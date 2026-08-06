@@ -1,145 +1,168 @@
-Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2354156CE
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 11:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7933847045E;
+	Thu,  6 Aug 2026 11:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786016888; cv=none; b=HEU5kp+SOZbkv0zjc+YA7jpoJZMCNOW/zcm4WzF33AVvubqE5DGjhhMOt2UY33YzJ92f93XKCVYUp/cpXBX6PGGeCD6tpGNzLYllkuqClNhBAZniIdNd8cnG+boDhdYIjbh0cNbpJO4PuCuJi3B1zhSv/VwGUl8d8vYU1iVboQM=
+	t=1786017120; cv=none; b=Kn+BkDfHf+qpX6lEe2xtiL3ynV0FUE/AVgJv4a8pNNH88lW+7MG/8J7aSfut6Oglhjog2PwqgJlqjBgfft7goDGYWehRRoc/PB5E3jgCthqMsxPhVtOnANtgKNorFrIag5axwudDUIvXRJdGOKCO9MhfO96AIBqwrbxokV0H0+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786016888; c=relaxed/simple;
-	bh=AfagInVYM8gAh9w0VoONI52XecLbRcbGI4KUe8vgmRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IV8mgsimpRH8B/hh8lLadbR6o+Q0QUC7v8T3srIGS46CA+Ci0vgCkH2B7V5w9P1kZVH7+TFgdhUDU/h2+J/dw9ovoyVRFc/mp+fMOwiJi95b8WJ5VK5dWg7jtgtsC9QeP/aIaqvjW2NVwVkzfMliuRTbGynoZ56LPcqC88vD+Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGdaq152; arc=none smtp.client-ip=74.125.228.0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786017120; c=relaxed/simple;
+	bh=Ddk2sLblFuCqgN3kLGjE4/tWjTxEOHE3xF2n+TVGTuI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kW0GRXQXGvHKorl2L4kAHoL1BHAEMiDWYmDOrIToGd8+KaAHPW+wSvrFW0KrctjKLtp8qErqCaFxuC58wETRxpCSDobzYsj1M6I6dW58bo2c+1vQ6Lbik+Jgo98FSKuehrE96XCgfsy0m63cQWfSiJF+y2+MR8DK7janBOGPj4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lULLnO+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGdaq152"
-Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-c96739a46acso1129482a12.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 04:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786016886; x=1786621686; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jTa6A1M2H+9bU9KnW8JJI6pSOlN/z7qEBlNWI2ijSbE=;
-        b=JGdaq152fHuWa7oqDv7Xc4GV5KzOERDOw2Ef9NJtrHjq4PuZD/TuyzDP1Ht1fhnk6A
-         SVPdrtH0zdt9qTdQICOD6eMZ7MV3sqfYn+VUvYxZMOnBlXWs6WO5yGrtPnXf7159JYx/
-         jf76I0l7XjliHvGG27rteWmzTXMOc82mN0+Qk9BN5XgT5EHzvmutluR/HAO7VKr0VlLO
-         rOpFfjzUi8rH0TIuEehg2tWNqmoDjuxh7+fkYP146i0Jza+3Z5rjI19eab37c/xldTh4
-         E9oX1KPzN8/BWuUfAXbj1jvfnnKn5hS3BtTYsTlxNmQc+tQX+3rTjN0QYXVWKmvY6wuc
-         07UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786016886; x=1786621686;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jTa6A1M2H+9bU9KnW8JJI6pSOlN/z7qEBlNWI2ijSbE=;
-        b=fP6KjYUQo9/jaFKTgzjjh097pdIE6aJhytEhlDpy3A3vYqRNfM3GJByj4U+jcH9QAh
-         QB7lQdxFNLFm4iv/2TwOps9y9wYENFqqRW/ChVrla3p5XwbycBHZCkg4Gqz/3xkV+7Rn
-         hG0pbUSkt8EizCCCXKS64WXMmjJeUpoocUKkX5MhDob6PqqF7A8/yEel0gSrK0Ud/Gn/
-         ziS2LO2y7Xdi592aizG+jXTEnknqdU/rDG+plhAldmB2b4SSwJ1dmBih2snn+lxGMRxS
-         VNfDE+H1GtkHY3sVW3QET98uoTOEdbK+rneQQ/rIJ9Srs42Xa1Sv2fqHHNawXIrn9UA0
-         v7gQ==
-X-Gm-Message-State: AOJu0YwSv1fTahKUCRPJCXNs7Vd/YGktrSlGFUDd0FXErXD7RdH/dPCQ
-	PODNQBCpUArOcKtB59dDwrn8c3BMBbofs7w3arHpRHDO488fQ9k1JIum1Jhj+2OczK4+wQ==
-X-Gm-Gg: AR+sD13jd1AIMAYSdu9wCAT+1QB4oeV3HmRPpfQpavLoH/tlTY07jrJ8vp5PrwJJiVR
-	KDX7FqHvgeLu0TuBy+J+CfX7km4AyJ2bumlUEDekcSJHi0m5TqKbpvwjyxn9Rq4vemtas171HWr
-	nTeT2emaoMV7vzjJw7kk7D4CLEYCRQ7m2xJ5wslUgU8ily7SbkCN08pmWn9CWG4KWGtfcNAx1eU
-	HEC8ZynRmA9hehplZtlmdQbDokEBRgYOXLnpr4CR/NjPgdiCAMezyuFnGdJ4loeSQN6yAc5csNv
-	8CeYKlryAB4eWy6Ek1JMqPFrXthT3UaRn5PfZTpYCO1zffHVFzbEDuwcJ2NZqnd6xO3UMZRSYp9
-	9UM+Kk1qnWieQH2iHZ88MaWUdVBcUujOS3LtZNFBscRpM1epw5VX/9n/8EwavybwBGR9BAjdD2+
-	pUCMjtZoXXuyb9uSsZkVizfvxEq8R6DTUOV9FzSHeZtrQNk0qDlfp7/RGvj6ODnHe7zaJ+
-X-Received: by 2002:a05:6a00:2e9a:b0:848:6ba2:4139 with SMTP id d2e1a72fcca58-84f2e0dbe21mr14854028b3a.36.1786016885959;
-        Thu, 06 Aug 2026 04:48:05 -0700 (PDT)
-Received: from [10.125.112.20] ([210.184.73.204])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f459ba3ebsm1238852b3a.46.2026.08.06.04.48.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 04:48:05 -0700 (PDT)
-Message-ID: <200a2b10-9f71-4e5e-9908-349c0c711073@gmail.com>
-Date: Thu, 6 Aug 2026 19:48:01 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lULLnO+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565B81F000E9;
+	Thu,  6 Aug 2026 11:51:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786017119;
+	bh=YDyQxw7kEcv8fafHZJCSFp9fBd0EX8yupcZ1eKpGNog=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=lULLnO+NrGAd8vuq+7byWmI35SX/ua1DfIjgavu3OB9gS8EllukpkdeLDcjChbvPM
+	 eQOp2x2rolMuDwM3xnoQWfGevQt4+scBtYsMEhETs687jPqSO8lf66DoaCHld0JKlH
+	 DPTi9d7y7NobGYayHlwpDqvR1T+hJwC92MrqtZch88K4B47GwE7Q7H5YDEAafEjg9t
+	 YBUVBH9imnyG/4V06WIN5qSXcDCiM/yC+HpuZ16/jtwg/BKw6udYEniGH6ygOiONcU
+	 edktd/UhqL7I3c+A/pfSHgAPqF5AXQoUvmOKcxv3fWD3psYrhJGum+ZWIwDVwwDaE6
+	 ilk3doCuWeVnQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wrwdh-0000000CwaY-1nA3;
+	Thu, 06 Aug 2026 11:51:57 +0000
+Date: Thu, 06 Aug 2026 12:51:57 +0100
+Message-ID: <868q6jbh5u.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org,
+	kvmarm@lists.linux.dev,
+	"Oliver\
+ Upton" <oupton@kernel.org>
+Subject: Re: [PATCH v2 4/8] KVM: arm64: Correctly handle end of VA space TLBI invalidation
+In-Reply-To: <20260806093030.863F31F000E9@smtp.kernel.org>
+References: <20260806091026.620700-1-maz@kernel.org>
+	<20260806091026.620700-5-maz@kernel.org>
+	<20260806093030.863F31F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/8] of: reserved_mem: add dumpable flag to opt-in
- vmcore
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260806093519.2907771-1-chenwandun1@gmail.com>
- <20260806093519.2907771-3-chenwandun1@gmail.com>
- <20260806094742.356B81F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Wandun <chenwandun1@gmail.com>
-In-Reply-To: <20260806094742.356B81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 8/6/26 17:47, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete implementation and write-only dead code: the `dumpable` flag is introduced and set, but the promised kdump filtering and overlap checks are missing.
+On Thu, 06 Aug 2026 10:30:29 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Range TLBI instructions for Stage-1 TTBR1 addresses silently fail to invalidate VNCR entries because the base address is not sign-extended.
+> - [High] The `tlbi_va_s1_to_va` macro and `read_vncr_el2` sign-extend from bit 48, which corrupts 52-bit Virtual Addresses (LVA).
 > --
 > 
-> --- Patch [2]: [PATCH v5 2/8] of: reserved_mem: add dumpable flag to opt-in vmcore ---
-> commit 873defcf6278254b5c39d8d3500f986e38a79da0
-> Author: Wandun Chen <chenwandun@lixiang.com>
+> --- Patch [4]: [PATCH v2 4/8] KVM: arm64: Correctly handle end of VA space TLBI invalidation ---
+> commit 0f00ac726029153c77159941056d984a8dc753cf
+> Author: Marc Zyngier <maz@kernel.org>
+> Subject: KVM: arm64: Correctly handle end of VA space TLBI invalidation
 > 
-> of: reserved_mem: add dumpable flag to opt-in vmcore
+> This commit fixes an issue with TLB invalidation by VA where address rollover
+> at the end of the TTBR1 VA space caused invalidations to fail. It introduces
+> a common helper, vncr_tlb_intersects(), which uses inclusive end addresses
+> to prevent this issue for both VA and IPA invalidations.
 > 
-> This commit adds a dumpable flag to struct reserved_mem to track whether
-> a reserved area should be included in the kdump vmcore. It sets the flag
-> for CMA regions to true in rmem_cma_setup().
-> 
->> diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_mem.h
->> index e8b20b29fa68c..55a67cee41ea0 100644
->> --- a/include/linux/of_reserved_mem.h
->> +++ b/include/linux/of_reserved_mem.h
->> @@ -15,6 +15,7 @@ struct reserved_mem {
->>  	phys_addr_t			base;
->>  	phys_addr_t			size;
->>  	void				*priv;
->> +	bool				dumpable;
-> 
-> [Severity: Medium]
-> Is the logic that checks this flag missing from this patch?
-> 
-> The commit message states that non-dumpable regions are later marked
-> MEMBLOCK_NODUMP, and that the flag is used to check for overlap with
-> /memreserve/ entries. However, this flag appears to be write-only,
-> as there are no corresponding checks or calls to memblock_mark_nodump()
-> implemented in this commit.
-
-Not correct. The checking of dumpable flag is in patch 03 and patch 04.
-
-> 
->>  };
-> 
+> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+> > index 939813aebaafa..67cc5b6d80705 100644
+> > --- a/arch/arm64/kvm/nested.c
+> > +++ b/arch/arm64/kvm/nested.c
+> > @@ -1000,6 +1000,20 @@ static void invalidate_vncr(struct vncr_tlb *vt)
 > [ ... ]
+> > +static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
+> > +				u64 scope_start, u64 scope_size)
+> > +{
+> > +	u64 tlb_size, tlb_start, tlb_end, scope_end;
+> > +
+> > +	tlb_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift, vt->wr.level));
+> > +
+> > +	tlb_start = addr & ~(tlb_size - 1);
+> > +	tlb_end = tlb_start + tlb_size - 1;
+> > +	scope_end = scope_start + scope_size - 1;
+> > +
+> > +	return !(tlb_end < scope_start || tlb_start > scope_end);
 > 
->> diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
->> index f754079a287d6..63ff134dadd42 100644
->> --- a/kernel/dma/contiguous.c
->> +++ b/kernel/dma/contiguous.c
->> @@ -565,6 +565,7 @@ static int __init rmem_cma_setup(unsigned long node, struct reserved_mem *rmem)
->>  		dma_contiguous_default_area = cma;
->>  
->>  	rmem->priv = cma;
->> +	rmem->dumpable = true;
+> [Severity: High]
+> This is a pre-existing issue, but could this intersection check fail for
+> Stage-1 TTBR1 Range TLBIs due to a missing sign extension?
 > 
-> [Severity: Medium]
-> Does setting this flag have any effect?
+> When a guest issues a Range TLBI for a TTBR1 virtual address,
+> decode_range_tlbi() zero-extends the base address:
 > 
-> Since the promised kdump filtering and overlap checks are missing from the
-> code, this assignment currently acts as dead code. Were those checks meant
-> to be included in this submission?
+> arch/arm64/include/asm/kvm_nested.h:decode_range_tlbi() {
+>     ...
+>     base = (val & GENMASK(36, 0)) << shift;
+>     ...
+> }
+> 
+> In compute_s1_tlbi_range(), this is directly assigned to scope->va.
+> 
+> Since scope->va is passed as scope_start here and is zero-extended (a large
+> positive unsigned number), won't it fail to intersect with vt->gva, which
+> is sign-extended (a negative number for TTBR1)?
 
-Not dead code, the checking of dumpable flag is in patch 03 and patch 04.>
+This is patch #6.
 
+> 
+> > +}
+> > +
+> >  /*
+> >   * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
+> >   * either can race against a vcpu not being onlined yet (no pseudo-TLB
+> [ ... ]
+> > @@ -1060,28 +1064,19 @@ static void invalidate_vncr_va(struct kvm *kvm,
+> >  	lockdep_assert_held_write(&kvm->mmu_lock);
+> >  
+> >  	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
+> >  		switch (scope->type) {
+> >  		case TLBI_ALL:
+> >  			break;
+> >  
+> >  		case TLBI_VA:
+> > -			if (va_end <= scope->va ||
+> > -			    va_start >= (scope->va + scope->size))
+> > +			if (!vncr_tlb_intersects(vt, vt->gva, scope->va, scope->size))
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does KVM incorrectly truncate
+> 52-bit Virtual Addresses (LVA) to 48 bits when constructing these VAs?
+> 
+> The tlbi_va_s1_to_va() macro and read_vncr_el2() both hardcode a 48-bit sign
+> extension:
+> 
+> arch/arm64/kvm/nested.c:read_vncr_el2() {
+>     ...
+>     return (u64)sign_extend64(__vcpu_sys_reg(vcpu, VNCR_EL2), 48);
+> }
+> 
+> If a guest uses 52-bit VAs (FEAT_LVA) and places the VNCR page at a TTBR1
+> address where bit 48 is 0, wouldn't the upper bits (49-63) be zero-extended
+> instead of sign-extended?
+> 
+> This seems like it would corrupt the VA into a TTBR0 address, and Range TLBIs
+> (which preserve bits up to 53 in decode_range_tlbi) would fail to intersect
+> with the corrupted 48-bit vt->gva.
+
+That'd be a bug if we had support for LVA. We don't.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
