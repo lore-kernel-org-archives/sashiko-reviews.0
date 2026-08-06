@@ -1,176 +1,122 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A65ECDF76
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 03:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA85537D11F;
+	Thu,  6 Aug 2026 04:17:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785985235; cv=none; b=Rn8w8tSvfc3zCVvDlubzyFmyN92KrhpAx7rTc5XBdwSWSwJwTDB0Jcf4knKc/JvYmw7JTiE8/eLvUp048jG+2PXDf/6uUKv6LSefP+7qym7KYjW+Y6QgWBolaU9HD4INjUIkCC2KPvPm/vypjEe0nc6RibTf78+12b7lRlKAsos=
+	t=1785989835; cv=none; b=gyA5GKe3mts9ytSEDr7hUWCotw2bk130oSL6a0VmUgLx4fmx8c5u1+ULhcDjajwebakRzlyK4tY2z6R9StuvXC92AQNjnkT1UijUOJOjbAkDHHB+qyVVfETeLlITdFkJIPV8m0Iu3ezOOcKW6qTarHtf90rRnfuJalb1egkr7ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785985235; c=relaxed/simple;
-	bh=mBMqnuqIgym0XsMK+vXWaxKHTKQcf3JZcYF1Zl43iUY=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=BHAh3HtWhQkXd9XjUSrrVk4lKpBv2M/qVxpRrPh+DXOa4CAI16UxoZGX+eQGgjs8nzSvkenXE8YE1park8BSZxBZdOc1kmwWYb8mZSIMYGzNX1v0fweunuer5BNa4UkqSUO59syYGr+4zPVLuruZeDCBHLj+l/ucTDRtnND+WRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.62])
-	by gateway (Coremail) with SMTP id _____8Dx8+nG+HNquN8KAA--.25638S3;
-	Thu, 06 Aug 2026 11:00:22 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
-	by front1 (Coremail) with SMTP id qMiowJCxbQfF+HNqslglAA--.1566S2;
-	Thu, 06 Aug 2026 11:00:21 +0800 (CST)
-Subject: Re: [PATCH v2 4/5] LoongArch: KVM: Implement vmid updating logic
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260806020739.2149268-1-maobibo@loongson.cn>
- <20260806020739.2149268-5-maobibo@loongson.cn>
- <20260806023024.7ACCE1F000E9@smtp.kernel.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <4f1446f5-1972-897d-d116-cc9638d2b6e0@loongson.cn>
-Date: Thu, 6 Aug 2026 11:00:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1785989835; c=relaxed/simple;
+	bh=UJNN0zMBMODzscybLgnfShli4inyPSqWKMxUBWBw/tQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FFRzEzXYAwI8KYnWEQV+n7FX8aaFx1Wi5hzqk+et13XWsvCT9fNMsSZ+gTKISVeQ7M43Nh5UXnomF0MImiyE5/uN/YnaOl04JIZwlLBav/Gf8rcDbam715IdWVAw6ONJaJIz6REJOTO4YAFUrckn3A7zqKXkrjJIGKp5Sho+734=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=cNBowQI6; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="cNBowQI6"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 675NlhQx3403131;
+	Thu, 6 Aug 2026 04:16:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=sszeY5
+	T8kdjTI3h5ZiATF3+wdFCDT7FEX/8SRrV9FDc=; b=cNBowQI6WUqhJJQ9Fs84Fy
+	7ZuLl51EBO4dQIpmer+gKU4m6y+pa5FhQ712PTzsvUpaJIF795OOmG08p23/FbqF
+	TDbS+02gAzbQRTP0atgT0R0DnXFkPa7ExZZQZz+EN+sU54FKN34jdaofEdOJr/5m
+	oyhlS+KmFm1ueD2HBzygD0M4kJxEosNUFCbwJ5keqEk+ldf0MtIJDNtHRy8ba9UF
+	scFRFXg2YqKMujMc+qSUoR22dbHPgfvpnMHSJnzWr3wEznW995JSxCjKIyiv5Xgq
+	r1h0YhIWoNRkUVi9RLNNgNvpauRhhqzOngqpexFpu4pdxcNn2cRB4tuP9tVnxALQ
+	==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqx70k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 04:16:50 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6764BI1v014627;
+	Thu, 6 Aug 2026 04:16:49 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswtysc5u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 04:16:49 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6764Gl5d48562628
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 6 Aug 2026 04:16:47 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C1D7F20049;
+	Thu,  6 Aug 2026 04:16:47 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 326A920040;
+	Thu,  6 Aug 2026 04:16:44 +0000 (GMT)
+Received: from Linuxdev.j9d-in.ibm.com (unknown [9.123.86.85])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu,  6 Aug 2026 04:16:43 +0000 (GMT)
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
+To: harshpb@linux.ibm.com, zhaotianrui@loongson.cn, maobibo@loongson.cn,
+        chenhuacai@kernel.org, npiggin@gmail.com,
+        sashiko-reviews@lists.linux.dev, seanjc@google.com,
+        pbonzini@redhat.com, Yanfei Xu <yanfei.xu@bytedance.com>
+Cc: kvm@vger.kernel.org, stable@vger.kernel.org, loongarch@lists.linux.dev,
+        linuxppc-dev@lists.ozlabs.org, caixiangfeng@bytedance.com,
+        fangying.tommy@bytedance.com, isyanfei.xu@gmail.com
+Subject: Re: (subset) [v2 0/2] KVM: Validate irqchip index in routing entries
+Date: Thu,  6 Aug 2026 09:46:43 +0530
+Message-ID: <178598971883.942627.14864231076983027112.b4-ty@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260531135326.2238555-1-yanfei.xu@bytedance.com>
+References: <20260531135326.2238555-1-yanfei.xu@bytedance.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260806023024.7ACCE1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJCxbQfF+HNqslglAA--.1566S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurWUAr1UAryfZryUJF4rCrX_yoWrAFWrpF
-	W8C3Z0qa18CrnrX340qw4kXr1jg34xGr1xZFyaya4avrn0vr1kGF4vk3ykuFy5JryS9a1I
-	vF15Kr9F9F1DCacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
-	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
-	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
-	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
-	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
-	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
-	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
-	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
-	UUU==
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 9XIrn19liHt_Gp35TI6FU0lszKKCE0M-
+X-Proofpoint-ORIG-GUID: ZrcnJp2922SmvrODV1LGkczb6OrRWGnT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDAyNSBTYWx0ZWRfX87taHarZcbbK
+ qrDRHczbdO398Rb71hhfyEUYsWWE+Wmg7lcOU2RQw7gFL6oj1Seyx9KWKQpzqlcFU3GsPKBUEf6
+ GrldeJGEPQPB+HkOW9rLreC6KaImCwk=
+X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a740ab3 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=4sZtcsWrhcTQ-q4STQgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDAyNSBTYWx0ZWRfX8/SwQGbft3ST
+ v5BFqbRjmEOCDVCQOhxrCwJK+YMEQHJdc1NYx53TngRpMsAed09kCqyI4eLvg2zgb+pqqkVthQ4
+ JDOxb/NC2yXu0QZHFcCnnXYMKqZchcYDyLVtRyPucY1jFwEdpKg0O2tAe/9tfboFbZqyxY5V5T/
+ 2240Wl0//jvzYLnMAbzIcCQItMC4XXJCBHF8XTi7J3V0kJ00/lHusCd0C6kIf4gwOWV8j0Q5VRq
+ tdux4zoXsn+HhYk0CsB/dBwnZn1KndyLaANnKFHqBcbL8Q+P1LQzcwyhzIslOFFuanySdnvD+1g
+ E+R1QqLWhiG42mb13lhLSEBJOEH3StemHUhegCXSpkVAxsoPZ+okI6j3RJgNcoT/hIXdN6onnBe
+ dNAmUxRVMsQNHsEtknE3pAbY4g6d9hLJzvYESuDbZjP7qiQbb8SXDdts19J5TSXutHqnFdB4X31
+ jk+dzPHLWXr+Y2aEMuw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_06,2026-08-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060025
 
+On Sun, 31 May 2026 21:53:24 +0800, Yanfei Xu wrote:
+> Validate irqchip indexes for LoongArch and PowerPC irq routing entries
+> to reject out-of-range values before indexing the irqchip array.
+> 
+> v1->v2:
+> - Split the patch into two by architecture (Sean)
+> - Pick up Reviewed-by
+> 
+> [...]
 
+Applied to powerpc/next.
 
-On 2026/8/6 上午10:30, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Missing early return in `__kvm_check_vmid` for machines without guest ID support breaks VMID/VPID synchronization.
-> - [Medium] Data race between non-atomic `cpumask_setall()` and atomic bitwise operations on `tlb_flush_pending`.
-> - [Low] Dead code: `kvm_arch_flush_remote_tlbs_memslot` is a fictitious arch hook not called by KVM core.
-> --
-> 
-> --- Patch [4]: [PATCH v2 4/5] LoongArch: KVM: Implement vmid updating logic ---
-> commit 1626f2256d93ca3c5c607a6a950ca7531c03169a
-> Author: Bibo Mao <maobibo@loongson.cn>
-> Date:   Thu Aug 6 02:07:38 2026 +0000
-> 
->      LoongArch: KVM: Implement vmid updating logic
->      
->      VMID calculation method is the same with ASID on LoongArch, it is
->      percpu vmid calculation method. For every physical CPU, VMID of
->      different VM is different, and it is the same for different vCPUs
->      of the same VM.
-> 
->> diff --git a/arch/loongarch/kvm/main.c b/arch/loongarch/kvm/main.c
->> index c36e62ab0d917..72c1d23156e50 100644
->> --- a/arch/loongarch/kvm/main.c
->> +++ b/arch/loongarch/kvm/main.c
-> [ ... ]
->> @@ -291,6 +316,20 @@ static void __kvm_check_vmid(struct kvm_vcpu *vcpu)
->>   			kvm_clear_request(KVM_REQ_TLB_FLUSH_GPA, vcpu);
->>   		}
->>   	}
->> +
->> +	cpu = smp_processor_id();
->> +	if (cpumask_test_and_clear_cpu(cpu, &vcpu->kvm->arch.tlb_flush_pending))
->> +		vcpu->kvm->arch.vmid[cpu] = 0;
->> +
->> +	/*
->> +	 * Check if our vmid is of an older version
->> +	 */
->> +	ver = vcpu->kvm->arch.vmid[cpu] & ~vpid_mask;
->> +	old = this_cpu_ptr(vcpu->kvm->arch.vmcs)->vmid_cache & ~vpid_mask;
->> +	if (ver != old)
->> +		kvm_update_vmid(vcpu, cpu);
->> +
->> +	vcpu->arch.hw_vmid = vcpu->kvm->arch.vmid[cpu] & vpid_mask;
-> 
-> [Severity: High]
-> Does this unconditionally overwrite vcpu->arch.hw_vmid for machines without
-> guest ID support? On machines like 3A5000, hw_vmid is set to match vpid
-> above, but without an early return or else block, it falls through and gets
-> overwritten here with a dynamically allocated vmid.
-yes, early return is missing in if (!cpu_has_guestid) sentence.
---- a/arch/loongarch/kvm/main.c
-+++ b/arch/loongarch/kvm/main.c
-@@ -315,6 +315,7 @@ static void __kvm_check_vmid(struct kvm_vcpu *vcpu)
-                         vcpu->arch.hw_vmid = vcpu->arch.vpid & vpid_mask;
-                         kvm_clear_request(KVM_REQ_TLB_FLUSH_GPA, vcpu);
-                 }
-+               return;
-         }
-> 
->>   }
->>   
->>   void kvm_check_vpid(struct kvm_vcpu *vcpu)
->> diff --git a/arch/loongarch/kvm/mmu.c b/arch/loongarch/kvm/mmu.c
->> index 714640a2e6142..80e7a8bdc344a 100644
->> --- a/arch/loongarch/kvm/mmu.c
->> +++ b/arch/loongarch/kvm/mmu.c
-> [ ... ]
->> @@ -942,6 +943,22 @@ void kvm_arch_sync_dirty_log(struct kvm *kvm, struct kvm_memory_slot *memslot)
->>   {
->>   }
->>   
->> +int kvm_arch_flush_remote_tlbs(struct kvm *kvm)
->> +{
->> +	/*
->> +	 * Queue a TLB invalidation for each CPU to perform on next
->> +	 * vcpu loading
->> +	 */
->> +	if (cpu_has_guestid) {
->> +		cpumask_setall(&kvm->arch.tlb_flush_pending);
-> 
-> [Severity: Medium]
-> Could calling cpumask_setall() cause a data race with concurrent atomic
-> bit operations?
-> 
-> cpumask_setall() uses a non-atomic memset() internally, while
-> __kvm_check_vmid() and kvm_handle_mm_fault() use atomic read-modify-write
-> operations like cpumask_test_and_clear_cpu() and cpumask_set_cpu() on the
-> same cpumask.
-This is under investigation, if data of memset() is not lost or 
-invalidated, it will send IPI to destination vCPU and check the flag again.
+[2/2] KVM: PPC: Validate irqchip index in MPIC routing
+      https://git.kernel.org/powerpc/c/5458b50b5291390ce0af2872a1baa51cc58e8f08
 
-Regards
-Bibo Mao
-> 
->> +		/* Be sure that other CPUS can watch the changes */
->> +		smp_wmb();
->> +	}
->> +
->> +	/* Return 1 continue to send ipi to running vCPUs */
->> +	return 1;
->> +}
->> +
->> +void kvm_arch_flush_remote_tlbs_memslot(struct kvm *kvm,
->> +					const struct kvm_memory_slot *memslot)
->> +{
->> +	kvm_flush_remote_tlbs(kvm);
->> +}
-> 
-> [Severity: Low]
-> Is kvm_arch_flush_remote_tlbs_memslot() dead code? There does not appear to be
-> a KVM core hook by this name, so this architecture-specific function won't be
-> called by the KVM core during memslot updates.
-> 
-
+cheers
