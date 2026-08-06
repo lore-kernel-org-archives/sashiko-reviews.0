@@ -1,259 +1,305 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD543264D5
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 15:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856223E325;
+	Thu,  6 Aug 2026 16:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786031340; cv=none; b=BF89CoO9mcyoleumWPlMXTXx+doZoeAu82Hk0ZzrbRJ7Vev6FTouoey/vbIyfrnONzlFv08zDTMKIsLxsITx6hVLc30WtdEdOHIP/VN8iqCVjh7is5rIoOMfxAEZKKVpHdk8Z/POIO5P0dU+trgjlgeUTt6fIQVK/2coLFf9v0k=
+	t=1786032398; cv=none; b=aFtCuYMwTRXRifzPheNyITY/5UL3wTeZsjKicRwe4zhi0bNDJMY7tF6o7HoiGC+/H2A+7OH3Wgoy1B/60DMYmDz8/LMQyDwCpR66R4lDrt7xL4dNWixk188xc8xVz/Z6lZi4AXYm/jBEUtPdI2RLcZ0U8peeu5jl95TMwnUPqnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786031340; c=relaxed/simple;
-	bh=v5TDmuQpqA82E3dy438qJQ0HCn9njcWZXH83JntM5Fk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UWMbdSjyKNe51FxMpfpjqWuaYvQ7fRh1MfUr5vcuFrMFizqqEnf2FBcZxP9WmG5M2wB27BW3iBgFmzDB/CaWGE4maXLv6OzwwoSJRbX2NOuq4XtCCjH1aPJyDagSdKOz6szI170ZWUiYbjqeNBhD7+Our302BGIIojdJ7BqfG5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y9rP6uxZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e8GBkEmb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1786032398; c=relaxed/simple;
+	bh=EDNffItBrzBc2yFrQyApte0aDzP2Cz9QaErcHpzLVKU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XTl00GPl8xoK2pGiIeYI1o8bpnDV/RkXmgeHdu67/vpMJT4SMeWuJJpGJrs80/2I7FXuKysm9vpBkkaDrP6lOghqRspyu/DjncC23kiEIrs8Rcn02sHUvpnAXQDWVKN9lWgL/oeC6MOJbp4Ra8wsNiNXMFT6kkzdjgGlJLyMjV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Bi0TCVdR; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y9rP6uxZ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e8GBkEmb"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676Ensei2570203
-	for <sashiko-reviews@lists.linux.dev>; Thu, 6 Aug 2026 15:48:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=; b=Y9rP6uxZ6jARpBXU
-	smu8lSXunEjdNphRzEeAMayE3zW53ucXz2fdkQtZP3wJSjiFsKBhukXdQbmnUtIh
-	Q02vCqSwBmh+0uAk1jxauEa9h8fJeHojNQ8dm0RGAYwmOWRlbtCb4rcDFggYzy6H
-	qswN8fjZ5eeAjDye88DJ+4kAdEfHJR1A3AMlKm67FgUMCxITGkNo+HcCzXtj1jC/
-	TFFmMnWNzzf07ef5w6aeT27ww/lvJVkke8Wcjcl4uUqESCc1OxyJYHzsW3KhWT+4
-	qpKFKWLDod/mpE6KejN5xy/1e2v0ERbkNE2B4eyRsin7aB1mZM+Trt7TWfwkiIw2
-	v9Uh3A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvjud33jw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 15:48:57 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-92ec3146553so391014385a.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 08:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1786031337; x=1786636137; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=;
-        b=e8GBkEmbJEgeInKc4yXMWR+fxN4ga1IVtzJiLZq3L4A7vV3w44Ri6I5s0zbsehmScZ
-         ywL91mrQKi8pPRWG4VgQIzb5fUZrQzJpON9FdcNxq5nMKMMolZ2ZbE3NamSESjqDX5po
-         Q86LeEwfCrAxFttRa1JozApV5VTZruW2kitrLQGn6pISrOTrQLEF7ntjNkpFpjWAscTp
-         2jZq9XqVbaD2xJm6CzAwaneNyE5R6CgCPjuwFjAUqpn3hJdnayjVfbIr59a9df34QHPS
-         kwQLUOKz6nnW0i1bC0wnmaaszLFuJZ5/wG9NK7Wx2uEsxa0cUfmjr0k6SWpCN8Dlcz/i
-         3mXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786031337; x=1786636137;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=;
-        b=axWtBsmMZxzhL8JfYBNiMFbxhN9Z8SduyO/c/6IkkXu+4e8iZMYAp+rJwRQYr/Ud5N
-         GO6XHQuP+mW/0FBq6HaPlPIsPfwWQrdMzFNWXgaJPCmazNHWkKllEWjb3YawgZIeavDj
-         G3tDa9tylQQCbuZ3qachHSlM8Vq8xo8uBfFbjdfYgnMQwgMh967MlE02XnI7az1ZI/+6
-         wUG3uz6G9wmoUc6BXU3AS/ATZIVXQWbE920NRHZM4ynplN0DL5OlrNYPW661v2UoZz54
-         KDnnxYNZOS2zCaF1aFA4oGwYf54CWFI6+s0a+zeLRyEHzQz4726AcFyDnsCbhmkAjJr1
-         2LZw==
-X-Forwarded-Encrypted: i=1; AHgh+RqykFKi/MGvax3eOmISBs98IO/8gcf1JuazejvMJ8bOU4r6Jf6iH5lD5qOGiXVPIrE8bwISZqJ8x9eRl7xwz3Y=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzo6r3UGj/yJI6dhjVzx08LQb75UIrbG0mmfVU6H7Vyq6HkijrQ
-	fCxT1tvSRCoS2VrcPLzby4zLDgJXvpYtSijbSnFrevrckKIo9RD8v/vto5tsdF5Vu6SJolTJKSY
-	8QR/ZgbJ75CstrezCHaEpCzwa5fggivn4MObA+gLfL9wq8LkgPdMNalttdZinEzkwYGbScSE=
-X-Gm-Gg: AR+sD11XAZ8oOD8RkO01mrSBnHfw/1J+vQkoSKlsqnOqBD845HzWyOXsyRpK1koO9UW
-	RZOIMWBt91b4IrjyciMz/QC5bzH2l9gAA4BvIgXESrVY16jLn9hf4btzahptD5Z9Gk8cURbAg3W
-	86cPfD8s1a0ZH76qyKWz9unYd9mD/2B8lJ4gfsSoHufZEJHgIxKJv8rsgUhtT0M2lOdHE1JbcyV
-	LiAXBErbuPYQathgUqL+wa2ZmjmDhTE2rWNzO+edylKHiIp1zIXpVMYkl0q1Lg74vLKrrRhamaU
-	WDBQ4gpmOs++xLavGf7aAT8RmRwiCXO9Jn0mAR1qZ66kESbheQvbZIHLKYIN0PGhAZT2vvEs4+a
-	TlpIH5lnYZgQWSwbo5fwTUMbYEP9bwhE=
-X-Received: by 2002:a05:620a:a10f:b0:92e:bd39:9993 with SMTP id af79cd13be357-936491af165mr1370753785a.31.1786031337260;
-        Thu, 06 Aug 2026 08:48:57 -0700 (PDT)
-X-Received: by 2002:a05:620a:a10f:b0:92e:bd39:9993 with SMTP id af79cd13be357-936491af165mr1370747385a.31.1786031336714;
-        Thu, 06 Aug 2026 08:48:56 -0700 (PDT)
-Received: from [192.168.1.16] ([106.222.229.34])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-936583cdd32sm274043585a.7.2026.08.06.08.48.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 08:48:56 -0700 (PDT)
-Message-ID: <67fd2a5d-fef4-4292-b981-c930b55aafb4@oss.qualcomm.com>
-Date: Thu, 6 Aug 2026 21:18:51 +0530
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Bi0TCVdR"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676En46L2939450;
+	Thu, 6 Aug 2026 16:06:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=mzGEVm
+	etbGjsMDpWjtcnXUBmusbrgdkIn6JsyNh8xeY=; b=Bi0TCVdR5/z62UjrWOQdce
+	UpuYimmGOp8jHzYBZY6gYtXZYXFcGFww/Up1dRxrQcSA3uREFRwRKFREdoIR+E1g
+	w1GB7UgZbZlwTeNtkmZS76KlfUg8YuKzEhsAvNs6vIBe/SvGKIzx+NuB1a18OE4x
+	jVb6swfTTWImK9dxTxfhD7McMLCwkmXLrSvSecPT6fJszukd8Jlvfrc+iQKpS3wl
+	aeUm7GJ/4kGVFwt5zi5EQK7B2Ne001jQClOFuImmNoaOgLR0jxSV7//ZkmqHj75Q
+	kMJdVx29hkSwp/52twli25ijLh/cLDy/7gcmr+8UmeNgErgmmZ7zbgWXN4BDULhg
+	==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8a495d5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 16:06:35 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 676FuI78027270;
+	Thu, 6 Aug 2026 16:06:34 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswtyunfg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 16:06:34 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 676G6Uwn17367424
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 6 Aug 2026 16:06:30 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8FEDF20049;
+	Thu,  6 Aug 2026 16:06:30 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A75D420040;
+	Thu,  6 Aug 2026 16:06:29 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu,  6 Aug 2026 16:06:29 +0000 (GMT)
+Date: Thu, 6 Aug 2026 21:37:19 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v6 1/4] KVM: PPC: Introduce KVM_CAP_PPC_COMPAT_CAPS and
+ wire up ioctl
+Message-ID: <20260806211428.e98e021d-5c-amachhiw@linux.ibm.com>
+Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260804180705.59160-1-amachhiw@linux.ibm.com>
+ <20260804180705.59160-2-amachhiw@linux.ibm.com>
+ <20260804181937.2EF2A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/9] soc: qcom: Add QMI TMD support for remote thermal
- mitigation
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        sashiko-reviews@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-References: <20260731-b4-qmi-tmd-v7-0-3befd44403d5@oss.qualcomm.com>
- <20260731-b4-qmi-tmd-v7-2-3befd44403d5@oss.qualcomm.com>
- <20260731105316.BDBA51F000E9@smtp.kernel.org>
- <7ptv24tcqk6ym3pkiuo5y5klhv52nycwhg2zl5usxme47cmflw@pg3lays6zpas>
-Content-Language: en-US
-From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-In-Reply-To: <7ptv24tcqk6ym3pkiuo5y5klhv52nycwhg2zl5usxme47cmflw@pg3lays6zpas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX79b5UPK3miOz
- IfmGmdsijJxr1fsOdcJEuZOEeBGufJn52Z7sE8+DJWrq6FW3L3jmEwJG1HFgms7qAjZ03k+FitF
- hxt5cB74W+363XCapzO4HPHRE5L078lb2Fp3rLpUdAAqymERvhgnM9GY2ez4iNiZYkp6/xNWlb2
- lAoNKC38eI5H7brxJJmXLr/Utb5wMGZx4djB2OmYKu7W5lkQAP6LUqp/YjEsAWxNSDDsn0rlxYV
- OlNPbSrE5ULjE9utFi2izcI6E0BneKa9/b46c6nfYP/k9FPdvCdj0AuCdtgsNlmeggcOYzB9OHS
- uVMdwbXpJS0sm/fJyonVgUB5dfafsXbResdAALbJunphPQ9GDWqZEm7UgZY+lw82irpy2Dfteud
- SaMI2n+cOxv/9ndNqR49idfJhng8dWRbs7liNdQkG5l4Ts3wkbukrxJDXXMZLlAEQ8WvT70mZjr
- P71xK2WExBUbCFJhXyw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX+tnPyI0rFYth
- RJZwOC5vORxpCTSvg4iENv8F1w5vd1D+lecPhIedAxOqQ4hdVdaeryySh4gkvefZ8WxnAD6A4M+
- lN0e4U3feTqX1WFEXCRycxQzqJeAWbA=
-X-Proofpoint-GUID: wOcKnLjJo7RSZPGlN3gBaGLgNeEQ4L8D
-X-Proofpoint-ORIG-GUID: wOcKnLjJo7RSZPGlN3gBaGLgNeEQ4L8D
-X-Authority-Analysis: v=2.4 cv=DeInbPtW c=1 sm=1 tr=0 ts=6a74ace9 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x3UvaR+l8cLCJ1uKBUlNag==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
- a=PaKyr2AS0Ek1y2y1GKQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=GvGzcOZaWPEFPQC_NcjD:22 a=cvBusfyB2V15izCimMoJ:22
+In-Reply-To: <20260804181937.2EF2A1F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E6P9Y6dl c=1 sm=1 tr=0 ts=6a74b10b cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=WvqGrGUc94HQVLc0aSkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: SXJwvlrgoFFVVsUN-1U6vXnC9LHlGu4A
+X-Proofpoint-GUID: SXJwvlrgoFFVVsUN-1U6vXnC9LHlGu4A
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX6OJF3iZcJm3Y
+ UxtuyO1rsVkUeeaeAl6DNXCCYadXVBIjw801obXMdwEx8rcq7rNEvz6iFReMYQKxY7CEaW/fcFL
+ O0dT8GMQFh4IEkaH7CaYJXl7omLHroE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfXyMxso1R3AK8A
+ reYE8iG6RLY4eDm1szYdBRp7X3b6Cd/0n0QgDViTLi3hEOOR1WvsnVtvLrqac6iW3vm9CUjgZHE
+ JL0doqsjORZfhxyTiHZSc5x2kcFvhLUoBPr/6CEiM1BKlaTlOTefocrUjgtIcPcJSlxH2SKCWTX
+ rWneTeFxu1EyNexlpAJ6h0+uJqJlfc4JlhIBo9LqggwXkhhBfv/Wyxk1l47fWXYpoMQEoWCCXeT
+ 2LdzSM8njD8ouLdWQ+xlpgfttMjIVJs06xZp24QOCoiJ9sLTNChE1vdeFHSvaZ7QKYXSrgK3pQN
+ qYp2Zng6TgxcPc4FEaqfL7uZdji+ZtzHTKWvMpGTpa5BM3DQZy1cBWnPEqS+NO4LIyWDr87fbff
+ az7IDvXKwSzPx2JgGtwF0pXl+aOKNlzxf23gSPHZaSxZN6KLLPC5fAfE93ILuJsoKqA2UbwJ+4y
+ Fi3leOhJH71XBR1zKZw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-06_01,2026-08-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 priorityscore=1501 adultscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060122
+ bulkscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608060122
 
-
-
-On 8/6/2026 3:10 PM, Dmitry Baryshkov wrote:
-> On Fri, Jul 31, 2026 at 10:53:16AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> - [High] Returning success without saving the requested mitigation state when QMI is disconnected permanently loses thermal mitigation updates.
->> - [Medium] TOCTOU race condition when reading `tmd->cur_state` during service reconnection causes permanent thermal state desynchronization.
->> --
->>
->> --- Patch [2]: [PATCH v7 2/9] soc: qcom: Add QMI TMD support for remote thermal mitigation ---
->> commit 02c2244c0a2cebd6be4e1bf4e41d51362be19b5f
->> Author: Casey Connolly <casey.connolly@linaro.org>
->>
->> soc: qcom: Add QMI TMD support for remote thermal mitigation
->>
->> This commit adds support for Qualcomm Messaging Interface (QMI) based
->> Thermal Mitigation Device (TMD) cooling devices provided by remote subsystems.
->> It allows client drivers to discover the service and forward cooling state
->> updates to remote processors.
->>
->> diff --git a/drivers/soc/qcom/qmi_tmd.c b/drivers/soc/qcom/qmi_tmd.c
->> new file mode 100644
->> index 0000000000000..37e6ef19a0b34
->> --- /dev/null
->> +++ b/drivers/soc/qcom/qmi_tmd.c
->> [ ... ]
->> @@ -236,25 +236,54 @@
->>> +/* Notify the remote subsystem of the requested cooling state */
->>> +static int qmi_tmd_send_state_request(struct qmi_tmd *tmd, int state)
->>> +{
->>> +	struct tmd_set_level_resp resp = { 0 };
->>> +	struct tmd_set_level_req req = { 0 };
->>> +	struct qmi_tmd_client *qmi_tmd_cli = tmd->qmi_tmd_cli;
->>> +	struct qmi_txn txn;
->>> +	int ret = 0;
->>> +
->>> +	guard(mutex)(&qmi_tmd_cli->mutex);
->>> +
->>> +	if (!qmi_tmd_cli->connection_active)
->>> +		return 0;
->>
->> [Severity: High]
->> Will returning 0 here without saving the new state to tmd->cur_state cause
->> thermal mitigation updates to be permanently lost?
->>
->> If the thermal core requests a new state while the remote QMI service is
->> down, this returns success but drops the state update. When the service
->> reconnects, qmi_tmd_register() will re-send the old tmd->cur_state to the
->> hardware.
->>
->> Could this leave the hardware running unmitigated while the thermal framework
->> believes it is actively mitigating?
+On 2026/08/04 06:19 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] The ioctl artificially inflates the userspace struct's `size` field on success, creating a memory corruption trap if userspace reuses the struct.
+> - [High] The ioctl unconditionally rejects larger structs with -E2BIG, bypassing standard UAPI zero-checking and encouraging silent input truncation.
+> - [Medium] The KVM_PPC_GET_COMPAT_CAPS ioctl availability is decoupled from its KVM_CAP_PPC_COMPAT_CAPS capability, breaking capability negotiation and bisectability.
+> --
 > 
-> Please address at these comments.
+> --- Patch [1]: [PATCH v6 1/4] KVM: PPC: Introduce KVM_CAP_PPC_COMPAT_CAPS and wire up ioctl ---
+> commit bcf86bb5d3079ca2dbb4bf09693ba6e6a24b06c5
+> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
 > 
-
-thanks, checking these comments. will update on this.
-
->>
->> [ ... ]
->> @@ -298,34 +327,33 @@
->>> +static int qmi_tmd_register(struct qmi_tmd_client *qmi_tmd_cli,
->>> +			    const char *label, u8 max_state)
->>> +{
->>> +	struct device *dev = qmi_tmd_cli->dev;
->>> +	struct qmi_tmd *tmd;
->>> +	int index;
->>> +
->>> +	for (index = 0; index < qmi_tmd_cli->num_tmds; index++) {
->>> +		tmd = &qmi_tmd_cli->tmds[index];
->>> +
->>> +		if (!strncasecmp(tmd->name, label,
->>> +				 QMI_TMD_DEV_ID_LEN_MAX + 1))
->>> +			goto found;
->>> +	}
->>> +
->>> +	dev_dbg(qmi_tmd_cli->dev,
->>> +		"TMD '%s' available in firmware but not specified in DT\n",
->>> +		label);
->>> +	return 0;
->>> +
->>> +found:
->>> +	tmd->max_state = max_state;
->>> +
->>> +	/*
->>> +	 * If the cooling device already exists then the QMI service went away and
->>> +	 * came back. So just make sure the current cooling device state is
->>> +	 * reflected on the remote side and then return.
->>> +	 */
->>> +	if (tmd->cdev)
->>> +		return qmi_tmd_send_state_request(tmd, tmd->cur_state);
->>
->> [Severity: Medium]
->> Is there a race condition between reading tmd->cur_state here and concurrent
->> updates from the thermal core?
->>
->> When the QMI service reconnects, tmd->cur_state is read outside of the
->> qmi_tmd_cli->mutex. If a thermal trip point is crossed concurrently, could
->> the following sequence occur:
->>
->> CPU1: qmi_tmd_register()
->>    reads tmd->cur_state (e.g., state A) locklessly
->>    
->> CPU2: qmi_tmd_set_cur_state()
->>    acquires qmi_tmd_cli->mutex inside qmi_tmd_send_state_request()
->>    sends state B to hardware
->>    updates tmd->cur_state = B
->>    releases mutex
->>    
->> CPU1: qmi_tmd_send_state_request(tmd, state A)
->>    acquires qmi_tmd_cli->mutex
->>    sends stale state A to hardware
->>    reverts tmd->cur_state = A
->>
->> Will this overwrite the new state on the hardware and cause the thermal
->> framework's view of the mitigation state to become desynchronized?
->>
->>> +
->>> +	tmd->cdev = thermal_of_cooling_device_register(dev->of_node, index,
->>> +						       label, tmd, &qmi_tmd_cooling_ops);
->>
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260731-b4-qmi-tmd-v7-0-3befd44403d5@oss.qualcomm.com?part=2
+> KVM: PPC: Introduce KVM_CAP_PPC_COMPAT_CAPS and wire up ioctl
 > 
+> This commit introduces a new capability and ioctl to expose CPU compatibility
+> modes supported by the host processor for nested guests.
+> 
+> > diff --git a/arch/powerpc/kvm/powerpc.c b/arch/powerpc/kvm/powerpc.c
+> > index 00302399fc37b..8d6632c64ca5f 100644
+> > --- a/arch/powerpc/kvm/powerpc.c
+> > +++ b/arch/powerpc/kvm/powerpc.c
+> > @@ -697,6 +697,13 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+> >  			}
+> >  		}
+> >  		break;
+> > +#if defined(CONFIG_KVM_BOOK3S_HV_POSSIBLE)
+> > +	case KVM_CAP_PPC_COMPAT_CAPS:
+> > +		r = 0;
+> > +		if (kvmhv_on_pseries())
+> > +			r = 1;
+> > +		break;
+> 
+> [Severity: Medium]
+> Is this capability check fully aligned with the ioctl's availability?
+> 
+> This check returns 1 on a pseries host using PR KVM (since it misses the
+> hv_enabled check), but the ioctl might fail with -ENOTTY if the backend
+> is missing.
 
+Looking closely, it looks like a good catch. PPC kernels can be built
+both KVM-PR and as well KVM-HV config enabled. Though at one point in
+time only one of kvm-pr and kvm-hv can be loaded, a PR KVM guest on a
+pseries system can see cap=1 but then get -ENOTTY from the ioctl
+(thought the documentation explicitly covers this case: "ENOTTY if the
+backend does not implement the get_compat_caps operation (e.g., on
+non-HV KVM implementations). But anyway, I'll fix in v7:
+
+	case KVM_CAP_PPC_COMPAT_CAPS:
+		r = 0;
+		if (hv_enabled && kvmhv_on_pseries())
+			r = 1;
+		break;
+
+> 
+> Later in the ioctl execution, it succeeds on a bare-metal host using HV KVM
+> (missing the kvmhv_on_pseries() check) even though this capability check
+> would return 0.
+
+On bare-metal, kvmhv_on_pseries() is false (CPU_FTR_HVMODE is set), so
+the cap correctly returns 0 there regardless of hv_enabled. The ioctl is
+only meaningful on pseries (PAPR guests) where KVM acts as L1 under a
+hypervisor, which is why both conditions are required
+
+> 
+> Could this decoupling between the capability and the ioctl availability break
+> capability negotiation for userspace?
+> 
+> > +#endif /* CONFIG_KVM_BOOK3S_HV_POSSIBLE */
+> >  	default:
+> >  		r = 0;
+> >  		break;
+> 
+> [ ... ]
+> 
+> > @@ -2463,6 +2470,70 @@ int kvm_arch_vm_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
+> >  		r = kvm->arch.kvm_ops->svm_off(kvm);
+> >  		break;
+> >  	}
+> > +	case KVM_PPC_GET_COMPAT_CAPS: {
+> > +		struct kvm_ppc_compat_caps host_caps = {};
+> > +		u64 usize;
+> > +
+> > +		/*
+> > +		 * Read the size field first to drive copy_struct_from_user.
+> > +		 * size must be the first field of the struct.
+> > +		 */
+> > +		r = -EFAULT;
+> > +		if (get_user(usize, (__u64 __user *)argp))
+> > +			goto out;
+> > +
+> > +		/*
+> > +		 * Enforce a minimum: reject buffers smaller than the initial
+> > +		 * struct version (VER0). This allows old userspace compiled
+> > +		 * against the original struct to still work on a newer kernel
+> > +		 * that has grown the struct with appended fields.
+> > +		 */
+> > +		r = -EINVAL;
+> > +		if (usize < KVM_PPC_COMPAT_CAPS_SIZE_VER0)
+> > +			goto out;
+> > +
+> > +		/*
+> > +		 * New userspace with a larger struct called an older kernel.
+> > +		 * Write back ksize in host_caps.size so userspace knows which
+> > +		 * older struct to retry with, then fail with -E2BIG.
+> > +		 */
+> > +		if (usize > sizeof(host_caps)) {
+> > +			host_caps.size = sizeof(host_caps);
+> > +			r = -EFAULT;
+> > +			if (put_user(host_caps.size, (__u64 __user *)argp))
+> > +				goto out;
+> > +			r = -E2BIG;
+> > +			goto out;
+> > +		}
+> 
+> [Severity: High]
+> Does explicitly rejecting larger structs here bypass the standard UAPI
+> zero-checking?
+
+The pre-check `usize > sizeof(host_caps)` is required, not a bypass. The
+-E2BIG path writes back ksize so userspace can discover the kernel's
+size and retry explicitly. Userspace that retries with the smaller size
+is making a deliberate choice to use the older interface; the kernel
+cannot have seen the truncated extra fields, so there is nothing
+silently ignored. copy_struct_from_user() itself would also return
+-E2BIG for non-zero trailing bytes — but it cannot be called safely with
+an arbitrary usize against a fixed-size kernel struct.
+
+> 
+> By catching usize > sizeof(host_caps) early and returning -E2BIG, the code
+> bypasses copy_struct_from_user()'s built-in validation which would safely
+> reject non-zero extended fields.
+> 
+> If userspace receives the smaller kernel size and retries by truncating its
+> buffer size, the kernel will only read the truncated portion, silently
+> ignoring any non-zero extended fields that userspace originally provided.
+> 
+> Should this rely on copy_struct_from_user() to safely check zeroed trailing
+> bytes instead?
+> 
+> > +
+> > +		/*
+> > +		 * copy_struct_from_user() handles forward/backward compat:
+> > +		 *   usize == ksize: verbatim copy
+> > +		 *   usize <  ksize: zero-pad trailing (old userspace, new kernel)
+> > +		 */
+> > +		r = copy_struct_from_user(&host_caps, sizeof(host_caps),
+> > +					  argp, usize);
+> > +		if (r)
+> > +			goto out;
+> > +
+> > +		/* Reserved fields must be zero */
+> > +		r = -EINVAL;
+> > +		if (host_caps.flags)
+> > +			goto out;
+> > +
+> > +		r = -ENOTTY;
+> > +		if (!kvm->arch.kvm_ops->get_compat_caps)
+> > +			goto out;
+> > +
+> > +		r = kvm->arch.kvm_ops->get_compat_caps(&host_caps);
+> > +		if (r)
+> > +			goto out;
+> > +
+> > +		host_caps.size = sizeof(host_caps);
+> > +		r = copy_struct_to_user(argp, usize, &host_caps,
+> > +					sizeof(host_caps), NULL);
+> 
+> [Severity: High]
+> Can this artificial size inflation cause an out-of-bounds read/write if
+> userspace reuses the struct?
+> 
+> If an older userspace passes a smaller struct to a newer kernel (where
+> usize < sizeof(host_caps)), the kernel sets host_caps.size to its own larger
+> size. It then copies the smaller usize bytes back, overwriting the userspace
+> size field with the kernel's larger size.
+> 
+> If userspace reuses this struct for a subsequent ioctl call, it will now pass
+> the larger size. The kernel would then read past the end of the originally
+> allocated userspace buffer, and if successful, write back past the end
+> as well.
+
+Not a bug. `copy_struct_to_user(argp, usize, &host_caps,
+sizeof(host_caps), NULL)` copies min(usize, ksize) bytes back to
+userspace. Today usize == ksize == 24, so exactly 24 bytes are written.
+In a future kernel where ksize grows, the function correctly copies only
+usize bytes (old userspace case), meaning userspace sees its own size
+field reflected back — not the kernel's larger size. The kernel sets
+host_caps.size = sizeof(host_caps) in the kernel-side copy so that the
+output `size` field documents the kernel's struct version when it is
+within the copied range, which is the designed semantics for versioned
+structs. No out-of-bounds access occurs.
+
+> 
+> > +		break;
+> > +	}
+> >  	default: {
+> >  		struct kvm *kvm = filp->private_data;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260804180705.59160-1-amachhiw@linux.ibm.com?part=1
