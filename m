@@ -1,176 +1,182 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2487D38B148;
-	Thu,  6 Aug 2026 19:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786044044; cv=none; b=Swn11DM57LEX+F82fi8XkXuuYCz80p0ZB6IUBg1nFb4w/f2owJjFozBAFxn9ua0NIsLYPTUolmyYCNDDRjhHFPJyB3SKMxLUx1vfpOXhNo7gQtHX/L2GbVw3DBoIGPEcuT/V+FPjJai1yNMAbk+Aj9LaGXJfS/Gu69g/xCCmYCY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786044044; c=relaxed/simple;
-	bh=XzpWK+54++jH/Hn91daGUA8raZsZZXmpTvUcgVNp0+s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ppqZThNPZHRmxGodN4RhyBoyfuuy2FyjyTrALKVP9YBHBT40PzHc+pkKDKoAQM7TB+IbH6FGhrjzEGF0ah4UX6rJPVx2xajO15q8sqD0eMPrQ/SXDK8rkWtB4y58yNULM3p20XksX+MBHJ1SlHQT9CuZSKkT48C0m49YXI/MPV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=PHWHLc4Z; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5656F494809
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 19:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786045146; cv=pass; b=mdLcxmabcG7vKRTIztDBJVnJKPTMk8nCgVtm1ZJTmNPuSR+aN6oq3pQ90fzbRinwWm1s8f+nXw/K/IauLTmy1zV6V2CUIi+MJGlbDfdA+IxeHwEyD5Icx9CuIW8d82poO4jnozjixRus3CHqb97zWwb8CXqmGtGJQwfWpoqPGJ4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786045146; c=relaxed/simple;
+	bh=pZsRu4bih/fOebs02+cyeryB8ah9q5y2Gx6ty4QhO3E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jMsVjLwHh6X8lbe/lVIFeaukmP2jlZVvb/i4LjMS6b5Alqi649IYPoQZgsSDZvpsPxKoaN1KFnZumHODnxqdLXYVVhywsXrtkVECjimKp0uUMEyr9utzsB6kx5FTTymIM5TxpUIR4rIMIzSlHwCG09d/OyTzze1S9BAolezSc2w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFl521B5; arc=pass smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="PHWHLc4Z"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676IHh8f3328432;
-	Thu, 6 Aug 2026 19:20:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=903dPF
-	hGzSSWDSTGFgCfauO8AxDFdO0mRUx8+CuMn68=; b=PHWHLc4ZLZ9T61z+1RXHHh
-	NMwOjlBMGWAPNFzD627TOox2z9O8HTn2ig/ilizjfwJgFsDlIvuonx0O6YM1CkVo
-	uuNojLaj2aj4/bCrAZ/murgkI5qTdtZEMWZR/FXOCh5XO7n6AlumLT0146J0Sz8Q
-	/EzM+ortkB9UC88kATQblLaPiWkVgkAwkdg8C8f6ombU9WqT158rZYKUA9CVkBl8
-	9l5eGHTvSzE1hiFhb+jcdNdeyytxzP/BMDSrDNf4CI40jUUU6bIHT7fd6afzglNK
-	uP1Cx5E/bIOZNoOtPJzgeBsDDtvY3iTZx7/heWiwnCJPnYxBR5xCyqDHymPr+TnA
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fvy020cru-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Aug 2026 19:20:40 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 676JBLI0025472;
-	Thu, 6 Aug 2026 19:20:40 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsvmhmj2t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Aug 2026 19:20:40 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 676JK1lG29622992
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 6 Aug 2026 19:20:01 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 74C3258051;
-	Thu,  6 Aug 2026 19:20:38 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C1A1B5805C;
-	Thu,  6 Aug 2026 19:20:37 +0000 (GMT)
-Received: from [9.61.80.66] (unknown [9.61.80.66])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu,  6 Aug 2026 19:20:37 +0000 (GMT)
-Message-ID: <b4f1436e-a1a4-4632-ac2c-6020a857d20d@linux.ibm.com>
-Date: Thu, 6 Aug 2026 15:20:37 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFl521B5"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-51c0c45c580so15988461cf.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 12:39:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786045144; cv=none;
+        d=google.com; s=arc-20260327;
+        b=AkKXwi8IYfuW5xzcFu3/INnFu5GxQVBWYmtzqdIv2PGPcMmze+VCJ238EULpzN1vTC
+         bL6SR2rTeKUxMPpw5ZSvUE+/iiPJdrE6sRNhk/9eNnMIl/qsTLNoxeS10b3FrF+CGcB7
+         7Hv9YqbEzJZ1Id313HN3rnRhjV2gpl2oaxczxcOnlS7HGhrPScvmzCfI6D7+OoWke7bu
+         qEZs1l/fPVz/QzDXY1TjPCTz+MB9s7NLkBWgkX6MigmdX1DgUbwhTn2ThZ5ZUAo5kMq6
+         8Q/rfPDpR9Ew/4nK9IxPvxssXrOUS5O54e+4T0BJLwiRdBuJ4TPd6ffqXrQx2sriwuGU
+         mAig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
+        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
+        b=Mcj6Yxc+leG8DGxWg8BbWWa0UskniI8cKeW/xKKUdmQDxQ1ExQiJWYdF6bL0Wkivws
+         iV8o7EbDEvTH7m1Irq4p8deI4ZsiFGlodwT667mfgmVHLTM3wlyoImstTuoW8NQRFDmb
+         dIJMvNsJZ+iuX1jy+P0lz85jqIRCWFHIerf2nLjSxTM4QSjjLNSDET06nzb7VZnj96Sp
+         rqvMIpD5GvVorqatT9IpPYoW8nxVVSjB8rFkkhisLSqnJR1D5gAya8mn0z1csdhGNuID
+         gJbeugLaBvj2ZT54cq5yzyuG5uuucV7T8wqD9GqujqN6LoqDLVwjhUb/mSvoIuvNsYXU
+         MPAw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786045144; x=1786649944; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
+        b=CFl521B5PSWUSS2aTv228p+U/8EtSwjEtqK//7Rf1CbzM+unbV6l66BXSbbW89VgQz
+         7dlQx1jWAzoazy9bvTLYwlgJH3xQPZETpA5k60qbSst2CZgikYjN1rhYBHgkkylLqOtx
+         mSDBS6ybU4FFAtaPZzIDkbc7o8xbBHInX525EpVTMarLw1qNJ3rPtqfYq8wZJ5BDVof9
+         y1qw0F6mBkuTf9hqFAOysSHltJp3R8CjJd7vqL+A7qOsc1KsZF8IwxPLZX1hQxc3SHHh
+         Q2Xa5DT+fPVr715MnvBZWm63Hq00vPpY93HohNSoNduM9oFAU7oJMZmu8dlvyNlvIx/H
+         XrWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786045144; x=1786649944;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
+        b=bSKxnlZExXxHGh4poNsyXZRnRbrLpcRP9goRS69JAyBH7DLvO3rmmsvLOUweVySkea
+         34DFzTPD9b1aqtYE+S+2SeG1cZh8qDy7bcJFwj6LqRm9jFvtE/ItzxiTnRQyQ6hBu9oK
+         0oa/gyQHPILvi8LLhdfZqbg2KzJkOOoQSf3TIztO4PX8N0QSLHr8yq1Cx6IId/rLYJ7q
+         lQJn+hAarIYB+COs+Jj+JI9sBGcBKjQ5eScmUpkzk1p+F6V7B4xhDPt3KiDBAebPbr72
+         f0flN/xLRGloAjwgT9a8aj/gHTv2d/fxwHtzxJaRRivflJbI7ZMU2hR55WFpiQBD3XYb
+         kNkg==
+X-Gm-Message-State: AOJu0YyLCgcUhmqub2bq8bEv/9CWoIi8BWZseVQbHgdTnso/2+i4hl0+
+	louFBNOjDrPpDYpKSZ2OZYUH2O0y/068trV81aEJVXdGys6ibE1zsuvZRWhhDFr/XWzRGbQDjvU
+	6qPsoh4oQZqprBBZPKz1BaIl+rn7NAyLUQUEAdXc=
+X-Gm-Gg: AR+sD11YIXbJom+VI9hfGG5XdxCVWqdMjQ6r0vkuKeCN3tFacZ0sbtq3wTZgJIm40gM
+	v5CKNu53GC8D2t0Q+xE/96GFWZJSIaIJeCE/Sj68tAYm4XCsY/q5kKtA5NGw+/wE6zkkzTvlONI
+	/HPPGdnJpRrv161+yWIU7ccayZrMglV7AoE8CQULg+4RD90yeedFv9hnIhykiSaWxAy2HByKDKu
+	MTPCkvV9wgbSKFik2XCsaAzMFo2gtLC8Ztq/l2KbZ4tkJqJtvheqgSJ+a/C66m3O7u2iB2GVKJh
+	pGFmb6o7tUbyWNpEwwBlqS7inl0FEXNdXr4rQJgxKb3WLg==
+X-Received: by 2002:a05:622a:411:b0:51c:e14:87a7 with SMTP id
+ d75a77b69052e-52ce60e900cmr177493651cf.28.1786045144090; Thu, 06 Aug 2026
+ 12:39:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] s390/vfio-ap: fix stale pqap_hook pointer on error in
- vfio_ap_mdev_set_kvm()
+References: <20260806190439.12022-1-derekjohn.clark@gmail.com> <20260806191942.39B691F000E9@smtp.kernel.org>
+In-Reply-To: <20260806191942.39B691F000E9@smtp.kernel.org>
+From: Derek John Clark <derekjohn.clark@gmail.com>
+Date: Thu, 6 Aug 2026 12:38:52 -0700
+X-Gm-Features: AUfX_mz1my3wgtPNVK9lIPUcA32hoZSI-uH2kaE1mQFxmSM0blLQR-HhSyV2W4A
+Message-ID: <CAFqHKTk47MvjVvijt_JKH53pMmaNMWSGvU9QkTuj6zJ7XHhnXQ@mail.gmail.com>
+Subject: Re: [PATCH] pci: quirks: Disable native PCIe hotplug on MSI Claw A8
+ root bridge
 To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20260806173435.105044-1-akrowiak@linux.ibm.com>
- <20260806175651.C01F01F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260806175651.C01F01F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: xlQpqdsSjNB9CED-jtmSPHgVuEXKTwE8
-X-Authority-Analysis: v=2.4 cv=e5k2j6p/ c=1 sm=1 tr=0 ts=6a74de88 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=RVB5ZjYeXRyjgiCplOgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: xlQpqdsSjNB9CED-jtmSPHgVuEXKTwE8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDE1MSBTYWx0ZWRfX6wayXWIcgJls
- 1ptK/Z5ii4bO3pVlTc80AYV0Hgq0gf7bSGjSlCQlPnGKr3NzIMhCsritaCgvxE7dxSPdw0eiLfg
- K3Taxxi1+L8YHpG5DOvBqKabDNZUfQ8GneDcZaI4Ha84i8h9/YfFBvDsLF+tPiBaxC7nigqjM5z
- AoYkU0PAnsxE4giU6NcgvOnNS/nZ6nDGyJW3sJZ2TOOOwDrntiKH9DPljU8CnJ27ejiALBIH7TG
- /12x3GLL8WswN30bpJOSV/XQEQtoT3kcz3cJ03YO3QwpgQr9gqetXYeTdzvjOjpR1gQANxBPnXg
- ZFqZStxQfZnZNUukO6Sa+jkDfrGPoDtC5ifV+XDbuywDj7XfKygweC+kWtnOYLYP2Sbj6FFDIo7
- S5dpaySEtbq5eu2KB88pYAS4w3AabIVJCA9F55A0O/zqlYnNHMXMOttVLm8MpK+9/4G+7pBBOGd
- hsHjxSwad5/ZRAGndBg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDE1MSBTYWx0ZWRfXwcynspDTsYJG
- /JA3EjK5iZ6gxh9eI/AR/pWd5TYlyFa9H7WvgawQi5MZvzdEkgCgFfPCDDk4S9xOGUWR/WHxbBz
- QtId9i5lhCrEUf8oF3+AgUa9THwNeKo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-06_02,2026-08-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 priorityscore=1501 adultscore=0 phishscore=0
- clxscore=1015 malwarescore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060151
+Cc: linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 8/6/26 1:56 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Thu, Aug 6, 2026 at 12:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Pre-existing issues:
-> - [High] Unconditional dereference of `matrix_mdev->kvm` when handling host AP configuration changes.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The quirk disables native PCIe hotplug on the shared host bridge=
+ rather than specifically for the target root port, which breaks hotplug fu=
+nctionality for dynamically enumerated Thunderbolt/USB4 devices system-wide=
+.
 > --
 >
-> --- Patch [1]: [PATCH v5] s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm() ---
-> commit ea70bf8efc92cb332a90ca640bf9deec142d0044
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm()
+> --- Patch [1]: [PATCH] pci: quirks: Disable native PCIe hotplug on MSI Cl=
+aw A8 root bridge ---
+> commit 841400e3b6d906dff0f94738835128127178d2e6
+> Author: Derek J. Clark <derekjohn.clark@gmail.com>
 >
-> This commit fixes a stale pointer use-after-free issue when another mdev is
-> already attached to a KVM instance. It avoids iterating the mdev_list under
-> the mdevs_lock by changing the rwsem lock order and checking if
-> kvm->arch.crypto.pqap_hook is already set.
+> pci: quirks: Disable native PCIe hotplug on MSI Claw A8 root bridge
 >
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 44b3a1dcc1b36..99a0efd999ef9 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+> This commit adds a quirk for the MSI Claw A8 to prevent s2idle resume fai=
+lures
+> caused by the Realtek card reader. It disables native PCIe hotplug on the=
+ host
+> bridge when the specific root port is found.
+>
+> > diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> > --- a/drivers/pci/quirks.c
+> > +++ b/drivers/pci/quirks.c
+>
 > [ ... ]
->> @@ -1883,18 +1881,15 @@ static void vfio_ap_mdev_unset_kvm(struct ap_matrix_mdev *matrix_mdev)
->>   	struct kvm *kvm = matrix_mdev->kvm;
->>   
->>   	if (kvm && kvm->arch.crypto.crycbd) {
->> -		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
->> -		kvm->arch.crypto.pqap_hook = NULL;
->> -		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
->> -
->>   		get_update_locks_for_kvm(kvm);
->> +		kvm->arch.crypto.pqap_hook = NULL;
->>   
->>   		kvm_arch_crypto_clear_masks(kvm);
->>   		vfio_ap_mdev_reset_queues(matrix_mdev);
->> -		kvm_put_kvm(kvm);
->>   		matrix_mdev->kvm = NULL;
+>
+> > +static void quirk_claw_a8_no_native_hotplug(struct pci_dev *pdev)
+> > +{
+> > +     struct pci_host_bridge *bridge;
+> > +
+> > +     if (!dmi_match(DMI_BOARD_NAME, "MS-1T8K"))
+> > +             return;
+> > +
+> > +     if (pdev->bus->number !=3D 0 ||
+> > +         PCI_SLOT(pdev->devfn) !=3D 2 ||
+> > +         PCI_FUNC(pdev->devfn) !=3D 2)
+> > +             return;
+> > +
+> > +     bridge =3D pci_find_host_bridge(pdev->bus);
+> > +     if (!bridge)
+> > +             return;
+> > +     dev_info(&pdev->dev, "disabling native PCIe hotplug\n");
+> > +     bridge->native_pcie_hotplug =3D false;
+>
 > [Severity: High]
-> This is a pre-existing issue, but can unattached mdevs cause a crash during
-> host AP configuration changes?
+> Does setting bridge->native_pcie_hotplug =3D false here break hotplug
+> functionality for dynamically enumerated Thunderbolt/USB4 devices on this
+> system?
 >
-> If an mdev is created but not attached to a guest (meaning matrix_mdev->kvm
-> is NULL), and a host AP config change occurs, vfio_ap_on_cfg_changed()
-> eventually triggers vfio_ap_mdev_cfg_remove():
+> Because the pci_host_bridge is a shared structure, modifying it globally
+> prevents the pciehp driver from claiming any hotplug-capable PCIe port un=
+der
+> that domain. While this might be the only fixed slot reporting HotPlug+ d=
+uring
+> boot, downstream ports on dynamically hot-plugged PCIe switches (like
+> Thunderbolt docks, eGPUs, or NVMe enclosures) rely on the host bridge's n=
+ative
+> hotplug capability to function.
 >
-> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_cfg_remove() {
->      ...
-> 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
-> 		mutex_lock(&matrix_mdev->kvm->lock);
->      ...
-> }
+> Would it be safer to clear pdev->is_pciehp and pdev->is_hotplug_bridge on=
+ the
+> specific root port instead of modifying the shared host bridge?
 >
-> Will this unconditionally dereference matrix_mdev->kvm and cause a panic
-> since it isn't checked for NULL?  A similar path exists in
-> vfio_ap_mdev_hot_plug_cfg() as well.
 
-This was responded to for the same review comment in v4 of this patch.
-A separate patch is forthcoming with a fix for this.
+Hi robot, and any humans reading this,
 
+This identified something I missed when scoping the patch. The two USB
+ports on top of the unit are USB4/TB capable and are affected by the
+root bridge quirk. In a previous version of the patch I did try
+pdev->is_hotplug_bridge =3D false to no effect, but was not aware of
+pdev->is_pciehp. I will try with both and see if that resolves it at
+the lower scope.
+
+Thanks,
+Derek
+
+> > +}
+> > +DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, 0x150b,
+> > +                      quirk_claw_a8_no_native_hotplug);
 >
->>   
->>   		release_update_locks_for_kvm(kvm);
->> +		kvm_put_kvm(kvm);
->>   	}
->>   }
-
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260806190439.12=
+022-1-derekjohn.clark@gmail.com?part=3D1
