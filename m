@@ -1,282 +1,180 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010009.outbound.protection.outlook.com [52.101.69.9])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03CC478865;
-	Thu,  6 Aug 2026 16:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786032499; cv=fail; b=bXrD6bP8o+UpH9Q19N02HzNo4VhprQ3utB5T5zgR34HMdcHH4sYcBPCOFHW3bpufzlPcM4VP3qsE1ViOR0MG46vP8/CeYPxK93lL6nkaGgd0iHmuEljqGN3PyVxwjR/tT8ySO3e7KX6GGZ6/3gE1/kuCy71jD8pUb6szohL9SIQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786032499; c=relaxed/simple;
-	bh=gHZtJaPfbx7kwCbx5WBe61mR5FU65oB9IOAZyF5GTdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=FIYWzRdd0R3fWIGguLCbMcy1Jb12sn4LlbniWCptta9wP7/+JMRq86bn8mbfDLJz7braI9ri0rbAgq3DwdgpXoh7aPDzxJymyU/NWyYhst4TzIte3LFlRyC4o+r07XC/u0/qoqZNu7gusTz8B+YNcvsDqWDo5mn+QO9dwf/9ntg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=OHYspa1f reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37148329E5A;
+	Thu,  6 Aug 2026 16:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786032546; cv=none; b=hXzUeEmooqSVhMNnRvAbWeQlRWEndLY/qRe5amPEHlenSdE1rkhcalvPWQ9ZzGW3T3rKmHwO71mRRZAG/cLKIZISxFpxphCaQXBgJ7XJZw1GEEe2zzEiNh0qx7HHFdwg3axa6FkoYmwCaZYVtbvYVIlFhidWBJtM4IggAhg4vXo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786032546; c=relaxed/simple;
+	bh=rfrsYd7q9l+0ULV1cCIYgZsbhYijyiaPYX+e0gKYFDk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EEOBEg0YtZLG9r050lmn5EuGD6+YMDXa8m/GrFRYTPRcgucXHhRzu7y0fl7mE8x0fPXVpuvbyzsnWsecgUH/C5fR+tk8ROzd3AFgfAocnz59GAIrW9EfTt52fqI+gxyLETjrPS7o9jaJ8ZWHAaCYiZlhUKa1OXsXZ4c9SvdNxQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=BfG6YfXn; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="OHYspa1f"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zPpl1P5/pqowz54HBsEyeR5Jif6hofADaYmf135XT7sMPU9HDYfwli3VnX7NME547dydHGgKRoTg2zvHHZJr9pE5XSzQj1stRYfGcH+esiNquSnpOjNCFzmekklVvcZL7TGgHw6yPOAYrhXyu/mreskUa5NEgORTPjUP8q2iEJBIPu4B5e49vAO5rcOjU9QH3C0nDWvpMXOZ+7vmxW2EFHWi9H+W0l+pqyOr+NmcB/ioeopRD3AoK6r1SUIpfWBK2TeOE4Q83BqgzG3ayscBX2MDMC1RRMKKhu4aqN8zQydn68XWVJ+AOLJ7y+9tm6+SxCz0JwJb3h4O0+ezzE0HGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h+dZ6FFnp5BWziFpM6x84pHwMPVY9mXeh5pu546du+g=;
- b=rqvcVUUV0Cy/zfUN9SZIfE12Y/lhoEfnuJHZVzR2CdvKGxlHy1bC1Vr7icrZhieCYkogm/TYB/icLEB1Ae9QVCtU6Sd2plpX8R2FdWVNhl5GR35bboI50vQGOS3XhsRKkR2kHrAahT4FAev0ARbhQC2eaMtFzQiPf/09THD8fvdlHeUtgx8dE8BhEyqNJH7alJHVNVdeSl7PwPqXEf0z7Nk+hPvqkSYQ2Hez1cWIJKW+yF46bwUGNH8XpBIJ5URXqq1XSNeE3dsLJmeKyfPPxmD2xVvUWcOzjLtzZkR95ldbznxY0Zh4M4lu9k8lVC6QcmITvzhTR+CBIW5w4A5cSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h+dZ6FFnp5BWziFpM6x84pHwMPVY9mXeh5pu546du+g=;
- b=OHYspa1fKh3qk+0TtahmYnggdXKyR3Maxjv33tGjT3XTSJ35cNXPJlnmZ7x3bdIy1TfSL+QpgO9kInOYDHVCSp3i/SgQ13P9sr4I47CUbd4J0q8IZexYczfYego9J5FyTb3+odMQ7IrXUTrMN3dLn/h2c+gZjB/L1/E7DpgkEteTAaiSR3TJzPm3BfouAXqqLVgxTmw0RN7qKjgnvtCKlSzo9J/4niZYPY9p1XKssY5GQwGi31e5/fU/vACRu6c63s+E4LPOROvKNlNUw0HIa6R5AfTTS5m+6z65WdRcTJ9sYrHfT1qAePrcec+la9PTXuRpUgklHdRrDaKOJ5uVMQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM9PR04MB8148.eurprd04.prod.outlook.com (2603:10a6:20b:3e9::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Thu, 6 Aug
- 2026 16:08:14 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Thu, 6 Aug 2026
- 16:08:14 +0000
-Date: Thu, 6 Aug 2026 11:08:07 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="BfG6YfXn"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676En3aT2939433;
+	Thu, 6 Aug 2026 16:09:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=qa2KKS
+	vNuRRAesQ8kVn7IlzgkVkNpaGabQEsrklyW34=; b=BfG6YfXnXlaWkJ7jKrbjhk
+	uOJiBglnRlxbt90a6/8fNrdyUuoLcsv7eYXn7rw7NmfI7sEWm6gCCH1JOnPLChd0
+	SDejII9BWAzvKXis+AWT4OdznvGVFp0ozATwas3Op5EUAJblrbmihvXVSmyoLDIJ
+	RhblW9HQ6OUWLa5E8iq1MoiOCg6+0jbWxYI0X/iyaYP11yhdfZ36H2BeeRU/rZqY
+	0U8SoEmI1I4Z6RyvlGeKp77vEGVX/uUMh6k5rSAXyHJ3oN0UjutP4oYoHRAPgxwF
+	P/KoEOtMl7ZeuslQ7ZPuQE+vvxWGdPj03cFuFrzI2LRItbdD6WtiyOQhFoVv13pQ
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8a495xd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 16:09:04 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 676FuNOr031347;
+	Thu, 6 Aug 2026 16:09:03 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsugwbyxa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 16:09:02 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 676G8xuR31457738
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 6 Aug 2026 16:08:59 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 10F8D20043;
+	Thu,  6 Aug 2026 16:08:59 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3432D20040;
+	Thu,  6 Aug 2026 16:08:58 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu,  6 Aug 2026 16:08:58 +0000 (GMT)
+Date: Thu, 6 Aug 2026 21:39:47 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: pankaj.gupta@oss.nxp.com, Frank.Li@kernel.org, conor+dt@kernel.org,
-	robh@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v35 3/7] firmware: imx: add driver for NXP EdgeLock
- Enclave
-Message-ID: <anSxZxLFoybigjZ8@SMW015318>
-References: <20260806-imx-se-if-v35-0-11b25bb308ef@nxp.com>
- <20260806-imx-se-if-v35-3-11b25bb308ef@nxp.com>
- <20260806111724.61CEE1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260806111724.61CEE1F00A3A@smtp.kernel.org>
-X-ClientProxiedBy: PH5P222CA0010.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:34b::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v6 2/4] KVM: PPC: Book3S HV: Implement compat CPU
+ capability retrieval for KVM on PowerVM
+Message-ID: <20260806213926.140b3346-a3-amachhiw@linux.ibm.com>
+Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260804180705.59160-1-amachhiw@linux.ibm.com>
+ <20260804180705.59160-3-amachhiw@linux.ibm.com>
+ <20260804182156.62D511F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8148:EE_
-X-MS-Office365-Filtering-Correlation-Id: 97591e16-7ed0-4b41-da8b-08def3d4eb88
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|19092799006|1800799024|376014|5023799004|11063799006|56012099006|10067099003|6133799003|18002099003|3023799007|22082099003|4143699003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	KWGkxyoxHdVBmJEVGdjfXRCEAJ/2hx0hZWMLny3QW+dy7Si6WDhzUy3ME9v19Bth0mcMWYEq6jNnkPwICswlEdR10NkiG/BrD3AKSKlDbOdeY9g9B1IvWLEc8sWth3H6jgvXxKABPp6aURV5a/D53W9cpyOnDA7AnfE55nMnU33p0R8sqA7dovQi4y7HhBCeL3wiYBPDzzpiTiytbeEArx/RevqUNqFFC44KX1TF08zEp7B1EbjxK69LiORehVXVW5zw4SelJf9gAI4818whJa/rXrThjezu2oY6VZ1CIUwqZ7dq4dk90GsAtgWiyFtO16BrmK7hYV1PsKwLEWx3vQCj/pCuRdhgrG0Z4fWE5xsDmW6RGlHcpUaRV16h+/KTL2019oaghK79HV4eb8Ep26Y0gEeTIf3/A1RBG5IuVvfwPga00LakOAg1BKroAr3F4EBbhITdapZod4eaVnV5HpK0tS4PLSKILQK6AsDluI2DFoTHVY7rNOXMzyo2jh1/3zRTeKDcbCjghCdHmkTmk1db8Ml+EQVn/xwYAIzy1GVjcHuS4MXHo6Eaa5j1gOvY9AeSlcYwaD7OlMuYi2lX5Wo5gTdwfpAzmG7ESgiQ7R4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(19092799006)(1800799024)(376014)(5023799004)(11063799006)(56012099006)(10067099003)(6133799003)(18002099003)(3023799007)(22082099003)(4143699003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?FJ5DrSMyJwKKPGOjMRZUEdFk3io0aPZnmu/ebLLpCIpHbpHqV2vnyxGNjE?=
- =?iso-8859-1?Q?l5AGRxDuPhAm180dExEy8a3/ZMKAsBCOuIIqVv4oi6docTvZLVIgsm5OXN?=
- =?iso-8859-1?Q?QFiRo0PEzTURtMD5c2Yuay9IfIjUDw0aFM1M7RSSBZAmy2/EtrxJQljmoO?=
- =?iso-8859-1?Q?zZoqQWAP05e0/PW5Agi5Gt8T9pzrOviizIZK1Fe/HilStOU32uhzXNDmpJ?=
- =?iso-8859-1?Q?zUtwgA65pKE7peOb3WEYAtqc5gELp52hGgJbAHAVZS1E1bK51Fes/V0tAj?=
- =?iso-8859-1?Q?oYmKQoLtp7NmsQGHdxQrteTGd6605uAsjgVG9gjVs04fKNuP2/0xZiNc/6?=
- =?iso-8859-1?Q?AtuCqjGBq+7bLnpR411617TqJ7ZgHN428V8GnKtpUB5Rjjp2HJthynlFMd?=
- =?iso-8859-1?Q?EPvYViMKrw5kzVrtPnBBI9z97KlyH5xh9h4qputn3OBnmUmsRUvsEtn802?=
- =?iso-8859-1?Q?dd6MWs6aLnSshFaj2U3ucRT3WT9Gu7u2UhjpyD3qxOhUUwHm90r6FdDj2w?=
- =?iso-8859-1?Q?v9dWl6XD1JvbwAb9CpBtW6WS4WS5UkJ4BQ3+tSoRAxYrtjeys36a8P5TnA?=
- =?iso-8859-1?Q?gM9QSWgy2MkwCisHxYEVFhiv9W3xpimUKE+ajSecTks2Rh9fS0CP5uWh93?=
- =?iso-8859-1?Q?AvPrTZuviXtGXfUT/r2Gf1YEjqviEr4gJ4KcQlrH+8IfRAMXI5O0rg56k3?=
- =?iso-8859-1?Q?WGD5LqCDwNAlKp+4IVvYWz6Nefm2izb9z/VrATsvX9GsoCZBciROcC6Pbw?=
- =?iso-8859-1?Q?woHzRp24SdFeEY+mRkTtUdsGh/CM6nE06v/P2XoB9bOHw18Et7d+2rjmaD?=
- =?iso-8859-1?Q?MjmqywW3QIpVBu7wKyrPuZgxSEPl2PPsKQCsDK9JF41yndvFlyLLR4mUqi?=
- =?iso-8859-1?Q?6v2LwbGn/1yQPpGJnB20nRBs1PQW4AH3kQ5ASZEOWUMoYLRKTNPLeF3Mil?=
- =?iso-8859-1?Q?ZmNcnneIwyz7x8PC0zE2vyXFP5QUiJ5iTmRturOi4oL0s73kt/mxmJiEis?=
- =?iso-8859-1?Q?wGq8GW5mi+EijxXkIle89U3zNxcAI/UfFREi+OrTPYEOgixw660iyHIQDk?=
- =?iso-8859-1?Q?UBMpDY/NDLGDV/nsbCodq+TH/KdVCtHxQgM08QNxerlNp11Rp2xfYgE59R?=
- =?iso-8859-1?Q?bMrelBmvoa44xQeEiqArBAaIuhcDxsECvmaHpH3ikTtXV8aY8091g4w4LS?=
- =?iso-8859-1?Q?013FgG7BG43JRBqSL8EVaV2vgfKZMeoBRmOAi0pGO8R5sTU3wXjBa3b5b/?=
- =?iso-8859-1?Q?XT12OxcTEdQwY3789vFC/7+6haB1wmGbC0wN9MudVRd3eEhbza3wyHSVXF?=
- =?iso-8859-1?Q?Gqi0RO/ViZXATvfB2S98pvQQ0cYImqMbhI4vJH3lyJQ0SLQXDT+2cOE2E+?=
- =?iso-8859-1?Q?2wLnd3YqQI5dLU37V7hTEqZCl5L2CzGh6nCQtBxsbvKl7ekK4vWnTHsllj?=
- =?iso-8859-1?Q?cvmwkBWdczWHxequw1bnysnZxfTXLssknldipPOp8Snb9NzZv8TsKwQcVK?=
- =?iso-8859-1?Q?7Xx/0vBsRbdHLhZlOMooYew9G1frzABi5c7fx57OW3vV2YPzaCWpkJkPcK?=
- =?iso-8859-1?Q?9G3yZQMZOclCpiU0oD/UxBtcQ2FkD8j2bawd1gVFo/KFvQXb2JQmzZqtUo?=
- =?iso-8859-1?Q?tOiswbnks+yntvnYjwOeV0vMzCuBL97z/pzdc7BeEAd0oOmkeekM+41RYX?=
- =?iso-8859-1?Q?4NBgmUKRKTcS2p6wlXIoaegXYe+Ex3xAIV2a8FLNlSzzp/hpiauZBBIQn6?=
- =?iso-8859-1?Q?7RWweQx+bflhLKYS/a2OpbrqC4Ba4aD82DXOh0GgWzM1TLD19t53bZM549?=
- =?iso-8859-1?Q?IdLfGjNLOqA1rJS0LuavCHcg6LzBfbEyvLA4QLUV/lPD9P0tO/H3?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97591e16-7ed0-4b41-da8b-08def3d4eb88
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Aug 2026 16:08:14.6674
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TWVo5oIn+IEvn1TAVLSSb7gqwIxEBaFSlQwEiU/HrY4TB/wUhyPVyS+o4WALZvfTKSxVsurKuQBLRlr8THsYMaY9zXs8Gtl2c7ZnOxskwXCsjjrhfUgITNDkgA5sBT4t
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8148
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260804182156.62D511F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E6P9Y6dl c=1 sm=1 tr=0 ts=6a74b1a0 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=Ha8nLlLPPlwXYc-YV0sA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: zEK8XSC7g_4O6NR5gUkYQ1dlLDFgnSYQ
+X-Proofpoint-GUID: zEK8XSC7g_4O6NR5gUkYQ1dlLDFgnSYQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX7DQ2keNJjhMU
+ FmTzVAJNWYiNSnW1FDpNEeDJNi2mCPYW5wWeervl1hebg7VwlVxvkBPxkZcgv9UAsUkjA/caxGu
+ Y6sC7vHRYBUEtkxgS34V6DH8H12nGus=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX8j4h2zOGeEqk
+ mKe+lXyaEQ5UVrlO1oRG1zaGC/4/7m+P8w3Df2vpaQDLBx6xTVF7oDYCofpWFm6+e0mPCfKKrh8
+ n3VhQKO/TtprMXzP359e0mXeQf1vIFAL9Hjx6N+OEvCTrYOtjR0/MdlH7Dtz24n2MNhUHR06eGg
+ eX0RJFjG1P9xzfzVHzDk/Z3tVJal4ukH8B2xLknfNOFIp/svt8MUHCarHFNq3OtN020/mtFH/QD
+ x3C4bkqV2tOgs1I/rLy52cBDWzJbBmIHqgiPo6mj7/y5tM+C8WyEjfHcx/qXCTzM4HzVNrlBBtZ
+ DCRmus3Vay3f+OciREqd4jCluE1g5/gQN3wUI5FewOn9GNJaZJEyXVzEdysGrf22gyN91TNqGGZ
+ RNuzcdGVBf2myE/I2La3vfc30mGHQr1857//t7HWlEX8oLjP9xNbpZP6z+ZO5gq72o/zN2FZWPU
+ cRJ8RB+SSQItZALtkgQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-06_01,2026-08-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608060122
 
-On Thu, Aug 06, 2026 at 11:17:23AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] The DMA buffer used for get_info is freed prematurely upon a timeout, allowing the enclave firmware to corrupt memory when it completes the transaction.
-> - [High] Allocating memory with GFP_KERNEL during the PM suspend/resume phases can cause system deadlocks.
-> - [Medium] A successfully completed firmware command is incorrectly reported as interrupted (-ERESTARTSYS), introducing a replay vulnerability.
-> - [Medium] se_restore_imem_state() ignores validation failure and returns success even if the IMEM state is bad.
-> - [Medium] Multi-byte fields in struct dev_info are populated via DMA by little-endian hardware but are accessed as native integers by the driver.
+On 2026/08/04 06:21 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Mismatch between KVM_CAP_PPC_COMPAT_CAPS advertisement and ioctl implementation for unsupported environments.
 > --
->
-> --- Patch [3]: [PATCH v35 3/7] firmware: imx: add driver for NXP EdgeLock Enclave ---
-> commit 357109d983ad738d0dc813242f9d555c6b2d561c
-> Author: Pankaj Gupta <pankaj.gupta@nxp.com>
->
-> firmware: imx: add driver for NXP EdgeLock Enclave
->
-> This commit adds the MU-based communication interface for the NXP EdgeLock
-> secure enclave, enabling messaging between the Linux kernel and the enclave
-> firmware on i.MX SoC platforms.
->
-> Link: https://sashiko.dev/#/patchset/20260121-imx-se-if-v32-0-c5222df51cc2@nxp.com?part=3
->
-> > --- /dev/null
-> > +++ b/drivers/firmware/imx/ele_base_msg.c
+> 
+> --- Patch [2]: [PATCH v6 2/4] KVM: PPC: Book3S HV: Implement compat CPU capability retrieval for KVM on PowerVM ---
+> commit 8305652489744988576b7fa55e0424452c48a633
+> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
+> 
+> KVM: PPC: Book3S HV: Implement compat CPU capability retrieval for KVM on PowerVM
+>     
+> This commit adds support for retrieving host CPU compatibility capabilities
+> for nested guests on PowerVM. The capability bitmap is retrieved from the
+> cached nested_capabilities value and exposed through the new
+> KVM_PPC_GET_COMPAT_CAPS ioctl.
+> 
+> > diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+> > index 61dbeea317f3b..8799124b80960 100644
+> > --- a/arch/powerpc/kvm/book3s_hv.c
+> > +++ b/arch/powerpc/kvm/book3s_hv.c
+> 
 > [ ... ]
-> > +static void ele_get_info_cleanup(struct se_if_priv *priv, u32 *buf, dma_addr_t d_addr,
-> > +				 size_t size)
-> > +{
-> > +	if (priv->mem_pool)
-> > +		gen_pool_free(priv->mem_pool, (unsigned long)buf, size);
-> > +	else
-> > +		dma_free_coherent(priv->dev, size, buf, d_addr);
-> > +}
->
-> [Severity: High]
-> If the ele_msg_send_rcv() transaction times out, the hardware might still
-> process the command and DMA the response payload later. Since this cleanup
-> function unconditionally frees the DMA buffer back to the pool or system,
-> could a delayed hardware response silently corrupt whatever kernel data is
-> subsequently allocated at this physical address?
->
-> [ ... ]
-> > +int ele_get_info(struct se_if_priv *priv, struct ele_dev_info *s_info)
-> > +{
-> > +	dma_addr_t get_info_addr = 0;
-> > +	void *get_info_data = NULL;
-> > +	u32 get_info_len;
-> > +	int ret = 0;
+> 
+> > @@ -6510,6 +6510,25 @@ static bool kvmppc_hash_v3_possible(void)
+> >  	return true;
+> >  }
+> >  
 > > +
-> > +	if (!priv)
-> > +		return -EINVAL;
-> > +
-> > +	memset(s_info, 0x0, sizeof(*s_info));
-> > +
-> > +	struct se_api_msg *tx_msg __free(kfree) =
-> > +		kzalloc(ELE_GET_INFO_REQ_MSG_SZ, GFP_KERNEL);
->
-> [Severity: High]
-> Can this allocation cause a deadlock during system suspend?
->
-> During system suspend, se_suspend() calls se_save_imem_state(), which invokes
-> ele_get_info(). Using GFP_KERNEL here and for the DMA buffer below can trigger
-> direct memory reclaim. If the reclaim process waits on I/O or swapping while
-> underlying storage devices are already suspended, will the system hang?
->
-> [ ... ]
-> > --- /dev/null
-> > +++ b/drivers/firmware/imx/ele_base_msg.h
-> [ ... ]
-> > +struct dev_info {
-> > +	u8  cmd;
-> > +	u8  ver;
-> > +	u16 length;
-> > +	u16 soc_id;
-> > +	u16 soc_rev;
-> > +	u16 lmda_val;
-> > +	u8  ssm_state;
-> > +	u8  dev_atts_api_ver;
-> > +	u8  uid[MAX_UID_SIZE];
-> > +	u8  sha_rom_patch[DEV_GETINFO_ROM_PATCH_SHA_SZ];
-> > +	u8  sha_fw[DEV_GETINFO_FW_SHA_SZ];
-> > +};
->
-> [Severity: Medium]
-> Since these multi-byte fields are populated directly via DMA from the NXP
-> enclave firmware (which uses little-endian format), will they be read
-> incorrectly on big-endian architectures?
->
-> For instance, get_se_soc_info() directly accesses s_info->d_info.soc_rev
-> without any byte-swapping, which might yield an invalid version number on
-> big-endian systems. Should these be defined as __le16 instead?
->
-> [ ... ]
-> > --- /dev/null
-> > +++ b/drivers/firmware/imx/ele_common.c
-> [ ... ]
-> > +int ele_msg_send_rcv(struct se_if_priv *priv, void *tx_msg, int tx_msg_sz,
-> > +		     void *rx_msg, int exp_rx_msg_sz)
+> > +static int kvmppc_get_compat_caps(struct kvm_ppc_compat_caps *host_caps)
 > > +{
-> [ ... ]
-> > +	err = ele_msg_rcv(priv, &priv->waiting_rsp_clbk_hdl);
+> > +	unsigned long capabilities = 0;
+> > +	long rc = -EINVAL;
 > > +
-> > +	if (priv->waiting_rsp_clbk_hdl.signal_rcvd) {
-> > +		/*
-> > +		 * Signal was deferred until the FW/kernel protocol resynchronized.
-> > +		 * On success report -ERESTARTSYS for the interrupted wait; the
-> > +		 * command is not re-sent. Keep real errors like -ETIMEDOUT.
-> > +		 */
-> > +		if (err > 0)
-> > +			err = -ERESTARTSYS;
->
-> [Severity: Medium]
-> Does this unintentionally convert a successful firmware transaction into an
-> error?
->
-> When a wait is interrupted by a signal, ele_msg_rcv() continues waiting
-> uninterruptibly. When the firmware finally responds successfully, err will
-> be positive. By overwriting this success with -ERESTARTSYS, won't this
-> cause the kernel to silently replay the syscall from userspace? For
-> non-idempotent operations, executing the command twice could corrupt enclave
-> state.
->
-> [ ... ]
-> > +int se_restore_imem_state(struct se_if_priv *priv, struct se_imem_buf *imem)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * After importing IMEM, check if IMEM state is equal to 0xCA
-> > +	 * to ensure IMEM is fully loaded and
-> > +	 * ELE functionality can be used.
-> > +	 */
-> > +	ret = ele_get_info(priv, &s_info);
-> > +	if (ret) {
-> > +		dev_err(priv->dev, "Failed to get info from ELE.");
-> > +		return ret;
+> > +	if (kvmhv_on_pseries()) {
+> > +		if (kvmhv_is_nestedv2()) {
+> > +			WARN_ON_ONCE(!nested_capabilities);
+> > +			capabilities = nested_capabilities;
+> > +			rc = 0;
+> > +		}
 > > +	}
-> > +	imem->state = s_info.d_addn_info.imem_state;
 > > +
-> > +	if (s_info.d_addn_info.imem_state == ELE_IMEM_STATE_OK)
-> > +		dev_dbg(priv->dev, "Successfully restored IMEM.");
-> > +	else
-> > +		dev_err(priv->dev, "Failed to restore IMEM.");
+> > +	host_caps->compat_capabilities = capabilities & KVM_PPC_COMPAT_BITMASK;
 > > +
-> > +	return ret;
+> > +	return rc;
 > > +}
->
+> 
 > [Severity: Medium]
-> If the IMEM state is bad (not ELE_IMEM_STATE_OK), the code logs an error
-> but still returns the success code (ret = 0) from the preceding ele_get_info()
-> call. Does this hide the hardware failure from the power management subsystem
-> and leave the enclave in a non-functional state after a system resume?
+> Will this return -EINVAL for pseries hosts when nestedv1 is used?
 
-This one make sense, should return failure.
+This is analysing patch 2 in isolation. The series is applied in order:
+patch 3 adds the nestedv1 (KVM on PowerNV) path to
+kvmppc_get_compat_caps(), filling in the `else` branch for the case
+where kvmhv_is_nestedv2() is false. After the full series is applied, a
+pseries nestedv1 host takes the DT-based path added in patch 3, not the
+-EINVAL path. There is no issue in the complete series.
 
-Frank
-
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260806-imx-se-if-v35-0-11b25bb308ef@nxp.com?part=3
+> 
+> If KVM_CAP_PPC_COMPAT_CAPS advertises support by returning 1 for all pseries
+> hosts (which appears to be the case in kvm_vm_ioctl_check_extension), 
+> userspace might query KVM_PPC_GET_COMPAT_CAPS and hit this path when
+> kvmhv_is_nestedv2() is false.
+> 
+> For example, if userspace checks KVM_CAP_PPC_COMPAT_CAPS and gets a positive
+> result, but kvmhv_is_nestedv2() returns false here, we return -EINVAL.
+> 
+> Since -EINVAL typically indicates invalid structure size or bad flags, could
+> userspace fail to differentiate an unsupported backend from invalid inputs,
+> leading to initialization failures? 
+> 
+> Should this gracefully return 0 capabilities (or -ENOTTY), or should the
+> capability check itself verify kvmhv_is_nestedv2() before advertising support?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260804180705.59160-1-amachhiw@linux.ibm.com?part=2
