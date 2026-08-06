@@ -1,195 +1,301 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843A740A940
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 11:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8060A224234;
+	Thu,  6 Aug 2026 12:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786017459; cv=none; b=BjgIiY7W1p3pI+zAc4ocHrOZ17C1tYSy7QwI4QqLTkNBFqoM5E7zZgCzmORspgNhS0fpmTZLxI4GVwBAYrOX4wU0PRo1pjqFU2VRPgyTUxoHE7IHIw7YZYw2TYAWJd/vKHojRFVvYP+dyVC6+eZLdEZPbK2NnRCUXyLakKQGPIo=
+	t=1786019430; cv=none; b=lXGOBD/f6qYvltvRLQ6RZX/HSch5FIM2rcrmfJE+r8b5pxzfTNTk0j0O9zorWOsrxkchYL1yF5pfs2goHN/KUIOvcLp9mfo8Sz5bTN2aN2Hl7HDFO56/I0o2RMWb74HDEUL2hrfVYliwtb1WQ4HkAfiJDL1qLvCoXI0RcwmeHik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786017459; c=relaxed/simple;
-	bh=26ZfCEEB41AkZZavPx8xwm6TNkfKfpHiByKlvYp3wQk=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=PhshQngTD2xuqHLK7zqGkoSo5y9A5WeoDM8YpSiWiEyqV50+AclhYX4tQKcnXmG6UnUQVa568CBM/q+G0iNBiyibG28HvdmL/mIELhnwsyv/BLolspws3Iuz6YUFGLekSDaxi7HZ/50tb/jaBAoT5i5B5XnWJdT1V1dtM9CJVgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.62])
-	by gateway (Coremail) with SMTP id _____8BxvKGtdnRqVfoKAA--.11982S3;
-	Thu, 06 Aug 2026 19:57:33 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
-	by front1 (Coremail) with SMTP id qMiowJDxDcetdnRqOMAlAA--.6871S2;
-	Thu, 06 Aug 2026 19:57:33 +0800 (CST)
-Subject: Re: [PATCH v2] LoongArch: KVM: Advertise already-supported
- capabilities
-To: Tao Cui <cui.tao@linux.dev>, sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260805054549.287648-1-cui.tao@linux.dev>
- <20260805060636.A0FB11F000E9@smtp.kernel.org>
- <b4343223-a221-4cc3-aee2-cb79c556bcb0@linux.dev>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <65365095-7758-96ae-5c7c-32200bd91867@loongson.cn>
-Date: Thu, 6 Aug 2026 19:57:16 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1786019430; c=relaxed/simple;
+	bh=k6xV0D7BSTpA6MwV87JmXPrdu0v7DNelQ3HMIoSVXAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e9Mvn9BgkhHQNaPuV5tz92J0+vV3Oux+Q16/X70mMhndRzrzGEcaWFtDEngN3XmfWJ2pSrh5JvVbbLBCN5W8/2M/N02YFCMj001xpRntc6MmoBQjfjWaS85+sobBG8Vii5cgPU60rI4nqJ8EqnJt4KR5cMErU2dq1Iy/QI1dGOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNZ1r82R; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNZ1r82R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3B91F000E9;
+	Thu,  6 Aug 2026 12:30:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786019428;
+	bh=b+VdRZXz0Mlzd/Fxvme7CV96v0QV8RQACj3fa8nalDI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BNZ1r82RHEVXsILv6fUNHhc2SdSUzx5KvIuczd36kHST8Zi4WaLATRIn1/5asWT//
+	 puaKDLrHpXk2xqnkJtLHIEivI34aM1edlqJW/rY9bLT+Jvj07bzSHnOsR3L4lDAH3K
+	 1DMXo4dn3iYeSwjMSmj1H+boA4U10xNbIFiVVU95BTN6imjndTcl3vjLCc/px5WePR
+	 bYLWPNHdHs5M6Nxx1nJY+6cEinJO+q7cT+Ytm/4foh6DU6wfXt7aaGYatRKJ5tG2KS
+	 RpoXUdwWmq5w2ynW/CYAf++y0Cg7uXdxDmIQ1knELMcOwzEVYgY81mE6e0w2RJJh8g
+	 YoMBW1ZzD7gEw==
+Date: Thu, 6 Aug 2026 09:30:23 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 02/12] perf jitdump: Validate code_size against
+ total_size in code load
+Message-ID: <anR-XwEFkI-P7UzZ@x1>
+References: <20260805212704.267779-1-acme@kernel.org>
+ <20260805212704.267779-3-acme@kernel.org>
+ <20260805214241.A15EA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <b4343223-a221-4cc3-aee2-cb79c556bcb0@linux.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJDxDcetdnRqOMAlAA--.6871S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3GF47Wry7urWfuF4rGF4xZrc_yoW7WF47pF
-	W7CasxCw48KrnFyan2qa4DuFW09r47Gry8Gas0y342v3Z09ryayFW0yrZrZF4DXwn3uw10
-	ga9Yq34FvF15AagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
-	67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
-	8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8
-	JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
-	1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
-	daVFxhVjvjDU0xZFpf9x07jOb18UUUUU=
+In-Reply-To: <20260805214241.A15EA1F000E9@smtp.kernel.org>
 
-
-
-On 2026/8/5 下午4:28, Tao Cui wrote:
+On Wed, Aug 05, 2026 at 09:42:41PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 10 potential issue(s) to consider:
 > 
-> Hi Bibo,
-> 
-> The Sashiko automated review of this patch flagged two pre-existing items
-> — neither is from this patch. Wanted to get your thoughts,
-> 
-> 在 2026/8/5 14:06, sashiko-bot@kernel.org 写道:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] The unsafe user-access macros (`unsafe_put_user()` and `unsafe_get_user()`) are used without the required `user_access_begin()` and `user_access_end()` guards, violating the kernel API contract.
-> The steal-time code uses unsafe_put_user()/unsafe_get_user() without
->     the usual user_access_begin()/end() around them. On LoongArch it
->     doesn't actually cause any trouble — there's no hardware user-access
->     protection (user_access_begin() just resolves to access_ok()),
->     __put_user is a plain store, and the ghc->hva address is already
->     validated by kvm_gfn_to_hva_cache_init(), so the access_ok() is
->     redundant anyway. So I see it more as a convention inconsistency /
->     style nit than a real bug. I'd be happy to put together a small
->     cleanup wrapping those in user_access_begin()/end() (or switching to
->     kvm_write_guest_cached()). Does that sound like just cleanup to you,
->     and would you want it?
->> - [High] A lockless read-modify-write on the shared VM state `kvm->arch.pv_features` allows userspace to bypass the validation check that requires all vCPUs to share identical PV features.
-> The check-then-set on kvm->arch.pv_features in cpucfg_set_attr() is a
->     genuine TOCTOU — again pre-existing, unrelated to this patch. It's not
->     really reachable in practice: 0/3000 with two vCPUs hammering it
->     concurrently, though a debug widening of the window does reproduce it
->     every time (3000/3000). It'd basically need a userspace firing
->     KVM_SET_DEVICE_ATTR with different values on two vCPUs at once. The
->     odds are low, but I do think edge cases like this are still worth
->     fixing — happy to send a separate patch using a mutex or cmpxchg.
-Happy to see the patch.
+> New issues:
+> - [Medium] jd->debug_data and jd->unwinding_data are leaked on the new validation failure path.
 
-It is design problem to set pv_features per-VM, there is concurrent 
-access issue and it can only be set for one time.
+This is fixed in a later patch in this series, I'll reorder the series
+so that this leak doesn't gets introduced to then be fixed in another
+patch.
 
-Regards
-Bibo Mao
-> 
-> Neither of these affects v2 itself, so I'd leave it as-is.
-> 
-> Thanks,
-> Tao
->> --
->>
->> --- Patch [1]: [PATCH v2] LoongArch: KVM: Advertise already-supported capabilities ---
->> commit 91e3758510b96f271c2589373d1340c246fab45a
->> Author: Tao Cui <cui.tao@linux.dev>
->>
->> LoongArch: KVM: Advertise already-supported capabilities
->>      
->> This commit advertises KVM_CAP_STEAL_TIME and KVM_CAP_VCPU_ATTRIBUTES on
->> LoongArch, making existing features discoverable to userspace.
->>
->>> diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
->>> index 1317c718f896a..0a51931d6f6e0 100644
->>> --- a/arch/loongarch/kvm/vm.c
->>> +++ b/arch/loongarch/kvm/vm.c
->>> @@ -122,6 +122,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
->>>   	case KVM_CAP_IOEVENTFD:
->>>   	case KVM_CAP_MP_STATE:
->>>   	case KVM_CAP_SET_GUEST_DEBUG:
->>> +	case KVM_CAP_VCPU_ATTRIBUTES:
->>
->> [Severity: High]
->> This is a pre-existing issue, but does advertising KVM_CAP_VCPU_ATTRIBUTES
->> expose a data race in kvm_loongarch_cpucfg_set_attr()?
->>
->> Looking at arch/loongarch/kvm/vcpu.c, there is a lockless read-modify-write
->> sequence on the shared VM state:
->>
->> arch/loongarch/kvm/vcpu.c:kvm_loongarch_cpucfg_set_attr() {
->> ...
->> 	/* All vCPUs need set the same PV features */
->> 	if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED)
->> 			&& ((kvm->arch.pv_features & valid) != val))
->> 		return -EINVAL;
->> 	kvm->arch.pv_features = val | LOONGARCH_PV_FEAT_UPDATED;
->> ...
->> }
->>
->> If multiple threads concurrently call KVM_SET_DEVICE_ATTR on different vCPUs,
->> can they bypass this validation check by both reading before either writes,
->> resulting in divergent configurations being silently applied globally instead
->> of returning -EINVAL?
->>
->>>   		r = 1;
->>>   		break;
->>>   	case KVM_CAP_NR_VCPUS:
->>
->> [ ... ]
->>
->>> @@ -136,6 +137,9 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
->>>   	case KVM_CAP_NR_MEMSLOTS:
->>>   		r = KVM_USER_MEM_SLOTS;
->>>   		break;
->>> +	case KVM_CAP_STEAL_TIME:
->>
->> [Severity: High]
->> This isn't a bug introduced by this patch, but does advertising
->> KVM_CAP_STEAL_TIME expose an issue with unsafe memory accesses?
->>
->> In arch/loongarch/kvm/vcpu.c, unsafe_put_user() is used without the required
->> user_access_begin() and user_access_end() guards:
->>
->> arch/loongarch/kvm/vcpu.c:kvm_update_stolen_time() {
->> ...
->> 	unsafe_put_user(0, &st->preempted, out);
->> ...
->> }
->>
->> And similarly in kvm_vcpu_set_pv_preempted():
->>
->> arch/loongarch/kvm/vcpu.c:kvm_vcpu_set_pv_preempted() {
->> ...
->> 	unsafe_put_user(KVM_VCPU_PREEMPTED, &st->preempted, out);
->> ...
->> }
->>
->> Since omitting user_access_begin() skips the access_ok() check at the access
->> site, could this cause a kernel fault if hardware-enforced user access
->> protections are introduced?
->>
->>> +		r = kvm_pvtime_supported();
->>> +		break;
->>>   	default:
->>>   		r = 0;
->>>   		break;
->>
+All the pre-existing issues reported are being tracked in TODO files for
+upcoming series, one is already in the making.
 
+Thanks,
+
+- Arnaldo
+ 
+> Pre-existing issues:
+> - [High] Integer underflow when calculating unwinding_data_size in jit_repipe_unwinding_info leads to a massive heap allocation and out-of-bounds read.
+> - [High] Missing snprintf truncation clamping in jit_repipe_code_move and jit_repipe_code_load leads to an undersized event allocation calculation and out-of-bounds heap write.
+> - [High] jit_get_next_entry iterates over an unvalidated nr_entry array using fixed-size indexing for a variable-length structure, leading to out-of-bounds byte-swapping.
+> - [High] The parser lacks total_size boundary checks for JIT_CODE_MOVE, leading to uninitialized heap reads.
+> - [High] Lack of validation between buffer size and nr_entry leads to heap OOB read and write in debug info parsing.
+> - [Medium] The perf_event allocated via calloc is unconditionally leaked in jit_repipe_code_move.
+> - [Medium] Multiple memory leaks of dynamically allocated buffers in the jitdump parser, including missing cleanup in jit_close and overwrites in debug info.
+> - [Medium] The ALIGN_8 macro evaluates using signed arithmetic, causing integer wrap and massive length corruption for mmap2 events.
+> - [Medium] Truncation of 64-bit unwinding_mapped_size to 32-bit int can corrupt mmap2 event length.
+> --
+> 
+> --- Patch [2]: [PATCH 02/12] perf jitdump: Validate code_size against total_size in code load ---
+> commit 97b091976e049b90397f99d555b22a4934abb49d
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf jitdump: Validate code_size against total_size in code load
+> 
+> This commit introduces validation checks to ensure that the code_size
+> does not exceed the available size in the JIT load record. It adds bounds
+> checking to prevent out-of-bounds heap reads when calculating the code
+> blob pointer.
+> 
+> > diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+> > index 4b7c7ba7cd95d..3195f94187164 100644
+> > --- a/tools/perf/util/jitdump.c
+> > +++ b/tools/perf/util/jitdump.c
+> > @@ -9,6 +9,7 @@
+> >  #include <fcntl.h>
+> >  #include <unistd.h>
+> >  #include <inttypes.h>
+> > +#include <limits.h>
+> >  #include <byteswap.h>
+> >  #include <sys/stat.h>
+> >  #include <sys/mman.h>
+> > @@ -450,6 +451,16 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+> >  	csize = jr->load.code_size;
+> >  	usize = jd->unwinding_mapped_size;
+> >  	addr  = jr->load.code_addr;
+> > +
+> > +	/* code blob lives at the end of the record, validate it fits */
+> > +	if (jr->load.p.total_size < sizeof(jr->load) ||
+> > +	    jr->load.code_size > jr->load.p.total_size - sizeof(jr->load) ||
+> > +	    jr->load.code_size > INT_MAX) {
+> > +		pr_warning("jitdump: invalid code_size %" PRIu64 " (total_size=%u) in code_load record\n",
+> > +			   (uint64_t)jr->load.code_size, jr->load.p.total_size);
+> > +		return -1;
+> 
+> [Severity: Medium]
+> Does this early return skip freeing the buffered debug and unwinding data?
+> 
+> Later in the function, these dynamically allocated buffers are freed:
+> 
+>     if (jd->debug_data && jd->nr_debug_entries) {
+>             zfree(&jd->debug_data);
+>             jd->nr_debug_entries = 0;
+>     }
+> 
+>     if (jd->unwinding_data && jd->eh_frame_hdr_size) {
+>             zfree(&jd->unwinding_data);
+>             ...
+> 
+> If the code returns -1 here, do jd->debug_data and jd->unwinding_data remain
+> allocated, permanently leaking since jit_close() does not appear to clean them
+> up?
+> 
+> > +	}
+> > +
+> >  	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
+> >  	code  = (unsigned long)jr + jr->load.p.total_size - csize;
+> >  	count = jr->load.code_index;
+> 
+> [ ... ]
+> 
+> Other findings in this file:
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does integer underflow occur when calculating
+> unwinding_data_size in jit_repipe_unwinding_info()?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_unwinding_info() {
+>     ...
+>     unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
+>     unwinding_data = malloc(unwinding_data_size);
+>     memcpy(unwinding_data, &jr->unwinding.unwinding_data, unwinding_data_size);
+>     ...
+> }
+> 
+> If total_size is smaller than sizeof(jr->unwinding), does the unsigned 32-bit
+> subtraction underflow to a massive value, causing malloc to allocate too much
+> memory and memcpy to perform an out-of-bounds read?
+> 
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but is the perf_event leaked in
+> jit_repipe_code_move()?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_code_move() {
+>     ...
+>     event = calloc(1, sizeof(*event) + 16);
+>     if (!event)
+>         return -1;
+>     ...
+>     return ret;
+> }
+> 
+> The event pointer is allocated via calloc but is never freed on the success
+> or error return paths. Does this gradually exhaust memory when parsing large
+> dumps?
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does missing snprintf truncation clamping
+> lead to out-of-bounds heap writes?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_code_move() {
+>     ...
+>     size = snprintf(filename, PATH_MAX, "%s/jitted-%d-%" PRIu64 ".so", ...);
+>     size++; /* for \0 */
+>     event->mmap2.header.size = (sizeof(event->mmap2) - (sizeof(event->mmap2.filename) - size) + idr_size);
+>     ...
+> }
+> 
+> When generating the filename, snprintf returns the length that would have
+> been written. If this exceeds PATH_MAX, does the returned size wrap in the
+> unsigned arithmetic for header.size, underflowing it and pushing the trailing
+> id pointer out of the allocated event buffer bounds?
+> 
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but are dynamic buffers repeatedly leaked in
+> jit_repipe_debug_info() and jit_close()?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_debug_info() {
+>     ...
+>     data = malloc(sz);
+>     /* ... */
+>     jd->debug_data       = data;
+>     ...
+> }
+> 
+> Repeated JIT_CODE_DEBUG_INFO records will malloc a new buffer and overwrite
+> jd->debug_data without freeing the old one. Additionally, jit_close() frees
+> the jd struct resources but does not seem to clean up internal heap buffers
+> like debug_data and unwinding_data. Does this leave them un-freed
+> indefinitely?
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does standard array indexing on a variable
+> length struct cause memory corruption during bswap?
+> 
+> tools/perf/util/jitdump.c:jit_get_next_entry() {
+>     ...
+>     for (n = 0 ; n < jr->info.nr_entry; n++) {
+>         jr->info.entries[n].addr    = bswap_64(jr->info.entries[n].addr);
+>     ...
+> }
+> 
+> In cross-endian mode, this iterates over an unvalidated nr_entry array using
+> fixed-size indexing. Since debug_entry includes a variable-length name[]
+> string inline, doesn't fixed-size array indexing read from and byte-swap
+> completely incorrect offsets?
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does jit_repipe_code_move() lack boundary
+> checks for the JIT_CODE_MOVE total_size?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_code_move() {
+>     ...
+>     event->mmap2.start = jr->move.new_code_addr;
+>     event->mmap2.len   = usize ? ALIGN_8(jr->move.code_size) + usize : jr->move.code_size;
+>     ...
+> }
+> 
+> Unlike the new validation added to JIT_CODE_LOAD in this patch,
+> jit_repipe_code_move() lacks a check confirming that total_size is greater
+> than or equal to sizeof(jr->move). Can malformed records cause the parser
+> to read uninitialized heap or stale data from jd->buf into perf.data?
+> 
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does the ALIGN_8 macro silently overflow
+> into a negative value?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_code_load() {
+>     ...
+>     int ret, csize, usize;
+>     /* ... */
+>     event->mmap2.len   = usize ? ALIGN_8(csize) + usize : csize;
+>     ...
+> }
+> 
+> Since csize is typed as a signed int, does calculating ALIGN_8(csize) with a
+> value near INT_MAX trigger signed integer overflow to a negative value, which
+> is then sign-extended into a corrupted uint64_t length?
+> 
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but can the truncation of unwinding_mapped_size
+> corrupt the mmap2 event length?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_code_move() {
+>     ...
+>     int usize;
+>     /* ... */
+>     usize = jd->unwinding_mapped_size;
+>     /* ... */
+>     event->mmap2.len   = usize ? ALIGN_8(jr->move.code_size) + usize : jr->move.code_size;
+>     ...
+> }
+> 
+> The 64-bit jd->unwinding_mapped_size is truncated to a 32-bit signed integer
+> (usize). Could a maliciously crafted mapped_size result in a negative or
+> truncated value, corrupting the final event->mmap2.len?
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does the lack of validation between buffer
+> size and nr_entry lead to heap out-of-bounds reads and writes?
+> 
+> tools/perf/util/jitdump.c:jit_repipe_debug_info() {
+>     ...
+>     jd->nr_debug_entries = jr->info.nr_entry;
+>     ...
+> }
+> 
+> The parser sets jd->nr_debug_entries from the unvalidated nr_entry file field
+> without confirming the allocated sz bytes can accommodate them. When
+> jit_process_debug_info() loops nr_entry times calling strlen on heap data,
+> does this result in out-of-bounds heap writes?
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260805212704.267779-1-acme@kernel.org?part=2
