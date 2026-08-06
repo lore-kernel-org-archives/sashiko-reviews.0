@@ -1,182 +1,182 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011070.outbound.protection.outlook.com [52.101.70.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5656F494809
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 19:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E193EDE4F;
+	Thu,  6 Aug 2026 20:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786045146; cv=pass; b=mdLcxmabcG7vKRTIztDBJVnJKPTMk8nCgVtm1ZJTmNPuSR+aN6oq3pQ90fzbRinwWm1s8f+nXw/K/IauLTmy1zV6V2CUIi+MJGlbDfdA+IxeHwEyD5Icx9CuIW8d82poO4jnozjixRus3CHqb97zWwb8CXqmGtGJQwfWpoqPGJ4=
+	t=1786049624; cv=fail; b=nr7hGkrr9fBbsk6aNu8pi1tvqRgFfmSj0oPbbwCHIK5nwV9Zu7m6YYGO/ZdzZ4okMpT6tH3yTgs9Kr7DiNQscr5fkXGKBPBRC5WMr3DljzCZRQliHEeOd6hrPA8St3yNYj4Xc4N1bHTm23bhHJZjulG+CTiVLHYutTSD1DUGDFg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786045146; c=relaxed/simple;
-	bh=pZsRu4bih/fOebs02+cyeryB8ah9q5y2Gx6ty4QhO3E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jMsVjLwHh6X8lbe/lVIFeaukmP2jlZVvb/i4LjMS6b5Alqi649IYPoQZgsSDZvpsPxKoaN1KFnZumHODnxqdLXYVVhywsXrtkVECjimKp0uUMEyr9utzsB6kx5FTTymIM5TxpUIR4rIMIzSlHwCG09d/OyTzze1S9BAolezSc2w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFl521B5; arc=pass smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786049624; c=relaxed/simple;
+	bh=Hh/jNTJs5Y14tUKgnaZf40RS73Vp5aWhx0aheZ9VZ9s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=u0vqc+I1zdflpFAfSCCNOJlWgeTvFHJzqxZHjQTOQQ5qE7dF0pM+vy1RRO6D4K0cS4L2NISIft+lSsbvo54d5d8okNWn1ADT7zb7rExi3K7nurfZHnN13kMKp0NE2jBHrrSUmmYbfZN6U6X1n0UVJAwe7bPRcIdwX57oPzWYYQ0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=AmOwIls2 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFl521B5"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-51c0c45c580so15988461cf.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 12:39:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786045144; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AkKXwi8IYfuW5xzcFu3/INnFu5GxQVBWYmtzqdIv2PGPcMmze+VCJ238EULpzN1vTC
-         bL6SR2rTeKUxMPpw5ZSvUE+/iiPJdrE6sRNhk/9eNnMIl/qsTLNoxeS10b3FrF+CGcB7
-         7Hv9YqbEzJZ1Id313HN3rnRhjV2gpl2oaxczxcOnlS7HGhrPScvmzCfI6D7+OoWke7bu
-         qEZs1l/fPVz/QzDXY1TjPCTz+MB9s7NLkBWgkX6MigmdX1DgUbwhTn2ThZ5ZUAo5kMq6
-         8Q/rfPDpR9Ew/4nK9IxPvxssXrOUS5O54e+4T0BJLwiRdBuJ4TPd6ffqXrQx2sriwuGU
-         mAig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
-        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=Mcj6Yxc+leG8DGxWg8BbWWa0UskniI8cKeW/xKKUdmQDxQ1ExQiJWYdF6bL0Wkivws
-         iV8o7EbDEvTH7m1Irq4p8deI4ZsiFGlodwT667mfgmVHLTM3wlyoImstTuoW8NQRFDmb
-         dIJMvNsJZ+iuX1jy+P0lz85jqIRCWFHIerf2nLjSxTM4QSjjLNSDET06nzb7VZnj96Sp
-         rqvMIpD5GvVorqatT9IpPYoW8nxVVSjB8rFkkhisLSqnJR1D5gAya8mn0z1csdhGNuID
-         gJbeugLaBvj2ZT54cq5yzyuG5uuucV7T8wqD9GqujqN6LoqDLVwjhUb/mSvoIuvNsYXU
-         MPAw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786045144; x=1786649944; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
-        b=CFl521B5PSWUSS2aTv228p+U/8EtSwjEtqK//7Rf1CbzM+unbV6l66BXSbbW89VgQz
-         7dlQx1jWAzoazy9bvTLYwlgJH3xQPZETpA5k60qbSst2CZgikYjN1rhYBHgkkylLqOtx
-         mSDBS6ybU4FFAtaPZzIDkbc7o8xbBHInX525EpVTMarLw1qNJ3rPtqfYq8wZJ5BDVof9
-         y1qw0F6mBkuTf9hqFAOysSHltJp3R8CjJd7vqL+A7qOsc1KsZF8IwxPLZX1hQxc3SHHh
-         Q2Xa5DT+fPVr715MnvBZWm63Hq00vPpY93HohNSoNduM9oFAU7oJMZmu8dlvyNlvIx/H
-         XrWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786045144; x=1786649944;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NNryo2myA6o1ZLmEL9pxSp2a/VR8Nun1pZv4kg1nG/o=;
-        b=bSKxnlZExXxHGh4poNsyXZRnRbrLpcRP9goRS69JAyBH7DLvO3rmmsvLOUweVySkea
-         34DFzTPD9b1aqtYE+S+2SeG1cZh8qDy7bcJFwj6LqRm9jFvtE/ItzxiTnRQyQ6hBu9oK
-         0oa/gyQHPILvi8LLhdfZqbg2KzJkOOoQSf3TIztO4PX8N0QSLHr8yq1Cx6IId/rLYJ7q
-         lQJn+hAarIYB+COs+Jj+JI9sBGcBKjQ5eScmUpkzk1p+F6V7B4xhDPt3KiDBAebPbr72
-         f0flN/xLRGloAjwgT9a8aj/gHTv2d/fxwHtzxJaRRivflJbI7ZMU2hR55WFpiQBD3XYb
-         kNkg==
-X-Gm-Message-State: AOJu0YyLCgcUhmqub2bq8bEv/9CWoIi8BWZseVQbHgdTnso/2+i4hl0+
-	louFBNOjDrPpDYpKSZ2OZYUH2O0y/068trV81aEJVXdGys6ibE1zsuvZRWhhDFr/XWzRGbQDjvU
-	6qPsoh4oQZqprBBZPKz1BaIl+rn7NAyLUQUEAdXc=
-X-Gm-Gg: AR+sD11YIXbJom+VI9hfGG5XdxCVWqdMjQ6r0vkuKeCN3tFacZ0sbtq3wTZgJIm40gM
-	v5CKNu53GC8D2t0Q+xE/96GFWZJSIaIJeCE/Sj68tAYm4XCsY/q5kKtA5NGw+/wE6zkkzTvlONI
-	/HPPGdnJpRrv161+yWIU7ccayZrMglV7AoE8CQULg+4RD90yeedFv9hnIhykiSaWxAy2HByKDKu
-	MTPCkvV9wgbSKFik2XCsaAzMFo2gtLC8Ztq/l2KbZ4tkJqJtvheqgSJ+a/C66m3O7u2iB2GVKJh
-	pGFmb6o7tUbyWNpEwwBlqS7inl0FEXNdXr4rQJgxKb3WLg==
-X-Received: by 2002:a05:622a:411:b0:51c:e14:87a7 with SMTP id
- d75a77b69052e-52ce60e900cmr177493651cf.28.1786045144090; Thu, 06 Aug 2026
- 12:39:04 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="AmOwIls2"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z+WvWo5nnqBMDJe5SkDSZec2p6FRdu7okAZsIUkN5afsnHGiqYV1tIzCAHgdrIwlaQISQ5lcST+ofqeT4w0oMwykZtXEe9aoZqBw6v+7b3maZMEeLXunnncNsRs1Ad5+pCVtFuQCni/mXGW8DkUNg/dyjvfU+U0k6wZKndkwswCzjt4BthIKIh5XI5ClD7rQ7VMhfx5US2I/C3c3qrMerzMuVcevyUrM+LRDGfxBZip2E197eZtzbxUuhXZONKcd0bN6i5+iyhIXbLngjAyAKQl/dtov/fRmCnHs13iFnqK1ZJ5xKe1iKia724TWt/8W6wl8IdddIt7Qa19FjdcoHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/oqGQxruKgtWAbMw+0xxTYcFu3vIYIhvu/ZztQaOTUQ=;
+ b=Zza6u6r8FbUhHCk6Jf6ToOtrEo/dbZeByJ2IPedPnRAFZ3vPteAWMCxRfQziD9o1bF8Ca+LA8FRcDsp2hJJB7e1QKFnnc7jWIHmoITqvggf/zFUDSp2Gx5+rz/tGSCGD7HR0XgqwJ1po/+7G1pLYgpe3os2yVVsF+aowzZ7JYKhtRs+R+Sdh0B+mpjnIkhyj5ebHkqeFPLmPvqFej2Xk5pBAce1oFzzHSa98D/Fdv4ta+exBbDFplTpqmLrhM4Iybq1+QATNokHtCy1QyjDtQ8zHrIsPQD0v1hGq+nLMCofJ/Suyyb3+fd3V9I64z8hh+ayjB44ER7xshGsh0+6eZQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/oqGQxruKgtWAbMw+0xxTYcFu3vIYIhvu/ZztQaOTUQ=;
+ b=AmOwIls2qIkB1NOfmtr2zuUVIzyDQq7wjQ4l5wtkVPmSdbIyb0e0b2VjxCbHw59TlHLAdVOyLWDCAiwm+YXTyM9++fZ1R62ZicAmrDZ0ZqTRYd2RUTorRa3N9nU0gq3CWYlv627+oFjMsh25EgDrQhHa41YvIxusrHzhMVuTTxw8qPoiYqsvuQ4SUxA2N7uQfEUBMs3iKbEUaRrWVF/zp+c2Xr3pcQ7BnwC5L2/zoF29UHfPXjKYoA63yyiCl0DIDrIeEQCKYzalIjc7OLHI5Z+eW7w6U8VPkL6/vqiDe2TVjc/1po1sf2TPrmH0TmN7SASmZm+ubZWYaLR2ue8Gag==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PAXPR04MB8205.eurprd04.prod.outlook.com (2603:10a6:102:1c2::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.22; Thu, 6 Aug
+ 2026 20:53:38 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Thu, 6 Aug 2026
+ 20:53:38 +0000
+Date: Thu, 6 Aug 2026 16:53:31 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Rudi Heitbaum <rudi@heitbaum.com>, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, Frank.Li@kernel.org, robh@kernel.org,
+	linux-pci@vger.kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH 2/3] PCI: imx6: Use the external clock as REF_CLK when
+ needed for i.MX8MQ
+Message-ID: <anT0S51eVwBKPdnM@lizhi-Precision-Tower-5810>
+References: <cover.1785669457.git.rudi@heitbaum.com>
+ <563f057f26b1147a79392509b35dcb7f18113ba9.1785669457.git.rudi@heitbaum.com>
+ <20260802114928.4CEEB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260802114928.4CEEB1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SN7PR04CA0191.namprd04.prod.outlook.com
+ (2603:10b6:806:126::16) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260806190439.12022-1-derekjohn.clark@gmail.com> <20260806191942.39B691F000E9@smtp.kernel.org>
-In-Reply-To: <20260806191942.39B691F000E9@smtp.kernel.org>
-From: Derek John Clark <derekjohn.clark@gmail.com>
-Date: Thu, 6 Aug 2026 12:38:52 -0700
-X-Gm-Features: AUfX_mz1my3wgtPNVK9lIPUcA32hoZSI-uH2kaE1mQFxmSM0blLQR-HhSyV2W4A
-Message-ID: <CAFqHKTk47MvjVvijt_JKH53pMmaNMWSGvU9QkTuj6zJ7XHhnXQ@mail.gmail.com>
-Subject: Re: [PATCH] pci: quirks: Disable native PCIe hotplug on MSI Claw A8
- root bridge
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PAXPR04MB8205:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad17bff2-2bed-41af-adfb-08def3fcc9ff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|19092799006|376014|11063799006|56012099006|10067099003|6133799003|22082099003|18002099003|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	3ssVVfywG0XWnfcFjJaMNYTKEFr7fMlJucPm/YpDvMZpvslbK9ckirZ2SWYyy/iktiuiQLiT7mUKlKik3iVuOh22QWy7HQ2q/l3rq+UJ/CcsibH9sbQfESe/omPPMU539vlFxsrpcG9jlGcVopnC7YiamydTq52B2T8Yp2Wvp5IiY5ivotRUIc/+oDmEvyqs4a4dYbm1mBtsldDlXKc27v9Fo7g03zRczaCVKzTG61YpZyydPf+rAiI8FD9TFExcfy8BX0SnOjAFOUkqB216qIGpPySKF4glzt2QjVLSv43lyGcADnQGj6d4CM+Dds9Hjgj9VO9JlLKzCUxBGdAwVl5hM4uTScAylyqZNroU4WugxQI3PhUqv0WL/x+4qMnfG7zWylbN7GNDDcKuTeKs806dom+msWmxZ9e3JZwciwEOiAEdDlGCuHkVOCra93u6mV5iTwUE4KALWSW6W/RDH1meoLjI6qFRpwgc6MJmvQRfYBymEv9Ab7Pk+HU/mFa6jk6EUw0VOejwfj9B85tEyMvGmGBKioMZ0Sp/FkttLvoQXilIhX8BIocsIopgM+5o3GV5Y44t/6gqd0PhDSJLiNJiQJKI2aso8vBRqzko4lM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(19092799006)(376014)(11063799006)(56012099006)(10067099003)(6133799003)(22082099003)(18002099003)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?uDpvT+fz7ijr7AprEqs0QNBDo3qcdDXNEBewM4tEhyKslhbZA2+Wc+KJpK?=
+ =?iso-8859-1?Q?DQCfBXryo6Mxvz+Ow8mhzMimV795Pgkrk67foknyvGZP7DIdr84WCKPAII?=
+ =?iso-8859-1?Q?Y/iYwr3wOHdMKCe9n27TmxpXFNVjZucKuIymGkmP/ssINm9uMdcxLD6w+Y?=
+ =?iso-8859-1?Q?ForfPB1X3+peoxb75cR5yXdNZKx7MHK130a+2cBmvblQjH8cMwbQ9nOrXR?=
+ =?iso-8859-1?Q?F4HHH4QZG3WFCUI3hAMBXY7TXHRwAmAn5UX8rZDQhhgPcjY/1uRnWtk8ey?=
+ =?iso-8859-1?Q?e6Q0llqwN4bdiEBsNsOfgmLg4iKnosmQprHMCRjOezJ5eFQLHESPx3le4/?=
+ =?iso-8859-1?Q?9PPKS7fcV+HxGvSMH0+am0l55k2fYrpnH/+ouTy5Vs4ntdDjGDBnngMITE?=
+ =?iso-8859-1?Q?IT+UCZ3B/RzKb9jO8mLQKLP0aYMMr2RCh6bJ7R2aoe4xdAnODIAPk489kU?=
+ =?iso-8859-1?Q?l+OxzGNYXR6z+KaiofPLkt6aM1N6SubwuG1YkKYgZlpofxuC21/mu2E1er?=
+ =?iso-8859-1?Q?PF1ItDNFs1x3A/Ho0oNlLYWR2BiUz/HSIHrpE6BqmIu71OpUKXe9Zbn1xE?=
+ =?iso-8859-1?Q?bgVZNzgWzuP4tgEdKUtvS12kVO4ikDgq1lOUZNtDtc9X+KGmwc2vALlkZa?=
+ =?iso-8859-1?Q?HNZqx1JoZ8lWUH5eolRBYd5awmpJrZKNj4Wc3cD3l35XcfsG38+xZPRJzS?=
+ =?iso-8859-1?Q?SPua2nxLaXvr3prDeDvTKFU9gVg75ll1MKHn0Pf8doGqdEHsIPzqYUBPUl?=
+ =?iso-8859-1?Q?qZnbvdtF1rbqtIIO5ruDbPyesH4VonpI0Ym2NA05nek0wln9iSzQuknD3+?=
+ =?iso-8859-1?Q?2Yj7Ys14FuDrgdNxcweMAV3AmqwpT+Bb45h+B3/Aj2FZU1GQurQTe3rhNC?=
+ =?iso-8859-1?Q?1xjTItef7ZtS3ae5Bt4EcmxbY6V5mqVSclPxbedsVxM3HGgGcp4ZfktOSg?=
+ =?iso-8859-1?Q?LmXAEYgpHweXrSE+3vJAF/N41/YmjJ3Z4FPSTdqqtJ/dp3VnvMDPwyfpja?=
+ =?iso-8859-1?Q?4ZJv3hzp+f4+VMyO4gss8yPiHLOAfofQ5XEAdsowBT0P6/t/vrKOtmGsPT?=
+ =?iso-8859-1?Q?qz5zjCXWfKVK6h0r3S/bZdRK722O9zDU/nnXmavNYkKAXjhDSZT460BB0y?=
+ =?iso-8859-1?Q?WdRiiGEtaFIQRM71s+bf4FeZffBJ2gHT4wIzC7Ps4+thxWs6duF5Xec3wD?=
+ =?iso-8859-1?Q?3GY6FdI+f+zr456GZg2nA30ao3tq6wGmcDG+NbVm2dJuEx48Gy/7MUX/HK?=
+ =?iso-8859-1?Q?nj0ZRf9kzjj/l9iw5zD8d7A5x8K1WKikaRzSb6nhG+npgJ2z/9DMNDGmZ9?=
+ =?iso-8859-1?Q?Q76mim3/fcMY/Jl3TBb3A50DHDGysCmeZDNnbb7KjfkHlc5Rq0gmBm32F2?=
+ =?iso-8859-1?Q?Mxb2vR3+CSlXcjNxGwRa9vYeEF/LbQdgBrOKfhORh8LjrF+Vefc2yXm2eU?=
+ =?iso-8859-1?Q?C1zqZERaAjgopDXOQFzoYEXSAWxVpwE/ltPMnMEQKNoNf1FZSt5t2ZiqOI?=
+ =?iso-8859-1?Q?nyb1YJ3eAnGlUoT9xeDSebn0vVI2D/xWfcHMdJEzLJQlAC3jYHReYVXL5v?=
+ =?iso-8859-1?Q?Dq2HFqgz2LKFCVPT/etZvFH3zoWE47my1AxX023XsuKicP158jku3AOz4Z?=
+ =?iso-8859-1?Q?XIo3TdY43C2OB4q1hPKuUPZjyBoZDvbZpX/L/owlDdqq8M1JDPoxqBduOz?=
+ =?iso-8859-1?Q?3fDpwnuJc4UeWmhnzSYh4WTA06D9El2O4QVfVgQP7X1ZGis6U7SVHb4/28?=
+ =?iso-8859-1?Q?NUR9lqgVK/f8LkzEROfiEMigYWXWIN4wn/cyQKXK49voEPZp7A1K4751wF?=
+ =?iso-8859-1?Q?y1ZktFQyeukd4SSDB+G3XeU5s92Md5zgjIacJkor0bEOytpbDKSN?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad17bff2-2bed-41af-adfb-08def3fcc9ff
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Aug 2026 20:53:38.2737
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: AG4D8CPfVajWlWn5Pxt/eOcTv4jLnYgTQ58jZ6jSVP0VE5HAFFDP3vcYmesxW0WTT+WC42dpD88PJCUMTPDuswAkqq0iOc4Pw6MQYJevx4Acysjq81OMzK2BLlS+Lt5F
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8205
 
-On Thu, Aug 6, 2026 at 12:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The quirk disables native PCIe hotplug on the shared host bridge=
- rather than specifically for the target root port, which breaks hotplug fu=
-nctionality for dynamically enumerated Thunderbolt/USB4 devices system-wide=
-.
+On Sun, Aug 02, 2026 at 11:49:27AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch breaks backward compatibility with existing i.MX8MQ device trees by changing the default reference clock source, causing PCIe initialization to fail.
 > --
 >
-> --- Patch [1]: [PATCH] pci: quirks: Disable native PCIe hotplug on MSI Cl=
-aw A8 root bridge ---
-> commit 841400e3b6d906dff0f94738835128127178d2e6
-> Author: Derek J. Clark <derekjohn.clark@gmail.com>
+> --- Patch [2]: [PATCH 2/3] PCI: imx6: Use the external clock as REF_CLK when needed for i.MX8MQ ---
+> commit 6f37370c304d3692e11e97087dc50e68e2389b9e
+> Author: Rudi Heitbaum <rudi@heitbaum.com>
 >
-> pci: quirks: Disable native PCIe hotplug on MSI Claw A8 root bridge
+> PCI: imx6: Use the external clock as REF_CLK when needed for i.MX8MQ
 >
-> This commit adds a quirk for the MSI Claw A8 to prevent s2idle resume fai=
-lures
-> caused by the Realtek card reader. It disables native PCIe hotplug on the=
- host
-> bridge when the specific root port is found.
+> This commit updates the i.MX8MQ PCIe PHY initialization to conditionally
+> select the external oscillator as the reference clock based on the
+> enable_ext_refclk flag. It falls back to the internal PLL if an "extref"
+> clock is not supplied.
 >
-> > diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-> > --- a/drivers/pci/quirks.c
-> > +++ b/drivers/pci/quirks.c
->
-> [ ... ]
->
-> > +static void quirk_claw_a8_no_native_hotplug(struct pci_dev *pdev)
-> > +{
-> > +     struct pci_host_bridge *bridge;
+> > diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> > index 98e1db751132a..9e3b64fecb451 100644
+> > --- a/drivers/pci/controller/dwc/pci-imx6.c
+> > +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> > @@ -445,11 +445,16 @@ static int pcie_phy_write(struct imx_pcie *imx_pcie, int addr, u16 data)
+> >
+> >  static int imx8mq_pcie_init_phy(struct imx_pcie *imx_pcie)
+> >  {
+> > -	/* TODO: This code assumes external oscillator is being used */
+> > +	bool ext = imx_pcie->enable_ext_refclk;
 > > +
-> > +     if (!dmi_match(DMI_BOARD_NAME, "MS-1T8K"))
-> > +             return;
-> > +
-> > +     if (pdev->bus->number !=3D 0 ||
-> > +         PCI_SLOT(pdev->devfn) !=3D 2 ||
-> > +         PCI_FUNC(pdev->devfn) !=3D 2)
-> > +             return;
-> > +
-> > +     bridge =3D pci_find_host_bridge(pdev->bus);
-> > +     if (!bridge)
-> > +             return;
-> > +     dev_info(&pdev->dev, "disabling native PCIe hotplug\n");
-> > +     bridge->native_pcie_hotplug =3D false;
+> > +	/*
+> > +	 * Select the off-chip oscillator as REF_CLK when an "extref" clock is
+> > +	 * supplied, otherwise fall back to the internal PLL.
+> > +	 */
+> >  	regmap_update_bits(imx_pcie->iomuxc_gpr,
+> >  			   imx_pcie_grp_offset(imx_pcie),
+> >  			   IMX8MQ_GPR_PCIE_REF_USE_PAD,
+> > -			   IMX8MQ_GPR_PCIE_REF_USE_PAD);
+> > +			   ext ? IMX8MQ_GPR_PCIE_REF_USE_PAD : 0);
 >
 > [Severity: High]
-> Does setting bridge->native_pcie_hotplug =3D false here break hotplug
-> functionality for dynamically enumerated Thunderbolt/USB4 devices on this
-> system?
+> Will this change break backward compatibility with existing i.MX8MQ device
+> trees?
+
+This is problem.  enable_ext_refclk is good direction to align imx95. but
+need find way to avoid break backward compatibility.
+
+Frank
 >
-> Because the pci_host_bridge is a shared structure, modifying it globally
-> prevents the pciehp driver from claiming any hotplug-capable PCIe port un=
-der
-> that domain. While this might be the only fixed slot reporting HotPlug+ d=
-uring
-> boot, downstream ports on dynamically hot-plugged PCIe switches (like
-> Thunderbolt docks, eGPUs, or NVMe enclosures) rely on the host bridge's n=
-ative
-> hotplug capability to function.
+> Looking at imx8mq_pcie_init_phy() in drivers/pci/controller/dwc/pci-imx6.c,
+> if a legacy device tree does not provide a clock named "extref",
+> imx_pcie->enable_ext_refclk evaluates to false.
 >
-> Would it be safer to clear pdev->is_pciehp and pdev->is_hotplug_bridge on=
- the
-> specific root port instead of modifying the shared host bridge?
->
-
-Hi robot, and any humans reading this,
-
-This identified something I missed when scoping the patch. The two USB
-ports on top of the unit are USB4/TB capable and are affected by the
-root bridge quirk. In a previous version of the patch I did try
-pdev->is_hotplug_bridge =3D false to no effect, but was not aware of
-pdev->is_pciehp. I will try with both and see if that resolves it at
-the lower scope.
-
-Thanks,
-Derek
-
-> > +}
-> > +DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, 0x150b,
-> > +                      quirk_claw_a8_no_native_hotplug);
+> This causes the driver to clear IMX8MQ_GPR_PCIE_REF_USE_PAD and fall back to
+> the internal PLL. On boards that previously relied on the unconditional
+> external oscillator selection, this regression will cause PCIe initialization
+> to fail.
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260806190439.12=
-022-1-derekjohn.clark@gmail.com?part=3D1
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1785669457.git.rudi@heitbaum.com?part=2
