@@ -1,68 +1,87 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C763543B489
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 15:44:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD543264D5
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 15:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786031068; cv=none; b=bKEcp6qz06MfdrROFpmaQIu6sNVv4bVQsSU2w677hUJp1sKj+yiK2q6Ff7WYZ/372HBQTwTW+URu6ERj+/Kp1+yjCQQ4xNwTSnc1ked60FyQcj7b18RqCKRA0j6FKB6z8lb0yrd9Dld/OdDspdWp9kj982llu53hfHvSrkiBlyg=
+	t=1786031340; cv=none; b=BF89CoO9mcyoleumWPlMXTXx+doZoeAu82Hk0ZzrbRJ7Vev6FTouoey/vbIyfrnONzlFv08zDTMKIsLxsITx6hVLc30WtdEdOHIP/VN8iqCVjh7is5rIoOMfxAEZKKVpHdk8Z/POIO5P0dU+trgjlgeUTt6fIQVK/2coLFf9v0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786031068; c=relaxed/simple;
-	bh=O7rkwtXnbLwt2keDlpi9elKWxaB0PjsiSkkruUjKVaE=;
+	s=arc-20240116; t=1786031340; c=relaxed/simple;
+	bh=v5TDmuQpqA82E3dy438qJQ0HCn9njcWZXH83JntM5Fk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pyfQbJ3l8uOVWj+uGGyAsGTtpdf6PAjeQGM0rfH0tSA3RFTffR+0cOLKGsE54TA1jiWY2qYInh7BwujuQ1CvrA/pP7GWifqn6JlrRO1og68inwFJyedu7ctluLEGJw3ajYz8ed0ws6lc9zSrdxGcZ8fUSFJZWVwqg8XSpPOLhZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFLiwAy6; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=UWMbdSjyKNe51FxMpfpjqWuaYvQ7fRh1MfUr5vcuFrMFizqqEnf2FBcZxP9WmG5M2wB27BW3iBgFmzDB/CaWGE4maXLv6OzwwoSJRbX2NOuq4XtCCjH1aPJyDagSdKOz6szI170ZWUiYbjqeNBhD7+Our302BGIIojdJ7BqfG5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y9rP6uxZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e8GBkEmb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFLiwAy6"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso25678715ad.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 08:44:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y9rP6uxZ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e8GBkEmb"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676Ensei2570203
+	for <sashiko-reviews@lists.linux.dev>; Thu, 6 Aug 2026 15:48:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=; b=Y9rP6uxZ6jARpBXU
+	smu8lSXunEjdNphRzEeAMayE3zW53ucXz2fdkQtZP3wJSjiFsKBhukXdQbmnUtIh
+	Q02vCqSwBmh+0uAk1jxauEa9h8fJeHojNQ8dm0RGAYwmOWRlbtCb4rcDFggYzy6H
+	qswN8fjZ5eeAjDye88DJ+4kAdEfHJR1A3AMlKm67FgUMCxITGkNo+HcCzXtj1jC/
+	TFFmMnWNzzf07ef5w6aeT27ww/lvJVkke8Wcjcl4uUqESCc1OxyJYHzsW3KhWT+4
+	qpKFKWLDod/mpE6KejN5xy/1e2v0ERbkNE2B4eyRsin7aB1mZM+Trt7TWfwkiIw2
+	v9Uh3A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvjud33jw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 15:48:57 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-92ec3146553so391014385a.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 08:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786031066; x=1786635866; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+        d=oss.qualcomm.com; s=google; t=1786031337; x=1786636137; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=O7rkwtXnbLwt2keDlpi9elKWxaB0PjsiSkkruUjKVaE=;
-        b=bFLiwAy6dpOd+q2YY6lvWD5WXrZd3GLmlXZY/n4nSl2AxK680AczvuqQg1NLWOFPwc
-         28kb0ydRlVAlFbJUI1CPIzTJXj+3iLWk9IPqe8d2SmN9Mmn9f2IdV3XTYoiO4v7Q0wBf
-         AyZRoMCX7gxLg/IwPTuV8Yyv26baXe4RtVhwn2iDW7CzqSA3EqogA74XEe+CSV+kMQmt
-         A8OHOkfth88+8lYP8IX9FE/qk+hFQD1LNyITpV6IGbgsLNsGBwsy/HX5tt2mXZWXvHQP
-         CPJLrXe5CVkN8hnlT4GCnN9PuAjnLnzfBJQPDGstXsgL+pwbzGMgHsGIpSshSOqO45J1
-         pt8g==
+        bh=SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=;
+        b=e8GBkEmbJEgeInKc4yXMWR+fxN4ga1IVtzJiLZq3L4A7vV3w44Ri6I5s0zbsehmScZ
+         ywL91mrQKi8pPRWG4VgQIzb5fUZrQzJpON9FdcNxq5nMKMMolZ2ZbE3NamSESjqDX5po
+         Q86LeEwfCrAxFttRa1JozApV5VTZruW2kitrLQGn6pISrOTrQLEF7ntjNkpFpjWAscTp
+         2jZq9XqVbaD2xJm6CzAwaneNyE5R6CgCPjuwFjAUqpn3hJdnayjVfbIr59a9df34QHPS
+         kwQLUOKz6nnW0i1bC0wnmaaszLFuJZ5/wG9NK7Wx2uEsxa0cUfmjr0k6SWpCN8Dlcz/i
+         3mXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786031066; x=1786635866;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+        d=1e100.net; s=20251104; t=1786031337; x=1786636137;
+        h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=O7rkwtXnbLwt2keDlpi9elKWxaB0PjsiSkkruUjKVaE=;
-        b=funnfxC2IW0WpcVqzyqA2yFZb161FEF8C8+2pWNDc2FOztL+7Zfm1wUga6lTix5by+
-         uH8M1nS5rGcAUgJJrQpUvUi/0Wgug3IFOpeg/gkguCEsQdADpsTh5/nyYJOztWsnVKZV
-         bWMKxnmVm7ySNfiW+lH8VfcBhgBVNmQ/n5qd9k5B8e4LjYF5de/gXcQefxgo1tYY97Y3
-         /IQHMRcBH9RxOz4T+aqkCpLeFPA1Wd7SaPM+Fkq5OpOBSWAi03RIedZrhHG9TWzDIOf9
-         ubtMKZz+wYkQSc4zM9r4BQrq3HIwDcVtzDbjO5YqJlpjQQcLAWX0pnHIyIu/dcsexnYV
-         zXyg==
-X-Gm-Message-State: AOJu0YzqMLQZ7lF7vRT7Rv3IUuyNppKshKWsLXjHvTVDykkN4eEZAZFU
-	Yo5fJJz3gzx67IMZlu91PFukLnlEKbpD3c2SotVE1N44LXLZ+FN5p1l+5ZejHw==
-X-Gm-Gg: AR+sD11WrKLiW7Fcxa5XnXbhpQmSz7gfSUNoeBY2FKLeJY/mQEYUb3T0wNW5/FZlQ88
-	CDflD2vPtMKeEcCN39E+2NZE61efZbScQt3WinoGIYwollDaXLKf+x0Q5n7H+psMiXPU3FTZSwd
-	m4xeEW4UJDtVWkBlRaGv4He4cmHhwuf7pbgypppQsmPReK6kmFl8IJhYk9LnteYlJP63NPxPtTa
-	VNhjStbVgks2/6xTiyLPUDxxMsoe8yER915JmKinFCkuFBZSnIDhS4ezUhIifAiHwMXpR3kJ3br
-	6A01X7ypRPAWMTVA8OzEAVtQTi8voX75O+8A/KSHhnFMR0+F9TxAGHHk8pTcXSuCNEgVfA5AxW+
-	n30wWcjVtycNUs5Zz0Fxx25WGM44bdAgF5TXM55YMOLs3P32VMufyNeQsfZR5k2Slvfqd7EwE6i
-	ZUuFPguL28iHrc9mV4zDJbr9Pa5+eDS/gwPvetmVMJ+wQ/ox1UHzS3/+4iAs+yAueeQCEGZbgJQ
-	VWE//uCd9AU8vWjvKu2vyGRRrsBgcVIhzzjWQ==
-X-Received: by 2002:a05:6a21:109:b0:39f:a8fb:3354 with SMTP id adf61e73a8af0-3cbadc1497emr3658629637.17.1786031065993;
-        Thu, 06 Aug 2026 08:44:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca92ada6sm25851294c88.15.2026.08.06.08.44.25
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=SZXBp15b585BWkwKGjEqMmNg+nscR5MNbxgZpGEOoco=;
+        b=axWtBsmMZxzhL8JfYBNiMFbxhN9Z8SduyO/c/6IkkXu+4e8iZMYAp+rJwRQYr/Ud5N
+         GO6XHQuP+mW/0FBq6HaPlPIsPfwWQrdMzFNWXgaJPCmazNHWkKllEWjb3YawgZIeavDj
+         G3tDa9tylQQCbuZ3qachHSlM8Vq8xo8uBfFbjdfYgnMQwgMh967MlE02XnI7az1ZI/+6
+         wUG3uz6G9wmoUc6BXU3AS/ATZIVXQWbE920NRHZM4ynplN0DL5OlrNYPW661v2UoZz54
+         KDnnxYNZOS2zCaF1aFA4oGwYf54CWFI6+s0a+zeLRyEHzQz4726AcFyDnsCbhmkAjJr1
+         2LZw==
+X-Forwarded-Encrypted: i=1; AHgh+RqykFKi/MGvax3eOmISBs98IO/8gcf1JuazejvMJ8bOU4r6Jf6iH5lD5qOGiXVPIrE8bwISZqJ8x9eRl7xwz3Y=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzo6r3UGj/yJI6dhjVzx08LQb75UIrbG0mmfVU6H7Vyq6HkijrQ
+	fCxT1tvSRCoS2VrcPLzby4zLDgJXvpYtSijbSnFrevrckKIo9RD8v/vto5tsdF5Vu6SJolTJKSY
+	8QR/ZgbJ75CstrezCHaEpCzwa5fggivn4MObA+gLfL9wq8LkgPdMNalttdZinEzkwYGbScSE=
+X-Gm-Gg: AR+sD11XAZ8oOD8RkO01mrSBnHfw/1J+vQkoSKlsqnOqBD845HzWyOXsyRpK1koO9UW
+	RZOIMWBt91b4IrjyciMz/QC5bzH2l9gAA4BvIgXESrVY16jLn9hf4btzahptD5Z9Gk8cURbAg3W
+	86cPfD8s1a0ZH76qyKWz9unYd9mD/2B8lJ4gfsSoHufZEJHgIxKJv8rsgUhtT0M2lOdHE1JbcyV
+	LiAXBErbuPYQathgUqL+wa2ZmjmDhTE2rWNzO+edylKHiIp1zIXpVMYkl0q1Lg74vLKrrRhamaU
+	WDBQ4gpmOs++xLavGf7aAT8RmRwiCXO9Jn0mAR1qZ66kESbheQvbZIHLKYIN0PGhAZT2vvEs4+a
+	TlpIH5lnYZgQWSwbo5fwTUMbYEP9bwhE=
+X-Received: by 2002:a05:620a:a10f:b0:92e:bd39:9993 with SMTP id af79cd13be357-936491af165mr1370753785a.31.1786031337260;
+        Thu, 06 Aug 2026 08:48:57 -0700 (PDT)
+X-Received: by 2002:a05:620a:a10f:b0:92e:bd39:9993 with SMTP id af79cd13be357-936491af165mr1370747385a.31.1786031336714;
+        Thu, 06 Aug 2026 08:48:56 -0700 (PDT)
+Received: from [192.168.1.16] ([106.222.229.34])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-936583cdd32sm274043585a.7.2026.08.06.08.48.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 08:44:25 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f96884d5-7bb2-4646-9175-1b385789690b@roeck-us.net>
-Date: Thu, 6 Aug 2026 08:44:24 -0700
+        Thu, 06 Aug 2026 08:48:56 -0700 (PDT)
+Message-ID: <67fd2a5d-fef4-4292-b981-c930b55aafb4@oss.qualcomm.com>
+Date: Thu, 6 Aug 2026 21:18:51 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,69 +89,171 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hwmon: (yogafan) Add support for new Lenovo models
-To: sashiko-reviews@lists.linux.dev, Sergio Melas <sergiomelas@gmail.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260806131103.19104-1-sergiomelas@gmail.com>
- <20260806132452.80AD21F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v7 2/9] soc: qcom: Add QMI TMD support for remote thermal
+ mitigation
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        sashiko-reviews@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20260731-b4-qmi-tmd-v7-0-3befd44403d5@oss.qualcomm.com>
+ <20260731-b4-qmi-tmd-v7-2-3befd44403d5@oss.qualcomm.com>
+ <20260731105316.BDBA51F000E9@smtp.kernel.org>
+ <7ptv24tcqk6ym3pkiuo5y5klhv52nycwhg2zl5usxme47cmflw@pg3lays6zpas>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260806132452.80AD21F000E9@smtp.kernel.org>
+From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+In-Reply-To: <7ptv24tcqk6ym3pkiuo5y5klhv52nycwhg2zl5usxme47cmflw@pg3lays6zpas>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX79b5UPK3miOz
+ IfmGmdsijJxr1fsOdcJEuZOEeBGufJn52Z7sE8+DJWrq6FW3L3jmEwJG1HFgms7qAjZ03k+FitF
+ hxt5cB74W+363XCapzO4HPHRE5L078lb2Fp3rLpUdAAqymERvhgnM9GY2ez4iNiZYkp6/xNWlb2
+ lAoNKC38eI5H7brxJJmXLr/Utb5wMGZx4djB2OmYKu7W5lkQAP6LUqp/YjEsAWxNSDDsn0rlxYV
+ OlNPbSrE5ULjE9utFi2izcI6E0BneKa9/b46c6nfYP/k9FPdvCdj0AuCdtgsNlmeggcOYzB9OHS
+ uVMdwbXpJS0sm/fJyonVgUB5dfafsXbResdAALbJunphPQ9GDWqZEm7UgZY+lw82irpy2Dfteud
+ SaMI2n+cOxv/9ndNqR49idfJhng8dWRbs7liNdQkG5l4Ts3wkbukrxJDXXMZLlAEQ8WvT70mZjr
+ P71xK2WExBUbCFJhXyw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDEyMiBTYWx0ZWRfX+tnPyI0rFYth
+ RJZwOC5vORxpCTSvg4iENv8F1w5vd1D+lecPhIedAxOqQ4hdVdaeryySh4gkvefZ8WxnAD6A4M+
+ lN0e4U3feTqX1WFEXCRycxQzqJeAWbA=
+X-Proofpoint-GUID: wOcKnLjJo7RSZPGlN3gBaGLgNeEQ4L8D
+X-Proofpoint-ORIG-GUID: wOcKnLjJo7RSZPGlN3gBaGLgNeEQ4L8D
+X-Authority-Analysis: v=2.4 cv=DeInbPtW c=1 sm=1 tr=0 ts=6a74ace9 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x3UvaR+l8cLCJ1uKBUlNag==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=PaKyr2AS0Ek1y2y1GKQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=GvGzcOZaWPEFPQC_NcjD:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-06_01,2026-08-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 bulkscore=0 priorityscore=1501 adultscore=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060122
 
-Sergio,
 
-On 8/6/26 06:24, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Specific Lenovo model DMI quirks incorrectly use `DMI_PRODUCT_FAMILY` for exact model string matching, causing all specific quirks to fail and fall back to incorrect generic profiles.
-> --
 
-Please confirm that this is a non-issue.
+On 8/6/2026 3:10 PM, Dmitry Baryshkov wrote:
+> On Fri, Jul 31, 2026 at 10:53:16AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] Returning success without saving the requested mitigation state when QMI is disconnected permanently loses thermal mitigation updates.
+>> - [Medium] TOCTOU race condition when reading `tmd->cur_state` during service reconnection causes permanent thermal state desynchronization.
+>> --
+>>
+>> --- Patch [2]: [PATCH v7 2/9] soc: qcom: Add QMI TMD support for remote thermal mitigation ---
+>> commit 02c2244c0a2cebd6be4e1bf4e41d51362be19b5f
+>> Author: Casey Connolly <casey.connolly@linaro.org>
+>>
+>> soc: qcom: Add QMI TMD support for remote thermal mitigation
+>>
+>> This commit adds support for Qualcomm Messaging Interface (QMI) based
+>> Thermal Mitigation Device (TMD) cooling devices provided by remote subsystems.
+>> It allows client drivers to discover the service and forward cooling state
+>> updates to remote processors.
+>>
+>> diff --git a/drivers/soc/qcom/qmi_tmd.c b/drivers/soc/qcom/qmi_tmd.c
+>> new file mode 100644
+>> index 0000000000000..37e6ef19a0b34
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/qmi_tmd.c
+>> [ ... ]
+>> @@ -236,25 +236,54 @@
+>>> +/* Notify the remote subsystem of the requested cooling state */
+>>> +static int qmi_tmd_send_state_request(struct qmi_tmd *tmd, int state)
+>>> +{
+>>> +	struct tmd_set_level_resp resp = { 0 };
+>>> +	struct tmd_set_level_req req = { 0 };
+>>> +	struct qmi_tmd_client *qmi_tmd_cli = tmd->qmi_tmd_cli;
+>>> +	struct qmi_txn txn;
+>>> +	int ret = 0;
+>>> +
+>>> +	guard(mutex)(&qmi_tmd_cli->mutex);
+>>> +
+>>> +	if (!qmi_tmd_cli->connection_active)
+>>> +		return 0;
+>>
+>> [Severity: High]
+>> Will returning 0 here without saving the new state to tmd->cur_state cause
+>> thermal mitigation updates to be permanently lost?
+>>
+>> If the thermal core requests a new state while the remote QMI service is
+>> down, this returns success but drops the state update. When the service
+>> reconnects, qmi_tmd_register() will re-send the old tmd->cur_state to the
+>> hardware.
+>>
+>> Could this leave the hardware running unmitigated while the thermal framework
+>> believes it is actively mitigating?
+> 
+> Please address at these comments.
+> 
 
-Thanks,
-Guenter
+thanks, checking these comments. will update on this.
+
+>>
+>> [ ... ]
+>> @@ -298,34 +327,33 @@
+>>> +static int qmi_tmd_register(struct qmi_tmd_client *qmi_tmd_cli,
+>>> +			    const char *label, u8 max_state)
+>>> +{
+>>> +	struct device *dev = qmi_tmd_cli->dev;
+>>> +	struct qmi_tmd *tmd;
+>>> +	int index;
+>>> +
+>>> +	for (index = 0; index < qmi_tmd_cli->num_tmds; index++) {
+>>> +		tmd = &qmi_tmd_cli->tmds[index];
+>>> +
+>>> +		if (!strncasecmp(tmd->name, label,
+>>> +				 QMI_TMD_DEV_ID_LEN_MAX + 1))
+>>> +			goto found;
+>>> +	}
+>>> +
+>>> +	dev_dbg(qmi_tmd_cli->dev,
+>>> +		"TMD '%s' available in firmware but not specified in DT\n",
+>>> +		label);
+>>> +	return 0;
+>>> +
+>>> +found:
+>>> +	tmd->max_state = max_state;
+>>> +
+>>> +	/*
+>>> +	 * If the cooling device already exists then the QMI service went away and
+>>> +	 * came back. So just make sure the current cooling device state is
+>>> +	 * reflected on the remote side and then return.
+>>> +	 */
+>>> +	if (tmd->cdev)
+>>> +		return qmi_tmd_send_state_request(tmd, tmd->cur_state);
+>>
+>> [Severity: Medium]
+>> Is there a race condition between reading tmd->cur_state here and concurrent
+>> updates from the thermal core?
+>>
+>> When the QMI service reconnects, tmd->cur_state is read outside of the
+>> qmi_tmd_cli->mutex. If a thermal trip point is crossed concurrently, could
+>> the following sequence occur:
+>>
+>> CPU1: qmi_tmd_register()
+>>    reads tmd->cur_state (e.g., state A) locklessly
+>>    
+>> CPU2: qmi_tmd_set_cur_state()
+>>    acquires qmi_tmd_cli->mutex inside qmi_tmd_send_state_request()
+>>    sends state B to hardware
+>>    updates tmd->cur_state = B
+>>    releases mutex
+>>    
+>> CPU1: qmi_tmd_send_state_request(tmd, state A)
+>>    acquires qmi_tmd_cli->mutex
+>>    sends stale state A to hardware
+>>    reverts tmd->cur_state = A
+>>
+>> Will this overwrite the new state on the hardware and cause the thermal
+>> framework's view of the mitigation state to become desynchronized?
+>>
+>>> +
+>>> +	tmd->cdev = thermal_of_cooling_device_register(dev->of_node, index,
+>>> +						       label, tmd, &qmi_tmd_cooling_ops);
+>>
+>> -- 
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260731-b4-qmi-tmd-v7-0-3befd44403d5@oss.qualcomm.com?part=2
+> 
 
