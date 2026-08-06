@@ -1,229 +1,327 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11021113.outbound.protection.outlook.com [52.101.70.113])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010051.outbound.protection.outlook.com [52.101.69.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE0427BF93
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 16:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.113
-ARC-Seal:i=4; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786033661; cv=fail; b=WfDNFV9LycPmn72CzYSn0a66F617GnKkVVhhn9qXm265IHeZMRbqtznZbRKDnHkUFRctAkfVP/F4VbgfKohN6Rb6RIkD+Np9pt8D5eGqTJ4w7gjVoLhhThO4OVxC912xSopUV9VzdbTRdUHQamXN/7Yw4+DWFaFdbkEM8dRHde8=
-ARC-Message-Signature:i=4; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786033661; c=relaxed/simple;
-	bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ig2P95S1Fvu/icT4QJkAUWM60UZ/8gtP2tJtxYMBjRw30azZYUjj7E6rn+zopSW0LfhXmd4XXyhtTz+CHN0KeqTZdz14QlEYHyPRm91kTEr7KwuGd2W4j1AtD74b8stZAqGUWWTKuKtt9q8fNPsjTFcV9nZ/pPA3Gv1D1xIc5HY=
-ARC-Authentication-Results:i=4; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=solid-run.com; spf=pass smtp.mailfrom=solid-run.com; dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b=g0zhUCa4; dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b=g0zhUCa4; arc=fail smtp.client-ip=52.101.70.113
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=solid-run.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=solid-run.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CA836195F;
+	Thu,  6 Aug 2026 16:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786033905; cv=fail; b=qMylpKBWvuQdHKFElfC2lSged8aHY1qXYW2CFklIOoupGmtKVnvbSZQtiMu3tb7bhbcwG2i9n3QfMDdOcORB5E2BYkntV2Y52eGsU9fBIxR3WoUAzw0gP2pibNR2d2bfS5vV5eYf6wY/IRLYyzv+lcHe/SKo8uoFfwWMOHs+qYE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786033905; c=relaxed/simple;
+	bh=RmQU2Lgqs6+v/syIsjYLdpxoaDAxa0ahcbUpyYnHwj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=XTBoPHpR64jYKINm4nvY5Run181RSqXS5SFqWsxuElF+8YV1xjQnRwirpZfdCjIjGdacpx86WeCoAwzVTTXDPZyPqTov2FT+uf8u+Ci1QOZ/NwrEgfjXux4lnQ43esDAyj72TgDTyeY94FzsZjC0dlYy0sLxqXrsUA2JBIIN0aI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=tpM1s2lg reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b="g0zhUCa4";
-	dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b="g0zhUCa4"
-ARC-Seal: i=3; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=NEcmdrQJGzPRkIeZ177KDGdmVi3zfeG5EevS8hwjZS4Aj6yRsJsPGlLMcj+eKknG9Vb9TsFV4/Y0wR6+iIep572c9SuMfPvFn51L3W7EvPO/Fp04cj1doP9g+3fHZ9DQKING57e6raLfY3uZWRfVeY53GHNYVHOOlfZ4rWupNJCeqajXyyi82gq18y/ePPBQEUma0mIzHcNwHvGtr7KzhzAWlESzuU8oKfSJHYQxl5ZmvjoMFGQNgyUy8irIjSXSqXc9M2wEqm2PEL9uhemI4HS3MPKAbXMGBgYHa6f8q3hNN2E/MNxMiJUeMWrw9BuAE3knciewsc6CwriZpyuHZw==
-ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="tpM1s2lg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CMjYFs5i7Qfn/nvbTDUNUImkdwA6DhoX5imKVbttG7HWU0S7dyzKiaS2Lzp71o7M9/SnxS3AUJ/1LDXpIRVTIq3D8W0hOG+rgkwsKk7XVTRF+GAAUS0jzCiONUL4pvY8TKfpFIObgNhJQpEP5B6PB4nO7JsKWhVvJuSeh8B1PwddVOonSDNLU1AHR806I9vy1GIf/DtPyECFSNDtCuOcd27IZy1MiAGiYyjerXDCPALvXeoqYqbgQKknbSIeLWFIyBaQU7cmkkyLa2zsx7a6Fmub4Se44PBgFNm9rrdktbhNyNVgFaEYsuNapfMq8tdBWs58UuFdHrZOqjgsxq36LQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
- b=s1NnMQSyJ+k+N+eqbXN2c5C2JJbiL66x59osJciDbUc4TaiOExkl11IeO1OjQGM8qGn0YTllXZkm6yK4YN0g4TxoIoRUhKGUS2GhfmV4otHpt90QJ1+4Te5crmNGkodmLLeSUxdfYcWTOPfSWK7UJoD9H+8jIlx0Di5puZ7OvryFu6t5fMfFZ6/cnSsWVGLwipOW2hcvZD26ji4PrG4OUHr+rgJo5mw/FlHUY37YAnU2PUFZD1MpE+AcrF4EFFoDu6qg4TZeiGeU8Y3PCD22QhpkCRO1D1cuSMwpThjLLKRnEqNzErGKW89JgeL5BqaTV31j4bsizaOksyWeG9fX+Q==
-ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=fail (sender ip is
- 52.17.62.50) smtp.rcpttodomain=kernel.org smtp.mailfrom=solid-run.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=solid-run.com; dkim=pass (signature was verified)
- header.d=solid-run.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=solid-run.com] dkim=[1,1,header.d=solid-run.com]
- dmarc=[1,1,header.from=solid-run.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=solid-run.com;
- s=selector1;
+ bh=htS2cDh2I5X4vxfoJNYcBY8vdB/uDofkhHL8chNaTOE=;
+ b=NOHDGkU4clHZHDup1EnWHFJKP0RnC8NoVQAg4Jn7Nm6xQCP4Vaua1zMcShwHIhVq+elZz9DF/Thg0Vfuh2mQwSouteFSVlY+Wvoj28pT87Yr/tuuWZaJ7EOSzJ2oG6RNbyeRbBxQblq/3NdV25/UqAl+9B+HGI4JjY8gN+RAHD0fezs/W+1DV8huCAw9zfX9zsndoM4f6kTd/pTqJKC97ygyvYjCK9aM9534ZnR+mqBRzC0gKfy9NKcvOXPIqR24FMmtSZM8Fc1xFt3lkWwYJX2iPMINBLZlFcABN6MmmgDDmRgJmUK7TPSEIHnfkiFbiZsi31gp6Yg76Fd1TbQaGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
- b=g0zhUCa4+yyxk9mR/FQVmUOtxbYcPM2aaRiE0LeaxYhYDOe8VppKQpZV0FXtWglTTd+T+eOk3AgtFA6wG84I8rg+pvYC9l9qCYkoCSkusqecw3kKIfTirS7tqmZU772iUMtskcIUfmRb8QCPb4boFBywi4wZipLEXK01tkGB44pfjazHr5KZv5qsY3h++Dq0HzfDSv6Y+Xoj/hWK27HM4GB85lFusnJHbwEynGsE6gA+iUxFksPSPCa3RXghW0n+dw9WCvIqPojxoNj4/mrOLsJQibPXhW4jkklxIU4Lp7Q5+ZuQEu1U0PWOOVX3qKQphFsyZRHEYlBCzJOx4COwwg==
-Received: from AS8P250CA0025.EURP250.PROD.OUTLOOK.COM (2603:10a6:20b:330::30)
- by PAWPR04MB9861.eurprd04.prod.outlook.com (2603:10a6:102:381::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Thu, 6 Aug
- 2026 16:27:34 +0000
-Received: from AMS0EPF00000192.eurprd05.prod.outlook.com
- (2603:10a6:20b:330:cafe::48) by AS8P250CA0025.outlook.office365.com
- (2603:10a6:20b:330::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.19 via Frontend Transport; Thu, 6
- Aug 2026 16:27:34 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 52.17.62.50)
- smtp.mailfrom=solid-run.com; dkim=pass (signature was verified)
- header.d=solid-run.com;dmarc=pass action=none header.from=solid-run.com;
-Received-SPF: Fail (protection.outlook.com: domain of solid-run.com does not
- designate 52.17.62.50 as permitted sender) receiver=protection.outlook.com;
- client-ip=52.17.62.50; helo=eu-dlp.cloud-sec-av.com;
-Received: from eu-dlp.cloud-sec-av.com (52.17.62.50) by
- AMS0EPF00000192.mail.protection.outlook.com (10.167.16.218) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.6
- via Frontend Transport; Thu, 6 Aug 2026 16:27:34 +0000
-Received: from emails-1558669-12-mt-prod-cp-eu-2.checkpointcloudsec.com (ip-10-20-6-106.eu-west-1.compute.internal [10.20.6.106])
-	by mta-outgoing-dlp-467-mt-prod-cp-eu-2.checkpointcloudsec.com (Postfix) with ESMTPS id 1B3B680497;
-	Thu,  6 Aug 2026 16:27:34 +0000 (UTC)
-X-Mailbox-Line: From b'josua@solid-run.com' Thu Aug  6 16:27:25 2026
-ARC-Seal: i=2; cv=pass; a=rsa-sha256; d=checkpointcloudsec.com;
- s=arcselector01; t=1786033654;
- b=Ww9m7QzhHjlVGmiHj9+HAphoajM3/dB6ut5xX2LepeneM3FzdFQ+d3hDgrX2sOLZJo9W2
- nP5BYFvHBuHzpgVSl3ISeZwc1XpQXb5fEmJ5OtFqszhv6+jjB0jokWE9ysH6p5BiBzLAB8F
- yglNJywTYiqPLrseCxhGwSn8P1ZVAvo=
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=checkpointcloudsec.com; s=arcselector01; t=1786033654; h=from : to :
- subject : date : message-id : content-type : mime-version;
- bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
- b=B3g/pqAfNW35UKJDLk2EaxQCWHp8u6N4RnQk+y/ccQMFVWAA/dKueVq8kX6W1g5QTqb3U
- hbNt3sW14iNgJYlJ7jTWzJ7zWI1AOhn8fVDZdHt/UsWkPdoKftE6wsYIhTDyxofdzvr/S47
- YMTsucRBHOKh0yZT6sX9ixcNd/RjJCk=
-ARC-Authentication-Results: i=2; mx.checkpointcloudsec.com;
- arc=pass;
- dkim=none header.d=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=solid-run.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
- b=g0zhUCa4+yyxk9mR/FQVmUOtxbYcPM2aaRiE0LeaxYhYDOe8VppKQpZV0FXtWglTTd+T+eOk3AgtFA6wG84I8rg+pvYC9l9qCYkoCSkusqecw3kKIfTirS7tqmZU772iUMtskcIUfmRb8QCPb4boFBywi4wZipLEXK01tkGB44pfjazHr5KZv5qsY3h++Dq0HzfDSv6Y+Xoj/hWK27HM4GB85lFusnJHbwEynGsE6gA+iUxFksPSPCa3RXghW0n+dw9WCvIqPojxoNj4/mrOLsJQibPXhW4jkklxIU4Lp7Q5+ZuQEu1U0PWOOVX3qKQphFsyZRHEYlBCzJOx4COwwg==
-Received: from VI1PR04MB5807.eurprd04.prod.outlook.com (2603:10a6:803:ec::21)
- by PA4PR04MB9462.eurprd04.prod.outlook.com (2603:10a6:102:2aa::9) with
+ bh=htS2cDh2I5X4vxfoJNYcBY8vdB/uDofkhHL8chNaTOE=;
+ b=tpM1s2lg9Bio5U4v0FNUVLlYeltVFkYnkUtEo/JoqU61qPfptMI41kXtHbAVXvUyASnGbD8Y/ZYewW36N96nFRo1fhUMTENu+3z46o41wP7Luq8yp5LViQQGV183rHveeNkTj/y98G0m37/9KH+h/vQbhGgSf9+iRM3i97sqPF0ctThWKpm4pd1U71oSpz+Dec/lkvAXGXJPBs2f0HxzC5A6KFDA2NcwBONFqbP06DjJpAoI6va7IzFJ29xwMAQmHL+awHlLX8J/o9MwkPXV84urOvbozmBYzrVgxyt8yQ6zBNbvb1q91q+DJ8z9x/XkGIUwuT0HYq5oS9Y7gLcphw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by GVXPR04MB9877.eurprd04.prod.outlook.com (2603:10a6:150:113::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Thu, 6 Aug
- 2026 16:27:22 +0000
-Received: from VI1PR04MB5807.eurprd04.prod.outlook.com
- ([fe80::3da4:2827:d637:37de]) by VI1PR04MB5807.eurprd04.prod.outlook.com
- ([fe80::3da4:2827:d637:37de%2]) with mapi id 15.21.0292.018; Thu, 6 Aug 2026
- 16:27:22 +0000
-From: Josua Mayer <josua@solid-run.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"wsa+renesas@sang-engineering.com" <wsa+renesas@sang-engineering.com>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>
-Subject: Re: [PATCH v4 1/5] dt-bindings: soc: renesas: Add various SolidRun
- RZ/G2 based boards
-Thread-Topic: [PATCH v4 1/5] dt-bindings: soc: renesas: Add various SolidRun
- RZ/G2 based boards
-Thread-Index: AQHdIA+YeUqcGl4770ejpdsevsJG9baF4eoAgAte3gA=
-Date: Thu, 6 Aug 2026 16:27:22 +0000
-Message-ID: <caf73060-ce7f-45c2-b5c4-d82a1d654c26@solid-run.com>
-References: <20260730-rzg2-sr-boards-v4-0-08bc459578dc@solid-run.com>
- <20260730-rzg2-sr-boards-v4-1-08bc459578dc@solid-run.com>
- <20260730104856.A190E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260730104856.A190E1F000E9@smtp.kernel.org>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=solid-run.com;
-x-ms-traffictypediagnostic:
-	VI1PR04MB5807:EE_|PA4PR04MB9462:EE_|AMS0EPF00000192:EE_|PAWPR04MB9861:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2b221ba1-8361-40af-a67d-08def3d79ef9
-x-cloud-sec-av-info: solidrun,office365_emails,sent,inline
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|38070700021|6133799003|10067099003|56012099006|4143699003|18002099003|22082099003|3023799007;
-X-Microsoft-Antispam-Message-Info-Original:
- SIKAHHxnPNQClFSKBEFB0FwPEoTGL1CIqOHpQrZIgIdr226UXQaoB0CDk9A4gkKVyrtJZ3V15Ys02DzuHfGbwu6se2yn9onWVjXHS4To+FXLUPWoxcUUxNExJNexZxA12Kv72Etb7sxYf0fgH2X9MrkpBG1UEvffaqnkyL8/B4UsOem+Xm6GxC1gtg7AUkv5Depkd65zF6sPYyAYfFEB6KGp8IMdaEADI4i1B2p5mKjCmZqqq90Xyebu/86/fyzU/KMJId0Y2wqHtCetfmr2kJ3sr8efaSM72mbafNB2cWhzYl26DaP9/h+1QnIBqoLPY9IVbCxcYXrsSLQ8IOb/e7MCi+t0tc5vKRq4cH9AMuqVVTIyPPMXCqWLclvjecJEMbUYx9cVb+dD4Cv/yGvrAhBCeH8tTt4J3CGvsXON+sX1jsOKvhqkVcqqxHyeFPDnLRo9l31wSgS8GpUcMbvjjwh9jQTH6PtkOAx+3F2As5zHICfc2vRwsaGCspRb03j8oXSCwfZiEYoF+NnpS+GlvTLU2qQf57oG5lsbkRmBufax6L2BF76QdehPCqG/BG1OFqm+NiNRSvlZnaflPCRAk390BYgVgtq8RChF6BJFgx10rM5xM/n1hYn1T/3J8y6/BthnTlHgBws5r29OOCKgCFo7tCZU+EfX3YFhl/WwuBGIef1KVnFkdkB6gCKR3fDWc/51sAk//yM/l30xM7GVaQ==
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5807.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(38070700021)(6133799003)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1102;
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1B844087698AD04F87BAF8B17D1ACE02@eurprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ 2026 16:31:36 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Thu, 6 Aug 2026
+ 16:31:36 +0000
+Date: Thu, 6 Aug 2026 11:31:29 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: pankaj.gupta@oss.nxp.com, Frank.Li@kernel.org, imx@lists.linux.dev,
+	robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v35 5/7] firmware: imx: adds miscdev
+Message-ID: <anS24Uf5jI7auJxS@SMW015318>
+References: <20260806-imx-se-if-v35-0-11b25bb308ef@nxp.com>
+ <20260806-imx-se-if-v35-5-11b25bb308ef@nxp.com>
+ <20260806112724.89B351F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260806112724.89B351F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA9PR13CA0008.namprd13.prod.outlook.com
+ (2603:10b6:806:21::13) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
- g7ABtk+qI5ZIWC7Pw1s9tmOoUuIolQiODdX1JSpkjXyu7EyVjGahXP5z+IyN1rgU7qpVbJ+dKRx2p3pCtm5LkD/W0VGNyMltyEVK5MpfEeJRvEi/cwGL08j1bVfHgiC6vZoIps1uKrQ9qUKniUnACWnUTZQ3YHR+yMmbe09+5jdJhs5lqtX6qZqFGwsydVb+FP46LddR4cHXsSF8NC8UktqZTG3uYU6hNeN2oQvO4itmLLmLLSDwI1fyxtuEEgdLwRQ0D23nzf9EEcJewW5jQb7i8RyLeePQ6/ODMJbdMqhXfAkIb5jSLOhZU2Y1J7ctxJR6qzelh4X+OiW2EHuN9w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9462
-X-CLOUD-SEC-AV-INT-Relay: sent<mta-outgoing-dlp-mt-prod-cp-eu-2.checkpointcloudsec.com>
-X-CLOUD-SEC-AV-UUID: c293648092204ab2b1c7567e2d9a7710:solidrun,office365_emails,sent,inline:205d1555f029ec72001a1b4933c5e88e
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VKeIfp5YeDpYnW5ArMV8XO1EdLJhP27BB665xsd36a0Q0UT8TEmd+8FB7yTn3iYypn1wHyAf2b8XCZ4dAvaMLlMUh2CBEYCWUKs5hmZfAFs54qrDuUvsYuIujvuTT80WP0guaDchqKGcaZeWQ9BvJfR6Uz8Br3DXDhP+9kqsrVOX69ugbqlnmEMkytdcl4rGi/aU4HQ6NVMPab2AzvoHsvTWsho99QWRuL4WXnzzq1ZHOOMCVN6QxZKHOQ+Tx+G1uCQf0SrFfHHqxN/WA1FmF0BEFjS3I0aCMC73CGCY3xinFH3e3w5B/AVFp/QF7ih68K7cLuhaa9kCTwAVL80qBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R7WsLCnb7hSKxRx8UUxfg4sSD/vqqumEgSZvw9DDzcQ=;
- b=MJgnPGROMDNJRPnu/FhSBGu9kxob2hxNIYQqTg+vNF+bHCURGmuHETNPzCMwlRa2bPgc37w9LP+G3KkQ+bl7ukqehNdkJEkbej6VD0ONDsxrxM3kJwppaLCL4RZPDDfTsSzGJE7MPd1580Nl6U1WXZBGYrIm1IffucErYnhqRixedtGfUESbiUVkPs0UXNlJuQpPu+mCOsNHyX7X2MUsmIqK5oSf6umuKZ0nucnOzxHozYZH1p93qawGcIjwZldfGgpLi8Nc8eARO19GilObD3LK8B5B4F0FZtJIiOuLyenveTiD1MbrVKoPpZ7eSx47b9Dr1v3nhcmu+nEhZgQfaQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=solid-run.com; dmarc=pass action=none
- header.from=solid-run.com; dkim=pass header.d=solid-run.com; arc=none
-Authentication-Results-Original: mx.checkpointcloudsec.com; arc=pass;
- dkim=none header.d=none
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- AMS0EPF00000192.eurprd05.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	9eb8a7c9-5bd9-4c8f-0579-08def3d797ec
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GVXPR04MB9877:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42d5d3d7-af30-4e39-16c3-08def3d82f0d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|14060799003|1800799024|23010399003|376014|82310400026|35042699022|3023799007|4143699003|56012099006|10067099003|6133799003|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|366016|19092799006|1800799024|376014|4143699003|11063799006|56012099006|3023799007|10067099003|6133799003|13003099007|7136999003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	fB+uwuzGD3hfMtdPsGstchUdBgyXyv5tRMuIljDY41PCDCSGMDH4WZfTKCCy59eQmi8TQHFRSlQzLW3HdnSx9KGhQYCqaW82XxAO9XScd/kCfE1Q4TM4V9v8G/6s598qVTtKEWPWa+BLl9IhV+WprGg74WZZZOTkrH2mLfyWH/qxxxHuYzmWfeB/U8HsFIqdfQWDOmumT1pngVQOQ0Bx2Y4p62oZmQmECHknNDSkwvkDKN5CHo3EZ47Gn2CYCv2snY0isrNT1m8E05p11+ifcvW6yUmtZZjHhvZQLgaDXowvkqHmHop43QJztFlZrpjVA/DWLl1Xn6FZlMeqIUD8PO715O6iueTnO7HH1YOz+RI+4LwK8RrH0ZJmsYahQ6iv7l2kCXT6ZV6Ura10UQmBMAhZf9OTyUvXbOUlKIM1Gbz2YfVj8Gv9FVH6s+5WqD3oNBy8yxECEfBASaxzjKbXQjZDtV5gVwQEc6Ld9rJBwVVHFBHyELcYMLkzgUAIAxx1d1Ai+pK4WMzo4As6/YXoKIZsBUo/zBKx3PqZgfta434w7TrFMMw6RGQJe6BaoI9RQ4RtO1tlvwjH+c7f31AaxQsy/RBA5sUmrUlQPM4VzjydaibDpPOMNZzTcUKRGmVOCEDvoHTIvzT2MTy6V0aZqFagzJlVWcWriOTFnZ38OwGsfyEtZwITFxDFet5cXpz5CF8df7CG84FtkWTFcI794Q==
+	YcJaOHBTaqTQ544QDD77dCDI5ztezIxAdeNl1sFRZW1sEpEdhq6FKHly4Cpd1XAGP83ahDTOh/ApbDwhMgi0AzppEJ9tcIK9a5KjtJY8G2p1TAkyc7RFfO7GY4gMo2kwxBUzmb6lFKB6q/bpDcHKuGjEhxpxF3EvXw6C6sSAQx5VotXEroke583r8H/XanvNqcdLARDRmDACjAMtJr7MRj7DQcd476iYKcUaoDGuftEu/Yea6FYaMNqLNpHNjW0Uok3UuYstq+HDETqkmTXEwyX1oqDoDoRlL23DzLZjsWp8jDTt2mSx6J7OOR1ByCNbCwRWk0r5pA436nudSzbiYsprPJ1cgn/gkJaO7JEcm3gxreis6jZNHvko2N0QpfJeh9moQuys1khVSzYhsAV8jIb6sbA58jKx0Zhg+y3wancN9jORwjzuW6mg3TsN7gqh3a9lBULWYJGiewawKIYtqhVds77HWJ78Lg/4fw1hD1EJVEebBAwtPG4X/zbMYzpMFS0k/1dASygs1Hs/ybosCuAOgzeRBuip4R3hDej5hfXEBjhXos8WKTHP1srmfD/WX2KUJP0i5LyNaFMrAEvmmMWguelKlnQ5dVhuqPchyfA=
 X-Forefront-Antispam-Report:
-	CIP:52.17.62.50;CTRY:IE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:eu-dlp.cloud-sec-av.com;PTR:eu-dlp.cloud-sec-av.com;CAT:NONE;SFS:(13230040)(36860700016)(14060799003)(1800799024)(23010399003)(376014)(82310400026)(35042699022)(3023799007)(4143699003)(56012099006)(10067099003)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(19092799006)(1800799024)(376014)(4143699003)(11063799006)(56012099006)(3023799007)(10067099003)(6133799003)(13003099007)(7136999003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	iAIu+6zlBv1HQzsWjCSWtuLpOQ6ynv99AM3G6NULtEpbUYZ4kIsNVaPZvQTg6oRoETyOVXgYwtkazFvEQhFnkRM9GjhmmgLM7iCGDb++k+cPfD45ltowQ8hvrwkcu9Xc2pXOg+HNw0vCuYOfyZncGts0n5JFhpCwEmNuMtXrc1GSGurj4z9lzs8YpHGUGIwtU8VO7IzflskxlZJo3b6BWbdn23AvoQHBXn2Nyhok6oOw19b4uBmjAmVq1qTUFeeRjYnhNxkpE+5LPvCQpgvpMqBBLrnx+MXFatIsxab3WaAxo3PMsfmQOS+W+p9aIUXy0Ssm4dTphK9/qy7fuQ5OnaaUg03Ri8JdoV1pk76ZpvGbjv03LD079rH6gVNpWR/VJ25wVgDsjgaDdOAnfEEFxC3iyhvtz/spI917thN5wdPEjh4+todQHoCjMm+jMUT/
-X-OriginatorOrg: solid-run.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Aug 2026 16:27:34.3017
+	=?iso-8859-1?Q?TNpxBsISFEHza9iVRRGGJIYtGtrrG7jFhn1nwOkN2G7TTlUIhYUUMKqVCk?=
+ =?iso-8859-1?Q?ursfDn8rzOCOdD63InYYJmNErZgcwyTxshqF+9tmDl3MQ6P6HR2BxHYtqz?=
+ =?iso-8859-1?Q?V+IQkUf442DIjZrFoSFE++Yx+S1Nwt4cia088HZBTgkNZAPqdVjKBJ/vsO?=
+ =?iso-8859-1?Q?p3VpiY/FQ0wZUUcMj6hJ/XPWCqICgBaNX+AQGK5/xoB3lGYUsae/DcdiLs?=
+ =?iso-8859-1?Q?SwGVRyAEJZlIwq25Hp/hVSPQW1G6u1Zq2/9Kb8u2dZK55cFLn7VBmlGF8n?=
+ =?iso-8859-1?Q?1HW9lP8dEOo9DM04SXah7/iXNtz2End6z1PgjgJOW6v7Hz4iZuj0J8KOBy?=
+ =?iso-8859-1?Q?+4vANxni+2IBPtZ+0XBWnecw5vc6eQXYb5I/X//q3CkzlbIFnGkzFwi0dG?=
+ =?iso-8859-1?Q?PlnkyzdZPwlne7Ra6TYWHnskR1vYcGOzV74HfIpM/X0NpgVVOFI5PCiS7p?=
+ =?iso-8859-1?Q?imkihdf8fvVafmQCwmi/R9plgjl/FQI3oKrf6OdcsK8XypaldTTPgiB39S?=
+ =?iso-8859-1?Q?lDQ5sC9ooj+Ch7yJ+8RQ2jQ8Byst/VH/+DJfN5Ri5fQ1QFCWKaOvnAGl4I?=
+ =?iso-8859-1?Q?7d+2VPeca2h19tkuFDliGfgphjq3tWy0+MqgAglAm7ufpVy4tBoE+Vc44R?=
+ =?iso-8859-1?Q?rJ73j3P4VpUlwFsl9g5eZ3pNcgGHaqkrHM8JzXvqaxuu/yVurYUIz/wULp?=
+ =?iso-8859-1?Q?19N69cHmoETf5bKzZj/hKK451CoLVAIJn6LrhYfYefutObjA9+jJa0uruq?=
+ =?iso-8859-1?Q?Sb4X2COJy5CySo3ARAnm8yyNNnVA/A5jfIzSq1Z9k9u1jQPFFli8LjctD+?=
+ =?iso-8859-1?Q?y2EuOAw3nshXnoVw5OSxXFDAbz4hOMQeMhkAAxVR5MnjlUm1tbu2TwAz2E?=
+ =?iso-8859-1?Q?QY57o6XXgXnXt8ItznBhPwxxWqAoxx+gjUSF+S1k5zkbq7WBH2U/Cv0HVc?=
+ =?iso-8859-1?Q?9ciYI/JbCw7945NEm4lpGeiNEGg+1DdDj1Y3P+VbNCG2fz5F7GZCkU+hyt?=
+ =?iso-8859-1?Q?j9KnAvhcNhFGLlAeKOrNKFFhT3vVOnZSRoYfIeXSrN4gQRQR3c1BR1m06m?=
+ =?iso-8859-1?Q?excRpTeSy1ig1j0RoHxpoPY7t5SWUqlyECVMt8M3aKs4fnlzKzWQUuGuzv?=
+ =?iso-8859-1?Q?US2qIYURpH/f1Y5fwva3yLAGPB8Y2ftz41EeE1BbLYulPe+cyjcUjF9y9p?=
+ =?iso-8859-1?Q?UkOfD3VMJepHj/DEetpP6Z8I8W8W5fnDiVXqKUro3X8h9kehr6UQofcmBP?=
+ =?iso-8859-1?Q?T6pKZAQElE6jq0L3akICEiuk5xKvt7YH+rJKY1rHAb4221tlo1zJfuDzDX?=
+ =?iso-8859-1?Q?518jGObfQUGyv+VA0gA31RttPyW1lGLdzRo8NzVPrVFbrS0YMs9D6Vf0if?=
+ =?iso-8859-1?Q?eetLdNk52mHG0zGBgHholY4jhl+Mao0uI0gOpaj5Og8gg8z5DgoYlDapxw?=
+ =?iso-8859-1?Q?X42AXbWKkKYld97DTJFiQ981hFmVZi4MslFIRb0XEZCZuk6iGIdK8gsLGJ?=
+ =?iso-8859-1?Q?RMxhYRj+hpEOA9qpfNySgK9UWjDQ7pUxYKhv6kFYwWSSSi/E7E4Pyj5egT?=
+ =?iso-8859-1?Q?kbE9AQRFrwuFaTnC3YczLApPpEnKMEMUGVoMNnbKhA67ZLcjB7jL4Rxeq/?=
+ =?iso-8859-1?Q?nefIitipIewez2IrXWjtNM/l+DHpFk11ViqJiMYjkos4S1SD8QcziB4dDz?=
+ =?iso-8859-1?Q?gzJZYFCSEMI9Ko59d90xlWv1zXtstsn0n8HqQ8C/30+cf9lfD2pM2EDyKK?=
+ =?iso-8859-1?Q?+WgrFqxyzmCulYDtueE6+A+iHWfoOHsqeNX8S41KnHn2kArCJZFERTXEI1?=
+ =?iso-8859-1?Q?EVYIzftG3u3gXjX57v8BFXHnHBufXr0Ow6mErdMYznjYG06eGL62?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42d5d3d7-af30-4e39-16c3-08def3d82f0d
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Aug 2026 16:31:36.3632
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b221ba1-8361-40af-a67d-08def3d79ef9
-X-MS-Exchange-CrossTenant-Id: a4a8aaf3-fd27-4e27-add2-604707ce5b82
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a4a8aaf3-fd27-4e27-add2-604707ce5b82;Ip=[52.17.62.50];Helo=[eu-dlp.cloud-sec-av.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AMS0EPF00000192.eurprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR04MB9861
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +DtHgIqQywPuQ7OTH6ap9BGVCYGnIdELpFzyhz6/8t3BI5hfDdXxo/Si7885oig6rj8KPt3sQA28JBBlX9U6rWAPfL0dT8oYoPIh1kX1UkpvS/W9CkHrc7/zb+isMOqU
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB9877
 
-T24gNy8zMC8yNiAxMzo0OCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gVGhhbmsg
-eW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBwb3Rl
-bnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQo+IC0gW01lZGl1bV0gVGhlIGJpbmRpbmdzIGZv
-ciBTb2xpZFJ1biBTb01zIGZhaWwgc2NoZW1hIHZhbGlkYXRpb24gd2hlbiB1c2VkIHN0YW5kYWxv
-bmUsIGFzIHRoZXkgb21pdCB0aGUgMy1pdGVtIGNvbXBhdGlibGUgc3RyaW5nIGNvbmZpZ3VyYXRp
-b25zLg0KPiAtLQ0KPg0KPiAtLS0gUGF0Y2ggWzFdOiBbUEFUQ0ggdjQgMS81XSBkdC1iaW5kaW5n
-czogc29jOiByZW5lc2FzOiBBZGQgdmFyaW91cyBTb2xpZFJ1biBSWi9HMiBiYXNlZCBib2FyZHMg
-LS0tDQo+IGNvbW1pdCA1YTgzNzdkMzNhNTdmOWY3ZTMzZTdhY2E4ZmM5NDIyZjY3MmJmNzJiDQo+
-IEF1dGhvcjogSm9zdWEgTWF5ZXIgPGpvc3VhQHNvbGlkLXJ1bi5jb20+DQo+DQo+IGR0LWJpbmRp
-bmdzOiBzb2M6IHJlbmVzYXM6IEFkZCB2YXJpb3VzIFNvbGlkUnVuIFJaL0cyIGJhc2VkIGJvYXJk
-cw0KPg0KPiBBZGQgYmluZGluZ3MgZm9yIHZhcmlvdXMgU29saWRSdW4gYm9hcmRzIGFuZCBTeXN0
-ZW0gb24gTW9kdWxlIGJ1aWx0DQo+IGFyb3VuZCBSZW5lc2FzIFJaL0cyIGZhbWlseSBvZiBTb0Nz
-Lg0KPg0KPj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9z
-b2MvcmVuZXNhcy9yZW5lc2FzLnlhbWwgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGlu
-Z3Mvc29jL3JlbmVzYXMvcmVuZXNhcy55YW1sDQo+PiBpbmRleCBlZWVmMzRlM2Q3ZDA3Li4xNjcz
-MDA1YTNkOTMwIDEwMDY0NA0KPj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRp
-bmdzL3NvYy9yZW5lc2FzL3JlbmVzYXMueWFtbA0KPj4gKysrIGIvRG9jdW1lbnRhdGlvbi9kZXZp
-Y2V0cmVlL2JpbmRpbmdzL3NvYy9yZW5lc2FzL3JlbmVzYXMueWFtbA0KPj4gQEAgLTUwOCw2ICs1
-MDgsMTQgQEAgcHJvcGVydGllczoNCj4gWyAuLi4gXQ0KPg0KPj4gKyAgICAgIC0gZGVzY3JpcHRp
-b246IFNvbGlkUnVuIFJaL0cyVUwgYmFzZWQgYm9hcmRzDQo+PiArICAgICAgICBpdGVtczoNCj4+
-ICsgICAgICAgICAgLSBlbnVtOg0KPj4gKyAgICAgICAgICAgICAgLSBzb2xpZHJ1bixyemcydWwt
-aHVtbWluZ2JvYXJkLXJpcHBsZSAjIFNvbGlkUnVuIFJaL0cyVUwgSHVtbWluZ0JvYXJkIFJpcHBs
-ZQ0KPj4gKyAgICAgICAgICAtIGNvbnN0OiBzb2xpZHJ1bixyemcydWwtc3Itc29tDQo+PiArICAg
-ICAgICAgIC0gY29uc3Q6IHJlbmVzYXMscjlhMDdnMDQzdTEyICMgUlovRzJVTCBUeXBlLTINCj4+
-ICsgICAgICAgICAgLSBjb25zdDogcmVuZXNhcyxyOWEwN2cwNDMNCj4+ICsNCj4gW1NldmVyaXR5
-OiBNZWRpdW1dDQo+IFdpbGwgdGhpcyBzY2hlbWEgZGVmaW5pdGlvbiBicmVhayB2YWxpZGF0aW9u
-IGZvciBzdGFuZGFsb25lIFNvbGlkUnVuIFNvTXM/DQo+DQo+IFRoZSBjdXJyZW50IHNjaGVtYSBp
-dGVtcyBibG9jayBtYW5kYXRlcyBleGFjdGx5IDQgY29tcGF0aWJsZSBzdHJpbmdzLCB3aXRoIHRo
-ZQ0KPiBmaXJzdCBzdHJpbmcgYmVpbmcgb25lIG9mIHRoZSBjYXJyaWVyIGJvYXJkIGVudW0gdmFs
-dWVzLg0KPg0KPiBJZiBhIHN0YW5kYWxvbmUgU29NIGRldmljZSB0cmVlIGlzIGRlZmluZWQgd2l0
-aCAzIGNvbXBhdGlibGUgc3RyaW5ncyAoZS5nLiwNCj4gInNvbGlkcnVuLHJ6ZzJ1bC1zci1zb20i
-LCAicmVuZXNhcyxyOWEwN2cwNDN1MTIiLCAicmVuZXNhcyxyOWEwN2cwNDMiKSwgaXQNCj4gYXBw
-ZWFycyBpdCB3aWxsIGZhaWwgdmFsaWRhdGlvbiBiZWNhdXNlIHRoZXJlIGlzIG5vIG1hdGNoaW5n
-IDMtaXRlbSBhcnJheQ0KPiBibG9jayBmb3IgdGhlIHN0YW5kYWxvbmUgU29NLg0KRGV2aWNlVHJl
-ZSBzaGFsbCBvbmx5IGRlc2NyaWJlIGNvbXBsZXRlIGRldmljZXMsIGEgU29NIGFsb25lIHdvdWxk
-IGJlDQplaXRoZXIgaW5jb21wbGV0ZSwgb3IgYSBkZWJ1Z2dpbmcgYXJ0aWZhY3QuDQo+DQo+IFsg
-Li4uIF0NCj4NCj4+ICsgICAgICAtIGRlc2NyaXB0aW9uOiBTb2xpZFJ1biBSWi9HMkwgYmFzZWQg
-Ym9hcmRzDQo+PiArICAgICAgICBpdGVtczoNCj4+ICsgICAgICAgICAgLSBlbnVtOg0KPj4gKyAg
-ICAgICAgICAgICAgLSBzb2xpZHJ1bixyemcybC1odW1taW5nYm9hcmQtaWlvdCAgICMgU29saWRS
-dW4gUlovRzJMIEh1bW1pbmdCb2FyZCBJSW9UDQo+PiArICAgICAgICAgICAgICAtIHNvbGlkcnVu
-LHJ6ZzJsLWh1bW1pbmdib2FyZC1wcm8gICAgIyBTb2xpZFJ1biBSWi9HMkwgSHVtbWluZ0JvYXJk
-IFBybw0KPj4gKyAgICAgICAgICAgICAgLSBzb2xpZHJ1bixyemcybC1odW1taW5nYm9hcmQtcmlw
-cGxlICMgU29saWRSdW4gUlovRzJMIEh1bW1pbmdCb2FyZCBSaXBwbGUNCj4+ICsgICAgICAgICAg
-LSBjb25zdDogc29saWRydW4scnpnMmwtc3Itc29tDQo+PiArICAgICAgICAgIC0gY29uc3Q6IHJl
-bmVzYXMscjlhMDdnMDQ0bDIgIyBEdWFsIENvcnRleC1BNTUgUlovRzJMDQo+PiArICAgICAgICAg
-IC0gY29uc3Q6IHJlbmVzYXMscjlhMDdnMDQ0DQo+PiArDQo+IFtTZXZlcml0eTogTWVkaXVtXQ0K
-PiBEb2VzIHRoZSBzdGFuZGFsb25lIFJaL0cyTCBTb00gYWxzbyByZXF1aXJlIGl0cyBvd24gMy1p
-dGVtIHZhbGlkYXRpb24gYmxvY2sNCj4gZm9yIHRoZSBzYW1lIHJlYXNvbj8NCj4NCj4gV2l0aG91
-dCBpdCwgc3RhbmRhbG9uZSBTb00gY29uZmlndXJhdGlvbnMgd2lsbCBsaWtlbHkgZmFpbCBkdF9i
-aW5kaW5nX2NoZWNrDQo+IGFuZCBkdGJzX2NoZWNrIHZhbGlkYXRpb24uDQo+
+On Thu, Aug 06, 2026 at 11:27:24AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [Critical] The driver allows userspace to embed arbitrary DMA addresses in permitted firmware commands, enabling arbitrary physical memory overwrite.
+> - [High] The `se_if_open_gate` structure can be accessed after it is freed if an `open()` system call races with driver unbind.
+> - [High] A concurrent `close()` racing with driver unbind causes a Use-After-Free on the mailbox channel `priv->tx_chan` due to premature unlinking.
+> - [High] Firmware session and storage handles can be permanently leaked if response validation or userspace memory copies fail, bypassing the tracking of allocated handles.
+> - [High] Signal interruption converts an interruptible wait into an unkillable uninterruptible wait for up to 5000 seconds.
+> --
+>
+> --- Patch [5]: [PATCH v35 5/7] firmware: imx: adds miscdev ---
+> commit a678d58783e842f1a853a0ba674864702cf30910
+> Author: Pankaj Gupta <pankaj.gupta@nxp.com>
+> Subject: firmware: imx: adds miscdev
+>
+> This commit adds a character driver to communicate with the NXP secure
+> enclave hardware. It provides an ioctl interface for userspace applications
+> to send commands, manage shared memory, and restricts invalid or disallowed
+> firmware commands.
+>
+> Closes: https://sashiko.dev/#/patchset/20260805-imx-se-if-v34-0-7e4713d14e0a@nxp.com?part=5
+>
+> > diff --git a/drivers/firmware/imx/ele_base_msg.c b/drivers/firmware/imx/ele_base_msg.c
+> > --- a/drivers/firmware/imx/ele_base_msg.c
+> > +++ b/drivers/firmware/imx/ele_base_msg.c
+> > @@ -15,13 +15,57 @@
+> >
+> >  #define FW_DBG_DUMP_FIXED_STR		"ELE"
+> >
+> > +int ele_uapi_allowed_base_cmd(struct se_if_priv *priv,
+> > +			      struct se_msg_hdr *header)
+> > +{
+> > +	switch (header->command) {
+> > +	case ELE_PING_REQ: return 0;
+> > +	case ELE_DEBUG_DUMP_REQ: return 0;
+> > +	case ELE_OEM_AUTH_CONTAINER_REQ: return 0;
+> > +	case ELE_OEM_VERIFY_IMAGE_REQ: return 0;
+> > +	case ELE_OEM_REL_CONTAINER_REQ: return 0;
+> > +	case ELE_FW_LIFE_CYCLE_REQ: return 0;
+> > +	case ELE_READ_FUSE_REQ: return 0;
+> > +	case ELE_GET_FW_VERS_REQ: return 0;
+> > +	case ELE_RETURN_LIFE_CYCLE_REQ: return 0;
+> > +	case ELE_GET_EVENT_REQ: return 0;
+> > +	case ELE_COMMIT_REQ: return 0;
+> > +	case ELE_GEN_KEY_BLOB_REQ: return 0;
+> > +	case ELE_GET_FW_STATUS_REQ: return 0;
+> > +	case ELE_XIP_DECRYPT_REQ: return 0;
+> > +	case ELE_WRITE_FUSE: return 0;
+> > +	case ELE_GET_INFO_REQ: return 0;
+> > +	case ELE_DEV_ATTEST_REQ: return 0;
+> > +	case ELE_WRITE_SHADOW_FUSE_REQ: return 0;
+> > +	case ELE_READ_SHADOW_FUSE_REQ: return 0;
+> > +	default:
+> > +		return -EACCES;
+> > +	}
+> > +}
+>
+> [Severity: Critical]
+> Does this allowlist permit userspace to embed arbitrary DMA addresses without
+> kernel validation?
+>
+> Commands like ELE_GET_INFO_REQ accept physical DMA addresses directly in
+> their payloads. Because se_chk_tx_msg_hdr() only validates the command header
+> against this list and performs no payload sanitization, could an unprivileged
+> user embed arbitrary physical addresses (e.g., kernel text) leading to the
+> hardware enclave overwriting arbitrary memory?
+
+This one may security hole, you need check payload to make sure DMA
+address is in ranges.
+
+>
+> > diff --git a/drivers/firmware/imx/ele_common.c b/drivers/firmware/imx/ele_common.c
+> > --- a/drivers/firmware/imx/ele_common.c
+> > +++ b/drivers/firmware/imx/ele_common.c
+> [ ... ]
+> > @@ -71,7 +122,7 @@ int ele_msg_rcv(struct se_if_device_ctx *dev_ctx, struct se_clbk_handle *se_clbk
+> > +		if (ret == -ERESTARTSYS) {
+> > +			/*
+> > +			 * Record that a signal was observed, then continue waiting non-
+> > +			 * interruptibly until the response arrives or the timeout
+> > +			 * expires. The caller can surface the interruption to userspace
+> > +			 * after the protocol transaction is brought back to a
+> > +			 * synchronized state.
+> > +			 */
+> > +			if (is_rsp_wait_with_timeout &&
+> > +			    READ_ONCE(se_clbk_hdl->rx_msg)) {
+> > +				WRITE_ONCE(se_clbk_hdl->signal_rcvd, true);
+> > +				wait_uninterruptible = true;
+> > +				continue;
+> > +			}
+> > +			break;
+> > +		}
+>
+> [Severity: High]
+> Can this loop trap a process in an unkillable state for a very long time?
+>
+> If a process is interrupted by a signal while waiting in ele_msg_rcv(), the
+> code converts the interruptible wait into an uninterruptible one by setting
+> wait_uninterruptible = true. Given that SE_RCV_MSG_LONG_TIMEOUT_MS is 5000
+> seconds, this could leave the task unkillable for over an hour, potentially
+> triggering the kernel's hung task watchdog.
+
+
+This one need double check.
+
+Other high problem need your judgement.
+
+Frank
+
+>
+> > diff --git a/drivers/firmware/imx/se_ctrl.c b/drivers/firmware/imx/se_ctrl.c
+> > --- a/drivers/firmware/imx/se_ctrl.c
+> > +++ b/drivers/firmware/imx/se_ctrl.c
+> [ ... ]
+> > +static void dlink_n_cleanup_dev_ctx(struct se_if_device_ctx *dev_ctx, bool is_fclose)
+> > +{
+> > +	struct se_if_priv *priv = dev_ctx->priv;
+> > +
+> > +	if (is_fclose) {
+> > +		scoped_guard(mutex, &priv->modify_lock)
+> > +			dlink_dev_ctx(dev_ctx);
+> > +	}
+> > +
+> > +	cleanup_dev_ctx(dev_ctx, is_fclose);
+> > +}
+>
+> [Severity: High]
+> Does unlinking dev_ctx before executing cleanup_dev_ctx() open a race
+> condition during driver unbind?
+>
+> In se_if_probe_cleanup(), the unbind thread iterates over priv->dev_ctx_list
+> to gracefully close contexts. By unlinking the context here before the
+> cleanup completes, the unbind thread won't see it, won't block on fops_lock,
+> and might call mbox_free_channel(priv->tx_chan) prematurely. This could cause
+> the concurrent close thread to send on a freed channel in ele_msg_send().
+>
+> [ ... ]
+> > +	rsp_status_err =
+> > +		se_val_rsp_hdr_n_status(priv, rx_msg, tx_msg->header.command,
+> > +					cmd_snd_rcv_rsp_info.rx_buf_sz,
+> > +					tx_msg->header.ver == priv->if_defs->base_api_ver);
+> > +
+> > +	if (!rsp_status_err) {
+> > +		err = se_dev_ctx_cpy_out_data(dev_ctx);
+> > +		if (err < 0) {
+> > +			se_ioctl_cmd_snd_rcv_cleanup(dev_ctx, uarg, &cmd_snd_rcv_rsp_info);
+> > +			return err;
+> > +		}
+> > +	}
+> > +
+> > +	/* Copy data from the buffer */
+> > +	print_hex_dump_debug("to user ", DUMP_PREFIX_OFFSET, 4, 4, rx_msg,
+> > +			     cmd_snd_rcv_rsp_info.rx_buf_sz, false);
+> > +
+> > +	if (copy_to_user(u64_to_user_ptr(cmd_snd_rcv_rsp_info.rx_buf), rx_msg,
+> > +			 cmd_snd_rcv_rsp_info.rx_buf_sz)) {
+> > +		dev_err(priv->dev, "%s: Failed to copy to user.", dev_ctx->devname);
+> > +		err = -EFAULT;
+> > +	}
+> > +
+> > +	cleanup_err = se_ioctl_cmd_snd_rcv_cleanup(dev_ctx, uarg, &cmd_snd_rcv_rsp_info);
+> > +
+> > +	if (cleanup_err && !err)
+> > +		err = cleanup_err;
+> > +
+> > +	if (!err && !rsp_status_err)
+> > +		fw_api_specific_ops(dev_ctx, rx_msg);
+>
+> [Severity: High]
+> Could this error handling sequence leak firmware session or storage handles?
+>
+> If the firmware successfully executes an ELE_SESSION_OPEN_REQ, it allocates a
+> handle. However, if a user submits an intentionally truncated rx_buf_sz
+> (causing se_val_rsp_hdr_n_status() to fail) or a bad user pointer (causing
+> copy_to_user() to fail), the function skips calling fw_api_specific_ops().
+> This leaves the handle untracked by the kernel, preventing cleanup and
+> leaking hardware resources.
+>
+> [ ... ]
+> > +/* Open a character device. */
+> > +static int se_if_fops_open(struct inode *nd, struct file *fp)
+> > +{
+> > +	struct miscdevice *miscdev = fp->private_data;
+> > +	struct se_if_open_gate *gate;
+> > +	struct se_if_device_ctx *misc_dev_ctx;
+> > +	struct se_if_device_ctx *dev_ctx;
+> > +	struct se_if_priv *priv;
+> > +	int err = 0;
+> > +
+> > +	gate = container_of(miscdev, struct se_if_open_gate, miscdev);
+> > +
+> > +	if (!se_if_open_gate_get(gate))
+> > +		return -ENODEV;
+>
+> [Severity: High]
+> Is there a use-after-free risk if open() races with driver unbind?
+>
+> When the module unbinds, se_if_probe_cleanup() calls misc_deregister(),
+> which does not fully synchronize with active open() calls. If the unbind
+> thread drops the final reference to priv in se_if_priv_release(),
+> se_if_open_gate_put() frees the gate object. A concurrent se_if_fops_open()
+> might then attempt to access the refcount of this already freed gate pointer.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260806-imx-se-if-v35-0-11b25bb308ef@nxp.com?part=5
