@@ -1,187 +1,94 @@
-Received: from out-185.mta1.migadu.com (out-185.mta1.migadu.com [95.215.58.185])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1640742122F
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 10:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186A13FB042;
+	Thu,  6 Aug 2026 10:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786012910; cv=none; b=g3yWFZu/ZjihCQRTqO+xPtK98glfSrSfyiooP7QJN9LFRZdWDoOCCRz6PXKq691vGhhwmIDnahIuYLDIncjgyvU+Vg7xsNtBeAEa4/rIyfWgxLXwyIIJMma1Vgmv5wqWelZ4PKwiZeLsGNa3cnyVxpEMPBczjrOi3NgtsrMR9zM=
+	t=1786013131; cv=none; b=iF+zIqMg475qLANXrlFTKiee+aZv3u4edTkKdpZ/JhrmX3Zkk7exOpMu8Nrcjm8jyd6L8Mmw9Rwgm+J1ETifXQLflQDbK98ODYq2GhQts32IR1ylrZ7TkF8mTKCx9SlMwnFm4MKeXUaTYOLK1O96AKwd86WbPwZ1FC8ua6W4pWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786012910; c=relaxed/simple;
-	bh=yEGD7nqbp+CMW/yxhvfHzzaAgx6rkkvvBeARHNQ6i8A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KrHpMzvhYR56qu3jd+snjfFw91PRISfIw5MT48+e1yQ00ly7tdI8SpSzHKD3/JzcaJOuBhZW03wCKPomGm+by82TgcOjMmuVgp1NQkbtmw+hjsCZn8wVjLzBVhtmmVgbX5rhGu/QuTviB8djC6aucUS51YOW10h76nc/CpID2zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rqCz9VUI; arc=none smtp.client-ip=95.215.58.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786013131; c=relaxed/simple;
+	bh=MtAjXb0GC9qtU8O6jN3mSAf62YIUZG+BsH47xlOo0kg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FQjHnRuG9sX8TMLIJpYQ9JK3KCqMfgHwCcCrTKOzgUKhzhzTX4w+Tyniyg+5ULOo136xJ349w/eAfJGLpt9WcnVZHEyrSkbaAiYi43yblCMKYfqA+EL0GLeXonCXRBbtyq4MpmtALZ1+NRbDG44DUR0lTa2XRyIIlMpD1camehk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/aEsNsU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rqCz9VUI"
-X-Gm-Message-State: AOJu0YyJC0yAaES+/7sSbsMWrElF1uCEQjajG1UhZKANjSbGeMhf/t4J
-	Rp9V73KnRurbtFzUZ8o114g1v+fkBEi0CdkUUiB6yx5JaGl6jtNBAL250+fAmzpVjnB+JDQAj76
-	H3lzdpwGb5bJgPXiwPdjMlJgkA8K/8Ym7hFuN2wjU
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786012905;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z1qJaH8qe3xOuKMLMRx9tLtyzADdhPNGWrKECtyXTAw=;
-	b=rqCz9VUIzjbyMv5daE9YfqciCoWf8ntJzCGcymHh4jTzTHCHBPrQSoJKWwJYILfHjWJAdL
-	EDuXe7+HPIclLJKdSkDeec/y1iLSO5/UEJ4ZBtC+W20G4WXV4hi+oddMoED7wfMQ6vnuUo
-	PdVerEUjmn2NcHPMVPtahsjQ2oIUiUM=
-X-Received: by 2002:a05:622a:2589:b0:51c:935d:8d74 with SMTP id
- d75a77b69052e-52cfea276f5mr5700541cf.9.1786012885009; Thu, 06 Aug 2026
- 03:41:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/aEsNsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FBA1F000E9;
+	Thu,  6 Aug 2026 10:45:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786013129;
+	bh=UvgW13cGx5sULFG3dOsr4BPa1hUA/eN36ycS3FZY3Aw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=H/aEsNsUwoZ42Jy5S2els0kCmFIUc/WITVkbgO04hDjJ+QMthuOnSv2q4S8cDEbz2
+	 DU2vQo6U8q+MmTTeGRLJBvnQeipWhX8CFUvl+SGk+y4OuyNZ/hFguxXwM/DhSGcLpg
+	 E0dDF0oCbF85bVGCDlxVZPlnZovNydXCXiSqTMG2u2eBkVq5zfgv7K/eN6EWln/rYR
+	 IkQeXM79M6v/OeBqnqk0BbLPFfVL0x2kqMDPrAbHvQOel610cJzCr5uLqTPzo9PA6F
+	 QNMNkBmjgMSkXs2r3edf4s53aJGzat8qGkWy4AeMD5siKXDD59a6Gbo2cEMcUDqV04
+	 SgZi6IhdAcvAQ==
+Date: Thu, 6 Aug 2026 11:45:25 +0100
+From: Lee Jones <lee@kernel.org>
+To: Andreas Kemnade <andreas@kemnade.info>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	linux-leds@vger.kernel.org,
+	"H. Nikolaus Schaller" <hns@goldelico.com>
+Subject: Re: [PATCH v3] leds: is31fl319x: modernize registration
+Message-ID: <20260806104525.GC10716@google.com>
+References: <20260804-led-modern-v3-1-297720eec19f@kemnade.info>
+ <20260804135515.5DBFC1F000E9@smtp.kernel.org>
+ <20260804164101.43753f1b@kemnade.info>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260806100256.371164-1-fuad.tabba@linux.dev> <20260806100256.371164-2-fuad.tabba@linux.dev>
- <20260806103207.013201F000E9@smtp.kernel.org>
-In-Reply-To: <20260806103207.013201F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Thu, 6 Aug 2026 11:40:48 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzAqGbjVvPSz0nKZzTmH33tJxi2htegrAzRNSjENPcmBw@mail.gmail.com>
-X-Gm-Features: AUfX_mwjA9imTqbgbCmw7CTjZO9uYjppMiugnM-BRCF57kpEMD-0F264YSmLgfc
-Message-ID: <CA+EHjTzAqGbjVvPSz0nKZzTmH33tJxi2htegrAzRNSjENPcmBw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/4] KVM: arm64: Validate the host-provided vgic model
- in pKVM
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260804164101.43753f1b@kemnade.info>
 
-On Thu, 6 Aug 2026 at 11:32, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Unconditional copy of the host's mdcr_el2 to the protected V=
-M's mdcr_el2 allows the host to reconfigure the guest's secure trap environ=
-ment.
+On Tue, 04 Aug 2026, Andreas Kemnade wrote:
 
-Coming soon in the second pKVM series.
+> On Tue, 04 Aug 2026 13:55:14 +0000
+> sashiko-bot@kernel.org wrote:
+> 
+> > > leds: is31fl319x: modernize registration  
+> > 
+> > [Severity: Low]
+> > This isn't a bug, but should the description after the subsystem prefix be
+> > capitalized? The LED subsystem guidelines recommend formatting commit messages
+> > as "leds: <Driver>: <Capitalized description>".
+> 
+> 
+> ~/linux$ grep -R 'leds: <Driver>: <Capitalized description>"' Documentation/
+> ~/linux$ ls Documentation/leds/
+> index.rst                  leds-lp5521.rst      leds-sc27xx.rst
+> leds-blinkm.rst            leds-lp5523.rst      leds-st1202.rst
+> leds-cht-wcove.rst         leds-lp5562.rst      ledtrig-oneshot.rst
+> leds-class-flash.rst       leds-lp55xx.rst      ledtrig-transient.rst
+> leds-class-multicolor.rst  leds-lp5812.rst      ledtrig-usbport.rst
+> leds-class.rst             leds-mlxcpld.rst     uleds.rst
+> leds-el15203000.rst        leds-mt6370-rgb.rst  well-known-leds.txt
+> leds-lm3556.rst            leds-qcom-lpg.rst
+> leds-lp3944.rst            leds-s2m-rgb.rst
+> 
+> nothing look like special guidelines for the system. I do not want to
+> see such comments without a reference.
+> Also MAINTAINERS does not show any additional policy for the LED subsystem.
 
-> - [Medium] The patch fails to sanitize the explicit `__vgic_v5_save_apr` =
-and `__vgic_v5_restore_vmcr_apr` hypercalls, allowing a malicious host to s=
-till panic the hypervisor on GICv3 machines.
+`git log --oneline -- <subsystem>` is your friend.
 
-Patch 2 of this series fixes it.
+ % git log --oneline -n10 -- drivers/leds
+8d6b6c05b8e3 leds: pca9532:  Fix phantom device registration on missing hardware
+98c5c7b0d426 leds: gpio:     Make legacy gpiolib interface optional
+b6e08e0ad4cf leds: bcm63138: Use %pe to print pinctrl error instead of %ld
+07e028d93a57 leds: ltc3220:  Add Support for LTC3220 18 channel LED Driver
+cf197514bdfd leds: st1202:   Validate LED reg property against channel count
+0767335233a8 leds: st1202:   Disable channel when brightness is set to zero
+7cbe470366bd leds: st1202:   Fix brightness having no effect while pattern mode is active
+dcc31246aaf0 leds: st1202:   Fix spurious pattern sequence start in setup
+d2ca0e2b6d64 leds: st1202:   Set all pattern PWM slots to full after clearing pattern
+d32f8bdc2b41 leds: st1202:   Fix pattern duration prescaler and pattern_clear skip marker
 
-/fuad
-
-> --
->
-> --- Patch [1]: [PATCH v1 1/4] KVM: arm64: Validate the host-provided vgic=
- model in pKVM ---
-> commit 3364f007874647c1650c3fc747633d9c5c9b87de
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Validate the host-provided vgic model in pKVM
->
-> This commit validates the host-provided vgic_model during initialization
-> of a protected VM, ensuring only GICv2 and GICv3 models are permitted.
-> This prevents a malicious host from causing a hypervisor panic by setting
-> the model to GICv5 on a GICv3 machine.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/p=
-kvm.c
-> > index 24d6f164129ac..59bb15efdca42 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > @@ -340,13 +340,25 @@ static void pkvm_init_features_from_host(struct p=
-kvm_hyp_vm *hyp_vm, const struc
-> >  {
->
-> [ ... ]
->
-> > -     /* Preserve the vgic model so that GICv3 emulation works */
-> > -     hyp_vm->kvm.arch.vgic.vgic_model =3D host_kvm->arch.vgic.vgic_mod=
-el;
-> > +     /*
-> > +      * Preserve the vgic model for GICv3 emulation, but only what pKV=
-M can
-> > +      * run: the GICv5 world switch touches registers UNDEFINED at EL2
-> > +      * without FEAT_GCIE. 0 is not a valid kvm_device_type: "no vgic"=
-.
-> > +      */
-> > +     switch (vgic_model) {
-> > +     case KVM_DEV_TYPE_ARM_VGIC_V2:
-> > +     case KVM_DEV_TYPE_ARM_VGIC_V3:
-> > +             break;
-> > +     default:
-> > +             vgic_model =3D 0;
-> > +     }
-> > +     hyp_vm->kvm.arch.vgic.vgic_model =3D vgic_model;
->
-> [Severity: Medium]
-> This is a pre-existing issue, but does this validation fully prevent a
-> malicious host from triggering a GICv5 panic?
->
-> Even with the model restricted here, the explicit GICv5 hypercalls
-> remain unconditionally exposed in the always-on band:
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:
-> static void handle___vgic_v5_save_apr(struct kvm_cpu_context *host_ctxt)
-> {
->         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
->
->         __vgic_v5_save_apr(kern_hyp_va(cpu_if));
-> }
->
-> static void handle___vgic_v5_restore_vmcr_apr(struct kvm_cpu_context *hos=
-t_ctxt)
-> {
->         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
->
->         __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
-> }
->
-> Can a compromised host still bypass this vgic_model sanitization by
-> directly executing the HVC instruction for
-> __KVM_HOST_SMCCC_FUNC___vgic_v5_save_apr or __vgic_v5_restore_vmcr_apr?
->
-> If these directly access GICv5 registers, wouldn't this still trigger an
-> UNDEFINED exception on machines without FEAT_GCIE?
->
-> >       /* No restrictions for non-protected VMs. */
-> >       if (!kvm_vm_is_protected(kvm)) {
->
-> [ ... ]
->
-> Additionally, while reviewing the protected guest state handling, I notic=
-ed
-> another potential issue in the hypervisor main loop:
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:flush_hyp_vcpu() {
->         ...
->         /* __hyp_running_vcpu must be NULL in a guest context. */
->         hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu =3D NULL;
->
->         hyp_vcpu->vcpu.arch.mdcr_el2    =3D host_vcpu->arch.mdcr_el2;
->         /*
->          * HCR_EL2.VSE is host-owned (a pending virtual SError to inject)=
-, not a
->         ...
-> }
->
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but does this unconditional
-> assignment allow the untrusted host to clobber the securely initialized
-> MDCR_EL2 configuration of protected guests on every VCPU entry?
->
-> Since flush_hyp_vcpu() overwrites the hyp vCPU's mdcr_el2 with the
-> host-controlled host_vcpu->arch.mdcr_el2, could a compromised host use
-> this to reconfigure the performance monitor (TPM) and debug (TDA/TDE)
-> trap environment of a protected guest?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260806100256.37=
-1164-1-fuad.tabba@linux.dev?part=3D1
->
+-- 
+Lee Jones
