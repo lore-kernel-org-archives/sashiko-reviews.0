@@ -1,169 +1,176 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A373783B5
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 01:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785979354; cv=pass; b=DfvfdLZRGle9c3iayTD+hzHgxrv5VDQR4qHDEcp/X/kgeuQqpAyeYvY8i+7LCdPoWBXmgMx1g482nTZ2psAhQ7jUY1rIlqTy5HIMzCgTbnUJl06sL//EhNLstuHZ30CdH7BIBv/NaLyvUinq86xOLtUqfq9XXS+xA8BHbaiLkwk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785979354; c=relaxed/simple;
-	bh=DjWYmhBKtJJzERRUUW+D5EYkAOs1qhXbIqwsFtxKPfI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TZio/n7wbtdL+nq7/Y2Jw5GaoA0uXhOQjorrTWv4MGYaGK7tPKmWc7eeXapWZVkKvFe+2xRWpLip2KkbC9OMJcf+WsuQXGxt/uUFyFHCDc2vU+5LIfceqq5UK8zXxls8PnO3WR0GsmWnyjRUxBhcre55mXjrYMSv1Pavf9j5dwg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OGM9dTkl; arc=pass smtp.client-ip=209.85.222.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGM9dTkl"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-973b676e5f5so936179241.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 18:22:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785979352; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dvMeXRJ6M8D9jtXCj2NMuu7g0vtDuR/eSDz+W1CzOuqM5Pd8Wk9NN7kvFiWIG8E0W4
-         GKZfUcDflG4tLOa9wH2i6j2e+mY0xnq5nTUelcBMbGwBDFa4UlF/NpxDauFcDrgUFv5g
-         /7V1t/+I4a96p5wrwOcWopg5Cte0eD/BMcMncqJLsnhOrnpb2YEGVlVY35HLnI6HtBVJ
-         9WTNHVqfYdVeWkWlHHT8A9IkLYJ6QHhYIqPdc2ucxnwhOybiuFtvxpgynWw0pKCxpzTU
-         rjHQjX28oxzGGpCynbrg1gn/D/cL9XymfvCJe9WSe6Gy5EZQu2GeQS1orGlZF4rPTrB7
-         IHLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QA49Za2VkvJvbOtqLvEZSGcnBBWne/MDjPHtSxdMZFc=;
-        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
-        b=rWyRZH5zO0q82i3LY3HHL1Xi3eXLfaziHWpqFK4wPQEMPgVIvg5gRe8YAjXcwAxgeD
-         ztSvVjFjMjxhRHn4OrZcwuKiq3EvmRRsKynsYda+jjkxc1vOrCnXKMLqiDCBiaPJVeLZ
-         0WD8r9PhHuHQ6qT/idFTWzLjBAiI3rwYKz6pjNVxXAByatUtlV/tNpwOQGQMPDKGRhMV
-         9lQxFi2RUznQPZiLZ7tVHZbRCHYwiMS6KEy8vEuS7nuyFSbW9XDNAPRJPtlnk8HBkRpV
-         Y+4YSzbdedlUHGngwL7RRCggxyljzyntuLL6viaOvlMvwXIDv/UUAL8JedqvS8ZC3qo5
-         LhuQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785979352; x=1786584152; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=QA49Za2VkvJvbOtqLvEZSGcnBBWne/MDjPHtSxdMZFc=;
-        b=OGM9dTkl8179IzfXY0Zt9PcLzbmgwdNU6iFLDKMHH71pqpdJe8ukynwWIdZAq8Ap+x
-         dc/+h0HamGX9u2VllQX+F7Hlnul28EGzm1LCN7M9xoK9DRfuuzItdvR0+t3btGOplRv6
-         j6Y6EnKSBhUdzf4wngH3odfLwBrnbA2HZaOPpqoIf3pTafQes0/vmJfctOH5T1vmd+Ey
-         DV6IHmvfgTtP+itE6WhawJxcChTf5sN77toxj+qGRRVVdFGNiMIAkbfdd4EbJrXWWjk/
-         26uBHxdME/Ryvz9rF/OQlFS1wQuCCgynICIygyclKGF6Ljz8+p5oEvKy/YpVlclq/Z4T
-         C3iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785979352; x=1786584152;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QA49Za2VkvJvbOtqLvEZSGcnBBWne/MDjPHtSxdMZFc=;
-        b=Yx3TtT78+zbq4IRuNkh6OehOLzoCzNDe1l62VD7qokZZEIv/SYY/o9/7h4puYnoB2d
-         CMdlW1iqb87NScscZkm5gUJXXUlrq1iGIG5/CS6wIaLSg+SDXHlQl3PYjiJ2BwsXDTK3
-         3/MhNlajvLh/QE8uOC5thlKYXB0tQsQ+l+DIGW/fclz76OShD8CyH0HDlPsft28jVjnY
-         jA+WkB7KXBjWEGCOLDQy5BzCDiN6dzKe2RFCFMjU1CltrgN9TaZBFFFztmu6UssHYPyl
-         /sYBv3/rmA0mTwwcc793zScT86E2iygUWJjPtx70Crdn/mttJxdoCWJcORBcccMO4/wB
-         6LDg==
-X-Gm-Message-State: AOJu0YzJrzgRrIJ0IozQVUKn+uadmLpSV1eRwYF7DLFuPa2Zxourhr1M
-	veHwWr2aDxi6cXNV6cE/zLDn9izR2vKBcpvUVcgI4obDiWNsYjIIBZk8S+9PZh89Erm/jfXiqZw
-	4/8KpSZ3vXKx3tUUL6M1RMFId159dkmYpag==
-X-Gm-Gg: AR+sD11Oqh+AOSV3fDoxtgn4buwembg1alDJfoGmcy3d/BRsV7dvmmuXxXcpkRbcnuT
-	xrjIuwfee5JK+k1sMEEhRfomgdoc1a4bFLzXqcAAQLbTpbSEjws0+wtuQ0Nzh1kpj1+yuD3OC6o
-	0wi9RmiW6opBSA1xYhv2yww5V8fvkP/z8tWfdo/LLck5QTCtf/C33tgDfSqm9Mf0zN5RxrX10CA
-	7SOsQF+frkZwGAsbdziEgsrtYoKIUw4sVhVv654vHL7tQ+iaLpydEwtpOmqp698vhaA1cOGkZKe
-	QN44VqX5dH3cTcsqGjxvnfbOx7d7xr1Q2yokOIXVFd7YNDE=
-X-Received: by 2002:a05:6102:4246:b0:738:d6c:7108 with SMTP id
- ada2fe7eead31-760e76e22fbmr3291431137.1.1785979351864; Wed, 05 Aug 2026
- 18:22:31 -0700 (PDT)
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A65ECDF76
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 03:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785985235; cv=none; b=Rn8w8tSvfc3zCVvDlubzyFmyN92KrhpAx7rTc5XBdwSWSwJwTDB0Jcf4knKc/JvYmw7JTiE8/eLvUp048jG+2PXDf/6uUKv6LSefP+7qym7KYjW+Y6QgWBolaU9HD4INjUIkCC2KPvPm/vypjEe0nc6RibTf78+12b7lRlKAsos=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785985235; c=relaxed/simple;
+	bh=mBMqnuqIgym0XsMK+vXWaxKHTKQcf3JZcYF1Zl43iUY=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=BHAh3HtWhQkXd9XjUSrrVk4lKpBv2M/qVxpRrPh+DXOa4CAI16UxoZGX+eQGgjs8nzSvkenXE8YE1park8BSZxBZdOc1kmwWYb8mZSIMYGzNX1v0fweunuer5BNa4UkqSUO59syYGr+4zPVLuruZeDCBHLj+l/ucTDRtnND+WRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.62])
+	by gateway (Coremail) with SMTP id _____8Dx8+nG+HNquN8KAA--.25638S3;
+	Thu, 06 Aug 2026 11:00:22 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+	by front1 (Coremail) with SMTP id qMiowJCxbQfF+HNqslglAA--.1566S2;
+	Thu, 06 Aug 2026 11:00:21 +0800 (CST)
+Subject: Re: [PATCH v2 4/5] LoongArch: KVM: Implement vmid updating logic
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20260806020739.2149268-1-maobibo@loongson.cn>
+ <20260806020739.2149268-5-maobibo@loongson.cn>
+ <20260806023024.7ACCE1F000E9@smtp.kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <4f1446f5-1972-897d-d116-cc9638d2b6e0@loongson.cn>
+Date: Thu, 6 Aug 2026 11:00:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260805-anacapa-devlop-phase-devicetree-v4-0-5d67e0efa6c5@gmail.com>
- <20260805-anacapa-devlop-phase-devicetree-v4-8-5d67e0efa6c5@gmail.com> <20260805132941.8B8F51F000E9@smtp.kernel.org>
-In-Reply-To: <20260805132941.8B8F51F000E9@smtp.kernel.org>
-From: Colin Huang <u8813345@gmail.com>
-Date: Thu, 6 Aug 2026 09:22:19 +0800
-X-Gm-Features: AUfX_myyiOvu3Ho0sO-RbG5JBiR5SgpMhvTveCX1rERMgnQv5T_zmcQpQkRNFho
-Message-ID: <CAPBH0A9+K9XpjoA4r0M=CZi0NQNj8SuKOKRTwvjj-WmSLUhPXQ@mail.gmail.com>
-Subject: Re: [PATCH v4 08/12] ARM: dts: aspeed: anacapa: Enable MCTP and FRU
- for NIC
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260806023024.7ACCE1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJCxbQfF+HNqslglAA--.1566S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxurWUAr1UAryfZryUJF4rCrX_yoWrAFWrpF
+	W8C3Z0qa18CrnrX340qw4kXr1jg34xGr1xZFyaya4avrn0vr1kGF4vk3ykuFy5JryS9a1I
+	vF15Kr9F9F1DCacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+	UUU==
 
-<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B48=E6=9C=885=E6=97=A5=E9=80=
-=B1=E4=B8=89 =E4=B8=8B=E5=8D=889:29=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Missing Frontend NIC (FE NIC) MCTP and FRU initialization for =
-the Right Bridge Board (`i2c10mux0ch0`).
+
+
+On 2026/8/6 上午10:30, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Missing early return in `__kvm_check_vmid` for machines without guest ID support breaks VMID/VPID synchronization.
+> - [Medium] Data race between non-atomic `cpumask_setall()` and atomic bitwise operations on `tlb_flush_pending`.
+> - [Low] Dead code: `kvm_arch_flush_remote_tlbs_memslot` is a fictitious arch hook not called by KVM core.
 > --
->
-> --- Patch [8]: [PATCH v4 08/12] ARM: dts: aspeed: anacapa: Enable MCTP an=
-d FRU for NIC ---
-> commit dd43e6fac4e737bcb1c934de5c94c3846795897a
-> Author: Andy Chung <Andy.Chung@amd.com>
->
-> ARM: dts: aspeed: anacapa: Enable MCTP and FRU for NIC
->
-> Add the mctp-controller property to enable frontend NIC management
-> via PLDM over MCTP. Also add EEPROM device for NIC FRU and reorder
-> the I2C virtual bus index according to the system silkscreen index.
->
-> > diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa-evt2.=
-dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa-evt2.dts
-> > index ff393ad7cdb79..703284721224f 100644
-> > --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa-evt2.dts
-> > +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa-evt2.dts
+> 
+> --- Patch [4]: [PATCH v2 4/5] LoongArch: KVM: Implement vmid updating logic ---
+> commit 1626f2256d93ca3c5c607a6a950ca7531c03169a
+> Author: Bibo Mao <maobibo@loongson.cn>
+> Date:   Thu Aug 6 02:07:38 2026 +0000
+> 
+>      LoongArch: KVM: Implement vmid updating logic
+>      
+>      VMID calculation method is the same with ASID on LoongArch, it is
+>      percpu vmid calculation method. For every physical CPU, VMID of
+>      different VM is different, and it is the same for different vCPUs
+>      of the same VM.
+> 
+>> diff --git a/arch/loongarch/kvm/main.c b/arch/loongarch/kvm/main.c
+>> index c36e62ab0d917..72c1d23156e50 100644
+>> --- a/arch/loongarch/kvm/main.c
+>> +++ b/arch/loongarch/kvm/main.c
 > [ ... ]
-> > @@ -55,6 +74,106 @@ eeprom@51 {
-> >       };
-> >  };
-> >
-> > +// R Bridge Board
-> > +&i2c10 {
-> > +     multi-master;
-> > +     mctp@10 {
-> > +             compatible =3D "mctp-i2c-controller";
-> > +             reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-> > +     };
-> > +
-> > +     i2c-mux@71 {
-> > +             /delete-property/ i2c-mux-idle-disconnect;
-> > +
->
+>> @@ -291,6 +316,20 @@ static void __kvm_check_vmid(struct kvm_vcpu *vcpu)
+>>   			kvm_clear_request(KVM_REQ_TLB_FLUSH_GPA, vcpu);
+>>   		}
+>>   	}
+>> +
+>> +	cpu = smp_processor_id();
+>> +	if (cpumask_test_and_clear_cpu(cpu, &vcpu->kvm->arch.tlb_flush_pending))
+>> +		vcpu->kvm->arch.vmid[cpu] = 0;
+>> +
+>> +	/*
+>> +	 * Check if our vmid is of an older version
+>> +	 */
+>> +	ver = vcpu->kvm->arch.vmid[cpu] & ~vpid_mask;
+>> +	old = this_cpu_ptr(vcpu->kvm->arch.vmcs)->vmid_cache & ~vpid_mask;
+>> +	if (ver != old)
+>> +		kvm_update_vmid(vcpu, cpu);
+>> +
+>> +	vcpu->arch.hw_vmid = vcpu->kvm->arch.vmid[cpu] & vpid_mask;
+> 
+> [Severity: High]
+> Does this unconditionally overwrite vcpu->arch.hw_vmid for machines without
+> guest ID support? On machines like 3A5000, hw_vmid is set to match vpid
+> above, but without an early return or else block, it falls through and gets
+> overwritten here with a dynamically allocated vmid.
+yes, early return is missing in if (!cpu_has_guestid) sentence.
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -315,6 +315,7 @@ static void __kvm_check_vmid(struct kvm_vcpu *vcpu)
+                         vcpu->arch.hw_vmid = vcpu->arch.vpid & vpid_mask;
+                         kvm_clear_request(KVM_REQ_TLB_FLUSH_GPA, vcpu);
+                 }
++               return;
+         }
+> 
+>>   }
+>>   
+>>   void kvm_check_vpid(struct kvm_vcpu *vcpu)
+>> diff --git a/arch/loongarch/kvm/mmu.c b/arch/loongarch/kvm/mmu.c
+>> index 714640a2e6142..80e7a8bdc344a 100644
+>> --- a/arch/loongarch/kvm/mmu.c
+>> +++ b/arch/loongarch/kvm/mmu.c
+> [ ... ]
+>> @@ -942,6 +943,22 @@ void kvm_arch_sync_dirty_log(struct kvm *kvm, struct kvm_memory_slot *memslot)
+>>   {
+>>   }
+>>   
+>> +int kvm_arch_flush_remote_tlbs(struct kvm *kvm)
+>> +{
+>> +	/*
+>> +	 * Queue a TLB invalidation for each CPU to perform on next
+>> +	 * vcpu loading
+>> +	 */
+>> +	if (cpu_has_guestid) {
+>> +		cpumask_setall(&kvm->arch.tlb_flush_pending);
+> 
 > [Severity: Medium]
-> Is the Frontend NIC (FE NIC) configuration missing here for the Right Bri=
-dge
-> Board?
-No, there is no FE NIC for Right Bridge Board.
+> Could calling cpumask_setall() cause a data race with concurrent atomic
+> bit operations?
+> 
+> cpumask_setall() uses a non-atomic memset() internally, while
+> __kvm_check_vmid() and kvm_handle_mm_fault() use atomic read-modify-write
+> operations like cpumask_test_and_clear_cpu() and cpumask_set_cpu() on the
+> same cpumask.
+This is under investigation, if data of memset() is not lost or 
+invalidated, it will send IPI to destination vCPU and check the flag again.
 
->
-> The &i2c10 override configures channels 1-4 for the Backend NICs but omit=
-s
-> channel 0 (i2c10mux0ch0). The Left Bridge Board (&i2c11) includes a Front=
-end
-> NIC on channel 0, and an alias for i2c10mux0ch0 was added in this patch.
->
-> Does i2c10mux0ch0 need to be populated with mctp-controller and the FRU
-> EEPROM here?
-No.
+Regards
+Bibo Mao
+> 
+>> +		/* Be sure that other CPUS can watch the changes */
+>> +		smp_wmb();
+>> +	}
+>> +
+>> +	/* Return 1 continue to send ipi to running vCPUs */
+>> +	return 1;
+>> +}
+>> +
+>> +void kvm_arch_flush_remote_tlbs_memslot(struct kvm *kvm,
+>> +					const struct kvm_memory_slot *memslot)
+>> +{
+>> +	kvm_flush_remote_tlbs(kvm);
+>> +}
+> 
+> [Severity: Low]
+> Is kvm_arch_flush_remote_tlbs_memslot() dead code? There does not appear to be
+> a KVM core hook by this name, so this architecture-specific function won't be
+> called by the KVM core during memslot updates.
+> 
 
->
-> > +             i2c10mux0ch1: i2c@1 {
-> > +                     mctp-controller;
-> > +                     // BE NIC FRU
-> > +                     eeprom@50 {
-> > +                             compatible =3D "atmel,24c32";
-> > +                             reg =3D <0x50>;
-> > +                     };
-> > +             };
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260805-anacapa-=
-devlop-phase-devicetree-v4-0-5d67e0efa6c5@gmail.com?part=3D8
