@@ -1,73 +1,60 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AD142D76A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 09:15:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB3432305;
+	Thu,  6 Aug 2026 09:20:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786007716; cv=none; b=UBaZa7HVlxfz5/YvKEzYBhozVaista165W5ExsiF6kC8XOlgi8Rjmw3cjz6KrZBn3fjmr9oWG6/bNq83/87QI0aoZxYdQBwu5O5qwjKljKLvlcvVuLJ1UcqZ/PGddexgxcGQHOgLDz9VUpjUbZJV4sZkSDit5+begyNQEYGw39Y=
+	t=1786008017; cv=none; b=LyyirSfeN+kxIJS4iNrFkIxWZLWxyku5vlrtKJvO70bRcHYDoxFYXsFsCmg3jSOrK/xT2AAV/TnnCSCNtB1eVG2MrOLMXjJifEc8b44mHtKq0dlu3zSNT8nZlcplPj4GZmPsj8mkmc8+28qvMrQD+1l/hgod6QkRJ/BvPzvtUwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786007716; c=relaxed/simple;
-	bh=qzNuBPozfFIkdZOuS/fLxMETJ0Kd83A2UR9sybGyKyo=;
+	s=arc-20240116; t=1786008017; c=relaxed/simple;
+	bh=HXAy9pagBUBNMEPp1P9vhv+dr4lTC6jQPcqa97RCplY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wq7Exr5M+tOqh2gMPO3RP8N9GMitvi0pVkvOf6Xd5FiSHFGtyh8t9i4038Q7dsaFl3Dj9T3XeEe8TrNKHW5w7avSH94D3EIayPtaNtImLGshKWPvtv7fYFTZB8gpaO/ds58ZUrK//iTuty2H6XRWR9M8pyJy2FiB+Cdi1nxl2Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HIgIczcV; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 In-Reply-To:Content-Type; b=fhjn/1zlc68dylsGDtrOpAfG/WukVduWulrCjHCef7rv0PdotvEmRdvXErsEAaNdOHfzG3nlh7702qjvAjmYrBxL7LsOFglufNJRGl/mWLcVaG2RMEgAaROO0efOqVcJD7fsRkXjis3pQy9pp/W7DmhphAJ3CwdySXPUIuYLRRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=tFQbe9p+; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HIgIczcV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786007713;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w1p/WqP5zNmyTteiVasVWjR72E6WFiVRU2GjHHBSa5c=;
-	b=HIgIczcVznM/PvVO3WSanKAnsj07yqxutA+c0qD6W7KLAX8sbER67wo9jFQsXuofoJp0/B
-	HSBivg8cl1+otxci0Ww/V/gbi+/7g4SukEv3JNqh5UMv90cICz6R9+Bvj6/5P+xXsCnIPy
-	CE6BpTG9rTiqqWxmwEluDWBUS6gIoZM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-gK3OrCBrM7GtDaOzpPbd4A-1; Thu, 06 Aug 2026 05:15:11 -0400
-X-MC-Unique: gK3OrCBrM7GtDaOzpPbd4A-1
-X-Mimecast-MFC-AGG-ID: gK3OrCBrM7GtDaOzpPbd4A_1786007711
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-47f2de3ba47so1097752f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 02:15:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786007710; x=1786612510;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=w1p/WqP5zNmyTteiVasVWjR72E6WFiVRU2GjHHBSa5c=;
-        b=X75gjsgv/u2MQDpwjfsYf88OekQnjJiAOFTXiKw44N+dAQup7y+VORNgGscF+nNqyi
-         Z6bkuxHuiSGYXwWEi8raTXMlXis7DTiqeU0mQYnwt+HzrKWSVrlerqaOOG2AcCRLkoMx
-         5sVSWT7u1gLbgyhpgfvHbSLAT7aUiJU/JnpPrI/wDF88exxA4/+F4L62qnbLjTq7hG0e
-         9X1SyS1csdgdjxZwVKclf1/RdoWgGrI24/CxG1KzgVWKtUksY36a87LqIf3U4KnxNG0z
-         esEbDB6uc/ecRPBAa043sHyyBey3VNLDRE/1gZ3npmeP+kotkEe/u8qkd7vhkNSS7/5y
-         c5cQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrhWj9ReME9c5KcWqPscJ26nHJubpOkRLd1LetLidjNM0A2s9kEqffjkN2nzlrnv5QR2fE2QVR71yNrp4/wy4M=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUTwRBWRWJ8pSqmKTm4pQ2HJjuqDAwddLpzhBUw6Q8dtE5Mmn/
-	NVQgJFFZIBhZUSIRCYTmx2Sbs+mOuhR+hw8rr3/CsLYSqvOok/84dQ8M/j28vnQkDy/OoSnKbOq
-	X/wOBfUpCCeMZCGI6aQRRsb4Ygi635iNsFajBEJm/bOWvpRw5NLdZJVlqP3Sh6ZxF4oB/gA==
-X-Gm-Gg: AR+sD12uWbyMAp1YfIMqXhHhhpMpXZlRafJ3+e9dvyN5sswpZtGooCS/3GHJPiwsxc0
-	pK9mF0uJ8VEJxEF40NDoYzReICEPr9G8kVKxa+I1gmRj7w15T8gaL7VLeWfyHytphi9u9mLHFol
-	BXYntwArF5ZHn9q0eegqWtRXfYqtmw1rAFtT1OemB/ABL6Oi0bfaRvTgWnGApCh15AW0RMbK/z6
-	L47WtiHNXQ/p7nkpVIncqmg7GBq+C75PM/1SkLKMB7jdT8NpBUGBfxNO3+V0ktsN9G4ZfHoR5Vr
-	xY/p73Vt3Vt8KR7ykVnk3dWmktDYaVvs5iHZ3y7BmyWW1DsA4jAX9GYifT6tffjRV3jlMzX4kwk
-	Cb7jzcIi6iXa2JlSgJS6akrPXylNAJUEunRLO4WWxfLxsIhXx1+soSEdqqfQczQjmCIsZMvhIs2
-	c=
-X-Received: by 2002:a05:6000:29d5:b0:47f:90df:4ec6 with SMTP id ffacd0b85a97d-47fec4e761bmr17445730f8f.6.1786007710481;
-        Thu, 06 Aug 2026 02:15:10 -0700 (PDT)
-X-Received: by 2002:a05:6000:29d5:b0:47f:90df:4ec6 with SMTP id ffacd0b85a97d-47fec4e761bmr17445663f8f.6.1786007710038;
-        Thu, 06 Aug 2026 02:15:10 -0700 (PDT)
-Received: from [192.168.188.103] (ip239-44-231-195.pool-bba.aruba.it. [195.231.44.239])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47ff7b26879sm4650653f8f.30.2026.08.06.02.15.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 02:15:09 -0700 (PDT)
-Message-ID: <1f36d5be-906a-4ba5-8679-24cbcf899254@redhat.com>
-Date: Thu, 6 Aug 2026 11:15:08 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="tFQbe9p+"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 675NmBgq3404367;
+	Thu, 6 Aug 2026 09:20:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=t+FPok
+	Ke21Lx+DelgigbPE/tIAnMsIbHR8ywdhZCCOU=; b=tFQbe9p+vW4fc3HmemWyfa
+	eyb8hr1T38GO0GZCWUpX7AGzQjSyQIH+Cn6oBmI854EiDQNZmQ7BWUh4bX0VOVVp
+	DDzx9ErbOlP7MS7pgpq7x5LNXl0nckPqfNjVcMoskjWXFt979eei2S1gJSZeK255
+	PGks6WdMAkrTc0+WdTdFLNQHXu8zODaeqpO6BlwaLPbhVLN3BsSJCd0AoLSrUfy/
+	D+Y3ZOV/SiAateJ6P8lgcOIc4vYcgGikRQOUYBp0pG5ARnY3hrJt59fJT/7lSGo/
+	qGBYq/pjyVPlKR4kvhfGw0HKMRQJCWwuq36RbwwsK7wU4CgcAWSm+kVYfZFcN4wQ
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqy9kn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 09:20:12 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6769BFc5030472;
+	Thu, 6 Aug 2026 09:20:11 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fsu4qtntu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 09:20:11 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6769KAng56885748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 6 Aug 2026 09:20:11 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9BB3D58064;
+	Thu,  6 Aug 2026 09:20:10 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6399258057;
+	Thu,  6 Aug 2026 09:20:09 +0000 (GMT)
+Received: from [9.123.15.94] (unknown [9.123.15.94])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Thu,  6 Aug 2026 09:20:09 +0000 (GMT)
+Message-ID: <e47fe37d-b28f-43c1-bd91-4904ec74bc53@linux.ibm.com>
+Date: Thu, 6 Aug 2026 14:50:07 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -75,87 +62,199 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3] tcp: honor BPF_SOCK_OPS_RWND_INIT on the
- active connect path
-To: Tejas Birajdar <tejasbirajdar@meta.com>,
- Eric Dumazet <edumazet@google.com>
-Cc: bpf@vger.kernel.org, "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- sashiko-reviews@lists.linux.dev
-References: <20260730220055.2946171-1-tejasbirajdar@meta.com>
- <20260731220124.B0C621F00AC4@smtp.kernel.org>
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20260731220124.B0C621F00AC4@smtp.kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: v5Y05nw7MRYbfX2DDvaD6Tn9LUvFmzhNhMpTVnc0Qx4_1786007711
-X-Mimecast-Originator: redhat.com
+Subject: Re: [RFC PATCH v3 5/5] perf test: Add test validating trace.dat
+ generated by 'perf data convert --to-trace-dat'
+To: Ian Rogers <irogers@google.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260803145958.299956-1-tshah@linux.ibm.com>
+ <20260803145958.299956-6-tshah@linux.ibm.com>
+ <20260803151949.4AE511F000E9@smtp.kernel.org>
+ <CAP-5=fXdA1YvAoqp61DddxsW4VwjJdmULYOqxk_2e-UAA=E_sA@mail.gmail.com>
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Tanushree Shah <tshah@linux.ibm.com>
+In-Reply-To: <CAP-5=fXdA1YvAoqp61DddxsW4VwjJdmULYOqxk_2e-UAA=E_sA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 7RNnnCyFeJaKr0YiuBjnFVF9Xg4nqWuK
+X-Proofpoint-ORIG-GUID: C8QugMwdvRbChQSC0Lfr2dhjhEhA4iNI
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDA3MiBTYWx0ZWRfX5jsqv0wmhzVV
+ JmegSrb8VYHNZl3mcTTqMhT5v6DC4+cRgerfzW2KhyFZwR7Srk6XVd58Y+4CvuFHViGeJY/+okn
+ uo3HsErZXxraNQl+8/D66L5+5Qb0o/k=
+X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a7451cc cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=i4BSLHE9Bb6Zsit8ZBoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDA3MiBTYWx0ZWRfXy3mSueq0xOdf
+ wOcU6y/jHs002o0M60eCRZ1vU3KEvgk5IQXvK0oDKxHHw+skw0JH+0PVVl6aK+RgaI/9FnLVS/o
+ LK/+UM9+eE4Pj/5k0KNFIsZtU7asBkQv8vqUmyWVusmGBr++uGU35O8bq1UjXX9D6ZqUbHJHgtL
+ Ij9ckQBwiZqnGzpp7pVoO1cvIvTqrKj7Ju5n1Nrr5mR5teXkfhyt+C2S7NmKoO7vj6+LPEPGQA4
+ XQNGz+uVd1MXkkVzo3Sg90pfygRc2HIzgavYYmeU66AQtKJRnqbas6qy173mx49wjcHtvw0ahPm
+ H9RJMxFq1oB1sM5kbLuf4sPm4+hfDOePBsgD4uV6zYl0YEuE7xaQhh1sfMT4SPTeHJ9MCtS5sTQ
+ WWhoBqceM9445s6W11PP++oVXs7sildB9NxVaYm7h3dSvObZgdIcQKul2k0vIDu1cn3A763z3fu
+ 8F+ofOV45UqClMluARw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_06,2026-08-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060072
 
-On 8/1/26 12:01 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Medium] The `SOCK_RCVBUF_LOCK` check executes before the BPF program runs and before `full_space` is inflated, silently defeating BPF-requested windows and bypassing dynamic `SO_RCVBUF` adjustments.
-> --
-> 
-> --- Patch [1]: [PATCH net-next v3] tcp: honor BPF_SOCK_OPS_RWND_INIT on the active connect path ---
-> commit 2cf5d1d17ae1c7488533ecaa0fcbb83ae4591ec8
-> Author: Tejas Birajdar <tejasbirajdar@meta.com>
-> 
-> tcp: honor BPF_SOCK_OPS_RWND_INIT on the active connect path
-> 
-> This commit updates tcp_connect_init() to honor the initial TCP receive
-> window requested by a BPF_SOCK_OPS_RWND_INIT program on the active connect
-> path. It inflates full_space if the program returns a non-zero window,
-> matching the listener path's behavior, and uses u64 arithmetic to prevent
-> overflows.
-> 
-> Link: https://lore.kernel.org/netdev/20260723214208.3655474-1-tejasbirajdar@meta.com/
-> Link: https://lore.kernel.org/netdev/20260722170033.2763794-1-tejasbirajdar@meta.com/
-> 
->> diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
->> index d7c1444b5e304..fcaa04e65189b 100644
->> --- a/net/ipv4/tcp_output.c
->> +++ b/net/ipv4/tcp_output.c
-> 
-> [ ... ]
-> 
->> @@ -4137,10 +4138,13 @@ static void tcp_connect_init(struct sock *sk)
->>  		WRITE_ONCE(tp->window_clamp, tcp_full_space(sk));
->>  
->>  	rcv_wnd = tcp_rwnd_init_bpf(sk);
->> +	full_space = tcp_full_space(sk);
->>  	if (rcv_wnd == 0)
->>  		rcv_wnd = dst_metric(dst, RTAX_INITRWND);
->> +	else if (full_space < (u64)rcv_wnd * tp->advmss)
->> +		full_space = min_t(u64, (u64)rcv_wnd * tp->advmss, INT_MAX);
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but does the SOCK_RCVBUF_LOCK check happening
-> before the BPF program runs defeat the purpose of allowing BPF to adjust
-> the receive window?
-> 
-> If an application sets SO_RCVBUF prior to connect(), SOCK_RCVBUF_LOCK is
-> set. In tcp_connect_init(), this caps tp->window_clamp to the old
-> tcp_full_space() before tcp_rwnd_init_bpf() is invoked.
-> 
-> When the BPF program returns a large requested window and full_space is
-> inflated, tcp_select_initial_window() bounds space by
-> min(window_clamp, space).
-> 
-> This caps it right back to the pre-BPF full_space and discards the BPF
-> request.
-> 
-> Conversely, if the application did not set SO_RCVBUF but the BPF program
-> adjusts it dynamically (which sets SOCK_RCVBUF_LOCK), 
 
-I read the above alike: 'a badly written bpf program could be
-ineffective'; not much relevant.
 
-This version LGTM; Eric do you have some comments?
+On 06/08/26 05:45, Ian Rogers wrote:
+> On Mon, Aug 3, 2026 at 9:50 AM <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>> - [High] Deleting a securely created temporary file and reusing its path creates a race condition vulnerable to symlink attacks.
+>> - [Medium] The exit trap incorrectly overrides intentional test skips (exit code 2), converting them into test failures (exit code 1).
+>> - [Medium] Hardcoding the 'cycles' hardware PMU event leads to brittle, spurious test failures on environments without hardware performance counters.
+>> - [Low] Stale output file verification due to incorrect cleanup ordering on error paths.
+>> - [Low] A temporary file may be leaked if a subsequent initialization step fails before the cleanup trap is registered.
+>> --
+>>
+>> --- Patch [5]: [RFC PATCH v3 5/5] perf test: Add test validating trace.dat generated by 'perf data convert --to-trace-dat' ---
+>> commit d717cd6622789cb3b2cd038490f59972dc4015dd
+>> Author: Tanushree Shah <tshah@linux.ibm.com>
+>>
+>> perf test: Add test validating trace.dat generated by 'perf data convert --to-trace-dat'
+>>
+>> Add a shell test covering perf data convert --to-trace-dat,
+>> alongside the existing --to-json and --to-ctf tests.
+>>
+>>> diff --git a/tools/perf/tests/shell/test_perf_data_converter_tracepoints_trace_dat.sh b/tools/perf/tests/shell/test_perf_data_converter_tracepoints_trace_dat.sh
+>>> new file mode 100755
+>>> index 0000000000000..9ca6432618cb2
+>>> --- /dev/null
+>>> +++ b/tools/perf/tests/shell/test_perf_data_converter_tracepoints_trace_dat.sh
+>>> @@ -0,0 +1,169 @@
+>>> +#!/bin/bash
+>>
+>> [ ... ]
+>>
+>>> +perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
+>>> +result=$(mktemp /tmp/__perf_test.output.trace.dat.XXXXX)
+>>
+>> [Severity: Low]
+>> Could a temporary file be leaked if an early initialization step fails?
+>>
+>> If the second mktemp fails, the script will exit immediately due to 'set -e'.
+>> Since the trap is not yet registered, the first temporary file allocated for
+>> $perfdata wouldn't be cleaned up.
+>>
+>> [ ... ]
+>>
+>>> +trap_cleanup()
+>>> +{
+>>> +     echo "Unexpected signal in ${FUNCNAME[1]}"
+>>> +     cleanup
+>>> +     exit 1
+>>> +}
+>>> +trap trap_cleanup exit term int
+>>
+>> [Severity: Medium]
+>> Does this trap handler unintentionally override test skips?
+>>
+>> When the script explicitly executes 'exit 2' for a skip condition (like
+>> missing libtraceevent), the EXIT trap is still active. This handler then
+>> executes 'exit 1', which converts the skip into a spurious test failure.
+>>
+>> [ ... ]
+>>
+>>> +test_trace_converter_command()
+>>> +{
+>>> +     echo "Testing Perf Data Conversion Command to trace.dat"
+>>> +
+>>> +     if ! perf record -e sched:sched_switch -o "$perfdata" -- sleep 0.1
+>>> +     then
+>>> +             echo "Failed to record perf data"
+>>> +             err=1
+>>> +             return
+>>> +     fi
+>>> +
+>>> +     rm -f "$result"
+>>
+>> [Severity: High]
+>> Does removing the securely created file path here open a symlink race
+>> condition?
+>>
+>> The script uses mktemp to securely allocate the path for $result, but deletes
+>> it before passing it to the converter with the --force flag. This leaves
+>> a time window where a predictably named path is free. If run as root, this
+>> could potentially be replaced with a symlink, allowing an arbitrary file
+>> overwrite.
+>>
+>> [ ... ]
+>>
+>>> +test_trace_converter_pipe()
+>>> +{
+>>> +     echo "Testing Perf Data Conversion Command to trace.dat (Pipe mode)"
+>>> +
+>>> +     rm -f "$result"
+>>
+>> [Severity: High]
+>> This test mode appears to have the same symlink race condition as above,
+>> since the securely allocated temporary file is removed prior to use.
+>>
+>> [ ... ]
+>>
+>>> +test_trace_converter_mixed_events()
+>>> +{
+>>> +     echo "Testing Perf Data Conversion with tracepoint and non-tracepoint events"
+>>> +
+>>> +     # Record both tracepoint and non-tracepoint events
+>>> +     if ! perf record -e sched:sched_switch,cycles -o "$perfdata" -- sleep 0.1
+>>
+>> [Severity: Medium]
+>> Could hardcoding the 'cycles' hardware PMU event cause spurious test failures
+>> on restricted environments?
+>>
+>> If the hardware 'cycles' event fails to open on virtual machines or
+>> unprivileged containers, perf record will return an error and fail the test
+>> step instead of skipping it or falling back to a software event.
+> 
+> As the `perf record` lacks the `-a` flag this will just record events
+> for the sleep command and the number of cycles there will be limited.
+> I'd suggest making this:
+> perf record -e sched:sched_switch,cpu-clock -a -o "$perfdata" -- sleep 0.1
+> The cpu-clock is a perf event based on a timer interrupt and should
+> always exist whether the system be an S390 or a limited system such as
+> running in a hypervisor.
+> 
+> Thanks,
+> Ian
+> 
+Thanks Ian for the suggestion, It makes sense. I will change the command 
+to "perf record -e sched:sched_switch,cpu-clock -a -o "$perfdata" -- 
+sleep 0.1".
 
-Thanks,
+Thanks
+Tanushree Shah
 
-Paolo
+>>> +     then
+>>> +             echo "Failed to record perf data (mixed events)"
+>>> +             err=1
+>>> +             return
+>>> +     fi
+>>> +
+>>> +     rm -f "$result"
+>>
+>> [Severity: Low]
+>> Does this cleanup ordering leave stale data available for validation on error
+>> paths?
+>>
+>> If the 'perf record' command above fails, it returns early before this file
+>> is removed. When validate_trace_format() is later called in the global flow,
+>> it will check the $result file left over from the preceding
+>> test_trace_converter_pipe() execution, which might erroneously report success
+>> for a failed command.
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260803145958.299956-1-tshah@linux.ibm.com?part=5
+>>
 
