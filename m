@@ -1,178 +1,138 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620EE381EB9
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 04:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BCE1A682C;
+	Thu,  6 Aug 2026 05:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785991068; cv=none; b=ADpXa7Z4ToprebxebnIX2ZCpAZKoMHJW4s2vz5wKBqhlArQrG+qor/EdeOKlhUOV0lFGQJhaDf31IJRsE2cQ/ycS3yTDIsshPyTzVSK1yKyDdquUL55DH0DaTi2TGJHIZZtkfprrMppxfGCkTgiUsqKTdezhN3FQqQ3Y+FywoJM=
+	t=1785994844; cv=none; b=qb2SdXlIWiXnL0UJAr+TJsublvOKR8DrmnNGJpT0s5aERuluekdrJAG9p5MiGLrLnF15SPW5CG5O5YJuCvTh0k3XWGZt6bKhk82snAUanKZNcdS1YGSC6CGpviuTyeCCZYxs7D1nj3suwermE8qKPu0jFN0DHY6NCXmk7QQmops=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785991068; c=relaxed/simple;
-	bh=/VtCJrpZZzW7BSrSBiAxCfOZr/95stzHxElzigjjE1A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L+rCitkJdtkd72F6dv+n1MT7YxWnZW2YxpMq5Q2UUFqToC5vtkkUQ4Tq6lhfeq+xFuNJkbg0CH11r3+kQsKytcBIKXY66gajM72XiNs5ex263mm6VP84YhB1jicLCCmBc1hgl1rBcAbhPpqlOfGyucJCzuP8g7HXCLUeJV/YswY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bXaR/nXn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LZOziyS4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1785994844; c=relaxed/simple;
+	bh=WADd6vGeeU9OJNepBvcH1C6UnYUHjrAY//NLC6sgTTg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OT2yAFkrqalQqLm5smd/L/C3365Jn+TDZynWmnXeUTckA3m6xUxtKn5Ym/vgw56IDfGZvQ8mH1MuTjJigNwLOjwcUI1kEf/gn0HdqYakccg3eN13KXNmDxBBvLOlTTLcke6jIVX5orfMnwpSJ+3XsBXcQIucX9uI+IqLuv/5ys0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KrLFpZMM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bXaR/nXn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LZOziyS4"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6763wlVX1070545
-	for <sashiko-reviews@lists.linux.dev>; Thu, 6 Aug 2026 04:37:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SKCuK4lPjrolSSKXq1q4z7GCP0Jt0iCByxPqY0euOUY=; b=bXaR/nXnVJb+40U5
-	qVoC408Ak1ZyOMFxmUw1dHQcyP6kKvCx0fXFp3F8IzelM3XjhrkcWqDMt+g3OrUw
-	KRD+vYilatrnJUViNn4yYM/OWOyE0UvY9k+/tTX2aPnahMyWblQs1aUPswI0hy48
-	1PrOEn1VuipVcyKyk29YeP3Sb7pxtAIMKEGtAE6i6rBvzrgUWtDgcucwvmfMW0hK
-	DtHGkazPn/LaWm/xeHB7cqEUTWaTUY2HqllhFpOrJyQv9RyQ6vtAyzZBeJFU0X/q
-	GCc/EFx6wb1r7FVT4F+NPww/TzdID9/173dXcOU3txFi2RtdUvxw6Ptd2iHrSLdB
-	NnY2pg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvjud03vs-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 04:37:45 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-caf5fa127d4so2939751a12.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 21:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785991064; x=1786595864; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SKCuK4lPjrolSSKXq1q4z7GCP0Jt0iCByxPqY0euOUY=;
-        b=LZOziyS4zMkTCRG4rBBVWMsVIOZBkH9greMbhbKlSSeRQlRAgf8GB1C1KprZsF48e9
-         4Qn75iWcyhqSunUY6aOiPF7lpXZr4ND/MhL2GAN9LWnq7Fi4aAIvKqa3hJ+ANx/Asxqx
-         AKQu6acTd8TfsQOkZxbkDvV4LAbC3AXyORSIaimiPF29EXBOrrOb2SVVC/uGusoxPxhG
-         G+Eb2P2fAI+sbL5+ugz3jHRm5rEyHPxpgNpKUYR5KMY7VGVkYzqa55tShuYLCHu9KnPW
-         1Jd+HDu3DHUwlcMMS89wmT7OU2wvIa2OtR2q8YVpfZgKVejvk5LMJcPlrmT1SP5m9HSS
-         //pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785991064; x=1786595864;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SKCuK4lPjrolSSKXq1q4z7GCP0Jt0iCByxPqY0euOUY=;
-        b=pYHiTXRaHolXyAEk2TFapBJW/t02+LMeSML/uMOWOt1dvJPNStCoqtEeDBVkT9GwDp
-         PVXdUauSj0lSoJIWCGm+GJhytw7TdhluhBve3CYdNgV03j9drmlDRPuNUIudaOREJEII
-         pmWTNwXQ2NQnfj0cxACwfoGEY2wTJqUv2uzn5DxPBQNV+1TJTkvfiaVDobqtJ0buxuaq
-         V9Y2IqRk/PyBz4DKkJ3k3Cl73SHkG4SuNeWvVdaCekVi1tyA0ZA1YJ1QAZWW6sZsV+Of
-         t+J2+yYqfrY5I6RPd59a1ZGwXonnbiiwJL0Wmz0e0iW+GkhhmL1Z/3SQfW39DWeUx6G2
-         8Q0A==
-X-Gm-Message-State: AOJu0Yw/Z8hajNtlaNb103BUaJSKwfWi4WOmnGJYn/7vEmn9t2XX9RfE
-	1FnebK/zLd53zsQKmP7O66wtW/sGVRzq7kI8RJgKBjOYt2ihHL5OAmRgv7d5hp/QJ1Re4U0ZEyL
-	W3UYqQdm0unkhiQTXaGndHPt+EEdkqG2g6b0a1iajNp8ufDS++k1LkV+Ipp1Y+oN1fXuk1M5TJs
-	g7MR4=
-X-Gm-Gg: AR+sD11/tao46nXt1jtahIKBCcTXfWR8CI4OXJghlLQa5rK3bHw9xcQre0OdNZVBxsO
-	eIqGkFGuL5bq4EZRtBog3eJnoaftgH1BNCnksH99/k8fsLCCZkW5Wyux0+hrB1Gfp4hVQQKjF47
-	l63xUvmh/GhQQqcvVZInoSyuRKBXkb5N0bnldUa+vI4ulFxOlwIgu+O7YFqL2LcIIdwD37L2W5O
-	kUH61nc/eFwDBCdAnRC43N+h5GyrTu/Ud+dqSpajeObJNBtu4tuVtZo3yFmOeGhkcn0zHClxBll
-	MCDhcmvbyiYW7g0lxV8j3MoNtMaGNHq2n16uw0i54Az/v3NLrhiQ09W53IuD7H9DbE3PlEL4b5e
-	jHJRI5jchcywnRiXwp7P0l0HkoXF78MzBQ18ed3frMiASO1to5lwFv0L+ZoLZBFSxK/gr/pK5cv
-	uV4rcT1sharWYY
-X-Received: by 2002:a05:6a20:2447:b0:3c3:becb:b705 with SMTP id adf61e73a8af0-3cb85ea2ec7mr13425255637.27.1785991064239;
-        Wed, 05 Aug 2026 21:37:44 -0700 (PDT)
-X-Received: by 2002:a05:6a20:2447:b0:3c3:becb:b705 with SMTP id adf61e73a8af0-3cb85ea2ec7mr13425226637.27.1785991063836;
-        Wed, 05 Aug 2026 21:37:43 -0700 (PDT)
-Received: from [10.79.116.175] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-315867bc261sm22329174eec.28.2026.08.05.21.37.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2026 21:37:43 -0700 (PDT)
-Message-ID: <a84a7148-b072-4afe-be5b-46773dc008bc@oss.qualcomm.com>
-Date: Thu, 6 Aug 2026 10:07:40 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KrLFpZMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB291F000E9;
+	Thu,  6 Aug 2026 05:40:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785994842;
+	bh=cFWJ5mmV9ugae6Hj18D13lBKr5wTHjHe+Y+Htr9wxws=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KrLFpZMM0el2EkDV0KE/i4gDrgYKwgVwYjnNIe+oHbhDE7HO3F7lF4WYqospuAgeS
+	 AblODgZnk0NKWOrVCkE9rFUQ/m2WZiin0/UF48zoOIfCZ6aqz2ng9bhFpdtk7jk/mU
+	 EH8SvDw/+cRRJ1LjdaxG16QBDY3KtVkgNatXCJa9VWstdSU/01oQNrBYp9vt3tyVQL
+	 SCgwx67PICU1ef6Yy4giJkfGv3nxhJC0jFZN5RatNNnG0kthAaeMlqK6+1Ex4FEUXu
+	 vjgfwt8DFbdQRXpxAVKckcWM14cZK0mkfEXt8bDmNvxZ5SvVODlj+uK4ViTH6EhaLl
+	 BH/Y0JOt0VP8w==
+Date: Wed, 5 Aug 2026 22:40:41 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: PVS Narasimha Rao <venkatasuryapala@gmail.com>,
+	linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH] perf test sample-parsing: Validate PERF_FORMAT_GROUP
+ values without LOST
+Message-ID: <anQeWZD8J-gHMt_3@google.com>
+References: <20260725084704.15463-1-venkatasuryapala@gmail.com>
+ <20260725085651.648B11F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: x1e80100-crd: Add qcom,tsens for EC
- fan thermal management
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260728-ec_add_more_commands-v1-0-771abd65ee1a@oss.qualcomm.com>
- <20260728-ec_add_more_commands-v1-8-771abd65ee1a@oss.qualcomm.com>
- <20260728183653.A8B671F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-In-Reply-To: <20260728183653.A8B671F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDAzMiBTYWx0ZWRfX1bH68QXeYYVf
- OtJsmUnYaj385ROpqInEg809W2TUD4n7tzCs9RnFJfOXNII+S6IOSuV5+vzsP9arEtZhagGxSwy
- wqTAXnt/lmOKUxEFjNgz+8YainbdDDOY+YPf7EURktI7i2pUQ2yxIMSbtcr2BCsU5Ej+OAhAmoz
- rWv0xZyop3VKtc3jj+j5aXpF4MPVSgQpNmMz/zQz1Dl0v/qh15fGfQO9kFG7JmgQgUWWaxSS++l
- uowlSGHlxqzNYzij/6yGRI6It2ja+GlOQ9DWbcEaZvNPsoOamApb/F3mnuibNbuHyFROPiVmV+b
- 6k3X7+mp8sWWQ/xegpkhcP2nIHobMCUhQfL77jIboErxJppNi0P19CwbAOPD0zL12zNYDDRMoNM
- 7HgbFxluaydR8UfXEKwAh9jXM4stxXEHL+exFhG+7q+vzGFnXKHfgvarnBCPgla+RSZJQu1onJx
- HCwT2Ct3mkgtAMNWBXQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDAzMiBTYWx0ZWRfX4UIJUyrAQQn0
- ldP5mfX9YSOD+NP+733HDeJWYUCuZXPKJpp5WmWcx0G1uZ4sdrvFeVmrr3D7D9N1fUINMjHeiwX
- QdIUrFg5N4bLMaAhvnXizJ+fLIEvclo=
-X-Proofpoint-GUID: hLYREMXynQDW62RHrvJ3OO_Cpn_dz8SW
-X-Proofpoint-ORIG-GUID: hLYREMXynQDW62RHrvJ3OO_Cpn_dz8SW
-X-Authority-Analysis: v=2.4 cv=DeInbPtW c=1 sm=1 tr=0 ts=6a740f99 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=_6jWvf3KgIEAQ9HY16cA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_06,2026-08-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 priorityscore=1501 adultscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060032
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260725085651.648B11F00A3A@smtp.kernel.org>
 
+Hello,
 
-
-On 7/29/2026 12:06 AM, sashiko-bot@kernel.org wrote:
-> --- Patch [8]: [PATCH 8/8] arm64: dts: qcom: x1e80100-crd: Add qcom,tsens for EC fan thermal management ---
-> commit 59ab25e0b30620df90dae53f1497861f1847b925
-> Author: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+On Sat, Jul 25, 2026 at 08:56:50AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> arm64: dts: qcom: x1e80100-crd: Add qcom,tsens for EC fan thermal management
+> Pre-existing issues:
+> - [Medium] The test setup for grouped reads without PERF_FORMAT_LOST validates garbage data because it provides a standard C array of structs rather than a tightly packed buffer.
+> --
 > 
-> This commit adds the qcom,tsens property to the embedded-controller node
-> in the x1e80100-crd device tree to report average SoC junction temperature
-> to the EC for fan control.
+> --- Patch [1]: [PATCH] perf test sample-parsing: Validate PERF_FORMAT_GROUP values without LOST ---
+> commit 803c0b64d4e8c311df29991bbbdd74726b85a1dd
+> Author: PVS Narasimha Rao <venkatasuryapala@gmail.com>
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
->> index 429deffcf3e9d..4639340e716c6 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
->> @@ -20,3 +20,9 @@ &gpu_zap_shader {
->>  &iris {
->>  	status = "okay";
->>  };
->> +
->> +&i2c5 {
->> +	embedded-controller@76 {
->> +		qcom,tsens = <&tsens2 11>, <&tsens3 15>;
->> +	};
->> +};
+> perf test sample-parsing: Validate PERF_FORMAT_GROUP values without LOST
+> 
+> This patch updates the sample parsing test to validate the value and id
+> fields in grouped reads even when PERF_FORMAT_LOST is absent. It uses
+> next_sample_read_value() to properly navigate the variable-sized group
+> entries during validation.
+> 
+> > diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
+> > index 55f0b73ca20e0..e44b01e5cd14c 100644
+> > --- a/tools/perf/tests/sample-parsing.c
+> > +++ b/tools/perf/tests/sample-parsing.c
+> [ ... ]
+> > @@ -86,10 +86,27 @@ static bool samples_same(struct perf_sample *s1,
+> >  			COMP(read.time_running);
+> >  		/* PERF_FORMAT_ID is forced for PERF_SAMPLE_READ */
+> >  		if (read_format & PERF_FORMAT_GROUP) {
+> > +			struct sample_read_value *v1 = s1->read.group.values;
+> > +			struct sample_read_value *v2 = s2->read.group.values;
+> > +
+> >  			for (i = 0; i < s1->read.group.nr; i++) {
+> > -				/* FIXME: check values without LOST */
+> > -				if (read_format & PERF_FORMAT_LOST)
+> > -					MCOMP(read.group.values[i]);
+> > +				if (v1->value != v2->value) {
+> > +					pr_debug("Samples differ at 'read.group.values[].value'\n");
+> > +					return false;
+> > +				}
+> > +
+> > +				if (v1->id != v2->id) {
+> > +					pr_debug("Samples differ at 'read.group.values[].id'\n");
+> > +					return false;
+> > +				}
+> > +
+> > +				if (read_format & PERF_FORMAT_LOST &&
+> > +				    v1->lost != v2->lost) {
+> > +					pr_debug("Samples differ at 'read.group.values[].lost'\n");
+> > +					return false;
+> > +				}
+> > +				v1 = next_sample_read_value(v1, read_format);
+> > +				v2 = next_sample_read_value(v2, read_format);
+> 
 > [Severity: Medium]
-> Since this defines a new embedded-controller@76 node directly under &i2c5
-> rather than referencing an existing phandle, does it need compatible and reg
-> properties?
+> This is a pre-existing issue, but does using next_sample_read_value() here
+> inadvertently cause the test to assert equality on misaligned garbage data
+> when PERF_FORMAT_LOST is omitted?
 > 
-> Without them, dtc will emit a unit_address_vs_reg warning because the @76
-> unit address lacks a corresponding reg = <0x76> property.
+> Looking at do_test(), the original sample is initialized with a standard C
+> array of struct sample_read_value:
 > 
-> Furthermore, the I2C subsystem will not instantiate the device without a
-> compatible string and reg address, which would prevent the driver from
-> probing and leave the thermal management non-functional.
+> tools/perf/tests/sample-parsing.c:do_test() {
+>     ...
+>     struct sample_read_value values[] = {{1, 5, 0}, {9, 3, 0}, {2, 7, 0}, {6, 4, 1},};
+>     ...
+>     if (read_format & PERF_FORMAT_GROUP) {
+>         sample.read.group.nr     = 4;
+>         sample.read.group.values = values;
+>     }
+>     ...
+> }
+> 
+> Since this array always has a 24-byte stride, but next_sample_read_value()
+> advances by a 16-byte stride when PERF_FORMAT_LOST is absent, both the
+> synthesizer and this validation loop end up reading overlapping memory
+> instead of the actual struct fields.
+> 
+> Could the test setup be updated to provide a tightly packed buffer so that
+> we validate the actual fields rather than falsely passing on identical
+> misaligned reads?
 
-Same as patch 7, already defined via the included dtsi, bot missed it.
-I'll switch to the ec label anyway.
+I think it's a valid issue and it seems there's a bug in the
+perf_event__synthesize_sample().  The input values contain the lost
+field regardless of the read format.  So it should skip the field
+carefully.
 
--- 
-Best Regards,
-Anvesh
+Thanks,
+Namhyung
 
