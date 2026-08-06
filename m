@@ -1,113 +1,107 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BDC41D202
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 21:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1B53DA7EC
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 21:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786050611; cv=none; b=YLL1avgXRa6VojjX30hlhx613Gg+ErHq6N3rTR5RLXxsm5PQNTn4iju3cVXq5h6obdmwVB7FhnFP8MWFSfSF+ecJKVNcuUhVw7MfeYHQquTqCyj5SiUkzt7btYpCv9kl/zU15i56WQT6aQJffSc37SyVKnh6U2aP1YBwl6JKC8c=
+	t=1786050742; cv=none; b=d3MmL9HsVrh4gQehitZgk8na246od/WTtb291S2DKhQZWuMrTIbIqBWpPegk+DKeFDZFyNPBASD54F/iY8E42H03eRZB+zxAPtEIN3/K+kD9IGZbhd7f5AdgQkqg8VOfjvHoKC09HD9ejLqyLbeVEUNYkLwmi3fnfJp+DNyzYPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786050611; c=relaxed/simple;
-	bh=3uC53TGj24ENV4GVRI1QRghP3hLrt3xbg6mDjIwNy/U=;
+	s=arc-20240116; t=1786050742; c=relaxed/simple;
+	bh=EVqqjgxitk7nA8Yt0CJqgu1UG0GrI/g9AGl76DLy0Os=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d/joK6fmRkL18Ei8Fjd7dPUjT2Vw4wmANiJt+q/TlscBXWsj9g/+nbCiWy1MucavGfa0JMQbt3Wa6a0FHKNG6nASjCqIMZw70ceKano39nVXx/0yt4p5gkxJIbGzSQwUA7Uic0RivaPJ6vSLSkm/0f5KuURi681QQKFHJdHZIp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Mqi6agzl; arc=none smtp.client-ip=95.215.58.183
+	 In-Reply-To:Content-Type; b=tjJFom2+DEakGLRsHG4+qCnh+KDsT1YvC2phgJBAJTR6QIHX5yOVp5WsHt6BQQOZfE0RWHapxXMZNBU930fGzDuW47WY8PPnR/PwDXrcGGy8Po8OEXIAtCGEo24Grgj4FOnY4Yke+oalplpIlqLJFkFa27nwhUGV9VOFZkY0M1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sHdG6Kq9; arc=none smtp.client-ip=91.218.175.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Mqi6agzl"
-Message-ID: <39401518-a0af-49f9-a247-1e3793bb0648@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sHdG6Kq9"
+Message-ID: <daee8e4f-c8e2-4187-9167-85d3be20fc47@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786050607;
+	t=1786050739;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=e39FPgvRuNUsT5Tht2Tl3jSVxrlqWgMlgFYM5FLFaBI=;
-	b=Mqi6agzldykWo28uj3U0dfCETkgEkjMSAZ+pRnq4ugaCq+yPIuABxPVK/xp/LVce1C4GxC
-	U6s1ISu5lXC9OD8CRdJgk8tSdOA5Uwywf3OJSr0XM6gTUC/o/+GKOAQkSWuuPfEuJcr347
-	1wNb0qs28VaMBCiDSQpLoZu37KgCdMQ=
-Date: Thu, 6 Aug 2026 14:09:46 -0700
+	bh=eGP0fJxkFCWgp7PTBweMOXOEbYCb357C9EXHOe/Ercw=;
+	b=sHdG6Kq9qkqSXExjSxwCIn6gRoJ1A/lQxKr/DjF0q0yPYL5Zi5/PPEm4NEnI9rKwvuQL5a
+	8fb858YpXfrraX/Kthrlq9ppDTKDwuTLzBd/O92Z5NfmLj2O5H0EsZW7MdWXuzAFGf+uGW
+	9hEIMxMscTWMxS0uU8fjohcp7mMyA9c=
+Date: Thu, 6 Aug 2026 14:12:08 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v2 3/6] selftests/bpf: Verify arena type tags in
- resolve_btfids test
+Subject: Re: [PATCH bpf-next v2 6/6] docs, resolve_btfids: Document kfunc BTF
+ annotation emission
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260805230648.2354989-1-ihor.solodrai@linux.dev>
- <20260805230648.2354989-4-ihor.solodrai@linux.dev>
- <20260805231755.966CC1F000E9@smtp.kernel.org>
+ <20260805230648.2354989-7-ihor.solodrai@linux.dev>
+ <20260805231628.D5F391F000E9@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <20260805231755.966CC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260805231628.D5F391F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-On 8/5/26 4:17 PM, sashiko-bot@kernel.org wrote:
+On 8/5/26 4:16 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing NULL pointer check on the result of `btf__type_by_id()` causes a segmentation fault when a kfunc symbol is missing.
+> - [Medium] The minimum required pahole version in the changes.rst table was not reverted to 1.22 after its dependency on 1.26 was removed.
 > --
 > 
-> --- Patch [3]: [PATCH bpf-next v2 3/6] selftests/bpf: Verify arena type tags in resolve_btfids test ---
-> commit 833ac8bbb8ac1055e25790da1396864987e31541
+> --- Patch [6]: [PATCH bpf-next v2 6/6] docs, resolve_btfids: Document kfunc BTF annotation emission ---
+> commit b5222d5ea4c3ea695d12ac70fc23f3fbadabd591
 > Author: Ihor Solodrai <ihor.solodrai@linux.dev>
 > 
-> selftests/bpf: Verify arena type tags in resolve_btfids test
+> docs, resolve_btfids: Document kfunc BTF annotation emission
 > 
-> This commit extends test_resolve_btfids() to assert that resolve_btfids
-> emits the address_space(1) type attribute on the return type and arguments
-> of kfuncs marked with KF_ARENA_RET, KF_ARENA_ARG1 or KF_ARENA_ARG2.
+> This commit updates documentation and comments to clarify that resolve_btfids
+> now emits BTF annotations for kfuncs instead of pahole. It modifies
+> changes.rst to reflect that a specific pahole version is no longer required
+> for these annotations.
 > 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/resolve_btfids.c b/tools/testing/selftests/bpf/prog_tests/resolve_btfids.c
->> index ac51fd4548214..8482f00046d4c 100644
->> --- a/tools/testing/selftests/bpf/prog_tests/resolve_btfids.c
->> +++ b/tools/testing/selftests/bpf/prog_tests/resolve_btfids.c
+>> diff --git a/Documentation/process/changes.rst b/Documentation/process/changes.rst
+>> index 1ca8c5f73ad00..6d1dbe4abf0f0 100644
+>> --- a/Documentation/process/changes.rst
+>> +++ b/Documentation/process/changes.rst
 > [ ... ]
->> @@ -227,6 +260,39 @@ void test_resolve_btfids(void)
->>  	check_kfunc_set(&test_kfunc_set);
->>  	check_kfunc_set(&test_kfunc_set_rev);
+>> @@ -147,10 +147,9 @@ Since Linux 5.2, if CONFIG_DEBUG_INFO_BTF is selected, the build system
+>>  generates BTF (BPF Type Format) from DWARF in vmlinux, a bit later from kernel
+>>  modules as well.  This requires pahole v1.22 or later.
 >>  
->> +	/*
->> +	 * Check resolve_btfids wrapped exactly the arena-flagged return/args
->> +	 * with the address_space(1) type attribute, and left other
->> +	 * pointers/returns untouched.
->> +	 */
->> +	for (i = 0; i < ARRAY_SIZE(kfunc_symbols); i++) {
->> +		const struct btf_type *fn, *proto;
->> +		const struct btf_param *params;
->> +		const char *name = kfunc_symbols[i].name;
->> +		u32 fl = kfunc_symbols[i].flags;
->> +		__u32 nr;
->> +
->> +		fn = btf__type_by_id(btf, kfunc_symbols[i].id);
->> +		if (!ASSERT_TRUE(btf_is_func(fn), name))
->> +			continue;
+>> -Since Linux 7.0, kfuncs annotated with KF_IMPLICIT_ARGS require pahole v1.26
+>> -or later.  Without it, such kfuncs will have incorrect BTF prototypes in
+>> -vmlinux, causing BPF programs to fail to load with a "func_proto incompatible
+>> -with vmlinux" error.  Many sched_ext kfuncs are affected.
+>> +Kfunc BTF annotations (the bpf_kfunc and bpf_fastcall decl tags and the arena
+>> +address_space(1) type attribute) are emitted in-tree by resolve_btfids from the
+>> +BTF_KFUNCS sets, so they no longer depend on a specific pahole version.
+>>  
+>>  It is found in the 'dwarves' or 'pahole' distro packages or from
+>>  https://fedorapeople.org/~acme/dwarves/.
 > 
 > [Severity: Medium]
-> Could this cause a segmentation fault if a kfunc symbol is missing?
-> 
-> If resolve_symbols() fails to find a kfunc in the parsed BTF file, the
-> symbol's id remains -1. When -1 is passed to btf__type_by_id(), it
-> returns NULL.
-> 
-> Since btf_is_func() unconditionally accesses the info member, passing a
-> NULL pointer to it would crash the test program before the ASSERT_TRUE
-> evaluates.
-> 
-> Should we check if fn is NULL before passing it to btf_is_func()?
+> Since this removes the dependency on pahole 1.26, should the minimum
+> required version in the "Current Minimal Requirements" table earlier in
+> this file be reverted to 1.22?
 
-We are fine with the test program crashing here. Wontfix.
+That's a good question. I'd like to check what pahole version is
+actually minimal with this series.
+
+But this is not a blocker for the series.
+
 
 > 
->> +		proto = btf__type_by_id(btf, fn->type);
->> +		if (!ASSERT_TRUE(btf_is_func_proto(proto), name))
->> +			continue;
-> [ ... ]
+> The table currently still lists 1.26:
+> 
+> Documentation/process/changes.rst:
+>     openssl & libcrypto    1.0.0            openssl version
+>     pahole                 1.26             pahole --version
+>     pcmciautils            004              pccardctl -V
 > 
 
