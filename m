@@ -1,49 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3E446D55F;
-	Thu,  6 Aug 2026 11:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E53947277C;
+	Thu,  6 Aug 2026 11:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786017222; cv=none; b=sl+Dc+y7fwDXSQL3f+snmf68yKgqSmiat6Ky1J6gokPA4gJLz1rQTBOrPLsULmbDXnYnRX32UXYfHEABNZXrMfVm4WnxTMxndpeZEpzJcE7R+K7KSqgxr0aRR+Vo2REnzWsLgCCEqKiakET4rOvfJxpA+rSh1TGtmR62nL+Hu00=
+	t=1786017270; cv=none; b=kF7Ooavud05Ux5Ia4/lswK4QMDVf5KrUA+taNpxl/g+s9Bm9w2tcJYCWxyPsAFyFqRCTE9aYssz6VSJtr29ES3ZsX88Exw6UrkpxaKSElsnry7mTwfnfdbY787zpiVyZoFOf5SbP5XNq3IYcRYHz+unIlx4jv7OsDQj8HF2NSYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786017222; c=relaxed/simple;
-	bh=/KIG8XWDzdc63PRaVjRI/+jO9yAkHEtgzoQ02Rlfy1o=;
+	s=arc-20240116; t=1786017270; c=relaxed/simple;
+	bh=tUjltdGNUCuuTO6mZEJ6dIrEbKM9BGEhKNJLNYQyZe0=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LnAH4pMTXzdZX6UlTR1qxHhSH/rua8MFVQUATOrUIibn/vRT9FhspVITAxdhVimUo5uE7HbYBOmRPhwSA7VQjRh+Bu3eP4FFqZk9zoc89ZZI6eezvstf0gMcGGZ7tq8eqniF7ejjEQ4Iuy91LNpd1zaB+1Fhuk5DwUr3zQ5huo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mLXZJ+u5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pcLvoh9VCgrMvtAFXz+Yu9CNECBkOSCmip2gA/dT6sORrJYatVqPRcGekiMlB7NPGpon39ctwk7inhg9k0BD999uPd/XBym21HFd/aE6NJxlewaPOl/Kx0YCha1oLgeeQSXHMyZPu/Acl3iVZaH3cioiYaX7lujXVmTPJwHl3Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XXRxPohz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mLXZJ+u5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55841F000E9;
-	Thu,  6 Aug 2026 11:53:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XXRxPohz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCAC1F000E9;
+	Thu,  6 Aug 2026 11:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786017220;
-	bh=nQPNJo06tNfnlixUt4c2Ra0SEs+OQZrCcf4BIulvtqU=;
+	s=k20260515; t=1786017269;
+	bh=Yllfnt8G0ssXpgimC9rEoN1keyuJ11edo+mCKKLdbTQ=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=mLXZJ+u5EJBZbwB9QZc5wJYLyDUVOj4EWFRE8aP/t1jXazpNiHX4RcjrhsNczXDol
-	 J1AY9hBy6ntKuykiujfNsIpH6p7Gv5e+8e9DTZuDeZeKu5bHQNLINXEulo1wTNsnl0
-	 ZJDGfC62EVaLCa+S6DSCpFSx6Lp0VfQjTPC28Imb+dJxWsPG8fdfmW1GN+l82sC7Z6
-	 WED41OqY8rFFyn7WL6j/F64cEDJPvWg8nR1MXLNan+078kYMR1S9dxNW3+LPHU87Pz
-	 ba3rUFAzqdzowsgAkTdPjChIrytwdTJkK2MA/aHgj6e37HB4vOTDf/Jo1f/dNAfxnd
-	 Q+ZIxR8Euul6Q==
+	b=XXRxPohzF6NZPJXvyTsqENa03bnV6nSMIHhWm0ZjNfFrECGtNgaBQgXi+u6lvhqau
+	 h0N0q1sHjMZM4ecPFSiIKQibPQILOlBLRLSTnOJ0N17nIwJlx/WicGSQu5sjMBoPPb
+	 bdAp3lhiKtE2a53QD8siz06qK+6qQGz+Rik/gWrfPCoP2wzpVMwzmUro+dE/dc7uIu
+	 jA4LRn6yLJDuQ/CoHhSCa1N79UGhVsM35SGkZu33ab/E6cDRN78FETSUH7pTBOR/YP
+	 0gxyIm+5n47AxjW7EzFm0v5lkxK9et6A7Lpk1GmnJQR3u5/B2C+7dEJYg3eUy9vZJc
+	 eShr6c8zBBSfg==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
 	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <maz@kernel.org>)
-	id 1wrwfL-0000000Cwcv-0oJS;
-	Thu, 06 Aug 2026 11:53:39 +0000
-Date: Thu, 06 Aug 2026 12:53:38 +0100
-Message-ID: <867bm3bh31.wl-maz@kernel.org>
+	id 1wrwg7-0000000Cwf4-0eJa;
+	Thu, 06 Aug 2026 11:54:27 +0000
+Date: Thu, 06 Aug 2026 12:54:26 +0100
+Message-ID: <865x1nbh1p.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: "Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org
-Subject: Re: [PATCH v2 1/8] KVM: arm64: Remove VM-wide VNCR mapping counter
-In-Reply-To: <20260806093541.9AEDE1F000E9@smtp.kernel.org>
+Cc: kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org,
+	"Oliver\
+ Upton" <oupton@kernel.org>
+Subject: Re: [PATCH v2 8/8] KVM: arm64: Add VNCR TLB tracking again
+In-Reply-To: <20260806093552.C9F4B1F00A3A@smtp.kernel.org>
 References: <20260806091026.620700-1-maz@kernel.org>
-	<20260806091026.620700-2-maz@kernel.org>
-	<20260806093541.9AEDE1F000E9@smtp.kernel.org>
+	<20260806091026.620700-9-maz@kernel.org>
+	<20260806093552.C9F4B1F00A3A@smtp.kernel.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
  (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -55,55 +56,56 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=US-ASCII
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev, kvm@vger.kernel.org
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, 06 Aug 2026 10:35:41 +0100,
+On Thu, 06 Aug 2026 10:35:52 +0100,
 sashiko-bot@kernel.org wrote:
 > 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] S1E2 TLBI instructions fail to invalidate the VNCR pseudo-TLB when TGE=0 or E2H=0.
-> - [High] Hardcoded `TR_EL20` in `kvm_translate_vncr` misinterprets `TCR_EL2` for non-VHE guests.
+> - [High] The fast-path TLBI handler incorrectly skips the slow path for native EL2 TLBI instructions when E2H or TGE is clear, bypassing software VNCR TLB invalidation and leaving stale mappings.
 > --
 > 
-> --- Patch [1]: [PATCH v2 1/8] KVM: arm64: Remove VM-wide VNCR mapping counter ---
-> commit 9a09630623c9341a08c8ecea540015307bde098c
+> --- Patch [8]: [PATCH v2 8/8] KVM: arm64: Add VNCR TLB tracking again ---
+> commit 65741607ee5db3e8d57cf0e1773bb1031e83a3ee
 > Author: Marc Zyngier <maz@kernel.org>
-> Subject: KVM: arm64: Remove VM-wide VNCR mapping counter
 > 
-> The global VNCR mapping counter is used to decide whether an L1
-> provided VNCR page is mapped in L0 on any CPU at the point of
-> dealing with a TLB invalidation. It is incremented when a mapping
-> is made in the fixmap, and decremented when unmapped.
+> KVM: arm64: Add VNCR TLB tracking again
+> 
+> This commit introduces a VM-wide counter to track valid VNCR TLBs. It aims
+> to improve performance by taking the TLBI slow path only when there are
+> active VNCR TLBs that need invalidation.
 > 
 > > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-> > index bbe9cebd3d9d5..c09b1d411c584 100644
 > > --- a/arch/arm64/kvm/hyp/vhe/switch.c
 > > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
-> > @@ -427,8 +427,7 @@ static bool kvm_hyp_handle_tlbi_el2(struct kvm_vcpu *vcpu, u64 *exit_code)
-> >  	 * If we have to check for any VNCR mapping being invalidated,
-> >  	 * go back to the slow path for further processing.
+> [ ... ]
+> > @@ -424,10 +424,15 @@ static bool kvm_hyp_handle_tlbi_el2(struct kvm_vcpu *vcpu, u64 *exit_code)
+> >  		return false;
+> >  
+> >  	/*
+> > -	 * If we have to check for any VNCR mapping being invalidated,
+> > -	 * go back to the slow path for further processing.
+> > +	 * If we have to check for any VNCR TLB being invalidated, go back
+> > +	 * to the slow path for further processing.
+> > +	 *
+> > +	 * The synchronisation betweem TLBI and walk is provided by the
+> > +	 * speculative increment of the TLB counter on walk, and the
+> > +	 * invalidation counter. Yes, this is fiddly.
 > >  	 */
-> > -	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
-> > -	    atomic_read(&vcpu->kvm->arch.vncr_map_count))
-> > +	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
+> > -	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
+> > +	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
+> > +	    atomic_read(&vcpu->kvm->arch.vncr_tlb_count))
+> >  		return false;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this condition incorrectly limit the
-> slow-path fallback to only E2H=1 and TGE=1 contexts?
-> 
-> If a non-VHE guest (E2H=0) or a VHE guest running a VM (TGE=0) executes an
-> S1E2 TLBI instruction (e.g. TLBI VAE2), the fast-path handler
-> kvm_hyp_handle_tlbi_el2() performs the hardware TLBI but will evaluate the
-> above condition as false.
+> This is a pre-existing issue, but does this condition incorrectly skip the
+> slow path for native EL2 TLBI instructions when E2H or TGE is clear?
 
-"Stuck record".
-
-There is no such thing as NV together with a non-VHE guest, so no
-VNCR, and no need for taking the invalidation on the slow path.
+See answer to the patch #1 review.
 
 	M.
 
