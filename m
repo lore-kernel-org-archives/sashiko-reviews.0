@@ -1,137 +1,197 @@
-Received: from out-181.mta1.migadu.com (mta1.migadu.com [37.59.57.117])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E42143848F
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 10:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.59.57.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44F043DA31
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 10:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786012174; cv=none; b=DRTQ8TxlP/qt9uzw8ByyccfeaAzLmGN2R3dTxyCn9TR1boZh0lYIrFwUxSUwa2/WRU5OvzuNuphDcaV9AMwkxWjZem1z+eXFKTWLnkfpTBtYMEZX+uRpEDmPoOVeRXncBJmAWC9a0JBykpTtb6DbbF3sXs6r0kySb91XkkXXx4g=
+	t=1786012635; cv=none; b=IRMzUGB6o331iQivbQDRH/taGhYp7o0ZUFFfzPHJAdGpsdF4hlxz7x8SeSlxCHySxnWI8zGQi7NrRt92XRO0NRjmmowGxt77MO/CA0WQ9fcSW0jd6sdv1ES2BNpu65cCkwPvJkqzPaYp/xAPG2F73BnGi3ImGi/MCw2bVH4XsvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786012174; c=relaxed/simple;
-	bh=NvBICakGyQH9sHFyfR7Q9JnnLoE+3m+jSLiUuDst1rU=;
+	s=arc-20240116; t=1786012635; c=relaxed/simple;
+	bh=CyQj0ikYbWqPj+cKb65E0rL3Em87q7eo5SfyA74yzAk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cWwXaph60h2aLtNdWt0aRTBd4I2egwPePv+S8vACqI9U8ZwK3rjvbFeYiz8UnvQeoQkJ/OZyR335MQVVpEX816TT26pRuEci7O5T9lb960LosVwlw7drsw6sV2UEu9mEzoTiqj7bmGwNKQWk6dvY0QGWlw25LOYPO9RvYoFN3rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=aou44YO/; arc=none smtp.client-ip=37.59.57.117
+	 To:Cc:Content-Type; b=MFaS3g7c6r0sU5/w2TLNYFGJRmCotf/0OPZsSUku4pKtXTUcAKzZffA4lJMvDOz/aHm0V9/z+CrrJJcurHsyxLMl9IgFraccI5ysk1QMcCJiq7T1agJKrh/wxtzT/S9adyY4glLgLnCEyGDReF4/dWVeM/L/OzgPPr/OufyOf+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ZgFALpK4; arc=none smtp.client-ip=91.218.175.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="aou44YO/"
-X-Gm-Message-State: AOJu0YwwxRU0j9nGzRj+MSECKlttSlE6UtWl6vHDNWEgE++tInMor8Xd
-	V1RWOPTB6RnKsqELFpNo9Z2tew1cMIPm4sGlY1FGsZk2uBtDpg3IjwwrlCpKFApyA9rgpDD2Vi+
-	bpM4gi+Qm/cBpXFWOHDzc/c+WX9V5uinFs9KvaCr1
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ZgFALpK4"
+X-Gm-Message-State: AOJu0YyQmpB8A9DVMhIqVmpCQ4yPkOhz6/92/f1kJv3N7Uwd9AcxUxed
+	/tz/tnoe10NoaSFZ89DEhOGCJzjQrFO+zRF/z/7y9O8rLnFywI5HXHVzAUkwjbrUDsEyfakAYUk
+	Hoi3XJwjhAckYg+//bu2nyC2Yos0smD2DQa297ZRX
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786012170;
+	t=1786012631;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=6gyHIAEcc7EYTchvF4v8OZJwBj28xxsDIlJxCAeS0PE=;
-	b=aou44YO/0aB+uGJkarVppVanHbznwYIFm2ktEiSAZGkCwPtRcaTj20m8ACRksn+R1B9uYQ
-	wjziQs246VoGYIjZVsKAS5nFv80BQnCxPvrBWIi6LYoPMI9KDUnSmEBaBZhk3g8nhGXgVs
-	2+HStEM4SGH02nwIxOHWKQXNyaMt/tQ=
-X-Received: by 2002:ac8:7d51:0:b0:50e:5eba:cadd with SMTP id
- d75a77b69052e-52cfbdba534mr16532461cf.2.1786012140284; Thu, 06 Aug 2026
- 03:29:00 -0700 (PDT)
+	bh=usAjdnBKFODlJjVhafWrgc8KxpEqvovna4+uO2ZWV1o=;
+	b=ZgFALpK44d189LHTy/mhqsyG9ouL2k46kLX+hwTYb/lsJt6CbFDWfURWphKjNzQZd9GUGy
+	MUCQR4ffuwWZCsDN87gLLycDhyuUpADOcv/Evi95tmV7vIDHK04hd9TAnTJ0tjooTSbMQC
+	zY4EjmkTEkxytZ7BxhpTJEnOIDLOn8c=
+X-Received: by 2002:a05:622a:aa84:20b0:51b:ff0a:2048 with SMTP id
+ d75a77b69052e-52cfe9f1040mr11390661cf.3.1786012627807; Thu, 06 Aug 2026
+ 03:37:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260806100256.371164-1-fuad.tabba@linux.dev> <20260806100256.371164-4-fuad.tabba@linux.dev>
- <20260806101600.207261F000E9@smtp.kernel.org>
-In-Reply-To: <20260806101600.207261F000E9@smtp.kernel.org>
+References: <20260806100256.371164-1-fuad.tabba@linux.dev> <20260806100256.371164-3-fuad.tabba@linux.dev>
+ <20260806102022.4C7921F000E9@smtp.kernel.org>
+In-Reply-To: <20260806102022.4C7921F000E9@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Thu, 6 Aug 2026 11:28:23 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTxNyzw_t++nF66zocB2de5ZKwtAN4M9jj69VU457OEMFA@mail.gmail.com>
-X-Gm-Features: AUfX_myF3cUgFTKnFOFo1bCqRsxQ978TfYpZmRtSvsYce4mJ1A2qgiTqTisJreM
-Message-ID: <CA+EHjTxNyzw_t++nF66zocB2de5ZKwtAN4M9jj69VU457OEMFA@mail.gmail.com>
-Subject: Re: [PATCH v1 3/4] KVM: arm64: vgic: Do not access the GICv5 CPU
- interface from EL1
+Date: Thu, 6 Aug 2026 11:36:31 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzn8+7N9QU7fNNaMGVaUwUzd3J_QOi3RUakY-qC3o1-WA@mail.gmail.com>
+X-Gm-Features: AUfX_myQP5_Gv4bHKWGHGnskzU3RV15QZN9DNjM1MOl4Dfl2GONNEPDCquUTUK0
+Message-ID: <CA+EHjTzn8+7N9QU7fNNaMGVaUwUzd3J_QOi3RUakY-qC3o1-WA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/4] KVM: arm64: Reject the GICv5 CPU interface
+ hypercalls under pKVM
 To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Migadu-Flow: FLOW_OUT
 
-On Thu, 6 Aug 2026 at 11:16, <sashiko-bot@kernel.org> wrote:
+On Thu, 6 Aug 2026 at 11:20, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Missing Context Synchronization Event (CSE) after writing to SYS=
-_ICC_ICSR_EL1.
+> - [Critical] Missing pointer validation in always-on legacy hypercalls al=
+lows arbitrary hypervisor memory corruption and information leaks by the ho=
+st.
 
-This runs on the guest-entry path, and the ERET into the guest is a
-context synchronization event.
+Under pKVM this patch removes the dereference: the early return is
+before cpu_if is used. Without pKVM the host is trusted.
+__kvm_adjust_pc() is WIP for the upcoming pKVM series.
 
-I really thought we've covered this in the review-prompts, I'll look
-into this later...
+> - [High] Missing Context Synchronization Event (`isb()`) after writing to=
+ `SYS_ICC_ICSR_EL1`.
+
+ERET into the guest is a context synchronization event.
+
+> - [High] Missing Context Synchronization Event (`isb()`) after writing to=
+ `SYS_SCTLR`.
+
+ERET back to the host on hypercall return is a context synchronization even=
+t.
+
 /fuad
 
 > --
 >
-> --- Patch [3]: [PATCH v1 3/4] KVM: arm64: vgic: Do not access the GICv5 C=
-PU interface from EL1 ---
-> commit 5b0cdbb37754741e9006b6abdf408b239ed6b887
+> --- Patch [2]: [PATCH v1 2/4] KVM: arm64: Reject the GICv5 CPU interface =
+hypercalls under pKVM ---
+> commit ecfed0b01b70bb8a7e96b451e64a9f311953ed53
 > Author: Fuad Tabba <fuad.tabba@linux.dev>
 >
-> KVM: arm64: vgic: Do not access the GICv5 CPU interface from EL1
+> KVM: arm64: Reject the GICv5 CPU interface hypercalls under pKVM
 >
-> This commit fixes an issue where the GICv5 CPU interface was incorrectly
-> accessed from EL1 on systems without FEAT_GCIE_LEGACY. It restricts GICv5
-> access to VHE, similar to the existing GICv3 handling.
+> __vgic_v5_save_apr() and __vgic_v5_restore_vmcr_apr() remain callable
+> after pKVM finalises. pKVM never registers a GICv5 vgic, so neither has
+> a valid caller in protected mode, and on a GICv3 machine the registers
+> they access are UNDEFINED at EL2 and panic the hypervisor.
 >
-> > diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
-> > index 74bace10a22ed..df58c0042ed63 100644
-> > --- a/arch/arm64/kvm/vgic/vgic.c
-> > +++ b/arch/arm64/kvm/vgic/vgic.c
-> > @@ -1042,11 +1042,15 @@ static void vgic_flush_lr_state(struct kvm_vcpu=
- *vcpu)
-> >  static inline bool can_access_vgic_from_kernel(void)
+> Reject both when protected mode is enabled.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index d3df96ed8ba42..a9afd350b1fb3 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > @@ -695,6 +695,9 @@ static void handle___vgic_v5_save_apr(struct kvm_cp=
+u_context *host_ctxt)
 > >  {
-> >       /*
-> > -      * GICv2 can always be accessed from the kernel because it is
-> > -      * memory-mapped, and VHE systems can access GICv3 EL2 system
-> > -      * registers.
-> > +      * GICv3 and GICv5 drive the CPU interface through EL2 system
-> > +      * registers, so only VHE reaches them from the kernel. GICv2 is
-> > +      * memory-mapped and always reachable.
-> >        */
-> > -     return !static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif=
-) || has_vhe();
-> > +     if (kvm_vgic_global_state.type =3D=3D VGIC_V5 ||
-> > +         static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif))
-> > +             return has_vhe();
+> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+> >
+> > +     if (unlikely(is_protected_kvm_enabled()))
+> > +             return;
 > > +
-> > +     return true;
+> >       __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+> >  }
+> >
+> > @@ -702,6 +705,9 @@ static void handle___vgic_v5_restore_vmcr_apr(struc=
+t kvm_cpu_context *host_ctxt)
+> >  {
+> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+> >
+> > +     if (unlikely(is_protected_kvm_enabled()))
+> > +             return;
+> > +
+> >       __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
 > >  }
 >
-> While reviewing the GICv5 access paths related to this change, I noticed =
-a
-> related issue in the GICv5 context restore path:
+> [Severity: Critical]
+> This is a pre-existing issue, but could the missing pointer validation in
+> these always-on legacy hypercalls allow hypervisor memory corruption and
+> information leaks by the host?
 >
-> arch/arm64/kvm/hyp/vgic-v5-sr.c:__vgic_v5_restore_state() {
->     write_sysreg_s(cpu_if->vgic_icsr, SYS_ICC_ICSR_EL1);
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___kvm_adjust_pc() {
+>         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
+>
+>         __kvm_adjust_pc(kern_hyp_va(vcpu));
 > }
 >
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v3_save_aprs() {
+>         DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+>
+>         __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> }
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v3_restore_vmcr_aprs() {
+>         DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+>
+>         __vgic_v3_restore_vmcr_aprs(kern_hyp_va(cpu_if));
+> }
+>
+> By exploiting the idempotence of kern_hyp_va() for EL2 linear-map pointer=
+s,
+> could a malicious host pass a pointer to EL2-private structures, tricking
+> EL2 into reading or writing private memory instead of host memory?
+>
+> Should EL2 validate that the pointer points to host memory, or use the
+> known pkvm_get_loaded_hyp_vcpu() state instead of trusting the
+> host-supplied pointer?
+>
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this write to
-> SYS_ICC_ICSR_EL1 require a subsequent isb() instruction?
+> This is a pre-existing issue, but does the write to SYS_ICC_ICSR_EL1
+> require a Context Synchronization Event (isb()) before returning?
 >
-> According to the ARM64 KVM architectural rules, any write to an ICC_*_EL1
-> register (excluding ICC_PMR_EL1) must be immediately followed by an isb()
-> as the very next instruction.
+> arch/arm64/kvm/hyp/vgic-v5-sr.c:__vgic_v5_restore_state() {
+> ...
+>         write_sysreg_s(cpu_if->vgic_icsr, SYS_ICC_ICSR_EL1);
+> }
 >
-> Because __vgic_v5_restore_state() writes to SYS_ICC_ICSR_EL1 and then
-> returns, the caller will execute subsequent instructions without a Contex=
-t
-> Synchronization Event. Could this leave the CPU operating with an
-> architecturally undefined pipeline state during the vCPU switch?
+> Since writes to most ICC_*_EL1 registers require an immediate isb(), coul=
+d
+> placing a function return between the write and a barrier cause the CPU
+> to observe an undefined pipeline state?
+>
+> Would this lead to unpredictable behavior or spurious faults when
+> switching to a guest?
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there a missing Context Synchronizat=
+ion
+> Event (isb()) after writing to SYS_SCTLR here?
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___kvm_enable_ssbs() {
+>         u64 tmp;
+>
+>         tmp =3D read_sysreg_el2(SYS_SCTLR);
+>         tmp |=3D SCTLR_ELx_DSSBS;
+>         write_sysreg_el2(tmp, SYS_SCTLR);
+> }
+>
+> If every write to a control-plane system register must be followed by an
+> isb() as the very next instruction, could missing the isb() before
+> returning result in executing subsequent instructions with an
+> architecturally undefined pipeline state?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260806100256.37=
-1164-1-fuad.tabba@linux.dev?part=3D3
+1164-1-fuad.tabba@linux.dev?part=3D2
