@@ -1,133 +1,67 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6E13F39FF;
-	Fri,  7 Aug 2026 05:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983FD446C1E;
+	Fri,  7 Aug 2026 06:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786080029; cv=none; b=OYUuSB4mpmFk3VTZopSmCd+KBCYLVCeDR12BeQ30d9O9p43drKhAlMxtEaPFhFTgDve/rIMYmqI4xBgOuxds8SqN4UITKeszSxCK85o44p6ccixzWXyNBXlTyrqu9EyJkMSqixZNpdXV95eEnd3d+09sFIEEiQIRJrtiYR8wuSY=
+	t=1786083770; cv=none; b=OwnhtUlBjinKUmAWDxlwRa9TX6ONxkBS3drY0HpQ99nqrQZLd9bYVzLrSZvklmcsXBzYdju/UovAEuKGUNAACAcEJHCMZb62e4Xoz90x/rmiDWqWcIZGzELA+vka/RIO4WdMqAtfyuUzTSKhi2WrjGA4ttx3dF3A/MJbTvf/C2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786080029; c=relaxed/simple;
-	bh=gcVMBKePjvoLma3pUiI9XIayU3YaiGEgoyKCSpWOliM=;
+	s=arc-20240116; t=1786083770; c=relaxed/simple;
+	bh=TQClskodylamYEW74Jg4mlXnUhaAnJkUCd6RVZdQ8+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZIn9AGLlkStLzp+e37ocaApAptcGK56B1Arqt2IjQ1lDKbhaHV2S9r1CyEHjM4x82aP+1LE0SORJi/oYRcn9E0XbC8AQAOslARvEstBs5q8lbAqun0DJpEfdWejcj9kUi+dY1L6PvpsnpXVUqjtQ40lU0sZQAg2vbLFMGVoKNLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oN9cwaix; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=jfluOqxc9bYLQyuoca5GxDB1Vd0rZ9vwNiqkhYaMElCBfm2VhqLiGWG5yhZ5cJhCyKjxLkdiwi9OXzLJx+EhhEwkDEQAKVYYsLtkO1alrX64qpgwrmcCvPo32wEzsoub7GOIFiNJYQ8ZsvriRFWQwcERP1NRXzsz62Hnix7b4Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=hFwrZcl8; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oN9cwaix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A931F000E9;
-	Fri,  7 Aug 2026 05:20:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786080014;
-	bh=+KtEZyQf0X70BuqHmgO5EuQqaCcj/hmsg61NBYDnlPM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=oN9cwaixhVG7q+WqTwISJOGan4fULIYIxOo9sWbAxUqYRNTYfzKPVR5TsJEBilcFI
-	 rYMn107SYaX4kEF5hSBGZ4cXMrcvkmD3N8MwuZ/bkFQcinzs+ftmCIw+8xNy0SWMdn
-	 NJiWxXcPOBamwUMvN4AXynBUEtfG6AhMTR9ZMOrHT/rVFSAp5v3iheubguupKA/F2v
-	 iqVWShd/kWfuzX99Qt2qA/BCxv6xnEoBjK8TXq9eeSZ9B4LDbMatFv2C276wsuIiIu
-	 9OOVrqJi6FEj4sGVY+xQ8PdpZu1hAHfigQXCHTbgjALUoUeaJRqs9025RblUxnNqWO
-	 kSTHpSTREL9dg==
-Date: Fri, 7 Aug 2026 07:19:57 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-Cc: sashiko-reviews@lists.linux.dev, 
-	Thierry Reding <thierry.reding@kernel.org>, linux-pci@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v9 3/5] PCI: tegra: Add Tegra264 support
-Message-ID: <lgtaaastqoikhq2btjqgnlqml35phsevfykuf6ernmd2hz2lmz@wsx62f3pvzpx>
-References: <20260805-tegra264-pcie-v9-0-fa2ed7350ae1@nvidia.com>
- <20260805-tegra264-pcie-v9-3-fa2ed7350ae1@nvidia.com>
- <20260805121039.A79921F00A3A@smtp.kernel.org>
- <sdpakcbeferzpxn6bf2acic4kfnfoaa6kgxmmi3asw7jqprekf@66cnwvuwk4ye>
- <9cc29a0b-6a9c-4b97-9cfd-f24ccad654fc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="hFwrZcl8"
+Received: from L30177.local (unknown [IPv6:2a01:e0a:ac2:22b0:49c8:52ac:1f61:9566])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 30D88B00571;
+	Fri,  7 Aug 2026 08:22:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1786083758;
+	bh=TQClskodylamYEW74Jg4mlXnUhaAnJkUCd6RVZdQ8+4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hFwrZcl8PMqXeN6RApS9TsmOVuQ/lugp6pkNc16gEHr7PJjTazoDbPCCm6cClYKfV
+	 dAxoKq+Rc8kC5QKAdpWGI1PgdPowAI8AYpLhN0VHHINdmkyQlVGgn7G/lsZYnNHCUI
+	 7kBVMVafPRFGZ1FN150Bx005LQjI7kOhn+SdScQowcYGiCF/Th1rZoqjo6dre/49le
+	 t+yV3yr/4jZiBiOwxrP3+bRM/rQNv834tjEnlxoEOX7r0WKw8ZT9tYe7q6ZcgeU731
+	 vqSqFY1qsQ7HIl/wWPZuh13nYZhPWOAIPgV+FJPwif8ACeV7zDyelcWbOLBAylK5FW
+	 10bGDptF3SbsA==
+Date: Fri, 7 Aug 2026 08:22:35 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH] i2c: imx: add I2C_M_REV_DIR_ADDR and I2C_M_NOSTART
+Message-ID: <anV5q2AZG67FMvS_@L30177.local>
+References: <20260807-for-upstream-i2c-imx-lx2160-reverse-v1-1-f276ce8cb660@free.fr>
+ <20260806224803.8CF921F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9cc29a0b-6a9c-4b97-9cfd-f24ccad654fc@nvidia.com>
+In-Reply-To: <20260806224803.8CF921F000E9@smtp.kernel.org>
 
-On Fri, Aug 07, 2026 at 10:35:30AM +0530, Manikanta Maddireddy wrote:
-> 
-> 
-> On 05/08/26 9:21 pm, Manivannan Sadhasivam wrote:
-> > On Wed, Aug 05, 2026 at 12:10:38PM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > - [High] The driver incorrectly accesses the ECAM window via `pcie->cfg->win` to read the root port configuration space, causing an out-of-bounds heap read on 32-bit platforms.
-> > > - [High] The driver incorrectly uses the Negotiated Link Width (NLW) to set interconnect bandwidth for hotplug-capable ports when the link is down, permanently setting it to 0.
-> > > --
-> > > 
-> > > --- Patch [3]: [PATCH v9 3/5] PCI: tegra: Add Tegra264 support ---
-> > > commit af63006f768e2991e49a48de9855ea58d20662ed
-> > > Author: Thierry Reding <treding@nvidia.com>
-> > > 
-> > >      PCI: tegra: Add Tegra264 support
-> > >      Add a driver for the PCIe controller found on NVIDIA Tegra264 SoCs. The
-> > >      driver is very small, with its main purpose being to set up the address
-> > >      translation registers and then creating a standard PCI host using ECAM.
-> > > 
-> > > > diff --git a/drivers/pci/controller/pcie-tegra264.c b/drivers/pci/controller/pcie-tegra264.c
-> > > > new file mode 100644
-> > > > index 0000000000000..e0c5b9d0d20bf
-> > > > --- /dev/null
-> > > > +++ b/drivers/pci/controller/pcie-tegra264.c
-> > > [ ... ]
-> > > > +static void tegra264_pcie_icc_set(struct tegra264_pcie *pcie)
-> > > > +{
-> > > > +	u32 value, speed, width;
-> > > > +	int err;
-> > > > +
-> > > > +	value = readw(pcie->ecam + XTL_RC_PCIE_CFG_LINK_STATUS);
-> > > > +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, value);
-> > > > +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, value);
-> > > > +
-> > > > +	value = Mbps_to_icc(width * PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]));
-> > > 
-> > > [Severity: High]
-> > > Will this permanently set the interconnect bandwidth to 0 for hotplug-capable
-> > > ports if the link is initially down?
-> > > 
-> > > When the link is down, the Negotiated Link Width (NLW) is 0, which means
-> > > the bandwidth value will be calculated as 0. Since the generic pciehp driver
-> > > handles hotplug but doesn't know about this driver's specific interconnect
-> > > bandwidth requirements, it appears there is no way to dynamically increase
-> > > the bandwidth later when a device is actually inserted.
-> > > 
-> > 
-> > I think this is a valid concern. If the ICC BW is set to 0, then the hotplugged
-> > device won't work properly.
-> > 
-> > > Should this read the Maximum Link Width and Speed from PCI_EXP_LNKCAP
-> > > instead of PCI_EXP_LNKSTA to properly reserve bandwidth for a hotplug slot?
-> > > 
-> > 
-> > If possible, BW should be updated once the device is added, but that requires
-> > detecting Link Up using some custom IRQ if available.
-> > 
-> > - Mani
-> > 
-> 
-> Custom IRQ support for link up and down events is not available in this IP.
-> For now, we have two options:
-> 
-> 1. Don’t set ICC BW for the hot-plug controller.
-> 
-> 2. Set ICC BW according to the Link Cap settings when the link is down and
-> it is a hot-plug controller. When the link is up, use the Link Status
-> settings.
-> 
-> We can get changes in link speed/width from the BW notification status.
-> IIRC, the BW notification port driver has been reverted. If it comes back,
-> we can consider integrating the ICC BW set logic into it instead of
-> implementing it in each controller driver.
-> 
+Hi Mr. Bot,
 
-Yeah sure. Option 2 sounds sensible to me.
+> Pre-existing issues:
+> - [High] Zero-length I2C reads cause a NULL pointer dereference and kernel panic in the interrupt handler due to integer underflow.
 
-- Mani
+This analysis seems to be correct but it is not the purpose of this feature
+update which does only "move" this block of code for the needed new feature.
 
--- 
-மணிவண்ணன் சதாசிவம்
+The pre-existing issue/topic may needs its own specific "Fix" commit.
+
+> Since the I2C core sets msg->buf to NULL for zero-length messages, does this
+> result in the driver writing to a NULL pointer and causing a kernel panic?
+
+I think your analysis it not correct.
+
+thanks for the reviews,
+  Vincent
