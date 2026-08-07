@@ -1,96 +1,125 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www2881.sakura.ne.jp (www2881.sakura.ne.jp [49.212.198.91])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9688B1C5D59
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 18:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582263BB48;
+	Fri,  7 Aug 2026 19:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.212.198.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786127960; cv=none; b=XPxAS8n1P9qfMru5V9TMwDCZl9gI2BoMXSHfEq7ut8jCizQnFSwWNynUjddE297jAhM9EJtGtSj2xs4B3S+XuEYZJez59QeLhn0EvTbSjMZpm5+sXOh+Pt4po2/EHzONuHxG0Vq6J/fXMbCNTmpesL7WXzRHVBePR+YRkpIantU=
+	t=1786129278; cv=none; b=j9BYodFvIyntPqmZ1Mqw3koabbBD05Gc0ShZpvgo8ZmUOxspI2gxo6qo2H286hH9N1NEG9c9GzsAtOagNWmnpgNwOqu7xQrAv5F1UzzLtRXrDxtm0C4CTktAYQPQZtrGcuSEcy9rxHO1Bf4Du3tzhnVNDaQ+vCYGHafNoHWhWiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786127960; c=relaxed/simple;
-	bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYGbPlv7Zjq5JukOfB8JP9wki8XrcDBxMtIaWX/heiKgJcSGSvXdH/a7Q9VU0uXXDp3LQ68ezB6VuF5WuLRvnnOZdfivYFwAioO4wIkX9IoG9XM/W/SMPvcqpggMi9qB/0RX5hF+i30hEh3YfxDPk90nciSdD8XfPPEkmniyAOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XdpD81hB; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786129278; c=relaxed/simple;
+	bh=86ara+HfeW2Hk135Uxw6/SHJydnGqQXBKMgiurlWUhM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BINXXWm1u2JPXPz7Ob1DOEudcwzxZyPM4iuoys/JJgLu+5StJ8GCvbur/EvUGq0iDTmJE6Lt3j3QkCYhWQsBj13XF+KNhT5VJ7SOm7tYcTWVvVf1iAgJmcon4/f76Lc+Wl6IsmfTbGZIvKndaH9KOQbYe4lRtsvU0fOExL9Zsvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enjuk.jp; spf=pass smtp.mailfrom=enjuk.jp; dkim=pass (2048-bit key) header.d=enjuk.jp header.i=@enjuk.jp header.b=yDYS3eLc; arc=none smtp.client-ip=49.212.198.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enjuk.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=enjuk.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XdpD81hB"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2cc891373e0so46158385ad.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 11:39:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786127959; x=1786732759; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
-        b=XdpD81hBz4T/PJ15OzYWC4mO3AJdYlYiOcyuZbg9Mq+Ispk9r6u+i/35JWpbWlMzpC
-         YPOaJ5/xeFuiopnM+o3OqHFOnLeWKxbRHEmhcaL7TSQXFFpqhduKq2fQ0cTAXQPqlOog
-         YqgFpme2pVd4wk6MHEPAMinYqfkx5IAF8vJ6gOtiIaGj38FCtMw6N+fowrnSScg+w/dP
-         MXJlUvLRn/xGewEHMqa8WYPpfymGAXj/Rwr6L8xShNFvFFn2k1RRuTNy8qaAIBBFkNpF
-         +1hdbqFTn6uxnJV1Epa1Ihvc3g4yG60jRbB7RHYt2jltyjF6HUCAcVvxbHjKB27EyoIX
-         pdXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786127959; x=1786732759;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
-        b=rec3J7D3NOVumg9c8DBbplu/SEkDbH73Pc6N4CpaW3uOAZHzqdzbPPT/LnDo8gsb91
-         3NajLQrmngJXwl9UbvpS/TQgfNJar2wdJWs41/pgoKDrAPd6PpOzyf0Q6ovbhAopSbQx
-         +XT0FqFJxlpequoiC+mDQUvaqsHK/XceBKGPnl/LSet6liY62XUGrxO5qLru3aYGqxcG
-         ne1FpEwR0YstN9fTDTx3WZDqEwZybeJ1ftrkxcqheGY72TMk0EWfuyWgBCWQGWjBjSGB
-         lWQx5lX4ERjBG0xCgAmndZYyuqDPNrbcirMgkZgYJupBXO7IrDTVguEstiUboMmiGQKJ
-         6+LQ==
-X-Forwarded-Encrypted: i=1; AHgh+RomQE29Rr5wnYWDscxqNB88QBlhlHsC4vYk6eqlD6354yO/hQ65U/X7btWYM533eV0iPCPNoHRuKddBZ1/gF28=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzv+nX3TqIB+76bokez+bSD5KVh3FxpTl6BUZytWEPjBfF17U4l
-	1vcSTALK0qGU9ZSSGqly4xQlyghNqiamu5XhmVALa1iCBUXYmyRBLIWE
-X-Gm-Gg: AR+sD11dXP6zIC4NW7ALVXyYeq0tK6UwbofatxSVWzXDNUXq0G8MTGFeVWuYFRTNQHD
-	GcFn4xdWItGKoKYtlyF+u9IBW3n6LA4agZOsase5uP58ovCIhsnfGtFADm+7dSbBkR/SMe/ygqI
-	FtlqIbekitaWp04o6cPcZqTy0DutwCWcG9F8XWUELu/OwlZjR4+m+R9hY7PVAcN9HDs0ovJgNQF
-	loguocrtrpzBak7/Uwmkm8BH/ufIWUk8scWCRyV+rczt3/7XdChe47l2eAStLJa9LjhWdFN9MKM
-	4/ieVHHGuMcmVDXeG+l5NOe/kIpFfsKZm7TkZMZ5s+QT8cQed28ezc1WXXisc1EUskVok6Cfbb1
-	6+offsD/NY0LzGaUBiaoL4Qm22aPIDVMYP37Z+JeXfbRuFGW6c9rbrC1aswvl+DUOZYmldYCee9
-	r49EBIqoMf2IAizZOzkz42KxHV1ib2DjEuX4rikScvbuU+4am6xFWBS3N+ySCZnzrGaNi5WfVKv
-	mrcK/VcSpj+ubW2jib762iy+VB8YXkAWcpphUPL36fq1ZpWlO2ifdGWw+Rd
-X-Received: by 2002:a05:6a21:e58b:b0:3a3:a9c4:3d60 with SMTP id adf61e73a8af0-3cb85f5c2b0mr30739753637.27.1786127958832;
-        Fri, 07 Aug 2026 11:39:18 -0700 (PDT)
-Received: from bloom.localdomain ([2604:3d09:178e:e100::6868])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f37469esm1155243a12.23.2026.08.07.11.39.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 11:39:18 -0700 (PDT)
-From: Ivy Lopez <skunkolee@gmail.com>
-To: sashiko-bot@kernel.org,
-	skunkolee@gmail.com
-Cc: linux-scsi@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] scsi: arcmsr: fix NULL deref on dma_alloc_coherent() failure in arcmsr_alloc_xor_buffer()
-Date: Fri,  7 Aug 2026 12:39:04 -0600
-Message-ID: <20260807183904.73546-1-skunkolee@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260807055056.9F05F1F000E9@smtp.kernel.org>
-References: <20260807055056.9F05F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=enjuk.jp header.i=@enjuk.jp header.b="yDYS3eLc"
+Received: from x1 (M106072126074.v4.enabler.ne.jp [106.72.126.74])
+	(authenticated bits=0)
+	by www2881.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 677J0wBk030066
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Sat, 8 Aug 2026 04:00:59 +0900 (JST)
+	(envelope-from kohei@enjuk.jp)
+DKIM-Signature: a=rsa-sha256; bh=4bdG/JFg//U/ZzRpQpxd3QskSgee6tRLQPpNCqUBRFk=;
+        c=relaxed/relaxed; d=enjuk.jp;
+        h=From:Message-ID:To:Subject:Date;
+        s=rs20251215; t=1786129260; v=1;
+        b=yDYS3eLcLvdOUHO52G+87QTE9ovkKwL5ieG72mFCvXqpp+lD5uhXhchfHwdhqk9g
+         v4l0pz2n7+XjTczsDTftPCchVznbdCG7V2bg3c8HLHfhSB11AW4tZyWEBgv4Ho10
+         UCsJLgsUa1vZ6Ad7dyTzHvDG7cJCjWxPOCzZ4fYPOoxRZViOujqiLajB5LSqWEh+
+         LpsTYQ9bKFimlIRBWkUZ6UZo4pX7vkBo1W3e59DVKNHh/ACa1TP8IGASnzPoR1Sp
+         97yOrET/C91QH8PWFTmpNtcORY/1uWBrPlrzDh9VX5GHIjA9pPZQR2aM2FvjlKaY
+         PKW3Tzr4Uzl7L8mOFfEsMQ==
+Date: Sat, 8 Aug 2026 04:00:58 +0900
+From: Kohei Enju <kohei@enjuk.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>, bpf@vger.kernel.org
+Subject: Re: [PATCH net-next 10/15] i40e: prepare for XDP metadata ops support
+Message-ID: <anYnt4a74hohZ-M1@x1>
+References: <20260805213541.2281287-1-anthony.l.nguyen@intel.com>
+ <20260805213541.2281287-11-anthony.l.nguyen@intel.com>
+ <20260806213617.56A711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260806213617.56A711F000E9@smtp.kernel.org>
 
-Thanks for the review.
+On 08/06 21:36, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] Use-After-Free in the AF_XDP Zero-Copy receive path due to stagnant index variable on error.
+> --
+> 
+> --- Patch [10]: [PATCH net-next 10/15] i40e: prepare for XDP metadata ops support ---
+> commit cf380b8d06da010c94723db1eb6af6df8fb0fdc8
+> Author: Kohei Enju <kohei@enjuk.jp>
+> 
+> i40e: prepare for XDP metadata ops support
+> 
+> This commit introduces struct i40e_xdp_buff to wrap an xdp_buff alongside
+> a pointer to an i40e_rx_desc. It passes the RX descriptor to XDP kfuncs
+> and adds bounds checking in the AF_XDP Zero-Copy path using
+> XSK_CHECK_PRIV_TYPE.
+> 
+> > diff --git a/drivers/net/ethernet/intel/i40e/i40e_xsk.c b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
+> > index 9f47388eaba53..51a05ce4c7ce8 100644
+> > --- a/drivers/net/ethernet/intel/i40e/i40e_xsk.c
+> > +++ b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
+> 
+> [ ... ]
+> 
+> > @@ -472,6 +482,8 @@ int i40e_clean_rx_irq_zc(struct i40e_ring *rx_ring, int budget)
+> >  		if (i40e_is_non_eop(rx_ring, rx_desc))
+> >  			continue;
+> >  
+> > +		xsk_buff_to_i40e_ctx(first)->desc = rx_desc;
+> > +
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this function have a use-after-free
+> in its error handling path?
+> 
+> If xsk_buff_add_frag() fails earlier in the loop, it calls
 
-Now that I look at it, the commit message's claim about a reachable
-secondary NULL deref via arcmsr_free_ccb_pool()/arcmsr_iop_confirm()
-doesn't hold up: arcmsr_alloc_ccb_pool() failing sends arcmsr_probe()
-straight to unmap_pci_region, bypassing the free_ccb_pool label
-entirely, so that path isn't reachable here. The acb->xor_mega = 0
-line is still harmless defensively, but my stated justification for
-it was wrong. My apologies for the inaccuracy!
+IIUC, I40E_MAX_CHAINED_RX_BUFFERS (5) limits a packet to one head and at
+most four frags. Since xsk_buff_add_frag() fails only when nr_frags ==
+MAX_SKB_FRAGS, which is at least 17, this path is unreachable for a
+valid i40e RX chain.
 
-Separately, thanks for flagging the pre-existing DMA leak of
-acb->dma_coherent (and the IO queue) when arcmsr_alloc_xor_buffer()
-fails inside arcmsr_alloc_ccb_pool()! I'll follow up with a separate
-patch addressing that.
+However, the UAF scenario looks valid if it does fail, so the
+pre-existing error may still be worth fixing.
 
-ivy
+> xsk_buff_free(first) and breaks out of the loop without advancing
+> next_to_clean:
+> 
+>     if (!first)
+>         first = bi;
+>     else if (!xsk_buff_add_frag(first, bi)) {
+>         xsk_buff_free(first);
+>         break;
+>     }
+> 
+> On the subsequent NAPI poll, because next_to_process != next_to_clean,
+> the code loads the freed buffer pointer from the stale next_to_clean
+> index:
+> 
+>     if (next_to_process != next_to_clean)
+>         first = *i40e_rx_bi(rx_ring, next_to_clean);
+> 
+> Could this cause the next packet to be built using a freed buffer?
+> 
+> >  		xdp_res = i40e_run_xdp_zc(rx_ring, first, xdp_prog);
+> >  		i40e_handle_xdp_result_zc(rx_ring, first, rx_desc, &rx_packets,
+> >  					  &rx_bytes, xdp_res, &failure);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260805213541.2281287-1-anthony.l.nguyen@intel.com?part=10
