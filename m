@@ -1,125 +1,104 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BEF22579E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 02:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1446B3B1B4
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 02:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786070194; cv=none; b=IxkIXbmUhRYbmGRzge+KLKEBGprBEsMhWZKWteRBs9nochcjSUPCYDWWs3J7pVVS+oFeynIFMdCABu04YPAkTOHfs26mLFtR4zW0mPK5DGgTfnbogNxnCyok+ugV5+93N4TKj8E2Mg617qv7bn4vi7Z5tCNv6yLYqnehaQui+zY=
+	t=1786071320; cv=none; b=O0qRBzn/ucjNWmau2XV3J+Zuy088PJijM8W1U4Lazc8bEZ8gG2tyQsPINVx+qy09dXYZks3O6m9liLx2Z6WjXuLIUiC+x4rqD1A9RaJxkLMCsgIV9knFcfdjNclGT4eDsaRvM6zf47C2ojPD5/DRJK/sqBezrSZ9Zr4vsNjVeFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786070194; c=relaxed/simple;
-	bh=RjdbIv/92OBQVKHvI8DoYf/S79ml1my5Lf3FSLlpQs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aBuE/I2vllD7QUnfxQzhUJE6Ie6ZH5XKkXqj2ubMvgoLrdNVyKRym8PNdvZmzXEJYgt+k9a7jc2r5ms/hhiKlmZnnSmngPIUbU8zYme+XuxSHslj+7e2N1Z+Wb66rqmyKZTmcHQ7E5w3LduavCZBzrHBJi2xJAkDjzr7Ndfi3OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=XZM29nRm; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786071320; c=relaxed/simple;
+	bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type:Content-Disposition; b=XuSVqdHQv0QyGLB6r/TvMFIZlA27Nu40BzGvQjlctDMVO2R5roEQC3Ntq6cmLLoPiEh0xKNIFLDDJ9nCVl/pu4g03vMhpGAq9m3+uZ+ZPz2h8dCy8I6zj+Z98WKDsh9WQoApeSp69OchjOy7l+70z9tXTdeD22P7vucyUphu2n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io; spf=pass smtp.mailfrom=edera.dev; dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b=WNAqCNB6; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=edera.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="XZM29nRm"
-Message-ID: <2b16a129-1329-436e-b796-ce83ba4d608b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786070190;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9ou9YQoj58vv1yhpCBAsrG70nlVGkHXknkmpj957MAM=;
-	b=XZM29nRmHugTAnrQBHHzvb4NCEZQOEc/4CMxS8JIQ/iJaWkbbAjaXosXPKbW2Xq3AeyzY7
-	dvuBRMS9BX9JWXEZP9ZhWysPoRLvhuiCPJ4UgfFkNqmH5tNp03U2b05sUOnr6C1qCVWZ2l
-	sJVHWLtYxs70F9Z+VUuijP/uTcWT9Zc=
-Date: Fri, 7 Aug 2026 10:36:18 +0800
+	dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b="WNAqCNB6"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-8200ca16f26so43834947b3.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 19:55:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=edera.io; s=google; t=1786071318; x=1786676118; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-disposition:content-type
+         :mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
+        b=WNAqCNB6ncYzEXb28K16WewxYX9YLkdr38PBaM78gfgpLin7q4nn/smRDmionSr5C8
+         Qv82Qf/9jHE/mZINWL6WTVaVHVB1gEIQf9UoWKDrr5G6E2r3WJhWLpmlCkpdGzA42vO9
+         loN/YFH0sxD5g4Pzpr+TzNol53HfmJZ3tNlTtQDhKK0rkh/HHREND0Y4liNTSDF8BY7r
+         02C7CnGKqTJN6bwPGtit6Ej1iUbq9Ejqly5BrHHbx28FR0+fNmDbqT+PCPA/ej/kBatd
+         CwfwMGVvbCmmXSz3GJfG0M3gguWVUdUW1BbqNaKraIbbROOMQ3z/l2GwgSGX8LFUUx+c
+         ZI4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786071318; x=1786676118;
+        h=content-transfer-encoding:content-disposition:content-type
+         :mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
+        b=VFFkx1n/neD4F6QHAlN2B9irW78y+qPDMj04fzf1y8npx7YIxxL+h8xFlfDrc/aNSy
+         rfH0Q1v7xIPZwBMHfvlCb0kYdM5cc0gE5B9VwQRgBt5a3DpeDTYtefdYB7Njf4cUHAyj
+         meazOKU7z6JzhpIBltO/8x9iT9Cae7eCh5S++0dcRqqg7TrZ5gJHgcJnLN50hbbgqOio
+         GyvM6V+eexRAsKJ7B654hVE8QF4C7Utz1GK4dD8D+lxm4yJSjQoFJIpS8jzmm2tgq3sR
+         YbNFZEkuPR9VIytKJ8byttWM73zdv6sO9EDU5YoE9tWoVNXMztuURhLk7xgGdruQBDnp
+         0srw==
+X-Gm-Message-State: AOJu0YwBEMAlGcOmoO23kZnATT0unIu01c2O+dNpDs8Y80Tl0zEQYt2r
+	89oR7YFYvdIBP8USyzXqWHDigx0LUnECilA5ocQXejwwOVKsK2YrG5C7wFXfMegfODpAFRmEua0
+	tEzG2syk=
+X-Gm-Gg: AR+sD12itKBIZiG5E09QuHeMiKyuBW2fYyIvfieN9YrxPBnOPhB//QlGaPWkH9tOfAM
+	P0lH0mUFd1ou57XN9gVpZTAcQv01i4w4+nlg2zWUaA+XBog9X4GwneDmUbOwZymWS7Je6GwgPkl
+	+KZqTiDVkn0ZEVCCNEGjmaU/oO1vcPjauloFYBALHKwCu0xqfU4/jibPoeiQWuL9b9wbyYJTSOv
+	1q4swtjVl64NFigY8mufx70VUdnYdYjNzUrKRvz/cLHfDQ2N0iIDRWU8mYQOKlkK18mpKtRCYPz
+	lTx+uhlYDG6b2JvlRLtV0viWMgktT0YX1rAnCBUjAZNFcvQ5Q0KXqUAZ1qBJf/SPKQuqqojfPLH
+	ulOfMIIF5ViA6VAmLve+Kr0Cg1Fd0lpR9SxM7tyAupckKfrb6xw7JZUt7tSLiUvMrEVvZSde7cO
+	jPA5qSgAEkNU66j42sfJ7vUAYBXbC/3lVnu8l9ByXG83ZTirYL7ZU+/OSPnsKg
+X-Received: by 2002:a05:690c:6e12:b0:81e:e313:2ed1 with SMTP id 00721157ae682-8201f08fd34mr121177527b3.8.1786071317695;
+        Thu, 06 Aug 2026 19:55:17 -0700 (PDT)
+Received: from StolidWingnut ([174.80.170.224])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-823f09910b2sm2600087b3.16.2026.08.06.19.55.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Aug 2026 19:55:17 -0700 (PDT)
+From: Benjamin Leggett <benjamin@edera.io>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/virtio: use the DMA API for resource backing on Xen
+In-Reply-To: <20260806231002.27B4D1F000E9@smtp.kernel.org>
+References: <20260806-virtgpu-xen-dma-v1-1-e499b345bbad@edera.io>
+	<20260806231002.27B4D1F000E9@smtp.kernel.org>
+User-Agent: mu4e 1.12.12; emacs 32.0.50
+Date: Thu, 06 Aug 2026 22:55:16 -0400
+Message-ID: <875x1m8wrv.fsf@edera.io>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v11 05/10] libbpf: Add support for global percpu
- data
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260806163125.11172-1-leon.hwang@linux.dev>
- <20260806163125.11172-6-leon.hwang@linux.dev>
- <20260806165754.B77971F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260806165754.B77971F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 7/8/26 00:57, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Dead code in percpu global data feature check
-> --
-> 
-> --- Patch [5]: [PATCH bpf-next v11 05/10] libbpf: Add support for global percpu data ---
-> commit ee97f8a8e25b5e9337024df3dd6f3a1aae4f6cdc
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> libbpf: Add support for global percpu data
-> 
-> This commit adds support for global percpu data in libbpf by introducing a 
-> new ".percpu" section. It updates the lightweight skeleton loader to use 
-> BPF_F_ALL_CPUS when updating the percpu_array map and marks the mmaped data 
-> as read-only after population.
-> 
->> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
->> index 514e4e9daa825..9f79a8e850fdb 100644
->> --- a/tools/lib/bpf/libbpf.c
->> +++ b/tools/lib/bpf/libbpf.c
-> 
-> [ ... ]
-> 
->> @@ -5293,18 +5326,26 @@ static int
->>  bpf_object__populate_internal_map(struct bpf_object *obj, struct bpf_map *map)
->>  {
->>  	enum libbpf_map_type map_type = map->libbpf_type;
->> +	bool is_percpu = map_type == LIBBPF_MAP_PERCPU;
->> +	const __u64 update_flags = is_percpu ? BPF_F_ALL_CPUS : 0;
->>  	int err, zero = 0;
->>  	size_t mmap_sz;
->>  
->> +	if (is_percpu && !obj->gen_loader && !kernel_supports(obj, FEAT_PERCPU_DATA)) {
->> +		pr_warn("map '%s': kernel does not support percpu data.\n",
->> +			bpf_map__name(map));
->> +		return -EOPNOTSUPP;
->> +	}
->> +
-> 
-> [Severity: Low]
-> Is this check reachable? 
-> 
-> Looking at bpf_object__create_maps(), if the kernel does not support
-> FEAT_PERCPU_DATA, map->autocreate is set to false and the map processing
-> loop continues early:
-> 
-> bpf_object__create_maps() {
->     ...
->     if (bpf_map__is_internal(map) && bpf_map__type(map) == BPF_MAP_TYPE_PERCPU_ARRAY &&
->         !kernel_supports(obj, FEAT_PERCPU_DATA))
->         map->autocreate = false;
-> 
->     if (!map->autocreate) {
->         pr_debug("map '%s': skipped auto-creating...\n", map->name);
->         continue;
->     }
->     ...
-> }
-> 
-> Since bpf_object__populate_internal_map() is called later in this same
-> loop (after the continue), wouldn't the !kernel_supports() condition
-> already be filtered out, making this warning dead code?
-> 
+sashiko-bot@kernel.org writes:
 
-True.
+> [Severity: High]
+> This is a pre-existing issue, but while enabling the DMA API for Xen PV
+> domains, does this leave guest-bound transfers vulnerable to data corrupt=
+ion
+> with SWIOTLB bounce buffers?
 
-Will drop this warning.
+Yep, preexisting issue, but not reachable via plain `virtio-vga`.
 
-And, update 'bpf_map__type(map) == BPF_MAP_TYPE_PERCPU_ARRAY' to
-'map->libbpf_type == LIBBPF_MAP_PERCPU' in bpf_object__create_maps().
+Only reachable, AFAICT, if `has_virgl_3d` is enabled. The missing `_for_cpu=
+`` sync
+is pre-existing since 8f44ca223345 and pretty orthogonal to this change.
 
-Thanks,
-Leon
+A correct fix most likely belongs in the completion path rather than at sub=
+mission,
+anyway, so I=E2=80=99m not sure it makes a lot of sense to include in this =
+patch.
 
+Happy to do that in a followup/separate patch, if requested.
+
+Ben
