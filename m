@@ -1,181 +1,112 @@
-Received: from out-184.mta1.migadu.com (out-184.mta1.migadu.com [95.215.58.184])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAE14749DE
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 12:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA4B22B594;
+	Fri,  7 Aug 2026 13:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786105041; cv=none; b=neFGeB6CFzSGKo4QcDzcoKO3mEDGe//ymGA8Ea/XvKF6AlqjDr8+mytQB5DppQ6Tl3klR+HkUT/Hor3gOA0HBuIaIMTEWx/3tKQ7Toas1h9K3aNrEjd8VN6yiwNFShzQygVqqVSqQGzQC/yt+a6tRFGUfCeYpKTfL+F24OwSpG0=
+	t=1786107764; cv=none; b=UwrpGPC3pg83OWbOV9duZ3ETA/aNWAd1jFIexUqAkOFAQbbSpX8O3F3+5vulifSSVfCQATuul512VTQqaQIAY5qiriLgBNOAQE3qU+gYD1Ci7qEviAZbGlIn9iumTqLir7eiXHFM6xH25wziIfyEHEchblAsZDvHFaymwg5YA9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786105041; c=relaxed/simple;
-	bh=W986ze8G+q6u5g/R2QNTU3PWhFiawzQNSsUAcQG7Z7s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nU1F6cn4kpww/DNKVnV5482cGh+mOnebzAbA+riNQteHHoT64W3Q32FqwXMTJQoxJVE88ZoOs9RlO4X5eU79FjM88pUe9nP9EsLzLLZ7GdvOWzEzSYzmmAh3jRsJ+V2j5lYE3pXq3ZG6qYRe9zoTqAqzY5EakpE9Xa51EDQHJXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FEdXmcgP; arc=none smtp.client-ip=95.215.58.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786107764; c=relaxed/simple;
+	bh=wOJ2tSpvQo55CkV7ANBuIXWxwK8nr6n7X4QMVY4FZ/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M5ZnvvJjfvugHDxSDmCpMvoAEJ4mO2Ta1VjaiqbRyWb0Iz7SnRMO5ujZ/1lPjsSifhwvEVz69G5wyx/Uca5Pu7QgyLG9fAeTWJ2D8lCl31QwztwvKbcaZAzP2JXOsZvwY+sBbAZLqtGfrOwD6m5p2oIyUhLDcKvAnqz4u1nslRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fA97iKkG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FEdXmcgP"
-X-Gm-Message-State: AOJu0YxgquvF6hjzJlDyYDnhK04s1R4RdFIfKe1XlvZJ8eCLY6+5B0eX
-	C5UPoawrBHpHfKwXb7H8SsBBLY353pCmzWSsGfkIwfh5H6j4L+qyqCbgpi5yxygZdrOuOSTpTTD
-	V3Pvf3Dkj02UIc073M2oOxaVABngHvhFT0pBI04i1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786105008;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=e60HI2csl/FvFgSPedUpviac4vF8aHpWa13WHMfWrMU=;
-	b=FEdXmcgPBygxX7zRKWD5ndroMbtWg8BIOLJct8ZBSltCHwNSDKbL+odBR/WZwUXDMHJJO8
-	CVv7zDyScKkD4J54DvCMGRKa58jNpJAK60zbDMUd+Vw2/mYD8uQ+pxHIJkzxe9RdrNR+w7
-	43A0WC1fZI9yxNMrqtCCr2vA9+c47uc=
-X-Received: by 2002:a05:622a:9cc:10b0:51c:ad5:93be with SMTP id
- d75a77b69052e-52d1124b22bmr15716631cf.8.1786104988944; Fri, 07 Aug 2026
- 05:16:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fA97iKkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584601F00A3A;
+	Fri,  7 Aug 2026 13:02:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786107756;
+	bh=CT91bWbT89hzh8GLDq+kFpqHsCca67iKK4YYFF9czfQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fA97iKkGr5Tp5nXOgZUvuj4AjFGmisxCkr0YOiWphS3qfBNcY2vfdktm/Y74Oaz2D
+	 l+gtrPBFTtgnE+kuCZGUyRZSeiTYkgXzdksapFo6kXo2cTffL7O/bpbS5qLh7MYuPP
+	 DsgsCn1biFR6kY/GJxdNNHTPR2tSJkbj9EHLzIMEcqyXWgjJFS4EWHrfC07XFc+zGG
+	 Ds3lrylVLQR9OyNNl5DwxIVcd2e8JsQaURTgGJfm3U4/pO+zNZbeIohhMwiHqxjZHq
+	 C3LOuthuIzcLQKHzWputkNdIPxxAHnbagoyXj52FLS+2WRRIpTaF7ukB2Ow0dJD8Ec
+	 pdrQSeI3oCe+g==
+Date: Fri, 7 Aug 2026 16:02:30 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 12/13] PCI/P2PDMA: Add KUnit coverage for the ACS P2P
+ routing walk
+Message-ID: <20260807130230.GA387018@unreal>
+References: <20260806-fix-p2p-acs-v2-0-0cec14812965@nvidia.com>
+ <20260806-fix-p2p-acs-v2-12-0cec14812965@nvidia.com>
+ <20260806114433.D9FA81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260807104102.2410744-1-fuad.tabba@linux.dev>
- <20260807104102.2410744-3-fuad.tabba@linux.dev> <20260807105558.73D701F000E9@smtp.kernel.org>
-In-Reply-To: <20260807105558.73D701F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Fri, 7 Aug 2026 13:15:52 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTwVKkAwWUeMrF_m2-35kyhESqAezOKJy-Pj=vA3qE5Bjw@mail.gmail.com>
-X-Gm-Features: AUfX_mx1YoX8ZV0-ZLrDmNofrTA9Elr7J11n5Lw6VJFj1kE-_aPeX7Mx5rJG-Yc
-Message-ID: <CA+EHjTwVKkAwWUeMrF_m2-35kyhESqAezOKJy-Pj=vA3qE5Bjw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] KVM: arm64: vgic: Don't leak the SPI array when
- init is retried
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260806114433.D9FA81F000E9@smtp.kernel.org>
 
-On Fri, 7 Aug 2026 at 11:56, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-
-No, thank _you_ Sashiko!
-
->
+On Thu, Aug 06, 2026 at 11:44:32AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] If `vgic_init()` fails after `vgic_v4_init()` succeeds, the VPE =
-array is left allocated but `vgic_initialized` remains false. Userspace can=
- then create additional VCPUs and retry `vgic_init()`. The second `vgic_v4_=
-init()` returns early because the VPE array is already allocated, leaving t=
-he new VCPUs without initialized VPE IRQs.
-...
-> When a new VCPU runs, `vgic_v4_load()` calls `irq_set_affinity()` with an=
- uninitialized IRQ (0), which fails and triggers a host `WARN_ON`, causing =
-a host-side denial of service.
-
-This is a separate fix. But you're right about the state.
-kvm_arch_vcpu_precreate() only refuses vCPUs once vgic_initialized()
-is true, so the retry admits one the VPE array does not cover.
-
-I don't think a VMM can drive it. kvm_vgic_setup_default_irq_routing()
-is the only failure after vgic_v4_init(), and it builds its own
-routing entries, so nothing short of a real -ENOMEM fails it.
-
-The fix I have in mind keeps vgic_v4_init() idempotent, as this patch
-is: return early only while the vCPU count is unchanged, rebuild when
-it grew. That needs its_free_vcpu_irqs() to clear vm->domain and
-vm->fwnode first, which it does not today, so its_alloc_vcpu_irqs()
-can reach its error path with a domain it has already removed.
-
-Let me think about it some more and I'll send something once others
-have had a chance to digest this as well.
-
-Cheers,
-/fuad
-
-
-
-
-
-/fuad
-
+> - [High] pci_p2pdma_release() skips synchronize_rcu() when p2pdma->pool is NULL, leading to a Use-After-Free of the pci_p2pdma struct and its XArray inside RCU read-side critical sections.
 > --
->
-> --- Patch [2]: [PATCH v2 2/4] KVM: arm64: vgic: Don't leak the SPI array =
-when init is retried ---
-> commit 11b9c8f9971b11e30ffc049a56071fafe4c7df73
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: vgic: Don't leak the SPI array when init is retried
->
-> This patch fixes a memory leak where up to 960 struct vgic_irq could be l=
-eaked
-> if kvm_vgic_setup_default_irq_routing() fails and userspace retries
-> KVM_DEV_ARM_VGIC_CTRL_INIT. It resolves this by returning early from
-> kvm_vgic_dist_init() if dist->spis is already allocated.
->
-> > diff --git a/arch/arm64/kvm/vgic/vgic-init.c b/arch/arm64/kvm/vgic/vgic=
--init.c
-> > index 907057881b26a..d4cf143f3ae6b 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-init.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-init.c
-> > @@ -210,6 +210,9 @@ static int kvm_vgic_dist_init(struct kvm *kvm, unsi=
-gned int nr_spis)
-> >       struct kvm_vcpu *vcpu0 =3D kvm_get_vcpu(kvm, 0);
-> >       int i;
-> >
-> > +     if (dist->spis)
-> > +             return 0;
-> > +
->
+> 
+> --- Patch [12]: [PATCH v2 12/13] PCI/P2PDMA: Add KUnit coverage for the ACS P2P routing walk ---
+> commit c4a68b62f4ec894cc35240eda46bf42dc5f562d9
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> PCI/P2PDMA: Add KUnit coverage for the ACS P2P routing walk
+> 
+> Extend the ACS KUnit suite with end-to-end coverage of
+> calc_map_type_and_dist(), the provider-to-client hierarchy walk.
+> 
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index c7680964d8a64..18e5339bc49e9 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
+> [ ... ]
+> > @@ -859,6 +859,7 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+> >  	rcu_read_unlock();
+> >  	return map_type;
+> >  }
+> > +EXPORT_SYMBOL_IF_KUNIT(calc_map_type_and_dist);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but since the commit message mentions mirro=
-ring
-> the early return behavior of vgic_v4_init(), does that original function
-> have a stale state bug on retry?
->
-> If vgic_init() fails after vgic_v4_init() successfully allocates
-> dist->its_vm.vpes, vgic_initialized remains false. If userspace then crea=
-tes
-> an additional vCPU and retries KVM_DEV_ARM_VGIC_CTRL_INIT, vgic_v4_init()
-> returns early on the second attempt without allocating a VPE for the newl=
-y
-> created vCPU.
->
-> When the new vCPU runs, vgic_v3_load() unconditionally calls vgic_v4_load=
-().
-> Because the VPE was never properly initialized for this new vCPU,
-> vgic_v4_load() passes an uninitialized vpe->irq (0) to irq_set_affinity()=
-:
->
-> arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_load() {
+> This is a pre-existing issue, but does this code have a race condition
+> leading to a use-after-free when interacting with pci_p2pdma_release()?
+> 
+> If a device acts as a P2PDMA provider without setting up an allocator pool
+> (for example, via vfio-pci or mlx5), pci_p2pdma_release() skips
+> synchronize_rcu() because p2pdma->pool is NULL:
+> 
+> drivers/pci/p2pdma.c:pci_p2pdma_release() {
 >         ...
->         err =3D irq_set_affinity(vpe->irq, cpumask_of(smp_processor_id())=
-);
+>         if (p2pdma->pool)
+>                 synchronize_rcu();
 >         ...
 > }
->
-> This fails with -EINVAL and triggers a WARN_ON in vgic_v3_load():
->
-> arch/arm64/kvm/vgic/vgic-v3.c:vgic_v3_load() {
->         ...
->         WARN_ON(vgic_v4_load(vcpu));
->         ...
-> }
->
-> Could an unprivileged VMM repeatedly trigger this host WARN_ON by
-> deliberately failing the first initialization and adding a vCPU before
-> retrying?
->
-> Is this something that should be addressed alongside or before this leak =
-fix?
->
-> >       dist->active_spis =3D (atomic_t)ATOMIC_INIT(0);
-> >       dist->spis =3D kzalloc_objs(struct vgic_irq, nr_spis, GFP_KERNEL_=
-ACCOUNT);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260807104102.24=
-10744-1-fuad.tabba@linux.dev?part=3D2
+> 
+> When the provider driver is unbound, devres frees the pci_p2pdma structure
+> and destroys the XArray. Concurrently, calc_map_type_and_dist() executing
+> here inside its RCU read-side critical section can dereference the freed
+> p2pdma pointer and call xa_store() on the destroyed XArray.
+> 
+> Should synchronize_rcu() be called during release regardless of whether
+> the allocator pool is set up?
+
+No, we already discussed that here.
+https://lore.kernel.org/kvm/20260729100840.GM12003@unreal/
+https://lore.kernel.org/kvm/20260805003127.GJ27883@nvidia.com/
+
+But let's see if I can write a documentation patch that helps AI
+tools stop complaining.
+
+Thanks
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260806-fix-p2p-acs-v2-0-0cec14812965@nvidia.com?part=12
+> 
