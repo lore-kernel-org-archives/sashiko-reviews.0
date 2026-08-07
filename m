@@ -1,202 +1,167 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CC4306D2A;
-	Fri,  7 Aug 2026 17:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786123621; cv=none; b=hH9jJCCzZONBbucNCXbf7RzdIwVMV0Yp3xPVJtnN6ioMU0Er7C4Q0u7KRo9VpeD2GNshYG3Uj6Phg3J2Dh7ohOhBL2QxH4iow61ytdEKRd6QU0fA9PW+Tpy2aCvS05oZfe60uMad8Y7THvmH5KXHIY3YPKW9Wys+T0DTDOGSFds=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786123621; c=relaxed/simple;
-	bh=J6hKlLDfy8EzeR1/qAoX8QmUsTzAE8MSqchz203HbuM=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=WPkXpSN2rV34aKOi9x2HCydMDzxzl1Xo3Vzpkz1wms4Iyj5Ih5Hpi5TZsuO9q7ajnM5OufuJxOwaO8wcJLZ7orquMvuLHRiXjU1QoiNRWJuGqDhIHR/3Ggq1hB9g2mlYFfk/ZmCg+RDnbPXq2sg1BhxwPZ2hkG8KRKBZAGvyKYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=desiato.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=hJaakCfH; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=desiato.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34686369D42
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 17:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786125541; cv=pass; b=NoxDYVcDumtzpngeN61RrDu4HwT0DJ+EiS2+uDscw2pMRF92rnpB9EpJ/1D+KEUkO784WrUKrEpl+LsWjpVO2CFlPCLRGzKimh/7z6mU6eRBxBjTSvMe4Cr+y/wkJfutKOMVcHo9MGxQcAUyyb7SVS5RWr0LtfWZnoaY9eN7amI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786125541; c=relaxed/simple;
+	bh=KifaXFQu9tF6aWbmCs03ZjXqJQ4xMHpOYPZarNrPG7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nI1bnDcbZ2PZAYxHS1Xf82Wl9A4Kfno+IDk5fc4I0qVdUhXkB8YzEhD5QuIwASTfK4iu0GDrXzFbUH8AZ5vmw4xyVU0wzon9zUWhvI/dyGeNqFEmQNJG7iHywBi9KoEvUTlwlIDeDkevoHzJgYNDElvVoBPU0nnx6fxDboTHPGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=OqvPtaZm; arc=pass smtp.client-ip=136.143.188.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="hJaakCfH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
-	:MIME-Version:Message-ID:References:In-Reply-To:Subject:CC:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=g/4OPoBcc0jdDeonME1p8x9/LKSW50jPvoTZ23X6NDg=; b=hJaakCfHCV/XNKe2hBtjFq54bk
-	KBJ8RFxBr4wwHHiAvTmp2dxSDrSSWS9BZ+28u7SdbbuF26yxAhGCPIk6XLta/2/v68pjes0s3xKCA
-	0LZqWlEniqQwXSeTnLyURB64yG+FrDVyFAgIJ4yTlNZA9MjIe8B/5maXzHf3UJHGouC3WZy/7p1u0
-	/g7YIvzsnvo+sooZjMRDGFQn6BrKVGlA7OXQK9GAvhaXow0W5k700pShuXFj/BqJzqetjH7Ka91uR
-	q1kox7zUXvdtOP2zE2433IiNfMDiZPMW9qRJc+V7omyfxTJEwzKCDFTi16hkYvJ0o5n7JKBXllZZp
-	g5Xf55Vg==;
-Received: from [2a00:23ee:1cb8:40de:9642:5441:c967:9c6] (helo=ehlo.thunderbird.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1wsOLM-0000000CZ2Q-4815;
-	Fri, 07 Aug 2026 17:26:53 +0000
-Date: Fri, 07 Aug 2026 18:26:51 +0100
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sean Christopherson <seanjc@google.com>, sashiko-reviews@lists.linux.dev
-CC: kvm@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v8_05/17=5D_KVM=3A_x86=3A_Avoid_NTP_f?=
- =?US-ASCII?Q?requency_skew_for_KVM_clock_on_32-bit_host?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <anYBYu4rx-jCv8gr@google.com>
-References: <20260804233923.3504629-1-seanjc@google.com> <20260804233923.3504629-6-seanjc@google.com> <20260805000221.B63F61F00A3A@smtp.kernel.org> <anN_J_KZhVJ1zIeI@google.com> <anUmdhx0Dh-yd89z@google.com> <anYBYu4rx-jCv8gr@google.com>
-Message-ID: <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="OqvPtaZm"
+ARC-Seal: i=1; a=rsa-sha256; t=1786125530; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=QzJSbKGvx2PDYsGwY5DrXb4Mu5zyFa0nzmJ/Wq8DMJ1h4ZFn7ubt7DZqnidBwzz2EH3AuODm0AxnedWChB+KAhadpOrO1jeKje8pMzuhmoTN5BZFAGTSpOGHZWUbURN1st9pXqcpWcQ+ylBW/zx2HqS8rLvyx8fThC8hAGy357A=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1786125530; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=5X66dM6QHHWxY6bBMRQTS1JmqGd1+5fST36EM3XypzI=; 
+	b=Tt/Ww/goqTmfvvPIWAwwx+SWH2heRAPbT4OWC0xgfdP4Gohyd51tUICycexLDBqLEm/g6ZmEU6eMr7LgRUdQJ+61Yv0vAn4RW1T4ez1fJzUQrjerDC3XGZuQCc1RwgCJwWT4xTeYw/ZaDaqBFUu2NgTqOVRfcvU3E8c82dKtLRc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1786125530;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=5X66dM6QHHWxY6bBMRQTS1JmqGd1+5fST36EM3XypzI=;
+	b=OqvPtaZmlVYUECV2meelrS5ctdP+Kzaf9EUb7/3lHk+5hYJHMC1uZoq3dh69kfhQ
+	KIOhLQ6keuYnJFuW1ndRmRcvcilurdPqHur6ZDM9494YEcnEREcag7gKS96M0wfLtbY
+	htGARHm2QrMDSqN3EICpalkv51x2Xxy4U9o77Zmo=
+Received: by mx.zohomail.com with SMTPS id 1786125527192874.9730414852983;
+	Fri, 7 Aug 2026 10:58:47 -0700 (PDT)
+Received: by venus (Postfix, from userid 1000)
+	id E4007180895; Fri, 07 Aug 2026 19:58:43 +0200 (CEST)
+Date: Fri, 7 Aug 2026 19:58:43 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, kernel@collabora.com
+Subject: Re: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix
+ sound DAI cells
+Message-ID: <anYanfuZQT4Pz6lC@venus>
+References: <20260806-synopsys-dw-dp-improvements-v11-0-0d508505f383@collabora.com>
+ <20260806-synopsys-dw-dp-improvements-v11-20-0d508505f383@collabora.com>
+ <20260806174000.668AB1F000E9@smtp.kernel.org>
+ <20260807155140.GA882294-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xvnis4rjdghlkh7f"
+Content-Disposition: inline
+In-Reply-To: <20260807155140.GA882294-robh@kernel.org>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/286.110.97
+X-ZohoMailClient: External
+
+
+--xvnis4rjdghlkh7f
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by desiato.infradead.org. See http://www.infradead.org/rpr.html
+Subject: Re: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix
+ sound DAI cells
+MIME-Version: 1.0
 
-On 7 August 2026 17:01:38 BST, Sean Christopherson <seanjc@google=2Ecom> wr=
-ote:
->+David (I realized I'm having a conversation between me, myself, and Sash=
-iko)
->
->On Thu, Aug 06, 2026, Sean Christopherson wrote:
->> On Wed, Aug 05, 2026, Sean Christopherson wrote:
->> > On Wed, Aug 05, 2026, sashiko-bot@kernel=2Eorg wrote:
->> > > > diff --git a/arch/x86/kvm/x86=2Ec b/arch/x86/kvm/x86=2Ec
->> > > > index 3107878a6fe5d=2E=2E8f469fd9863f9 100644
->> > > > --- a/arch/x86/kvm/x86=2Ec
->> > > > +++ b/arch/x86/kvm/x86=2Ec
->> > >=20
->> > > [ =2E=2E=2E ]
->> > >=20
->> > > > @@ -915,13 +914,6 @@ static s64 get_kvmclock_base_ns(void)
->> > > >  	/* Count up from boot time, but with the frequency of the raw c=
-lock=2E  */
->> > > >  	return ktime_to_ns(ktime_add(ktime_get_raw(), pvclock_gtod_data=
-=2Eoffs_boot));
->> > >=20
->> > > [Severity: Low]
->> > > Will reading the 64-bit pvclock_gtod_data=2Eoffs_boot without seqco=
-unt
->> > > protection or data_race() annotations trigger KCSAN data race warni=
-ngs on
->> > > 32-bit systems?
->> > >=20
->> > > By removing the ktime_get_boottime_ns() fallback, this read now exe=
-cutes on
->> > > 32-bit architectures where it compiles to two non-atomic 32-bit acc=
-esses=2E
->> > > If a KVM vCPU thread calls get_kvmclock_base_ns() while a timer int=
-errupt
->> > > runs timekeeping_update(), it overwrites offs_boot=2E
->> > >=20
->> > > Even though the value only actually changes during suspend when the=
- freezer
->> > > subsystem guarantees vCPU threads are frozen (preventing functional=
- tearing),
->> > > overwriting the identical value concurrently with an unprotected re=
-ad still
->> > > introduces a formal C11 data race=2E
->> >=20
->> > Huh=2E  And strictly speaking, 64-bit could tear the store/load=2E  S=
-tealing heavily
->> > from ktime_mono_to_any(), this as a prep patch plus fixup (not yet te=
-sted)?
->>=20
->> LOL, hilarious=2E  I was cherry-picking the rest of the series on top t=
-o run the
->> tests, and discovered that "Compute kvmclock base without pvclock_gtod_=
-data"
->> does exactly that: uses ktime_mono_to_any() directly=2E  So at least I =
-went in the
->> right direction?
->>=20
->> David, is there any reason that patch needs to be 25/36?  AFAICT, it sl=
-ots in
->> very nicely before this patch=2E  Then we don't need to do the below, b=
-ecause
->> ktime_mono_to_any() already takes care of 32-bit=2E
->
->Same question for "KVM: x86: Use ktime_get_snapshot_id() for master clock=
-"=2E  I
->don't see any obvious dependencies in here:
->
->  KVM: x86: Re-synchronize TSC after KVM_SET_TSC_KHZ
->  KVM: x86: Remove runtime Xen TSC frequency CPUID update
->  KVM: x86: Avoid redundant masterclock updates from multiple vCPUs
->  KVM: x86/xen: Prevent runstate times from becoming negative
->  KVM: x86: Avoid gratuitous global clock updates
->  KVM: x86: Factor out kvm_use_master_clock()
->  KVM: x86: Allow KVM master clock mode when TSCs are offset from each ot=
-her
->  KVM: x86: Replace nr_vcpus_matched_tsc count with all_vcpus_matched_tsc=
- bool
->  KVM: x86: Kill last_tsc_{nsec,write,offset} fields
->  KVM: x86: Improve synchronization in kvm_synchronize_tsc()
->
->And if I pull those in earlier, and grab these two (which AFICT also don'=
-t have
->dependencies either):
->
->  KVM: x86: Remove runtime Xen TSC frequency CPUID update
->  KVM: x86/xen: Prevent runstate times from becoming negative
->
->Then what's left fits nicely into two or three buckets:
->
->  1: Masterclock overhaul
->  2=2E New uAPI and tests
->
->> > diff --git a/arch/x86/kvm/x86=2Ec b/arch/x86/kvm/x86=2Ec
->> > index b6e1dfd6db6a=2E=2E57679d871581 100644
->> > --- a/arch/x86/kvm/x86=2Ec
->> > +++ b/arch/x86/kvm/x86=2Ec
->> > @@ -921,7 +921,8 @@ static void update_pvclock_gtod(struct timekeeper=
- *tk)
->> > =20
->> >         vdata->wall_time_sec            =3D tk->xtime_sec;
->> > =20
->> > -       vdata->offs_boot                =3D tk->offs_boot;
->> > +       /* Pairs with the READ_ONCE() in get_kvmclock_base_ns()=2E */
->> > +       WRITE_ONCE(vdata->offs_boot, tk->offs_boot);
->> > =20
->> >         write_seqcount_end(&vdata->seq);
->> >  }
->> > @@ -929,7 +930,26 @@ static void update_pvclock_gtod(struct timekeepe=
-r *tk)
->> >  static s64 get_kvmclock_base_ns(void)
->> >  {
->> >         /* Count up from boot time, but with the frequency of the raw=
- clock=2E  */
->> > -       return ktime_to_ns(ktime_add(ktime_get_raw(), pvclock_gtod_da=
-ta=2Eoffs_boot));
->> > +       struct pvclock_gtod_data *gtod =3D &pvclock_gtod_data;
->> > +       ktime_t raw =3D ktime_get_raw();
->> > +       ktime_t now;
->> > +
->> > +       /*
->> > +        * Synchronization with clock updates isn't required on 64-bi=
-t as only
->> > +        * one field is being consume
->> > +        * */
->> > +#ifdef CONFIG_X86_64
->> > +       now =3D ktime_add(raw, READ_ONCE(gtod->offs_boot));
->> > +#else
->> > +       unsigned int seq;
->> > +
->> > +       do {
->> > +               seq =3D read_seqcount_begin(&gtod->seq);
->> > +               now =3D ktime_add(raw, *offset);
->> > +       } while (read_seqcount_retry(gtod->seq, seq));
->> > +#endif
->> > +
->> > +       return ktime_to_ns(now);
->> >  }
->> > =20
->> >  static uint32_t div_frac(uint32_t dividend, uint32_t divisor)
+Hello Rob,
 
-(Home and on the phone after an insane week; full attention span might be =
-limited until Monday)=2E
+On Fri, Aug 07, 2026 at 10:51:40AM -0500, Rob Herring wrote:
+> On Thu, Aug 06, 2026 at 05:39:59PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] Device Tree schema validation breakage for existing `rockchi=
+p,rk3588-dp` configurations.
+> > --
+> >=20
+> > --- Patch [20]: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp=
+: Fix sound DAI cells ---
+> > commit 2c15bbfcf4dec184872abdf4c2e06063a52d1e2f
+> > Author: Sebastian Reichel <sebastian.reichel@collabora.com>
+> >=20
+> > dt-bindings: display: rockchip: dw-dp: Fix sound DAI cells
+> >=20
+> > The RK3588 and RK3576 DesignWare DisplayPort controllers both have two
+> > possible DAI interfaces: I2S and S/PDIF. Thus an argument is needed to
+> > to select the right interface.
+> >=20
+> > > diff --git a/Documentation/devicetree/bindings/display/rockchip/rockc=
+hip,dw-dp.yaml b/Documentation/devicetree/bindings/display/rockchip/rockchi=
+p,dw-dp.yaml
+> > > index 2b0d9e23e9432..c4f8959dd65da 100644
+> > > --- a/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-=
+dp.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-=
+dp.yaml
+> > [ ... ]
+> > > @@ -83,7 +83,8 @@ properties:
+> > >      maxItems: 1
+> > > =20
+> > >    "#sound-dai-cells":
+> > > -    const: 0
+> > > +    const: 1
+> > > +    description: 0 for I2S, 1 for S/PDIF
+> >=20
+> > [Severity: Medium]
+> > Will this strict constraint update cause make dtbs_check validation to
+> > fail for existing in-tree device trees?
+> >=20
+> > The mainline arch/arm64/boot/dts/rockchip/rk3588-base.dtsi still defines
+> > #sound-dai-cells =3D <0>; for DP nodes.
+> >=20
+> > While the commit message notes this breakage is intentional and will be
+> > fixed up separately, could changing the schema without the accompanying
+> > DTS updates cause automated CI validation failures and break bisectabil=
+ity?
+>=20
+> Yes, and I don't love the intermittent warnings introduced. As long as=20
+> the warnings are on a downward trajectory, I won't notice...
+>=20
+> Not saying you have to do something here, but this will get more=20
+> strict...
 
-The only reason the ktime snapshot stuff is last in the series is because =
-I did that work on the kernel's core timekeeping two years after the rest o=
-f the series, and it was still sitting at the tip branch at the time so I d=
-idn't want to make it a hard dependency for the kvmclock series=2E Now the =
-timekeeping stuff is merged we can fold it all into the kvmclock series how=
-ever we like=2E
+I don't like it either, but it's the best I came up with. If DT is
+updated first, there will be a warning for the DAI cells being 1
+instead of 0. To fully avoid the warning I see these options:
+
+1. update DT binding and DTS in a single patch
+2. allow 0 and 1 in the binding with 0 not really working
+
+IMHO neither of those are great either, so I ended up with the
+series like this. Regarding the downward trajectory: RK3588 should
+be completley free of warnings in dtbs_check at the moment.
+
+Greetings,
+
+-- Sebastian
+
+--xvnis4rjdghlkh7f
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmp2HMwACgkQ2O7X88g7
++pp+Ig//YTasKYth8R0rZG54e32jecsEgJeOQXkU9uTt+XNoLMdVLNAOSz2O1Vz0
+T0JwqtSO2hVj6tXqBQ4ZQmtE8FuPpKuUymgJtnOy2w9xSZP2aZzxjbZ6keQw9OEn
+4bifhadn1iLTmRrYHoA9IwCn7rSqfgyS5oebPFENqNEKIJ+b9rr+UF6OpxPcPbk5
+Z9hYf+NCddXja9C7OWTOYzyVMxaZ30coVr6jDidgrpZcZogXC5SsO7banHrQ71LE
+0nQ85i59W1paV/cYNlK6hU5s2Iw+kAL2JyQqqmE6buK5T2ZPYLNpmoom7bI9U65m
+CWKFUiHCWJDFB5Sor02KfokvWB9dOVS1TnVj1wxMyBjkAIoIJSd+h0J9RCDnok/d
+Cnzd7x1pR7XTcux+w+AE+bJ4w/YQRxYka/E33ntZRXpKXQO8BRjO6p4m0/1a4KqY
+0ChKQGMlDatl/oNhAXLRth/tCOGanMjr6bNXVh/0MkgtjGpRb2sA+vWd0kHNF3DJ
+nHZwYR+1kntUZpvT5MdIaOpJrFQ83J0xEeQ+uUyFfOjzlSItwr0oUAgnQIdltEwc
+cQ+OdwGr8wZm6s/AaPlEtakR7xUiofEUxhQMshASWhwRHL0nljCVXf36/vX7Sn03
+JTKhNxI08uW0Fm4b2DNyAEa4dZMGDhP/rUl0SutKeYVeutCZi8A=
+=kX1F
+-----END PGP SIGNATURE-----
+
+--xvnis4rjdghlkh7f--
