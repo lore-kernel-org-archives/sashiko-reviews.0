@@ -1,128 +1,151 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D05279DCC
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 09:26:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697F841A90B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 10:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786094787; cv=none; b=VFXY0dkPWIBHVVV3Qa/f4i1smPHrQ/bxa0RWwom7nZZEoPt2ZVZDWeg04Qj/bd6lVXbxlQVwNBtr/graZ7i7xvMIPnerYzIGDhNAbZZ9ZPYGXkPNf0VlfsrJGbVj5FiOPRa90F8o7VuAFXQXYNcXlek9128gCqRAu8vfHfXp7C0=
+	t=1786097162; cv=none; b=RL4CyqTcedT3MKMr0DqIxMv28WBfa6+m5Fovc5RjfnIjbd1h/bjJ8UVwgmTI1rdkhEVdiNffezX4MJIrGo/QwzRye5Uq3QBRNB3x89GutqbU4Dm5Ihy8I58u9EKEZxGhkJrThbtYnRiaETvkUj90AXvYuU85ntMYXHWQeNcdpbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786094787; c=relaxed/simple;
-	bh=EX+YCv48pnUpPB6CX8QiTAoOqhlTAHbsillQgnzAIKE=;
+	s=arc-20240116; t=1786097162; c=relaxed/simple;
+	bh=sA5sKBqdjln4LVJdf4f3i0ubipaw/kZhUE3epTeGjs0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nc2+yhDALHbf3aOFHmBpmaBxjivs8ffVoz1OcQsP1+gfLXdIzzcVlc+W7J9SwrqupGjI2BEpSxBVQC6nhXenEHTCc123uWIuaCzytGm22uJCcE5Ow7m7Txpr36oKPbtZkRTrz/HnwppthVa3ApulEFYQBDYoaaUduJtZdUpIJ5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=VAqP5hRT; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=r5OFjmCZ4Lj3NjcsMe2q774HAmddlmWyjDrpsderkbPCcz3+oL9xzC/SlQeW6wOOiHuNN70yVBpl89IVSRT3pJr+ZS3ot/YShBLTXh7rpSQFJHMM5DRHqzVEYvCD1PDJejvogwfuR7ahcNuvp27jDtTJVsEckp8F+/ns4FkHigo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RqhqCc6q; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="VAqP5hRT"
-Message-ID: <0b10bb1d-3d74-4aa4-ae57-f8a0462bbd73@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786094782;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+xmDI+1jGZvliNTbr2SWgCPwAukMA1ziPoz/EzBkxu0=;
-	b=VAqP5hRTg9wCyhGAYb9Qq6hzBklk35ixnB5PQnz/VPLtRHFy+Zu+89ZQqW1tIIRqLGifXP
-	lZ/iYdDTDYSXpgqNRK5tO6HPUvBSuM4Zf4GtD7gqntUTaSEf1JoeMNRQUQ4AHFv06XTjQ2
-	QLC1fYTmy/SkD2YuubGfaMA+tJqmZdA=
-Date: Fri, 7 Aug 2026 17:26:14 +0800
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RqhqCc6q"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4954aff6088so31933935e9.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 03:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1786097158; x=1786701958; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mFR8Iq7ncoeZFQXhT5aZNy4pslkhJ7M0UmwQblvHi8k=;
+        b=RqhqCc6q2Y0cYYTZ0xP6RWdh7gbiArZdc68k9EKRT24JZYPkUWtI1oa/ZzYsAgEkGi
+         IQ+ePa8R+ebLqlQo0IGJjvHlVgb8v7kGZoRlnjSsGHMPlvHrL9cIRYij0DeEhA3k7Fub
+         qX1fTeUkY1lZr4e91O7zcrTnmJXP8w3Y8czlHiBbIc9ARCldyTFzG+avTi5tREjPyQfc
+         KFBtYsBc9dJWnQ/cYBzWUwUljBw9yRYny4UI4GnS6pF8SOemcvhVHuuDfylw5OnsokpY
+         7N03MZT9w8JXNHbeqSBaXwKazqHDeterylyAxyQsW687j6wvV4bNoZe3gzlLiLXl/05B
+         41+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786097158; x=1786701958;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mFR8Iq7ncoeZFQXhT5aZNy4pslkhJ7M0UmwQblvHi8k=;
+        b=tU9IGyZghFRJkmdc890ac+CQSKL4PX1eNXOSNqFb//XowuwFcR6M3BgCQObBun2cjb
+         RccAkTG78mUa0feiXtXT8BHr/cKcEv+GAwUvuRZaTOoSrkLTOly6sQDqSL74eAnTK4BF
+         BzrxPMh4yrWQ7RYmgnQTWqkTUh2nQ9QWompCbaLnMEQ490O7PY53/LYViTspPMajycPU
+         yfTm3nhDIO58fVp6z1C8Arpjnqp2lvs8MYfQRwLvv5gYoKrgpIWVxS9nWLaxZumx8iOL
+         /qG2XxyVfjnnUK3pn0jIOdRUckvtTF6UsLgspB0aiXmFCrLUZ6+WqwFtSSQTYsY/m5bt
+         YkvA==
+X-Gm-Message-State: AOJu0YxiYWTAHWFPglDd83bHniUvoE0slw4JtGH6tLsvuD8ischCnhyK
+	fPhr66RRHPEOHtsblvQgIAV4MzBTGfJ8SdfdqXoN/B84LlirEQhLiS7T0n0PuZV1v2h92tcOPKq
+	OgMginI0=
+X-Gm-Gg: AR+sD13GsETvs5ULq7yoj21ahOJT9KCUdmqHPuuHmHmcu07BZ5DXW29NIG0U6caazgH
+	ApGp4RoTQkoJqNm2MazeggwS407qcSDx9UVdZu1nW6Zk/kQ8HYY5yLsjMd8y6u+81tvWVclRdWp
+	Qq2XQab8+zv7ZjfwO1EV/3VJEjgwK6vo8w1hvejhp3nEcqWl7rezC28/D/70An3zP5qk4FUU8Re
+	VJe9JMSLvlhBLO5jWydPRlMLrncDg+yL6iAYjaAeUkLJfXpqH5ZilzUKZW5XsSfT3YKq4uq+KYz
+	V/jKfNDAQab3MNgzxZAkk6uv3N9eLGhATcMWpyLxlsnSXg9DzxwRSRD9MNCluo6aRyX+3hUlo86
+	LGLxM2uSuFfFjEurnB14jsrtsfYOMxw3dUYvK5TSGMYjGPb7Cm//5kuShdtsNoRJQnltrIZq3M6
+	NXv8Nql3+L9P6cqd7c6qBJ/WKJznDWQdcmRp/S/EMv0ArnPzeekDajgXqNZH2HgH1GaQ==
+X-Received: by 2002:a05:600c:c046:b0:499:491e:4b0d with SMTP id 5b1f17b1804b1-4994e7d1ccdmr238405765e9.19.1786097158525;
+        Fri, 07 Aug 2026 03:05:58 -0700 (PDT)
+Received: from [192.168.1.3] ([37.18.141.193])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021f8f33sm4885059f8f.27.2026.08.07.03.05.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2026 03:05:58 -0700 (PDT)
+Message-ID: <c925f9ef-b9e7-41cd-8809-d330283fed3a@linaro.org>
+Date: Fri, 7 Aug 2026 11:05:57 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/2] memcg: acquire peaks_lock when reading memory.peak
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] perf: arm_pmuv3: Zero initialize hw_id branch stack field
 To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
-References: <20260807090000.1532495-1-ridong.chen@linux.dev>
- <20260807090000.1532495-2-ridong.chen@linux.dev>
- <20260807091437.082C41F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ridong Chen <ridong.chen@linux.dev>
-In-Reply-To: <20260807091437.082C41F000E9@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260807-james-brbe-init-hw-idx-v1-1-009d1843960a@linaro.org>
+ <20260807092755.CDF991F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20260807092755.CDF991F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
 
 
 
-On 8/7/2026 5:14 PM, sashiko-bot@kernel.org wrote:
+On 07/08/2026 10:27, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] peak_write() destroys transient peaks for all other watchers by propagating the current usage instead of the old local_watermark.
+> - [High] Missing initialization of `new_type` and `priv` fields in `perf_clear_branch_entry_bitfields()` allows cross-sample metadata leakage and KASLR bypass.
 > --
 > 
-> --- Patch [1]: [PATCH v2 1/2] memcg: acquire peaks_lock when reading memory.peak ---
-> commit 7238a507204c3e18dae7c130c8f9f1da91b169b0
-> Author: Ridong Chen <chenridong@xiaomi.com>
+> --- Patch [1]: [PATCH] perf: arm_pmuv3: Zero initialize hw_id branch stack field ---
+> commit 9362aa7ec453c50e757449959540fd185a720850
+> Author: James Clark <james.clark@linaro.org>
 > 
-> memcg: acquire peaks_lock when reading memory.peak
+> perf: arm_pmuv3: Zero initialize hw_id branch stack field
 > 
-> The commit fixes a race condition where a reader of memory.peak could
-> transiently observe a lower peak. It adds peaks_lock acquisition in
-> memory_peak_show and swap_peak_show to ensure readers see a consistent
-> snapshot of the peak metrics.
+> This patch modifies the allocation of the BRBE branch_stack to use kzalloc
+> instead of kmalloc. This ensures that the hw_id field, and any future fields,
+> are safely zero-initialized upon allocation to comply with documentation.
 > 
-> Link: https://sashiko.dev/#/patchset/20260730115314.1069089-1-ridong.chen@linux.dev?part=1
-> 
->> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
->> index 6061c0ba923bf..15c65249849e3 100644
->> --- a/mm/memcontrol.c
->> +++ b/mm/memcontrol.c
-> 
-> [ ... ]
-> 
->> @@ -5806,8 +5811,13 @@ static u64 swap_current_read(struct cgroup_subsys_state *css,
->>   static int swap_peak_show(struct seq_file *sf, void *v)
->>   {
->>   	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(sf));
->> +	int ret;
+>> diff --git a/drivers/perf/arm_pmuv3.c b/drivers/perf/arm_pmuv3.c
+>> --- a/drivers/perf/arm_pmuv3.c
+>> +++ b/drivers/perf/arm_pmuv3.c
+>> @@ -1361,7 +1361,7 @@ static int branch_records_alloc(struct arm_pmu *armpmu)
+>>   		struct pmu_hw_events *events_cpu;
 >>   
->> -	return peak_show(sf, v, &memcg->swap);
->> +	spin_lock(&memcg->peaks_lock);
->> +	ret = peak_show(sf, v, &memcg->swap);
->> +	spin_unlock(&memcg->peaks_lock);
->> +
->> +	return ret;
->>   }
->>   
->>   static ssize_t swap_peak_write(struct kernfs_open_file *of, char *buf,
+>>   		events_cpu = per_cpu_ptr(armpmu->hw_events, cpu);
+>> -		events_cpu->branch_stack = kmalloc(size, GFP_KERNEL);
+>> +		events_cpu->branch_stack = kzalloc(size, GFP_KERNEL);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does peak_write() destroy transient peaks
-> for other watchers by propagating the current usage instead of the old
-> local_watermark?
+> This is a pre-existing issue, but since we are fixing uninitialized branch
+> stack fields on allocation, does the per-sample reuse of these entries later
+> leak previous metadata?
 > 
-> Looking at peak_write() in mm/memcontrol.c:
+> The perf_clear_branch_entry_bitfields() helper zeroes most bitfields, but
+> misses the new_type and priv fields:
 > 
-> 	usage = page_counter_read(pc);
-> 	WRITE_ONCE(pc->local_watermark, usage);
+> include/linux/perf_event.h:perf_clear_branch_entry_bitfields() {
+>      br->mispred = 0;
+>      br->predicted = 0;
+>      ...
+>      br->reserved = 0;
+>      // new_type and priv are not cleared
+> }
 > 
-> 	list_for_each_entry(peer_ctx, watchers, list)
-> 		if (usage > peer_ctx->value)
-> 			WRITE_ONCE(peer_ctx->value, usage);
+> In the ARM BRBE driver, the per-CPU branch_stack buffer entries are reused
+> and cleared using this helper. If a hardware branch record is source-only,
+> entry->priv is not explicitly set:
 > 
-> If watcher A resets its peak when usage has dropped, peak_write() uses the
-> current lower usage. If watcher B was tracking a previous peak, it seems
-> watcher B's value is updated to the current usage rather than the previous
-> peak (the old local_watermark).
+> drivers/perf/arm_brbe.c:perf_entry_from_brbe_regset() {
+>      perf_clear_branch_entry_bitfields(entry);
+>      ...
+>      if (!brbe_record_is_source_only(brbinf))
+>          entry->priv = brbinf_get_perf_priv(brbinf);
+> }
 > 
-> For example, if watcher B resets, and then usage spikes to 100 and drops to
-> 50, when watcher A resets, peak_write() will see usage is 50. Watcher B's
-> value would be updated to 50 instead of 100, and the previous peak of 100
-> would be lost.
+> If the previous sample in that slot was a user-space branch, entry->priv
+> retains PERF_BR_PRIV_USER. When filter_branch_privilege() later checks
+> entry->priv, could this allow kernel source addresses to be exposed to
+> unprivileged users and bypass KASLR?
 > 
-> Can this cause workload schedulers reading the peak to receive an
-> artificially low value, leading them to over-pack workloads?
+>>   		if (!events_cpu->branch_stack)
+>>   			return -ENOMEM;
+>>   	}
 > 
 
-This is what I am trying to fix with patch 2/2.
-
--- 
-Best regards
-Ridong
+Fixed by "[PATCH v6 3/3] perf/core: Clear the whole branch entry in 
+perf_clear_branch_entry()" on the list.
 
