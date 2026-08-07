@@ -1,98 +1,152 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DAC4B048A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 23:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8A64B049E
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 00:27:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786060401; cv=none; b=ci1oThwv89da6/wjFglHFra9xDS/Ow66jEOFQ8lWJ5jgTQubA1SDP0ef1QHy8bQBBaVtE4C5M8c1hYPAVza697jBYvIUaE4ysIw4ma5z3jbZibIrj3ylO8E/w93qOEmScADX1wdMxFKCaduuLYg3n6v8lp2g1Q+p2p+FoD1+1jI=
+	t=1786062456; cv=none; b=bdc6ZD0R32dZjNA5UnFNmxvVr2m8QfIMk+wIf2PymXlcqD8g7w/XnthmqIVvr7hMRg781yhQUeQyFEOCtWgO2Xo61UoqjzmWF3M2Z8dkaO2Zv+3zxNsfc9DhHtySpKh75ijIWYHVTikqolkqa4GE5Mh+BisOY7ooE+yLWLK9Mpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786060401; c=relaxed/simple;
-	bh=k3HgQkukNBNJv/hmD9hzfSotfFQHeA0758t49VFm5iU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Disposition; b=smUDbiREDfeoOjYtU2G20OKqTuUrH1GHE1YpwgRR5GyKUmgicYngyLzZaB7qkkD3Oe494MsMEtnrfd4cbWJa809SFve4g9/fr+pRmER+k7WaRe1whIBAUrYdzxpWxkeAGtMeiV0pmDv3dT5kwVKqWcUEB79AH9Dl56kCnT2l/i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io; spf=pass smtp.mailfrom=edera.dev; dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b=qKJ1HQwq; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=edera.dev
+	s=arc-20240116; t=1786062456; c=relaxed/simple;
+	bh=s4ld6/Vfb2w1YRnUk1r2bL4X/XVPlnFkAw1PKPru48E=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=rTjMaDK9vrWIqIu8QJAcL7DkK23Cg+1iKk0Lvo5SydGgpEfM/X8jHMw2Tv2kFfyrWWsza5+MkXfLF1eXdkO9yaLM607m2V1vX1Eqk/83F5tEqxtPIb6CkGtQXlF9HvXGbF5Ri3Z8+pYnBsUSMyyDL3l1ZzNaZ1tIHOXMFnB+ZBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AbRIflhJ; arc=none smtp.client-ip=209.85.214.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b="qKJ1HQwq"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81ee6b2da98so41508957b3.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 16:53:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AbRIflhJ"
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2ce7dfd33ffso33357285ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 17:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edera.io; s=google; t=1786060399; x=1786665199; darn=lists.linux.dev;
-        h=content-disposition:content-type:mime-version:message-id:date
-         :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=k3HgQkukNBNJv/hmD9hzfSotfFQHeA0758t49VFm5iU=;
-        b=qKJ1HQwq1eA2OLvIRm5+5LzWd/x65YrAnTLwngzgIAymBX0PTKzA5O1QSKYyeAU650
-         s8wodasLgR5js0d8Ioetd9vk0PCWno4WdHayJdsGTRhuJixEA2GECxTzUUz2ViFuYiIR
-         UUGxutU6M7IGjEfUInWrtiKV+YGvTYSTdicyTPWOOMdGCwx8aEelsqocclHhmcakJ9Vk
-         YyEPj+4+rsv4n5esw+m7kNt0wpnxeSJGVLkTJRsO2k6S+M+7ZuEtRDWRhE6/MqMG96jn
-         FzxmavZiDt3SQf3CFdTu0ByvPf9LanXup7kzV3KR4C4mZLl6nE1hg9pts0J+BN25OPqi
-         37rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786060399; x=1786665199;
-        h=content-disposition:content-type:mime-version:message-id:date
-         :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1786062455; x=1786667255; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=k3HgQkukNBNJv/hmD9hzfSotfFQHeA0758t49VFm5iU=;
-        b=aJy1pOWF7CY0VqP9aBc/OAhniBrge09Qv2jEu+kXR5HgQqW5JTXrEDsLRamICFdP2f
-         R9wO/xdqmj7f9wxarE7scROLpEsO82masoAJJiyw1815b52K0ct+nP3H6CyEqnm4+lCr
-         CHyrB+KD9eNgTMnROmisfGynK93BA8FnOcpW3RauZYzZNoS72lIWzfxxXgdiEqFs9d/N
-         B0nC9hvm/50lKwOzkJXg6scslx2IZXoci2ApuPfAV1fdFqPHuYt9S2E5sw/xo8QUUqMT
-         HFaI+OOsYI131MOy2YUs/j3qqm5EoWBtxNROmQ6VjJW1ie1l1/Aebmmu/aw/Jh3vHbX7
-         cZ+A==
-X-Gm-Message-State: AOJu0YxyS/dHpoXeWPuo7jGrcgd3n5IWQXUa4GGk+4cnUT+bG55tu1iH
-	2hnc1PJ4Ks0xNcOzhjZMN8QY15W1scFmom0wmgnO2kupXGbpfBdnALvXTiu/sTaoPrfdiFr6kLR
-	rjsqT7mk=
-X-Gm-Gg: AR+sD13Y5d9EprSdzI2xdNfeTIhNDXCACluol6QLdrdLIab2A58qGBan9zoahDRwSAi
-	tNJyyAh/GBEwDH93aA0sLd2ZrSIal6RTfRKoJHCUd4FD7qo6Kulo50D46bBKZ65k69KkG6eJUs+
-	GpJeO6ssRbV1+Nphx5QERsyOCS7oKUSwymUCipmi14UZ3uKw1HTNBCCXItSCUARNF0nTRdVvWyA
-	B484wPCKCjzacgzwbb1ukezhP0T/Upf1hjahKgEHs+CzXqSOPpz6BdRCCL+hCvVhZboGmKIARm0
-	lMc6Eb/YVxFkWH+xHDe/VePRaGv5/9qBE4Rwebdha4lEDpTz8e5GfBhOzMUGTqcIqci7ffUfzOC
-	Ivb7FufxKuj6HifhjiO8SGRZWkQvoP8PrGXV7vMb366hhs+rxa5aWXZsNkNzOpaULTPwjeum+n/
-	qPGbkUzGmEd6ggPn9sIRPOW8nS5hlUtIIxX8eLFFxbj/sK8rGb0dJSpZCRNEma
-X-Received: by 2002:a05:690c:7303:b0:81e:514b:1b98 with SMTP id 00721157ae682-8201bccf693mr116095477b3.7.1786060399007;
-        Thu, 06 Aug 2026 16:53:19 -0700 (PDT)
-Received: from StolidWingnut ([174.80.170.224])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-823f0e64324sm527997b3.19.2026.08.06.16.53.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2026 16:53:18 -0700 (PDT)
-From: Benjamin Leggett <benjamin@edera.io>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/virtio: use the DMA API for resource backing on Xen
-In-Reply-To: <20260806231002.27B4D1F000E9@smtp.kernel.org>
-References: <20260806-virtgpu-xen-dma-v1-1-e499b345bbad@edera.io>
-	<20260806231002.27B4D1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 32.0.50
-Date: Thu, 06 Aug 2026 19:53:17 -0400
-Message-ID: <87v79mu7pu.fsf@edera.io>
+        bh=xKyn5cwk7Lgqnga1QgDwp0/460XhyRh/fsWVnYx/SKo=;
+        b=AbRIflhJdPCn6huH5VAGF0QyDAtXJ/Adei3BPBjkEfSF+GgavboKUH3m+EHrYHLuQR
+         ZZb8pdjk8NEAPYu4meup4R9LHuQYVUvm8OT/Vn5NyeW8Ofk6XmY+MeNObPuVLs2ohNR3
+         VHowdkR5SCSUB7CBZorwPRz3FBT9GzWoYANifVlvb8LEmXlwo5owttDC2ki/muh2s3ke
+         cPsfhFe1WXLC6S1p7DV20kRUKahRd6UnterHmcW0Rpxry08uTG1Ujl74jcJP4zuKNDpV
+         GtwyK0+F88wRloxPau2YA7RNDKnjyZAA+TWQ4kM7epuHlVl/9R6oBvzkZLYEt0FTPF59
+         FVcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786062455; x=1786667255;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=xKyn5cwk7Lgqnga1QgDwp0/460XhyRh/fsWVnYx/SKo=;
+        b=qQ89jEdQs3RhpbLvhUGX6KpWu/TzG0TkQ04eD5mzYE2DPKWLP99SM7d7KyYRX4M0up
+         tNKuQA4B2m8xm2JH36vEnNQuBTyuT/eKFH8tBVEqsUm6a2NCEzl6D1jnFYAk/ngFPhQu
+         +kQ/QvfcS1lE+anfUQnSIDBmzu6XO8Yiy/y/EZcc6/SZv/IPpYycdvQqHufnbmy6j8ke
+         dIeFx0L0LUbmOXSPMBg/603X92eLONTQc+s/C1GdFl3ATGJtsAkqM6ETAeiKyng3pF8/
+         8vQ2vMxltMZrg9bwmd0dHybzKBszFZxki59c7fo72xdGK09T03FkyGrhSnQ2kDmvMxwg
+         3qwA==
+X-Gm-Message-State: AOJu0YyFd6XgO7HEFLNyZARuHSrPU/RUmTuY8SnjGbfjDnEoMqCcNZcR
+	jYHR02MiE/761BErrdfAr5XBjBzcjG6b6B4YHdqtEnQqZmdx6K63t9XDDhsXPU/7mgtMgSvTe8X
+	FDcuHBXuz1snfEw0PCf93ncXfaybgH1a7CBU/lFf+3npVfJ/Uf51YKmJ2rj/FZiBTZIMYTmYHqQ
+	e3v92TJtFe4a091f7hPIWYMDiCQXsnDJ33gvRUH73YZQVfr7/F
+X-Received: from plda18.prod.google.com ([2002:a17:902:ee92:b0:2ca:cbc9:76fd])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:e852:b0:2ca:10c6:f69b
+ with SMTP id d9443c01a7336-2d0ca7b54ebmr187122615ad.5.1786062454618; Thu, 06
+ Aug 2026 17:27:34 -0700 (PDT)
+Date: Thu, 6 Aug 2026 17:27:34 -0700
+In-Reply-To: <anN_J_KZhVJ1zIeI@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
-Content-Disposition: inline
+Mime-Version: 1.0
+References: <20260804233923.3504629-1-seanjc@google.com> <20260804233923.3504629-6-seanjc@google.com>
+ <20260805000221.B63F61F00A3A@smtp.kernel.org> <anN_J_KZhVJ1zIeI@google.com>
+Message-ID: <anUmdhx0Dh-yd89z@google.com>
+Subject: Re: [PATCH v8 05/17] KVM: x86: Avoid NTP frequency skew for KVM clock
+ on 32-bit host
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-sashiko-bot@kernel.org writes:
+On Wed, Aug 05, 2026, Sean Christopherson wrote:
+> On Wed, Aug 05, 2026, sashiko-bot@kernel.org wrote:
+> > > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > > index 3107878a6fe5d..8f469fd9863f9 100644
+> > > --- a/arch/x86/kvm/x86.c
+> > > +++ b/arch/x86/kvm/x86.c
+> > 
+> > [ ... ]
+> > 
+> > > @@ -915,13 +914,6 @@ static s64 get_kvmclock_base_ns(void)
+> > >  	/* Count up from boot time, but with the frequency of the raw clock.  */
+> > >  	return ktime_to_ns(ktime_add(ktime_get_raw(), pvclock_gtod_data.offs_boot));
+> > 
+> > [Severity: Low]
+> > Will reading the 64-bit pvclock_gtod_data.offs_boot without seqcount
+> > protection or data_race() annotations trigger KCSAN data race warnings on
+> > 32-bit systems?
+> > 
+> > By removing the ktime_get_boottime_ns() fallback, this read now executes on
+> > 32-bit architectures where it compiles to two non-atomic 32-bit accesses.
+> > If a KVM vCPU thread calls get_kvmclock_base_ns() while a timer interrupt
+> > runs timekeeping_update(), it overwrites offs_boot.
+> > 
+> > Even though the value only actually changes during suspend when the freezer
+> > subsystem guarantees vCPU threads are frozen (preventing functional tearing),
+> > overwriting the identical value concurrently with an unprotected read still
+> > introduces a formal C11 data race.
+> 
+> Huh.  And strictly speaking, 64-bit could tear the store/load.  Stealing heavily
+> from ktime_mono_to_any(), this as a prep patch plus fixup (not yet tested)?
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> [Severity: High]
-> This is a pre-existing issue, but while enabling the DMA API for Xen PV
-> domains, does this leave guest-bound transfers vulnerable to data corruption
-> with SWIOTLB bounce buffers?
+LOL, hilarious.  I was cherry-picking the rest of the series on top to run the
+tests, and discovered that "Compute kvmclock base without pvclock_gtod_data"
+does exactly that: uses ktime_mono_to_any() directly.  So at least I went in the
+right direction?
 
-Yep, preexisting issue, but not reachable via plain `virtio-vga`.
+David, is there any reason that patch needs to be 25/36?  AFAICT, it slots in
+very nicely before this patch.  Then we don't need to do the below, because
+ktime_mono_to_any() already takes care of 32-bit.
 
-Only reachable, AFAICT, if `has_virgl_3d` is enabled. The missing `_for_cpu`` sync
-is pre-existing since 8f44ca223345 and pretty orthogonal to this patch.
-
-A correct fix belongs in the completion path rather than at submission,
-anyway, so it should be its own separate patch.
-
-Happy to do that in a followup/separate patch, if requested.
+> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> index b6e1dfd6db6a..57679d871581 100644
+> --- a/arch/x86/kvm/x86.c
+> +++ b/arch/x86/kvm/x86.c
+> @@ -921,7 +921,8 @@ static void update_pvclock_gtod(struct timekeeper *tk)
+>  
+>         vdata->wall_time_sec            = tk->xtime_sec;
+>  
+> -       vdata->offs_boot                = tk->offs_boot;
+> +       /* Pairs with the READ_ONCE() in get_kvmclock_base_ns(). */
+> +       WRITE_ONCE(vdata->offs_boot, tk->offs_boot);
+>  
+>         write_seqcount_end(&vdata->seq);
+>  }
+> @@ -929,7 +930,26 @@ static void update_pvclock_gtod(struct timekeeper *tk)
+>  static s64 get_kvmclock_base_ns(void)
+>  {
+>         /* Count up from boot time, but with the frequency of the raw clock.  */
+> -       return ktime_to_ns(ktime_add(ktime_get_raw(), pvclock_gtod_data.offs_boot));
+> +       struct pvclock_gtod_data *gtod = &pvclock_gtod_data;
+> +       ktime_t raw = ktime_get_raw();
+> +       ktime_t now;
+> +
+> +       /*
+> +        * Synchronization with clock updates isn't required on 64-bit as only
+> +        * one field is being consume
+> +        * */
+> +#ifdef CONFIG_X86_64
+> +       now = ktime_add(raw, READ_ONCE(gtod->offs_boot));
+> +#else
+> +       unsigned int seq;
+> +
+> +       do {
+> +               seq = read_seqcount_begin(&gtod->seq);
+> +               now = ktime_add(raw, *offset);
+> +       } while (read_seqcount_retry(gtod->seq, seq));
+> +#endif
+> +
+> +       return ktime_to_ns(now);
+>  }
+>  
+>  static uint32_t div_frac(uint32_t dividend, uint32_t divisor)
