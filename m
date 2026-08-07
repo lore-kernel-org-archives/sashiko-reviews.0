@@ -1,317 +1,320 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010020.outbound.protection.outlook.com [52.101.84.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1453B42C0
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 07:18:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786087090; cv=none; b=a+wbPko7fKW4DrNpmymGfNtzVg2aXWRFktJ5qQORdwy6vcBLnrqB/83OhqsGZkGTObCyBxkq5C5S964Extvie0RIRcpglULidOBmiPqAyokHDzLCJrPEzNdm/BLb3r0aGYa09hgSq0rEK3A12VuRXpSPO38gOBWt0Vl/l/ZkBcs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786087090; c=relaxed/simple;
-	bh=8rE4idcUKxQQ+px+vkwWlZkphY3J4f7ZSBLYbBU0Txg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qcPVZ4gWn7I2derdEqnvimFRkbk+c8nsYamHgnNQojTzSG3wly0fQf0LkNuK/Q5SGfa2KtY8zn27maa68RJbqPGb7/x+LXjgGzMeWvw7qA2zzti0wT2tA/DuZ/mcwMmfSF/nAVREjU06dozoJMliLjSTJykuidpcqfAJbzNHpnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9bhsFMf; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4433E26FD97;
+	Fri,  7 Aug 2026 08:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.20
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786090020; cv=fail; b=L+QjH9IsrJkIqPZ0AXCP/z8gRkzrtWyF5q4cUGSSTxjjfcC3NE7k4/eBHJSwmSZrc/Su4vor9HuiRcYhpsQuowkkKh/FlXrXZ16kv5QRiJy5zTfWioMkhUFLaWLPcidwG5d8Tud0zBYobyFwZ5/dgH3zG5hxcIShWzqzC2k7Zh4=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786090020; c=relaxed/simple;
+	bh=sZZiHvPj7ZwxsH9wTSKLCVSXZAewtq1/vM5rwDR97f4=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=fVVKuj2SZLzZaSmSI9b8UWscr6Wu+SfM433VzK5qp7++7iMONsP6bS8Z3SHa+SOQY2+0QZD/9NJL2XhxUgs58ed/DGFf/ohTWEwYsiGf5W5PbYRbT5IFwhg/njfRG921315eI0J79AvlFhEsVOMfth6AJA0Ewj8/+0XCw2j0uks=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FDV0MxQC; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FDV0MxQC; arc=fail smtp.client-ip=52.101.84.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9bhsFMf"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8486ac3f347so1966539b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 00:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786087087; x=1786691887; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wWRiuEYvxeApf3WCErrX4QKIxHG44lrxaPCuF1YNriM=;
-        b=J9bhsFMfuXGdUxBgIm6wvtXc87n1KwG8Hh1fxlD+Xoj4oCgccy3qEL3eOVvcqoQuVd
-         JyvkPxot1tUIvB0oSjrpih4gutvW3q9CfPxHstOEMBhQ/y+xhTNaftC5uwVT0AFjctFN
-         T0GvIWejxFxkxSY2Cazhd7zJTP+GuhFJtBo4RrCetW2qxPPrqQadErf7nSlZVE/L4maz
-         zIiajTheNCzRo5yLFZdKA4+kRXe0Fq9sYS6idxnetY1Z/elBzD0cvx7WciliTvDf3hA1
-         0Cj1avdSTmQUREZypIJzMioo5FYqn4nuGDPZzImAGjZbwUzxD18Ku5ndZ54os6LW1317
-         legw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786087087; x=1786691887;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=wWRiuEYvxeApf3WCErrX4QKIxHG44lrxaPCuF1YNriM=;
-        b=hu5DaRUrPSyfdKtgwNTsGew1NVFL/CFw+5sgyN4t1u2tCGKhsZSY3jUN2Y+3sg5x6j
-         pm0jUreqUjWwSLAPyN2YW01NEI3F0BBHgfdV0FWWXq2AKCDqLrLpSL8FSWJkXQWTsRVk
-         bg6YQQ0Fl8CB1ZLx60xou1w21ZEWIZ45eb0svlnKpqhl2clO9lg6smmdO6GywuIurTaN
-         BHmglmvIVi2MF7UAlbkJO/VzEJ+E+K1K4r60fxfdzGh+TBjEgxvzLYej3SPqNTmDH5UO
-         vrztcr6k1/+ZVVvvLF+vWEJHYmUGQxw5kEAlHIS4R4BZ40ga8dhyDdRTTM2xMxTfj2GZ
-         EETQ==
-X-Gm-Message-State: AOJu0YyY0PN97+5asM1gWbKY85O6/4KkHWLs5eUykoqEpHe9pz5XfG0G
-	m5Ahueve1vKdAeVZCtrLGpzCp3C6Z/s0A9aW76hGaUoczf5AqYqoYapYG7KuUQ==
-X-Gm-Gg: AR+sD12E/EHy9MIFXHUfVyVGChR8Ean0jLDurYOxQmpWrQZx77tTLdowyC1PjXhN1KJ
-	R3Pktc+bV/VX0XMikV90og+xowqJ8+FaDeWjbozfIk4/QgAg5SIsmYAifiPfsjiYzFLifnByiub
-	4+/ppNjhW0x/D7jB1fDQRZ50sAA2aFWL0YyrRhoUicqYyztl7uKJPHhnEeIHItJG4/l+sb+5OOv
-	FulU7Cy5k6fiBDIirh0lRrJWbXaGPfSv0Wxx1m3ooD+c9ebn9lu32lt2z46UN4yt0faMBlAuJsl
-	l+Ao5TgeacY1U55HIoXyF8cq7U8UVo9OwDkwsuL1zgVgQV5Kz7bvALQvaBXUnZJRPlq2u/TarEq
-	boRJPFUxPs0CrPFuD0oWH2ZeJWohoCj+00MOE/Ad4ymex5t2xu4j5KakfDI+y4tixExeD8528kq
-	rCXDnHl35BLHftbpQ5XAN2Z+4ThKdy6fLIjXud4x9npNkp0gT83xjqLenFRsHNQAHFsnJQ8UqIX
-	S0RF1Tw1XGbuIX8tXe+icZmb4Wz0RylZCwH
-X-Received: by 2002:a05:6a20:3d82:b0:3a3:adea:83bc with SMTP id adf61e73a8af0-3cba2aea1efmr10198445637.15.1786087087424;
-        Fri, 07 Aug 2026 00:18:07 -0700 (PDT)
-Received: from [172.19.1.48] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f1988besm255803a12.3.2026.08.07.00.18.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Aug 2026 00:18:07 -0700 (PDT)
-Message-ID: <8a1f643e-8aa1-4476-aaea-61342dd45985@gmail.com>
-Date: Fri, 7 Aug 2026 15:18:04 +0800
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FDV0MxQC";
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FDV0MxQC"
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=T7dweB6TAEiY1Sp2mZ8K1h3MP0uRY+2+H2Uk317GlrjDkpg9XKF5zFBpWd7JXA7fcnhmzj9AvPpjZFcuadlboO5S2n0+GNcCwuEuby7jA/tXoqjhWTkVc7qkAjx7M+vRPEBHNqe8aDC+OTgHqr+P33tlmm98a7XMO4/2htUv42SYsmpQekZjP6YU2yQOO+VZW32YYFw9V79Fh2soSivx7MAuR00hroRJqBpfWTwRG/oysI51oVqlEfmhiEcXMXe1Qxmw7bMcoDTvBk0H7rTtLORyx63esF7KHYukrL6/Nw9La0DGkRQHTjYql3XkibVt/Lg/lm7VHRtdzMhT+VIPGw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sZZiHvPj7ZwxsH9wTSKLCVSXZAewtq1/vM5rwDR97f4=;
+ b=iTNNd6MqyWpKJN9BD7Ov35bNhbA7NehbrlQ+nKxfXLPwYQoLzfDkmXsZxN7iOaIZ04dHplDhkuhtIYqA66Scsf9mF6pTr4Qwui9S93Od/B0WTtNugwI+38/p/fbtivr8JyEQMmN7X81Gb2l7lUF3KEtP45ANnKFW9MBE5/o/g1S4+dXzD5TmtjgxToLSRdM9G/YCM+JANwAgi9b3g2E4P4UxduTJffHmjNsXOaCfLjA+njm6dN6R7Hq583grskyn6Z3RpNG+PCJL3nAEWigmEZ9M08GZNYmVbhQupxC8vWXr+wjSoY84gcQM/mr/BfOJyqJA61X40EqjqirJ2xAmJA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 4.158.2.129) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=arm.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
+ dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
+ dmarc=[1,1,header.from=arm.com])
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sZZiHvPj7ZwxsH9wTSKLCVSXZAewtq1/vM5rwDR97f4=;
+ b=FDV0MxQCUI72/4wk+4oHJITo9vj+IzSZGOQ70SXyW2DavXyYbulSgKOHYLuImMWGVaFeLrgGrxqYYYZuK71q/FBvPYZFxwQXBK963+22B5lawyv2xWxJeS5v8fcX7bMpp563qrVH+ROdpibyi+9x9GRbviwNvB/rU7O5dnu7INc=
+Received: from AS4P195CA0005.EURP195.PROD.OUTLOOK.COM (2603:10a6:20b:5e2::14)
+ by DB3PR08MB8916.eurprd08.prod.outlook.com (2603:10a6:10:428::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Fri, 7 Aug
+ 2026 08:06:51 +0000
+Received: from DB5PEPF00014B97.eurprd02.prod.outlook.com
+ (2603:10a6:20b:5e2:cafe::35) by AS4P195CA0005.outlook.office365.com
+ (2603:10a6:20b:5e2::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.23 via Frontend Transport; Fri, 7
+ Aug 2026 08:06:51 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
+ smtp.mailfrom=arm.com; dkim=pass (signature was verified)
+ header.d=arm.com;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
+ client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
+Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
+ DB5PEPF00014B97.mail.protection.outlook.com (10.167.8.235) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.6
+ via Frontend Transport; Fri, 7 Aug 2026 08:06:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=btkSvDaISSFYSDD4mjxJkaPTj5xJBeJddkW2lm6BwQZOetJ5fnjiiJVCBQeVZqijGB36r2SX01fXNViMLooTd7EOj7EsYA1YLDuJz1I7xr5DfpzemNAq0vONRh+yLuvCBmgct10EdxyfUoxeb9S6rHZDPY9cY0Ess6Ibu8bmiq6YFIj3rM8tX1kK3M61lz9Jxh3VUKDA+th2GElTzUFhVJeP9MQWqyEKM81ydOCtOW+AXelUbtALxeQ6eW4KBxB+zWIVtr6OPcDOyGzymcJqe6DvfuYYywpXB094Xx7wMZlRdeaw0/ZOQmlmIAitH3b4BwtW+CCqyJa3GdMKz0nHqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sZZiHvPj7ZwxsH9wTSKLCVSXZAewtq1/vM5rwDR97f4=;
+ b=uq2RQH5IGKX4l3WkssNwMTDgb9P0YAW6Zlzz0Nzk+Kxt3iP8lOjUi1r0XZenBJ+J2Su6RL2M5rmDch7yOX4TOG9NC+GU5A2+mbIFeAzEnLK4eUxXgxuO1qASCIHkZ/pKMMup10RGIjIU0OhgkDNqzNuZ++4mVOJ8287MtpjhPbpru/+uT4AzgVMVCowCTXOu50mjKrvOKCZjgx86f4v8u9pKGAORlw3c8hdIf+6eX0H1wT9+koeFF13EVWX9fvYEl/Dlovz4O03wVUh52rRyQw+Q26R0RehkRfQxc7zR/WyL5HOq3k+aMELot6sRzhijIBxYzZPRdn4uAlJRntZHcA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
+ header.d=arm.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sZZiHvPj7ZwxsH9wTSKLCVSXZAewtq1/vM5rwDR97f4=;
+ b=FDV0MxQCUI72/4wk+4oHJITo9vj+IzSZGOQ70SXyW2DavXyYbulSgKOHYLuImMWGVaFeLrgGrxqYYYZuK71q/FBvPYZFxwQXBK963+22B5lawyv2xWxJeS5v8fcX7bMpp563qrVH+ROdpibyi+9x9GRbviwNvB/rU7O5dnu7INc=
+Received: from GV1PR08MB8428.eurprd08.prod.outlook.com (2603:10a6:150:81::5)
+ by AMDPR08MB11555.eurprd08.prod.outlook.com (2603:10a6:20b:71f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Fri, 7 Aug
+ 2026 08:06:19 +0000
+Received: from GV1PR08MB8428.eurprd08.prod.outlook.com
+ ([fe80::9b97:c973:3308:5ba7]) by GV1PR08MB8428.eurprd08.prod.outlook.com
+ ([fe80::9b97:c973:3308:5ba7%5]) with mapi id 15.21.0292.018; Fri, 7 Aug 2026
+ 08:06:18 +0000
+From: Sascha Bischoff <Sascha.Bischoff@arm.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "maz@kernel.org" <maz@kernel.org>, "kvmarm@lists.linux.dev"
+	<kvmarm@lists.linux.dev>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+	"oupton@kernel.org" <oupton@kernel.org>, nd <nd@arm.com>
+Subject: Re: [PATCH v4 09/48] KVM: arm64: gic-v5: Create and manage VM and VPE
+ tables
+Thread-Topic: [PATCH v4 09/48] KVM: arm64: gic-v5: Create and manage VM and
+ VPE tables
+Thread-Index: AQHdG1pGkZ/rYLJAtkGvle0+dM0tN7Z8hc6AgBXKuwA=
+Date: Fri, 7 Aug 2026 08:06:18 +0000
+Message-ID: <510ba4c7717ff25f47ce1597f519acb9e0898ed8.camel@arm.com>
+References: <20260724104819.1296803-1-sascha.bischoff@arm.com>
+	 <20260724104819.1296803-10-sascha.bischoff@arm.com>
+	 <20260724111913.8A83B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260724111913.8A83B1F000E9@smtp.kernel.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.52.3-0ubuntu1.1 
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=arm.com;
+x-ms-traffictypediagnostic:
+	GV1PR08MB8428:EE_|AMDPR08MB11555:EE_|DB5PEPF00014B97:EE_|DB3PR08MB8916:EE_
+X-MS-Office365-Filtering-Correlation-Id: 226313aa-c67b-40d6-d058-08def45ad685
+x-checkrecipientrouted: true
+nodisclaimer: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|18002099003|22082099003|5023799004|11063799006|4143699003|56012099006|38070700021|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info-Original:
+ MVEnZ5h9qwKdLZKZxw95VNH8CWC+hHO6yYUSvM6W/uGHLTt08vnD++RcPWPIe7KjMXvU2tgr8ZIKWYGzD3jGH63OQt7hJt2g31S85tfhXuHrVMqH3svJye1263GbzXLU/9PP0JdDOc0P996BSm/8gTvVQpzHAKQy2JJQd1iQH8Ug5mZWnDAZFuuGARwuRO6N6felck9HaG2Hw3V9Yc+mcWqA72yCN9quGIF60OiH16A0E3OVGXUMeS0JKZE1GWHK21CevABYcfFMT7upf5I8O3cbSuZ5wEMLZ2Vu0NakIHUv8wVdXbDe94xpBJ7RkaUtMz4EdqAgNmb8m+h0uw62P5CBOl22Xtivz9ODgo5ZYXKSvIQM0y6paowaDD7SdRqOA01V066h6R2uK4RA1rkpXfTnAGEPotxbk3NQrlUgmge9WEl+RNVFOriJJM/VEsl64TY+C7DZS8ORofDsqKnnJgW2uqgdqnKlnTQ+S2UZW4BgclZYy6lNGL2MY50FPM4woweOKRN/4C+RCduRHsfpmxbP4gVH1oMzV+LtvL6VqWs1NrNWICkTVfZsz7h6pL3n82jhNZ8tyTT492cfN2IP9yV0fi83HcDr0F2xunvsJj59RFxxS32XLhKu35dRWeD2Fc8H9sG2lCDV7f+iO2rr+MjrLob+JFazciAN+bE424luTu78ap8+LB8tVy9buQi66mWPga9bS9G19Nq/MjvNS0agsI5X2raB3QZM9pKzYFA=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR08MB8428.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(22082099003)(5023799004)(11063799006)(4143699003)(56012099006)(38070700021)(6133799003)(10067099003);DIR:OUT;SFP:1101;
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <28EF4CB042834A418D9933E39E70364E@eurprd08.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/3] i2c: ma35d1: Add Nuvoton MA35D1 I2C driver support
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260807060400.2047517-1-zychennvt@gmail.com>
- <20260807060400.2047517-3-zychennvt@gmail.com>
- <20260807061851.698081F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: zychen <zychennvt@gmail.com>
-In-Reply-To: <20260807061851.698081F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Exchange-RoutingPolicyChecked:
+ lcru8Cl7CEURf4llIrS3/3vBdQS3jTmuq4Xd3ifA7wfqVge5NwKOQGH8hb9/OZWGwjs5zb0pPOOtWoy5E5FSa2E7UZl0G4lNfs1XGHvIzF+MFr0J9HdTr3aOUwEn7fE2xPOOVaFms+TujqjNPsyQ6Q3ft4R2n4ymzlATXJ5ZcUNcOP1J+yHxotKC+K6qpojzSCEkkmMeyxSiGd481BpLeyA8BbOWawG9mQChI0LcjxoU5cQIPV3duwEuxIrcGkEzXJYGdO4Y5qeBdBK5u5CLHNGPFWYWtGC5cyHHtTW74doSrudpsEdncJv+AUA3blVs6jmMHSi2TcS1qRrVb1ISDA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR08MB11555
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DB5PEPF00014B97.eurprd02.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	589b92dd-8bc8-4156-9f99-08def45ac2bd
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|23010399003|376014|82310400026|1800799024|35042699022|14060799003|6133799003|56012099006|11063799006|5023799004|10067099003|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	NRMEPudfLdjG9HH08kUKcvImqmVUb3KnWBc1cJkOyaxIpurgRerO+nTogW6AFDTtqE4115Q1+ktEFfqf+BiIV2mV24RN51kmZbPfyvW+DVyeuugFfozIE9hlGKI1kpRBXz0wQx+yCkPzdbutCBIEMIeLR1CjZZecZDRWGhErA6B7Mn4Uv38CIvwKespzTUnc4YQgNKfhp/1j1T57zXTNKzfJviH0FIyawaoSo5uKihP/Ayl0V8utRVszJgSDmDexc7QJeCKWvVmyB++UIlC7vbY9anagzPzs4Oeki2csWNeIyLUbi7qGzP4m//Lo0/jpvQ4/cP15q00OcgvVhRZsPUUXPQ8u+09PxE/naE2KnccY2RPKqm0e59T6AYXtEbTZuc3e/aLqJS3X9iqvgBxfIT75LpD7CJmUkMAvHDfZ+Mk9Si9cbTy24bcsZlUnr38LYW0PCiwhmZ8Fgj/dS3JlG67j4btefMFdyZe8vKeg48/pxc8wsdgSjfVteJvmVZmNUPy3OM0gyc0TMoiKyuKf3JlvkaQY+Mz3p6S085SJFzxmI15mL6a1lGRnF/g8ax3gljiTTdJttnr0UOSwYq9EvtnqtefJvlBhMzDUCZqZJC/vO8wR2IdmCuZxGR3jz/7DxH/KqoAXsOtMnAZhygFwmST0m7bdOsgytgTGF7PJYhf5sv8mUNshra+8ZwojdBPweFyOMYEb6QR1CMQy9tXlLA==
+X-Forefront-Antispam-Report:
+	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(376014)(82310400026)(1800799024)(35042699022)(14060799003)(6133799003)(56012099006)(11063799006)(5023799004)(10067099003)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	xPxJGxKvoMityPDHnkBdJaaRiCIlGri5bPC6ri2Ewvi2Y7STJpJBelqwU2dVpQorguyBV7HfwwJ0af64raNfsuKW6uC+mWKKREv04oI3cVo8N7pDvR2g45l1n3MXGWk5N3I5mSXY6l45NzDxzhy7n7Kikaf6rSkYuHINybxPFhHg7BbKfAXuJy4Gi3nlBRlgR+05JuiJHRbR9q8VzXaHmVDaPtz+fnBJjTyJxRfxQAtZ+yiW4NkUif38WaLR3BE+Hsir2VNpB31ak9OjSgEOzASsnOfWwbfTtpcHKWcDAODhbp7RwZslqtvdhCEtzX1+PgJwyj0o8WUd3Y2Ezz4jgL/W0kZ0fCoCXEBIJCa1A6ZCRBKJVOk1qFU/sMqe1PPwtLhE0c+Q+3TAPsdV6ig0nXMXlgftN4elwM6Jq4rE+35VjEXjpm69NTQtx1obRjDj
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 08:06:51.5403
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 226313aa-c67b-40d6-d058-08def45ad685
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DB5PEPF00014B97.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR08MB8916
 
-
-
-sashiko-bot@kernel.org 於 2026/8/7 下午 02:18 寫道:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] Unhandled `MA35_BUS_RELEASED` status causes spurious errors and randomly aborts ongoing I2C transfers.
-Not applicable.
-According to the MA35D1 TRM, MA35_BUS_RELEASED (0xf8) won't raise interrupt.
-
-> - [High] Missing NULL checks for `i2c->target` and race conditions during target unregistration lead to a NULL pointer dereference in the ISR.
-Not applicable.
-The target mode is disabled before synchronize_irq(), and i2c->target is cleared only after synchronize_irq() completes. Thus, any pending or
-running target interrupt is handled before the pointer is cleared, and a NULL check is not required.
-
-> - [High] Unprotected initialization of shared transfer state in `ma35d1_i2c_doxfer` races with asynchronous I2C interrupts.
-Not applicable.
-The target mode interrupt path does not access the controller transfer state variables. No additional locking is required.
-
-> - [Medium] Missing `pm_runtime_mark_last_busy()` defeats the autosuspend delay, causing immediate suspension.
-Not applicable.
-pm_runtime_put_autosuspend() already calls pm_runtime_mark_last_busy() internally.
-
-> - [Medium] Missing reset assertion on driver remove or probe error leaves the hardware in a dirty state.
-Not applicable.
-reset_control_deassert() is only used to ensure the controller is released from reset, as it may have been left asserted by the bootloader.
-The controller is fully reinitialized during probe, so reasserting the reset line on driver removal is unnecessary.
-
-> - [Medium] Unconditional `disable_irq_wake()` during resume causes a kernel warning if `enable_irq_wake()` failed.
-Not applicable.
-The MA35D1 I2C interrupt is a dedicated wake-capable IRQ, so enable_irq_wake() is expected to succeed on this platform.
-
-> --
-> 
-> --- Patch [2]: [PATCH v9 2/3] i2c: ma35d1: Add Nuvoton MA35D1 I2C driver support ---
-> commit a1da9304aab06d4fdb61f6ee5807d7913cc199b8
-> Author: Zi-Yu Chen <zychennvt@gmail.com>
-> Subject: i2c: ma35d1: Add Nuvoton MA35D1 I2C driver support
-> 
-> This commit adds I2C controller driver support for the Nuvoton MA35D1 SoC.
-> The driver provides both controller and target functionality across
-> standard, fast, and fast-plus modes.
-> 
->> diff --git a/drivers/i2c/busses/i2c-ma35d1.c b/drivers/i2c/busses/i2c-ma35d1.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/drivers/i2c/busses/i2c-ma35d1.c
-> [ ... ]
->> +static irqreturn_t ma35d1_i2c_irq_target_trx(struct ma35d1_i2c *i2c,
->> +					     unsigned long i2c_status)
->> +{
->> +	unsigned char byte = 0;
->> +
->> +	switch (i2c_status) {
->> +	case MA35_S_RECE_ARB_LOST:
-> [ ... ]
->> +	case MA35_S_RECE_ADDR_ACK:
->> +		/* Own SLA+W has been receive; ACK has been return */
->> +		i2c_slave_event(i2c->target, I2C_SLAVE_WRITE_REQUESTED, &byte);
-> 
-> [Severity: High]
-> Can this result in a NULL pointer dereference if a target interrupt is
-> pending during unregistration?
-> 
-> When ma35d1_unreg_target() calls synchronize_irq() and sets i2c->target
-> to NULL, pending interrupts in the irqchip might still fire immediately
-> after. 
-> 
-> If that happens, i2c_slave_event() will dereference i2c->target without
-> a NULL check. Could a defensive check be added here, or could the teardown
-> synchronization be adjusted?
-> 
->> +		break;
-> [ ... ]
->> +static irqreturn_t ma35d1_i2c_irq(int irqno, void *dev_id)
->> +{
->> +	struct ma35d1_i2c *i2c = dev_id;
->> +	unsigned long status;
->> +
->> +	status = readl(i2c->regs + MA35_STATUS0);
-> 
-> [Severity: High]
-> Does this interrupt handler properly process the MA35_BUS_RELEASED (0xf8)
-> status code?
-> 
-> If a spurious interrupt occurs and the status is 0xf8, this falls through
-> to the default cases in the transaction handlers, which log an error and
-> call ma35d1_i2c_restore_idle().
-> 
-> This would unconditionally abort any active controller transfers via
-> ma35d1_i2c_stop(i2c, -EIO). Could this be addressed by explicitly checking
-> for 0xf8 and returning IRQ_NONE early?
-> 
->> +
->> +	if (status == MA35_BUS_ERROR) {
-> [ ... ]
->> +static int ma35d1_i2c_doxfer(struct ma35d1_i2c *i2c, struct i2c_msg *msgs,
->> +			     int num)
->> +{
->> +	unsigned long timeout;
->> +	unsigned int val;
->> +	int ret, err;
->> +
->> +	i2c->msg = msgs;
->> +	i2c->msg_num = num;
->> +	i2c->msg_ptr = 0;
->> +	i2c->msg_idx = 0;
->> +	i2c->err = 0;
-> 
-> [Severity: High]
-> Could this lockless initialization race with asynchronous I2C interrupts?
-> 
-> These transfer state variables are set in process context without holding
-> i2c->lock or disabling interrupts. If a target mode event or spurious
-> interrupt fires concurrently, the ISR could execute
-> ma35d1_i2c_controller_complete() and clear the i2c->msg pointer.
-> 
-> When doxfer() then sends the START command, the controller might see a null
-> message pointer and incorrectly abort the transfer. Does this section need
-> lock protection?
-> 
->> +
->> +	ma35d1_i2c_write_ctl(i2c, MA35_CTL_STA);
-> [ ... ]
->> +static int ma35d1_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->> +			   int num)
->> +{
->> +	struct ma35d1_i2c *i2c = i2c_get_adapdata(adap);
->> +	int ret;
->> +
->> +	ret = pm_runtime_resume_and_get(i2c->dev);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = ma35d1_i2c_doxfer(i2c, msgs, num);
->> +
->> +	if (i2c->target)
->> +		ma35d1_i2c_write_ctl(i2c, MA35_CTL_AA);
->> +	pm_runtime_put_autosuspend(i2c->dev);
-> 
-> [Severity: Medium]
-> Does this bypass the autosuspend delay?
-> 
-> Calling pm_runtime_put_autosuspend() without first updating the timestamp
-> via pm_runtime_mark_last_busy() will cause the PM core to evaluate based
-> on an outdated timestamp.
-> 
-> This could result in the device suspending immediately rather than waiting
-> for the 5000ms delay configured in the probe function.
-> 
->> +
->> +	return ret;
->> +}
-> [ ... ]
->> +static int ma35d1_i2c_suspend(struct device *dev)
->> +{
->> +	struct ma35d1_i2c *i2c = dev_get_drvdata(dev);
->> +	unsigned int val;
->> +
->> +	/* Prepare for wake-up from I2C events if target mode is active */
->> +	if (i2c->target) {
->> +		ma35d1_i2c_write_ctl(i2c, MA35_CTL_AA);
->> +
->> +		/* Setup wake-up control */
->> +		writel(0x1, i2c->regs + MA35_WKCTL);
->> +
->> +		/* Clear pending wake-up flags */
->> +		val = readl(i2c->regs + MA35_WKSTS);
->> +		writel(val, i2c->regs + MA35_WKSTS);
->> +
->> +		enable_irq_wake(i2c->irq);
->> +
->> +		return 0;
->> +	}
->> +	return pm_runtime_force_suspend(dev);
->> +}
->> +
->> +static int ma35d1_i2c_resume(struct device *dev)
->> +{
->> +	struct ma35d1_i2c *i2c = dev_get_drvdata(dev);
->> +	unsigned int val;
->> +
->> +	if (i2c->target) {
->> +		/* Disable wake-up */
->> +		writel(0x0, i2c->regs + MA35_WKCTL);
->> +
->> +		/* Clear pending wake-up flags */
->> +		val = readl(i2c->regs + MA35_WKSTS);
->> +		writel(val, i2c->regs + MA35_WKSTS);
->> +
->> +		disable_irq_wake(i2c->irq);
-> 
-> [Severity: Medium]
-> Can this cause a kernel warning if enable_irq_wake() fails during suspend?
-> 
-> The return value of enable_irq_wake() is ignored in ma35d1_i2c_suspend().
-> If the irqchip does not support wakeup, the wake depth remains zero.
-> 
-> Unconditionally calling disable_irq_wake() here will then trigger an
-> "Unbalanced IRQ wake disable" warning. Should the driver record whether
-> enabling wake succeeded before disabling it?
-> 
->> +		return 0;
->> +	}
-> [ ... ]
->> +static int ma35d1_i2c_probe(struct platform_device *pdev)
->> +{
-> [ ... ]
->> +	i2c->rst = devm_reset_control_get_exclusive(&pdev->dev, NULL);
->> +	if (IS_ERR(i2c->rst))
->> +		return dev_err_probe(dev, PTR_ERR(i2c->rst),
->> +				     "failed to get reset control\n");
->> +
->> +	ret = reset_control_deassert(i2c->rst);
->> +	if (ret)
->> +		return dev_err_probe(dev, ret, "failed to deassert reset line\n");
-> 
-> [Severity: Medium]
-> Is a cleanup action required to assert the reset line?
-> 
-> The reset line is deasserted during initialization, but there appears to be
-> no corresponding reset_control_assert() on the error path or driver
-> unbind.
-> 
-> If the module is unloaded and reloaded, the hardware could remain in a
-> dirty state from the previous session, potentially causing unexpected
-> behavior like spurious interrupts. Could a devm action be added to handle
-> re-asserting the reset line?
-> 
->> +
->> +	/* Setup info block for the I2C core */
->> +	strscpy(i2c->adap.name, "ma35d1-i2c", sizeof(i2c->adap.name));
-> 
-
-Regards,
-Zi-Yu Chen
+T24gRnJpLCAyMDI2LTA3LTI0IGF0IDExOjE5ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOg0KPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJl
+dmlldyBmb3VuZCA2IHBvdGVudGlhbA0KPiBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbSGln
+aF0gYHZnaWNfdjVfYWxsb2NfbDJfdm10KClgIHVuY29uZGl0aW9uYWxseSBkZXJlZmVyZW5jZXMN
+Cj4gYGt2bV9nZXRfdmNwdShrdm0sIDApYCwgY2F1c2luZyBhIGhvc3Qga2VybmVsIHBhbmljIGlm
+IG5vIHZDUFVzIGFyZQ0KPiBvbmxpbmUuDQo+IC0gW0hpZ2hdIEFsbG9jYXRpbmcgaGFyZHdhcmUt
+bW9kaWZpZWQgdGFibGVzIChWTVRFIGFuZCBWUEVURSkgZGVuc2VseQ0KPiBpbiBub3JtYWwgY2Fj
+aGVhYmxlIG1lbW9yeSBjYXVzZXMgc2lsZW50IGRhdGEgY29ycnVwdGlvbiBvbiBub24tDQo+IGNv
+aGVyZW50IElSUyBzeXN0ZW1zIGR1ZSB0byBjYWNoZWxpbmUgZmFsc2Ugc2hhcmluZy4NCj4gLSBb
+SGlnaF0gTWlzc2luZyBjYWNoZSBpbnZhbGlkYXRpb24gYmVmb3JlIHplcm9pbmcgdGhlIFZQRSB0
+YWJsZQ0KPiBlbnRyeSBjYXVzZXMgZmFsc2Utc2hhcmluZyBjb3JydXB0aW9uIG9mIG5laWdoYm9y
+aW5nIGhhcmR3YXJlIHN0YXRlLg0KPiAtIFtIaWdoXSBUaGUgZXJyb3IgaGFuZGxpbmcgcGF0aCBp
+biBgdmdpY192NV92bXRlX2luaXQoKWAgaW5jb3JyZWN0bHkNCj4gY2FsbHMgYHhhX2VyYXNlKClg
+IHdoZW4gYHhhX2luc2VydCgpYCBmYWlscyB3aXRoIGAtRUJVU1lgLCBkZXN0cm95aW5nDQo+IHBy
+ZS1leGlzdGluZyB2YWxpZCBzdGF0ZS4NCj4gLSBbSGlnaF0gRWFybHkgcmV0dXJucyBvbiBlcnJv
+ciBpbiBgdmdpY192NV92bXRlX3JlbGVhc2UoKWAgYnlwYXNzDQo+IGNyaXRpY2FsIGNsZWFudXAg
+c3RlcHMsIHBlcm1hbmVudGx5IGxlYWtpbmcgbWVtb3J5IGFuZCBsZWF2aW5nDQo+IGhhcmR3YXJl
+IHN0YXRlIGFjdGl2ZS4NCj4gLSBbTWVkaXVtXSBMb2NrbGVzcyByZWFkIG9mIGBsMnB0cnNgIGFy
+cmF5IHdpdGhvdXQgYFJFQURfT05DRSgpYCBjYW4NCj4gbGVhZCB0byBvYnNlcnZpbmcgYSBzdGFs
+ZSBvciBwYXJ0aWFsbHkgdXBkYXRlZCBwb2ludGVyLg0KPiAtLQ0KPiANCj4gLS0tIFBhdGNoIFs5
+XTogW1BBVENIIHY0IDA5LzQ4XSBLVk06IGFybTY0OiBnaWMtdjU6IENyZWF0ZSBhbmQgbWFuYWdl
+DQo+IFZNIGFuZCBWUEUgdGFibGVzIC0tLQ0KPiBjb21taXQgNmQxOGFiMjdkMjg3NWI3YTNlMjY3
+YTM5YWU3ZWZiNDM5N2ViYWM5Mg0KPiBBdXRob3I6IFNhc2NoYSBCaXNjaG9mZiA8U2FzY2hhLkJp
+c2Nob2ZmQGFybS5jb20+DQo+IFN1YmplY3Q6IEtWTTogYXJtNjQ6IGdpYy12NTogQ3JlYXRlIGFu
+ZCBtYW5hZ2UgVk0gYW5kIFZQRSB0YWJsZXMNCj4gDQo+IEdJQ3Y1IHVzZXMgYSBzZXQgb2YgaW4t
+bWVtb3J5IHRhYmxlcyB0byB0cmFjayBhbmQgbWFuYWdlIFZNDQo+IHN0YXRlLiBUaGVzZSBtdXN0
+IGJlIGFsbG9jYXRlZCBieSB0aGUgaHlwZXJ2aXNvciwgYW5kIHByb3ZpZGVkIHRvIHRoZQ0KPiBJ
+UlMgdG8gdXNlLg0KPiANCj4gPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9rdm0vdmdpYy92Z2lj
+LXY1LXRhYmxlcy5jDQo+ID4gYi9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtdjUtdGFibGVzLmMN
+Cj4gPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiA+IGluZGV4IDAwMDAwMDAwMDAwMDAuLjIyY2Qw
+M2UwZjE5NjMNCj4gPiAtLS0gL2Rldi9udWxsDQo+ID4gKysrIGIvYXJjaC9hcm02NC9rdm0vdmdp
+Yy92Z2ljLXY1LXRhYmxlcy5jDQo+ID4gQEAgLTAsMCArMSw2MzAgQEANCj4gDQo+IFsgLi4uIF0N
+Cj4gDQo+ID4gK3N0YXRpYyBpbnQgdmdpY192NV9hbGxvY192bXRfbGluZWFyKHVuc2lnbmVkIGlu
+dCBudW1fZW50cmllcykNCj4gPiArew0KPiA+ICsJdm10X2luZm8tPmxpbmVhci52bXRfYmFzZSA9
+IGt6YWxsb2Nfb2Jqcygqdm10X2luZm8tDQo+ID4gPmxpbmVhci52bXRfYmFzZSwNCj4gPiArCQkJ
+CQkJIG51bV9lbnRyaWVzKTsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gRG9lcyBhbGxvY2F0
+aW5nIHRoZSBoYXJkd2FyZS1tb2RpZmllZCBWTVRFIHRhYmxlIGRlbnNlbHkgaW4gbm9ybWFsDQo+
+IGNhY2hlYWJsZQ0KPiBtZW1vcnkgY2F1c2Ugc2lsZW50IGRhdGEgY29ycnVwdGlvbiBvbiBub24t
+Y29oZXJlbnQgSVJTIHN5c3RlbXM/DQo+IA0KPiBTaW5jZSBremFsbG9jX29ianMoKSBhbGxvY2F0
+ZXMgdGhlIDMyLWJ5dGUgVk1URSBlbnRyaWVzIGNvbnRpZ3VvdXNseSwNCj4gbXVsdGlwbGUgZW50
+cmllcyB3aWxsIHNoYXJlIGEgNjQtYnl0ZSBDUFUgY2FjaGUgbGluZS4gSWYgYSBDUFUNCj4gbW9k
+aWZpZXMgb25lDQo+IGVudHJ5LCB0aGUgc3Vic2VxdWVudCBEQyBDSVZBQyBjYWNoZSBtYWludGVu
+YW5jZSBjb3VsZCB3cml0ZSB0aGUNCj4gZW50aXJlIGNhY2hlDQo+IGxpbmUgYmFjayB0byBtZW1v
+cnksIG92ZXJ3cml0aW5nIGFueSBjb25jdXJyZW50IGhhcmR3YXJlIHVwZGF0ZXMgdG8NCj4gbmVp
+Z2hib3JpbmcgZW50cmllcy4NCg0KVGhlIHdheSB0aGF0IHRoaXMgd2FzIHN0cnVjdHVyZWQgaXQg
+d2FzIHBvc3NpYmxlIGZvciB0d28gYWRqYWNlbnQgVk1URXMNCnRvIGJlIG1hbmlwdWxhdGVkIGF0
+IHRoZSBzYW1lIHRpbWUuIEkndmUgcmV3b3JrZWQgdGhpbmdzIGEgbGl0dGxlIHRvDQptb3ZlIHRo
+ZXNlIHVuZGVyIHRoZSBsb2NraW5nIHdlIGFscmVhZHkgaGF2ZSBmb3IgdGhlIElSUyBNTUlPDQpp
+bnRlcmZhY2UuIFRoaXMgaW50ZXJmYWNlIGlzIGFscmVhZHkgdXNlZCB0byBtYWtlIFZNVEVzIHZh
+bGlkLCBmb3INCmV4YW1wbGUsIHNvIGl0IGlzIGxvZ2ljYWwgdG8gdXNlIHRoZSBzYW1lIGxvY2sg
+Zm9yIHRoZSBWTVRFcy4NCg0KV2l0aCB0aGF0IGNoYW5nZSB3ZSBjYW4gbm8gbG9uZ2VyIGJlIGlu
+IHRoZSBzaXR1YXRpb24gd2hlcmUgd2UgYXJlDQptb2RpZnlpbmcgbW9yZSB0aGFuIG9uZSBWTVRF
+IGF0IGFueSBvbmUgdGltZS4gV2UgbWFrZSBzdXJlIHRvIGNsZWFuIGFuZA0KaW52YWxpZGF0ZSBp
+biBhbnkgcGxhY2Ugd2hlcmUgd2UgaGF2ZSBtb2RpZmllZCBpdCwgYW5kIGFsc28gZXhwbGljaXRs
+eQ0KbWFrZSBzdXJlIHRvIHJlYWQgdGhlIGxhdGVzdCBjb3B5IGJlZm9yZSByZWFkaW5nIGl0Lg0K
+DQo+IA0KPiBbIC4uLiBdDQo+IA0KPiA+ICtzdGF0aWMgaW50IHZnaWNfdjVfYWxsb2NfbDJfdm10
+KHN0cnVjdCBrdm0gKmt2bSkNCj4gPiArew0KPiA+ICsJc3RydWN0IGt2bV92Y3B1ICp2Y3B1MCA9
+IGt2bV9nZXRfdmNwdShrdm0sIDApOw0KPiANCj4gWyAuLi4gXQ0KPiANCj4gPiArCS8qDQo+ID4g
+KwkgKiBWTUFQIGluIHRoZSBMMiBWTVQgdmlhIHRoZSBJUlMuIFdlIHVzZSBhbnkgb2YgdGhlIFZN
+J3MNCj4gPiBDUFVzIGFzIGENCj4gPiArCSAqIGNvbmR1aXQgZm9yIGludGVyYWN0aW5nIHdpdGgg
+dGhlIGhvc3QncyBJUlMuIEluIHRoZQ0KPiA+IGN1cnJlbnQgY2FzZSwNCj4gPiArCSAqIHRoaXMg
+bGV0cyB1cyByZXNvbHZlIHRoZSBWTSBJRCB0byBwYXNzIHRvIHRoZSBoYXJkd2FyZS4NCj4gPiAr
+CSAqLw0KPiA+ICsJcmV0ID0gaXJxX3NldF92Y3B1X2FmZmluaXR5KHZnaWNfdjVfdnBlX2RiKHZj
+cHUwKSwgJmNtZCk7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IENhbiB2Y3B1MCBiZSBOVUxM
+IGhlcmUsIGxlYWRpbmcgdG8gYSBob3N0IGtlcm5lbCBwYW5pYz8NCg0KTm8uIFdlIGZhaWwgR0lD
+djUgaW5pdCBpZiB0aGVyZSBhcmUgbm8gb25saW5lIHZjcHVzLiBpdCBpc24ndCBwb3NzaWJsZQ0K
+dG8gbWFrZSBpdCB0aGlzIGZhciB3aXRob3V0IHZjcHUwIGV4aXN0aW5nLg0KDQo+IA0KPiBJZiB2
+Z2ljX3Y1X3ZtdGVfaW5pdCgpIGlzIGNhbGxlZCBiZWZvcmUgYW55IHZDUFVzIGFyZSBvbmxpbmUg
+KHdoaWNoDQo+IGl0IGFwcGVhcnMNCj4gdG8gaGFuZGxlIGJ5IHJvdW5kaW5nIG5yX2NwdXMgdXAg
+dG8gMiksIGt2bV9nZXRfdmNwdShrdm0sIDApIHdpbGwNCj4gcmV0dXJuIE5VTEwuDQo+IHZnaWNf
+djVfdnBlX2RiKHZjcHUwKSB1bmNvbmRpdGlvbmFsbHkgZGVyZWZlcmVuY2VzIHRoZSB2Q1BVIHBv
+aW50ZXIsDQo+IHdoaWNoDQo+IHdvdWxkIGNhdXNlIGFuIGltbWVkaWF0ZSBjcmFzaC4NCg0KV2Ug
+d2lsbCBuZXZlciBtYWtlIGl0IHRoaXMgZmFyLCBzbyB0aGlzIGlzIGEgbm9uLWlzc3VlLg0KDQo+
+IA0KPiBbIC4uLiBdDQo+IA0KPiA+ICtzdGF0aWMgc3RydWN0IHZtdGwyX2VudHJ5ICp2Z2ljX3Y1
+X2dldF9sMl92bXRlKHUzMiB2bV9pZCkNCj4gPiArew0KPiANCj4gWyAuLi4gXQ0KPiANCj4gPiAr
+CWlmICghdm10X2luZm8tPmwyLmwycHRyc1tsMV9pbmRleF0pDQo+ID4gKwkJcmV0dXJuIEVSUl9Q
+VFIoLUVJTlZBTCk7DQo+ID4gKw0KPiA+ICsJbDJfdGFibGUgPSB2bXRfaW5mby0+bDIubDJwdHJz
+W2wxX2luZGV4XTsNCj4gDQo+IFtTZXZlcml0eTogTWVkaXVtXQ0KPiBDb3VsZCB0aGlzIGxvY2ts
+ZXNzIHJlYWQgb2YgbDJwdHJzIG9ic2VydmUgYSBzdGFsZSBvciBwYXJ0aWFsbHkNCj4gdXBkYXRl
+ZA0KPiBwb2ludGVyIHdpdGhvdXQgUkVBRF9PTkNFKCk/DQo+IA0KPiBTaW5jZSB0aGUgYXJyYXkg
+ZWxlbWVudCBpcyBhY2Nlc3NlZCBsb2NrbGVzc2x5IGFuZCByZWFkIHR3aWNlIChvbmNlDQo+IGZv
+ciB0aGUNCj4gTlVMTCBjaGVjayBhbmQgb25jZSBmb3IgdGhlIGFzc2lnbm1lbnQpLCB0aGUgY29t
+cGlsZXIgbWlnaHQgZW1pdCB0d28NCj4gc2VwYXJhdGUNCj4gbG9hZHMuIEEgY29uY3VycmVudCB1
+cGRhdGUgaW4gdmdpY192NV9hbGxvY19sMl92bXQoKSBjb3VsZCBjYXVzZQ0KPiB0aGVzZSBsb2Fk
+cw0KPiB0byByZXR1cm4gaW5jb25zaXN0ZW50IHN0YXRlcy4NCg0KVGhlcmUncyBubyB3YXkgZm9y
+IHRoZXJlIHRvIGJlIGEgY29uY3VycmVudCB1cGRhdGUuIFdlIGNhbGwNCnZnaWNfdjVfZ2V0X2wy
+X3ZtdGUoKSBmb3IgZWFjaCBWTSBhcyBwYXJ0IG9mIGluaXRpYWxpc2luZyB0aGUgVk1URS4gV2UN
+Cm9ubHkgZXZlciBjaGFuZ2UgdGhpcyBlbnRyeSBvbmNlLCB3aGljaCB0YWtlcyBpdCBmcm9tIGEg
+TlVMTCBwb2ludGVyIHRvDQphIHZhbGlkIHBvaW50ZXIsIGFuZCBpdCByZW1haW5zIGFzIHRoYXQg
+Zm9yZXZlcm1vcmUuIFRoZSBvbmx5IHRpbWUgd2hlbg0Kd2UgbWlnaHQgdGVhciB0aGluZ3MgZG93
+biBpcyB3aGVuIHRoZXJlIGhhcyBiZWVuIGEgcHJvYmUgZmFpbHVyZSwgYW5kDQp0aGVyZWZvcmUg
+DQoNCldlIHNob3VsZCBuZXZlciBiZSBpbiB0aGUgc2l0dWF0aW9uIHdoZXJlIHRoZSBmaXJzdCBh
+bmQgc2Vjb25kIGxvYWQNCndvdWxkIGRpZmZlci4gRWl0aGVyIGJvdGggYXJlIE5VTEwgb3IgYm90
+aCBhcmUgdmFsaWQuIFJFQURfT05DRSgpIGlzDQpub3QgbmVlZGVkIGhlcmUuDQoNCj4gDQo+IFsg
+Li4uIF0NCj4gDQo+ID4gK2ludCB2Z2ljX3Y1X3ZtdGVfaW5pdChzdHJ1Y3Qga3ZtICprdm0pDQo+
+ID4gK3sNCj4gDQo+IFsgLi4uIF0NCj4gDQo+ID4gKwlyZXQgPSB4YV9pbnNlcnQoJnZtX2luZm8s
+IHZtX2lkLCB2bWksIEdGUF9LRVJORUwpOw0KPiA+ICsJaWYgKHJldCkNCj4gPiArCQlnb3RvIG91
+dF9mYWlsOw0KPiANCj4gWyAuLi4gXQ0KPiANCj4gPiArCXZwZXQgPSBremFsbG9jX29ianMoKnZw
+ZXQsIG5yX2NwdXMpOw0KPiANCj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBEb2VzIGFsbG9jYXRpbmcg
+dGhlIDgtYnl0ZSBWUEVURSB0YWJsZSBlbnRyaWVzIGRlbnNlbHkgY2F1c2UgdGhlIHNhbWUNCj4g
+ZmFsc2UNCj4gc2hhcmluZyBhbmQgZGF0YSBjb3JydXB0aW9uIGlzc3VlcyBhcyB3aXRoIHRoZSBW
+TVRFIHRhYmxlPw0KDQpZZXMsIGl0IGNvdWxkIHBvdGVudGlhbGx5IGRvIHRoYXQuIEkndmUgbW92
+ZWQgdGhpcyB0byB1c2UgdGhlIHNhbWUNCmxvY2tpbmcgYXMgSSBtZW50aW9uZWQgYWJvdmUuDQoN
+Cj4gDQo+IFNpbmNlIHRoZSBlbnRyaWVzIGFyZSB0aWdodGx5IHBhY2tlZCBpbnRvIGNhY2hlIGxp
+bmVzLCBhIGZsdXNoIGZvcg0KPiBvbmUgZW50cnkNCj4gY291bGQgZGVzdHJveSBjb25jdXJyZW50
+IGhhcmR3YXJlIG1vZGlmaWNhdGlvbnMgdG8gbmVpZ2hib3JpbmcNCj4gZW50cmllcyBvbg0KPiBu
+b24tY29oZXJlbnQgSVJTIHN5c3RlbXMuDQoNCldoaWNoIGlzIHByZWNpc2VseSB3aGF0IHdlIGFy
+ZSB0cnlpbmcgdG8gYXZvaWQuIEFzIHdpdGggdGhlIFZNVEVzLCBJJ3ZlDQpyZS13b3JrZWQgdGhp
+cyB0byBhdm9pZCB0aGUgc2l0dWF0aW9uIHdoZXJlIHdlIG1pZ2h0IGJlIG1vZGlmeWluZw0KdGhp
+bmdzIGNvbmN1cnJlbnRseSB3aXRoIHRoZSBoYXJkd2FyZS4gQWRkaXRpb25hbGx5LCBJJ3ZlIGdy
+b3duIHRoZQ0KYWxsb2NhdGlvbiB0byBiZSBhdCBsZWFzdCBvbmNlIGNhY2hlIGxpbmUgdG8gYXZv
+aWQgc2hhcmluZyB0aGUgbGluZQ0Kd2l0aCBzb21ldGhpbmcgZWxzZSB0aGF0IGNvdWxkIGVuZCB1
+cCBjbG9iYmVyaW5nIHRoZSBkYXRhLg0KDQo+IA0KPiBbIC4uLiBdDQo+IA0KPiA+ICtvdXRfZmFp
+bDoNCj4gPiArCS8qIGtmcmVlKE5VTEwpIGlzIHNhZmUgc28gd2UgY2FuIGp1c3Qga2ZyZWUoKSBh
+dCBsZWlzdXJlDQo+ID4gKi8NCj4gPiArCWtmcmVlKHZtZCk7DQo+ID4gKwlrZnJlZSh2cGV0KTsN
+Cj4gPiArCWtmcmVlKHZwZWRfcHRycyk7DQo+ID4gKwlpZiAodm1pKQ0KPiA+ICsJCXhhX2VyYXNl
+KCZ2bV9pbmZvLCB2bV9pZCk7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IElzIGl0IHNhZmUg
+dG8gdW5jb25kaXRpb25hbGx5IGVyYXNlIHRoZSBYQXJyYXkgZW50cnkgaWYgeGFfaW5zZXJ0KCkN
+Cj4gZmFpbHM/DQo+IA0KPiBJZiB4YV9pbnNlcnQoKSBmYWlscyB3aXRoIC1FQlVTWSBiZWNhdXNl
+IGFuIGVudHJ5IGFscmVhZHkgZXhpc3RzIGZvcg0KPiB0aGlzDQo+IHZtX2lkIChlLmcuLCBkdWUg
+dG8gY29uY3VycmVudCBpbml0aWFsaXphdGlvbiksIHRoZSBjb2RlIGp1bXBzIHRvDQo+IG91dF9m
+YWlsLg0KPiBTaW5jZSB2bWkgd2FzIHN1Y2Nlc3NmdWxseSBhbGxvY2F0ZWQgYW5kIGlzIG5vbi1O
+VUxMLCB0aGlzIGNsZWFudXANCj4gYmxvY2sgY2FsbHMNCj4geGFfZXJhc2UoKSwgYmxpbmRseSBk
+ZWxldGluZyB0aGUgcHJlLWV4aXN0aW5nIHZhbGlkIGVudHJ5IGFuZA0KPiBjb3JydXB0aW5nIEtW
+TSdzDQo+IHRyYWNraW5nIG9mIGFuIGFjdGl2ZSBWTS4NCg0KSSd2ZSBhZGRlZCBhIGxvY2FsIGJv
+b2wgdG8gdHJhY2sgaWYgd2UgYWxsb2NhdGVkIG9yIG5vdC4gV2Ugbm93IG9ubHkNCmNhbGwgeGFf
+ZXJhc2UoKSBpZiB3ZSBzdWNjZXNzZnVsbHkgaW5zZXJ0ZWQuDQoNCj4gDQo+IFsgLi4uIF0NCj4g
+DQo+ID4gK2ludCB2Z2ljX3Y1X3ZtdGVfcmVsZWFzZShzdHJ1Y3Qga3ZtICprdm0pDQo+ID4gK3sN
+Cj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gQXJlIHRoZXJlIGVhcmx5IHJldHVybiBwYXRocyBp
+biB0aGlzIGZ1bmN0aW9uIChzdWNoIGFzIHdoZW4gZnJlZWluZw0KPiBMUEkgb3INCj4gU1BJIElT
+VCBzdHJ1Y3R1cmVzKSB0aGF0IGJ5cGFzcyBjcml0aWNhbCBjbGVhbnVwIHN0ZXBzPw0KDQpJIGRv
+bid0IGJlbGlldmUgc28sIG5vLg0KDQpJZiB0aG9zZSBmYWlsLCB0aGVuIHdlIG5lZWQgdG8gYnlw
+YXNzIG90aGVyIHBhcnRzIGFzIHdlIGNhbm5vdCBjbGVhbmx5DQp0ZWFyIHRoaW5ncyBkb3duLiAg
+SW4gdGhhdCBjYXNlLCB3ZSByZXR1cm4gYW5kIGVycm9yIGFuZCB0aGUgVk0gSUQgaXMNCmxlZnQg
+YWxsb2NhdGVkLiBXZSBsb3NlIHRoZSBtZW1vcnkgKHdlIGFscmVhZHkgZmFpbGVkIHRvIGZyZWUg
+aXQNCnByb3Blcmx5KSBhbmQgbG9zZSBhIHVzYWJsZSBWTSBJRCwgYnV0IHRoYXQncyBiZXR0ZXIg
+dGhhbiBhY2NpZGVudGFsbHkNCnJldXNpbmcgbWVtb3J5IHRoYXQgdGhlIGhhcmR3YXJlIG1pZ2h0
+IHN0aWxsIGhhdmUgYSBoYW5kbGUgdG8uDQoNCj4gDQo+IElmIGZyZWVpbmcgdGhlIElTVCBzdHJ1
+Y3R1cmVzIGZhaWxzIGFuZCByZXR1cm5zIGFuIGVycm9yIGVhcmx5LCBpdA0KPiBieXBhc3Nlcw0K
+PiB0aGUgcmVzdCBvZiB0aGUgdGVhcmRvd24gbG9naWMuIEl0IGZhaWxzIHRvIGZyZWUgdGhlIHZw
+ZWRfcHRycywNCj4gdnBldF9iYXNlLA0KPiBhbmQgdm1kX2Jhc2UgYWxsb2NhdGlvbnMsIGFuZCBz
+a2lwcyBjYWxsaW5nIHZnaWNfdjVfcmVzZXRfdm10ZSgpLg0KPiBUaGlzIGxlYXZlcw0KPiB0aGUg
+aGFyZHdhcmUgc3RhdGUgYWN0aXZlIGFuZCBwZXJtYW5lbnRseSBsZWFrcyBtZW1vcnkuDQoNCklm
+IHdlIGRvbid0IGhhdmUgYSBWTVRFLCB0aGVuIHRoZXJlIGlzIG5vdGhpbmcgdG8gZG8gdG8gYmVn
+aW4gd2l0aCBhbmQNCmhlbmNlIHdlIHJldHVybi4gSWYgdGhlIFZNIGlzIHN0aWxsIG1hcmtlZCBh
+cyB2YWxpZCwgd2UgY2FuJ3QgdGVhcg0KdGhpbmdzIGRvd24sIHNvIGFnYWluIHdlIHJldHVybiBo
+YXZpbmcgZG9uZSBub3RoaW5nLiBCZXlvbmQgdGhhdCwgd2UNCnRlYXIgZG93biBldmVyeXRoaW5n
+IHRoYXQgaXMgdmFsaWQsIHVubGVzcyB3ZSBleHBsaWNpdGx5IGZhaWwgdG8gdGVhcg0KZG93biB0
+aGUgSVNUcy4NCg0KPiANCj4gWyAuLi4gXQ0KPiANCj4gPiAraW50IHZnaWNfdjVfdm10ZV9mcmVl
+X3ZwZShzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUpDQo+ID4gK3sNCj4gDQo+IFsgLi4uIF0NCj4gDQo+
+ID4gKwl2cGV0X2Jhc2UgPSB2bWktPnZwZXRfYmFzZTsNCj4gPiArCVdSSVRFX09OQ0UodnBldF9i
+YXNlW3ZwZV9pZF0sIDBVTEwpOw0KPiA+ICsNCj4gPiArCXZnaWNfdjVfY2xlYW5faW52YWwodnBl
+dF9iYXNlICsgdnBlX2lkLA0KPiA+IHNpemVvZih2cGVfZW50cnkpKTsNCj4gDQo+IFtTZXZlcml0
+eTogSGlnaF0NCj4gRG9lcyB0aGlzIHNlcXVlbmNlIG5lZWQgYSBjYWNoZSBpbnZhbGlkYXRpb24g
+YmVmb3JlIHRoZSB3cml0ZSB0bw0KPiBhdm9pZCBmYWxzZQ0KPiBzaGFyaW5nIGNvcnJ1cHRpb24/
+DQo+IA0KPiBJZiB0aGUgQ1BVIGhvbGRzIGEgc3RhbGUsIGNsZWFuIGNvcHkgb2YgdGhpcyBjYWNo
+ZSBsaW5lLCB0aGUNCj4gV1JJVEVfT05DRSgpDQo+IGRpcnRpZXMgaXQgd2l0aG91dCBmZXRjaGlu
+ZyB0aGUgbGF0ZXN0IGhhcmR3YXJlIHN0YXRlIGZyb20gUkFNLiBUaGUNCj4gc3Vic2VxdWVudA0K
+PiBjYWNoZSBmbHVzaCB3cml0ZXMgdGhpcyBzdGFsZSBsaW5lIGJhY2sgdG8gbWVtb3J5LCBkZXN0
+cm95aW5nDQo+IGNvbmN1cnJlbnQNCj4gaGFyZHdhcmUgbW9kaWZpY2F0aW9ucyB0byBvdGhlciBW
+UEUgZW50cmllcyBzaGFyaW5nIHRoZSBzYW1lIGNhY2hlDQo+IGxpbmUuDQo+IA0KDQpXZSBhcmUg
+b25seSBkb2luZyB0aGlzIG9uIHRoZSB0ZWFyZG93biBwYXRoLCBhbmQgb25seSByZWFjaCB0aGlz
+IHBvaW50DQpvbmNlIHRoZSBWTSBpdHNlbGYgaXMgbWFya2VkIGFzIGludmFsaWQuIFRoZSBoYXJk
+d2FyZSBzaG91bGQgbm90IGJlDQp3cml0aW5nIHRvIHRoZSBWUEVUIGhlcmUsIGFuZCB3ZSBhcmUg
+c2ltcGx5IHRlYXJpbmcgZG93biB0aGUgc3RhdGUuDQpUaGlzIHNob3VsZCBiZSBmaW5lLg0KDQpU
+aGFua3MsDQpTYXNjaGENCg0K
