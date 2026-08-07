@@ -1,104 +1,212 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011057.outbound.protection.outlook.com [40.93.194.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1446B3B1B4
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 02:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786071320; cv=none; b=O0qRBzn/ucjNWmau2XV3J+Zuy088PJijM8W1U4Lazc8bEZ8gG2tyQsPINVx+qy09dXYZks3O6m9liLx2Z6WjXuLIUiC+x4rqD1A9RaJxkLMCsgIV9knFcfdjNclGT4eDsaRvM6zf47C2ojPD5/DRJK/sqBezrSZ9Zr4vsNjVeFg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786071320; c=relaxed/simple;
-	bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Disposition; b=XuSVqdHQv0QyGLB6r/TvMFIZlA27Nu40BzGvQjlctDMVO2R5roEQC3Ntq6cmLLoPiEh0xKNIFLDDJ9nCVl/pu4g03vMhpGAq9m3+uZ+ZPz2h8dCy8I6zj+Z98WKDsh9WQoApeSp69OchjOy7l+70z9tXTdeD22P7vucyUphu2n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io; spf=pass smtp.mailfrom=edera.dev; dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b=WNAqCNB6; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=edera.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=edera.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC5B3B1B4
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 05:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786079155; cv=fail; b=BiOr8aMJO9fRgpRcMUOqiLt8NeGT4G5Rmm/MOzwk2LOHgf5it7vYpm6GoDO+XVTqlQqUTDdQwRBXkfeKtb4cnjSUg6zMwuMmVyu1wQn00BoJBIdugXh8YC9EracgJsEonOVQyC6cgNmw1iaNc7JLTwb0I9F0btCAphe6IOtcuug=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786079155; c=relaxed/simple;
+	bh=05awlTiwwIU0WYHxoKk4PiXou5Mh5WMYAAFQU+RVrtg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=g0aVStO4OINuXn0iGhctgNWEU8BUKfgC7jZSXLF4V99pMl+2W0ZOCkw9UYeolxWkidp7ihODmYmzgigZid9imAqDKAWhytolAIkJcS6g1ZrfSOR2uslEPRUwn/J/zMfxVrJZahb3vsF8rbmL22cEYD7HGyXOg/KQkKf76ovRNvg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qmYxSwj6; arc=fail smtp.client-ip=40.93.194.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=edera.io header.i=@edera.io header.b="WNAqCNB6"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-8200ca16f26so43834947b3.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 19:55:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edera.io; s=google; t=1786071318; x=1786676118; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-disposition:content-type
-         :mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
-        b=WNAqCNB6ncYzEXb28K16WewxYX9YLkdr38PBaM78gfgpLin7q4nn/smRDmionSr5C8
-         Qv82Qf/9jHE/mZINWL6WTVaVHVB1gEIQf9UoWKDrr5G6E2r3WJhWLpmlCkpdGzA42vO9
-         loN/YFH0sxD5g4Pzpr+TzNol53HfmJZ3tNlTtQDhKK0rkh/HHREND0Y4liNTSDF8BY7r
-         02C7CnGKqTJN6bwPGtit6Ej1iUbq9Ejqly5BrHHbx28FR0+fNmDbqT+PCPA/ej/kBatd
-         CwfwMGVvbCmmXSz3GJfG0M3gguWVUdUW1BbqNaKraIbbROOMQ3z/l2GwgSGX8LFUUx+c
-         ZI4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786071318; x=1786676118;
-        h=content-transfer-encoding:content-disposition:content-type
-         :mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rD0P/EwWw7jwEPK55gnVfsYkHWCAigVS0mVtp0HL//Q=;
-        b=VFFkx1n/neD4F6QHAlN2B9irW78y+qPDMj04fzf1y8npx7YIxxL+h8xFlfDrc/aNSy
-         rfH0Q1v7xIPZwBMHfvlCb0kYdM5cc0gE5B9VwQRgBt5a3DpeDTYtefdYB7Njf4cUHAyj
-         meazOKU7z6JzhpIBltO/8x9iT9Cae7eCh5S++0dcRqqg7TrZ5gJHgcJnLN50hbbgqOio
-         GyvM6V+eexRAsKJ7B654hVE8QF4C7Utz1GK4dD8D+lxm4yJSjQoFJIpS8jzmm2tgq3sR
-         YbNFZEkuPR9VIytKJ8byttWM73zdv6sO9EDU5YoE9tWoVNXMztuURhLk7xgGdruQBDnp
-         0srw==
-X-Gm-Message-State: AOJu0YwBEMAlGcOmoO23kZnATT0unIu01c2O+dNpDs8Y80Tl0zEQYt2r
-	89oR7YFYvdIBP8USyzXqWHDigx0LUnECilA5ocQXejwwOVKsK2YrG5C7wFXfMegfODpAFRmEua0
-	tEzG2syk=
-X-Gm-Gg: AR+sD12itKBIZiG5E09QuHeMiKyuBW2fYyIvfieN9YrxPBnOPhB//QlGaPWkH9tOfAM
-	P0lH0mUFd1ou57XN9gVpZTAcQv01i4w4+nlg2zWUaA+XBog9X4GwneDmUbOwZymWS7Je6GwgPkl
-	+KZqTiDVkn0ZEVCCNEGjmaU/oO1vcPjauloFYBALHKwCu0xqfU4/jibPoeiQWuL9b9wbyYJTSOv
-	1q4swtjVl64NFigY8mufx70VUdnYdYjNzUrKRvz/cLHfDQ2N0iIDRWU8mYQOKlkK18mpKtRCYPz
-	lTx+uhlYDG6b2JvlRLtV0viWMgktT0YX1rAnCBUjAZNFcvQ5Q0KXqUAZ1qBJf/SPKQuqqojfPLH
-	ulOfMIIF5ViA6VAmLve+Kr0Cg1Fd0lpR9SxM7tyAupckKfrb6xw7JZUt7tSLiUvMrEVvZSde7cO
-	jPA5qSgAEkNU66j42sfJ7vUAYBXbC/3lVnu8l9ByXG83ZTirYL7ZU+/OSPnsKg
-X-Received: by 2002:a05:690c:6e12:b0:81e:e313:2ed1 with SMTP id 00721157ae682-8201f08fd34mr121177527b3.8.1786071317695;
-        Thu, 06 Aug 2026 19:55:17 -0700 (PDT)
-Received: from StolidWingnut ([174.80.170.224])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-823f09910b2sm2600087b3.16.2026.08.06.19.55.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2026 19:55:17 -0700 (PDT)
-From: Benjamin Leggett <benjamin@edera.io>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/virtio: use the DMA API for resource backing on Xen
-In-Reply-To: <20260806231002.27B4D1F000E9@smtp.kernel.org>
-References: <20260806-virtgpu-xen-dma-v1-1-e499b345bbad@edera.io>
-	<20260806231002.27B4D1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 32.0.50
-Date: Thu, 06 Aug 2026 22:55:16 -0400
-Message-ID: <875x1m8wrv.fsf@edera.io>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qmYxSwj6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xHd7QtC9NLbGtsqnDlEbhdXYCu9J+sDPlcqIEz3V7AtnGsTn3zLAja6alTYMo5W55/JAStoX/amP/VFGrwvtkxy4fwGNeqhlDEBFwQ55gmTPBZavQdnEV1oGpNzw0C2jyBul3ob4bBHXoZEKmjmZIZegGEou8lO5ncMtuxr9GKJw3tj6RCckuiPlUhOj0UilWoayo0UYxiWt0gnR/hanekZ/SiJZ+G908RHgOuMR5KQWXU/eYWrUbOYxi1hDwhCtf5C+UTGXUzWjWLkPjw8+xSCBNl9a3yl7AVWrh04yvTd4QbNVlzEPvO1/FNhE86Qu/6+8+r1HSBYytSKFphLiDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AR4znTdBFRR++Boh6IfuL07mvlMYJ3raLmK0T6iZO1c=;
+ b=mXo40C4QawpFfO72maRDIKPK+ZKfwBXZQqK1Pj8EqzXVcctwlL48JVfhSHzKEx46UgrvWAp/O3BGAMXYjoYuE1qRebgc5hDg+NS6FZ5Hom1DdgiVLbvVwBh1ClBWQQHS2bCwnMudfLEqrPI2cqn2cFiEaB8zH8+369k8gv6rjc06HQsdhrv70AejC11UMVv83fbh5S97g2hZSfyGHjyuNhTmWbL0z7vaBtGOGgot15+IHQmzGasVonblgNTvz3mLJqOXGov5qMYO/ZJUg0uyDIECcj6obYSIex7onuOuDFMHHQVnDOM+71ztPnZMaxu/weM0DDOd3eks7IpdJthdog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AR4znTdBFRR++Boh6IfuL07mvlMYJ3raLmK0T6iZO1c=;
+ b=qmYxSwj6z0F4pyfZoOUczTrpmgWgMqjKl2ZQvlGbGrM6/mwCqCtkamUidRzmMuocwsqVKD9rtTL7AnoMBflAKa7P+IxpTNcd/CXHWW9y6kwzIYffhhlDhyVekaWHZ9HkB0Im2G9PaHNsW3lQH+jA3+VvZVtAht8uhC/PB+fduRUqiLyZ31EsxAozltGVyvG0yVOpO9UO5lTclzCtJcH0pCDqraT3eOZiVDiTG+EOyZx2++OSEgVKZeOyVeZBgKOSW6M+C1TVyP5LyEHg5i9etoQmNt6Q9wPH5n2rFr6LvKRjDIdSZuFYe7aBRaZ9fAi8Hx6WhXSagf1w7PFk2uvrHg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com (2603:10b6:8:f2::16) by
+ DS0PR12MB8247.namprd12.prod.outlook.com (2603:10b6:8:f5::22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.292.21; Fri, 7 Aug 2026 05:05:39 +0000
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4]) by DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4%4]) with mapi id 15.21.0292.019; Fri, 7 Aug 2026
+ 05:05:39 +0000
+Message-ID: <9cc29a0b-6a9c-4b97-9cfd-f24ccad654fc@nvidia.com>
+Date: Fri, 7 Aug 2026 10:35:30 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 3/5] PCI: tegra: Add Tegra264 support
+To: Manivannan Sadhasivam <mani@kernel.org>, sashiko-reviews@lists.linux.dev,
+ Thierry Reding <thierry.reding@kernel.org>
+Cc: linux-pci@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260805-tegra264-pcie-v9-0-fa2ed7350ae1@nvidia.com>
+ <20260805-tegra264-pcie-v9-3-fa2ed7350ae1@nvidia.com>
+ <20260805121039.A79921F00A3A@smtp.kernel.org>
+ <sdpakcbeferzpxn6bf2acic4kfnfoaa6kgxmmi3asw7jqprekf@66cnwvuwk4ye>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+In-Reply-To: <sdpakcbeferzpxn6bf2acic4kfnfoaa6kgxmmi3asw7jqprekf@66cnwvuwk4ye>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN3PR01CA0019.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:97::10) To DS0PR12MB8245.namprd12.prod.outlook.com
+ (2603:10b6:8:f2::16)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR12MB8245:EE_|DS0PR12MB8247:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5cec9d60-d245-4ffe-086d-08def44185c4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|18002099003|22082099003|10067099003|4143699003|6133799003|5023799004|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	wm0laconbgVzSpBFHxsSJ17g9IsSi2M76lRHIdbs/Isd9RdIcFzC0PPDUTgrJZk84ej8pcCbPNaRBaY1LEPqS6qyACob5txwcO4qkweoxd+xZHs8Q4Y7p+dch4nF4P4ACzqmhW7AovlPFRK9RUmN2WfcA6V1T5yJ8CN1/pT6pyDjahSMh96n/ZoQetWw0rpGpMiX0XeuvFVH7e2YcugUZBdF/OiO/AeMuNETEjiR5OcSqsX2c9Spn8jt3u2h1EjQd04T0lyv9gr9LSp7anhEyd0mHCBShGDm5w/Rknamp6AAxVDQrbEgzrxGE0SqFTlbJ5JJWaAJGVA0VjJAOZWGaH7MVT7IckYgIR+CBj/8lQ2hYPYbqcXIZfgI4ZOQIEr7Y68nPO0JwyFt+moOSlWudEOCWyXCZLNVk8/k+mYs8TNtD+vkEMeOtp2/wseeIiQkHW2yGliPAu771G9DoVcVAeiL4fGUodYL4ShL+a95A4bmHrRzd1AO3VCThfXsUKxTXvuuXd2rlW+V7lsv5yyMxSSQi4FQ8ULD53R3VoogOR4looA8sOE32z4ivxIUsI8atzbjZvzYae0xA/IWahwJ6ZlBgTeLzGmPapcwp7ZZNateZL9/l6+5MoKMl4Gte6qR7D2u1cFqR90hmOC8/xBR8ih0rP7LT3KKpbCYiiOYDQs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB8245.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(22082099003)(10067099003)(4143699003)(6133799003)(5023799004)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cHhtc2hlMkJ5SW1UNXBLRi9jVHB6V0p6OGhkZkFuQzFENklQT2JuWUlva0F1?=
+ =?utf-8?B?ZDROMEt2d3hYMlJlU0MyaU1wd0JNL0ZBd3JrS2lCSnR2Y0poU1EyUEM1T3cr?=
+ =?utf-8?B?eDAwa1ZJNGpMRTVoNVMxZ0ZORVpuOXVrb054NktzQU42eUN5NVhvb1B3cnBm?=
+ =?utf-8?B?bEdpTlZKZUhtNG43bzI5NVhoTVIrMHlKUmxTRXo0bTFlc3JQQkUvYjI3WDVX?=
+ =?utf-8?B?Qmp0SGY3d1M4R1owL20vVjM0L1BMRWZtTFl2a3UwcWNlWGtOYVpubnJMaXhH?=
+ =?utf-8?B?MXlETDNPazRjTXlmY3JIUk05eTFCblgwVzc3eXAxOVFsc3ZoTXNEOUsyVFZR?=
+ =?utf-8?B?ZVBtNk40T3NJMFhWcXZrTTErYk5jckVSMElsVjA4L292WVMxSFh5VUJMV0tU?=
+ =?utf-8?B?V0pST2dFTkFhQ1FTbiswbDkwcVZsQmZWSHNzc1lpTWl6UnVVdHVYejVDQ2Jv?=
+ =?utf-8?B?b2g0WS92UHhuL2VZTDl2SXF5bE1IcHg2WVhKbUVRbStuY3JQM3NNTFN4cjFy?=
+ =?utf-8?B?b1F2M0VaOE1aZlBTUW02R21OQVRCUUg0US9hQVNXb0RYbzVicklNTEp5UUJC?=
+ =?utf-8?B?eVRDRjEwWktKNmFaMURuOTdkMzVreFFWTTFnbXFCZjgzemZMWjNPWElDTHV6?=
+ =?utf-8?B?eUJaWGtCem9oR0F0VThuQ3NzQzlMaEdraVhJTCtYaXQwZVRZald3YXBCVkoy?=
+ =?utf-8?B?U3VNY3A4aFNqNU00d2oyZjNlUFhTUG83dXJod1R0RVo0NEFpKzlhemdsVG9p?=
+ =?utf-8?B?QWdpRE0yeEJwZkpsZGg0VmVScDdscjZWcmRkcFZkN3VhdG04eVpFakh3N2hN?=
+ =?utf-8?B?SGg1YXVPK2gwZ1daUGg4ckZ4cDF1Q2xJWVlqRDVrcm1HV045aE0vKzRZVFJs?=
+ =?utf-8?B?Ni93YnR3WCs3UGZKN2VRbVB2UWsrMDNBdmE3M2pzbzlFUWszMkFNZmt5Wmwx?=
+ =?utf-8?B?V0lOZHFINHFvYWpZUkdsMTBmbXUvODlaOUlrSFZOUXNrNW4vTjl3NitpMkFz?=
+ =?utf-8?B?R2VTb2RjMjdNeUprUU1qbG01RmFDd1M2NzFvVFM4WnMvc2Q3NStXWWpSY05y?=
+ =?utf-8?B?am14L0lHUjFKazlOVkJiMFlHSzBtRk8wUGZvMGdtZUMvTGF4TXlYNmtKcWUr?=
+ =?utf-8?B?Tjd0Y2dYUW80MUViaSttWk80ZEFyR2duSmxSOFhxSmN2T3lqN2VMcW12dHFM?=
+ =?utf-8?B?YVMvUnk1bFpWTTJwMCtWZTVlVjVyTDdrKzZiM2dCSHBnNmNaWmtvaWoyUHJk?=
+ =?utf-8?B?UGJweElBVE53UnNieUJRdzdYNS9rcDMxcUhoNXJvcWZqdjFjb1U2MjRDUVZP?=
+ =?utf-8?B?Nks5OGdST1llalpjRS9xR21XdWhOU0RDUDZudGJDMTJqS0dVQ0Vwb240YWJE?=
+ =?utf-8?B?REFYSHZrMXVqT0tEWWk4bnE3RnQ4WVR1bllSc1JkZDNJWXNndzF5SXJTRllz?=
+ =?utf-8?B?VDNwOEsrZnplQWRDMDVLN0NtWFFRREl1TVBvcCtmRkQwU3Y5VFZuNXJMNGt3?=
+ =?utf-8?B?NlkrbnFXTktpQmRFczlObi95bUp4NHBLWEI4R1BHZVpwcGF0Q0VXdmhDT21z?=
+ =?utf-8?B?c1dCa2hqOGNOQ1ZCN0JaUHc3THljMUd6cWVRdFh6NlhQcmdIUFlsNDdRS2t6?=
+ =?utf-8?B?Y2M2QnQ4S29XYTBUNHVNa3JtbU95ZWJaNTJBMDFPUzdqRmlTMUdEQXNsSDJ2?=
+ =?utf-8?B?dUJURDVLWDdVWWpSL28vUVRQeXpkemo4YitIN2hhTU5CMmZ2cG9JemVyNU1r?=
+ =?utf-8?B?bXgrb09TYUVhUGNFbWcwNXo1YnZRRkRla2ZYSG84K29neERXOW41R1BQTXpu?=
+ =?utf-8?B?dkwrbzRQT21uZG42QkQ2dXpoblNBMkh6UDdTcjN6U0cwT0FQc21LR29HcHNE?=
+ =?utf-8?B?OU95Q29ndU02dTVTdjcwamJIRWNvaFNQblluVTZXTU1NMzRCK3RwS1Nwd2Nr?=
+ =?utf-8?B?d0djeTVKZDBqbWx4cGpMdmk3VDduT1RhMzM0dzRmVEpjQlJmeHg4MWlJa0xq?=
+ =?utf-8?B?cXVkTnFFK2JxT3d5V2R3ZWFnYzlaNGhBcERmQldDbmliK2JrcmV5ME50VytE?=
+ =?utf-8?B?OHA1RXB6eFoxZHdDUTNDaWpjbFRXOTRxM0VmcDI4V3lUS0tnaUVQL1ovSTZT?=
+ =?utf-8?B?bXFRUHlsS0VTMEl5a1EwUkMxODBBQkN3K3lrSUtqZnpPMHNoS1RreWpyS1ZL?=
+ =?utf-8?B?NFpFL1l5UjRHb3RDVjBxUVJNUmQraFNTSnRaZWNKY3dXc1FsaHFadUhFa2dr?=
+ =?utf-8?B?YTROQmFMZnp5VEtHTDErTFFLMkF4Y1oxZ0ozSDB3WkJMRWFCU2g1MTZuQlpR?=
+ =?utf-8?B?VlB4MEFwdG5aS3VCS0gxSit2UGZqWEdSQVUyV0pmak55RGREYU9KMHF4WlBL?=
+ =?utf-8?Q?JDRlZBNBaPOWmrkc=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5cec9d60-d245-4ffe-086d-08def44185c4
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8245.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 05:05:39.1380
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KJefGhblODupHrsDXD1kOZtdHsC1LDRJ3qnhN5b9b0z4JTLwovhEIG0moEjlyIrpP8rLVXP6aPQqlmzmvA80bw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8247
 
-sashiko-bot@kernel.org writes:
 
-> [Severity: High]
-> This is a pre-existing issue, but while enabling the DMA API for Xen PV
-> domains, does this leave guest-bound transfers vulnerable to data corrupt=
-ion
-> with SWIOTLB bounce buffers?
 
-Yep, preexisting issue, but not reachable via plain `virtio-vga`.
+On 05/08/26 9:21 pm, Manivannan Sadhasivam wrote:
+> On Wed, Aug 05, 2026 at 12:10:38PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] The driver incorrectly accesses the ECAM window via `pcie->cfg->win` to read the root port configuration space, causing an out-of-bounds heap read on 32-bit platforms.
+>> - [High] The driver incorrectly uses the Negotiated Link Width (NLW) to set interconnect bandwidth for hotplug-capable ports when the link is down, permanently setting it to 0.
+>> --
+>>
+>> --- Patch [3]: [PATCH v9 3/5] PCI: tegra: Add Tegra264 support ---
+>> commit af63006f768e2991e49a48de9855ea58d20662ed
+>> Author: Thierry Reding <treding@nvidia.com>
+>>
+>>      PCI: tegra: Add Tegra264 support
+>>      
+>>      Add a driver for the PCIe controller found on NVIDIA Tegra264 SoCs. The
+>>      driver is very small, with its main purpose being to set up the address
+>>      translation registers and then creating a standard PCI host using ECAM.
+>>
+>>> diff --git a/drivers/pci/controller/pcie-tegra264.c b/drivers/pci/controller/pcie-tegra264.c
+>>> new file mode 100644
+>>> index 0000000000000..e0c5b9d0d20bf
+>>> --- /dev/null
+>>> +++ b/drivers/pci/controller/pcie-tegra264.c
+>> [ ... ]
+>>> +static void tegra264_pcie_icc_set(struct tegra264_pcie *pcie)
+>>> +{
+>>> +	u32 value, speed, width;
+>>> +	int err;
+>>> +
+>>> +	value = readw(pcie->ecam + XTL_RC_PCIE_CFG_LINK_STATUS);
+>>> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, value);
+>>> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, value);
+>>> +
+>>> +	value = Mbps_to_icc(width * PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]));
+>>
+>> [Severity: High]
+>> Will this permanently set the interconnect bandwidth to 0 for hotplug-capable
+>> ports if the link is initially down?
+>>
+>> When the link is down, the Negotiated Link Width (NLW) is 0, which means
+>> the bandwidth value will be calculated as 0. Since the generic pciehp driver
+>> handles hotplug but doesn't know about this driver's specific interconnect
+>> bandwidth requirements, it appears there is no way to dynamically increase
+>> the bandwidth later when a device is actually inserted.
+>>
+> 
+> I think this is a valid concern. If the ICC BW is set to 0, then the hotplugged
+> device won't work properly.
+> 
+>> Should this read the Maximum Link Width and Speed from PCI_EXP_LNKCAP
+>> instead of PCI_EXP_LNKSTA to properly reserve bandwidth for a hotplug slot?
+>>
+> 
+> If possible, BW should be updated once the device is added, but that requires
+> detecting Link Up using some custom IRQ if available.
+> 
+> - Mani
+> 
 
-Only reachable, AFAICT, if `has_virgl_3d` is enabled. The missing `_for_cpu=
-`` sync
-is pre-existing since 8f44ca223345 and pretty orthogonal to this change.
+Custom IRQ support for link up and down events is not available in this 
+IP. For now, we have two options:
 
-A correct fix most likely belongs in the completion path rather than at sub=
-mission,
-anyway, so I=E2=80=99m not sure it makes a lot of sense to include in this =
-patch.
+1. Don’t set ICC BW for the hot-plug controller.
 
-Happy to do that in a followup/separate patch, if requested.
+2. Set ICC BW according to the Link Cap settings when the link is down 
+and it is a hot-plug controller. When the link is up, use the Link 
+Status settings.
 
-Ben
+We can get changes in link speed/width from the BW notification status. 
+IIRC, the BW notification port driver has been reverted. If it comes 
+back, we can consider integrating the ICC BW set logic into it instead 
+of implementing it in each controller driver.
+
+-- 
+nvpublic
+
