@@ -1,167 +1,96 @@
-Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34686369D42
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 17:59:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786125541; cv=pass; b=NoxDYVcDumtzpngeN61RrDu4HwT0DJ+EiS2+uDscw2pMRF92rnpB9EpJ/1D+KEUkO784WrUKrEpl+LsWjpVO2CFlPCLRGzKimh/7z6mU6eRBxBjTSvMe4Cr+y/wkJfutKOMVcHo9MGxQcAUyyb7SVS5RWr0LtfWZnoaY9eN7amI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786125541; c=relaxed/simple;
-	bh=KifaXFQu9tF6aWbmCs03ZjXqJQ4xMHpOYPZarNrPG7I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nI1bnDcbZ2PZAYxHS1Xf82Wl9A4Kfno+IDk5fc4I0qVdUhXkB8YzEhD5QuIwASTfK4iu0GDrXzFbUH8AZ5vmw4xyVU0wzon9zUWhvI/dyGeNqFEmQNJG7iHywBi9KoEvUTlwlIDeDkevoHzJgYNDElvVoBPU0nnx6fxDboTHPGI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=OqvPtaZm; arc=pass smtp.client-ip=136.143.188.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9688B1C5D59
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 18:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786127960; cv=none; b=XPxAS8n1P9qfMru5V9TMwDCZl9gI2BoMXSHfEq7ut8jCizQnFSwWNynUjddE297jAhM9EJtGtSj2xs4B3S+XuEYZJez59QeLhn0EvTbSjMZpm5+sXOh+Pt4po2/EHzONuHxG0Vq6J/fXMbCNTmpesL7WXzRHVBePR+YRkpIantU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786127960; c=relaxed/simple;
+	bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hYGbPlv7Zjq5JukOfB8JP9wki8XrcDBxMtIaWX/heiKgJcSGSvXdH/a7Q9VU0uXXDp3LQ68ezB6VuF5WuLRvnnOZdfivYFwAioO4wIkX9IoG9XM/W/SMPvcqpggMi9qB/0RX5hF+i30hEh3YfxDPk90nciSdD8XfPPEkmniyAOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XdpD81hB; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="OqvPtaZm"
-ARC-Seal: i=1; a=rsa-sha256; t=1786125530; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=QzJSbKGvx2PDYsGwY5DrXb4Mu5zyFa0nzmJ/Wq8DMJ1h4ZFn7ubt7DZqnidBwzz2EH3AuODm0AxnedWChB+KAhadpOrO1jeKje8pMzuhmoTN5BZFAGTSpOGHZWUbURN1st9pXqcpWcQ+ylBW/zx2HqS8rLvyx8fThC8hAGy357A=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1786125530; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=5X66dM6QHHWxY6bBMRQTS1JmqGd1+5fST36EM3XypzI=; 
-	b=Tt/Ww/goqTmfvvPIWAwwx+SWH2heRAPbT4OWC0xgfdP4Gohyd51tUICycexLDBqLEm/g6ZmEU6eMr7LgRUdQJ+61Yv0vAn4RW1T4ez1fJzUQrjerDC3XGZuQCc1RwgCJwWT4xTeYw/ZaDaqBFUu2NgTqOVRfcvU3E8c82dKtLRc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1786125530;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=5X66dM6QHHWxY6bBMRQTS1JmqGd1+5fST36EM3XypzI=;
-	b=OqvPtaZmlVYUECV2meelrS5ctdP+Kzaf9EUb7/3lHk+5hYJHMC1uZoq3dh69kfhQ
-	KIOhLQ6keuYnJFuW1ndRmRcvcilurdPqHur6ZDM9494YEcnEREcag7gKS96M0wfLtbY
-	htGARHm2QrMDSqN3EICpalkv51x2Xxy4U9o77Zmo=
-Received: by mx.zohomail.com with SMTPS id 1786125527192874.9730414852983;
-	Fri, 7 Aug 2026 10:58:47 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id E4007180895; Fri, 07 Aug 2026 19:58:43 +0200 (CEST)
-Date: Fri, 7 Aug 2026 19:58:43 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Rob Herring <robh@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, kernel@collabora.com
-Subject: Re: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix
- sound DAI cells
-Message-ID: <anYanfuZQT4Pz6lC@venus>
-References: <20260806-synopsys-dw-dp-improvements-v11-0-0d508505f383@collabora.com>
- <20260806-synopsys-dw-dp-improvements-v11-20-0d508505f383@collabora.com>
- <20260806174000.668AB1F000E9@smtp.kernel.org>
- <20260807155140.GA882294-robh@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XdpD81hB"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2cc891373e0so46158385ad.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 11:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786127959; x=1786732759; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
+        b=XdpD81hBz4T/PJ15OzYWC4mO3AJdYlYiOcyuZbg9Mq+Ispk9r6u+i/35JWpbWlMzpC
+         YPOaJ5/xeFuiopnM+o3OqHFOnLeWKxbRHEmhcaL7TSQXFFpqhduKq2fQ0cTAXQPqlOog
+         YqgFpme2pVd4wk6MHEPAMinYqfkx5IAF8vJ6gOtiIaGj38FCtMw6N+fowrnSScg+w/dP
+         MXJlUvLRn/xGewEHMqa8WYPpfymGAXj/Rwr6L8xShNFvFFn2k1RRuTNy8qaAIBBFkNpF
+         +1hdbqFTn6uxnJV1Epa1Ihvc3g4yG60jRbB7RHYt2jltyjF6HUCAcVvxbHjKB27EyoIX
+         pdXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786127959; x=1786732759;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1w3Nuu7MEgSLxDphoqxOiHIes6lwaCTQWCmIXRsJ1JI=;
+        b=rec3J7D3NOVumg9c8DBbplu/SEkDbH73Pc6N4CpaW3uOAZHzqdzbPPT/LnDo8gsb91
+         3NajLQrmngJXwl9UbvpS/TQgfNJar2wdJWs41/pgoKDrAPd6PpOzyf0Q6ovbhAopSbQx
+         +XT0FqFJxlpequoiC+mDQUvaqsHK/XceBKGPnl/LSet6liY62XUGrxO5qLru3aYGqxcG
+         ne1FpEwR0YstN9fTDTx3WZDqEwZybeJ1ftrkxcqheGY72TMk0EWfuyWgBCWQGWjBjSGB
+         lWQx5lX4ERjBG0xCgAmndZYyuqDPNrbcirMgkZgYJupBXO7IrDTVguEstiUboMmiGQKJ
+         6+LQ==
+X-Forwarded-Encrypted: i=1; AHgh+RomQE29Rr5wnYWDscxqNB88QBlhlHsC4vYk6eqlD6354yO/hQ65U/X7btWYM533eV0iPCPNoHRuKddBZ1/gF28=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzv+nX3TqIB+76bokez+bSD5KVh3FxpTl6BUZytWEPjBfF17U4l
+	1vcSTALK0qGU9ZSSGqly4xQlyghNqiamu5XhmVALa1iCBUXYmyRBLIWE
+X-Gm-Gg: AR+sD11dXP6zIC4NW7ALVXyYeq0tK6UwbofatxSVWzXDNUXq0G8MTGFeVWuYFRTNQHD
+	GcFn4xdWItGKoKYtlyF+u9IBW3n6LA4agZOsase5uP58ovCIhsnfGtFADm+7dSbBkR/SMe/ygqI
+	FtlqIbekitaWp04o6cPcZqTy0DutwCWcG9F8XWUELu/OwlZjR4+m+R9hY7PVAcN9HDs0ovJgNQF
+	loguocrtrpzBak7/Uwmkm8BH/ufIWUk8scWCRyV+rczt3/7XdChe47l2eAStLJa9LjhWdFN9MKM
+	4/ieVHHGuMcmVDXeG+l5NOe/kIpFfsKZm7TkZMZ5s+QT8cQed28ezc1WXXisc1EUskVok6Cfbb1
+	6+offsD/NY0LzGaUBiaoL4Qm22aPIDVMYP37Z+JeXfbRuFGW6c9rbrC1aswvl+DUOZYmldYCee9
+	r49EBIqoMf2IAizZOzkz42KxHV1ib2DjEuX4rikScvbuU+4am6xFWBS3N+ySCZnzrGaNi5WfVKv
+	mrcK/VcSpj+ubW2jib762iy+VB8YXkAWcpphUPL36fq1ZpWlO2ifdGWw+Rd
+X-Received: by 2002:a05:6a21:e58b:b0:3a3:a9c4:3d60 with SMTP id adf61e73a8af0-3cb85f5c2b0mr30739753637.27.1786127958832;
+        Fri, 07 Aug 2026 11:39:18 -0700 (PDT)
+Received: from bloom.localdomain ([2604:3d09:178e:e100::6868])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f37469esm1155243a12.23.2026.08.07.11.39.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 11:39:18 -0700 (PDT)
+From: Ivy Lopez <skunkolee@gmail.com>
+To: sashiko-bot@kernel.org,
+	skunkolee@gmail.com
+Cc: linux-scsi@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] scsi: arcmsr: fix NULL deref on dma_alloc_coherent() failure in arcmsr_alloc_xor_buffer()
+Date: Fri,  7 Aug 2026 12:39:04 -0600
+Message-ID: <20260807183904.73546-1-skunkolee@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260807055056.9F05F1F000E9@smtp.kernel.org>
+References: <20260807055056.9F05F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xvnis4rjdghlkh7f"
-Content-Disposition: inline
-In-Reply-To: <20260807155140.GA882294-robh@kernel.org>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/286.110.97
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
+Thanks for the review.
 
---xvnis4rjdghlkh7f
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix
- sound DAI cells
-MIME-Version: 1.0
+Now that I look at it, the commit message's claim about a reachable
+secondary NULL deref via arcmsr_free_ccb_pool()/arcmsr_iop_confirm()
+doesn't hold up: arcmsr_alloc_ccb_pool() failing sends arcmsr_probe()
+straight to unmap_pci_region, bypassing the free_ccb_pool label
+entirely, so that path isn't reachable here. The acb->xor_mega = 0
+line is still harmless defensively, but my stated justification for
+it was wrong. My apologies for the inaccuracy!
 
-Hello Rob,
+Separately, thanks for flagging the pre-existing DMA leak of
+acb->dma_coherent (and the IO queue) when arcmsr_alloc_xor_buffer()
+fails inside arcmsr_alloc_ccb_pool()! I'll follow up with a separate
+patch addressing that.
 
-On Fri, Aug 07, 2026 at 10:51:40AM -0500, Rob Herring wrote:
-> On Thu, Aug 06, 2026 at 05:39:59PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] Device Tree schema validation breakage for existing `rockchi=
-p,rk3588-dp` configurations.
-> > --
-> >=20
-> > --- Patch [20]: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp=
-: Fix sound DAI cells ---
-> > commit 2c15bbfcf4dec184872abdf4c2e06063a52d1e2f
-> > Author: Sebastian Reichel <sebastian.reichel@collabora.com>
-> >=20
-> > dt-bindings: display: rockchip: dw-dp: Fix sound DAI cells
-> >=20
-> > The RK3588 and RK3576 DesignWare DisplayPort controllers both have two
-> > possible DAI interfaces: I2S and S/PDIF. Thus an argument is needed to
-> > to select the right interface.
-> >=20
-> > > diff --git a/Documentation/devicetree/bindings/display/rockchip/rockc=
-hip,dw-dp.yaml b/Documentation/devicetree/bindings/display/rockchip/rockchi=
-p,dw-dp.yaml
-> > > index 2b0d9e23e9432..c4f8959dd65da 100644
-> > > --- a/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-=
-dp.yaml
-> > > +++ b/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-=
-dp.yaml
-> > [ ... ]
-> > > @@ -83,7 +83,8 @@ properties:
-> > >      maxItems: 1
-> > > =20
-> > >    "#sound-dai-cells":
-> > > -    const: 0
-> > > +    const: 1
-> > > +    description: 0 for I2S, 1 for S/PDIF
-> >=20
-> > [Severity: Medium]
-> > Will this strict constraint update cause make dtbs_check validation to
-> > fail for existing in-tree device trees?
-> >=20
-> > The mainline arch/arm64/boot/dts/rockchip/rk3588-base.dtsi still defines
-> > #sound-dai-cells =3D <0>; for DP nodes.
-> >=20
-> > While the commit message notes this breakage is intentional and will be
-> > fixed up separately, could changing the schema without the accompanying
-> > DTS updates cause automated CI validation failures and break bisectabil=
-ity?
->=20
-> Yes, and I don't love the intermittent warnings introduced. As long as=20
-> the warnings are on a downward trajectory, I won't notice...
->=20
-> Not saying you have to do something here, but this will get more=20
-> strict...
-
-I don't like it either, but it's the best I came up with. If DT is
-updated first, there will be a warning for the DAI cells being 1
-instead of 0. To fully avoid the warning I see these options:
-
-1. update DT binding and DTS in a single patch
-2. allow 0 and 1 in the binding with 0 not really working
-
-IMHO neither of those are great either, so I ended up with the
-series like this. Regarding the downward trajectory: RK3588 should
-be completley free of warnings in dtbs_check at the moment.
-
-Greetings,
-
--- Sebastian
-
---xvnis4rjdghlkh7f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmp2HMwACgkQ2O7X88g7
-+pp+Ig//YTasKYth8R0rZG54e32jecsEgJeOQXkU9uTt+XNoLMdVLNAOSz2O1Vz0
-T0JwqtSO2hVj6tXqBQ4ZQmtE8FuPpKuUymgJtnOy2w9xSZP2aZzxjbZ6keQw9OEn
-4bifhadn1iLTmRrYHoA9IwCn7rSqfgyS5oebPFENqNEKIJ+b9rr+UF6OpxPcPbk5
-Z9hYf+NCddXja9C7OWTOYzyVMxaZ30coVr6jDidgrpZcZogXC5SsO7banHrQ71LE
-0nQ85i59W1paV/cYNlK6hU5s2Iw+kAL2JyQqqmE6buK5T2ZPYLNpmoom7bI9U65m
-CWKFUiHCWJDFB5Sor02KfokvWB9dOVS1TnVj1wxMyBjkAIoIJSd+h0J9RCDnok/d
-Cnzd7x1pR7XTcux+w+AE+bJ4w/YQRxYka/E33ntZRXpKXQO8BRjO6p4m0/1a4KqY
-0ChKQGMlDatl/oNhAXLRth/tCOGanMjr6bNXVh/0MkgtjGpRb2sA+vWd0kHNF3DJ
-nHZwYR+1kntUZpvT5MdIaOpJrFQ83J0xEeQ+uUyFfOjzlSItwr0oUAgnQIdltEwc
-cQ+OdwGr8wZm6s/AaPlEtakR7xUiofEUxhQMshASWhwRHL0nljCVXf36/vX7Sn03
-JTKhNxI08uW0Fm4b2DNyAEa4dZMGDhP/rUl0SutKeYVeutCZi8A=
-=kX1F
------END PGP SIGNATURE-----
-
---xvnis4rjdghlkh7f--
+ivy
