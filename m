@@ -1,96 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C275305699;
-	Fri,  7 Aug 2026 15:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723A0318ECD;
+	Fri,  7 Aug 2026 15:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117902; cv=none; b=pNBeQr3LODYSasFZVjfvu6/41orC2yXM3lhlXnyAgZm8X712wvDQkplHLHhyASMU+bwQkcj2+Qsu8TxpIelh3BQS3+vTpZvzpwlL5XxV9HyXa5e8RnMJ52Ayt3x3c4wR2CLvbL5Wi+mmLbJmlXr9CQANP3aLQm3vn9cwNWZnhxs=
+	t=1786118282; cv=none; b=ZdISF+31NgVesm98zk6hOOlJcuzu0CTzDbxmNp6VPllA8hbkl3WhzG3VriHAnPVTcR7rXvnXDeW/zxuMn+mWZMQCRcLHIqy6Hbcz9HfOpjTvQWqoU20n20FtXZC4TRqw83MmGZOVKhLT7xmdYaR/rkElMZeJPybrxXonCsAwvME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117902; c=relaxed/simple;
-	bh=jOIJgFZhtrCN8yQUck+4cseH9Q2Y1bR+woS8n5Mtn9I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k17alQuJ6ecULOonGtn70tzr3YNEAK+dTR6saEkxMgU+w1LOtOc4TkBEQZua9i2Dm0GycIR9L3k8/O2gLWqLRsBb/xcwk2w17rw0svuvnzb9knrskMkF/dODcb0zTl4668qRrtS8RESAJ9k2NNbTBgNEVbNI8682YafpjZQSmFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aYLkVVQ7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786118282; c=relaxed/simple;
+	bh=yOdMXiznmWMdNlH7BcMN3yp+3ovM4HFNUQAl72cgHW0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=p0J21wVAlHkMCENqwEMpMbIAg3VpWlLX7t+b2DNc7aGlW0V8OqRDYbuv3bzr57htANdiqXuOmDNEoGvFZQ0vp2+Fh2bJQCC6nEKpQrTSLUjRS3r2gYaTEXN9EqFi7Q+ySd3gwU4WwSZgpd2pPcMjwVL37QD/6/Pmuzf4Z29up74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J6UKsoGK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aYLkVVQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80871F000E9;
-	Fri,  7 Aug 2026 15:51:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J6UKsoGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5825A1F000E9;
+	Fri,  7 Aug 2026 15:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786117901;
-	bh=gIpqIEJ1hpxZU+jdGL2zT4kDorAYvLQD53HhekKbuRk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=aYLkVVQ7c0l2WVoIIpbvPYPvfyKYPZRBAn185d7bbCQc6iaeaEep5onjdOqi8tPvl
-	 xSrATgH2XtMDnM5t2uasfEsrv0pOSnsQaCvo28W1bsjNLr47BLOPDB1C8jJ+JAzHIa
-	 Xb4cQObD0owIsW1Ewqp7lpSTIdI4NBWaoasK0AJEtgZOTUUlRDR14D3y33AMXjwx+V
-	 Q2S82vr+8GfZTXPTxbKiRw+KTWjjzt0IPdfJvSbwxtrUSu71dsXqETLnTj1cjGnUqc
-	 X/lLf6b5AFd4GODQCS/pJDF+RRyN7sSig8+zHrdLcw9Ml/XC59OlNWMci9E4IXEkTN
-	 2qbZR2d1zwhwA==
-Date: Fri, 7 Aug 2026 10:51:40 -0500
-From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
-	conor+dt@kernel.org, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix
- sound DAI cells
-Message-ID: <20260807155140.GA882294-robh@kernel.org>
-References: <20260806-synopsys-dw-dp-improvements-v11-0-0d508505f383@collabora.com>
- <20260806-synopsys-dw-dp-improvements-v11-20-0d508505f383@collabora.com>
- <20260806174000.668AB1F000E9@smtp.kernel.org>
+	s=k20260515; t=1786118281;
+	bh=H9yHLZZwqi/1FJ13kcoLlPaPvDMFshF3bFHXxJWeoYM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=J6UKsoGKstA84e+c0qs2R8K8N6MYLVo/ma7x4zN2iCPT0xIVTkXTn7d5DDlEqKSqL
+	 898E/l+cR+vrnVfMVH6cWzxqBfoqmI2qiit3MJsn7v25MZinPp7rviMjOAMlii78RB
+	 p2ktstzxZtkQ6JDgrPIIiX73CF7hKSrDP30EDaP+emO0xAFn4E/D1Sk0r60jFso426
+	 80W6Q5yv5+tZy3A8bdrEgiCQzS1ImfhMHLXRilO95VuOhsV8HezLgMDMdNK/ccOkeZ
+	 1VOuMbcEAUtYgA7Sy9eaL/XRIvHROaOSgqvopvTOH8nPEfNRYhXe5UXgAuW44GB+6d
+	 3VCpsJf6feIig==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wsMxL-0000000DRIq-153k;
+	Fri, 07 Aug 2026 15:57:59 +0000
+Date: Fri, 07 Aug 2026 16:59:21 +0100
+Message-ID: <87fr0pq5uu.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v2 2/4] KVM: arm64: vgic: Don't leak the SPI array when init is retried
+In-Reply-To: <CA+EHjTwVKkAwWUeMrF_m2-35kyhESqAezOKJy-Pj=vA3qE5Bjw@mail.gmail.com>
+References: <20260807104102.2410744-1-fuad.tabba@linux.dev>
+	<20260807104102.2410744-3-fuad.tabba@linux.dev>
+	<20260807105558.73D701F000E9@smtp.kernel.org>
+	<CA+EHjTwVKkAwWUeMrF_m2-35kyhESqAezOKJy-Pj=vA3qE5Bjw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260806174000.668AB1F000E9@smtp.kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Aug 06, 2026 at 05:39:59PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Device Tree schema validation breakage for existing `rockchip,rk3588-dp` configurations.
-> --
+On Fri, 07 Aug 2026 13:15:52 +0100,
+Fuad Tabba <fuad.tabba@linux.dev> wrote:
 > 
-> --- Patch [20]: [PATCH v11 20/21] dt-bindings: display: rockchip: dw-dp: Fix sound DAI cells ---
-> commit 2c15bbfcf4dec184872abdf4c2e06063a52d1e2f
-> Author: Sebastian Reichel <sebastian.reichel@collabora.com>
+> On Fri, 7 Aug 2026 at 11:56, <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> dt-bindings: display: rockchip: dw-dp: Fix sound DAI cells
+> No, thank _you_ Sashiko!
 > 
-> The RK3588 and RK3576 DesignWare DisplayPort controllers both have two
-> possible DAI interfaces: I2S and S/PDIF. Thus an argument is needed to
-> to select the right interface.
+> >
+> > Pre-existing issues:
+> > - [High] If `vgic_init()` fails after `vgic_v4_init()` succeeds, the VPE array is left allocated but `vgic_initialized` remains false. Userspace can then create additional VCPUs and retry `vgic_init()`. The second `vgic_v4_init()` returns early because the VPE array is already allocated, leaving the new VCPUs without initialized VPE IRQs.
+> ...
+> > When a new VCPU runs, `vgic_v4_load()` calls `irq_set_affinity()` with an uninitialized IRQ (0), which fails and triggers a host `WARN_ON`, causing a host-side denial of service.
 > 
-> > diff --git a/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-dp.yaml b/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-dp.yaml
-> > index 2b0d9e23e9432..c4f8959dd65da 100644
-> > --- a/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-dp.yaml
-> > +++ b/Documentation/devicetree/bindings/display/rockchip/rockchip,dw-dp.yaml
-> [ ... ]
-> > @@ -83,7 +83,8 @@ properties:
-> >      maxItems: 1
-> >  
-> >    "#sound-dai-cells":
-> > -    const: 0
-> > +    const: 1
-> > +    description: 0 for I2S, 1 for S/PDIF
+> This is a separate fix. But you're right about the state.
+> kvm_arch_vcpu_precreate() only refuses vCPUs once vgic_initialized()
+> is true, so the retry admits one the VPE array does not cover.
 > 
-> [Severity: Medium]
-> Will this strict constraint update cause make dtbs_check validation to
-> fail for existing in-tree device trees?
+> I don't think a VMM can drive it. kvm_vgic_setup_default_irq_routing()
+> is the only failure after vgic_v4_init(), and it builds its own
+> routing entries, so nothing short of a real -ENOMEM fails it.
 > 
-> The mainline arch/arm64/boot/dts/rockchip/rk3588-base.dtsi still defines
-> #sound-dai-cells = <0>; for DP nodes.
+> The fix I have in mind keeps vgic_v4_init() idempotent, as this patch
+> is: return early only while the vCPU count is unchanged, rebuild when
+> it grew. That needs its_free_vcpu_irqs() to clear vm->domain and
+> vm->fwnode first, which it does not today, so its_alloc_vcpu_irqs()
+> can reach its error path with a domain it has already removed.
 > 
-> While the commit message notes this breakage is intentional and will be
-> fixed up separately, could changing the schema without the accompanying
-> DTS updates cause automated CI validation failures and break bisectability?
+> Let me think about it some more and I'll send something once others
+> have had a chance to digest this as well.
 
-Yes, and I don't love the intermittent warnings introduced. As long as 
-the warnings are on a downward trajectory, I won't notice...
+I don't think we should grow anything opportunistically.
 
-Not saying you have to do something here, but this will get more 
-strict...
+The GICv4 code expects the number of vcpus to be fixed when first
+initialised, and if we must fail it one way or another, then
+everything should be torn down and reinitialised from scratch.
 
-Rob
+I really don't want to have to think about the intermediate state.
+
+Thanks,
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
