@@ -1,240 +1,249 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7532E286417
-	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 20:33:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3AB4B04AB
+	for <sashiko-reviews@lists.linux.dev>; Fri,  7 Aug 2026 20:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786134825; cv=none; b=CUW/L3A/fBZBR1gtWBelTVoDgAW5ajDQRDuK7GytFlIDjcyBRaLObnyaePGDnARZPXfAE1uRZSrK6Z1vBj47m2CzN3IuZs6udq4/BHyeKQzN3xVKzkICoJcVE/+SQVmfiAlLYgfbEfcjYwWQR+HOmZOJHktKdTO8KY5UbgND0NI=
+	t=1786136300; cv=none; b=YOvwAFaedyrHXWwdeinTF1jq0bZNgG+Bgc+vhOFR+K0BRdFZdzkTLBwhbhgT+Umpz2wgUfB+iM5F5I4c9yRvN3kwfxc2uStrMvGsXIwMS09X93Is8chLXQ8EVeVWHZMGt/0LrHs8lux9fwrF1gasu4MjWCMYQ/WCT1nzTOj/adM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786134825; c=relaxed/simple;
-	bh=N54qbveZaZaWvgeVPjQfBKOXXxxCrWiwcT07N4okEVA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=ro+nN8yyzUeCc9JUukEzpNSkA7PmLVjYcudylwmASbNUR2zlY72pI/2lxclNz5JegrQIBI6amsX9yK33fAtGYhsYudcCSIIW3tkCZbo0a1ha3op3xkDQlnP6wHcwnafzwxhnKgPWipbHiDpb5glfrGmUxiUVS1g19R5sOYl0emI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ekM2idDE; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786136300; c=relaxed/simple;
+	bh=QD8HDsLorTOwKnowHDnWqEIpmV2BBsi6qi+p+7WJzwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BEvy6X6ZwAp3eTbDxnXyR1/h+Mp8VC6ShfOJQ/BVmrCOu5cyjEdWG5IFxc0GiNeVXFidDcktsvIIZPZJsezY0JU/lUbNhw9O5m/6EF0yt6FDchsYj7n0E5Os0Pyp9Pf3hIX+riDS3Jzdv5q1x+xfLlIK0qVMgHFhxQS24a34VT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=GEBf3TfM; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ekM2idDE"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49554ebb87dso34710195e9.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 13:33:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="GEBf3TfM"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-930c0f9c1b1so240186585a.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 07 Aug 2026 13:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786134822; x=1786739622; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=De06VEaOuiWd1BlZEWn4N+f8YiSt9PtjH7YLJZB3hj4=;
-        b=ekM2idDEXDIeqez5DtThHTbdtzHk6nr/MdrK9KiW3Jrzb/B/mCOIIFOiXvgl+QzcQj
-         +iw9HuSHCQjwAJdviDRVfBjGSLGsPrnbyMMsSyVmH77SB5oMGWh+CKCXDBDX3ZqBlKZG
-         7dJJalmqp2bdDLpR+PUBYROnMdld3hiuO4D9aIoMBgbF8vEYTerafr0hvI/Q4qVxQLf0
-         u6F2Y68I/UpOzsjRG7zIppt50L3ESlsyIxpJEaXbs6vdgKlUZL4RZuPUAXLYgYTCJHg7
-         NisvowTUDCqsRT+l+nZTybiZeY9WX3U8k++UDIHp86+pu4hAXdBWoxahVtKHQIphoXe/
-         Fl+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786134822; x=1786739622;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1786136297; x=1786741097; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=De06VEaOuiWd1BlZEWn4N+f8YiSt9PtjH7YLJZB3hj4=;
-        b=soyVRcCiT3XC64O7z1bpvXya84wC4fPigJX+81Pn1VzohpSI/6VbwDSWRKM5f5Rs2X
-         88kThlAs/KOjv+WNO5Vs3CZa/T5KPfwrAj9Hke1hOq7T0lwdXa59XNGEuUGBUZiJmIzT
-         Cbsgp/0mF2s3+XPjIXDQglCaChFIeJH584rtplWs2hAudVq+qeYbLsuTT4nIKKcX2fh5
-         n5kNdlDdWlOohrpGSAajiogZDJ8fupzdepAqSBSLewIY7rGX859tOtJMRS4VZlzsfXMK
-         y0MCqMBzaEmz5UEYFCm1hYfes52L4V/pub9PJcJBJmB6EDfzcRCh+EDADnHtNATLdn7C
-         Pgsg==
-X-Gm-Message-State: AOJu0Yz5F9qMuVLnxLNgMV+VZ4LOHAYVjTEzpBibbxnelKWpfBr+IkYZ
-	aa1qGPhcGfxcIijbfj2UCQmRnkEnZHsyUF8fUxHL1HKaxEI5uQTG6pei+I5MZg==
-X-Gm-Gg: AR+sD11A5r2qlQ1NRq91izATAkQVWFAYdQGsZa5iWELorXUhSX6EUahH7ZaP3qQOPhJ
-	IcF7ZaFnn96dobLLL6CzjNBGL1xmgEMefSLG3u9F3JwWqFPs7LHir/QmeuGKmdhg08rGLDUQHi3
-	/qHRozUpPGrG0NUjFE41S+FEkdyQlSff6ErlLL911XBUQQpSOhI9rIdxaA0RlL8Dh9pUfZYDfcP
-	ond+W/phqq1e1yXJf2hIrGAUtPYQ9SWnGscrQzJj9+BbVQZnZ8ywBIqMN6YyQBSOi8ZhRGMgkZa
-	P1B4F4zYUENfwR//sjLdPPagBTLHa+bsl+l0xcObM3Vwq2DJarpkUFAVWGbsaJJVKj2tfM/qEE2
-	dyf8iSdnEUBHU77nLsO3r7qn0shCdUzRYohnJ7VpVe8rPCEEtzj4cTRTd9fS+kEai30T97v8ba2
-	UCihAzjJE667sBJdoFAwHdRupe8ANqy7ADsY9V0jQholWWd+3lSOmSnQpCa8j2LymY8CA28+0HH
-	mr5rqrZrSmbB88=
-X-Received: by 2002:a05:600c:3b88:b0:499:52ab:a50c with SMTP id 5b1f17b1804b1-4996194e24bmr35256175e9.1.1786134821476;
-        Fri, 07 Aug 2026 13:33:41 -0700 (PDT)
-Received: from localhost ([2001:4bb8:13c:7c2e:e257:63be:6e31:db7d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995c7b4499sm65549785e9.3.2026.08.07.13.33.40
+        bh=pd1I5KUa8f+9TeyWUaIVVVrtIGXgdlxuJMrpjZwfZjM=;
+        b=GEBf3TfMjjr+MnuJbjumsMlCv2qj8gFSHIixoiOLzYIKHpYSyzAuc1zVbaCbLRWxkn
+         RYIziyN74DHMmTKAZfH/ZuycNLHoesY6dC4a+5iqY88sd8uvESIQBsdSzBol5v/kelwm
+         MLBeMIvk7M8gbHA0UpzjNiN9ZY7dWji5UKmXiUhZJk36xkk+HVehQTs5fC410/fbFLlP
+         Le0E5jpht3cGkT9/s3n8Ik6cSPLlOA8Ouf3osJ9Vp/7ZyZthCsIY/IY2+sgZj43qUjvT
+         4RvO9eEE28C7cLW0MBLwTJxo7p7IyIXnfExn4IbK/V06+S5qLHb+ov4Sx8bk7Ly1k7vS
+         Lz/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786136297; x=1786741097;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pd1I5KUa8f+9TeyWUaIVVVrtIGXgdlxuJMrpjZwfZjM=;
+        b=XNT2ENGqD4Gv4Fn0jjsKQop1tIPt/v5S4pEnVS28rEsYEijNH/7CpiBS/tTgy7cZko
+         oBULwn0ivR2oy+Mf0ZooH3/zuSO9xD62gqNvk9EIefQZUiEcQFdEHRryhGS5LGzueQO+
+         bZkp9g5Lvv1vRz8L1rFxXsG+7tr/zyJikMMc27Z2TlV8HFbizjoj4N1zoPWb+mITEQtn
+         DrG+iViioK/C/3sfXE8Dsv6se/O/fasjE4LHju8/Lj3Rsipe7mzb6Xqo0jltqz38hY46
+         4fUgYJqV4T50qL4OeFMJz4Jtg846Jhjc9OfEV1580UPHoJ0i2+v2tXnvluVgqjHMRj+Z
+         tJhg==
+X-Gm-Message-State: AOJu0Yxtz6GCzG8E7hU8hpVUQwI+FMZCRzaxW7d/Q6HYR8TqPboUVB1G
+	cx+4mYrC8cTOFLPkaHtqycH/2jwwt3bcInjfvbNXRFJKZugoAEPmqjBlEcC9V4AvAsJ6HgEnaIP
+	kXs60gbY=
+X-Gm-Gg: AR+sD13IgHq0BjG0dqHfQuDFW1z6it/7SDC8vcBvLfdOexj4kP8Y1reGr5+vD4NRq7q
+	4mYWg2RJZr3rpLlvseNcfVT45mvKvze74TfiuRBoCvusHVuPxi91IogYgcqIsVc5d/Bav5TJG8r
+	B6hccw5HZIzCJNdvz3omFWlAWIzQfi56+fGHpWKAo+AHFsC06BKPcPQkZsL1zbJeLm5qgsTzKvo
+	HogLWrctyRK3vVQTkwud58jOfsuuZEHoufrWUgdWq1DXyGrKLCzYBPStC5dCp0yjNG56joQnw6k
+	jO8m75mUZXrO9bSxveAyMkhW3WGbzpU9+pfUMUVkomKsgE027nd3coqfRPYYje+xi7vIArhsMPX
+	/KcZKlTN38tzxqHosK/4y9YcMud6zXXeH0izlwwDccjpr0Z/pGlRc+er0QIkN8yWKsVrmVKYuRM
+	y0/iM3vyV+UQddNYJY035UIho+L1pAWF1HRVHFcqgflxExAd8lFseG+ryO8Hfo4JvOWZrTBdg=
+X-Received: by 2002:a05:620a:12c3:b0:8cf:c106:faca with SMTP id af79cd13be357-93649267a91mr2416475185a.36.1786136297181;
+        Fri, 07 Aug 2026 13:58:17 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9366e09dc07sm233090185a.15.2026.08.07.13.58.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Aug 2026 13:33:41 -0700 (PDT)
+        Fri, 07 Aug 2026 13:58:16 -0700 (PDT)
+Message-ID: <a647bd56-7dc8-4fec-9d96-834622054cdf@riscstar.com>
+Date: Fri, 7 Aug 2026 15:58:15 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 07 Aug 2026 22:33:39 +0200
-Message-Id: <DKIZY8CMDB8D.2OSTM5ASBS0FG@gmail.com>
-Subject: Re: [PATCH v5 3/4] iio: light: veml6031x00: add support for
- triggered buffers
-Cc: <conor+dt@kernel.org>, <devicetree@vger.kernel.org>, <robh@kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
- <javier.carrasco.cruz@gmail.com>
-From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
-References: <20260807-veml6031x00-v5-0-e60876fb3640@gmail.com>
- <20260807-veml6031x00-v5-3-e60876fb3640@gmail.com>
- <20260807144922.D11A81F00A3A@smtp.kernel.org>
-In-Reply-To: <20260807144922.D11A81F00A3A@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] PCI: of: drop the reg_num argument to
+ of_pci_set_address()
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20260807194100.455599-1-elder@riscstar.com>
+ <20260807194100.455599-2-elder@riscstar.com>
+ <20260807195451.C3BAC1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260807195451.C3BAC1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri Aug 7, 2026 at 4:49 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
-> - [High] AB-BA deadlock between scale_lock and IIO direct mode lock
-> - [High] Missing IIO buffer channel configuration causes probe failure
-> - [High] Uninitialized kernel stack data leaked to userspace in IIO trigg=
-ered buffer
-> - [High] Unbalanced pm_runtime put leads to negative usage count
+On 8/7/26 2:54 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Missing `of_node_put()` in `of_pci_prop_intr_map()` causes a memory leak of interrupt parent device nodes.
+> - [High] Missing NULL checks for `kasprintf()` returns in `of_pci_prop_compatible()` leads to a kernel crash via `strlen(NULL)`.
 > --
->
-> --- Patch [3]: [PATCH v5 3/4] iio: light: veml6031x00: add support for tr=
-iggered buffers ---
-> commit a5266734ac0d8d96ec4ee20e5c8d6088863dee05
-> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
->
-> iio: light: veml6031x00: add support for triggered buffers
->
-> Add triggered buffer functionality for the two channels the device
-> provides (ambient light sensor and IR).
->
->> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml603=
-1x00.c
->> index 30cccda51ca08..0cccd40d729eb 100644
->> --- a/drivers/iio/light/veml6031x00.c
->> +++ b/drivers/iio/light/veml6031x00.c
+> 
+> --- Patch [1]: [PATCH 1/4] PCI: of: drop the reg_num argument to of_pci_set_address() ---
+> commit 2224ebd8fd372dc1822f3ceaf7519520a5ca9bdf
+> Author: Alex Elder <elder@riscstar.com>
+> 
+> PCI: of: drop the reg_num argument to of_pci_set_address()
+> 
+> The reg_num argument passed to of_pci_set_address() is always zero,
+> so get rid of it.
+> 
+>> diff --git a/drivers/pci/of_property.c b/drivers/pci/of_property.c
+>> index 75a358f73e694..505226b876c56 100644
+>> --- a/drivers/pci/of_property.c
+>> +++ b/drivers/pci/of_property.c
+> 
 > [ ... ]
->> @@ -392,6 +401,10 @@ static int veml6031x00_single_read(struct iio_dev *=
-iio, enum iio_chan_type type,
->>
->>  	guard(mutex)(&data->scale_lock);
->>
->> +	IIO_DEV_ACQUIRE_DIRECT_MODE(iio, claim);
->> +	if (IIO_DEV_ACQUIRE_FAILED(claim))
->> +		return -EBUSY;
->> +
->
+> 
 > [Severity: High]
-> Does this establish a lock order of scale_lock followed by the IIO direct
-> mode lock?
->
-> [ ... ]
->> @@ -453,6 +466,10 @@ static int veml6031x00_write_raw(struct iio_dev *ii=
-o,
->>  				 struct iio_chan_spec const *chan,
->>  				 int val, int val2, long mask)
->>  {
->> +	IIO_DEV_ACQUIRE_DIRECT_MODE(iio, claim);
->> +	if (IIO_DEV_ACQUIRE_FAILED(claim))
->> +		return -EBUSY;
->> +
->
+> This isn't a bug introduced by this patch, but while reviewing this file I
+> noticed a potential resource leak in of_pci_prop_intr_map().
+> 
+> Does this code leak the interrupt parent device nodes?
+
+There are two device nodes at play here.  The first is
+passed in as an argument, np, and although this is referring
+to the other one, I analyzed it anyway.
+
+The only place that pointer is used is in the three
+of_changeset_add_prop_u32*() calls at the end of the
+function.  No reference is taken or dropped to that
+node in this function, and presumably that is up to
+the caller to manage.
+
+The only caller is of_pci_add_properties(), which similarly
+gets the node pointer as an argument, and relies on its
+caller for managing its references.  This function's only
+caller is of_pci_make_dev_node(), whose purpose is literally
+to create a new device node for the purpose of attaching
+it to a PCI device node that has none.
+
+So I don't think there is any leak of the np variable passed
+in as an argument.
+
+
+The second device node is pnode, which comes either from
+pci_device_to_OF_node() or from pci_bus_to_OF_node().
+Neither of those functions takes a reference to the
+node pointer they return (assuming it's non-null).
+
+That pointer is assigned to each out_irq[x].np field
+before it's passed to of_irq_parse_raw().  The value
+returned from of_irq_parse_raw() will either be a null
+pointer or will be another device node *with a reference*.
+
+We'll refer to this as *THE* reference.
+
+If this branch is taken:
+
+         if (out_irq->args_count != intsize)
+                 goto fail;
+
+The code at fail will properly drop the reference:
+
+fail:
+         of_node_put(ipar);
+
+         return rc;
+
+The next block of code gets *another* reference to ipar,
+then follows the OF parent pointers up, dropping the
+reference taken as each new parent is found.  Once
+that loop exits, we still seem to hold THE reference,
+though others seem to come and go properly.
+
+Next there is a "big while loop", and it looks to me
+like this return statement:
+
+                         pr_debug(" -> got it !\n");
+                         return 0;
+
+...does indeed leak a reference to ipar.
+
+There is more to study on this function to be sure this is
+right.  But based on this quick look, the Sashiko report
+seems right.
+
+==> Can anyone else confirm or refute this?
+
+If nobody tells me this is wrong, I will plan to submit
+a bug fix for this.
+
+> 
+> drivers/pci/of_property.c:of_pci_prop_intr_map() {
+>      ...
+>      for (pin = 1; pin <= OF_PCI_MAX_INT_PIN;  pin++) {
+>          i = pin - 1;
+>          out_irq[i].np = pnode;
+>          out_irq[i].args_count = 1;
+>          out_irq[i].args[0] = pin;
+>          ret = of_irq_parse_raw(laddr, &out_irq[i]);
+>          if (ret) {
+>              out_irq[i].np = NULL;
+>              pci_dbg(pdev, "parse irq %d failed, ret %d", pin, ret);
+>              continue;
+>          }
+>          of_property_read_u32(out_irq[i].np, "#address-cells",
+>                               &addr_sz[i]);
+>      }
+>      ...
+>      return 0;
+> 
+> failed:
+>      kfree(int_map);
+>      return ret;
+> }
+> 
+> of_irq_parse_raw() populates out_irq[i].np with a device node that has an
+> incremented reference count.
+> 
+> Should there be a matching of_node_put() called on these successfully parsed
+> nodes before the function returns?
+> 
 > [Severity: High]
-> Can this cause a deadlock?
->
-> In veml6031x00_single_read(), data->scale_lock is acquired before the IIO
-> direct mode lock.
->
-> However, here the IIO direct mode lock is acquired first. If this then ca=
-lls
-> veml6031x00_set_it(), which acquires data->scale_lock:
->
-> veml6031x00_write_raw()
->     IIO_DEV_ACQUIRE_DIRECT_MODE(iio, claim)
->     veml6031x00_set_it()
->         guard(mutex)(&data->scale_lock)
->
-> Could concurrent sysfs access to raw data read and integration time write
-> lead to a deadlock?
->
+> This is a pre-existing issue, but I also noticed a potential NULL pointer
+> dereference in of_pci_prop_compatible().
+> 
+> Can this crash the kernel if memory allocation fails?
 
-I will reorder the lock acquisition order, always acquiring direct mode
-first and then scale_lock.
+Yes it can.  of_changeset_add_prop_string_array() blindly calls
+strlen() on each array string provided.
 
->>  	switch (mask) {
->>  	case IIO_CHAN_INFO_INT_TIME:
->>  		return veml6031x00_set_it(iio, val, val2);
-> [ ... ]
->> @@ -484,6 +501,81 @@ static const struct iio_info veml6031x00_info =3D {
-> [ ... ]
->> +static irqreturn_t veml6031x00_trig_handler(int irq, void *p)
->> +{
->> +	struct iio_poll_func *pf =3D p;
->> +	struct iio_dev *iio =3D pf->indio_dev;
->> +	struct veml6031x00_data *data =3D iio_priv(iio);
->> +	IIO_DECLARE_BUFFER_WITH_TS(__le16, scan, 2);
->
-> [Severity: High]
-> Does this leak uninitialized stack memory to userspace?
->
-> The scan buffer is declared without zero-initialization.
->
-> When reading only a single active channel (e.g., just the ambient light
-> sensor), the driver only writes 2 bytes into the array, leaving the
-> unpopulated channel slots and structure padding uninitialized.
->
-> Will iio_push_to_buffers_with_ts() push this uninitialized kernel stack
-> memory to the ring buffer? Should the scan structure be zero-initialized?
->
+I will create a bug fix for this issue as well.
 
-I will fix it in V6 with =3D { } on the declaration.
+					-Alex
 
->> +	unsigned int i =3D 0;
->> +	int ch, ret;
-> [ ... ]
->> @@ -588,6 +680,14 @@ static int veml6031x00_probe(struct i2c_client *i2c=
-)
-> [ ... ]
->> +	ret =3D devm_iio_triggered_buffer_setup(regmap_get_device(data->regmap=
-), iio,
->> +					      iio_pollfunc_store_time,
->> +					      veml6031x00_trig_handler,
->> +					      &veml6031x00_buffer_setup_ops);
->> +	if (ret)
->> +		return dev_err_probe(&i2c->dev, ret,
->> +				     "Failed to register triggered buffer\n");
->> +
->
-> [Severity: High]
-> Will this probe fail with -EINVAL?
->
-> The triggered buffer is registered here, but it appears the driver's
-> channels array (veml6031x00_channels) was not updated with .scan_index,
-> .scan_type, or a timestamp channel.
->
-> Without .scan_index, the IIO core defaults both channels to index 0.
->
-> Does iio_device_register() abort with -EINVAL during probe when
-> iio_check_unique_scan_index() detects the duplicate scan index 0?
->
+> 
+> drivers/pci/of_property.c:of_pci_prop_compatible() {
+>      ...
+>      compat_strs[PROP_COMPAT_PCI_VVVV_DDDD] =
+>          kasprintf(GFP_KERNEL, "pci%x,%x", pdev->vendor, pdev->device);
+>      compat_strs[PROP_COMPAT_PCICLASS_CCSSPP] =
+>          kasprintf(GFP_KERNEL, "pciclass,%06x", pdev->class);
+>      compat_strs[PROP_COMPAT_PCICLASS_CCSS] =
+>          kasprintf(GFP_KERNEL, "pciclass,%04x", pdev->class >> 8);
+> 
+>      ret = of_changeset_add_prop_string_array(ocs, np, "compatible",
+>                                               compat_strs, PROP_COMPAT_NUM);
+>      ...
+> }
+> 
+> If kasprintf() returns NULL, the compat_strs array will contain NULL pointers.
+> 
+> When this unvalidated array is passed to
+> of_changeset_add_prop_string_array(), could it lead to a kernel crash when
+> the string array is processed and strlen() is called on a NULL element?
+> 
 
-The problem is that the no_irq channel definition is missing the scan
-attributes. I will add them for V6.
-
->>  	pm_runtime_put_autosuspend(&i2c->dev);
->
-> [Severity: High]
-> Is this pm_runtime_put_autosuspend() call unbalanced?
->
-> The probe function appears to use devm_pm_runtime_get_noresume() which
-> automatically queues a put on unbind.
->
-> If we explicitly decrement the usage counter here, will the devres action
-> firing on unbind drop the counter below zero and trigger a warning?
->
-> Should this use the non-devm pm_runtime_get_noresume() instead if the
-> driver intends to manually drop the reference later?
->
->>
->>  	ret =3D devm_iio_device_register(&i2c->dev, iio);
-
-I yield. This warning is going to show up a million times during the
-review, and probably every time a change is applied to this driver. I
-will use the simple pm_runtime_get_noresume() and add the
-pm_runtime_put_noidle() in the error paths after it in the probe.
-
-Best regards,
-Javier
