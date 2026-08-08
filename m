@@ -1,288 +1,265 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4F03191D6
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 11:20:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786188030; cv=pass; b=rzldHkSNygf1zSSgDItr7WN4FvtSppOflRjPsKNWfP8F6FEf0fUqiRW9E/hMimkdAYtS/jKfsaL0rVROBQXMfsDhnmBtu+fhWXh2uhuBS9S/tLuBBB8TqslzuttzHZSgSreeLKN4YjzrWb8URnrnhQ25F4gMS4qLFuzXk+rerKo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786188030; c=relaxed/simple;
-	bh=TWLphmIi2kimQzCJscprLxq2t1Tk6kjAiP54AgHPs9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BVcCTVVxDCtQYP+boCHbgU36kcoQ8WKJ5Lac2DuvpdXk2qRRUrGppJu+EmDA0RxTLGxmMYva8qGB8CBizDVvxrMEZmGAjJADaYfluWH20wXGqKTCYLGws6yuCJqbgXVLq5vxaCFWUzQRd7a3Asx3VLMjrbKTyQvHMHeS0rMgueg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pWG3vIMz; arc=pass smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B033B2AA;
+	Sat,  8 Aug 2026 12:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786190736; cv=none; b=NiV3TpX3z/tKItJDaED6G5Dmddtz8RXSyUasu2AgaE1EN0OQBthwvVXe4ZhGZqjVO8GiJppmR2fg/cZEXpIdmRnOEw6gQbZGzLxr8sOl+LLFOdNft4dceIBc+kL0ch7Wd81aFMN9oN+URghlGa/zSCtjz7xme/vaaufUmHsWgf4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786190736; c=relaxed/simple;
+	bh=bbKCrRua32z4iylyWxb015ypo9VfUWlARsU39T25Ins=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=V9gIMUnJzRSyqFpzwt5ZDdoem5VWmqf6Vzl/+utHJ6VnSRMneZluJ/fTtAe+2zSWvV5wUR2dnfsTJa8JcW2PXp9ZsQRfJmXAiCS7VegNB5JBUDsvDQAgtLXuDSNYDZ3nGzpkxdttXQK4Sn0om4kVAs7ScUJjl3RnEMS2wjckkpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ds2cYSXE; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pWG3vIMz"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-80bb41f7f3cso4024797b3.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 04:20:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786188028; cv=none;
-        d=google.com; s=arc-20260327;
-        b=R65OGAgBpf/4hVhsuFhFXFPLCksZroRsM6vnnFYFM7wr2piKfEERCzI1x5qQn5Y+bc
-         1ntCd4Zs/CbXjtuEQ+3Zu3+S1KLaxMIeSAH81Y5pRkwUvCUfmHG7BRz56/INBtROHvGB
-         RP2FwVP80yMFG8OihQg2haVlKX0/FPRT2g2bWuGeCJk4oGUjmtX/jGEEVQ56Av7Lh6th
-         pHEyUIB/QYvRtir2JfsycFRjU+50m5V0C95ezV2M9QHqCt3luiYADVT47WyXuaoP6LOS
-         IBeYlt//UYoPzheVcbGEnN0CDpPUrdOp/bxWELtLxVpIIfODI01n8G9gwRvgXcfEe+YF
-         wWkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
-        fh=3HEnILFhrdVh+hHtdPC8bOVWQi7VkwWDlgNweflG/6k=;
-        b=qRGMpEZb19x/rTguxczKmOnz9getU7lW8c2N3ctm4djT/zqCNxsywWGn55IvW8IuFG
-         VEj4WlfUjM6GTgHkNg4kD/oakzYaKtKecskjyXxw2R/5R+VGvD0FzuM5Y7AkxSdrP6wD
-         xAAP53pSZ5Z6GYyqQNAeAmGgQ35D4hBT93ZaNw7mYDocWWN+n3DRMWSJGlyiB9GQpZbT
-         F6dw5pT5TURBYqlDHpwGEDFU7KFZHMb2vCZLWeofWqV0n+SrMEz8MUi8SEBiXok+WPmX
-         InHDMV47uDERrTRdvdmj31dO7CDuIGPLEWFsVHwmx732AzqRyH5J9o3Pa5qFPcXD1pSi
-         0bxw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786188028; x=1786792828; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
-        b=pWG3vIMzlHD+8NdVTbULHuSXub+k5aLwgyP5hs4GpAOCzya8TBU83NIV1ved9byt3G
-         xKWmn/VdyAVguHFtmDbk/16lwm5Kize5tf7LOQ4kSNjeCfzBmqY5p53z4GTfeO7ayaX/
-         kFQ9eSwMAY+tIxy97ph7XFXgkFIF2TEmFNBBmnqaSDlS2bnL32m0gSMARxY5wdL6Z7y1
-         +jYbSJ2NwAOY/6U28PlJlLwIGJFVooWxmWosymDhz9jAHlcu2QUPR/sKNfbDdlmTSsDk
-         GP8Dh6Sir4TXXAOv7Ho9yz0Nnza1URAXZaSog7+OTIrsaFo+FnhrqVaVZ5SFeL9I99Hv
-         Smtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786188028; x=1786792828;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
-        b=jr2feUtybARn0JDcWxfCTHWgq9CjcalY2bv2O4nmKaINbwY7AIVEFim+mT9HfC/CyP
-         H51r1MKsjiI/DG0pYtCVczLqIa3x+RQG5q+5NUJQWe9BRWlQSx6tYvIq2tLIYPTerxju
-         ZBH5Wur1s3BheZXzjtbzHLaYqW1e0fLcKGwrXLYPhHj+h3GL1N1VePrsWsgF2jqhy05C
-         bVgV32iHKbvLfDiiMg59KciockTxCj80p+QAsWc+bvS7X7MywB8fJfjpsHCfp1r2x/XN
-         sAAvTQcAOlXFGTfxMsDH9WRotSfO0b/4wbbRdYFA6OptkxA2ItTr+4Sg1vWNWNmU0cD1
-         gqhw==
-X-Gm-Message-State: AOJu0Yxi5L35HZRQneRe67DeXOWAV2Bmf6gEiMdt6eKVLBjGILwbSZsP
-	HGDhmiah/K8sbQoLkCAD4YQfWf2WBK6pLnXVPjuSYlehtjGTjnhhRQmycnqBtNdg8ukQcKOq3GM
-	auy5vVvuWfdHbqS77zS2UEZf3RzO2ZWVLjoKlW4rJWw==
-X-Gm-Gg: AR+sD11ZorPij4uBeyLH/bXtXbxwFmRIJw8HCn0oJNRVkG7WoJxgllTeIYetw2qheGh
-	2iFC186Z/bXSjk3n/0LkY+HatUPfISyuCd+e85Xte4NjOjiPKc5qnNn3Q21UbRempO+wToE8WIW
-	QLBSjacsixYYfsGxzTqrVbPuf4uXtu3dF4ZwjLqQRZAN2N5dh9uDeX5ZbzaW83DEga4m3+H6YMl
-	dTODG3aXG3Ql7CPh0grCEqg6BaQrCrtCSQHS0YG4Dll6fBvSuavlY76Ny0f3ifYtv4DMHvCPuso
-	x39oGd8DJgLlxY0uF0u8w9UaxFWZif79Sf7imBOLfa5y
-X-Received: by 2002:a05:690c:4587:b0:81e:6c2e:f114 with SMTP id
- 00721157ae682-8225d08d51bmr92640247b3.30.1786188027924; Sat, 08 Aug 2026
- 04:20:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ds2cYSXE"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 678AVb4U012016;
+	Sat, 8 Aug 2026 12:05:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=vTXt0Q
+	2h3u47845D1YPQ2AaYzR+SQeowTWlSxc7OMh4=; b=ds2cYSXERe5umupIM661se
+	mr0iJZzkUvAFAylEniQ5BpHIriNOyDU5vQoS+eQmjcsVp2N+pFzBZwfzmLAGGZrT
+	gfz0Ug/r3H/hwnZ26SZYMDfEehBB6bSzzQ0wBCDDOR55ROQ04HFLjgjNYahIIVIZ
+	UeTuhdoHb42o85ugLVoqqn0sNYhkHkhFiGZ9Q4W+H013OjocuOsZ/D+3Kiaer9MM
+	LH9h/6R/OWhYJNjGf3UOson5wPcLL1qUbAgd7y/z1Qg0V5XkNDDz6Bh6ddJgVvRs
+	CmL+nkZAE+TebmJVvuC3Y1miLqfALpZV/xw0BenJ78uH2LPnP0tw7tpbA/XyFbyw
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnvs138-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 08 Aug 2026 12:05:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 678BuOJ1005429;
+	Sat, 8 Aug 2026 12:05:32 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgu7sy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 08 Aug 2026 12:05:32 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 678C5Vg59175584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Sat, 8 Aug 2026 12:05:31 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 83D625803F;
+	Sat,  8 Aug 2026 12:05:31 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D3ED65804E;
+	Sat,  8 Aug 2026 12:05:30 +0000 (GMT)
+Received: from [9.61.94.189] (unknown [9.61.94.189])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Sat,  8 Aug 2026 12:05:30 +0000 (GMT)
+Message-ID: <4e8e189d-48ec-48b2-8d1b-2a2f40f67b89@linux.ibm.com>
+Date: Sat, 8 Aug 2026 08:05:30 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260808091151.2691482-1-congnt264@gmail.com> <20260808092336.B72451F000E9@smtp.kernel.org>
-In-Reply-To: <20260808092336.B72451F000E9@smtp.kernel.org>
-From: =?UTF-8?B?Tmd1eeG7hW4gQ8O0bmc=?= <congnt264@gmail.com>
-Date: Sat, 8 Aug 2026 18:20:17 +0700
-X-Gm-Features: AUfX_mwL9hQFTg60PgMNaG31rZwxLVbY7r_wH_4Q0kmBiIMOXsojo4RGbteIBU8
-Message-ID: <CAJpJ=GuZhiU7NurhLqVgLzRd-pc2hD2OR4zP_gycMJ81KXrRcA@mail.gmail.com>
-Subject: Re: [PATCH] media: sun4i-csi: fix async connection leak when notifier
- registration fails
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390/vfio-ap: Fix control domain removal in
+ vfio_ap_mdev_cfg_remove
 To: sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org, linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org
+References: <20260807223939.573718-1-akrowiak@linux.ibm.com>
+ <20260807225802.41BCD1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260807225802.41BCD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a771b8d cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=D19gQVrFAAAA:8
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=8vdVCLQQ5IgfLE6QZuoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=W4TVW4IDbPiebHqcZpNg:22
+X-Proofpoint-GUID: 9Xg0m4eylzBp61semCptw8BMn7qA8P-Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA4MDEwMSBTYWx0ZWRfX8Iwqzv/R1MJm
+ FUi7SsfZJ0CR8BsFiMb+uI111IFA2bgm2JYCx6tKDMFIxugNZklfLJhAp4fWR0QyTG+nfgCEY+q
+ 7ANh7OgaoNCpsWckUX2UI4txb+TJvzxbg4oL3RHQ3MJflfBeKh17UN2sGbpQcYxKPnlGC38N0Lw
+ DN2qqgN8EDXjRRYSfTYHQqF9Q2zsA+6ZlI2P9bR7GqI3SpHDfm6xEWzDt7LLy63+tG8L+Vsm4Xw
+ rvoNcceY999FUKC8LBxk45HrEdNfvHkmglcHiW94Kd6FAc8QBgHihALXeHSlhieDusiQ9TQvWuF
+ pLiTvDJtwpxPKbNangivUpaTtzOI1wJl76wCLS777NyOjjm8qW1sXHryTkLo4USs+3hJCPyPdgD
+ zLyDWMt/j3hdk9CLSdNowMIZET+mB6qchWVC5DJCSt5GP7obUQaj6OLzIyEUk75AOaGwQ8oDz5X
+ 5pEr95mURw6KOexAekA==
+X-Proofpoint-ORIG-GUID: 9Xg0m4eylzBp61semCptw8BMn7qA8P-Z
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA4MDEwMSBTYWx0ZWRfX7qjKzXOKqR0d
+ /Cp8swXnoIDNIssmTVmsQGu+SqOrXICBILBux3/X2zmk8LefYPFb3O7f0sgaZeGc2oH76QfJE12
+ hnN5DTnBRKejtaRZYBG770mr24dHa90=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-08_04,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608080101
 
-On Sat, Aug 8, 2026 at 4:23=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
+
+
+On 8/7/26 6:58 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Missing cleanup of registered video and subdev devices in `sun4i=
-_csi_notify_complete()` error paths leads to device leaks and potential Use=
--After-Free.
-> - [High] The driver does not disable hardware interrupts or synchronize t=
-he IRQ handler when stopping capture, allowing an interrupt to crash the sy=
-stem after device suspension.
-> - [High] Missing `.unbind` callback allows the video device to retain and=
- access a freed subdevice pointer (`csi->src_subdev`).
+> - [High] Missing NULL check on `matrix_mdev->kvm` before acquiring its lock on AP configuration change paths, leading to a kernel panic if a mediated device is unattached.
+> - [High] Guest APCB is not updated when the last adapter or domain is removed, leaving the guest with unauthorized hardware access.
+> - [High] Iterating `mdev_list` without the appropriate mutex allows concurrent list modifications, leading to list corruption or use-after-free.
 > --
 >
-> --- Patch [1]: [PATCH] media: sun4i-csi: fix async connection leak when n=
-otifier registration fails ---
-> commit d13febea573e64b9e585c2c1f9b472e41737683c
-> Author: Cong Nguyen <congnt264@gmail.com>
+> --- Patch [1]: [PATCH] s390/vfio-ap: Fix control domain removal in vfio_ap_mdev_cfg_remove ---
+> commit 934a77df4b71bb3ee940f94ad6abdd8290e96d28
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Subject: s390/vfio-ap: Fix control domain removal in vfio_ap_mdev_cfg_remove
 >
-> media: sun4i-csi: fix async connection leak when notifier registration fa=
-ils
+> This commit modifies the vfio_ap_config_remove function to use bitmap_and()
+> instead of bitmap_andnot() when clearing bits from matrix_mdev->matrix.adm.
+> This ensures that explicitly unplugged control domains are correctly removed
+> from the KVM guest.
 >
-> sun4i_csi_notifier_init() adds a v4l2_async_connection to the notifier's
-> waiting list with v4l2_async_nf_add_fwnode_remote(). If the subsequent
-> v4l2_async_nf_register() then fails, probe jumps to err_unregister_media,
-> which never calls v4l2_async_nf_cleanup(). The core does not free the
-> waiting list on a failed registration, so the async connection is leaked.
+>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+>> index 44b3a1dcc1b36..1bfdbe85023dd 100644
+>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+>> @@ -2615,9 +2615,9 @@ static void vfio_ap_mdev_cfg_remove(unsigned long *ap_remove,
+> [Severity: High]
+> This is a pre-existing issue, but does vfio_ap_mdev_cfg_remove() safely handle
+> unattached mediated devices?
 >
-> Add an err_clean_notifier label that cleans up the notifier on the
-> registration-failure path, matching the teardown done in
-> sun4i_csi_remove(). The notifier-init failure path adds nothing to the
-> notifier and continues to skip the cleanup.
+> If an mdev is created via sysfs, matrix_mdev->kvm is initialized to NULL. If a
+> host AP configuration change occurs before this mdev is attached to a guest,
+> the loop in this function:
 >
-> > diff --git a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c b/drive=
-rs/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-> > index e53a07b770b7e..a8db851ab5a59 100644
-> > --- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-> > +++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-> > @@ -255,13 +255,15 @@ static int sun4i_csi_probe(struct platform_device=
- *pdev)
-> >       ret =3D v4l2_async_nf_register(&csi->notifier);
-> >       if (ret) {
-> >               dev_err(csi->dev, "Couldn't register our notifier.\n");
-> > -             goto err_unregister_media;
-> > +             goto err_clean_notifier;
-> >       }
-> >
-> >       pm_runtime_enable(&pdev->dev);
-> >
-> >       return 0;
-> >
-> > +err_clean_notifier:
-> > +     v4l2_async_nf_cleanup(&csi->notifier);
-> >  err_unregister_media:
-> >       media_device_unregister(&csi->mdev);
-> >       sun4i_csi_dma_unregister(csi);
+> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_cfg_remove() {
+>      ...
+>      list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+>          mutex_lock(&matrix_mdev->kvm->lock);
+>      ...
+> }
+>
+> will unconditionally dereference the NULL kvm pointer. Is there a missing NULL
+> check for matrix_mdev->kvm before acquiring its lock on AP configuration change
+> paths?
+
+A patch has already been posted for this:
+https://lkml.org/lkml/2026/8/7/1453
+
+I think it would be wise to submit that patch and this as a series since
+both bugs were introduced with the same patch, so the Fixes: tag
+for each would be the same.
+
 >
 > [Severity: High]
-> This is a pre-existing issue, but does sun4i_csi_notify_complete() leak
-> registered video and subdev devices in its error paths?
+> This isn't a bug introduced by this patch, but can the iteration over
+> mdev_list in vfio_ap_mdev_cfg_remove() race with mdev creation?
 >
-> If media_create_pad_link() or other subsequent operations fail, the error
-> path err_clean_media only unregisters the media device:
+> vfio_ap_mdev_probe() adds a new mdev to matrix_dev->mdev_list using list_add()
+> while holding only matrix_dev->mdevs_lock:
 >
-> drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c:sun4i_csi_notify_compl=
-ete() {
->     ...
-> err_clean_media:
->         media_device_unregister(&csi->mdev);
->
->         return ret;
+> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_probe() {
+>      ...
+>      mutex_lock(&matrix_dev->mdevs_lock);
+>      list_add(&matrix_mdev->node, &matrix_dev->mdev_list);
+>      mutex_unlock(&matrix_dev->mdevs_lock);
+>      ...
 > }
 >
-> It doesn't seem to unregister the video device or the subdev. Because thi=
-s
-> failure propagates back to v4l2_async_nf_register(), the probe will fail
-> and the driver's devm-managed memory is freed.
+> However, vfio_ap_mdev_cfg_remove() iterates over mdev_list using
+> list_for_each_entry() holding only matrix_dev->guests_lock, as mdevs_lock is
+> only acquired individually inside the loop body.
 >
-> Since the /dev/videoX node remains active but points to freed memory,
-> could userspace access trigger a use-after-free?
+> Could this lead to kernel memory corruption or use-after-free if a user
+> creates a new mdev concurrently with an asynchronous host AP configuration
+> change?
+
+This needs to be fixed.
+
 >
+>>   		do_remove |= bitmap_and(aqrem, aq_remove,
+>>   					  matrix_mdev->matrix.aqm,
+>>   					  AP_DOMAINS);
+>> -		do_remove |= bitmap_andnot(cdrem, cd_remove,
+>> -					     matrix_mdev->matrix.adm,
+>> -					     AP_DOMAINS);
+>> +		do_remove |= bitmap_and(cdrem, cd_remove,
+>> +					matrix_mdev->matrix.adm,
+>> +					AP_DOMAINS);
+>>   
+>>   		if (do_remove)
+>>   			vfio_ap_mdev_hot_unplug_cfg(matrix_mdev, aprem, aqrem,
 > [Severity: High]
-> This isn't a bug introduced by this patch, but is the driver leaving
-> hardware interrupts enabled when stopping capture?
+> This is a pre-existing issue, but does vfio_ap_mdev_hot_unplug_cfg() properly
+> update the guest APCB when the last device is removed?
 >
-> In sun4i_csi_stop_streaming(), the hardware capture is stopped, but the
-> interrupt enable register doesn't appear to be cleared and there is no
-> call to synchronize_irq():
+> In vfio_ap_mdev_hot_unplug_cfg(), the decision to update the guest's APCB
+> relies on bitmap_andnot():
 >
-> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_stop_streami=
-ng() {
->     ...
->         v4l2_subdev_call(csi->src_subdev, video, s_stream, 0);
->         sun4i_csi_capture_stop(csi);
->
->         /* Release all active buffers */
->     ...
+> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_hot_unplug_cfg() {
+>      ...
+>      if (!bitmap_empty(cdrem, AP_DOMAINS))
+>          do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.adm,
+>                                      matrix_mdev->shadow_apcb.adm,
+>                                      cdrem, AP_DOMAINS);
+>      ...
 > }
 >
-> Because capture stops at the end of the current frame, a frame-done
-> interrupt could fire shortly after this function returns. If userspace
-> closes the device, sun4i_csi_release() invokes pm_runtime_put(), powering
-> down the hardware block.
+> The kernel's bitmap_andnot() function returns true only if the resulting
+> destination bitmap is non-empty. If the last adapter, domain, or control domain
+> is explicitly removed, the destination shadow APCB becomes entirely empty,
+> causing bitmap_andnot() to return false.
 >
-> When the delayed interrupt fires, could the interrupt handler attempt to =
-read
-> registers on powered-down hardware and cause a system crash?
+> Since do_hotplug remains false, vfio_ap_mdev_update_guest_apcb() is skipped.
+> Does this leave KVM guests with unauthorized access to physical hardware devices
+> that have been explicitly removed from the host's AP configuration?
+
+The logic here is correct. The
+concern rests on a misreading of what bitmap_andnot() returns
+and what the bitmaps represent.
+
+There are three functions that form a pipeline:
+
+vfio_ap_mdev_on_cfg_remove() computes which adapters,
+domains and control domains have been removed from the host
+AP configuration by comparing the previous and current config
+info bitmaps. If nothing was removed from a given bitmap,
+that bitmap is empty and there is nothing to do.
+
+vfio_ap_mdev_cfg_remove() intersects each of those
+removed-from-host bitmaps against matrix_mdev->matrix,
+which represents what the administrator has assigned to the
+mdev. If the intersection is empty — none of the host-removed
+resources were assigned to this mdev — there is nothing to
+hot-unplug for this mdev.
+
+vfio_ap_mdev_hot_unplug_cfg() intersects those
+mdev-assigned-and-host-removed bitmaps against
+matrix_mdev->shadow_apcb, which represents what is actually
+passed through to the guest after filtering. The shadow_apcb
+is a filtered subset of matrix — a resource assigned to the
+mdev may not be in the shadow APCB if it was previously
+filtered out (e.g., the queue was not passable, or the
+resource was not in the host config at the time of the last
+filter pass). If bitmap_andnot() returns false here, it
+means none of the removed resources were present in the shadow
+APCB to begin with — the guest never had access to them — so
+skipping vfio_ap_mdev_update_guest_apcb() is correct.
+
+Furthermore, bitmap_andnot(dst, src, rem) returns false only
+when the result dst = src & ~rem is all zeros. If none of the
+rem bits are present in src, then ~rem clears nothing and
+dst == src. If src was non-empty, the return value is true
+and vfio_ap_mdev_update_guest_apcb() is called — even though
+the APCB content is unchanged. So there is no path through this
+function where a genuine removal from the guest's APCB is
+silently dropped.
+
 >
-> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_irq() {
->     ...
->         reg =3D readl(csi->regs + CSI_INT_STA_REG);
->
->         /* Acknowledge the interrupts */
->         writel(reg, csi->regs + CSI_INT_STA_REG);
->     ...
-> }
->
-> [Severity: High]
-> This is a pre-existing issue, but is sun4i_csi_notify_ops missing an
-> .unbind callback?
->
-> drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c:
->     ...
-> static const struct v4l2_async_notifier_operations sun4i_csi_notify_ops =
-=3D {
->         .bound          =3D sun4i_csi_notify_bound,
->         .complete       =3D sun4i_csi_notify_complete,
-> };
->     ...
->
-> If the remote sensor module is unloaded, the V4L2 async core unbinds
-> and frees the subdevice, but it appears csi->src_subdev is never cleared
-> and the video node is never unregistered.
->
-> If userspace calls VIDIOC_STREAMON afterward, does sun4i_csi_start_stream=
-ing()
-> dereference the freed csi->src_subdev pointer here?
->
-> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_start_stream=
-ing() {
->     ...
->         ret =3D v4l2_subdev_call(csi->src_subdev, video, s_stream, 1);
->         if (ret < 0 && ret !=3D -ENOIOCTLCMD)
->                 goto err_disable_device;
->     ...
-> }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808091151.26=
-91482-1-congnt264@gmail.com?part=3D1
 
-Thanks for the review. I checked all three against the code =E2=80=94 they =
-are
-all real pre-existing bugs, independent of this async-notifier cleanup
-patch. I've prepared a separate 3-patch series to address them:
-
-1. Missing cleanup in sun4i_csi_notify_complete() error paths
-
-   Confirmed. sun4i_csi_v4l2_register() calls video_register_device(), so
-   /dev/videoX is live before the pad links and subdev nodes are set up.
-   On failure err_clean_media only unregisters the media device, leaving
-   the video device (and the bridge subdev) registered. Since the failure
-   aborts probe, the devm-managed sun4i_csi (which embeds the video_device)
-   is freed while the node is still registered -> UAF on open(). Fixed by
-   unwinding the registrations in reverse order, matching sun4i_csi_remove(=
-).
-
-2. Interrupts left enabled in sun4i_csi_stop_streaming()
-
-   Confirmed. start_streaming() enables CSI_INT_FRM_DONE in CSI_INT_EN_REG,
-   but capture_stop() only clears CSI_CPT_CTRL_REG and stop_streaming() has
-   no synchronize_irq(). A frame-done IRQ can fire after streaming stops;
-   if userspace then closes the device, pm_runtime_put() gates the clocks
-   and asserts reset, and a late handler touches registers on a dead block.
-   Fixed by clearing CSI_INT_EN_REG and calling synchronize_irq() in
-   stop_streaming() before the buffers/scratch are released.
-
-3. Missing .unbind callback in sun4i_csi_notify_ops
-
-   Confirmed. Without .unbind, csi->src_subdev is left dangling when the
-   remote sensor is unbound/freed, and a later VIDIOC_STREAMON dereferences
-   it in sun4i_csi_start_streaming() -> UAF. Fixed by adding an .unbind tha=
-t
-   unregisters the video device and clears csi->src_subdev.
-
-I'll send these as a follow-up series ("media: sun4i-csi: fixes"). This
-patch stands on its own; the series can be applied on top.
-
-Thanks,
-Cong
