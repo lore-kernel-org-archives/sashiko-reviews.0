@@ -1,197 +1,132 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4340721254B;
-	Sat,  8 Aug 2026 15:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C1C19046E
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 16:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786201733; cv=none; b=eYk1effTrlP3QVlrJcuxVry68aHt39JL++0kbSR6zK4C06FiNO5tVdbYiY9SIga2G2UlZYJhpfBR7uR/TZVOej4BMaXLRP3S0RYKY8Hxiq6xK6Jtu01MsCExhDRUqS4MyzwZ5/sNff1jLoeS3ypMyFXzwPw4OrxcuxFlYXT0v/Q=
+	t=1786205009; cv=none; b=ET/sZhUtIWepc/UHvQWbVq7HCvGKiOEeYyPVT+0QTL0M5wHrv7QVSuqhhqmsHgHPDthiGzlcvWG4Tfiv8uyP93qh4nopZ7+82MnmIRefR6ZEOtYN2XcyfFpvIAyK5acx1bGGem0pEYvzOWxOmSn4oJcw7Zk+kOxMx0knax4Slv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786201733; c=relaxed/simple;
-	bh=pg23t9+Cq9349ummgjLXRokranw6YorDiUashfy7AcM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YZjdjiqb5yuRoMc03nvr7YNOPIZWxTwm33z3WS/+g9VH0+pGTXd4rCKeP5LdbrOC9wIAybCuBpd6aWQY0YqGQEuBT039HR90rgLt8JhuvVI32Sh1Cgmn9o/Rhkti/GwI8mLX5NZFWsrwYHghFRya3KxyT+OaqDe0Wt54SAvB0dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ch6LXmae; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	s=arc-20240116; t=1786205009; c=relaxed/simple;
+	bh=ILHf0iFPsOL//tvtiBRcG1RLIHbs+oDyF4gx2B63WiY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HfTy58tuLPyk5V5BpC44nALmDIhcNy0J+RpYyIKvt+/aPaucgxaFYFeLdOjyxqzDpkar/6NJZELwiHm5cZC9QtpbOBe1h/ulILvfQYjzedoX1pKOHcimWzWYqAbT7pNmUgac572Lu97POMemfP8dF540HrGY1p7LQn+3WdpdN/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=j10b+b6N; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ch6LXmae"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=pg23t9+Cq9349ummgjLXRokranw6YorDiUashfy7AcM=; b=ch6LXmaexPUu+upV1Xwjp0mRsQ
-	8FtHySERpun5SV3+D0qZVsSzJjcEz0/Q7H2XXYSZNf1zSDJvMuY7W7KBDtvlrFc8YoIztcX60Wmn8
-	R/QWsqv39lg0L0WanYyjeOgjNfePPzXap69mXAcF0GPqPKkswVzX5sSK+KX6E+y424MGfCpf+yRNY
-	MHNRckb7cDS6X9i6+ED+Se97MFMDrh6O1GauQjvwmx9qY3gAzU9xh+YBRHKNfFB6l+V1KIZb6HJ7D
-	HgtDuhYtE43vnRW++0xzsLU9dFHEc92JBfYbsxtcERAePiC9N6M8wBVFEcXwtaFm8YMSdX95+DBzw
-	6n0oMnTw==;
-Received: from [54.239.6.187] (helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wsifK-00000006ZSG-1WZl;
-	Sat, 08 Aug 2026 15:08:50 +0000
-Message-ID: <7c34aa00b566822c257c52c4b398809354f88bf8.camel@infradead.org>
-Subject: Re: [PATCH v8 05/17] KVM: x86: Avoid NTP frequency skew for KVM
- clock on 32-bit host
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sean Christopherson <seanjc@google.com>, sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Date: Sat, 08 Aug 2026 16:08:49 +0100
-In-Reply-To: <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org>
-References: <20260804233923.3504629-1-seanjc@google.com>
-	 <20260804233923.3504629-6-seanjc@google.com>
-	 <20260805000221.B63F61F00A3A@smtp.kernel.org> <anN_J_KZhVJ1zIeI@google.com>
-	 <anUmdhx0Dh-yd89z@google.com> <anYBYu4rx-jCv8gr@google.com>
-	 <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-e+Lv7gzkh1GBFcKbaHyg"
-User-Agent: Evolution 3.60.3-0ubuntu1~ppa9~24.04 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="j10b+b6N"
+Message-ID: <1de41ecc-9ff3-42b7-8b1b-f71b233965ac@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1786205004;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FAbay96Idmxx0yTlNvviqCOHwEEy0ezS9jpgEf1b4qc=;
+	b=j10b+b6NYJn/0GDK6/O3nRk6OjafP95iLGzxHqIGpokvsudDdETSjF2EtTqdLmpY9nXEI/
+	frSLisZf9OR5llPulxiyR2C58e9pqa62ZNv+s/KyRHOE6smVHF25lMErHtd4s/d8PLVzmh
+	7Dn4cUwE72fjESkl5dbIiWs0AolWXO0=
+Date: Sat, 8 Aug 2026 09:02:59 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Subject: Re: [PATCH bpf-next v2 05/13] bpf: Account R2 of register-pair
+ returns in live register analysis
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260804203522.1869244-1-yonghong.song@linux.dev>
+ <20260804203548.1872337-1-yonghong.song@linux.dev>
+ <20260804211451.A7F621F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260804211451.A7F621F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
 
---=-e+Lv7gzkh1GBFcKbaHyg
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2026-08-07 at 18:26 +0100, David Woodhouse wrote:
-> (Home and on the phone after an insane week; full attention span
-> might be limited until Monday).
+On 8/4/26 2:14 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The verifier fails to check if BPF_REG_2 is initialized at BPF_EXIT for global subprograms returning > 8 bytes, which can lead to leaking uninitialized memory.
+> - [High] The verifier fails to copy the callee's R2 to the caller's R2 in prepare_func_exit() for static subprograms returning > 8 bytes.
+> --
+>
+> --- Patch [5]: [PATCH bpf-next v2 05/13] bpf: Account R2 of register-pair returns in live register analysis ---
+> commit 149c9afee6775ff575a63e08693b340337d96491
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Account R2 of register-pair returns in live register analysis
+>
+> This commit updates the live register analysis in the BPF verifier to mark R2
+> as read at BPF_EXIT for subprograms returning a value larger than 8 bytes. It
+> uses bpf_ret_reg_pair() to determine if a subprogram returns its value in the
+> R0:R2 register pair.
+>
+>> diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
+>> index 0aadfbae0acc5..68df6d8db4bda 100644
+>> --- a/kernel/bpf/liveness.c
+>> +++ b/kernel/bpf/liveness.c
+> [ ... ]
+>> @@ -2174,7 +2179,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+>>   			break;
+>>   		case BPF_EXIT:
+>>   			def = 0;
+>> -			use = r0;
+>> +			use = ret_reg_pair ? (r0 | BIT(BPF_REG_2)) : r0;
+> [Severity: High]
+> Does check_global_subprog_return_code() also need to check BPF_REG_2 when the
+> subprogram returns a register pair?
+>
+> If a global BPF subprogram returns a 16-byte value (e.g., an __int128 or
+> struct) but does not write to R2 before exiting, the verifier only validates
+> that BPF_REG_0 is initialized:
+>
+> kernel/bpf/verifier.c:check_global_subprog_return_code() {
+>      ...
+> 	return check_global_ret_scalar_reg(env, BPF_REG_0);
+> }
+>
+> Although check_global_ret_scalar_reg() was refactored earlier in this series
+> so that it can be reused for R2, there appears to be no call added to check R2
+> in check_global_subprog_return_code().
+>
+> Can this allow a global subprogram to leak uninitialized kernel memory or
+> pointers in the CPU register corresponding to R2 back to the kernel caller?
+>
+> [Severity: High]
+> Additionally, should prepare_func_exit() copy the callee's R2 to the caller's
+> R2 for static subprograms returning > 8 bytes?
+>
+> Currently, prepare_func_exit() only copies R0:
+>
+> kernel/bpf/verifier.c:prepare_func_exit() {
+>      ...
+> 	} else {
+> 		/* return to the caller whatever r0 had in the callee */
+> 		caller->regs[BPF_REG_0] = *r0;
+> 	}
+>      ...
+> }
+>
+> If a BPF program calls a static subprogram that returns a 16-byte value, and
+> the caller attempts to use the upper 8 bytes returned in R2, won't the verifier
+> reject the valid program with a read of uninitialized register error?
+>
+> This happens because the caller's R2 was marked NOT_INIT prior to the call by
+> clear_caller_saved_regs(), but prepare_func_exit() does not propagate the
+> callee's R2 value back to the caller.
 
-Hi, my name is Dave and I'm an addict...
+We should be okay here. The actually allowing R2 is in later commit
+  Add verifier support for 16-byte returns in R0:R2
 
-> The only reason the ktime snapshot stuff is last in the series is
-> because I did that work on the kernel's core timekeeping two years
-> after the rest of the series, and it was still sitting at the tip
-> branch at the time so I didn't want to make it a hard dependency for
-> the kvmclock series. Now the timekeeping stuff is merged we can fold
-> it all into the kvmclock series however we like.
+>
+>>   			break;
+>>   		case BPF_CALL:
+>>   			def = ALL_CALLER_SAVED_REGS;
 
-I think that goes for "Compute kvmclock base without pvclock_gtod_data"
-too. It *isn't* at the end of the series, but I'm fairly sure (from
-memory) that it's one of the newer commits, and I just shuffled it
-earlier in the series for very similar reasons to the ones you're
-looking at now.
-
---=-e+Lv7gzkh1GBFcKbaHyg
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-RrH3KguFk9q0+CdFJahdEjEAAAAAAAA=
-
-
---=-e+Lv7gzkh1GBFcKbaHyg--
