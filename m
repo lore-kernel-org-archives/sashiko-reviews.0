@@ -1,401 +1,197 @@
-Received: from mail-pj2-f9.google.com (mail-pj2-f9.google.com [74.125.227.137])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14343F8254
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 12:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4340721254B;
+	Sat,  8 Aug 2026 15:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786193476; cv=none; b=pQBw2JQcrJEKqSqDwnqvtOi3Zsmi+SbluJ1myy8NdYVqCFvlUirLBwuq1zYyNKhD5451UZoFRl5UV99Bfdb1/Cm3JUuXj0+jeNF/ysA6Z4wOAPkggaMR3TKIXabtru+q93C6CzMZ32R6p5IG4jSk5+W1+hTO4wJRhApZb1ZO5t0=
+	t=1786201733; cv=none; b=eYk1effTrlP3QVlrJcuxVry68aHt39JL++0kbSR6zK4C06FiNO5tVdbYiY9SIga2G2UlZYJhpfBR7uR/TZVOej4BMaXLRP3S0RYKY8Hxiq6xK6Jtu01MsCExhDRUqS4MyzwZ5/sNff1jLoeS3ypMyFXzwPw4OrxcuxFlYXT0v/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786193476; c=relaxed/simple;
-	bh=e3o5DypB4NSFaz1WXz/IT83XxjWRQf7ZGhqPPY+Y15A=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nMFYOYBCN4WgRmgZ4mVsx3q0ZxXb/7c51XRdLs74P00I5lV36sHVl51KFOlM79bZMt5MxMD0zkJQHJmoWk9mhRfZeYb2ICQnDOoQ2+ske0hb9ktQ06mZJ6tkfqTSfMftjhC4EskBK7saaIIR2Id1cRvubq9XKPLCnfNRqjU5VO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctQ542BQ; arc=none smtp.client-ip=74.125.227.137
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786201733; c=relaxed/simple;
+	bh=pg23t9+Cq9349ummgjLXRokranw6YorDiUashfy7AcM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=YZjdjiqb5yuRoMc03nvr7YNOPIZWxTwm33z3WS/+g9VH0+pGTXd4rCKeP5LdbrOC9wIAybCuBpd6aWQY0YqGQEuBT039HR90rgLt8JhuvVI32Sh1Cgmn9o/Rhkti/GwI8mLX5NZFWsrwYHghFRya3KxyT+OaqDe0Wt54SAvB0dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ch6LXmae; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctQ542BQ"
-Received: by mail-pj2-f9.google.com with SMTP id 98e67ed59e1d1-38ed4d37526so362501a91.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 05:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786193471; x=1786798271; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=OlRrA389d9FWYi8l3Quvar4ELxprzGoBLCcCx6MN668=;
-        b=ctQ542BQZhKK9t7NvhvODgUacJ3rRQ4l4JvlBZ5p8Z2YB5KUGpyUWjhoOtSKOzyLvv
-         g0AoZlSD3F2iiWEWlzTAgiYvRXB6PMq8u5ocsWz99AUvXhElpLM9PticeGVr+mpzJscc
-         JpEfw5VP2Xb7eBxZlkyUrLr1gXsIjyEhCzNvooXCjFMqbvlNCzF3gfbGa3kUm6Hrf1ek
-         ylJoZi0r8pIztAGYs9DeEegzcTGKst28eQKdfLcOKIzB8jCWU4fmFMNhU9jiR0oQNvik
-         VeJUW3iHKJVhpu+UNnKGTy6YXOayEe7uKiVxXyIna1jQAlAKOh5VXmO2iAFdyfiY30AK
-         idiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786193471; x=1786798271;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OlRrA389d9FWYi8l3Quvar4ELxprzGoBLCcCx6MN668=;
-        b=FAHOpx1mHHtPOASGhkorm66o54MfIjnlNcY5C9Nb+tjUlGLu33MRlo5MmpbpRZiFGQ
-         o6s56yFPi3diZNeoB2Zzm2yc7jCISVruuhSrgdNO+LRfJk118uGPDKKrZslf6pr7iZ5Y
-         LIRIcu8hGMcVatiOOJrpNy1L9cMI1Lwg9V12ZXiqFbbCPCaFpTwwEUYRrS4UYchzvBTL
-         MOwtkj7RJVijYbU49oJg6S6O74p4ggV/7rzixs+S7ovc9DajAgj4WJMA3zHgsn8NlXvU
-         T3PtZW7PSVfPtWCKNSSUfPMrGihBSHdsnRTm2U275xC/YepfEDMSkAq6B8zN5h+kQYm8
-         xm3w==
-X-Gm-Message-State: AOJu0YzAGoyiNlydo1G3sgMHgV+oy8p6VXjiOLE5U0kY0Ali4wZviMos
-	yfuZEFyftP7bWiHtFHoQdIRlko31gH4nq52O+OSg723frclQE1nPYNEykFVu6LhlluFIfw==
-X-Gm-Gg: AR+sD137AOBWl8mpWAz3glhG7JaYrSYKHuyYjn+xKSjNOss3Lxw+yEqQ0CeHKdyCjP2
-	0gWw31V649tA3bxRjJrER2xAFPPReoUo2NwTtXekysH0/Cv0PaJWKRj2ODkycax0q7EJf6ztXYA
-	VtHwaZxGVxkFJYfWo3UzqagYKZj5jCpHBVYCE5P6kj6FXe0LYNkCmANfkejE4NS+Rhd6jtSzZ4i
-	8RefHO1UROokJB9BMe0iOL+VTaN6du7/IFb3PAbsgmbdvzhTFLeMMBgOh+r7RUggGkjM/1kfzIv
-	0Yv8mHs8BljjeL5/2lv2Pgo8ufJ22qRg1qKBxv765rttxnoaCcIVha0glriYn0Caj7FwnptNDhD
-	cf7qqet4m0y4NU+pSd1ybdNGg9Dl4KtfZTz4DQjz1R+GlWustjqmumNYnaQ+hG8WNI64O7sZaRJ
-	QoM9Ad8mLFwzySqVKsP4FVw7UcX0ZgAGt/TbhWARA=
-X-Received: by 2002:a05:6a21:6f15:b0:3ab:2fa:756c with SMTP id adf61e73a8af0-3cbce6cb53bmr8991053637.1.1786193471349;
-        Sat, 08 Aug 2026 05:51:11 -0700 (PDT)
-Received: from localhost ([2403:2c80:17:1e::20db])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f35b0c3sm1846702a12.15.2026.08.08.05.51.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2026 05:51:10 -0700 (PDT)
-Date: Sat, 08 Aug 2026 20:51:07 +0800
-Message-ID: <b0499978adf9f603e5da621f0056a139.codykang.hk@gmail.com>
-From: Cody Kang <codykang.hk@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- robh@kernel.org, linux-phy@lists.infradead.org, olteanv@gmail.com,
- dri-devel@lists.freedesktop.org, vkoul@kernel.org, sashiko-bot@kernel.org
-Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
- controller bridge driver
-In-Reply-To: <20260725050438.302CF1F000E9@smtp.kernel.org>
-References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
- <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
- <20260725050438.302CF1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ch6LXmae"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=pg23t9+Cq9349ummgjLXRokranw6YorDiUashfy7AcM=; b=ch6LXmaexPUu+upV1Xwjp0mRsQ
+	8FtHySERpun5SV3+D0qZVsSzJjcEz0/Q7H2XXYSZNf1zSDJvMuY7W7KBDtvlrFc8YoIztcX60Wmn8
+	R/QWsqv39lg0L0WanYyjeOgjNfePPzXap69mXAcF0GPqPKkswVzX5sSK+KX6E+y424MGfCpf+yRNY
+	MHNRckb7cDS6X9i6+ED+Se97MFMDrh6O1GauQjvwmx9qY3gAzU9xh+YBRHKNfFB6l+V1KIZb6HJ7D
+	HgtDuhYtE43vnRW++0xzsLU9dFHEc92JBfYbsxtcERAePiC9N6M8wBVFEcXwtaFm8YMSdX95+DBzw
+	6n0oMnTw==;
+Received: from [54.239.6.187] (helo=u09cd745991455d.ant.amazon.com)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wsifK-00000006ZSG-1WZl;
+	Sat, 08 Aug 2026 15:08:50 +0000
+Message-ID: <7c34aa00b566822c257c52c4b398809354f88bf8.camel@infradead.org>
+Subject: Re: [PATCH v8 05/17] KVM: x86: Avoid NTP frequency skew for KVM
+ clock on 32-bit host
+From: David Woodhouse <dwmw2@infradead.org>
+To: Sean Christopherson <seanjc@google.com>, sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Date: Sat, 08 Aug 2026 16:08:49 +0100
+In-Reply-To: <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org>
+References: <20260804233923.3504629-1-seanjc@google.com>
+	 <20260804233923.3504629-6-seanjc@google.com>
+	 <20260805000221.B63F61F00A3A@smtp.kernel.org> <anN_J_KZhVJ1zIeI@google.com>
+	 <anUmdhx0Dh-yd89z@google.com> <anYBYu4rx-jCv8gr@google.com>
+	 <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org>
+Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
+	boundary="=-e+Lv7gzkh1GBFcKbaHyg"
+User-Agent: Evolution 3.60.3-0ubuntu1~ppa9~24.04 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
-On Sat, 25 Jul 2026 05:04:37 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 11 potential issue(s) to consider:
-> - [High] Custom EDID read function bypasses DRM core and breaks I2C repeated-start (MOT) rules, corrupting EDID reads for blocks > 0 or on active adapters.
-> - [High] The hardirq handler returns `IRQ_NONE` after clearing hardware interrupt flags, permanently disabling the IRQ line.
-> - [High] Late attachment of the eDP panel bridge violates drm_bridge_connector architecture and breaks panel support if the panel probes asynchronously.
-> - [High] DP Transfer Unit (TU) miscalculation due to pixel clock truncation.
-> - [High] The IRQ handler returns `IRQ_NONE` without clearing the hardware interrupt when `drm_dev_enter()` fails, leading to an interrupt storm.
-> - [High] `spacemit_dp_bridge_atomic_create_state` returns an error pointer instead of `NULL` on allocation failure, causing a kernel crash in the DRM core.
-> - [High] The hardirq handler calls regmap functions which use a sleepable lock on PREEMPT_RT.
-> - [Medium] The atomic_check and mode_valid callbacks access DPCD link capabilities without holding mode_lock, leading to data races with the hotplug IRQ handler.
-> - [Medium] The DP IRQ handler silently drops hotplug notifications because drm_bridge_hpd_notify() is a no-op when DRM_BRIDGE_OP_HPD is omitted.
-> - [Medium] Calling clk_set_parent() on an already enabled clock.
-> - [Medium] Resetting the AUX controller without holding aux->hw_mutex races with concurrent AUX transfers.
-> --
->
-> --- Patch [12]: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP controller bridge driver ---
-> commit b7eace372254ab27e120213d38c3a656b2a195b8
-> Author: Cody Kang <codykang.hk@gmail.com>
->
-> drm/spacemit: add Innosilicon DP/eDP controller bridge driver
->
-> Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
-> identical instances share one compatible; the eDP-vs-DP role is board
-> wiring, so it is taken from the devicetree.
->
-> > diff --git a/drivers/gpu/drm/spacemit/spacemit_inno_dp.c b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
-> > index 0000000000000..e88731d9b18bf
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
-> > @@ -248,16 +248,10 @@
-> >  static inline struct spacemit_dp_bridge_state *
-> >  to_spacemit_dp_bridge_state(struct drm_bridge_state *state)
-> >  {
-> >  	return container_of(state, struct spacemit_dp_bridge_state, base);
-> >  }
-> >
-> >  static const struct regmap_config spacemit_dp_regmap_config = {
-> >  	.name		= "dp",
-> >  	.reg_bits	= 32,
-> >  	.val_bits	= 32,
-> >  	.reg_stride	= 4,
-> >  	.max_register	= 0x3ffc,	/* full 0x4000 reg region from binding */
-> >  };
->
-> [Severity: High]
-> Is it safe to omit use_raw_spinlock from the regmap configuration? Because
-> this is not set to true, the regmap defaults to a sleepable lock on
-> PREEMPT_RT. This causes a BUG when regmap read/write functions are called
-> from the hardirq handler spacemit_dp_irq_handler().
 
-The handler is force-threaded on PREEMPT_RT (no IRQF_NO_THREAD), so
-the regmap spinlock is fine there.
+--=-e+Lv7gzkh1GBFcKbaHyg
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > [ ... ]
-> > @@ -661,16 +661,10 @@
-> >  static void spacemit_dp_link_disable(struct spacemit_dp_dev *dp)
-> >  {
-> >  	regmap_write_bits(dp->regs, DP_VIDEO_VSAMPLE_REG,
-> >  			  DP_VIDEO_STREAM_ENABLE,
-> >  			  FIELD_PREP(DP_VIDEO_STREAM_ENABLE, 0));
-> >  	spacemit_dp_phy_off(dp);
-> >
-> >  	regmap_write_bits(dp->regs, DP_SOFT_RESET, DP_AUX_RESET,
-> >  			  FIELD_PREP(DP_AUX_RESET, 0x1));
->
-> [Severity: Medium]
-> Could this reset corrupt concurrent AUX transfers? Modifying the AUX
-> hardware in spacemit_dp_link_disable() without holding the aux->hw_mutex
-> could race against a userspace or deferred transfer, potentially wedging
-> the controller.
+On Fri, 2026-08-07 at 18:26 +0100, David Woodhouse wrote:
+> (Home and on the phone after an insane week; full attention span
+> might be limited until Monday).
 
-All driver-internal AUX users serialize on mode_lock; the EDID
-rework below also serializes with the userspace i2c node.
+Hi, my name is Dave and I'm an addict...
 
-> > [ ... ]
-> > @@ -936,15 +936,10 @@
-> >  static void spacemit_dp_hw_set_msa_and_enable_video(struct spacemit_dp_dev *dp,
-> >  						    const struct drm_display_mode *mode,
-> >  					       enum spacemit_dp_link_rate rate,
-> >  					       enum spacemit_dp_lane_count lanes,
-> >  		u32 color_format)
-> >  {
-> >  	u64 hb_num;
-> >  	u32 link_rate;
-> >  	u32 fp; /* Pixel clock in MHz */
-> >  	u32 bpp, misc0;
-> >  	u32 tu, tu_frac, tu_int, rd_thres;
-> >  	u32 hsync_len;
-> >
-> >  	/* mode->clock unit is kHz, fp unit is MHz */
-> >  	if (dp->use_ext_pixel_clock)
-> >  		fp = dp->pixel_clock / 1000;
-> >  	else
-> >  		fp = mode->clock / 1000;
->
-> [Severity: High]
-> Can this truncation of the pixel clock to an integer MHz value cause DP
-> FIFO underflows or overflows? For non-integer MHz pixel clocks like
-> 148.5 MHz, this truncates to 148, introducing precision errors in the
-> Transfer Unit (TU) calculations which results in corrupted video.
+> The only reason the ktime snapshot stuff is last in the series is
+> because I did that work on the kernel's core timekeeping two years
+> after the rest of the series, and it was still sitting at the tip
+> branch at the time so I didn't want to make it a hard dependency for
+> the kvmclock series. Now the timekeeping stuff is merged we can fold
+> it all into the kvmclock series however we like.
 
-The values are vendor-faithful and board-proven at 4K; computing in
-kHz is a possible later refinement, not a v2 change.
+I think that goes for "Compute kvmclock base without pvclock_gtod_data"
+too. It *isn't* at the end of the series, but I'm fairly sure (from
+memory) that it's one of the newer commits, and I just shuffled it
+earlier in the series for very similar reasons to the ones you're
+looking at now.
 
-> > [ ... ]
-> > @@ -1286,13 +1286,10 @@
-> >  static int spacemit_dp_conn_get_edid_block(void *data, u8 *buf,
-> >  					   unsigned int block, size_t len)
-> >  {
-> >  	struct spacemit_dp_dev *dp = data;
-> >  	unsigned int start = block * EDID_LENGTH;
-> >  	u8 segment = block >> 1;
-> >  	int ret, retry;
-> >  	size_t offset;
-> >
-> >  	if (segment) {
-> >  		for (retry = 0; retry < 3; retry++) {
-> >  			ret = spacemit_dp_aux_i2c_write(dp,
-> >  				SPACEMIT_DP_DDC_SEGMENT_ADDR, &segment, 1);
->
-> [Severity: High]
-> Does this custom EDID read function bypass the Middle-Of-Transaction (MOT)
-> rules for I2C repeated-start? Issuing writes and reads without the MOT flag
-> resets the DDC segment pointer to 0, breaking EDID reads for displays with
-> multiple EDID blocks (block >= 1) or on active adapters.
+--=-e+Lv7gzkh1GBFcKbaHyg
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-Will rework in v2: the custom reader becomes one i2c_transfer per
-block on the aux I2C adapter, so the DP I2C-over-AUX core chains
-segment, offset and data with MOT, and 3+ block EDIDs work.
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+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
+RrH3KguFk9q0+CdFJahdEjEAAAAAAAA=
 
-> > [ ... ]
-> > @@ -1632,15 +1632,10 @@
-> >  static int spacemit_dp_bridge_atomic_check(struct drm_bridge *bridge,
-> >  					   struct drm_bridge_state *bridge_state,
-> >  				      struct drm_crtc_state *crtc_state,
-> >  				      struct drm_connector_state *conn_state)
-> >  {
-> >  	struct spacemit_dp_dev *dp = container_of(bridge,
-> >  						  struct spacemit_dp_dev,
-> >  						  bridge);
-> >  	struct spacemit_dp_bridge_state *st =
-> >  			to_spacemit_dp_bridge_state(bridge_state);
-> >  	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
-> >  	int bpp;
-> >  	u32 req_bw;
-> >  	int i;
-> >
-> >  	/* A single output bus format, see ->atomic_get_output_bus_fmts(). */
-> >  	st->color_format = SOC_VIDEO_RGB_8BIT;
-> >  	bpp = spacemit_dp_get_bpp(dp, st->color_format);
-> >  	req_bw = spacemit_dp_calc_required_bw(mode, bpp);
-> >
-> >  	/* No caps yet: leave idx unset and let ->atomic_enable() retry. */
-> >  	if (!dp->link.max_rate || !dp->link.max_num_lanes) {
->
-> [Severity: Medium]
-> Could reading the DPCD link capabilities here race with the hotplug IRQ
-> handler? Accessing the dp->link capabilities in
-> spacemit_dp_bridge_atomic_check() without holding mode_lock might observe
-> intermediate or torn states if a concurrent interrupt triggers a capability
-> re-read, leading to transient rejections of valid modes.
 
-detect(), enable and the EDID paths all serialize on mode_lock.
-
-> > [ ... ]
-> > @@ -1705,10 +1705,10 @@
-> >  static struct drm_bridge_state *
-> >  spacemit_dp_bridge_atomic_create_state(struct drm_bridge *bridge)
-> >  {
-> >  	struct spacemit_dp_bridge_state *new;
-> >
-> >  	new = kzalloc_obj(*new);
-> >  	if (!new)
-> >  		return ERR_PTR(-ENOMEM);
->
-> [Severity: High]
-> Should this return NULL on allocation failure instead of an error pointer?
-> The DRM core's reset helper assigns the returned state directly without
-> checking for errors. Returning an error pointer here causes a fatal page
-> fault when the DRM core later dereferences it.
-
-ERR_PTR is what the bridge core expects here;
-drm_bridge_atomic_create_priv_state() checks IS_ERR().
-
-> > [ ... ]
-> > @@ -1742,16 +1742,10 @@
-> >  static int spacemit_dp_edp_link_panel(struct drm_dp_aux *aux)
-> >  {
-> >  	struct spacemit_dp_dev *dp = container_of(aux, struct spacemit_dp_dev,
-> >  						  aux);
-> >  	struct drm_bridge *next;
-> >  	int ret;
-> >
-> >  	next = devm_drm_of_get_bridge(dp->dev, dp->dev->of_node, 1, 0);
-> >  	if (IS_ERR(next))
-> >  		return PTR_ERR(next);
-> >
-> >  	dp->next_bridge = next;
-> >
-> >  	/*
-> >  	 * A non-NULL bridge.encoder means .attach already ran: late-chain
-> >  	 * panel-edp.
-> >  	 */
-> >  	if (dp->bridge.encoder) {
-> >  		ret = drm_bridge_attach(dp->bridge.encoder, next,
-> >  					&dp->bridge,
-> >  					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->
-> [Severity: High]
-> Does dynamically attaching the panel bridge late bypass connector
-> initialization? If the eDP panel defers its probe,
-> drm_bridge_connector_init() builds the connector without the panel bridge.
-> Attaching it here later violates the drm_bridge_connector architecture and
-> breaks panel support, because the connector will lack the panel's mode or
-> EDID operations.
-
-Handled by design: the aux-bus done-probing callback late-chains
-with DRM_BRIDGE_ATTACH_NO_CONNECTOR and re-fires detection; both
-probe orders are exercised on hardware. See the comment above
-spacemit_dp_edp_link_panel().
-
-> > [ ... ]
-> > @@ -1782,10 +1782,10 @@
-> >  static irqreturn_t spacemit_dp_irq_handler(int irq, void *data)
-> >  {
-> >  	struct spacemit_dp_dev *dp = data;
-> >  	irqreturn_t ret = IRQ_NONE;
-> >  	int idx;
-> >
-> >  	if (!drm_dev_enter(dp->drm, &idx))
-> >  		return IRQ_NONE;
->
-> [Severity: High]
-> Will returning IRQ_NONE here without clearing the hardware interrupt cause
-> an interrupt storm? If an interrupt fires while the DRM device is
-> unregistered (such as during module unload), the handler exits without
-> acknowledging the hardware interrupt, causing it to continuously fire and
-> stall the CPU.
-
-Only reachable during unbind while the line is being torn down.
-
-> > [ ... ]
-> > @@ -1796,11 +1796,10 @@
-> >  	/*
-> >  	 * Only compare here: the authoritative connector_status update
-> >  	 * happens in the thread under mode_lock, via .detect().
-> >  	 */
-> >  	if (spacemit_dp_hw_detect_hpd(dp) != READ_ONCE(dp->connector_status))
-> >  		ret = IRQ_WAKE_THREAD; /* Call hotplug_event */
-> >  	spacemit_dp_hw_clean_hpd(dp);
-> >
-> >  	drm_dev_exit(idx);
-> >  	return ret;
-> >  }
->
-> [Severity: High]
-> Is it safe to return IRQ_NONE after clearing the hardware interrupt flags?
-> If the logical state has not changed (e.g. from a transient hardware
-> glitch), returning IRQ_NONE causes the kernel's spurious interrupt detector
-> to eventually disable the IRQ line, which results in all future hotplug
-> events being permanently missed.
-
-Real; will return IRQ_HANDLED in v2 when a latched HPD event was
-consumed.
-
-> > [ ... ]
-> > @@ -1813,11 +1813,10 @@
-> >  static irqreturn_t spacemit_dp_hotplug_event_handler(int irq, void *data)
-> >  {
-> >  	struct spacemit_dp_dev *dp = data;
-> >  	enum drm_connector_status status;
-> >  	int idx;
-> >
-> >  	if (!drm_dev_enter(dp->drm, &idx))
-> >  		return IRQ_HANDLED;
-> >
-> >  	/*
-> >  	 * .detect() owns mode_lock and re-reads the sink caps on a fresh plug
-> >  	 */
-> >  	status = spacemit_dp_bridge_detect(&dp->bridge, dp->connector);
-> >  	drm_bridge_hpd_notify(&dp->bridge, status);
->
-> [Severity: Medium]
-> Will this hotplug notification be silently dropped? Since
-> DRM_BRIDGE_OP_HPD is not set for the DP bridge during inno_dp_probe(), the
-> bridge->hpd_cb is NULL, making drm_bridge_hpd_notify() a no-op and forcing
-> the DRM core to rely entirely on periodic polling.
-
-Deliberate: the HPD interrupt is gated by the DP pixel clock, so
-the connector is polled instead, and the IRQ path still refreshes
-status early when it does fire. Documented at the ops assignment.
-
-> > [ ... ]
-> > @@ -2338,10 +2338,15 @@
-> >  static int inno_dp_probe(struct platform_device *pdev)
-> >  {
-> >  	struct device *dev = &pdev->dev;
-> > [ ... ]
-> >  	if (dp->pxclk) {
-> >  		ret = clk_prepare_enable(dp->pxclk);
-> >  		if (ret) {
-> >  			dev_err(dev, "failed to enable pxclk: %d\n", ret);
-> >  			goto err_reset;
-> >  		}
-> >  	}
-> > [ ... ]
-> >  	if (dp->pxclk) {
-> >  		ret = clk_set_parent(dp->pxclk, dp->pll_clk);
->
-> [Severity: Medium]
-> Can calling clk_set_parent() on an already enabled clock cause hardware
-> glitches? The pxclk is prepared and enabled earlier in inno_dp_probe(), and
-> reparenting a running clock without hardware-specific glitch-free muxing
-> can lock up downstream logic.
-
-The mux is reparented before the display is enabled; nothing scans
-while it switches at probe.
-
-Cody
+--=-e+Lv7gzkh1GBFcKbaHyg--
