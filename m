@@ -1,178 +1,195 @@
-Received: from meve.dewith.io (meve.dewith.io [157.90.20.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32B63CB2CF
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 10:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.20.64
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786185434; cv=none; b=aIS6K79KxtQuFZr9H6nh5Uenimq5HDb7uuZmEb4D139S0op977mgkLfjL6pR9PCvGjF4ZnSE1bVkR5MIGjujC7fpRiVYItwDWMuvg8Xh7dsW2PjLS9OZ2t9Gp9iKpDfaGMJNolrU+tgcjkkHZp8Ch8tcQF5lRecgXxbOoFgHg4E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786185434; c=relaxed/simple;
-	bh=s/I0xdOx+n7VnNTPht8TffgnXTNOSrOv20s7+rZj9U0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B2IrDbuC3eeaTGuEENfDvbDBNXoJcp2ZZNdRUhg8e/LH2LHf34CQHzsxj+AoNW3j7KXQRpFv6I7f2bzkB/XRsKc41nPoL6GHKyYYKhwMOdw921gVBuo2M65LaHp4dacAEwXlWiGuQ0ChLoq41l5uamKSbKw+lDN4lEKQrRGqeSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=dewith.io; spf=pass smtp.mailfrom=dewith.io; dkim=pass (1024-bit key) header.d=dewith.io header.i=@dewith.io header.b=gnSL7tzt; arc=none smtp.client-ip=157.90.20.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=dewith.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dewith.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DC13C1D44
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 10:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786185791; cv=pass; b=VWnKquNL2ZXMGaudeolpEWzB/4wTz28/8joxfXKqFH+nVJ0HXnBu+2cNkj7OKIYLelCGv/sdn1BFZHn78tHdxEiYlSvp8EptsZMsvsMU7wLEJLeqaByX+wqXN+skUIx9aHfPpgjKoWdmJMihj6vnxKCxUnz8popWtICGSjGMvnc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786185791; c=relaxed/simple;
+	bh=mXjI6xLrsgJ/BCByKBCc7QBfdI52WmMfRYnj8yT11hk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mpTywugPMwV1wV+lv7Y/Jq43DI8yFxD4CkHlkHsYUPfeMSnn4SXpCRRqF1WPH875OGuUGZ8osQScQPpuAow7U43da/35xeH2M5zRNaTTVhHIv9sBBDDw+u/V+R1gN7QKq4aEECVcG4XpWH3ShPbuc7njGpXJ6rsL30m+fNcKYmM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oN2NHSFo; arc=pass smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=dewith.io header.i=@dewith.io header.b="gnSL7tzt"
-Received: from localhost (37-74-132-17.biz.kpn.net [37.74.132.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by meve.dewith.io (Postfix) with ESMTPSA id DBE5A20157;
-	Sat,  8 Aug 2026 10:37:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dewith.io; s=default;
-	t=1786185424;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YMBaPAYHToijBVahmID/bRSHm7hl1KFROWZe+Ee2lu8=;
-	b=gnSL7tztfhUSFv4oQ1kEHZvH5rbDhNeMvYW6eGeittWdRtE7jhARpF/TBJixsqlWe/aZdx
-	C5bUlSlk7nhWLGw3DwhFiJMczvTsHO+dk6+w3OkRAgby6vD3YkIlPf1TJY0zdtYBJr6FKq
-	hbZ0UrsItw7iW/+e8yIu1agKYQSu92U=
-Date: Sat, 8 Aug 2026 12:28:16 +0200
-From: Wim de With <wf@dewith.io>
-To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, robh@kernel.org, dri-devel@lists.freedesktop.org,
-	linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH 2/2] backlight: Add support for Orient Chip OCP8178
-Message-ID: <A02AA15C-FF70-41E1-B2F7-1DC157CCB544@dewith.io>
-References: <20260806201541.101304-1-wf@dewith.io>
- <20260806201541.101304-3-wf@dewith.io>
- <20260806203654.542301F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oN2NHSFo"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8453427d3f4so369493b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 03:43:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786185790; cv=none;
+        d=google.com; s=arc-20260327;
+        b=i/6uLfSYf5tJ2Cn4yrfGzorlpfAzNczzXY2XlFs+TX9E8QrxyZhLFPYmRrcgJoW8ol
+         EZ8luAsLzB/nmy3bIt4nhZo9JbUyLXM6f0QCXXJiD07obf/Ig+2bBiY7H8VSo8PriefQ
+         VymUJi1PrILXYa0TpduGr2UNAJX1noMsW3CmW1ZhHgWoZO9gPBw4SOc6K7e091KydTJY
+         tR/Aq8Qg+jBHAP9iBIRc9psZo73WBpD47DuRxznwg9W0HeAJGT5ffg4kU2Mls1iIG/Ok
+         +6yYfmetAc1PYXlvcQ4MMhgHYMilFnSBwSHJiVA/nPuHTPihmjlcWeTymi2R0YwKqXtk
+         GRAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
+        fh=3mbWQc2KYnV1YBFEjtPx/1jzUpC/uZUzPfAesf3Pc0M=;
+        b=pE/hwtaSXovGRU+bCOyeUGTimz85YD5AjIitUUIK+6y/V26awKfGY/JPBhuYL5Rfij
+         sWIdS5M1WDrWqvTOsAejoocMHooLAOAHP7mUNoyFa3MuPBhkJV95XPdCSmSC6D38WwyB
+         01wG/LzohJKQDBXnFfdbr+XoB1+uYy0FTTVhV3VTRP3e0N4GaU87FaehLwUI8KuFrZAi
+         71oH12DqM0Zdc2JjJHmd8n9s5bqiRp323lTKT7Rz4JC6KixYs0ARE7DJyv++53uBId+f
+         uKZFUHDV32RkxxujdkOgd6rsF6gZfI2BLmc+bxFF0fcU6dAAeFq/1zX9BK471z7MdB6G
+         iDCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786185790; x=1786790590; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
+        b=oN2NHSFoWObscXjoAPmj5L9lqtIiWUTLSEIjF2RTeBhrg/FQWPd96IJpzZKle4PexQ
+         taAdS7hYXNF9wwJzv6fF+wfK+dn3cdYLVDyASfFuj78aWwTImwmwv5H1q0k/f+4R+6hK
+         XhyDX5NNSu74MaRmUCj4/qxjt4K+Rg+ENSb74rpguxI02PvvICDeig67C/VxAI0PkONE
+         59KCN+9nFNKaqVhHMZpU2rOTXBdruGMk8qpb4bG9uYiISPqtL07LpbzfqeQDtjVEtrDr
+         ik7Au3dcGLABOuMaEf0AgvMNUSiXdyoWAfXKAywrnQ1LtRyzZlkl8fjkLS+s1JWqfKL5
+         pcnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786185790; x=1786790590;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
+        b=bL2qMAa2JzK5956wdQLSeD9ye3AjGB6IQ7WMnhI+ZkDu5pCzWn/R1vYFw8+x1kl5WX
+         LqLtyMbrVZtIEQfi4s6n7cQOdi52GWmhTks5qfQlsCM7qqc02m19PN0pkdgJPQrcIJ7n
+         OmzVOXeUOe82OxpYFBAzBgDd9k+wzNCM7+7geUYtpjf2+CS7amqXRb80blQZFsvSjd9A
+         DbmrHysi4whQoYnltZlt2uZkbbvu2i8IBMBEkTikGiKAzvEkCrsFLp3PgKrTwUIUifKR
+         w/0tsxFiOGRcCdI5mBnBg5XDpUudJzd4GeS+NtjLqoypy0Ogs4tnAuWQb0E+S6zEko9X
+         XwGg==
+X-Gm-Message-State: AOJu0Yw9OoJcWfhlZaJ0FFmUuPUELNC7RQ0a4eGgYeKdtVCCPDw1C8tc
+	CmxQMoyVLip5HRbyo59l7Yd/fyER3e8TCCW9DfhdoJTarPmkl6BEofh8vfkKfA7CobsVzxnxn67
+	/zm6o+K488bJ+LcEdKNnCpfGyD3+icj1av6QX
+X-Gm-Gg: AR+sD13aem9ALoGkOaRiGgija0XB6ZxMXpOQX5Dus2BUftYfLfuUV05+DTWypcY+XWG
+	egefKo2APvjf6m0Y/9b5xOPvYBstHXcw95eDGpyp1BB9I/nIDP0BhYfqysTG+7OFn8eZU6gSi08
+	3bshhzmfS6jyBsWdznEe0TDuKJ/DIsQU0/qJyRHuJyPUbvzk1d0ISxwdbkS4KLxt1VrS/uVdJBu
+	kGJDKjvT4ir8dBZXb1o/HuHPCiqdtHRW0XCE9wkzO8l4lRKj3vIrqjRdzeg6LHMljl4x+gTYJ8Q
+	9Cxah61HeZQJruYl6vnDyOpZYHJa32zaTgWQ/sesQZNURq5qg2QNMHDD/DkcPqahr5+59ZX3PzH
+	RcQB9S1gvKt4vN5BGpm9d9LFCsXiCqwAbylhLndqJNe6Tf/T/pF0o+rZgn0zX2Kt4FAd8ekntyr
+	aMVQ/+U8Npyefq+Mg=
+X-Received: by 2002:a05:6a00:4293:b0:84a:6540:3389 with SMTP id
+ d2e1a72fcca58-84f2dfc53e4mr33552422b3a.10.1786185789775; Sat, 08 Aug 2026
+ 03:43:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260806203654.542301F000E9@smtp.kernel.org>
-User-Agent: K-9 Mail for Android
-X-K9mail-Identity: !l=5700&o=27&fo=27&pl=4796&po=0&qs=PREFIX&f=HTML&m=%2
- 3%3AMTRjYmVhM2ItMTllMS00ZTVmLTlkNGUtYTgwNWZmMmI3MTBj%3AMTk%3D%3AMjI%3D&
- p=4124&q=NONE
-X-TUID: LDDKbQpo27r7
+References: <20260807090945.41690-1-phucduc.bui@gmail.com> <20260807090945.41690-3-phucduc.bui@gmail.com>
+ <20260807092245.4730E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260807092245.4730E1F000E9@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sat, 8 Aug 2026 17:42:58 +0700
+X-Gm-Features: AUfX_mwps0K_oGqDED58AIb5iJaSMgZ8HxJfRxTKu9khW67GW5bUW_-aJvkpS2I
+Message-ID: <CAABR9nFW8XYSts6ZxTekZJSTpProDCrVgOm5=5aW1ahXV=wG5g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] serial: 8250_mtk: Propagate errors from optional IRQ lookup
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 06, 2026 at 08:36:53PM +0000, sashiko-bot@kernel.org wrote:
-> > +static void ocp8178_bl_write_u8(struct ocp8178_bl *ocp8178, u8 value)
-> > +{
-> > + unsigned long flags;
-> > +
-> > + gpiod_set_value(ocp8178->gpiod, 1);
-> > + udelay(OCP8178_1W_T_START_US);
-> > +
-> > + local_irq_save(flags);
-> > +
-> > + for (int i = 7; i >= 0; i--) {
-> > + if ((value >> i) & 1) {
-> > + gpiod_set_value(ocp8178->gpiod, 0);
-> 
+On Fri, Aug 7, 2026 at 4:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Critical] The probe function exits with an error without unregistering=
+ the previously registered 8250 port, leading to a port leak and a use-afte=
+r-free of devm-allocated memory.
+>
+> Pre-existing issues:
+> - [High] Runtime PM is enabled after the UART port is registered, violati=
+ng TTY subsystem guidelines and risking circular wait conditions during pro=
+be.
+> --
+>
+> --- Patch [3]: [PATCH 3/3] serial: 8250_mtk: Propagate errors from option=
+al IRQ lookup ---
+> commit b5b9e4c48c3e7b1094e5e1c9834f9f8130a17c26
+> Author: bui duc phuc <phucduc.bui@gmail.com>
+>
+> serial: 8250_mtk: Propagate errors from optional IRQ lookup
+>
+> This commit updates mtk8250_probe() to propagate error codes such as
+> -EPROBE_DEFER or -EINVAL from platform_get_irq_optional(), rather than
+> continuing without an IRQ.
+>
+> > diff --git a/drivers/tty/serial/8250/8250_mtk.c b/drivers/tty/serial/82=
+50/8250_mtk.c
+> > index e6a56cf54ae0c..d0d2aecf90059 100644
+> > --- a/drivers/tty/serial/8250/8250_mtk.c
+> > +++ b/drivers/tty/serial/8250/8250_mtk.c
+>
+> [ ... ]
+>
+> > @@ -587,6 +587,8 @@ static int mtk8250_probe(struct platform_device *pd=
+ev)
+> >               return data->line;
+> >
+> >       data->rx_wakeup_irq =3D platform_get_irq_optional(pdev, 1);
+> > +     if (data->rx_wakeup_irq < 0 && data->rx_wakeup_irq !=3D -ENXIO)
+> > +             return data->rx_wakeup_irq;
+>
+> [Severity: Critical]
+> Does this error path leak the registered serial port?
+>
+> The port was successfully registered earlier in mtk8250_probe() via
+> serial8250_register_8250_port(), but there is no call to
+> serial8250_unregister_port() before returning the error here.
+>
+> Could this result in a use-after-free if the tty device is later accessed=
+?
+> The devm-allocated memory for the data structure will be automatically fr=
+eed
+> when the probe fails, but the port remains active globally.
+>
+> >
+> >       pm_runtime_set_active(&pdev->dev);
+> >       pm_runtime_enable(&pdev->dev);
+>
+
+I agree that this makes sense. I'll make the change and send v2.
+
 > [Severity: High]
-> Could this trigger a scheduling while atomic bug if the GPIO controller is
-> behind an I2C or SPI expander?
-> 
-> Since this bit-banging occurs inside a local_irq_save() block where hardware
-> interrupts are disabled, any GPIO accesses must not sleep. If the driver
-> is instantiated via Device Tree with a sleepable GPIO, gpiod_set_value()
-> will attempt to sleep in an atomic context.
+> This is a pre-existing issue, but should runtime PM be enabled before
+> the serial port is registered?
+>
+> The mtk8250_do_pm() callback invokes pm_runtime_get_sync(). If
+> serial8250_register_8250_port() synchronously invokes the pm callback
+> during registration, it will attempt to use uninitialized runtime PM
+> infrastructure, which can lead to circular wait conditions.
+>
+> >
+> >       return 0;
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260807090945.41=
+690-1-phucduc.bui@gmail.com?part=3D3
 
-> Should probe() explicitly reject sleepable GPIOs by checking
-> gpiod_cansleep()?
+In mtk8250_probe(), uart.port.pm is set to mtk8250_do_pm:
 
-I didn't realize that the spinlock safety is a property of the GPIO
-itself. Applying this suggestion means that we don't need to use
-gpiod_set_value_cansleep() at all in this driver.
+uart.port.pm =3D mtk8250_do_pm;
 
-I took inspiration from the ktd253 driver, which also has tight timing
-requirements on GPIO bit-banging. This driver does not check
-gpiod_cansleep() either and mixes gpiod_set_value() and
-gpiod_set_value_cansleep(), which is incorrect.
+In serial8250_register_8250_port(), this part:
 
-> > + udelay(OCP8178_1W_HIGH_BIT_T_LOW_US);
-> > + gpiod_set_value(ocp8178->gpiod, 1);
-> > + udelay(OCP8178_1W_HIGH_BIT_T_HIGH_US);
-> > + } else {
-> > + gpiod_set_value(ocp8178->gpiod, 0);
-> > + udelay(OCP8178_1W_LOW_BIT_T_LOW_US);
-> > + gpiod_set_value(ocp8178->gpiod, 1);
-> > + udelay(OCP8178_1W_LOW_BIT_T_HIGH_US);
-> > + }
-> > + }
-> > +
-> > + gpiod_set_value(ocp8178->gpiod, 0);
-> > +
-> > + local_irq_restore(flags);
-> > +
-> > + udelay(OCP8178_1W_T_EOS_US);
-> > + gpiod_set_value(ocp8178->gpiod, 1);
-> 
-> [Severity: High]
-> Is there a risk that the end-of-sequence pulse gets extended arbitrarily here?
-> 
-> By calling local_irq_restore() while the GPIO is driven low, any pending
-> interrupts will run immediately. If system interrupt processing or softirqs
-> delay execution by more than 2.5ms (OCP8178_T_OFF_MS), the hardware will
-> interpret this extended low pulse as a command to disable the onewire mode.
-> 
-> This could cause the controller to unexpectedly power off and revert to PWM
-> mode, breaking backlight control.
-> 
-> Would it be safer to restore interrupts after the final gpiod_set_value()
-> call?
+if (uart->port.type !=3D PORT_8250_CIR) {
+        if (uart_console_registered(&uart->port))
+                pm_runtime_get_sync(uart->port.dev);
 
-This is indeed a problem and I'll fix it in v2. The datasheet states
-that T_EOS must be between 2 and 360 us. Interrupt handling may
-exceed this value.
+calls pm_runtime_get_sync() directly on the device, and I don't see a
+direct call to port.pm here.
+it may be invoked in some other helper function called within
+serial8250_register_8250_port() itself.
 
-> > +static void ocp8178_bl_set_brightness(struct ocp8178_bl *ocp8178, u8 brightness)
-> > +{
-> > + u8 data = 0;
-> > +
-> > + dev_dbg(ocp8178->dev, "setting brightness to %u\n", brightness);
-> > +
-> > + data |= FIELD_PREP(OCP8178_DATA_ADDR, 0);
-> > + data |= FIELD_PREP(OCP8178_DATA_VALUE, brightness);
-> > +
-> > + ocp8178_bl_write_u8(ocp8178, OCP8178_DEVICE_ADDRESS);
-> > + ocp8178_bl_write_u8(ocp8178, data);
-> 
-> [Severity: Medium]
-> Does the controller require strict timing between the address and data bytes?
-> 
-> Since ocp8178_bl_write_u8() only disables interrupts for the duration of a
-> single byte, an interrupt could fire between these two calls. If the 1-wire
-> hardware state machine has a maximum idle time, arbitrary interrupt latency
-> in the inter-byte gap might cause the controller to reset and drop the
-> brightness update.
-
-For sending a single byte, we need to disable interrupts for about 58
-us. The datasheet doesn't put a maximum on T_START (which is the start
-of sequence period) so I would need to test the practical limitation.
-Regardless though, disabling interrupts for both writes would take 118
-us and I'm not sure if that is preferable over failing a brightness
-update in rare situations.
-
-> > +static const struct backlight_ops ocp8178_bl_ops = {
-> > + .options = BL_CORE_SUSPENDRESUME,
-> > + .update_status = ocp8178_bl_update_status,
-> > +};
-> 
-> [Severity: Medium]
-> Is BL_CORE_SUSPENDRESUME sufficient for restoring this hardware after suspend?
-> 
-> If the platform cuts power to the backlight controller during system suspend,
-> the hardware will wake up in its default PWM mode. The backlight core will
-> simply call update_status() on resume to restore brightness, but the onewire
-> brightness commands will be ignored because the onewire mode hasn't been
-> re-enabled.
-> 
-> Should the platform driver provide pm operations to re-execute
-> ocp8178_bl_enable_onewire() on system resume?
-
-I'm not sure if this is just LLM-hallucination or actually relevant.
-Should I account for the power cutting to the controller if the driver
-itself doesn't implement the power cutting?
+That said, this is a pre-existing issue, so I'd like to keep this
+patch scoped as-is and not address it here.
