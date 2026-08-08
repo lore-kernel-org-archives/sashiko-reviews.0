@@ -1,132 +1,118 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C1C19046E
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 16:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890F6345725
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 16:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786205009; cv=none; b=ET/sZhUtIWepc/UHvQWbVq7HCvGKiOEeYyPVT+0QTL0M5wHrv7QVSuqhhqmsHgHPDthiGzlcvWG4Tfiv8uyP93qh4nopZ7+82MnmIRefR6ZEOtYN2XcyfFpvIAyK5acx1bGGem0pEYvzOWxOmSn4oJcw7Zk+kOxMx0knax4Slv4=
+	t=1786205307; cv=none; b=einKmeFtMu8wh5dNI6HYv0WJ7t2qnz1eIkyDgF4SaJdu+lX3l9wH0654nT/JfLZPEv305d91DC5eaFHy1kamIaFbmMZOjo2nvJOYlezpr7zyVPGiEtcosvSj64fN1auD0rIqt0q9LUz2w6AFuP3ifKISNDFpuhTClGOclocpQBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786205009; c=relaxed/simple;
-	bh=ILHf0iFPsOL//tvtiBRcG1RLIHbs+oDyF4gx2B63WiY=;
+	s=arc-20240116; t=1786205307; c=relaxed/simple;
+	bh=dfl8gpcfQUXz2gO95hFYGw8Np9EFr5FXQB6/QU4Vur8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HfTy58tuLPyk5V5BpC44nALmDIhcNy0J+RpYyIKvt+/aPaucgxaFYFeLdOjyxqzDpkar/6NJZELwiHm5cZC9QtpbOBe1h/ulILvfQYjzedoX1pKOHcimWzWYqAbT7pNmUgac572Lu97POMemfP8dF540HrGY1p7LQn+3WdpdN/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=j10b+b6N; arc=none smtp.client-ip=91.218.175.186
+	 In-Reply-To:Content-Type; b=uRBkGSzwV6vutWyMlI9ED0UpZ39fK8u+/kf9Jwl4TvWtrKxOCdIhtxzEuXXC7ecXKaE0Rd/stDlgyveJi0c/1ZWnjLUE78U3K1d16NCiVtB2CDrmAdGpEE/+PVUDjfBP2vRJQ6M9fO5YhzK7QSOoHJuSVerW4NF6fuZcGuvjujQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PmJZCSSQ; arc=none smtp.client-ip=91.218.175.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="j10b+b6N"
-Message-ID: <1de41ecc-9ff3-42b7-8b1b-f71b233965ac@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PmJZCSSQ"
+Message-ID: <df7b5afd-d012-437a-8cb4-8095fdb52752@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786205004;
+	t=1786205293;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FAbay96Idmxx0yTlNvviqCOHwEEy0ezS9jpgEf1b4qc=;
-	b=j10b+b6NYJn/0GDK6/O3nRk6OjafP95iLGzxHqIGpokvsudDdETSjF2EtTqdLmpY9nXEI/
-	frSLisZf9OR5llPulxiyR2C58e9pqa62ZNv+s/KyRHOE6smVHF25lMErHtd4s/d8PLVzmh
-	7Dn4cUwE72fjESkl5dbIiWs0AolWXO0=
-Date: Sat, 8 Aug 2026 09:02:59 -0700
+	bh=F+vlreat5ZEJUL+O1ujJeOU9gYQKiL5alpysgKi7NrA=;
+	b=PmJZCSSQS8gk1isFdj66i9f3kwLVhRMxeIoa1P6Akz45kgRKnpDvNoZqemKiYfhEPEVJpo
+	YDEIDSvlhv3U8S4x5UULJrHX4PVWqhg39hDu4R688PLl+27WxjGSf6MKS8kCUp0wsDCOBQ
+	VrCklNlKb6octFvbTO8wv8xM0jYi8c0=
+Date: Sat, 8 Aug 2026 09:07:51 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v2 05/13] bpf: Account R2 of register-pair
- returns in live register analysis
+Subject: Re: [PATCH bpf-next v2 07/13] bpf: Add verifier support for 16-byte
+ returns in R0:R2
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260804203522.1869244-1-yonghong.song@linux.dev>
- <20260804203548.1872337-1-yonghong.song@linux.dev>
- <20260804211451.A7F621F000E9@smtp.kernel.org>
+ <20260804203558.1873903-1-yonghong.song@linux.dev>
+ <20260804205219.D44AC1F000E9@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260804211451.A7F621F000E9@smtp.kernel.org>
+In-Reply-To: <20260804205219.D44AC1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
 
-On 8/4/26 2:14 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The verifier fails to check if BPF_REG_2 is initialized at BPF_EXIT for global subprograms returning > 8 bytes, which can lead to leaking uninitialized memory.
-> - [High] The verifier fails to copy the callee's R2 to the caller's R2 in prepare_func_exit() for static subprograms returning > 8 bytes.
+On 8/4/26 1:52 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Kfuncs returning 9-15 byte structs leak uninitialized kernel memory via R2 because the verifier bypasses zero-extension.
 > --
 >
-> --- Patch [5]: [PATCH bpf-next v2 05/13] bpf: Account R2 of register-pair returns in live register analysis ---
-> commit 149c9afee6775ff575a63e08693b340337d96491
+> --- Patch [7]: [PATCH bpf-next v2 07/13] bpf: Add verifier support for 16-byte returns in R0:R2 ---
+> commit 5c235db7cbd600a1b91b24fbad96652d702b6b3a
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Account R2 of register-pair returns in live register analysis
+> bpf: Add verifier support for 16-byte returns in R0:R2
 >
-> This commit updates the live register analysis in the BPF verifier to mark R2
-> as read at BPF_EXIT for subprograms returning a value larger than 8 bytes. It
-> uses bpf_ret_reg_pair() to determine if a subprogram returns its value in the
-> R0:R2 register pair.
+> This commit adds verifier support for returning values in two registers
+> (R0 and R2) for structures between 9 and 16 bytes or __int128. It adds
+> handling for subprogram and kfunc returns to map the second return
+> register to BPF_REG_2.
 >
->> diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
->> index 0aadfbae0acc5..68df6d8db4bda 100644
->> --- a/kernel/bpf/liveness.c
->> +++ b/kernel/bpf/liveness.c
 > [ ... ]
->> @@ -2174,7 +2179,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
->>   			break;
->>   		case BPF_EXIT:
->>   			def = 0;
->> -			use = r0;
->> +			use = ret_reg_pair ? (r0 | BIT(BPF_REG_2)) : r0;
-> [Severity: High]
-> Does check_global_subprog_return_code() also need to check BPF_REG_2 when the
-> subprogram returns a register pair?
 >
-> If a global BPF subprogram returns a 16-byte value (e.g., an __int128 or
-> struct) but does not write to R2 before exiting, the verifier only validates
-> that BPF_REG_0 is initialized:
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 5584178a0e1c7..60b9e587e0947 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
 >
-> kernel/bpf/verifier.c:check_global_subprog_return_code() {
->      ...
-> 	return check_global_ret_scalar_reg(env, BPF_REG_0);
-> }
+>> @@ -10859,6 +10901,22 @@ static void mark_btf_func_reg_size(struct bpf_verifier_env *env, u32 regno,
+>>   	return __mark_btf_func_reg_size(env, cur_regs(env), regno, reg_size);
+>>   }
+>>   
+>> +/* Mark the register(s) holding a @size byte kfunc return value as unknown
+>> + * scalars. All of them are processed the same way, only the size differs:
+>> + * a single register may hold a sub-register sized value, while both halves
+>> + * of a register pair are treated as 64-bit wide.
+>> + */
+>> +static void mark_kfunc_ret_regs(struct bpf_verifier_env *env,
+>> +				struct bpf_reg_state *regs, u32 size)
+>> +{
+>> +	u32 i, nregs = ret_regs_cnt(size);
+>> +
+>> +	for (i = 0; i < nregs; i++) {
+>> +		mark_reg_unknown(env, regs, ret_regs[i]);
+>> +		mark_ret_reg_size(env, regs, ret_regs[i], nregs == 1 ? size : sizeof(u64));
+> [Severity: Medium]
+> For kfuncs returning a struct between 9 and 15 bytes in size, does
+> forcing sizeof(u64) for both return registers bypass zero-extension for R2?
 >
-> Although check_global_ret_scalar_reg() was refactored earlier in this series
-> so that it can be reused for R2, there appears to be no call added to check R2
-> in check_global_subprog_return_code().
+> If the native compiler only populates the lower bytes of the second return
+> register (e.g. RDX on x86_64) for a <16 byte struct, the upper bits will be
+> left uninitialized. However, setting the size to sizeof(u64) here sets
+> subreg_def to DEF_NOT_SUBREG for R2, which treats R2 as a fully initialized
+> 64-bit scalar.
 >
-> Can this allow a global subprogram to leak uninitialized kernel memory or
-> pointers in the CPU register corresponding to R2 back to the kernel caller?
->
-> [Severity: High]
-> Additionally, should prepare_func_exit() copy the callee's R2 to the caller's
-> R2 for static subprograms returning > 8 bytes?
->
-> Currently, prepare_func_exit() only copies R0:
->
-> kernel/bpf/verifier.c:prepare_func_exit() {
->      ...
-> 	} else {
-> 		/* return to the caller whatever r0 had in the callee */
-> 		caller->regs[BPF_REG_0] = *r0;
-> 	}
->      ...
-> }
->
-> If a BPF program calls a static subprogram that returns a 16-byte value, and
-> the caller attempts to use the upper 8 bytes returned in R2, won't the verifier
-> reject the valid program with a read of uninitialized register error?
->
-> This happens because the caller's R2 was marked NOT_INIT prior to the call by
-> clear_caller_saved_regs(), but prepare_func_exit() does not propagate the
-> callee's R2 value back to the caller.
+> Since the verifier's zero-extension logic only supports zero-extending the
+> destination register (R0 for calls), couldn't a BPF program performing a
+> 64-bit read of R2 leak up to 7 bytes of uninitialized kernel register state?
 
-We should be okay here. The actually allowing R2 is in later commit
-  Add verifier support for 16-byte returns in R0:R2
+This should be okay. The bpf prog return value will be handled properly in
+bpf prog, e.g., if the value (R2) is an int, the bpf prog will do proper
+32-bit sign extention.
 
 >
->>   			break;
->>   		case BPF_CALL:
->>   			def = ALL_CALLER_SAVED_REGS;
+>> +	}
+>> +}
+> [ ... ]
+>
 
