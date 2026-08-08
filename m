@@ -1,265 +1,401 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f9.google.com (mail-pj2-f9.google.com [74.125.227.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B033B2AA;
-	Sat,  8 Aug 2026 12:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14343F8254
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 12:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786190736; cv=none; b=NiV3TpX3z/tKItJDaED6G5Dmddtz8RXSyUasu2AgaE1EN0OQBthwvVXe4ZhGZqjVO8GiJppmR2fg/cZEXpIdmRnOEw6gQbZGzLxr8sOl+LLFOdNft4dceIBc+kL0ch7Wd81aFMN9oN+URghlGa/zSCtjz7xme/vaaufUmHsWgf4=
+	t=1786193476; cv=none; b=pQBw2JQcrJEKqSqDwnqvtOi3Zsmi+SbluJ1myy8NdYVqCFvlUirLBwuq1zYyNKhD5451UZoFRl5UV99Bfdb1/Cm3JUuXj0+jeNF/ysA6Z4wOAPkggaMR3TKIXabtru+q93C6CzMZ32R6p5IG4jSk5+W1+hTO4wJRhApZb1ZO5t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786190736; c=relaxed/simple;
-	bh=bbKCrRua32z4iylyWxb015ypo9VfUWlARsU39T25Ins=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V9gIMUnJzRSyqFpzwt5ZDdoem5VWmqf6Vzl/+utHJ6VnSRMneZluJ/fTtAe+2zSWvV5wUR2dnfsTJa8JcW2PXp9ZsQRfJmXAiCS7VegNB5JBUDsvDQAgtLXuDSNYDZ3nGzpkxdttXQK4Sn0om4kVAs7ScUJjl3RnEMS2wjckkpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ds2cYSXE; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1786193476; c=relaxed/simple;
+	bh=e3o5DypB4NSFaz1WXz/IT83XxjWRQf7ZGhqPPY+Y15A=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nMFYOYBCN4WgRmgZ4mVsx3q0ZxXb/7c51XRdLs74P00I5lV36sHVl51KFOlM79bZMt5MxMD0zkJQHJmoWk9mhRfZeYb2ICQnDOoQ2+ske0hb9ktQ06mZJ6tkfqTSfMftjhC4EskBK7saaIIR2Id1cRvubq9XKPLCnfNRqjU5VO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctQ542BQ; arc=none smtp.client-ip=74.125.227.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ds2cYSXE"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 678AVb4U012016;
-	Sat, 8 Aug 2026 12:05:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=vTXt0Q
-	2h3u47845D1YPQ2AaYzR+SQeowTWlSxc7OMh4=; b=ds2cYSXERe5umupIM661se
-	mr0iJZzkUvAFAylEniQ5BpHIriNOyDU5vQoS+eQmjcsVp2N+pFzBZwfzmLAGGZrT
-	gfz0Ug/r3H/hwnZ26SZYMDfEehBB6bSzzQ0wBCDDOR55ROQ04HFLjgjNYahIIVIZ
-	UeTuhdoHb42o85ugLVoqqn0sNYhkHkhFiGZ9Q4W+H013OjocuOsZ/D+3Kiaer9MM
-	LH9h/6R/OWhYJNjGf3UOson5wPcLL1qUbAgd7y/z1Qg0V5XkNDDz6Bh6ddJgVvRs
-	CmL+nkZAE+TebmJVvuC3Y1miLqfALpZV/xw0BenJ78uH2LPnP0tw7tpbA/XyFbyw
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnvs138-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 08 Aug 2026 12:05:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 678BuOJ1005429;
-	Sat, 8 Aug 2026 12:05:32 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgu7sy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 08 Aug 2026 12:05:32 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 678C5Vg59175584
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 8 Aug 2026 12:05:31 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 83D625803F;
-	Sat,  8 Aug 2026 12:05:31 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D3ED65804E;
-	Sat,  8 Aug 2026 12:05:30 +0000 (GMT)
-Received: from [9.61.94.189] (unknown [9.61.94.189])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Sat,  8 Aug 2026 12:05:30 +0000 (GMT)
-Message-ID: <4e8e189d-48ec-48b2-8d1b-2a2f40f67b89@linux.ibm.com>
-Date: Sat, 8 Aug 2026 08:05:30 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctQ542BQ"
+Received: by mail-pj2-f9.google.com with SMTP id 98e67ed59e1d1-38ed4d37526so362501a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 05:51:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786193471; x=1786798271; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OlRrA389d9FWYi8l3Quvar4ELxprzGoBLCcCx6MN668=;
+        b=ctQ542BQZhKK9t7NvhvODgUacJ3rRQ4l4JvlBZ5p8Z2YB5KUGpyUWjhoOtSKOzyLvv
+         g0AoZlSD3F2iiWEWlzTAgiYvRXB6PMq8u5ocsWz99AUvXhElpLM9PticeGVr+mpzJscc
+         JpEfw5VP2Xb7eBxZlkyUrLr1gXsIjyEhCzNvooXCjFMqbvlNCzF3gfbGa3kUm6Hrf1ek
+         ylJoZi0r8pIztAGYs9DeEegzcTGKst28eQKdfLcOKIzB8jCWU4fmFMNhU9jiR0oQNvik
+         VeJUW3iHKJVhpu+UNnKGTy6YXOayEe7uKiVxXyIna1jQAlAKOh5VXmO2iAFdyfiY30AK
+         idiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786193471; x=1786798271;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OlRrA389d9FWYi8l3Quvar4ELxprzGoBLCcCx6MN668=;
+        b=FAHOpx1mHHtPOASGhkorm66o54MfIjnlNcY5C9Nb+tjUlGLu33MRlo5MmpbpRZiFGQ
+         o6s56yFPi3diZNeoB2Zzm2yc7jCISVruuhSrgdNO+LRfJk118uGPDKKrZslf6pr7iZ5Y
+         LIRIcu8hGMcVatiOOJrpNy1L9cMI1Lwg9V12ZXiqFbbCPCaFpTwwEUYRrS4UYchzvBTL
+         MOwtkj7RJVijYbU49oJg6S6O74p4ggV/7rzixs+S7ovc9DajAgj4WJMA3zHgsn8NlXvU
+         T3PtZW7PSVfPtWCKNSSUfPMrGihBSHdsnRTm2U275xC/YepfEDMSkAq6B8zN5h+kQYm8
+         xm3w==
+X-Gm-Message-State: AOJu0YzAGoyiNlydo1G3sgMHgV+oy8p6VXjiOLE5U0kY0Ali4wZviMos
+	yfuZEFyftP7bWiHtFHoQdIRlko31gH4nq52O+OSg723frclQE1nPYNEykFVu6LhlluFIfw==
+X-Gm-Gg: AR+sD137AOBWl8mpWAz3glhG7JaYrSYKHuyYjn+xKSjNOss3Lxw+yEqQ0CeHKdyCjP2
+	0gWw31V649tA3bxRjJrER2xAFPPReoUo2NwTtXekysH0/Cv0PaJWKRj2ODkycax0q7EJf6ztXYA
+	VtHwaZxGVxkFJYfWo3UzqagYKZj5jCpHBVYCE5P6kj6FXe0LYNkCmANfkejE4NS+Rhd6jtSzZ4i
+	8RefHO1UROokJB9BMe0iOL+VTaN6du7/IFb3PAbsgmbdvzhTFLeMMBgOh+r7RUggGkjM/1kfzIv
+	0Yv8mHs8BljjeL5/2lv2Pgo8ufJ22qRg1qKBxv765rttxnoaCcIVha0glriYn0Caj7FwnptNDhD
+	cf7qqet4m0y4NU+pSd1ybdNGg9Dl4KtfZTz4DQjz1R+GlWustjqmumNYnaQ+hG8WNI64O7sZaRJ
+	QoM9Ad8mLFwzySqVKsP4FVw7UcX0ZgAGt/TbhWARA=
+X-Received: by 2002:a05:6a21:6f15:b0:3ab:2fa:756c with SMTP id adf61e73a8af0-3cbce6cb53bmr8991053637.1.1786193471349;
+        Sat, 08 Aug 2026 05:51:11 -0700 (PDT)
+Received: from localhost ([2403:2c80:17:1e::20db])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f35b0c3sm1846702a12.15.2026.08.08.05.51.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Aug 2026 05:51:10 -0700 (PDT)
+Date: Sat, 08 Aug 2026 20:51:07 +0800
+Message-ID: <b0499978adf9f603e5da621f0056a139.codykang.hk@gmail.com>
+From: Cody Kang <codykang.hk@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ robh@kernel.org, linux-phy@lists.infradead.org, olteanv@gmail.com,
+ dri-devel@lists.freedesktop.org, vkoul@kernel.org, sashiko-bot@kernel.org
+Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
+ controller bridge driver
+In-Reply-To: <20260725050438.302CF1F000E9@smtp.kernel.org>
+References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
+ <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
+ <20260725050438.302CF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390/vfio-ap: Fix control domain removal in
- vfio_ap_mdev_cfg_remove
-To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org
-References: <20260807223939.573718-1-akrowiak@linux.ibm.com>
- <20260807225802.41BCD1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260807225802.41BCD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a771b8d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=D19gQVrFAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=8vdVCLQQ5IgfLE6QZuoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=W4TVW4IDbPiebHqcZpNg:22
-X-Proofpoint-GUID: 9Xg0m4eylzBp61semCptw8BMn7qA8P-Z
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA4MDEwMSBTYWx0ZWRfX8Iwqzv/R1MJm
- FUi7SsfZJ0CR8BsFiMb+uI111IFA2bgm2JYCx6tKDMFIxugNZklfLJhAp4fWR0QyTG+nfgCEY+q
- 7ANh7OgaoNCpsWckUX2UI4txb+TJvzxbg4oL3RHQ3MJflfBeKh17UN2sGbpQcYxKPnlGC38N0Lw
- DN2qqgN8EDXjRRYSfTYHQqF9Q2zsA+6ZlI2P9bR7GqI3SpHDfm6xEWzDt7LLy63+tG8L+Vsm4Xw
- rvoNcceY999FUKC8LBxk45HrEdNfvHkmglcHiW94Kd6FAc8QBgHihALXeHSlhieDusiQ9TQvWuF
- pLiTvDJtwpxPKbNangivUpaTtzOI1wJl76wCLS777NyOjjm8qW1sXHryTkLo4USs+3hJCPyPdgD
- zLyDWMt/j3hdk9CLSdNowMIZET+mB6qchWVC5DJCSt5GP7obUQaj6OLzIyEUk75AOaGwQ8oDz5X
- 5pEr95mURw6KOexAekA==
-X-Proofpoint-ORIG-GUID: 9Xg0m4eylzBp61semCptw8BMn7qA8P-Z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA4MDEwMSBTYWx0ZWRfX7qjKzXOKqR0d
- /Cp8swXnoIDNIssmTVmsQGu+SqOrXICBILBux3/X2zmk8LefYPFb3O7f0sgaZeGc2oH76QfJE12
- hnN5DTnBRKejtaRZYBG770mr24dHa90=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-08_04,2026-08-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608080101
 
-
-
-On 8/7/26 6:58 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Missing NULL check on `matrix_mdev->kvm` before acquiring its lock on AP configuration change paths, leading to a kernel panic if a mediated device is unattached.
-> - [High] Guest APCB is not updated when the last adapter or domain is removed, leaving the guest with unauthorized hardware access.
-> - [High] Iterating `mdev_list` without the appropriate mutex allows concurrent list modifications, leading to list corruption or use-after-free.
+On Sat, 25 Jul 2026 05:04:37 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 11 potential issue(s) to consider:
+> - [High] Custom EDID read function bypasses DRM core and breaks I2C repeated-start (MOT) rules, corrupting EDID reads for blocks > 0 or on active adapters.
+> - [High] The hardirq handler returns `IRQ_NONE` after clearing hardware interrupt flags, permanently disabling the IRQ line.
+> - [High] Late attachment of the eDP panel bridge violates drm_bridge_connector architecture and breaks panel support if the panel probes asynchronously.
+> - [High] DP Transfer Unit (TU) miscalculation due to pixel clock truncation.
+> - [High] The IRQ handler returns `IRQ_NONE` without clearing the hardware interrupt when `drm_dev_enter()` fails, leading to an interrupt storm.
+> - [High] `spacemit_dp_bridge_atomic_create_state` returns an error pointer instead of `NULL` on allocation failure, causing a kernel crash in the DRM core.
+> - [High] The hardirq handler calls regmap functions which use a sleepable lock on PREEMPT_RT.
+> - [Medium] The atomic_check and mode_valid callbacks access DPCD link capabilities without holding mode_lock, leading to data races with the hotplug IRQ handler.
+> - [Medium] The DP IRQ handler silently drops hotplug notifications because drm_bridge_hpd_notify() is a no-op when DRM_BRIDGE_OP_HPD is omitted.
+> - [Medium] Calling clk_set_parent() on an already enabled clock.
+> - [Medium] Resetting the AUX controller without holding aux->hw_mutex races with concurrent AUX transfers.
 > --
 >
-> --- Patch [1]: [PATCH] s390/vfio-ap: Fix control domain removal in vfio_ap_mdev_cfg_remove ---
-> commit 934a77df4b71bb3ee940f94ad6abdd8290e96d28
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Subject: s390/vfio-ap: Fix control domain removal in vfio_ap_mdev_cfg_remove
+> --- Patch [12]: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP controller bridge driver ---
+> commit b7eace372254ab27e120213d38c3a656b2a195b8
+> Author: Cody Kang <codykang.hk@gmail.com>
 >
-> This commit modifies the vfio_ap_config_remove function to use bitmap_and()
-> instead of bitmap_andnot() when clearing bits from matrix_mdev->matrix.adm.
-> This ensures that explicitly unplugged control domains are correctly removed
-> from the KVM guest.
+> drm/spacemit: add Innosilicon DP/eDP controller bridge driver
 >
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 44b3a1dcc1b36..1bfdbe85023dd 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
->> @@ -2615,9 +2615,9 @@ static void vfio_ap_mdev_cfg_remove(unsigned long *ap_remove,
-> [Severity: High]
-> This is a pre-existing issue, but does vfio_ap_mdev_cfg_remove() safely handle
-> unattached mediated devices?
+> Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
+> identical instances share one compatible; the eDP-vs-DP role is board
+> wiring, so it is taken from the devicetree.
 >
-> If an mdev is created via sysfs, matrix_mdev->kvm is initialized to NULL. If a
-> host AP configuration change occurs before this mdev is attached to a guest,
-> the loop in this function:
->
-> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_cfg_remove() {
->      ...
->      list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
->          mutex_lock(&matrix_mdev->kvm->lock);
->      ...
-> }
->
-> will unconditionally dereference the NULL kvm pointer. Is there a missing NULL
-> check for matrix_mdev->kvm before acquiring its lock on AP configuration change
-> paths?
-
-A patch has already been posted for this:
-https://lkml.org/lkml/2026/8/7/1453
-
-I think it would be wise to submit that patch and this as a series since
-both bugs were introduced with the same patch, so the Fixes: tag
-for each would be the same.
-
+> > diff --git a/drivers/gpu/drm/spacemit/spacemit_inno_dp.c b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
+> > index 0000000000000..e88731d9b18bf
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
+> > @@ -248,16 +248,10 @@
+> >  static inline struct spacemit_dp_bridge_state *
+> >  to_spacemit_dp_bridge_state(struct drm_bridge_state *state)
+> >  {
+> >  	return container_of(state, struct spacemit_dp_bridge_state, base);
+> >  }
+> >
+> >  static const struct regmap_config spacemit_dp_regmap_config = {
+> >  	.name		= "dp",
+> >  	.reg_bits	= 32,
+> >  	.val_bits	= 32,
+> >  	.reg_stride	= 4,
+> >  	.max_register	= 0x3ffc,	/* full 0x4000 reg region from binding */
+> >  };
 >
 > [Severity: High]
-> This isn't a bug introduced by this patch, but can the iteration over
-> mdev_list in vfio_ap_mdev_cfg_remove() race with mdev creation?
->
-> vfio_ap_mdev_probe() adds a new mdev to matrix_dev->mdev_list using list_add()
-> while holding only matrix_dev->mdevs_lock:
->
-> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_probe() {
->      ...
->      mutex_lock(&matrix_dev->mdevs_lock);
->      list_add(&matrix_mdev->node, &matrix_dev->mdev_list);
->      mutex_unlock(&matrix_dev->mdevs_lock);
->      ...
-> }
->
-> However, vfio_ap_mdev_cfg_remove() iterates over mdev_list using
-> list_for_each_entry() holding only matrix_dev->guests_lock, as mdevs_lock is
-> only acquired individually inside the loop body.
->
-> Could this lead to kernel memory corruption or use-after-free if a user
-> creates a new mdev concurrently with an asynchronous host AP configuration
-> change?
+> Is it safe to omit use_raw_spinlock from the regmap configuration? Because
+> this is not set to true, the regmap defaults to a sleepable lock on
+> PREEMPT_RT. This causes a BUG when regmap read/write functions are called
+> from the hardirq handler spacemit_dp_irq_handler().
 
-This needs to be fixed.
+The handler is force-threaded on PREEMPT_RT (no IRQF_NO_THREAD), so
+the regmap spinlock is fine there.
 
+> > [ ... ]
+> > @@ -661,16 +661,10 @@
+> >  static void spacemit_dp_link_disable(struct spacemit_dp_dev *dp)
+> >  {
+> >  	regmap_write_bits(dp->regs, DP_VIDEO_VSAMPLE_REG,
+> >  			  DP_VIDEO_STREAM_ENABLE,
+> >  			  FIELD_PREP(DP_VIDEO_STREAM_ENABLE, 0));
+> >  	spacemit_dp_phy_off(dp);
+> >
+> >  	regmap_write_bits(dp->regs, DP_SOFT_RESET, DP_AUX_RESET,
+> >  			  FIELD_PREP(DP_AUX_RESET, 0x1));
 >
->>   		do_remove |= bitmap_and(aqrem, aq_remove,
->>   					  matrix_mdev->matrix.aqm,
->>   					  AP_DOMAINS);
->> -		do_remove |= bitmap_andnot(cdrem, cd_remove,
->> -					     matrix_mdev->matrix.adm,
->> -					     AP_DOMAINS);
->> +		do_remove |= bitmap_and(cdrem, cd_remove,
->> +					matrix_mdev->matrix.adm,
->> +					AP_DOMAINS);
->>   
->>   		if (do_remove)
->>   			vfio_ap_mdev_hot_unplug_cfg(matrix_mdev, aprem, aqrem,
+> [Severity: Medium]
+> Could this reset corrupt concurrent AUX transfers? Modifying the AUX
+> hardware in spacemit_dp_link_disable() without holding the aux->hw_mutex
+> could race against a userspace or deferred transfer, potentially wedging
+> the controller.
+
+All driver-internal AUX users serialize on mode_lock; the EDID
+rework below also serializes with the userspace i2c node.
+
+> > [ ... ]
+> > @@ -936,15 +936,10 @@
+> >  static void spacemit_dp_hw_set_msa_and_enable_video(struct spacemit_dp_dev *dp,
+> >  						    const struct drm_display_mode *mode,
+> >  					       enum spacemit_dp_link_rate rate,
+> >  					       enum spacemit_dp_lane_count lanes,
+> >  		u32 color_format)
+> >  {
+> >  	u64 hb_num;
+> >  	u32 link_rate;
+> >  	u32 fp; /* Pixel clock in MHz */
+> >  	u32 bpp, misc0;
+> >  	u32 tu, tu_frac, tu_int, rd_thres;
+> >  	u32 hsync_len;
+> >
+> >  	/* mode->clock unit is kHz, fp unit is MHz */
+> >  	if (dp->use_ext_pixel_clock)
+> >  		fp = dp->pixel_clock / 1000;
+> >  	else
+> >  		fp = mode->clock / 1000;
+>
 > [Severity: High]
-> This is a pre-existing issue, but does vfio_ap_mdev_hot_unplug_cfg() properly
-> update the guest APCB when the last device is removed?
+> Can this truncation of the pixel clock to an integer MHz value cause DP
+> FIFO underflows or overflows? For non-integer MHz pixel clocks like
+> 148.5 MHz, this truncates to 148, introducing precision errors in the
+> Transfer Unit (TU) calculations which results in corrupted video.
+
+The values are vendor-faithful and board-proven at 4K; computing in
+kHz is a possible later refinement, not a v2 change.
+
+> > [ ... ]
+> > @@ -1286,13 +1286,10 @@
+> >  static int spacemit_dp_conn_get_edid_block(void *data, u8 *buf,
+> >  					   unsigned int block, size_t len)
+> >  {
+> >  	struct spacemit_dp_dev *dp = data;
+> >  	unsigned int start = block * EDID_LENGTH;
+> >  	u8 segment = block >> 1;
+> >  	int ret, retry;
+> >  	size_t offset;
+> >
+> >  	if (segment) {
+> >  		for (retry = 0; retry < 3; retry++) {
+> >  			ret = spacemit_dp_aux_i2c_write(dp,
+> >  				SPACEMIT_DP_DDC_SEGMENT_ADDR, &segment, 1);
 >
-> In vfio_ap_mdev_hot_unplug_cfg(), the decision to update the guest's APCB
-> relies on bitmap_andnot():
+> [Severity: High]
+> Does this custom EDID read function bypass the Middle-Of-Transaction (MOT)
+> rules for I2C repeated-start? Issuing writes and reads without the MOT flag
+> resets the DDC segment pointer to 0, breaking EDID reads for displays with
+> multiple EDID blocks (block >= 1) or on active adapters.
+
+Will rework in v2: the custom reader becomes one i2c_transfer per
+block on the aux I2C adapter, so the DP I2C-over-AUX core chains
+segment, offset and data with MOT, and 3+ block EDIDs work.
+
+> > [ ... ]
+> > @@ -1632,15 +1632,10 @@
+> >  static int spacemit_dp_bridge_atomic_check(struct drm_bridge *bridge,
+> >  					   struct drm_bridge_state *bridge_state,
+> >  				      struct drm_crtc_state *crtc_state,
+> >  				      struct drm_connector_state *conn_state)
+> >  {
+> >  	struct spacemit_dp_dev *dp = container_of(bridge,
+> >  						  struct spacemit_dp_dev,
+> >  						  bridge);
+> >  	struct spacemit_dp_bridge_state *st =
+> >  			to_spacemit_dp_bridge_state(bridge_state);
+> >  	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
+> >  	int bpp;
+> >  	u32 req_bw;
+> >  	int i;
+> >
+> >  	/* A single output bus format, see ->atomic_get_output_bus_fmts(). */
+> >  	st->color_format = SOC_VIDEO_RGB_8BIT;
+> >  	bpp = spacemit_dp_get_bpp(dp, st->color_format);
+> >  	req_bw = spacemit_dp_calc_required_bw(mode, bpp);
+> >
+> >  	/* No caps yet: leave idx unset and let ->atomic_enable() retry. */
+> >  	if (!dp->link.max_rate || !dp->link.max_num_lanes) {
 >
-> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_hot_unplug_cfg() {
->      ...
->      if (!bitmap_empty(cdrem, AP_DOMAINS))
->          do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.adm,
->                                      matrix_mdev->shadow_apcb.adm,
->                                      cdrem, AP_DOMAINS);
->      ...
-> }
+> [Severity: Medium]
+> Could reading the DPCD link capabilities here race with the hotplug IRQ
+> handler? Accessing the dp->link capabilities in
+> spacemit_dp_bridge_atomic_check() without holding mode_lock might observe
+> intermediate or torn states if a concurrent interrupt triggers a capability
+> re-read, leading to transient rejections of valid modes.
+
+detect(), enable and the EDID paths all serialize on mode_lock.
+
+> > [ ... ]
+> > @@ -1705,10 +1705,10 @@
+> >  static struct drm_bridge_state *
+> >  spacemit_dp_bridge_atomic_create_state(struct drm_bridge *bridge)
+> >  {
+> >  	struct spacemit_dp_bridge_state *new;
+> >
+> >  	new = kzalloc_obj(*new);
+> >  	if (!new)
+> >  		return ERR_PTR(-ENOMEM);
 >
-> The kernel's bitmap_andnot() function returns true only if the resulting
-> destination bitmap is non-empty. If the last adapter, domain, or control domain
-> is explicitly removed, the destination shadow APCB becomes entirely empty,
-> causing bitmap_andnot() to return false.
+> [Severity: High]
+> Should this return NULL on allocation failure instead of an error pointer?
+> The DRM core's reset helper assigns the returned state directly without
+> checking for errors. Returning an error pointer here causes a fatal page
+> fault when the DRM core later dereferences it.
+
+ERR_PTR is what the bridge core expects here;
+drm_bridge_atomic_create_priv_state() checks IS_ERR().
+
+> > [ ... ]
+> > @@ -1742,16 +1742,10 @@
+> >  static int spacemit_dp_edp_link_panel(struct drm_dp_aux *aux)
+> >  {
+> >  	struct spacemit_dp_dev *dp = container_of(aux, struct spacemit_dp_dev,
+> >  						  aux);
+> >  	struct drm_bridge *next;
+> >  	int ret;
+> >
+> >  	next = devm_drm_of_get_bridge(dp->dev, dp->dev->of_node, 1, 0);
+> >  	if (IS_ERR(next))
+> >  		return PTR_ERR(next);
+> >
+> >  	dp->next_bridge = next;
+> >
+> >  	/*
+> >  	 * A non-NULL bridge.encoder means .attach already ran: late-chain
+> >  	 * panel-edp.
+> >  	 */
+> >  	if (dp->bridge.encoder) {
+> >  		ret = drm_bridge_attach(dp->bridge.encoder, next,
+> >  					&dp->bridge,
+> >  					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
 >
-> Since do_hotplug remains false, vfio_ap_mdev_update_guest_apcb() is skipped.
-> Does this leave KVM guests with unauthorized access to physical hardware devices
-> that have been explicitly removed from the host's AP configuration?
+> [Severity: High]
+> Does dynamically attaching the panel bridge late bypass connector
+> initialization? If the eDP panel defers its probe,
+> drm_bridge_connector_init() builds the connector without the panel bridge.
+> Attaching it here later violates the drm_bridge_connector architecture and
+> breaks panel support, because the connector will lack the panel's mode or
+> EDID operations.
 
-The logic here is correct. The
-concern rests on a misreading of what bitmap_andnot() returns
-and what the bitmaps represent.
+Handled by design: the aux-bus done-probing callback late-chains
+with DRM_BRIDGE_ATTACH_NO_CONNECTOR and re-fires detection; both
+probe orders are exercised on hardware. See the comment above
+spacemit_dp_edp_link_panel().
 
-There are three functions that form a pipeline:
-
-vfio_ap_mdev_on_cfg_remove() computes which adapters,
-domains and control domains have been removed from the host
-AP configuration by comparing the previous and current config
-info bitmaps. If nothing was removed from a given bitmap,
-that bitmap is empty and there is nothing to do.
-
-vfio_ap_mdev_cfg_remove() intersects each of those
-removed-from-host bitmaps against matrix_mdev->matrix,
-which represents what the administrator has assigned to the
-mdev. If the intersection is empty — none of the host-removed
-resources were assigned to this mdev — there is nothing to
-hot-unplug for this mdev.
-
-vfio_ap_mdev_hot_unplug_cfg() intersects those
-mdev-assigned-and-host-removed bitmaps against
-matrix_mdev->shadow_apcb, which represents what is actually
-passed through to the guest after filtering. The shadow_apcb
-is a filtered subset of matrix — a resource assigned to the
-mdev may not be in the shadow APCB if it was previously
-filtered out (e.g., the queue was not passable, or the
-resource was not in the host config at the time of the last
-filter pass). If bitmap_andnot() returns false here, it
-means none of the removed resources were present in the shadow
-APCB to begin with — the guest never had access to them — so
-skipping vfio_ap_mdev_update_guest_apcb() is correct.
-
-Furthermore, bitmap_andnot(dst, src, rem) returns false only
-when the result dst = src & ~rem is all zeros. If none of the
-rem bits are present in src, then ~rem clears nothing and
-dst == src. If src was non-empty, the return value is true
-and vfio_ap_mdev_update_guest_apcb() is called — even though
-the APCB content is unchanged. So there is no path through this
-function where a genuine removal from the guest's APCB is
-silently dropped.
-
+> > [ ... ]
+> > @@ -1782,10 +1782,10 @@
+> >  static irqreturn_t spacemit_dp_irq_handler(int irq, void *data)
+> >  {
+> >  	struct spacemit_dp_dev *dp = data;
+> >  	irqreturn_t ret = IRQ_NONE;
+> >  	int idx;
+> >
+> >  	if (!drm_dev_enter(dp->drm, &idx))
+> >  		return IRQ_NONE;
 >
+> [Severity: High]
+> Will returning IRQ_NONE here without clearing the hardware interrupt cause
+> an interrupt storm? If an interrupt fires while the DRM device is
+> unregistered (such as during module unload), the handler exits without
+> acknowledging the hardware interrupt, causing it to continuously fire and
+> stall the CPU.
 
+Only reachable during unbind while the line is being torn down.
+
+> > [ ... ]
+> > @@ -1796,11 +1796,10 @@
+> >  	/*
+> >  	 * Only compare here: the authoritative connector_status update
+> >  	 * happens in the thread under mode_lock, via .detect().
+> >  	 */
+> >  	if (spacemit_dp_hw_detect_hpd(dp) != READ_ONCE(dp->connector_status))
+> >  		ret = IRQ_WAKE_THREAD; /* Call hotplug_event */
+> >  	spacemit_dp_hw_clean_hpd(dp);
+> >
+> >  	drm_dev_exit(idx);
+> >  	return ret;
+> >  }
+>
+> [Severity: High]
+> Is it safe to return IRQ_NONE after clearing the hardware interrupt flags?
+> If the logical state has not changed (e.g. from a transient hardware
+> glitch), returning IRQ_NONE causes the kernel's spurious interrupt detector
+> to eventually disable the IRQ line, which results in all future hotplug
+> events being permanently missed.
+
+Real; will return IRQ_HANDLED in v2 when a latched HPD event was
+consumed.
+
+> > [ ... ]
+> > @@ -1813,11 +1813,10 @@
+> >  static irqreturn_t spacemit_dp_hotplug_event_handler(int irq, void *data)
+> >  {
+> >  	struct spacemit_dp_dev *dp = data;
+> >  	enum drm_connector_status status;
+> >  	int idx;
+> >
+> >  	if (!drm_dev_enter(dp->drm, &idx))
+> >  		return IRQ_HANDLED;
+> >
+> >  	/*
+> >  	 * .detect() owns mode_lock and re-reads the sink caps on a fresh plug
+> >  	 */
+> >  	status = spacemit_dp_bridge_detect(&dp->bridge, dp->connector);
+> >  	drm_bridge_hpd_notify(&dp->bridge, status);
+>
+> [Severity: Medium]
+> Will this hotplug notification be silently dropped? Since
+> DRM_BRIDGE_OP_HPD is not set for the DP bridge during inno_dp_probe(), the
+> bridge->hpd_cb is NULL, making drm_bridge_hpd_notify() a no-op and forcing
+> the DRM core to rely entirely on periodic polling.
+
+Deliberate: the HPD interrupt is gated by the DP pixel clock, so
+the connector is polled instead, and the IRQ path still refreshes
+status early when it does fire. Documented at the ops assignment.
+
+> > [ ... ]
+> > @@ -2338,10 +2338,15 @@
+> >  static int inno_dp_probe(struct platform_device *pdev)
+> >  {
+> >  	struct device *dev = &pdev->dev;
+> > [ ... ]
+> >  	if (dp->pxclk) {
+> >  		ret = clk_prepare_enable(dp->pxclk);
+> >  		if (ret) {
+> >  			dev_err(dev, "failed to enable pxclk: %d\n", ret);
+> >  			goto err_reset;
+> >  		}
+> >  	}
+> > [ ... ]
+> >  	if (dp->pxclk) {
+> >  		ret = clk_set_parent(dp->pxclk, dp->pll_clk);
+>
+> [Severity: Medium]
+> Can calling clk_set_parent() on an already enabled clock cause hardware
+> glitches? The pxclk is prepared and enabled earlier in inno_dp_probe(), and
+> reparenting a running clock without hardware-specific glitch-free muxing
+> can lock up downstream logic.
+
+The mux is reparented before the display is enabled; nothing scans
+while it switches at probe.
+
+Cody
