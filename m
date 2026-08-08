@@ -1,265 +1,201 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72023009F6
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 09:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D333370EC
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 09:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786181913; cv=pass; b=MK0j2kxg+j+ZPtW7pe8s1urXMj/z1DfdA3MCE4b5tXsajomd16YVYY10cgt9MLu1NqX5EWNGMRVXlduB5yvjV0lYbHcqgZ+nW2Q3nL+5J+uAV6W5JRCHF/759s73I8Y+UC0h/zYb/3fK69H7TNAmpKyKGZmSL8SSwPScqLkA0f4=
+	t=1786182075; cv=pass; b=Q7O/TMYT2IWmmC7gr+lS8XZ5w6ve0j0Y/twu7psEcGTUhjdONWFx0Cr5zkhhxhWBQRHIWQwFMsWn3f+iyftjGxZNDkgOF6SPENkVuWk1DiHocA43RRJAwe/8qeLPHZPHQclrK8YN7zdWV+u/wAcj3kHC37upElDmBf5fhahBJY4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786181913; c=relaxed/simple;
-	bh=+X5YTpzoR40uFu6Nw8c+HNf/9wBeFm9Xzur6C4IpBbg=;
+	s=arc-20240116; t=1786182075; c=relaxed/simple;
+	bh=GeR3WgJ0x8i/NRqnVm1DI26+S17KbCmE4428p5EAIek=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WWRDAkNDDD/RMab1QNChCIVzBwLheDDYqgbq77/swj6u7E9OftpKhsZwQwvswoiKcZ0U30IDgPtWPA6N/T21v7w1GH79Dpqnqn4yyqSHXgmXfRqEgVDOWjVQhSYrcO/1ZwAAGOSbG5GWdRy/wo7UXih841IzAHM6cAZd3WOZT7w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rYq0l4fm; arc=pass smtp.client-ip=209.85.128.173
+	 To:Cc:Content-Type; b=UZtAeGOXMnkYQFAh+eCA9K0ajptpuwBE0I2JvqYFd+Pb/T5P0HBsMArIoqtbZ9rKmXdL2eMmHsbhUdeBdO9QTyaHvtuDW6xBCwz1nDzNsTWxaUL1EYgIzyrtaV8j1XG3W0HeuP2p1dV1OvR2jb6Qk9IT7BgSDXoESN4iDXqfLjg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3RUmxTS; arc=pass smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rYq0l4fm"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-81ed2a06b9eso3216277b3.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 02:38:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786181910; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3RUmxTS"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c966b9ee9cbso151781a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 02:41:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786182074; cv=none;
         d=google.com; s=arc-20260327;
-        b=Fe6U3BxZxRLVs84/5Jbmc4Le3ebbZ1qBkStIV209P9FQP7jVRhUYIgl519KdAXcHXx
-         LrDNsh1Qn8rQxYFnJaL9egR7d1elk3HQt1khML13k3Mp1su2fLp5KW04TNfJD/EIG25x
-         Wz5FM23tZUlFi0lHVLOMc8DU7jFF1/FS3ZpfBEC7c5Pvp4LSh9rWphIHYJc/n83FnCSf
-         23ESTkV8dskc+Sc9tAk2Vqyvb/KqwH9HLnsey9lM9WE7eiqz1gY8fCWhu1de3F2YnPY5
-         5QhqjuEu03yGyyMFdoeI6pXr1eWT7Y4p3bSKOTtjMPnjoXkRJiitKVHrVsOOcucqC9zc
-         q+KA==
+        b=XUbxYYnRzz5ajH6oM4TuMZ/0bxGC0J08XSVLQ6EEvkkhQtTREUXFLNpEOVDfA/wJ3z
+         kicwI1TjiNCj688T/sGp1E8fChUUkuM+gnt0mgndZxg87em8mAIh9Hwoywa8ifpl5W4C
+         FkUSSat1yQv8qGYhKtm9t+Vt2G0vThKB0geL7wxeA1CWvjeABYiWRYI0FyIbLDEoYFsM
+         6XgxeQLKEkjgjNcvS2bsc2/dBKEeU9cBH80lp0IADHjUlti9c4ogVUdbSYpMkRchD0pt
+         2mD4QH6897Jv0b/G03zvh/HBry92wCfHTxNqneq58D5NEeXEPb0zbzcG0rf1WRmGo5+e
+         M4Nw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=8P9ztDq65uskymseje35VOw9g9KDNjj2Y7InSXRtTGk=;
-        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
-        b=PrluH5+W6gloESqwEg2lD7zFU5fn3JiH+X6XmokQOpnfUqKx5pF+xh4KzRsu/gko//
-         M4jT6XyOyGnlYteJ7GHt3uwSebEYVxUbVTSxsuVNkBfrWWIefH4OLreU1NbHjr/f9Yo6
-         L2pENs4o+++D0oj897hftIeSgcxPwr5m2d304EREH09r4C7lV6YDBGoolMLXY5gkl3rF
-         nx9Oz9GAFdf9N0/QvNjcns4byMFKhSrR7TIIH3+dkS75YdX+7OmML1e1A6JkM09UuPMW
-         52u6aX3M+71wlQLfFxVmFC0xVdtryjbFNtZVvMGHQNm8mq1aTEmaO3CI8321OG1G905t
-         9FOQ==;
+        bh=/l19uDd+pZl8D9UObTo4oOMzXM/oQNXxEljarRKbP0E=;
+        fh=3mbWQc2KYnV1YBFEjtPx/1jzUpC/uZUzPfAesf3Pc0M=;
+        b=drmbFuxY66/s1tkEt5kH+u3qYnaarcsJEOUbqnJo3GY6F80vMzYoNMK9jEnQUQVGGN
+         OBNdAuRfchk6xTeS2NziKOK2aFvdHsPR11LzNWS4XPpTupbObknb1eDyPRA6TcewNbm1
+         dLodVe4BuiIP5N88agpkYGjPIsAgPhVFgd2mi7i31ghUFv2LpQy2DckdIgrKGv+Fnimo
+         Oe9TLP4PFEJzuW1sPrcbaIvAii41PBIYZgvNH7plezlIwGSYAhF2yr00A1EKClM1DyYX
+         /PKNu4BnVHUFFCt8w6BvE2XlXW34lRjIYOAd3Zu8qxvP0r6r1CQE1yNXC9wuPosmQ4Cj
+         nlRw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786181910; x=1786786710; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786182074; x=1786786874; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=8P9ztDq65uskymseje35VOw9g9KDNjj2Y7InSXRtTGk=;
-        b=rYq0l4fmaXGsDO8Q+04+Ur4z1OYeL4ZOSqWQtyoTWptP2B0x8gnCWo/eC13WE5zIPk
-         JqWqoeANRb7G7G5xq6X4sZhqR467e+QPeP+qZ7HleJDSFez1nUoCHxqWx5v8ktZljs5Y
-         S8UnhYTBnILmzOdDeRtBNYqEzkNV9/9nZZeWoFKmIsSGiv0sTByU8w8Zur1aJPh1RPbf
-         KWymxDQw2sFP83FcOlLDVWiRDlF/C+3w660DJkN3JqgczOdGM6LYU5ezDnLAV7uJeUUe
-         nnQoI9w2NufnUmllEZ2BNnYRM3ojg6b7HwnUIX3TUqEgXlBKE8o1/SJbp1WvwqHBX511
-         AspA==
+        bh=/l19uDd+pZl8D9UObTo4oOMzXM/oQNXxEljarRKbP0E=;
+        b=Z3RUmxTSRb+yilovARZtdDqL92zqyX0DnHgPlK+dmAJojVorMyMULAfv5p9nV1iXfm
+         934xRdRffDF2rEXneRGgxKwn98pFqMwlLof0mbc552W+p9BI6rVo07rNJUJnVqbDNhJu
+         6MGbRo1SnNwWVUE8sAL/2/BQPTo2AAX8iH6/kut72IQK/jNY4r4S7Tv4YEdkE4ShIqU5
+         31WO5ohp0MXW4gf2RzfYJLW7qO94PnbCzxw7kt4pFOb2dBmgOuNPrVqH/GUadiITeGWj
+         CMPuyam2XKpl8updHrrhWCihpCEju8GrTgZcyaejuEs4lx/lPItbV7aXc1xoBU8ScTMN
+         YTlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786181910; x=1786786710;
+        d=1e100.net; s=20251104; t=1786182074; x=1786786874;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8P9ztDq65uskymseje35VOw9g9KDNjj2Y7InSXRtTGk=;
-        b=tKWahD92kElxHdtJUP0YxciPq9s8Sfu5kjtaB/CHpmdkNvOcDDquaf1nOnH2foCW4L
-         CCsT37V1w3sV3rrm2Vm5jqxbe8lK0iqr7yi035IlQPCh09yk4qSQGHVH86o4TP1clRHg
-         kgDK0FB8y8eWKWrugWcSE0k48cBqSGT1NOqj22ZF/p6VaWdigwzayZibQ48BBeE98Oof
-         Ym8ziJwFv2I5JB8gKdhdpyiHafdLkWV/l6HU1kqPSLD3YVbI4BFADQvOnySDM07wjZUD
-         wr92b/tUzlpuNn0ubk3PBGAbd99+mI92KOa8gtTANUfEnB7bpoOcBaKPCRG753L9Pdwe
-         pnJg==
-X-Gm-Message-State: AOJu0Yz0QiWKu1FABVssScWS6vClWAWA72intmU5/H2J+mtcN5A9zkeL
-	0a68WkklaXhLp6OYEZfUDdnxmjK7MfzMa/0nZvGx6LKL/XY7GTijd/rNKCsr0c5wYsZmsTS/Dpd
-	ikm3rtzTrP3OuRbCI4yNwkwvteX4RtBfSZRB46xu3Nw==
-X-Gm-Gg: AR+sD132J25e72E9AHLn4WIsF5CmXds4oKxgYzt77TSGJJrD61AnmFGq6ONGC5l4E7m
-	rm0CaMTGKyLyQRBJvrRz+u31e7rrGNQ9HUFPiEzeYbPo5fvx7PLdjy9R9IT+cIFPH2OmMJVrD4q
-	D05olMIyvmQoDxqLy0ppTxv+k280YqKvSovrXloHinhRCprtEsBL2zKLWtlXSITxNkSxjMvYupl
-	QCJL00LljaRV8Uisjmv4cN4JzzfYMsZY2E7taHlGtRVuY1eWfywvgUV6bKTLtKpS0Kuib4diDAM
-	yZli8nIPMuqY8ips00eq4EJDj/KXUW0lNGvN7cjtBNiOOQ==
-X-Received: by 2002:a05:690c:2702:b0:814:4755:2b2b with SMTP id
- 00721157ae682-822576265c1mr99613807b3.3.1786181910553; Sat, 08 Aug 2026
- 02:38:30 -0700 (PDT)
+        bh=/l19uDd+pZl8D9UObTo4oOMzXM/oQNXxEljarRKbP0E=;
+        b=gJTnBxeZ5ZQDPaO7w7mT1oPUkQssr3HSndUbu+Kabb1pXnSKHVQbACKM5r/NR0V0JY
+         2LFk3LQ5a7ubOGNo2fLtO5sOv4H75S4Z7fu8WKEY9UfBM9qEA90AyAuUsqkB3rH99sMV
+         wEc2zj6MK0CCMMK0FA8XaMWaf8E3pIK/LXxyRMft/iKxkRh6R3i2Z0rn9rwUyRd4m4tw
+         O51UO0qEMwB+BBaCK4HLrfn0E7pmalz9yFpO0DhT31QIiWGHwNybeYuxNJIOtEi9l+e9
+         BmcpeVB7RTWGlIhHKTR03ukKP+lnuBW6OiT0g/NdT02tS741/ah6MTDLQYIVefYtXpEF
+         ZwMA==
+X-Gm-Message-State: AOJu0YziQQKxWLAgfR5wqRbhZRnZuctOsgdipSKmzX8ZIXw+YBgk1HWc
+	rSklk1WPnAJhsyQGgXTE3UCr1SF6P3P/+FlmlrhzHwwmg9sWuoP8VbNIViYFE8FVdeWI9B3Eu6D
+	/6xHOk4Z9+H1IinzjdAVgUSB05ztv7tDRf9nU
+X-Gm-Gg: AR+sD10fMv+HTyhASOp//J6Wz0fgwXNSY58IC7JL84saL5XztuIImgTkEpP0uHfLnLu
+	8ZZ+KNvnThGo4fmlx7f3Zt81+ljYvy7T21x8EOlNJa2GJcpVRIlJy8LG6N8SLUCCPPseD5Zah8t
+	R4P8MnZyNeMBJzQRZD8cPI6/SgSfI0fUQmwrfZBboADEbCWmbHRnHD3O0YwTMYGUC+w3P+eGFB5
+	Sc53Pi2VabfLl+D6JFgIg2ydcsCEiVjFcjBb2R+nHtGJh91plCnRi9L/Mbv+WqA4tDjVC8WLHxp
+	CoyPtrRLE1xP2GVyxEJa15WxiX/purPgcmfqyek4UIEwvz75OokQTRALJW9WjVFkIVPlGYXnnJG
+	Q7k+Uk5CB9egivAe3IhCIg5U9OW5JLP3U8ItsbMNM3Qqs1P7uYWj9TNmS71oFYtaIZT1khtotHg
+	SX2zYpFiyLj8feJXc7nENaZiqCEg==
+X-Received: by 2002:a05:6a00:2383:b0:842:5b66:3c7f with SMTP id
+ d2e1a72fcca58-84f2dedf356mr31868085b3a.0.1786182073748; Sat, 08 Aug 2026
+ 02:41:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260808083718.2612205-1-congnt264@gmail.com> <20260808085811.ACB651F000E9@smtp.kernel.org>
- <CAJpJ=GuiQy0XtcER6=Va7VmfuGF__3BGSrjKiYRriEEUbUaEPA@mail.gmail.com>
-In-Reply-To: <CAJpJ=GuiQy0XtcER6=Va7VmfuGF__3BGSrjKiYRriEEUbUaEPA@mail.gmail.com>
-From: =?UTF-8?B?Tmd1eeG7hW4gQ8O0bmc=?= <congnt264@gmail.com>
-Date: Sat, 8 Aug 2026 16:38:19 +0700
-X-Gm-Features: AUfX_mzVkCvUiMCc3l3osMwc-IZ7bRJgtjhtnV2V88sfqxPRPpdDFxfK3QfDw0k
-Message-ID: <CAJpJ=GvwdHj4J=1tTz4tzJQH-HVKC4zWprVRYU-de__ypaB9kg@mail.gmail.com>
-Subject: Re: [PATCH] hwmon: (max6621) fix negative temperature offset and crit readings
+References: <20260807090945.41690-1-phucduc.bui@gmail.com> <20260807091703.C7C4A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260807091703.C7C4A1F000E9@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sat, 8 Aug 2026 16:41:00 +0700
+X-Gm-Features: AUfX_mwrkHMk598CXW1q3wK5PB29pkUNeAL39jA2hIuR_LDf8E7ixsTqlrnBNII
+Message-ID: <CAABR9nHXD5Ow+_N9DLNyqhduEmosx+sEUmnL1iQvLFFLBgSW5w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] serial: qcom-geni: Propagate errors from optional IRQ lookup
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 8, 2026 at 4:19=E2=80=AFPM Nguy=E1=BB=85n C=C3=B4ng <congnt264@=
-gmail.com> wrote:
+On Fri, Aug 7, 2026 at 4:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> On Sat, Aug 8, 2026 at 3:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 2 potential is=
-sue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Writing the maximum allowed temperature of 128=C2=B0C to hwmon=
-_temp_crit silently wraps to -128=C2=B0C in hardware.
-> > - [Medium] Fractional temperature precision is discarded due to shiftin=
-g and integer division before scaling.
-> > --
-> >
-> > --- Patch [1]: [PATCH] hwmon: (max6621) fix negative temperature offset=
- and crit readings ---
-> > commit a073f1d4838dda93adf9b46f8e3cc16f1b662f82
-> > Author: Cong Nguyen <congnt264@gmail.com>
-> >
-> > hwmon: (max6621) fix negative temperature offset and crit readings
-> >
-> > This patch fixes temperature reporting for the max6621 driver. It
-> > addresses an issue where negative temperatures were reported as large
-> > positive numbers due to missing sign extension before scaling the 16-bi=
-t
-> > register values.
-> >
-> > Cc: stable@vger.kernel.org
-> >
-> > >       - temp_input used an s8 intermediate, which is correct for the
-> > >         -127..127 range but reports the documented +128 degrees C max=
-imum as
-> > >         -128 degrees C.
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but while fixing the read path for the +1=
-28
-> > degrees C maximum, is it possible that the write path still wraps to -1=
-28
-> > degrees C?
-> >
-> > When writing to hwmon_temp_crit, max6621_write() in drivers/hwmon/max66=
-21.c
-> > clamps the input to MAX6621_TEMP_INPUT_MAX (128000) and divides by 1000=
-L:
-> >
-> > drivers/hwmon/max6621.c:max6621_write() {
-> >     ...
-> >     case hwmon_temp_crit:
-> >         ...
-> >         /* Clamp to allowed range to prevent overflow. */
-> >         val =3D clamp_val(val, MAX6621_TEMP_INPUT_MIN,
-> >                 MAX6621_TEMP_INPUT_MAX);
-> >         val =3D val / 1000L;
-> >
-> >         return regmap_write(data->regmap, reg, val);
-> > }
-> >
-> > If a user writes 128000 to temp_crit, it gets clamped and divided to 12=
-8
-> > (0x80). For an 8-bit two's complement alert register in the MAX6621
-> > hardware, 0x80 is interpreted as -128 degrees C.
-> >
-> > Could this cause continuous false thermal alerts and potential unintend=
-ed
-> > system throttling?
-> >
-> > > diff --git a/drivers/hwmon/max6621.c b/drivers/hwmon/max6621.c
-> > > index e86ec6d237ca6..9becd098d840b 100644
-> > > --- a/drivers/hwmon/max6621.c
-> > > +++ b/drivers/hwmon/max6621.c
-> > [ ... ]
-> > > @@ -225,8 +224,8 @@ max6621_read(struct device *dev, enum hwmon_senso=
-r_types type, u32 attr,
-> > >                        * The temperature is given in two's complement=
- and 8
-> > >                        * bits is used for the register conversion.
-> > >                        */
-> > > -                     temp =3D (regval >> MAX6621_REG_TEMP_SHIFT);
-> > > -                     *val =3D temp * 1000L;
-> > > +                     *val =3D (sign_extend32(regval, 15) >>
-> > > +                             MAX6621_REG_TEMP_SHIFT) * 1000L;
-> >
-> > [Severity: Medium]
-> > This is a pre-existing issue, but does this arithmetic right shift disc=
-ard
-> > the hardware's fractional temperature precision?
-> >
-> > By shifting right by MAX6621_REG_TEMP_SHIFT (6 bits) before multiplying=
- by
-> > 1000L, the lower 6 fractional bits are lost, dropping up to 0.984 degre=
-es C
-> > of precision.
-> >
-> > Would it be better to multiply by 1000L first and then shift or divide =
-to
-> > expose the full fractional precision provided by the MAX6621 device?
-> >
-> > The same precision loss also happens when writing hwmon_temp_offset in
-> > drivers/hwmon/max6621.c:
-> >
-> > drivers/hwmon/max6621.c:max6621_temp_mc2reg() {
-> >     return (val / 1000L) << MAX6621_REG_TEMP_SHIFT;
-> > }
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808083718.=
-2612205-1-congnt264@gmail.com?part=3D1
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
 >
-> Thanks for the review. Both points are pre-existing and on the
-> write/precision side, so I'd like to keep this patch focused on the
-> sign-extension read fix and handle them separately:
+> Pre-existing issues:
+> - [High] The error cleanup path in `qcom_geni_serial_probe()` leaks the I=
+DA allocated for the UART line index, which is severely exacerbated by the =
+newly added IRQ probe deferral path.
+> --
 >
-> - temp_crit write / +128 =C2=B0C: agreed this is a pre-existing write-pat=
-h
-> issue. max6621_write() clamps to MAX6621_TEMP_INPUT_MAX (128000), so
-> 128 =C2=B0C lands in the (non-shifted) alert register as 0x80; if that
-> register is interpreted as signed, it wraps. I'll send a separate
-> patch to tighten the clamp once I've confirmed the alert register
-> width/sign against the datasheet =E2=80=94 it's orthogonal to this read-s=
-ide
-> fix.
-> - Fractional precision: also pre-existing =E2=80=94 both the read (>>
-> MAX6621_REG_TEMP_SHIFT before scaling) and the write
-> (max6621_temp_mc2reg() divides by 1000 before shifting) discard the 6
-> fractional bits, so the driver has always reported at 1 =C2=B0C resolutio=
-n.
-> Exposing the 1/64 =C2=B0C resolution is a behavioural change rather than =
-a
-> fix, so I'd prefer to do that as a follow-up.
+> --- Patch [1]: [PATCH 1/3] serial: qcom-geni: Propagate errors from optio=
+nal IRQ lookup ---
+> commit 9ec5f0b3d9989a6071c2d4680336709af497a5bf
+> Author: bui duc phuc <phucduc.bui@gmail.com>
 >
-> This patch only restores the sign of the existing values, which were
-> being reported as large positives for negative offsets and crit
-> thresholds.
+> serial: qcom-geni: Propagate errors from optional IRQ lookup
+>
+> This commit updates qcom_geni_serial_probe() to propagate errors, such as
+> -EPROBE_DEFER, from platform_get_irq_optional() for the wakeup IRQ.
+> Previously, errors other than -ENXIO were ignored and probe continued.
+>
+> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial=
+/qcom_geni_serial.c
+> > index 7ead87b4eb65b..240a6d67d8475 100644
+> > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > @@ -1883,8 +1883,13 @@ static int qcom_geni_serial_probe(struct platfor=
+m_device *pdev)
+> >       uport->irq =3D irq;
+> >       uport->has_sysrq =3D IS_ENABLED(CONFIG_SERIAL_QCOM_GENI_CONSOLE);
+> >
+> > -     if (!data->console)
+> > +     if (!data->console) {
+> >               port->wakeup_irq =3D platform_get_irq_optional(pdev, 1);
+> > +             if (port->wakeup_irq < 0 && port->wakeup_irq !=3D -ENXIO)=
+ {
+> > +                     ret =3D port->wakeup_irq;
+> > +                     goto error;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this goto error path leak the port=
+ IDA?
+>
+> In get_port_from_line(), an IDA is allocated for the UART line index with=
+ a
+> very restricted range:
+>
+> drivers/tty/serial/qcom_geni_serial.c:get_port_from_line() {
+>     ...
+>                 if (line < 0)
+>                         line =3D ida_alloc_range(&port_ida, max_alias_num=
+ + 1,
+>                                                nr_ports - 1, GFP_KERNEL);
+>                 else
+>                         line =3D ida_alloc_range(&port_ida, line,
+>                                                nr_ports - 1, GFP_KERNEL);
+>     ...
+> }
+>
+> However, when jumping to the error label in qcom_geni_serial_probe(), the
+> cleanup only detaches PM domains and misses calling ida_free():
+>
+> drivers/tty/serial/qcom_geni_serial.c:qcom_geni_serial_probe() {
+>     ...
+> error:
+>         dev_pm_domain_detach_list(port->pd_list);
+>         return ret;
+> }
+>
+> Since this patch adds a check that propagates -EPROBE_DEFER when the opti=
+onal
+> wakeup IRQ is not yet ready, this error path will be frequently hit durin=
+g
+> normal boot.
+>
+> Because the max IDA limit is very small, just a few probe deferrals will
+> exhaust the available IDs, causing get_port_from_line() to return -ENXIO =
+and
+> permanently preventing the UART driver from probing on subsequent attempt=
+s.
+>
+> Should ida_free(&port_ida, uport->line) be called before jumping to the e=
+rror
+> label, or added to the error label itself, to prevent exhausting the ID s=
+pace?
+>
+> > +             }
+> > +     }
+> >
+> >       if (of_property_read_bool(pdev->dev.of_node, "rx-tx-swap"))
+> >               port->rx_tx_swap =3D true;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260807090945.41=
+690-1-phucduc.bui@gmail.com?part=3D1
 
-Following up after checking the datasheet (MAX6621AUB):
 
-All temperature values use 16-bit two's complement, left-shifted so that
-the +1 C bit is bit 6 (1/64 C per LSB). The alternate integer
-representation is optional and enabled via CONFIG0 bit 6, which this
-driver never sets, so the device stays in the default shifted format.
-
-The offset path already accounts for this: it shifts by
-MAX6621_REG_TEMP_SHIFT on read and uses max6621_temp_mc2reg() (which
-left-shifts by 6) on write. The temp_crit path does not -- it uses a
-plain "regval * 1000" on read and "val / 1000" on write, i.e. the math
-for the alternate/integer format that isn't enabled.
-
-As far as I can tell the alert-threshold registers are in that same
-shifted format (the datasheet doesn't give a separate worked example for
-them, but they're compared against PECI temperatures in the current data
-format, and CONFIG2/offset is explicitly "represented in the current data
-format"). If so, the threshold is programmed 64x too low: a 95 C crit
-stores 0x005f, which the device interprets as 0x5f/64 ~=3D 1.5 C, so ALERT
-can assert almost immediately. It round-trips through sysfs (the read
-undoes the write), which hides it from a simple read-after-write check.
-
-So this is a scaling bug rather than the clamp/+128 wrap I mentioned
-earlier -- with the shift in place, 128 C encodes as 0x2000 and there is
-no wrap.
-
-I'll send a patch scaling the crit read/write like the offset path. It
-builds on the sign-extension fix in this patch, so I'd send it as a
-follow-up on top -- happy to fold both crit changes into a v2 instead if
-you'd prefer. Confirmation from someone with the hardware would be
-welcome, since I've only verified this against the datasheet.
-
-The 1/64 C precision point stands as a separate enhancement.
+I noticed that get_port_from_line() is also called from other
+functions, such as qcom_geni_console_setup()
+and qcom_geni_serial_console_write().
+Since this is a pre-existing issue, I think it would be better to
+address it in a separate patch if we decide to fix it.
+For the current patch, I would prefer to keep it as is.
