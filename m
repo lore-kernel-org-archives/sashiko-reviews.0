@@ -1,160 +1,276 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302D275870
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 00:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786149399; cv=fail; b=Tw35cx04Dydm5iTanBtuMvCqexlJSJwvadKGlaAGnw3dtL8OSa5P09LTZ+Ktla+UBJfUmYal5ZU363TT1jGvbJNg/p3HCVVMibT+bxyXjmVbyRA0Fr2YTiHelj5KL0Pxp/1z0LYrZGrZKwunF/A6CmceDKTcVzH0NSjpo5VVYdc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786149399; c=relaxed/simple;
-	bh=OmvygZMRHp7hYB3CyBqRLtIUHzKKdhPhcEQ3owh81Xs=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ZSSGdeIR3Rz/SoLbi1L41jSu75lAoooudknyfFyTD9DB55BK7RufMRyH2+9JmMV0nbabAmdoIBHC/JhTg8JvI3xpwQBKa/s4ww24sR4gtlvOj/3RVzYxiSFoctF0YybeP0yUlgxbohiRNOpMTLeGsH+O6MUt44h7gJvkOEDBvrs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Uh9WbHDq; arc=fail smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36294165F1A;
+	Sat,  8 Aug 2026 03:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786161063; cv=none; b=bGZoXjfWSX+uPTINKqG2wPbejRkKhJgpftX1h4Yf3Wd1qW4Md+6MUUTfZxwRiXIvXqpeZ0QA26voQsKSsepKCyoH9eGBYist5RnJ6E+TdwZ0M7/BSCIIhsitBPQZTtf4d/k4D9AxRc9JLJjjC+T8A40FvN49hidIQZH7TXMGxgo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786161063; c=relaxed/simple;
+	bh=YKlOFwwfoRHKSYtEmKwTtfm+QryBsgP9jQOBfDxPctI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=ZHEd/MTovsg4HQSaixrp7nDTD/2EOSZo3v3QHPH77Ofe7GkqaCh2DCBCKvgIh4G30yXb0AYCBJwUrYi6IqE51MH09XStWr5zlrpjxMmTe5DTe79KNhJU/H68AY+LI5wnkgPg7IWXx14FrczTM8Y6AYRwkLkSzEeFEXFS+8UHjbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=TslxBJSF; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Uh9WbHDq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1786149397; x=1817685397;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=OmvygZMRHp7hYB3CyBqRLtIUHzKKdhPhcEQ3owh81Xs=;
-  b=Uh9WbHDqxRS3uH9SOa2dZYxXCzWoMqIN+Bi5XCzWiRE4UxTEuRHab2BU
-   sUtWycZ+jjlAjyK65er8z1OxRHFoZUFtSrie3vUGeIWuYjlf5VVx3fbjK
-   YQQIgTvAMSxBx2iBOTDIY39sRMpp1Kb2dfoMIwHns+H3iR3/9sWWtBxMj
-   YomPUTNqglzBsP2iZ37TaFSc1SOjo5Kl4jHDgIlQOivAyu0+gyCnh6nRP
-   Gjk42gkhVlK93e4gtRSLjf5AUfHRlKblqQ8MnwAy5yYkJHzymDSs62uJP
-   S6qA7Bc+B9RqL0uSo9bW0ExaiJusUFYidGwKam8BVR7R9EQUfIbsPtt+N
-   Q==;
-X-CSE-ConnectionGUID: /EDzYvZdRRGA92//ZPSWeA==
-X-CSE-MsgGUID: I+cMGHxNRFyrxZfdyuiWRQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11868"; a="109555976"
-X-IronPort-AV: E=Sophos;i="6.25,211,1779174000"; 
-   d="scan'208";a="109555976"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2026 17:36:37 -0700
-X-CSE-ConnectionGUID: GqPtLDDUQKC29gMhkxZVQg==
-X-CSE-MsgGUID: Mk8TqMiSRoitjRn0yiqpSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,211,1779174000"; 
-   d="scan'208";a="258231819"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2026 17:36:37 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Fri, 7 Aug 2026 17:36:36 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Fri, 7 Aug 2026 17:36:36 -0700
-Received: from CY7PR03CU001.outbound.protection.outlook.com (40.93.198.71) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Fri, 7 Aug 2026 17:36:36 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BiXh6fnVdhApbERWRtZi5hFf+d9PZWJjrWGhBfKsn3u95qPox3u0O3mTocTFAulcm/bRh8c63wMk39RxYIr2kdOo2srwOau1G82lovKDjZsOGERabddTK0MJb1FHV7+JJE0f3s26o3qbxo7hm8FrEPI3yO1X/Ck0cjNCflOpFRsH5YxnqpkPzwIpiUqYEYcknXt5ane1JSRA4LEIiLTNe+jyo1RAGnwbvz2A0+ldfpQCXR6tkRjGh1vRuZfSjHAO+/Q1bPxxN/LQujc5gHUF2IBEnj8f7/iCJZZ/Mb1yLSDrB6zP+p5n5PdfWJ9XX4R4Q1a1aeRiHmam9KoUXE8wWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aF19XqVZDXuI2nMDSIGGhXfl905FKcTH3KetgHfWOUo=;
- b=SZyZd/YQe0FGH7WQFvSOWjIhuTSv6pp4d5v1FOH+SbJ4ZEKM1n+6AZ/4uS/XvIOuqU/+mmWZ5xLS4Gh+vuDN9ZajVquELqkQKzZ6BTDMhsiobeRQ6DtPtH7diuwteqtoByxyYrJfrcCBOu00CSo/bS9tKfVyOA+7ltzhss9wgf0NZ4+Tj6KJJs+OX6ucj3EegghZvnLiZHwc7uLnzYXh/QtTem8Jj92YC/THVkzbl8tKl8cVBsqr5Mmxm/gO21hW73kfdWvk8a/lzE4Z3lzLyKRBVgyN+5ze9BtSX3wSdrkDs3yr2wzoOwGqUH5hMYsQbP7xZ2hYp7yPK8yL61QI+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by CY5PR11MB6236.namprd11.prod.outlook.com (2603:10b6:930:23::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.24; Sat, 8 Aug
- 2026 00:36:24 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53%6]) with mapi id 15.21.0292.013; Sat, 8 Aug 2026
- 00:36:24 +0000
-Date: Fri, 7 Aug 2026 17:36:21 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v5 1/4] cxl/hdm: Reject switch decoder interleave ways
- that overflow targets
-Message-ID: <anZ6BUjep72GZ0jl@aschofie-mobl2.lan>
-References: <cover.1786143520.git.alison.schofield@intel.com>
- <af094094813d7f51d86cbf608936270b7d85526e.1786143520.git.alison.schofield@intel.com>
- <20260808001733.52ACD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260808001733.52ACD1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR13CA0170.namprd13.prod.outlook.com
- (2603:10b6:a03:2c7::25) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="TslxBJSF"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6783Z2fa3259842;
+	Sat, 8 Aug 2026 03:51:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=tIs542
+	9RT+zt2oZJQk9HhekwBnXkcCt8D9pIpmjg83o=; b=TslxBJSFZdkbQkXmaBkCSb
+	pUz2d4gs4RPBlmY22EggeTkcgTFGrLdyYY3rtOMGbfdP+hm9nvj+U5tdx7gLD+w0
+	kEWJaV4SG5xHyeKT8fnz1+AIYGsC4W7WBX6M9TxKPiVLwmjjBIBn43FtE1VTokzy
+	uHd0EWDUOtznrnc091/9cM3sJ/IS6Qksbx2AJD73qXnXgsraNa5UtzeMhI/oBd3a
+	eBCvGpz5QT+CWsPO2fUwug9ofmfGK9tlJQoZOSUlyT62oxStofIU8dRMTfyRNs1V
+	ucmS/LpnDZnEtOmGbFyduPWAAeuYnIll2cpDfT0OATCMjuB4lQaBcHoGvExX/7QA
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp2g112-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 08 Aug 2026 03:51:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6783fFP8025806;
+	Sat, 8 Aug 2026 03:51:00 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fsu4r2jpg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 08 Aug 2026 03:50:59 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6783owPm29229654
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Sat, 8 Aug 2026 03:50:58 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 22ECD20043;
+	Sat,  8 Aug 2026 03:50:58 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7F85920040;
+	Sat,  8 Aug 2026 03:50:57 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.124.213.45])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Sat,  8 Aug 2026 03:50:57 +0000 (GMT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|CY5PR11MB6236:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0634c770-0591-4aad-82c1-08def4e5137e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|22082099003|18002099003|10067099003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: yGceVLefKUIXKrEovIB/zzFfSo8Wo1E3iRsAVyWbaqzAak2UPilGkumw72ogfBjkGiaMnACHIvO6HuzSvygz9icLw27T0AUHwuiGt0Wxk+s5hmfeDm06saDQHQqObyhLbXFWazkf0K5rPn2/PciLb4c4pqnJQzTiqaM5kgXJDPl329eG1yE/yAcPtf8tOFv0qPxx29qZTuEmzaqLX4e1Rc+r4Pcv2JJTFKukGnLyw+sLwq2oqKOzwvnDYkMq2j5ZRXZYIMD2HuUgzWpDL6FRet26gEVwDeKQoAh0nY2E1dZiYoJUcKKs6y3HEcXRCxF6QSlsmX18St8+J18iJPHSVjN908stYJQKO/8w6/sjl823ByUr9kfYkagT7iOmboOv1YTTb80K1UIWhXBxz+bgPbhiS1o5QvaLWm6EUkd3Xo4/18/xiyIJaS+o64U8l8E3z7/KQ8W2QItUwYGCwUYCFNZvVqEbw30P9oLXiip/qQNL52c89iyT31yk1sLjIOPWUahVcRN2h/BIpwXqcOQka8l50fmwEzy0i66xuDz1Gr9rqnnpoty22CcfXgfW8QtpTGLCus3c39ON04rjzuJX5qTqCDCd4qe4YpMUzlTrt3dz/hdOgmnEL92UE90E/vJVNyMWCVD4ocnBM4pb2gh3jQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(22082099003)(18002099003)(10067099003)(4143699003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?94NfJ/nKtetiDkXdOgZ/tPaXzkW2vleJMVTM2W9XX87jMQsJ5YwIgKLIqkc9?=
- =?us-ascii?Q?hqwZZ6OCoOg6JcW2M4Apz4YtHUDnXEhHfAGaE67f5wHZvH7FcSadoTPrHr9u?=
- =?us-ascii?Q?RZBR90hlVqZINzl0c7aD4eKCw74lr7R1frkCuQfgvS4MAdC+U1+wjv5vpMm9?=
- =?us-ascii?Q?iRwSzXQvJXPfxWK/gMANuc+AjubZhi1KFb6VXY2KTXQoJPmdUHTvWHQJTEQl?=
- =?us-ascii?Q?ca8F8ZIU3/E16m2WmPQb+kchZRbyk5/ZcKjVhcyOCJMAqjrriQ/E59E/ImWu?=
- =?us-ascii?Q?boXCEafmWXPcO3jfRlfZy8W/NU1dq73nDBMuZQt8hTpwRyeqG0z/mv3u9w/p?=
- =?us-ascii?Q?YqNhDA2UL0I5iX5UPSd3xIEjeDo9Tq2OBOViy7WoBUrxX9tlv/pX7zxCnmCI?=
- =?us-ascii?Q?HrHMHRmwxUifL+mgnKrkIn5nY7SMETeXa+tZxF5q+ZK2JVx4au5u9mmTcpeR?=
- =?us-ascii?Q?FOcAUDJ/C5xTCAMtbWJ3IdhL5OqKxWqkhHMQcoPPNft/rN7cYNYWBU86IEwI?=
- =?us-ascii?Q?BTJ+OY/IYCdJ5FgfWtUufdODmxHvQ/k2wi47MMBKg8l8FwyroX7Cbj1+ZUS9?=
- =?us-ascii?Q?p1E5KM78Xl4EsGaZ62v4Oi1oIn2ZiC9SKhCgHuxpohB4nct/tDIPpan3Y4Xr?=
- =?us-ascii?Q?HiKwt6PilIAIkafNAEgLw0nlq1o1hnr13fcAvslYnb0XfmXzo6nkSWp3I3yB?=
- =?us-ascii?Q?EBJonCLe7g9gS+LkIhC3rqIn0OZE8Qh34Otx1tRRKgE8D1PLty+E075gv82R?=
- =?us-ascii?Q?oZ3A1naphCZ1PE8zk8GlkePGU4J0QwgFdk4F6yGwU2jaGtNs7925GJJNfRoK?=
- =?us-ascii?Q?/3cau6VE32PyL4xNmBZS0+GncY75YaqdZbrJt16uA1MwY8HlsEz46e0pxwtN?=
- =?us-ascii?Q?d186sAWPRdF7Hc2TNwMRelvA4dpy/qrnY50hHZ021aLXuIq0mQLf3TYs/n2b?=
- =?us-ascii?Q?4NnxwYG/vqz64Jc8yKRKMMv3rpb7A+EExtSK1lJ8DtcB2c9JwABSpA7RF1mJ?=
- =?us-ascii?Q?YTsqBKYcqACRhpW6gSu8ep6E37ZvqVfmEVdZQ/Z8ZAxrGeV40vbTuzKa2OBd?=
- =?us-ascii?Q?QSLeatWnmN26qWFQDBMQpy3AM6OOvHXEP5DG07kFooAwbA/bkgb1ONqUESxj?=
- =?us-ascii?Q?Okd3TCw1BzGQHycgYk096DNkJcaPjvzP58xAQScblct3tVkw8wm68zPG29C1?=
- =?us-ascii?Q?fSsPjjYGA2838zh0kBWPutIpORVjIwEgszKfMaWhVvT2wLN52UHnKuLS1+TT?=
- =?us-ascii?Q?zSYbGqRQdLtiEPzPbRCF8x/3x7gppZRHb2n9us0XT8R4aOrlarOn9KF1w/u0?=
- =?us-ascii?Q?W9cUdOJkysUq7jjQ0sU82lNic/v5GG1rOVxdueH4O/oBKqYpzCJGHgpk0aMR?=
- =?us-ascii?Q?Q7MsmU+d6/zKRqtHbY6cRxKbAzkwkAjiCl5I/AFyo970Bz2/Wf+m6zERHmSB?=
- =?us-ascii?Q?/xl+e9fG7lMCgusUwZVhlycJbep5zoTyyW430tdExnzki4G3zgTKjB6dMHLe?=
- =?us-ascii?Q?wQ720FYKnatn0fX3l9BXE6uoFYuaR+VzVP1gzB7gHULa8EYoOCoOye8nRbu4?=
- =?us-ascii?Q?FuOrZDhwD3w4WpSsvPn0UFycBOJkEBwde25lO0RCVtHa1QNnWH88pb5RtYKI?=
- =?us-ascii?Q?uZ+1Na1ZD9heI3GRKz/oKrxNmGcKmw+78HkqK1+sVafpD9fxq6Z6j43a2vjF?=
- =?us-ascii?Q?qvUh0/jUrQyq/+1lGr9o0sEQLYqyE68PilnXw/TmqbnEk7JI/CRnqmGrfsl0?=
- =?us-ascii?Q?SpZpm438DV6FI0KNBSaHTYIHdOwri2Q=3D?=
-X-Exchange-RoutingPolicyChecked: H9cCFjoeLYX+GvYvUXhcOOk5Lo5LE4bhGqKI4GNpYWCtg76KRMiODYyIrucrh8/oxxYaEITKq+28PiBJzeNU0cs0f+k2K1RUp75rxJSdvKPHveWyqGG7LTkUwov172bvdhBW0j8LhDOpTMIIpYXOlyoPJ1MUv00Zdn8qhBunMQ1yCHflqBN6lQfcErAnvIDZvBEc2d8hUfLj9nI3LLbTRTV0tuektcp4GcN4d0YEipPqBggOMdjfBwj2+kvXqnAqPoGjDEStNXacMlUkMKI3SFO5Ze8LFHm6ZA8QcL3gLDjvNFBDGFtRrKpxxIQImLoDcX/uxkQ6+ugZA4mW4ebldA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0634c770-0591-4aad-82c1-08def4e5137e
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Aug 2026 00:36:24.6961
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7cW7y1pFQGS1+T9CFIrY8jx9mC1WekLNxtpmz+0/1X30R/WxNRSM2atFLsHQJCGU7IYeq9Nl6X8PxhCc6BA7cO2axnicP3n8nFja18FdOH0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6236
-X-OriginatorOrg: intel.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH V5 2/6] tools/perf: Add AUXTRACE recording support for
+ powerpc HTM
+From: Athira Rajeev <atrajeev@linux.ibm.com>
+In-Reply-To: <20260807145958.2AEF21F00A3D@smtp.kernel.org>
+Date: Sat, 8 Aug 2026 09:20:44 +0530
+Cc: linux-perf-users@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <44FFDD84-E177-4824-9233-AE021E8ED3A5@linux.ibm.com>
+References: <20260807144135.2607-1-atrajeev@linux.ibm.com>
+ <20260807144135.2607-3-atrajeev@linux.ibm.com>
+ <20260807145958.2AEF21F00A3D@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a76a7a4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=q_6GuL3v2PeAzwMcsi8A:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: KlIrGZFdQV1Nf3CbsEmm5b6y7GGZah05
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA4MDAyNSBTYWx0ZWRfX90LmDQATpMvj
+ 7zT3ieE4bzIJvesoXIfI6s0c786+z+GIgKO5iZnDsx5iSKFZAwQ0JXQO5byW4HuWMH2Y51yeiyv
+ /vRMf+c5nJz0AX044Df1kr64w1Cq0jKKxmOD3LNUDUt0sp+FeJRv8+1jT6xOkdMS2HWZs2OCmNc
+ RXRWkvBVr3KktMY4JqSY2I4qotdK2WV64r3LQEE2Yo7g+CXDLNk4ObllJpa2lPIwgxe+wEkZ7k+
+ IM7qtbospA49ANQq/fdr5nOW7W5wKEwFWPbCc/xawms6pqrwJlxaj+Hkvj9LZoUG6ETE+TsoGdH
+ NASzvf0X2+VBqu5SE7Q2Fv4U0nqqZfK9VUvm+RewM9gM3/5951tQlfO9Rx/kSPZ9lRWtIzzPIgJ
+ YsPugDGPdzHP5S7dz9iJGOnBn5UzVJNkF+JXii+zO0qHyWfOYGqnRPsMzdV6C/CTkOrl5+FYm0O
+ Oj86LMASuk5rQf4LjWA==
+X-Proofpoint-ORIG-GUID: KlIrGZFdQV1Nf3CbsEmm5b6y7GGZah05
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA4MDAyNSBTYWx0ZWRfXxKFuc+Um1rN4
+ a+QK+JHbbJnw9fF52yj3l3T74DGkZpj0+TIn+L11ZWgR03/U8b8V9pSy3pzmyqYdbwL8SURuejd
+ QlkxcCR5Rn+gWvaWoDYtV7deYyox7I4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-08_01,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608080025
 
-On Sat, Aug 08, 2026 at 12:17:32AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Incorrect parsing of the target list register on Big-Endian architectures.
 
-Fixed in patch 2 of this series.
+
+> On 7 Aug 2026, at 8:29=E2=80=AFPM, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> - [High] Heap buffer overflow in htm_info_fill() due to undersized =
+PERF_RECORD_AUXTRACE_INFO allocation for HTM evsels covering multiple =
+CPUs.
+> - [Low] Missing explicit inclusion of `<string.h>` for `strcmp()`, =
+violating musl libc compatibility guidelines.
+> --
+>=20
+> --- Patch [2]: [PATCH V5 2/6] tools/perf: Add AUXTRACE recording =
+support for powerpc HTM ---
+> commit 36cc90227b9052ae32b72e6b7df67e4e6bc7ac1e
+> Author: Athira Rajeev <atrajeev@linux.ibm.com>
+>=20
+> tools/perf: Add AUXTRACE recording support for powerpc HTM
+>=20
+> Add powerpc perf tool support for the HTM PMU AUXTRACE recording path.
+> Introduce htm_recording_init() and the associated auxtrace callbacks =
+so
+> perf record can create PERF_RECORD_AUXTRACE records for HTM data.
+>=20
+>> diff --git a/tools/perf/arch/powerpc/util/htm.c =
+b/tools/perf/arch/powerpc/util/htm.c
+>> new file mode 100644
+>> index 0000000000000..d2fdef4880320
+>> --- /dev/null
+>> +++ b/tools/perf/arch/powerpc/util/htm.c
+>> @@ -0,0 +1,185 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * HTM AUX tracing support
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/types.h>
+>> +#include <linux/string.h>
+>> +#include <linux/zalloc.h>
+>=20
+> [Severity: Low]
+> This isn't a bug, but this file uses strcmp() which is declared in =
+<string.h>.
+> Does this code need to explicitly include <string.h> to avoid relying =
+on
+> implicit inclusion, which might cause build failures in strictly =
+conformant
+> musl libc environments?
+>=20
+> [ ... ]
+>=20
+>> +/* Count htm evsels in the evlist */
+>> +static int htm_nr_events(struct evlist *evlist)
+>> +{
+>> + struct evsel *pos;
+>> + int n =3D 0;
+>> +
+>> + evlist__for_each_entry(evlist, pos) {
+>> + if (!strcmp(evsel__pmu_name(pos), "htm"))
+>> + n++;
+>> + }
+>> + return n;
+>> +}
+>> +
+>> +static size_t htm_info_priv_size(struct auxtrace_record *itr =
+__maybe_unused,
+>> + struct evlist *evlist)
+>> +{
+>> + return HTM_AUXTRACE_PRIV_SIZE(htm_nr_events(evlist));
+>> +}
+>=20
+> [ ... ]
+>=20
+>> +/*
+>> + * Fill the PERF_RECORD_AUXTRACE_INFO private data with:
+>> + *   priv[POWERPC_HTM_PMU_TYPE]   =3D pmu->type of the first htm =
+evsel
+>> + *   priv[POWERPC_HTM_NUM_EVENTS] =3D total number of HTM CPU =
+entries
+>> + *   priv[POWERPC_HTM_EVENT_DATA + n*2]     =3D CPU number for nth =
+entry
+>> + *   priv[POWERPC_HTM_EVENT_DATA + n*2 + 1] =3D attr.config for nth =
+entry
+>> + *
+>> + * One entry is written per CPU in each evsel's cpu map.  An evsel =
+opened
+>> + * with -C 0,1,2 contributes three entries (one per CPU), each =
+carrying
+>> + * the same attr.config.  The decode side uses event->auxtrace.cpu =
+to look
+>> + * up the matching config and derive (node, chip, core) for the =
+output
+>> + * file name.
+>> + */
+>> +static int
+>> +htm_info_fill(struct auxtrace_record *itr,
+>> +      struct perf_session *session,
+>> +      struct perf_record_auxtrace_info *auxtrace_info,
+>> +      size_t priv_size)
+>> +{
+>> + struct htm_recording *htm_r =3D container_of(itr, struct =
+htm_recording, itr);
+>> + struct evlist *evlist =3D session->evlist;
+>> + struct evsel *pos;
+>> + int n =3D 0;
+>> + int expected_n =3D htm_nr_events(evlist);
+>> +
+>> + if (priv_size !=3D HTM_AUXTRACE_PRIV_SIZE(expected_n))
+>> + return -EINVAL;
+>> +
+>> + auxtrace_info->type =3D PERF_AUXTRACE_POWERPC_HTM;
+>> + auxtrace_info->priv[POWERPC_HTM_PMU_TYPE] =3D =
+htm_r->evsel->core.attr.type;
+>> + auxtrace_info->priv[POWERPC_HTM_NUM_EVENTS] =3D expected_n;
+>> +
+>> + evlist__for_each_entry(evlist, pos) {
+>> + struct perf_cpu_map *cpus;
+>> + int i, nr;
+>> +
+>> + if (strcmp(evsel__pmu_name(pos), "htm"))
+>> + continue;
+>> +
+>> + /*
+>> + * Emit one (cpu, config) entry for every CPU in this evsel's
+>> + * map.  perf record -C 0,1,2 creates one evsel with a
+>> + * three-entry cpu map; each CPU gets its own AUX buffer and
+>> + * must be individually mapped so the decoder can match
+>> + * event->auxtrace.cpu to the correct (node, chip, core).
+>> + */
+>> + cpus =3D evsel__cpus(pos);
+>> + nr =3D cpus ? perf_cpu_map__nr(cpus) : 0;
+>> +
+>> + if (nr > 0) {
+>> + for (i =3D 0; i < nr; i++) {
+>> + int cpu =3D perf_cpu_map__cpu(cpus, i).cpu;
+>> +
+>> + auxtrace_info->priv[POWERPC_HTM_EVENT_DATA + n * 2]     =3D cpu;
+>> + auxtrace_info->priv[POWERPC_HTM_EVENT_DATA + n * 2 + 1] =3D
+>> + pos->core.attr.config;
+>> + n++;
+>=20
+> [Severity: High]
+> Does this code overflow the auxtrace_info->priv[] array when an HTM =
+evsel
+> covers multiple CPUs?
+>=20
+> The auxtrace_info->priv[] buffer size is calculated by htm_nr_events() =
+above,
+> which only counts the total number of HTM evsels. If a user runs perf =
+record
+> with a CPU list (e.g., -C 0,1,2), there might be only 1 evsel, =
+resulting in
+> space allocated for a single (cpu, config) pair.
+>=20
+> However, this loop iterates over the CPU map and writes a pair for =
+every CPU
+> in that evsel (e.g., 3 CPUs), incrementing n past the allocated size.
+Thanks for the review
+Will address this in next version
+
+Thanks
+Athira
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260807144135.2607-1-atrajeev@linux.ibm.co=
+m?part=3D2
 
