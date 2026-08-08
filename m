@@ -1,195 +1,288 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DC13C1D44
-	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 10:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4F03191D6
+	for <sashiko-reviews@lists.linux.dev>; Sat,  8 Aug 2026 11:20:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786185791; cv=pass; b=VWnKquNL2ZXMGaudeolpEWzB/4wTz28/8joxfXKqFH+nVJ0HXnBu+2cNkj7OKIYLelCGv/sdn1BFZHn78tHdxEiYlSvp8EptsZMsvsMU7wLEJLeqaByX+wqXN+skUIx9aHfPpgjKoWdmJMihj6vnxKCxUnz8popWtICGSjGMvnc=
+	t=1786188030; cv=pass; b=rzldHkSNygf1zSSgDItr7WN4FvtSppOflRjPsKNWfP8F6FEf0fUqiRW9E/hMimkdAYtS/jKfsaL0rVROBQXMfsDhnmBtu+fhWXh2uhuBS9S/tLuBBB8TqslzuttzHZSgSreeLKN4YjzrWb8URnrnhQ25F4gMS4qLFuzXk+rerKo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786185791; c=relaxed/simple;
-	bh=mXjI6xLrsgJ/BCByKBCc7QBfdI52WmMfRYnj8yT11hk=;
+	s=arc-20240116; t=1786188030; c=relaxed/simple;
+	bh=TWLphmIi2kimQzCJscprLxq2t1Tk6kjAiP54AgHPs9o=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mpTywugPMwV1wV+lv7Y/Jq43DI8yFxD4CkHlkHsYUPfeMSnn4SXpCRRqF1WPH875OGuUGZ8osQScQPpuAow7U43da/35xeH2M5zRNaTTVhHIv9sBBDDw+u/V+R1gN7QKq4aEECVcG4XpWH3ShPbuc7njGpXJ6rsL30m+fNcKYmM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oN2NHSFo; arc=pass smtp.client-ip=209.85.210.170
+	 To:Cc:Content-Type; b=BVcCTVVxDCtQYP+boCHbgU36kcoQ8WKJ5Lac2DuvpdXk2qRRUrGppJu+EmDA0RxTLGxmMYva8qGB8CBizDVvxrMEZmGAjJADaYfluWH20wXGqKTCYLGws6yuCJqbgXVLq5vxaCFWUzQRd7a3Asx3VLMjrbKTyQvHMHeS0rMgueg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pWG3vIMz; arc=pass smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oN2NHSFo"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8453427d3f4so369493b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 03:43:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786185790; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pWG3vIMz"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-80bb41f7f3cso4024797b3.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 08 Aug 2026 04:20:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786188028; cv=none;
         d=google.com; s=arc-20260327;
-        b=i/6uLfSYf5tJ2Cn4yrfGzorlpfAzNczzXY2XlFs+TX9E8QrxyZhLFPYmRrcgJoW8ol
-         EZ8luAsLzB/nmy3bIt4nhZo9JbUyLXM6f0QCXXJiD07obf/Ig+2bBiY7H8VSo8PriefQ
-         VymUJi1PrILXYa0TpduGr2UNAJX1noMsW3CmW1ZhHgWoZO9gPBw4SOc6K7e091KydTJY
-         tR/Aq8Qg+jBHAP9iBIRc9psZo73WBpD47DuRxznwg9W0HeAJGT5ffg4kU2Mls1iIG/Ok
-         +6yYfmetAc1PYXlvcQ4MMhgHYMilFnSBwSHJiVA/nPuHTPihmjlcWeTymi2R0YwKqXtk
-         GRAw==
+        b=R65OGAgBpf/4hVhsuFhFXFPLCksZroRsM6vnnFYFM7wr2piKfEERCzI1x5qQn5Y+bc
+         1ntCd4Zs/CbXjtuEQ+3Zu3+S1KLaxMIeSAH81Y5pRkwUvCUfmHG7BRz56/INBtROHvGB
+         RP2FwVP80yMFG8OihQg2haVlKX0/FPRT2g2bWuGeCJk4oGUjmtX/jGEEVQ56Av7Lh6th
+         pHEyUIB/QYvRtir2JfsycFRjU+50m5V0C95ezV2M9QHqCt3luiYADVT47WyXuaoP6LOS
+         IBeYlt//UYoPzheVcbGEnN0CDpPUrdOp/bxWELtLxVpIIfODI01n8G9gwRvgXcfEe+YF
+         wWkA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
-        fh=3mbWQc2KYnV1YBFEjtPx/1jzUpC/uZUzPfAesf3Pc0M=;
-        b=pE/hwtaSXovGRU+bCOyeUGTimz85YD5AjIitUUIK+6y/V26awKfGY/JPBhuYL5Rfij
-         sWIdS5M1WDrWqvTOsAejoocMHooLAOAHP7mUNoyFa3MuPBhkJV95XPdCSmSC6D38WwyB
-         01wG/LzohJKQDBXnFfdbr+XoB1+uYy0FTTVhV3VTRP3e0N4GaU87FaehLwUI8KuFrZAi
-         71oH12DqM0Zdc2JjJHmd8n9s5bqiRp323lTKT7Rz4JC6KixYs0ARE7DJyv++53uBId+f
-         uKZFUHDV32RkxxujdkOgd6rsF6gZfI2BLmc+bxFF0fcU6dAAeFq/1zX9BK471z7MdB6G
-         iDCg==;
+        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
+        fh=3HEnILFhrdVh+hHtdPC8bOVWQi7VkwWDlgNweflG/6k=;
+        b=qRGMpEZb19x/rTguxczKmOnz9getU7lW8c2N3ctm4djT/zqCNxsywWGn55IvW8IuFG
+         VEj4WlfUjM6GTgHkNg4kD/oakzYaKtKecskjyXxw2R/5R+VGvD0FzuM5Y7AkxSdrP6wD
+         xAAP53pSZ5Z6GYyqQNAeAmGgQ35D4hBT93ZaNw7mYDocWWN+n3DRMWSJGlyiB9GQpZbT
+         F6dw5pT5TURBYqlDHpwGEDFU7KFZHMb2vCZLWeofWqV0n+SrMEz8MUi8SEBiXok+WPmX
+         InHDMV47uDERrTRdvdmj31dO7CDuIGPLEWFsVHwmx732AzqRyH5J9o3Pa5qFPcXD1pSi
+         0bxw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786185790; x=1786790590; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786188028; x=1786792828; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
-        b=oN2NHSFoWObscXjoAPmj5L9lqtIiWUTLSEIjF2RTeBhrg/FQWPd96IJpzZKle4PexQ
-         taAdS7hYXNF9wwJzv6fF+wfK+dn3cdYLVDyASfFuj78aWwTImwmwv5H1q0k/f+4R+6hK
-         XhyDX5NNSu74MaRmUCj4/qxjt4K+Rg+ENSb74rpguxI02PvvICDeig67C/VxAI0PkONE
-         59KCN+9nFNKaqVhHMZpU2rOTXBdruGMk8qpb4bG9uYiISPqtL07LpbzfqeQDtjVEtrDr
-         ik7Au3dcGLABOuMaEf0AgvMNUSiXdyoWAfXKAywrnQ1LtRyzZlkl8fjkLS+s1JWqfKL5
-         pcnw==
+        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
+        b=pWG3vIMzlHD+8NdVTbULHuSXub+k5aLwgyP5hs4GpAOCzya8TBU83NIV1ved9byt3G
+         xKWmn/VdyAVguHFtmDbk/16lwm5Kize5tf7LOQ4kSNjeCfzBmqY5p53z4GTfeO7ayaX/
+         kFQ9eSwMAY+tIxy97ph7XFXgkFIF2TEmFNBBmnqaSDlS2bnL32m0gSMARxY5wdL6Z7y1
+         +jYbSJ2NwAOY/6U28PlJlLwIGJFVooWxmWosymDhz9jAHlcu2QUPR/sKNfbDdlmTSsDk
+         GP8Dh6Sir4TXXAOv7Ho9yz0Nnza1URAXZaSog7+OTIrsaFo+FnhrqVaVZ5SFeL9I99Hv
+         Smtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786185790; x=1786790590;
+        d=1e100.net; s=20251104; t=1786188028; x=1786792828;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=TahiDhpqp/N8bPEZcra7/rRwJQuhTtc5hSf7Qko9ehI=;
-        b=bL2qMAa2JzK5956wdQLSeD9ye3AjGB6IQ7WMnhI+ZkDu5pCzWn/R1vYFw8+x1kl5WX
-         LqLtyMbrVZtIEQfi4s6n7cQOdi52GWmhTks5qfQlsCM7qqc02m19PN0pkdgJPQrcIJ7n
-         OmzVOXeUOe82OxpYFBAzBgDd9k+wzNCM7+7geUYtpjf2+CS7amqXRb80blQZFsvSjd9A
-         DbmrHysi4whQoYnltZlt2uZkbbvu2i8IBMBEkTikGiKAzvEkCrsFLp3PgKrTwUIUifKR
-         w/0tsxFiOGRcCdI5mBnBg5XDpUudJzd4GeS+NtjLqoypy0Ogs4tnAuWQb0E+S6zEko9X
-         XwGg==
-X-Gm-Message-State: AOJu0Yw9OoJcWfhlZaJ0FFmUuPUELNC7RQ0a4eGgYeKdtVCCPDw1C8tc
-	CmxQMoyVLip5HRbyo59l7Yd/fyER3e8TCCW9DfhdoJTarPmkl6BEofh8vfkKfA7CobsVzxnxn67
-	/zm6o+K488bJ+LcEdKNnCpfGyD3+icj1av6QX
-X-Gm-Gg: AR+sD13aem9ALoGkOaRiGgija0XB6ZxMXpOQX5Dus2BUftYfLfuUV05+DTWypcY+XWG
-	egefKo2APvjf6m0Y/9b5xOPvYBstHXcw95eDGpyp1BB9I/nIDP0BhYfqysTG+7OFn8eZU6gSi08
-	3bshhzmfS6jyBsWdznEe0TDuKJ/DIsQU0/qJyRHuJyPUbvzk1d0ISxwdbkS4KLxt1VrS/uVdJBu
-	kGJDKjvT4ir8dBZXb1o/HuHPCiqdtHRW0XCE9wkzO8l4lRKj3vIrqjRdzeg6LHMljl4x+gTYJ8Q
-	9Cxah61HeZQJruYl6vnDyOpZYHJa32zaTgWQ/sesQZNURq5qg2QNMHDD/DkcPqahr5+59ZX3PzH
-	RcQB9S1gvKt4vN5BGpm9d9LFCsXiCqwAbylhLndqJNe6Tf/T/pF0o+rZgn0zX2Kt4FAd8ekntyr
-	aMVQ/+U8Npyefq+Mg=
-X-Received: by 2002:a05:6a00:4293:b0:84a:6540:3389 with SMTP id
- d2e1a72fcca58-84f2dfc53e4mr33552422b3a.10.1786185789775; Sat, 08 Aug 2026
- 03:43:09 -0700 (PDT)
+        bh=3lMTBDnwIBEolYLfeXzMCEeMWNrHRiWHBpgIPWsoSmI=;
+        b=jr2feUtybARn0JDcWxfCTHWgq9CjcalY2bv2O4nmKaINbwY7AIVEFim+mT9HfC/CyP
+         H51r1MKsjiI/DG0pYtCVczLqIa3x+RQG5q+5NUJQWe9BRWlQSx6tYvIq2tLIYPTerxju
+         ZBH5Wur1s3BheZXzjtbzHLaYqW1e0fLcKGwrXLYPhHj+h3GL1N1VePrsWsgF2jqhy05C
+         bVgV32iHKbvLfDiiMg59KciockTxCj80p+QAsWc+bvS7X7MywB8fJfjpsHCfp1r2x/XN
+         sAAvTQcAOlXFGTfxMsDH9WRotSfO0b/4wbbRdYFA6OptkxA2ItTr+4Sg1vWNWNmU0cD1
+         gqhw==
+X-Gm-Message-State: AOJu0Yxi5L35HZRQneRe67DeXOWAV2Bmf6gEiMdt6eKVLBjGILwbSZsP
+	HGDhmiah/K8sbQoLkCAD4YQfWf2WBK6pLnXVPjuSYlehtjGTjnhhRQmycnqBtNdg8ukQcKOq3GM
+	auy5vVvuWfdHbqS77zS2UEZf3RzO2ZWVLjoKlW4rJWw==
+X-Gm-Gg: AR+sD11ZorPij4uBeyLH/bXtXbxwFmRIJw8HCn0oJNRVkG7WoJxgllTeIYetw2qheGh
+	2iFC186Z/bXSjk3n/0LkY+HatUPfISyuCd+e85Xte4NjOjiPKc5qnNn3Q21UbRempO+wToE8WIW
+	QLBSjacsixYYfsGxzTqrVbPuf4uXtu3dF4ZwjLqQRZAN2N5dh9uDeX5ZbzaW83DEga4m3+H6YMl
+	dTODG3aXG3Ql7CPh0grCEqg6BaQrCrtCSQHS0YG4Dll6fBvSuavlY76Ny0f3ifYtv4DMHvCPuso
+	x39oGd8DJgLlxY0uF0u8w9UaxFWZif79Sf7imBOLfa5y
+X-Received: by 2002:a05:690c:4587:b0:81e:6c2e:f114 with SMTP id
+ 00721157ae682-8225d08d51bmr92640247b3.30.1786188027924; Sat, 08 Aug 2026
+ 04:20:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260807090945.41690-1-phucduc.bui@gmail.com> <20260807090945.41690-3-phucduc.bui@gmail.com>
- <20260807092245.4730E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260807092245.4730E1F000E9@smtp.kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Sat, 8 Aug 2026 17:42:58 +0700
-X-Gm-Features: AUfX_mwps0K_oGqDED58AIb5iJaSMgZ8HxJfRxTKu9khW67GW5bUW_-aJvkpS2I
-Message-ID: <CAABR9nFW8XYSts6ZxTekZJSTpProDCrVgOm5=5aW1ahXV=wG5g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] serial: 8250_mtk: Propagate errors from optional IRQ lookup
+References: <20260808091151.2691482-1-congnt264@gmail.com> <20260808092336.B72451F000E9@smtp.kernel.org>
+In-Reply-To: <20260808092336.B72451F000E9@smtp.kernel.org>
+From: =?UTF-8?B?Tmd1eeG7hW4gQ8O0bmc=?= <congnt264@gmail.com>
+Date: Sat, 8 Aug 2026 18:20:17 +0700
+X-Gm-Features: AUfX_mwL9hQFTg60PgMNaG31rZwxLVbY7r_wH_4Q0kmBiIMOXsojo4RGbteIBU8
+Message-ID: <CAJpJ=GuZhiU7NurhLqVgLzRd-pc2hD2OR4zP_gycMJ81KXrRcA@mail.gmail.com>
+Subject: Re: [PATCH] media: sun4i-csi: fix async connection leak when notifier
+ registration fails
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Cc: media-ci@linuxtv.org, linux-sunxi@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 7, 2026 at 4:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sat, Aug 8, 2026 at 4:23=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
 >
-> New issues:
-> - [Critical] The probe function exits with an error without unregistering=
- the previously registered 8250 port, leading to a port leak and a use-afte=
-r-free of devm-allocated memory.
->
 > Pre-existing issues:
-> - [High] Runtime PM is enabled after the UART port is registered, violati=
-ng TTY subsystem guidelines and risking circular wait conditions during pro=
-be.
+> - [High] Missing cleanup of registered video and subdev devices in `sun4i=
+_csi_notify_complete()` error paths leads to device leaks and potential Use=
+-After-Free.
+> - [High] The driver does not disable hardware interrupts or synchronize t=
+he IRQ handler when stopping capture, allowing an interrupt to crash the sy=
+stem after device suspension.
+> - [High] Missing `.unbind` callback allows the video device to retain and=
+ access a freed subdevice pointer (`csi->src_subdev`).
 > --
 >
-> --- Patch [3]: [PATCH 3/3] serial: 8250_mtk: Propagate errors from option=
-al IRQ lookup ---
-> commit b5b9e4c48c3e7b1094e5e1c9834f9f8130a17c26
-> Author: bui duc phuc <phucduc.bui@gmail.com>
+> --- Patch [1]: [PATCH] media: sun4i-csi: fix async connection leak when n=
+otifier registration fails ---
+> commit d13febea573e64b9e585c2c1f9b472e41737683c
+> Author: Cong Nguyen <congnt264@gmail.com>
 >
-> serial: 8250_mtk: Propagate errors from optional IRQ lookup
+> media: sun4i-csi: fix async connection leak when notifier registration fa=
+ils
 >
-> This commit updates mtk8250_probe() to propagate error codes such as
-> -EPROBE_DEFER or -EINVAL from platform_get_irq_optional(), rather than
-> continuing without an IRQ.
+> sun4i_csi_notifier_init() adds a v4l2_async_connection to the notifier's
+> waiting list with v4l2_async_nf_add_fwnode_remote(). If the subsequent
+> v4l2_async_nf_register() then fails, probe jumps to err_unregister_media,
+> which never calls v4l2_async_nf_cleanup(). The core does not free the
+> waiting list on a failed registration, so the async connection is leaked.
 >
-> > diff --git a/drivers/tty/serial/8250/8250_mtk.c b/drivers/tty/serial/82=
-50/8250_mtk.c
-> > index e6a56cf54ae0c..d0d2aecf90059 100644
-> > --- a/drivers/tty/serial/8250/8250_mtk.c
-> > +++ b/drivers/tty/serial/8250/8250_mtk.c
+> Add an err_clean_notifier label that cleans up the notifier on the
+> registration-failure path, matching the teardown done in
+> sun4i_csi_remove(). The notifier-init failure path adds nothing to the
+> notifier and continues to skip the cleanup.
 >
-> [ ... ]
->
-> > @@ -587,6 +587,8 @@ static int mtk8250_probe(struct platform_device *pd=
-ev)
-> >               return data->line;
+> > diff --git a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c b/drive=
+rs/media/platform/sunxi/sun4i-csi/sun4i_csi.c
+> > index e53a07b770b7e..a8db851ab5a59 100644
+> > --- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
+> > +++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
+> > @@ -255,13 +255,15 @@ static int sun4i_csi_probe(struct platform_device=
+ *pdev)
+> >       ret =3D v4l2_async_nf_register(&csi->notifier);
+> >       if (ret) {
+> >               dev_err(csi->dev, "Couldn't register our notifier.\n");
+> > -             goto err_unregister_media;
+> > +             goto err_clean_notifier;
+> >       }
 > >
-> >       data->rx_wakeup_irq =3D platform_get_irq_optional(pdev, 1);
-> > +     if (data->rx_wakeup_irq < 0 && data->rx_wakeup_irq !=3D -ENXIO)
-> > +             return data->rx_wakeup_irq;
->
-> [Severity: Critical]
-> Does this error path leak the registered serial port?
->
-> The port was successfully registered earlier in mtk8250_probe() via
-> serial8250_register_8250_port(), but there is no call to
-> serial8250_unregister_port() before returning the error here.
->
-> Could this result in a use-after-free if the tty device is later accessed=
-?
-> The devm-allocated memory for the data structure will be automatically fr=
-eed
-> when the probe fails, but the port remains active globally.
->
-> >
-> >       pm_runtime_set_active(&pdev->dev);
 > >       pm_runtime_enable(&pdev->dev);
->
-
-I agree that this makes sense. I'll make the change and send v2.
-
-> [Severity: High]
-> This is a pre-existing issue, but should runtime PM be enabled before
-> the serial port is registered?
->
-> The mtk8250_do_pm() callback invokes pm_runtime_get_sync(). If
-> serial8250_register_8250_port() synchronously invokes the pm callback
-> during registration, it will attempt to use uninitialized runtime PM
-> infrastructure, which can lead to circular wait conditions.
->
 > >
 > >       return 0;
-> >  }
+> >
+> > +err_clean_notifier:
+> > +     v4l2_async_nf_cleanup(&csi->notifier);
+> >  err_unregister_media:
+> >       media_device_unregister(&csi->mdev);
+> >       sun4i_csi_dma_unregister(csi);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does sun4i_csi_notify_complete() leak
+> registered video and subdev devices in its error paths?
+>
+> If media_create_pad_link() or other subsequent operations fail, the error
+> path err_clean_media only unregisters the media device:
+>
+> drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c:sun4i_csi_notify_compl=
+ete() {
+>     ...
+> err_clean_media:
+>         media_device_unregister(&csi->mdev);
+>
+>         return ret;
+> }
+>
+> It doesn't seem to unregister the video device or the subdev. Because thi=
+s
+> failure propagates back to v4l2_async_nf_register(), the probe will fail
+> and the driver's devm-managed memory is freed.
+>
+> Since the /dev/videoX node remains active but points to freed memory,
+> could userspace access trigger a use-after-free?
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is the driver leaving
+> hardware interrupts enabled when stopping capture?
+>
+> In sun4i_csi_stop_streaming(), the hardware capture is stopped, but the
+> interrupt enable register doesn't appear to be cleared and there is no
+> call to synchronize_irq():
+>
+> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_stop_streami=
+ng() {
+>     ...
+>         v4l2_subdev_call(csi->src_subdev, video, s_stream, 0);
+>         sun4i_csi_capture_stop(csi);
+>
+>         /* Release all active buffers */
+>     ...
+> }
+>
+> Because capture stops at the end of the current frame, a frame-done
+> interrupt could fire shortly after this function returns. If userspace
+> closes the device, sun4i_csi_release() invokes pm_runtime_put(), powering
+> down the hardware block.
+>
+> When the delayed interrupt fires, could the interrupt handler attempt to =
+read
+> registers on powered-down hardware and cause a system crash?
+>
+> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_irq() {
+>     ...
+>         reg =3D readl(csi->regs + CSI_INT_STA_REG);
+>
+>         /* Acknowledge the interrupts */
+>         writel(reg, csi->regs + CSI_INT_STA_REG);
+>     ...
+> }
+>
+> [Severity: High]
+> This is a pre-existing issue, but is sun4i_csi_notify_ops missing an
+> .unbind callback?
+>
+> drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c:
+>     ...
+> static const struct v4l2_async_notifier_operations sun4i_csi_notify_ops =
+=3D {
+>         .bound          =3D sun4i_csi_notify_bound,
+>         .complete       =3D sun4i_csi_notify_complete,
+> };
+>     ...
+>
+> If the remote sensor module is unloaded, the V4L2 async core unbinds
+> and frees the subdevice, but it appears csi->src_subdev is never cleared
+> and the video node is never unregistered.
+>
+> If userspace calls VIDIOC_STREAMON afterward, does sun4i_csi_start_stream=
+ing()
+> dereference the freed csi->src_subdev pointer here?
+>
+> drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c:sun4i_csi_start_stream=
+ing() {
+>     ...
+>         ret =3D v4l2_subdev_call(csi->src_subdev, video, s_stream, 1);
+>         if (ret < 0 && ret !=3D -ENOIOCTLCMD)
+>                 goto err_disable_device;
+>     ...
+> }
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260807090945.41=
-690-1-phucduc.bui@gmail.com?part=3D3
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808091151.26=
+91482-1-congnt264@gmail.com?part=3D1
 
-In mtk8250_probe(), uart.port.pm is set to mtk8250_do_pm:
+Thanks for the review. I checked all three against the code =E2=80=94 they =
+are
+all real pre-existing bugs, independent of this async-notifier cleanup
+patch. I've prepared a separate 3-patch series to address them:
 
-uart.port.pm =3D mtk8250_do_pm;
+1. Missing cleanup in sun4i_csi_notify_complete() error paths
 
-In serial8250_register_8250_port(), this part:
+   Confirmed. sun4i_csi_v4l2_register() calls video_register_device(), so
+   /dev/videoX is live before the pad links and subdev nodes are set up.
+   On failure err_clean_media only unregisters the media device, leaving
+   the video device (and the bridge subdev) registered. Since the failure
+   aborts probe, the devm-managed sun4i_csi (which embeds the video_device)
+   is freed while the node is still registered -> UAF on open(). Fixed by
+   unwinding the registrations in reverse order, matching sun4i_csi_remove(=
+).
 
-if (uart->port.type !=3D PORT_8250_CIR) {
-        if (uart_console_registered(&uart->port))
-                pm_runtime_get_sync(uart->port.dev);
+2. Interrupts left enabled in sun4i_csi_stop_streaming()
 
-calls pm_runtime_get_sync() directly on the device, and I don't see a
-direct call to port.pm here.
-it may be invoked in some other helper function called within
-serial8250_register_8250_port() itself.
+   Confirmed. start_streaming() enables CSI_INT_FRM_DONE in CSI_INT_EN_REG,
+   but capture_stop() only clears CSI_CPT_CTRL_REG and stop_streaming() has
+   no synchronize_irq(). A frame-done IRQ can fire after streaming stops;
+   if userspace then closes the device, pm_runtime_put() gates the clocks
+   and asserts reset, and a late handler touches registers on a dead block.
+   Fixed by clearing CSI_INT_EN_REG and calling synchronize_irq() in
+   stop_streaming() before the buffers/scratch are released.
 
-That said, this is a pre-existing issue, so I'd like to keep this
-patch scoped as-is and not address it here.
+3. Missing .unbind callback in sun4i_csi_notify_ops
+
+   Confirmed. Without .unbind, csi->src_subdev is left dangling when the
+   remote sensor is unbound/freed, and a later VIDIOC_STREAMON dereferences
+   it in sun4i_csi_start_streaming() -> UAF. Fixed by adding an .unbind tha=
+t
+   unregisters the video device and clears csi->src_subdev.
+
+I'll send these as a follow-up series ("media: sun4i-csi: fixes"). This
+patch stands on its own; the series can be applied on top.
+
+Thanks,
+Cong
