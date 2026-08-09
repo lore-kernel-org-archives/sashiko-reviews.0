@@ -1,97 +1,314 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pj1-f98.google.com (mail-pj1-f98.google.com [209.85.216.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B615B1CAA6C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  9 Aug 2026 08:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFFB3A16AA
+	for <sashiko-reviews@lists.linux.dev>; Sun,  9 Aug 2026 09:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786265367; cv=none; b=ju7dliYHznzbE0XWvufpKoWOi+eX75fwQ7v1tQIdJwTopehRFqBC6Ufr5ZjOu36uQ9l1AZbi4NdZe7nkhV8mmIViC+5IMmUJy6KnMrWX8TdQpB+fWIBDnUMVrpCrveaRRREftnxqqz2FMbi/1zWivCDKO+t4zTgNeyR3G4mWsik=
+	t=1786267521; cv=none; b=V1XpEopV9TZ8jXHFkgBq12wuKIPSZsPjzqRg0qbhXU4vkEWDEeYdZR9YcwdkBaFtISUgoBiHEOzl7JoGWh1o6Kdg31wxEYwjOFRohk/dFxvSrS4saYZQlTapDOFDCSf5wANjRF8M/MYIUxDonYeNYQRA9JnCF1SdwQQoq6fiYDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786265367; c=relaxed/simple;
-	bh=vKWgmcHfwYmk+WOyH/m/NR1zFQDp05YpYR4cyM855Uw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Di1zpQZMmdjYBBEb+x+y0N0gWfMC4S5UrP/nTijqkZL6e5qjeRLf+T/9Myg3FJrarjXe2AX58FGPq9bSxYYs4tKienQsCXNo8mTUPzXguT/2p5dtKkYuPWpd8tpjJobQI3YvL3lyyFc2ThtunR+CCuqZ+acpIcOAnjBWwFlCG7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mim/NfuW; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786267521; c=relaxed/simple;
+	bh=0leKMjEOnn4MQlTJ6X2hvB7VMlZjuimC0t4G0XxJaeA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EcmqYXMS8+qBNwp3YHer0Vbd/xTKRm7YxyBKdxZM9tWDuGSu680fv3uKXtXUHCJS1Uy8oLj4l7CC7AnQEwD7i9gcRwZHbxqKip8N9xtNQ91nNg0SKzwDWrLNC1kEPmf/H3Ipc/qIVxUuCTOzBqIWMt8zwNyjso4dDgE23I+kHAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=WUYS01tK; arc=none smtp.client-ip=209.85.216.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mim/NfuW"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8486672f03cso885272b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 09 Aug 2026 01:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786265366; x=1786870166; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vKWgmcHfwYmk+WOyH/m/NR1zFQDp05YpYR4cyM855Uw=;
-        b=Mim/NfuWSIfVsn2/KukvGmfvGnorNtVLew+O/NTR9l1zD0mKvvimLu9HPsV1Drm8Ip
-         V+Nhi41JWf77wQm3ggglD/+eAmpgPBcFuaQ7M+LMD50AeHBpAL/bZenfjlWv4gIoW0qe
-         tnFFqMPZN7XBZmRHIoya2FkeITnT6zZCfJdq12dDpKu53i8iNbMzI1oB3mdAM9AOKBY3
-         jI422gnlTzXEVZ9hl6TZLwUIc8p0xbCW99h2fi4Seghdp32Q6HsAO0J4inOuDiWraGq7
-         2p4AiUkomiXCkMKodN37Ve/K+QB6DudNkTk+UfKaj2yqNmEWmj1KVxU5k3/yHeR8+0qg
-         aDRA==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="WUYS01tK"
+Received: by mail-pj1-f98.google.com with SMTP id 98e67ed59e1d1-38e7109321dso485366a91.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 09 Aug 2026 02:25:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786265366; x=1786870166;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vKWgmcHfwYmk+WOyH/m/NR1zFQDp05YpYR4cyM855Uw=;
-        b=EDR3yXpwgI3eXB/CSXA9MLWUl1tZgyecjwAHC2FWruZfkQToM4RJk7/wUFd4Ff6kIs
-         GHNotsEvxCScO1Jw2iHbTb1TcZCB/SwBsq8qU0Imym+FEknVfKdH4elnpK+MXCfkC3cI
-         tHV8gf1s14/nJugdVfvMBoV1NhgdM6xJ40qhxxSS16nYk2kQYPxnGvTnH9RrFfLqKUVE
-         8JOFQs7vOcDnayJ24LOrY8l+RZYlClkcfGBiaTmgnYagMRE2j+/YdlulvOUC0Q0rEG2+
-         60FNWt77FEGNlFjMczeA4ciinzPucVZAoGZFAMTAAIJTBvR9XpdULlvLmWdF+knp3GJZ
-         ItOQ==
-X-Gm-Message-State: AOJu0YyR/Z+UMenEMgL05FUvzdAxZ+v3U9AYWuAcOIHlr3A1f8wndLfv
-	RwW7Sfzdrb1vbQiiUczTdeSeY051MmBPgWxokAM8A+7J0o6siJp8ZY/T
-X-Gm-Gg: AR+sD12PgbKgMTuyVnsmlugEMgZr+RBcGXxXKTYqebUP5amEl2cnFQ/ZCpNOwNz9nyc
-	L1//XJUz56gb2K2lLWu5aJXIMTa0nCUEREtUOZvVYfVooKfPxQ35B0Dm9qUR0NtpY3dHB4jI/y2
-	/5Q9/9faWCup024kzuWEBy9DGIUu/skvLfX2Q6V13FT7dIn3gM8/OnNc8vkBiGFnJzL6DaI+2lU
-	K4gkwnFRb1t6vmqtN68D+IG+JwUgmY003JymeWif1ZCD68/qweA1uPLOBpKkrKSRoKxZkAjAQzb
-	cedCNCOKN6BdvtAh71pPx6I0Z3xl85hEtCsx76Bzn3kZi9tFDiTGr8Qysk6dr4JxYbC1NDc+Qsa
-	o+9CavJg9OP0zBP09hL9w7ysnUnp5Zn+Uu+hS60n5F+dP3hjppw3gHE6FvTr0IbLThvvbk9VRGQ
-	vpDiWJsZs0dQb0SZ9CjqWwRCRHJ47RUtFa8VRpKnr+PjkTgNkjxtAHxV+3B6Y1OgbqbqHF+49p2
-	Z9csdmSYrY3zJ0=
-X-Received: by 2002:a05:6a20:7f86:b0:3bf:9c93:ac44 with SMTP id adf61e73a8af0-3cb85ea363cmr32830018637.19.1786265366126;
-        Sun, 09 Aug 2026 01:49:26 -0700 (PDT)
-Received: from volcano9dee-host.amd.com ([165.204.217.251])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-315beb877b4sm32757823eec.19.2026.08.09.01.49.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Aug 2026 01:49:24 -0700 (PDT)
-From: PVS Narasimha Rao <venkatasuryapala@gmail.com>
-To: Namhyung Kim <namhyung@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev,
-	linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf test sample-parsing: Validate PERF_FORMAT_GROUP values without LOST
-Date: Sun,  9 Aug 2026 14:19:03 +0530
-Message-ID: <20260809084903.23914-1-venkatasuryapala@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <anQeWZD8J-gHMt_3@google.com>
-References: <anQeWZD8J-gHMt_3@google.com>
+        d=1e100.net; s=20251104; t=1786267519; x=1786872319;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=U6+6cYU+CYhHsBzzEEvFQPh42qyUj1xAtDPvjFJGXyk=;
+        b=qnGRm8y67OWiCh67UPsymm3zUlBCsb0sTpDHB/7lT+z6G/Y58b+Zy5GPXfXWSpv0Qy
+         UlfoV0jzmoCE+SWhoqUdeLM4uWBoVrb3AU+G30/058JU9M/SgABicbjDXGcM56mb65QN
+         n0n7DtlogRDXx0qnui0G9Pls7jZjbrn3/ZpyJV4GSnqQx3v9vAxyLlssUtFkzK9yAuK9
+         OHYapNYIE7AraikouOHqdES/GxxcGV7X786NvSO3gPj8JHykBT6A8NXmODfR1xbCl+1c
+         J0N2r6s+RzdRIcYLDGoG74H1cjDBgte+HvMhOGVkritvlG2Fg193OOiaIF2Q3bcczD1w
+         RXsg==
+X-Gm-Message-State: AOJu0YzlrUL+HT13FiHi1oJlV6F2pZF2K5A6Aa4XwIqOJoA8UvkieKNb
+	ySV7CcRrU5CIEtNm/6VmzD1KdafzfnLSC46qqjHVvw6/UQUdSgmclEz1wj0HgO57tnEWqCDgusi
+	WmG6V9XvPdAME6Utbt9LfGDiBl4X5hvVZTvni2yitxEkGlrbcdrtqV68pTXOMliJZ5varAqVOsx
+	7HFyz9IaYolqxVpiKIFSiugQ8nHoTYQPdUQrIsZHK2ZrCUbeah2LOOToHuDIrfeEyForsd7xF+y
+	Rc4LJuSrOw0KXy8+RlkxsSvHRbZLy8=
+X-Gm-Gg: AR+sD108Bil398ykj2wO2H9nLynHNLoGG+P3Pd2LQtDl8Aw2/vbuzsPPYBoIyhjF1Gb
+	GSkN5GV5sTfDqkBYiOAXjrCFB4GIN7AV2KTtUhtGMzjjtrdpO7DUKlFoM0CL05Il4RteFGI3lJs
+	pD+wTP0ed3wTEFam0N1LSftpf/eP4ZYw+nYck+bY3BtduPai69It3/tFzE5SvB8LtrC4kbJ5J4K
+	pCxK8wz0x24Vc7hV74EMUILFAZoW9r1VHxcNUcYMTnFPh8padibi1iryrAB6wjVOy5S2LoEGo1Y
+	ls/6XWAki7yaNV9gGOzmKxR8us+Pds9jUtcAYoSot3ViF69lbviEt60ZeTss10zK/g28Q8a2d0m
+	Ck/46e1IVsR1FZft4qqi8SPMg32LHUNYSnfgPfCGGjXn1dWB/H3DX7ZzMNqZFA4Ne0bH81iv7uT
+	UJakr3bGFlm6OqjRYcDKQAbRAdYhkmDrTn+tqW6qcL
+X-Received: by 2002:a17:90b:4ace:b0:375:2a38:1d40 with SMTP id 98e67ed59e1d1-3928246545amr11628528a91.20.1786267519047;
+        Sun, 09 Aug 2026 02:25:19 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-0.dlp.protect.broadcom.com. [144.49.247.0])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-392825e7e76sm2751991a91.13.2026.08.09.02.25.18
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Aug 2026 02:25:19 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c20262b5e10so99193666b.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 09 Aug 2026 02:25:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1786267517; x=1786872317; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=U6+6cYU+CYhHsBzzEEvFQPh42qyUj1xAtDPvjFJGXyk=;
+        b=WUYS01tKsvzfznfzQNVPNaTj7uef75n1Ua/nqyO0SCgdfhyXQAOp28yao8bge7AuWi
+         HXalwO6xoc88QRecpQUN5jUJruDTkLnJB/DtLiuGSO3/EVvq7R0iFDYETgbLMFhm9BY2
+         nEJYWyXkBmIp/b7rk90HcfXICtNXWAjUvz1qY=
+X-Received: by 2002:a17:907:ea8b:b0:c16:126b:98b4 with SMTP id a640c23a62f3a-c2039c03283mr1719324166b.3.1786267516909;
+        Sun, 09 Aug 2026 02:25:16 -0700 (PDT)
+X-Received: by 2002:a17:907:ea8b:b0:c16:126b:98b4 with SMTP id
+ a640c23a62f3a-c2039c03283mr1719322466b.3.1786267516237; Sun, 09 Aug 2026
+ 02:25:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260808151010.185603-1-chandrakanth.patil@broadcom.com> <20260808100945.526F51F00A3A@smtp.kernel.org>
+In-Reply-To: <20260808100945.526F51F00A3A@smtp.kernel.org>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Date: Sun, 9 Aug 2026 14:55:02 +0530
+X-Gm-Features: AUfX_mx1QPerGwWkX-T21oCgsrqtVYzRtbre9gurcKt1gXiRQqBt4D-Niqz-Sbo
+Message-ID: <CABvwm=MZO3TG-Pd=KWdK3Y3DxWk5_74T1EebY4UyhQrQ8R8LzQ@mail.gmail.com>
+Subject: Re: [PATCH] scsi: mpt3sas: Avoid freeing unallocated PCIe SGL buffers
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000d861e9065899d04e"
 
-Hi Namhyung,
+--000000000000d861e9065899d04e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the review.
+On Sat, Aug 8, 2026 at 3:39=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] _base_release_memory_pools() lacks idempotency, causing fatal Us=
+e-After-Free, double-frees, and NULL pointer dereferences when invoked cons=
+ecutively on error paths.
+> - [High] Missing NULL check for `ioc->chain_lookup[i].chains_per_smid` du=
+ring partial allocation failure cleanup causes a guaranteed kernel panic du=
+e to invalid pointer arithmetic.
+> --
+>
+> --- Patch [1]: [PATCH] scsi: mpt3sas: Avoid freeing unallocated PCIe SGL =
+buffers ---
+> commit 74366255b6baaf468aaa8aa5ff843c58339a10f7
+> Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+>
+> scsi: mpt3sas: Avoid freeing unallocated PCIe SGL buffers
+>
+> _base_release_memory_pools() unconditionally frees every
+> ioc->pcie_sg_lookup[] entry, including ones the setup loop never
+> allocated after a partial failure, causing a "bad dma" warning on
+> debug kernels or a NULL pointer dereference otherwise.
+>
+> > diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas=
+/mpt3sas_base.c
+> > index 791a3c5fbf442..fed7aeffec58d 100644
+> > --- a/drivers/scsi/mpt3sas/mpt3sas_base.c
+> > +++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+> > @@ -5870,6 +5870,8 @@ _base_release_memory_pools(struct MPT3SAS_ADAPTER=
+ *ioc)
+> >
+> >       if (ioc->pcie_sgl_dma_pool) {
+> >               for (i =3D 0; i < ioc->scsiio_depth; i++) {
+> > +                     if (!ioc->pcie_sg_lookup[i].pcie_sgl)
+> > +                             continue;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does adding the array lookup here make
+> the function unsafe if called twice?
+>
+> If _base_release_memory_pools() is invoked a second time on an error path
+> (e.g., if a subsequent operation fails after a retry in
+> _base_allocate_memory_pools()), ioc->pcie_sgl_dma_pool is still non-NULL
+> because it was never cleared.
 
-I reproduced it with gdb and confirmed the mismatch: the values in
-do_test() are a plain array of struct sample_read_value with a 24-byte
-stride, while sample_read_value_size() is 16 without PERF_FORMAT_LOST.
-So the synthesizer reads overlapping bytes, and the test compares the
-same garbage on both sides and passes.
+No, the array is already dereferenced unconditionally by the existing
+dma_pool_free() call right below, under the same
+if (ioc->pcie_sgl_dma_pool) guard, so this patch doesn't add a new
+dereference or change the double-invocation exposure.
 
-read.group.values is expected to be packed per read_format, though
-evsel__parse_sample() points it into the event data, and perf inject
-feeds such a sample straight back to perf_event__synthesize_sample().
-So I plan to fix the test input rather than the synthesizer.
+The underlying idempotency issue (pcie_sgl_dma_pool never cleared
+after dma_pool_destroy()) is real, but pre-existing and independent of
+this patch. We'd like to fix it as a separate follow-up.
 
-I'm preparing v2 and will send it shortly.
+>
+> During the second call, the newly added check will attempt to access
+> ioc->pcie_sg_lookup[i].pcie_sgl. Since ioc->pcie_sg_lookup was set to NUL=
+L
+> at the end of the first call, will this trigger a NULL pointer dereferenc=
+e?
+>
+> Additionally, variables like ioc->reply_post and ioc->config_page are
+> freed earlier in this function but never set to NULL. Would it make sense=
+ to
+> clear these pointers and ioc->pcie_sgl_dma_pool so the function is safely
+> idempotent and avoids double-frees?
+>
+> >                       dma_pool_free(ioc->pcie_sgl_dma_pool,
+> >                                       ioc->pcie_sg_lookup[i].pcie_sgl,
+> >                                       ioc->pcie_sg_lookup[i].pcie_sgl_d=
+ma);
+> >                       ioc->pcie_sg_lookup[i].pcie_sgl =3D NULL;
+> >               }
+> >               dma_pool_destroy(ioc->pcie_sgl_dma_pool);
+> >       }
+> >       kfree(ioc->pcie_sg_lookup);
+> >       ioc->pcie_sg_lookup =3D NULL;
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while fixing the cleanup
+> logic in this function, is there a similar vulnerability for
+> ioc->chain_lookup[i].chains_per_smid?
+>
+> If kzalloc() for ioc->chain_lookup[i].chains_per_smid partially fails in
+> _base_allocate_memory_pools(), the unallocated indices are NULL.
+>
+> In the cleanup loop further down in this function, the code calculates th=
+e
+> pointer offset:
+>
+>         ct =3D &ioc->chain_lookup[i].chains_per_smid[j];
+>         if (ct && ct->chain_buffer)
+>                 dma_pool_free(ioc->chain_dma_pool, ...);
+>
+> If chains_per_smid is NULL and j > 0, C pointer arithmetic will evaluate
+> this to a non-NULL address. The subsequent check if (ct && ct->chain_buff=
+er)
+> will falsely pass, leading to an immediate page fault when trying to
+> dereference memory.
+>
+> Should we also add a NULL check for ioc->chain_lookup[i].chains_per_smid
+> before evaluating the offset?
 
-Thanks,
-Narasimha
+Yes, this look genuine: chains_needed_per_io is greater than one
+in essentially every real configuration, so a partial kzalloc()
+failure here would hit this on the very first freed index.
+
+We'll add the chains_per_smid NULL check, but as a separate follow-up
+patch to keep this one scoped to the PCIe SGL fix.
+
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808151010.18=
+5603-1-chandrakanth.patil@broadcom.com?part=3D1
+
+--000000000000d861e9065899d04e
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
+2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
+phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
+a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
+ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
+07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
+SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
+rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGpzCCBI+g
+AwIBAgIMAgfxQ1Z7DrZKmCE/MA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
+ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
+MDIzMB4XDTI1MDYyMDEwMzUwNFoXDTI3MDYyMTEwMzUwNFowgekxCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
+MDExNzEOMAwGA1UEBBMFUGF0aWwxFTATBgNVBCoTDENoYW5kcmFrYW50aDEWMBQGA1UEChMNQlJP
+QURDT00gSU5DLjEoMCYGA1UEAwwfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTEuMCwG
+CSqGSIb3DQEJARYfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAJwyF5qSHwwr1zJWkKvkMnY7V/sVFYYjTpjgxS4XA76pD6eLsZvS
+4J73HkKSNEzORxBE7OyZSnuBJ9zeeRcypuItG9YrHm+0OSF0psIWsH15FBYJ0nvsUnlFbCSNvOdr
+Co0WJ1KTe/7caj014uRZM2j7zH1vC+9fjEgrJdDRZakZXarl8M7k9okvVj1N+EuHiYUMvsAuMadE
+a3p31Z6QdvMpr+30UdJXHshV1mXca+UBpCx26GbY6NgxhHM2LtHiaCK8Vn4HMofDkFg4nQ6eK4ai
+uCiTtPj5aNlkdpcCzcZ+j1eCu6ZfPIq2ycwDaHi8d6Dwcgm+XoxDmD97Ehp2FOkCAwEAAaOCAeMw
+ggHfMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggr
+BgEFBQcwAoY6aHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1l
+Y2EyMDIzLmNydDA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2Ny
+NnNtaW1lY2EyMDIzMGUGA1UdIAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGg
+MgoDAjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5
+LzBBBgNVHR8EOjA4MDagNKAyhjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWlt
+ZWNhMjAyMy5jcmwwKgYDVR0RBCMwIYEfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTAT
+BgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSMEGDAWgBQAKTaeXHq6D68tUC3boCOFGLCgkjAdBgNV
+HQ4EFgQUyqNnwId/JCbRPslVl3nm48YRek0wDQYJKoZIhvcNAQELBQADggIBAKPmllSh8cRXzNRs
+3OATCVDgrdOfIsZMB9UVXcYQ+HtR1fu9bafeyuuupF9gcCmi+onLsANYRKaEDjC8h+V5FMAgm6TI
+bww4EFGpWvP/XEVKrpcpMkYNMLw89lagx9ZZDhx9DmfQMI9gG9MPpCkSMEPnJvEs7gqtOo08aL1+
+ts10tGfePsHF/I42Da21hJIJ01XN+Z91y//1cJkHwCBvDmoB8gdMXp3g4sjzahTxRZ25BdZB9W+n
+0jfWJXFKtp9MYS1SaVo17usfrlTeyaH3zPyDvfAfGoLB5+i8vyVL6wta2vgVpfsL9iwhbJnAIxr+
+ljECWkh1weDJw3UnV6nooG1RztnwqbG4eAG/KSCToXgVH9qSDv5S1lve5mvhv9AHzLjGLs+QtMeg
+WEdMM4G0PWyibzGgNrmVgKaLjV6EMo/IZW7KjBtvjyKQZhes90D4GyxXv+/mrTo2rruz53+FoSc/
+nuyLmg/SxnnZRaf7JGHFvu0IbwkeINwdHynAanOg9AD4zits7k7jjQ0fwIdhCaoRA3ao7PXUL1t8
+LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
+tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
+YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
+YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
+oIHHMC8GCSqGSIb3DQEJBDEiBCCrR0AjouGcU0pfvf+BYYg7Ompy0TD9zIpKDsZn0rF69DAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MDkwOTI1MTdaMFwGCSqG
+SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAdNtmYdWOW
+sXFCGt0tvrzZJrwq5CrC38av7JM/BbzgQs/b1Dq/R9T7c7oxj9TBQZcN4kklmPjfWgp4px15OLXM
+6uEghxI8YUOLW3aI7JNiObvEOibbY8+PtmvzGk6JY9gSeQkUaQ7IBiEf2fKqFqXT3tpBwiOYbyWu
+Jv/3ZpUjrY2IzYqe8wYNZadxQtiL2Rnnw0S2mpoqi/TiQwspu+QBoHiH7rfh2gphteeHXtwSPZqH
+skHQ2/p63Lx8Kh/5lvLTI08fj3WXCAwzT5H8wH9XVt3jmjccculEcpx7VZslcj+3la3f6hJljVP2
+B3jorM+8s34ug0uLdY8TpDAS0Cq0
+--000000000000d861e9065899d04e--
