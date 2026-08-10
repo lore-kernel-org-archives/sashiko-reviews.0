@@ -1,158 +1,163 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-195.mta1.migadu.com [95.215.58.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99E9414A1F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 16:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352CE3BB13D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 16:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786379791; cv=none; b=DnAuKX77jqx1ZATK90Pxp7E8/gbVVFVjkT6b83dyUEEYrw1O0O3GzmH5i6J7r7WhmyKCD+sH5Bdl/UzRgSRncImeewWvh3P1AWBcrrGzV1mO0fXZAH7uZ4wWLJMp8Qv6kfVjnveiCwVYBmgoQeMte0dEQZ/66a9Kb3irfHkzI+c=
+	t=1786380277; cv=none; b=n6G1g5UJ8yMkkbfH9s7Wiqp6JBM5wY93kkQeFHrLfy4JsyL+TwsmSVnf8Cr0GI0ihdKHvXVIC0vnzJVE/4kozpufUIUwcMkrYIjkxgrjkdn4yWbl/odjhCvvFCEyhOQciLxCzH7zqL8imnSmkHUusTZZYaW3RrX107Jn/bYjEuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786379791; c=relaxed/simple;
-	bh=f0hg9Bhx+8d5BYdtUQ4HO2HH5hQAbnaFTrdruOQV1rA=;
+	s=arc-20240116; t=1786380277; c=relaxed/simple;
+	bh=P19N8uMlqnT83++aFQt+ZwhTQG1tlI0sXkg9DISendo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qXQ2J4YtDKL91k57Sl7KpfQLdwVE/ErDTnj+uLlleq8VVcNnt0680sEE+bj+0HHgpEdpP3nFXdWF5AAcAEaANqUnz8BM0066LW+xEsb4+titKyRmFD0cGSaeEKeX9oYmg7pFfoRvxaop9kJxiabMK04p59PUlz6rjHNsyKDIhME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ZHpIkLkX; arc=none smtp.client-ip=91.218.175.178
+	 In-Reply-To:Content-Type; b=a7amXTsrC+T/HKhwWUihIjHOqtmEjf27+yTKCRnzAeVuxVLXvulfIZ+jNcKWhdPHOh0lpuiiSgsG7RGkoIzizxxruNNLq7EX78NPm/iR86mUTBsqWdGQajq6VHYOuKFGOszsE9SZKLYNfbyP+c5cfkmsH9IBm7orl2psIWBljOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Nt1DeoIk; arc=none smtp.client-ip=95.215.58.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ZHpIkLkX"
-Message-ID: <0e6fd62e-0f69-4ae8-9335-85a139870d81@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786379787;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4bZOTfz5mWPoXkp9RI9KOFVy6F1zIbcdWH3Kj73wQTU=;
-	b=ZHpIkLkX5tO65ScodTOkje33kozXjHjnOUViSj7avTXihcVm5PjFEJYWKFT8dZRvOWt4dZ
-	k4TpGqSMfELR6WzjP6AKz3+DWKbLOMBGef9QCdZKoJ4yek2agr8qJOhr/8tGwwpcFv2qAk
-	m6HloWEfdStN+RhMXu2j0MlDKeSnSz0=
-Date: Mon, 10 Aug 2026 09:36:11 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Nt1DeoIk"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=P19N8uMlqnT83++aFQt+ZwhTQG1tlI0sXkg9DISendo=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786380272; v=1; x=1786985072;
+ b=Nt1DeoIkkiWKNbhm9Mdv5v6mHDa4yPhJEnApdfN+zvaRWk8Ytdgm200y4c8EjaFGvRc7npwY
+ WklbULJD/FA73eKHNSBuI0r92cRA6BE8Vehf9nYrnwUgAbdbPCVCZwS0LbfbZK9OQNws4NzFHcm
+ 8IbGcQ/EYvit0qE56zdzUDoA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::5:2f4a)
+	by mta12.migadu.com with ESMTPS id b1c0dccbab71e666;
+	Mon, 10 Aug 2026 16:44:32 +0000
+X-Migadu-Scanner: mta12.migadu.com
+Authentication-Results: mta12.migadu.com;
+	none
+Message-ID: <a3b12cca-05c3-4ee1-91b7-848aa97e409b@linux.dev>
+Date: Mon, 10 Aug 2026 09:44:22 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v3 06/13] bpf: Reject callbacks returning more
- than 8 bytes
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v3 07/13] bpf: Add verifier support for 16-byte
+ returns in R0:R2
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260808190322.1896580-1-yonghong.song@linux.dev>
- <20260808190353.1899379-1-yonghong.song@linux.dev>
- <20260808194539.1418B1F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+ <20260808190358.1899615-1-yonghong.song@linux.dev>
+ <20260808194120.31A171F000E9@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260808194539.1418B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260808194120.31A171F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 7bit
 
 
 
-On 8/8/26 12:45 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] check_global_subprog_return_code() fails to validate BPF_REG_2 for global subprograms returning > 8 bytes, allowing kernel pointer leaks.
-> - [High] BPF-to-BPF calls returning 16-byte values are broken because prepare_func_exit() only copies R0 to the caller, leaving R2 uninitialized.
-> - [High] BPF programs cannot use 16-byte returns from kfuncs because check_kfunc_call() fails to initialize BPF_REG_2.
+On 8/8/26 12:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Kfuncs returning structs by value can leak uninitialized kernel registers or stack memory via struct padding.
+> - [Low] Multi-line comments do not follow the mandatory BPF subsystem style.
 > --
 >
-> --- Patch [6]: [PATCH bpf-next v3 06/13] bpf: Reject callbacks returning more than 8 bytes ---
-> commit d03b8255604638dcb72d6dda989b79be64af9fa4
+> --- Patch [7]: [PATCH bpf-next v3 07/13] bpf: Add verifier support for 16-byte returns in R0:R2 ---
+> commit 655df23f6a36d32f4e8e39dbf37f70004e7dee82
 > Author: Yonghong Song <yonghong.song@linux.dev>
+> Subject: bpf: Add verifier support for 16-byte returns in R0:R2
 >
-> bpf: Reject callbacks returning more than 8 bytes
+> LLVM 23 added support for returning a value in two registers for an
+> __int128, or a struct/union whose size is greater than 8 but not more than
+> 16 bytes. This patch adds handling for returns greater than 8 bytes in
+> BPF subprogram returns and kfunc returns.
 >
-> This patch prevents BPF callbacks passed to helpers, kfuncs, or as exception
-> callbacks from returning more than 8 bytes. Since the callback prototypes
-> yield a single u64 in R0, returning a 16-byte value would cause the upper
-> half to be silently dropped. The verifier now rejects such callbacks at
-> load time in check_ld_imm() and do_check_common().
+> Link: https://github.com/llvm/llvm-project/pull/190894
+> Link: https://github.com/llvm/llvm-project/pull/206876
 >
 >> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 0c070957a52b7..41c47bcc3b0a2 100644
 >> --- a/kernel/bpf/verifier.c
 >> +++ b/kernel/bpf/verifier.c
->> @@ -16306,6 +16306,11 @@ static int check_ld_imm(struct bpf_verifier_env *env, struct bpf_insn *insn)
->>   			verbose(env, "callback function not static\n");
->>   			return -EINVAL;
+> [ ... ]
+>> @@ -9849,8 +9870,21 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
+>>   			return -EFAULT;
 >>   		}
->> +		if (bpf_ret_reg_pair(env, subprogno)) {
+>>   	} else {
+>> -		/* return to the caller whatever r0 had in the callee */
+>> -		caller->regs[BPF_REG_0] = *r0;
+>> +		/* return to the caller whatever the callee had in the
+>> +		 * return register(s)
+>> +		 */
+>> +		for (i = 0; i < nregs; i++)
+>> +			caller->regs[ret_regs[i]] = callee->regs[ret_regs[i]];
+>> +
+>> +		/* R2 carries only the upper half of a register pair return
+>> +		 * value. A stack pointer must not escape the callee (see the
+>> +		 * R0 case above), but there is no need to reject the whole
+>> +		 * program for it: hand the caller an uninitialized R2 instead,
+>> +		 * so that only a caller actually using the returned pointer
+>> +		 * fails.
+>> +		 */
+> [Severity: Low]
+> This isn't a bug, but do these multi-line comments follow the modern BPF
+> subsystem style? The opening /* typically needs to be on its own line.
+
+Will fix in the next revision.
+
+>
+> [ ... ]
+>> @@ -10747,6 +10781,18 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+>>   	return 0;
+>>   }
+>>   
+>> +/* Mark the register(s) holding a @size byte kfunc return value as unknown
+>> + * scalars. Both halves of a register pair are treated the same way.
+>> + */
+>> +static void mark_kfunc_ret_regs(struct bpf_verifier_env *env,
+> [Severity: Low]
+> This isn't a bug, but here is another instance where the multi-line comment
+> might need the opening /* on its own line.
+
+Will fix in the next revision.
+
+>
+> [ ... ]
+>> @@ -13223,10 +13269,25 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+>>   	}
+>>   
+>>   	if (btf_type_is_scalar(t)) {
+>> -		mark_reg_unknown(env, regs, BPF_REG_0);
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
+>>   		if (meta.btf == btf_vmlinux && (meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock] ||
+>>   		    meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock_irqsave]))
+>>   			__mark_reg_const_zero(env, &regs[BPF_REG_0]);
+>> +	} else if (btf_type_is_struct(t)) {
+>> +		/*
+>> +		 * The returned struct comes back as raw register bits modeled
+>> +		 * as an unknown scalar, so it must contain only scalars:
+>> +		 * otherwise a pointer field would be laundered into a scalar
+>> +		 * and escape provenance and reference tracking.
+>> +		 */
+>> +		if (!__btf_type_is_scalar_struct(env, desc_btf, t, 0)) {
 >> +			verbose(env,
->> +				"callback function with >8-byte return value is not supported\n");
+>> +				"kernel function %s returns %s %s that is not composed of scalars\n",
+>> +				func_name, btf_type_str(t),
+>> +				btf_name_by_offset(desc_btf, t->name_off));
 >> +			return -EINVAL;
 >> +		}
->>   
->>   		dst_reg->type = PTR_TO_FUNC;
->>   		dst_reg->subprogno = subprogno;
-> [ ... ]
->
->> @@ -18528,6 +18533,12 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog)
->>   				ret = -EINVAL;
->>   				goto out;
->>   			}
->> +			if (bpf_ret_reg_pair(env, subprog)) {
->> +				verbose(env,
->> +					"exception cb cannot return value larger than 8 bytes\n");
->> +				ret = -EINVAL;
->> +				goto out;
->> +			}
->>   
->>   			/* Also ensure the callback only has a single scalar argument. */
->>   			if (sub->arg_cnt != 1 || sub->args[0].arg_type != ARG_ANYTHING) {
->
-> While reviewing the support for 16-byte return values, I noticed a few other
-> places in kernel/bpf/verifier.c that might need updates:
->
-> In kernel/bpf/verifier.c:check_global_subprog_return_code():
->
->> 	return check_global_ret_scalar_reg(env, BPF_REG_0);
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
 > [Severity: High]
-> Does check_global_subprog_return_code() fail to validate BPF_REG_2 for global
-> subprograms returning more than 8 bytes?
+> Could this leak uninitialized kernel registers or stack memory via struct
+> padding?
 >
-> A global subprogram returning a 16-byte value (e.g. __int128) could place a
-> kernel pointer in BPF_REG_2 and exit without the verifier rejecting it,
-> bypassing the verifier's pointer leak prevention.
+> When a kfunc returns a struct by value, __btf_type_is_scalar_struct() checks
+> that the defined members are scalars, but it doesn't appear to check for or
+> enforce zero padding.
 >
-> Although currently unexploitable because callers have R2 marked uninitialized
-> due to another issue, if the caller issue is fixed, or if the kernel reads
-> the return value directly (e.g. via BPF trampoline), can this missing
-> validation become an exploitable KASLR bypass or pointer leak?
->
->
-> In kernel/bpf/verifier.c:prepare_func_exit():
->
->> 	/* return to the caller whatever r0 had in the callee */
->> 	caller->regs[BPF_REG_0] = *r0;
-> [Severity: High]
-> Are BPF-to-BPF calls returning 16-byte values broken here?
->
-> This only copies R0 to the caller, leaving R2 uninitialized in the caller's
-> frame. BPF programs calling static subprograms that return 16-byte values
-> cannot use the upper 64 bits of the return value, as the verifier will reject
-> the program with an uninitialized register error.
->
-> Additionally, precision backtracking logic added for R2 on static subprog exit
-> appears to be rendered unreachable dead code because R2 can never be marked
-> precise by the caller.
->
->
-> In kernel/bpf/verifier.c:check_kfunc_call():
->
->> 	if (btf_type_is_scalar(t)) {
->> 		mark_reg_unknown(env, regs, BPF_REG_0);
-> [Severity: High]
-> Can BPF programs actually use 16-byte returns from kfuncs?
->
-> This handles scalar return types from kfuncs but only initializes R0, leaving
-> R2 uninitialized.
->
-> Since caller-saved registers (including R2) are cleared before the call, any
-> BPF program attempting to use this new feature will be rejected by the
-> verifier when attempting to read R2. Should this also mark R2 as initialized
-> for 16-byte scalar returns?
+> Since mark_kfunc_ret_regs() marks the entire return registers (BPF R0 and R2)
+> as initialized SCALAR_VALUE based on t->size, wouldn't a BPF program be able
+> to read uninitialized padding bytes left by the native C compiler?
 
-This patch is a preparation patch, in the next commit, proper verifier support
-(with returning R2) will be implemented.
+We are fine here. The return value will do proper sign/zero extensions.
+Seehttps://reviews.llvm.org/D131598
 
