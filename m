@@ -1,113 +1,119 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C8A23815B;
-	Mon, 10 Aug 2026 14:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DCA3FF1D5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 14:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786370924; cv=none; b=Aws3jL1htVpNDQ61vF3WuPa5RjRWeZUeSOFNvMc7UpJfyKVlG13Uc672nzTEKQ+b8cF6N9txkOnjhWZTyY9CC9csDCy8PmsG0p2VZ6/HhXN8ILZk8jYvZrUgGuROmVt0nwGPxjxxS65HNLaQEX3lQp5dQtrXzfLnCcqRwkTDhkA=
+	t=1786371754; cv=none; b=oanYGkPpH/QLNjbEoowJny9EsfXAhGg/v5axaJid//iXPtf+lDbR3uKjwBXBRxHgs/z6Z9DvHSwam8M8rbjecmWc00kMwmIawT3+SCmGLj+AhK8J+7/aq1AUSU4moBQS9pW2MuS0N2AsJfWfP5F1qvo9sOL5A7KFLK3kZkGaWTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786370924; c=relaxed/simple;
-	bh=bY9jnm5MpICFZzA3sRD/Dhv2CEQ6Go2c0GfL7d9/014=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e8j1AuIGsG0bmznkO+QAxP+Esun1Xea7JPO8U6HX6bIuQGH00hu3VvpgSMR3piL53caw9xAmQzBEgEHs9qgh37n1sr+eIvBB+vCkJDfojel0sr4Nobc7AmpJhUykbURduf9jyh8LIaDPJd/M7cplg9wAkcEpLf1MMCP7q+iVyRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Z37WDsHG; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1786371754; c=relaxed/simple;
+	bh=8g8km/C3yIxQynwOX3yaXcIqjAlktfsOY5bFp2UYV6Q=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=TlrH22ti9toUQYdLNvTX2exJGPVIq61OnINB8IMWfRIjHSrlci0pxwSxMIbSH8544dsnLW5cQl4FTA8Bbe1YHNn6P0QMqOFY0TOZ4AzTSnEfHXkxHhNGZrRXdNYZOmJdM+GGi15tJCv2UsRtNlXmrwIB/j7yPI/qqOqVF3TVrzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sSHsN3vH; arc=none smtp.client-ip=209.85.214.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Z37WDsHG"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=Go60cGue0Q7Mg9cAdF5V7LfLoMWaOFxa4khyMQz0HgY=; b=Z37WDsHGbgOb1XnDXDfUjmFrKJ
-	CMVqpq4/KDsPIg0p2NEccwzYzWvY3aHttvfBj1PmtbN0h9YKEH8XlePd1onWSxWRcaaPzph7why95
-	U1X4eDlEB0WZ2fqKWp5CTrTf5GDG7d2R5RrBZMELiP2y5jXtJwuKPznNZn3Q6V4iHUwFoKzrJSFtP
-	psiDH6oA+6qFMzNDdCpfW5RjuiK/vdBn3ZeWkYs3+3tHP2+tNaKg2V5bhU9Eq59w2bh3rq4d+o21w
-	HB+CaJV+tDiO3FpTBeoXCMlUzAlx94sAHy6zHcmyTf9EfOug2Tdsk0ab6G6xUh8rzRYa1sfmg3WPa
-	kZPrIeSQ==;
-Received: from sslproxy07.your-server.de ([78.47.199.104])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wtQgC-000AiV-2O;
-	Mon, 10 Aug 2026 16:08:40 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wtQgC-000F7G-0I;
-	Mon, 10 Aug 2026 16:08:40 +0200
-Message-ID: <6921488d-ad7b-4ba8-9794-8957600b36f6@iogearbox.net>
-Date: Mon, 10 Aug 2026 16:08:40 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sSHsN3vH"
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cceabd70f5so60953795ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 07:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786371743; x=1786976543; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Vyov84/MoszmkbZl8iei5CYtyOkdDWiwki2+Rn3v4lc=;
+        b=sSHsN3vHoy4cUawo9KAiJg0kluY6ZfaeqNeRZtBXPahgw02UvwII7h9BwDwBe6WJ3p
+         YXV8QyEtuEchdNj2geUEAQrrrKu3S5G0xt3P5SdjtCzUS/d78fuxbq/pgeO3P1nBUQH9
+         3SW+0ezdyULQZcurHXsjTwx2QsAdYdrLOzleKOr0AucDwc/0v9jW9+OM67aGvFzzSImY
+         N+IL/H4W/mcdlNP/NNt8ZjptnOLvATj4rMEaN9VgtnuOOqPBgeRgy4nLKF25GsnDJaHK
+         jYAHWvZm+uegwDtojqVvyNhiNY2TtTnYj5QTQu41C53p370nZkxBUqL4g1/JEn5Hm/fD
+         Lkfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786371743; x=1786976543;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Vyov84/MoszmkbZl8iei5CYtyOkdDWiwki2+Rn3v4lc=;
+        b=dgnyQccgJz2nGx1I9ywzwbCxFiguBPrW/2Zc9GWM/VYJKa8gTZdHZLcxYA6M92vi+8
+         6LrfkWRCIYu2ya3KG6xUPbrzemanFs6isXdjm6qdIu6rfvgCQ/YYFqZ9//WoiRlQc/Li
+         3gN1ZgYVypUE4zuJoHKSbIuQbVMh57L85R5SoEzuX67CO8e6H//K1SseFcGoVSrylx4C
+         H9VNvTp5s9t4MEWtQQCObxL0t+0hZS+Y683vKZt9Fx6m+Hmmsw7+0UQ3tfGFELblA2ph
+         vnAMkB9RhpkMoHrZ/vFsHeJftgpzKBGXs+sEGPFcKcuQfp801HCZjBKjyxbyqSz9Om9h
+         vZ+Q==
+X-Gm-Message-State: AOJu0Yy8HA9YrgyPESdCDV1W6gNCDnEiWISmC3pe2Lp9Cwz8TR9y2Bxb
+	ntfBMuT46PKnoRTn+lL8lla9DcLZgtoAy0aGoWySgxVB377PVgUeiHJ8+rvRcHr3eoNUJuPOM0G
+	TTRX2uw==
+X-Received: from plbb11.prod.google.com ([2002:a17:903:c0b:b0:2d2:f257:ff6b])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1847:b0:2ca:d91d:d3a7
+ with SMTP id d9443c01a7336-2d294b46248mr294491635ad.10.1786371743067; Mon, 10
+ Aug 2026 07:22:23 -0700 (PDT)
+Date: Mon, 10 Aug 2026 07:22:22 -0700
+In-Reply-To: <7c34aa00b566822c257c52c4b398809354f88bf8.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 3/6] bpf, x86: Clear fetch destination on
- faulting arena atomic
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260810134346.466004-1-daniel@iogearbox.net>
- <20260810134346.466004-3-daniel@iogearbox.net>
- <20260810140726.5C0BF1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260810140726.5C0BF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28088/Mon Aug 10 08:24:15 2026)
+Mime-Version: 1.0
+References: <20260804233923.3504629-1-seanjc@google.com> <20260804233923.3504629-6-seanjc@google.com>
+ <20260805000221.B63F61F00A3A@smtp.kernel.org> <anN_J_KZhVJ1zIeI@google.com>
+ <anUmdhx0Dh-yd89z@google.com> <anYBYu4rx-jCv8gr@google.com>
+ <9D3BEB2D-1FC8-4607-BB92-8C26F138985A@infradead.org> <7c34aa00b566822c257c52c4b398809354f88bf8.camel@infradead.org>
+Message-ID: <annenh5tqKQ0xWel@google.com>
+Subject: Re: [PATCH v8 05/17] KVM: x86: Avoid NTP frequency skew for KVM clock
+ on 32-bit host
+From: Sean Christopherson <seanjc@google.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 8/10/26 4:07 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Sat, Aug 08, 2026, David Woodhouse wrote:
+> On Fri, 2026-08-07 at 18:26 +0100, David Woodhouse wrote:
+> > (Home and on the phone after an insane week; full attention span
+> > might be limited until Monday).
 > 
-> Pre-existing issues:
-> - [High] The fix for clearing the fetch destination register on a faulting arena read-modify-write atomic is incomplete and misses arm64 and s390 architectures.
-(done in the other patches of this series)
+> Hi, my name is Dave and I'm an addict...
+> 
+> > The only reason the ktime snapshot stuff is last in the series is
+> > because I did that work on the kernel's core timekeeping two years
+> > after the rest of the series, and it was still sitting at the tip
+> > branch at the time so I didn't want to make it a hard dependency for
+> > the kvmclock series. Now the timekeeping stuff is merged we can fold
+> > it all into the kvmclock series however we like.
+> 
+> I think that goes for "Compute kvmclock base without pvclock_gtod_data"
+> too. It *isn't* at the end of the series, but I'm fairly sure (from
+> memory) that it's one of the newer commits, and I just shuffled it
+> earlier in the series for very similar reasons to the ones you're
+> looking at now.
+
+That's good, because I came to same conclusion last week :-)
+
+This is what I now have locally as "part 1", which I'm planning on posting today.
+It'll be too late for 7.3, but if part 1 looks good to you, I'll throw them in an
+unstable topic branch for 7.4 so that we can consider them "done" and work on the
+remaining patches.
+
+  KVM: x86: Update "last guest TSC" snapshot prior to enabling IRQs/preemption
+  KVM: x86: Improve accuracy of KVM clock when TSC scaling is in force
+  KVM: x86: Explicitly disable TSC scaling without CONSTANT_TSC
+  KVM: x86: Activate master clock immediately on vCPU creation
+  KVM: x86: Compute kvmclock base without pvclock_gtod_data
+  KVM: x86: Avoid NTP frequency skew for KVM clock on 32-bit host
+  KVM: x86: Drop unnecessary CPU pinning when computing/getting kvmclock
+  KVM: x86: Move "no master clock" fallback from __get_kvmclock() to get_kvmclock()
+  KVM: x86: Wrap all of __get_kvmclock_master_clock() with CONFIG_X86_64=y
+  KVM: x86: Fall back to non-master-clock if clockread fails in get_kvmclock()
+  KVM: x86: Fix KVM clock precision in get_kvmclock() with TSC scaling
+  KVM: x86: Use get_kvmclock() in kvm_get_wall_clock_epoch()
+  KVM: x86: Fix compute_guest_tsc() to handle negative time deltas
+  KVM: x86: Disable preemption, not IRQs, when getting TSC+freq pair
+  KVM: x86: Make master clock logic in guest PV clock updates 64-bit only
+  KVM: x86: Upscale TSC to "now", not master clock when updating PV clocks
+  KVM: x86: Simplify and comment kvm_get_time_scale()
+  KVM: x86: Remove implicit rdtsc() from kvm_compute_l1_tsc_offset()
+  KVM: x86: Use kernel timekeeping snapshots for getting kvmclock time since boot
+  KVM: x86: Use kernel timekeeping snapshot for monotonic clock
+  KVM: x86: Use kernel timekeeping snapshot to get walltime+TSC
