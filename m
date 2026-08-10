@@ -1,62 +1,68 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011061.outbound.protection.outlook.com [52.101.52.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C93F36D9F5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 06:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.61
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786342349; cv=fail; b=W5GrdCo2yDpZPHecQp9V4S7ykCG0wtpOVH3AYiEu3qfGkwI6qMsJStxgjNmnBsUFnH8P0ITqT+3fGBDsJZ09P0TFV5otSKCMxA0RZXp2l9KxVGeGiP48iJsVIxwWR29GWSLVjXoPsxTCaxff/cZY5RaHpVYjKFNI1McDYQUQgtU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786342349; c=relaxed/simple;
-	bh=gjei86QODtOL3iE+ya5WNHGD+hNI+McRap+w1RFuDzQ=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=M+l9cRoBS1UFSCH5VVfPuJl8Q9rPSRSm2d9G2KsA5v0NZ2TDegKhi9TzPR/5g4SrNGL7S9Juk7yXhWJJjnIhkbH7vKJBO1Oms1OqYI99gfCR8Z/HFbiAgnmUNHCPXmehdMPQo3q0W9juAStPyIyQZUdLdOqzyDk8kw+N4nqte3s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=PhwdRkZS; arc=fail smtp.client-ip=52.101.52.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213B434F259
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 06:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786343736; cv=none; b=MjiUnwZpqlUvwVdoQAaXzGZ6P/jGf+8+7PTbL1lYsK13pdDG9s/4Ig4qDNu8B8rB1TYDpBuJbuJld6XSDXCUcb9eT63eE7ifaPfisNPVJqP6vF3aSx6b6jU1GX1jsNMqvVw+B64jkkwb3+joa1H4TqsSLFliylAWIXKneMuscqQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786343736; c=relaxed/simple;
+	bh=IGEMFtz5m1rgtvO20zFipE93T56u1qS09OUG8XV2g4s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fC1t0gxf/LBSJmHGKagXU+J2bTl3ty48VqgrzkM/yA/REdsAdn36NvanyKOdZObBgQWIbODYEJsWHyZoivYE2I7/hrsZ0PGF6CPwIipsr3heCRolhFr2OECaS5+8TAPJ/fcCNMhJKN1Ae/R6L2PiAyJ5432GLuw0Dp4RSnsxKhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LWvvIvml; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="PhwdRkZS"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bg0EpaArLD2dksF+J0ThRhMCs8QIYRLECyJWh8khRKdWTPcCB8BCmzoc2BQgTTM2hnfk3YCRTpTXtPbInS0L3D5yh1NcxuZYtiNYEDN6NoXSZmu4VS2qRjA5U2KECSlXca7BBCQpfXQFk+kACmoif3S3IW3+1nmSHG8FNReVZsRRkTchgmr1CCZtYF41FbH55hcVFVvoe0mMarYjBW4Fx0VXYdJc4IbzPPu/DocPa1ZRIvN5rHtSulju7TbHV9z42pPDK8y4dAu//lSaWILRrcr7sm1r+V/uIJID2vvOopA6yFSwfFTBHgbG+dGwZjMEBTPawvyH++o8xnaTwDMzEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MD1VZ+0OdHK0ApNCIeHIRDfBxfb2xBhsjxgE9syi7C4=;
- b=GQ6ci7Ygd2jyIAWcmOcaCsJ7dgjDrSzsVkmqn4G45VWyUFcqeYTgmtUQthns2n568D3ch7WJkkAMuPsl6nXTyxdfKgSCgekUJ6ktSWrz759agA3ECP6NfSg6qVsjn6df1KbzqzDyTRbuosWRTlPMjE9gQgtDSiawG7UYGCCoZODLKZc/vrsV/WRDdyYVaZ3/hjIn2V8Ps0+relhH642Yk9oerWtwJgp9V4RJy5jt0paJQNqWlw6nJmGxSGH16xwdKrPSwlvrW9gwKLYg3WEI6YO/Lo1CLE0s0y2hjw9RnmmJAaZBk9lYeEKpSDyBin0PnX+upG5N5p22nE9GTo9JLg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MD1VZ+0OdHK0ApNCIeHIRDfBxfb2xBhsjxgE9syi7C4=;
- b=PhwdRkZSwK+rUi3YIcFgp7ynMitwBvFdNXkqDbh4EgF88zCT2dqMZisQ7EfBUbDc0a4hUr5uGMC8vo9nR5/TyEbMOt2JUyhzksKLBlq9+2OHkM7SfjG1XM1k/D2p0A3G0vJoyNyB8XbKwsSGmPMrmtyoJoqv26GuWbsbnj8SM1s=
-Received: from CH0P221CA0021.NAMP221.PROD.OUTLOOK.COM (2603:10b6:610:11c::17)
- by PH7PR12MB7020.namprd12.prod.outlook.com (2603:10b6:510:1ba::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 06:12:21 +0000
-Received: from CH1PEPF0000AD74.namprd04.prod.outlook.com
- (2603:10b6:610:11c:cafe::50) by CH0P221CA0021.outlook.office365.com
- (2603:10b6:610:11c::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.25 via Frontend Transport; Mon,
- 10 Aug 2026 06:12:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CH1PEPF0000AD74.mail.protection.outlook.com (10.167.244.52) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Mon, 10 Aug 2026 06:12:21 +0000
-Received: from [10.252.200.247] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 10 Aug
- 2026 01:12:20 -0500
-Message-ID: <c63943d0-f336-4b66-98d6-fddad60f394c@amd.com>
-Date: Mon, 10 Aug 2026 11:42:17 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LWvvIvml"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38759bcd877so1523471a91.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 09 Aug 2026 23:35:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786343734; x=1786948534; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NItFpiIwMj1k7tiB1SnfhJqtoSXdWJbFQ3hu5IzRqxs=;
+        b=LWvvIvmlalpF7AofIfvlhXXpEwFvf9bN7tXpHZJDTfZb5Jt3Tm1/NbxyxuqvnpouPm
+         hEuZupxsun6vkTL/21ZzQSRYjn9XdomCoVOW/lNFrCjiXYyJveM0OGX65hRjlUyI/d9a
+         ZrD9/9HfGqyj01BXS6jVl4KQJ/90yZ9KS8X8O75Tjq+JDHEPtJbON98ZMfkL89Ag6+9/
+         iV2MR87csA8HXpJjIy/IuAO/JrrEMl3e85O+lPZMS1wb723Etda5aGfQTQK6IaQYZz/m
+         gYhLao5GcCFp+64BgGuvwJVNa9dc3I1DCQ25AXUQcZICCmC0+LiEDhCKe1IGW4d+qk5k
+         uA4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786343734; x=1786948534;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=NItFpiIwMj1k7tiB1SnfhJqtoSXdWJbFQ3hu5IzRqxs=;
+        b=QpkoslErfRUlroUWuKaDoPeSysAymvXdKc3NFsNIzL3TwtkwLpJCS75FzUj75useqS
+         dOEa8eBUWEj+jCF5xPKIDXqEv03Xa6pp+1n5pC3ov+VJrq4yakCuzWNnf5xdeexQmzZR
+         gVw+Nwgx5TiR+whubkpH5JCdpI4R0ASZ4oQLYuX44RFPqhYC0bgNw2VO2VSm4LRnW+k+
+         Lx7dWjEuwoywQEAOCiWusq0WntCQrK/tDPijVHSxQsgaim0M2VwZJLKaxMJLxH3ZMG1g
+         CrzQBE/j2Br424OPUh6RF+hymVxoik9bMSjDPHKMGc5RUvQcX/m/UgoQZgxgsyf2M15Q
+         m4aQ==
+X-Gm-Message-State: AOJu0YyVbnjQ3WXHoZfLtWFNjUJCEI7MTjz171w/bm6q1q4D7DH7T80K
+	Xm+Kvl7001mfGtCENmkxNHHcoNjSnarLg28zOgKkVSNBROFhSaUzBrGGPHocHQ==
+X-Gm-Gg: AR+sD13/d6gsReIdWrQQFeGPqwt1v5jpyCaursZnGtI6eMymAMLuAcqKjBx60aapS1W
+	SSyaae0pFfegLcIfNvuA7AlK6C8FGSezBJNQiltfN69B4gxh3zG1dZTUs6n4IwguI3KYxmk65K9
+	WsO05kck+eE/b/MQ+qfALNhtrU1R3Lek95vpPq6TduRB+bFD7oMgnlR4uiMUk+JxzExFisE2SKA
+	H3Nye0I9YxxyZaqvOLE38RDnGG9jORaQNRIgYga0GsrW6p9FOXgScoZKr203Xm4ckSXiUcVdv4Q
+	tU3nylZgi6mpNyPxaDMwzZW/TsqpUScI3+4CI1V6Vv5M4AzxEwWPWvIbyu9WKxN+YzHctmObybD
+	daNVZGpr0PJqBrqFKWnBZy+F5xv44/VG0c949LzeXJAKZDqOJpZavHpNwPg+ITDuozVkmcJyP2n
+	q9niF/TdxUCR4YxBPrYcEClg28hrNWcnVorylWl2nPQL51lpSkYYT/U0Oayw6sDPYPd0LXPJszG
+	YxvgActhL32Vj7n5afAUEcAwBYflRcOfioo3w==
+X-Received: by 2002:a17:90a:ec8e:b0:37f:be6c:f3f2 with SMTP id 98e67ed59e1d1-3903c53827bmr43219538a91.2.1786343734084;
+        Sun, 09 Aug 2026 23:35:34 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39085dbf82csm13435684a91.1.2026.08.09.23.35.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Aug 2026 23:35:33 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <0309e122-3424-451e-afd3-8395f87e58e1@roeck-us.net>
+Date: Sun, 9 Aug 2026 23:35:32 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -64,176 +70,144 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
-Subject: Re: [RFC PATCH v3 6/6] iommu/amd: Provide kernel command line option
- to enable GAPPI
+Subject: Re: [PATCH v2 2/2] hwmon: (max6621) fix negative temperature offset
+ and crit readings
+To: sashiko-reviews@lists.linux.dev, Cong Nguyen <congnt264@gmail.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <9d3a4f1895a47794bb359a2a32fb1ccd6a15812c.1786334038.git.congnt264@gmail.com>
+ <ad0baddbd6163cf73545c8e9273258136718585c.1786334038.git.congnt264@gmail.com>
+ <20260810051655.C2BB81F00A3A@smtp.kernel.org>
 Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>
-References: <20260713105033.15405-1-sarunkod@amd.com>
- <20260713105033.15405-7-sarunkod@amd.com>
- <20260713111125.9DC2F1F000E9@smtp.kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260713111125.9DC2F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260810051655.C2BB81F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD74:EE_|PH7PR12MB7020:EE_
-X-MS-Office365-Filtering-Correlation-Id: 374a377e-c730-437c-866e-08def6a656d4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|376014|23010399003|36860700016|22082099003|18002099003|5023799004|11063799006|4143699003|56012099006|6133799003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	G8JOj22WX7caoG9KEAYUBgIVYuFw5Ok52AD7uyKtDk69cUaWyy1oXB6X6nACkDufwxsAJSTTRkRTefrc3SqkBHkUM0QrLzRFO9M6RJLFA/s6r8XUJ0Z5Bt8RJOKk1Jd+U0CrBKqMcMHzIiWaFCoZBpQINYrjTfxU8dX4LW0KpjHe61GxugNxtaKj9Wv5FLYvFHjisVNZ+/SnSvkTruI5906S2xpNW6Q8AuUggoupn09eQ6DZKn3mJPlLu9+w+zE59dcELbYmpAvwHgS40x/WJrh1vUhtS7PMYrXUheWWK6W05YdcXEyOa8lFbZgDOxa+Ltpnvm/VNaRA7rcR7kqhzSki4wx0hWjKln3vwW0HWu3/+zcD3bDXEAct4Yy4cBGYJNzPhs87NtdLK9BGsDQi0pyWbLRUxytRBh0gHgHjaZFZ5cg8BFZC48+blV4fIsNAJ1QxbvLIgrDhLQj9o+d513L8dY0+bnXcBZjIfyQpmKTo67tZUavgTq4kMWBX+dKSeKdWawvyIE3l/d9YL1fggCjBBdhd1tNh59sBl3I+N04wVAvsfdNjF+oOAP9k6wcjc54ZtjohweFP2jEEodZEq+VWe2R22pvoJO/8VrvwUpY4va8fva1rheK1gmExMTuLheYYCp+xQ4AFDchtmJvJ9OEssMPfGUzLJRHM31AJzwE333cL0ku0s9HHPRJB2/5GpWSpFogCK8ImI4gwu/QHYQ==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(23010399003)(36860700016)(22082099003)(18002099003)(5023799004)(11063799006)(4143699003)(56012099006)(6133799003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	VD9pLoU6C9xAxhKG0DQVOvLB5R1qUpuVsdMaJFXaqfkZjxnDA2kumXE9Yi3KhTUnrLNOLAsswDC5hFpA0MgC89eadl2Csv2riCgWMUIIEkfRUOfqcXDehNeahsoyuMg+zsN2xejN1abOZXQnaDnMelU7UBXnz0rpWu7pEkKpVu+xTeN45Z+UNe06rCJrEt8p6BjNcWF7GcagUyrFP0jTgg3AEpJjEOtAP2NgdsrdYUSojs2/qTUZggHn1pYg9lkT7JgLorN/PsnXSuhmvh51sxFjAGpJTQiCUMRenqxHRlP/foQ75ZMrsEcEauBZ6MZx4kAAH1YJ7fhBV/IWbN3npG7PlHUi93eX/o1a3NyRFgnJc8ljHrDho4mQWiWT0VuCV76MQwReDJaK7TbtB+ouwMoGlMRtjJ0xw/b2T4CinsfuGAWVOG3T9PgIumcFJbs2
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 06:12:21.4641
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 374a377e-c730-437c-866e-08def6a656d4
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH1PEPF0000AD74.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7020
 
-
-
-On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] Unconditional enablement of GA log on overflow in kexec/kdump environments with GAPPI leads to critical DMA memory corruption.
+On 8/9/26 22:16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Lockless read-modify-write of the IOMMU MMIO control register causes a race condition that can permanently disable IOMMU interrupts or GAPPI.
+> - [Medium] The `hwmon_temp_crit_alarm` read path ignores the `channel` parameter and unconditionally clears global alerts, causing alarms to be misattributed and lost.
 > --
 > 
-> --- Patch [6]: [RFC PATCH v3 6/6] iommu/amd: Provide kernel command line option to enable GAPPI ---
-> commit 38ebc4ddc54202efd2ae74234b7ee4169af3e39a
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
+> --- Patch [2]: [PATCH v2 2/2] hwmon: (max6621) fix negative temperature offset and crit readings ---
+> commit 0116e27b3257c1efaee364113dfc90d35d8fb869
+> Author: Cong Nguyen <congnt264@gmail.com>
 > 
-> iommu/amd: Provide kernel command line option to enable GAPPI
+> hwmon: (max6621) fix negative temperature offset and crit readings
 > 
-> This commit adds a kernel parameter to enable GAPPI for AMD IOMMUs when
-> the GAPPISup extended feature bit is set. It also modifies initialization
-> code to handle GAPPI alongside the existing GALOG feature.
+> This commit fixes a bug where negative temperature offsets and critical alerts
+> were read back as large positive numbers due to missing sign extension. By
+> casting the register value to s16 before scaling, the read path now preserves
+> the sign encoded during writes.
 > 
->> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
->> index 2e1889f8a9e42..7d2b1c24f6ecc 100644
->> --- a/drivers/iommu/amd/init.c
->> +++ b/drivers/iommu/amd/init.c
-> 
-> [ ... ]
-> 
->> @@ -2999,6 +3002,13 @@ static void enable_iommus_vapic(void)
->>  	struct amd_iommu *iommu;
->>  
->>  	for_each_iommu(iommu) {
->> +		/*
->> +		 * Disable GAPPI, do not check amd_iommu_gappi as it may be
->> +		 * false in new kexec kernel even though previous kernel has
->> +		 * enabled it.
->> +		 */
->> +		iommu_feature_disable(iommu, CONTROL_GAPPI_EN);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this unlocked modification of the
-> IOMMU MMIO control register cause a race condition that could disable
-> interrupts or other features?
-> 
-> The iommu_feature_disable() function performs a read-modify-write without
-> holding iommu->lock:
-> 
-> drivers/iommu/amd/init.c:iommu_feature_set() {
->     ctrl = readq(iommu->mmio_base +  MMIO_CONTROL_OFFSET);
->     ctrl &= ~((u64)mask << shift);
->     ctrl |= ((u64)val << shift) & ((u64)mask << shift);
->     writeq(ctrl, iommu->mmio_base +  MMIO_CONTROL_OFFSET);
-> }
-> 
-> During initialization, the IRQ thread could be running concurrently. If a log
-> overflow occurs, the IRQ thread calls amd_iommu_restart_log() which also
-> invokes iommu_feature_disable().
-> 
-> Since this read-modify-write isn't synchronized, could concurrent
-> modifications silently overwrite each other?
-> 
->> +
->>  		/*
->>  		 * Disable GALog if already running. It could have been enabled
+>> diff --git a/drivers/hwmon/max6621.c b/drivers/hwmon/max6621.c
+>> index 16a3a61d25326..1a644d7871431 100644
+>> --- a/drivers/hwmon/max6621.c
+>> +++ b/drivers/hwmon/max6621.c
 > 
 > [ ... ]
 > 
->> @@ -3038,10 +3048,19 @@ static void enable_iommus_vapic(void)
->>  		return;
->>  	}
->>  
->> +	if (amd_iommu_gappi &&
->> +	    !(check_feature(FEATURE_GAPPI) &&
->> +	      AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))) {
->> +		pr_warn("GAPPI is not supported.\n");
->> +		amd_iommu_gappi = false;
->> +	}
->> +
->>  	/* Enabling GAM and SNPAVIC support */
->>  	for_each_iommu(iommu) {
->> -		if (iommu_init_ga_log(iommu) ||
->> -		    iommu_ga_log_enable(iommu))
->> +		if (amd_iommu_gappi)
->> +			iommu_feature_enable(iommu, CONTROL_GAPPI_EN);
->> +		else if (iommu_init_ga_log(iommu) ||
->> +			 iommu_ga_log_enable(iommu))
->>  			return;
->>  
+>> @@ -254,7 +254,7 @@ max6621_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+>>   			if (ret)
+>>   				return ret;
+>>   
+>> -			*val = regval * 1000L;
+>> +			*val = (s16)regval * 1000L;
+>>   
+>>   			break;
+>>   		case hwmon_temp_crit_alarm:
+>>   			/*
+>>   			 * Set val to zero to recover the case, when reading
+>>   			 * MAX6621_TEMP_ALERT_CAUSE_REG results in for example
+>>   			 * MAX6621_ALERT_DIS. Reading will return with error,
+>>   			 * but in such case alarm should be returned as 0.
+>>   			 */
+>>   			*val = 0;
+>>   			ret = regmap_read(data->regmap,
+>>   					  MAX6621_TEMP_ALERT_CAUSE_REG,
+>>   					  &regval);
 > 
-> [Severity: Critical]
-> If the system is booted into a kdump kernel with GAPPI enabled, could this
-> lead to the IOMMU writing to stale physical memory from the previous kernel?
+> [ ... ]
 > 
-> When GAPPI is used, iommu_init_ga_log() is skipped, meaning the ga_log buffer
-> is not allocated. However, if the previous kernel crashed with a pending GA
-> log overflow, the hardware's overflow status bit remains set.
+>>   			if (regval) {
+>>   				ret = i2c_smbus_write_byte(data->client,
+>>   						MAX6621_CLEAR_ALERT_REG);
+>>   				if (ret)
+>>   					return ret;
+>>   			}
+>>
+>>   			*val = !!regval;
+>>
+>>   			break;
 > 
-> Once shared IOMMU interrupts are enabled, the pending overflow status triggers
-> the interrupt thread:
+> [Severity: Medium]
+> This is a pre-existing issue, but does this hwmon_temp_crit_alarm read path
+> in max6621_read() ignore the channel parameter?
 > 
-> drivers/iommu/amd/iommu.c:amd_iommu_int_thread_galog() {
->     amd_iommu_handle_irq(data, "GA", MMIO_STATUS_GALOG_INT_MASK,
->                          MMIO_STATUS_GALOG_OVERFLOW_MASK,
->                          iommu_poll_ga_log, amd_iommu_restart_ga_log);
-> }
+> When userspace reads the tempX_crit_alarm sysfs attribute for any channel,
+> this code reads the global MAX6621_TEMP_ALERT_CAUSE_REG and unconditionally
+> clears it via MAX6621_CLEAR_ALERT_REG if an alert is active.
 > 
-> This calls amd_iommu_restart_ga_log() which unconditionally enables
-> CONTROL_GALOG_EN:
-> 
-> drivers/iommu/amd/init.c:amd_iommu_restart_ga_log() {
->     amd_iommu_restart_log(iommu, "GA", CONTROL_GAINT_EN,
->                           CONTROL_GALOG_EN, MMIO_STATUS_GALOG_RUN_MASK,
->                           MMIO_STATUS_GALOG_OVERFLOW_MASK);
-> }
-> 
-> Since CONTROL_GALOG_EN is re-enabled without checking if GAPPI is active or
-> if the log memory was allocated, will the IOMMU resume writing GA log
-> entries to the uninitialized physical address left by the crashed kernel?
+> Could this result in misattributed alarms where a read on one channel
+> incorrectly reports an alarm belonging to a different channel, and causes
+> subsequent reads on other channels to miss their alarms because the global
+> alert state was already cleared?
 > 
 
-The IOMMU driver does not evaluate GALOG overflow status bit unless
-IOMMU delivers an GALOG interrupt, which is not possible when IOMMU
-switches GAPPI mode.
+Valid point, but the datasheet says:
 
-Thanks
-Sairaj
+The result is a 16-bit word (low byte transmitted first,
+high byte second) that contains the register that
+caused ALERT to assert. An error (8103h) is returned
+when there is no active ALERT.
 
->>  		iommu_feature_enable(iommu, CONTROL_GAM_EN);
->>  		if (amd_iommu_snp_en)
-> 
+Since we don't know what "contains the register that caused ALERT to assert"
+actually means (in other words, what registers are returned), we can not fix
+the problem without access to an evaluation board or a board using this chip.
+
+Guenter
 
