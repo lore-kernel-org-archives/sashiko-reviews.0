@@ -1,119 +1,147 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE083B95EB
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 10:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AC7380FE5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 10:38:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786357550; cv=pass; b=C89sn8mXn3MlHnVbvY9yjpvE25gu8KM1HmjOEnI43/PKldbdgtLBkaQ2QArTRZQCK77pijEdoMqUSMKp/d8L0ItPmflK/nuuwWEDZnsn9uEymSCCqBe9LtDGxoppB+SQDdKdSN6ZyfgK1CzA4ZmaG9Zwz6MjdQ66X2UURtsJfW0=
+	t=1786358290; cv=pass; b=L/rTtvV1XenqWbZTijU9A8pGLGxK5SVCmdM6RkBWebe0kqAXFaVOb9NbVj041WogtensyJ2WvEgHUVnEVVVc/jL73TwKwmksPImURAMe72buicNehoaxuShEvlH1cxNERD9Q6Se0CqZLpEuDDRhoRC1d7R7Fm5rou8D24CSetPw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786357550; c=relaxed/simple;
-	bh=+wQ1/0Ny1GWvfbtUqTtYvQWbT0Ovv2Co+yvv4LxBCis=;
+	s=arc-20240116; t=1786358290; c=relaxed/simple;
+	bh=q7Go9yYok3C95hUOfmQUuxaqx/nyR/Er6G2c8Gtll/g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qHFkoup6Kk5YuwNWiLDCcf91EGZntBIuBiWyxnltZIW5WED2Psmky9D/xgDFY+UW8UdjhibE1VEScoegcIIMRK3RfSfpluOZBSIO306jDYmIGjw0t2lxdKs3UUK5heEPQ5NiTqtMIBMTCrHaOj/81CJTRH2VyrZMopDqDcPGJ0k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nRlWSVOq; arc=pass smtp.client-ip=209.85.214.182
+	 To:Cc:Content-Type; b=rZBEoxvRnVmkY6mTtRzIHAKgQBetN4PoW0UiOloMbe4h44M/B0xEZelZUDc6lV0KIgIbibW50MbXNjbK8Kwa2wook//Rfmfxbl+3OXBwGFTHInwaqP71Ikf/Ag3zf5WCxE0dg79jzULPBr52w5w7MvZ5l7MGXkJaClRiFCVSJ7A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gNZgD2H4; arc=pass smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRlWSVOq"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2caed617615so20595485ad.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 03:25:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786357548; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gNZgD2H4"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84830c774a0so1525813b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 03:38:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786358289; cv=none;
         d=google.com; s=arc-20260327;
-        b=cN6giVWOLHTHPfGQMzR5MYQ+oDkafo4aKfOwI3Gt1K+pxkw8AAdsauL2a9v0mJZXZf
-         zECX5E6f6O6CA6qSweDx6Y4g40cFqk/lQPzcZsZLG31KQChQ51UaBtio6Rg+U/k85CGX
-         Yc3TpbfoWdC5lQXbsxSN4pbplu22f1tnWjA7qMC35I4fXnCWavFAFgKEy++OCR7TMV4Z
-         FsaB+QZqP0Exeb93pWTNT9iSEhEj2s1bT3mu+XS2NaQpuAs3DRFRvf5Ui+yxXBELq2Ub
-         A0/Gx9uKhqtWSgMu+l0UG7oAwJdNLd/xKeMKYkouj936t4u1YjqWPlN18FlsHgMnb8kQ
-         +W9A==
+        b=AnN/3bHmV+W/SJhJXLJjQBWzhwSAz57Rk4Wwyi6TTodQSYB531/D33+3BJ6Zw9RV7n
+         RyGDMwQZq9DMTy5v+aR8zsUs+Bi2iCkH2o2cJDzwobyxIApO6ZXZNmubLTqlMAwBauuh
+         CGCo8AmX9PYHDYT8/HMJ1bRo5PpTc1BCGUBlXoMU4Z8S/4kVZBksdNMBl5GLMPvrj7rz
+         UC+47TmKw+GElZFZQI7EMNkqFg4zPLPKg3JU00iTTRrj1A4xULnZC9PgWk3imGbktmAT
+         HhAEmIaQjftCiodnqmSX+TJojHW5ym84kFPfLny4aIrWexKP1Qyhkbt/9/LrKv1QwND3
+         AIIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=fMsszLrae2MK8L8AhSiRXxABl30KILb8MFS1COTcPW8=;
-        fh=3mbWQc2KYnV1YBFEjtPx/1jzUpC/uZUzPfAesf3Pc0M=;
-        b=IIHmyrP+hahdu+BPaejRtYTxicoJjSxlZ+dpjB6xkZupAAT5hr6Hu1Lr6k8hVRzYHE
-         TIT/3fpyKZ/HggIeFx1vbf0lnpBB9Ai8/QMgXsX5tXQSdKjwN8/ADq+6JlJbttrmjIN0
-         wn9yTx2zqNifqH05jZkMZCgFnAmA5M/H95jDROCpovVhe3dOwzyU1AvBprTIgFS29SL3
-         nn639JadcNrunHhVGj6+MncDt3DsYRKyW50eSjVOakEKptlm9HRaO1KfgowMG65R/Y09
-         glEA13Jxe27otk9GC6tgQpw9h1bKKSfBoYTQW2NCPpTnqt619HzQcoPO1r6U4sOS6t2i
-         orng==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ndyTsAfSWT9fU/X+sfJ4tCXGlqjlZNQz8Rp00QAZlQM=;
+        fh=zt2hjtFWVrBSbexOnXx/digRN2O0tNSOK4/ceCsrIlE=;
+        b=rGO+C4HFZs+ySMeM7ZjVioGNOcrtJl2wrRRt/mywWRMa7eUls9QKcLTBGOrJ4Qores
+         /dPECMLjNz5xYPuPPg5uchblFZX166Zx6VA22klIfadiR+oUmF7iRfc4TW1guuMKtEGk
+         B9RYYU7aLz8+VRtgSo8cgdBya5iX9uHaZSXFgCn2QLsaGU8f+aTnn5c8wdr08XHrHP/D
+         0rPl8qHoBZE1rpPUjyFneUWKxvsX1Yd7+436duGMzKLpBV7E/ppxTeCBut0uwrS96UgT
+         Lxo9nSkYQynSQ01o2e/De6HteaH89RFO8XNtGe1EoreQTU/uI3NH9uOAmXhLLYVWvogr
+         31PA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786357548; x=1786962348; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fMsszLrae2MK8L8AhSiRXxABl30KILb8MFS1COTcPW8=;
-        b=nRlWSVOq2b1aotXlit0fgxxhdX7wv9jDJ1XyERB49HAjh1rGFRWj8uk4zV7eCwmjaT
-         iGnxTMrEOY3SSfPkbALkMKX+FDQwmwJkgX6vgBHsGi+n1hkciRtRunkUJrEXEPGCsJPS
-         xi0ClsPnPV5V/gBki9h/bzbRrnuuOh7oAAwQ+k3IdBzKY45C3m9gGaBl994IHnPJOde8
-         kEvf97RgD+d/s4HV4+dHBVTf5SrPe1A7raEcM7G4rh1z8pKYkLeBB/xLNGJN5dFqf1K2
-         hePZsiMhTw5wllUfo+ATX/fjnaE/NCOD9lklBMySyWtYr0uzLMHpyRZGeQ+372noMvFs
-         GWHw==
+        d=gmail.com; s=20251104; t=1786358289; x=1786963089; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ndyTsAfSWT9fU/X+sfJ4tCXGlqjlZNQz8Rp00QAZlQM=;
+        b=gNZgD2H4Xy9fMUx+Rta8F+s+oE2+MAe64Nwmy6wqJRYcGdH2yeb0q8FbTwaj5EAeZo
+         9BnO1Kgj0D1hEaxhktwTsJzdUFRWJ+t8VxqTjUBb177aHS1/Enrahik1mAuMl5aofKxc
+         gaPG7i4y9r3k8od0CznLot/jE03T6yurfGRR8Jc4Wv+xTdfOr3NDZ5HABeIfj/dM/W0C
+         DgGcOuzWArpMrVcMFY2WorPkQVY7NcMcvc7tqcM/sXViSv8lXehsnsz2Bm9yDNY9O4Yc
+         zsM5+ByAZJ9hw2OUb42NNltC//D2JPuve23xrDEOSdZdFXqdeumM76GD9oieIm0nwP5s
+         ICFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786357548; x=1786962348;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=fMsszLrae2MK8L8AhSiRXxABl30KILb8MFS1COTcPW8=;
-        b=tVoFNfO0kfqA0UFdX31WcxMhtzZhetgDZxPSY1O5+F37rnB55y9TWda1CWqNVXfCWK
-         8jc0eO3Ht34EblDItnW0iyWckdgcJj+JclgT3m4dg1jJHfRv/ZYJ/c5O0+m+sC2Zb+m/
-         SubIRUQnVwl2Fsx6taxjFILGnZtlRi3WZyM7p/ijvli1Gldnf6zhsYovWYNqfDNbSxkD
-         uFygdKEl22R8k1VaibkETtPhLEwnAj/CvWTxd5VFQ567PXkRvmIPlzgk6yHzVpP37pEX
-         DGj5bziWhF0iD+tPMLP9bqyUaykYcIMfUKebe4KLmUkAb7X9SD+Ig/kIqwQsH3s41nZK
-         hBXw==
-X-Gm-Message-State: AOJu0YwScIRY7xe9Nf57eFx3YDeX1p1MTbr73YCHO8BUJyqCWOt/JCpd
-	Tdxzrm+F/FyIC/yYlhRRmAPTNmYJX1o3ObdKdE7A3ZaLXpyYTfQL8D3ZQi++4UUZBx226xARUMf
-	y0TAXx22DsgLMOqsE/h9lBogTMZvwZFBVC0u0
-X-Gm-Gg: AR+sD10dHIol/a9Kc+FF7X/MTVAU836apErqLvIQ9atWJ10N+d1OaGmcdWGT6B+rq1F
-	MHS2uEuOf0KJAuDz6FWeE1gbf1iJul1p7W5qBaPtuYmLSh+48SdfZONjtHAF0IWVa9hJa+uDGXY
-	4z7uG2/ogAewNmGs6tSCxQ3jYytU2GYVDWI1/Mx9kNGafX+yPOJzwkZOC9mNTqX2FOx7+HVLu4F
-	CJEP8Fbjrn33KTvZQc2kmdOZG5qOAjOek2QK4aoWpR/Mn9eWzkYkfufOwNVdSPdAmUbQyyZmrYL
-	41NANG7bvF47RCgKsIueL/lowh38fK7o0IPA2ErG1uKMJrnOyeUHfN5ItCyyB1qlYAGJgZ4DbXR
-	WdgJNFqdOoYX687HfmqkSKzKhgpZ8hthSicv+guR1srSJmCDnXaz18q7M
-X-Received: by 2002:a05:6a21:9106:b0:3c3:8651:b302 with SMTP id
- adf61e73a8af0-3cc1a372bfemr862555637.28.1786357547968; Mon, 10 Aug 2026
- 03:25:47 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786358289; x=1786963089;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ndyTsAfSWT9fU/X+sfJ4tCXGlqjlZNQz8Rp00QAZlQM=;
+        b=W7rp5UFV3+OMuudka6ZoFN6p6aOHeIpl7MqibmZGZtSjpVjgATu4zdVfet8YjE7zYf
+         PmI9bHmMc4ZPUPp5rYJ2Zaq1qM5HvJW5kxNuo6c3EbGXWKHU6LIV32jj5SqGTRvCOROL
+         PlCzHhCvbO1rHyQ90Ax6DdgfbSOpeHIrbosWp4cLiY2iik+4oJI0O0YjWyiJNnKgZJXe
+         E6IgiMTXOZQJ8+qKhe5Yn2uk/z2y+h34EAY6Zm4rvdIQSwMIsUY6RdBnKRXiSnz7fUhE
+         Y7/jQUF6jZojFZ+gzvJNCVXJz+oXJz2cBkb3Y8KdWs/E/nJDvykFtKI1MZWd0gLvCcwg
+         B7GQ==
+X-Gm-Message-State: AOJu0Ywzf0KiTvWf71CnleGyemYeHcNV7qdrpmnDz7m80bzyKgFMzSoD
+	NktzjkCGBRDCHV5V32TIpaMWDGmk3NjACoubJcHsKa6PwtNDNUNW4LUKgE5awf7AOBDM1Ek7det
+	QFtd8HXHA4bSd9ldRpjSQ+O4dbfDjeaiz8ZMK
+X-Gm-Gg: AR+sD12NOgmK70r2JkkKqu4QX66eIaq5r45OXk9K5ZOvZFPqaPhMKJaqs10IjFkM0K7
+	/xRAmQP+g1r8FboaYNUOOQ6XV0CP8dIPZGXO0NNpAD18M1B9OuSfA3o/4IaEj8kolyvLOPwGJz2
+	oYpliVnbR8q+/AkxXLetHYeP+g9/9UTH2fXTufhj5ACMUw3fOy2qIMNhS9p+lWXI1EALgeLhSg3
+	IlxPYvIGbZ6zrN94VJ20YyPNqcHFz1cqJf+QUGUPdI2Dfr8q6Eu1K0fJT1K9iU+is58GGkSOn8B
+	vzAmH7LRpG7g+JpYoyrBskgecws7zqPNbidfevFlEpL0f2o8FgHeotwWvXOIwlBHHWdJ/Yauvyj
+	8ptOL19JmzAPR/T9M4PPA/bzD9ASs2MklfAnvEm3wOQ2ozCQ1JFuoxpEX
+X-Received: by 2002:a05:6a00:8f0c:b0:848:32f5:4999 with SMTP id
+ d2e1a72fcca58-84f696d2552mr19666780b3a.30.1786358288679; Mon, 10 Aug 2026
+ 03:38:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260810093112.47807-1-phucduc.bui@gmail.com> <20260810094626.DA02F1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260810094626.DA02F1F00A3A@smtp.kernel.org>
+References: <20260810102144.51663-1-phucduc.bui@gmail.com> <20260810102815.3720F1F00A3D@smtp.kernel.org>
+In-Reply-To: <20260810102815.3720F1F00A3D@smtp.kernel.org>
 From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Mon, 10 Aug 2026 17:25:36 +0700
-X-Gm-Features: AUfX_mxcyOkzFIt26apNzc3AQVC2pMBeVC3PSTmwWCNqFnynRLRcPTYJic0izHU
-Message-ID: <CAABR9nH3qTfRbsT2aE228M-koP0mNdmHy48ti1-xSkKHQcC7pw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] usb: chipidea: ci_hdrc_imx: Propagate errors from
- optional IRQ lookup
+Date: Mon, 10 Aug 2026 17:37:56 +0700
+X-Gm-Features: AUfX_mzvMK0zlcloRVltWRfYX01mBrnV3QFem1x4obOb00rlOZkyBIDJi5Xucsg
+Message-ID: <CAABR9nE=oRUr1XbStf0ztudQ9HM7LEVc_fVcmN7QkQixi4DyYw@mail.gmail.com>
+Subject: Re: [PATCH v2] watchdog: qcom: Propagate errors from optional IRQ lookup
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 > [Severity: High]
-> This is a pre-existing issue, but missing an assignment to ret here causes
-> the probe to falsely succeed:
+> Does this code leave wdt->wdd.info uninitialized if data->pretimeout is t=
+rue
+> but the optional IRQ is missing?
 >
-> drivers/usb/chipidea/ci_hdrc_imx.c:ci_hdrc_imx_probe() {
->     ...
->         if (data->wakeup_irq > 0) {
->                 irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s:wakeup", pdata.name);
->                 if (!irq_name) {
->                         dev_err_probe(dev, -ENOMEM, "failed to create irq_name\n");
->                         goto err_clk;
->                 }
->     ...
-> }
+> If platform_get_irq_optional() returns -ENXIO, the if (irq > 0) branch is
+> skipped. Since this all occurs inside the if (data->pretimeout) branch, t=
+he
+> outer else block is bypassed.
 >
-> Because dev_err_probe() is called but its return value is not assigned to
-> ret, and ret is 0 at this point, the probe function incorrectly returns 0
-> (success) despite the memory allocation failure.
+> Could this cause devm_watchdog_register_device() to later fail with -EINV=
+AL
+> because wdd->info is NULL?
 >
-> Does this code need to assign the error to ret before jumping to err_clk?
+> >       } else {
+> > -             if (irq =3D=3D -EPROBE_DEFER)
+> > -                     return -EPROBE_DEFER;
+> > -
+> >               wdt->wdd.info =3D &qcom_wdt_info;
+> >       }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810102144.51=
+663-1-phucduc.bui@gmail.com?part=3D1
 
-This issue has been addressed in patch 2:
-[PATCH v3 2/2] usb: chipidea: ci_hdrc_imx: Fix error handling when
-creating IRQ name
+
+Oh, it looks like this approach is correct.
+
+Option C (default-then-override, only look up the IRQ when pretimeout
+is supported):
+
+----------------------
+wdt->wdd.info =3D &qcom_wdt_info;
+
+if (data->pretimeout) {
+        irq =3D platform_get_irq_optional(pdev, 0);
+        if(irq < 0 && irq !=3D -ENXIO)
+                return irq;
+
+        if (irq > 0){
+                ret =3D devm_request_irq(dev, irq, qcom_wdt_isr, 0,
+                                                       "wdt_bark", &wdt->wd=
+d);
+                if(ret)
+                        return ret;
+
+                wdt->wdd.info=3D &qcom_wdt_pt_info;
+                wdt->wdd.pretimeout =3D 1;
+        }
+}
+-----------------------
