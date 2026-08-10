@@ -1,299 +1,200 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011059.outbound.protection.outlook.com [40.107.208.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F662314D37;
-	Mon, 10 Aug 2026 19:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786388630; cv=none; b=oDgxMNm8kP9GN84LqHzN13FB25du2Jdztcw02RH4VWqorJVO5Z/gm8rOPd13XWtg62XtR2MbkNzRhdXUymoJiqq5flCqbkdtuA6vv24/owbO3RqWYjs2pbhfxbCXrkC0WaxfEB8SGbdAl/B+uWAqPxZj6N7nVDtiv5in8A5xPyk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786388630; c=relaxed/simple;
-	bh=sFCoT7r+NYAnPUz6vI6B8bgUDEP1j4yEW7S+xuHVtz4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=I8irzT0CK0gnL/flDlHNcFFB1DLWE7o3/v5R7Q/SIMauwmBu72s/zguvILOdLFiCUFlU+6xMiJDydSR88uhA56t5yH1ZiY3RO+7jbK5ZfxDtJYfrGvI8bbSCoy6385WYEVfvIjWXRAGjIbLceCOal8yzwALnILuRWBeCWu/hYS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=VE0tSh3B; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B43FE36A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 19:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786389508; cv=fail; b=mWpdjWXH4Fuj0V36V5TyKRdxJDg4Ja0akQGA+FCrt3kADoSbMR5SgftvOZGbYo4CjNwj+pfz68Qmb9IeX7DJG/xcwU1opRfn9QuC9mimig1wobnFx0q520SLyzqoJHtNcx2Ip71EZpccENKN4YgVdTtwrJiok6+vA6oJ5XsHWi8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786389508; c=relaxed/simple;
+	bh=/jdbCL/biMG9AMgH+91W7uzBEk2/gJaAsK6qZ1q1UKc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=PBzoXoN44V8kIUsxLOHqk7HTEBCqLvVv3KvmEIrPciUFEiYn7fs+5OOUtfxUKLFbc7doXYHPcp63IptxhYcWj8d/OlLae7qwAPlLuRLjGC3Fjnlso2LElg/LxXjPJwRXImjxIAtkJkbcHfKsd0JWfL/OEsgsmAWDTaz9RBxXWnU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=VsCrapXw; arc=fail smtp.client-ip=40.107.208.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="VE0tSh3B"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67AJ2Re3614215;
-	Mon, 10 Aug 2026 19:03:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=QJoP3U
-	j5zQT8VzRvCrDqGdZLEcp8TUBfq7ck67xMpfE=; b=VE0tSh3BEHUa+Itj2L+twE
-	KiM5RkiNgkkrnSKx3a3PKumHQxX4iPmHNsNLl4k09/WDIOmKjaS4k0QIjfiNgkM1
-	yVxWQBfyTbeHjtW7EUW5OWBOVvXbwHGGluuOTGE1lJKE17CnN5QV1V7YtYUQnEmx
-	43/ahIC2c7aE3aUo19JquvNo7tUSXZajqF0J+BIkZUdHS7DY42h9NIoEhVcuurii
-	AV8FClX8ByqOhSYKua5JnF/RVv6+I1kWmgG1bXqzal8xEi0UkBZEXZb0u3l+zbZo
-	WnRW+KRxzn3vd1LyAEektm3/cVOo3xWFtUB4SK9JjwVuh2HVv0d3T8rpTuKrsueA
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjysnad-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Aug 2026 19:03:48 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AIQGgU026175;
-	Mon, 10 Aug 2026 19:03:47 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxespx7vc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Aug 2026 19:03:47 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67AJ3krb29688532
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 10 Aug 2026 19:03:46 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 520CC58056;
-	Mon, 10 Aug 2026 19:03:46 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9DCBB5803F;
-	Mon, 10 Aug 2026 19:03:45 +0000 (GMT)
-Received: from [9.61.71.153] (unknown [9.61.71.153])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 10 Aug 2026 19:03:45 +0000 (GMT)
-Message-ID: <86b5707f-7aaf-4dd0-95ac-604f20f5c158@linux.ibm.com>
-Date: Mon, 10 Aug 2026 15:03:45 -0400
+	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="VsCrapXw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cLMpU25RBIExE60nO8mSM8mU8gPgkpyPH7wyVNkKy6MbnGxhElPNhcR0WTLIxLbNbo5aDmpwheRj7ds6S09jXanLWrdIJ+DYaGTt+yAfftCYJUxRiStRCmV4C3Mshk0kXnXSUsS/tPsndmdzoj01ZrdmNAoEsDoQGe9JhNzyxHDlHdDbPgOEse2+xBuN9axY/0ZV05LrbpC1H7cnzcpXNss5DQ+9TMXnkGmwGmuGnrWc1NCpCmXHasSaYTxjXOz6tRFy4zt04p/xarpI2hiZOxQQkaw9EfxhP3sZkvgCynnxMizf44IworTMMMhyTiN1Ag5nClnJOdEHwFE8Rm2fng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xhnnGagoXLv43rovzazQFWVTeOq29LfINPFy1yJ9T4Y=;
+ b=Bz00b1lkSUnka4EZEpj+exzjW+a8fUAEK5MGkbYdttcCofhGigYtKbZMMZJtQD417R10m4LTgBks+BqvsXRM31xk1xfLXUc2V/Joc/dHnKsDXcMOCEzoFv+9X/27nUtUdlxY2tt2Xgwj97ogbweh4lHc9UTujzuCskEsyJ/Gj3T97F1+YEzbLFzei4Jzh6Sk3Wa2Yp/zQSCd5zvJds8+nzDLMCiM9f9Qly3xarcLbNajHDH2VfT/duRFOnF9TBeR/YGk0AP70IE4bBIweyF73T/HDYVRBHbkzhDIp+o0QwIZ/WdGm7UigGnhlIvmPX9uqUumF/Tt9ZppouFHQagAyQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
+ dkim=pass header.d=altera.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xhnnGagoXLv43rovzazQFWVTeOq29LfINPFy1yJ9T4Y=;
+ b=VsCrapXwsHetix1VPyVlP0WMiXTC2SZnFsaaP/S/Wq5nLfdgxp2guBhsErRNX3p4D+2K3ZF5Dl18EPbZrz6IxYJ+o7jYp6rlhLlWiNvok64XmV0sEjbH3geM5dKeRl00con1jcx3+QmNChxMq8Dbnqie3tHoK66bgSdE2Vo1IPGGqgk8thIr+hci4s2N4844GPNaFd/MFvD2+Ec/ChFcxVIJ59nsXVb1RB+wYXWe6Z38EX0D79U/s5GIO/8zNOLvgsd/8/jWPmqPfnV15fhpcx/+WaMSfHzz5dTn0PIlWWsFBmbRfcD2nLzeD+FSewkZ/a6sxxo/cCxLW6uzHU1dwQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=altera.com;
+Received: from DM4PR03MB6208.namprd03.prod.outlook.com (2603:10b6:5:39c::19)
+ by BLAPR03MB5553.namprd03.prod.outlook.com (2603:10b6:208:285::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
+ 2026 19:18:23 +0000
+Received: from DM4PR03MB6208.namprd03.prod.outlook.com
+ ([fe80::2216:93ef:67b:9e04]) by DM4PR03MB6208.namprd03.prod.outlook.com
+ ([fe80::2216:93ef:67b:9e04%3]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
+ 19:18:22 +0000
+Message-ID: <0163efe2-1db2-4fa8-adf8-fe1e622ea637@altera.com>
+Date: Tue, 11 Aug 2026 00:48:14 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/8] dt-bindings: arm: altera: add Agilex5 SOCDK eMMC
+ board variant
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260810190025.25045-1-tanmay.kathpalia@altera.com>
+ <20260810190025.25045-4-tanmay.kathpalia@altera.com>
+ <20260810191040.535A31F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Kathpalia, Tanmay" <tanmay.kathpalia@altera.com>
+In-Reply-To: <20260810191040.535A31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5P287CA0243.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1ae::17) To DM4PR03MB6208.namprd03.prod.outlook.com
+ (2603:10b6:5:39c::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] s390/vfio-ap: Fix stale do_remove flag across
- iterations in vfio_ap_mdev_cfg_remove
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>,
-        Janosch Frank <frankja@linux.ibm.com>
-References: <20260808170712.839066-1-akrowiak@linux.ibm.com>
- <20260808170712.839066-2-akrowiak@linux.ibm.com>
- <20260808174955.163381F000E9@smtp.kernel.org>
- <d557661d-089e-42e0-acc1-dccf78cfdee4@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <d557661d-089e-42e0-acc1-dccf78cfdee4@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE2MiBTYWx0ZWRfX6xV2a6dp6+rr
- WwXF/Nh0NGNE+IxxMCgtoSQcn5XjahorCanmsXGT20AbJMRMjPNQeKoCkAfYkPvi7v9Qb+pdRlu
- GD53LDnTQmlVhKwIq5CSSqyM39aXpBJVK7d1Y/SaMLVHgZ2xQC1Osr9y/H9jFMeU1c0vQVR2V0D
- dsthcMHBqLWDXr2lBIyTqzN27W3TCXcmZTSOJDQoaQ5QUC9sORf7gP1LFA54oPsxY5n52wtjM7G
- SMWsJ5g5kUVkSVC6bajcdRet/yCOUmcSNDzAKtpzvMhDW+3dv1vFUT233KKR1zyJnEQm2M/3P4I
- cdmBim3PPOPH8vqW7Yauq/UFpbkEgSsQ2lA2UTXmf2YH1cVg9n962k4ESJyyw6CVILcpLs983NP
- oJYs/Uz871J33viAD7cSyX1xOESopQYhSh9Ck+71E6qlY6a4bpWxazhioqN48RbyK1r/sbsA6m0
- OIIovD31TlDAkDNBoSQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE2MiBTYWx0ZWRfXw3Sj6uVcJeja
- vKnlkKCdiTsUo7ruuE8ci3xGqpOzFHUhIx/FV+2Fe/ufBjzkyP7SvIeW47WOXtG390TIYQeQqxM
- 7ZnotTusGJ8FI8dKPlp5vt7Vq4ne8Aw=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7a2094 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=xj8cl9uyBNh-16ABMOwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: U3x6Bbjk9-EcGu3vluWuO5k3HjpjrXba
-X-Proofpoint-ORIG-GUID: U3x6Bbjk9-EcGu3vluWuO5k3HjpjrXba
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_05,2026-08-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608100162
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR03MB6208:EE_|BLAPR03MB5553:EE_
+X-MS-Office365-Filtering-Correlation-Id: f994b6fe-f7de-496f-7a54-08def71424ee
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|11063799006|56012099006|10067099003|4143699003|22082099003|18002099003|55112099003;
+X-Microsoft-Antispam-Message-Info:
+	bQ+XRAzMGZFvnYY9+HPOQvcQe1wvFp2f0kIrD3ol9uksZ2L8g3PgzHB1r1vExZ+8fWQBmg93T+ohWu6BKxAWXJD4nq/akJ6Q/JeHeBiUfch+RogijvqFbr8qDtk5m5O49UmzLoYAZTntiQYs2134Ba03qCcdazr6Q5N8AoVKJsfzBjKqWZGcm5zHd9prKbasuDsskZbIqYrpwn4wBjGPjBkgkNL5SoF5R3Q41Ox5O4WFTdxHuG4zG59wLjIPrSLFJIYmw9FSMie448eW4yRWdWJeyJtuqOOtXMYyAzF9vGz4uo0CSzZ2SYM6evQ6wx+jtNCr3n5b9/o0psVll4CeatoSr5Ffv+zUmp9W85ukxmnpNH7rG0lzHsaDGDVLE7w38mn4P7TM3mvMSMLs9Q2PUq5fAsw7x6iiHQA74teIKxVDVgClDLnITuxWJVnv6TUttvWKseDrOr8c/B4AxIwK8rY+DY87wHcDjbVJyrQ/+1gg/DhQUkyXR1fcHiK1kEuBNY2zWZLlFk2ULQKSxJYRqlq2OyQu/x6fP7UjSA72Dqkc9V6iheFOkv/Lmr7d4lDqld6pBQlgCInhS/g3e1UWPFRgFrPpW5RBQSRru0wa/dr9wDLW//jF1mNpZhKnZ9zvdbLAIZEIReW1bOTdizw+PvvbhyIaOq1doSX16OeBYN4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR03MB6208.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(11063799006)(56012099006)(10067099003)(4143699003)(22082099003)(18002099003)(55112099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MjRTclRhR3I5dWl6a0dWTVRqQ0Zzc1d5bDVIc3pFTEpOdmRHU3Y1L1lCNGRq?=
+ =?utf-8?B?R2ErQjhVOFFnVnRYZEVVdUlFdmRiWFVOQzAvaXFZUm94bDF1dlpBNi8xcmxt?=
+ =?utf-8?B?d29YZ3R6clg5OFpLZUxua3BXTSs1OExCdjdtZk4razdSdDExdUxvWFo3R0RS?=
+ =?utf-8?B?Z3Y2OG5nVUR3bHFrcStaQzR3Q1hsQUxqTkRnTkp0MWpBTkFmV3AvTkdPNm9y?=
+ =?utf-8?B?dTlTRy9zdENHRWU0RmtVeU93aDk1S0d3anZhZlRDNmU2aCt5QVhUYnBsVXlp?=
+ =?utf-8?B?QmdEbnhNYnBSYzBoRnVLVkFQRGJnZXNuU0szRmw5TGlUcFdXc2dXYjJMZFVp?=
+ =?utf-8?B?Zm5QMkNxNjhsTVRCZnUrKy80Smd2eWFvQ3FOdUwwbXdrUG82MWM4alJoUW1s?=
+ =?utf-8?B?RFFwVnJOZjVCWHNycnRJUTlqUE5oQWx6MjRqWkFtZEozbGpySlFrMkcrZW9F?=
+ =?utf-8?B?T28rNmprTE11U3Z3d1BVR2d1OFJsVUdiazJxRVdpaDFjbW1MRkU1a2w1bUp6?=
+ =?utf-8?B?ZU4rRWR4aW5PY09KaG5nRnVUUHdYY3Ztem8wVFVPdHQ5TDhEcEE3VVY4cDVu?=
+ =?utf-8?B?K1grLzAxOS9FNXVrUVB3QlVHSzM0Y3EwVkFreXEvRzFGZktIUytCZmJsQzhi?=
+ =?utf-8?B?U3RITTcySXVMcy9Tcmp5Z3A4azJsQ0xJa3BNV3AvOXhtQzM0UlVmZm5MWG1v?=
+ =?utf-8?B?WEgybFRpRVlwL0xzMWxLWUdXZTVsQlMzbERTeGVBWmtuT3hzbi93Ymk1bVRP?=
+ =?utf-8?B?Q2hrdGJ5NENSblB1Wko0bHhGYWgrVWdmZCtQWFFGTStRdzBUVzQxNTlwQ3Zw?=
+ =?utf-8?B?a2ZnWmVlNE1hU2FJUXBHUVJvZW93TWJtbFloek1lKys1VHBLM0lQelZXMTZ5?=
+ =?utf-8?B?d2ZIcGhsTEF2K2ZnQVFIZGNGUzhIeVNQcWZ6VjZtTnBpRnN0WWJGZXY0V3Q3?=
+ =?utf-8?B?Y0h3VUJhYVdNdEM3NUNkOGpWeGVkRmtrd0FKMTcrVWFURFY4cExiYmxqWmxj?=
+ =?utf-8?B?T09wYk12QTRWMHd0cWpaMDVpbUw1QWQyWFJORkd5OXd2TlpjeHU3bFgzenFZ?=
+ =?utf-8?B?T1RMNmV3ZitXZnVvUzZnNW5iNzNTRzZkOEZaTmxOSmZha3NycitmQ2Vwektq?=
+ =?utf-8?B?Tnk3RXg1c1d4QXEvTmNpUW12STVVbGRrWmU1TWx1TGRSakRqVUZMaWd6dkk2?=
+ =?utf-8?B?VmZ1Wm1mSEFGWUMxSUM3ZzJoWDNnZlkyYjZ3anZpYzFnT0NrRFloenVTNHFT?=
+ =?utf-8?B?a3lCVE9JSE9WdHd1MjRXcXlCZ0dtUzJsZTc5N3gxWVljV2M4U0NQSlBNV3JQ?=
+ =?utf-8?B?S1doWE5iRCtNVVRIY3hhS0wzblN6eGh2enk2OXFJNlpRc3lOUG1oaW42cXpz?=
+ =?utf-8?B?c3lxWENNRmpiLzFYUmRUbVNxbEVJS1RxV09uQVdrV1RCMVNFMFFtVW1NMzlk?=
+ =?utf-8?B?a21SMzE4TUpXUXBCNnF6d0YwM21IMDlWY1ptbnI1MlBOcUdqQzlYWkVJWSs4?=
+ =?utf-8?B?OW42dEtFMXhKUWh3bzFQYWsxSGRBa0NVdWZCdm4rOWdEZFM2RWp4UjhOYjhD?=
+ =?utf-8?B?SU9sK1pKWm52RXQvejlWbmJ5ZDVITGwxMlZuS0xvaE5MN3hTVVd0Tk1kTFE5?=
+ =?utf-8?B?OHNIeFI1dFFlOExlR3hSdDRvbEgremRhcFpjcmZPUnZ6MjZhWVZsaHJKdEs0?=
+ =?utf-8?B?cGpYNVN4NS9zS05tUG03b09tNjJsTmZDN1dKV1ZjNi9DZUFXZjYxTVpINU5M?=
+ =?utf-8?B?M2Z5dit4aWJqWXBjdjJhczJtWWFmbHNwNWlyWlBuNkk0MlA4VFdvbks3Q1pa?=
+ =?utf-8?B?blVIM25QTE9CZnA2NUFmTjhnRUtuMmp6cWhiZVo0a1QrZWlXSGhIdU9yVk5a?=
+ =?utf-8?B?MlBydSt2SHM3MjdtZlFFZXNCY2NvQ0xycGxWeDZlbDhtbVlRMFpDeVI3OEJJ?=
+ =?utf-8?B?dG5QZE13N0VCSkM0Ky84czZnSWhSU0s3b1E2bVE2ZVduN1RrRGlHQ0ZZcXdV?=
+ =?utf-8?B?NkUrcEx1Qnd6NmQ1aTVZME1yUEZwcG5HNFA1VjB0dFRrdEJjUU5aT1BOZGdl?=
+ =?utf-8?B?b2xzU21RcFNIVmd0SGFSSWxYTENSMjE5c2FHM21kS2t2ZVpxaUh0YTdVRlBp?=
+ =?utf-8?B?VjVKYjZ0MmxMaHdsNUZWbStKTExsVytLL09SZFlXU2tvTEEzV0xmc0RGeEZn?=
+ =?utf-8?B?YU1OY2dYY0U3dUMzbU5vRDVoSHFOZUk0ZEZHb0J3L1E1a1gvQ2xvRjBmcHRP?=
+ =?utf-8?B?V3JaSWFJL1JBbGNkU1ViYW9kVVNZTEcwbXpUazFrMnFvT3JnTVQ5T2lWYUh1?=
+ =?utf-8?B?RGlvT0t4WHpGSHpMZnV0YkNGYTdoQS9tbElTMkhGbTBoYmFoNnVIbERHMXFl?=
+ =?utf-8?Q?ictwNnB5NzyAimT0=3D?=
+X-OriginatorOrg: altera.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f994b6fe-f7de-496f-7a54-08def71424ee
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR03MB6208.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 19:18:22.7483
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: fbd72e03-d4a5-4110-adce-614d51f2077a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kmVCdhGtJDZ7q267hd6w+GIMuoGhYG4H0SnAqGCUm2sD3/yO2ilkyMSyKQMdRfXIP3gfxZuqmZh0JjJhpw6ytRDBeSqIUGt1S3+7HTXmOrQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR03MB5553
 
 
+On 8/11/2026 12:40 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Device Tree compilation will fail due to the undefined macro `COMBOPHY_RESET` in the `emmc` node.
+> --
+>
+> --- Patch [3]: [PATCH v4 3/8] dt-bindings: arm: altera: add Agilex5 SOCDK eMMC board variant ---
+> commit a686e27903fc966d624926fbeae5d10fa6638ad7
+> Author: Tanmay Kathpalia <tanmay.kathpalia@altera.com>
+>
+> dt-bindings: arm: altera: add Agilex5 SOCDK eMMC board variant
+>
+> Document the Agilex5 SoCDK with the eMMC daughter card, which uses the
+> shared HPS SD/eMMC host for onboard eMMC instead of an SD slot.
+>
+>> diff --git a/Documentation/devicetree/bindings/arm/altera.yaml b/Documentation/devicetree/bindings/arm/altera.yaml
+>> index 0b418d9d60dbd..ce3a8c1679e57 100644
+>> --- a/Documentation/devicetree/bindings/arm/altera.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/altera.yaml
+>> @@ -112,6 +112,7 @@ properties:
+>>                 - intel,socfpga-agilex5-socdk
+>>                 - intel,socfpga-agilex5-socdk-013b
+>>                 - intel,socfpga-agilex5-socdk-debug
+>> +              - intel,socfpga-agilex5-socdk-emmc
+> [Severity: Low]
+> Does this new variant introduce a regression when compiling the emmc node in
+> socfpga_agilex5.dtsi?
+>
+> It appears that Device Tree compilation will fail due to the undefined macro
+> COMBOPHY_RESET in the emmc node.
+>
+> In arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi:
+>
+> 		emmc: mmc@10808000 {
+> 			compatible = "altr,agilex5-sd6hc", "cdns,sd6hc";
+> 			...
+> 			resets = <&rst SDMMC_RESET>, <&rst COMBOPHY_RESET>,
+> 				 <&rst SDMMC_OCP_RESET>;
+>
+> The resets property uses the COMBOPHY_RESET macro which is not defined in
+> dt-bindings/reset/altr,rst-mgr-s10.h or anywhere else in the tree. Because
+> the C preprocessor leaves undefined macros unexpanded, executing the dtbs make
+> target will result in a syntax error when the compiler expects integer cell
+> references.
+>
+> Should this macro be added to the reset bindings, or is a different reset
+> intended here?
 
-On 8/10/26 10:01 AM, Anthony Krowiak wrote:
->
->
-> On 8/8/26 1:49 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 4 potential 
->> issue(s) to consider:
->>
->> Pre-existing issues:
->> - [Critical] Unconditional dereference of `matrix_mdev->kvm` pointer 
->> leading to host kernel panic.
->> - [High] Concurrent modification and traversal of 
->> `matrix_dev->mdev_list` without consistent locking.
->> - [High] Assigned control domains removed from the host are not 
->> unplugged from the KVM guest due to incorrect bitmap calculation.
->> - [High] Unplugging the last assigned AP resource from an mdev fails 
->> to update the KVM guest configuration.
->> -- 
->>
->> --- Patch [1]: [PATCH 1/5] s390/vfio-ap: Fix stale do_remove flag 
->> across iterations in vfio_ap_mdev_cfg_remove ---
->> commit bb84df1768da7fbde04fb6494c22c41ed756bd46
->> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->>
->> s390/vfio-ap: Fix stale do_remove flag across iterations in 
->> vfio_ap_mdev_cfg_remove
->>
->> This commit fixes an issue in vfio_ap_mdev_cfg_remove() where the 
->> do_remove
->> flag is incorrectly accumulated across iterations. It ensures the 
->> flag is
->> properly assigned on the first bitmap operation for each mdev.
->>
->>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c 
->>> b/drivers/s390/crypto/vfio_ap_ops.c
->>> index 44b3a1dcc1b36..845c86ba8bc30 100644
->>> --- a/drivers/s390/crypto/vfio_ap_ops.c
->>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
->>> @@ -2603,15 +2603,15 @@ static void vfio_ap_mdev_cfg_remove(unsigned 
->>> long *ap_remove,
->>>       DECLARE_BITMAP(aprem, AP_DEVICES);
->>>       DECLARE_BITMAP(aqrem, AP_DOMAINS);
->>>       DECLARE_BITMAP(cdrem, AP_DOMAINS);
->>> -    int do_remove = 0;
->>> +    int do_remove;
->>>         list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, 
->>> node) {
->> [Severity: High]
->> This isn't a bug introduced by this patch, but does this code risk list
->> corruption or following invalid pointers?
->>
->> The list is being iterated without holding mdevs_lock across the 
->> entire loop
->> (the lock is acquired and released inside the loop). Concurrently,
->> vfio_ap_mdev_probe() adds new mdevs to the list while holding only 
->> mdevs_lock:
->>
->> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_probe() {
->>      ...
->>      list_add(&matrix_mdev->node, &matrix_dev->mdev_list);
->>      ...
->> }
->>
->> Could this concurrent modification and traversal crash the host kernel?
->
-> No. The call stack for this function is:
-> vfio_ap_on_cfg_changed -> vfio_ap_mdev_on_cfg_remove -> 
-> vfio_ap_mdev_config_remove
->
-> In vfio_ap_cfg_changed, the matrix_dev->guests_lock mutex is taken and 
-> held for the duration
-> of the function. The guests_lock guards access to the 
-> matrix_dev->mdev_list. All functions
-> that add or remove ap_matrix_mdev objects also take this mutex, so 
-> there should never be
-> concurrent modification of the list.
->
->>
->>> mutex_lock(&matrix_mdev->kvm->lock);
->> [Severity: Critical]
->> This is a pre-existing issue, but can this unconditionally 
->> dereference a null
->> pointer?
->
-> It can; however, the problem is fixed with patch 02/05 in the patch 
-> series in which this patch is
-> included.
->
->>
->> When an mdev is created, its kvm pointer is null until it is attached 
->> to a
->> guest. If a host AP configuration change occurs while an unattached mdev
->> exists, this unconditionally executes 
->> mutex_lock(&matrix_mdev->kvm->lock),
->> which dereferences the null kvm pointer.
->>
->> Could this lead to a host kernel panic?
->>
->>> mutex_lock(&matrix_dev->mdevs_lock);
->>>   -        do_remove |= bitmap_and(aprem, ap_remove,
->>> -                      matrix_mdev->matrix.apm,
->>> -                      AP_DEVICES);
->>> +        do_remove = bitmap_and(aprem, ap_remove,
->>> +                       matrix_mdev->matrix.apm,
->>> +                       AP_DEVICES);
->>>           do_remove |= bitmap_and(aqrem, aq_remove,
->>>                         matrix_mdev->matrix.aqm,
->>>                         AP_DOMAINS);
->> [Severity: High]
->> This is a pre-existing issue in vfio_ap_mdev_cfg_remove(), but is 
->> this bitmap
->> calculation correct?
->>
->> Right below the quoted code, cdrem is calculated:
->>
->> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_cfg_remove() {
->>      ...
->>         do_remove |= bitmap_andnot(cdrem, cd_remove,
->>                          matrix_mdev->matrix.adm,
->>                          AP_DOMAINS);
->>      ...
->> }
->>
->> This evaluates to cd_remove & ~(matrix.adm), which yields domains 
->> removed from
->> the host that are explicitly not assigned to the mdev. Assigned 
->> domains that
->> are removed from the host are omitted and therefore not hot-unplugged.
->>
->> Could this allow a control domain removed from the host AP 
->> configuration to
->> remain improperly assigned and accessible to the KVM guest?
->
-> This problem is fixed with patch 5/5 in the patch series in which this 
-> patch is
-> included.
->
->>
->> [Severity: High]
->> This is another pre-existing issue, but does unplugging the last 
->> assigned
->> AP resource from an mdev fail to update the KVM guest configuration?
->>
->> In vfio_ap_mdev_hot_unplug_cfg(), do_hotplug is determined using 
->> bitmap_andnot:
->>
->> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_hot_unplug_cfg() {
->>      ...
->>     if (!bitmap_empty(aprem, AP_DEVICES)) {
->>         do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.apm,
->>                         matrix_mdev->shadow_apcb.apm,
->>                         aprem, AP_DEVICES);
->>     }
->>      ...
->> }
->>
->> bitmap_andnot returns true only if the resulting destination bitmap is
->> non-empty. If the last adapter or domain is removed, the resulting 
->> mask is
->> empty, bitmap_andnot returns false, and do_hotplug remains false.
->>
->> Would this skip the APCB update, leaving the KVM guest with its old 
->> KVM CRYCBD
->> configuration and retaining access to an AP resource that was 
->> successfully
->> removed from the host?
->
-> The logic here is correct. aprem is a bitmap specifying the adapters 
-> that have
-> been removed from the host's AP configuration. The bitmap_andnot will 
-> return
-> true only if the matrix_mdev->shadow_apcb and aprem and therefore the
-> intersecting bits have been removed from shadow_apcb. If there is not
-> intersection, then no bits will have been removed and the bitmap_andnot
-> will return 0, in which case there is no need to make changes on the 
-> guest.
+This comment applies to patch 2/8 (arm64: dts: agilex5: add SD/eMMC host
+controller), which adds the emmc node.
 
-I am wrong here; a misunderstanding of the return value of 
-bitmap_andnot. See my
-response to patch 5/5 which mentions this same thing.
+COMBOPHY_RESET is already defined. It was added by:
+commit ab45ecfab540 ("dt-bindings: reset: altr: add COMBOPHY_RESET for 
+Agilex5")
+which is in mainline via the reset tree:
+   #define COMBOPHY_RESET        38
+in include/dt-bindings/reset/altr,rst-mgr-s10.h.
+
+That commit is not yet in mmc/next, which is why DT builds against mmc/next
+alone can fail. The dependency is called out in the cover letter and in the
+patch 2/8.
 
 
->
->>
->
-
+>>                 - intel,socfpga-agilex5-socdk-modular
+>>                 - intel,socfpga-agilex5-socdk-nand
+>>             - const: intel,socfpga-agilex5
