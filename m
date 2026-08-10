@@ -1,163 +1,121 @@
-Received: from mta1.migadu.com (out-195.mta1.migadu.com [95.215.58.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-181.mta1.migadu.com (mta1.migadu.com [37.59.57.117])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352CE3BB13D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 16:44:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E67542B75A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 16:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.59.57.117
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786380277; cv=none; b=n6G1g5UJ8yMkkbfH9s7Wiqp6JBM5wY93kkQeFHrLfy4JsyL+TwsmSVnf8Cr0GI0ihdKHvXVIC0vnzJVE/4kozpufUIUwcMkrYIjkxgrjkdn4yWbl/odjhCvvFCEyhOQciLxCzH7zqL8imnSmkHUusTZZYaW3RrX107Jn/bYjEuE=
+	t=1786380709; cv=none; b=pZPEYm3vob3Cae1gB2FpSKD+JgLcuUueYZ0XRrMDh2Xe/teCLbIG0WLpUHZwAQjY3RiugTnOet0G3ZwwhXTz4Ar5z0psuVNB8AUWd05xHMuge2l6ZcwZifLPqE4wHfDECRHr3OFUDiEn3hdYDh8hKVkgxc/xUz8v5TKhqK8fFp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786380277; c=relaxed/simple;
-	bh=P19N8uMlqnT83++aFQt+ZwhTQG1tlI0sXkg9DISendo=;
+	s=arc-20240116; t=1786380709; c=relaxed/simple;
+	bh=8UmLJhHODv+jWbG8zfMrUNGJVmHVQ4LZvVgODHsHICE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a7amXTsrC+T/HKhwWUihIjHOqtmEjf27+yTKCRnzAeVuxVLXvulfIZ+jNcKWhdPHOh0lpuiiSgsG7RGkoIzizxxruNNLq7EX78NPm/iR86mUTBsqWdGQajq6VHYOuKFGOszsE9SZKLYNfbyP+c5cfkmsH9IBm7orl2psIWBljOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Nt1DeoIk; arc=none smtp.client-ip=95.215.58.195
+	 In-Reply-To:Content-Type; b=IBYQJj8WSKjkOmgS58JA6awJC781qrrT/dTNw+z+uFFyQWqvuqghA7YbckFT4B19of0cNfAPnKR56+Lo2i6PWWGrt4ePLHHeupts0HW5gG81/khAdD2HZ/DjmYS+rpfqPXrF/df3eEzJRkQUw/h+UPWf6MTS77G2yGedD+DEcFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=MPgeTTck; arc=none smtp.client-ip=37.59.57.117
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Nt1DeoIk"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=P19N8uMlqnT83++aFQt+ZwhTQG1tlI0sXkg9DISendo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786380272; v=1; x=1786985072;
- b=Nt1DeoIkkiWKNbhm9Mdv5v6mHDa4yPhJEnApdfN+zvaRWk8Ytdgm200y4c8EjaFGvRc7npwY
- WklbULJD/FA73eKHNSBuI0r92cRA6BE8Vehf9nYrnwUgAbdbPCVCZwS0LbfbZK9OQNws4NzFHcm
- 8IbGcQ/EYvit0qE56zdzUDoA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::5:2f4a)
-	by mta12.migadu.com with ESMTPS id b1c0dccbab71e666;
-	Mon, 10 Aug 2026 16:44:32 +0000
-X-Migadu-Scanner: mta12.migadu.com
-Authentication-Results: mta12.migadu.com;
-	none
-Message-ID: <a3b12cca-05c3-4ee1-91b7-848aa97e409b@linux.dev>
-Date: Mon, 10 Aug 2026 09:44:22 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="MPgeTTck"
+Message-ID: <a3f40063-9142-4bb3-afc4-046b73f462ef@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1786380704;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bkF+nvzdOLAxOh+q6y8bPGgGWXsr3dD/p5QQC6oJDQk=;
+	b=MPgeTTck3/N5e29CxA/CmNTvIvib43Awx6Ekq7boNcKLJw8NDiY56ntnT0FvM0bnmlSMML
+	hThHEQFApY21vLa1v3LVVPrX43KexsruBbXuN0BWRrkJ9rZAKXUPVzqoOtRipWaj9QANoQ
+	/p3hcLNm3nddVefg4zJsMmRJcFj6Hq0=
+Date: Mon, 10 Aug 2026 09:51:27 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 07/13] bpf: Add verifier support for 16-byte
+Subject: Re: [PATCH bpf-next v3 10/13] selftests/bpf: Add C tests for 16-byte
  returns in R0:R2
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260808190322.1896580-1-yonghong.song@linux.dev>
- <20260808190358.1899615-1-yonghong.song@linux.dev>
- <20260808194120.31A171F000E9@smtp.kernel.org>
+ <20260808190413.1902293-1-yonghong.song@linux.dev>
+ <20260808192726.EBB0E1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260808194120.31A171F000E9@smtp.kernel.org>
+In-Reply-To: <20260808192726.EBB0E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
 
 
-On 8/8/26 12:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Kfuncs returning structs by value can leak uninitialized kernel registers or stack memory via struct padding.
-> - [Low] Multi-line comments do not follow the mandatory BPF subsystem style.
+On 8/8/26 12:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `aggregate_ret_kfunc_c` test will fail to load instead of gracefully skipping on 32-bit kernels when compiled with LLVM >= 23, due to a mismatch in `__SIZEOF_INT128__` definitions causing a ksym resolution failure.
 > --
 >
-> --- Patch [7]: [PATCH bpf-next v3 07/13] bpf: Add verifier support for 16-byte returns in R0:R2 ---
-> commit 655df23f6a36d32f4e8e39dbf37f70004e7dee82
+> --- Patch [10]: [PATCH bpf-next v3 10/13] selftests/bpf: Add C tests for 16-byte returns in R0:R2 ---
+> commit 34be80f3aa8159c8e9fb57e485947ec4dc335cca
 > Author: Yonghong Song <yonghong.song@linux.dev>
-> Subject: bpf: Add verifier support for 16-byte returns in R0:R2
 >
-> LLVM 23 added support for returning a value in two registers for an
-> __int128, or a struct/union whose size is greater than 8 but not more than
-> 16 bytes. This patch adds handling for returns greater than 8 bytes in
-> BPF subprogram returns and kfunc returns.
+> selftests/bpf: Add C tests for 16-byte returns in R0:R2
 >
-> Link: https://github.com/llvm/llvm-project/pull/190894
-> Link: https://github.com/llvm/llvm-project/pull/206876
+> This commit adds selftests that exercise a 16-byte return value passed in the
+> R0:R2 register pair. It covers __int128, 16-byte struct, and 16-byte union
+> returns. It also adds tests for __int128 and 16-byte struct returns from a
+> kfunc, with bpf_kfunc_call_test_i128() guarded by __SIZEOF_INT128__.
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 0c070957a52b7..41c47bcc3b0a2 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/aggregate_ret.c b/tools/testing/selftests/bpf/prog_tests/aggregate_ret.c
+>> new file mode 100644
+>> index 0000000000000..e4317399d711b
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/prog_tests/aggregate_ret.c
 > [ ... ]
->> @@ -9849,8 +9870,21 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
->>   			return -EFAULT;
->>   		}
->>   	} else {
->> -		/* return to the caller whatever r0 had in the callee */
->> -		caller->regs[BPF_REG_0] = *r0;
->> +		/* return to the caller whatever the callee had in the
->> +		 * return register(s)
->> +		 */
->> +		for (i = 0; i < nregs; i++)
->> +			caller->regs[ret_regs[i]] = callee->regs[ret_regs[i]];
+>
+>> +static void test_kfunc_c(void)
+>> +{
+>> +	struct aggregate_ret_kfunc_c *skel;
+>> +	bool supported;
+>> +	int err;
 >> +
->> +		/* R2 carries only the upper half of a register pair return
->> +		 * value. A stack pointer must not escape the callee (see the
->> +		 * R0 case above), but there is no need to reject the whole
->> +		 * program for it: hand the caller an uninitialized R2 instead,
->> +		 * so that only a caller actually using the returned pointer
->> +		 * fails.
->> +		 */
-> [Severity: Low]
-> This isn't a bug, but do these multi-line comments follow the modern BPF
-> subsystem style? The opening /* typically needs to be on its own line.
-
-Will fix in the next revision.
-
+>> +	skel = aggregate_ret_kfunc_c__open();
+>> +	if (!ASSERT_OK_PTR(skel, "skel_kfunc_c_open"))
+>> +		return;
+>> +
+>> +	supported = skel->rodata->has_reg_pair_ret;
+>> +
+>> +	/*
+>> +	 * Where the JIT cannot hand the second half of a >8-byte kfunc return
+>> +	 * back in R0:R2, bpf_add_kfunc_call() rejects the call with
+>> +	 * -EOPNOTSUPP. Asking the kernel keeps this test free of a list of the
+>> +	 * JITs that can, which would have to be updated as the rest of them
+>> +	 * learn.
+>> +	 */
+>> +	err = aggregate_ret_kfunc_c__load(skel);
+>> +	if (err == -EOPNOTSUPP)
+>> +		supported = false;
+>> +	else if (!ASSERT_OK(err, "skel_kfunc_c_load"))
+>> +		goto out;
+> [Severity: Medium]
+> Will this load fail with an assertion error instead of gracefully skipping on
+> 32-bit kernels when compiled with LLVM >= 23?
 >
-> [ ... ]
->> @@ -10747,6 +10781,18 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
->>   	return 0;
->>   }
->>   
->> +/* Mark the register(s) holding a @size byte kfunc return value as unknown
->> + * scalars. Both halves of a register pair are treated the same way.
->> + */
->> +static void mark_kfunc_ret_regs(struct bpf_verifier_env *env,
-> [Severity: Low]
-> This isn't a bug, but here is another instance where the multi-line comment
-> might need the opening /* on its own line.
-
-Will fix in the next revision.
-
+> If the host kernel is 32-bit, bpf_testmod is built without __SIZEOF_INT128__,
+> omitting bpf_kfunc_call_test_i128 from the module BTF.
 >
-> [ ... ]
->> @@ -13223,10 +13269,25 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
->>   	}
->>   
->>   	if (btf_type_is_scalar(t)) {
->> -		mark_reg_unknown(env, regs, BPF_REG_0);
->> +		mark_kfunc_ret_regs(env, regs, t->size);
->>   		if (meta.btf == btf_vmlinux && (meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock] ||
->>   		    meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock_irqsave]))
->>   			__mark_reg_const_zero(env, &regs[BPF_REG_0]);
->> +	} else if (btf_type_is_struct(t)) {
->> +		/*
->> +		 * The returned struct comes back as raw register bits modeled
->> +		 * as an unknown scalar, so it must contain only scalars:
->> +		 * otherwise a pointer field would be laundered into a scalar
->> +		 * and escape provenance and reference tracking.
->> +		 */
->> +		if (!__btf_type_is_scalar_struct(env, desc_btf, t, 0)) {
->> +			verbose(env,
->> +				"kernel function %s returns %s %s that is not composed of scalars\n",
->> +				func_name, btf_type_str(t),
->> +				btf_name_by_offset(desc_btf, t->name_off));
->> +			return -EINVAL;
->> +		}
->> +		mark_kfunc_ret_regs(env, regs, t->size);
-> [Severity: High]
-> Could this leak uninitialized kernel registers or stack memory via struct
-> padding?
+> However, because the BPF program aggregate_ret_kfunc_c.c is compiled for a
+> 64-bit BPF target, __SIZEOF_INT128__ will be defined, and it will
+> unconditionally reference the bpf_kfunc_call_test_i128 kfunc via the
+> bpf_testmod_kfunc.h header.
 >
-> When a kfunc returns a struct by value, __btf_type_is_scalar_struct() checks
-> that the defined members are scalars, but it doesn't appear to check for or
-> enforce zero padding.
->
-> Since mark_kfunc_ret_regs() marks the entire return registers (BPF R0 and R2)
-> as initialized SCALAR_VALUE based on t->size, wouldn't a BPF program be able
-> to read uninitialized padding bytes left by the native C compiler?
+> During aggregate_ret_kfunc_c__load(), libbpf will attempt to resolve the
+> kfunc, but since it is missing from the 32-bit kernel's BTF, it will fail and
+> return a relocation error (such as -ENOENT) rather than -EOPNOTSUPP. This
+> would cause the ASSERT_OK(err) check to fail.
 
-We are fine here. The return value will do proper sign/zero extensions.
-Seehttps://reviews.llvm.org/D131598
+To avoid complexity, the current implementation should be okay. The CI tests
+only for 64bit arch (x86_64, arm64 and s390x). Running selftests with 32bit arch
+may fail (or fail with other tests too).
 
