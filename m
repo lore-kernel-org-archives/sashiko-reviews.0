@@ -1,143 +1,154 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC563B14DE;
-	Mon, 10 Aug 2026 13:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D4F3DC4DE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 13:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786368007; cv=none; b=rk8r7bMwTyJFJXqIW/d+F0j322ctAlx85/lICS/BmAWhFFSxvgGDFIHA1jtTYdZf0+o3qIXddWTMILHCCH1crL5RdkSS6CNETse3QCGyJ1j7mLtrJUCZlZtW4KfJXLJtx2Fy/4HoQphvS9NnqOVfD6GtICUypHmIA7jwKUWU4UI=
+	t=1786368086; cv=none; b=PYXfL/nJg5e1RUg94WIwaiX3ssy7bExWVGJ8drsq2yuUz7z1/z4WfN1hF//EJYTOgZebzTiTtpfF+cJHgS9VjnpUV76sQZXl0fl3AKRUja6GWEQ5ThqPVfDv2vjd2UV2zP6Rh1on2zZTvsFUDdCRQ+g9CcQxR0Pc/jHGr7ZCv6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786368007; c=relaxed/simple;
-	bh=23n7xNC0wK5ZUHggYjdx8rmCopX+e5uhX04mNc2+sd4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Du9ISgUUc5+soVYZE63iv9X14y+sN5K5ytmWbGaw/Z5Z5iefW1KGAwmh/saXzOJx+gb8AbK8WCCTASKWi5SMX0Z15a2lEpE9q6CmUEsEh4wumvwTcT6VP+nwLq3zK2zgsKRbaQlAbkqI1LddFBsvrQKgM0fdqyPqTCrNMYVoia4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bsI5BaBH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786368086; c=relaxed/simple;
+	bh=Jritruhw88V157bsaVjUyVKBcWQHYkBHQchXkcJBv5s=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=YX7AWlc7L5e6UG/hFiwm3oIrLADPlvWQuD2h2Z/Qk40T1LMIGdcFH5XvAYgMWTr6f1LtNskpgyzXOmdkuBJzIm8FB56Tm2Tcj7Bvy9nOv440dNn7o4h0ccMMmAr8e26frV7IWRQGlWekWuLOiT9xUmKaLLCJfaDV5PqtetKkRPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CbR/wRsT; arc=none smtp.client-ip=209.85.128.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bsI5BaBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D1F1F00A3A;
-	Mon, 10 Aug 2026 13:20:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786368005;
-	bh=CWZbcJZd01Rh3SjqaHYZ8Ee+dXAZQOE2onsgdhR5pbc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=bsI5BaBHTmDAgytN/JS299plhBl85drxk50UvEYDr+Azx2jePdMB1s7GsiN+BFxDJ
-	 2cLXdBAoWav1pW8cU5bGpXwYdKknihwjuy0Z+yvb0aQVijJQKFqdMK8yvikr24VTr6
-	 aw6zCVkEa0ucldtCWjSK/2ddK6LFTSIzHVCx+3OwE+X1Iqas3Fmr9J5Yyn335S9FYy
-	 41nZnmSUgxSj0TCFk5kE+4lRZ2VN/HzsTPpchKFxYFx8tuZ+/ab3ljZs7oijdNnLwv
-	 7w8dQXwnqRyK+IQhgxMlAMbOFe3ewlq27r/t6ZuCI7juFDfLOkKBcsE6zWJizoTSQ/
-	 jBvbKOvZEkxDg==
-From: Puranjay Mohan <puranjay@kernel.org>
-To: sashiko-reviews@lists.linux.dev, chenyuan_fl@163.com
-Cc: bpf@vger.kernel.org, Puranjay Mohan <puranjay12@gmail.com>
-Subject: Re: [PATCH bpf-next v2 3/3] bpf, arena: check range_tree_set return
- in arena_free_pages and arena_free_worker
-In-Reply-To: <20260810100047.946191F00A3A@smtp.kernel.org>
-References: <20260810094634.2723213-1-chenyuan_fl@163.com>
- <20260810094634.2723213-4-chenyuan_fl@163.com>
- <20260810100047.946191F00A3A@smtp.kernel.org>
-Date: Mon, 10 Aug 2026 14:19:58 +0100
-Message-ID: <m2ecg66rk1.fsf@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CbR/wRsT"
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-496bbcf7d1eso13108475e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 06:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786368084; x=1786972884; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=NUXsdBwMwxI/nd8pDWWxjP+P4ja3jy+HCgssAFJhmgg=;
+        b=CbR/wRsT5od2T8ZzVx6vT+CvheVXxQxC7tuL1N/aYTl6eYPFe+8J9VPDnIiET2CGuk
+         jcK0zxTUynLI9vv9uGObHmxaoMGV3gh1Zem0QCjsAqwcJP8Gkng47ZEtYVI+hGlgDOaf
+         8NCU6HQbMSytbIHRRBrxukvH6EA2LCSsVW5RJbw43fILkNzswzk9CLaV19hNopfmLiFU
+         6fD6tjURuXKtCerINrYxcg+gh+ATpxSFbv0Lr3lC7d8UtXvmyBPkjFplxxR6sUmfQAtw
+         7oz+FcWATk+Kjn7OOKLcoZq5dprGH6XYmefO2ep5EUJegxW66SbN3BXW3GAiskUi1XQB
+         bSMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786368084; x=1786972884;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NUXsdBwMwxI/nd8pDWWxjP+P4ja3jy+HCgssAFJhmgg=;
+        b=Bk6ER8Dp/92qsOCh+6iZ26LA2dSNaq2QTBgjC+vF8eRGF2lXVqVr5NYJhpph3gZzu/
+         XWf6t4F80jAaofMrbdz3kzCxTLT53ClKTITmecKDndTBxZCAV/i552xosIe63p8wgksN
+         Ikb6UsPhNqUqXqrrwOJM8+qB+dE21Q6PNN++RH6FrWGyf3pLBOaW/fNhYuw0hAZjxSxe
+         IHMaHBfSo2d4GckspkxRjEVdo/2tI2FUe8SRiV5wmKuvuR+ViCij2gYPN7NninyWyJ6b
+         NNqK+dt3iPWGE3YsK/oWMkpFqmv+TJsfVhn693LV891OP9BOGYKQuQAZ9fDLYom+zU8F
+         1G+g==
+X-Gm-Message-State: AOJu0YxRXECY3oe+LoqTZFlsWz4N+GOgHdx5JY+dK0srR01t5gFvPYpM
+	QijmJ237JoPPiQizd86S9ODMIozqgAIdGQUTkNDwojr5xKkAOV6qAAYTyJNIWSe8RdrmkpghjWK
+	MR88ncw7QLQvoht7xr8JMXi1HjmkUEys4DgbJu4tYRpw8T27Ory2GwflRYd/JROL8MAMKZEa6T+
+	9JCnqWelsu8hzp305oejBLVoWyiUY6yWitGBYfBqQy+XHjG7uzAztzqQm2mFZS6rPP
+X-Received: from wrwl10.prod.google.com ([2002:a5d:674a:0:b0:47d:fb5d:6130])
+ (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:4715:b0:493:cefc:d113 with SMTP id 5b1f17b1804b1-4996195884bmr227828785e9.5.1786368083378;
+ Mon, 10 Aug 2026 06:21:23 -0700 (PDT)
+Date: Mon, 10 Aug 2026 13:21:22 +0000
+In-Reply-To: <20260728122128.D0E831F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+References: <20260728121138.1103610-1-tarunsahu@google.com>
+ <20260728121138.1103610-10-tarunsahu@google.com> <20260728122128.D0E831F000E9@smtp.kernel.org>
+Message-ID: <9huzy0ee6rhp.fsf@tarunix.c.googlers.com>
+Subject: Re: [PATCH v4 09/11] docs: liveupdate: Add documentation for VM and
+ guest_memfd preservation
+From: tarunsahu@google.com
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, 
+	Oliver Upton <oupton@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
 sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] A race condition between dropping the arena spinlock and flushing the TLB allows concurrent reallocation and stale TLB access, leading to an information leak.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Mismatched kernel-doc section titles cause Sphinx build warnings =
+and missing documentation.
 > --
 >
-> --- Patch [3]: [PATCH bpf-next v2 3/3] bpf, arena: check range_tree_set return in arena_free_pages and arena_free_worker ---
-> commit d52cc998404e8cd2b8a37ee307bab5c587ce8336
-> Author: Yuan Chen <chenyuan@kylinos.cn>
+> --- Patch [9]: [PATCH v4 09/11] docs: liveupdate: Add documentation for V=
+M and guest_memfd preservation ---
+> commit a930d2f58a9edc06bdcfd10fb383e97d7fe3996c
+> Author: Tarun Sahu <tarunsahu@google.com>
 >
-> bpf, arena: check range_tree_set return in arena_free_pages and arena_free_worker
+> docs: liveupdate: Add documentation for VM and guest_memfd preservation
+>    =20
+> Add Documentation/liveupdate/vmm.rst detailing VMM requirements, scope,
+> ordering constraints, and kernel-doc inclusions for KVM VM and
+> guest_memfd preservation via Live Update Orchestrator (LUO).
 >
-> arena_free_pages() and arena_free_worker() now handle range_tree_set()
-> errors. arena_free_pages() aborts the free on error, and
-> arena_free_worker() moves range_tree_set() before PTE clearing so that a
-> failed tree update leaves the PTEs intact instead of freeing pages that
-> the arena free tree does not track.
+>> diff --git a/Documentation/liveupdate/vmm.rst b/Documentation/liveupdate=
+/vmm.rst
+>> new file mode 100644
+>> index 0000000000000..b8e8fb2b63c21
+>> --- /dev/null
+>> +++ b/Documentation/liveupdate/vmm.rst
+>> @@ -0,0 +1,107 @@
+>> +.. SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>> +VM & Guest_Memfd Preservation
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>> +
+>> +.. kernel-doc:: virt/kvm/kvm_luo.c
+>> +   :doc: KVM VM Preservation via LUO
+>> +
+>> +.. kernel-doc:: virt/kvm/guest_memfd_luo.c
+>> +   :doc: Guest_Memfd Preservation via LUO
 >
->> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
->> index 7b6847200b431..4597d9becb97a 100644
->> --- a/kernel/bpf/arena.c
->> +++ b/kernel/bpf/arena.c
->> @@ -881,7 +881,12 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt,
->>  	if (ret)
->>  		goto defer;
->>  
->> -	range_tree_set(&arena->rt, pgoff, page_cnt);
->> +	ret = range_tree_set(&arena->rt, pgoff, page_cnt);
->> +	if (ret) {
->> +		raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
->> +		bpf_map_memcg_exit(old_memcg, new_memcg);
->> +		return;
->> +	}
+> [Severity: Low]
+> Does this section title exactly match the DOC: title in
+> virt/kvm/guest_memfd_luo.c?
 >
-> [Severity: High]
-> This is a pre-existing issue, but does marking the range as free here,
-> before dropping the spinlock and flushing the TLB, create a race condition?
->
-> If CPU 1 calls arena_free_pages(), marks the pages as free via
-> range_tree_set(), clears the PTEs, and drops the spinlock:
->
->         ret = range_tree_set(&arena->rt, pgoff, page_cnt);
->         ...
->         raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
->
-> Before CPU 1 executes flush_tlb_kernel_range(), could CPU 2 allocate the
-> same virtual address via bpf_arena_alloc_pages() and populate new PTEs? 
->
-> If CPU 2 (or another CPU) previously accessed this virtual address, its
-> TLB might still point to the old physical page. Writes to this address
-> would then incorrectly modify the old physical page.
->
-> CPU 1 would then flush the TLB and free the old physical page to the buddy
-> allocator, potentially leaking sensitive data to other processes.
+> If the source file uses "Guestmemfd Preservation via LUO" without the
+> underscore, this directive will fail to find the documentation and genera=
+te a
+> Sphinx build warning.
+
+
+I will correct it. Good find!
 >
 > [ ... ]
 >
->> @@ -1004,11 +1009,18 @@ static void arena_free_worker(struct work_struct *work)
->>  		kaddr = arena_vm_start + s->uaddr;
->>  		pgoff = compute_pgoff(arena, s->uaddr);
->>  
->> +		/*
->> +		 * Mark the range as free before clearing PTEs so that
->> +		 * if the range tree update fails we leave the PTEs
->> +		 * intact, avoiding an unrecoverable state where pages
->> +		 * are freed but the arena free tree does not track them.
->> +		 */
->> +		if (range_tree_set(&arena->rt, pgoff, page_cnt))
->> +			continue;
+>> +VM & Guest_Memfd Preservation ABI
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +.. kernel-doc:: include/linux/kho/abi/kvm.h
+>> +   :doc: DOC: guest_memfd Live Update ABI
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the same race
-> condition exist here in the asynchronous worker?
+> [Severity: Low]
+> Does this section title match the actual title in include/linux/kho/abi/k=
+vm.h?
 >
-> The worker marks the range as free via range_tree_set() and drops the
-> spinlock:
+> If the source file uses "KVM and guest_memfd Live Update ABI", this misma=
+tch
+> will cause empty sections in the generated documentation.
 >
->         if (range_tree_set(&arena->rt, pgoff, page_cnt))
->                 continue;
->         ...
->         raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+> Also, should the literal "DOC: " prefix be omitted here? The directive
+> typically only expects the text that follows the prefix.
 >
-> Before iterating the list again to call flush_tlb_kernel_range(), this
-> seems to expose the old physical pages to the same concurrent reallocation
-> race window as arena_free_pages().
+>> +
+>> +.. kernel-doc:: include/linux/kho/abi/kvm.h
+>> +   :internal:
+>> +
+>> +See Also
 >
-
-Both these issues are real and I am working on a fix for these. I
-already saw them while fuzzing the BPF JITs through litmus tests.
-
-Will post the patch soon.
-
-Thanks,
-Puranjay
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728121138.11=
+03610-1-tarunsahu@google.com?part=3D9
