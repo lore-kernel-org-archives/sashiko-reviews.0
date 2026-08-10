@@ -1,178 +1,113 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A253E1233
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 14:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786370699; cv=pass; b=b8OHaf2YZLwZYJSTq+ClzsY5uKrJnqAmDt3di33+CwbMV2UpCupqqu4Y0VWMCMO/C16CLSY/2eoXh9o1IPnuDKUE+cj9IU0yixkNSpgnemDCRMQh+xjCAqjYb0TCiD/fB7jghiUQ8K5BgIp2Tt9oGbh4JWqWkZGHF9PipWwoGh8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786370699; c=relaxed/simple;
-	bh=aQefb5KGUUtBew9fCgJ/HSm0at5w/RtJ4qdMArEgBms=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dln2Q3BWyqGoJumDyHSKQD8mevUkz0egVfsA9X6tyY2TOVu1OH0r0lZb2Iy1IztCBD9ahQFspS5ezpLGvnkJuCjH2HoEu5r9xWFspetvLDGigv0ntEzTOc+qq7FCw7KCv+QZxEcgWzyfJzPQ/ok2FzvMl48ftcDVCkY5rb9dC8o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kXLAixZD; arc=pass smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C8A23815B;
+	Mon, 10 Aug 2026 14:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786370924; cv=none; b=Aws3jL1htVpNDQ61vF3WuPa5RjRWeZUeSOFNvMc7UpJfyKVlG13Uc672nzTEKQ+b8cF6N9txkOnjhWZTyY9CC9csDCy8PmsG0p2VZ6/HhXN8ILZk8jYvZrUgGuROmVt0nwGPxjxxS65HNLaQEX3lQp5dQtrXzfLnCcqRwkTDhkA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786370924; c=relaxed/simple;
+	bh=bY9jnm5MpICFZzA3sRD/Dhv2CEQ6Go2c0GfL7d9/014=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e8j1AuIGsG0bmznkO+QAxP+Esun1Xea7JPO8U6HX6bIuQGH00hu3VvpgSMR3piL53caw9xAmQzBEgEHs9qgh37n1sr+eIvBB+vCkJDfojel0sr4Nobc7AmpJhUykbURduf9jyh8LIaDPJd/M7cplg9wAkcEpLf1MMCP7q+iVyRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Z37WDsHG; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kXLAixZD"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c2020421077so300552366b.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 07:04:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786370696; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WzoYAZgDdpSS49my9+KzcL6SiY43ZubGIYGSJo/j2X1SeqYJIF/SsB692feiWtROha
-         HC9IELZNJW7vmVl1z5fBzV1wI+MjuRK0ijwevhQo5fGuej4lirtbszKq/FZgvRkIywQA
-         KuyLPAQ2yTo6hAniy+0oRzlSAAhN6stspExOU4QyC2ewq3bnm6zwVzv2bieHNmYZ7Omb
-         aaCrSSdDfbDH7fzIIts9OjhC2C5r+DYVJZ5jlfQcxVOv8a6R3heIHPvtHseupQhujBv8
-         V8tFgp52OXOnJrLwJzFCZpJhCuruh3MsoYNwRNwEKSpZtexGPkQ0LuJ/MTQAqpZZSXsX
-         /CmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=rXErR0QDrrFQK5fNUe5J6pmYbKM/4pwmkmKBefRuoz0=;
-        fh=LQLdSW01h2ROUwNK2N5+UwHQ+4lE93qNu55uGrsD190=;
-        b=qDGxi4vfrjivMmKL7+mCpGsu2D5YYNhpuAIl7xLg4iZVFZJb6HJGawaFjv1Ae7xpnG
-         6fijql3OXUROulljOYsVbu1PPvm97csMSFFxhETMBGQ4E5BFJyqt/1BWeIRt+/rS6dz+
-         jkO60cITNvSei8ccDXl1TEU72FjAVfMq6+HQO1147zrEvILUNIn9ji9JRtbvpzSm28GS
-         zNoLxk7vw6nY9xn6JRBbtKZqR8+Al8vo8CTS6KzzhrLQ1PSztWPdAOt0NHz9K8g/fJh+
-         4mKFz5Ic/EO+pTZxMVVMGKCrUfsdHyDB6uunm9s+JRYBzVFdzDWJkB+6k1QcBZ02KIVr
-         ZAkw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786370696; x=1786975496; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rXErR0QDrrFQK5fNUe5J6pmYbKM/4pwmkmKBefRuoz0=;
-        b=kXLAixZDMvxsRF7fBxjEpTrjK+fqz3ydNLa7G/RNUX9yPkmon5V/zrNFr5qtpQrpOB
-         mpm2YmY8Dz95mSdcAh+1ODy9RBY1b1G532KOOlxx4vovxj/GiNit0LJMiJYsBaQKCo8S
-         Im/2LF7KgRTf62FVkDOpPLulHzovucw1+gquvfCBqMOcta5Gh/hcS7oJskmcamKiWq35
-         Kjfb+56B3afyNidSfjdi2FmtkcmSAlqtVNR5gzMok9Ma9mmJtVXUzm/xfyfUq3yZ18cf
-         PQ26QidN2UoWWNYQColDLauOMBpI4vZVr0njRaDC1190uCRCwAXqKyYgy/EgNN2DQ8i1
-         nPDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786370696; x=1786975496;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rXErR0QDrrFQK5fNUe5J6pmYbKM/4pwmkmKBefRuoz0=;
-        b=izPJatTotInP1qMCYkUW/kajsbdQwNlSsLgS4+CBXvwXuMlUKw+IMqkA5DvqDnsZXX
-         4rqzEX7rKEzsDWW4OAey50R5B0BdL9pUsktU2P/MDQyf4G3h4EfyO/neQcQAaHZLLwJa
-         gyDVcRjdMjktMmWyhfeY+w3NiC0FO2yn1v/GPS4gnvO5M9rmHujj01E3znZMhFYJWmnl
-         mJv3R1ynTXEk0URoA6xcpc7/xxxHH6cHpukofUptxLtSBUYCeWg++/S7N5Kvvya/xYdT
-         e6qGJS3ViU/+W1E2LyDo4yvxIEiTAvz1xUYMn8RLJm2RYtotvsPuHvQF16qFRlJhjsag
-         zFog==
-X-Gm-Message-State: AOJu0YyqloCR47qXdsZMg1pxE/x99WP2fux9Uj7Fogmt0jmoSNiq6B3N
-	aKToSkpLeYd8e40HOK96UtF24k+48hg9axmC+O25dpzapKUQwxLIk/3xEC5ulI/pvhfBsz9nR4I
-	QA4td9sFWGRyVz7dFtljEpsXhyOxRxVkUZFN27TI=
-X-Gm-Gg: AR+sD13g1SHJ1hJCX0E7XXQNemPNsB/7tFBPqLjvAUXmmvg9a+Gea4EZ06KOJ2B94gD
-	XZxpiXyesSpP+1RFlOsPPgzLmpWhZE/z8bAQB172PiaF+CuGgiXzQxfeABZ6dC8A5Y/KYc1jW/V
-	dcTJmQ6ZMXqlCAVQil1CmIfTtUB7PSMGP6uAw2morHziIbj+xYdKwxm8WGfb6hyjQ9ei5UbaYGq
-	hgP4CAW1IcItNY04pIzZK23bTz3IxQ6f7183dIZ7jQeEkUOpS6xdjItX1vWU/11zu8JqtnMe+FV
-	xzCjpx79yKQOzZA0SVQKhfQBvHd2ALgP4uRCxnkBxLSmABK99nPbdM627hGjVY+kGLQ+yhg=
-X-Received: by 2002:a17:907:8e96:b0:c12:83c9:d41 with SMTP id
- a640c23a62f3a-c20c67e6fd9mr99288466b.12.1786370696006; Mon, 10 Aug 2026
- 07:04:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Z37WDsHG"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=Go60cGue0Q7Mg9cAdF5V7LfLoMWaOFxa4khyMQz0HgY=; b=Z37WDsHGbgOb1XnDXDfUjmFrKJ
+	CMVqpq4/KDsPIg0p2NEccwzYzWvY3aHttvfBj1PmtbN0h9YKEH8XlePd1onWSxWRcaaPzph7why95
+	U1X4eDlEB0WZ2fqKWp5CTrTf5GDG7d2R5RrBZMELiP2y5jXtJwuKPznNZn3Q6V4iHUwFoKzrJSFtP
+	psiDH6oA+6qFMzNDdCpfW5RjuiK/vdBn3ZeWkYs3+3tHP2+tNaKg2V5bhU9Eq59w2bh3rq4d+o21w
+	HB+CaJV+tDiO3FpTBeoXCMlUzAlx94sAHy6zHcmyTf9EfOug2Tdsk0ab6G6xUh8rzRYa1sfmg3WPa
+	kZPrIeSQ==;
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wtQgC-000AiV-2O;
+	Mon, 10 Aug 2026 16:08:40 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wtQgC-000F7G-0I;
+	Mon, 10 Aug 2026 16:08:40 +0200
+Message-ID: <6921488d-ad7b-4ba8-9794-8957600b36f6@iogearbox.net>
+Date: Mon, 10 Aug 2026 16:08:40 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260810133540.1947118-1-puranjay@kernel.org> <20260810133540.1947118-2-puranjay@kernel.org>
- <20260810140306.C1D721F000E9@smtp.kernel.org>
-In-Reply-To: <20260810140306.C1D721F000E9@smtp.kernel.org>
-From: Puranjay Mohan <puranjay12@gmail.com>
-Date: Mon, 10 Aug 2026 15:04:42 +0100
-X-Gm-Features: AUfX_mzW0QQd2n7jimcEIfkUiJMD2Japtfg5KrPbI5Jksmx_wgWQIhzjSqo4ogE
-Message-ID: <CANk7y0gUp5-Rqt-CCmfh1W5o2sMHW+Z=oGrjLYXdS81ZLE-TaA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] perf/core: Fix NULL pmu_ctx passed to pmu->sched_task()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 3/6] bpf, x86: Clear fetch destination on
+ faulting arena atomic
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260810134346.466004-1-daniel@iogearbox.net>
+ <20260810134346.466004-3-daniel@iogearbox.net>
+ <20260810140726.5C0BF1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260810140726.5C0BF1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28088/Mon Aug 10 08:24:15 2026)
 
-On Mon, Aug 10, 2026 at 3:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
+On 8/10/26 4:07 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] Per-CPU PMUs missing `sched_task` callbacks during context switc=
-hes if a task context exists.
-> --
->
-> --- Patch [1]: [PATCH v7 1/3] perf/core: Fix NULL pmu_ctx passed to pmu->=
-sched_task() ---
-> commit 333df3e02c2d6b54e5bd528f91779820677d118e
-> Author: Puranjay Mohan <puranjay@kernel.org>
->
-> perf/core: Fix NULL pmu_ctx passed to pmu->sched_task()
->
-> perf_pmu_sched_task() returns early when cpuctx->task_ctx is set, and
-> cpc->task_epc is only non-NULL while a task context is scheduled in on
-> this CPU. This patch passes &cpc->epc instead, which is the CPU-wide
-> context for this PMU, avoiding a NULL pointer dereference.
->
-> > diff --git a/kernel/events/core.c b/kernel/events/core.c
-> > index ba5bd6a78fe7b..c372213ffc883 100644
-> > --- a/kernel/events/core.c
-> > +++ b/kernel/events/core.c
-> > @@ -3907,7 +3907,7 @@ static void __perf_pmu_sched_task(struct perf_cpu=
-_pmu_context *cpc,
-> >       perf_ctx_lock(cpuctx, cpuctx->task_ctx);
-> >       perf_pmu_disable(pmu);
-> >
-> > -     pmu->sched_task(cpc->task_epc, task, sched_in);
-> > +     pmu->sched_task(&cpc->epc, task, sched_in);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the early return in
-> perf_pmu_sched_task() skip callbacks for CPU-wide PMUs?
->
-> If a system-wide PMU event is active (sched_cb_usage > 0), and a context
-> switch occurs to or from a task with an active perf event (meaning
-> cpuctx->task_ctx is set), perf_pmu_sched_task() returns early:
->
-> kernel/events/core.c:perf_pmu_sched_task() {
->         ...
->         /* cpuctx->task_ctx will be handled in perf_event_context_sched_i=
-n/out */
->         if (prev =3D=3D next || cpuctx->task_ctx)
->                 return;
->         ...
-> }
->
-> It seems to rely on perf_event_context_sched_out/in() to handle the
-> callbacks. However, perf_ctx_sched_task_cb() only iterates over the task'=
-s
-> pmu_ctx_list:
->
-> kernel/events/core.c:perf_ctx_sched_task_cb() {
->         ...
->         list_for_each_entry(pmu_ctx, &ctx->pmu_ctx_list, pmu_ctx_entry) {
->                 cpc =3D this_cpc(pmu_ctx->pmu);
->
->                 if (cpc->sched_cb_usage && pmu_ctx->pmu->sched_task)
->                         pmu_ctx->pmu->sched_task(pmu_ctx, task, sched_in)=
-;
->         }
->         ...
-> }
->
-> If the task's perf event is for a different PMU (like a software event), =
-the
-> CPU-wide PMU won't be in ctx->pmu_ctx_list. Does this mean the CPU-wide
-> PMU's sched_task() callback is completely skipped during the context swit=
-ch,
-> potentially corrupting hardware tracing or leaking branch records across =
-tasks?
->
-> >
-> >       perf_pmu_enable(pmu);
-> >       perf_ctx_unlock(cpuctx, cpuctx->task_ctx);
-
-
-Next patch fixes this exact issue.
+> - [High] The fix for clearing the fetch destination register on a faulting arena read-modify-write atomic is incomplete and misses arm64 and s390 architectures.
+(done in the other patches of this series)
