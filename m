@@ -1,145 +1,167 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422E94398ED
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 18:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 661B5367F41;
+	Mon, 10 Aug 2026 19:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786387784; cv=none; b=Ih2pHpsXnqLMcjwt27MNQJqjszGw035erkGFOyIpcuTJkRRdHy0siw+TqYnD1TS67gRwPouYrjKoe9/XQjL68xfPiY9w6BD9JGgob2kwj1m0hvp85I98ApVLFrW+KVfYaEyQ9H9R424PsaqNW7lLDDjxdVFzCkZTVV4211jQ+NM=
+	t=1786388415; cv=none; b=CWIaPK4Jzutss42ZG58HFk6WaPcyzyL83N6Qjbs7vzkSN8ywFF2p8cgZxSzVQ33QjtuosDOXKv10nJadWUkeHGJHVCVBNn8l2rIMx2HuPX2OzarkLEo84zE1g5jWWwLudWArNaO0sGdT8ciJeiecdr4uE9E7xSKm8SE3ZhuZNuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786387784; c=relaxed/simple;
-	bh=hAQbiBdb/L8L3hFDxA7tlwzLJflj/1mJe11rh+xIi38=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tbHLoWoKXAhsMXhm7AiPimfznRljRw5CmG3yk1iEyfFjqU+O+6UaBUR5vPXJ8SSx54BVR4J+Gn/YwaFK1WyHQGsOCKcIZS/gg/Oh3CBhPW5HWWwnTu3xMYPD7zzrJAKaO+rLSR8eT1kP49LdQdJVWOcL9AoN6Hy/XsNBDBw/bB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIfGDdTx; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786388415; c=relaxed/simple;
+	bh=U/jF6v9qP06JsWOI9lupqfGBJ2l9NBq9KuukzX6A27k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dgr/Wt83j3x5VVYwJEshC4Ptz8ib0jnGTOC93JyhdeJQehXtwmPQxQjzMyJ7m3/6kYhU0/DFE3w41HZ4wvySd0qYt2rCK3c6NaKbvtdiy9VnX7aWUllIpX6BTn7NId9eaMyG3UQ9w3o5OiqaHSAfgaQ9Nl4/ratkMy0uYubCvLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=rO7JbiIn; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIfGDdTx"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-49553515a8bso34604535e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 11:49:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786387781; x=1786992581; darn=lists.linux.dev;
-        h=content-type:mime-version:references:in-reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dcLbXw1HtxaVkLOq1A7ImeYJkGmUUOjnz1hGZ+5xdjY=;
-        b=ZIfGDdTxH/eoURpKJJFnT+/peAHHrhSi3XE7/FQRuIVDJnw5hvqfUBjesiBuLQjUVM
-         GMr1Yc4ZLEKfSecBEhpUC3nemNmpvCdfbhlXJWpmKemls3cRNI2XQ6kiGEJ6NDqZJnsy
-         qfWj3dIJ6dAfH2lWaFH4aZui0eEb+ZfIiyc/y+kCNKwKmX1TxEJa7WMd8kuq+aGMAnGo
-         XQTlB8sTZ/1qUTNcYsqtFL4Pql3/vOafsU/RVNEgjaID8p4gIybFkerqeazh7UO7zsBp
-         t521WMSGaSROuAxxFG0EH6ZCiyaRhwOl+7mlOQXDui/awF29IZo2ZxMdeXpw4ueCFSwP
-         fCsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786387781; x=1786992581;
-        h=content-type:mime-version:references:in-reply-to:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=dcLbXw1HtxaVkLOq1A7ImeYJkGmUUOjnz1hGZ+5xdjY=;
-        b=jEua5PSJ2lyw6Z/6B9VBKXPIdST7mSNcrHSqXAxwi+ENyoU2dKJTxyRyvG657Ms1ph
-         CZkj3bQHbR72FWJDvc3xo9BKHVuL32HRTIgIxfqaauDNUN7FDJPU/gjj7m2yRQF/mRp6
-         nGMKwW/bzFwJlC694YiU0aMQJ0rMpqFvLEs6GDS9TkVwUNyqMxvxEtVSyXuvoOey58P7
-         5F0BATuWpvLlLXAzu6UFV3myYPlgr6/Ted65fVr8QRyj9LIhViYmJgQh1SK75mFk1IXy
-         2+ehRffxPQqe5CpFomIda1afG8Coconewu8hgcHgxmfwTepeSLlarpbHe8jWSwd9yd1z
-         NInw==
-X-Gm-Message-State: AOJu0YzL2zG7eLpFBwMQudRs8xQlUl5blykrpq4HHONfWf8hGulNJQxC
-	kFS+zKFGOwnVhZgEfLeeKL7TiMU0HKoaqLZOIku32qmPscbSqxBYfW0T4CQhwmasRs1u0g==
-X-Gm-Gg: AR+sD13TLE2jLNyzmbu92logVjL8UqPnWxIQ7+nSyK7ziGZAx47z7tefElumliKjNeN
-	DAP7JApHrr4v78fh7uadU3W1OqD/+24d5Kcb4pJ+ifkZNSZY2mzz+w9YRFr0BP7kvf2CCk1mFn5
-	WamWfgjVrWjpwLCc9QukTkah1poPLVTEnv+lc+YQmHLEVrc57U9xNcb+m2upPW1raria0tPjMTG
-	bVQ8DYWNbAEHtW7xYisEFfSUiFWMEosKNUHZwXJ1v4yC/xa+ADCTu93o53Fn6oeVSiyOA6UIHA6
-	3FH4E8raSgR4OzHq678CgJ5SGWh+2dFBnn5VE85ZPAWv95l8i0zyzCFgOU9O0j76oOaoY27hhWm
-	gYGZiDqFnejZI3QuqDudHA17ylBJmBkxmyblh+I4x5jnkfSdEvTQDeEa/jrEIDn/hSQjZRymuiZ
-	W2Kpf01kgf4TIWGpcrTMr3n0QgVfTWF15R5J9uGzjuI+ba0BbCo2V8qTPjmwNwZ77Tk8oVBwba
-X-Received: by 2002:adf:f4c9:0:b0:47f:f3f9:ae37 with SMTP id ffacd0b85a97d-47ffd21da75mr38161242f8f.7.1786387781329;
-        Mon, 10 Aug 2026 11:49:41 -0700 (PDT)
-Received: from strix.localnet ([197.250.226.68])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48002206effsm33568215f8f.32.2026.08.10.11.49.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 11:49:40 -0700 (PDT)
-From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
-To: sashiko-reviews@lists.linux.dev, Rob Herring <robh@kernel.org>
-Cc: vkoul@kernel.org, devicetree@vger.kernel.org, lee@kernel.org,
- neil.armstrong@linaro.org, linux-phy@lists.infradead.org, olteanv@gmail.com,
- conor+dt@kernel.org, mfd@lists.linux.dev
-Subject:
- Re: [PATCH v10 01/12] dt-bindings: clk: zte: Add zx297520v3 top clock and
- reset controller
-Date: Mon, 10 Aug 2026 21:49:27 +0300
-Message-ID: <gypuIvsORyye1Tbviu_vVQ@gmail.com>
-In-Reply-To: <20260810153805.GA1793660-robh@kernel.org>
-References:
- <20260810-zx29clk-v10-0-63846490712c@gmail.com>
- <20260810071224.5AA301F00A3A@smtp.kernel.org>
- <20260810153805.GA1793660-robh@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="rO7JbiIn"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7D52514BF;
+	Mon, 10 Aug 2026 12:00:07 -0700 (PDT)
+Received: from thinkpad-e142931.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5B30A3F86F;
+	Mon, 10 Aug 2026 12:00:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1786388411; bh=U/jF6v9qP06JsWOI9lupqfGBJ2l9NBq9KuukzX6A27k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rO7JbiIn8ep5iQSq0LaahxSLEMPDguK3ahGIPB3EJWkyyIX7bEPaY8tvW9DvUv2mP
+	 5ssevyqLKeEBYof8+hVeKzQRhlEBSJ55W7H1jClOIBlLJ+1CS9aAYLca5Idm/H9tBV
+	 SGGhYMy/t3tezrLSxbNyBWna9TXqdi5EYruW83lk=
+Date: Mon, 10 Aug 2026 19:59:52 +0100
+From: Wei-Lin Chang <weilin.chang@arm.com>
+To: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
+Subject: Re: [PATCH] KVM: arm64: Correctly cap TLBI Range to the architural
+ limit
+Message-ID: <kepali2qvsom3x55qfdsvsf6vs6vcg3ubkz6zisjfoncrwsvaq@5nftl3thh7i2>
+References: <20260810170616.746100-1-maz@kernel.org>
+ <20260810174309.52D041F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPartnjexxywtRIihZLyUay2Kiw";
- micalg="pgp-sha256"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260810174309.52D041F000E9@smtp.kernel.org>
 
---nextPartnjexxywtRIihZLyUay2Kiw
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
-To: sashiko-reviews@lists.linux.dev, Rob Herring <robh@kernel.org>
-Date: Mon, 10 Aug 2026 21:49:27 +0300
-Message-ID: <gypuIvsORyye1Tbviu_vVQ@gmail.com>
-In-Reply-To: <20260810153805.GA1793660-robh@kernel.org>
-MIME-Version: 1.0
+On Mon, Aug 10, 2026 at 05:43:08PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Hardcoded BIT(48) cap truncates valid 52-bit IPAs and underflows for higher addresses
+> - [High] Upper-half range cap `~base + 1` is completely ineffective due to missing sign-extension
+> 
+> Pre-existing issues:
+> - [High] Range TLB invalidations for upper-half VAs silently fail to invalidate the VNCR cache
+> - [High] Malicious guests can still trigger a host WARN_ON because the BIT(48) cap ignores smaller VM ia_bits
+> --
+> 
+> --- Patch [1]: [PATCH] KVM: arm64: Correctly cap TLBI Range to the architural limit ---
+> commit 09ab12a5dd613f7e322a9123897db5c50369508d
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> KVM: arm64: Correctly cap TLBI Range to the architural limit
+> 
+> This commit caps the range of a TLB invalidation based on the base address
+> to prevent guests from triggering an overflow when the hypervisor adds the
+> range to the base address.
+> 
+> Link: https://lore.kernel.org/r/yifz3wn5gk5sr6mapi32trgk5m5kp33bquctsjmkifebnsnndt@fix6u4rthx4g
+> 
+> > diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+> > index cdf3e8422ea12..b68806b3bd6e5 100644
+> > --- a/arch/arm64/include/asm/kvm_nested.h
+> > +++ b/arch/arm64/include/asm/kvm_nested.h
+> > @@ -298,6 +298,12 @@ static inline u64 decode_range_tlbi(u64 val, u64 *range, u16 *asid)
+> >  	num	= FIELD_GET(GENMASK(43, 39), val);
+> >  	*range	= __TLBI_RANGE_PAGES(num, scale) << shift;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but earlier in
+> decode_range_tlbi(), base is extracted without sign-extension:
+> 
+> 	base = (val & GENMASK(36, 0)) << shift;
+> 
+> For upper-half kernel virtual addresses, base will be zero-extended. When
+> invalidate_vncr_va() in arch/arm64/kvm/nested.c checks if this invalidation
+> intersects with a cached VNCR TLB (vt->gva), the cached TLB is correctly
+> sign-extended. The bounds check incorrectly fails due to comparing a
+> sign-extended gva against a zero-extended scope->va:
+> 
+> 	if (va_end <= scope->va ||
+> 	    va_start >= (scope->va + scope->size))
+> 		continue;
+> 
+> Does this leave stale entries in the VNCR cache and break memory isolation
+> for nested guests when they invalidate an upper-half VA range via
+> TLBI RVAE1*?
 
-Am Montag, 10. August 2026, 18:38:05 Ostafrikanische Zeit schrieb Rob Herring:
-> On Mon, Aug 10, 2026 at 07:12:23AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential
-> > issue(s) to consider: - [Medium] Missing `resets` property definition in
-> > the YAML schema. - [Medium] Missing `simple-mfd` in compatible string
-> > list for syscon with children.
-> Neither of these look valid to me.
+base is correctly sign-extended now [1].
 
-Yeah, I removed the resets property in response to Krzysztof's feedback [0]. 
-And the syscon-reboot is registered by the MFD driver, which in turn goes back 
-to Conor's suggestion at [1].
+[1]: https://git.kernel.org/kvmarm/kvmarm/c/239347008564
 
-Should I reply to the list when I think Sashiko produced a false warning? In a 
-way it feels like fighting windmills, as it will likely bring up the same 
-warning for further patch revisions.
+> 
+> > +
+> > +	/* Cap the range to the correct half of the address space */
+> > +	if (!(base & BIT(48)))
+> > +		*range = min(*range, (BIT(48) - base));
+> 
+> [Severity: High]
+> Does this hardcoded BIT(48) cap incorrectly truncate valid 52-bit IPAs?
+> 
+> For guests with a 52-bit IPA space (FEAT_LPA), a valid TLB invalidation over
+> the entire address space (base=0, range=BIT(52)) appears to be truncated to
+> BIT(48), potentially leaving stale mappings in the upper 48-52 bits.
+> 
+> Additionally, if the base address exceeds BIT(48) but has bit 48 cleared
+> (for example, base=BIT(49)), won't (BIT(48) - base) underflow to a massive
+> unsigned value, bypassing the cap and failing to prevent the overflow?
 
-It does find a lot of real problems though and as a newbie contributor I feel 
-like it is a valuable tool.
+There is no 52-bit support for NV guests.
 
-Cheers,
-Stefan
+> 
+> [Severity: High]
+> This is a pre-existing issue, but since this cap uses BIT(48), can a nested
+> guest still trigger the host WARN_ON in __unmap_stage2_range() if the VM's
+> configured PARange (ia_bits) is smaller than 48?
+> 
+> If a guest supplies a base and range that stays below BIT(48) but exceeds
+> the VM's actual limit (for example, BIT(40)), it seems _kvm_pgtable_walk() in
+> arch/arm64/kvm/hyp/pgtable.c will still return -ERANGE:
+> 
+> 	if (data->addr > limit || data->end > limit)
+> 		return -ERANGE;
+> 
+> This bypasses the new cap and can trigger the warning, which could act as a
+> Denial of Service if panic_on_warn is set.
 
-0: https://lore.kernel.org/linux-arm-kernel/20260717-uncovered-feathered-groundhog-eab16e@quoll/
-1: https://lore.kernel.org/linux-arm-kernel/20260617-deed-snap-4649ffae0e27@spud/
+This looks correct to me, but irrelevant to this patch.
 
---nextPartnjexxywtRIihZLyUay2Kiw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+> 
+> > +	else
+> > +		*range = min(*range, ~base + 1);
+> 
+> [Severity: High]
+> Is this upper-half range cap mathematically effective without base being
+> sign-extended?
+> 
+> Since decode_range_tlbi() leaves base as a positive unsigned 64-bit integer,
+> ~base + 1 evaluates to an extremely large positive value near 2^64. Will
+> min(*range, ~base + 1) always evaluate to *range, leaving the range uncapped
+> and still vulnerable to the overflow for upper-half virtual addresses?
 
------BEGIN PGP SIGNATURE-----
+base is sign-extended now, see above.
 
-iQJPBAABCAA5FiEEQxb0tqoFWyeVMl1sPRO8yFRPGiIFAmp6HTcbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJED0TvMhUTxoi6FgQAKm9IYOLqegfSaVNChHC
-dp6j7VY8B5nPtUGsRfYZo5T7Vf3pKufABFbR1iabCxwC2IB3jXx1qz+24mCXVDHo
-XuRq29BeEeDNBoHh7GNUkTagt+HRHV79yD4tiBNvfH6Mly2NHUeIOOoZ8ZRi8TmH
-I25u5EuZmqCO10wGs7DDbq5ak8DeNsQvk+MQFLxzi7DOdW6UzDv5enNFEoSPj5JW
-tMuj2EoKw+LIT12rkhXAPpUroKtHknKtl+SKolXU1ZjNOgxMdIgRKd5EsTMCWqWe
-Xyi47x2kKDp0a/wSX2kBMUOQZn645dEQPKyAiB7uwEBQIA8PQoxuB2+wBZqXpQ1z
-PE4JW1aAPI5uo+ru6LAMss467ZiK4eejRNWoLsnyVaaO49VwtCjdQftqPI2xC/Dv
-+4aDMhJWJ6+VXFLC9HMC4lz5hggYHrsLfeMARDvyt8YSRrW6+Joh6bjGx5vxt011
-h/FLE4TsK++xPYar9OjtpXLNN2HPi2EBibVVWP4pXWCcm0mIuKXa3jNANUObUBAe
-0z54JE4GKVlIvZTRsqUUlzk/pnQLE1KwLZ5oX4O79537YTkQzjBNmGRZh0NM1SmP
-quoWwa8alZw0Eb9GRPZOFstwiFhvB9mzis3/j6KSeHekWUIyhHfrKhl9wFbezAA4
-wZpFmf+iiVSkrDq/xp/ft93Y
-=7cJL
------END PGP SIGNATURE-----
+Thanks,
+Wei-Lin Chang
 
---nextPartnjexxywtRIihZLyUay2Kiw--
-
-
-
+> 
+> > +
+> >  	return base;
+> >  }
+> >
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260810170616.746100-1-maz@kernel.org?part=1
