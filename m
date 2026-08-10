@@ -1,46 +1,46 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010032.outbound.protection.outlook.com [52.101.193.32])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011061.outbound.protection.outlook.com [52.101.52.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0C934CFA1
-	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 05:54:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C93F36D9F5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 06:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.61
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786341271; cv=fail; b=e98K3OvUZz8/OKm3CTNqAhctPd7UXREmy2CpP22+GQZarykz9j+tIqTfXHaKZH1d2htOniKg3ikAlhB4DgsMd6kRPS1CQeSFZE13ubQnonU1D5vnVDaoFv+iBlULjLFwNzjDP574oEtT7oT7Eq/0UsdkKCZKhaQexhzSNiJ41IM=
+	t=1786342349; cv=fail; b=W5GrdCo2yDpZPHecQp9V4S7ykCG0wtpOVH3AYiEu3qfGkwI6qMsJStxgjNmnBsUFnH8P0ITqT+3fGBDsJZ09P0TFV5otSKCMxA0RZXp2l9KxVGeGiP48iJsVIxwWR29GWSLVjXoPsxTCaxff/cZY5RaHpVYjKFNI1McDYQUQgtU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786341271; c=relaxed/simple;
-	bh=jEpn7XWzTT1U8h80ma/B0mUzu3cOpCXhS1iBdZ6oG9o=;
+	s=arc-20240116; t=1786342349; c=relaxed/simple;
+	bh=gjei86QODtOL3iE+ya5WNHGD+hNI+McRap+w1RFuDzQ=;
 	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=gxLkrRtmuDRXVYxtSMxB8DYX6dD5UXVOPlgwyIkprhmgT2y3Plk8+2xBlBTIueol9rCZxXgiBSp1rDwDNTEVSLX0C6Lc4gP8znXf5t5zvTH8+KwAhv16uNUOLg1deacPQPDQtnT1aQhiXqseuM18On5kpSNiI0bhsIIkN1tub7I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=r88EKz5i; arc=fail smtp.client-ip=52.101.193.32
+	 In-Reply-To:Content-Type; b=M+l9cRoBS1UFSCH5VVfPuJl8Q9rPSRSm2d9G2KsA5v0NZ2TDegKhi9TzPR/5g4SrNGL7S9Juk7yXhWJJjnIhkbH7vKJBO1Oms1OqYI99gfCR8Z/HFbiAgnmUNHCPXmehdMPQo3q0W9juAStPyIyQZUdLdOqzyDk8kw+N4nqte3s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=PhwdRkZS; arc=fail smtp.client-ip=52.101.52.61
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="r88EKz5i"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="PhwdRkZS"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Lu9oRYQpe5oFs+rHQYQhUTWeaP7qtk3V/zje5wILkrOv7WZHblr+1t2ktYfonRRD3XTXvxMs0DWdmOkNcj5cvcZRgPUS2NhP2J8f57nKFTwcnUPUIJJDrS5uTk6jNMwVdlllJ0CjkGW/mm+RHcrNL4ah4s23jNcsyP0LojWoXx76c6Jak+HD3PhJr21kM8D973OZq3Q5ZOnkuoquSm+j8RyPIb4hXUG/1vTLzaa+Z2c89dcmn9uXV/rommq7LRiBLfsUoNF2mDaukGPNgfgDuTFrEX0Sbxc968O8S6KcLiTULFz2geiu7sIUW4ZIZSJR3Bp2knMG55U2emBe6Y6dtA==
+ b=bg0EpaArLD2dksF+J0ThRhMCs8QIYRLECyJWh8khRKdWTPcCB8BCmzoc2BQgTTM2hnfk3YCRTpTXtPbInS0L3D5yh1NcxuZYtiNYEDN6NoXSZmu4VS2qRjA5U2KECSlXca7BBCQpfXQFk+kACmoif3S3IW3+1nmSHG8FNReVZsRRkTchgmr1CCZtYF41FbH55hcVFVvoe0mMarYjBW4Fx0VXYdJc4IbzPPu/DocPa1ZRIvN5rHtSulju7TbHV9z42pPDK8y4dAu//lSaWILRrcr7sm1r+V/uIJID2vvOopA6yFSwfFTBHgbG+dGwZjMEBTPawvyH++o8xnaTwDMzEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Td1f5GcqWUT9EVPqLBJBkMeJiO+Hy4/udoBw6EgapyA=;
- b=NQPZDT/qN0QyLP/eII5bg5BvMQfDYwhtIGw/TXPevt/sGnZQjZg+FxBKIxZvpIUQaqV0Y3ZpmZ5RYYU8+hePqiZIyM/mslolIGJbP1WVfvOyBCMQ1hl9QNjt3RGv1yK1CnRjDM6aI7IXBOzj4M1yxBMefkRkflUsjGcCGgcWmI3ANnTiLLsSwTUsN6gitQkwF8r7a00DRZ1xqj8PBh79kBtnK74RWD9gTL/8Fdx289/DOiaeHPgeYhoodu7RHeh7OxAN2UbRJxjReWL2ZVusDObOEcVUhFPeDyKtfHfyZZo8WVDv5NZh7lGP2hs6dazC+IpErczJheK+WTiv+bvcQQ==
+ bh=MD1VZ+0OdHK0ApNCIeHIRDfBxfb2xBhsjxgE9syi7C4=;
+ b=GQ6ci7Ygd2jyIAWcmOcaCsJ7dgjDrSzsVkmqn4G45VWyUFcqeYTgmtUQthns2n568D3ch7WJkkAMuPsl6nXTyxdfKgSCgekUJ6ktSWrz759agA3ECP6NfSg6qVsjn6df1KbzqzDyTRbuosWRTlPMjE9gQgtDSiawG7UYGCCoZODLKZc/vrsV/WRDdyYVaZ3/hjIn2V8Ps0+relhH642Yk9oerWtwJgp9V4RJy5jt0paJQNqWlw6nJmGxSGH16xwdKrPSwlvrW9gwKLYg3WEI6YO/Lo1CLE0s0y2hjw9RnmmJAaZBk9lYeEKpSDyBin0PnX+upG5N5p22nE9GTo9JLg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
  dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
  header.from=amd.com; dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Td1f5GcqWUT9EVPqLBJBkMeJiO+Hy4/udoBw6EgapyA=;
- b=r88EKz5i+06BC7thHc3ks7x0uEWXCRXI0bbdUVRXldYU/ZLzeoKAO3pGVYR4+wpICXISR6RbTquvbkxYgRf5d5zRai+qtqyPLYy09Qn7BphS0tlyNlcdGdxD8uEWSY7072kACiViiXaPzu1ddtXD9gprkvY+SmjKGi4bW+Tq8AU=
-Received: from MW4PR04CA0198.namprd04.prod.outlook.com (2603:10b6:303:86::23)
- by CY5PR12MB6299.namprd12.prod.outlook.com (2603:10b6:930:20::21) with
+ bh=MD1VZ+0OdHK0ApNCIeHIRDfBxfb2xBhsjxgE9syi7C4=;
+ b=PhwdRkZSwK+rUi3YIcFgp7ynMitwBvFdNXkqDbh4EgF88zCT2dqMZisQ7EfBUbDc0a4hUr5uGMC8vo9nR5/TyEbMOt2JUyhzksKLBlq9+2OHkM7SfjG1XM1k/D2p0A3G0vJoyNyB8XbKwsSGmPMrmtyoJoqv26GuWbsbnj8SM1s=
+Received: from CH0P221CA0021.NAMP221.PROD.OUTLOOK.COM (2603:10b6:610:11c::17)
+ by PH7PR12MB7020.namprd12.prod.outlook.com (2603:10b6:510:1ba::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 05:54:23 +0000
-Received: from CO1PEPF00012E64.namprd05.prod.outlook.com
- (2603:10b6:303:86:cafe::49) by MW4PR04CA0198.outlook.office365.com
- (2603:10b6:303:86::23) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 06:12:21 +0000
+Received: from CH1PEPF0000AD74.namprd04.prod.outlook.com
+ (2603:10b6:610:11c:cafe::50) by CH0P221CA0021.outlook.office365.com
+ (2603:10b6:610:11c::17) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.25 via Frontend Transport; Mon,
- 10 Aug 2026 05:54:23 +0000
+ 10 Aug 2026 06:12:21 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -48,15 +48,15 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- CO1PEPF00012E64.mail.protection.outlook.com (10.167.249.73) with Microsoft
+ CH1PEPF0000AD74.mail.protection.outlook.com (10.167.244.52) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Mon, 10 Aug 2026 05:54:22 +0000
+ 15.21.315.6 via Frontend Transport; Mon, 10 Aug 2026 06:12:21 +0000
 Received: from [10.252.200.247] (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 10 Aug
- 2026 00:54:21 -0500
-Message-ID: <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com>
-Date: Mon, 10 Aug 2026 11:24:13 +0530
+ 2026 01:12:20 -0500
+Message-ID: <c63943d0-f336-4b66-98d6-fddad60f394c@amd.com>
+Date: Mon, 10 Aug 2026 11:42:17 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -65,231 +65,175 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
-Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
- Physical Processor Interrupt (GAPPI)
+Subject: Re: [RFC PATCH v3 6/6] iommu/amd: Provide kernel command line option
+ to enable GAPPI
 Content-Language: en-US
 To: <sashiko-reviews@lists.linux.dev>
 References: <20260713105033.15405-1-sarunkod@amd.com>
- <20260713105033.15405-6-sarunkod@amd.com>
- <20260713111119.EC35E1F000E9@smtp.kernel.org>
+ <20260713105033.15405-7-sarunkod@amd.com>
+ <20260713111125.9DC2F1F000E9@smtp.kernel.org>
 From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260713111119.EC35E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260713111125.9DC2F1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E64:EE_|CY5PR12MB6299:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9e135f4-d291-4339-a3ae-08def6a3d3fc
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD74:EE_|PH7PR12MB7020:EE_
+X-MS-Office365-Filtering-Correlation-Id: 374a377e-c730-437c-866e-08def6a656d4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|23010399003|36860700016|1800799024|376014|11063799006|5023799004|4143699003|56012099006|10067099003|6133799003|22082099003|18002099003;
+	BCL:0;ARA:13230040|82310400026|1800799024|376014|23010399003|36860700016|22082099003|18002099003|5023799004|11063799006|4143699003|56012099006|6133799003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	ugsXnV0uTCdG/C847iKxkQZbDrQCAjwRZf04yDzyJrDFku6ehr1HVA5nJoAFHKT76mpF48S5nm3HK+Mq+RQZmdnTriGu/V2uUSkPhol5G7tCdqGX3vxL/vLa/Oy7U5gZqZ2JWNfmhMfV6HqaBbRUaodxYTLvbSmzOlsRVebkbt6BvtpqUOZK/W6SCM+DWAJLlSTe7caT8ynbAnnN1HrD4I/BqzmvZraEgQYYQFKgdKcwQx5zOEmRcMqmC7t5aYFKZyin3vGyicoREECc5XxXZQXgxBm1UE173Vrix6JTKFK157CYIBthg00h/fC6bbi/rOr2G+f4b48xe30hBxuxmfVXDy255fMYy82yKg6j82uZrUGA7B3BE0KJToON4pKFwjzS+7NqjURiAG4jILwe4YOQZOY4vx2Fkdy996IPUQjITq6tjRFnuauQHQwFrD0LzdUqGyFMnk5G3gqi1Av/cQh11ch9maVTaeE914JCl1anqcBiMoTzBAA7D2AbzjFxqhFvz+ApWZa34FSZ9VbLbCEDpjnPv6tjh/kRn8kMPaaJNf7QvKsUq0ersGokpRFJYbfL0r+7sZfr5Vv4f+wWgiZHtZt8quZyBdKkDVdnlRaowen7tW6bJRu02L2P9Bu0y+rodoBximuMoJFPjuvyucSAraMt1pFCKjtZ7Wr5+X14+k1wjj08uRiyV14CWfuJTGFHwQo0kMHjQRBg5rbUWQ==
+	G8JOj22WX7caoG9KEAYUBgIVYuFw5Ok52AD7uyKtDk69cUaWyy1oXB6X6nACkDufwxsAJSTTRkRTefrc3SqkBHkUM0QrLzRFO9M6RJLFA/s6r8XUJ0Z5Bt8RJOKk1Jd+U0CrBKqMcMHzIiWaFCoZBpQINYrjTfxU8dX4LW0KpjHe61GxugNxtaKj9Wv5FLYvFHjisVNZ+/SnSvkTruI5906S2xpNW6Q8AuUggoupn09eQ6DZKn3mJPlLu9+w+zE59dcELbYmpAvwHgS40x/WJrh1vUhtS7PMYrXUheWWK6W05YdcXEyOa8lFbZgDOxa+Ltpnvm/VNaRA7rcR7kqhzSki4wx0hWjKln3vwW0HWu3/+zcD3bDXEAct4Yy4cBGYJNzPhs87NtdLK9BGsDQi0pyWbLRUxytRBh0gHgHjaZFZ5cg8BFZC48+blV4fIsNAJ1QxbvLIgrDhLQj9o+d513L8dY0+bnXcBZjIfyQpmKTo67tZUavgTq4kMWBX+dKSeKdWawvyIE3l/d9YL1fggCjBBdhd1tNh59sBl3I+N04wVAvsfdNjF+oOAP9k6wcjc54ZtjohweFP2jEEodZEq+VWe2R22pvoJO/8VrvwUpY4va8fva1rheK1gmExMTuLheYYCp+xQ4AFDchtmJvJ9OEssMPfGUzLJRHM31AJzwE333cL0ku0s9HHPRJB2/5GpWSpFogCK8ImI4gwu/QHYQ==
 X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(23010399003)(36860700016)(1800799024)(376014)(11063799006)(5023799004)(4143699003)(56012099006)(10067099003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(23010399003)(36860700016)(22082099003)(18002099003)(5023799004)(11063799006)(4143699003)(56012099006)(6133799003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	BXoEPcoXIAZbjjX6RjsonK0/DJuCzYUuqKC70CytvJS3oSRKOHgJzfLaJ54sB2o1PGJlYzKxGJqiIWhb9mu7fDrfNqysAvLwyl3QwkRzedOlUBaGax+0+AjMyJ/OVMxicD2OYQ+1v8TZkLJHAqlHJ2/qjWYU+AOk/Mnp3sJxl+t0eTYPb3NlJIFE7fVydGC9HliDppg0aN6x71Hl5tGtVVN62KmMpBJk610Lf22GSX5AOXx91H3xPO31DLWo693GshZEqTinPaTnqxlQx0MlBGMryFNy9raVvLgzUovEUMvua+rTD2do+uBApdWFMYkz4BU086KFJiVgKvG0f6y3YlVGPmGwv5ieLm5F1lz+H2JXvhuenPwb6irgJQmEJtMiT3w853ScupFe054oA9IHp4/l/v3+dUjP9vvhm9GxKUnMCfoqHlgQyREb/1Kugl2x
+	VD9pLoU6C9xAxhKG0DQVOvLB5R1qUpuVsdMaJFXaqfkZjxnDA2kumXE9Yi3KhTUnrLNOLAsswDC5hFpA0MgC89eadl2Csv2riCgWMUIIEkfRUOfqcXDehNeahsoyuMg+zsN2xejN1abOZXQnaDnMelU7UBXnz0rpWu7pEkKpVu+xTeN45Z+UNe06rCJrEt8p6BjNcWF7GcagUyrFP0jTgg3AEpJjEOtAP2NgdsrdYUSojs2/qTUZggHn1pYg9lkT7JgLorN/PsnXSuhmvh51sxFjAGpJTQiCUMRenqxHRlP/foQ75ZMrsEcEauBZ6MZx4kAAH1YJ7fhBV/IWbN3npG7PlHUi93eX/o1a3NyRFgnJc8ljHrDho4mQWiWT0VuCV76MQwReDJaK7TbtB+ouwMoGlMRtjJ0xw/b2T4CinsfuGAWVOG3T9PgIumcFJbs2
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 05:54:22.8495
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 06:12:21.4641
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9e135f4-d291-4339-a3ae-08def6a3d3fc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 374a377e-c730-437c-866e-08def6a656d4
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF00012E64.namprd05.prod.outlook.com
+	CH1PEPF0000AD74.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6299
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7020
 
 
 
 On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Host-userspace-reachable WARN_ON due to uninitialized `svm->gappi_cpu` (-1) when configuring IRQ routing before a vCPU runs.
-> - [High] Missing CPU hotplug handling causes blocked vCPUs to hang if their last-run physical CPU goes offline.
-> - [High] ABBA deadlock between scheduler `rq_lock` and `gappi_vcpu_wakeup_list_lock` due to manipulating the wakeup list during vCPU preemption.
-> - [Low] Mixing scoped `guard()` cleanup with `goto` error handling violates architectural guidelines.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] Unconditional enablement of GA log on overflow in kexec/kdump environments with GAPPI leads to critical DMA memory corruption.
+> 
+> Pre-existing issues:
+> - [High] Lockless read-modify-write of the IOMMU MMIO control register causes a race condition that can permanently disable IOMMU interrupts or GAPPI.
 > --
 > 
-> --- Patch [5]: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI) ---
-> commit c3bb8845bd944e9a327f36d68b70032d436f727c
+> --- Patch [6]: [RFC PATCH v3 6/6] iommu/amd: Provide kernel command line option to enable GAPPI ---
+> commit 38ebc4ddc54202efd2ae74234b7ee4169af3e39a
 > Author: Sairaj Kodilkar <sarunkod@amd.com>
 > 
->     KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI)
->     
->     With AVIC guest-mode interrupt remapping, device interrupts are posted into
->     the guest vAPIC backing page by the IOMMU. When the vCPU is not running
->     (IRTE[IsRun] = 0), KVM must still be notified to schedule it. The legacy
->     path uses the GA log.
+> iommu/amd: Provide kernel command line option to enable GAPPI
 > 
->> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
->> index 3b2d92a587098..982a5988532ff 100644
->> --- a/arch/x86/kvm/svm/avic.c
->> +++ b/arch/x86/kvm/svm/avic.c
->> @@ -886,6 +892,42 @@ int avic_init_vcpu(struct vcpu_svm *svm)
->>  	return ret;
->>  }
->>  
->> +static void avic_add_vcpu_to_gappi_wakeup_list(struct vcpu_svm *svm, int cpu)
->> +{
->> +	struct list_head *wakeup_list;
->> +	raw_spinlock_t *spinlock;
->> +
->> +	if (WARN_ON(unlikely(cpu < 0)))
->> +		return;
+> This commit adds a kernel parameter to enable GAPPI for AMD IOMMUs when
+> the GAPPISup extended feature bit is set. It also modifies initialization
+> code to handle GAPPI alongside the existing GALOG feature.
 > 
-> [Severity: High]
-> Can an unprivileged user-space process trigger this WARN_ON?
-> 
-> When a vCPU is created, svm->gappi_cpu is initialized to -1 in
-> avic_init_vcpu(). It is only set to a valid CPU ID later during
-> __avic_vcpu_load().
-> 
-> If host user-space configures device interrupt routing via the KVM_IRQFD ioctl
-> before the vCPU runs, avic_pi_update_irte() is invoked. This will pass the
-> uninitialized svm->gappi_cpu (-1) down to this function, hitting the WARN_ON.
-> If the host has panic_on_warn enabled, this allows host userspace to trigger
-> a kernel panic.
-
-This is a valid concern.
-
-If host userspace attaches a bypass IRQ targeting a vCPU that has never
-been loaded. Functionally, there is nothing to do in that window. A vCPU
-that has never been loaded cannot be blocking, so no GAPPI wakeup is
-required. The IOMMU still posts the interrupt into the vAPIC backing
-page, and the pending IRR is evaluated at the first VMRUN after
-avic_vcpu_load(), which is also where the IRTE gets a valid Destination
-and IsRun = 1.
-
-This can be resolved by assigning a arbitrary gappi destination, without
-actually updating the gappi wakeup list of that CPU.
-
-Thanks
-Sairaj
-
+>> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+>> index 2e1889f8a9e42..7d2b1c24f6ecc 100644
+>> --- a/drivers/iommu/amd/init.c
+>> +++ b/drivers/iommu/amd/init.c
 > 
 > [ ... ]
->> @@ -947,6 +993,12 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
->>  		 * scheduled out, KVM will update the pCPU info when the vCPU
->>  		 * is awakened and/or scheduled in.  See also avic_vcpu_load().
->>  		 */
->> +		if (amd_iommu_gappi)
->> +			pi_data.ga_tag = POSTED_INTR_WAKEUP_VECTOR;
->> +		else
->> +			pi_data.ga_tag = AVIC_GATAG(to_kvm_svm(kvm)->avic_vm_id,
->> +						    vcpu->vcpu_idx);
->> +
->>  		entry = svm->avic_physical_id_entry;
->>  		if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK) {
->>  			pi_data.apicid = entry & AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK;
->> @@ -955,11 +1007,19 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
->>  			pi_data.apicid = -1;
->>  			pi_data.wakeup_intr = entry & AVIC_PHYSICAL_ID_ENTRY_WAKEUP_INTR;
->>  			pi_data.is_running = false;
->> +
->> +			if (amd_iommu_gappi) {
->> +				pi_data.apicid = kvm_cpu_get_apicid(svm->gappi_cpu);
->> +				if (list_empty(&svm->ir_list)) {
->> +					avic_add_vcpu_to_gappi_wakeup_list(svm, svm->gappi_cpu);
->> +					is_vcpu_waiting = true;
->> +				}
->> +			}
->>  		}
+> 
+>> @@ -2999,6 +3002,13 @@ static void enable_iommus_vapic(void)
+>>  	struct amd_iommu *iommu;
 >>  
->>  		ret = irq_set_vcpu_affinity(host_irq, &pi_data);
->>  		if (ret)
->> -			return ret;
->> +			goto gappi_err_out;
+>>  	for_each_iommu(iommu) {
+>> +		/*
+>> +		 * Disable GAPPI, do not check amd_iommu_gappi as it may be
+>> +		 * false in new kexec kernel even though previous kernel has
+>> +		 * enabled it.
+>> +		 */
+>> +		iommu_feature_disable(iommu, CONTROL_GAPPI_EN);
 > 
-> [Severity: Low]
-> Is it safe to mix goto-based error handling in a function that uses guard()?
+> [Severity: High]
+> This is a pre-existing issue, but does this unlocked modification of the
+> IOMMU MMIO control register cause a race condition that could disable
+> interrupts or other features?
 > 
-> Earlier in avic_pi_update_irte(),
-> guard(raw_spinlock_irqsave)(&svm->ir_list_lock) is used. According to
-> include/linux/cleanup.h, mixing goto with guard() in the same function creates
-> confusing ownership semantics and violates the subsystem's cleanup rules.
+> The iommu_feature_disable() function performs a read-modify-write without
+> holding iommu->lock:
 > 
-
-Valid concern
-
-Will remove all the gotos in this function.
-
-Thanks
-Sairaj
-
->>  
+> drivers/iommu/amd/init.c:iommu_feature_set() {
+>     ctrl = readq(iommu->mmio_base +  MMIO_CONTROL_OFFSET);
+>     ctrl &= ~((u64)mask << shift);
+>     ctrl |= ((u64)val << shift) & ((u64)mask << shift);
+>     writeq(ctrl, iommu->mmio_base +  MMIO_CONTROL_OFFSET);
+> }
+> 
+> During initialization, the IRQ thread could be running concurrently. If a log
+> overflow occurs, the IRQ thread calls amd_iommu_restart_log() which also
+> invokes iommu_feature_disable().
+> 
+> Since this read-modify-write isn't synchronized, could concurrent
+> modifications silently overwrite each other?
+> 
+>> +
 >>  		/*
->>  		 * Revert to legacy mode if the IOMMU didn't provide metadata
->> @@ -968,12 +1028,17 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
->>  		 */
->>  		if (WARN_ON_ONCE(!pi_data.ir_data)) {
->>  			irq_set_vcpu_affinity(host_irq, NULL);
->> -			return -EIO;
->> +			ret = -EIO;
->> +			goto gappi_err_out;
->>  		}
->>  
->>  		irqfd->irq_bypass_data = pi_data.ir_data;
->>  		list_add(&irqfd->vcpu_list, &svm->ir_list);
->>  		return 0;
->> +gappi_err_out:
->> +		if (is_vcpu_waiting)
->> +			avic_remove_vcpu_from_gappi_wakeup_list(svm, svm->gappi_cpu);
->> +		return ret;
->>  	}
->>  	return irq_set_vcpu_affinity(host_irq, NULL);
->>  }
+>>  		 * Disable GALog if already running. It could have been enabled
+> 
 > [ ... ]
->> @@ -1300,6 +1382,21 @@ static bool __init avic_want_avic_enabled(void)
->>  	return true;
->>  }
+> 
+>> @@ -3038,10 +3048,19 @@ static void enable_iommus_vapic(void)
+>>  		return;
+>>  	}
 >>  
->> +static void avic_gappi_wakeup_handler(void)
->> +{
->> +	int cpu = smp_processor_id();
->> +	struct list_head *vcpu_wakeup_list = &per_cpu(gappi_vcpu_wakeup_list, cpu);
->> +	raw_spinlock_t *spinlock = &per_cpu(gappi_vcpu_wakeup_list_lock, cpu);
->> +	struct vcpu_svm *svm;
->> +
->> +	raw_spin_lock(spinlock);
->> +	list_for_each_entry(svm, vcpu_wakeup_list, gappi_vcpu_wakeup_list) {
->> +		if (kvm_lapic_find_highest_irr(&svm->vcpu) >= 0)
->> +			kvm_vcpu_wake_up(&svm->vcpu);
+>> +	if (amd_iommu_gappi &&
+>> +	    !(check_feature(FEATURE_GAPPI) &&
+>> +	      AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))) {
+>> +		pr_warn("GAPPI is not supported.\n");
+>> +		amd_iommu_gappi = false;
 >> +	}
->> +	raw_spin_unlock(spinlock);
->> +}
+>> +
+>>  	/* Enabling GAM and SNPAVIC support */
+>>  	for_each_iommu(iommu) {
+>> -		if (iommu_init_ga_log(iommu) ||
+>> -		    iommu_ga_log_enable(iommu))
+>> +		if (amd_iommu_gappi)
+>> +			iommu_feature_enable(iommu, CONTROL_GAPPI_EN);
+>> +		else if (iommu_init_ga_log(iommu) ||
+>> +			 iommu_ga_log_enable(iommu))
+>>  			return;
+>>  
+> 
+> [Severity: Critical]
+> If the system is booted into a kdump kernel with GAPPI enabled, could this
+> lead to the IOMMU writing to stale physical memory from the previous kernel?
+> 
+> When GAPPI is used, iommu_init_ga_log() is skipped, meaning the ga_log buffer
+> is not allocated. However, if the previous kernel crashed with a pending GA
+> log overflow, the hardware's overflow status bit remains set.
+> 
+> Once shared IOMMU interrupts are enabled, the pending overflow status triggers
+> the interrupt thread:
+> 
+> drivers/iommu/amd/iommu.c:amd_iommu_int_thread_galog() {
+>     amd_iommu_handle_irq(data, "GA", MMIO_STATUS_GALOG_INT_MASK,
+>                          MMIO_STATUS_GALOG_OVERFLOW_MASK,
+>                          iommu_poll_ga_log, amd_iommu_restart_ga_log);
+> }
+> 
+> This calls amd_iommu_restart_ga_log() which unconditionally enables
+> CONTROL_GALOG_EN:
+> 
+> drivers/iommu/amd/init.c:amd_iommu_restart_ga_log() {
+>     amd_iommu_restart_log(iommu, "GA", CONTROL_GAINT_EN,
+>                           CONTROL_GALOG_EN, MMIO_STATUS_GALOG_RUN_MASK,
+>                           MMIO_STATUS_GALOG_OVERFLOW_MASK);
+> }
+> 
+> Since CONTROL_GALOG_EN is re-enabled without checking if GAPPI is active or
+> if the log memory was allocated, will the IOMMU resume writing GA log
+> entries to the uninitialized physical address left by the crashed kernel?
 > 
 
-> [ ... ]
->> @@ -1308,12 +1405,18 @@ static bool __init avic_want_avic_enabled(void)
->>   */
->>  bool __init avic_hardware_setup(void)
->>  {
->> +	int cpu;
->>  	avic = avic_want_avic_enabled();
->>  	if (!avic)
->>  		return false;
->>  
->>  	pr_info("AVIC enabled\n");
->>  
->> +	for_each_possible_cpu(cpu) {
->> +		INIT_LIST_HEAD(&per_cpu(gappi_vcpu_wakeup_list, cpu));
->> +		raw_spin_lock_init(&per_cpu(gappi_vcpu_wakeup_list_lock, cpu));
->> +	}
-> 
-> [Severity: High]
-> Are blocked vCPUs left stranded if their physical CPU is taken offline?
-> 
-> The per-CPU wakeup lists queue blocked vCPUs on the physical CPU they last ran
-> on. However, there are no CPU hotplug callbacks registered. If a physical CPU
-> is taken offline, the IOMMU hardware will not deliver GAPPI interrupts for
-> that offlined CPU's APIC ID.
-> 
-> Since there is no mechanism to migrate the stranded vCPUs to an online CPU's
-> wakeup list during the offline event, these vCPUs could hang indefinitely.
+The IOMMU driver does not evaluate GALOG overflow status bit unless
+IOMMU delivers an GALOG interrupt, which is not possible when IOMMU
+switches GAPPI mode.
+
+Thanks
+Sairaj
+
+>>  		iommu_feature_enable(iommu, CONTROL_GAM_EN);
+>>  		if (amd_iommu_snp_en)
 > 
 
