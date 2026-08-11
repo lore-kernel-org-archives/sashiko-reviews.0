@@ -1,158 +1,244 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011042.outbound.protection.outlook.com [40.107.208.42])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E353033EC
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 16:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786465769; cv=fail; b=geunSlYAtNY48L/nH93jSvsjGLCT6rPGatAMv2DytbKgs6e5/wTiiW9k9QlIJAggIZI2hDklsjCrl9Bj92ulvZdVUYA1c1iSxc2oAgzNhalF5HuFAR6rnVWXcptl1EDkPLkaVW1jvGERN0zUsqFjL7/Xi9j0QPkHTbNyogEwW/o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786465769; c=relaxed/simple;
-	bh=YZNjM5eFaoNSwvCoG5gaUa7PMjQ160BCgRjvG56BvBY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QmOGQv9MTQs57dSheQ2VqHKnvD3/zfFiAfQcTMfh+rNliBvgGaU05BbFXXHvAc/zvaCTSoovwMh4E/BMPqNpuebh7wj5Ex6LTJE10j8CXhz8nGfhmSdJP+UkfTmJwlIdWWgstxCSTPYVdS9DaOWa+YTcgwoue28nLwsYgFnLzOg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=k84zZzGP; arc=fail smtp.client-ip=40.107.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D874562BD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 17:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786467940; cv=none; b=CI4+G/fIEbyCnqDIOkw/wLWf4jhnUAv8GndwjLAiNNf0QJQjY8cwKLvXEDDJwYF9IUNBy1VLoN58nokprV5ZKqSqTJfS6cnxi/Dj7CihZQOsruZ94CI6hlbZTnWoPRjRzjY9c//pN1mINvr18UvCSFLq/D3EtphIw5QEuUimK9Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786467940; c=relaxed/simple;
+	bh=y60WQKbnfxxPpZGYQxuPuZXmWaUbdCih368iXeHm9WI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=t811BOna5UKsIFnwoNgQVJZAwfPcFhzgjskB+DjP3krqKBJ0oarIYRZs1nvX5lQ/IcnEByDZFQ8XmlLM+9goRysTCLP0qG1fl02tCrNtt31E3/dei1sF4EXaeOD0MH3gB/8+cnpm2ZJKJAkAS7qcbZGnj5X7L8LdDOaRh1tHWq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=P4C9K/fu; arc=none smtp.client-ip=185.67.36.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="k84zZzGP"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nEw4VcZJNyFXP+Wp7nuDZZQoVR30r9iPlaGdnPJf0E7V5QYGZgj5/Hlpbc0RCUiBeP6+UpAOyQuM7DGBOHWC9SL7VZA5rRlhULjKtcU49oHbHOMdw8Gk+7l0eQiv9kxhP/1xytqfT8Q2O1avVaBfm+B298JlIMD7qhBH0zrCTkC+365iCtsf5CJVrimZ6PjVJlQ0j6PAJ68QPlDEe1MLORrnKcKyaVLA2nvmlehB+FWr8Kvwo1OyAQIMLGcwuhhQ5fZXN1EqKbT7bl3PV/pXFMx2jTEF6BeicHRQ/geRNRC/dY1VyPF3a7zVg0VPSAf7uaU/AaVv+SzY0jOobQgOug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WJWFbOPlA70e6+dnkUwuhcuvxSOZo6ZYtFpHWdbij3Y=;
- b=djm2P1iRK5CY3C8ikjJlQriJ2gZ+2YZxb4S7pKaicfgkcFhuqUflSIDu9xM4mlYLAYEUl7of69OpA9Ezy8ESjM6eY5WxQfp2YtJ6V9z6CKaca9hUpWCq/uG38JRySQbxw9X4CR64OCbMPwhKLQTq1zQzkpra6RXk2xkFHogIRzkbPUeYFhaCegbeBtuyUjyMwR9eBVlfIBYOJ58LqnVabI4ENPwzZkh7sUmZ2+QOAEjeSt5GfQucJ/ghrEc/8NMyNOuLe0W460NWcK4f3bHkg80mKhF6l17AApPJ+es/mPN7mpGitF9VzRDvdnkqU19GK7fYgWdjlNPbo4l6hwvYsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=oss.nxp.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WJWFbOPlA70e6+dnkUwuhcuvxSOZo6ZYtFpHWdbij3Y=;
- b=k84zZzGPCEholFaSKAauUFZ+fgGb7Wd09D6FMO7zrN4i31CvNqtlygZNzsm+Lbgtga4DDLmtQ9HYchSxIqmNNfzgpc5NrnYK4CHA/mHMW6PVPx9TqTAmgh+6wGHX+TkRZZun9wWmz8kZ7kGM7ZaJM2FncTC6PunJ6OuewkrdzXNm114+v/mgCuUvA0W3myVaNsWTU/68Rrzd0gvXgV9JLi6fu71700K3GVLyX6K92US4b1aJeSqxfvS77R7dqx64Gwa7VrREAG1UxZ84KvGxHWkQNzE9jvYrLpMyisA+FvtFkc9ZyNg/eHjHcJN07tCURjZ9TXOaSjPb5bh2p0Jiuw==
-Received: from BN9P220CA0010.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:13e::15)
- by IA1PR12MB8190.namprd12.prod.outlook.com (2603:10b6:208:3f2::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
- 2026 16:29:19 +0000
-Received: from BN3PEPF0000B070.namprd21.prod.outlook.com
- (2603:10b6:408:13e:cafe::a8) by BN9P220CA0010.outlook.office365.com
- (2603:10b6:408:13e::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.25 via Frontend Transport; Tue,
- 11 Aug 2026 16:29:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN3PEPF0000B070.mail.protection.outlook.com (10.167.243.75) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.339.0 via Frontend Transport; Tue, 11 Aug 2026 16:29:19 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 11 Aug
- 2026 09:28:52 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 11 Aug
- 2026 09:28:52 -0700
-Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
- mail.nvidia.com (10.129.68.10) with Microsoft SMTP Server id 15.2.2562.20 via
- Frontend Transport; Tue, 11 Aug 2026 09:28:50 -0700
-From: Akhil R <akhilrajeev@nvidia.com>
-To: <frank.li@oss.nxp.com>
-CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>,
-	<alexandre.belloni@bootlin.com>, <linux-i3c@lists.infradead.org>,
-	<sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH 1/5] i3c: master: Release the fwnode of i2c boardinfo
-Date: Tue, 11 Aug 2026 16:28:49 +0000
-Message-ID: <20260811162849.1242167-1-akhilrajeev@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <anOJ2V4_R0KFM_aQ@lizhi-Precision-Tower-5810>
-References: <anOJ2V4_R0KFM_aQ@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="P4C9K/fu"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id DA36F240103
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 19:05:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1786467935;
+	bh=nOMPTZKoGJ+jhq7X3DLmn8turldSsuhoUMhsNGxWBMI=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=P4C9K/fu1jYqy+uH1PHKr4Md51RMD2apY7dRsKkJOU6NTgnL+nPRACt3JjDRLrCB1
+	 Kse4yGndYQy4tBhUa2GAwCmI/exduQ5Z2Wxn1o6gLAK2UgXTIRYNv3blQAEoQczM+o
+	 VN23bpB7bIEH7ZBDfKL95kO5Y6U2mKdVJvNBO9f23vq8nApQufV4tv5ibMaEO4lUjk
+	 B8NJ1RBH9QQzH7ymEaUS3rflnsa4kd6/iFafKO783ngQCpeRVmBjDGZ02w8mUHvaZj
+	 X7nkHUTdGfw7WW9vnkfTjMzksOWmdfjg4MiCokPVKD7BHPgRk8U+KBg2GGgvvYtYr9
+	 +3S1hJ8Dz1L3g==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4hKJ0Z5j1Nz6twP;
+	Tue, 11 Aug 2026 19:05:34 +0200 (CEST)
+Message-ID: <de063c2d6fd671af5ab71ff9372a426730b98449.camel@posteo.de>
+Subject: Re: [PATCH v3 1/5] dt-bindings: rtc: Add pinctrl for S35390A
+From: Markus Probst <markus.probst@posteo.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rtc@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, 	robh@kernel.org, Alexandre Belloni
+ <alexandre.belloni@bootlin.com>
+Date: Tue, 11 Aug 2026 17:05:35 +0000
+In-Reply-To: <20260805202151.3C0C11F000E9@smtp.kernel.org>
+References: <20260805-rtc_s35390a_int1-v3-0-e836faba3e25@posteo.de>
+	 <20260805-rtc_s35390a_int1-v3-1-e836faba3e25@posteo.de>
+	 <20260805202151.3C0C11F000E9@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-DNHLbVYBy4pleStj0hu1"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B070:EE_|IA1PR12MB8190:EE_
-X-MS-Office365-Filtering-Correlation-Id: d3662819-d53b-4b3b-656d-08def7c5b189
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|36860700016|1800799024|30052699003|82310400026|6133799003|10067099003|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	dYivr4SLYioNWytnW37IxHQPeUY+WMHqLvVzcmztMSzIOiFfPu1fDJVJto+GwAtpdfzGagWwZ9O/p3qr8mrxv4aD/8i5sFOZ0zX5SPkI9BnbcviNU4X5XBRSxZpKRgyKXhD97aAahYS2a2kB6W67YjHPR/WrbHgM1vuTBgSvzQ8SB7G69ZZARYF/yYIhPw57p+9jfwASGuxJVDdftxmKM3e/pJic0QlOsROniVModhwb2wIuj59Rt59HuC0atz34VtNWraMS6++on0MsgyEN6qxzTcLEK61+/jF2dFXu5iu8yjsEKLeHmCAxIm5KthaZQF40Oj1bXPW377HcDp+Q3TXQ8TL3I0xctwbYuztacJPHDQenkrgpucbmrvxLDvXrsMLel9SVBa8QtA15+ahrmo5uiumd59Q8dkwfSYBF7LQrrbpFeCmmL/ZSdRXwoi615iYjZCB6x7q+3hNwl74/oDgZzriSvU5893JrRRpLoO66kOf/fTzAtta6Vpo2RVtzeZgK6gk4ERO1W+/Gd/q+Zqiw+hjESPqhISG7QRFoyXJZgObxWJm8N1XmEWVZRCj41Bxk21q88NNU4rS1nELK3I4XctwaYaSp3dAHVrsdBGFb3tab2sYxx8XhB8PpLutK+GM3Z6Arr4+Qqcdrv2qyWDL4NlThxhAnS0ToenLEcwRfFNPKOrO0y3Fefinj9CS7OShj4pc0fnif4M3n823dKw==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(376014)(36860700016)(1800799024)(30052699003)(82310400026)(6133799003)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	to/cMYIIW+wEfwsZGrtY/h3AZay8V+RTiE/4ZyeXUzNOC7jZ3wm64w7Q1zYUF1OZ1/Z2l3hjyAZkZcMrJXSaVAxXtLmkCyCvwHsJRZIgusrMSO4VboazxOZGMs8hleBv1wcouvD7iBy7/bAO2Dj4b4Jg1zDWIAlrlAQzxqTEQMLnFOX+HHfRzKutNHRWUNrxl4+zpryS94YF+5//pL3XQ1XQrfgOQ92yYFyYytKoRb/LFQlxal5HoMJofYdTwgi0HqJ0JhBxMKpz8nzcQYCb050limGwCHHjymeLL9hK34Sk0z3vKQUAx5rRKmIhdHWZneXTqIET1+QtITT/UN7Ux28sj3BpRS/MnAbvJCht0v/fuVwlPEqTjH964lUk3HU5apBKFqlehLCbOZggwDnacj1/p3LLyiUHoTzw1H4bDTrKK5edAKF2Et04M80/xsxh
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 16:29:19.0446
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3662819-d53b-4b3b-656d-08def7c5b189
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN3PEPF0000B070.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8190
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
-On Wed, 5 Aug 2026 15:07:05 -0400, Frank Li wrote:
-> On Tue, Aug 04, 2026 at 10:33:05AM +0000, sashiko-bot@kernel.org wrote:
 
-...
+--=-DNHLbVYBy4pleStj0hu1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> [Severity: High]
->> This is a pre-existing issue, but while fixing the leak for I2C devices, it
->> looks like the identical leak was left behind in the I3C counterpart,
->> i3c_master_add_i3c_boardinfo().
->>
->> However, would applying the same devm_add_action_or_reset() fix there
->> trigger a double-put use-after-free for instantiated I3C devices?
->>
->> Looking at how the I3C devices are created, i3c_master_register_new_i3c_devs()
->> assigns the boardinfo fwnode to the new device without taking an additional
->> reference:
->>
->> drivers/i3c/master.c:i3c_master_register_new_i3c_devs() {
->>     ...
->>     device_set_node(&desc->dev->dev, desc->boardinfo->fwnode);
->>     ...
->> }
->>
->> And when the device is unregistered, i3c_device_release() unconditionally
->> drops it:
->>
->> drivers/i3c/master.c:i3c_device_release() {
->>     ...
->>     fwnode_handle_put(dev->fwnode);
->>     ...
->> }
->>
->> If a devm action is added to i3c_master_add_i3c_boardinfo() to drop the
->> reference on teardown, wouldn't we also need to add a fwnode_handle_get()
->> in i3c_master_register_new_i3c_devs() to ensure i3c_device_release()
->> doesn't consume the reference the devm action expects to drop?
-> 
-> Make sense, please make i2c/i3c handle fwnode consisent.
+On Wed, 2026-08-05 at 20:21 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Medium] The schema describes a hardware constraint for the 'pmin2' fun=
+ction but fails to enforce it programmatically in the YAML logic.
+> - [Medium] The patch makes an undocumented, unrelated modification to the=
+ MAINTAINERS file by adding a non-existent directory.
+> - [Medium] The pinctrl child node pattern `-pins$` requires the `function=
+` property but omits the `pins` property from the `required` list.
+> --
+>=20
+> --- Patch [1]: [PATCH v3 1/5] dt-bindings: rtc: Add pinctrl for S35390A -=
+--
+> commit 7fb91877359a278935b0893edcef6e5ae7d9c6a2
+> Author: Markus Probst <markus.probst@posteo.de>
+>=20
+>     dt-bindings: rtc: Add pinctrl for S35390A
+>    =20
+>     Synology NAS devices use the output pin for interrupt signal 1 to wak=
+e up
+>     the system. Move devicetree bindings for sii,s35390a into its own fil=
+e.
+>     Add necessary properties to configure the individual pins via pinctrl=
+,
+>     which allows the interrupt signal 1 to be used for wakeup alarm.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml b/D=
+ocumentation/devicetree/bindings/rtc/sii,s35390a.yaml
+> > new file mode 100644
+> > index 0000000000000..0355f17f233a3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml
+> [ ... ]
+> > +          function:
+> > +            $ref: /schemas/types.yaml#/definitions/string
+> > +            description: |
+> > +              Pin function:
+> > +              - ignore:  Preserve the previous state.
+> > +              - disable: Disable pin output.
+> > +              - wakeup:  Output wakes up the system.
+> > +              - clock:   Output clock pulse.
+> > +              - pmin1:   Minute periodical output with 50% duty.
+> > +              - pmin2:   Minute periodical output L for 7.81 ms.
+> > +                         Can only be used with pin int1.
+>=20
+> [Severity: Medium]
+> Could this hardware constraint be enforced programmatically in the YAML s=
+chema?
+>=20
+> As currently written, a device tree specifying function =3D "pmin2" for=
+=20
+> pins =3D "int2" would silently pass dt_binding_check validation despite v=
+iolating=20
+> the documented hardware constraints. Should this be enforced using condit=
+ional=20
+> schema logic?
+>=20
+> > +            enum:
+> > +              - ignore
+> > +              - disable
+> > +              - wakeup
+> > +              - clock
+> > +              - pmin1
+> > +              - pmin2
+> > +
+> > +        required:
+> > +          - function
+I cannot add further restrictions in an if statement to the property,
+than disabling or requiring it afaik.
 
-Patch 2 of this series ("i3c: master: Fix refcount of i3c fwnode") does
-that. It adds the same devm action for the i3c boardinfo and takes a
-reference in i3c_master_register_new_i3c_devs(), so the put in
-i3c_device_release() is balanced and there is no double put.
+>=20
+> [Severity: Medium]
+> Should the pins property also be required here?
+>=20
+> If a developer creates a pinmux child node specifying a function but omit=
+s the=20
+> mandatory pins identifier, the incomplete node will silently pass=20
+> dt_binding_check validation but fail to configure the hardware correctly =
+in=20
+> the driver.
+Yes.
 
-Best Regards,
-Akhil
+
+>=20
+> > +
+> > +        additionalProperties: false
+> > +
+> > +    additionalProperties: false
+> [ ... ]
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 15011f5752a99..46a19a0873e06 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -22690,6 +22690,7 @@ T:	git git://git.kernel.org/pub/scm/linux/kerne=
+l/git/abelloni/linux.git
+> >  F:	Documentation/admin-guide/rtc.rst
+> >  F:	Documentation/devicetree/bindings/rtc/
+> >  F:	drivers/rtc/
+> > +F:	include/dt-bindings/rtc/
+>=20
+> [Severity: Medium]
+> Is this addition to the MAINTAINERS file intentional?
+It isn't.
+
+>=20
+> This introduces an undocumented and unrelated modification adding a direc=
+tory=20
+> that does not actually exist in the kernel tree, which may cause maintain=
+er=20
+> scripts to fail or behave unexpectedly.
+>=20
+> >  F:	include/linux/rtc.h
+> >  F:	include/linux/rtc/
+> >  F:	include/uapi/linux/rtc.h
+
+--=-DNHLbVYBy4pleStj0hu1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmp7Vl4bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSSDIP/1qPbdVD96WWsrvK3XZi
+m4orKp2ETQYeHnboOl3+uIuFQrZYOY6nl34oVjhhJ4yrB4qe1LbkDJ97T70WTc5a
+J5PdfJ9ZY13wjVWD6p4vOFMIjENOxKmmy62AjOFy6QU4DfPZt2MNS3uShqyeZ+6z
+/YTezWmr2LbbPl+Mc92N72H9prMY82ZxtUwHGG0eVqiCZhYws7gvHS9ockgKA+CQ
+WS0WLOVYFtZqxnbPDqXW11LkBIPWYJXe+GIdYpgixuxA0Luo/UP0j6YVPbaavVWv
+Xi8UQeuSQgVs6YdgcihIMfVmcz/Hde1jBX6+OaVnLff9RSABcjeAd6/L2w7KJiu/
+TMW24qJ0Won5R5ndJRDj/P22sc2FuJiHnyzlF8uqrXbBi7nNdpJWtaSS7KOl8nMB
+bPo4MxLddxC99dpnRgId1vRJRjOl9CSflgClKgbT6LaBeYFBuqQRjc3yQkaeCXLw
+xuoGcITBU33O9Ix0mO1KwogZG1+Gp0f4Atd82AGv7mxkXfbkX5SuTYkb/JnfI0nW
+iisBB4D0Zi3MWkjYajZzmCmUE/lQNYrSLs8v4L3Mv8c78Fu1CxVbFieL/pyQRZ5w
+B11R6UyT8nsPT7m6PkRO1OZ7T6l/FK/+XciIu3f1N32jN65AuM53veR3jv65gDfs
+jPZ3PglS+7yMQZipvoNwj0LY
+=aw9u
+-----END PGP SIGNATURE-----
+
+--=-DNHLbVYBy4pleStj0hu1--
