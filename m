@@ -1,101 +1,104 @@
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C598C13D53C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 00:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDCB2517AF
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 00:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786406680; cv=none; b=GZ9HSYbssTPQPNQGsLVs7HfuHV2RokE/ojVM81Y0pJ5z//kqMGd34DMSAaOEhQxFbcUrWBV1dbkhtgUZuwVdGD6eyioQgBwt89sSwpVIc+2BHc9FxF9L0Atd9CnpXFok3qKfT26FzgcXZtxo9fvXapzvjipNjnPInVS7KuaWy2g=
+	t=1786407582; cv=none; b=WTEHcwjOZEQNt96w254vkAe9xobVbo+0P7WFlxRGqOJoXg6WnhiHJwYYUEucvhnHYKmN8nolqx0tKabOJsBQ0WdviOjy8J3ZamhxnMwWexO+QKcc/aHn69zqC+Vp7zwFjkeEgrPUjYmT+3PuFOhE9dAgooAD4FfqVJX+QwFZMwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786406680; c=relaxed/simple;
-	bh=HJBF+TSSzQd86uwj6B1uJ2YU+Qpc/TVCzBSZ0dPrIdw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=bRZE5pjoaXm/Hwt2P/8izuBj6EXia70FbwJ0FLQPVprObDUAp6dNNFDctxXyNUdQIKXJIFi2qb2rymE5GP0k7rwwCx3JW01+4yi6wSzbMNImW387LkBIHjq84Qll9O47MkPdktL8jTz7Z9sP/+/NAX1p8mqYP5mF79KzUQ2Yeg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=co6EprUE; arc=none smtp.client-ip=209.85.214.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1786407582; c=relaxed/simple;
+	bh=U66L/gSSF6ngUPOZrEqZedSLeI0tHxIkX04NsxIq5Oo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bU/WqcA6C/wpLrSvMujbGSzFKZ7NKaUyxFy8D93jR8w0kpjmhmH8EVK7e8vywoYRTrHpKPFMNKOYG8MsDhXyl18i/eHnb53yMZJdBjgcAc92HHnefK8BYOF9Lx/RXu07hwlub27rs3KiWmPBYOeJF32vRgxRBae0hCZg72xXamA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=He4vDi/c; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="co6EprUE"
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cceabd70f5so73547935ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 17:04:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786406677; x=1787011477; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TWP8fni2Pj7QL+D72A3UzmdRtAr58m5dr4TKd83QRDo=;
-        b=co6EprUErS8G0AyARk2LiEevN57g3dMmmaUzBhUwlCo+ppV7v0zmhixqYFMslR0UPt
-         bJeD1snmwYpdaReWnrJlo2QlDX6J/XLmR/0SXoyTCb/fPUGgN6gcvXgH/7xF0mHJv92i
-         5K8tqo08fx8bydsDYE5csTGh5wjL1D2tT9Z6Zx+dpbrp6MTzxqfJpzaHMZvF8fkGdmZs
-         Xt2EI4b8zKpKmO6o7ZnIDpXxxMOT4uWd1w3jIk3/6J8tXs1wF+QSokgcBlzVSgqv+Rz7
-         thdrbFTZOatwpczaa41oReVKr5uYwL7p/8D6lm8ibf6xEXSKbNjZib/9Mp88lRcD4JL8
-         3xkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786406677; x=1787011477;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TWP8fni2Pj7QL+D72A3UzmdRtAr58m5dr4TKd83QRDo=;
-        b=n1UXgx0AbSCya37NDmLYFf/Y2DSwQyb+0/Z7qW7x2C/eiRyjh6CWftPcwuVYXZIOIo
-         YDaHdk8kEqXdedpEsPyAeWa4CIwiW8NvYWgXiT8DJZTNyAaud/9kmydkh+fEQUIqruNX
-         nQKeU6nYjn34a6dtRbetBrl+FDHIlrsX+lDh2zSID5rjyt1Q7ZrpnOg/l5+a+KkW45Nv
-         3V25ge86jFzuCMqJ7TB0jltxnbthEMWa67+cwCl8FGkhz0kqKMLbIrOUqV4at9uWh4n1
-         sZC2NCm6B0kXbqNLDOk7eF55ax6EYfhdg1x/sMjlxm7Hk8Pz46iWulF50FEgU8DXC4b1
-         PxBQ==
-X-Gm-Message-State: AOJu0YxzZDsx8q7vGzu4F0HH6viR6u5UQ3yDsMKYTErKuWcKg7H0XJM2
-	bCjCTR2tD8JYgJCKz0w1od1Xs/UPBHzoHODYGAEQ0yhdfOnKBx/qurGKZwCaxJm3pKcC4uZze2o
-	3kmDJIA==
-X-Received: from plcb3.prod.google.com ([2002:a17:902:d303:b0:2ce:d2e2:393])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1b26:b0:2cf:ccc2:6088
- with SMTP id d9443c01a7336-2d294b29193mr358218035ad.4.1786406677170; Mon, 10
- Aug 2026 17:04:37 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:04:36 -0700
-In-Reply-To: <anplcWfYReCMeu1A@google.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="He4vDi/c"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1786407581; x=1817943581;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=U66L/gSSF6ngUPOZrEqZedSLeI0tHxIkX04NsxIq5Oo=;
+  b=He4vDi/c41xD3uWC8e9OkrUdhy5WzXvNqxE4b5x9p8YoK2rHo3pNrok5
+   KutEy41SKJhia/H+IFmRNFe7mx6sFrii+UfX13a/Mx79kwoaZw4Y+n0jS
+   S1EP7uDk6Cya/m/O4IU6x9P70eZ3TCRx6NEJuIHNIZeZbMMF7ujlKtLRI
+   WXDQQwK2SO/eMndzSFOiA0dEe9EZBiyeS8/l6CWXut58yP/f4FEsIr5wD
+   Ekk349ypMzvRpIRvNGc4Ko3g6dDRxtgJ+OncWVsxZ1tY8HoEEaBVor/+P
+   xooAfyJe5k2wwElIf8Mov/DFAV1Md6J2HenxhxrBT+CzZ3h4aCOn01Vim
+   w==;
+X-CSE-ConnectionGUID: VPORv5bOTQq/n8z87DrEgg==
+X-CSE-MsgGUID: 0o23YAVYSmGQR4dfHeFDfw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11871"; a="90747210"
+X-IronPort-AV: E=Sophos;i="6.25,216,1779174000"; 
+   d="scan'208";a="90747210"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2026 17:19:40 -0700
+X-CSE-ConnectionGUID: SiDjlxTFTW+eL2+BBTuAHQ==
+X-CSE-MsgGUID: P7z0nwhJQaum795k3EHlNw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,216,1779174000"; 
+   d="scan'208";a="259879762"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.248]) ([10.124.240.248])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2026 17:19:38 -0700
+Message-ID: <07df932f-ca83-463d-b830-aa10a8fa11f2@intel.com>
+Date: Tue, 11 Aug 2026 08:19:34 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260810112200.2326727-1-xiaoyao.li@intel.com>
- <20260810112200.2326727-3-xiaoyao.li@intel.com> <20260810113924.4ACBE1F000E9@smtp.kernel.org>
- <13ea6279-a342-493b-a0f8-15ac5b4c59ad@intel.com> <anplcWfYReCMeu1A@google.com>
-Message-ID: <anpnFAK6EZToizbZ@google.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/3] KVM: TDX: Fix the exit reason handling
-From: Sean Christopherson <seanjc@google.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
-	Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="us-ascii"
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260810112200.2326727-1-xiaoyao.li@intel.com>
+ <20260810112200.2326727-3-xiaoyao.li@intel.com>
+ <20260810113924.4ACBE1F000E9@smtp.kernel.org>
+ <13ea6279-a342-493b-a0f8-15ac5b4c59ad@intel.com>
+ <anplcWfYReCMeu1A@google.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <anplcWfYReCMeu1A@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 10, 2026, Sean Christopherson wrote:
+On 8/11/2026 7:57 AM, Sean Christopherson wrote:
 > On Mon, Aug 10, 2026, Xiaoyao Li wrote:
-> > On 8/10/2026 7:39 PM, sashiko-bot@kernel.org wrote:
-> > > > @@ -2147,7 +2156,7 @@ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
-> > > >   	struct vcpu_tdx *tdx = to_tdx(vcpu);
-> > > >   	*reason = tdx->vt.exit_reason.full;
-> > > > -	if (*reason != -1u) {
-> > > > +	if (tdx->vt.exit_reason.basic != -1) {
-> > > [Severity: Medium]
-> > > Will this check always evaluate to true due to C integer promotion rules?
-> > > 
-> > > The basic field in union vmx_exit_reason is a 16-bit unsigned bitfield. When
-> > > comparing it to -1, the unsigned 16-bit value is promoted to a signed 32-bit
-> > > integer. If the value was set to -1 (65535), the comparison evaluates as
-> > > 65535 != -1, which is always true.
-> > > 
-> > 
-> > Well, how about something below on top of this patch?
+>> On 8/10/2026 7:39 PM, sashiko-bot@kernel.org wrote:
+>>>> @@ -2147,7 +2156,7 @@ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
+>>>>    	struct vcpu_tdx *tdx = to_tdx(vcpu);
+>>>>    	*reason = tdx->vt.exit_reason.full;
+>>>> -	if (*reason != -1u) {
+>>>> +	if (tdx->vt.exit_reason.basic != -1) {
+>>> [Severity: Medium]
+>>> Will this check always evaluate to true due to C integer promotion rules?
+>>>
+>>> The basic field in union vmx_exit_reason is a 16-bit unsigned bitfield. When
+>>> comparing it to -1, the unsigned 16-bit value is promoted to a signed 32-bit
+>>> integer. If the value was set to -1 (65535), the comparison evaluates as
+>>> 65535 != -1, which is always true.
+>>>
+>>
+>> Well, how about something below on top of this patch?
 > 
 > No, we need to not rely on magic exit_reason.basic values.  Can't this be?
 > 
 > 	if ((tdx->vp_enter_ret & TDX_SW_ERROR) != TDX_SW_ERROR) {
 
-This would arguably be a bug fix as well, because the "real" EXIT_REASON_EPT_MISCONFIG
-path gets a false negative.  E.g. when getting information for an EPT Misconfig
-for the tracepoint, KVM really should print all information, not zeros.
+I think the reason of checking if (*reason != -1u) in the original 
+commit 095b71a03f49 ("KVM: TDX: Add a place holder to handle TDX VM 
+exit") was that, -1u means there is no valid Exit Reason in the lower 32 
+bits in vp_enter_ret.
 
-At a glance, this exact change can probably be a separate patch too.
+Change it to check TDX_SW_ERROR, doesn't look correct to me. Set the 
+EPT_MISCONFIG magic handling aside, TDX_SW_ERROR only means the SEAMCALL 
+instruction faults, e.g., hitting #UD, #GP, or VMFAILINVALID. Just a 
+small subset of the cases where there is no valid Exit Reason.
 
 > 		<read values>
 > 	} else {
@@ -107,3 +110,4 @@ At a glance, this exact change can probably be a separate patch too.
 > obvious)?
 > 
 > [*] https://lore.kernel.org/all/anXxBzO41_5eaaOI@google.com
+
