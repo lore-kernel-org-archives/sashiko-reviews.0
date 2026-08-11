@@ -1,80 +1,30 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227193B7760
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 07:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B99412261
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 08:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786435164; cv=none; b=D2ge3rPoMozNTfIzeZTCggrbduT/g7ygwju7kdjbmNZJEnz46sww4sa9bNAZtsOKfLt+Anp9/Yj/IU+heh7IRbDeXVKTfKKrYgOpg2mBLh/Ck4Hpplzvf5YvUhTVimXj5g+drjGDCglUgnEyKAZ5faqXZr6k49TD0raMeP1nlpc=
+	t=1786435827; cv=none; b=KoxtZBtPQDZN7MssVZKBYGJS6ZqYY0/HW0V2KhM9rYEaPFX4yXlXBH92a/rqYEnITpTzU/kh3MHSyxJ2RUThHznw9b/rg1ezHUWQ+ThxyOfrShh9URznFz8Wx9R3nYB4bceRHn5y60CfUxzlLh+TDHZaRI5EHr9xJK8Zgn7wUUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786435164; c=relaxed/simple;
-	bh=Oj9exzTFfgkc/bgtlVhiRo9zOm4CjJfJQPz/F+C5IYI=;
+	s=arc-20240116; t=1786435827; c=relaxed/simple;
+	bh=5p+navuV7D6IYh3+/liSGmyyN6jCn+Kbnk5GDF6fHJU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oemAu7dxVA97LDGBaawGM+d2gmSX3dp711hkk5WYV3ZDI8SIaYY8p+jH8efqh+uMs2N5PxIju1jZVUM32Y2MElV6PVr12uIdW3OKn4kYoed1tIEYjMCu3bx4wodSv2BEgvw7pfsJY0/UXejcmvQeJ0XBfcGH/PnlYCMV4L8wfU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=F7pj/nhg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Q1MYPfiA; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ChZFwsCs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vnBQfVUf; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="F7pj/nhg";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Q1MYPfiA";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ChZFwsCs";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="vnBQfVUf"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 19DE03DF6;
-	Tue, 11 Aug 2026 07:59:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1786435147; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mEb+iFVnsjF8sWnvUeIiIZLGSrKk7a/zXl6CXhr7ddA=;
-	b=F7pj/nhg4OrBsuuN3sF6gkB5SOa+ub4F5TMRS00XFyGqkjLRfYepSQ2zyLT5RzJ3ycw4Wa
-	u6cCNLABe37M3Y5NIUm9Vv9+OMda3ylInNkSxajXk7wEKgNQP5kugPA4upISBQXMIiww9f
-	XB++b1znrIfVv0CJQd8OBT9Y01h2EHs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1786435147;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mEb+iFVnsjF8sWnvUeIiIZLGSrKk7a/zXl6CXhr7ddA=;
-	b=Q1MYPfiAO/sJkiTgetv99j6Gqm6jse/osv//p/dHm4pk+6GQ2Ur5sWJEYAVtWShtpm+y80
-	LN3mL9ZQFm+ZAYDQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1786435143; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mEb+iFVnsjF8sWnvUeIiIZLGSrKk7a/zXl6CXhr7ddA=;
-	b=ChZFwsCskUHR6N5QkSEA11Cvvv0XhdRKd0Vltx+tMzZL00SkD1UJZoFoDQBmb91IT0OOd1
-	vu9tncT7ffPsmeI3I82yTE62UdOTq/nibhhFEm91HQ+nGla9vahJHjGEvYXIPGB5VorM3H
-	p6nzQkPh0R063oFY47lasweIjkP/ykU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1786435143;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mEb+iFVnsjF8sWnvUeIiIZLGSrKk7a/zXl6CXhr7ddA=;
-	b=vnBQfVUf+vBm9sJMsNomwC+My0J1s6WKSuW7gyYmSV9wvUSfBoYMzj3zhtmAs9LSkOSYJF
-	9pePizGkRX9IVrDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BEB14779B2;
-	Tue, 11 Aug 2026 07:59:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id tkI3LUbWemrGJAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 11 Aug 2026 07:59:02 +0000
-Message-ID: <df01989a-04fc-4f1d-8942-51f937fc8d97@suse.de>
-Date: Tue, 11 Aug 2026 09:58:21 +0200
+	 In-Reply-To:Content-Type; b=fa9AqYWumVAgVTqlnmf7QHvfjGR8ttCKrE87RZotU3aZepy6ktL5hXehGBEzEwkEXz7tckmV+RYoXiFE59KvfkByfeo89p+HOPUBxBTf3ec/uVx3i1GkOELy9A7b0wK31iFt4T9g+l5cEvhK888O8ZBU/vf5zbJrtAONTZxnCLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hK46v50yRzYQv30
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 16:10:15 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id A462C4058C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 16:10:18 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBH2R3p2Hpq5iawBw--.5771S2;
+	Tue, 11 Aug 2026 16:10:18 +0800 (CST)
+Message-ID: <54a84f96-8ce8-4288-b0e1-dbbe2d8edce3@huaweicloud.com>
+Date: Tue, 11 Aug 2026 16:10:17 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,153 +32,139 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] drm/i915/display: Handle struct
- drm_plane_state.ignore_damage_clips
-To: ville.syrjala@intel.com, rodrigo.vivi@intel.com,
- jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
- tursulin@ursulin.net, airlied@gmail.com, simona@ffwll.ch
-Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- Javier Martinez Canillas <javierm@redhat.com>
-References: <20260721095454.404298-1-tzimmermann@suse.de>
+Subject: Re: [PATCH v4 06/23] perf annotate: Adapt arch__dwarf_regnum() for
+ arm64
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
+ <20260808122400.2961238-7-wutengda@huaweicloud.com>
+ <20260808130708.749031F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260721095454.404298-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.997];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[intel.com,linux.intel.com,ursulin.net,gmail.com,ffwll.ch];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.com:url,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spam-Level: 
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260808130708.749031F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgBH2R3p2Hpq5iawBw--.5771S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykXFW5CrykCF17Gw4fGrg_yoWrJFWrpa
+	1fu3W3JF1UtrW8KwsxXw4rWFy5Kw4fGF1rZr4kG3W2krZrur9Yya1ftF4Y9a4rJrs8Gw40
+	yw4jqF18ur1kCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-gentle ping to review this change
 
-Am 21.07.26 um 11:54 schrieb Thomas Zimmermann:
-> Call drm_atomic_helper_check_plane_damage() in plane_atomic_check()
-> before copying the damage information to guarantees that ignore_damage_clips
-> from struct drm_plane_state has the correct value. Although i915 does not
-> directly modify or use the flag, DRM's damage iterator will soon rely on
-> it.
->
-> As a side effect, if the CRTC has been marked for a full modeset before
-> the call to drm_atomic_helper_check_plane_damage() happens, the plane now
-> ignores all damage clips and does a full update.
->
-> Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
-> helpers to ignore damage clips") introduced ignore_damage_clips to
-> selectively ignore damage clipping for certain framebuffer changes. The
-> mode-setting pipeline can disabled damage clippings for an atomic commit
-> by setting ignore_damage_clips in struct drm_plane_state. The atomic
-> commit will then do a full display update.
->
-> Future directions: there's currently a multitude of options that affect
-> damage clipping; with different places seeing different state. In order
-> to unify this, drm_atomic_helper_check_plane_state() will soon evaluate
-> all options in a single place and set ignore_damage_clips accordingly. All
-> later stages of the mode-setting pipeline will only look at this field.
->
-> v3:
-> - fix the call to drm_atomic_helper_check_plane_state()
-> - use primary-CRTC's plane state (Sashiko)
-> - note full-plane updates in commit description
-> v2:
-> - move _check_plane_damage() before reading damage first time (Sashiko)
-> - expand commit description
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-> ---
-> Taken with updates from the series at
->
->    https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
-> ---
->   drivers/gpu/drm/i915/display/intel_plane.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/i915/display/intel_plane.c b/drivers/gpu/drm/i915/display/intel_plane.c
-> index a440f92ff00c..d64f151ce410 100644
-> --- a/drivers/gpu/drm/i915/display/intel_plane.c
-> +++ b/drivers/gpu/drm/i915/display/intel_plane.c
-> @@ -850,7 +850,7 @@ static int plane_atomic_check(struct intel_atomic_state *state,
->   		intel_atomic_get_new_plane_state(state, plane);
->   	const struct intel_plane_state *old_plane_state =
->   		intel_atomic_get_old_plane_state(state, plane);
-> -	const struct intel_plane_state *new_primary_crtc_plane_state;
-> +	struct intel_plane_state *new_primary_crtc_plane_state;
->   	const struct intel_plane_state *old_primary_crtc_plane_state;
->   	struct intel_crtc *crtc = intel_crtc_for_pipe(display, plane->pipe);
->   	const struct intel_crtc_state *old_crtc_state =
-> @@ -873,6 +873,14 @@ static int plane_atomic_check(struct intel_atomic_state *state,
->   		old_primary_crtc_plane_state = old_plane_state;
->   	}
->   
-> +	/*
-> +	 * Prepare plane-damage state before using it; do this on all
-> +	 * display versions to keep the underlying DRM plane state in
-> +	 * good shape.
-> +	 */
-> +	drm_atomic_helper_check_plane_damage(&state->base,
-> +					     &new_primary_crtc_plane_state->uapi);
-> +
->   	intel_plane_copy_uapi_plane_damage(new_plane_state,
->   					   old_primary_crtc_plane_state,
->   					   new_primary_crtc_plane_state);
->
-> base-commit: fcaba3bc017906059b910ece3f83185e93010581
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+On 2026/8/8 21:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The patch's fix to enable arm64 register parsing is unreachable and ineffective because the callers still unconditionally require a register prefix.
+> - [Medium] The new optional prefix logic in `arch__dwarf_regnum()` fails to strip the opening bracket from memory operands.
+> --
+> 
+> --- Patch [6]: [PATCH v4 06/23] perf annotate: Adapt arch__dwarf_regnum() for arm64 ---
+> commit 1ed2e0e5199a9033fdb64817a106aecaa0871796
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate: Adapt arch__dwarf_regnum() for arm64
+> 
+> This commit makes the register prefix check in arch__dwarf_regnum() optional
+> to support arm64 assembly syntax. It also extends the delimiter set in
+> strpbrk() to handle bracketed memory operands and removes the static
+> qualifier from arch__dwarf_regnum().
+> 
+>> diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+>> index df70e95a84704..9d8b4d6b859b8 100644
+>> --- a/tools/perf/util/annotate.c
+>> +++ b/tools/perf/util/annotate.c
+> 
+> [ ... ]
+> 
+>> @@ -2472,21 +2472,23 @@ int annotate_check_args(void)
+>>  	return 0;
+>>  }
+>>  
+>> -static int arch__dwarf_regnum(const struct arch *arch, const char *str)
+>> +int arch__dwarf_regnum(const struct arch *arch, const char *str)
+> 
+> [Severity: Medium]
+> Does this change fully enable arm64 register parsing?
+> 
+> Looking at the callers of arch__dwarf_regnum(), they appear to still
+> unconditionally enforce the presence of a register prefix character.
+> 
+> For example, extract_reg_offset() checks:
+> 
+>     if (arch->objdump.register_char == 0)
+>         return -1;
+> 
+> And annotate_get_insn_location() strictly requires a match:
+> 
+>     if (*s == arch->objdump.register_char) {
+>         op_loc->reg1 = arch__dwarf_regnum(arch, s);
+>     }
+> 
+> Will these un-updated callers prevent arm64 registers from actually being
+> parsed?
+> 
 
+This seems to be a patch ordering problem. I performed arm64 adaptation
+for the above functions too early, before exporting the arch-specific
+extract_op_location callback. As a result, sashiko flagged those call
+sites which are only used by x86 logic. If I reorder the patches by
+moving the current 0007 patch earlier, it should avoid these warnings:
+
+Reorder: 0007 => 0005 => 0006 => 0008
+Where:
+  0005 perf annotate: Adapt arch__dwarf_regnum() for arm64
+  0006 perf dwarf-regs: Adapt get_dwarf_regnum() for arm64
+  0007 perf annotate: Introduce extract_op_location callback for arch-specific parsing
+  0008 perf annotate-arm64: Implement extract_op_location() callback
+
+>>  {
+>> -	const char *p;
+>> +	const char *p = str;
+>>  	char *regname, *q;
+>>  	int reg;
+>>  
+>> -	p = strchr(str, arch->objdump.register_char);
+>> -	if (p == NULL)
+>> -		return -1;
+>> +	if (arch->objdump.register_char) {
+>> +		p = strchr(str, arch->objdump.register_char);
+>> +		if (p == NULL)
+>> +			return -1;
+>> +	}
+>>  
+>>  	regname = strdup(p);
+>>  	if (regname == NULL)
+>>  		return -1;
+>>  
+>> -	q = strpbrk(regname, ",) ");
+>> +	q = strpbrk(regname, ",)] ");
+> 
+> [Severity: Medium]
+> Since the prefix check is now optional, will p point to the opening bracket
+> for arm64 memory operands like [x2, #8]?
+> 
+> This strpbrk() strips the closing bracket ], but is there logic to strip the
+> leading [ before the string is passed to get_dwarf_regnum()? Can this pass
+> [x2 as the register name and cause it to be rejected?
+> 
+>>  	if (q)
+>>  		*q = '\0';
+>>
+> 
+
+I don't consider this an issue. Even if '[x2' is mistakenly passed as
+the register name, get_dwarf_regnum() will reject the invalid register
+string, which prevents the problem from spreading further.
 
