@@ -1,139 +1,145 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from forward204a.mail.yandex.net (forward204a.mail.yandex.net [178.154.239.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EBF345EC3
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 03:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67A23BAD9C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 06:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786418393; cv=none; b=KPl+lvYn+QXuxZ46ggM7hJew/45KtJcBIKmlhTU6JHjSb2UiQh/ZZy1GuGmOKCP3Pr+HDCdq2YxkVjzWNHFFNywKTGxnc5tjBgrvViPckNyyzd+SRzDfr/NBL4e0SIwKao7n235T9qNQbw71n8vvq0LAOZ3Z9h3ofE9VTl9SQKg=
+	t=1786431109; cv=none; b=JjKfmsxUEuo/izMlrZFWEljwolOgxcxeBVrOd7DMWUHVLAl0eZv01IkM01Yzlg0zNBCEcrd5fNn85LVJhPPweXZvJn90+QiUBVNvrIwbOodpqbDrwqGSbGENCq5DL/imjMIiYKyMehJTvCT8gRm7XdHU4JrZ4OZhsURlPxUgIvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786418393; c=relaxed/simple;
-	bh=Ts+vHWukKN8sUEb+E2XiHaq0mJtw5CebvNk7YyVa2H0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XTqASIJYa/fDUmq4bnkpliO3et5tT6XjxIOIXl//H5dRV2TgQCjwg1+UBTfNApuEj+M3coW2zKjag169nLErDeD4JmW3EZSp2DM0Lnk/ARSNAIgnLqVGTU7Ud7YvmZHwynNsC87JpR2sGDSw6ecq35yVfyS5hXtz6U7lQq25wxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hJxgH6ZjXzKHMQB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 11:19:23 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 56D5840593
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 11:19:39 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBn+R3KlHpqvgCXBw--.2755S2;
-	Tue, 11 Aug 2026 11:19:39 +0800 (CST)
-Message-ID: <6a62c820-3317-4786-823d-50c0a0349a78@huaweicloud.com>
-Date: Tue, 11 Aug 2026 11:19:38 +0800
+	s=arc-20240116; t=1786431109; c=relaxed/simple;
+	bh=wdHZqAEzFn0T0noQsYOfAvtIQsp/ASVtCNDjomPjN40=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CHfLzpli8zXiDbtcXvcG91aXuYDVD+ELLY2iUc9lUiYzttYruq/am/r9PlWhRZyQHM9RHY1vjK6/PyM/FraefUu0Am7oTRLSK0RpMGOd0uEXGJMnIYqyUShc/O7lLOuDiDc6dWShXl2z+sYayVdha4hKVCy3KZUTLEDupfUmkng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=wBa0dJD6; arc=none smtp.client-ip=178.154.239.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="wBa0dJD6"
+Received: from forward103a.mail.yandex.net (forward103a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d103])
+	by forward204a.mail.yandex.net (postfix) with ESMTPS id EF053820C4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 09:44:17 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:8c92:0:640:e75e:0])
+	by forward103a.mail.yandex.net (postfix) with ESMTPS id 4E3638077B;
+	Tue, 11 Aug 2026 09:44:09 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net (smtp) with ESMTPSA id 6iHIfZ5fXqM0-vK0RrYlw;
+	Tue, 11 Aug 2026 09:44:08 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1786430648; bh=JOB0Gct27bnpcqzXKjT56YtpLZ3eR7/sTP3nzxqHITg=;
+	h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+	b=wBa0dJD6Y6xVq1XfLVa/F6qSUw0666nPyPCsO6nv8+Mm9PC0HleuH8lSEiLeoxC3w
+	 yoWgpKFCXs7sR7LsUSdT48oiamYC7wJvVIseXAWsCDcjceJKhoX6J9D6iUKubIZAM8
+	 XOImJlvolfQBg+gV/Yt24Q2gkEEJ5AZjnLa4CYac=
+Authentication-Results: mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+From: Dmitry Antipov <dmantipov@yandex.ru>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-input@vger.kernel.org,
+	lvc-project@linuxtesting.org,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
+Subject: [PATCH v3] Input: sur40: fix error recovery in sur40_probe()
+Date: Tue, 11 Aug 2026 09:44:04 +0300
+Message-ID: <20260811064404.142265-1-dmantipov@yandex.ru>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260810155707.2C5751F00A3D@smtp.kernel.org>
+References: <20260810155707.2C5751F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/23] perf annotate-arm64: Generalize arm64_mov__parse
- to support more instructions
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
- <20260808122400.2961238-4-wutengda@huaweicloud.com>
- <20260808130502.02EA31F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260808130502.02EA31F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgBn+R3KlHpqvgCXBw--.2755S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDur4DJw47uF1rKr15urg_yoW5XF48pw
-	47Cws8GF10gr4UKwn3Zrs7XF1S9w17Ja15KFyYy3Z7KrsxCFn7AFn3tF4a9a1rWrs8Cw4j
-	vFnYvFyxXFn5CaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Transfer-Encoding: 8bit
 
+Since an input device which has passed 'input_register_device()'
+should be released with 'input_unregister_device()', adjust
+'sur40_probe()' to do so and call 'input_free_device()' to handle
+device register error only. To avoid V4L2 memory leak, ensure that
+'v4l2_ctrl_handler_free()' is called on all error handling paths,
+including the one after 'video_register_device()' failure. Finally,
+since 'sur40_poll()' which reads 'bulk_in_buffer' may become active
+immediately after 'input_register_device()' has succeeded, ensure
+that this buffer is freed after 'input_unregister_device()', just
+like it's done in 'sur40_disconnect()'.
 
+Reported-by: syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2a123f6269da57ffefaa
+Fixes: 08b936012964 ("Input: sur40 - switch to using polled mode of input devices")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+---
+v3: free 'bulk_in_buffer' after an input device has passed
+    'input_unregister_device()' (Sashiko)
+v2: setup sur40 input device pointer after 'input_register_device()' and
+    adjust error handling path to ensure that 'input_unregister_device()'
+    is always called for a registered device only (Vasileios)
+---
+ drivers/input/touchscreen/sur40.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-On 2026/8/8 21:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] arch->objdump.memory_ref_char is uninitialized (0) for ARM64, causing arm64__check_multi_regs() to fail parsing memory operands and creating an out-of-bounds read risk.
-> --
-> 
-> --- Patch [3]: [PATCH v4 03/23] perf annotate-arm64: Generalize arm64_mov__parse to support more instructions ---
-> commit 0546b270cb844bdab4fcf529e313bb0ead4fc3f8
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Generalize arm64_mov__parse to support more instructions
->     
-> As the default parser for arm64 instructions, arm64_mov__parse()
-> currently only supports parsing instructions with the 'addr <symbol>'
-> suffix. Other instructions are not supported, causing a lack of
-> source and target information for most regular instructions.
->     
-> Generalize arm64_mov__parse to extend its parsing capabilities:
-> 1. Parse 'ops->target.raw' and 'ops->source.raw' by default.
-> 2. Utilize arm64__check_multi_regs() to identify if source and
->    target contain multiple registers.
-> 3. Maintain backward compatibility for instructions containing the
->    'addr <symbol>' suffix.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 33080fdca125f..5e824fd617ee5 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> 
-> [ ... ]
-> 
->> +static bool arm64__check_multi_regs(const struct arch *arch, const char *op)
->> +{
->> +	const char *p = op;
->> +	int reg_count = 0;
->> +
->> +	while (p && *p) {
->> +		p = skip_spaces(p);
->> +		if (*p == arch->objdump.memory_ref_char)
->> +			p++;
-> 
-> [Severity: Medium]
-> Could this result in an out-of-bounds read?
-> 
-> Since arch->objdump.memory_ref_char is not explicitly initialized for ARM64,
-> it defaults to 0. If the operand string contains trailing spaces,
-> skip_spaces() will advance p to the null terminator. 
-> 
-> This would cause the following check to match:
-> 
->     if (*p == arch->objdump.memory_ref_char) /* 0 == 0 */
->         p++;
-> 
-> This increments p past the null terminator, and the subsequent call to
-> arm64__is_reg(p) would access unallocated memory:
-> 
->     static bool arm64__is_reg(const char *op)
->     {
->         ...
->         if ((op[0] == 'x' || op[0] == 'w') && isdigit(op[1]))
->         ...
-> 
-> Should memory_ref_char be initialized to '[' for ARM64 so that memory
-> operands are correctly parsed?
-> 
-
-Agreed. I need to move the initialization of memory_ref_char earlier in this patch.
-
->> +
->> +		if (arm64__is_reg(p))
->> +			reg_count++;
->> +
-> 
+diff --git a/drivers/input/touchscreen/sur40.c b/drivers/input/touchscreen/sur40.c
+index fe63d53d56db..f7d6d89a028b 100644
+--- a/drivers/input/touchscreen/sur40.c
++++ b/drivers/input/touchscreen/sur40.c
+@@ -713,7 +713,6 @@ static int sur40_probe(struct usb_interface *interface,
+ 
+ 	sur40->usbdev = usbdev;
+ 	sur40->dev = &interface->dev;
+-	sur40->input = input;
+ 
+ 	/* use the bulk-in endpoint tested above */
+ 	sur40->bulk_in_size = usb_endpoint_maxp(endpoint);
+@@ -730,9 +729,12 @@ static int sur40_probe(struct usb_interface *interface,
+ 	if (error) {
+ 		dev_err(&interface->dev,
+ 			"Unable to register polled input device.");
+-		goto err_free_buffer;
++		goto err_free_input;
+ 	}
+ 
++	/* announce an input device as completely initialized */
++	sur40->input = input;
++
+ 	/* register the video master device */
+ 	snprintf(sur40->v4l2.name, sizeof(sur40->v4l2.name), "%s", DRIVER_LONG);
+ 	error = v4l2_device_register(sur40->dev, &sur40->v4l2);
+@@ -786,9 +788,8 @@ static int sur40_probe(struct usb_interface *interface,
+ 	if (sur40->hdl.error) {
+ 		dev_err(&interface->dev,
+ 			"Unable to register video controls.");
+-		v4l2_ctrl_handler_free(&sur40->hdl);
+ 		error = sur40->hdl.error;
+-		goto err_unreg_v4l2;
++		goto err_unreg_ctrl;
+ 	}
+ 
+ 	error = video_register_device(&sur40->vdev, VFL_TYPE_TOUCH, -1);
+@@ -806,12 +807,19 @@ static int sur40_probe(struct usb_interface *interface,
+ 
+ err_unreg_video:
+ 	video_unregister_device(&sur40->vdev);
++err_unreg_ctrl:
++	v4l2_ctrl_handler_free(&sur40->hdl);
+ err_unreg_v4l2:
+ 	v4l2_device_unregister(&sur40->v4l2);
+-err_free_buffer:
+-	kfree(sur40->bulk_in_buffer);
+ err_free_input:
+-	input_free_device(input);
++	if (sur40->input)
++		/* device was successfully registered */
++		input_unregister_device(input);
++	else
++		/* device just needs to be freed */
++		input_free_device(input);
++	/* this should be done after unregistering an input device */
++	kfree(sur40->bulk_in_buffer);
+ err_free_dev:
+ 	kfree(sur40);
+ 
+-- 
+2.55.0
 
