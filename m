@@ -1,120 +1,102 @@
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A511DB95E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 00:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199DD29C35A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 00:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786408080; cv=none; b=VdymQnPmiJFQf9ei7YJdL/AaCvJ/m+eTAdeQKt77kGt9PR8Rpzg2AB7TntRn3IMQbelgM8PtmjL8/t7GZL9IdAdf2ctZ5wYQcEaaBUD5OmLAgIXn0cQl2z5uP4O1YIz6ErOW2XLZpjfqW3RAhS3CKVFdu5iQddV2IwLBR1lWMv0=
+	t=1786408816; cv=none; b=F/lMS2dEBMGCN574pmG6UFp/0+FGhsp5nnBlNFn/LfVmZdKkfABUp21zeEreZ6xjzo4coBQ6lAdnQWdIU1hOl8PnVPcud4GhrdzZLW8+cI3DDnGl5iNzhNpEB7J5e3eJb2Bgzxi0zVKep9flu+gxsny3WkjXTRJ4RP2j8Zgx6Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786408080; c=relaxed/simple;
-	bh=Z3/m4TkqL/dv/HUc2AANkOLODQvUR2RTnqXEuVw/xLs=;
+	s=arc-20240116; t=1786408816; c=relaxed/simple;
+	bh=gPQX7eKDjF4fZq/GhWCuXhtZgyhr/sWawWqdyrYXkio=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=QxbOPq+CDCAMh8GWPDsvmn+0dxXRzwtK+AT2hoKTESqLzUv0AYe4JZUCmWgkzZS77WaUNnxkZH0XBW9Q9JK2ggAkj0psE7Z3fPEQfivCGbhYIDlQFsZpXYwT3hChaA1WOv3E5318UooDQDGasf4bxzecYKm6lMySRYMg99YTlZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XQcWK31c; arc=none smtp.client-ip=209.85.214.197
+	 To:Cc:Content-Type; b=qE7IQ9Q7CpDuujlwiIQfNMvx9VAwxwns/Iu7sGVNSqbSzfXH1/e8OjBnuwqm2GS/olVjRJ8VjOSTKw3KhOvs0QBNghnSHe5+2mDEsA2Z+InM9kfFxQ3U39w5JLBuWGt20NMdu6E2kSvrdw3gPMPky//RaajI+LfzaZXtxRXNtWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SvA/6fK1; arc=none smtp.client-ip=209.85.215.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XQcWK31c"
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cf1c86963bso4005875ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 17:27:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SvA/6fK1"
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cbb6433e9d4so4024727a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 17:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786408079; x=1787012879; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=LEmG05/qyAp4ekJGUu3plZzNKZ0Z1vbporsI46eg3PM=;
-        b=XQcWK31cDw6r+/3KHi2jrmm4jYoG8I+xmtzuaXX9wyC/wpV0AOTjrq8LACXhwmwdyK
-         UvfXhEZjPlcljUesLnGRZ13Kje1O55CFwB2LBThqtyswiQjG8vkCCwbZLNSOzcUmYLQF
-         sBopBg9UJYHIkgAHI7w4NzKHroIjyAzyqqz74GFwpPaVhYKbJycAt1cZfDA5eymrxf6J
-         oFSgts11koWvZhl4+4gKgbY6EADQz/ALgUClXdXkQWjiG9n4u/vp1L5AELiEJBLQvkFb
-         YdkdiA2zNZRrmRKd85otvE3a4d2uT9JiJXgyZX9EUA278t4ehqPXBe+VN3MyTzx3/Sf3
-         KgdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786408079; x=1787012879;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1786408814; x=1787013614; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LEmG05/qyAp4ekJGUu3plZzNKZ0Z1vbporsI46eg3PM=;
-        b=XGY4kTjgagcnRja/5qE8pJCBLxVoVMdfFz10LiU17nxDE77khkzT0a4WF07/PPxdx+
-         JLzQxfAhGcdPOF0j9Q+O1drb08PITN7iKPi9ZaIVlwn8RtZAaq5X7Y8mivssP5x8fv3n
-         E3QkkL08o+tLxPdjc3bKT+/9QKA0nvLpUGt8io/2SfhYxrKNrZMwET04b/YTiLH7Lwl8
-         mEm15W2rSbtWhwlBzz+nFKvT7MdlsmuKhDd2wDhFFPgwRK2qXYQtVH97L8gjoMtff7+I
-         4gaRxLxJTxmnBJbr6Cw/idM2mNy6nkcrsfZ9OhvWf3fEiEnDS/Ow7YZCkeNf0KeJtU0f
-         SsUQ==
-X-Gm-Message-State: AOJu0YxJP/du2u9bhboUO7HBKXrlBV3Cah/c1ApDOQGSYYRWA9OtOwl5
-	ViFEMT/j3Hck1Ci+poIPk8g08GiCWP+QfRL0eeW6Ga+M/2dahykU1XU+HO+tsLml5EsTGPyvLRz
-	X+MDnVw==
-X-Received: from pjbnm24.prod.google.com ([2002:a17:90b:19d8:b0:37d:95c5:815d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2d0e:b0:390:b3c5:e2c9
- with SMTP id 98e67ed59e1d1-392d61cf225mr980360a91.17.1786408078835; Mon, 10
- Aug 2026 17:27:58 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:27:58 -0700
-In-Reply-To: <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com>
+        bh=JyMT57kWt1PHWoThOFjq7MhJaHyWUBNbFvppiukGfjo=;
+        b=SvA/6fK16/8SD0wxThpzB8LuG5ualr5TTz4I79jVuTQSms0I5fBanCIAmfZQgX5HvO
+         LeVwx5qagO3gHM4HPchmkXOYvlPQIiQuR6DQ4A3knmED4SLl1P3inj2k/v2e653yEllw
+         /+7ziWvqM7W9VFM0YvLyWypXi58mAmj1FPIOaxZPcTn/hH7Pd93H6M0kphpJmjg+XWJJ
+         sk7GNZl6QW4K2B2SyFf8s68jxmLySb4wWk9Zv3/+rBYZsj82wocdA00/dDrDSWory0b5
+         zLG0g76LDx4OpYt8xumrG2QewD7sCPZ0eqxNv9jYT5K4S30m8pnIJE355HFMO955OQ9P
+         GTiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786408814; x=1787013614;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JyMT57kWt1PHWoThOFjq7MhJaHyWUBNbFvppiukGfjo=;
+        b=Rq5zEnb8Vklq8dSlTPjWwMyviZD55nF514nLwBzII6N5mj20Gj7T4cbNaWRrgJGZaz
+         8+mQ9g3Z+iveVN+aCmWpT6gpYKjGEY2BynW2puko/XI1hZNW8WDasc3WZ9bZ0APBe0Kg
+         ovf9LmPw09RjLta67ougilLsU1sy03T0UL3Y1EJP9XP3z+ZZQQcMwosElrkl/1m6Bf9a
+         i7hyVbI8liP5NhP25CM8ACUTdLQQ2oXdXA+LdAgqV2UoxasvD935dKpsrXtcUZOAcUv2
+         FjiJe7hr9JEMtpLW10aqiig6zN8Hb1WtMlKs4OzxDSSbHdgNdW6tu76wpZG2VVP0xMeG
+         K7cQ==
+X-Gm-Message-State: AOJu0YwBr2UtwdRhTwk67tUNw4/1bqRphJc1eLAa+qaJr/WmBido718F
+	SfmTaQi4bG2YTV7clPfky5y4KUqzttwO1XnVQMAZL1xvMVpY9/LsSjVmrJWQHyz/rrMOzjEli12
+	2oPqcgA==
+X-Received: from pgbg16.prod.google.com ([2002:a63:5210:0:b0:c9a:2800:5ce6])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:d10e:b0:3b4:8f18:33a
+ with SMTP id adf61e73a8af0-3cc1a0bcd09mr6439126637.1.1786408814121; Mon, 10
+ Aug 2026 17:40:14 -0700 (PDT)
+Date: Mon, 10 Aug 2026 17:40:13 -0700
+In-Reply-To: <6adaf312-84ff-4fea-b072-61588fd73b40@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260706063035.1139-1-sarunkod@amd.com> <20260706063035.1139-2-sarunkod@amd.com>
- <20260706065212.CCD741F000E9@smtp.kernel.org> <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com>
-Message-ID: <anpsjpCQHjJCH7TU@google.com>
-Subject: Re: [PATCH v2 1/2] x86/uaccess: Extend CMPXCHG user helpers to
- 128-bit operands
+References: <20260713105033.15405-1-sarunkod@amd.com> <20260713105033.15405-6-sarunkod@amd.com>
+ <20260713111119.EC35E1F000E9@smtp.kernel.org> <6adaf312-84ff-4fea-b072-61588fd73b40@amd.com>
+Message-ID: <anpvbdzUIE_JtVoL@google.com>
+Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
+ Physical Processor Interrupt (GAPPI)
 From: Sean Christopherson <seanjc@google.com>
 To: Sairaj Kodilkar <sarunkod@amd.com>
 Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, Jul 06, 2026, Sairaj Kodilkar wrote:
-> On 7/6/2026 12:22 PM, sashiko-bot@kernel.org wrote:
-> > > diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/ua=
-ccess.h
-> > > index 367297b188c39..123755d471099 100644
-> > > --- a/arch/x86/include/asm/uaccess.h
-> > > +++ b/arch/x86/include/asm/uaccess.h
-> > [ ... ]
-> >=20
-> > > @@ -551,11 +594,18 @@ do {                                           =
-                                 \
-> > >=20
-> > >   extern void __try_cmpxchg_user_wrong_size(void);
-> > >=20
-> > > -#ifndef CONFIG_X86_32
-> > > +#ifdef CONFIG_X86_32
-> > > +/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e.=
- cmpxchg16b
-> > > + * instruction).
-> > > + */
-> > > +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
-> > [Severity: Medium]
-> > Does this 32-bit stub correctly signal failure?
-> >=20
-> > Since this macro evaluates to 1, won't the surrounding unsafe_try_cmpxc=
-hg_user
-> > macro treat this as success (true) rather than failure (false)?
-> >=20
-> > This could cause the wrapper to negate the value and return 0 (success)=
- to the
-> > caller, falsely signaling a successful memory exchange without actually
-> > updating memory or the old value. Even though there are no current 32-b=
-it
-> > callers using a 16-byte operand, should this evaluate to 0 instead of 1=
- to
-> > ensure theoretical future callers don't encounter a silent atomicity br=
-eak?
-> >=20
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706063035.=
-1139-1-sarunkod@amd.com?part=3D1
-> Hi,
->=20
-> Right, It should return 0 instead of 1, will rectify this in the next pat=
-ch.
+On Mon, Jul 13, 2026, Sairaj Kodilkar wrote:
+> On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
+> > [Severity: High]
+> > Does this lock ordering create an ABBA deadlock?
+> > 
+> > When a vCPU is preempted, the scheduler executes kvm_sched_out() while holding
+> > the runqueue lock (rq_lock). KVM then calls __avic_vcpu_put(), which in turn
+> > calls avic_add_vcpu_to_gappi_wakeup_list(). This acquires the
+> > gappi_vcpu_wakeup_list_lock, establishing an ordering of rq_lock ->
+> > gappi_vcpu_wakeup_list_lock.
+> > 
+> > Conversely, when a GAPPI interrupt arrives, avic_gappi_wakeup_handler()
+> > acquires gappi_vcpu_wakeup_list_lock and calls kvm_vcpu_wake_up(). The wakeup
+> > path then attempts to acquire the target task's runqueue lock, establishing
+> > the reverse order: gappi_vcpu_wakeup_list_lock -> rq_lock.
+> > 
+> > This inversion will likely trigger a lockdep ABBA deadlock splat and violates
+> > the scheduler locking hierarchy.
+> 
+> For this condition to exist, Following two conditions must be true.
+> 1. avic_vcpu_put() and gappi interrupt handler() must be on same
+> physical CPU.
+> 2. GAPPI must preempt the __avic_vcpu_put() once it has acquired
+> gappi_vcpu_wakeup_list_lock().
+> 
+> The second condition is not possible since __avic_vcpu_put() disables
+> the interrupt while aquiring the ir_list lock.
+> 
+> Hence ABBA deadlock is not possible
 
-Is it possible to fail the build instead?  Attempting to generate CMPXCHG16=
-B on
-32-bit should straigt up fail.
+I wouldn't be surprised if you need to tell lockdep that, e.g. see commit
+c0b8dcabb2cd ("KVM: VMX: Use separate subclasses for PI wakeup lock to squash
+false positive").
