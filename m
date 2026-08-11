@@ -1,145 +1,152 @@
-Received: from forward204a.mail.yandex.net (forward204a.mail.yandex.net [178.154.239.89])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67A23BAD9C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 06:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64063BB102
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 07:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786431109; cv=none; b=JjKfmsxUEuo/izMlrZFWEljwolOgxcxeBVrOd7DMWUHVLAl0eZv01IkM01Yzlg0zNBCEcrd5fNn85LVJhPPweXZvJn90+QiUBVNvrIwbOodpqbDrwqGSbGENCq5DL/imjMIiYKyMehJTvCT8gRm7XdHU4JrZ4OZhsURlPxUgIvE=
+	t=1786432069; cv=none; b=K0cHoDusQcwV/84jPSxHaE2cNe9h1ic24VKUO/MBOO2VaKGnTI7wovMPM+OzMi05WOgB1FOUhj6eVgdeyygWgnhJcZ+jsM/T4kKX3qApJX8VYzgKK1gDZfe/pdF6/be2Ux/y44lPpurEcRsKWGD/AqX03pZxA2TXUPUDoYhKChI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786431109; c=relaxed/simple;
-	bh=wdHZqAEzFn0T0noQsYOfAvtIQsp/ASVtCNDjomPjN40=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHfLzpli8zXiDbtcXvcG91aXuYDVD+ELLY2iUc9lUiYzttYruq/am/r9PlWhRZyQHM9RHY1vjK6/PyM/FraefUu0Am7oTRLSK0RpMGOd0uEXGJMnIYqyUShc/O7lLOuDiDc6dWShXl2z+sYayVdha4hKVCy3KZUTLEDupfUmkng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=wBa0dJD6; arc=none smtp.client-ip=178.154.239.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="wBa0dJD6"
-Received: from forward103a.mail.yandex.net (forward103a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d103])
-	by forward204a.mail.yandex.net (postfix) with ESMTPS id EF053820C4
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 09:44:17 +0300 (MSK)
-Received: from mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:8c92:0:640:e75e:0])
-	by forward103a.mail.yandex.net (postfix) with ESMTPS id 4E3638077B;
-	Tue, 11 Aug 2026 09:44:09 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net (smtp) with ESMTPSA id 6iHIfZ5fXqM0-vK0RrYlw;
-	Tue, 11 Aug 2026 09:44:08 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1786430648; bh=JOB0Gct27bnpcqzXKjT56YtpLZ3eR7/sTP3nzxqHITg=;
-	h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
-	b=wBa0dJD6Y6xVq1XfLVa/F6qSUw0666nPyPCsO6nv8+Mm9PC0HleuH8lSEiLeoxC3w
-	 yoWgpKFCXs7sR7LsUSdT48oiamYC7wJvVIseXAWsCDcjceJKhoX6J9D6iUKubIZAM8
-	 XOImJlvolfQBg+gV/Yt24Q2gkEEJ5AZjnLa4CYac=
-Authentication-Results: mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
-From: Dmitry Antipov <dmantipov@yandex.ru>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	linux-input@vger.kernel.org,
-	lvc-project@linuxtesting.org,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
-Subject: [PATCH v3] Input: sur40: fix error recovery in sur40_probe()
-Date: Tue, 11 Aug 2026 09:44:04 +0300
-Message-ID: <20260811064404.142265-1-dmantipov@yandex.ru>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260810155707.2C5751F00A3D@smtp.kernel.org>
-References: <20260810155707.2C5751F00A3D@smtp.kernel.org>
+	s=arc-20240116; t=1786432069; c=relaxed/simple;
+	bh=d78qSzYRSD06L5dH8dKaGICQIUleLAJ8r+ArZk+eYNU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tG+Ipi7WjyHc4Rylit+K1m1rzEDk9KcgJIfI74tkzu6GwxE+y4ZQjNCBTVIx+ZUkuBemIjDWFty7o7Qy12l522QWvdLlY3Im1H2D71kqtT9DhTW6zSkpBFH0sq7K21fabhZIsD0mvHbauLjXqCwl1ODEmL1PsedcuhcvIBklQVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hK2kf2SNXzYQtw8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:07:38 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 3F07F4056B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:07:41 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgAnkok7ynpqFUqkBw--.27793S2;
+	Tue, 11 Aug 2026 15:07:41 +0800 (CST)
+Message-ID: <5ff620e2-3763-4dda-bac8-fefb686b69df@huaweicloud.com>
+Date: Tue, 11 Aug 2026 15:07:39 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 04/23] perf annotate-arm64: Handle load and store
+ instructions
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
+ <20260808122400.2961238-5-wutengda@huaweicloud.com>
+ <20260808130701.DF40E1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260808130701.DF40E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgAnkok7ynpqFUqkBw--.27793S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurWUZry5tr1xCr1kXF1UWrg_yoW5KrW7pa
+	1Ykw45Jr1Utr1Fg3Z2qrZxWFySga17Za13Gry8J3ZIkF4S9r1xKF93KF12ka15GrnYyw42
+	yFy8tr15AF1kCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Since an input device which has passed 'input_register_device()'
-should be released with 'input_unregister_device()', adjust
-'sur40_probe()' to do so and call 'input_free_device()' to handle
-device register error only. To avoid V4L2 memory leak, ensure that
-'v4l2_ctrl_handler_free()' is called on all error handling paths,
-including the one after 'video_register_device()' failure. Finally,
-since 'sur40_poll()' which reads 'bulk_in_buffer' may become active
-immediately after 'input_register_device()' has succeeded, ensure
-that this buffer is freed after 'input_unregister_device()', just
-like it's done in 'sur40_disconnect()'.
 
-Reported-by: syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2a123f6269da57ffefaa
-Fixes: 08b936012964 ("Input: sur40 - switch to using polled mode of input devices")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
----
-v3: free 'bulk_in_buffer' after an input device has passed
-    'input_unregister_device()' (Sashiko)
-v2: setup sur40 input device pointer after 'input_register_device()' and
-    adjust error handling path to ensure that 'input_unregister_device()'
-    is always called for a registered device only (Vasileios)
----
- drivers/input/touchscreen/sur40.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/input/touchscreen/sur40.c b/drivers/input/touchscreen/sur40.c
-index fe63d53d56db..f7d6d89a028b 100644
---- a/drivers/input/touchscreen/sur40.c
-+++ b/drivers/input/touchscreen/sur40.c
-@@ -713,7 +713,6 @@ static int sur40_probe(struct usb_interface *interface,
- 
- 	sur40->usbdev = usbdev;
- 	sur40->dev = &interface->dev;
--	sur40->input = input;
- 
- 	/* use the bulk-in endpoint tested above */
- 	sur40->bulk_in_size = usb_endpoint_maxp(endpoint);
-@@ -730,9 +729,12 @@ static int sur40_probe(struct usb_interface *interface,
- 	if (error) {
- 		dev_err(&interface->dev,
- 			"Unable to register polled input device.");
--		goto err_free_buffer;
-+		goto err_free_input;
- 	}
- 
-+	/* announce an input device as completely initialized */
-+	sur40->input = input;
-+
- 	/* register the video master device */
- 	snprintf(sur40->v4l2.name, sizeof(sur40->v4l2.name), "%s", DRIVER_LONG);
- 	error = v4l2_device_register(sur40->dev, &sur40->v4l2);
-@@ -786,9 +788,8 @@ static int sur40_probe(struct usb_interface *interface,
- 	if (sur40->hdl.error) {
- 		dev_err(&interface->dev,
- 			"Unable to register video controls.");
--		v4l2_ctrl_handler_free(&sur40->hdl);
- 		error = sur40->hdl.error;
--		goto err_unreg_v4l2;
-+		goto err_unreg_ctrl;
- 	}
- 
- 	error = video_register_device(&sur40->vdev, VFL_TYPE_TOUCH, -1);
-@@ -806,12 +807,19 @@ static int sur40_probe(struct usb_interface *interface,
- 
- err_unreg_video:
- 	video_unregister_device(&sur40->vdev);
-+err_unreg_ctrl:
-+	v4l2_ctrl_handler_free(&sur40->hdl);
- err_unreg_v4l2:
- 	v4l2_device_unregister(&sur40->v4l2);
--err_free_buffer:
--	kfree(sur40->bulk_in_buffer);
- err_free_input:
--	input_free_device(input);
-+	if (sur40->input)
-+		/* device was successfully registered */
-+		input_unregister_device(input);
-+	else
-+		/* device just needs to be freed */
-+		input_free_device(input);
-+	/* this should be done after unregistering an input device */
-+	kfree(sur40->bulk_in_buffer);
- err_free_dev:
- 	kfree(sur40);
- 
--- 
-2.55.0
+On 2026/8/8 21:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] PC-relative loads can be incorrectly parsed and truncated if their associated symbol name or trailing comment contains a bracket '[' (e.g., C++ operator[]).
+> - [Medium] The arm64_ldst_ops struct omits a .scnprintf callback, breaking UI formatting for PC-relative loads and discarding resolved symbols.
+> --
+> 
+> --- Patch [4]: [PATCH v4 04/23] perf annotate-arm64: Handle load and store instructions ---
+> commit e23857fdcfc409dfdff0cd84b9fe8f31c4283050
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-arm64: Handle load and store instructions
+> 
+> Add ldst_ops to handle load and store instructions in order to parse
+> the data types and offsets associated with PMU events for memory access
+> instructions. Matches instruction prefixes to handle arm64 variants.
+> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index 5e824fd617ee5..32752a3bc756b 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> [ ... ]
+>> @@ -163,6 +164,108 @@ static const struct ins_ops arm64_mov_ops = {
+>>  	.scnprintf = arm64_mov__scnprintf,
+>>  };
+>>  
+>> +static bool arm64__insn_is_source_on_left(struct disasm_line *dl)
+>> +{
+> [ ... ]
+>> +static int arm64_ldst__parse(const struct arch *arch,
+>> +			     struct ins_operands *ops,
+>> +			     struct map_symbol *ms,
+>> +			     struct disasm_line *dl)
+>> +{
+>> +	char *s, *left, *right;
+>> +
+>> +	right = s = strchr(ops->raw, arch->objdump.memory_ref_char);
+>> +	if (!s) {
+>> +		/* Fallback to default parser for PC-relative loads. */
+>> +		return arm64_mov__parse(arch, ops, ms, dl);
+>> +	}
+> 
+> [Severity: Medium]
+> For PC-relative loads, if the associated symbol name contains a bracket '['
+> (such as a C++ operator[] or Objective-C method) or if there is an unstripped
+> comment containing a bracket, will this strchr() incorrectly match it instead
+> of falling back to arm64_mov__parse()?
+> 
+> If so, it appears the subsequent string manipulation would use this incorrect
+> bracket position, dropping the characters in between and potentially corrupting
+> the operands.
+> 
+
+Indeed, it appears I need to move rstrip_space_and_comment to the beginning of
+the function, processing ops->raw first.
+
+> [ ... ]
+>> +	ops->source.multi_regs = arm64__check_multi_regs(arch, ops->source.raw);
+>> +	ops->target.multi_regs = arm64__check_multi_regs(arch, ops->target.raw);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static struct ins_ops arm64_ldst_ops = {
+>> +	.parse	   = arm64_ldst__parse,
+>> +};
+> 
+> [Severity: Medium]
+> Does omitting a .scnprintf callback here break UI formatting for PC-relative
+> loads?
+> 
+> Because this structure lacks .scnprintf, it will fall back to
+> ins__raw_scnprintf(). For PC-relative loads that successfully fall back to
+> arm64_mov__parse() and resolve the symbol into ops->source.name, the raw
+> formatter will ignore the resolved symbol and just print ops->raw. Could this
+> result in the UI discarding the resolved symbol and displaying raw hex
+> addresses instead?
+> 
+
+Yes, this only affects the display of ldr PC-relative loads, for example:
+
+Expected: ldr x0, <__kvm_nvhe_$d>
+Current : ldr x0, ffff800080f40c68 <__kvm_nvhe_$d>
+
+This is not a serious issue, but I will still add the .scnprintf callback
+as a follow-up.
 
