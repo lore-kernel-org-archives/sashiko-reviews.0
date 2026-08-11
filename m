@@ -1,209 +1,187 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011055.outbound.protection.outlook.com [40.107.208.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DC143C7DA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 10:55:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786445723; cv=none; b=bSGzdM3tTcjMbveW/s4J+s983L+qDzuWDqs4ZuKK15G3VnVWa4PzqSgLa099Pcyh3O95rDwYBy93t/li/U3Wvc9nT4+0qNnntXVUNDCED/bRUH1AVxFT48pfL5pTbzNZQIR5rbIHNIvjwheYs2jD7HAJRtiHEj8QSXX0llNxT98=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786445723; c=relaxed/simple;
-	bh=lH8D+BJ1YRMpPcmHtgURObMm7AT/9ogJJtxfYRSd7Kc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HPU2ADL+MJbY722dMUTvwWlD2F/vKvaT8t2JnipG7YtmLgMezeN0imK0Vv4E6PcdW3IiUvv7YrfGSIgxoki2sKU8HQippCuvMPOzOdBzYEFLm/hGCtnNkoTz4AofyOalPGKdJSzIXXFDXwajmEp5K7/xhNx01/yO+XaLRGLHyQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bJAINQTk; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74486432BCB
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 10:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786445739; cv=fail; b=RxM7UtqbFjwOV92GAhRixWvEIoOMitHy9SgRzfahi1PXMhRsIOoDPCxvCymnlIj1Yb5R/UYMMyLovEqXoZQt3I0V2FRZNsRkIeLKiedm4NqymK4jL1GqH1gWd1t0DPqksPPTuD36/vRdDewLdVhG+jXrtx9Pn9LpQPdQvEygRUs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786445739; c=relaxed/simple;
+	bh=WAEAhq9VgCAoyyoaH37p3vgLrQP8iopT/rpow/bhhPQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=o7Q4elHQ86ji2XiYproQnlSOcW1iRnoacqQI6Ma9PHAnfpKrzLjAzcMLGiMkKo3aWvl1l5w8JyrGZ3kxKiiozVU6IySuTZ2ufe5WJqBzOnQAn+8+wUZGY8n1TNFgndIj8lNFAfwcUT9+Moscb2aRSciB7RRITb5aD2II8Bz2iQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=pl042mE8; arc=fail smtp.client-ip=40.107.208.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bJAINQTk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786445719;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/55ml4BFA7dhVMUEyZoknlvzKvYGcwvGx5Ocga37Jjo=;
-	b=bJAINQTkhN7YUPqZiHWhneW86Gsv6xVhvfu0S46mP64U1Ez3t2sRRNMxNi00Pe/DjEK3MD
-	EavPX3DIP27eAADnuWSyfkAdRvRqkieZB+aEsvADg6sI0K/s92XsdV2RlVY7zOrj8LeziR
-	t0//z7tKBL+HsXp8K/LUhmh4/4uianQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-dIQKyvYeMCy5hqCeqrd5Ag-1; Tue, 11 Aug 2026 06:55:18 -0400
-X-MC-Unique: dIQKyvYeMCy5hqCeqrd5Ag-1
-X-Mimecast-MFC-AGG-ID: dIQKyvYeMCy5hqCeqrd5Ag_1786445717
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-49953abe51fso18725385e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 03:55:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786445717; x=1787050517;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/55ml4BFA7dhVMUEyZoknlvzKvYGcwvGx5Ocga37Jjo=;
-        b=bGGCcQ7XJG79xfsV/p2e2F4JBtWhLnhkLRKaSA6VKwXQ5JBai5Z5fk2AfDVEwMET7c
-         srDVxKJyJSsK8309tepyOI2SZlfXIvgYyanjSCN+EBHnRmyDlsBTzHMebpt4QV2b6Omx
-         jTdgs71GqdeDC/8P5B8mwgkOOyJGnLm2Bpmso8/NhJZozt7VHcPaAZD2H9VfK6Fb0BP2
-         Fn4PDIDPM6h1VJ1QlZwABeQc5d6q3j0wxVF5Ug6e5BgS+GBixglu11wSo82Cbkbk2ezg
-         /tQyWERwjphjrRYYBlgNRndi9exjKz/pvhblD0Yjr1rq/Ti9CQ0qajcz47WXzZsq+4jX
-         wcLg==
-X-Forwarded-Encrypted: i=1; AHgh+RrjS0uYLZ7GrsQjyPGs9AraI2KriR3GObpWz3fK5XrjvHF8PgmN5/zeN/ZO7rf0Z9hW4iqJCIEgmRzaOZgIPdQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyF/RK7rFCXfhbMRkBejen48gGcoXsYIZLKKQpReSiisQAYs6p6
-	ghwR0ocT0+ItgI2UZ+6DT1vaAoq9+6p+QiQWgw01lWe40S5AVbTRSWeVgMk3r2lrK9Vik1dJuGq
-	pEMY9EnFaCdAAJVvL5tGMbxw/Y53dkFmrjM3sjhDIPqpPUAZFgwvv0JEosKR9KWNsIcHzSw==
-X-Gm-Gg: AR+sD130mIHaf1G8XVQgzLvaVhLFHZYdaT2rbccqXv1709lkDg2u67Bsq1f/ILTEFDP
-	aEWIOTt9fhy+IGvZM92hm9wV37xiLWTUI6C/pDrkJgelLXoPGpI3iry9BvewGHYnWd3VxDn5gWK
-	v8Azy7tXUWNbl+CMhi5U1qbA28OIN5mZeUixdLe4K6T9MluhhFioaExvaHFl7UgkQBL840kjNjD
-	h4O8a1W6o0Y5GxlRfr7MXpzR9gjdRBf9cUlDPMCKSYw8z+eakn6EabtwNfPoB3L3r7WNJHEoTxq
-	tq4ZNeeEtogsrilnZOmT21xTkNHV53Xyx8MzPpOcDvD+23HIFWdpVdra3FkJ4ATQPCzwqg4GJ8G
-	9bfm15jXHcvG99RHEJYs0wCSiHvmnXCKGPGi9OaGXZV8KlkMnzuHb3Kvmc/xd03KrVKDoqJuhfx
-	w=
-X-Received: by 2002:a05:600c:6085:b0:499:728c:4704 with SMTP id 5b1f17b1804b1-499784649b5mr37096545e9.12.1786445716786;
-        Tue, 11 Aug 2026 03:55:16 -0700 (PDT)
-X-Received: by 2002:a05:600c:6085:b0:499:728c:4704 with SMTP id 5b1f17b1804b1-499784649b5mr37095935e9.12.1786445716357;
-        Tue, 11 Aug 2026 03:55:16 -0700 (PDT)
-Received: from [192.168.188.103] (ip239-44-231-195.pool-bba.aruba.it. [195.231.44.239])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49974146b83sm57841085e9.11.2026.08.11.03.55.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Aug 2026 03:55:15 -0700 (PDT)
-Message-ID: <c22fb728-516d-4dcc-b9d6-64ac4968fcfe@redhat.com>
-Date: Tue, 11 Aug 2026 12:55:14 +0200
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="pl042mE8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=psTbK7rid6R22tjwCrE4JAKT3UMTHD0077uTTcSd41NheqwKjiVnP+hH4AXFaYxw+qfR551U1iutMnietrJkzacoyWkVcjUZrpv4hBOyr4vFv/7O4yTD8YOoZSTYD4Owa7+XUUvRoAQP/hUB3dmqXZmvR0L0ukqo4o8/2EIU6/WgTk8+MbK3urPv/CksuPL1Pec/x6y2bmCE8doqLLZ0R9vradhiDxHUFDrQB4zBvN1sxrMbTYkGy7M9MeDgcxK3ZlK9+csrMVM4Yl6ZDS3EUZEiTGsk4JFaQcnUy9s+5m2GG5AVBzt7+mEyV+0e99ENU7wqlBP9IXltCOjoue6s/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hIZUU+Ar4SaRbWfNbeYjJC2zIHFW013NMXwsAFzLNUk=;
+ b=QiHapZ/lWyclj1RwVGmnR6tokkh15H/GVXbGfoaz2qlwi+dtEBtjU+HWi8YryaEMkC5ZQw/VOrMBDzNqT8MPPBd0lmfew+40lBUpm41wfcMhMiXY7X2latseSl2zawK0NJGTSrktY7EU67VsTm06ucBAk4YYIw4g9pjJIPMndvxAWmyKudbcMntoz+knle5+AVkq2OrW1ENp1U7QMw1ZiXUwQ0WaoVNTKkvgkGYpAsS5LJGoRhheWrjNAm0uIa9hCEgHlcP1QACwjcFTlm9k/BpcIDBDLLMitrXcaGIX0T6HaK/hFEIjc6Jc1pkU8FpkdC/w+1Z6FSa0lI1DQIpz/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hIZUU+Ar4SaRbWfNbeYjJC2zIHFW013NMXwsAFzLNUk=;
+ b=pl042mE85EetTQfanWeiXgoGruk/yTKpg5+ypX7KkXmBVTh80aSVx1jgL6AZc28JxpLci7gacn6evzcGUGEm8Teyenz3jtFQz6/ezr7n3jYNExmA6PXOg2hCtVXPL3OWKcT2W5/MeJPAnWELVC1uluOjqf5p6iUkyswkr+GJDCw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS4PR12MB999075.namprd12.prod.outlook.com (2603:10b6:8:2fc::20)
+ by SA3PR12MB8804.namprd12.prod.outlook.com (2603:10b6:806:31f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
+ 2026 10:55:32 +0000
+Received: from DS4PR12MB999075.namprd12.prod.outlook.com
+ ([fe80::4c9d:851d:3f44:800f]) by DS4PR12MB999075.namprd12.prod.outlook.com
+ ([fe80::4c9d:851d:3f44:800f%6]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
+ 10:55:32 +0000
+Message-ID: <322931c5-dfbc-4441-b992-8608231f9fb7@amd.com>
+Date: Tue, 11 Aug 2026 16:25:25 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 1/6] dmaengine: zynqmp_dma: Fix PM usage count handling
+ in probe error path
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, Frank.Li@kernel.org, vkoul@kernel.org,
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+References: <20260810100452.426320-1-nagendra.golla@amd.com>
+ <20260810100452.426320-2-nagendra.golla@amd.com>
+ <20260810102814.4A6981F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Golla, Nagendra" <Nagendra.Golla@amd.com>
+In-Reply-To: <20260810102814.4A6981F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4P287CA0119.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:2b0::9) To DS4PR12MB999075.namprd12.prod.outlook.com
+ (2603:10b6:8:2fc::20)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v11 1/9] net: dsa: add tag driver for LAN9645X
-To: JensEmil.SchulzOstergaard@microchip.com, sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260805-dsa_lan9645x_switch_driver_base-v11-0-007ebc983a0a@microchip.com>
- <20260805-dsa_lan9645x_switch_driver_base-v11-1-007ebc983a0a@microchip.com>
- <20260806143835.53A7E1F000E9@smtp.kernel.org>
- <ed13dca89e3b2131a717476b9e13d5a3012a0e30.camel@microchip.com>
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <ed13dca89e3b2131a717476b9e13d5a3012a0e30.camel@microchip.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: QmOIyBbGWOVvkQuVJTVYhd8O2PlPOXHnyJVrfTf9v40_1786445717
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PR12MB999075:EE_|SA3PR12MB8804:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d6ad69f-d5c7-4a74-87dc-08def7971051
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|56012099006|11063799006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	ReG3rzMNZC11P/YmaRWeHErJr9jNSwAZq/g8fx+UjdnXX3esugbRnnhIlFXVstzpNO/hwunKWVz+06312Q8PfunZofAzwhfEIdpp3sFRVwfVtosmXEpDhfBuzX0+9/WpCQeI4YW5zYvZrcvDSJHjyT2nw5aD0IeLecBSHGfYHsHnffgx6GoFnItFTlR6v71XRA0qzOa/F7C8dVCL7vCCFiXpDfmBAxWilfKqxavuj3LnUq/tC/iGcZsT7m2hfakK6eG1/vUqaFf57nAsd68u/OXFeMfoKjZLLlp8tVXinyCtEN51PgrKwFWEbT7n+UYqj37j5DqOoazpLn1z3NpjyX8MewORGTQI48cF3cDg5qcXMLavSiwTsMYeahrnC/EPk+1tmNti0qCXn34XWy648yoCraumQRBtzyJpa/cn0bpqQfez84L4IXUAYRodh0icj/ooA0uUAQhiksf6wmlgurdCK7nA5NqMdrq7EzlbzOsG6U2JogOBI/T4vOBpUCVqNVX5b9owlprHvse1mMxXEhn//LrTyKPSQhzKHOXKMjQHwKu1QE88Y8d4i8dTBuowHmFq3TlaQLgmmbVZBx2pFRDq9nzcKpv2qSXnChPKv2uboXfFWiBhffwfviaBXxrjpzxo9Ltnh2C0frUrZ+4JNKBxFNtjlG1jgSdv6vfEhDs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999075.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?UVErN1phVTZKTUx1MW9idWtkbFU2aEpGSWFMN0Fhbkw1Zll0SEcyMW1jRUc0?=
+ =?utf-8?B?VkhhSk4wVmNyd1hPZUR2YmtrYkVzOElveEp5L1dqZTh3TDRvdGViMHBUdlli?=
+ =?utf-8?B?N3pSSG0yeXBraFVpM0laRVlHV01rQzlQRTJHbnNlS2hFZGxwdjU2UUx2TXNj?=
+ =?utf-8?B?M2JQWFhjTUlyZHI2dE4vaTc0MnlneHFyMlpnanRubjUwbWlMVHEwZUl0akNM?=
+ =?utf-8?B?aUowVUMwZk8yWUJSU2YrTi9vSzRKKzFFZDJOZWozM1JFK0l1UTc1b2FsU1d1?=
+ =?utf-8?B?dHA3TFFmZVF3QXUwN2RjMGM1WEoweDg4Uk43OHUraHNjd0tFZS9Db1VDR2Rh?=
+ =?utf-8?B?T1dJR2xDTjVMVHBUZTJVYkt5UGRJdm9Kd09qNG5lMm5zRDNBcEFEeXdzaEdr?=
+ =?utf-8?B?L2RmWHRFTnBtNlpSR09nSnB2T1ZPUTd6bVk1RkluVDRrdDVDNjIwWFZYdjNU?=
+ =?utf-8?B?VzY4bXNnQkRNNFBRcUZqMk5hV1lQUVVTbkxxYjE2WWJRT1ZQdU0wRUhueGQz?=
+ =?utf-8?B?dGpQWndrS0lSMlBNNThvSTcyajdpalExK0tWdEl6MmZQS0JMNzg0ZmNzWTFi?=
+ =?utf-8?B?MWlxUG1PdGRlMVhaMDlWL0ZISkZDeUFSMjc5V0NRL2kwUlFpQkt6bCtVbEdv?=
+ =?utf-8?B?YTh4OFZBZkpQU3F0QWpXeElJSVlzbUlqRHNsRmx4bW1FazQ4ODNIU1oyRVNT?=
+ =?utf-8?B?dlV6bVpNQ0ZNV1hBcHJ0TGhYN0k2ZTE1N0pHWkVhREtVTG9Od2xKdWE4YWd3?=
+ =?utf-8?B?MXRpdnRoT0h4NzhCWnFwblRjenJkU3QrY1dGWFZPZ3VIK0lVQXNwbDNISzJ4?=
+ =?utf-8?B?clROYmhtZkgzNFdTdXp5WmxtUFlLU1REN0N5K1BwRjRXRkJXSGZQMzVBbTc1?=
+ =?utf-8?B?bnVjTkpweEp6amxEM3ExUE0xS3QzdlRaQnUwOEZ1LzBmWTRMMVo4Ymxvdlcw?=
+ =?utf-8?B?K25ZNHM3YkRvdWtiYTZIY25NNklWcHpQdkZ0UmtnaDl2b01rNXMzWUcveVpl?=
+ =?utf-8?B?VjZDOUlacHZHK2pKeTlYd0JoOE12Z3o5am5YeHB6RkZxdCt1UnhOZEdEdUll?=
+ =?utf-8?B?RllibU9sODNHL1g5cXdFd29HRFpXMVZkTjJGRUJ6ai8rbm9kdGduQ3c2TWJW?=
+ =?utf-8?B?cGxvcXhOUnV4aXlDR08wN2lRM2VVYlNtdG9jbUozUXpJL2JJQ3lSU1NmVE9h?=
+ =?utf-8?B?WUczeGF4ckpHM2Z3NTM0d2Z4TWlFbkdzSlFDMGpJWkJES3dPR0xQd1BkK2RR?=
+ =?utf-8?B?MWdYWnFNTTZNTEUxTmNBUGZkNXYzSTY0azBla3ZCS0Uybzl5Wk5xRHI4Z0NE?=
+ =?utf-8?B?b3FNS0RwdFpMVW5ORis0WWlnbkxabGRvU0hqemNCNHJPWHd0U0NZUitXcTZS?=
+ =?utf-8?B?alIvYW5ibnJySWtPSU9Va2lva2hvbyt3c3RwR1J2MzZlNjJJVnlEVlo1a0J3?=
+ =?utf-8?B?YUlSdDdUczNoRjBEdzFLLzU0OUJDaHdmZ2VraURCUzArVThWRGtEQjZBY29y?=
+ =?utf-8?B?eWpOMHk3N3Y5aitWZ3dDV0J3dnFmS2hUbXJjR0gyTHV4ODh1cmRDNkVST1ZK?=
+ =?utf-8?B?ZzkvTGdPK1U1YmlXTjFYejM1VExqSDJENTA1cGRkMkE1WTFxQ1ZTenVTY2I3?=
+ =?utf-8?B?djdxVll4WUozUnFtNDMrelR1S2hBcHdrNGVjejhRUkswVTBWZXVUWFBHZmlJ?=
+ =?utf-8?B?bWhuRTVSUk5zeHlib3AzNDlwN3hzNFA3U0trb2pGditlNkR5cHlSZlM4NEs0?=
+ =?utf-8?B?VU9qNkVoVlhKbkY2RlVLdm1HUFRWbVJKMzFuQmhPTDYveW85OE4wTm1oWGd1?=
+ =?utf-8?B?WHMrUGZTR2p3a2pHMDNTaWcyZ1hoUjlDQi85UDU1aDM4VzJpQ3ZyM2x3ZVhp?=
+ =?utf-8?B?N2dOOEtPa1ljajhrT0grNWxIZE5zRE1vbzNBZmNzWGVYMkQydm02Rm42QjIz?=
+ =?utf-8?B?dFZNekN6Q0Nvb00rT3ljNlZEN1Y0OVBxRlk5QktWNStYNkQ2MW5TUW5RTHVp?=
+ =?utf-8?B?dWVTVnBBWHBEVEQvdEpOMTZhSHUwY3ZjUmNNSG9EYWhzR2YxcFhGMmlnS2Fm?=
+ =?utf-8?B?WFVxb0NhTEljdy9KM0pQRWluVkttdW8wazFZM01TYm5OWGRxd1FjR1JuTzR0?=
+ =?utf-8?B?NDhxdXkxdVN2NlMzWHp1QVR5VGNBWS9UOTBRRDN3RUdueEdLWFg4cVpidWpx?=
+ =?utf-8?B?SUtMTVgrMURncjBCdEpwcDlZZzhsQlp6UDJ5Q1o5YlhMdkMyU3JiQytYQWQw?=
+ =?utf-8?B?YnJZRzRzQ0RnSEVGVGludndYRmFwZkdoMlo3QWlyVEh6d3UrYWtlRWh3UW5Q?=
+ =?utf-8?B?R1RuZHQxeSs1UDgvWHZQeS80czdRRlJuczlsOEs2d25heGRxR0hwUT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d6ad69f-d5c7-4a74-87dc-08def7971051
+X-MS-Exchange-CrossTenant-AuthSource: DS4PR12MB999075.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 10:55:31.9808
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: K7izcKXN2bSqPK0vIDIiES/ogd1l75JdOSaq39emKCn+0/kZ/V/lk+cFET7GSZZT624mGbJHkjt7HWzk6q+HBQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8804
 
-On 8/7/26 4:41 PM, JensEmil.SchulzOstergaard@microchip.com wrote:
-> On Thu, 2026-08-06 at 14:38 +0000, sashiko-bot@kernel.org wrote:
->> EXTERNAL EMAIL: Do not click links or open attachments unless you know the content is safe
->>
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] The tag driver drops hardware-accelerated VLAN tags on transmit, leading to switch misclassification and double tagging.
->> --
->>
->> --- Patch [1]: [PATCH net-next v11 1/9] net: dsa: add tag driver for LAN9645X ---
->> commit 97f24952991b201e3d0f1948d98e9534914b9db3
->> Author: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
->>
->> net: dsa: add tag driver for LAN9645X
->>
->> This commit introduces a new DSA tag driver for the LAN9645X switch family,
->> using an NPI port for CPU connection. It supports prepending a 28-byte
->> internal frame header (IFH) on injection and handling a long prefix on
->> extraction.
->>
->>> diff --git a/net/dsa/tag_lan9645x.c b/net/dsa/tag_lan9645x.c
->>> new file mode 100644
->>> index 0000000000000..6a33216c7792f
->>> --- /dev/null
->>> +++ b/net/dsa/tag_lan9645x.c
->>
->> [ ... ]
->>
->>> +static void lan9645x_xmit_get_vlan_info(struct sk_buff *skb,
->>> +                                     struct net_device *br,
->>> +                                     u32 *vlan_tci, u32 *tag_type)
->>> +{
->>> +     struct vlan_ethhdr *hdr;
->>> +     u16 proto, tci;
->>> +
->>> +     if (!br || !br_vlan_enabled(br)) {
->>> +             *vlan_tci = 0;
->>> +             *tag_type = LAN9645X_IFH_TAG_TYPE_C;
->>> +             return;
->>> +     }
->>> +
->>> +     hdr = (struct vlan_ethhdr *)skb_mac_header(skb);
->>> +     br_vlan_get_proto(br, &proto);
->>> +
->>> +     if (skb_headlen(skb) >= VLAN_ETH_HLEN &&
->>> +         ntohs(hdr->h_vlan_proto) == proto) {
->>> +             vlan_remove_tag(skb, &tci);
->>> +             *vlan_tci = tci;
->>> +     } else {
->>> +             rcu_read_lock();
->>> +             br_vlan_get_pvid_rcu(br, &tci);
->>> +             rcu_read_unlock();
->>> +             *vlan_tci = tci;
->>> +     }
->>
->> [Severity: High]
->> Does this code drop hardware-accelerated VLAN tags on transmit?
->>
->> When the network stack transmits a frame through the DSA user port with a
->> hardware-accelerated VLAN tag, the tag is stored out-of-band in skb->vlan_tci.
->>
->> By only checking the inline Ethernet header, ntohs(hdr->h_vlan_proto) will
->> evaluate to the inner network protocol (like IPv4) instead of ETH_P_8021Q.
->> This causes the check to fail and fall back to using the bridge PVID instead
->> of extracting the existing out-of-band VLAN tag.
->>
->> Because the out-of-band tag is ignored and never removed from the socket
->> buffer, will the conduit driver eventually insert the original VLAN tag into
->> the payload, resulting in a double-tagged frame on the wire?
-> 
-> If the conduit sets NETIF_F_HW_VLAN_CTAG_TX (or STAG_TX) in
-> conduit->vlan_features, then I think the analysis is correct.
-> 
-> __dev_queue_xmit() calls validate_xmit_skb() -> validate_xmit_vlan()
-> before ndo_start_xmit():
-> 
-> 	if (skb_vlan_tag_present(skb) &&
-> 	    !vlan_hw_offload_capable(features, skb->vlan_proto))
-> 		skb = __vlan_hwaccel_push_inside(skb);
-> 
-> vlan_hw_offload_capable() requires NETIF_F_HW_VLAN_CTAG_TX (or STAG_TX).
-> A DSA user port inherits its features from the conduit
-> 
-> user->features = conduit->vlan_features | NETIF_F_HW_TC;
-> 
-> and user->hw_features only ever gains NETIF_F_HW_TC and
-> NETIF_F_HW_VLAN_CTAG_FILTER, so ethtool cannot turn the TX offload on.
-> 
-> But if a conduit sets those offload flags, the tag driver could receive
-> an skb with the vlan tag in the hwaccel area.
-> 
-> I will normalise the tag into the payload at the top of
-> lan9645x_xmit_get_vlan_info(), following the precedent in
-> sja1105_pvid_tag_control_pkt():
-> 
-> if (unlikely(skb_vlan_tag_present(skb))) {
->         skb = __vlan_hwaccel_push_inside(skb);
->         if (!skb)
->                 return NULL;
-> }
-> 
-> But the outcome would probably be worse than a double-tagged frame? We
-> prepend the dsa tag, and the conduit would not know anything about that, so
-> my guess is it would insert the vlan tag into the dsa tag.
-What about something alike the following?
+Hi,
 
-	if (skb_vlan_tag_present(skb)) {
-		*vlan_tci = skb_vlan_tag_get(__skb);
-	} else if (skb_headlen(skb) >= VLAN_ETH_HLEN &&
-		 ntohs(hdr->h_vlan_proto) == proto) {
-	// ...
+On 8/10/2026 3:58 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The introduced pm_runtime_put_sync() fails to synchronously suspend the device because autosuspend is enabled, leaving clocks active.
+> --
+> 
+> --- Patch [1]: [PATCH V3 1/6] dmaengine: zynqmp_dma: Fix PM usage count handling in probe error path ---
+> commit 8bb5754b8f17c08d0144740ac308428274806a68
+> Author: Golla Nagendra <nagendra.golla@amd.com>
+> 
+> dmaengine: zynqmp_dma: Fix PM usage count handling in probe error path
+> 
+> This commit attempts to fix a reference leak on the probe error path. When
+> probe fails after successfully waking up the device, it adds a missing
+> runtime PM put call to drop the usage count and allow the device to suspend.
+> 
+>> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+>> --- a/drivers/dma/xilinx/zynqmp_dma.c
+>> +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> 
+> [ ... ]
+> 
+>> @@ -1152,6 +1152,8 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+>>   err_disable_pm:
+>>   	if (!pm_runtime_enabled(zdev->dev))
+>>   		zynqmp_dma_runtime_suspend(zdev->dev);
+>> +	else
+>> +		pm_runtime_put_sync(zdev->dev);
+>>   	pm_runtime_disable(zdev->dev);
+> 
+> [Severity: Medium]
+> Does this actually suspend the device and disable the clocks?
+> 
+> Since autosuspend is enabled for this device earlier in zynqmp_dma_probe():
+> pm_runtime_use_autosuspend(zdev->dev);
+> 
+> Calling pm_runtime_put_sync() will only schedule an asynchronous suspend
+> timer. The immediately following pm_runtime_disable() will cancel this
+> pending timer before the suspend callback ever runs, leaving the clocks
+> permanently enabled.
+> 
+> Should this use pm_runtime_put_sync_suspend() instead to force a synchronous
+> suspend and bypass the autosuspend delay before disabling runtime PM?
 
-Side note: I *think* the unlikely() on skb_vlan_tag_present() is not
-needed; the like-wood depends on the actual traffic pattern.
+Thanks for catching this
+Agreed will fix this in the next version
 
-/P
+Thanks,
+Nagendra
+> 
+>>   	return ret;
+>>   }
+> 
 
