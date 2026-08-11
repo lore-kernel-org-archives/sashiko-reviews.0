@@ -1,108 +1,125 @@
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4136529E0E5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 00:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CB230D3E8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 02:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786409038; cv=none; b=ljJYP8PpaE1X/XE5UZB3ouCsmlm2JfzR16yNuDUw9SqcMsaN8j7UgZEHlPcNWp/LodsAuZfF3unstCaHAkCzGCE9BPfS+jxujDzKKmiLhSBlX+uIKBsjK+IZ8Ed2wfKw3P2c8weTBwBDXNFuXPHyhPpa+99Urc4+uWo3FHBgu+8=
+	t=1786415850; cv=none; b=BW4KiuxIU3FNEvpdSpfyQLw/F+e2fhgRUjeVEB/oGnj0i7nADB6rsmJFq/nk8QcTSdHNS8lLFfEgJ5lHTCe0Mmbr9z9ZAG2FCa8hBblOHvqB0fgx2o82td9aiJNqf/+rxs35NpgOIiKvbTyyh8BPiqxEmR6ZU4UW5OxMoQurfIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786409038; c=relaxed/simple;
-	bh=WQxPyjOmNtM5R8JyZSMh3RwDvaCfdXHPYKo1RlbE7Bk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=tLgDwibHsymhTDT8WZcP0yXCi4y7GXIkEpaw2p51W66T4sNVq6FtsOkSujInTU0MgC6kw4qv2j31KD1fUsjlz1h6J1fUXEQcXOc+7FYc8hf7PlzNdjBYmrPD1E100N5jXLzMYcUiE9dX86VNhbnFrzMLcxmxabzft0yFxk+n6r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gmfbST/h; arc=none smtp.client-ip=209.85.215.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gmfbST/h"
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cb5ea36f969so3157325a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 10 Aug 2026 17:43:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786409036; x=1787013836; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TdtwI1Ee0mw3e+1rCkhKazccv8OvfhLfoElZh6LGLeY=;
-        b=gmfbST/hXiuMwSrdI9htqs0LsZUw7dobX1ULs8l4VpOOWpEJiEfZNb60E58wr6VHTV
-         I7IHFXTWAsv5Z2kdwQ1yjJg7S8HISzmb8pErr90upD2EfFBKiSwSUuCLwr8DKmL6X7yq
-         88oiLDyIbkHq8biqtFwbaPFHMLAXUNjCvz4PIPvX31csq0Fjfx4UP6LSP9UHTZMV05vm
-         iMzBxqgx7xrtdr6pUqSPpQ/QDRi1Ngc5WQ2VdwoLXzugfvrjmEktRTLfz3f2tgDIJ5d4
-         0/CoUPulseHhwrrEz9owPU7B+gc6Lh3NRERFnIJDZ/D5kUGBDBqfsqKQZHEvA+d+FgLC
-         kyJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786409036; x=1787013836;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TdtwI1Ee0mw3e+1rCkhKazccv8OvfhLfoElZh6LGLeY=;
-        b=QkRF630tFTamQHg2mz2yu2ZzVib5p6IOZyfXrkg9qUDdY8zOgnxTTexXPr8Ej4CVjt
-         bKHjidcHTjkVpXr63PgIntEiON62WyPDfo3Z5I5HEzQb3UpDfOtu3mD9k+mufs+h5dvp
-         RgOzkHr5SsdjcYMtU0b7CTGNOtBVDchi7l1a+XYPjkWfgH0K3dCvYAng9xPuRxDnpxcz
-         78Mb56JV43NcC8zMZ3EIPwWGPzMOVuFFR1W4vdVMPg9DQ8Rw4D4RGhCP22IBPCO9m0bN
-         HDiz7KfAe64340LETm0GPYrbEKd6YwRMqFJrTS9OXI6gjTq34Kl+BYTQ0MYb+Bxdlc8P
-         lP1g==
-X-Gm-Message-State: AOJu0YwpN03YA4U81mQcJPcBWmP5fqn4Dezwg2RT2SfOYYzwf4TzpuUA
-	lbmZDMN+SjDL+BUvoERyGprTWIxhqpKg/c0ICm8vrl+3UN9BWJJYaAgV93rBkgSTlPWV0hkSJYB
-	FVGbdeg==
-X-Received: from pgnb22.prod.google.com ([2002:a63:7156:0:b0:c9e:63b8:11b5])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:4a89:b0:3b4:61f:1fec
- with SMTP id adf61e73a8af0-3cc1a0bcd18mr7553175637.2.1786409036317; Mon, 10
- Aug 2026 17:43:56 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:43:55 -0700
-In-Reply-To: <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com>
+	s=arc-20240116; t=1786415850; c=relaxed/simple;
+	bh=cfLv9BWa1ACYiLkcRQkRu+Sun7RHvrPhFp596jTISs4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YBoq0J4aXbhJs86oBwenqfKRzmiYLL8YK4p+2EE+kPYr3CPREfFxmmElJ0RYfRA9OtY3KEoDWUUtHZclvxWjIm8B6dLO42VMScaLfklkYuiwu8NbI0T2c0fR9wO5AFPKjR42CTkMkx6hTTrdI3d3cPUsLOpZiyLfuprNn906Ck4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hJwkX44HFzKHMRH
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 10:37:08 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id E666840608
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 10:37:23 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgA3oYjiinpq2iKNBw--.51630S2;
+	Tue, 11 Aug 2026 10:37:23 +0800 (CST)
+Message-ID: <cf4fac8a-925d-4cf4-b58d-1138ed27b692@huaweicloud.com>
+Date: Tue, 11 Aug 2026 10:37:22 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260713105033.15405-1-sarunkod@amd.com> <20260713105033.15405-6-sarunkod@amd.com>
- <20260713111119.EC35E1F000E9@smtp.kernel.org> <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com>
-Message-ID: <anpwS3C2UIHFz_Uf@google.com>
-Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
- Physical Processor Interrupt (GAPPI)
-From: Sean Christopherson <seanjc@google.com>
-To: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/23] perf llvm: Fix arm64 adrp instruction
+ disassembly mismatch with objdump
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
+ <20260808122400.2961238-3-wutengda@huaweicloud.com>
+ <20260808130329.EA6F31F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260808130329.EA6F31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgA3oYjiinpq2iKNBw--.51630S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5tFWxuFy5Ar4kur13twb_yoW8tw17pF
+	ZxCa93XFy8Jrn5Zw4j9w4xXFn3Cw4qqFW5Kr45Z3y8Cr13CFn3ur1fGF12kan7XrnYy39I
+	yrs09FyUGFn5AFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1wL05UUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On Mon, Aug 10, 2026, Sairaj Kodilkar wrote:
-> On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
-> > [Severity: High]
-> > Can an unprivileged user-space process trigger this WARN_ON?
-> > 
-> > When a vCPU is created, svm->gappi_cpu is initialized to -1 in
-> > avic_init_vcpu(). It is only set to a valid CPU ID later during
-> > __avic_vcpu_load().
-> > 
-> > If host user-space configures device interrupt routing via the KVM_IRQFD ioctl
-> > before the vCPU runs, avic_pi_update_irte() is invoked. This will pass the
-> > uninitialized svm->gappi_cpu (-1) down to this function, hitting the WARN_ON.
-> > If the host has panic_on_warn enabled, this allows host userspace to trigger
-> > a kernel panic.
+
+
+On 2026/8/8 21:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Memory leak of the dynamically allocated string `name` on an error path if a comma is missing in the disassembled instruction, which also brittly aborts the entire disassembly process.
+> --
 > 
-> This is a valid concern.
+> --- Patch [2]: [PATCH v4 02/23] perf llvm: Fix arm64 adrp instruction disassembly mismatch with objdump ---
+> commit d33f174b93415a7430f8bf32e53bbf77ad2fce9a
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> If host userspace attaches a bypass IRQ targeting a vCPU that has never
-> been loaded. Functionally, there is nothing to do in that window. A vCPU
-> that has never been loaded cannot be blocking, so no GAPPI wakeup is
-> required. The IOMMU still posts the interrupt into the vAPIC backing
-> page, and the pending IRR is evaluated at the first VMRUN after
-> avic_vcpu_load(), which is also where the IRTE gets a valid Destination
-> and IsRun = 1.
+> perf llvm: Fix arm64 adrp instruction disassembly mismatch with objdump
 > 
-> This can be resolved by assigning a arbitrary gappi destination, without
-> actually updating the gappi wakeup list of that CPU.
+> This commit addresses an inconsistency where libllvm parses arm64 adrp
+> operands as raw immediates instead of the address format used by objdump.
+> It extracts the target address and resolves the symbol, reformatting the
+> disassembly output to match objdump's expectations.
+> 
+>> diff --git a/tools/perf/util/llvm.c b/tools/perf/util/llvm.c
+>> index a0deb742a7331..6b53b283205ab 100644
+>> --- a/tools/perf/util/llvm.c
+>> +++ b/tools/perf/util/llvm.c
+> 
+> [ ... ]
+> 
+>> @@ -230,10 +242,40 @@ int symbol__disassemble_llvm(const char *filename, struct symbol *sym,
+>>  		if (storage.pcrel_load_addr != 0) {
+>>  			char *name = llvm_name_for_data(dso, filename,
+>>  							storage.pcrel_load_addr);
+>> -			disasm_len += scnprintf(disasm_buf + disasm_len,
+>> -						sizeof(disasm_buf) - disasm_len,
+>> -						"  # %#"PRIx64,
+>> -						storage.pcrel_load_addr);
+>> +
+>> +			if (arch__is_arm64(args->arch)) {
+>> +				/*
+>> +				 * For arm64, replace the immediate operand with
+>> +				 * the resolved address to match objdump's output.
+>> +				 *
+>> +				 * Example conversion:
+>> +				 *   From: adrp  x18, 8014
+>> +				 *   To:   adrp  x18, ffff800081f5f000
+>> +				 */
+>> +				char *s = strchr(disasm_buf, ',');
+>> +
+>> +				if (s == NULL)
+>> +					goto err;
+> 
+> [Severity: Medium]
+> Does this leak name if a comma isn't found in the disassembled instruction?
+> 
+> Looking at symbol__disassemble_llvm(), name is allocated earlier in this
+> block via llvm_name_for_data(). If strchr() fails and the code jumps to the
+> err label, name appears to be leaked since the err cleanup path only frees
+> code_buf and line_storage.
+> 
 
-With the disclaimer that I haven't look super closely at this series, and haven't
-thought too deeply about the feature itself either...
+Sorry, that was a careless mistake. Will fix it right away.
 
-Why are we doing anything different than what VMX does?  vCPUs on the wakeup
-list when they block, and come off the list when they wakeup.  It's literally
-one flow that's guarantee to pair put()+load(), and the logic for manipulating
-the list is quite simple as a result.
+-- Tengda
 
-Going a step further, why is GAPPI not sharing code with VMX Posted Interupts?
-At a glance, the only meaningful difference in the wakeup flow is the "should
-this particular vCPU be awakened".
