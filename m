@@ -1,30 +1,30 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64063BB102
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 07:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8883B2C11E8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 07:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786432069; cv=none; b=K0cHoDusQcwV/84jPSxHaE2cNe9h1ic24VKUO/MBOO2VaKGnTI7wovMPM+OzMi05WOgB1FOUhj6eVgdeyygWgnhJcZ+jsM/T4kKX3qApJX8VYzgKK1gDZfe/pdF6/be2Ux/y44lPpurEcRsKWGD/AqX03pZxA2TXUPUDoYhKChI=
+	t=1786432729; cv=none; b=HG1NGb6l3ycuPgSjlEhpWeq/yn0Oey7/nHyZypyRIOsB5Mk6JvtLMTVvIjnekFLCfAY46cYDkYiuciAUMD8QTBsQ5eqTgvn9Gq2W/UaDK0GCZqlFfk2K3ohVj/fxKmSzam3odksZzuzBVw7QQ59H+Npqg7mpJHb+1iox0w/Xz/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786432069; c=relaxed/simple;
-	bh=d78qSzYRSD06L5dH8dKaGICQIUleLAJ8r+ArZk+eYNU=;
+	s=arc-20240116; t=1786432729; c=relaxed/simple;
+	bh=hc/Oy6N15FEFtduOi7ddMMV3L+eLd0KabP3jmJMXDjs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tG+Ipi7WjyHc4Rylit+K1m1rzEDk9KcgJIfI74tkzu6GwxE+y4ZQjNCBTVIx+ZUkuBemIjDWFty7o7Qy12l522QWvdLlY3Im1H2D71kqtT9DhTW6zSkpBFH0sq7K21fabhZIsD0mvHbauLjXqCwl1ODEmL1PsedcuhcvIBklQVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+	 In-Reply-To:Content-Type; b=As0uO93OoTwmc/93E2pPkmms2TNQn8gjuv2agiczCNEA3j9r38L3k9JhYniIyhSZj+YHAVMIGtA55aK6vH/+zPdmCS64jM/mT68bgfTNZT/YgV9KTNc43D6npQll7uEDoUmUYUh8v9m/azX7Lep7bjiP3nnfQ5GmMwvWOzzcdtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hK2kf2SNXzYQtw8
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:07:38 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 3F07F4056B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:07:41 +0800 (CST)
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hK2z841hwzKHMdK
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:18:28 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 3DF8840581
+	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:18:44 +0800 (CST)
 Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgAnkok7ynpqFUqkBw--.27793S2;
-	Tue, 11 Aug 2026 15:07:41 +0800 (CST)
-Message-ID: <5ff620e2-3763-4dda-bac8-fefb686b69df@huaweicloud.com>
-Date: Tue, 11 Aug 2026 15:07:39 +0800
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgAXB0bSzHpqPceaBw--.63125S2;
+	Tue, 11 Aug 2026 15:18:44 +0800 (CST)
+Message-ID: <d6324221-0fc6-40e9-9003-52c7d509daeb@huaweicloud.com>
+Date: Tue, 11 Aug 2026 15:18:42 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,121 +32,88 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/23] perf annotate-arm64: Handle load and store
- instructions
+Subject: Re: [PATCH v4 05/23] perf dwarf-regs: Adapt get_dwarf_regnum() for
+ arm64
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
 References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
- <20260808122400.2961238-5-wutengda@huaweicloud.com>
- <20260808130701.DF40E1F000E9@smtp.kernel.org>
+ <20260808122400.2961238-6-wutengda@huaweicloud.com>
+ <20260808131253.107781F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260808130701.DF40E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260808131253.107781F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgAnkok7ynpqFUqkBw--.27793S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurWUZry5tr1xCr1kXF1UWrg_yoW5KrW7pa
-	1Ykw45Jr1Utr1Fg3Z2qrZxWFySga17Za13Gry8J3ZIkF4S9r1xKF93KF12ka15GrnYyw42
-	yFy8tr15AF1kCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+X-CM-TRANSID:_Ch0CgAXB0bSzHpqPceaBw--.63125S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFW8Gw1kZryfZry5Ww4fAFb_yoW8uryfpF
+	4akrW3J3y8GFyYvwnxWF1xWF15Gw1fZr4rury5t3y7KrsF9Fy0qw1ftF4Y9FW8GryDAa10
+	yw4DKr109rn5ZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
-	Ja73UjIFyTuYvjxUzsqWUUUUU
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1wL05UUUUU==
 X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
 
-On 2026/8/8 21:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] PC-relative loads can be incorrectly parsed and truncated if their associated symbol name or trailing comment contains a bracket '[' (e.g., C++ operator[]).
-> - [Medium] The arm64_ldst_ops struct omits a .scnprintf callback, breaking UI formatting for PC-relative loads and discarding resolved symbols.
+On 2026/8/8 21:12, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The programmatic DWARF register lookup __get_dwarf_regnum_arm64() fails to support the standard AArch64 'lr' (link register) and 'fp' (frame pointer) aliases.
 > --
 > 
-> --- Patch [4]: [PATCH v4 04/23] perf annotate-arm64: Handle load and store instructions ---
-> commit e23857fdcfc409dfdff0cd84b9fe8f31c4283050
+> --- Patch [5]: [PATCH v4 05/23] perf dwarf-regs: Adapt get_dwarf_regnum() for arm64 ---
+> commit 7e82be98e18ee79f31ad73b727e21d33b0a6f30d
 > Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> perf annotate-arm64: Handle load and store instructions
+> perf dwarf-regs: Adapt get_dwarf_regnum() for arm64
 > 
-> Add ldst_ops to handle load and store instructions in order to parse
-> the data types and offsets associated with PMU events for memory access
-> instructions. Matches instruction prefixes to handle arm64 variants.
+> This patch replaces the static string table lookup for arm64 DWARF registers
+> with a programmatic implementation. This change allows resolving arm64
+> register names directly into their corresponding DWARF register numbers
+> during annotation parsing.
 > 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 5e824fd617ee5..32752a3bc756b 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> diff --git a/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c b/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
+>> index 593ca7d4fccca..720c863d18696 100644
+>> --- a/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
+>> +++ b/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
+> 
 > [ ... ]
->> @@ -163,6 +164,108 @@ static const struct ins_ops arm64_mov_ops = {
->>  	.scnprintf = arm64_mov__scnprintf,
->>  };
+> 
+>> @@ -10,3 +13,22 @@ int __get_dwarf_regnum_for_perf_regnum_arm64(int perf_regnum)
 >>  
->> +static bool arm64__insn_is_source_on_left(struct disasm_line *dl)
->> +{
-> [ ... ]
->> +static int arm64_ldst__parse(const struct arch *arch,
->> +			     struct ins_operands *ops,
->> +			     struct map_symbol *ms,
->> +			     struct disasm_line *dl)
->> +{
->> +	char *s, *left, *right;
+>>  	return perf_regnum;
+>>  }
 >> +
->> +	right = s = strchr(ops->raw, arch->objdump.memory_ref_char);
->> +	if (!s) {
->> +		/* Fallback to default parser for PC-relative loads. */
->> +		return arm64_mov__parse(arch, ops, ms, dl);
->> +	}
+>> +int __get_dwarf_regnum_arm64(const char *name)
+>> +{
+>> +	int reg;
+>> +
+>> +	if (!strcmp(name, "sp"))
+>> +		return 31;
+>> +
+>> +	if (*name != 'x' && *name != 'w')
+>> +		return -ENOENT;
 > 
 > [Severity: Medium]
-> For PC-relative loads, if the associated symbol name contains a bracket '['
-> (such as a C++ operator[] or Objective-C method) or if there is an unstripped
-> comment containing a bracket, will this strchr() incorrectly match it instead
-> of falling back to arm64_mov__parse()?
+> Will this strict prefix check inadvertently reject standard AArch64 aliases
+> like lr and fp?
 > 
-> If so, it appears the subsequent string manipulation would use this incorrect
-> bracket position, dropping the characters in between and potentially corrupting
-> the operands.
-> 
-
-Indeed, it appears I need to move rstrip_space_and_comment to the beginning of
-the function, processing ops->raw first.
-
-> [ ... ]
->> +	ops->source.multi_regs = arm64__check_multi_regs(arch, ops->source.raw);
->> +	ops->target.multi_regs = arm64__check_multi_regs(arch, ops->target.raw);
->> +
->> +	return 0;
->> +}
->> +
->> +static struct ins_ops arm64_ldst_ops = {
->> +	.parse	   = arm64_ldst__parse,
->> +};
-> 
-> [Severity: Medium]
-> Does omitting a .scnprintf callback here break UI formatting for PC-relative
-> loads?
-> 
-> Because this structure lacks .scnprintf, it will fall back to
-> ins__raw_scnprintf(). For PC-relative loads that successfully fall back to
-> arm64_mov__parse() and resolve the symbol into ops->source.name, the raw
-> formatter will ignore the resolved symbol and just print ops->raw. Could this
-> result in the UI discarding the resolved symbol and displaying raw hex
-> addresses instead?
+> These architectural aliases are frequently emitted by objdump and were
+> previously handled by the old static table. When perf annotate attempts
+> to look up lr or fp, this programmatic DWARF register lookup in
+> __get_dwarf_regnum_arm64() will fail because the name does not start with
+> x or w.
 > 
 
-Yes, this only affects the display of ldr PC-relative loads, for example:
-
-Expected: ldr x0, <__kvm_nvhe_$d>
-Current : ldr x0, ffff800080f40c68 <__kvm_nvhe_$d>
-
-This is not a serious issue, but I will still add the .scnprintf callback
-as a follow-up.
+Currently, I have not seen such aliases in AArch64 disassembly output,
+nor are they documented in the manual. Therefore, I will not change this
+and will keep it as-is.
 
