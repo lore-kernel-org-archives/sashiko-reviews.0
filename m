@@ -1,223 +1,319 @@
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B04E32ED39
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 18:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F4937F8BA;
+	Tue, 11 Aug 2026 18:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786471441; cv=none; b=gZv7s7NLnpb4ynBroFK2F6h7mC8US1pY1rBHhU8tP/OKFIHQxkAqyagX3jmkrKloMXaoTFD0hCVrxLwyU0nYsL5hPhCZphtyVS50R1c1Q4jDQ5V9iBlIuflfH/tBFk8IXissvXCJ1uRMpsgxVXRGGsMW3X066SRKG9V17DYwhR0=
+	t=1786472968; cv=none; b=iw+Pr3FNxzP+pcC2/1VZVA2c1H+qFRBibnnDr1PNuyBBxLRBQomgGM/zSUcrh8QxH00JU5hADV1/UiU9o9rihJ7WAsUYKNeeIlprQkMZhy6LSxyMb/SfEy8bLWchFBSubPl6NMkv2kdHoUtcBtQFXP2ZlMEM7SmWCdlC0S8RfQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786471441; c=relaxed/simple;
-	bh=7DFhAXUVgj9JF2prx27/2JFtAO9oDV+94cL3B8WgpqY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=a8kB/SEOWSYahRDacM4aZyB7U+71tY49fJ7xLnmtPuLs59/RenJFzZqUy++1KkbRUYzvt9MOfcz/U4pDqjAFwegi5Gvrj/nfntzbTU/9HiZYI8KOT9g+ivS6IAMXZBH8QK37/biZsm+XzneDb2Z4+OHmK+Ey1pW76fVftOilXhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=JpZibyMZ; arc=none smtp.client-ip=185.67.36.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	s=arc-20240116; t=1786472968; c=relaxed/simple;
+	bh=yXxD06+8js+oRtqW9RBBG5AHWINYnFR+f9xpLsXGhjM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=HtHeNi9nFKA156A5U72zZxiZsNxO14wxnnRdj5TdAqZSj4g8H/OnRug8X2lGl/CIRi2CPExk8rZXuikVGmq28b5UjMBU+b88jNZizNVidut2YRNLOwUVgEz1eVzFZ/6qnOURLUUUm4U/J5197kAk35qKBrCuTxqyVJFfAHkrbBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=K2rclZl2; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="JpZibyMZ"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 7ECFC240101
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 20:03:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1786471437;
-	bh=y3+z+tsbACfa+Yw+MQefzdiQfWOqt812EOh0FeS7toU=;
-	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP:From;
-	b=JpZibyMZUvOWfEntQoJVcYSL5lgK1ueoM1aovUNhaVFSOkMcQg5nM5aKkHuVLiI9Q
-	 M3J4vR2H/8SthF/DYfTH3XPSThCh/6L9sXFhQG3VWohO1SeovA94XekjDn+HvAMkMX
-	 2HClLOa338WrlXGX0Natjzgsw8FGXxGkheGIuKlgKk5cQoj/JazfQlyXOMb5e61gsc
-	 xh57U7uPpwztqyiqRkMJNNLR66tTEOD3wEBM+RgoBHEPkgPOPE/Y90D5gav0/Q96fq
-	 OtcT4X3ozLg+L1AiOSMFFDJhtsTxEnt8ilXMYRKg6iYcS4dGPkb/YFjOlp/xkJf53y
-	 RrccqjK1GAiEw==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hKKHw5TNXz9rxX;
-	Tue, 11 Aug 2026 20:03:56 +0200 (CEST)
-Message-ID: <7548ea70cb73f744dd313722211daa9a5cc49d70.camel@posteo.de>
-Subject: Re: [PATCH v3 2/5] rtc: s35390a: Add missing newline to dev_err
-From: Markus Probst <markus.probst@posteo.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, Alexandre Belloni	
- <alexandre.belloni@bootlin.com>, linux-rtc@vger.kernel.org,
- conor+dt@kernel.org
-Date: Tue, 11 Aug 2026 18:03:57 +0000
-In-Reply-To: <20260805203037.E9A341F000E9@smtp.kernel.org>
-References: <20260805-rtc_s35390a_int1-v3-0-e836faba3e25@posteo.de>
-	 <20260805-rtc_s35390a_int1-v3-2-e836faba3e25@posteo.de>
-	 <20260805203037.E9A341F000E9@smtp.kernel.org>
-Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
- keydata=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
- jfGillcaQOqFZ3WwVqyzG1BUfTow==
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-bH8OtN9TdEHa5Hw2HTUT"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="K2rclZl2"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67BGWALD965285;
+	Tue, 11 Aug 2026 18:29:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=qgK3dw
+	gYpUh6VBAMtnEP0A9d/vE2uxuCKuX/dQ7u1bo=; b=K2rclZl2/QwCWcazjtSOxy
+	4hGa1xpnaXOrDv/zTKXX0aqAMLwreqTSySBVYd+gJUjjJEglbMR2L5cUxjtZqEvR
+	LGkoFJKaZiRgcxcWlNfeaGknk+0G3U8x576cMYsjEpguZL52s2YJrkfwU5B8asSg
+	GlzfgPYjM5qCmMcLCCJn4Ih0qYP7JZ3VBaGOnYv0oJWkhQhGUdZ577XgKYnmNPlH
+	PcDOo8o1Y/ArFblPS/bv/Lh+1GJ0pVafpPhAbUIPq7QABMNUdQWRkXV33kzLHGpt
+	v+55kKrk2Q4fn/IRHhCyBO2emx4lTBse0KTJSd6wJTzzlIm/CLtxJAqYU7g7xt9Q
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnw5sb3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Aug 2026 18:29:24 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BIQKPs022722;
+	Tue, 11 Aug 2026 18:29:24 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsjt7yu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Aug 2026 18:29:24 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67BITMEE27722294
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 11 Aug 2026 18:29:23 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DFE1D58056;
+	Tue, 11 Aug 2026 18:29:22 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6AE7158052;
+	Tue, 11 Aug 2026 18:29:22 +0000 (GMT)
+Received: from [9.61.58.252] (unknown [9.61.58.252])
+	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 11 Aug 2026 18:29:22 +0000 (GMT)
+Message-ID: <dae1b841-143c-4608-9b0c-1535e0cce3c0@linux.ibm.com>
+Date: Tue, 11 Aug 2026 14:29:22 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+User-Agent: Mozilla Thunderbird
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+Subject: Re: [PATCH v7 10/15] s390/vfio-ap: File ops called to resume the vfio
+ device migration
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>, kvm@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>
+References: <20260807221834.562851-1-akrowiak@linux.ibm.com>
+ <20260807221834.562851-11-akrowiak@linux.ibm.com>
+ <20260807223030.D808E1F000E9@smtp.kernel.org>
+Content-Language: en-US
+In-Reply-To: <20260807223030.D808E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a7b6a05 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=Ty3Ky8OSm3sCUs7UeLUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: srpyn7dnigyaOnEu9DwBbxuDy2DVLY7B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDE1MSBTYWx0ZWRfXyj48YBtU/c+t
+ ywCvTeLSiSuG94IbAZ+BfdhJY9+f+EwOveY2z9Vo0rNFU2ce7No6fa6KdjMQkx7Zir7btMbdSm5
+ 8kxrAzL0+eZHvly0pEjbnxq9j1JA7BAYftcL4d2LDI9lDtdK+u7JKzF1ZPRXpq9ssBn3uvEAvkx
+ H9UPIglJs8gsASxVHVOIMcwxuhbCf8ud6p3y6aECnQlLyvW1dsJIzRoJUQLiGEjdbg9s5cnZG4x
+ MMGJLqdVujTE+dQdlnB71uegjb7NrlkGJCOGXspgZWbEXJ/Dqu3siIjMmgkSyrVfzTM6GrYSeHM
+ rC8VQalkhonbx2D/4wu3LopIv+rz8BUzRMtXY+wZPoqUU6o71RrabDcKMVyFB4mYacNaLKqe6nT
+ TKpH9J8bwq9+ij/84kbRn8EamvUIFkR4jFsDaxyQ0FRogmZZR9Agr842sAMvTCpFXBcatB780dB
+ VvArnml9Rd1z/KRecKA==
+X-Proofpoint-ORIG-GUID: srpyn7dnigyaOnEu9DwBbxuDy2DVLY7B
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDE1MSBTYWx0ZWRfX3rQahMd3Fv8O
+ lp/RgJJFWdXAVmT9fy2lzXdvfEj7d5bYDMtgxekPHgVk2PCTCagyWiaR9qZBHbIoH3wBU7OX0nY
+ WrHbor9hjWR0fhAM77OAH7jFERigeVM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-11_04,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110151
 
 
---=-bH8OtN9TdEHa5Hw2HTUT
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2026-08-05 at 20:30 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Desynchronization between software state and hardware 24-hour mo=
-de after initialization causes time corruption.
-> - [High] Alarm hour formatting erroneously adds PM bit in 24-hour mode, c=
-ausing PM alarms to permanently fail.
+On 8/7/26 6:30 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Heap buffer overflow in vfio_ap_resuming_write when processing the initial chunk of migration data.
+> - [High] Memory leak of the dynamically allocated temporary ap_config buffer in vfio_ap_resuming_write on copy_from_user failure.
+> - [High] Use-After-Free condition in set_new_ap_configuration due to a TOCTOU race when the migration session is concurrently replaced.
+> - [Medium] Missing validation of migration magic and version fields when the entire configuration payload is submitted in a single write.
 > --
->=20
-> --- Patch [2]: [PATCH v3 2/5] rtc: s35390a: Add missing newline to dev_er=
-r ---
-> commit 60df926a63720bd3dbdd3b4991c3149af682d4b0
-> Author: Markus Probst <markus.probst@posteo.de>
->=20
-> rtc: s35390a: Add missing newline to dev_err
->=20
-> This commit fixes a missing newline character in the dev_err call
-> within s35390a_probe() when alarm disabling fails.
->=20
-> > diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-> > index b72eef4fb0997..4cfe7034c5165 100644
-> > --- a/drivers/rtc/rtc-s35390a.c
-> > +++ b/drivers/rtc/rtc-s35390a.c
-> > @@ -494,7 +494,7 @@ static int s35390a_probe(struct i2c_client *client)
-> >  		buf =3D 0;
-> >  		err =3D s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &buf, 1);
-> >  		if (err < 0) {
-> > -			dev_err(dev, "error disabling alarm");
-> > +			dev_err(dev, "error disabling alarm\n");
-> >  			return err;
-> >  		}
-> >  	} else {
->=20
-> While reviewing this driver, I noticed a couple of pre-existing issues.
->=20
+>
+> --- Patch [10]: [PATCH v7 10/15] s390/vfio-ap: File ops called to resume the vfio device migration ---
+> commit 1f7d34b59709567819d8ff6eb6bf255fe0360e1b
+> Author: Anthony Krowiak<akrowiak@linux.ibm.com>
+> Subject: s390/vfio-ap: File ops called to resume the vfio device migration
+>
+> This commit implements the write callback for the file stream created to
+> restore the vfio-ap device state during the RESUMING phase of migration.
+> It parses chunks of user data into a vfio_ap_config structure and sets
+> up the new device configuration.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index e2e7ae8515e55..4dd7373c3d9d9 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> [ ... ]
+>> @@ -451,11 +539,916 @@ static struct file *vfio_ap_open_file_stream(struct ap_matrix_mdev *matrix_mdev,
+>>   	return filp;
+>>   }
+>>   
+>> +static int validate_resuming_write_parms(struct file *filp,
+>> +					 size_t len, loff_t *pos)
+>> +{
+> [ ... ]
+>> +	/*
+>> +	 * If the vfio_ap_config object has been allocated, then the 'config_sz'
+>> +	 * field indicates the total size allocated. If the write operation
+>> +	 * will exceed the allocation, return an I/O error.
+>> +	 */
+>> +	if (resuming_mig_file.ap_config) {
+>> +		if (resuming_mig_file.ap_config->magic != VFIO_AP_MIG_MAGIC ||
+>> +		    resuming_mig_file.ap_config->version != VFIO_AP_MIG_VERSION)
+>> +			return -EINVAL;
+>> +
+>> +		if (*pos + len > resuming_mig_file.config_sz)
+>> +			return -EIO;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+> [Severity: Medium]
+> Does this miss validating the magic and version fields if userspace writes
+> the entire configuration in a single chunk? The validation here is skipped
+> if the configuration buffer is not yet allocated. If all data arrives at
+> once, it appears to be allocated and processed in do_post_copy_processing()
+> without the magic or version ever being verified against the expected
+> values.
+
+The magic/version check will be added to the do_post_copy_validation
+function
+
+> [ ... ]
+>> +static int set_new_ap_configuration(struct ap_matrix_mdev *matrix_mdev,
+>> +				    struct vfio_ap_config *ap_config,
+>> +				    size_t cfg_sz)
+>> +{
+>> +	struct vfio_ap_config *cur_ap_config;
+>> +
+>> +	mutex_lock(&matrix_dev->mdevs_lock);
+>> +	/*
+>> +	 * Re-read mig_data under the lock; the device could have been closed
+>> +	 * concurrently while the lock was dropped for copy_from_user().
+>> +	 */
+>> +	if (!matrix_mdev->mig_data) {
+>> +		mutex_unlock(&matrix_dev->mdevs_lock);
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	cur_ap_config = matrix_mdev->mig_data->resuming_mig_file.ap_config;
+>> +	if (cur_ap_config)
+>> +		memcpy(cur_ap_config, ap_config, cfg_sz);
+>> +	else
+>> +		matrix_mdev->mig_data->resuming_mig_file.ap_config = ap_config;
 > [Severity: High]
-> This isn't a bug introduced by this patch, but looking at s35390a_init(),
-> is it possible for the software state to become desynchronized from the
-> hardware 24-hour mode?
->=20
-> drivers/rtc/rtc-s35390a.c:s35390a_init() {
->     ...
->     initialize:
-> 	buf =3D S35390A_FLAG_RESET | S35390A_FLAG_24H;
-> 	ret =3D s35390a_set_reg(s35390a, S35390A_CMD_STATUS1, &buf, 1);
->     ...
-> }
->=20
-> When this reset is triggered (for instance, via the RTC_VL_CLR ioctl or w=
-hen
-> a brownout is detected), the hardware is explicitly switched to 24-hour m=
-ode
-> by setting S35390A_FLAG_24H.
->=20
-> However, s35390a->twentyfourhour is not updated to 1.
->=20
-> Does this mean subsequent calls to rtc_set_time() will incorrectly use th=
-e
-> 12-hour formatting rules if twentyfourhour was previously 0, sending inva=
-lid
-> BCD formats to the chip and corrupting the timekeeping for PM hours?
-Yes.
->=20
->=20
+> Can a concurrent state change cause a use-after-free here? The mdevs_lock is
+> dropped prior to the copy_from_user() call in vfio_ap_resuming_write(). If
+> the migration state is cleared during that window, the original ap_config
+> pointer would be freed and cur_ap_config will be NULL upon reacquiring the
+> lock. This path then assigns the temporary ap_config to resuming_mig_file.
+> However, if the write was a continuation (!new_allocation), the temporary
+> ap_config is unconditionally freed at the end of vfio_ap_resuming_write(),
+> which would leave a dangling pointer in the active migration session.
+
+The comment is correct — there are two distinct use-after-free windows
+in the original code.
+
+Window 1: during copy_from_user()
+
+mdevs_lock was dropped before calling copy_from_user(). A concurrent
+vfio_ap_reset_migration_state() could acquire the lock during that
+window, call vfio_ap_release_resuming_file() to free and NULL
+resuming_mig_file.ap_config, and return — leaving mig_data intact
+but with a NULL ap_config. On the !new_allocation path,
+set_new_ap_configuration() would then re-acquire the lock, see
+cur_ap_config == NULL, store the temporary ap_config pointer into
+resuming_mig_file, and return 0 — causing the caller to immediately
+kvfree() the pointer that was just stored there.
+
+Window 2: during do_post_copy_processing()
+
+Even if copy_from_user() completes cleanly,
+do_post_copy_processing() drops mdevs_lock internally for slow
+hardware TAPQ calls. With the original code storing ap_config into
+resuming_mig_file before that call, the same concurrent reset could
+free the buffer while do_post_copy_validation() is still reading
+through the local pointer parameter.
+
+Fix
+
+Hold mdevs_lock across copy_from_user(). The migration
+data is small in practice (a handful of queues → a few hundred bytes
+for any real guest), and mdevs_lock is a sleeping mutex so holding
+it across a potential page fault is legal.
+
+Keep ap_config as a purely local allocation throughout and store
+into resuming_mig_file do_post_copy_processing() returns.
+
+>
+> [ ... ]
+>> +static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+> [ ... ]
+>> +	/*
+>> +	 * If ap_config is a new allocation, then the contents of the
+>> +	 * 'magic', 'version' and 'num_queues' fields will already have
+>> +	 * been copied in; so the write_pos must be set to the location
+>> +	 * following the 'num_queues' field and the length to be written must be
+>> +	 * adjusted accordingly.
+>> +	 */
+>> +	if (new_allocation) {
+>> +		size_t nbytes_already_copied = VFIO_AP_CONFIG_BUF_SIZE - *pos;
+>> +
+>> +		write_pos = VFIO_AP_CONFIG_BUF_SIZE;
+>> +		write_len = len - nbytes_already_copied;
+>> +		buf += nbytes_already_copied;
+>> +	} else {
+>> +		write_pos = *pos;
+>> +		write_len = len;
+>> +	}
+>> +
+>> +	*pos += len;
+>> +
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (copy_from_user((char *)ap_config + write_pos, buf, write_len)) {
+> [Severity: Critical]
+> Is there a missing bounds check on the user-supplied len parameter here?
+> When allocating a new ap_config, the driver calculates cfg_sz based on the
+> num_queues field. However, the calculation for write_len uses the unmodified
+> user input len, which is not verified against cfg_sz. If a userspace process
+> provides a len that exceeds the dynamically calculated cfg_sz, it seems this
+> copy_from_user() will write past the allocated heap buffer bounds.
+
+This is not a bug. The bounds check is performed by
+validate_resuming_write_parms(), called unconditionally at the top of
+vfio_ap_resuming_write() before any of this code is reached. For
+continuation writes (!new_allocation), line 584 enforces:
+
+if (*pos + len > resuming_mig_file.config_sz)
+     return -EIO;
+
+For the new_allocation path, resuming_mig_file.ap_config is NULL at
+that point (the fresh buffer has not yet been stored there), so that
+check does not fire. However, an overrun is still impossible:
+write_len = len - nbytes_already_copied writes starting at
+write_pos = VFIO_AP_CONFIG_BUF_SIZE, and every subsequent write is
+bounded by the same config_sz check above. The total bytes written
+across all calls cannot exceed cfg_sz.
+
+>
 > [Severity: High]
-> This is a pre-existing issue, but I have a question about how the alarm h=
-our
-> is formatted when the chip is operating in 24-hour mode:
->=20
-> drivers/rtc/rtc-s35390a.c:s35390a_rtc_set_alarm() {
->     ...
-> 	buf[S35390A_ALRM_BYTE_HOURS] =3D s35390a_hr2reg(s35390a,
-> 			alm->time.tm_hour) | 0x80;
-> 	buf[S35390A_ALRM_BYTE_MINS] =3D bin2bcd(alm->time.tm_min) | 0x80;
->=20
-> 	if (alm->time.tm_hour >=3D 12)
-> 		buf[S35390A_ALRM_BYTE_HOURS] |=3D 0x40;
->     ...
-> }
->=20
-> If the chip is in 24-hour mode, s35390a_hr2reg() will already return the
-> standard 24-hour BCD value (e.g., 0x15 for 15:00).
->=20
-> Could the unconditional bitwise-OR with 0x40 (the PM bit) corrupt the ala=
-rm
-> time value in 24-hour mode, causing PM alarms to permanently fail because=
- the
-> hardware comparator expects a standard 24-hour BCD value?
-No. AM/PM bit gets ignored in 24-hour mode.
+> Does this leak the dynamically allocated temporary ap_config buffer when a
+> continuation write fails? During a continuation write (!new_allocation),
+> the ap_config buffer is freshly allocated via kvzalloc(). If the subsequent
+> copy_from_user() fails, this error path explicitly skips the kvfree()
+> because new_allocation is false, leaving the temporary buffer permanently
+> leaked.
 
+This is not a bug. The copy_from_user error path
+calls kvfree(ap_config) unconditionally — the new_allocation flag
+is not checked there at all.
 
+The temporary buffer allocated on the !new_allocation path is freed
+on this error path exactly the same as the new_allocation buffer.
+There is no leak.
 
---=-bH8OtN9TdEHa5Hw2HTUT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+>
+>> +		if (new_allocation)
+>> +			kvfree(ap_config);
+>> +		ret = -EFAULT;
+>> +		goto out_clear_write_in_progress;
+>> +	}
+>> +
+>> +	/* Check if we've completed writing the entire configuration */
+>> +	if (write_pos + write_len == cfg_sz) {
+>> +		ret = do_post_copy_processing(matrix_mdev, ap_config);
+>> +
+>> +		if (ret) {
+>> +			kvfree(ap_config);
+>> +			goto out_clear_write_in_progress;
+>> +		}
+>> +	}
 
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmp7ZAcbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSpfEP/jRZ+MH9v/Z+yMa5vJHY
-79OSrDJDyjGRJpk/g7Iq/fjh3li0EY9J5BBmWZl4wSUItpUN9Z0QVPNxZQNShXPT
-03N5QavT701BN6GRe4B+zxDLq/CxkjFAILiJD+l2SIbKDsae+OhpZ43CP93d8mg1
-g6AaW9S+FJsMGgm3u+SJOR4YiFHzc3+j2fHSM4tFh7fRs4lNoagd+0E2qdD7d5t3
-sy3RcJs4q6VNg91R4dFlnzKa+Pi1FXKNxQ83j4CeaiGinskv11qr7o+Ey3GUcAx1
-0tFX6y5jf7UDGPGStQlc1x1u9gPsIHqPRuj+sXS0fvQywU12eADiuTBDmpWT1+0e
-TTDAoAKZl0MNufUnKjuvSEydF0tmh4fdQuzZi1HQsnNHFtqZkqs3txrS0l0qnY8F
-CVxuy6fXxp/AdQ60VYfl55U5uP9SgO2mHscmaA63p8p+prUJfG4i2AlUXnShWZZ1
-nZksB6rcwBwZaY0SI9ND9BiqF724tFl9zbF+ynKGcn3HI+5G3relzKCDzb90EOVV
-EeE/LAXGPlqdTDFtivB0jYXn3/KuksF1sQ6kfgYfge6YOQrvbk7pvkhb/6NYMd8o
-DULu5wuw6fBOJ87+kjergTfkgUEYt7YpB7ZzEsOVfRs/GZhUCu9EKSc/llQ3Y1po
-AB0LLhj4ja7DHN9l4dtmrn/H
-=hu7G
------END PGP SIGNATURE-----
-
---=-bH8OtN9TdEHa5Hw2HTUT--
