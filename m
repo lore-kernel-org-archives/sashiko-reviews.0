@@ -1,179 +1,222 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F7745C6E1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 15:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3800536D4FC;
+	Wed, 12 Aug 2026 16:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786547760; cv=none; b=Qymsh0z18zMhKU5OLyA+Wyao5RRqR2rDrsnPtsKGw9Ijuf/joObaMirU8T89XI8dQBc5R8tGfZDlplKwLIpbHH/3VKIU4/deGRMzDSnPnIYy9kNG3NuPXlB//rI/APSTnj5XKHXoJ54ltPSmhK9ctQ2Nw65FE8f96GA9e+twAt4=
+	t=1786550757; cv=none; b=uU2x6P8KK9tqEjtGmF5MGlyjWUFtz7041Oe97xnhWgfdO2ekW3QLnMJdR/aIAinZRNmC4n1mCka8PKkYF7CNlssp1VAM/0VR3yuJ+rXPjzrxhhM5dVUZ7w/XJ7dLACgGT1GfGC0DsyibAG2FXochtq8EwkWOIRV4GtcoYZJVG04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786547760; c=relaxed/simple;
-	bh=U2G5S1kTFIH8tXKuK0u+pk+jwp/6jWSIKAU/olOPQ20=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=WFtSZ05FIsuiAyqG4XP/aHPLp+ITYuQC8xp0knm578lZ3riwhomirLWKuFNSuZ+pjFXMeAbaZ0yR+1CoE+VauJgBkeUE7mW7/m/4rMCCyoA8ZKZgbm8gVWOzRQ83jrXkVb3FS6NXxjTd49hE2cgC24VXu5my0vd9kGaJVHlBbjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Rhf9ziCg; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=INM3KIC5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1786550757; c=relaxed/simple;
+	bh=cLknSUSl3yWG6hJTa0g7ystw2ATf+cZeemm4mRPrKfM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m+hmpls/HGh2TkWldBjCCWpKXwLGTkVdDZgbTGt9zIRCqZZRsX7lWMHkCcIXv4t7UBW4rn5Xm1/0JJldnZW28hpCxmQNcSC1sFN94/hURAjp8aZtrQWeAQwF4plWJUzDdU5rcJopjIAIrNFzwiUfag4ciQQA391W0J5h4GcNW+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=HliZvzJ8; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Rhf9ziCg";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="INM3KIC5"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67CDbdXG3641675
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 15:15:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BdfscUOJ1exQbIKDJO8Fdd9Yw+KSm+j+ja1ZpjtoaZc=; b=Rhf9ziCgbuGgAjf6
-	6XH8dPfZdROJ5mpiII5EEFdiWfDJSY4OJuVovU8xIbQ87dIyHKzdk8jLZJD+Tnas
-	WvqrlGhcPaJ8P9VkyB3oc27yObN05xn+NiQuYSbyhII4DkG6lS9zWKApbgpqo0jM
-	GGrrE9wpQYBsS4WLcYBK//u7CyBirG8hg0sPr+8sAyVExQmlXKbY8n2CHwRoq0HB
-	Me/hOHO6+FQ5nO/pZTsQQHQtlep0bpCc7F6Of6Zjwgy+3gETBp18DTxLRCbQP0w9
-	m7TuIoHDUPaniwDQqjQSoSzGlp5p7EAQ2+x8JFFLXD7Eo91N/vkhril/nMB+cHwK
-	nDbSqA==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0p3d1fhg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 15:15:57 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2ce8a76df2dso17839605ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 08:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1786547756; x=1787152556; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BdfscUOJ1exQbIKDJO8Fdd9Yw+KSm+j+ja1ZpjtoaZc=;
-        b=INM3KIC5JidGyJy2cC4CLAWG/YdEJdxAD89+XhSRArM4rd7+zf0h8Uvs094by0Su9q
-         6LYgFzdy2uYMv3DL5XArG4lIvJBGbPz0acEYo/BjIL0Tm8t9HYVzGEtrLFUmAq8pHOeF
-         LIIea75LSWCn2gG/lwwCCEJxZcpB6VBYlskZUabwgNZE4WZA83TuXszyilCiwFvGKjQ3
-         THuwG0y6EnpMT4sB3zH+8UMr8ojd8MqTqbtnZ3OZz/wyrMAKioZnm1gSwjwt0QIm5uho
-         9EkLLYd3fav748WZGNKuDWsu8OFgUUCSWcJR0+c3pJ5P4Gsn283dyo/c+a0j/vcIwe9t
-         N81g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786547756; x=1787152556;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BdfscUOJ1exQbIKDJO8Fdd9Yw+KSm+j+ja1ZpjtoaZc=;
-        b=IcUuHLHqeKuOkVAJucR987exTTGaFHYeXkE4gqqDlX9vbyTCTQ8XWL4KzNBDoXJsRT
-         QJ7YR3AoRMU10agZu9/rdcchq5KE6gTFzZkkOqAeIhv9HR1OshoqDobjyGHDVKQatccG
-         PtICw5BjG05Az/INDlOUTp2NjGJNeV/L1w38kY3IF+x5ryjUF64nrRiMQI4eTExEjeJw
-         KelP+/Jgx/yENWBNPyHeJnEhtP1ZDumPMUIOnn0oSCrkoEDPAPweUNigZwLUOce6WGXp
-         qOTobJ6UhyAjgpFVg0GECKYgFdVM4x1+qymOcsMkr9qMB6VoLe7YsQmP7yfh0v+LHmvx
-         E4mA==
-X-Gm-Message-State: AOJu0Yx0C0hoEeUnYoo3ckDB68t5IZCsB9s8WzEsK9Gxwg35rqKNXM75
-	TdQYc7xrM7twbGqSJoT0i+LDNxI0bST8xj9Mk2TuCGZqyMAxMcZ5Ojwy5aFmYdb/822UfHU2IAV
-	O5KAAOkCCpMDdMEXr87uGTNc1xZ7i73YYW2clvY36nx2ZrENQPvjA+ZQ8Ne3n455Fqt8NFXl8Jc
-	rW+I+lpw==
-X-Gm-Gg: AR+sD10iIwIVaDfqOROi4MaUyf/NCLdUAwgQ6V+5JsDMoRIDTTZILFyorpPQNDvYZ9o
-	0WaBr5i2S9GM0ci99hlEHaoo1yxn7dxvUpObtiKM3iLelGsl1K0GG0V6A9K3wyeIldzm0otIGnj
-	YyqsQd29eua/M4JoiHtk5txhgIWymIW2Kdv7UbCJ2KfmZ6rUp8tlnAq3P/NdU+mlSUQ/OffGJgY
-	8DSW4NT45zjRIU2z/V2K1OPSg02topInApVhAHVujRiViSiFFVuYozcnRPHfeX87BiCYEkapiQ+
-	pGV0i8lJI2EqRojFAoEL3phw6lL1yzJq+FEmeoMo5WrLzAjxeYRiF9JDvsg=
-X-Received: by 2002:a17:903:37cd:b0:2ca:53e1:b915 with SMTP id d9443c01a7336-2d34560df46mr72972485ad.14.1786547756069;
-        Wed, 12 Aug 2026 08:15:56 -0700 (PDT)
-X-Received: by 2002:a17:903:37cd:b0:2ca:53e1:b915 with SMTP id d9443c01a7336-2d34560df46mr72971625ad.14.1786547755623;
-        Wed, 12 Aug 2026 08:15:55 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::40fb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d35219ee32sm8268495ad.38.2026.08.12.08.15.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 08:15:55 -0700 (PDT)
-Date: Wed, 12 Aug 2026 11:15:52 -0400
-Message-ID: <51d0105b39278f46def5b14d8d10103e.guodong.xu@oss.qualcomm.com>
-From: Guodong Xu <guodong.xu@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
-        conor+dt@kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v5 15/17] riscv: cpufeature: Introduce ISA bases bitmap
- and rva23u64 detection
-In-Reply-To: <20260701142230.A575F1F000E9@smtp.kernel.org>
-References: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com>
- <20260701-rva23u64-hwprobe-v2-v5-15-2c61f94a695a@gmail.com>
- <20260701142230.A575F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="HliZvzJ8"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67CE1lqI3717406;
+	Wed, 12 Aug 2026 16:05:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=hqHTma
+	hy3f784QIY5eJzE0Y4p132QncQcr2ZjXJ20Qo=; b=HliZvzJ8bsb70dxFjwIxD+
+	Lj7p5k3FmJfcPTwkf7AyKf6YUDVCDqjLmWXIcpBcDeDdu3Dq9pXsRjbQuYEhy8kv
+	i+RINWVIlndBtBbDtPegsUDWOddRISx5zojE93yK3+uHHWD2YmEB04Ki2eFAr7ae
+	VcNEYf2ayM2X3yTs8RtVX6mG5ArdB4yEGOnuvdIkb1ePKoZECWSKQ6Hx/Y1M9ebv
+	sAshpibPe8l3FKmzu+9zUOkzbra58OyxJxYZOjKPdKXuGLXa73gZ3Go/1YgHYZoF
+	lnkJ32O9DWtA+DzY00o2Bjbt/I2hMSTXO1nEn/JFzxHJs4d2OEWa21DgQ2wxXi2A
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnwajj5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Aug 2026 16:05:54 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CFuGb4019145;
+	Wed, 12 Aug 2026 16:05:54 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesq70kr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Aug 2026 16:05:53 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67CG5qij22741516
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 12 Aug 2026 16:05:52 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1E7F658062;
+	Wed, 12 Aug 2026 16:05:52 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6B5945805A;
+	Wed, 12 Aug 2026 16:05:51 +0000 (GMT)
+Received: from [9.61.9.29] (unknown [9.61.9.29])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 12 Aug 2026 16:05:51 +0000 (GMT)
+Message-ID: <5fde23c4-3e31-4dd1-b63d-6cf6c26f3b6b@linux.ibm.com>
+Date: Wed, 12 Aug 2026 12:05:50 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-ORIG-GUID: IrifwqZuxiXm2g406aX3UTI7armuVk64
-X-Proofpoint-GUID: IrifwqZuxiXm2g406aX3UTI7armuVk64
-X-Authority-Analysis: v=2.4 cv=UfNhjqSN c=1 sm=1 tr=0 ts=6a7c8e2d cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
- a=pGLkceISAAAA:8 a=7NWRS0o-2Gl6raFx_5EA:9 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEyNCBTYWx0ZWRfX1salJQYY4QWJ
- jlJjiG9leB5zjBp1RW/8sMhbS96lrVUG1IbTio18X7/7aVtUMip7eEXHM6Gy910JIH7GdqAqv+i
- r0VLckMLFyLuZ8rzaMiMDNbuTOyBfzduLj602iWaZHbw3O16bEi8zJwGljhvxUCLORJtO+r/GPm
- 7G+3s2Z8tKpimAlmfFU+CpPbYJevJYn3T1LP5CA8Q7basx0f5y4G/V1VvHnm2HHLrV+RK0GEJfR
- pOsLIKaWaybf5PIVKbZFUukjSFqqpJeiBrhkcqk/3YtvWmcM0ZNq/OiYRd07TR4Md6fBOIyX8nI
- 1t7IBOvnCPCyfQ+X0G7N11s+5aWnsRQf20367UMcXvjtontGnBIsrZPdJVbbdA4L1E6DzFEKDUo
- r1FAKa8QSP6YF8AQWUetfTw61MhkXmom0P5YWFlHuB1ysNL1vG5y/KBMZRrCNM0Na0Ey3zp1PsK
- /sIgd+Xf9PoECarZoIQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEyNCBTYWx0ZWRfX1hXXBokwtF0u
- qd4BkWf/p5WYxg4yvE3x/Gx8Jxtj87nPYp0AVbnoL6LVEsN8rYme1ce3+vCWqq0XJZS43iMlJoy
- hDQwRBX9gxo7vQPyV+xqsm7tSYQZYU0=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/9] s390/vfio-ap: Fix dereference matrix_mdev->kvm
+ without checking for NULL
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, linux-s390@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik
+ <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.vom>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260812115139.576303-1-akrowiak@linux.ibm.com>
+ <20260812115139.576303-3-akrowiak@linux.ibm.com>
+ <20260812121219.0E0161F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260812121219.0E0161F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a7c99e2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=eFc6ll9Oi7pUKGAjX2kA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zK-oFZXdftiG49a1gDtXgSnNLMV4BSzE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzMCBTYWx0ZWRfX0ateAm1RrTol
+ A23ZqgKw09W+nkF+YogOI+4twN7Kbc3LjsQ3QcnIPtGtqKOf4r49jc3JL7lSOHEqTwf9CNP02aS
+ Tty6g3mG9aSVwoSYm2NGZJDrGxf4+6yvlxkL6qS/5GOBhVsHDBcta+OEFbtTdmFTkZa1Rb/3Xeh
+ VTLiIm9lI42gfaajzw+W8dJva5YdCrt8DmnFAoT0VfwTrA+sJg829XJQ/0vigxAjSzApkjitfXR
+ WpI9q7NGIBj8gHyCnWx3ctQISvqwZJcuhvxifhGRU0heuNGDrXmrovymWGnGaLDKJgga1j8J0+m
+ 54efjeY5ufuzOXIFEE/x/xtrUAXZ4DoTGBHlJ4kj+DAnKhY10hRaUmzFZQw4i53FVEzk+XdS7Xn
+ I18wISbcvfxriyRlfWx63cE0arCmAUveO+zVFfUbsASCJVE+GoeQNhIRPjiP8GljdK67Xpf7zKw
+ toCtzOwbDjymoWcDfgw==
+X-Proofpoint-ORIG-GUID: zK-oFZXdftiG49a1gDtXgSnNLMV4BSzE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzMCBTYWx0ZWRfX6Gk1GMWWE9Lv
+ 0d3Sz9CmcdzBN0wuHVo1mM/rEMBM1L0rC219M2UBIC15trsaN91iL0LjzgViz6XEJMjCrvxX0Ht
+ nq3pkLKv6aBsiyIqpNo8hkaz/XTdTR8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0 clxscore=1015
+ spamscore=0 impostorscore=0 suspectscore=0 clxscore=1011 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120124
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120130
 
-On Wed, 01 Jul 2026 14:22:29 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The RVA23U64 base detection wrongly mandates the legacy broad `B` extension superset instead of its required bitmanip constituent extensions (`Zba`, `Zbb`, `Zbs`).
+
+
+On 8/12/26 8:12 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Uninitialized stack-allocated bitmap (`apm_filtered`) is passed to `reset_queues_for_apids`.
+> - [High] Missing matrix_dev->mdevs_lock acquisition in vfio_ap_mdev_cfg_add() causing data race on matrix_mdev fields.
+> - [High] Unsafe iteration over matrix_dev->mdev_list without holding mdevs_lock.
 > --
 >
-> commit e73d8757f0ce7270b4b39989368d4e83e5a355fc
-> Author: Guodong Xu <docular.xu@gmail.com>
+> --- Patch [2]: [PATCH v3 2/9] s390/vfio-ap: Fix dereference matrix_mdev->kvm without checking for NULL ---
+> commit adee11494c3d56eaa0ce36b3c479c7382d103cad
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
 >
-> riscv: cpufeature: Introduce ISA bases bitmap and rva23u64 detection
+> s390/vfio-ap: Fix dereference matrix_mdev->kvm without checking for NULL
 >
-> This commit introduces a per-hart and host-wide bitmap of conformant ISA
-> profile bases, such as IMA and RVA23U64. The bitmap is computed during
-> init by riscv_init_isa_bases() and registered as a subsys_initcall.
+> This commit adds NULL checks for matrix_mdev->kvm before attempting to
+> acquire the matrix_mdev->kvm->lock mutex in the configuration change and
+> scan complete callbacks. This prevents a potential NULL pointer dereference
+> if the kvm pointer has not been initialized.
 >
-> > diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-> > index 4c3bf813af052..fa8471aef42ee 100644
-> > --- a/arch/riscv/kernel/cpufeature.c
-> > +++ b/arch/riscv/kernel/cpufeature.c
+>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+>> @@ -2606,7 +2606,13 @@ static void vfio_ap_mdev_cfg_remove(unsigned long *ap_remove,
+>>   	int do_remove;
+>>   
+>>   	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it safe to iterate over
+> mdev_list holding only matrix_dev->guests_lock here?
+>
+> Looking at vfio_ap_mdev_probe(), it appears new entries are added to
+> this list holding only matrix_dev->mdevs_lock (without taking guests_lock).
+>
+> Could concurrent probing during an AP bus scan modify the list while we are
+> traversing it locklessly here, leading to list corruption?
+
+Will add a block comment here to point out that it is safe to iterate 
+the list
+because vfio_ap_on_cfg_changed() - which is called prior to this - holds the
+guests_lock. Hopefully that stops this from being pointed out by LLMs. Will
+also add a comment prior to adding a matrix_mdev in the vfio_ap_mdev_probe
+function for the same reason.
+
+>
+>> -		mutex_lock(&matrix_mdev->kvm->lock);
+>> +		/*
+>> +		 * The mdevs_lock must be held to access fields within matrix_mdev,
+>> +		 * and kvm->lock must be taken before mdevs_lock to satisfy the lock
+>> +		 * ordering requirement and prevent a lockdep splat.
+>> +		 */
+>> +		if (matrix_mdev->kvm)
+>> +			mutex_lock(&matrix_mdev->kvm->lock);
+>>   		mutex_lock(&matrix_dev->mdevs_lock);
+> [Severity: High]
+> This is a pre-existing issue, but does vfio_ap_mdev_cfg_add() also need
+> matrix_dev->mdevs_lock protection like this?
+>
+> vfio_ap_mdev_cfg_add() is called right after vfio_ap_mdev_cfg_remove() from
+> vfio_ap_on_cfg_changed(), which only holds matrix_dev->guests_lock. It
+> modifies matrix_mdev->apm_add, aqm_add, and adm_add, and reads
+> matrix_mdev->matrix.
+>
+> Could concurrent modifications race without mdevs_lock being held and
+> corrupt the guest AP configuration bitmaps in vfio_ap_mdev_cfg_add()?
+
+Fixed in patch 4/9 of this series.
+
+>
+> [ ... ]
+>> @@ -2821,9 +2828,6 @@ static void vfio_ap_mdev_hot_plug_cfg(struct ap_matrix_mdev *matrix_mdev)
+>>   	DECLARE_BITMAP(apm_filtered, AP_DEVICES);
+>>   	bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = false;
+> [Severity: High]
+> This is a pre-existing issue, but does apm_filtered need to be zeroed or
+> initialized before use?
+>
+> If vfio_ap_on_scan_complete() is called with non-empty adm_add but empty
+> apm_add and aqm_add, filter_adapters and filter_domains are set to false.
+> This bypasses vfio_ap_mdev_filter_matrix(), which normally initializes
+> apm_filtered.
+>
+> Then the uninitialized stack variable is passed down:
+>
+>      reset_queues_for_apids(matrix_mdev, apm_filtered);
+>
+> Could this cause reset_queues_for_apids() to iterate over random stack
+> garbage bits and inadvertently reset arbitrary AP queues?
+
+Fixed in patch 6/9 of this series.
+
+>
+> [ ... ]
+>>   void vfio_ap_on_scan_complete(struct ap_config_info *new_config_info,
+>> @@ -2854,15 +2855,29 @@ void vfio_ap_on_scan_complete(struct ap_config_info *new_config_info,
+>>   	mutex_lock(&matrix_dev->guests_lock);
+>>   
+>>   	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+> [Severity: High]
+> This isn't a bug introduced by this patch, but similar to the loop in
+> vfio_ap_mdev_cfg_remove() above, does this iteration also need
+> matrix_dev->mdevs_lock to prevent list corruption against concurrent calls
+> to vfio_ap_mdev_probe()?
+
+No, the matrix_dev->guests_lock is needed to prevent list corruption.
+
 >
 > [ ... ]
 >
-> > @@ -1304,3 +1307,90 @@ void __init_or_module riscv_cpufeature_patch_func(struct alt_entry *begin,
-> >  	}
-> >  }
-> >  #endif
->
-> [ ... ]
->
-> > +	/* RVA23U64 */
-> > +
-> > +	/* Supm with PMLEN=7 */
-> > +	if (!riscv_have_user_pmlen(7))
-> > +		return;
-> > +
-> > +	__set_bit(RISCV_ISA_EXT_F, ext_mask);
-> > +	__set_bit(RISCV_ISA_EXT_D, ext_mask);
-> > +	__set_bit(RISCV_ISA_EXT_C, ext_mask);
-> > +	__set_bit(RISCV_ISA_EXT_B, ext_mask);
->
-> [Severity: Medium]
-> Does this incorrectly mandate the legacy broad B extension for RVA23U64?
->
-> If a RISC-V device tree advertises the RVA23U64 constituent bitmanip
-> extensions (e.g., zba, zbb, zbs) but omits the legacy unratified 'b'
-> string, it appears this check will fail because RISCV_ISA_EXT_B won't be
-> synthesized. Should this instead check for the individual constituent
-> extensions required by the profile?
 
-No. This was raised and answered in the v2 and v3 rounds.
-
-Guodong
