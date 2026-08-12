@@ -1,80 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A19417D7A;
-	Wed, 12 Aug 2026 11:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786533642; cv=none; b=uqDwdTQgzUlCfHSGFz5UqKwtVIil5ic4R50XybRORpE/AISBnNpSoZ8h0Kno3rGMQRF+WRcKiTD7vy0pRrCSe1IhrLE+GuNu3WaeOsiNccZwkBQ7WNJPxg8khg3lHb5KtPm3Gy0/Mk9U/Ohu4PFj74fLxynYECE5obcx3i5dP+Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786533642; c=relaxed/simple;
-	bh=9A8Bhz2TfTVBJdFtGyPY+UuYkCjmAamRVnmIkozQJoU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DhFBS9xVzHZlxUT8mqS/qxnL2ecqIFg7dEiEUWpNQjsRwe20SZZNZfFjCUY95n72YHJj4sMYTBjOn40TVdMooBeW5g3WQ10X9byor4zYhnK3/hM54jOJZIQ42sYuiuEkFZ2NMFrJnhSr8bNjYfPL6gdVSX2SIBdM3K8yDG/RXTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GULO7AVg; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48C63B52F8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 11:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786534098; cv=pass; b=WokEwAecBZjfRtozKq+WqGqPczRTF44QwYPwQPYeZ7gTU/zEoSQ7hYZqa8GLvrQ4uQfxc4+q7NWRa5x3wTgICz2ofnKvn8/yuHYBEs4ZiO89v229KRt/SYuYLLosBoP+X6EE2Cqp3sZscI277kvmzEDcmOwMW/q8RYNb6s8+8CI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786534098; c=relaxed/simple;
+	bh=2rFGE4qfBernJcN/gTlI/3NpT6ke01djCdzhEcA9pVk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XOBfY5XGIVgKWZp0phPL9iffLcxIcxPh4tQfs6rbxseLstxP571ZdKg3tO5KD/BT+mAGjWlQy/JTK499X4OF6OrucO/a2RJvSE+SzogcWJKB0XG/8+yz/V+2TcUidRCPAxrAZ0tVKqGEhalfWJJzVgCDkBo+xXVgU+tpH32p4PM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZO35d377; arc=pass smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GULO7AVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFB11F000E9;
-	Wed, 12 Aug 2026 11:20:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786533641;
-	bh=xjjekHDCD+ngjZWFcAGybvbD19AYt6LyIcYokjOW7N8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GULO7AVg7KNJAgScpQNaFV/fB8NTEgsdTfaPBLAVc/9xE01wE2CZmkb1bcW6A4Tkl
-	 OwXfw1VccHguO4yJUEVbW1r5+UvW6kjsFzsf5kJhVUOrCZrkAfW3BLo6XLxJLCOz7F
-	 fQJ9644NGPsMrvJByAblb/SDM6FXUN8Gq6TkQBYFlcLj0XsDotLrAXIJgcAPFxeqa6
-	 Levb1LOuKkgkSG+ftWISD/0tSzmsQqt2s7nKhV0jhNv8CL0FexKqtq1kU5upj1Ank1
-	 1WcIDKHGkly+iuWakqQVZ4dUP2vZ3sNMUcnU3lvtKJxW4lCk/fh8JR4DPMoqRZs4Qf
-	 OnJ6Txy9VjC6w==
-Date: Wed, 12 Aug 2026 12:20:37 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Thomas Richard (congatec GmbH)" <thomas.richard@bootlin.com>,
-	mfd@lists.linux.dev
-Subject: Re: [PATCH 3/4] mfd: cgbc: Add virtual I2C bus support
-Message-ID: <20260812112037.GJ1072730@google.com>
-References: <20260804-cgbc-i2c-storage-devices-support-v1-0-fed38510671c@bootlin.com>
- <20260804-cgbc-i2c-storage-devices-support-v1-3-fed38510671c@bootlin.com>
- <20260804154824.458301F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZO35d377"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so1020503a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:28:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786534096; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DZ/0NKMl+FmYPIKiD8D/eCnqDriW7SvP8wTYLthi6FyEo63ZMfe7R4YRZoFOvkfEK5
+         v/gw8xFjR0cTF1nqmI7Q9IxH3hutBhqqzLlxZNaERv644RgfBp6WMobcGxAYuhZJnYB4
+         rfdcnZg1p7LkoGDSw811CzpYZBSsYRIHQmab462kzCtprjyBCnKPezZiy+Ia0dE5JT6g
+         d29pdhZpeDv9vuIA6LGwT+RNuu91CpscgnVitTvcbWpaSKBHTCJHjgXHnE+0msuEiqHi
+         MEOXfAROVYYUXWqT7bJmbaJfBj52rasTMngy61lhLclGnukVlc4dY124ANBN+pfjcdUx
+         A+0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ciG76+KQ9pkjJMs5bmm5Wc7sSbVFbcyhCTB47xsSC/4=;
+        fh=LcgpHvf8Q9R5NlBSSEW9eNy+WcF5IoW3LDiZImP2iwU=;
+        b=mOdIbswlqYI8rzxikzSOlNKELu9tqsbIk8E7EK2k+cR9o4QyRm0Q+U56xU7SA2nKkY
+         U3QWzC2ugi0RAjoC7lCuxOfZVR+q06vL1tDmBhGOe2w0B8ZQ9k+W+NWQmt7D1MB8+fb+
+         sYRFyVK66eOCz2oJyBAHAgpQ+U9v95bo6ZUNXd3wghD76Lbxtk+TrrD8ny9c7P8dSvpO
+         yCKKVEiou64HUXEvQpnK96xKjksL3v+SQDVz1LQpSTPI1YF1FuuaK9p85ONbbIEEqA4y
+         jwVh18Ke8OYl1VDmODd3lFN9TJiWsBrBv9RsNHNEavi6ZuH2DecJi3/HZ08xNK5u91+x
+         fcZg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786534096; x=1787138896; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ciG76+KQ9pkjJMs5bmm5Wc7sSbVFbcyhCTB47xsSC/4=;
+        b=ZO35d377tup5//fQ+IwOdQOcitAqVd3kn+QdLvhAqgkcyPG92EzC5B3sw9RDjHaOza
+         YyBJe7eFC8G86HRukVNfkjWFmYCfn5eGSRtkHKLYlcNO8YUDM8jw2DPdBchYbsnhSWXS
+         jM999ili0jDDRZJsMfROSHm9gjyGt2i2WwD34dLqzU2Rr570sKJHJ4hXa+ctPDKJDfg/
+         6k/AYRIbCTSnE70V4cj9VUglObZpTVp29lIdzfHBCWoQgetIRe/JirM/QPX+FsnPGhsi
+         tryk3bzBaIGqBdfBQhb6pRIBOg5fR/kgPmea8YJzoiBsdWThdH03/RbJv5+lLQoGGApf
+         YCtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786534096; x=1787138896;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ciG76+KQ9pkjJMs5bmm5Wc7sSbVFbcyhCTB47xsSC/4=;
+        b=CvSsFxEcpU1PlLE247m74aGg5bcqWZApGBCO3FHKI0eFJNw35coHL/GVHf+JB4sGtQ
+         kckKM6eA/TKasFtbS9o2zm/rEjYT0xivAPrMZos3HRrJn5yXFtEUg6pwvdGlAxfmBO+G
+         LT839948NpA+VgAg4S8d9nZn/cN633+CAjbTB7wd8zBLhBgzmmkDryJo8IY/EBHX/FnQ
+         90rz2IP/8ZS2RgShrJmecDt79hGV4v/kbsDAo8bhYy2O+vQU0D58/MqxZAI7wGkaKyJ0
+         sK7RuOPOCbjT35LksWwsRrv/4w5l3Ac73Y8uR8RLSeuj9eMHdmRM/edAiPAq4xxClqio
+         xGZQ==
+X-Gm-Message-State: AOJu0YxKb2ff+TpP48Lp37E7tqMKw9vplZB5tWyRz+b6en29Pgv3gZcB
+	GWJfGa3sDF79D9MqgjqU1PwMJISfoGwuL7MNLO+a4/D0eZd06o59URgfjZAHf2UxADywKqTn9XL
+	4woPNcGb/G2B1lpLdzeRcMh9KlD/hFnckS3/j
+X-Gm-Gg: AR+sD10SrsflccRq9byF56nTQQxovdicBQa/t4meKbDO3uhTstWOZJ3sAFrzSpPgC+H
+	1sriBZvcs4LShcHvz+xou3f/LQoWchJNAJ0cvs9XZBdn5AMqDYRohxDheu32PLYesxBGuKCvzhs
+	0xNtnKBOysWyrm9zkFzWEXz/9TXJtzBq4qhgx3+pzY752Id3tOaY5748hseLT8Qdty8/zjhvNIB
+	03OjInhO09y4PS+jMgBdWaZau4WV+6+ZIF4paF8S2VI509/u8dazSrwC5y0u/3USr86o44vLdBJ
+	7WYfeBRe8CoWB7G1qV6bUQGoYSdLiUq0KzUTqrDS41H0ZCNkBe93wdcfXpe7zQQS9JKZExz8gzu
+	NyuP0ALVspwVvyUXD9trZrBn9qJS0AgslzRHCk6mp5TQ/lnqY7jQZU9+D
+X-Received: by 2002:a17:90b:3c50:b0:38e:8050:e63a with SMTP id
+ 98e67ed59e1d1-393014230b6mr4960578a91.6.1786534096017; Wed, 12 Aug 2026
+ 04:28:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260804154824.458301F000E9@smtp.kernel.org>
+References: <20260812101418.37966-1-phucduc.bui@gmail.com> <20260812101418.37966-3-phucduc.bui@gmail.com>
+ <20260812102938.D4E101F00A3A@smtp.kernel.org>
+In-Reply-To: <20260812102938.D4E101F00A3A@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Wed, 12 Aug 2026 18:28:04 +0700
+X-Gm-Features: AUfX_mxppOfJDeDuODBCk4keCHLpvRYa2z6NmDB-C1PSyXw7Xu2FjUDIo_zRHs4
+Message-ID: <CAABR9nEzo9pb=mLhZ2nyDuSYr=qDcgBZDzMUqptyvDCG8nLgTg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ASoC: mxs-saif: Drop redundant probe error messages
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 04 Aug 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Hard-coded cell IDs are used for the newly added `cgbc-i2c` subdevice instead of `PLATFORM_DEVID_AUTO`.
-> --
-> 
-> --- Patch [3]: [PATCH 3/4] mfd: cgbc: Add virtual I2C bus support ---
-> commit 4f0038d5dc42bfd45540675cdbf89f68ab3673d5
-> Author: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
-> 
-> mfd: cgbc: Add virtual I2C bus support
-> 
-> This commit adds a new I2C cell to support the internal virtual I2C bus 
-> provided by the Board Controller.
-> 
-> > diff --git a/drivers/mfd/cgbc-core.c b/drivers/mfd/cgbc-core.c
-> > index 4a409234e66c8..81bd0a381ca13 100644
-> > --- a/drivers/mfd/cgbc-core.c
-> > +++ b/drivers/mfd/cgbc-core.c
-> > @@ -240,6 +240,7 @@ static struct mfd_cell cgbc_devs[] = {
-> >  	{ .name = "cgbc-gpio"	},
-> >  	{ .name = "cgbc-i2c", .id = 1 },
-> >  	{ .name = "cgbc-i2c", .id = 2 },
-> > +	{ .name = "cgbc-i2c", .id = 3 },
-> 
 > [Severity: Low]
-> Should this use PLATFORM_DEVID_AUTO instead of hard-coding the cell ID?
+> Are we sure the underlying functions actually log these errors?
+>
+> Looking at devm_request_irq(), devm_snd_soc_register_component(), and
+> mxs_pcm_platform_register(), they do not appear to print error messages when
+> they fail, except in very specific edge cases.
+>
+> While the driver core will log a generic failure code on probe exit, does
+> removing these specific error logs cause the driver to fail silently at these
+> initialization steps, making it difficult to debug which step failed?
+>
 
-I had this question too.
+I checked all error paths in the called functions, and they already
+report the corresponding errors,
+either directly or deeper in the call chain.
+Therefore, removing the additional dev_err() calls does not make these
+failures silent.
 
--- 
-Lee Jones
+> [Severity: High]
+> This is a pre-existing issue, but does returning here leave a dangling pointer
+> in the global mxs_saif array?
+>
+> Earlier in mxs_saif_probe(), the newly allocated saif context is stored
+> globally:
+>
+> mxs_saif_probe()
+>     mxs_saif[saif->id] = saif;
+>
+> If the probe function fails here, or if the driver is manually unbound via
+> sysfs, devres will automatically free the saif structure. However, the driver
+> never clears mxs_saif[saif->id].
+>
+> If a user is actively playing audio and the driver is unbound, the ALSA core
+> unregisters the component but keeps the PCM file descriptor open. When the
+> stream is subsequently closed, the machine driver's hw_free callback invokes
+> mxs_saif_put_mclk(), which will dereference the freed mxs_saif pointer.
+>
+> >
+> >       platform_set_drvdata(pdev, saif);
+> >
+> > @@ -857,16 +855,12 @@ static int mxs_saif_probe(struct platform_device *pdev)
+> >
+> >       ret = devm_snd_soc_register_component(&pdev->dev, &mxs_saif_component,
+> >                                             &mxs_saif_dai, 1);
+> > -     if (ret) {
+> > -             dev_err(&pdev->dev, "register DAI failed\n");
+> > +     if (ret)
+> >               return ret;
+>
+> [Severity: High]
+> This is also a pre-existing issue, but does returning here cause a
+> use-after-unmap panic if the clock divider was initialized?
+>
+> When mxs_saif_probe() calls mxs_saif_mclk_init() for saif0, it registers a
+> clock divider and an OF clock provider. These are not devm-managed and require
+> explicit unregistration.
+>
+> The registered clock divider is passed a register pointer mapped via devres:
+>
+> mxs_saif_mclk_init()
+>     clk = clk_register_divider(..., saif->base + SAIF_CTRL, ...);
+>
+> If devm_snd_soc_register_component() fails and we return directly, devres
+> will automatically unmap saif->base.
+>
+> Because the clock framework objects are never unregistered, they remain in the
+> system. Any subsequent access to this clock, such as reading debugfs or a
+> machine driver interacting with the clock, will dereference the now-unmapped
+> register pointer and cause a synchronous external abort.
+>
+> >
+> >       ret = mxs_pcm_platform_register(&pdev->dev);
+> > -     if (ret) {
+> > -             dev_err(&pdev->dev, "register PCM failed: %d\n", ret);
+> > +     if (ret)
+> >               return ret;
+> > -     }
+> >
+> >       return 0;
+> >  }
+>
+
+I confirmed that both issues are pre-existing and are not introduced
+by this patch.
+They are unrelated to the error-message cleanup in this series.
