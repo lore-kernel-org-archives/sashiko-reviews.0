@@ -1,147 +1,78 @@
-Received: from out-181.mta1.migadu.com (mta1.migadu.com [37.59.57.117])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD723803F2
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.59.57.117
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EA20361953
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:19:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786507730; cv=none; b=ejcNwRgCMn0UcNLhr2/NLjHw6tREeOJZaNwUG3E4FxuNg6glCu9Bn75LQlu/OY7EjkKn4dZAK/mOKas7Tc+WhRXEo0399qi1HZELCrHRQoLqvVUSq1mdyGe0eDR707XD8WbIQh6HVL/w0auyymuRthv4CbLm7NUmSlOqMJc2o1M=
+	t=1786508356; cv=none; b=k5bj/V/Te6qY8e6i1Rgq8wcZJxcUdWj1TydbYNGDiaFAFdl01VPqYsovzqBSLvuL6hYMS3QAdGTGURgwF4bX+Nvu9uZcI747JpkT1fbzzL55XeRNlt96Qud+nVpRewJh1lBBX9gL1thdPAnpWhxZ9JYXUEfgR4fGRYqceSogr7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786507730; c=relaxed/simple;
-	bh=vwHAkDctMYBjsbJdxFFxSqLh7SCbl5pspuWDwDn5tWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hoGPKWXI+LEcutEQBD3nhaPtGOum6yFat5SYDA92XabOHG4MacU0S4oetXTWPcKqPqmXUIy1pej5T5QuvL7KZ/NdSKheDBN16IMEEvpGGgkKa5PFOO7SLsmFm8YMPxHrqlqb7/yErCl73X3JCnNc3m96Vu0JyeOOhpQiiBxZXyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AVuJcSOX; arc=none smtp.client-ip=37.59.57.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AVuJcSOX"
-Message-ID: <27c32796-c265-408d-b12c-6c307db01943@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786507727;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9WVwTrkX3p77Vyzv+J/1SigeABNhqxZJeXVvTaI+3/U=;
-	b=AVuJcSOXR3J8eDUMpjoG0COR98J7g1xy+aQqsEi2LVaEjdeEsD90vl0CdDYZ+dBFEeYmb5
-	KiZBfZwlShVxBq9qUMPpd8EJiEIPxrIWWi4RWgvlYcCMyTPAEeyLhEHOYjoMC61ijqZwMZ
-	CethRfCClH7UpcMCUK1xnmGCatgWxEk=
-Date: Wed, 12 Aug 2026 12:08:30 +0800
+	s=arc-20240116; t=1786508356; c=relaxed/simple;
+	bh=kyWuVwDHDZwQqMzpX/78Rp68PO8hrk0L1annhXEhrh8=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=K9PEX2ArBZWzAAYtaxwe67DJqyinVpJYTxJkPerkLHIYpb05ISh2ShJVH02CllggKXX5ueNRRbQn3jvJb0S/vuw5ZRz+HPIBWK6CaNXRodVvm8+Vh7L9QBveXv0Um3qgI04Rre3+VOGALl/UjlDS3zvJD5Umc8AmSzpD+bbzeRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [123.138.236.242])
+	by gateway (Coremail) with SMTP id _____8Ax29E_9HtqRG4AAA--.1403S3;
+	Wed, 12 Aug 2026 12:19:12 +0800 (CST)
+Received: from [10.130.40.83] (unknown [123.138.236.242])
+	by front1 (Coremail) with SMTP id qMiowJAx3c479HtqJZEBAA--.10850S2;
+	Wed, 12 Aug 2026 12:19:08 +0800 (CST)
+Subject: Re: [PATCH v3 3/3] module/kallsyms: Filter out local and mapping
+ symbols during module load
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-modules@vger.kernel.org
+References: <20260812032807.15034-1-yangtiezhu@loongson.cn>
+ <20260812032807.15034-4-yangtiezhu@loongson.cn>
+ <20260812034416.DAB981F000E9@smtp.kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <0cd4c5c8-3c50-958f-a8c8-9f118a14a57c@loongson.cn>
+Date: Wed, 12 Aug 2026 12:19:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 12/13] selftests/bpf: Add tracing_multi bpf prog
- link info test
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260809150111.45000-1-leon.hwang@linux.dev>
- <20260809150111.45000-13-leon.hwang@linux.dev>
- <20260809152940.0EFDF1F000E9@smtp.kernel.org>
+In-Reply-To: <20260812034416.DAB981F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260809152940.0EFDF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJAx3c479HtqJZEBAA--.10850S2
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+	ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+	BjDU0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+	xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+	j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxV
+	AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E
+	14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
+	0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280
+	aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
+	xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+	x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r
+	17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
+	7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
+	W8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU
+	20PSUUUUU
 
-On 9/8/26 23:29, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing array sorting in user-space targets leads to flaky test
-> - [Medium] Uninitialized stack variable `fids` passed to kernel
-> --
-> 
-> --- Patch [12]: [PATCH bpf-next 12/13] selftests/bpf: Add tracing_multi bpf prog link info test ---
-> commit 5ee3239754522a052ad0eb2cf3e2485319bff581
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> selftests/bpf: Add tracing_multi bpf prog link info test
->     
-> Verify the link info works well for bpf prog targets of tracing_multi link.
-> 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
->> index 0918321c8e63d..a5f8bfcb1e07a 100644
->> --- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
->> +++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-> [ ... ]
->> @@ -467,13 +489,48 @@ static int setup_tmulti_targets(const struct bpf_program *prog,
->>  	return -1;
->>  }
->>  
->> +static int setup_tmulti_bpf_prog_targets(const struct bpf_program *prog, int token_fd,
->> +					 const __u64 *cookies,
->> +					 const struct bpf_program * const *target_progs,
->> +					 struct tmulti_target *targets,
->> +					 __u32 *btf_obj_id)
->> +{
-> [ ... ]
->> +		targets[i].cookie = cookies[i];
->> +		targets[i].id = prog_info.id;
->> +		targets[i].func_btf_id = func_btf_id;
->> +	}
->> +
->> +	return setup_tmulti_btf_obj_id(prog, btf_obj_id);
->> +}
-> 
-> [Severity: Medium]
-> Will this lead to flaky tests? The kernel sorts the tracing_multi targets by a
-> computed key during attachment.
-> 
-> When returning link info, the arrays are returned in this sorted order, and
-> verify_tracing_multi_link_info() asserts that they perfectly match the targets
-> array at the exact same indexes.
-> 
-> However, unlike setup_tmulti_targets(), this function does not call qsort() on
-> the targets array. If ID allocation wraps around or another process allocates
-> IDs concurrently, this might fail non-deterministically.
-> 
+On 2026/8/12 上午11:44, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+...
 
-Will add qsort() here.
+> [Severity: High]
+> This is a pre-existing issue
 
->> +
->>  static int verify_tracing_multi_link_info(int fd, const struct bpf_program *prog,
->>  					  const struct tmulti_target *targets,
->> -					  __u32 btf_obj_id, bool has_cookies)
->> +					  __u32 btf_obj_id, __u32 count,
->> +					  bool has_cookies, bool tgt_progs)
->>  {
->> +#define TMULTI_CNT (TRACING_MULTI_CNT > TRACING_MULTI_BPF_CNT ? \
->> +		    TRACING_MULTI_CNT : TRACING_MULTI_BPF_CNT)
->>  	enum bpf_attach_type attach_type = bpf_program__expected_attach_type(prog);
->> -	__u64 addrs[TRACING_MULTI_CNT], cookies[TRACING_MULTI_CNT];
->> -	__u32 ids[TRACING_MULTI_CNT];
->> +	__u64 addrs[TMULTI_CNT], cookies[TMULTI_CNT];
->> +	__u32 ids[TMULTI_CNT], fids[TMULTI_CNT];
->>  	struct bpf_link_info info;
->>  	__u32 len = sizeof(info);
->>  	int err, i;
-> [ ... ]
->>  	memset(ids, 0, sizeof(ids));
->>  	memset(cookies, 0, sizeof(cookies));
->> @@ -496,7 +555,8 @@ static int verify_tracing_multi_link_info(int fd, const struct bpf_program *prog
->>  	info.tracing_multi.ids = ptr_to_u64(ids);
->>  	info.tracing_multi.addrs = ptr_to_u64(addrs);
->>  	info.tracing_multi.cookies = has_cookies ? ptr_to_u64(cookies) : 0;
->> -	info.tracing_multi.count = TRACING_MULTI_CNT;
->> +	info.tracing_multi.func_btf_ids = tgt_progs ? ptr_to_u64(fids) : 0;
->> +	info.tracing_multi.count = count;
->>  
->>  	err = bpf_link_get_info_by_fd(fd, &info, &len);
-> 
-> [Severity: Medium]
-> Does this code leave the fids array uninitialized?
-> 
-> The other stack arrays (ids, cookies, addrs) are explicitly cleared with
-> memset() before being passed to the bpf_link_get_info_by_fd() syscall, but
-> fids is not. This could potentially cause issues with uninitialized memory.
-> 
+Thanks for the reports of patch 2 and patch 3.
 
-Will add 'memset(fids, 0, sizeof(fids))'.
+As noted in the descriptions, these are pre-existing issues,
+they are completely independent of this series.
+
+IMO, a dedicated security patch series should handle this
+historical vulnerability in the future.
 
 Thanks,
-Leon
+Tiezhu
 
