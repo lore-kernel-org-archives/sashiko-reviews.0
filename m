@@ -1,238 +1,119 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62593546D9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 06:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BAF39447C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 06:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786516366; cv=none; b=pTf6zYvjjVrP3CRUu1o7oBkTi2eoxDAUJXXUvTUJp99dS05/s3uWR+xrjeo1uXz1uoFlDpDbk+mu6Q/qJb3oyxV3ZPxOMUrKQ7CNkxTpwGeCC67S0ZRwRH4ZDuEWaSkC4h5K4ipPKgGvliiSUZrbD7b5/mF0Bd7MxFlGZDWWRw8=
+	t=1786517026; cv=none; b=p0ZxWaz6jnfywa1YeK2ER/afvRW5lgLi9m3vkRIxkZ/IRm4PfiiZ7A+PZ3CJ1McFcckCNsrCrl+58pEqDT4B12ZxLrc/nivGO3DFUmeQt64X7+24dcTAb7nGdbj44VEqlEzQKqNx1yqu/er9g9EYAa57yKjkAh4RGlLHom8sm64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786516366; c=relaxed/simple;
-	bh=h5JXSvc1ufL6bkPE/woM5yaUaXQLAZ8qaqklf9eMHAc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h7+cb+pr5ciAmC6YGDaxAXHBO9FHf/I94glgWPlcdVq/rlvZ5ACFukUVK4bJCehVsQsrDDeWmC8rQoDejeoervOmvTeIK8vMnLNSFbrQJ9nm0J3Y95ylGAf4iDW6Uj9YY+qAlpYCZxsTvB+DkJPnFRaVMi77ljgS1y2658FFhj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PLdyU+qs; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786517026; c=relaxed/simple;
+	bh=HO3kgb3Rzg6mpaKRnBriWOvYD+DVM7tffSSfpsRtkHY=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VAuHprPRdnTJG45brsUjjfUtS7O0SY+3YStmwGi8xRLixnGQJmHFtSPa8gWCARCcQ1Qfzhz4xVu05+9zt0Skc+WE4RiH6pWty+mSkBJW2YXdPXy5CR3wVn3Bj1Tt++7gZhdwxfBLgv5wey+uVe+/2pwg/W01QxWU72JD8WNN6a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=LrudRtpF; arc=none smtp.client-ip=161.97.139.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PLdyU+qs"
-Message-ID: <f244c880-c907-456b-81ae-07c28456185e@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786516361;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ExJys5qSDXQWFXg8uSDgxGRkENE87NKcgW0l7vfMryo=;
-	b=PLdyU+qsm8C9P29r4fmpfnSmLBODoUGdBqzDh9D1uirmugiUqWiF1KJNxYfAaOVCcJzh2Z
-	KRfHKXbsCYtnXvQFGVljlD+C+wgQcCnfBoPVvyRT+/quU+lQ429XSl+lMcooNE8j+CDw63
-	1xOwbNgx2ftc9XiwadFKgdEGZt4cJjQ=
-Date: Wed, 12 Aug 2026 14:32:40 +0800
+	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="LrudRtpF"
+Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
+	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <andreas@kemnade.info>)
+	id 1wu2gb-0000000CWme-0tKF
+	for sashiko-reviews@lists.linux.dev;
+	Wed, 12 Aug 2026 08:43:37 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
+	Reply-To:Content-ID:Content-Description;
+	bh=AfXOw53sapozXifXpKm30CeEsqFjzfBau8Gt2HT8J98=; t=1786517017; x=1787726617; 
+	b=LrudRtpFlk3LwNGuFwus73QLZh8ADxvrLtnKKXet1VeIb8qaHfa4gVlDNybaN5vu9tZoH3NW2Oc
+	hhf/aXvIJAnT70ynsdWUq+sCCtIVfxbunMeTldzuqWivwRWM3w1Y6lf/Uxr3CQIofrW9ULDEU7oIX
+	Id+jmhITcCCxV/3NcdIHe/wqfP2SwKLT17io8S9ThXuu0cyxR/HBsJCAzMu+/qfFOhPWzHjn6js98
+	k4dpcRw+aZXG7F576UDsFJp+hanItjmR8fd2dJoADVB5kfqoLNJp2J/a2CAD/Hpd4pli250aJsiJt
+	Ed0wDoFLGSVIxx64a8W2OdwCUzn2mqms19bw==;
+Date: Wed, 12 Aug 2026 08:43:20 +0200
+From: Andreas Kemnade <andreas@kemnade.info>
+To: Lee Jones <lee@kernel.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ linux-leds@vger.kernel.org, "H. Nikolaus Schaller" <hns@goldelico.com>
+Subject: Re: [PATCH v3] leds: is31fl319x: modernize registration
+Message-ID: <20260812084320.21a7341a@kemnade.info>
+In-Reply-To: <20260811185127.GW2869284@google.com>
+References: <20260804-led-modern-v3-1-297720eec19f@kemnade.info>
+	<20260804135515.5DBFC1F000E9@smtp.kernel.org>
+	<20260804164101.43753f1b@kemnade.info>
+	<20260806104525.GC10716@google.com>
+	<20260806135550.2d57682c@kemnade.info>
+	<20260811185127.GW2869284@google.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v5 2/2] alloc_tag: fix undetected compressed tag overflow
- when profiling is disabled
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-modules@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>,
- Suren Baghdasaryan <surenb@google.com>
-References: <20260812054105.102637-1-hao.ge@linux.dev>
- <20260812054105.102637-3-hao.ge@linux.dev>
- <20260812060411.968631F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Hao Ge <hao.ge@linux.dev>
-In-Reply-To: <20260812060411.968631F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
 
-CC Andrew and Suren
+On Tue, 11 Aug 2026 19:51:27 +0100
+Lee Jones <lee@kernel.org> wrote:
 
+> On Thu, 06 Aug 2026, Andreas Kemnade wrote:
+> 
+> > On Thu, 6 Aug 2026 11:45:25 +0100
+> > Lee Jones <lee@kernel.org> wrote:
+> >   
+> > > On Tue, 04 Aug 2026, Andreas Kemnade wrote:
+> > >   
+> > > > On Tue, 04 Aug 2026 13:55:14 +0000
+> > > > sashiko-bot@kernel.org wrote:
+> > > >     
+> > > > > > leds: is31fl319x: modernize registration      
+> > > > > 
+> > > > > [Severity: Low]
+> > > > > This isn't a bug, but should the description after the subsystem prefix be
+> > > > > capitalized? The LED subsystem guidelines recommend formatting commit messages
+> > > > > as "leds: <Driver>: <Capitalized description>".    
+> > > > 
+> > > > 
+> > > > ~/linux$ grep -R 'leds: <Driver>: <Capitalized description>"' Documentation/
+> > > > ~/linux$ ls Documentation/leds/
+> > > > index.rst                  leds-lp5521.rst      leds-sc27xx.rst
+> > > > leds-blinkm.rst            leds-lp5523.rst      leds-st1202.rst
+> > > > leds-cht-wcove.rst         leds-lp5562.rst      ledtrig-oneshot.rst
+> > > > leds-class-flash.rst       leds-lp55xx.rst      ledtrig-transient.rst
+> > > > leds-class-multicolor.rst  leds-lp5812.rst      ledtrig-usbport.rst
+> > > > leds-class.rst             leds-mlxcpld.rst     uleds.rst
+> > > > leds-el15203000.rst        leds-mt6370-rgb.rst  well-known-leds.txt
+> > > > leds-lm3556.rst            leds-qcom-lpg.rst
+> > > > leds-lp3944.rst            leds-s2m-rgb.rst
+> > > > 
+> > > > nothing look like special guidelines for the system. I do not want to
+> > > > see such comments without a reference.
+> > > > Also MAINTAINERS does not show any additional policy for the LED subsystem.    
+> > > 
+> > > `git log --oneline -- <subsystem>` is your friend.
+> > >   
+> > That is looking at common practice, not guidelines, which is of course
+> > often a good idea.
+> > 
+> > So Sahiko is hallucinating about non-existant guidelines which
+> > cannot be referenced of course. Well, at least it gives quite an amount of
+> > useful hintse.  
+> 
+> It's not hallucinating, I put it there. =:-)
+> 
+> https://github.com/sashiko-dev/sashiko/blob/main/third_party/prompts/kernel/subsystem/leds.md
+> 
+> Specifically:
+> 
+> https://github.com/sashiko-dev/sashiko/blob/main/third_party/prompts/kernel/subsystem/leds.md?plain=1#L8
+> 
+So, that is another repository of another project. That is not an
+intuitive place to look at. So I would expect to see at least some pointer
+in that direction in the first place.
 
-On 2026/8/12 14:04, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Unconditional allocation of per-CPU counters for modules causes a memory leak when memory profiling is disabled and the module load is retried.
-> 
-> Pre-existing issues:
-> - [Critical] Concurrent module loading can cause an out-of-bounds memory write and module corruption because the global profiling flag is toggled without cross-phase synchronization.
-> - [High] A race condition on the global module tags size variable can lead to unmapped virtual memory access and a kernel panic.
-> - [High] If page population fails, a dangling module pointer is left in the maple tree, leading to a Use-After-Free.
-> --
-> 
-> --- Patch [2]: [PATCH v5 2/2] alloc_tag: fix undetected compressed tag overflow when profiling is disabled ---
-> commit ffb2b208763f32cdfb3d6cb740d4d4efa5c99ae0
-> Author: Hao Ge <hao.ge@linux.dev>
-> 
-> alloc_tag: fix undetected compressed tag overflow when profiling is disabled
-> 
-> This patch modifies module layout and allocation to retry loading without
-> memory profiling if the compressed tag limit is exceeded. It removes the
-> profiling enabled guard when checking for tag overflow and handles the
-> fallback by resetting section flags and repeating the layout process.
-> 
->> diff --git a/kernel/module/main.c b/kernel/module/main.c
->> --- a/kernel/module/main.c
->> +++ b/kernel/module/main.c
-> 
-> [ ... ]
-> 
->> @@ -2966,18 +2967,38 @@ static struct module *layout_and_allocate(struct load_info *info, int flags)
->>   	 */
->>   	module_mark_ro_after_init(info->hdr, info->sechdrs, info->secstrings);
->>   
->> +	/*
->> +	 * Save the sizes reserved by module_frob_arch_sections() so they can
->> +	 * be restored if we retry below.
->> +	 */
->> +	for_each_mod_mem_type(type)
->> +		frob_size[type] = info->mod->mem[type].size;
->> +
->>   	/*
->>   	 * Determine total sizes, and put offsets in sh_entsize.  For now
->>   	 * this is done generically; there doesn't appear to be any
->>   	 * special cases for the architectures.
->>   	 */
->> +retry:
->>   	layout_sections(info->mod, info);
->>   	layout_symtab(info->mod, info);
->>   
->>   	/* Allocate and move to the final place */
->>   	err = move_module(info->mod, info);
-> 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but can concurrent module loading
-> cause memory corruption if profiling is disabled mid-flight?
-> 
-> In move_module(), if one thread disables profiling globally via
-> shutdown_mem_profiling() while another thread is halfway through module
-> loading (between layout calculation and memory movement), the second thread's
-> section offset queries could evaluate to false.
-> 
-> This would cause the module loader to use an un-incremented 0 offset and
-> incorrectly write the codetag section into the base memory, overwriting the
-> start of the module's core memory block.
-> 
->> -	if (err)
->> -		return ERR_PTR(err);
->> +	if (err) {
->> +		if (err != -EAGAIN)
->> +			return ERR_PTR(err);
->> +		/*
->> +		 * -EAGAIN means profiling was disabled but the module
->> +		 * can still load without it. Reset state and retry.
->> +		 */
->> +		rewrite_section_headers(info, flags);
->> +		for_each_mod_mem_type(type)
->> +			info->mod->mem[type].size = frob_size[type];
->> +		info->sechdrs[info->index.sym].sh_flags &= ~(unsigned long)SHF_ALLOC;
->> +		info->sechdrs[info->index.str].sh_flags &= ~(unsigned long)SHF_ALLOC;
->> +		goto retry;
-> 
-> [Severity: High]
-> Does this retry mechanism cause a memory leak for per-CPU counters?
-> 
-> When the module load is retried via this new loop, the codetag section is
-> treated as standard memory and bypasses maple tree registration. However, the
-> subsequent codetag module initialization unconditionally allocates per-CPU
-> memory for these tags regardless of the profiling state.
-> 
-> During module unload in release_module_tags(), the cleanup path exits early
-> because the module cannot be found in the maple tree, permanently leaking
-> the per-CPU memory on every unload.
-
-The per-CPU counter leak is pre-existing, not introduced by the retry 
- 
- 
-                                                      mechanism.
-
-The root cause is that shutdown_mem_profiling() permanently sets 
- 
- 
- 
-mem_profiling_support to false, after which needs_section_mem() 
- 
- 
-                                                        returns false 
-for every subsequent module. Their codetag sections are 
- 
- 
-                                         placed as regular data, so they 
-are never inserted into the alloc_tag 
- 
- 
-                       maple tree. Yet codetag_load_module() still 
-unconditionally invokes 
- 
- 
-          the load_module() callback, which allocates percpu counters 
-that 
- 
- 
-release_module_tags() cannot find on unload.
-
-I'll send out a separate patch to fix this leak later.
-
-
-
-> 
->> +	}
->>   
->>   	/* Module has been copied to its final place now: return it. */
->>   	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
-> 
->> diff --git a/mm/alloc_tag.c b/mm/alloc_tag.c
->> --- a/mm/alloc_tag.c
->> +++ b/mm/alloc_tag.c
-> 
-> [ ... ]
-> 
->> @@ -950,10 +950,12 @@ static void *reserve_module_tags(struct module *mod, unsigned long size,
->>   		int grow_res;
->>   
->>   		module_tags.size = offset + size;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the update to module_tags.size race
-> with concurrent module loads?
-> 
-> The high-water mark for the module tags size is updated here without a lock
-> after the maple tree lock is released. If two concurrent module loads race on
-> this update, a higher offset might be overwritten by a smaller one.
-> 
-> Subsequently, vm_module_tags_populate() relies on this corrupted size and
-> would fail to map the physical pages for the higher virtual addresses, leading
-> to a page fault when the module accesses its allocated tags.
-> 
->> -		if (mem_alloc_profiling_enabled() && !tags_addressable()) {
->> +		if (!tags_addressable()) {
->>   			shutdown_mem_profiling(true);
->> -			pr_warn("With module %s there are too many tags to fit in %d page flag bits. Memory allocation profiling is disabled!\n",
->> -				mod->name, NR_UNUSED_PAGEFLAG_BITS);
->> +			pr_warn_once("With module %s there are too many tags to fit in %d page flag bits. Memory allocation profiling is disabled!\n",
->> +				     mod->name, NR_UNUSED_PAGEFLAG_BITS);
->> +			release_module_tags(mod, false);
->> +			return ERR_PTR(-EAGAIN);
->>   		}
->>   
->>   		grow_res = vm_module_tags_populate();
-> 
-> [Severity: High]
-> This is a pre-existing issue, but could this lead to a dangling pointer in
-> the maple tree if page population fails?
-> 
-> If vm_module_tags_populate() fails and returns an error, the allocation
-> routine returns an error here but doesn't remove the newly inserted module
-> pointer from the maple tree.
-> 
-> Since this error bypasses the standard codetag cleanup routines in the module
-> loader (where codetag_section_found might remain false in move_module()),
-> the maple tree retains a pointer to the aborted module. Once the module
-> structure is freed, future maple tree iterations could dereference this freed
-> pointer.
-> 
+Regards,
+Andreas
+PS: you have seen the corrected v4?
