@@ -1,175 +1,169 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C8639A047
-	for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 22:26:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786487173; cv=pass; b=PfLknKIYMS1pDqSGigLa2ACdVrh2dl1JPXABnZV+6EZyEV2xCYHV1q2Cs7IeC6Lzwc7VUSQPmSMrUaC3Od0Z5isCaFrtyPnvwZ2Ub2suAGPp4zb2HCkqZgYicWPexbk+/iH9MKEltvrGY6ZtiOIOi+uFgFGapJAA9DK9aMbo0wo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786487173; c=relaxed/simple;
-	bh=zOxTpYwEGrjOIPWvV8eblzzR6Is1CgaWmxeGqUl1ytk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=spsN3qBQBn4txyiqJ2MCiyhAOiPW59ukSk3ETdJrYiU2SAZ/TfTyF++d+Q0k8ZNs8NY33fYl7KKXj/KL7rwSgG2HPuQaoy9h07/VByWInBt7kBpoCDmmBpS/aQYuS17x8V70wWWW5oUI2knTvRyNfxg4ssHxSEWvWIEF9NaHApI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZBhcRHcj; arc=pass smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZBhcRHcj"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6a17c04563fso537328a12.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 11 Aug 2026 15:26:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786487170; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pHAuN5E8kZdtDSO25dalaqbpFcDNi+OmM3HHA5jmgnIsIUcS7zH/GTL9O31631WMcs
-         BYKLNweHnvbCLC93fNf2HAxGfmsmLw1fnhglipVNFtBcXEYEKWVu5XQVBb2/bCJRtB05
-         CLI64vQuDFP8Zkru1EcxB8x67kM3JHJoaiw0Q6wRMDesrdB4p/mKpkskAgBXq4OzS4Zw
-         pw38BrnNuxMojf2PXoxKfDgaxfzxVrecuKzG6C6qONfm2rwd0O97bVPHMiAmU2tRjvbx
-         k/rkUVrVGlezGfoK69hRAe75rrIyHfQmanGqyjC46C8Pey/8NadgT/sXuIV+kSZvkLd4
-         U49Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ztwhx/oqFOuHzV2Y1PSljV48Qzv2Tvays7jDKuyMYA4=;
-        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
-        b=bPMk2Wdm7+tcszZyMP5b+nuynCp+/rtHwzjQ+8dcnhI/bD7dcDdqGO8v/alLPvEGa8
-         zazblpQ23IC+c/ubB54O2+rvXqo7z1PiWGft0wzECSbIleHZnJ1TZgqzivTd5xhVVQv1
-         ubRvQSjgJzu/SaEiuzIemHVcXTCdwKcp6OuSkT/ahi/zwoVtgU75l2aS0QkNsP5LAZP8
-         /tueQVsnnYwFd/PdNMKTZEf0vbmWj7w9AjC3y/AVN/59zPW258112KtPpt5b0yU4CRyA
-         yprLfSUvicqFr2vqCI3i7MgrvGcVXouGFpyM8+IS8qhx/UGvL6YhuY0yO52H3B9/8BRF
-         TjSQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786487170; x=1787091970; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ztwhx/oqFOuHzV2Y1PSljV48Qzv2Tvays7jDKuyMYA4=;
-        b=ZBhcRHcjRPdeLfGG8QkHjW/CVNtuKHALzP+NL7ADvChIBIR52dLkmZqy1nt8uT6InA
-         hcHVB3BDSbFoluEKBYQncpi0UcvGwrG0Af6syPxvTI9pfssHwMUTP1Jewlkg2y3bozXV
-         OTY6AbPGVVMHzwA/jMXM0zQGm+9odBu6yhwH/Ctz4MHAVFl8CLMhw01c4fyPzsbVyfn1
-         qjclAxWHrKbZsz09D+9e6bYdfL8MtbRTTJ4krtK7ab7QnvRzjwasJYIZB1MH5LrqyJLy
-         Q2vaP8P3WP+F4W6LRP0dsPq4LjlXrlHeCs21qB1p7jhktnEMhziwlzrEgDZ1Cp/IFEE/
-         8sow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786487170; x=1787091970;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ztwhx/oqFOuHzV2Y1PSljV48Qzv2Tvays7jDKuyMYA4=;
-        b=ZL4IDRRh9KXt6rjTLCnh/gNHdZElXHHd2Ww52ww5ypalteoHrV/mKgmupUAVJ8wzCU
-         iqUJDfbZrfL9nsab3gA5lepARPxf6JsXSJYeeK+uehiEAUvDlzE4rUJvi3gykq7FBw7R
-         FX2xpKQ5udnIdPjePhy16i17TL7Spw1B04IzN2UA4IWDRuX7/JZu9xP76l/sabjjZGmt
-         MG6kEte7bV3rsG9LxmqYMrkj+xfZZ3eunZEyu+5Pcyd9adyCFGFksmZsLHBFcM/FzsBR
-         fUvoXvmslY8pVVmK+NOLSE0p5/CGXjxQzlMfU7rEzGmcfZH4tuVfnpqITlZ3B9RvGqxC
-         WWTw==
-X-Gm-Message-State: AOJu0YzUFI2fI3TOsZZZ5fQX1H8aGGh6JZiOz1SEqD40J/NTmDjSTPnb
-	RqpV62sahtnyHLMnyQqt83vTWDDMjObbE134ocQ12dLQEr6KD8XiEF0xQ31LdMNIeh5316W38c9
-	yag9p5oT+0YP5vLOaMUMNQnhhc0xl/9CdOuDWJ+2BBlhB
-X-Gm-Gg: AR+sD12XYCYCTnE2WsHkQTTasMOz/bd+9PuNwxcCgjykpd/5abzb2WLdtycvRw/KIQR
-	kqKPpd+Tw/Gz8qJppJxKvsvmRKyvAnuOHX80MYfg1k7xJ0T3fyNuHG5Ezfa6JWmpcuRL+agT7Ox
-	BxQyg//LZzV94gX6LwyRpCxwmm8OZyqTkQseDdBoUMksQBRyqUn6HNI+jEIW5kpNVmp8/Q6g2Jj
-	jKu+/bS5LERUU9nPh3YdhO2g2CGTu8bOidPDQ3CYNANfjr50fgwW2enEI/P17mjLo+AIUU1Uv1b
-	/MKsViHLOupKk7Pwh42ojlEHB3olQtstqwbCzudTJfZF0X5wxENqW2yHKPibzd/S7OL4rTBrqQu
-	RIA==
-X-Received: by 2002:a05:6402:a5d7:20b0:6a1:fb46:c405 with SMTP id
- 4fb4d7f45d1cf-6a375f5d5b6mr6729a12.14.1786487169650; Tue, 11 Aug 2026
- 15:26:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ED135DA40
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 01:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786499106; cv=none; b=XGKiAYBX7FvHnVFOREZW74OMy8GlGiNfBAovOn7nSxbqoN0BVzumf7m4C3tVSqHF8UWjoHcrXqzEE44hP6jjiFJmCL6rfZ/q9f5Oe0t5g2XkK5I3IuNPHoNBpN5vtiyhf/lmlF0UU3Y/osJUfgRZRTc4iD0c/kzqVDg2KdZr3UM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786499106; c=relaxed/simple;
+	bh=UrMq7Y66WkGrtLYAG5K4sJB9H6S3tcijVZXetAdOE4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oATM2w2/GkZ6Hw3JIDD8ApX1YFynyUvPtUpze8YF6AoFZ4YY5142yteD3E+HPasa2Gf618a5NvubW0l0gwV7ycIwY8l7/nexrTb2T3lHMFw5NjcuwW0TRSQMTlsdxFw4rNCfXMTbMKIa8ExkUSxkr2N2ev+QBCAo2mvO45Jf/I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hKWWN4VnxzKHMnH
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 09:44:32 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 8CE624058C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 09:44:49 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgDnUooQ0HtqKzYECA--.31294S2;
+	Wed, 12 Aug 2026 09:44:49 +0800 (CST)
+Message-ID: <96bfc0eb-6a4d-4d39-9501-ebb30f7ee88c@huaweicloud.com>
+Date: Wed, 12 Aug 2026 09:44:48 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260811215135.87756-1-harshitvaru666@gmail.com> <20260811220809.CBC431F000E9@smtp.kernel.org>
-In-Reply-To: <20260811220809.CBC431F000E9@smtp.kernel.org>
-From: Harshit Varu <harshitvaru666@gmail.com>
-Date: Wed, 12 Aug 2026 03:56:01 +0530
-X-Gm-Features: AUfX_mxXY8iQoC5CagJacgyM0bDhEtZRHnNuzSchqdybGAiumvcHcgazmUDO7mw
-Message-ID: <CANQf2B1ZSm8uC-c1s91EV6KF5i+eSSAZF+RUZieFDw-k2XZuXA@mail.gmail.com>
-Subject: Re: [PATCH mptcp] mptcp: fix uninitialized local_id in syncookie
- MP_JOIN reconstruction
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/23] perf annotate: Introduce extract_op_location
+ callback for arch-specific parsing
 To: sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-perf-users@vger.kernel.org
+References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
+ <20260808122400.2961238-8-wutengda@huaweicloud.com>
+ <20260808131116.3BE021F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260808131116.3BE021F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgDnUooQ0HtqKzYECA--.31294S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykKF18ur1fCw15Kr47CFg_yoWrCF43pa
+	1q934UJ3WUJr4UKwnxJayruFyS9w1xGF4rurn8K392yFnxurn5XFZ2gF4a9ayrArZxAw4j
+	vw4qqryDZw1vkaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7
+	CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02
+	F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4I
+	kC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+	z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+	AF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
+	IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
+	CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Good catch =E2=80=94 request_bkup and thmac are indeed read uninitialized i=
-n
-subflow_ulp_clone() on the syncookie path (not stored in join_entry, not
-restored). I've expanded the fix (v2) to save and restore both, completing =
-the
-state restore alongside local_id. v2 also updates the commit message
-accordingly.
 
-On Wed, Aug 12, 2026 at 3:38=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Medium] The `request_bkup` and `thmac` fields in `mptcp_subflow_reques=
-t_sock` remain uninitialized when processing MP_JOIN SYN cookies, leading t=
-o state corruption and KMSAN violations.
+
+On 2026/8/8 21:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Propagating errors from extract_reg_offset aborts instruction state processing, breaking register invalidation, and uses a flawed condition.
 > --
->
-> --- Patch [1]: [PATCH mptcp] mptcp: fix uninitialized local_id in syncook=
-ie MP_JOIN reconstruction ---
-> commit 0b8fe993e0c1f5676def1ed9e644c11a85aca0ae
-> Author: Harshit Varu <harshitvaru666@gmail.com>
->
-> mptcp: fix uninitialized local_id in syncookie MP_JOIN reconstruction
->
-> This commit fixes an issue in MP_JOIN SYN cookie processing where the
-> local_id was not restored from the saved cookie entry. By restoring
-> subflow_req->local_id, it prevents the use of stale memory from previousl=
-y
-> freed request sockets.
->
-> > diff --git a/net/mptcp/syncookies.c b/net/mptcp/syncookies.c
-> > index 7f22526346a7e..b5cac57011221 100644
-> > --- a/net/mptcp/syncookies.c
-> > +++ b/net/mptcp/syncookies.c
-> > @@ -118,6 +118,7 @@ bool mptcp_token_join_cookie_init_state(struct mptc=
-p_subflow_request_sock *subfl
-> >       subflow_req->local_nonce =3D e->local_nonce;
-> >       subflow_req->backup =3D e->backup;
-> >       subflow_req->remote_id =3D e->join_id;
-> > +     subflow_req->local_id =3D e->local_id;
->
+> 
+> --- Patch [7]: [PATCH v4 07/23] perf annotate: Introduce extract_op_location callback for arch-specific parsing ---
+> commit ea4cc06c47d3d877b7277db8368241769c5b60d3
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate: Introduce extract_op_location callback for arch-specific parsing
+> 
+> Assembly syntax for operands varies significantly across different
+> architectures, which prevents the operand location (op_loc) parsing
+> logic in annotate_get_insn_location() from being directly reused.
+> 
+> To simplify the core logic and improve maintainability, move the
+> operand parsing inside the for_each_insn_op_loc loop into arch-specific
+> extract_op_location callbacks.
+> 
+>> This refactoring is primarily a cleanup,
+>> but includes a minor x86-specific change: errors from extract_reg_offset()
+>> are now propagated, so unrecognized operands are correctly rejected
+>> instead of being silently ignored, , and testing confirms no functional
+>> regression from this change.
+> 
 > [Severity: Medium]
-> This is a pre-existing issue, but do we also need to initialize request_b=
-kup
-> and thmac here to prevent similar stale memory leaks?
->
-> It looks like these fields are not stored in the join_entry struct during
-> mptcp_join_store_state(), and therefore remain uninitialized in
-> mptcp_token_join_cookie_init_state().
->
-> Since the request socket slab is SLAB_TYPESAFE_BY_RCU and not zeroed, doe=
-s
-> this cause uninitialized stale data to be copied into the new subflow con=
-text
-> when the child socket is cloned?
->
-> net/mptcp/subflow.c:subflow_ulp_clone() {
+> Are we certain this change does not introduce functional regressions?
+> 
+> Propagating errors out of extract_reg_offset() appears to break type state
+> tracking for absolute memory references.
+> 
+
+This has been validated through local testing, and all statistical metrics
+remain unchanged.
+I noticed there are two commas in the commit message and will correct that.
+
+
+>> diff --git a/tools/perf/util/annotate-arch/annotate-x86.c b/tools/perf/util/annotate-arch/annotate-x86.c
+>> index 7e61365363938..6044a68966f14 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-x86.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-x86.c
+> [ ... ]
+>> @@ -809,6 +811,85 @@ static void update_insn_state_x86(struct type_state *state,
+> [ ... ]
+>> +static int extract_reg_offset(const struct arch *arch, const char *str,
+>> +			      struct annotated_op_loc *op_loc)
+>> +{
+> [ ... ]
+>> +	op_loc->reg1 = arch__dwarf_regnum(arch, p);
+>> +	if (op_loc->reg1 == -1)
+>> +		return -1;
+> 
+> [Severity: Medium]
+> Will this error check correctly identify unrecognized registers?
+> 
+> If an instruction contains an unrecognized register like '%zmm0',
+> arch__dwarf_regnum() returns -2 (-ENOENT). The check for -1 will miss
+> unrecognized registers, but it will trigger for absolute memory references
+> like 'mov (0x1234), %rax' which lack a '%' character entirely.
+> 
+
+Shuai raised this point as well. The fix will be to normalize
+arch__dwarf_regnum() to return -1.
+
+>> diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+>> index 9d8b4d6b859b8..20be609ebed24 100644
+>> --- a/tools/perf/util/annotate.c
+>> +++ b/tools/perf/util/annotate.c
+> [ ... ]
+>> @@ -2572,6 +2527,7 @@ int annotate_get_insn_location(const struct arch *arch, struct disasm_line *dl,
+> [ ... ]
+>> +		if (arch->extract_op_location) {
+>> +			ret = arch->extract_op_location(arch, dl, insn_str, i, op_loc);
+>> +			if (ret)
+>> +				return ret;
+>>  		}
+>>  	}
+> 
+> [Severity: Medium]
+> Does propagating this failure cause issues in update_insn_state_x86()?
+> 
+> When absolute memory references return -1 and trigger this early return,
+> annotate_get_insn_location() will fail.
+> 
+> If update_insn_state_x86() bails out early because of this failure:
+> 
+> tools/perf/util/annotate-arch/annotate-x86.c:update_insn_state_x86() {
 >     ...
->     new_ctx->backup =3D subflow_req->backup;
->     new_ctx->request_bkup =3D subflow_req->request_bkup;
->     WRITE_ONCE(new_ctx->remote_id, subflow_req->remote_id);
->     new_ctx->token =3D subflow_req->token;
->     new_ctx->thmac =3D subflow_req->thmac;
+> 	if (annotate_get_insn_location(dloc->arch, dl, &loc) < 0)
+> 		return;
 >     ...
 > }
->
-> Could this lead to state corruption for the path priority or uninitialize=
-d
-> memory access warnings if those fields are accessed later during packet
-> scheduling?
->
-> >       subflow_req->token =3D e->token;
-> >       subflow_req->msk =3D msk;
-> >       spin_unlock_bh(&join_entry_locks[i]);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260811215135.87=
-756-1-harshitvaru666@gmail.com?part=3D1
+> 
+> Won't this bypass the fallback logic that invalidates the destination register?
+> This could cause the analyzer to incorrectly assume the destination register
+> retains its previous type state, when it actually contains unknown data.
+> 
+
+Indeed, the return value should not be handled directly; instead, the op_loc
+information should be resolved as completely as possible.
+This was also the approach before the change, and I will keep it consistent
+by removing the ret value check.
+
