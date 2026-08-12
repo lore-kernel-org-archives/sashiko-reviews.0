@@ -1,137 +1,99 @@
-Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9688538E8C5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D78386C3F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:06:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786507555; cv=none; b=j0XUyhvHYfxTWFpE/zllCfqQja33x+79d0ArZL0Zn6+E2oS3kgT7HyylDdyN4CkpReYJiSJEnQS1ykckIReMrZwRX6BMPYorNjiAUwSXc+TmU4cDv2MYAZ2+xkRPfBCzDE6EiRcl302I9KzGNnnPwf+coCZgBH4SQ8Gq4tGlUeY=
+	t=1786507583; cv=none; b=HEkMrHDXRKAY9h/NAL1MNp+BxHSLd8BpKhKNcDd1zwTJBBc37JSsyxRsS6ZmtEFpGfEl8+4q5HkCjPjDCRjg9ofw0cRZt9bvwZcP3/YDW3yaYc7yunez+8eJNbT/mmKekMqlzA4Kfyjt7/40TGV7LElLmOCnqHDsVAYyXojbvro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786507555; c=relaxed/simple;
-	bh=MbTno0rjUBnAKDun7c0wJsP2yV2Zbrh1Zi32IOycOk0=;
+	s=arc-20240116; t=1786507583; c=relaxed/simple;
+	bh=2zfyDfp9lDoLpzcdeCHTTCZljwO67Im02LbNzMDZ43g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mODmQpJqzhaJA/nxkBGC+ScPqCEgImQMmtxrjUUSVlpfQ2MwJWJHW+GTJ4+JaQt32/PUVCooTw8YC8jU78CvtOLiKMj9dM54M1XqZx6Jmbdjicj5kku3aRSJjtATO+02xRRNXyiV7RyyEdjvg5R7hO8pQYqzQyhtJrWYw4fSOoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=U9/xjNmq; arc=none smtp.client-ip=91.218.175.172
+	 In-Reply-To:Content-Type; b=j2BG4BM2yJyEcTkIBCtskT7TeTaC2rgTC6yawziPZq/qE5oEsKyGHEbv6gcpMylWrjIL898hyozsJhqruQhP6Jsle3Zl0mqEkatiUeQIR12t14JRYi+NaEvnkUvoC1hrtQPokxAJqnV7wpwwjlNf3ysDzGYXyvvvLj0ldlqx+aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uU3IDwwa; arc=none smtp.client-ip=91.218.175.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="U9/xjNmq"
-Message-ID: <85f244d7-32d0-4d0a-bd44-a7972a09575d@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uU3IDwwa"
+Message-ID: <a40b43fc-66aa-4b1f-86e6-602a5f465a14@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786507551;
+	t=1786507579;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Cpa6GCJ3MHdYq7+owe5oXYxXlvZIq17J2FQtppIDN/8=;
-	b=U9/xjNmq7LwD9T/Dp5IoAxSgQK/U9JFnt7q5rwNo2Mt2o0fUODqcjitio83VrlaPn58UO0
-	p+Qqj0OTCvwWzAiRKxVKArfz7I3yn/YoEYwGl7MrAdNHaK+CV9r3pr/P0EZ+sVU4uPd6nO
-	BHWGSJY5vHqC90V/CcL3iIG9VmZmOek=
-Date: Wed, 12 Aug 2026 12:05:37 +0800
+	bh=XfH6dHmVvaHe3hKH+bxvI/kGunaJ9EZu/zp2AZ6k9qY=;
+	b=uU3IDwwaZ0x66JbIVu3zTxEcSZgkjGobchZw+dMKTimKQzBD6IeNv5ln5VjhEy9w9r+iK/
+	svnOsTR0S7nK9poZeSGiUo2tsd7gPipLrJZDOjn/wm7qGODI6eOjkKAU3wd67pa2jZHI+A
+	9ddiHizFT/r8vTmdBQl+FAHUQBMv8RA=
+Date: Wed, 12 Aug 2026 12:06:13 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 07/13] bpf: Add tracing_multi link info support
- for bpf progs
+Subject: Re: [PATCH bpf-next 09/13] selftests/bpf: Add tracing_multi bpf prog
+ attach failure tests
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260809150111.45000-1-leon.hwang@linux.dev>
- <20260809150111.45000-8-leon.hwang@linux.dev>
- <20260809151726.269221F000E9@smtp.kernel.org>
+ <20260809150111.45000-10-leon.hwang@linux.dev>
+ <20260809151715.790681F000E9@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260809151726.269221F000E9@smtp.kernel.org>
+In-Reply-To: <20260809151715.790681F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 On 9/8/26 23:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Out-of-bounds Read / Uninitialized Memory Leak in sym_name_trim_prefix()
-> - [Medium] UAPI Anti-Pattern: Usage of C bitfields in UAPI headers
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Build failure due to undefined symbol `libbpf_find_prog_btf_id`.
 > --
 > 
-> --- Patch [7]: [PATCH bpf-next 07/13] bpf: Add tracing_multi link info support for bpf progs ---
-> commit 65386c192a0d673092c95f3f31578ae7c4d19498
+> --- Patch [9]: [PATCH bpf-next 09/13] selftests/bpf: Add tracing_multi bpf prog attach failure tests ---
+> commit c3b104cf9a90f8ddf11f23d2944ad76004fb3150
 > Author: Leon Hwang <leon.hwang@linux.dev>
-> Subject: bpf: Add tracing_multi link info support for bpf progs
 > 
-> This commit adds tracing_multi link info support for BPF programs. It
-> updates the bpf_link_info structure and extends bpftool to show function
-> BTF IDs and program IDs.
+> selftests/bpf: Add tracing_multi bpf prog attach failure tests
 > 
->> diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
->> index 6fa93a6ff54f2..e0c8ea5ed2c8f 100644
->> --- a/include/uapi/linux/bpf.h
->> +++ b/include/uapi/linux/bpf.h
->> @@ -6890,10 +6890,12 @@ struct bpf_link_info {
->>  			__u32 attach_type;
->>  			__u32 count; /* in/out: tracing_multi target count */
->>  			__u32 btf_obj_id;
->> -			__u32 :32;
->> +			__u32 tgt_progs:1;
->> +			__u32 :31;
+> This patch adds tests for tracing_multi BPF program attach failures,
+> covering both libbpf and kernel failure modes.
 > 
-> [Severity: Medium]
-> Could this cause endianness issues since C bitfield layout is
-> implementation-defined?
-> 
-> The established Linux UAPI standard is to use a __u32 flags field with
-> bitmask macros instead of C bitfields to ensure portability across
-> architectures and cross-platform tools. (This also applies to the mirrored
-> header in tools/include/uapi/linux/bpf.h).
-> 
-
-Correct.
-
-Will use the bit mask style by changing '__u32 :32' to '__u32 flags' and
-adding BPF_F_TRACING_MULTI_TGT_PROGS.
-
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_multi.c b/tools/testing/selftests/bpf/prog_tests/tracing_multi.c
+>> index 5ecb751af9be7..5cf11707eaf89 100644
+>> --- a/tools/testing/selftests/bpf/prog_tests/tracing_multi.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/tracing_multi.c
 > [ ... ]
+>> +	/* fail#4 (kernel) duplicate target through different fds */
+>> +	token_fd = bpf_object__token_fd(skel->obj);
+>> +	token_fd = token_fd < 0 ? 0 : token_fd;
+>> +	target_id = libbpf_find_prog_btf_id("target_1", fds[0], token_fd);
 > 
->> diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
->> index 088d1d206065f..d5c5ec433350b 100644
->> --- a/tools/bpf/bpftool/link.c
->> +++ b/tools/bpf/bpftool/link.c
-> [ ... ]
->> +#define BPF_PROG_PREFIX		"bpf_prog_"
->> +#define BPF_PROG_PREFIX_LEN	(sizeof(BPF_PROG_PREFIX) - 1)
->> +
->> +static const char *
->> +sym_name_trim_prefix(struct kernel_sym *sym, bool is_prog)
->> +{
->> +	int prefix_len;
->> +
->> +	if (!is_prog)
->> +		return sym->name;
->> +
->> +	/* Ref kernel/bpf/core.c::bpf_prog_ksym_set_name() */
->> +	prefix_len  = BPF_PROG_PREFIX_LEN;
->> +	prefix_len += BPF_TAG_SIZE * 2;
->> +	prefix_len += 1;			/* skip the '_' */
->> +	return sym->name + prefix_len;
-> 
-> [Severity: Medium]
-> Does this code read past the null terminator for unnamed BPF programs?
-> 
-> When processing an unnamed BPF program (e.g., exported in kallsyms as
-> bpf_prog_9a7f9e3ab6f138ab), the sym->name buffer contains exactly 25
-> characters. Here, prefix_len is calculated as 26 (9 + 16 + 1).
-> 
-> This offset advances the pointer past the null terminator into
-> uninitialized heap memory, which is then passed to the JSON string writer
-> when calling jsonw_string_field() later in show_tracing_multi_json().
+> [Severity: Low]
+> Does this code compile successfully? libbpf_find_prog_btf_id is an
+> internal static function in libbpf, so calling it directly from selftests
+> seems like it would cause an implicit function declaration and undefined
+> reference linker error during the build.
 > 
 
-Correct.
+Good catch.
 
-According to bpf_prog_ksym_set_name(), will check "sym->name[prefix_len]
-!= '\0'" before "+= 1".
+libbpf_find_prog_btf_id() is exposed in the patch #11.
+
+Will move the expose in this patch.
 
 Thanks,
 Leon
+
+>> +	if (!ASSERT_GT(target_id, 0, "target_1_btf_id"))
+>> +		goto cleanup;
+>> +
+>> +	dup_fd = dup(fds[0]);
+>> +	if (!ASSERT_GE(dup_fd, 0, "dup_target_fd"))
+>> +		goto cleanup;
+> 
 
