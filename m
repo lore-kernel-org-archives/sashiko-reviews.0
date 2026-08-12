@@ -1,123 +1,113 @@
-Received: from out30-110.freemail.mail.aliyun.com (out30-110.freemail.mail.aliyun.com [115.124.30.110])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BF938AC96
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 07:51:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E536C32E12E;
+	Wed, 12 Aug 2026 08:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786521104; cv=none; b=iIF0G5rJvDM7x+ALGF2IOPhaha98IH6Wni8Inex0rzJZvIPFfT0Aa++rHkitHjrxd5S8WYw3ylT1FfallPk5wFOb4tDp266GgtCGHEXIo945WMhpjxKnVACEq6oSPo+Nq1wwzhdJR9ZpzVe8FF/uI0W2tQj7HNY6s4YpGPpB9Kc=
+	t=1786522527; cv=none; b=Q0qLJaqoEH8Apd8oHuXpoPokhTbpYn/WuPFl8AG6nZcdHlQ83f/3cjaTUxxONPIaIp/VhmCt8adbN7Y8iz3MO+Ph3INKy3RTJl+0gq5dubEso/WrHP5srbJQADEx5ObXGh2ElpfYsYUXrqQP9LUIDE0xf3dW3V/C5HiQSt3hv94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786521104; c=relaxed/simple;
-	bh=6ixNAalDzQrb/kd39z4fvTRj9/VF1CTYnG/r9GExsMI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HAQ2RRRkjx6jMcFCGUxkf+EbzOShrJxPcG9TVWsN0wN5bFy6WDv3MTvFEmQVYmpFBSPKJLgOlYkn+bWYJbB6PgqfPrVFSZIFz+L3EY7Z0x1+o50EB1frZwQDbZqb2P40aP7w2GmlZPeIN35EprTefZOF4eOj3HqVwtZ5J/Xqtrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=Vss5uTlV; arc=none smtp.client-ip=115.124.30.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1786522527; c=relaxed/simple;
+	bh=9BY7ufueTNS3wdYw/+vOSPSkUrKWO4ohMTslQOu0JwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ssZkJ/5kAWjeEGWCrvrIBprfl8fFEsVmXA4b2x4YrUJJJ4rLQQ88Kskil9tfdJrMeahKoIBQBS5ZoCE+e0rquAcTI379Sv3UUVPTTQK+B+mIhKLSHStGTHqBJ5lAGcVmDV7sczRz1eTVysBjQSA/j/4tE1mmsz0xDVfYJmlZXJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQuLFUDv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="Vss5uTlV"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1786521095; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=VKC9Lzx4ab+liJrqIgdI3Wv5GjLYP50gKwkFy7uDYQc=;
-	b=Vss5uTlVYWzPtDQGGEmKpG7YwncvDta9EUDyZ2877dpsdIRTyzoYpzDdOJ1R/YL90KXEv6Net5hR7iCJahum7gw19zoSsjsQArXMc5Th6+TAgLHFUen3GY7ub70VlSAsjAKUfzsv0BQgXG9DtdTWXMhMu+KSXyerg7CYRN9EFVk=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R121e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0X8qsRwC_1786521093;
-Received: from 30.178.83.207(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0X8qsRwC_1786521093 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Wed, 12 Aug 2026 15:51:35 +0800
-Message-ID: <6be8a860-a56f-4776-9017-d976571fbee7@linux.alibaba.com>
-Date: Wed, 12 Aug 2026 15:51:33 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQuLFUDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE961F000E9;
+	Wed, 12 Aug 2026 08:15:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786522525;
+	bh=nZtfL1kwIlkIkj/Cq5rLTRLLBqk+ImQDiZUgSiLiBpM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=CQuLFUDv9XLflAELJY36wwErBRpVAuJN7zcl92mvIbBcTYuxS6tdtP2HdE464CXVc
+	 Fr/2zXIIzKTG6maPVbZpbQovMr2g55NmU95xS/Acsn/wOo+kuafSiEutBsbYs6vQYn
+	 h5dthN6B3vIqftGHQjdvvtBYNf78ui2/saVJQbqwCxuLGy8sdvehOqagfKJBMkKvua
+	 oMByjghDPbgStf44rHqUWkqzWIMJpu0g1xB/00qik2t9Rn8YD5sdvNLnN42y7llq9n
+	 xXBgSeccy+vQSP2fPzcfnfS5389bfMWVIG+qv2sqATWH4BuqLpBbVFw5cPqEbF927x
+	 UDYRpe3jsSgCw==
+Date: Wed, 12 Aug 2026 09:15:21 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+	conor+dt@kernel.org, mfd@lists.linux.dev,
+	devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH v24 04/12] mfd: psci-mfd: Add PSCI MFD driver for
+ cpuidle-psci-domain cell
+Message-ID: <20260812081521.GE1072730@google.com>
+References: <20260803-arm-psci-system_reset2-vendor-reboots-v24-0-889281373870@oss.qualcomm.com>
+ <20260803-arm-psci-system_reset2-vendor-reboots-v24-4-889281373870@oss.qualcomm.com>
+ <20260803100023.7AA1C1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] cxl/hdm: Fix out of bounds read of the decoder target
- list
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org
-References: <20260812061017.56916-1-kanie@linux.alibaba.com>
- <20260812062605.610B61F000E9@smtp.kernel.org>
-From: Guixin Liu <kanie@linux.alibaba.com>
-In-Reply-To: <20260812062605.610B61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260803100023.7AA1C1F00A3A@smtp.kernel.org>
 
+On Mon, 03 Aug 2026, sashiko-bot@kernel.org wrote:
 
-
-在 2026/8/12 14:26, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Endianness bug when decoding the HDM decoder Target List registers on big-endian architectures.
-> - [High] Permanent port state corruption on decoder initialization failure due to un-reverted `port->commit_end`.
-> --
->
-> --- Patch [1]: [PATCH v2] cxl/hdm: Fix out of bounds read of the decoder target list ---
-> commit c692efbe782398330e6841bfdd1146cdee44ef3b
-> Author: Guixin Liu <kanie@linux.alibaba.com>
-> Subject: cxl/hdm: Fix out of bounds read of the decoder target list
->
-> This commit fixes an out-of-bounds read in the HDM decoder initialization. It
-> adds a check to ensure the interleave ways do not exceed the size of the
-> target list array when programming the target map.
->
-> Link: https://lore.kernel.org/linux-cxl/20260811113608.2815625-1-kanie@linux.alibaba.com/
->
->> diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
->> index 0c80b76a5f9b4..9d49b48a4456e 100644
->> --- a/drivers/cxl/core/hdm.c
->> +++ b/drivers/cxl/core/hdm.c
->> @@ -1084,6 +1084,18 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
->>   		cxld->interleave_ways, cxld->interleave_granularity);
->>   
->>   	if (!cxled) {
->> +		/*
->> +		 * The Target List register only holds
->> +		 * ARRAY_SIZE(target_list.target_id) entries, so a switch
->> +		 * decoder cannot interleave across more ports than that.
->> +		 */
->> +		if (cxld->interleave_ways > ARRAY_SIZE(target_list.target_id)) {
->> +			dev_warn(&port->dev,
->> +				 "decoder%d.%d: Interleave ways: %d exceeds target list size\n",
->> +				 port->id, cxld->id, cxld->interleave_ways);
->> +			return -ENXIO;
-> [Severity: High]
-> This is a pre-existing issue, but does returning here leave port->commit_end
-> permanently advanced?
->
-> Earlier in init_hdm_decoder(), port->commit_end is updated:
->
-> 	if (committed) {
-> 		...
-> 		port->commit_end = cxld->id;
-> 	}
->
-> If we fail here and return -ENXIO, port->commit_end is not rolled back.  If
-> initialization is retried, cxl_num_decoders_committed() will return an
-> inflated count, which could cause the out of order commit check to fail.
-> Could this permanently prevent the port from initializing?
-Yes, this is another bug, I will send another patch to fix this.
->> +		}
->> +
->>   		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
->>   		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
->>   		target_list.value = (hi << 32) + lo;
-> [Severity: High]
-> This is a pre-existing issue, but does this code read the target IDs
-> incorrectly on big-endian architectures?
->
-> target_list.value is populated as a native 64-bit integer.  The subsequent loop
-> reads it byte-by-byte via the target_id union:
->
-> 		for (i = 0; i < cxld->interleave_ways; i++)
-> 			cxld->target_map[i] = target_list.target_id[i];
->
-> On big-endian hardware, accessing the native 64-bit integer byte-by-byte will
-> read the most significant bytes first, which could scramble the port target
-> routing.
-There is no CXL big-endian architecture platform, should not change this 
-currently. Best Regards, Guixin Liu
+> - [Medium] The new `psci-mfd` driver lacks a `.remove` callback and does not set `.suppress_bind_attrs = true`, allowing manual unbinding via sysfs which leads to resource leaks.
+> - [Low] The newly introduced MFD driver, its file, and its structures include the string 'mfd' in their names, violating subsystem conventions.
 
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
+> --
+> 
+> --- Patch [4]: [PATCH v24 04/12] mfd: psci-mfd: Add PSCI MFD driver for cpuidle-psci-domain cell ---
+> commit 26907aee3ff3e0a5d7112a9be25ebbebb10e94c7
+> Author: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> 
+> mfd: psci-mfd: Add PSCI MFD driver for cpuidle-psci-domain cell
+> 
+> This commit introduces a new PSCI MFD driver to manage multiple consumers of
+> the PSCI device node. It registers the cpuidle-psci-domain as a child cell
+> and updates the cpuidle driver to probe as an MFD child.
+> 
+> > diff --git a/drivers/mfd/psci-mfd.c b/drivers/mfd/psci-mfd.c
+> > new file mode 100644
+> > index 0000000000000..7affd6bb09dd8
+> > --- /dev/null
+> > +++ b/drivers/mfd/psci-mfd.c
+> [ ... ]
+> > +static struct platform_driver psci_mfd_driver = {
+> > +	.probe = psci_mfd_probe,
+> > +	.driver = {
+> > +		.name = "psci-mfd",
+> 
+> [Severity: Low]
+> This isn't a bug, but does naming the driver and struct with the "mfd"
+> string violate the MFD subsystem guidelines?
+> 
+> The MFD guidelines state not to hard-code implementation details in driver,
+> struct, or device names, and to specifically avoid including the string
+> "mfd" or the driver's own filename in names.
+> 
+> [Severity: Medium]
+> Since there is no .remove callback provided in psci_mfd_driver, does this
+> allow manual sysfs unbinding that could leak resources?
+> 
+> If a user unbinds the driver via sysfs, devres will destroy the child
+> devices. Because the child driver (psci-cpuidle-domain) lacks proper
+> cleanup for non-devm resources like generic PM domains, those resources
+> might leak or leave dangling pointers on this administrative path.
+> 
+> Should .suppress_bind_attrs = true be set in the driver struct to prevent
+> unsupported sysfs unbinding?
+> 
+> > +		.of_match_table = psci_mfd_of_match,
+> > +	},
+> > +};
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260803-arm-psci-system_reset2-vendor-reboots-v24-0-889281373870@oss.qualcomm.com?part=4
+
+-- 
+Lee Jones
