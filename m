@@ -1,119 +1,164 @@
-Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
+Received: from out30-111.freemail.mail.aliyun.com (out30-111.freemail.mail.aliyun.com [115.124.30.111])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BAF39447C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 06:43:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8261385D99
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 06:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.111
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786517026; cv=none; b=p0ZxWaz6jnfywa1YeK2ER/afvRW5lgLi9m3vkRIxkZ/IRm4PfiiZ7A+PZ3CJ1McFcckCNsrCrl+58pEqDT4B12ZxLrc/nivGO3DFUmeQt64X7+24dcTAb7nGdbj44VEqlEzQKqNx1yqu/er9g9EYAa57yKjkAh4RGlLHom8sm64=
+	t=1786517094; cv=none; b=X5aqsD9Jjm4mpO4OXt6w2Kj902XMBPw1NHWEoEGAc3GqDrMsdnLuUJrcq55bqRzqwjzA3mBTtmhDvI31IcSeB67/WtDKj+DztavtEeJHFQXpAyaaQfPEVHPRfIu5/IXuqn6myC6kbw19ZRu5nkFOoOSRwEXJvARZf/4+dFIjeUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786517026; c=relaxed/simple;
-	bh=HO3kgb3Rzg6mpaKRnBriWOvYD+DVM7tffSSfpsRtkHY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VAuHprPRdnTJG45brsUjjfUtS7O0SY+3YStmwGi8xRLixnGQJmHFtSPa8gWCARCcQ1Qfzhz4xVu05+9zt0Skc+WE4RiH6pWty+mSkBJW2YXdPXy5CR3wVn3Bj1Tt++7gZhdwxfBLgv5wey+uVe+/2pwg/W01QxWU72JD8WNN6a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=LrudRtpF; arc=none smtp.client-ip=161.97.139.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
+	s=arc-20240116; t=1786517094; c=relaxed/simple;
+	bh=ZehznD972PzSThMLyX1XlWT4oAwUULRCWERaE2CRksg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ib2PoIvAeJsTznJJKdWECy0PrKMg+xoFk0uxdLHnLW8xNBNZKNHlLHnpy6a/ZnXawyi3WUfxGVwGb6wlLLCPtH5t4/AQ823tkoYGST+TknR+JTRvXqod1BZBqdGHU2SZjFxggR3w9FTNFcTxKqINfAHvc0iL6CjPA4wO/cVzSPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=jWQTs5BB; arc=none smtp.client-ip=115.124.30.111
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="LrudRtpF"
-Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
-	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <andreas@kemnade.info>)
-	id 1wu2gb-0000000CWme-0tKF
-	for sashiko-reviews@lists.linux.dev;
-	Wed, 12 Aug 2026 08:43:37 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
-	Reply-To:Content-ID:Content-Description;
-	bh=AfXOw53sapozXifXpKm30CeEsqFjzfBau8Gt2HT8J98=; t=1786517017; x=1787726617; 
-	b=LrudRtpFlk3LwNGuFwus73QLZh8ADxvrLtnKKXet1VeIb8qaHfa4gVlDNybaN5vu9tZoH3NW2Oc
-	hhf/aXvIJAnT70ynsdWUq+sCCtIVfxbunMeTldzuqWivwRWM3w1Y6lf/Uxr3CQIofrW9ULDEU7oIX
-	Id+jmhITcCCxV/3NcdIHe/wqfP2SwKLT17io8S9ThXuu0cyxR/HBsJCAzMu+/qfFOhPWzHjn6js98
-	k4dpcRw+aZXG7F576UDsFJp+hanItjmR8fd2dJoADVB5kfqoLNJp2J/a2CAD/Hpd4pli250aJsiJt
-	Ed0wDoFLGSVIxx64a8W2OdwCUzn2mqms19bw==;
-Date: Wed, 12 Aug 2026 08:43:20 +0200
-From: Andreas Kemnade <andreas@kemnade.info>
-To: Lee Jones <lee@kernel.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-leds@vger.kernel.org, "H. Nikolaus Schaller" <hns@goldelico.com>
-Subject: Re: [PATCH v3] leds: is31fl319x: modernize registration
-Message-ID: <20260812084320.21a7341a@kemnade.info>
-In-Reply-To: <20260811185127.GW2869284@google.com>
-References: <20260804-led-modern-v3-1-297720eec19f@kemnade.info>
-	<20260804135515.5DBFC1F000E9@smtp.kernel.org>
-	<20260804164101.43753f1b@kemnade.info>
-	<20260806104525.GC10716@google.com>
-	<20260806135550.2d57682c@kemnade.info>
-	<20260811185127.GW2869284@google.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="jWQTs5BB"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1786517088; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=OFUQvK7sq6uJFUWt0Md1Hq5RBKP1XgwUdLYssyYVU6E=;
+	b=jWQTs5BB/2C7putFnyXXTxjWe4apRfOStWfqLg8v2jyhADCAXDCxAbdXr1+wrvGRVfzFSSZt5+0KU6HPrAnacuW3F+sDTiiTVsantmJ0ARtDUHASuHIoFPlDZy5bkFpqCz5Gm8Wpn0ByrvTm6giuzckQxrHh+cGBi/BSwQiNhQQ=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R131e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033032089153;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0X8qe3m-_1786517086;
+Received: from 30.178.83.207(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0X8qe3m-_1786517086 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Wed, 12 Aug 2026 14:44:47 +0800
+Message-ID: <b78fa489-8ef9-4cc7-a8a1-c3b7996db7c2@linux.alibaba.com>
+Date: Wed, 12 Aug 2026 14:44:46 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] cxl/cdat: Fix uninitialized stack use in endpoint
+ bandwidth gathering
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-cxl@vger.kernel.org
+References: <20260812060912.54932-1-kanie@linux.alibaba.com>
+ <20260812062241.570631F000E9@smtp.kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
+In-Reply-To: <20260812062241.570631F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, 11 Aug 2026 19:51:27 +0100
-Lee Jones <lee@kernel.org> wrote:
 
-> On Thu, 06 Aug 2026, Andreas Kemnade wrote:
-> 
-> > On Thu, 6 Aug 2026 11:45:25 +0100
-> > Lee Jones <lee@kernel.org> wrote:
-> >   
-> > > On Tue, 04 Aug 2026, Andreas Kemnade wrote:
-> > >   
-> > > > On Tue, 04 Aug 2026 13:55:14 +0000
-> > > > sashiko-bot@kernel.org wrote:
-> > > >     
-> > > > > > leds: is31fl319x: modernize registration      
-> > > > > 
-> > > > > [Severity: Low]
-> > > > > This isn't a bug, but should the description after the subsystem prefix be
-> > > > > capitalized? The LED subsystem guidelines recommend formatting commit messages
-> > > > > as "leds: <Driver>: <Capitalized description>".    
-> > > > 
-> > > > 
-> > > > ~/linux$ grep -R 'leds: <Driver>: <Capitalized description>"' Documentation/
-> > > > ~/linux$ ls Documentation/leds/
-> > > > index.rst                  leds-lp5521.rst      leds-sc27xx.rst
-> > > > leds-blinkm.rst            leds-lp5523.rst      leds-st1202.rst
-> > > > leds-cht-wcove.rst         leds-lp5562.rst      ledtrig-oneshot.rst
-> > > > leds-class-flash.rst       leds-lp55xx.rst      ledtrig-transient.rst
-> > > > leds-class-multicolor.rst  leds-lp5812.rst      ledtrig-usbport.rst
-> > > > leds-class.rst             leds-mlxcpld.rst     uleds.rst
-> > > > leds-el15203000.rst        leds-mt6370-rgb.rst  well-known-leds.txt
-> > > > leds-lm3556.rst            leds-qcom-lpg.rst
-> > > > leds-lp3944.rst            leds-s2m-rgb.rst
-> > > > 
-> > > > nothing look like special guidelines for the system. I do not want to
-> > > > see such comments without a reference.
-> > > > Also MAINTAINERS does not show any additional policy for the LED subsystem.    
-> > > 
-> > > `git log --oneline -- <subsystem>` is your friend.
-> > >   
-> > That is looking at common practice, not guidelines, which is of course
-> > often a good idea.
-> > 
-> > So Sahiko is hallucinating about non-existant guidelines which
-> > cannot be referenced of course. Well, at least it gives quite an amount of
-> > useful hintse.  
-> 
-> It's not hallucinating, I put it there. =:-)
-> 
-> https://github.com/sashiko-dev/sashiko/blob/main/third_party/prompts/kernel/subsystem/leds.md
-> 
-> Specifically:
-> 
-> https://github.com/sashiko-dev/sashiko/blob/main/third_party/prompts/kernel/subsystem/leds.md?plain=1#L8
-> 
-So, that is another repository of another project. That is not an
-intuitive place to look at. So I would expect to see at least some pointer
-in that direction in the first place.
 
-Regards,
-Andreas
-PS: you have seen the corrected v4?
+在 2026/8/12 14:22, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Uninitialized stack memory use in cxl_switch_gather_bandwidth() during access coordinate combination.
+> - [High] Uninitialized stack memory leak into QoS class calculation for Restricted CXL Devices (RCDs).
+> - [Medium] Pointer aliasing in `cxl_coordinates_combine()` causes bandwidth calculations to incorrectly ignore zero bandwidths from downstream hops.
+> --
+>
+> --- Patch [1]: [PATCH v2] cxl/cdat: Fix uninitialized stack use in endpoint bandwidth gathering ---
+> commit 1627473a040a741d578311d820959582436220a3
+> Author: Guixin Liu <kanie@linux.alibaba.com>
+>
+> cxl/cdat: Fix uninitialized stack use in endpoint bandwidth gathering
+>
+> cxl_endpoint_gather_bandwidth() declares three access_coordinate arrays on
+> the stack - pci_coord, sw_coord and ep_coord - without initializing them,
+> and relies on its helpers to fill every member. None of them does.
+>
+> Link: https://lore.kernel.org/linux-cxl/20260811113608.2815625-1-kanie@linux.alibaba.com/
+>
+>> diff --git a/drivers/cxl/core/cdat.c b/drivers/cxl/core/cdat.c
+>> index 5c9f072625135..3c6a1537f89b8 100644
+>> --- a/drivers/cxl/core/cdat.c
+>> +++ b/drivers/cxl/core/cdat.c
+>> @@ -633,9 +633,9 @@ static int cxl_endpoint_gather_bandwidth(struct cxl_region *cxlr,
+>>   	struct cxl_port *endpoint = to_cxl_port(cxled->cxld.dev.parent);
+>>   	struct cxl_port *parent_port = to_cxl_port(endpoint->dev.parent);
+>>   	struct cxl_port *gp_port = to_cxl_port(parent_port->dev.parent);
+>> -	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX];
+>> -	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX];
+>> -	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX];
+>> +	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX] = { };
+>> +	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX] = { };
+>> +	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX] = { };
+>>   	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+> [Severity: High]
+> This is a pre-existing issue, but cxl_switch_gather_bandwidth() has a similar
+> uninitialized stack array:
+>
+> drivers/cxl/core/cdat.c:cxl_switch_gather_bandwidth() {
+>      ...
+>      struct access_coordinate coords[ACCESS_COORDINATE_MAX];
+>      ...
+>      rc = cxl_pci_get_bandwidth(pdev, coords);
+>      ...
+>      cxl_coordinates_combine(coords, coords, ctx->coord);
+>      ...
+> }
+>
+> cxl_pci_get_bandwidth() leaves latency members uninitialized, and then
+> cxl_coordinates_combine() unconditionally sums them.
+>
+> Should coords be zero-initialized here as well to prevent reading
+> uninitialized memory?
+Yes, will be changed too in v3.
+>
+> [Severity: High]
+> This is a pre-existing issue, but uninitialized stack memory can leak into QoS
+> calculations for Restricted CXL Devices (RCDs):
+>
+> drivers/cxl/core/cdat.c:cxl_port_perf_data_calculate() {
+>      struct access_coordinate ep_c[ACCESS_COORDINATE_MAX];
+>      ...
+>      rc = cxl_endpoint_get_perf_coordinates(port, ep_c);
+>      ...
+>      cxl_coordinates_combine(dent->coord, dent->cdat_coord, ep_c);
+>      ...
+> }
+>
+> For RCDs, cxl_endpoint_get_perf_coordinates() returns 0 early without
+> modifying the array:
+>
+> drivers/cxl/core/port.c:cxl_endpoint_get_perf_coordinates() {
+>      ...
+>      if (cxlmd->cxlds->rcd)
+>          return 0;
+>      ...
+> }
+>
+> This causes cxl_coordinates_combine() to merge uninitialized stack data into
+> the region's coordinates, which is later passed to QoS class calculation and
+> exported to userspace sysfs.
+>
+> Should ep_c also be zero-initialized?
+Yes, changed too in v3.
+>
+> [Severity: Medium]
+> This is a pre-existing issue, but does pointer aliasing in
+> cxl_coordinates_combine() cause bandwidth calculations to ignore zero
+> bandwidths from downstream hops?
+>
+> drivers/cxl/core/cdat.c:__cxl_coordinates_combine() {
+>      if (c1->write_bandwidth && c2->write_bandwidth)
+>          out->write_bandwidth = min(c1->write_bandwidth,
+>                                     c2->write_bandwidth);
+> }
+>
+> When called with aliased pointers in cxl_endpoint_gather_bandwidth() and
+> cxl_switch_gather_bandwidth():
+>
+>      cxl_coordinates_combine(ep_coord, ep_coord, sw_coord);
+>
+> If sw_coord has 0 bandwidth, the operation is skipped, and ep_coord retains
+> its previous non-zero bandwidth instead of being updated to 0.
+>
+> Should the bandwidth be updated when one of the inputs has 0 bandwidth, or is
+> retaining the previous value intended?
+It is intended.
+
+Best Regards,
+Guixin Liu
+>>   	struct cxl_dev_state *cxlds = cxlmd->cxlds;
+>>   	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+
