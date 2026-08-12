@@ -1,102 +1,64 @@
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC71379EC4
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 19:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0CC37E5CA;
+	Wed, 12 Aug 2026 19:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786563557; cv=none; b=rbxq8W7Xj1bQpPZIFkCUyjd+N79aH1Ezh0YkhxyYA8qeN+ed2OgyKfaRnhnIDN1IB3uq/ldvRqhoD+zlLbDMGuCnUDyp1YwLni/UcdvJzymoJxTqdiwd1aoh2EtlGAWOWBUHnDXAI2tymmWBm7LCHPqA37haK6uPWZVqkikHblI=
+	t=1786563861; cv=none; b=gHhpEwdaAurr6FKXPwIN1t0ozx0McGARYsyOt5fjlB7QpUPWeyOp9JdO3Hssq+nvummmeK3M9GJebO3U5U9ZzyaNSIrVT5lI9Ld2o5vUYlQ57m9htcn0TG9dQm1XnRCTtnqUzdoZJbTHBODbiW2ofcRtEDTWFu7FeVVapGTqi0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786563557; c=relaxed/simple;
-	bh=Jxlbn2kEWy8HeStc6KfR7KYADvRNrzF0gC1nZSpv45U=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=j/j8PKLLBnvv+0w6uAS8JZ7fVYoWhsMVkO8iMCLx+tUkKtHtHyCD5qH/0Iv+y490LO3R8H+KKT9OmrMnBuhI53dJD01/NWmcs6y7xqUynMSeagguDrdyddHX/AR2siB0rQVDvJo4s1+EfK9426yir9nScuj9an/eMACMiZnUWIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=syXNCe4y; arc=none smtp.client-ip=209.85.210.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1786563861; c=relaxed/simple;
+	bh=bQWLPAxpNZTOvy3Y+tcPydVvEwDj5MG8HRGA4E3mhPw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eBjlvOrpEvNjytZCcf1o65FHYYXz31W4ukOz8fEG/v5vKh5uIXXajq3YOFQW+yLw8dbzuij+ehx3QSPLekOQtOaXWmxOLEQHDpr/WG9XHAKSHu8sQBoJ3tM+sT+T5IFseBkRhpIfDa49RXxr9kvbkt3KD5UqVVdSyiHHxdwubMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=m6a1LpNV; arc=none smtp.client-ip=212.27.42.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="syXNCe4y"
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-848568a6f62so1835466b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 12:39:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786563555; x=1787168355; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3na27S9dvXCrzn4sNrcA7VrHo71pojsv2T9Iii/MivQ=;
-        b=syXNCe4yzrV7AhAkAlO0Jyw6NbMtzuqcRAXR1TUYHl3/xABd+RqMPrBBokKwnKMEXB
-         H7oYqkHLr6NBPtDV5VHOG6D+1PM9X38otN9jtlIE5ypTCdaMvdhv+bt8tJMeT3wn9JOJ
-         WwbrcLF92Z1oc+Ohqy4cSA4aXuaCUkBcE+cHzhANxLdHtQkPJMQElHQxSC84L0PHN1b3
-         MrUc+2g2Nu5COT5Owk9Zsc+pr5yim8c3UQj4fFcIbB7Q2yEbjQoP4ZRgcW6o8uWa5zBY
-         cSPtod/6RvCp/ATYBG5i6CTcASVEx159hIeGJADrWt8jTwxWP9hz+rGx5cXfozihNKHv
-         W+VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786563555; x=1787168355;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3na27S9dvXCrzn4sNrcA7VrHo71pojsv2T9Iii/MivQ=;
-        b=gdfjdAq3PbG7tkl6vtvB2Rhu1iVp8ft6boq6BsEDmET/FnJ513IDyGbdPstytpaoEF
-         zfTFQMSHh5Cc/eQnBNl8VU1t/UF2s+b9G5Y9s+SwMdLnMI8OuABmlkylbrYWna1JfZU3
-         +C0K+i0zj96F0mL53wwUTJLtRtzp5L2BE2+XuM20xrbvdiZaDnhVrdqwszyoE3CKWmju
-         QydgBxvt51sUqK4Dp6oNgXjcHPyvuYC3K7oCSEKJVvOR7pTyL1ksm8+B/RE8sCcKWPR/
-         qBBd6gyayPiLzgdH3JUiK+WMk0PjLfhPtXgxCfwKYXTAqyiga8v4JJXSmaVRmmrfP2Wm
-         0Q/A==
-X-Gm-Message-State: AOJu0YxpJRCjyW+YejeDZ1fQ/gVDcDJ8A+BfqszNV/eYKZDNvx5SA1mh
-	rN7zJoSACY8cEWS/b4bFI69VwDYkm8YmVnnFBqb58kBGzh++gKTD5hWpGePLpcY5fmfdyuRxZg7
-	guhTnsI6CdYHsQLi94jWOIdS9guDdTIXf6Wk1NDQKxXsxk2iwJ9QsGXdIo4DmHy4afTvz60Qj5U
-	Fxgl3EQR4EEk/+WZvi3TEnHclZhAAgqkPdtZa+9APUesjdgwtV
-X-Received: from pgbr17.prod.google.com ([2002:a63:5d11:0:b0:c9e:a22d:15c5])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:cc8:b0:845:e41f:9696
- with SMTP id d2e1a72fcca58-84fc75f438fmr176338b3a.25.1786563554512; Wed, 12
- Aug 2026 12:39:14 -0700 (PDT)
-Date: Wed, 12 Aug 2026 12:39:13 -0700
-In-Reply-To: <20260812192319.BF41B1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="m6a1LpNV"
+Received: from L30177.local (unknown [IPv6:2a01:e0a:ac2:22b0:f846:40e6:d9d0:ef5a])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id 6748F78035E;
+	Wed, 12 Aug 2026 21:44:14 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1786563856;
+	bh=bQWLPAxpNZTOvy3Y+tcPydVvEwDj5MG8HRGA4E3mhPw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m6a1LpNVczu6+eKchNswANMGeO5vS9mE26nKA1Gvz/KQrpJdqm6vLaM0yJsBJMfuw
+	 YsivR8uWf/O6MlL3KldMheQTEwW9lx/1jtiwqiqJwCzxqqGers5kuSar8BdEKIC9Xg
+	 2i8fxLDxnDBrO7yEF2aPVYepMXXC2dglguFV5M1kzWOXSWj2xp5oDdY2nzPvzPVTyi
+	 j9CN917NGrcy5dMLbp2+FWHsAyREyBi6gHSreXT2U+5DKvYLbYd6oakXBuyCM61XJZ
+	 r6nVpme9zdR04I1vig/1VmbOWAqdhvJDFrtQtCjqoerV8//MQzymhFi6kXCfqS+4PL
+	 OFzYRJgDyYtzw==
+Date: Wed, 12 Aug 2026 21:44:13 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH v2] i2c: imx: add I2C_M_REV_DIR_ADDR and I2C_M_NOSTART
+Message-ID: <anzNDV8BmdbHArWO@L30177.local>
+References: <20260812-for-upstream-i2c-imx-lx2160-reverse-v2-1-f1343714c5a9@free.fr>
+ <20260812193031.CD8AC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260812-vfio-v1-1-5cfe0b1fa4e7@linux.ibm.com> <20260812192319.BF41B1F000E9@smtp.kernel.org>
-Message-ID: <anzL4YiN7QozkrN9@google.com>
-Subject: Re: [PATCH] vfio: Use file-based reference counting for KVM
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Steffen Eiden <seiden@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org, 
-	Christian Borntraeger <borntraeger@linux.ibm.vom>, Vasily Gorbik <gor@linux.ibm.com>, 
-	Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260812193031.CD8AC1F000E9@smtp.kernel.org>
 
-On Wed, Aug 12, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/mmu/page_track.c b/arch/x86/kvm/mmu/page_track.c
-> > index 7e8195a311bb0..98f133e4f0b32 100644
-> > --- a/arch/x86/kvm/mmu/page_track.c
-> > +++ b/arch/x86/kvm/mmu/page_track.c
-> > @@ -237,10 +237,11 @@ static int kvm_enable_external_write_tracking(struct kvm *kvm)
-> 
+Hi M. Bot,
+
+> [Severity: Critical]
+> This is a pre-existing issue, but does a 0-length standard I2C read cause an
+> integer underflow here?
+  ...
 > [Severity: High]
-> This is a pre-existing issue, but does kvm_enable_external_write_tracking()
-> need to hold srcu_read_lock(&kvm->srcu) when iterating over the memslots
-> array?
-> 
-> Looking at the function, it retrieves and iterates over the memslots array
-> while only holding the slots_arch_lock mutex:
-> 
-> mutex_lock(&kvm->slots_arch_lock);
-> ...
-> for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
->     slots = __kvm_memslots(kvm, i);
->     kvm_for_each_memslot(slot, bkt, slots) {
->         r = kvm_page_track_write_tracking_alloc(slot);
->         if (r)
->             goto out_unlock;
->     }
-> }
-> 
-> Without holding srcu_read_lock(&kvm->srcu) or the writer-side slots_lock,
-> could a concurrent memslot update swap and free the memslots array while
-> the loop is traversing it, causing a use-after-free?
+> This isn't a bug introduced by this patch, but do the error paths after this
+> timeout leak DMA mappings?
 
-No, because the part of kvm_swap_active_memslots() that performs the actual swap
-runs with slots_arch_lock held.  
+Yes, both are preexisting, you are right but they are not the purpose of this serie/thread.
+
+Best regards,
+  Vincent
