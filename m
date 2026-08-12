@@ -1,150 +1,238 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011060.outbound.protection.outlook.com [40.93.194.60])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEF7276041
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 05:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786513725; cv=fail; b=AM/4dRciu7Jj40LOQkvigR9bxVEt3WtllSsbKXl8NHOuBkvEcpMWRI/Hp22aU21DKadKSAivaUgYSWio9Z3E6BYi7JiYZxriXcxxIIiP0x/GH6BiwGG8zeq0SRb209y9Tge5wMnHY2tcuUX+WwcwZRBCUhziTb0isLDamSwdgBY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786513725; c=relaxed/simple;
-	bh=NRe+fvF2vu3mneCd9BLilZQxEytE9+44FjOZHNfIlwU=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eu6zsM3vWJ4lynpDq00X2yw/zqd3f9Mc+UP8U5XCm5+w1F0d8Jl9f6bZqUGZHib5nsCdzi4GUpxfe8gwzn2i6g5g6YWiMt3lphCcASeruZiTu45V9Srw8Ud0EzncAcCNi9Jg5z/Rw2AT994kjQ69aQLwh8/8dBAXyvqyDI1i4t0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=Tx9bal/T; arc=fail smtp.client-ip=40.93.194.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62593546D9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 06:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786516366; cv=none; b=pTf6zYvjjVrP3CRUu1o7oBkTi2eoxDAUJXXUvTUJp99dS05/s3uWR+xrjeo1uXz1uoFlDpDbk+mu6Q/qJb3oyxV3ZPxOMUrKQ7CNkxTpwGeCC67S0ZRwRH4ZDuEWaSkC4h5K4ipPKgGvliiSUZrbD7b5/mF0Bd7MxFlGZDWWRw8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786516366; c=relaxed/simple;
+	bh=h5JXSvc1ufL6bkPE/woM5yaUaXQLAZ8qaqklf9eMHAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h7+cb+pr5ciAmC6YGDaxAXHBO9FHf/I94glgWPlcdVq/rlvZ5ACFukUVK4bJCehVsQsrDDeWmC8rQoDejeoervOmvTeIK8vMnLNSFbrQJ9nm0J3Y95ylGAf4iDW6Uj9YY+qAlpYCZxsTvB+DkJPnFRaVMi77ljgS1y2658FFhj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PLdyU+qs; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Tx9bal/T"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IJzUhzsQrmibJdrGIofb5rPh7IBeqSNJVSt4POfD1Lj2xJp0fjgwLfrAOtsfvdaVTIyE3sT7aD1huiO9nWK0+YtFMzMnxJIAzRCDQ8eHUs6DNklAJNBXVFt+pytJOKzUAi8q2Y3q5GbQw3PE/y6M+G/nptLW4AAG6rD9TrX43kMUFavzvC2mfWM6v245aiUHAjqoFsUkCGFoOitROSRhcHFsqgEnejg55/zcArsVslC/E15gqk6yk3c8Vfq8TMwwezFb5YKT+l0gw1bjjlnLJCbO72IwELVuXJZEBqzDuM30VWNhKuJ/sg3/5+zGM2LoR9neDLJtOypdfz4xysyELQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CaPxlztw6GzFuf1mjagVRpaf2mNaO9weCCwhmujzoMA=;
- b=JogSwU4xbCZ47aQQr5rLWC23UH0a2v1zhTNp+l5uG1YP/TgY1Pg899X5lXQDocFswk8XREaVtNK9yRWLLt5Zh1XXy+GUC1fUmqFAwaWeGToVYYFVxns7oPpmk2rTmGrUgRI69m/qfKu24bbx7RLv/OBWpGRu8nifFufUyGq7+s4Rsh57Qa/l97Q1CrlyEWRwNns7xP6HPHrWg+VNavRdUCc+kgjeW6cWQPVgoloI2fA1b/JCSSPh1dIAuI8psmJQhfw/OO6K+gDclKdNZBkIUiQ1fEkEb5s7Q4AuVbkY++ky0fe3sDocyqGb3eBu9MK2y60Uglgiz7NN6BEVF25p1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CaPxlztw6GzFuf1mjagVRpaf2mNaO9weCCwhmujzoMA=;
- b=Tx9bal/TF67n3rMtbFLEV2ulIWj1hN6khUBxtKlclxd+jqJ4ciRTy/vw/bWwQzFTQ+toPUtvuKIcmNL/jst6ItGvJ9honwYHh45BR7so9E54T5Z+NTEXDAMN2+u5YUg9OgoDdpluKr6kz9XQoCPzqUVMJGSRPZpbvNAXQ2TkC88=
-Received: from SJ0PR13CA0036.namprd13.prod.outlook.com (2603:10b6:a03:2c2::11)
- by PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Wed, 12 Aug
- 2026 05:48:37 +0000
-Received: from MWH0EPF000A6730.namprd04.prod.outlook.com
- (2603:10b6:a03:2c2:cafe::4e) by SJ0PR13CA0036.outlook.office365.com
- (2603:10b6:a03:2c2::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.12 via Frontend Transport; Wed,
- 12 Aug 2026 05:48:33 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A6730.mail.protection.outlook.com (10.167.249.22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Wed, 12 Aug 2026 05:48:32 +0000
-Received: from [10.252.200.247] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 12 Aug
- 2026 00:48:30 -0500
-Message-ID: <09aaceca-c01b-41d9-9f87-4ee6a3a4800e@amd.com>
-Date: Wed, 12 Aug 2026 11:18:27 +0530
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PLdyU+qs"
+Message-ID: <f244c880-c907-456b-81ae-07c28456185e@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1786516361;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ExJys5qSDXQWFXg8uSDgxGRkENE87NKcgW0l7vfMryo=;
+	b=PLdyU+qsm8C9P29r4fmpfnSmLBODoUGdBqzDh9D1uirmugiUqWiF1KJNxYfAaOVCcJzh2Z
+	KRfHKXbsCYtnXvQFGVljlD+C+wgQcCnfBoPVvyRT+/quU+lQ429XSl+lMcooNE8j+CDw63
+	1xOwbNgx2ftc9XiwadFKgdEGZt4cJjQ=
+Date: Wed, 12 Aug 2026 14:32:40 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <sashiko-reviews@lists.linux.dev>,
-	<kvm@vger.kernel.org>
-Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
- Physical Processor Interrupt (GAPPI)
+Subject: Re: [PATCH v5 2/2] alloc_tag: fix undetected compressed tag overflow
+ when profiling is disabled
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-modules@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>,
+ Suren Baghdasaryan <surenb@google.com>
+References: <20260812054105.102637-1-hao.ge@linux.dev>
+ <20260812054105.102637-3-hao.ge@linux.dev>
+ <20260812060411.968631F000E9@smtp.kernel.org>
 Content-Language: en-US
-To: Sean Christopherson <seanjc@google.com>
-References: <20260713105033.15405-1-sarunkod@amd.com>
- <20260713105033.15405-6-sarunkod@amd.com>
- <20260713111119.EC35E1F000E9@smtp.kernel.org>
- <6adaf312-84ff-4fea-b072-61588fd73b40@amd.com> <anpvbdzUIE_JtVoL@google.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <anpvbdzUIE_JtVoL@google.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Hao Ge <hao.ge@linux.dev>
+In-Reply-To: <20260812060411.968631F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6730:EE_|PH7PR12MB5974:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3c436d32-b334-4ae2-b54e-08def8355819
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|376014|23010399003|36860700016|18002099003|22082099003|11063799006|56012099006|6133799003|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	9fpJHwqawXND6WKcw457Ots/CNyMVwlmLOvlYm4eSKZwxGtt98NNp/N5ZwpCXToT4NCJRZWlstS8T+CTuDohJehxP3488GKnH3EJM8t1e309+sFx+97ctaDgWbI1LiM7XWbsfbBwGBEqw9bxPhnvMpiPGl9/jD/PrJH8FI2t3cyS6f5u2SSe3LPhN9OfDo/el8FsywHNfjtX6y17s1vin2r8QqRkOO37hzvkpd76UABrAwXLFFJatOaJ5RSNki7BrkVP7L8UWeOh08GpKmbWyi/LRPQIWJmwMNeZYPNbeF7lq5YD13VerlXMnn/I3nU0PxYQLJbgqBcHQ7jnD6AqlrTxZaabLu0oIaCmBXGQtaUhV81uQ2w9nFr0GBAjHUjzeyG2yNGXCYpOSyKLqZclXF46uxAfPtXENA7wvBIOxGsYl0pJIy1HPC3rnugkYM4rRsb80yHa1qYOCUjnK14ZSLajr8SfrWXuwEnaVj8byk24Zq05NxIcHXf0SU1An0xdhZeXV3fx6TMojyUvREufMEIoLOojDsZHL8Hld2KcIqfubM9XR03I8F5j9xIYz+Iv2Ga4kAiyOEj34mTEeh5QPreE6IJWnXYhjdlYR2T3BEKwQIRzTQcOGY369/NX7/ygiOjCB9w8fDahdnBlGPcccJFA47pTMSGf95DkfoyDYveH3B0wKZy+w8+UF05rcv2ziThAe+TJQ3sIc63IV0++1w==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(23010399003)(36860700016)(18002099003)(22082099003)(11063799006)(56012099006)(6133799003)(10067099003)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	9OXdqJfZK0YVylaC4GEF9Vo2sOxQSi8r5hzo+lbGMc6Sk5FCTwd9dVCpixfT3DR5JICzDrKOYZt9crMfPyk9qaT/BcvPAOnnV9Dkmsr7GhtehnfaINgt7k+8RPDPuhf0jCXhy15aSDySjsmQdTBdfoYLZ2JuKYqvhdIECwNqucDKfJ0BCOpqycPgsiFJ9j9GIgdZJiEQl1+pqgc6hQ6Vuc6gx3mF5wsQIrPuWMuMeEVU7xq31vvTBkmu22uVyM4CogXY+axRSBMCjka8P10iV+AdHBHghOZ49s+2Asspi7/ZhePOEke3CKKnaMuUKQ4FMuXsIztfrNL5We6XdHcsxb1SbX9j2jC3TYDMp6zZ179B0nMqW0lWzqO/rmh/cTZ5W+mGZuCDOonC1uhb3GgQYt6vdDdkmIHgJ3+GLr+5xr1FLcen5p/9r6JVRJgw9b10
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 05:48:32.6877
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3c436d32-b334-4ae2-b54e-08def8355819
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000A6730.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5974
+X-Migadu-Flow: FLOW_OUT
+
+CC Andrew and Suren
 
 
-
-On 8/11/2026 6:10 AM, Sean Christopherson wrote:
-> On Mon, Jul 13, 2026, Sairaj Kodilkar wrote:
->> On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
->>> [Severity: High]
->>> Does this lock ordering create an ABBA deadlock?
->>>
->>> When a vCPU is preempted, the scheduler executes kvm_sched_out() while holding
->>> the runqueue lock (rq_lock). KVM then calls __avic_vcpu_put(), which in turn
->>> calls avic_add_vcpu_to_gappi_wakeup_list(). This acquires the
->>> gappi_vcpu_wakeup_list_lock, establishing an ordering of rq_lock ->
->>> gappi_vcpu_wakeup_list_lock.
->>>
->>> Conversely, when a GAPPI interrupt arrives, avic_gappi_wakeup_handler()
->>> acquires gappi_vcpu_wakeup_list_lock and calls kvm_vcpu_wake_up(). The wakeup
->>> path then attempts to acquire the target task's runqueue lock, establishing
->>> the reverse order: gappi_vcpu_wakeup_list_lock -> rq_lock.
->>>
->>> This inversion will likely trigger a lockdep ABBA deadlock splat and violates
->>> the scheduler locking hierarchy.
->>
->> For this condition to exist, Following two conditions must be true.
->> 1. avic_vcpu_put() and gappi interrupt handler() must be on same
->> physical CPU.
->> 2. GAPPI must preempt the __avic_vcpu_put() once it has acquired
->> gappi_vcpu_wakeup_list_lock().
->>
->> The second condition is not possible since __avic_vcpu_put() disables
->> the interrupt while aquiring the ir_list lock.
->>
->> Hence ABBA deadlock is not possible
+On 2026/8/12 14:04, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
 > 
-> I wouldn't be surprised if you need to tell lockdep that, e.g. see commit
-> c0b8dcabb2cd ("KVM: VMX: Use separate subclasses for PI wakeup lock to squash
-> false positive").
+> New issues:
+> - [High] Unconditional allocation of per-CPU counters for modules causes a memory leak when memory profiling is disabled and the module load is retried.
+> 
+> Pre-existing issues:
+> - [Critical] Concurrent module loading can cause an out-of-bounds memory write and module corruption because the global profiling flag is toggled without cross-phase synchronization.
+> - [High] A race condition on the global module tags size variable can lead to unmapped virtual memory access and a kernel panic.
+> - [High] If page population fails, a dangling module pointer is left in the maple tree, leading to a Use-After-Free.
+> --
+> 
+> --- Patch [2]: [PATCH v5 2/2] alloc_tag: fix undetected compressed tag overflow when profiling is disabled ---
+> commit ffb2b208763f32cdfb3d6cb740d4d4efa5c99ae0
+> Author: Hao Ge <hao.ge@linux.dev>
+> 
+> alloc_tag: fix undetected compressed tag overflow when profiling is disabled
+> 
+> This patch modifies module layout and allocation to retry loading without
+> memory profiling if the compressed tag limit is exceeded. It removes the
+> profiling enabled guard when checking for tag overflow and handles the
+> fallback by resetting section flags and repeating the layout process.
+> 
+>> diff --git a/kernel/module/main.c b/kernel/module/main.c
+>> --- a/kernel/module/main.c
+>> +++ b/kernel/module/main.c
+> 
+> [ ... ]
+> 
+>> @@ -2966,18 +2967,38 @@ static struct module *layout_and_allocate(struct load_info *info, int flags)
+>>   	 */
+>>   	module_mark_ro_after_init(info->hdr, info->sechdrs, info->secstrings);
+>>   
+>> +	/*
+>> +	 * Save the sizes reserved by module_frob_arch_sections() so they can
+>> +	 * be restored if we retry below.
+>> +	 */
+>> +	for_each_mod_mem_type(type)
+>> +		frob_size[type] = info->mod->mem[type].size;
+>> +
+>>   	/*
+>>   	 * Determine total sizes, and put offsets in sh_entsize.  For now
+>>   	 * this is done generically; there doesn't appear to be any
+>>   	 * special cases for the architectures.
+>>   	 */
+>> +retry:
+>>   	layout_sections(info->mod, info);
+>>   	layout_symtab(info->mod, info);
+>>   
+>>   	/* Allocate and move to the final place */
+>>   	err = move_module(info->mod, info);
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but can concurrent module loading
+> cause memory corruption if profiling is disabled mid-flight?
+> 
+> In move_module(), if one thread disables profiling globally via
+> shutdown_mem_profiling() while another thread is halfway through module
+> loading (between layout calculation and memory movement), the second thread's
+> section offset queries could evaluate to false.
+> 
+> This would cause the module loader to use an un-incremented 0 offset and
+> incorrectly write the codetag section into the base memory, overwriting the
+> start of the module's core memory block.
+> 
+>> -	if (err)
+>> -		return ERR_PTR(err);
+>> +	if (err) {
+>> +		if (err != -EAGAIN)
+>> +			return ERR_PTR(err);
+>> +		/*
+>> +		 * -EAGAIN means profiling was disabled but the module
+>> +		 * can still load without it. Reset state and retry.
+>> +		 */
+>> +		rewrite_section_headers(info, flags);
+>> +		for_each_mod_mem_type(type)
+>> +			info->mod->mem[type].size = frob_size[type];
+>> +		info->sechdrs[info->index.sym].sh_flags &= ~(unsigned long)SHF_ALLOC;
+>> +		info->sechdrs[info->index.str].sh_flags &= ~(unsigned long)SHF_ALLOC;
+>> +		goto retry;
+> 
+> [Severity: High]
+> Does this retry mechanism cause a memory leak for per-CPU counters?
+> 
+> When the module load is retried via this new loop, the codetag section is
+> treated as standard memory and bypasses maple tree registration. However, the
+> subsequent codetag module initialization unconditionally allocates per-CPU
+> memory for these tags regardless of the profiling state.
+> 
+> During module unload in release_module_tags(), the cleanup path exits early
+> because the module cannot be found in the maple tree, permanently leaking
+> the per-CPU memory on every unload.
 
-Will do this in next version.
+The per-CPU counter leak is pre-existing, not introduced by the retry 
+ 
+ 
+                                                      mechanism.
 
-Thanks
-Sairaj
+The root cause is that shutdown_mem_profiling() permanently sets 
+ 
+ 
+ 
+mem_profiling_support to false, after which needs_section_mem() 
+ 
+ 
+                                                        returns false 
+for every subsequent module. Their codetag sections are 
+ 
+ 
+                                         placed as regular data, so they 
+are never inserted into the alloc_tag 
+ 
+ 
+                       maple tree. Yet codetag_load_module() still 
+unconditionally invokes 
+ 
+ 
+          the load_module() callback, which allocates percpu counters 
+that 
+ 
+ 
+release_module_tags() cannot find on unload.
+
+I'll send out a separate patch to fix this leak later.
+
+
+
+> 
+>> +	}
+>>   
+>>   	/* Module has been copied to its final place now: return it. */
+>>   	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
+> 
+>> diff --git a/mm/alloc_tag.c b/mm/alloc_tag.c
+>> --- a/mm/alloc_tag.c
+>> +++ b/mm/alloc_tag.c
+> 
+> [ ... ]
+> 
+>> @@ -950,10 +950,12 @@ static void *reserve_module_tags(struct module *mod, unsigned long size,
+>>   		int grow_res;
+>>   
+>>   		module_tags.size = offset + size;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does the update to module_tags.size race
+> with concurrent module loads?
+> 
+> The high-water mark for the module tags size is updated here without a lock
+> after the maple tree lock is released. If two concurrent module loads race on
+> this update, a higher offset might be overwritten by a smaller one.
+> 
+> Subsequently, vm_module_tags_populate() relies on this corrupted size and
+> would fail to map the physical pages for the higher virtual addresses, leading
+> to a page fault when the module accesses its allocated tags.
+> 
+>> -		if (mem_alloc_profiling_enabled() && !tags_addressable()) {
+>> +		if (!tags_addressable()) {
+>>   			shutdown_mem_profiling(true);
+>> -			pr_warn("With module %s there are too many tags to fit in %d page flag bits. Memory allocation profiling is disabled!\n",
+>> -				mod->name, NR_UNUSED_PAGEFLAG_BITS);
+>> +			pr_warn_once("With module %s there are too many tags to fit in %d page flag bits. Memory allocation profiling is disabled!\n",
+>> +				     mod->name, NR_UNUSED_PAGEFLAG_BITS);
+>> +			release_module_tags(mod, false);
+>> +			return ERR_PTR(-EAGAIN);
+>>   		}
+>>   
+>>   		grow_res = vm_module_tags_populate();
+> 
+> [Severity: High]
+> This is a pre-existing issue, but could this lead to a dangling pointer in
+> the maple tree if page population fails?
+> 
+> If vm_module_tags_populate() fails and returns an error, the allocation
+> routine returns an error here but doesn't remove the newly inserted module
+> pointer from the maple tree.
+> 
+> Since this error bypasses the standard codetag cleanup routines in the module
+> loader (where codetag_section_found might remain false in move_module()),
+> the maple tree retains a pointer to the aborted module. Once the module
+> structure is freed, future maple tree iterations could dereference this freed
+> pointer.
+> 
