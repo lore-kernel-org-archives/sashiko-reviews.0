@@ -1,78 +1,186 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EA20361953
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 04:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786508356; cv=none; b=k5bj/V/Te6qY8e6i1Rgq8wcZJxcUdWj1TydbYNGDiaFAFdl01VPqYsovzqBSLvuL6hYMS3QAdGTGURgwF4bX+Nvu9uZcI747JpkT1fbzzL55XeRNlt96Qud+nVpRewJh1lBBX9gL1thdPAnpWhxZ9JYXUEfgR4fGRYqceSogr7k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786508356; c=relaxed/simple;
-	bh=kyWuVwDHDZwQqMzpX/78Rp68PO8hrk0L1annhXEhrh8=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=K9PEX2ArBZWzAAYtaxwe67DJqyinVpJYTxJkPerkLHIYpb05ISh2ShJVH02CllggKXX5ueNRRbQn3jvJb0S/vuw5ZRz+HPIBWK6CaNXRodVvm8+Vh7L9QBveXv0Um3qgI04Rre3+VOGALl/UjlDS3zvJD5Umc8AmSzpD+bbzeRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [123.138.236.242])
-	by gateway (Coremail) with SMTP id _____8Ax29E_9HtqRG4AAA--.1403S3;
-	Wed, 12 Aug 2026 12:19:12 +0800 (CST)
-Received: from [10.130.40.83] (unknown [123.138.236.242])
-	by front1 (Coremail) with SMTP id qMiowJAx3c479HtqJZEBAA--.10850S2;
-	Wed, 12 Aug 2026 12:19:08 +0800 (CST)
-Subject: Re: [PATCH v3 3/3] module/kallsyms: Filter out local and mapping
- symbols during module load
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-modules@vger.kernel.org
-References: <20260812032807.15034-1-yangtiezhu@loongson.cn>
- <20260812032807.15034-4-yangtiezhu@loongson.cn>
- <20260812034416.DAB981F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <0cd4c5c8-3c50-958f-a8c8-9f118a14a57c@loongson.cn>
-Date: Wed, 12 Aug 2026 12:19:06 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013019.outbound.protection.outlook.com [40.93.201.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B171328635
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 05:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786513671; cv=fail; b=l8VRdQwbYH+WXjqm98Xvl+dU+dX3pMYSUv8CJoXaQmGN2/rLIqCB/Gqfn0Ynh4P5Bu61WP73uwWiLMR9ITvmLdUEcVpH92uD14Wx4xoILXMPptlsvZuDNQnWgA0PXa56f+bPZbMFFcq2jkjisP6+UWt7jKJabhnRvAOHHDvILtI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786513671; c=relaxed/simple;
+	bh=30BRmc0ZOHnB4s3dM6Fgn3YftSILatD8YHH5HTr0G9g=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Xf3QI0nFzy3ZRm19KDJffL2qPeJk0Qv8qVITkCU/JdO0C1OWqgDI/nZiBqsdmgzBMGZ3jHbsqO0dkrlMjzk3C/eAYwX20QcWMAZIVpoG8L0yWQvBqmoJ/yUIKxG6YS8tse6y+CL91TARuG4G1v2mqcF8X7QtLV9vfG84CpfhLfc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lH0cpcnR; arc=fail smtp.client-ip=40.93.201.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lH0cpcnR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gO24vb3aNwA9flq5uezQw2/rU/t/NsUqcTXwkMlYZZ1u9Ue+/Q/D1kZQ4Uk6MfWl3LBEPWGc8UO8efOgIEzrphxbfB4zPXtDdCeFkDXZWWViYSePd8BsL2TYJ9GtXfOtkr4qOAkcp951rG2VshOoZiE1xPz8ELpneatR2uj7bKpBf9feTw3K/2xf/WKyXczeJkM761OBdgSAnl7B5gHRKyh/L4X7GDMTQIUhz/4Fl11pnwoCgjkBsBVwqsDssuyU5WLXLnlcEqnVcpV0CIxq1OmlbSFLLJ0W0FnVNkEae5CZuqfWfNO++8+gc0MiIjNmQCi4+jWqcDMSAustBhpFcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O5hWH1o/RZFIdmQ/q00IcB7hWbi3fNcHVFatxXxXbek=;
+ b=P+D5+gI8Ubgt4gKrMmoQIvD7pRAckEt3L8rjZOXYtEp/l6d7uGrVTWDvCPPa8PClSywEXLzzRn1Y/LATFKs7iBK2LZEyROAdu5bAc9usM3Lj3OHEQW7tKOr1Ts9K7MgRgzUysFTDUIWtnoZhGG/T5dJ/qH2grScbie8+7zRVX0Qkth/FF7eegYNNI0vcqwl3beoRkCE5k/zNyJW7NX9nwWs8iXd4EYLEOZo8L0CCRm71Q7M4eC2FCjgC9pwgdxo5UHXI55n/vibm7ldoHwWR6xfb6fPkzAfLbbsBJ98Ftax72PTN3hPJQn85pCkD6PIgNN08klxrHnVqnziRpTqsdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O5hWH1o/RZFIdmQ/q00IcB7hWbi3fNcHVFatxXxXbek=;
+ b=lH0cpcnRcjVrwgoUJ9mo/YU/Hkt4jsuvuAQNmvLWS5d1t5oD1qXMTPbmIAJufVSq1WvrV6WHQiho4PTVF0RUz+aZUbs+286CjvWX8q5ch4pi02MW2I7aS1cyctrYyHDXOI6vOSQC0lCbAp7s/IvwyDUDO2pB2ePVtr/Zho2KF+I=
+Received: from IA4P220CA0011.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::11)
+ by PH7PR12MB8155.namprd12.prod.outlook.com (2603:10b6:510:2b2::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Wed, 12 Aug
+ 2026 05:47:43 +0000
+Received: from BL02EPF0002992D.namprd02.prod.outlook.com
+ (2603:10b6:208:558:cafe::7d) by IA4P220CA0011.outlook.office365.com
+ (2603:10b6:208:558::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.13 via Frontend Transport; Wed,
+ 12 Aug 2026 05:47:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0002992D.mail.protection.outlook.com (10.167.249.58) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.315.6 via Frontend Transport; Wed, 12 Aug 2026 05:47:43 +0000
+Received: from [10.252.200.247] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 12 Aug
+ 2026 00:47:41 -0500
+Message-ID: <5149127b-32ce-4409-a443-02b5a9600e14@amd.com>
+Date: Wed, 12 Aug 2026 11:17:33 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260812034416.DAB981F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <sashiko-reviews@lists.linux.dev>,
+	<kvm@vger.kernel.org>, Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
+ Physical Processor Interrupt (GAPPI)
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAx3c479HtqJZEBAA--.10850S2
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
-	ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
-	BjDU0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
-	xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
-	j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxV
-	AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E
-	14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
-	0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280
-	aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
-	xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
-	x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r
-	17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
-	7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
-	W8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU
-	20PSUUUUU
+To: Sean Christopherson <seanjc@google.com>
+References: <20260713105033.15405-1-sarunkod@amd.com>
+ <20260713105033.15405-6-sarunkod@amd.com>
+ <20260713111119.EC35E1F000E9@smtp.kernel.org>
+ <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com> <anpwS3C2UIHFz_Uf@google.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <anpwS3C2UIHFz_Uf@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0002992D:EE_|PH7PR12MB8155:EE_
+X-MS-Office365-Filtering-Correlation-Id: a90f92b7-6c8b-4364-8b01-08def8353ac8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|23010399003|36860700016|22082099003|18002099003|5023799004|11063799006|4143699003|56012099006|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	lxRNKRctfQ1B7+9Of9DADzKU8Kgtret2l5+t+EXS03AyjYLgGfoScbOYiTDmLy6/5ucHygmG/tiomQ3KiYAsjbuEyHdQWn0wHbBJB4X2GfN89ZazOQIgR5/+iwwITgD5xUIWas7GPGQrKZlUyRM2/sITux8ZvsXJ58ELm2IV4oR56q8JW7CSM4MZV9h4nRavpb+5E4WOpSN5oaL+mvsjFHcb8okLfGYeEoLtYHAIZr0dqElgaw8CP/nSKzx+uaemBYQyYRYWo9uyMxZ5oNAc2/UZb0Gdrvx/YplLC1cH6QYCU3vr51RtwG3ZcnggmCRgBrapRAkFgudndrUM6+kD75vXgP/DX+38FmqPJIJVGYWK2GIgb3nr4XXGbuc1CxK6o6k4/oTQjbqQ6+vBP6qP60t//15NJdvSFw3JuJdUWA0cGGoKoAFvwsjMrsHydLTr5BoKyZZYHSmXI8pg5sfD87S6ulqVkTEvZ8gzO38jkhAz6Ik/h3dMw207hPPbLfbZraaXWbpxH77TzxaA7wsXaDILRRZJDSzVEnFK52B8MVZwNIHAVIF3NQteG/BSt9lAZX+gG8ltqeuYk9i391ZtmEGBDe0MqfDasUy56KNThxp0mWC6sc6iFyesY5QtDRXEVlx8aZzUWa+9NqkqqPiAwp3Z90TslhlZ1SHWJMTElp/ZfrZvINtggaaPnp4L2VGf+Xu0cYJeONakfSMcd77WwA==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(23010399003)(36860700016)(22082099003)(18002099003)(5023799004)(11063799006)(4143699003)(56012099006)(6133799003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	wU3aezBGZOKhbIi6InH3399iU4TZMbY0MbSn+Yz2a9QfN0CerHIxveRye5jJdeAtIG2/58g4popSH+GMg1TEUEmXaAuZoCRz55UmG+mgBHG0m0B4Rl0EocKK3BaBM0KI8MFaNugu+OPaaBka2NfTw3FoV3CG06gtUoREKc7lYK+gSBAntch9iYx+I2WGdeuqcvpmojxH29UBlny5QjeMWFrO88CKZdvdSSDfs8zAA3Semg5eYPJGNhyMAfDLm9xjHiNc14drARqW5gzS35zN98avn2p+4tlJlcOSGHBob16wHuiAqo3SSsgrt9AXRdTqXUkLj/S/OgfWeWoqgq/g513EtUvYPWuDr5ZCfbnOzee3UGWNZDPgqkjXtwmdryjfezL7CmFgkDAeKa51Fb7DDmiDDTSO+ryO5iuDFKAHhXvjkYNFNzbN72dKIj+EV5KN
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 05:47:43.5650
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a90f92b7-6c8b-4364-8b01-08def8353ac8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0002992D.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8155
 
-On 2026/8/12 上午11:44, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-...
 
-> [Severity: High]
-> This is a pre-existing issue
 
-Thanks for the reports of patch 2 and patch 3.
+On 8/11/2026 6:13 AM, Sean Christopherson wrote:
+> On Mon, Aug 10, 2026, Sairaj Kodilkar wrote:
+>> On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
+>>> [Severity: High]
+>>> Can an unprivileged user-space process trigger this WARN_ON?
+>>>
+>>> When a vCPU is created, svm->gappi_cpu is initialized to -1 in
+>>> avic_init_vcpu(). It is only set to a valid CPU ID later during
+>>> __avic_vcpu_load().
+>>>
+>>> If host user-space configures device interrupt routing via the KVM_IRQFD ioctl
+>>> before the vCPU runs, avic_pi_update_irte() is invoked. This will pass the
+>>> uninitialized svm->gappi_cpu (-1) down to this function, hitting the WARN_ON.
+>>> If the host has panic_on_warn enabled, this allows host userspace to trigger
+>>> a kernel panic.
+>>
+>> This is a valid concern.
+>>
+>> If host userspace attaches a bypass IRQ targeting a vCPU that has never
+>> been loaded. Functionally, there is nothing to do in that window. A vCPU
+>> that has never been loaded cannot be blocking, so no GAPPI wakeup is
+>> required. The IOMMU still posts the interrupt into the vAPIC backing
+>> page, and the pending IRR is evaluated at the first VMRUN after
+>> avic_vcpu_load(), which is also where the IRTE gets a valid Destination
+>> and IsRun = 1.
+>>
+>> This can be resolved by assigning a arbitrary gappi destination, without
+>> actually updating the gappi wakeup list of that CPU.
+> 
+> With the disclaimer that I haven't look super closely at this series, and haven't
+> thought too deeply about the feature itself either...
+> 
+> Why are we doing anything different than what VMX does?  vCPUs on the wakeup
+> list when they block, and come off the list when they wakeup.  It's literally
+> one flow that's guarantee to pair put()+load(), and the logic for manipulating
+> the list is quite simple as a result.
+> 
 
-As noted in the descriptions, these are pre-existing issues,
-they are completely independent of this series.
+I was trying to manipulate the vCPU list after is_empty(ir_list) check
+in put() and load() path. Which complicated the things, since
+pi_update_irte() will have to add the vCPU to the list if it was a first
+interrupt assigned to given vCPU.
 
-IMO, a dedicated security patch series should handle this
-historical vulnerability in the future.
+I think its better to keep the list operations before is_empty(ir_list)
+check in order to simplify things a little bit.Note that it may increase
+the list size and potentially increasing time for gappi_wakeup_handler.
 
-Thanks,
-Tiezhu
+> Going a step further, why is GAPPI not sharing code with VMX Posted Interupts?
+> At a glance, the only meaningful difference in the wakeup flow is the "should
+> this particular vCPU be awakened".
+
+On Intel there is a level of indirection: KVM hands the IOMMU the
+physical address of the PI descriptor once, at IRQ affinity setup time
+(vmx_pi_update_irte()). After that the descriptor is the only thing that
+needs updating, so vcpu_load()/vcpu_put() just write NDST/NV/SN in
+memory and never call into the IOMMU driver again.
+
+AMD has no such indirection. The destination APIC ID, IsRun and GATag
+live directly in the IRTE, and there is no per-vCPU structure that the
+IOMMU dereferences. So every vcpu_load()/vcpu_put() has to call into the
+AMD IOMMU driver to update each IRTE targeting the vCPU, via
+avic_update_iommu_vcpu_affinity() -> amd_iommu_update_ga().
+
+That difference leaks into the wakeup list handling. On Intel, putting a
+vCPU on the per-pCPU list is self-contained. On AMD it has to happen in
+the same ir_list_lock critical section as the IRTE update, and it is
+conditional on the vCPU actually having posted IRQs (ir_list being non
+empty), because the pCPU that the vCPU is enqueued on is also what gets
+programmed into IRTE[Destination].
+
+Because of above complications I did not try to factor out the common code.
+
+Thanks
+Sairaj
 
