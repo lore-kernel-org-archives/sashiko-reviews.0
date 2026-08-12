@@ -1,75 +1,75 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E243E41A51D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 16:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D345C716
+	for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 16:44:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786552919; cv=none; b=DmGl/RFMQn5zkHGdwN6k15ms6l2ytMBoQ8SG10I5KfGeY4YBt8BYnXGn0ZWB0PT6ER5ViVGWkChyrtiWptoV73s3NdodkOYcPTd9KYIPnzFN71kkx0f1Iygqc3B8ZdFZut5yqwpjPgUl+fo00C1ksuohE8UxnlW+62dmXy8QA+Y=
+	t=1786553091; cv=none; b=M5t7qQfQvPOMj2eBfve8TxnWsD84Hk7AAL46FPQ5mTcgkqPofoxC/3pm2ZdMVfooq2h6p/0GoLcUYa1oPpsxVub+52AICXOlkoZAu1Q50qFvqWntVuX7RkquKLxfwcgCYdyWzLixAWyUwBmbQGjHBpWaGiWYUxmCkPdjG9MFEeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786552919; c=relaxed/simple;
-	bh=PjVol4Tb65djtG82OoMJft4ncg82OzrKc1EnjHQJyOg=;
+	s=arc-20240116; t=1786553091; c=relaxed/simple;
+	bh=Uc6d1JmE8vFz0jcinRPk+LTNIi3qbY4xnAX+AuHLtUQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GwB7ZioQyeJP4WO9Wpz91xjAdFzT6SYx3kxHDCPrEL2OjS2J6fpXs1o2v+0cDGQyyrfWZ/pHm9uQXdCWyS3nmJZjUlSMR89rACRY4Pv4pBtZSPI+85VlqD7yQgQyCZ2uMpKP0tbZpNF3yWAyp/NXMwVcpIWT0GWwsi1Ms0tgU/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DxGVctXQ; arc=none smtp.client-ip=209.85.221.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=qMuk75qr3Pz3CnCrg+7J/gHFMM/DFavEiw4oB8riyvvmszCquhDmZy2q4s8aD5isoIbRy7l1LRZMV7BP4zYE45b2W7lzzJ6C9Gsa76mN0O/etajkxyEGHXzLh6om5u5sgKDdLmIX1Y/UjCAD+m9ri81P+fo9mHVlrjNaF6itCf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BzMSJ/+b; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DxGVctXQ"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47ffaa8ebbdso978611f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 09:41:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BzMSJ/+b"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-49978908b35so8985635e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 09:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786552916; x=1787157716; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1786553086; x=1787157886; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wVgq/pUAW2YVRGzzvc+9i8P+jYOJxwDdDeiAi7vwOC8=;
-        b=DxGVctXQzvjr9F5eIkTA+pDUHbuunR4dXWc1AgOXsd+pH1McY6LlFlR6c+1N9TWXah
-         0bTP2dxWQvv2xjUZjwl84dpA1JIWWbgQ0Wq0BDanRV9gDokow91OFGw8/a4VzFDxl+Te
-         5viFWiCu8ZgGUGhI8cU+cR6M95MIaoXjc/VdvfwXS5gGtmJgSd15DBbzOZDGZ54aMpBj
-         1+UxZ8Wg/8pMwyxfwgU6YRrsEH28ZTqc4Fj4pZP+JPsUK5rWGYcj7MC3DcqbvusJjh9J
-         G4tJ+foBm7VT42ObDyxD/KRFpq9jwE9R2dQtPuwACyPqo9lN+VUptiQN29t+WpQfhSVK
-         lGvA==
+        bh=oHbwVhKHiepnO85KbGfGGDjglAmQPanCzzbHx9mANVw=;
+        b=BzMSJ/+b4JjwsTYRinFeskirlH68rQMdWWE7kyA+5chPKWccHFaTKmJn4EgnQcyh9V
+         NUtJIO6k89LE8Mf1nSNZjIX3wmg10umvEZBaobWyysW73QU/v5tbjaxBoHp4mt763Iwt
+         BYK4e6P0R5f3Pvzlhg6o+tPgSW5weMKdD5gRVksGlSMUOGWQatI89CoDhjtOHhGH2tN2
+         ZIL8FqVyNq3Aj9LjyE/3btfox9oBvzvBi7/DEeM+e/zuu+yhyoPUOnYF23kepQsLYdwB
+         KJ2zuhoWIUQvK5TFJ+kN3/uIdJwqpp316pT6DLA57yo8JW/Sp8h/yi5IYIpCpb+Zu65K
+         6uDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786552916; x=1787157716;
+        d=1e100.net; s=20251104; t=1786553086; x=1787157886;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=wVgq/pUAW2YVRGzzvc+9i8P+jYOJxwDdDeiAi7vwOC8=;
-        b=I61bDnzpGtnAmZhIl8K3UbGsE2gVbFY7c1BVm8awvq5J+DKkHlOfhh/GZkQhMZyvZs
-         WjNHZ7M9JvVx4+8hsw7dEj2NP/oWspg7rn92oRx0xgT5ThTHDytIaP07FXZ6aZnBiD0N
-         ENXfAtego+2ulF5irhZuvLO0ijMPvdTl25BezIxbIekK1rgS5Q/z4RLYI/E8vy9FXJMP
-         mUnH8PG2XBgkb3kQsmGO8xoWwm0l15HIK23A+hlKFqfsquTT/m1Qe4A4iWDxTOd4BK2o
-         cVrJ8WKKGb+JWJwIBJOvfuNunfNpOc02idoYxcLSY/FbxoAorukr2bbMitzprUbZRRt1
-         t86A==
-X-Gm-Message-State: AOJu0YziJU4oSJO1Sia2QP1euRgbHAhjGtS8wo6MkaLXT10bevhTKTer
-	F5oFU8uch0Pd5V71nTCfXQH5Clu5EsRoyS/BDsL5V4lrM5eAOVs5lwd2J0IwEzzThLR0Nj9fRBn
-	961LpDQ==
-X-Gm-Gg: AR+sD12emK1dz9gS4k3793C8C9wSw/j6ItO8Sz3xaRVtMqVbZKK0Ren4XcV8UnXDGCS
-	teCDEW5ClJJXXWQgWpJyiWt1bDH8Ag20CBdo+vok1z4jw1wmEGTATgVRwKF13+aki05re9vGz/a
-	0edOOm8yLPfyrKO2FRT+3A9rDPWA8+KWTgOZ5ZEuuj3c/49EAaYDy14qLcslGMBYbxwsdo4WlUl
-	2u4Wcx1Bhsx4OikGfosRqFLIdwaMWRap+ZUHR4rKouZgy2QFfFDoEosznET6rxtDTDAIPjVbstq
-	iYFU1mvgb08bSsnwzuoBl9E7cRMsJU+hSNZblHAnyzVhs8N7vfFhHdCHyAxPYERpqM65lN+KylW
-	dFdNMC3TLQARzC455e4xu6LDwrkhpWK52VyBn8DS0OhsQaydkWLXVZe/26SR2ESI+lXZ+wsINTl
-	PDUv4DTWjuyM8X2Eib8wNu/AKpJVsFzax5aLY9rRNqa2DmDBX9Pqc7X070oD68yO+8f9+7HoajK
-	x8j+5AllV8BsPEczQ0ahoTnw46jyhVA
-X-Received: by 2002:a05:6000:250e:b0:480:2fd:96a6 with SMTP id ffacd0b85a97d-481528b9df6mr9204800f8f.7.1786552915607;
-        Wed, 12 Aug 2026 09:41:55 -0700 (PDT)
+        bh=oHbwVhKHiepnO85KbGfGGDjglAmQPanCzzbHx9mANVw=;
+        b=L8kh/Yzec8tDsSSjTOx76AqFrsCWhMn/6dfxFZx9k2BoN8B5oS+WMpUHBSYiJAEnId
+         DdL80cCh4bbBG2VpfMvmOkBPSp9pznERkL3nXAbsw+kDebBTq0eLAlkToFL8e1QKVgQK
+         j2PJysSulhNFgDL8HOW4wGI5hPnqwEuDOBZgseLej2KWNa6Qlw2Xwz47KHE+11K4W9Kf
+         2IQ6BOuaMZ8kpMMd5BTTkCqfZZ/FmB22AcoospapvNLL+EW+noQiS5jSsBQqgNlIkNxT
+         HpFN6zObs0LRcbfxFcRG1AZqiWzW+9mUd2psNRjVOaCL/rVhctQU0qnmOuRDfWvK0aii
+         Y2Dg==
+X-Gm-Message-State: AOJu0Yw2gqdl9SZWIQyChSTMJV5Zj54o2pZ8RS8dcIUfhGzdqg/Z8SpR
+	AoEFsw6W6qpgctegZDp5rGGXvzGnpfNGS+arDc9FKfwm0xTXbHWeDE28totHCeRTHJg8Gart2hT
+	2ire8cA==
+X-Gm-Gg: AR+sD13isH9bnegAtdRqFnPQOZygl5XyFcxWdewArwP7kCmnOLHLc4dNnqgeD3Be5YA
+	zXJU6UAAhZrEf0aGOeBOtOs3MhBJ+MODz+/+A6EAZl2foCzB0AOMhrf2PMmijoqZVqipsRKgQvB
+	K3+yTl0rP5jMRxFRWRCvvCl6NBtAX5EIsVwzG0FzdEeYJ6YPsqpZzEK9wlqF8IU5eJBeaIoLr8A
+	eYQ0aXLqprb4MkJoKGarTOuekSKndiWUMcCtEuS9QjImgMf/AENGIkOJKK6TD2+0Kh+T8owddAd
+	sVLK7xVAO/aI8HnzepqgWgxmBzydYsaP229RoRcB96KsrmlCJZaL9e0qEH0ovWaXkA3ijr42BYV
+	Fe8TovPm9hbvZDpf2OHUIZrrChwi3pfsJTp+l7o5XQ2+Y3BTtvEr2/9gjcU0DE+QJgydsqCASPa
+	b/9g4x/qRkPVdmmaNxwamILAMZ+TSVQffxQ9ZNdAD0hvEyNPUdnsLbJhYS3Lxmk0rMABR7ejPfH
+	AQdSoVGXFhMpXJIXu8Xu//ht4VG2Xal
+X-Received: by 2002:a05:600c:a213:b0:499:737c:8a8b with SMTP id 5b1f17b1804b1-4997c12c7e8mr61050435e9.12.1786553085965;
+        Wed, 12 Aug 2026 09:44:45 -0700 (PDT)
 Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48150d4e675sm9197192f8f.23.2026.08.12.09.41.55
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997b238a9asm57102355e9.3.2026.08.12.09.44.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 09:41:55 -0700 (PDT)
-Date: Wed, 12 Aug 2026 17:41:51 +0100
+        Wed, 12 Aug 2026 09:44:44 -0700 (PDT)
+Date: Wed, 12 Aug 2026 17:44:41 +0100
 From: Vincent Donnefort <vdonnefort@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/9] ring-buffer: Hold cpu_buffer::lock when resizing
- a subbuf
-Message-ID: <anyiT3KzVIm-4ZeD@google.com>
+Subject: Re: [PATCH v4 3/9] ring-buffer: Fix subbuf resize race with ring
+ buffer readers
+Message-ID: <anyi-W-fZHqCPRZd@google.com>
 References: <20260812153311.2328812-1-vdonnefort@google.com>
- <20260812153311.2328812-3-vdonnefort@google.com>
- <20260812154659.3E3081F00A3F@smtp.kernel.org>
+ <20260812153311.2328812-4-vdonnefort@google.com>
+ <20260812155312.ADF031F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -79,90 +79,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260812154659.3E3081F00A3F@smtp.kernel.org>
+In-Reply-To: <20260812155312.ADF031F000E9@smtp.kernel.org>
 
-On Wed, Aug 12, 2026 at 03:46:58PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Wed, Aug 12, 2026 at 03:53:12PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Use-After-Free dereference of `reader_page` in `ring_buffer_read_start()` when bypassing buffer mutex.
 > 
 > Pre-existing issues:
-> - [Critical] The patch attempts to fix a race with `cpu_buffer->free_page` by adding an `arch_spin_lock(&cpu_buffer->lock)`, but it leaves a severe Time-Of-Check to Time-Of-Use (TOCTOU) race unaddressed. `buffer->subbuf_order` and `buffer->subbuf_size` are updated globally outside of any per-CPU lock. If a reader (like `tracing_buffers_splice_read`) calls `ring_buffer_alloc_read_page()` concurrently, it locklessly reads the NEW `buffer->subbuf_order` but then retrieves the OLD, incorrectly-sized `free_page` from the locked cache. When `ring_buffer_read_page()` uses this page, it copies data up to the NEW `buffer->subbuf_size`, leading to a heap buffer overflow if the new order is larger. Similarly, `ring_buffer_free_read_page()` validates `data_page->order` locklessly; if the global order changes just after the check, it inserts a new-order page into `free_page`, which `ring_buffer_subbuf_order_set()` will later free using the `old_order`, corrupting the page allocator.
-> - [High] The patch adds an unconditional `arch_spin_lock(&cpu_buffer->lock)` to `ring_buffer_subbuf_order_set()`. This creates an NMI deadlock window. If an NMI (e.g., from a watchdog or an Oops triggering `ftrace_dump_on_oops`) fires on the same CPU while this lock is held, the NMI handler may attempt to read the ring buffer. The read path (via `ring_buffer_peek()` -> `rb_buffer_peek()` -> `__rb_get_reader_page()`) unconditionally acquires the same `cpu_buffer->lock` using `arch_spin_lock()` without an NMI-safe trylock fallback. Because the interrupted context holds the lock, the NMI handler will spin forever, causing a hard lockup.
+> - [High] 32-bit integer overflow in ring buffer capacity calculation truncates large trace buffers.
+> - [High] Out-of-bounds kernel memory write and VMAP flush in `ring_buffer_map_get_reader()` due to global capacity TOCTOU race.
 > --
 > 
-> --- Patch [2]: [PATCH v4 2/9] ring-buffer: Hold cpu_buffer::lock when resizing a subbuf ---
-> commit 1db68f92346fd21f55d54529fb97b920f02a0136
+> --- Patch [3]: [PATCH v4 3/9] ring-buffer: Fix subbuf resize race with ring buffer readers ---
+> commit 9618f28d9a6939c645e7579fa798c42557eb075c
 > Author: Vincent Donnefort <vdonnefort@google.com>
 > 
-> ring-buffer: Hold cpu_buffer::lock when resizing a subbuf
+> ring-buffer: Fix subbuf resize race with ring buffer readers
 > 
-> This commit adds an arch_spin_lock() around the clearing of
-> cpu_buffer->free_page in ring_buffer_subbuf_order_set(). This aims to
-> prevent races with ring_buffer_alloc_read_page() and
-> ring_buffer_free_read_page() during sub-buffer resizing.
+> This commit changes the trace_buffer to use bpage order instead of
+> trace_buffer::subbuf_size in ring_buffer_read_start() and
+> ring_buffer_read_page(). It also removes trace_buffer::subbuf_size and
+> introduces capacity accessors.
 > 
 > > diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-> > index a3d28b2e2c94a..ec4f5a0c93e85 100644
+> > index ec4f5a0c93e85..97449423d3a68 100644
 > > --- a/kernel/trace/ring_buffer.c
 > > +++ b/kernel/trace/ring_buffer.c
-> > @@ -7431,8 +7431,10 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
-> >  		cpu_buffer->nr_pages = cpu_buffer->nr_pages_to_update;
-> >  		cpu_buffer->nr_pages_to_update = 0;
+> [ ... ]
+> > @@ -6380,36 +6417,44 @@ EXPORT_SYMBOL_GPL(ring_buffer_consume);
+> >  struct ring_buffer_iter *
+> >  ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags)
+> >  {
+> > +	struct ring_buffer_iter *iter __free(kfree) = kzalloc_obj(*iter, flags);
+> >  	struct ring_buffer_per_cpu *cpu_buffer;
+> > -	struct ring_buffer_iter *iter;
+> > -
+> > -	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+> > -		return NULL;
 > >  
-> > +		arch_spin_lock(&cpu_buffer->lock);
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but is there a Time-Of-Check to Time-Of-Use
-> (TOCTOU) race between the global order updates and this per-CPU lock?
-> 
-> Earlier in ring_buffer_subbuf_order_set(), buffer->subbuf_order and
-> buffer->subbuf_size are updated globally outside of any per-CPU lock.
-> 
-> If a reader like tracing_buffers_splice_read() calls
-> ring_buffer_alloc_read_page() concurrently, can it locklessly read the new
-> buffer->subbuf_order, but then retrieve the old, incorrectly-sized
-> free_page from the locked cache?
-> 
-> When ring_buffer_read_page() uses this page, wouldn't it copy data up to
-> the new buffer->subbuf_size, leading to a heap buffer overflow if the new
-> order is larger?
-> 
-> Similarly, ring_buffer_free_read_page() validates data_page->order against
-> buffer->subbuf_order locklessly. If the global order changes right after
-> the check, could it insert a new-order page into free_page, which
-> ring_buffer_subbuf_order_set() will later free using the old order,
-> corrupting the page allocator?
-
-This is hopefully fixed in one of the following patch of this series.
-
+> > -	iter = kzalloc_obj(*iter, flags);
+> >  	if (!iter)
+> >  		return NULL;
+> >  
+> > -	/* Holds the entire event: data and meta data */
+> > -	iter->event_size = buffer->subbuf_size;
+> > -	iter->event = kmalloc(iter->event_size, flags);
+> > -	if (!iter->event) {
+> > -		kfree(iter);
+> > +	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+> >  		return NULL;
+> > -	}
+> >  
+> >  	cpu_buffer = buffer->buffers[cpu];
+> >  
+> > -	iter->cpu_buffer = cpu_buffer;
+> > +	/*
+> > +	 * Only KDB is using GFP_ATOMIC, for the others, lock the buffer to
+> > +	 * prevent concurrent resizing.
+> > +	 */
+> > +	if (gfpflags_allow_blocking(flags))
+> > +		mutex_lock(&buffer->mutex);
+> >  
+> >  	atomic_inc(&cpu_buffer->resize_disabled);
+> >  
+> > +	if (gfpflags_allow_blocking(flags))
+> > +		mutex_unlock(&buffer->mutex);
+> > +
+> > +	/* Holds the entire event: data and meta data. */
+> > +	iter->event_size = rb_page_capacity(READ_ONCE(cpu_buffer->reader_page));
 > 
 > [Severity: High]
-> This is also a pre-existing issue, but does adding this unconditional
-> arch_spin_lock() widen an NMI deadlock window?
+> Can this result in a use-after-free dereference of the reader page?
 > 
-> If an NMI (such as a watchdog or an Oops triggering ftrace_dump_on_oops)
-> fires on the same CPU while this lock is held, the NMI handler may attempt
-> to read the ring buffer.
+> When ring_buffer_read_start() is called with GFP_ATOMIC, it skips acquiring
+> buffer->mutex and only increments cpu_buffer->resize_disabled.
 > 
-> The read path via __rb_get_reader_page() unconditionally acquires the same
-> cpu_buffer->lock using arch_spin_lock() without an NMI-safe trylock
-> fallback.
+> If a concurrent ring_buffer_subbuf_order_set() has already passed its
+> resize_disabled check, it will proceed to allocate new pages and free the old
+> reader page.
+> 
+> A thread executing ring_buffer_read_start() could load the old reader page
+> pointer just before it is freed by the other CPU, dereferencing freed memory
+> when accessing the order field.
 
-This is under raw_spin_lock_irqsave(). I believe the panic path will first try
-to issue normal IPIs.
+Yep, as the comment says, we only bypass for KDB.
+
+> 
+> > +	iter->event = kmalloc(iter->event_size, flags);
+> > +	if (!iter->event) {
+> > +		atomic_dec(&cpu_buffer->resize_disabled);
+> > +		return NULL;
+> > +	}
+> [ ... ]
+> > @@ -7367,8 +7413,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+> >  		}
+> >  
+> >  		/* Update the number of pages to match the new size */
+> > -		nr_pages = old_size * buffer->buffers[cpu]->nr_pages;
+> > -		nr_pages = DIV_ROUND_UP(nr_pages, buffer->subbuf_size);
+> > +		nr_pages = old_capacity * buffer->buffers[cpu]->nr_pages;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can this 32-bit integer capacity calculation
+> truncate large trace buffers?
+> 
+> For buffers larger than 4GB, the multiplication of old_capacity and
+> buffer->buffers[cpu]->nr_pages can exceed 32 bits. Because nr_pages is a
+> 32-bit signed integer, the result is truncated, and the buffer is shrunk to a
+> tiny fraction of its intended size during a resize operation.
+
+This is fixed in a later patch.
+
+> 
+> > +		nr_pages = DIV_ROUND_UP(nr_pages, rb_subbuf_capacity(buffer));
+> >  
+> >  		/* we need a minimum of two pages */
+> >  		if (nr_pages < 2)
+> [ ... ]
+> > @@ -7896,7 +7941,7 @@ int ring_buffer_map_get_reader(struct trace_buffer *buffer, int cpu)
+> >  			 * missed events, then record it there.
+> >  			 */
+> >  			commit = rb_page_size(reader);
+> > -			if (buffer->subbuf_size - commit >= sizeof(missed_events)) {
+> > +			if (rb_subbuf_capacity(buffer) - commit >= sizeof(missed_events)) {
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this create a time-of-check to
+> time-of-use race leading to an out-of-bounds kernel memory write and
+> VMAP flush?
+
+This is fixed in a later patch.
+
+> 
+> During a sub-buffer order resize, ring_buffer_subbuf_order_set() modifies
+> buffer->subbuf_order globally before verifying if resize_disabled is set. If
+> the buffer is currently mapped, the resize aborts and restores the old order.
+> 
+> In that race window, a concurrent ring_buffer_map_get_reader() call will see
+> the new, larger capacity via rb_subbuf_capacity(buffer) here. It could then
+> write missed_events past the end of the old, smaller reader page, and
+> subsequently flush memory beyond the mapped VMAP range.
+> 
+> >  				memcpy(&dpage->data[commit], &missed_events,
+> >  				       sizeof(missed_events));
+> >  				local_add(RB_MISSED_STORED, &dpage->commit);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260812153311.2328812-1-vdonnefort@google.com?part=3
 
 -- 
 Vincent
-
-> 
-> Because the interrupted context holds the lock, will the NMI handler spin
-> forever, causing a hard lockup?
-> 
-> >  		old_free_data_page = cpu_buffer->free_page;
-> >  		cpu_buffer->free_page = NULL;
-> > +		arch_spin_unlock(&cpu_buffer->lock);
-> >  
-> >  		rb_head_page_activate(cpu_buffer);
-> >
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260812153311.2328812-1-vdonnefort@google.com?part=2
