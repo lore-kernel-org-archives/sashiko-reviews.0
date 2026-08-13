@@ -1,138 +1,103 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mta0.migadu.com (out-245.mta0.migadu.com [91.218.175.245])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9EA3264DD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 14:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B70E481641
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 14:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.245
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786630895; cv=none; b=SW2M9h/phihcKe+jxllY89mtvuqHwE58evvQIVPs3ZZLCmG3KnPcYJu0xilmeanHEcmx4QTtf+obpFIL5JO6Z5x20S+SY6BomWp4cc2UAhesRIYkLvRoNqdhUpL9L5i66gI3t+n2uFYR7zI1MxxkXQzVNpcbi7+qHCN/eDE6BT0=
+	t=1786631097; cv=none; b=qEDyNp0V/s1jT9OBbWQ8e2c2i2CNIpk2F6y7TmsWHWbBMqUMqUOqw50O33YSBZEHDI3nFzvNm7UeqmXcONpvy59GkCSjKREKc+mwn9a6IyamVYbmsdM5bBgQJTYDtCy9Wqa+5E9J7z8DuWmMs9k/TeCshuxxZTIh9MxTWJR+Gng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786630895; c=relaxed/simple;
-	bh=1BngQDqStPy4IbAN/A8pfaIz1nplmIope5AI7+UIB48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PuQUEdXhr4fCxDGQ+FTbVcMLkO6AsW9rTo3a9YiVHLEYzASBd47moaLjxUT2TIyEGorLY+e4x1OFlmUGdz4VCXfU3M67P4JopzmvD8HyePkg+r+qT/8f+iCwwl+QtJtsfQjV0jA/3MitCI8jTgGh/xOAxYzzorrcTziIjqnVsao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Sysz1F2T; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1786631097; c=relaxed/simple;
+	bh=0dFH5UTN8j9+CyRG1lB9zZ6dooQJ9bl8CN1nTdqle/0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=XkErFr327K4oZYKxPyyqC7j3Riob/RZgez5Y6OeobI+uaA2Xpo0L/IqF8KOEINFsPoSaIOVK+gKCiakruEpTkucO/L58GmxNbumDVjaO+kOe2cW7aVyJcfliR2pgcINe54xk+hqByIV+tWAeoDSYO7fF5aCmxfPkEoIAxUIXWnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=VsTc8RDd; arc=none smtp.client-ip=91.218.175.245
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Sysz1F2T"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-47362928f65so1813375f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 07:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786630892; x=1787235692; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JcHbtPHDcFE5fkEu2tD+QxgHH1BZ1IzYrTBReRRcNS8=;
-        b=Sysz1F2TLiiqYzStZ5oxk0umYqeojl6BNFeASBSo/6XPennARP9nNgQhk+MFXvT6JA
-         7k4o4mVvRmpLpb7ZjlaOrhXBhaBJ3P8VuNkybn8Y/dBCxALOcfe6i9s4ubB+VAP0tmeT
-         IXDmtlGimv8rlPw2Yr9s2Li9UCgQ6NrPjyrS+TEk31dnDPF/mCZuVimY8+qzirAHBQEy
-         Yho3jtjjFrjz4hIyFuTkDGWYQAWPbYSC9RiSqgH8ngrSAQYVu2tGx1+a2Wpp66CcjvNG
-         ma1acaeV/mk3r7TGqzqyld12Z39MkBF7tltl0kghomtmGeDmFNsAYSjpqdcvP/4BuOv1
-         eleQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786630892; x=1787235692;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=JcHbtPHDcFE5fkEu2tD+QxgHH1BZ1IzYrTBReRRcNS8=;
-        b=PZnEQyw+Om1IzW5X5Nf/5pPPnUJL5LzuKlTxAGQZQKsvyJbGg45hmsDDuO4gZLIwTd
-         1585hD0/HY/rWG1u3QV1K6xUwM5rwLF9tgPvkjAoRZTTUiUq0aLFQwKu1meLFfbMi5bn
-         kSRWjBd7XLyqWEs1pdDcszXv7C2Z23J2xYrgDruOZw4eS+q3d09AupmU/KtnQWt0olqQ
-         cxyrkIrt2teOzuCmZNqwlsL19qErD1bZy0YGKkH2f97IgKnYR4Kh9J3T09Y97tPpkw+f
-         UVAXSYQ47v6Nya3bTHMJ2KHYj3lfHU1hLXykTj2ImORpjr1xAD/DOM8onhdCVDqu55ia
-         6v1Q==
-X-Gm-Message-State: AOJu0Yzc6cyMt2ljxlZoRJv7nBq+HnJtPC/b64ChNEZW+uTWB53eYRvz
-	MIVOhN0nQfHiQoEYmYgpsIJKwUfo0+qvjumPcgn7pL0rRR6JaciH/VJ4SU197Cl2Uqk8Eei36N8
-	GdiX2TA==
-X-Gm-Gg: AR+sD121IiK3DTcxM1Spije7AlYc4i3ZGtolNLsaSI7XClPOT5L6HPS3rk8SXgT4ggz
-	+D4nL46+aOaeZOHkbkd1w6zjSBvVSPMBwSYmb/X3dPAne4DjNw2v+UQNEb8+u5mHnwcvM6ZFO4C
-	zxiuQ+eeYcs1PnLvrjfIvDqzVMkFAWFUh+04mR/rGsXfG6RFYinkG1sxuArozVydUtgRa8tDZq+
-	b+eXjq04cgiyNLd3bAu5fbznP9DBSx04npHJfjKF8gEfvx5FyQDPWPrkbTx5Q4pydeC6hZnFhR8
-	kE3/Lk3a0SqgeA5rAjvOqnn0e2qn3C/Zn/beT7R//yjRwT6JzyDdGAzu0LdmnTzPJOVbTjHJIsa
-	Sfy5YZ4jYMr9rPq4h4HDzRl04/mQ4lVrcRe2ugtSHK9kzQRhlg1UMRTuMPkN0A1ZzdL+hDtV/Zx
-	5ivN5leKu/vq2l4xUq5R5aDaM6RtK2/FBWELY55FaU7sFZGrx77c9ZfG6t/L7A88Hc6np51cfbX
-	UxifkQJGYg3V1ozPAWVCE1nwaCLw0Xx
-X-Received: by 2002:a5d:5986:0:b0:481:4761:45dc with SMTP id ffacd0b85a97d-48159ec3b8amr10253257f8f.13.1786630891044;
-        Thu, 13 Aug 2026 07:21:31 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815a5b6f94sm6645063f8f.32.2026.08.13.07.21.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 07:21:30 -0700 (PDT)
-Date: Thu, 13 Aug 2026 15:21:26 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 16/18] tracing/remotes: Add trace_remote cmdline
- options
-Message-ID: <an3S5rK5dLZkADSU@google.com>
-References: <20260812161340.2417322-1-vdonnefort@google.com>
- <20260812161340.2417322-17-vdonnefort@google.com>
- <20260812171148.D9E9F1F00A3E@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="VsTc8RDd"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=0dFH5UTN8j9+CyRG1lB9zZ6dooQJ9bl8CN1nTdqle/0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786631093; v=1; x=1787235893;
+ b=VsTc8RDdruaNib+kZFs6YaNQVJOJspD7P/xgp8Ousfpd482JyAnzulqrCgvPDxdhMfUTBSTY
+ sw+IzttNATnLrcgImtpkdlbFW1H5/iqVBGerEnZCuoa9w7c9MrEchFRUKd0b64UGQaccAwAO5nn
+ q3Wah2R+P6TS0aoe94ximAFM=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [192.168.1.116] (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id 047ef3b105610436;
+	Thu, 13 Aug 2026 14:24:53 +0000
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <6f547663-beac-4ee8-9a5e-7f681d979d85@linux.dev>
+Date: Thu, 13 Aug 2026 22:24:49 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
+Subject: Re: [PATCH v3] selftests/cgroup: add PSI pressure trigger and
+ validation tests
+To: sashiko-reviews@lists.linux.dev
+References: <20260813133723.1663605-1-cui.tao@linux.dev>
+ <20260813135418.D34F31F000E9@smtp.kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260813135418.D34F31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260812171148.D9E9F1F00A3E@smtp.kernel.org>
 
-On Wed, Aug 12, 2026 at 05:11:48PM +0000, sashiko-bot@kernel.org wrote:
+
+
+在 2026/8/13 21:54, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] User-controllable command-line arguments inappropriately trigger a WARN_ON().
+> - [Medium] The child processes spawned to generate CPU pressure execute an unconditional infinite loop (`for (;;);`). If the test is interrupted (e.g., via SIGINT or a CI timeout sending SIGTERM), the parent process will exit immediately without executing the cleanup block (`cg_killall()`). This leaves `ncpus + 1` child processes running forever, consuming 100% CPU on all cores and effectively locking up the system.
 > --
 > 
-> --- Patch [16]: [PATCH v5 16/18] tracing/remotes: Add trace_remote cmdline options ---
-> commit 473129b2ec6ced6d4d23093ce86b83497f7202d2
-> Author: Vincent Donnefort <vdonnefort@google.com>
+> --- Patch [1]: [PATCH v3] selftests/cgroup: add PSI pressure trigger and validation tests ---
+> commit a3c72bd52fb11f36beba6ee125a9c7100e986a5a
+> Author: Tao Cui <cuitao@kylinos.cn>
+> selftests/cgroup: add PSI pressure trigger and validation tests
 > 
-> tracing/remotes: Add trace_remote cmdline options
+> This commit adds per-resource trigger smoke tests, a cgroup.pressure
+> hide/show toggle test, and a CPU-pressure trigger test using
+> over-subscription to the cgroup selftests.
 > 
-> This commit adds a trace_remote= boot command-line option to configure a
-> trace remote upon registration. It enables configuring various options like
-> buffer size, polling interval, and activating specific tracing events.
+> Link: https://lore.kernel.org/all/20260724025826.504586-1-cui.tao@linux.dev/
+> Link: https://lore.kernel.org/all/20260728083742.2359320-1-cui.tao@linux.dev/
 > 
-> > diff --git a/kernel/trace/trace_remote.c b/kernel/trace/trace_remote.c
-> > index b1c75666ab638..8764d0ed39097 100644
-> > --- a/kernel/trace/trace_remote.c
-> > +++ b/kernel/trace/trace_remote.c
-> 
+>> diff --git a/tools/testing/selftests/cgroup/test_psi.c b/tools/testing/selftests/cgroup/test_psi.c
+>> new file mode 100644
+>> index 0000000000000..cfb412f614588
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/cgroup/test_psi.c
 > [ ... ]
-> 
-> > @@ -1169,6 +1171,124 @@ static int poll_ms_show(struct seq_file *s, void *unused)
-> 
-> [ ... ]
-> 
-> > +static void trace_remote_apply_cmdline_opts(struct trace_remote *remote, char *cmdline)
-> > +{
-> 
-> [ ... ]
-> 
-> > +		} else if (!strncmp(opt, "buf_size=", 9)) {
-> > +			/* buf_size can only be applied if the buffer is unloaded */
-> > +			if (!WARN_ON(trace_remote_loaded(remote)))
-> > +				remote->trace_buffer_size = memparse(opt + 9, NULL);
+>> +/* A child that burns CPU forever; stopped by cg_killall() in the parent. */
+>> +static int hog_cpu(const char *cgroup, void *arg)
+>> +{
+>> +	for (;;)
+>> +		;
 > 
 > [Severity: Medium]
-> Should this be a pr_warn() instead of a WARN_ON()?
+> Will this leave runaway CPU hogs consuming 100% CPU on all cores if the test
+> is interrupted?
 > 
-> If the bootloader passes multiple trace_remote= parameters, and an earlier
-> parameter enables events (which loads the buffer) before a later parameter
-> tries to set buf_size= for the same remote, this check will fail and emit a
-> warning.
+> If the parent process is interrupted by a signal (like SIGINT or a CI runner
+> timeout sending SIGTERM) while waiting for poll(), it will exit immediately
+> without executing the cg_killall() cleanup block.
 > 
-> Because WARN_ON() is used here, a simple typo or misordered boot command line 
-> will trigger a splat and cause a kernel panic during boot on any system 
-> configured with panic_on_warn.
+> Could a fallback termination condition be added here, such as
+> prctl(PR_SET_PDEATHSIG, SIGKILL) or checking getppid(), to prevent orphaned
+> processes from locking up the system?
+>
+Agreed. The hogs run forever, so interrupting the parent during poll()
+skips cg_killall() and orphans them. I'll add prctl(PR_SET_PDEATHSIG,
+SIGKILL) at the start of each hog so the kernel reaps them if the
+parent dies -- for v4.
+ 
+>> +	return 0;
+>> +}
 > 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260812161340.2417322-1-vdonnefort@google.com?part=16
 
-pr_warn() sounds good
-
--- 
-Vincent
