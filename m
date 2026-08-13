@@ -1,74 +1,120 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2954484258
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 14:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA21047CC67
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 15:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786633110; cv=none; b=hK/MVIyVRPys8kES3cuDUJkTgK4s5FplWOjgi6XEnFIGcWc5MW+NMG6Cn+Q09PecD+149ybFmp9Jer+QCZ5QZz+K5k0HmtsertYwufmS/1O21m+FFzRd9d3UeIIaTPpsEbbZsl9MmMExfENG2D/N36ZWgm6tQFoXy0W48DKXtYs=
+	t=1786633467; cv=none; b=cdJCF+0Zq/jQp/bn+FLjUxSw7HRS9LdJQkHD+G+P40OCha5GyXy4Kb9jSrIFftK5v504TSdolw5q3DMaHTjoOfFGH03ATAEtgvxjtKIz+UCe+ufKmdwb/FghKy52ZbY1STYdvzvXDpOqK0YTq/UM6LwjrDsGmh65eq/AmkQTRgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786633110; c=relaxed/simple;
-	bh=yMR+TnSdk1ztOdOTdPBOe6RTGhKHZDxrly8/tCEswO0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CneD/oeEEtHIWaVQL1/LDjgKSO0/scP6JUrt4HsBwPXC68tF3vB+36luvT33iMt71C44dCYuWDPgxVzCcLqKFVaxs7UVQW9LtoV0iCcs+Mu7+NItOx7OpnCOnntRBj/3z+wUS4NspBQlWNjFvyzZAX6omt8saGHLL1dvSXlalrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from Mogu.localdomain (unknown [223.73.65.85])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 49e36c9ae;
-	Thu, 13 Aug 2026 22:58:16 +0800 (GMT+08:00)
-From: MoGGuU <Naixumogu@whut.edu.cn>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org,
-	Naixumogu@whut.edu.cn
-Subject: Re: [PATCH] accel/rocket: Fix job submit error handling
-Date: Thu, 13 Aug 2026 22:58:10 +0800
-Message-ID: <20260813145810.177179-1-Naixumogu@whut.edu.cn>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260813143334.81E231F00A3A@smtp.kernel.org>
-References: <20260813142059.151644-1-Naixumogu@whut.edu.cn> <20260813143334.81E231F00A3A@smtp.kernel.org>
+	s=arc-20240116; t=1786633467; c=relaxed/simple;
+	bh=5zTi31vZB3GT0Sh+ZwqdBoZyA/bp9f5f4Ldd7AUuq98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RLvz6fsp56INp1knzuV5loZ9OTsVKJWDW6Z9nNBcNZPVHkqLhzBxSvRhelKvmeHEVkPzPobyDUkWkpzYGJjdIDEPjis1fJXSJ5rC+Ci9IWxPHiWl+SxtMSg2pKSiqev/9neZrhuJ/b4V40rCQcIcY0PiBi+fch/7G84XfZBQdG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=lNZ8yr6l; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="lNZ8yr6l"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=KtKOQIt0m4NPOgD4wYzf6ZB8/ruzhBRsosCHoXqM2DM=; b=lNZ8yr6lxUcj/hNOSPoO+ECEFC
+	wMvCx1mYS1qAHtqAjqPchGI/U1KtVc1YiPYotrYm/Vx/LWMDDBUAdY8qL7JtThuyboj+sTTOnFi1q
+	Ya6A0mSk4pAjvB4nFvHHroWm4zoXCOkZ8mxSr8uyPBXPe+IplBM+p/rL0QP5+i8EqKq3UWeIVeAQe
+	akcCAHUcOQ245Gve5Q+U2I9jNFK9OghTNvUamATkbL+3gLLnnmmdWvUqvr2WfE1n0ybIW64H9FLrU
+	FriFahJqmlMykyFlp0V43obY4pCIFKJ7JFT/m2z+XFrdeYKjfkdjpQtLbvLMR+H7UTvJBirw7zz3L
+	WKtTgcDw==;
+Received: from [31.4.149.66] (helo=[192.168.1.126])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wuWyi-000t6j-Jk; Thu, 13 Aug 2026 17:04:20 +0200
+Message-ID: <9a5ec6db-2f5b-459c-9d21-11e0de993523@igalia.com>
+Date: Thu, 13 Aug 2026 17:04:19 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ffba18d4403a1kunm78eaa06f3514f
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaT0IdVkJNSUoaQhoYS0IaS1YeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlJSUhVTEhVTU5VQ05ZV1kWGg8SFR0UWUFZT0tIVUpLSUJNS0
-	pVSktLVUtZBg++
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] drm/amd/display: advertise PIXEL_NONE as blend
+ mode for DCE generations
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260813143605.106104-1-mwen@igalia.com>
+ <20260813143605.106104-4-mwen@igalia.com>
+ <20260813144405.EF8031F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Melissa Wen <mwen@igalia.com>
+In-Reply-To: <20260813144405.EF8031F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thanks for the review.
 
-I checked the reported partial-submission restart path.  I do not believe
-the new issue is reachable as described.  The interruptible operation in
-this path is drm_gem_lock_reservations().  Its
-dma_resv_lock_interruptible() call returns -EINTR when interrupted, as
-documented by ww_mutex_lock_interruptible(), and drm_ioctl() propagates
-that value unchanged.  It does not return an -ERESTART* value, so the
-kernel will not automatically restart this ioctl from job zero.  The other
-failure paths in rocket_ioctl_submit_job() also do not return an
--ERESTART* value.  Userspace could still choose to retry an EINTR manually;
-the ordered partial-submit semantics documented in the commit message mean
-that it must not blindly retry the whole batch.
 
-The duplicate-BO report does not cause a double unlock either.  Trying to
-lock the same WW mutex twice with the same acquisition context returns
--EALREADY.  drm_gem_lock_reservations() then unlocks the reservations it
-already acquired and finalizes the context before returning the error.
-rocket_job_push() takes its err path in that case, not err_unlock.  I also
-verified this on RK3588: a submission containing the same input BO handle
-twice returned EALREADY without a new warning or error in the kernel log.
+On 13/08/2026 16:44, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Calling drm_plane_create_blend_mode_property() without PREMULTI support triggers a kernel warning (WARN_ON) and fails to create the property.
+> --
+>
+> --- Patch [3]: [PATCH v3 3/3] drm/amd/display: advertise PIXEL_NONE as blend mode for DCE generations ---
+> commit 44681caffc8bcfc7085bcfe1ec288a0eafc8c992
+> Author: Melissa Wen <mwen@igalia.com>
+>
+> drm/amd/display: advertise PIXEL_NONE as blend mode for DCE generations
+>
+> This commit changes the blend mode property creation for primary planes on
+> DCE generations. It modifies the driver to create the blend mode property
+> with PIXEL_NONE only, instead of the DRM default PREMULTI mode.
+>
+>> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+>> index 423e3cd7b9c98..e02cbafc8c5d0 100644
+>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+> [ ... ]
+>> @@ -2208,14 +2208,18 @@ int amdgpu_dm_plane_init(struct amdgpu_display_manager *dm,
+> [ ... ]
+>> -	if ((plane->type == DRM_PLANE_TYPE_OVERLAY ||
+>> -	     plane->type == DRM_PLANE_TYPE_PRIMARY) &&
+>> -	    plane_cap && plane_cap->per_pixel_alpha &&
+>> -	    plane_cap->type == DC_PLANE_TYPE_DCN_UNIVERSAL) {
+>> +	if (plane_cap && plane_cap->type != DC_PLANE_TYPE_DCN_UNIVERSAL) {
+>> +		drm_plane_create_blend_mode_property(plane, BIT(DRM_MODE_BLEND_PIXEL_NONE));
+> [Severity: High]
+> Does this trigger a kernel warning and fail to create the property?
+>
+> Looking at drm_plane_create_blend_mode_property() in drm_blend.c, the DRM
+> core explicitly enforces that DRM_MODE_BLEND_PREMULTI must be supported:
+>
+> int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+> 					 unsigned int supported_modes)
+> {
+> 	...
+> 	if (WARN_ON((supported_modes & ~valid_mode_mask) ||
+> 		    ((supported_modes & BIT(DRM_MODE_BLEND_PREMULTI)) == 0)))
+> 		return -EINVAL;
+> 	...
+> }
+>
+> Since amdgpu_dm_plane_init() now passes only BIT(DRM_MODE_BLEND_PIXEL_NONE),
+> this will trigger the WARN_ON and return -EINVAL during device probe,
+> meaning the property is not created at all.
 
-The two dma-resv fence observations are valid pre-existing issues.  The
-completion fence should be attached with DMA_RESV_USAGE_READ to input BOs
-and DMA_RESV_USAGE_WRITE to output BOs after drm_sched_job_arm() creates
-the finished fence, but before drm_sched_entity_push_job() makes the job
-runnable.  I will address those in a separate follow-up patch so this patch
-remains focused on its stated error-path fixes.
+No, you are probably looking at an outdated codebase.
 
--- 
-MoGGuU
+Other blend modes are supported since:
+
+9813e158d13d5 ("drm/drm_blend: allow blend mode property without 
+PREMULTI") in drm-misc-next.
+
+Melissa
+
+>
+>> +	} else if ((plane->type == DRM_PLANE_TYPE_OVERLAY ||
+>> +		    plane->type == DRM_PLANE_TYPE_PRIMARY) &&
+>> +		   plane_cap && plane_cap->per_pixel_alpha) {
+>>   		unsigned int blend_caps = BIT(DRM_MODE_BLEND_PIXEL_NONE) |
+>>   					  BIT(DRM_MODE_BLEND_PREMULTI) |
+>>   					  BIT(DRM_MODE_BLEND_COVERAGE);
+
