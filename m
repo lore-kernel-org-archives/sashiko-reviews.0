@@ -1,243 +1,151 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE1E41D128
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 10:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC113B5B3;
+	Thu, 13 Aug 2026 11:48:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786618249; cv=none; b=HO2K426xTNzd/rFQ0RuaZfjFgWyl5dgZw1eMJGBO+AB57d5T+lQSANo8fY0W7zoz6wQDR0sjueTDcNrMxMKPZLQino0bX3yWtuobonyOWMB/9OBOnc2klcK8DxbXf1O2gUXacUJ5pl6owbDXC7XPvWQKWnOMuU0E0J1vf4yaHCM=
+	t=1786621689; cv=none; b=dkVWRUa+FnU4cViGehLiGJG6CHsrrnq2UqfK+cy572C8qEKh9o+zCfsld9s1FG4moGxfRHzwLSkFyzjoGUVkS9/Sh0TqII56RotzPj6rqNw4fzY7slflQp3whYSW5a1Sogt1+Pl7COxqato+sMTuKBfpMNlNTQiaBJWmuZgTovs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786618249; c=relaxed/simple;
-	bh=4ZxeGb9cdlY4ZyFWDKWuj44pdyUfc109MJtUzAvBwmE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wc19rEF98mKn3jSKbGzgeC5aRrSaIKN2W2U/xsGRRpFgwv4NGrtNUodA+5uNVWIo0iiFj6m7i36QvJwFEMA+EqTW/BC3degbX7DduUtN2x5xdBxZqvUapjpuG4PJZtPo/zCIKqgRzP/KIG91c4vZqEesxF4SFccLL3WyIe71ciE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b=O0a5QjxV; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
+	s=arc-20240116; t=1786621689; c=relaxed/simple;
+	bh=oLFX+xgNOs1pcggNEGzNlONgxQpL2Aj7MRDuipSKMCE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i6vRnTW0f/ha5IDCkDg7zPBiI+0sMxvK9lZQsKdikRw+tagmD+9eB6iRaP0NaqmnkBthopwIzmcfoe3k2KGKF9VTlLIyRm0mWqAr6o6VIsw9JhKxbyGNmMPe10lziOap3QTV207Y0P9UEyhUoPTBCzXVuSECWJttyCHoemAh0DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=VKiLL36O; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b="O0a5QjxV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1786618217; x=1787223017; i=wahrenst@gmx.net;
-	bh=9/aZFij1F+aoTzNB5a9WBgP5f4BcQvGm6O9yVblVbm4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=O0a5QjxVZ4RH4QpxXqvwi3ZN8ALKlH9J+gQhCy521qKsPSQ5dTB8MIpGcbXbcj6N
-	 SOMb4diA11bkCPSzVfDb6VmU7TXwTB/ciqA2rdkFCdyic2x9n8knsMEqfr/GITM5C
-	 QNP3HpLqLUG1Onmryt36sEbxOrlDjH9KelAaODZZrC5+We1f3KjgDzwb34TGKLrrc
-	 Fcxlhzv/qtc2yjJ7Zj3kSu8jsTJ0k4BG5+PTEbW04zGsv4D71eM6QeDkUSvE56Shc
-	 dHYksSZA1wIRc2S4QVDP0Wc/Sf/fiW/6j+9NRYVY8VkDmb5XNA/S2+XI/p+OhuGcr
-	 AGikcEJgcnxiZ6pQqg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mf07E-1xNVRL382M-00amWU; Thu, 13
- Aug 2026 12:50:17 +0200
-Message-ID: <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
-Date: Thu, 13 Aug 2026 12:50:17 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="VKiLL36O"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67D98iq0041857;
+	Thu, 13 Aug 2026 11:48:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=L8QoVVZttuU76tzv2FsMBmsOZIitj0
+	tCtnClG9jDbjI=; b=VKiLL36OUgFBD/dsjlXTbYtFuIZepXhYnPT/TTm9DBUc9j
+	E+fWtucvs6apaiFyRuKHILBzNX68Ja5dUvIq9M7ZpZQkwPIy5xP4uNIC6rc49UrU
+	FLv5ukEPwbHfSo2DJmAWMle/aaNcatAeX8GhpPxU/I6MrJreSet8zzezHVMPsO3k
+	3U3W+aBVmmJDbfBm1m+pb2mYeMe54TKrmBSDhDOZPnq6cSxiWoOoVLrw3CCWTKqq
+	uCbYodOU0WDnMAK7kNSLg3viO3uSltkD0rNMNeCx96bOSzGI/tesk6WvBcCaaMdg
+	5W6FRZ3rMkBjB1Vx3RK92UpEWZJ5SNHwLwBjWqqg==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvk07nkf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Aug 2026 11:48:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67DBfJGf032419;
+	Thu, 13 Aug 2026 11:48:06 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesqb099-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Aug 2026 11:48:05 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67DBm2tu39780840
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 13 Aug 2026 11:48:02 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 096AF2004B;
+	Thu, 13 Aug 2026 11:48:02 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C0B4020043;
+	Thu, 13 Aug 2026 11:48:01 +0000 (GMT)
+Received: from localhost (unknown [9.111.42.87])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu, 13 Aug 2026 11:48:01 +0000 (GMT)
+Date: Thu, 13 Aug 2026 13:48:00 +0200
+From: Vasily Gorbik <gor@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.vom>,
+        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org
+Subject: Re: [PATCH 1/2] s390/ipl: Fix NULL deref in kdump without re-IPL
+ parm block
+Message-ID: <ttjpi40@ub.hpns>
+References: <c00-02.ttjpfvt@ub.hpns>
+ <p01-02.g87de83845c5f.ttjpfvt@ub.hpns>
+ <20260813111928.184701F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4] leds: rgb: leds-group-multicolor: Implement
- default-intensity
-To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org, Jonas Rebmann <jre@pengutronix.de>
-References: <20260813091428.9072-1-wahrenst@gmx.net>
- <20260813092522.0228D1F00A3A@smtp.kernel.org>
- <20260813095330.GZ1072730@google.com>
-Content-Language: en-US
-From: Stefan Wahren <wahrenst@gmx.net>
-Autocrypt: addr=wahrenst@gmx.net; keydata=
- xjMEZ1dOJBYJKwYBBAHaRw8BAQdA7H2MMG3q8FV7kAPko5vOAeaa4UA1I0hMgga1j5iYTTvN
- IFN0ZWZhbiBXYWhyZW4gPHdhaHJlbnN0QGdteC5uZXQ+wo8EExYIADcWIQT3FXg+ApsOhPDN
- NNFuwvLLwiAwigUCZ1dOJAUJB4TOAAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEG7C8svCIDCK
- JQ4BAP4Y9uuHAxbAhHSQf6UZ+hl5BDznsZVBJvH8cZe2dSZ6AQCNgoc1Lxw1tvPscuC1Jd1C
- TZomrGfQI47OiiJ3vGktBc44BGdXTiQSCisGAQQBl1UBBQEBB0B5M0B2E2XxySUQhU6emMYx
- f5QR/BrEK0hs3bLT6Hb9WgMBCAfCfgQYFggAJhYhBPcVeD4Cmw6E8M000W7C8svCIDCKBQJn
- V04kBQkHhM4AAhsMAAoJEG7C8svCIDCKJxoA/i+kqD5bphZEucrJHw77ujnOQbiKY2rLb0pE
- aHMQoiECAQDVbj827W1Yai/0XEABIr8Ci6a+/qZ8Vz6MZzL5GJosAA==
-In-Reply-To: <20260813095330.GZ1072730@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2FkglYBKjXO9xD3NvRNC2nkirWgAME6OBJuCEPF9YweDi4CQgmc
- EiriJAVHnw6PwLaZkYdhow9SjsAwSkpxq+T9pee+nwk3d8PHstteoI7/me2IFMWq6tjBx4o
- rbwFQmocCurNtHu/gfBIqHyiayvPNbeKNBh8il6zRQGf8OIWs/rBKNAmaalG0xkmpSryL41
- pb1tQW9OOPXSyzOSU3BXQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:aUKRP04kwoU=;1+DVeA26wh1bzYvWlP3I75e6LhA
- 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
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260813111928.184701F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDA4MSBTYWx0ZWRfX6ABwxvktg9Gb
+ G+qrya0vY6gjpJk8BG8R7MAMdA2wOR4v3oCM5E2iliNAphKzIpO51d7tES8SBeYM3lAjOfdeVxX
+ BbqY6UBPJd0nfUYKWZfjvszbBU2NRx7uiwXz6R0rE58CS4JYxyTLtu+vns9/vJe018vYwpn5ru/
+ AwCCs1xQSL13BZ9MRAWffuw3lNDr9H4lTSPIvwuTiNQ7AQ7X1G8B1eQfFFxGzf9nKEyEQmt3nb/
+ HaJmEEDMS5c+ePfdwtbBhMRufKtMbggSG2oaE5FwmdvFgEZYOFL/5tpHV8esUXlJFi2CKQ9fOBT
+ 9Brz19/XSSYljL0QneT1fgjDOwG83Kv/JpFEPdJdVVIcr+s6bxLJi+NZRZbUu3LrI9Asmxc1c9s
+ sKAWRlAqYrJpkcy9fnXPezE83BMR/rCy8O6hdKNDmjN7IXxGVfqwzWeQv+TbElVsXzv7mjwPvBR
+ 0T5ogJpcgMEYeYRK+Mw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDA4MSBTYWx0ZWRfXxxG0xQGPsxPk
+ XcCF884tG0fyXqiqQhvXE9lFDsoe08iyxoC/Gv/JVehOJRYQIAenArmN+2TEQ6LnixdZwOdh/ya
+ zzS1PnpDylbyyIp7KTBxM8lotqBf6ok=
+X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7daef6 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=3hd6PT9mWKKFgb9ofbUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 0dTOD1nzGi9gWcUAFrx7Dfxqws2MtoTA
+X-Proofpoint-ORIG-GUID: 0dTOD1nzGi9gWcUAFrx7Dfxqws2MtoTA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-13_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608130081
 
-Hi,
+On Thu, Aug 13, 2026 at 11:19:27AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] NULL pointer dereference in `dump_reipl_run()` when the system is booted without an IPL parameter block.
+> - [High] Unbounded `memcpy()` in `reipl_type_init()` causes a heap buffer overflow in the dump kernel.
+> --
 
-Am 13.08.26 um 11:53 schrieb Lee Jones:
-> On Thu, 13 Aug 2026, sashiko-bot@kernel.org wrote:
->
->> Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
->> - [Medium] The `default-intensity` property read from individual monoch=
-romatic LED nodes is applied to the multicolor group without rescaling, ca=
-using incorrect brightness calculations.
-> Please review, explain or fix the Sashiko review(s).
->
-> If this is a set, this request includes the other patches too.
-Sorry, I don't get the problem with "incorrect brightness calculation",=20
-I tought the intensity setting is independent from the brightness. Btw=20
-the intensity is applied to the monochromatic LED not to the group=20
-itself. hallucination?
+...
 
-Does mixing PWM and GPIO LED in a RGB multicolor group make sense at all?
+> [Severity: High]
+> This is a pre-existing issue, but looking at dump_reipl_run(), if the system
+> boots without an IPL parameter block and sets reipl_block_actual to NULL,
+> won't this unconditionally dereference it?
 
->
->> --
->>
->> --- Patch [1]: [PATCH V4] leds: rgb: leds-group-multicolor: Implement d=
-efault-intensity ---
->> commit 13399f1aaceaf09afa7e252e35000d7d61ab1925
->> Author: Stefan Wahren <wahrenst@gmx.net>
->>
->> leds: rgb: leds-group-multicolor: Implement default-intensity
->>
->> This commit introduces support for the default-intensity property durin=
-g
->> boot for LED multicolor groups. If the property is missing, the code fa=
-lls
->> back to the previous behavior of configuring the sub-LED intensity to i=
-ts
->> maximum.
->>
->>> diff --git a/drivers/leds/rgb/leds-group-multicolor.c b/drivers/leds/r=
-gb/leds-group-multicolor.c
->>> --- a/drivers/leds/rgb/leds-group-multicolor.c
->>> +++ b/drivers/leds/rgb/leds-group-multicolor.c
->>> @@ -108,8 +108,10 @@ static int leds_gmc_probe(struct platform_device =
-*pdev)
->>>  =20
->>>   		subled[i].color_index =3D led_cdev->color;
->>>  =20
->>> -		/* Configure the LED intensity to its maximum */
->>> -		subled[i].intensity =3D max_brightness;
->>> +		ret =3D device_property_read_u32(led_cdev->dev, "default-intensity"=
-,
->>> +					       &subled[i].intensity);
->>> +		if (ret || subled[i].intensity > max_brightness)
->>> +			subled[i].intensity =3D max_brightness;
->> [Severity: Medium]
->> Does this logic properly scale the intensity when the individual LEDs i=
-n the
->> group have different maximum brightness values?
->>
->> If a multicolor group consists of LEDs with vastly different maximum br=
-ightness
->> capabilities (like a GPIO LED maxing at 1 and a PWM LED maxing at 255),=
- the
->> overall group max_brightness will evaluate to 255.
->>
->> When reading the default-intensity from the device tree, the value is t=
-ypically
->> specified on the scale of the individual sub-LED's max brightness. If t=
-his
->> value is assigned directly to subled[i].intensity without being scaled =
-up to
->> the group's max_brightness, the sub-LED might be initialized with only =
-a tiny
->> fraction of its intended intensity, often resulting in the LED being co=
-mpletely
->> unlit instead of at the requested intensity.
->>
->>>   	}
->>>  =20
->>>   	/* Initialise the multicolor's LED class device */
->> --=20
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260813091428.=
-9072-1-wahrenst@gmx.net?part=3D1
+That's fixed in patch 2 of the series
 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but looking at reipl_type_init(),
+> could an untrusted size from the crashed kernel memory overflow the
+> PAGE_SIZE buffers here?
+> 
+> arch/s390/kernel/ipl.c:reipl_type_init() {
+>     ...
+> 	reipl_block = os_info_old_entry(OS_INFO_REIPL_BLOCK, &size);
+> 	if (!reipl_block)
+> 		goto out;
+> 	/*
+> 	 * If we have an OS info reipl block, this will be used
+> 	 */
+> 	if (reipl_block->pb0_hdr.pbt == IPL_PBT_FCP) {
+> 		memcpy(reipl_block_fcp, reipl_block, size);
+> 		reipl_type = IPL_TYPE_FCP;
+> 	} else if (reipl_block->pb0_hdr.pbt == IPL_PBT_NVME) {
+>     ...
+> }
+> 
+> If a malicious primary kernel crafts an os_info payload with a valid
+> checksum but a size greater than PAGE_SIZE, wouldn't this cause a heap
+> buffer overflow in the dump kernel, preventing the crash dump from being
+> collected?
+
+The primary kernel is not an untrusted security boundary for kdump. It
+loads the dump kernel and can modify both the dump kernel image and the
+data. A malicious primary kernel can therefore already prevent dump
+collection or execute arbitrary code in the dump kernel. So, this
+finding is outside the kernel threat model.
