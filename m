@@ -1,176 +1,112 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out28-194.mail.aliyun.com (out28-194.mail.aliyun.com [115.124.28.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BFC2F4A05
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 03:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786591871; cv=pass; b=DA1YPa7XDj06zwfPr44F6dhee0JGqsV1wuPi/UaiM+J/GSG5aGwNuYMgm+mSsb/Lw4OLwJi3p+kbZNzeiPTvpdGDbyBHj495xKfP+ZFBdj6c9lCmxDb/KIAna0Fz80B1EMhDhroLtF+Re805cF4m/sED2aPHuo4rDDvCakkp3WE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786591871; c=relaxed/simple;
-	bh=gOPNZqLp7a5HeIP9YLnnqfOKKfCkhssIhljZ/6oUCzQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AGJYhl63/pwp+EWOh72PeYFm42WR5ojrqhafVM59kFqIqZjpfzm3+2msoG9HHLblyzrhpA0KimBpdGJyfyEbTO0E5pF6nb/CNmKw5iTG7u6mZoWxM4+zC6g+NZrQyrIgdcTfDkRIz891mBvxITffNXCUi9atwNZL7ptcrKjy0nI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SJk9NMx6; arc=pass smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJk9NMx6"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38e347638adso386394a91.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 20:31:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786591869; cv=none;
-        d=google.com; s=arc-20260327;
-        b=koE2scVj0Q0+Vjsg40tZF4dg4RBl0HVBPNbk7Lk3c+FISIMtIRsOiimcSxbnPogHhx
-         iGUsrWebBojDTS8mcJBOHNmWa2OqesXEAuJVdzAX7J2wqs4qhg0bNexQ3r+wulRhTAe9
-         CZqKirC5wm9pO7x2WXfCFl7BKSTyG+tS450olN2CwVkLfqktIEHwkzuzWmFNlkZiMZAk
-         VSoHPr00i8nk5b4OvY6aVINrunDHT5RBgOAT93y2VMQr6rB4577+zPNkEBSEOGRgnxdz
-         aXk752EilB1/ejgL/AbuAnYCJCBVe/4/uA5qMtxBSr96Ez1AT9XPFulVtuOaA9CXVDA9
-         cLCA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
-        fh=EOwbGu6VWTfz/tEdQjXSTD6cZJzzmDOPooRGpDdc1gI=;
-        b=UulSN/7+VhCcETzvme+sV4EKGUerxFIG4CxU3fWoquhHKmQFkgmMPFv2yCCkNWCNEs
-         nA4rM3cK03kzbwlql91yO9ewTiFUTOy8ank7RJToOk6XZZzTFVun+jkjhsUeeUhebvqg
-         yJ+saKBJca7XD99zGSMG+Ylai6QmC9wTN51PXZAOq1PMap8eIKdHhWC8t9Ya+OLv88ij
-         hqwgoJnqnsc80mc9SzjSNFqdBghFL8IiEuJQYwS+rFEj5paLtqoQAv4RaO+4tKNJczmj
-         hLcyUXOmtQxikNigRznXkO5krJ3ULeZPr1p3QDu/wDcRJEk66mCvH5UxblXJwtmc6ohy
-         qveQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786591869; x=1787196669; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
-        b=SJk9NMx6cjURztCeqOmr3B5a0WrtLpN8sIVBstB1N00atd25YrWWOAyDaJL3nPeezn
-         9S4vbYx86KY2mWTubZR6fvMnRKAh25dB4by3c2FHyC2NP3CQoqtqnXjMy15rhhUFa45l
-         pFpirxuuD+UtlvZuIShOOhs5sINOu9/GuxLLGcOaiHom8AUnnlPIcKbcOJ3U4tdc9BbW
-         PV8s5o4qWkUFrnj8HOBlsAfwR+N3QviaoeJCqn0ZkmzrawxDV7nY0+cKkNySHcJWZVMg
-         tLnmapsLN1ZiUE/+XEra9+4o94y89OShPLsA3Hk2S2tmI6gchC2IZ6qPvUMC+32JdF8v
-         Uw4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786591869; x=1787196669;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
-        b=enVOrm99RGA8CG5/JxtpZ/vstdPFGYISAIkfvzkXTdHB/frHtIDBh/6+4J1Nvr9tYX
-         1x1eQ3muLpXn3x7d/d9a0LWBaurU8dG2Jl4/oGdt+LGj23KHl027a4MmWYvuaSZCq7AR
-         YiE+ZEZIeFD+K8lGFYIMHObmqX/7xh3jwOsSmKc1LUuetdT7g6qxJvKBIX35NKNdjHdo
-         EH2G/BmnGB0ZolRMIr1GswEBhQpyswwtSgoVxY2w35QbvBaM1ZUNWtHsTXMpkCWAdJKi
-         SHV37Y0IYfOjmX7uYH5zkdrEZ89vJJEgCDPpmwaEFWVAQDgc29cNdYlMEmle1boA6Q6W
-         t7AA==
-X-Gm-Message-State: AOJu0Yx60CHgV9doeHt4qBlsxliBsBRCL4k0PusuZbn2v/1bNrln+Osq
-	dmG07czbiJIpD8UlKlnz2DBUKI0eznFGqgLWQBAxlzeKZBUfePT2sDSAyYZhtplLPw7iGJRuRLf
-	vuusnLVG9Fn26fU7qMlZ5qVtha7kp7v4=
-X-Gm-Gg: AR+sD124TQok60/+w7/33QAdptQDgY60kTO75tIYtUP7dXncxdaJWh222EoxzXaLTou
-	czCK9oTDqTMoxLOT2UE3Ax1LGh/dt5lArvtWFwq8MHWjWd0GSngxtMb+HwUM5p9PEPtZJ0cTT66
-	cuOKsTgf8XqiM2R7xZ5PfTjDj4D3ufKDS772ILVz1t0KfVtmDxiWKf8vQvucjih8/VEfPpnsue0
-	eBHbxTfb3wER8jEZk1HByDAZs5+iw5VR2dO3ILnpihB1vBZ6GrOaEx0u882m+IurGy4C9VRsQ7G
-	df6uRIJgh+ub/7N+kMiNgD/xqTJlAHgyZGdwXck3WnDiDmnXT7mOowq4VjlMY/c/WfZBTuk+97g
-	GEzGaBxPrLlUZoWJR+MYG4AwH8Fo0yH/LbQzdO0Ors7L+3gH+l1BwcBXz
-X-Received: by 2002:a17:90b:1f88:b0:38e:bfe:81e9 with SMTP id
- 98e67ed59e1d1-3931dfd7b7fmr3944788a91.1.1786591869462; Wed, 12 Aug 2026
- 20:31:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09ED6351C2D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 03:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.194
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786593316; cv=none; b=PgjFaBV7W6PF3Pm6gubVthR+GEWcg6Je40spaj83i6XNPNjbxz2I51FUG3hBeibv2KW/ebmMUBCONKCKNaWsambnkuVth9KT5be1BWAwvK4PjW5gkJiL6RxfJ/H0aJCdN1mnNv1H4kja4WFQ0+M/dTtCRwxDPs5ZiyztLqi5QxA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786593316; c=relaxed/simple;
+	bh=48n+PIx5SYWw7YnTqfji9aLdKgIsVTBFMaBGAKvUAx4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y/uFH5car67ZafomyMqMeRBQFLgNu09aVN0IK77N03tjvzdSP+6qCEJ9DLSTHR9qRMg9soAoM3syjHGwKuXqnS0mjcQP4duj2Xa89Oz27UWJR8wOVQRDEPqnKHFu3j9/5V1NOWm1SRVC5LZ3UWu2AAAxYcv9bmCtdoQao0BvbYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net; spf=pass smtp.mailfrom=open-hieco.net; arc=none smtp.client-ip=115.124.28.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=open-hieco.net
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.0909289|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0200195-0.000325931-0.979655;FP=7811912649937782567|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033037025160;MF=zhang_wei@open-hieco.net;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.ikx0Cbo_1786593302;
+Received: from 172.18.22.44(mailfrom:zhang_wei@open-hieco.net fp:SMTPD_---.ikx0Cbo_1786593302 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Thu, 13 Aug 2026 11:55:02 +0800
+Message-ID: <3ba91bb9-312a-4b55-9cb5-ae53bfb8dacf@open-hieco.net>
+Date: Thu, 13 Aug 2026 11:55:02 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260812101418.37966-1-phucduc.bui@gmail.com> <20260812101418.37966-3-phucduc.bui@gmail.com>
- <20260812102938.D4E101F00A3A@smtp.kernel.org> <CAABR9nEzo9pb=mLhZ2nyDuSYr=qDcgBZDzMUqptyvDCG8nLgTg@mail.gmail.com>
- <da9a3b50-bee9-4485-aeaa-5872f09c499d@oss.nxp.com>
-In-Reply-To: <da9a3b50-bee9-4485-aeaa-5872f09c499d@oss.nxp.com>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Thu, 13 Aug 2026 10:30:58 +0700
-X-Gm-Features: AUfX_mzfmXh4NLJX1MKsYr1jid54mgT2F7xWNIpS5SDfSoyh36cdjOuWu_5UCJU
-Message-ID: <CAABR9nFgiNv6cnYa3+ZY3KnjbKpcF-JHpZY8TVcR7H40vOoR=Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ASoC: mxs-saif: Drop redundant probe error messages
-To: Daniel Baluta <daniel.baluta@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/9] KVM: x86: Add helper to provide intercept linear
+ addresses
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <cover.1785411877.git.zhang_wei@open-hieco.net>
+ <233ea37ecf646692c2d2aa6d335643c3dbb1fe09.1785411877.git.zhang_wei@open-hieco.net>
+ <20260730123830.A3EF01F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tina Zhang <zhang_wei@open-hieco.net>
+In-Reply-To: <20260730123830.A3EF01F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Daniel,
 
-Thank you for your feedback.
 
->
-> Is there a tool that told you to fix these? How did you reached the conclusion that
-> this patch is needed.
->
+On 7/30/2026 8:38 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The patch computes `intercept_linear_addr` and adds it to `x86_instruction_info`, but fails to actually use it in the architecture-specific intercept handlers (`svm_check_intercept` and `vmx_check_intercept`), leaving a severe preexisting bug unfixed.
+> --
+> 
+> --- Patch [1]: [PATCH v3 1/9] KVM: x86: Add helper to provide intercept linear addresses ---
+> commit e0c208c3018cdb4b9689064eac5e998c1b4d07df
+> Author: Tina Zhang <zhang_wei@open-hieco.net>
+> 
+> KVM: x86: Add helper to provide intercept linear addresses
+> 
+> This commit adds get_intercept_linear_addr() to compute the linear address
+> for INVLPG intercepts. It passes this address through x86_instruction_info
+> so intercept handlers can use it directly without duplicating the calculation.
+> 
+>> diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+>> --- a/arch/x86/kvm/emulate.c
+>> +++ b/arch/x86/kvm/emulate.c
+> [ ... ]
+>> @@ -427,6 +447,7 @@ static int emulator_check_intercept(struct x86_emulate_ctxt *ctxt,
+>>   		.src_type   = ctxt->src.type,
+>>   		.dst_type   = ctxt->dst.type,
+>>   		.ad_bytes   = ctxt->ad_bytes,
+>> +		.intercept_linear_addr = get_intercept_linear_addr(ctxt, intercept),
+>>   		.rip	    = ctxt->eip,
+>>   		.next_rip   = ctxt->_eip,
+>>   	};
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but it looks like the architecture
+> backends might still need to be updated to consume this new field.
+> 
+> If an L2 guest executes an INVLPG instruction that KVM intercepts and emulates,
+> and L1 is also intercepting INVLPG, the KVM emulator populates
+> intercept_linear_addr here.
+> 
+> However, if the handlers in arch/x86/kvm/svm/svm.c:svm_check_intercept() and
+> arch/x86/kvm/vmx/vmx.c:vmx_check_intercept() don't use this new field, does
+> KVM synthesize nested VM-exits for INVLPG incorrectly?
+> 
+> For SVM, if it falls through to the default case and leaves
+> vmcb->control.exit_info_1 unmodified, could this leak previous host or
+> VM-exit data to the L1 hypervisor?
+> 
+> For VMX, does lacking a case for x86_intercept_invlpg entirely cause it to
+> return X86EMUL_UNHANDLEABLE and fail emulation?
+> 
+> Should the hardware intercept handlers be updated in this series to prevent
+> stale data leakage and L2 DoS?
 
-My main goal was to understand what the underlying core code is
-actually doing, so I tend
-to trace the call chain and read deeper into the implementation when
-reviewing these issues.
-I use Bootlin Elixir for this, as it is convenient to access anytime
-and anywhere,
-even from my phone :
+The SVM consumer is added in patch 2/9.
+svm_prepare_decode_assist_exit_info() uses
+info->intercept_linear_addr for x86_intercept_invlpg and writes it to
+EXITINFO1 before constructing the nested VM-Exit.
 
-https://elixir.bootlin.com/linux/v7.1.8/C/ident/platform_get_irq_optional
+The absence of x86_intercept_invlpg handling in vmx_check_intercept()
+predates this series.  VMX does not implement SVM DecodeAssists or VMCB
+EXITINFO semantics, and patch 1 does not change the existing VMX
+behavior.  Supporting emulated nested VMX INVLPG would be a separate
+change.
 
-I don't use a tool to detect bugs or generate these patches. The
-patches are mainly the result of
-reading the code, tracing the actual paths, and then finding issues or
-improvements along the way.
-Also, through discussions with other maintainers during the review
-process, I can sometimes
-identify additional issues or areas that could be improved.
-For example, this discussion led me to another improvement:
+Thanks,
+Tina
 
-https://lore.kernel.org/all/CAABR9nG2vYKhMKeSxFstCRcHb8Z2FzDTBuQ3PY261Lipx7FfJw@mail.gmail.com/
+> 
 
-https://lore.kernel.org/all/95f5d6ec-ecc5-4090-ac04-27cdcdc21b8a@sirena.org.uk/#t
-
-> > I checked all error paths in the called functions, and they already
-> > report the corresponding errors,
-> > either directly or deeper in the call chain.
-> > Therefore, removing the additional dev_err() calls does not make these
-> > failures silent.
->
-> Point here is not really that the error is not propagated up in the call chain
-> but more like if you remove the error messages the user wont' really know exactly
-> where the failure happened.
-
-I understand your concern.
-I think this comes down to perspective on how much value the outer
-message adds.
-Let me give a concrete example :
-
-----------------------------------------------------------------
-       ret = devm_request_irq(&pdev->dev, irq, mxs_saif_irq, 0,
-                               dev_name(&pdev->dev), saif);
--       if (ret) {
--               dev_err(&pdev->dev, "failed to request irq\n");
-+       if (ret)
-                return ret;
--       }
----------------------------------------------------------------
-
-Here, devm_request_irq() internally calls devm_request_result()
-
-https://elixir.bootlin.com/linux/v7.2-rc7/source/kernel/irq/devres.c#L33
-
- which already uses dev_err_probe():
---------------------------
-dev_err_probe(dev, rc, "request_irq(%u) %ps %ps %s\n",
-                         irq, handler, thread_fn, devname ? : "");
--------------------------
-
-Since this lower-level message already logs the exact IRQ number,
-handler, thread_fn,
-devname, and error code, my thought was that the outer dev_err() might
-be redundant
-without adding extra context.
-
-That said, I recognize this can be a matter of maintainer preference.
-If you feel keeping the explicit dev_err() at the driver level is
-still clearer for tracing,
-I am completely fine dropping this change from the patch series.
-
-Best regards,
-Phuc
