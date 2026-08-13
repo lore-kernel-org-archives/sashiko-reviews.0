@@ -1,138 +1,195 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE38494A18
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 16:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786639982; cv=none; b=j6mS53jDT4CjJO/+OR3oDCk5gpj+ne4leFYhKGv8uzeYEppsgYMkc3oFuVhnBTNnFw+k8612YRy5rTTh/dqBlB7ziXbhFtvAfTDQ1Riq7Qh9y+K1c8G0+76ofLNzQjB6UX0J36Ez4xNsmdL4d4MEBo/Kltu9jJIc7hpE7MTT/lM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786639982; c=relaxed/simple;
-	bh=/6gR/F0NF4dyfxXmlPbggAK3SqSGZ8hEKLFz/6duBHc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eX2eNfmlymVFTf1OUuZilJazUlsn0OlmHj13gf6pPffQXBS7080BLF4tqAgHw/xVzrJ0XbI3p5Oag2R7N31xMFL60Ti2KtXJtdtJpQQoANnOluZkoiRa1TsEQTgbYf34EaIgnRT66C3J4cgv3sf+IGhe7uMQJBA0K/Upzt8g7ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b50DVSWB; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0AF4963B8
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 16:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786640070; cv=pass; b=NU1gTUgvEu/U8YojnFrndZF75o9Arcem5oR/t8VZznGVqCJk3GhwAh/e+BwsNNB2ND+fz2Tq4ngnuqGDF5Dpl8ZCPRY5pi/SHJRADlvfpw1zgxVuEw8AXQp+6v+tc9EC9IINf3+5BcNqT700sMJ9/989CrgJ95swUsKaccA138k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786640070; c=relaxed/simple;
+	bh=7Fvq3zqL/KzBPneeBMfdo/0oBRye38WJc9bujdH1Mjk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=scagv8B3PHDg+3OBO1hSX1ZdFd7diTafHB1KW+QHvjfxuz8DyFsfvLJCpOMG0nYXMEo8FHFv6eKB+sqqN5XXDwVG+r+sJfbrQRZW2W+ljekxqBFni0ZPUI1/SyOesHPmCNXScmCiWBpgX2GbeeeeqxqcH+F5BlYjpcAkeeX26qE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ms0MadgR; arc=pass smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b50DVSWB"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8485bd28dd0so2747067b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 09:52:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ms0MadgR"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c1676648c1eso1667366b.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 09:54:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786640064; cv=none;
+        d=google.com; s=arc-20260327;
+        b=si9xfEwXBam/YneiNixZq98PMoufnCvLplTTbQ8OOUsErbNeXV96J6N3Qe+U5j8xnm
+         dWheyNGlYckRYiSUJ6za+HYhLUktnVd92Lvhcb0FALxlZjOJo2+w3zg9q80FSE+SwssU
+         32XdmXHqPBH84pQmG4/RTK5ARFNUccJM3IbInCGgZ3sQx98L8+JxGlc3lzAUlj1f0n2Y
+         s/6hDS007dN7zzVnNDKG3Q2HaOxYo0+611jKJZl9YeFpUpzD8b9FHOZ+SfEycUE3pDn1
+         RnGR3NYo+gXvl2HU1EP5/W4pWD3++O78kAjtg62t8YZ/XsyyId1yXjWa/tXBOP+AV8HB
+         Zl+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Ww9P2ixuZzBUhiTpprwhy2KM8BvHef44lGTvhAxYQG4=;
+        fh=rNF5hIxNJyuaS9vQB6Jw+lBcIQ3GVwb5Yxht9bD2Q0s=;
+        b=i1wDL9fMS5qwWU6zsKDYXpumVyEQhMF6auUccH3qZEGlRzUN2URL3KT3fvCAY+yyyh
+         S5hahAOrZ6yN9huGHE3E6FKzHxrDFNAfYU/waB4WC7TOHNgpgskHprAHmI0yaCJ+EaKT
+         /wHhjR+hcxgV+puGZLOEBtH49OH2xsmrQLWnJr1xWiqc+OTEzJ/0qJ2i8WJEdAsnmABj
+         O75UnvhF1EmqWakDtLl3aLts3jcZeDTRy8C6mBYSltKAUTQC3L1kpndDsUPWWYOsqRgv
+         bjEZggNz7Af3jZoLD5Yz3nOxsiM2A0DrIf4oaZbIIZKteEiigXB8v2W8oRQOamJpaJtt
+         ondg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786639977; x=1787244777; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wcOTGw+yU50xIcVPJ3wdwMSygvygwt98ERvGGHsAU14=;
-        b=b50DVSWB2f9TFsaVaNJmCv0AYA3DQ0YOnr7S83phf10guxGGhZmwpMfoFYcaSGGRZf
-         aI3pQYayP1q0z+M9gUkDvmUrfCwnHo9wpP1UW/RaISYdlcL1u49eZnS1P0s11qfZ9psZ
-         nVzOwgbncqr/D3CTa98Pv0rvkoiVHshdMYXExSu9r4waIOtZMPTY5rLaO3LagEPzWReG
-         +c/xRlhiiiXOmJaBcy9ttafSlNVe5Od7fYKttu1k0VgZBH02V0ixlT2RUU/kAJ4aXBYe
-         PqNTDxPoObBJrs7Vw9pZRbacYFctr0sBikzZgu8dLmaD7MuPnxZmnDoqcwgj+eFS8bN4
-         GrTQ==
+        d=gmail.com; s=20251104; t=1786640064; x=1787244864; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Ww9P2ixuZzBUhiTpprwhy2KM8BvHef44lGTvhAxYQG4=;
+        b=Ms0MadgRmTdDMA6COSpMlM5ZZWEf1LltO/QRik9zUS9mvs3O7ualhN/PoE8c41ugAE
+         GthqUPbzt/I4j4cRUSTE9JMf4i4kJnuZiJHMMUzMxEZbs8dX6l5bWMCVzSISqYALcnXJ
+         PVYqGDc9v/EFbB3FBi1tSHabse813KGRF1hM1emFGmdOazg5XFTY4pNGxnqyPlZ8Vuk7
+         d0j+QEsXFxkPrNVcpU5t0N4sCL78GJ1PPL7a1dqlRyr1QH3acmazCFl6M0vdAMbHgBic
+         cKmYrjO5Ntt8cQfnp3Fw4LIJcOJBbSNpt1KtELlYNch7mubbwaCjiKBsL9HTBYbe8h2r
+         yFfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786639977; x=1787244777;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=wcOTGw+yU50xIcVPJ3wdwMSygvygwt98ERvGGHsAU14=;
-        b=MIE6iXLX2wii7B5ZXnTYHmJA1sC5EMFAKp5antlnYe9VNhHHIT7KcEz9Zu8LXrevgp
-         kQaUH82+gkzjJMOk27z1LgZ+0vL2QRr+ri5VDRE1YSkqBIS4Bu0nqerND+MhOD9F+JK6
-         G0LjWvH9aN9XqyKz0GC7PS8et5r6RDvdpxxTHbkOYBz1fCkzZXhadb5ajnjDfCY3y2Oq
-         heprlKF5Fxi7HNva1nVpctx0jLMCzpXctm3BxA+ljD+3hV2iu2oKOa2nJTcNHkKAkzaj
-         jeXJudmgsf31QF5/UX/Rt0I5IrSFESL2AXW9SDWtms2iOuTjJ+EBxxU6aXpNQSVwR0wZ
-         Mv+A==
-X-Gm-Message-State: AOJu0YyuudNZ0+2/Odme7dJl2NgbBD2HCMvN8C7JlrGsHe73wKMHYPEh
-	//qxt1CngmFfhLWrSdrNXEK+Q+tIApYk4YjXysZJNA+pgMNcloFbwtqzN5+YPGFm2BM=
-X-Gm-Gg: AR+sD10sA1Ifrqq6Xgmo0aFHP1X8i0/7bjiDH9939DVQd4l+BzWcMglYuXncol9AH5V
-	gHwxdK+RTK5vOSBLBk6hGczDpk81nCqeIrdzh48FqCE7BCN/cQTTz/DywF4bongMoIZENyhpF42
-	PuH+FLld4mUMZ1GnO+98ii0AIV0LZVFnoH3oHHUF+RNsjb8AuaFOg814hpuyG43LsiLeFIK88XU
-	qPh0UD/krT3B8zpMiRTPV+eqA2xcit2fnMrNc2MQZEuj/3lgrKhKviZT80v1H8M63dysCeG4mbo
-	ZdOhYYtxdMIb3SkrmdnzcwPWwhCAvfRYWzOt8IjOrYu5zjG3YQaaEd7q149MrnHKBVI1iWMT3y8
-	uPZWUNtnFX3K+Dztg1omuR4B0MXy15zFoNGauvqMW1OhcL/90GJYZKX5jhqEl++peL46Bkom2qB
-	9NjW6xXBBDeoySy2PwIPOSRQHynKjvRV4AJZMf15VjI50fMwzfh4R+WshEz2yYXqt/WcE=
-X-Received: by 2002:a05:6a00:e10:b0:845:e97d:447e with SMTP id d2e1a72fcca58-84fc760e881mr8509974b3a.26.1786639977197;
-        Thu, 13 Aug 2026 09:52:57 -0700 (PDT)
-Received: from leonardoc-nb ([179.160.38.252])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84fc4566f8csm1221247b3a.2.2026.08.13.09.52.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 09:52:56 -0700 (PDT)
-Date: Thu, 13 Aug 2026 13:52:53 -0300
-From: Leonardo Costa <leoreis.costa@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, imx@lists.linux.dev, robh@kernel.org, 
-	devicetree@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 1/6] arm64: dts: freescale: imx8mp-verdin: Add Toradex
- Capacitive Touch Display 10.1" LVDS
-Message-ID: <6zpgl2fbn6lzmpyhdfvhgbt2um2ykehkfbkv6qgv44w4f6dyr5@wkarn773j6ol>
-References: <20260813133335.1941580-1-leoreis.costa@gmail.com>
- <20260813133335.1941580-2-leoreis.costa@gmail.com>
- <20260813135158.778871F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1786640064; x=1787244864;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ww9P2ixuZzBUhiTpprwhy2KM8BvHef44lGTvhAxYQG4=;
+        b=sg+JrFS+L2mTq1me+dgyiQLHUlcGrXJ8550F+p8+1qog99txXyx4/9VI2kQSzskdkm
+         xI5l0tfJ8V5oS+oV5vefSawvm7pJmTguDFYBmzHpAvgxLV+BMwefWv1+dhUpUw3/ZHuH
+         zkA34kj795Rp/wGScThVc9xjvTLXyWPAjCEzOewZ0HuF1phhna7xj2Gj1PHjwi0TUJR+
+         2BCH7bWQX1ATLmQ1xlwgQ0RFshiXEsZIqjc898xPPPvZT4sjDX+SwniUH+vwXxHHq7Ao
+         XqpINeS1v9wArzK1QbXo/ahrAPks4ArderIwAsOBAgM1mmai7kz2v34aIbS3G3o7HH8O
+         WWxQ==
+X-Gm-Message-State: AOJu0YyIjrpAgVxYQHWoKKl7mJs8Ku1nPwvDPBs947XrIZ89xrJphuGG
+	oR1P4uZOGqmJvFWnhF1N6ed9BIwH+TLBcwOp7t06ZcFu7cIVBmtqb9eiw95k5IH76raf8oHEQJX
+	NKt7blY4STT+RKJjhTVH5aUWAuNqW/UO/SwwC
+X-Gm-Gg: AR+sD12E25fMbi+Nel3einK7TRtqwIHCXm+Qox/kBdWKcF0ULuTvziTzxv+P/xZiTIq
+	M+8GCGhyBhq3ce+axTtz7dt///HWoiHzmI+BahgNJgYKY7jZOdrbvNYXG8/rZYKNAvjD9pyHRa4
+	gmmtc5pjyZOJslB7DiMOdmOFdl+3+7MEDznhgbReyXYKG9GbylZ0tMvDrdubThIXQPArBcAzSsN
+	Ej1QC1549/m1yt9KECxMlnncznyTzwThm433czOtXWxEZJtA58IpL27XoGnepkOPr7dyfNf9Ym/
+	EIa6oLoRv7Yt7GK4CRJffrsKMJRRZAWMFzVSo1HE2TfdNHyqr9CNfrztlyW0dR3sHFkLbpnGfns
+	/1Vg=
+X-Received: by 2002:a17:907:3c8a:b0:c16:1290:11a7 with SMTP id
+ a640c23a62f3a-c2108f6adc6mr198642866b.1.1786640063579; Thu, 13 Aug 2026
+ 09:54:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813135158.778871F000E9@smtp.kernel.org>
+References: <20260813-ti-keystone-devctrl-v1-1-6f0aa87d9af8@gmail.com> <20260813164117.DE8F01F00A3A@smtp.kernel.org>
+In-Reply-To: <20260813164117.DE8F01F00A3A@smtp.kernel.org>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
+Date: Thu, 13 Aug 2026 22:24:12 +0530
+X-Gm-Features: AUfX_mzwE_muvtzUi7sgoturtrvJi-GJEAPGrT1WA_uTWsInh6m2LlCJF_HFSLY
+Message-ID: <CAOWyW_6Wayw0gKMyhpy2wE6oSbikM3fKCopqxHodddM9zt1-FQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mfd: ti,keystone-devctrl: Convert to DT schema
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, robh@kernel.org, lee@kernel.org, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 13, 2026 at 01:51:58PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The panel node name 'panel-lvds-native' does not comply with the devicetree bindings for simple panels.
+On Thu, Aug 13, 2026 at 10:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] The schema enforces non-compliant, legacy device tree node nam=
+es (containing underscores) for child nodes via `patternProperties`, blocki=
+ng the use of standard generic names and contradicting the commit message.
+Yes nodes with underscores are kept not to break older dts/dtsi files
+which uses underscores
+> - [Low] The YAML example references undefined phandles (`&devctrl` and `&=
+pllctrl`), which will cause a fatal `dtc` compilation error during `make dt=
+_binding_check`.
+no this won't cause any errors related to references ( tested on version 20=
+26.7)
 > --
-> 
-> --- Patch [1]: [PATCH 1/6] arm64: dts: freescale: imx8mp-verdin: Add Toradex Capacitive Touch Display 10.1" LVDS ---
-> commit 9fa4254322a01ecfb1f9a0941237ecac9d2bf3f1
-> Author: Leonardo Costa <leonardo.costa@toradex.com>
-> 
-> arm64: dts: freescale: imx8mp-verdin: Add Toradex Capacitive Touch Display 10.1" LVDS
-> 
-> This commit adds a device tree overlay for the Toradex Capacitive Touch
-> Display 10.1" LVDS on Verdin iMX8M Plus carrier boards. It integrates the
-> LogicTechno LCD panel and an Atmel MaxTouch capacitive touch controller.
-> 
-> Link: https://developer.toradex.com/hardware/accessories/displays/capacitive-touch-display-101inch-lvds
-> 
-> [ ... ]
-> 
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-panel-cap-touch-10inch-lvds.dtso b/arch/arm64/boot/dts/freescale/imx8mp-verdin-panel-cap-touch-10inch-lvds.dtso
+>
+> --- Patch [1]: [PATCH] dt-bindings: mfd: ti,keystone-devctrl: Convert to =
+DT schema ---
+> commit f59b6bface010fc243ef7f899dbb8dddf737e2c5
+> Author: Bhargav Joshi <j.bhargav.u@gmail.com>
+>
+> dt-bindings: mfd: ti,keystone-devctrl: Convert to DT schema
+>
+> Converts the Texas Instruments Keystone Device State Control binding from
+> legacy text format to DT schema. Adds "simple-mfd" support, enforces chil=
+d
+> bus properties, and adds validations for standard child nodes.
+>
+> > diff --git a/Documentation/devicetree/bindings/mfd/ti,keystone-devctrl.=
+yaml b/Documentation/devicetree/bindings/mfd/ti,keystone-devctrl.yaml
 > > new file mode 100644
-> > index 0000000000000..9079c6284dfae
 > > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-panel-cap-touch-10inch-lvds.dtso
-> > @@ -0,0 +1,95 @@
-> 
+> > +++ b/Documentation/devicetree/bindings/mfd/ti,keystone-devctrl.yaml
 > [ ... ]
-> 
-> > +&{/} {
-> > +	panel-lvds-native {
-> 
+> > +patternProperties:
+> > +  "^keystone_dsp_gpio@[0-9a-f]+$":
+> > +    type: object
+> > +    description: Keystone DSP GPIO controller
+> > +
+> > +  "^keystone_irq@[0-9a-f]+$":
+> > +    type: object
+> > +    description: Keystone DSP to ARM interrupt controller
+>
+> [Severity: Medium]
+> The commit message mentions updating node names to conform with standard
+> Devicetree specifications. However, these patternProperties enforce names
+> with underscores like "keystone_dsp_gpio" and "keystone_irq".
+>
+> Does this block the use of standard generic names (like "gpio" or
+> "interrupt-controller")? Because additionalProperties is false, using gen=
+eric
+> names in a DTS file would cause validation errors. Could these patterns b=
+e
+> updated to match generic names instead?
+>
+> [ ... ]
+> > +examples:
+> [ ... ]
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> > +    device-state-control@2620000 {
+> > +        compatible =3D "ti,keystone-devctrl", "syscon", "simple-mfd";
+> > +        reg =3D <0x02620000 0x1000>;
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <1>;
+> > +        ranges =3D <0x0 0x02620000 0x1000>;
+> > +
+> > +        keystone_irq@2a0 {
+> > +            compatible =3D "ti,keystone-irq";
+> > +            reg =3D <0x2a0 0x4>;
+> > +            interrupts =3D <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>;
+> > +            interrupt-controller;
+> > +            #interrupt-cells =3D <1>;
+> > +            ti,syscon-dev =3D <&devctrl 0x2a0>;
+> > +        };
+> > +
+> > +        reset-controller@328 {
+> > +            compatible =3D "ti,keystone-reset";
+> > +            reg =3D <0x328 0x10>;
+> > +            ti,syscon-pll =3D <&pllctrl 0xe4>;
+> > +            ti,syscon-dev =3D <&devctrl 0x328>;
+> > +            ti,wdt-list =3D <0>;
+> > +        };
+> > +    };
+>
 > [Severity: Low]
-> Does this node name comply with the generic panel devicetree binding schema?
-> 
-> The bindings generally require panel node names to match the regular
-> expression ^panel(@[0-9a-f]+)?$. Using panel-lvds-native might trigger a
-> schema validation warning when running make dtbs_check. 
-> 
-> Would it be better to name this node simply panel?
-> 
-> > +		compatible = "logictechno,lt170410-2whc";
-> > +		backlight = <&backlight>;
-> > +		power-supply = <&reg_3p3v>;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813133335.1941580-1-leoreis.costa@gmail.com?part=1
-
-Is the panel node name required to match this expression? I can't find
-it anywhere in the documentation, and other overlays also use the
-panel-* pattern.
-
-The 'panel-lvds-native' node name complies with the schema specified at 
-Documentation/devicetree/bindings/vendor-prefixes.yaml, and 'make dtbs_check'
-runs without warnings for these overlays.
-
-Leonardo
+> The example uses phandles for &devctrl and &pllctrl, but it appears these
+> labels are not defined in the example block.
+>
+> Won't this cause a fatal dtc compilation error during make dt_binding_che=
+ck?
+> Could we define these labels on the parent node or a dummy node in the
+> example so that the build succeeds?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260813-ti-keyst=
+one-devctrl-v1-1-6f0aa87d9af8@gmail.com?part=3D1
