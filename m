@@ -1,150 +1,115 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DB32E88A4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 04:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C109345CDD
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 05:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786597083; cv=pass; b=La7HMtXkTNkHM3dBpc+lePSN+lwfNAwp9ibovpiTeuJsIEP3fE7oy9TZDj7quYj8HgKaLo0ySYSRL0pKkripo/k6QxrsJTHSu1ZIX8wZfWB1n30cNcxEFyWHaQo00ye7Obg3jLNYgrl/i9Uer6GWQuHXGNDToa6RPEzgXfqnaWI=
+	t=1786597360; cv=pass; b=nm+WacLkgRskh27HArnXCgmr1Ci+zESJePbnjldRpYS6nIuwEmIAWAg4K6zMdyU2TDjiAOveIBza0l/KX/PjnZJojECW86ad3R/845jXMYaL5hzcOkFmnDnE2HnQsV5xigVVlR2ZF/2AV31kEy3PjTy/EBHjIKBwesIm83UFZn8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786597083; c=relaxed/simple;
-	bh=s7dEc1PMLnZ/FdlcTZBJRUWujNEvt8LM9Z4x2ckqrYc=;
+	s=arc-20240116; t=1786597360; c=relaxed/simple;
+	bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=niGVWYAmK/fGmv/rO8tJThK0H19NAtrBEZptNrv42ahN642qazNyP1ysg5ObhuC+NwW11HwD7DrvmgieFfG8eSfGcKvBivTdkd5hWkrJI9IRYe32YVIpoimorw59d5u442JnNrIG2jf5uhFkADJj3qdBoAb/+2h+3t/udSQ5QvA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPwSA/2l; arc=pass smtp.client-ip=209.85.214.169
+	 To:Cc:Content-Type; b=Hn2d3+PREIBDJ9L2CDCK749cstqlIIdrJgpsE+ZBslIy2zx9JU2F3WRzTmROd1Tj0EXo6xbOPnVWogMttwq2TEj3tdvXGMSZ6FT+gaJ+Ws6ieKXE1r4R7EITPT594A9IJTxhq7o+rvcOCeZRqAUz9xmyLi0eiLhCvCUfzuOTWOY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HBUjkxgP; arc=pass smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPwSA/2l"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2caed617615so4173025ad.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 21:58:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786597081; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HBUjkxgP"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ccf2360620so17950355ad.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 22:02:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786597358; cv=none;
         d=google.com; s=arc-20260327;
-        b=Wz899edTgLGvb40Stfhip5Ybv8RizBhFAmPCPlYiwe3e4mwSkJmo6sgqgAshkClkgC
-         gBEjj2asXC4HYp6MEhFs20be14+gpOiwxn5Cb+IB/+X46CwX41+9hvVPwEaMkbYTzkjV
-         fMf/wMWWeKTC29olsRQtkxaYIU+1HbczyeihiSarIyf8Gbfb3YZe5Xpe0haaBb7mNy1V
-         fNh/59z0DQhPoLZcREElbi3yJZB9PC/NQ7lQJsOewAOp62zDbW0pj/D1GFkiSqOebnB1
-         e1FL10sjZQ5CsSiw4IN4Wd6xolFJEIcWDJ+oZ31svIP8QKVMMqYkZd3+uJnrpettyP8h
-         AdOA==
+        b=gRo+cCeoNol4gpQnAgQU3eqNmZdKQZjYf+nOBZiqXShmdfFKoHFAGsvVKnIa79qzBy
+         tkecVP0AMTPtkaDgK9M5UJx7jkA0g2GaXFwJFHYawPTBzgSMa8+QDPpZqt1pkOuZiiJU
+         CFFDdKYJpOuAlWS6wCfTjz6Rb5MCluXIiFDrARMVoel8gcZy0ohg6jKHmsehTXpbOeDn
+         34VuM07dvit8ooszCmMBb8XF2hUIOcAf6REYMRpf0+2nZsIbdZRVyeQSI2t5Zn/0QmWF
+         TPA7VRZb4ZVLjm2ZKcj1bZvs0h5e0uDAuJ8lp4VWjxXVzZwHYWXE/GOS7B/nCu06i+QI
+         bzvQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=SUsbAPNc68aIG4OQfMUsvANEsU1GLxgtxRCXnCqwe0w=;
+        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
         fh=WJ81iVv7VVNN3XcmqLwfLU/KtKhWcyunKbGcwKiNOFI=;
-        b=HgwKTHxG5RP65jKAtWtDrwVFjRJxqFtpVevexAaJUXQT5G6iwM8R7dAjzMyGjxQbcj
-         Uk/I7FcCVH6r+dzpEv1hBkhURlDjUMteQaVZVO9ShJLAWPdB094Ey1oEYDo44jIQS7AQ
-         y79tU0ZaZl8IqwxokUzs7Y/QMeBPXOZTYYqUv62mzHcHoW8zZG0RkX8ocr1H193dQtiA
-         bThH193VnAHBTmNzr2H1yJL1/JsJXmUHqro54xLhin/JnT9C2Ms5BpIe1a7MixyApXUa
-         hycNDH35f3JBWHA0cPcm4AapEm4kRJGnwovPJtzREwK+lvteVd6AseaGeQJHINmnk3OW
-         PbkQ==;
+        b=VESbEK6aaFfhaAWAjOKl+ONbQs61sjat47IwYYytEiBMT1KcORf48As/EURLrndwP7
+         KOBFL4RW4mIWsPPlI/g2AsRg5KG6OxmJQwvSGb0rP2XZRD8XK7g0WWkJt9DBuITMbK1n
+         lupUP2lmZ1ZsjMzPncYxBfh21HY/2ahoaH2O5IaUI4cpzNvC4dhO5cFGAi41ZyhOEteW
+         oMwcs4gar8reKVT6vkjX4eEaN+IEBBWsaWHiwALbwuLTrrBaF/Efa5MKOjAmujHPBwT1
+         alnEuplU8FmP281ESfHjegUTGjV/ev5E32AxIxUC83yRQAdwlMILV1Jp8CedJoWW5SsZ
+         yUAQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786597081; x=1787201881; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786597358; x=1787202158; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=SUsbAPNc68aIG4OQfMUsvANEsU1GLxgtxRCXnCqwe0w=;
-        b=hPwSA/2lMBKsx0E50fgO06LDJXw+rsLrrz7DQm/jtDty7FQylzaGI06+PgNtdT68Bm
-         Xx/9JHi2DSfgdlUbOGUyU7PZxfgozM5VoW/AlhDM+su/DamqXSjtIes2C71Nf2INVXB2
-         FHKQWm11tRd9ICHvyWgB9NUvux7p+9BVKky8vJzf97+E+rjPjAjmIlIaEqZDMN5X7By+
-         RuXUk+eue+4lyO1yH1GdgHR3guiS7JJ/jRnoJqOoqIOssU8e/eQJbWM2z2fKzesrAEIw
-         Qd1BNYkpN/9I0E3bJ/53E63dHyf3pMfb01WwExJFovl4f5oRPL6VTz++dLdPUc/ui103
-         Qbog==
+        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
+        b=HBUjkxgP6fODQoihCl9iKQu9PgBN6oZxfi5VGuP6pGeUaITh5LjzrSa9jT9H5O2Dpq
+         RDvCJ+kNdFCbiPvS0x4dfQwXTMvoOvUA7iLHoTC93LW9XO2mYQKlBoQPaCQVp5gxinWs
+         1zWi+dSV4aqPMOWpiDvr3mZXlvxKZsKi6QLoyTm9SK1TAQ+UxhKblWi+9PtWbghFuTSt
+         4d9XvQa9bihquVDHWaI2d2rFKvanRT/R6tlDyngq8LagMTzD+EtaOuouVmahPCjsf1iJ
+         ggYSfai66HSTobwqyCTu7C/xtlqAu5/epLtTRHLd3R5qrFLvSH4SmlY3oozuAyNfghQe
+         0gNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786597081; x=1787201881;
+        d=1e100.net; s=20251104; t=1786597358; x=1787202158;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SUsbAPNc68aIG4OQfMUsvANEsU1GLxgtxRCXnCqwe0w=;
-        b=izTnR9eyduZOFlEE+WQhvyogZTtMVdrpvdP/FViGgS0xWd7LI2TVW80RHP5u0I0zB3
-         dghsTLkT/uRSM8LNk6tGf8RnrBbWg/Y788ST58wo3uWA8SmgVUCBf+78dbgHeDFaExTd
-         x7KkDP/DCNAY6JCfMbNlMdIcJN3YjKUkLrG7Ot5b4FER7uxufQbx2Z37nVFFi1RTg32h
-         Q/PFuq0/0XlPkaQ4Ph44sLM3+Aw2xIvLlf03FR2ZN7xrB65e87uL07c1xy3ZVYa/I+PD
-         D/Fffj3NoO9bX9ZiCoUwbqaCa8+TEl4rwhVv391ZxQN52fQrxGe/HrwK/kFNT8XMiesH
-         4kew==
-X-Gm-Message-State: AOJu0YzssxU2cWfQhlr75z8QZLTzI+j77EvBueNdBmDgXbTVs8sp8yOa
-	RJjR2ls5MB8Rgiir1B3TYyZYwmDgdkPYM55sZv1GOXQ56xmZRzROwsUZuSIYE+6tZyQzZIpOVn1
-	FEbOB0f1oBMEQ71ks2bFoRNr4rUQE88UyQlrz
-X-Gm-Gg: AR+sD11UTsWfEiu9v0pmD9j8rsY193ZnDDXcDj2MgvS63ctFhDWshB6ryLKzh+LZtQF
-	DPuQ7xjr8jhIm0YBxyYP9DK68orkbi9PLOruW5YsJLJ+WcfHeUggcdFH+50Y5dGUb553lQL7IaL
-	Jcs5S8/wv2RJtRcqHh8BieV7mF+VfsquROovEkbww1jqmTZjHoeDdS7rCMd1QrC1pN4t8QkztCi
-	ag1eMdO1zRQ5f3FZZqhvV5mMsffwEvV7eF720JHdzSZ03QTCYnGV5FxM20vYJ8seqko6+rOTfV6
-	8LPp/uGp+mfyXe2iKZ8jULbo98sgr5m2aA3h25aP1TobNlvwQiaVXJhaRokFaASzNsdiGoFMgux
-	215GI/IekyK3iklsV4srTc2LTEwPfRQ9eDacf1KyFAdL9DsrUhlXy/yjQ
-X-Received: by 2002:a17:902:f64c:b0:2c9:d8c6:1dc3 with SMTP id
- d9443c01a7336-2d37d189f9emr36563835ad.0.1786597081398; Wed, 12 Aug 2026
- 21:58:01 -0700 (PDT)
+        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
+        b=hpxg1pDb6KqB6CF7ytoyi7T75imiZbPCndeTD/Z/Fn9fHEkoKaPhCT8KDMAl2QAlDW
+         InwGUKzxEvL6krjAhh6jW4YR4LfFJgwMzjhFbCf2q9k6L3c6x6cC5BQqJcIbgViPJz30
+         gRCLvuWgRAkySywNuUTAaJdIe/p9TPOU4bPuR3unNbFkveirGYK/vfZON7c73KGFUA36
+         hsOROytv9Dqn7FC7g/WNpEf+Dz0Rotx8soXkpMwoegGS+/Ss6WG+hZcpzrlsYmTnks+w
+         sBkkcohuHUIrZ1ITuVZriK0/qspdr3qSvLGLx/f++qRQF46GxjXd9h7iYkgZmzQyywpZ
+         MCnQ==
+X-Gm-Message-State: AOJu0Yy6tY7jVvQ7ttjoHBrYBG47NfFJJQFkHQYDm31kdc0qatj25h3W
+	6+lc8Zzx3kfy55w4XHFx0Xs7Gr2J/7X/4F1JwC3yinElp/h/y/tJpSLEEgpgsy0cH3MyfY9VIIB
+	LsXdD/D8u3U1DGg8KnKNhUlzyKG6q4E11TG9E
+X-Gm-Gg: AR+sD105VP+dr3FTMxrw+9Y5tkK9BdvD/RgDwAHxsi/JS8iRl3XWvOI1m2X9tl6P6bl
+	0IbZJ/9ICjLfnAM++saPWBvUl/pnX4rIM68vxFDWgz1GujVxZP3lSROEtsbv/I9G6gz5T/p7hkj
+	Nrd/rwULwEHaKYV+UJV+o/IhABrvF2X+2bl05MfUaUda4M8RZStTS5bvr9f1zfr6V4t9QnHCyMv
+	tzd2ZHZP3/k67/oRj8l05C74BFxI0GPfIyawMpH9PuEwy2aegMzPJnyh3zh8EbveqoVgm+uxSi4
+	ZhZuKx7tW532RzsrFtABznX13Zw4zsJu9+5Y/wnAraHtGhTPBtJfL67j+RvYAKflPE+TS13nh1b
+	64UG+41ZCF8QPlAZaAMaNEAjaaL6bsJ4fxWRwHXWwHtdBTFTi46V+1LfKML5A9GcBeKuEB8WW
+X-Received: by 2002:a17:90b:4e8e:b0:38e:5b59:c2ff with SMTP id
+ 98e67ed59e1d1-3931dfd0888mr3861982a91.3.1786597358325; Wed, 12 Aug 2026
+ 22:02:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260812112023.42254-1-phucduc.bui@gmail.com> <20260812112023.42254-3-phucduc.bui@gmail.com>
- <20260812114711.8641E1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260812114711.8641E1F00A3A@smtp.kernel.org>
+References: <20260812112023.42254-1-phucduc.bui@gmail.com> <20260812112023.42254-4-phucduc.bui@gmail.com>
+ <20260812115606.6AA5D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260812115606.6AA5D1F000E9@smtp.kernel.org>
 From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Thu, 13 Aug 2026 11:57:50 +0700
-X-Gm-Features: AUfX_mykwCkincg2687zWGdDRSSrfKTd8N6RDJWLSmR0UYOP0VRifiRp-JErN1o
-Message-ID: <CAABR9nHBt=+5C54vDzhvnZ2EsSTbA_raTq_q_K7EXoxhst_H2w@mail.gmail.com>
-Subject: Re: [PATCH 2/3] mmc: davinci: Handle errors from optional IRQ lookup
+Date: Thu, 13 Aug 2026 12:02:26 +0700
+X-Gm-Features: AUfX_mxshKTDLRVYPf-YHvMsJCb8eL4BRjYK6eEFFCMEmoQ7q_lwa2Buu3dSHlo
+Message-ID: <CAABR9nEQ6v26S65WrOx1VX-fx3aP+PfjDWfmtEahgn4Uc-Q3bw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] mmc: davinci: Handle optional IRQ return value correctly
 To: sashiko-reviews@lists.linux.dev
 Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> [Severity: High]
-> Does this direct return leak the clock reference?
->
-> Earlier in davinci_mmcsd_probe(), the clock is prepared and enabled:
->
->         ret =3D clk_prepare_enable(host->clk);
->         if (ret)
->                 return ret;
->
-> If platform_get_irq_optional() returns an error like -EPROBE_DEFER, retur=
-ning
-> directly here bypasses the cleanup labels at the end of the function that
-> call clk_disable_unprepare(host->clk). This can endlessly increase the
-> clock reference count on probe retries, permanently preventing the clock =
-from
-> being disabled for power management.
->
-> Should this use a goto label (like parse_fail or dma_probe_defer) instead=
-?
->
-> > +     if (ret > 0)
-> > +             host->sdio_irq =3D ret;
-> >
-> >       if (host->use_dma) {
-> >               ret =3D davinci_acquire_dma_channels(host);
+> New issues:
+> - [Medium] Direct return on `platform_get_irq_optional` error bypasses cl=
+ock cleanup, leaking the clock enable reference.
 >
 
+This will be addressed in v2.
 
-You are right. I overlooked the full context of the function.
-I=E2=80=99ll add the goto parse_fail cleanup path and adjust the handling a=
-ccordingly.
-There is already a check for host->sdio_irq before devm_request_irq()
-at the end of the function:
+> Pre-existing issues:
+> - [High] The driver manually disables the hardware clock in the remove an=
+d probe error paths while devm-managed IRQs are still active, risking unclo=
+cked register accesses.
+> - [High] If DMA descriptor allocation fails, the driver attempts PIO fall=
+back but leaves `host->do_dma` set and leaks the mapped scatterlist.
+> - [High] The system suspend routine disables the MMC controller clock wit=
+hout masking the SDIO interrupt, risking unclocked register access.
 
----------------------------------
-if (host->sdio_irq >=3D 0) {
-        ret =3D devm_request_irq(&pdev->dev, host->sdio_irq,
-                                               mmc_davinci_sdio_irq, 0,
-                                               mmc_hostname(mmc), host);
----------------------------------
-
-So I=E2=80=99ll handle the optional IRQ lookup as follows:
-
---------------------------------
-host->sdio_irq =3D platform_get_irq_optional(pdev, 1);
-if (host->sdio_irq < 0 && host->sdio_irq !=3D -ENXIO) {
-        ret =3D host->sdio_irq;
-        goto parse_fail;
-}
---------------------------------
-
-This preserves the existing handling of -ENXIO while making sure
-other errors are propagated through the proper cleanup path.
+ These issues are pre-existing, and I=E2=80=99d prefer to keep the scope of
+this patch focused on the issue being addressed by this series.
