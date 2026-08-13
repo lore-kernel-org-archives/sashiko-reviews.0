@@ -1,69 +1,74 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1173747427F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 14:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2954484258
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 14:58:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786632312; cv=none; b=sFVJpVzwYvNIAoswPCEFMAbjI02V+FgCiJbnOjAFyWNLxTy9K1H9xZpNmYEG/P++vVgYxLId/NDFULYBkkN3OwRa3wowgmp4GFkGA14FJt6m7m9JMG1mu0mGUvkkZhVgz5iVzQgqUxhMEdRtJJBNpZQKlXrlTB16PB6dhGUCw9Y=
+	t=1786633110; cv=none; b=hK/MVIyVRPys8kES3cuDUJkTgK4s5FplWOjgi6XEnFIGcWc5MW+NMG6Cn+Q09PecD+149ybFmp9Jer+QCZ5QZz+K5k0HmtsertYwufmS/1O21m+FFzRd9d3UeIIaTPpsEbbZsl9MmMExfENG2D/N36ZWgm6tQFoXy0W48DKXtYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786632312; c=relaxed/simple;
-	bh=UKiEw25JACPfoRyZOGdENNRZZgzji4bHQNrW3S+x3YI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sqibdjxv6ixezzCAZs2bskyl28G5PVDvzbNSDmdxT3DbqRI3G8kOINYjxLw/J2t11DkViRv+7rS6bJ+MYx7y7NXNq8WkPWefp2MFMnpYD8s5Km8eQw/+cDJq4jXBYjB3hIv9N+rhqDuzvuTnURLAUvsffaV0NUcrq071mHbkwSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=Wi0M6lCt; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="Wi0M6lCt"
-Received: from omf11.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay09.hostedemail.com (Postfix) with ESMTP id CFC7980143;
-	Thu, 13 Aug 2026 14:45:02 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf11.hostedemail.com (Postfix) with ESMTPA id 2E67A2002D;
-	Thu, 13 Aug 2026 14:45:01 +0000 (UTC)
-Date: Thu, 13 Aug 2026 10:45:17 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Thomas =?UTF-8?B?V2Vpw59zY2h1aA==?= <thomas.weissschuh@linutronix.de>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 3/7] tracing: Stop modifying the input buffer in
- ftrace_set_clr_event()
-Message-ID: <20260813104517.588cc978@gandalf.local.home>
-In-Reply-To: <20260813164014-bb2d92fc-631f-4e0d-b940-2f2c63859563@linutronix.de>
-References: <20260813-tracing-cli-event-filter-v1-0-57c4e8029c86@linutronix.de>
-	<20260813-tracing-cli-event-filter-v1-3-57c4e8029c86@linutronix.de>
-	<20260813141501.347E21F000E9@smtp.kernel.org>
-	<20260813103821.36d6b6f7@gandalf.local.home>
-	<20260813164014-bb2d92fc-631f-4e0d-b940-2f2c63859563@linutronix.de>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1786633110; c=relaxed/simple;
+	bh=yMR+TnSdk1ztOdOTdPBOe6RTGhKHZDxrly8/tCEswO0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CneD/oeEEtHIWaVQL1/LDjgKSO0/scP6JUrt4HsBwPXC68tF3vB+36luvT33iMt71C44dCYuWDPgxVzCcLqKFVaxs7UVQW9LtoV0iCcs+Mu7+NItOx7OpnCOnntRBj/3z+wUS4NspBQlWNjFvyzZAX6omt8saGHLL1dvSXlalrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from Mogu.localdomain (unknown [223.73.65.85])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 49e36c9ae;
+	Thu, 13 Aug 2026 22:58:16 +0800 (GMT+08:00)
+From: MoGGuU <Naixumogu@whut.edu.cn>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org,
+	Naixumogu@whut.edu.cn
+Subject: Re: [PATCH] accel/rocket: Fix job submit error handling
+Date: Thu, 13 Aug 2026 22:58:10 +0800
+Message-ID: <20260813145810.177179-1-Naixumogu@whut.edu.cn>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260813143334.81E231F00A3A@smtp.kernel.org>
+References: <20260813142059.151644-1-Naixumogu@whut.edu.cn> <20260813143334.81E231F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Stat-Signature: c63d5gk5xugksbbqogfdpbu5m8be7nwb
-X-Rspamd-Server: rspamout08
-X-Rspamd-Queue-Id: 2E67A2002D
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18gTdyoOwJ5gGMvOjFDNh7D9rmbOJeSEvI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=UKiEw25JACPfoRyZOGdENNRZZgzji4bHQNrW3S+x3YI=; b=Wi0M6lCtuPF2afXqJl7wqPVA86Ex0P4Rf27JuAgydEENURxm0+hZluu8CuSdvN+cfYuzLBNe9GrkTVStIEa4YKy+mEUG6YdoyiseZv39MUEhXXtXptSQkUzUfM+Yt6rL6k1hnxWJJs77dfIlmX7dnlE5QahBZrmW7GtoNdF/cWM=
-X-HE-Tag: 1786632301-102954
-X-HE-Meta: U2FsdGVkX1/YTE9NQyiHwsIGVUOEF2ABuU2WZ10JVc0ItvrWfl1fraSzyEvpCrJBL9oN0TxK/L7QFkmil1BEskaAZUV7uVir8HPGXUG/1kaGBk5mULCoHYXyJlGO9XbIoS+cU7p07rGhygC+uJVzwwxZHH1BkFCulTF59WHoXmbh/b3J4UwtnSA7HFIdCpgVIAkSjNDnis5CyKD8wwNVFtm3YRcgfwC0WLnfDaJyZQ/NQvL5wEXsaePrEM565s41ZzwhTDqmggSfOcqn8r30XqdQJzKCA7D+5hEQOVgCRAZfIFlnhC8QEjBE9Q+E4akz
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9ffba18d4403a1kunm78eaa06f3514f
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaT0IdVkJNSUoaQhoYS0IaS1YeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlJSUhVTEhVTU5VQ05ZV1kWGg8SFR0UWUFZT0tIVUpLSUJNS0
+	pVSktLVUtZBg++
 
-On Thu, 13 Aug 2026 16:40:48 +0200
-Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> wrote:
+Thanks for the review.
 
-> I'll deal with the Sashiko fallout if you are fine with the general idea.
+I checked the reported partial-submission restart path.  I do not believe
+the new issue is reachable as described.  The interruptible operation in
+this path is drm_gem_lock_reservations().  Its
+dma_resv_lock_interruptible() call returns -EINTR when interrupted, as
+documented by ww_mutex_lock_interruptible(), and drm_ioctl() propagates
+that value unchanged.  It does not return an -ERESTART* value, so the
+kernel will not automatically restart this ioctl from job zero.  The other
+failure paths in rocket_ioctl_submit_job() also do not return an
+-ERESTART* value.  Userspace could still choose to retry an EINTR manually;
+the ordered partial-submit semantics documented in the commit message mean
+that it must not blindly retry the whole batch.
 
-I'm fine with the general idea of adding filtering logic to kernel command
-line, but can you show some examples of how it would work? That is,
-examples of the kernel command line.
+The duplicate-BO report does not cause a double unlock either.  Trying to
+lock the same WW mutex twice with the same acquisition context returns
+-EALREADY.  drm_gem_lock_reservations() then unlocks the reservations it
+already acquired and finalizes the context before returning the error.
+rocket_job_push() takes its err path in that case, not err_unlock.  I also
+verified this on RK3588: a submission containing the same input BO handle
+twice returned EALREADY without a new warning or error in the kernel log.
 
-This should be in the cover letter.
+The two dma-resv fence observations are valid pre-existing issues.  The
+completion fence should be attached with DMA_RESV_USAGE_READ to input BOs
+and DMA_RESV_USAGE_WRITE to output BOs after drm_sched_job_arm() creates
+the finished fence, but before drm_sched_entity_push_job() makes the job
+runnable.  I will address those in a separate follow-up patch so this patch
+remains focused on its stated error-path fixes.
 
-Thanks,
-
--- Steve
+-- 
+MoGGuU
