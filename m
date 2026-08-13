@@ -1,50 +1,25 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from out28-2.mail.aliyun.com (out28-2.mail.aliyun.com [115.124.28.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00846396B70
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 08:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2939D3D2
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 08:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786610551; cv=none; b=rL5P27PZoz3+O733lq/s5sfwW9rYEwmQRrJvOSbpdJnMje17E78nr5g1DoDZHSiH8+FGDB7pPPFIihTyrSOvep7SydacHduUUoFIWihqvB2Im5xrcOi98hL8EGCtVLR4GylZa4vuycB0h/dI0Jdase6D2oEq1xhXsDFbPJpVa3M=
+	t=1786611346; cv=none; b=OYNclS2nFX9YM+HIPE94N6cwXkBqWE40b4wSRKnZ8dim/g6X10Ari3ggJa1VwKq2ln0lQjXl6QP8j7SqAvzRAPbTbn/btmzra7QpEhLouBo+lP8Qr13O+x0R9MDTHO0B7aw4WmoJRK+B5mfg03g9A6BVfXd3TgLT8T9luZNwPEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786610551; c=relaxed/simple;
-	bh=0KAfdatrp5NmxkZzJ5tFT0z3k0Tiv9cuF3dydjmsMqY=;
+	s=arc-20240116; t=1786611346; c=relaxed/simple;
+	bh=rGH4QNRzvvtaYg2m5ypZ7wRJdhkVYjUGq6arrKPEt70=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UpMY6Cgp4jmiChpmtFHAJTC5zJb+DJbb5cSzqGnz1Yw696IdQAPrTZ5Z5NlGT640ZkiAJeDqAZPhgUlXae0kwUXUIee0qvo5cOdipvBA7QtbF1SSv5bmVTuqbSWDc5KZRUWMt3UxexeneASyPPvCao3m0F/CLRhgej9Ck5Uy4xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iVnouKPn; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iVnouKPn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1786610550; x=1818146550;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=0KAfdatrp5NmxkZzJ5tFT0z3k0Tiv9cuF3dydjmsMqY=;
-  b=iVnouKPnomuTWxuFWfgoXqj4jzEMmebp6jfNNvKfaWlTx8C+5nyMZ85u
-   M1F1Gfshoxfq0hFdmlYYk545XJ7urQWIgNINCak+Kaeh/VFDhIp5z4tun
-   j36f/9gYWDn8Vh+swAi5aUud4CMJDiuIR6vzFAMYsm+c6nalMV3w4ygHC
-   RDeLW9hca7e+jisex1gWtRGpOJxMpH2xwR3dNQm2ImW/pYlMAJm5D8Gna
-   IpgAa71YaELzWZ7tSys2jZm9sqOmBm0M0HL0jdplBFl2YPkCIQrVUwxxw
-   kcBdD94RyES29E6cEIEpVPOzIypD/Na+BgxYFp4WA8To9ICN6vPO9iPW7
-   A==;
-X-CSE-ConnectionGUID: 4MDmWw4HSsSyGWBsGEXN3A==
-X-CSE-MsgGUID: 9VDo3xVZTjaEOAOLItuj3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11873"; a="87304166"
-X-IronPort-AV: E=Sophos;i="6.25,221,1779174000"; 
-   d="scan'208";a="87304166"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 01:42:29 -0700
-X-CSE-ConnectionGUID: tH3lincAQay6xn5uxQUj1w==
-X-CSE-MsgGUID: 1X+jZ5p/SIer6l+YBXvTKA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,221,1779174000"; 
-   d="scan'208";a="264463501"
-Received: from unknown (HELO [10.238.208.98]) ([10.238.208.98])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 01:42:28 -0700
-Message-ID: <0e7524d5-8798-49fd-b8a8-9d7e5977f23c@intel.com>
-Date: Thu, 13 Aug 2026 16:42:25 +0800
+	 In-Reply-To:Content-Type; b=o9XuG8zYoTO5dngdWZI9qJPXvC2+A/1yrF0q4BfkX4VRRCXApdGoauXO1Hsfr/B2hvvm0mbLq7oboPt5XW/n2UECgPg5fSf4xt68pqwhXDlMOS1SmYskePApBac9VU9zNyoEOFcw4qsAzKOhTDaZ1Xu+raYWfFhdIFMX8WSOyW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net; spf=pass smtp.mailfrom=open-hieco.net; arc=none smtp.client-ip=115.124.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=open-hieco.net
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.09450802|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0628005-0.00236258-0.934837;FP=16889375159082665970|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033045213054;MF=zhang_wei@open-hieco.net;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.il9KI8t_1786611331;
+Received: from 172.18.22.44(mailfrom:zhang_wei@open-hieco.net fp:SMTPD_---.il9KI8t_1786611331 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Thu, 13 Aug 2026 16:55:31 +0800
+Message-ID: <e1c54a6b-6d90-4239-adab-6813cfc6dec9@open-hieco.net>
+Date: Thu, 13 Aug 2026 16:55:31 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,51 +27,100 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] KVM: TDX: Don't assume exit_reason[31:16] as all-0
- in tdx_to_vmx_exit_reason()
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev, Paolo Bonzini <pbonzini@redhat.com>,
- kvm@vger.kernel.org
-References: <20260812080229.2481439-1-xiaoyao.li@intel.com>
- <20260812080229.2481439-4-xiaoyao.li@intel.com>
- <20260812082306.11E8B1F000E9@smtp.kernel.org>
- <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
- <an0MdQKMHclUjW9r@google.com>
+Subject: Re: [PATCH v3 7/9] KVM: nSVM: Fetch missing DecodeAssist bytes for
+ synthesized #NPF/#PF
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <cover.1785411877.git.zhang_wei@open-hieco.net>
+ <9dae4bd5ad241b72193b38cfe8857c968c47a4b7.1785411877.git.zhang_wei@open-hieco.net>
+ <20260730123135.B3FB21F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <an0MdQKMHclUjW9r@google.com>
+From: Tina Zhang <zhang_wei@open-hieco.net>
+In-Reply-To: <20260730123135.B3FB21F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/13/2026 8:14 AM, Sean Christopherson wrote:
-> On Wed, Aug 12, 2026, Xiaoyao Li wrote:
->> On 8/12/2026 4:23 PM, sashiko-bot@kernel.org wrote:
->>>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
->>> When the basic exit reason is set to TDX_INVALID_EXIT_REASON here, but upper
->>> bits like Bus Lock are preserved in exit_reason.full, does this break
->>> tdx_get_exit_info()?
->>>
->>> In tdx_get_exit_info(), it evaluates against the full 32-bit exit reason:
->>>
->>>       *reason = tdx->vt.exit_reason.full;
->>>       if (*reason != TDX_INVALID_EXIT_REASON) {
->>>           *info1 = vmx_get_exit_qual(vcpu);
->>>           ...
->>>
->>> Since TDX_INVALID_EXIT_REASON is the 16-bit 0xFFFF, this check will pass if
->>> any upper bits are set, even if the basic reason was marked invalid,
->>> incorrectly exposing meaningless hardware state.
->>
->> Oh, I should have called it out it's intentional to check the full 32 bits
->> Exit Reason instead of checking the lower 16 bits .basic field as what it
->> did in the v2.
-> 
-> Please wait for discussion to die down before sending new versions.  You sent
-> this version literally the same day you responded to some of my comments on v2.
-> Now the discussion is spread across different mail threads and I'm having to
-> piece the converation together.
-> 
-> In short, spamming versions makes it harder to review, and thus slows the process
-> down; it doesn't speed things up.
 
-My apologies for this.
+
+On 7/30/2026 8:31 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Already-prepared instruction bytes are discarded if the instruction pointer exceeds the CS limit (or due to residual upper bits in 16-bit mode).
+> --
+> 
+> --- Patch [7]: [PATCH v3 7/9] KVM: nSVM: Fetch missing DecodeAssist bytes for synthesized #NPF/#PF ---
+> commit 96d13188ab4298d9414e0345853cc8950d39abb9
+> Author: Tina Zhang <zhang_wei@open-hieco.net>
+> 
+> KVM: nSVM: Fetch missing DecodeAssist bytes for synthesized #NPF/#PF
+> 
+> This commit limits the preparation of synthesized state to matching the
+> emulator fetch cache and fetches any missing tail bytes through L2 guest
+> page tables. If the emulator cache is empty, it attempts to fetch the full
+> window from the L2 RIP, avoiding fetches for SEV guests.
+> 
+>> diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+>> index cfb686c29bb47..cf2b6bb8126ff 100644
+>> --- a/arch/x86/kvm/svm/nested.c
+>> +++ b/arch/x86/kvm/svm/nested.c
+> 
+> [ ... ]
+> 
+>> +static u8 nested_svm_fetch_insn_bytes(struct kvm_vcpu *vcpu, u8 *bytes,
+>> +				      u8 count, u8 max_bytes)
+>> +{
+>> +	struct kvm_pagewalk *gva_walk = &vcpu->arch.gva_walk;
+>> +	u64 access = PFERR_FETCH_MASK;
+>> +	gva_t rip = kvm_get_linear_rip(vcpu);
+>> +	struct x86_exception e;
+>> +
+>> +	if (kvm_x86_call(get_cpl)(vcpu) == 3)
+>> +		access |= PFERR_USER_MASK;
+>> +
+>> +	if (!is_64_bit_mode(vcpu)) {
+>> +		u32 eip = kvm_rip_read(vcpu);
+>> +		u32 limit = to_svm(vcpu)->vmcb->save.cs.limit;
+>> +
+>> +		if (eip > limit)
+>> +			return 0;
+> 
+> [Severity: Medium]
+> Should this return count instead of 0?
+> 
+> If an L2 guest in 16-bit or 32-bit mode causes a nested page fault where
+> eip > limit evaluates to true (for example, in 16-bit mode if kvm_rip_read()
+> retains residual upper 16-bits), returning 0 here causes the caller to
+> overwrite vmcb12->control.insn_len with 0.
+> 
+> This would inadvertently discard any already-prepared valid instruction bytes
+> that were passed in via the count parameter, forcing the L1 hypervisor to
+> manually read the instruction from L2 memory and defeating the DecodeAssist
+> optimization.
+
+Returning zero is intentional. If the starting EIP is already beyond
+the CS limit, no instruction byte is architecturally fetchable from
+CS:EIP, and the APM specifies an instruction length of zero in that
+case.
+
+A matching emulator fetch cache should not normally contain bytes for
+this condition. The emulator fetch path uses __linearize() with
+X86EMUL_F_FETCH and checks the same CS limit before populating its cache.
+
+Also, a 16-bit code segment does not imply that EIP should be
+unconditionally truncated to 16 bits here. KVM's emulator checks the
+full non-64-bit EIP against the segment limit, which is consistent with
+this code.
+
+Thanks,
+Tina
+
+> 
+>> +		max_bytes = min_t(u64, max_bytes, (u64)limit - eip + 1);
+>> +	}
+>> +
+>> +	count = min(count, max_bytes);
+>> +
+>> +	while (count < max_bytes) {
+> 
+> [ ... ]
+> 
+
