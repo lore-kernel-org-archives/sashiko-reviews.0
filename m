@@ -1,115 +1,122 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out28-73.mail.aliyun.com (out28-73.mail.aliyun.com [115.124.28.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C109345CDD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 05:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786597360; cv=pass; b=nm+WacLkgRskh27HArnXCgmr1Ci+zESJePbnjldRpYS6nIuwEmIAWAg4K6zMdyU2TDjiAOveIBza0l/KX/PjnZJojECW86ad3R/845jXMYaL5hzcOkFmnDnE2HnQsV5xigVVlR2ZF/2AV31kEy3PjTy/EBHjIKBwesIm83UFZn8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786597360; c=relaxed/simple;
-	bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hn2d3+PREIBDJ9L2CDCK749cstqlIIdrJgpsE+ZBslIy2zx9JU2F3WRzTmROd1Tj0EXo6xbOPnVWogMttwq2TEj3tdvXGMSZ6FT+gaJ+Ws6ieKXE1r4R7EITPT594A9IJTxhq7o+rvcOCeZRqAUz9xmyLi0eiLhCvCUfzuOTWOY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HBUjkxgP; arc=pass smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HBUjkxgP"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ccf2360620so17950355ad.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 22:02:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786597358; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gRo+cCeoNol4gpQnAgQU3eqNmZdKQZjYf+nOBZiqXShmdfFKoHFAGsvVKnIa79qzBy
-         tkecVP0AMTPtkaDgK9M5UJx7jkA0g2GaXFwJFHYawPTBzgSMa8+QDPpZqt1pkOuZiiJU
-         CFFDdKYJpOuAlWS6wCfTjz6Rb5MCluXIiFDrARMVoel8gcZy0ohg6jKHmsehTXpbOeDn
-         34VuM07dvit8ooszCmMBb8XF2hUIOcAf6REYMRpf0+2nZsIbdZRVyeQSI2t5Zn/0QmWF
-         TPA7VRZb4ZVLjm2ZKcj1bZvs0h5e0uDAuJ8lp4VWjxXVzZwHYWXE/GOS7B/nCu06i+QI
-         bzvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
-        fh=WJ81iVv7VVNN3XcmqLwfLU/KtKhWcyunKbGcwKiNOFI=;
-        b=VESbEK6aaFfhaAWAjOKl+ONbQs61sjat47IwYYytEiBMT1KcORf48As/EURLrndwP7
-         KOBFL4RW4mIWsPPlI/g2AsRg5KG6OxmJQwvSGb0rP2XZRD8XK7g0WWkJt9DBuITMbK1n
-         lupUP2lmZ1ZsjMzPncYxBfh21HY/2ahoaH2O5IaUI4cpzNvC4dhO5cFGAi41ZyhOEteW
-         oMwcs4gar8reKVT6vkjX4eEaN+IEBBWsaWHiwALbwuLTrrBaF/Efa5MKOjAmujHPBwT1
-         alnEuplU8FmP281ESfHjegUTGjV/ev5E32AxIxUC83yRQAdwlMILV1Jp8CedJoWW5SsZ
-         yUAQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786597358; x=1787202158; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
-        b=HBUjkxgP6fODQoihCl9iKQu9PgBN6oZxfi5VGuP6pGeUaITh5LjzrSa9jT9H5O2Dpq
-         RDvCJ+kNdFCbiPvS0x4dfQwXTMvoOvUA7iLHoTC93LW9XO2mYQKlBoQPaCQVp5gxinWs
-         1zWi+dSV4aqPMOWpiDvr3mZXlvxKZsKi6QLoyTm9SK1TAQ+UxhKblWi+9PtWbghFuTSt
-         4d9XvQa9bihquVDHWaI2d2rFKvanRT/R6tlDyngq8LagMTzD+EtaOuouVmahPCjsf1iJ
-         ggYSfai66HSTobwqyCTu7C/xtlqAu5/epLtTRHLd3R5qrFLvSH4SmlY3oozuAyNfghQe
-         0gNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786597358; x=1787202158;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FPdVbJEJQfj1xWJ2K3M3PZX5UlvGIUA6xNdCdiePNfE=;
-        b=hpxg1pDb6KqB6CF7ytoyi7T75imiZbPCndeTD/Z/Fn9fHEkoKaPhCT8KDMAl2QAlDW
-         InwGUKzxEvL6krjAhh6jW4YR4LfFJgwMzjhFbCf2q9k6L3c6x6cC5BQqJcIbgViPJz30
-         gRCLvuWgRAkySywNuUTAaJdIe/p9TPOU4bPuR3unNbFkveirGYK/vfZON7c73KGFUA36
-         hsOROytv9Dqn7FC7g/WNpEf+Dz0Rotx8soXkpMwoegGS+/Ss6WG+hZcpzrlsYmTnks+w
-         sBkkcohuHUIrZ1ITuVZriK0/qspdr3qSvLGLx/f++qRQF46GxjXd9h7iYkgZmzQyywpZ
-         MCnQ==
-X-Gm-Message-State: AOJu0Yy6tY7jVvQ7ttjoHBrYBG47NfFJJQFkHQYDm31kdc0qatj25h3W
-	6+lc8Zzx3kfy55w4XHFx0Xs7Gr2J/7X/4F1JwC3yinElp/h/y/tJpSLEEgpgsy0cH3MyfY9VIIB
-	LsXdD/D8u3U1DGg8KnKNhUlzyKG6q4E11TG9E
-X-Gm-Gg: AR+sD105VP+dr3FTMxrw+9Y5tkK9BdvD/RgDwAHxsi/JS8iRl3XWvOI1m2X9tl6P6bl
-	0IbZJ/9ICjLfnAM++saPWBvUl/pnX4rIM68vxFDWgz1GujVxZP3lSROEtsbv/I9G6gz5T/p7hkj
-	Nrd/rwULwEHaKYV+UJV+o/IhABrvF2X+2bl05MfUaUda4M8RZStTS5bvr9f1zfr6V4t9QnHCyMv
-	tzd2ZHZP3/k67/oRj8l05C74BFxI0GPfIyawMpH9PuEwy2aegMzPJnyh3zh8EbveqoVgm+uxSi4
-	ZhZuKx7tW532RzsrFtABznX13Zw4zsJu9+5Y/wnAraHtGhTPBtJfL67j+RvYAKflPE+TS13nh1b
-	64UG+41ZCF8QPlAZaAMaNEAjaaL6bsJ4fxWRwHXWwHtdBTFTi46V+1LfKML5A9GcBeKuEB8WW
-X-Received: by 2002:a17:90b:4e8e:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-3931dfd0888mr3861982a91.3.1786597358325; Wed, 12 Aug 2026
- 22:02:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40663B5F48
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 05:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.73
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786598004; cv=none; b=hDTkihrnxyeycK926QbbF+Ulrs9YxhF9ircOWqPrcL8YzDXA5B67bdlRZkDgFp69w17QlS5NazZelLomg3VRq10KTItxSmqCo8vXd3NFbKU3BWdoRamOacN7KqahEiY5t5hthN/786D6MudXYDfUT96KwtZJ2oQvKy7ghY3wdM0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786598004; c=relaxed/simple;
+	bh=LiT8uigoMWZFNftXGyY3ZzF76pXMrXintb98icAvOo4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QS0cgWAXbuVLSM+vKbVqwAQw+t5h5j+TUXHQSxnbVMU/z4cVzh7FDivhz6qP3JQ/Yw5FufDTfoCayqPFC4c1GfP/il4MKEYINIYPP6Q9/YyHkWSceqf3ALceE3QQhrvtvssItg9QE168c7u1JOWZwyptEEjsWoyb56jrUGjfIcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net; spf=pass smtp.mailfrom=open-hieco.net; arc=none smtp.client-ip=115.124.28.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=open-hieco.net
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.166705|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.203107-0.00302257-0.79387;FP=5109737411339666614|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033045213054;MF=zhang_wei@open-hieco.net;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.ikx1dIp_1786597971;
+Received: from 172.18.22.44(mailfrom:zhang_wei@open-hieco.net fp:SMTPD_---.ikx1dIp_1786597971 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Thu, 13 Aug 2026 13:12:51 +0800
+Message-ID: <8fc500dd-5a56-4d7e-b964-73dea89309b8@open-hieco.net>
+Date: Thu, 13 Aug 2026 13:12:51 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260812112023.42254-1-phucduc.bui@gmail.com> <20260812112023.42254-4-phucduc.bui@gmail.com>
- <20260812115606.6AA5D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260812115606.6AA5D1F000E9@smtp.kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Thu, 13 Aug 2026 12:02:26 +0700
-X-Gm-Features: AUfX_mxshKTDLRVYPf-YHvMsJCb8eL4BRjYK6eEFFCMEmoQ7q_lwa2Buu3dSHlo
-Message-ID: <CAABR9nEQ6v26S65WrOx1VX-fx3aP+PfjDWfmtEahgn4Uc-Q3bw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] mmc: davinci: Handle optional IRQ return value correctly
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/9] KVM: nSVM: Synthesize DecodeAssists EXITINFO for
+ emulated intercepts
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: kvm@vger.kernel.org
+References: <cover.1785411877.git.zhang_wei@open-hieco.net>
+ <31fd4e46d29c57b004b635d8e6a23020cc9ba0fb.1785411877.git.zhang_wei@open-hieco.net>
+ <20260730123008.9C58B1F00A3F@smtp.kernel.org>
+Content-Language: en-US
+From: Tina Zhang <zhang_wei@open-hieco.net>
+In-Reply-To: <20260730123008.9C58B1F00A3F@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> New issues:
-> - [Medium] Direct return on `platform_get_irq_optional` error bypasses cl=
-ock cleanup, leaking the clock enable reference.
->
 
-This will be addressed in v2.
 
-> Pre-existing issues:
-> - [High] The driver manually disables the hardware clock in the remove an=
-d probe error paths while devm-managed IRQs are still active, risking unclo=
-cked register accesses.
-> - [High] If DMA descriptor allocation fails, the driver attempts PIO fall=
-back but leaves `host->do_dma` set and leaks the mapped scatterlist.
-> - [High] The system suspend routine disables the MMC controller clock wit=
-hout masking the SDIO interrupt, risking unclocked register access.
+On 7/30/2026 8:30 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Synthesized EXITINFO1 is incorrectly populated for SVM_EXIT_CR0_SEL_WRITE intercepts triggered by MOV CR0, violating the AMD APM.
+> --
+> 
+> --- Patch [2]: [PATCH v3 2/9] KVM: nSVM: Synthesize DecodeAssists EXITINFO for emulated intercepts ---
+> commit 60593c4facd0e8bdc8b0aa501c98449feeced81a
+> Author: Tina Zhang <zhang_wei@open-hieco.net>
+> 
+> KVM: nSVM: Synthesize DecodeAssists EXITINFO for emulated intercepts
+> 
+> This commit populates the architectural EXITINFO fields when DecodeAssists
+> is exposed to L1 and KVM synthesizes a nested VM-Exit for emulated
+> instructions. It targets specific intercepts like MOV CR/DR, INTn, and
+> INVLPG.
+> 
+>> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+>> index d68cba12c772b..b63234a2feb8d 100644
+>> --- a/arch/x86/kvm/svm/svm.c
+>> +++ b/arch/x86/kvm/svm/svm.c
+>> @@ -4822,6 +4822,52 @@ static const struct __x86_intercept {
+> [ ... ]
+>> +static void svm_prepare_decode_assist_exit_info(struct kvm_vcpu *vcpu,
+>> +						const struct x86_instruction_info *info)
+>> +{
+>> +	struct vmcb *vmcb = to_svm(vcpu)->vmcb;
+>> +	u64 exit_info_1;
+>> +
+>> +	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_DECODEASSISTS))
+>> +		return;
+>> +
+>> +	switch (info->intercept) {
+>> +	case x86_intercept_cr_read:
+>> +	case x86_intercept_cr_write:
+>> +		/* MOV CRx: bit 63 set, GPR number in bits 3:0. */
+>> +		exit_info_1 = BIT_ULL(63) | (info->modrm_rm & 0xf);
+> 
+> [Severity: High]
+> Will this incorrectly populate exit_info_1 for selective CR0 writes?
+> 
+> In svm_check_intercept(), the exit code can be dynamically upgraded to
+> SVM_EXIT_CR0_SEL_WRITE for MOV CR0 instructions:
+> 
+> svm_check_intercept() {
+>          ...
+>          cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
+>          val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
+>          if (cr0 ^ val)
+>                  icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
+>          ...
+> }
+> 
+> Since svm_prepare_decode_assist_exit_info() is subsequently called and
+> only checks the original instruction intercept (x86_intercept_cr_write),
+> could this wrongly populate exit_info_1 with decode assist information
+> instead of leaving it zero as required by the AMD architecture manual
+> for SVM_EXIT_CR0_SEL_WRITE?
 
- These issues are pre-existing, and I=E2=80=99d prefer to keep the scope of
-this patch focused on the issue being addressed by this series.
+SVM_EXIT_CR0_SEL_WRITE does not imply that EXITINFO1 must be zero.
+The exit code identifies the selective CR0 intercept, whereas the
+DecodeAssist contents describe the instruction that triggered it.
+
+For MOV-to-CR0, the APM specifies that EXITINFO1 provides the GPR
+number and identifies the instruction as MOV CRx.  For LMSW and CLTS,
+no additional information is provided and bit 63 is clear.
+
+Checking info->intercept is therefore intentional, as it distinguishes
+MOV-to-CR0 from LMSW when both can result in SVM_EXIT_CR0_SEL_WRITE.
+
+Thanks,
+Tina
+
+> 
+>> +		break;
+>> +	case x86_intercept_clts:
+> [ ... ]
+> 
+
