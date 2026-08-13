@@ -1,151 +1,210 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11012027.outbound.protection.outlook.com [40.107.75.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC113B5B3;
-	Thu, 13 Aug 2026 11:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786621689; cv=none; b=dkVWRUa+FnU4cViGehLiGJG6CHsrrnq2UqfK+cy572C8qEKh9o+zCfsld9s1FG4moGxfRHzwLSkFyzjoGUVkS9/Sh0TqII56RotzPj6rqNw4fzY7slflQp3whYSW5a1Sogt1+Pl7COxqato+sMTuKBfpMNlNTQiaBJWmuZgTovs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786621689; c=relaxed/simple;
-	bh=oLFX+xgNOs1pcggNEGzNlONgxQpL2Aj7MRDuipSKMCE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i6vRnTW0f/ha5IDCkDg7zPBiI+0sMxvK9lZQsKdikRw+tagmD+9eB6iRaP0NaqmnkBthopwIzmcfoe3k2KGKF9VTlLIyRm0mWqAr6o6VIsw9JhKxbyGNmMPe10lziOap3QTV207Y0P9UEyhUoPTBCzXVuSECWJttyCHoemAh0DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=VKiLL36O; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777D4470E84
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 12:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.27
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786622433; cv=fail; b=eQY+4sEzRIzOx1GeJ0DiXj4IdCvaMa2MvX1NZX2SsMeC/uWd0f/IPc6nc6b+92t9r/vijGvPn1/4kY9yLVfcFT8LZCJCn0lw/asJ5hpMTE/fuZ2pHzrYdDL/6GxLq8E1yPk+wUiUHy5KtTca+0Q2CNFk2uGbuYdu3VUV/FZ2vXI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786622433; c=relaxed/simple;
+	bh=WzlWjXd+ITz5CGA+YV8mt/gPm4BaecoDkJkSrgcEnNs=;
+	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Y4cIK1A+ejRHK9cv/pZZN4afYQKbGON5blpbqO4ruXCwWFb1ZXPdBjPID52rLiqImiiGkFR+I5mGOtI9sgQO6CMWy4EDfj2y9M6fb/HHLnsUrwwo8Hw52ADXFApt5VYiqETYGXrGN+HXgxsFmkiWO6u4exwjctJ81PVXrvGT/uU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=XvLv49lQ; arc=fail smtp.client-ip=40.107.75.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="VKiLL36O"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67D98iq0041857;
-	Thu, 13 Aug 2026 11:48:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=L8QoVVZttuU76tzv2FsMBmsOZIitj0
-	tCtnClG9jDbjI=; b=VKiLL36OUgFBD/dsjlXTbYtFuIZepXhYnPT/TTm9DBUc9j
-	E+fWtucvs6apaiFyRuKHILBzNX68Ja5dUvIq9M7ZpZQkwPIy5xP4uNIC6rc49UrU
-	FLv5ukEPwbHfSo2DJmAWMle/aaNcatAeX8GhpPxU/I6MrJreSet8zzezHVMPsO3k
-	3U3W+aBVmmJDbfBm1m+pb2mYeMe54TKrmBSDhDOZPnq6cSxiWoOoVLrw3CCWTKqq
-	uCbYodOU0WDnMAK7kNSLg3viO3uSltkD0rNMNeCx96bOSzGI/tesk6WvBcCaaMdg
-	5W6FRZ3rMkBjB1Vx3RK92UpEWZJ5SNHwLwBjWqqg==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvk07nkf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Aug 2026 11:48:06 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67DBfJGf032419;
-	Thu, 13 Aug 2026 11:48:06 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesqb099-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Aug 2026 11:48:05 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67DBm2tu39780840
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 13 Aug 2026 11:48:02 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 096AF2004B;
-	Thu, 13 Aug 2026 11:48:02 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C0B4020043;
-	Thu, 13 Aug 2026 11:48:01 +0000 (GMT)
-Received: from localhost (unknown [9.111.42.87])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 13 Aug 2026 11:48:01 +0000 (GMT)
-Date: Thu, 13 Aug 2026 13:48:00 +0200
-From: Vasily Gorbik <gor@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="XvLv49lQ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ezztbCnBHuJ74NtLeZMbUbX6dNRuW3vJvbnAjvVW9M48GeN1Eust9z4upgSV8lQ6baLLFXAnYfoFqC0HCFRFUunqU3TQ24tQpUAGKyGWJCTqvxWAXMU9srfcVTXscmhxDsKpO4oqLUGqXFYGAsdyAtcG1I+f8KCDasQ4GNsyEZ6DILrk3Ww052NtIBTMteyunTQQ2uWOHl+jcjySIXjIcFh+C4Dmjn3vZ63Bq3P8fLbkCuMELr+J4Lv9XLwXtVJEr03eIlEVuXlWqmBItvE5UmuFQV3UQFU9Kky+Q3ilmE/aW5utkhK6gQMV/NxRpLtayA3PoHEkOt5v1LRuVVgmpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lKfjHeopNpfzde/ZrmQSGd2AZoUmJ6I5dJmzG1KdqaM=;
+ b=D66qXcmNzV/wptZWxKx2D/iK4dyTx5WOLnfgN8I6/iQTMiO6ViifvomnPxmIvmfqa0zwHK6IlEW4BBS3cZzF7xS4pSNDtEWUTSt4dciWIZkSTb7tUsYhkCoCv6FCi4MU4yfOsknCyq0bXCKBXh4Ib01oL1thMlOREkcb9J400O5RWmWTRgCHsxLYNKMmGfPuhd69dysxUWNp7IBAsn1oxXNVYRvkG3Svr8kSqEjwRPiGfNtKFSGFpfI+6Sz69bkoeQcVfkFilfUGBbxzG2afrvpq1WBytlecAh1DfL+ZMbDVJkU7zWwAhFaxQbOplaSueiarcQkg4fxzM0CKzFWiCg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lKfjHeopNpfzde/ZrmQSGd2AZoUmJ6I5dJmzG1KdqaM=;
+ b=XvLv49lQ6uxDDPL80wGDpptQzxnj6iymEqDksabsr0bfM5gf2voSym0I0qyMX3OHvNlSx0/E82HbBCgL/YX6Ps6QpO9OcBeKFI7103jo7yjTGfMdqHu52OZpy2DgRi0ZkRo9nnQ4RHihMr7yKfJGqyyQso3AEhzgw6EZ4HVLDqanV93LPBBba5o1U02l/9vdEiDaSMvAGDR96MVu6QvxtIvPw+iRIkcKgcSvWeA7uZVVO/tIsJmh7AAReUZhogAZBMu6eOdGszbuVCxMWz88E9ezm/F3K4RMTb44VK9/KY1Db6xIeCssr55LUccoMe9GlVxaVGCu8pMkS+HQv90l5Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
+ by SEYPR06MB8092.apcprd06.prod.outlook.com (2603:1096:101:2d8::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
+ 2026 12:00:25 +0000
+Received: from PUZPR06MB4742.apcprd06.prod.outlook.com
+ ([fe80::206c:c661:9838:5571]) by PUZPR06MB4742.apcprd06.prod.outlook.com
+ ([fe80::206c:c661:9838:5571%6]) with mapi id 15.21.0315.011; Thu, 13 Aug 2026
+ 12:00:24 +0000
+Message-ID: <aa3bb684-3eea-4478-9298-7c97f4f653ea@vivo.com>
+Date: Thu, 13 Aug 2026 20:00:20 +0800
+User-Agent: Mozilla Thunderbird
+From: Fuyu Zhao <zhaofuyu@vivo.com>
+Subject: Re: [RFC PATCH bpf-next v2 1/2] libbpf: support selective kernel
+ module BTF loading via .kmod_btfs section
 To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.vom>,
-        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org
-Subject: Re: [PATCH 1/2] s390/ipl: Fix NULL deref in kdump without re-IPL
- parm block
-Message-ID: <ttjpi40@ub.hpns>
-References: <c00-02.ttjpfvt@ub.hpns>
- <p01-02.g87de83845c5f.ttjpfvt@ub.hpns>
- <20260813111928.184701F000E9@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260813032613.2755-1-zhaofuyu@vivo.com>
+ <20260813032613.2755-2-zhaofuyu@vivo.com>
+ <20260813033753.B09FA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260813033753.B09FA1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SGAP274CA0012.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::24)
+ To PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260813111928.184701F000E9@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDA4MSBTYWx0ZWRfX6ABwxvktg9Gb
- G+qrya0vY6gjpJk8BG8R7MAMdA2wOR4v3oCM5E2iliNAphKzIpO51d7tES8SBeYM3lAjOfdeVxX
- BbqY6UBPJd0nfUYKWZfjvszbBU2NRx7uiwXz6R0rE58CS4JYxyTLtu+vns9/vJe018vYwpn5ru/
- AwCCs1xQSL13BZ9MRAWffuw3lNDr9H4lTSPIvwuTiNQ7AQ7X1G8B1eQfFFxGzf9nKEyEQmt3nb/
- HaJmEEDMS5c+ePfdwtbBhMRufKtMbggSG2oaE5FwmdvFgEZYOFL/5tpHV8esUXlJFi2CKQ9fOBT
- 9Brz19/XSSYljL0QneT1fgjDOwG83Kv/JpFEPdJdVVIcr+s6bxLJi+NZRZbUu3LrI9Asmxc1c9s
- sKAWRlAqYrJpkcy9fnXPezE83BMR/rCy8O6hdKNDmjN7IXxGVfqwzWeQv+TbElVsXzv7mjwPvBR
- 0T5ogJpcgMEYeYRK+Mw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDA4MSBTYWx0ZWRfXxxG0xQGPsxPk
- XcCF884tG0fyXqiqQhvXE9lFDsoe08iyxoC/Gv/JVehOJRYQIAenArmN+2TEQ6LnixdZwOdh/ya
- zzS1PnpDylbyyIp7KTBxM8lotqBf6ok=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7daef6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=3hd6PT9mWKKFgb9ofbUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 0dTOD1nzGi9gWcUAFrx7Dfxqws2MtoTA
-X-Proofpoint-ORIG-GUID: 0dTOD1nzGi9gWcUAFrx7Dfxqws2MtoTA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-13_03,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608130081
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PUZPR06MB4742:EE_|SEYPR06MB8092:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34750cb3-718f-48b4-d65e-08def932750d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|6133799003|22082099003|18002099003|56012099006|11063799006|4143699003|3023799007|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	hFi2EvumFdm1xG6NkWztVOIZ6qRGEdwk+xGYo1a7KJwPRHFvr4zG3Wc51ScZhe2HkJo5id788gRrbLsqRAKk2rFwGS9z32Ei7l6adEUPErQnb74BDBBgvylPvPoX8kvE2/IjOoBuWg84qXfn9vVjkeKOfLTyXZck3epts1eCKaMBQlHxmszRNNpvizcrT5MxXqXxCmMLW4mUJhAESWeCkm7D5TKhMq3auGwMobXvIT9NrzOuqOsPgJ7RCxbiAcniyeGKExVJKdxM7ezF+RHj7hj6HA5LABe48lAJewPTwJEplUVp7kMA0QQWDCP9Anht+LaH7BfpTHhCFn35EhHu2d3kMdz+D8nleku+LHgOYTzRByakYvlY4IukWnHv1zEWkBpFU/ErOl+8GDpw7o/MCMrQ2SZr3J3/sxfCLULPUmRrV0E6ZZk74vw2JujaHPwud2O7tVbHP+5Ai4mBnL0iZUlGTvObsMsRADB+6DjXHX8rBjF9uPP4M2/tD0Vz4zfZHo4XCRiXJar3MOg4lK372ggHHQFh7yHVEU6/lz3gUCAqGzCBegH+emUiuUK6RG9NubzmKyS9dFnDXF67Xf56pc9nSNSA6reIdI5KR1Ct5nAYWMTCsquk81aoRVr10fkCB5AhMiXqU5zmz53v94m2u7lWAz4l7PUn5QCmfmNZeJQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB4742.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003)(3023799007)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WFdZN3MrQkVpTjM1c3hzRWtxcGFTZDNJU0UrQndUTFZBSEF2TGZDZVlnVzNm?=
+ =?utf-8?B?TUFUUHNGWGRrd3V5c3BidXM5S0RoK3FiNVV3TllVR2lvNUNOZDVoUnl2VkhJ?=
+ =?utf-8?B?MW4rNWo3OTc1b3FTQlJPejJSOEZORmlRY1FSMmpiWEpYU2I5MnNRMjFDa3FH?=
+ =?utf-8?B?VFA4a3MwaU1kYjJ0QVpPaUNBODB5V0NUQStMVUUzc25ZZ09Oa282UER0cmlE?=
+ =?utf-8?B?OCtkTUdLVDR1KzF0SDZyQnRmUmsxcEUyYWI3dkxETFhxWlhzbmJCNjd1bkc5?=
+ =?utf-8?B?N2VhTlJHUjVST0w5Nk4wUlVZaDNrbjQxUVdzMFRGanExKzc4dnB4TG0zSUxW?=
+ =?utf-8?B?a1F1WFJPOUFNVmNQV29tZXVFSEo1V0hHckRYcWtqV1Vaa1E5ZWxNQlU3Rk13?=
+ =?utf-8?B?L0YzcUFIZHlOcTBNN0ZPeVhHOVYwR2tZN1dWTnRqMnhTOWVMWkxlYk1iQi9u?=
+ =?utf-8?B?SnJ5OXZyeVhYay9ieHRMd0xUNU9OdnhkdFVOZ1hQWHRtelltWitwbkpSWERP?=
+ =?utf-8?B?Tk11V0lnYVpTYTVLNXhpY3QzY3NZVVREZGMrdnFYaXEzeS9ZMCtDeG5MMDJC?=
+ =?utf-8?B?ME91WXk5YSt6Q0w3R2dudHdaWGlmS1BxTVFqeVRBRW1NZ1VLcFFJbWxxYlBP?=
+ =?utf-8?B?SW9KNWZTTUdGRlV4RHZZV1ZtaTRxRkVQVFBqMnh2WkVEZ1FBUUxMTnMrdjRw?=
+ =?utf-8?B?b1lNcGZrTDh0MWh2VFBaaTBCTWFiWnZkRC9zQXFpWXhYSHJ3Q3JiTEFSZjJv?=
+ =?utf-8?B?UVBpbUJIUzFwNVNNOXB5SnhVVGl4cGlqQ2dwekw0RnhyTGRqbys2a0FYYUpl?=
+ =?utf-8?B?WlpIM0NJYXlQcnh6UmNrVHYyMVkvOW0vMmJJeE5EN0xucDZFaFgweDNUYVRl?=
+ =?utf-8?B?VGE2R0hEYXpyYS83VnFFRFNhNFh1VG5ZdGJieitnYXhFbVpMU2VXQktydThj?=
+ =?utf-8?B?SEJFZmsyUW03S3pjWmpDQW5Odm12Y0ZTMkJZRlZnZ004VHFmeHNGTmhXVVRJ?=
+ =?utf-8?B?OVIyQWFudW9qVlovc1hTZVRxTElFcVZNYjVWRzRCdmxJRTdVOHhhNWxjWm9C?=
+ =?utf-8?B?bk84NVVxL3ZrSXZlYzNIOERVWTF2b2dHbm4xTEVhWEdGRHVzS01ZWEZJSVV3?=
+ =?utf-8?B?R1dObGVwZzdIVDNCUW5NTmFwdm03bGE2N25CK3ZucnlXTVp4aWhZTmcyUVMr?=
+ =?utf-8?B?dExiQ0NDSS93Qkk2Vk45SW56dXpwY3VyN0dyTkdsa2UxSEJPMmxtdGJMZjg0?=
+ =?utf-8?B?MjhMUWlWVGZJWlJrNlhzVmtqK0RvUVZ0ODRmQUlycnZVV1lmaUIxeVBEUjJV?=
+ =?utf-8?B?dHMyK2ZOTm1RTVJkN1Jjcll3Z0FzTm9OdFNPVVYveFVoL0lnWFpkWVFNVlJE?=
+ =?utf-8?B?UnNrcVV5ZjBFYm5pZC9FMVMvTHhNbXFmakZUb3RyMEpzUUxHd2YwRkRjLy83?=
+ =?utf-8?B?M3VVV3NiOENHcTcrQmdNeXVtb2E0dFBCWXZSbXcrVVNhclNQYU11YXNXWUVq?=
+ =?utf-8?B?OG12NFpvQzNiWlRkL0J3N3JibzJQM1F4WkMyNUtMR0NqZlFqZzU2OXVBcWR3?=
+ =?utf-8?B?clBvUUNoTXpFdVRyTHJaSjZpZTZ3OVdSUHBtcXllV25sZWJBK2ZYWTY0OGc4?=
+ =?utf-8?B?a2RoRERKU0RhNWFreW5XdlM1UFBOdVc4dFZ5NlpWSHY1ci9uL1RNeGhDMDFn?=
+ =?utf-8?B?b0ZLTm1lSWczWXhzMVRPUkYyMHZIS1YyZTJJTHFXbG9nK3Rvc2phWmtOS2xm?=
+ =?utf-8?B?eG9MblJaWmwrZ2lCVTZnWW5ST3JsMU1nTkF0dUJETitEa1FUbkh2TEhPMkpq?=
+ =?utf-8?B?VCtaWmx5cmV4djFhS1JWNzA5Wkg3UUxvMjNPcVNKOTBaZ0lkNWt3SFVSN0JG?=
+ =?utf-8?B?bFVzYUFKTDlHcTNzaFhaQ08xakp0dUtUSXNuQmNGdjZhQTBMZVlCYytHNmxR?=
+ =?utf-8?B?UTJ4OHRxK3N5akZDM3ViVmlkcUFBN3dYbTZ2ZGduNGZpNUxSL3RETzl5ekhJ?=
+ =?utf-8?B?T05ZWURTQjhXUU1XV2tuOVFURGRsbzk4ODZzYWUzbHUzTEcwVDhRVmJ6ZFVX?=
+ =?utf-8?B?TVpZbGRFMWU3eUIrR3I1L3JwbTZESGVVeWVvcG5nWWhvTXRnaWNoRUFHL1o2?=
+ =?utf-8?B?dm9xNTZiQ3hBNVJuYlg1TG15cU92U01IVXBXeVpIOWMyRVJkRkRydFFDT3Qz?=
+ =?utf-8?B?c0dEWVlFbGtYZ3N0TTZLNzk2bWgvdHRoaCsxV1QrZzdUM0VON1ZvbUVmNERZ?=
+ =?utf-8?B?alh2dGQ0T042QlVEMHB5YS9yQnU4azd4MUxML05wSlR0V0hYTXB5Z0Zob25v?=
+ =?utf-8?B?ZUNHWWpxaUlOMzBDTk5ZcVdBbXJJbVN3ek1BaWFoa1I4eVBjemVyQT09?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34750cb3-718f-48b4-d65e-08def932750d
+X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4742.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 12:00:24.3737
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6l+F26AavQJPuYlbSnS/54acBtAaMKR/yuSHf0fg1tsz+mi3vQFhK5FZ3cjhRJVcQnuxYqPZXb2X3UDp6Zs8FA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB8092
 
-On Thu, Aug 13, 2026 at 11:19:27AM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 8/13/2026 11:37 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] NULL pointer dereference in `dump_reipl_run()` when the system is booted without an IPL parameter block.
-> - [High] Unbounded `memcpy()` in `reipl_type_init()` causes a heap buffer overflow in the dump kernel.
+> - [Medium] Missing increment of `nr_loaded` prevents early loop termination.
+> - [Low] Multi-line comment formatting violation.
 > --
-
-...
-
-> [Severity: High]
-> This is a pre-existing issue, but looking at dump_reipl_run(), if the system
-> boots without an IPL parameter block and sets reipl_block_actual to NULL,
-> won't this unconditionally dereference it?
-
-That's fixed in patch 2 of the series
-
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at reipl_type_init(),
-> could an untrusted size from the crashed kernel memory overflow the
-> PAGE_SIZE buffers here?
 > 
-> arch/s390/kernel/ipl.c:reipl_type_init() {
->     ...
-> 	reipl_block = os_info_old_entry(OS_INFO_REIPL_BLOCK, &size);
-> 	if (!reipl_block)
-> 		goto out;
-> 	/*
-> 	 * If we have an OS info reipl block, this will be used
-> 	 */
-> 	if (reipl_block->pb0_hdr.pbt == IPL_PBT_FCP) {
-> 		memcpy(reipl_block_fcp, reipl_block, size);
-> 		reipl_type = IPL_TYPE_FCP;
-> 	} else if (reipl_block->pb0_hdr.pbt == IPL_PBT_NVME) {
->     ...
-> }
+> --- Patch [1]: [RFC PATCH bpf-next v2 1/2] libbpf: support selective kernel module BTF loading via .kmod_btfs section ---
+> commit 3f4fb04bbfb95d7f7ea0012b5651135983af6e62
+> Author: Fuyu Zhao <zhaofuyu@vivo.com>
 > 
-> If a malicious primary kernel crafts an os_info payload with a valid
-> checksum but a size greater than PAGE_SIZE, wouldn't this cause a heap
-> buffer overflow in the dump kernel, preventing the crash dump from being
-> collected?
+> libbpf: support selective kernel module BTF loading via .kmod_btfs section
+> 
+> This patch adds support for a ".kmod_btfs" ELF section to allow BPF programs
+> to specify which kernel modules need BTF loading. It introduces functions to
+> collect the module names and filter the BTF loading process to avoid loading
+> unneeded modules.
+> 
+>> diff --git a/tools/lib/bpf/bpf_helpers.h b/tools/lib/bpf/bpf_helpers.h
+>> index 9d160b5b9c0ee..171ea055cd323 100644
+>> --- a/tools/lib/bpf/bpf_helpers.h
+>> +++ b/tools/lib/bpf/bpf_helpers.h
+>> @@ -188,6 +188,20 @@ enum libbpf_tristate {
+>>  	TRI_MODULE = 2,
+>>  };
+>>  
+>> +/* Helper typedef for declaring kernel module names that need BTF loading.
+>> + *
+> 
+> [Severity: Low]
+> This isn't a bug, but the BPF subsystem coding style expects multi-line
+> comments to have the opening /* on its own line. Should this be reformatted
+> to match the preferred kernel style?
+> 
 
-The primary kernel is not an untrusted security boundary for kdump. It
-loads the dump kernel and can modify both the dump kernel image and the
-data. A malicious primary kernel can therefore already prevent dump
-collection or execute arbitrary code in the dump kernel. So, this
-finding is outside the kernel threat model.
+Thanks. I'll also fix the comment formatting.
+
+>> + * Usage: define an array in the ".kmod_btfs" ELF section to specify
+>> + * which modules need BTF loading:
+>> + *
+> 
+> [ ... ]
+> 
+>> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+>> index 514e4e9daa825..9fe8a653e8b6b 100644
+>> --- a/tools/lib/bpf/libbpf.c
+>> +++ b/tools/lib/bpf/libbpf.c
+> 
+> [ ... ]
+> 
+>> @@ -5891,6 +5987,10 @@ static int load_module_btfs(struct bpf_object *obj)
+>>  			break;
+>>  		}
+>>  		obj->btf_module_cnt++;
+>> +
+>> +		if (obj->kmod_btfs &&
+>> +		    obj->kmod_btfs->nr_names == obj->kmod_btfs->nr_loaded)
+>> +			break;
+> 
+> [Severity: Medium]
+> Is obj->kmod_btfs->nr_loaded missing an increment?
+> 
+> Looking at the loop in load_module_btfs(), when a module BTF is successfully
+> loaded and obj->btf_module_cnt is incremented, obj->kmod_btfs->nr_loaded
+> doesn't appear to be updated anywhere.
+> 
+> Will this prevent the intended optimization of breaking out of the loop early,
+> causing it to always scan all remaining kernel BTF IDs unnecessarily?
+> 
+
+My bad, this is a simple oversight. I forgot to preserve the
+nr_loaded increment when removing KMODS_BTF_* and simplifying the
+related logic. I'll fix it and pay closer attention to such changes
+next time.
+
+>>  	}
+>>  
+>>  	if (err) {
+> 
+
