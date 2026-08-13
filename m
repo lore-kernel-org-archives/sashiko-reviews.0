@@ -1,111 +1,176 @@
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608D22931CE
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 00:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.200
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786580437; cv=none; b=buRdcTgoIkdhHhIHOZgwn73pt5xt29aP0Fh+pXxeM5QLWEFC2xFIc4IxN+9s9uJMd6QSvaE1bh/3Ix/E10B4wg2EeHvKDiBqKq3I3mE4Ug1OFVEQ//3q//q7yGJyLxN3O0nb5+K2lZ3yrndOyq+qbUR1t0OfrtrsCnM5Kc1f4kg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786580437; c=relaxed/simple;
-	bh=Sxrwx/3H6vvFb4P3DmxA3ygoHV+JvbXJNwmyBv4uFDc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=IoEPoJkPHmsqqMR5plpqZC+dOsPTLhZK+P3dBw9A4J2hMsJwtXiBldawIDWh+Oy4rjhMIwo5NQV9uNrtkM3ZKe5/jOlZ1w8+XtRoZYF9GXJLGEDfsmC83edf5S4TjEpilkAB+VCMjNFrbPgBbb3SiqlGLxWpyQvCpKQpFuZxaZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UQnjikY9; arc=none smtp.client-ip=209.85.210.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BFC2F4A05
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 03:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786591871; cv=pass; b=DA1YPa7XDj06zwfPr44F6dhee0JGqsV1wuPi/UaiM+J/GSG5aGwNuYMgm+mSsb/Lw4OLwJi3p+kbZNzeiPTvpdGDbyBHj495xKfP+ZFBdj6c9lCmxDb/KIAna0Fz80B1EMhDhroLtF+Re805cF4m/sED2aPHuo4rDDvCakkp3WE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786591871; c=relaxed/simple;
+	bh=gOPNZqLp7a5HeIP9YLnnqfOKKfCkhssIhljZ/6oUCzQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AGJYhl63/pwp+EWOh72PeYFm42WR5ojrqhafVM59kFqIqZjpfzm3+2msoG9HHLblyzrhpA0KimBpdGJyfyEbTO0E5pF6nb/CNmKw5iTG7u6mZoWxM4+zC6g+NZrQyrIgdcTfDkRIz891mBvxITffNXCUi9atwNZL7ptcrKjy0nI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SJk9NMx6; arc=pass smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UQnjikY9"
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84eee2147ffso231209b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 17:20:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJk9NMx6"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38e347638adso386394a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 20:31:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786591869; cv=none;
+        d=google.com; s=arc-20260327;
+        b=koE2scVj0Q0+Vjsg40tZF4dg4RBl0HVBPNbk7Lk3c+FISIMtIRsOiimcSxbnPogHhx
+         iGUsrWebBojDTS8mcJBOHNmWa2OqesXEAuJVdzAX7J2wqs4qhg0bNexQ3r+wulRhTAe9
+         CZqKirC5wm9pO7x2WXfCFl7BKSTyG+tS450olN2CwVkLfqktIEHwkzuzWmFNlkZiMZAk
+         VSoHPr00i8nk5b4OvY6aVINrunDHT5RBgOAT93y2VMQr6rB4577+zPNkEBSEOGRgnxdz
+         aXk752EilB1/ejgL/AbuAnYCJCBVe/4/uA5qMtxBSr96Ez1AT9XPFulVtuOaA9CXVDA9
+         cLCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
+        fh=EOwbGu6VWTfz/tEdQjXSTD6cZJzzmDOPooRGpDdc1gI=;
+        b=UulSN/7+VhCcETzvme+sV4EKGUerxFIG4CxU3fWoquhHKmQFkgmMPFv2yCCkNWCNEs
+         nA4rM3cK03kzbwlql91yO9ewTiFUTOy8ank7RJToOk6XZZzTFVun+jkjhsUeeUhebvqg
+         yJ+saKBJca7XD99zGSMG+Ylai6QmC9wTN51PXZAOq1PMap8eIKdHhWC8t9Ya+OLv88ij
+         hqwgoJnqnsc80mc9SzjSNFqdBghFL8IiEuJQYwS+rFEj5paLtqoQAv4RaO+4tKNJczmj
+         hLcyUXOmtQxikNigRznXkO5krJ3ULeZPr1p3QDu/wDcRJEk66mCvH5UxblXJwtmc6ohy
+         qveQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786580436; x=1787185236; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1786591869; x=1787196669; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eTTJxbYDLzilzFrnq/ue/6XV3N0/n+FGwD1ynmItG2U=;
-        b=UQnjikY972da+ottXgt+TWLcuZ8NmYculLfkJz6NCfAOfVurWyqRyyt2vkapSdTb5b
-         FBpiR3aBQS4oUTXy0tVCtbGw/OF3b9jPi2H4phFacbURc274NLOWfMyEkMpxI/Rkjawe
-         Jj/lUOc5ulW+mgK0dbAbHoB6g9AL/zNHE91uv+5O1czNxKAqbAzcr1TLqMQEXYx+TST5
-         1GXMqTA4o2VY+7CDPuyK+HnpKkIiv1jr3BWuA6qHNcUKsp1pftpT/ooAZ8j2LA0EePii
-         IUsGxTMzWZuSx6t0kdFQfsek9qJAv0SQaX4su+pZHtP01sDXZ7xaawSDHpMqeewxM7yG
-         0iWA==
+        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
+        b=SJk9NMx6cjURztCeqOmr3B5a0WrtLpN8sIVBstB1N00atd25YrWWOAyDaJL3nPeezn
+         9S4vbYx86KY2mWTubZR6fvMnRKAh25dB4by3c2FHyC2NP3CQoqtqnXjMy15rhhUFa45l
+         pFpirxuuD+UtlvZuIShOOhs5sINOu9/GuxLLGcOaiHom8AUnnlPIcKbcOJ3U4tdc9BbW
+         PV8s5o4qWkUFrnj8HOBlsAfwR+N3QviaoeJCqn0ZkmzrawxDV7nY0+cKkNySHcJWZVMg
+         tLnmapsLN1ZiUE/+XEra9+4o94y89OShPLsA3Hk2S2tmI6gchC2IZ6qPvUMC+32JdF8v
+         Uw4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786580436; x=1787185236;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eTTJxbYDLzilzFrnq/ue/6XV3N0/n+FGwD1ynmItG2U=;
-        b=fDo9XGMWl21ZqKADTUSDKSu5IAtVUTubYWFI/MsGd1XmNP2LYu5+s0iyaeirJSe5aZ
-         HGG5Svbk/ARy0dRSIJw8/2gEVn/N6anzx1dOg2v3zG6+yX22ngP8sXyOzvc4CXnUxFFH
-         xOvicraP/aAUvqhNCUWeBOT5SnhDzU0toe7udSYaJoLRDFLyIm4ZhpkMe8yFz6j/HAJI
-         Gzc7rfMLZ6oCDFSMBoSiEEr7+HtQr+zHNADrDquL5yPCVtyK6P2t4iGbEEN5JpSV3yun
-         nXHJ0pCJRhwycfrRjvuyEZ9Zc6QaCX0sxzmauItphAGwoIazKjp7nUvCiHT15eubb3Z/
-         NzTQ==
-X-Gm-Message-State: AOJu0Yyvyg5zyf4SrBnGdnXcIF3on5/xK0934kG6+sw6KyqP36FLRkRq
-	pWGzY/hvWPa/u6MIqso5SRQQ4vBQNMffj2hRxrpR0n/sumuWHrY8lbB5zJdtmJZ20HOrT25NQaf
-	KvINqFg==
-X-Received: from pfbhu19.prod.google.com ([2002:a05:6a00:6993:b0:84b:62d1:9fe3])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:a257:b0:848:3e74:85eb
- with SMTP id d2e1a72fcca58-84fc74936d1mr1770176b3a.1.1786580435517; Wed, 12
- Aug 2026 17:20:35 -0700 (PDT)
-Date: Wed, 12 Aug 2026 17:20:34 -0700
-In-Reply-To: <07df932f-ca83-463d-b830-aa10a8fa11f2@intel.com>
+        d=1e100.net; s=20251104; t=1786591869; x=1787196669;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=D4T9bYHXVCBlbZGZYFqh4GD8XHK8t3g1v1wjuNVx8ds=;
+        b=enVOrm99RGA8CG5/JxtpZ/vstdPFGYISAIkfvzkXTdHB/frHtIDBh/6+4J1Nvr9tYX
+         1x1eQ3muLpXn3x7d/d9a0LWBaurU8dG2Jl4/oGdt+LGj23KHl027a4MmWYvuaSZCq7AR
+         YiE+ZEZIeFD+K8lGFYIMHObmqX/7xh3jwOsSmKc1LUuetdT7g6qxJvKBIX35NKNdjHdo
+         EH2G/BmnGB0ZolRMIr1GswEBhQpyswwtSgoVxY2w35QbvBaM1ZUNWtHsTXMpkCWAdJKi
+         SHV37Y0IYfOjmX7uYH5zkdrEZ89vJJEgCDPpmwaEFWVAQDgc29cNdYlMEmle1boA6Q6W
+         t7AA==
+X-Gm-Message-State: AOJu0Yx60CHgV9doeHt4qBlsxliBsBRCL4k0PusuZbn2v/1bNrln+Osq
+	dmG07czbiJIpD8UlKlnz2DBUKI0eznFGqgLWQBAxlzeKZBUfePT2sDSAyYZhtplLPw7iGJRuRLf
+	vuusnLVG9Fn26fU7qMlZ5qVtha7kp7v4=
+X-Gm-Gg: AR+sD124TQok60/+w7/33QAdptQDgY60kTO75tIYtUP7dXncxdaJWh222EoxzXaLTou
+	czCK9oTDqTMoxLOT2UE3Ax1LGh/dt5lArvtWFwq8MHWjWd0GSngxtMb+HwUM5p9PEPtZJ0cTT66
+	cuOKsTgf8XqiM2R7xZ5PfTjDj4D3ufKDS772ILVz1t0KfVtmDxiWKf8vQvucjih8/VEfPpnsue0
+	eBHbxTfb3wER8jEZk1HByDAZs5+iw5VR2dO3ILnpihB1vBZ6GrOaEx0u882m+IurGy4C9VRsQ7G
+	df6uRIJgh+ub/7N+kMiNgD/xqTJlAHgyZGdwXck3WnDiDmnXT7mOowq4VjlMY/c/WfZBTuk+97g
+	GEzGaBxPrLlUZoWJR+MYG4AwH8Fo0yH/LbQzdO0Ors7L+3gH+l1BwcBXz
+X-Received: by 2002:a17:90b:1f88:b0:38e:bfe:81e9 with SMTP id
+ 98e67ed59e1d1-3931dfd7b7fmr3944788a91.1.1786591869462; Wed, 12 Aug 2026
+ 20:31:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260810112200.2326727-1-xiaoyao.li@intel.com>
- <20260810112200.2326727-3-xiaoyao.li@intel.com> <20260810113924.4ACBE1F000E9@smtp.kernel.org>
- <13ea6279-a342-493b-a0f8-15ac5b4c59ad@intel.com> <anplcWfYReCMeu1A@google.com>
- <07df932f-ca83-463d-b830-aa10a8fa11f2@intel.com>
-Message-ID: <an0N0vHwsYEqjpRe@google.com>
-Subject: Re: [PATCH v2 2/3] KVM: TDX: Fix the exit reason handling
-From: Sean Christopherson <seanjc@google.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
-	Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+References: <20260812101418.37966-1-phucduc.bui@gmail.com> <20260812101418.37966-3-phucduc.bui@gmail.com>
+ <20260812102938.D4E101F00A3A@smtp.kernel.org> <CAABR9nEzo9pb=mLhZ2nyDuSYr=qDcgBZDzMUqptyvDCG8nLgTg@mail.gmail.com>
+ <da9a3b50-bee9-4485-aeaa-5872f09c499d@oss.nxp.com>
+In-Reply-To: <da9a3b50-bee9-4485-aeaa-5872f09c499d@oss.nxp.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Thu, 13 Aug 2026 10:30:58 +0700
+X-Gm-Features: AUfX_mzfmXh4NLJX1MKsYr1jid54mgT2F7xWNIpS5SDfSoyh36cdjOuWu_5UCJU
+Message-ID: <CAABR9nFgiNv6cnYa3+ZY3KnjbKpcF-JHpZY8TVcR7H40vOoR=Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ASoC: mxs-saif: Drop redundant probe error messages
+To: Daniel Baluta <daniel.baluta@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Aug 11, 2026, Xiaoyao Li wrote:
-> On 8/11/2026 7:57 AM, Sean Christopherson wrote:
-> > On Mon, Aug 10, 2026, Xiaoyao Li wrote:
-> > > On 8/10/2026 7:39 PM, sashiko-bot@kernel.org wrote:
-> > > > > @@ -2147,7 +2156,7 @@ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
-> > > > >    	struct vcpu_tdx *tdx = to_tdx(vcpu);
-> > > > >    	*reason = tdx->vt.exit_reason.full;
-> > > > > -	if (*reason != -1u) {
-> > > > > +	if (tdx->vt.exit_reason.basic != -1) {
-> > > > [Severity: Medium]
-> > > > Will this check always evaluate to true due to C integer promotion rules?
-> > > > 
-> > > > The basic field in union vmx_exit_reason is a 16-bit unsigned bitfield. When
-> > > > comparing it to -1, the unsigned 16-bit value is promoted to a signed 32-bit
-> > > > integer. If the value was set to -1 (65535), the comparison evaluates as
-> > > > 65535 != -1, which is always true.
-> > > > 
-> > > 
-> > > Well, how about something below on top of this patch?
-> > 
-> > No, we need to not rely on magic exit_reason.basic values.  Can't this be?
-> > 
-> > 	if ((tdx->vp_enter_ret & TDX_SW_ERROR) != TDX_SW_ERROR) {
-> 
-> I think the reason of checking if (*reason != -1u) in the original commit
-> 095b71a03f49 ("KVM: TDX: Add a place holder to handle TDX VM exit") was
-> that, -1u means there is no valid Exit Reason in the lower 32 bits in
-> vp_enter_ret.
-> 
-> Change it to check TDX_SW_ERROR, doesn't look correct to me. Set the
-> EPT_MISCONFIG magic handling aside, TDX_SW_ERROR only means the SEAMCALL
-> instruction faults, e.g., hitting #UD, #GP, or VMFAILINVALID. Just a small
-> subset of the cases where there is no valid Exit Reason.
+Hi Daniel,
 
-Surely we can enumerate those cases?  I.e. why can't that be something like:
+Thank you for your feedback.
 
-	if (tdx_is_exit_reason_valid(vcpu))
+>
+> Is there a tool that told you to fix these? How did you reached the conclusion that
+> this patch is needed.
+>
 
-where tdx_is_exit_reason_valid() decodes vp_enter_ret.  Clobbering the entire
-exit reason and then _relying_ on that clobbered state is gross and brittle.
+My main goal was to understand what the underlying core code is
+actually doing, so I tend
+to trace the call chain and read deeper into the implementation when
+reviewing these issues.
+I use Bootlin Elixir for this, as it is convenient to access anytime
+and anywhere,
+even from my phone :
+
+https://elixir.bootlin.com/linux/v7.1.8/C/ident/platform_get_irq_optional
+
+I don't use a tool to detect bugs or generate these patches. The
+patches are mainly the result of
+reading the code, tracing the actual paths, and then finding issues or
+improvements along the way.
+Also, through discussions with other maintainers during the review
+process, I can sometimes
+identify additional issues or areas that could be improved.
+For example, this discussion led me to another improvement:
+
+https://lore.kernel.org/all/CAABR9nG2vYKhMKeSxFstCRcHb8Z2FzDTBuQ3PY261Lipx7FfJw@mail.gmail.com/
+
+https://lore.kernel.org/all/95f5d6ec-ecc5-4090-ac04-27cdcdc21b8a@sirena.org.uk/#t
+
+> > I checked all error paths in the called functions, and they already
+> > report the corresponding errors,
+> > either directly or deeper in the call chain.
+> > Therefore, removing the additional dev_err() calls does not make these
+> > failures silent.
+>
+> Point here is not really that the error is not propagated up in the call chain
+> but more like if you remove the error messages the user wont' really know exactly
+> where the failure happened.
+
+I understand your concern.
+I think this comes down to perspective on how much value the outer
+message adds.
+Let me give a concrete example :
+
+----------------------------------------------------------------
+       ret = devm_request_irq(&pdev->dev, irq, mxs_saif_irq, 0,
+                               dev_name(&pdev->dev), saif);
+-       if (ret) {
+-               dev_err(&pdev->dev, "failed to request irq\n");
++       if (ret)
+                return ret;
+-       }
+---------------------------------------------------------------
+
+Here, devm_request_irq() internally calls devm_request_result()
+
+https://elixir.bootlin.com/linux/v7.2-rc7/source/kernel/irq/devres.c#L33
+
+ which already uses dev_err_probe():
+--------------------------
+dev_err_probe(dev, rc, "request_irq(%u) %ps %ps %s\n",
+                         irq, handler, thread_fn, devname ? : "");
+-------------------------
+
+Since this lower-level message already logs the exact IRQ number,
+handler, thread_fn,
+devname, and error code, my thought was that the outer dev_err() might
+be redundant
+without adding extra context.
+
+That said, I recognize this can be a matter of maintainer preference.
+If you feel keeping the explicit dev_err() at the driver level is
+still clearer for tracing,
+I am completely fine dropping this change from the patch series.
+
+Best regards,
+Phuc
