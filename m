@@ -1,109 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE1E3B8412;
-	Thu, 13 Aug 2026 09:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E78243D4FA;
+	Thu, 13 Aug 2026 09:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786614816; cv=none; b=CDA8jneSGql8Zd/htqtv0yOWqJAYCAmkueoCtciTqqGKctOV8DLs3R/wtxOA/4XK6oi/mgvxb9c7zLqzTK0nH35Bt3AIK2h3sJkdTDmv+Q69R6mjAyTlqy/pRrSkzO3l/7xiKim5MCZDFSR17anQpXBQuA8nWJayG3L9UI75GEg=
+	t=1786614966; cv=none; b=oPFnN35hJu2F/ruIPbPP4n5RXLqQObX8/uccPIhAJpLEvpBMdOvH/dFcLKmQ2OzjJQWJrwcv4+Cz9UnQhr8Fs4EXcfeFxyPTAF30ciXJ89PioUy3FzTZs6nR1FhYL2wogFjQDHY+Ey/JknMsU7LRRrBBXj9aMq6iLGJwRci6Ozs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786614816; c=relaxed/simple;
-	bh=/OTNhh05kPBBLKFjqB5BbbQrxvsPtgpU6hd4Jcs6UCc=;
+	s=arc-20240116; t=1786614966; c=relaxed/simple;
+	bh=Q5UrNWP2cgzd9JwQj0u8Wlpr2r4pBGqbcj9N5hEn2XQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S+NlrOtLIW1cOTh+kS1qXoGFwuckXJHgZGiNQMrdwH5yZDbadR4u9lVkKfZle3ZzFPD8rz9pz10t/JyjJNWjKE7AjdnufcBAs6+C3q73d83tAxcT8v9FMy3cTZ30rviyzGY6/l/7urqXVY7CeaAY1iNWmd7x4nZBT6vX4/w9Rvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IHkt5NAX; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=fSMyvSyzbXvv04WUlqwr+p3y8/Hk7v7S/43iwkAqfsNh7cnCDVdPx9MVuWxnLLRbumRqLy+eh3zQufYDKqMW+rL2ZwzPrd/e4cqpeplkdT5LKUohfJuJ+ORzSrAMXaToGJBQrwguAbb7ledyq3JD7yAJiRgH4H2bc6a7OITcnlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iuplm4bl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IHkt5NAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F188F1F00A3D;
-	Thu, 13 Aug 2026 09:53:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iuplm4bl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97361F000E9;
+	Thu, 13 Aug 2026 09:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786614814;
-	bh=fatAP2tKSo+FPkloTSGYPkH4ZOT18ygTPlW9hozx2oQ=;
+	s=k20260515; t=1786614964;
+	bh=k7IRT7w488lOfR9xkeYXBX2k2JLbjwVizA4fzP0b7UI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=IHkt5NAXG0sVXnCkEYfv7TxtHIt5suaqQuSYmUOrvuINRps4Ph8LuK7yZiTJHBom+
-	 sWbqstrcUN01lsXd2CiMCAKyRGfHo2IviLlDSkdD4vV8chDGZ5DhLDFgOLgmNAtThL
-	 uu4878GNPdQaeC/qaIWTGBSgGEtNKJVEcrdvjEhyNbiZalTKK6nZeZyzrxUts95vqg
-	 g0HszbZWw5h37qYco4QSL4ttlVHU6CRWmfG3hbK9PSSPvvTd42JRgASO7G+wdDANRZ
-	 VU6cQJglJKOzij6KmLnvEeAzlU3wGhVsM7ChbJSXaRzB4VlKu9GFxv3aBvRCenozSq
-	 9VhKhJMpqUb+A==
-Date: Thu, 13 Aug 2026 10:53:30 +0100
+	b=Iuplm4blHS2c8/DcK3dPZ84Lb9r9AaJdZIf04Sd1H84ArTJvE5rlfZTiFJMmbaeIu
+	 wyExIBXnR/cya7T2jDLkmkZJFmaluDJUbgcSaoGRjRJ4wnmN4waylUVPbBzKiIIB5M
+	 274tr+T64x9X3N5eLeBsbKUTYnEhatPykRzyFlC4fNaUXZj+dhQMwjI09vNUp+Rt4m
+	 O/FkDadodLP06MVUp9mQ2XgREtJeGFU5aEzkn3sTHRgFCAbOWfeTxiWojQDLX4vW8I
+	 dsPZBLz2Ci49soTnctPyjLbjyldC5KO3vKCmTJaC5HOuSMXJ96IhFRIfuLZUd1+ZFY
+	 HlMS6hw/NUfEQ==
+Date: Thu, 13 Aug 2026 10:56:00 +0100
 From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Stefan Wahren <wahrenst@gmx.net>, linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH V4] leds: rgb: leds-group-multicolor: Implement
- default-intensity
-Message-ID: <20260813095330.GZ1072730@google.com>
-References: <20260813091428.9072-1-wahrenst@gmx.net>
- <20260813092522.0228D1F00A3A@smtp.kernel.org>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org, Mark Brown <broonie@kernel.org>,
+	sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	mfd@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH RESEND v6 4/5] mfd: axp20x: Add support for AXP318W PMIC
+Message-ID: <20260813095600.GA1072730@google.com>
+References: <20260812-axp318-regulator-v6-0-d6b84b55c000@baylibre.com>
+ <20260812-axp318-regulator-v6-4-d6b84b55c000@baylibre.com>
+ <20260812214019.CDF921F000E9@smtp.kernel.org>
+ <1jldaafmpd.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813092522.0228D1F00A3A@smtp.kernel.org>
+In-Reply-To: <1jldaafmpd.fsf@starbuckisacylon.baylibre.com>
 
-On Thu, 13 Aug 2026, sashiko-bot@kernel.org wrote:
+On Thu, 13 Aug 2026, Jerome Brunet wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `default-intensity` property read from individual monochromatic LED nodes is applied to the multicolor group without rescaling, causing incorrect brightness calculations.
+> On sam. 12 janv. 2008 at 23:40, sashiko-bot@kernel.org wrote:
+> 
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [High] The corresponding regulator driver lacks support for `AXP318_ID`, causing the `axp20x-regulator` child device probe to fail.
+> 
+> Funny sashiko did not pick up on this when v6 was first sent. This is an
+> ordering problem. The regulator part should be applied before the mfd
+> one.
+> 
+> I could reorder here but there is not much point since the 2 changes will
+> land in different subsystems but it does bring a valid question:
+> 
+> Lee, Mark, are you OK with picking the patches indended for your
+> subsystem or would you prefer that I split the series, regulator on one
+> side, mfd on the other (with a dep on the regulator one, of course) ?
 
-Please review, explain or fix the Sashiko review(s).
-
-If this is a set, this request includes the other patches too.
-
-> --
-> 
-> --- Patch [1]: [PATCH V4] leds: rgb: leds-group-multicolor: Implement default-intensity ---
-> commit 13399f1aaceaf09afa7e252e35000d7d61ab1925
-> Author: Stefan Wahren <wahrenst@gmx.net>
-> 
-> leds: rgb: leds-group-multicolor: Implement default-intensity
-> 
-> This commit introduces support for the default-intensity property during
-> boot for LED multicolor groups. If the property is missing, the code falls
-> back to the previous behavior of configuring the sub-LED intensity to its
-> maximum.
-> 
-> > diff --git a/drivers/leds/rgb/leds-group-multicolor.c b/drivers/leds/rgb/leds-group-multicolor.c
-> > --- a/drivers/leds/rgb/leds-group-multicolor.c
-> > +++ b/drivers/leds/rgb/leds-group-multicolor.c
-> > @@ -108,8 +108,10 @@ static int leds_gmc_probe(struct platform_device *pdev)
-> >  
-> >  		subled[i].color_index = led_cdev->color;
-> >  
-> > -		/* Configure the LED intensity to its maximum */
-> > -		subled[i].intensity = max_brightness;
-> > +		ret = device_property_read_u32(led_cdev->dev, "default-intensity",
-> > +					       &subled[i].intensity);
-> > +		if (ret || subled[i].intensity > max_brightness)
-> > +			subled[i].intensity = max_brightness;
-> 
-> [Severity: Medium]
-> Does this logic properly scale the intensity when the individual LEDs in the
-> group have different maximum brightness values?
-> 
-> If a multicolor group consists of LEDs with vastly different maximum brightness
-> capabilities (like a GPIO LED maxing at 1 and a PWM LED maxing at 255), the
-> overall group max_brightness will evaluate to 255.
-> 
-> When reading the default-intensity from the device tree, the value is typically
-> specified on the scale of the individual sub-LED's max brightness. If this
-> value is assigned directly to subled[i].intensity without being scaled up to
-> the group's max_brightness, the sub-LED might be initialized with only a tiny
-> fraction of its intended intensity, often resulting in the LED being completely
-> unlit instead of at the requested intensity.
-> 
-> >  	}
-> >  
-> >  	/* Initialise the multicolor's LED class device */
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813091428.9072-1-wahrenst@gmx.net?part=1
+Does this break existing devices or simply delay support for this new one?
 
 -- 
 Lee Jones
