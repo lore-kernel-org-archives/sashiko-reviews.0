@@ -1,106 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CAD33939D;
-	Thu, 13 Aug 2026 09:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A4A3CC314;
+	Thu, 13 Aug 2026 09:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786613345; cv=none; b=YaVsT+5UFjnHvkMLVEv+1vcizRnUUbdr8jNJUnfQAp4HOXRA96cMmEbB64W04TK/jECDRWovZLVdIzEPnHxwS6f2ao/DPmE8RQ2mFaUe3Tgq167mTahP+8wmb48ECDzL9AyQcNAf4hJ3bkSddnQynJP2SREHK+6QJF1+SOPZWdo=
+	t=1786613648; cv=none; b=VHWipVRM4AZgDNZZH8VnQaW3LIJ2IoMkYhaTanH4QFm0T2QPV0kMi0S4XI5wiUovoSi2AR6QrGv2rIYmaXUBPYYacduatFT8/+KvtEhMIqVvrRrDVyY0uF6MOwm2QzZAjlliW+hF6/zc8kGHNlfI2IQFuZZnRgntb9udHLHDH3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786613345; c=relaxed/simple;
-	bh=V7yz1xdUcYj69O1x3V+3WRVc824Oo8kW+lcILojXT64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LPxbLvefJ39mhV+2XY++62t8hP6YLrjIN+isGGdgeDd+Wio/uUjvqyKeuLZNAjOWQ4pCiwToMlNhwm/R8w1sO9el50L1a7snC26Z5hTr5KHBRRRy5AUzwX/ti3vht3MH/kmseV7+4pna59CUhRL7Z8Lt3rIcOYZ+P1vzXsyzdHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jNUHEzpX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786613648; c=relaxed/simple;
+	bh=WZcKegKusGSYc+j1Wkf8jKtJ41TaZy/jhhpAMK5Js9Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=duWaH95pLnSUGAibeNsEqsyzs2Xo47lWMsxPtuS5hYQlSgtzjm+EMJZG/nLdkKuugdRtV8tyF1LUX0zn3cWT976qIr7HTikdW9Iac+LdWr+2WyYz0u7mNP0ZwV6J/vbI1O1hp3/EDz1IvQ7yh0yTwpPYmvdII/HTRiXEAdYU8Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=bpJcrEAp; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jNUHEzpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10B21F00A3A;
-	Thu, 13 Aug 2026 09:29:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786613344;
-	bh=tzfZOTg3euPGGgReeCodY9rzq6J9GOIejIL3iPZRIAM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jNUHEzpXTbP9KoV10pLCvQWuw6T015VemhiufP8I5jaQVQcuqS2ymcQI3rJXZwjeB
-	 B1IgNXGrkBj0BoXA4Jre+f8rlXCukwimLXggqV1rRSPSpng2oPAWPMHD65cSqKzR0s
-	 IX+knzD7HrxrHRLzcVIQwpCY2kLeYrvmSorJ2mIuteQ/m8ksIEovzDAmVvCGfCuB62
-	 g4lGSPZY1Cd4vshdnIjYIZId+0XuDXiX94zUq208lkyq0z9//X6/TRV79bMhk55ZqZ
-	 4Wi6nPSESEq86SUAg/hhin7RGTon4yWZ1QtSzhjiS4mZ7P7asu6+cSPHpj/cPQcH77
-	 B07IcfBE5glhQ==
-Date: Thu, 13 Aug 2026 11:28:58 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH v1 2/5] ASoC: qcom: q6prm: Fix QAIF clock ID typo
-Message-ID: <20260813-snobbish-acoustic-spider-8c0749@quoll>
-References: <20260808181948.2489187-1-prasad.kumpatla@oss.qualcomm.com>
- <20260808181948.2489187-3-prasad.kumpatla@oss.qualcomm.com>
- <20260808184539.3C6601F000E9@smtp.kernel.org>
- <e88326f0-e945-4d63-b257-308cb00df756@oss.qualcomm.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="bpJcrEAp"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67D98vfb1949754;
+	Thu, 13 Aug 2026 09:34:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=128j5y
+	xQWpx+4Nfn3fGJu3UpPbXfHhXb3HJpm34WKW8=; b=bpJcrEApNS76irch0XiVze
+	zvywkgTvvPhOcAZayMwVefelhe5S7OGw8GtUf4Im5Dbes0fwOnMub9ZRrmPQBf5T
+	EEGTijZVeyUdBlpgy8d55HZgDMjPN2/wDf3/qkL58xrO8VpBjCmBLKyQ8n3XRgfx
+	L5Z91bBrzsyBSDjo9i0gm7ekUX23wtXphC6xBUbtKRcSidekVY6ogwnc5hBexjLB
+	ivy8icc5Lbkl5Kr4XMVJN9sJyaFhUeIzQ93l6JgVDZ8SOGKqmPbbYPW1uTGZVsfh
+	zHxLvKi8lyM0CiHJPLDBiHx4COYqKsaxxgOLIAkQht6I5IBAuR8dw6CcIdwERJLA
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnwe83x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Aug 2026 09:34:04 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67D9QWa9022756;
+	Thu, 13 Aug 2026 09:34:04 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9hac1j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Aug 2026 09:34:03 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67D9Y05l31981954
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 13 Aug 2026 09:34:00 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1C8C420043;
+	Thu, 13 Aug 2026 09:34:00 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E6E6020040;
+	Thu, 13 Aug 2026 09:33:59 +0000 (GMT)
+Received: from [9.224.77.157] (unknown [9.224.77.157])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 13 Aug 2026 09:33:59 +0000 (GMT)
+Message-ID: <e13682db-e68a-4196-807b-8c67bea68a2a@linux.ibm.com>
+Date: Thu, 13 Aug 2026 11:33:59 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e88326f0-e945-4d63-b257-308cb00df756@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390/pai: Handle multiple PMU stop callback invocations
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
+        Vasily Gorbik <gor@linux.ibm.com>
+References: <20260813070815.2692398-1-tmricht@linux.ibm.com>
+ <20260813072156.9C4311F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Richter <tmricht@linux.ibm.com>
+Organization: IBM
+In-Reply-To: <20260813072156.9C4311F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a7d8f8c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=_CkJLOUM1Kt26T3VhsEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: -jr7y3OyPJoaeNEZmAZqNyzNu3SZ1tp2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDA2NiBTYWx0ZWRfX9ozMIUZ0Qz+n
+ 1nDEgL13ElsSrxpbT5WA5ZoNy+qvGzJJVgdoLdTPbbhQ0mVJa9eS29QZaSZG/AP321n9Cwit4/M
+ 9W7QOH4yZcIntxJIexiU945wpvz61WRcv+cuLw2rc6pJZA9osKfiQnBU6Hhn4S2tK9KXnCyWs64
+ +wwE9cngF4RlBIZ02TEuvArDAyqBLcQN5ZKYTfJKgpL6fAWVFkntUNYTGDXSc0gPOwL19u/pTWv
+ NwRTI0sRuJqKYlcF+Mp/MS3rwjmGArdtGOg+fXfw0c1rnIlkgq77AAO8swNSFRaVdzCDHxadaXj
+ JWAg3UTbcCG5cRPJtZ3bSLdGs7UiV8VC+hny6stndvSV2BxRhPnT/bawZOWKOxqYHxvoVnHusg/
+ mHxxsxFYWorNRH1IZ65OAauOlD29g+zvwbUoOFWoaORYiZFCA0QPDae/Mv9vXY8yL2dQ0PabLJx
+ L25JebjIiyUAskhawyg==
+X-Proofpoint-ORIG-GUID: -jr7y3OyPJoaeNEZmAZqNyzNu3SZ1tp2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDA2NiBTYWx0ZWRfX4FHbjM9QdaUO
+ ySAxdxkhTb472Gf1jUwf9ZLRtltE2KdJ97OHFSLRt3oLKT9/SXaTYVJ1gr/Rj9cgIb/mPsJHSVA
+ /eJGIXiTsEtB74OmGzSYED96VDBvBvI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-13_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608130066
 
-On Sun, Aug 09, 2026 at 05:57:18PM +0530, Prasad Kumpatla wrote:
+On 8/13/26 09:21, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> On 8/9/2026 12:15 AM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Low] The patch series breaks `git bisect` by splitting a macro rename across commits without retaining aliases, causing an intermediate build failure.
-> > --
-> > 
-> > --- Patch [2]: [PATCH v1 2/5] ASoC: qcom: q6prm: Fix QAIF clock ID typo ---
-> > commit 2d0653a87462572279fa5b7912ec981aed567a40
-> > Author: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> > 
-> > ASoC: qcom: q6prm: Fix QAIF clock ID typo
-> > 
-> > The Audio IF QAIF clock IDs were introduced with a "LAPSS" prefix instead
-> > of "LPASS". This commit renames the definitions and updates their users
-> > accordingly.
-> > 
-> > Link: https://sashiko.dev/#/patchset/20260804070307.117119-1-prasad.kumpatla@oss.qualcomm.com
-> > 
-> > > diff --git a/sound/soc/qcom/qdsp6/q6prm-clocks.c b/sound/soc/qcom/qdsp6/q6prm-clocks.c
-> > > index f613e2aee75e6..b4f9abbe02cb0 100644
-> > > --- a/sound/soc/qcom/qdsp6/q6prm-clocks.c
-> > > +++ b/sound/soc/qcom/qdsp6/q6prm-clocks.c
-> > > @@ -64,34 +64,34 @@ static const struct q6dsp_clk_init q6prm_clks[] = {
-> > >   	Q6PRM_CLK(LPASS_CLK_ID_WSA2_CORE_TX_MCLK),
-> > >   	Q6PRM_CLK(LPASS_CLK_ID_WSA2_CORE_TX_2X_MCLK),
-> > >   	Q6PRM_CLK(LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK),
-> > > -	Q6PRM_CLK(LAPSS_CLK_ID_QAIF_IF0_IBIT),
-> > [Severity: Low]
-> > Does this patch series break git bisect by splitting a macro rename across
-> > commits?
-> > 
-> > While this regression is fixed in this commit, it appears the preceding
-> > dt-bindings commit removes LAPSS_CLK_ID_QAIF_IF0_IBIT and related macros
-> > from include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h.
-> > 
-> > Because q6prm_clks still references those removed macros at the preceding
-> > dt-bindings commit, it causes an intermediate build failure when compiling
-> > the kernel at that point.
-> > 
-> > Should the dt-bindings commit temporarily retain the old misspelled macros as
-> > aliases until the driver is migrated, or should these changes be squashed?
-> 
-> Hi Sashiko,
-> 
-> Thanks for reviewing.
-> 
-> The series remains bisectable as the renamed clock IDs are not
-> referenced by any in-tree users before the corresponding Q6PRM updates.
+> Pre-existing issues:
+> - [High] Unsafe iteration over `cpump->syswide_list` in `pai_have_samples()` leads to a kernel crash (LIST_POISON dereference) if an event overflows and is synchronously throttled during the loop.
+> --
 
-Really? git grep LAPSS_CLK_ID_QAIF_IF0_IBIT told me different story. And
-it is even YOUR code which is reported by grep.
+This can not happen. The syswide_list is anchored by per-CPU pai_map::syswide_list and tracks
+all events which are bound to that particular CPU. The event was installed only on that particular
+CPU and does not move with the process/task. Each CPU has its own list anchored by
+ pai_map::syswide_list.
+
+The call chains are either
+
+ paicrypt_sched_task() or paiext_sched_task
+ +--> pai_have_samples() iterates over syswide_list and calls
+      +--> pai_have_sample
+
+or
+ pai_stop()
+ +--> list_del() to remove the event from that CPU.
+
+ Since a CPU can only execute one given code path at any one time:
+ - either schedule out
+ - or stop the event
+ both can not happen at the same time. PAI PMU does not install an interrupt handler,
+ there is no supoprt for interrupts.
+
+ I think this is safe or am I mistaken?
 
 
-Best regards,
-Krzysztof
+...
 
+-- 
+Thomas Richter, Dept 3303, IBM s390 Linux Development, Boeblingen, Germany
+--
+IBM Deutschland Research & Development GmbH
+
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+
+Geschäftsführung: David Faller
+
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart, HRB 243294
