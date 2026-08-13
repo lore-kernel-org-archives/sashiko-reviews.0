@@ -1,191 +1,147 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA23B43F0AD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 08:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348FA43F4A3
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 08:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786608652; cv=none; b=aVrg1+9aTRVYBSds90SLs1olV+px0GfReegdGcdfvyZN7CHuoy+lGI1F1YCUH7sENrDCid1bhwRJYAc5uw1jTzx1d3LqdJM63AT2as/ynaCgowVoWSf72div6GP/fthQBTUXP7srvlqpjDgWW7sIXfTy9QpG/1/twkYGrxTHEeM=
+	t=1786609170; cv=none; b=hu3ZtCn60HpYsAaDsBXahQjsIwL+sW6vgOIIQgHZAPEhBuJ2g7QOreElt2xUG3SD7+CeDSXRvOTqkJyBtZL99Tsm5P9cz5ZEETKhscTwYQzNQZLP/qJd8s3khANJS2Cr9q5xdvADa8X34JoCUS9SpKwvNlBjTNrwBYf4mEWIcZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786608652; c=relaxed/simple;
-	bh=2vW8nPjiF+fKmhpleG4r/1VZ5Ror7CluAB366amg3HI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tcX1k/610yOOaVm0+LkQMTOe61HILZ70Y9xn/GJdR+ciprs2UK3bATs/3gpVU6YfWy1nH269yJEXp64zx6QB8mK8yxiRUxFUm2NqaIX7/TH0CYPDfYKtcyZM03vXO2hPwmYyuYKgRb9nOKXrA5Llj4qcJ2ALu9oHIjJdGyOkzEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GJjgaQBj; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1786609170; c=relaxed/simple;
+	bh=3o0ghu/JaY4o1UrD0lyf5hXneVEdMI/7Llifd12GZP8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uDBTOGwRSeUGcZGGV+snbdlrq0vKgzjUOqXS5tKp1TGpm4GSfRZMUwjpez4Q69/6q2V8j04W9tA2CcKb1M5VJlqmvmsmPhJH4jXhZ/PJ8z3gAo8Y7w87tK9x2php7CXrvG8eaYeTqvYskwaSyvzPjZ0B/SQ1AtMDdEH3eIGbbEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=jKDLWCoi; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GJjgaQBj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1786608646; x=1818144646;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=2vW8nPjiF+fKmhpleG4r/1VZ5Ror7CluAB366amg3HI=;
-  b=GJjgaQBjguHe0LTjyu76wMWupr6MCbRMzZZ+7k7D0Mitpy0xBFWGJjvp
-   9pGZRi3oUGF9MG/k0zTFdK9cZyTQZdQ3OQWG+eRBOexJ0ll6sAu5j4i81
-   VMwMR/rCNBWRwlZRjDH6sOoaoDJ6e2VE/lJK5ClxbW9SZ4vdG5k6YzvMg
-   HLLHuzznDRNOIDNqKgIXO1WU1PvRRzYuplyMIx1Wl5bQkddNBUhfbdHVV
-   HoMVctAgM0q+QiN3xGlYuow//ztfu+yb67qE5yI7lfBxTqM3IBEw1mkFH
-   DIt0FBzRKt7/+lJ7qmZpbNm0Eu6Q4YMZ4+odO+Fr80vuwtqX9PIeArqMh
-   Q==;
-X-CSE-ConnectionGUID: tIJipONOR2+N5TKWGG8RCQ==
-X-CSE-MsgGUID: 8FasUBmKRjeIDdwxnHv+MQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11873"; a="97524270"
-X-IronPort-AV: E=Sophos;i="6.25,221,1779174000"; 
-   d="scan'208";a="97524270"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 01:10:44 -0700
-X-CSE-ConnectionGUID: 5a7DsNlZS/iliGzvmg7gbQ==
-X-CSE-MsgGUID: MluFwrrzRKi96aEWKhcA9g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,221,1779174000"; 
-   d="scan'208";a="262559933"
-Received: from unknown (HELO [10.238.208.98]) ([10.238.208.98])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 01:10:42 -0700
-Message-ID: <e749e9bc-5bdf-4e43-87cf-32b0a58981ea@intel.com>
-Date: Thu, 13 Aug 2026 16:10:37 +0800
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="jKDLWCoi"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f96c5b722so942725f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 01:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1786609163; x=1787213963; darn=lists.linux.dev;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=jnnmyEy0HKcgC5aHIY6kah2VQrRaESEvLGC8LbPQC3Q=;
+        b=jKDLWCoidE61XfXhxcicE5Vo0xBSbAA7S7BrRwPpk0pBHCfYG2Xsz5Gunx99yjaHB3
+         8RC6k3tdicpglkt6BFIe9ktgan+ufsthVw01gb3NW1H8bGyNeJ8GiZmo61c5GQULAdWx
+         7LVfe1YIvFKh8L0P8nL/cxkJDPc4Un0bjJylzouhI4EfXuUxWgukpqIOLWq1Si1xuYHd
+         /QhwjM8R2u1vjDClKybg20ad5ioKBGmYttpdoJQ4LvLQCzK3bSbZr7NWIvsKo+dbKkCc
+         l/uWxGgEV/R+mbcpUpCXPWK+rBv17f+Nwxkrs3nbqJpfaAx27j2qbZWrL/pJrz53Vitn
+         MCmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786609163; x=1787213963;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=jnnmyEy0HKcgC5aHIY6kah2VQrRaESEvLGC8LbPQC3Q=;
+        b=OHYmTrD3OjM16/HB7j3B6LEnmKRAZN0US/H01XtL5wNRVTAkEcu8Z0JUauMEHRLhay
+         1nXDLHhme/KrvX7Fj+XcatoQ2I/ilsn7O0Tlkp6F2zlhFMRjVNX/vKuzD1deJc7N3nRd
+         ZBZK10qsgJfnMctyeBo55NdMKUE6AbUnfWk4AeEyb8gsVWfFWqDCEKEXIxiTwRuEw4oD
+         GeH3zoFS2ElqorJ4ivPkT0keJPEcF2UpeXk7Oggt/vcUp3YpH+/Rh6HPE3vFjzwxudL1
+         qfnfZL61u9KnTdaiaw0qoaaHDC0zHAFadYy5ZTSqBPSiipUv0j37Fmz2hw43vE/0fUfq
+         6Ihw==
+X-Gm-Message-State: AOJu0Yxj6jPUrP+qoqvQt9Mth6DlnYsdOhPpQD99xEPRrpME72QY90xp
+	lDuYoMFh4bQRhy1VsxxtU1fPMNk8xZiTHLjmB4Vy2+kyXxsShofxnfFONZcJlsqKoImNu/JwbqI
+	Gfb/mXXw=
+X-Gm-Gg: AR+sD10zL0zhpT6bbh5r+a1PtWofDtk9dGYBy09/kEGbf1TEpA0BWzvF0gI5gK4dkHY
+	eiuQZiiFWBV5t9I6lZKyKP0k4cy/zRwuO6yC8myCeIOFV3WpMafM76bkgDz96WH72tBXr8g806J
+	ytKXZT2KdVlPpMtEGA6fXVlEXKptegM0+KVSGOwcEVmtDdTnNO0VD0MlaMY35toZGTktJp683my
+	qUwboJ6GSH4J133Fpfiesm5FszjV6DN5CuXaA3cX4kU6ucYCWP5lKEk8xV5/QvedA99D9Lqx1A0
+	bzA76Cg4Bx/pwEc9uSFSC7l74CAOxZFj+Fgo1q5vl6OHbAj82YqMLGTRDKOAYQJ4PhSEUsX49kU
+	RC0bqr/V6OOdforZmafu7RxaElKQOdahGLxWcICC762G4FoNh/GisFRR7ngihr0w897yOMezfv9
+	VD36ET3Q3K/1epTkmKbCBQxRm88d6y8jdMz9BX55UxtN/PZQPCx0Vzk2h8CZI=
+X-Received: by 2002:a05:600c:3e15:b0:499:819e:db2c with SMTP id 5b1f17b1804b1-499821d7ed1mr43073485e9.16.1786609163484;
+        Thu, 13 Aug 2026 01:19:23 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:bd31:7f6f:53ba:7518])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49981e438edsm39581985e9.4.2026.08.13.01.19.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 01:19:22 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+ mfd@lists.linux.dev, devicetree@vger.kernel.org, lee@kernel.org
+Subject: Re: [PATCH RESEND v6 1/5] mfd: axp20x: Constify axp313 and axp717
+ cells
+In-Reply-To: <20260812213712.1A8671F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 12 Aug 2026 21:37:11
+	+0000")
+References: <20260812-axp318-regulator-v6-0-d6b84b55c000@baylibre.com>
+	<20260812-axp318-regulator-v6-1-d6b84b55c000@baylibre.com>
+	<20260812213712.1A8671F000E9@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Thu, 13 Aug 2026 10:19:21 +0200
+Message-ID: <1jqzk2fn5i.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] KVM: TDX: Fix the exit reason handling
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260810112200.2326727-1-xiaoyao.li@intel.com>
- <20260810112200.2326727-3-xiaoyao.li@intel.com>
- <20260810113924.4ACBE1F000E9@smtp.kernel.org>
- <13ea6279-a342-493b-a0f8-15ac5b4c59ad@intel.com>
- <anplcWfYReCMeu1A@google.com>
- <07df932f-ca83-463d-b830-aa10a8fa11f2@intel.com>
- <an0N0vHwsYEqjpRe@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <an0N0vHwsYEqjpRe@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 8/13/2026 8:20 AM, Sean Christopherson wrote:
-> On Tue, Aug 11, 2026, Xiaoyao Li wrote:
->> On 8/11/2026 7:57 AM, Sean Christopherson wrote:
->>> On Mon, Aug 10, 2026, Xiaoyao Li wrote:
->>>> On 8/10/2026 7:39 PM, sashiko-bot@kernel.org wrote:
->>>>>> @@ -2147,7 +2156,7 @@ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
->>>>>>     	struct vcpu_tdx *tdx = to_tdx(vcpu);
->>>>>>     	*reason = tdx->vt.exit_reason.full;
->>>>>> -	if (*reason != -1u) {
->>>>>> +	if (tdx->vt.exit_reason.basic != -1) {
->>>>> [Severity: Medium]
->>>>> Will this check always evaluate to true due to C integer promotion rules?
->>>>>
->>>>> The basic field in union vmx_exit_reason is a 16-bit unsigned bitfield. When
->>>>> comparing it to -1, the unsigned 16-bit value is promoted to a signed 32-bit
->>>>> integer. If the value was set to -1 (65535), the comparison evaluates as
->>>>> 65535 != -1, which is always true.
->>>>>
->>>>
->>>> Well, how about something below on top of this patch?
->>>
->>> No, we need to not rely on magic exit_reason.basic values.  Can't this be?
->>>
->>> 	if ((tdx->vp_enter_ret & TDX_SW_ERROR) != TDX_SW_ERROR) {
->>
->> I think the reason of checking if (*reason != -1u) in the original commit
->> 095b71a03f49 ("KVM: TDX: Add a place holder to handle TDX VM exit") was
->> that, -1u means there is no valid Exit Reason in the lower 32 bits in
->> vp_enter_ret.
->>
->> Change it to check TDX_SW_ERROR, doesn't look correct to me. Set the
->> EPT_MISCONFIG magic handling aside, TDX_SW_ERROR only means the SEAMCALL
->> instruction faults, e.g., hitting #UD, #GP, or VMFAILINVALID. Just a small
->> subset of the cases where there is no valid Exit Reason.
-> 
-> Surely we can enumerate those cases?  I.e. why can't that be something like:
-> 
-> 	if (tdx_is_exit_reason_valid(vcpu))
-> 
-> where tdx_is_exit_reason_valid() decodes vp_enter_ret.  Clobbering the entire
-> exit reason and then _relying_ on that clobbered state is gross and brittle.
+On sam. 12 janv. 2008 at 23:37, sashiko-bot@kernel.org wrote:
 
-This a good suggestion. I implemented it as:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [Medium] Hard-coded cell IDs are used in `axp806_cells` and
+> `axp809_cells` instead of leveraging `platform_device->id` or
+> `PLATFORM_DEVID_AUTO`, violating MFD subsystem guidelines.
+> --
+>
+> --- Patch [1]: [PATCH RESEND v6 1/5] mfd: axp20x: Constify axp313 and axp717 cells ---
+> commit d0271b0bfb6609a5dbfc9c713361a49994e56202
+> Author: Jerome Brunet <jbrunet@baylibre.com>
+>
+> mfd: axp20x: Constify axp313 and axp717 cells
+>
+> This commit constifies the mfd_cells arrays for the axp313 and axp717 chips.
+> It aligns their declarations with the rest of the supported chips where
+> the arrays are properly marked as const.
 
-Author: Xiaoyao Li <xiaoyao.li@intel.com>
-Date:   Thu Aug 13 09:42:15 2026 +0800
+As expected and already explained in the cover-letter.
 
-     KVM: TDX: Check if there is valid exit info based on vp_enter_ret
+>
+>> diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+>> index 679364189ea58..22baab6e10fa6 100644
+>> --- a/drivers/mfd/axp20x.c
+>> +++ b/drivers/mfd/axp20x.c
+>
+> [ ... ]
+>
+>> static const struct mfd_cell axp806_cells[] = {
+>> 	{
+>> 		.id		= 2,
+>> 		.name		= "axp20x-regulator",
+>> 	},
+>> };
+>> 
+>> static const struct mfd_cell axp809_cells[] = {
+>> 	{
+>> 		.name		= "axp20x-gpio",
+>> 		.of_compatible	= "x-powers,axp221-gpio",
+>> 	}, {
+>> 		.name		= "axp221-pek",
+>> 		.num_resources	= ARRAY_SIZE(axp809_pek_resources),
+>> 		.resources	= axp809_pek_resources,
+>> 	}, {
+>> 		.id		= 1,
+>> 		.name		= "axp20x-regulator",
+>> 	},
+>> };
+>
+> [Severity: Medium]
+> This is a pre-existing issue, but is it safe to use hard-coded cell IDs
+> like 1 and 2 for the axp20x-regulator cells in the axp806_cells and
+> axp809_cells arrays?
+>
+> The MFD subsystem guidelines require using PLATFORM_DEVID_AUTO for automatic
+> cell indexing, or platform_device->id if numbering is explicitly needed.
+>
+> Can this hard-coded cell ID usage lead to device naming collisions in sysfs
+> or driver load failures?
 
-     Check if there is valid exit info based on vp_enter_ret instead of 
-relying
-     on the clobbered Exit Reason, in tdx_get_exit_info().
-
-     Current KVM uses "Exit Reason is not equal to the synthesized invalid
-     Exit Reason, -1u," as the condition to identify there is a real TD Exit
-     and valid exit infos.  However, there is one issue with this approach:
-     KVM updates the Exit Reason to the synthesized invalid Exit Reason for
-     real EPT MISCONFIG as well.  This is a false positive that real EPT
-     MISCONFIG has valid exit infos.
-
-     Though the issue can be addressed by changing the handling for real EPT
-     MISCONFIG to not update the Exit Reason to the synthesized one, relying
-     on the clobbered Exit Reason itself is brittle.  Instead, check
-     vp_enter_ret directly to identify if it is a valid Exit Reason.
-
-     Fixes: da407fe45908 ("KVM: TDX: Handle EPT violation/misconfig exit")
-     Cc: stable@vger.kernel.org
-     Suggested-by: Sean Christopherson <seanjc@google.com>
-     Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-index 7338ac0af693..f9036c0a8f9c 100644
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -921,21 +921,27 @@ static __always_inline u32 
-tdcall_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-         return EXIT_REASON_TDCALL;
-  }
-
--static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+static __always_inline bool tdx_is_exit_reason_valid(u64 vp_enter_ret)
-  {
--       struct vcpu_tdx *tdx = to_tdx(vcpu);
--       u32 exit_reason;
--
--       switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
-+       switch (vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
-         case TDX_SUCCESS:
-         case TDX_NON_RECOVERABLE_VCPU:
-         case TDX_NON_RECOVERABLE_TD:
-         case TDX_NON_RECOVERABLE_TD_NON_ACCESSIBLE:
-         case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
--               break;
-+               return true;
-         default:
--               return -1u;
-+               return false;
-         }
-+}
-+
-+static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+{
-+       struct vcpu_tdx *tdx = to_tdx(vcpu);
-+       u32 exit_reason;
-+
-+       if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
-+               return -1u;
-
-         exit_reason = tdx->vp_enter_ret;
-
-@@ -2144,7 +2150,7 @@ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 
-*reason,
-         struct vcpu_tdx *tdx = to_tdx(vcpu);
-
-         *reason = tdx->vt.exit_reason.full;
--       if (*reason != -1u) {
-+       if (tdx_is_exit_reason_valid(tdx->vp_enter_ret)) {
-                 *info1 = vmx_get_exit_qual(vcpu);
-                 *info2 = tdx->ext_exit_qualification;
-                 *intr_info = vmx_get_intr_info(vcpu);
+-- 
+Jerome
