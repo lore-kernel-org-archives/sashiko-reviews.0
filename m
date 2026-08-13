@@ -1,185 +1,145 @@
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11012054.outbound.protection.outlook.com [52.101.126.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270493B42DD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 12:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786622455; cv=fail; b=ce704ygIY9+Dl2SwVJijZ9VaFLyPnD6coyay0HCADTymJy/9ZSYzWYLE3BzGthmD6SNDojh02jVAOFcxOqotHsR7VQzQW4zNalEa6cNrUH4oY/39U5Oipf+p8WvpM2ArYy4fPjvsO1zAndP9oqA+UpRQD9b6kIPYh24fqPRF3lw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786622455; c=relaxed/simple;
-	bh=mC3+m7xFWluL2PLyNXBDDeUaVP27deg7bYU9eBabFV4=;
-	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=TOSxHacfqQwivOgYyW1Mbdcr9ZM7EBA4+LFZrzXzXU2vyQeNLAOWmaFOLmvod4l/AZ0wOmKgSXXQerCGj8JSnDHfT0Y4vSGGGHfREHRAZKNtKLbU9OoCvAhGmEbWURoXjUwvq8/LWVkXj8ANo4/iL1zHMvVKlplR5xZUgaOn6A0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=YOp7NASj; arc=fail smtp.client-ip=52.101.126.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC2D38B7BC
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 13:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786626987; cv=none; b=ZH6y2WmN1+kxsNb9zVFT6j8iRC241e8mk/XRiB6GYrp+IKRY63f7UATkIRmYwCnpQJ2QlmFwlt7t1XgNONP0T5RyDrcPqWVejjqz7TLdOl+OsJj3WQtvzPE1v/z7t2MkJT83mk3b8R4SaS5xmGo3qrSBC7jV8woimMexDV2UHqo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786626987; c=relaxed/simple;
+	bh=6dt3Ufb5RisjOvIx7jeq08hJ7uBHukeiJU/N0FKxucc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qg8YDpie5emSgqsimVraqc4tM2s24QxLrqvGCn/ZoGTF0dfTfLha78gnBBM6KIZ3wvQksGJ0dJd9Ix9tyF0KKfoYH7QGKLIzMI/XEHg4yzlk8/kP9lpnPoS9pML6Fjd20jQgoX1da0OV/dxRIC5IXbqA6few0HoFPfqvZTF7a9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QoDBXjV0; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="YOp7NASj"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EEbqd27Nn80QFLJoKm+r4csC30LFXqwbXjDgyjadVaWwpFpNNE34CUpwZFxUOGMAna/6j1KdOJX0Q6Vr8xLdUMx4AFnIlaJRBTsna92d0RjdNodjd8AZ5o62/6vetvEbNwtTtmFKt36urjAVR1ln3vUF4Mx5I1JsuEDe+aLU3IBHPhyluvxWZvz7O1NPrqBYWsRZhQVhkfjb86QTuqEivJSPpToSZp8XHXr0x0CSNfablp/7akmenWEg7asenHXggshjfHqD79EIw8x95CFYI3pzr/7frRvLsGT9B4EOpEm2/3Rw6eXXm2PFOphw+hjg1qcDJQHwBmntgpWGk+Dnmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NRo2rQAX6w6S9D9fb/ZnKC3i3GsHAgxSw5hKcENYguA=;
- b=Xb2uMMvRGnTBOMwBVX8ZNpUnitAxwZHVcLFWWuj9TdZEKFBJvVONjDmqcBYLynwwTcDrafEo39HOf6qL9HQqm7G7EVS9y0uc3V5IfIOsLPV/zL5v6hje8lUeTiCxL5itk8mOuiZI9QLdslmRYhHV/6lQYGmALB2EmcUQ4vb9iM8EDzv0Ioe8o1IR3BMG6RBYthm9+zfm6QmVhlTZlR5zsYv5vT+51uJdm1O9m5OvvAyRMj0P+zqTQ9JXlSvHVsxsdBb+XOnouYoDfj2JH0p5ffDnL2+/e2i9CnlwHuoMmALKeV6QO8AeF3e1mUnWdkg4bSeafwWXKNVa2/E2UsVtdg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NRo2rQAX6w6S9D9fb/ZnKC3i3GsHAgxSw5hKcENYguA=;
- b=YOp7NASj38/FcrWo4BIskadfwsXW1caTDTH5f/vE/h4fJvlTfEsHkYXRSsP0arThw1zNwUVXmp/n/9+Te/8SLS+n4HSnley/E8eycvvEMdPxh783GZeRfiXH0VJl2/NNA+9P5RELMM+3GuOAOsvKLFEt2fScMrfDnKYa69EvmrFlaiY4TdkN3FT59kNmPQ87I6iis6XHlX0f6mgOrm8RaOmL/2uPDgwmJXYJNHxImhrB+Y9kcxr2aeqdj/wei2Pb7uxlRucaO+xDsKx71E4ncWq0QQuWwV7oPXMg5b6yb3HN3YfXTgfQ7vllQSOU8XJANPTkApAJDWehwYsWkE8Ybw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
- by JH0PR06MB6655.apcprd06.prod.outlook.com (2603:1096:990:3d::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
- 2026 12:00:45 +0000
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571]) by PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571%6]) with mapi id 15.21.0315.011; Thu, 13 Aug 2026
- 12:00:44 +0000
-Message-ID: <b83c28cc-94ce-466b-aa25-f86ffc3be512@vivo.com>
-Date: Thu, 13 Aug 2026 20:00:42 +0800
-User-Agent: Mozilla Thunderbird
-From: Fuyu Zhao <zhaofuyu@vivo.com>
-Subject: Re: [RFC PATCH bpf-next v2 2/2] selftests/bpf: add tests for
- selective kmod BTF loading
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QoDBXjV0"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47f6609c657so1019326f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 06:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786626984; x=1787231784; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0e+2GX5rm60FuEMHuqP+WuIydlySPn3ZKCDLSPuaJHY=;
+        b=QoDBXjV01jSv50rhHyXN2NGv8YpEh2Jrmm03HyMfNfksijUxfwTKf84kaikh3bgOIi
+         WLJlFgUu9r4TyBt+pt/0Z+07sJzE8pYaPj2k6ad1jFA65X8d5d7tov/PuVUvO2AMlezW
+         QpC1TkG9b1tN7S7X1JQhQYLTb2KYbOr7wxPgEJS/WKj0Z+NWzmsG/Z72dpbpsM2VktMM
+         F/JtzBu99VSnD1fCRIFeno9thiyz95DljN9QKfRtyceKY/YnGUvC7I5RE2lydc3GU870
+         xRtZFfgjJWjImxRXK4VNHQwDhIOfqv0VzuzsEVWLO+vLMWlL9L876xyO6ao2cBrA0LnH
+         /Huw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786626984; x=1787231784;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=0e+2GX5rm60FuEMHuqP+WuIydlySPn3ZKCDLSPuaJHY=;
+        b=J7LeKqBxaBQByBGKTtQJw2/0ZGBZN/ca7isozThZ1LFsoyAP4UhYij7Es7IzB5zss7
+         vbdl1ZwWRw7M0b1SaBcaxhBHqqIdDA3lfLm6WV1EZId5i/+NRzfXpt1u0Rnqri3pQQ9p
+         MvtAl25LSL7+yR/9qivjfOotZKtPTWXzlgH+x8TSIbDMqIm4f6z1gG3DTxCzUZIfGD4A
+         8XEYNjUu8ecxQ/3XgooYQHhh0tPk3Bnu25N3Htctpm50sExYMXrWp96VzH4qGhXHH7XS
+         aU5EIDeTS9iItb6eFgD6Pl7qFviiM0c+dpIl6Ia/wlDnpmioLffTsoLf8lUo2gTBUcX0
+         HiEw==
+X-Gm-Message-State: AOJu0YxrLpy9vs22V4JujPmqyF0bZf/0hilyG7FwkC7oSvrkenEZYzZR
+	LbbzyL09nfUKKYM1JGvkC3vtzko2gWASqnLjegQNanibbEUNbhtZ1uXzUfYJRFC9B0e7jJE08rY
+	1m5quDw==
+X-Gm-Gg: AR+sD11bxGZ/xUOK09rjyvE6GfMvJ5goA6xaLd9pNSBeTZwgBI/Rj+nlRLFu+arun0k
+	0m333V9wjbdQ7rrPfPjDhhWBmHTjWOOFVia9g5Kpzvg2xDZ2cPAKj9yEOaENdytUfg/PX0aaMai
+	zMyLiHaKdiB/o+ji+Qoexq7RPT1Ty5OQy80ZV1OwQNOfzmH/Rqt6BJm8XphkKVMHpeEz1NIQxjV
+	OUkAMmI8J39Q+l+8hQJB88+UMjK15h51C/AGqOo4I2cjgHp3twHt0j+svzsP/lYoOPhVbtMyqTN
+	EV0TJMnxjI5ZfIqjFjQAppIJo5LK9x35jamwt73brWhOS4sRrGMYk/Ig29n7pnOyWD2WUF8sl5s
+	n4MYK0+emPugjAjWdMdmO2Fgrpu3/wJxqUJCjfpa1/0ru876TS+cokRg4PgLEqIpjtJGne60sNR
+	IaqxgVUabEz8vgi94dwkpzpYmYDl64l9riO5OPNUDzMncJ7YT6giQ+b7fqDaVlaktGz6N8lfwBv
+	4lvf2B4VzWdaBQQLh16mfanqyxXUEgx
+X-Received: by 2002:a05:6000:491e:b0:481:44e5:160c with SMTP id ffacd0b85a97d-48159ed68f5mr9844185f8f.2.1786626983301;
+        Thu, 13 Aug 2026 06:16:23 -0700 (PDT)
+Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815a5c2769sm6333494f8f.36.2026.08.13.06.16.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 06:16:22 -0700 (PDT)
+Date: Thu, 13 Aug 2026 14:16:18 +0100
+From: Vincent Donnefort <vdonnefort@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260813032613.2755-1-zhaofuyu@vivo.com>
- <20260813032613.2755-3-zhaofuyu@vivo.com>
- <20260813033743.102F91F000E9@smtp.kernel.org>
-In-Reply-To: <20260813033743.102F91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SGAP274CA0022.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::34)
- To PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
+Cc: linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 01/18] tracing/remotes: Gate tracefs files opening on
+ trace remote registration
+Message-ID: <an3DosTQoNFcOHs4@google.com>
+References: <20260812161340.2417322-1-vdonnefort@google.com>
+ <20260812161340.2417322-2-vdonnefort@google.com>
+ <20260812163111.587781F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4742:EE_|JH0PR06MB6655:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5c032ad1-f945-4149-b4b0-08def9328106
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|22082099003|18002099003|56012099006|11063799006|6133799003|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	lMVOgmrmGAa8ZWNqg2ZZs1Hf3K+5ObVi9kEG9G4IlTFuNU+RXWBIkWlLNFkluCCgIWAUZ0LfsU7nyFq6ecPeKB9Uc3ClHiLYqgH3oKCvt69EQeSXQG1RB0QGJfKAgLSBGcBnrCmo/soYzgpF8ku5tdof5v6Vv2Cx8ZaKtUixirjGM9U8lZX34WxNEbQ6hk5SC0NnT5sskhOwLn4fRFmRRwDb8n2bb4u6oGS14emv7zWituX+nFefOfgQhQMB5vBlHpEdiUSf7rh1N4LmWYAHmZ46DhHqacoFp0BssGMgFyaRNhl4iCO8H3wc3DQF2ZfvXFEcutFxoYEQlDGf9MYFGyf5yRrTcEY3GjuhNxuaNBLKNK8XfBB2a5ldhJn9FnHGIfRFqp2P7Ae5u4xrBTBUMvmRpwxp9r6+BP0Vjw+q+ymPra8+5oDnj/FpZMyt4cOYfMRHrQyg0MW6D439PxzlQzgu4jFIachgtB9HM4ka8OXdwzQ0x7kHBXFovPNM/MdVwoV8ZgFQ5419KtiSkVv2gCFOIb4/LkKKG+kN50LZzI8qkYN7OZ9+zjHokHl8shNmF/V+bVeD+VW0daqNK1WXpkJn3uubt0YLjYXhQXX6W+KvMNQsxsdwQdrIBYeOXwrIPfmPxkVqI0y82pigPuFILUXvailYnkHLwlvfCODNXfQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB4742.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(22082099003)(18002099003)(56012099006)(11063799006)(6133799003)(10067099003)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?V1lUUzlRVWZTYWE4M2QweVhmbU1WMEQrbXZXaDRaWjlSMWp4VXZ2MnJ1MFJE?=
- =?utf-8?B?MDlLQjNvM1BIbXF6K0RkVjNXTVNRazhlaFY3cHdPV1ExWTJPbldsVmFrK0FP?=
- =?utf-8?B?akFIWnRlc0laYzFGRXdqNktSU3JPR0xPcVovMWxoNWs2TjlSWGdvSDNLSDJJ?=
- =?utf-8?B?UHlZVldSN0E3VU50OTVLMXY3eWVFNEVvY1hIeUU0VTVGYzZpa0RLSVdkZWVM?=
- =?utf-8?B?YUR0RDJMQWlzQ1AwWkdnYzh2dStGWVV1Qk5WcWZQOUl1bjAwN3dNdTRxcUZr?=
- =?utf-8?B?NVpibGNqRVAwbEpOVzRZOWhBdjhWTkY1TlB2cWo5Sld2TmFmR1czbTZXb3hG?=
- =?utf-8?B?VmtIbnM0NUNlMytEMm5QUFNkUGI1WTluZjhYV1hXQVA4N1BTa3FtSW5kQWls?=
- =?utf-8?B?aEdTV1R1Qkw4bjFVK096OCtwVHpFUUdINUxMRjNZY0hDMW1mTCt2UXhPOFYr?=
- =?utf-8?B?aUpETENLSGN1YWFNVnJRQjQyaTRWQVl6bXN4VmRseUwyUHBzM044bjA1Ky90?=
- =?utf-8?B?WWtaV3c1ZTE2UFB0TWZyTEFxei9HdTNsd0xpNWlYRW1ic3VhbUN1Yytlb05j?=
- =?utf-8?B?TGpYc2dXdHBmNTloS3IwWjNES1lxN0luVE1ZSEFOOXZ3ZHFPQVVvWEN4LzJH?=
- =?utf-8?B?VTZDUzgwdWF3SlFMRVBaVkh6R0kzNThKODlmU005cnM5Zmt6WjJQelUrUGxY?=
- =?utf-8?B?TnRFRGZWUUtJSE9xZnIreWt2RzJMZnpuUXhmS0dHMVUxbWdIcnFlU1NBelNS?=
- =?utf-8?B?TjRsb2xCS3FYMGRvdHhyQ3VrOUhkOEtXK3owQmVKT2UyYnE4UUdUbWRudTRJ?=
- =?utf-8?B?K2FKYkl5cXpkdTBlTjA3NklvRVpnbE1lanVnbjUvajVMaHhYa3hGK0RubVU2?=
- =?utf-8?B?VHFDZjNHcVhqb3NFRTd1L0NUQTNGOGZUZWlRM3NZUGpDdWtNbWxiVmd2YVFl?=
- =?utf-8?B?SEJFaGIzb29TYUdnY1hDQ1ZxVlVaQWRLME9tZVF2MnY0Ujg5MWlHQlNIN3oy?=
- =?utf-8?B?TDA3Z1JaK2tvZUlVYzRhb0JXTllRRWZzei9hN2RRcWEwdWFTeVFIT2YvMVdu?=
- =?utf-8?B?VUFieC9kNUIwb1lJWW9tdUsxbHpTU01kNFF4NUlTQmxsWnp5UEt2YUlDM0V0?=
- =?utf-8?B?MTRUaFhkNkkyYmRiS3FUNmc5Y05vb3RIMStrOXBzb1BsTjZvcTl1ZFBrdHpP?=
- =?utf-8?B?cER2YTl4TmJPckREOTlQNkk0aGZhcC9vUmhtalBxbXJhV2U0enc5eFoySU9L?=
- =?utf-8?B?NVdQRnIwdFlPMHpGQlFIbWlrUDZkWnJpUjl2Um1zaEhpVDdQWHh0OVB3M2Jm?=
- =?utf-8?B?V05Jd1ExVjZobldzRnI5TXo1WFNWNVl1RkVZclVVRVBCS1VaNzVrS2ltV1RS?=
- =?utf-8?B?SnJzYTY3QitwS0lDcHRER05sVzhxUTRRMnIyelNmRC9EaGZ1RCt6T3A1a21x?=
- =?utf-8?B?bk5aN2NSM2gySEFGbVhkT3VkSnljKzJyT0ZLMWIyUTJQakFZMmNzUjVOTXdt?=
- =?utf-8?B?a1Bkd010RXZnOXY2elVJNmZFMTZ4bHNVUUo2OWpBWktIbHpEbjNtUzhHTXgw?=
- =?utf-8?B?RncyUkdmUFJsZ002RmRCdDJUaHhTcEdCSnV3SXhOR25BdU9HempuT042eDZC?=
- =?utf-8?B?WEZmT0gvTXdPbEVvSktGYXozK0ZYSnVRNFZ0MlNCNEhjd3dGeDd3S2pxb1Jj?=
- =?utf-8?B?V3VnNFF4dW4wb1h4SVVLRlpFUEYvL2Z1WC8zNmJ5TStqamtVL3FST1ZEazhP?=
- =?utf-8?B?bHdINUpuOFdRREF1NXQ4VGNKQU93dHI5cXRXUzhVYkZ5QXV4bzRvWC9DNHdk?=
- =?utf-8?B?ZjhPYlN1d1pWY05TNFZxbDJtUnFGUEU4SEtKWUtvc3VKcEZEWERLZ0MzNTk4?=
- =?utf-8?B?SVRJaGZ1UDE5N1VDUUpjNm16eDdwNitEMStVOUc0eVRDMmU0TzRwK3BkUk1h?=
- =?utf-8?B?Y1NVVDVJOEdYZnE2cU1EQWlWY0ZrRGxmUHE5dEo4VFpRVVFXZytHWU5VQ3I3?=
- =?utf-8?B?SjhHdFdrRW9ncXBKUkIyZkdXUnV6aVNJWlhhVGJpd2VBQk9pZTlQdy9ua3k2?=
- =?utf-8?B?N3RqbmNPNzNEUjZDZFFsS0dwM2FIbWVQY0QralU4dkNKd0IvVDBBTHBWbGFs?=
- =?utf-8?B?NTNKZjR5UGp6UFpyYlVuMDhvOEJOL29lanpzYlppVlZSb1pOS3BlN3RUOXND?=
- =?utf-8?B?WU4xWlB6emxPblRGUmN0dzd0RkJlaWlVUGpPSUFneXNvSmVWbWUycmVzekZv?=
- =?utf-8?B?RDVISk9CK3lDWElWSXkxemNOb0VYakRlYmt0THkxbDBzVUNSalA5eFhzZnpK?=
- =?utf-8?B?QWVqZnovMWdsNmtMNUlvNVE4M0dVK1plbjhsUWZZdXM3VHlkYkFQdz09?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c032ad1-f945-4149-b4b0-08def9328106
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4742.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 12:00:44.3550
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UfsRjQUiWhwS8QdGmHfUj08Lk527ZV70SwF7FJVLIQXsh5VdvaW4bvTppoAGZiUdSKIBNHH6d4cSCmLKrwSfag==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6655
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260812163111.587781F000E9@smtp.kernel.org>
 
-
-
-On 8/13/2026 11:37 AM, sashiko-bot@kernel.org wrote:
+On Wed, Aug 12, 2026 at 04:31:10PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The tracking counter `obj->kmod_btfs->nr_loaded` is never updated, rendering the early termination optimization for BTF loading completely ineffective.
+> - [High] Incomplete tracefs gating: Caller-created tracefs files bypass the newly introduced `trace_remote_tracefs_open` gating, leaving them fully accessible if registration fails.
 > --
 > 
-> --- Patch [2]: [RFC PATCH bpf-next v2 2/2] selftests/bpf: add tests for selective kmod BTF loading ---
-> commit 506359525a106f517e013e060ee2c6feb17720c8
-> Author: Fuyu Zhao <zhaofuyu@vivo.com>
+> --- Patch [1]: [PATCH v5 01/18] tracing/remotes: Gate tracefs files opening on trace remote registration ---
+> commit 63ef30c302e1341f240b4f5b82d4e65d421da4cf
+> Author: Vincent Donnefort <vdonnefort@google.com>
+> tracing/remotes: Gate tracefs files opening on trace remote registration
 > 
-> selftests/bpf: add tests for selective kmod BTF loading
+> This commit adds a global list of registered trace remotes and a gating
+> function to prevent access to tracefs files for remotes that are being
+> destroyed or failed to register. Standard trace remote file operations
+> are wrapped to check this list before allowing open().
 > 
-> Add test cases to verify the new ".kmod_btfs" section logic in libbpf.
-> The added test cases cover three main scenarios: valid module, non-existent
-> module, and duplicates/unneeded modules.
-> 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/kmod_btfs.c b/tools/testing/selftests/bpf/prog_tests/kmod_btfs.c
->> index 0000000000000..d875fcce6681d
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/kmod_btfs.c
->> @@ -0,0 +1,52 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +#include <test_progs.h>
->> +#include "kmod_btfs.skel.h"
->> +#include "kmod_btfs_nonexist.skel.h"
->> +#include "kmod_btfs_mix.skel.h"
->> +
+> > --- a/kernel/trace/trace_remote.c
+> > +++ b/kernel/trace/trace_remote.c
 > 
 > [ ... ]
 > 
-> [Severity: Medium]
-> While reviewing these tests, I noticed a potential regression in the libbpf
-> code they exercise. In load_module_btfs():
+> > @@ -932,8 +999,12 @@ int trace_remote_register(const char *name, struct trace_remote_callbacks *cbs,
+> >  	}
+> >  
+> >  	ret = cbs->init ? cbs->init(remote->dentry, priv) : 0;
+> > -	if (ret)
+> > +	if (ret) {
+> >  		pr_err("Init failed for trace remote '%s' (%d)\n", name, ret);
+> > +	} else {
+> > +		guard(mutex)(&trace_remotes_lock);
+> > +		list_add(&remote->node, &trace_remotes);
+> > +	}
+> >  
+> >  	return ret;
+> >  }
 > 
-> tools/lib/bpf/libbpf.c:load_module_btfs() {
-> ...
-> 		if (obj->kmod_btfs &&
-> 		    obj->kmod_btfs->nr_names == obj->kmod_btfs->nr_loaded)
-> 			break;
-> ...
-> }
+> [Severity: High]
+> Does this leave caller-created tracefs files exposed if cbs->init() fails?
 > 
-> Is obj->kmod_btfs->nr_loaded ever incremented when a module BTF is
-> successfully loaded?
+> If a remote's initialization fails halfway through, any custom tracefs files
+> already created by cbs->init() will leak and remain accessible. Because
+> trace_remote_tracefs_open() is static to trace_remote.c, the caller cannot
+> wrap their custom files' open() callbacks with this new gating mechanism.
 > 
-> If it is not incremented, will this early termination condition ever be
-> met? It appears this might unnecessarily iterate over all remaining
-> system BTFs, which would bypass the intended performance optimization
-> of the .kmod_btfs section.
+> For example, if KVM's hyp_trace_init_tracefs() successfully creates
+> a 'write_event' file but fails later, trace_remote_register() returns an
+> error and the remote is not added to the trace_remotes list. 
 > 
+> Userspace could then open the leaked 'write_event' file, bypassing the
+> gating entirely, and trigger kvm_call_hyp_nvhe() against the uninitialized
+> hypervisor stub.
+> 
+> Should trace_remote_tracefs_open() be exported so that subsystems can gate
+> their custom files, or should the leaked files be cleaned up when
+> trace_remote_register() returns an error?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260812161340.2417322-1-vdonnefort@google.com?part=1
 
-Thanks for catching this. This is the same oversight mentioned above.
-I'll fix the nr_loaded accounting in v3.
+In the following patch, the tracefs folder is entirely removed on init failure.
 
-
+-- 
+Vincent
