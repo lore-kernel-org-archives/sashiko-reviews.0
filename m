@@ -1,56 +1,56 @@
 Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94863136672
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 00:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5EB5FDA7
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 00:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786579621; cv=none; b=CUIXXvimr01/k9CzF5AdwiJvdYOkASMKt6Wr34jgmAmKRV65MtGKFB6hMkmbIa6wYPAu5gCfYWDCcRbuSJip1PvQDEFZScMiUcNfUpfgy2AyYq1bIW7C5+iHLEjT6LpV5SWVmq5ybiTJ4U6FsbaKugFthtt2YFL83uN84wOxrHw=
+	t=1786580088; cv=none; b=Oe0SWss5cNrLs8cg/86kgSKaM935cKgLEzmvZKoqNbuyfloC0g5OeXsdQxw3grOdmNxCgD/4nTmmkKgTjOzWdWjXqddfkHbq2MOFLavj12wP5IOJhXuxWOB+TR68RBdBjl7tEcx/82YVlHHDH7cnZeScutvAiS/aE6/AvO/qjII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786579621; c=relaxed/simple;
-	bh=4DFC9XcdQa+gXjY/jBLIEv888QmZKCWfftMFEJzsr2c=;
+	s=arc-20240116; t=1786580088; c=relaxed/simple;
+	bh=OZjj7SWGU1Ekx4pavCx66iB/CiMgJpABLIy0OyPCF1g=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=t5gnaR/dtCY2KgBaRQd5uR8b4vI/+qaQnlugMTxLs9O2nUuBqD8I9TdkmUUsxgzF0J+aAT3cIgKKGE8Spl+JC3diPyZ2iXT00I45J/fJm9Gc1BsdY9GdYPHVRZj3lt57WJXsxYVB6soISDAJXfI75d71LOdRapESQQ6sNoMOwBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dU4l4ElE; arc=none smtp.client-ip=209.85.210.197
+	 To:Cc:Content-Type; b=GR4jf2k2/K7YFYdvs67myRBcyghw6yYdxZ/xWf6Q3hhWLER7oeQfhY0wilQWlzKAFR7pNcqs8FichUkM1VpcCcOiU4vuhV2iZsfcNr0BoFlyFh+Ik6axlB1S+b8R7GhddymZoOEZ+Ogy3DhuD2KUtAu9LUKe2s+kFDlVEo4OKFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uQTGH9NJ; arc=none smtp.client-ip=209.85.210.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dU4l4ElE"
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84e024d2129so2382791b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 17:06:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uQTGH9NJ"
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84a67b16217so292406b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 17:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786579619; x=1787184419; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1786580086; x=1787184886; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ZKU+B6jA9oay19SIBewfSSwib4hWwrU7BKuj6eQWkeY=;
-        b=dU4l4ElEeIGrpU40N2NweekFe9b9cL7uHFmS/FtlxhKxdrk6auPpXrxTJ+IkQOfw24
-         4aOLUn6a7J42RKMjz0Nn/VZw6jG6V5+XUNrYX67eRZTLuuaXP+yzZSIyr4G0yakK7Eqe
-         UQ0p/BZ2tjcM7QLUm3d315hIRSk5Wbo7YaCGk7QB8B3qH4zNu19DS1L/8vPGLo+7QXYW
-         UG9x0Q1equ44VEZPOQHuS76n76RuVWrsb1Fajd1QB7HAHxvwUs+qlrrnnJNrcAsHwPhc
-         pv4mAk5hsX6Bb0Ow4HOfzt7+0/0DT77iBcGgK77ADqtoBCRnA3Fk7TGzVspkvxAuroYN
-         0fgA==
+        bh=GAm9CE86Y5LnZb71GqWeHyDQ4XOCTPq/X6e2OTsWPAs=;
+        b=uQTGH9NJno4UjMMMJkut4yyZTRYLvTwbUvRmxxX0mdNRQKxcI3s6Yo6wstIYbinf+E
+         jAdgroqL8IsG/+NDi2oS4lnGcpwUYPmzLZb9gkgxntdqH8PzmGJvAUym8YacbzhvZ/Nt
+         xDbNQohCg2LlFQaU234LzK6uc3bDiss/jyruv8VS1b95EHhbuZcRwC4AG/0TOSk4L0Wx
+         vFY04PSgEtLyBqnWO0PTpwO2JXQ3d6io5O/H5DbTTELeDUJmGVV4RHxDdAfcPF+jKRd/
+         +lqbK9/nUYVHrosHGc9m4LT2im2QNRRTtANNor/C3ns8PPn/2ZQKzP/FyTWhS7sN4PCV
+         AFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786579619; x=1787184419;
+        d=1e100.net; s=20251104; t=1786580086; x=1787184886;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ZKU+B6jA9oay19SIBewfSSwib4hWwrU7BKuj6eQWkeY=;
-        b=KimYIaWnlGliSeZyp2mdZhH4kSaHroNsNDoylnZUNRMoZeVA2RQ0VAUormtVSjhIz6
-         yr+NT94dNlI0D4QGn9/hZK1eHCixg3m0vEUdI0dvCWzHGGyKZgCXt7it+LbjPDyLvAq7
-         S0+D73fr+Sngt3mSEwFa+G5DysCGKsmYWSceZA8NoFVxLAT80+4J1XRZF8GAC8j1fMuX
-         fO6xU56KlFzgQUQdAbEhBGYdON9gm8g3o7ib6zZowIJ1UxBuUehoUWwihXialYCs9ws8
-         QfbeE0U1lh2AUCbzvoj9voVlH2jHyUgTUiWR3Qj8fuSG0TfxFQeXunC+sZWANlhECX+s
-         scbw==
-X-Gm-Message-State: AOJu0Yw9CoNLOyL4RZcbLbwBtLZqljlvLYDVSOQrbPp2lqSclkF2/KL5
-	2CkMh8vwCb8X1MFHcjAxwhTaBrbFJw48Ej4e/elANe2QBZSHdkbQdTCZPIcRSP2PiLi5OgwPz5r
-	rq5509Q==
-X-Received: from pgbcn3.prod.google.com ([2002:a05:6a02:a83:b0:c8f:d0d0:d863])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:4103:b0:848:5540:2377
- with SMTP id d2e1a72fcca58-84fc6d3f4b3mr1871965b3a.17.1786579618762; Wed, 12
- Aug 2026 17:06:58 -0700 (PDT)
-Date: Wed, 12 Aug 2026 17:06:58 -0700
-In-Reply-To: <b66874a9-3f3f-4b65-90b1-b08c4aab6649@intel.com>
+        bh=GAm9CE86Y5LnZb71GqWeHyDQ4XOCTPq/X6e2OTsWPAs=;
+        b=jF0Q6FDze2wtRgOzhRpHm//Ma/hdzLu7pnrIXGVrhc6S21WD19eYAzz6jYM37MxxUv
+         Rr0H3gjyta/AqWbHlL4LKYmty3kmPkqsGtCcKBzWE+X2+BEbdoes7gi72gZ8Y+GJtCxQ
+         l30owUYIBp+LcS0vGLl26LlUSAx3vljsHXjMDAl3moeemRmznKPMQHew+ScFY6IJS0G1
+         7q33ZkVthpT6VHq8zvk8D4YewEEfOCE0p5Rn5uhch2guTcLRMbQXeiHFVFu5+it0vOB8
+         93E5ePLeJh7eKXVy8M4amgxy6Qnyf3hoJ+szmAqAU/mKd6ynLu4hm6fBORMV7KsuAfCm
+         HEag==
+X-Gm-Message-State: AOJu0YzZeLX+7aq6TtOjfe7UfRUT8NgXsecEe5m86CvfAl0RK8KE7WQ+
+	lDjb3J5cshTCCYDt9goeN3t59gGLfuFYx+mpwECUCm5GS6lfIrr1otaD92RriHiHncPt4bUp4jo
+	8ab1m0g==
+X-Received: from pfnv20.prod.google.com ([2002:aa7:8514:0:b0:84b:57b7:60c5])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:6017:b0:848:30c3:45d6
+ with SMTP id d2e1a72fcca58-84fc74f9107mr1811925b3a.14.1786580086327; Wed, 12
+ Aug 2026 17:14:46 -0700 (PDT)
+Date: Wed, 12 Aug 2026 17:14:45 -0700
+In-Reply-To: <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -58,29 +58,43 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260812080229.2481439-1-xiaoyao.li@intel.com>
- <20260812080229.2481439-5-xiaoyao.li@intel.com> <20260812082029.118791F000E9@smtp.kernel.org>
- <b66874a9-3f3f-4b65-90b1-b08c4aab6649@intel.com>
-Message-ID: <an0KokdtSXE2GmM1@google.com>
-Subject: Re: [PATCH v3 4/4] KVM: TDX: Enable Bus Lock VM exit
+ <20260812080229.2481439-4-xiaoyao.li@intel.com> <20260812082306.11E8B1F000E9@smtp.kernel.org>
+ <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
+Message-ID: <an0MdQKMHclUjW9r@google.com>
+Subject: Re: [PATCH v3 3/4] KVM: TDX: Don't assume exit_reason[31:16] as all-0
+ in tdx_to_vmx_exit_reason()
 From: Sean Christopherson <seanjc@google.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Cc: sashiko-reviews@lists.linux.dev, Paolo Bonzini <pbonzini@redhat.com>, 
+	kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Wed, Aug 12, 2026, Xiaoyao Li wrote:
-> On 8/12/2026 4:20 PM, sashiko-bot@kernel.org wrote:
-> > Pre-existing issues:
-> > - [High] The preexisting VMX handler vmx_handle_exit() silently drops negative error codes when a bus lock is detected.
+> On 8/12/2026 4:23 PM, sashiko-bot@kernel.org wrote:
+> > > diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+> > When the basic exit reason is set to TDX_INVALID_EXIT_REASON here, but upper
+> > bits like Bus Lock are preserved in exit_reason.full, does this break
+> > tdx_get_exit_info()?
+> > 
+> > In tdx_get_exit_info(), it evaluates against the full 32-bit exit reason:
+> > 
+> >      *reason = tdx->vt.exit_reason.full;
+> >      if (*reason != TDX_INVALID_EXIT_REASON) {
+> >          *info1 = vmx_get_exit_qual(vcpu);
+> >          ...
+> > 
+> > Since TDX_INVALID_EXIT_REASON is the 16-bit 0xFFFF, this check will pass if
+> > any upper bits are set, even if the basic reason was marked invalid,
+> > incorrectly exposing meaningless hardware state.
 > 
-> As replied in the v2: VMX fix was sent already
-> 
-> https://lore.kernel.org/all/20260806111923.1990562-2-xiaoyao.li@intel.com/
-> 
-> BTW, Sean,
-> 
-> Will you pick the VMX fix separately from the series, if it looks OK to you?
-> So the next version of that series can focus on the general x86 CAP changes.
+> Oh, I should have called it out it's intentional to check the full 32 bits
+> Exit Reason instead of checking the lower 16 bits .basic field as what it
+> did in the v2.
 
-Given how close we are to the merge window, it probably makes sense to include
-it in this series.  It's not urgent enough to squeeze into 7.3-rc1, let alone 7.2,
-so the very earliest I would grab it is 2.5 weeks from now.
+Please wait for discussion to die down before sending new versions.  You sent
+this version literally the same day you responded to some of my comments on v2.
+Now the discussion is spread across different mail threads and I'm having to
+piece the converation together.
+
+In short, spamming versions makes it harder to review, and thus slows the process
+down; it doesn't speed things up.
