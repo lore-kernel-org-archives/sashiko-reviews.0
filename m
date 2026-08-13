@@ -1,292 +1,127 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145D432E6B4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 04:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805C135E94E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 13 Aug 2026 04:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786594606; cv=pass; b=MVJu4exO4V5wTw4VQ7DkFkFpOs9AEBi0Abp4mMWx24exz57JuZh4ZJoCq5tRcleK2HV1WwF6tawVzwvU88qR+OOb4mxb9rr+sbTPu0s5UM+BOzTWAuuhNpXCsqX85LP8tvKV3aPbaHdOHZ9nTwAywT60YBtDxI9nrkRdHJ4QmZg=
+	t=1786595958; cv=pass; b=kleVXSsoWLso1TnZ+uVF0np+RnMBKO73ZgIgHymx6e6b5pJc5zZnPlagGVY91g8IpScVE97jd9a+yKuZacoAtMhDoTYMryZ9soIrXUi9ZTWbxggzY4/eY5FKwHkIyxqip/wJK+zLNnR9w8erTv78wZuPd6hUe701pOF5WEzVELM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786594606; c=relaxed/simple;
-	bh=kyvju2B3kVRFWxtt3UBGqzSAAkahmS3D2grt7G1bekA=;
+	s=arc-20240116; t=1786595958; c=relaxed/simple;
+	bh=Ofy1wJzt3/70xLfJfjodsfIDueywj0cIlAEBEaS/uAI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u83rfOozLWbHJZ/6DI3cbBuZtug0wXtsg0/vV58y/GvCEqSI80f4E7zHUZtBmPyJUZqbKncYI/5vvSGdhvKHIYqA++udp4SMYVoBWUdAgbViaMjQdafWUQ4w5HIMe2Ouqu5Z4bZ8V85vYYfizEh/7QyYZJBlMNx46gSAY4YBMU0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wxc+payK; arc=pass smtp.client-ip=74.125.224.48
+	 To:Cc:Content-Type; b=K8pwoygOFwAoRC2OJQ82cEGaqwCnPvrZRWxS9SuFGHgKUDnZgZe7jqyoD4EVlnrWtHa01rQ7+Rm+cSVM+J4qv5k16Ae/jE4LUHFU3Qx1nZ0nTwWX4Na+469SZw2HQD0CDbyINltnQrc3Zrwxh8Wdu1i+9Nv+VaEGNMYdlhg2sr8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6yrUVfo; arc=pass smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wxc+payK"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-667923d86a7so927984d50.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 21:16:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786594604; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6yrUVfo"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-84fa3b14ee1so1495388b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 12 Aug 2026 21:39:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786595957; cv=none;
         d=google.com; s=arc-20260327;
-        b=U7DIAwnPViPbPTpR54d8tlU5Ua9rHB1qMAxK+wXDkfHLSa42Oi87ohW/EXVagkfmRw
-         pXvLWtwwDFWkx53XH/ypJGxqjIfFNRjnex6EUReDbTLBvkmTfWeio/xWipT9Wsy/5D9N
-         0P/PJnakbQAWl9SmVmX2JnvTEo0TLPOiR6/AdllyhuzCYGoH3Ojlpb6JrobV2PUfxH57
-         kUMCKbd9sHT1RH1Dkn/jyfuzwEMVYsv+1mUEI/F0QAsgCRPGDJaNkMr0JJwoN5geZjrF
-         vTgt74qd+BwF4kKlJeRUERXuQwUpo0Q57crUgToh8V2AUDBo9nX2aaV0gs032rn22hKi
-         oZ5Q==
+        b=LzTHux/UhZzT76EZ311z6OmsJwygaRG4F2NCdefn1n/z4xkmDy7JvMcGPlP6OMWxQh
+         wzmBuD9OVfPeFScdrtzyxqaNHDn+/3OV5X723XEGIu0uOW2/WS5kWwQhT9Rk5ufHQI++
+         XWq0OfyYK5/9nXZjN5m933VIBLXqt21vU32N83fP6qidUmWUQbgUlbVNR9VWn24Pekq+
+         m6jC/6hOI4xChgA1CVfwVR8JrBwXvkx8jujQzOu3e6FBP6AbaqX0Qp7NF6Q9Y5IqWlBP
+         1eOR8/dx5WZBF2AhlgEmjHqVR95nS/WbOwTqQ1OjTc9m7HXfZjy9Q01yEWAmjLspAu6s
+         CcGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=hj+aZ+4yYhvsPaAhIqtP1+VT7SwFhpMGkiPhnjwuFe4=;
-        fh=nqphhD1P8K1WKXaIQRKZ0UgWTbqJHCEI7dwObfIwAhA=;
-        b=ji0nj2VF56FZjE47DgQ7dxFdtwLCd7DgqACXW1Fx8IIxX9YFZGbBOvsFwc2qRel0cs
-         byLwv5rfVOmyMbt/M2/T8Ro2JAaWcz1H2NYpU8HnDV9h5qBC0e07e7Ot5QVUaXnBdPaT
-         hNTb6PzCCL6zhiT1GWjZiJMTd0Nuwe9T9tOc8C6XQVlgxjwuw4Rbow0XLFGr6Ho2KP6B
-         febyfmCfTr0SrKwPCSsK4HR/jtOq5xM3JoUv+o5wGHsKe+zJFhABGKPR/dR565CG54T3
-         bBXMMcZDrToaC6lhnbCRxdvltPBjrPKJIsy0Z2e8oJangNxQATNMDPzZ9g62EfQpkpg1
-         /mFQ==;
+        bh=XYpEx9HkEnMrxTTj9VAReLXkOthyicSAduUByBP+u38=;
+        fh=WJ81iVv7VVNN3XcmqLwfLU/KtKhWcyunKbGcwKiNOFI=;
+        b=mmPkTlmG/6VuttGIeF3oJDE6fXEEqUK5ORqD9FxGFLxGwsRIn/xMaTY+cEHfi/lY/Z
+         W2+u6APuHEv3h8uobb0oYxvUzqnpuSsIzHfbMg1ZdlsBLZWu3Sj+HhSFdNH23wWK3d7m
+         gKGrDRbg3V88xDhqKSrQ3pdT9I7M1Sdz2LHgSEprfMyTCoG2r8vN2VI3RDCpaH9AwdvR
+         3ZF27r61s3tgvmktBwU6si9FPgcHuU/oTEFEMTTMXXvJ3QFmey9Wve4BZloFCWcqCvcO
+         Ehfm3pYg5l/1PNvGwuJM4M332NJpoGhXBu12gg3BW8xlTDNCmGRi+ZhNRcQqiD0o2HJ2
+         Ed0w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786594604; x=1787199404; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786595957; x=1787200757; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=hj+aZ+4yYhvsPaAhIqtP1+VT7SwFhpMGkiPhnjwuFe4=;
-        b=Wxc+payKX6TZQwSdJo6Faov9UHM5M+PcT4IDjBEd/LwLmaTFQo3NKIDmmTI34PQOZe
-         HhHOhNjaBjVmxrjV8AQxytegmxIKdqPsNNkLmKr61Cx2qWU3gI3ceSsLSN/Ibi5CkWCS
-         itvUsg+b/AKujrktvOwz4Yc/QXBbb0uKSd9WNYTO0uhPysYNXXASgEeOwXVh2SqMnWWU
-         gi1+AVIlk8d1hv78GrfvTfotmDNfAj1zl0Sq79ixaJRffAEqg0GL/YzSxr1DmhoR/rz2
-         YYmVtKjEbvZ12d/dnq6HL8Eoys4iqhzJbf1h5dSuNVUiPuW4R9GUZ+oiv+9+AIFvnlcW
-         Z/Lw==
+        bh=XYpEx9HkEnMrxTTj9VAReLXkOthyicSAduUByBP+u38=;
+        b=j6yrUVfouUkCaSvyif9r/1RapdqF/8kdGJpttKixtJi3aKvBoI+QC6CSKRZXlFU4C0
+         8DI7NvqILumm2wD6ebNBgMkztlj7XdT1N4mIH3C91oDs/2lRjyPikKtR3VpEUTQM/IHV
+         aBveiQvaph5tj5j+Ls6+5jErx3dxGJxI2APnZObcpA1ApMliFtUzR4kjqBMxM9VVrvAi
+         ySoaotuvjXQaVFoQE68Chf0Ppb1Me2/YzVXe7ubZz1h6r3NWm5C10F2KahtpAsfGxNZF
+         INd7gkf/ZZzkGr2ND1TYYBc0xweWPYqa7UXbBmRZZ/Z1Ls5KCoY3Kb0GaE/TPZf6xMVA
+         BYMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786594604; x=1787199404;
+        d=1e100.net; s=20251104; t=1786595957; x=1787200757;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=hj+aZ+4yYhvsPaAhIqtP1+VT7SwFhpMGkiPhnjwuFe4=;
-        b=i7jo6rU3G2zlKZJzsfL+nTdDYR/dDVKDabWeG+bCmIIAMMuBIciJHobCqJzzYTz6cb
-         wW5CxSTiY9WdU8S9iReDFyrOMF8we1RU05xTSRfNWIrYqYYoyfNlxhWoS4fWk8nT+Aij
-         Z1QgmK2sEPDOhy6rXojLej1mKPtN3OYwylbM/vzlXqgkWxn6sfRNRsS/VD85HRKVpS9t
-         LVXTZ5h7SuFRE7sV1JJGNlVa/P/saESrVTSgh9GCJ3o6ngG9E1WTAC0YAKXx+gMAo3q5
-         HL2OqKoQhMdCcUBzwGcdDYMYnRWlozUwprbJHhDRNqjiHaZwKMYlqd4+6ynEH3frq+WA
-         T5TA==
-X-Gm-Message-State: AOJu0YwkDrtT6N2x/I5tGWhAMtnC85OhayAj/gVPsIEEx01vOWMSSqBe
-	3GeXFwZt2ujicSHBC34CtY8jTDwzVARuBcEAjWbxASIzbcgL+oUI1zI5xV/AFzziRus8tvu1R7+
-	JQmiDnBS+qPWT9TpFFvIromUyzx29Gjg=
-X-Gm-Gg: AR+sD139XSrtHIKZXG1NNl+hlqr6A7mheebhWJoCGZ8XzfHudOVie8KXXiNi3h3ln31
-	af5TOSdZs05Zqt6Oihppuf67d47LCB1T7jT+2lLq8YhJDYLW0BGf3U1QryeRjsGo8+gcVq+aWrm
-	YzwhfFa5KAd7VUJvBvh9NmfhE2h2QNsmpVUSr1GIY+5fXxHcB731WN4Huep+c0zPuKYa4FMOaTr
-	vCzH+eDVeFyy7+K/ExNfKPM6lqLu7CCl7ysASa14ebLbnL4lxyq515LHn7ydC9Brt71SkZLeCbW
-	f/92gUpQEAOcpJbiKy3WfSim+sXasVnO74mES+TfkDtfhPQlVBZpwXIatOXGp2Br2k05yGJnJOg
-	5stwapp0RXQIsaGspTSRvlmozSOnpPiV7VouKB4TGDk9v
-X-Received: by 2002:a05:690e:2584:b0:668:a17:daed with SMTP id
- 956f58d0204a3-66c54c49056mr818130d50.21.1786594604022; Wed, 12 Aug 2026
- 21:16:44 -0700 (PDT)
+        bh=XYpEx9HkEnMrxTTj9VAReLXkOthyicSAduUByBP+u38=;
+        b=WdJIvNydlrTnYhc+z90fD8mMsJLwwIYyGcrdcZUxu2Qt57sIhlDHMz9uUqhZgniOnw
+         ttuaVip2JuSAERrDsxyNZUtpN65fg58YNPFTBxlTCO0K5SxtsoF0SiibD+LIjnLn+OUw
+         sY5+FRypHWTBnAUW96Pg+pJUYuU81/FNXSX33uVC8gN17dODmglJ1TqYnjXSR95dNqtp
+         G3GHTQ3nP5GfuQL/fFM05tRscrbxjjXuydjlO9sB+DvS7Z4j5bW1mSbo4BcDwGX6TdA7
+         4hzJd+cEr7f2U2BXQ6/sWYxYrHG2Eh6+/M10B8u5fVebX8ktS1+BvFdmYdqSdCFicC6d
+         TUow==
+X-Gm-Message-State: AOJu0YwiUxSzww2GT9skZQVuy4IDnaMCvYZyFrx0TK7crd5voqum4ieH
+	WU210JFgA+F5IDdS6cNsJ3fqTWF3gMb7Gv0dLVcI86yCHochKNO0sitrXLspCNoBlkhsw10wTsQ
+	/itpwxG3Di5DpsvrTB5towvScnBD/1/WWpqGf
+X-Gm-Gg: AR+sD111EFekD0X1OQ4fuZPD6oDZ7JcawRkx7494lYxhq2LU/T96CZDTCwWrGWS/Dcn
+	oFwaF30dZJwN0FxF6fMAuGiIaXsRpq1hIijz/qNHEVqfP+/dUDM/FdThDhnojAB+lKKeP1hTtlo
+	L6jxcI/Xeua10QVEiEWvhAcyHeQEnWTBRSgpnFBdpp6LiVAoOU0sBXPmnw6nYPowa906RuMbuun
+	+u+5dWABUNk6LcAHpXJcd6i3grItirPb76vD5dULTxjhuf3g+n13+/6Ojf/bZxWkJmuLv64SyhL
+	Xuy/ZCajYXs9Ox8YU9O+DxaDqqDROHouZni6wkb56UC9QaIw1K7OBRS3luy5+CZ51tnxbwr+820
+	WjyUckc+zYiWELMnapiJralhfqVOzpOm14PveeM8L+IXn7fgeEUdhjtOs
+X-Received: by 2002:a05:6a00:2e09:b0:847:9ce5:d293 with SMTP id
+ d2e1a72fcca58-84fc75d7052mr3029392b3a.24.1786595956685; Wed, 12 Aug 2026
+ 21:39:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260811235331.10044-1-kartikey406@gmail.com> <20260812000859.654FC1F00A3A@smtp.kernel.org>
- <anxMXBwCX0HCYgxr@krava>
-In-Reply-To: <anxMXBwCX0HCYgxr@krava>
-From: Deepanshu Kartikey <kartikey406@gmail.com>
-Date: Thu, 13 Aug 2026 09:46:31 +0530
-X-Gm-Features: AUfX_mwfqzym4wGlqOQexfSsnhGUEHmMvw1zBvwX7sKbdWrWjMFru5WvJUuewL8
-Message-ID: <CADhLXY5QdvPjyK+X0q4S4wF71CTt-RQ76fHt_W=x-BmVka9LAQ@mail.gmail.com>
-Subject: Re: [PATCH] perf/bpf: Fix data race in __perf_event_overflow
-To: Jiri Olsa <olsajiri@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org
+References: <20260812112023.42254-1-phucduc.bui@gmail.com> <20260812112023.42254-2-phucduc.bui@gmail.com>
+ <20260812114044.4D4481F000E9@smtp.kernel.org>
+In-Reply-To: <20260812114044.4D4481F000E9@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Thu, 13 Aug 2026 11:39:04 +0700
+X-Gm-Features: AUfX_mxIGA074y1m10Z4uUGjKnNbeOvwgaN0R96bR9Dhl-K9zsWpmGzk0Vj6-cA
+Message-ID: <CAABR9nE1r3-2eafWqfTv8kJg7G_urfC0hP36NgqeGt9QPf6NrA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] mmc: meson-gx: Handle errors from optional IRQ lookup
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 12, 2026 at 4:05=E2=80=AFPM Jiri Olsa <olsajiri@gmail.com> wrot=
-e:
 >
-> On Wed, Aug 12, 2026 at 12:08:58AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential is=
-sue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Lockless TOCTOU race in perf_event_alloc() causes NULL pointer=
- dereference or Use-After-Free during BPF program inheritance.
-> > - [Medium] Incomplete fix for data races and missing memory barriers in=
- BPF attach/detach paths.
-> > - [Medium] Time-of-Check to Time-of-Use (TOCTOU) race drops valid perf =
-events during concurrent BPF detach.
-> > --
-> >
-> > --- Patch [1]: [PATCH] perf/bpf: Fix data race in __perf_event_overflow=
- ---
-> > commit f63a2be5ceb79a2a8bb0263ba6723f7bf4ae763d
-> > Author: Deepanshu Kartikey <kartikey406@gmail.com>
-> >
-> > perf/bpf: Fix data race in __perf_event_overflow
-> >
-> > This patch addresses a data race where __perf_event_overflow() concurre=
-ntly
-> > reads event->prog without lock protection while perf_event_detach_bpf_p=
-rog()
-> > writes it to NULL. It fixes the race by introducing READ_ONCE() and
-> > WRITE_ONCE() in the respective read and write paths.
-> >
-> > Reported-by: syzbot+651d2774bd1d8395595f@syzkaller.appspotmail.com
-> > Closes: https://syzkaller.appspot.com/bug?extid=3D651d2774bd1d8395595f
-> > Fixes: f11f10bfa1ca ("perf/bpf: Call BPF handler directly, not through =
-overflow machinery")
-> > Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-> >
-> > > diff --git a/kernel/events/core.c b/kernel/events/core.c
-> > > --- a/kernel/events/core.c
-> > > +++ b/kernel/events/core.c
-> >
-> > [ ... ]
-> >
-> > > @@ -10766,7 +10767,8 @@ static int __perf_event_overflow(struct perf_=
-event *event,
-> > >     if (event->attr.aux_pause)
-> > >             perf_event_aux_pause(event->aux_event, true);
-> > >
-> > > -   if (event->prog && event->prog->type =3D=3D BPF_PROG_TYPE_PERF_EV=
-ENT &&
-> > > +   prog =3D READ_ONCE(event->prog);
-> > > +   if (prog && prog->type =3D=3D BPF_PROG_TYPE_PERF_EVENT &&
-> > >         !bpf_overflow_handler(event, data, regs))
-> > >             goto out;
-> >
-> > [Severity: Medium]
-> > This isn't a bug introduced by this patch, but does the independent sec=
-ond
-> > read in bpf_overflow_handler() create a time-of-check to time-of-use ra=
-ce?
-> >
-> > If a concurrent detach sets event->prog to NULL between the READ_ONCE()=
- here
-> > in __perf_event_overflow() and the second READ_ONCE() inside
-> > bpf_overflow_handler():
-> >
-> > bpf_overflow_handler() {
-> >     prog =3D READ_ONCE(event->prog);
-> >     if (prog) {
-> >         ...
-> >     }
-> >     return 0;
-> > }
-> >
-> > Wouldn't bpf_overflow_handler() evaluate prog as NULL and return 0? The
-> > caller __perf_event_overflow() evaluates !0 as true and executes goto o=
-ut,
-> > which unconditionally drops the perf sample.
-> >
-> > Should the already-validated prog pointer be passed directly to
-> > bpf_overflow_handler()?
+> [Severity: High]
+> Does this code pass an uninitialized variable to mmc_gpio_set_cd_irq()
+> when the optional IRQ is not present?
 >
-> seems legit
+> If platform_get_irq_optional() returns -ENXIO, the assignment to cd_irq
+> is skipped. The uninitialized cd_irq variable is then passed to
+> mmc_gpio_set_cd_irq().
 >
-> >
-> >
-> > > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-> > > --- a/kernel/trace/bpf_trace.c
-> > > +++ b/kernel/trace/bpf_trace.c
-> > > @@ -2018,7 +2018,7 @@ void perf_event_detach_bpf_prog(struct perf_eve=
-nt *event)
-> > >
-> > >  put:
-> > >     prog =3D event->prog;
-> > > -   event->prog =3D NULL;
-> > > +   WRITE_ONCE(event->prog, NULL);
-> > >
-> > >  unlock:
-> >
-> > [Severity: Medium]
-> > This is a pre-existing issue, but does this incomplete fix leave other =
-data
-> > races in the attach and detach paths?
-> >
-> > Other functions like perf_event_set_bpf_handler(),
-> > perf_event_free_bpf_handler(), and perf_event_attach_bpf_prog() still
-> > perform plain writes to event->prog without WRITE_ONCE().
+> If the uninitialized stack value happens to be >=3D 0, mmc_gpio_set_cd_ir=
+q()
+> will accept it and overwrite the card-detect IRQ configuration with an
+> invalid or random IRQ number.
 >
-> was wondering the same, the perf_event_detach_bpf_prog is called for
-> tracing events (tracepoint/kprobe/uprobe) the perf event release goes
-> through perf_event_free_bpf_handler, check perf_event_free_bpf_prog
+> Could cd_irq be initialized to a negative value when it is declared?
 >
-> jirka
->
-> >
-> > Additionally, does this need release and acquire semantics? If the writ=
-es to
-> > event->prog and event->bpf_cookie in the attach paths are reordered by =
-the
-> > CPU, could the NMI handler read a valid event->prog but a stale or
-> > uninitialized event->bpf_cookie?
-> >
-> > [Severity: High]
-> > This is also a pre-existing issue, but does the lockless access in
-> > perf_event_alloc() create a use-after-free or NULL pointer dereference
-> > during BPF program inheritance?
-> >
-> > During fork, perf_event_alloc() inherits the BPF program:
-> >
-> > perf_event_alloc() {
-> >     ...
-> >     if (parent_event->prog) {
-> >         struct bpf_prog *prog =3D parent_event->prog;
-> >         bpf_prog_inc(prog);
-> >         ...
-> >     }
-> > }
-> >
-> > Since this accesses parent_event->prog locklessly, can a concurrent
-> > bpf_perf_link_release() clear the pointer? If the compiler reloads the
-> > pointer after the check, bpf_prog_inc() would dereference NULL.
-> >
-> > Even if it is optimized to a single read, perf_event_alloc() is not ins=
-ide
-> > an RCU read-side critical section. Could a concurrent detach finish its=
- RCU
-> > grace period and free the BPF program, causing bpf_prog_inc() to write =
-to
-> > freed memory?
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260811235331.=
-10044-1-kartikey406@gmail.com?part=3D1
-> >
 
 
-Thank you for the thorough review!
+Okay, you are right. However, mmc_gpio_set_cd_irq() already checks for
+this case:
+--------------------
+if (!ctx || irq < 0)
+        return;
+--------------------
 
-On the three issues raised:
+I=E2=80=99ll fix this by initializing cd_irq to -ENXIO:
 
-[1] TOCTOU in bpf_overflow_handler():
-
-You are correct. The second READ_ONCE() inside bpf_overflow_handler()
-creates a TOCTOU race. If a concurrent detach sets event->prog to NULL
-between the two reads, bpf_overflow_handler() returns 0, causing
-__perf_event_overflow() to drop the perf sample via goto out.
-
-I will fix this by passing the already-validated prog pointer directly
-to bpf_overflow_handler() instead of having it re-read event->prog.
-
-[2] Incomplete fix - other write paths:
-
-Thanks Jirka for pointing out that perf_event_free_bpf_handler() is
-used for handler-based events (tracepoint/kprobe/uprobe). You are
-right that my fix is incomplete.
-
-I will extend the fix to also add WRITE_ONCE() in:
-- perf_event_free_bpf_handler()
-- perf_event_set_bpf_handler()
-- perf_event_attach_bpf_prog()
-
-[3] Lockless access in perf_event_alloc() - UAF:
-
-Agreed. The lockless access to parent_event->prog in
-perf_event_alloc() during fork can lead to NULL pointer dereference or
-use-after-free if a concurrent detach clears and frees the prog.
-
-I will fix this by using READ_ONCE() to capture the pointer atomically
-before the NULL check.
-
-I will send a v2 patch addressing all three issues.
-
-Thanks
-
-Deepanshu
+------------------------------
+int cd_irq =3D -ENXIO;
+------------------------------
