@@ -1,188 +1,195 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazolkn19013085.outbound.protection.outlook.com [52.103.33.85])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFD73E7653
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 09:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.85
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786701415; cv=fail; b=Rg00J1LM+jlKwZPZnHQeYBYBx7aiBKM6AgLZzFzxoKN0/lyyIFQplEX/y2tahBeiy2Cz43j6dmVhSmdY+M82cgtvCs4/2gODY1BDePnLu4QQIj6Ui7eKLFz/xFJ6pKsKmN+F5k+ic2x4l7WNK0feAE8O3LKzBbXEY5I/HRUkDgc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786701415; c=relaxed/simple;
-	bh=PdN1ISuRwpexwrsVf9YMgl1HG938Q7mY2xVbe7WChzE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=iOv84LAyDN2p7O7NUE4HwDh6GBXifqsT2gCfoYojFUsIdwZjYwoN9AfxC7g+Gm9nlYibPlDTl9o0/hViyTO9rv6B32a9YoTTRe4eXyVAmiTJGgjfPUA/0rfPCI60BjMXjw8jQMCfJDV5PMhSzxolFYOH8S7d5pRPVGCcRQOcotI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=F37cU1g/; arc=fail smtp.client-ip=52.103.33.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BADF394780
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 10:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786703679; cv=none; b=krONs/SNxOk6Ag+e5QCraxr65cMv1pxX9iZ34fWjWBcCo4MvqRVxg0Y6ogFREnfmrUZ8SDqaDsgTO08oztFmX5iJckNfvM+W3GuhNf+Z2+5kLqmm6ybxTqE2dy1u5RwhmGaOhf6SUG9MKeUtKOI6dlmkhL0gaLs7pwHFceUHuFA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786703679; c=relaxed/simple;
+	bh=6j/9SxCd4JSpREEUFzMNRxrwVOYOjtDtr95DsAm0Bfs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VmCgGpmLqgf/oVX15n8ig9DOWcQsjgkGB63keD/BRuYqNVk6zUzGLhX/XnbTAp0KwRc6DX97JEHCIPIEV1KEzF1/QrmYXR7kuGrjm0gdNHUI7FHPtR0A1RDBBJDk9AhoWSgSaQZNceGwPpYdXoyHvZOc38EOCsAvm1xe5+BOGs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Mul0DBDE; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="F37cU1g/"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZVtd6+itURsnE2SujpNATqz7xHkFCT6OnB1LDcsWQUbpEx3FjZAJE6+kK+meV69T+LX5cohCLoRocUnIHNEuo3PprU21igppv1HEZQk3HnZgTPla83r2m+pWXNz3Vo1mZGYAmnT9ND7EZIxm5fMv4kDBabj5yXiY97zu2TXx3S5ega35q8yRgnPmPgmOQqKg3UTqHe2+3VRWSgozizgwSgKnc4I45QTPCsWw1C73l9JVv4OFxK79JHUgDIUgWjBALAC0YpkEpoMqN4e07VClgmR2piWlVX7v8QfF63r9qPGDjil5CV1V7LBPlqSgTRFnO0VV88j2bGnZrAQQub+0YQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PdN1ISuRwpexwrsVf9YMgl1HG938Q7mY2xVbe7WChzE=;
- b=VBzDrYhwT8/qj8rhqsUHvNryaJQuFVPg6bWPyZEAA+3Ud3y/GqPsfbcbHBzHeKTPFqNBdbBG4Wbk1sjwTTmkiOnrGdfNGUXpzHceCsW3jxO514HdwdzrQadrQ6sOwEMyhswmy7vMdKncW4crjprSG1HL2U2eSrA1jkwclt5G8u5eVOCWV87VWn6pZ0wKyp9jJk0XgEM4q/FxK/IBzGFdDYBUIZdQmQh1L8cWe5Lee4YbVYLqkqUA2evm5Pv9vuEUOHrmQahwekZyYbmHGtomCq9mfCgxkpO8d9jTNYUHxuS/ceVouUj7JyZhpmN9UPo09WfDyjrWoHj5VmnlV4GkIw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PdN1ISuRwpexwrsVf9YMgl1HG938Q7mY2xVbe7WChzE=;
- b=F37cU1g/Fdj8u3F1SwvyRPxwTK0TRPl7SojiIM3DxkB2G0SZ+QjvcHfVegZxgUwLQpTZO5enxulquKw7wNahmMhMjB8bP0bFEIhkHKmyxRjVUu0YmHgo3ylrAqzpQBoZkhAn98WEa4tCxsoK6xlG6RuNJjL5zJ9X3JPYMg57qn45SLJJpboKdGz5NtNe03uyQfKozG8TUiXbeS7uNNI6DJuW10cdeNMy+f9ICQ9ucRo4ahE+Mym3AzAJBuDI3szhDbFuPx4ysf6hcbDcjXRm2GL2aj3eJ0JrkZdTaFaz2n/AYKJWnVpo4nY7M/EBrYl2gmNl2xeGS09eyaYNUpciwg==
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
- by DU0PR08MB9774.eurprd08.prod.outlook.com (2603:10a6:10:445::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 09:56:46 +0000
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 09:56:45 +0000
-Message-ID:
- <GV1PR08MB8497E81BDE07F9EA0D581DC5C5DA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
-Subject: Re: [PATCH v7 1/1] leds: st1202: Add hardware-accelerated blink
- support
-From: Manuel Fombuena <fombuena@outlook.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, linux-leds@vger.kernel.org
-Date: Fri, 14 Aug 2026 10:56:44 +0100
-In-Reply-To: <20260814093000.9E4191F00A3D@smtp.kernel.org>
-References:
- <GV1PR08MB84974C7ACD911E66864C5008C5DA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
-	 <GV1PR08MB84973F79E871176EB387C377C5DA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
-	 <20260814093000.9E4191F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44app2) 
-X-ClientProxiedBy: LO6P123CA0008.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:338::16) To GV1PR08MB8497.eurprd08.prod.outlook.com
- (2603:10a6:150:81::22)
-X-Microsoft-Original-Message-ID:
- <ddc0f40c84b028b810c7244ef13fba52aa0d02a8.camel@outlook.com>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Mul0DBDE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=YkQjnFDCo1dB5BDFIb8WGuaEHaukQCwRTziICDH/SuA=; b=Mul0DBDEEj9W4CaPnW6yRmTnpz
+	nEufwi/PEidJzP5z7wHwbGe9j0EdGE88Z6AOeikUM5cLpX2IqyTEwaDIg6iikmYKAQ4I3U+SQPaF8
+	o1VVWwyNQeEcSV0b4bTB/c+BdLCDQk27wtOV4fP/mtGJcwC2sexv0hAXNPFaWIVHpZ8VwO8tiR+ih
+	OxzMbIByp+XHoFhEtjgJcP513h5eHnfDqUW1Le98j7gqC9Vp0Sl1+GJq+ygJqxiupM7xwpI6olYof
+	bYiYURfN6VCH4Rz+SMp2/mpRkzObmR5ta9ov6urvOU1P+e6IUYdXVZRyfUgQXRy7ycFC1K5HsXhKr
+	54hFtmzg==;
+Received: from [81.79.79.1] (helo=[192.168.0.116])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wupEz-001hAO-1O; Fri, 14 Aug 2026 12:34:21 +0200
+Message-ID: <7657d2ea-30c7-4655-be90-04e86fb2212a@igalia.com>
+Date: Fri, 14 Aug 2026 11:34:20 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|DU0PR08MB9774:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6d649aa8-ab55-47f8-3b17-08def9ea59a5
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|24021099003|5072599009|8060799015|19110799012|51005399006|15080799012|6090799003|12121999013|37011999003|23021999003|25010399006|40105399003|2607281247196008|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QXhWeWtZOG1DRnZLV1lxZnR4NmpaZTZSa2dQU3l3bHpRTG9HaHA3cXF6cE5t?=
- =?utf-8?B?VnBlV3E0cWloVXZEWjhJcGovbk00OWJ1djk3cVVVL3pDK1dEV2J4dzlXVkx2?=
- =?utf-8?B?RDd1R1FWR2NiU1VlZW12M3NIUHR0a1IvMGZrc2t4RFplbVlQSkRDai9IYWF1?=
- =?utf-8?B?YUEwSk9JcnZUaGR3MWlUSGE0R1NTV0VYT0lLSnNFZW4ycEpIZUhkTjduclBU?=
- =?utf-8?B?c24xbWxhVEFpNjRUa3g5Sk9WZnlyRDkySkpvVWNQMWx1bFd0UDhTWmtqWnRC?=
- =?utf-8?B?dUZFQjZocDhSQnlEbEFBcE1vbFMyRThUK3YxcDdwc3ZJWWxXeENMeS9oYk5z?=
- =?utf-8?B?SDViT21tblk3ZVBHWVBxc1FHdlU0OWRlNWd6NTQ0L1JibTRSb2RtNlM3bXJl?=
- =?utf-8?B?ZVZ4ZmF3VnRaYS8zQjhtTm9nbGRlQVpxMVAzNzdUaGhsWUtUN0Njdmo5b2N0?=
- =?utf-8?B?UWVPVkxGMzk2OTNlNFlGcE9qZURnZnY3Qm5RbW8yd3JHTmFjUDlHWEw1c2NU?=
- =?utf-8?B?Mk5uNkRUZ3pZV2hRSkMyL0oxNzYza0l2UU1jRUswbDdTSHN5YVRXYUZUcWIw?=
- =?utf-8?B?cTMvOWNMa3RPYVNFdy9QMmpHRmVEeC9qUUFNYTYzUjlIbkxKK3dQeHMvTldz?=
- =?utf-8?B?MnFjdUc4czJDeGUwbjZZMUNhMkc0c3doWEViRmpSKzVMUDY4WlJGVUErOWVX?=
- =?utf-8?B?clp1amVHVzliQzZsejhIN0pUZlU1N1BQdkxJRysyQmk3S2M3L2thTG1KQk13?=
- =?utf-8?B?Tngzc1RsL1kzWFBKUWFQZFh3SCt5RHkxeUtIVHVBV2Eyc29MOG9Eb0VRUnpG?=
- =?utf-8?B?ZEtzbW9SKzFVUWVKS1p6aGRpTDlad3IzWFY3RXA1cFBCcTlKS1RaL2VXZjMy?=
- =?utf-8?B?a0dXL1phU3hLU2oreGsxanJLNVVGTEtiNzlzd3NXbXFCUXdwQi8wR2pBNEpw?=
- =?utf-8?B?QmdEVzhYb1lVc3FnaGg1U3ZJUWFzaG5wOHV3U01aWjVGbGlBV1Iwa3htdzNY?=
- =?utf-8?B?b0xmQUNVVURDSmJIa3VOUnpPT3ROQ2xpLzhUZWEzd3NqZ1I3QXgzb3dXVld1?=
- =?utf-8?B?UXhUVm1KTDRqMWlOZUd2WXo5NTdVd0NncGwrcHFGczBpU1grSXNGWWpiVHBU?=
- =?utf-8?B?VXpYSVFzV0tVZjNqMVA5bkVkcTAwTTgxdTZkeEFQbzZyKzUrMUVKWlI3VDN4?=
- =?utf-8?B?TjNkdXZkdzlpdURHNWFOVWwvWDZxbkRaNWdQZU1tS1BZTVlRU2Qvc25rLzlu?=
- =?utf-8?B?VTVHUDZnT1VhVWM2My9pSnZvVHlZS0VSU0FucnJZR3FUcFZaUFJTOEFQU2NR?=
- =?utf-8?B?QzdtN1hDWEh4ZGFpenlwcmdhTlpCNmdUUFJuR0JldkFQZWo1ZmpOMGVJRDk0?=
- =?utf-8?Q?nKUy7qAmDpb07vXf81oej52nKBrEIUhQ=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UUM0bzZGb1Fmd0Uyc0F5OFFVbFhhN214dHIwd1UwdTlraEEya0JuaUhSZXBx?=
- =?utf-8?B?VFh1eUJsYzhPYUNKK3k1WWZNQ0tQTEh6OU5JSC9SMUR0dzhqQ3M4SFVVOVF3?=
- =?utf-8?B?eExzVUJpb2VvcENTSllMQVRkVGhrLzJPdnNFelF4QzM0TFhxMktLN1JQS0Ez?=
- =?utf-8?B?YVhIMCt0MDdmS2I3SlZtTjFxekYxSktOalg2S2RUcHF1SzJKSXdLUlpNZTBR?=
- =?utf-8?B?NTVDdkJjekR4RkI5V2Jpc1V6SC9pQTRGMGdrUXNqaFAwNTFhV1FCZ2hxeEhy?=
- =?utf-8?B?bW5KT1o1MjEwUis4SGF4MFNKelYwYUpUMGxBeFRmcjFrSUJsSVVxVHF5MHlv?=
- =?utf-8?B?RmsyU05xczVXbHc4eGRRcDJZM3JqRG1VOFFoK1IxdmZKMU92eUxmemJzRWZz?=
- =?utf-8?B?TUd5T3cyT0FmaHY3TkNYdUxYZG5YS3dlamRjYzBSKys2ejduQWh4STlBSHpy?=
- =?utf-8?B?VXVlZ0U0MXltTEV3bU5WVVU2UWdhZUxLS2dzb2l5dmkrVGlJaVdyNGt5alNs?=
- =?utf-8?B?dXU2elFOOFl5U1IzNy9Cb2tZYmNadElLV3NxNm15cEdtKzhOQ1RlRG1DUDI0?=
- =?utf-8?B?YUxEQWFSNjJqTlliMFdCN3NSd3FLSUJmNXpVNlZ3VFRXT1dqWUdTYUZpNzg5?=
- =?utf-8?B?SnZxRkFjNndlNVZBK1pYNlZSWC9SbkJHUllZWkFTVklwNVExMTB0aituMGU4?=
- =?utf-8?B?cVJYRGo3QlJwMHpWUnFVeVVMN0g0aXNmeTUyZy9ZR3JoZDJHY0JIbVZlVjRN?=
- =?utf-8?B?M05scHdEeDNYbEE1Q2N1VHNDbkV0VlhrdHR6djlEQ09mRm8rMnJvd0NERUhS?=
- =?utf-8?B?aVQxdGVPajMrOFlRME8rSHR3c1NjR3I3VTNuZlptYUtnRG5nZHNVM2tpc3U4?=
- =?utf-8?B?VXVPRTRCaTlBNEJxN0JsYU5RRFREeEt5VUc1ZWl4R3M3dmcxTGloUjM0L3NT?=
- =?utf-8?B?N2pyamlKcytYWXU5dCsyQ0l6MG5YSS9xa1YvN1hPMzdpT2hra3NKeFVwR3N0?=
- =?utf-8?B?OUF4SEd5dUhoRHdpbGUweUxPNVU0Rmw2bWx3MW5LcFZkU3huRlNETnl4UEhl?=
- =?utf-8?B?QlNUb3d3M25xUVVoT3VBWU5jZzNMUzFGYThkdGwvMGhyU3dnRzV0QWlWM2Jv?=
- =?utf-8?B?elF3N2tnbEFDdW9JS2I4am1PVzNwdzk0b25qenlwb1UxazZYdVZYVnhKeWRU?=
- =?utf-8?B?WkIyQ2haR21mMFRBUXJEN1ZrdE96Tjh6ZXhNQnhIN20yUFFTd21yc2R2Mjd0?=
- =?utf-8?B?VW1tWXo1ci9sWjYwZ2pJRjBEUm5LMnpKbW94V25HMFpDSm16S21qcytOaVF2?=
- =?utf-8?B?MW0wM1Z1ajJiNXhnZXArcEtaSGF5U05QemtsUkloRER3VEd2QTd5R3BaeXFi?=
- =?utf-8?B?WHVqekNUbXZMdnB1QWVwVmFhQ29QRDlrUzUvSHZEelV1KzZjQVFObGxuT3VX?=
- =?utf-8?B?K1pFV0FramcvVkdmSzd4S1Uyc0RPUlpyUGZaREpwWUJ3b25oOXFaL3p6Y3lD?=
- =?utf-8?B?ODgrR094QUFZbVhtM1YyNngwUWNudlFrSFF1U0lzMEJLRTExZW5ibmowK2hJ?=
- =?utf-8?B?U0lsUm9nM1BIaXVSQUFHMjdzZjJVSStMVGJnNnptejluOFJwTnllTk1yYm9C?=
- =?utf-8?B?Y1pQZEE3K1dEcG9oamc2ZUtTZTQwbGp4YXlZTi9CQ2ttU3RPbkJ4bmY3L3ZD?=
- =?utf-8?B?VVVEUExoYkxBbVZVSEJWaWV4MUhKTnhKWjdLZzlTekhhRzZvZ05IVzdzamx3?=
- =?utf-8?B?cVZpTUNNbG16eW1LRlZPaFBabXJnWEcrdWF2WFJGSmEwb3h5RkJscWFWTWhO?=
- =?utf-8?B?elRsQ3BSQmEvVnpBMVpQTVdjZjBNTEI5bmNBSER0Q1F6ejVJOFI1Ky9nc1F2?=
- =?utf-8?B?WTROMVo5WVlveVRlTlUrRndjL1dPb2JQaFN2cmdyZFZPdFBKUjd5akxCZHZx?=
- =?utf-8?Q?wpSOXFRZG/ePhlcJ3Ok5dKmJSMAWmhp3?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6d649aa8-ab55-47f8-3b17-08def9ea59a5
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 09:56:45.8537
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR08MB9774
-
-On Fri, 2026-08-14 at 09:30 +0000, sashiko-bot@kernel.org wrote:
->=20
-> New issues:
-> - [High] st1202_blink_set alters the hardware state of sibling LED
-> channels by zeroing out their PWM configurations, permanently turning
-> off solid-ON LEDs and desynchronizing their physical state from the
-> LED subsystem.
-
-The zero-delay handling is not a bug. Converting a zero delay
-to a default value is the established convention for blink_set()
-implementations across the LED subsystem. The timer trigger does not
-use zero delays to signal steady-on or steady-off states; those are
-achieved through different triggers or by setting brightness directly.
-The if-statement form used here was introduced in v6 at the maintainer's
-request precisely because it matches how other blink_set callbacks in
-the kernel handle this case.
-
-> - [High] Hardware blink implementation incorrectly intercepts 0-delay
-> values, breaking timer trigger off/on states.
-
-This is an inherent hardware constraint. The LED1202 uses a single
-global pattern sequencer with shared timing registers, making it
-impossible for two channels to run independent blink configurations
-simultaneously. When blink_set() is called, the shared timing is
-reconfigured for the requested delays and other channels' PWM slots are
-set to LED_OFF so they remain dark rather than outputting unintended
-values. This behaviour is described in the commit message.
-
-> - [Medium] st1202_blink_set hardcodes maximum brightness, completely
-> ignoring the user's requested blink brightness.
-
-led_cdev->blink_brightness is set inside led_set_software_blink(), which
-is the fallback path taken when blink_set() is absent or returns non-
-zero. Since st1202_blink_set() returns 0 on success,
-led_set_software_blink() is never reached and blink_brightness is not
-updated by the core before our callback is invoked. Using it would risk
-reading 0 or a stale value from a previous software blink, causing the
-LED to blink invisibly. U8_MAX is intentional.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] drm/sched: Ensure monotonic min_vruntime
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260814075739.32481-1-tvrtko.ursulin@igalia.com>
+ <20260814075739.32481-3-tvrtko.ursulin@igalia.com>
+ <20260814080942.58E071F000E9@smtp.kernel.org>
+Content-Language: en-GB
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+In-Reply-To: <20260814080942.58E071F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
---=20
-Manuel Fombuena
+On 14/08/2026 09:09, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] drm_sched_entity_save_vruntime() always saves a virtual runtime lag of 0 due to an impossible condition, permanently destroying the entity's relative lag state.
+> - [Medium] rq->min_vruntime incorrectly tracks the maximum updated vruntime of the executing entity rather than the true minimum of the runqueue, penalizing newly enqueued entities.
+> --
+> 
+> --- Patch [2]: [PATCH 2/2] drm/sched: Ensure monotonic min_vruntime ---
+> commit 840e24cc75ac9a836c633b23cb95dda0e0dc3b75
+> Author: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+> 
+> drm/sched: Ensure monotonic min_vruntime
+> 
+> min_vruntime handling had a bug where if an entity never exited the run-
+> queue it could get penalised by its virtual runtime only ever growing,
+> while the periodically exiting and re-joining entities could repeatedly
+> get pulled ahead of it.
+> 
+> Fix it by making the min_vruntime strictly monotonic by tracking it
+> separately (an keeping it always up to date) instead of fetching what
+> happens to be the top of the tree sorted by virtual runtime.
+> 
+> While at it replace open coded ktime_t comparison with the correct
+> ktime_after() helper.
+> 
+> Fixes: 2fa4d8e2c109 ("drm/sched: Add fair scheduling policy")
+> Tested-by: Luke.Wildhardt@proton.me
+> Cc: Christian König <christian.koenig@amd.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: Luke.Wildhardt@proton.me
+> Cc: Matthew Brost <matthew.brost@intel.com>
+> Cc: Philipp Stanner <phasta@kernel.org>
+> Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
+> 
+>> diff --git a/drivers/gpu/drm/scheduler/sched_rq.c b/drivers/gpu/drm/scheduler/sched_rq.c
+>> index 23f46ec610e78..bc8363974a276 100644
+>> --- a/drivers/gpu/drm/scheduler/sched_rq.c
+>> +++ b/drivers/gpu/drm/scheduler/sched_rq.c
+> 
+> [ ... ]
+> 
+>> @@ -151,7 +130,7 @@ drm_sched_entity_save_vruntime(struct drm_sched_entity *entity,
+>>   
+>>   	spin_lock(&stats->lock);
+>>   	vruntime = stats->vruntime;
+>> -	if (min_vruntime && vruntime > min_vruntime)
+>> +	if (ktime_after(vruntime, min_vruntime))
+> 
+> [Severity: High]
+> Will this condition always evaluate to false and unconditionally reset the
+> saved lag to 0?
+> 
+> In drm_sched_rq_pop_entity(), the runqueue's min_vruntime is updated to be
+> at least the entity's current vruntime:
+> 
+> drm_sched_rq_pop_entity() {
+>      ...
+>      ts = drm_sched_entity_update_vruntime(entity);
+>      if (ktime_after(ts, rq->min_vruntime))
+>          rq->min_vruntime = ts;
+> 
+> Later in the same function, if the queue is empty, we call:
+> 
+>      drm_sched_entity_save_vruntime(entity, rq->min_vruntime);
+> 
+> Since min_vruntime is guaranteed to be greater than or equal to the entity's
+> vruntime at this point, the ktime_after(vruntime, min_vruntime) check here
+> seems mathematically impossible to satisfy.
+> 
+> Does this mean entities that empty their runqueue will permanently lose
+> their accumulated vruntime penalty?
+
+Okay, it's not a quick fix so I'll drop 2/2 for now and come back to it 
+later. 1/2 stands on it's own anyway.
+
+Regards,
+
+Tvrtko
+
+> 
+>>   		vruntime = ktime_sub(vruntime, min_vruntime);
+>>   	else
+>>   		vruntime = 0;
+> 
+> [ ... ]
+> 
+>> @@ -351,27 +324,27 @@ void drm_sched_rq_pop_entity(struct drm_sched_entity *entity)
+>>   	 * Update the entity's location in the min heap according to
+>>   	 * the timestamp of the next job, if any.
+>>   	 */
+>> +
+>> +	if (drm_sched_policy == DRM_SCHED_POLICY_FAIR) {
+>> +		ts = drm_sched_entity_update_vruntime(entity);
+>> +		if (ktime_after(ts, rq->min_vruntime))
+>> +			rq->min_vruntime = ts;
+>> +	}
+>> +
+> 
+> [Severity: Medium]
+> Does this unintentionally advance the runqueue's min_vruntime past other
+> entities still waiting in the RB tree?
+> 
+> By setting rq->min_vruntime to the newly updated vruntime of the currently
+> executing entity, it seems we might ignore the vruntimes of other entities
+> that are still queued.
+> 
+> When new entities join the runqueue, won't their initial vruntime be based
+> on this artificially inflated min_vruntime, penalizing them relative to the
+> existing waiting entities?
+> 
+>>   	next_job = drm_sched_entity_queue_peek(entity);
+>>   	if (next_job) {
+>> -		ktime_t ts;
+>> -
+>> -		if (drm_sched_policy == DRM_SCHED_POLICY_FAIR)
+>> -			ts = drm_sched_entity_get_job_ts(entity);
+>> -		else if (drm_sched_policy == DRM_SCHED_POLICY_FIFO)
+>> +		if (drm_sched_policy == DRM_SCHED_POLICY_FIFO)
+>>   			ts = next_job->submit_ts;
+>> -		else
+>> +		else if (drm_sched_policy == DRM_SCHED_POLICY_RR)
+>>   			ts = drm_sched_rq_next_rr_ts(rq, entity);
+>>   
+>>   		drm_sched_rq_update_fifo_locked(entity, rq, ts);
+>>   	} else {
+>> -		drm_sched_rq_remove_fifo_locked(entity, rq);
+>> -
+>> -		if (drm_sched_policy == DRM_SCHED_POLICY_FAIR) {
+>> -			ktime_t min_vruntime;
+>> +		if (drm_sched_policy == DRM_SCHED_POLICY_FAIR)
+>> +			drm_sched_entity_save_vruntime(entity,
+>> +						       rq->min_vruntime);
+>>   
+>> -			min_vruntime = drm_sched_rq_get_min_vruntime(rq);
+>> -			drm_sched_entity_save_vruntime(entity, min_vruntime);
+>> -		}
+>> +		drm_sched_rq_remove_fifo_locked(entity, rq);
+>>   	}
+>>   
+>>   	spin_unlock(&rq->lock);
+> 
+
