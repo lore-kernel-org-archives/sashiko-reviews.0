@@ -1,139 +1,123 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655D84457B8;
-	Fri, 14 Aug 2026 13:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4279D47884D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 13:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786712758; cv=none; b=dWqpLivVL2HFzZBKX1NzN1HBQx4Z7nfQnqkAETy77my5jsgZ6nEZtuoqo4bauvvPnm3zyRnwMI+oLGVEvMf+KA2MmwMnSj66xRAVBrRm79PqtRmOyjB2GyPm+eFRIiClVdCSoC1rcafb1n7E1szAS3He4R15KiZqJBqg/AgzbIQ=
+	t=1786714927; cv=none; b=pzPZwNeQhhgz11T/BzGU0OabTik6KmJdk8j1MCyvSpcNYDp0WrBECcrVk+0E2fHfP9z8Rnafev7DuWgWAVfwRXUdY0vIM9SY+xE3FGjC2fWnjVUiYZiPcWGVyYYd2jzR27OsdScROGRccytsz6/pINfxDNtrS567T47pKLSLmdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786712758; c=relaxed/simple;
-	bh=FaMxajwDmgrfyWezIBhw766aPBJd4ai4FYKK8Hwtw5o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uvluvyPViqlzVlNuem8bBM7AGulaSHIo4e4IChUmb02GWMyUe34LMRcPimV4l8TeUUVTX/0LmyLq1bbfINw17w/fRevsgaodebyPOtHlTicpWZArGLNRkv8zjgQXdUVER7eYXsZWNWCdFWuacxDIFGovaCsC/gP3f+goODRisCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AusQgJL1; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1786714927; c=relaxed/simple;
+	bh=Ighuvc8zNEvdMdTBj2MgkY+Ru3uT8BFEEQGLZyHwDyo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lVipiFjQv0M9K0MVZLSlh8xh6S8jcF6eMAsFLVgGct96DjqJ+qYO97KMm41gF3syEb3tEOrfgl5LWICgpzHl1qN+g7xMM5o1twbpTTM/FlkqyD/LCqjBNa5oDEtka3jlf8h0Kiu29cnRAOQaywvwzZvD+q2PoA1XsME2BTjrOtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=bSsFjFRY; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AusQgJL1"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67EB1lpI860633;
-	Fri, 14 Aug 2026 13:05:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=JSRBH/kCMGuvkyn7WD4sI5kh/AXYN9
-	405kzAXftjPyc=; b=AusQgJL1m9WcEIUWMLxNPFyN/Anol9QiQpYnBtN3B1TOef
-	TjBprYVT//x/RmfaUTyryAXVaRqzRyF8YNBYADu6atr9oujf8nVp1bihpA8Q8dT8
-	JZ6RslBAEQyZL/QKEqBqp9ZQJ+1Q3xuRwwOndi4/+QYKil8eonPE+W56jO6h5ddq
-	9iqNuNtwOm5nyGW0Y8kbUCCnD6gxh9YqvT8A+fTieies50tHZG9MjXrjtBdt6zxY
-	FoTAH6heHcLB/ijp+Z6ilqK9w9I+TsDHeFBzeYfwwQ/q5ZSq/yLjX3rvv/aB2p3R
-	5a1qBWOIL35y5fkmPv+rPH2wMPTxvq+v5CdH/ggA==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp3bqc8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Aug 2026 13:05:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ECuZIW008220;
-	Fri, 14 Aug 2026 13:05:55 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0gq8f4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Aug 2026 13:05:54 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67ED5pdp44499452
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 14 Aug 2026 13:05:51 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 228712004F;
-	Fri, 14 Aug 2026 13:05:51 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C5B5D20043;
-	Fri, 14 Aug 2026 13:05:50 +0000 (GMT)
-Received: from osiris (unknown [9.111.40.200])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 14 Aug 2026 13:05:50 +0000 (GMT)
-Date: Fri, 14 Aug 2026 15:05:49 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Thomas Richter <tmricht@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Sumanth Korikkar <sumanthk@linux.ibm.com>,
-        Jan Polensky <japo@linux.ibm.com>
-Subject: Re: [PATCH] s390/pai: Handle multiple PMU stop callback invocations
-Message-ID: <20260814130549.15373B35-hca@linux.ibm.com>
-References: <20260813070815.2692398-1-tmricht@linux.ibm.com>
- <20260813072156.9C4311F000E9@smtp.kernel.org>
- <e13682db-e68a-4196-807b-8c67bea68a2a@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="bSsFjFRY"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4980dc26022so11104245e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 06:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1786714923; x=1787319723; darn=lists.linux.dev;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=xhKuc7koDaTER66hHC21DLwLn/weA2lcrprNlj91Qto=;
+        b=bSsFjFRY4J3lwo2Jr7zxuMZ2PLVJeiz0OWuV+G9FOeXIoikJyrZFWpLlDHSn9J79Df
+         9GwVe/0by6gsT8vquFjDyeMMH9bUQMvj6jMfbeRaqO3P4S6fIC2bqo9EwwkdoEdVRaNe
+         5FBEGeeKFQOHYbJrjF5TlzNNk+fakSsjCWKV0fx76PHrveOJo52mw7quD/hPcFa5hgwv
+         no19RFGRPjxoK1dTAKpUTGrlle7X/hKM4n9wB/b93vJNXtDXDmi+xoR0ISS5MlCLXQKL
+         xDWp72w2C3GF9sLyTRhp/IAZIiRUlnXRY3QwbEYrgy5ssM3800lS3cG8ZyHnmmf0lt/J
+         tgYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786714923; x=1787319723;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=xhKuc7koDaTER66hHC21DLwLn/weA2lcrprNlj91Qto=;
+        b=ppjFxOq+svdzuTenzBqnfv8vQqSjdNOU1flo4j59aoJyw7TVzy0yuG68+GwlqtqtG0
+         RHArahPS0YM8bUht9CYaTbYz8lD2bKlwmPOdL1497TT5koKPipdRzmf0Xbzow/iWZcmB
+         nRyJefyryQTgEjjCgBKFUVafgt0s3pbV37BNeTsqtfD3Nj2w1d6uMyvR3S15SgM1U75c
+         uBfPhtfgU8lFDHW51fi+I7Nrco+E3Svgcc6V6Uwo/BIn9p5pYTGREJBOwKpbxaSOYBsb
+         dGMlTH2/jkdgRsHxWBi8t9R4IWLJOAvu4qCZ8CpbXO1NJq7PtdGhNaWtoM9eKg1AlvPh
+         8zmA==
+X-Forwarded-Encrypted: i=1; AHgh+Rq/EZCrHpWi5toECX4O8Zh5wrBexaYW2A2KKPFGwddziQoqpbiZkbb1Egty2QHZnb8Py26LlIAA8qzEIdNbFXo=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy3mlLEfNOO0ssr2Bk+EKdxXPBgbQ037f75L277ljNeLSFNVFqC
+	0JMJo3+cTL/dJY/fA75WE6EMZOr8nuYOqwyEY1LJp9zy+dXVbZt8LjyEsWglsuSO2Ns=
+X-Gm-Gg: AR+sD13C7jV1JGvMGqnEDhC0F+makhLYIeGenIpfVjkOijoaEleGM7h39zztK1/n4O6
+	6z8GAdpPEd0UGs9iHih3Ui393QuWsJmj2i7arnxHwI+l0kRLnSKF22pDLa0XKquK4npeJaqrVBn
+	704KKFsC4ex84wherpkzzadwaGd3Ss1OprPGgkHgzJpxmPrL5Wh3wGKceYzqGQrBtGlMfKR+e9J
+	2dC3FrtYl2r4Ub2Pg3rhzE1DBIGNGWmK1HBJ+PvFexPNAbL4LJHeKlKnXR/81GzeLH0mSbFXBQh
+	uMT0qaIXOq/1hIIoVySJKfoAqOardGAe6lMYo7YlAerksvVjXb0NVynTMBn/Z6n9bfdzl/OyHSx
+	uZ0VoGAPowZrVuogFZECWk/pRuh/e+lWf6Q4hylciYfcyREz4IxB4SesEf9owlTvx79oM+n5gfV
+	jsVvr37HQMZvqNwIn/0FslqTmrang0soixjahzxlCeuSQf//NBChLsah3DFUTHKAu2DEBSjA==
+X-Received: by 2002:a05:600c:810a:b0:495:737a:7afe with SMTP id 5b1f17b1804b1-49987985df1mr76542075e9.15.1786714923535;
+        Fri, 14 Aug 2026 06:42:03 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:9886:6a22:ee2a:d5e1])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-499899c138dsm32119835e9.8.2026.08.14.06.42.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Aug 2026 06:42:02 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Lee Jones <lee@kernel.org>
+Cc: sashiko-bot@kernel.org, Mark Brown <broonie@kernel.org>,
+ sashiko-reviews@lists.linux.dev, robh@kernel.org, mfd@lists.linux.dev,
+ conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH RESEND v6 4/5] mfd: axp20x: Add support for AXP318W PMIC
+In-Reply-To: <20260813095600.GA1072730@google.com> (Lee Jones's message of
+	"Thu, 13 Aug 2026 10:56:00 +0100")
+References: <20260812-axp318-regulator-v6-0-d6b84b55c000@baylibre.com>
+	<20260812-axp318-regulator-v6-4-d6b84b55c000@baylibre.com>
+	<20260812214019.CDF921F000E9@smtp.kernel.org>
+	<1jldaafmpd.fsf@starbuckisacylon.baylibre.com>
+	<20260813095600.GA1072730@google.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Fri, 14 Aug 2026 15:41:59 +0200
+Message-ID: <1j33wg6cpk.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e13682db-e68a-4196-807b-8c67bea68a2a@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7f12b3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=5gAsseg2trt6j1QRJAUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: TgUXZxFOpt3HYQtP4-js0KGVEUWY6_qD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA5OSBTYWx0ZWRfXw0OVl6T8tUXR
- Ji2eprhF3qLPghpOJL1CxVFHn7rA1acu0QAsyT69YtRtVPpo3SVSHQrmb2GxLkcLb3uAruG3MpR
- RFPS8ZCB9cdnyrS71uPcN7X5OMxNebmNtD5+AIIj2vFzg2wlsAOSNkOR3jM+F6rWU6byVbvsGb7
- HySOLajdyTvThfZWkJKP70Kt9/mS26rLWMTJL/X+YyJ3ZyWwSNlfcM6aDYVdADWD8NJxyg8+6x0
- gj4793WCoN1xeYW9pGy3UNjrFvZPVE7TMIGX+y/MRB4mfbYSOx7R2xYP/STIfEvDRcw3DL9f+7s
- 63Xe+xj8i8JJoXFp5Tv7o2p27wUEGvrSho4r0guWCZiYfeQSguED2nVq/+QPl9DEZPlRQr0H0OG
- J3F44+yxHUZiiFwI063nbYXNlRFfVgri8AqC62RySIVSS1vRQSsPz6DI0+K1j4SufnXshSoQmLI
- /DbTXt8RPbLAMdmwRVg==
-X-Proofpoint-ORIG-GUID: TgUXZxFOpt3HYQtP4-js0KGVEUWY6_qD
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA5OSBTYWx0ZWRfX97/u49SRYFMt
- L15nqadbFUP8Wg+huYHLwSvbguHB9X3BYE8Y6QpyS+uD0+KnfVoh3RKwP+A3zkyL27/KdldxLmq
- aTbW1Nejfr1y/N1xQVQiO8pR2uH3Jw0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-14_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608140099
+Content-Type: text/plain
 
-On Thu, Aug 13, 2026 at 11:33:59AM +0200, Thomas Richter wrote:
-> On 8/13/26 09:21, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] Unsafe iteration over `cpump->syswide_list` in `pai_have_samples()` leads to a kernel crash (LIST_POISON dereference) if an event overflows and is synchronously throttled during the loop.
-> > --
-> 
-> This can not happen. The syswide_list is anchored by per-CPU pai_map::syswide_list and tracks
-> all events which are bound to that particular CPU. The event was installed only on that particular
-> CPU and does not move with the process/task. Each CPU has its own list anchored by
->  pai_map::syswide_list.
-> 
-> The call chains are either
-> 
->  paicrypt_sched_task() or paiext_sched_task
->  +--> pai_have_samples() iterates over syswide_list and calls
->       +--> pai_have_sample
-...
->  I think this is safe or am I mistaken?
+On dim. 13 janv. 2008 at 11:56, Lee Jones <lee@kernel.org> wrote:
 
-Looks like this is not safe. The following can happen:
+> On Thu, 13 Aug 2026, Jerome Brunet wrote:
+>
+>> On sam. 12 janv. 2008 at 23:40, sashiko-bot@kernel.org wrote:
+>> 
+>> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> > - [High] The corresponding regulator driver lacks support for
+>> > `AXP318_ID`, causing the `axp20x-regulator` child device probe to fail.
+>> 
+>> Funny sashiko did not pick up on this when v6 was first sent. This is an
+>> ordering problem. The regulator part should be applied before the mfd
+>> one.
+>> 
+>> I could reorder here but there is not much point since the 2 changes will
+>> land in different subsystems but it does bring a valid question:
+>> 
+>> Lee, Mark, are you OK with picking the patches indended for your
+>> subsystem or would you prefer that I split the series, regulator on one
+>> side, mfd on the other (with a dep on the regulator one, of course) ?
+>
+> Does this break existing devices or simply delay support for this new one?
 
--> pai_have_sample()
- -> pai_push_sample()
-  -> perf_event_overflow()
-   -> event->pmu->stop()
-    -> pai_stop()
-     -> list_del() modifies the list being traversed
-      -> potential crash when list traversal continues
+Existing device are fine and untouched.
 
-As sashiko proposed: using list_for_each_entry_safe() instead of
-list_for_each_entry() would avoid that potential scenario.
+I've just checked and if someone tried to run without PATCH 5 (regulators),
+the main axp driver loads fine but the regulator part gives this
+
+axp20x-regulator axp20x-regulator.0: Unsupported AXP variant: 8
+
+Seems sane enough if the regulator part is not present (and no board
+using it has landed yet)
+
+To completly avoid this, the ID would need to be in its own patch,
+then the regulators, finally the MFD. It seems like an unecessary churn
+but I can do that if you prefer.
+
+-- 
+Jerome
