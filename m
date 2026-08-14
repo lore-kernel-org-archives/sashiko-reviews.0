@@ -1,273 +1,155 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010017.outbound.protection.outlook.com [52.101.84.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8706747D932;
-	Fri, 14 Aug 2026 14:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786719065; cv=fail; b=OV+n+9oUgD9EIiDPzCepJIM06aqA3XLXWgC9X82wcaz4Bf72IKlkNeMOdT7dwapyBGyMzG8NB5a5GA6q6dmJCoiRmot9ctuol69qUUsixxYOF6Q2MbaN8m8E6K24IEwrq7KlqK4ZGa6wsd+hQ1lv8ZuHZOfciioWRq39Jn4p1Nc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786719065; c=relaxed/simple;
-	bh=ytdQyXJO5EaJZx8lCCIGGTFmO+kFqYpHzRjt7aOyAHk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=BDd0vUFjDoIopNswmkQXVpz6WocO6fz/cwIA2pxyXathdSXmkldoUwL7RqQB8ixuDdhgj2h9tPRFSd0rDiplGHQSpWrhXXmVyxuI2KLylsuzcexecoyyTFRQA5x/jI1DMa8pCC3Q6JD95bCvTN8jT1YxoaPrzNUaSBvfOCXgRBs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=eAy0q9Qs reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380333AAF5F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 15:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786719897; cv=none; b=Mm0dOkOQcpyfSLDg02uYG+hTvRXyPBggaey1A+Y2VAU8ehCz3NjJLuyDO3wZijQWcJuVGKR3HPOiTnTyV7NiOVXNxzwI5aU7Jk6vR52oj2MOPCJsUG+8i0/ZoAyXnrR76n760DfzlPqQ8CEM84Ab9FiO8eJkOKEfMVJvr25m0XM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786719897; c=relaxed/simple;
+	bh=NvVAbYBU185WneoSgMcFUr9kFVrv1d7BGQxpqdAy0OU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CYnCxQ/uoQbS/HKWVbrQUpXQLdV+gaf9JqiOG7KhwSp/ZPT1I+O2hiTbDXvHAi4ypCIbMNfOvvnLvR1y56lt0m9E8rDnp5e3THpFaPnx0mzWKgcej6KAQbqWr2VDcXIrNgjEYWwmk/uJnboCWmC4xyqL3c9LzuQ2uEuj5HysczQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bB5ed6Tm; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="eAy0q9Qs"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LguZRnRieGH+kRk7mzKUvTGgf6pCJCMK7LufYiDR3chIN2dlAr9hxYCzRTUD8AtQWKAdFLGpgvD4QCSqfM8CGcmho+qKgIAG0iGw47KpkK9Lh4nPwsupDC8eSfBuDf4tSBKani4RKwakwvmKFrdWF1b2UNgarPw/TeEpmxya+u5ozS3GhobMGP7387ZVEr9B/UQ5Zs6DanbkMbf1v9qoZhNcotwIvHTkJFd/LkwqYGn6+tZgBOIC8AclcjQsPT2RWKbGzjuMp0XNNe8qcq6JnDVGQgjKV/ezXqEsIoXROLcTZQ/OK+lbfvjskt9LpcR6fYQ+H4kaqXggh9s+cBQzQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ywPg+TZW9+jAI2UUnXmYW1ySlp1Ggn9e8lp20qr2nbM=;
- b=SzI51CqnspWCSb0nwthdMNpBSKCHCWMlw4be/ojnlj/A5sjKZ1CeWJM73DZXY58Tq2DFUvlph+2NyD2s5MZ63z3AsWLEu2DGY9A1K04WuYNsbjvWiEyYczH94bl5R7HEKmGicAzq98Yz6yegYGE5IVMBJNroDupPtVuUGD/fW8J3hwrrYUVavQYRIhmK1FR4nOuD0j7Gv6Esw68HDRWpI6mPGrRcyeZ1rym1YqYdoJ7yZb2H9V+kY2uPdCEGnIasmNmUi+NBzyFHbScS84GXqVsaU+sbP9ZgkGSHiJRL4WZk9Ov0NM9rn7Ru8nBT4q6hGGtaiJ7pH37MWx8e3iRLrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ywPg+TZW9+jAI2UUnXmYW1ySlp1Ggn9e8lp20qr2nbM=;
- b=eAy0q9QsFiLu21Ya8EhvNVR7H2PBx6XMQWeQxhsHh1h0XnF8/7PLbsgM+HOnz5L0vZWUB4Ux56YkqJ0mGRlZQq0HYbT4QheyN3/kR3b8gFl+A8qdgXm0RrFIMGH6umuxHm830fvcBSL4mht3Ig5ozp1CnsSfdsHRXhLNUhd/BrPGT4a8si6DuwqFHRIdJHkJavGFhDsU2rzz2ldtdgtt3Szb833WU1pniwbLQU94bXqrbMFRRm5KzLMkzRAgVPKSA98Z2LwEgv7n/vnnsmFFBUBP7UIeDMyeVhnketGUgc0grdNr0x7YMqACtSbhzwt5+YYeDBs4rZO4UoGiEaBUXg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DBAPR04MB7462.eurprd04.prod.outlook.com (2603:10a6:10:1a0::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 14:50:57 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 14:50:54 +0000
-Date: Fri, 14 Aug 2026 09:50:44 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bB5ed6Tm"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2d3b445a84fso90845ad.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 08:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786719895; x=1787324695; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kayzQZfqtmmp1eC2tR/rKF1wFKlx2J92sDaRBHhidao=;
+        b=bB5ed6TmuXisUG2omCR/At+CDePZK58gAMkBAxG9dTB4OMD5DWW0Q8k+WQOu6aIChN
+         AmZL8oXSas4/eCUgsXinQZmxS1WSZdFnlnR25D6owGBrMtoaR0uhM4IdwKvEVo+he262
+         OIMVLPEPQMbcylSg8RFYPgSmO8ZObZao62jHAY5WK5Qo5zBqClsBUWkQSAk9ZWaUXeOW
+         8hSE3nEd8na8paYJQ+d79t1sL9VcPhTP8LkSLx6Nkb7IWwBJbdMLAQddHUOZ8j5/rdGH
+         ufmMJP3SF8HkKkeDAcHtxORY9bbMCBpqpapb6jYUktoC7heP3+qgc+szWjqHDo4+Wdpk
+         mHog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786719895; x=1787324695;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kayzQZfqtmmp1eC2tR/rKF1wFKlx2J92sDaRBHhidao=;
+        b=oprTiJqa5mTeMGDHsOWKZijrJxbIhE2UWCo6bD4sG+utbGAlTjkTm3cb2H+xffX18N
+         J5C/qPnUPCjNG26+FcTI45HUXNgpblDo5vleQjhNfq8MMyZKImurSlqDoDLfMrzPhKlx
+         ANf5E3CUitkDhJb4nmDbShcn1QxcFd6o9nb2m3cMLaB4HOUMpp8kEcvvhOaJ77buXfsl
+         hO+dYJig4SZMaS5gaZxjx2aHKhJrUSrujgK+LJH3n0jD5cUzFKcrYDlInQYX3gbFzzD3
+         cTYQUHa59E9sGURPOGNUK6vxck+rKo+7hfbUUg2SvszY89YZD55G8NgUNew8GJmxs4y3
+         aBFQ==
+X-Gm-Message-State: AOJu0YypDVmGh3qBy3cuRSAx2QA9Q0Igb+0t7OswsvdqeZYwFaVptNJT
+	l/11zTRxvKoNOjwcnjV5rQ+nt+Uqw3BCwUyrn5ITMMk9Uw/P7YA4AtrKKc3dlBNNxU2nScHoMmH
+	f8PNXGQ==
+X-Gm-Gg: AR+sD11r/QwGtd6BfOj5J4PPWFoQiJV847VSI3I1B6wZLb92xwmJmwrCMJjhitFtfE7
+	IrOGx6sFnxUsWXVO8m8CiLopW5DkHyfBkp+PxwQpVMZipaTPQyBBjVZ8X1w8KEAt/JXMlLMutyx
+	dvPMizC+luG30b1XtmA/v5FruqOsO3COXb8AfzEUr6GKg6nwHl1bE36iJ79TQWTkOOAkTiaWAH1
+	pliVJgSMQ6QRHX2aECcieqJnRfC20EBtwiJygThS6cUAqoML8uIkbjQ+XXEv1hPlAM5dWDLn7rt
+	m6omMspbSsI/WQe/YWMzox3OVgzG8YGGOhIY4hHBKKgRysO3ikhtEg0YigllTYI+GK36Wi0JnQQ
+	bZkrLIcX9qFaK5j+ffeytWF/0GxLu71AIHrFwayp1UeIV91gCl0+led+le92AFIqkbkddREmxLO
+	mYSqrstDQaIC+mlllWxy6VCpwnjZv+OpISCEN+n0X6jCQUgEsBK2Ka6MQoLIOeHQbVGm+S+Yfj+
+	G3WsawNJVQk3wjIfkbHQgE=
+X-Received: by 2002:a17:902:ea03:b0:2c9:bd54:cf with SMTP id d9443c01a7336-2d3aef5eff0mr9451345ad.4.1786719893479;
+        Fri, 14 Aug 2026 08:04:53 -0700 (PDT)
+Received: from google.com (21.168.124.34.bc.googleusercontent.com. [34.124.168.21])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d3ae800480sm11350755ad.33.2026.08.14.08.04.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Aug 2026 08:04:52 -0700 (PDT)
+Date: Fri, 14 Aug 2026 15:04:47 +0000
+From: Pranjal Shrivastava <praan@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Ciprian Costea <ciprianmarian.costea@oss.nxp.com>, imx@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>, robh@kernel.org,
-	Frank.Li@kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [RESEND PATCH v6 1/6] can: flexcan: use dedicated IRQ handlers
- for multi-IRQ platforms
-Message-ID: <an8rRKaadKgTdBFS@SMW015318>
-References: <20260814090324.647898-1-ciprianmarian.costea@oss.nxp.com>
- <20260814090324.647898-2-ciprianmarian.costea@oss.nxp.com>
- <20260814092027.86BA51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260814092027.86BA51F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH8PR15CA0016.namprd15.prod.outlook.com
- (2603:10b6:510:2d2::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+Cc: Anna Schumaker <anna@kernel.org>, Chuck Lever <cel@kernel.org>,
+	linux-pci@vger.kernel.org, Jeff Layton <jlayton@kernel.org>
+Subject: Re: [PATCH v6 1/5] nfs: make nfs_page pin-aware
+Message-ID: <an8uj2qmwuHeSCL1@google.com>
+References: <20260814143255.861084-1-praan@google.com>
+ <20260814143255.861084-2-praan@google.com>
+ <20260814144658.129DB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBAPR04MB7462:EE_
-X-MS-Office365-Filtering-Correlation-Id: 961a66ab-fdb0-49dc-9712-08defa1370fc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|376014|1800799024|7416014|23010399003|6133799003|5023799004|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	6yXjjTO91Olx2AW/xyNnyB2TRtxocSj3zX34Rppb03XMYtnMwXqWE3bOu5CCI3W3hATJjonWNXKTg/Uc7vaVBZXvvmVS5ENMXGInoz7933VBsdjDhuA9e/hEtRA83HZO/nUJSOqcygYzhdjcS18z+YspFL5rgwUfBfhxIPhh5Nt4Qx25y1pJbkdwLBpPf973W1DW92QCS/pZ0+iFefFzuETH35pK9qaCa0G3nwHojTNT2wGlLhfqG+Ec4Cr8zxAUwQOgQyJ/zUht0kAA4iNQuXBEO4a0ADEd9sV+wRjUw3+rscyoCxmSRMi1ukKm2BkG1CNKYl2QNMFPOvJm8j8vTuVTbFtVuH91xbiXOEcTEjI9jMNgd1UT51x73YNwaWcpzhJHtMKJ7Q3YdxpC0n6niZKpmAiwtIze3uR9wUgXAICVTLTi22tFWszTRzQn5HkN6pJA9sGDwzjxI6tLejjBtjVhcWOjs7LOWp+5bbmFo94fzVXkM9gJDo/iYzYrJgqgS3eZaytuxXwRYG448Je2OWgsW96+xk0KOJ3DtmXgiSNT5hsUte0Ak8pASqktOjGovbc5TzDAtdWmJND1BFmWprCvisyyrGd/0z+MSQqBIJc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(1800799024)(7416014)(23010399003)(6133799003)(5023799004)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?/7NP0nyscA62za/tQL/NTy7bCGxMPBJmfhDFjVMYWTopd021eXvHuNb1XT?=
- =?iso-8859-1?Q?3fiSRtgGW1n8KjrzNM/aOay3/Q/IDsWbgrMKGmE9YY0mYdOmcQParRpM0W?=
- =?iso-8859-1?Q?E41HKjPGF4J1otWbHfYLLz1Sm3syRaxno8SrJxEJNvK7J5720nCQ6YfsSt?=
- =?iso-8859-1?Q?mXx+CZvPsV1wuqm/JHFy19cOUWV9cg22AhZy3MVp/QrDLW5zMoBw38NoV5?=
- =?iso-8859-1?Q?NVxPqRpkwv8vUa0HlXEWTPMH1tRTCxiwJ0BYxobMf0UkTsTK0inW0V7XxB?=
- =?iso-8859-1?Q?bn1NzQsiQBSMnZiwJkTDUPKR2LxY8jOxAJ4MRYRAoX8mAx0xCimMqV9TJ+?=
- =?iso-8859-1?Q?1mo1aNFYrak5N5VsUfQPSuO7Ebgl9pj9O6buP+Ujyco0VhOqYkSINKK5QL?=
- =?iso-8859-1?Q?doIDH7+sk5ZeQKqTg5oNU33t91le7+ty2uwtIzlW0bwJ1FhwCHMkppr/BI?=
- =?iso-8859-1?Q?VpwDhhBJbl18UE1zpr5mwaJMGdxrrFsdErgTcrz3rZ6cn9LApMyyIxcJ9U?=
- =?iso-8859-1?Q?gw6pgZ5SKmVgYk/hF74/6nX128Q+WbErDZ86E/mxtB2um1zZDHLKszOxRY?=
- =?iso-8859-1?Q?vnXELz1KRamTgfIxqEneHkclvulc02kOMhsFOg9AR0eaZxAPat1RABa80a?=
- =?iso-8859-1?Q?A+N39x4UMtONIZTp4Sif3CsgQhdl4RNa5110eToQfTIWbLydCaPglsfvDI?=
- =?iso-8859-1?Q?gqgyFrUWsu5eWG9JVPC9ntx2Tdog1GLBRwbocBA9/tvEKTDLrjGJ93wIOj?=
- =?iso-8859-1?Q?r7zm+NGkbIIpGBWlg2LYTbG3eRS2MMc7+1G5UUrF8QIeU2GX41m+BEtNys?=
- =?iso-8859-1?Q?RLY2cmRDvgxGC2oNk0coQL+8T4c3/sypBsu6Aa+XIcA+IpA04iQdD5jXMk?=
- =?iso-8859-1?Q?MeB9mPZxmxQnS2sIPV71OWTXs31zquBrG8GswMFCutWOJ62NiI+FqoLks7?=
- =?iso-8859-1?Q?amS0Y/yO46d3sIVeevS/Zt7ghCqcuRiu2BmXu3Gqb9SJyK8nDDSK0GCOkx?=
- =?iso-8859-1?Q?fHO1SS/RYFOgY5yzoCNkrHkA4m78FnsFB2+RA1f0+4etSbOu6GugLkXBTy?=
- =?iso-8859-1?Q?ir6J6TKhKnrqqwD8NHW5+ZIy3pLsOOHqYegYAlsG8Yk98/0canqj5KgE4r?=
- =?iso-8859-1?Q?NkmWvtJgS+dMSdHc+tJUrXY5IUiPepSCG0C+AcAr7U6KPAmt8Y9h2wSDAg?=
- =?iso-8859-1?Q?Rt9WwoiPyRAOYcNkyNUQFS+ZTSHxWjKJJM7Nx5Q9FeEhsok53WCNq1Z670?=
- =?iso-8859-1?Q?qW/l6DlpLOv5YbHryhjMzM8AS8ec7nnVjkRWkAn98khjxMVH2IELjeh/mF?=
- =?iso-8859-1?Q?ZAXuTqGQBlMKmdTPVFxa0qtFSrqWmjpa6ZqwaEGrlyqI+lJfwWntp9Dob/?=
- =?iso-8859-1?Q?WTE0IUdwl51OeI3rwj5HmmhEamRHcuI4PAgvcS08iBKmZt+F88jNx8BDYE?=
- =?iso-8859-1?Q?TDCVgWF8FB8ZIsq0ZbrDbFUj9dnqITfnfuNN8yG7Gc2wDt0gswaP8X24ar?=
- =?iso-8859-1?Q?Vj1IC6R0IRJz9ud8rnXWi4QdfCpuLNSz6ZtJzZc5W1AQxjoS1INBGi0gu4?=
- =?iso-8859-1?Q?D44/cWdmF64S+HLst+v5tUXIPviISB3M5fU7gv21Va6qdL1HP60/nSSXMl?=
- =?iso-8859-1?Q?aeqgF0UZkz8O73RHGXLykDso7BLsEnSTB1Ndu87Ds9U/BEaR3GEvT6N9kH?=
- =?iso-8859-1?Q?agq5hEcn/jzBZht8I4cTZBwnSMWoZX+z48iiym8cRJKgvG0V1DvjeDk5Rs?=
- =?iso-8859-1?Q?M0ErlNCGa6RRA35sHEpHg4U1BcpokRJ1SOQ/x+bAX764kXfs78BK9+K9Ml?=
- =?iso-8859-1?Q?CKe0RZnjnTT0qImS9L8hhDANlB37Owpf/9Od2BuNb7Emggt8W/bI?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 961a66ab-fdb0-49dc-9712-08defa1370fc
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 14:50:54.3173
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GCuzxxBQJVMffCe4sCGix9Jx8cfb3dFpN5jdQHAt8kH4C5uV1qEyOjAMzaJmdEtSsTr4tDRqTwEfeqcgyqtKpOpGNvLCMmuQ2Fep4fTia2i1wj6XFgRr1xtnw1I1H7IJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR04MB7462
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260814144658.129DB1F000E9@smtp.kernel.org>
 
-On Fri, Aug 14, 2026 at 09:20:27AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] The split IRQ handlers break the FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround on multi-IRQ platforms.
-
-Please check this one, You can fix pre-existing issue later.
-
-Frank
-
->
-> Pre-existing issues:
-> - [Critical] Concurrent execution of split IRQ handlers locklessly corrupts the shared `skb_irq_queue`.
-> - [High] The patch fails to fix duplicate frame processing for platforms with multiple mailbox IRQs.
+On Fri, Aug 14, 2026 at 02:46:57PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Subrequests incorrectly drop GUP pins multiple times because `req == req->wb_head` evaluates to true for all requests during teardown, causing pin count underflow and Use-After-Free.
+> - [Medium] Hardcoded unpin count of 1 in `unpin_user_folio()` leaks GUP pins for large folios spanning multiple pages.
 > --
->
-> --- Patch [1]: [RESEND PATCH v6 1/6] can: flexcan: use dedicated IRQ handlers for multi-IRQ platforms ---
-> commit 4696683063946bcc95216f931b7fa509b55610f8
-> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
-> Date:   Fri Aug 14 09:03:18 2026 +0000
->
->     can: flexcan: use dedicated IRQ handlers for multi-IRQ platforms
->
-> This commit splits the monolithic flexcan IRQ handler into dedicated
-> handlers for mailbox, bus error, and state change events. This is intended
-> to prevent duplicate frame processing on multi-IRQ platforms where distinct
-> IRQ lines can dispatch concurrently.
->
-> > diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
-> > index f5d22c61503fa..f73ff442d5304 100644
-> > --- a/drivers/net/can/flexcan/flexcan-core.c
-> > +++ b/drivers/net/can/flexcan/flexcan-core.c
+> 
+> --- Patch [1]: [PATCH v6 1/5] nfs: make nfs_page pin-aware ---
+> commit 21b0f62730c29dca3085e0b77d441b62786919e8
+> Author: Pranjal Shrivastava <praan@google.com>
+> 
+> nfs: make nfs_page pin-aware
+> 
+> Modernizing the NFS Direct I/O path to use iov_iter_extract_pages()
+> introduces page pinning (GUP) instead of standard page referencing.
+> To handle this correctly, nfs_page must track whether it holds a
+> pin or a standard reference.
+> 
+> > diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
+> > index 7dd478ffc2fab..a562cfe2a126d 100644
+> > --- a/fs/nfs/pagelist.c
+> > +++ b/fs/nfs/pagelist.c
 > [ ... ]
-> > @@ -1131,25 +1129,57 @@ static irqreturn_t flexcan_irq(int irq, void *dev_id)
-> >  		netif_wake_queue(dev);
-> >  	}
-> >
-> > +	return handled;
-> > +}
-> > +
-> > +/* Process bus error events */
-> > +static irqreturn_t flexcan_do_berr(struct net_device *dev)
-> > +{
-> > +	struct flexcan_priv *priv = netdev_priv(dev);
-> > +	struct flexcan_regs __iomem *regs = priv->regs;
-> > +	irqreturn_t handled = IRQ_NONE;
-> > +	u32 reg_esr;
-> > +
-> >  	reg_esr = priv->read(&regs->esr);
-> >
-> > -	/* ACK all bus error, state change and wake IRQ sources */
-> > -	if (reg_esr & (FLEXCAN_ESR_ALL_INT | FLEXCAN_ESR_WAK_INT)) {
-> > +	/* ACK bus error interrupt source */
-> > +	if (reg_esr & FLEXCAN_ESR_ERR_INT) {
-> >  		handled = IRQ_HANDLED;
-> > -		priv->write(reg_esr & (FLEXCAN_ESR_ALL_INT | FLEXCAN_ESR_WAK_INT), &regs->esr);
-> > +		priv->write(FLEXCAN_ESR_ERR_INT, &regs->esr);
-> >  	}
-> >
-> > -	/* state change interrupt or broken error state quirk fix is enabled */
-> > -	if ((reg_esr & FLEXCAN_ESR_ERR_STATE) ||
-> > -	    (priv->devtype_data.quirks & (FLEXCAN_QUIRK_BROKEN_WERR_STATE |
-> > -					   FLEXCAN_QUIRK_BROKEN_PERR_STATE)))
-> > -		flexcan_irq_state(dev, reg_esr);
-> > -
-> >  	/* bus error IRQ - handle if bus error reporting is activated */
-> >  	if ((reg_esr & FLEXCAN_ESR_ERR_BUS) &&
-> >  	    (priv->can.ctrlmode & CAN_CTRLMODE_BERR_REPORTING))
-> >  		flexcan_irq_bus_err(dev, reg_esr);
-> >
-> > +	return handled;
-> > +}
->
-> [Severity: High]
-> Does this break the FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround?
->
-> Before this patch, the monolithic flexcan_irq() checked this quirk and called
-> flexcan_irq_state() on any interrupt.
->
-> The FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround relies on enabling the bus error
-> interrupt to catch state changes on platforms where the state interrupt is
-> broken.
->
-> Now that the bus error interrupt is routed exclusively to flexcan_do_berr(),
-> which never invokes flexcan_irq_state(), won't state transitions (like bus
-> warning or bus-off) be silently ignored on affected platforms?
->
-> [ ... ]
-> > +/* Mailbox IRQ handler for multi-IRQ platforms */
-> > +static irqreturn_t flexcan_irq_mb(int irq, void *dev_id)
-> > +{
-> > +	struct net_device *dev = dev_id;
-> > +	struct flexcan_priv *priv = netdev_priv(dev);
-> > +	irqreturn_t handled;
-> > +
-> > +	handled = flexcan_do_mb(dev);
->
-> [Severity: High]
-> This is a pre-existing issue, but does this still allow duplicate frame
-> processing?
->
-> If a platform has a secondary mailbox IRQ (FLEXCAN_QUIRK_SECONDARY_MB_IRQ),
-> flexcan_open() registers flexcan_irq_mb() for the secondary IRQ, and the
-> primary IRQ registers either flexcan_irq() or flexcan_irq_mb().
->
-> Because these can run concurrently on different CPUs, and flexcan_do_mb()
-> unconditionally processes all active mailboxes globally, won't both threads
-> still race and process the same frames?
->
-> > +
-> > +	if (handled)
-> > +		can_rx_offload_irq_finish(&priv->offload);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does splitting the IRQ handlers make
-> skb_irq_queue vulnerable to lockless corruption?
->
-> When flexcan_irq_mb(), flexcan_irq_boff(), and flexcan_irq_berr() run
-> concurrently on different CPUs, they can independently call the can_rx_offload
-> API (like can_rx_offload_irq_offload_timestamp() and
-> can_rx_offload_queue_timestamp()).
->
-> These functions insert SKBs into offload->skb_irq_queue using the lockless
-> __skb_queue_add_sort().
->
-> Additionally, they concurrently call can_rx_offload_irq_finish(), which
-> splices the list locklessly:
->
-> drivers/net/can/dev/rx-offload.c:can_rx_offload_irq_finish() {
->     ...
->     spin_lock_irqsave(&offload->skb_queue.lock, flags);
->     skb_queue_splice_tail_init(&offload->skb_irq_queue, &offload->skb_queue);
->     spin_unlock_irqrestore(&offload->skb_queue.lock, flags);
->     ...
-> }
->
-> Will this concurrent lockless access corrupt the skb->next / skb->prev pointers
-> leading to a kernel panic?
->
-> > +
-> > +	return handled;
-> > +}
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260814090324.647898-1-ciprianmarian.costea@oss.nxp.com?part=1
+> > @@ -552,11 +566,21 @@ static void nfs_clear_request(struct nfs_page *req)
+> >  	struct nfs_open_context *ctx;
+> >  
+> >  	if (folio != NULL) {
+> > -		folio_put(folio);
+> > +		if (test_and_clear_bit(PG_PINNED, &req->wb_flags)) {
+> > +			if (req == req->wb_head)
+> > +				unpin_user_folio(folio, 1);
+> 
+> [Severity: Medium]
+> Will this leak GUP pins for large folios spanning multiple pages?
+> 
+> If a caller uses nfs_page_create_from_folio() with pinned=true for a folio
+> spanning multiple pages, hardcoding 1 releases only one pin and leaks the rest.
+> 
+> Also, does this check for the head request evaluate to true for all
+> subrequests?
+> 
+> During teardown, nfs_page_group_destroy() breaks the page group linkage by
+> setting tmp->wb_head = tmp before freeing the request:
+> 
+> nfs_page_group_destroy()
+>     tmp->wb_head = tmp;
+>     nfs_free_request(tmp);
+> 
+> Because of this, when nfs_clear_request() is called, req == req->wb_head will
+> evaluate to true for all subrequests, causing each subrequest to unconditionally
+> invoke unpin_user_folio() and potentially resulting in a pin count underflow
+> and Use-After-Free.
+> 
+> > +		} else {
+> > +			folio_put(folio);
+> > +		}
+> >  		req->wb_folio = NULL;
+> >  		clear_bit(PG_FOLIO, &req->wb_flags);
+> >  	} else if (page != NULL) {
+> > -		put_page(page);
+> > +		if (test_and_clear_bit(PG_PINNED, &req->wb_flags)) {
+> > +			if (req == req->wb_head)
+> > +				unpin_user_page(page);
+> 
+> [Severity: Medium]
+> Similar to the issue above, because nfs_page_group_destroy() severs the
+> linkage and sets tmp->wb_head = tmp, will this unconditionally call
+> unpin_user_page() for all subrequests and cause a pin count underflow?
+> 
+
+These are fixed by patch 2 with the introduction of wb_nr_pinned.
+
+Thanks,
+Praan
