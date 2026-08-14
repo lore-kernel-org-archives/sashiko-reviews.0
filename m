@@ -1,165 +1,75 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E7C48AE00
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 16:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801643CFF44
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 16:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786725230; cv=none; b=WK9OF0o+FEWdeuvUb9XlXI6iwQcYYtWOHOehAClEUqCa0/XsZ8duBnSKQWP7GgPXhZnW5R0HV9Jb93dPg4kXIBR5i2MUiNjtCvGRI+u3GhESFUZx1RzNgCovA7BIvPOJMoHZbZbGBUDQD8zeLAVY7NNJ3UnCXA3yutSEcf9rPUY=
+	t=1786725811; cv=none; b=ADiBSaacEjm2LaD9SU0t8Dt0AW48cbaF/g4guB0ndOLGpXQ99pjTtt+PKalPk/nRdt+yPXGNDSwLxzV5nab0fd20QYpxAK1kvasJWcxWpTt27VMOpSAtRjhFMYX6ZdzTmOgLzdDm3k6yjU2rahrEEWvbXObdJjwQOUx20d6LJ6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786725230; c=relaxed/simple;
-	bh=pyHrc9bBxEomdl5XM9q/B52XkX59HhJnj27Srg6oQo4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JPxAjwS3dP0NmCNpkccqdLQaQEey4ldHiqiDGjM5LAX59Zs0tSWNdEX1EFNoen+wDH4QSS2p3NqHzreP/ZGg/Ug6yoDy4y1fLN85Dhn9DXj0OLmz5V/umot+2qdcrzGeRslIyjZok9vKRPUYxsk055tyTlKGD2Ox0/oFppbzslU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IB8A09tO; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1786725811; c=relaxed/simple;
+	bh=8PPb9fnW5inzVvVJ0q4AtntZzt01JJ1xSrRX1Jz4xDk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=nJZXYwRCJpfA3TEjJZriFj3IwJa9yc+heK8S2pUsXOjD7b0DXCB/S5G6Zp/8PYoVgVeGengX4KAgWGLuTqKabYrAGjjWZ39zPDTe0Uv2aNTFPVpIMgAohj9dzvxE2gAyHRmJNcsxk25m10Lb1aaeXAQTlJ5gy7zR55EZHuQngN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=t8vCjszF; arc=none smtp.client-ip=209.85.215.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IB8A09tO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786725227;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8WV9Wj4SCHBYhAbyzgDfM0gpgoEghIbZbNF8uqhfCQc=;
-	b=IB8A09tOsV0UZrnRHoR3O+VvsuTnpuelmyTugqPlbmrib70DTQX9vK4kGA5f484wilgQB3
-	1veMGr775/Q1LJoRmjCjR+R2rAUqxK6AtsvJhqRZMaXPvzhoaDlzlhOviGV4tJ2jf5Tivw
-	tnkBeMmJisjEyQUUe6t9kqG+ctI9Q+k=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-opjA610XMRyKnDAgrrtoEA-1; Fri, 14 Aug 2026 12:33:46 -0400
-X-MC-Unique: opjA610XMRyKnDAgrrtoEA-1
-X-Mimecast-MFC-AGG-ID: opjA610XMRyKnDAgrrtoEA_1786725225
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-47485fde05aso698294f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 09:33:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="t8vCjszF"
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cbeeaabcadfso1266179a12.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 09:43:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786725808; x=1787330608; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8PPb9fnW5inzVvVJ0q4AtntZzt01JJ1xSrRX1Jz4xDk=;
+        b=t8vCjszFW+HlBAWxfdfG1b50cqfFI+zG+/7cgzlVl9BO1MWY/Uq79wtMm+fbwuyVAi
+         HvezUcGy4smtLfZSJaPTTZCEvm9VwKF74PPBu/k8u8yFPGLPCFHwIIEwXV2z9VcZW/ID
+         WTA2UlnxPmeINKsn357twVwfk7M0AFiPeVYWsQDqu0JVkA/dT3sGKA1zXMEeVPW5PbkE
+         Am/HfW70UBuLxjd9SDxI+wrCSikQb7ZZwW9S+biQTbASkYOI+G9byIESIYyskM9rrzP8
+         285bkby+WaVNs6u13K8f8e8EGZMfEjMRqKw14Q75FVZsqMvtYO6tfDVqVGtoeeckOPe9
+         aFRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786725225; x=1787330025;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1786725808; x=1787330608;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8WV9Wj4SCHBYhAbyzgDfM0gpgoEghIbZbNF8uqhfCQc=;
-        b=DPGuIc1DrtVGR/kpOtoXwaU/8uv0hO12z3rMIvJ99a0oj7tqEMT2U0ulPdIEn3X710
-         zrwdq9T+LzM40fpAQ0pWNl3LVgb9wRmkuYVfvAuIswBLbIpyf3RwPJqhUmfYnq8s+hD5
-         0UFoF2tJyDtILYquAz4TE+NCIO4IlLqtyD9580kKFlWevpfNye0ibzEKbAQwoJ1DMeiQ
-         mudiABV8lMeC4nHgPwdYoYZ5Kz6X7SsnFOq6TquOHDHj9+GcPb56X6dD9beR3i0ujsMP
-         cQztbf5jJzGchoc75HPg4kWnue6utXgwf88X0X4QY+f6iuosAx//dmQUTdol1RqeCT9B
-         Y14Q==
-X-Gm-Message-State: AOJu0Yz5nZO+XqHrsFaDbbCYeP0eWlYvl6rnPsT+uFFb2hmi12w5hLBA
-	AjYqFgQl2BK7N2GlTs199F9aT3KB4mTDldy8AOyords9xVotsTt4+9QZLXMUvAKdMZCWJXhdAQ4
-	MB/Lrdr5SxAXEacYvh2m/46KBM6QWbJPQKXObc4T7jyrGSROT5L4KdCqf8td5IZsQzPbkm+wkM7
-	UEOX1fzYHwekLtSs6KO2wkR9Ht1Tr/ftIWp1ZQf0S7S5uXdWzobxc=
-X-Gm-Gg: AR+sD12msKQN+GSJF7+dDiPTQP4iz5SDy1BBJTbF7O08DFjeMJSD6TiVYaIX80wkWAx
-	G0cOBpJfx9TE1Xlt/NtYnCCgKy7p9kM9lq3JOM0h29j/MztSnCKaSjQmuwVuM9O33MR4cYomQGP
-	NIJ3gJHHWyz16LmyFK6rGeieKqtASinZtSlQ4le9dJNt5seDIuDDbX1iohNpofav/jNjDds+owk
-	XLE1z9vdFU86lNIfdM73An/gamuMR37B24T1QuPDapDaANGCD2ZFeDO5lbmOoKLW5cF05hf7CtF
-	KHjRg/HKR3CnbLWUXSX2aiTD0gSvsugmm8mZw9huQcZki9mGC4oR2a3pYTsBv/ELTT/uWl8TOY+
-	hS8eGMyp3YA6FvveR1A/SQ2qLZNOw0LFyMs13D6MlRbIeK4yxeyz4RWcU6KPNMhRSqHWY5H1V5P
-	U=
-X-Received: by 2002:a05:600c:1395:b0:499:872b:abd4 with SMTP id 5b1f17b1804b1-4998797684cmr87803895e9.6.1786725224773;
-        Fri, 14 Aug 2026 09:33:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:1395:b0:499:872b:abd4 with SMTP id 5b1f17b1804b1-4998797684cmr87803265e9.6.1786725224244;
-        Fri, 14 Aug 2026 09:33:44 -0700 (PDT)
-Received: from [192.168.188.103] (ip239-44-231-195.pool-bba.aruba.it. [195.231.44.239])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499899753ccsm45933325e9.0.2026.08.14.09.33.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Aug 2026 09:33:43 -0700 (PDT)
-Message-ID: <aa683b2d-264e-43bc-b98f-0b8728ad11e0@redhat.com>
-Date: Fri, 14 Aug 2026 18:33:42 +0200
+        bh=8PPb9fnW5inzVvVJ0q4AtntZzt01JJ1xSrRX1Jz4xDk=;
+        b=Y4c5dtHW2IojyZI5cMezFIveioE/TqI0TOHz+kWW+k9YbnUvCXnCXB5HYqVIharoPw
+         zwRcqxkc8IXV2sisPbs6TuoTIowebh88i0exngcuNXt5kAt5bQppuUusOE/am2bxO1Fb
+         3CpTdNORQU5Khnwa1PPFauLGF96JYAve2ielIVMSLrY7p48vj7ZUBr3z5fcIAgVb+d18
+         HOX9MEfr43Q7yBhFgwezVoT/1nZskgdIXh5W+CtExgdhs+ctIeDq5GUD/BkAxt+vUaDd
+         FiRsrt39KVoqNlZchQzjKXtGERpeD+3lwwH4SdpSQPCZMcnhJjKsJ/ysOfx8jmTAUAZO
+         1+9A==
+X-Gm-Message-State: AOJu0Yw/Q8jaQUrO/fyLgk8vgcBQvA2e9GMuqYPEHUI22KeHpW8ZS0Jy
+	C3ihXjDbMQXJW7bc7OYqwzPYEThKlHxvEz9N66ZbMpGWoocDwKRimfklr+WfNygrM+KKPQXhFF7
+	PBcVdOD8t+b4MGptGaHkesB05xNn4vMHFZ1y2jBwkYoMd1L6N3tCSEuMNIo3MrnHhCyVyjcjPPu
+	gRUtrMECV7f7hlkp/OBNpWi1U31KUscy1U2ZSyLCAhLzub8mg/
+X-Received: from pgbeh9.prod.google.com ([2002:a05:6a02:2569:b0:c92:864:4328])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:301b:b0:848:76af:db37
+ with SMTP id d2e1a72fcca58-84fde11e1f5mr8614245b3a.7.1786725807369; Fri, 14
+ Aug 2026 09:43:27 -0700 (PDT)
+Date: Fri, 14 Aug 2026 09:43:26 -0700
+In-Reply-To: <20260814163137.297DE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH resend mptcp-net 4/4] mptcp: do not reschedule the RTX
- timer for fallback sockets
+Mime-Version: 1.0
+References: <20260814162221.2144473-1-vkuznets@redhat.com> <20260814162221.2144473-2-vkuznets@redhat.com>
+ <20260814163137.297DE1F000E9@smtp.kernel.org>
+Message-ID: <an9Frud7pHPXMFRN@google.com>
+Subject: Re: [PATCH 1/4] KVM: nVMX: Make VMPTRLD result in #UD when eVMCS is used
+From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-References: <cover.1786713351.git.pabeni@redhat.com>
- <59c6c4dd41bb72b7aef984b14a0c6ad0881f6a4c.1786713351.git.pabeni@redhat.com>
- <20260814140334.39D5B1F000E9@smtp.kernel.org>
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20260814140334.39D5B1F000E9@smtp.kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: hqXOzD7P3htdH1mbDS91WtgzWfKB6h02doyH-Hn3tSc_1786725225
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 8/14/26 4:03 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The MPTCP_RTX_DISABLED flag makes the TCP_CLOSE state sticky for the RTX timer, permanently disabling retransmissions on reused connections and their accepted children.
-> --
-> 
-> --- Patch [4]: [PATCH resend mptcp-net 4/4] mptcp: do not reschedule the RTX timer for fallback sockets ---
-> commit 227375cb381dd3864273cd7170dd28e0f079ff8b
-> Author: Paolo Abeni <pabeni@redhat.com>
-> 
-> mptcp: do not reschedule the RTX timer for fallback sockets
->     
-> This patch introduces the MPTCP_RTX_DISABLED flag to prevent the RTX timer
-> from being rescheduled on fallback sockets and when the socket state is
-> TCP_CLOSE.
-> 
->> diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
->> index b311fe30c7855..f22d64ab1c53b 100644
->> --- a/net/mptcp/protocol.c
->> +++ b/net/mptcp/protocol.c
-> [ ... ]
->> @@ -1121,13 +1122,14 @@ static bool mptcp_rtx_timer_pending(struct sock *sk)
->>  
->>  static void mptcp_reset_rtx_timer(struct sock *sk)
->>  {
->> +	struct mptcp_sock *msk = mptcp_sk(sk);
->>  	unsigned long tout;
->>  
->> -	/* prevent rescheduling on close */
->> -	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
->> +	/* Prevent rescheduling on close and in case of fallback. */
->> +	if (test_bit(MPTCP_RTX_DISABLED, &msk->flags))
->>  		return;
-> 
+On Fri, Aug 14, 2026, sashiko-bot@kernel.org wrote:
 > [Severity: High]
-> Since this flag is checked here to prevent rescheduling, will the timer be
-> permanently disabled if the flag is never cleared?
-> 
-> [ ... ]
->> @@ -3360,6 +3362,9 @@ void mptcp_set_state(struct sock *sk, int state)
->>  		 * transition from TCP_SYN_RECV to TCP_CLOSE_WAIT.
->>  		 */
->>  		break;
->> +	case TCP_CLOSE:
->> +		set_bit(MPTCP_RTX_DISABLED, &mptcp_sk(sk)->flags);
->> +		fallthrough;
->>  	default:
-> 
-> [Severity: High]
-> Does setting MPTCP_RTX_DISABLED here without a corresponding clear logic make
-> the TCP_CLOSE state sticky for the RTX timer? 
-> 
-> If an MPTCP socket transitions to TCP_CLOSE (like a failed connect() attempt
-> or an explicit disconnect()), and the application then reuses the socket to 
-> connect() again, it appears the flag will remain set.
-> 
-> Furthermore, if listen() is called on such a reused socket, would
-> sk_clone_lock() copy the flags to all child sockets? This could cause every
-> accepted connection to inherit the MPTCP_RTX_DISABLED flag, permanently
-> breaking MPTCP-level retransmissions for all clients.
+> This isn't a bug introduced by this patch, but does handle_vmptrst() need the
+> same fix?
 
-On nice, I did not read an hallucination this allucinated since a while...
-
-without disconnect() a closed socket can not transition to other non
-closed states, because the network-level ops check the 'struct socket'
-state, which in turn is cleared only by disconnect().
-
-mptcp_disconnect() explicitly clears msk->flags.
-
-No real issues above.
-
-/P
-
+LOL, one of these days Sashiko will look at the next patch before responding.
