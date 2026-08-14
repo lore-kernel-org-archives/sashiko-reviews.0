@@ -1,84 +1,82 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC024307A0;
-	Fri, 14 Aug 2026 09:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024F7372EF0;
+	Fri, 14 Aug 2026 09:35:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786699253; cv=none; b=UqJ5SAmK1UDFHaSyfwEjGDSY+H2uf1JuJs/0uq4AF2sclDe+HWXlPi6q/pNtu1lyq97KS0P/POY75G9u9Q2cqRdOHBXS9xrQILS/uRk/rzpGavsq7rqxwA48gZW3qBL8hD1SRec+H8WtuJt37KYG2e2hFPXgYqmcDaDmRHYgSqc=
+	t=1786700130; cv=none; b=TgtkqA1HhWnajbt3aoudo7dzaweFc9pwdz5gkeX5zIXs/Vy9v3v/5is83NctzYEvYAnBqj+AJtCTwVLhjzVn+og8lJEQjAt6mZGFZ9tb+4wvr4FUIEdJJTywUykQLiyxQyID0O984IZjuuCzxmFvCR09WBB3X8MZ/ZVbtfYcpwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786699253; c=relaxed/simple;
-	bh=1KhXvLEDkEAicVP5moGfyxxsylfCzN/Ap/dIUreDcBI=;
+	s=arc-20240116; t=1786700130; c=relaxed/simple;
+	bh=vXU31pIrSBLJwTVXE3XMHZkPOfcYAhYLUYsI44ksAk8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PPAkhnZOU0WZmgXpS+OTyGAMIu4Lg67v7dqipQgfpoLZDPfKjlKE5uJ/xq1nQhubJX20pBUESxJgge3Rr2xjiY/1rU0MUKCcK9vkLUUgwapfxtEZw+uVJkCoWcnv4aqc9LPP0xC73yReVyJkTiDN6wjav3+zmOJ8Dpa0D3EwkXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=S6jfXMFF; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=hz3xYgGZ; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZhQ3Two6WhamCNdc67iLSZme2jDDbTgRAWFvd0IVU5rJ0dfvdV/8zW36bkBg4/gKuwZJmSd/4lMO0JEPWuu1j8Rp5QMY7fg0MKAz0IMXOxCKK5WZD289jUuqBKJBefwrWfM9+Tr6wzdEtVpfmTcIA4rJeveB/MYiceysLp6ydgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jhHr7yb3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="S6jfXMFF";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="hz3xYgGZ"
-Date: Fri, 14 Aug 2026 11:20:49 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1786699250;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OMg+8hkApl7/3tTo/irXs19wXzhS0ibwiO7UcbWOpxA=;
-	b=S6jfXMFFGQPoQAtV8USjz/Ngb8NIfhbP8rPrrUfo0/jgkHW1G9HQ2DkAx3uK43DfMIBauZ
-	lF0chHwYusow8/B3EhjYSbJapGAm+rApi+umNyxbbVq05RA4N0nJ9dvtwP/1vcJgDI9g0K
-	himUp9Lq4xGjXO8GkCID9GlWQdvz3rxKC/R6m5DpvT4ClCiLRq6mmnR4EvN6lyUfK5/SLe
-	1Qk75LftRysUmjXrTpTPphNHaU7RtPbb7az/CwOJM+WR8cn/VjEDtuI6kl054FseWQ42vw
-	xmB13i8TvjjGFpSuiiBDBUlDFjfIQaAupHxH0nCOJfZwOBm45Y+7ZuoOIkKtIQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1786699250;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OMg+8hkApl7/3tTo/irXs19wXzhS0ibwiO7UcbWOpxA=;
-	b=hz3xYgGZdECixFiiEAInQQgdc3jbXWIsQsC4+jkGisBPU5nnJBp+HZ824wUXNq/4hgNa6z
-	QkBjgL2NBBWt+xDw==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jhHr7yb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646EC1F000E9;
+	Fri, 14 Aug 2026 09:35:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786700125;
+	bh=Pte0yYpvKWieRPdASsm63OdJ3w0+16rYPlq3Qw/T5h0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jhHr7yb3U5Blcje3j22ocMUXRBhU8/a/sy16gPjJHwYjREgIWnCOjTLmonVE0pqfp
+	 pnp71uYSkxR9ecwjZJVbqQC1DhPrWrTkCqFVEBHookguqtv8NxhXmJ5jzP/WlHIZ/W
+	 1ZNqwj2wWW5+HN3FPU2u4BwkWpNaRs9UtqPDTr1xS42pr9Dl139+c+aWYyM5FxvzTp
+	 NQuDMlkW6ohqmorh4nOpWoX4quu2IBkBYZJyZxU+SZzNFbyABIldpeU10B3KjWxjJ5
+	 2vVsPAqq/QkDoa1/BAmiKzbCHY0WZOtqzVnHX1bjdT8m9k9CIhdNNDBbQPuUBkFKRI
+	 DnUCLn1fJhPeQ==
+Date: Fri, 14 Aug 2026 18:35:24 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev,
-	linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2] ARM, ARM64, LONGARCH: Delay HW BP notification to
- task_work()
-Message-ID: <20260814092049.EHIf1eeX@linutronix.de>
-References: <20260814085118.OPEA_Ssn@linutronix.de>
- <20260814090304.558901F0155A@smtp.kernel.org>
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH 3/4] PCI/sysfs: Handle a malformed _DSM result in
+ acpi_attr_is_visible()
+Message-ID: <20260814093405.GA3463973@rocinante>
+References: <20260814070522.2327975-1-kwilczynski@kernel.org>
+ <20260814070522.2327975-4-kwilczynski@kernel.org>
+ <20260814071951.085BD1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260814090304.558901F0155A@smtp.kernel.org>
+In-Reply-To: <20260814071951.085BD1F00A3A@smtp.kernel.org>
 
-On 2026-08-14 09:03:03 [+0000], sashiko-bot@kernel.org wrote:
-> > +	if (xchg_relaxed(&bp->hw.arch_hw_notif_busy, 1) ||
-> > +	    WARN_ON_ONCE(task_work_add(current, &bp->hw.arch_hw_notif, TWA_RESUME)))
+Hello,
+
 > [Severity: High]
-> Will using TWA_RESUME here cause a hang if a hardware watchpoint is triggered
-> during a blocking syscall like futex() or read()?
+> This isn't a bug introduced by this patch, but while reviewing how the _DSM
+> buffer is handled in this file, I noticed a pre-existing issue in
+> dsm_label_utf16s_to_utf8s():
 > 
-> When a blocking syscall accesses watched memory (e.g., via get_user()), the
-> watchpoint synchronously triggers and queues the SIGTRAP task work via
-> task_work_add(). Since TWA_RESUME only sets TIF_NOTIFY_RESUME, and
-> signal_pending() ignores TIF_NOTIFY_RESUME, the syscall wait loop will not
-> abort. 
+> drivers/pci/pci-label.c:dsm_label_utf16s_to_utf8s() {
+> 	int len;
 > 
-> Does this need to use TWA_SIGNAL instead so that TIF_NOTIFY_SIGNAL is set and
-> the interruptible sleep correctly aborts to deliver the pending task work?
+> 	len = utf16s_to_utf8s((const wchar_t *)obj->buffer.pointer,
+> 			      obj->buffer.length,
+> 			      UTF16_LITTLE_ENDIAN,
+> 			      buf, PAGE_SIZE - 1);
+> 	buf[len++] = '\n';
+> 
+> 	return len;
+> }
+> 
+> Does this code pass a byte length instead of a character count?
+> 
+> Because utf16s_to_utf8s() expects the inlen parameter to represent the number
+> of 16-bit characters, passing obj->buffer.length (which is the size in bytes)
+> might instruct the function to process up to twice as many characters as are
+> actually allocated for the buffer.
+> 
+> Could this result in an out-of-bounds heap memory read when an unprivileged
+> user reads the world-readable /sys/bus/pci/devices/.../label sysfs file?
 
-Well, this only means that the signal will be delivered once the syscall
-handling is complete. I don't see a reason why the syscall should be
-interrupted just to deliver the signal right away. The logic should not
-be affected by delivering the signal immediately.
+The last patch of this series aims to address this issue.
 
-> > +		put_event(bp);
-> > +}
-> > +#endif
+Thank you!
 
-Sebastian
+	Krzysztof
