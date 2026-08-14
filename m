@@ -1,111 +1,66 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11EC198A17
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 01:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E405A22A7F6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 01:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786669363; cv=none; b=Qp5w5d/3HdkhQfhYCbwj42sxlNtlBnrJHQoNXqfUH8tbu/Ivkefdt4wteD7D6sGzrcGjDOazVRY+fU+RVIPX6fhJ2STVAUweD0gsQfuCmGkihCjagPdl0n31lhCMGpd22vJ4imxqFY+4o3yx6Voj9uCN4MJU5iMFcwGIlXtJgeo=
+	t=1786669479; cv=none; b=fVOUwtq16GMyua0yOUgmFRxWV6H307AHu0PBtum8rIat9JYqh22AQvOMvjorEr+5cm9/84ctNlh5eoC+uzaFWUDmhnNZOo5v9eJYljl8Sb9zV2Iq5BvWLE6ieKqR3KHTnRLmdj9qMG8isex7xBWqr/bfMxkC9HTblSmAETiPjVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786669363; c=relaxed/simple;
-	bh=0B46lS5Ljpeg4FS+ptKt2QMcbDX4xRoabXK9BHZHmQA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BAyQTCOQofEeIrWpOCOaaADfRSm8WVC0QW1BjTYCeGuL+Tuq2Xv5ikk5su1tTlwHX10ZujWvmLotaWm9oE1DLFtXxg4GNwcL6V+6aXAoztZbcta/AeDWGsdxWWOteoNoudHn/gNHe7aYz77ifyHo6Nv/5CFIUX+bXGUXrXdPW7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aZawGTaT; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1786669479; c=relaxed/simple;
+	bh=i8WnjqxHmS+PKrArGVUl3dEMeIfSO9n5cVHL/oQ5+ts=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bnMX+/IjQE/6P8GsOD5SXw6Xgajcn0Z6t65zAYfHH9VFVkBYuvBeODgR3621daILzYqtSmu7DUYvrXrUfFy1HAvN/6qd4POGHpSnJxaQd0EKkEKihzO/33lH2gNs13/2QCKNJBrDYoF/L/FZ4ELx0s9aIfO6RrvGbotrSM59p5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=cRPsgzzY; arc=none smtp.client-ip=216.40.44.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aZawGTaT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1786669362; x=1818205362;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=0B46lS5Ljpeg4FS+ptKt2QMcbDX4xRoabXK9BHZHmQA=;
-  b=aZawGTaTckMZFWIpB5zYG2fV0v61PX//D7RlYvAjlEDVrwHHoZbyrt4q
-   SFOx/qt3wa+Q+AzjPBCk5OQD/9P8NM3CK7oOY+HjV12K0kG8kx4nvLPuM
-   RcAR70MbDOh7LRW6gJwBjv8181Rxz5b+WHkDnuUO8bk61tZinicjVHYgU
-   TPWmIPMqCa9Pi8uUd9Z98rizku24sd/IG518zVI98uBktpuchDQuLrEiZ
-   6E0LHxDeiNv40bBwyGdjctJLAgjUGSs61SdsJnlVxKOmMpaWg4+XPashL
-   y4cDsk01mFIK1TnE8CRCbC0yevGCkYm9AItXsHVW7DQtbttd0xNZ+NGLT
-   Q==;
-X-CSE-ConnectionGUID: Ah3fcYaCR/SXfwJSCjZnCw==
-X-CSE-MsgGUID: cB9yVdQKSTenvsBWGkL+Rg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11874"; a="97917732"
-X-IronPort-AV: E=Sophos;i="6.25,222,1779174000"; 
-   d="scan'208";a="97917732"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 18:02:41 -0700
-X-CSE-ConnectionGUID: DkZRhqoFS6O3q42sglhDtw==
-X-CSE-MsgGUID: kdZDrTQ2R4CPO59AfLNKbQ==
-X-ExtLoop1: 1
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.248]) ([10.124.240.248])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2026 18:02:39 -0700
-Message-ID: <eddf28d4-c211-41fb-b0a3-586e5afde030@intel.com>
-Date: Fri, 14 Aug 2026 09:02:36 +0800
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="cRPsgzzY"
+Received: from omf02.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay10.hostedemail.com (Postfix) with ESMTP id AC0DFC0325;
+	Fri, 14 Aug 2026 01:04:30 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id 174E380013;
+	Fri, 14 Aug 2026 01:04:29 +0000 (UTC)
+Date: Thu, 13 Aug 2026 21:04:45 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Vincent Donnefort"
+ <vdonnefort@google.com>, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 03/10] ring-buffer: Make cpu_buffer::free_page a
+ buffer_data_read_page
+Message-ID: <20260813210445.74b69fce@gandalf.local.home>
+In-Reply-To: <20260813135613.BD3A11F00A3A@smtp.kernel.org>
+References: <20260813131152.3589632-1-vdonnefort@google.com>
+	<20260813131152.3589632-4-vdonnefort@google.com>
+	<20260813135613.BD3A11F00A3A@smtp.kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] KVM: TDX: Don't assume exit_reason[31:16] as all-0
- in tdx_to_vmx_exit_reason()
-To: Sean Christopherson <seanjc@google.com>,
- Rick P Edgecombe <rick.p.edgecombe@intel.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-References: <20260812080229.2481439-1-xiaoyao.li@intel.com>
- <20260812080229.2481439-4-xiaoyao.li@intel.com>
- <20260812082306.11E8B1F000E9@smtp.kernel.org>
- <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
- <138969948dac13369ddebd72bf523dda4dda6b85.camel@intel.com>
- <an5W5XC97HK229MX@google.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <an5W5XC97HK229MX@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 174E380013
+X-Stat-Signature: cnbwesfs7betqa87xmhgh1gk9hbab1cr
+X-Rspamd-Server: rspamout03
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+E/J0Mtfi5r8kNh3hrDciSggRftT9B2Jk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=i8WnjqxHmS+PKrArGVUl3dEMeIfSO9n5cVHL/oQ5+ts=; b=cRPsgzzYuYmu74zrcd75rOHCD+BEWSCifloXPNYT/EKsckIW4FVxWLULj5jU/6qLoC+vhCE6VGDjCe2luH437cK7ran5VmUqdnR0+IUGWENJ0KFogcymmf+Jycn/6jX36DFM0n/ZmfJMGnjTrKyPOxeYd+YfVAuRm9b2uy6spoQ=
+X-HE-Tag: 1786669468-696948
+X-HE-Meta: U2FsdGVkX19X3bdl5vkKSKEQEJleFcaCgNdsUAluQ1L+OqyRTyyftlE48sJNpoSp9c2qdesOI22BwoRxCpvrd2IIAxZDbqK1Tyg1UncaXkY/ntgnVDTEplO0XYq/LauPVwxmOQItVaGuf0df8UB/R4fCB8Y9GkSfv9cB162KMP5BcCPnmIPyN3PUTVb04ZZG7TzzKITJQhi/9jNvcWlf6zta8+r6jTnXnbfZm4geqHwP1/27ffCIIkqsSkOKFDl8TXjCM234dw6Cb0O2MkVFdo4hYpbps9lVnObvm/pA2UA9Ref72AxUYaI/qA2wCTy9XAP+009wv49wg5QRsjrbE/Rl3sNyCDD5
 
-On 8/14/2026 7:44 AM, Sean Christopherson wrote:
-> On Wed, Aug 12, 2026, Rick P Edgecombe wrote:
->> Side note. I really dislike how tangled this area is for something that seems
->> like it should be much more straightforward. Deriving partially I think from the
->> overloading of the TDVMCALL leafs with the exit reasons. So we have things like:
->> ...
->> 	case EXIT_REASON_EPT_VIOLATION:
->> 		return EXIT_REASON_EPT_MISCONFIG;
->> ...
-> 
-> I peeked at that code again, and FWIW I still think swizzling the exit_reason for
-> TDVMCALL is the least awful solution.  If we don't do that, then we'll have to
-> update every single use of the exit_reason to demux TDVMCALL into the "real" exit
-> reason, which will be a mess.
+On Thu, 13 Aug 2026 13:56:13 +0000
+sashiko-bot@kernel.org wrote:
 
-I'm not sure if you read my idea[1]?
+> This returns -1, which tracing_buffers_read() treats as EOF. Subsequent
+> reads see info->spare_size == page_size, reuse the bad page, and
+> permanently return EOF.
 
-I think there is only one place KVM cares about the exit_reason 
-TDVMCALL, just the
+If you are resizing the ring buffer at the same time as reading
+trace_pipe_raw, yeah you may get garbage or an early EOF.
 
-	case EXIT_REASON_TDCALL:
+It's stupid to do.
 
-in tdx_handle_exit().
-[1] 
-https://lore.kernel.org/all/646f9595-459f-4224-b4e5-4ec2eecc0bc6@intel.com/
-> And once we track the exit_reason separately from vp_enter_ret, IMO it all becomes
-> more logical and easier to follow.  vp_enter_ret holds the information about why
-> VP.ENTER returned/exited, while exit_reason holds information about why the _guest_
-> exited.  Obviously it's imperfect since we're still fudging EXIT_REASON_EPT_MISCONFIG,
-> but again, I think that's a better alternative than demuxing exit_reason in multiple
-> locations.
-
-The question do we really need to swizzle EXIT_REASON_TDCALL to other 
-exit reasons ahead? why cannot them just be handled in the central 
-handler for EXIT_REASON_TDCALL?
-
-I think there will be more problems when TDX can exit with the reasons 
-that are currently swizzled from the TDVMCALL. e.g., when EPT_MISCONFIG 
-can happen on private memory.
-
+-- Steve
