@@ -1,46 +1,46 @@
 Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D90B2D8385;
-	Fri, 14 Aug 2026 22:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438993955E8;
+	Fri, 14 Aug 2026 22:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786745969; cv=none; b=kSXGZbm+CEnuwfrRDeJ1ALug6C053YQ9Do3JDOdXbCPX0U9r97wbjAREHf6Qx4zGR5EyTHPN0soS9G+u5jsmlMM/pqmO1qu/Wsud0D4OhHs3S2zE4G6ISDCwmlQ6ugIks/WYjYyin65LTPUcXtT4f9V1A7ExdE2G02xoif0L9Nc=
+	t=1786746498; cv=none; b=YmK/dS0LoZsq7rnJ3vFaMMonz4xpho2pieBHhBB+FZBIEUba0dWeSI4ds/ZtQ1PadzipfA5J4dG4Ju1khEYQ+1nTDvwxjgz35RkgNOWV459OT+TMpNPds3AOPShC0Hncl30eWVgSOoXUN9/0wB+6Y41YCT2u/A1lfQzlkdfeT2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786745969; c=relaxed/simple;
-	bh=byIk0wKlUDT8kV4RrhUZpLpHNsjKlVdZKuOvmIFsQrw=;
+	s=arc-20240116; t=1786746498; c=relaxed/simple;
+	bh=/B/uIFhv76/UbnzCTjGiIfTv9nr12zAq3O2h3EkM65o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LI75LGUgDi42KQg5iBJfpZ/S5FCNkTxfTAg9w1l4ivfaFl3JOafunWFYDpg/jQAwOtsDG5sySmLN733SJYo7hf05KfDDpe6hXTgmja75h+jvXTG53bSnRStZMOn8m8Nv/6N1m4TCZDBMGJhk2VOMDHo6kCoeI4lFN2t1ucl+Lkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=acCaduEG; arc=none smtp.client-ip=213.133.104.62
+	 In-Reply-To:Content-Type; b=m7x/O4mpXjdm2a4LV256ShDkrTZYTW/SuyDIgOqQHwtKY2tGAkcmZU8GREFGTwa5rSL03+KGZkBWJKae9+wlP4EoPRjbNvm3V4KIzH4lk4XwEBMtZp54wpaaqHF5cZyxssgRW/CzmZUBu/lofmoq9/ViPMdYomqif73Cf9U46Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Y8CCRqe3; arc=none smtp.client-ip=213.133.104.62
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="acCaduEG"
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Y8CCRqe3"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
 	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
 	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=zwW1SAd3cmYUAiMqZzrPnhUmBkwtmavZeG+Evi/0jHE=; b=acCaduEGa2QmdLd0Dxt3Hx9ccY
-	X+euiYwDgBlqDcDAHt2fhJoPGmJdCgA8ctnVFZ3cwIlxSCwaR6C33Ium7B2iWVDH3gDzVZHfZIGS2
-	YaBQNJujm5mwuYAEggZHfCGRKyqEwqywUXMe/Bb8JbeJJ+QMcOsoQYi30rceRm6q+783Sih9uDhEV
-	cfvNHd26AwnekBxCxygpNUc530vYa19uOG6od4daoJ/TYx4GJDflTuv6At/wN+I2XYHqu4ofoGN6s
-	SvFmqY11z7WkIinCMNiOrsMhQervec7NGxvU5sGwUyfmyOvgF0sz3O/k56X0NbBmyz985q9BddV48
-	knEoCXTA==;
-Received: from sslproxy08.your-server.de ([78.47.166.52])
+	bh=xATVbIG6/1OqLV8VuUF7ocDyn+C5xB5uzy7s1wg98lA=; b=Y8CCRqe3vB6GuNgTrKW1dzx3+f
+	olQRrRx6XlRx2+juVftfUq4cq+WTa26IEajXlwRRD+NcpUfymgQjCI2n8koiiGZvmOpPbLcS2jZtP
+	pezUKNxhHUoUBhvD4QTEfaddUVyX6XUGgkpA24XI050QQXkSUQIzvJTx9wwo4f4+O6y9opb/E6JeR
+	7YwVulO8M6y8PcBkk2CUHOSOiATT1la19irRnldL/0/itBMGv8v68p2iiZD6DBOGqzq+SrEX05+ND
+	Cr8Uged0COY08O7L8Ud0zNqRlGGmqtBY3VHB2LGN3ovQqymzGhJkQEfihv2PHM/ZDYmW8G/OMsBXg
+	4D4W24jA==;
+Received: from sslproxy06.your-server.de ([78.46.172.3])
 	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96.2)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1wv0FK-000K8i-0t;
-	Sat, 15 Aug 2026 00:19:26 +0200
+	id 1wv0Np-000Lll-26;
+	Sat, 15 Aug 2026 00:28:13 +0200
 Received: from localhost ([127.0.0.1])
-	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1wv0FK-0008fW-1L;
-	Sat, 15 Aug 2026 00:19:26 +0200
-Message-ID: <9dd7a33a-7a22-4730-a92b-dba67e68f89f@iogearbox.net>
-Date: Sat, 15 Aug 2026 00:19:25 +0200
+	id 1wv0Np-000JVh-0O;
+	Sat, 15 Aug 2026 00:28:13 +0200
+Message-ID: <11348b43-7015-45db-903c-86b6a721de8e@iogearbox.net>
+Date: Sat, 15 Aug 2026 00:28:13 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -48,12 +48,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 1/6] bpf: Keep fault protection when merging
- pointer types
+Subject: Re: [PATCH bpf-next v2 6/6] selftests/bpf: Add tests for fault prone
+ loads out of RCU pointers
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260814215301.709827-1-daniel@iogearbox.net>
- <20260814221502.880C11F000E9@smtp.kernel.org>
+ <20260814215301.709827-6-daniel@iogearbox.net>
+ <20260814220331.D132B1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Daniel Borkmann <daniel@iogearbox.net>
 Autocrypt: addr=daniel@iogearbox.net; keydata=
@@ -99,14 +100,18 @@ Autocrypt: addr=daniel@iogearbox.net; keydata=
  rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
  DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
  owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
-In-Reply-To: <20260814221502.880C11F000E9@smtp.kernel.org>
+In-Reply-To: <20260814220331.D132B1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Virus-Scanned: Clear (ClamAV 1.4.3/28092/Fri Aug 14 08:27:02 2026)
 
-On 8/15/26 12:15 AM, sashiko-bot@kernel.org wrote:
+On 8/15/26 12:03 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] The verifier fails to emit BPF_PROBE_MEM instructions when a safe pointer type (e.g., PTR_TO_STACK or PTR_TO_MAP_VALUE) and an untrusted memory pointer type (PTR_TO_MEM | PTR_UNTRUSTED) reach the same load instruction via different branches. This completely bypasses the newly introduced merge_ptr_types logic.
-(this is already addressed in 2/6 in the series)
+> - [Medium] The newly added BPF programs do not execute the vulnerable instructions at runtime and lack explicit verifier log assertions, failing to provide robust regression coverage.
+Nope, its basically load coverage (ASSERT_OK(err, "skel_load") in test_success()),
+meaning we make sure the assertion on patch 4/6 in bpf_convert_ctx_accesses()
+doesn't trigger if this is forgotten to get rewritten as probed pointer:
+
+         if (verifier_bug_if(bpf_may_fault_on_deref(ptr_type), env,
+                             "access to a fault prone pointer is not rewritten as a probed one"))
+                 return -EFAULT;
