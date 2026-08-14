@@ -1,228 +1,273 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010017.outbound.protection.outlook.com [52.101.84.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F5F3469EE
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 14:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786716012; cv=none; b=ToO5aY0zrNEzhyJBWHpcIu8oHHK/wpxnnAWDSGIwm+Hneo3dXbuGXaFLAyRb8SJgxHAwtZrd5wWtAX13ERsc1ljs8LLcNxIMJz6WXkPlGOTt1IclaMpZUp/OLxkrGwTLjiVq7n6bg8C5oGglWTt1kF5jc7BXe8MwEb7TUXEwU4Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786716012; c=relaxed/simple;
-	bh=TQCVbJzN093KkdDUdao1srurBeR5qvLyrNvei/7fvE4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qwBWcT00O39yF7FtokYXz2sdZ14YPplZ/7BfXIWIlRuWqFle3FCdRiCeb8mKh7XzwmjeXK9pgAPP+AbX2Ur9qBisZvHjC9h11axBz7Xrxc/PH33weZLsLTvMDvhthiW36rrlrvFi1jZcsDE0bkBEBSI5HlJ+v9oTorBdF8hbS9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LCSPgdKF; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8706747D932;
+	Fri, 14 Aug 2026 14:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786719065; cv=fail; b=OV+n+9oUgD9EIiDPzCepJIM06aqA3XLXWgC9X82wcaz4Bf72IKlkNeMOdT7dwapyBGyMzG8NB5a5GA6q6dmJCoiRmot9ctuol69qUUsixxYOF6Q2MbaN8m8E6K24IEwrq7KlqK4ZGa6wsd+hQ1lv8ZuHZOfciioWRq39Jn4p1Nc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786719065; c=relaxed/simple;
+	bh=ytdQyXJO5EaJZx8lCCIGGTFmO+kFqYpHzRjt7aOyAHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=BDd0vUFjDoIopNswmkQXVpz6WocO6fz/cwIA2pxyXathdSXmkldoUwL7RqQB8ixuDdhgj2h9tPRFSd0rDiplGHQSpWrhXXmVyxuI2KLylsuzcexecoyyTFRQA5x/jI1DMa8pCC3Q6JD95bCvTN8jT1YxoaPrzNUaSBvfOCXgRBs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=eAy0q9Qs reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LCSPgdKF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1786716010; x=1818252010;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=TQCVbJzN093KkdDUdao1srurBeR5qvLyrNvei/7fvE4=;
-  b=LCSPgdKFSGMAn7oejrXXnJ/yQK5L3ny2wST/WCpEU1z260J17cchpv8I
-   CfRmUiDDzWFAd2Xtq28Vi2dLl4w+927DN2DfAYwJ5//zUsGi34BgU5iFF
-   48YwdEw7+oaQBl8RueLdSUPHhFbj40SRxZ+20bhi0VRkhem1Ir5U6Hba4
-   gZ6AHRm2ebvke2APCH9/Ep7ML5x0U3S9PZ0k2WCM0hyw5TvEk993hnFuB
-   x8atAK4DZ+R7GnIqNR7QK3VWVCNjTB/V4p5DJI0qoGr1UMxhaNKRHlIyx
-   a2K7OOXPKrqluYau6I5H+yw9nGgZYSmKayHn2NkV9lxtlQm+NNEK439ny
-   g==;
-X-CSE-ConnectionGUID: M93R+BEQQdKys0cGsgeE+w==
-X-CSE-MsgGUID: hKgfp4PnR8OVutb1pgwsfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11875"; a="87316338"
-X-IronPort-AV: E=Sophos;i="6.25,222,1779174000"; 
-   d="scan'208";a="87316338"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2026 07:00:09 -0700
-X-CSE-ConnectionGUID: J+37JIwMT1i/d5Cefxbd/A==
-X-CSE-MsgGUID: tBCcGRqrRruokPPv24d6kw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,222,1779174000"; 
-   d="scan'208";a="269418457"
-Received: from rvuia-mobl.ger.corp.intel.com (HELO [10.245.244.164]) ([10.245.244.164])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2026 07:00:07 -0700
-Message-ID: <89b0b1f748a8e971d4f066dcc51c47f167215261.camel@linux.intel.com>
-Subject: Re: [PATCH] drm/ttm: Represent LRU bulk moves as nested sublists
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="eAy0q9Qs"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LguZRnRieGH+kRk7mzKUvTGgf6pCJCMK7LufYiDR3chIN2dlAr9hxYCzRTUD8AtQWKAdFLGpgvD4QCSqfM8CGcmho+qKgIAG0iGw47KpkK9Lh4nPwsupDC8eSfBuDf4tSBKani4RKwakwvmKFrdWF1b2UNgarPw/TeEpmxya+u5ozS3GhobMGP7387ZVEr9B/UQ5Zs6DanbkMbf1v9qoZhNcotwIvHTkJFd/LkwqYGn6+tZgBOIC8AclcjQsPT2RWKbGzjuMp0XNNe8qcq6JnDVGQgjKV/ezXqEsIoXROLcTZQ/OK+lbfvjskt9LpcR6fYQ+H4kaqXggh9s+cBQzQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ywPg+TZW9+jAI2UUnXmYW1ySlp1Ggn9e8lp20qr2nbM=;
+ b=SzI51CqnspWCSb0nwthdMNpBSKCHCWMlw4be/ojnlj/A5sjKZ1CeWJM73DZXY58Tq2DFUvlph+2NyD2s5MZ63z3AsWLEu2DGY9A1K04WuYNsbjvWiEyYczH94bl5R7HEKmGicAzq98Yz6yegYGE5IVMBJNroDupPtVuUGD/fW8J3hwrrYUVavQYRIhmK1FR4nOuD0j7Gv6Esw68HDRWpI6mPGrRcyeZ1rym1YqYdoJ7yZb2H9V+kY2uPdCEGnIasmNmUi+NBzyFHbScS84GXqVsaU+sbP9ZgkGSHiJRL4WZk9Ov0NM9rn7Ru8nBT4q6hGGtaiJ7pH37MWx8e3iRLrg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ywPg+TZW9+jAI2UUnXmYW1ySlp1Ggn9e8lp20qr2nbM=;
+ b=eAy0q9QsFiLu21Ya8EhvNVR7H2PBx6XMQWeQxhsHh1h0XnF8/7PLbsgM+HOnz5L0vZWUB4Ux56YkqJ0mGRlZQq0HYbT4QheyN3/kR3b8gFl+A8qdgXm0RrFIMGH6umuxHm830fvcBSL4mht3Ig5ozp1CnsSfdsHRXhLNUhd/BrPGT4a8si6DuwqFHRIdJHkJavGFhDsU2rzz2ldtdgtt3Szb833WU1pniwbLQU94bXqrbMFRRm5KzLMkzRAgVPKSA98Z2LwEgv7n/vnnsmFFBUBP7UIeDMyeVhnketGUgc0grdNr0x7YMqACtSbhzwt5+YYeDBs4rZO4UoGiEaBUXg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DBAPR04MB7462.eurprd04.prod.outlook.com (2603:10a6:10:1a0::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
+ 2026 14:50:57 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 14:50:54 +0000
+Date: Fri, 14 Aug 2026 09:50:44 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Date: Fri, 14 Aug 2026 16:00:05 +0200
-In-Reply-To: <20260814134602.9AD981F000E9@smtp.kernel.org>
-References: <20260814133231.3193-1-thomas.hellstrom@linux.intel.com>
-	 <20260814134602.9AD981F000E9@smtp.kernel.org>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+Cc: Ciprian Costea <ciprianmarian.costea@oss.nxp.com>, imx@lists.linux.dev,
+	Oliver Hartkopp <socketcan@hartkopp.net>, robh@kernel.org,
+	Frank.Li@kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [RESEND PATCH v6 1/6] can: flexcan: use dedicated IRQ handlers
+ for multi-IRQ platforms
+Message-ID: <an8rRKaadKgTdBFS@SMW015318>
+References: <20260814090324.647898-1-ciprianmarian.costea@oss.nxp.com>
+ <20260814090324.647898-2-ciprianmarian.costea@oss.nxp.com>
+ <20260814092027.86BA51F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260814092027.86BA51F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR15CA0016.namprd15.prod.outlook.com
+ (2603:10b6:510:2d2::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBAPR04MB7462:EE_
+X-MS-Office365-Filtering-Correlation-Id: 961a66ab-fdb0-49dc-9712-08defa1370fc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|366016|376014|1800799024|7416014|23010399003|6133799003|5023799004|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	6yXjjTO91Olx2AW/xyNnyB2TRtxocSj3zX34Rppb03XMYtnMwXqWE3bOu5CCI3W3hATJjonWNXKTg/Uc7vaVBZXvvmVS5ENMXGInoz7933VBsdjDhuA9e/hEtRA83HZO/nUJSOqcygYzhdjcS18z+YspFL5rgwUfBfhxIPhh5Nt4Qx25y1pJbkdwLBpPf973W1DW92QCS/pZ0+iFefFzuETH35pK9qaCa0G3nwHojTNT2wGlLhfqG+Ec4Cr8zxAUwQOgQyJ/zUht0kAA4iNQuXBEO4a0ADEd9sV+wRjUw3+rscyoCxmSRMi1ukKm2BkG1CNKYl2QNMFPOvJm8j8vTuVTbFtVuH91xbiXOEcTEjI9jMNgd1UT51x73YNwaWcpzhJHtMKJ7Q3YdxpC0n6niZKpmAiwtIze3uR9wUgXAICVTLTi22tFWszTRzQn5HkN6pJA9sGDwzjxI6tLejjBtjVhcWOjs7LOWp+5bbmFo94fzVXkM9gJDo/iYzYrJgqgS3eZaytuxXwRYG448Je2OWgsW96+xk0KOJ3DtmXgiSNT5hsUte0Ak8pASqktOjGovbc5TzDAtdWmJND1BFmWprCvisyyrGd/0z+MSQqBIJc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(1800799024)(7416014)(23010399003)(6133799003)(5023799004)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?/7NP0nyscA62za/tQL/NTy7bCGxMPBJmfhDFjVMYWTopd021eXvHuNb1XT?=
+ =?iso-8859-1?Q?3fiSRtgGW1n8KjrzNM/aOay3/Q/IDsWbgrMKGmE9YY0mYdOmcQParRpM0W?=
+ =?iso-8859-1?Q?E41HKjPGF4J1otWbHfYLLz1Sm3syRaxno8SrJxEJNvK7J5720nCQ6YfsSt?=
+ =?iso-8859-1?Q?mXx+CZvPsV1wuqm/JHFy19cOUWV9cg22AhZy3MVp/QrDLW5zMoBw38NoV5?=
+ =?iso-8859-1?Q?NVxPqRpkwv8vUa0HlXEWTPMH1tRTCxiwJ0BYxobMf0UkTsTK0inW0V7XxB?=
+ =?iso-8859-1?Q?bn1NzQsiQBSMnZiwJkTDUPKR2LxY8jOxAJ4MRYRAoX8mAx0xCimMqV9TJ+?=
+ =?iso-8859-1?Q?1mo1aNFYrak5N5VsUfQPSuO7Ebgl9pj9O6buP+Ujyco0VhOqYkSINKK5QL?=
+ =?iso-8859-1?Q?doIDH7+sk5ZeQKqTg5oNU33t91le7+ty2uwtIzlW0bwJ1FhwCHMkppr/BI?=
+ =?iso-8859-1?Q?VpwDhhBJbl18UE1zpr5mwaJMGdxrrFsdErgTcrz3rZ6cn9LApMyyIxcJ9U?=
+ =?iso-8859-1?Q?gw6pgZ5SKmVgYk/hF74/6nX128Q+WbErDZ86E/mxtB2um1zZDHLKszOxRY?=
+ =?iso-8859-1?Q?vnXELz1KRamTgfIxqEneHkclvulc02kOMhsFOg9AR0eaZxAPat1RABa80a?=
+ =?iso-8859-1?Q?A+N39x4UMtONIZTp4Sif3CsgQhdl4RNa5110eToQfTIWbLydCaPglsfvDI?=
+ =?iso-8859-1?Q?gqgyFrUWsu5eWG9JVPC9ntx2Tdog1GLBRwbocBA9/tvEKTDLrjGJ93wIOj?=
+ =?iso-8859-1?Q?r7zm+NGkbIIpGBWlg2LYTbG3eRS2MMc7+1G5UUrF8QIeU2GX41m+BEtNys?=
+ =?iso-8859-1?Q?RLY2cmRDvgxGC2oNk0coQL+8T4c3/sypBsu6Aa+XIcA+IpA04iQdD5jXMk?=
+ =?iso-8859-1?Q?MeB9mPZxmxQnS2sIPV71OWTXs31zquBrG8GswMFCutWOJ62NiI+FqoLks7?=
+ =?iso-8859-1?Q?amS0Y/yO46d3sIVeevS/Zt7ghCqcuRiu2BmXu3Gqb9SJyK8nDDSK0GCOkx?=
+ =?iso-8859-1?Q?fHO1SS/RYFOgY5yzoCNkrHkA4m78FnsFB2+RA1f0+4etSbOu6GugLkXBTy?=
+ =?iso-8859-1?Q?ir6J6TKhKnrqqwD8NHW5+ZIy3pLsOOHqYegYAlsG8Yk98/0canqj5KgE4r?=
+ =?iso-8859-1?Q?NkmWvtJgS+dMSdHc+tJUrXY5IUiPepSCG0C+AcAr7U6KPAmt8Y9h2wSDAg?=
+ =?iso-8859-1?Q?Rt9WwoiPyRAOYcNkyNUQFS+ZTSHxWjKJJM7Nx5Q9FeEhsok53WCNq1Z670?=
+ =?iso-8859-1?Q?qW/l6DlpLOv5YbHryhjMzM8AS8ec7nnVjkRWkAn98khjxMVH2IELjeh/mF?=
+ =?iso-8859-1?Q?ZAXuTqGQBlMKmdTPVFxa0qtFSrqWmjpa6ZqwaEGrlyqI+lJfwWntp9Dob/?=
+ =?iso-8859-1?Q?WTE0IUdwl51OeI3rwj5HmmhEamRHcuI4PAgvcS08iBKmZt+F88jNx8BDYE?=
+ =?iso-8859-1?Q?TDCVgWF8FB8ZIsq0ZbrDbFUj9dnqITfnfuNN8yG7Gc2wDt0gswaP8X24ar?=
+ =?iso-8859-1?Q?Vj1IC6R0IRJz9ud8rnXWi4QdfCpuLNSz6ZtJzZc5W1AQxjoS1INBGi0gu4?=
+ =?iso-8859-1?Q?D44/cWdmF64S+HLst+v5tUXIPviISB3M5fU7gv21Va6qdL1HP60/nSSXMl?=
+ =?iso-8859-1?Q?aeqgF0UZkz8O73RHGXLykDso7BLsEnSTB1Ndu87Ds9U/BEaR3GEvT6N9kH?=
+ =?iso-8859-1?Q?agq5hEcn/jzBZht8I4cTZBwnSMWoZX+z48iiym8cRJKgvG0V1DvjeDk5Rs?=
+ =?iso-8859-1?Q?M0ErlNCGa6RRA35sHEpHg4U1BcpokRJ1SOQ/x+bAX764kXfs78BK9+K9Ml?=
+ =?iso-8859-1?Q?CKe0RZnjnTT0qImS9L8hhDANlB37Owpf/9Od2BuNb7Emggt8W/bI?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 961a66ab-fdb0-49dc-9712-08defa1370fc
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 14:50:54.3173
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GCuzxxBQJVMffCe4sCGix9Jx8cfb3dFpN5jdQHAt8kH4C5uV1qEyOjAMzaJmdEtSsTr4tDRqTwEfeqcgyqtKpOpGNvLCMmuQ2Fep4fTia2i1wj6XFgRr1xtnw1I1H7IJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR04MB7462
 
-On Fri, 2026-08-14 at 13:46 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
-> - [High] Missing cursor adjustment in `ttm_lru_bulk_move_add` when
-> re-seeding an empty bulk move anchor causes recently-used resources
-> to be prematurely evicted.
-> - [Medium] Computing `&man->lru[j]` when `man` is NULL in
-> `ttm_bulk_move_drop_cursors` invokes Undefined Behavior and will
-> trigger UBSAN panics.
+On Fri, Aug 14, 2026 at 09:20:27AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> New issues:
+> - [High] The split IRQ handlers break the FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround on multi-IRQ platforms.
 
-Both issues verified as real and reachable. Will update for v3.
+Please check this one, You can fix pre-existing issue later.
 
-Thanks,
-Thomas
+Frank
 
-
+>
+> Pre-existing issues:
+> - [Critical] Concurrent execution of split IRQ handlers locklessly corrupts the shared `skb_irq_queue`.
+> - [High] The patch fails to fix duplicate frame processing for platforms with multiple mailbox IRQs.
 > --
->=20
-> --- Patch [1]: [PATCH] drm/ttm: Represent LRU bulk moves as nested
-> sublists ---
-> commit b97657bee6dc1cddf7841bc260d33b4b040368e4
-> Author: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-> Subject: drm/ttm: Represent LRU bulk moves as nested sublists
->=20
-> This patch changes the LRU bulk move mechanism to track each group as
-> a
-> real nested sublist instead of ranges. Each group gets a persistent
-> anchor
-> node linked on the manager LRU list along with a sublist holding its
-> member
-> resources, simplifying cursor tracking and eliminating range-
-> corruption bugs.
->=20
-> Link: https://gitlab.freedesktop.org/drm/amd/-/issues/5387
->=20
-> > diff --git a/drivers/gpu/drm/ttm/ttm_resource.c
-> > b/drivers/gpu/drm/ttm/ttm_resource.c
-> > index 4e6d3d658d858..195f960b2d738 100644
-> > --- a/drivers/gpu/drm/ttm/ttm_resource.c
-> > +++ b/drivers/gpu/drm/ttm/ttm_resource.c
->=20
+>
+> --- Patch [1]: [RESEND PATCH v6 1/6] can: flexcan: use dedicated IRQ handlers for multi-IRQ platforms ---
+> commit 4696683063946bcc95216f931b7fa509b55610f8
+> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+> Date:   Fri Aug 14 09:03:18 2026 +0000
+>
+>     can: flexcan: use dedicated IRQ handlers for multi-IRQ platforms
+>
+> This commit splits the monolithic flexcan IRQ handler into dedicated
+> handlers for mailbox, bus error, and state change events. This is intended
+> to prevent duplicate frame processing on multi-IRQ platforms where distinct
+> IRQ lines can dispatch concurrently.
+>
+> > diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
+> > index f5d22c61503fa..f73ff442d5304 100644
+> > --- a/drivers/net/can/flexcan/flexcan-core.c
+> > +++ b/drivers/net/can/flexcan/flexcan-core.c
 > [ ... ]
->=20
-> > +static void ttm_bulk_move_drop_cursors(struct ttm_device *bdev,
-> > +					struct ttm_lru_bulk_move
-> > *bulk)
-> > +{
-> > +	unsigned int i, j;
-> > +
-> > +	for (i =3D 0; i < TTM_NUM_MEM_TYPES; ++i) {
-> > +		struct ttm_resource_manager *man =3D
-> > ttm_manager_type(bdev, i);
-> > +
-> > +		for (j =3D 0; j < TTM_MAX_BO_PRIORITY; ++j) {
-> > +			struct ttm_lru_bulk_move_pos *pos =3D &bulk-
-> > >pos[i][j];
-> > +			struct ttm_lru_item *lru, *next;
-> > +
-> > +			list_for_each_entry_safe(lru, next, &pos-
-> > >sublist, link) {
-> > +				struct ttm_resource_cursor
-> > *cursor;
-> > +
-> > +				if (ttm_lru_item_is_res(lru)) {
-> > +					WARN_ON_ONCE(1);
-> > +					continue;
-> > +				}
-> > +				/*
-> > +				 * This cursor descended here; its
-> > main hitch
-> > +				 * already sits on the manager
-> > list, so just
-> > +				 * detach it from this sublist.
-> > +				 */
-> > +				cursor =3D container_of(lru,
-> > typeof(*cursor),
-> > +						=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > sublist_hitch);
-> > +				cursor->cur_list =3D &man->lru[j];
-> > +				list_del_init(&lru->link);
-> > +			}
-> > +			list_splice_tail_init(&pos->sublist, &man-
-> > >lru[j]);
->=20
-> [Severity: Medium]
-> When ttm_manager_type() returns NULL for unused memory types, doesn't
-> the
-> pointer arithmetic &man->lru[j] result in undefined behavior?
->=20
-> If the kernel is compiled with UBSAN, this can trigger a panic even
-> if the
-> list operations don't actually dereference the pointer. Should there
-> be a
-> check like if (!man) continue; before the inner loop?
->=20
-> > +			list_del_init(&pos->marker.link);
-> > +		}
-> > +	}
+> > @@ -1131,25 +1129,57 @@ static irqreturn_t flexcan_irq(int irq, void *dev_id)
+> >  		netif_wake_queue(dev);
+> >  	}
+> >
+> > +	return handled;
 > > +}
->=20
-> [ ... ]
->=20
-> > +/* Add the resource to a bulk_move sublist */
-> > =C2=A0static void ttm_lru_bulk_move_add(struct ttm_lru_bulk_move *bulk,
-> > =C2=A0				=C2=A0 struct ttm_resource *res)
-> > =C2=A0{
-> > =C2=A0	struct ttm_lru_bulk_move_pos *pos =3D
-> > ttm_lru_bulk_move_pos(bulk, res);
-> > +	struct ttm_resource *first =3D
-> > ttm_lru_first_res_or_null(&pos->sublist);
-> > +	struct ttm_buffer_object *bo =3D res->bo;
-> > +	struct ttm_resource_manager *man =3D
-> > +		ttm_manager_type(bo->bdev, res->mem_type);
-> > =C2=A0
-> > -	if (!pos->first) {
-> > -		pos->first =3D res;
-> > -		pos->last =3D res;
-> > +	if (first) {
-> > -		WARN_ON(pos->first->bo->base.resv !=3D res->bo-
-> > >base.resv);
-> > -		ttm_lru_bulk_move_pos_tail(pos, res);
-> > +		WARN_ON(first->bo->base.resv !=3D res->bo-
-> > >base.resv);
-> > =C2=A0	} else {
-> > +		/*
-> > +		 * Group empty (first activation, or all members
-> > were pinned
-> > +		 * or swapped out); re-seed the anchor at the tail
-> > so it
-> > +		 * counts as recently used.
-> > +		 */
-> > +		list_move_tail(&pos->marker.link, &man->lru[bo-
-> > >priority]);
-> > =C2=A0	}
->=20
+> > +
+> > +/* Process bus error events */
+> > +static irqreturn_t flexcan_do_berr(struct net_device *dev)
+> > +{
+> > +	struct flexcan_priv *priv = netdev_priv(dev);
+> > +	struct flexcan_regs __iomem *regs = priv->regs;
+> > +	irqreturn_t handled = IRQ_NONE;
+> > +	u32 reg_esr;
+> > +
+> >  	reg_esr = priv->read(&regs->esr);
+> >
+> > -	/* ACK all bus error, state change and wake IRQ sources */
+> > -	if (reg_esr & (FLEXCAN_ESR_ALL_INT | FLEXCAN_ESR_WAK_INT)) {
+> > +	/* ACK bus error interrupt source */
+> > +	if (reg_esr & FLEXCAN_ESR_ERR_INT) {
+> >  		handled = IRQ_HANDLED;
+> > -		priv->write(reg_esr & (FLEXCAN_ESR_ALL_INT | FLEXCAN_ESR_WAK_INT), &regs->esr);
+> > +		priv->write(FLEXCAN_ESR_ERR_INT, &regs->esr);
+> >  	}
+> >
+> > -	/* state change interrupt or broken error state quirk fix is enabled */
+> > -	if ((reg_esr & FLEXCAN_ESR_ERR_STATE) ||
+> > -	    (priv->devtype_data.quirks & (FLEXCAN_QUIRK_BROKEN_WERR_STATE |
+> > -					   FLEXCAN_QUIRK_BROKEN_PERR_STATE)))
+> > -		flexcan_irq_state(dev, reg_esr);
+> > -
+> >  	/* bus error IRQ - handle if bus error reporting is activated */
+> >  	if ((reg_esr & FLEXCAN_ESR_ERR_BUS) &&
+> >  	    (priv->can.ctrlmode & CAN_CTRLMODE_BERR_REPORTING))
+> >  		flexcan_irq_bus_err(dev, reg_esr);
+> >
+> > +	return handled;
+> > +}
+>
 > [Severity: High]
-> If an active LRU traversal cursor has descended into this sublist and
-> all
-> resources are subsequently removed, the sublist becomes empty except
-> for the
-> cursor's hitch.
->=20
-> When a new resource is added and 'first' is NULL, we re-seed the
-> anchor to
-> the tail of the manager's LRU list. However, could this leave the
-> descended
-> cursor parked in the sublist without adjusting it?
->=20
-> If ttm_lru_bulk_move_pos_adjust_cursors() is not called to detach it,
-> the
-> resumed traversal might immediately process and evict this newly
-> added
-> resource, violating the LRU guarantee.
->=20
-> > +	/*
-> > +	 * The resource may still be on another list (manager LRU
-> > or
-> > +	 * bdev->unevictable); move it unconditionally to keep
-> > group
-> > +	 * membership consistent.
-> > +	 */
-> > +	list_move_tail(&res->lru.link, &pos->sublist);
-> > =C2=A0}
+> Does this break the FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround?
+>
+> Before this patch, the monolithic flexcan_irq() checked this quirk and called
+> flexcan_irq_state() on any interrupt.
+>
+> The FLEXCAN_QUIRK_BROKEN_PERR_STATE workaround relies on enabling the bus error
+> interrupt to catch state changes on platforms where the state interrupt is
+> broken.
+>
+> Now that the bus error interrupt is routed exclusively to flexcan_do_berr(),
+> which never invokes flexcan_irq_state(), won't state transitions (like bus
+> warning or bus-off) be silently ignored on affected platforms?
+>
+> [ ... ]
+> > +/* Mailbox IRQ handler for multi-IRQ platforms */
+> > +static irqreturn_t flexcan_irq_mb(int irq, void *dev_id)
+> > +{
+> > +	struct net_device *dev = dev_id;
+> > +	struct flexcan_priv *priv = netdev_priv(dev);
+> > +	irqreturn_t handled;
+> > +
+> > +	handled = flexcan_do_mb(dev);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this still allow duplicate frame
+> processing?
+>
+> If a platform has a secondary mailbox IRQ (FLEXCAN_QUIRK_SECONDARY_MB_IRQ),
+> flexcan_open() registers flexcan_irq_mb() for the secondary IRQ, and the
+> primary IRQ registers either flexcan_irq() or flexcan_irq_mb().
+>
+> Because these can run concurrently on different CPUs, and flexcan_do_mb()
+> unconditionally processes all active mailboxes globally, won't both threads
+> still race and process the same frames?
+>
+> > +
+> > +	if (handled)
+> > +		can_rx_offload_irq_finish(&priv->offload);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does splitting the IRQ handlers make
+> skb_irq_queue vulnerable to lockless corruption?
+>
+> When flexcan_irq_mb(), flexcan_irq_boff(), and flexcan_irq_berr() run
+> concurrently on different CPUs, they can independently call the can_rx_offload
+> API (like can_rx_offload_irq_offload_timestamp() and
+> can_rx_offload_queue_timestamp()).
+>
+> These functions insert SKBs into offload->skb_irq_queue using the lockless
+> __skb_queue_add_sort().
+>
+> Additionally, they concurrently call can_rx_offload_irq_finish(), which
+> splices the list locklessly:
+>
+> drivers/net/can/dev/rx-offload.c:can_rx_offload_irq_finish() {
+>     ...
+>     spin_lock_irqsave(&offload->skb_queue.lock, flags);
+>     skb_queue_splice_tail_init(&offload->skb_irq_queue, &offload->skb_queue);
+>     spin_unlock_irqrestore(&offload->skb_queue.lock, flags);
+>     ...
+> }
+>
+> Will this concurrent lockless access corrupt the skb->next / skb->prev pointers
+> leading to a kernel panic?
+>
+> > +
+> > +	return handled;
+> > +}
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260814090324.647898-1-ciprianmarian.costea@oss.nxp.com?part=1
