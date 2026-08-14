@@ -1,144 +1,183 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8EB75801;
-	Fri, 14 Aug 2026 15:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81003C9EEF;
+	Fri, 14 Aug 2026 15:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786719977; cv=none; b=XUvCyuLWDLtwdJQAbQpxz5Oz5d3AcliiUckBuV4CkeH2GVRt50oRgwZyu8hdmMxSQHn4WWX9aBw1YBRwJtLqCAuFZL/qZ80nhUOORPGRQ5NSTUK/rW5WA68FT7YGDCOcsoe9XQ2IDuxfR6q4B65hUQbEaA1X9O62HNOsWP7j4wg=
+	t=1786720132; cv=none; b=N1dpGLaekqe32Y1OjWzyCA+glsaEQGTRL9takuHwh/2FdZ3Qx7RmqkUddnKek1Up/1bvcYR5ithKFBVjgcveWyJxcDzmkVsoLJqdjzh35a4U56ImXdxxdhhdWrVIJ3gQZFD4eK+bELmTPVCH3/6iAmyynvaSPlVamt/WKUZfym4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786719977; c=relaxed/simple;
-	bh=y66QjIu9+k2WYa3fHNxpAULLU4r+jYbLL7bLMxopSsk=;
+	s=arc-20240116; t=1786720132; c=relaxed/simple;
+	bh=jsl8MrQfwRthoU04AgSqk5+QOq9zjYaABgINvgF5WOA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JrYm87xac3mwDzwf4d5QT1qQxnVtkbXrgpEcOmIMB5moKuTVXCRlV1btbfNwc7pRdODs0Em9BMvIch0xCglvs7Mp9VfDYHRlEU548l0PTfuYa5EpgqLV+UJmW79/cYBfREFF9RV6gV/WfRluxMkqDE5v1a9KSp7P2Me/kUkh+Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GFmBts8L; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=nkdQvddxQU/vc8eYAP4kG+wGkxvrDmvW7Gv5fkuRN5/Llx8f8P+Ib6ptYQouT1zBjm+f0AxYjIEyFLq9L1KQy/TK1tU36uRn4ZDtsum0C7z+kTyWlZ4lq9fUT+a75CDdq/YhHKOIloB7SMyZBGZt6XrxClosYfMQzCOGqgfqHc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=WH7x+pLj; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GFmBts8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1168D1F000E9;
-	Fri, 14 Aug 2026 15:06:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786719975;
-	bh=eTDoNCijpffwsuhfYUfjss8g3pWyUHGeLWGc9ix7oEM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=GFmBts8Lo3uqBhoWNTpM7ULQRPOUKo0OQPpzxHCAUg9syPhkt3uFgjZZuK2L88g4a
-	 kHK2jO/1DUoT4qhsOZfvlFFCMhfK7YC85z1mIVd0qMV8xk6sWVXzY/TOqNNvaCcjwf
-	 IIA2sxYtbssQF9BpmDHBvumTtzYcMFxa42YQ+iZVxqcQNQ2UAWreWuszJ1w84bYZ9L
-	 s7HL70FEgAnOXCCJDD3CR2pqpi1xZim4SDwlgnl7X9QvxX2PZE05xMVI26yN/G1ERR
-	 qVFRfwZ4M0bMv95A1Rv9V5RS3bv5+hcEqkzffvwujzMUFCXrbgru1JQ58YQSA5P03b
-	 j3+8BThcHNMmg==
-Message-ID: <e224943f-abc4-410f-83ad-7238c89dd49d@kernel.org>
-Date: Fri, 14 Aug 2026 17:06:12 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="WH7x+pLj"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67EE5ZAP3660177;
+	Fri, 14 Aug 2026 15:08:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=O45NYv
+	hjJ0ymu35KpIGlEr65IetKun7u2AI3RzlFy/Q=; b=WH7x+pLj4yR6JD5aln6zOb
+	kogQk4gXGSu+ZxIAPO9ZtWLCXktrlSXgsURPc5yAr+QDwzPsoP35xAC5M2XcuXRV
+	qwDD21Uvqysy6zkm4akNT66G8YkgMSMmZk6B2pboJ065+76LlUlFN/EEFL1acksS
+	UrzuITbSso+aOzFT3HYGKNq2+3BOzim37h1bKnQaNp14VRAmq126C+FB1+bYotFK
+	CDfK/Gyp5YWxbWb7+Xf51uVjLNml8H4uBy0RgNmqGcKgJ4vLOGMokLnD1pCjauJb
+	hhCGFEWWKQ++jtVbXidMMZv9a8QnaDFL0FY/DkPl0W4TvceXuJHI0U+q3U1ze36A
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvk0dbr8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Aug 2026 15:08:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EEuTFD020324;
+	Fri, 14 Aug 2026 15:08:48 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxf5wfv6d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Aug 2026 15:08:48 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67EF8i0F38535600
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 14 Aug 2026 15:08:44 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AA8E320043;
+	Fri, 14 Aug 2026 15:08:44 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6727320040;
+	Fri, 14 Aug 2026 15:08:44 +0000 (GMT)
+Received: from [9.111.74.75] (unknown [9.111.74.75])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 14 Aug 2026 15:08:44 +0000 (GMT)
+Message-ID: <9d6917f1-bfd0-4539-8df1-cc46b4d2a419@linux.ibm.com>
+Date: Fri, 14 Aug 2026 17:08:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH mptcp-next] selftests: mptcp: print stats before socket
- closure
-Content-Language: fr
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] s390/crypto: Generate intermediate CV for API
+ partial block handling
 To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-References: <20260814-sft-mptcp-stats-b4-close-v1-1-2945a591be7e@kernel.org>
- <20260814141500.A19A11F000E9@smtp.kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260814141500.A19A11F000E9@smtp.kernel.org>
+Cc: linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.vom>
+References: <20260814142010.259918-1-dengler@linux.ibm.com>
+ <20260814142010.259918-2-dengler@linux.ibm.com>
+ <20260814143143.75EE41F00A3A@smtp.kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US, de-DE
+In-Reply-To: <20260814143143.75EE41F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDExNCBTYWx0ZWRfX7Lglp+fTH6HV
+ 2qIlPToI06WGDXqUbBXqZjwG5EvPKkFmDJUMnKZIkWog50TeAO6FU1XCWfCPXYmrxkYKEa60noa
+ Y62RLmZNZqWc1N9x+MKO3hPJQIDKMBDWQo6y/mqLRho0IJekcpkLBftt/UksT/y9sRIaih//zvs
+ DK2I3/aTjIBZytVEOhl2I6+T8qNK5lVlLC56zhHY+CXUu50nPGp6GfjRDhxIZKikNP90nTHg/Sh
+ EU8YVETfAd0IOg4zPa8TobZpI5Fzq8jwompS5y1wa9KO5WPM0XT3bspgAGeNor2mKg1dk0S3RO1
+ xe38VMDaitd9LOXmvQUlenjIYhNUrfPlao+5OcipwYWFiR2FocitSqzjmS55ajfFvjoWpfkiJNt
+ QY5Myh4CqYHpxHwcpDXsisbFkZKkZXZ09v4GmJn44PV81GXQR1ceqyFfr9+VDg1tYi3BebESGE7
+ r5v3P4TrWA0pswvSzjA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDExNCBTYWx0ZWRfX6qOyuwyIBI+9
+ uyiFaL+/uL0T7OhHt/sQiLlgodxYYch4XOpq6CSovvo+J8RCJx5eAVY0RN/MSWH94kZQ9aeUDqB
+ MdduHc2jxm2xmaXmMRZlm18mo1CLGIc=
+X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7f2f82 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=gN5i18_ZI52W_xiBWBcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: t5bBcEWNluGD2eXZSR6pbFs3WQ61aBsR
+X-Proofpoint-ORIG-GUID: t5bBcEWNluGD2eXZSR6pbFs3WQ61aBsR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-14_05,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608140114
 
-On 14/08/2026 16:15, sashiko-bot@kernel.org wrote:
+On 8/14/26 16:31, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Invalid iproute2 command `ip netns id` causes an error message and incorrect NSTAT_HISTORY file path.
+> 
+> Pre-existing issues:
+> - [High] Hardware Alignment Requirement Violation due to `__packed` attribute
 > --
 > 
-> --- Patch [1]: [PATCH mptcp-next] selftests: mptcp: print stats before socket closure ---
-> commit 0e02bc2b403cc7ef4929da44802ea29557081b60
-> Author: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+> --- Patch [1]: [PATCH v1 1/1] s390/crypto: Generate intermediate CV for API partial block handling ---
+> commit 6ca29d2947b71c2e1420feb8fbee6504922ff37f
+> Author: Holger Dengler <dengler@linux.ibm.com>
 > 
-> selftests: mptcp: print stats before socket closure
+> s390/crypto: Generate intermediate CV for API partial block handling
 > 
-> This commit adds a mechanism to dump socket statistics via ss and nstat
-> just before socket closure when a poll timeout occurs. This helps debug
-> timeout issues in the mptcp_connect test.
+> This commit updates the internal hash_data() function to conditionally use
+> cpacf_kimd() for intermediate chaining values when API partial block handling
+> is requested, reserving cpacf_klmd() for the final hash value.
 > 
->> diff --git a/tools/testing/selftests/net/mptcp/mptcp_connect.c b/tools/testing/selftests/net/mptcp/mptcp_connect.c
->> --- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
->> +++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-> [ ... ]
->> @@ -210,6 +210,19 @@ static void xgetaddrinfo(const char *node, const char *service,
->>  	}
->>  }
+>> diff --git a/arch/s390/crypto/hmac_s390.c b/arch/s390/crypto/hmac_s390.c
+>> index f8cd09f341d4b..445fa7bbd9586 100644
+>> --- a/arch/s390/crypto/hmac_s390.c
+>> +++ b/arch/s390/crypto/hmac_s390.c
+>> @@ -150,7 +150,10 @@ static int hash_data(const u8 *in, unsigned int inlen,
 >>  
->> +static void print_err_stats(void)
->> +{
->> +	char cmd[128];
->> +
->> +	snprintf(cmd, sizeof(cmd), "ss -Menitam -o '%cport = :%s' >&2",
->> +		 listen_mode ? 's' : 'd', cfg_port);
->> +
->> +	fprintf(stderr, "socket stats before socket closure:\n");
->> +	(void)!system(cmd);
->> +	(void)!system("NSTAT_HISTORY='/tmp/$(ip netns id).nstat' nstat -s | "
-> [Severity: Medium]
-> Will this ip netns id command fail and cause an iproute2 error during the
-> test?
+>>  #undef PARAM_INIT
+>>  
+>> -	cpacf_klmd(func, &param, in, inlen);
+>> +	if (final)
+>> +		cpacf_klmd(func, &param, in, inlen);
+>> +	else
+>> +		cpacf_kimd(func, &param, in, inlen);
 > 
-> It appears ip netns id is an invalid command, and should likely be
-> ip netns identify.
+> [Severity: High]
+> This is a pre-existing issue, but could the alignment of the param block passed
+> to cpacf_kimd() and cpacf_klmd() trigger a hardware specification exception?
+> 
+> The param variable is defined earlier in hash_data() with the __packed
+> attribute:
+> 
+> 	union {
+> 		struct sha256_paramblock {
+> 			u32 h[8];
+> 			u64 mbl;
+> 		} sha256;
+> 		struct sha512_paramblock {
+> 			u64 h[8];
+> 			u128 mbl;
+> 		} sha512;
+> 	} __packed param;
+> 
+> The __packed attribute reduces the compiler's alignment requirement for param
+> to 1 byte. The z/Architecture requires doubleword (8-byte) alignment for KIMD
+> and KLMD parameter blocks.
 
-No, 'ip netns id' is valid and is the same as 'ip netns identify'.
+This is not true. The z/Architecture (as described in "z/Architecture,
+Principles of Operation") does not require any alignment for the address
+of the parameter block in general register GR1.
 
-I used the short version initially to fit on 80 chars, but I guess I
-should still use 'identify' to avoid this warning when sending the patch
-upstream...
+> If the compiler places param on a stack address not divisible by 8, won't this
+> cause a kernel panic when passed to these hardware instructions?
 
-Cheers,
-Matt
+There is no specification exception documented, if the parameter block
+address in GR1 is not 8-byte aligned. A stack address not divisible by 8
+will not cause a specification exception and there for also no kernel crash.
+
+> Since the struct fields inside the union are naturally packed, can we remove
+> the __packed attribute to ensure the compiler maintains safe alignment?
+
+The __packed statement may be redundant. But I would prefer to leave it
+in the code, because it increases the readability.
+
+[...]
+
 -- 
-Sponsored by the NGI0 Core fund.
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
 
