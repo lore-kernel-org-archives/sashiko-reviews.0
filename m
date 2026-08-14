@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-62.mta1.migadu.com [95.215.58.62])
+Received: from mta1.migadu.com (out-27.mta1.migadu.com [95.215.58.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1799F7E792
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 04:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E935E948
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 06:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786681153; cv=none; b=gX/n663kcUAbDvIMdln7OHeMuGX0nODRJR1AuUQu5jNjMZFjkOtzBFhw+xz31ah+04KNWGrhJRpdvk4S9WuTns2VRkZOSi9AmK+DdeuZp3zImOTG/vdMIC5RxQvPo2KVr4rg5fATaqC7QCUY26QRImF6aURg7iEj5jSOIoSsjKU=
+	t=1786687896; cv=none; b=S+XrB5GiJnbcPzsyvdq8WlIOMZIt3ZIsx1Mo2DLI+XO31o7cNGplaxQcfY3UwxpOG0KTK0sIwxafeLReZgXpBOc+ee21e5xjSkNCeBQdYLAClugxW7Q4beLxLSgRoMHBLMiDdRpw0GKe04CIzKYAlsZ63AKfxm+jyRqQCyiwT4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786681153; c=relaxed/simple;
-	bh=IVPmquKdnfAc0rhx5Mx3Ocp283/Ti0L/9S+/+rdrMQE=;
+	s=arc-20240116; t=1786687896; c=relaxed/simple;
+	bh=RII08E4OChShk1f6g9svv7r6KNxxrcFvD8vpWNknJuM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IcgSnDwCCh3+WRHetizLxnSsKpD+AEPbBAHURVoTrPqc4pccMu2oinhhKlHpsi6IG4J1Afbkklo/8pbyNlTTeKzI6Ou7N5WPn+9AlphQH7OE3yRsDZIV9SlmzQ1fmj9LIVcbgV7GQLQeaxyeVH9WPo7Amg5qb3X0/2Xpo4+Ac2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=A4L/LO2n; arc=none smtp.client-ip=95.215.58.62
+	 In-Reply-To:Content-Type; b=cvAHpzTa4EZ6ZNB/K7g1GKKP7z0MOKXymlF0vTs+8ISwsYxqjyq7ygW/ew8aSDoRiWUQOPB6gjRgimpRBVAGSB1tSpQ6onJeDBDiLGSIJL5kAnq09I7zdZK9KvvZnuJ/X1E9AiAspJJ8d0/igfmI1qylJ4d12aFG8iawhxUF+fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y8+FbEvc; arc=none smtp.client-ip=95.215.58.27
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="A4L/LO2n"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y8+FbEvc"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=IVPmquKdnfAc0rhx5Mx3Ocp283/Ti0L/9S+/+rdrMQE=;
+DKIM-Signature: a=rsa-sha256; bh=RII08E4OChShk1f6g9svv7r6KNxxrcFvD8vpWNknJuM=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786681149; v=1; x=1787285949;
- b=A4L/LO2nmzqgJcyYyXRvw+6YzVKr6lW/fv5pCS5YWf7CK/dmtHBq9XCyVsTiJwHYY3cgQPcX
- sb42AWS8yyCze8s7tdMtEjBMJCPCWdEpm+GGB7uAot48BOIxHQUDWe9a+D3SQAsX0xCv1UxHRsk
- 5BJ5X+XYW6chCmI07Oklv3Nc=
+ t=1786687892; v=1; x=1787292692;
+ b=Y8+FbEvccVoxXRqNlG6edC22f1Ks930NbnTO3V9dnbhVRNxoanILJCbqR3YzFo7D1Poi+9zH
+ O3KdqUs9dbQiAEoWiaYS8Z+h7op5XXPtPf4+QDn+jnZYCa2PYiYAiSM0VERzfj1DlleQyx1nkG+
+ BsOKt6xvXJwxBsUmNYDn+uNc=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [10.63.123.245] (14.29.108.90)
-	by smtp.migadu.com with ESMTPS id 65a5bc5f56dafcf0;
-	Fri, 14 Aug 2026 04:19:07 +0000
+Received: from [10.22.64.46] (122.11.166.8)
+	by smtp.migadu.com with ESMTPS id e2fe0e194bef90a0;
+	Fri, 14 Aug 2026 06:11:32 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <516dd300-5bb7-4550-8e79-50de6e6b2c28@linux.dev>
-Date: Fri, 14 Aug 2026 12:19:04 +0800
+Message-ID: <9835140c-1a55-4b96-9bbd-a36882f2ac5e@linux.dev>
+Date: Fri, 14 Aug 2026 14:11:25 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,96 +38,81 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] memcg: acquire peaks_lock when reading memory.peak
+Subject: Re: [PATCH bpf-next v12 04/10] libbpf: Probe percpu data feature
 To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
-References: <20260814033005.2481920-1-ridong.chen@linux.dev>
- <20260814033005.2481920-2-ridong.chen@linux.dev>
- <20260814034812.19DEC1F000E9@smtp.kernel.org>
-From: Ridong Chen <ridong.chen@linux.dev>
-In-Reply-To: <20260814034812.19DEC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: bpf@vger.kernel.org
+References: <20260813152324.97937-1-leon.hwang@linux.dev>
+ <20260813152324.97937-5-leon.hwang@linux.dev>
+ <20260813153811.6C69D1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260813153811.6C69D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 8/14/2026 11:48 AM, sashiko-bot@kernel.org wrote:
+On 13/8/26 23:38, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The patch fails to address a data loss bug in `peak_write()` where a reset permanently destroys the historical peak for all other registered FDs.
+> - [Medium] The feature probe `probe_kern_percpu_data` incorrectly returns a negative error code and logs a warning when the kernel lacks support for `BPF_MAP_TYPE_PERCPU_ARRAY`. Feature probes in libbpf should silently return 0 when a feature is missing to gracefully indicate its absence without polluting stderr.
 > --
 > 
-> --- Patch [1]: [PATCH v4 1/2] memcg: acquire peaks_lock when reading memory.peak ---
-> commit 8f5f0ca96603012cd51c47aee8957e3a77182ee5
-> Author: Ridong Chen <chenridong@xiaomi.com>
+> --- Patch [4]: [PATCH bpf-next v12 04/10] libbpf: Probe percpu data feature ---
+> commit 783c3759ac5b8bbe1c5368930abe9953ff13c465
+> Author: Leon Hwang <leon.hwang@linux.dev>
 > 
->      memcg: acquire peaks_lock when reading memory.peak
->      
->      This commit fixes a race condition where a reader can transiently observe
->      a lower memory peak. It acquires the peaks_lock in memory_peak_show and
->      swap_peak_show so the reader sees a consistent snapshot of the memory
->      values.
+>     libbpf: Probe percpu data feature
+>     
+>     This commit adds a feature probe for global percpu data support. It allows
+>     libbpf to detect if the kernel supports percpu data early and make capability
+>     decisions accordingly.
 > 
->> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
->> index 1d3339520809f..1546993168610 100644
->> --- a/mm/memcontrol.c
->> +++ b/mm/memcontrol.c
->> @@ -4713,6 +4713,7 @@ static int memory_peak_show(struct seq_file *sf, void *v)
->>   {
->>   	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(sf));
->>   
->> +	guard(spinlock)(&memcg->peaks_lock);
->>   	return peak_show(sf, v, &memcg->memory);
->>   }
-> 
-> [Severity: High]
-> This is a pre-existing issue, but there appears to be a data loss bug in
-> the peak memory tracking API during resets that this patch does not address.
-> 
-> Looking at peak_write(), when one watcher resets the peak, it updates the
-> peer watchers using the current usage instead of the old
-> pc->local_watermark:
-> 
-> mm/memcontrol.c:peak_write() {
->      ...
-> 	usage = page_counter_read(pc);
-> 	WRITE_ONCE(pc->local_watermark, usage);
-> 
-> 	list_for_each_entry(peer_ctx, watchers, list)
-> 		if (usage > peer_ctx->value)
-> 			WRITE_ONCE(peer_ctx->value, usage);
->      ...
-> }
-> 
-> Does this incorrectly discard the historical memory peak for all other
-> registered watchers when any one watcher resets the peak?
-> 
-> If memory usage spiked and dropped before a watcher calls peak_write(),
-> propagating the current (lower) usage instead of the old
-> pc->local_watermark would cause the other watchers to lose visibility of
-> the spike. This could lead to userspace tools like OOM daemons
-> under-provisioning memory or failing to detect usage spikes.
-> 
-> Could the loop propagate the old pc->local_watermark instead of the
-> current usage to preserve the historical peak?
-> 
+>> diff --git a/tools/lib/bpf/features.c b/tools/lib/bpf/features.c
+>> index b7e388f99d0bb..ef9581c113035 100644
+>> --- a/tools/lib/bpf/features.c
+>> +++ b/tools/lib/bpf/features.c
 > [ ... ]
+>> +static int probe_kern_percpu_data(int token_fd)
+>> +{
+>> +	struct bpf_insn insns[] = {
+>> +		BPF_LD_MAP_VALUE(BPF_REG_1, 0, 0),
+>> +		BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_1, 0),
+>> +		BPF_EXIT_INSN(),
+>> +	};
+>> +	LIBBPF_OPTS(bpf_map_create_opts, map_opts,
+>> +		.token_fd = token_fd,
+>> +		.map_flags = token_fd ? BPF_F_TOKEN_FD : 0,
+>> +	);
+>> +	LIBBPF_OPTS(bpf_prog_load_opts, prog_opts,
+>> +		.token_fd = token_fd,
+>> +		.prog_flags = token_fd ? BPF_F_TOKEN_FD : 0,
+>> +	);
+>> +	int ret, map, insn_cnt = ARRAY_SIZE(insns);
+>> +
+>> +	map = bpf_map_create(BPF_MAP_TYPE_PERCPU_ARRAY, "libbpf_percpu", sizeof(int), 8, 1,
+>> +			     &map_opts);
+>> +	if (map < 0) {
+>> +		pr_warn("Error in %s(): %s. Couldn't create simple percpu_array map.\n",
+>> +			__func__, errstr(map));
+>> +		return map;
+>> +	}
 > 
->> @@ -5858,6 +5859,7 @@ static int swap_peak_show(struct seq_file *sf, void *v)
->>   {
->>   	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(sf));
->>   
->> +	guard(spinlock)(&memcg->peaks_lock);
->>   	return peak_show(sf, v, &memcg->swap);
->>   }
+> [Severity: Medium]
+> Will this cause spurious warnings when probing environments that don't support
+> BPF_MAP_TYPE_PERCPU_ARRAY?
+> 
+> Since feat_supported() expects feature probes to return 0 when a feature is
+> missing, returning a negative error code here causes feat_supported() to log
+> an additional failure warning.
+> 
+> Should this return 0 instead of map (and perhaps omit the pr_warn) to
+> gracefully indicate the feature's absence without polluting stderr?
 > 
 
-Thanks.
+No.
 
-Patch 2/2 will fix this issue.
+Since percpu_array map is a basic map in bpf, this map creation should
+likely succeed. If it fails, the kernels are too old to use such new libbpf.
 
--- 
-Best regards
-Ridong
+Thanks,
+Leon
+
 
