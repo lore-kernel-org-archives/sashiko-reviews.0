@@ -1,116 +1,267 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727C0377A98
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 08:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786694852; cv=none; b=oErlJTlvE1690y3UIbdVzFktitkQTljj7uFb9Q/LQMraFt9JshI4Pna0CJC5Tw1lJRYdokwzrZZudjPZzp9+zjn+U/FuFTv+wRW05Lne6ZtEPD+zSKJIcw+CU4XK3j5M8a85gX1gTLiWfpch1nrJublRJ94ATS3TdMcwAkCuNdo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786694852; c=relaxed/simple;
-	bh=C0abIehr80Wpjf52fM2FVTg08DwwXZt69KjDeV+3SPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=avBue8S6DyoKTEs9MLyeyQj12lH0W7jatuqdbIMvpGdsKGmnnkiM3eL6XkNfZom1rFipz9Q5tbPWMduV1gmQtDRZ/VUS3P8XuxQGapVB5/x0JrSwi8mpKd9feW9SqBAzti0+eO9DIK/tTcw3HPsPSNM6VMDcncGZgdRucs2fmCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dq+PyDpt; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7D23EA968
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 08:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786695529; cv=fail; b=S0bateuOdEt9yOOdtRNKDQHs/J1eHozmIzc0yyYDAqrvViOWb9r8460Xyyr0YxVTFsVZkB/yZi0AIuRW3aJbZCU/JdIXbeiIMX4atPr7vTs5/VloMVothCHkBUXtJPbO9JMq/jNhFx/EcR8NUjE6Nupi+lhFwuysucn0yZvR2qc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786695529; c=relaxed/simple;
+	bh=l4lvm4jftKkobE5GE8KY9v5LKAZTxaLlcSWfl0nJLxs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=fYuj5OvjVLMkkdLvifKcSXpVAsv+77+OZEr8OKA9USmQcUehqwUTJ87DEPQ9sIkZvqMLsDzgvBJVRITW2ja3a6jSwjJP8WkbZWezeX71GqRKMrv7PHLxv+qlkTDKeZJ0jLcG3zg8z6WcFTELZkbunKgzb1RJFb3HoF7z15MWA78=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YJpP9mPC; arc=fail smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dq+PyDpt"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490cf322ed0so6915235e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 01:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786694849; x=1787299649; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rvwtzarQ/dYBS7JL1ZitrxFtSPInVeBnSLoYHJJQBl8=;
-        b=dq+PyDptsaz7njZnuz/Lvdnl01/K8vTzG22YfhWJEBS/y6s8VlmFuPtyqixzXCEyme
-         McJffuwRWqFSg9xA0bbKF6hp/U25Uxz/vjVvrgRcWV7vbWKPqowFVC7d7AjX4+DxYXpG
-         k3n94zQmDkn4sqDAmI0aGY7TAP5uQDwNwhpzOji+cBj2N+ZpSlV9lL/Fc//vghIsPCev
-         nWZzxAwFALiuE0eIU5X9AVGKDxo5R1QTMUbVsA2PvEW/BX8RpQLXc8lKHjTAZXUBOpek
-         SiqYtFpHwDoCBzSTt8x13WmcmpXW2ByJLQpRI6YNwTpBjyr/jCfuC7VeQmc+nXrO7xdU
-         Z+JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786694849; x=1787299649;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rvwtzarQ/dYBS7JL1ZitrxFtSPInVeBnSLoYHJJQBl8=;
-        b=Lfdc3uivVqbU0Md5ntOLlNYm1Ud//zOM4+z1psG9H4Hdp2p4VA9KPUos2b8jGheCog
-         s3jSLcD6M/8QwaUccOSUXdYBlVLoDhcTqxK3WN0RAtAsZqn/tjAe4ocKfAZI/1ULcSvR
-         ZzGW64du6jinhTc/ZKB20fWVwvAAv+TYMxrkipbGbtYifMXZRda/12+t5UfsVwcvkK5M
-         HwMFuZpdsIBtnpIZTKN5rW4cQIswfz20o5XT5IjhdpmlSXNZsDNKLji3NjSdYgSjAMf4
-         SDc2raUY3jy2CtSbCB2ZjfIRcfQKMhHZ0we+CcW3voVI7ET3bOE5/OayTOxFCon+hT0k
-         SH2A==
-X-Forwarded-Encrypted: i=1; AHgh+Rplprs+fa4tPVgUxWA65zI938S2dqgyeaGzmB45glYgL0BU1Fr28D/sQKR7Gz9TOwj0NLi+MZYBM/N0RM84QVg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQUbqZgi/FZctIY05w1GCHHgFAAiBD2RVfdBHSXx4v1iVW2Mc+
-	Z1Up7f21qfLXnQIHfrZVSFEqs4BMcYhPh2Im2+sPseHgE2tuAQbN8EpuripSLj782A==
-X-Gm-Gg: AR+sD13ElXPGJJxRPuXGEmyqpjPsrjwhp92vZ1Q5OhukX1lKX0yNaRmpJU+0I6u9Y6O
-	yaMOLknBmKPzfiLac7fgU5HjCrK9wbR6ZL0W7fw6WgNQR87Ri/qms5frnO2BzfGiFdTrGydRdpg
-	KPHba7OoJ72A76nzSGf0tc0WCYH3hoPj/fM/yUChitQ0kNp0e9WayrtjDY1cWDq+RuMWlLxF4CF
-	o7iDFspCpoDxcMIMPuGUEP3oO2d1vuJMyEu2bMrj1yBB6Z2I7vieyPJCydAMGleDf8P83X0ekRc
-	99SxqFFWbrJav4YEKv9p2SSVr+9+byCD2P8C/UQJcGX8x+nlFJm9Gm2dXLQQwvmj8a+OaM3KRti
-	VxLPxyaXHR5d0BA+MyTyYZn1n4EIR9IL2TIyNl0rtV9g03W9z8BXoh/gCTQZdTSqyq56jBVCMQL
-	QufZ94zaBZ0dzECsGVwbCfwCVKGtP5QKVbofvZf+SHQt/YQ0EcmwHv+8CO6f5x+QsgQaj1Ma14e
-	JKTtRHUcxByCFlyu1W3/dosk3KsF3K0
-X-Received: by 2002:a05:600c:c165:b0:499:4892:d022 with SMTP id 5b1f17b1804b1-4998795bca6mr60329945e9.8.1786694848111;
-        Fri, 14 Aug 2026 01:07:28 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2b27bfsm6056643f8f.23.2026.08.14.01.07.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2026 01:07:27 -0700 (PDT)
-Date: Fri, 14 Aug 2026 09:07:23 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 10/10] ring-buffer: Make nr_pages unsigned int
-Message-ID: <an7Muwh8LgL0_v5h@google.com>
-References: <20260813131152.3589632-1-vdonnefort@google.com>
- <20260813131152.3589632-11-vdonnefort@google.com>
- <20260813135526.EF9CF1F000E9@smtp.kernel.org>
- <20260813214156.64d0b21a@gandalf.local.home>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YJpP9mPC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1786695529; x=1818231529;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=l4lvm4jftKkobE5GE8KY9v5LKAZTxaLlcSWfl0nJLxs=;
+  b=YJpP9mPC0LHDM+mLtC5DdzN2nysWX/Mk+G/eQG0txfB0+5SpKcD1+L8n
+   QuBaa46//WxcFsR8RoI3oUVoj09MG0YM71UEygmiGn/WYXNAM4qR8Q9uL
+   5a6Vkmg3egCbmhqJUnUa2YC5AmiwGDEiSl160d0a6x6xM044Fg2gsPTP1
+   kG7x2R77YKS8adT5v44hbUiLAv/G9DRAejsL+hNbTeEkv9kSx1q6qe5z9
+   BfszcNLtPJO0uIsM6ZDMIjWgX/QRuchCif3FcGRmoaVZPNkpNR9KdUGC+
+   KWtAs2LZ6DzuENg5waMyEwM2zemJyjXM5PzNDw0irDGr556Rges2vdru8
+   A==;
+X-CSE-ConnectionGUID: MDgJsjXvRoyVUv8rTbSslw==
+X-CSE-MsgGUID: UzAQhnPsRAeaa+NbC6N1gQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11874"; a="110062668"
+X-IronPort-AV: E=Sophos;i="6.25,222,1779174000"; 
+   d="scan'208";a="110062668"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2026 01:18:48 -0700
+X-CSE-ConnectionGUID: HSuuVgA0QtSwAU3tYiJYjw==
+X-CSE-MsgGUID: epqZrEGTRbSCkiFUyalXlA==
+X-ExtLoop1: 1
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2026 01:18:47 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 14 Aug 2026 01:18:46 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Fri, 14 Aug 2026 01:18:46 -0700
+Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.58) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 14 Aug 2026 01:18:46 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=odB2Rl0CeYbfVrXt2Nxw+tsq1iNG7vcRS31pFtRvGcnOfSqpISDWZDJCamWgGrbOgF5BGVrRidHPAUUMZflUcmIHAJncvBKRrqyXvx/FRhC1IEFdLJxCXdRW12iHUT8j1+R1rX7lF3icuF/omLOj4UjaE/tCkuc8J/BmsCPJERO+p3MHa4japkPoua2M9aBJ5Si29negWnvQ7IkJMhbVG9C5DrR7Xk3LqzUXBJC9s0h8JYtXYYrCdCSBr2sPAp5udOGoQFRyIES7e0IL/sgpYdY5zK0GQYhzNlZc5m3xnJ/KMfDiyjSE65Ls+p3ejU2tOQTZuekfVuWnchEofPq62w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=crX2UXHmF9TMjIKcW99PxcrU9Mwm++0nh2DUxsbtZnE=;
+ b=NRHtMFbJjLmRirrmrlXUWj4fs+eaGl7YWjiJ9BINRAGPFqPzAmdXF67j5UiEINz26CQtP/9h04vwZWILM+dN7o3ISVyrF3AgbtvMF8Zg2BbzJOcHOAUMS8yHSXYSHIi1FTM2PGqtWrVNW1Q7X85qJ9Re1rz8QqtfWIeE/Y3v0KwExns0fGT/x+iMavV9aSKr7+Tid4bSk1oxwFM9zhm7N3cIkZZXyklLLZ4r9XE4KgU6fk+BoI38JK77cYWR9YuQT5o3WV/mmvxYEzwNpNggHIONgxE3kPQRooX2QkBSO4GHjBuv9PaSQflQDSKqUsNDYkJq4gydj568NjKx7jYYYw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com (2603:10b6:510:212::12)
+ by CO1PR11MB5201.namprd11.prod.outlook.com (2603:10b6:303:95::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 08:18:44 +0000
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::e0c5:6cd8:6e67:dc0c]) by PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::e0c5:6cd8:6e67:dc0c%4]) with mapi id 15.21.0315.011; Fri, 14 Aug 2026
+ 08:18:44 +0000
+Date: Fri, 14 Aug 2026 01:18:42 -0700
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <dri-devel@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH 1/3] drm/gpuvm: allow locking external objects in two
+ passes
+Message-ID: <an7PYrd8zDssAtAs@gsse-cloud1.jf.intel.com>
+References: <20260814073258.893007-1-matthew.brost@intel.com>
+ <20260814073258.893007-2-matthew.brost@intel.com>
+ <20260814075107.C2A4A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260814075107.C2A4A1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0238.namprd03.prod.outlook.com
+ (2603:10b6:a03:39f::33) To PH7PR11MB6522.namprd11.prod.outlook.com
+ (2603:10b6:510:212::12)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813214156.64d0b21a@gandalf.local.home>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR11MB6522:EE_|CO1PR11MB5201:EE_
+X-MS-Office365-Filtering-Correlation-Id: c8e0ed04-dcc2-46ac-537f-08def9dca81b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|6133799003|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: mVvipMYdT4XUK1SC8tkHRogbul6uf3Ep6zJuksz1rZORTWZVwcZ20Frcg9pOJrJBdA8KU2SQAavX8MaeN6txS0QX6/6L8OQxtpS0jReG0XO7W1ECDzQSyb90lqZI5rx2By0ellDYE7vq87gHFfet1e1rTcunGKloQpHkerIxkqEMrPC7rbKoKJrn1lJ2vQ4XxCIaEvoqzzzNz7p7q+JuEW+ygZMUUv+hiC5k8A1nS5jas0GfNPdcTPn2BZqEun4OC8tB/4u4jBQFHv2Aj6RSvs2eiliIK8SceeAT6TL6qlN9DwUjr1TVblXyeiYTCJ+fUmNNqCBRDNnjSh/4FlLwlxkiiECaCkVvGH8CpaT+M2X3yxcX+KsOkaiijS6QRbE2NALdy2fweSGEQwIlkOv06TNrLk5ui6l+JR3OaeGpk782HowOtr4b9N8fRGprwgpezWOl7Zpw7zCqUxLZzwbUtTWU/OcruHE4jfr4tFJpQaBirLILNcVwUzI1dL9CoYYONW0GNjiDfBCwLaOYAecFYze128hHyEq50LVdZSB3iYgk/9EAlX/X9ZF+gxuKgNrc3oeTc3iBNsexRqEarvrBEgmcJ3bMS9C5Vwn9JkAPIVA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?n4LLp/nYgxc1v9nixuiIRVnCNjETV5mZZ9Ti34fQnZPMu7sPwBCb2oW+/m?=
+ =?iso-8859-1?Q?kRWeGk9cYC83rsTrzyHzHO6nK6iqdB0p0fZFIcqw+z9W2UPyoILwCGV+MI?=
+ =?iso-8859-1?Q?eZMmFjAJZ55AG62yRNDDDB4Lj5Ds78MeJawnPwjePx3josJHGqcZPnbGNt?=
+ =?iso-8859-1?Q?wSgo6FH1C5ZhoCA7bYhJtozOt/nZpTy0pfd7mUMho+zoLjh9kBGZzYC7BG?=
+ =?iso-8859-1?Q?BiZ84VxzIFl++NV5bbDu7b/EN2+AiWD9v1z+mijpTwNWm9bCDZWbotGQc3?=
+ =?iso-8859-1?Q?mdLBAYdyZlCSgI6Gr3vg9CVaS2KgjJWUWMHWujX16JLmjBUQLK4Tsb4wnb?=
+ =?iso-8859-1?Q?aFmNumGtW0o15JDMUgLDSi0EIFTIaC/US6yoBew0FzXqSFc7gLQ0aenbX2?=
+ =?iso-8859-1?Q?aBI7oyySWw17+dmN7WWnYXQnwGkaAL+pUXuNRIlQfZ7rCGHwzs6WD+JI+k?=
+ =?iso-8859-1?Q?6VkpLIUyLDe3GJtIVEMZlm2JRk5aK3mTr53AFbBJS6inXFl6ro8owbn9y4?=
+ =?iso-8859-1?Q?a4LV+Wcrow6VjILjJrwZbLQc5bteMNjZJPqcvT6pDV6adJuV9dwYScTfgy?=
+ =?iso-8859-1?Q?2G57oUstg7URPHT+OLom0WEPc+KGqEVEBKnvDO4N2IpF3zYNPBtL4Gofl/?=
+ =?iso-8859-1?Q?L7Ntf80kTF4+vJY3PnYurIY3/ReDyJ+FWWjclXmLtceGF9C+ys+YaiH8YA?=
+ =?iso-8859-1?Q?1L/NRorocnaJLr97fBwE6ASzuWzJ1IKPI8ehTjaVaoVd2sCS15CBXfGL2R?=
+ =?iso-8859-1?Q?QE+cOwbMzhvsO64ub9kcAfzNh7fg5D7apQemIh4SmL0KsXU1pMLMVosLoL?=
+ =?iso-8859-1?Q?znP1M61HfRpdyXKDZDLG2eY/y7TSXIWpv3rYdaW5pOROLbUfQOWuMga1fd?=
+ =?iso-8859-1?Q?iCIVx0FC9Ta2Mj8J9/pkbYL55uGXzr596i7AuYV2BrmN7CPtOKjd4wiq0z?=
+ =?iso-8859-1?Q?SC5GGRhnfu++NGedxJIISVYblTRgQe1yr98leNKlQmSR+JJXQZGrHwiFbY?=
+ =?iso-8859-1?Q?8hv6F/yQPAlulsK6tnypsjWUytOtCxUfbG8vQ5mKIIvMsykzOzJDP0qLRW?=
+ =?iso-8859-1?Q?NBCTd9BL2ThKrr8qHhDjrlAaUhVV12zyCwTnEd8HmY7nD+bXLUaHMXBO0a?=
+ =?iso-8859-1?Q?BG5fb0kAQN5H1qE6sz96hDaxjIyGxmIGkjYxttg2biNdFSp4YKQNxrnBn7?=
+ =?iso-8859-1?Q?l0b3uYEJpS7HwPx+m6iyJwM4yPIXNeSKAHTSaUc5ENVd37yLjze2kyCgwp?=
+ =?iso-8859-1?Q?M/FkGGFUFL5C7OaWhG8NYx2E7nXmNRb7LujP9M1IdG4pumF91o0VyEa2Vi?=
+ =?iso-8859-1?Q?xC1HhJ7BQd9b599VzHI1YiMDiyFpblUveoOslHfKVALeDbWjgqhin+J6EI?=
+ =?iso-8859-1?Q?ZQ3tbf0Cz4j8I+qCdct0LHMk2zlqrNICbJPwaa/djNUHDby8WZo1EoQOUr?=
+ =?iso-8859-1?Q?2S3Z19iNH89FVyseyZ8rllHnXmognZFPn1ve8Dq69eft90XHvdDRclZX7O?=
+ =?iso-8859-1?Q?5X43ta0SpPLM3bQeY8/IA7Ad95dsfzfv6PdB0p252q5Q7DU351OjgpgSa9?=
+ =?iso-8859-1?Q?0jC+SqIE+xUl9/1kuEuLioFQ8/fpWu+R993yKTCxifGKToBCdzDT8MZfLf?=
+ =?iso-8859-1?Q?Am0zBfPZ7J2gDK5L/w35kRazVYMJtlF0sw4k2+c/X+J7Wiisf32vXPpyIq?=
+ =?iso-8859-1?Q?TlQbZKV2ZbZdBrkbBGXc8W3IMGQzuj0KP0pa3xHaWkYDp2rHqhOlhfK6Mo?=
+ =?iso-8859-1?Q?BPA7UEYujIeeuiLTiogn3GI+prbXIxRf6HxpfijCBOBtvABs7ZBjIE53oO?=
+ =?iso-8859-1?Q?oYd5B7Wa8A=3D=3D?=
+X-Exchange-RoutingPolicyChecked: aIyBrZuZXnmWSo5y5eSASmS5xQ7OfpsLwZ7HAAnNHBjFhNB7hWO1GMTPzQgOxbAoH3vezozDuSqQAAJLapkvGH8wtJzdPXhVMCqzxEss701xJIu44w3JL78+OSDv8LMp2mXS/kuzPMhunEbqfDRu6WwMgiC6G5AEOgTlobiH41+ZhtlxbxeZlLZsKCJ0C3h/Q5DPydfIKd3wOb8SdL0bRh5ZaLJSo8GVu7Xj6f6rB1K2nXw2y6EAdqs9X+l6770DtTa5/DT0zzmnjknQbizk7mPi3tac6vQvf/+M26FyzZ0tH6tasOktSb5Br0ER2HXJYbgvodESH3IJ/Z9VC4kKwg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8e0ed04-dcc2-46ac-537f-08def9dca81b
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6522.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 08:18:44.3821
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VwUN++wz3OUlS5bBFc4wNe4mGEFfiTphz6P8xgn8JA2M/GLM3OwPusqtiRI2K1/Hf/5NFGDXJMNhH4x/uJKmXQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5201
+X-OriginatorOrg: intel.com
 
-On Thu, Aug 13, 2026 at 09:41:56PM -0400, Steven Rostedt wrote:
-> On Thu, 13 Aug 2026 13:55:26 +0000
-> sashiko-bot@kernel.org wrote:
+On Fri, Aug 14, 2026 at 07:51:07AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> > > @@ -3264,7 +3263,7 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
-> > >  			int cpu_id)
-> > >  {
-> > >  	struct ring_buffer_per_cpu *cpu_buffer;
-> > > -	unsigned long nr_pages;
-> > > +	unsigned int nr_pages;  
-> > 
-> > [Severity: Critical]
-> > If a huge value is written to buffer_size_kb, could the unsigned
-> > difference between nr_pages and cpu_buffer->nr_pages overflow when
-> > assigned to the now 32-bit signed cpu_buffer->nr_pages_to_update?
+> New issues:
+> - [Low] Missing WRITE_ONCE() for vm_bo->evicted causes a data race with a newly introduced lockless reader.
 > 
-> I agree. I never wanted to limit the size of the ring buffer. If anything,
-> I would want to make all references to nr_pages to be long. Otherwise we
-> are capping the size of the ring buffer to 8 terabytes per CPU. Yeah, that
-> may sound huge, but believe me, in the not so distant future, it may be
-> desirable.
+> Pre-existing issues:
+> - [High] The xe driver bypasses drm_gpuvm_bo_evict() when clearing vm_bo->evicted, which permanently leaks the newly introduced num_evicted counter.
+> --
 > 
-> I'm fine with keeping persistent memory and even special case mappings
-> limited to MAX_INT pages. But not the ring buffer as a whole.
+> --- Patch [1]: [PATCH 1/3] drm/gpuvm: allow locking external objects in two passes ---
+> commit 8dc4616b6b0a651e19f9a8c0a513982ffa694e85
+> Author: Matthew Brost <matthew.brost@intel.com>
 > 
-> -- Steve
+> drm/gpuvm: allow locking external objects in two passes
+> 
+> This patch introduces an optimization to drm_gpuvm by allowing a split
+> in the drm_exec transaction. It locks private and evicted objects first,
+> then locks resident external objects later in a second pass. This reduces
+> the time locks are held for resident shared objects during migration.
+> 
+> > diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+> > index d1c80ad3deadb..f6ec90640d372 100644
+> > --- a/drivers/gpu/drm/drm_gpuvm.c
+> > +++ b/drivers/gpu/drm/drm_gpuvm.c
+> [ ... ]
+> > @@ -1220,16 +1301,88 @@ drm_gpuvm_prepare_vm(struct drm_gpuvm *gpuvm,
+> >  }
+> >  EXPORT_SYMBOL_GPL(drm_gpuvm_prepare_vm);
+> >  
+> [ ... ]
+> > +static bool
+> > +drm_gpuvm_prepare_skip(struct drm_gpuvm_bo *vm_bo,
+> > +		       enum drm_gpuvm_exec_pass pass)
+> > +{
+> > +	drm_gpuvm_pass_assert_held(vm_bo->vm, pass);
+> > +
+> > +	switch (pass) {
+> > +	case DRM_GPUVM_EXEC_PASS_EARLY:
+> > +		vm_bo->lock_skipped = !READ_ONCE(vm_bo->evicted);
+> > +		break;
+> > +	case DRM_GPUVM_EXEC_PASS_LATE:
+> [ ... ]
+> > @@ -1959,6 +2389,11 @@ EXPORT_SYMBOL_GPL(drm_gpuvm_bo_extobj_add);
+> >   * @evict: indicates whether the object is evicted
+> >   *
+> >   * Adds a &drm_gpuvm_bo to or removes it from the &drm_gpuvm's evicted list.
+> > + *
+> > + * An external object of a %DRM_GPUVM_RESV_PROTECTED &drm_gpuvm is the
+> > + * exception: the evicted list is protected by the GPUVM's common dma-resv
+> > + * there, which this does not hold, so such an object is only accounted for
+> > + * and is put on the list later, by drm_gpuvm_prepare_objects().
+> >   */
+> >  void
+> >  drm_gpuvm_bo_evict(struct drm_gpuvm_bo *vm_bo, bool evict)
+> > @@ -1966,6 +2401,7 @@ drm_gpuvm_bo_evict(struct drm_gpuvm_bo *vm_bo, bool evict)
+> >  	struct drm_gpuvm *gpuvm = vm_bo->vm;
+> >  	struct drm_gem_object *obj = vm_bo->obj;
+> >  	bool lock = !drm_gpuvm_resv_protected(gpuvm);
+> > +	bool was_evicted = vm_bo->evicted;
+> >  
+> >  	dma_resv_assert_held(obj->resv);
+> >  	vm_bo->evicted = evict;
+> 
+> [Severity: Low]
+> Does this write need to use WRITE_ONCE()?
+> 
+> This plain write pairs with the lockless READ_ONCE(vm_bo->evicted) added
+> in drm_gpuvm_prepare_skip(). Without a WRITE_ONCE() here, KCSAN will report
+> a data race.
+> 
 
-So, keeping nr_pages unsigned long everywhere but -E2BIG for the cases where we
-are limited to 32-bits, that is persistent buffers, user-mapped buffers and
-remotes?
+Correct, look preexisting though. Will fix.
 
--- 
-Vincent
+> > @@ -1974,8 +2410,16 @@ drm_gpuvm_bo_evict(struct drm_gpuvm_bo *vm_bo, bool evict)
+> >  	 * internal spinlocks, since in this case the evicted list is protected
+> >  	 * with the VM's common dma-resv lock.
+> >  	 */
+> > -	if (drm_gpuvm_is_extobj(gpuvm, obj) && !lock)
+> > +	if (drm_gpuvm_is_extobj(gpuvm, obj) && !lock) {
+> > +		/*
+> > +		 * Count them instead, so drm_gpuvm_needs_two_pass() can tell
+> > +		 * whether any are evicted without walking the list. The
+> > +		 * object's dma-resv is held, so the transition is stable.
+> > +		 */
+> > +		if (evict != was_evicted)
+> > +			atomic_add(evict ? 1 : -1, &gpuvm->extobj.num_evicted);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but the xe driver manually clears
+> the evicted flag (vm_bo->evicted = false) during validation in
+> drivers/gpu/drm/xe/xe_vm.c:xe_gpuvm_validate() instead of using the
+> drm_gpuvm_bo_evict() API.
+> 
+> Because drm_gpuvm_bo_evict() is bypassed for clearing the flag, this counter
+> decrement will never execute for the xe driver. Does this mean the
+> num_evicted counter will permanently leak, continuously incrementing and
+> permanently forcing drm_gpuvm_needs_two_pass() to return true, thereby
+> defeating the optimization?
+
+Xe uses the drm_gpuvm_bo_evict API in the following patch when enabling
+two-pass GPUVM locking. So correct, but non-issue in the context of the
+series.
+
+Matt
+
+> 
+> >  		return;
+> > +	}
+> >  
+> >  	if (evict)
+> >  		drm_gpuvm_bo_list_add(vm_bo, evict, lock);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260814073258.893007-1-matthew.brost@intel.com?part=1
