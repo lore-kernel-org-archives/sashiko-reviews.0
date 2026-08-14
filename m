@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-27.mta1.migadu.com [95.215.58.27])
+Received: from mta0.migadu.com (out-229.mta0.migadu.com [91.218.175.229])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E935E948
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 06:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A5371071
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 06:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.229
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786687896; cv=none; b=S+XrB5GiJnbcPzsyvdq8WlIOMZIt3ZIsx1Mo2DLI+XO31o7cNGplaxQcfY3UwxpOG0KTK0sIwxafeLReZgXpBOc+ee21e5xjSkNCeBQdYLAClugxW7Q4beLxLSgRoMHBLMiDdRpw0GKe04CIzKYAlsZ63AKfxm+jyRqQCyiwT4o=
+	t=1786687949; cv=none; b=MDUHkJE6RQD36jMmYfxZgUG3bnaSDgROuwS3WMK8qPr3AaiH4tlAnY547OQ94ZVxoLgcoUPKI+/ttxz4SaDmnyxkqiWpAGyWvhL+Y1H+2ztBpWEkX7wfPlw44cDVvpvK+oLIuDT4SQdBTj8fx9h62SQeuj/HK1E4T93BB0Dt+3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786687896; c=relaxed/simple;
-	bh=RII08E4OChShk1f6g9svv7r6KNxxrcFvD8vpWNknJuM=;
+	s=arc-20240116; t=1786687949; c=relaxed/simple;
+	bh=ONS1Y9e0gWgh9g4MMK4gPnMrtrBh/FugRw96BqHpXLE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cvAHpzTa4EZ6ZNB/K7g1GKKP7z0MOKXymlF0vTs+8ISwsYxqjyq7ygW/ew8aSDoRiWUQOPB6gjRgimpRBVAGSB1tSpQ6onJeDBDiLGSIJL5kAnq09I7zdZK9KvvZnuJ/X1E9AiAspJJ8d0/igfmI1qylJ4d12aFG8iawhxUF+fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y8+FbEvc; arc=none smtp.client-ip=95.215.58.27
+	 In-Reply-To:Content-Type; b=nA2Fs3BavmWS3635eDzBqdTaZusImHLXogBGE0KtqrAz4stHePnvKS5bku+jd7MmjafStx0UW5+c5U0l9jmawLP1/SbLcWMU+fBI26oNBSucJH3XYOlCozM4NMJJuKZRDaESBBUxidVjjo9UMdICobJlxhXFPeyoy5ArXU7Bkow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=a5NC3hMg; arc=none smtp.client-ip=91.218.175.229
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y8+FbEvc"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="a5NC3hMg"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=RII08E4OChShk1f6g9svv7r6KNxxrcFvD8vpWNknJuM=;
+DKIM-Signature: a=rsa-sha256; bh=ONS1Y9e0gWgh9g4MMK4gPnMrtrBh/FugRw96BqHpXLE=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786687892; v=1; x=1787292692;
- b=Y8+FbEvccVoxXRqNlG6edC22f1Ks930NbnTO3V9dnbhVRNxoanILJCbqR3YzFo7D1Poi+9zH
- O3KdqUs9dbQiAEoWiaYS8Z+h7op5XXPtPf4+QDn+jnZYCa2PYiYAiSM0VERzfj1DlleQyx1nkG+
- BsOKt6xvXJwxBsUmNYDn+uNc=
+ t=1786687943; v=1; x=1787292743;
+ b=a5NC3hMgrhZiXu/i+uZN5HZ5U8Qm9NFoThCxmXdtE3k+ozDHS/cgpX/pwDZqUOEB5htgB1B3
+ FZbp0rsW3811rjS7Ch55oNtyC7tITnKWf100v8GBdPTZRI2LG+sF+GNdZorVYSfzhyDPFI379+I
+ HYJSM7805mgTDDZL3nBxjzF4=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [10.22.64.46] (122.11.166.8)
-	by smtp.migadu.com with ESMTPS id e2fe0e194bef90a0;
-	Fri, 14 Aug 2026 06:11:32 +0000
+	by smtp.migadu.com with ESMTPS id 6545b2071ce9a338;
+	Fri, 14 Aug 2026 06:12:23 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <9835140c-1a55-4b96-9bbd-a36882f2ac5e@linux.dev>
-Date: Fri, 14 Aug 2026 14:11:25 +0800
+Message-ID: <23c9d6ee-3fa9-4e69-845e-2c30d9beeb7a@linux.dev>
+Date: Fri, 14 Aug 2026 14:12:20 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,81 +38,113 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v12 04/10] libbpf: Probe percpu data feature
+Subject: Re: [PATCH bpf-next v12 05/10] libbpf: Add support for global percpu
+ data
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260813152324.97937-1-leon.hwang@linux.dev>
- <20260813152324.97937-5-leon.hwang@linux.dev>
- <20260813153811.6C69D1F000E9@smtp.kernel.org>
+ <20260813152324.97937-6-leon.hwang@linux.dev>
+ <20260813154249.1CA831F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260813153811.6C69D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260813154249.1CA831F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/8/26 23:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The feature probe `probe_kern_percpu_data` incorrectly returns a negative error code and logs a warning when the kernel lacks support for `BPF_MAP_TYPE_PERCPU_ARRAY`. Feature probes in libbpf should silently return 0 when a feature is missing to gracefully indicate its absence without polluting stderr.
+On 13/8/26 23:42, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] bpftool gen skeleton fails to generate fields for .percpu maps, breaking lightweight skeleton generation memory layout.
+> 
+> Pre-existing issues:
+> - [High] A massive >4GB ELF section causes a gigabyte-scale out-of-bounds memcpy buffer overflow in libbpf.
 > --
 > 
-> --- Patch [4]: [PATCH bpf-next v12 04/10] libbpf: Probe percpu data feature ---
-> commit 783c3759ac5b8bbe1c5368930abe9953ff13c465
+> --- Patch [5]: [PATCH bpf-next v12 05/10] libbpf: Add support for global percpu data ---
+> commit ba7ffd0a036fafab1adafd7c20bbbb6455fe6cf6
 > Author: Leon Hwang <leon.hwang@linux.dev>
 > 
->     libbpf: Probe percpu data feature
->     
->     This commit adds a feature probe for global percpu data support. It allows
->     libbpf to detect if the kernel supports percpu data early and make capability
->     decisions accordingly.
+> libbpf: Add support for global percpu data
 > 
->> diff --git a/tools/lib/bpf/features.c b/tools/lib/bpf/features.c
->> index b7e388f99d0bb..ef9581c113035 100644
->> --- a/tools/lib/bpf/features.c
->> +++ b/tools/lib/bpf/features.c
+> Add support for global percpu data in libbpf by adding a new ".percpu"
+> section, similar to ".data". It enables efficient handling of percpu
+> global variables in bpf programs.
+> 
+>>     When generating loader for lightweight skeleton, update the percpu_array
+>>     map used for global percpu data using BPF_F_ALL_CPUS, in order to update
+>>     values across all CPUs using one value slot.
+> 
+> [Severity: High]
+> Does this change break bpftool's lightweight skeleton generation for .percpu
+> maps?
+> 
+> Looking at tools/bpf/bpftool/gen.c:get_map_ident(), the hardcoded sfxs
+> array lacks the ".percpu" suffix:
+> 
+>     static const char *sfxs[] = { ".data", ".rodata", ".bss", ".kconfig" };
+> 
+> This causes the .percpu map to be silently skipped during skeleton
+> generation.
+
+False positive.
+
+The .percpu map has been handled correctly in get_map_ident() by
+checking map type.
+
+> 
+> Since the BPF loader program is generated based on the true array index
+> (map_idx = map - obj->maps), skipping .percpu in the generated C struct
+> shifts all subsequent maps. Can this cause the loader program to read or write
+> out of bounds of the skel->maps structure?
+> 
+>>     
+>>     Unlike global data, the mmaped data for global percpu data will be marked
+>>     as read-only after populating the percpu_array map. Thereafter, users can
+>>     read those initialized percpu data after loading prog. If they want to
+>>     update the percpu data after loading prog, they have to update the
+>>     percpu_array map using key=0 instead.
+>>     
+>>     Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+> 
+>> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+>> index 514e4e9daa825..e574870fb7169 100644
+>> --- a/tools/lib/bpf/libbpf.c
+>> +++ b/tools/lib/bpf/libbpf.c
+> 
 > [ ... ]
->> +static int probe_kern_percpu_data(int token_fd)
->> +{
->> +	struct bpf_insn insns[] = {
->> +		BPF_LD_MAP_VALUE(BPF_REG_1, 0, 0),
->> +		BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_1, 0),
->> +		BPF_EXIT_INSN(),
->> +	};
->> +	LIBBPF_OPTS(bpf_map_create_opts, map_opts,
->> +		.token_fd = token_fd,
->> +		.map_flags = token_fd ? BPF_F_TOKEN_FD : 0,
->> +	);
->> +	LIBBPF_OPTS(bpf_prog_load_opts, prog_opts,
->> +		.token_fd = token_fd,
->> +		.prog_flags = token_fd ? BPF_F_TOKEN_FD : 0,
->> +	);
->> +	int ret, map, insn_cnt = ARRAY_SIZE(insns);
->> +
->> +	map = bpf_map_create(BPF_MAP_TYPE_PERCPU_ARRAY, "libbpf_percpu", sizeof(int), 8, 1,
->> +			     &map_opts);
->> +	if (map < 0) {
->> +		pr_warn("Error in %s(): %s. Couldn't create simple percpu_array map.\n",
->> +			__func__, errstr(map));
->> +		return map;
->> +	}
 > 
-> [Severity: Medium]
-> Will this cause spurious warnings when probing environments that don't support
-> BPF_MAP_TYPE_PERCPU_ARRAY?
+>> @@ -1983,7 +2000,7 @@ bpf_object__init_internal_map(struct bpf_object *obj, enum libbpf_map_type type,
+>>  	}
+>>  
+>>  	def = &map->def;
+>> -	def->type = BPF_MAP_TYPE_ARRAY;
+>> +	def->type = is_percpu ? BPF_MAP_TYPE_PERCPU_ARRAY : BPF_MAP_TYPE_ARRAY;
+>>  	def->key_size = sizeof(int);
+>>  	def->value_size = data_sz;
 > 
-> Since feat_supported() expects feature probes to return 0 when a feature is
-> missing, returning a negative error code here causes feat_supported() to log
-> an additional failure warning.
+> [Severity: High]
+> This is a pre-existing issue, but does this code cause a buffer
+> overflow if a malicious BPF ELF file contains a data section larger than 4GB?
 > 
-> Should this return 0 instead of map (and perhaps omit the pr_warn) to
-> gracefully indicate the feature's absence without polluting stderr?
+> The 64-bit size_t data_sz is truncated into the 32-bit unsigned int
+> def->value_size. The mmap allocation will use this undersized truncated
+> value, but the subsequent memcpy below uses the original 64-bit data_sz,
+> overflowing the undersized map->mmaped buffer:
+> 
+>     if (data)
+>         memcpy(map->mmaped, data, data_sz);
+> 
+> Can this lead to a massive out-of-bounds write in libbpf?
+> 
+>>  	def->max_entries = 1;
 > 
 
-No.
+We must trust the BPF ELF file.
 
-Since percpu_array map is a basic map in bpf, this map creation should
-likely succeed. If it fails, the kernels are too old to use such new libbpf.
+See Andrii's comment in v8:
+https://lore.kernel.org/bpf/CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com/.
 
 Thanks,
 Leon
-
 
