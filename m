@@ -1,185 +1,183 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012064.outbound.protection.outlook.com [52.101.66.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21FD48988A;
-	Fri, 14 Aug 2026 16:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786724271; cv=none; b=FDSdY9ICn2tEEcR1lKQ6dde8hdwrkhPp+baHi6zH3SwnWjghjPmG2113O1FVCY8kIKZlxJxJc1aTL42saebQVIiybWe3ty23s+r+cfZ2NCa8H7/+yQfoxohneigktN69etxywuDTFYPGMR1a8Q17+GjgRPcsGpKZknvJMiB/wis=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786724271; c=relaxed/simple;
-	bh=Hsm0ilBUsFYmcZnIHDNIMH0kZG/jJyXYiYiNXg/ePj0=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=Dokgrn2yd7YnfDaQdgUf6D8u9BjWdGKN054LUU0wCHXKzU0HMFOTJQdU/rcIPrSgCuwPk3c6/V7jb4rzmAFRdQBpLfeHgQBhWgxGNvrweZj9tVWYl5/jZrnUzijtwNDz5+HFFW5EpB3AWHqnOPXPBU3EUQQg+rXmbJAsUE9sCrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avUjzz+y; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C97F3822B7;
+	Fri, 14 Aug 2026 16:21:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.64
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786724474; cv=fail; b=XNAYrVPw8342Ij3BnaTbo0ziAduKA3Ivjp4jlqbu639S5oCtw8WFc1okm5KeIVID3G0nQ516LqK1vTQ1BV2IK+gQrQfD/ZD2oJDnfKMOdVguwuatiQBbUS/MYuaQzGFheIOyPkhiSAO8t29LbTutj/spCQGCLaIA6ZrTq4DSmZ4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786724474; c=relaxed/simple;
+	bh=V8CmgEnYTLicUVJ9ysnr/IRoxWV81QdwfbgZ2RxofXM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Awmkm6pNzLJ+I7lc2sTkcjqn7nqLIL5ALQk80FmMHN4W0I5oLhS9q2EBg+g4HBxsTsoSiZ2hSkI1mkP0IGsZ2uJKkWPtdlZzPnlQisdgz6bxqCOhiesU568KbWipzshzBjPcjLMPDanBV77moPE8Nk8Yhubd78hiU8pR3hOVMWE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=AvuPUwzC reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avUjzz+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA741F000E9;
-	Fri, 14 Aug 2026 16:17:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786724270;
-	bh=cl56UCgbHJRz1uOcu/M7rczSp3Dhl8lXYJV+SJ/Lhis=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date;
-	b=avUjzz+yEfxOpteWqliw+htABr9q/NMWNGAUsQ6Q4OjaQ+SneYzlYJr68gDXTwhBK
-	 EuvYj1AtZdE/8BegGl0HPNQcDXPvpRPWYNeFMGfdd8ZU7+J13YSAdKhtINaeDNUvvu
-	 MRBHawY9o0PPE4Cmco7/5azcSZ7Ye0BUzTHnb7/TnEfzcl6lI/6JTPGHHSvCPJdo6V
-	 Qf2bnw/Spav0TWabA+Cs00b/BIparu2xFxB8dF16FZDJfhIP3KzgxmsiHSNw7t/2LM
-	 axlX16t36smf9X7VHabvAJIEwkKOsiMFmrg3BZIn0ObrU5oUAkRAoD6febzhr9RLjt
-	 E5dpEx5HvoLZg==
-Content-Type: text/plain; charset="utf-8"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="AvuPUwzC"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dIlSofC0z6Uo6zSGIjS2UzWl9FpWyVfCH+nFgJ1eGG8jKfiM3YSVEfjmobDJi3DKQEze6M6GYXskugofi12VXYg11B7ehkVhjDtntjnTCQAkh9IvB1rniHVkncEBNvRL2JscGX4HR+f3s6pO5lyxx/nj9dzOf+AqQxlKvgGQBCXx7Ef+c/BpJgkrH3yBVlsUn17w5+95KPbWG9hE/bE196TQCYFBbUOpDKGnTgFbGFY+QJDk/lwNb41BcuzWu2dcK8xUeDk08NgknKaK9SV03CKF8hAxFWsvYnlIB22WUKO5H61YNg5Z2RHDwYJMByHqzvSF0BgvPyfsyLqeO/5oUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dUfUNBrm1Kzmh6DxOw6ARCPQY26rS2s468WIwSobPIQ=;
+ b=K2UVlHlIZL3n+WCtSwm7pjZr9Mq0CqiOYVAuxF3cHXUzfOCcGH61wu/jBckXzFXktbIl/MlZRN3whf5YOCMl04iKJXwigEqqb6GrWV+8uDVoDe9EwGqjM7KL/L8QKRbwFMWpA+igHt6DmqHkaaE438TbkHrYfgFPKoFFyCBtSXDWuU/qE/SeLwPUbC5wGhqUX3HSygxSEz6BJWGW2Hcaws0znvbjSb39TT8aEn0R97vXF0mDb6MMJNDMk18rI3IAjVAxCvxsp1oyAuPRWdOqWI4UC0204jNh8XoIdxip8cIR47yS2kxJCDuVuf8nJcA5tYMxW8oIhfmjnBuhhPuReA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dUfUNBrm1Kzmh6DxOw6ARCPQY26rS2s468WIwSobPIQ=;
+ b=AvuPUwzCIcg3IA0agfXHc0zcHX7AOU15VeVRrLBRFdtz09QfWNOtAKjrJkv1m2iapopczCMhzwIlqRAfZhqp2on+Eb+34epgtaikXQfQ39Gzdmr4dELqjkEP4rn8X3QGSI79R3yJKalORA/M/pw9hFcKaIuROBIj6yLmuSAiPa72K71JPRUicfo05yyBQPJpMUgKaF2MHhH+qWTuxmm+gwv2rcZLD3BTJbfOE6A1TlvUF289CkGeeGM/9j6RNhYI+nqEGmSFRlIMZmpORjtZL96tdmGcmdLyGWmd95HldMNl1RmwGGj6h7cUPol9CL2yZ3JA78jsi0wHSQGzsNNPhw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from DU4PR04MB11791.eurprd04.prod.outlook.com (2603:10a6:10:623::11)
+ by AMBPR04MB857968.eurprd04.prod.outlook.com (2603:10a6:20b:799::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 16:21:09 +0000
+Received: from DU4PR04MB11791.eurprd04.prod.outlook.com
+ ([fe80::11ca:6b74:3234:d7de]) by DU4PR04MB11791.eurprd04.prod.outlook.com
+ ([fe80::11ca:6b74:3234:d7de%5]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 16:21:09 +0000
+Date: Fri, 14 Aug 2026 11:20:56 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Chancel Liu <chancel.liu@oss.nxp.com>, Frank.Li@kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 03/17] arm64: dts: imx91-11x11-evk: Add pinmux and mark
+ conflicting devices for MQS1
+Message-ID: <an9AaDX1EnCDVMRw@SMW015318>
+References: <20260814072022.4064009-1-chancel.liu@oss.nxp.com>
+ <20260814072022.4064009-4-chancel.liu@oss.nxp.com>
+ <20260814073138.27F5B1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260814073138.27F5B1F00A3A@smtp.kernel.org>
+X-ClientProxiedBy: PH7P223CA0001.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:510:338::22) To DU4PR04MB11791.eurprd04.prod.outlook.com
+ (2603:10a6:10:623::11)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260612085812.AA15D1F000E9@smtp.kernel.org>
-References: <20260612-clk-v10-v10-6-eb92484eda38@nxp.com> <20260612085812.AA15D1F000E9@smtp.kernel.org>
-Subject: Re: [PATCH v10 6/6] clk: scmi: Add i.MX95 OEM extension support for SCMI clock driver
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-To: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, Brian Masney <bmasney@redhat.com>, Peng Fan <peng.fan@nxp.com>
-Date: Fri, 14 Aug 2026 09:17:48 -0700
-Message-ID: <178672426822.5897.11563790103554525148@lazor>
-User-Agent: alot/0.12
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DU4PR04MB11791:EE_|AMBPR04MB857968:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5654076d-00b2-40cd-705b-08defa200c8c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|19092799006|1800799024|366016|22082099003|18002099003|56012099006|10067099003|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	7iGZ/VbOpCbnM0MNO4fmTbdmXKXpuIi6YZccTJHwT/Fmwapso7EZgpMr1mi71Sn0yUwQV66UTptimyzcbyHLi8Vk03bFAA/EoV0c2m4mpDrny/xYINV+cZfhdKpv8kfyVM0wh2aI0l5dDUYQG4sbxvJp+iMnWapMm23qSGD1LldUuHwli9VrlXBHpMvOgQFCmOiiZAPmICowVcWNge2fS/RlFK6LYsBg4q6SqjMHHJe5sYdT4gLVwS/Y0KxmiTsvVC/WSr3nbnGAaaWVI6ebB7Q7i1utHZbZamtYa/wZSLTtj9x1VzAMSQlxf9QNFPl0EIbdjZBiKFdA47uHYDc6TIwTu5nbxAjtbuW9HtMlw7jOnMX7McoqOE6LQlOsBulvgeYWabwlvM/Z22jW9quqG31VcssNcMN/aLIPpI/p8yonYEde6bqooWDY+OKsz30tg1Zt6/6y3Otj3cyfhcq7JloOzYhKtI70gniZnRJqI3xFPadZXDhtPSQSQihVnXISZeCPM2VBIj1L5mxjjOqQbfRGKd0N8gZpBstejO3RMBXZUwfsz07PqwwL2i/NcOOl0uJhbMzNX6KRQSazU6XYBuCpljz/LeAjlhi3KExQ31c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU4PR04MB11791.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(19092799006)(1800799024)(366016)(22082099003)(18002099003)(56012099006)(10067099003)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?T1KE07OqFVfN5opt2fFRMkgaKLGW7b1OcGV15LjznSVlKWUpKtnwAtWsdd?=
+ =?iso-8859-1?Q?BhTraJ3xsCokHYmBsMWstGgTsn63RUyDZYkzIrTLKOy4THgcxuwGaFTBXf?=
+ =?iso-8859-1?Q?S2DFNEjiFgkiC9zNZ0ew+kxLU8FyZ8VKs6VAKCzCDB6bO7lghO80+TV10y?=
+ =?iso-8859-1?Q?PPuL9vFCaWYBwbJrRY5WbBNXy38qrl5eknpQps8tFUyYaqC14Dz0gK0DCb?=
+ =?iso-8859-1?Q?vTkMxKogt9GLxCj1g5L4vRBtBfYY0noHZdjITqMBgch8Wl9pK+Soxq4dek?=
+ =?iso-8859-1?Q?C6bGIttSfem5LcXNDJjhAk5XLO755QhPhdVrxZHK6QhvDe55JVjYMYBMVI?=
+ =?iso-8859-1?Q?6OCOvwGqyqM8G3MQlHtO9xOFslvuqey+CXTvhFiUolJZ0pJgjLFK9wHXZE?=
+ =?iso-8859-1?Q?cGXMVaGqPGyGmUhvy+CIEMBFJP/zJU03eNQ/286juuF/oz3Vzqi5g/LJWS?=
+ =?iso-8859-1?Q?wgsC0cq/p2+qUXeOB7POHLDOJMJaMPSfRpDok+pO0IyY3fVDy33+UzzbGe?=
+ =?iso-8859-1?Q?jCbXUVrP6lIxC8VraRfCpqmhym40vvmWr5/YJYxzepHf0rQaQblmrZCcFj?=
+ =?iso-8859-1?Q?1X5aiaSVJ2dQE43dCCR3afyKV+937Ltri8baY+lqyYMjqDpvcC2eJZS6L3?=
+ =?iso-8859-1?Q?aVj7bZ4R2ZJ9UqL1QycWi1kVWyDYzNgmlHreAeyxK9av5RdDtshKoVGtg5?=
+ =?iso-8859-1?Q?7HS8UnxoF7B469hVFJnT5Qm+L7swz2rSW+IxIaCzzMWd1G5NGXQYWtvzmw?=
+ =?iso-8859-1?Q?9GecNOA1xJlltreSxovLgajVEWjVyCMY7cBZdPahmihoL5TDHEDMHitacs?=
+ =?iso-8859-1?Q?z+gYWlC2evhn3YTlob+a7S4bzfQibk3Tk6SvhIK+6bCYt71G0JX48kG1Bc?=
+ =?iso-8859-1?Q?ADSfjsXF24TtSFxs8ZVqHDA1Seikdyf8uH/875BarEUOF8ZAu3bmV1+kdT?=
+ =?iso-8859-1?Q?d0Gi7RrmjxzYzNvsE/08PPAwcrnm4PmKbwpIketvd5GNxYYQn1KTQq8hAe?=
+ =?iso-8859-1?Q?arghVu7/2aHYCSWdMPQYHhbErDy+YFZdOv439+FuoziE6tSDAGm33tuiyW?=
+ =?iso-8859-1?Q?0OXv+V+oX/vKqYDNgn9h900qrcjNSrZS/SFlnQA5kRm6pP9D4zM2+fTUBq?=
+ =?iso-8859-1?Q?ZiIUE1ONCx/hA4e8QNYqDOIoBBHGleUNqktRQmbLZccUVD7mNYpNGwCyFr?=
+ =?iso-8859-1?Q?zCKO802mxcFCE0xrST9tESqOu0yIlZmz+4aTn2vN1l+O9XHicXkkpFzraF?=
+ =?iso-8859-1?Q?vCVKw8A0OY4XRnhRLOpGcm6q9A9j/iCDTXskiUGKA5O79nGD0XPoWvyYWa?=
+ =?iso-8859-1?Q?BVOiAkYBtefPcQS6B6ArEu2X5BNdzLN6LcUJe45Fz9knoWccDza3h624W8?=
+ =?iso-8859-1?Q?SzRalOczfXvciPlA0ehdPonCCUF+Lr391M8S78OKagZwvebFzMsLmoyrTV?=
+ =?iso-8859-1?Q?u2iIRrtiH4ydJAOvRhcXzGjdjcWKMYhPtyG3T+H+hUnr/j7qshy+yD5SIH?=
+ =?iso-8859-1?Q?k8IAixfh13GmDMgA4VRfxxtbopxLph2Nx6VvoyU4Ln3Qp4XnzHxR0t3dzb?=
+ =?iso-8859-1?Q?3aExii8NICUxPYl4CJrTdlZT/QKCBniXsSwXhdHDDEQGRC8G4cwrTCRvRZ?=
+ =?iso-8859-1?Q?SymB6iXMbRn3BMmTBQZHqS+sxBxEwWRY2fyLRn5FoX8pZ4BS5wx2/+AJiH?=
+ =?iso-8859-1?Q?uIaaENnzQ6XWeg9c2awvULKL26ztutQxVIU9IXLD6uozn9KkWc/DCpsktv?=
+ =?iso-8859-1?Q?yXSwtsi6Cy4KRZVJIyXhE/h/RKNVeyXvAVQBwk+7aXtE7WpbicKgMGfaar?=
+ =?iso-8859-1?Q?o6ehWBvQUa9lccbpyfkZNovkfKinfkJ4QjNJu5RX8Co1HLxRqtFp?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5654076d-00b2-40cd-705b-08defa200c8c
+X-MS-Exchange-CrossTenant-AuthSource: DU4PR04MB11791.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 16:21:09.2200
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YyFrwVbB5Fw9JV6RkyPe+oEONf7p8whkT7YthmFPxueXECUqp0GzBj90k/+26/Xn+43dO9UdRrayMY3Icg2oJEhMpXYI4ikCJQHBCR3nG9l57k+aNgPMmC3qnuB6ku6o
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB857968
 
-+Brian and Peng
-
-It doesn't link for allmodconfig build
-
-Quoting sashiko-bot@kernel.org (2026-06-12 01:58:12)
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->=20
-> New issues:
-> - [High] The driver fails to link when compiled as a module (`CONFIG_COMM=
-ON_CLK_SCMI=3Dm`) because `clk-scmi.c` and `clk-scmi-oem.c` are built as se=
-parate modules without exporting their shared symbols.
-> - [High] Incorrect unit conversion for spread spectrum percentage causes =
-valid spread values to be truncated to 0.
->=20
-> Pre-existing issues:
-> - [High] Missing bounds check on SCMI firmware-provided parent clock inde=
-x leads to heap out-of-bounds read and wild pointer dereference.
+On Fri, Aug 14, 2026 at 07:31:37AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Undocumented modification of the '&sai1' node's clock properties.
 > --
->=20
-> commit 02412e4d55042034939e6eece844d1bd4d62d5e9
-> Author: Peng Fan <peng.fan@nxp.com>
->=20
-> clk: scmi: Add i.MX95 OEM extension support for SCMI clock driver
->=20
-> Introduces clk-scmi-oem.c to support vendor-specific OEM extensions for t=
-he
-> SCMI clock driver. This enables querying OEM-specific features and setting
-> spread spectrum configurations.
->=20
-> > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> > index 6a726331b6c9e..c2ae700ec0f2a 100644
-> > --- a/drivers/clk/Makefile
-> > +++ b/drivers/clk/Makefile
-> > @@ -98,7 +98,7 @@ obj-$(CONFIG_COMMON_CLK_RP1)            +=3D clk-rp1.o
-> >  obj-$(CONFIG_COMMON_CLK_RPMI)                +=3D clk-rpmi.o
-> >  obj-$(CONFIG_COMMON_CLK_HI655X)              +=3D clk-hi655x.o
-> >  obj-$(CONFIG_COMMON_CLK_S2MPS11)     +=3D clk-s2mps11.o
-> > -obj-$(CONFIG_COMMON_CLK_SCMI)           +=3D clk-scmi.o
-> > +obj-$(CONFIG_COMMON_CLK_SCMI)           +=3D clk-scmi.o clk-scmi-oem.o
->=20
-> [Severity: High]
-> Will this fail to link when compiled as a module (CONFIG_COMMON_CLK_SCMI=
-=3Dm)?
->=20
-> It looks like Kbuild will treat clk-scmi.o and clk-scmi-oem.o as separate
-> kernel modules rather than linking them into a single composite module.
-> Since neither file exports their shared symbols (like scmi_proto_clk_ops
-> or scmi_clk_oem_init), won't this result in undefined reference errors?
->=20
-> Should this use a composite module definition instead?
->=20
-> scmi-clk-y :=3D clk-scmi.o clk-scmi-oem.o
-> obj-$(CONFIG_COMMON_CLK_SCMI) +=3D scmi-clk.o
->=20
+>
+> --- Patch [3]: [PATCH 03/17] arm64: dts: imx91-11x11-evk: Add pinmux and mark conflicting devices for MQS1 ---
+> commit 2ae9b14f843efe8a48368cba7c61c4f11632f83b
+> Author: Chancel Liu <chancel.liu@nxp.com>
+> arm64: dts: imx91-11x11-evk: Add pinmux and mark conflicting devices for MQS1
+>
+> This patch adds the MQS1 pinctrl group and labels the conflicting sound card
+> and micfil devices for the imx91-11x11-evk device tree. This allows the shared
+> imx9-mqs overlay to disable these conflicting devices.
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx91-11x11-evk.dts b/arch/arm64/boot/dts/freescale/imx91-11x11-evk.dts
+> > index 4d1ada6a3942b..4a3dfafae3773 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx91-11x11-evk.dts
+> > +++ b/arch/arm64/boot/dts/freescale/imx91-11x11-evk.dts
+>
 > [ ... ]
->=20
-> > diff --git a/drivers/clk/clk-scmi-oem.c b/drivers/clk/clk-scmi-oem.c
-> > new file mode 100644
-> > index 0000000000000..be11d359b4ec3
-> > --- /dev/null
-> > +++ b/drivers/clk/clk-scmi-oem.c
->=20
-> [ ... ]
->=20
-> > +static int
-> > +scmi_clk_imx_set_spread_spectrum(struct clk_hw *hw,
-> > +                              const struct clk_spread_spectrum *ss_con=
-f)
-> > +{
-> > +     struct scmi_clk *clk =3D to_scmi_clk(hw);
-> > +     int ret;
-> > +     u32 val;
+>
+> > @@ -511,10 +511,19 @@ &micfil {
+> >  	status = "okay";
+> >  };
+> >
+> > +&mqs1 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_mqs1>, <&mqs1_fun>;
+> > +};
 > > +
-> > +     /*
-> > +      * extConfigValue[7:0]   - spread percentage (%)
-> > +      * extConfigValue[23:8]  - Modulation Frequency
-> > +      * extConfigValue[24]    - Enable/Disable
-> > +      * extConfigValue[31:25] - Reserved
-> > +      */
-> > +     val =3D FIELD_PREP(SCMI_CLOCK_IMX_SS_PERCENTAGE_MASK, ss_conf->sp=
-read_bp / 10000);
->=20
-> [Severity: High]
-> Does this integer division by 10000 inadvertently truncate valid spread
-> spectrum values to 0?
->=20
-> Since ss_conf->spread_bp is in basis points (where 100 basis points equals
-> 1%), and standard configurations usually range from 50 to 500 basis points
-> (0.5% to 5%), dividing by 10000 will always result in zero. Could this
-> divide by 100 instead to correctly convert basis points to a percentage?
->=20
-> [ ... ]
->=20
-> > diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-> > index d88e78cc9a12e..2dd50c5b4ea8f 100644
-> > --- a/drivers/clk/clk-scmi.c
-> > +++ b/drivers/clk/clk-scmi.c
->=20
-> [ ... ]
->=20
-> > @@ -406,7 +419,7 @@ static int scmi_clocks_probe(struct scmi_device *sd=
-ev)
-> >                * to avoid sharing the devm_ allocated clk_ops between m=
-ultiple
-> >                * SCMI clk driver instances.
-> >                */
-> > -             scmi_ops =3D scmi_clk_ops_select(sclk, transport_is_atomi=
-c,
-> > +             scmi_ops =3D scmi_clk_ops_select(sdev, sclk, transport_is=
-_atomic,
-> >                                              atomic_threshold_us,
-> >                                              scmi_clk_ops_db,
-> >                                              ARRAY_SIZE(scmi_clk_ops_db=
-));
->=20
-> [Severity: High]
-> This is a pre-existing issue, but is it possible for the SCMI firmware to
-> trigger an out-of-bounds read right after this ops setup?
->=20
-> Looking at scmi_clocks_probe(), it uses the parent index provided by the
-> SCMI firmware to directly access the dynamically allocated hws array:
->=20
-> drivers/clk/clk-scmi.c:scmi_clocks_probe() {
->     ...
->         for (int i =3D 0; i < sclk->info->num_parents; i++) {
->                 sclk->parent_data[i].index =3D sclk->info->parents[i];
->                 sclk->parent_data[i].hw =3D hws[sclk->info->parents[i]];
->     ...
-> }
->=20
-> If the firmware provides an index greater than or equal to the total clock
-> count, won't this result in an out-of-bounds read on the heap, potentially
-> dereferencing a wild pointer? Should this index be verified against count
-> first?
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612-clk-v10-=
-v10-0-eb92484eda38@nxp.com?part=3D6
+> >  &sai1 {
+> >  	pinctrl-names = "default", "sleep";
+> >  	pinctrl-0 = <&pinctrl_sai1>;
+> >  	pinctrl-1 = <&pinctrl_sai1_sleep>;
+> > +	clocks = <&clk IMX93_CLK_SAI1_IPG>, <&clk IMX93_CLK_DUMMY>,
+> > +		 <&clk IMX93_CLK_SAI1_GATE>, <&clk IMX93_CLK_DUMMY>,
+> > +		 <&clk IMX93_CLK_DUMMY>, <&clk IMX93_CLK_AUDIO_PLL>;
+> > +	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3", "pll8k";
+>
+> [Severity: Medium]
+> The commit message mentions adding the MQS1 pinctrl group and labeling
+> conflicting devices, but doesn't mention modifying the &sai1 node's clock
+> properties. Is this change to the clocks and clock-names intentional for this
+> patch, or was it included by mistake?
+>
+> If it is intended, could the commit message be updated to explain why the
+> pll8k clock is being added to the active SAI1 node here?
+
+Make sense, please update commit message
+
+Frank
+>
+> >  	assigned-clocks = <&clk IMX93_CLK_SAI1>;
+> >  	assigned-clock-parents = <&clk IMX93_CLK_AUDIO_PLL>;
+> >  	assigned-clock-rates = <12288000>;
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260814072022.4064009-1-chancel.liu@oss.nxp.com?part=3
