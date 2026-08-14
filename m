@@ -1,109 +1,181 @@
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF694611E5
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 16:44:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49E84749C0
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 16:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786725879; cv=none; b=Q+ypaNMIqS2wRPdwmH/XmMxhIXpP7vfRjUCSTsIgZrfPr+Juz/ufQz1EgAQ5Z6km4bOdRWEEMamOpIQgwJX1KLtz4qoofdkjt6p6hd5kJGZlnmVEgcirAB4kIQYwq/X+ZUBozd0NneoEf2jS+FVcOhMQLrv9IB73kRTa3lANoIc=
+	t=1786726523; cv=none; b=rntxz8Xs19EOCyujFLRxmt0wLIUu3RKPHFj0xLel8GWl9Y5CLz8OypxsUiONrrtVyrSpEyWqx1gG4+GdHlcR9OMzPUYj8FqWWw5aI9xvfWBP9zocGn8S67EJd9rAOgfOXYIFJIRRl0okEIICb2h4/n9exVNM8UaXd6XLfetYIPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786725879; c=relaxed/simple;
-	bh=SXMUBMpWqjsSZ8UZUax/xd2jiHPkqWpJd/+6vxgoa0s=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Ejamlj7M5PHuO5NTqdH0eziurH3BzH4MzVWTe7jHfl59JOtTEab68T7sw/SkqB7KtU05o+bHrAvCwtoytaMeebw7/C+NK8lSpVeqD4BgadU8Fu3s0A6bQhg2ka6h9kRGTMm6Fk2lM0AJo5OlzvGs9r6msTYJl3hibq1MaFhbafE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eRnUJ9aj; arc=none smtp.client-ip=209.85.210.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1786726523; c=relaxed/simple;
+	bh=RBwYjF3auxfgNTDdTufyuoqTSozXax3hznWOixXop/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Qc7fOnhV+Va76FCYq0+qIp/HJewqccndqPwNupLuuddNt1443x+imzpOdOKSStwyLsdMg5M6daVO1B+9Zq7bucu6dGh9VPN31N+qDPcl3G4Ph7/gb5qdZ8eSx76pFtM6nJBxFx8Lhr6Fnk82OebmSP2NeLaQ+yv/1r+J6OgXKOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=fp/wGnbM; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eRnUJ9aj"
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-84842381150so1232178b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 09:44:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="fp/wGnbM"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51c0c45c580so8355031cf.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 09:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786725877; x=1787330677; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=OHHH7uTWtnNMDgIrudvSIouxtfc87FvfYM1qiAcx7gY=;
-        b=eRnUJ9ajTPHE2+PFbdMMwjMEWUaAMJXy79Ry+jorWzbvDgqtl/xTeBaByd6jBxm/NT
-         hBe6bkIENUKbX4en8cDk9QK4YZ0paQHvkdZtMHXwwyFMBpOIA6dKLYNbsVIKsEaQRk90
-         hq3GTbFFL54oHQ5mdPtXFdfRBeAq1pEUS5pV5q2pUZ3HltG/KIQb0ojCp3Jf1YvQiafT
-         bBsV456CjuwLmEpfgQKV+vBt1tGNt2At3JUHBfTh+p7spOU23sEgk97+hOVRA/V/R5sh
-         rf4DKXFpsH0UUd7a2Dpjz4l+z4sK8PYrGHADXxjyF0j9XZi5HS7JIO9NVCoKuW8V7wz+
-         SxUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786725877; x=1787330677;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1786726516; x=1787331316; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=OHHH7uTWtnNMDgIrudvSIouxtfc87FvfYM1qiAcx7gY=;
-        b=dZadgaWKecq9gyEBaTwekmPyyo+Tr/iwsxPjCJ1gQ6if3XgAk+lRIG6wN4jPXt2p6a
-         +oYCZ3So7+LrySpblNix+jKktrmHg4wutnHe4+vNNAujisyKDQdrb09cfO3xIVbT63rn
-         1T4we4wdCEHt8FVOOG88I7ETbi9tRVcv6p2IzLxvR+5d3ZD6ysdjHODFlTBDPh1IONiN
-         O6PSWLtPV3tRRh5jRKEUGE7CbS4dYRDW83Uy9Et0jg9htIwleUd8WSdvzTFL8LsqwF+M
-         ofm9zlAqILf3660oKVbF2A0NobXTGuCaxHGYLH24b9zCyPf6UmsT3O2a4gtJ6PjTw8xT
-         iYyw==
-X-Gm-Message-State: AOJu0YwTNlJzm6Y8uFJjFxfSmHj9LVZXtP6HAFj9Gz6jOR6Bcy639ixq
-	nC1WBB3avf0jf2P8OPpk6mh9mHn7IqtXm/DGyyf31JYeOBrw9zXY8MtKeEXz5LlzQhcDYLXhC02
-	tE5YxSmKl1O6nkH7JbmTa3YgkvRCXHwDlnmPaoj6l3yYn/7MlqdNfBO0Op9IctBUHHn4nCTbSnA
-	NNwpzsra/Hx/W+CrI1eYca0wP3Eg31n8hYVWKPFf5H2Vs1FFsx
-X-Received: from pfbgp14.prod.google.com ([2002:a05:6a00:3b8e:b0:847:8e58:df6f])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:21c8:b0:847:973b:3cf6
- with SMTP id d2e1a72fcca58-84fddde3c32mr7348818b3a.0.1786725876826; Fri, 14
- Aug 2026 09:44:36 -0700 (PDT)
-Date: Fri, 14 Aug 2026 09:44:36 -0700
-In-Reply-To: <20260814163207.D8C5D1F000E9@smtp.kernel.org>
+        bh=aL8pP85i8EaCb3lxYohsqsu8B10B2NEcVQY+xjMxthI=;
+        b=fp/wGnbMJG5gc9H9lC8sA3GvczGRup1NmtinspgP0Z7LnuzbiY34mwdSJpprgId+JD
+         NuLtl8f/5ndHqnvOp1VuwtpTaT380Mz+5o3eJVEm0jKUi0P4RkvAotxV+EMCI5FX5BnD
+         xYzzw5NddcUK1XOrowxAkBG3ytfjtAgd46hgoEeF73WqjpCHBPgdtkk+2K3fOCsJw2WW
+         emMkXaEadQA8tmz7ikbjbtQxO4ZY6pTOWRy7lAubkMyxE8EaQOlbsW8mbM2KgMhHjcfU
+         VsXYuR16nNvyeMh1m0E5D7v2DiWS1BcOsl1OSF4vftBy+gisU6IxD1a/6OY4PDqttkL8
+         QKiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786726516; x=1787331316;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=aL8pP85i8EaCb3lxYohsqsu8B10B2NEcVQY+xjMxthI=;
+        b=Gjpotb6ZLx+49+qHVQMaVbHB3fMBIv5oUT56k+gLs6rQVcG7aIMdxfeUoKXrqZ6eho
+         hLG/UFfd00m3iFybUljymJNMV/wyhKIUXzqPbZ+ALomowh+871fP3EXN7KBqMdVPDem7
+         on/o/5m+AQfysHUVB5f/MgYxGNCSZ0XIaR0PSfogI25w0dRhDrNHHAtu+THlNYmZ7jpA
+         fyshdIyIieOewO2TdriCxKRzfoqG1eyzy5j0JCvvYne2VPUchNdkgL9KE7BggPCu5xyy
+         mujOmF5afuZ3kiP+cy8/k6gm4LJ7RZWwrZR3/lyiUSKbD+9BWQ5znftZGISYCBp9Vf5h
+         jj2A==
+X-Gm-Message-State: AOJu0YznZ1KIhWk/rGQKXCewMxEGXjn3PnTgAi14cfK5LWNMuxfYRSAt
+	Ea+AAukzzkEIJ9ir1x+tQpODulvpGmRW7C6HS56TeKQ2hib+AOxZ/54LmqFt5c9IPs38rY5nY6/
+	eiTETId8=
+X-Gm-Gg: AR+sD13Lt6RLouqhf/idpUUE6uj+KREekvJWKmrPOuDeYipzoFtVURV6INsTdhbKWFC
+	TJz2MJOz0UHUq5cVuSpoQPcmw+IWjbtAW9u7rUBCdjaS6/g6TcDDKAomHYIpq5gQWvNtcYpXZqH
+	85cwEHqLqjUtIHBS0EqqcHpfPutsBZZTq1l6/Hw1ydpXRm40ODAc0IHvUJV/AOT6Gr34Zgtk0bC
+	Uik+7V6qU7BZjb/RPTCU6CW+ERo0tgvsXWF6hbikUNwv8zV1lPtGsKx4Iz6TGpDo0mHPk3Vb0Xx
+	5zNbVlunghxn0hav5sRgIV7tsmKHB3czWmolbvNirjIXYFhsz+RMpdMs0geepfmJeAwegI4ODzI
+	lZ0e5yCslU0xK2woGB2VFwxXk3Pdv9+Z+z0GR+pV32jPSwgAGUKhNrKMglIjX9C5vDYJi0yx/uK
+	o6tA+H1uF5jlIaU4RUO0Mlpx96ltNut1NsiwcoqD2qV4F2xP0YRTUgO2+uhf1SuA==
+X-Received: by 2002:ac8:6104:0:b0:51c:92a0:b2cb with SMTP id d75a77b69052e-52d854ce987mr83660721cf.26.1786726516287;
+        Fri, 14 Aug 2026 09:55:16 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52d84071799sm24476161cf.20.2026.08.14.09.55.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Aug 2026 09:55:15 -0700 (PDT)
+Message-ID: <29e363b0-baa0-40e6-b347-5083c4f2c682@riscstar.com>
+Date: Fri, 14 Aug 2026 11:55:14 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260814162221.2144473-1-vkuznets@redhat.com> <20260814162221.2144473-3-vkuznets@redhat.com>
- <20260814163207.D8C5D1F000E9@smtp.kernel.org>
-Message-ID: <an9F9EJj4yLkc8Op@google.com>
-Subject: Re: [PATCH 2/4] KVM: nVMX: Make VMPTRST return eVMCS GPA when it is used
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: misc: introduce pci1179,0220.yaml
 To: sashiko-reviews@lists.linux.dev
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-pci@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260813222943.1655453-1-elder@riscstar.com>
+ <20260813222943.1655453-2-elder@riscstar.com>
+ <20260814014513.5CF1A1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260814014513.5CF1A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 14, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-> > index c78c67525ac9b..d13a4d47bc68f 100644
-> > --- a/arch/x86/kvm/vmx/nested.c
-> > +++ b/arch/x86/kvm/vmx/nested.c
+On 8/13/26 8:45 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The example DT nodes map multiple PCI BARs to the exact same parent physical address, and define unused BARs that contradict the hardware diagram.
+> - [Low] Typographical error in the compatible string comment.
+> --
+> 
+> --- Patch [1]: [PATCH 1/2] dt-bindings: misc: introduce pci1179,0220.yaml ---
+> commit ee5f64080011b047dd81e1bbdc568f784c09b77f
+> Author: Alex Elder <elder@riscstar.com>
+> 
+> dt-bindings: misc: introduce pci1179,0220.yaml
+> 
+> Define the binding for the Toshiba TC9564 PCI endpoint function device.
+> The third downstream PCIe switch port within this chip has an embedded
+> PCIe controller, and that implements two of these PCIe functions.
+> 
+>> diff --git a/Documentation/devicetree/bindings/misc/pci1179,0220.yaml b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
 > [ ... ]
-> > @@ -5958,8 +5958,14 @@ static int handle_vmptrst(struct kvm_vcpu *vcpu)
-> >  	if (!nested_vmx_check_permission(vcpu))
-> >  		return 1;
-> > =20
-> > -	if (unlikely(nested_vmx_is_evmptr12_valid(to_vmx(vcpu))))
-> > -		return 1;
-> > +	/*
-> > +	 * Hyper-V TLFS does not specify the behavior of VMPTRST when eVMCS i=
-s used
-> > +	 * but genuine Hyper-V seems to be returning eVMCS GPA.
-> > +	 */
-> > +	if (nested_vmx_is_evmptr12_valid(to_vmx(vcpu)))
-> > +		current_vmptr =3D to_vmx(vcpu)->nested.hv_evmcs_vmptr;
->=20
+>> +properties:
+>> +  compatible:
+>> +    const: pci1179,0220 # Toshiba TC96564 (a.k.a. Qualcomm QPS615)
+> 
 > [Severity: Low]
-> Will this cause a build failure when CONFIG_KVM_HYPERV is disabled?
->=20
-> Because nested_vmx_is_evmptr12_valid() is a static inline function rather
-> than a preprocessor macro, the compiler still evaluates and type-checks
-> this branch even when the helper is hardcoded to return false. If the
-> hv_evmcs_vmptr member in struct nested_vmx is conditionally compiled base=
-d
-> on CONFIG_KVM_HYPERV, the compiler will fail to find it here.
+> This isn't a bug, but there's a typo in this comment. It says TC96564 instead
+> of TC9564.
 
-Yep.
+I will fix this in the next version.
 
-arch/x86/kvm/vmx/nested.c: In function =E2=80=98handle_vmptrst=E2=80=99:
-arch/x86/kvm/vmx/nested.c:5971:53: error: =E2=80=98struct nested_vmx=E2=80=
-=99 has no member named =E2=80=98hv_evmcs_vmptr=E2=80=99
- 5971 |                 current_vmptr =3D to_vmx(vcpu)->nested.hv_evmcs_vmp=
-tr;
-      |                                                     ^
+> [ ... ]
+>> +        pci@0,0 {
+>> +            compatible = "pci1179,0220";
+>> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+>> +            #address-cells = <3>;
+>> +            #size-cells = <2>;
+>> +            /* Ranges will be updated dynamically */
+>> +            ranges = <0x0 0x0 0x0  0x83000000 0x0 0x0  0x0 0x4000>,
+>> +                     <0x2 0x0 0x0  0x83000000 0x0 0x0  0x0 0x80000>,
+>> +                     <0x4 0x0 0x0  0x83000000 0x0 0x0  0x0 0x200000>;
+> 
+> [Severity: Low]
+> Are these example ranges accurate for the hardware? The mappings configure
+> BAR 0, BAR 2, and BAR 4 to use the identical parent physical address
+> (0x83000000), which would result in overlapping memory regions.
+
+Yes, and I could put something else in there, but this is related
+to another issue about the dynamic nature of assigned BAR base
+addresses.  I sent out another series to propose a fix for that.
+
+   https://lore.kernel.org/lkml/20260813220717.1394644-1-elder@riscstar.com/
+
+I'm interested to know if anyone has another suggestion for how
+best to represent this.
+
+> Additionally, the hardware diagram in the binding description indicates
+> BAR 2 is not present, but it is configured in this example.
+
+I find it very impressive that Sashiko interprets the ASCII
+art diagram this well...
+
+The reality is that--at least when the ranges property is dynamically
+created--all BARs will have a range value defined in the ranges
+property, even if one or more is not used.
+
+I chose this way of specifying this so that the relationship
+between the endpoint ranges property and the pci-ep-bus ranges
+properties were clear (indicating the BAR number in the first
+cell).
+
+The remaining questions below have the same basic answers as I
+have already provided.
+
+					-Alex
+
+> 
+> [ ... ]
+>> +        pci@0,1 {
+>> +            compatible = "pci1179,0220";
+>> +            reg = <0x100 0x0 0x0 0x0 0x0>;
+>> +            #address-cells = <3>;
+>> +            #size-cells = <2>;
+>> +            /* Ranges will be updated dynamically */
+>> +            ranges = <0x0 0x0 0x0  0x83000100 0x0 0x0  0x0 0x4000>,
+>> +                     <0x2 0x0 0x0  0x83000100 0x0 0x0  0x0 0x80000>,
+>> +                     <0x4 0x0 0x0  0x83000100 0x0 0x0  0x0 0x200000>;
+> 
+> [Severity: Low]
+> Do these ranges match the hardware design for Function 1? The example maps
+> BAR 0 and BAR 2 here, but the hardware diagram indicates Function 1 only
+> uses BAR 4.
+> 
+> These mappings also map to the same parent physical address (0x83000100),
+> causing overlapping memory regions similar to the previous node.
+> 
+
