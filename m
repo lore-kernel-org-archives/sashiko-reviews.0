@@ -1,133 +1,199 @@
-Received: from mta0.migadu.com (out-76.mta0.migadu.com [91.218.175.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9814B26ED59
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 22:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F1E3A8743
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 23:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786747205; cv=none; b=VIloaPD99Nn4u1AA1DfET6IPs0KZI4bFUv04f8udJVGgYpaLaui47R8Em0jTpDze01YZB3YAUPJzd8yDndbXT1TGtiuSYK2fp3KM3HtSnI/MJlKfhbfNOjsIRG/ZxN9Q5jz1vdbB/tygp9MVBaWSGnmJCk0XzP9aSQLODJ9mQIc=
+	t=1786748777; cv=none; b=A3A4tl+CEDj/LGVkaTW/WIVblWmZ4AcAgsMKs1IQ8WvNhnxUHScTyCNv0/Wcc7daGA2w8v9YdzXwpjMC3yP+PDt6NEC9A9ksIxf4c766oSHnO8SfnInyueRIsKY+KNrsAc77gG5nsWycCSZLOAIzKPFCesiuSvM1qM64BSgL8aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786747205; c=relaxed/simple;
-	bh=IV2UV3chZCnHrDt7xljiy/hS29K/5lVpa/jkOtIILzE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qar4QO2oQeGkVQaGxEbcfaSpu3m1nrF3n6GzxJ3NoNrBQciAdzV4rbfNU36eUHDR+lqGu2rSQhRDIXxegfJCjq2ZB0Cj3xY4zpT4cIq0ODesT8TqYFYGhcR3cwrgBvRo4vTLMG5N+MytKiggeEQ4OcYUE83/OHlyUE+nhjy81XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=gDO5u4/i; arc=none smtp.client-ip=91.218.175.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786748777; c=relaxed/simple;
+	bh=1TpSUfASlPYD6vkolB41pNnkgQFwJ5CZAHQhOHVxR9E=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GMha99D0HmG0hxBFAy9TCJO/WF3p7MALzOaDBiAHkk37I1rKesj5IcNAelS3kLnQmJ2GXFufy8E8CRDsW6yv03+USiQ9EMYaBbMG82mo0s/VkNMFeCjvreC3XU7eKml9Wuimt158GttHZfLwjyqKpt0BLJzzAax4X6QNSJ1A+4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=l7GMIIOj; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="gDO5u4/i"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=IV2UV3chZCnHrDt7xljiy/hS29K/5lVpa/jkOtIILzE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786747201; v=1; x=1787352001;
- b=gDO5u4/ijsNQvRZDLWgD7wrvzaQILgLLYT9tKF9zSdxFwWjNdragyNgD2l3GKxvRGPneDaut
- Z2yoDIuOMl8sIxJ748FNRDMHx1TNS4af9ls3HGzaHit0pxUiSMxNId4XL92Rg7w0qwWnJRzmmhR
- TFyHIYG+KEqcexuYg8VvOVLo=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1251:27:9295:e585:8bf6:fa24] (2620:10d:c090:500::6:7be4)
-	by smtp.migadu.com with ESMTPS id f4b8fbe0aa8df799;
-	Fri, 14 Aug 2026 22:40:00 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <f651b905-eef2-41a3-ad55-ce2adede5d9c@linux.dev>
-Date: Fri, 14 Aug 2026 15:39:54 -0700
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="l7GMIIOj"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 2E933240027
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 01:06:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1786748773;
+	bh=duys7+8s+gASCH3kpoA/OFIn50y/yFTrHBputIyJi6w=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=l7GMIIOjHzspips0gsYJUaNJEU9rfOD5h72Sm5F2NcN8u7cs/yC5S5oz+PE9iOvj4
+	 iaP8tcEykpGZYbf0TrZiuFlLxOP8sOkybBzbEL8r+WzCPcWXfb76K8ACq9bw4bNGh5
+	 Ajacpgyt28VyveeVmBSvV9+JWa70Ri1EnR7Xrk/urww/2w6iRVIO58EFlBilw8VXbx
+	 kW+zZRxgqv1EuZC4nezWhZ/CZ7trwEE4gjNx/BggMDt/TVGXkEU7uf0DDYO8MKF6Aa
+	 Ivq/WDRg32VedgB8uitE/3SIwNjDTRlSA4aVd6KQbtNC47yAt6AoEa3lLtox+NOvdX
+	 rsgU3okQnxfpQ==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4hMHsJ2fkCz6tsf;
+	Sat, 15 Aug 2026 01:06:12 +0200 (CEST)
+Message-ID: <06254c4859f8f11858bc950a52c1214c4e13f87e.camel@posteo.de>
+Subject: Re: [PATCH v4 1/6] dt-bindings: rtc: Add pinctrl for S35390A
+From: Markus Probst <markus.probst@posteo.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, Alexandre Belloni	
+ <alexandre.belloni@bootlin.com>, linux-rtc@vger.kernel.org, robh@kernel.org
+Date: Fri, 14 Aug 2026 23:06:12 +0000
+In-Reply-To: <20260814230443.5D6451F000E9@smtp.kernel.org>
+References: <20260815-rtc_s35390a_int1-v4-0-3133309c365f@posteo.de>
+	 <20260815-rtc_s35390a_int1-v4-1-3133309c365f@posteo.de>
+	 <20260814230443.5D6451F000E9@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-Y+aJ1fG7DBSjhDBewXiA"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v3 2/2] selftests/bpf: Check per-CPU address
- resolution per register
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260814220254.3797467-1-vineet.gupta@linux.dev>
- <20260814220254.3797467-3-vineet.gupta@linux.dev>
- <20260814222652.7600C1F000E9@smtp.kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
-Content-Language: en-US
-In-Reply-To: <20260814222652.7600C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
 
+--=-Y+aJ1fG7DBSjhDBewXiA
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/14/26 3:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The test uses an unrecognized section name `SEC(".percpu")` for its global variable, preventing libbpf from loading the test.
-> - [High] The test's inline assembly is missing the `mov_percpu_addr` instruction, causing the `__jited` assertions to always fail.
+On Fri, 2026-08-14 at 23:04 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Invalid use of the `wakeup-parent` property on an RTC end-device.
 > --
->
-> --- Patch [2]: [PATCH bpf v3 2/2] selftests/bpf: Check per-CPU address resolution per register ---
-> commit 94ba39b00c54962b463da6e18c62f89978f29a3f
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
->
-> selftests/bpf: Check per-CPU address resolution per register
->
-> This commit adds a BPF selftest to verify that the x86 JIT correctly encodes
-> the per-CPU address resolution. It loads a .percpu variable into all registers
-> and matches the JITed add instruction against the expected register.
->
->> diff --git a/tools/testing/selftests/bpf/progs/verifier_percpu_addr.c b/tools/testing/selftests/bpf/progs/verifier_percpu_addr.c
->> new file mode 100644
->> index 0000000000000..967f4e6e3a490
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/progs/verifier_percpu_addr.c
->> @@ -0,0 +1,72 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +
->> +#include <vmlinux.h>
->> +#include <bpf/bpf_helpers.h>
->> +#include "bpf_misc.h"
->> +
->> +#if defined(__TARGET_ARCH_x86)
->> +
->> +int percpu_data SEC(".percpu");
-> [Severity: High]
-> Does libbpf support the SEC(".percpu") section name?
-
-Yes it does:
-
-   - tools/lib/bpf/libbpf.c:544 — #define PERCPU_SEC ".percpu"
-
->
-> When bpf_object__elf_collect runs, it skips the .percpu section as it doesn't
-> match known data section prefixes like .data. Later, when
-> bpf_object__relocate_data processes the R_BPF_64_64 relocation for the
-> percpu_data load, bpf_object__section_to_libbpf_map_type returns
-> LIBBPF_MAP_UNSPEC.
->
-> Since the section is not the BTF maps section, this results in a bad map relo
-> warning and returns -LIBBPF_ERRNO__RELOC, causing the test to fail to load.
->
+>=20
+> --- Patch [1]: [PATCH v4 1/6] dt-bindings: rtc: Add pinctrl for S35390A -=
+--
+> commit 58cc609a743d62ad0839cf063b2bd4bf9603a2d0
+> Author: Markus Probst <markus.probst@posteo.de>
+> Subject: dt-bindings: rtc: Add pinctrl for S35390A
+>=20
+> This commit converts the devicetree bindings for the S-35390A RTC into a
+> standalone YAML schema. It also adds properties to configure individual p=
+ins
+> via pinctrl to allow the interrupt signal 1 to be used for wakeup alarms.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml b/D=
+ocumentation/devicetree/bindings/rtc/sii,s35390a.yaml
+> > new file mode 100644
+> > index 0000000000000..d9da3abbbd518
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml
+>=20
 > [ ... ]
->
->> +__naked void percpu_addr(void)
->> +{
->> +	asm volatile ("					\
->> +	r0 = %[percpu_data] ll;				\
->> +	r1 = %[percpu_data] ll;				\
-> [Severity: High]
-> Are the mov_percpu_addr instructions missing from this inline assembly?
+>=20
+> > +  interrupts:
+> > +    minItems: 1
+> > +    maxItems: 2
+> > +    description: Supports up to 2 interrupt lines via the INT1 and INT=
+2 pins.
+> > +
+> > +  wakeup-parent: true
+> > +
+> > +  wakeup-source: true
+>=20
+> [Severity: Low]
+> Is wakeup-parent appropriate for this device? The wakeup-parent property =
+is
+> typically defined strictly for cascaded interrupt controllers to specify =
+an
+> upstream wakeup-capable interrupt controller. Since this is an end device=
+,
+> should it only use the wakeup-source boolean instead?
 
-They are inserted by the verifier.
+If it is connected to an interrupt controller and the interrupt
+controller then causes the wakeup, wakeup-parent should be used here.
 
-Thx,
--Vineet
-
-> The commit message notes that an ld_imm64 of a per-CPU map value is followed
-> by a mov_percpu_addr, but the assembly here only emits a BPF_LD_IMM64
-> instruction.
->
-> The verifier processes this as BPF_PSEUDO_MAP_VALUE and converts it to a
-> standard 64-bit immediate load. Without the BPF_MOV64_PERCPU_REG
-> (mov_percpu_addr) instruction, the x86 JIT emits movabsq but never emits the
-> addq %gs:..., %reg instruction. This causes the __jited assertions to fail.
->
->> +	r2 = %[percpu_data] ll;				\
->> +	r3 = %[percpu_data] ll;				\
->> +	r4 = %[percpu_data] ll;				\
+>=20
 > [ ... ]
->
+>=20
+> > +examples:
+> > +  - |
+> > +    i2c {
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +
+> > +        rtc@30 {
+> > +            compatible =3D "sii,s35390a";
+> > +            reg =3D <0x30>;
+> > +            pinctrl-0 =3D <&rtc_pins_default>;
+> > +            pinctrl-names =3D "default";
+> > +
+> > +            wakeup-parent =3D <&int>;
+>=20
+> [Severity: Low]
+> Should this example be updated to remove the wakeup-parent assignment,
+> assuming the property is dropped from the schema above?
+>=20
+> [ ... ]
 
+--=-Y+aJ1fG7DBSjhDBewXiA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmp/n2MbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSKWEP/3WfFNrYKZ64Wn61F/3n
+hlI9BhXTDbL6bCzMzZKg9Ys1StrauNpld6sTCYekEfPay2Haee/NxdQyb/t+N6A/
+K8ljGHqVk+68NrH0wwlzF5BkSr7+8XBfS+D8LclB7cegndTizKNfODCWAbW0b+WK
+3UMfs2hKrbslRC6SP3lFm/Li9FSqxQbiomdjzbt/cmSYxV5iqRNy0+nuJkFtyJ25
+ihX+UpjCtpvmHqOia8sS755OF7PZN88gcDm37v6MEgJziNooNIPptls9+V3Q7xMp
+y330L80WUCYFOmHCFv/ZDNPD1Bsj0hSKyCy+dXPK5fdPe28aMDJ3AzXYyOkbxIsB
+UdsLhzTU42UbaLX4kS4xNzD9o3UkOSqZxSRPWDmiMP2wqNbEGmedC8rLFEhdB/ZU
+cqfVgTpIltrk5FoBxe+NwZji5ssdyVd5/+pdVcMaXot7/q7JZpsb0Pgw8xUoIgHO
+pMf7g6xu2ZDLA+OGkM0SGwvexiaWJbLrznHVpHadu0JUy1W6YitESK4I6RSvpkDS
+NtPzWENSPbwiiFL+T+MPcd3MdVBA6LxHojfbsV+czb2pN2D8P9AxilkV12qVPSm+
+anI6oVHkdNmYqNtLkHYcBBKCsKGabvw45PBcjFYfPVDz0Mtf0Izsn7vnab1CIyvW
+o8tdZBzBRvJF3KzZGnqiaoY1
+=CNfC
+-----END PGP SIGNATURE-----
+
+--=-Y+aJ1fG7DBSjhDBewXiA--
