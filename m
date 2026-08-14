@@ -1,92 +1,203 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11021105.outbound.protection.outlook.com [40.107.208.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076B04908DD;
-	Fri, 14 Aug 2026 18:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786731313; cv=none; b=Q1sOm6kCZUhAbu7WzDRvzXK/0VGTyWxUCkUQE2U3n69mZHizPawIesv1aQJhbMJMApeu/loazc+vgSzMtqNhrae9CV3LYjLI3LNghQpYG1eqMoEN4KgwEPpAUu0K9rzzxjl6jzKfe3i9gqgjXH6TsZlfqt0e514y6aENLo2liRw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786731313; c=relaxed/simple;
-	bh=FAQe8K3WtXf9zE/h1I1r4dxas6Lxm4YxHWV9a8iY4ec=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I8PWZBBPxWD3y0uASgfDVbVQ1dmcGjp7quJ+95BEheUBX4Y83Rr1GS682/oWbGucgA5R/4QnZrCRJhuWicMTEe3n9T/iuetjFcmFSjZMb7fFF9S58fIcCt16cnLj63yF+WZWrwDv2OMk3lLFYhERV401XK6i2AGyNX7D+P/Zu28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nnu17Gao; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB5F353A75
+	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 18:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.105
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786731473; cv=fail; b=WYIXn8Ds2nfkJyjuYb/oGtQ7uZY0plIyTaYDT146wFl4KolnWBwZQwo67i7W+UgxwTAPWnePDdQ0R5fka9IEmzoXdSvnh76hF9p4EZRqrp3w2sACm65P/gEmlizNMd8w8oWDji1DO4E8IsuWXtVlyOCzVaW8KbTpFXj3uMTac1s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786731473; c=relaxed/simple;
+	bh=snvBMrxz/EMz0l2mXOwJDrcEEiveqkl0EmadTnKkbAM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=tiNkHNxYgdcxzbi517knU7OA+cC8QTYYJVUbZxEAyICGomdboIRBsBJcezg1YoWaFccVPAQVkzhGD/X7/odGXDeitaI+mug8QC7mwnxZnk0HuREbVgMNXhhVr/o40cLlZBNSbvV1iaap1y7i0FohBtKgvcmxRfgI7FDnTY9WxTE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=jtmClD5v; arc=fail smtp.client-ip=40.107.208.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nnu17Gao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BE51F000E9;
-	Fri, 14 Aug 2026 18:15:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786731311;
-	bh=/3aVrEO/ZPRcGp0+GUOquBEpY6pCN/wvllzg5oTpbkI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nnu17GaoNyqCgHqKyQxHj/1nOCPUyXP9tycdxQQ3omUVzWnoYN2tayo1mhYRSC/ha
-	 48c/8enKupfxCByMuQ9eIVMo4tnoSuhdGJUHUR8Cs9wQDSSoffFaihh7cbYUeeZ3gF
-	 vU9LZKUkYbvkCUEVe4b5nJQqXwwQeKak/HYg5xQuI1dJdbS79CWR0+T6RoNepPilIu
-	 DaklX2bGTo9q14vqm1KxGK3t9pz6CTJzByiarMq+YTTXoQsWRxtTvb0K3aJfFzOZ6Q
-	 LwOpb4t8Ctc4prVc+1PLKY7pRCpfK0TwVv0RkIdixRqLrmcueJvnpacTFTZGJx3/do
-	 5+8szAVPyMmTQ==
-Date: Fri, 14 Aug 2026 13:15:10 -0500
-From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Abdurrahman Hussain <abdurrahman@nexthop.ai>, conor+dt@kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] of: property: add i2c-parent to fw_devlink supplier
- bindings
-Message-ID: <20260814181510.GH1981719-robh@kernel.org>
-References: <20260813-b4-of-property-add-i2c-parent-v1-1-a2487e920ce1@nexthop.ai>
- <20260814010950.051261F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="jtmClD5v"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CDnyMWa5DIyJ3hV6c+qu4yPJHeDScPSPyTW/jfD5v5DUW8hPc5OImFiQ/GrALsXriJQ+4/jLzNDZjBw4fKtcETib31CfkMW6hy52tm/Az8RU9ztN4iwP5fmMb9FoHvc3oRX3ZHDmq7CqECAJ1d3QRKE3FGVk4gLfV55BbFOkWocRqfCCraJdI/pgjvz0WVjdbL7WPWi91jdwR8Y4c89LXyScBv2JTZg3Fny06oR4iVxmHH1S6eI1NRg/xL36Y92Pz8dI+tpf7uV62aJN/kDJj+MDTS7LufziYYmoTOofvJbAwr83kEz3Z8rFR+XhDg1CCslpzdRMUd+lIYvb+0AAeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CqLAnwgRJ1JuYmn1SBf2X5p2HjI7jFeJtfD2Dwpzll8=;
+ b=ievG89xmeUNvSFFcBqFAf91Waq1NYH5Vw/7ZN9ya9sGrG66Oby86AuRRZsmhW3E+xGqObG2XNUd4nh6hgms/NM27cMQP1eGIjPp3CD8CuL3ZlWfUkFE4OxmTFtWo7qfuFzxW9t1B0LZmZd8bDWV4CwrCgcwIvFUEqthbAVTwd9T8+JXOiHk8ke0r/FxwiPB2ghiKpSjOQkPJa1ScIRE0Bpwyqnjt2yeKwndVSe0U/yMA429jjASJTUfk2KlrdDg+yFbtr4r4QCvC03Wj6zm7RDnX2dUWFCT3vhtfqjzg9wDwwTnXDooj2UbkO1/Cz4BtquyEopPDS42VaozMLcFsDw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CqLAnwgRJ1JuYmn1SBf2X5p2HjI7jFeJtfD2Dwpzll8=;
+ b=jtmClD5vul9cOSDSUSRYv3ygz7UdJvGLV2XhxDzqUuTJUbMelDONDR8nkE+LgschgK+J5MakyZAuLIyvWOQqA/DDcbRaOKRCvzEvQdVSRlj/Zquk5gUP/iChNKwqEQo02RH8tYhnE0mUEZ8XV32imEoOq/1WkgEW8+MjneoH0N0=
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com (2603:10b6:806:4a4::6)
+ by SA1PR21MB2049.namprd21.prod.outlook.com (2603:10b6:806:1b4::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.2; Fri, 14 Aug
+ 2026 18:17:47 +0000
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::8bad:6294:8a07:fe18]) by SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::8bad:6294:8a07:fe18%6]) with mapi id 15.21.0315.008; Fri, 14 Aug 2026
+ 18:17:46 +0000
+From: Long Li <longli@microsoft.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
+Subject: RE: [EXTERNAL] Re: [PATCH net-next v2 01/13] net: mana: add queue-set
+ allocation and teardown helpers
+Thread-Topic: [EXTERNAL] Re: [PATCH net-next v2 01/13] net: mana: add
+ queue-set allocation and teardown helpers
+Thread-Index: AQHdKuFKuk5ZIKVHHUKWUIwuPzLfzLac/z0AgADdK+A=
+Date: Fri, 14 Aug 2026 18:17:46 +0000
+Message-ID:
+ <SA1PR21MB66837CDCF8E35CADA976DAF3CEDA2@SA1PR21MB6683.namprd21.prod.outlook.com>
+References: <20260813050418.2906468-1-longli@microsoft.com>
+ <20260813050418.2906468-2-longli@microsoft.com>
+ <20260814050519.2B8851F000E9@smtp.kernel.org>
+In-Reply-To: <20260814050519.2B8851F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=6e284c98-53ce-4514-9616-d78eceb93747;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-08-14T18:16:53Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR21MB6683:EE_|SA1PR21MB2049:EE_
+x-ms-office365-filtering-correlation-id: e5b0de14-c1a0-4194-32e1-08defa3057a2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|18002099003|22082099003|11063799006|56012099006|38070700021|6133799003|7146999003|4143699003|10067099003;
+x-microsoft-antispam-message-info:
+ J/e2EDlPBuC3Nkis5hmqWeSxbzHBy98ucCL8Af9kA2ibZgv369mKN1O4in6GApox0+FehUwnvd1wVI1Y+Pw1rTNQ//E8lnceuJ9TVQucub0p7D8O3iX297ZSiZyIE3dBDwNBtX6bA7424p5ppuD1GQlpDgL9WXj/0ijlkS2UwkQlSdpsZnvQpg/WIhNAfehG8Ft59wUDTMVrLuCS2HDhtEPniaWDuWanyF9QFSzez/L7Fxuc4yz0HbtPFeDC8mgvvwVIeafVey16uyU52Xs01nEtIoANV0mL/Mcy2THWSdM9Iqra+vUZ4Dd+Awht31MD2ZHBiFmB1o3GEE/sH3XapFQx3oBUu0y8KJNs0CdLFmHNOd4gXdMtOvpUL0LMOdCJXiWpmPSkol7FiqeSX4tZY3Az8PKYVfl1IIgVYt3RKt3gjk+TnTrf8WCFkLbIZNxosU6ndzCy8oesGsQeY2puMzYLiMm41WARRcyKysEk6kaKAA0RcEcSiIUbBxFF4Po/WayuhA4YNakAic5/yHvjg5/AQwua97WFa/szkYj9klSnQWwpQ/bnmKAM7bB2i180encWau5bQ4S4hQQb5q2DojOT76+UAkChREXRh1CMpvNkxE7alISMDh4v3QC1Y2KQdbM42r+7QQVbOWiY6zNRM/WyxpdKXaSmktrd37GBk4Y3rERk+AJz79LqbA7oxuMr9eMfYH3NmoqQEUEDstt6r8HverZGeUuQ68w8QXxbaPU=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB6683.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(38070700021)(6133799003)(7146999003)(4143699003)(10067099003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?ufYn4YnZVqgrZP/llsjdwcfxYlM9E4HctdtYlCFJ+iHRR1CKhhK/iUgwcW1Z?=
+ =?us-ascii?Q?NJXsq24JN2XgWQFjfhN1qR99IYyHJ0t7nbg69K41jf6HuzLtmY8875NFKJq4?=
+ =?us-ascii?Q?f3ZnpQxvoXfChQ3ExdeARhDXT0ifi7vHvco9e7wDQsyT5Y0PGKxaWM6UW8+i?=
+ =?us-ascii?Q?MOXQ5Ty5HXPPVww7GuAk5kbkaEAJEB4zDEvofBmLfhqKVikHlLDfNfBbhPzq?=
+ =?us-ascii?Q?FETsg++adeBHteAnViUu4Qj9z9ofTTeJsEAzvqs7KUJ4scrPAxjk+qvW26p7?=
+ =?us-ascii?Q?+sgjV1A/2wnR7KpMej2+f1KGVmapUqbuiUPHbL/NEuPcPMADGLbr7jQdt2ja?=
+ =?us-ascii?Q?jaExR4BZAPnPzj2LM2+HVqDiAPqk+3hsYKi+6/eWjED0G4WR3z29RXF6gv4m?=
+ =?us-ascii?Q?lb3vFF0SsMGgScH+8oRQebDDRqXWdVAo5msJkkysSHsD5l5xBaQc+gpcce2E?=
+ =?us-ascii?Q?8ZHvXlG8VqLOGHKzzSaPJIM9powNIVXCrmF8DPzCahr8b+dgwqQ7ot/RFGmE?=
+ =?us-ascii?Q?2v7amJhAoGHF4gOnzv6a/ydtAsUW2rJkZggpigy0hBfsT8WoETN2tVKU8LvM?=
+ =?us-ascii?Q?qhOxs8dtcD4Ro3LUUvRkKaVcGSYWoct7cUQieT11P1gIv94Z7NihZNYVszIx?=
+ =?us-ascii?Q?bw0teuoiLCLY3UDgjiE0HvQHMUYX39vmT6w+eZZ1b8VClQyzHOY8HrwtPXQ/?=
+ =?us-ascii?Q?Nr1DFVwPgSPDHCWIh5Y0+iTo6EQhITQGZoyhav8I+6BHVQut3CwR0v4/zf5T?=
+ =?us-ascii?Q?gnyvo9ZdDyei/oTtEMj4zJ6JyqnnJeoCR4HdMMP/ZRxUQ8GhwSNG87YkSEQI?=
+ =?us-ascii?Q?yEbhjiwk2IBgB1I3Je3GydjPL70Asq9/YeHAAoZ3xZgXet/O8LFs4l70tFrn?=
+ =?us-ascii?Q?YhP2Y5SXlo5CTbn2S/68bBh8iDRzZixTWkIKXQ54+jjNO0hyQssb0eHuB9Q2?=
+ =?us-ascii?Q?HuKeC3j9iszNXoe05Og8wRznXrdCyhSepS9YpHJs4gkHRXnCxMclHVRzQnkg?=
+ =?us-ascii?Q?1x3axpYi5sUqn06bz+k/BNZpCjO3mnFWUi3QLX9AQUwqPZywmvuwzj2jDzw7?=
+ =?us-ascii?Q?d360gEU7Eqdqmx/D3W58ZKCnn3xgMMc8QLVL8P+j4Fi8p2ZYo8xl4bpL7bk4?=
+ =?us-ascii?Q?m0T/LkbT4gWU48DrYT86zpM4U7twZkZ/NbQ3/j4ZOUtvangxjEoRMlk3AGn9?=
+ =?us-ascii?Q?eEoWQgWwvxI7aDfr+Y13Zi0Y/+ufJb4QO9B3sZTW+y7WCCLKV0QRlsDFSY4F?=
+ =?us-ascii?Q?NQedzmKR+zqsunoPpkVifA+n//vnklYAb0cadw5fQw/Th6soZef45a+rf1lr?=
+ =?us-ascii?Q?7cI9Nmzq6gvObqmOZWNhqKdCED05mWS+YFtPTCtGWwVMIO7L2awHML+VESGI?=
+ =?us-ascii?Q?HaL422wcWSr7NFSrvA5KqwqVls8Ez19x2Rc1iQooiaDFQDu26NAaNbI/reDY?=
+ =?us-ascii?Q?0QL4hhJgQI+w91OrJ4Hzlurj1x8DQ/6RUMGcqkRvZkyeWMl+XZXb/SOdbnre?=
+ =?us-ascii?Q?TddDRnJeeigAfO06ySyKswxOKCemUtLCnSZzxeSOszp+P8EpMtTSfRHZPtYF?=
+ =?us-ascii?Q?r6kVbrVWJGGQOTko0cuvp69rDFR4+b1K4jiwokjuyHWRKlIQuZFaP22+5eP0?=
+ =?us-ascii?Q?Ip+w7Dpi0ngYv8brIc3Qal6GSleGJ+ZOCyCsh958aLm1CdUK5eFniDD/Vxyg?=
+ =?us-ascii?Q?pSG86Hsaivu359tvfUWnYh5Q4VeIKvv7FIQLD+cFDrb/oRZW?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260814010950.051261F000E9@smtp.kernel.org>
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB6683.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5b0de14-c1a0-4194-32e1-08defa3057a2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2026 18:17:46.8273
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9s5dFPv5w5mAvmerHZZZYan8cAt2YnXLxW1M30RWVC8m8ngAftqVwM9OGPUeYhNZvBqFX4NuzFGswguC/81DDQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR21MB2049
 
-On Fri, Aug 14, 2026 at 01:09:49AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] fw_devlink incorrectly parses I2C slave addresses as phandles due to 0-cell supplier binding definition for `i2c-parent`.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s)
+> to consider:
+> - [Medium] User-configured RSS indirection table is silently discarded an=
+d
+> reset to defaults during per-queue reconfigurations.
 > --
-> 
-> --- Patch [1]: [PATCH] of: property: add i2c-parent to fw_devlink supplier bindings ---
-> commit 85f34a66eac871d9e36bccb6795b94b17ab065d4
-> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-> 
-> of: property: add i2c-parent to fw_devlink supplier bindings
-> 
-> This commit teaches fw_devlink about i2c-parent so the core creates the
-> corresponding device links. This ensures consumers are unbound before the
-> parent adapter's device, removing the need for -EPROBE_DEFER.
-> 
-> > diff --git a/drivers/of/property.c b/drivers/of/property.c
-> > --- a/drivers/of/property.c
-> > +++ b/drivers/of/property.c
-> > @@ -1409,6 +1409,7 @@ DEFINE_SIMPLE_PROP(resets, "resets", "#reset-cells")
-> >  DEFINE_SIMPLE_PROP(leds, "leds", NULL)
-> >  DEFINE_SIMPLE_PROP(backlight, "backlight", NULL)
-> >  DEFINE_SIMPLE_PROP(panel, "panel", NULL)
-> > +DEFINE_SIMPLE_PROP(i2c_parent, "i2c-parent", NULL)
-> 
-> [Severity: High]
-> Will this correctly handle device tree bindings where the i2c-parent
-> property includes a slave address argument?
-> 
-> For example, platforms using devices like the Toshiba TC9563 PCIe switch
-> might use a property such as: i2c-parent = <&qup_i2c 0x77>;
-> 
-> By passing NULL as the cells argument to DEFINE_SIMPLE_PROP(), the parser
-> assumes a 0-cell list. When fw_devlink iterates over the property, it finds
-> the first phandle correctly, but won't it erroneously interpret the slave
-> address argument (0x77 / 119) as a second, independent 0-cell phandle?
-> 
-> If another unrelated device tree node happens to match this phandle ID,
-> could this cause fw_devlink to link the consumer to the wrong device,
-> potentially leading to spurious probe deferrals or circular dependencies?
+>=20
+> --- Patch [1]: [PATCH net-next v2 01/13] net: mana: add queue-set allocat=
+ion
+> and teardown helpers --- commit
+> fcc6a74602d4e66dc287809434c5e9b44c3be829
+> Author: Long Li <longli@microsoft.com>
+> Subject: net: mana: add queue-set allocation and teardown helpers
+>=20
+> The ethtool reconfiguration paths (channel count, ring size, private flag=
+s),
+> mana_change_mtu() and mana_xdp_set() rebuild the queues with
+> mana_detach() then mana_attach(). This adds the data model and helpers
+> for pre-allocate and swap to independently build and tear down a queue se=
+t.
+>=20
+> > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> [ ... ]
+> > +int mana_alloc_qset(struct mana_port_context *scratch, unsigned int
+> num_queues,
+> > +		    unsigned int rx_queue_size, unsigned int tx_queue_size,
+> > +		    u32 priv_flags, struct mana_qset *out) {
+> > +	struct net_device *ndev =3D scratch->ndev;
+> > +	int err;
+> [ ... ]
+> > +	err =3D mana_rss_table_alloc(scratch);
+> > +	if (err)
+> > +		goto cleanup_rxq_array;
+> > +
+> > +	err =3D mana_create_eq(scratch);
+> > +	if (err)
+> > +		goto cleanup_rss;
+> > +
+> > +	err =3D mana_create_txq(scratch, ndev);
+> > +	if (err)
+> > +		goto cleanup_eq;
+> > +
+> > +	err =3D mana_add_rx_queues(scratch, ndev);
+> > +	if (err)
+> > +		goto cleanup_rxq;
+> > +
+> > +	mana_rss_table_init(scratch);
+>=20
+> [Severity: Medium]
+> Will this unconditionally reset the RSS indirection table to defaults dur=
+ing
+> reconfigurations?
+>=20
+> Since mana_rss_table_alloc() creates a new table and mana_rss_table_init(=
+)
+> initializes it to default round-robin values, it seems like a user's exis=
+ting
+> custom RSS steering configuration might be silently overwritten when the =
+new
+> queue set is published.
+>=20
+> Could this cause a regression where the custom configuration is lost? Sho=
+uld
+> it be preserved by copying the existing table from the active port contex=
+t
+> instead?
 
-I think you need custom parsing for this one to read the first cell and 
-ignore the 2nd cell if present.
+patch 11/13 fixed this.
 
-Rob
+Long
+
