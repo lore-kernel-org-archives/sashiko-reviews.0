@@ -1,120 +1,112 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A8633C502
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 21:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786743236; cv=pass; b=GldVTl3wc7rdpDuv7dfVdT4TW452PO5K+JLjeSjw+b2/0EAx7MSl3tshHcjc0zUBYxdLsbs+UkaJVEjrwxi9NG6w2vmi8vtEeOiSPkdRmTumQZHAGHmfj5o7OH75Wa8I6KQ1YQkrUGsby0nSOnNTeLe07PRfXkUNDa7p618fId4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786743236; c=relaxed/simple;
-	bh=bF//maFhRDVTJClT6VlIKy7W5yILeHbfc8S+gFxhrTk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rKD1QHvKI2stzGKl/bfNn0aHa6okq7bRHW5nDtHSmWQjMWx5/btiQql8TvIwY7MElcLZ8732R9VwV3UMAJeax5tOb/6A60jnwD5qcHgu5cF8H+fearyNMB/aSPA/iT29aszyaoPBZOZ6d77yOM2eNTvcLFzND2RUnez416UdaQA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fm07JK97; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D90B2D8385;
+	Fri, 14 Aug 2026 22:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786745969; cv=none; b=kSXGZbm+CEnuwfrRDeJ1ALug6C053YQ9Do3JDOdXbCPX0U9r97wbjAREHf6Qx4zGR5EyTHPN0soS9G+u5jsmlMM/pqmO1qu/Wsud0D4OhHs3S2zE4G6ISDCwmlQ6ugIks/WYjYyin65LTPUcXtT4f9V1A7ExdE2G02xoif0L9Nc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786745969; c=relaxed/simple;
+	bh=byIk0wKlUDT8kV4RrhUZpLpHNsjKlVdZKuOvmIFsQrw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LI75LGUgDi42KQg5iBJfpZ/S5FCNkTxfTAg9w1l4ivfaFl3JOafunWFYDpg/jQAwOtsDG5sySmLN733SJYo7hf05KfDDpe6hXTgmja75h+jvXTG53bSnRStZMOn8m8Nv/6N1m4TCZDBMGJhk2VOMDHo6kCoeI4lFN2t1ucl+Lkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=acCaduEG; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fm07JK97"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69a33fb0031so199806a12.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 14:33:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786743233; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hvsSvR+kbSPeDRHGTUCR1Yv3oupwUJXTyJmpH47JH4LYIcLmp/gMklMP9wOKBLquT1
-         z0xPdPlN6CKEw2JzjxGpyvLBiEMtViibw8zaHNs5kgDm1kmKGfeLr3V1nqlXAYRyxILP
-         H/E/C7EKxv2xnNp/L2G5Muyp7Jp9rg536NSawW0LtSf57yK/K2BRj9jUtOKiUPBCYofB
-         yc0x8whnX0WmEqtx++Zhcz9o0aSAt8lo8rrs//NITc60MpLUi7DH9oKyQxnUsmwpISG2
-         Zgvj6YbfDFFVik7WeyGQdwRf3olhrIHPWgWYLlVxHMQBKrVnqPTJ1vHKuZwwZlZRv5Zo
-         khiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bF//maFhRDVTJClT6VlIKy7W5yILeHbfc8S+gFxhrTk=;
-        fh=iPERcR2270DHwjuw++KJ4U1n/KGPryhn7KXnUKY8lzo=;
-        b=KLiDpFzxAt2INSuhaWndyvFRVTh1ef6tJ8VGrXSONPSAaa3QBetiuEr5rpX23RCNm1
-         97vMyMImp6PLin8GfIkNOb7W5RI38puCnzW5cLTtoTVdq52sQwAVx1Cx1LnXn4sJkB7L
-         XlR781gAiHgxEgxZPiDyVLpSkSYCMLDHiD72ZMKkkmxHOZc6J11bqx2tW8hicIjNvk0H
-         LnpJHx6HDWATECAawRUHGkMWo7u+DdXIq8Ejs5dspUoDg/WCe6pgrcBScxV+hDA6aVwv
-         sztVpf6OgxFo8O1RBUDZFy2UaGOMyZa8FB0GpjTIj88WAALSaylspmk4jUbfxlz8Mi3/
-         32Og==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786743233; x=1787348033; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bF//maFhRDVTJClT6VlIKy7W5yILeHbfc8S+gFxhrTk=;
-        b=fm07JK97OK7jlIzf40ewuzaJ5o2/xJHn7SjeqM4ByLWw4iEhmO239/Hz+d5Gp9cGK2
-         cP0OKSjPyR3sadfu3kOD9rlYJLi6FJj1k1pORU/5K/82sNbY3Pj3Np1Xd7U2hwk2X2Zf
-         ZeGf4V6XO5VUafHGD/Uw/Gwz9T2VxSXADdOWmh0IEZMcfiSJ41BpBLVlTXB3eDpAf9/K
-         5gkhAC3pUuB3ZifJmvfRGopficiyAQ0I47Un4dtujILkTQUALXbT+nPOzWrUrBnMmPEM
-         hO7mdyoRjzQhMxYSQh7UhU5wExGbK//EuUv2AcKQclfWZvQM9j8NUPmr9FJEWjHo+Y7g
-         9xGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786743233; x=1787348033;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bF//maFhRDVTJClT6VlIKy7W5yILeHbfc8S+gFxhrTk=;
-        b=ED6yAT/HR5UyfikUFBqjh+JvE1E6N1enFIkc1EHMovBGnT5yxXIy4QuEn4TxIQQ2ki
-         DQyT5kh8t5HRythqxuH5h+g+Slg8TG8bLLrCMRFQ8+RZRiUEknm9f4TTvKRA/uzpGlyt
-         rInNg27NBAk18tlBqZllQ/6fKRA4Jvqg3ZLqbpWeqjt6RQ9XVcc4crDO3YYJyBjyZt2Q
-         D1zAbX+8jgnCT3SxdRki/i8L0UcfqUeofTVzLme0P+NXZzwvfh0if8Y+y8kv4vC21skF
-         9e048IyHVZWfm7lh8DtiKbdn/Xofet9yMeIsPIHWzOPbCZVodN0stGfiDrrZHcyWGxr0
-         Aniw==
-X-Gm-Message-State: AOJu0Yzs+zZRtUZSJO8w16LjPNdraeIe/YmZycfE5muivJWb2xjWzZ/o
-	lUKodk0oUPtr1XdzoqWbVegp6yJ77U7bdtcA/Br9wC+JDoNqSVAuSabeq/6KdckrfFbz6UX8PgW
-	tRRilxzh/46E8WBOHscVUGb08K2Od62Ea6w==
-X-Gm-Gg: AR+sD12qUGciCPzQysYhtUg97UiA0PcRk/CACGftEyHbCHQeHrkATWPi5gNvsaJ1a/k
-	VZjmcS0NPov7YXFEQHoB8JQ5YaIFoFf1DN6DAf0Hahe5cnukOxEaag/aZdr+Jrulel8dNWyMrbW
-	J9MU5G9THDNeVa4q0J34GASkY4P+Y7iKVTKxoG5CM6V9MWVx5vUUjSk6LqMx1F1tVhAMfNw79ww
-	rU+rMbT9zs+6JLRT19WhHbxUWtsVAk2NhvqITUDydejb51or65dafQbp/VSvm+aJU97OQcRJSLS
-	YT+8+WbF9kzYoLQMXGhtQKxVfgvra+saLGf/GQgYMVCv5yGcU9Kp3p3vF729q+AWrSlJDY6GINE
-	+IcI=
-X-Received: by 2002:a17:907:3e9b:b0:c12:732a:fe52 with SMTP id
- a640c23a62f3a-c212a26d6a6mr212990566b.4.1786743233242; Fri, 14 Aug 2026
- 14:33:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="acCaduEG"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=zwW1SAd3cmYUAiMqZzrPnhUmBkwtmavZeG+Evi/0jHE=; b=acCaduEGa2QmdLd0Dxt3Hx9ccY
+	X+euiYwDgBlqDcDAHt2fhJoPGmJdCgA8ctnVFZ3cwIlxSCwaR6C33Ium7B2iWVDH3gDzVZHfZIGS2
+	YaBQNJujm5mwuYAEggZHfCGRKyqEwqywUXMe/Bb8JbeJJ+QMcOsoQYi30rceRm6q+783Sih9uDhEV
+	cfvNHd26AwnekBxCxygpNUc530vYa19uOG6od4daoJ/TYx4GJDflTuv6At/wN+I2XYHqu4ofoGN6s
+	SvFmqY11z7WkIinCMNiOrsMhQervec7NGxvU5sGwUyfmyOvgF0sz3O/k56X0NbBmyz985q9BddV48
+	knEoCXTA==;
+Received: from sslproxy08.your-server.de ([78.47.166.52])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wv0FK-000K8i-0t;
+	Sat, 15 Aug 2026 00:19:26 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wv0FK-0008fW-1L;
+	Sat, 15 Aug 2026 00:19:26 +0200
+Message-ID: <9dd7a33a-7a22-4730-a92b-dba67e68f89f@iogearbox.net>
+Date: Sat, 15 Aug 2026 00:19:25 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260813-ti-keystone-devctrl-v1-1-6f0aa87d9af8@gmail.com>
- <20260813164117.DE8F01F00A3A@smtp.kernel.org> <CAOWyW_6Wayw0gKMyhpy2wE6oSbikM3fKCopqxHodddM9zt1-FQ@mail.gmail.com>
- <20260814-wild-dog-of-dew-3ccfe8@quoll>
-In-Reply-To: <20260814-wild-dog-of-dew-3ccfe8@quoll>
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Sat, 15 Aug 2026 03:03:41 +0530
-X-Gm-Features: AcwNN1Uy44KKTceDwDiBJV_p4AQtngzimLEUMzkno-EHQhuKCEBgyeAvZt7maU0
-Message-ID: <CAOWyW_7NL1GeWCTu5LED4avsRLMOHMs1kVxGN0r+MxMhHSj_AA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: mfd: ti,keystone-devctrl: Convert to DT schema
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev, robh@kernel.org, 
-	lee@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 1/6] bpf: Keep fault protection when merging
+ pointer types
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260814215301.709827-1-daniel@iogearbox.net>
+ <20260814221502.880C11F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260814221502.880C11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28092/Fri Aug 14 08:27:02 2026)
 
-On Fri, Aug 14, 2026 at 12:18=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.o=
-rg> wrote:
->
-> On Thu, Aug 13, 2026 at 10:24:12PM +0530, Bhargav Joshi wrote:
-> > On Thu, Aug 13, 2026 at 10:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote=
-:
-> > >
-> > > Thank you for your contribution! Sashiko AI review found 2 potential =
-issue(s) to consider:
-> > > - [Medium] The schema enforces non-compliant, legacy device tree node=
- names (containing underscores) for child nodes via `patternProperties`, bl=
-ocking the use of standard generic names and contradicting the commit messa=
-ge.
-> > Yes nodes with underscores are kept not to break older dts/dtsi files
-> > which uses underscores
->
-> No, you made them ABI now without explanation why this is needed.
-I will fix dtsi instead of keeping incorrect child names in binding in V2
->
-Best Regards,
-Bhargav
+On 8/15/26 12:15 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] The verifier fails to emit BPF_PROBE_MEM instructions when a safe pointer type (e.g., PTR_TO_STACK or PTR_TO_MAP_VALUE) and an untrusted memory pointer type (PTR_TO_MEM | PTR_UNTRUSTED) reach the same load instruction via different branches. This completely bypasses the newly introduced merge_ptr_types logic.
+(this is already addressed in 2/6 in the series)
