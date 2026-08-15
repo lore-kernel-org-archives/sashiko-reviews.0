@@ -1,158 +1,176 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC4029AB02
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 08:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786782654; cv=none; b=S5SyRsqAy5kTFHyEHm3aWJoa1DYjDBJZ0YuN9wvT4OA5WRxRKXEc5Da4yafb62iNOMCQG1vbAwZ71X3ya0lJtADjP3WTPXxzum3HiMk3eXBezX/3grk0zwFn15jqQNRsKoRhbqKJSNIRJxZo0om9rc5LH9DHjJqIMKateyr53kg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786782654; c=relaxed/simple;
-	bh=nQf+oRV2tsje4ZAAo4tpszk2WhvhadMFLZRKKhKbilE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UaniZW2hC+UKF6HAjU7biNywvqYMF7qRwQQZVTINxTqjYSJJ3EKJgdUEklUrhaV5ENJVXCCKgD6yUHAb9N9TCpL8oZE3XZrhG8JbTQaY9+904o+XFoCwiKefo00kDqGf4N2AqnbWstWoht8g+MTZhW9nIzE/aGrOA/Piy6oD2uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e6NQWm3w; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD983B0AC3
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 09:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786785285; cv=pass; b=XIWMHuycl+S4Yue990EjcAGH056H61z6hnAIJtK68trDf8NU35Fq5O34QfjMoyvx+0QtiQn/3AktqinLYJy6GGBXcevXAXxgn6uUPN35waIbPR3c/u9LGANgjMcVwBBcUfJf5OnsCBKalz9Df9rc52cRFjGFxdybgzvdpnulfhg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786785285; c=relaxed/simple;
+	bh=5fQncidyqju5XwIRjWaEWUVmeKeo8nb3CtmIXxuvC0k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gar2N1C6wnnSWvW3c8lVamGbSf/z6RVwqMukiepdF0WPggoGBUQhZmedR3NDRX6oKTc6dbDyo0fTVkGqJygGyuv0Rm+TIP4LkVF9XwoP2LcBUSo1p4wWGHjHKaWkXupEsmHw9xvLxUBkDd6z7OsbmXp/t5je5vUhSjdnvwBIq1A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f7HHhc+5; arc=pass smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e6NQWm3w"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-384930ca5e2so2048675a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 01:30:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f7HHhc+5"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69fab5a852cso2387226a12.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:14:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786785281; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fU6oW8F2PyOfTcV5WuasE8uce9t40sfH/GRnxB5sl/DCgwQ3WL8CqmVzoz0AKbRbEa
+         rTK6QkAKyzXJWf8HOh6bPdnrIyiLYjhmS6VusbuaYbPW5A1pvPZKWRyr6unOS8kFelET
+         aUZiIJ15nQeGXiKD5zIZErn5rXGZqddtayaBmr0qjB0wMqlYOGNzns3RKkOLhjAShugI
+         Y0dCuZGiIqxewdOmKkNGEl4ctT0Ws/+M+iuKXZ3fc2XaIzdKY1OimAWNe09lmrVX6pjM
+         pndHaCeuM3G5mXkOUSgLyda8+d8IEcVYRwamBWQUH8grhQm16d30kN8KESp3EREjp8Gs
+         nhfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
+        fh=2W0Ap0j8ZPdraPmHNiuQ1VQrSV3frHwjk20YcE+aGgo=;
+        b=fDnRnif4mBXzjJdh51yP+jgPPxc3rJPijom38HJ9O7zH9PXFrduyfUZne3aOCIzSKY
+         Uj8Ol4rUWLvS2uwWNycE5mpylz33xVsb0Fca67jZ38Nm8d/frM12NeIJ/WiWx6RB22R6
+         LX+xDYUpoxoGpH8YAtynz//xR86DxOd4jhL+c8XE4R+DQ38999RT5L5R1TTTyAv/BR7Z
+         pBKFMbPuMwlNa/mofLcORP/1l955ZjWAtbYZlUMaIbYFV9ei/yrhLKtzQbbWStr8/SFk
+         9JYxNUKKvwt+IvJBgkLJnOz7TRLEnsGA28SJrgLABbzXm6qmLzr7NyUyvVUxJxF1BHhL
+         KU2w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786782652; x=1787387452; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JOcULi8LDrPr9znFK69f8PAs3Dh2L7dZMUzvNkwuPa4=;
-        b=e6NQWm3wTA05WsjyHym5j575U4VXm3hYPWyld3xVwvyAJV/z6rMDkDYIDhh96SwRqD
-         dEH3MeRcTON6xmruTqeLNiPUYs7FPIrx+jugt82oAxI/gHm3oeLLbRfI690Z68uucLca
-         FBKerxYWN1x2qXPf7kvec28LzqAPviavK+O5gxKJYKem6pFzR1kY69yIwYAZrqWck6ON
-         pALgtvJD2mP6E1ExiBSBajDau2++AU4jwEz2F/YghFWVCgWV9iSY4fOZB+BX2Eg4jr6b
-         g4CVBsK8TNJ3FGINGkFalCJNnIKDvAc7C6TlZBPFyVJI4QXStp5uBjwMoKy5IdXXTId/
-         OSlw==
+        d=gmail.com; s=20251104; t=1786785281; x=1787390081; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
+        b=f7HHhc+5cFgQTGiKJiLds0CB62eq4ADk7JL/64O0uopQJ7LtGexbgqRK0o+fqPGSLo
+         s09eKW17ggAQakPiEZ9MaytL/LzMda/YV5UDgpuNIMYsTv9SWCXrCV3JHaV+QCaC6Zkv
+         sVgbOW2I2ZB1isz1vLkhEIVdI/IfxaXu8gCkIOnkX26rAVZNiztHINVbxf+XL09Z9H1r
+         9evFqTrRdLmJ/WkCOOuHaMuur4DtLam+0FVpbz3gSXvLtcQjq4MdRRH/kerzchan92O1
+         1OmmhWE6x9DfawdZVDC6QSpqp61fUOemh6uAPfnXJktt21ROx+CDRY3uFlWMRV53mOL3
+         MPpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786782652; x=1787387452;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JOcULi8LDrPr9znFK69f8PAs3Dh2L7dZMUzvNkwuPa4=;
-        b=LsmRJ1EPXcZvgPuL4Wj61VEgWHRG3r7K4OblFpjpdJxlzk/Ht7hgopOF5tgxHTczJj
-         kqkZNav9PMtQx9KtG5Q7sogaUp4Z/FNbhid4EXEk1PYBRWlNmAt+08EDyRnw9zHG3XRk
-         vj6WbWeQEI3Y5z5gx0JIN5qgZFCV3sPaqivNvFUQx5uy2BjXWoMw6OLutmO2mE50si3M
-         Lqbxpf0xYZDrZsLCfgjH5LM1wygzzvgY96wM9vpPwIbIgUqY0LlVJYfRvg4gm0lkgSu0
-         TDIT/0O+Ndzh14LmRvxYd0x1/3r2kawZfepwzEN/aJPYbiWSnMtejWDAJ3PpGzDyTa4z
-         AJ3Q==
-X-Gm-Message-State: AOJu0Yyll8XMzaOwvKD3V1LMlrQPUoCMCieI2LUm+KRr6Dymm/9ajUHO
-	Q26ZxmF1QAzl9KNQnoCxu3lYmTahs9Gj/l/uCYwsd9XmSZSXo1VKkP96RdSxDJABxZ0=
-X-Gm-Gg: AR+sD13+nPdgd1cM6hEnLJqMAKfeHVHbVYj1d6735f7rR2Pqf9S8m+gmQ/Fizj/y1hI
-	AYxk5Q8ml1IELmVTdMZDmPAKeJX0gcSBOOVRW65/ZK5Zpx2wzwzIX0GdlpZQipZ0X66S4csp9qF
-	KVYaYPRuoNEHree3iWxo+ylgb98D6KP0ImPJcxvWYnMjBizLoU+F+AkJ0jBCyY6FIz3mRm9vpFD
-	CqhFWJuJPhHM3/pD+DA0yl/y+0qkFL57Q57c/VpNqiOqIghGjuQng4gLvdeIYyds9UrsFyK0b/R
-	zRGQOlj7mIwUMisMtzWJUsleRPTP1jx2IxMCOhPU0cnCvXgQRKlLOxv/N9v3Swks9TU14G8Dp9O
-	Tv2bkEyd3z+BisMetinHxyPdiaqk22KMNi+Tbd9N3sw20wlRdkYZ5f737cZVuHVq0BliFzZOn63
-	c7/UO4UML+tW206QT+kVR9YpOBrDLSMjvm8Q1Y4Z5Y94Z1hmk3EWz0S4qnwk/mceSAs7Ob5Hn7Q
-	E284nEo
-X-Received: by 2002:a17:90b:53cf:b0:381:1c96:829b with SMTP id 98e67ed59e1d1-3933bd204d0mr13591060a91.3.1786782652373;
-        Sat, 15 Aug 2026 01:30:52 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-394ea96c87bsm5480237a91.4.2026.08.15.01.30.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Aug 2026 01:30:51 -0700 (PDT)
-Message-ID: <16bcbf6d-b950-4ea1-a516-ae9330b6335e@gmail.com>
-Date: Sat, 15 Aug 2026 16:30:24 +0800
+        d=1e100.net; s=20251104; t=1786785281; x=1787390081;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
+        b=a+zAwOiaj/6UMULwRUb9yWHOWKVjYwolqKmRTrjPU9U9s7+XooPPOp5C3tv01Rrfbv
+         n0A11H9HP1SZDp8xrL+F+PHf5PC0NvnuSaC5J6+SaqASnB6BBJMjZ8nJlKPOiPfn/Sih
+         nu31iNBpASCsRpc0h/uIuY3eY7szL8vxdEbo78eVadkQIb3N/oX9eDd6g56PuFAcCd0f
+         T1tlMgwFT+aojrVd2dIQgCP41KO2LvRJ7BGWPUL0YQa3KPYSbMXhk3j7b3f8r77CEol7
+         SMOhBkWVlWOD/14G0+yo9ObnoZG48cQIPxwiYzEu+prh6y7Gg1zcK0wxPLhjNqxOX5oa
+         UEgQ==
+X-Gm-Message-State: AOJu0YxsYd+gWA17onvKWjxjK9S/2sOzR0njGPfPmEbwOvCtEgchL+ms
+	A39P2RIS7b8rxH+GM2WVXsisuqNY0Cm41iYG1McebRYr+dLif1O296SvFGwog9SwhVIjOwwO9AI
+	0UoaJ72ClBMBKlWCH2IQsbcLOr5kZfg25G6suYVU=
+X-Gm-Gg: AR+sD12fdn9hXCZiziTNoIrbSYHYOkGiUrrePL8ybA2369fpuTvZz3vhjzgWP2+QiDK
+	TkNHB0MQzeoXwY6AzupO1bZo42u7kM/D4iykxY9rSYMN6W/NzROE/etO8bfZ8nSQfEFLX8PmfR/
+	g4AEQ0hOYOJiKIrIV49rZhj6rhkxiPg5qd+msQsKnIuCBmkS0T8VlMFxPHBlkPwI8tzad7l08hx
+	oBQUSDhx4yClUbcQ++XPQjTFAeKQH57/FPhZOUFfyP4oEX3OyKrkJahhOFJaN+AmNLXbZUAkfHh
+	AyBn/b8cpatoSXDkvAwXJTrKPObo5b06YfXfTLxoPvvHIpG9algMv8jeEqumFR72+ixQNHIc66Q
+	hZ+aYy3IwaYT8
+X-Received: by 2002:a05:6402:249c:b0:6a3:8586:9b73 with SMTP id
+ 4fb4d7f45d1cf-6a38a926287mr5303643a12.6.1786785281054; Sat, 15 Aug 2026
+ 02:14:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 06/32] ext4: recheck extent status tree before
- block allocation
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
-References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-7-yi.zhang@huaweicloud.com>
- <20260814101548.7E86E1F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814101548.7E86E1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260815083451.2147129-1-egbostina@gmail.com> <20260815084635.BECD91F000E9@smtp.kernel.org>
+In-Reply-To: <20260815084635.BECD91F000E9@smtp.kernel.org>
+From: Eduard Bostina <egbostina@gmail.com>
+Date: Sat, 15 Aug 2026 12:14:30 +0300
+X-Gm-Features: AcwNN1XLq_7Rvilq510EdyjugR4FFUzRoIg_f3AqTgOwGlF-ckiD4eTzrM4zuSY
+Message-ID: <CAEFOc61s9761y+7zcuWmNUeRuOWika=uhAhOay8ufL7vVhNk8w@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mfd: Convert TI TWL6040 to DT schema
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, mfd@lists.linux.dev, 
+	robh@kernel.org, lee@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/14/2026 6:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Reading uninitialized `map->m_seq` on error paths leads to an infinite retry loop in `ext4_map_blocks()`, causing a kernel hard lockup.
+On Sat, Aug 15, 2026 at 11:46=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The YAML schema defines incorrect property names for the vibra=
+ default voltages, mismatching the driver's requirements and breaking schem=
+a validation.
 > --
-> 
-> --- Patch [6]: [PATCH -next v5 06/32] ext4: recheck extent status tree before block allocation ---
-> commit 6ae9b515f2027351280fce82734e7e8361a281e7
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> 
-> ext4: recheck extent status tree before block allocation
-> 
-> After acquiring i_data_sem in write mode, recheck that the mapping
-> found via the extent status tree or disk query has not changed. If
-> we find a valid extent and the sequence number has changed, retry
-> the entire lookup to obtain the correct trimmed mapping.
-> 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> index 9dbece14ae569..548a3968c5a7d 100644
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
-> 
+>
+> --- Patch [1]: [PATCH] dt-bindings: mfd: Convert TI TWL6040 to DT schema =
+---
+> commit c57af8c690b680b78b9119a5988e020149e24c1e
+> Author: Eduard Bostina <egbostina@gmail.com>
+>
+> dt-bindings: mfd: Convert TI TWL6040 to DT schema
+>
+> Convert the Texas Instruments TWL6040 audio codecs family bindings to DT
+> schema.
+>
+> > diff --git a/Documentation/devicetree/bindings/mfd/ti,twl6040.yaml b/Do=
+cumentation/devicetree/bindings/mfd/ti,twl6040.yaml
+> > new file mode 100644
+> > index 0000000000000..a93835aa91535
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/mfd/ti,twl6040.yaml
+>
 > [ ... ]
-> 
->> @@ -820,6 +821,19 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
->>   	 * with create == 1 flag.
->>   	 */
->>   	down_write(&EXT4_I(inode)->i_data_sem);
->> +
->> +	/*
->> +	 * Check the validity of the mapping found via the extent status
->> +	 * tree or the disk query. A racing truncate may have changed the
->> +	 * extent, since writeback does not hold i_rwsem or the folio locks
->> +	 * covering the full extent.
->> +	 */
->> +	if (map->m_seq != READ_ONCE(EXT4_I(inode)->i_es_seq)) {
->> +		up_write(&EXT4_I(inode)->i_data_sem);
->> +		map->m_flags = 0;
->> +		map->m_len = orig_mlen;
->> +		goto create_retry;
->> +	}
-> 
-> [Severity: High]
-> Could this cause an infinite loop and hard lockup on disk error?
-> 
-> If ext4_map_query_blocks() encounters an error like -EIO or -EFSCORRUPTED,
-> it returns < 0 without setting map->m_seq.
-> 
-> However, if EXT4_GET_BLOCKS_CREATE is set, the function does not return
-> early on error and falls through to this TOCTOU check.
-> 
-> Since callers like _ext4_get_block() allocate struct ext4_map_blocks
-> on the stack:
-> 
-> fs/ext4/inode.c:_ext4_get_block() {
->          struct ext4_map_blocks map;
->          ...
->          map.m_lblk = iblock;
->          map.m_len = bh->b_size >> inode->i_blkbits;
-> 
->          ret = ext4_map_blocks(..., &map, flags);
+>
+> > +      ti,vibrmotor-res:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        description: Resistance parameter for right motor
+> > +      vddvibl_uV:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        description: vddvibl default voltage if it needs to be changed
+> > +      vddvibr_uV:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        description: vddvibr default voltage if it needs to be changed
+>
+> [Severity: Medium]
+> Does this incorrectly define the property names for the vibra default vol=
+tages?
+>
+> The twl6040-vibra driver actually expects these properties to be hyphenat=
+ed
+> and have a "ti," prefix. For example, in drivers/input/misc/twl6040-vibra=
+.c:
+>
+> twl6040_vibra_probe() {
+>     ...
+>     of_property_read_u32(twl6040_core_node, "ti,vddvibl-uV", &vddvibl_uV)=
+;
+>     of_property_read_u32(twl6040_core_node, "ti,vddvibr-uV", &vddvibr_uV)=
+;
+>     ...
 > }
-> 
-> Will map->m_seq contain uninitialized stack garbage, causing the sequence
-> check to mismatch and jump to create_retry, which then encounters the exact
-> same disk error indefinitely?
-> 
+>
+> Since the vibra object sets "additionalProperties: false", won't valid de=
+vice
+> trees using "ti,vddvibl-uV" fail schema validation?
+>
+> Conversely, if a device tree uses "vddvibl_uV" to satisfy this schema, wo=
+n't
+> it be silently ignored by the driver at runtime?
+>
+> > +
+> > +    required:
+> > +      - ti,vibldrv-res
+> > +      - ti,vibrdrv-res
+> > +      - ti,viblmotor-res
+> > +      - ti,vibrmotor-res
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260815083451.21=
+47129-1-egbostina@gmail.com?part=3D1
 
-This is a valid report. I think ext4_map_query_blocks() should bail
-out immediately on error, rather than trying to allocate blocks
-afterwards.
-
-Thanks,
-Yi.
-
+No in-tree device tree uses these two optional properties, so
+dtbs_check never caught them, and I carried the names over from the
+old txt binding.
+I'll fix them in v2.
