@@ -1,36 +1,67 @@
-Received: from mta1.migadu.com (out-166.mta1.migadu.com [95.215.58.166])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF3B1E5B9A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 05:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C8C3E0243
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 06:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786773004; cv=none; b=ptTk+U3o655AmNYkiUcBnENslmsK56jgcGsrpaxQs8wymBIZrd8ghTk31+eS/Rt4hSQ9hwbhWNtTrUEo/++pAQaesjTj9vUCzqmrmgEq0+jb6DO/WxodiKcWrc1vYZQuotzT/rPVo9W8IgpMaLOsYEW/Za7zmeZRMBzJuOYup34=
+	t=1786777062; cv=none; b=NXhTskB5VDAR1AK+4HeHtgcacY1yIekKr3qeMR+yWlHSL4713R+UVagmNlTEJMr0YElRgbr3OV0fGhHzgoCqoucbUyXKRwIErHH02WZZ8gMtGO4Y9sOY8Dl0FLs0Y8iWnKP3qb5HPwbiw64bUhwInE7Q1dJ7BclyQZTISLAQkes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786773004; c=relaxed/simple;
-	bh=S2DaLHJtGrxg+rAnTMD2ZN89R+9nnovpVGWwJdu9V20=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Q/CcdkaLyJl7vyFh4f+n5bGDsHT2PkueR6Y8WI1559GPmGzzHaW/0hlhgxQOv6uW02h62PWrMZMbJ1gmUtJdKitEeLARKuCUgy0vG5KAx/2R6MMdmyBeRG4s06u32hd7N/r2A8qgiTGlWxYOF7RAEujHjX5BC+jA2AhTeDBMWxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tUMYG3NM; arc=none smtp.client-ip=95.215.58.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786777062; c=relaxed/simple;
+	bh=FGfhaeq2xKFMjBFTHBJ/wj72N0xgrREq6zmCXL6Pm8Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UOhw1Bak5UJltsEK0dV83UYZDOfxgxiAJyz36uChaL35p2sqlZHQEk6pB7J7a7E8FAaMFX5nI5jE8BkVDmT9ldLeOFAN4ZAuLAk+GrcUf8V6L+O14johZpepjd6LZQuBPG+HIkKDs8fA2qv9y9cIMnpZOPvC7DqsxOXD4cfYT2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sBgDduDz; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tUMYG3NM"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=S2DaLHJtGrxg+rAnTMD2ZN89R+9nnovpVGWwJdu9V20=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786773001; v=1; x=1787377801;
- b=tUMYG3NMzedYZKM4Nr6+umU9EjNl9NQPB1FR8e7J/7voD8Lm5cNkEhj6Wl1fwe+DBQEhvGzw
- 5ZHrtvAyK3LK6JP7h059RnXEH2d+23XcFrmgkQU4V1LEjdTrCKUl1pD6lnfCftMJhh7o9ZOpdH7
- kCByDtgTuEYQD9aFg2i1KKvg=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [192.168.1.116] (111.162.215.50)
-	by smtp.migadu.com with ESMTPS id 3ecc13c41b46260c;
-	Sat, 15 Aug 2026 05:50:00 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.dev>
-Date: Sat, 15 Aug 2026 13:49:58 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sBgDduDz"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2d0407aedd6so22175235ad.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 23:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786777058; x=1787381858; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0+O+EXhLcJWT45f42scuWhe5FquZM52S8O6m5v2Jyxk=;
+        b=sBgDduDz+695xOE1pSuNiC44XOlP1GhM2U1ZaQg8kHqnyScClXCd3HKaUlyBy/X242
+         0MPMfIfziGNVf2ZDRmCPzDTSUSTApU9R3Du6zHlR/115YUGkjSZCYvktN6NeaAXanz96
+         LlQv4Hlh+iIWuvJJ4HNViGz9nsOI5bvND33UxBSxhlbY0eaHzOssW/UcZ8eEQp4N8Add
+         SmeKn2RWfasZaMOS4ijuqGYlQB5VYS2ZxjAQ0ieLmSDubOYB1UOC0mr3lk61zqVaU3Pu
+         TJa4wxk9GIn/rfujtX2Jba5zKvpQGmcWgDeinm36uR4H5PC0VckmV21Dt8fhYCCLm6Kn
+         +1Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786777058; x=1787381858;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0+O+EXhLcJWT45f42scuWhe5FquZM52S8O6m5v2Jyxk=;
+        b=N/3e4tsjvFfDkxvzGNSS3YOjDebWq0xA5zD5qayTVr0d9kaob2Pyik+B6bFwfEzqeU
+         tZQiN1nL7QO5rFPhwoPLSsdphXRU84Jt+rtrVFffPEOqrz3xTipuhieO3kIOmT0Fi+Ix
+         LNys2WgYiR+tqXp3FEIkClLd7gXYYaoftt1PlosapHZ5ElMF3ywZNrsyhwM8Ijluk7Vv
+         dHd7cfjcrVLdpqJ7kM11gNdv5gnOQtW/gRJditv9RBrnW2doFj8Q8t76+nrjGEIEABmO
+         MjCFIiB3eJ0tnK7majwuZ51IkZSq5+3jCWVQzncc9Ag5ivutR3z7eQptLA8czgvphZ4o
+         Qaeg==
+X-Gm-Message-State: AOJu0YxOPMjPkuRVb6vcg0g+QlZmNia5L9jB3hYvbn9Tp+1TrFwITDlH
+	wCZqnvEQNKErNKvQ4by+NktWshSA2hTzNVOZsztlZlpOoHZQhdVETd1RKKw3SJyMXY8=
+X-Gm-Gg: AR+sD1069gjTojs4daa6IatKNBY6r8i7Hdw2fyDuZmMb5J5AydZOuR1M8+iP0Jy/jaI
+	1FzqXXMwNhUDQNFg3hJRIMViKd7xU31QMcflBcfqEuGDTX3z0oz7uAJF5Xq0mZmACdDvejSSbnO
+	vhny+17mGWtmlsF3tYeiIGgYJlLjAJpOf7T0wv2tg3CpOKyCCRX2pE3Q3/bycC6zUqWINMkNXGc
+	2pTblMd6tR5sNEDGgGUCpMKEFPQSQOqBxvxB/99uYckI3F/hY22cn6WFFPW29q5peM8jpDSwuuF
+	Quwbvhh1WvzP6K4Gax6MfRdfdR/t5urPSKqxr2/jOkW3RYJQXfOYEafc5dWBI2Jg4q3N7C9c3uM
+	gNyJJisG+W2kAmpxF+ZQAP7oSzQ/cHd6LC1RdDaCMNSldbP0ybKUTEVvwKh2eph6xIT7YH0YZZ2
+	iZb0Rrp0JUCXVdGzreGfNakcBTsOKz1bKRUwaUi/JhmtDkkWJfKuMsJ7QQhYXOGsuf0c3oNfMwB
+	1RWnta7
+X-Received: by 2002:a17:902:f610:b0:2d3:2b8a:5007 with SMTP id d9443c01a7336-2d3b0e4378emr139170855ad.15.1786777058358;
+        Fri, 14 Aug 2026 23:57:38 -0700 (PDT)
+Received: from [100.125.248.95] ([124.70.231.46])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d3aebf17absm17255635ad.80.2026.08.14.23.57.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Aug 2026 23:57:37 -0700 (PDT)
+Message-ID: <6cc8eaee-9855-4e97-8cdc-b30257a79d18@gmail.com>
+Date: Sat, 15 Aug 2026 14:57:31 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,85 +69,101 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, bpf@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH] sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
-To: sashiko-reviews@lists.linux.dev
-References: <20260815045905.3431991-1-cui.tao@linux.dev>
- <20260815051412.C8DA91F000E9@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260815051412.C8DA91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH -next v5 04/32] ext4: skip ordered I/O wait when zeroing
+ beyond i_disksize block
+To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
+References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
+ <20260814093331.1703882-5-yi.zhang@huaweicloud.com>
+ <20260814101457.008C01F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Zhang Yi <yizhang089@gmail.com>
+In-Reply-To: <20260814101457.008C01F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-
-
-在 2026/8/15 13:14, sashiko-bot@kernel.org 写道:
+On 8/14/2026 6:14 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Priority inversion in RB-tree due to unprotected cvtime wraparound in cgv_node_less().
+> - [High] Torn read of the 64-bit `i_disksize` on 32-bit architectures can cause the kernel to skip ordered I/O, leading to stale data exposure.
 > --
 > 
-> --- Patch [1]: [PATCH] sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry ---
-> commit c84c79d28fee1a17412c6846489091841b03f293
-> Author: Tao Cui <cuitao@kylinos.cn>
-> Date:   Sat Aug 15 04:59:05 2026 +0000
+> --- Patch [4]: [PATCH -next v5 04/32] ext4: skip ordered I/O wait when zeroing beyond i_disksize block ---
+> commit bb84de10d990ded9aab4107d18dd1616342efccd
+> Author: Zhang Yi <yi.zhang@huawei.com>
 > 
->     sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
+> ext4: skip ordered I/O wait when zeroing beyond i_disksize block
 > 
-> This commit fixes the cvtime true-up calculation in fcg_dispatch() when a
-> cgroup's slice expires or its DSQ runs empty. It addresses a bug where the
-> unsigned division by hweight was inverting the sign of the delta, causing
-> massive jumps in cvtime_delta instead of minor corrections. The fix properly
-> computes the delta as a signed value and uses fetch_and_add()/fetch_and_sub()
-> to keep dividends positive.
+> This commit optimizes ext4_block_zero_eof() by skipping the ordered I/O
+> wait when the zeroed range is entirely beyond the block containing
+> i_disksize. Since data beyond i_disksize hasn't been written to disk yet,
+> the ordered I/O wait is unnecessary and can be bypassed.
 > 
->> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
->> index 0fd214cc61dae..ddcf6bc03b11c 100644
->> --- a/tools/sched_ext/scx_flatcg.bpf.c
->> +++ b/tools/sched_ext/scx_flatcg.bpf.c
+>> --- a/fs/ext4/inode.c
+>> +++ b/fs/ext4/inode.c
+> [ ... ]
+>> @@ -4241,9 +4241,16 @@ int ext4_block_zero_eof(struct inode *inode, loff_t from, loff_t end)
+>>   	 * truncating up or performing an append write, because there might be
+>>   	 * exposing stale on-disk data which may caused by concurrent post-EOF
+>>   	 * mmap write during folio writeback.
+>> +	 *
+>> +	 * Ordered I/O is required only when zeroing the tail of a block that
+>> +	 * overlaps with i_disksize. If the zeroed range falls outside that
+>> +	 * block, the zeroed data lies beyond the existing on-disk data. It
+>> +	 * will be written out before i_disksize is later extended past
+>> +	 * i_size, so no stale data can be exposed.
+>>   	 */
+>>   	if (ext4_should_order_data(inode) &&
+>> -	    did_zero && zero_written && !IS_DAX(inode)) {
+>> +	    did_zero && zero_written && !IS_DAX(inode) &&
+>> +	    from < round_up(READ_ONCE(EXT4_I(inode)->i_disksize), blocksize)) {
 > 
 > [Severity: High]
-> This is a pre-existing issue, but was not introduced by the patch under
-> review. Since this file handles cvtime accounting, could the red-black tree
-> comparison in cgv_node_less() suffer from priority inversion due to cvtime
-> wraparound?
+> Could this READ_ONCE() on the 64-bit i_disksize result in a torn read on
+> 32-bit architectures?
 > 
-> Looking at tools/sched_ext/scx_flatcg.bpf.c:cgv_node_less():
+> If a background writeback thread concurrently updates i_disksize under
+> i_data_sem but without holding i_rwsem, and the file size is extending
+> across a 4GB boundary (for example, transitioning from 0x00000000FFFFFFFF
+> to 0x0000000100000000), a torn read might fetch 0 if the lower 32 bits are
+> zeroed first.
 > 
-> static bool cgv_node_less(struct bpf_rb_node *a, const struct bpf_rb_node *b)
-> {
->         struct cgv_node *cgc_a, *cgc_b;
-> 
->         cgc_a = container_of(a, struct cgv_node, rb_node);
->         cgc_b = container_of(b, struct cgv_node, rb_node);
-> 
->         return cgc_a->cvtime < cgc_b->cvtime;
-> }
-> 
-> If a cgroup with the lowest possible weight (1) advances its cvtime rapidly,
-> a 64-bit nanosecond counter could wrap around in approximately 3.25 days of
-> continuous execution.
-> 
-> When a cgroup's cvtime wraps to a small value (e.g., 100) while other cgroups
-> are near the 64-bit maximum, the standard < operator will evaluate
-> 100 < (2^64 - 1000) as true.
-> 
-> Would this place the wrapped cgroup permanently at the front of the tree and
-> completely starve other cgroups? Should this use a wraparound-safe comparison
-> like time_before64() instead, similar to the time_before() usage elsewhere
-> in the scheduler?
-> 
-Right, the comparison is not wraparound-safe, and CFS compares
-vruntimes with (s64)(a - b) < 0 for the same reason. Hard to reach in
-practice though: cgrp_cap_budget() clamps each node's cvtime to within
-cvtime_now - max_budget, so wrapping needs an extreme weight ratio held
-for days. Pre-existing either way, and with the true-up fixed cvtime
-no longer collects garbage, so this patch only makes it less likely.
+> If 0 is returned here, round_up(0, blocksize) evaluates to 0, which makes
+> the condition 'from < 0' false. Would this incorrectly bypass the critical
+> ordered I/O guarantee and potentially expose stale data in the event of a
+> crash?
 
-If we want to close it, (s64)(a->cvtime - b->cvtime) < 0 would do it,
-as a separate patch.
+I agree this concern is valid. The torn 64-bit read on 32-bit SMP is
+mechanically possible, and the proposed condition could skip the
+ordered I/O path when it shouldn't.
 
-> [ ... ]
+However, this pattern is not introduced by this commit. The existing
+ext4 code already has multiple READ_ONCE(i_disksize) sites without
+holding i_data_sem, such as the fast-path check in
+mpage_map_and_submit_extent() and the size check in
+ext4_dio_write_end_io(). i_disksize has no seqcount, unlike
+inode->i_size which has i_size_seqcount.
+
+I'm not sure whether all the unlocked sites are harmless, at least
+the mpage_map_and_submit_extent() fast-path check looks a bit
+problematic to me. If a torn read returns a value larger than the
+writer's actual target (e.g. when another ioend worker is concurrently
+advancing i_disksize from 0x00000000FFFFFFFF to 0x0000000100000000 —
+high 4 bytes already updated to 0x00000001, low 4 bytes still
+0xFFFFFFFF, so the reader observes 0x00000001FFFFFFFF), the fast-path
+comparison skips the lock-protected recheck, and the i_disksize update
+for this writeback batch is missed.
+
+I think this deserves a separate patch series to properly fix it,
+perhaps by introducing an i_size_read()-style helper for i_disksize
+(seqcount or similar), and reviewing all access sites. What do people
+think?
+
+Thanks,
+Yi.
+
+> 
+>>   		handle_t *handle;
+>>   
+>>   		handle = ext4_journal_start(inode, EXT4_HT_MISC, 1);
 > 
 
