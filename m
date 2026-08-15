@@ -1,176 +1,67 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD983B0AC3
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 09:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786785285; cv=pass; b=XIWMHuycl+S4Yue990EjcAGH056H61z6hnAIJtK68trDf8NU35Fq5O34QfjMoyvx+0QtiQn/3AktqinLYJy6GGBXcevXAXxgn6uUPN35waIbPR3c/u9LGANgjMcVwBBcUfJf5OnsCBKalz9Df9rc52cRFjGFxdybgzvdpnulfhg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786785285; c=relaxed/simple;
-	bh=5fQncidyqju5XwIRjWaEWUVmeKeo8nb3CtmIXxuvC0k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gar2N1C6wnnSWvW3c8lVamGbSf/z6RVwqMukiepdF0WPggoGBUQhZmedR3NDRX6oKTc6dbDyo0fTVkGqJygGyuv0Rm+TIP4LkVF9XwoP2LcBUSo1p4wWGHjHKaWkXupEsmHw9xvLxUBkDd6z7OsbmXp/t5je5vUhSjdnvwBIq1A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f7HHhc+5; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83B04B0483;
+	Sat, 15 Aug 2026 09:35:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786786527; cv=none; b=cd23o/pYKkZw7LSFb373cDKiK/4kMlXa9SgIP0TZJKmejq3oysVa8bCHTTDHL/zT3tRjSPlJ7t611hl0tYGZmNsZmsd4ZtkKKoAkLfLsrHmJ3IG57e1ojCjKE6fDAn57PIL0xp7mFqJ5G50fJyNiyWWmVCDjgkBNXBozcj94TpQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786786527; c=relaxed/simple;
+	bh=Kavl+59kgtFCYXQXpMXyb5XH15mvjyJKF+dcCHJ+7RQ=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=hwqHALXDGbm5nWQArbPovECpIYOA8qBfqKPtje1/mPI+WeDNVgLAOgB9w2l2BxupfLjbI4ROY7YthwILyRoMKE0JDvq8Wsrq4XN7n+u/18881X4CIzceH7t+KT1Vhp5r3ncINC7yyEXnxKkZiQfpg3WNlpunlT13t6IRnscPh6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pzk0ieAV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f7HHhc+5"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69fab5a852cso2387226a12.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:14:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786785281; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fU6oW8F2PyOfTcV5WuasE8uce9t40sfH/GRnxB5sl/DCgwQ3WL8CqmVzoz0AKbRbEa
-         rTK6QkAKyzXJWf8HOh6bPdnrIyiLYjhmS6VusbuaYbPW5A1pvPZKWRyr6unOS8kFelET
-         aUZiIJ15nQeGXiKD5zIZErn5rXGZqddtayaBmr0qjB0wMqlYOGNzns3RKkOLhjAShugI
-         Y0dCuZGiIqxewdOmKkNGEl4ctT0Ws/+M+iuKXZ3fc2XaIzdKY1OimAWNe09lmrVX6pjM
-         pndHaCeuM3G5mXkOUSgLyda8+d8IEcVYRwamBWQUH8grhQm16d30kN8KESp3EREjp8Gs
-         nhfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
-        fh=2W0Ap0j8ZPdraPmHNiuQ1VQrSV3frHwjk20YcE+aGgo=;
-        b=fDnRnif4mBXzjJdh51yP+jgPPxc3rJPijom38HJ9O7zH9PXFrduyfUZne3aOCIzSKY
-         Uj8Ol4rUWLvS2uwWNycE5mpylz33xVsb0Fca67jZ38Nm8d/frM12NeIJ/WiWx6RB22R6
-         LX+xDYUpoxoGpH8YAtynz//xR86DxOd4jhL+c8XE4R+DQ38999RT5L5R1TTTyAv/BR7Z
-         pBKFMbPuMwlNa/mofLcORP/1l955ZjWAtbYZlUMaIbYFV9ei/yrhLKtzQbbWStr8/SFk
-         9JYxNUKKvwt+IvJBgkLJnOz7TRLEnsGA28SJrgLABbzXm6qmLzr7NyUyvVUxJxF1BHhL
-         KU2w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786785281; x=1787390081; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
-        b=f7HHhc+5cFgQTGiKJiLds0CB62eq4ADk7JL/64O0uopQJ7LtGexbgqRK0o+fqPGSLo
-         s09eKW17ggAQakPiEZ9MaytL/LzMda/YV5UDgpuNIMYsTv9SWCXrCV3JHaV+QCaC6Zkv
-         sVgbOW2I2ZB1isz1vLkhEIVdI/IfxaXu8gCkIOnkX26rAVZNiztHINVbxf+XL09Z9H1r
-         9evFqTrRdLmJ/WkCOOuHaMuur4DtLam+0FVpbz3gSXvLtcQjq4MdRRH/kerzchan92O1
-         1OmmhWE6x9DfawdZVDC6QSpqp61fUOemh6uAPfnXJktt21ROx+CDRY3uFlWMRV53mOL3
-         MPpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786785281; x=1787390081;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=l1AHP1yiadUPKvA53vmM4QSUOpatBxef1dyJnSggtJU=;
-        b=a+zAwOiaj/6UMULwRUb9yWHOWKVjYwolqKmRTrjPU9U9s7+XooPPOp5C3tv01Rrfbv
-         n0A11H9HP1SZDp8xrL+F+PHf5PC0NvnuSaC5J6+SaqASnB6BBJMjZ8nJlKPOiPfn/Sih
-         nu31iNBpASCsRpc0h/uIuY3eY7szL8vxdEbo78eVadkQIb3N/oX9eDd6g56PuFAcCd0f
-         T1tlMgwFT+aojrVd2dIQgCP41KO2LvRJ7BGWPUL0YQa3KPYSbMXhk3j7b3f8r77CEol7
-         SMOhBkWVlWOD/14G0+yo9ObnoZG48cQIPxwiYzEu+prh6y7Gg1zcK0wxPLhjNqxOX5oa
-         UEgQ==
-X-Gm-Message-State: AOJu0YxsYd+gWA17onvKWjxjK9S/2sOzR0njGPfPmEbwOvCtEgchL+ms
-	A39P2RIS7b8rxH+GM2WVXsisuqNY0Cm41iYG1McebRYr+dLif1O296SvFGwog9SwhVIjOwwO9AI
-	0UoaJ72ClBMBKlWCH2IQsbcLOr5kZfg25G6suYVU=
-X-Gm-Gg: AR+sD12fdn9hXCZiziTNoIrbSYHYOkGiUrrePL8ybA2369fpuTvZz3vhjzgWP2+QiDK
-	TkNHB0MQzeoXwY6AzupO1bZo42u7kM/D4iykxY9rSYMN6W/NzROE/etO8bfZ8nSQfEFLX8PmfR/
-	g4AEQ0hOYOJiKIrIV49rZhj6rhkxiPg5qd+msQsKnIuCBmkS0T8VlMFxPHBlkPwI8tzad7l08hx
-	oBQUSDhx4yClUbcQ++XPQjTFAeKQH57/FPhZOUFfyP4oEX3OyKrkJahhOFJaN+AmNLXbZUAkfHh
-	AyBn/b8cpatoSXDkvAwXJTrKPObo5b06YfXfTLxoPvvHIpG9algMv8jeEqumFR72+ixQNHIc66Q
-	hZ+aYy3IwaYT8
-X-Received: by 2002:a05:6402:249c:b0:6a3:8586:9b73 with SMTP id
- 4fb4d7f45d1cf-6a38a926287mr5303643a12.6.1786785281054; Sat, 15 Aug 2026
- 02:14:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pzk0ieAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4E41F000E9;
+	Sat, 15 Aug 2026 09:35:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786786526;
+	bh=BsxeFdMkikWusc5Dce5wEA13m5mLEXdd68VTZnlY8/4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Pzk0ieAV0CHpD5P1sTIHU1uYqbuFozyBxiZZFH0DGmQuuRM7djxy99MhCr5jZ5a10
+	 UzIXfMuf2+XG1TdjFZ4RFKzFRJyEjR92HhHDXwil5VfKAwe9qHPKLpWJL2I0lDDiyB
+	 ynsUJuDu98ho3l/uvo5fHEECC44Mj8S/Y5HZImygz2eQshCmvnccS3ja7uY0d1C8so
+	 nxyKVUlnVHnqHR53Lxt2YrHG1faadmUKov6/KCRC+U3Fh6uMKsw8edJ1azHxjvBXMI
+	 Iz44OQ7OiXEXTdY3tdJlOXjVpyNh5egseKzRpWDaI3T0mGlVLOTOtFzFqrwaYFh80O
+	 Md4Wqvd8DuE8g==
+Date: Fri, 14 Aug 2026 23:35:25 -1000
+Message-ID: <db213c23e9faf8f5871bd0307fbd97e5@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 2/2] sched_ext: Make scx_bpf_events() read the calling
+ scheduler's counters
+In-Reply-To: <20260815060403.0C69F1F000E9@smtp.kernel.org>
+References: <20260815055107.115671-1-tj@kernel.org>
+ <20260815055107.115671-3-tj@kernel.org>
+ <20260815060403.0C69F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260815083451.2147129-1-egbostina@gmail.com> <20260815084635.BECD91F000E9@smtp.kernel.org>
-In-Reply-To: <20260815084635.BECD91F000E9@smtp.kernel.org>
-From: Eduard Bostina <egbostina@gmail.com>
-Date: Sat, 15 Aug 2026 12:14:30 +0300
-X-Gm-Features: AcwNN1XLq_7Rvilq510EdyjugR4FFUzRoIg_f3AqTgOwGlF-ckiD4eTzrM4zuSY
-Message-ID: <CAEFOc61s9761y+7zcuWmNUeRuOWika=uhAhOay8ufL7vVhNk8w@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: mfd: Convert TI TWL6040 to DT schema
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, mfd@lists.linux.dev, 
-	robh@kernel.org, lee@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 15, 2026 at 11:46=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The YAML schema defines incorrect property names for the vibra=
- default voltages, mismatching the driver's requirements and breaking schem=
-a validation.
-> --
->
-> --- Patch [1]: [PATCH] dt-bindings: mfd: Convert TI TWL6040 to DT schema =
----
-> commit c57af8c690b680b78b9119a5988e020149e24c1e
-> Author: Eduard Bostina <egbostina@gmail.com>
->
-> dt-bindings: mfd: Convert TI TWL6040 to DT schema
->
-> Convert the Texas Instruments TWL6040 audio codecs family bindings to DT
-> schema.
->
-> > diff --git a/Documentation/devicetree/bindings/mfd/ti,twl6040.yaml b/Do=
-cumentation/devicetree/bindings/mfd/ti,twl6040.yaml
-> > new file mode 100644
-> > index 0000000000000..a93835aa91535
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/mfd/ti,twl6040.yaml
->
-> [ ... ]
->
-> > +      ti,vibrmotor-res:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > +        description: Resistance parameter for right motor
-> > +      vddvibl_uV:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > +        description: vddvibl default voltage if it needs to be changed
-> > +      vddvibr_uV:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > +        description: vddvibr default voltage if it needs to be changed
->
-> [Severity: Medium]
-> Does this incorrectly define the property names for the vibra default vol=
-tages?
->
-> The twl6040-vibra driver actually expects these properties to be hyphenat=
-ed
-> and have a "ti," prefix. For example, in drivers/input/misc/twl6040-vibra=
-.c:
->
-> twl6040_vibra_probe() {
->     ...
->     of_property_read_u32(twl6040_core_node, "ti,vddvibl-uV", &vddvibl_uV)=
-;
->     of_property_read_u32(twl6040_core_node, "ti,vddvibr-uV", &vddvibr_uV)=
-;
->     ...
-> }
->
-> Since the vibra object sets "additionalProperties: false", won't valid de=
-vice
-> trees using "ti,vddvibl-uV" fail schema validation?
->
-> Conversely, if a device tree uses "vddvibl_uV" to satisfy this schema, wo=
-n't
-> it be silently ignored by the driver at runtime?
->
-> > +
-> > +    required:
-> > +      - ti,vibldrv-res
-> > +      - ti,vibrdrv-res
-> > +      - ti,viblmotor-res
-> > +      - ti,vibrmotor-res
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260815083451.21=
-47129-1-egbostina@gmail.com?part=3D1
+Hello,
 
-No in-tree device tree uses these two optional properties, so
-dtbs_check never caught them, and I carried the names over from the
-old txt binding.
-I'll fix them in v2.
+> If a BPF_PROG_TYPE_TRACING or BPF_PROG_TYPE_SYSCALL program is associated
+> with a different struct_ops map (like tcp_congestion_ops), the pointer is
+> blindly cast to struct sched_ext_ops *.
+>
+> Since struct sched_ext_ops is much larger than other struct_ops structures,
+> reading ops->priv could read memory well past the end of the map allocation
+> and cause a kernel panic when the garbage value is dereferenced as a
+> struct scx_sched *.
+
+The hole exists but reaching it requires the privileged userspace to
+deliberately associate its own tracing or syscall program with a wrong type
+of struct_ops map and then call SCX kfuncs from it. Association is an
+explicit per-program operation, so this can't happen accidentally. The
+right fix is rejecting the association of a program which uses SCX kfuncs
+with a non-sched_ext struct_ops map at association time, which the
+association path has enough information to do. Will worry about it later.
+
+Thanks.
+
+-- 
+tejun
