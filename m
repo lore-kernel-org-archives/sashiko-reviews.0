@@ -1,176 +1,117 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F3123183F
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786761227; cv=none; b=T2cB+ahTwO/wBFMZlIpZ3NCxIM+zN/6YrtFGdhS5lRHhQ9e1LFE6tqlZ802Q7ILmDbhU/D7jqYsSmNyIIq3q1BcHiSybxKEaPD4BFeQeVoyQuUlngLhzHkkmfi24fuDEY5MAZ7wRqqVIdlhGLPlitTmv+kNH0o1LNgUWUyE/vLw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786761227; c=relaxed/simple;
-	bh=iV4XDfJX+CFZbdszmcTiGj00Tjyby5tA1Vo+celIx7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H73/r4a02tOBH2pe0IK3wzvxllnX2HoYMyHg8z2dJYYhPcPWDpMM5KzVYOGddHU3ql9pGjYz/R5lh9rFMGkBmi/8rPr8r5lJ5Q8CyEL4RqDXEt8DdKW0Lv5A1p67CJgV7WbgLW9jpAlsw5d+m06XUYs4MOi7PEdno8xv0tfCrWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kroKMND7; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BBF1E5B9A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786762538; cv=pass; b=JihaMh5BtdgxooDcFBy4wONHVef6XHpy3SW7SW0HXdieBxA/EBex3dgB9uzs/0tMXO/L5ycfI/aJv7RG8m5S5H/WkzmoidL9gstbF016Wp2z7txvdDg6dahs+hGoSNtAtCON+9Qvqp4WUBvgiylRdvTYJGn5hG6sVq16Ro1oB8Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786762538; c=relaxed/simple;
+	bh=Fx8jpcriAtMOORqEdmHYz+cT8ZtXqnCKp7LKXe/56PY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mxszl9u0qt9phdoYRoWOI+K4HxC/eeEKtEjvdPFFfOHNarvrbi8duLN7nfmV2LNqCP4O8i8cosF0LCOIpctV7TLjDMm5yQ2atf5knE2RceB4LKw1BkIrhDqVoJ1y9hDnbcMLEgN1EbT/O4KkR8xdepC0rmuPG8is/2gT8QZGm44=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DvKgFGsl; arc=pass smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kroKMND7"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e88b60121so1352605a91.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 19:33:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DvKgFGsl"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-38dd55ad76cso1719041a91.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 19:55:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786762537; cv=none;
+        d=google.com; s=arc-20260327;
+        b=R3ClOaZ522Yqv/RwEaXJA88nMj/jffZ6pPFqEgsoaciUzmEUjtrbQNYjtNTjMzEC1Z
+         njTg2JTI3nRAAb/YvRG4I8+zV1RkTPGeZg7FerznkVgv2PYyo97D35bbw7Z9dGsFSAsv
+         yQpg+rzpxWXMuGW2GcO0Pyy96cxAY8CIjTPHx3m85L2EJKHCVLLlDRS8dt4w8pPjbS7Q
+         a6hJ8dJe4y6b8Iwhratqnxq/VQe0WfdY8ko0IMrtVP/QO3yC/QHJFuoMasuZy1ugArGR
+         4/9xPheQWEkKqt6Q2O8PPgZb2FVhUsPg5hRviCSHcVQpnFMjgvCUv2MFgp8pp0WDvZEa
+         hJJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=s42wC4lgya/mAEZ3+0MIKkFZaa62LITqDsv5px9luEPvCsCUREfJJUHUDZsCjiZZKW
+         kXmSKgVAgor0Q7qonhnPG0qPHwKVPlQXqgw8xkS/WJoIpFzcXoWUhqo8R8vJPrdsLAlf
+         saF3QiS2WQ+84r03OX3h94q9KXAej8eo6P/UE0WGVfrZ3OnrReXBEwXKeUghHjwnGShJ
+         1eDWUuOtilJDBGDGPFDqTAhFjfnalbvVWuhaKYSGwFfk3RyPJeewkYlhKRVAbUtd7dKu
+         8sY0c1y5Q044gHb9P3akTlVgDTGSnCpR3xstZuSSeNd4TXrzjLh9HXR272aqahWsEUKP
+         5MCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786761225; x=1787366025; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=x0Z8mCo+puk0a6hzRC+iz3VlA602gbMFooVLucdUKS8=;
-        b=kroKMND7Oo0ZqSEwOPcL8IiYB62WX5aOkR2FkZ/oKfRGCebFXySXRxOLNLftzL5KrL
-         YU2tLVwVDpcvLt3vHe+nBz0cVCkxJKbuZbQLsiacAXaAOyy6U5vn4KvrefvJKW2Lyznw
-         abBbTzuhaPyLCsnrqg58FKW+xSu40vCvNey85VElMg88ltjgOA9mIqvTICmZAHSmh5zM
-         W9rPLMl5VmANufsdZ0tiTEoNI4jUYOqT89CryNdKU3UlVZltyt0yeHJCRCHMCXt62lgH
-         nbiY6EswG+/+SjuFNCK5k48skjn6xhQjiNgSIpU7F6tFEGi0PBDDLgWc6Sk21SIA0ED6
-         QiCw==
+        d=gmail.com; s=20251104; t=1786762537; x=1787367337; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
+        b=DvKgFGsl7cI81mEL2smR2vZFbgyTTjTdwG5zIR/ODu50xJXYazXVxCyyj3GZWQC+Am
+         EO4B445BkvkQSpy1RrlKbRnvrzuxtnQYsJFXbM8JCrFP+v4InBhZbBpZ/EMM4Blm/8u+
+         m/gBaijSqKIG263kBzNCZrRKoG8m0MX+TBqFgcPdCcOXtgP8OHI0iTBzkDOdgjE+5TcL
+         SMDIn5ylGdwHL7lUjnWHwzNQWCKMZKTucH8O+mdt8HlSOAT+9YP89n3YK/TTB5d96tN1
+         NLN+qwkKHvHJ/9WTyHibp2jUlxRBuj+or77USHMJVaz3yNMcgClJklDYVFIhEyGeGfS9
+         Gd0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786761225; x=1787366025;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=x0Z8mCo+puk0a6hzRC+iz3VlA602gbMFooVLucdUKS8=;
-        b=iRogoGRlwSYwYVy41YTmC7AgUvq9xgqK2QFdn11Q5vmmAFzOxD5y0Nr5jsAr7beUhX
-         +z4yH2T2CfCBFWPZOd4EKem+AXxxmK9zU1C+g/VGjxfkZKWBglam66pvSP/OZX1CvBmY
-         CKD5fSTNZHoP5qhopm7BVyRxXqZ9C8vmQSkcMpNGK1thaiU3EynOq3BocB0UrTaQ0jjX
-         JxtVptC6Nsy1ztZcuQpiR+jdhvT3yEocoxPhUXeVvJ0B1ITgSWITqYGtaNljvJnaRj4P
-         +A3Ew0DFXIXmtDPvujtC47VkdwIdfVbh43ApNQ+3FkfKhkkBrd8Pva2XulnkIUNxLFFT
-         QSJg==
-X-Gm-Message-State: AOJu0YyYcQLyUIA7SsjhjgPxakeBNAb4G373r9WSRitNQeTw6eTjNw2l
-	RMYFD3um2Iuud+ac1TlIbfri2b/LjToNpfQCajj2dKWEBcsz6VcP01JFDV3BeA==
-X-Gm-Gg: AR+sD10gmTjl/A9F4qiZ5lnSD7WLIpBCoTzncwZb8u/EPGRRiAAA86ooBQ+kFrHRxTB
-	j7YkyO4eT61GouJA5CFytV/RRFkILvijS7c9z8LFj38gj1CFIPIszHbI0tze4wMnUSk8fVeQ6ra
-	b9oCDCyP59IXLoqtN7JsXQM76koE6XJKIjq1U6sTmKrXvss0RukTzjU93DzCTFOlh0FUyHQYaJ2
-	hunwMPL5El6DcOaZ14MOpeIBiYadmNlt70qS02O3AhsTI27RX4bYUbys4bniMgCzwICVBuS+3/o
-	K4K4BXAvEa54S5rG0YNzzDw6O1JHKlrbnX0iL5YDUz8jJ31LoCsA05wicvKdOu8HBjzCBOBVvXH
-	/KE84XIvG/bV8jspgRRMNaqKJRVO6N4A+Sp9IHsd7/hEM8EqmUP5mSJ+lKOKe+t8QgpPR0hDgAY
-	5I5DD244UzBMNvpfzDYSIndw+z12NCmMSx7/qUtM3mvgdNyFoIbelnIhwbB1MTjxm4hiyRXpPut
-	UGsuLAJ
-X-Received: by 2002:a17:90a:e18d:b0:380:7688:fbe9 with SMTP id 98e67ed59e1d1-3933b764d23mr12272119a91.8.1786761224820;
-        Fri, 14 Aug 2026 19:33:44 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-394ea9723casm4714661a91.2.2026.08.14.19.33.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Aug 2026 19:33:44 -0700 (PDT)
-Message-ID: <3ba86c4d-ddc2-4716-bb4c-feb4b68bb6bd@gmail.com>
-Date: Sat, 15 Aug 2026 10:33:17 +0800
+        d=1e100.net; s=20251104; t=1786762537; x=1787367337;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
+        b=keWwVz7ITjxDc4qV+EX3eNriTg22TZn7iiHhubvzjA53eYZ9X/tAsfrpfS4fiRNtWw
+         qdojrOkWggRxPneO/KWOLPv0xsHefkVDTRBAX1oPIuLeywbgFAAiCvudeErNU2QpiYUQ
+         a0N02YYUU0uMBZZUetBz3Y7JYrbZFbEOc0Mr/Wbgs57FYCCoEhJJuk0KGgDeE8E/3z9+
+         akOnpitYLrqS4T8Uyff+cOtgVS+/cM8OA4T6iyFkLF1wrsxaJJqA8EY0GTPyCY788NWB
+         rABN9K2jqyV8P1guoG6cxUciY7edOEtNWMSr2yLmg1zDlAsvPDrRJeHXbEzZiHfBQmua
+         DQJA==
+X-Gm-Message-State: AOJu0Yzao+V5Abm3yLTIR5Q4/2xH8tKnEQktzBft9ylbCfOL5sQs3yRP
+	V736BZcX7gka5+gZj0e0NFxhT8tI58TtMHRjtyKVIk596KOkkKt1+k2dq/ig+yoJ4xBsPwfCe7l
+	+CCIs2biKc8GDT34Z8Mol5Elozq10eop98keY
+X-Gm-Gg: AR+sD12DbR8ECDJNcO/D9B9sbOEQTY/GLe5j/4DEinPkL/xyuYmGbxf7a072hNLxDsH
+	uw+nMjQCdjFTNqQOFLRPTX1KTQ6VpoKs98aeaRzmC7dXbMMVZIkCLGrfzCyOdPjYZL1784lYtev
+	nPXdvyQp9SAk1KuzQVsqYxEo8xaUfovMs/zSnAIVANO8IJeWRpSHvJ4v50glNWEalB14UhhFXFN
+	Nmi1FJCaHHoP2Oa5C57gx7StBe1wLe+0JGEeMnjDvnd8yezc6Uus3nC1ARq0gjS7V9N0b9U4CTZ
+	PP81Q9IL+uXNeci/wWBuvNj5HvOyFYxAjvtPt1+SmKhMUrY=
+X-Received: by 2002:a17:90b:38d1:b0:38e:4e61:c9e with SMTP id
+ 98e67ed59e1d1-3933b168bbfmr6998267a91.21.1786762536518; Fri, 14 Aug 2026
+ 19:55:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 03/32] ext4: simplify error handling in
- ext4_setattr()
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
-References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-4-yi.zhang@huaweicloud.com>
- <20260814101229.9F5201F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814101229.9F5201F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260812-net-netdevsim-v1-1-521a85e4fe91@gmail.com> <20260812140235.8AC2B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260812140235.8AC2B1F000E9@smtp.kernel.org>
+From: Subasri S <subasris1210@gmail.com>
+Date: Sat, 15 Aug 2026 08:25:24 +0530
+X-Gm-Features: AcwNN1UFV3hM3RwZUnTxCyjKPBWwLWgg9-4fTDT5T6kLa1MmJrERw0zuW5mD6Ls
+Message-ID: <CABfayGNZF553ZW=QoSkwA8YtRoDAQ5RP=MGyGXEbzbegYBN10w@mail.gmail.com>
+Subject: Re: [PATCH] netdevsim: update rxq->napi pointer during queue reset
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/14/2026 6:12 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] The patch incorrectly routes non-fatal errors from `posix_acl_chmod()` (and `ext4_truncate()`) to `ext4_std_error()`, triggering a spurious filesystem corruption response (DoS).
-> --
-> 
-> --- Patch [3]: [PATCH -next v5 03/32] ext4: simplify error handling in ext4_setattr() ---
-> commit f94f03ca7ff7f314c8faf61276a2cc51f78e4ce7
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> 
-> ext4: simplify error handling in ext4_setattr()
-> 
-> Refactor the error handling in ext4_setattr() to propagate errors using
-> the existing error variable and jump to the common 'err_out' label. This
-> removes the need for the redundant rc variable and unreachable checks.
-> 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> index 8654006a57eff..76bf0e944ebee 100644
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
-> [ ... ]
->> @@ -6244,15 +6244,19 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
->>   		}
->>   
->>   		filemap_invalidate_unlock(inode->i_mapping);
->> +		if (error)
->> +			goto err_out;
->>   	}
->>   
->> -	if (!error) {
->> -		if (inc_ivers)
->> -			inode_inc_iversion(inode);
->> -		setattr_copy(idmap, inode, attr);
->> -		mark_inode_dirty(inode);
->> -	}
->> +	if (inc_ivers)
->> +		inode_inc_iversion(inode);
->> +	setattr_copy(idmap, inode, attr);
->> +	mark_inode_dirty(inode);
->>   
->> +	if (ia_valid & ATTR_MODE)
->> +		error = posix_acl_chmod(idmap, dentry, inode->i_mode);
->> +
->> +err_out:
->>   	/*
->>   	 * If the call to ext4_truncate failed to get a transaction handle at
->>   	 * all, we need to clean up the in-core orphan list manually.
->> @@ -6260,14 +6264,8 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
->>   	if (orphan && inode->i_nlink)
->>   		ext4_orphan_del(NULL, inode);
->>   
->> -	if (!error && (ia_valid & ATTR_MODE))
->> -		rc = posix_acl_chmod(idmap, dentry, inode->i_mode);
->> -
->> -err_out:
->> -	if  (error)
->> +	if (error)
->>   		ext4_std_error(inode->i_sb, error);
-> 
-> [Severity: Critical]
-> Does this code now incorrectly route non-fatal errors from posix_acl_chmod()
-> (and ext4_truncate()) to ext4_std_error()?
-> 
-> Passing a non-fatal error code like -ENOSPC or -EDQUOT to ext4_std_error()
-> can cause it to treat the condition as a critical filesystem metadata
-> corruption, aborting the journal and remounting read-only (or panicking).
-> 
-> For example, if an unprivileged user exhausts their quota or filesystem
-> space, and then executes chmod on a file with a POSIX ACL,
-> posix_acl_chmod() attempts to update the ACL, calling ext4_set_acl(), which
-> may return -EDQUOT or -ENOSPC. This error is now assigned to the error
-> variable and falls through to the err_out label, triggering
-> ext4_std_error() and causing a potential local Denial of Service (DoS).
+On Wed, Aug 12, 2026 at 7:32=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> Earlier in this function (nsim_queue_start), there is an early return
+> for rq_reset_mode =3D=3D 1 that bypasses the new restoration code:
+>
+> drivers/net/netdevsim/netdev.c:nsim_queue_start() {
+>         ...
+>         if (ns->rq_reset_mode =3D=3D 1) {
+>                 ns->rq[idx]->page_pool =3D qmem->pp;
+>                 napi_enable_locked(&ns->rq[idx]->napi);
+>                 return 0;
+>         }
+>         ...
+> }
+>
+> Does this skip restoring rxq->napi, leaving it NULL and preventing XSK bu=
+sy
+> polling from working after a reset in mode 1?
 
-Yeah, if an inode shares its xattrs with another one, updating ACLs
-will allocate new space and can return ENOSPC when we're low on space.
-I'll drop this patch in the next spin. For later, maybe we can add a
-helper similar to ext4_error_is_fatal() to filter ENOSPC, ENOMEM, and
-EDQUOT, and only call ext4_std_error() for the real fatal ones. We've
-got similar checks in extent.c, so we could probably generalize that
-and share the logic.
-
-Thanks,
-Yi.
-
-> 
->> -	if (!error)
->> -		error = rc;
->>   	return error;
->>   }
->>
-> 
-
+Yes, I missed to handle the case when reset mode is 1. Sent a v2 patch fixi=
+ng
+this - https://lore.kernel.org/netdev/20260815-net-netdevsim-v2-1-d6c85c515=
+7a7@gmail.com/
