@@ -1,199 +1,176 @@
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F1E3A8743
-	for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 23:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F3123183F
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786748777; cv=none; b=A3A4tl+CEDj/LGVkaTW/WIVblWmZ4AcAgsMKs1IQ8WvNhnxUHScTyCNv0/Wcc7daGA2w8v9YdzXwpjMC3yP+PDt6NEC9A9ksIxf4c766oSHnO8SfnInyueRIsKY+KNrsAc77gG5nsWycCSZLOAIzKPFCesiuSvM1qM64BSgL8aU=
+	t=1786761227; cv=none; b=T2cB+ahTwO/wBFMZlIpZ3NCxIM+zN/6YrtFGdhS5lRHhQ9e1LFE6tqlZ802Q7ILmDbhU/D7jqYsSmNyIIq3q1BcHiSybxKEaPD4BFeQeVoyQuUlngLhzHkkmfi24fuDEY5MAZ7wRqqVIdlhGLPlitTmv+kNH0o1LNgUWUyE/vLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786748777; c=relaxed/simple;
-	bh=1TpSUfASlPYD6vkolB41pNnkgQFwJ5CZAHQhOHVxR9E=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GMha99D0HmG0hxBFAy9TCJO/WF3p7MALzOaDBiAHkk37I1rKesj5IcNAelS3kLnQmJ2GXFufy8E8CRDsW6yv03+USiQ9EMYaBbMG82mo0s/VkNMFeCjvreC3XU7eKml9Wuimt158GttHZfLwjyqKpt0BLJzzAax4X6QNSJ1A+4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=l7GMIIOj; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	s=arc-20240116; t=1786761227; c=relaxed/simple;
+	bh=iV4XDfJX+CFZbdszmcTiGj00Tjyby5tA1Vo+celIx7w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H73/r4a02tOBH2pe0IK3wzvxllnX2HoYMyHg8z2dJYYhPcPWDpMM5KzVYOGddHU3ql9pGjYz/R5lh9rFMGkBmi/8rPr8r5lJ5Q8CyEL4RqDXEt8DdKW0Lv5A1p67CJgV7WbgLW9jpAlsw5d+m06XUYs4MOi7PEdno8xv0tfCrWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kroKMND7; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="l7GMIIOj"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 2E933240027
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 01:06:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1786748773;
-	bh=duys7+8s+gASCH3kpoA/OFIn50y/yFTrHBputIyJi6w=;
-	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP:From;
-	b=l7GMIIOjHzspips0gsYJUaNJEU9rfOD5h72Sm5F2NcN8u7cs/yC5S5oz+PE9iOvj4
-	 iaP8tcEykpGZYbf0TrZiuFlLxOP8sOkybBzbEL8r+WzCPcWXfb76K8ACq9bw4bNGh5
-	 Ajacpgyt28VyveeVmBSvV9+JWa70Ri1EnR7Xrk/urww/2w6iRVIO58EFlBilw8VXbx
-	 kW+zZRxgqv1EuZC4nezWhZ/CZ7trwEE4gjNx/BggMDt/TVGXkEU7uf0DDYO8MKF6Aa
-	 Ivq/WDRg32VedgB8uitE/3SIwNjDTRlSA4aVd6KQbtNC47yAt6AoEa3lLtox+NOvdX
-	 rsgU3okQnxfpQ==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hMHsJ2fkCz6tsf;
-	Sat, 15 Aug 2026 01:06:12 +0200 (CEST)
-Message-ID: <06254c4859f8f11858bc950a52c1214c4e13f87e.camel@posteo.de>
-Subject: Re: [PATCH v4 1/6] dt-bindings: rtc: Add pinctrl for S35390A
-From: Markus Probst <markus.probst@posteo.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, Alexandre Belloni	
- <alexandre.belloni@bootlin.com>, linux-rtc@vger.kernel.org, robh@kernel.org
-Date: Fri, 14 Aug 2026 23:06:12 +0000
-In-Reply-To: <20260814230443.5D6451F000E9@smtp.kernel.org>
-References: <20260815-rtc_s35390a_int1-v4-0-3133309c365f@posteo.de>
-	 <20260815-rtc_s35390a_int1-v4-1-3133309c365f@posteo.de>
-	 <20260814230443.5D6451F000E9@smtp.kernel.org>
-Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
- keydata=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
- jfGillcaQOqFZ3WwVqyzG1BUfTow==
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-Y+aJ1fG7DBSjhDBewXiA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kroKMND7"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e88b60121so1352605a91.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 19:33:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786761225; x=1787366025; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=x0Z8mCo+puk0a6hzRC+iz3VlA602gbMFooVLucdUKS8=;
+        b=kroKMND7Oo0ZqSEwOPcL8IiYB62WX5aOkR2FkZ/oKfRGCebFXySXRxOLNLftzL5KrL
+         YU2tLVwVDpcvLt3vHe+nBz0cVCkxJKbuZbQLsiacAXaAOyy6U5vn4KvrefvJKW2Lyznw
+         abBbTzuhaPyLCsnrqg58FKW+xSu40vCvNey85VElMg88ltjgOA9mIqvTICmZAHSmh5zM
+         W9rPLMl5VmANufsdZ0tiTEoNI4jUYOqT89CryNdKU3UlVZltyt0yeHJCRCHMCXt62lgH
+         nbiY6EswG+/+SjuFNCK5k48skjn6xhQjiNgSIpU7F6tFEGi0PBDDLgWc6Sk21SIA0ED6
+         QiCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786761225; x=1787366025;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=x0Z8mCo+puk0a6hzRC+iz3VlA602gbMFooVLucdUKS8=;
+        b=iRogoGRlwSYwYVy41YTmC7AgUvq9xgqK2QFdn11Q5vmmAFzOxD5y0Nr5jsAr7beUhX
+         +z4yH2T2CfCBFWPZOd4EKem+AXxxmK9zU1C+g/VGjxfkZKWBglam66pvSP/OZX1CvBmY
+         CKD5fSTNZHoP5qhopm7BVyRxXqZ9C8vmQSkcMpNGK1thaiU3EynOq3BocB0UrTaQ0jjX
+         JxtVptC6Nsy1ztZcuQpiR+jdhvT3yEocoxPhUXeVvJ0B1ITgSWITqYGtaNljvJnaRj4P
+         +A3Ew0DFXIXmtDPvujtC47VkdwIdfVbh43ApNQ+3FkfKhkkBrd8Pva2XulnkIUNxLFFT
+         QSJg==
+X-Gm-Message-State: AOJu0YyYcQLyUIA7SsjhjgPxakeBNAb4G373r9WSRitNQeTw6eTjNw2l
+	RMYFD3um2Iuud+ac1TlIbfri2b/LjToNpfQCajj2dKWEBcsz6VcP01JFDV3BeA==
+X-Gm-Gg: AR+sD10gmTjl/A9F4qiZ5lnSD7WLIpBCoTzncwZb8u/EPGRRiAAA86ooBQ+kFrHRxTB
+	j7YkyO4eT61GouJA5CFytV/RRFkILvijS7c9z8LFj38gj1CFIPIszHbI0tze4wMnUSk8fVeQ6ra
+	b9oCDCyP59IXLoqtN7JsXQM76koE6XJKIjq1U6sTmKrXvss0RukTzjU93DzCTFOlh0FUyHQYaJ2
+	hunwMPL5El6DcOaZ14MOpeIBiYadmNlt70qS02O3AhsTI27RX4bYUbys4bniMgCzwICVBuS+3/o
+	K4K4BXAvEa54S5rG0YNzzDw6O1JHKlrbnX0iL5YDUz8jJ31LoCsA05wicvKdOu8HBjzCBOBVvXH
+	/KE84XIvG/bV8jspgRRMNaqKJRVO6N4A+Sp9IHsd7/hEM8EqmUP5mSJ+lKOKe+t8QgpPR0hDgAY
+	5I5DD244UzBMNvpfzDYSIndw+z12NCmMSx7/qUtM3mvgdNyFoIbelnIhwbB1MTjxm4hiyRXpPut
+	UGsuLAJ
+X-Received: by 2002:a17:90a:e18d:b0:380:7688:fbe9 with SMTP id 98e67ed59e1d1-3933b764d23mr12272119a91.8.1786761224820;
+        Fri, 14 Aug 2026 19:33:44 -0700 (PDT)
+Received: from [100.125.248.95] ([124.70.231.46])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-394ea9723casm4714661a91.2.2026.08.14.19.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Aug 2026 19:33:44 -0700 (PDT)
+Message-ID: <3ba86c4d-ddc2-4716-bb4c-feb4b68bb6bd@gmail.com>
+Date: Sat, 15 Aug 2026 10:33:17 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH -next v5 03/32] ext4: simplify error handling in
+ ext4_setattr()
+To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
+Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
+References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
+ <20260814093331.1703882-4-yi.zhang@huaweicloud.com>
+ <20260814101229.9F5201F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Zhang Yi <yizhang089@gmail.com>
+In-Reply-To: <20260814101229.9F5201F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---=-Y+aJ1fG7DBSjhDBewXiA
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, 2026-08-14 at 23:04 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Invalid use of the `wakeup-parent` property on an RTC end-device.
+On 8/14/2026 6:12 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] The patch incorrectly routes non-fatal errors from `posix_acl_chmod()` (and `ext4_truncate()`) to `ext4_std_error()`, triggering a spurious filesystem corruption response (DoS).
 > --
->=20
-> --- Patch [1]: [PATCH v4 1/6] dt-bindings: rtc: Add pinctrl for S35390A -=
---
-> commit 58cc609a743d62ad0839cf063b2bd4bf9603a2d0
-> Author: Markus Probst <markus.probst@posteo.de>
-> Subject: dt-bindings: rtc: Add pinctrl for S35390A
->=20
-> This commit converts the devicetree bindings for the S-35390A RTC into a
-> standalone YAML schema. It also adds properties to configure individual p=
-ins
-> via pinctrl to allow the interrupt signal 1 to be used for wakeup alarms.
->=20
-> > diff --git a/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml b/D=
-ocumentation/devicetree/bindings/rtc/sii,s35390a.yaml
-> > new file mode 100644
-> > index 0000000000000..d9da3abbbd518
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/rtc/sii,s35390a.yaml
->=20
+> 
+> --- Patch [3]: [PATCH -next v5 03/32] ext4: simplify error handling in ext4_setattr() ---
+> commit f94f03ca7ff7f314c8faf61276a2cc51f78e4ce7
+> Author: Zhang Yi <yi.zhang@huawei.com>
+> 
+> ext4: simplify error handling in ext4_setattr()
+> 
+> Refactor the error handling in ext4_setattr() to propagate errors using
+> the existing error variable and jump to the common 'err_out' label. This
+> removes the need for the redundant rc variable and unreachable checks.
+> 
+>> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+>> index 8654006a57eff..76bf0e944ebee 100644
+>> --- a/fs/ext4/inode.c
+>> +++ b/fs/ext4/inode.c
 > [ ... ]
->=20
-> > +  interrupts:
-> > +    minItems: 1
-> > +    maxItems: 2
-> > +    description: Supports up to 2 interrupt lines via the INT1 and INT=
-2 pins.
-> > +
-> > +  wakeup-parent: true
-> > +
-> > +  wakeup-source: true
->=20
-> [Severity: Low]
-> Is wakeup-parent appropriate for this device? The wakeup-parent property =
-is
-> typically defined strictly for cascaded interrupt controllers to specify =
-an
-> upstream wakeup-capable interrupt controller. Since this is an end device=
-,
-> should it only use the wakeup-source boolean instead?
+>> @@ -6244,15 +6244,19 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+>>   		}
+>>   
+>>   		filemap_invalidate_unlock(inode->i_mapping);
+>> +		if (error)
+>> +			goto err_out;
+>>   	}
+>>   
+>> -	if (!error) {
+>> -		if (inc_ivers)
+>> -			inode_inc_iversion(inode);
+>> -		setattr_copy(idmap, inode, attr);
+>> -		mark_inode_dirty(inode);
+>> -	}
+>> +	if (inc_ivers)
+>> +		inode_inc_iversion(inode);
+>> +	setattr_copy(idmap, inode, attr);
+>> +	mark_inode_dirty(inode);
+>>   
+>> +	if (ia_valid & ATTR_MODE)
+>> +		error = posix_acl_chmod(idmap, dentry, inode->i_mode);
+>> +
+>> +err_out:
+>>   	/*
+>>   	 * If the call to ext4_truncate failed to get a transaction handle at
+>>   	 * all, we need to clean up the in-core orphan list manually.
+>> @@ -6260,14 +6264,8 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+>>   	if (orphan && inode->i_nlink)
+>>   		ext4_orphan_del(NULL, inode);
+>>   
+>> -	if (!error && (ia_valid & ATTR_MODE))
+>> -		rc = posix_acl_chmod(idmap, dentry, inode->i_mode);
+>> -
+>> -err_out:
+>> -	if  (error)
+>> +	if (error)
+>>   		ext4_std_error(inode->i_sb, error);
+> 
+> [Severity: Critical]
+> Does this code now incorrectly route non-fatal errors from posix_acl_chmod()
+> (and ext4_truncate()) to ext4_std_error()?
+> 
+> Passing a non-fatal error code like -ENOSPC or -EDQUOT to ext4_std_error()
+> can cause it to treat the condition as a critical filesystem metadata
+> corruption, aborting the journal and remounting read-only (or panicking).
+> 
+> For example, if an unprivileged user exhausts their quota or filesystem
+> space, and then executes chmod on a file with a POSIX ACL,
+> posix_acl_chmod() attempts to update the ACL, calling ext4_set_acl(), which
+> may return -EDQUOT or -ENOSPC. This error is now assigned to the error
+> variable and falls through to the err_out label, triggering
+> ext4_std_error() and causing a potential local Denial of Service (DoS).
 
-If it is connected to an interrupt controller and the interrupt
-controller then causes the wakeup, wakeup-parent should be used here.
+Yeah, if an inode shares its xattrs with another one, updating ACLs
+will allocate new space and can return ENOSPC when we're low on space.
+I'll drop this patch in the next spin. For later, maybe we can add a
+helper similar to ext4_error_is_fatal() to filter ENOSPC, ENOMEM, and
+EDQUOT, and only call ext4_std_error() for the real fatal ones. We've
+got similar checks in extent.c, so we could probably generalize that
+and share the logic.
 
->=20
-> [ ... ]
->=20
-> > +examples:
-> > +  - |
-> > +    i2c {
-> > +        #address-cells =3D <1>;
-> > +        #size-cells =3D <0>;
-> > +
-> > +        rtc@30 {
-> > +            compatible =3D "sii,s35390a";
-> > +            reg =3D <0x30>;
-> > +            pinctrl-0 =3D <&rtc_pins_default>;
-> > +            pinctrl-names =3D "default";
-> > +
-> > +            wakeup-parent =3D <&int>;
->=20
-> [Severity: Low]
-> Should this example be updated to remove the wakeup-parent assignment,
-> assuming the property is dropped from the schema above?
->=20
-> [ ... ]
+Thanks,
+Yi.
 
---=-Y+aJ1fG7DBSjhDBewXiA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+> 
+>> -	if (!error)
+>> -		error = rc;
+>>   	return error;
+>>   }
+>>
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmp/n2MbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSKWEP/3WfFNrYKZ64Wn61F/3n
-hlI9BhXTDbL6bCzMzZKg9Ys1StrauNpld6sTCYekEfPay2Haee/NxdQyb/t+N6A/
-K8ljGHqVk+68NrH0wwlzF5BkSr7+8XBfS+D8LclB7cegndTizKNfODCWAbW0b+WK
-3UMfs2hKrbslRC6SP3lFm/Li9FSqxQbiomdjzbt/cmSYxV5iqRNy0+nuJkFtyJ25
-ihX+UpjCtpvmHqOia8sS755OF7PZN88gcDm37v6MEgJziNooNIPptls9+V3Q7xMp
-y330L80WUCYFOmHCFv/ZDNPD1Bsj0hSKyCy+dXPK5fdPe28aMDJ3AzXYyOkbxIsB
-UdsLhzTU42UbaLX4kS4xNzD9o3UkOSqZxSRPWDmiMP2wqNbEGmedC8rLFEhdB/ZU
-cqfVgTpIltrk5FoBxe+NwZji5ssdyVd5/+pdVcMaXot7/q7JZpsb0Pgw8xUoIgHO
-pMf7g6xu2ZDLA+OGkM0SGwvexiaWJbLrznHVpHadu0JUy1W6YitESK4I6RSvpkDS
-NtPzWENSPbwiiFL+T+MPcd3MdVBA6LxHojfbsV+czb2pN2D8P9AxilkV12qVPSm+
-anI6oVHkdNmYqNtLkHYcBBKCsKGabvw45PBcjFYfPVDz0Mtf0Izsn7vnab1CIyvW
-o8tdZBzBRvJF3KzZGnqiaoY1
-=CNfC
------END PGP SIGNATURE-----
-
---=-Y+aJ1fG7DBSjhDBewXiA--
