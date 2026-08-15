@@ -1,98 +1,132 @@
-Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0FB189B84
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 18:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4462D17AE11;
+	Sat, 15 Aug 2026 21:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786819781; cv=none; b=b9IpYh7KG9eeugdjwTe9BlaPEYgvTQ5S+il/CAGjkTSQ9thWbz2CdIiI4RuNVdyQJpYiqfSrk1OHBydSoIjJa8FeN6i+A6OWwyI8VclSf/XxdN7g75xzO/rQ6fadB2z6pSqcY6AMfjoahQNBX/KCpGMg3iBsUBjtz/d/0+pJGiE=
+	t=1786828156; cv=none; b=mSGzmkFsxWEQeMO0ucbG4t1i1v7AP1spGsqvxAU2yxWySDpv1jupU+oGvvR+zmVxWcuvSM+2C/vRPwbsOxuhaIIUpnfIpqLNkEt6SDQXBYAFWmkQInBEnFTLhR7+bcU8LkomW1NXQ5jjj4Ovjp90aXvuetbgZ8GMxknQEItl+eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786819781; c=relaxed/simple;
-	bh=PttXHyLo2Ca8uSgwgo9FDS084O6lH/w869izAOuRLwo=;
+	s=arc-20240116; t=1786828156; c=relaxed/simple;
+	bh=cvHtDf/MNkZzP+HuOGgIqHTbLHKklw4Of1sANfDKL/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pCa2bdfVgjlgMuyH0NI0fcWJt+aeh7f4VJmvz4Al/T8+lE0OThFmhqJTwBpoi/cCP2VjqOCdt1cR9jb4vzXRNC9nDRD5oPNxCdPxbDgsSXNzF0Ac97UYmPY+/wqjIjrdCZZ5FnmpR5QdpUjW8vwkV5aG+JJfGA/PSjlT38vdxXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=Pd6x59u8; arc=none smtp.client-ip=46.235.229.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=RQVnVINCmmgyVGrEOYIB8cJ0qYIUTLA5R4u4j5ljpiBJpGfvHCE35y0v5EweN5uU2OG6c2wZU9NtrNJTISbG21cDVFr6+jxGi2smMpkXG69rUdDI5Ucf6U5Jq0mkDxPs3OMnCkASh33FVPRv0MDdfyJYlj+5SeoStpwWro0oH6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QvKIPru8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="Pd6x59u8"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
-	:Subject; bh=6WuypneQn3cTHhX0dwJvE+PWf9laq6MT/r6uqMRRYko=; b=Pd6x59u8xZNcIbia
-	8YI98wuNpUOrPFLzovlpKqVkqBfljTvNdfQdhzuxpb3He/gOEA4vffxZWNygHgXtzkjh/IY2ZhbtC
-	NBUPzS6nrjo7FNtIlj6BqBKgSRG9pN7FIlbZ9U9+W0x8P05wgYxAHW7lZvK8o4QCGYYymfASQ6P5r
-	6rDbGLdoiCOvbrLnDm66v+apvqhck1IgBAOovzWgms+zqLRymvWJAzYr6iV1UBaz5mcMMs99xW3xZ
-	Dmnbb6ctigLeNmhSwSgM8vtG7DJcLFotootLVQMVdR9cdhDKcK2xdQK7eX0p/y041A+R/YqD1O/rY
-	OMIrFL18in+n+BW+1A==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
-	(envelope-from <dg@treblig.org>)
-	id 1wvJRp-00000002HnN-3eX2;
-	Sat, 15 Aug 2026 18:49:37 +0000
-Date: Sat, 15 Aug 2026 18:49:37 +0000
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 3/4] drm/amdgpu: Remove is_idle (non trivial functions)
-Message-ID: <aoC0wVsRCZ74YlOL@gallifrey>
-References: <20260815180033.8958-1-linux@treblig.org>
- <20260815180033.8958-4-linux@treblig.org>
- <20260815183749.21F7F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QvKIPru8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A81D1F000E9;
+	Sat, 15 Aug 2026 21:09:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786828155;
+	bh=SdiKS9gyo4Z/n0wKNYDT/4TsbzKJL8AhnxRoK+S57/8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=QvKIPru8o5AsQvFOlclGfaVkqyTYz6nHIBTvwG5bpVSJYAv7LItFVVxIPezqPWp9X
+	 J1/tw8i5IBOQ2LTWYpGyQzukiWKFcPro/l8+A23unovvpectwVaYmhs2vKqhljqZJc
+	 PvOcs/mq79Xqrwu2s81Vgy8eVTo+lpc0w0Xf8be3NkGuklyYEasTaqe60Xumm1Qd6l
+	 +P8nFkBWXOO179GMoGgcjUF7o+CkMF169A1mZb2UrAatMaYC2/iYjR87RN5lxIq/z9
+	 ySavR4E9e59nk72RqCp/nEgJdty2h+WgqdsoQa9JYbpJvIgpx5xIUKoX+1Rk+KG/TK
+	 qO5wWiljZrS9g==
+Date: Sat, 15 Aug 2026 16:09:14 -0500
+From: Rob Herring <robh@kernel.org>
+To: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] of: property: add i2c-parent to fw_devlink supplier
+ bindings
+Message-ID: <20260815210914.GA2217724-robh@kernel.org>
+References: <20260813-b4-of-property-add-i2c-parent-v1-1-a2487e920ce1@nexthop.ai>
+ <20260814010950.051261F000E9@smtp.kernel.org>
+ <20260814181510.GH1981719-robh@kernel.org>
+ <DKOWMVJ31OP8.KS5H56DT4YUE@nexthop.ai>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260815183749.21F7F1F000E9@smtp.kernel.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.101+deb13-amd64 (x86_64)
-X-Uptime: 18:49:20 up 8 days, 22:27,  2 users,  load average: 0.06, 0.02, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <DKOWMVJ31OP8.KS5H56DT4YUE@nexthop.ai>
 
-* sashiko-bot@kernel.org (sashiko-bot@kernel.org) wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Incomplete API cleanup: The `is_idle` function pointer remains defined in `struct amd_ip_funcs`.
-> --
+On Fri, Aug 14, 2026 at 12:13:45PM -0700, Abdurrahman Hussain wrote:
+> On Fri Aug 14, 2026 at 11:15 AM PDT, Rob Herring wrote:
+> > On Fri, Aug 14, 2026 at 01:09:49AM +0000, sashiko-bot@kernel.org wrote:
+> >> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >> - [High] fw_devlink incorrectly parses I2C slave addresses as phandles due to 0-cell supplier binding definition for `i2c-parent`.
+> >> --
+> >> 
+> >> --- Patch [1]: [PATCH] of: property: add i2c-parent to fw_devlink supplier bindings ---
+> >> commit 85f34a66eac871d9e36bccb6795b94b17ab065d4
+> >> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+> >> 
+> >> of: property: add i2c-parent to fw_devlink supplier bindings
+> >> 
+> >> This commit teaches fw_devlink about i2c-parent so the core creates the
+> >> corresponding device links. This ensures consumers are unbound before the
+> >> parent adapter's device, removing the need for -EPROBE_DEFER.
+> >> 
+> >> > diff --git a/drivers/of/property.c b/drivers/of/property.c
+> >> > --- a/drivers/of/property.c
+> >> > +++ b/drivers/of/property.c
+> >> > @@ -1409,6 +1409,7 @@ DEFINE_SIMPLE_PROP(resets, "resets", "#reset-cells")
+> >> >  DEFINE_SIMPLE_PROP(leds, "leds", NULL)
+> >> >  DEFINE_SIMPLE_PROP(backlight, "backlight", NULL)
+> >> >  DEFINE_SIMPLE_PROP(panel, "panel", NULL)
+> >> > +DEFINE_SIMPLE_PROP(i2c_parent, "i2c-parent", NULL)
+> >> 
+> >> [Severity: High]
+> >> Will this correctly handle device tree bindings where the i2c-parent
+> >> property includes a slave address argument?
+> >> 
+> >> For example, platforms using devices like the Toshiba TC9563 PCIe switch
+> >> might use a property such as: i2c-parent = <&qup_i2c 0x77>;
+> >> 
+> >> By passing NULL as the cells argument to DEFINE_SIMPLE_PROP(), the parser
+> >> assumes a 0-cell list. When fw_devlink iterates over the property, it finds
+> >> the first phandle correctly, but won't it erroneously interpret the slave
+> >> address argument (0x77 / 119) as a second, independent 0-cell phandle?
+> >> 
+> >> If another unrelated device tree node happens to match this phandle ID,
+> >> could this cause fw_devlink to link the consumer to the wrong device,
+> >> potentially leading to spurious probe deferrals or circular dependencies?
+> >
+> > I think you need custom parsing for this one to read the first cell and 
+> > ignore the 2nd cell if present.
+> >
+> > Rob
 > 
-> --- Patch [3]: [PATCH 3/4] drm/amdgpu: Remove is_idle (non trivial functions) ---
-> commit cf17e80a1ef9c0d7e6925465357af056c949e840
-> Author: Dr. David Alan Gilbert <linux@treblig.org>
+> Agreed. One wrinkle with unconditionally ignoring everything after the
+> first phandle: i2c-demux-pinctrl holds a list of several bare phandles
+> (i2c-parent = <&iic2>, <&i2c2>, <&gpioi2c2>;), and in the flattened
+> tree that's indistinguishable from tc9563's <phandle addr> form. So
+> always stopping at entry 0 would silently drop the demux's remaining
+> supplier links.
 > 
-> drm/amdgpu: Remove is_idle (non trivial functions)
+> The only reliable disambiguator I found is the consumer's compatible â€”
+> toshiba,tc9563 is the one binding with a trailing slave-address cell.
+> I have this queued for v2:
 > 
-> This commit removes the various is_idle implementations across the amdgpu
-> driver since the method is never called. The same logic is mostly duplicated
-> in the wait_for_idle method which remains in use.
+> static struct device_node *parse_i2c_parent(struct device_node *np,
+>                                           const char *prop_name, int index)
+> {
+>       if (strcmp(prop_name, "i2c-parent"))
+>               return NULL;
 > 
-> > diff --git a/drivers/gpu/drm/amd/amdgpu/cik_ih.c b/drivers/gpu/drm/amd/amdgpu/cik_ih.c
-> > --- a/drivers/gpu/drm/amd/amdgpu/cik_ih.c
-> > +++ b/drivers/gpu/drm/amd/amdgpu/cik_ih.c
-> [ ... ]
-> > @@ -435,7 +424,6 @@ static const struct amd_ip_funcs cik_ih_ip_funcs = {
-> >  	.hw_fini = cik_ih_hw_fini,
-> >  	.suspend = cik_ih_suspend,
-> >  	.resume = cik_ih_resume,
-> > -	.is_idle = cik_ih_is_idle,
-> >  	.wait_for_idle = cik_ih_wait_for_idle,
+>       /* toshiba,tc9563 is <phandle addr>; every other user is bare phandles */
+>       if (of_device_is_compatible(np, "toshiba,tc9563")) {
+>               if (index)
+>                       return NULL;
+>               return of_parse_phandle(np, prop_name, 0);
+>       }
 > 
-> [Severity: Low]
-> Since we are removing the .is_idle assignments across the tree, is it also
-> worth removing the is_idle function pointer from the struct amd_ip_funcs
-> definition in drivers/gpu/drm/amd/include/amd_shared.h to complete the
-> API cleanup?
+>       return of_parse_phandle(np, prop_name, index);
+> }
+> 
+> Is a compatible check in property.c acceptable here, or would you
+> rather see something else (e.g. entry 0 only, accepting the lost demux
+> links)? If this looks fine I'll send it as v2.
 
-That's what I do in the next patch!
+This is fine. Hopefully we can prevent more cases though.
 
-Dave
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260815180033.8958-1-linux@treblig.org?part=3
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Rob
