@@ -1,117 +1,120 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BBF1E5B9A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 02:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84517257854
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 03:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786762538; cv=pass; b=JihaMh5BtdgxooDcFBy4wONHVef6XHpy3SW7SW0HXdieBxA/EBex3dgB9uzs/0tMXO/L5ycfI/aJv7RG8m5S5H/WkzmoidL9gstbF016Wp2z7txvdDg6dahs+hGoSNtAtCON+9Qvqp4WUBvgiylRdvTYJGn5hG6sVq16Ro1oB8Q=
+	t=1786764017; cv=pass; b=dcCk1T5QGPYJDnXxvqlW6ziIRgmqUBA+Yun+RvlSc1mKp8n4JdtoywwfDOUoIOhSqmk7xrK8o6lQBgML9QzvHeuIWwJqxtILIiy3u692fzSCpVDobR5/k+k65FjG/MDGA31mX9MmRJwfoEMbmz7GejBRCsHPiu3bJ0knYtVVOw4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786762538; c=relaxed/simple;
-	bh=Fx8jpcriAtMOORqEdmHYz+cT8ZtXqnCKp7LKXe/56PY=;
+	s=arc-20240116; t=1786764017; c=relaxed/simple;
+	bh=qvk4YjvniYtak+kXTfBaCRVIW+L/iNNu37Gor4R2CX4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mxszl9u0qt9phdoYRoWOI+K4HxC/eeEKtEjvdPFFfOHNarvrbi8duLN7nfmV2LNqCP4O8i8cosF0LCOIpctV7TLjDMm5yQ2atf5knE2RceB4LKw1BkIrhDqVoJ1y9hDnbcMLEgN1EbT/O4KkR8xdepC0rmuPG8is/2gT8QZGm44=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DvKgFGsl; arc=pass smtp.client-ip=209.85.216.48
+	 To:Cc:Content-Type; b=bbmzG+0vSUaLqvGV0Yze906lZP80A7KAIEWXBx+jJ61sK8TdQnmYrmhVHoNc21uRXeeecxnH4X7gjZjJWEYwyoJpw4yMGOFTYry7SjaUa8UrvytXkwUPnEzh7ZEBgkxqJV8aHx3GKj0RP1c7s3w1WUvE3M2l9FmqSfZ+4QcNwi8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mOZEjuQx; arc=pass smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DvKgFGsl"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-38dd55ad76cso1719041a91.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 19:55:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786762537; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mOZEjuQx"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2d01663d816so15256735ad.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 14 Aug 2026 20:20:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786764016; cv=none;
         d=google.com; s=arc-20260327;
-        b=R3ClOaZ522Yqv/RwEaXJA88nMj/jffZ6pPFqEgsoaciUzmEUjtrbQNYjtNTjMzEC1Z
-         njTg2JTI3nRAAb/YvRG4I8+zV1RkTPGeZg7FerznkVgv2PYyo97D35bbw7Z9dGsFSAsv
-         yQpg+rzpxWXMuGW2GcO0Pyy96cxAY8CIjTPHx3m85L2EJKHCVLLlDRS8dt4w8pPjbS7Q
-         a6hJ8dJe4y6b8Iwhratqnxq/VQe0WfdY8ko0IMrtVP/QO3yC/QHJFuoMasuZy1ugArGR
-         4/9xPheQWEkKqt6Q2O8PPgZb2FVhUsPg5hRviCSHcVQpnFMjgvCUv2MFgp8pp0WDvZEa
-         hJJw==
+        b=LURCZeSgmmCZMnHdgWBEats4LB0mhBuwB60A+zARzmLpsKxTgbnTRNhqyGMHtTSo3i
+         o2QYu1T+AM6jviYa1k62S8XkuJNxSREHbZUxBIV1ax2ovmjK7jWJFlfRIoeu8228ynFM
+         vpSCW6SFXMV7KevsFTkdklBUqiCYihTiUiB1rUr8/vsdJWWsHvgSkplCYamk+JoKm07R
+         aPD3u5yfRN/utKxcwW+iKxu0HL72ILq5uNc00conbLa7TZTbjDZvX1fqsVJusOZEG+x/
+         QxcoR3amubKRhwuP7DLbU6cmttEsZwlAojg8OaPPbm3i0d0f1jWFEtCcGotxTgJwEKwa
+         Ng3Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=s42wC4lgya/mAEZ3+0MIKkFZaa62LITqDsv5px9luEPvCsCUREfJJUHUDZsCjiZZKW
-         kXmSKgVAgor0Q7qonhnPG0qPHwKVPlQXqgw8xkS/WJoIpFzcXoWUhqo8R8vJPrdsLAlf
-         saF3QiS2WQ+84r03OX3h94q9KXAej8eo6P/UE0WGVfrZ3OnrReXBEwXKeUghHjwnGShJ
-         1eDWUuOtilJDBGDGPFDqTAhFjfnalbvVWuhaKYSGwFfk3RyPJeewkYlhKRVAbUtd7dKu
-         8sY0c1y5Q044gHb9P3akTlVgDTGSnCpR3xstZuSSeNd4TXrzjLh9HXR272aqahWsEUKP
-         5MCg==;
+        bh=qvk4YjvniYtak+kXTfBaCRVIW+L/iNNu37Gor4R2CX4=;
+        fh=GJnPbtl+vSOzxR/1fEs1OZTrAmKtEW0RCoGgxPNOOJA=;
+        b=kJKFYDFEMGuX9vwr6gsD+9/Jpg2Pp3hkKVW46ksn4KIAxVpX8fs1PJE/G7b0Lhnlsf
+         FN/pwtXHkZkEGU2K5cltN1WH8P1spYRX4h2be+c4DkIPaP80dwQgLoDv3+BEgV9fLv7D
+         6WKICTYpdShJTFpIdw/I4WRKd/qAbYuoFf35I7WTnMb6eRKOeQXDgIM+74ty29K1T7U2
+         rPoN14QrsJbb4xu/PV/0Uta1IWs/BBUGqVrUiSbS4fXzRQX8PZWBUlwV/FIUuR0ZAuzd
+         N5DD2PAvjNObCYeM6rAorSgmQF9kNCJimw6npL0uv8/qHuK0C33nw/XQDfSCP0gNW3FC
+         xKFQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786762537; x=1787367337; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786764016; x=1787368816; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
-        b=DvKgFGsl7cI81mEL2smR2vZFbgyTTjTdwG5zIR/ODu50xJXYazXVxCyyj3GZWQC+Am
-         EO4B445BkvkQSpy1RrlKbRnvrzuxtnQYsJFXbM8JCrFP+v4InBhZbBpZ/EMM4Blm/8u+
-         m/gBaijSqKIG263kBzNCZrRKoG8m0MX+TBqFgcPdCcOXtgP8OHI0iTBzkDOdgjE+5TcL
-         SMDIn5ylGdwHL7lUjnWHwzNQWCKMZKTucH8O+mdt8HlSOAT+9YP89n3YK/TTB5d96tN1
-         NLN+qwkKHvHJ/9WTyHibp2jUlxRBuj+or77USHMJVaz3yNMcgClJklDYVFIhEyGeGfS9
-         Gd0A==
+        bh=qvk4YjvniYtak+kXTfBaCRVIW+L/iNNu37Gor4R2CX4=;
+        b=mOZEjuQxf5qVvF4Xb9drwdpn+NejzIN150rt+XdNF8//SuBGMrgXKUSqffv6TO71Fe
+         JS1cVHUVK3HaMUNLewOcNsXwC7eKDNMu6DvKCDzE4CjuNPc55M+Vx1D8WQNbRFeEI3KT
+         mqnB/n0MnVz902ocwNbp0FOyxHBupoMbt9LBUccr2YWuucCdr9Uw//oRsDVpOfonfirn
+         Oj9NF0qm+cDOSuj80/lKUj8tJacroztM+DHbPvVEQN24Fl5cUBX/eBq6RELKENoyQbK+
+         GiOEA5xIlBo9Qu8JpBLGFNqRqs576+CL3Us1HFBsAOFK3VkYh6P/J3aV9XDlgoDFHffL
+         B6CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786762537; x=1787367337;
+        d=1e100.net; s=20251104; t=1786764016; x=1787368816;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VPaZxMbqLEnlS6J9v9E+TEXvf9o4iRcf1Qh32ca3bM8=;
-        b=keWwVz7ITjxDc4qV+EX3eNriTg22TZn7iiHhubvzjA53eYZ9X/tAsfrpfS4fiRNtWw
-         qdojrOkWggRxPneO/KWOLPv0xsHefkVDTRBAX1oPIuLeywbgFAAiCvudeErNU2QpiYUQ
-         a0N02YYUU0uMBZZUetBz3Y7JYrbZFbEOc0Mr/Wbgs57FYCCoEhJJuk0KGgDeE8E/3z9+
-         akOnpitYLrqS4T8Uyff+cOtgVS+/cM8OA4T6iyFkLF1wrsxaJJqA8EY0GTPyCY788NWB
-         rABN9K2jqyV8P1guoG6cxUciY7edOEtNWMSr2yLmg1zDlAsvPDrRJeHXbEzZiHfBQmua
-         DQJA==
-X-Gm-Message-State: AOJu0Yzao+V5Abm3yLTIR5Q4/2xH8tKnEQktzBft9ylbCfOL5sQs3yRP
-	V736BZcX7gka5+gZj0e0NFxhT8tI58TtMHRjtyKVIk596KOkkKt1+k2dq/ig+yoJ4xBsPwfCe7l
-	+CCIs2biKc8GDT34Z8Mol5Elozq10eop98keY
-X-Gm-Gg: AR+sD12DbR8ECDJNcO/D9B9sbOEQTY/GLe5j/4DEinPkL/xyuYmGbxf7a072hNLxDsH
-	uw+nMjQCdjFTNqQOFLRPTX1KTQ6VpoKs98aeaRzmC7dXbMMVZIkCLGrfzCyOdPjYZL1784lYtev
-	nPXdvyQp9SAk1KuzQVsqYxEo8xaUfovMs/zSnAIVANO8IJeWRpSHvJ4v50glNWEalB14UhhFXFN
-	Nmi1FJCaHHoP2Oa5C57gx7StBe1wLe+0JGEeMnjDvnd8yezc6Uus3nC1ARq0gjS7V9N0b9U4CTZ
-	PP81Q9IL+uXNeci/wWBuvNj5HvOyFYxAjvtPt1+SmKhMUrY=
-X-Received: by 2002:a17:90b:38d1:b0:38e:4e61:c9e with SMTP id
- 98e67ed59e1d1-3933b168bbfmr6998267a91.21.1786762536518; Fri, 14 Aug 2026
- 19:55:36 -0700 (PDT)
+        bh=qvk4YjvniYtak+kXTfBaCRVIW+L/iNNu37Gor4R2CX4=;
+        b=nHqajJ9BZtCabET9x7mETl0D+tANCtAzAlmH58IqeXjsFQ9DyW13LkbWAle5dLD/H6
+         suCkJdINc7r65A8v6v49IIntQ8Pq7zAHQU0UyOrP6GI6Lfr6iA4K8kL70f3f/M2wo/rA
+         fKhsTQxv7DCU4nzCr7l9+eGAbF5mQLBcpXuM1o9XKfooJ6Vj7zBuOdy9nJrdUL20b4Q0
+         da9ypPCUEXHSMRHvt075zhHiXy2adY0oOrHxbJ3wMbH61dl7hcn1bBzFGpDpkMmSue82
+         S87IX+Y1iqXaWuwMHBBptEqzj2EU2YwbjmMrKtcwiBrWgUKKYF4x2oWe0+iOc70ZXR8C
+         9UHQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqaustQ3gNzhJK1Nfd9xLYeCkrAqtC9qjI0U2Ws/Jz83TikQPtGI9X9O7zv0yyRjUtv0cYaKVtHWu18oYdvT0w=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyna99XRAB/ES+vlf3tQGLd6eNHbPjDRUaRNKpZB6xCZwxhq3aF
+	cghArjspBcp6A9ttk0Qfixp/j8KMgkrICzsfcifhDGGt9TB4Je/iRRdxRVDxVGanYgqwQya8Uxu
+	dysG7zQGVVsPsrpQKCIXgaktD4/Ntnac=
+X-Gm-Gg: AR+sD11fegclzCdoJusJjn/m5ZjG6H6B3gSq9MBw/2W58oHNY/s0im9XkmOCN3uYgUV
+	gUeSiuwGo5QQ/VC48S5ZYh94tHv/MiqXFMsp1Uav1CkHifIMG3EENCvvRMwiDuZr5GRsq1aZgk5
+	HXvV5NVLuEsXu51mlVxGI0NBgArPjY3O3XbAXihfAFuGMoAs/1J1W6B2dbpApPIMFiexrjry4xK
+	predIgJuWnUi+YStWK0SDlYgtst1XD0GWwBTYsFjw/tBdPOkPeJiaeg5mXr1nfffhX9Ln0vwn0Y
+	0aGTRAsnli0A3O3CXEgDpYSqgnuowRb89D04wCo5IAhGajX3dJtfIX5bECAzUkt0CabRKKEn9hE
+	qS07KGRRbQzUMB2H8ZX+elotF6vPVY0rQY8iU+GouDbHqGSPFSS6CvyS5yO+L4UlOkN8YToqTG1
+	sbwYERt7TeN3DYdKk=
+X-Received: by 2002:a17:903:22ca:b0:2b2:67ca:5ff9 with SMTP id
+ d9443c01a7336-2d3b06e91c4mr122984055ad.0.1786764015675; Fri, 14 Aug 2026
+ 20:20:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260812-net-netdevsim-v1-1-521a85e4fe91@gmail.com> <20260812140235.8AC2B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260812140235.8AC2B1F000E9@smtp.kernel.org>
-From: Subasri S <subasris1210@gmail.com>
-Date: Sat, 15 Aug 2026 08:25:24 +0530
-X-Gm-Features: AcwNN1UFV3hM3RwZUnTxCyjKPBWwLWgg9-4fTDT5T6kLa1MmJrERw0zuW5mD6Ls
-Message-ID: <CABfayGNZF553ZW=QoSkwA8YtRoDAQ5RP=MGyGXEbzbegYBN10w@mail.gmail.com>
-Subject: Re: [PATCH] netdevsim: update rxq->napi pointer during queue reset
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+References: <20260814094211.25151-1-phucduc.bui@gmail.com> <20260814094211.25151-2-phucduc.bui@gmail.com>
+ <20260814095120.235F21F000E9@smtp.kernel.org> <1jqzk1lz2g.fsf@starbuckisacylon.baylibre.com>
+In-Reply-To: <1jqzk1lz2g.fsf@starbuckisacylon.baylibre.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sat, 15 Aug 2026 10:20:04 +0700
+X-Gm-Features: AUfX_mzRbh4hmvosuiLVlY3i6x4JnG5NEbKO-sUOdCn6SPRkXPqPXV4-RyM6Qsw
+Message-ID: <CAABR9nHrxzkK+dR5ca9PxY5Psxm3NVsbpAwAfx=_FyH3q5zodw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: meson: meson-card-utils: Drop redundant probe
+ error messages
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
+	neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 12, 2026 at 7:32=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> Earlier in this function (nsim_queue_start), there is an early return
-> for rq_reset_mode =3D=3D 1 that bypasses the new restoration code:
->
-> drivers/net/netdevsim/netdev.c:nsim_queue_start() {
->         ...
->         if (ns->rq_reset_mode =3D=3D 1) {
->                 ns->rq[idx]->page_pool =3D qmem->pp;
->                 napi_enable_locked(&ns->rq[idx]->napi);
->                 return 0;
->         }
->         ...
-> }
->
-> Does this skip restoring rxq->napi, leaving it NULL and preventing XSK bu=
-sy
-> polling from working after a reset in mode 1?
+Hi Jerome,
 
-Yes, I missed to handle the case when reset mode is 1. Sent a v2 patch fixi=
-ng
-this - https://lore.kernel.org/netdev/20260815-net-netdevsim-v2-1-d6c85c515=
-7a7@gmail.com/
+Thank you for the review.
+
+> > Pre-existing issues:
+> > - [High] Preexisting dangling pointer dereference (Use-After-Free) and
+> > double-free in the `meson_card_reallocate_links()` error path.
+> > --
+> >
+>
+> Yeah, that was picked up before and it is related to the use of devm_.
+> It is on my TODO list
+>
+
+Please take care of that when you have a chance.
+For now, I=E2=80=99m focusing only on the issues I=E2=80=99ve identified.
+
+Best regards,
+Phuc
