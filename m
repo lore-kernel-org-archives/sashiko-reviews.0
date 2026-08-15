@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-99.mta0.migadu.com [91.218.175.99])
+Received: from mta1.migadu.com (out-166.mta1.migadu.com [95.215.58.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695641531C8
-	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 05:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF3B1E5B9A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 15 Aug 2026 05:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786772643; cv=none; b=BdPghQS+PySss5aogV7MzDLScN2hbdGmkV3kIsQur/UO9g5D6XW6zGP47m2cPQJr58TIC7FlABygWG0Z4SOXMAYOOLu4WHSQUDFyTWCSr4rJj8w1tTMDNcn86WzBibzsHzjmvUo1nmRtfU+mVLjrNlt1kHchUKm2U4qF+WjlR2c=
+	t=1786773004; cv=none; b=ptTk+U3o655AmNYkiUcBnENslmsK56jgcGsrpaxQs8wymBIZrd8ghTk31+eS/Rt4hSQ9hwbhWNtTrUEo/++pAQaesjTj9vUCzqmrmgEq0+jb6DO/WxodiKcWrc1vYZQuotzT/rPVo9W8IgpMaLOsYEW/Za7zmeZRMBzJuOYup34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786772643; c=relaxed/simple;
-	bh=8M2PINbWuHVRS4IFw+NHAtUDhE/+9smDV7B8yZAgwxA=;
+	s=arc-20240116; t=1786773004; c=relaxed/simple;
+	bh=S2DaLHJtGrxg+rAnTMD2ZN89R+9nnovpVGWwJdu9V20=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Yju4QFMESW/UIhqKn5QDipUj8xJR3RpKiln8XOPvYzhs+WiW3SKMxSKK0uN1AD7UrR+64trlQuSsDkILFNdSJT5i/r+5NFV4nr3vtr65CaAI4DlPAxENhH51GsyJ3XzGuAcxj5uKSwoXMUNAV2UqQlvqdS0lgKfYSoF1eLhVGCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oIUE/E+4; arc=none smtp.client-ip=91.218.175.99
+	 In-Reply-To:Content-Type; b=Q/CcdkaLyJl7vyFh4f+n5bGDsHT2PkueR6Y8WI1559GPmGzzHaW/0hlhgxQOv6uW02h62PWrMZMbJ1gmUtJdKitEeLARKuCUgy0vG5KAx/2R6MMdmyBeRG4s06u32hd7N/r2A8qgiTGlWxYOF7RAEujHjX5BC+jA2AhTeDBMWxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tUMYG3NM; arc=none smtp.client-ip=95.215.58.166
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oIUE/E+4"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tUMYG3NM"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=8M2PINbWuHVRS4IFw+NHAtUDhE/+9smDV7B8yZAgwxA=;
+DKIM-Signature: a=rsa-sha256; bh=S2DaLHJtGrxg+rAnTMD2ZN89R+9nnovpVGWwJdu9V20=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786772639; v=1; x=1787377439;
- b=oIUE/E+41UTPLWEQIou6EH7Nvah0vJuVuQiLCXubsNQuiyphTIyC0Ifx4Bs3zUQoCAcgCUAG
- jS7wzG9el4kubeMaUFcnV5gaa5+xgaXJL0HqNVqIW0d+cn5T4/rXiyTouGF8wzy0pvoRTK0Nig/
- bz1L4mAV3Wc5FpJ6I1naSiQc=
+ t=1786773001; v=1; x=1787377801;
+ b=tUMYG3NMzedYZKM4Nr6+umU9EjNl9NQPB1FR8e7J/7voD8Lm5cNkEhj6Wl1fwe+DBQEhvGzw
+ 5ZHrtvAyK3LK6JP7h059RnXEH2d+23XcFrmgkQU4V1LEjdTrCKUl1pD6lnfCftMJhh7o9ZOpdH7
+ kCByDtgTuEYQD9aFg2i1KKvg=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [192.168.1.116] (111.162.215.50)
-	by smtp.migadu.com with ESMTPS id c2923518412e5bae;
-	Sat, 15 Aug 2026 05:43:59 +0000
+	by smtp.migadu.com with ESMTPS id 3ecc13c41b46260c;
+	Sat, 15 Aug 2026 05:50:00 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <68283707-192f-41d8-a3f2-f38386622aeb@linux.dev>
-Date: Sat, 15 Aug 2026 13:43:52 +0800
+Message-ID: <3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.dev>
+Date: Sat, 15 Aug 2026 13:49:58 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,102 +38,85 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, sched-ext@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH v2] sched_ext: Don't BUG_ON a destroyed DSQ in
- process_deferred_reenq_users
+Cc: cui.tao@linux.dev, bpf@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH] sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
 To: sashiko-reviews@lists.linux.dev
-References: <20260815022017.3305427-1-cui.tao@linux.dev>
- <20260815023458.C97F81F000E9@smtp.kernel.org>
+References: <20260815045905.3431991-1-cui.tao@linux.dev>
+ <20260815051412.C8DA91F000E9@smtp.kernel.org>
 From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260815023458.C97F81F000E9@smtp.kernel.org>
+In-Reply-To: <20260815051412.C8DA91F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
 
-在 2026/8/15 10:34, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Lockless double-read of `dsq->id` creates a Time-Of-Check to Time-Of-Use (TOCTOU) race that can still falsely trigger the `BUG_ON`, crashing the kernel.
+在 2026/8/15 13:14, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] Dereferencing `dsq->id` in `process_deferred_reenq_users()` causes a Use-After-Free because an RCU grace period can complete while the target CPU is idle, freeing `dsq` before it is accessed.
+> - [High] Priority inversion in RB-tree due to unprotected cvtime wraparound in cgv_node_less().
 > --
 > 
-> --- Patch [1]: [PATCH v2] sched_ext: Don't BUG_ON a destroyed DSQ in process_deferred_reenq_users ---
-> commit f1934b9161ead6ceeb2cb6d00c64a01e1a233104
+> --- Patch [1]: [PATCH] sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry ---
+> commit c84c79d28fee1a17412c6846489091841b03f293
 > Author: Tao Cui <cuitao@kylinos.cn>
+> Date:   Sat Aug 15 04:59:05 2026 +0000
 > 
-> sched_ext: Don't BUG_ON a destroyed DSQ in process_deferred_reenq_users
+>     sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
 > 
-> This commit attempts to fix a BUG_ON triggered when process_deferred_reenq_users()
-> encounters a destroyed DSQ. It adds a check to skip processing if the DSQ ID 
-> has been set to SCX_DSQ_INVALID.
+> This commit fixes the cvtime true-up calculation in fcg_dispatch() when a
+> cgroup's slice expires or its DSQ runs empty. It addresses a bug where the
+> unsigned division by hweight was inverting the sign of the delta, causing
+> massive jumps in cvtime_delta instead of minor corrections. The fix properly
+> computes the delta as a signed value and uses fetch_and_add()/fetch_and_sub()
+> to keep dividends positive.
 > 
->> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
->> index 18183062f751c..1a059e5f09e80 100644
->> --- a/kernel/sched/ext/ext.c
->> +++ b/kernel/sched/ext/ext.c
->> @@ -4332,6 +4332,10 @@ static void process_deferred_reenq_users(struct rq *rq)
->>  		/* see schedule_dsq_reenq() */
->>  		smp_mb();
->>  
->> +		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq */
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does dereferencing dsq->id here outside of
-> the rq->scx.deferred_reenq_lock critical section expose the pointer to a
-> concurrent kfree() in the RCU teardown path?
-> 
-> If CPU B is idle (in an RCU Extended Quiescent State), and CPU A queues a
-> deferred reenq for a DSQ to CPU B and calls destroy_dsq(), the RCU grace
-> period can end immediately without waiting for CPU B. The RCU callback
-> free_dsq_rcufn then runs on CPU C and calls exit_dsq().
-> 
-> Concurrently, if CPU B wakes up, enters process_deferred_reenq_users(),
-> removes dru from the list, and drops the lock:
-> 
-> CPU B:
-> scoped_guard (raw_spinlock, &rq->scx.deferred_reenq_lock) {
-> 	...
-> 	list_del_init(&dru->node);
-> }
-> // CPU B is now at the dsq->id check
-> 
-> CPU C's exit_dsq() then evaluates the list without locks:
-> 
-> CPU C:
-> exit_dsq() {
-> 	...
-> 	if (WARN_ON_ONCE(!list_empty(&dru->node))) {
-> 		// Skips lock because list is empty
-> 	}
-> 	...
-> 	kfree(dsq);
-> }
-> 
-> Would CPU B then read from the freed dsq memory when checking dsq->id?
-> 
-I think this one doesn't exist. schedule_dsq_reenq() queues the dru on the inserting CPU's own rq (rq = this_rq()), not on a remote CPU, and process_deferred_reenq_users() runs with rq->lock held, so the CPU cannot pass through a quiescent state between dequeuing the dru and reading dsq->id. A grace period cannot complete underneath it. The residual case where the dru is never processed is what the WARN and forced delete in exit_dsq() cover.
->> +		if (unlikely(dsq->id == SCX_DSQ_INVALID))
->> +			continue;
->> +
->>  		BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
+>> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+>> index 0fd214cc61dae..ddcf6bc03b11c 100644
+>> --- a/tools/sched_ext/scx_flatcg.bpf.c
+>> +++ b/tools/sched_ext/scx_flatcg.bpf.c
 > 
 > [Severity: High]
-> Because dsq->id is accessed twice consecutively without READ_ONCE(), can
-> the compiler emit two separate memory loads?
+> This is a pre-existing issue, but was not introduced by the patch under
+> review. Since this file handles cvtime accounting, could the red-black tree
+> comparison in cgv_node_less() suffer from priority inversion due to cvtime
+> wraparound?
 > 
-> If a concurrent destroy_dsq() sets dsq->id = SCX_DSQ_INVALID exactly
-> between the two loads, the first load would see a valid user DSQ ID and
-> bypass the continue. The second load would then observe SCX_DSQ_INVALID.
+> Looking at tools/sched_ext/scx_flatcg.bpf.c:cgv_node_less():
 > 
-> Since SCX_DSQ_INVALID evaluates to true for SCX_DSQ_FLAG_BUILTIN,
-> wouldn't this still trigger the BUG_ON?
+> static bool cgv_node_less(struct bpf_rb_node *a, const struct bpf_rb_node *b)
+> {
+>         struct cgv_node *cgc_a, *cgc_b;
 > 
-Fair in theory. The two loads are adjacent and will be merged by the compiler in practice, but folding them into a single READ_ONCE() would close it for good. Happy to do that in a follow-up.
->>  		reenq_user(rq, dsq, reenq_flags);
->>  	}
+>         cgc_a = container_of(a, struct cgv_node, rb_node);
+>         cgc_b = container_of(b, struct cgv_node, rb_node);
+> 
+>         return cgc_a->cvtime < cgc_b->cvtime;
+> }
+> 
+> If a cgroup with the lowest possible weight (1) advances its cvtime rapidly,
+> a 64-bit nanosecond counter could wrap around in approximately 3.25 days of
+> continuous execution.
+> 
+> When a cgroup's cvtime wraps to a small value (e.g., 100) while other cgroups
+> are near the 64-bit maximum, the standard < operator will evaluate
+> 100 < (2^64 - 1000) as true.
+> 
+> Would this place the wrapped cgroup permanently at the front of the tree and
+> completely starve other cgroups? Should this use a wraparound-safe comparison
+> like time_before64() instead, similar to the time_before() usage elsewhere
+> in the scheduler?
+> 
+Right, the comparison is not wraparound-safe, and CFS compares
+vruntimes with (s64)(a - b) < 0 for the same reason. Hard to reach in
+practice though: cgrp_cap_budget() clamps each node's cvtime to within
+cvtime_now - max_budget, so wrapping needs an extreme weight ratio held
+for days. Pre-existing either way, and with the true-up fixed cvtime
+no longer collects garbage, so this patch only makes it less likely.
+
+If we want to close it, (s64)(a->cvtime - b->cvtime) < 0 would do it,
+as a separate patch.
+
+> [ ... ]
 > 
 
