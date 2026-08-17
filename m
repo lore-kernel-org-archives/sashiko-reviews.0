@@ -1,67 +1,50 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6E6271A94
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 02:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DADD4B04A7
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 02:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786934046; cv=none; b=lQN0Vn/X0EHOVfRFyTl4gVLE7Lsg7ASKlrrzMiFTyed84CSvxcIFEHwv8h4Fd1wg6Ysv1NIEflpDmLoQ8eg4XWPDorhAcIkcU61wDGo/4E283jLRusSpuExCYcKf31jDi4yfjv3NrnHqxOg2Ng/asflmK1PmePtbnsoItCB11/g=
+	t=1786934948; cv=none; b=sd40njlvo0YpNG/TOkFEUMtalZ6JKm01bmQUAk+OUKLNynSmmlpcEzdhNMAuRJOZVJekmAuMtdT9i6hODzHxF6B9e+Q9Lp5hpeQu4TbR1H4nbizkn/AqVHYHsUr9VMN8Vc5mI97mNzM/b5nGJybFrrjAzf9stv56R6leaWvefqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786934046; c=relaxed/simple;
-	bh=eTHtzAFZ85EdeGDqcWkQ/bQReWq5g02vZ3+EYMBU44Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CbzCDptgrlT/Mm2Yv+NRpQomkH9/Kd8GdywMmoBGu0el11mWTv9yE5WLpOXbJ4613HrCYQW2fPCSM8u1jdmm4AFciPUUmqThA7x6MDJoKG1dXa6Kiu2wBpoxzOEE+HY41JFuG565BEIlqZ8XK/6QgveCHDedagPScZw22jAKBZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ESUrzrhq; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786934948; c=relaxed/simple;
+	bh=n2WL18QbkJXJN8OvYh75LNNQjNrZrLU+wUyTRx9yt5s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Kzag8Qs/gzz0syrZarwY5Tyg/sKTXBNXi8/mE1/Z1PgF77Zp5SbsKyZAtM2psMBLTiD51LQZOBELPWSVQi+wpneQ5bAAKkW3zgR+NCKUVEGo3UxaonVROep84buphsfhoPO0+jdoSD8YW7F5metoh5FS8qhki8V5cBYpo/d8v5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fZqK2Hfp; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ESUrzrhq"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38dfe7eb825so2102342a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 16 Aug 2026 19:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786934045; x=1787538845; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6xdmAG7qehxZR5RlI6+a6ahVKS+3T/VGOnRQ8szv9Ys=;
-        b=ESUrzrhqN46UNqIac1Dp1WlI49WKsawh4tfqCXeeMNtqmVinNeIItnSfWVQ+7v12eY
-         YPH9XY0+hI9XrT6SBPhfb8UdK5ot2dZzGkOlmft6acpTkH0yy83t91rh81JPGrvt4Xs5
-         RwHuG00ihBfPdExiWT9z1NKgbGmJMR+INjnk9tPdzr6JkLDM6SgtDI0LwmnVrNca0KDQ
-         sViSfvVw4t4c4Uqe5PbAfwYh4EZ0IRgiht0HVFeTHAtF7ber9k9SFZbTg6aPN9GOL5do
-         xWeDSuiizQM3W0P3jpJIrethyS3xVfUux2QNw1e19de6i/ba9wuZxEvgspv98eVHlzLo
-         GEBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786934045; x=1787538845;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6xdmAG7qehxZR5RlI6+a6ahVKS+3T/VGOnRQ8szv9Ys=;
-        b=afeboQnMY4qkAg2xpFvEsIfg1TOY8rhtjBkRGPkiI8T7KB6EJ6FFMj2WkYvvqL0kZS
-         5hEEekIRM8XHmBM3Xz21Otz+gB4lHKlPZNTQ48ACUXN9yiEKeMoX2jTYi7yHLYTivh55
-         S5hmUdHK0ebgcKBGBJ87ooMSs3yC5bUimoCwM6IBfSMQqoXVFovylAwjiNss7rI1f22n
-         1RNr2QbyOzCiqL7lqHOQmx8YUhf8O9n+Y/nD85S6igOrZ3YUYTE5n1rI0mONk1E29GYh
-         LocUt+9dGTAQsgMK48+xePGpOXezEukwf9imtPb9VrCY21dVJOTOlTQf56Ed0B4uW0vT
-         MtbA==
-X-Gm-Message-State: AOJu0Yxl7Hg2fazN/EcBNnZ4NVOgd7TmfZ8XULHhkef1UVtrgeLqNIKW
-	MenEJ2Z8/7PlDLhf/YUeKTab7BGBuhw5KgSuQljE0rng1+BYCevxt+DVc6y92KDzSKM=
-X-Gm-Gg: AR+sD12jcxSNbp3XkezrRX9Y6XiBN4x7dBxYDFvXnomMNt17jnGL9p+ILUAexXUbSdq
-	fr6Ohhg/9ua7iHZtmTxHEf6CHJ1aMncLs7t5vxq4Ywi196s/RbfZ0bzI9jGBCZDRv3lsud32Oii
-	3/Uw3HJiBGt9MCFUI349g9RBr0QrQM6J7GaBNrcArAzYfs2Q6Tw9SHX/zJczCCc6IPxfZX7+DzT
-	oKIfrTyxHlo6BhrQI4FXyuGjXzpznrqD9JPds+uEiOjxx5BuRKs532M+CTyV62D7C4HBC0gDwvp
-	nHhyztkWW3n9hbzRlcLH4uTKMk5GJV6II+BeAjFVCRuAbFA3oKtN4J7DBXHU1qtmkQI9zIL2lhB
-	c0QOn3iJX9qTBEXQPfFP8I0K6cwbUb4sxvB4lCPRcZ5y+Q1e1n+klMDzTTThvkSwHUe6P0oDp0W
-	Zgn9rLwtrPXQMnrtDyrtlbs7NuNJj6GA6xjeXCMI8PLoFTAruytS9lyUt97+MbfBt1zicClKC4w
-	SJuGAYM
-X-Received: by 2002:a17:90b:3c02:b0:380:f389:447b with SMTP id 98e67ed59e1d1-3933b8938f9mr23461491a91.11.1786934044437;
-        Sun, 16 Aug 2026 19:34:04 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39531e84118sm3147766a91.5.2026.08.16.19.34.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Aug 2026 19:34:03 -0700 (PDT)
-Message-ID: <ead3fd2a-5c57-4f78-9ce1-9555b64fb8c0@gmail.com>
-Date: Mon, 17 Aug 2026 10:33:58 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fZqK2Hfp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1786934946; x=1818470946;
+  h=message-id:date:mime-version:from:subject:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=n2WL18QbkJXJN8OvYh75LNNQjNrZrLU+wUyTRx9yt5s=;
+  b=fZqK2HfpZeY0QetjVK2SQBUtSIkog1KO6nQAkblXwmimBMT6wdzDR2RC
+   RNmiNxv+Qc3fSlyJn30L/oemWhPXIzOB2z/MGjo4TBgn305ma2HBU1Tuu
+   sRJo+zY5G2CcENGkt9fkIbWxVzhbx0oRHD77uejvAmihToXvn2b+7XuM7
+   cCsSlFyaH2TNnf41rrAWTGXqXzFVBPF6ibBlkYKpKeCl6Q8J7qIcZ3XEJ
+   8IBwS90ZESPk/2pGAwwyVm7bjrnWiNagE8V+8t6dLqmmCAjw+ZPMlKZ2W
+   WwKq9+iYjQP/kMSc09n8Btayaq9lSNPupxsMmGic/mldLilDJ6Q9l+KXi
+   A==;
+X-CSE-ConnectionGUID: nhKnSgmeTUCC/ahmVpakpg==
+X-CSE-MsgGUID: 5QIdwvKYTSKOpTajjiTrdQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11877"; a="91220972"
+X-IronPort-AV: E=Sophos;i="6.25,228,1779174000"; 
+   d="scan'208";a="91220972"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2026 19:49:06 -0700
+X-CSE-ConnectionGUID: iJPeAk6JQOKC7btkjK5iig==
+X-CSE-MsgGUID: mppKOT1GQ9SIdFr5jkZb/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,228,1779174000"; 
+   d="scan'208";a="261511890"
+Received: from unknown (HELO [10.238.208.98]) ([10.238.208.98])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2026 19:49:04 -0700
+Message-ID: <d67eb097-1223-4b68-92d4-1510d3d7be7c@intel.com>
+Date: Mon, 17 Aug 2026 10:49:01 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,172 +52,392 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 15/32] ext4: implement buffered write path using
- iomap
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
-References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-16-yi.zhang@huaweicloud.com>
- <20260814104055.7F2C21F000E9@smtp.kernel.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v3 3/4] KVM: TDX: Don't assume exit_reason[31:16] as all-0
+ in tdx_to_vmx_exit_reason()
+To: Sean Christopherson <seanjc@google.com>
+Cc: Rick P Edgecombe <rick.p.edgecombe@intel.com>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+References: <20260812080229.2481439-1-xiaoyao.li@intel.com>
+ <20260812080229.2481439-4-xiaoyao.li@intel.com>
+ <20260812082306.11E8B1F000E9@smtp.kernel.org>
+ <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
+ <138969948dac13369ddebd72bf523dda4dda6b85.camel@intel.com>
+ <an5W5XC97HK229MX@google.com>
+ <eddf28d4-c211-41fb-b0a3-586e5afde030@intel.com>
+ <an8wUfZ9JxvEhtHS@google.com>
 Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814104055.7F2C21F000E9@smtp.kernel.org>
+In-Reply-To: <an8wUfZ9JxvEhtHS@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/14/2026 6:40 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Extending a file within an already-allocated block does not update the on-disk `i_disksize` or mark the inode dirty, causing appended data to be lost on a crash or unmount.
-> - [High] The iomap non-delalloc buffered write path permanently leaks unwritten extents past `i_size` when a short write or failure occurs.
-> --
+On 8/14/2026 11:12 PM, Sean Christopherson wrote:
+> On Fri, Aug 14, 2026, Xiaoyao Li wrote:
+>> On 8/14/2026 7:44 AM, Sean Christopherson wrote:
+>>> On Wed, Aug 12, 2026, Rick P Edgecombe wrote:
+>>>> Side note. I really dislike how tangled this area is for something that seems
+>>>> like it should be much more straightforward. Deriving partially I think from the
+>>>> overloading of the TDVMCALL leafs with the exit reasons. So we have things like:
+>>>> ...
+>>>> 	case EXIT_REASON_EPT_VIOLATION:
+>>>> 		return EXIT_REASON_EPT_MISCONFIG;
+>>>> ...
+>>>
+>>> I peeked at that code again, and FWIW I still think swizzling the exit_reason for
+>>> TDVMCALL is the least awful solution.  If we don't do that, then we'll have to
+>>> update every single use of the exit_reason to demux TDVMCALL into the "real" exit
+>>> reason, which will be a mess.
+>>
+>> I'm not sure if you read my idea[1]?
+>>
+>> I think there is only one place KVM cares about the exit_reason TDVMCALL,
+>> just the
+>>
+>> 	case EXIT_REASON_TDCALL:
 > 
-> --- Patch [15]: [PATCH -next v5 15/32] ext4: implement buffered write path using iomap ---
-> commit 7a553e37ec457f0a485aa7c6fc378e68d6d66bfb
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> 
-> ext4: implement buffered write path using iomap
-> 
-> This commit introduces two new iomap_ops instances for ext4 buffered writes:
-> one for delayed allocation mode and another for non-delayed allocation mode.
-> It also updates the folio lock and transaction start ordering for the new
-> iomap buffered write path.
-> 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> index 9098d9a5fc05b..d831d1911a6ff 100644
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
-> 
-> [ ... ]
-> 
->> @@ -3994,6 +4009,113 @@ static int ext4_iomap_buffered_read_begin(struct inode *inode, loff_t offset,
->>   	return 0;
->>   }
->>   
->> +static int ext4_iomap_buffered_do_write_begin(struct inode *inode,
->> +		loff_t offset, loff_t length, unsigned int flags,
->> +		struct iomap *iomap, struct iomap *srcmap, bool delalloc)
->> +{
->> +	int ret, retries = 0;
->> +	struct ext4_map_blocks map;
->> +	int map_flags;
->> +
->> +	ret = ext4_emergency_state(inode->i_sb);
->> +	if (unlikely(ret))
->> +		return ret;
->> +
->> +	/* Inline data and non-extent are not supported. */
->> +	if (WARN_ON_ONCE(ext4_has_inline_data(inode)))
->> +		return -ERANGE;
->> +	if (WARN_ON_ONCE(!ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
->> +		return -EINVAL;
->> +	if (WARN_ON_ONCE(!(flags & IOMAP_WRITE)))
->> +		return -EINVAL;
->> +
->> +	map_flags = delalloc ? EXT4_GET_BLOCKS_DELALLOC_RESERVE :
->> +			       EXT4_GET_BLOCKS_CREATE_UNWRIT_EXT;
->> +retry:
->> +	ret = ext4_iomap_map_blocks(inode, offset, length, &map, map_flags);
-> 
-> [Severity: High]
-> Does this code permanently leak unwritten extents past i_size if a short
-> write or write failure occurs?
-> 
-> If the user memory copy subsequently fails (e.g. fault_in_iov_iter_readable()
-> returns -EFAULT), it results in a short write.
-> 
-> In the non-delalloc path, ext4_iomap_buffered_write_ops lacks an iomap_end
-> callback to clean up the allocated on-disk blocks, which could exhaust
-> disk space or quota.
+> No, the massaged exit_reason is also subtley consumed via trace_kvm_exit().
 
-For short writes, leaving the preallocated blocks behind is not
-really a problem. They are visible to users and can be reclaimed
-manually, so it's not a permanent leak. I don't think we need to
-fix this.
+yeah. This is exactly the one I don't like, it looks like 
+trace_kvm_exit() is tracing the wrong exit reason, though it is by 
+intentional.
 
+> It's also consumed by tdx_complete_emulated_msr():
 > 
->> +	if (ret == -ENOSPC && ext4_should_retry_alloc(inode->i_sb, &retries))
->> +		goto retry;
->> +	if (ret < 0)
->> +		return ret;
->> +
->> +	ext4_set_iomap(inode, iomap, &map, offset, length, flags);
->> +	return 0;
->> +}
+> 	if (vmx_get_exit_reason(vcpu).basic == EXIT_REASON_MSR_READ)
 > 
-> [ ... ]
+> and by tdx_interrupt_allowed()
 > 
->> +static int ext4_iomap_buffered_da_write_end(struct inode *inode, loff_t offset,
->> +					    loff_t length, ssize_t written,
->> +					    unsigned int flags,
->> +					    struct iomap *iomap)
->> +{
->> +	loff_t start_byte, end_byte;
->> +
->> +	/* If we didn't reserve the blocks, we're not allowed to punch them. */
->> +	if (iomap->type != IOMAP_DELALLOC || !(iomap->flags & IOMAP_F_NEW))
->> +		return 0;
+> 	return vmx_get_exit_reason(vcpu).basic != EXIT_REASON_HLT ||
+> 	       !to_tdx(vcpu)->vp_enter_args.r12;
 > 
-> [Severity: Critical]
-> Will this silently lose data for extending writes within already-allocated
-> blocks?
+> and by tdx_protected_apic_has_interrupt():
 > 
-> If a buffered write appends data to a file within an extent that was already
-> allocated, iomap_write_iter() will update the in-memory i_size and set
-> IOMAP_F_SIZE_CHANGED.
-> 
-> However, this early return skips checking IOMAP_F_SIZE_CHANGED.
-> 
-> Without updating EXT4_I(inode)->i_disksize and calling ext4_mark_inode_dirty()
-> to persist the size change, appended data can be lost on a crash.
+> 	if (vmx_get_exit_reason(vcpu).basic != EXIT_REASON_HLT ||
+> 	    to_tdx(vcpu)->vp_enter_args.r12)
+> 		return false;
 
-This is a false concern. i_disksize is updated during writeback,
-not in the iomep_end callback.
+Ah, I really should have checked the code more carefully.
 
-Thanks,
-Yi.
+>> in tdx_handle_exit().
+>> [1]
+>> https://lore.kernel.org/all/646f9595-459f-4224-b4e5-4ec2eecc0bc6@intel.com/
+>>> And once we track the exit_reason separately from vp_enter_ret, IMO it all becomes
+>>> more logical and easier to follow.  vp_enter_ret holds the information about why
+>>> VP.ENTER returned/exited, while exit_reason holds information about why the _guest_
+>>> exited.  Obviously it's imperfect since we're still fudging EXIT_REASON_EPT_MISCONFIG,
+>>> but again, I think that's a better alternative than demuxing exit_reason in multiple
+>>> locations.
+>>
+>> The question do we really need to swizzle EXIT_REASON_TDCALL to other exit
+>> reasons ahead? why cannot them just be handled in the central handler for
+>> EXIT_REASON_TDCALL?
+> 
+> Because as above, it's not as central as you think.  If we want to not swizzle
+> the exit_reason, then IMO the only sane way to do that is to not track exit_reason
+> for TDX vCPUs, i.e. move vcpu_vt.exit_reason back to vcpu_vmx and force TDX to
+> always demux vp_enter_ret every time.
 
-> 
->> +
->> +	/* Nothing to do if we've written the entire delalloc extent */
->> +	start_byte = iomap_last_written_block(inode, offset, written);
->> +	end_byte = round_up(offset + length, i_blocksize(inode));
->> +	if (start_byte >= end_byte)
->> +		return 0;
->> +
->> +	filemap_invalidate_lock(inode->i_mapping);
->> +	iomap_write_delalloc_release(inode, start_byte, end_byte, flags,
->> +				     iomap, ext4_iomap_punch_delalloc);
->> +	filemap_invalidate_unlock(inode->i_mapping);
->> +	return 0;
->> +}
->> +
->> +/*
->> + * Since we always allocate unwritten extents, there is no need for
->> + * iomap_end to clean up allocated blocks on a short write.
->> + */
->> +static DEFINE_IOMAP_ITER_NEXT(ext4_iomap_buffered_write_next,
->> +			      ext4_iomap_buffered_write_begin);
->> +
->> +const struct iomap_ops ext4_iomap_buffered_write_ops = {
->> +	.iomap_next = ext4_iomap_buffered_write_next,
->> +};
-> 
-> [Severity: High]
-> Is it safe to omit an iomap_end callback here?
-> 
-> Without an iomap_end callback for the non-delalloc path, two issues appear
-> to occur:
-> 
-> 1) Allocated unwritten extents past i_size are leaked if a write fails,
-> exhausting disk space or quota.
-> 
-> 2) Extending writes into an already-allocated extent set IOMAP_F_SIZE_CHANGED
-> in the core iomap code, but without an iomap_end callback to update i_disksize
-> and mark the inode dirty, this size update is never persisted to disk.
-> 
->> +
->> +static DEFINE_IOMAP_ITER_NEXT_END(ext4_iomap_buffered_da_write_next,
->> +				  ext4_iomap_buffered_da_write_begin,
->> +				  ext4_iomap_buffered_da_write_end);
-> 
+How about adding a specific field to track the TDVMCALL leaf? Full diff 
+as below (the EPT MISCONFIG part can be split into a separate one)
 
+
+-----8<--------
+diff --git a/arch/x86/include/asm/shared/tdx.h 
+b/arch/x86/include/asm/shared/tdx.h
+index f20e91d7ac35..61d00100a2b1 100644
+--- a/arch/x86/include/asm/shared/tdx.h
++++ b/arch/x86/include/asm/shared/tdx.h
+@@ -69,6 +69,13 @@
+  #define TD_CTLS_LOCK                   BIT_ULL(TD_CTLS_LOCK_BIT)
+
+  /* TDX hypercall Leaf IDs */
++#define TDVMCALL_CPUID                 10 /* EXIT_REASON_CPUID */
++#define TDVMCALL_HLT                   12 /* EXIT_REASON_HLT */
++#define TDVMCALL_IO_INSTRUCTION                30 /* 
+EXIT_REASON_IO_INSTRUCTION */
++#define TDVMCALL_MSR_READ              31 /* EXIT_REASON_MSR_READ */
++#define TDVMCALL_MSR_WRITE             32 /* EXIT_REASON_MSR_WRITE */
++#define TDVMCALL_MMIO                  48 /* EXIT_REASON_EPT_VIOLATION */
++
+  #define TDVMCALL_GET_TD_VM_CALL_INFO   0x10000
+  #define TDVMCALL_MAP_GPA               0x10001
+  #define TDVMCALL_GET_QUOTE             0x10002
+diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+index 545b03d9d10b..113bcf301ec9 100644
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -734,6 +734,12 @@ void tdx_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+         local_irq_enable();
+  }
+
++static bool tdx_is_tdvmcall(struct kvm_vcpu *vcpu, u64 
+tdvmcall_exit_reason)
++{
++       return vmx_get_exit_reason(vcpu).basic == EXIT_REASON_TDCALL &&
++              to_tdx(vcpu)->tdvmcall_exit_reason == tdvmcall_exit_reason;
++}
++
+  bool tdx_interrupt_allowed(struct kvm_vcpu *vcpu)
+  {
+         /*
+@@ -741,7 +747,7 @@ bool tdx_interrupt_allowed(struct kvm_vcpu *vcpu)
+          * interrupt is always allowed unless TDX guest calls TDVMCALL 
+with HLT,
+          * which passes the interrupt blocked flag.
+          */
+-       return vmx_get_exit_reason(vcpu).basic != EXIT_REASON_HLT ||
++       return !tdx_is_tdvmcall(vcpu, TDVMCALL_HLT) ||
+                !to_tdx(vcpu)->vp_enter_args.r12;
+  }
+
+@@ -759,7 +765,7 @@ static bool tdx_protected_apic_has_interrupt(struct 
+kvm_vcpu *vcpu)
+          * otherwise the interrupt would have been serviced at the 
+instruction
+          * boundary.
+          */
+-       if (vmx_get_exit_reason(vcpu).basic != EXIT_REASON_HLT ||
++       if (!tdx_is_tdvmcall(vcpu, TDVMCALL_HLT) ||
+             to_tdx(vcpu)->vp_enter_args.r12)
+                 return false;
+
+@@ -906,28 +912,9 @@ int tdx_vcpu_pre_run(struct kvm_vcpu *vcpu)
+         return 1;
+  }
+
+-static __always_inline u32 tdcall_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+-{
+-       switch (tdvmcall_leaf(vcpu)) {
+-       case EXIT_REASON_CPUID:
+-       case EXIT_REASON_HLT:
+-       case EXIT_REASON_IO_INSTRUCTION:
+-       case EXIT_REASON_MSR_READ:
+-       case EXIT_REASON_MSR_WRITE:
+-               return tdvmcall_leaf(vcpu);
+-       case EXIT_REASON_EPT_VIOLATION:
+-               return EXIT_REASON_EPT_MISCONFIG;
+-       default:
+-               break;
+-       }
+-
+-       return EXIT_REASON_TDCALL;
+-}
+-
+  static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+  {
+         struct vcpu_tdx *tdx = to_tdx(vcpu);
+-       u32 exit_reason;
+
+         switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
+         case TDX_SUCCESS:
+@@ -935,30 +922,10 @@ static __always_inline u32 
+tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+         case TDX_NON_RECOVERABLE_TD:
+         case TDX_NON_RECOVERABLE_TD_NON_ACCESSIBLE:
+         case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
+-               break;
++               return (u32)tdx->vp_enter_ret;
+         default:
+                 return -1u;
+         }
+-
+-       exit_reason = tdx->vp_enter_ret;
+-
+-       switch (exit_reason) {
+-       case EXIT_REASON_TDCALL:
+-               if (tdvmcall_exit_type(vcpu))
+-                       return EXIT_REASON_VMCALL;
+-
+-               return tdcall_to_vmx_exit_reason(vcpu);
+-       case EXIT_REASON_EPT_MISCONFIG:
+-               /*
+-                * Defer KVM_BUG_ON() until tdx_handle_exit() because 
+this is in
+-                * non-instrumentable code with interrupts disabled.
+-                */
+-               return -1u;
+-       default:
+-               break;
+-       }
+-
+-       return exit_reason;
+  }
+
+  static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
+@@ -1096,9 +1063,6 @@ fastpath_t tdx_vcpu_run(struct kvm_vcpu *vcpu, u64 
+run_flags)
+
+         kvm_clear_available_registers(vcpu, ~TDX_REGS_AVAIL_SET);
+
+-       if (unlikely(tdx->vp_enter_ret == EXIT_REASON_EPT_MISCONFIG))
+-               return EXIT_FASTPATH_NONE;
+-
+         if (unlikely((tdx->vp_enter_ret & TDX_SW_ERROR) == TDX_SW_ERROR))
+                 return EXIT_FASTPATH_NONE;
+
+@@ -1589,27 +1553,6 @@ static int 
+tdx_setup_event_notify_interrupt(struct kvm_vcpu *vcpu)
+         return 0;
+  }
+
+-static int handle_tdvmcall(struct kvm_vcpu *vcpu)
+-{
+-       switch (tdvmcall_leaf(vcpu)) {
+-       case TDVMCALL_MAP_GPA:
+-               return tdx_map_gpa(vcpu);
+-       case TDVMCALL_REPORT_FATAL_ERROR:
+-               return tdx_report_fatal_error(vcpu);
+-       case TDVMCALL_GET_TD_VM_CALL_INFO:
+-               return tdx_get_td_vm_call_info(vcpu);
+-       case TDVMCALL_GET_QUOTE:
+-               return tdx_get_quote(vcpu);
+-       case TDVMCALL_SETUP_EVENT_NOTIFY_INTERRUPT:
+-               return tdx_setup_event_notify_interrupt(vcpu);
+-       default:
+-               break;
+-       }
+-
+-       tdvmcall_set_return_code(vcpu, TDVMCALL_STATUS_SUBFUNC_UNSUPPORTED);
+-       return 1;
+-}
+-
+  void tdx_load_mmu_pgd(struct kvm_vcpu *vcpu, hpa_t root_hpa, int 
+pgd_level)
+  {
+         u64 shared_bit = (pgd_level == 5) ? TDX_SHARED_BIT_PWL_5 :
+@@ -2024,12 +1967,56 @@ int tdx_complete_emulated_msr(struct kvm_vcpu 
+*vcpu, int err)
+                 return 1;
+         }
+
+-       if (vmx_get_exit_reason(vcpu).basic == EXIT_REASON_MSR_READ)
++       if (tdx_is_tdvmcall(vcpu, TDVMCALL_MSR_READ))
+                 tdvmcall_set_return_val(vcpu, kvm_read_edx_eax(vcpu));
+
+         return 1;
+  }
+
++static int handle_tdcall(struct kvm_vcpu *vcpu)
++{
++       struct vcpu_tdx *tdx = to_tdx(vcpu);
++
++       if (tdvmcall_exit_type(vcpu)) {
++               tdx->tdvmcall_exit_reason = EXIT_REASON_VMCALL;
++               return tdx_emulate_vmcall(vcpu);
++       }
++
++       tdx->tdvmcall_exit_reason = tdvmcall_leaf(vcpu);
++       switch (tdvmcall_leaf(vcpu)) {
++       case TDVMCALL_CPUID:
++               return tdx_emulate_cpuid(vcpu);
++       case TDVMCALL_HLT:
++               return kvm_emulate_halt_noskip(vcpu);
++       case TDVMCALL_IO_INSTRUCTION:
++               return tdx_emulate_io(vcpu);
++       case TDVMCALL_MSR_READ:
++               kvm_ecx_write(vcpu, tdx->vp_enter_args.r12);
++               return kvm_emulate_rdmsr(vcpu);
++       case TDVMCALL_MSR_WRITE:
++               kvm_ecx_write(vcpu, tdx->vp_enter_args.r12);
++               kvm_eax_write(vcpu, tdx->vp_enter_args.r13);
++               kvm_edx_write(vcpu, tdx->vp_enter_args.r13 >> 32);
++               return kvm_emulate_wrmsr(vcpu);
++       case TDVMCALL_MMIO:
++               return tdx_emulate_mmio(vcpu);
++       case TDVMCALL_MAP_GPA:
++               return tdx_map_gpa(vcpu);
++       case TDVMCALL_REPORT_FATAL_ERROR:
++               return tdx_report_fatal_error(vcpu);
++       case TDVMCALL_GET_TD_VM_CALL_INFO:
++               return tdx_get_td_vm_call_info(vcpu);
++       case TDVMCALL_GET_QUOTE:
++               return tdx_get_quote(vcpu);
++       case TDVMCALL_SETUP_EVENT_NOTIFY_INTERRUPT:
++               return tdx_setup_event_notify_interrupt(vcpu);
++       default:
++               break;
++       }
++
++       tdvmcall_set_return_code(vcpu, TDVMCALL_STATUS_SUBFUNC_UNSUPPORTED);
++       return 1;
++}
+
+  int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+  {
+@@ -2040,11 +2027,6 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, 
+fastpath_t fastpath)
+         if (fastpath != EXIT_FASTPATH_NONE)
+                 return 1;
+
+-       if (unlikely(vp_enter_ret == EXIT_REASON_EPT_MISCONFIG)) {
+-               KVM_BUG_ON(1, vcpu->kvm);
+-               return -EIO;
+-       }
+-
+         /*
+          * Handle TDX SW errors, including TDX_SEAMCALL_UD, 
+TDX_SEAMCALL_GP and
+          * TDX_SEAMCALL_VMFAILINVALID.
+@@ -2086,26 +2068,12 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, 
+fastpath_t fastpath)
+         case EXIT_REASON_EXTERNAL_INTERRUPT:
+                 ++vcpu->stat.irq_exits;
+                 return 1;
+-       case EXIT_REASON_CPUID:
+-               return tdx_emulate_cpuid(vcpu);
+-       case EXIT_REASON_HLT:
+-               return kvm_emulate_halt_noskip(vcpu);
+         case EXIT_REASON_TDCALL:
+-               return handle_tdvmcall(vcpu);
+-       case EXIT_REASON_VMCALL:
+-               return tdx_emulate_vmcall(vcpu);
+-       case EXIT_REASON_IO_INSTRUCTION:
+-               return tdx_emulate_io(vcpu);
+-       case EXIT_REASON_MSR_READ:
+-               kvm_ecx_write(vcpu, tdx->vp_enter_args.r12);
+-               return kvm_emulate_rdmsr(vcpu);
+-       case EXIT_REASON_MSR_WRITE:
+-               kvm_ecx_write(vcpu, tdx->vp_enter_args.r12);
+-               kvm_eax_write(vcpu, tdx->vp_enter_args.r13);
+-               kvm_edx_write(vcpu, tdx->vp_enter_args.r13 >> 32);
+-               return kvm_emulate_wrmsr(vcpu);
++               return handle_tdcall(vcpu);
+         case EXIT_REASON_EPT_MISCONFIG:
+-               return tdx_emulate_mmio(vcpu);
++               /* EPT MISCONFIGs are *always* KVM/kernel bugs. */
++               KVM_BUG_ON(1, vcpu->kvm);
++               return -EIO;
+         case EXIT_REASON_EPT_VIOLATION:
+                 return tdx_handle_ept_violation(vcpu);
+         case EXIT_REASON_OTHER_SMI:
+diff --git a/arch/x86/kvm/vmx/tdx.h b/arch/x86/kvm/vmx/tdx.h
+index ac8323a68b16..fc9c0c462f77 100644
+--- a/arch/x86/kvm/vmx/tdx.h
++++ b/arch/x86/kvm/vmx/tdx.h
+@@ -68,6 +68,22 @@ struct vcpu_tdx {
+
+         u64 vp_enter_ret;
+
++       /*
++        * Valid only when exit_reason is EXIT_REASON_TDCALL.
++        *
++        * When r10 of TDCALL is 0. It means the TDCALL is invoked for a
++        * TDVMCALL leaf that is defined by the GHCI spec. In this case,
++        * tdvmcall_exit_reason is set to the value of r11.
++        *
++        * When r10 of TDCALL is not 0. KVM treats it as a KVM hypercall.
++        * In this case, tdvmcall_exit_reason is set to EXIT_REASON_VMCALL,
++        * as what to invoke KVM hypercall in VMX. If GHCI defines the
++        * number of EXIT_REASON_VMCALL to a new TDVMCALL leaf in the future
++        * and KVM is going to support it, KVM will need to choose a new 
+value
++        * for tdvmcall_exit_reason to distinguish it from the KVM 
+hypercall.
++        */
++       u64 tdvmcall_exit_reason;
++
+         enum vcpu_tdx_state state;
+
+         u64 map_gpa_next;
