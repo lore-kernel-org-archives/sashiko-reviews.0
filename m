@@ -1,161 +1,143 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B934399F8
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 13:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF583EC6BF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 13:46:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974127; cv=none; b=VMbuTM+1RTk6cuWbNhiCN57j561zbE+hG5WLkfZsEWrBdAbISVi94t5WAiAqqUjdnyp4N5+s0tM8McpBwvBZA98lCRo7RPMtYcxM/lahrEF+8aQVBrKYl2n4te11yo35kJM26W+BAD84zZQK7xfBsmyv48oQ3tQh6x3+lDJQ+n8=
+	t=1786974395; cv=none; b=p/L5ZUUqNSnPpkguiVlAlwoh/PGf7SvY2FpQG9pbd451YGBIwEXohDz3kjH0Q9ahbtjXiAK1IvOOuMf7v2V9vhdaAD3i1AInA/4Osb/AlW3DYax9bdnWj5at6rxDxMs6zEyCCWn0NmkGQ7vLzMs36of40Tm7Hlpxo/lLdrL2B8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974127; c=relaxed/simple;
-	bh=5t0+awvIEoaGKqMdu39TCk34rZ/73tsfHuxRUuz9SGU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F9sF0hv5kTpmLSEbIXU2olRksUyI7pBIpYdMzk53ieKVd6//L3y3ct3tIXnXQ1OR4TGLATBYqhDmQK1CdvanHlCd5fRNMpAbXgZr5vXI25OxU7wmKL+YIlrsZplnCHwSjo/4z3qT/z4r3j07K1wMFdoSpdr+bCHQCTELCJhdtpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EPyeYmqH; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1786974395; c=relaxed/simple;
+	bh=BNA2bJ8izQU+zHo+wKDbWbBqe6iF/JZhi8seSQQ2KMg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Ja7jOl3pUF4jaIcfuoDMSPb7lC0GAw5Sx/tPQvVLYkNF1vWmk3iWa6F2VaBIrkOohusATK52GUKlQdcacFNjxe0jzH+zsDEJbMv6t5JxCyGR+FWxeviwejCGgikHiA9lvPkECFPr6Fxu4lGHObPWbem1/WwhmUL6h4xgzrmXMko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QihgVAfW; arc=none smtp.client-ip=209.85.216.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EPyeYmqH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786974120;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Nar5TPwp4YomIFNBACklaS1XT648jZLKltDco2A2dR0=;
-	b=EPyeYmqHjsj9pXA9uPXyel6RKmDnKpJV0IH36hOyYm4JANoB/8qrQLeOGwO0nFdFKAzpti
-	cPEfnAqmK2smrTv2X+KeGI1tLHAHvW0be4OFKX+tYqDJSfFw+JnKZXmVy6lNObLV/QdAfF
-	Lris5VF7OTeXbUn6Ag6YUQunh5+Vrzk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-WFMhlakUP96tlkFPPiYlmg-1; Mon, 17 Aug 2026 09:41:53 -0400
-X-MC-Unique: WFMhlakUP96tlkFPPiYlmg-1
-X-Mimecast-MFC-AGG-ID: WFMhlakUP96tlkFPPiYlmg_1786974112
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-47fecbb7f88so2338707f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 06:41:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786974112; x=1787578912;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QihgVAfW"
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38dc085b0a7so6406689a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 06:46:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786974390; x=1787579190; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Nar5TPwp4YomIFNBACklaS1XT648jZLKltDco2A2dR0=;
-        b=ZZGvJKwV8dV/TBFLD++VFg8GBT9c+PFqxB5yk3s5x6x73xG9oLT+rtdS5uCckxsTUo
-         NvBKttydqXsLv1jhu6J0o8zMkRJhy8BtJZfYRdIW94jCNygiypL+hapOhMYVzE6XMpL5
-         ZOX8LmvQowF9dQh0UHMkkZJzloReJXAweuOkYGViNph9zIvZr9jZXuykzoxjcB0nP5Yq
-         DdxGCawv7/Qhe8j9D22vKt2jiaYCqpeoHQpM7QVyIkyU2i88EwG3B42VGRTuD/9QkkAd
-         nwFJk8m3yhPVU27usrRLHRGYVL0PjLh1B53/GHVuMwyy18wVusjqGOAlrRcyecX/o6vS
-         RSVA==
-X-Gm-Message-State: AOJu0YzbJXX/jsRwekYXei6iY0rFyF49qyFDqfEt6tzqmwK6Zn0pA6r9
-	rOw7hLFvdAw6/PVtnexJ4xY3Fkk5AtWgs10IWagsLk/1Fhs0dEAv9Hle/iERVbJBNYxhrYbBIBx
-	f8sIpFLeubgNE4kc1+zAJp39v6TzQWi+9AWqZjh7OS9mJVNW6CXlMt6l5AFfau/qwKmHYHj78V1
-	tosAocO6Eq/3btogTlWVXJK7ryEXSZ4IpSyU+aekWs+lgTrs17dy8s
-X-Gm-Gg: AR+sD10arJ0pOh8UIx+MT8WRyAbp3woEOqpGzmlZvLyz5IJFKEhFD/4y2UZxW+iCfdj
-	D2M0lVZIQGUVtwQqgWN9vrZPp8ncCgzFaXFnJD3k93HTrgpiH0zJuCkUv7HutoLQFQm9Ouy0zeh
-	67LZ3yUHUUnqyCudf19cmjFiRjvsedvnb6/qioZ4xWWlwK7N2prf7A08YD3Ke5iepTLUNsw8+ur
-	/2N+QjYrS1ROHXi2g==
-X-Received: by 2002:a05:6000:2612:b0:47f:c648:e265 with SMTP id ffacd0b85a97d-48160758afcmr42033780f8f.17.1786974112291;
-        Mon, 17 Aug 2026 06:41:52 -0700 (PDT)
-X-Received: by 2002:a05:6000:2612:b0:47f:c648:e265 with SMTP id
- ffacd0b85a97d-48160758afcmr42033697f8f.17.1786974111934; Mon, 17 Aug 2026
- 06:41:51 -0700 (PDT)
+        bh=G5psuCp/phg+ycu2xLFTJu6xbtt7uSiAktxc7KtLUx8=;
+        b=QihgVAfW6c8ZNqJbDruS00IKdj40KOcm3nm8tsUhfE/4r5dipVa3d3m/UtKBcOg2Bw
+         FqUOM28/cYlTTEweI9t0uy23DeblOSu21cgl/6rXzApsXN5Ncbm2JTvfc8kDe9nHMvUY
+         4lwWnto/9ok+VKtOiPUg7x5DqtbYj8Ih7pKx0IQ4wnvQKUGKji7oFTIH78x87j+/JyEY
+         U6dI69SVKNsTYQwASTXfRtfoMufGzfls07GkGS26CSQHKpJrGZiugTB+fCFWU9v/sjoC
+         JIbRBI6kqNbGwZIlmPgqtNdl+vK6bmf7KFhfXwyL9l/65hebOf58+HcVXuVj5rHEjGr2
+         wlcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786974390; x=1787579190;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=G5psuCp/phg+ycu2xLFTJu6xbtt7uSiAktxc7KtLUx8=;
+        b=eB5qiD2l44h/uEF1otBeMm2M10u0aXSsaUPJr0Cb1zT3LimmKew4/C+RG7gWoE1Zdi
+         554xcaTmfgQ57AG3pKokpqnqTDZ5pPGDRHZzr4C2IgckpmVY53hE4s3Zez03bilSWW1i
+         R9xP/4y7gPQ2BM3RdETrfEIIeGHiXk2wcjCEgg2HSr3NndGxZ5gshyIS4ejwRXNfWMIv
+         U2w6GJJfCiLhReKbxZvd3UUZHaWqqqnwuG8BbyCH1jxVYc8KGPYxd/i6E3Xa1jhP71Su
+         aASYAFj0cHomddoSQAT0ch8B4Fm9lokF4eNi6Fqo5StxqsUBOM+a/zSUmCbA34VYZLeZ
+         fiSw==
+X-Gm-Message-State: AOJu0YxHeUAPyScSjzKn7thDqIuPZVDNIgrkwRU6AvcJsmlhf5NMPnqt
+	ctUHy22A9vqqlj6+B4zdinUtqyxvJp6NW5TMA7q5tihsahzrZCK9zZTV6Ky7nzIbfVQwaaYtlda
+	onM+kCg==
+X-Received: from pjje11.prod.google.com ([2002:a17:90a:630b:b0:38d:f003:cd24])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4f:b0:38e:ad9d:1161
+ with SMTP id 98e67ed59e1d1-3933b833613mr29799421a91.0.1786974389518; Mon, 17
+ Aug 2026 06:46:29 -0700 (PDT)
+Date: Mon, 17 Aug 2026 06:46:28 -0700
+In-Reply-To: <32c405c0-a05d-49e7-9cc5-3e5918c27df1@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260812181300.3712426-1-jtaubepe@redhat.com> <20260812181300.3712426-3-jtaubepe@redhat.com>
- <20260812182142.3207A1F00A3E@smtp.kernel.org>
-In-Reply-To: <20260812182142.3207A1F00A3E@smtp.kernel.org>
-From: Jesse Taube <jtaubepe@redhat.com>
-Date: Mon, 17 Aug 2026 09:41:39 -0400
-X-Gm-Features: AcwNN1UC6sQe5yjBCYZbkjh1cT7tfFNaedkvSo-HYeu9LkQg5W4yToVKNkirk2E
-Message-ID: <CADRr4bfRsLn2fYcCepK9EjOCn+PH2KUCf6KXcd-a=Hu57LNZRw@mail.gmail.com>
-Subject: Re: [PATCH 02/13] nvme: add NVME_CTRL_MARGINAL flag
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: pGFLymKJauTIkRTF_sxBxp1buzeT9NI-4xNYN9IsdVg_1786974112
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20260713105033.15405-1-sarunkod@amd.com> <20260713105033.15405-6-sarunkod@amd.com>
+ <20260713111119.EC35E1F000E9@smtp.kernel.org> <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com>
+ <anpwS3C2UIHFz_Uf@google.com> <5149127b-32ce-4409-a443-02b5a9600e14@amd.com>
+ <anzsptZlkU4VOKGi@google.com> <32c405c0-a05d-49e7-9cc5-3e5918c27df1@amd.com>
+Message-ID: <aoMQtL8qx_P69NTk@google.com>
+Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
+ Physical Processor Interrupt (GAPPI)
+From: Sean Christopherson <seanjc@google.com>
+To: Sairaj Kodilkar <sarunkod@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	Vasant Hegde <vasant.hegde@amd.com>
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Aug 12, 2026 at 2:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The NVME_CTRL_MARGINAL flag is cleared on the wrong structure's =
-flags field in the Fibre Channel transport.
-> - [Medium] The NVME_CTRL_MARGINAL flag is not cleared universally on all =
-controller resets, leaving non-FC transports and manual resets permanently =
-in a marginal state.
-> --
->
-> --- Patch [2]: [PATCH 02/13] nvme: add NVME_CTRL_MARGINAL flag ---
-> commit f9c336bbdc7993d3daa484b869cd6845d7fce7a7
-> Author: Bryan Gurney <bgurney@redhat.com>
->
-> nvme: add NVME_CTRL_MARGINAL flag
->
-> Add a new controller flag, NVME_CTRL_MARGINAL, to help multipath I/O
-> policies to react to a path that is set to a "marginal" state.
-> The flag is cleared on controller reset, which is often the case when
-> faulty cabling or transceiver hardware is replaced.
->
-> [ ... ]
->
-> > diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-> > index 04363b9c4489e..d2ca65f70a0c5 100644
-> > --- a/drivers/nvme/host/fc.c
-> > +++ b/drivers/nvme/host/fc.c
-> > @@ -788,6 +788,10 @@ nvme_fc_ctrl_connectivity_loss(struct nvme_fc_ctrl=
- *ctrl)
-> >               "Reconnect", ctrl->cnum);
-> >
-> >       set_bit(ASSOC_FAILED, &ctrl->flags);
+On Mon, Aug 17, 2026, Sairaj Kodilkar wrote:
+> On 8/13/2026 3:29 AM, Sean Christopherson wrote:
+> > diff --git arch/x86/kvm/svm/avic.c arch/x86/kvm/svm/avic.c
+> > index c5b1d294b15a..c9a6da646c8e 100644
+> > --- arch/x86/kvm/svm/avic.c
+> > +++ arch/x86/kvm/svm/avic.c
+> > @@ -1020,6 +1020,9 @@ static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int cpu,
+> >  
+> >         lockdep_assert_held(&svm->ir_list_lock);
+> >  
+> > +       if (ga_log_intr && gappi && kvm_can_use_device_posted_irqs(vcpu->kvm))
+> > +               kvm_pi_enable_wakeup_handler(vcpu);
 > > +
-> > +     /* clear 'marginal' flag as controller will be reset */
-> > +     clear_bit(NVME_CTRL_MARGINAL, &ctrl->flags);
->
-> [Severity: High]
-> Does this clear the flag on the wrong structure?
+> 
+> I am not sure what you mean here, because pi_enable_wakeup_handler does
+> more than just manipulating the wakeup list, it also updates pi
+> descriptor which is Intel specific, 
 
-Yes, Will fix.
+Sorry, got ahead of myself.  I was envisioning a helper that for just the common
+part, e.g.
 
->
-> Here, ctrl is a pointer to struct nvme_fc_ctrl. Clearing the bit on
-> &ctrl->flags will affect the FC-specific flags field instead of the inten=
-ded
-> core NVMe controller flags (&ctrl->ctrl.flags).
->
-> [Severity: Medium]
-> Will other transports remain in a marginal state indefinitely?
+void kvm_pi_enable_wakeup_handler(struct kvm_vcpu *vcpu)
+{
+	lockdep_assert_irqs_disabled();
 
-Yes, this is intended it wont affect their functionality.
+	/*
+	 * Acquire the wakeup lock using the "sched out" context to workaround
+	 * a lockdep false positive.  When this is called, schedule() holds
+	 * various per-CPU scheduler locks.  When the wakeup handler runs, it
+	 * holds this CPU's wakeup lock while calling try_to_wake_up(), which
+	 * can eventually take the aforementioned scheduler locks, which causes
+	 * lockdep to assume there is deadlock.
+	 *
+	 * Deadlock can't actually occur because IRQs are disabled for the
+	 * entirety of the sched_out critical section, i.e. the wakeup handler
+	 * can't run while the scheduler locks are held.
+	 */
+	raw_spin_lock_nested(&per_cpu(wakeup_vcpus_on_cpu_lock, vcpu->cpu),
+			     PI_LOCK_SCHED_OUT);
+	list_add_tail(&vcpu->pi_wakeup_list,
+		      &per_cpu(wakeup_vcpus_on_cpu, vcpu->cpu));
+	raw_spin_unlock(&per_cpu(wakeup_vcpus_on_cpu_lock, vcpu->cpu));
+}
 
-> The commit message mentions the flag is cleared on controller reset, but =
-the
-> clearing logic is only added here in the FC-specific connectivity loss ha=
-ndler.
->
-> Should this flag instead be cleared universally inside nvme_reset_ctrl() =
-in
-> drivers/nvme/host/core.c to ensure PCIe, TCP, and RDMA paths also recover
-> after a reset?
->
-> drivers/nvme/host/core.c:nvme_reset_ctrl() {
->     if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING))
->         return -EBUSY;
->     ...
->
-> > +
-> >       nvme_reset_ctrl(&ctrl->ctrl);
-> >  }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812181300.37=
-12426-1-jtaubepe@redhat.com?part=3D2
->
+> We have following two options:
+> 
+> Option A:
+> Adding a new x86_ops
+> 
+> avic_update_iommu_vcpu_affinity
+> 	kvm_pi_enable_wakeup_handler
+> 		list handling
+> 		kvm_x86_callback(configure_pi)
+> 			IOMMU callbacks
+> 
+> 
+> The new x86_ops makes sure that irte and pi descriptor are configured
+> correctly.
+> 
+> Option B:
+> Common list handling
+> 
+> The svm and vmx will share function for list handling but IRTE/PI setup
+> code will remain same.
+> 
+> avic_update_iommu_vcpu_affinity/pi_enable_wakeup_handler
+> 	kvm_add_to_wakeup_list
+> 		list handling
+> 	IOMMU callbacks
 
+Definitely option B.
