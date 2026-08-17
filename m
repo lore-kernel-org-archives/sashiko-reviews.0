@@ -1,70 +1,192 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-131.mta0.migadu.com [91.218.175.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F23222597
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 15:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6225B445AC1
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 15:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980625; cv=none; b=c2peP8ao39wf0YOShtspelw5O8i2ZQavuuwRNSM3OAd1LFKejgncnNwko7IcFv4PNh8EqZB6bicpt75jQSNdRJ5YcWZavGjAjWksdBzopRNGa5zvid2Ljxz3tVJel8ziN4bDxXrgbjJI5kTbcfw4TY0nWEix9dlYbR2soBd75zw=
+	t=1786981219; cv=none; b=TRzfxEIqcDS38L6N9Cjq9YnHxXwb5vYJZSd1v/CQ4+tC8xWhKbPr/OBO0KX4wi940GmT1N4iWBfnlqDf9SHpV748Om8+St0gLiqcQghFVUFhNQwMxmZJugRVsVIJ66K2c1U3h/KGD9Xq84kOmqZHiYZbwOq2u/kdrijdj+GTWlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980625; c=relaxed/simple;
-	bh=Jtb7MBCUpRL3r8wUI5sHpryZ8uYbVER3YKn7EGTZ2Ws=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SlN9TgM0jZpnQWNUmBix3T/m3s1mYcrRA259aDdBSwWNDBg1Cu9VjcWf0eezKqtddNQyUH6zSZCBRhf+0cyO9MqSKpkE7zQr3CXqfhi78RiEm7I2ZY9KAzW4rvkXsK9GwvVL4j8sKlfPE9H64ibvGDGVV0w3Yb4bjT5AUFpA0ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=SP0rJq+m; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1786981219; c=relaxed/simple;
+	bh=FJgFdu/ffLhe8fA1YtSM6rw0vqDXM7Ut1m2HBm00pPg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EoMI1YG1PRlOxwgL2nR0YMg0TGl4JGrRT3J/kD1AOI35FDmXA+KHLQy43CkuYTo2P7qte4uFcdGBhYOHOpB0+Y428P/ZOq88LER9RAgdXlPtgVUy5srH7+lURdxiQH2NKFLzx6kWKFoTK3rZsqW8GZsAg1d1Z+L/r0AGhS0IeYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=L5dytUmf; arc=none smtp.client-ip=91.218.175.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="SP0rJq+m"
-Received: from macsyma.thunk.org (pool-173-48-113-153.bstnma.fios.verizon.net [173.48.113.153])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 67HFUIYc014817
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Aug 2026 11:30:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1786980621; bh=5lP2TF3nDkDFNL6YrkIL6wAMOBQnkc2dy2i2C2gWJjM=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=SP0rJq+mYyHH6fjKG2UBuey2VfB6e+YfRi23qUvu9vZ1kkBovd8r+o+FZOS5ltuq7
-	 F1RBcmPKzauhvj+Drw9I8eSKkU7ofJvYxx5EPJH7Rex8DngOerVnuf/vbBX9pkBC9R
-	 vDkBNc1dyWGRsI6UqsgN910kHIPemOz5dKe386cMPtIAoNMLGqQc4J2vH5vG4GFIy9
-	 WRG1Vst7GSUqd291hKYAtNGYZ9JXFkxf3LTXDsqjaZySQhyWIEjOnLWwJqeOdpZtSv
-	 NQWRq5y/9Z0L9pQc5p9MYvl3EW6MkeS/wsb1uk6TM5GWLA8j2jK32iJHlXXWbRsbda
-	 32NCt0mBFgh3g==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id 76848F595D6; Mon, 17 Aug 2026 11:29:18 -0400 (EDT)
-Date: Mon, 17 Aug 2026 11:29:18 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: Matthias Goergens <matthias.goergens@gmail.com>
-Cc: linux-ext4@vger.kernel.org, jack@suse.cz, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] ext4: compensate ea_inode refs and free block on new
- xattr block write error\
-Message-ID: <aoMe0uuQnGovxMSH@mit.edu>
-References: <20260817100724.923291F000E9@smtp.kernel.org>
- <20260817114905.2708356-1-matthias.goergens@gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="L5dytUmf"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=FJgFdu/ffLhe8fA1YtSM6rw0vqDXM7Ut1m2HBm00pPg=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786981214; v=1; x=1787586014;
+ b=L5dytUmfnVwG55zYXUrSRxNwv6/hum8rcfxMX7tjYmLCnm6CPQ/NSEg2UR8IF2AfgyEpsJNh
+ 1ByXrpt+nTDNfm1ocuc+rO3WjhnHexOF8uMP1FsRkEs5Pf3Db+OMBO2zsqrSayfSrX3U5t7CX4Z
+ DCdW0wuQ9DkDyK4Ztz/GIlZA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5604)
+	by smtp.migadu.com with ESMTPS id 88af39c8beda6d5a;
+	Mon, 17 Aug 2026 15:40:13 +0000
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <83cf5ba4-810d-44e5-a298-7b81c9dcced8@linux.dev>
+Date: Mon, 17 Aug 2026 08:40:11 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v6 05/10] bpf: Account R2 of register-pair
+ returns in live register analysis
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260817042141.2286086-1-yonghong.song@linux.dev>
+ <20260817042207.2289995-1-yonghong.song@linux.dev>
+ <20260817044342.66D1E1F000E9@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260817044342.66D1E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260817114905.2708356-1-matthias.goergens@gmail.com>
 
-On Mon, Aug 17, 2026 at 07:49:05PM -0500, Matthias Goergens wrote:
-> Sashiko's reviews on these threads have been genuinely useful — the
-> ea_inode refcount leak that this patch follows up on was its find.  This
-> one, though, is a false positive: mb_cache_entry_delete_or_get() and
-> mb_cache_entry_wait_unused() have been defined in fs/mbcache.c and
-> declared in include/linux/mbcache.h since commit 3dc96bba65f5 ("mbcache:
-> add functions to delete entry if unused", 2022)
 
-Yeah, I had noticed this and filed a bug against Sashiko.
 
-https://github.com/sashiko-dev/sashiko/issues/439
+On 8/16/26 9:43 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] When a BPF program with 16-byte returns falls back to the interpreter (e.g., if JIT is disabled), the interpreter silently discards the upper 8 bytes (R2) of the return value, causing runtime data corruption.
+> - [High] The verifier fails to propagate or initialize BPF_REG_2 back to the caller for subprograms and kfuncs returning 16-byte values, rendering the feature unusable.
+> - [High] The verifier fails to validate the safety of BPF_REG_2 at the exit of global subprograms returning 16-byte values, allowing potential pointer leaks or returning uninitialized memory.
+> --
+>
+> --- Patch [5]: [PATCH bpf-next v6 05/10] bpf: Account R2 of register-pair returns in live register analysis ---
+> commit 1e84baf022beac38fd11fa1a392f1c5622154586
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Account R2 of register-pair returns in live register analysis
+>
+> This commit updates the live register analysis to account for subprograms
+> returning a 16-byte register pair. It modifies compute_insn_live_regs()
+> to mark BPF_REG_2 as read during BPF_EXIT when a subprogram returns a
+> register pair.
+>
+>> diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
+>> index 74fc4b3f80d6e..71f998c6eb888 100644
+>> --- a/kernel/bpf/liveness.c
+>> +++ b/kernel/bpf/liveness.c
+> [ ... ]
+>> @@ -2191,7 +2193,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+>>   			break;
+>>   		case BPF_EXIT:
+>>   			def = 0;
+>> -			use = r0;
+>> +			use = ret_reg_pair ? (r0 | r2) : r0;
+>>   			break;
+> [Severity: High]
+> How does the verifier propagate BPF_REG_2 back to the caller for subprograms
+> and kfuncs returning 16-byte values?
+>
+> In kernel/bpf/verifier.c:prepare_func_exit(), only BPF_REG_0 is copied from
+> the callee's state to the caller's state:
+>
+> kernel/bpf/verifier.c:prepare_func_exit() {
+> 	...
+> 	/* return to the caller whatever r0 had in the callee */
+> 	bpf_diag_mod_begin(env, &caller->regs[BPF_REG_0], r0, BPF_DIAG_MOD_WRITE);
+> 	caller->regs[BPF_REG_0] = *r0;
+> 	bpf_diag_mod_end(env);
+> 	...
+> }
+>
+> Similarly, when returning from a non-void global subprogram or a kfunc, only
+> BPF_REG_0 is initialized as a scalar. For instance, in check_func_call():
+>
+> kernel/bpf/verifier.c:check_func_call() {
+> 	...
+> 	/* All non-void global functions return a 64-bit SCALAR_VALUE. */
+> 	if (!returns_void) {
+> 		mark_reg_unknown(env, caller->regs, BPF_REG_0);
+> 		bpf_diag_mod_end(env);
+> 	}
+> 	...
+> }
+>
+> And in check_kfunc_call():
+>
+> kernel/bpf/verifier.c:check_kfunc_call() {
+> 	...
+> 	if (btf_type_is_scalar(t)) {
+> 		mark_reg_unknown(env, regs, BPF_REG_0);
+> 	...
+> }
+>
+> Since clear_caller_saved_regs() marks R1-R5 as NOT_INIT prior to the call,
+> would this leave the caller's BPF_REG_2 uninitialized, causing the verifier
+> to reject legitimate reads of the upper 8 bytes of the return value?
 
-(Filed before github went down.)
+This should be okay. The BPF_REG_2 is introduced in later patch
+   bpf: Add verifier support for 16-byte returns in R0:R2
 
-					- Ted
+>
+> [Severity: High]
+> Is the safety of BPF_REG_2 validated at the exit of global subprograms
+> returning 16-byte values?
+>
+> In kernel/bpf/verifier.c:check_global_subprog_return_code(), the return code
+> validation is only performed for BPF_REG_0:
+>
+> kernel/bpf/verifier.c:check_global_subprog_return_code() {
+> 	...
+> 	return check_global_ret_scalar_reg(env, BPF_REG_0);
+> }
+>
+> Could this omit BPF_REG_2 for register-pair returns, potentially allowing a
+> global subprogram to return an unreferenced pointer, a map value pointer, or
+> uninitialized memory without being caught by the verifier?
+
+The same as above. The BPF_REG_2 is introduced in later patch
+   bpf: Add verifier support for 16-byte returns in R0:R2
+
+
+>
+> [Severity: Critical]
+> What happens if a BPF program with 16-byte returns falls back to the
+> interpreter?
+>
+> If JIT is not requested, bpf_compute_subprog_ret_regs() exits early without
+> setting env->prog->jit_required = 1:
+>
+> kernel/bpf/verifier.c:bpf_compute_subprog_ret_regs() {
+> 	...
+> 	if (!env->prog->jit_requested || bpf_prog_is_offloaded(env->prog->aux))
+> 		return 0;
+> 	...
+> }
+>
+> This permits the program to fall back to the interpreter. However, the
+> interpreter handles subprogram calls via JMP_CALL_ARGS, which only propagates
+> BPF_R0:
+>
+> kernel/bpf/core.c:___bpf_prog_run() {
+> 	...
+> 	JMP_CALL_ARGS:
+> 		BPF_R0 = interpreters_args[insn->off](BPF_R1, BPF_R2, BPF_R3,
+> 						      BPF_R4, BPF_R5,
+> 						      insn + insn->imm + 1);
+> 		CONT;
+> 	...
+> }
+>
+> Since the PROG_NAME_ARGS macro generates functions that return a single u64,
+> does the interpreter silently discard the upper 8 bytes (R2) of the return
+> value, causing data corruption at runtime?
+>
+>>   		case BPF_CALL:
+>>   			def = ALL_CALLER_SAVED_REGS;
+
+In such case (jit not requested), verifier will fail. For example,
+suppose the subprog will return R0:R2, but in interpreter mode, only
+R0 is returned. R2 is not initialized. In caller, when trying to
+return R2, but R2 is not initialized, so verifier will fail.
+
