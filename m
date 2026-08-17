@@ -1,129 +1,174 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-116.mta1.migadu.com [95.215.58.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DBC3FA5D2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5953E63AA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786965970; cv=none; b=q14bDb5Sa0TKz8qkCMSpILD2ttvSW33+oo9MbRt3ZqmqoKB0v8ZXcSRh66ucVXEjyuEYXrZwNUTGpfLV4saiKrKAwtYY1ZSmMVBYmDoe8TCLXpYXCsTsbfV8CwWMp7MiIYYVuh98eF24XvX/1DsxhEWNbS8VJ73vTsSXJ6TwIqQ=
+	t=1786966143; cv=none; b=fG7lhigk7HRDXscNKELWJweUD0Px3OlXZwwPLPcWxF7lqZxcjZi7xzV2EBBM/czA1pDOMjeEIamBBcGuJ8aKLYF7cPvwuOGThetAWRFEnfF9LO29uJRhY9OodVoaeKK1Ms+p3KtY/KRUE75m//kV7PNb8/R7sJKf1YJd84InkwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786965970; c=relaxed/simple;
-	bh=/HK3S1h/p4YqWHBgoSBiqiJ+ZmeGeH8/Mfh0HXbAKwg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EpQr0axIljnVx/OwBJsnueUmBkqnFzDCMWekvTB1h1MLduBItJHGKkJ0/q7K+h7ZpKCQ8Man6PoJcbbaysTbXhjoKC9VmU+9CYDTJkROfAmSg7/yxCMbr+jOqGRm9HRgMdiiVEMG1jVL9qoBSffSu4TJr5Ja0TmjKvUt/IWuKyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZaIBImFC; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1786966143; c=relaxed/simple;
+	bh=gGAFBl9s0Hip9Xt/14uDPkwKVPiyseO+fC7WoteSaHE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a7w56D2qo+6+l1RN9p6VY9kj+jBi4dObg0lG03TPqGhJXeQyOnCxZoklHm3QJyk9BCPY9+4iRWh9Ug7S02kbyio13qheNRO7+dl+n8lvdNl+U78QYLAbm7UH6ClQjFWsXpOXDzN489BGU/P7NWr2THtsrJxL6oTSbcERQIme+qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=eFq3gI8R; arc=none smtp.client-ip=95.215.58.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZaIBImFC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786965967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=q73ryK5kUwcmMiYglMvM52gIXR5G72fMcc+CsMgRAr8=;
-	b=ZaIBImFCMYO48txZzYLANjLSjodRY0VXDGGG4FfmTM2HSMU6pLQO5fTjmi4htusu4+roQg
-	hDNNVzyr9NezYDBqLqi1M+2OF04qEvlRyQdDuYJBOFc+BzmiZ2KPOaSsjgKzJit3Wf8XqB
-	amJnjIdutVwxzaD7NR7pnUxEZzFS30I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-bWEI491dP328ukgjfqYOVQ-1; Mon, 17 Aug 2026 07:26:04 -0400
-X-MC-Unique: bWEI491dP328ukgjfqYOVQ-1
-X-Mimecast-MFC-AGG-ID: bWEI491dP328ukgjfqYOVQ_1786965963
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-495689bfcc8so21739505e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 04:26:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786965963; x=1787570763;
-        h=content-type:mime-version:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=q73ryK5kUwcmMiYglMvM52gIXR5G72fMcc+CsMgRAr8=;
-        b=MYU8qAQ1riGOQC2W7eVTan1kE4LqKws17B9Evq7noSIuedOOSaFmfZNln5OwVYAo5R
-         58nnUXNCjmkw7tYDEjihzMXptfeLGaHXJcw0WyadI+DRd7X2PNXEZ5gtKdSRrsnDW9bJ
-         gbuPHyy+kUm0e8t1SpEGjPT+GOCJ4KXkNhMRKAOurraGQpC3Pm6WrUlzSVSMYmLN3j55
-         BUsHmNLoPWPr25w1zrgPc1G3u361j9B81iAStMYxU5URakP+lqePDOmGKkRybjBV7bwi
-         q4OmNBh7ovhUVNqgoAqc19mLppd5xgL4JAG33uFL+WJwls1X2CtI/9o/eUqLQ4tJIxo7
-         /1vA==
-X-Gm-Message-State: AOJu0YzoPRXHqKuCuHeeenlZ2e77SQXNVUNgm1Gso766+e/TluWgm0W3
-	5B2eXi0ZiQAI+Z3CnEAzKUhYZbAQpFs8LrkjGAiKLiRvtsMOLNa2aqKHScy5aHWLF9Z+2Im2S0O
-	jplT3K94rpiygBMTohDBnzIRsXRNbYyw0AsKlVzHExKpTSYNnDVXHD4RCEtUPTH4eGEKQPw==
-X-Gm-Gg: AR+sD10Ie2VOtr2fkwQgAn5eXCtLuko7lvAY0T4oy09x++tGAFLW9bfT8kZr4ixRHzz
-	xB49b+UtmyRDHl5VF60ZBJ+O3tgbYlqZqQ0qzFDYQbXryrjX9W8QwaspqI4e+M1+G69gzZr8Vx0
-	/9JaxnvDuNdYl4gES4p0e7eiTLmn0jI9R/ZFmCPg4bQ5KxtKCl52Cg2jDJbkqDj0MLMRM3qa0rO
-	k+GZBuTFiLJ1csoFHmTQ3KTa5Fv7wgT3mGhot2bY7FbwrxUI7CgN2jIxE8kY3dJQqdEx+JOu+GS
-	1/zQ/kSgbupkElsj55N9ZubcwYS4uaksTXKBGN5TNr/ZuUiyRXzoYwmVaPEyzYffI7xVmQpcIza
-	uXA==
-X-Received: by 2002:a05:600c:468e:b0:495:6a50:3fb8 with SMTP id 5b1f17b1804b1-49987944202mr342126635e9.1.1786965963229;
-        Mon, 17 Aug 2026 04:26:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:468e:b0:495:6a50:3fb8 with SMTP id 5b1f17b1804b1-49987944202mr342125905e9.1.1786965962850;
-        Mon, 17 Aug 2026 04:26:02 -0700 (PDT)
-Received: from fedora (nat-20.ign.cz. [91.219.240.20])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482a6c449dbsm2091445f8f.8.2026.08.17.04.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2026 04:26:02 -0700 (PDT)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: sashiko-reviews@lists.linux.dev, Sean Christopherson
- <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH 4/4] KVM: selftests: Check VMPTRLD with active eVMCS
-In-Reply-To: <20260814163105.BDEC31F000E9@smtp.kernel.org>
-References: <20260814162221.2144473-1-vkuznets@redhat.com>
- <20260814162221.2144473-5-vkuznets@redhat.com>
- <20260814163105.BDEC31F000E9@smtp.kernel.org>
-Date: Mon, 17 Aug 2026 13:26:01 +0200
-Message-ID: <87lda5kmye.fsf@redhat.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="eFq3gI8R"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=gGAFBl9s0Hip9Xt/14uDPkwKVPiyseO+fC7WoteSaHE=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786966138; v=1; x=1787570938;
+ b=eFq3gI8RCgG83Jf+CrVQOyTo6kil9j4RhsC82p7YD2RhfirJkrQnzDGwBXvKKAPX4GJ0Lj5u
+ eNPAKAFRfSt1b/wWMy63j3iPpbQnmonbPGBtWHrK5aL6twSspz9D54vXqv9kcEtJEgxlfNjBLUY
+ fgwF+FpKzm2o/LFEW8sd4OL0=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from mail-lf1-f52.google.com (209.85.167.52)
+	by smtp.migadu.com with ESMTPS id 0addf17a102c577b;
+	Mon, 17 Aug 2026 11:28:58 +0000
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5aeb688ae83so17751e87.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 04:28:53 -0700 (PDT)
+X-Gm-Message-State: AOJu0YysHNlDTWnKAJyNdJLMUa+EeZ6hwALNY6/7Gvooam7KEL1c8dao
+	mK3CRjQxeuUZYtHaufpLPoGEjrW77VOTn1ZeYANiFd7xZQsQS/ggvit8ZMhzATAReEgyrkToR1y
+	ZekFKpMiUHZbI4xK3VWmZKb7NnCp1h17A2wjggi8U
+X-Received: by 2002:a05:6512:3e0d:b0:5b2:958b:24f with SMTP id
+ 2adb3069b0e04-5b4693d328fmr75321e87.4.1786966132880; Mon, 17 Aug 2026
+ 04:28:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 9ZnEInyHicRm3fn4BvlqduvaYV7PrENqSioVmYZo57k_1786965963
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+References: <20260817103228.1203140-1-fuad.tabba@linux.dev>
+ <20260817103228.1203140-3-fuad.tabba@linux.dev> <20260817104711.26A3D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260817104711.26A3D1F000E9@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 17 Aug 2026 12:28:16 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzggi3U-FF=NHjb1qrLOsizV8rNtGHpbD=YSXN_SPyhAw@mail.gmail.com>
+X-Gm-Features: AcwNN1W0ERaZbu3OXegRP31-Zk_Bugm9-HWpP3hC5nUI1JjHTsKcx8M9JWS5XFA
+Message-ID: <CA+EHjTzggi3U-FF=NHjb1qrLOsizV8rNtGHpbD=YSXN_SPyhAw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] KVM: arm64: Reject the GICv5 CPU interface
+ hypercalls under pKVM
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
+It's been a while...
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The hardcoded `VMPTRLD_INSN_SIZE` of 5 bytes is brittle
-> because `vmptrld` is executed using an inline assembly memory operand
-> constraint (`"m"`), which results in a variable-sized instruction
-> depending on compiler optimizations and register allocation.
+On Mon, 17 Aug 2026 at 11:47, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Medium] The patch manually adds runtime mode checks inside GICv5 handl=
+ers instead of correctly categorizing the hypercall IDs in the pKVM availab=
+ility bands, resulting in an incorrect SUCCESS return for an unsupported op=
+eration.
 
-True that, but afair we don't currently have an instruction decoder in
-selftests. I see three ways to move forward:
+pKVM does not support GICv5 yet but is expected to, so these are gated
+off for now, not rejected outright.
 
-- Calculate the size of the instruction with two labels, something like
-  (untested):
+> Pre-existing issues:
+> - [Critical] Always-on legacy hypercalls (like `handle___vgic_v3_save_apr=
+s` and `handle___kvm_adjust_pc`) dereference host-provided pointers using `=
+kern_hyp_va()` without ownership validation, enabling a malicious host to a=
+rbitrarily corrupt hypervisor memory.
 
-    static inline int __vmptrld(u64 vmcs_pa, int *insn_size)
-    {
-            u8 ret;
+The _proper_ fix for this one is coming soon to a series near you
+(i.e., proper pVM support upstream)!
 
-            __asm__ __volatile__ ("movl $(2f-1f), %[size];"
-                                  "1: vmptrld %[pa]; 2:"
-                                  "setna %[ret]"
-                    : [ret]"=rm"(ret), [size]"=m"(*insn_size)
-                    : [pa]"m"(vmcs_pa)
-                    : "cc", "memory");
+/fuad
 
-            return ret;
-    }
-
-  and use insn_size in the tests.
-
-- Stuf __vmptrld() with NOPs after vmptrld and keep the constant jump,
-  just make it loner (e.g. 10 bytes should realistically be enough).
-
-- Make peace with the fragility (it's just a selftest after all) and
-  leave a comment in vmptrld() that changing the asm there make break
-  the assumption.
-
-Any preferences? Personally, I'm feeling adventurous and can go with the
-first one - calculating the exact size with labels.
-
--- 
-Vitaly
-
+> --
+>
+> --- Patch [2]: [PATCH v2 2/4] KVM: arm64: Reject the GICv5 CPU interface =
+hypercalls under pKVM ---
+> commit b55739e7ec2cd459ba47129f61f967475ca69c49
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: Reject the GICv5 CPU interface hypercalls under pKVM
+>
+> __vgic_v5_save_apr() and __vgic_v5_restore_vmcr_apr() remain callable
+> after pKVM finalises. pKVM never registers a GICv5 vgic, so neither has
+> a valid caller in protected mode, and on a GICv3 machine both reach a
+> register that is UNDEFINED at EL2 and panic the hypervisor.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index d3c69de698f48..9159bce7515b1 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > @@ -695,6 +695,9 @@ static void handle___vgic_v5_save_apr(struct kvm_cp=
+u_context *host_ctxt)
+> >  {
+> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+> >
+> > +     if (unlikely(is_protected_kvm_enabled()))
+> > +             return;
+> > +
+>
+> [Severity: Medium]
+> Does this early return leave SMCCC_RET_SUCCESS in the return register
+> instead of correctly rejecting the call?
+>
+> Because the hypercall ID remains in the always-on band in
+> enum __kvm_host_smccc_func, the dispatcher will preload SMCCC_RET_SUCCESS
+> and route it here. Returning early means the host receives a success code
+> for an unsupported operation.
+>
+> Would it be better to move these hypercall IDs before
+> __KVM_HOST_SMCCC_FUNC_MIN_PKVM in asm/kvm_asm.h so the dispatcher
+> rejects them automatically with SMCCC_RET_NOT_SUPPORTED?
+>
+> >       __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+> >  }
+> >
+> > @@ -702,6 +705,9 @@ static void handle___vgic_v5_restore_vmcr_apr(struc=
+t kvm_cpu_context *host_ctxt)
+> >  {
+> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+> >
+> > +     if (unlikely(is_protected_kvm_enabled()))
+> > +             return;
+> > +
+> >       __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
+> >  }
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but while looking at how kern_hyp_va()
+> is used in this file, could a host use the always-on legacy hypercalls
+> to modify hypervisor memory?
+>
+> In handle___vgic_v3_save_aprs():
+>
+> static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ctxt)
+> {
+>         DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+>         __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> }
+>
+> And similarly in handle___kvm_adjust_pc():
+>
+> static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
+> {
+>         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
+>         __kvm_adjust_pc(kern_hyp_va(vcpu));
+> }
+>
+> Since kern_hyp_va() transforms the pointer without validating page
+> ownership, what happens if the host passes a pointer that resolves to an
+> EL2-owned physical page? It appears this might give the host an
+> arbitrary write or bit-clear primitive against hypervisor memory. Should
+> these always-on handlers validate the host pointer before dereferencing i=
+t?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817103228.12=
+03140-1-fuad.tabba@linux.dev?part=3D2
