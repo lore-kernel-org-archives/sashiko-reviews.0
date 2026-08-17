@@ -1,128 +1,163 @@
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-244106.protonmail.ch (mail-244106.protonmail.ch [109.224.244.106])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFCB463B86
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 17:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D7B45FFA8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 17:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786986375; cv=none; b=qESJoDWsI52yz7eDf8wcXJaQvkMSiHngrUkHw1rBIR8LXY4OzVR+fvISVm/BoxG+UO+7ZRoUkat8vUDVFaAmwbf1JMNaFBigYax0LhTV75IAuGmNlvkIiNOr0u3ETnMuuz1ZGVdi9oBj5f9IsIjWaC6iQBAYfieYq1Fei51CSGc=
+	t=1786986792; cv=none; b=L+ANsC8kVMkIj64jjHWkgQq6TvjGwUjICioqJqX/8yZzcjvrQlkXA6lmHAH4OgwZxTNavSvBLijzn/C3UqO5TXku8EZaN6TVIn92pWKPWMlzy5DkAXICEvGs0rSo6cSbD/qVVqLEhOkiSAyLluzfakgffuxGp89DtrF0uiJ1b/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786986375; c=relaxed/simple;
-	bh=vGRkCp8CN9ItE9Tqxfjd1G6PBe2XxjW5Iv38PjtgXxc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=V6vV9LdnOfr05W1Lbzm4EgS99pAxkaE4TOWofyztfKH6JQEWMqTZtjlFkPuXT+p579JfEyWYG3+h6OJZs/OzDxPRvKkos0mGj1tHt5AsMM7LLKKBXcLNtUh8xke4tUIPwRo+GK+a33MaTFupwLixjfDMaKsHJonN80soAjX/vVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dUWuT8ak; arc=none smtp.client-ip=209.85.215.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1786986792; c=relaxed/simple;
+	bh=Funfs8E/yoZTFxmmlNQQwhqmgzGqK4SfdhjhJozakyQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iVszfUO4eqZrOkLUY7pdC6BHAaryS2qr6cdXhZRbtncFIwnSV84NuW2/O6T+Cs+9zXjcuS0bfdqq9ADs7JrGKjHXRh4SkSmhiFt7RhTiOy9sUTxuYpkgT5UgZElXwe62ZMQX99oefKpYewbeByxl1Ca5rXLU4azsNYT88/+pv+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=hmjlyuff; arc=none smtp.client-ip=109.224.244.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dUWuT8ak"
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cb4bd11ddf8so4939725a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 10:06:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786986373; x=1787591173; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PEnRvWyc97A37Ln6PXTQIDa+M4xYXCTC9bYQPyMKWBg=;
-        b=dUWuT8akc5iHPhpJBs90PQebDD/CnvKupRtEjpORI1qlLCdy2PTYIzIKaQFJt84+jm
-         rba1WUMGHzpq351JiDiIsssFgOsu1V3PMnpbnbpAqu1t419XPoNzRJDrVLMS4DLes877
-         ztk4172V+aS0lxFI+yjW93ZX7iJxzZqCvkiOp6zXLmWGPSc1Gplfs+dyQT/eJxdDkTLR
-         7+9SXlHxFZh8Rj3aBGEy5A92MxE1jB+O0KnmHS5mCXp2mQQUP901oy7Y/X+h8TpDc7P5
-         5c7x9FIugLPAukS85JgY5AmfcJMAjz+y9Saiwfp6ZbiDCl5kmA5cb3QnoFeLqc+pKJN2
-         nq/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786986373; x=1787591173;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=PEnRvWyc97A37Ln6PXTQIDa+M4xYXCTC9bYQPyMKWBg=;
-        b=FhSG8GyirBdyvPiaCurGPanMWlpfvWAe/9iy7VHqjqh18FluNZafDxG62hcL4y24K9
-         hrXHb+IlkIZMk4+MipX8JDtgKRoOcCR68dJxSGMN6k83b9/6lVv3gcnSGehRPJPv2JBG
-         q5bYDPPW1yCpKYYQyypVJAg3wvObzprlfJxPAPFJotRSZUHLG+pKVsQDp6wRj5SY6wwD
-         Io60RBUBgWjYqSBSpSpe9dnsRMWCL0h8lAroMsyts+n+RNqrrrmPxIGFQ0poXMsGu8v5
-         sTSymnsJaP7CzUaEVzzNFgqBDm1tw7b4Rv0AysLVR4k0E4SUm+DjOupturBfXCQv/lgd
-         0ivw==
-X-Gm-Message-State: AOJu0Yzf7CGmsKwMjg/30N6DjNSO/bYmYG7RzmX9WByZ2ui2/wquYbuf
-	WhWsHRe2M7Opa/dmLPTvrvZbjC9h/ytgmHvLjJOWnqUoEBGzZkYyfZUbCIM96tKtjsLR76NQi0x
-	uRJAN7g==
-X-Received: from pgcc4.prod.google.com ([2002:a63:1c04:0:b0:cbe:9e80:c394])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:d52c:b0:3c3:a140:9380
- with SMTP id adf61e73a8af0-3cc71c09a97mr31063858637.16.1786986372909; Mon, 17
- Aug 2026 10:06:12 -0700 (PDT)
-Date: Mon, 17 Aug 2026 10:06:12 -0700
-In-Reply-To: <87lda5kmye.fsf@redhat.com>
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="hmjlyuff"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1786986788; x=1787245988;
+	bh=CoOz2+7M7ol56iy8nW7gPP2UQsL/lZIZ3nq8gac0nEY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=hmjlyuffZXrHqFAkR2MhEB13MYfv+xnbCAM+CZswjFNHxVtXwmJKVGaagw+jcwe49
+	 5czgZ1skBC24zFQ2JhRzq9z3dwHrNx/UDbifA+Noy4Yv+sDeCDSECQrLlvU3D1o1no
+	 +kPMyn6ZqW0+TuaxbxB1PiGZoTrpaklNWFZ2wUhbqaJRAmhL+7IFdBaawVoe9DTFpm
+	 EXfnkA2tprrkIlknGPJGhWp3MeIHJQptS+YGd0AfQfRYuBKthww+YmZHDIhNfaGeYl
+	 N0Pkmyyn+fV7jEtrvtJ7M0FtgINvCAHKs0L+CLM47toLbgMcJGaztZvUJEeHjBlmns
+	 9LV4ABTu8Cysg==
+X-Pm-Submission-Id: 4hNztW4xxwz2Scd3
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <conor+dt@kernel.org>,
+  <devicetree@vger.kernel.org>,  <robh@kernel.org>
+Subject: Re: [PATCH v4 4/6] iio: accel: mma8452: Support interrupt sharing
+In-Reply-To: <20260812153451.55DC91F00A3A@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 12 Aug 2026 15:34:50
+	+0000")
+References: <20260812-mma8452-open-drain-v4-0-bfca15d02b59@geanix.com>
+	<20260812-mma8452-open-drain-v4-4-bfca15d02b59@geanix.com>
+	<gh3S_nDtj7vykftK5WE3fGr9bcSwlhkftzCYT-00fQBn-9KfXfanQLuXqMBu-v2cS1-3lvGUhx9aGiGlXPHeyw==@protonmail.internalid>
+	<20260812153451.55DC91F00A3A@smtp.kernel.org>
+Date: Mon, 17 Aug 2026 19:13:06 +0200
+Message-ID: <87se4ck6vx.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260814162221.2144473-1-vkuznets@redhat.com> <20260814162221.2144473-5-vkuznets@redhat.com>
- <20260814163105.BDEC31F000E9@smtp.kernel.org> <87lda5kmye.fsf@redhat.com>
-Message-ID: <aoM_hK4Vn-xr7NvO@google.com>
-Subject: Re: [PATCH 4/4] KVM: selftests: Check VMPTRLD with active eVMCS
-From: Sean Christopherson <seanjc@google.com>
-To: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: sashiko-reviews@lists.linux.dev, Paolo Bonzini <pbonzini@redhat.com>, 
-	kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 17, 2026, Vitaly Kuznetsov wrote:
-> sashiko-bot@kernel.org writes:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] The hardcoded `VMPTRLD_INSN_SIZE` of 5 bytes is brittle
-> > because `vmptrld` is executed using an inline assembly memory operand
-> > constraint (`"m"`), which results in a variable-sized instruction
-> > depending on compiler optimizations and register allocation.
-> 
-> True that, but afair we don't currently have an instruction decoder in
-> selftests. I see three ways to move forward:
-> 
-> - Calculate the size of the instruction with two labels, something like
->   (untested):
-> 
->     static inline int __vmptrld(u64 vmcs_pa, int *insn_size)
->     {
->             u8 ret;
-> 
->             __asm__ __volatile__ ("movl $(2f-1f), %[size];"
->                                   "1: vmptrld %[pa]; 2:"
->                                   "setna %[ret]"
->                     : [ret]"=rm"(ret), [size]"=m"(*insn_size)
->                     : [pa]"m"(vmcs_pa)
->                     : "cc", "memory");
-> 
->             return ret;
->     }
-> 
->   and use insn_size in the tests.
-> 
-> - Stuf __vmptrld() with NOPs after vmptrld and keep the constant jump,
->   just make it loner (e.g. 10 bytes should realistically be enough).
-> 
-> - Make peace with the fragility (it's just a selftest after all) and
->   leave a comment in vmptrld() that changing the asm there make break
->   the assumption.
+<sashiko-bot@kernel.org> writes:
 
-Option D: use KVM_ASM_SAFE() to do the heavy lifting.  Completely untested, but
-something like so:
+> --- Patch [4]: [PATCH v4 4/6] iio: accel: mma8452: Support interrupt shar=
+ing ---
+> commit ae80b7f558736b5e80920be8e31037e5cc8645ba
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> iio: accel: mma8452: Support interrupt sharing
+>
+> This commit adds handling of runtime PM suspension in the interrupt handl=
+er.
+> It also adds the IRQF_SHARED flag to the interrupt request to allow shari=
+ng
+> the interrupt with other devices.
+>
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index 1fb43c5b0b72f..106cdd904dbfd 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
+>> @@ -1056,14 +1056,19 @@ static irqreturn_t mma8452_interrupt(int irq, vo=
+id *p)
+>>  	struct iio_dev *indio_dev =3D p;
+>>  	struct mma8452_data *data =3D iio_priv(indio_dev);
+>>  	irqreturn_t ret =3D IRQ_NONE;
+>> +	int pm_status;
+>>  	int src;
+>>
+>> +	pm_status =3D pm_runtime_get_if_active(&data->client->dev);
+>> +	if (pm_status =3D=3D 0)
+>> +		return IRQ_NONE; /* device is powered down */
+>> +
+>
+> [Severity: High]
+> Does this correctly handle the case where runtime PM is disabled?
 
-static inline int vmptrst_safe(u64 *value)
-{
-	u64 error_code;
-	u8 vector;
-	int ret;
+If you mean when runtime PM is disabled (CONFIG_PM not set) or disabled
+for the specific device, yes, I believe this is handled correctly. We
+will correctly assume that the device is not powered down when
+pm_runtime_get_if_active() returns an error (-EINVAL).
 
-	asm volatile(KVM_ASM_SAFE("vmptrst %[value]")
-		     "\n\tsetna %[ret]"
-		     : KVM_ASM_SAFE_OUTPUTS(vector, error_code),
-		       [value]"=m"(*value), [ret]"=rm"(ret)
-		     :
-		     : "cc", "memory");
+> When pm_runtime_disable() is called during device removal,
+> pm_runtime_get_if_active() can return -EINVAL.
+>
+> If a shared interrupt fires from another device during this window, the
+> handler will see a negative return value. Since the check is explicitly
+> for =3D=3D 0, the handler will proceed and attempt to read from the I2C b=
+us while
+> the device regulators might be disabled.
 
-	return vector ? vector : ret ? -EINVAL : 0;
-}
+Ah. That does sound like an issue.
 
-> Any preferences? Personally, I'm feeling adventurous and can go with the
-> first one - calculating the exact size with labels.
+> Should this check be <=3D 0 instead?
+
+No. That would break usage with runtime PM disabled in the normal cases.
+
+We could add a boolean to struct mma8452_data to mark the device as
+being removed, and then check on that also.
+
+Or probably better, we could call free_irq() before
+pm_runtime_disable(), and cause a spurious irq if/when the race occurs,
+but avoid additional code in the irq handler.
+
+>>  	src =3D i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
+>>  	if (src < 0)
+>> -		return IRQ_NONE;
+>> +		goto out;
+>
+> [ ... ]
+>
+>> @@ -1690,7 +1699,7 @@ static int mma8452_probe(struct i2c_client *client)
+>>  			dev_info(dev, "invalid irq type, setting default active low\n");
+>>  			irq_flags =3D IRQF_TRIGGER_LOW;
+>>  		}
+>> -		irq_flags |=3D IRQF_ONESHOT;
+>> +		irq_flags |=3D IRQF_ONESHOT | IRQF_SHARED;
+>
+> [Severity: Medium]
+> With the addition of IRQF_SHARED, is synchronize_irq() needed in the runt=
+ime
+> suspend path?
+>
+> The PM subsystem guidelines require that drivers using shared interrupts =
+must
+> call synchronize_irq() in their runtime suspend callback before powering =
+down
+> hardware. This guarantees no interrupt handler is executing mid-flight wh=
+en
+> the regulators are disabled.
+
+I am not aware of this guideline, and haven't been able to locate it.
+If someone could share a pointer to where I can read about this I would
+be happy to be enlightened.
+
+> Would it be safer to add this to mma8452_runtime_suspend() before the dev=
+ice
+> is placed in standby?
+
+I am not a runtime PM expert, but that does sounds like a good solution.
+
+I will try to update the patch with fixes for both this and the above
+mentioned issue.
+
+>>  		ret =3D request_threaded_irq(client->irq, NULL, mma8452_interrupt,
+>>  					   irq_flags, client->name, indio_dev);
+>>  		if (ret)
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812-mma8452-=
+open-drain-v4-0-bfca15d02b59@geanix.com?part=3D4
