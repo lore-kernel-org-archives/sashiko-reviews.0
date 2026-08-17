@@ -1,143 +1,94 @@
-Received: from mail-10696.protonmail.ch (mail-10696.protonmail.ch [79.135.106.96])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACE324A047
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133D14B0497
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786967274; cv=none; b=kKOgdblJAn/9SLv7MFJMMdZPiVBZxYL7PW0TCSITxwgJTS4jf7/IGZnMMpTl3uxWkzbYorpTwOhVTTgUb+FPecaT5HCq0OHeZN9GwcQZhbkGZXYzNL0UofP2DcL8JTK5w1wYeinmGmTbHs50Mez70TDnUcQLn6ThsPhMWs3DVUE=
+	t=1786967351; cv=none; b=FzOFbwde8Um8ym7AcBxr+ZHlFWSBRdYLcwhWvV/tfaflJ+hp313eqGb0Vp8gmYX6DDloApGuhb5jSgg0bm3IHCJzSYQ24dhNgicRIM4mDbFGOJQYypyNQ/SwrvfQtBQ8wzPaSG6TWqBrDbqhct1kWrkacT1JJY3dnvLU8fZQovI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786967274; c=relaxed/simple;
-	bh=VQk+NKX2QLLmpu+AnKTBzGZpFZgEXg3SbSlRnkYbJQY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q8FaJC+W76GzRasgAJFkxSTc//zBL4+MHwWrdOK26NIqfecMeCUDC2x2G1LI+esGdR5RtmPRhdm/dufCr/074qdVht18Iwh47NMYSJZ3TuDvjAUcSBKLsss2amJnWu3E44W4xuXEHOGpq9yDVxFu2KAzOAdhrpegeDpic7bcAVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=nINoI/uM; arc=none smtp.client-ip=79.135.106.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1786967351; c=relaxed/simple;
+	bh=+oHH2oNEdYmqVCEcFHAyqbUQOs4dxsuZY2YxaGGg4zk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hiTP/7H9Xm2hX+X+W9L3DWtoIpTDXhjTF1lLVGDwVNs3Gp7aTDZYObOs7otl7dSGSbMSIc062upSIc7duXZ2Tt9ZrHcEhPESJ9F1fHGzp4H4nvSXTkEHsjjKEftlEJQBSKXTw+2BlorUsaJoH7QlvbTgi/kJKuTJSRVLmJqtqxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sdisyJdF; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="nINoI/uM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1786967263; x=1787226463;
-	bh=ZRu1RYNKFVEiUGNH9uQ6dlTqTZqU/qO7+ZFglPoqZe0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=nINoI/uMqd+TrP/KKlwOtvJgDa0TodCbL/TAXPhZ1t6peKfSYl2JOmOzj4R2qnJBC
-	 NCTlHj9UW8tSEYLuyFXJYjrRWCeO7FbNzX5gpVkFUJVv0tIcJhzqClsscICPx3yFXR
-	 0Lmj7bXv3FeFwU1Bgeboi857a8V7YnFl0pTN36IyCwR6pdGdBztqOqZJqMrIC9UlTR
-	 75bacJU2uc48lcbubsWjDjstO7XgGgnjLoEharMrLSrLchYIfWQnSuqKNlaJDxAL84
-	 RzBqzKmtc8f7Ai/yLhO35rD7sML2yiD/EysJQcoOZrqv4toJTK4cM5unP+GyyOcA6D
-	 bXGP3Voquo1qw==
-Date: Mon, 17 Aug 2026 11:47:40 +0000
-To: sashiko-reviews@lists.linux.dev
-From: Aiden Isik <aidenisik@protonmail.com>
-Cc: Aiden Isik <aidenisik@member.fsf.org>, linux-clk@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/3] clk: samsung: clk-pll: Add support for pll_309
-Message-ID: <ubD1iFupOIubgrcjfABhlLsSRSjHBgzA5ZmyURWTM9xviGIM0OlLeXehsukZEY9cXqAgwJt_BI2xspZ5BIlCBPROAWUyyReaTWWSL7g08gI=@protonmail.com>
-In-Reply-To: <20260817103711.943D81F000E9@smtp.kernel.org>
-References: <20260817-for-next-lucky7-clock-v1-0-032e4b229c76@member.fsf.org> <20260817-for-next-lucky7-clock-v1-2-032e4b229c76@member.fsf.org> <20260817103711.943D81F000E9@smtp.kernel.org>
-Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: 805fa40c58baa6408f869d226858baad95d120ff
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sdisyJdF"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cbb7926836eso2200414a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 04:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786967349; x=1787572149; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=F+jru68zFVDUG+9X9/jsXrRXwodS8/wdB98bVrjC8LY=;
+        b=sdisyJdF6rhbv09XLm8o4bWlNsB50GtwCU4ZZ/4lg1P+mT3gStdoLjqofLIqHR8zgp
+         w7Gqfd4rtLY44Nv/uRZe6aMExlEg/XRYUfPdhADzGweePGsC0nzy95XZJvCrd2d1Hcx/
+         L1RFX0S1P5n7lOwLOlcUAItBfa6qapKhR+w2H9kmvKrt71OK74l3gwkA6qDYwV4a21RU
+         6w2ZtFmXcjXOM3tOLbaPTgU09IXU+jFUhaPdParTLFr8fMdON2Q80JQFuWmeXZlR6roM
+         p3cFGsazphGq6jkxAf/M9Q41f3CsXcG6wd6+TaFQLeMN2yeiGkqJ64hGi+Cnl0Y0GbFM
+         UsjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786967349; x=1787572149;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=F+jru68zFVDUG+9X9/jsXrRXwodS8/wdB98bVrjC8LY=;
+        b=D1ry758PDaG6RfDdj1sebUUkafDoZzcrvYqHWW16qsv3b4DUo+OdIZkDqQA059hMlD
+         tU0qOlpMa0iGz9zz9g5b/J4795gXHnIB+Mt4yOansXwIgUmFFkmVf7WvVD86xeYoeTx0
+         WQe3gkKFzFO3vEvoIeqfbCTTd7axvKXhwu+1gPDGGTzUw1iR8bS0Ejusw+5S6fiDrL4v
+         5gO6lZX5M40oZzIyL8A4HOdKrEYRR9DNx0vhf98MAf35P6aLKGDGe2qQz1HDjuqoXoB/
+         TFZWfRdtYFdM7BZHttdUvwefcsr2wI9iWBLCCEd+8mYcL7EZioZhLNaQNF4v9YfZXslT
+         ORvQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqV6DUUzIAv8+V6vcbw0R7jzItF8CsI0efSimDNnSHDPqfo8TAT38GwnszKRdzeF1/7OHZKbLsT4jZFBdcihaw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywukb1zEowNID0QRAGK8qgauWbScWlwCOIAZm8Tit2gnYEPiVxd
+	PV92i01XHXwVEhvAm/8xanKzouZUwt7KJ2VoLpiPammCF5iQau/OIrZZTO1SuWRg
+X-Gm-Gg: AR+sD10kS/0QLOfFJCBxmhEJKnRIr0Be1hjEWwFgN+eiEEVJrYmyazPxuHvX3RES8S/
+	kpowqJgYdBdEyfwPyyY15Lmlh86vQpwerhDkI3HkWItYLkSFBr4rEdcIjcDUN1v3ctdSmz6e96j
+	GBfmQwXUREby1ivfTR87PIizgpCTGRSiGHcxoeqMMxdwfHmjlJKeOlxXibBFi94xW+tC3Pto/Uz
+	Ni6qT6mikLJu1UpJX2aOcwBGKYubP+ubljupqIt+5HrLO9/Gy9sWPJrUpEYruQHl9qLsrKnbxEo
+	wJPC5Kx7QZnSACPAP27lrHnFgZhJj0Nt7aNTvNjwuLBOjPiy9Y7Ia9qUbBWRnkqrJ9nn8BopRX7
+	Q7ZN9fxi+UsueKBogyY39J1AuwEUM5JKIrwBQ1ATdhhpxko15eU+IKL0uj+Oj14QjoCAnx6IZHV
+	I3l7eJyoRWjGn8Wy5C5+iK0Qa6F48m7P070mtqnqTLG4/JOEPETB86gCmRHR2aAg7rvFURXH9tX
+	COdTqmlb2N5Ele42XiENo4Ct8teyd7nnLXANFIWvsa1e1BmII8pRAN1pHhRTFWiAkAYaXp42Bgz
+	TDOKYDEFHVd3qjGA4KtM6EXE8AnVDskzsyy0XDGNGGTfgXsUWDJj
+X-Received: by 2002:a05:6a00:3926:b0:84c:2e2d:57b with SMTP id d2e1a72fcca58-84fde76bf46mr22504769b3a.27.1786967349111;
+        Mon, 17 Aug 2026 04:49:09 -0700 (PDT)
+Received: from spider.bream-herring.ts.net ([103.252.203.158])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851b6ff0a13sm149453b3a.59.2026.08.17.04.49.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2026 04:49:08 -0700 (PDT)
+From: Matthias Goergens <matthias.goergens@gmail.com>
+To: linux-ext4@vger.kernel.org
+Cc: tytso@mit.edu,
+	jack@suse.cz,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] ext4: compensate ea_inode refs and free block on new xattr block write error
+Date: Mon, 17 Aug 2026 19:49:05 +0800
+Message-ID: <20260817114905.2708356-1-matthias.goergens@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260817100724.923291F000E9@smtp.kernel.org>
+References: <20260817100724.923291F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Logic Error / Out-of-bounds Read when rate_table is empty
-> - [Medium] Single-Responsibility Violation: Undocumented architectural re=
-factoring
-> --
->=20
-> --- Patch [2]: [PATCH 2/3] clk: samsung: clk-pll: Add support for pll_309=
- ---
-> commit d62df56ff2e6bf73437e6e25e1335b3fb4571268
-> Author: Aiden Isik <aidenisik@member.fsf.org>
->=20
-> clk: samsung: clk-pll: Add support for pll_309
->=20
-> This commit adds support for the pll_309 used in the Exynos5515 SoC, defi=
-ning
-> the PLL characteristics which are handled similarly to pll_531x.
->=20
-> > diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pl=
-l.c
-> > index e74552846ba34..8b1474aeaf0c8 100644
-> > --- a/drivers/clk/samsung/clk-pll.c
-> > +++ b/drivers/clk/samsung/clk-pll.c
-> > @@ -1593,32 +1593,35 @@ static void __init _samsung_clk_register_pll(st=
-ruct samsung_clk_provider *ctx,
-> >  {
-> >  =09struct samsung_clk_pll *pll;
-> >  =09struct clk_init_data init;
-> > -=09unsigned int len =3D 0;
-> > -=09int ret;
-> > +=09int ret, len;
-> >
-> > -=09if (pll_clk->rate_table) {
-> > -=09=09/* find count of rates in rate_table */
-> > -=09=09while (pll_clk->rate_table[len].rate !=3D 0)
-> > -=09=09=09len++;
-> > -=09}
-> > -
-> > -=09pll =3D kzalloc_flex(*pll, rate_table, len);
-> > +=09pll =3D kzalloc_obj(*pll);
->=20
-> [Severity: Medium]
-> This isn't a bug, but the commit message only mentions adding support for=
- the
-> new pll_309 type, while this code changes the allocation semantics of the
-> rate_table across the entire driver, switching from a flexible array memb=
-er
-> to a separate pointer allocation.
->=20
-> Could this architectural refactoring be split into a separate patch or
-> documented in the commit message?
-
-This was a mistake caused when updating patches against next.
-Will fix in v2.
-
->=20
-> [ ... ]
->=20
-> > @@ -1637,7 +1640,7 @@ static void __init _samsung_clk_register_pll(stru=
-ct samsung_clk_provider *ctx,
-> >  =09case pll_a9fracm:
-> >  =09=09pll->enable_offs =3D PLL35XX_ENABLE_SHIFT;
-> >  =09=09pll->lock_offs =3D PLL35XX_LOCK_STAT_SHIFT;
-> > -=09=09if (!pll->rate_count)
-> > +=09=09if (!pll->rate_table)
->=20
-> [Severity: High]
-> If a clock is registered with an empty rate table containing only the zer=
-o
-> terminator, kmemdup_array() is called with a count of 0 earlier in this
-> function and returns ZERO_SIZE_PTR rather than NULL.
->=20
-> Since ZERO_SIZE_PTR is not NULL, this check evaluates to false, which
-> incorrectly assigns the full operations instead of the safe min_ops fallb=
-ack.
->=20
-> If samsung_pll_determine_rate() is subsequently called, it skips its loop
-> because rate_count is 0, and attempts to access rate_table[-1]:
->=20
-> samsung_pll_determine_rate() {
->     ...
->     req->rate =3D rate_table[i - 1].rate;
-> }
->=20
-> Since rate_table is ZERO_SIZE_PTR, will this result in an out-of-bounds
-> memory read?
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817-for-next=
--lucky7-clock-v1-0-032e4b229c76@member.fsf.org?part=3D2
->=20
-
-Kind regards,
-- Aiden Isik
+Sashiko's reviews on these threads have been genuinely useful — the
+ea_inode refcount leak that this patch follows up on was its find.  This
+one, though, is a false positive: mb_cache_entry_delete_or_get() and
+mb_cache_entry_wait_unused() have been defined in fs/mbcache.c and
+declared in include/linux/mbcache.h since commit 3dc96bba65f5 ("mbcache:
+add functions to delete entry if unused", 2022), CONFIG_FS_MBCACHE is
+selected by every EXT4 configuration, and fs/ext4/xattr.c already calls
+mb_cache_entry_delete_or_get() at three sites before this patch — a tree
+missing the symbols could not build ext4 at all.  The patch compiles,
+and the fault-injection measurements in the commit message ran on a
+built kernel.
