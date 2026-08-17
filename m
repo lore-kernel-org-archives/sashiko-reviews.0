@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-224.mta1.migadu.com [95.215.58.224])
+Received: from mta0.migadu.com (out-82.mta0.migadu.com [91.218.175.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEA8305E3B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 03:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.224
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453DD274B4A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 03:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.82
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786937723; cv=none; b=fJcghCOprxN8dL+BmTIJWM1S7x9ktOt6cviot7gKZozKQJolrGyzJKuZwJDP/hVLq56rIi4VRVtVKyplWhEONvmpN04p1iaF8ha6Vzz8Q0V/YaR7+sUyCFJna9lNMgb5FLY2YZSXTVr14yffLIDSq1LZvtiSzcXyUfV53izt9XY=
+	t=1786938268; cv=none; b=CYlq35NkExBCe5FmwF68ZCP5+Sbchcc/LJlXB6LNBjCb6K2wXgFOt6++nDkxQ+fIsF6GtWrfRvJha4++vfgnJeOgothvqATpYIEuvSHzfwCK81/XvQfSNHrZPefvwhKxLxT5Vr/RnxOU9i+Nioj0u6cuNy3ytESMI0UUH2TG45M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786937723; c=relaxed/simple;
-	bh=341gYsVcuEDX1S12g4bLB1dRDrCJlTLFjfno5jIK05M=;
+	s=arc-20240116; t=1786938268; c=relaxed/simple;
+	bh=ONUXVn4EcDphDo7KsaCHdSqV/EGEjLfMgyUFh3WJBzo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ej8+CMDZfDVNI7bImfq2RfQaDUUybi0SFZohLpudif76hhJiTHfCpGosiRTwFLJm4qBN1A48mw8bHfYW3uaJLM0QmaGVm5Xs0z7hgSfrVvu7T9XN8OkHdxPWOWNqv8WAwLR83OtgmrP5ZliktFqayUEfBUI7ZedpyMg+nhFw23g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jLn4equ+; arc=none smtp.client-ip=95.215.58.224
+	 In-Reply-To:Content-Type; b=R0Y4j/ocXQmKEVg2IoQHGoX+aX9qJFHILtSNX8ztfZi/MMVnIR/RDWr5s8FLptTc1upS6UZFfFxiaXCH+DVU2IO7LhX6oPPhzAuEwJgBFs/g+p61wEOumHX62nSs/g7D3yBLOinRrMfMZlysg9fhZMD20ug/0RaABfEbRmcsV5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AyPjH8TR; arc=none smtp.client-ip=91.218.175.82
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="jLn4equ+"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AyPjH8TR"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=341gYsVcuEDX1S12g4bLB1dRDrCJlTLFjfno5jIK05M=;
+DKIM-Signature: a=rsa-sha256; bh=ONUXVn4EcDphDo7KsaCHdSqV/EGEjLfMgyUFh3WJBzo=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786937720; v=1; x=1787542520;
- b=jLn4equ+go/OBc2O4BcyNwMRjRl/SrRbFJmBPb2LZzMH11CQ7r/sW1dGINTKqMdSmtrfh8Co
- KuvL4YqD4HUc+yEphmLSdmmHuSEsvUPWPohsPzh/u4Cg8fk5O16nH2BfmODwcmrdNIeOAZg44FK
- fEms/prBs2v5mIe/4xaJ574Q=
+ t=1786938264; v=1; x=1787543064;
+ b=AyPjH8TR5wmajXEvBhjA87oJNCVsW7hMCIDlMvl7ZQNKVK3r9f+7ldlVL2khlR7CnoQ3Wji4
+ 18CvPzkzMX1K9GBnW6IiqO7N/0iJ24N6sk2u2vDYt8AEOsT5Qqx8NRL4qj4zgwWUzSj9ja9nGno
+ 4i5TrQe9bW6kFDSnhAPMu4ig=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [IPV6:2600:382:861c:7f36:14e1:cf55:e233:293b] (2600:382:861c:7f36:14e1:cf55:e233:293b)
-	by smtp.migadu.com with ESMTPS id c03165809de37c4c;
-	Mon, 17 Aug 2026 03:35:20 +0000
+	by smtp.migadu.com with ESMTPS id 06c9bd7da7b32600;
+	Mon, 17 Aug 2026 03:44:24 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <6058f12d-dd67-4795-bb06-a76e79edec16@linux.dev>
-Date: Sun, 16 Aug 2026 20:35:13 -0700
+Message-ID: <1a5bd4c5-8138-48da-b48d-6290d38428f0@linux.dev>
+Date: Sun, 16 Aug 2026 20:44:22 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,72 +38,93 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v5 05/11] bpf: Account R2 of register-pair
- returns in live register analysis
+Subject: Re: [PATCH bpf-next v5 06/11] bpf: Add verifier support for 16-byte
+ returns in R0:R2
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260813200210.1991507-1-yonghong.song@linux.dev>
- <20260813200235.1995574-1-yonghong.song@linux.dev>
- <20260814015034.EDD381F000E9@smtp.kernel.org>
+ <20260813200240.1995795-1-yonghong.song@linux.dev>
+ <20260814022633.B578E1F00A3A@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260814015034.EDD381F000E9@smtp.kernel.org>
+In-Reply-To: <20260814022633.B578E1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 8/13/26 6:50 PM, sashiko-bot@kernel.org wrote:
+On 8/13/26 7:26 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Static (non-global) BPF subprograms returning a register pair are functionally broken because the verifier does not propagate R2 back to the caller frame.
+> - [Medium] The newly added support for kfuncs and global subprograms returning structs up to 16 bytes by value is unreachable dead code because existing BTF validation logic unconditionally rejects struct return types.
 > --
 >
-> --- Patch [5]: [PATCH bpf-next v5 05/11] bpf: Account R2 of register-pair returns in live register analysis ---
-> commit 35ab629244a73b2ad2baa7b7f0fd5b365c1b35e9
+> --- Patch [6]: [PATCH bpf-next v5 06/11] bpf: Add verifier support for 16-byte returns in R0:R2 ---
+> commit 9e421b8a810e50b00fab2bcdb9c1dbd32e705d84
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Account R2 of register-pair returns in live register analysis
+> bpf: Add verifier support for 16-byte returns in R0:R2
 >
-> This commit updates the live register analysis to correctly mark R2 as read
-> at the BPF_EXIT of a subprogram that returns a register pair. This prevents
-> R2 from being considered dead and pruned incorrectly.
+> This commit adds verifier support for returning values in both R0 and R2 for
+> types greater than 8 bytes and up to 16 bytes. It models the register pair
+> for global and static subprograms as well as kfunc calls.
 >
->> diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
->> index 74fc4b3f80d6e..71f998c6eb888 100644
->> --- a/kernel/bpf/liveness.c
->> +++ b/kernel/bpf/liveness.c
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 161d77791bc62..0c68ab3bd6cec 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
 > [ ... ]
->> @@ -2191,7 +2193,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
->>   			break;
->>   		case BPF_EXIT:
->>   			def = 0;
->> -			use = r0;
->> +			use = ret_reg_pair ? (r0 | r2) : r0;
->>   			break;
-> [Severity: High]
-> This is a pre-existing issue, and wasn't introduced by this patch, but while
-> we are fixing liveness tracking for register-pair returns here, is the
-> propagation of R2 back to the caller missing in the verifier?
 >
-> Looking at prepare_func_exit() in kernel/bpf/verifier.c:
+>> @@ -13265,10 +13295,25 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+>>   	}
+>>   
+>>   	if (btf_type_is_scalar(t)) {
+>> -		mark_reg_unknown(env, regs, BPF_REG_0);
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
+>>   		if (meta.btf == btf_vmlinux && (meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock] ||
+>>   		    meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock_irqsave]))
+>>   			__mark_reg_const_zero(env, &regs[BPF_REG_0]);
+>> +	} else if (btf_type_is_struct(t)) {
+> [Severity: Medium]
+> Is this new logic for kfuncs returning structs actually reachable?
 >
->      } else {
->          /* return to the caller whatever r0 had in the callee */
->          caller->regs[BPF_REG_0] = *r0;
->      }
+> Looking at btf_distill_func_proto() in kernel/bpf/btf.c, it unconditionally
+> rejects struct return types, meaning programs would fail to load early on:
 >
-> When a static BPF subprogram returning a 16-byte struct is called,
-> check_func_call() sets all caller-saved registers (including R2) to NOT_INIT.
-> When the callee exits, it seems we only copy BPF_REG_0 back to the
-> caller's state, leaving BPF_REG_2 as NOT_INIT.
+> 	if (ret < 0 || btf_type_is_struct(t)) {
+> 		bpf_log(log,
+> 			"The function %s return type %s is unsupported.\n",
+> 			tname, btf_type_str(t));
+> 		return -EINVAL;
+> 	}
 >
-> If the caller attempts to read the second half of the returned struct in R2,
-> will the verifier reject it with an 'R2 !read_ok' error?
+> Similarly, btf_validate_return_type() blocks global subprograms from returning
+> structs:
+>
+> 	/* We always accept void or scalars. */
+> 	if (btf_type_is_void(t) || btf_type_is_int(t) || btf_is_any_enum(t))
+> 		return 0;
+>
+> 	return -EOPNOTSUPP;
+>
+> Does this mean the new struct return handling logic is dead code, and only
+> static subprograms or __int128 returns can actually use the new convention?
 
-We should be okay here. The next patch will actually introducing return value
-R2 in various places.
+The next patch will actually enable "aggregate return types up to 16 bytes".
 
 >
+>> +		/*
+>> +		 * The returned struct comes back as raw register bits modeled
+>> +		 * as an unknown scalar, so it must contain only scalars:
+>> +		 * otherwise a pointer field would be laundered into a scalar
+>> +		 * and escape provenance and reference tracking.
+>> +		 */
+>> +		if (!__btf_type_is_scalar_struct(env, desc_btf, t, 0)) {
+>> +			verbose(env,
+>> +				"kernel function %s returns %s %s that is not composed of scalars\n",
+>> +				func_name, btf_type_str(t),
+>> +				btf_name_by_offset(desc_btf, t->name_off));
+>> +			return -EINVAL;
+>> +		}
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
+>>   	} else if (btf_type_is_ptr(t)) {
 
