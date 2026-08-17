@@ -1,81 +1,113 @@
-Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265CC426D03
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 13:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.12
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 176E8438024
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 13:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973209; cv=none; b=dG/R4elGsA8r+nndIl+6It0QB4G69UIh545nSwmxy/Pi5FjSeho9seqIZxbhDyJrzi2vFXVMckVE5v/0j9RBAoeoHs0vsmDZ5kkLLSQxMTWP0mCO36lGnQz/oMHNxQbur2tdriaeEAKDTMOErCrA0jfFVg3S1blcKveGPJuitSo=
+	t=1786973309; cv=none; b=a5Xnxkj8cGKfRH0xnnEYCIF4kwCyaCfw5djvFTfKqr9WEriU+rRkis7r+77M+d8rFYCluIo36fA7fN3l68SnU2DS2m5lyuE2h5s4b8t5lebEgiQCgpZl82v/09cy7M+QSU63e3DYxCEe8TJUojzTvBSSni69l1nAq1TDtY28Z34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973209; c=relaxed/simple;
-	bh=OvJFo1KbSmJgP3geNtFhm8IaDtdNV4aZSt2whHxGCxw=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qCGlIIX0PMbkzsVWgtz6UPapb26QklQYAktOeLj531mhI4791wMsqvP/ZRyUUkDUXgSidIiYLVP2ZvZ6RKKpD1jBeMYS0NL7oN0xwuapX2jJey+y3wF4zN4VSxycK+ZHiReli890WcYEl4PkVN/15OYYFYF4sRkAYvORF/5T01Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=GZ+HIq7i; arc=none smtp.client-ip=216.40.44.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1786973309; c=relaxed/simple;
+	bh=IazxHX+RHUkRnRFbKnOMrt+XO1dpE9zzI6uZpKPk/jc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N0s9fryBU/t0XtXY+ucTN0fRHk9s4gD0faGCNBSTaAf44cc8X/NbvsaLiTmJn4GfGqRwcxfSSbHBHnSAjJsyOs26fZCvl3ZZONu+SCDksIRIdQtU2tt8tNtbBv/my80lqkVxr34pyX+Ysdq0ewj5jjMFaMII3Puc3N5kkOkAn60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ISEYnvPQ; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="GZ+HIq7i"
-Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay03.hostedemail.com (Postfix) with ESMTP id C11BDA078B;
-	Mon, 17 Aug 2026 13:26:45 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id CAF3320012;
-	Mon, 17 Aug 2026 13:26:43 +0000 (UTC)
-Date: Mon, 17 Aug 2026 09:26:42 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Hui Su" <sh_def@163.com>,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] tracing: Fix crash passing ERR_PTR to kthread_stop()
-Message-ID: <20260817092642.0e65f5bf@robin>
-In-Reply-To: <20260817121532.9C14A1F000E9@smtp.kernel.org>
-References: <20260817120642.668375-3-sh_def@163.com>
-	<20260817121532.9C14A1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ISEYnvPQ"
+Received: by linux.microsoft.com (Postfix, from userid 1134)
+	id 8CEDF20B7168; Mon, 17 Aug 2026 06:28:00 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8CEDF20B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1786973280;
+	bh=wE/KSNA2IF+wb72w9EHFZN0ZxVCzMKOucJxYMzjjrQo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ISEYnvPQ6gITISzNVkpr7gWYwGLQxsrv7c/8lKs/KLp8nsLegNeTOgsUzuCu7ta2v
+	 XZ8LKKyCIQZHOSiG6EfT1ErRav0A+AITtPlZLr3WJybyDjlbZ8X1Ci3/gUJ4x1SBfI
+	 vQQ+tzHNjO0SLnoMvi3iWHEit1+nLwF4yYztRx+A=
+Date: Mon, 17 Aug 2026 06:28:00 -0700
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] arm64: Add pre-shutdown hook to
+ machine_shutdown()
+Message-ID: <aoMMYJiH/oA2avUv@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20260814093133.3191250-1-shradhagupta@linux.microsoft.com>
+ <20260814093154.3191311-1-shradhagupta@linux.microsoft.com>
+ <20260814093857.1DD1C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: 4g3dfq1uwtdmob3b6tmbhqxbw6ipw8ce
-X-Rspamd-Server: rspamout06
-X-Rspamd-Queue-Id: CAF3320012
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19oo9EL2vbgQS/ZeVI6vyicotGQsqOKcqo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=BTUKkLa3F85pMF6sWXs4mQcLU9dzg2/ZBR7pC3kkv68=; b=GZ+HIq7i+11yrSKl2vD7Vs9fHGLiBtukjc7zsDOeEclTuJEs01nuihQQHspUoj3pFw2R6epRNVi0kNch6TCS567tTCOsKvTgz0rvPZXOoqlRxQ6jvDw/LpYqL8LehgjiLOeHaUS5znL+gwZx617NXR9qomP7VWZ6C+s7gB771Gs=
-X-HE-Tag: 1786973203-967486
-X-HE-Meta: U2FsdGVkX1/pwJ5XILhp+inqYGvZ+L5XFrde3L0hteVUVs1v1RQCzKOQSucw2iyyGWx45PSPvNlKt01167MRdGaEpLIga0Gd1rQ6nHV6w6m5QTg8VKh1jtJVIwiwzmyENisrhF0x+n9rAY9OE+upvf55amrOml6NZO0xTWhohq1Lwg0QyRyhaBl6CBCLHE5WPX6gHYT30OgbVO8ADQ1KoB9U7ytYnNCPQSGY+WMM6IioSlM+ygsv0Fqos3VgnqpmkV8obH4P8GOCypS+5F/sLggyzjx6PCXJQFOOq69VBGRrr990mW2ZDel4SmLcjp057PVecDyTWGVxt3w4F4Kb46ev121rlyN1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260814093857.1DD1C1F000E9@smtp.kernel.org>
 
-On Mon, 17 Aug 2026 12:15:32 +0000
-sashiko-bot@kernel.org wrote:
-
-> > diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-> > index 0356cae0cf74e..9e941e5805f5e 100644
-> > --- a/kernel/trace/trace_events.c
-> > +++ b/kernel/trace/trace_events.c
-> > @@ -3866,6 +3866,8 @@ static __init void event_test_stuff(void)
-> >  	struct task_struct *test_thread;
-> >  
-> >  	test_thread = kthread_run(event_test_thread, NULL, "test-events");
-> > +	if (WARN_ON(IS_ERR(test_thread)))
-> > +		return;  
+On Fri, Aug 14, 2026 at 09:38:56AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The newly introduced global function pointer `arm64_pre_smp_shutdown_hook` is placed in writable memory without the `__ro_after_init` annotation, creating a potential target for control-flow hijacking.
+> --
 > 
-> [Severity: High]
-> Does this risk causing a console flood and soft lockup if thread creation
-> persistently fails?
+> --- Patch [1]: [RFC PATCH 1/2] arm64: Add pre-shutdown hook to machine_shutdown() ---
+> commit 438763f14354dbd91b5fa7bea807c334ada0c642
+> Author: Shradha Gupta <shradhagupta@linux.microsoft.com>
 > 
+> arm64: Add pre-shutdown hook to machine_shutdown()
+> 
+> This patch introduces a global function pointer invoked from
+> machine_shutdown() to allow platform-specific cleanup before secondary CPUs
+> go offline during kexec or reboot.
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+> > index 581f80e9b9b73..41c0e98409138 100644
+> > --- a/arch/arm64/kernel/process.c
+> > +++ b/arch/arm64/kernel/process.c
+> > @@ -88,8 +88,21 @@ void __noreturn arch_cpu_idle_dead(void)
+> 
+> [ ... ]
+> 
+> > +/*
+> > + * Hook for platform code to perform cleanup after device_shutdown()
+> > + * but before secondary CPUs are offlined. This runs in the kexec path
+> > + * from kernel_kexec() after device_shutdown() and cpu_hotplug_enable()
+> > + * have been called, matching the point at which x86 invokes
+> > + * machine_ops.shutdown.
+> > + */
+> > +void (*arm64_pre_smp_shutdown_hook)(void);
+> 
+> [Severity: Medium]
+> Should this global function pointer be annotated with __ro_after_init?
+> 
+> Without it, the pointer resides in writable memory, which could make it a
+> reliable target for control-flow hijacking if an arbitrary memory write
+> primitive is obtained elsewhere. Since the hook is presumably only set once
+> during platform initialization, making it read-only after init would improve
+> defense-in-depth on the shutdown/reboot path.
+>
 
-If that happens than the system is doomed to begin with. We don't care
-here. This patch is good enough. It's for a debugging feature, not
-anything that would be run in production.
+The pointer is assigned when the VMBus kexec handler is registered and
+cleared when it is removed, so it cannot be __ro_after_init.
 
-Just look at the name of the function: event_test_stuff()
+In v1 though, I will use WRITE_ONCE() when publishing/clearing the
+callback
+and READ_ONCE() before invoking it, preventing compiler refetching of
+the pointer.
 
-This is where AI has a hard time with subtle requirements.
-
-Thanks,
-
--- Steve
+Regards,
+Shradha
+ 
+> > +
+> >  void machine_shutdown(void)
+> >  {
+> > +	if (arm64_pre_smp_shutdown_hook)
+> > +		arm64_pre_smp_shutdown_hook();
+> > +
+> >  	smp_shutdown_nonboot_cpus(reboot_cpu);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260814093133.3191250-1-shradhagupta@linux.microsoft.com?part=1
