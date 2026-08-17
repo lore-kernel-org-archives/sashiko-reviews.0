@@ -1,67 +1,67 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8661A1EFF93
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 02:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6E6271A94
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 02:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786932907; cv=none; b=LSw9MIpci5IBK15EyA4CMcUx4KUA1sXodutAN7jFxpJ5RDxemQ0eAazYTL2wZEANZoiFxAFU9EkqncN9PIdLqVxvXJc4XLcD4UEQxSkxZmP0zdDiR9gN/DzGiZ7Aeh0xmB1DJ0o9eOCgoRDFrepbX4/EjLNIWdyI0IwPDmeGVj4=
+	t=1786934046; cv=none; b=lQN0Vn/X0EHOVfRFyTl4gVLE7Lsg7ASKlrrzMiFTyed84CSvxcIFEHwv8h4Fd1wg6Ysv1NIEflpDmLoQ8eg4XWPDorhAcIkcU61wDGo/4E283jLRusSpuExCYcKf31jDi4yfjv3NrnHqxOg2Ng/asflmK1PmePtbnsoItCB11/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786932907; c=relaxed/simple;
-	bh=4PDxVHxzEtixMQxj375u5qupcw8HmdOETUyxhxESZ+Y=;
+	s=arc-20240116; t=1786934046; c=relaxed/simple;
+	bh=eTHtzAFZ85EdeGDqcWkQ/bQReWq5g02vZ3+EYMBU44Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GlbwZf+Twti7k23Ni8OZlYMssJEDhBukQbdPiGkFRkEkQxOPZJWZBVtoVyCnVipk20tQ+gXy3BhScqCDcRpQb0bT894k3BNxxRGgIscYNWJgHvyW/SGdLMX1S1xwP8bTdnvAzu3ogZsL8FmHT5S+fsZyzb7sLeCeppRbNg6EbA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLde4/PC; arc=none smtp.client-ip=209.85.214.173
+	 In-Reply-To:Content-Type; b=CbzCDptgrlT/Mm2Yv+NRpQomkH9/Kd8GdywMmoBGu0el11mWTv9yE5WLpOXbJ4613HrCYQW2fPCSM8u1jdmm4AFciPUUmqThA7x6MDJoKG1dXa6Kiu2wBpoxzOEE+HY41JFuG565BEIlqZ8XK/6QgveCHDedagPScZw22jAKBZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ESUrzrhq; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLde4/PC"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2d58efc7356so4694895ad.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 16 Aug 2026 19:15:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ESUrzrhq"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38dfe7eb825so2102342a91.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 16 Aug 2026 19:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786932904; x=1787537704; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786934045; x=1787538845; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aTuatPTaLF+hATnCNZpEBrhBXHe7FOsOaL8XbwX/BY8=;
-        b=hLde4/PCMQ15fV/+expyBsBCtAHy2zOCDZ8DSQuXhxSq7XmkCG/f99R9qADNrx3qIY
-         wC7DzkBP1ZK4yHlNJxKRSiOola3Xwzw7hS+fOta3gfuljFmHmUX/GxLYffngsutqp+az
-         ivsd+aCzNpwq3KNqUgh7a62ezKo/IKB9yvmSheLQRtKcAQ6P5gLgFShE6tiWw7lN0ceq
-         LtSdrPHSJwOJRlVo1I92oMv1Cdgn0TmHbqehGFiGJApKrey1hmXgtnmkJdyeFeUiGvy8
-         Yzo73omyEZk5qLbah6qXmyPfkbIR1fnULD9e0gunjjzCLRaRc8JLEWjaE0iACWhAdCyB
-         dX9Q==
+        bh=6xdmAG7qehxZR5RlI6+a6ahVKS+3T/VGOnRQ8szv9Ys=;
+        b=ESUrzrhqN46UNqIac1Dp1WlI49WKsawh4tfqCXeeMNtqmVinNeIItnSfWVQ+7v12eY
+         YPH9XY0+hI9XrT6SBPhfb8UdK5ot2dZzGkOlmft6acpTkH0yy83t91rh81JPGrvt4Xs5
+         RwHuG00ihBfPdExiWT9z1NKgbGmJMR+INjnk9tPdzr6JkLDM6SgtDI0LwmnVrNca0KDQ
+         sViSfvVw4t4c4Uqe5PbAfwYh4EZ0IRgiht0HVFeTHAtF7ber9k9SFZbTg6aPN9GOL5do
+         xWeDSuiizQM3W0P3jpJIrethyS3xVfUux2QNw1e19de6i/ba9wuZxEvgspv98eVHlzLo
+         GEBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786932904; x=1787537704;
+        d=1e100.net; s=20251104; t=1786934045; x=1787538845;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=aTuatPTaLF+hATnCNZpEBrhBXHe7FOsOaL8XbwX/BY8=;
-        b=GIMC90SC6VlLSsKhxP0hD6CleqNpdjr+y0mrm0+R4u5jJX+PR+/UuLIi/ERKWLdYkb
-         s3wpiu5jIrI0C+r7ap3XeY75MDg/rBaKS+sVFD7rQqlhVQD4+cIPrqESMzTqp3J3nY8l
-         p7y2V3eFmZA7gOPV6X53zlChfGrlmjbnGeXhYY9dzOOnJDiOePKB0WBeCrCWGrodZIHb
-         22BbonFV2wFuLvwJlohDeZ3sWWvq86zfPPnQgzun7c/xrVEFWJbFjmjuPAJWjG2mkaHG
-         GRNfuONva0qGW4H2ArT9R0FJ3NfpmgpM444JIop0qI5mFbKUnrvymqWUD8axDyieBN9X
-         M7IQ==
-X-Gm-Message-State: AOJu0YykBYCmKK7kz1oaJLGDqO8W3XgcsvYq5QKJ3c560Dfyf0KcIpGx
-	E18QKMnK/+qRH7QWfvBTzeV7+39on3bG+sYrRyBtE5MUFAMWzJYeHvSxGF54miKeiio=
-X-Gm-Gg: AR+sD12qLheJefTua9IuJZbVkuV5aQT30Sp/2j0TbWXhcYl78mWqcwVDJeCP6qsecvZ
-	n28YBZfHX7dRj+Z9/HoaA/UGoK/2JLidO5yLFSdKCUrFAoY75k5DNAs4284jGjGVSo342T0hxzL
-	Cq2G6DE0eYci/QPkSmDQKJwHuS6i+qEwk8tnV20Wcxdu3LI0hKGGu4gDTqRGv4vZRiQTARsYZ6u
-	GElxpZ8ONNpt42DCOWyS+SdFbwxmFZO35t7hrsaxxl6ujtUVPMRa38Kb7ISitTF4KOneKqNto78
-	It5bBTAf+atyPGVzhxODcx1nluK2osAgx5YSI65KlDXO/Z8qFBgpAQ2Wu/0BE7gik8xlWisTJdk
-	mKAK4VCpcidUv9UQmhxMgZdbgt9hwo3m6KQeDkhCINk8HjBgzrgKJtGAvM86p/KNo/QKzRJhJUX
-	wpi5xAk/Me94tJSlc62W6dwbTq2nftSPaw+ltvegKcy+Lb37Cwoe3ZUgH2j6TZ+qCPchdMyChdC
-	5ibmJdMRn9APQgSNNw=
-X-Received: by 2002:a17:90b:4f:b0:38e:ad9d:1161 with SMTP id 98e67ed59e1d1-3933b833613mr26020542a91.0.1786932904324;
-        Sun, 16 Aug 2026 19:15:04 -0700 (PDT)
+        bh=6xdmAG7qehxZR5RlI6+a6ahVKS+3T/VGOnRQ8szv9Ys=;
+        b=afeboQnMY4qkAg2xpFvEsIfg1TOY8rhtjBkRGPkiI8T7KB6EJ6FFMj2WkYvvqL0kZS
+         5hEEekIRM8XHmBM3Xz21Otz+gB4lHKlPZNTQ48ACUXN9yiEKeMoX2jTYi7yHLYTivh55
+         S5hmUdHK0ebgcKBGBJ87ooMSs3yC5bUimoCwM6IBfSMQqoXVFovylAwjiNss7rI1f22n
+         1RNr2QbyOzCiqL7lqHOQmx8YUhf8O9n+Y/nD85S6igOrZ3YUYTE5n1rI0mONk1E29GYh
+         LocUt+9dGTAQsgMK48+xePGpOXezEukwf9imtPb9VrCY21dVJOTOlTQf56Ed0B4uW0vT
+         MtbA==
+X-Gm-Message-State: AOJu0Yxl7Hg2fazN/EcBNnZ4NVOgd7TmfZ8XULHhkef1UVtrgeLqNIKW
+	MenEJ2Z8/7PlDLhf/YUeKTab7BGBuhw5KgSuQljE0rng1+BYCevxt+DVc6y92KDzSKM=
+X-Gm-Gg: AR+sD12jcxSNbp3XkezrRX9Y6XiBN4x7dBxYDFvXnomMNt17jnGL9p+ILUAexXUbSdq
+	fr6Ohhg/9ua7iHZtmTxHEf6CHJ1aMncLs7t5vxq4Ywi196s/RbfZ0bzI9jGBCZDRv3lsud32Oii
+	3/Uw3HJiBGt9MCFUI349g9RBr0QrQM6J7GaBNrcArAzYfs2Q6Tw9SHX/zJczCCc6IPxfZX7+DzT
+	oKIfrTyxHlo6BhrQI4FXyuGjXzpznrqD9JPds+uEiOjxx5BuRKs532M+CTyV62D7C4HBC0gDwvp
+	nHhyztkWW3n9hbzRlcLH4uTKMk5GJV6II+BeAjFVCRuAbFA3oKtN4J7DBXHU1qtmkQI9zIL2lhB
+	c0QOn3iJX9qTBEXQPfFP8I0K6cwbUb4sxvB4lCPRcZ5y+Q1e1n+klMDzTTThvkSwHUe6P0oDp0W
+	Zgn9rLwtrPXQMnrtDyrtlbs7NuNJj6GA6xjeXCMI8PLoFTAruytS9lyUt97+MbfBt1zicClKC4w
+	SJuGAYM
+X-Received: by 2002:a17:90b:3c02:b0:380:f389:447b with SMTP id 98e67ed59e1d1-3933b8938f9mr23461491a91.11.1786934044437;
+        Sun, 16 Aug 2026 19:34:04 -0700 (PDT)
 Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3954d2b6efcsm321769a91.1.2026.08.16.19.15.00
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39531e84118sm3147766a91.5.2026.08.16.19.34.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Aug 2026 19:15:03 -0700 (PDT)
-Message-ID: <915be46d-de6f-4d61-80ce-2236c7208028@gmail.com>
-Date: Mon, 17 Aug 2026 10:14:57 +0800
+        Sun, 16 Aug 2026 19:34:03 -0700 (PDT)
+Message-ID: <ead3fd2a-5c57-4f78-9ce1-9555b64fb8c0@gmail.com>
+Date: Mon, 17 Aug 2026 10:33:58 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,85 +69,172 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 10/32] ext4: skip block allocation for holes in
- the data submission path
+Subject: Re: [PATCH -next v5 15/32] ext4: implement buffered write path using
+ iomap
 To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
 Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
 References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-11-yi.zhang@huaweicloud.com>
- <20260814101554.428AA1F000E9@smtp.kernel.org>
+ <20260814093331.1703882-16-yi.zhang@huaweicloud.com>
+ <20260814104055.7F2C21F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814101554.428AA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260814104055.7F2C21F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/14/2026 6:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ext4_convert_unwritten_extents_atomic() silently aborts conversion if it encounters a hole, leading to data loss for the rest of the atomic write range.
+On 8/14/2026 6:40 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Extending a file within an already-allocated block does not update the on-disk `i_disksize` or mark the inode dirty, causing appended data to be lost on a crash or unmount.
+> - [High] The iomap non-delalloc buffered write path permanently leaks unwritten extents past `i_size` when a short write or failure occurs.
 > --
 > 
-> --- Patch [10]: [PATCH -next v5 10/32] ext4: skip block allocation for holes in the data submission path ---
-> commit 741674f6128ebda7382e0529fd0b709e4ae876be
+> --- Patch [15]: [PATCH -next v5 15/32] ext4: implement buffered write path using iomap ---
+> commit 7a553e37ec457f0a485aa7c6fc378e68d6d66bfb
 > Author: Zhang Yi <yi.zhang@huawei.com>
 > 
-> ext4: skip block allocation for holes in the data submission path
+> ext4: implement buffered write path using iomap
 > 
-> This commit updates ext4_map_blocks() to avoid allocating blocks for holes
-> in the data submission path, returning 0 instead. To prevent data loss
-> during extent conversion, ext4_convert_unwritten_extents() is modified
-> to skip over unexpected holes and continue converting subsequent blocks.
+> This commit introduces two new iomap_ops instances for ext4 buffered writes:
+> one for delayed allocation mode and another for non-delayed allocation mode.
+> It also updates the folio lock and transaction start ordering for the new
+> iomap buffered write path.
 > 
->> diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
->> index 76038b6c36552..0d62d9312284e 100644
->> --- a/fs/ext4/extents.c
->> +++ b/fs/ext4/extents.c
->> @@ -5167,11 +5167,15 @@ int ext4_convert_unwritten_extents(handle_t *handle, struct inode *inode,
->>   				      EXT4_GET_BLOCKS_IO_CONVERT_EXT |
->>   				      EXT4_EX_NOCACHE);
->>   		if (ret <= 0) {
->> +			/*
->> +			 * If the ret is zero, an unexpected hole may cause
->> +			 * conversion to fail.  To avoid data loss during I/O
->> +			 * end conversion, skip the hole and continue
->> +			 * converting subsequent blocks.
->> +			 */
->>   			ext4_warning(inode->i_sb,
->>   				     "inode #%llu: block %u: len %u: ext4_map_blocks returned %d",
->>   				     inode->i_ino, map.m_lblk, map.m_len, ret);
->> -			if (unlikely(ret == 0))
->> -				ret = -EINVAL;
->>   		} else {
->>   			conv_blocks += map.m_len;
->>   		}
+>> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+>> index 9098d9a5fc05b..d831d1911a6ff 100644
+>> --- a/fs/ext4/inode.c
+>> +++ b/fs/ext4/inode.c
+> 
+> [ ... ]
+> 
+>> @@ -3994,6 +4009,113 @@ static int ext4_iomap_buffered_read_begin(struct inode *inode, loff_t offset,
+>>   	return 0;
+>>   }
+>>   
+>> +static int ext4_iomap_buffered_do_write_begin(struct inode *inode,
+>> +		loff_t offset, loff_t length, unsigned int flags,
+>> +		struct iomap *iomap, struct iomap *srcmap, bool delalloc)
+>> +{
+>> +	int ret, retries = 0;
+>> +	struct ext4_map_blocks map;
+>> +	int map_flags;
+>> +
+>> +	ret = ext4_emergency_state(inode->i_sb);
+>> +	if (unlikely(ret))
+>> +		return ret;
+>> +
+>> +	/* Inline data and non-extent are not supported. */
+>> +	if (WARN_ON_ONCE(ext4_has_inline_data(inode)))
+>> +		return -ERANGE;
+>> +	if (WARN_ON_ONCE(!ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+>> +		return -EINVAL;
+>> +	if (WARN_ON_ONCE(!(flags & IOMAP_WRITE)))
+>> +		return -EINVAL;
+>> +
+>> +	map_flags = delalloc ? EXT4_GET_BLOCKS_DELALLOC_RESERVE :
+>> +			       EXT4_GET_BLOCKS_CREATE_UNWRIT_EXT;
+>> +retry:
+>> +	ret = ext4_iomap_map_blocks(inode, offset, length, &map, map_flags);
 > 
 > [Severity: High]
-> Since ext4_map_blocks() will now return 0 for holes when
-> EXT4_GET_BLOCKS_IO_SUBMIT is set, should
-> ext4_convert_unwritten_extents_atomic() also be updated to handle holes?
+> Does this code permanently leak unwritten extents past i_size if a short
+> write or write failure occurs?
 > 
-> In ext4_convert_unwritten_extents_atomic():
+> If the user memory copy subsequently fails (e.g. fault_in_iov_iter_readable()
+> returns -EFAULT), it results in a short write.
 > 
-> 	int flags = EXT4_GET_BLOCKS_IO_CONVERT_EXT | EXT4_EX_NOCACHE;
-> ...
-> 	while (ret >= 0 && ret < max_blocks) {
-> 		map.m_lblk += ret;
-> 		map.m_len = (max_blocks -= ret);
-> 		ret = ext4_map_blocks(handle, inode, &map, flags);
-> ...
-> 		if (ret <= 0)
-> 			break;
-> 	}
-> 
-> It looks like if ext4_map_blocks() returns 0 for a hole, the loop will
-> break early and the function will return 0. Will this leave the remaining
-> blocks in the atomic write range unconverted and cause data loss?
-> 
+> In the non-delalloc path, ext4_iomap_buffered_write_ops lacks an iomap_end
+> callback to clean up the allocated on-disk blocks, which could exhaust
+> disk space or quota.
 
-For atomic writes, if we hit an unexpected hole during conversion,
-there's no point in continuing the loop since the data is already
-torn. We should just return early.
+For short writes, leaving the preallocated blocks behind is not
+really a problem. They are visible to users and can be reclaimed
+manually, so it's not a permanent leak. I don't think we need to
+fix this.
+
+> 
+>> +	if (ret == -ENOSPC && ext4_should_retry_alloc(inode->i_sb, &retries))
+>> +		goto retry;
+>> +	if (ret < 0)
+>> +		return ret;
+>> +
+>> +	ext4_set_iomap(inode, iomap, &map, offset, length, flags);
+>> +	return 0;
+>> +}
+> 
+> [ ... ]
+> 
+>> +static int ext4_iomap_buffered_da_write_end(struct inode *inode, loff_t offset,
+>> +					    loff_t length, ssize_t written,
+>> +					    unsigned int flags,
+>> +					    struct iomap *iomap)
+>> +{
+>> +	loff_t start_byte, end_byte;
+>> +
+>> +	/* If we didn't reserve the blocks, we're not allowed to punch them. */
+>> +	if (iomap->type != IOMAP_DELALLOC || !(iomap->flags & IOMAP_F_NEW))
+>> +		return 0;
+> 
+> [Severity: Critical]
+> Will this silently lose data for extending writes within already-allocated
+> blocks?
+> 
+> If a buffered write appends data to a file within an extent that was already
+> allocated, iomap_write_iter() will update the in-memory i_size and set
+> IOMAP_F_SIZE_CHANGED.
+> 
+> However, this early return skips checking IOMAP_F_SIZE_CHANGED.
+> 
+> Without updating EXT4_I(inode)->i_disksize and calling ext4_mark_inode_dirty()
+> to persist the size change, appended data can be lost on a crash.
+
+This is a false concern. i_disksize is updated during writeback,
+not in the iomep_end callback.
 
 Thanks,
 Yi.
+
+> 
+>> +
+>> +	/* Nothing to do if we've written the entire delalloc extent */
+>> +	start_byte = iomap_last_written_block(inode, offset, written);
+>> +	end_byte = round_up(offset + length, i_blocksize(inode));
+>> +	if (start_byte >= end_byte)
+>> +		return 0;
+>> +
+>> +	filemap_invalidate_lock(inode->i_mapping);
+>> +	iomap_write_delalloc_release(inode, start_byte, end_byte, flags,
+>> +				     iomap, ext4_iomap_punch_delalloc);
+>> +	filemap_invalidate_unlock(inode->i_mapping);
+>> +	return 0;
+>> +}
+>> +
+>> +/*
+>> + * Since we always allocate unwritten extents, there is no need for
+>> + * iomap_end to clean up allocated blocks on a short write.
+>> + */
+>> +static DEFINE_IOMAP_ITER_NEXT(ext4_iomap_buffered_write_next,
+>> +			      ext4_iomap_buffered_write_begin);
+>> +
+>> +const struct iomap_ops ext4_iomap_buffered_write_ops = {
+>> +	.iomap_next = ext4_iomap_buffered_write_next,
+>> +};
+> 
+> [Severity: High]
+> Is it safe to omit an iomap_end callback here?
+> 
+> Without an iomap_end callback for the non-delalloc path, two issues appear
+> to occur:
+> 
+> 1) Allocated unwritten extents past i_size are leaked if a write fails,
+> exhausting disk space or quota.
+> 
+> 2) Extending writes into an already-allocated extent set IOMAP_F_SIZE_CHANGED
+> in the core iomap code, but without an iomap_end callback to update i_disksize
+> and mark the inode dirty, this size update is never persisted to disk.
+> 
+>> +
+>> +static DEFINE_IOMAP_ITER_NEXT_END(ext4_iomap_buffered_da_write_next,
+>> +				  ext4_iomap_buffered_da_write_begin,
+>> +				  ext4_iomap_buffered_da_write_end);
+> 
 
