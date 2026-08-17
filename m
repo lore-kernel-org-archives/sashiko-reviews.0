@@ -1,115 +1,70 @@
-Received: from mta1.migadu.com (out-213.mta1.migadu.com [95.215.58.213])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4D22DA759
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 15:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.213
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F23222597
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 15:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980342; cv=none; b=Zzw5+4CehsCb2kbzWbH0bSq5RGKcwEvI8SKADE8NGMiDi6njjDtXz8SWjWg+gpan9OslzB5dKaoB/BiWYp3gQ4FcMi3IrtZRaxAGByC8rDOiy883aBPnGHTcApdoxOZOtjPDa/jzQa4atgIAgU+LM7usB5K/BcnBhAOt4GoYqdQ=
+	t=1786980625; cv=none; b=c2peP8ao39wf0YOShtspelw5O8i2ZQavuuwRNSM3OAd1LFKejgncnNwko7IcFv4PNh8EqZB6bicpt75jQSNdRJ5YcWZavGjAjWksdBzopRNGa5zvid2Ljxz3tVJel8ziN4bDxXrgbjJI5kTbcfw4TY0nWEix9dlYbR2soBd75zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980342; c=relaxed/simple;
-	bh=bXOd8kpK155zzyeISgqb97p6lTwhlPIf7DGpfNTuzzc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a8BJ77UwqC1kwVHCUt+lrWiO3Izoa1KbQLDvwh7bvyj+bFeOg82rTHwN8hZodDbVKUfH53hyBsBazPzk5RmfIYRzsDS0W4H2sgER+CPk6xlMw9GLDWNGLoVf/swU5nJgVSpg6SvVSXOF2RA47Omf5GCZjTWcdQIaHRD7EDzDCJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PiLaCXAU; arc=none smtp.client-ip=95.215.58.213
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786980625; c=relaxed/simple;
+	bh=Jtb7MBCUpRL3r8wUI5sHpryZ8uYbVER3YKn7EGTZ2Ws=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SlN9TgM0jZpnQWNUmBix3T/m3s1mYcrRA259aDdBSwWNDBg1Cu9VjcWf0eezKqtddNQyUH6zSZCBRhf+0cyO9MqSKpkE7zQr3CXqfhi78RiEm7I2ZY9KAzW4rvkXsK9GwvVL4j8sKlfPE9H64ibvGDGVV0w3Yb4bjT5AUFpA0ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=SP0rJq+m; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PiLaCXAU"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=bXOd8kpK155zzyeISgqb97p6lTwhlPIf7DGpfNTuzzc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786980338; v=1; x=1787585138;
- b=PiLaCXAUUQcRkVPsv+venj1CVfziuiSqh3sq1nnDUZ35H/63WXbJLF1ea0+/kIV/m3kkHgDt
- ZyYCcgoW2oYWAj9MoxfBxpse/O1TXTtZ8XBf4icvAMd5lHsfXUob7bBticuiExmRydA5RlvZmNK
- E9SlqUHJlOOXnKqP/fUlYFQ8=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5604)
-	by smtp.migadu.com with ESMTPS id bc701301e2e389d9;
-	Mon, 17 Aug 2026 15:25:38 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <4a5a3d48-2c36-4e27-86ce-e7bd5b796593@linux.dev>
-Date: Mon, 17 Aug 2026 08:25:36 -0700
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="SP0rJq+m"
+Received: from macsyma.thunk.org (pool-173-48-113-153.bstnma.fios.verizon.net [173.48.113.153])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 67HFUIYc014817
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Aug 2026 11:30:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1786980621; bh=5lP2TF3nDkDFNL6YrkIL6wAMOBQnkc2dy2i2C2gWJjM=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=SP0rJq+mYyHH6fjKG2UBuey2VfB6e+YfRi23qUvu9vZ1kkBovd8r+o+FZOS5ltuq7
+	 F1RBcmPKzauhvj+Drw9I8eSKkU7ofJvYxx5EPJH7Rex8DngOerVnuf/vbBX9pkBC9R
+	 vDkBNc1dyWGRsI6UqsgN910kHIPemOz5dKe386cMPtIAoNMLGqQc4J2vH5vG4GFIy9
+	 WRG1Vst7GSUqd291hKYAtNGYZ9JXFkxf3LTXDsqjaZySQhyWIEjOnLWwJqeOdpZtSv
+	 NQWRq5y/9Z0L9pQc5p9MYvl3EW6MkeS/wsb1uk6TM5GWLA8j2jK32iJHlXXWbRsbda
+	 32NCt0mBFgh3g==
+Received: by macsyma.thunk.org (Postfix, from userid 15806)
+	id 76848F595D6; Mon, 17 Aug 2026 11:29:18 -0400 (EDT)
+Date: Mon, 17 Aug 2026 11:29:18 -0400
+From: "Theodore Tso" <tytso@mit.edu>
+To: Matthias Goergens <matthias.goergens@gmail.com>
+Cc: linux-ext4@vger.kernel.org, jack@suse.cz, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] ext4: compensate ea_inode refs and free block on new
+ xattr block write error\
+Message-ID: <aoMe0uuQnGovxMSH@mit.edu>
+References: <20260817100724.923291F000E9@smtp.kernel.org>
+ <20260817114905.2708356-1-matthias.goergens@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 03/10] bpf: Wire up JIT support for 16-byte
- kfunc returns
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260817042141.2286086-1-yonghong.song@linux.dev>
- <20260817042156.2287455-1-yonghong.song@linux.dev>
- <20260817043753.89D311F000E9@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260817043753.89D311F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260817114905.2708356-1-matthias.goergens@gmail.com>
 
+On Mon, Aug 17, 2026 at 07:49:05PM -0500, Matthias Goergens wrote:
+> Sashiko's reviews on these threads have been genuinely useful — the
+> ea_inode refcount leak that this patch follows up on was its find.  This
+> one, though, is a false positive: mb_cache_entry_delete_or_get() and
+> mb_cache_entry_wait_unused() have been defined in fs/mbcache.c and
+> declared in include/linux/mbcache.h since commit 3dc96bba65f5 ("mbcache:
+> add functions to delete entry if unused", 2022)
 
+Yeah, I had noticed this and filed a bug against Sashiko.
 
-On 8/16/26 9:37 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The BPF verifier fails to initialize BPF_REG_2 for 16-byte scalar kfunc returns, breaking the feature.
-> --
->
-> --- Patch [3]: [PATCH bpf-next v6 03/10] bpf: Wire up JIT support for 16-byte kfunc returns ---
-> commit 70077e00d2d0c46ef0daa85eb2612ed7fbf545ef
-> Author: Yonghong Song <yonghong.song@linux.dev>
-> bpf: Wire up JIT support for 16-byte kfunc returns
->
-> This commit wires up JIT support for 16-byte kfunc returns in BPF, such as
-> large structs or 128-bit integers. It adds support to the x86-64, arm64, and
-> riscv64 JITs to return the second half of the value in BPF_REG_2, and adds
-> verifier checks to reject larger returns on unsupported architectures.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index f1f1268d29c66..54aca6c305061 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->> @@ -2920,6 +2920,18 @@ int bpf_add_kfunc_call(struct bpf_verifier_env *env, u32 func_id, u16 offset)
->>   	err = btf_distill_func_proto(&env->log, kfunc.btf, kfunc.proto, kfunc.name, &func_model);
->>   	if (err)
->>   		return err;
->> +	if (func_model.ret_size > 8) {
->> +		if (kfunc.flags && (*kfunc.flags & KF_FASTCALL)) {
->> +			verbose(env, "kfunc %s with >8-byte return is not supported with KF_FASTCALL\n",
->> +				kfunc.name);
->> +			return -EOPNOTSUPP;
->> +		}
->> +		if (!bpf_jit_supports_kfunc_ret_reg_pair()) {
->> +			verbose(env, "kfunc %s with >8-byte return is not supported by JIT\n",
->> +				kfunc.name);
->> +			return -EOPNOTSUPP;
->> +		}
->> +	}
-> [Severity: Medium]
-> While this patch adds JIT support and basic verifier checks for >8-byte
-> returns, does the verifier correctly initialize BPF_REG_2 for 16-byte scalar
-> returns?
->
-> Looking at check_kfunc_call() in kernel/bpf/verifier.c, it seems only
-> BPF_REG_0 is marked as initialized for scalar returns:
->
->      if (btf_type_is_scalar(t)) {
->          mark_reg_unknown(env, regs, BPF_REG_0);
->          if (meta.btf == btf_vmlinux &&
->              (meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock] || ...
->
-> Since BPF caller-saved registers (including BPF_REG_2) are marked as NOT_INIT
-> earlier in check_kfunc_call(), a BPF program attempting to access the upper
-> 64 bits of a 16-byte scalar (like an __int128) in BPF_REG_2 would be rejected
-> with a verifier read error.
->
-> Should check_kfunc_call() also initialize BPF_REG_2 when the return size is
-> greater than 8 bytes?
+https://github.com/sashiko-dev/sashiko/issues/439
 
-We should be okay here. The actual BPF_REG_2 will be used in
-   commit "bpf: Add verifier support for 16-byte returns in R0:R2"
+(Filed before github went down.)
 
+					- Ted
