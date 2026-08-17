@@ -1,192 +1,206 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013012.outbound.protection.outlook.com [40.107.159.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5B138D01E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 14:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976773; cv=none; b=olORb171a7pCK4tcSi0WDJJ404RKSsqfmgAdRAUvlMAO3AenybRYHUH+fkDEir2yi1PsESMv3oUIu4Y2bRvWzxXc1/re2I0IucdyIyU2g/c93qPRbstkqebki8bZoyu9aXL+JFVvCk2rh++evizsbipuecGTkLlKx7HjtNHUYf0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976773; c=relaxed/simple;
-	bh=5Fx/jLBt4NjgKsouyRUj62+jA3S0tsigRG7T1AupIoU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AqWJwP4+WUfRai4D5joh5H7xwhcIjrkmM/ORb5/5KgV/slRaHtQzdq+JlySpAY1dYKMD90UNdPBHOHBR6CKQK2fPWulxqo0lFYm4qhRz7tZo4HMuXxTehAuCGK+OIal7/vrPQomq6n3w1k6axLsd+tpXHr0CqlMmd10gS4I98/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PTjgDSTs; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7613922CBE6
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 14:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786976798; cv=fail; b=VBshamxMxg/+ADv5BtiinXBoOaHw4ezrGP0shGQSLqJZxHf/NxhHh0QmJAg2KyPn5MjPWGwJ9ZwPl2lEq58tqzh7//tyJvhZSDaW2IS7808b4dszjqjmZE1qeJCqX/mTGMX5xx/iPoyUowyzS9rJgSAaQJI6M+acyumZXEZiqLo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786976798; c=relaxed/simple;
+	bh=/VzS7MNQ2JcuNOILix3p1nNLbdb6OTjSo640vwCbAGg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=s5oTxe/bqnSVe+KCTpdiYNGts/2eM8VRpmx9gdtNvCnFB5bcJjfriclCmQ9+gik7iPMu2d0qLYNrFpWLZV67kAQ529pNWZ1ADOrh/IRx9LNGL/FIeGFkQbtE9xA8PBZ5wnAJcLuOkyBZWVEd5FzFIeik0VPaj3e3p9jkcHMEnTA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=AmmpEjIZ; arc=fail smtp.client-ip=40.107.159.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PTjgDSTs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786976771;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0xVoO4PGa93cBgoTmsmPlqVbYL9tE4BTnM50GMQnOmg=;
-	b=PTjgDSTsljrm5GjZRBzhVnvweLDUBh9qVsbPEflutoYkydiWjTMJitWn+uhtz6aa1QNAmQ
-	AXx5Y/v6ZjvJwbPlWP02Hj+EyZTFXiBTRA8EDuCMuE1I9v8G8TiWUiMKBoacC4uu06fjbL
-	WRzykh+JZndv3da5zCtZErTB4PvCnYo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-ErI39yUfPpWUemr6_7rauQ-1; Mon, 17 Aug 2026 10:26:09 -0400
-X-MC-Unique: ErI39yUfPpWUemr6_7rauQ-1
-X-Mimecast-MFC-AGG-ID: ErI39yUfPpWUemr6_7rauQ_1786976769
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-482a5e9400eso476878f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 07:26:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786976769; x=1787581569;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0xVoO4PGa93cBgoTmsmPlqVbYL9tE4BTnM50GMQnOmg=;
-        b=hoayrf2tl/jdjTF0kd0HsxbCC9PRj105opKhnHIkTfWo4bxPiTkShO3FJXjg/6fgXj
-         cSCdvW0dEuY0ePURG+ZcGF6u8FBBFWMKAFy7qfNdTJZVJJBOVc1ylR3p945nbYzDtKiy
-         F9s84WlvPsBErTohBXu1YK7Gl4c9yv5ij9j6xhgaVXGoeA6olq5qecOCmuCjLcXZK9xz
-         eu+E6gJf9vxDR3AsOLTN1jOdzdUSDWkx3qIK/YvWN+L1z91Z4XUkHiqlrnJ32qFrKrBc
-         NSNyK4aiff5q7fuPcpJ5K0vz4f3JLqE7+5GRY/08n4H6K5NmazfiEkX725B6ncO/q+hq
-         QPPA==
-X-Gm-Message-State: AOJu0Yyw8wueCmtLZDNTN71QTfDKigxD+O/8floQjUeCH9rn+ib3Nazu
-	y7ODyB57zf7dj2ndV243fUi115yFm5jLBp2sCS0IeNVp6OEJ7/Pl5b7XnRNTzoSqM0gCGhSxuLz
-	3pc/CHTOMkNze1uCasgUAZldSRcnthX7/kzn9m3z/t6Ys8RB2kzogLmVD40JI7H4mgbyAoA1U8P
-	V9F6zf+vIxvYzX82qcJRJ5s3qZ1FbzE7aDdljinxQRTn7oYddDX4AD
-X-Gm-Gg: AR+sD10SvGuYVv1leK488URmRanNqvVWZ+nOmrQGladSV3uuOM7r2RxGZsjVykgom41
-	ZyIFkugc8gSPbwFJMhz7oC+pSayeUROS2k9RS0aSpQvFnDLXMqRebfdjMBsi/uYB5ar651VTSSb
-	/HFsEa3mCjcY1cHuPaSruFknCz4soLIn0FGkCQHUR2pLi09Uk00ymfxO5iHAVS0I5VnO5WPYGQG
-	fGWwXekMt/h9tpRQA==
-X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id ffacd0b85a97d-482a908a3ddmr728343f8f.12.1786976768686;
-        Mon, 17 Aug 2026 07:26:08 -0700 (PDT)
-X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id
- ffacd0b85a97d-482a908a3ddmr728270f8f.12.1786976768264; Mon, 17 Aug 2026
- 07:26:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="AmmpEjIZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f94iUHTTxxKeQBynONd0alvkh1uo1zB5Z6HgjyY769Ns80xPkTGTlEjvxBr0s8msYr6TNxgnJKjvuP7yAh+0c+3xKGm2UBkZzfFFXdnP4GFpchuQq17n906N498JaG0WEiziV+CCGazBd3ZN5TTrYe9yRR7UItmrRFPDctRZoQVqbVTXyrfvoFocF/Y4/pzhRhP/kT4l6mXRVdKMy1+PEkOsI3BJ8SJfSU8Xyv6UwpgNFj/onqTwMkfNm7AffuwfoW8rHSsRggcKDOLmYQiIZfAhouu51C3E2QLNyAmceu7spV0HzV15gZ2q8+InLFvg+RCjbFdlhlJ3RP6y4/CYyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hKS3jxS7B26aBqXMgMb0OUaENXUk6M2anoS+NQLelic=;
+ b=T4wkfngdFc/fbzyJaZN//tWCXeM6CRYzuFhhAuVVJVsO8rpE+X+AjXVF9vGvwqAHqknmRFfaGNe+dMmCjA7U8fo8ISh0vpVfVwXN4AIiR2xD4ru1tsahxdAYrpRjekZHl5BA6hHkF9XD7DNFaCeO5ljlofJwrPhMmXTCIyck8b8Dk02u82/ont9wakemQEYg3weQ12xEgSn9XrWXeyf0Z2eTHsPKeM0UaiaDGm8EV+hJF5RsIGHrVTAs3VKomjpIUVHLzPU9kml59lp8iKLWUZfHoevnVCXtSlzm/+eYRDQQv+ywYMQIp9LJZ2uuJ/zT40RfUfm89ORdzF6fJ3b/sQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hKS3jxS7B26aBqXMgMb0OUaENXUk6M2anoS+NQLelic=;
+ b=AmmpEjIZkkXeGOCffRNcEX2JikvYcye78wlc8OeRRLg1eG+WwS9HA0FZTV01Po0lyjn0HEeRawBXV4gU0rere+qun1ZeMDCwMsufW2xt4zBdwtF9jmAFNcsvHZAwLI1HZQa5pzuBO/gQOmRU+rHWLjmbZ9wcmf1IWrDnLXVWCpfuWhfW9xP1U5V2FBl579MI1VgGgqfuTlJUV0Mm3M2yGlpZUSQloHK5iRVzqswHMjJxSxYalfrvykecZ5cRWpux6em2rp6cZ9r7TBkZeidsHe7LVbfeQS2wLuee0dtBApjBb/438f2aDw78m4MxU6YE2N1wTZtqydhpkDcQgUCHCQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PA1PR04MB11429.eurprd04.prod.outlook.com (2603:10a6:102:4f3::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
+ 2026 14:26:34 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
+ 14:26:33 +0000
+Date: Mon, 17 Aug 2026 09:26:24 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: "Garg, Shivank" <shivankg@amd.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+	"vkoul@kernel.org" <vkoul@kernel.org>,
+	"Frank.Li@kernel.org" <Frank.Li@kernel.org>
+Subject: Re: [PATCH v3 2/3] dmaengine: fix use-after-free in dma_chan_put()
+ and dma_release_channel()
+Message-ID: <aoMaEEOgQhZduJoe@SMW015318>
+References: <20260816-dmaengine-kref-fix-v3-0-7e76187145df@amd.com>
+ <20260816-dmaengine-kref-fix-v3-2-7e76187145df@amd.com>
+ <20260816160722.26C811F000E9@smtp.kernel.org>
+ <ba6d6fc86076b4f2e5244cad3c5c70d782dff74a.camel@amd.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba6d6fc86076b4f2e5244cad3c5c70d782dff74a.camel@amd.com>
+X-ClientProxiedBy: SN7PR04CA0175.namprd04.prod.outlook.com
+ (2603:10b6:806:125::30) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260812181300.3712426-1-jtaubepe@redhat.com> <20260812181300.3712426-12-jtaubepe@redhat.com>
- <20260812183533.423061F00A3A@smtp.kernel.org>
-In-Reply-To: <20260812183533.423061F00A3A@smtp.kernel.org>
-From: Jesse Taube <jtaubepe@redhat.com>
-Date: Mon, 17 Aug 2026 10:25:56 -0400
-X-Gm-Features: AcwNN1WoAXOWHM0UvOaW2H_aN_oGR153U8en9mLKgo-ACm1moZ0bC2Z130Jd7D8
-Message-ID: <CADRr4bfgy_e=2QjTKxGrUWXvKW6KoJZZOmDabgzp0yYx3SSfAw@mail.gmail.com>
-Subject: Re: [PATCH 11/13] scsi: lpfc: enable FPIN notification for NVMe
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: K-eABTiGTBnlxxWupyUYUfiZB0wLPkqW-X1CQ4bo7IE_1786976769
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB11429:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5d7e5dd3-7927-4aeb-e0d2-08defc6b89ce
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|19092799006|18002099003|22082099003|56012099006|6133799003|11063799006|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	rW/d0zrRGE9v4u+YgB1OkKFRn2QblqjT+IdeGs1O378Rs+Ye2GeBy6QRZBCc3lS8kqT9LbE/7nwpUNG5YbMGcwaULd8YXotOQeoSDh1v4o+UFRRF6aI0uQTmwne+5H/M1cDMkM6+CdxEAZow1xnpjGExIBRZu5XOW7+vDFTLr1+4r90Rf3SZB7voluepHxSwBiu3jumG+EoQyn8CnDfO5DD6R1y/ujxNCdcyUltG+4psPIWY6ust8VVSIg5hkom3aWzeErJBooYOqrfk/QHbP5LS2IVHJRDjDyi8RaWn1/5MLfu2adpGmsoH2V965XEaxzH8ppmCB37BKKiNxVxKUgsPCoBwJ+JiJHVFjdRfS086xjVdW/z7/+wl0lylRSJGifEJicz4hVIHzyN0cH5l7wQ1cYukIkIDAK3agSLJxVlUxvtJWl0k3IKL8I7HzuzD8pc+D2xv0BYeuOp2VNpWH0mVgIHFRNu9W4cZBCM+jOeYj6hbWa4PMY4kRdQj2YsVl9FzLL/5Ulgo09WBzgrO9ZqYxCl4g3M9/OXAr4nK0+lviwOzNiBMIWmhOsxHAPPo/+OdFO/ejgQZAaE7r+5R2EKasefe2kFYvPnBMk2ZwUU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(19092799006)(18002099003)(22082099003)(56012099006)(6133799003)(11063799006)(4143699003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?7ty1cPDinPZBZqSlRgkem/OKgOMFtlPoonz1nZKVXGjmrOKSw1n+phb8NnPk?=
+ =?us-ascii?Q?uYCcSZ8BQv62PJUGB8yS3cnesKWgAGn5H5nIEE497maLHZH2iBv9fRi2hI+D?=
+ =?us-ascii?Q?OEnjuoRY6dTdZSdfdX/Y3qMlg8SbW5BA1uy+cste5Lfolafd5+hN47LDTd3o?=
+ =?us-ascii?Q?8y15q0RKK9PH7bIE+GmUb2CxsrtPkV9TiQCX62V22shNMVhVrrPOIbK15uzu?=
+ =?us-ascii?Q?UxI077TkgayQcdQS4mpuqHbQIaxskKJlx0jYmNjn/KtR5FV98ci8YRQAHh0p?=
+ =?us-ascii?Q?2edHBsjX+2RgFNMMBRwm9rcPna3xfeSvtE2zUJsY9nbvS/Q7eqmgdqPFqHmR?=
+ =?us-ascii?Q?hfSePZ5LooOgrCgP76omtP591D6mXOAa7zE4HJV8Naw9Wa73IZUtZhLUj5Eg?=
+ =?us-ascii?Q?M+eIGrBtVZ2WfrYFn7Nbv2fxfzqw8Z2UAa9UCqIRSDrR6pDAF7EMx4CR8TIY?=
+ =?us-ascii?Q?u9R4OEVWjIloWhH9mcopTN0hvIsyOtBgTQvNBlBJYgzAG6herWTvXkgwvBdI?=
+ =?us-ascii?Q?HmdBU/Rubmh0BBdx+KTl7k+2K8clRHldlEjowECWqjLl4RoOnyl0oARfx0M4?=
+ =?us-ascii?Q?7LUscKFErXAsoK5xY0Ow4w2xGVdKBJr+7MpoWRkuWr3MtheK7Z5s6BJvJstW?=
+ =?us-ascii?Q?SbPocLutJ7bM+kT57YLod84eA7lUoFrPxQEFdaXc8CxxwN/sh9DRv7nvKZAe?=
+ =?us-ascii?Q?Y01oAnCNJGyrb9vcjzXPeyusquLLEVvJbWf4XiTOHG3Ca8AbVb/9kQjkaz+S?=
+ =?us-ascii?Q?gHfuClY/r+mh8A8hGzsx86SgSm7hSHtxAjIZorlPGD9YDWFo/YM+bJG46auE?=
+ =?us-ascii?Q?rHzGdYT8D19CJGlEIWop154mfRdtiOZQx8y2Gaw0ibHu+h8jiaG+R3D14/fV?=
+ =?us-ascii?Q?YPTx3KOwd4znixtsyB8Cjrm2Ax0+uotGINfXnj+9v0pBO7HtiJr7EKsbHFjI?=
+ =?us-ascii?Q?6Ng+M/1g5MxkKdC99Ti1NWFRVN6VEsHsoNxFqex5c7+0Bf3/CQR4Xk46Td40?=
+ =?us-ascii?Q?7iBjSqp6bogmbcgjU5XEnuyogJmyfW9cGa3rNR1eLJUUOCgfTJEl5ueh3v2v?=
+ =?us-ascii?Q?W1tY1zN17sZ7mCd3Ihguj+9w3DPsCaecRaQIzcdc3k0i1AqSxyS5f5zFaLPI?=
+ =?us-ascii?Q?HY/Ve3DVP32Ima3Pmdh5zkm0STxMDGOBe9tQzS/OR0/NuvDN1+MmSKn4H3Sc?=
+ =?us-ascii?Q?a2vGNLWGVhGBjWEdgVF9ER39txWeUPWw2tek5qu3605zG7G7MjWtY3bZM+Oc?=
+ =?us-ascii?Q?SRic0/EQDs4AkQWLV6xH2SIhsHwqr1TgN72EDdjEEOnxqP+tDLz5ZI6zVB/K?=
+ =?us-ascii?Q?20ghhQyieE4W9jGGd7QE+ejGjBgK9YG/jM6/DP/duySRvXhkanej811TnsoX?=
+ =?us-ascii?Q?0slfZ8pg1THF4GykJ8gN8lThVmqKyBwL+6pbYLSlfgbGO31tCMnMLwC1X1ex?=
+ =?us-ascii?Q?W8S0YtGU04Q2swVp91pL8mboDAzGareono0fJGTzAodNpqX0TbwNYCrIE00S?=
+ =?us-ascii?Q?v8zxISoZoCmO1Mil/5Q4zIePg8w7+LeH2bvLDvPTSr2TvNKelOaSw89ECymg?=
+ =?us-ascii?Q?DQvmM0qaaYIWkNWKxfu/xy1q0r7xXHDxJ+CUUrwIj0MB94zlDsYcWTmDeMZY?=
+ =?us-ascii?Q?BZl5tMg8oZnH3tcKvA+usVUlTmS9ArhjZ2zEinTGtb2jeAWNB806se7zcYJI?=
+ =?us-ascii?Q?HoS+Kbi4wzdeAPofzDMDbjWmC8uTdgGGUCG565fpsni0doZdLFsaoiKZaIqI?=
+ =?us-ascii?Q?sEwvEQU73l40mCuZ2ZUWS+9Gr009LDQ/jBfyo2Yt7neWK+nlBsqN?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d7e5dd3-7927-4aeb-e0d2-08defc6b89ce
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 14:26:33.8419
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YZcFfSZCdLKav9t4B9Z0ORTNjoK1TITeOdhd+YmGct3qvQGhuGe6v46UjD2HRjZwr6+kRR5RMMf862Qo1ZbvV7k0TcnDoCLbw2G43jkYIxNfbc2wyZWevh/VvUbTQ5E8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB11429
 
-On Wed, Aug 12, 2026 at 2:35=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sun, Aug 16, 2026 at 06:05:27PM +0000, Garg, Shivank wrote:
+> [You don't often get email from shivankg@amd.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Low] Logging Formatting Defect: Error message is improperly split acro=
-ss two consecutive `dev_info()` calls.
->
-> Pre-existing issues:
-> - [High] Concurrency / Use-After-Free: Lockless access to `ndlp->nrport` =
-and `nrport->remoteport` can lead to a Use-After-Free due to concurrent unr=
-egistration.
-> --
->
-> --- Patch [11]: [PATCH 11/13] scsi: lpfc: enable FPIN notification for NV=
-Me ---
-> commit 6d41021b653095acd49d1f7828d07c1405835a16
-> Author: Jesse Taube <jtaubepe@redhat.com>
->
-> scsi: lpfc: enable FPIN notification for NVMe
->
-> Implement set_rport_marginal callback using nvme_fc_set_remoteport_fpin()=
- to
-> enable FPIN notifications for NVMe.
->
-> > diff --git a/drivers/scsi/lpfc/lpfc_attr.c b/drivers/scsi/lpfc/lpfc_att=
-r.c
-> > index f4e8164b94abb..d54899cceed99 100644
-> > --- a/drivers/scsi/lpfc/lpfc_attr.c
-> > +++ b/drivers/scsi/lpfc/lpfc_attr.c
->
-> [ ... ]
->
-> > @@ -7134,6 +7134,30 @@ lpfc_set_rport_loss_tmo(struct fc_rport *rport, =
-uint32_t timeout)
-> >  #endif
-> >  }
+> On Sun, 2026-08-16 at 16:07 +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] Clearing `chan->slave` before stopping the hardware introduces a NULL pointer dereference in `stm32_dma3_pm_suspend()`.
+> > --
 > >
-> > +static void
-> > +lpfc_set_rport_marginal(struct fc_rport *rport, bool marginal)
-> > +{
-> > +     struct lpfc_rport_data *rdata =3D rport->dd_data;
-> > +     struct lpfc_nodelist *ndlp =3D rdata->pnode;
-> > +     struct lpfc_nvme_rport *nrport =3D NULL;
-> > +
-> > +     /* Break early if NVME_FC is not enabled */
-> > +     if (!IS_ENABLED(CONFIG_NVME_FC))
-> > +             return;
-> > +
-> > +     if (!ndlp) {
-> > +             dev_info(&rport->dev, "Cannot find remote node to ");
-> > +             dev_info(&rport->dev, "set rport marginal, port_id x%x\n"=
-,
-> > +                      rport->port_id);
+> > --- Patch [2]: [PATCH v3 2/3] dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel() ---
+> > commit c0bca60dc6977cca7352bacd1095081d89c88211
+> > Author: Shivank Garg <shivankg@amd.com>
+> >
+> > dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel()
+> >
+> > When dma_device_put() drops the last reference on chan->device->ref,
+> > dma_device_release() may free the dma_device. This commit caches the
+> > module owner and delays dma_chan_put() to prevent reading freed memory.
+> >
+> > Link: https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com
+> >
+> > > --- a/drivers/dma/dmaengine.c
+> > > +++ b/drivers/dma/dmaengine.c
+> > > @@ -916,8 +919,6 @@ void dma_release_channel(struct dma_chan *chan)
+> > >     if (--chan->device->privatecnt == 0)
+> > >             dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
+> > >
+> > > -   dma_chan_put(chan);
+> > > -
+> > >     if (chan->slave) {
+> > >             sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
+> > >             sysfs_remove_link(&chan->slave->kobj, chan->name);
+> > >             kfree(chan->name);
+> > >             chan->name = NULL;
+> > >             chan->slave = NULL;
+> > >     }
+> > >
+> > >  #ifdef CONFIG_DEBUG_FS
+> > >     kfree(chan->dbg_client_name);
+> > >     chan->dbg_client_name = NULL;
+> > >  #endif
+> > > +   dma_chan_put(chan);
+> >
+> > [Severity: High]
+> > Could moving dma_chan_put() here introduce a NULL pointer dereference
+> > during system suspend?
+> >
+> > By moving dma_chan_put() after the block that clears chan->slave, the
+> > hardware channel may still be active while chan->slave is NULL. If a
+> > system suspend occurs concurrently, drivers like stm32-dma3 might check
+> > the hardware state and attempt to print the slave device name:
+> >
+> > drivers/dma/stm32/stm32-dma3.c:stm32_dma3_pm_suspend() {
+> >     ...
+> >       ccr = readl_relaxed(ddata->base + STM32_DMA3_CCR(chan->id));
+> >       if (ccr & CCR_EN) {
+> >               dev_warn(dev, "Suspend is prevented: %s still in use by %s\n",
+> >                        dma_chan_name(c), dev_name(c->slave));
+> >     ...
+> > }
+> >
+> > Since dma_chan_put() (which stops the hardware) hasn't been called yet,
+> > CCR_EN would still be active, and dev_name(c->slave) would dereference
+> > the NULL pointer we just set.
+> >
+> > Is there a way to stop the channel before clearing the slave pointer
+> > without triggering the original use-after-free?
 >
-> [Severity: Low]
-> Does this code format the output correctly?
+> This is a valid concern.
+> So, either we can have a NULL check in stm32 code while printing device
+> name, or drop dma_chan_put() change for now to avoid this trigger?
 
-Will fix
+Drop dma_chan_put() firstly.
+
+Frank
 
 >
-> Because dev_info() prepends the device name and KERN_INFO to every
-> invocation, splitting the message across two calls without a newline on t=
-he
-> first will cause the prefix to be injected in the middle of the sentence =
-in
-> the kernel log.
+> Thanks,
+> Shivank
 >
-> > +             return;
-> > +     }
-> > +
-> > +     nrport =3D lpfc_ndlp_get_nrport(ndlp);
-> > +
-> > +     if (nrport && nrport->remoteport)
-> > +             nvme_fc_set_remoteport_fpin(nrport->remoteport, marginal)=
-;
 >
-> [Severity: High]
-> This is a pre-existing issue, but does this lockless retrieval of nrport =
-via
-> lpfc_ndlp_get_nrport() safely protect against concurrent unregistration?
-
-Will fix
-
-> The macro performs a lockless double-fetch of ndlp->nrport without acquir=
-ing
-> ndlp->lock:
 >
-> drivers/scsi/lpfc/lpfc_nvme.h:
-> #define lpfc_ndlp_get_nrport(ndlp)                              \
->         ((!ndlp->nrport || (ndlp->fc4_xpt_flags & NVME_XPT_UNREG_WAIT))\
->         ? NULL : ndlp->nrport)
->
-> If a concurrent remote port loss triggers lpfc_nvme_unregister_port(), it
-> could free the NVMe remote port memory before setting ndlp->nrport =3D NU=
-LL.
->
-> Could this code then read a dangling pointer and pass nrport->remoteport
-> to nvme_fc_set_remoteport_fpin(), resulting in a Use-After-Free?
->
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812181300.37=
-12426-1-jtaubepe@redhat.com?part=3D11
->
-
