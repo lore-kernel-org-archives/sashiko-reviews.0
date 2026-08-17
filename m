@@ -1,94 +1,153 @@
-Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF353E559A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 16 Aug 2026 23:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8661A1EFF93
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 02:15:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786922121; cv=none; b=YGUgbTAFd0xm8O4RUhEWVFOchEbB0Y5iPsMRVCCOWdMh+R1CMdXfIs4TJ62eh9+o0/9B4fMGbGcYihDrn8kmpGhOugTzP4LkD0RM5zWyZSVgqmtDWZlbxSGiRdjkZTIyWKqPF8WE9YkM/Bgo+Cv+mK0pCZgEhpm1lLNPzvqiGbE=
+	t=1786932907; cv=none; b=LSw9MIpci5IBK15EyA4CMcUx4KUA1sXodutAN7jFxpJ5RDxemQ0eAazYTL2wZEANZoiFxAFU9EkqncN9PIdLqVxvXJc4XLcD4UEQxSkxZmP0zdDiR9gN/DzGiZ7Aeh0xmB1DJ0o9eOCgoRDFrepbX4/EjLNIWdyI0IwPDmeGVj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786922121; c=relaxed/simple;
-	bh=kZaryQEFDAwtcBmH075xLUIUtn8Z6aPjOOmfDN33OW8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TWWE5zjKsPjvDkO+p9O7Vf3TbiHTnVO8hkgA9Knka4qW2pFXFBsJYE4x2wI91q95uJ4Uk3BA3HgGpdDsRrPC3cqrLHY5bunIce+Za/OJ7QzMO+v4Ihv8owLJG62V/A+fRks+sSQmapw01OlzIbjV3jfb2NmMQR9De8Zn1W9oASQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=IsBkWl3l; arc=none smtp.client-ip=216.40.44.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1786932907; c=relaxed/simple;
+	bh=4PDxVHxzEtixMQxj375u5qupcw8HmdOETUyxhxESZ+Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GlbwZf+Twti7k23Ni8OZlYMssJEDhBukQbdPiGkFRkEkQxOPZJWZBVtoVyCnVipk20tQ+gXy3BhScqCDcRpQb0bT894k3BNxxRGgIscYNWJgHvyW/SGdLMX1S1xwP8bTdnvAzu3ogZsL8FmHT5S+fsZyzb7sLeCeppRbNg6EbA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLde4/PC; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="IsBkWl3l"
-Received: from omf08.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay03.hostedemail.com (Postfix) with ESMTP id 8C63CA0614;
-	Sun, 16 Aug 2026 23:15:11 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf08.hostedemail.com (Postfix) with ESMTPA id 0FA0720027;
-	Sun, 16 Aug 2026 23:15:09 +0000 (UTC)
-Date: Sun, 16 Aug 2026 19:15:08 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Hui Su" <sh_def@163.com>,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] tracing: Fix crash passing ERR_PTR to kthread_stop()
-Message-ID: <20260816191508.27f87c31@robin>
-In-Reply-To: <20260815191034.82D8F1F000E9@smtp.kernel.org>
-References: <20260815190151.568893-4-sh_def@163.com>
-	<20260815191034.82D8F1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLde4/PC"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2d58efc7356so4694895ad.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 16 Aug 2026 19:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786932904; x=1787537704; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aTuatPTaLF+hATnCNZpEBrhBXHe7FOsOaL8XbwX/BY8=;
+        b=hLde4/PCMQ15fV/+expyBsBCtAHy2zOCDZ8DSQuXhxSq7XmkCG/f99R9qADNrx3qIY
+         wC7DzkBP1ZK4yHlNJxKRSiOola3Xwzw7hS+fOta3gfuljFmHmUX/GxLYffngsutqp+az
+         ivsd+aCzNpwq3KNqUgh7a62ezKo/IKB9yvmSheLQRtKcAQ6P5gLgFShE6tiWw7lN0ceq
+         LtSdrPHSJwOJRlVo1I92oMv1Cdgn0TmHbqehGFiGJApKrey1hmXgtnmkJdyeFeUiGvy8
+         Yzo73omyEZk5qLbah6qXmyPfkbIR1fnULD9e0gunjjzCLRaRc8JLEWjaE0iACWhAdCyB
+         dX9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786932904; x=1787537704;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=aTuatPTaLF+hATnCNZpEBrhBXHe7FOsOaL8XbwX/BY8=;
+        b=GIMC90SC6VlLSsKhxP0hD6CleqNpdjr+y0mrm0+R4u5jJX+PR+/UuLIi/ERKWLdYkb
+         s3wpiu5jIrI0C+r7ap3XeY75MDg/rBaKS+sVFD7rQqlhVQD4+cIPrqESMzTqp3J3nY8l
+         p7y2V3eFmZA7gOPV6X53zlChfGrlmjbnGeXhYY9dzOOnJDiOePKB0WBeCrCWGrodZIHb
+         22BbonFV2wFuLvwJlohDeZ3sWWvq86zfPPnQgzun7c/xrVEFWJbFjmjuPAJWjG2mkaHG
+         GRNfuONva0qGW4H2ArT9R0FJ3NfpmgpM444JIop0qI5mFbKUnrvymqWUD8axDyieBN9X
+         M7IQ==
+X-Gm-Message-State: AOJu0YykBYCmKK7kz1oaJLGDqO8W3XgcsvYq5QKJ3c560Dfyf0KcIpGx
+	E18QKMnK/+qRH7QWfvBTzeV7+39on3bG+sYrRyBtE5MUFAMWzJYeHvSxGF54miKeiio=
+X-Gm-Gg: AR+sD12qLheJefTua9IuJZbVkuV5aQT30Sp/2j0TbWXhcYl78mWqcwVDJeCP6qsecvZ
+	n28YBZfHX7dRj+Z9/HoaA/UGoK/2JLidO5yLFSdKCUrFAoY75k5DNAs4284jGjGVSo342T0hxzL
+	Cq2G6DE0eYci/QPkSmDQKJwHuS6i+qEwk8tnV20Wcxdu3LI0hKGGu4gDTqRGv4vZRiQTARsYZ6u
+	GElxpZ8ONNpt42DCOWyS+SdFbwxmFZO35t7hrsaxxl6ujtUVPMRa38Kb7ISitTF4KOneKqNto78
+	It5bBTAf+atyPGVzhxODcx1nluK2osAgx5YSI65KlDXO/Z8qFBgpAQ2Wu/0BE7gik8xlWisTJdk
+	mKAK4VCpcidUv9UQmhxMgZdbgt9hwo3m6KQeDkhCINk8HjBgzrgKJtGAvM86p/KNo/QKzRJhJUX
+	wpi5xAk/Me94tJSlc62W6dwbTq2nftSPaw+ltvegKcy+Lb37Cwoe3ZUgH2j6TZ+qCPchdMyChdC
+	5ibmJdMRn9APQgSNNw=
+X-Received: by 2002:a17:90b:4f:b0:38e:ad9d:1161 with SMTP id 98e67ed59e1d1-3933b833613mr26020542a91.0.1786932904324;
+        Sun, 16 Aug 2026 19:15:04 -0700 (PDT)
+Received: from [100.125.248.95] ([124.70.231.46])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3954d2b6efcsm321769a91.1.2026.08.16.19.15.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Aug 2026 19:15:03 -0700 (PDT)
+Message-ID: <915be46d-de6f-4d61-80ce-2236c7208028@gmail.com>
+Date: Mon, 17 Aug 2026 10:14:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH -next v5 10/32] ext4: skip block allocation for holes in
+ the data submission path
+To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
+Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
+References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
+ <20260814093331.1703882-11-yi.zhang@huaweicloud.com>
+ <20260814101554.428AA1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Zhang Yi <yizhang089@gmail.com>
+In-Reply-To: <20260814101554.428AA1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Stat-Signature: a87cfc1c73p9zqz6eq1pu1oaj75m69aw
-X-Rspamd-Server: rspamout08
-X-Rspamd-Queue-Id: 0FA0720027
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18GMgLrU++4BAtKZ/brReYbAmD+Bk2V3ns=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=70peDjSv+s80yFEXxWa2RN38KLxDz6kSpijZWZdhg9U=; b=IsBkWl3lLtMJmmiZFomZT2s6fDW+tjBywjDRCJAcIogERzQ+UydCZ72Yp5PVfVPyYSB7FIxJmacKRWkKYkPRNLKRGICRvaEhBWHuN5yMYVmHEu2Mc2MVRdHysZRoNCphC8AcfBKZWe1kUaYucq6LGFWXgvXPincBxv1JDA+zhyc=
-X-HE-Tag: 1786922109-717115
-X-HE-Meta: U2FsdGVkX1+52xCGM+PhrG9cUFTwn+5ER6wRx6w5SrST0jQ5ODt9hLfdc0UeoUkLDkmtDIOgugt/9l72tyCXKFxtRinfFchuT3Hnk6OCMpr+zXLDZLCZNt7M8WBj5xsy+etPn2P1fp1xc00OXi46NKmLRHSXqRjNTEaAl0VtiI4RlZbcxoDB49+dTAaUGSx6Ysb/mLeiHNxdzFVoxPcdWgndH1J3djPd2j656jkwGoOfb4A+yeblu2PRhDNE0sd3mLKrAFmpno3xDZp+9XAagziBVBkKaA3gLuJQDfMZUwAVtgdy8XIHPrT9kbiaqQ4Y1jvX8s9wQLvlXwAQ+baBzSVrE5c6KQT9
 
-On Sat, 15 Aug 2026 19:10:34 +0000
-sashiko-bot@kernel.org wrote:
-
-> > diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-> > index 0356cae0cf74e..207f47f54dbbf 100644
-> > --- a/kernel/trace/trace_events.c
-> > +++ b/kernel/trace/trace_events.c
-> > @@ -3866,6 +3866,8 @@ static __init void event_test_stuff(void)
-> >  	struct task_struct *test_thread;
-> >  
-> >  	test_thread = kthread_run(event_test_thread, NULL, "test-events");
-> > +	if (IS_ERR(test_thread))
-> > +		return;  
+On 8/14/2026 6:15 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] ext4_convert_unwritten_extents_atomic() silently aborts conversion if it encounters a hole, leading to data loss for the rest of the atomic write range.
+> --
 > 
-> [Severity: Medium]
-> Does returning silently here cause the self-test framework to falsely report
-> success when the workload thread cannot be created?
+> --- Patch [10]: [PATCH -next v5 10/32] ext4: skip block allocation for holes in the data submission path ---
+> commit 741674f6128ebda7382e0529fd0b709e4ae876be
+> Author: Zhang Yi <yi.zhang@huawei.com>
 > 
-> The caller event_trace_self_tests() unconditionally prints "OK" after calling
-> this function:
+> ext4: skip block allocation for holes in the data submission path
 > 
-> kernel/trace/trace_events.c:event_trace_self_tests() {
->         ...
-> 		ftrace_event_enable_disable(file, 1);
-> 		event_test_stuff();
-> 		ftrace_event_enable_disable(file, 0);
+> This commit updates ext4_map_blocks() to avoid allocating blocks for holes
+> in the data submission path, returning 0 instead. To prevent data loss
+> during extent conversion, ext4_convert_unwritten_extents() is modified
+> to skip over unexpected holes and continue converting subsequent blocks.
 > 
-> 		pr_cont("OK\n");
+>> diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+>> index 76038b6c36552..0d62d9312284e 100644
+>> --- a/fs/ext4/extents.c
+>> +++ b/fs/ext4/extents.c
+>> @@ -5167,11 +5167,15 @@ int ext4_convert_unwritten_extents(handle_t *handle, struct inode *inode,
+>>   				      EXT4_GET_BLOCKS_IO_CONVERT_EXT |
+>>   				      EXT4_EX_NOCACHE);
+>>   		if (ret <= 0) {
+>> +			/*
+>> +			 * If the ret is zero, an unexpected hole may cause
+>> +			 * conversion to fail.  To avoid data loss during I/O
+>> +			 * end conversion, skip the hole and continue
+>> +			 * converting subsequent blocks.
+>> +			 */
+>>   			ext4_warning(inode->i_sb,
+>>   				     "inode #%llu: block %u: len %u: ext4_map_blocks returned %d",
+>>   				     inode->i_ino, map.m_lblk, map.m_len, ret);
+>> -			if (unlikely(ret == 0))
+>> -				ret = -EINVAL;
+>>   		} else {
+>>   			conv_blocks += map.m_len;
+>>   		}
+> 
+> [Severity: High]
+> Since ext4_map_blocks() will now return 0 for holes when
+> EXT4_GET_BLOCKS_IO_SUBMIT is set, should
+> ext4_convert_unwritten_extents_atomic() also be updated to handle holes?
+> 
+> In ext4_convert_unwritten_extents_atomic():
+> 
+> 	int flags = EXT4_GET_BLOCKS_IO_CONVERT_EXT | EXT4_EX_NOCACHE;
+> ...
+> 	while (ret >= 0 && ret < max_blocks) {
+> 		map.m_lblk += ret;
+> 		map.m_len = (max_blocks -= ret);
+> 		ret = ext4_map_blocks(handle, inode, &map, flags);
+> ...
+> 		if (ret <= 0)
+> 			break;
 > 	}
->         ...
-> }
 > 
-> Should event_test_stuff() propagate the error so that the caller can correctly
-> report the test failure or skip it appropriately?
+> It looks like if ext4_map_blocks() returns 0 for a hole, the loop will
+> break early and the function will return 0. Will this leave the remaining
+> blocks in the atomic write range unconverted and cause data loss?
+> 
 
-Right, this is just a boot up test that is only done for debugging.
-This is not something for production. If it fails, it should not fail
-silently. If anything, it should be:
+For atomic writes, if we hit an unexpected hole during conversion,
+there's no point in continuing the loop since the data is already
+torn. We should just return early.
 
-	if (WARN_ON(IS_ERR(test_thread))
-		return;
+Thanks,
+Yi.
 
--- Steve
