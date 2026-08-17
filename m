@@ -1,176 +1,242 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012022.outbound.protection.outlook.com [52.101.66.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0463E5EC2;
-	Mon, 17 Aug 2026 09:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.22
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786959506; cv=fail; b=iINXFfJUaxJEwyxCQbLtqJt3LnrA2bnXA0C8RMBcG0jKUdDjv5MAW4cLP3WAP88//m3OmzacZI1Mr3bCFd6Hv+KT5i1gcXoFpVGtnJrkbA1yxORbOsPyXXzFwMaFvvUkggBNGu8/m6lIalHEhlhfF7SKBwGDYVF5rbSL8QdzvEk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786959506; c=relaxed/simple;
-	bh=EqgPit1AkvwgLbG72sjqv7j91iqpr9ePANTLrj6AMp0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=k752gWuNpak0ot501SjSrydfs9f8aDzL+3WszTOKcRiHsR1dTcUYDmorrOtZwUbpdxxCSnxpHIOPYZEBwsONxqa8eeKMt1v0v7nJP3C+vRD6Gc1wgO1rYm962SfeWwL6f7IBlq8fqvnZfduw7AgvRxP2idQv4FVX7LCCEvqecQI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=h8bdzgsM; arc=fail smtp.client-ip=52.101.66.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76113F4DE1
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 10:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786961696; cv=none; b=YMPEgHCOgEsY1FVgt/O0K/5JaU3jYKeU7SQYnOgfOSXNo/gl9GLDgqNy/vjxUUNCkb+J6B2Cc+kHJKd3NDZXERbCdnWj6ad6kA6J+U9BaOLe42+r4lutENEztna7Qo3l1pVzr+tuSFclROs2h9V1TN8WaCH38RV9FPVaq1MrQ68=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786961696; c=relaxed/simple;
+	bh=jEtdv8cixT4yT8CUzlCKJ298vzSvS3wb33Tb68PE/XE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rzD+X30MIYKqkIb43KItUVl4iv32vHBSnIRvWzEIL+L2MdhR4gyFVT+k1Va0V4/IuQK5XI4adGq1nMkqkf+A+sqbGZJFAZVZ7I84MbYGIz9EKK0/wdbqnj4SrD/zGsTB8MiPo4mrZK4sOzChV4s33r8r3CiQ57dWOemGWdkqNEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jvr4UZsO; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="h8bdzgsM"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HJ0KOQRnsbIGx620xuCdRER+N8UPcwnMUewcb7iw3rxMA1/1pinOJZw9CskhAQd+oDguZS/jYQQX/fxBvvQ0wFYHP0SLemxaA/sh6BH0vv67vklPWjGHPrcUogAL6sCsiZYY/fm9ZV9UI8mkkYpbwcEaK8X3a7O8fgbFk54a6bp5n0eh/B9RKEaCnJM+cKgrLFHix6xTdz6Fzz+9BXBhF4Cb+DizCiWb4E5fUDHhvazjhljxgkO2euea3mQWltWBCvgT/TuI3SPNHzY7prVO2yHMaWtLIi9AdAWsQQdtaKfwLydE+QzCWcQ3gf7g8kzUT+c99K7g6rbPw5U8kPMKVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=19Fac7kQ0/l5zLxjRxaP4Hb7RUQ/xF8WWnn7ouf4w4c=;
- b=EYFK0YOv9FQ45Vx1H8CzLpfTdQJWWi0MAwXv4ZvTUxkXMVPgdPY10v58923g548sqWyM9sKRLRBqIlsJnQ8VAvGlxr3PwEgMdytAV0RlV4g8tBRYrQuoFQsraKhdtvFVzDBJ2fM/TAPC0/iETlYLWfDglcr1fuJiuERll1GdqSww//35gWOOA+vDX/QRaOeMCZ/Dr45onOcgPTKiyok3L6awwfxcWQkQgjuKY4yVyLNcUFFSEXGe/b5m8KauG4WK0B+HDTCMZRjAMr6wsXD4WDvEw3gm6Kt7fL6ZfdbSiGK9ZoqgAColF2hV4FWpnpQRaScUoqZXllzbgAaeRES6wg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=19Fac7kQ0/l5zLxjRxaP4Hb7RUQ/xF8WWnn7ouf4w4c=;
- b=h8bdzgsMCsM76JsUyE7t+KmUlvWKBb1WzXsfwPDDnUZ1y8IqtEXl0UQmto8YMOEuFihXaOu46RFJHA7u7MeEELqNpcEe+/Tdb5HPDGfMRVzUsdfRpl4EMKsZmClLo3gnrjTKUnDV+9a/yiRQJrA0WkL4lqr+Bz5WUf8zgt35GGD8S9IIH5Lm0wnSScwH66V2M/EgBg+IA9kIRtb3vKkVwI223D+Q1hv3sCVy5ulXEakGL/RUbIH07WfA/1raWKjifg11QxHvG1N7ujAUUC19LJkioUza+5EQw+liyoo/gvC0+lt8nJdZkyXNnhLuPlRbs/hgy2ny7zwQwN7xg1ZP9g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AM9PR04MB8353.eurprd04.prod.outlook.com (2603:10a6:20b:3ef::22)
- by AS8PR04MB7575.eurprd04.prod.outlook.com (2603:10a6:20b:29c::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Mon, 17 Aug
- 2026 09:38:13 +0000
-Received: from AM9PR04MB8353.eurprd04.prod.outlook.com
- ([fe80::46ae:f774:f04c:a1bc]) by AM9PR04MB8353.eurprd04.prod.outlook.com
- ([fe80::46ae:f774:f04c:a1bc%3]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 09:38:13 +0000
-Message-ID: <bfac9033-5b98-4352-9a15-b09ef12145ae@oss.nxp.com>
-Date: Mon, 17 Aug 2026 17:38:02 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/17] arm64: dts: imx91_93_common: Add clock and
- sound-dai-cells properties for MQS
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jvr4UZsO"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4957eefd361so24408985e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 03:14:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786961691; x=1787566491; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=WkV77Z8Ixwaqf7EeDyRNAP+C+NWCpS3WdahE3ARQznE=;
+        b=jvr4UZsOKna/Mm7S2rQLLO43/hhKzv8HemOpGogeI9SdhTf4XvubfJxUqHsicYQMXv
+         y3Ztxn8Tb+7kWeXPxjxBA3OTVCQkwUXckaevnwvstlCdb/tG4K4z2s9aY5GE6FyGWnSv
+         DMkMFsfK0O9Lrso8cjgyTP5uz2Jgo1AKDYgUBDOvOyjXc6yA5oDvPunuvBeEoe2Ttbdh
+         Ky9NxiAr9bUwa0wfX3kur3BnL6yY+0lh9NLYygOd2fw2du1t+lOlfKYR1i5CO/rQ3cuJ
+         ZoaiMiZ4cfxP2JGnaTSxuAaYqVSQMq6HNEGzY84mOGvq38fnhFLGyM6OvWudf8hRRYim
+         NDtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786961691; x=1787566491;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=WkV77Z8Ixwaqf7EeDyRNAP+C+NWCpS3WdahE3ARQznE=;
+        b=Nu3F+7AeJRqeTEBKAeKnmGCCTgaC25TmoOhUoOwaPyq+WGCjpN3suoF8x3kdMTsjGC
+         xt/cooc0WlZq6obvJSyyE1VQCE82cKqo/dS9BVP53EWRaCr4GBVyYJ8HLrTcWGcWLBYw
+         6Gfraoc4L4G1a0vhR1l8W+EwEHffXTnISpTiBv48GCsuetG9cbLi0DtSWaTSW6+N84AS
+         BsRO3SVAD0ufdrG+BalgZq9XBvGZ9TXCa6UQjL4g2Irr+AN5Tueqigs92xlKezNJ4wjH
+         wSuDMf51R5WuPWS9/raDPHWQjRwDU3OSgj1o++e07lOoyjQhF1M9bMCY3Sq9Zv1IRKCF
+         QnBg==
+X-Gm-Message-State: AOJu0YzLO+jnnbhLIZqHPmaG7fBknqRqLVLbuoGEoyM89Vs2/uYyXVsM
+	Q/4QjA9rHhflND/s+pJ0wwp8pieyc5leBdYDsboom7luvIswJgfSoIYRKYgbSxYDcT9jmOnQgYe
+	4z4GtcA==
+X-Gm-Gg: AR+sD13ME9tR4OhOwEA+O+CCrOvt5GlCnE8JIZcfmuORwD82zjFpweBCvCAZNStuMU7
+	5R/H/CegEN3UyytRcbzPCdd2Rr/NVZ3WlHmuRMC5eIMeJOTP2xwyV70RHIULM5orbcV+XmQ7kTI
+	mjRCkxS7FrrlUIZ745bRs3hxeIVKT9qhjRMMFpeQU1qMh+pysWBHDXaphpaJ1MmknhHQ2VfIaIe
+	yvV33hy9CoPSMU8VVydJJlhDB4uU0uvwpXNmtTqR/XyYRxSaPkSYbeA9/eqdkbq6LxgaQzPUcHZ
+	H0+yU8bqeepkmIGQXxmD3TFqiDo5JZwcix7MYJAJKP4nh6fAfyw+QhScvzMEZrbvbSJboava1ue
+	X60YUMM5n9TkLJXb6d0Cn9NNEv7VClP96JzeDMNApeW4xlUek5tyqfQAy/hLUel27MifsEjgxni
+	8US2Olbm+lORdQwxRjA/S9TxXUuZbpVks7HtYqF9MVkutKjt9UYl7yYPrtz7m9XzRb9JAOV/ers
+	AY+RTQd0JePvG5zAFhhvihCuJ7VWr6O
+X-Received: by 2002:a05:600c:3796:b0:495:4811:7998 with SMTP id 5b1f17b1804b1-49987993e08mr307088115e9.17.1786961690475;
+        Mon, 17 Aug 2026 03:14:50 -0700 (PDT)
+Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49996109652sm169231445e9.4.2026.08.17.03.14.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2026 03:14:49 -0700 (PDT)
+Date: Mon, 17 Aug 2026 11:14:46 +0100
+From: Vincent Donnefort <vdonnefort@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev,
- conor+dt@kernel.org, Frank.Li@kernel.org
-References: <20260814072022.4064009-1-chancel.liu@oss.nxp.com>
- <20260814072022.4064009-2-chancel.liu@oss.nxp.com>
- <20260814073023.0B4F21F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Chancel Liu <chancel.liu@oss.nxp.com>
-In-Reply-To: <20260814073023.0B4F21F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SGAP274CA0009.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::21)
- To AM9PR04MB8353.eurprd04.prod.outlook.com (2603:10a6:20b:3ef::22)
+Cc: linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] ring-buffer: Improve nr_pages type
+Message-ID: <aoLfFtBTvvyvI_Wu@google.com>
+References: <20260814154823.755406-1-vdonnefort@google.com>
+ <20260814154823.755406-3-vdonnefort@google.com>
+ <20260814155944.F017E1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR04MB8353:EE_|AS8PR04MB7575:EE_
-X-MS-Office365-Filtering-Correlation-Id: fb3c674c-fb83-4d0b-939c-08defc4341d6
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|19092799006|1800799024|23010399003|366016|18002099003|56012099006|22082099003|3023799007|4143699003|10067099003|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	DkDmWnekWmHwx69MkyrWsroWoY4v7d4IWFW0gXBG0m9tGMMSfWv3lOP1NJt3xalBFJgaBslEMYGFRUVqbNScKQRas1zPgiKpsMlGlbSPHE2n/o2OLGjtVIzQvgJ7orSBDxRYOxHzM4/+Ub5REDZWkzFgoGgEV5fZGbdgexYKGIQMtMWs6pz2hvUHUEcSK7F6cmonm1gHCp3HW00llhbmmgK6XHiWc9Lb7K5qawKEfB8m27J8ClRkbceAqkMkd5izOYm1ED9xm8kNYJXlIlS2TuK5MAilfWuPTEXJyVVMuzUX9nz3/kYVW1dzx9AOonHQOF+yRLtT9WEFOJT7hPIc6O9nVPh3IsdaA8siT0I2NKNJ4OsLpRHOjqnYBtAiuaXSj+/3Pg0tBrnHbE5INs7TPLp4fFQCJWb9YN6hbuNLG1CFXyEfKJSi8UArKBVNp0bvJkZX8AesfUItHfr8ad+R5nvQFiFCpT3eYyvFUL5tahZaBSI/vDbBeJHQKB+2NUDHxEYLwiPSdXDO8v4BAW3uwFmmTEZUf3cYV9Bh+5N5YAxQzb1FSYxmzupY7U7JIXNDtRGZBTH1hr++f9qFEgDLCwgS53rCGIcfoGA+8+S8m7VnmD+L0e9FJvhpCAneE8TPGb0OyghEcJZYhHaLwPdXeaa4TRyJFOrS+90oxQAjJHA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8353.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(1800799024)(23010399003)(366016)(18002099003)(56012099006)(22082099003)(3023799007)(4143699003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?U01lQkpkeUQrSHpISXpOTC9sS0lieVdXSDBIRXR4cWJLRzZsaFZFM1JSb1pk?=
- =?utf-8?B?N3BOUEhpS2JEdmxVMERSZlAySll3SkR5aW9TOVRpNUZIK3pQdWJNcGpISUZn?=
- =?utf-8?B?bFJvNmdCbmhGUWRuL3RlbUNyVnJDOUJ6Rlp4dVRaUUtLRXhVbFhOUVd0RC9a?=
- =?utf-8?B?Z2drZXVhT3VXYjYrWER2bCtwK3B6bS82Smg2OE5SVlArdFpISkplNlE2OVBz?=
- =?utf-8?B?eHd0V2ZDQUFHdlRramxtSU5xV2ZFWTlFWTJrODFheWpBNllUZGZYSHJNTXFt?=
- =?utf-8?B?ZThJNTNXNzd6NExMQTN2RThoM2oraVVJZWxCSEpDOWIwR0NjWWFIL0FnV2pk?=
- =?utf-8?B?a3dXdEZYZUZDaFM2ekxiWndCSDZBV09Wc0tXa2NtY3Rhd2o0MGJ0WjBXOXQ4?=
- =?utf-8?B?U1pMY0VPUW8xbE9YempuZ05JajZJaTdMeGswWS9Vd3NKNUpnc2ZJQTFaZTkv?=
- =?utf-8?B?STFhdVpNdmtkWnl0UEZ0VXNDb2lLYW5KRGJHQ21tVzZOT1E5Nm9hTlZFbDgx?=
- =?utf-8?B?akVDQnVXcmZIanFhOW9WNC9uc1J0Ly8wUjZha0FqaEFMQ3I1WVM2NitxY0FJ?=
- =?utf-8?B?QWl2blVraG95dzc0SXNORlRNYkVwbllQVnpLR09yaXpIbXpLM1AwQ2c2TGZL?=
- =?utf-8?B?VXhWMnNYMDNGNGdBa3craUphUGI2QkdJTjV0R0t5M1JRUS92Yms1c1lvMnQx?=
- =?utf-8?B?eElhUk9hVHZjYXYzb1FEUEtiNzY2YmlXMk5HRys2SWd2aGxZY1k3MGhnWFRk?=
- =?utf-8?B?aEZtSW83eXB6TkJ6WWl4ajBUbDY3c3RWd3BiNEZHcGY3dWpFbXliVk5BUWlT?=
- =?utf-8?B?dzU2cjZtbk5SL0JUTGdJUWdudlEvVUYyTUpxbm9ycWZYMXVSVUtBc1VUZGhN?=
- =?utf-8?B?cjFqa1luY3NNWTIvYlFUTmQrR051V0xuWmIrSkFCTVI2UElUVHZCN0ErSkRG?=
- =?utf-8?B?VGJjenRvNE1CUUdpNUZNQUdxZ042MnpPd21wK1N3b0xoSk13WnRYUExlNTYv?=
- =?utf-8?B?Y21kbzlyMHVVdGJNbFZ1RThIamF0bWoySWMvVTVjOE40d2x5UjVnSmlLemRs?=
- =?utf-8?B?M0hLZHlFL2hqSUM1a3NqMWpHK0UxdWFJbjdzWlhBQmhseDhxaDhMbFQ0dWIv?=
- =?utf-8?B?OXZVdTBVQTByL1dKYjAvVTdrd2hjVkQwQlRoUUdUTlNtUHBUVEpNM21sSHFx?=
- =?utf-8?B?cU8rVzRPajRhS0w0TDh4Q2dtZDdMc0o5c3NvTVNhTkVBNGtORE9USmRBMEF6?=
- =?utf-8?B?NFhwZnY4ZCt6TmlHU2tHSStFWkdxUmNnUFdzNUhpb2NoVVRBU1lTOTF6TUNE?=
- =?utf-8?B?aEthcS9CTkpqUFpibGlxVkRHZ1EwcFJnS0c1WmJMRzhoUUN5YVZFRCs3NElO?=
- =?utf-8?B?UE1SV1kyREZKTVdta0pCdjBqN3NGeG1XaUlTYWpzT0E1V1JzS0FSdXFwWVJK?=
- =?utf-8?B?Qm5LNUJjUDVxbGhncWkySkk0aDc3UUs3MXk4b2xNbUtrMG5PdkQ5aFRUSzVi?=
- =?utf-8?B?dEdrZUhXelM1RHh1WnBRZkd2WkJ0VXBFd2NHZWdkS1dzYjF3MjlScGhDZDRX?=
- =?utf-8?B?WXZYdHlHQzVIUVVwbHBEK3MwNGZOeEJHcTFLcXFORlpGM3VOT3FIdG5hMFFO?=
- =?utf-8?B?TGg5WXRoMU1CWDdoNEFvYzZuaGwwVG9PaWh4Rmo0M2NocENhSExVTnhlbzFO?=
- =?utf-8?B?RDgvUHYyQ0lWRW01RXhtY0tvSmRFQ3liZG9rcGQ5NG5hRXVjc2U5Q3drdjJR?=
- =?utf-8?B?blppZTBrTUw3MzByMHF0QzRoelZycDh2eU5BZVBwdlBXZzIyNWpTZmwvQmcv?=
- =?utf-8?B?OERqaHBac010cVhJaEUwNUJ6eFEyL21aNmhzUUhCQ2JFWEV6N09xRUlaRU8z?=
- =?utf-8?B?Rk1XcTUrTGZ0S3BOeXBJeXFkSmNDMXk3NjFhclhTTWJPYytRa3NQYy9sSGZN?=
- =?utf-8?B?SjZuNk9QMURsZjRwS2VNNG5YNWFMbjR1Rk9yajVNUTUzSHFCNGJPNDZTRi9T?=
- =?utf-8?B?aklqTiszcVREQ2R5VXhuZ3hQNEpITzgvV0QzaEN4b0pnV3RXY1Rtam10cHVB?=
- =?utf-8?B?Z2FUcE8xN1VwUHVHYzBuekt1RUJtNUp2djg1R3ZaYlhvYkZOQTgxdG5OMEpO?=
- =?utf-8?B?Y1JtWThWTmpxaGx3RFRtRkZJZVJ1clpZcS9JNTl0M1p6eGhJYVNDNW1sNTR2?=
- =?utf-8?B?ZG5SekViekYzV0tJOWNqK3ZCSUE2dDRSR3NTeFRBanR4T0MvTUJ6L1k2Sjlj?=
- =?utf-8?B?SUtibzBoQkpRRUtZRXoyanQ2bTc0dVozRGpHQStJSndOeDhSUng3b255NldC?=
- =?utf-8?B?ZmlhVGhGWCtUTW53ZjhPVmxOMHpSRTV0TXlQamlieEI4VGZmaGFNdz09?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fb3c674c-fb83-4d0b-939c-08defc4341d6
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8353.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 09:38:13.6636
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xE4UHq/h/Wscy32g+QqZK3bw3lAVfBojRpxdh8pD/1hkDorvL/ghzusCSb8sMdn/hZvLCGjmcA+tBM3QgzHQnQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7575
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260814155944.F017E1F000E9@smtp.kernel.org>
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete refactoring leaves duplicated property definitions in board files, mismatching the stated commit intent.
+On Fri, Aug 14, 2026 at 03:59:44PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] When `nr_pages` is exactly `U32_MAX - 1`, the expression `meta->nr_subbufs + 1` overflows to 0, silently skipping persistent ring buffer validation and wiping data.
+> 
+> Pre-existing issues:
+> - [Critical] Loop counters iterating over `meta->nr_subbufs` are typed as `signed int`, which wrap to negative values for extremely large buffers, leading to out-of-bounds memory accesses.
+> - [Critical] The `meta->nr_subbufs` field is read from potentially corrupted persistent memory and used without validation against `nr_pages`, causing a heap out-of-bounds write in `bitmap_clear()`.
+> - [High] Multiplication of `subbuf_size` and `idx` overflows 32 bits for ring buffers > 4GB, causing severe memory aliasing.
 > --
 > 
-> --- Patch [1]: [PATCH 01/17] arm64: dts: imx91_93_common: Add clock and sound-dai-cells properties for MQS ---
-> commit 3f3b7186dd0d4a7ad6f02447032fc2e5538b3ca5
-> Author: Chancel Liu <chancel.liu@nxp.com>
+> --- Patch [2]: [PATCH v6 2/2] ring-buffer: Improve nr_pages type ---
+> commit 030ec6a7ceec6e71123077bd1fc64e0cf5c27cc8
+> Author: Vincent Donnefort <vdonnefort@google.com>
 > 
-> arm64: dts: imx91_93_common: Add clock and sound-dai-cells properties for MQS
+> ring-buffer: Improve nr_pages type
 > 
-> This commit adds the mclk and #sound-dai-cells properties to the mqs1 and
-> mqs2 nodes in the common imx91/93 dtsi. The intent is to define these fixed
-> SoC integration properties centrally rather than duplicating them across
-> individual board files.
+> If ring_buffer_per_cpu::nr_pages is defined as unsigned long, it is
+> capped to 32-bits in a few places, limiting the operations possible on a
+> very large buffer.
 > 
->> The "mclk" clock provides the MQS oversampling clock, and #sound-dai-cells
->> describes the node as an ASoC DAI provider. Both are fixed SoC integration
->> properties rather than board specific, so add them here in the common dtsi
->> instead of duplicating them in each board dts.
+> [ ... ]
 > 
-> [Severity: Medium]
-> The commit message mentions adding these properties here instead of
-> duplicating them in each board dts. Should this patch also remove the
-> existing duplicated properties from the board files?
+> > diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+> > index ec13779922ffb..ec127e2ad0527 100644
+> > --- a/kernel/trace/ring_buffer.c
+> > +++ b/kernel/trace/ring_buffer.c
 > 
-> It appears clocks and clock-names are still defined for the mqs1 node override
-> in arch/arm64/boot/dts/freescale/imx91-11x11-frdm.dts:
+> [ ... ]
 > 
-> &mqs1 {
->         clocks = <&clk IMX93_CLK_MQS1_GATE>;
->         clock-names = "mclk";
-> ...
+> > @@ -1746,8 +1745,8 @@ static void *rb_subbufs_from_meta(struct ring_buffer_cpu_meta *meta)
+> >  static void *rb_range_buffer(struct ring_buffer_per_cpu *cpu_buffer, int idx)
+> >  {
+> >  	struct ring_buffer_cpu_meta *meta;
+> > +	unsigned int subbuf_size;
+> >  	unsigned long ptr;
+> > -	int subbuf_size;
+> >  
+> >  	meta = rb_range_meta(cpu_buffer->buffer, 0, cpu_buffer->cpu);
+> >  	if (!meta)
 > 
-> These duplicate properties also still exist in the mqs1 node override in
-> arch/arm64/boot/dts/freescale/imx93-11x11-frdm.dts.
+> [Severity: High]
+> This is a pre-existing issue, but does the multiplication of subbuf_size and
+> idx overflow 32 bits for ring buffers larger than 4GB?
 > 
+> In rb_range_buffer(), we have:
+> 
+>     subbuf_size = meta->subbuf_size;
+>     idx = meta->buffers[idx];
+>     ptr = (unsigned long)rb_subbufs_from_meta(meta);
+>     ptr += subbuf_size * idx;
+> 
+> Since subbuf_size is an unsigned int and idx is an int, the multiplication
+> evaluates as a 32-bit unsigned integer. For ring buffers over 4GB, this can
+> overflow and wrap around before being zero-extended and added to the 64-bit
+> ptr, causing memory aliasing by overwriting earlier subbuffers.
 
-To avoid misunderstanding, I'll remove the redundant properties from the
-DTS overrides on all related platforms.
+I can add this to this patch/
 
-Regards,
-Chancel Liu
+> 
+> [ ... ]
+> 
+> > @@ -1840,10 +1839,10 @@ static bool rb_meta_init(struct trace_buffer *buffer, int scratch_size)
+> >   * must be the same.
+> >   */
+> >  static bool rb_cpu_meta_valid(struct ring_buffer_cpu_meta *meta, int cpu,
+> > -			      struct trace_buffer *buffer, int nr_pages,
+> > +			      struct trace_buffer *buffer, unsigned long nr_pages,
+> >  			      unsigned long *subbuf_mask)
+> >  {
+> > -	int subbuf_size = PAGE_SIZE;
+> > +	unsigned int subbuf_size = PAGE_SIZE;
+> >  	unsigned long buffers_start;
+> >  	unsigned long buffers_end;
+> >  	int i;
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but will loop counters iterating over
+> meta->nr_subbufs wrap to negative values for extremely large buffers?
+> 
+> In rb_cpu_meta_valid():
+> 
+>     for (i = 0; i < meta->nr_subbufs; i++) {
+>         if (meta->buffers[i] < 0 || ...
+> 
+> And in rb_range_meta_init():
+> 
+>     for (i = 0; i < meta->nr_subbufs; i++) {
+>         meta->buffers[i] = i;
+> 
+> The loop counter i is a signed int. Since nr_pages can now go up to
+> U32_MAX - 1, if the buffer size pushes meta->nr_subbufs past INT_MAX, i
+> will wrap to negative. i < meta->nr_subbufs will promote i to unsigned,
+> evaluating to true, and the negative index will be sign-extended on 64-bit
+> architectures, causing out-of-bounds reads and writes.
+
+Yeah sure, I'll make it unsigned int... doesn't sound too critical though!
+
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but could meta->nr_subbufs cause a heap
+> out-of-bounds write if it doesn't match nr_pages?
+> 
+> In rb_cpu_meta_valid():
+> 
+>     bitmap_clear(subbuf_mask, 0, meta->nr_subbufs);
+> 
+>     for (i = 0; i < meta->nr_subbufs; i++) {
+>         ...
+>         set_bit(meta->buffers[i], subbuf_mask);
+> 
+> meta->nr_subbufs is read directly from persistent memory and used without
+> being validated against the dynamically allocated subbuf_mask size, which is
+> based on nr_pages + 1. If meta->nr_subbufs is maliciously or accidentally set
+> larger than nr_pages + 1, bitmap_clear() and set_bit() will write zeroes and
+> ones past the end of the bitmap allocation.
+
+Sure, but that'll be another patch.
+
+> 
+> [ ... ]
+> 
+> > @@ -2837,6 +2837,10 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
+> >  		 */
+> >  		nr_pages = (size - sizeof(struct ring_buffer_cpu_meta)) /
+> >  			(subbuf_size + sizeof(int));
+> > +
+> > +		/* limited by ring_buffer_cpu_meta::nr_subbufs */
+> > +		if (nr_pages > U32_MAX - 1)
+> > +			goto fail_free_buffers;
+> >  		/* Need at least two pages plus the reader page */
+> >  		if (nr_pages < 3)
+> >  			goto fail_free_buffers;
+> 
+> [Severity: High]
+> Does meta->nr_subbufs + 1 overflow when nr_pages is exactly U32_MAX - 1?
+> 
+> If nr_pages is exactly U32_MAX - 1, meta->nr_subbufs becomes U32_MAX.
+> In rb_meta_validate_events(), there are loops with this condition:
+> 
+>     for (i = 0; i < meta->nr_subbufs + 1; i++, rb_dec_page(&head_page)) {
+> 
+> U32_MAX + 1 overflows to 0 in 32-bit unsigned arithmetic. This makes the loop
+> condition i < 0, causing the loops to terminate immediately without rewinding
+> and validating the persistent ring buffer from a previous boot.
+
+Sure, this can be  unsigned it as well...
+
+And there are plenty of other functions that need fixing then.
+rb_meta_subbuf_idx, rb_cpu_meta_valid, __rb_get_reader_page, rb_iter_peek... 
+
+I need a bit more time to audit what must be modified.
+
+-- 
+Vincent
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260814154823.755406-1-vdonnefort@google.com?part=2
