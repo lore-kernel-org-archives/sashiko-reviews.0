@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696D53AC0FB
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 21:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257B02798EA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 22:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787003111; cv=none; b=QRN9MbKE8Pj8MxAWMlINSsgulLTWvyk5T4MYRUbE5BSFW3K0AEoFzDIzIR7JoVYKtfA6/R6yaQmjBJ9SFrXe7yJiHV9eckb0suE6M3btyu6HVwGq0nvH+WHtoS4ri/M1aYBCzCDagZdMGt1RC2qFkM1mQJiJ7p7CVC2v3Ne3Z1Q=
+	t=1787004134; cv=none; b=SCUTgqUmfIFLlfGgcDUqnLaLqwjWL5wfyO4pVYjIO7r8A2hlXKOOprjwVUuqcJNhgv4yUJ4UsCSjEMvS8TLcvFKOCX3Zh+ZWqMzRLaZcxk/1Wgcgf98CisoV20X8iS+5qZWLBb8LrseNUVvxyaiOseHEHv5A1HX/cWvDqfn2TD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787003111; c=relaxed/simple;
-	bh=U5rbhSr6xqEfux6hu+NbOHBIwlQc0MOPm6nX42CS0uE=;
+	s=arc-20240116; t=1787004134; c=relaxed/simple;
+	bh=THRwhNgoHKlx8frnlgZw6iu5m7tC2AiyOaNC8QnYzl0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YYIjKfFu8jTjPIVb10EUxv8xhoH1GHOLqVe3UIhVTu8UwVGMGRwMIOb3my6suTnJLbwztk/Ky8d9RbBNulvaMlremTEvZq0U3rPSvg4pFR0jZ3rMudpOE2OoTeW7PBoGJ/I5upu2KWf4rTA+G8+TQ0CfJFUpnUj7wproDe6wGc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J+pZEnsj; arc=none smtp.client-ip=192.198.163.16
+	 In-Reply-To:Content-Type; b=XVp/yoT+XSZC/KX60rDTgkEs5dPq4oEXRHB24K/PKLh+9Ibc/4Tm4iMIsvK+XaTNLXfSe2WdV7rzbHwgCtnz7AKepLYq2I4wwlS5tZUIBdkKfFgM/AGjOVXrklDPB/gnGDaTV7+7E9rd4/tLelitDj2KfyOEf1aUVzM6f4aB8oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=O7lF9Gfh; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J+pZEnsj"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O7lF9Gfh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787003109; x=1818539109;
+  t=1787004132; x=1818540132;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=U5rbhSr6xqEfux6hu+NbOHBIwlQc0MOPm6nX42CS0uE=;
-  b=J+pZEnsjgdMx6KyriQ9z1/zAAKB3hU4JWpqFJycngZX3m/ENbq84gHY7
-   JzoYyMONQD8oBLPZIjhb2CGfVj2g7p7VSfp4TQOXmG7N60UGvd3Grluof
-   E8Aj8G+2MAf4iEg/X7KYewPMFV8tD3mL265lf+RDW+ujPWgjl6kG1jypn
-   6uyp92M5PRCsocAsTAPIeLpz7CDZ+e24Eud+W3K4kbQvUBRPj6Jncm2RL
-   o0IcUyqlKpjvr0hqvsjMd2bwZyGfEu8EW5BidXOHCEBGOk4gMd6ligOgM
-   QuNU/QGLOzJjIXA4eOVxZTkzpGGS91prHDRC5JXkwcAvwzvQk12z5ypTU
-   Q==;
-X-CSE-ConnectionGUID: PEw5LwA7S7Ksk72X6cDGYA==
-X-CSE-MsgGUID: hlCmMAdyQTCZg6JkZjotJg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11878"; a="75017792"
+  bh=THRwhNgoHKlx8frnlgZw6iu5m7tC2AiyOaNC8QnYzl0=;
+  b=O7lF9Gfhri1u0ZHK3d8H1k1FhVg4W5xrQlq2pbuxfqftiJCoB7JcDPFn
+   rxwQ/y3yFnywf1XPN6Vuh96QRfPtm8HyTPtNyM45g/45zHMpnhrN9uVyg
+   ttVnXc1XsWlPXLtPY+xMV9fUDGNQVsVOjfMVUOrdBR4Ju6fi727njMxX3
+   aiUPgCnrwgiIKuupKA6xm2jsQk2cBwI2XZYL5+J0TWqkAzJ3VkdXD/KXd
+   Uevg++3UIDXdYfm7k+qh+KP3QHjBjjngx1G5bWYlwlnSKahKuYACWnRPP
+   maqVIOT492/XXmemyuhuke+Z6B/KtLyOrbdhb2lu8l2mj6Mp9phKvgCRN
+   A==;
+X-CSE-ConnectionGUID: X+q9eaw/StGErB7pPJm5vg==
+X-CSE-MsgGUID: PHSJ7y9EQSqDVNewYhBQ4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11878"; a="87251320"
 X-IronPort-AV: E=Sophos;i="6.25,229,1779174000"; 
-   d="scan'208";a="75017792"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2026 14:45:08 -0700
-X-CSE-ConnectionGUID: xSWDHz0sSEiNWVzYsuGxwg==
-X-CSE-MsgGUID: VMbRh32sRQus1kXceMUnlg==
+   d="scan'208";a="87251320"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2026 15:02:12 -0700
+X-CSE-ConnectionGUID: 3cR827NKQbO/4RchCB7wcA==
+X-CSE-MsgGUID: J4ciT969TripajK4DUTbyw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,229,1779174000"; 
-   d="scan'208";a="263275593"
+   d="scan'208";a="265072386"
 Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2026 14:45:08 -0700
-Message-ID: <04be3602-dfd6-4415-bec1-33ff062e2980@intel.com>
-Date: Mon, 17 Aug 2026 16:45:07 -0500
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2026 15:02:12 -0700
+Message-ID: <0e1d1bd5-8cc1-4381-8a73-f14bea7789e4@intel.com>
+Date: Mon, 17 Aug 2026 17:02:10 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,102 +52,78 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/8] KVM: x86/pmu: Rename and move
- vcpu_get_perf_capabilities() to pmu.h
+Subject: Re: [PATCH v8 7/8] KVM: x86/pmu: Emulate RDPMC on performance metrics
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 References: <20260817183143.226156-1-zide.chen@intel.com>
- <20260817183143.226156-4-zide.chen@intel.com>
- <20260817185210.C9FA61F000E9@smtp.kernel.org>
+ <20260817183143.226156-8-zide.chen@intel.com>
+ <20260817190135.4AF511F00A3A@smtp.kernel.org>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260817185210.C9FA61F000E9@smtp.kernel.org>
+In-Reply-To: <20260817190135.4AF511F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 8/17/2026 1:52 PM, sashiko-bot@kernel.org wrote:
+On 8/17/2026 2:01 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Header files pmu.h and pmu_intel.h lack required includes, violating self-contained header practices.
+> - [Medium] Metrics Clear Mode is not emulated, causing guest application crashes (#GP) when RDPMC is intercepted.
 > --
 > 
-> --- Patch [3]: [PATCH v8 3/8] KVM: x86/pmu: Rename and move vcpu_get_perf_capabilities() to pmu.h ---
-> commit 7eb009fb5328b80368e10acda6cfe621b3e1e1c0
+> --- Patch [7]: [PATCH v8 7/8] KVM: x86/pmu: Emulate RDPMC on performance metrics ---
+> commit 5022d9b3f098d7ca5a383495c52fb9e9c119df3b
 > Author: Zide Chen <zide.chen@intel.com>
 > 
-> KVM: x86/pmu: Rename and move vcpu_get_perf_capabilities() to pmu.h
+> KVM: x86/pmu: Emulate RDPMC on performance metrics
 > 
-> This commit renames vcpu_get_perf_capabilities() to kvm_vcpu_get_perf_caps()
-> and moves it to the common x86 PMU header. This prepares the function to be
-> called from common x86 code to check the guest's PERF_METRICS capability.
+> This commit adds emulation for RDPMC performance metrics when RDPMC
+> interception is enabled. It handles type 0x2000 but skips Metrics Clear Mode
+> for simplicity.
 > 
->> diff --git a/arch/x86/kvm/pmu.h b/arch/x86/kvm/pmu.h
->> index 090c9bbb74f48..82f955e5a4507 100644
->> --- a/arch/x86/kvm/pmu.h
->> +++ b/arch/x86/kvm/pmu.h
 > [ ... ]
->> @@ -271,6 +271,14 @@ static inline bool kvm_pmu_is_fastpath_emulation_allowed(struct kvm_vcpu *vcpu)
->>  				  X86_PMC_IDX_MAX);
->>  }
->>  
->> +static inline u64 kvm_vcpu_get_perf_caps(struct kvm_vcpu *vcpu)
->> +{
->> +	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_PDCM))
+> 
+>> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+>> index bbf4afcffafc8..3ca61e4b0ba68 100644
+>> --- a/arch/x86/kvm/vmx/pmu_intel.c
+>> +++ b/arch/x86/kvm/vmx/pmu_intel.c
+> [ ... ]
+>> @@ -125,6 +126,19 @@ static int intel_emulate_rdpmc(struct kvm_vcpu *vcpu, unsigned int idx,
+>>  		counters = pmu->gp_counters;
+>>  		num_counters = pmu->nr_arch_gp_counters;
+>>  		break;
+>> +	case INTEL_RDPMC_METRICS:
+>> +		if (!kvm_vcpu_has_perf_metrics(vcpu))
+>> +			return 1;
+>> +
+>> +		/*
+>> +		 * The index in ECX[15:0] is implementation specific, but no
+>> +		 * platform currently supports a non-zero index.
+>> +		 */
+>> +		if (idx)
+>> +			return 1;
+>> +
+>> +		*data = pmu->perf_metrics;
 >> +		return 0;
+>>  	default:
+>>  		return 1;
 > 
-> [Severity: Low]
-> Does this file need to include cpuid.h? guest_cpu_cap_has() is used here,
-> but pmu.h does not include the header that defines it.
-
-Copied from my reply in v7 review:
-
-It sounds reasonable, but I'd prefer to keep it as-is.
-
-Adding cpuid.h to pmu.h would make pmu.h more self-contained, but it
-would also naturally lead to removing now-redundant cpuid.h includes
-from PMU-related files such as vmx/pmu_intel.c, svm/pmu.c, and
-potentially others.
-
-I'd like to keep the current patch focused on the functional change and
-avoid mixing it with include dependency cleanup.
-
-
->> +
->> +	return vcpu->arch.perf_capabilities;
->> +}
->> +
->>  void kvm_pmu_deliver_pmi(struct kvm_vcpu *vcpu);
-> [ ... ]
->> diff --git a/arch/x86/kvm/vmx/pmu_intel.h b/arch/x86/kvm/vmx/pmu_intel.h
->> index 5d9357640aa18..dd447d8b6fdde 100644
->> --- a/arch/x86/kvm/vmx/pmu_intel.h
->> +++ b/arch/x86/kvm/vmx/pmu_intel.h
->> @@ -4,19 +4,9 @@
->>  
->>  #include <linux/kvm_host.h>
->>  
->> -#include "cpuid.h"
->> -
->> -static inline u64 vcpu_get_perf_capabilities(struct kvm_vcpu *vcpu)
->> -{
->> -	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_PDCM))
->> -		return 0;
->> -
->> -	return vcpu->arch.perf_capabilities;
->> -}
->> -
->>  static inline bool fw_writes_is_enabled(struct kvm_vcpu *vcpu)
->>  {
->> -	return (vcpu_get_perf_capabilities(vcpu) & PERF_CAP_FW_WRITES) != 0;
->> +	return (kvm_vcpu_get_perf_caps(vcpu) & PERF_CAP_FW_WRITES) != 0;
+> [Severity: Medium]
+> The commit message notes that Metrics Clear Mode is not supported for
+> simplicity. However, if a guest application uses Metrics Clear Mode (setting
+> bit 16 in ECX, making the type 0x20010000), it will fall through to this
+> default case since it doesn't match INTEL_RDPMC_METRICS.
 > 
-> [Severity: Low]
-> Should pmu_intel.h include pmu.h? It calls kvm_vcpu_get_perf_caps() which
-> is now defined in pmu.h, but the include appears to be missing.
-> 
->>  }
->>  
->>  bool intel_pmu_lbr_is_enabled(struct kvm_vcpu *vcpu);
+> Returning 1 here causes KVM to inject a #GP. Does this cause unexpected
+> crashes (like a SIGSEGV) for unprivileged guest userspace applications that
+> legitimately try to use this architecturally valid mode when RDPMC is
+> intercepted?
+
+This is a false positive. Setting bit 16 in ECX is not indicating
+Metrics Clear mode. Whether or not clear metrics, depends on
+IA32_FIXED_CTR_CTRL.METRICS_CLEAR_EN[bit 14].
+
+BTW, IA32_PERF_CAPABILITIES.RDPMC_METRICS_CLEAR[bit 19] is not exposed.
+>>  	}
 > 
 
