@@ -1,114 +1,128 @@
-Received: from mta0.migadu.com (out-116.mta0.migadu.com [91.218.175.116])
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0126344212B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 16:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFCB463B86
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 17:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786985633; cv=none; b=UZ9gFvxrpq7EWD3mYzz2moX2j0zxul5N0HKTb2aYsZBWlACb0R98eZAhzmByOwolqkQAfCF0GXz1OyvrOrDdwQYaOdKRmxb1WZSk7p9UWjSYZuS/5d1PTdcfW5oEkLJIfQJcDRPt3IIRrIpksC+z6WVGc+pTT2eKCeUe/P91k1w=
+	t=1786986375; cv=none; b=qESJoDWsI52yz7eDf8wcXJaQvkMSiHngrUkHw1rBIR8LXY4OzVR+fvISVm/BoxG+UO+7ZRoUkat8vUDVFaAmwbf1JMNaFBigYax0LhTV75IAuGmNlvkIiNOr0u3ETnMuuz1ZGVdi9oBj5f9IsIjWaC6iQBAYfieYq1Fei51CSGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786985633; c=relaxed/simple;
-	bh=9A99tP2RVKFtRuAvAPnizc74i2WsWuguVDsFF7Y/zUs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g0pdnUkbvyKhHzcpP87LGcpMNYZoSYvkeUom+1wFfbIjtYbC9i+Ujb2uwer2ZziFOhNg2aa9Y3nEGvf4rLFVT11RpKncK8h5NWdaRoO7ZdyG9SOKn0guxHl8gVJdR/VXvBgsD2jFpqopgqW9OTtQ99T/Ks36J4QqLQP6dugyxtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=c5XERpjW; arc=none smtp.client-ip=91.218.175.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786986375; c=relaxed/simple;
+	bh=vGRkCp8CN9ItE9Tqxfjd1G6PBe2XxjW5Iv38PjtgXxc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=V6vV9LdnOfr05W1Lbzm4EgS99pAxkaE4TOWofyztfKH6JQEWMqTZtjlFkPuXT+p579JfEyWYG3+h6OJZs/OzDxPRvKkos0mGj1tHt5AsMM7LLKKBXcLNtUh8xke4tUIPwRo+GK+a33MaTFupwLixjfDMaKsHJonN80soAjX/vVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dUWuT8ak; arc=none smtp.client-ip=209.85.215.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="c5XERpjW"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=9A99tP2RVKFtRuAvAPnizc74i2WsWuguVDsFF7Y/zUs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786985621; v=1; x=1787590421;
- b=c5XERpjWHjdKDIunQXBhL0k2u3ulySRd4SZVjFPm2a+PL9wkqeFSBo2otEMziyiE2K0KWfmE
- nwvX67w+M1ICo70KBxRRzLSjuR+mmLCmUR74IhrEJ2bsY0IRjGY8a+0z2aPfvcCbFNZBNqfPTm8
- u48KeoM6o6yx/eIW/nQT2PpA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5604)
-	by smtp.migadu.com with ESMTPS id ab001f380118c4c6;
-	Mon, 17 Aug 2026 16:53:40 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <c5d05037-e32e-4126-b336-3e44dba8054e@linux.dev>
-Date: Mon, 17 Aug 2026 09:53:38 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dUWuT8ak"
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cb4bd11ddf8so4939725a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 10:06:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786986373; x=1787591173; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PEnRvWyc97A37Ln6PXTQIDa+M4xYXCTC9bYQPyMKWBg=;
+        b=dUWuT8akc5iHPhpJBs90PQebDD/CnvKupRtEjpORI1qlLCdy2PTYIzIKaQFJt84+jm
+         rba1WUMGHzpq351JiDiIsssFgOsu1V3PMnpbnbpAqu1t419XPoNzRJDrVLMS4DLes877
+         ztk4172V+aS0lxFI+yjW93ZX7iJxzZqCvkiOp6zXLmWGPSc1Gplfs+dyQT/eJxdDkTLR
+         7+9SXlHxFZh8Rj3aBGEy5A92MxE1jB+O0KnmHS5mCXp2mQQUP901oy7Y/X+h8TpDc7P5
+         5c7x9FIugLPAukS85JgY5AmfcJMAjz+y9Saiwfp6ZbiDCl5kmA5cb3QnoFeLqc+pKJN2
+         nq/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786986373; x=1787591173;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PEnRvWyc97A37Ln6PXTQIDa+M4xYXCTC9bYQPyMKWBg=;
+        b=FhSG8GyirBdyvPiaCurGPanMWlpfvWAe/9iy7VHqjqh18FluNZafDxG62hcL4y24K9
+         hrXHb+IlkIZMk4+MipX8JDtgKRoOcCR68dJxSGMN6k83b9/6lVv3gcnSGehRPJPv2JBG
+         q5bYDPPW1yCpKYYQyypVJAg3wvObzprlfJxPAPFJotRSZUHLG+pKVsQDp6wRj5SY6wwD
+         Io60RBUBgWjYqSBSpSpe9dnsRMWCL0h8lAroMsyts+n+RNqrrrmPxIGFQ0poXMsGu8v5
+         sTSymnsJaP7CzUaEVzzNFgqBDm1tw7b4Rv0AysLVR4k0E4SUm+DjOupturBfXCQv/lgd
+         0ivw==
+X-Gm-Message-State: AOJu0Yzf7CGmsKwMjg/30N6DjNSO/bYmYG7RzmX9WByZ2ui2/wquYbuf
+	WhWsHRe2M7Opa/dmLPTvrvZbjC9h/ytgmHvLjJOWnqUoEBGzZkYyfZUbCIM96tKtjsLR76NQi0x
+	uRJAN7g==
+X-Received: from pgcc4.prod.google.com ([2002:a63:1c04:0:b0:cbe:9e80:c394])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:d52c:b0:3c3:a140:9380
+ with SMTP id adf61e73a8af0-3cc71c09a97mr31063858637.16.1786986372909; Mon, 17
+ Aug 2026 10:06:12 -0700 (PDT)
+Date: Mon, 17 Aug 2026 10:06:12 -0700
+In-Reply-To: <87lda5kmye.fsf@redhat.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 09/10] selftests/bpf: Add inline-asm and
- subprog tests for R0:R2 returns
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260817042141.2286086-1-yonghong.song@linux.dev>
- <20260817042227.2296079-1-yonghong.song@linux.dev>
- <20260817044221.152F31F00A3A@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260817044221.152F31F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260814162221.2144473-1-vkuznets@redhat.com> <20260814162221.2144473-5-vkuznets@redhat.com>
+ <20260814163105.BDEC31F000E9@smtp.kernel.org> <87lda5kmye.fsf@redhat.com>
+Message-ID: <aoM_hK4Vn-xr7NvO@google.com>
+Subject: Re: [PATCH 4/4] KVM: selftests: Check VMPTRLD with active eVMCS
+From: Sean Christopherson <seanjc@google.com>
+To: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: sashiko-reviews@lists.linux.dev, Paolo Bonzini <pbonzini@redhat.com>, 
+	kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
+On Mon, Aug 17, 2026, Vitaly Kuznetsov wrote:
+> sashiko-bot@kernel.org writes:
+> 
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] The hardcoded `VMPTRLD_INSN_SIZE` of 5 bytes is brittle
+> > because `vmptrld` is executed using an inline assembly memory operand
+> > constraint (`"m"`), which results in a variable-sized instruction
+> > depending on compiler optimizations and register allocation.
+> 
+> True that, but afair we don't currently have an instruction decoder in
+> selftests. I see three ways to move forward:
+> 
+> - Calculate the size of the instruction with two labels, something like
+>   (untested):
+> 
+>     static inline int __vmptrld(u64 vmcs_pa, int *insn_size)
+>     {
+>             u8 ret;
+> 
+>             __asm__ __volatile__ ("movl $(2f-1f), %[size];"
+>                                   "1: vmptrld %[pa]; 2:"
+>                                   "setna %[ret]"
+>                     : [ret]"=rm"(ret), [size]"=m"(*insn_size)
+>                     : [pa]"m"(vmcs_pa)
+>                     : "cc", "memory");
+> 
+>             return ret;
+>     }
+> 
+>   and use insn_size in the tests.
+> 
+> - Stuf __vmptrld() with NOPs after vmptrld and keep the constant jump,
+>   just make it loner (e.g. 10 bytes should realistically be enough).
+> 
+> - Make peace with the fragility (it's just a selftest after all) and
+>   leave a comment in vmptrld() that changing the asm there make break
+>   the assumption.
 
+Option D: use KVM_ASM_SAFE() to do the heavy lifting.  Completely untested, but
+something like so:
 
-On 8/16/26 9:42 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The test `aggregate_ret_kfunc_too_big_fail` is incorrectly restricted to only run on x86_64 and arm64 architectures.
-> --
->
-> --- Patch [9]: [PATCH bpf-next v6 09/10] selftests/bpf: Add inline-asm and subprog tests for R0:R2 returns ---
-> commit b44fbeb59afa99f6be0f33037220d124e0fb4e12
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> selftests/bpf: Add inline-asm and subprog tests for R0:R2 returns
->
-> This commit adds BPF inline-assembly tests to cover BPF-to-BPF returns, kfunc
-> calls, backtracking, and liveness for functions returning values in the R0:R2
-> register pair. It also includes an extension test to ensure a function returning
-> R0:R2 cannot be replaced.
->
->> diff --git a/tools/testing/selftests/bpf/progs/aggregate_ret_kfunc.c b/tools/testing/selftests/bpf/progs/aggregate_ret_kfunc.c
->> new file mode 100644
->> index 0000000000000..c23b4beb1773c
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/progs/aggregate_ret_kfunc.c
-> [ ... ]
->
->> +/*
->> + * A return value larger than 16 bytes does not fit in R0:R2 and is rejected by
->> + * btf_distill_func_proto(), before the KF_FASTCALL and JIT-capability checks,
->> + * so this behaves the same on every architecture.
->> + */
->> +SEC("tc")
->> +__arch_x86_64 __arch_arm64
-> [Severity: Medium]
-> Are these architecture restriction tags intended here?
->
-> The comment right above mentions that this test behaves the same on every
-> architecture, but the __arch_x86_64 and __arch_arm64 tags artificially limit
-> aggregate_ret_kfunc_too_big_fail() to only run on those two architectures,
-> which prevents the test from running on others.
+static inline int vmptrst_safe(u64 *value)
+{
+	u64 error_code;
+	u8 vector;
+	int ret;
 
-Okay, I don't have 100% confidence about every architecture. So let us
-change to
+	asm volatile(KVM_ASM_SAFE("vmptrst %[value]")
+		     "\n\tsetna %[ret]"
+		     : KVM_ASM_SAFE_OUTPUTS(vector, error_code),
+		       [value]"=m"(*value), [ret]"=rm"(ret)
+		     :
+		     : "cc", "memory");
 
-/*
-  * A return value larger than 16 bytes does not fit in R0:R2 and is rejected by
-  * btf_distill_func_proto() before the KF_FASTCALL and JIT-capability checks.
-  */
+	return vector ? vector : ret ? -EINVAL : 0;
+}
 
->
->> +__failure __msg("The function bpf_kfunc_call_test_ret_big return type STRUCT is unsupported")
->> +__naked int aggregate_ret_kfunc_too_big_fail(void)
->> +{
->> +	asm volatile (
->> +	"call %[bpf_kfunc_call_test_ret_big];"
->> +	"r0 = 0;"
->> +	"exit;"
->> +	:
->> +	: __imm(bpf_kfunc_call_test_ret_big)
->> +	: __clobber_all);
->> +}
-
+> Any preferences? Personally, I'm feeling adventurous and can go with the
+> first one - calculating the exact size with labels.
