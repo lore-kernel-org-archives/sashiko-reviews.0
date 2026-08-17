@@ -1,174 +1,143 @@
-Received: from mta1.migadu.com (out-116.mta1.migadu.com [95.215.58.116])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-10696.protonmail.ch (mail-10696.protonmail.ch [79.135.106.96])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5953E63AA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACE324A047
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:47:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.96
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786966143; cv=none; b=fG7lhigk7HRDXscNKELWJweUD0Px3OlXZwwPLPcWxF7lqZxcjZi7xzV2EBBM/czA1pDOMjeEIamBBcGuJ8aKLYF7cPvwuOGThetAWRFEnfF9LO29uJRhY9OodVoaeKK1Ms+p3KtY/KRUE75m//kV7PNb8/R7sJKf1YJd84InkwA=
+	t=1786967274; cv=none; b=kKOgdblJAn/9SLv7MFJMMdZPiVBZxYL7PW0TCSITxwgJTS4jf7/IGZnMMpTl3uxWkzbYorpTwOhVTTgUb+FPecaT5HCq0OHeZN9GwcQZhbkGZXYzNL0UofP2DcL8JTK5w1wYeinmGmTbHs50Mez70TDnUcQLn6ThsPhMWs3DVUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786966143; c=relaxed/simple;
-	bh=gGAFBl9s0Hip9Xt/14uDPkwKVPiyseO+fC7WoteSaHE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a7w56D2qo+6+l1RN9p6VY9kj+jBi4dObg0lG03TPqGhJXeQyOnCxZoklHm3QJyk9BCPY9+4iRWh9Ug7S02kbyio13qheNRO7+dl+n8lvdNl+U78QYLAbm7UH6ClQjFWsXpOXDzN489BGU/P7NWr2THtsrJxL6oTSbcERQIme+qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=eFq3gI8R; arc=none smtp.client-ip=95.215.58.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786967274; c=relaxed/simple;
+	bh=VQk+NKX2QLLmpu+AnKTBzGZpFZgEXg3SbSlRnkYbJQY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=q8FaJC+W76GzRasgAJFkxSTc//zBL4+MHwWrdOK26NIqfecMeCUDC2x2G1LI+esGdR5RtmPRhdm/dufCr/074qdVht18Iwh47NMYSJZ3TuDvjAUcSBKLsss2amJnWu3E44W4xuXEHOGpq9yDVxFu2KAzOAdhrpegeDpic7bcAVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=nINoI/uM; arc=none smtp.client-ip=79.135.106.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="eFq3gI8R"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=gGAFBl9s0Hip9Xt/14uDPkwKVPiyseO+fC7WoteSaHE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786966138; v=1; x=1787570938;
- b=eFq3gI8RCgG83Jf+CrVQOyTo6kil9j4RhsC82p7YD2RhfirJkrQnzDGwBXvKKAPX4GJ0Lj5u
- eNPAKAFRfSt1b/wWMy63j3iPpbQnmonbPGBtWHrK5aL6twSspz9D54vXqv9kcEtJEgxlfNjBLUY
- fgwF+FpKzm2o/LFEW8sd4OL0=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f52.google.com (209.85.167.52)
-	by smtp.migadu.com with ESMTPS id 0addf17a102c577b;
-	Mon, 17 Aug 2026 11:28:58 +0000
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5aeb688ae83so17751e87.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 04:28:53 -0700 (PDT)
-X-Gm-Message-State: AOJu0YysHNlDTWnKAJyNdJLMUa+EeZ6hwALNY6/7Gvooam7KEL1c8dao
-	mK3CRjQxeuUZYtHaufpLPoGEjrW77VOTn1ZeYANiFd7xZQsQS/ggvit8ZMhzATAReEgyrkToR1y
-	ZekFKpMiUHZbI4xK3VWmZKb7NnCp1h17A2wjggi8U
-X-Received: by 2002:a05:6512:3e0d:b0:5b2:958b:24f with SMTP id
- 2adb3069b0e04-5b4693d328fmr75321e87.4.1786966132880; Mon, 17 Aug 2026
- 04:28:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="nINoI/uM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1786967263; x=1787226463;
+	bh=ZRu1RYNKFVEiUGNH9uQ6dlTqTZqU/qO7+ZFglPoqZe0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=nINoI/uMqd+TrP/KKlwOtvJgDa0TodCbL/TAXPhZ1t6peKfSYl2JOmOzj4R2qnJBC
+	 NCTlHj9UW8tSEYLuyFXJYjrRWCeO7FbNzX5gpVkFUJVv0tIcJhzqClsscICPx3yFXR
+	 0Lmj7bXv3FeFwU1Bgeboi857a8V7YnFl0pTN36IyCwR6pdGdBztqOqZJqMrIC9UlTR
+	 75bacJU2uc48lcbubsWjDjstO7XgGgnjLoEharMrLSrLchYIfWQnSuqKNlaJDxAL84
+	 RzBqzKmtc8f7Ai/yLhO35rD7sML2yiD/EysJQcoOZrqv4toJTK4cM5unP+GyyOcA6D
+	 bXGP3Voquo1qw==
+Date: Mon, 17 Aug 2026 11:47:40 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Aiden Isik <aidenisik@protonmail.com>
+Cc: Aiden Isik <aidenisik@member.fsf.org>, linux-clk@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/3] clk: samsung: clk-pll: Add support for pll_309
+Message-ID: <ubD1iFupOIubgrcjfABhlLsSRSjHBgzA5ZmyURWTM9xviGIM0OlLeXehsukZEY9cXqAgwJt_BI2xspZ5BIlCBPROAWUyyReaTWWSL7g08gI=@protonmail.com>
+In-Reply-To: <20260817103711.943D81F000E9@smtp.kernel.org>
+References: <20260817-for-next-lucky7-clock-v1-0-032e4b229c76@member.fsf.org> <20260817-for-next-lucky7-clock-v1-2-032e4b229c76@member.fsf.org> <20260817103711.943D81F000E9@smtp.kernel.org>
+Feedback-ID: 46524699:user:proton
+X-Pm-Message-ID: 805fa40c58baa6408f869d226858baad95d120ff
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260817103228.1203140-1-fuad.tabba@linux.dev>
- <20260817103228.1203140-3-fuad.tabba@linux.dev> <20260817104711.26A3D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260817104711.26A3D1F000E9@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 17 Aug 2026 12:28:16 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzggi3U-FF=NHjb1qrLOsizV8rNtGHpbD=YSXN_SPyhAw@mail.gmail.com>
-X-Gm-Features: AcwNN1W0ERaZbu3OXegRP31-Zk_Bugm9-HWpP3hC5nUI1JjHTsKcx8M9JWS5XFA
-Message-ID: <CA+EHjTzggi3U-FF=NHjb1qrLOsizV8rNtGHpbD=YSXN_SPyhAw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] KVM: arm64: Reject the GICv5 CPU interface
- hypercalls under pKVM
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-It's been a while...
-
-On Mon, 17 Aug 2026 at 11:47, <sashiko-bot@kernel.org> wrote:
->
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [Medium] The patch manually adds runtime mode checks inside GICv5 handl=
-ers instead of correctly categorizing the hypercall IDs in the pKVM availab=
-ility bands, resulting in an incorrect SUCCESS return for an unsupported op=
-eration.
-
-pKVM does not support GICv5 yet but is expected to, so these are gated
-off for now, not rejected outright.
-
-> Pre-existing issues:
-> - [Critical] Always-on legacy hypercalls (like `handle___vgic_v3_save_apr=
-s` and `handle___kvm_adjust_pc`) dereference host-provided pointers using `=
-kern_hyp_va()` without ownership validation, enabling a malicious host to a=
-rbitrarily corrupt hypervisor memory.
-
-The _proper_ fix for this one is coming soon to a series near you
-(i.e., proper pVM support upstream)!
-
-/fuad
-
+> - [High] Logic Error / Out-of-bounds Read when rate_table is empty
+> - [Medium] Single-Responsibility Violation: Undocumented architectural re=
+factoring
 > --
->
-> --- Patch [2]: [PATCH v2 2/4] KVM: arm64: Reject the GICv5 CPU interface =
-hypercalls under pKVM ---
-> commit b55739e7ec2cd459ba47129f61f967475ca69c49
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Reject the GICv5 CPU interface hypercalls under pKVM
->
-> __vgic_v5_save_apr() and __vgic_v5_restore_vmcr_apr() remain callable
-> after pKVM finalises. pKVM never registers a GICv5 vgic, so neither has
-> a valid caller in protected mode, and on a GICv3 machine both reach a
-> register that is UNDEFINED at EL2 and panic the hypervisor.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index d3c69de698f48..9159bce7515b1 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > @@ -695,6 +695,9 @@ static void handle___vgic_v5_save_apr(struct kvm_cp=
-u_context *host_ctxt)
+>=20
+> --- Patch [2]: [PATCH 2/3] clk: samsung: clk-pll: Add support for pll_309=
+ ---
+> commit d62df56ff2e6bf73437e6e25e1335b3fb4571268
+> Author: Aiden Isik <aidenisik@member.fsf.org>
+>=20
+> clk: samsung: clk-pll: Add support for pll_309
+>=20
+> This commit adds support for the pll_309 used in the Exynos5515 SoC, defi=
+ning
+> the PLL characteristics which are handled similarly to pll_531x.
+>=20
+> > diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pl=
+l.c
+> > index e74552846ba34..8b1474aeaf0c8 100644
+> > --- a/drivers/clk/samsung/clk-pll.c
+> > +++ b/drivers/clk/samsung/clk-pll.c
+> > @@ -1593,32 +1593,35 @@ static void __init _samsung_clk_register_pll(st=
+ruct samsung_clk_provider *ctx,
 > >  {
-> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+> >  =09struct samsung_clk_pll *pll;
+> >  =09struct clk_init_data init;
+> > -=09unsigned int len =3D 0;
+> > -=09int ret;
+> > +=09int ret, len;
 > >
-> > +     if (unlikely(is_protected_kvm_enabled()))
-> > +             return;
-> > +
->
+> > -=09if (pll_clk->rate_table) {
+> > -=09=09/* find count of rates in rate_table */
+> > -=09=09while (pll_clk->rate_table[len].rate !=3D 0)
+> > -=09=09=09len++;
+> > -=09}
+> > -
+> > -=09pll =3D kzalloc_flex(*pll, rate_table, len);
+> > +=09pll =3D kzalloc_obj(*pll);
+>=20
 > [Severity: Medium]
-> Does this early return leave SMCCC_RET_SUCCESS in the return register
-> instead of correctly rejecting the call?
->
-> Because the hypercall ID remains in the always-on band in
-> enum __kvm_host_smccc_func, the dispatcher will preload SMCCC_RET_SUCCESS
-> and route it here. Returning early means the host receives a success code
-> for an unsupported operation.
->
-> Would it be better to move these hypercall IDs before
-> __KVM_HOST_SMCCC_FUNC_MIN_PKVM in asm/kvm_asm.h so the dispatcher
-> rejects them automatically with SMCCC_RET_NOT_SUPPORTED?
->
-> >       __vgic_v5_save_apr(kern_hyp_va(cpu_if));
-> >  }
-> >
-> > @@ -702,6 +705,9 @@ static void handle___vgic_v5_restore_vmcr_apr(struc=
-t kvm_cpu_context *host_ctxt)
-> >  {
-> >       DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
-> >
-> > +     if (unlikely(is_protected_kvm_enabled()))
-> > +             return;
-> > +
-> >       __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
-> >  }
->
-> [Severity: Critical]
-> This is a pre-existing issue, but while looking at how kern_hyp_va()
-> is used in this file, could a host use the always-on legacy hypercalls
-> to modify hypervisor memory?
->
-> In handle___vgic_v3_save_aprs():
->
-> static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ctxt)
-> {
->         DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
->         __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> This isn't a bug, but the commit message only mentions adding support for=
+ the
+> new pll_309 type, while this code changes the allocation semantics of the
+> rate_table across the entire driver, switching from a flexible array memb=
+er
+> to a separate pointer allocation.
+>=20
+> Could this architectural refactoring be split into a separate patch or
+> documented in the commit message?
+
+This was a mistake caused when updating patches against next.
+Will fix in v2.
+
+>=20
+> [ ... ]
+>=20
+> > @@ -1637,7 +1640,7 @@ static void __init _samsung_clk_register_pll(stru=
+ct samsung_clk_provider *ctx,
+> >  =09case pll_a9fracm:
+> >  =09=09pll->enable_offs =3D PLL35XX_ENABLE_SHIFT;
+> >  =09=09pll->lock_offs =3D PLL35XX_LOCK_STAT_SHIFT;
+> > -=09=09if (!pll->rate_count)
+> > +=09=09if (!pll->rate_table)
+>=20
+> [Severity: High]
+> If a clock is registered with an empty rate table containing only the zer=
+o
+> terminator, kmemdup_array() is called with a count of 0 earlier in this
+> function and returns ZERO_SIZE_PTR rather than NULL.
+>=20
+> Since ZERO_SIZE_PTR is not NULL, this check evaluates to false, which
+> incorrectly assigns the full operations instead of the safe min_ops fallb=
+ack.
+>=20
+> If samsung_pll_determine_rate() is subsequently called, it skips its loop
+> because rate_count is 0, and attempts to access rate_table[-1]:
+>=20
+> samsung_pll_determine_rate() {
+>     ...
+>     req->rate =3D rate_table[i - 1].rate;
 > }
->
-> And similarly in handle___kvm_adjust_pc():
->
-> static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
-> {
->         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
->         __kvm_adjust_pc(kern_hyp_va(vcpu));
-> }
->
-> Since kern_hyp_va() transforms the pointer without validating page
-> ownership, what happens if the host passes a pointer that resolves to an
-> EL2-owned physical page? It appears this might give the host an
-> arbitrary write or bit-clear primitive against hypervisor memory. Should
-> these always-on handlers validate the host pointer before dereferencing i=
-t?
->
+>=20
+> Since rate_table is ZERO_SIZE_PTR, will this result in an out-of-bounds
+> memory read?
+>=20
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817103228.12=
-03140-1-fuad.tabba@linux.dev?part=3D2
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817-for-next=
+-lucky7-clock-v1-0-032e4b229c76@member.fsf.org?part=3D2
+>=20
+
+Kind regards,
+- Aiden Isik
