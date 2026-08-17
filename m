@@ -1,143 +1,272 @@
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF583EC6BF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 13:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8183B4417
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 14:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974395; cv=none; b=p/L5ZUUqNSnPpkguiVlAlwoh/PGf7SvY2FpQG9pbd451YGBIwEXohDz3kjH0Q9ahbtjXiAK1IvOOuMf7v2V9vhdaAD3i1AInA/4Osb/AlW3DYax9bdnWj5at6rxDxMs6zEyCCWn0NmkGQ7vLzMs36of40Tm7Hlpxo/lLdrL2B8c=
+	t=1786975452; cv=none; b=KrXxXqCplu385KNE+uHDG20tn853F08SlPcIRfafxYHByLDwB+7g35fENseReDxuLXjSKKRoXCpeDePXDNV1B/oy3vF0e7RWMKrFkbqFZiRZUJcfXdQIpy7r78blfCjoHIUXwPNZZq6lZ8mNKni85tW49uamD9dhdeOm6aSiWrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974395; c=relaxed/simple;
-	bh=BNA2bJ8izQU+zHo+wKDbWbBqe6iF/JZhi8seSQQ2KMg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Ja7jOl3pUF4jaIcfuoDMSPb7lC0GAw5Sx/tPQvVLYkNF1vWmk3iWa6F2VaBIrkOohusATK52GUKlQdcacFNjxe0jzH+zsDEJbMv6t5JxCyGR+FWxeviwejCGgikHiA9lvPkECFPr6Fxu4lGHObPWbem1/WwhmUL6h4xgzrmXMko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QihgVAfW; arc=none smtp.client-ip=209.85.216.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1786975452; c=relaxed/simple;
+	bh=2FVR51YYSzXBEz4cHV81SklxODFeut4QjmvjYChhQJg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eh4usw2JNrjifznUzfgplI781DD2ZVM9cmjBJyADS05JHstKs38Dn8ruLSrj6t+yTazrG8gth4R1fPhXSissXgXH8NfAdTsnFVhakKqVRqH8LkpWHtwpNCP296x/2WGXXUL1eaR9cufzoYmTXmq93xtISuRMureJFXwhRZAEwpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OYYNHXP+; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QihgVAfW"
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38dc085b0a7so6406689a91.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 06:46:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786974390; x=1787579190; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=G5psuCp/phg+ycu2xLFTJu6xbtt7uSiAktxc7KtLUx8=;
-        b=QihgVAfW6c8ZNqJbDruS00IKdj40KOcm3nm8tsUhfE/4r5dipVa3d3m/UtKBcOg2Bw
-         FqUOM28/cYlTTEweI9t0uy23DeblOSu21cgl/6rXzApsXN5Ncbm2JTvfc8kDe9nHMvUY
-         4lwWnto/9ok+VKtOiPUg7x5DqtbYj8Ih7pKx0IQ4wnvQKUGKji7oFTIH78x87j+/JyEY
-         U6dI69SVKNsTYQwASTXfRtfoMufGzfls07GkGS26CSQHKpJrGZiugTB+fCFWU9v/sjoC
-         JIbRBI6kqNbGwZIlmPgqtNdl+vK6bmf7KFhfXwyL9l/65hebOf58+HcVXuVj5rHEjGr2
-         wlcw==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OYYNHXP+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1786975450;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pLzFhErDKqfPJHE0H6OtFPW+m0QP1y3pLi+ryPdDuiI=;
+	b=OYYNHXP+JaOOrUw4N+JiVl+xx6qK8rhSKG2yFnbeb0dmGOjCUgsD+fqN09fwmZgeDqgYOa
+	Fq46ynFDfRnw9EzduY+1KFM0hIMDp3jpEUHFpZFOmpzOVHSvn1xYFzvWi3FYgkV2oSXnh6
+	4QXPiRQGv/W48MOkHUmR4s8+Zp4tUc4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-177-jUGnQhNgMzCSK10mY9LU4A-1; Mon, 17 Aug 2026 10:04:08 -0400
+X-MC-Unique: jUGnQhNgMzCSK10mY9LU4A-1
+X-Mimecast-MFC-AGG-ID: jUGnQhNgMzCSK10mY9LU4A_1786975447
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-47f83999cceso3065598f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 07:04:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786974390; x=1787579190;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=G5psuCp/phg+ycu2xLFTJu6xbtt7uSiAktxc7KtLUx8=;
-        b=eB5qiD2l44h/uEF1otBeMm2M10u0aXSsaUPJr0Cb1zT3LimmKew4/C+RG7gWoE1Zdi
-         554xcaTmfgQ57AG3pKokpqnqTDZ5pPGDRHZzr4C2IgckpmVY53hE4s3Zez03bilSWW1i
-         R9xP/4y7gPQ2BM3RdETrfEIIeGHiXk2wcjCEgg2HSr3NndGxZ5gshyIS4ejwRXNfWMIv
-         U2w6GJJfCiLhReKbxZvd3UUZHaWqqqnwuG8BbyCH1jxVYc8KGPYxd/i6E3Xa1jhP71Su
-         aASYAFj0cHomddoSQAT0ch8B4Fm9lokF4eNi6Fqo5StxqsUBOM+a/zSUmCbA34VYZLeZ
-         fiSw==
-X-Gm-Message-State: AOJu0YxHeUAPyScSjzKn7thDqIuPZVDNIgrkwRU6AvcJsmlhf5NMPnqt
-	ctUHy22A9vqqlj6+B4zdinUtqyxvJp6NW5TMA7q5tihsahzrZCK9zZTV6Ky7nzIbfVQwaaYtlda
-	onM+kCg==
-X-Received: from pjje11.prod.google.com ([2002:a17:90a:630b:b0:38d:f003:cd24])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4f:b0:38e:ad9d:1161
- with SMTP id 98e67ed59e1d1-3933b833613mr29799421a91.0.1786974389518; Mon, 17
- Aug 2026 06:46:29 -0700 (PDT)
-Date: Mon, 17 Aug 2026 06:46:28 -0700
-In-Reply-To: <32c405c0-a05d-49e7-9cc5-3e5918c27df1@amd.com>
+        d=1e100.net; s=20251104; t=1786975447; x=1787580247;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pLzFhErDKqfPJHE0H6OtFPW+m0QP1y3pLi+ryPdDuiI=;
+        b=ipFxdCs3LJyWxZqu/S6eFFbwd8f3gBub6MEEkBpkDENU/EboF1ndU5TMkhtFmhtT+o
+         CG4Tr7rVMtWBU2l/bAy65++ZuCK/0FkooLdv5AcmN01WpcqimAy5tdA60u3XNcpOSJlW
+         MewcBewB7IRhG5v38fAnc2en5qohu+rm2JLYRNhoBipGkVl8mGZr+yffRPkFmyZm2x9B
+         Fccrckxprk/txpEBs/DXBSti89ws1vS9B0ptkN+gUsD+1eLJlgJsC6tAH8Vg7h5RARXM
+         pWyyKy9tVP0JsR0ClpFujaBJx4mg7zr6MhV+cPDRQ9rfN9yUkm7l4RhLXcOdq2Dgtaii
+         rSlA==
+X-Gm-Message-State: AOJu0YxYyolq1889a06mqMzKj/t0IZEyqDzukiSkhiExPjBxXJpSRdyE
+	YgH55IliSpTh/XAumeEG6vrrdk9BScZ3yAe4ucAKNnzl4Y2T+ZuXAfOdokXOSlPoqfclHJ+NCKK
+	2VEH+Hb8MONMfSyfOugrIvZ2GIQsgLEQyQ9EJpag64Cnad8at9sdyJrp/eZye9EfHXqpxdjzTVL
+	UFQykZvGw6/VhsioYRq78zMcX4TU66UxnfVJau/QlDFzWGaESnmvQGn2s=
+X-Gm-Gg: AR+sD12O8u4Ic1uix8lz6yHL8Q5wiVgF9HZ523L063faJZaoO6DnYGMmVH98DCx1E8z
+	gRhN+soR+7fsw9+QKJaer8vAxdcqFcwqe9XlWrYGSixmf1UCWYVgR8aRw7FuKgGJ+nZbbxExjRo
+	AuHqKkvVZEtn325oNPxOn2uShG7I8KOawQC5ZLxhKIGxW+71EJerlv2IrwyfZ/vbN0YbN3mLk0d
+	DnYgfVGrCkCDEnaXg==
+X-Received: by 2002:a5d:588b:0:b0:47f:9568:ebf0 with SMTP id ffacd0b85a97d-4816076e5d6mr38279466f8f.23.1786975447210;
+        Mon, 17 Aug 2026 07:04:07 -0700 (PDT)
+X-Received: by 2002:a5d:588b:0:b0:47f:9568:ebf0 with SMTP id
+ ffacd0b85a97d-4816076e5d6mr38279370f8f.23.1786975446778; Mon, 17 Aug 2026
+ 07:04:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260713105033.15405-1-sarunkod@amd.com> <20260713105033.15405-6-sarunkod@amd.com>
- <20260713111119.EC35E1F000E9@smtp.kernel.org> <b50b3535-eaa1-4944-914d-0eea8dac0e06@amd.com>
- <anpwS3C2UIHFz_Uf@google.com> <5149127b-32ce-4409-a443-02b5a9600e14@amd.com>
- <anzsptZlkU4VOKGi@google.com> <32c405c0-a05d-49e7-9cc5-3e5918c27df1@amd.com>
-Message-ID: <aoMQtL8qx_P69NTk@google.com>
-Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
- Physical Processor Interrupt (GAPPI)
-From: Sean Christopherson <seanjc@google.com>
-To: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
-	Vasant Hegde <vasant.hegde@amd.com>
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+References: <20260812181300.3712426-1-jtaubepe@redhat.com> <20260812181300.3712426-8-jtaubepe@redhat.com>
+ <20260812182803.EDCB01F000E9@smtp.kernel.org>
+In-Reply-To: <20260812182803.EDCB01F000E9@smtp.kernel.org>
+From: Jesse Taube <jtaubepe@redhat.com>
+Date: Mon, 17 Aug 2026 10:03:55 -0400
+X-Gm-Features: AcwNN1XQZilVxlWK6QmM5kDZ3ZoOiemcQZ3TtC2mKTfU85MQnKHO6knMpufOG2U
+Message-ID: <CADRr4beHoGtJXW_RFuHCESiRB3gmeGuyahStXNVwFS+Z2e5gdQ@mail.gmail.com>
+Subject: Re: [PATCH 07/13] scsi: scsi_transport_fc: Add set_rport_marginal to fc_function_template
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: vKM_0bIK-EmR2HtW2hQH4OJ1NCwG94Ehs9z9icoN39I_1786975447
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 17, 2026, Sairaj Kodilkar wrote:
-> On 8/13/2026 3:29 AM, Sean Christopherson wrote:
-> > diff --git arch/x86/kvm/svm/avic.c arch/x86/kvm/svm/avic.c
-> > index c5b1d294b15a..c9a6da646c8e 100644
-> > --- arch/x86/kvm/svm/avic.c
-> > +++ arch/x86/kvm/svm/avic.c
-> > @@ -1020,6 +1020,9 @@ static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int cpu,
-> >  
-> >         lockdep_assert_held(&svm->ir_list_lock);
-> >  
-> > +       if (ga_log_intr && gappi && kvm_can_use_device_posted_irqs(vcpu->kvm))
-> > +               kvm_pi_enable_wakeup_handler(vcpu);
+On Wed, Aug 12, 2026 at 2:28=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] The primary affected port (`attach_rport`) in a Link Integrity e=
+vent is excluded from being marked as marginal.
+> - [High] NVMe targets are erroneously placed into the 'marginal' state du=
+ring Peer Congestion (PC) events.
+> - [High] The `set_rport_marginal` callback is not invoked when the margin=
+al state is manually cleared or set via sysfs.
+>
+> Pre-existing issues:
+> - [Critical] The `fc_rport` pointer returned by `fc_find_rport_by_wwpn` i=
+s used without a reference count, leading to a Use-After-Free.
+> - [Critical] Integer underflow in `fc_host_fpin_rcv` when `fpin_len` is s=
+mall, leading to massive OOB read.
+> --
+>
+> --- Patch [7]: [PATCH 07/13] scsi: scsi_transport_fc: Add set_rport_margi=
+nal to fc_function_template ---
+> commit 978d2e847b2a738287194acf215a8cbbe297f65a
+> Author: Jesse Taube <jtaubepe@redhat.com>
+>
+> scsi: scsi_transport_fc: Add set_rport_marginal to fc_function_template
+>
+> Add fc_fpin_set_marginal function to evaluate the FPIN LI TLV
+> information and set the 'marginal' path status for all
+> affected nvme rports. Then call set_rport_marginal() callback added
+> to fc_function_template.
+>
+> The implementation of set_rport_marginal() is almost identical to
+> set_rport_dev_loss_tmo implementation.
+>
+> > diff --git a/drivers/scsi/scsi_transport_fc.c b/drivers/scsi/scsi_trans=
+port_fc.c
+> > index 02c58f4591d83..df1edf3c23fa8 100644
+> > --- a/drivers/scsi/scsi_transport_fc.c
+> > +++ b/drivers/scsi/scsi_transport_fc.c
+> > @@ -737,6 +737,25 @@ fc_cn_stats_update(u16 event_type, struct fc_fpin_=
+stats *stats)
+> >       }
+> >  }
+> >
+> > +static void fc_fpin_set_marginal(struct Scsi_Host *shost, struct fc_rp=
+ort *rport)
+> > +{
+> > +     struct fc_internal *i =3D to_fc_internal(shost->transportt);
+> > +     unsigned long flags;
 > > +
-> 
-> I am not sure what you mean here, because pi_enable_wakeup_handler does
-> more than just manipulating the wakeup list, it also updates pi
-> descriptor which is Intel specific, 
+> > +     spin_lock_irqsave(shost->host_lock, flags);
+> > +
+> > +     if (rport->port_state =3D=3D FC_PORTSTATE_ONLINE &&
+> > +         rport->roles & FC_PORT_ROLE_NVME_TARGET) {
+> > +             rport->port_state =3D FC_PORTSTATE_MARGINAL;
+> > +             spin_unlock_irqrestore(shost->host_lock, flags);
+> > +             if (i->f->set_rport_marginal)
+> > +                     i->f->set_rport_marginal(rport, true);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does passing this rport pointer out to =
+the
+> driver callback outside of the lock risk a use-after-free?
 
-Sorry, got ahead of myself.  I was envisioning a helper that for just the common
-part, e.g.
+Yes, the solution would be to move the lock to after set_rport_marginal, bu=
+t
+this holds a lock over a driver callback is not ideal. fc_rport does not ha=
+ve a
+lock either, so this is also not possible. The solution is to let the
+driver callback
+check. There is also a Time of use time of check issue here with port_state
+which can also be solved like this.
 
-void kvm_pi_enable_wakeup_handler(struct kvm_vcpu *vcpu)
-{
-	lockdep_assert_irqs_disabled();
+>
+> The rport pointer passed into fc_fpin_set_marginal() is retrieved by
+> fc_find_rport_by_wwpn(). Looking at fc_find_rport_by_wwpn(), it returns t=
+he
+> pointer without incrementing its reference count (e.g., via get_device())=
+.
+>
+> If a concurrent fc_remote_port_delete() runs, the rport memory could be
+> freed as soon as the internal list lock is dropped. When the host_lock is
+> dropped here, the unreferenced rport pointer is then passed to
+> set_rport_marginal(), potentially dereferencing freed memory.
+>
+> > +             return;
+> > +     }
+> > +
+> > +     spin_unlock_irqrestore(shost->host_lock, flags);
+> > +}
+> > +
+> >  static void
+> >  fc_fpin_pname_stats_update(struct Scsi_Host *shost,
+> >                          struct fc_rport *attach_rport, u16 event_type,
+> > @@ -764,6 +783,7 @@ fc_fpin_pname_stats_update(struct Scsi_Host *shost,
+> >                       if (rport =3D=3D attach_rport)
+> >                               continue;
+> >                       stats_update(event_type, &rport->fpin_stats);
+> > +                     fc_fpin_set_marginal(shost, rport);
+>
+> [Severity: High]
+> Does this continue statement unintentionally bypass the newly added
+> fc_fpin_set_marginal() call for the primary attach_rport?
 
-	/*
-	 * Acquire the wakeup lock using the "sched out" context to workaround
-	 * a lockdep false positive.  When this is called, schedule() holds
-	 * various per-CPU scheduler locks.  When the wakeup handler runs, it
-	 * holds this CPU's wakeup lock while calling try_to_wake_up(), which
-	 * can eventually take the aforementioned scheduler locks, which causes
-	 * lockdep to assume there is deadlock.
-	 *
-	 * Deadlock can't actually occur because IRQs are disabled for the
-	 * entirety of the sched_out critical section, i.e. the wakeup handler
-	 * can't run while the scheduler locks are held.
-	 */
-	raw_spin_lock_nested(&per_cpu(wakeup_vcpus_on_cpu_lock, vcpu->cpu),
-			     PI_LOCK_SCHED_OUT);
-	list_add_tail(&vcpu->pi_wakeup_list,
-		      &per_cpu(wakeup_vcpus_on_cpu, vcpu->cpu));
-	raw_spin_unlock(&per_cpu(wakeup_vcpus_on_cpu_lock, vcpu->cpu));
-}
+This is intentional; only pnames should be updated.
 
-> We have following two options:
-> 
-> Option A:
-> Adding a new x86_ops
-> 
-> avic_update_iommu_vcpu_affinity
-> 	kvm_pi_enable_wakeup_handler
-> 		list handling
-> 		kvm_x86_callback(configure_pi)
-> 			IOMMU callbacks
-> 
-> 
-> The new x86_ops makes sure that irte and pi descriptor are configured
-> correctly.
-> 
-> Option B:
-> Common list handling
-> 
-> The svm and vmx will share function for list handling but IRTE/PI setup
-> code will remain same.
-> 
-> avic_update_iommu_vcpu_affinity/pi_enable_wakeup_handler
-> 	kvm_add_to_wakeup_list
-> 		list handling
-> 	IOMMU callbacks
+>
+> When a Link Integrity FPIN is processed via fc_fpin_li_stats_update(), it
+> locates the attach_rport and passes it to fc_fpin_pname_stats_update().
+> Because of this continue, the primary port experiencing the Link Integrit=
+y
+> failure won't be transitioned to the marginal state.
+>
+> [Severity: High]
+> Will this also place NVMe targets into the marginal state during Peer
+> Congestion (PC) events?
 
-Definitely option B.
+Yes, will fix.
+
+>
+> fc_fpin_peer_congn_stats_update() processes Peer Congestion events by
+> calling fc_fpin_pname_stats_update(). Since fc_fpin_set_marginal() is now
+> called unconditionally here, it seems ports involved in transient congest=
+ion
+> events might be incorrectly marked as marginal, potentially causing
+> unwarranted path failovers.
+>
+> >               }
+> >       }
+> >  }
+> > diff --git a/include/scsi/scsi_transport_fc.h b/include/scsi/scsi_trans=
+port_fc.h
+> > index 9f30625aa0d30..bc7c3f8323992 100644
+> > --- a/include/scsi/scsi_transport_fc.h
+> > +++ b/include/scsi/scsi_transport_fc.h
+> > @@ -684,6 +684,7 @@ struct fc_host_attrs {
+> >  struct fc_function_template {
+> >       void    (*get_rport_dev_loss_tmo)(struct fc_rport *);
+> >       void    (*set_rport_dev_loss_tmo)(struct fc_rport *, u32);
+> > +     void    (*set_rport_marginal)(struct fc_rport *rport, bool margin=
+al);
+>
+> [Severity: High]
+> Should this callback also be invoked when the marginal state is manually
+> cleared or set via sysfs?
+
+No, the AI clearly doesn't understand the code.
+
+>
+> When a user writes 'Online' to the port_state sysfs attribute, it calls
+> fc_rport_set_marginal_state() which modifies rport->port_state, but it do=
+es
+> not call this new set_rport_marginal() callback.
+>
+> Will this leave the Low-Level Device Driver (LLDD) permanently out of syn=
+c
+> with the transport class state when a path is recovered manually?
+>
+> >
+> >       void    (*get_starget_node_name)(struct scsi_target *);
+> >       void    (*get_starget_port_name)(struct scsi_target *);
+>
+> [Severity: Critical]
+> This is a pre-existing issue,
+
+ pre-existing issue will not fix.
+
+> but is there an integer underflow in
+> fc_host_fpin_rcv() when fpin_len is small?
+>
+> In fc_host_fpin_rcv(), bytes_remain is calculated without validating that
+> fpin_len is large enough:
+>
+>     bytes_remain =3D fpin_len - offsetof(struct fc_els_fpin, fpin_desc);
+>     bytes_remain =3D min_t(u32, bytes_remain, be32_to_cpu(fpin->desc_len)=
+);
+>
+> Since offsetof(struct fc_els_fpin, fpin_desc) is 8, if an FPIN payload is
+> received with fpin_len < 8, the subtraction underflows to a massive u32
+> value. The parsing loop will then read well past the end of fpin_buf,
+> causing an out-of-bounds read.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812181300.37=
+12426-1-jtaubepe@redhat.com?part=3D7
+>
+
