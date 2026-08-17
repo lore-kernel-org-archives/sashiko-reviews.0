@@ -1,43 +1,43 @@
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
+Received: from mail-106103.protonmail.ch (mail-106103.protonmail.ch [79.135.106.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD9E3F20EC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:09:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C0A3B774B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 17 Aug 2026 11:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786964943; cv=none; b=kuZ4RABR1ozq4h9d1EVJbutWzCotpBH03lKc3ozx8UU/ptUdta8cRBeEBXuJT1t9UpHg7uf7nkqz7ktwye2MLV4Mcbo9G9rLh+ThKmYa/cDxv+OtVWb75UiE6Mk/B8V0jncGxiooS7lqk5jXpTlKinR5CU2sAyit0gu7KU8p8os=
+	t=1786965161; cv=none; b=bDkop34zdDpETpjVKaVvrW523Ms1CaGQso+h1VDD1Ce+8sp8cuIqEooI7N5I0om42QAuN3vwBDAPEVQneW1pgfa3N7A1kqos7NdSgEUV5gXQpRXSOOAQqh1DBedbeXFj8r3enzt1YYIWWc6Z1C17GkLWVJJv23K4k3wsW/lsbvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786964943; c=relaxed/simple;
-	bh=zPCnKvUY679S6FYWHPC8KfDz/9Shx5+soSEn5mxDyxE=;
+	s=arc-20240116; t=1786965161; c=relaxed/simple;
+	bh=5xei31jWfbCvjJWYAWxdOGjoutWr7qVmV319yL89d4k=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qnHeWvkJw7hBaAF1jb56h1w9KVwtTbScXtyw/dq+tYGAXXuqBzbofCwCnoR3hVfNFzOEqNxpiwxoozsChACwZRZFH4YfNiX5TUvrLYTl7HJQagCQVh8l3RqTnpTSlKee4gZHBwbsKTYAwq1j2vrweKI/ViVr+yIxyMuRkNDqJRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=e4hJc5ua; arc=none smtp.client-ip=185.70.43.25
+	 MIME-Version:Content-Type; b=OQ9ZU8p2T6ZxFxgzXQifvkNdk0mgAiYeVJiidmk1ZT1vOYMe2q9nREbT4BryDO20Nam/HAku5JDFmLS72HWCQ67BQVmAobU1a0vxtC9jY0oRWiSQyKNzAKQfZ16saUS517oqGsHfkaB2UmfFPfGlQ2ZjfrjNWvUHerTS8V36qPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=IVZO/xFD; arc=none smtp.client-ip=79.135.106.103
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="e4hJc5ua"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="IVZO/xFD"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1786964933; x=1787224133;
-	bh=yGze0ymZYgExAxN/K4WSJodaDn1EV8mUaPA6esUxvqs=;
+	s=protonmail3; t=1786965149; x=1787224349;
+	bh=E5G9u9fUe0iGm+rUuoOsMW1cZLD8NY482SDhJ2sWIns=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=e4hJc5uaHCNZyoKMDroam7FzgEMXepWWYotk+LGIa7Y4JuiEBxGJsqeSpBuaMZ22D
-	 /CJWbEuItZIzyCzEMPVzfwm3w7+b5c5+yrP6uhM4rxRaDtgJdI8uiY1B9CSMtsBWGR
-	 Xw2qPWYhc7dGUaX7D9ZDlo16LKlhzt8bqGQYITQIPxt3nRqcoC6Qan6M0Vqz+lR9/t
-	 tO/qMjdCFVHpR0jqGXE0ZDWE0yqlYtPvRLA/ZfNZ/pj48i55Xu1kGDJqdjuslKcQ6/
-	 dIREMQuqDqTModVWxOOWyiu7zdWN5pe1qXUqSxdd08CogaSSMuHgMD2cgS0qOY90zr
-	 Gt1Nw/8LzIO6w==
-Date: Mon, 17 Aug 2026 11:08:48 +0000
+	b=IVZO/xFDha57j4U7Zjb5cuJXWObIccJIyLCVLqDSXKoW5xGP6VRL+SKzXMkDYe4Qt
+	 xbCLjrMf/iEafIf2fWHxtL/VGk+ITFqzc5XZl0sSdTJH12S/1V/Ympw4f2EaEHgBY0
+	 m3prP3VeK0r6O/4xoPwsYI+S0U7bLkRka6QIu4p+1NYufdEdiQNN4f70PRr5v9El8A
+	 22fhOgwIkt/Fc9v3Np63ibUxVAQuHcnoaf9pnlB0x+LNl3+qHyRoOxmNfca09R/WJj
+	 1hDkhWm3cZNewkgwd3OT9UmpnDZ3qi+8nk/cFi8hwUJXvZP6OWHijMwH11ppa8cOAn
+	 lOPCNdT314b0w==
+Date: Mon, 17 Aug 2026 11:12:25 +0000
 To: sashiko-reviews@lists.linux.dev
 From: Aiden Isik <aidenisik@protonmail.com>
-Cc: Aiden Isik <aidenisik@member.fsf.org>, conor+dt@kernel.org, linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
-Message-ID: <Pv3LDXcGtYeb0JiJVOS82nc-ncrhiXght8Q87Z9yrqKw0zLqkMiF05AdaUtvS7BLt6P4CK6XOiaj4IA7uq0bFqkHKtS96mkPeCxMvgtvRNc=@protonmail.com>
-In-Reply-To: <20260817103354.BB64F1F000E9@smtp.kernel.org>
-References: <20260817-for-next-lucky7-watchdog-v1-0-a14370e20b92@member.fsf.org> <20260817-for-next-lucky7-watchdog-v1-2-a14370e20b92@member.fsf.org> <20260817103354.BB64F1F000E9@smtp.kernel.org>
+Cc: Aiden Isik <aidenisik@member.fsf.org>, robh@kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 3/3] clk: samsung: Introduce Exynos5515 clock driver
+Message-ID: <BdKoBOnRuIhrT7tN4m3VwHkPBE8h5rTX4ZSgs3xnFjtnEw-xyS-LtWmX1r6efxBmC7b7JWlSkp49_8gsJTrFXja-3au5EusJ443xPQuFTLE=@protonmail.com>
+In-Reply-To: <20260817102753.AD2711F00A3A@smtp.kernel.org>
+References: <20260817-for-next-lucky7-clock-v1-0-032e4b229c76@member.fsf.org> <20260817-for-next-lucky7-clock-v1-3-032e4b229c76@member.fsf.org> <20260817102753.AD2711F00A3A@smtp.kernel.org>
 Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: b6cfe360eccfd6718e12a25ae94a2c4a8726c356
+X-Pm-Message-ID: 5c2396f84eec43ac44cd52c30b8f10b0ecebfb2a
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -50,89 +50,131 @@ Content-Transfer-Encoding: quoted-printable
 
 > Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
-> - [High] The `drv_data_exynos5515` variant declares `QUIRK_HAS_PMU_AUTO_D=
-ISABLE` but fails to initialize `.disable_reg`, causing unintentional write=
-s to PMU offset 0x0000.
-> - [High] The `drv_data_exynos5515` variant uses an 'INT_EN' register for =
-masking watchdog reset, but omits the `.mask_reset_inv =3D true` flag, inve=
-rting the WDT reset mask logic.
-> - [Medium] Incorrect use of an Exynos Auto v920 register macro (`EXYNOSAU=
-TOV920_CLUSTER0_NONCPU_INT_EN`) in an Exynos 5515 variant.
+> - [High] Clock Tree Misconfiguration / Unintended Clock Bypass in CMU_PER=
+I
+> - [High] Incorrect Mux Parent Clock Order in CMU_FSYS User MUXes
+> - [Medium] Missing Initialization and State Preservation for EXYNOS5515_M=
+EMCLK_OFFSET
 > --
 >=20
-> --- Patch [2]: [PATCH 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt comp=
-atible data ---
-> commit dcaab4881777bc5f5ce1a532adad7c17046164a8
+> --- Patch [3]: [PATCH 3/3] clk: samsung: Introduce Exynos5515 clock drive=
+r ---
+> commit 30844f6e4b1e1ae616f216fdbd770df29393e674
 > Author: Aiden Isik <aidenisik@member.fsf.org>
 >=20
-> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+> clk: samsung: Introduce Exynos5515 clock driver
 >=20
-> This commit adds driver data and a compatible string for the Exynos5515
-> SoC's watchdog timer.
+> CMU_TOP is the top level clock management unit which contains PLLs,
+> muxes, dividers and gates that feed the other clock management units.
+> CMU_PERI provides clocks for USI blocks and their children, PWM, MCT,
+> and watchdog timers. CMU_FSYS provides clocks for MMC, USB, GPIO, etc.
 >=20
-> > diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_=
-wdt.c
-> > index e31f93db05096..7299dfdb0c099 100644
-> > --- a/drivers/watchdog/s3c2410_wdt.c
-> > +++ b/drivers/watchdog/s3c2410_wdt.c
+> > diff --git a/drivers/clk/samsung/clk-exynos5515.c b/drivers/clk/samsung=
+/clk-exynos5515.c
+> > new file mode 100644
+> > index 0000000000000..f989a13f1a574
+> > --- /dev/null
+> > +++ b/drivers/clk/samsung/clk-exynos5515.c
+> > @@ -0,0 +1,1485 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
 >=20
 > [ ... ]
 >=20
-> > @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_data_e=
-xynos5420 =3D {
-> >  =09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
-> >  };
-> >
-> > +static const struct s3c2410_wdt_variant drv_data_exynos5515 =3D {
-> > +=09.mask_reset_reg =3D EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
+> > +static const unsigned long drcg_sysreg[] __initconst =3D {
+> > +=09EXYNOS5515_DRCG_EN_OFFSET,
+> > +};
 >=20
 > [Severity: Medium]
-> Is this intentionally using an Exynos Auto v920 register macro for an
-> Exynos 5515 variant, or could this be a copy-paste error?
+> Is it intended that EXYNOS5515_MEMCLK_OFFSET is missing from the drcg_sys=
+reg
+> array? Without this offset, the memory clock gating state won't be saved =
+or
+> restored across power management suspend/resume cycles.
 >=20
-
-This is intentional.
-
-> [Severity: High]
-> Since this variant uses an INT_EN register for masking the reset, should
-> the .mask_reset_inv =3D true flag be set here?
+> > +
+> > +static const struct samsung_cmu_info top_cmu_info __initconst =3D {
 >=20
-> Without the inversion flag, the bitwise masking logic in
-> s3c2410wdt_mask_wdt_reset() evaluates to (mask ^ false). For INT_EN
-> registers, this typically writes 1 when intending to mask the reset, and =
-0
-> when intending to unmask it, effectively inverting the logic.
+> [ ... ]
 >=20
-> > +=09.mask_bit =3D 2,
-> > +=09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
-> > +=09.rst_stat_bit =3D 24,
-> > +=09.quirks =3D QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET | \
-> > +=09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE | \
-> > +=09=09  QUIRK_HAS_DBGACK_BIT,
+> > +=09.gate_dbg_offset=09=3D EXYNOS5515_GATE_DBG_OFFSET,
+> > +=09.option_offset=09=09=3D CMU_CMU_TOP_CONTROLLER_OPTION,
+> > +=09.drcg_offset=09=09=3D EXYNOS5515_DRCG_EN_OFFSET,
 > > +};
 >=20
 
-Possibly, will wait for maintainer input.
+This is intentional, downstream only has this on a few blocks and
+these are not amongst those blocks. Will see if a maintainer agrees.
 
+> [Severity: Medium]
+> Will this break the dynamic root clock gating initialization? The
+> .memclk_offset =3D EXYNOS5515_MEMCLK_OFFSET assignment seems to be missin=
+g
+> here, which might prevent samsung_en_dyn_root_clk_gating() from enabling =
+the
+> memory clock gate correctly.
+>=20
+
+See above.
+
+> [ ... ]
+>=20
+> > +/* Parent clock list for CMU_PERI muxes */
+> > +PNAME(mout_pll_peri_bus_user_p)=09=09=3D { "oscclk",
+> > +=09=09=09=09=09    "mout_cmu_peri_bus" };
+> > +
+> > +PNAME(mout_pll_peri_ip_user_p)=09=09=3D { "oscclk",
+> > +=09=09=09=09=09    "mout_cmu_peri_ip" };
+>=20
 > [Severity: High]
-> Will this cause unintentional writes to offset 0x0000 of the PMU regmap?
->=20
-> This variant declares QUIRK_HAS_PMU_AUTO_DISABLE but omits .disable_reg.
-> Since struct fields default to zero, when s3c2410wdt_enable() checks for
-> this quirk and calls s3c2410wdt_disable_wdt_reset() during driver probe:
->=20
-> s3c2410wdt_disable_wdt_reset()
->     regmap_update_bits(wdt->pmureg, wdt->drv_data->disable_reg, mask_val,=
- val);
->=20
-> regmap_update_bits() will blindly write to offset 0x0000.
+> Does this correctly route the clocks from CMU_TOP? Referencing the
+> intermediate mout_cmu_peri_* clocks here instead of the final
+> dout_cmu_peri_* dividers appears to bypass the hardware gates and divider=
+s
+> defined in CMU_TOP. Could this lead to incorrect clock rate calculations =
+and
+> resource leaks if the CMU_TOP blocks fail to gate when PERI clocks are
+> disabled?
+
+Unsure, but this is how downstream does it.
+
 >=20
 > [ ... ]
 >=20
+> > +/* Parent clock list for CMU_FSYS muxes */
+> > +PNAME(mout_pll_fsys_bus_user_p)=09=09=3D { "dout_cmu_fsys_bus",
+> > +=09=09=09=09=09    "oscclk" };
+> > +
+> > +/* Parent clock list for CMU_FSYS muxes: for MMC */
+> > +PNAME(mout_pll_fsys_mmc_card_user_p)=09=3D { "dout_cmu_fsys_mmc_card",
+> > +=09=09=09=09=09    "oscclk" };
+> > +
+> > +PNAME(mout_pll_fsys_mmc_embd_user_p)=09=3D { "dout_cmu_fsys_mmc_embd",
+> > +=09=09=09=09=09    "oscclk" };
+> > +
+> > +/* Parent clock list for CMU_FSYS muxes: for USB */
+> > +PNAME(mout_pll_fsys_usb20drd_user_p)=09=3D { "dout_cmu_fsys_usb20drd",
+> > +=09=09=09=09=09    "oscclk" };
+>=20
+> [Severity: High]
+> Is the parent clock order inverted in these MUXes? User MUX arrays like t=
+hose
+> in CMU_PERI map oscclk to hardware value 0 and the bus clock to 1. Since =
+the
+> clock framework uses the array index for the register value, placing oscc=
+lk
+> at index 1 here will write 0 when requesting the high-speed bus clock,
+> inadvertently selecting the 26MHz oscclk instead. Could this cause
+> performance degradation and hardware instability?
+>=20
+
+Possibly, I thought the ordering was just cosmetic and for the
+kernel's informational purposes. HWACG seems to mask the problem
+if there is one but will still fix in v2.
+
 > --
-
-Again, will wait for maintainer input.
-
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817-for-next=
--lucky7-watchdog-v1-0-a14370e20b92@member.fsf.org?part=3D2
-> 
+-lucky7-clock-v1-0-032e4b229c76@member.fsf.org?part=3D3
+>=20
+
+Kind regards,
+- Aiden Isik
