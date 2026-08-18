@@ -1,162 +1,229 @@
-Received: from mail-24429.protonmail.ch (mail-24429.protonmail.ch [109.224.244.29])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DD218A6CF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.29
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787085993; cv=none; b=pBiOcJF9Zo5ajAMoQSP/efPfL6ar6EuaJgJxJBg6gWLqZPiJUW2ST4OCS6PrgGhtOfkILiw9d0+ZF+1hkyFvJckUnLjCPUM/ZkBaC9enKpsrLmjk21TaRLV2M90MXTDKLLcGlG9v1FftehSlt3Vl9xnZEkDFjLQGwSb2vITrfSA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787085993; c=relaxed/simple;
-	bh=K3vlFJD4cT1F0eM8FfQttXwV0OfJJaJt1BMhDK27JQQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tqIBnCzIzTMQpW4D3CIGtMvop1beWEJ5yOBOBPS7VMgoTMLELy31fXFuYqCQBHLbRhqI0jXeiwr2ow84B+FA7M9KUqIBGKgKZq6p2aKGrbly6egc8ebMq3zGiX3QF4/PIYCTcU6S8kiyoGIQO3yKpx02WQrNdK47xhuo9Haemzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=BSPHPvMG; arc=none smtp.client-ip=109.224.244.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA122D7814
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787086462; cv=fail; b=dbqQc6xxkVGSQjRZGGpoHYKmZuX/H6f244HRZtYlRd7bltGThYnCh7K9kzr/uOw8eyHYgyJvQ9b1mNdk26ui3D/fk1ZCHLibdpwhM/ft+/oDY95Nz5woBbqmo098ypQlqFo7Elh+1kj8f9gL9KmDRxGybWJOIi0tCIPoz2gY1ug=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787086462; c=relaxed/simple;
+	bh=r9jBtIjDK6Lp6mZF5gun0xVRCl2QbwFMGXnzc21ONx4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lkoj0A2E28rvyS9Jd+GDDKPe2oQN/1ZTuUERmVDEUP7Bj9+0qbTXvRRq7K6bC/zeE9OlPcxrU5xjNVOFDQTuAH72Rik0iPT0qGUerFM7Qya0qNjXMAN0/GLQxeDEYG9tPAGBJIX/3b26VwPH/4iId1HMhy8u56MSc8sx2MuCMH0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cB4MOA7J; arc=fail smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="BSPHPvMG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1787085983; x=1787345183;
-	bh=cRkYxNJn/yxzKk7pSNeZpMeDLO4mT6EyjoLqmG1frtU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=BSPHPvMGJZi8yT6XML5B+noc94wgz17dAGDaMRsz4Xx8WkIjEBX4wcdRW5eEtUJot
-	 R3So/GzynHE+827ld9WkCYE/q6fowB5kGuzVsAXf15EyZeHCYsDfmnseEEt+NSMGw2
-	 xJIOAS6RCqapGbm9kE8FqM0d8kMwhHtWK0jMleDNrrUv6DI2bOxFb2KMABbdMVs5Wi
-	 qfO/cFsJ/FKukIFwimCkrQcV38dUWovG5Gi+q4uZ5yEnSXkvMOR4jTIjL6wpTExVJe
-	 tA1sU0jDIERMaDRtG4/32PpIqVgXtfma33BtSjfbAi3h6IXQMwuIoMJC0hMpHSjhrp
-	 g4nOjyh6FrGHg==
-Date: Tue, 18 Aug 2026 20:46:19 +0000
-To: Guenter Roeck <linux@roeck-us.net>
-From: Aiden Isik <aidenisik@protonmail.com>
-Cc: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
-Message-ID: <cTie_daC2kaIY2BT6HkyAeivwspRhq3thkrkGDMVdIpF2vF5Vr38HQxPcvKFK6pvWatAFk-CO7XL2uz3OCfDSwI-EOxQqI8hNylXjG1jrQI=@protonmail.com>
-In-Reply-To: <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net>
-References: <20260818-for-next-lucky7-watchdog-v3-0-2912bd122c57@member.fsf.org> <20260818-for-next-lucky7-watchdog-v3-2-2912bd122c57@member.fsf.org> <20260818181349.894171F000E9@smtp.kernel.org> <k_6CWq_7vPkV72MkyL0wCdcr9ptTffpGOGc6dBLbXjcHBV4DGRzP-35mxO0tdOBaIEhy4BxByYLCh8T5nidgwaMwGcNYD9KCIpxkeF4RRiE=@protonmail.com> <83b5d8e7-9504-41c9-9f24-8fce60641de4@roeck-us.net> <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com> <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net>
-Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: ef885cefebbd3cf3ff2575b1f5a98544d88d6c7e
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cB4MOA7J"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787086460; x=1818622460;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=r9jBtIjDK6Lp6mZF5gun0xVRCl2QbwFMGXnzc21ONx4=;
+  b=cB4MOA7JGe/mcCrfUSAAxQmCk1euotpOFDHrHsbCH+5SZkupqdtd/29k
+   DAnn87OYzOUZKb8+wafOhjksZ6/Ij1pVEk/2Y8YIJSsLBqI0izkSfzLRH
+   nXu6GEyn+9we5DZxkW3zsVjFsyWbYn4R30b3o2iHYZk3RT7eR+cEzwyFk
+   PLOHpjfxf7goa7CN0Sl0atA8MMETVywgOAlFEIdAHQmBpl/r12XFzuq8+
+   hB2dbDWjjL4Ci6Q9EkajTouDoX73CMlQe9Hxw/fqWQjQLRnQysVWG7RPR
+   TdrDmrT8aJKr8Q41P2BhFIcLTOIbOKRWpQXJFrGHZB3v7g7RwUpA71Dy5
+   A==;
+X-CSE-ConnectionGUID: hXV1SHhMS8mpxaHmaDKLmQ==
+X-CSE-MsgGUID: w2psTTL0R6GnMz1JbGVdUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11879"; a="86707134"
+X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; 
+   d="scan'208";a="86707134"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2026 13:54:18 -0700
+X-CSE-ConnectionGUID: CIBdFnucSLyln9IzDQW+rg==
+X-CSE-MsgGUID: c96Ry78ERh+QodPEQT6tKQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; 
+   d="scan'208";a="269624444"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2026 13:54:18 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 18 Aug 2026 13:54:17 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Tue, 18 Aug 2026 13:54:17 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.22)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 18 Aug 2026 13:54:17 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YqL8WYdRj1CUZNntJGVwNyOvbHTBehX/A3D7eU3xVrApW610cU3AUsw10HJzPmoKlcrUIc9J1VSdk2gBRQo1Lj6Y8NpJYCSXha0c1O/ZWcvM5keSmemIjtm5R3qbXdYIYqOxHyCJx0Drh87elDTZVGVOJdBSU9SYdrJXtqTzSPjIxWaVZW+c9MYv/BH4/8M9qxr4k9jPQNY5aZyoVEp+cJSHZ6ZslZtO9iZxhhVCDTmHuXu4CztLuA/VxRZyH3FnrAgOX4D5fxFNNf4glcgZqoozayP8MyVBF1swkUqlrJ4N5SP4QI7mdpO4GX0x1Dp5luwqLXbPiXyqedBJZ1ah5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v/TVQsdGLXIoSUHGfXilkEUlAKNRnzI4Wg7mBnLrPsg=;
+ b=P58zELhyZxXb2LoxwbF6wHmBRT47xC8K+oBedyY+UFTZPxH1QoPEhuyKs0m3CbfCzaP3tPX3BJspBdqndPXSzZNuPc1RWFXw0I+E/9nL8TfErnYT5VaouSaFcpptNe85q+4DHKcGYdy9hFenSXvjZs//ca+qNBBVuRxII1DnIf9xBq1GI1GFI3UCmEjO/EfsPhfv3gkJaFT80hrv7TUABsUkQoH0P829rj80GLqmBYNZQYqfqYekQLnpKrjnosi59rrmFKFC+b3Mun3V4pBR/vm44Y+YHjTUwIZ6xY/5WW65DFpJ41CP8pKkxJ9n2sxs43FefC97YAS3vrCU9ZsI/w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BL3PR11MB6410.namprd11.prod.outlook.com (2603:10b6:208:3b9::15)
+ by CY8PR11MB7290.namprd11.prod.outlook.com (2603:10b6:930:9a::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Tue, 18 Aug
+ 2026 20:54:14 +0000
+Received: from BL3PR11MB6410.namprd11.prod.outlook.com
+ ([fe80::b01a:aa33:165:efc]) by BL3PR11MB6410.namprd11.prod.outlook.com
+ ([fe80::b01a:aa33:165:efc%4]) with mapi id 15.21.0315.014; Tue, 18 Aug 2026
+ 20:54:14 +0000
+Date: Tue, 18 Aug 2026 13:54:11 -0700
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Jagmeet Randhawa <jagmeet.randhawa@intel.com>,
+	<intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v2] drm/xe/guc: Fix race around q->guc->suspend_pending
+ access
+Message-ID: <aoTGc0L9ItVs0Uyx@nvishwa1-desk>
+References: <20260818183838.273486-2-jagmeet.randhawa@intel.com>
+ <20260818185142.BEFE31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260818185142.BEFE31F000E9@smtp.kernel.org>
+X-ClientProxiedBy: BY3PR04CA0026.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::31) To BL3PR11MB6410.namprd11.prod.outlook.com
+ (2603:10b6:208:3b9::15)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR11MB6410:EE_|CY8PR11MB7290:EE_
+X-MS-Office365-Filtering-Correlation-Id: ec146b6b-7fe5-4c43-c8c7-08defd6adca4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|56012099006|10067099003|6133799003|18002099003|22082099003|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info: 6lh9QG2gbTmfEy1lbrC2XDHzzMG0ImM+UpaR+NwuVQYNfml3OYLO1OGg/eLbVxu6rbsAZMiR8Jwu22GY603bb0eAeLzzR+EpmQDW45tRAgR/HM49W/RNDVYcuXAdQxjeGqo7Ge9AGBXtm+8P/PJadhGbh0i7K0plTen4n6u02QXgQNJBPVCa7wiOXnytQef711kRb+r8360PiCqcsxhCSf5qA+3RJUsAy1xy6XoUNX30oczclFZhxlG1Xl2Cu/9XYzUp5NFZ6bO216gMBEv5ydxocWRk3dBQCbuMB5mLbrXVcemsE8XVpQ326ezdZA431Ah8loYS1PaOzUE42pdNrFOcwGXuvBY6yi+YbDMmVZ6QFapip45vvjZiV9K2eHtuzz0y4XJYZjqB6eisDKcAsBooYKMN4LDe6LJPPCIRxl5hg2OStF5zi89GBjrJpBbsEujJ6170Pj+GpVHPLh8yeAbssn6doLHUO0O38/c+VlajINGNeouTyCwA/HAyyB5WwXz3zPANSsPMicb+tlreZOZojjIhFME4RjfcJxQMl0eQRcZnmtF/FaZf7E/XlDlHsBht2X0L1D1FntoMkshEdMN1b9bi8QnX5A+yqeA824s=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR11MB6410.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(56012099006)(10067099003)(6133799003)(18002099003)(22082099003)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?OW+65hh72C0yQWY2Jn+P+AisYo2R4Fe2vjciVcjMjcDzPmIYAETLecFNjA?=
+ =?iso-8859-1?Q?zHIWmtZHIZwFRASNb2UmqhclWIoLKxLAfNzAJEWHlFpyfJ2P9vNiIQ5jwS?=
+ =?iso-8859-1?Q?vhGrP19GxT/o3dXlv/U5aoXH1A7fhq5j+lkfeulzVUqivRwaIgQNNvJ3ai?=
+ =?iso-8859-1?Q?LAMdG3kL2yZRz9L2H88unQiHLYKuziyZbIkC2Eg+wtJ3SJ0rghvXXHQjnJ?=
+ =?iso-8859-1?Q?tTXICRwyxJ9PKR3oH7Omsw959UBBFiX7EWOTObHbdfIcDcbhNvL8vpBrOn?=
+ =?iso-8859-1?Q?Sta8W+CJbT4M+0fOWMZ8ZW/TxPoPX58ZYBDAQwPce6Ep4eGWPK4e/VlcuM?=
+ =?iso-8859-1?Q?+oC3IKjywZ3TOuCEWdgHKnLTJf8gV/ktSS53T9a/l7JHgJWG+5eEeODe9y?=
+ =?iso-8859-1?Q?4TVboA6ubhr/hpRay5G8H6gr4xnwPR1T8J05Uej9PBUnbGR2y/bdAhYiPj?=
+ =?iso-8859-1?Q?Xn7jdgq5eBvcX/h5L/AtmiEMuEtK7Di56SWFcf5wbcQB/BdOT9CUra4K4v?=
+ =?iso-8859-1?Q?Eo2pyD0fYlgyQyDJmtmHb47Ukk93zypjY4mVNNwNNFuzHqEKWx0esAVQWD?=
+ =?iso-8859-1?Q?twvUXa+H5LMZFONzMOUymujX7rIv1MGMN7Ar3lqKQBNOad4mBTjsbbbEK/?=
+ =?iso-8859-1?Q?Waxk0HrFe94WP22EowSJxPQk/H6HZC57Layxw03pIEsnh0Lkxv0VFXI5CT?=
+ =?iso-8859-1?Q?MF2Hitx+xmjEVW8xP5wNBBJAMadHRJEirbygzMTGEjaMX2zstpdUtWwS3D?=
+ =?iso-8859-1?Q?FsLqDvMQyo3IXguvH2EkyuR1QqZaGAQnZ8h/L0hTLcw4DzdnenebeUzUhP?=
+ =?iso-8859-1?Q?NYt0XQUTAiDsQHB46fib44tFtewRhRNLaKhtcSjFcxrQNnMaGp6J4pGzMs?=
+ =?iso-8859-1?Q?mF1EJqEGRQZXh0CglXAcHUl25CSW/6QXoUonZ5xwb4LuhJD2WUA0+luqdL?=
+ =?iso-8859-1?Q?gm9plbf7tB8ZoOT6xZb84/+McgrYbfBlqWfBh/FXisUFlxbIbnhoTNS35Y?=
+ =?iso-8859-1?Q?f6ozMiM8ntm0f3hCrdGAg0Q2xR83bpTMCivLuuEiLE5Iof3LfmJ4yRTALP?=
+ =?iso-8859-1?Q?Rwcxp0ABYgVm0H5XEk6ae0xZPNgD4N1RqiDDmee82iljp51cTKAOfVV8KL?=
+ =?iso-8859-1?Q?GrBCCQ2EcMh4yOPrAHmraXp7eA2I7Sl3/Rlg9Tt/QHSAA2vOV9afGG97OY?=
+ =?iso-8859-1?Q?JI3eDzvmLpTP6d6890pMf5eBHNK+JV9ySu/zWpi3Ujd+/mGh2c8HloybKQ?=
+ =?iso-8859-1?Q?q/vsrBcexudy4jdGtpTG6QgujsFZn/FOMED8TFSg7X+Ra4H3FQ4eWnV5ZA?=
+ =?iso-8859-1?Q?RqQxKzjc7J0aFhFcqws2QsYJxFUb2jmTO6ZMI4Q7pbcl+y2eQ17by/UJV6?=
+ =?iso-8859-1?Q?NSviyKMqcIwj9UW7nbA43vzqagTpp9/frVD2QuNlnD9tnfhVrQsQCcKUOC?=
+ =?iso-8859-1?Q?dOws6TzFQwUKeh1swNZ8/CfQ4P2hSpxThgdJDcKcQHteRQ3pr9bFETFY5p?=
+ =?iso-8859-1?Q?LxoJp+78RCX0xsIbZCgVg3j1NAodlz2wy81RGKWMbwKkb8BP0QyP7DUUC4?=
+ =?iso-8859-1?Q?DSh9LzVeLDQ1JuZS1dWbUxiZ70XeskyvcPURfSAFX6ruzeg/5DaYHxuKDZ?=
+ =?iso-8859-1?Q?N59dv+3VhZmP8c5d7RsCMOMOy4mhqqQ5yHLn4asXFpwqed6csCrL+NC4gr?=
+ =?iso-8859-1?Q?BzuWIEizwtiUPNoL3BJ6Suh4RDGE5qvuKQ5bbzGdHTmKhqA6Q+ltiDFkv1?=
+ =?iso-8859-1?Q?CmXk9magNjsvBx0FkNR2SSwQwNI7vrxE5g1gWB3Zz+/osGk63fqrWdcCnS?=
+ =?iso-8859-1?Q?6cP6yvdrFgESZ5zMFN0vJQ0x5dp37zlYW8/kREqs+CL7hMN45XCQ?=
+X-Exchange-RoutingPolicyChecked: PTlWhDVhUUx3hB7DGzckD2l3JbKU0wcTWNALkTCR564VSJOpCo2GicLNp8MWxgSYsOc8GJCikH4XhBt9rgca5lYZ1I1vMRe3CMi6/CS7S4yaBMx1z8sGOxjdYFXziob4jqtnx3wOIMFgT6srtqkRHlk616tykOyesp+1ze0hSMhrL+W/+EMfAlk+j/wlx2rcys/NiOU1NYmhRwPDf8E4OeCXTouZTxZ59F0k5TELcS2l4TkYG/Y1PxSGsVtjx1QX7QQGWuhWZYfzxf4Xw4rW0wQOdJpv7Wka4u08yWnUpnuIN5xSkNvBxgXzkhOwwcDEmr+qdcft+J/5b+IuSuqZxw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: ec146b6b-7fe5-4c43-c8c7-08defd6adca4
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR11MB6410.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 20:54:14.5047
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2S9xCwtB3xY4UhyQtVR76YZ0ti8TzTvUO6WkohkebCi2SyHNuYPlXUwNdH68wjvS1LRtoodZXVhw8SrfTSlEjxG3eKhnDiCwxfz3P9vRByPvM7K9mUDTEWlwlTZC8/v4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7290
+X-OriginatorOrg: intel.com
 
-Hi Guenter,
+On Tue, Aug 18, 2026 at 06:51:42PM +0000, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+>Pre-existing issues:
+>- [High] TDR (Timeout Delay Recovery) races with asynchronous queue suspend, leading to misattributed SCHED_DONE messages, an assertion failure, and a TDR hang.
+>--
+>
+>--- Patch [1]: [PATCH v2] drm/xe/guc: Fix race around q->guc->suspend_pending access ---
+>commit 256a06cec5d42e79b9711d9f1861b3717e23b08f
+>Author: Jagmeet Randhawa <jagmeet.randhawa@intel.com>
+>
+>drm/xe/guc: Fix race around q->guc->suspend_pending access
+>
+>This commit wraps accesses to q->guc->suspend_pending with xe_sched_msg_lock
+>in the suspend, resume, kill, and ban paths. This ensures that checking the
+>flag and calling suspend_fence_signal() is atomic with respect to the
+>asynchronous clears in the kill and ban paths.
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+>> index 9036f89dff7d9..c565c1d32d3a4 100644
+>> --- a/drivers/gpu/drm/xe/xe_guc_submit.c
+>> +++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+>[ ... ]
+>> @@ -3222,13 +3234,20 @@ static void handle_sched_done(struct xe_guc *guc, struct xe_exec_queue *q,
+>>  		smp_wmb();
+>>  		wake_up_all(&guc->ct.wq);
+>>  	} else {
+>> +		bool was_pending;
+>> +
+>>  		xe_gt_assert(guc_to_gt(guc), runnable_state == 0);
+>>  		xe_gt_assert(guc_to_gt(guc), exec_queue_pending_disable(q));
+>>
+>> -		if (q->guc->suspend_pending) {
+>> +		xe_sched_msg_lock(&q->guc->sched);
+>> +		was_pending = q->guc->suspend_pending;
+>> +		if (was_pending) {
+>>  			clear_exec_queue_pending_disable(q);
+>>  			suspend_fence_signal(q);
+>> -		} else {
+>> +		}
+>> +		xe_sched_msg_unlock(&q->guc->sched);
+>
+>[Severity: High]
+>This is a pre-existing issue, but does this logic misattribute a SCHED_DONE
+>message if TDR races with an asynchronous queue suspend?
+>
+>If a queue is being suspended (setting q->guc->suspend_pending = true) and
+>concurrently a job times out, the TDR handler stops the DRM scheduler,
+>trapping the SUSPEND message before it can execute. TDR then calls
+>disable_scheduling(), which directly sends a DISABLE command to the GuC.
+>
+>When the GuC responds to the DISABLE command with a SCHED_DONE message,
+>won't handle_sched_done() incorrectly attribute it to the trapped SUSPEND
+>message because was_pending is still true?
+>
+>It looks like this would call suspend_fence_signal(q) and trigger an
+>assertion failure, because the queue was never actually suspended (the
+>message was trapped) or killed (TDR only bans it). Additionally, skipping
+>the wake_up_all() call in the other branch might cause the TDR thread to
+>wait and hang for 5 seconds until it times out.
+>
 
-> On 8/18/26 12:35, Aiden Isik wrote:
-> > Hi Guenter,
-> >
-> >> On 8/18/26 11:33, Aiden Isik wrote:
-> >>>> Thank you for your contribution! Sashiko AI review found 1 potential=
- issue(s) to consider:
-> >>>> - [Medium] Missing PMU counter enable configuration for Exynos5515 w=
-atchdog.
-> >>>> --
-> >>>>
-> >>>> --- Patch [2]: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-=
-wdt compatible data ---
-> >>>> commit 9ce360e3c933b7447ba5da9ba1b7ae3fee989703
-> >>>> Author: Aiden Isik <aidenisik@member.fsf.org>
-> >>>>
-> >>>> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
-> >>>>
-> >>>> This commit adds driver data for the Exynos5515 SoC's watchdog timer=
-.
-> >>>>
-> >>>>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2=
-410_wdt.c
-> >>>>> index e31f93db05096..5592f25fe6c83 100644
-> >>>>> --- a/drivers/watchdog/s3c2410_wdt.c
-> >>>>> +++ b/drivers/watchdog/s3c2410_wdt.c
-> >>>>> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_da=
-ta_exynos5420 =3D {
-> >>>>>    =09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
-> >>>>>    };
-> >>>>>
-> >>>>> +static const struct s3c2410_wdt_variant drv_data_exynos5515 =3D {
-> >>>>> +=09.mask_reset_reg =3D EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
-> >>>>> +=09.mask_bit =3D 2,
-> >>>>> +=09.mask_reset_inv =3D true,
-> >>>>> +=09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
-> >>>>> +=09.rst_stat_bit =3D 24,
-> >>>>> +=09.quirks =3D QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET |=
- \
-> >>>>> +=09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_DBGACK_BIT,
-> >>>>> +};
-> >>>>
-> >>>> [Severity: Medium]
-> >>>> Does the Exynos5515 PMU require explicit counter enablement like oth=
-er recent
-> >>>> Exynos SoCs?
-> >>>>
-> >>>> Other variants in this driver (like Exynos850, AutoV920, and GS101) =
-that use
-> >>>> the NONCPU_INT_EN PMU registers also pair it with a NONCPU_OUT regis=
-ter and
-> >>>> the QUIRK_HAS_PMU_CNT_EN flag to ensure the watchdog counter ticks.
-> >>>>
-> >>>> If the Exynos5515 hardware works similarly, omitting cnt_en_reg, cnt=
-_en_bit,
-> >>>> and QUIRK_HAS_PMU_CNT_EN here might leave the counter disabled and t=
-he
-> >>>> watchdog silently non-functional. Could you confirm if this variant =
-needs the
-> >>>> counter enable logic?
-> >>>
-> >>> Exynos5515 does not require this.
-> >>>
-> >>> Downstream on GS101, as an example, has this struct member set:
-> >>>
-> >>>> pmu_count_en_func
-> >>>
-> >>> This is not set downstream for Exynos5515, so it is not used for
-> >>> Exynos5515.
-> >>>
-> >>
-> >> You keep talking about "downstream". What is that ?
-> >
-> > By "downstream" I am referring specifically to Samsung's Linux kernel
-> > fork for Exynos5515.
-> >
-> > I host a copy here: https://github.com/Aiden-Isik/linux-android-lucky7
-> >
-> > Also in this message I refer to Google's GS101 kernel fork, which can
-> > be found here:
-> > https://github.com/LineageOS/android_kernel_google_gs101
-> >
->=20
-> Both are completely irrelevant for the upstream kernel. I am most definit=
-ely
-> not going to look into that code. If there is anything relevant - such as
-> the comment you pointed to earlier - you'll need to provide that as indep=
-endent
-> comment(s), not just refer to some downstream code as explanation. The
-> explanation needs to be provided in the _upstream_ kernel code.
->=20
+As the report says, it it unrelated, pre-existing issue which should
+be addressed separately.
 
-There's not really any explanation for it other than "that is the way it is=
-".
-Samsung designed the Exynos5515 watchdog timer to not have that quirk,
-I read the downstream code and learnt that fact, so we don't enable
-that quirk.
+Niranjana
 
-> Guenter
->=20
-> >>
-> >> Guenter
-> >>
-> >>
-> >
-> > Kind regards,
-> > - Aiden Isik
->=20
->=20
-
-Kind regards,
-- Aiden Isik
+>> +
+>> +		if (!was_pending) {
+>>  			if (exec_queue_banned(q)) {
+>>  				smp_wmb();
+>>  				wake_up_all(&guc->ct.wq);
+>
+>-- 
+>Sashiko AI review · https://sashiko.dev/#/patchset/20260818183838.273486-2-jagmeet.randhawa@intel.com?part=1
