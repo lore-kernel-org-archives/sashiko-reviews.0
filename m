@@ -1,135 +1,88 @@
-Received: from mta1.migadu.com (out-139.mta1.migadu.com [95.215.58.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2413D6CD7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 10:21:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FA43D2FEC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 10:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787048510; cv=none; b=Kuc/8LigahSmpYnxQJ056q0PKRzW0WrrQAoxvPWZfRZGuip4shj0fiQa83erG1JWTQ6bEvJIasat4nicAzOhj5pmllQF8CZtWGQlL/M8WqFPHX4zMENlTJmKLqdoc8s5OCjVDqhq59hr6evqQCEnCI2IzXtvtKw6uSYSD9wlKvE=
+	t=1787050277; cv=none; b=kPpZdco3a9foBreahnI0sgZE3NS/jm9icm29mTpMoJ2xizmqVQLDC3AdVr5VHs/9r6tu8i6ozGwKJkL5FOhh/1euWhzwzs8hSklMSlwraV5Kno56mJXbCBwE0m5X3If8ng3unnwHsqWFXhcZMBXP0UnAdLtAl8fi9LU+Ty6mfW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787048510; c=relaxed/simple;
-	bh=sEINk0SuzGmZfx49ENHguHS9kV8Gt5ZTS5C85FRtTzQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oMwvJVXwG0TvdEO6ZPYR0rz7GnPDpSvVtt9QZ/m+L8tOgHIn6/PvtRWIjN8Mk5ZdHtZZSIJBUd6/sLJpqRFoEtY/YlRp36A/l3PNIqB97sr0I6bA2OZolIW2WGeCF8GFFATd2mTe0U3xUCIr1cUi8ehxPTB6d9qqwEDg5SBZRY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=XQ1H2adw; arc=none smtp.client-ip=95.215.58.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787050277; c=relaxed/simple;
+	bh=XI6eTIuvgUaJ8wwOh6l/BdaRuxz6+wAmPBXm3VeUo4k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iHOAvYdyShy0Ce7186k/s+W754HN6HIGnc8SS978ZDkDsUVBQh8IoUOekM/qJBuFePumUdPYa56k4tWwSDh/S17YGsePD6FdzuxL/Qaub4TYAUjrblNXmXI4U0HZI307PIa+XMfreFLGHiznKojAT0N80YjiMNjULCdk8Grnc9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=RLF0S+kN; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="XQ1H2adw"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=sEINk0SuzGmZfx49ENHguHS9kV8Gt5ZTS5C85FRtTzQ=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787048506; v=1; x=1787653306;
- b=XQ1H2adwcTHtv1NCAZhgeiKoyGBAWuvcyL1ERtC0gAqTo+Uo1/aq6J6qOcNXHAwS6wntfZkK
- Bu4kIyX70PoTFbOPmQ/L7mUTqlEFaR0VvGDuDXiu14ftAS32Z5UbWFwd6xkp+VEGfF7/L5V0k5k
- Uoj8YbjtJMTJGqOp3oaOW+kQ=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f45.google.com (209.85.167.45)
-	by smtp.migadu.com with ESMTPS id bc5e8edc602c405d;
-	Tue, 18 Aug 2026 10:21:46 +0000
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5b0129cf6ffso6506e87.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 03:21:45 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyZCIvMMc79HkzXGimXuZXhsfgqpNB5VBcsJHPi8ZoKIz005YYd
-	u4bOtxnC8kgVmAAoC+7xid3CYR5yBlxz3mh1mL0SbyYkPwekirz4/9CuGhpLhQN/94gaXle/+bu
-	TBvDVZf+siQ4WKaTRK0hIU+MvzjcoRfwcwoPiQv7b
-X-Received: by 2002:a05:6512:a84:b0:5b4:4c8a:abef with SMTP id
- 2adb3069b0e04-5b471fcde42mr199081e87.10.1787048504871; Tue, 18 Aug 2026
- 03:21:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="RLF0S+kN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=XI6e
+	TIuvgUaJ8wwOh6l/BdaRuxz6+wAmPBXm3VeUo4k=; b=RLF0S+kNS9v4/mlOZQ2V
+	o6sq/ALl+wKL/ROn3xZ4EgizQpjH/peUXt4tjJO0UXkRGtTZHcGbO67TZN52gxEo
+	cA5hfeWDbEcRbkJnBELzI5trqHpzVfhWpaZj1hNsSZ2sKmbd1528idhMsJEfB8Mc
+	HbeOrZvUOtbrRAjgBrYOUeYWa991qSr9z25RYTk5gHrIj79RQibA3nczjiSDDW6X
+	PPQJA33B16G9VzaHPRywjdoZpK0WoULVHstznK/9LVW8ibgkKzVGqPTwAYOAXLlt
+	WH7IMhpB6UeuCuP4zRGlO0l5nrqnkksSjcFwnGTxKtbjf4jiyFkMX2iMlFDGF7Sc
+	AQ==
+Received: (qmail 3764408 invoked from network); 18 Aug 2026 12:51:13 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 18 Aug 2026 12:51:13 +0200
+X-UD-Smtp-Session: l3s3148p1@ZpG4EFBZGIgujnuP
+Date: Tue, 18 Aug 2026 12:51:12 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, devicetree@vger.kernel.org,
+	linux-rtc@vger.kernel.org, robh@kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v3 09/12] rtc: rzn1: Use temporary variable for struct
+ device
+Message-ID: <aoQ5INLOtNELfXpH@ninjato>
+References: <20260706175138.12587-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175138.12587-10-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175655.6A31D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260818093117.2379344-1-fuad.tabba@linux.dev> <20260818094305.828891F000E9@smtp.kernel.org>
-In-Reply-To: <20260818094305.828891F000E9@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 18 Aug 2026 11:21:00 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso2=38PJUg@mail.gmail.com>
-X-Gm-Features: AcwNN1XBa4lu--DTS7FPE7UTplgkK7PvCaW-8GJz5zkY8XlBihkyJFzXTyTS3qg
-Message-ID: <CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso2=38PJUg@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Validate the SVE vector length in pkvm_vcpu_init_sve()
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="i9uCrGg6SWItUDpN"
+Content-Disposition: inline
+In-Reply-To: <20260706175655.6A31D1F000E9@smtp.kernel.org>
 
-On Tue, 18 Aug 2026 at 10:43, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] A fallible memory allocation failure inside `hyp_pin_shared_=
-mem()` triggers a `WARN_ON()`, which results in a fatal hypervisor panic.
 
-It can't fail. hyp_s1_pgtable_pages() provisions the hyp stage-1 page
-tables at init to cover all of memory at page granularity, so hpool
-can always map any host page into the hyp linear map.
+--i9uCrGg6SWItUDpN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-/fuad
 
-> --
->
-> --- Patch [1]: [PATCH] KVM: arm64: Validate the SVE vector length in pkvm=
-_vcpu_init_sve() ---
-> commit f011c5300d433db59b3f2b97e822b9e148c39b84
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> KVM: arm64: Validate the SVE vector length in pkvm_vcpu_init_sve()
->
-> This commit updates pkvm_vcpu_init_sve() to validate the host-provided
-> SVE vector length before deriving its state size. This prevents an invali=
-d
-> length from reaching the sve_state_size_from_vl() macro and triggering a
-> fatal EL2 WARN_ON().
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/p=
-kvm.c
-> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> [ ... ]
-> > @@ -460,14 +460,15 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcp=
-u *hyp_vcpu, struct kvm_vcpu *h
-> [ ... ]
-> > +     sve_state_size =3D sve_state_size_from_vl(sve_max_vl);
-> > +
-> >       ret =3D hyp_pin_shared_mem(sve_state, sve_state + sve_state_size)=
-;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but looking at hyp_pin_shared_mem(), could =
-a
-> memory allocation failure here trigger a fatal hypervisor panic?
->
-> If host userspace repeatedly creates VMs and vCPUs to exhaust the
-> hypervisor's memory pool, pkvm_create_mappings_locked() can return
-> -ENOMEM.
->
-> Because hyp_pin_shared_mem() wraps this fallible call in a WARN_ON():
->
-> arch/arm64/kvm/hyp/nvhe/mem_protect.c:hyp_pin_shared_mem() {
->     ...
->     for (cur =3D start; cur < end; cur +=3D PAGE_SIZE) {
->         p =3D hyp_virt_to_page(cur);
->         hyp_page_ref_inc(p);
->         if (p->refcount =3D=3D 1)
->             WARN_ON(pkvm_create_mappings_locked((void *)cur,
->                                                 (void *)cur + PAGE_SIZE,
->                                                 PAGE_HYP));
->     }
->     ...
-> }
->
-> And since WARN_ON() is fatal at EL2, does this allow unprivileged host
-> userspace to intentionally crash the host system if the allocation fails?
->
-> >       if (ret)
-> >               goto err;
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818093117.23=
-79344-1-fuad.tabba@linux.dev?part=3D1
+> Should rzn1_rtc_disable_hardware() use pm_runtime_put_sync() instead to
+> ensure the suspend completes before runtime PM is disabled?
+
+Sounds reasonable to me, what do you think?
+
+
+--i9uCrGg6SWItUDpN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqEOSAACgkQFA3kzBSg
+KbafAg/+MCgXVaHhq3ddk51Im5xzgcqbuC9YjNFX0D8+7HqPozGqmWOfxCVmJOZF
+PeaJyVcd+JF9e5+DH85exClAWl8s0p+ph2UWsuYVX9RH86ErOQJz4/lpaLVguc6K
+NrAizPCc8TnkI87dc4iSidArzVIpp4+2g7y/qCtX0GTP7qTS1vVcMY/THkO8pT05
+djQPlQ1SJ+OwF6qgAK5KWd/ayiKgkqzCIIkpuIQYQa9S0Q5IjoI5HXE2d8oNtm6p
+75neuPZGVuJtzosKB3SB/j+/fU0hjamtnnXppk5MQ9hCbkcSkLNpN4xk4iE2OcSd
+4IeG9kobM/zj8CSFuBNfCT1aFepRHPBS3oxLvena9Sd8FjVXk8pWLKcI8vZEEoq3
+I9NriTjIcPHJTq3AM0aygvetDf00+eMPAxwWGNFLqrWGncCqXyBpyuw6/4vsImSa
+1xjD+Khfm7CdqAeqmtq/B4vrR9PIqgS357TeJ20kVEb88BX4nSiQVWn1us9mSPxJ
+a6gE2kaYdRKcEVTQbq5/smFzuOu8MR8SFsraRfeMk6f74tNOlWT7dPsf4EfRRfzU
+vdoUSh0UeKkG7wu6F3TZJpn/PO6NunAD+0yefyAzclMP2SmaVpUjH/p+FwIoYdzj
+INTb+V/qUf82I1atd2aPxp40/jim4MsRI2jZz0GEFliI5SVPaRY=
+=gHS+
+-----END PGP SIGNATURE-----
+
+--i9uCrGg6SWItUDpN--
