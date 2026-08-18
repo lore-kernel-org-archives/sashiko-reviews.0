@@ -1,258 +1,170 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152B1472760;
-	Tue, 18 Aug 2026 12:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D74749D5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 12:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787057712; cv=none; b=L9jqK/cRaiB+AJBK62MCXKvuO8PuJE7zXW29U1zTLS0HEboCNH64V5cf1+PdJIxTcA/1LpP7o0hKHrHhChsU3LVEuTa3XQg0g7XrQRzbsSfvQIHjrTlaVH2mkuIvdaoW7xaCLyQHqEkW5PhBxw/kBjBDltT9p6WEiik+o3a/B8g=
+	t=1787057805; cv=none; b=s8Ge7hUcXpfuRMRe/c+14So0SCPfTFPeeYK7CjzFTauG0jDL7cBO+ARBHd9K/rJwUyHlbYJvSRKNgSjDUsOPhv6q0w/CcHJ1vpTa9DrN3JD47syCnLCFk8D6YRBtxHSLECcE0sT6MN2+MvroI4bX6sB8Wp0OxTsr2SKzwD8Mwd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787057712; c=relaxed/simple;
-	bh=QL0X6pTTavKTFei5lSC5sB2J1NhdSdOGYGzTaL3tIwg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3gcVHb6eG67iQeI7ySeWXo6EyyGTS4ewm+c4tL10qyt9LLqLdA9YNlg+HyNx3QuR5jgWYcY5PDk3uMkW7pjQvcIm/V1I4afdF7bRAwe5BgCHnfBaaajOsnKoG85oYFr2Sl5qriYy7Zi8GElLvcGVkvQSUPARhX0R1cHwMo/J0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Z88GztwC; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0A1c5aPM; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=bnvWNKN3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UEgg4hEl; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1787057805; c=relaxed/simple;
+	bh=p5JJuqLylq9ImerUrult5K3ksayef5SjuM4l3CtXeqc=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=gl8mmzjvCpnkRMSHEpGEI2n7H/x45UaWMawuSDYKNtCGis9A79GXgI8DGQGJeG/TQGS56ma9bqPTHp21FxVjXVl89kRL8GBmT8Er966Y/veKjR2cQ643YiEeNZ0vUelPHEkxykaOAVmYfdFeDkcdeeKfzPj0VLIlMVrgQn8U0Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=VM9M9F/N; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Z88GztwC";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0A1c5aPM";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="bnvWNKN3";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UEgg4hEl"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 82F8C3EBD;
-	Tue, 18 Aug 2026 12:50:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787057427; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H+bcWc4T/rU3VJYnflqTO5mpTU63URyw7VznDPWHcA0=;
-	b=Z88GztwCCatW/H/uskajNcA46j7QOQcPqEU8P20avJdJy2CXcGyyRYDwE5CAYFDKfLc86B
-	FyQFPjmqhjtyXuwo8l3P6gK225jif20wFcvlJtyrWL3x3imHQAfFoXrwZRitDlGSN0jkvc
-	UqWjML9tMqvfq6jkYsy7nmE772IVCFc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787057427;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H+bcWc4T/rU3VJYnflqTO5mpTU63URyw7VznDPWHcA0=;
-	b=0A1c5aPMTnHHEJ6rIXyy/+peCcZQ4ykHjlRriaEYQJ0Dc4YZ/NQ0K7GF/GrO0xsc7KPpwh
-	g2c6xZkRgOJi57CA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787057423; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H+bcWc4T/rU3VJYnflqTO5mpTU63URyw7VznDPWHcA0=;
-	b=bnvWNKN3izrmYsYYhi2y/HstSlabK46I1lmloa4ucnshsOeH1Jv+ZIbBJwvbnG+YQXR2+3
-	mZuRKWk9Wm0TmR5GPR6Br8wJ0g2VgTe+6hNVyHTCA/hAQXGTMMhDYCxY0gvy4u2Oh1nzCY
-	MX/BgqaTSjQdtWjD283xUc87+W6LoaQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787057423;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H+bcWc4T/rU3VJYnflqTO5mpTU63URyw7VznDPWHcA0=;
-	b=UEgg4hEljsD5umpamNvvTFD9Rohmv/TNMp3RHFalLPZNYh0eWj0BY8P0N6FZwh5cF7RVOB
-	ehRyK6Vsen6pjKDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 475D6367E;
-	Tue, 18 Aug 2026 12:50:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id sG9SEA1VhGojIAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 18 Aug 2026 12:50:21 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: jfalempe@redhat.com,
-	javierm@redhat.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	linux-doc@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org,
-	rust-for-linux@vger.kernel.org,
-	linux-hyperv@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	nouveau@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 08/12] drm/panic: Split draw_panic_plane()
-Date: Tue, 18 Aug 2026 14:28:06 +0200
-Message-ID: <20260818125012.468092-9-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260818125012.468092-1-tzimmermann@suse.de>
-References: <20260818125012.468092-1-tzimmermann@suse.de>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="VM9M9F/N"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=p5JJuqLylq9ImerUrult5K3ksayef5SjuM4l3CtXeqc=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787057797; v=1; x=1787662597;
+ b=VM9M9F/NnDcd1SZOGjmNklbxLJvZ0JRfsjnmcCBrvPx3OzOsP09DbZJc0c6h2PJLJwZLhKWM
+ 5EjPikin/GuD3KsYmisNB83LwJhBBnP99cXq4uSHE3JPvFD4N9ZbK6ZbzUbLsueSyz/0Ep964L1
+ YU+mlasl6VsCkw7doC6CLE9A=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from webmail.migadu.com (2001:41d0:303:fc7a::)
+	by smtp.migadu.com with ESMTPS id 4baefb6e2b4a5c1a;
+	Tue, 18 Aug 2026 12:56:37 +0000
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -6.80
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.998];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Date: Tue, 18 Aug 2026 12:56:37 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: gang.yan@linux.dev
+Message-ID: <a9ef03bb12d3087e8f4af51d6d7dcd9967810942@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH mptcp-next v2 1/5] mptcp: sched: change scheduler sysctl
+ atomically
+To: sashiko-reviews@lists.linux.dev
+Cc: mptcp@lists.linux.dev
+In-Reply-To: <20260818095955.6892E1F000E9@smtp.kernel.org>
+References: <20260818094825.48446-1-gang.yan@linux.dev>
+ <20260818094825.48446-2-gang.yan@linux.dev>
+ <20260818095955.6892E1F000E9@smtp.kernel.org>
 
-Move locking and parameters from draw_panic_plane() into the new
-helper drm_panic_display_panic_screen(). Call draw_panic_plane() from
-there.
+August 18, 2026 at 5:59 PM, sashiko-bot@kernel.org mailto:sashiko-bot@ker=
+nel.org  wrote:
 
-The new helper drm_panic_display_panic_screen() is now the DRM core's
-interface for displaying a panic screen. The code remaining in
-draw_panic_plane() still does all the heavy lifting. It will become a
-plane helper for DRM drivers.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/drm_panic.c | 60 ++++++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 27 deletions(-)
+>=20
+>=20Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> - [High] Use-After-Free and module reference leak due to missing refere=
+nce counting when setting the default MPTCP scheduler
+> - [Medium] Redundant scheduler list traversal during socket initializat=
+ion defeats pointer caching
+> --
+>=20
+>=20--- Patch [1]: [PATCH mptcp-next v2 1/5] mptcp: sched: change schedul=
+er sysctl atomically ---
+> commit d5b1780c033b9909a1b30fbd814812af5c25ed2f
+> Author: Gang Yan <yangang@kylinos.cn>
+>=20
+>=20mptcp: sched: change scheduler sysctl atomically
+>=20
+>=20This commit changes the per-netns scheduler storage from an inline st=
+ring
+> to an RCU-protected pointer to an mptcp_sched_ops struct. It updates th=
+e
+> sysctl read/write paths and socket initialization to use this pointer,
+> aiming to prevent concurrent readers from observing half-written names.
+>=20
+>=20Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/626
+>=20
+>=20>=20
+>=20> diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
+> >  index 63c5747f0f63c..479b31eb30079 100644
+> >  --- a/net/mptcp/ctrl.c
+> >  +++ b/net/mptcp/ctrl.c
+> >=20
+>=20[ ... ]
+>=20
+>=20>=20
+>=20> @@ -126,7 +133,7 @@ static int mptcp_set_scheduler(char *scheduler,=
+ const char *name)
+> >  rcu_read_lock();
+> >  sched =3D mptcp_sched_find(name);
+> >  if (sched)
+> >  - strscpy(scheduler, name, MPTCP_SCHED_NAME_MAX);
+> >  + xchg(&pernet->scheduler, sched);
+> >=20
+>=20[Severity: High]
+> When replacing the scheduler pointer here with xchg(), does this leak t=
+he
+> module reference for the previous scheduler returned by xchg()?
+>=20
+>=20Also, do we need to acquire a module reference for the newly assigned=
+ sched
+> via bpf_try_module_get() before storing it? Without a reference, could =
+the
+> module be unloaded, leaving pernet->scheduler pointing to freed memory =
+that
+> would trigger a use-after-free when dereferenced by a concurrent reader=
+ in
+> proc_scheduler()?
 
-diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-index 0960750bfce2..2263a11efdf6 100644
---- a/drivers/gpu/drm/drm_panic.c
-+++ b/drivers/gpu/drm/drm_panic.c
-@@ -940,38 +940,21 @@ static void drm_panic_clear_description(void)
- 	desc_line->txt = NULL;
- }
- 
--static void draw_panic_plane(struct drm_plane *plane, const char *description)
-+static void draw_panic_plane(struct drm_plane *plane, const char *description,
-+			     enum drm_panic_type panic_type, u32 fg_color, u32 bg_color,
-+			     unsigned int qr_version)
- {
- 	struct drm_scanout_buffer sb = { };
- 	int ret;
--	unsigned long flags;
--#if defined(CONFIG_DRM_PANIC_FOREGROUND_COLOR)
--	u32 fg_color = CONFIG_DRM_PANIC_FOREGROUND_COLOR;
--#else
--	u32 fg_color = 0x00ffffff;
--#endif
--#if defined(CONFIG_DRM_PANIC_BACKGROUND_COLOR)
--	u32 bg_color = CONFIG_DRM_PANIC_BACKGROUND_COLOR;
--#else
--	u32 bg_color = 0x00000000;
--#endif
--#if IS_ENABLED(CONFIG_DRM_PANIC_SCREEN_QR_CODE)
--	unsigned int qr_version = panic_qr_version;
--#else
--	unsigned int qr_version = 0;
--#endif
--
--	if (!drm_panic_trylock(plane->dev, flags))
--		return;
- 
- 	ret = plane->helper_private->get_scanout_buffer(plane, &sb);
- 
- 	if (ret || !drm_panic_is_format_supported(sb.format))
--		goto unlock;
-+		return;
- 
- 	/* One of these should be set, or it can't draw pixels */
- 	if (!sb.set_pixel && !sb.pages && iosys_map_is_null(&sb.map[0]))
--		goto unlock;
-+		return;
- 
- 	drm_panic_set_description(description);
- 
-@@ -986,9 +969,33 @@ static void draw_panic_plane(struct drm_plane *plane, const char *description)
- 	}
- 
- 	drm_panic_clear_description();
-+}
- 
--unlock:
--	drm_panic_unlock(plane->dev, flags);
-+static void drm_panic_display_panic_screen(struct drm_plane *plane, const char *description)
-+{
-+#if defined(CONFIG_DRM_PANIC_FOREGROUND_COLOR)
-+	u32 fg_color = CONFIG_DRM_PANIC_FOREGROUND_COLOR;
-+#else
-+	u32 fg_color = 0x00ffffff;
-+#endif
-+#if defined(CONFIG_DRM_PANIC_BACKGROUND_COLOR)
-+	u32 bg_color = CONFIG_DRM_PANIC_BACKGROUND_COLOR;
-+#else
-+	u32 bg_color = 0x00000000;
-+#endif
-+#if IS_ENABLED(CONFIG_DRM_PANIC_SCREEN_QR_CODE)
-+	unsigned int qr_version = panic_qr_version;
-+#else
-+	unsigned int qr_version = 0;
-+#endif
-+	struct drm_device *dev = plane->dev;
-+	unsigned long flags;
-+
-+	if (drm_panic_trylock(dev, flags)) {
-+		draw_panic_plane(plane, description, drm_panic_type,
-+				 fg_color, bg_color, qr_version);
-+		drm_panic_unlock(dev, flags);
-+	}
- }
- 
- static struct drm_plane *to_drm_plane(struct kmsg_dumper *kd)
-@@ -1001,10 +1008,9 @@ static void drm_panic(struct kmsg_dumper *dumper, struct kmsg_dump_detail *detai
- 	struct drm_plane *plane = to_drm_plane(dumper);
- 
- 	if (detail->reason == KMSG_DUMP_PANIC)
--		draw_panic_plane(plane, detail->description);
-+		drm_panic_display_panic_screen(plane, detail->description);
- }
- 
--
- /*
-  * DEBUG FS, This is currently unsafe.
-  * Create one file per plane, so it's possible to debug one plane at a time.
-@@ -1021,7 +1027,7 @@ static ssize_t debugfs_trigger_write(struct file *file, const char __user *user_
- 	if (kstrtobool_from_user(user_buf, count, &run) == 0 && run) {
- 		struct drm_plane *plane = file->private_data;
- 
--		draw_panic_plane(plane, "Test from debugfs");
-+		drm_panic_display_panic_screen(plane, "Test from debugfs");
- 	}
- 	return count;
- }
--- 
-2.55.0
+Hi Matt,
 
+As far as I know, for linux-master branch, the sched ops cannot be torndo=
+wn, and
+the only static default scheduler is used, so no reference counting is ne=
+eded.
+
+It is safe for now, the pm is as the same. Right?
+
+>=20
+>=20[ ... ]
+>=20
+>=20>=20
+>=20> diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+> >  index c2762d74f29d7..82df0400d0f94 100644
+> >  --- a/net/mptcp/protocol.c
+> >  +++ b/net/mptcp/protocol.c
+> >=20
+>=20[ ... ]
+>=20
+>=20>=20
+>=20> @@ -3271,8 +3272,8 @@ static int mptcp_init_sock(struct sock *sk)
+> >  return -ENOMEM;
+> >=20=20
+>=20>  rcu_read_lock();
+> >  - ret =3D mptcp_init_sched(mptcp_sk(sk),
+> >  - mptcp_sched_find(mptcp_get_scheduler(net)));
+> >  + mptcp_get_scheduler(net, sched_name);
+> >  + ret =3D mptcp_init_sched(mptcp_sk(sk), mptcp_sched_find(sched_name=
+));
+> >=20
+>=20[Severity: Medium]
+> Since pernet->scheduler now stores the mptcp_sched_ops pointer directly=
+,
+> could we retrieve and use that pointer here directly? Extracting the na=
+me
+> via mptcp_get_scheduler() just to perform a redundant list traversal wi=
+th
+> mptcp_sched_find() seems to defeat the purpose of caching the operation=
+s
+> pointer.
+>
+
+That's a good point, will done in v3.
+
+Thanks
+Gang
+=20
+>=20>=20
+>=20> rcu_read_unlock();
+> >  if (ret)
+> >  return ret;
+> >=20
+>=20--=20
+>=20Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026081809482=
+5.48446-1-gang.yan@linux.dev?part=3D1
+>
