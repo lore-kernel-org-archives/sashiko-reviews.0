@@ -1,126 +1,168 @@
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F71C3D0930
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 17:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03062483BF1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 17:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787073403; cv=none; b=Knwlza+Bk3N/e11D1OlkZX6ihMPyBCpU0+PiYJmw2Le1ipmfcmzrrOKBfFz9BBSwBBqBaY4QuDcFxDNlM6BciodK0vmM9sFxDnrCWdWVEh04xeURdeskb0Gc+dGRnZr2oX7tvIjGW4kgj7u9GHlxQK77/XQ4M1OgNE6K2/ay5Jg=
+	t=1787075792; cv=none; b=oRkoZiw5VqZyUsSfaP8kqtJbjRsgFeApFd8Lx1N28Llp3PLNOuVFnZXSo3in+3wNGj3V+gQ+/iFGh7GHCJRQxlvKZZDeHE2WUqIqax38uf4+y7ZK1/v45YG9OJpPs9QO7GCJuryq9AXqDRtcikpL6U9dms4WIKQYo3XHpLfWCkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787073403; c=relaxed/simple;
-	bh=joRLrHQ5PciVlyhcB33kf3F6lW7tZpKQ6/AfYULRl5c=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=f3GRz7UG5qByodQgO9p7dOlj5MQ6hlTjZdOr86JB0TGG6A1ZIHmEidR0WwZVw13zGUysnuHbFbY/lGPJLLNI2SokWD/MkgssD/ws3GuTX1E1Ar2q0tMpFdxxNpt04IfEzJ0ED663dY8WTWLQM3p9THYavI+zwsTTqNncKVqaYdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cER1hgPc; arc=none smtp.client-ip=209.85.214.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1787075792; c=relaxed/simple;
+	bh=8NnAKA1Wu+Zox2PtrAdbrfk5WpUjAgKTJ0y+XbdDMv4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KdGCNPKpuKLOBRJB1xyyAjFD7B/Rr1heMHqIfcqg413MjnINL5qF5CK4Brz8YF8yAWhLIsX1QuhU3O740ZkXxVBAcKEwga8CmIJzuz0/Njm53wDYJGSOiW8o0uPn7vFdY3khAkW6t/6Jrru1SNh3Qb0ow1Zk1gvrhkc60Q3vdi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=otdaVsg3; arc=none smtp.client-ip=57.129.93.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cER1hgPc"
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cec4226c70so746735ad.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 10:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787073401; x=1787678201; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XT1Rr2HB3t99psvHxumchfGyXnfabp1WpWGCjDa/GZU=;
-        b=cER1hgPc9fBKKTvRN6H/80Nkd3dzt1+t1FQ1HnBzW5oa1yDKGnlpyajkqtflntfxZA
-         ihQpg4HVf7hGtWcfNkII0zfq5X94ZmDMQaxumSUyl2VyaXnhw/s0Xn3ECzNcdLPGiwpu
-         vJ4nCl7kCAZu+8V+FryVZKx2RAqqcOww1PSqPllw54N2nQJ17S2Ojx6BjmA39ol42E5B
-         GyBkoU9LIG4yAQoo8zL7Q+HijbZRfeTAnxkaKkcCrVexesK9CM87LUD099LS7eZJwxQZ
-         c94ba0GGed+EaFC+tpKE/5e3vb6dTVniz7wZOzcbe1k9mY1g3fws+lK5d4CDEWbBCr86
-         oQaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787073401; x=1787678201;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XT1Rr2HB3t99psvHxumchfGyXnfabp1WpWGCjDa/GZU=;
-        b=npFXe05C4XnxWgl9XWlAKlQoWDk1AX3/47FCNS37ADvDt0+ALP67dUY8Nm0mppJx4i
-         iWUbFnVYhAtWZfLepERcDkDb8ACOH2Wfw3XL7NYWp+QgKTJoBFfLts48hz3gICyK/qiX
-         +alJ2cWjpUtnoti+nv6SFvhiex2KiK5wO4/yzBx6+xy+Mzoy+lz++wvaxLCPa2cO+Phd
-         sAgIjIdEXuK6yFWTAxECmvbjIAPymzFxgFZBqxLA5axznitCPkeiLF63uqKK1op21CVA
-         H1lfurA2F5OEhW6aL6D4/x6J6InjckxkKY7q1e1zsVBz7nFztsbNKpZwmMQsB2rZtrHC
-         6oLg==
-X-Gm-Message-State: AOJu0YyWaYikqx0DesQRTip4HX15utJ4iQBTccM0m8KOA7k4i1jP5hiT
-	Qy+P0Rty8AgFCFKHx0mk+BFrEtn8pyFTnGGE5jPUXW6QsHnUu2ei4X/kqtDxN5rGY+2FtO9EOvG
-	9hZq/FcqLpbJRqpN9lBDr9oOl3ds2LWkkz7UQ853SNPKFt9ekaR/ttn6p9UgtnjOX7B7BhB8BP1
-	I8n4y3qDq4SKeP3eiIVX4USOySy6/oSxjQYs8Xo7EbGL7Brx2W
-X-Received: from plbiy23.prod.google.com ([2002:a17:903:1317:b0:2ce:7984:4347])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1a2e:b0:2ca:9d5a:8b6c
- with SMTP id d9443c01a7336-2d5c4ee9bf2mr149762845ad.5.1787073401220; Tue, 18
- Aug 2026 10:16:41 -0700 (PDT)
-Date: Tue, 18 Aug 2026 10:16:40 -0700
-In-Reply-To: <20260818170534.07B561F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="otdaVsg3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1787075781; x=1787334981;
+	bh=WfeZJ4/Uu5+5SQa1TKs3/R1EC+79WK7M4LswJI4I/wI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=otdaVsg3mS9rKvIVzSnAE+At2fGKk7qwVe/MCSwkfD0ENnOYFf2lGbCuu5DjQz7+f
+	 7FBpyuCNs9IQcRrGfj+6XS7LGCzYi8JmBKiQQGYhWlo3YN3S6J/kEVsK7IwjLOZnLL
+	 SaGqBzCrp3bFRu9+hTlECP0c3maNYY8uvGzlVGzz2bxir3Si0KU0PnvuK/tFg1Xbb0
+	 Ojf+2gBuNaQxNm2bfMwi0YgEzBvUoL/toS6c/YJ4vSA6SNavTwReuBPsDoOfxkqUDp
+	 eMN7ctzVpHif7e2foT9LChi/8Ocj3hSwr5Ker/wj+6pXwL2rFHRsIXgUaESJrHpaj3
+	 eCC2Xvqb1pPIA==
+Date: Tue, 18 Aug 2026 17:56:16 +0000
+To: Guenter Roeck <linux@roeck-us.net>
+From: Aiden Isik <aidenisik@protonmail.com>
+Cc: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+Message-ID: <M_lNzXuQ5wi3MVyFU1JstH_dxQWKDdPGje5yyVFO9lvJsz1H4USWNtew1040JtG4p17UrpWTWoohByvy_x7Nc5dvBh0LuONKNmPZPNMImdg=@protonmail.com>
+In-Reply-To: <8919c7f3-2dcb-4666-91e0-a91edc378c28@roeck-us.net>
+References: <20260818-for-next-lucky7-watchdog-v2-0-6743f479a47f@member.fsf.org> <20260818-for-next-lucky7-watchdog-v2-2-6743f479a47f@member.fsf.org> <20260818155332.9E0DD1F000E9@smtp.kernel.org> <8919c7f3-2dcb-4666-91e0-a91edc378c28@roeck-us.net>
+Feedback-ID: 46524699:user:proton
+X-Pm-Message-ID: 932c582b24195cb701693a284c24bd0b34c4c621
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260818165258.2613603-1-vkuznets@redhat.com> <20260818165258.2613603-5-vkuznets@redhat.com>
- <20260818170534.07B561F000E9@smtp.kernel.org>
-Message-ID: <aoSTeLzhaWohymLf@google.com>
-Subject: Re: [PATCH v2 4/4] KVM: selftests: Check VMPTRLD with active eVMCS
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Code relying on CPU flags after `KVM_ASM_SAFE` incorrectly evaluates them because the macro's cleanup instructions unconditionally clobber the flags.
-> --
-> 
-> --- Patch [4]: [PATCH v2 4/4] KVM: selftests: Check VMPTRLD with active eVMCS ---
-> commit d5821824a958c354147206d0cf6cf26eaeb71cc6
-> Author: Vitaly Kuznetsov <vkuznets@redhat.com>
-> 
-> KVM: selftests: Check VMPTRLD with active eVMCS
-> 
-> This commit verifies that VMPTRLD triggers a #UD when eVMCS is active.
-> It uses the KVM_ASM_SAFE framework to safely handle the expected
-> exceptions from VMPTRLD testing.
-> 
-> > diff --git a/tools/testing/selftests/kvm/include/x86/vmx.h b/tools/testing/selftests/kvm/include/x86/vmx.h
-> > index 047d02aa96889..e6adde3970d4d 100644
-> > --- a/tools/testing/selftests/kvm/include/x86/vmx.h
-> > +++ b/tools/testing/selftests/kvm/include/x86/vmx.h
-> [ ... ]
-> > @@ -336,6 +333,22 @@ static inline int vmptrld(u64 vmcs_pa)
-> >  	return ret;
-> >  }
-> >  
-> > +static inline int vmptrld_safe(u64 vmcs_pa)
-> > +{
-> > +	u64 error_code;
-> > +	u8 vector;
-> > +	u8 failed;
-> > +
-> > +	asm volatile(KVM_ASM_SAFE("vmptrld %[pa]")
-> > +		     "\n\tsetna %[failed]"
-> 
-> [Severity: Medium]
-> Will this setna instruction incorrectly evaluate CPU flags?
-> 
-> The KVM_ASM_SAFE macro executes xor %%r9, %%r9 on its success path, which
-> unconditionally clears the Carry Flag (CF=0) and sets the Zero Flag (ZF=1).
+Hi Guenter,
 
-Shame on me, I should know better after dealing with ba5ca5e5e6a1 ("x86/retpoline:
-Don't clobber RFLAGS during srso_safe_ret()").
+> Aiden,
+>=20
+> On 8/18/26 08:53, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> > - [High] The `drv_data_exynos5515` variant includes `QUIRK_HAS_PMU_AUTO=
+_DISABLE` but fails to define `.disable_reg`, resulting in PMU register cor=
+ruption at offset 0x0.
+> > - [High] The `drv_data_exynos5515` variant uses an INT_EN register for =
+masking but fails to set `.mask_reset_inv =3D true`, inverting the watchdog=
+ masking logic.
+> > --
+> >
+> Please either address or explain why those are non-issues.
+>=20
 
-Untested, but I think the fix is simply:
+For the 'disable_reg' issue Sashiko flagged, downstream says this:
 
-diff --git tools/testing/selftests/kvm/include/x86/processor.h tools/testing/selftests/kvm/include/x86/processor.h
-index 6e6f70035508..119715ffe93f 100644
---- tools/testing/selftests/kvm/include/x86/processor.h
-+++ tools/testing/selftests/kvm/include/x86/processor.h
-@@ -1318,7 +1318,7 @@ gva_t vm_alloc_stack(struct kvm_vm *vm, int nr_pages);
-        "lea 1f(%%rip), %%r10\n\t"                              \
-        "lea 2f(%%rip), %%r11\n\t"                              \
-        fep "1: " insn "\n\t"                                   \
--       "xor %%r9, %%r9\n\t"                                    \
-+       "mov $0, %%r9\n\t"                                      \
-        "2:\n\t"                                                \
-        "mov  %%r9b, %[vector]\n\t"                             \
-        "mov  %%r10, %[error_code]\n\t"
+> /* PMU registers are changed.
+>  * MASK_RESET register was replaced by CLUSTERx_NONCPU_INT_TYPE register.
+>  * DISABLE register was removed and its value was always fixed by 0.
+>  */
+
+Which is why I omitted disable_reg. It no longer exists.
+
+Looking closer just now, A few months ago when I was implementing this
+I mistook pmu_reset_func for auto_disable_func. There is no
+auto_disable_func set in the struct corresponding to exynos5515 and so
+the QUIRK_HAS_PMU_AUTO_DISABLE flag should be removed. I'm not sure how
+I did not catch that. Will fix in v3.
+
+As for the mask inversion issue, similar story. Will also fix in v3.
+
+I've been using this driver for the past few months and it has been
+working, I assumed it poked the watchdog every so often but I suppose
+with these problems it disables it completely by default. I will keep
+that in mind when testing future contributions to this driver.
+
+> Guenter
+>=20
+> > --- Patch [2]: [PATCH v2 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt=
+ compatible data ---
+> > commit fd223d0c16451bec63089d85a77c3b012b8f28ed
+> > Author: Aiden Isik <aidenisik@member.fsf.org>
+> >
+> > watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+> >
+> > Add driver data for the Exynos5515 SoC's watchdog timer.
+> >
+> >> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410=
+_wdt.c
+> >> index e31f93db05096..7299dfdb0c099 100644
+> >> --- a/drivers/watchdog/s3c2410_wdt.c
+> >> +++ b/drivers/watchdog/s3c2410_wdt.c
+> >> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_data_=
+exynos5420 =3D {
+> >>   =09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
+> >>   };
+> >>
+> >> +static const struct s3c2410_wdt_variant drv_data_exynos5515 =3D {
+> >> +=09.mask_reset_reg =3D EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
+> >
+> > [Severity: High]
+> > This variant uses an INT_EN register for masking but omits .mask_reset_=
+inv.
+> > Could this cause the watchdog masking logic to be inverted?
+> >
+> > Looking at s3c2410wdt_mask_wdt_reset(), the logic evaluates to false wh=
+en
+> > unmasking if .mask_reset_inv is not set to true:
+> >
+> > s3c2410wdt_mask_wdt_reset() {
+> > =09...
+> > =09const bool val_inv =3D wdt->drv_data->mask_reset_inv;
+> > =09const u32 val =3D (mask ^ val_inv) ? mask_val : 0;
+> > =09...
+> > =09ret =3D regmap_update_bits(wdt->pmureg, wdt->drv_data->mask_reset_re=
+g,
+> > =09=09=09=09 mask_val, val);
+> >
+> > Does this mean it will write a 0 when unmasking, disabling the reset ou=
+tput
+> > instead of enabling it?
+> >
+> >> +=09.mask_bit =3D 2,
+> >> +=09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
+> >> +=09.rst_stat_bit =3D 24,
+> >> +=09.quirks =3D QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET | \
+> >> +=09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE | \
+> >
+> > [Severity: High]
+> > Since QUIRK_HAS_PMU_AUTO_DISABLE is set but .disable_reg is omitted, wi=
+ll
+> > .disable_reg default to 0x0?
+> >
+> > During initialization and suspend, s3c2410wdt_disable_wdt_reset() appli=
+es
+> > updates to wdt->drv_data->disable_reg:
+> >
+> > s3c2410wdt_disable_wdt_reset() {
+> > =09...
+> > =09ret =3D regmap_update_bits(wdt->pmureg, wdt->drv_data->disable_reg,
+> > =09=09=09=09 mask_val, val);
+> >
+> > Could this unintentionally corrupt bit 2 at PMU offset 0x0?
+> >
+> >> +=09=09  QUIRK_HAS_DBGACK_BIT,
+> >> +};
+> >> +
+> >
+> > [ ... ]
+> >
+>=20
+>=20
+
+Kind regards,
+- Aiden Isik
