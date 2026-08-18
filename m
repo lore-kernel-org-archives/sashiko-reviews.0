@@ -1,151 +1,123 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E7A34D3BE;
-	Tue, 18 Aug 2026 14:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787063555; cv=none; b=UVbwvCaY5b55XN4GdHbeRAbKt83V/2NSZpRo3nPRhArqFB1UBZIc5pZm3sL4bZO6nQom9iu35DrsfEPyaPpgNW5QAS6ZDFTbHb2yRoN/9QencPDuiBB5zcj3v7Pyi7FBzf+GyNcqMBzMPSbEKofXtS///pnfq+7dudGQn0WBUAo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787063555; c=relaxed/simple;
-	bh=Nu4ar1tjItLX9SqqtXy6c4Ll4Jn0MfM2dez1G0XkrXA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C5SJXEps4sgLN3e2r9k6TgqbmhpJ3g7YPpB7apqMHOqtvZjmXUuym8jKPFn9YWbgSJM/UfNoynxwsCvxZrGa8T6k6OxwXjfZgrTy6+/L91VSx3mFcJKTde850vTLQ7Js2mmLpGDZu9BnEodGpf/wKkFimc8a3AosBx/W8UwtCrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=PAAHb7P+; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8461C2AA
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 14:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787063567; cv=pass; b=fDBU6NxZzjwUPP8YjBNyQLtGpU72Se6bEqt9CYM8P5iIFpfJD36l91dbfxYx7wsCtoTVCp6Y53SMXGiCNey2ubsn3fWTG0ecO9WwXAE//yNz6BcFkA3rMNVrKXIko5tQbB6iDhnDAge92/I87rLOZmN0vE0X6fDPt8mSF2447cQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787063567; c=relaxed/simple;
+	bh=NGssG08XGVBBqY+9J7nJH2PbzBb8vv1nnvneoVYMMxM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CFljKx7RfUgjGN3hOaq/1eOwl71jj+dGDP4nCc/8i/RFmddWZ9SAhJ058e4qZsC7kT1erfUDalGZrw2S5xaKla2tD5bdkQUUj7WJTeol7wEinS+AafPy9BUcKtiaqd/MgJYVyE/4RyFiuFv/nzDM+ggL6Dbu+vpwrcw89MmhKdQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2UdptJa; arc=pass smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="PAAHb7P+"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67IE3rMv2831771;
-	Tue, 18 Aug 2026 14:32:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=k0GNVx
-	WYMe6//F4MMZIk2UTC2p+ujC79wXYMitDFsm0=; b=PAAHb7P+qHB/32G8MUgTGr
-	SOTN97MaaECqF/8T7zREU9UOT2ZcnK4cQ6QmNo2E+yETLf5YhIoK4ulVEHmVFPbt
-	zRdBBqyrBG/aLolEpvtSERU6ciidnlggX/Q3OxXVDtKNqngytIizYWB+jQxPUV+m
-	5N6i9jLo/FoH6UfIZO/d8YHRUW5S4sT1eKSZ4LEFyJsXuAin8dxI/zaQsd5B11fA
-	VgikmKWi/o7EXCi1lvNFqvkBos6E/S3pQqQXoBQJd5gSX388xhkpkC514SENHihy
-	hlmcDl7FNWmVouVy3KR30Q9uOdngnSvywsNVx+LNqBk3yJQBB7GvigDOxxmacpcA
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqrss6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Aug 2026 14:32:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IEQKbP011306;
-	Tue, 18 Aug 2026 14:32:32 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngbff7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Aug 2026 14:32:32 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67IEWS9Q44171664
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 18 Aug 2026 14:32:28 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2FFF920043;
-	Tue, 18 Aug 2026 14:32:28 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 920BE20040;
-	Tue, 18 Aug 2026 14:32:27 +0000 (GMT)
-Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.2.143])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with SMTP;
-	Tue, 18 Aug 2026 14:32:27 +0000 (GMT)
-Date: Tue, 18 Aug 2026 16:32:26 +0200
-From: Halil Pasic <pasic@linux.ibm.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, Janosch Frank <frankja@linux.ibm.com>,
-        linux-s390@vger.kernel.org, kvm@vger.kernel.org,
-        Vasily Gorbik
- <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko
- Carstens <hca@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
-        Michael
- Mueller <mimu@linux.ibm.com>,
-        Eric Farman <farman@linux.ibm.com>,
-        Matthew
- Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v2] KVM: s390: Improve floating IRQ injection behavior
-Message-ID: <20260818163226.68c6bea4.pasic@linux.ibm.com>
-In-Reply-To: <3562788b-150c-4387-a840-60d9e6b6e49d@linux.ibm.com>
-References: <20260817121631.159451-1-frankja@linux.ibm.com>
-	<20260817122849.9F8061F00A3A@smtp.kernel.org>
-	<3562788b-150c-4387-a840-60d9e6b6e49d@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2UdptJa"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-49978908b35so35610395e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 07:32:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787063564; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OvVqRhxQR6UwbsviPidLsO1AZ3k/oUj//eKli33BFkp/zOpakbiMOGqwuStIOWwJiF
+         eMn0CUlmkW5dPGLhXCIk3WXm3JdJhbx7VLhpu2vqkwSgsNiLK/CHpdimAwW7K+dRXaPu
+         3b+w3FY8nYLFkXfjxAoa8Nka9t+3Wfv2/q5z8Xw5mnfTDyERgOVniuoK+b3TblpYzSxb
+         x+fF4AymT8fpPAjmTTWIIy9dx98HRT9phaMgN9Ec/Jt9J5iatB/mBBZyvC10iMGl2FQN
+         d2SFUEL2gwCvE7zhDObfhol6c8dzdE5AVnW+AhMBSzoMnRjtebYXms4xRE+FKoMt4Xew
+         CMBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NGssG08XGVBBqY+9J7nJH2PbzBb8vv1nnvneoVYMMxM=;
+        fh=vk9AksSAWxHHCwKPyS6CzXUy0Ek9eDFG1guVFjdlSoI=;
+        b=Gx/BzDoJ2NnhRG589yMuSu/e2A2HSWO2yAeGMMxQYtzY+nhWQpD8O7T5DsQorLe9DB
+         U+7O4UTOi4aujMsGoEnlO/1MX6YtdvzfF0NUeJLf7rqEpOb3kaqgEf2hYdNWqxi1LxRs
+         faK/Ryx6MQI4FxGPPTit75dKGCmi1l85Xp23Aq5h1V0Tm4as3sGOrAnXg+s1t+L/JOzS
+         6eb1QvMl+zGbJW5/BJKK70ysBByrKZAH5sN9ZMyp8it+CpjAwL7/U8ZQ6EaMOEzvBQgR
+         KzRfTItEcC1u82sinZj9eODF/surbvxwYaxFmOPB+Zq21BodXSyylidkpgLS8kzn74G3
+         SDUQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787063564; x=1787668364; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=NGssG08XGVBBqY+9J7nJH2PbzBb8vv1nnvneoVYMMxM=;
+        b=S2UdptJazEX6P/dk+hod/UW1un9AqELs6vWaGZLmCs225FF7A6T2IrV14eXlsR9fRr
+         F7IAtcsxaE5j6QEA32C+8gKfZcSPzVf94VqHm1HImXVT47mdHdf1PXIz482inDxTXTaY
+         38TdXpF+/VbUPegf3lH6Cn/iZ+rNeMjFr8fc8Ti9YWtsLr5tYuuqasiBwsNABf9qnfMs
+         vigLfYqaAMPqLSbHOYBPXvsCDUIO2LefAOurmrFceSgowgwHLMD6JRBpPad3nbtUAC2K
+         GGCbkaifHsKZlnYr7RXhVzZVlyKiN5mwk0iOvNnjAOO9M7BEmbvyjTZrk4D4UC8jsXEH
+         K75w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787063564; x=1787668364;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NGssG08XGVBBqY+9J7nJH2PbzBb8vv1nnvneoVYMMxM=;
+        b=B4VC0GOw+ePg1zmcN/sDAs07gPZ9Ltz/LZh7AFNr0KWRKcyV5NC+84gP8/oWoiLqaP
+         9avaAD5OVlzPEj2r91Kny9+AiuQi09SO2x+B2lvqqON6l9NKu1JK4LmYyXo8juLfDGZ5
+         6NSI04TueCYNGnFELZaVa2ON0kKDmJQwaoupof0tO+6APxKDLp8/u5BlVBx6cF7Dk+0y
+         VeTyrgQfm9Q9zZhBC+GViQZD8jdjs0kiwbmd0B3qAAPivr8B1mVUMqBq0U/0c3m87AwD
+         AFbysIfCijXPvvaPb0CNYeEmf9BShD6a03tAV1z0/khWf24ck1kKvHEfC4cXiVAwxne2
+         MJ3w==
+X-Gm-Message-State: AOJu0Ywn6ivKCAjU38Pr7YqT9IAAB9uC1kjknEBLdhBp94+jXBSEGSbC
+	yv1R8ICSLDrbFP7qcg/rtdXiwYx86HFBjptY/mrF26Z1Uw4u0KeXl5FlGUA2iFQNnQWgvyfu39x
+	ebQJAgy10LVf70Bpo9dWge9w3PazVa54=
+X-Gm-Gg: AR+sD12AcJ9RB4LSeGpYB/1B2/lDyQor1NR+j50RdcdQ+/3sXzY9zqtE0ngU6LLyA1E
+	k7zi2zqU6YCu78MrBlYXbz2UFmOwJkIXV/cLjwCq18EtIFe/qLAZLEuwSBo/yOigFL9nmy3Cq2I
+	P8msyRLpc0EZ3R84kM95rcCYMZMG0kXVKWfOppnEUXeThk+pQ94ryq4yzEyCBYhob56hl1MCLaH
+	eO3O59B9ovC+IVFyixiTr8j/CSadq0bLW72NNDnNc3XdROGoCSbNdGt99zWSHYoySOfRuq3AyOP
+	7NLNEGTPck2kg69owN0+59mlAGIcRb3jxz1CX+ZPgZgZtOQYo5ZaO0QI2EBxXMSodrYmTXimkD8
+	kmuRp/AjvyNAxiuRQneTTENuA6FUfV9Jd+uPl+MIxdrG4SL/9g0CJeOGY0mRAICc=
+X-Received: by 2002:a05:600c:3495:b0:499:873b:471c with SMTP id
+ 5b1f17b1804b1-4998794fafdmr589623875e9.6.1787063564017; Tue, 18 Aug 2026
+ 07:32:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfXxiaz0YapN5jl
- sFtxj6UhLRCIFO42QLy9UiQYvRABnl/zhSXBhKxqkjX9X6GDucm+V1LUiR2IM1KZzLjHoyO2IOL
- lJCs+ZY/IlBmOaYU70+G+AqTKjd7O5s1+22hRIrWOfK1mGzABKe6i2m5SDYXJw8/6npvB5G5CZh
- UmH4icZW4otD8FHXawBZfbWT7D+F9eaKyOIpqHeoFcHhezIbqYeayik25wpF+qYDF0RFNlCD6nj
- XmgdMnH/zENvASTL+GM6zsRMMcy/+FwZeP8Toe++PGoyan5aUPfxKRkyRd+187LHha+ifqkPVhX
- DPrU55GzbjIhICuld6EdZLAotMMmZgdx3s544XQ/oiF5Z7RHriVuY0ZNypsLgq5+2C4HrcItFng
- rg/07ZRyRXMOsgc/1BgDqqyTsfjEz/Sy6kVFU7eogmTWAgr2X96NZKujkSVJXgTDhf9cVVb2VCf
- 7/m66zQDJw/5XoEqVZg==
-X-Proofpoint-ORIG-GUID: yzPUUrhW7yuQ74atz1oUDne8npCXOR_B
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX9lSeU8+pX1hb
- MDtVZXonRBM/sTBPgxyfx258P4HR29lw0ncsndXvb9g8XgpfUHDGUD9oHS1F1WNm2rufWJxaNxs
- zqklFvxIvGy+9fOUpouzK2JXQjNuSYA=
-X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a846d01 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=3RURawJg7slDEgzNLLoA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: yzPUUrhW7yuQ74atz1oUDne8npCXOR_B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1011 bulkscore=0
- suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180107
+References: <20260706175138.12587-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175138.12587-2-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175846.7964C1F000E9@smtp.kernel.org> <aoQMyllxMOpY5sHx@ninjato>
+In-Reply-To: <aoQMyllxMOpY5sHx@ninjato>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Tue, 18 Aug 2026 15:32:17 +0100
+X-Gm-Features: AcwNN1VJxq7eVCEWfdNgZl_iK0BuChP1h-uLWAWz1h0QEtggQlEtSfG5vXSv_tI
+Message-ID: <CA+V-a8vu6d2mo_zSDLi12gpQa12ag7kUnUWx6E6B1843wOy+Tg@mail.gmail.com>
+Subject: Re: [PATCH v3 01/12] dt-bindings: rtc: renesas,rzn1-rtc: Add RZ/T2H
+ and RZ/N2H support
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
+	linux-rtc@vger.kernel.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 17 Aug 2026 15:22:41 +0200
-Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+Hi Wolfram,
 
-> >> +	irq_pend_mask = inti_to_irq_pend_mask(inti);
-> >>   	for (sigcpu = kvm->arch.float_int.last_sleep_cpu; ; sigcpu++) {
-> >>   		sigcpu %= online_vcpus;
-> >>   		dst_vcpu = kvm_get_vcpu(kvm, sigcpu);
-> >> -		if (!is_vcpu_stopped(dst_vcpu))
-> >> +		if (!is_vcpu_stopped(dst_vcpu) &&
-> >> +		    deliverable_irqs(dst_vcpu) & irq_pend_mask)
-> >>   			break;
-> >>   		/* avoid endless loops if all vcpus are stopped */
-> >>   		if (nr_tries++ >= online_vcpus)
-> >>   			return;  
-> > 
-> > [Severity: High]
-> > Does this code drop the interrupt kick entirely if all vCPUs currently
-> > have their interrupt masks closed?  
-> 
-> I think this is a corner case but still a valid finding. We can probably consider this
-> slowpath and wakeup/set cpuflags for ALL cpus? maybe after doing 2 rounds instead of one?
+On Tue, Aug 18, 2026 at 8:42=E2=80=AFAM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+>
+>
+> > [Severity: Medium]
+> > The commit message mentions that the RZ/T2H RTC variant supports a 1Hz =
+clock
+> > output signal on the RTCAT1HZ pin. Since this introduces a clock provid=
+er
+> > capability, shouldn't the #clock-cells property be documented and requi=
+red
+> > here with an appropriate const constraint?
+>
+> X5H has this as well but the feature has neither been implemented nor
+> tested yet. So, I suggest to add related properties incrementally.
+>
+Agreed these properties can be added when support for this is being added.
 
-With GISA, I think the FW is supposed to deliver the floating interrupts
-without dropping the vCPU out of SIE. I'm not 100% sure but I think we
-can rely on that mechanism for the CPUs that are in SIE. Without GISA,
-I think, it is reasonable to assume that vCPUs don't keep running for
-ever. It has been a while since I have looked at this code, but I think
-the SIE exit path would catch this. If that is true we would not really
-lose initiative, but just see delayed interrupt delivery.
-
-Sleeping vCPUs on the other hand are not of interest in this context, I
-think.
-
-Opinions?
-
-Regards,
-Halil
+Cheers,
+Prabhakar
