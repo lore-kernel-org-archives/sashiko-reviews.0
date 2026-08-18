@@ -1,147 +1,218 @@
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5002379981
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C74133C19E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:21:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787084333; cv=none; b=IlXWm6qh13V1Gx0/w0ftfY1Xlz1J9FjBIjgt0oz8y9mL5lazDAMCfT0/bpbPbPYvqe3A/zl5fkJfPOe2qqBVCEep/u06cKNhxIfxRXNcrjgErE8ec8N7Jbvhad6WS+9c3450nJW5n0QXK8CLnW4wujl7Tt4ZMpHhKR0OxQnX12Y=
+	t=1787084472; cv=none; b=A8j8dboXnoHH4zifchRniFT2Sb3rfqQy/aaCBFGOJkSOpciUA29uo4AaDyTWpomyzHlKGUONhGifTdm4qshzuahvoZlFmdlm1HLKWYYNp/T3yB2qC0elkS4e1DIBDDP+6TSGaoa6xDX+RtC1T4LmSg0NOelDTyYi47TluJeCofA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787084333; c=relaxed/simple;
-	bh=aFdgLI/M3aEQ4R3ESMTBC/jZAtaSl6H36QPK89eRHNA=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=AMdFqWiVSP2dZaHAlPkEVr3814wJh+QBoxJnJLaz9q93pSQhHAVDCV0t1SPolsB8Ah/KymeKT5xwARkS5HIUIlH89MpDQEeye0qcp8XoZVYNgr8ImUQ9WQ/arpD0Xk9rD2SHESshG/bRHOdPhRy3PJSA7eN88ej2jkMxKl89LLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WBBI0L1q; arc=none smtp.client-ip=209.85.215.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1787084472; c=relaxed/simple;
+	bh=uJ7l3+0Kz+d1zVSznuwkAWrbWcHhnORnvwLkNSK27QE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RoJlX+Ua0pShnuRLogYppQlopnfYrXWV4eTPiGoXRkB0dNexmtXSq5t0dIoZbHNiQqkEEMeBMFzujIRsy814VvvPDHps/4lG9aquPoDHDYxfIsLGt/XuC8zF82FzWn+FeqUqWZ3oo/O+QNRspW8FcNMaeSxQ9KOtH+/T93jWIpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JfGvi048; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WBBI0L1q"
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cbee8d434b8so126534a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 13:18:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfGvi048"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cab973140bso3391915ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 13:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787084331; x=1787689131; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787084470; x=1787689270; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6nd1e46G1OcgkU0Lw/9KLj/QTAAA1ra7omauJvV2lvM=;
-        b=WBBI0L1qHhXdoRXHFV81LEjVsa7nvpQWTMn3UIZ8cio8fRUcbv7q7FKVYwShOVOYxN
-         OSnWWgw+nr6+L9B4caTlRTm6Hion5RnkkxHGnomnu999Fe8CZUHF3Q8ibUyWDBh9tXDj
-         1fI0hrMFxazCZqNgNa3OhkI/1r6CqNXBf+TDpIrwx77n9EkiUunPBXe7umzwJR9VwHCf
-         SYM9DlG9N63Wl0lzK7pVxrSUp1i/NZSbXFkdDUgfU4xR7OxhfUqGp1EaxKC7sSUmqudj
-         3iiCcnUoq6WnJ37O6TOmwS3aodnzNDjjoWJ9leKptMY8CBwE6hDDTQ2tW4ydiAHEGrzt
-         kn7w==
+        bh=/wAo+hbi5pIQETVuT2GBp4z5fZRcd8aBocbDb7r063U=;
+        b=JfGvi0486NTdD9Rvk6BrcQ435tCff5uP4UFNoFUjXoMv2Li6MsMGs1idSDc8/uRKxR
+         y4H2DMFjnp0MqXIn9izYkjOYGA5Jy8F2PjTG+LM3W/+yQtVXJ9GqZ57SVr1Y155W/jRX
+         ulGZxyMoDEBaoU9xI/JTAxTIyzdR8AiqJ3Nii++mNpToweqHSUIhuP+xui6q323jq2va
+         S7buaQFTyXDgYn8YXFVNozcSvbK4/vGREpGrUrGpK6a0PAc4rWLLWdbMxX1O59qeP0w5
+         VN6ovqveXJfka5bNFXnl+EDj7Y7xFCFCvnKisYgp9XsWAYs8egQiizhXUm9BNw7cQvna
+         B+6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787084331; x=1787689131;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6nd1e46G1OcgkU0Lw/9KLj/QTAAA1ra7omauJvV2lvM=;
-        b=JgCx1I+OjKvNPZnysrKK8xADqrRpqL9nJ1fWQasetVDk7/ftXMsDZZ0Efo5zxryyNh
-         Pg4dwpdkhlcvES/4IGL7tBPUGRW5lNmU1RoHKdd+5fDogQZAKVAqtkysyZbrRalBbOy3
-         kY7wL6qnZVyLCUgm67KGZzeokMrMynjVdvTHjsAWrbjTJ908b2z9+Les7Cy/eWFaeJtw
-         Vnqzk62TiyTlrZECwTOVzAN+lknDW3VPtLOxWWcFHhIBWJKKqWiE0QHj3zqN6i/nLjW/
-         oFInBHYkca81X8/aVjTftJjMT0EnMOdgcgHmwYOBW4dbA2ePU73ySFe31cyR8/EjzeJO
-         5ezA==
-X-Forwarded-Encrypted: i=1; AHgh+RoZ9SKhF8nZLmlxfqix4EwTU0oRBb/tlDE59zceYapGHyX3Wg0tihA7keppzLplgd0h0gins/X5O6FEgujndz8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwyWauDLbxm3dGBFx95HbqsahQyGMbmDmzpo1e0Q9/P9tqMPSHh
-	eVadW9t6MXjnt0C/qD4VbEA7S0ht6+GNDFTOTKYFU1+wdnrGdQ3oSf867NFDLFaqIDfakGyUZ17
-	TjXWQVA==
-X-Received: from pggr13.prod.google.com ([2002:a63:d90d:0:b0:cc1:5039:f21d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:2446:b0:39b:bc11:9ec5
- with SMTP id adf61e73a8af0-3ccded40c3emr8553153637.13.1787084330881; Tue, 18
- Aug 2026 13:18:50 -0700 (PDT)
-Date: Tue, 18 Aug 2026 13:18:50 -0700
-In-Reply-To: <8c121997-6673-4d5b-927e-be74b5779059@intel.com>
+        d=1e100.net; s=20251104; t=1787084470; x=1787689270;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/wAo+hbi5pIQETVuT2GBp4z5fZRcd8aBocbDb7r063U=;
+        b=IO48Ym+8FR3E80bUCvIiSlK93JtiBV8hKdHsXo8HCoiTEe6z8lk99bnS7jTS+S0j/J
+         PC6CcFrGruf6Yz4uPaIsO7LBl49wJdHbHu2neU7Ar7qtZW6FQKo63BmAgSgt7p3Ti7eC
+         fZJw1Yojl7bfIFrsD+sITyjHjZzMEQaRWV6U9ck1/28EIz9acu5U1raseKcGvSEyD0zZ
+         A0NhzLe1vymJlPH/a6oqM/O3AgXJE4KUa2y7DLzD79uOxjqP0q47La7I6JSJdo4j5UKm
+         uIT2sDCIwHfRvFyjP0gYMNJ9dKL4V4ZSWCtJfmvNN5aOsygGul2IgPkGCzs/5CaAQqQr
+         s68g==
+X-Gm-Message-State: AOJu0YzATctKZqn36yCVrRq0+PpQBJPAtEgsmBUcCbmjlJk+OYP0vRjl
+	ApL5neoMDZrLhee/y9ukvo8QWXOg3BLGZ63Wi1H+fqPkq7vT1YPoaRD0
+X-Gm-Gg: AR+sD13RlxIae86lWPvG9yqSezSv0t+X7GHjbeRqrIowgrx7ow3PYGC4TGQWl27AjwY
+	AZP6rXPV4rCC09u4YlQrgu8GXlRxDn3a608h+OPiuPZgvarTidighNusX4KgLCWXK1814OabCnG
+	GjiwczzKxgP48Ob2nMC8EwAKIxLM+4101Q72SRRvgL54ENvHrYLVfGhUiCdh3+UY8OAJLnYyCzp
+	Ay1e/zUNf7Hgf5lApASKIx+xAQGcfcezorQl4XcFHu8xDp/7/S9B3s5Zwp0sVNT+G36+MdvtxdD
+	8K9IOsXi0S/wW1hQb2NtUDb1VeZMi0HCSAJxDgnjdXPxV5tee4ZWPTNlx+gvUnVBGv8UEr9a29K
+	t/2RDBxBRKpHYcCVBHqLThMppGgFXBdUocl5Tiwq1/FFW7GQ+gRxd6IW8dmMQ5Upo83gJnvmjWf
+	iq3z69a9xtErOAs9VYmwfSptaP5x3vmUvmRBCV57RhSoyN2eoq6WOf8SL8iYJOnhWnSA3V8LP19
+	dA8hE8+vk50e+SeyTfGNii/abQHXMR68s/J0yoB+7KCmcw0
+X-Received: by 2002:a17:903:40d1:b0:2d1:d95:5253 with SMTP id d9443c01a7336-2d5f6ba5ademr7027555ad.15.1787084469784;
+        Tue, 18 Aug 2026 13:21:09 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d5c1e542ebsm18588485ad.47.2026.08.18.13.21.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Aug 2026 13:21:09 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net>
+Date: Tue, 18 Aug 2026 13:21:06 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260812080229.2481439-4-xiaoyao.li@intel.com>
- <20260812082306.11E8B1F000E9@smtp.kernel.org> <8b05ead1-ef2c-472f-a613-bcd1a65b64e1@intel.com>
- <138969948dac13369ddebd72bf523dda4dda6b85.camel@intel.com>
- <an5W5XC97HK229MX@google.com> <eddf28d4-c211-41fb-b0a3-586e5afde030@intel.com>
- <an8wUfZ9JxvEhtHS@google.com> <d67eb097-1223-4b68-92d4-1510d3d7be7c@intel.com>
- <aoNQpP-BQKiZL47O@google.com> <8c121997-6673-4d5b-927e-be74b5779059@intel.com>
-Message-ID: <aoS-Kqz7lwt1baqg@google.com>
-Subject: Re: [PATCH v3 3/4] KVM: TDX: Don't assume exit_reason[31:16] as all-0
- in tdx_to_vmx_exit_reason()
-From: Sean Christopherson <seanjc@google.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Rick P Edgecombe <rick.p.edgecombe@intel.com>, 
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"pbonzini@redhat.com" <pbonzini@redhat.com>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt
+ compatible data
+To: Aiden Isik <aidenisik@protonmail.com>
+Cc: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>,
+ devicetree@vger.kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org,
+ conor+dt@kernel.org
+References: <20260818-for-next-lucky7-watchdog-v3-0-2912bd122c57@member.fsf.org>
+ <20260818-for-next-lucky7-watchdog-v3-2-2912bd122c57@member.fsf.org>
+ <20260818181349.894171F000E9@smtp.kernel.org>
+ <k_6CWq_7vPkV72MkyL0wCdcr9ptTffpGOGc6dBLbXjcHBV4DGRzP-35mxO0tdOBaIEhy4BxByYLCh8T5nidgwaMwGcNYD9KCIpxkeF4RRiE=@protonmail.com>
+ <83b5d8e7-9504-41c9-9f24-8fce60641de4@roeck-us.net>
+ <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 18, 2026, Xiaoyao Li wrote:
-> On 8/18/2026 2:19 AM, Sean Christopherson wrote:
-> > On Mon, Aug 17, 2026, Xiaoyao Li wrote:
-> > > On 8/14/2026 11:12 PM, Sean Christopherson wrote:
-> > > > > > And once we track the exit_reason separately from vp_enter_ret, IMO it all becomes
-> > > > > > more logical and easier to follow.  vp_enter_ret holds the information about why
-> > > > > > VP.ENTER returned/exited, while exit_reason holds information about why the _guest_
-> > > > > > exited.  Obviously it's imperfect since we're still fudging EXIT_REASON_EPT_MISCONFIG,
-> > > > > > but again, I think that's a better alternative than demuxing exit_reason in multiple
-> > > > > > locations.
-> > > > > 
-> > > > > The question do we really need to swizzle EXIT_REASON_TDCALL to other exit
-> > > > > reasons ahead? why cannot them just be handled in the central handler for
-> > > > > EXIT_REASON_TDCALL?
-> > > > 
-> > > > Because as above, it's not as central as you think.  If we want to not swizzle
-> > > > the exit_reason, then IMO the only sane way to do that is to not track exit_reason
-> > > > for TDX vCPUs, i.e. move vcpu_vt.exit_reason back to vcpu_vmx and force TDX to
-> > > > always demux vp_enter_ret every time.
-> > > 
-> > > How about adding a specific field to track the TDVMCALL leaf? Full diff as
-> > > below (the EPT MISCONFIG part can be split into a separate one)
-> > 
-> > I like it even less than demuxing vp_enter_ret on demand.  It has all the same
-> > flaws as demuxing vp_enter_ret, because it's effectively just a cache of the
-> > result of demuxing vp_enter_ret.  And caching values on entry/exit boundaries
-> > adds additional risk;  I can point you at a number of bugs in the past where KVM
-> > consumed stale data, e.g. because some chunk of code got moved to run before a
-> > cached field was refreshed.  That's unlikekly to be a problem here, but anytime
-> > data is cached it introduces risk of consuming stale data.
-> > 
-> > And the cost of demuxing vp_enter_ret every time doesn't concern me, at all.
-> > What I don't like is relying on call sites to know that the exit_reason needs to
-> > be demuxed in the first place, because that will be brittle and error prone.
+On 8/18/26 12:35, Aiden Isik wrote:
+> Hi Guenter,
 > 
-> Do you mean that with my diff, the consumers of tdx_is_tdvmcall() rely on
-> handle_tdcall() being called already?
-
-That's one of my concerns, but it's not my biggest concern.  What I'm most worried
-about is providing what is effectively an incomplete vcpu_vt.exit_reason, relative
-to how vcpu_vt.exit_reason has been handled by KVM for years, and still is handled
-by VMX.  It essentially violates the principle of least surprise: years of experience
-and huge swaths of the code base will result in developers expecting exit_reason to
-be _the_ source of truth.
-
-There are obviously cases where additional state needs to be queried to handle the
-exit, e.g. most visibly in handle_tdvmcall().  The big difference is that
-handle_tdvmcall() only deals with "new", TDX-specific functionality, and it's
-analgous to kvm_emulate_hypercall(), i.e. it behaves pretty much how the majority
-of developers would expect it to behave.
-
-> If so, I get your point.
+>> On 8/18/26 11:33, Aiden Isik wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>> - [Medium] Missing PMU counter enable configuration for Exynos5515 watchdog.
+>>>> --
+>>>>
+>>>> --- Patch [2]: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data ---
+>>>> commit 9ce360e3c933b7447ba5da9ba1b7ae3fee989703
+>>>> Author: Aiden Isik <aidenisik@member.fsf.org>
+>>>>
+>>>> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+>>>>
+>>>> This commit adds driver data for the Exynos5515 SoC's watchdog timer.
+>>>>
+>>>>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
+>>>>> index e31f93db05096..5592f25fe6c83 100644
+>>>>> --- a/drivers/watchdog/s3c2410_wdt.c
+>>>>> +++ b/drivers/watchdog/s3c2410_wdt.c
+>>>>> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_data_exynos5420 = {
+>>>>>    		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
+>>>>>    };
+>>>>>
+>>>>> +static const struct s3c2410_wdt_variant drv_data_exynos5515 = {
+>>>>> +	.mask_reset_reg = EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
+>>>>> +	.mask_bit = 2,
+>>>>> +	.mask_reset_inv = true,
+>>>>> +	.rst_stat_reg = EXYNOS5_RST_STAT_REG_OFFSET,
+>>>>> +	.rst_stat_bit = 24,
+>>>>> +	.quirks = QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET | \
+>>>>> +		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_DBGACK_BIT,
+>>>>> +};
+>>>>
+>>>> [Severity: Medium]
+>>>> Does the Exynos5515 PMU require explicit counter enablement like other recent
+>>>> Exynos SoCs?
+>>>>
+>>>> Other variants in this driver (like Exynos850, AutoV920, and GS101) that use
+>>>> the NONCPU_INT_EN PMU registers also pair it with a NONCPU_OUT register and
+>>>> the QUIRK_HAS_PMU_CNT_EN flag to ensure the watchdog counter ticks.
+>>>>
+>>>> If the Exynos5515 hardware works similarly, omitting cnt_en_reg, cnt_en_bit,
+>>>> and QUIRK_HAS_PMU_CNT_EN here might leave the counter disabled and the
+>>>> watchdog silently non-functional. Could you confirm if this variant needs the
+>>>> counter enable logic?
+>>>
+>>> Exynos5515 does not require this.
+>>>
+>>> Downstream on GS101, as an example, has this struct member set:
+>>>
+>>>> pmu_count_en_func
+>>>
+>>> This is not set downstream for Exynos5515, so it is not used for
+>>> Exynos5515.
+>>>
+>>
+>> You keep talking about "downstream". What is that ?
 > 
-> > That's why I'd be ok if vcpu_vt.exit_reason simply didn't exist: it becomes
-> > impossible to check the wrong exit field because there's only one such field.
-> > 
-> > I'm ok caching the fully processed vcpu_vt.exit_reason, i.e. with the code now,
-> > because only the TDVMCALL path needs to be aware that it may have undergone
-> > processing, *and* KVM can WARN if that processing didn't happen as expected.
-> > 
-> > Whereas checking the "right" exit reason requires doing so in multiple paths and
-> > doesn't have a natural sanity check.
+> By "downstream" I am referring specifically to Samsung's Linux kernel
+> fork for Exynos5515.
 > 
-> I'm OK with it.
+> I host a copy here: https://github.com/Aiden-Isik/linux-android-lucky7
 > 
-> After changing to use tdx_is_exit_reason_valid() instead of checking
-> (*reason != -1u) in tdx_get_exit_info(), the only issue is trace_kvm_exit()
-> prints 0x0000ffff when real EPT MISCONFIG happens. But it can be resolved by
-> your suggestion below. So current implementation can still work.
+> Also in this message I refer to Google's GS101 kernel fork, which can
+> be found here:
+> https://github.com/LineageOS/android_kernel_google_gs101
+> 
 
-Yep, that's one of the reasons why I don't want to overwrite the exit reason.
+Both are completely irrelevant for the upstream kernel. I am most definitely
+not going to look into that code. If there is anything relevant - such as
+the comment you pointed to earlier - you'll need to provide that as independent
+comment(s), not just refer to some downstream code as explanation. The
+explanation needs to be provided in the _upstream_ kernel code.
+
+Guenter
+
+>>
+>> Guenter
+>>
+>>
+> 
+> Kind regards,
+> - Aiden Isik
+
