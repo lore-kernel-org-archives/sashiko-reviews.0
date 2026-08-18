@@ -1,205 +1,170 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367CE47D451
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 16:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81938DC7C;
+	Tue, 18 Aug 2026 16:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787071409; cv=none; b=rxyNbMVB/olpquUEwlplqp7vMJx/WYmsil250zIW1HzQUhOKQPgRTwST1Udgd92GA7DRuGbjIDN2olWcjLmEcSH9nmg1ZIKU/XRyp65OWnZZp6agALrLL0lfquNs1N8U+BHu4GAPsnWo6cQ4YPEHXo14eGaISYi1Sl3F3OUIArc=
+	t=1787072340; cv=none; b=KxoMnQpArEEfInJ3pceddSMgR3KDQ9BsttWxslo/wzfFTSEzDLxMRZwya15Xi5VeeU/MONV7rBkZg/bElf8AFr+4VskF9bLURVrwAzc0b9rJKq13sQWrmpMdNL4RPUR4rNfmEdKULIm6k0MUaLmcPUGUDFj+0gSVLIawog9bt9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787071409; c=relaxed/simple;
-	bh=K+QUy4zLmlv4+MaVDHnBLu+gH/Gcy3fxKtNBfHWbBA8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aYZw71BZHpaDaXioG68H78CkvzT4Cyxdmf5Uz3K0Gm3sbznFJpjHHOZLiJdh/cZvEFYBkvRGOezoY6fda//1ViTb83MTlPK9hKY5hLDX/jtcn/JFlMeCQdEt2AF9q0D7h8Xhj/kceySizlyBbNyoviVz0GnQPzKDHUDxGzeZ8ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JmVLuODv; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787072340; c=relaxed/simple;
+	bh=qB96Myp3e87pGsgQvOtWd+Q1UZwg8qA6pnBCbcn8vaw=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Y5EAL0Dqut8GL9gOzYRRjxGYcMjiONB3YUWDyYBPcfk+quVcI+Un1AjT+lM2H9ctxm0zf4cwP/uNdCl1ffqtb4j4BpEKNLgRtdokTQvL9E3J2hfR6p/ex2XipGF9IfI5Cl9y/EZhX+8o5ksMtAZ3KdpFlZDi2FrHv3Fp//DxdmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=fxqY6BmR; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JmVLuODv"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-84f38f3b36eso130927b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 09:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787071407; x=1787676207; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6RTooZUiv9NtYPBqi5Uj7Uh2pUea9ucaOoXpNtgOCTw=;
-        b=JmVLuODv08uCaBHftsb1XEMABt69s8eOgyXfHXbTkSinOVmb3I5GX7Gon5wxkPlQez
-         mGt2YwFShHB0OjnDOaswQkruz9RB0F2V4kP1RDRfHZLwxIA4DHgEAw8+dc3DApa8W6t+
-         QistLEzxsB8SgeFl+vCRZH4tbyWnVzZnSPc+NtVmW7O2nEl8obkGIPX141Y/B7I8ELsG
-         zFGl0VANZNrIqSm/bt45nx134w2bPqIk0QLL/P1cp6uii0CSlBkRGAkiXOLV+Mgil+Zp
-         hzU+qMLB5ir9VSco0BlOPLhsBR7dn1tMsdYJ49rCv31KJpwi/JUQAToyAbZDT+Z3ymxA
-         8KTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787071407; x=1787676207;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=6RTooZUiv9NtYPBqi5Uj7Uh2pUea9ucaOoXpNtgOCTw=;
-        b=L3gRjFU4oL2RUFEMilWrIPDQ5C9gIU43H8N9uysp8IE/vdUV+7o2249knFyJ/iOZ68
-         JT+c8BcNlVCaTKehdV+hao0q2YRmqQ4Ovnrb6vo6Sr3djZF1bJxuE4z4RwgdZzB01wNf
-         /NszBstyfu5DHzod63kncohHwE4tsYLCyAtMWCsDEJnaQFEkghkljfJQLzC7EtTSA9Bo
-         obCSlltweEqpuMa2xwvVBpB68z+JyauOSSBuLmQsK9BODPZnQdyFeScROzpNKxZj4S7q
-         OJXmuteCZ13sa80M12rLHBqVO3azvocHv/OFCwTHAA1BFhuucs0qbTOFytHSbUdM/MyX
-         p9Ug==
-X-Gm-Message-State: AOJu0YxuMFYkEpFIe4G6mGnoBhtNTg1NivsvnXIpmOgY30U0xuP4tEgn
-	0Q+bNcnM6JGwY2OexlvI9sl8SgzV3WE2YX+Ss40ENsg8iiOdKXt9IAz++xyd4Q==
-X-Gm-Gg: AR+sD11h5R/yoPnqGf0wjcRsceYAfzwOapJJFhUdfU1bhGjJTVdwNnY9UQc5b4+RL5Y
-	hZHv4xVpF3Nno09E6kqXhnDgYRpDe+TzqRSBEDjy6rxltG0oyrlISb3aqCSWPpiCHexmwEhENfm
-	+MZHWihEILqEIxqUSAEAJitYOArbyA8NC0+EqbmCs1sz1a7RIOipLnyODKdBMfSa2fASI0fA8nv
-	xgyl4oAkxdCvKz+uHAC0PkC4umm+oDqCtJcvDbcanpDvYTgirqVoz4wG/Y/QEa9+6wR7RqL8ecX
-	jHMLjtRASegWFTGgnUdZool3n62x0visaLxXfqT+9hsZvKrZd8Hci2b68YSnmSI/eLIegxUqfu+
-	m+JKxkQ0LrgHirh0PV++1x7g1hCbqm16f5soanHO84tCHVTgio+CRCmgAH/XeNOlJRanaDB8B3k
-	kTyI2LB5415lqhBIwKPR9rr0hBYAUTEUj9WIYwsRDS1/KODHrtTDuJwQWGdM6cXrBmUw/LTqoKV
-	MJQyasogKMzuPuXNswwp7WaTlj/m1SAx3O9TA==
-X-Received: by 2002:a05:6a00:1c9e:b0:845:c694:5c3d with SMTP id d2e1a72fcca58-84fddfbf1c0mr37409469b3a.1.1787071407292;
-        Tue, 18 Aug 2026 09:43:27 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851b401ddd9sm2069801b3a.3.2026.08.18.09.43.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Aug 2026 09:43:26 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <8919c7f3-2dcb-4666-91e0-a91edc378c28@roeck-us.net>
-Date: Tue, 18 Aug 2026 09:43:25 -0700
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="fxqY6BmR"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67IE3d063582558;
+	Tue, 18 Aug 2026 16:58:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=xSaa5a
+	d9whBZM6BpEFa4Guwjm1yMPlDrT+vSCA8TNWw=; b=fxqY6BmRibgrvn8pRFDWIs
+	IslCLFmwj8Z48q4o5+vdRB4f5l33KZFSRlN6NufWzj2WqDK0Rli0GKAHZBwfA9iZ
+	6Z+SEEVB02GpU4a3KRScfliwTgYbcUfQloTSKDaO7PgPY3AyFuE1UWuzZOOqnj1N
+	qhnJZw5sudgHYRDJ5+KTkL/MJFTDhw3ay4jlbqQbo+gSwYgSbWOrMtmFB8IF74K3
+	VcJSqSFvyMDRDxi4U6JVc/bcV0q74xxAAAP2ete+KVx1QV+Lx3jr6HDbTI4kdnTA
+	HTFnxY9gzXoINGpNYii8oXu4mAuSbqXuHn8cI8SsbuBfO2pnp6jWmiBuambVMYlg
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2ehe972a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Aug 2026 16:58:58 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IGuPDC006658;
+	Tue, 18 Aug 2026 16:58:57 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xh49sg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Aug 2026 16:58:57 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67IGwrxi45220120
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 18 Aug 2026 16:58:53 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 25C2520043;
+	Tue, 18 Aug 2026 16:58:53 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7DC4820040;
+	Tue, 18 Aug 2026 16:58:52 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.2.143])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
+	Tue, 18 Aug 2026 16:58:52 +0000 (GMT)
+Date: Tue, 18 Aug 2026 18:58:50 +0200
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: sashiko-reviews@lists.linux.dev, Janosch Frank <frankja@linux.ibm.com>,
+        linux-s390@vger.kernel.org, kvm@vger.kernel.org,
+        Vasily Gorbik
+ <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko
+ Carstens <hca@linux.ibm.com>,
+        Michael Mueller <mimu@linux.ibm.com>,
+        Eric
+ Farman <farman@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v2] KVM: s390: Improve floating IRQ injection behavior
+Message-ID: <20260818185850.0a522630.pasic@linux.ibm.com>
+In-Reply-To: <4f233ae1-2a30-4498-bd5d-2a001c96b2d8@linux.ibm.com>
+References: <20260817121631.159451-1-frankja@linux.ibm.com>
+	<20260817122849.9F8061F00A3A@smtp.kernel.org>
+	<3562788b-150c-4387-a840-60d9e6b6e49d@linux.ibm.com>
+	<20260818163226.68c6bea4.pasic@linux.ibm.com>
+	<4f233ae1-2a30-4498-bd5d-2a001c96b2d8@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt
- compatible data
-To: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- linux-watchdog@vger.kernel.org
-References: <20260818-for-next-lucky7-watchdog-v2-0-6743f479a47f@member.fsf.org>
- <20260818-for-next-lucky7-watchdog-v2-2-6743f479a47f@member.fsf.org>
- <20260818155332.9E0DD1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260818155332.9E0DD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEyMiBTYWx0ZWRfX/dL/8Mx4u2xg
+ igyTOnPKN6vK4FIb/Hnj0K7LeRrFPzzE7ofeacGKrFTWhEue4uPP71HdwlI0gVklpr6lD0b2X+s
+ Qx7hq+pguLRq7ELH/eTkXm8V9l0Dzmqo9KE6HG529T1kfG2Vwat6+nOhIa+Yb2OLQbCNY9Z80BS
+ wOE8xSL9yfGy0dwczJXSZP5Y7HuIPPLCvlA5LC3146EkSmr770aC9lTq/K9RE4twJoIR/WiA+94
+ 6PovJdudJobwgWwObdRLVt4EGZKj+wOmbxVxwTSvwLpSF2+l2h8OLjcspnsyTYXQXie7PGaHPun
+ yds7RhnjsDdg4RFxW7TH7/dQgcqBbdHVE1nvIf3PhQ3a7O0PcZyg3Ok3z9LcXGX+gJH7j9EnWa9
+ J3a3w8UkFSCdR9iBHuAptrT8EY1iG5x8AMTEYummSwTayAoXPu6OcckrgWbo1ywQxAyGZ8K2Gne
+ U9c9WpRfgHWpGa0SMzQ==
+X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a848f52 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=Mdc7fmIS_ZdQ-8du_ekA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: IegUhs1uygnFrYziChUzy73HJAD8g8B0
+X-Proofpoint-GUID: IegUhs1uygnFrYziChUzy73HJAD8g8B0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEyMiBTYWx0ZWRfX1IQfDi16leA7
+ g4X6JgTJcsC9wNl0SvLQSKo44Y7PV28RVyJ43tFBDKTbZ743UMG1QOup7uj5/3e3M5oQGwF8Q39
+ HV9kbFLPxSuaf+AfNcgPuIvQhg+Nx9s=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180122
 
-Aiden,
+On Tue, 18 Aug 2026 17:14:52 +0200
+Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-On 8/18/26 08:53, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The `drv_data_exynos5515` variant includes `QUIRK_HAS_PMU_AUTO_DISABLE` but fails to define `.disable_reg`, resulting in PMU register corruption at offset 0x0.
-> - [High] The `drv_data_exynos5515` variant uses an INT_EN register for masking but fails to set `.mask_reset_inv = true`, inverting the watchdog masking logic.
-> --
-> 
-Please either address or explain why those are non-issues.
+> Am 18.08.26 um 16:32 schrieb Halil Pasic:
+> > On Mon, 17 Aug 2026 15:22:41 +0200
+> > Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+> >   
+> >>>> +	irq_pend_mask = inti_to_irq_pend_mask(inti);
+> >>>>    	for (sigcpu = kvm->arch.float_int.last_sleep_cpu; ; sigcpu++) {
+> >>>>    		sigcpu %= online_vcpus;
+> >>>>    		dst_vcpu = kvm_get_vcpu(kvm, sigcpu);
+> >>>> -		if (!is_vcpu_stopped(dst_vcpu))
+> >>>> +		if (!is_vcpu_stopped(dst_vcpu) &&
+> >>>> +		    deliverable_irqs(dst_vcpu) & irq_pend_mask)
+> >>>>    			break;
+> >>>>    		/* avoid endless loops if all vcpus are stopped */
+> >>>>    		if (nr_tries++ >= online_vcpus)
+> >>>>    			return;  
+> >>>
+> >>> [Severity: High]
+> >>> Does this code drop the interrupt kick entirely if all vCPUs currently
+> >>> have their interrupt masks closed?  
+> >>
+> >> I think this is a corner case but still a valid finding. We can probably consider this
+> >> slowpath and wakeup/set cpuflags for ALL cpus? maybe after doing 2 rounds instead of one?  
+> > 
+> > With GISA, I think the FW is supposed to deliver the floating interrupts
+> > without dropping the vCPU out of SIE. I'm not 100% sure but I think we
+> > can rely on that mechanism for the CPUs that are in SIE. Without GISA,
+> > I think, it is reasonable to assume that vCPUs don't keep running for
+> > ever. It has been a while since I have looked at this code, but I think
+> > the SIE exit path would catch this. If that is true we would not really
+> > lose initiative, but just see delayed interrupt delivery.
+> > 
+> > Sleeping vCPUs on the other hand are not of interest in this context, I
+> > think.  
+> This is all corner case handling. Imagine one CPU running with IO disabled
+> and all other CPUs sleeping. If now the "opportunistic" wakeup fails the
+> GISA IO interrupt will never be delivered unless there is another wakeup.
+> In reality this is a will not happen, but see the latest kvm unit test
+> patch from Janosch and it might also create latencies, the "pick one CPU
+> to deliver and wake it up if normal processing does not work" obviously
+> has a hole in specific cases.
 
-Guenter
+Right, but that is not the "if all vCPUs currently have their interrupt
+masks closed" case that Sashiko is talking about. Or did I misunderstand
+that?
 
-> --- Patch [2]: [PATCH v2 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data ---
-> commit fd223d0c16451bec63089d85a77c3b012b8f28ed
-> Author: Aiden Isik <aidenisik@member.fsf.org>
-> 
-> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
->      
-> Add driver data for the Exynos5515 SoC's watchdog timer.
-> 
->> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
->> index e31f93db05096..7299dfdb0c099 100644
->> --- a/drivers/watchdog/s3c2410_wdt.c
->> +++ b/drivers/watchdog/s3c2410_wdt.c
->> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_data_exynos5420 = {
->>   		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
->>   };
->>   
->> +static const struct s3c2410_wdt_variant drv_data_exynos5515 = {
->> +	.mask_reset_reg = EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
-> 
-> [Severity: High]
-> This variant uses an INT_EN register for masking but omits .mask_reset_inv.
-> Could this cause the watchdog masking logic to be inverted?
-> 
-> Looking at s3c2410wdt_mask_wdt_reset(), the logic evaluates to false when
-> unmasking if .mask_reset_inv is not set to true:
-> 
-> s3c2410wdt_mask_wdt_reset() {
-> 	...
-> 	const bool val_inv = wdt->drv_data->mask_reset_inv;
-> 	const u32 val = (mask ^ val_inv) ? mask_val : 0;
-> 	...
-> 	ret = regmap_update_bits(wdt->pmureg, wdt->drv_data->mask_reset_reg,
-> 				 mask_val, val);
-> 
-> Does this mean it will write a 0 when unmasking, disabling the reset output
-> instead of enabling it?
-> 
->> +	.mask_bit = 2,
->> +	.rst_stat_reg = EXYNOS5_RST_STAT_REG_OFFSET,
->> +	.rst_stat_bit = 24,
->> +	.quirks = QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET | \
->> +		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE | \
-> 
-> [Severity: High]
-> Since QUIRK_HAS_PMU_AUTO_DISABLE is set but .disable_reg is omitted, will
-> .disable_reg default to 0x0?
-> 
-> During initialization and suspend, s3c2410wdt_disable_wdt_reset() applies
-> updates to wdt->drv_data->disable_reg:
-> 
-> s3c2410wdt_disable_wdt_reset() {
-> 	...
-> 	ret = regmap_update_bits(wdt->pmureg, wdt->drv_data->disable_reg,
-> 				 mask_val, val);
-> 
-> Could this unintentionally corrupt bit 2 at PMU offset 0x0?
-> 
->> +		  QUIRK_HAS_DBGACK_BIT,
->> +};
->> +
-> 
-> [ ... ]
-> 
+Yes, I agree there are holes, and I was hoping to contribute to a better
+understanding on where the holes actually are and what are the
+implications of those holes.
 
+Regards,
+Halil
