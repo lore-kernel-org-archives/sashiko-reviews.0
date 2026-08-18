@@ -1,67 +1,68 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4FB358368
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 12:08:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627046D564
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 12:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787054913; cv=none; b=C66X7wQdDqEJI0NrCYn11g7ItQ6GNHopFac71pJRmqoJNg7dDUZb+9j4bRlfKMn18HsPS1URK6fhSBLU6/dY8+x1qew1WjOfEM/AtKRMFwb1VBSWi/uPlevE9ZVjVwUU+DG//QkF+1x4EytyLgQqkVMMdQ7mNA3KWVkQ3yRb/44=
+	t=1787057366; cv=none; b=DWbqRKPua1/+nM3TyHcrxiAxtv8QO/TPQILBxYkhSUfTsP8qN0lC/kExZnQUiuCDlqHQEKH40ZyKl/dkSA86kMvl2qT4gtP/JbpL61IrR5LHOvQlBO/eRbg7+rCAwFgIeyEWmtRCgNeXMkmJ7f2IHyKWkuimf/DJNlbFvYGd5k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787054913; c=relaxed/simple;
-	bh=fAUDPvxqaw+6pr5mc39n3eur2Tcogs78ZHJo5w0bH/g=;
+	s=arc-20240116; t=1787057366; c=relaxed/simple;
+	bh=cvR0dWZUF4em4CAcfZS1ifgyPX19BMD2dQHLEiiqibQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N5pIA7jN5UrSqu14rPCPyaPDfijLGJr0h9iV0uH6kNqsOwe0WTq3pq844Se12QLep6bkITRIEHEQnv6as30ztKzyWT9i8SGk3uJ5U6nspVoVtK+er6Lsagn3ZfqXh93lC1U9/HlwKpPNjXkHQiClOrM6NN9nporGrFQroZ0hrI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PLCQyHIk; arc=none smtp.client-ip=209.85.216.44
+	 In-Reply-To:Content-Type; b=W8kNyVzaFwY6oaP5RyuD4BVNbsA5JdL1KEdwS16WwUGYiX7wci8AhddIj4UuLPVFy4McJFUNNx1X079CwVHCovM0Jz6hr4at5mOV1J06yBTKhs+UtnWBUZEg8XMi+DV0yXSD6FBX+eNL31ZOhD9TVKwg/hlyAAzpSpqw2Sywt7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QSFob4Jl; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PLCQyHIk"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so3775627a91.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 05:08:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSFob4Jl"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38ec1402b05so3676310a91.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 05:49:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787054910; x=1787659710; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1787057364; x=1787662164; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SLWRR6bd/B1YfeV+dpf0DikAPd8jlRuMRPf5YKC5xI0=;
-        b=PLCQyHIkenyZ9FCfX9PieOpvSba+nlqcxi1Bh1II4rkAqoE5xlKOGVuMD+veLrQO7u
-         jThFTR4jOcgzVU7gcrEZbKJ1JyNJYYfCruJeNivR/ssOKlO2CNGMseh57kb9ivMXNtsM
-         vl+iROmF5JhJXziWuJKTD38HeKXBiBUK8YNVAbVPX/6vSEMNqD6djhDILVk8la/78P1t
-         P29eQFXrQl7FHxu97fALdWRYLwK835xDCr9Xo7PYjenkhiBt6f4XNHC6ORzdsbw2St6Z
-         ItFuVMBx1E2Ji5BfIxXhTyqTi0GJlczdB58qNjBVYEEreZGwFSIGXTH5pzWsUo3Z1cNY
-         effQ==
+        bh=g8KO6swaxgVTtcdM/0ToN4cGodRQ27jC6GnsdjaTcjE=;
+        b=QSFob4JllBCbNbgRrbC0N8SXTkmDbNWTnttSfypC+/fyTTpvBi7SFVlQp4M2gC+2z3
+         A1IyXl4rYRplcsrDlwddSAEUX+sLIvSJJyKVpMuN8MvH58Tjdr85fi6i8SC16eBlthd3
+         TEbJWcsdBA/f5MApoC1bHbrIpt3i+reb/NrgxJNV9SSb+udYuuy+w+PqOrR3XxX7ynPh
+         WMmEuCD8kJVgmU2F8YffO/7OeYeC9Ve1GognevXkahJJ0R4i4CzJDb29o/GZGLKKWFqd
+         +osYdJW7ByV3p7PDkhFz4hbv8FUglZdfgQfmPAHqlQOZAWdgVmpegD7/QvBj2JkW5Xvd
+         BdrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787054910; x=1787659710;
+        d=1e100.net; s=20251104; t=1787057364; x=1787662164;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=SLWRR6bd/B1YfeV+dpf0DikAPd8jlRuMRPf5YKC5xI0=;
-        b=CeCCI18atDQc6tIHf0ktBm6GPJHDx6sjn8UK7yKpoD10h40Pb9ZGRNxIv7baAt3ssE
-         sfdvg5+i5c2eqjglxDpLu1jUz4oZpy55Cs9wTKe7NWfuFKzELoENP23lDB3NHLeR8YII
-         QI6krLReAYMiUuw0VTmA/UWRFapoCrosrUUkRl7+xxt9f+dl09NC+mX1BaSS8VU2K/ZK
-         u9PqJ/PFXTEWVarvK6PCnY3PWFz3jCqRoCPNAv6cTRUFzMx/htue5pPbk4jPYN8V+ljD
-         jfzcJVT58drFLn+vKK254kCxdt59q0+oRLLzYQ1noggLZu6hPLEP/m7HfnDzeZHrKMoa
-         vCxg==
-X-Gm-Message-State: AOJu0YzwlKyABPAau4NbYjHax+F9YezFE/8vm3yvd8JBbg3xci/ndFIm
-	9gbtku0+BZ+IZIFiIbanpvIqXPkDfhAdqCdNy4P3ThnN44xalZ4bqTxMzequEg==
-X-Gm-Gg: AR+sD13ydrGmXaYi/y89VUuBYxaXx9jcSGhAtQvJgmUNIgFuzllJQRpV4oo8QKAxM7v
-	nzOllPeD2ZXuJHNBfhSZNKOFsOSbxBSPLlLivYETeX2HWbbNgScoJ0+4xmrJ7ZNyYOCXoPu6KDS
-	lJn8mlkrnabZ/XfyY/xW780lYH5JIEtb4t0kEedKnljPuQC9O1+lXcUadglnaSaqyjceEkV+HsY
-	zEnvvaVYLZ1rXwQ5j8qBVkSJ8SOFZ0JLDkDmJpEgScgbf+AH4YM3Rvd/IHhQkt1uHbZ2kHxtkOH
-	Qdiz1Z/ncKz6S85RGj3QQyd2YF5bbqcv4t7k5vPLx4BkqtAOG7WzJ4amIbVBJUMxfV+c6tAjv4c
-	pHoPW87+zhdwgEQLVYQOE5xBVIDShVtwLNmZCDj23VZ5+rBMXYcZG3tkBxojBtc1HNeotgP4Xt3
-	6KFpYSVHT4l1GIml7Xk67dTfj3PJsxQ1T7F9b2rxbwB5/Bjq7fOHV5nQcbLTZMo9pfTxK5GSqHa
-	R+gxNh/
-X-Received: by 2002:a17:90b:3c8c:b0:38e:5c6:4db9 with SMTP id 98e67ed59e1d1-3933b91661emr37890092a91.11.1787054909608;
-        Tue, 18 Aug 2026 05:08:29 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39531fbb3c5sm8561385a91.9.2026.08.18.05.08.23
+        bh=g8KO6swaxgVTtcdM/0ToN4cGodRQ27jC6GnsdjaTcjE=;
+        b=TcIrgDzlFjMef3Mg/IHH9OdSmsaTcWCKK9RwTEe06f1b0HmrsXhKpUWKz9lVp/g7O4
+         pHXj34MXmwx2NDH+dhMJKCLhWIJMnN0rGjBI4La8vEWODiNkrQSMW4aQ5t+GjtrS15oR
+         d8aEa6DHGwdVg9CEJe9Lgjap5QnEhfPe354lSEoeQptZTMneEIRQmyWNCR235SSgYypx
+         bnjr6fWpYxB5b3Ll9z2hE6aL2gCKVaiYRnh6N/J9Eus3YmYoiA5AcMD939vojAgPdEpU
+         Z2irwyaZ7xp3syk5KFIqzykuIxsHciN4o98AxIr3wdWpKFMe+PFsbeM05xojZ3ekN2Vu
+         NMOg==
+X-Forwarded-Encrypted: i=1; AHgh+RoAza6NxdLcwEMDUSMMAw+DSrrP/M0lAPxRFtdr4Q7MHh+Uar0+onpKeCqDh8IvtALZ/YAyKk07IeK8IytV98I=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzryqIQh2H1cWrfXDWOq5CaghZ4GGQrLq19l9HToVrMy0eNL+kx
+	uPTuMQwwImAv3xRMubfdIptNHy4ny7c3obwESWMVvuQJvUNY0x+xB5mq
+X-Gm-Gg: AR+sD11w0tyyX0ylTiGV+at/aZL3a8YSel73ox3XzsTnS0FcW+CezbPe9m6T1+aeSkZ
+	eJgtHh3aMe8jdxjPYsFUAaEMvnvTdlrKxSvXI4cyi8n5HoIrMeElcr1ysJyM8hmvrSAtnMTdVmu
+	FpXnWdTlIRQpzL5jIaRGk0etizgFC18FLRh9GRzj01DRBh2O96t8DEIw1QVCjKEHZIuUIWwrTDp
+	nTlRRk1t4NTYO/wPM0i/ZKHAQYiXrajS8V2gJXvhOsaVuqJHC4n4jRZxuEgw+3s1P4OCq2aWu7k
+	kOaCCaw52lN8m6wsNhwrN5nmnHaZbLL3SQbNz5DsBxqKQEv0ySLTlluVgT3g0BbZqax+WHeAZqN
+	OEibJwlyPEVtF7QRwbuVbxG3WisraTnHwUFavyiuGHwRnWxf1ZW/WHb8gSqTBtZmE6L7iHcSGJO
+	Vt/Nb9jV5BTZiudofxnF6VxCtTJmMAwhtPKZif0x9rS1BAAoRUNAVj9b2PixG+tBNiPVnLh16nO
+	mtKUKearXPQaxUFHo3p2dsLmQ8=
+X-Received: by 2002:a17:90b:264c:b0:38d:ddc2:7ccb with SMTP id 98e67ed59e1d1-3933b714f34mr36446357a91.1.1787057364363;
+        Tue, 18 Aug 2026 05:49:24 -0700 (PDT)
+Received: from [10.26.143.42] ([43.132.141.24])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39339d00eafsm7174764a91.1.2026.08.18.05.49.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Aug 2026 05:08:28 -0700 (PDT)
-Message-ID: <4706b63c-a74f-43ec-9b25-773192d7b55a@gmail.com>
-Date: Tue, 18 Aug 2026 20:07:58 +0800
+        Tue, 18 Aug 2026 05:49:24 -0700 (PDT)
+Message-ID: <4f7023b4-dd7a-47cb-9754-52e6d41d3aa1@gmail.com>
+Date: Tue, 18 Aug 2026 20:49:21 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,119 +70,150 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 25/32] ext4: defer i_disksize update while
- DISKSIZE_GROW_PENDING is set
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-26-yi.zhang@huaweicloud.com>
- <20260814103123.E1A601F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 2/3] KVM: selftests: arm64: Skip sea_to_user without
+ 1GB hugepages
+To: Marc Zyngier <maz@kernel.org>
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
+ kvm@vger.kernel.org, sashiko-reviews@lists.linux.dev
+References: <20260818112920.26252-1-likexu@tencent.com>
+ <20260818112920.26252-3-likexu@tencent.com>
+ <20260818113615.5CBE01F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814103123.E1A601F000E9@smtp.kernel.org>
+From: Like Xu <like.xu.linux@gmail.com>
+In-Reply-To: <20260818113615.5CBE01F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/14/2026 6:31 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Missing State Initialization / Dead Code: EXT4_STATE_DISKSIZE_GROW_PENDING is never set.
-> - [High] State Leak / Data Loss: Discarding the zeroed EOF folio without writeback permanently leaks the pending bit.
-
-These are false positive. EXT4_STATE_DISKSIZE_GROW_PENDING is set
-in patch 28. This patch is just preparing for that functionality.
-
-> - [High] Durability Loss: O_SYNC extensions via fallocate/zero_range silently persist a stale i_disksize.
-
-This is a false positive. O_SYNC in fallocate operations is handled
-in patch 26.
-
-Thanks,
-Yi.
-
+On 8/18/26 7:36 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] get_free_hugepages() overestimates available hugepages by ignoring reserved pages, which allows the test to proceed and crash with ENOMEM on systems with reserved pools.
 > --
 > 
-> --- Patch [25]: [PATCH -next v5 25/32] ext4: defer i_disksize update while DISKSIZE_GROW_PENDING is set ---
-> commit 5fa612fe6ec599be935a3aa55b36845e34d3180e
-> Author: Zhang Yi <yi.zhang@huawei.com>
+> --- Patch [2]: [PATCH v2 2/3] KVM: selftests: arm64: Skip sea_to_user without 1GB hugepages ---
+> commit 5fa5666824342b3dd28a5ef6a04bb5ac183257c8
+> Author: Like Xu <like.xu.linux@gmail.com>
 > 
-> ext4: defer i_disksize update while DISKSIZE_GROW_PENDING is set
+> KVM: selftests: arm64: Skip sea_to_user without 1GB hugepages
 > 
-> Operations like append allocate, zero range, and truncate update
-> i_disksize directly. If the new i_disksize exceeds the original value
-> while the zeroed EOF block is still awaiting writeback, metadata may be
-> persisted before the zeroed data, exposing stale data on crash.
-> 
->> diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
->> --- a/fs/ext4/ext4.h
->> +++ b/fs/ext4/ext4.h
->> @@ -3605,30 +3605,67 @@ do {								\
+> This commit adds a check to skip the sea_to_user test if the host does not
+> have enough 1GB hugepages available, preventing a hard failure on systems
+> without an empty pool.
 > 
 > [ ... ]
-> 
->> +static inline void __ext4_set_i_disksize(struct inode *inode, loff_t newsize)
->> +{
->> +	WARN_ON_ONCE(!rwsem_is_locked(&EXT4_I(inode)->i_data_sem));
->> +
->> +	if (newsize < EXT4_I(inode)->i_disksize ||
->> +	    !ext4_test_inode_state(inode, EXT4_STATE_DISKSIZE_GROW_PENDING))
-> 
-> [Severity: High]
-> Could O_SYNC extensions via ext4_do_fallocate() or ext4_zero_range() silently
-> persist a stale i_disksize here?
-> 
-> If the size is extended with an unaligned old EOF, the i_disksize update is
-> deferred. Since O_SYNC immediately commits the journal without waiting for
-> the pending zeroing writeback to complete, it seems it will commit the old,
-> deferred i_disksize to disk.
-> 
-> Would this cause the file size to revert on crash despite a successful fsync,
-> discarding the size extension?
-> 
->> +		WRITE_ONCE(EXT4_I(inode)->i_disksize, newsize);
->> +}
-> 
-> [ ... ]
-> 
->>   static inline int ext4_update_inode_size(struct inode *inode, loff_t newsize)
->>   {
->>   	int changed = 0;
+>> diff --git a/tools/testing/selftests/kvm/lib/test_util.c b/tools/testing/selftests/kvm/lib/test_util.c
+>> index bab1bd2b775b6..29f9c1d60b1b7 100644
+>> --- a/tools/testing/selftests/kvm/lib/test_util.c
+>> +++ b/tools/testing/selftests/kvm/lib/test_util.c
+>> @@ -222,6 +222,21 @@ size_t get_def_hugetlb_pagesz(void)
+>>   	TEST_FAIL("Error in reading /proc/meminfo");
+>>   }
 >>   
->> +	if (newsize <= inode->i_size && newsize <= EXT4_I(inode)->i_disksize)
+>> +size_t get_free_hugepages(size_t page_size)
+>> +{
+>> +	char path[128];
+>> +	size_t free;
+>> +
+>> +	snprintf(path, sizeof(path),
+>> +		 "/sys/kernel/mm/hugepages/hugepages-%zukB/free_hugepages",
+>> +		 page_size >> 10);
+>> +	if (!test_sysfs_path(path))
 >> +		return 0;
 >> +
->> +	down_write(&EXT4_I(inode)->i_data_sem);
->>   	if (newsize > inode->i_size) {
->>   		i_size_write(inode, newsize);
->>   		changed = 1;
->>   	}
->> -	if (newsize > EXT4_I(inode)->i_disksize) {
->> -		ext4_update_i_disksize(inode, newsize);
->> +	if (newsize > EXT4_I(inode)->i_disksize &&
->> +	    !ext4_test_inode_state(inode, EXT4_STATE_DISKSIZE_GROW_PENDING)) {
+>> +	free = get_sysfs_val(path);
+>> +	return free * page_size;
 > 
-> [Severity: High]
-> Are we setting EXT4_STATE_DISKSIZE_GROW_PENDING anywhere in the codebase?
+> [Severity: Medium]
+> Does this calculation overestimate the available hugepages by ignoring the
+> reserved pool?
 > 
-> Looking at this patch series, it appears the bit is checked here but never
-> actually initialized or set. Does this mean the deferral condition is always
-> bypassed and i_disksize is always updated immediately?
+> The sysfs free_hugepages value includes pages that are already committed to
+> other mappings but not yet allocated (which are tracked via resv_hugepages).
 > 
-> [Severity: High]
-> If the EXT4_STATE_DISKSIZE_GROW_PENDING bit is properly set, could it leak
-> if the dirty folio is discarded before writeback?
+> If the test runs on a host where free_hugepages meets the VM_MEM_SIZE
+> requirement but some or all of those pages are reserved, the test will
+> incorrectly proceed and still crash with an -ENOMEM abort instead of cleanly
+> skipping.
 > 
-> For example, if a file is truncated down before writeback completes, it
-> seems the bit might never be cleared since the writeback completion function
-> wouldn't be called for that folio.
+> Could we also read and subtract resv_hugepages to determine the actual
+> allocatable count?
+
+For any human to double check:
+
+diff --git a/tools/testing/selftests/kvm/arm64/sea_to_user.c 
+b/tools/testing/selftests/kvm/arm64/sea_to_user.c
+index 1c2a743ca8e23..7cf95da8e594d 100644
+--- a/tools/testing/selftests/kvm/arm64/sea_to_user.c
++++ b/tools/testing/selftests/kvm/arm64/sea_to_user.c
+@@ -281,6 +281,12 @@ static struct kvm_vm 
+*vm_create_with_sea_handler(struct kvm_vcpu **vcpu)
+  	alignment = max(backing_page_size, guest_page_size);
+  	num_guest_pages = VM_MEM_SIZE / guest_page_size;
+
++	/*
++	 * The region is backed by 1GB hugepages; skip gracefully rather than
++	 * failing with mmap() -ENOMEM if the host has none reserved.
++	 */
++	TEST_REQUIRE(get_free_hugepages(backing_page_size) >= VM_MEM_SIZE);
++
+  	vm = __vm_create_with_one_vcpu(vcpu, num_guest_pages, guest_code);
+  	vm_init_descriptor_tables(vm);
+  	vcpu_init_descriptor_tables(*vcpu);
+diff --git a/tools/testing/selftests/kvm/include/test_util.h 
+b/tools/testing/selftests/kvm/include/test_util.h
+index a56271c237ae9..0624922c2735d 100644
+--- a/tools/testing/selftests/kvm/include/test_util.h
++++ b/tools/testing/selftests/kvm/include/test_util.h
+@@ -168,6 +168,7 @@ struct vm_mem_backing_src_alias {
+  bool thp_configured(void);
+  size_t get_trans_hugepagesz(void);
+  size_t get_def_hugetlb_pagesz(void);
++size_t get_free_hugepages(size_t page_size);
+  const struct vm_mem_backing_src_alias *vm_mem_backing_src_alias(u32 i);
+  size_t get_backing_src_pagesz(u32 i);
+  bool is_backing_src_hugetlb(u32 i);
+diff --git a/tools/testing/selftests/kvm/lib/test_util.c 
+b/tools/testing/selftests/kvm/lib/test_util.c
+index bab1bd2b775b6..3bff9d825e8af 100644
+--- a/tools/testing/selftests/kvm/lib/test_util.c
++++ b/tools/testing/selftests/kvm/lib/test_util.c
+@@ -222,6 +222,32 @@ size_t get_def_hugetlb_pagesz(void)
+  	TEST_FAIL("Error in reading /proc/meminfo");
+  }
+
++size_t get_free_hugepages(size_t page_size)
++{
++	char path[128];
++	size_t free, resv;
++
++	snprintf(path, sizeof(path),
++		 "/sys/kernel/mm/hugepages/hugepages-%zukB/free_hugepages",
++		 page_size >> 10);
++	if (!test_sysfs_path(path))
++		return 0;
++	free = get_sysfs_val(path);
++
++	/*
++	 * free_hugepages still counts pages that are reserved by existing
++	 * mappings but not yet faulted in, so only free minus resv can back a
++	 * new reservation (see available_huge_pages() in mm/hugetlb.c). Ignore
++	 * surplus/overcommit: it does not apply to gigantic pages at runtime.
++	 */
++	snprintf(path, sizeof(path),
++		 "/sys/kernel/mm/hugepages/hugepages-%zukB/resv_hugepages",
++		 page_size >> 10);
++	resv = test_sysfs_path(path) ? get_sysfs_val(path) : 0;
++
++	return free > resv ? (free - resv) * page_size : 0;
++}
++
+  #define ANON_FLAGS	(MAP_PRIVATE | MAP_ANONYMOUS)
+  #define ANON_HUGE_FLAGS	(ANON_FLAGS | MAP_HUGETLB)
+
 > 
-> Would this leak cause all subsequent appends to skip updating i_disksize,
-> leading to silent data loss on crash for future writes to the file?
-> 
->> +		WRITE_ONCE(EXT4_I(inode)->i_disksize, newsize);
->>   		changed |= 2;
->>   	}
->> +	up_write(&EXT4_I(inode)->i_data_sem);
->>   	return changed;
->>   }
+>> +}
+>> +
+>>   #define ANON_FLAGS	(MAP_PRIVATE | MAP_ANONYMOUS)
+>>   #define ANON_HUGE_FLAGS	(ANON_FLAGS | MAP_HUGETLB)
+>>
 > 
 
