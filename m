@@ -1,122 +1,113 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E3B3A6F04
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 14:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116BC377563
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 14:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787064522; cv=none; b=J/6JeYd63oY1dIl6JKzJuDVNuWBmglWRgLAVg088kGTDiaRjL+tgQz57mUKEpulgBe9PSa59ufiDqwgZw73jfhOmlQiAgoKapLqeMaPIi+kF3Dw/35nzmxqiGpynlZOlH/lnd+Pm3CWe+hkLjVV1xU7mcHbe5DunxLO1V/69e4A=
+	t=1787064533; cv=none; b=VY9J6hMHiGnSj2dJEw2LyhqDJS2WoF2aOlwk4GWxV20NYRZNFMqEz5qtLp9o3oA9CMOV7OIMERm9Z0yGdA6BaXw7l29064iIin+pmPFpbjzOGJFVR75chr8Jy7D3l4DcJHTGTZsj7Su2Hc43L7wDStJ5hEcFS+pxt2vBHfkGk+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787064522; c=relaxed/simple;
-	bh=7Ycn469SFWFeO5s2hhsreUDiy/3RnWxqNOUX56/cLd4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=iOYZa0uzZ11+ZbNmdaN9UOOuIyYWDORqJxOYp+TnLAsTboPpGsZmhreaZfWIhw7i61c35jNtOUrVNgh84j7bCGTdC2MR47w1byHDw7vdVWeoLWkYyGHsZLsLm9cH3LR+3TFQ0mH83qz/iwNo94vkoYFw97b0VsM3too7bbU8/UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=L5MR4mgF; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1787064533; c=relaxed/simple;
+	bh=ut+2eq7WSaSVlLblrB/noknMPuxRnWmAtoR5s0E3O/o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IUL+Ywv6ppYki1LzZp7JoOIx8gzlSa88c/48Au7Xrg0Md2dUlPxu3YPuM7FxuB3WTGDq1kSx7mgweD47cmsc79moKZs4nBV4ORSBB49+LpYHkvchGtnyu9tEzVaLQwgPJbBx5HzduZjyEHxjs4Wi6EUCbNJDCAdlpshSGd+kuWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9HQn5II; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="L5MR4mgF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787064518;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MqratTSFO85K0UfEW/nA8PLglWUW5y7UwI0MM36KLxg=;
-	b=L5MR4mgFXS7ljsIReYV9CpjGcd5bnkqmso6mS9lYNtrujPv522B5DpUcEAsHcuj73ePq2r
-	BrSZpF+ARMns/L3oL3ZFMiGM8mKiR/nnJZH/3p+V5Gwp3iQpcJrM1lk3ZQGNPCt72stIkI
-	TP+sXzmF9Z/Wr509IilpC8gAXOV9xJE=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-IUv_sr4SM1WK20XI1oHfhw-1; Tue, 18 Aug 2026 10:48:34 -0400
-X-MC-Unique: IUv_sr4SM1WK20XI1oHfhw-1
-X-Mimecast-MFC-AGG-ID: IUv_sr4SM1WK20XI1oHfhw_1787064514
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-52d33c89a29so60946151cf.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 07:48:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9HQn5II"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-84eb992a881so3672986b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 07:48:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787064530; x=1787669330; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5b3SGhODqk0c4vJ8OoIQWWGMwcq+bbZgtoc9iFh8o/E=;
+        b=h9HQn5IIUEwsJQ5yFFBiyI6loA6bGvzkAOzvKhgNzJUga6e+QfeXnuW0N901VTuWYh
+         W0cayV3BQ+wNnu173/b3qse811o1nzpfComNXpd/NqtDt1FhfXx7FRDerQpKrPFB39cV
+         19+Iwj2acrT6fo1cnTFablAZyVSGdspfYP7a5AmOoSCwntoA7CGF0iHWo7mkI/BR0Elx
+         BEx2j9q61Q+G6GBnTEbz1TnJfcigEOG7AehH/WV2uA0Fi0tqLZF9ZuegKiNg9rvdx4rD
+         v6uqZhqqgiU/uv+g5ULkvjTMO5BjNnkpyMTvH128nlCcgMPrU3P1BjP1M+YlYlD4YRtW
+         qLVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787064514; x=1787669314;
-        h=user-agent:in-reply-to:content-disposition:content-type
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MqratTSFO85K0UfEW/nA8PLglWUW5y7UwI0MM36KLxg=;
-        b=jidLgAENHznqeobjn9vmpDJU1UOpCCBbMLDBbuPIW8FVn1YBRTIFdB+loutNSzqcAl
-         O18Bd6lNZWoE1SkmgQsaj/7NhYXDCwho5qMK/fY4/wNGyO2RagV1YVleOLBr+PlZzmvm
-         lERNDWBWi9ex8D/Qm4IcNrK9uOyo3FgoxfyK8L0btPoxEGCekBnBvNs+FUflGIBddDni
-         WT+N9myWAHCfYc2FjwU8eXX6ZOwz+T1I16JXOOrfORAS6P/h5d1qKRSYv8qdoqQK8NUg
-         jU/I0hhrGplhwA3E0KZXY3HBHN4Hzcupnzsf6YepWfUjOExc8YK+PgCsZUF4LYzttPTz
-         scuA==
-X-Forwarded-Encrypted: i=1; AHgh+RoyXP4SEKj65Sl6cSuvhqZVmPmmR2Huxsc8IT3mAXbzBxERljDHo7tJ67mSki7ELbClw6+odClvLCwqrPr0LPs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzdyx2lq/0ZWtGo2QDJHeQP+iFs/QF5v7NIXNItpvfV2g6SNvLD
-	NBQ83FpKaD0ZLr7BOo3kWpUgwsy1dHCQAa83BFGb/nAxJffj3atlkaWWKxCC9C+eVZB+ZRtL8SL
-	eMpEF6g2J3Di9qUvvQHlmTBjAoP64b7t6lfoBu8DjQN7PRvJ++XXWCyfyjONjKnWxFm0h0A==
-X-Gm-Gg: AR+sD12F9U+xXuy62dpkE2ygbmv9lrS3HqnNprLzsNOSxkNGIGvwwGAKk+0vPRkyLy3
-	M4AUj4yVCd25Hao67NPbt8glN3cylP3oXoKclY6FyzbUlIvVRwDxPBq1LZU8p2KqEVixgTT7x8j
-	xbasQxlGwNcX30DLGimhqG04aCeGrK8sYXDQYnGW5HyrGPbF7fU7TmqLGSVWGgkGFcy6Xtqbxzs
-	3dlghDlMBv2s1kQjs+1UrLXXKJ2kH19Dpd1DBEpyocS+9urqxJGtjJ/bzRzmwmNnxN3HK7vovj7
-	//QdmuS0+wvj8FQHWnYZw2zjfv0IXXfHugZ0gUWZgacfSxwcD02U3WgPoUefH2YlY0OxXcowa3V
-	3B2FlkjnN5tI1Rmw05u7L+wJQtgsuW5Pp+Fo=
-X-Received: by 2002:a05:622a:118f:b0:52d:953b:2c25 with SMTP id d75a77b69052e-52dbd769343mr79745161cf.38.1787064514168;
-        Tue, 18 Aug 2026 07:48:34 -0700 (PDT)
-X-Received: by 2002:a05:622a:118f:b0:52d:953b:2c25 with SMTP id d75a77b69052e-52dbd769343mr79744431cf.38.1787064513566;
-        Tue, 18 Aug 2026 07:48:33 -0700 (PDT)
-Received: from redhat.com (c-73-183-53-213.hsd1.pa.comcast.net. [73.183.53.213])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52db6127e2dsm41922251cf.9.2026.08.18.07.48.32
+        d=1e100.net; s=20251104; t=1787064530; x=1787669330;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5b3SGhODqk0c4vJ8OoIQWWGMwcq+bbZgtoc9iFh8o/E=;
+        b=Hh/CgnSlW84A1JO29M5tsAlpif+y0CMB6VMP8XrMIGTJ1hWswzrcJCqvirCp86Oe40
+         WjEeMlhsZDFm9mhaW58lse9YjvQFOnWFLEkqLuJWIyU8qBKaeletqHlc4twaZ7cOk84j
+         TvMdqjiCPjyxxEcsoVh4a6jla+xORQPvaBep0IO617Hhy2I/8r5E+uC4TLjeCJ/Y1b8h
+         1xYsKZTxi/Mj2JAoRnzSf/7DTuOCCFec/M0lkQNRUvpGoV0b56g9dKl/h3ArEl8S+soj
+         6Hf87irT9XqJpap00vc/pUCmM27WspbS5B3LjB3LuQGyKNezUreBwOCQliZY1/2eeUIN
+         YQ4g==
+X-Forwarded-Encrypted: i=1; AHgh+RodIzo6bav8Fua9SZNHvqSEj82ePA0bUs+HXEWBp9ERADfTTCaJMZsoW7Iad5khBdSvZtTi5ealpNOJrMDFDzo=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxx1VRfaC3nrUS/4ip4LB5sJYaQrRggqKwuaQnYrVP4NFJFm9Wr
+	awAhwHmoMXFsY2aOabYB1h06ujVdlfoMaUgvke9Ovbzd7HCy8xkOoU8=
+X-Gm-Gg: AR+sD11ha10XSLjWEi8Iq86wvwwjjd/KgL6eYYyxE+5sRCbxBCOjCQXvsQHt3EvxEFb
+	PJRmRHntPUxOel8Kinn8P+W8UWyJmMIfoXagm0UMLlN6F/mAJ4OYhG64B0/Qn4uYSHzTJwNYmjD
+	Bcgsh/2kbp8i40V9+YxGu8f/RdTmvF55yzQm2qpYjZqdOWjJnkaWONWEeUG2KPSM5WSL0dDzSXu
+	sQEgzABGRgRA5KyRsYkUplt2xDRajZrIOeCUT5jOdiPOvzA5Z1jg/q7rsInB20A2oldIb0Ak10T
+	u0tp853Kx5IaYmUtKuiWFnJuuxs9vEoRTd8Jm2cSrn/CDsnoZ/TQpo8D8jq358GDBblhpoJ4+TK
+	9yFouOqsuc6cxjCi3NTcyrnVH0QrxHfwI5qmvZDRi9ADZwOMAjuMJ6uBCZdplh8JsZNGniOivWv
+	oL6uQ9kbOg7b6RWWK0itvUk03Q8SP2DQIeGiNNb0FWz6+Rb8ey0U+8EIefZEcvhbWLZzk1ztNnZ
+	bwRwZKlFS5XX6Np5fUGiNGwAqk9gEhu47T4FLMzE7lcqvKnEKFdla60YYx4Ubv5uABymoz0dg==
+X-Received: by 2002:aa7:888b:0:b0:84e:24df:3870 with SMTP id d2e1a72fcca58-84fdddf222fmr33587088b3a.0.1787064530349;
+        Tue, 18 Aug 2026 07:48:50 -0700 (PDT)
+Received: from codespaces-2db70c.ktkhmpmw22vebpok31ngjx2qsb.ix.internal.cloudapp.net ([23.97.62.119])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851c5382f1esm638832b3a.41.2026.08.18.07.48.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 07:48:32 -0700 (PDT)
-Date: Tue, 18 Aug 2026 10:48:31 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Peng Fan <peng.fan@oss.nxp.com>, sashiko-bot@kernel.org,
+        Tue, 18 Aug 2026 07:48:49 -0700 (PDT)
+From: Triet Hoang <triet.hoang.dev@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: linux-perf-users@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
-	Brian Masney <bmasney+clk@redhat.com>, Peng Fan <peng.fan@nxp.com>,
-	robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: Re: [PATCH v10 6/6] clk: scmi: Add i.MX95 OEM extension support for
- SCMI clock driver
-Message-ID: <aoRwv93owSaasnC5@redhat.com>
-References: <20260612-clk-v10-v10-6-eb92484eda38@nxp.com>
- <20260612085812.AA15D1F000E9@smtp.kernel.org>
- <178672426822.5897.11563790103554525148@lazor>
- <aoLqSA3XOMJnJL4o@shlinux89>
- <178698381923.5030.9178300925075210422@lazor>
+	triet.hoang.dev@gmail.com
+Subject: [PATCH v2] perf unwind: handle allocation failure in libdw__get_entries()
+Date: Tue, 18 Aug 2026 14:48:37 +0000
+Message-ID: <20260818144837.741469-1-triet.hoang.dev@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260818142902.639F51F000E9@smtp.kernel.org>
+References: <20260818142902.639F51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <178698381923.5030.9178300925075210422@lazor>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: NvYtjSkE224PLiF6OKcMmUVvadjgNkcJ32rjwS7euMM_1787064514
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 17, 2026 at 09:23:39AM -0700, Stephen Boyd wrote:
-> Quoting Peng Fan (2026-08-17 04:02:32)
-> > Hi Stephen,
-> > 
-> > On Fri, Aug 14, 2026 at 09:17:48AM -0700, Stephen Boyd wrote:
-> > >+Brian and Peng
-> > >
-> > >It doesn't link for allmodconfig build
-> > 
-> > My bad.
-> > 
-> > I just posted v11 to address the allmodconfig build issue, very minor changes:
-> > -obj-$(CONFIG_COMMON_CLK_SCMI)           += clk-scmi.o
-> > +scmi-clk-y                             := clk-scmi.o clk-scmi-oem.o
-> > +obj-$(CONFIG_COMMON_CLK_SCMI)           += scmi-clk.o
-> > 
-> 
-> Ok. Brian already picked this up in a PR that he sent me so I'll squash
-> this in.
+Check the return value of zalloc() before dereferencing the allocated
+dwfl_ui_ti structure.
 
-Thanks. Sorry for not catching this. I only did an aarch64 allmodconfig
-build before I sent you that pull. I see this happened on x86_64
-allmodconfig.
+Return -ENOMEM when the allocation fails to avoid a NULL pointer
+dereference.
 
-Brian
+Signed-off-by: Triet Hoang <triet.hoang.dev@gmail.com>
+---
+Changes in v2:
+- Free the ui structure before returning -ENOMEM to avoid memory leak.
+---
+ tools/perf/util/unwind-libdw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
+index 7f35042be567..fd8a5125468c 100644
+--- a/tools/perf/util/unwind-libdw.c
++++ b/tools/perf/util/unwind-libdw.c
+@@ -379,6 +379,11 @@ int libdw__get_entries(unwind_entry_cb_t cb, void *arg,
+ 		dwfl = dwfl_ui_ti->dwfl;
+ 	} else {
+ 		dwfl_ui_ti = zalloc(sizeof(*dwfl_ui_ti));
++		if (!dwfl_ui_ti) {
++			free(ui);
++			return -ENOMEM;
++		}
++
+ 		dwfl = dwfl_begin(&offline_callbacks);
+ 		if (!dwfl)
+ 			goto out;
+-- 
+2.53.0
 
