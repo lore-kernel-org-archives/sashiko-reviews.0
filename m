@@ -1,90 +1,135 @@
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-139.mta1.migadu.com [95.215.58.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA49437E5E7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 10:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2413D6CD7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 10:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787047424; cv=none; b=inq81Y0M7kzbAAp6NH4oSzBCavexMYhn5qtet2v/4DLqRCPbMU+KX9ecn4b10E8Ul6ad4qtRymyfHkrsw8O1TsnKsVyyPEHGmHcPlTQhCq+lxN7UHUWurihQrvS2zYMytJ1Du0I1HU8xOvr9A1QIbsc51Fz78E3y74vXeJZsWRU=
+	t=1787048510; cv=none; b=Kuc/8LigahSmpYnxQJ056q0PKRzW0WrrQAoxvPWZfRZGuip4shj0fiQa83erG1JWTQ6bEvJIasat4nicAzOhj5pmllQF8CZtWGQlL/M8WqFPHX4zMENlTJmKLqdoc8s5OCjVDqhq59hr6evqQCEnCI2IzXtvtKw6uSYSD9wlKvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787047424; c=relaxed/simple;
-	bh=C0HCW72zM79iFVVsM5WSeATz1jsOrplZoTWDpYd8nmQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JIkmksZKWq9b35i7yVIV5V+9EuU8xntGl/Eh1dH7Wjx6pOQIs6eRbGBA6rROZPE87jlTiGTknJb9RxsszHK2S8djM1bOtb2xsbmVw2qQEXjeiPCySBMtbkEOxsRecNZIiquuAKiaFhXdz1g4+kN5lnVFlo6x3JmxFoDF1qmggKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=EKCBhfvT; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+	s=arc-20240116; t=1787048510; c=relaxed/simple;
+	bh=sEINk0SuzGmZfx49ENHguHS9kV8Gt5ZTS5C85FRtTzQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oMwvJVXwG0TvdEO6ZPYR0rz7GnPDpSvVtt9QZ/m+L8tOgHIn6/PvtRWIjN8Mk5ZdHtZZSIJBUd6/sLJpqRFoEtY/YlRp36A/l3PNIqB97sr0I6bA2OZolIW2WGeCF8GFFATd2mTe0U3xUCIr1cUi8ehxPTB6d9qqwEDg5SBZRY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=XQ1H2adw; arc=none smtp.client-ip=95.215.58.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="EKCBhfvT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=flTW
-	lluT2xrHSGFV7gl3IrPvJEE1mKVirXZXfgwfNAU=; b=EKCBhfvT5uRw80x8kpOz
-	WMz9GKf1ZZUDE8IOgrsuzZyzUbQNcJKriEGwpuJyXWJZgCPDLJNi6xTFxiktlERZ
-	tSIfL4LfHvQL8dPGSYnGdJsfmja83MrLdAFkK13DuM7v3fvrmJeoga2bdCJTm1rH
-	afgGb//yRnEbk9mFm1nmaba+sGcb1646f8kiL6MAjgC0roTQLU/+11g9ZO+3SYBx
-	pYXxY3GGwScfQJJGCuyap9imQb0fcF0szf5oV7U2OZQvoDvCaRp3aYIJLu6jbVva
-	bPUuhGOHFyoAOIZIQk0u7ZDD5wg0Hu54oZVf+eOxOHamuXnZLOL0NyogLkgG73C/
-	bg==
-Received: (qmail 3751099 invoked from network); 18 Aug 2026 12:03:35 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 18 Aug 2026 12:03:35 +0200
-X-UD-Smtp-Session: l3s3148p1@xDNmZk9ZrMkujnuP
-Date: Tue, 18 Aug 2026 12:03:35 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3] ARM: dts: renesas: r9a06g032-rzn1d400-eb: enable
- GPIOs on CN12
-Message-ID: <aoQt94eAuPlfV-0p@ninjato>
-References: <20260817103255.49565-2-wsa+renesas@sang-engineering.com>
- <20260817104615.3D4631F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="XQ1H2adw"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=sEINk0SuzGmZfx49ENHguHS9kV8Gt5ZTS5C85FRtTzQ=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787048506; v=1; x=1787653306;
+ b=XQ1H2adwcTHtv1NCAZhgeiKoyGBAWuvcyL1ERtC0gAqTo+Uo1/aq6J6qOcNXHAwS6wntfZkK
+ Bu4kIyX70PoTFbOPmQ/L7mUTqlEFaR0VvGDuDXiu14ftAS32Z5UbWFwd6xkp+VEGfF7/L5V0k5k
+ Uoj8YbjtJMTJGqOp3oaOW+kQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from mail-lf1-f45.google.com (209.85.167.45)
+	by smtp.migadu.com with ESMTPS id bc5e8edc602c405d;
+	Tue, 18 Aug 2026 10:21:46 +0000
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5b0129cf6ffso6506e87.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 03:21:45 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyZCIvMMc79HkzXGimXuZXhsfgqpNB5VBcsJHPi8ZoKIz005YYd
+	u4bOtxnC8kgVmAAoC+7xid3CYR5yBlxz3mh1mL0SbyYkPwekirz4/9CuGhpLhQN/94gaXle/+bu
+	TBvDVZf+siQ4WKaTRK0hIU+MvzjcoRfwcwoPiQv7b
+X-Received: by 2002:a05:6512:a84:b0:5b4:4c8a:abef with SMTP id
+ 2adb3069b0e04-5b471fcde42mr199081e87.10.1787048504871; Tue, 18 Aug 2026
+ 03:21:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9F4I4fnNXXphUTNM"
-Content-Disposition: inline
-In-Reply-To: <20260817104615.3D4631F000E9@smtp.kernel.org>
-
-
---9F4I4fnNXXphUTNM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20260818093117.2379344-1-fuad.tabba@linux.dev> <20260818094305.828891F000E9@smtp.kernel.org>
+In-Reply-To: <20260818094305.828891F000E9@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Tue, 18 Aug 2026 11:21:00 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso2=38PJUg@mail.gmail.com>
+X-Gm-Features: AcwNN1XBa4lu--DTS7FPE7UTplgkK7PvCaW-8GJz5zkY8XlBihkyJFzXTyTS3qg
+Message-ID: <CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso2=38PJUg@mail.gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Validate the SVE vector length in pkvm_vcpu_init_sve()
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
+On Tue, 18 Aug 2026 at 10:43, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] A fallible memory allocation failure inside `hyp_pin_shared_=
+mem()` triggers a `WARN_ON()`, which results in a fatal hypervisor panic.
 
-> > +&gpio2b {
-> > +	pinctrl-0 =3D <&pins_cn12>;
-> > +	pinctrl-names =3D "default";
-> > +};
->=20
-> [Severity: Medium]
-> Will these pinctrl properties be ignored here?
+It can't fail. hyp_s1_pgtable_pages() provisions the hyp stage-1 page
+tables at init to cover all of memory at page granularity, so hpool
+can always map any host page into the hyp linear map.
 
-Tests show they are not ignored.
+/fuad
 
-
---9F4I4fnNXXphUTNM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqELfMACgkQFA3kzBSg
-KbZLSg//bdXjNSgSsj8BkDOTndwfz+OkXGkHBwXfLh3TrYDM4M4HmN7fRs764T/f
-1O+vRiqaPSdxT2zZ2wV81g0Cyz9/QfKwCpnKAeNMyxHisfvYHzxClhV1YngARm14
-kNA9NFS9X0fYvWChKgCG9fYN2baks79t1VCwXYLIyiZQrNQ3b0TdXulxuovCNe78
-QjU6ce3QxRO7OYPWZDFBf4bJrnNnL/6lP1Iqiyqouy2MxBopH/JaW3uGvWtOnrxZ
-QLaRT9lCcSnlVln9gUGkJfprlQtZAL2+zxuWiGBaqbXy5+MbBky3iYgYp10tkAkP
-aAVzIbMgyOoh0kMoefjl6QEIKb0qqMrMyVyQbkwjspjO6nROuNjaoCA2Huxmv25k
-8ymK+ISt/3zpMPw2gjSNMJWZoKSjkREjcnlrylNe2W73uJZBSjGnzrnID+jwllDw
-75mlyF9od36PvMOYtiEJiXbdjLdYzzX/2qDMT5Uejznv7DQOOa4sIdStsqwaoIt7
-aTW77tXmZeY9hvaG5fW5ipWfX2cZrr/tBCHJzez4y0ckzS/V6hA45Hr11Z4erx+S
-Dmyk/avYAcCjSpTuJNNUbw0YNy1Il36+ignKMFQL234a2tDcqnBOHiGDgn2rpcr0
-VA9601tfEvkw7MBfIPcjV7RYlmcIX/dqL8JH9z9ehFB1kcOh4og=
-=DvzK
------END PGP SIGNATURE-----
-
---9F4I4fnNXXphUTNM--
+> --
+>
+> --- Patch [1]: [PATCH] KVM: arm64: Validate the SVE vector length in pkvm=
+_vcpu_init_sve() ---
+> commit f011c5300d433db59b3f2b97e822b9e148c39b84
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> KVM: arm64: Validate the SVE vector length in pkvm_vcpu_init_sve()
+>
+> This commit updates pkvm_vcpu_init_sve() to validate the host-provided
+> SVE vector length before deriving its state size. This prevents an invali=
+d
+> length from reaching the sve_state_size_from_vl() macro and triggering a
+> fatal EL2 WARN_ON().
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/p=
+kvm.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> [ ... ]
+> > @@ -460,14 +460,15 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcp=
+u *hyp_vcpu, struct kvm_vcpu *h
+> [ ... ]
+> > +     sve_state_size =3D sve_state_size_from_vl(sve_max_vl);
+> > +
+> >       ret =3D hyp_pin_shared_mem(sve_state, sve_state + sve_state_size)=
+;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but looking at hyp_pin_shared_mem(), could =
+a
+> memory allocation failure here trigger a fatal hypervisor panic?
+>
+> If host userspace repeatedly creates VMs and vCPUs to exhaust the
+> hypervisor's memory pool, pkvm_create_mappings_locked() can return
+> -ENOMEM.
+>
+> Because hyp_pin_shared_mem() wraps this fallible call in a WARN_ON():
+>
+> arch/arm64/kvm/hyp/nvhe/mem_protect.c:hyp_pin_shared_mem() {
+>     ...
+>     for (cur =3D start; cur < end; cur +=3D PAGE_SIZE) {
+>         p =3D hyp_virt_to_page(cur);
+>         hyp_page_ref_inc(p);
+>         if (p->refcount =3D=3D 1)
+>             WARN_ON(pkvm_create_mappings_locked((void *)cur,
+>                                                 (void *)cur + PAGE_SIZE,
+>                                                 PAGE_HYP));
+>     }
+>     ...
+> }
+>
+> And since WARN_ON() is fatal at EL2, does this allow unprivileged host
+> userspace to intentionally crash the host system if the allocation fails?
+>
+> >       if (ret)
+> >               goto err;
+> >
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818093117.23=
+79344-1-fuad.tabba@linux.dev?part=3D1
