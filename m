@@ -1,109 +1,180 @@
-Received: from devianza.investici.org (devianza.investici.org [198.167.222.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-30.mta1.migadu.com [95.215.58.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD522F8E8B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 15:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.167.222.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF63AAF52
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 15:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787066252; cv=none; b=Noaeod2IVjM+bXoPyUOWvRUTU4uZNk8snZKRhTZpHKjyrf9VqJEWovTuDnHyqKkDoZxKloc2TA7zyUz5oeYWjXhdK3LbDnzdHuhirxdniQN+me+lIqm5pos2iycRkU1WShzXz1BfHLr7bFOBBywuJ4/BR9ecvwhRN2fGYv+83Pc=
+	t=1787067264; cv=none; b=N2v/ewk0T4vsedEuGddqeZbcvhFYvP6cZ+onnbelCMMatqKopwwUNaeKk/hklV0IAaC8aeu98NbODft8mFHJuDqk6FKpI3rH56vXB63Gk4tXluxiPwZbOcgHFQWfoTIJzXv6jMMm0iX5YNxL4ra02hH1DAMgKCT/91rkiLVYAOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787066252; c=relaxed/simple;
-	bh=IAFOleP9PKZrqVNHvILegTCgb2/Y9h07y+JQuxY4Wnk=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=j+UOnqlNOQQ8iAdTIQRtm4r4AhNtn9NftbdfTn3yJIy13dTwb3ZU6Qqoz4jH68eU9xIMTpbuV993L14GfdA5F3RGm41E2Qb3tj271XHHLEabUbs+O6TdWUBitBem8xFfduPjA1ZevvaDI38nGKJv9dlg02d1CCiUmFL9MPn90Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net; spf=pass smtp.mailfrom=grrlz.net; dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b=Rfjy0M/u; arc=none smtp.client-ip=198.167.222.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grrlz.net
+	s=arc-20240116; t=1787067264; c=relaxed/simple;
+	bh=lIAig7tUvkXtXkjFtjUQBXAMX5gnC9a5uuDkqG0DwUI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RpBbxYQ2ootOHusr/K3F2e9SxAcx28E1JuAwmF+jBBcTmSape8m0mXvXP+KV+qmdHU22pI77PIsKJITCKiqIhGPpLWFnpsomGBgrmRo+2IeKP7IqJnRKdmWDON4eGkMK0B2Hx5ZFXAVOamQgrZYavWODrc/EK/ci6ym+f6TZZ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=moE/eT0t; arc=none smtp.client-ip=95.215.58.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b="Rfjy0M/u"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grrlz.net;
-	s=stigmate; t=1787066241;
-	bh=4pgB6nTt+K8CIebFqRQUJykNy2kI7bCZa71ZlN3FIBs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=Rfjy0M/uoJu2Sui7u+ve8khcxnyNywQUHebzBcNMtIcY0w9wrFg4Qca/ynJWAM2gB
-	 PnSiACJ1Sv6HGnOIL3y2HN+LmXAFpoSgYihVILbf4KGDe2J39lKuMBSWtfg6WCsmqA
-	 duJjaAtKfGM4JBBpfYb88U+oSGkbr0UWw2y++1a4=
-Received: from mx2.investici.org (unknown [127.0.0.1])
-	by devianza.investici.org (Postfix) with ESMTP id 4hPYGT0jNRz6vHk;
-	Tue, 18 Aug 2026 15:17:21 +0000 (UTC)
-Received: by mx2.investici.org (Postfix) id 4hPYGS561Gz4y6W;
-	Tue, 18 Aug 2026 15:17:20 +0000 (UTC)
-Date: Tue, 18 Aug 2026 16:17:20 +0100
-From: Bradley Morgan <include@grrlz.net>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-CC: linux-trace-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_kprobes=3A_use_DEFINE=5FDEB?=
- =?US-ASCII?Q?UGFS=5FATTRIBUTE_for_the_enabled_knob?=
-In-Reply-To: <20260818020119.2DF141F000E9@smtp.kernel.org>
-References: <20260818014920.23870-1-include@grrlz.net> <20260818020119.2DF141F000E9@smtp.kernel.org>
-Message-ID: <786EF401-1ECA-4ACC-BED9-764ADFAB9087@grrlz.net>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="moE/eT0t"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=lIAig7tUvkXtXkjFtjUQBXAMX5gnC9a5uuDkqG0DwUI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787067260; v=1; x=1787672060;
+ b=moE/eT0tNfcWqeIou+JbHGVLmZmzZr4d4y4Y7FeiC4PESwkM9BcYHpkYslSOMYDMdmk0G32m
+ OoAVAnoJRmWI9nVLQAidCXX84gRkNIke+Hr8/vfiqGolk8BtKz9RgGqYAjxdfUweWy/4uJm8wO0
+ kkzjOgHCvSct2JlaYQjfPqvo=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from mail-lf1-f41.google.com (209.85.167.41)
+	by smtp.migadu.com with ESMTPS id b852e35d4454865d;
+	Tue, 18 Aug 2026 15:34:20 +0000
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aeb688ae83so8588e87.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 08:34:16 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzLUEitNyUqWzm/ik1kHoixHtU7iXdgnYY9AECyE2m+vNHku6j+
+	fs1iDll6Lf+j8IT1I++TpkYk7v+cF2PBcUwgtuXWDnBo1JnvQ8vjLI9yPZhCVRkJKpelitH12e+
+	5k7PjiGMoqL+iYwkZtR2YyUSFtBZCcGRfmMJkqJW3
+X-Received: by 2002:a05:6512:286:b0:5b4:74e2:4171 with SMTP id
+ 2adb3069b0e04-5b474e243eamr126342e87.4.1787067255336; Tue, 18 Aug 2026
+ 08:34:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20260731143541.956291-1-vdonnefort@google.com>
+ <20260731143541.956291-7-vdonnefort@google.com> <20260731144557.AE9001F000E9@smtp.kernel.org>
+In-Reply-To: <20260731144557.AE9001F000E9@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Tue, 18 Aug 2026 16:33:39 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTx0hjergdVY9QA_oprver04ZDEDzt4aV=Jp_pVCpkssCw@mail.gmail.com>
+X-Gm-Features: AcwNN1UYsjeQqgZxajIZ4qeFFphUQpYmE_se_eYbtb9J9ALm7i8zcSrROb_yVHU
+Message-ID: <CA+EHjTx0hjergdVY9QA_oprver04ZDEDzt4aV=Jp_pVCpkssCw@mail.gmail.com>
+Subject: Re: [PATCH v4 06/17] KVM: arm64: Add pkvm_hyp_req infrastructure
+To: sashiko-reviews@lists.linux.dev
+Cc: Vincent Donnefort <vdonnefort@google.com>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 18 August 2026 03:01:18 BST, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential
->issue(s) to consider:
->- [Low] The 'enabled' debugfs file is created using `debugfs_create_file()` instead of `debugfs_create_file_unsafe()` with a `DEFINE_DEBUGFS_ATTRIBUTE` struct, leading to redundant proxying and overhead.
+On Fri, 31 Jul 2026 at 16:06, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Phantom hypervisor requests leading to infinite loop and memory =
+leak on hypercall errors.
+> --
+>
+> --- Patch [6]: [PATCH v4 06/17] KVM: arm64: Add pkvm_hyp_req infrastructu=
+re ---
+> commit ec846697735578e1b5a4e25b88e07602c29ae6a2
+> Author: Vincent Donnefort <vdonnefort@google.com>
+>
+> KVM: arm64: Add pkvm_hyp_req infrastructure
+>
+> Introduce a struct pkvm_hyp_req to enable the pKVM hypervisor to request
+> resources from the host. Provide serialisation helpers to transport these
+> requests via SMCCC registers and a macro to automate HVC retries.
+>
+> > diff --git a/arch/arm64/include/asm/kvm_pkvm.h b/arch/arm64/include/asm=
+/kvm_pkvm.h
+> > index 74fedd9c5ff02..6c2497047f8d8 100644
+> > --- a/arch/arm64/include/asm/kvm_pkvm.h
+> > +++ b/arch/arm64/include/asm/kvm_pkvm.h
+>
+> [ ... ]
+>
+> > +/* Return true if a pkvm_hyp_req has been decoded from the SMCCC args =
+*/
+> > +static inline bool smccc_to_pkvm_hyp_req(struct pkvm_hyp_req *req, str=
+uct arm_smccc_res *res)
+> > +{
+> > +     u8 *src =3D (u8 *)res + offsetof(struct arm_smccc_res, a2);
+> > +     u8 type =3D *src;
+> > +
+> > +     if (type =3D=3D PKVM_HYP_NO_REQ || type >=3D __PKVM_HYP_REQ_TYPE_=
+MAX)
+> > +             return false;
+> > +
+> > +     req->type =3D type;
+> > +     memcpy(&req->args, src + 1, pkvm_hyp_req_arg_size(type));
+> > +
+> > +     return true;
+> > +}
+> > +
+> > +int __pkvm_handle_smccc_req(struct arm_smccc_res *res);
+> > +
+> > +#define pkvm_call_hyp_req(f, ...)                                     =
+                       \
+> > +({                                                                    =
+                       \
+> > +     struct arm_smccc_res __res;                                      =
+                       \
+> > +     int __ret;                                                       =
+                       \
+> > +     do {                                                             =
+                       \
+> > +             __ret =3D -1;                                            =
+                         \
+> > +             arm_smccc_1_1_hvc(KVM_HOST_SMCCC_FUNC(f), ##__VA_ARGS__, =
+&__res);               \
+> > +             if (WARN_ON(__res.a0 !=3D SMCCC_RET_SUCCESS))            =
+                         \
+> > +                     break;                                           =
+                       \
+> > +             __ret =3D __res.a1;                                      =
+                         \
+> > +             if (!__ret)                                              =
+                       \
+> > +                     break;                                           =
+                       \
+> > +             __ret =3D __pkvm_handle_smccc_req(&__res);               =
+                         \
+> > +     } while (!__ret);                                                =
+                       \
+> > +     __ret;                                                           =
+                       \
+> > +})
+>
+> [Severity: High]
+> Can this sequence lead to an infinite loop and memory leak on hypercall e=
+rrors?
 
-+akpm@linux-foundation.org 
+This does not happen. Every handler reachable through
+pkvm_call_hyp_req() goes via errno_to_smccc(), which always calls
+pkvm_hyp_req_to_smccc(), and that writes 0 to x2 when there is no
+request to pass back. So the decode never sees a stale argument.
 
-I hate sashiko so damn much, best to wait for review!
+/fuad
 
->--
 >
->--- Patch [1]: [PATCH] kprobes: use DEFINE_DEBUGFS_ATTRIBUTE for the enabled knob ---
->commit f5babbd146ccf4194f28506d04f5cbfb2c40150a
->Author: Bradley Morgan <include@grrlz.net>
+> When the hypercall fails and returns a non-zero error in __res.a1, the ma=
+cro
+> passes the result to __pkvm_handle_smccc_req() to check for a piggybacked
+> request in __res.a2.
 >
->    kprobes: use DEFINE_DEBUGFS_ATTRIBUTE for the enabled knob
+> Standard EL2 handlers typically do not clear the x2 register (which maps =
+to a2)
+> on error; they set x1 to the error code and return. This means a2 retains=
+ the
+> original second hypercall argument passed by the host.
 >
->This commit replaces the custom read/write handlers for the debugfs
->enabled
->file with the standard DEFINE_DEBUGFS_ATTRIBUTE macro. It simplifies the
->implementation and accepts integer inputs rather than characters.
+> If the least significant byte of that original host argument happens to m=
+atch
+> a valid request type, smccc_to_pkvm_hyp_req() would mistakenly decode a p=
+hantom
+> request. The host would handle this phantom request, return success, and =
+the
+> macro would then infinitely retry the failing hypercall.
 >
->> diff --git a/kernel/kprobes.c b/kernel/kprobes.c
->> index ca9d834d0b843..10bcc2a0926a6 100644
->> --- a/kernel/kprobes.c
->> +++ b/kernel/kprobes.c
->> @@ -2962,47 +2962,22 @@ static int disarm_all_kprobes(void)
+> Is there a way to explicitly distinguish a hypercall error from a legitim=
+ate
+> hypervisor request, perhaps using a specific return code in a1 to indicat=
+e when
+> a2 actually contains a request?
 >
->[ ... ]
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260731143541.95=
+6291-1-vdonnefort@google.com?part=3D6
 >
->> -static const struct file_operations fops_kp = {
->> -	.read =         read_enabled_file_bool,
->> -	.write =        write_enabled_file_bool,
->> -	.llseek =	default_llseek,
->> -};
->> +DEFINE_DEBUGFS_ATTRIBUTE(fops_kp, kprobes_enabled_get,
->> +			 kprobes_enabled_set, "%llu\n");
->>  
->>  static int __init debugfs_kprobe_init(void)
->>  {
->
->[Severity: Low]
->Will this lead to double-proxying for the debugfs file?
->
->Since DEFINE_DEBUGFS_ATTRIBUTE natively provides debugfs_attr_read and
->debugfs_attr_write operations that already include debugfs_file_get() and
->debugfs_file_put() protection, passing fops_kp to debugfs_create_file()
->in debugfs_kprobe_init() will cause the debugfs core to wrap it again:
->
->kernel/kprobes.c:debugfs_kprobe_init() {
->    ...
->	debugfs_create_file("enabled", 0600, dir, NULL, &fops_kp);
->    ...
->}
->
->Could this use debugfs_create_file_unsafe() instead?
->
->
-
-Thanks!
