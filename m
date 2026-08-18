@@ -1,106 +1,105 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54EE47CA89
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 16:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E9282F1E;
+	Tue, 18 Aug 2026 16:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787069442; cv=none; b=lHRKsW3JRK4PMm4wdjzdo32byxbbbhEKCbxooLPpjvK93hBQBY6gWp0euqn23mKdnl2SCSw97yNjlk21l0d3If/ish4orq2L1LVP0H8+3LmUEUVzIy4h0rTbSeqvPWomQ9jDAei2rGs05R78FUbT3xgihiduzdrgLY3FZx/db7M=
+	t=1787069552; cv=none; b=f1jXf2rTW4Ny0liEj8XjlGbhfIgNIVCFXw0GbpOm+0ZjElc8hihM8peBAayKiIu4DyBqmUJq7jjpCWMo587BAm4qV8kITquIDWgedOVyWvs6yFDUEZZbBHUFnf40uW7DmqSDgp4Vqr/PY2xgx+Dc/y4JI71jiIPUcdOQPwgfx60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787069442; c=relaxed/simple;
-	bh=Ej1OKIzZ624Ui5Xsq/EoGFTv2e1GKHnjXgYOyjTcjMU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qq7fVUKJHjjA1OQWrXZQTSOIV8NSNRy7ciJRlArH7TtKHyAb0cgZFal1tqPRi6g8xJbmEKPB5Idj1qnLJgLpI3r6Y+5sJ8HPA7Xdb/lrBlAVlOu4Z01l57tPggvsiIH2QIUIHm56qb8oAABR0UyruonTOvWna6cO7vCRPTUC/dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=62zlIpNa; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1787069552; c=relaxed/simple;
+	bh=P2PWozcu2sCCQVd2ueH+8VGwvPlyXhpt8AG4GK9IJ0k=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=X9ZdQhMz1fs4KcOR6q0vKM6mnKpR45hmeUDmNpeqZH1s/s85F3do720MzhDQls/7ZLvpmjqGx/91qBdOBHhJBBlcZHhtDHTaXWdWY0zspfQaExxZdKX0G1rq9JdRMaVD/GQSSiFsA0b7bFNuEor8Q9VPjFgxqhwinuW8oCeNugw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cWp5hQiT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="62zlIpNa"
-Received: from omf09.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay09.hostedemail.com (Postfix) with ESMTP id 6CAFE8013E;
-	Tue, 18 Aug 2026 16:10:30 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf09.hostedemail.com (Postfix) with ESMTPA id A0DC820025;
-	Tue, 18 Aug 2026 16:10:28 +0000 (UTC)
-Date: Tue, 18 Aug 2026 12:10:25 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Bradley Morgan <include@grrlz.net>
-Cc: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] kprobes: use DEFINE_DEBUGFS_ATTRIBUTE for the enabled
- knob
-Message-ID: <20260818121025.187b1a1c@robin>
-In-Reply-To: <786EF401-1ECA-4ACC-BED9-764ADFAB9087@grrlz.net>
-References: <20260818014920.23870-1-include@grrlz.net>
-	<20260818020119.2DF141F000E9@smtp.kernel.org>
-	<786EF401-1ECA-4ACC-BED9-764ADFAB9087@grrlz.net>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cWp5hQiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3351F000E9;
+	Tue, 18 Aug 2026 16:12:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787069550;
+	bh=GrXrMuiesxftt1DXnu2ZTlsi1uFiEr3n3z3WjCq+UDE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=cWp5hQiTGuFL5hgSDgtWZ1B9mwrZAEKufqsB8QuR6AmR/mADMPpxHIj1V6cf7MPfO
+	 3oDPePgbwL09wODEyb03v5ANLZM+pLjVXt2ByTXtFWlOB9TOSylxuFT8r/u3CbFbgQ
+	 2OGlMVgp7rJ1uwWvFFpYvfL/H60v6BmhMzaqPL9DwAbGVSjRymdcengpx1FtqtjzKW
+	 I32q2U8uEm6DMXUYIXzoAvJDIgpmoFqyfe+busL3D/WmdniHNseNi6JEU/Ys3+UlGk
+	 kFoAX28oOsmVuINgmepF90f+CwdT9bl255neRrL/S9tGJ26GWE6Uusao2+XWfzMJk0
+	 bVy/31Ijpkc3w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wwMQO-0000000GhD3-2p0W;
+	Tue, 18 Aug 2026 16:12:28 +0000
+Date: Tue, 18 Aug 2026 17:12:28 +0100
+Message-ID: <86a4qj5rwz.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v2 2/4] KVM: arm64: vgic: Don't leak the SPI array when init is retried
+In-Reply-To: <CA+EHjTyDix+y6NTLTsXP5j9Sn2VLOZcsw94LntQxg_etRBJZuA@mail.gmail.com>
+References: <20260807104102.2410744-1-fuad.tabba@linux.dev>
+	<20260807104102.2410744-3-fuad.tabba@linux.dev>
+	<20260807105558.73D701F000E9@smtp.kernel.org>
+	<CA+EHjTwVKkAwWUeMrF_m2-35kyhESqAezOKJy-Pj=vA3qE5Bjw@mail.gmail.com>
+	<87fr0pq5uu.wl-maz@kernel.org>
+	<CA+EHjTyQ-1sUhgs0LNuPa-VJ=J=+vS7UCwJJU0ATJG9LtEQpSA@mail.gmail.com>
+	<CA+EHjTyDix+y6NTLTsXP5j9Sn2VLOZcsw94LntQxg_etRBJZuA@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: A0DC820025
-X-Stat-Signature: s1u3uhimb8u4ob7bndaaofmkx6p913ti
-X-Rspamd-Server: rspamout07
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19WJJyPpIkXj6NRdFovX6exs0VdDB7pwZ0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=fvAB6j1CaCVhBMde1WLdjwqamICgRD3e/AUgxO7mOGs=; b=62zlIpNa+zMIbwf5/zkFNaOHxYOm4tgugdwsgcCS0sm+tI84tMKhwQyxgn3lJAIdMEb2/J/mzCyXpKaao4X5wzZMViK070C7CI8StXo8jC6fDQNu8aCCHZXweYRpdlh4skoy61uoqhtSGi/t93WA3r9pWKU5v+390C0sesW7Mxo=
-X-HE-Tag: 1787069428-806084
-X-HE-Meta: U2FsdGVkX18GK76fw2cBnoHO6hgWUCaFrbiIRziIMHmC6B0/YumrHP07LbFQ+gb0Bb2i49FfTI5rz8p8AK/0qUW15gw4dHBs9yJbRdEkopUDwiwhqsQ0uWDIzAJ2DkOto3I6S+XYlBhuf58RqOfY/IPZBApqULqNk/B57iNOKNCPzD/vFUqkZS3kS76gSP45tIFvgoZ6+xd04Ww9+0WvY6Cxo5Sm9DcCooExv/31sC1+Y+cf9o6RBecK0RVVbjCkVlgXGQ8oj8FtKgPnFAkerm/TtFRKC1pS0AbLbuhwvULI7qf9+Bn0ag+Y5gicSy/ASXfAnxJhCkw4qARKZRtRhptIY8kkPZmLlKud+Xd4+2v4inMqhfgG5qVEcjUBiKm02Sxkp8w8qtlWeeK3T6lioPBAp7oL85k8dBTh/F6TUf1vmFlzBltPPUGHV4kwuFKES7qK7B35B0GE9WydUTXRCA==
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Tue, 18 Aug 2026 16:17:20 +0100
-Bradley Morgan <include@grrlz.net> wrote:
-
-> On 18 August 2026 03:01:18 BST, sashiko-bot@kernel.org wrote:
-> >Thank you for your contribution! Sashiko AI review found 1 potential
-> >issue(s) to consider:
-> >- [Low] The 'enabled' debugfs file is created using `debugfs_create_file()` instead of `debugfs_create_file_unsafe()` with a `DEFINE_DEBUGFS_ATTRIBUTE` struct, leading to redundant proxying and overhead.  
+On Tue, 18 Aug 2026 14:22:09 +0100,
+Fuad Tabba <fuad.tabba@linux.dev> wrote:
 > 
-> +akpm@linux-foundation.org 
+> Hi again Marc,
 > 
-> I hate sashiko so damn much, best to wait for review!
-
-I found sashiko to be extremely useful. 
-
-
-> >[ ... ]
-> >  
-> >> -static const struct file_operations fops_kp = {
-> >> -	.read =         read_enabled_file_bool,
-> >> -	.write =        write_enabled_file_bool,
-> >> -	.llseek =	default_llseek,
-> >> -};
-> >> +DEFINE_DEBUGFS_ATTRIBUTE(fops_kp, kprobes_enabled_get,
-> >> +			 kprobes_enabled_set, "%llu\n");
-> >>  
-> >>  static int __init debugfs_kprobe_init(void)
-> >>  {  
+> On Mon, 17 Aug 2026 at 19:40, Fuad Tabba <fuad.tabba@linux.dev> wrote:
+> ...
+> > > I really don't want to have to think about the intermediate state.
 > >
-> >[Severity: Low]
+> > Agreed. I'll drop the idempotent version I sketched and do teardown
+> > and reinit instead.
+> 
+> Here are my thoughts. Three patches, all fixes.
+> 
+> vgic_init() will undo what it created when it fails, so
+> KVM_DEV_ARM_VGIC_CTRL_INIT is all or nothing and a retry starts from
+> scratch. Same thing you asked Karl for on the redistributor rollback
+> [1].
+> 
+> That drops the count check I sketched. vgic_v4_init()'s early return
+> stays, since vgic_its_create() still calls it for an ITS created after
+> init.
+> 
+> irq-gic-v4.c goes first, as two patches. It removes the domains and
+> frees the fwnodes without clearing the pointers, at four sites, and
+> the teardown above makes that reachable on a path where it was not.
+> The second is a leak in the same error path: when
+> its_alloc_vcpu_sgis() fails partway, the SGI domains already allocated
+> below it are never unwound.
+> 
+> What do you think?
 
-It is even saying this is of "low priority". That means it's more of an "FYI".
+Hard to picture when described like this. Please post the patches!
 
-> >Will this lead to double-proxying for the debugfs file?
-> >
-> >Since DEFINE_DEBUGFS_ATTRIBUTE natively provides debugfs_attr_read and
-> >debugfs_attr_write operations that already include debugfs_file_get() and
-> >debugfs_file_put() protection, passing fops_kp to debugfs_create_file()
-> >in debugfs_kprobe_init() will cause the debugfs core to wrap it again:
-> >
-> >kernel/kprobes.c:debugfs_kprobe_init() {
-> >    ...
-> >	debugfs_create_file("enabled", 0600, dir, NULL, &fops_kp);
-> >    ...
-> >}
-> >
-> >Could this use debugfs_create_file_unsafe() instead?
+Thanks,
 
-As this isn't a critical path, I don't think we really care here if
-it's wrapped or not. But it's nice to know that it is.
+	M.
 
-Anyway, I'll let others review this, but it looks fine to me.
-
--- Steve
+-- 
+Without deviation from the norm, progress is not possible.
