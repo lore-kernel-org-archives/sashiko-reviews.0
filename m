@@ -1,118 +1,112 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from latitanza.investici.org (latitanza.investici.org [185.218.207.228])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FA247A87B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 16:29:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787070566; cv=pass; b=BxkM297sxOlAnqX3f+pxto1oMfdtL7vEjdGnVCMopJUJrZ2qoPp2QRKataxTlF2J7WuyJ8uQO6Et+HAQn/z/4gMq+lKzxGst33u4WH8YA/Jvkbot4ao2JyGf3A0yrF5LmFHqa1BWogW+naAWRZzRCJ49bSWQuV9KdUo3+8ZKe7A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787070566; c=relaxed/simple;
-	bh=WbLq5KSubTXR3Nv4sQNzeoIw9EVc824Iz7H+0Pk8yZM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aonoiWivFFk/NMZDBJkBYmUr7NHYJ7ExSzth/Y3FQkoSFKCvFHme5jqKWzza+Q76GGjDn3/xIsGthr9c0JeEtAVf0syfqx/eWfxgWnJgTKvl41LU7+ZFD7Byu43psrspHYoXEAAUttl3cKKKEQyLDkvOMcK9GFB1p664K/7Qj7M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hKbIP9lj; arc=pass smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989F947DD51
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 16:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.218.207.228
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787071279; cv=none; b=lRV1DMDEDLsLSCWfTTfx2lLshT/T0gqHfs9QQYx9eEly1AGWjYbn7Gx2fqZVG0KAlJ01NidXh+15zi8XXBuRfisB5lJB7cet1T0WlVkGafl747J0+qA2q4r3WnJ3/MLG5bkxWKeRaX+RMmz1u4wkVzBzQQz/UGJ6TZf3uX0gSD0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787071279; c=relaxed/simple;
+	bh=U/Zc/TbV88VxA0i0QQRESvuwltXvbOKWfAkbTJl3DM4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=AUtaI1ZyWjnont66HFk9XR8hjpEDncYKB8UVmMCM0ZD+LTRSDjGCBVBRCElzPkD8xUjKFT5QuXFnavxqDa9XZtX+EzCUV/k43ASpe3GfF3sal930LtPkwsd5iNzRXZZfDL+HwrGdu36hOj7sVg7mgaaCN0yl8lf+83aGN7a3uBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net; spf=pass smtp.mailfrom=grrlz.net; dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b=sgEIHmyq; arc=none smtp.client-ip=185.218.207.228
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grrlz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hKbIP9lj"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-97bf92018a5so2302149241.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 09:29:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787070564; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fUBi4Vh6ZVtFt9mfuB7RVBn+QWTPiFlWa7ORZfH5j8wpFITiE/ljqQnzxViPlikOU7
-         rELn4L1kefZjaGHSZFYvilNho0Tvu+yM7uj7j6BRRZxXnpmxwVz0wKaWYLhKpPC0J5es
-         nQVir4oRu4vKR9fW6BlxD3R3mTh7UuhmepzSS/NMOhrOyrQqKeB5PfbNsFGzr0ta8Xtu
-         ovQWV3xjCoxcnw4LCZpOU0u7mDWOM105l0f05FVsViPC0iKUj24Fe3U804Y97d/emZj7
-         EFj3MaBojHW1/2yDoGEXg7PNBisP5yQ5RHoPAmpDLY3pMx4QaEhxHYWBx2/IZdXoaGa/
-         CCjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WbLq5KSubTXR3Nv4sQNzeoIw9EVc824Iz7H+0Pk8yZM=;
-        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
-        b=OJP4W/3nlHHgxab3872qCSIvJpPtMFPUPl3aH7IZEyRwDFYHWz1Rwr2tmeN+ArVLFO
-         W0PL7HLDjZOfFMYCtDNhiplOfxzi0isMXrqPHf19MQ5OwJT6zHvq9l1bqREatuRyFZsE
-         wGRpzD+OdWUWYPumyuLjQeAGpHSnnh9DsduuDcy/YI5JyLnk7a13YP5A2O5URIHhYYdp
-         1Nhs0eH3OfCoShCLwp0cc8rP+kwNVxbTnFy1QifAX3Fm0a3Tj5kB/RZ/9j/TefZXV27s
-         LArzDZXAR/zGT81dcrwD7zYh/LPrXqdfREiqF/iIXob/CVS+ZqQFslrSmwR1/LNuQiBt
-         3TFg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787070564; x=1787675364; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=WbLq5KSubTXR3Nv4sQNzeoIw9EVc824Iz7H+0Pk8yZM=;
-        b=hKbIP9lj7MxMgyOdbiqIx2rHl8lyRl1O0uE9hGQwLsqOT4ReGRWk99OJ/Bvk11uKD1
-         nSt1S1PtwB0BbPm8k6NVE9QetcZrypwPvZvUG/6p1jKdEULAekOzVQ8HI/sf+5woIOQx
-         DELJvmw4WgTKvCon77m+LM7/NzOV4Oymp2+i7+NIIR7G/ukKFdLMYDoBec0YYae7BjE+
-         yV1mhVZmaMfWOO+ew486W9Z+roc0vZRsTZ3jt6FH2mR5yY+F45vuJM4hOSp28Y2tQe6Z
-         XOaknn9o2WWc0Z3TXPn9kxGXLb1C4AhGrV7+RzagXOWUPXvE1gYNneIyl/K93A8lYNT8
-         BClw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787070564; x=1787675364;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WbLq5KSubTXR3Nv4sQNzeoIw9EVc824Iz7H+0Pk8yZM=;
-        b=pNHLb2ympenz5GiyVdvaK7oJkWBqBgXmjMw6y69tq0816YPReIPrd0ZhEIXW1QwVtH
-         8dQ5cKioAA7S+E7Pbkk6MoC71ul8/DSNKexbd+tKIkp4isXnWy46xWFkvl2UG0qzfJ5w
-         9qC0ym24X1M8kB2MgHPGSUCIwWJvGJ8XfgOb4It+mLPeCtmEKKZIxvQ5ornmAsZ5sVOQ
-         duhUSSrnvwo+K+tnL6lHPwORRTZHjmE3JyjCxuMxqdQ4KUGgRc7VbNyM3z4lyMHa1WCL
-         WNO4LKiivCJ5N1peKK/sehtAke7uKVOlUmSUG7XtA/4SxrFE+tfEZ/UGBUtWYE8RyqbT
-         kFpQ==
-X-Gm-Message-State: AOJu0Yy8guZ9ad/UGy1oQ+OerEQuM0q9dMUzAutT91mVIm1Law6vZgns
-	kD3BfsTOWF1ViTXDt49exlkhwdIldSwpVSe9g+Ek4w2aiZVpl9O9U9RDrK5wyb9KsSe/3EYfi14
-	yLXD28rPncFre9hnz5dSo/VLrJfwlTikzxQ==
-X-Gm-Gg: AR+sD11fQhBjh+GnCZIIEFP6TglH1XY6v3MdfNkayqd8NfYXxrtdUafF9hEwcWDuZB1
-	1hA2uoEYKWiYwrjNvxj5imsDpsbZd5STXLqfduvFAbDdQ4zPJgw08q/4FmWdEPyr2idEaF/bsWd
-	9i91v/PZH/5ru7lEkLMcu9xcJUp5i8+YXTWsQl+5KwTOIFsrw7FSH6dEEFJR+2xZrgYWNDqb8hV
-	Wr6gPy9k85Fmk2Lo4eiOV2SOIRybDkReNOaDw1aSAwdrm3+9aE8mC+vNhjgU6TsVoLfO3tFa6C6
-	zdwy/sMkaIo19Kol+vipoMMEBJme69FMYhDH9E/ywVSW
-X-Received: by 2002:a05:6102:512a:b0:76b:12e9:a443 with SMTP id
- ada2fe7eead31-76f2c43cbd6mr8049856137.9.1787070564183; Tue, 18 Aug 2026
- 09:29:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b="sgEIHmyq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grrlz.net;
+	s=stigmate; t=1787071275;
+	bh=30lup9SBgRdpF9Pq1C2Z/x0+Cv9ITBPmLOabA308I2E=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=sgEIHmyqhGOTlFnelbWCGhQzgIoVdCMViJ2vkNZttVdCqViQ+YX05rA7qClEjOIPo
+	 4vaUib1vpVlkX2/8eXRzvf2s11cd2fXn0KGTY3wAXbgC8fOSZKGATWx2xwrIe8P3GM
+	 QVmg8WFQf37Cp5xMjoJTCFc2lUKilotmlQzWkzaU=
+Received: from mx3.investici.org (unknown [127.0.0.1])
+	by latitanza.investici.org (Postfix) with ESMTP id 4hPb7H3c8YzGpDK;
+	Tue, 18 Aug 2026 16:41:15 +0000 (UTC)
+Received: by mx3.investici.org (Postfix) id 4hPb7H1CqczGpDG;
+	Tue, 18 Aug 2026 16:41:15 +0000 (UTC)
+Date: Tue, 18 Aug 2026 17:41:12 +0100
+From: Bradley Morgan <include@grrlz.net>
+To: Steven Rostedt <rostedt@goodmis.org>
+CC: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org,
+ linux-trace-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_kprobes=3A_use_DEFINE=5FDEB?=
+ =?US-ASCII?Q?UGFS=5FATTRIBUTE_for_the_enabled_knob?=
+In-Reply-To: <20260818121025.187b1a1c@robin>
+References: <20260818014920.23870-1-include@grrlz.net> <20260818020119.2DF141F000E9@smtp.kernel.org> <786EF401-1ECA-4ACC-BED9-764ADFAB9087@grrlz.net> <20260818121025.187b1a1c@robin>
+Message-ID: <C32B508C-053C-497A-903B-E2544EB242DF@grrlz.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260818160914.108313-1-seanwascoding@gmail.com>
- <20260818160914.108313-2-seanwascoding@gmail.com> <20260818161335.A761D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260818161335.A761D1F000E9@smtp.kernel.org>
-From: Sean Chang <seanwascoding@gmail.com>
-Date: Wed, 19 Aug 2026 00:29:13 +0800
-X-Gm-Features: AcwNN1W-gOFcNNm6dBJE2Sjxmz20SbB5OE2mGe7N_yx2yNmOo_ToxIK5uhgNFD4
-Message-ID: <CAAb=EJXmUNPB2d0qeqLqvd6jmAMWsZ1nRHjaNMMUGqQLD0avXg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] drm/ttm: drop stale @ctx kernel-doc entry
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 19, 2026 at 12:13=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On 18 August 2026 17:10:25 BST, Steven Rostedt <rostedt@goodmis.org> wrote:
+>On Tue, 18 Aug 2026 16:17:20 +0100
+>Bradley Morgan <include@grrlz.net> wrote:
 >
-> > ttm_bo_alloc_state no longer has a ctx member, but its kernel-doc
-> > comment still documents @ctx. Remove the stale entry so the
-> > documentation matches the struct.
+>> On 18 August 2026 03:01:18 BST, sashiko-bot@kernel.org wrote:
+>> >Thank you for your contribution! Sashiko AI review found 1 potential
+>> >issue(s) to consider:
+>> >- [Low] The 'enabled' debugfs file is created using
+>`debugfs_create_file()` instead of `debugfs_create_file_unsafe()` with a
+>`DEFINE_DEBUGFS_ATTRIBUTE` struct, leading to redundant proxying and
+>overhead.  
+>> 
+>> +akpm@linux-foundation.org 
+>> 
+>> I hate sashiko so damn much, best to wait for review!
 >
-> [Severity: Low]
-> This isn't a bug, but is this description accurate?
+>I found sashiko to be extremely useful. 
 >
-> The commit message states the documentation for struct ttm_bo_alloc_state
-> is being fixed, but the modified kernel-doc block actually documents the
-> function ttm_bo_alloc_at_place().
 >
-> It appears the diff chunk header below mistakenly picked up the struct
-> definition from earlier in the file, which may have caused the confusion.
+>> >[ ... ]
+>> >  
+>> >> -static const struct file_operations fops_kp = {
+>> >> -	.read =         read_enabled_file_bool,
+>> >> -	.write =        write_enabled_file_bool,
+>> >> -	.llseek =	default_llseek,
+>> >> -};
+>> >> +DEFINE_DEBUGFS_ATTRIBUTE(fops_kp, kprobes_enabled_get,
+>> >> +			 kprobes_enabled_set, "%llu\n");
+>> >>  
+>> >>  static int __init debugfs_kprobe_init(void)
+>> >>  {  
+>> >
+>> >[Severity: Low]
 >
-
-Yeah, I type the wrong function name, fixing that in the
-next v2 patch.
-
-Best Regard,
-Sean
+>It is even saying this is of "low priority". That means it's more of an
+>"FYI".
+>
+>> >Will this lead to double-proxying for the debugfs file?
+>> >
+>> >Since DEFINE_DEBUGFS_ATTRIBUTE natively provides debugfs_attr_read and
+>> >debugfs_attr_write operations that already include debugfs_file_get()
+>and
+>> >debugfs_file_put() protection, passing fops_kp to debugfs_create_file()
+>> >in debugfs_kprobe_init() will cause the debugfs core to wrap it again:
+>> >
+>> >kernel/kprobes.c:debugfs_kprobe_init() {
+>> >    ...
+>> >	debugfs_create_file("enabled", 0600, dir, NULL, &fops_kp);
+>> >    ...
+>> >}
+>> >
+>> >Could this use debugfs_create_file_unsafe() instead?
+>
+>As this isn't a critical path, I don't think we really care here if
+>it's wrapped or not. But it's nice to know that it is.
+>
+>Anyway, I'll let others review this, but it looks fine to me.
+>
+>-- Steve
+>
+the fix is a couple of years in the making, heh
+Thanks!
