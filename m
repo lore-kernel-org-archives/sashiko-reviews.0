@@ -1,152 +1,109 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from devianza.investici.org (devianza.investici.org [198.167.222.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC8E377563;
-	Tue, 18 Aug 2026 15:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD522F8E8B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 15:17:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.167.222.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787066101; cv=none; b=l82fl8K4T9R38HpGwzBgeJXihV9pR4hUDJ4ALrGQXvPAWXn9XdHQhe1n+I2twva0BWwbu47nycrhKYjnPZFbb6r6iVxj2X5k9o+SIeXD+oZwfa3oPcu3EUOkDmCVchSl9mA71/iJBOun0RZatSb8kP/xI2hHkttquUD1PfYwCH0=
+	t=1787066252; cv=none; b=Noaeod2IVjM+bXoPyUOWvRUTU4uZNk8snZKRhTZpHKjyrf9VqJEWovTuDnHyqKkDoZxKloc2TA7zyUz5oeYWjXhdK3LbDnzdHuhirxdniQN+me+lIqm5pos2iycRkU1WShzXz1BfHLr7bFOBBywuJ4/BR9ecvwhRN2fGYv+83Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787066101; c=relaxed/simple;
-	bh=UtKHPU7LgYeqF7pEdbbr5qpCC5qokgkZW2+ag8nr3KA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FTIGKwoFxuYDkGtdS0iOsRZp0A4X1/gA1zdw2yeiKrgh6cvrd4CdxIcm1Sjto9WfYFN432XMRiDryyEeGDNX3XrhrvggjhS8feXEKPFmr260BNgKXUK4lAoJywnFlds1+SuxkLCT+9h+woULNKQByEab2i50m3qSjWmunYR+/hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ODPHnIU7; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1787066252; c=relaxed/simple;
+	bh=IAFOleP9PKZrqVNHvILegTCgb2/Y9h07y+JQuxY4Wnk=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=j+UOnqlNOQQ8iAdTIQRtm4r4AhNtn9NftbdfTn3yJIy13dTwb3ZU6Qqoz4jH68eU9xIMTpbuV993L14GfdA5F3RGm41E2Qb3tj271XHHLEabUbs+O6TdWUBitBem8xFfduPjA1ZevvaDI38nGKJv9dlg02d1CCiUmFL9MPn90Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net; spf=pass smtp.mailfrom=grrlz.net; dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b=Rfjy0M/u; arc=none smtp.client-ip=198.167.222.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grrlz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grrlz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ODPHnIU7"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67IE3VWH505027;
-	Tue, 18 Aug 2026 15:14:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Z4d3+a
-	tjiJsDT4/c8d9SPB69V+GK4aoijm3zu/E4Cx8=; b=ODPHnIU7JVLe5ozXQEKFhW
-	MWYXbW1wb1bTG64HUXszroWYLq38EzS4C11DGBbdYRUeMdGAbBe9BV8Rs/huu4Ie
-	lpHct08KfUYLxdMy9HdOyECIJomMUapk9eMM0sAc00CfhBJR/n4dFbFvhvw12kWv
-	Jyh3Bmy+OTu20ZMCxcUVNLFSLvbsbGEsk/nQPeL0ofJMlp8XD0INJBRrwUzyAzMl
-	kS5RZViaPnSl/kwluU+v0t+l0kUoPDn15J+CEBP6gt1ykuFnmgVEzikR4yq0CEkt
-	LHNZJjffw9PQBxlgs+EWL+vazlH6XtItpkCqvN/OBtBHIyHC9EsiGh39EduMCChA
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4s35y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Aug 2026 15:14:58 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IFBSt1001655;
-	Tue, 18 Aug 2026 15:14:57 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xh3u8p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Aug 2026 15:14:57 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67IFErnY45482376
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 18 Aug 2026 15:14:53 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9384F20043;
-	Tue, 18 Aug 2026 15:14:53 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BA4F120040;
-	Tue, 18 Aug 2026 15:14:52 +0000 (GMT)
-Received: from [9.111.45.90] (unknown [9.111.45.90])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 18 Aug 2026 15:14:52 +0000 (GMT)
-Message-ID: <4f233ae1-2a30-4498-bd5d-2a001c96b2d8@linux.ibm.com>
-Date: Tue, 18 Aug 2026 17:14:52 +0200
+	dkim=pass (1024-bit key) header.d=grrlz.net header.i=@grrlz.net header.b="Rfjy0M/u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grrlz.net;
+	s=stigmate; t=1787066241;
+	bh=4pgB6nTt+K8CIebFqRQUJykNy2kI7bCZa71ZlN3FIBs=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=Rfjy0M/uoJu2Sui7u+ve8khcxnyNywQUHebzBcNMtIcY0w9wrFg4Qca/ynJWAM2gB
+	 PnSiACJ1Sv6HGnOIL3y2HN+LmXAFpoSgYihVILbf4KGDe2J39lKuMBSWtfg6WCsmqA
+	 duJjaAtKfGM4JBBpfYb88U+oSGkbr0UWw2y++1a4=
+Received: from mx2.investici.org (unknown [127.0.0.1])
+	by devianza.investici.org (Postfix) with ESMTP id 4hPYGT0jNRz6vHk;
+	Tue, 18 Aug 2026 15:17:21 +0000 (UTC)
+Received: by mx2.investici.org (Postfix) id 4hPYGS561Gz4y6W;
+	Tue, 18 Aug 2026 15:17:20 +0000 (UTC)
+Date: Tue, 18 Aug 2026 16:17:20 +0100
+From: Bradley Morgan <include@grrlz.net>
+To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+CC: linux-trace-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_kprobes=3A_use_DEFINE=5FDEB?=
+ =?US-ASCII?Q?UGFS=5FATTRIBUTE_for_the_enabled_knob?=
+In-Reply-To: <20260818020119.2DF141F000E9@smtp.kernel.org>
+References: <20260818014920.23870-1-include@grrlz.net> <20260818020119.2DF141F000E9@smtp.kernel.org>
+Message-ID: <786EF401-1ECA-4ACC-BED9-764ADFAB9087@grrlz.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] KVM: s390: Improve floating IRQ injection behavior
-To: Halil Pasic <pasic@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, Janosch Frank <frankja@linux.ibm.com>,
-        linux-s390@vger.kernel.org, kvm@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev
- <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Michael Mueller <mimu@linux.ibm.com>,
-        Eric Farman <farman@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260817121631.159451-1-frankja@linux.ibm.com>
- <20260817122849.9F8061F00A3A@smtp.kernel.org>
- <3562788b-150c-4387-a840-60d9e6b6e49d@linux.ibm.com>
- <20260818163226.68c6bea4.pasic@linux.ibm.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260818163226.68c6bea4.pasic@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 7oyVCJAtDwDm8b9vwPVE6Oy0CML7dt0h
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a8476f2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=0b-LWui6CJ47Kv1T03UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDExMCBTYWx0ZWRfX+F5Vos5luRpK
- P0AMPT3R6SKL8sPYkDhg/u6tSzshLuk1YeFwC8mpg1GwXPwxdIQ9Ge5JMdhVG4DXmXUtkbkP/lA
- 7QCIxUZu9KOJMLwOVHB85QYx6or4b+4=
-X-Proofpoint-ORIG-GUID: 7oyVCJAtDwDm8b9vwPVE6Oy0CML7dt0h
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDExMCBTYWx0ZWRfX+3ULzZAWplGR
- zgezgXVtbQXb5hYzxluy+gX3SaC/Ykb3lu49/Qz1YsouQCHZ2fP32fTEs1PLv6snXu9dsPG3kvu
- oJtG0AJh9oQVzZti3UsJTCmOy2Cihc5yOmY67PxEqqjV575gY5n11pt5UrrVfhi+2PhpJoy5Vai
- QKFx+gLAEwocZD5Dx3sS6FjHUlNa8b9sFdSAX8s+tGg6ecp6NUZ2TMwRMF+HE5DjX815yYV7Er6
- 1DtsaMJKLaY4NQUXSp+XlJSlN3EWImOydQzoZs57TMbUF5PNNlUlYvgowqtCRePrjNDEWL06Gl7
- buiVOAnFL548ZdT3tztH68SU5G34i1U41kwCisSLNnzCLMhOWGPxCO3afjdafKF4NgimTX3MlUS
- /+X1gxj8VjA8JKmbHrIGEnje8NUko2q46ojF1KFB/DOY1FUEg3EL1iKc7wCsnlkw0wWMh2B6C4U
- dN4x+ppFFZt0Ct7cZ6g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180110
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Am 18.08.26 um 16:32 schrieb Halil Pasic:
-> On Mon, 17 Aug 2026 15:22:41 +0200
-> Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
-> 
->>>> +	irq_pend_mask = inti_to_irq_pend_mask(inti);
->>>>    	for (sigcpu = kvm->arch.float_int.last_sleep_cpu; ; sigcpu++) {
->>>>    		sigcpu %= online_vcpus;
->>>>    		dst_vcpu = kvm_get_vcpu(kvm, sigcpu);
->>>> -		if (!is_vcpu_stopped(dst_vcpu))
->>>> +		if (!is_vcpu_stopped(dst_vcpu) &&
->>>> +		    deliverable_irqs(dst_vcpu) & irq_pend_mask)
->>>>    			break;
->>>>    		/* avoid endless loops if all vcpus are stopped */
->>>>    		if (nr_tries++ >= online_vcpus)
->>>>    			return;
->>>
->>> [Severity: High]
->>> Does this code drop the interrupt kick entirely if all vCPUs currently
->>> have their interrupt masks closed?
->>
->> I think this is a corner case but still a valid finding. We can probably consider this
->> slowpath and wakeup/set cpuflags for ALL cpus? maybe after doing 2 rounds instead of one?
-> 
-> With GISA, I think the FW is supposed to deliver the floating interrupts
-> without dropping the vCPU out of SIE. I'm not 100% sure but I think we
-> can rely on that mechanism for the CPUs that are in SIE. Without GISA,
-> I think, it is reasonable to assume that vCPUs don't keep running for
-> ever. It has been a while since I have looked at this code, but I think
-> the SIE exit path would catch this. If that is true we would not really
-> lose initiative, but just see delayed interrupt delivery.
-> 
-> Sleeping vCPUs on the other hand are not of interest in this context, I
-> think.
-This is all corner case handling. Imagine one CPU running with IO disabled
-and all other CPUs sleeping. If now the "opportunistic" wakeup fails the
-GISA IO interrupt will never be delivered unless there is another wakeup.
-In reality this is a will not happen, but see the latest kvm unit test
-patch from Janosch and it might also create latencies, the "pick one CPU
-to deliver and wake it up if normal processing does not work" obviously
-has a hole in specific cases.
+On 18 August 2026 03:01:18 BST, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential
+>issue(s) to consider:
+>- [Low] The 'enabled' debugfs file is created using `debugfs_create_file()` instead of `debugfs_create_file_unsafe()` with a `DEFINE_DEBUGFS_ATTRIBUTE` struct, leading to redundant proxying and overhead.
+
++akpm@linux-foundation.org 
+
+I hate sashiko so damn much, best to wait for review!
+
+>--
+>
+>--- Patch [1]: [PATCH] kprobes: use DEFINE_DEBUGFS_ATTRIBUTE for the enabled knob ---
+>commit f5babbd146ccf4194f28506d04f5cbfb2c40150a
+>Author: Bradley Morgan <include@grrlz.net>
+>
+>    kprobes: use DEFINE_DEBUGFS_ATTRIBUTE for the enabled knob
+>
+>This commit replaces the custom read/write handlers for the debugfs
+>enabled
+>file with the standard DEFINE_DEBUGFS_ATTRIBUTE macro. It simplifies the
+>implementation and accepts integer inputs rather than characters.
+>
+>> diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+>> index ca9d834d0b843..10bcc2a0926a6 100644
+>> --- a/kernel/kprobes.c
+>> +++ b/kernel/kprobes.c
+>> @@ -2962,47 +2962,22 @@ static int disarm_all_kprobes(void)
+>
+>[ ... ]
+>
+>> -static const struct file_operations fops_kp = {
+>> -	.read =         read_enabled_file_bool,
+>> -	.write =        write_enabled_file_bool,
+>> -	.llseek =	default_llseek,
+>> -};
+>> +DEFINE_DEBUGFS_ATTRIBUTE(fops_kp, kprobes_enabled_get,
+>> +			 kprobes_enabled_set, "%llu\n");
+>>  
+>>  static int __init debugfs_kprobe_init(void)
+>>  {
+>
+>[Severity: Low]
+>Will this lead to double-proxying for the debugfs file?
+>
+>Since DEFINE_DEBUGFS_ATTRIBUTE natively provides debugfs_attr_read and
+>debugfs_attr_write operations that already include debugfs_file_get() and
+>debugfs_file_put() protection, passing fops_kp to debugfs_create_file()
+>in debugfs_kprobe_init() will cause the debugfs core to wrap it again:
+>
+>kernel/kprobes.c:debugfs_kprobe_init() {
+>    ...
+>	debugfs_create_file("enabled", 0600, dir, NULL, &fops_kp);
+>    ...
+>}
+>
+>Could this use debugfs_create_file_unsafe() instead?
+>
+>
+
+Thanks!
