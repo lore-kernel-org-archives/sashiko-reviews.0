@@ -1,98 +1,130 @@
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8A4456DF5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 11:28:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+Received: from mailgw1.hygon.cn (unknown [101.204.27.37])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C8FE46C4DC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 11:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.204.27.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787052532; cv=none; b=MJ+hvYZuyLUQK/mnJPmYsDnykq07dygm7voSwTWNP07473NqLNCkiqpllix+dm7iZhjbRDG6H+qz5LMOR3TIX5f5idTnTPe5qZtVEYd29K8zYIybA7WINTfvgd/5Tg37LMQpuCTJGd1IqC1j1KAgaWxRWcTtCbdWJFHK1wFbrsE=
+	t=1787052756; cv=none; b=rxgv9+wNvZKUqL5vbI8XX1vi6oAT7EfymHRowLqQNDDEXYo2kZJOMpyK4M/AHB/89vBP1GJIQQbtSnCYTwWM/lUw6fGH4fcoThJNKrvFF0WmREzSYauU7YE4Wts8W2XQRZ0154c+n678sTS2PKhXq6z6fOGKyIvsr9ruo2BRl3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787052532; c=relaxed/simple;
-	bh=rSoVLM/0ud3lUAUp0DqI7sQJoGb9vo5YsUfOcI3cOrI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gy/23cSx+rWB73SQ9KuPcVcLgeDml3Z+TpwFoWhJcnLZkrirV6OcS9iMERqHc0Kug8W4R6lDXLIh+xZJw3K4xKZR8tcDSt2kuDsld+hEedQqqcR122mHqgTnEgeY+UE7PwnD7rO6JixSjEMcgLh7VmMW9U8kDY7F+aa766sNdx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=i5X2Vv0f; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="i5X2Vv0f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=KfvJ
-	YESh3LDK7aMDLCYwiiNWKEIe9E8A0YChUBOWYh0=; b=i5X2Vv0fBv8KEb2yhSfU
-	Hf/boQh7Diu1X49bhGQIOlTSEPTidKmuJWBTlEkdiq6t+7YorK1W9MmuNWN/h7mn
-	B0LwdwnTjF14Vn5hQYD7JOU76+FPp4eI1mBMZYtgZagKtU7j6sut9dh4RwXnd6MQ
-	7bY6MEwS9VnaLjBpFFqzYE9OPunjYRVsGOITPIXkU1+pDGaYFrWLFHUC2YAX8Azb
-	LcPANmig7ZjkbDAjXeB83eWuWIINlRZEhymwqRsvCfej5jds7nrltLFsBQ5Z+3cV
-	gThgRcl2jjPywL3XBaKE6d7vBmZh+0iT30kqv4XASt/8jlZ65DSygzaO5xg48aUR
-	XQ==
-Received: (qmail 3773925 invoked from network); 18 Aug 2026 13:28:48 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 18 Aug 2026 13:28:48 +0200
-X-UD-Smtp-Session: l3s3148p1@cOcml1BZvtsujnuP
-Date: Tue, 18 Aug 2026 13:28:48 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Prabhakar <prabhakar.csengg@gmail.com>, linux-rtc@vger.kernel.org,
-	robh@kernel.org, Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 12/12] rtc: rzn1: Add support for Renesas RZ/T2H and
- RZ/N2H SoCs
-Message-ID: <aoRB8CrV7ECOG33Y@ninjato>
-References: <20260706175138.12587-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260706175138.12587-13-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260706180331.3AD811F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1787052756; c=relaxed/simple;
+	bh=oQLpwDfYoframDn/RhUR9AsGkJf1wgM3k0ZHmqUz+T8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WqF1ZxYwUVuPT/nX8GykqErAcoUIVRgcZKzUWq+RU0lH3Upqv9IJD1BmItpoT/fuPKvLdXoWyMotLTJsBIA9MUYWiH+yIorz3gQ33nGZIYpOQq2wF+i1IynGjj3obOX2CMV7HAAIiUzdNGUHkDjURN/SJ7FXARCgKdmwPAwt0Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hygon.cn; spf=pass smtp.mailfrom=hygon.cn; arc=none smtp.client-ip=101.204.27.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hygon.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hygon.cn
+Received: from maildlp1.hygon.cn (unknown [127.0.0.1])
+	by mailgw1.hygon.cn (Postfix) with ESMTP id 4hPSGl3FZQz1JMH4;
+	Tue, 18 Aug 2026 19:32:15 +0800 (CST)
+Received: from maildlp1.hygon.cn (unknown [172.23.18.60])
+	by mailgw1.hygon.cn (Postfix) with ESMTP id 4hPSGh6rm9z1JMH4;
+	Tue, 18 Aug 2026 19:32:12 +0800 (CST)
+Received: from cncheex04.Hygon.cn (unknown [172.23.18.114])
+	by maildlp1.hygon.cn (Postfix) with ESMTPS id 83C82B369;
+	Tue, 18 Aug 2026 19:32:08 +0800 (CST)
+Received: from [172.25.61.61] (172.25.61.61) by cncheex04.Hygon.cn
+ (172.23.18.114) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 18 Aug
+ 2026 19:32:13 +0800
+Message-ID: <9bf245a2-43ea-440b-b980-317dc542d67a@hygon.cn>
+Date: Tue, 18 Aug 2026 19:32:13 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yaQdnyxd3robH3DO"
-Content-Disposition: inline
-In-Reply-To: <20260706180331.3AD811F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] perf/x86/amd/uncore: Add Hygon uncore PMU support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-perf-users@vger.kernel.org>
+References: <20260818100118.12944-1-liuqi@hygon.cn>
+ <20260818100118.12944-2-liuqi@hygon.cn>
+ <20260818101627.5424B1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Qi Liu <liuqi@hygon.cn>
+In-Reply-To: <20260818101627.5424B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: cncheex06.Hygon.cn (172.23.18.116) To cncheex04.Hygon.cn
+ (172.23.18.114)
 
+Hi
 
---yaQdnyxd3robH3DO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 8/18/2026 6:16 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Removal of Hygon L3 Uncore PMU support without a replacement in the new driver.
+> --
+> 
+> --- Patch [1]: [PATCH v5 1/2] perf/x86/amd/uncore: Add Hygon uncore PMU support ---
+> commit 1b6dd18387bea20f9f548951bf79cae006705b47
+> Author: Qi Liu <liuqi@hygon.cn>
+> 
+> perf/x86/amd/uncore: Add Hygon uncore PMU support
+> 
+> This commit introduces a separate uncore PMU driver for Hygon processors to
+> support Data Fabric (DF) and Data Fabric IO Die (DF_IOD) counters. It also
+> removes the Hygon vendor checks from the AMD uncore driver to keep the
+> vendor-specific features separated.
+> 
+>> diff --git a/arch/x86/events/amd/hygon_uncore.c b/arch/x86/events/amd/hygon_uncore.c
+>> new file mode 100644
+>> index 0000000000000..471955d6fc282
+>> --- /dev/null
+>> +++ b/arch/x86/events/amd/hygon_uncore.c
+> 
+> [ ... ]
+> 
+>> +static struct hygon_uncore uncores[HYGON_UNCORE_TYPE_MAX] = {
+>> +	/* HYGON DF */
+>> +	{
+>> +		.scan = hygon_uncore_df_ctx_scan,
+>> +		.init = hygon_uncore_df_ctx_init,
+>> +		.move = hygon_uncore_ctx_move,
+>> +		.free = hygon_uncore_ctx_free,
+>> +	},
+>> +	/* HYGON DF IOD */
+>> +	{
+>> +		.scan = hygon_uncore_df_iod_ctx_scan,
+>> +		.init = hygon_uncore_df_iod_ctx_init,
+>> +		.move = hygon_uncore_ctx_move,
+>> +		.free = hygon_uncore_ctx_free,
+>> +	}
+>> +};
+> 
+> [ ... ]
+> 
+>> diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+>> index dbc00b6dd69ee..6c486e1ab001a 100644
+>> --- a/arch/x86/events/amd/uncore.c
+>> +++ b/arch/x86/events/amd/uncore.c
+> 
+> [ ... ]
+> 
+>> @@ -1120,8 +1116,7 @@ static int __init amd_uncore_init(void)
+>>   	int ret = -ENODEV;
+>>   	int i;
+>>   
+>> -	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
+>> -	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
+>> +	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
+>>   		return -ENODEV;
+>>   
+>>   	if (!boot_cpu_has(X86_FEATURE_TOPOEXT))
+> 
+> [Severity: Medium]
+> Does this inadvertently remove L3 uncore PMU support for Hygon systems?
+> 
+> Removing the Hygon vendor check in amd_uncore_init() prevents the AMD uncore
+> driver from initializing on Hygon CPUs, which previously provided L3 cache PMU
+> support.
+> 
+> Looking at the new driver in hygon_uncore.c, the uncores[] array only
+> implements the DF and DF_IOD components. It does not appear to provide a
+> replacement for the L3 cache PMU that was previously available.
+> 
+L3 and UMC PMU support for Hygon will be added in follow-up series. This series 
+focuses specifically on Data Fabric uncore PMU support as the initial step.
 
+Thanks,
+Qi
 
-> Should we add match data to this compatible string to identify the variant
-> and explicitly reject probe with -EOPNOTSUPP if the clock configuration
-> would require the unsupported SUBU mode?
-
-Correct. Matches also my notes which say that this code
-
-445                 if (rate != 32768)
-446                         scmp_val = RZN1_RTC_CTL0_SLSB_SCMP;
-
-is wrong when we have a variant which has no SUBU support. Because in
-that case, we need to enable SCMP even for 32768Hz.
-
-So, yes, it is needed to mark which variant has SUBU (RZ/N1 only, likely
-forever) and bail out if no SUBU and no 'xtal'. The above code needs to
-check SUBU support, too.
-
-
---yaQdnyxd3robH3DO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqEQfAACgkQFA3kzBSg
-KbasZxAAh+UdvDISQDbAVdcFM1MRSX2vJGNj7lp0i83uMUWWY2j1jmvZFA6PNjK/
-P+QY1G7iHhU8Bv/xyTaYOuZFhucgjUKBJbf5Au5L3VUuGCiEB6g3Jk8doU2j4NXr
-TTJTAofOW5gDWLJNP5fFBACEp/STZxB9hr1wEz5sIJw/QTLAvDSVvkL2U5al24LQ
-lBDG10itHZjmMsdKnUcEEVXL8J3Gv/ZZPCJYrXwVfxxAOoxj5e5Wn5b6NWMfA5IV
-c0yTaUADCllXVk0D5HPGI2bAPx5DeLJSXsyghyYmK6sgLU2xHayJ7nlBz43XkKSt
-kc+1ahOuStTQ1B6CmMXlMAIwORoTtR/34HLCd6nTLd6sL7zOy40BFtJJsZM3gvhC
-5Prwj/3sl95hadnxz0TFyemhxxnQfL+dUSSO2EpmlZDXduggo1YfsgUFO9xr4q3l
-BFelACcCjMSZpEO5L0CcviAqD5y/c7IK/9YdKehc72d1c0Mo6U8VkRdgVzAYPfCI
-UUKuRXJlKBBIOaR8QXO5mpZhkkpscmlQdTAQDUS9/sagEVDQcoBZfO0LxcpfOsmI
-JrX5sd6VC8A2/v5i9Bbe09u28nQLo8x8IJHNbI/pXsUQJRMQPfbVd5rvJVdimYCX
-EV+Ok4UoTxTACBDh19+ii/gUIfr4gww/0BCO7FxikBdBeL6grLg=
-=4UQo
------END PGP SIGNATURE-----
-
---yaQdnyxd3robH3DO--
