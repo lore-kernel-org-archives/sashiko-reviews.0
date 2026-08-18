@@ -1,178 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailout3.hostsharing.net (mailout3.hostsharing.net [144.76.133.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF14736A02F;
-	Tue, 18 Aug 2026 15:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8B0376490
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 16:03:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.133.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787068670; cv=none; b=i8rbvK0AcmnBsjc8rYkqB3GTvGkx2PhmTLBUYxtDN3Rv+F4SZxQZ6KMaxduxbbhlKSkF0T8SEU0OOccJW5rDk83zbKEXtn8DMzqM0XfLNjT9WpmOAJO0NJc1Usn2vBRC4lVmZfDgUoXv45khgh1tjgbWk1v//CqB19qUQeF7qT4=
+	t=1787068984; cv=none; b=sWVfEIyYrkY22aaUVh5BkKAMZwCfVKn4Ojo9/Zf6dEEb9iYJrtMuU8uWy7wZKuuGhuXUI7SNLEhEkCC6mOI4j0Id4kTsFmUv2MYc0DzWq3jXpJoIqcFWtf5ZusDFBiwz4cOo36qCDGJFCIZyOCQqqJbfF0uQHBQ5FTgtiPPFJ34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787068670; c=relaxed/simple;
-	bh=wyCAOLzM8d4C2doylHsj51aWQa1LeQmbwpKGp3KeGMg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OZhLm9xxAq+4faJELCHcUMcSSIwF+4fdpVUiGxpm9+efWRSwz5XU2R+XPUR0VpjjAKqnLTKdV6lu1qwmTFpliTZr4FiJQ0mlkg0jS6+Vfv+CIiaM5Qj1NoWWZAINX7Qfgtm19SksszmX3dUa+k1Ieon1oeG/MgHtc5Gfv2f+5Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XeGpRteH; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XeGpRteH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37BB1F000E9;
-	Tue, 18 Aug 2026 15:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787068668;
-	bh=Yw2PJnKUma43a2n/lx8z8mSyCWYBg71MGUhxKOEG8Ac=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=XeGpRteHqTAOHNK+TGL+T6yhQa1UCaX1VuRaB/tBV2jTVvdTpI4W/B3XgLuh4v7hM
-	 5sfHGJFGaP7xMn9E/MX2iixOBPTkbYLGWgsBoyipIUpkxlztjEKmyAyz7GMKTcOlIs
-	 F5s/Z3/zWrAPm7dbGZ/jqV+wBnmFxmCkBB23RL7q8tKn80gQlVia1HGTbE1nrsx07e
-	 zEl9wfgJm+7OfjkWcTKUq3pJQDeIQv2kQdIbDwxbinNgw734wv9AR54hbVWdBuddA0
-	 i6qAoBfU85piFZHOJ4hO3mG4Nlt2nnHD9hyowWwCiRMFRZXhLbivweIe1/galrfSS2
-	 gAZ8w16PhbmKw==
-Message-ID: <a59df372-85d3-41fc-8897-7c07b2a809fd@kernel.org>
-Date: Tue, 18 Aug 2026 17:57:44 +0200
+	s=arc-20240116; t=1787068984; c=relaxed/simple;
+	bh=u1krH2MgW/rmUMJz5nl//UAxP1FT9KVWwO9LVr/JSCc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IOQwsclKKlvKFrviDxxwztMPfYqTyVoUcvVToCjm0mJGJLdHJRg6LEo7dwcyjVMCAQfEYOGsX1E6mHnEQsRBQ0BD8wFsvnmldQtw7gZ3DZGppbIuA6/7kHUXC8FqrUohBc1YNlrZXdXk5crR9XBaC7hHcTErGvun5PnBljxUrqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=pass smtp.mailfrom=wunner.de; arc=none smtp.client-ip=144.76.133.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
+	 client-signature ECDSA (secp384r1) client-digest SHA384)
+	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
+	by mailout3.hostsharing.net (Postfix) with ESMTPS id 10C7ACAB;
+	Tue, 18 Aug 2026 18:02:52 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id D2D05606F46C; Tue, 18 Aug 2026 18:02:51 +0200 (CEST)
+Date: Tue, 18 Aug 2026 18:02:51 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Keith Busch <kbusch@meta.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH] vfio/pci: Restore standard PCI config space in
+ .slot_reset()
+Message-ID: <aoSCK2Sy0HeyX_la@wunner.de>
+References: <20260817195110.2077698-1-kbusch@meta.com>
+ <20260817200404.BB3121F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH mptcp-next v2 3/5] mptcp: use READ_ONCE() over sysctls
-Content-Language: fr
-To: gang.yan@linux.dev, sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-References: <20260818094825.48446-1-gang.yan@linux.dev>
- <20260818094825.48446-4-gang.yan@linux.dev>
- <20260818100151.DD70A1F00A3E@smtp.kernel.org>
- <e0cd265f7d15246668d06c865adacf36943cc6c3@linux.dev>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <e0cd265f7d15246668d06c865adacf36943cc6c3@linux.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260817200404.BB3121F000E9@smtp.kernel.org>
 
-Hi Gang,
+On Mon, Aug 17, 2026 at 08:04:04PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Is this callback reachable under normal single-device circumstances?
+> 
+> In pcie_do_recovery(), the report_slot_reset broadcast is gated behind
+> checking if the combined error status is PCI_ERS_RESULT_NEED_RESET.
+> 
+> However, vfio_pci_core_aer_err_detected() unconditionally returns
+> PCI_ERS_RESULT_CAN_RECOVER. The PCI recovery state machine promotes
+> CAN_RECOVER to RECOVERED during the mmio_enabled phase, so the
+> condition to call slot_reset evaluates to false unless another driver
+> on the same PCIe bridge votes for NEED_RESET.
 
-On 18/08/2026 15:02, gang.yan@linux.dev wrote:
-> August 18, 2026 at 6:01 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kernel.org  wrote:
-> 
-> 
->>
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] Concurrent sysctl writes or sysctl updates racing with socket creation can leave the socket's `pm_type` and `ops` mismatched, breaking MPTCP path management.
->> --
->>
->> --- Patch [3]: [PATCH mptcp-next v2 3/5] mptcp: use READ_ONCE() over sysctls ---
->> commit 77c9e4aa4cdd5f6c57cc4cab253d46fd0cf2dfb2
->> Author: Matthieu Baerts (NGI0) <matttbe@kernel.org>
->>
->> mptcp: use READ_ONCE() over sysctls
->>
->> This commit adds READ_ONCE() and WRITE_ONCE() macros around sysctl
->> variables in the MPTCP networking code to avoid KCSAN issues. It also
->> ensures the pm_type is written with WRITE_ONCE() in proc_path_manager().
->>
->> Closes: https://lore.kernel.org/CANn89iL=os-60kDKqMDdyiXuPF5CG=eejS0vmthwpDGXz_Bp8A@mail.gmail.com
->>
->>>
->>> diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
->>>  index c0481b09c1a17..733706f06f1b1 100644
->>>  --- a/net/mptcp/ctrl.c
->>>  +++ b/net/mptcp/ctrl.c
->>>
->> [ ... ]
->>
->>>
->>> @@ -251,7 +251,7 @@ static int proc_path_manager(const struct ctl_table *ctl, int write,
->>>  pm_type = MPTCP_PM_TYPE_KERNEL;
->>>  else if (strncmp(pm_name, "userspace", MPTCP_PM_NAME_MAX) == 0)
->>>  pm_type = MPTCP_PM_TYPE_USERSPACE;
->>>  - pernet->pm_type = pm_type;
->>>  + WRITE_ONCE(pernet->pm_type, pm_type);
->>>
->> [Severity: High]
->> This is a pre-existing issue, but can this sequential update race with socket
->> creation and leave the socket's pm_type and ops mismatched?
->>
->> If an administrator writes to the sysctl while a new socket is being created,
->> could mptcp_pm_data_reset() in net/mptcp/pm.c interleave like this:
->>
->> CPU1 (sysctl write)
->> proc_path_manager()
->>  mptcp_set_path_manager(pernet, pm_name); // Updates pernet->path_manager
->>
->> CPU2 (socket creation)
->> mptcp_pm_data_reset()
->>  pm_type = mptcp_get_pm_type(net); // Reads old pm_type
->>  ...
->>  mptcp_get_path_manager(net, pm_name); // Reads new path_manager
->>
->> CPU1 (sysctl write resumes)
->> proc_path_manager()
->>  WRITE_ONCE(pernet->pm_type, pm_type); // Updates pernet->pm_type
->>
->> Would this leave the new socket corrupted with a contradictory path manager
->> state, breaking MPTCP path management logic?
-> 
-> Hi,
-> 
-> I think that may happen. Maybe need anothor patch to fix this.
-> 
-> When I have time, I'll look this.
-Indeed, that's for another patch, probably a fix for -net.
+I have a patch on my development branch so that ->reset_slot() is
+also invoked if (state == pci_channel_io_frozen), i.e. on Fatal Errors.
 
-But it feels like you would need a lock to handle that properly. If it
-starts to be too complex, we could also say that the net.mptcp.pm_type
-sysctl knob is deprecated, and that's a known issue. In this case, it
-might be good to add a comment above this WRITE_ONCE(). Then, this could
-be done in a dedicated patch I think to explain why. This "mptcp: use
-READ_ONCE() over sysctls" would then be only about ... READ_ONCE() :)
+I have another patch pending to allow error recovery for unbound devices.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+Both patches are available for testing on this branch and I hope to
+submit them in the upcoming cycle:
 
+https://github.com/l1k/linux/commits/aer_unbound/
+
+> [Severity: High]
+> Can pci_restore_state() clobber userspace runtime configurations with
+> an outdated probe-time snapshot?
+> 
+> For a VFIO device, pdev->saved_config_space contains the host kernel's
+> baseline state captured during vfio_pci_core_enable(). Subsequent
+> userspace modifications (like enabling bus master or setting up MSI)
+> are recorded in VFIO's virtual cache (vdev->vconfig) but do not update
+> pdev->saved_config_space.
+
+I guess the right thing to do is to write vdev->vconfig to config space
+after pci_restore_state()?
+
+Thanks,
+
+Lukas
