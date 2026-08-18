@@ -1,180 +1,174 @@
-Received: from mta1.migadu.com (out-30.mta1.migadu.com [95.215.58.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF63AAF52
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 15:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A822363081;
+	Tue, 18 Aug 2026 15:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787067264; cv=none; b=N2v/ewk0T4vsedEuGddqeZbcvhFYvP6cZ+onnbelCMMatqKopwwUNaeKk/hklV0IAaC8aeu98NbODft8mFHJuDqk6FKpI3rH56vXB63Gk4tXluxiPwZbOcgHFQWfoTIJzXv6jMMm0iX5YNxL4ra02hH1DAMgKCT/91rkiLVYAOY=
+	t=1787068226; cv=none; b=CeYqHi/O7/s1rKOHXkaWnr8vpOITslUiryIEZVZl/ftXHrcK2rZDlkT4FtVjQUnvH6QVA2HiMTqEkKiBXeMT6/RZLgTP+EJup/4gD/2oJhwEW5bajluQoapA6/B3uX/B7VJPV5fqSrR4Qxi5iZ7FCYhPeOXKsSVE1CEbfVbFiZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787067264; c=relaxed/simple;
-	bh=lIAig7tUvkXtXkjFtjUQBXAMX5gnC9a5uuDkqG0DwUI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RpBbxYQ2ootOHusr/K3F2e9SxAcx28E1JuAwmF+jBBcTmSape8m0mXvXP+KV+qmdHU22pI77PIsKJITCKiqIhGPpLWFnpsomGBgrmRo+2IeKP7IqJnRKdmWDON4eGkMK0B2Hx5ZFXAVOamQgrZYavWODrc/EK/ci6ym+f6TZZ0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=moE/eT0t; arc=none smtp.client-ip=95.215.58.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787068226; c=relaxed/simple;
+	bh=nlp08hHGiLccYDf+/XVoWlrGj7xR3CL2bOzNqCOBPcE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UINsMhOC0aAhKLP7lBTbedZLgMpI/UyFtif73xZvtXkg3P0qVWnGlEcVLK4cMpAvy6lnaTLknOjqtRQwewHMyrPyyd2sjMEEQVJk3d4Qz7lozgAnLMhuWKs0zqsRhTP6R/jnbj69i8RGOFMfVuZPpFtlUhYB+sKJHO1MjKvSjys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUUn+o8Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="moE/eT0t"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=lIAig7tUvkXtXkjFtjUQBXAMX5gnC9a5uuDkqG0DwUI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787067260; v=1; x=1787672060;
- b=moE/eT0tNfcWqeIou+JbHGVLmZmzZr4d4y4Y7FeiC4PESwkM9BcYHpkYslSOMYDMdmk0G32m
- OoAVAnoJRmWI9nVLQAidCXX84gRkNIke+Hr8/vfiqGolk8BtKz9RgGqYAjxdfUweWy/4uJm8wO0
- kkzjOgHCvSct2JlaYQjfPqvo=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f41.google.com (209.85.167.41)
-	by smtp.migadu.com with ESMTPS id b852e35d4454865d;
-	Tue, 18 Aug 2026 15:34:20 +0000
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aeb688ae83so8588e87.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 08:34:16 -0700 (PDT)
-X-Gm-Message-State: AOJu0YzLUEitNyUqWzm/ik1kHoixHtU7iXdgnYY9AECyE2m+vNHku6j+
-	fs1iDll6Lf+j8IT1I++TpkYk7v+cF2PBcUwgtuXWDnBo1JnvQ8vjLI9yPZhCVRkJKpelitH12e+
-	5k7PjiGMoqL+iYwkZtR2YyUSFtBZCcGRfmMJkqJW3
-X-Received: by 2002:a05:6512:286:b0:5b4:74e2:4171 with SMTP id
- 2adb3069b0e04-5b474e243eamr126342e87.4.1787067255336; Tue, 18 Aug 2026
- 08:34:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUUn+o8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7187D1F000E9;
+	Tue, 18 Aug 2026 15:50:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787068225;
+	bh=fGoucq703kpQy1vL6rg4U4eLvWWv4LLJ5Mwz/r7MHdM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=GUUn+o8YfLndQshOnVo/EoBsAZy7ZWyNkxpUo6O4dzPCgQIROeK+o+8W/77hLUhJT
+	 bvT7roxyeEJh34ljNR/GbUBPa8spjcOYF3GiLoGo0WV36E1Q/V/QWj2I5MreTaiWqj
+	 HYGyPn3hZsAzwgXL0m4YQXhXP4ISFHK8On/B3SoK9VRqVF+D1sj+08c2ONXoJAQj7g
+	 Q4Kh6OsmIuBI5myWf20R741aPLBx9+aqJmJIl8UA39lw/Ay8w3ZbmSekOqB8btlq5f
+	 DVJxKU/4oml7JWnE1z5fCaaHFy1O4w3s6tYbg+9d51h5vsz/wT9+ysWqGQEieuWC8h
+	 +ZqnbzNRSNkfA==
+Message-ID: <be72266a-a2a2-49f7-9be8-36eeb09750df@kernel.org>
+Date: Tue, 18 Aug 2026 17:50:21 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260731143541.956291-1-vdonnefort@google.com>
- <20260731143541.956291-7-vdonnefort@google.com> <20260731144557.AE9001F000E9@smtp.kernel.org>
-In-Reply-To: <20260731144557.AE9001F000E9@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 18 Aug 2026 16:33:39 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTx0hjergdVY9QA_oprver04ZDEDzt4aV=Jp_pVCpkssCw@mail.gmail.com>
-X-Gm-Features: AcwNN1UYsjeQqgZxajIZ4qeFFphUQpYmE_se_eYbtb9J9ALm7i8zcSrROb_yVHU
-Message-ID: <CA+EHjTx0hjergdVY9QA_oprver04ZDEDzt4aV=Jp_pVCpkssCw@mail.gmail.com>
-Subject: Re: [PATCH v4 06/17] KVM: arm64: Add pkvm_hyp_req infrastructure
-To: sashiko-reviews@lists.linux.dev
-Cc: Vincent Donnefort <vdonnefort@google.com>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH mptcp-next v2 1/5] mptcp: sched: change scheduler sysctl
+ atomically
+Content-Language: fr
+To: gang.yan@linux.dev, sashiko-reviews@lists.linux.dev
+Cc: mptcp@lists.linux.dev
+References: <20260818094825.48446-1-gang.yan@linux.dev>
+ <20260818094825.48446-2-gang.yan@linux.dev>
+ <20260818095955.6892E1F000E9@smtp.kernel.org>
+ <a9ef03bb12d3087e8f4af51d6d7dcd9967810942@linux.dev>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <a9ef03bb12d3087e8f4af51d6d7dcd9967810942@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 31 Jul 2026 at 16:06, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Phantom hypervisor requests leading to infinite loop and memory =
-leak on hypercall errors.
-> --
->
-> --- Patch [6]: [PATCH v4 06/17] KVM: arm64: Add pkvm_hyp_req infrastructu=
-re ---
-> commit ec846697735578e1b5a4e25b88e07602c29ae6a2
-> Author: Vincent Donnefort <vdonnefort@google.com>
->
-> KVM: arm64: Add pkvm_hyp_req infrastructure
->
-> Introduce a struct pkvm_hyp_req to enable the pKVM hypervisor to request
-> resources from the host. Provide serialisation helpers to transport these
-> requests via SMCCC registers and a macro to automate HVC retries.
->
-> > diff --git a/arch/arm64/include/asm/kvm_pkvm.h b/arch/arm64/include/asm=
-/kvm_pkvm.h
-> > index 74fedd9c5ff02..6c2497047f8d8 100644
-> > --- a/arch/arm64/include/asm/kvm_pkvm.h
-> > +++ b/arch/arm64/include/asm/kvm_pkvm.h
->
-> [ ... ]
->
-> > +/* Return true if a pkvm_hyp_req has been decoded from the SMCCC args =
-*/
-> > +static inline bool smccc_to_pkvm_hyp_req(struct pkvm_hyp_req *req, str=
-uct arm_smccc_res *res)
-> > +{
-> > +     u8 *src =3D (u8 *)res + offsetof(struct arm_smccc_res, a2);
-> > +     u8 type =3D *src;
-> > +
-> > +     if (type =3D=3D PKVM_HYP_NO_REQ || type >=3D __PKVM_HYP_REQ_TYPE_=
-MAX)
-> > +             return false;
-> > +
-> > +     req->type =3D type;
-> > +     memcpy(&req->args, src + 1, pkvm_hyp_req_arg_size(type));
-> > +
-> > +     return true;
-> > +}
-> > +
-> > +int __pkvm_handle_smccc_req(struct arm_smccc_res *res);
-> > +
-> > +#define pkvm_call_hyp_req(f, ...)                                     =
-                       \
-> > +({                                                                    =
-                       \
-> > +     struct arm_smccc_res __res;                                      =
-                       \
-> > +     int __ret;                                                       =
-                       \
-> > +     do {                                                             =
-                       \
-> > +             __ret =3D -1;                                            =
-                         \
-> > +             arm_smccc_1_1_hvc(KVM_HOST_SMCCC_FUNC(f), ##__VA_ARGS__, =
-&__res);               \
-> > +             if (WARN_ON(__res.a0 !=3D SMCCC_RET_SUCCESS))            =
-                         \
-> > +                     break;                                           =
-                       \
-> > +             __ret =3D __res.a1;                                      =
-                         \
-> > +             if (!__ret)                                              =
-                       \
-> > +                     break;                                           =
-                       \
-> > +             __ret =3D __pkvm_handle_smccc_req(&__res);               =
-                         \
-> > +     } while (!__ret);                                                =
-                       \
-> > +     __ret;                                                           =
-                       \
-> > +})
->
-> [Severity: High]
-> Can this sequence lead to an infinite loop and memory leak on hypercall e=
-rrors?
+Hi Gang,
 
-This does not happen. Every handler reachable through
-pkvm_call_hyp_req() goes via errno_to_smccc(), which always calls
-pkvm_hyp_req_to_smccc(), and that writes 0 to x2 when there is no
-request to pass back. So the decode never sees a stale argument.
+On 18/08/2026 14:56, gang.yan@linux.dev wrote:
+> August 18, 2026 at 5:59 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kernel.org  wrote:
+> 
+> 
+>>
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] Use-After-Free and module reference leak due to missing reference counting when setting the default MPTCP scheduler
+>> - [Medium] Redundant scheduler list traversal during socket initialization defeats pointer caching
+>> --
+>>
+>> --- Patch [1]: [PATCH mptcp-next v2 1/5] mptcp: sched: change scheduler sysctl atomically ---
+>> commit d5b1780c033b9909a1b30fbd814812af5c25ed2f
+>> Author: Gang Yan <yangang@kylinos.cn>
+>>
+>> mptcp: sched: change scheduler sysctl atomically
+>>
+>> This commit changes the per-netns scheduler storage from an inline string
+>> to an RCU-protected pointer to an mptcp_sched_ops struct. It updates the
+>> sysctl read/write paths and socket initialization to use this pointer,
+>> aiming to prevent concurrent readers from observing half-written names.
+>>
+>> Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/626
+>>
+>>>
+>>> diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
+>>>  index 63c5747f0f63c..479b31eb30079 100644
+>>>  --- a/net/mptcp/ctrl.c
+>>>  +++ b/net/mptcp/ctrl.c
+>>>
+>> [ ... ]
+>>
+>>>
+>>> @@ -126,7 +133,7 @@ static int mptcp_set_scheduler(char *scheduler, const char *name)
+>>>  rcu_read_lock();
+>>>  sched = mptcp_sched_find(name);
+>>>  if (sched)
+>>>  - strscpy(scheduler, name, MPTCP_SCHED_NAME_MAX);
+>>>  + xchg(&pernet->scheduler, sched);
+>>>
+>> [Severity: High]
+>> When replacing the scheduler pointer here with xchg(), does this leak the
+>> module reference for the previous scheduler returned by xchg()?
+>>
+>> Also, do we need to acquire a module reference for the newly assigned sched
+>> via bpf_try_module_get() before storing it? Without a reference, could the
+>> module be unloaded, leaving pernet->scheduler pointing to freed memory that
+>> would trigger a use-after-free when dereferenced by a concurrent reader in
+>> proc_scheduler()?
+> 
+> Hi Matt,
 
-/fuad
+(you can address such email to the list, I'm not the only one here ;) )
 
->
-> When the hypercall fails and returns a non-zero error in __res.a1, the ma=
-cro
-> passes the result to __pkvm_handle_smccc_req() to check for a piggybacked
-> request in __res.a2.
->
-> Standard EL2 handlers typically do not clear the x2 register (which maps =
-to a2)
-> on error; they set x1 to the error code and return. This means a2 retains=
- the
-> original second hypercall argument passed by the host.
->
-> If the least significant byte of that original host argument happens to m=
-atch
-> a valid request type, smccc_to_pkvm_hyp_req() would mistakenly decode a p=
-hantom
-> request. The host would handle this phantom request, return success, and =
-the
-> macro would then infinitely retry the failing hypercall.
->
-> Is there a way to explicitly distinguish a hypercall error from a legitim=
-ate
-> hypervisor request, perhaps using a specific return code in a1 to indicat=
-e when
-> a2 actually contains a request?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260731143541.95=
-6291-1-vdonnefort@google.com?part=3D6
->
+> As far as I know, for linux-master branch, the sched ops cannot be torndown, and
+> the only static default scheduler is used, so no reference counting is needed.
+
+Thank you for replying to these emails from Sashiko, that's the right
+way to do!
+
+> It is safe for now, the pm is as the same. Right?
+
+Oh, sorry, I just realised the BPF module part for the scheduler is
+already in Linux mainstream [1], but not the PM one [2]:
+
+[1] https://elixir.bootlin.com/linux/v7.2/source/net/mptcp/sched.c#L130-L160
+[2] https://elixir.bootlin.com/linux/v7.2/source/net/mptcp/pm.c#L1225-L1254
+
+Sorry for the confusion, but then I guess the split is only needed for
+the PM side. In fact patch 1/3 from the v1 can apply on net-next
+directly. So in terms of split, the sched part from v1 was OK (no
+split), but for the PM, we need the split from v2.
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
+
