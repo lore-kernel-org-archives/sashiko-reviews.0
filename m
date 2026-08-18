@@ -1,113 +1,116 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116BC377563
-	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 14:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787064533; cv=none; b=VY9J6hMHiGnSj2dJEw2LyhqDJS2WoF2aOlwk4GWxV20NYRZNFMqEz5qtLp9o3oA9CMOV7OIMERm9Z0yGdA6BaXw7l29064iIin+pmPFpbjzOGJFVR75chr8Jy7D3l4DcJHTGTZsj7Su2Hc43L7wDStJ5hEcFS+pxt2vBHfkGk+A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787064533; c=relaxed/simple;
-	bh=ut+2eq7WSaSVlLblrB/noknMPuxRnWmAtoR5s0E3O/o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUL+Ywv6ppYki1LzZp7JoOIx8gzlSa88c/48Au7Xrg0Md2dUlPxu3YPuM7FxuB3WTGDq1kSx7mgweD47cmsc79moKZs4nBV4ORSBB49+LpYHkvchGtnyu9tEzVaLQwgPJbBx5HzduZjyEHxjs4Wi6EUCbNJDCAdlpshSGd+kuWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9HQn5II; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956FC3A6EF1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 14:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787065169; cv=pass; b=UTuF6CghgsFwNiIs+aLqNZYI1z0Zl10Am5tCJvT6Drdtxjt7jWVH/kKY/evvaEOvTBcSPptd2qLnYWFLAlL+Ogba6wVYUD8N/VJvw724uM2fxAKXJDEWOt0eUR6ENhMpjbqs4055J7o0SbPQct6gE06ivjKoffkPHETgnT9wRSY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787065169; c=relaxed/simple;
+	bh=auOWJSI+p4NXA2fRT5Cx8VbH8xiNgNPgiWdRlKFQleQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XZPvCSwj8FDnTCepI5EzXwcFVwA99rRniCTOZv9a9K/E4kjfjLlVGeRtv2OimCICMkLf02YDM3+FJSBqFVQyyglrdM57cRmnwDPvsXfrnJeyxj0C0BAEm4h7+u3EILuQLrRoMPvZ7PkgM6s8GbgW77xoj5/9sa/HwWcwkY4PLHY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cs+GcWhA; arc=pass smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9HQn5II"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-84eb992a881so3672986b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 07:48:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cs+GcWhA"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4953de5be0aso38163135e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 07:59:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787065167; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TL9K70/WHeUxYwzYCd/OQI6nQYFhg2L8K96ZsaBSHiaX1nyEzODkgwiH/SNVrzfyG/
+         FI4GJoAHgXfi4Up10SvKe3OQKsmn+tJAquRxYwetYUCXXSdFdNV18CljEk1gDBgPwFTk
+         xRA+q8CVJsesWAaL7ASuoKFHbfCCv93EpIjD0txsitma+dhLeZtnAAWX1yQdUprCxEnP
+         2/2jKBpHbIvijBx3Q2YjEbP3jnieN4kul5JGi7UmJ32k+M5hQnM53JVY0npl3hhSEogj
+         VB/RTDVvGCFnqcKHASwT4eOJLNYwyVrb+9Xv4md5WAd5Qznc0ki6ldVJd6FMz5ud6F73
+         dhvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=auOWJSI+p4NXA2fRT5Cx8VbH8xiNgNPgiWdRlKFQleQ=;
+        fh=VzOA4vMZ0hs7z58xCOIebYw0hsP5O335eG5uln2UTDw=;
+        b=DMatPTiZdFtwqdZxvFYVmILy31hLjYFY+O/3auXEVHr7XQMQKGyF+a8o6RQs6fn3fW
+         zm+q5E2mIjeBFhCMetrtgHIF6Y0Od4XErnajzY0V7tkhNfGssKajzApgjcLz0YPTrBHE
+         bi/JeCW3XgWIEqhf9nJjhHjDpCi838FPbT2e52tXB6gJg8qgZMogiyr22OIpyHfDBuIk
+         7wpJlzIIHGV6TndJj2JAJmY7e/vHMsVkDGTEvfsl65KsVZzT/BmSU3FRKneciuhNPTrz
+         r0JKzCybOF0a4ER6LQrgfYoOpFiXXmtryjK/Kk1rKvrD/7InWDOc5iLByECikRKTdASV
+         Bplg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787064530; x=1787669330; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5b3SGhODqk0c4vJ8OoIQWWGMwcq+bbZgtoc9iFh8o/E=;
-        b=h9HQn5IIUEwsJQ5yFFBiyI6loA6bGvzkAOzvKhgNzJUga6e+QfeXnuW0N901VTuWYh
-         W0cayV3BQ+wNnu173/b3qse811o1nzpfComNXpd/NqtDt1FhfXx7FRDerQpKrPFB39cV
-         19+Iwj2acrT6fo1cnTFablAZyVSGdspfYP7a5AmOoSCwntoA7CGF0iHWo7mkI/BR0Elx
-         BEx2j9q61Q+G6GBnTEbz1TnJfcigEOG7AehH/WV2uA0Fi0tqLZF9ZuegKiNg9rvdx4rD
-         v6uqZhqqgiU/uv+g5ULkvjTMO5BjNnkpyMTvH128nlCcgMPrU3P1BjP1M+YlYlD4YRtW
-         qLVA==
+        d=gmail.com; s=20251104; t=1787065167; x=1787669967; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=auOWJSI+p4NXA2fRT5Cx8VbH8xiNgNPgiWdRlKFQleQ=;
+        b=Cs+GcWhAdFBfICauAO8wHpkZBlXEpPTToJcqe2LPIeaY8GgpSXWh21cHoHT0xj9se/
+         xgTeGet20eyNW18Mmy0/6TRdbQg4ZddKucjG5PJpDa/KUyAKdJvkqJcqeXrr8il5hAZ2
+         Ty9AGJy6e9xuSutpzdsKxTx+7igimNYTzRRu7FIPd3d/a9P97tB5g8TIShMtgduEKOhH
+         QMlbXeHfCoHJKk+RrUOhF5010YWUpYLStgPrM4IyL07js/D0cvzu7JxzvmQLGHcn0d4n
+         OB8IKO1yqHw/tuiI3N6db0zySOeBvUmyKbKJJjBhpiYbi2PLRI3V+QhHaqdn+AD08Tw1
+         8IEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787064530; x=1787669330;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=5b3SGhODqk0c4vJ8OoIQWWGMwcq+bbZgtoc9iFh8o/E=;
-        b=Hh/CgnSlW84A1JO29M5tsAlpif+y0CMB6VMP8XrMIGTJ1hWswzrcJCqvirCp86Oe40
-         WjEeMlhsZDFm9mhaW58lse9YjvQFOnWFLEkqLuJWIyU8qBKaeletqHlc4twaZ7cOk84j
-         TvMdqjiCPjyxxEcsoVh4a6jla+xORQPvaBep0IO617Hhy2I/8r5E+uC4TLjeCJ/Y1b8h
-         1xYsKZTxi/Mj2JAoRnzSf/7DTuOCCFec/M0lkQNRUvpGoV0b56g9dKl/h3ArEl8S+soj
-         6Hf87irT9XqJpap00vc/pUCmM27WspbS5B3LjB3LuQGyKNezUreBwOCQliZY1/2eeUIN
-         YQ4g==
-X-Forwarded-Encrypted: i=1; AHgh+RodIzo6bav8Fua9SZNHvqSEj82ePA0bUs+HXEWBp9ERADfTTCaJMZsoW7Iad5khBdSvZtTi5ealpNOJrMDFDzo=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxx1VRfaC3nrUS/4ip4LB5sJYaQrRggqKwuaQnYrVP4NFJFm9Wr
-	awAhwHmoMXFsY2aOabYB1h06ujVdlfoMaUgvke9Ovbzd7HCy8xkOoU8=
-X-Gm-Gg: AR+sD11ha10XSLjWEi8Iq86wvwwjjd/KgL6eYYyxE+5sRCbxBCOjCQXvsQHt3EvxEFb
-	PJRmRHntPUxOel8Kinn8P+W8UWyJmMIfoXagm0UMLlN6F/mAJ4OYhG64B0/Qn4uYSHzTJwNYmjD
-	Bcgsh/2kbp8i40V9+YxGu8f/RdTmvF55yzQm2qpYjZqdOWjJnkaWONWEeUG2KPSM5WSL0dDzSXu
-	sQEgzABGRgRA5KyRsYkUplt2xDRajZrIOeCUT5jOdiPOvzA5Z1jg/q7rsInB20A2oldIb0Ak10T
-	u0tp853Kx5IaYmUtKuiWFnJuuxs9vEoRTd8Jm2cSrn/CDsnoZ/TQpo8D8jq358GDBblhpoJ4+TK
-	9yFouOqsuc6cxjCi3NTcyrnVH0QrxHfwI5qmvZDRi9ADZwOMAjuMJ6uBCZdplh8JsZNGniOivWv
-	oL6uQ9kbOg7b6RWWK0itvUk03Q8SP2DQIeGiNNb0FWz6+Rb8ey0U+8EIefZEcvhbWLZzk1ztNnZ
-	bwRwZKlFS5XX6Np5fUGiNGwAqk9gEhu47T4FLMzE7lcqvKnEKFdla60YYx4Ubv5uABymoz0dg==
-X-Received: by 2002:aa7:888b:0:b0:84e:24df:3870 with SMTP id d2e1a72fcca58-84fdddf222fmr33587088b3a.0.1787064530349;
-        Tue, 18 Aug 2026 07:48:50 -0700 (PDT)
-Received: from codespaces-2db70c.ktkhmpmw22vebpok31ngjx2qsb.ix.internal.cloudapp.net ([23.97.62.119])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851c5382f1esm638832b3a.41.2026.08.18.07.48.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 07:48:49 -0700 (PDT)
-From: Triet Hoang <triet.hoang.dev@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: linux-perf-users@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	triet.hoang.dev@gmail.com
-Subject: [PATCH v2] perf unwind: handle allocation failure in libdw__get_entries()
-Date: Tue, 18 Aug 2026 14:48:37 +0000
-Message-ID: <20260818144837.741469-1-triet.hoang.dev@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260818142902.639F51F000E9@smtp.kernel.org>
-References: <20260818142902.639F51F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1787065167; x=1787669967;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=auOWJSI+p4NXA2fRT5Cx8VbH8xiNgNPgiWdRlKFQleQ=;
+        b=Mf9xRSyIRBTg3Ge0VMaPeJnd7ybpOB0cVNWF6mZ3oACG1MeDt0D0bvUgqI3o4n1478
+         Ff9mxNGEp6eCbYOczRe3oy576SaUrdS/t02zFMb7HSQjn8jb4ahy80+rSNSlALwLX8xM
+         mHM+nqEig+C0ehVJkM+uvhyPQJPhRc6wH8hVW/bV2bhj+RxnCqsKMgF4o5J/Yi8aRMZg
+         qsj4tz7/wrN1hbF22SGCT/bDdO1Qdbcy7fN1Pzi/H7DXJxejVafPD03wZ9q+QvzP+TV3
+         7XzZjlVaPiVc64a0J2n8ljIzpqIUuRa1WdEFQL4ehW7FHKcqPUI35VbcaHnG4s+F19v3
+         8Lcw==
+X-Gm-Message-State: AOJu0YwIEI0jRwSNGJACkc5KSZP8QwML5sYIlP+PBj8RufogxOuV3wUp
+	PipjvJ4nyGvXsQ+/79qxQ8ey1JsAWHFwKGAuvjKATp8iOVz7YjztTyfMlkxupe2HZ+0Ka4bjfXA
+	QuZd1DZY+Gu6beAsox8uddzbQ/Wa+kJw=
+X-Gm-Gg: AR+sD11n0fxENvx6Y0Z7qOi2ayZ38Mrjwe0ILUYRckZxmxHo3ZwEMwDZ6oECf8DbNyf
+	7wfju0xS9FUYWVxmQb2wz0Ul3n99dCsH/rhXrc0bDFL1xyj6o/CJyfcU07Rid+IQre1deyFelxT
+	jCELzCEtwI2DR2oDqQ8kar2v8Nc6q/LdnhL2JWeJNOj3+ZrvaywWqVeemy83lp1VtLc48LG70pt
+	Tv+Ej+2i9jypxe0NGdZvnbD6bTwabY95q0xGwDq4bn6xBvohejWD+/grzN0EskLVgd6VTkRLJH6
+	8WYuYALDGxlsgnCv9LqmbvQQsZ0fQ0ItUHwCmmy9L+2eqlP8wvnUMqcjXl2fQ6dOa+fvM7SsFhA
+	UvhtvLLW3ZFMK5zTa6dObhknIWCAigLlF3khVFKlRrd0/ul3bf7Hg5VInFIukYtk=
+X-Received: by 2002:a05:600c:4ed2:b0:499:8743:77c8 with SMTP id
+ 5b1f17b1804b1-49987941ae1mr528130175e9.8.1787065166778; Tue, 18 Aug 2026
+ 07:59:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260706175138.12587-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175138.12587-10-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260706175655.6A31D1F000E9@smtp.kernel.org> <aoQ5INLOtNELfXpH@ninjato>
+In-Reply-To: <aoQ5INLOtNELfXpH@ninjato>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Tue, 18 Aug 2026 15:58:59 +0100
+X-Gm-Features: AcwNN1UCOJCIwPDBwZ6xtGRL3Omm13v2RjrLOXY3KVHS5j4fJiEaqJmGRVxTIKw
+Message-ID: <CA+V-a8s_p95DsJDSZeP2Uy6=Nv4KZkKj0unLaojqR+yDZGTLZw@mail.gmail.com>
+Subject: Re: [PATCH v3 09/12] rtc: rzn1: Use temporary variable for struct device
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	linux-rtc@vger.kernel.org, robh@kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Check the return value of zalloc() before dereferencing the allocated
-dwfl_ui_ti structure.
+Hi Wolfram,
 
-Return -ENOMEM when the allocation fails to avoid a NULL pointer
-dereference.
+On Tue, Aug 18, 2026 at 11:51=E2=80=AFAM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+>
+>
+> > Should rzn1_rtc_disable_hardware() use pm_runtime_put_sync() instead to
+> > ensure the suspend completes before runtime PM is disabled?
+>
+> Sounds reasonable to me, what do you think?
+>
+I haven't seen any issues as such, but I will create a patch for it.
+I've seen patches taken along similar lines.
 
-Signed-off-by: Triet Hoang <triet.hoang.dev@gmail.com>
----
-Changes in v2:
-- Free the ui structure before returning -ENOMEM to avoid memory leak.
----
- tools/perf/util/unwind-libdw.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
-index 7f35042be567..fd8a5125468c 100644
---- a/tools/perf/util/unwind-libdw.c
-+++ b/tools/perf/util/unwind-libdw.c
-@@ -379,6 +379,11 @@ int libdw__get_entries(unwind_entry_cb_t cb, void *arg,
- 		dwfl = dwfl_ui_ti->dwfl;
- 	} else {
- 		dwfl_ui_ti = zalloc(sizeof(*dwfl_ui_ti));
-+		if (!dwfl_ui_ti) {
-+			free(ui);
-+			return -ENOMEM;
-+		}
-+
- 		dwfl = dwfl_begin(&offline_callbacks);
- 		if (!dwfl)
- 			goto out;
--- 
-2.53.0
-
+Cheers,
+Prabhakar
