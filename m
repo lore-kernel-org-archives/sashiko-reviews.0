@@ -1,161 +1,169 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11021086.outbound.protection.outlook.com [40.93.194.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849FF3D525B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 07:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787124770; cv=none; b=B2MPjlkLPNRgdQXpCkV/khbBOs3hsOPJzhfY1VDShXmU8kam/EvWiHb84TiJlpnkjSsDQ4c60zbOPY1RUPklmsREvEk7woe8aYG5e2QczXWwneQdBo3K9nbH6lz74lbwUBctMrQAXifcT3cYKtOL7I07rsjHAJMrWkqRxB0O3uM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787124770; c=relaxed/simple;
-	bh=o/2vI3L7DjU+AGv1ghKW5/EjiUALqhJV4GZBMQXeKpE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=jSnqJUpyCvqm9AtrHCqSf7yBM9GXa5l4Rku1ThdBNCC6f/nk+0BybczUuxt3G2TCTRAknAxEUEG6iyxqyo34niv1BZkmb6E/ac28Z0JIzsDDwTU8aQAbRWftTKkf8VYEl27YhVO1215ItQyVgjcraLYKZwxmQI+pPMVvg/balqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ov4NkIaB; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FA14156C9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 08:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.86
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787127191; cv=fail; b=KpKuLWuV1LqHKc400OWi8bKNxoE/zI75DW8f68DklcvFDyQeKzAjs+B/c5QjvorjbWeJ1EKt/jbIyggzxysWt5fCOuTEYWMKBZGnD0iVvqOX4RnCaoE/Cbk3eEMz09sFkxFjbu2SF3YN+neJl8nyTrPrasE+Rs0msY9EVQzfvOU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787127191; c=relaxed/simple;
+	bh=U9u1HiqM3ghBkJDRXP0enlz5fZlWNqxp4a+hHkIMtqY=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=R4vt2HAYxqcdGhAXSXFiyi6+uvLcho/gBlCNZhUQ/7XRl5KQQYtWWVKelFRRvL4y+FIfXNE/hw6ZNFcDTfqjK9de9DMVSKlTK0M4Z0MkDH1WojY5w8InuvjJDFhnWYYPDJyolm0+XAXnz0jp0S3S7vxuce+jZpyqoko80Cx/Gl8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com; spf=fail smtp.mailfrom=analogixsemi.com; dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b=IsMPBpbu; arc=fail smtp.client-ip=40.93.194.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=analogixsemi.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ov4NkIaB"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id AE4191A172B;
-	Wed, 19 Aug 2026 07:32:43 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 8291F5FF42;
-	Wed, 19 Aug 2026 07:32:43 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E759711C753B7;
-	Wed, 19 Aug 2026 09:32:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1787124758; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=hQKtUNfu32zyyC3Pj0M51woeAuZ2PTZyG0Xqk5Ab96I=;
-	b=ov4NkIaBPQjK5QOgWFDAaIX+AGemj/mYur8euDyWKpDKQhIgALpJzcC2rY7O47dazgnCq2
-	ldjpBhvTFzT+WKYxCW/IsYATs5b0vLo/ga46XhaR0eg03d7UclrWJ9xT4bhjItk2g+319P
-	zy110nlWGd5ujXMq7EI7iYO92jm4soUdn7pBT5YvMNijLkn+t45QSY1VJ1ya3y1tDeW+Wm
-	tt6SiD/OAH3iX3OqYjnROILLWbdepOpsiHRNrOSHkRhDbKCPEiaKeRY+lwep9KTx2YY7Ts
-	iqSQzMVFSjN5Kt0hpuj5qMezBS4RCPP1840Q2kaSoApEdycxvaml3Piy2wHkhA==
+	dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b="IsMPBpbu"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J80gz/OlcYrvqR/F2LW8XB20pxrU9puodi3UYU/wVx10Zt9hq0PwI0wpZ0nZdaUDQub8XMzYmAE/Cm3gjN9ZV2C1DBkXD7QYxBP8uGAliSr566qEGjlhe9bRG7m7wUoP+Vyl8cHkx9IUeWAF/OYPsOZNFDVc+Fc464Np611T2xqQHNX3SsVFL60vJ5t3TFzwCqtGQGdpCadp23gbHqsLVq8DVPZCLUESlxjHimaeUyStFvquQMog97kDndl6RAF9SUmXBcqOIacS7dDTkKtnXsFyXTTYh1jHqCgufmGLQaUa3F4qm0h1TWDFOAcE3yXQmGxgWNOXIhVnA7CwPzcgiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=U9u1HiqM3ghBkJDRXP0enlz5fZlWNqxp4a+hHkIMtqY=;
+ b=AQA+tNICpRg7c2zWknowODpFfLNj1qhxEh2Opau4sK9Efux+LxEHapU/2Q2Ooi1uWx4tGgiZ+hCbooZnyetFpo/H/k8pTUhqdC1gqk9bb2Gj1RoXNyXEP7oX3F/EEKW8mIUb34iH89fB3UBRXcSAKxzfyUO+B1BM1OYQ6k9+lt0Ve9uvk+8QVpreUgqXe1QzZKOpP1Nf/iogCutd9z9xF4NPpC4wMh8CVa3BGj4Ng4tmyOI13lBz90tBhSdJ2dxqbXDM+mURTfpRQ+3CswyVUHde2qkl69ZPFf7NGXCX2kFIRUGjQaKAfHhGLP1/00+EXKFvhRS3o2JB9eSPxfCY8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=analogixsemi.com; dmarc=pass action=none
+ header.from=analogixsemi.com; dkim=pass header.d=analogixsemi.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analogixsemi.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=U9u1HiqM3ghBkJDRXP0enlz5fZlWNqxp4a+hHkIMtqY=;
+ b=IsMPBpbuP0WqymA+HDTa5t77Lod/9XbMg/B0ZSwQ9DwYrgT5q4nc460h10xPNON2BSGameWeNrU2Hgiqty/lcDIcH0MYsPUzAIDqpQRz3qF4lr76GRmPp0cuj4Za206EwqCuvw2+07qPzFYD5veqCRaTBRhiW8KeVtZ0TZKD7uk=
+Received: from DM6PR04MB6970.namprd04.prod.outlook.com (2603:10b6:5:244::15)
+ by SA6PR04MB9543.namprd04.prod.outlook.com (2603:10b6:806:42f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Wed, 19 Aug
+ 2026 08:12:49 +0000
+Received: from DM6PR04MB6970.namprd04.prod.outlook.com
+ ([fe80::c85b:1156:a070:b01c]) by DM6PR04MB6970.namprd04.prod.outlook.com
+ ([fe80::c85b:1156:a070:b01c%4]) with mapi id 15.21.0339.007; Wed, 19 Aug 2026
+ 08:12:48 +0000
+From: Xin Ji <xji@analogixsemi.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"robh@kernel.org" <robh@kernel.org>
+Subject: RE: [PATCH 1/2] dt-bindings: drm/bridge: anx7625: Add right justify
+ property
+Thread-Topic: [PATCH 1/2] dt-bindings: drm/bridge: anx7625: Add right justify
+ property
+Thread-Index: AQHdLrYssVSLx0E5+U6dyVM75xkZp7ajEJGAgAH2zjA=
+Date: Wed, 19 Aug 2026 08:12:48 +0000
+Message-ID:
+ <DM6PR04MB69700C246B6CF8ED6EBF16DFC7A52@DM6PR04MB6970.namprd04.prod.outlook.com>
+References: <20260818020559.961335-1-xji@analogixsemi.com>
+ <20260818021219.DCA4A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260818021219.DCA4A1F000E9@smtp.kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=analogixsemi.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR04MB6970:EE_|SA6PR04MB9543:EE_
+x-ms-office365-filtering-correlation-id: 78706bfa-b3f0-47d5-7f4e-08defdc9a81f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|3023799007|6133799003|22082099003|18002099003|4143699003|38070700021;
+x-microsoft-antispam-message-info:
+ zOgHJf3S9hCbj+JQxap24RBUXKH9L0LLAfqOive0nEm2fzyRVXUs+ryNTQ0oqPuZXz3I2Bt3RMMzEpiBBap1ztcx9ujc7tgq+InSvtJmmpSnP2hcwtnup8C6slqsy/HkUjaOXHkFOs0uylYLz74TwF16rIw948dIWWWtPxV0v7swtfCloyhvD3BzspTA+5tuUKjb9LOBLj4O6n3XrKxiCYYPch6YjHXSI1fsLFTDYtOVGM1zcG0dUeCMo439ikU4e7jBOrDbX0YU/GGpPPwhBcX0/JoVkOHLrulFSWTV4F8FdMMQduldkGiNoAL1nr/D8DRW6MN+uWOMBr2LGA699fryePG0knN3HCo4nqDIZJhPddmSQPQ2LJhaL2rVypW4cUNqJ/9SKcUypCKChXzMSpRSsoAncAHKnH64Ci98LGqeYAOYOxla3kMd+Mx61ceU2SGswRajP9uEHXCYwZg4UlY8Q+Uu/mkaeog1IOB/rp7oFXxdfaLWGitvo7hXbSQKFxeuZ1TTh9rjpoM+TwtMTokPdhZyhCCs//FvX7+rQDfZP5gearHxOt9M9dkGK0d2c7JeKnEv9v4dmPLCeYdxsG3oXCFAyLPBwQgkqclpNp9/rX7/VJBTNYxRzqRVUwgNTPmCD96ZIAyCvw9GXn7gUwcg4UDI2ETmmJK6i5FzeX8=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6970.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(3023799007)(6133799003)(22082099003)(18002099003)(4143699003)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?cnRSUjAzQTR6eFU1VEhlZmROUzVKMTBOQVBaUXNRVFRkSkhXd2JXK2NGZUx4?=
+ =?utf-8?B?OWx5Uy9FSmdCUU5XM3c0MW02VkwxQTJCb2tLVmZSL0lTR2IxOTgrbVg2dXkv?=
+ =?utf-8?B?enFwZ043TVJJZWNob1dabVRjdmlqTC9XeXRKTmRPcjJZeVQxZlRkRnJidDdU?=
+ =?utf-8?B?ZWJkS0ZadkN2NnI1eUNhK20zc3FRUHZDYXlqTEpHd1JoZW1heDU3dU5zbVMv?=
+ =?utf-8?B?MC91VitDWE1vR1llRFIvMzZlaDA2TzIzNE1YT3hQb2t1dVZNSGUwRjZyd1VR?=
+ =?utf-8?B?QkN5ZlIzL0JlckhjQkk5aE1JNlk4VUNFNVVaTlhDdmtLQ2JIa1g5V0pIazlC?=
+ =?utf-8?B?NS9OMStvNk5Pd2MrbVRBY3NhbVZ0YjRiR3Q3V1RTTUJEaFlmTkU1aXkxUDFv?=
+ =?utf-8?B?WTJMakcvbjVBZkhSS2ozS1piZ3RkNUtCakx0Q3BiS2g5U0xjcGF1RXJlYXh6?=
+ =?utf-8?B?RG5qSUYyMDFvK0pWdUV6Umc0bk51Y0loOVpXZXBkQWt3VTRYNmVSUTR5UFJS?=
+ =?utf-8?B?dEVraWNGbUFwSDhmVXpjQzVWVUVhakNlOFVxOFFUOTNJQlByQXpNYUt0QkZi?=
+ =?utf-8?B?ODZaT1JhRnhqdjVSZ0tUU3VRRUo5NXA4TEVqYWNjeUFOVkViYytXQzVJenhT?=
+ =?utf-8?B?TGVnN2ovS2F2QVU0Q3llblkxT0w3WXdhY3FOam0xRUJQZXYwcnNWVndLK1Qy?=
+ =?utf-8?B?NlNYcEFEZElsV1NSbTcza3RueHRNa1o4ZXM3dHY3b21JbHUxY3p3UDI1eW4w?=
+ =?utf-8?B?RmdhMEtwZWV3QXVXNmJ3NHFMcGxXMzRIME5PalNGUStwMmRZKzh1MjhVOEJv?=
+ =?utf-8?B?TStRWmwwU0RVOEJ3RVRHNzNuaitjdXJlYjkvR1pnb0xpRDE3L2FWeWtHVTBn?=
+ =?utf-8?B?Wm1Vb0ZQRFFlK2tXa25wTFZZYk9pbExVRElPV3B1OUZCR3lnZm5UK2RYcUs3?=
+ =?utf-8?B?ejhZcjl1eGVFZG9jSmxNcW9BdUppcFRSYUYxTTZ4TmhlYlZVRkp4YUpncjFu?=
+ =?utf-8?B?MmcwNkRYVE1WL3RLRU5vYzVldDQ1Wk11aWVBZVVKYUdJaDR2UXZLd0NCWlpP?=
+ =?utf-8?B?emkrQkRUSVpCQk5JU0NybHFqR3AvNnFEZ0hRSFNEZVp3RmVLOVl4Zjlselk4?=
+ =?utf-8?B?NWNyNHBOajVKR21mbjRmckZ4MUszUzZucXNHdEhnNElpUzE1UjVjaWEwMFBU?=
+ =?utf-8?B?ZlE1TStyRnQwL3hXMnpvV2xWUDlBZFpLV2x0dDF1dlpkSEZQTjJweVhSaE1M?=
+ =?utf-8?B?UWlVWTMrZkRoSTl6cUsrOUNqVnhpcnRDQ3dIMmRBWGs0TW9URUlDNG4wNkRj?=
+ =?utf-8?B?NTd1ekNyaFpOWCtnS2RPblhIU3hpSTBCRkRNTFhzcm9LczlZdDVRVUEzV25O?=
+ =?utf-8?B?amxZdTl5OHp0d2hNS2tPSUlZNUJ1R0dNYUNCRFNTYUgrSjkzRjdCTjlTWUh5?=
+ =?utf-8?B?T0lqQ1haWjhvcU9KMnFWZjBDRW00cldzQWRoMFZnV1NLVk4wM1VPcFRadGR4?=
+ =?utf-8?B?ZFpVYm04am95dU5ydFEvTGJoQktab0dacEQzVTZpcHcxRlBVaUoyYXVmSGtx?=
+ =?utf-8?B?N2ZVYzFrS3NTdUtESHFNMlZmNjR4SDkzOHIrOXhVeGxVNFJzMmhRK05HcjBr?=
+ =?utf-8?B?OXA4ZTVsbUw4djBNY1NVWWM5aEx3YjhmdkptaVBSQjFpdHVmQitoVEluVnU5?=
+ =?utf-8?B?a1JnR282eWpHVWtEYXlIcDJ3dUNKRElVZW0zWlAwQUhVSVVqK0xHOW9iaThH?=
+ =?utf-8?B?dTlnTFJ1TXR1cUhkSHBpSVRLZXBsemZ4dUd5VFBzeVJCRXRmdU1vUVUxeE1D?=
+ =?utf-8?B?QXdnaUR5SnRqUGcwTFRFckRoRnlkOEhjUytmZXZhdGhtQ2xRdjFORnArNXpr?=
+ =?utf-8?B?b1J3ZXlIUk1Vc2ZhekhkY2Npa2VpYjFtR2MzVGxIa1hUV3dmWGg5MnhsMmJX?=
+ =?utf-8?B?aUJOUzNVU0dOUXY0Y1NGQkI5cytMM0xBRnE2WmxYRUFvK2FiSXp6Y2libmpa?=
+ =?utf-8?B?ZUtoZlVNUjdLZ1NjTU9aVGtFMVRzcmdGZzk0aFlxY3V3VGQ1VkVkMFp5Yk5a?=
+ =?utf-8?B?emVKYnhTTVN3clJhdzhpcSs1aWdzT1JNMkxxVy84UmNhVVdvU0JNUUgwZ3g4?=
+ =?utf-8?B?dW8rd3FySFBFTEw4RHU1T3ZFVkhYTEVHKzBiRHBZcWFqblR1Ynh1WVkwc2Zx?=
+ =?utf-8?B?MGZUL3Q1RHNpRzdyemxpQmFXdEpWQ1c5aXFxNkloRjRZOFViUFhQWGFJWXYv?=
+ =?utf-8?B?T1VHRnJRNDJMMlNjSmJ6eW1lcXJWbklUcWgwWTFHOHIvVlkzTjlhNFZlKzV3?=
+ =?utf-8?B?Y3A2a2dZd3NIODQ2K0xSU2lTUUJUWkR4NUprSGZ6aVd1TEsyQVF2Zz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 19 Aug 2026 09:32:29 +0200
-Message-Id: <DKSQUNWA86GP.9NHE4ADGYLQH@bootlin.com>
-Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
- samsung DP DT properties
-Cc: <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
- <dri-devel@lists.freedesktop.org>, <robh@kernel.org>, "Luca Ceresoli"
- <luca.ceresoli@bootlin.com>
-To: "Damon Ding" <damon.ding@rock-chips.com>,
- <sashiko-reviews@lists.linux.dev>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-X-Mailer: aerc 0.22.0
-References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
- <20260707040613.1992841-4-damon.ding@rock-chips.com>
- <20260707041711.4F7351F000E9@smtp.kernel.org>
- <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
-In-Reply-To: <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
-X-Last-TLS-Session-Version: TLSv1.3
+MIME-Version: 1.0
+X-OriginatorOrg: analogixsemi.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR04MB6970.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 78706bfa-b3f0-47d5-7f4e-08defdc9a81f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Aug 2026 08:12:48.3856
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b099b0b4-f26c-4cf5-9a0f-d5be9acab205
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: p+tEQtCyXvUIKCVQhupYWfRT9GG2Zo+iayX/NfnEpVoMzU4acW0Gjy9kQo5PWsMrWl2XAia4b5ZDRmTD0LC0lg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA6PR04MB9543
 
-Hello Damon,
-
-On Wed Jul 15, 2026 at 10:32 AM CEST, Damon Ding wrote:
-> On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s) to consider:
->> - [Critical] Failing probe when deprecated DT properties are missing bre=
-aks DT ABI and prevents their deprecation.
->> --
->>
->> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory=
- samsung DP DT properties ---
->> commit b573dba50acc6087122ffa4a65680322f4d004f8
->> Author: Damon Ding <damon.ding@rock-chips.com>
->>
->> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
->>
->> This commit reverts a change that made the samsung,link-rate and
->> samsung,lane-count properties optional for Exynos DP. It adds error chec=
-king
->> to fail the probe early if these properties are missing, aiming to preve=
-nt
->> link training failures caused by zero values.
->>
->>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drive=
-rs/gpu/drm/bridge/analogix/analogix_dp_core.c
->>> index 8cf6b73bceac0..293d8adfe9856 100644
->>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> [ ... ]
->>> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struct an=
-alogix_dp_device *dp)
->>>   		 * NOTE: those property parseing code is used for
->>>   		 * providing backward compatibility for samsung platform.
->>>   		 */
->>> -		of_property_read_u32(dp_node, "samsung,link-rate",
->>> -				     &video_info->max_link_rate);
->>> -		of_property_read_u32(dp_node, "samsung,lane-count",
->>> -				     &video_info->max_lane_count);
->>> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
->>> +			return dev_err_probe(dp->dev, -EINVAL,
->>> +					     "Failed to get samsung,link-rate\n");
->>
->> [Severity: Critical]
->> Does failing the probe when this property is missing break the DT ABI?
->>
->> Since samsung,link-rate is a deprecated property, a modern schema-compli=
-ant
->> Device Tree might intentionally omit it. If a system boots with such a D=
-T,
->> this check will fail the probe with -EINVAL and disable the display.
->>
->> Could the driver instead fall back to hardware maximums or sensible defa=
-ults
->> when the deprecated property is absent, rather than returning an error?
->>
->
-> I'm afraid it's difficult to provide a universal sensible default value
-> here.
->
-> The samsung,lane-count and samsung,link-rate values vary significantly
-> across Exynos DP device trees, so a generic fallback to hardware
-> maximums cannot guarantee stable link training.
->
-> Even though these two properties are marked deprecated, all existing DTS
-> files in our projects have already populated them completely. Moreover,
-> the current link training logic relies on these two parameters; omitting
-> either will directly cause link training failures at runtime.
->
-> Therefore, retaining the mandatory property check in probe is a
-> reasonable approach for now.
-
-I'm still not convinced we should turn an optional property into mandatory,
-after having been optional since 2016 (based on the commit in the Fixes:
-tag).
-
-The sure thing is we cannot break existing devices which upgrade to a new
-kernel.
-
-Se the question is: if a device is missing one of these properties, or
-both, what happens? The video_info->max_link_rate and/or
-video_info->max_lane_count will be zero, correct? And if they are zero, is
-there even a remote possibility that the device will work somehow, maybe
-only with some rare low resolution or whatever?
-
-If the answer is "yes, there is a remote possibility that one sich device,
-with some maybe rare configuration, will work", then no, we cannot make
-this property mandatory now. There can be devices out there working without
-these proberties, and they would be broken.
-
-If the answer is "there is no way at all a device can work without one or
-both properties", with a good explanation based on the code flow and
-hardware docs, then we can consider this change.
-
-Luca
-
---
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+T0ssIEknbGwgdHJ5IHRvIHVzZSBmbXQgSERNSV9SSUdIVF9KDQoNCj4gDQo+IFRoYW5rIHlvdSBm
+b3IgeW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFs
+IGlzc3VlKHMpDQo+IHRvIGNvbnNpZGVyOg0KPiAtIFtNZWRpdW1dIEFkZGluZyBhIHZlbmRvci1z
+cGVjaWZpYyBEVCBwcm9wZXJ0eSBmb3IgYXVkaW8gaW50ZXJmYWNlIGZvcm1hdA0KPiBieXBhc3Nl
+cyBzdGFuZGFyZCBBU29DIERBSSBmb3JtYXQgbmVnb3RpYXRpb24uDQo+IC0tDQo+IA0KPiAtLS0g
+UGF0Y2ggWzFdOiBbUEFUQ0ggMS8yXSBkdC1iaW5kaW5nczogZHJtL2JyaWRnZTogYW54NzYyNTog
+QWRkIHJpZ2h0IGp1c3RpZnkNCj4gcHJvcGVydHkgLS0tIFBsZWFzZSBub3RlIHRoYXQgZHVlIHRv
+IHJlY2l0YXRpb24gcmVzdHJpY3Rpb25zLCBJIGNhbm5vdCBxdW90ZSB0aGUNCj4gb3JpZ2luYWwg
+cGF0Y2ggY29kZSBkaXJlY3RseS4gVGhlIHJldmlldyBiZWxvdyBpcyBwcm92aWRlZCBhcyBhIGZy
+ZWUtZm9ybQ0KPiBzdW1tYXJ5IG9mIHRoZSBmaW5kaW5ncy4NCj4gDQo+IGNvbW1pdCBjN2Y3NWY0
+Yjc4NTQ3MGJhNDViNDIxMzI0MjY2MjczZjUxNDJkYTBiDQo+IEF1dGhvcjogWGluIEppIDx4amlA
+YW5hbG9naXhzZW1pLmNvbT4NCj4gDQo+IGR0LWJpbmRpbmdzOiBkcm0vYnJpZGdlOiBhbng3NjI1
+OiBBZGQgcmlnaHQganVzdGlmeSBwcm9wZXJ0eQ0KPiANCj4gVGhpcyBjb21taXQgYWRkcyBhIG5l
+dyBib29sZWFuIHByb3BlcnR5IHRvIHRoZSBhbmFsb2dpeCxhbng3NjI1IGRldmljZQ0KPiB0cmVl
+IGJpbmRpbmdzLiBUaGUgcHJvcGVydHkgY29udHJvbHMgd2hldGhlciB0aGUgZHJpdmVyIGVuYWJs
+ZXMgdGhlIGF1ZGlvDQo+IHJpZ2h0IGp1c3RpZnkgZnVuY3Rpb24gZm9yIHRoZSBkYXRhIHN0cmVh
+bS4NCj4gDQo+IFtTZXZlcml0eTogTWVkaXVtXQ0KPiBEb2VzIGFkZGluZyBhIHZlbmRvci1zcGVj
+aWZpYyBkZXZpY2V0cmVlIHByb3BlcnR5IGZvciB0aGUgYXVkaW8gaW50ZXJmYWNlDQo+IGZvcm1h
+dCBieXBhc3MgdGhlIHN0YW5kYXJkIEFTb0MgREFJIGZvcm1hdCBuZWdvdGlhdGlvbj8NCj4gDQo+
+IFRoZSBzdGFuZGFyZCBoZG1pLWNvZGVjIGZyYW1ld29yayBhbHJlYWR5IHN1cHBvcnRzIHJpZ2h0
+IGp1c3RpZmllZCBmb3JtYXRzDQo+IHVzaW5nIHRoZSBleGlzdGluZyBEQUkgZm9ybWF0IHN0cnVj
+dHVyZXMsIHdoaWNoIGFyZSBub3JtYWxseSBwYXNzZWQNCj4gZHluYW1pY2FsbHkgdG8gdGhlIGRy
+aXZlcidzIGh3X3BhcmFtcyBjYWxsYmFjayBiYXNlZCBvbiBzdGFuZGFyZCBzb3VuZA0KPiBjYXJk
+IHByb3BlcnRpZXMuDQo+IA0KPiBDcmVhdGluZyBhIGN1c3RvbSBwcm9wZXJ0eSBsaWtlIGFuYWxv
+Z2l4LGF1ZGlvLXJpZ2h0LWp1c3RpZnktZW5hYmxlIGhhcmRjb2Rlcw0KPiB0aGlzIGNvbmZpZ3Vy
+YXRpb24gc3RhdGljYWxseSBpbiB0aGUgZGV2aWNldHJlZSwgd2hpY2ggY3JlYXRlcyBhIHBlcm1h
+bmVudCBBQkkuDQo+IFNob3VsZCB0aGlzIGRyaXZlciBpbnN0ZWFkIHJlbHkgb24gdGhlIHN0YW5k
+YXJkIGhkbWktY29kZWMgQVBJIHRvIGhhbmRsZSB0aGUNCj4gREFJIGZvcm1hdCBuZWdvdGlhdGlv
+biByYXRoZXIgdGhhbiBpbnRyb2R1Y2luZyBhIGN1c3RvbSB2ZW5kb3IgcHJvcGVydHk/DQo+IA0K
+PiAtLQ0KPiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hz
+ZXQvMjAyNjA4MTgwMjA1NTkuOTYxMzM1LQ0KPiAxLXhqaUBhbmFsb2dpeHNlbWkuY29tP3BhcnQ9
+MQ0K
