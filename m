@@ -1,129 +1,161 @@
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E073D5C06;
-	Wed, 19 Aug 2026 07:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.61.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849FF3D525B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 07:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787124560; cv=none; b=pk30tBSNr7ozBHAV4m0LAeiUoaKpYryfOAwDnK7nGWDZArsF6s+MkL13UrCQUTd5RwBQyWAWtoeQFTtrEQhg3I3yR2mffYETSpTsHSV2TAi4IuKzzy8WphAWJt+Aj4Yn+a4H0OoSSqTJxlvexC+u8xavtqssxevWb5bdL18SQ/c=
+	t=1787124770; cv=none; b=B2MPjlkLPNRgdQXpCkV/khbBOs3hsOPJzhfY1VDShXmU8kam/EvWiHb84TiJlpnkjSsDQ4c60zbOPY1RUPklmsREvEk7woe8aYG5e2QczXWwneQdBo3K9nbH6lz74lbwUBctMrQAXifcT3cYKtOL7I07rsjHAJMrWkqRxB0O3uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787124560; c=relaxed/simple;
-	bh=Mu+7LLfVGJEa7egrQJ85+es5WpyywoehYqfJDmwmG9c=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kVn5UpULcDGBrROSBf9jJHzIoc3EPNGHyd2z1PvDTdUm2NGCsUaoTyUYWVFrY3yptXPeufjVaxw0wVBIQq4h0UXBaK7O7x0bIChmsdvP+fpzdggviHcnB+09LCQgwYhp/nVexoTkPFHVV0eVhjuAV56ZdORQfaWhZqyIsYMH/Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr; spf=pass smtp.mailfrom=aliel.fr; dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.b=Bp/jOf1o; arc=none smtp.client-ip=65.21.61.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	s=arc-20240116; t=1787124770; c=relaxed/simple;
+	bh=o/2vI3L7DjU+AGv1ghKW5/EjiUALqhJV4GZBMQXeKpE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=jSnqJUpyCvqm9AtrHCqSf7yBM9GXa5l4Rku1ThdBNCC6f/nk+0BybczUuxt3G2TCTRAknAxEUEG6iyxqyo34niv1BZkmb6E/ac28Z0JIzsDDwTU8aQAbRWftTKkf8VYEl27YhVO1215ItQyVgjcraLYKZwxmQI+pPMVvg/balqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ov4NkIaB; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.b="Bp/jOf1o"
-Message-ID: <0ca5c247-18b4-4711-83c9-f0fa6570404d@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1787124553;
-	bh=Mu+7LLfVGJEa7egrQJ85+es5WpyywoehYqfJDmwmG9c=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=Bp/jOf1oKfFdpCH+Zeh00mSopBGHf2Lkn66R1D49WVY/1pwnLxLS4klyg//FH2iFs
-	 D/bZw5GLQdcpBxJD8UVbO5qIW2o4zAQolSp4zmZUthYoDWmFafdoHQC3jQf466cZFd
-	 q/dHXar5lC5Jr9XeqYYKX/o4v8PckUa1GauWTTSo=
-Date: Wed, 19 Aug 2026 09:29:12 +0200
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ov4NkIaB"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id AE4191A172B;
+	Wed, 19 Aug 2026 07:32:43 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 8291F5FF42;
+	Wed, 19 Aug 2026 07:32:43 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E759711C753B7;
+	Wed, 19 Aug 2026 09:32:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1787124758; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=hQKtUNfu32zyyC3Pj0M51woeAuZ2PTZyG0Xqk5Ab96I=;
+	b=ov4NkIaBPQjK5QOgWFDAaIX+AGemj/mYur8euDyWKpDKQhIgALpJzcC2rY7O47dazgnCq2
+	ldjpBhvTFzT+WKYxCW/IsYATs5b0vLo/ga46XhaR0eg03d7UclrWJ9xT4bhjItk2g+319P
+	zy110nlWGd5ujXMq7EI7iYO92jm4soUdn7pBT5YvMNijLkn+t45QSY1VJ1ya3y1tDeW+Wm
+	tt6SiD/OAH3iX3OqYjnROILLWbdepOpsiHRNrOSHkRhDbKCPEiaKeRY+lwep9KTx2YY7Ts
+	iqSQzMVFSjN5Kt0hpuj5qMezBS4RCPP1840Q2kaSoApEdycxvaml3Piy2wHkhA==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH v9 3/6] mfd: khadas-mcu: Add support for VIM4 MCU variant
-To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
- mfd@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
- devicetree@vger.kernel.org
-References: <20260805-add-mcu-fan-khadas-vim4-v9-0-75df78710b9e@aliel.fr>
- <20260805-add-mcu-fan-khadas-vim4-v9-3-75df78710b9e@aliel.fr>
- <20260805081913.272991F00A3A@smtp.kernel.org>
- <20260812120007.GO1072730@google.com>
-Content-Language: en-US
-In-Reply-To: <20260812120007.GO1072730@google.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 19 Aug 2026 09:32:29 +0200
+Message-Id: <DKSQUNWA86GP.9NHE4ADGYLQH@bootlin.com>
+Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
+ samsung DP DT properties
+Cc: <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+ <dri-devel@lists.freedesktop.org>, <robh@kernel.org>, "Luca Ceresoli"
+ <luca.ceresoli@bootlin.com>
+To: "Damon Ding" <damon.ding@rock-chips.com>,
+ <sashiko-reviews@lists.linux.dev>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+X-Mailer: aerc 0.22.0
+References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
+ <20260707040613.1992841-4-damon.ding@rock-chips.com>
+ <20260707041711.4F7351F000E9@smtp.kernel.org>
+ <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
+In-Reply-To: <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 8/12/26 2:00 PM, Lee Jones wrote:
-> On Wed, 05 Aug 2026, sashiko-bot@kernel.org wrote:
-> 
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] The driver unconditionally fails to probe on generic Khadas MCU boards (VIM1/VIM2/VIM3) due to a NULL pointer check on valid match data.
-> 
-> Please review, explain or fix the Sashiko review(s).
-> 
-> If this is a set, this request includes the other patches too.
-> 
+Hello Damon,
 
-Yes I will check all those reviews.
-
+On Wed Jul 15, 2026 at 10:32 AM CEST, Damon Ding wrote:
+> On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential iss=
+ue(s) to consider:
+>> - [Critical] Failing probe when deprecated DT properties are missing bre=
+aks DT ABI and prevents their deprecation.
 >> --
 >>
->> --- Patch [3]: [PATCH v9 3/6] mfd: khadas-mcu: Add support for VIM4 MCU variant ---
->> commit eab418dac1b5e94bd297b0a14e92e87b2063dc9b
->> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+>> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory=
+ samsung DP DT properties ---
+>> commit b573dba50acc6087122ffa4a65680322f4d004f8
+>> Author: Damon Ding <damon.ding@rock-chips.com>
 >>
->> mfd: khadas-mcu: Add support for VIM4 MCU variant
+>> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
 >>
->> This patch refactors the probe function to use per-variant values instead of
->> hardcoded globals. It adds dedicated regmap configuration, fan control register,
->> and duty-cycle levels for the VIM4 MCU variant. A new compatible string
->> "khadas,vim4-mcu" is introduced for this new device.
+>> This commit reverts a change that made the samsung,link-rate and
+>> samsung,lane-count properties optional for Exynos DP. It adds error chec=
+king
+>> to fail the probe early if these properties are missing, aiming to preve=
+nt
+>> link training failures caused by zero values.
 >>
->>> diff --git a/drivers/mfd/khadas-mcu.c b/drivers/mfd/khadas-mcu.c
->>> index 0e74efe14f367..4cb305ac915e1 100644
->>> --- a/drivers/mfd/khadas-mcu.c
->>> +++ b/drivers/mfd/khadas-mcu.c
+>>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drive=
+rs/gpu/drm/bridge/analogix/analogix_dp_core.c
+>>> index 8cf6b73bceac0..293d8adfe9856 100644
+>>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
 >> [ ... ]
->>> @@ -75,47 +75,138 @@ static const struct regmap_config khadas_mcu_regmap_config = {
->> [ ... ]
->>>  static int khadas_mcu_probe(struct i2c_client *client)
->>>  {
->>> +	const struct mfd_cell *cells, *fan_cells;
->>> +	const struct regmap_config *regmap_cfg;
->>>  	struct device *dev = &client->dev;
->>> +	int ncells, nfan_cells, ret;
->>>  	struct khadas_mcu *ddata;
->>> -	int ret;
->>> +	const void *match;
->>>  
->>>  	ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
->>>  	if (!ddata)
->>>  		return -ENOMEM;
->>>  
->>> +	match = i2c_get_match_data(client);
->>> +	if (!match)
->>> +		return -ENODEV;
+>>> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struct an=
+alogix_dp_device *dp)
+>>>   		 * NOTE: those property parseing code is used for
+>>>   		 * providing backward compatibility for samsung platform.
+>>>   		 */
+>>> -		of_property_read_u32(dp_node, "samsung,link-rate",
+>>> -				     &video_info->max_link_rate);
+>>> -		of_property_read_u32(dp_node, "samsung,lane-count",
+>>> -				     &video_info->max_lane_count);
+>>> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
+>>> +			return dev_err_probe(dp->dev, -EINVAL,
+>>> +					     "Failed to get samsung,link-rate\n");
 >>
->> [Severity: High]
->> Does this code inadvertently break the probe for generic Khadas MCU boards
->> (VIM1/VIM2/VIM3)?
+>> [Severity: Critical]
+>> Does failing the probe when this property is missing break the DT ABI?
 >>
->> Because KHADAS_MCU_GENERIC evaluates to 0 in its enum, i2c_get_match_data() will
->> return a NULL pointer when matching "khadas,mcu" in khadas_mcu_probe() in
->> drivers/mfd/khadas-mcu.c. This will cause the check here to evaluate to true and
->> unconditionally abort the probe with -ENODEV.
+>> Since samsung,link-rate is a deprecated property, a modern schema-compli=
+ant
+>> Device Tree might intentionally omit it. If a system boots with such a D=
+T,
+>> this check will fail the probe with -EINVAL and disable the display.
 >>
->> [ ... ]
->>> @@ -123,7 +214,8 @@ static int khadas_mcu_probe(struct i2c_client *client)
->>>  
->>>  #ifdef CONFIG_OF
->>>  static const struct of_device_id khadas_mcu_of_match[] = {
->>> -	{ .compatible = "khadas,mcu", },
->>> +	{ .compatible = "khadas,mcu", .data = (void *)KHADAS_MCU_GENERIC },
->>> +	{ .compatible = "khadas,vim4-mcu", .data = (void *)KHADAS_MCU_VIM4 },
->>>  	{},
->>>  };
->>>  MODULE_DEVICE_TABLE(of, khadas_mcu_of_match);
+>> Could the driver instead fall back to hardware maximums or sensible defa=
+ults
+>> when the deprecated property is absent, rather than returning an error?
 >>
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260805-add-mcu-fan-khadas-vim4-v9-0-75df78710b9e@aliel.fr?part=3
-> 
+>
+> I'm afraid it's difficult to provide a universal sensible default value
+> here.
+>
+> The samsung,lane-count and samsung,link-rate values vary significantly
+> across Exynos DP device trees, so a generic fallback to hardware
+> maximums cannot guarantee stable link training.
+>
+> Even though these two properties are marked deprecated, all existing DTS
+> files in our projects have already populated them completely. Moreover,
+> the current link training logic relies on these two parameters; omitting
+> either will directly cause link training failures at runtime.
+>
+> Therefore, retaining the mandatory property check in probe is a
+> reasonable approach for now.
 
+I'm still not convinced we should turn an optional property into mandatory,
+after having been optional since 2016 (based on the commit in the Fixes:
+tag).
 
--- 
-Best regards,
-Ronald
+The sure thing is we cannot break existing devices which upgrade to a new
+kernel.
+
+Se the question is: if a device is missing one of these properties, or
+both, what happens? The video_info->max_link_rate and/or
+video_info->max_lane_count will be zero, correct? And if they are zero, is
+there even a remote possibility that the device will work somehow, maybe
+only with some rare low resolution or whatever?
+
+If the answer is "yes, there is a remote possibility that one sich device,
+with some maybe rare configuration, will work", then no, we cannot make
+this property mandatory now. There can be devices out there working without
+these proberties, and they would be broken.
+
+If the answer is "there is no way at all a device can work without one or
+both properties", with a good explanation based on the code flow and
+hardware docs, then we can consider this change.
+
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
