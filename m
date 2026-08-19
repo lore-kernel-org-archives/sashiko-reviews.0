@@ -1,66 +1,81 @@
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9223AAF4B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 03:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F312C3CF046;
+	Wed, 19 Aug 2026 06:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787109383; cv=none; b=qnNnK83NANC95e8YX8wVuR6nAafYbiqmN7hR3RWEum+TpxUiaKVNk+UEDuAf5MQc91HcHQdKHwNSNL1hpJWks8oiV4Y1i+BnUY+rWcgvozzfjrmSbldyoakXNt2YFwPhWj7R/kQMcfA/Ohxzo7fwfwHBouPLT28xGCepB6tn3dQ=
+	t=1787120264; cv=none; b=NMRvCiRoWwI8JazgCk6/l0+edGI4n02mPedZ1z2Dp6CAw9kD7avup18I3nUNHYfXI81DuqeAeCGjDUOnJaLpmvrU2w4mN1+CVXfJ53mBr5C9F+F6tEDY21PWgVPx4rzpsap1zOeyNIPWXP8eOO1nl+zq3m5wyvi7HvjN9d3dCvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787109383; c=relaxed/simple;
-	bh=Og/uutWqSXDMpsCRwyQ5y4UVlDXT8nuIVOfBTHEmw6Q=;
+	s=arc-20240116; t=1787120264; c=relaxed/simple;
+	bh=3EajQNbjuEt3B0aP/HWXhloydBrWAMv9GoLKHiDXcSw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kCMMlSGEc/1bQARHCA624yqRwpUa65KllFJIw1XGp4nqHZ08zlUiaNgUeErzPGJJ8aSXAv4mcFb4YziqAGhMA+jlxGiZQypoNveYcxlNxdDQgXRmR6YX+MNdjw/xgcUyFGZr6DMsaC8E3DVDNWHcrdlQXDU+is/G6cjBG1IxewA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XE6et2sX; arc=none smtp.client-ip=74.125.227.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=JsZvAvzhakw8YbajXfiw1jnM4qlA+xGghOexlwJZMFR8GHMo21wg0NpbY6+kE7Ulqyq+JGpbj4lvlp0eQ+B9lDcfIxglqam2rPF3U536aFfC47dwQ3116C0ijYSbPv7FEKjaWqLo6X15Oj2sh5FvIDNBqopEWJBXH0FhkbLMKTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dO720plT; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3Q9NN6B3; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=L8HnCUTS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=eaPdP7nU; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XE6et2sX"
-Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-38fd9408220so181613a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:16:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787109381; x=1787714181; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Y7sdpc4i3FhZtnK/5yqCR/sO4q2wvmyIj6tyoETyR9k=;
-        b=XE6et2sXCmwHdXjH5ZI1Rey+RQaG7cS12w5o9czTfsQhMGBswuvUyFNH79X6Ze/8ML
-         iN6W7pOwh+i69WHSDMTB5l65li3h/yAcZI93ZiHugD+JpEBm/epVf7XUOn9gXFovMkFt
-         Bm3DZEqexJxKyfwk0hUoAbO81KgKTqfeiy0nkVb6fKIcMJ4U80WzVMNel1LawF8oWDtp
-         PYq01pioy9ANFL/th3SD+AXOTt9Qg0URTPYozHk24vFKRiRz8Ihe1StRvDwO9dy7SYAy
-         vR56SXO59g1MvBS+scQ7M+YQYVrYdKzEEpq5fugu12hGHqsGpD/h3CA1NRIkrcA6HUev
-         BvqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787109381; x=1787714181;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Y7sdpc4i3FhZtnK/5yqCR/sO4q2wvmyIj6tyoETyR9k=;
-        b=QTfHJVLNPIG1dlkEvlsvC7fkcosBd35fnJfpaFB4frytqWgTcLRqebJgN2OjrE8VYo
-         ZNJIwzX/g3j7SpYt18h9lmhqdlwn+mDYUlde4QYCER4XEHcq3XMzxrUWJuDCnDPb1bvM
-         2/u9WHyfprh8UiQk/1JZM8V42Vr8YRlm+L+jrODsPI1fTKPlmYn6W5CzUNqcuRKqoQTN
-         3GMbnOuDWpcfXhl4Q7hsSbphMjaBSJ/H909/LkhPSoGF4BYggR96Z0IzeKAxhWUNTD9J
-         nR01v8cNPKQQF4Z//2MiHVuguPj6+1bPDlC/OvbVzODUhSLobvv7sR+iFnny16nfOAtr
-         a0Kg==
-X-Gm-Message-State: AOJu0YwC4FtlC5cZ+uqNp6x2QLgqjpUK/hsjJ7v1l7toMb7coOx2nna2
-	VcyVj0yy0dguQTgakMtG8SPAQ2U4FyxwAA3mSKN33gnI4xpqRcrmkrcygUEDB13q7qChYA==
-X-Gm-Gg: AR+sD13lEpfSPaMcDH14/p5Ji9ctX8eL9Z7gJrWUa9ZmLFZQJtMqzxMRGhbzap5PoAi
-	6otHpANh7Tsni3OL+U2uQCp6RYx+FVADgiYDTQnZqd/RvZkQy2+erWhzjY206k/Rls7dqWkVwXr
-	p3295iRCVV5bycl2UiEx9riUIAznBlp0GVIWougmSZcpXgKr4YF15vvSO1FGkegbcN3TBUMnhTs
-	91+EgTlWtdkApBqp6umFzX9HfzpgK6+uYSgzynpROrF+61ocqJzI5FYWVq3KG/9ziFaUmJgzc/t
-	KXOfP7lbtsIsVugRQWZN8y4pgsXPS8z4bhQKiHz10uR26BSmiPzQMn3LOWYr4UYNKHhMT1BYesz
-	39ZgnkUFP8Wa9xcBDZVvmj+81UNNOo5K8P+CsBPANpygmVMgIc7vhmDB1oG4VyzWotUtWZ1zoTR
-	AeZ2DWWFjeVAG70Ob4/u037jK7RarAKiMmxqPgJhbusMmF+8ovGuO2GC8WXJNByTFngOg=
-X-Received: by 2002:a17:90b:1e53:b0:38f:bbc:6a0f with SMTP id 98e67ed59e1d1-39580ecefbemr2777693a91.1.1787109381266;
-        Tue, 18 Aug 2026 20:16:21 -0700 (PDT)
-Received: from [10.125.112.20] ([122.11.210.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3957f9ad013sm846585a91.7.2026.08.18.20.16.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Aug 2026 20:16:20 -0700 (PDT)
-Message-ID: <71b25c0f-9efd-4d8f-9bca-6d2d267d5ed7@gmail.com>
-Date: Wed, 19 Aug 2026 11:16:16 +0800
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dO720plT";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3Q9NN6B3";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="L8HnCUTS";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="eaPdP7nU"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 168B33E69;
+	Wed, 19 Aug 2026 06:16:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787120204; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=c/AzOS9nYCn1gKcDW+iR9M86QEqFfEOWGqdTZE1/Q8A=;
+	b=dO720plTJcEcHC+arFs6mB/9g8FDyt9rYEInkQG8s2VxFn+S+3tlBdg/z0/AE76kVegV/J
+	po0cwcLIJ0eVH1dO9hOcYHWbGx/nXdmjU0jchzVB/Ap9d4oLj2BeJMXDhXaD1gW3tzAHoa
+	VMq/ekbE9a8qAKfFTXWZ3jSUpCcnGBI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787120204;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=c/AzOS9nYCn1gKcDW+iR9M86QEqFfEOWGqdTZE1/Q8A=;
+	b=3Q9NN6B3P//DA/0r1qISw0CBzYxq34c3kFnAVy/gpQSWIUSsUBzu81MGBqHvUkojiRlIT4
+	IvkPnljiLo7vL3CA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=L8HnCUTS;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eaPdP7nU
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787120200; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=c/AzOS9nYCn1gKcDW+iR9M86QEqFfEOWGqdTZE1/Q8A=;
+	b=L8HnCUTSvXwz89JqoFEUVGXfyBa/oJZAT7BC7J3w1uwidMcKF4OuijNQdTHOe7KdU9uEgh
+	5FjLcKdQXjz0iGVcE0TMronQ79HDZTovL3ne4XDVb7NDRzvZyTBD8D37rgnErtXW0X/CoY
+	vMYe1wsMsZ1pQJYvLMtEzC1qL6dpgqk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787120200;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=c/AzOS9nYCn1gKcDW+iR9M86QEqFfEOWGqdTZE1/Q8A=;
+	b=eaPdP7nUjcgGMN2xiwEPnkNBTlV45RYeLfigA5z8I3ZRnJMisCHgbu0N+Luewac2zV75sO
+	rnXH4UsE7FZEdMAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 960AA2F81;
+	Wed, 19 Aug 2026 06:16:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id B2BRI0dKhWpUcwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 19 Aug 2026 06:16:39 +0000
+Message-ID: <614bdf7b-031d-444b-a30c-132daa55ce3e@suse.de>
+Date: Wed, 19 Aug 2026 08:16:39 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,95 +83,133 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] of: reserved_mem: retain static no-map memory on
- init failure
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260818092420.2859026-1-chenwandun1@gmail.com>
- <20260818092420.2859026-6-chenwandun1@gmail.com>
- <20260818093450.AE0AB1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 11/12] drm/panic: Move panic display code into helper
+ library
+To: Randy Dunlap <rdunlap@infradead.org>, jfalempe@redhat.com,
+ javierm@redhat.com, airlied@gmail.com, simona@ffwll.ch,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org
+Cc: dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, rust-for-linux@vger.kernel.org,
+ linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, nouveau@lists.freedesktop.org,
+ linux-renesas-soc@vger.kernel.org, virtualization@lists.linux.dev,
+ sashiko-reviews@lists.linux.dev
+References: <20260818125012.468092-1-tzimmermann@suse.de>
+ <20260818125012.468092-12-tzimmermann@suse.de>
+ <916c4bd5-c73f-466e-8e9b-aee9d4d7d742@infradead.org>
 Content-Language: en-US
-From: Wandun <chenwandun1@gmail.com>
-In-Reply-To: <20260818093450.AE0AB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <916c4bd5-c73f-466e-8e9b-aee9d4d7d742@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-4.50 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.19)[-0.973];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_TO(0.00)[infradead.org,redhat.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
+X-Spam-Score: -4.50
+X-Spam-Level: 
+X-Rspamd-Queue-Id: 168B33E69
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
 
+Hi
 
+Am 18.08.26 um 17:55 schrieb Randy Dunlap:
+> Hi,
+>
+> On 8/18/26 5:28 AM, Thomas Zimmermann wrote:
+>>   M:	Hans de Goede <hansg@kernel.org>
+>> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+>> index 323422861e8f..cdfd72d9a9c5 100644
+>> --- a/drivers/gpu/drm/Kconfig
+>> +++ b/drivers/gpu/drm/Kconfig
+>> @@ -45,6 +45,7 @@ config DRM_MIPI_DSI
+>>   config DRM_KMS_HELPER
+>>   	tristate
+>>   	depends on DRM
+>> +	select DRM_PANIC_HELPER if DRM_PANIC
+> but DRM_PANIC_HELPER depends on DRM_TTM so
+> DRM_KMS_HELPER should also depend on DRM_TTM. Otherwise:
 
-On 8/18/26 17:34, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] In `__reserved_mem_alloc_size`, an allocation error when marking a region as `NOMAP` is ignored, leading to a use-after-free of memblock memory.
-> --
-> 
-> --- Patch [5]: [PATCH v2 5/5] of: reserved_mem: retain static no-map memory on init failure ---
-> commit 35ad8d6e4b86dc63d754a8415950fc7ab54dfce4
-> Author: Wandun Chen <chenwandun@lixiang.com>
-> 
-> of: reserved_mem: retain static no-map memory on init failure
-> 
-> Clear MEMBLOCK_NOMAP only for dynamically allocated regions on init failure.
-> Static regions are initialized after paging_init() and should retain their
-> memory states.
-> 
-> Link: https://sashiko.dev/#/message/20260814090305.4C8741F00A3D%40smtp.kernel.org [1]
-> 
->> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
->> index a0df075a9902e..0c5163ce601ea 100644
->> --- a/drivers/of/of_reserved_mem.c
->> +++ b/drivers/of/of_reserved_mem.c
->> @@ -708,7 +708,7 @@ static void __init fdt_init_reserved_mem_node(unsigned long node, const char *un
->>  		pr_info("node %s compatible matching fail\n", rmem->name);
->>  		rmem->name = NULL;
->>  
->> -		if (nomap)
->> +		if (dynamic && nomap)
->>  			memblock_clear_nomap(rmem->base, rmem->size);
->>  
->>  		if (dynamic || !nomap)
-> 
-> [Severity: High]
-> This is a pre-existing issue, but while looking at reserved memory error
-> handling in this file, I noticed a potential memory corruption when dynamic
-> allocation fails.
-> 
-> In early_init_dt_alloc_reserved_memory_arch(), the base address is assigned
-> before the nomap check:
-> 
-> base = memblock_phys_alloc_range(size, align, start, end);
-> ...
-> *res_base = base;
-> if (nomap) {
->         err = memblock_mark_nomap(base, size);
->         if (err)
->                 memblock_phys_free(base, size);
-> }
-> 
-> If memblock_mark_nomap() fails, the memory is freed, but *res_base still
-> holds the freed address instead of being cleared.
-> 
-> Then in __reserved_mem_alloc_size(), the code checks the base address instead
-> of the return value ret:
-> 
-> ret = early_init_dt_alloc_reserved_memory_arch(size, align,
->                                                0, 0, nomap, &base);
-> if (ret == 0)
->         pr_debug("...");
-> 
-> if (base == 0) {
->         pr_err("failed to allocate memory...");
->         return -ENOMEM;
-> }
+Oops, how did that creep in?  There's no TTM dependency. This Kconfig 
+change appears to be a copy-paste accident. Thanks for noting.
 
-Repeated questions;
+Best regards
+Thomas
 
-The reason of memblock_mark_nomap fails only can be out of memory, and this would
-trigger panic because memblock is not allowd resize before paging_init.
+>
+> WARNING: unmet direct dependencies detected for DRM_PANIC_HELPER
+>    Depends on [n]: HAS_IOMEM [=y] && DRM [=y] && DRM_TTM [=n]
+>    Selected by [y]:
+>    - DRM_KMS_HELPER [=y] && HAS_IOMEM [=y] && DRM [=y] && DRM_PANIC [=y]
+>
+>
+>>   	select FB_CORE if DRM_FBDEV_EMULATION
+>>   	help
+>>   	  CRTC helpers for KMS drivers.
+>> @@ -130,6 +131,10 @@ config DRM_PANIC_SCREEN_QR_VERSION
+>>   	  Smaller QR code are easier to read, but will contain less debugging
+>>   	  data. Default is 40.
+>>   
+>> +config DRM_PANIC_HELPER
+>> +	bool
+>> +	depends on DRM_TTM
+>> +
+>>   config DRM_RAS
+>>   	bool "DRM RAS support"
+>>   	depends on DRM
 
-> 
-> Since base contains the freed address instead of 0, does this allow the
-> freed memory to be registered and later handed out by the buddy allocator
-> while still being incorrectly used as reserved memory?
-> 
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
 
