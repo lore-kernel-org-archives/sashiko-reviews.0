@@ -1,260 +1,255 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-24431.protonmail.ch (mail-24431.protonmail.ch [109.224.244.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34D82773CA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 22:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF94437475B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 23:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787178746; cv=none; b=FS08HQ2zbLEsoTwhwXpwS5MBWe5tg4e6d4K+/mfmorz/w590J6XbT1iHV7YRqrk49NgqdK+2f0EN6XWgWYdUiXe4nWIOGbHGxhVHwOQNENJJc1nJd60AIUsOU5q2fSG04+2ExEXHIoJ7nt68+wnt+lvyV7XiYFNnEcHLy87yExg=
+	t=1787182632; cv=none; b=Slghw/S0DD1GMb6UKIiZTDhHqKPm9hotPC3uQrGmou6ES8bB/TO7JIAIJvZ/hGlcv3gbuSeUjmoUgxW3JmnHrdV2UdTi+sEvK5lYrl6pukX8GXP5x8mkz+rtSCmOvuOCAyWJ/g8DohgIsH3iz5cYcm7uZy9bEZNGkO2GWVdD5zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787178746; c=relaxed/simple;
-	bh=LokY7ZV5PcRkI+aeUAzFv5UxuFJO74rA/6mazHkhdcc=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C1/ixQDih4ZOr7iGM2qvnHT0x7F7O63kmL9ZjaYG6gBC73ksAG8OEJw/8B/PGXYyc/q3QO6ySAe2L+IAlU+dmqK/OxmzsPhncxHVqpkqOf+pS6BRZj/QhEqrhZu+f/rhraKqZf5D0WOPwa5heM5vbkuJVmunDadHTAOriUlrICw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qBgnyBVS; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787182632; c=relaxed/simple;
+	bh=T1RX4BsoftmeCYwceyFW4W7+YlPKsDkcCIsIkem3sD0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kFowo+r90MUmDwRYWyLmI5ezCpuVhpwqWgPzSYlGGZ8EjzGCUTLykY11sekCkIo/KIs6JD4PGbzOI6dWtNOXB9u3DfA9nwAmWtrGuDhoHO56XrsAhIgY7xKf1M+aeiC6bu1lGZMhfO7b/KCiBVqcQd3kk+A35kSxuT69+UMNOts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=J5a0lyPQ; arc=none smtp.client-ip=109.224.244.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qBgnyBVS"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so14461055e9.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:32:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787178740; x=1787783540; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:subject:cc:to:from:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WzNQMJ+ws1+nniHlWi5ZWmVgaLJuM4kR6WvKxeZk5HU=;
-        b=qBgnyBVSiBwYMikna0KqELjdcUSNcHWQIm+jHOGL/KXos3M/nAdDCAs0ABCQTz7vwJ
-         YQdddMfpi/b4ccDgYXCUmuFvu9BEU/4JqQKMCG4B7pCML2tpYvLT3dbrZ4uvZERfTu4B
-         Rj81CnnhqvCnN44j961d8cVCeEuSCblYv4Vd8+2x4QXFGydz3smfTwBXU/2ycdNRJhAY
-         9fb/tB0X7bnVbdw/XpFu6BoCe/NMQH1xUFwolpg0C9JscUcg8ijaliNS0OZtNQVSnkEW
-         z9o1hQ5udhKIN3u/m3M55ubJ1P0DXdyESmqXHkZeAltKy3oWYPSb2T0cJWfHpYemyl4Y
-         AVKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787178740; x=1787783540;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:subject:cc:to:from:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WzNQMJ+ws1+nniHlWi5ZWmVgaLJuM4kR6WvKxeZk5HU=;
-        b=h40/OXZi3QwDOYfcpV41wxwiemP7a1gQXtqBrxe43ZWiXt5Sy4KH+eHggOmnTF8umV
-         empj/o9K9kqtUu4L/UqF+Hkz9TGoifNtU+bQw6LFI45vzLkwfArKd3nrcAQcpsAGxO7W
-         l3IIQIjuYnpE+2XCM/kVzBJwH4e5fBLIB/dba7KRYuLp8xyxxEyYdQXE4jEpeW6MpvQn
-         Gx95GxVRSiurjQPg4IEEMd40wMplXYw5LhjcYZkopoFZPIVNlGrb8L5CkIoFBBbHp/XK
-         6iZ7Hrqed9dJKWb5GyJjreHBjjQmIXze0iDb5Iln7yWXhrWy1bJxh/r5QH4VYdLVNrJV
-         7kQQ==
-X-Gm-Message-State: AOJu0Yyx+5f0HnpHuQvJdxRBqP07oHg0slaR3+9RspXp+jLrFJyl2CXP
-	ftdiOAozbWXcuiCroFft+1hfT6nWMT9XBzy/2sjn+MEvOCBmSad2O4fJKICnvgl3
-X-Gm-Gg: AR+sD10YjC3+7Iz0P7e+8p3jla7IyabUxvg1YuRwA/zHUOTqJCKcNYwOnxuvzpUDJRB
-	YZ6Gmv24QIf5HwBy2KnIMdu1ADpYUn2Hn+/BVOWvYk0OwsRvIwJ1AGM3Zu6XjEPb2HsziCOqZMS
-	mf9Qoxf3Y5uXCx46acpkygIyCKg8yI5d2gjGjs9b1Hv9BbkfCapdYnqOJFvlT9iZAOCUZmkwlD9
-	3HIOSyU4SAiduEsY8ZzXR+tVjyGDoycCOxy3FAGdKP7mx/7R1FnszdeauL8dv8VZnxHiWSVZwdY
-	GVuvSGJhDfOOPsNyx4oCwu5bf2cfyjiPdiTbTJpUiP1He1EF0NPzju5L+EkI/mybzXFUnqkf94F
-	IXZcGoEbkTnjzw1mndcxmpfu4E4xWtRKctDkzj9IDweIRxgifCLG5LstvofJlsjVj8y2VeKxeU2
-	ZKUpeK0j9bOjquXAHwOt308U9u9Zg3SjW4RHzbkybR+ZxVMDru08w2L0edEnqxjNuZPhavBYTo9
-	+kN0HTynN2Xsua3VwSQ/SOlKj1jEbt8Y3VwhQ==
-X-Received: by 2002:a05:600c:4f87:b0:499:7219:122f with SMTP id 5b1f17b1804b1-499aa199590mr123654125e9.4.1787178740502;
-        Wed, 19 Aug 2026 15:32:20 -0700 (PDT)
-Received: from Ansuel-XPS. (host-213-45-7-219.pool21345.interbusiness.it. [213.45.7.219])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482b144173csm8416265f8f.6.2026.08.19.15.32.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 15:32:20 -0700 (PDT)
-Message-ID: <6a862ef4.35b91a9e.11438f.69a9@mx.google.com>
-X-Google-Original-Message-ID: <aoYu8QrMTxiI6pct@Ansuel-XPS.>
-Date: Thu, 20 Aug 2026 00:32:17 +0200
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] clk: en7523: add support for Airoha AN7583 clock
-References: <20260819221458.30040-1-ansuelsmth@gmail.com>
- <20260819221458.30040-4-ansuelsmth@gmail.com>
- <20260819222743.5044F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="J5a0lyPQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1787182621; x=1787441821;
+	bh=xmk48MDHeI5qyQlK5RSyYpYYbm/gHF3M+T/awEAKowY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=J5a0lyPQ0vkYTwQAzbhXjz5UhI3VWH/31ZMYBgOiLyOopOL8sbQfDfH50oCO6id++
+	 lENQpe/AyPKzPjUYxfpi53WIGKgMVmR5+fkwrUzdzaKCHkRGw2l1BvJn6F/c6mCOwI
+	 y/8CohDdNajYep+QAmt75BmqAq2Gf0sHdFOOHPPwE7Cd/jrN7W4AkEbJliWqsuLnh9
+	 2p5s3tf0+NzJX58RDelHwlyiUUo03sJbqlCi0Uhm8O0q5kgLfxfjRZldXhfVfkaB/M
+	 givx5uFEmSnOpdJUQYC9DYc1FUCeejBbtqLEZ649Gy7gKN/PdvkHUbrXo7WzrKo+fb
+	 8Neghmltq1rFQ==
+Date: Wed, 19 Aug 2026 23:36:59 +0000
+To: Aiden Isik <aidenisik@protonmail.com>
+From: Aiden Isik <aidenisik@protonmail.com>
+Cc: Guenter Roeck <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+Message-ID: <XNt95pVriUNFbMMYsr5mnQo9LUABboJjUMboxV5mWYj9FQJb6XGjsGkGRre7eSK4bvCG4oOuTg4YNiujCpX7ZlonVgQSHFBEzpFvZLFTXtw=@protonmail.com>
+In-Reply-To: <cTie_daC2kaIY2BT6HkyAeivwspRhq3thkrkGDMVdIpF2vF5Vr38HQxPcvKFK6pvWatAFk-CO7XL2uz3OCfDSwI-EOxQqI8hNylXjG1jrQI=@protonmail.com>
+References: <20260818-for-next-lucky7-watchdog-v3-0-2912bd122c57@member.fsf.org> <20260818-for-next-lucky7-watchdog-v3-2-2912bd122c57@member.fsf.org> <20260818181349.894171F000E9@smtp.kernel.org> <k_6CWq_7vPkV72MkyL0wCdcr9ptTffpGOGc6dBLbXjcHBV4DGRzP-35mxO0tdOBaIEhy4BxByYLCh8T5nidgwaMwGcNYD9KCIpxkeF4RRiE=@protonmail.com> <83b5d8e7-9504-41c9-9f24-8fce60641de4@roeck-us.net> <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com> <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net> <cTie_daC2kaIY2BT6HkyAeivwspRhq3thkrkGDMVdIpF2vF5Vr38HQxPcvKFK6pvWatAFk-CO7XL2uz3OCfDSwI-EOxQqI8hNylXjG1jrQI=@protonmail.com>
+Feedback-ID: 46524699:user:proton
+X-Pm-Message-ID: 111a5a9167fae369011da8dfeac121ed85b8e216
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260819222743.5044F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 19, 2026 at 10:27:42PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] The macro `REG_PCIE_HB_RST` is used but never defined, causing a build failure.
-> - [High] Requesting PCIC resets on AN7583 causes an out-of-bounds read on the `en7581_rst_ofs` array, leading to undefined hardware behavior or memory corruption.
->
+Hi again Guenter,
 
-For reference, it seems the bot applied the patch to the wrong branch.
-The reported problems from the bot are not valid as those changes were
-introduced by the last 2 patch present in linux-next and clk-next.
+> Hi Guenter,
+>=20
+> > On 8/18/26 12:35, Aiden Isik wrote:
+> > > Hi Guenter,
+> > >
+> > >> On 8/18/26 11:33, Aiden Isik wrote:
+> > >>>> Thank you for your contribution! Sashiko AI review found 1 potenti=
+al issue(s) to consider:
+> > >>>> - [Medium] Missing PMU counter enable configuration for Exynos5515=
+ watchdog.
+> > >>>> --
+> > >>>>
+> > >>>> --- Patch [2]: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos551=
+5-wdt compatible data ---
+> > >>>> commit 9ce360e3c933b7447ba5da9ba1b7ae3fee989703
+> > >>>> Author: Aiden Isik <aidenisik@member.fsf.org>
+> > >>>>
+> > >>>> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
+> > >>>>
+> > >>>> This commit adds driver data for the Exynos5515 SoC's watchdog tim=
+er.
+> > >>>>
+> > >>>>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3=
+c2410_wdt.c
+> > >>>>> index e31f93db05096..5592f25fe6c83 100644
+> > >>>>> --- a/drivers/watchdog/s3c2410_wdt.c
+> > >>>>> +++ b/drivers/watchdog/s3c2410_wdt.c
+> > >>>>> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_=
+data_exynos5420 =3D {
+> > >>>>>    =09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
+> > >>>>>    };
+> > >>>>>
+> > >>>>> +static const struct s3c2410_wdt_variant drv_data_exynos5515 =3D =
+{
+> > >>>>> +=09.mask_reset_reg =3D EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
+> > >>>>> +=09.mask_bit =3D 2,
+> > >>>>> +=09.mask_reset_inv =3D true,
+> > >>>>> +=09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
+> > >>>>> +=09.rst_stat_bit =3D 24,
+> > >>>>> +=09.quirks =3D QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET=
+ | \
+> > >>>>> +=09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_DBGACK_BIT,
+> > >>>>> +};
+> > >>>>
+> > >>>> [Severity: Medium]
+> > >>>> Does the Exynos5515 PMU require explicit counter enablement like o=
+ther recent
+> > >>>> Exynos SoCs?
+> > >>>>
+> > >>>> Other variants in this driver (like Exynos850, AutoV920, and GS101=
+) that use
+> > >>>> the NONCPU_INT_EN PMU registers also pair it with a NONCPU_OUT reg=
+ister and
+> > >>>> the QUIRK_HAS_PMU_CNT_EN flag to ensure the watchdog counter ticks=
+.
+> > >>>>
+> > >>>> If the Exynos5515 hardware works similarly, omitting cnt_en_reg, c=
+nt_en_bit,
+> > >>>> and QUIRK_HAS_PMU_CNT_EN here might leave the counter disabled and=
+ the
+> > >>>> watchdog silently non-functional. Could you confirm if this varian=
+t needs the
+> > >>>> counter enable logic?
+> > >>>
+> > >>> Exynos5515 does not require this.
+> > >>>
+> > >>> Downstream on GS101, as an example, has this struct member set:
+> > >>>
+> > >>>> pmu_count_en_func
+> > >>>
+> > >>> This is not set downstream for Exynos5515, so it is not used for
+> > >>> Exynos5515.
+> > >>>
+> > >>
+> > >> You keep talking about "downstream". What is that ?
+> > >
+> > > By "downstream" I am referring specifically to Samsung's Linux kernel
+> > > fork for Exynos5515.
+> > >
+> > > I host a copy here: https://github.com/Aiden-Isik/linux-android-lucky=
+7
+> > >
+> > > Also in this message I refer to Google's GS101 kernel fork, which can
+> > > be found here:
+> > > https://github.com/LineageOS/android_kernel_google_gs101
+> > >
+> >
+> > Both are completely irrelevant for the upstream kernel. I am most defin=
+itely
+> > not going to look into that code. If there is anything relevant - such =
+as
+> > the comment you pointed to earlier - you'll need to provide that as ind=
+ependent
+> > comment(s), not just refer to some downstream code as explanation. The
+> > explanation needs to be provided in the _upstream_ kernel code.
+> >
+>=20
+> There's not really any explanation for it other than "that is the way it =
+is".
+> Samsung designed the Exynos5515 watchdog timer to not have that quirk,
+> I read the downstream code and learnt that fact, so we don't enable
+> that quirk.
+>=20
 
-Code was compiled and tested with those 2 changes included.
- 
-> Pre-existing issues:
-> - [High] Probe error paths cause a use-after-free by mixing `devm_kzalloc` with non-devres `clk_hw_register()` for the PCIe clock.
-> - [High] Read-modify-write operations on shared registers in the reset and clock controllers lack spinlocks, causing data races and lost writes.
-> - [High] The clock `.disable` callback calls `usleep_range()`, which sleeps while holding an IRQ-disabled spinlock.
-> --
-> 
-> --- Patch [3]: [PATCH v6 3/3] clk: en7523: add support for Airoha AN7583 clock ---
-> commit e4983d60cb386b35f51bc20a5f0912039bf92780
-> Author: Christian Marangi <ansuelsmth@gmail.com>
-> 
-> clk: en7523: add support for Airoha AN7583 clock
-> 
-> Add support for Airoha AN7583 clock and reset.
-> 
-> Airoha AN7583 SoC have the same register address of EN7581 but implement
-> different bits and additional base clocks. Also reset are different with
-> the introduction of 2 dedicated MDIO line and drop of some reset lines.
-> 
-> > diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-> > index 087ff4568124f..493812c683f53 100644
-> > --- a/drivers/clk/clk-en7523.c
-> > +++ b/drivers/clk/clk-en7523.c
-> > @@ -505,6 +646,64 @@ static const u16 en751221_rst_map[] = {
-> >  	[EN751221_USB_PHY_P1_RST]	= 3 * RST_NR_PER_BANK + 7,
-> >  };
-> >  
-> > +static const u16 an7583_rst_map[] = {
-> > +	/* RST_CTRL2 */
-> > +	[AN7583_XPON_PHY_RST]		= 0,
-> > +	[AN7583_GPON_OLT_RST]		= 1,
-> [ ... ]
-> > +	/* RST_PCIC */
-> > +	[AN7583_PCIC_PERSTOUT0_RST]	= 2 * RST_NR_PER_BANK + 29,
-> > +	[AN7583_PCIC_PERSTOUT1_RST]	= 2 * RST_NR_PER_BANK + 26,
-> > +};
-> 
-> [Severity: High]
-> Does this out-of-bounds array access corrupt memory when requesting PCIC resets?
-> 
-> The an7583_rst_map defines these PCIC resets in bank index 2. 
-> 
-> When en7581_reset_register() is called later in this patch, it is passed
-> the en7581_rst_ofs array:
-> 
-> 	static const u16 en7581_rst_ofs[] = {
-> 		REG_RST_CTRL2,
-> 		REG_RST_CTRL1,
-> 	};
-> 
-> Since en7581_rst_ofs only has 2 elements, when en7523_reset_update()
-> dynamically calculates the bank index via id / RST_NR_PER_BANK, it evaluates
-> to 2. Accessing bank_ofs[2] will read out of bounds.
-> 
-> [ ... ]
-> > +static int an7583_clk_hw_init(struct platform_device *pdev,
-> > +			      struct clk_hw_onecell_data *clk_data)
-> > +{
-> > +	struct device *dev = &pdev->dev;
-> > +	struct regmap *map;
-> > +	void __iomem *base;
-> > +	u32 val;
-> > +
-> > +	map = syscon_regmap_lookup_by_phandle(dev->of_node, "airoha,chip-scu");
-> > +	if (IS_ERR(map))
-> > +		return PTR_ERR(map);
-> > +
-> > +	base = devm_platform_ioremap_resource(pdev, 0);
-> > +	if (IS_ERR(base))
-> > +		return PTR_ERR(base);
-> > +
-> > +	en7581_register_clocks(dev, clk_data, map, base);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the probe error path leave
-> us with a use-after-free for the PCIe clock?
-> 
-> In en7523_register_pcie_clk() which is called by en7581_register_clocks(),
-> the clk_hw structure is allocated via devm_kzalloc(), but registered with the
-> non-devres clk_hw_register():
-> 
-> 	cg = devm_kzalloc(dev, sizeof(*cg), GFP_KERNEL);
-> 	...
-> 	if (clk_hw_register(dev, &cg->hw))
-> 
-> If a subsequent initialization step fails in en7523_clk_probe() (like hw_init 
-> returning an error), the driver core automatically frees the memory via devres,
-> but the clock framework retains dangling pointers to the freed clk_hw.
-> 
-> > +
-> > +	val = readl(base + REG_RST_CTRL1);
-> > +	val |= REG_PCIE_HB_RST;
-> 
-> [Severity: Critical]
-> Will this break the build due to an undefined macro?
-> 
-> The REG_PCIE_HB_RST macro is not defined anywhere. The existing code seems
-> to use REG_RESET_CONTROL_PCIEHB for this bit instead.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but could this unlocked read-modify-write race
-> with the reset framework?
-> 
-> en7523_pci_prepare() modifies REG_RESET_CONTROL1 (0x834) without any locks:
-> 
-> 	val = readl(np_base + REG_RESET_CONTROL1);
-> 	mask = REG_RESET_CONTROL_PCIE1 | REG_RESET_CONTROL_PCIE2 |
-> 	       REG_RESET_CONTROL_PCIEHB;
-> 	writel(val & ~mask, np_base + REG_RESET_CONTROL1);
-> 
-> Concurrently, en7523_reset_update() performs an unlocked read-modify-write
-> on the same register (REG_RST_CTRL1 is also 0x834):
-> 
-> 	val = readl(addr);
-> 	if (assert)
-> 		val |= BIT(id % RST_NR_PER_BANK);
-> 	...
-> 	writel(val, addr);
-> 
-> Since .prepare() runs in process context and resets can be triggered by
-> other probing devices concurrently, this seems likely to cause lost writes.
-> 
-> > +	writel(val, base + REG_RST_CTRL1);
-> > +	val &= ~REG_PCIE_HB_RST;
-> > +	writel(val, base + REG_RST_CTRL1);
-> > +
-> > +	return en7581_reset_register(dev, base, an7583_rst_map,
-> > +				     ARRAY_SIZE(an7583_rst_map),
-> > +				     en7581_rst_ofs);
-> > +}
-> [ ... ]
-> > +static const struct en_clk_soc_data an7583_data = {
-> > +	.base_clks = an7583_base_clks,
-> > +	/* We increment num_clocks by 1 to account for additional PCIe clock */
-> > +	.num_clocks = ARRAY_SIZE(an7583_base_clks) + 1,
-> > +	.pcie_ops = {
-> > +		.is_enabled = en7581_pci_is_enabled,
-> > +		.enable = en7581_pci_enable,
-> > +		.disable = en7581_pci_disable,
-> > +	},
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does mapping en7581_pci_disable
-> to the .disable callback result in sleeping while in an atomic context?
-> 
-> The core clock framework invokes .disable callbacks with the enable_lock
-> spinlock held and hardware interrupts disabled.
-> 
-> However, en7581_pci_disable() explicitly yields and sleeps:
-> 
-> 	writel(val & ~mask, np_base + REG_PCI_CONTROL);
-> 	usleep_range(1000, 2000);
-> 
-> Could this cause a scheduling while atomic panic when the PCIe clock is
-> disabled?
-> 
-> > +	.hw_init = an7583_clk_hw_init,
-> > +};
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260819221458.30040-1-ansuelsmth@gmail.com?part=3
+Just in case I am misunderstanding what you are asking for and you want
+examples of how I know this is correct to be posted on the mailing list,
+here you go.
 
--- 
-	Ansuel
+Unfortunately Samsung doesn't publish technical specifications for their
+modern SoCs, so the best documentation we have is their own source code,
+which doesn't really explain the *why*, but it does explain the *what*
+and the *how*.
+
+I'll do my best to explain it concisely and how we drive the hardware
+in the same way upstream:
+
+Google (and/or Samsung since GS101 is Exynos-based) define the struct
+for the watchdog timer like this:
+
+> static const struct s3c2410_wdt_variant drv_data_gs101_cl0 =3D {
+> =09.noncpu_int_en =3D EXYNOS_CLUSTER0_NONCPU_INT_EN,
+> =09.noncpu_out =3D EXYNOS_CLUSTER0_NONCPU_OUT,
+> =09.mask_bit =3D 2,
+> =09.cnt_en_bit =3D 8,
+> =09.rst_stat_reg =3D EXYNOS_RST_STAT_REG_OFFSET,
+> =09.rst_stat_bit =3D 0,      /* CLUSTER0 WDTRESET */
+> =09.pmu_reset_func =3D s3c2410wdt_noncpu_int_en,
+> =09.pmu_count_en_func =3D s3c2410wdt_noncpu_out,
+> =09.quirks =3D QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_WTCL=
+RINT_REG |
+> =09=09  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
+> };
+
+Note 'pmu_count_en_func' is set.
+
+Later on in the file, we have this code:
+
+> if (wdt->drv_data->pmu_count_en_func) {
+> =09ret =3D wdt->drv_data->pmu_count_en_func(wdt, true);
+> =09if (ret < 0) {
+> =09=09dev_info(wdt->dev, "wdt count enable fail\n");
+> =09=09return ret;
+> =09}
+> }
+
+Which will call the chosen counter enable function if that field is set,
+which will, well, enable the counter.
+
+Now, for the struct corresponding to Exynos5515 in the same driver:
+
+> static const struct s3c2410_wdt_variant drv_data_exynos9_v4 =3D {
+> =09.noncpu_int_en =3D EXYNOS_CLUSTER2_NONCPU_INT_EN,
+> =09.mask_bit =3D 2,
+> =09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
+> =09.rst_stat_bit =3D 23,=09/* CLUSTER2 WDTRESET */
+> =09.pmu_reset_func =3D s3c2410wdt_noncpu_int_en,
+> =09.quirks =3D QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_WTCL=
+RINT_REG |
+> =09=09  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
+};
+
+We can see that 'pmu_count_en_func' is not set, meaning that code within
+the if statement shown earlier is not called, and the counter is not manual=
+ly
+enabled.
+
+Translating this to upstream, if QUIRK_HAS_PMU_CNT_EN is set as a flag,
+the following code within the if statement will execute:
+
+> if (wdt->drv_data->quirks & QUIRK_HAS_PMU_CNT_EN) {
+> =09ret =3D s3c2410wdt_enable_counter(wdt, en);
+> =09=09if (ret < 0)
+> =09=09=09return ret;
+> =09}
+
+Which as we can see does the same thing and enables the counter.
+
+So, since 'pmu_count_en_func' is enabled on GS101 in the downstream vendor
+code, the QUIRK_HAS_PMU_CNT_EN flag is set, as the Sashiko AI points out.
+However, since it is *not* set for Exynos5515, that means Exynos5515 does
+not require manual counter enablement and that flag should not be set,
+which is why the AI's concern is wrong.
+
+I also tested this (with the watchdog actually enabled this time), and it
+behaves as expected.
+
+> > Guenter
+> >
+> > >>
+> > >> Guenter
+> > >>
+> > >>
+> > >
+> > > Kind regards,
+> > > - Aiden Isik
+> >
+> >
+>=20
+> Kind regards,
+> - Aiden Isik
+>=20
+
+Kind regards,
+- Aiden Isik
