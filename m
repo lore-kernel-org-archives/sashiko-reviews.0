@@ -1,128 +1,121 @@
-Received: from mta0.migadu.com (out-65.mta0.migadu.com [91.218.175.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF7B3C5540
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 16:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2ACD2FF66A;
+	Wed, 19 Aug 2026 16:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787155483; cv=none; b=fUw6nKo/QtVlSGeQrmqh3HSv2va8B0ooibTSfN5TYTaYaVvvsOAKwd/i8BMXaPpUu9v+uAGT8rccbEPX1AtB4FPXHlEo0iBhX3fMMRVF6XwZTDy1Ui9oFugF5+6gZUGou/H0wsRmkzWcjN36F13tQFLtfRVuEkvbkv5RS67EHDM=
+	t=1787156700; cv=none; b=KoUBDc7RZnfLS69wodpnnBH8LNKx4NxxYL0go2AQHUA3w31AyMu2VflkKM3ZdYxH6nZvqAdlQoZzrLYVUy3ZrHkzg8RQ1NYhyswrqSgpcttnWG9ejSiN/qsr5BhzX2NUlS8O8SI70xMFH4ZayI1/Pgqc77DqclO+RuJGmnyKfUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787155483; c=relaxed/simple;
-	bh=ZlBrOXJ6PHWTt554K7ifaS0Y0oPCZpnfxyqBMbg/th0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sxVn8Yt6sAOagZvQRP/6Q+3zIzyuOLbGMOKGFssyIP2NdC9pDkuxD3ZrPCuOS0Re2pbLyc8lA+MHJVkUfCI6nA2z8CrPf8yLWkDQnrQ0dzaJo4aXzwxOtSUPdALVwOXstvdT1owS5QvURYBsGUkZkdIWEBO+EtCOw76DzICNQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mobzR3MO; arc=none smtp.client-ip=91.218.175.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787156700; c=relaxed/simple;
+	bh=tiUkh4CXcgWdb8T5QjHF78jxJUt0AICUL9u1PZGDpJU=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=pkUdH8G0lF7vbMJ5SwBbADAdn3XZ2sOUmLxQR/4OKX/U5RDGBsTJ3/oQZ098AOdFjKw3s7p/M+oyvdOqdY5wLlAJsV6O9muBPPAx7CuGLN3xMCl9lreONd0WVp4dc6Wtdqif/UFt5PS2iN6u3kQjHAWwyz+zsNd7ICfuufjIXRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=PD979zmA; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mobzR3MO"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ZlBrOXJ6PHWTt554K7ifaS0Y0oPCZpnfxyqBMbg/th0=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787155479; v=1; x=1787760279;
- b=mobzR3MOTVv3eqONKdGtPo3tLgTmiZW1giFtYaFDd3ManXxJMkv5/dCAT7Ifh6AFW1uWxipB
- ciH5+WV5kl935PUBvqQh9bP46r4vnhVL+6HobY2G52CNgmcCeAS636MyhpfLeiFfoXpOzjw69Vl
- IMEa7DAT9ghAdOSuDIMCuSKY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5d0e)
-	by smtp.migadu.com with ESMTPS id 5a70adfd73f1071f;
-	Wed, 19 Aug 2026 16:04:39 +0000
-X-Mizu-Trace-ID: 5a70adfd73f1071f
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <6be499cd-b78b-4958-ab95-6d11107e85c2@linux.dev>
-Date: Wed, 19 Aug 2026 09:04:38 -0700
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="PD979zmA"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Message-ID:Subject:Cc:To
+	:From:Date:MIME-Version:From:Reply-To;
+	bh=ieH8yXwVQoecHWb1KauxcH1NWtDhTmFX9Ha642wE9dU=; b=PD979zmAMQvSR/X0nScgdA6RXG
+	99oYYjuceAJ+2px8dVClqYbnckWNYMfg5kLb5sGA8xrCRevHaKnd4F4jz1VrVELJwe6gWxPxWLHvG
+	rqp5W1iPjvO4UUdhOiGlk+hihGE5DNe5v38K6aOIOjzjfP9NVGR/d3oZbEURm05RS8Ka9tixVku0+
+	kgdYCZgAMB49ksJwNtNNog3pXxiB+1Di+biqIsbnjyNXYQItZRxeuggXT9vzNwdODTaqjqBpEpM3T
+	c/Nzm10baaANKWpjlm4auYOIlqT4rN1epduV82oe7438NmlQqcK4nelCXaTV/xLOhnSQG+E+94Fx2
+	O7wK9OyA==;
+Received: from maestria.local.igalia.com ([192.168.10.14] helo=mail.igalia.com)
+	by fanzine2.igalia.com with esmtps 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wwj60-006Bn2-5N; Wed, 19 Aug 2026 18:24:56 +0200
+Received: from webmail.service.igalia.com ([192.168.21.45])
+	by mail.igalia.com with esmtp (Exim)
+	id 1wwj5z-00EYVP-8F; Wed, 19 Aug 2026 18:24:56 +0200
+Received: from localhost ([127.0.0.1] helo=webmail.igalia.com)
+	by webmail.service.igalia.com with esmtp (Exim 4.98.2)
+	(envelope-from <mfo@igalia.com>)
+	id 1wwj5z-000000027F1-0r6f;
+	Wed, 19 Aug 2026 18:24:55 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 07/10] bpf: Enable aggregate return types up
- to 16 bytes
-Content-Language: en-GB
+Date: Wed, 19 Aug 2026 13:24:55 -0300
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260819055239.3293449-1-yonghong.song@linux.dev>
- <20260819055314.3298664-1-yonghong.song@linux.dev>
- <20260819061323.66C1A1F000E9@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260819061323.66C1A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>, Alexander
+ Gordeev <agordeev@linux.ibm.com>, mptcp@lists.linux.dev, Vasily Gorbik
+ <gor@linux.ibm.com>, bpf@vger.kernel.org
+Subject: Re: [PATCH RFC v2 02/13] proc: add config option
+ SYSCTL_MODULE_ALIASES
+In-Reply-To: <20260819023701.5197B1F000E9@smtp.kernel.org>
+References: <20260818-sysctl-module-aliases-v2-0-d5a69dae5798@igalia.com>
+ <20260818-sysctl-module-aliases-v2-2-d5a69dae5798@igalia.com>
+ <20260819023701.5197B1F000E9@smtp.kernel.org>
+Message-ID: <253d5572bd8c3020775b61e8ac9eb675@igalia.com>
+X-Sender: mfo@igalia.com
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-Spam-Report: NO, Score=-2.1, Tests=ALL_TRUSTED=-3,BAYES_50=0.8,KAM_DMARC_NONE=0.125,KAM_DMARC_STATUS=0.005
+X-Spam-Score: -20
+X-Spam-Bar: --
 
+On 2026-08-18 23:37, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The Kconfig option `SYSCTL_MODULE_ALIASES` is introduced but never used in the codebase.
 
+It's used in later patches; apparently not a problem.
 
-On 8/18/26 11:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] BPF extension programs (BPF_PROG_TYPE_EXT) bypass return value verification for BPF_REG_2 when replacing a function that returns a 16-byte struct, allowing uninitialized memory or kernel pointers to leak.
+> - [Low] Grammatical error in the Kconfig help text: 'This options adds' should be 'This option adds'.
+
+Fixed.
+
 > --
->
-> --- Patch [7]: [PATCH bpf-next v7 07/10] bpf: Enable aggregate return types up to 16 bytes ---
-> commit 19d85b11c1fe37fb0f420056e54cf29ffa04a0bb
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Enable aggregate return types up to 16 bytes
->
-> Relax btf_distill_func_proto() to accept a by-value struct or union that
-> the R0:R2 convention added in earlier patches can carry.
->
->> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
->> index 5e9f6a4875244..58b81c6f5288c 100644
->> --- a/kernel/bpf/btf.c
->> +++ b/kernel/bpf/btf.c
-> [ ... ]
->> @@ -7993,6 +7993,19 @@ static int btf_validate_return_type(struct bpf_verifier_env *env, struct btf *bt
->>   	if (btf_type_is_void(t) || btf_type_is_int(t) || btf_is_any_enum(t))
->>   		return 0;
->>   
->> +	if (btf_type_is_struct(t) && t->size <= 16) {
->> +		/*
->> +		 * A global function's caller models the return as an opaque
->> +		 * scalar pair, so it may only return scalars by value. A local
->> +		 * function is verified inline, so a pointer field stays tracked
->> +		 * and needs no such restriction.
->> +		 */
->> +		bool local_func = subprog && !is_global;
+> 
+> --- Patch [2]: [PATCH RFC v2 02/13] proc: add config option SYSCTL_MODULE_ALIASES ---
+> commit 931fa1a5261f1467829ad7b64b387a4e318eb177
+> Author: Mauricio Faria de Oliveira <mfo@igalia.com>
+> 
+> proc: add config option SYSCTL_MODULE_ALIASES
+> 
+> Add a config option for the 'sysctl:' module aliases feature.
+> 
+>> diff --git a/fs/proc/Kconfig b/fs/proc/Kconfig
+>> index 24f5a36f45df8..e6591ec4bcf0a 100644
+>> --- a/fs/proc/Kconfig
+>> +++ b/fs/proc/Kconfig
+>> @@ -98,6 +98,19 @@ config SYSCTL
+>>  	  building a kernel for install/rescue disks or your system is very
+>>  	  limited in memory.
+>> 
+>> +config SYSCTL_MODULE_ALIASES
+>> +	bool "'sysctl:' module aliases (EXPERIMENTAL)"
+> 
+> [Severity: Low]
+> Is this config option fully implemented in this commit? The
+> SYSCTL_MODULE_ALIASES option is being introduced here, but it doesn't look
+> like CONFIG_SYSCTL_MODULE_ALIASES is referenced anywhere else in the C code,
+> Makefiles, or scripts.
+> 
+>> +	depends on SYSCTL && MODULES
+>> +	default n
+>> +	help
+>> +	  The /proc/sys files registered by a module do not exist until the
+>> +	  module is loaded; meanwhile, userspace cannot find or access them.
 >> +
->> +		if (local_func || btf_type_is_scalar_struct(env, btf, t, 0))
->> +			return 0;
->> +	}
->> +
->>   	return -EOPNOTSUPP;
->>   }
-> [Severity: High]
-> Does this allow BPF_PROG_TYPE_EXT extension programs to bypass return value
-> verification for BPF_REG_2?
->
-> Since this patch enables global functions to return structs up to 16 bytes, a
-> BPF_PROG_TYPE_EXT program can now replace such a function. This is allowed by
-> bpf_check_attach_target() because attach_uses_trampoline_retval() is false for
-> extension programs.
->
-> However, during verification of the extension program,
-> bpf_compute_subprog_ret_regs() explicitly skips subprog 0 (the extension
-> program itself), which leaves ret_reg_pair as false:
->
-> kernel/bpf/verifier.c:bpf_compute_subprog_ret_regs() {
-> 	/*
-> 	 * Skip the main program: its return value is the program's exit code,
-> 	 * read out of R0, so it never uses the register pair. An extension does
-> 	 * have a real prototype for subprog 0, but bpf_check_attach_target()
-> 	 * refuses to replace a function returning more than 8 bytes.
-> 	 */
-> 	for (subprog = 1; subprog < env->subprog_cnt; subprog++) {
->          ...
-> }
->
-> Because ret_reg_pair is false, process_bpf_exit_full() later invokes
-> check_return_code(..., BPF_REG_0) for subprog 0 instead of checking the full
-> register pair. Could this fail to validate R2 on exit, potentially allowing an
-> uninitialized or sensitive kernel pointer to leak to the caller?
+>> +	  This options adds 'sysctl:*/<path>/<file>' module aliases for the
+> 
+> [Severity: Low]
+> This isn't a bug, but there is a typo in the help text: "This options adds"
+> should likely be "This option adds".
+> 
+>> +	  /proc/sys files registered by modules, so modules for nonexistent
+>> +	  files can be loaded with 'modprobe sysctl:/proc/sys/<path>/<file>'
+>> +	  by userspace when needed.
 
-We should be okay here. If freplace replacing the original subprog 0, it
-is up to users to check the result if the freplace returning R0:R2.
-
->
-
+-- 
+Mauricio
