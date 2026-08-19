@@ -1,238 +1,104 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214B337BA4;
-	Wed, 19 Aug 2026 13:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8F92EB856
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 13:01:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787144412; cv=none; b=Xn+636CAkE+psEOAAo5RQtvUXR09gcUSGKjBXJpWyw+AXp5myXlv5ugNit9TJWriohhJp1fVqsiq+PePIHM7fNZBDrHJfZ0W3gfo/yUhyULFZze5PPPuJC7IJ+vd4zmy/RjJLfoRc8Ib41GxWKSElAD2DNy3D4Zab686U7xJQOE=
+	t=1787144505; cv=none; b=m9UsUDnqRJXZQCwAZVpqive7wNO73XbWhBR+rZa2Vt8IuIootGE/R44rmCMTWGK4L7OiipwZ8fFGd+i9zufLn+apxrJjYR9SKb6EMBHv6P0SaWns9JZb7sjppLZulwreK9/Ra0x3rK0IDAPmABTRtBKmZLmYvHLUim4A3aPY09s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787144412; c=relaxed/simple;
-	bh=aYlkVRPCilvPCuY4Bv/YkUHeNjUWb2kK1BT1pZH+P4k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lgld7j3FZxWmt8j+v/3lSx3ujMj+u0ZGNm/rvaCJfOXXn4xQnwM70KSLLdqo47YYMFcdjF1nKhielGEtvvT+iWxgh6TeIy27IRX1rBHa9/x26QpE++bluMJYvAkGRDAIoEB5kdelCSR79mGr0UDbn+963xNx85TJh0PtmLfhznU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=p6BJyW69; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1787144505; c=relaxed/simple;
+	bh=wp8TGbisRW8gW+kdJD0RAvTV+2ZP24fjbMV6UB0mk1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d+GJZ3SCofYXZqX6GmRcWJSgmfbu3dD1W9FmMSzVpBmk4Ng42jnLdMgLNarKn0aAHSWbDwt1FUybtf134cDzKd31ZewtMZNc60RRYVRAQ93EPBgVDok/ibAyR9Pe2dpaCKSX1qdP6S3PZ26wJPmbrHeS15Yom2iziCFr7stCjVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=fIAdq57+; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="p6BJyW69"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67JAViEC3085597;
-	Wed, 19 Aug 2026 13:00:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=MvbE2i
-	lmO2j95849Uz9dV/kEVwiKmVCUEjwCg0QHoPc=; b=p6BJyW69IujAcf45B47q3F
-	GxZS6GpvDsQEtepx6qr5IVJEZfaFmBbW2PZ5a623+L21OtytQmQ9DpmkpoFAGhl4
-	TvRzWBN2LVvf+JQubV0NI8UxqJn7aU6VMZX4vhf5q8dT7dIkKf5EiWG5A7HCyBKi
-	wF/pDexz2yppUWhicmxU/2kE3lkKPYimRib+fF7CaGM0qjjnXwrhdS4vHnou6RrV
-	EVjMSrwFdXziiT59gkA7uPl/AviZjgmXFWs86YJ9WBplCR3EcFHPJUyeDqlI1exl
-	Ik0d9zSxAtcGjRU+MirmRygpW/tkxZKsW+yop+EEV+KJVPEzcpfUjzY4xrUSYUlg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu43q6v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Aug 2026 13:00:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67JCuuHr024651;
-	Wed, 19 Aug 2026 13:00:08 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tw92t5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Aug 2026 13:00:08 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67JD06gt43319694
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 19 Aug 2026 13:00:06 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 73F2758062;
-	Wed, 19 Aug 2026 13:00:06 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id B5E0C5805E;
-	Wed, 19 Aug 2026 13:00:05 +0000 (GMT)
-Received: from [9.61.25.66] (unknown [9.61.25.66])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 19 Aug 2026 13:00:05 +0000 (GMT)
-Message-ID: <5db518eb-8bde-4a04-b552-80bd444037c9@linux.ibm.com>
-Date: Wed, 19 Aug 2026 09:00:05 -0400
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="fIAdq57+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=wp8T
+	GbisRW8gW+kdJD0RAvTV+2ZP24fjbMV6UB0mk1g=; b=fIAdq57+X4ZBpmxtZzEn
+	fDLkyOcc+Zy7BDZDtKwFiI2bOp2j4AmiSMEKywNA9pJwY+gmedx8pe5HHCjndFry
+	jT5jKIV6hEyQXCAI2Nmz8i390/yUs4ym9ein5MTqbzvx64o+2yL+2cUrGPdYDd4y
+	vMicr/U97JIQ3bwf3ZiddZ6vBPomJJIJ+km22VJNIx1nS02r0T395yt+U8njjXiw
+	+vyYZZulQChvv1SU9VD66gAX/inaOGfbDr2JtuULPEJ5emTN9baKzD8/5/YqM+op
+	SUwLcGa1BHREKzkW5Gans1/y2/K0F088NpXncV28+panoP12zU/fY8yzNWq9xavA
+	RQ==
+Received: (qmail 4145528 invoked from network); 19 Aug 2026 15:01:42 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 19 Aug 2026 15:01:42 +0200
+X-UD-Smtp-Session: l3s3148p1@yYQuAWZZjWJtKXGR
+Date: Wed, 19 Aug 2026 15:01:43 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, conor+dt@kernel.org,
+	linux-rtc@vger.kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: Re: [PATCH v4 03/15] rtc: rzn1: Fix weekday underflow when alarm
+ crosses month boundary
+Message-ID: <aoWpLvrNGHBPvFY5@shikoro>
+References: <20260819103926.2136712-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260819103926.2136712-4-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260819105356.BD7731F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/9] s390/vfio-ap: Fix required lock not held during
- update of ap_matrix_mdev object
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.vom>, kvm@vger.kernel.org,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260812200240.818004-1-akrowiak@linux.ibm.com>
- <20260812200240.818004-5-akrowiak@linux.ibm.com>
- <20260812201845.076301F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260812201845.076301F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA5NyBTYWx0ZWRfX3WZyQRgJuR5A
- QuYfxpkX95oCIMgldgdXPb7SU4192BuJe2ScsA539GrQqWWG03fOoUgAOMhRrnnLoRHUfPxPbIB
- EIMsFwlTVgGEujOG896U0epBd1SLeuw=
-X-Proofpoint-GUID: A0Cl-UMp0qwalz2pbq-1n8ZXNrvXJY7M
-X-Proofpoint-ORIG-GUID: A0Cl-UMp0qwalz2pbq-1n8ZXNrvXJY7M
-X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a85a8d8 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=JEP08AD3klR8GEedPp0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA5NyBTYWx0ZWRfX05L5s3d6Ffk+
- MkrpnvIdPd2fB+GLmjpu36gRzh0eowJfk6Q4arA5EmwlqZNLIQjuNYLm6fHdJP2RtidtHBkT8KG
- MF6HXQfHgvfWRoAQp7Y8e3RhXXhNopawnX0oOuXX4vyv8yatM/e2/oFyuH1c6TYvQLEQuNcXJhc
- x/mU8coY5bN0rDJt9pmw7o58RannU9SOkG/Vydc/e5PaMHt9liYEGAb1Eja1xs5WvvGzvqsDXEF
- nPIbKYRmmex+p6do6vAFT5FGf4562Fux7yvmdAJoQC2Po++X4wWJ+CmLz6yMbp0wSqW5xeP3G+W
- 9zleDo0EWo/szbJvvWipEwCuOTS86CITbu3QzDjmufZQaaWZzi+V1CxclXK1UBGh+eTF88j9tna
- 7x80SNe1GZ/GB2sjSOnGVaZ0Hd/RyzFJpr1G871bIYekFfx9L6dZge8LnRx/D9OFBROyn22eCBc
- lRt/qt2uYz5lanX7TOA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_03,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190097
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SMyub7+rJAR37Ee9"
+Content-Disposition: inline
+In-Reply-To: <20260819105356.BD7731F000E9@smtp.kernel.org>
 
 
+--SMyub7+rJAR37Ee9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/12/26 4:18 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Hot-plug add state is overwritten instead of accumulated, potentially dropping hot-plug events.
-> - [High] Pinned page and GISC registration leak in vfio_ap_irq_enable() when ap_aqic() returns a default error code.
-> --
->
-> --- Patch [4]: [PATCH v5 4/9] s390/vfio-ap: Fix required lock not held during update of ap_matrix_mdev object ---
-> commit 65680656f25b3ea60807c838ba28f8d65cca5a45
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Fix required lock not held during update of ap_matrix_mdev object
->
-> This commit adds the missing matrix_dev->mdevs_lock in vfio_ap_mdev_cfg_add()
-> to guard against race conditions when modifying the ap_matrix_mdev object's
-> fields.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index f2d662e388bdc..21c502598f8ca 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
->> @@ -2777,12 +2777,20 @@ static void vfio_ap_mdev_cfg_add(unsigned long *apm_add, unsigned long *aqm_add,
->>   	 * called.
->>   	 */
->>   	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
->> +		/*
->> +		 * The mdevs_lock must be held in order to access fields
->> +		 * within matrix_mdev
->> +		 */
->> +		mutex_lock(&matrix_dev->mdevs_lock);
->> +
->>   		bitmap_and(matrix_mdev->apm_add,
->>   			   matrix_mdev->matrix.apm, apm_add, AP_DEVICES);
->>   		bitmap_and(matrix_mdev->aqm_add,
->>   			   matrix_mdev->matrix.aqm, aqm_add, AP_DOMAINS);
->>   		bitmap_and(matrix_mdev->adm_add,
->>   			   matrix_mdev->matrix.adm, adm_add, AP_DEVICES);
+
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this overwrite the
-> hot-plug addition state instead of accumulating it?
->
-> If multiple AP configuration change events occur before the AP bus scan
-> completes, it appears that vfio_ap_mdev_cfg_add() unconditionally overwrites
-> the deferred hot-plug bitmaps with the delta of the most recent event.
->
-> Should this logic use a temporary intersection followed by bitmap_or() to
-> accumulate the pending additions so that hot-plug events aren't dropped?
+> This is a pre-existing issue, but does this time_after() comparison
+> allow bypassing the 1-week hardware limit on 32-bit systems?
 
-Looking at ap_scan_bus(), the entire execution is strictly sequential and
-single-threaded under ap_scan_bus_mutex:
+This is fixed later.
 
-1. ap_get_configuration() is called once — a single PQAP(QCI)
-    captures the snapshot of the configuration delta for the entire scan.
+> [Severity: Medium]
+> This is a pre-existing issue, but what happens if the RZN1_RTC_ALW regist=
+er
+> is uninitialized and wday is 0?
+>=20
+> Calling fls(0) - 1 would evaluate to -1. If the current time is a Saturday
+> (tm_now.tm_wday =3D=3D 6), delta_days evaluates to 0, which bypasses
+> the if (delta_days) block and leaves tm->tm_wday =3D -1.
+>=20
+> Since the core function rtc_valid_tm() does not check tm_wday, would this
+> propagate a bogus alarm date to the caller?
 
-2. If config_changed, notify_config_changed() is called once — this
-     fires vfio_ap_on_cfg_changed -> vfio_ap_mdev_cfg_add exactly once 
-per scan.
+This looks worth investigating to me. On RZN1, ALW is default 0.
 
-3. The adapter loop runs.
 
-4. If config_changed, notify_scan_complete() is called once — this
-     fires vfio_ap_on_scan_complete exactly once per scan.
+--SMyub7+rJAR37Ee9
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Both notify_config_changed and notify_scan_complete are also guarded by
-ap_scan_bus_mutex which ensures the entire callback pair is an
-atomic unit from the perspective of any concurrent scan attempt.
-The mutex_trylock(ap_scan_bus_mutex) is used, so a concurrent scan
-request is simply dropped if one is already in progress, not queued 
-behind it.
+-----BEGIN PGP SIGNATURE-----
 
-So the scenario the that two on_cfg_changed firings accumulating
-in the bitmaps before on_scan_complete clears them is structurally 
-impossible.
-Each scan atomically fires on_cfg_changed (at most once) and 
-on_scan_complete
-(at most once) as an inseparable pair, with no mechanism for a second 
-scan to
-interleave. The comment is not valid.
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqFqTcACgkQFA3kzBSg
+Kbag4RAAsMRHDOpMNLJabJXwBAWJUK2mWCnzfDSIETzpqGyx1frm+t8YpZXjOxIT
+RRKRx+dk539yoAwSv2Bz50yReL8UKMt2orjSx+UpdDhD4npHRX/llRvyITsT9mUj
+p0LwMqTuc3TTXJrWLo0hi5DARDbx5oYlT76urMRIJXNhI4MOt6h/IpC98VD3bZio
+X+wn7nfFCB7dalElBZ/lQsdm8WQliyjfi8HpjPzhQmIsv8D5qIzgh2i20XQB2ydR
+WkA3yUn3/Li/scou0NJjrgUwsHb+O+BsHU6e0P0BDQOXU/L44V98DOqrcw7BM9bQ
+F2jfCMlqxPM9Bu2GjS6k4SWfLjze8uUu1X1zpiqVMZ47w3oCgmVllQsq/+9YfO3z
+Uyq5Uq/lf+hgkMIkftkuVM6rWhyEf0Lanl2jB18N5coqiwQLDcblZBjTgDEwb8yx
+2EChf0IxabWZjXSFUy2skVCdC/qZ0WzvyAgYZOZZRbNBb619ukQSmR1sR+RKVz66
+wPXC4qqAMDAVM/bYJVOdvWyfdwLmQyg3cgE5e1oXhJVDMEsJo8jUXE6xMKk6RWV0
+tqgV0qr+yVgEncnCJQWh0L3cHD2ay5LKnWBcitoPRfxmbLatKQqzo0tNDNGRR5RW
+PTvL9ChDJdz3yuTORyyH39N3IRNwsbxwiaCyXOXQyipQXC7RMo8=
+=xS2V
+-----END PGP SIGNATURE-----
 
->
->> +
->> +		mutex_unlock(&matrix_dev->mdevs_lock);
->>   	}
->>   }
-> While reviewing the file, I noticed a pre-existing issue in
-> vfio_ap_irq_enable():
->
->> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_irq_enable() {
->> 	...
->> 	default:
->> 		pr_warn("%s: apqn %04x: response: %02x\n", __func__, q->apqn,
->> 			status.response_code);
->> 		vfio_ap_irq_disable(q);
->> 		break;
->> 	}
->> 	...
->> }
-> [Severity: High]
-> This is a pre-existing issue, but does this default error path leak the
-> newly pinned nib and registered nisc?
->
-> When ap_aqic() returns an unexpected error falling into the default case,
-> vfio_ap_irq_disable() is called. However, it seems vfio_ap_irq_disable()
-> only cleans up the previously successfully saved configuration, bypassing
-> the newly pinned nib and isc held in local variables.
->
-> Can a malicious KVM guest repeatedly issue the PQAP(AQIC) instruction with
-> configurations that trigger this error path, causing unbounded memory pinning
-> on the host?
-
-This one is a real pre-existing bug. By the time the default case is
-reached:
-
-1. The nib has been pinned
-2. The nisc has been registered
-
-Neither has been saved to q->saved_iova / q->saved_isc yet, so when
-vfio_ap_irq_disable(q) calls vfio_ap_free_aqic_resources(q), it releases
-whatever is in q->saved_iova and q->saved_isc; the old resources from a
-prior call. The newly pinned nib page and newly registered nisc are never
-freed.
-
-A fix patch is forthcoming.
-
->
-
+--SMyub7+rJAR37Ee9--
