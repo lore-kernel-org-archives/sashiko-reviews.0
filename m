@@ -1,131 +1,194 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mail-106111.protonmail.ch (mail-106111.protonmail.ch [79.135.106.111])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE875364EAB
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 08:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7634416D1A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 08:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.111
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787129034; cv=none; b=b6VYHAdHjn9YwuGIs9p/F8iaSAWQf6zR3XDONCfvRDI5kS7s2knLNe7H+/Pc5JBtv9oj+wSYuKJJQzI+Gj//MFM8i/QTrOlWAvTdATefo4+zR+wHP9SPo/NWOPJ2yUqn1yALPbFCy2BC9jzw4YfRYkuE3JqrJXhJXgrJcNroK1g=
+	t=1787129084; cv=none; b=WTaUAs5fmu0ruxb0Dg56qKNjnnwb00jscd6aPF1A9gbrjm6qnpa53841I4Ga8GjMDcR1oOKLVVsWhtW/uRjxOU/1kUgjeRG46LE3b6USGE748sSIu2Q/9n/YgTt4mSaFi7Kewd8VL/TLqQn7VzZxy4qH/LXwIE9yqIbjG842QjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787129034; c=relaxed/simple;
-	bh=Uv1K79NbGpJeNGDWogYsDBbzlPFxjmBAgzsk5++s5E4=;
+	s=arc-20240116; t=1787129084; c=relaxed/simple;
+	bh=sd97K6LQlzbVQuCV/CnpqmaoI+hfKWUPMLSOGZkWrNQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xd/N5VhBzmQTTHJM7BIIJz9CKs8/1l6LsQTI5FqcWF6pSab1GEvbdHMaMaX57WsnUQq53oFySv1iq/QpMygTfx6tLqCqBBWBL8qTpQuT8eklp1jEfjsP0IepvNCyo/zv6ZnlJOZ83fRtPh0S9bPbQSbgFec3F/K3tbEEQZg1Oqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OP0Gwp0A; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 MIME-Version:Content-Type; b=D4Rm1UfkV5YVqMOtGNdpLMt++STQ2s3CtEcMIio9y1uBE5RWXVLRdhxQy9s+YF15yOtiVWviDN2SvbzJe4hZ/ElQ93iE9HhAfFJPi9Olg+6hyyRxZZyMK6EwOUuOvkvOAPFT8cVHpP6zaAQ+PHYqq6Zc1cDo871pvkz3GOTIgjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=pfn5J4H8; arc=none smtp.client-ip=79.135.106.111
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OP0Gwp0A"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787129031;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MTelDZFss5bzde/fj2VbnN0q0pzXKI8uuhHquLDc6v4=;
-	b=OP0Gwp0AFmCnjsSuWTKnUDpJaGHRYNOniyykpjfA97LbnzAmC7QMBIW/Af86qQQhTJBDnq
-	rS6V69rITm2mGTtx49LCXowAxPByICPk6yQuq2aw9Hz/MypwQJpyJ4h6q6ol3bxEdunjne
-	fbOBbRfqWNvGUThGhR+IClr1Zckd/NE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-2zEfA1yiNnCnwqMFwopfbg-1; Wed, 19 Aug 2026 04:43:50 -0400
-X-MC-Unique: 2zEfA1yiNnCnwqMFwopfbg-1
-X-Mimecast-MFC-AGG-ID: 2zEfA1yiNnCnwqMFwopfbg_1787129029
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-47faa02f707so511967f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 01:43:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787129029; x=1787733829;
-        h=content-type:mime-version:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MTelDZFss5bzde/fj2VbnN0q0pzXKI8uuhHquLDc6v4=;
-        b=AMDa1Xw/iiPWCudDnjZ+3wgNxLOxwnA/pCTl7LX5lhNF8ODgxPqBCCJsa1k4tbaSRr
-         XdG/U/iNWU8C30Wyq1WKLYWaBlj7l2cMs/YwL1j5CoitH+92ByyzPVAnf/3K7hBEUxjA
-         0RXrRrk1fbNaIyAVHQcLF/lUK6jzaSE8EXYXLqknSAqXjET/I0Plhb6Pj1wr24qfmB2K
-         U3Ao82H4yrSnlznCwM/7ivgaHnUoU+dZuDhxfbAfoEIKU5K615tMDL++xU3IQ6RnTIpi
-         0qEyGo+ws0YNFOqsNCpv1EDA/9jCow0S+aPndEoxl71Zs6YOqXMtcNHg59JOuu360HjO
-         nbRg==
-X-Forwarded-Encrypted: i=1; AHgh+RqXBG77Gs0s8ZlVN2eWiP9zYP0ISofzLbtKpxBpODzcszXjfI0ZayBJi8lLh7wjvDPlqhptSIS5IoIUSRyUgjc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzBQNrRKsVBn7JRueqQkWC+w4v+d0X+5OfUF4OV0zbpFCtc+Zki
-	BT4smDtUlaukIKXVFo/WS/3bu+4GWYSqwzneYAmF9BLlj2tG2Zc88BF8EWq5jHuTCiVQrGgd18b
-	uhtQEbEAeeVGb3vOBw9J9JhTyEOTtUU3p1UAG2LUYnVj3V6BPzniOIJ5lbhN46vro+rpSex6bN1
-	Lgr4WtRwT05WpworpzOc16u4KMYmmEhLTuPyalYLC+TR8XKgBuMKfckA==
-X-Gm-Gg: AR+sD110kH3dP4hPSENUKs2q8vNiXojx7XpihpZMf+NOPm3Moq0wUaT6QyL+dWF1F48
-	zTto0ml0dWst33iuvkHgffABYA+U3XIeMJbokZWTut2n8z8FF8AAgjJxl4blvF1teW7u0cXp5Ww
-	vNqJ3Hv5oTF5zWrUTYgzHDtO9sukPB80o0/XQ07TszntI3myHZi/mSIXC9msSoDxK7YWkWCz0c8
-	R2XqiOEpO4Za8PmR0ugPz37Z3hn8sbZwV/RLfs5d1NMEcOYCEFSVUTO9JrMpUeVqa623ZvwT50g
-	a8X0NiapwFzrJctTINwCDkUQs6uH+kQKFq2TM773vnN908818cDKeo6UZSh21oIhGg2+uA2vSWy
-	sgg==
-X-Received: by 2002:a5d:5d10:0:b0:47f:ece1:1eca with SMTP id ffacd0b85a97d-482b0f3c6c9mr5058054f8f.1.1787129029134;
-        Wed, 19 Aug 2026 01:43:49 -0700 (PDT)
-X-Received: by 2002:a5d:5d10:0:b0:47f:ece1:1eca with SMTP id ffacd0b85a97d-482b0f3c6c9mr5057957f8f.1.1787129028515;
-        Wed, 19 Aug 2026 01:43:48 -0700 (PDT)
-Received: from fedora (nat-20.ign.cz. [91.219.240.20])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482b14b7d3asm3982321f8f.23.2026.08.19.01.43.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 01:43:48 -0700 (PDT)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 4/4] KVM: selftests: Check VMPTRLD with active eVMCS
-In-Reply-To: <aoTVAdqoAAuVKi8L@google.com>
-References: <20260818165258.2613603-1-vkuznets@redhat.com>
- <20260818165258.2613603-5-vkuznets@redhat.com>
- <20260818170534.07B561F000E9@smtp.kernel.org>
- <aoSTeLzhaWohymLf@google.com> <aoTVAdqoAAuVKi8L@google.com>
-Date: Wed, 19 Aug 2026 10:43:47 +0200
-Message-ID: <87ecfuxzy4.fsf@redhat.com>
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="pfn5J4H8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1787129073; x=1787388273;
+	bh=Yhs/KUzvuwpk/qtsf9pNgHwEgS1uh0dEXULoHEIlBM4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=pfn5J4H8yQ8ZmqsBfsO6M4Xt/4tJfjLHcQs58OiPmhqRTSZkB2nkGfNPWFFLkfypS
+	 6y2A+XRFxNPG3d2wVl9cPT7euwnVq9s9ogbG1Q0do57UffwhX3UX4LugEEDgD23eAO
+	 51zIoPpMjeLr2TWw4ZP7ilLuQuSm+htLFbQRpFrp50cHLOkgug8M/XmHN9cqF2gHUs
+	 czwNrxomPwX58AiefaMgOLVvVdJklXtrANSqKgRhiRN2LyxXB7q3+WG1z3VkXYD4Tv
+	 RAmaGFuxeaGMrC8RmImOd+NrShEI7dXGHlkew/tAoQw6BdHxRtbnpIFNCqhhjLhGvC
+	 vNEhfFwxUxd0w==
+X-Pm-Submission-Id: 4hQ0Vl5p6bz2ScX8
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <devicetree@vger.kernel.org>,
+  <robh@kernel.org>,  <conor+dt@kernel.org>
+Subject: Re: [PATCH RESEND v5 4/6] iio: accel: mma8452: Support interrupt
+ sharing
+In-Reply-To: <20260819082547.783CD1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 19 Aug 2026 08:25:47
+	+0000")
+References: <20260819-mma8452-open-drain-v5-0-d8aa590d7c36@geanix.com>
+	<20260819-mma8452-open-drain-v5-4-d8aa590d7c36@geanix.com>
+	<ZLyemjqlxP-U6rRBNInlQp7sJfLwB7tJI9VWCglK8nFiCOY4u4NidOdROFOLcLNAR4zA0F31qVjeiKNA0XIfBw==@protonmail.internalid>
+	<20260819082547.783CD1F000E9@smtp.kernel.org>
+Date: Wed, 19 Aug 2026 10:44:30 +0200
+Message-ID: <874igq1oup.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: m4pcXpgsDXXf5J5fPdklnZlb3zxKsZ134T5qpyEY2Ww_1787129029
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Sean Christopherson <seanjc@google.com> writes:
+<sashiko-bot@kernel.org> writes:
 
-> On Tue, Aug 18, 2026, Sean Christopherson wrote:
->> On Tue, Aug 18, 2026, sashiko-bot@kernel.org wrote:
->> > > +	asm volatile(KVM_ASM_SAFE("vmptrld %[pa]")
->> > > +		     "\n\tsetna %[failed]"
->> > 
->> > [Severity: Medium]
->> > Will this setna instruction incorrectly evaluate CPU flags?
->> > 
->> > The KVM_ASM_SAFE macro executes xor %%r9, %%r9 on its success path, which
->> > unconditionally clears the Carry Flag (CF=0) and sets the Zero Flag (ZF=1).
->> 
->> Shame on me, I should know better after dealing with ba5ca5e5e6a1 ("x86/retpoline:
->> Don't clobber RFLAGS during srso_safe_ret()").
->> 
->> Untested, but I think the fix is simply:
->> 
->> diff --git tools/testing/selftests/kvm/include/x86/processor.h tools/testing/selftests/kvm/include/x86/processor.h
->> index 6e6f70035508..119715ffe93f 100644
->> --- tools/testing/selftests/kvm/include/x86/processor.h
->> +++ tools/testing/selftests/kvm/include/x86/processor.h
->> @@ -1318,7 +1318,7 @@ gva_t vm_alloc_stack(struct kvm_vm *vm, int nr_pages);
->>         "lea 1f(%%rip), %%r10\n\t"                              \
->>         "lea 2f(%%rip), %%r11\n\t"                              \
->>         fep "1: " insn "\n\t"                                   \
->> -       "xor %%r9, %%r9\n\t"                                    \
->> +       "mov $0, %%r9\n\t"                                      \
->>         "2:\n\t"                                                \
->>         "mov  %%r9b, %[vector]\n\t"                             \
->>         "mov  %%r10, %[error_code]\n\t"
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
 >
-> Vitaly, I'll send a v3 of this series with a rather large pile of additional
-> selftests changes.  As often seems to be the case, my desire validate a simple
-> fix has snowballed...
+> New issues:
+> - [High] Failed runtime suspend leaves the `suspended` flag set to `true`,
+> causing an unrecoverable PM usage counter leak and a potential interrupt =
+storm.
+> - [Low] Compilation Error: undeclared variable `client` used in `mma8452_=
+runtime_suspend`.
+>
+> Pre-existing issues:
+> - [High] Unbalanced `regulator_disable()` calls and I2C writes to a power=
+ed-off device in `mma8452_remove()`.
+> --
+>
+> --- Patch [4]: [PATCH RESEND v5 4/6] iio: accel: mma8452: Support interru=
+pt sharing ---
+> commit 79ad9089167d804daaa97086d058cd3a0e2f4199
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> iio: accel: mma8452: Support interrupt sharing
+>
+> This commit adds handling of runtime PM suspension in the interrupt handl=
+er
+> to allow sharing interrupts with other devices. It introduces a suspended=
+ flag
+> and uses synchronize_irq() to protect against race conditions during runt=
+ime
+> suspend and device removal.
+>
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index 1fb43c5b0b72f..25bb2dd69381e 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
+> [ ... ]
+>> @@ -1056,14 +1057,19 @@ static irqreturn_t mma8452_interrupt(int irq, vo=
+id *p)
+>>  	struct iio_dev *indio_dev =3D p;
+>>  	struct mma8452_data *data =3D iio_priv(indio_dev);
+>>  	irqreturn_t ret =3D IRQ_NONE;
+>> +	int pm_status;
+>>  	int src;
+>>
+>> +	pm_status =3D pm_runtime_get_if_active(&data->client->dev);
+>> +	if (pm_status =3D=3D 0 || READ_ONCE(data->suspended))
+>> +		return IRQ_NONE; /* device is powered down or being removed */
+>> +
+>
+> [Severity: High]
+> If mma8452_runtime_suspend() in drivers/iio/accel/mma8452.c fails and
+> leaves data->suspended set to true, can this early return cause a PM
+> usage counter leak and an interrupt storm?
+>
+> If the device is kept in the RPM_ACTIVE state after a suspend failure,
+> pm_runtime_get_if_active() will return 1. Because data->suspended is true,
+> the handler will return IRQ_NONE immediately.
+>
+> This skips pm_runtime_put_autosuspend(), leaking the usage counter. Also,
+> by returning IRQ_NONE on a shared level-triggered IRQ without clearing the
+> hardware interrupt, wouldn't this trigger an interrupt storm?
 
-Sure,
+Yes, I make sure to call pm_runtime_put_autosuspend() when
+pm_runtime_get_active() returns 0 and suspended flag is set.
 
-I guess you can start using 'Provoked-by:' tag in such cases :-)
+Also, I guess we should not set the suspended flag until after checking
+the return value from mma8452_standby() in mma8452_runtime_suspend().
 
--- 
-Vitaly
+In case one of the regulator_disable() calls fails, the suspended flag
+will be left set to true. But as the device is in standby, no interrupt
+storm should happen.
 
+> [ ... ]
+>> @@ -1768,12 +1778,15 @@ static int mma8452_runtime_suspend(struct device=
+ *dev)
+>>
+>>  	mutex_lock(&data->lock);
+>>  	ret =3D mma8452_standby(data);
+>> +	WRITE_ONCE(data->suspended, true);
+>>  	mutex_unlock(&data->lock);
+>>  	if (ret < 0) {
+>>  		dev_err(&data->client->dev, "powering off device failed\n");
+>>  		return -EAGAIN;
+>>  	}
+>
+> [Severity: High]
+> If mma8452_standby() fails, should data->suspended be reverted to false?
+>
+> When returning -EAGAIN on failure in drivers/iio/accel/mma8452.c,
+> leaving data->suspended set to true creates the inconsistent state that
+> breaks mma8452_interrupt() as noted above.
+
+I will move the WRITE_ONCE() to after checking the ret value, so we
+don't leave suspended set to true in this case.
+
+>> +	synchronize_irq(client->irq);
+>> +
+>
+> [Severity: Low]
+> Does this code compile?
+>
+> There is no local variable named client in mma8452_runtime_suspend() in
+> drivers/iio/accel/mma8452.c. The I2C client is available via
+> data->client or to_i2c_client(dev), so using client->irq directly
+> appears to cause a compilation failure.
+>
+> [ ... ]
+>
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential problem during
+> device removal in mma8452_remove() in drivers/iio/accel/mma8452.c:
+>
+> drivers/iio/accel/mma8452.c:mma8452_remove() {
+>     ...
+> 	pm_runtime_disable(&client->dev);
+> 	pm_runtime_set_suspended(&client->dev);
+>     ...
+> 	mma8452_standby(iio_priv(indio_dev));
+>
+> 	regulator_disable(data->vddio_reg);
+> 	regulator_disable(data->vdd_reg);
+> }
+>
+> If the device is already in the RPM_SUSPENDED state when mma8452_remove()=
+ is
+> called, its regulators have already been disabled by
+> mma8452_runtime_suspend().
+>
+> Because pm_runtime_disable() does not resume the device, calling
+> regulator_disable() again will underflow the regulator enable count. Could
+> this forcefully disable shared regulators and cause system instability?
+>
+> Additionally, mma8452_standby() performs an I2C write. Is it safe to
+> unconditionally access the hardware when it might be powered off?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260819-mma8452-=
+open-drain-v5-0-d8aa590d7c36@geanix.com?part=3D4
