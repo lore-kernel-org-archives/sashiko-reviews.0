@@ -1,163 +1,203 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2C53845B0
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 17:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787159187; cv=pass; b=eubOJKxHXJoMsVXbgBl/PKHrAqPaBMUEOx87j7E6sf5QW/6FiRnxjazSoBsw30UDsfuadDfcNa5/FvTCUXRgmzKfgP8XTHrdCaI+zvZ0n4BjsAS1Gp3Wb1Ku1sD3rOeYSqpZGrU/AjHU4ZXAnBal2+dKHkcOiS0J5ToqJV3tXI4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787159187; c=relaxed/simple;
-	bh=XZKDG5oRID/PK9mkYKTUI0I6iYxS7XDXpjoDeuHAFC8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aClMzhIOlAJcn17sYdCzqOrWFKNsVeUC1Q1NtDbM6reNnB3r3TGzfpFD06zy3YhuUG9J7kLfA6gOt0eVEBy/WKls5cjOku2lDuRVKX1GtE6sxr4SAku3CYsHJrE2sNCOfr69fhPaWMFjzMdaqu2xRgY7+bCuXMC6A7g+p6kBBVY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=klJxMM6o; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=zoIjzOai; arc=pass smtp.client-ip=85.215.255.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0286B4078C1
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 19:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787166695; cv=none; b=H17iJJgWQvCTwfPHxkDXakem8m2cL4eDgajDcqJ7GNhFGbveYFCVGMexPLpokIVag4nVjM5qWHjfTe5Bw71n+bBWCvs6iACdAWezYMeSH+L+6VNtskxnfDhq6MwgTWOyjH5MRR9HubyZIvHc3mznNXeaENDWhGAfXnV/7CXlaDM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787166695; c=relaxed/simple;
+	bh=LZH4Ig8rdsa+22GNL8Pma7P6dkGY16eM0dMSUGfgm4E=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=L/+zp6pZPwoMiaiizqK8exZj9iBocBU8iPQqWn0gz2o9LeoZarZOvTTUASIs3mYZ7zdrj1gCVKMJVIsWtpPc6SkRolIGmGWKdmfbewm//qRDl1r7wKj/ZokuNnp4zi683SSbPEP3aFl+wYY2X4i5Mv0b2nYvep6E7lifGG1r5D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=qDG66zwU; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="klJxMM6o";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="zoIjzOai"
-ARC-Seal: i=1; a=rsa-sha256; t=1787159150; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=pLpFwDJQhmteyu6JBvBlORGODRkRCPctPQSFi07HQd8XxJ/6zkz8Z/cNmmLQEWeUHg
-    lUYnk41NqISmc7BpvGiZxzWMD+MM31CI98CmvvnuVfu1HgtaK3UyO9dcORfyAKkktG19
-    DSKtg/i0SVKmPeiaZiU4VnZn8/dDAIlXZ8psLp5/NqyFlIOhce70S9TQ9wyusnEsUYKC
-    6DPfbet/vPJpLx2SDX39uCaOYXM2eXlGTsaSL5S2nnoEBgSWjp1yP2djcbjXZpzsDf89
-    43uVjzG7BVs6c4tmjSz9tmY0Egn3GZalYr6vDjXD8XlYOSQKZvwl6T04dZK33iIg66aq
-    yWjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1787159150;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
-    b=TSBHECkMCsoMqr7AuQsnp0iV55tgISJvv4KT+j9EIPcdTPDE+KoXjuHfsyavabH9KT
-    ZIDFCnbCGIA4Bkbj90CH/QtNkzIn6r06cYX7DTQKbvOt/a9b9d9gSZ0I+aV/wuA3B6X9
-    qGz5BcUIKOYZN0JHkXnKREXCn96H4Vg4BdrvGoZInWXtKDlJ8wvekr80kyYlelzNGPtS
-    qMMf7gS8nM3ctjSOaoR0BPiKqSc1vRr1/INqGyX+s51I/DfXGIsoF6IK/4KIvmY9NNE2
-    aMv2JnWjSJmigdvwb6shEn5O0IXGin7EoQapyMuXaAd2zaYThVFpvatGnnyOneKbek60
-    2GFA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1787159150;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
-    b=klJxMM6oQ7MetJwQ5n/jZBHDuosiDdsQzFrmjrGlTh4nvFsmUT4bLqB+/2Nc4YK86K
-    t3W0+JhTaY218pJbbBR3w9mv9ljW+zKSZI/8hnao7ZjbSDXtANJ73ZLdi1Q3BCVF7ki/
-    Eq9UpBn2rBLPcRpzJfLHUuFAffPZrfLgsb4b+tnHTYYp0cfDyRR6hQt9S0ezRsA8weiy
-    9i6X8wEyp27FNSoyBd1oa35IPZyXNs5x9zGLFek4QphJqR1TzPJPc0ti+vBvTOmhKu06
-    c92aRXj+ClKnhHJ+vpzvQ6Yx38u+AMlEr5wQRC/STTTtIKJI3EZ64IgW+6u0D7qc0yv5
-    qeCA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1787159150;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
-    b=zoIjzOaiU4bCNXQm66KFYB4T50NC9at8+afHjYJuwJKL++5JLJPf4g8wFOKG+T2C5V
-    sD2q0CO7QxIMHwuHcICg==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.2 AUTH)
-    with ESMTPSA id K171b727JH5nMgH
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Wed, 19 Aug 2026 19:05:49 +0200 (CEST)
-Message-ID: <140b6ce8-d920-46c4-a83c-0d52b8f1c653@hartkopp.net>
-Date: Wed, 19 Aug 2026 19:05:44 +0200
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="qDG66zwU"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cc891373e0so17410195ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 12:11:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1787166693; x=1787771493; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=iuJxNDnPI30koRC+wulDPOVDN1bFgNOxk8BAwV2kNWY=;
+        b=qDG66zwUCsqjUGrffRZgGKoJDN41qrzMucEXq9p11f0sRX56jnfNPZaV1NRFADqUHS
+         qBA9lekedPieAEaVufVugmceoLu/Lg2N8YNsuF6sZqrCiK8yrCOnuXQPEv77OTAuApcm
+         qpahEtB9uIL/c6jU3sn2AsXfyzZ/ikjFWQdDUb4qfSZ8X7ra5om/4wT0VKthQaYTIb2x
+         boYskv8ARXVG0JIZAw73x0xMvca8UzS1bfoe9OEjK6bpEPvNWxUssy1NG18vbT8oRuQN
+         conk/6VJbW/Jk7VZ8HG5H7UhHd7q8c7H/B1/C1qaV8j27+QR4Sa6TVcSKuMtiWkRinu6
+         9bBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787166693; x=1787771493;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iuJxNDnPI30koRC+wulDPOVDN1bFgNOxk8BAwV2kNWY=;
+        b=oBYQ0JHLtqBbkLZHhCaL6i9Ap3EmNaKyw/C76ZQfuv+pPKLCAECk+06BIdwRmYIX/J
+         O4n3AFumsqgx8P3oN22CwDY6zfHQ72lmYkG+qV4uh8neY2ntDvFDnht1DV2avWZfpKZf
+         r77uDt40Ir1tG5r+S2OkgBjpftX095GpjMNtXt9hLTAjg3ukJzvWPnKlmKYKihlu0Lcw
+         Tdy+QFYrGlEIIZVKo89h309yd4JiMsFMz97Bzxdb5pYWbZ/qb53QW+hNQoCy4GvKqX+X
+         mqrUIQx/t4OB4Sd1KPadY3WZX7QTPe4G+dYqWLZqAMmjEaqzUp5Z5+ExvFUXoNSOYVF7
+         7+1A==
+X-Gm-Message-State: AFuF++lA5htQ4NGoXN2oUEgewkEwpHr07JUXzWPyGYlnPBzzqYGQWWOA
+	4qs54SoGL8AbKhALmq7zK/F0fqL1UeyMgo+iuVd7Hldr+0dWHMO1keRP+eSTfbKO4fdeipjqFsN
+	ALXUB
+X-Gm-Gg: AR+sD12rf5vZOhyq/PHlqFZrbcq5v07dMS/eIbJjZTEPhqRy/4IQA79H6r837j4pAiq
+	sLG8QAU0/E0l6kT34Mf9DQ78EhnX7K23uZMLGMb2cG1q4v0oMfttmhxiu42iRj9hR84HCLHgt/H
+	wOABv0KcNXaqEo/85xyAb54sh0Mh0FgdesbI8iqVVITeBoZD+ESXuBEW+ARBi00fYbiigdubkKP
+	a1ykluU3pKX2nHXBqZEnYj3PwzMGlw9CTnBb3IzfmN69iLpMp5jDlhlKirzMPa7ZBNsODn1vXAa
+	zEqjBRhBTZeNclg8G8AB5VxqwHu533BSj3rp8OQWy7QvMpRscNfpgrLcvIqQMoS51t/at4noZuC
+	KBBHlPmsc8r4Xt4LSGsTXl/dwcYbvt/z7B6afMahYDFqTfLgZoDtbG60hIOmzPUyidXLXR3QBrz
+	BCPWNVJmw8kCGTqBhSO+DlMgMXjjbJU84pU3saEdLkmXAJXMMe/WJP/jk2SAqVX6ZZyo2+2ZViC
+	jShdK4HgjNVHgRJaI3mmhjJ3YpJwdAv+UkHxkxb
+X-Received: by 2002:a17:902:d2d0:b0:2c7:ebfb:618f with SMTP id d9443c01a7336-2d601985763mr103968165ad.14.1787166693067;
+        Wed, 19 Aug 2026 12:11:33 -0700 (PDT)
+Received: from localhost (107-190-31-17.cpe.teksavvy.com. [107.190.31.17])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d5c1e543besm28951195ad.41.2026.08.19.12.11.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Aug 2026 12:11:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] can: convert unreliable ARPHRD_CAN type checks to robust
- can_get_ml_priv()
-To: sashiko-reviews@lists.linux.dev
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>,
- Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>
-References: <20260819160822.8256-1-socketcan@hartkopp.net>
- <20260819162609.2EF0E1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260819162609.2EF0E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 19 Aug 2026 15:11:31 -0400
+Message-Id: <DKT5PVZDPTZX.38GSKZBE4TPYR@etsalapatis.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v3 3/3] bpf, arena: check range_tree_set return
+ in arena_free_pages and arena_free_worker
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: <sashiko-reviews@lists.linux.dev>, <chenyuan_fl@163.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260810134800.2875487-1-chenyuan_fl@163.com>
+ <20260810134800.2875487-4-chenyuan_fl@163.com>
+ <20260810140850.4214E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260810140850.4214E1F000E9@smtp.kernel.org>
 
-
-
-On 19.08.26 18:26, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Data modification of shared/cloned SKBs in `can_send()` causes payload corruption for concurrent users.
+On Mon Aug 10, 2026 at 10:08 AM EDT, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Physical memory leak in the BPF arena allocation rollback and de=
+ferred free paths when `range_tree_set()` fails.
 > --
-> 
-> --- Patch [1]: [PATCH] can: convert unreliable ARPHRD_CAN type checks to robust can_get_ml_priv() ---
-> commit 57320b2cc995d1852816aaacf79460f42c05858d
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
-> 
-> can: convert unreliable ARPHRD_CAN type checks to robust can_get_ml_priv()
-> 
-> This commit updates the CAN subsystem to use can_get_ml_priv() for
-> identifying valid CAN devices instead of relying on ARPHRD_CAN. This
-> prevents issues with TUN/TAP devices that might overwrite their hardware
-> type without properly initializing the midlayer private data.
-> 
-> Cc: stable@kernel.org
-> Cc: Oleksij Rempel <o.rempel@pengutronix.de>
-> 
->> diff --git a/net/can/af_can.c b/net/can/af_can.c
->> index 7bc86b176b4de..ef435f22ac933 100644
->> --- a/net/can/af_can.c
->> +++ b/net/can/af_can.c
->> @@ -226,7 +226,7 @@ int can_send(struct sk_buff *skb, int loop)
->>   		goto inval_skb;
->>   	}
->>   
-> 
+>
+> --- Patch [3]: [PATCH bpf-next v3 3/3] bpf, arena: check range_tree_set r=
+eturn in arena_free_pages and arena_free_worker ---
+> commit 2ed41c8c8f7aaa211a3d44f83cea88768b2f5819
+> Author: Yuan Chen <chenyuan@kylinos.cn>
+>
+> bpf, arena: check range_tree_set return in arena_free_pages and arena_fre=
+e_worker
+>
+> This commit adds error checking for range_tree_set() in the BPF arena
+> allocation rollback and free paths. If the tree update fails, it aborts
+> the page free operation or skips clearing PTEs to prevent untracked pages=
+.
+>
+>> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+>> index 7b6847200b431..1e519c3c229ca 100644
+>> --- a/kernel/bpf/arena.c
+>> +++ b/kernel/bpf/arena.c
+>
+> [ ... ]
+>
+>> @@ -881,7 +883,12 @@ static void arena_free_pages(struct bpf_arena *aren=
+a, long uaddr, long page_cnt,
+>>  	if (ret)
+>>  		goto defer;
+>> =20
+>> -	range_tree_set(&arena->rt, pgoff, page_cnt);
+>> +	ret =3D range_tree_set(&arena->rt, pgoff, page_cnt);
+>> +	if (ret) {
+>> +		raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+>> +		bpf_map_memcg_exit(old_memcg, new_memcg);
+>> +		return;
+>> +	}
+>
 > [Severity: High]
-> This is a pre-existing issue, but can modifying the SKB payload here cause
-> data corruption for concurrent receivers?
-> 
-> Earlier in can_send(), the SKB data is directly modified without checking if
-> it is shared:
-> 
-> 	} else if (can_is_canfd_skb(skb)) {
-> 		struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
-> 
-> 		skb->protocol = htons(ETH_P_CANFD);
-> 
-> 		/* set CAN FD flag for CAN FD frames by default */
-> 		cfd->flags |= CANFD_FDF;
-> 
-> When routing frames without data modifications, can_can_gw_rcv() creates
-> a cloned SKB using skb_clone() and passes it to can_send():
-> 
-> net/can/gw.c:can_can_gw_rcv() {
-> 	...
-> 	nskb = skb_clone(skb, GFP_ATOMIC);
-> 	...
-> 	can_send(nskb, gwj->limit_hops);
+> Does this early return cause a physical memory leak bounded by the lifeti=
+me
+> of the BPF map?
+>
+> If arena_alloc_pages() fails midway due to memory limits, it attempts to
+> roll back the partially allocated physical pages by calling
+> arena_free_pages(). Under memory pressure, the range_tree_set() call is
+> highly likely to fail due to its internal kmalloc_nolock() allocation.
+>
+> Aborting here leaves the physical pages mapped in the kernel VMA and
+> completely orphaned. Exchanging a virtual address space leak for a physic=
+al
+> memory leak on an error path under OOM conditions worsens memory pressure=
+.
+>
+> The pre-patch behavior of freeing pages and clearing PTEs appeared safe,
+> since bpf_arena_fault_handler() handles unmapped PTEs by mapping the
+> scratch_page.
+>
+
+Imo this is debatable. If we are at the point where we can't allocate
+entries in the range tree, we are close to an OOM anyway and so it is
+better to keep the range tree and actual mappings consistent.
+
+>>  	init_llist_head(&free_pages);
+>>  	cdata.arena =3D arena;
+>
+> [ ... ]
+>
+>> @@ -1004,11 +1011,18 @@ static void arena_free_worker(struct work_struct=
+ *work)
+>>  		kaddr =3D arena_vm_start + s->uaddr;
+>>  		pgoff =3D compute_pgoff(arena, s->uaddr);
+>> =20
+>> +		/*
+>> +		 * Mark the range as free before clearing PTEs so that
+>> +		 * if the range tree update fails we leave the PTEs
+>> +		 * intact, avoiding an unrecoverable state where pages
+>> +		 * are freed but the arena free tree does not track them.
+>> +		 */
+>> +		if (range_tree_set(&arena->rt, pgoff, page_cnt))
+>> +			continue;
+>> +
+>
+> [Severity: High]
+> Can this continue statement permanently leak the physical pages from the
+> free system?
+>
+> When this skips PTE clearing and page collection, the subsequent loop in
+> arena_free_worker():
+>
+> arena_free_worker() {
+>     ...
+>     llist_for_each_safe(pos, t, list) {
+>         s =3D llist_entry(pos, struct arena_free_span, node);
+>         ...
+>         kfree_nolock(s);
+>     }
+>     ...
 > }
-> 
-> Since skb_clone() shares the underlying data buffer, wouldn't modifying
-> cfd->flags directly in can_send() corrupt the payload for other concurrent
-> users of the original SKB?
-> 
+>
+> unconditionally destroys the tracking span 's'. This abandons the pages,
+> leaving them orphaned rather than avoiding an unrecoverable state.
 
-This is a common remark from Sashiko-bot when looking at this code.
 
-No problem here.
+This, however, seems valid. You can make it so that we do not free
+ranges for which we haven't called apply_range_clear_cb.
 
->> -	if (unlikely(skb->dev->type != ARPHRD_CAN)) {
->> +	if (unlikely(!can_get_ml_priv(skb->dev))) {
->>   		err = -EPERM;
->>   		goto inval_skb;
->>   	}
-> 
+pw-bot: cr
+
+>
+>>  		/* clear ptes and collect pages in free_pages llist */
+>>  		apply_to_existing_page_range(&init_mm, kaddr, page_cnt << PAGE_SHIFT,
+>>  					     apply_range_clear_cb, &cdata);
+>> -
+>> -		range_tree_set(&arena->rt, pgoff, page_cnt);
+>>  	}
+>>  	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
 
