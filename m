@@ -1,37 +1,37 @@
-Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
+Received: from mta1.migadu.com (out-246.mta1.migadu.com [95.215.58.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6413B813F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DE548097E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.246
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787154644; cv=none; b=PHj1ibOLSm9/CEJoJ2mwwJlP1JQUDIbz/udqVVCH7Kvkyjo3uSD5/icHLCnxzoUziWScel6LZ0LJ/YlCAQzH5E6fUv6OUtKAbVqFdWbKVFohu3+Dv3hi6af6GVJvTqs/Pj9xg+IEJmPmAU0UBN6n3M969nFjHEdp1y4Pzbt9Wzw=
+	t=1787154859; cv=none; b=rvJeoBz3IB8yk7BMotJ4Y9xacc0V0yl1YGCW2fBDKzyKS7wi/ysLuw/HiKI5CHVZRDhvIqUlmdSCP1YvNoJ6vqpR1NYJh4/APisp0Rx+ZClg0OVfykY8cczTqVewyIXjDovSfC3fVT3vzWiIuOk2pUkm7CgknLKDnc7ujn75IFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787154644; c=relaxed/simple;
-	bh=pmc3rgjTX9WWxQeyhGNjCXEOqtOtWKs4p5J6EHAGhEE=;
+	s=arc-20240116; t=1787154859; c=relaxed/simple;
+	bh=ga4iCN9MpDHY01rWYETPo7NaSHPsYk+IP9nQrpDupE4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eg0pABoZULHvPUGGWSH6/uCTZ3lT0VarDw1NPKM+yKq1XKKzgOHA/z5VdcF7P3BHdEru/cu7P3MvOu4aHlI6fYYzEENj5CCEaDo7ZxVxcMVJTwyz4RUCEfyUQTwEC9rijhl++Y1D0OhIZ0wgWQCmEh/uMA+mL0GHjYDODPO7DiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rEeWtYRO; arc=none smtp.client-ip=91.218.175.95
+	 In-Reply-To:Content-Type; b=jXzp1/B7deOgf9lx6BgOoGua5Xudckyf6mAVmvxw8dt6A+p2pZqQnCpHC44iOITpBkZkG/zp4l2ozVs/i9weR2v36grIH8bsf5gAMWDil4YC+r4CNhS7zBV+xZcsDfxc6qGeCW7T2qLrTcQhJ2fBEUvbOn5WigIZOL2WwoX8Emg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dG2pp71t; arc=none smtp.client-ip=95.215.58.246
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rEeWtYRO"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dG2pp71t"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=pmc3rgjTX9WWxQeyhGNjCXEOqtOtWKs4p5J6EHAGhEE=;
+DKIM-Signature: a=rsa-sha256; bh=ga4iCN9MpDHY01rWYETPo7NaSHPsYk+IP9nQrpDupE4=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787154640; v=1; x=1787759440;
- b=rEeWtYRO/b6b3OMv9vDz9PEaR0U690jNLmKP2jhwSq+CQAw2wlVeiSgguyRPH1K1r23M/BgW
- hF02Q1XQRUXHWbRjNFtWItUjppujG6jMI0fReAmiweT7oAOH07vyUJ5FtMzoRdIVFTYnorkgugz
- aUue1yCWwzc4WgK4wwgOL9Xk=
+ t=1787154855; v=1; x=1787759655;
+ b=dG2pp71tw6mP+flcRkvv7mXVxeT4CXbI17Vlattm2inNryCH4DIZGZX1H/uF/MgAvJWDjhpg
+ M7PP7DtavZRGfk3BNm31LkZU1YbspnQgatUMqLYUN46TJlfpont4HaE9JTcpg83huhrAoJmc0Zv
+ Ya7kjU44JB/NqAU2oMl+Gyl8=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5d0e)
-	by smtp.migadu.com with ESMTPS id 594093d243d35417;
-	Wed, 19 Aug 2026 15:50:40 +0000
-X-Mizu-Trace-ID: 594093d243d35417
+	by smtp.migadu.com with ESMTPS id 4607e8584e3dc236;
+	Wed, 19 Aug 2026 15:54:15 +0000
+X-Mizu-Trace-ID: 4607e8584e3dc236
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
-Date: Wed, 19 Aug 2026 08:50:36 -0700
+Message-ID: <d1e1d798-4905-4d43-9b66-ac827f064381@linux.dev>
+Date: Wed, 19 Aug 2026 08:54:10 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,93 +39,76 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 02/10] bpf: Add helpers to describe the R0:R2
- return register pair
+Subject: Re: [PATCH bpf-next v7 04/10] bpf: Handle R2 as a return register in
+ precision backtracking
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260819055239.3293449-1-yonghong.song@linux.dev>
- <20260819055249.3295283-1-yonghong.song@linux.dev>
- <20260819061746.0DFE71F00A3A@smtp.kernel.org>
+ <20260819055259.3295829-1-yonghong.song@linux.dev>
+ <20260819060306.6F2141F000E9@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260819061746.0DFE71F00A3A@smtp.kernel.org>
+In-Reply-To: <20260819060306.6F2141F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 8/18/26 11:17 PM, sashiko-bot@kernel.org wrote:
+On 8/18/26 11:03 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Extension programs (BPF_PROG_TYPE_EXT) are mishandled because `bpf_compute_subprog_ret_regs` skips subprog 0, failing to set up `ret_reg_pair`.
+> - [Low] Multi-line comments do not follow the required BPF subsystem style.
 > --
 >
-> --- Patch [2]: [PATCH bpf-next v7 02/10] bpf: Add helpers to describe the R0:R2 return register pair ---
-> commit f6c1f4f14c6e8bda9545fe1b82f42648b4f3c475
+> --- Patch [4]: [PATCH bpf-next v7 04/10] bpf: Handle R2 as a return register in precision backtracking ---
+> commit 827448f59c95b01086f128d7ec2894a154de5092
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Add helpers to describe the R0:R2 return register pair
+> bpf: Handle R2 as a return register in precision backtracking
 >
-> This commit adds bpf_ret_reg_pair() to determine if a BPF subprogram returns
-> a value in the R0:R2 register pair. It implements
-> bpf_compute_subprog_ret_regs() to compute this flag based on the BTF
-> prototype of each subprogram, intentionally skipping the main program.
+> This commit updates precision backtracking to treat R2 as a return register
+> alongside R0 at call/return boundaries. It clears R2 unconditionally when
+> evaluating subprograms or kfuncs, and samples it before callback paths clear
+> R1-R5.
 >
-> Link: https://github.com/llvm/llvm-project/pull/190894
-> Link: https://github.com/llvm/llvm-project/pull/206876
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index d8bf897460eae..2b5e88fdda07e 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
+>> diff --git a/kernel/bpf/backtrack.c b/kernel/bpf/backtrack.c
+>> index a2b18a9f1694c..653db80bcc47b 100644
+>> --- a/kernel/bpf/backtrack.c
+>> +++ b/kernel/bpf/backtrack.c
 > [ ... ]
 >
->> +static int bpf_compute_subprog_ret_regs(struct bpf_verifier_env *env)
->> +{
->> +	const struct btf *btf = env->prog->aux->btf;
->> +	const struct btf_type *type;
->> +	int subprog;
->> +	u32 size;
+>> @@ -520,7 +524,25 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+>>   					return -EFAULT;
+>>   			}
+>>   		} else if (opcode == BPF_EXIT) {
+>> -			bool r0_precise;
+>> +			bool from_subprog_call, r0_precise, r2_precise;
 >> +
->> +	if (!env->prog->jit_requested || bpf_prog_is_offloaded(env->prog->aux))
->> +		return 0;
+>> +			/* BPF_EXIT in subprog or callback always returns
+> [Severity: Low]
+> This isn't a bug, but does this multi-line comment follow the preferred BPF
+> subsystem style? The opening /* is usually required to be on its own line.
+>
+>> +			 * right after the call instruction, so by checking
+>> +			 * whether the instruction at subseq_idx-1 is subprog
+>> +			 * call or not we can distinguish actual exit from
+>> +			 * *subprog* from exit from *callback*. In the former
+>> +			 * case, we need to propagate the precision of the
+>> +			 * return registers, if necessary. In the latter we
+>> +			 * never do that.
+>> +			 */
+>> +			from_subprog_call = subseq_idx - 1 >= 0 &&
+>> +					    bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]);
 >> +
->> +	/*
->> +	 * Skip the main program: its return value is the program's exit code,
->> +	 * read out of R0, so it never uses the register pair. An extension does
->> +	 * have a real prototype for subprog 0, but bpf_check_attach_target()
->> +	 * refuses to replace a function returning more than 8 bytes.
->> +	 */
->> +	for (subprog = 1; subprog < env->subprog_cnt; subprog++) {
-> [Severity: High]
-> Does this code mishandle extension programs (BPF_PROG_TYPE_EXT)?
->
-> The comment mentions that bpf_check_attach_target() refuses to replace a
-> function returning more than 8 bytes. However, for extension programs,
-> prog->expected_attach_type is 0, so attach_uses_trampoline_retval(0) evaluates
-> to false, bypassing the size check.
->
-> If an extension program successfully attaches and replaces a subprogram
-> returning an __int128 (16 bytes), skipping subprog 0 here means ret_reg_pair
-> won't be set. Could this result in the verifier failing to enforce the
-> initialization of R2, potentially leaking uninitialized register contents to
-> the caller?
+>> +			/* Sample the return registers before the callback
+> [Severity: Low]
+> This isn't a bug either, but the same formatting question applies here. Should
+> the opening /* be on its own line for multi-line comments?
 
-But the comment needs update for this version.
-    bpf_check_attach_target() -> btf_check_func_type_match()
+We should be okay here.
 
 >
->> +		type = subprog_ret_type(env, subprog);
->> +		if (!type || btf_type_is_void(type))
->> +			continue;
->> +		if (verifier_bug_if(IS_ERR(btf_resolve_size(btf, type, &size)), env,
->> +				    "cannot size return type of subprog %d", subprog))
->> +			return -EFAULT;
->> +		if (ret_regs_cnt(size) > 1) {
->> +			subprog_info(env, subprog)->ret_reg_pair = true;
->> +			env->prog->jit_required = 1;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
+>> +			 * handling below clears R1-R5.
+>> +			 */
+>> +			r0_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_0);
+>> +			r2_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_2);
 
