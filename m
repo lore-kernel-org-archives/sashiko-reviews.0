@@ -1,50 +1,66 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f1.google.com (mail-pz2-f1.google.com [74.125.228.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754EE3C13EF;
-	Wed, 19 Aug 2026 03:14:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33DA2DF3F2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 03:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787109268; cv=none; b=u7VTc4Buc+UfM340bXeKTbOy2UsasgPQfHlTrEPH1o5JCAXzghKhT1pOweLNVt20s6Wjm68wnaMyzgkY/5rFXLLvepDQja5FsllhBLGYf4MbwfwkixrC03RdgZ/8aBDEjPVCIaBhNR9NAL5weIXYAOtIDG5D+Ll4hdNvWKvu8Nw=
+	t=1787109272; cv=none; b=gqfaxHHUOr91xKNp5V8tcdDGQUhd+IpJpuUMlU7R6wwJ9lUDqHlMA1+TVsMO28VQnBVaLzUHuL1DRR1Vx+IGRrLUFIkfo2rT22qHBN9RCeJR9ykajtTeDxxuNdfZUNQVmd7eBuy9TOyolaJopcR6u/WlvErbPMp1VrkktNvw0Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787109268; c=relaxed/simple;
-	bh=Ii1mnAQIk3JxKPtw1+lNgA5Zgg05+1uKMZeaIO1HU7o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HZ5/z9kx4+ZupMrphUqDsWsQkULTgZBO0pms6cJWM4TvBNiGykqrZvjcDh9xYcTrosKNvrH0CSGTihxPr27CQU2u1wNzsmn+fK5tiU04xrvcxmFu+S1OQUOB326E/XSBJceyTYROkKmIP3Cy9uyR4ELKrBHhNvBQ9LUYSyHukfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=BnEUPud8; arc=none smtp.client-ip=68.232.153.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	s=arc-20240116; t=1787109272; c=relaxed/simple;
+	bh=qhh5IYjcZfOvPbQAcHwjlmsNnJJ/j7fHA9NCgpyJsgU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bQ7++N5BTmyrWEx9r7Zv+yZ/YRNBskeQcyY9LN6IQlJym0XYpiOoIa3BC4UGZwpTRNqZvXdi0C9uzyiR2hiV06t+NE+0rBojySor0nMmLpyTJ9Jlu0oB3sE7ebMfpwQO5pvnB8ouLNCVHoRtJHT6DutoDZOGC04yDJmXYCgCCTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgPSXdvI; arc=none smtp.client-ip=74.125.228.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="BnEUPud8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1787109266; x=1818645266;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Ii1mnAQIk3JxKPtw1+lNgA5Zgg05+1uKMZeaIO1HU7o=;
-  b=BnEUPud80n1F2dPN1NLQ070xyUUTak4Tm3SLMXRI+g1q7X17MnSj4jtq
-   rVtG+Fjt3X2GNrVVMydgg7UY2bP3tl3c9fDCdBN7xZBp44KicJk1NlXp4
-   LU4LnzsjE1mPvw3TVtuIbEEAArywR3mGzj6NNfh8NUlwWkVU6rCRnouUo
-   0ieusWcGM/kv+wKkpwf74qIwxGbhTWOe7s0dPYmfGPFBY6J25wC8DpaIv
-   6uumRqwTEUN2L8I7nLN9+n3F/7UId525RyPnLKWZDropnLMzbz4x8K2GW
-   4lHud9vA4ha7iwEnAmMPW9F3Veg9H9dYw5Ial/fG/zUBHn24VnMQsrNrq
-   Q==;
-X-CSE-ConnectionGUID: J864rs4URjeHfXVvhbskAA==
-X-CSE-MsgGUID: IZR9RznkR1GhxX1awoXUaA==
-X-IronPort-AV: E=Sophos;i="6.25,231,1779174000"; 
-   d="scan'208";a="72077587"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2026 20:14:19 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.87.152) by
- chn-vm-ex2.mchp-main.com (10.10.87.31) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.2562.45; Tue, 18 Aug 2026 20:14:19 -0700
-Received: from [10.40.24.197] (10.10.85.11) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server id 15.1.2507.58 via Frontend
- Transport; Tue, 18 Aug 2026 20:14:11 -0700
-Message-ID: <93f0727f-0b25-4374-9a6c-ad3799006440@microchip.com>
-Date: Wed, 19 Aug 2026 08:44:10 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgPSXdvI"
+Received: by mail-pz2-f1.google.com with SMTP id 41be03b00d2f7-ca8758e7e94so19564a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 18 Aug 2026 20:14:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787109270; x=1787714070; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rkDTbm6UNf3o2IwfVAFs79C+vTq7/RzNoY70xRVtDM8=;
+        b=NgPSXdvIrxV0c6AFQ1mzWJwBskrm1RRbYl6MuIBShhVLAAUpysCgIH6RT1QJ3LbKPU
+         9rs8uiqrwqq7HJrijHVc4r/XledR73/+uvvpVQIysMwSfltUtLX3llAUIuvAXemrm5Tf
+         Ms2FYzdms+DyOwdb7XyF68PFahgILn4Dg2vRi9eLzZiW9vsDhcGjW/sZEvaEkjxxBmrn
+         4Wifr7CZMtJ6uCD/jHo8DjPfHTuBpiod/WxpCOH7PFrTOwwEpeWQhK45lSJbVdBjlLzH
+         a6bYSbIFcQ7YuijQ8T2KW9mVj8jM22uPVmrPYZMBHJI/YiIV4htanzRB/mIOs9iC7Zks
+         G2mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787109270; x=1787714070;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rkDTbm6UNf3o2IwfVAFs79C+vTq7/RzNoY70xRVtDM8=;
+        b=qNwgkgTflp38rCs3Wr7rm4TfywPN/LHQjru5iix/d+rdwLnEraDvZjrDhc57hPjTQA
+         qdEBiOU+cCIP8XKd1TP1nufHYgkjtmU/wNqp8dAmxTaMfW3e/r/s/6GSq4X/R6L70bJo
+         9YdRFSAay/n39QWZE7nxL8T6/tbJwAxR5QCWXT2VVTWB1i0rZDva2HbS7pJzv0fH8BVm
+         ir+X2DBHYvMsQ5yoRgIk4QX3HfBq8KD5Rc5AbAnTP3UVBb4IxTc71fImoFSXw2A4wBqC
+         lOcwBbO/5imKdZHmD5OQQEIT5T5u6iLYsY/gLdqEXLbxLABRPpfrEYlW9Zs/jRzSl/Lc
+         k0bw==
+X-Gm-Message-State: AOJu0YwJwvDVlc+XBweoewZLU1iX5qR+En9UC0wO9uoWGT89OE/2sjoe
+	mafmzj9Q0knlHCDM1sZEqfC8ERZJOlgdapaV5NO4rEMZVHNqIFsneyFCINXLIsCr4bYouw==
+X-Gm-Gg: AR+sD11Ic1RQqNSErCaGFMsRyJTWzsWTfIgZCMPxelyqLEDeO8SJyRn5ZDoS7/sWtSb
+	x9celN66GXgO4Uy/zU6NSwzHfI4YW1sjnRdCJeittWstrjqSvNFir3IreBKvJuL8Dpt1TKAlBau
+	GRGQql3t3A8WOuh4hgRUFj/wpxUJ927GHhQQVLF4UWfeYjqGBCOgulXDb9NRAwvdcmwx2cW9zM8
+	C9jYdsmH8n/pacINYyCPRsLMBry5KXV0m+XBP+guHl+xfWiVsryM6UlTZZcNlcVZBsTsclBP7X8
+	dapF/f4XW9hpTsCTDUtfPTNd87SSnyRA0vhsDshIPk5GTSHRtl62KsFDVgqXW4/4zjRLu/PIxbt
+	Kq6Gano4iQww7o/w9ywLOF/XG6HoRq+tIpGWSPSyDJAv+ZjU1Msc0miOn5gdzjBDgvJrL7AClNM
+	2qTUGP6Oz6jJB69SJEcs2T95bXuOQLO2pjoxveM/t2lVByqpC8M77Pl2iHm9h5dchb7FQ=
+X-Received: by 2002:a17:903:15c8:b0:2cf:7db9:e13e with SMTP id d9443c01a7336-2d5fc8c65a8mr22351785ad.3.1787109270238;
+        Tue, 18 Aug 2026 20:14:30 -0700 (PDT)
+Received: from [10.125.112.20] ([122.11.210.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d5c1e9ab8bsm19697935ad.64.2026.08.18.20.14.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Aug 2026 20:14:29 -0700 (PDT)
+Message-ID: <8ab82f38-e2c7-4cde-b306-946a220f8c78@gmail.com>
+Date: Wed, 19 Aug 2026 11:14:23 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,105 +68,125 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 4/4] arm64: dts: freescale: Add chargebyte Charge
- Control Y
-To: Stefan Wahren <wahrenst@gmx.net>, Selvamani Rajagopal
-	<Selvamani.Rajagopal@onsemi.com>, Ciprian Regus <ciprian.regus@analog.com>
-CC: <imx@lists.linux.dev>, Oliver Hartkopp <socketcan@hartkopp.net>, "Oleksij
- Rempel" <o.rempel@pengutronix.de>, <vkoul@kernel.org>, <olteanv@gmail.com>,
-	<devicetree@vger.kernel.org>, <conor+dt@kernel.org>, <Frank.Li@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>, <linux-can@vger.kernel.org>,
-	<neil.armstrong@linaro.org>, Vincent Mailhol <mailhol@kernel.org>,
-	<robh@kernel.org>, <linux-phy@lists.infradead.org>,
-	<sashiko-reviews@lists.linux.dev>, David Tumma - M78440
-	<David.Tumma@microchip.com>, Roland Trissl - M21193
-	<Roland.Trissl@microchip.com>
-References: <20260818091701.6441-1-wahrenst@gmx.net>
- <20260818091701.6441-5-wahrenst@gmx.net>
- <20260818093147.E556C1F000E9@smtp.kernel.org>
- <89573332-94a0-4fc9-b4b4-be100a97de6e@gmx.net>
+Subject: Re: [PATCH v2 4/5] of: reserved_mem: release dynamically allocated
+ no-map region on init failure
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260818092420.2859026-1-chenwandun1@gmail.com>
+ <20260818092420.2859026-5-chenwandun1@gmail.com>
+ <20260818093834.588661F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
-In-Reply-To: <89573332-94a0-4fc9-b4b4-be100a97de6e@gmx.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Wandun <chenwandun1@gmail.com>
+In-Reply-To: <20260818093834.588661F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Stefan,
 
-On 18/08/26 7:10 pm, Stefan Wahren wrote:
-> EXTERNAL EMAIL: Do not click links or open attachments unless you know 
-> the content is safe
+
+On 8/18/26 17:38, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> Hi Parthiban,
-> hi Selvamani,
-> hi Ciprian,
+> Pre-existing issues:
+> - [High] `__reserved_mem_alloc_size()` ignores the error return value and checks `base == 0` for failure, leading to Use-After-Free of reserved memory regions.
+> - [High] Statically allocated reserved memory is unconditionally freed back to the OS on driver initialization failure, violating the DT specification and causing memory corruption.
+> --
 > 
-> Am 18.08.26 um 11:31 schrieb sashiko-bot@kernel.org:
->> Thank you for your contribution! Sashiko AI review found 4 potential 
->> issue(s) to consider:
->> - [Medium] The LAN8651 ethernet device is missing its hardware reset 
->> configuration, leaving the `X_nRST_LAN` pin unmanaged.
->> - [Medium] The SD card slot power/reset pin (`SD2_nRESET`) is named in 
->> `gpio-line-names` but is not associated with any regulator or reset 
->> control.
->> - [Low] The GPIO label `X_LAN_nCS` is incorrectly placed at index 0 of 
->> `&gpio2`'s `gpio-line-names` array, but the `lan8651` chip select is 
->> actually wired to index 8.
->> - [Low] The `ti,leds-polarity` property used in both Ethernet PHY 
->> nodes is undocumented, invalid, and will cause `dtbs_check` validation 
->> errors.
->> -- 
->>
->> --- Patch [4]: [PATCH RFC 4/4] arm64: dts: freescale: Add chargebyte 
->> Charge Control Y ---
->> commit a177a5e0acba62156876ea6dc84457789786bfb8
->> Author: Stefan Wahren <wahrenst@gmx.net>
-> ...
->> +/* MCS Ethernet SPI */
->> +&lpspi3 {
->> +     pinctrl-names = "default";
->> +     pinctrl-0 = <&pinctrl_lpspi3>;
->> +     num-cs = <1>;
->> +     cs-gpios = <&gpio2 8 GPIO_ACTIVE_LOW>;
->> +     status = "okay";
+> --- Patch [4]: [PATCH v2 4/5] of: reserved_mem: release dynamically allocated no-map region on init failure ---
+> commit cf35e3414292da4070c89965dbb1bce8416755e9
+> Author: Wandun Chen <chenwandun@lixiang.com>
+> 
+> of: reserved_mem: release dynamically allocated no-map region on init failure
+> 
+> Dynamically reserved-memory regions are added to memblock.reserved by
+> memblock_phys_alloc_range() during __reserved_mem_alloc_size(). When a
+> reserved-memory region's driver initialization fails,
+> fdt_init_reserved_mem_node() cleans up the reservation. For no-map
+> regions it only calls memblock_clear_nomap(), leaving the range in
+> memblock.reserved and unavailable for normal memory use.
+> 
+> Fix it by freeing the region on init failure when it was dynamically
+> allocated.
+> 
+> Sashiko found this issue in [1].
+> 
+> Link: https://sashiko.dev/#/message/20260806100605.2C2C01F000E9%40smtp.kernel.org [1]
+> 
+>> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+>> --- a/drivers/of/of_reserved_mem.c
+>> +++ b/drivers/of/of_reserved_mem.c
+> 
+> [ ... ]
+> 
+>> @@ -567,7 +568,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node, const char *unam
+>>  	}
+>>  
+>>  	fdt_fixup_reserved_mem_node(node, base, size);
+>> -	fdt_init_reserved_mem_node(node, uname, base, size);
+>> +	fdt_init_reserved_mem_node(node, uname, base, size, true);
+>>  
+>>  	return 0;
+>>  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it possible for
+> __reserved_mem_alloc_size() to ignore the error return value from
+> early_init_dt_alloc_reserved_memory_arch() and only check if base is 0 for
+> failure?
+> 
+> If early_init_dt_alloc_reserved_memory_arch() fails after setting *res_base
+> because memblock_mark_nomap() fails:
+> 
+> early_init_dt_alloc_reserved_memory_arch() {
+>         ...
+>         *res_base = base;
+>         if (nomap) {
+>                 err = memblock_mark_nomap(base, size);
+>                 if (err)
+>                         memblock_phys_free(base, size);
+>         }
+>         ...
+> }
+> 
+> The base variable in __reserved_mem_alloc_size() will be non-zero, but the
+> memory has already been freed. Since __reserved_mem_alloc_size() only checks
+> if base is 0, it passes the error check and registers the freed memory.
+> 
+> Could this result in a use-after-free if the OS hands the memory out to
+> other subsystems while it is still mapped or used by the reserved region?
+> 
+
+If too many nodes init fail, it will fallback to the current behavior.
+
+> [ ... ]
+> 
+>> @@ -707,7 +710,8 @@ static void __init fdt_init_reserved_mem_node(unsigned long node, const char *un
+>>  
+>>  		if (nomap)
+>>  			memblock_clear_nomap(rmem->base, rmem->size);
+>> -		else
 >> +
->> +     lan8651: ethernet@0 {
->> +             compatible = "microchip,lan8651", "microchip,lan8650";
->> +             reg = <0>;
->> +             interrupt-parent = <&gpio2>;
->> +             interrupts = <7 IRQ_TYPE_LEVEL_LOW>;
->> +             spi-max-frequency = <25000000>;
->> +
->> +             nvmem-cells = <&eth2_mac_address 0>;
->> +             nvmem-cell-names = "mac-address";
->> +     };
->> +};
->> [Severity: Medium]
->> The pin X_nRST_LAN is labeled in the gpio1 node, but this ethernet node
->> doesn't seem to configure a reset mechanism. Does the LAN8651 need a 
->> reset
->> control or gpio-hog to ensure the pin is driven and not left floating?
-> according to the current DT binding of LAN8651 there is no reset
-> control, but the chip has a reset line and its wired on our board.
+>> +		if (dynamic || !nomap)
+>>  			memblock_phys_free(rmem->base, rmem->size);
+>>  		return;
+>>  	} else {
 > 
-> Are there any plans to implement reset control for OA TC6 or LAN8651?
-Yes, we have recently completed the implementation for handling reset 
-GPIO, as well as recoverable and non-recoverable error handling. We are 
-currently preparing for the internal review process, which is expected 
-to begin shortly.
+> [Severity: High]
+> This isn't a bug introduced by this patch, but could this logic
+> unconditionally free statically allocated memory without the no-map
+> property back to the general pool?
+> 
+> If a driver fails to initialize a statically defined reserved memory region,
+> and the region does not have the no-map property, it is freed here.
 
-At this point, I’m unable to commit to an exact timeline for the 
-completion of the internal review and when the changes will be merged 
-into the mainline. However, we are making every effort to complete the 
-process as quickly as possible.
+This is pre-existing behavior for static non-no-map regions.
+> 
+> According to the Device Tree specification, if a driver fails to initialize,
+> the OS must not use the memory for general purposes unless the reusable
+> property is explicitly present.
+> 
+> Will this cause kernel memory corruption if the general buddy allocator
+> hands this memory out to unrelated kernel subsystems, but the firmware or a
+> coprocessor still expects the region to remain reserved and accesses it?
+> 
 
-In the meantime, if you are interested, I would recommend using our 
-early version, which already includes support for these features and is 
-available to customers. Please reach out to Roland Trissl 
-(Roland.Trissl@microchip.com), our Technical/Application Support 
-Engineer, and we will be happy to assist you further.
-
-Best regards,
-Parthiban V>
-> Best regards
 
