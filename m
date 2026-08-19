@@ -1,142 +1,156 @@
-Received: from mail-106104.protonmail.ch (mail-106104.protonmail.ch [79.135.106.104])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A72A3A1B5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 23:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.104
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FFB379966;
+	Wed, 19 Aug 2026 23:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787183106; cv=none; b=d1uJZCgru6AewnfeAvXaVOAZKG+j4pESmQsuBAbWnMmpfdxzM13L1IEMzf4dwiK6+MzUyQZf1bomKZm6LStChugxhZ7eQEyHCtUGKRWsI0qqqxJCgMp6VQGPHsYm2+K4kqIrmpJ033N0k/9aa0Jmkjlk5k+wdaZhoQcKYBYkCI8=
+	t=1787183701; cv=none; b=NAFyHHN47VPtORi2SM3gfZBaBC94laaplPM0tY5u0oErBkfcvBIfdvGl49bww9Hay7NuDs7OT93FOjbsXZkkkgcchw1j6emf3C3ecb4dt3jefbQGgbhUydezkzA05U9wzvjRb4cSh+YactAIZUQft3SiFdZ5WhtVnOpQgOMsUpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787183106; c=relaxed/simple;
-	bh=NpxhhghZH96jiprY7833SIQdk62ROTWi6y93t8EqsyE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=joXtDzjvOeNt8vOKNWgb40DbmBMA5la+B2HOBFmTmS0czzXX1epmj/Vv2v7WZPoTP5ebpX+DVP+cgK/WdFUB1+lChceJWajOSU2G/MtJE0UD90GPqObxM/VRGsz2FbkyjC100ajicar0c82TuvcuFjsrA7X9ahR9JbvsSWn4I/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Cgw1i1dM; arc=none smtp.client-ip=79.135.106.104
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1787183701; c=relaxed/simple;
+	bh=gs9hvltnsfszTrvLTk7QgFw8EQK8T2X6k/hezkhhHlg=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=P6iy3NAsMRgvWPwsfzDdZKu8GhjasuAD7cMzcR+Ry/q1RLZVebSd2lyeYQ5slrDLse52DwLuF6MWGCbknDlCXRc/Ts3LNUMQVEPYKdqr5iCVuU1sejz/bbN7PVt/3hy/mJlahD/9uhCGFJIL3xmLGq0lHDdxCIdiZh0Qt8Mw05s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W9S4S5ul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Cgw1i1dM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1787183094; x=1787442294;
-	bh=Bm3T+3R4e12qE2fuXOHpf0T1yx4lHyAb2v65jzA26H8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Cgw1i1dMhzUmxUlLX9NXMeI/6Hq4mA6btiEvuNOuF4r4rrGU0kBFB8k6SX8rDMkKy
-	 M+HPVnzYeljlpuva6D6SgeGNWK1fvI+Dun0zfckPA2xgqFeM/HLgFnAzQGETHEawgy
-	 ArHYYL1jjIzBI6SuDw6FLD53/nFljraLfvxptiD/X2G+Pn8FHU4Mv/sfjA55OoLU3O
-	 llsFQD+brhBsgu6a1lXIQ7VbToBLGmUFegQDozFjAsSmTtpmK0CPJZq2HIQ8DVhvi+
-	 FOjNAQGW5QTsoD7qo3b5Z5eEBLF2Kn39stre9DbTam6z1KUk3hovfc81E967sB8NWd
-	 4dcG7gr1Vnm6w==
-Date: Wed, 19 Aug 2026 23:44:51 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W9S4S5ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A777F1F000E9;
+	Wed, 19 Aug 2026 23:54:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787183699;
+	bh=B0ytyDnWFNUv0OEEnTR1U8wLe6Cq77wdZFOAEOYvuTg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=W9S4S5ulezMkDW3twRMJ6dVHmet+74EZ0y64hXJqtZjXzbyvsaLmeloiBNuLV/sF5
+	 7isx1slQBEj+7YRD4LUQRT9lgZaN1JQpkSP/H743NllLAqP686sH6WocrqiWJLGBip
+	 8WkykqwQJn5pHh+GW9MfPoVTWZsOtChXKA6j9fIWpGER34E/asNya9egph7jBKNtxi
+	 p2KTRQcinD3gSacmemoolPUK7qtsmUdI1uaGMWNaHFQcdE1iKrD+qoCMyvTbrvWrz6
+	 6g18H39P62BlXTgDA2z+1YKAz1MO/HVk8phqXlg0KQewAjaQaQ5Ga1vdXeqFqM4+yc
+	 zNDMQ2q9OXXPg==
+Date: Thu, 20 Aug 2026 08:54:56 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-From: Aiden Isik <aidenisik@protonmail.com>
-Cc: Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, linux-clk@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v2 3/3] clk: samsung: Introduce Exynos5515 clock driver
-Message-ID: <Ct9YPMTdD6F2UHUYPgnPFXxKNMRyZFYVZHJG6P5Tp-7fPMzboeweP7k-mIIu1XbeEmhe3CN1I7QDmsYcHH-lxWruE4BwzXJ5QXTc5MPlg-A=@protonmail.com>
-In-Reply-To: <20260818220901.4BCC91F000E9@smtp.kernel.org>
-References: <20260818-for-next-lucky7-clock-v2-0-cda0cc80f158@member.fsf.org> <20260818-for-next-lucky7-clock-v2-3-cda0cc80f158@member.fsf.org> <20260818220901.4BCC91F000E9@smtp.kernel.org>
-Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: 0d70a57540a6cc3b960c523f3f265b4aa0b845d2
+Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v12 02/11] x86/hw_breakpoints: Add
+ arch_modify_local_hw_breakpoint_addr() API
+Message-Id: <20260820085456.c9f2f51135d03093692feace@kernel.org>
+In-Reply-To: <20260807155051.528FB1F000E9@smtp.kernel.org>
+References: <178611679753.237811.10190793347982785419.stgit@devnote2>
+	<178611682030.237811.16459191503595231339.stgit@devnote2>
+	<20260807155051.528FB1F000E9@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] PERI CMU muxes incorrectly use TOP CMU mux outputs instead of di=
-vider outputs, bypassing clock gating and division.
-> - [Medium] EXYNOS5515_MEMCLK_OFFSET is uninitialized and excluded from th=
-e suspend/resume sysreg array.
+On Fri, 07 Aug 2026 15:50:50 +0000
+sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] arch_modify_local_hw_breakpoint_addr updates the hardware and shadow registers but fails to update the perf_event's canonical software state, leading to silent hardware reverts and incorrect event samples.
 > --
->=20
-> --- Patch [3]: [PATCH v2 3/3] clk: samsung: Introduce Exynos5515 clock dr=
-iver ---
-> commit ec18c4d69f3cc6d71671cf32be2a8263d5584524
-> Author: Aiden Isik <aidenisik@member.fsf.org>
-> Subject: clk: samsung: Introduce Exynos5515 clock driver
->=20
-> This commit adds Common Clock Framework support for the Exynos5515 SoC. I=
-t introduces the CMU_TOP, CMU_PERI, and CMU_FSYS clock management units.
->=20
-> > diff --git a/drivers/clk/samsung/clk-exynos5515.c b/drivers/clk/samsung=
-/clk-exynos5515.c
-> > new file mode 100644
-> > index 0000000000000..aeaa51c1c7354
-> > --- /dev/null
-> > +++ b/drivers/clk/samsung/clk-exynos5515.c
-> > @@ -0,0 +1,1485 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> [ ... ]
-> > +#define EXYNOS5515_GATE_DBG_OFFSET=090x4000
-> > +#define EXYNOS5515_DRCG_EN_OFFSET=090x0104
-> > +#define EXYNOS5515_MEMCLK_OFFSET=090x0108
->=20
-> [Severity: Medium]
-> EXYNOS5515_MEMCLK_OFFSET is defined here, but it appears to be missing fr=
-om
-> the drcg_sysreg array below and is not assigned to the memclk_offset fiel=
-d
-> in any samsung_cmu_info structs (like top_cmu_info). Will this cause the =
-MEMCLK
-> register state to be lost during system suspend and resume cycles, and sk=
-ip
-> its initialization during boot?
-
-None of the CMUs introduced by this patchset have this. The
-CMUs which have this on Exynos5515 are CMU_DPU, CMU_G3D, CMU_MFC,
-CMU_VTS, and CMU_CHUB.
-
->=20
-> [ ... ]
-> > +static const unsigned long drcg_sysreg[] __initconst =3D {
-> > +=09EXYNOS5515_DRCG_EN_OFFSET,
-> > +};
-> > +
-> > +static const struct samsung_cmu_info top_cmu_info __initconst =3D {
-> [ ... ]
-> > +=09.gate_dbg_offset=09=3D EXYNOS5515_GATE_DBG_OFFSET,
-> > +=09.option_offset=09=09=3D CMU_CMU_TOP_CONTROLLER_OPTION,
-> > +=09.drcg_offset=09=09=3D EXYNOS5515_DRCG_EN_OFFSET,
-> > +};
-> [ ... ]
-> > +/* Parent clock list for CMU_PERI muxes */
-> > +PNAME(mout_pll_peri_bus_user_p)=09=09=3D { "oscclk",
-> > +=09=09=09=09=09    "mout_cmu_peri_bus" };
-> > +
-> > +PNAME(mout_pll_peri_ip_user_p)=09=09=3D { "oscclk",
-> > +=09=09=09=09=09    "mout_cmu_peri_ip" };
-> > +
-> > +/* Parent clock list for CMU_PERI muxes: for SPI */
-> > +PNAME(mout_peri_spi_p)=09=09=09=3D { "oscclk",
-> > +=09=09=09=09=09    "mout_pll_peri_ip_user" };
-> > +
-> > +/* Parent clock list for CMU_PERI muxes: for UART */
-> > +PNAME(mout_pll_peri_uart_user_p)=09=3D { "oscclk",
-> > +=09=09=09=09=09    "mout_cmu_peri_uart" };
->=20
-> [Severity: High]
-> Should these parent lists use the divided outputs from TOP CMU
-> (like dout_cmu_peri_bus, dout_cmu_peri_ip, and dout_cmu_peri_uart)
-> instead of the direct mux outputs (mout_cmu_peri_*)?
->=20
-> Using the direct mout_* clocks here bypasses the intended clock division
-> and gating, which might lead to incorrect peripheral clock frequencies an=
-d
-> break power management for these blocks.
-
-This is how they are handled by Samsung themselves in their own kernel
-fork.
-The Exynos990 clock driver upstream also does this, so it is most likely
-correct.
-
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-for-next=
--lucky7-clock-v2-0-cda0cc80f158@member.fsf.org?part=3D3
 > 
+> --- Patch [2]: [PATCH v12 02/11] x86/hw_breakpoints: Add arch_modify_local_hw_breakpoint_addr() API ---
+> commit bbc277e839d1fd31bb4bfa9d695721e5b6899bf6
+> Author: Jinchao Wang <wangjinchao600@gmail.com>
+> 
+> x86/hw_breakpoints: Add arch_modify_local_hw_breakpoint_addr() API
+>     
+> Wprobe needs to move an active per-CPU watchpoint without releasing and
+> reserving its hardware slot.
+>     
+> Add arch_modify_local_hw_breakpoint_addr() to find the installed local
+> slot and update only its address shadow and hardware debug address
+> register. Publish the shadow first so hw_breakpoint_restore() observes
+> the new address if an NMI interrupts the update.
+> 
+> Link: https://lore.kernel.org/all/59637b96946653393a7ad3c7de094094796b39c2.1785067572.git.wangjinchao600@gmail.com/
+> 
+> > diff --git a/arch/x86/kernel/hw_breakpoint.c b/arch/x86/kernel/hw_breakpoint.c
+> > index 9ef24b55737f8..c89f6e71c3a91 100644
+> > --- a/arch/x86/kernel/hw_breakpoint.c
+> > +++ b/arch/x86/kernel/hw_breakpoint.c
+> 
+> [ ... ]
+> 
+> > @@ -128,6 +128,39 @@ int arch_install_hw_breakpoint(struct perf_event *bp)
+> >  	return 0;
+> >  }
+> >  
+> > +int arch_modify_local_hw_breakpoint_addr(struct perf_event *bp,
+> > +					  unsigned long addr)
+> > +{
+> > +	struct arch_hw_breakpoint hw;
+> > +	struct perf_event_attr attr = bp->attr;
+> > +	unsigned int seq;
+> > +	int i, ret;
+> > +
+> > +	lockdep_assert_irqs_disabled();
+> > +
+> > +	attr.bp_addr = addr;
+> > +	ret = hw_breakpoint_arch_parse(bp, &attr, &hw);
+> > +	if (ret)
+> > +		return ret;
+> 
+> [Severity: High]
+> Does this discard the validated software state?
+> 
+> The new address configuration is successfully validated into the local 'hw'
+> struct, but neither the architecture-specific state (counter_arch_bp(bp))
+> nor the core attribute (bp->attr.bp_addr) are updated.
+
+Yes, if it is sololy used. But in the 3rd patch, this function is only
+called from modify_local_hw_breakpoint_addr(), which updates
+counter_arch_bp(bp)->address. I will add this as a comment.
+
+> 
+> If the breakpoint is later re-installed (e.g., during CPU offline/online or
+> PMU scheduling), arch_install_hw_breakpoint() will read the stale address:
+> 
+>     struct arch_hw_breakpoint *info = counter_arch_bp(bp);
+>     ...
+>     this_cpu_write(cpu_debugreg[i], info->address);
+>     barrier();
+>     set_debugreg(info->address, i);
+> 
+> Could this silently revert the hardware register back to the old address?
+> 
+> Also, if a watchpoint fires, perf_bp_event() initializes the sample record
+> using the unmodified bp->attr.bp_addr. Could this result in reporting
+> incorrect addresses in the trace output?
+
+trace_wprobe ensures the hit address and modified bp->attr.bp_addr are the
+same. So there should be no problem.
+
+Thanks,
+
+> 
+> > +
+> > +	for (i = 0; i < HBP_NUM; i++) {
+> > +		if (this_cpu_read(bp_per_reg[i]) == bp)
+> > +			break;
+> > +	}
+> > +
+> > +	if (WARN_ONCE(i == HBP_NUM, "Can't find any breakpoint slot"))
+> > +		return -ENOENT;
+> > +
+> > +	do {
+> > +		seq = this_cpu_inc_return(cpu_dr7_seq);
+> > +		this_cpu_write(cpu_debugreg[i], addr);
+> > +		barrier();
+> > +		set_debugreg(addr, i);
+> > +	} while (seq != this_cpu_read(cpu_dr7_seq));
+> > +
+> > +	return 0;
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/178611679753.237811.10190793347982785419.stgit@devnote2?part=2
+
+
+-- 
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
