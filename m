@@ -1,128 +1,167 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0212DF12F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 20:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DE9376A0B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 20:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787172179; cv=none; b=o+33h0BkuwYUo+U4nV7WWfbJMn3zYfS/TFYmNtsZGd1fq9qfbLMjZ19JqF+g+BOX+Ds7YG4YdwRAv0DJyDRpHiAj0/LTS55mX8KkugB07dbuha1fJP/QjDrywd2JsIlepMrBFduGAC2B7HZldpFar5oydkEYMw//u2tz9dUXUJ8=
+	t=1787173068; cv=none; b=Ykh7+w5cRnqitYkkCFVOoOn95jta3Q2uAPnQVtzzmIVsBI9OoPJgG1mpY8WnUYwNy+pO9MjJOSZ+HgNjcTcJFl+dbya3/CkfEz6iAegFleLdTPuNH4DPBWVa260RXE19gbsBMrN67aX3tw8W3nCL+DSUMve8jWTehGVKek5jd+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787172179; c=relaxed/simple;
-	bh=lsmXjePorRAzUjJL6ORGR+bUFBHa1eeaFQXiJVML7fk=;
+	s=arc-20240116; t=1787173068; c=relaxed/simple;
+	bh=gDfua+9ShagUuSPzMUyOYe1EpfBoD5A1A4oU+7lt6CA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=EinJ/YzQ0zJ8i3bnypT8qJnqn5bO2OlfOng3UCTpH+IT3+L+umtF5IJiN8AI6J0QuwxwBpwrZNTxKHqmjQnX6laC9gc+2PDmL1rY3ZrwcNd7y0bM2KXbZH2rU9lJsa2wsmuZrZPxoFY+JHEEnMzaXuLU28T1Dpb6YkhcqSGLPWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DAG/qhBA; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type:Content-Disposition; b=TcuHHc3D9Os44JERHVB4+KaZ+Vkm5XRPXm0gJbtp9tNWXOpQbGnt4NdsQoWDSNjCx6NUeO5jk2uALs1WLVMGEyxibGCyHug2JQlTDj4r/hdBHpfhtpKEtL+Ywp7Bh5a+lOaZdSJSiCTSHaqn5WtNMYfi/2kHw1bYHOXPu/RT/5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RtnWOv7O; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DAG/qhBA"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RtnWOv7O"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787172177;
+	s=mimecast20190719; t=1787173066;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HhcnPKvnBcdmIG5Q5TzyCZUomoVpouA/md8ztmVdXeM=;
-	b=DAG/qhBA9/aLutGHDUVhh09t5BtpxyaqdpswwBABqd8iZN/TP4f5jKdTsUlSSHcID/W3UO
-	ITifNX5C0rk1i+DX+t7b3Zx3PeKYLPeeqHqUHlHTpURDU4bC+8s/F/1LO2Gcma2UIfJT3p
-	9d3r7PpPfI4TSsgG+Az6qFRk47gjWcw=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=HB6dtIzqksVtqcu2PuJ7X1T6+4gFFyG8eD+zoH9sLuc=;
+	b=RtnWOv7OFN+GeseQkf5TUyRFIWSkqGJUru6FEKzxhkjWScgguIZApaYPmN96mTCmb6Ed08
+	MVnXDoVCnhDbXAaanTwd+7KCX9WfgGkpF0HqQ2aRZiVHkPFA+/Yup59/uwf7VwGZa09kdp
+	1LuhLsfiZeb3quHguvLuzgTgYpsYzfI=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-E6y_yH9SPZ-50ToxLhpBGA-1; Wed, 19 Aug 2026 16:42:55 -0400
-X-MC-Unique: E6y_yH9SPZ-50ToxLhpBGA-1
-X-Mimecast-MFC-AGG-ID: E6y_yH9SPZ-50ToxLhpBGA_1787172175
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-904ee4473a8so15432976d6.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 13:42:55 -0700 (PDT)
+ us-mta-295-MURqyevINmOEayREV9xNfw-1; Wed, 19 Aug 2026 16:57:44 -0400
+X-MC-Unique: MURqyevINmOEayREV9xNfw-1
+X-Mimecast-MFC-AGG-ID: MURqyevINmOEayREV9xNfw_1787173064
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-92e8004d60eso279309185a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 13:57:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787172175; x=1787776975;
+        d=1e100.net; s=20251104; t=1787173064; x=1787777864;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=HhcnPKvnBcdmIG5Q5TzyCZUomoVpouA/md8ztmVdXeM=;
-        b=Y51T54dC3pD2hdw02P0PqCvG0rabXpgtZK23FTMqWTHwNzG1RfN9KxMSBLe9yUHLHZ
-         ani55+Z0hqnJPIvXWttZalc++uoUH6OWll2C16M1kMdliORD6+ehQ5eDAUHg4RB3zU28
-         SIH/EUaSVwEKIREUze/Es3ZfRCu90E0von68MDv2ajNVAhinzV6sfJRLsOjGMnAf4GgU
-         ZKVFKq6nUMELJ56IQPaTiNONjQNbeAEGdnLRnXBLNc/WEjuZqsP6C62pziOBCFN6BwQ/
-         OlXrh2TAtK9KGi8ffrq79k5UtVD318D6Ik56ozDqOvW9U49cpX4m/jTS1lfG+9kkderN
-         6JjQ==
-X-Gm-Message-State: AFuF++k1QdA0jE1j8I6CFK8KcgFp/tcPBXDKOiYFC0TehXUk2JnJNkzy
-	ycaDWMTJr7XkIc7eAL4M2fp0HlFxIt1D+mwFIkhLs47uhOys0UJIjE9WMdFgpyfH//NFEIzotli
-	An6/WqbsKCq3hMgpjBzDuYEpSQTUNrzsfQJ6COn/zf+RLNWuVd8c2kELgewjUrpH7iw7cTKy8Ie
-	pKi7IKh+k+pcIYwSCI1lJuzEIIt1eAqhTh1QOG400HBo1Cy6aJeN52
-X-Gm-Gg: AR+sD1291/J2ay1ubxtvAhbI9fMor7XPd1ouhJ1MOD+WAQpADyj8ztRwVZ4vzYqQ1Zy
-	3asGlXUVOhQ9zcsfaWI4FqMlwmUds/EizNh23JkiDndSvS/AlQOYxNXsuVHE0cPtemFiL7CNsZf
-	X583AiQD1NaOtnbt4HbCuk+WTsJUEe6SkubUL/QKrJA97J6CSPbeb+eXVX4343jRrVDYMGfPhEL
-	gOwPvcutZnXUp33I8MWp87M412+Pd7J1tdcoEGWzzF5lUkCkuuzyg3qTBxeX+Phq5wIUYksF/PW
-	8QGurouwWu7ri2atOylfby4MD/wgRSg9vpE9nL7DKU57LylF9yqfUJUWjV3u7tIdE2o55+ganSE
-	VmAPdOONF9A==
-X-Received: by 2002:a05:6214:2122:b0:90a:807d:31bf with SMTP id 6a1803df08f44-90c5eab90ffmr71349386d6.24.1787172175362;
-        Wed, 19 Aug 2026 13:42:55 -0700 (PDT)
-X-Received: by 2002:a05:6214:2122:b0:90a:807d:31bf with SMTP id 6a1803df08f44-90c5eab90ffmr71348866d6.24.1787172174902;
-        Wed, 19 Aug 2026 13:42:54 -0700 (PDT)
+        bh=HB6dtIzqksVtqcu2PuJ7X1T6+4gFFyG8eD+zoH9sLuc=;
+        b=gFBYIUu8LU1lEz0pKTn5njxmqvLyh1JehpPO9txL4N1zCcFRcgmvdPI9oIa/RiQ28c
+         rPfYfP5LeAti3lF9jK+ZeSGPtXBFb2k/0DIRK+kWSyr1OE+K1EvGfBkY24drxDtpCKja
+         baJhtUziyWXK+hWsrbuaUvx6m1EvEuhkj3vHcFae0iVi9efKPy/J7ullOzPprdDMYukU
+         Jw7DlKsMM6nQ2YKCG6TJne9KJVJSjC2t8uDzFtx498/iSNocwosqgOe0NThA3kULwyir
+         tcSUXhZbbF5fxqKD/Kmacwh3G/NP2ry/8RRIacyPPG0qZ5hP1qh+ypnztbkzXA9TaGfA
+         TbZw==
+X-Gm-Message-State: AOJu0YwWHjlXNxeghev1sFcUhAbs/I3eoxwkZ68/wnc85WXh/yLKZ3WK
+	DMnybKEdbyQj9nc0qbqP3EEKMAzBdUP+W4nAZn8kzSrrOfY64qw7hZ4PmTHruPKETHowTVBkLnn
+	d7R6+eOBk/iaEBuppAtBKpRxRjrZgEt2+0Av8RCOggZls5ifpWLDcIKzSfgV1Aq7S08EsT7HB4o
+	Q0cd3gl2HDafXiGiIVM1h1ZrBDjeDgapr5oxdjh+OzZ2o9rBGiqCiN
+X-Gm-Gg: AR+sD12qgsJICGgxTHbEYAjeW/GYb7igondNGJ6FMdyIy4ftW66HnwRB7hI1X9dSSfR
+	lGq2fTIjIzJGQ+u4hzn52CUqCbL0wkmn3yD0ApQSRa1+RT2GAW2cIjAuqFBiSbW6azs9wfpTB6W
+	Km8yKYRHXa5SSAtSEmcVciuS2ZkFX0lUcLeWK7rZXHaf3BkjuVDgQ/M07weW7J0WyYvKtXDphtQ
+	JhVkMiGr1r7mv8oqZ1OkZTwFSjpRo8aDoj28N7e+vobt9+eagrSbSShHvoPdvM+59MILvv+cKN1
+	5zJkSFei8heRCMDPevyn0lwlXEHomqF2LVraJlX/fPVURosBD0zm4OgfuIzngbW7HSf73qIi3uF
+	z1HAqSgldkw==
+X-Received: by 2002:a05:620a:a40a:10b0:937:27fb:96f1 with SMTP id af79cd13be357-93727fb978emr207460185a.43.1787173063749;
+        Wed, 19 Aug 2026 13:57:43 -0700 (PDT)
+X-Received: by 2002:a05:620a:a40a:10b0:937:27fb:96f1 with SMTP id af79cd13be357-93727fb978emr207455685a.43.1787173063250;
+        Wed, 19 Aug 2026 13:57:43 -0700 (PDT)
 Received: from rh-jkangas-kernel ([2601:1c2:4480:2110:932e:45ef:6b6c:ddd0])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90c5edb4fa2sm22921116d6.10.2026.08.19.13.42.53
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93720584d5dsm218840785a.36.2026.08.19.13.57.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 13:42:54 -0700 (PDT)
-Date: Wed, 19 Aug 2026 13:42:51 -0700
+        Wed, 19 Aug 2026 13:57:42 -0700 (PDT)
+Date: Wed, 19 Aug 2026 13:57:40 -0700
 From: Jared Kangas <jkangas@redhat.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-hwmon@vger.kernel.org
-Subject: Re: [PATCH 1/4] hwmon: (ina2xx) Replace regmap in
- ina226_alert_read() with ina2xx_data
-Message-ID: <aoYVS8htMnz8vLQb@rh-jkangas-kernel>
+Subject: Re: [PATCH 2/4] hwmon: (ina2xx) Replace masks with enum in alert
+ functions
+Message-ID: <aoYYxM63yFRgrxFD@rh-jkangas-kernel>
 References: <20260729-upstream-ina2xx-in0-curr1-alarms-v1-0-349f7b2f1df8@redhat.com>
- <20260729-upstream-ina2xx-in0-curr1-alarms-v1-1-349f7b2f1df8@redhat.com>
- <20260729155254.2C9261F000E9@smtp.kernel.org>
+ <20260729-upstream-ina2xx-in0-curr1-alarms-v1-2-349f7b2f1df8@redhat.com>
+ <20260729160250.7FCE21F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260729155254.2C9261F000E9@smtp.kernel.org>
+In-Reply-To: <20260729160250.7FCE21F00A3A@smtp.kernel.org>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 9xyAL6kkew0FeF7j4ACm994WR5qqAoPFTXu_V-NfnRE_1787172175
+X-Mimecast-MFC-PROC-ID: T0ucSFj5QY_3sPYsYnivGu9pDPAJPEAYjNNxTkgJC2Y_1787173064
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 29, 2026 at 03:52:53PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Wed, Jul 29, 2026 at 04:02:50PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
 > [snip]
 > 
-> > -static int ina226_alert_read(struct regmap *regmap, u32 mask, long *val)
-> > +static int ina226_alert_read(struct ina2xx_data *data, u32 mask, long *val)
-> >  {
-> >  	unsigned int regval;
-> >  	int ret;
-> >  
-> > -	ret = regmap_read_bypassed(regmap, INA226_MASK_ENABLE, &regval);
-> > +	ret = regmap_read_bypassed(data->regmap, INA226_MASK_ENABLE, &regval);
+> [Severity: Medium]
+> Does this actually distinguish current from shunt voltage alerts as stated
+> in the commit message?
+
+No, this patch is intended to do some replumbing to make the fix
+cleaner. I could see how the patch phrasing could come off the wrong way
+though. I'll reword this in v2.
+
+> 
+> By converting the enum back to the shared hardware mask here and in
+> ina226_alert_read(), and not tracking which alert was actually configured,
+> reading current limits or alarms via sysfs can return the value or status of
+> a configured shunt voltage limit (or vice versa), yielding incorrectly scaled
+> hardware measurements.
+> 
+> [snip]
 > 
 > [Severity: High]
-> This is a pre-existing issue, but I have a question about how the hardware
-> alert state is managed here in ina226_alert_read().
+> This is a pre-existing issue, but does ina226_alert_limit_write() reject
+> valid configurations for reverse current flow?
 > 
-> Since the INA226_MASK_ENABLE register clears the Alert Function Flag when
-> read, does this bypassed hardware read clear the alert flag unintentionally
-> if an inactive alarm attribute is polled?
+> The function explicitly returns -EINVAL for negative limits:
 > 
-> For example, if userspace utilities sequentially read sysfs alarm attributes,
-> could checking an inactive alarm trigger this clear-on-read behavior before
-> the actually active alarm is polled? It seems this sequence would cause the
-> active alarm to falsely report as inactive (0).
+>     if (val < 0)
+>         return -EINVAL;
 > 
-> >  	if (ret)
-> >  		return ret;
+> This prevents configuring hardware alerts for reverse current or negative
+> shunt voltage, such as during battery discharge.
+> 
 
-Yes, the current behavior of the driver is to clear alerts even when an
-inactive alarm is polled. This is addressed in patch 4/4.
+Shunt/bus voltages are clamped to non-negative values in the driver, so
+this seems like more of a design choice than a high-severity issue.
+
+> Additionally, if the limit is exactly zero, the alert is not enabled here,
+> which makes it impossible to trigger an alert at exactly zero.
+
+Disabling on zero is an explicit driver choice, per
+Documentation/hwmon/ina2xx.rst:
+
+    Writing 0 to any `*crit` setting clears all `*crit` settings and
+    alarms.
+
+> 
+> [snip]
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can the calculations in ina2xx_get_value()
+> and ina226_alert_to_reg() overflow?
+> 
+> For large limit values, such as a 200V bus voltage limit, the shift operation
+> in ina226_alert_to_reg() on 32-bit architectures:
+> 
+>     val = (val * 1000) << data->config->bus_voltage_shift;
+> 
+> yields 3.2 billion, which overflows a signed 32-bit long variable. This
+> results in a negative value that gets clamped to 0.
+> 
+> Similarly, in ina2xx_get_value() called above:
+> 
+>     val = regval * data->power_lsb_uW;
+> 
+> the power calculation can overflow a 32-bit signed int for large regval and
+> high power_lsb_uW, returning negative power readings.
+
+This is addressed in e6c80061ca23 ("hwmon: (ina2xx) Fix various overflow
+issues").
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729-upstream-ina2xx-in0-curr1-alarms-v1-0-349f7b2f1df8@redhat.com?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729-upstream-ina2xx-in0-curr1-alarms-v1-0-349f7b2f1df8@redhat.com?part=2
 
