@@ -1,65 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186B731E852;
-	Wed, 19 Aug 2026 07:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E073D5C06;
+	Wed, 19 Aug 2026 07:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.61.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787123005; cv=none; b=hJrk0oGTlzBR9MpiIjFGQ0hUCMIU9wIrgUlIfudip6JiiTuOfkPbdTHRnDir6fXCyrLjo2988VPPtxuwVrm0aCExBLJRBU1EFSEXANOdh7ImoAhMTdHVJ9NXIkiy/YnpPOfUt04QjbG4F62RoFB/33AIdhLhTSXMeuCTxwSloKY=
+	t=1787124560; cv=none; b=pk30tBSNr7ozBHAV4m0LAeiUoaKpYryfOAwDnK7nGWDZArsF6s+MkL13UrCQUTd5RwBQyWAWtoeQFTtrEQhg3I3yR2mffYETSpTsHSV2TAi4IuKzzy8WphAWJt+Aj4Yn+a4H0OoSSqTJxlvexC+u8xavtqssxevWb5bdL18SQ/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787123005; c=relaxed/simple;
-	bh=kogiabQex8ceO4jBfTbGi2eSZBGKffmzWtkrc/8gn9g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UrZWSBFixnGYAMAVNCa5jrmprMWRiSEsg/Z8Mnd4AJCTWyMzf8Ci7tsG1PD+ha8IkPBCpCsCtuLogn5AgvzHqMq+MmyOe+oFYOt6t6Vbj51zV63y6kZwBGd3zLMRaWSoen44XGdpAQfwVM+AiQ27tO1Z3JSkipkH7IhfiTesETY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lP+RwyhK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787124560; c=relaxed/simple;
+	bh=Mu+7LLfVGJEa7egrQJ85+es5WpyywoehYqfJDmwmG9c=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kVn5UpULcDGBrROSBf9jJHzIoc3EPNGHyd2z1PvDTdUm2NGCsUaoTyUYWVFrY3yptXPeufjVaxw0wVBIQq4h0UXBaK7O7x0bIChmsdvP+fpzdggviHcnB+09LCQgwYhp/nVexoTkPFHVV0eVhjuAV56ZdORQfaWhZqyIsYMH/Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr; spf=pass smtp.mailfrom=aliel.fr; dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.b=Bp/jOf1o; arc=none smtp.client-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lP+RwyhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806741F000E9;
-	Wed, 19 Aug 2026 07:03:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787123003;
-	bh=0dah2MZp38/3Li3hSx/lwDyI7CxaUkx606L5S0i7Muk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lP+RwyhKAIpRG5lS47j2c+l1rdHP+0qhlYNqRooGsJcG+u91AUYg5Z5dfPimN8Txb
-	 mJVqarLe7Qj8ldqvBUVR7TB5YrVnUPEO50Ol3sDeZkyEGOOxnk4G+CGQ56mODhxF7a
-	 aeyZhH3LwHUE7tq8YcbPzPEcstv5CHI/epISHGClFcaDE/PIp+j3GznLbxScO19LGc
-	 UHnw7fsDmhGuC5gASggSxDWKrNX/3HGhLCk8CTP/zaMPinLpamf6VbjdMTIO2l/4Ox
-	 LrtHgvPi2poylI5EnjezNWD/G4MufvcOtT9JAxXDUYWcI/D6mtvQczmvRS4DSgtVjC
-	 +r1FLpqOpY+WQ==
-Date: Wed, 19 Aug 2026 10:03:17 +0300
-From: Mike Rapoport <rppt@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org
-Subject: Re: [PATCH 5/6] mm/execmem: use VM_FLUSH_RESET_PERMS for ROX cache
- allocations
-Message-ID: <aoVVNXbXvWarDkSR@kernel.org>
-References: <20260816-execmem-set-vm-perms-v0-2-v1-0-90944a3ad43f@kernel.org>
- <20260816-execmem-set-vm-perms-v0-2-v1-5-90944a3ad43f@kernel.org>
- <20260816111727.0A6521F00A3D@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.b="Bp/jOf1o"
+Message-ID: <0ca5c247-18b4-4711-83c9-f0fa6570404d@aliel.fr>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
+	s=courrier-s1; t=1787124553;
+	bh=Mu+7LLfVGJEa7egrQJ85+es5WpyywoehYqfJDmwmG9c=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To;
+	b=Bp/jOf1oKfFdpCH+Zeh00mSopBGHf2Lkn66R1D49WVY/1pwnLxLS4klyg//FH2iFs
+	 D/bZw5GLQdcpBxJD8UVbO5qIW2o4zAQolSp4zmZUthYoDWmFafdoHQC3jQf466cZFd
+	 q/dHXar5lC5Jr9XeqYYKX/o4v8PckUa1GauWTTSo=
+Date: Wed, 19 Aug 2026 09:29:12 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260816111727.0A6521F00A3D@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird Beta
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+Subject: Re: [PATCH v9 3/6] mfd: khadas-mcu: Add support for VIM4 MCU variant
+To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
+ mfd@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260805-add-mcu-fan-khadas-vim4-v9-0-75df78710b9e@aliel.fr>
+ <20260805-add-mcu-fan-khadas-vim4-v9-3-75df78710b9e@aliel.fr>
+ <20260805081913.272991F00A3A@smtp.kernel.org>
+ <20260812120007.GO1072730@google.com>
+Content-Language: en-US
+In-Reply-To: <20260812120007.GO1072730@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Aug 16, 2026 at 11:17:26AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On 8/12/26 2:00 PM, Lee Jones wrote:
+> On Wed, 05 Aug 2026, sashiko-bot@kernel.org wrote:
 > 
-> Pre-existing issues:
-> - [Critical] execmem_cache_clean() calls vfree() on partial or interior chunks of a larger vmalloc allocation, causing a use-after-free for actively used regions.
-> - [High] Unchecked return value of mas_store_gfp() during maple tree deletion can leave a dangling pointer in the free tree if deletion fails.
-> - [Medium] Cache memory may never be freed because execmem_vmalloc() does not guarantee PMD_SIZE alignment on all architectures, preventing execmem_cache_clean() from matching its alignment checks.
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] The driver unconditionally fails to probe on generic Khadas MCU boards (VIM1/VIM2/VIM3) due to a NULL pointer check on valid match data.
+> 
+> Please review, explain or fix the Sashiko review(s).
+> 
+> If this is a set, this request includes the other patches too.
+> 
 
-Noted, will check which of those are real and address them with separate
-patches.
+Yes I will check all those reviews.
+
+>> --
+>>
+>> --- Patch [3]: [PATCH v9 3/6] mfd: khadas-mcu: Add support for VIM4 MCU variant ---
+>> commit eab418dac1b5e94bd297b0a14e92e87b2063dc9b
+>> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+>>
+>> mfd: khadas-mcu: Add support for VIM4 MCU variant
+>>
+>> This patch refactors the probe function to use per-variant values instead of
+>> hardcoded globals. It adds dedicated regmap configuration, fan control register,
+>> and duty-cycle levels for the VIM4 MCU variant. A new compatible string
+>> "khadas,vim4-mcu" is introduced for this new device.
+>>
+>>> diff --git a/drivers/mfd/khadas-mcu.c b/drivers/mfd/khadas-mcu.c
+>>> index 0e74efe14f367..4cb305ac915e1 100644
+>>> --- a/drivers/mfd/khadas-mcu.c
+>>> +++ b/drivers/mfd/khadas-mcu.c
+>> [ ... ]
+>>> @@ -75,47 +75,138 @@ static const struct regmap_config khadas_mcu_regmap_config = {
+>> [ ... ]
+>>>  static int khadas_mcu_probe(struct i2c_client *client)
+>>>  {
+>>> +	const struct mfd_cell *cells, *fan_cells;
+>>> +	const struct regmap_config *regmap_cfg;
+>>>  	struct device *dev = &client->dev;
+>>> +	int ncells, nfan_cells, ret;
+>>>  	struct khadas_mcu *ddata;
+>>> -	int ret;
+>>> +	const void *match;
+>>>  
+>>>  	ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
+>>>  	if (!ddata)
+>>>  		return -ENOMEM;
+>>>  
+>>> +	match = i2c_get_match_data(client);
+>>> +	if (!match)
+>>> +		return -ENODEV;
+>>
+>> [Severity: High]
+>> Does this code inadvertently break the probe for generic Khadas MCU boards
+>> (VIM1/VIM2/VIM3)?
+>>
+>> Because KHADAS_MCU_GENERIC evaluates to 0 in its enum, i2c_get_match_data() will
+>> return a NULL pointer when matching "khadas,mcu" in khadas_mcu_probe() in
+>> drivers/mfd/khadas-mcu.c. This will cause the check here to evaluate to true and
+>> unconditionally abort the probe with -ENODEV.
+>>
+>> [ ... ]
+>>> @@ -123,7 +214,8 @@ static int khadas_mcu_probe(struct i2c_client *client)
+>>>  
+>>>  #ifdef CONFIG_OF
+>>>  static const struct of_device_id khadas_mcu_of_match[] = {
+>>> -	{ .compatible = "khadas,mcu", },
+>>> +	{ .compatible = "khadas,mcu", .data = (void *)KHADAS_MCU_GENERIC },
+>>> +	{ .compatible = "khadas,vim4-mcu", .data = (void *)KHADAS_MCU_VIM4 },
+>>>  	{},
+>>>  };
+>>>  MODULE_DEVICE_TABLE(of, khadas_mcu_of_match);
+>>
+>> -- 
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260805-add-mcu-fan-khadas-vim4-v9-0-75df78710b9e@aliel.fr?part=3
+> 
+
 
 -- 
-Sincerely yours,
-Mike.
+Best regards,
+Ronald
