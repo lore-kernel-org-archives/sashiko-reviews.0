@@ -1,37 +1,37 @@
-Received: from mta1.migadu.com (out-29.mta1.migadu.com [95.215.58.29])
+Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B27A35C697
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6413B813F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:50:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787154076; cv=none; b=ftRi1AxiWEGZGj+l7Shss7IJyUuD3FVcdn+9f8ytChbxxnySd3Oi5UKihCBqalJUAXi09KYPjXTQcB5fq8ocU1U6aXiLmaYWX/iLY+XcYz6+nfDM3mS/9V/upSj/LWK8LkEQYhrOX67TX5ThOI3obNF36HYM4PtpnrKmKIunUPY=
+	t=1787154644; cv=none; b=PHj1ibOLSm9/CEJoJ2mwwJlP1JQUDIbz/udqVVCH7Kvkyjo3uSD5/icHLCnxzoUziWScel6LZ0LJ/YlCAQzH5E6fUv6OUtKAbVqFdWbKVFohu3+Dv3hi6af6GVJvTqs/Pj9xg+IEJmPmAU0UBN6n3M969nFjHEdp1y4Pzbt9Wzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787154076; c=relaxed/simple;
-	bh=7+XZSFOtMnHYHziupaQkPdMkTzDBh8SwyfZNqXYHgZk=;
+	s=arc-20240116; t=1787154644; c=relaxed/simple;
+	bh=pmc3rgjTX9WWxQeyhGNjCXEOqtOtWKs4p5J6EHAGhEE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R7dBh7DfWE65PB+LMWU+FnQ0XxfsgX/g/UajEdzqwjeZ0J+qain9KWZVGIU99ueK5NJ5BhuwF7gCZcANRnrqIu5vFkhh5iIOjcPRjenEsSy7r6WfE8UJfMTDyMvDgAZ5Z7MPyltfXu+TnyHSgFgiGzz3QvUtiSFR4NU6TCxCl4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qDnJlLzv; arc=none smtp.client-ip=95.215.58.29
+	 In-Reply-To:Content-Type; b=eg0pABoZULHvPUGGWSH6/uCTZ3lT0VarDw1NPKM+yKq1XKKzgOHA/z5VdcF7P3BHdEru/cu7P3MvOu4aHlI6fYYzEENj5CCEaDo7ZxVxcMVJTwyz4RUCEfyUQTwEC9rijhl++Y1D0OhIZ0wgWQCmEh/uMA+mL0GHjYDODPO7DiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rEeWtYRO; arc=none smtp.client-ip=91.218.175.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qDnJlLzv"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rEeWtYRO"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=7+XZSFOtMnHYHziupaQkPdMkTzDBh8SwyfZNqXYHgZk=;
+DKIM-Signature: a=rsa-sha256; bh=pmc3rgjTX9WWxQeyhGNjCXEOqtOtWKs4p5J6EHAGhEE=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787154071; v=1; x=1787758871;
- b=qDnJlLzvr98sN8NWS8lhvlkqVBZ9NRKUMJqjhogKWpQ2n5T38XltWsZi3k4xMs6Q0i2EXO3G
- 9pRwSaWhT43kDtPBaMbHgeE87A8h/XgTxD+ZJHs0L5k/5tf9SIC6BCmNj0YRflm754BIxuv8bEL
- S/Typ/JSqMid6S7CwX6zilS4=
+ t=1787154640; v=1; x=1787759440;
+ b=rEeWtYRO/b6b3OMv9vDz9PEaR0U690jNLmKP2jhwSq+CQAw2wlVeiSgguyRPH1K1r23M/BgW
+ hF02Q1XQRUXHWbRjNFtWItUjppujG6jMI0fReAmiweT7oAOH07vyUJ5FtMzoRdIVFTYnorkgugz
+ aUue1yCWwzc4WgK4wwgOL9Xk=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5d0e)
-	by smtp.migadu.com with ESMTPS id e95b706ce7f0e963;
-	Wed, 19 Aug 2026 15:41:10 +0000
-X-Mizu-Trace-ID: e95b706ce7f0e963
+	by smtp.migadu.com with ESMTPS id 594093d243d35417;
+	Wed, 19 Aug 2026 15:50:40 +0000
+X-Mizu-Trace-ID: 594093d243d35417
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <6dc42fbd-f5f8-4880-96b3-6e7fe2db59e8@linux.dev>
-Date: Wed, 19 Aug 2026 08:41:03 -0700
+Message-ID: <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
+Date: Wed, 19 Aug 2026 08:50:36 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -110,12 +110,8 @@ On 8/18/26 11:17 PM, sashiko-bot@kernel.org wrote:
 > initialization of R2, potentially leaking uninitialized register contents to
 > the caller?
 
-We should be okay. For freplace program, in later commit
-   bpf: Add verifier support for 16-byte returns in R0:R2
-freplace will get rejected if kernel function returns
-R0:R2 values. If the freplace is for original subprog 0,
-the R2 (if to-be-returned in freplace) may cause incorrect
-result but it is user's problem.
+But the comment needs update for this version.
+    bpf_check_attach_target() -> btf_check_func_type_match()
 
 >
 >> +		type = subprog_ret_type(env, subprog);
