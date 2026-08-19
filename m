@@ -1,37 +1,37 @@
-Received: from mta0.migadu.com (out-211.mta0.migadu.com [91.218.175.211])
+Received: from mta0.migadu.com (out-12.mta0.migadu.com [91.218.175.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E49C47A876
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 15:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992F6212FAD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 16:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787155037; cv=none; b=TTUVfckSgaZIa3uwBxAiCxj/7DnCpNHxjIVW0KVOPESExQl/plLiH9OhIkHkQcoz8hhmc3+xG6ErjyrPB6O1lNAweJTI/go8ktQ3ugO2BAE4r9/DK1RMNtKeJIZcsTH5oXJIDJ3P3JYTIYjBNIUdsd0r92+e/z9kDZirXIP6JN0=
+	t=1787155273; cv=none; b=R1xjDk8jsOxqW2M+lmMmxgM4ocfk8+eVjtx1knFP7lMPXwaWQXapO1UrNyn2g9X4B2BFknnJbRTi/eVmAPFGAXEN9cZu2nTq2lNywaYXHGju7QkGqWHl+bh74lmeZ7mSsqtS3A4qNsAcY0qMSAMFur83LQ/FnI1QTxciPr84EME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787155037; c=relaxed/simple;
-	bh=qHG+hNfD/uDO9DvYun5lVZsVldtATReTviIlNvAUeEM=;
+	s=arc-20240116; t=1787155273; c=relaxed/simple;
+	bh=/4p+VVa305dJaK3Y0s6o85s7xff+p4asIjcMJoggyjM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qKA/9JdW3mbhaNLRlhPiCQQ5tWgiaaS8QzBJUZnNXaVc/wZDOvpq0hUs+3NK7zpgshQxkN/MhPVQSiOkoX96XGKgdk2T7W3sjVWrlnDzvvEuhY3oyPdPlRHP6l7FLIueeZmfK/BMHoaOva3kOg3ho2KPI14jb/EVBise2a/+7WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Zi2wUJLv; arc=none smtp.client-ip=91.218.175.211
+	 In-Reply-To:Content-Type; b=tWBLAmc8htMAKvuNEFFiqsgv1w/xwBMsAkVf1oEqA5DKXNIqQYF4GKZ4O+OYc0O5MJfpv4AINhGDr0JhuvIZTl7ft+/u6dVwAVxPlwtFf5OyciSCN9pgL/roTU/dMwIA62k8Wg8P3NNCjSQ/RrIpU2x34E/yACN6tFhB08ZL838=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=q/CWHUVh; arc=none smtp.client-ip=91.218.175.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Zi2wUJLv"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="q/CWHUVh"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=qHG+hNfD/uDO9DvYun5lVZsVldtATReTviIlNvAUeEM=;
+DKIM-Signature: a=rsa-sha256; bh=/4p+VVa305dJaK3Y0s6o85s7xff+p4asIjcMJoggyjM=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787155033; v=1; x=1787759833;
- b=Zi2wUJLvkX9PmS0qXDul13uYeaShv5bKoX4QpmbQTyz/3/gatDHLBwub6TLj5g/3HSYk24AB
- PXWDlrZ5/nGRGjEKN0t3kDfvYwI9cktgMbL4UvKPQ2GJYW4bD5uBNwosCFRSk55GGoz1qdX90KJ
- f5IGvKRiEeM5pqe2q3bB49lQ=
+ t=1787155268; v=1; x=1787760068;
+ b=q/CWHUVhoQ5hLsDPQt5KETnxgfYiGTeZljHEiVcqikqNoW2dgVG00bYx/WNzGVPz6fYDRJQ8
+ uxWN5knBMUvbjw1VLY+BWUmy2Dmkj12EKebj2Mlkg0v2XBRC33fVyN9SB1PbJSB1CnXEmVKeQlj
+ Lb85Po9NXNUDrDEZ3J1rJaHg=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
 Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:5d0e)
-	by smtp.migadu.com with ESMTPS id ae428da0d1733840;
-	Wed, 19 Aug 2026 15:57:13 +0000
-X-Mizu-Trace-ID: ae428da0d1733840
+	by smtp.migadu.com with ESMTPS id a49fe7c89178272e;
+	Wed, 19 Aug 2026 16:01:08 +0000
+X-Mizu-Trace-ID: a49fe7c89178272e
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <892727cf-36a7-4b87-9f1f-344fe9bc4872@linux.dev>
-Date: Wed, 19 Aug 2026 08:57:08 -0700
+Message-ID: <85a4607e-aa71-43f1-96db-33f25ef15173@linux.dev>
+Date: Wed, 19 Aug 2026 09:01:06 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,95 +39,106 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 05/10] bpf: Account R2 of register-pair
- returns in live register analysis
+Subject: Re: [PATCH bpf-next v7 06/10] bpf: Add verifier support for 16-byte
+ returns in R0:R2
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260819055239.3293449-1-yonghong.song@linux.dev>
- <20260819055304.3296353-1-yonghong.song@linux.dev>
- <20260819062041.B92D41F000E9@smtp.kernel.org>
+ <20260819055309.3297684-1-yonghong.song@linux.dev>
+ <20260819061414.070A61F000E9@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260819062041.B92D41F000E9@smtp.kernel.org>
+In-Reply-To: <20260819061414.070A61F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
-On 8/18/26 11:20 PM, sashiko-bot@kernel.org wrote:
+On 8/18/26 11:14 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The verifier fails to properly model execution for BPF subprograms and kfuncs returning >8 bytes (register pairs), specifically by not restoring R2 to the caller and not verifying R2 initialization.
+> - [Medium] The newly added support for kfuncs returning structs is completely unreachable due to an overlooked check in btf_distill_func_proto, and hides a critical missing size limit.
 > --
 >
-> --- Patch [5]: [PATCH bpf-next v7 05/10] bpf: Account R2 of register-pair returns in live register analysis ---
-> commit 1cab80ee79c6b836ae7862851a98688dd786f8f2
+> --- Patch [6]: [PATCH bpf-next v7 06/10] bpf: Add verifier support for 16-byte returns in R0:R2 ---
+> commit c9e349733faae615b87f8da3417558d2ede26348
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Account R2 of register-pair returns in live register analysis
+> bpf: Add verifier support for 16-byte returns in R0:R2
 >
-> This commit modifies live register analysis to mark R2 as read at BPF_EXIT
-> when a subprogram returns a register pair, such as an __int128. This
-> prevents a callee's R2 from being considered dead and incorrectly pruned
-> from checkpointed states.
+> LLVM 23 added support for returning a value in two registers for an
+> __int128, or a struct/union whose size is greater than 8 but not more than
+> 16 bytes. See LLVM patches [1] and [2].
 >
->> diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
->> index 74fc4b3f80d6e..71f998c6eb888 100644
->> --- a/kernel/bpf/liveness.c
->> +++ b/kernel/bpf/liveness.c
+> Before LLVM 23 the BPF backend could not return these values at all.
+>
 > [ ... ]
 >
->> @@ -2191,7 +2193,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
->>   			break;
->>   		case BPF_EXIT:
->>   			def = 0;
->> -			use = r0;
->> +			use = ret_reg_pair ? (r0 | r2) : r0;
-> [Severity: High]
-> Does the verifier also need to be updated to properly model execution for
-> BPF subprograms and kfuncs returning > 8 bytes?
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 991782b402f20..d79f0c069795c 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
 >
-> While this patch handles the liveness side, it looks like
-> kernel/bpf/verifier.c only copies or initializes BPF_REG_0 (and not
-> BPF_REG_2) to the caller's state in several places.
+>> @@ -13965,10 +13995,25 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+>>   	}
+>>   
+>>   	if (btf_type_is_scalar(t)) {
+>> -		mark_reg_unknown(env, regs, BPF_REG_0);
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
+>>   		if (meta.btf == btf_vmlinux && (meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock] ||
+>>   		    meta.func_id == special_kfunc_list[KF_bpf_res_spin_lock_irqsave]))
+>>   			__mark_reg_const_zero(env, &regs[BPF_REG_0]);
+>> +	} else if (btf_type_is_struct(t)) {
+>> +		/*
+>> +		 * The returned struct comes back as raw register bits modeled
+>> +		 * as an unknown scalar, so it must contain only scalars:
+>> +		 * otherwise a pointer field would be laundered into a scalar
+>> +		 * and escape provenance and reference tracking.
+>> +		 */
+> [Severity: Medium]
+> Is this new struct return handling reachable?
 >
-> In prepare_func_exit():
+> Looking at early program loading, btf_distill_func_proto() unconditionally
+> rejects struct return types:
 >
-> 		/* return to the caller whatever r0 had in the callee */
-> 		bpf_diag_mod_begin(env, &caller->regs[BPF_REG_0], r0, BPF_DIAG_MOD_WRITE);
-> 		caller->regs[BPF_REG_0] = *r0;
+> kernel/bpf/btf.c:btf_distill_func_proto() {
+>      ...
+> 	if (ret < 0 || btf_type_is_struct(t)) {
+> 		bpf_log(log,
+> 			"The function %s return type %s is unsupported.\n",
+> 			tname, btf_type_str(t));
+> 		return -EINVAL;
+> 	}
+>      ...
+> }
 >
-> In check_func_call():
+> As a result, wouldn't programs be rejected before check_kfunc_call() is
+> executed?
 >
-> 		/* All non-void global functions return a 64-bit SCALAR_VALUE. */
-> 		if (!returns_void) {
-> 			mark_reg_unknown(env, caller->regs, BPF_REG_0);
-> 			bpf_diag_mod_end(env);
-> 		}
+> Additionally, if this code were reachable, does it lack a bounds check on
+> t->size?
 >
-> In check_kfunc_call():
+> Because kfuncs use the C ABI, returning a large struct requires a hidden
+> 'sret' pointer. Without a size limit, returning a struct larger than 16 bytes
+> might bypass the BPF return pair logic, as the BPF JIT would pass the
+> attacker-controlled BPF R1 as this pointer.
 >
-> 	if (btf_type_is_scalar(t)) {
-> 		mark_reg_unknown(env, regs, BPF_REG_0);
->
-> And in check_global_subprog_return_code():
->
-> 	if (subprog_returns_void(env, subprog))
-> 		return 0;
->
-> 	return check_global_ret_scalar_reg(env, BPF_REG_0);
->
-> If a program attempts to read the upper half (R2) of a 16-byte return value,
-> will it be rejected by the verifier with an R2 !read_ok error?
->
-> Additionally, for global subprograms returning 16-byte types, could the lack
-> of R2 initialization checks allow uninitialized memory to be passed back to
-> the kernel?
+> Could this potentially allow a kfunc to overwrite arbitrary kernel memory?
 
-We should be okay, later patch "bpf: Add verifier support for 16-byte returns in R0:R2"
-will add R2 support properly.
+Patch 7 "bpf: Enable aggregate return types up to 16 bytes" will
+have proper guard (e.g. return type must be <= 16 bytes). So we
+should be fine here.
 
 >
->>   			break;
->>   		case BPF_CALL:
->>   			def = ALL_CALLER_SAVED_REGS;
+>> +		if (!__btf_type_is_scalar_struct(env, desc_btf, t, 0)) {
+>> +			verbose(env,
+>> +				"kernel function %s returns %s %s that is not composed of scalars\n",
+>> +				func_name, btf_type_str(t),
+>> +				btf_name_by_offset(desc_btf, t->name_off));
+>> +			return -EINVAL;
+>> +		}
+>> +		mark_kfunc_ret_regs(env, regs, t->size);
+>>   	} else if (btf_type_is_ptr(t)) {
+>>   		ptr_type = btf_type_skip_modifiers(desc_btf, t->type, &ptr_type_id);
+>>   		err = check_special_kfunc(env, &meta, regs, insn_aux, ptr_type, desc_btf);
 
