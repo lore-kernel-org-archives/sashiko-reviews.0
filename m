@@ -1,194 +1,172 @@
-Received: from mail-106111.protonmail.ch (mail-106111.protonmail.ch [79.135.106.111])
+Received: from mail-m3288.qiye.163.com (mail-m3288.qiye.163.com [220.197.32.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7634416D1A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 08:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625823F44EF
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 08:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787129084; cv=none; b=WTaUAs5fmu0ruxb0Dg56qKNjnnwb00jscd6aPF1A9gbrjm6qnpa53841I4Ga8GjMDcR1oOKLVVsWhtW/uRjxOU/1kUgjeRG46LE3b6USGE748sSIu2Q/9n/YgTt4mSaFi7Kewd8VL/TLqQn7VzZxy4qH/LXwIE9yqIbjG842QjM=
+	t=1787129959; cv=none; b=V6FAzcrEBTgx8KRbDt1WSyc99ua/5l3btTMpOsEKj71ppR0mPxPQYB0+RxKmMd59aNFA32iHkkjzakMU/3vnEgZzaRjy5i/PX8Tjh/2uYIwHBh5Kkj/0d1rRO6hw61kMKAzfO/f4+y10ekY3ZTZiM1jQi0Vhc6bzJTwTr+91MIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787129084; c=relaxed/simple;
-	bh=sd97K6LQlzbVQuCV/CnpqmaoI+hfKWUPMLSOGZkWrNQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D4Rm1UfkV5YVqMOtGNdpLMt++STQ2s3CtEcMIio9y1uBE5RWXVLRdhxQy9s+YF15yOtiVWviDN2SvbzJe4hZ/ElQ93iE9HhAfFJPi9Olg+6hyyRxZZyMK6EwOUuOvkvOAPFT8cVHpP6zaAQ+PHYqq6Zc1cDo871pvkz3GOTIgjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=pfn5J4H8; arc=none smtp.client-ip=79.135.106.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1787129959; c=relaxed/simple;
+	bh=+2pari/f+A9InDed14Yk6z4S5bn5gEqmS5rfItbpUjA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ukas4No75nVfLWHnWhnJFk4RbGQhk7pxySVuVPHPDxgxNnHPGAr+KFwTj9ywNXNYszvJ3H8EgYd/kPgPokj8DIqxIzqVJ5mCcOapyj8Gm51QDY2kqY+RfOc+QmztXL6vV4/1um624t8U4M6/Huy+KZDoVjl38m3Tg65Sqk74jyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=bGWaL0kF; arc=none smtp.client-ip=220.197.32.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="pfn5J4H8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1787129073; x=1787388273;
-	bh=Yhs/KUzvuwpk/qtsf9pNgHwEgS1uh0dEXULoHEIlBM4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=pfn5J4H8yQ8ZmqsBfsO6M4Xt/4tJfjLHcQs58OiPmhqRTSZkB2nkGfNPWFFLkfypS
-	 6y2A+XRFxNPG3d2wVl9cPT7euwnVq9s9ogbG1Q0do57UffwhX3UX4LugEEDgD23eAO
-	 51zIoPpMjeLr2TWw4ZP7ilLuQuSm+htLFbQRpFrp50cHLOkgug8M/XmHN9cqF2gHUs
-	 czwNrxomPwX58AiefaMgOLVvVdJklXtrANSqKgRhiRN2LyxXB7q3+WG1z3VkXYD4Tv
-	 RAmaGFuxeaGMrC8RmImOd+NrShEI7dXGHlkew/tAoQw6BdHxRtbnpIFNCqhhjLhGvC
-	 vNEhfFwxUxd0w==
-X-Pm-Submission-Id: 4hQ0Vl5p6bz2ScX8
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <devicetree@vger.kernel.org>,
-  <robh@kernel.org>,  <conor+dt@kernel.org>
-Subject: Re: [PATCH RESEND v5 4/6] iio: accel: mma8452: Support interrupt
- sharing
-In-Reply-To: <20260819082547.783CD1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Wed, 19 Aug 2026 08:25:47
-	+0000")
-References: <20260819-mma8452-open-drain-v5-0-d8aa590d7c36@geanix.com>
-	<20260819-mma8452-open-drain-v5-4-d8aa590d7c36@geanix.com>
-	<ZLyemjqlxP-U6rRBNInlQp7sJfLwB7tJI9VWCglK8nFiCOY4u4NidOdROFOLcLNAR4zA0F31qVjeiKNA0XIfBw==@protonmail.internalid>
-	<20260819082547.783CD1F000E9@smtp.kernel.org>
-Date: Wed, 19 Aug 2026 10:44:30 +0200
-Message-ID: <874igq1oup.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="bGWaL0kF"
+Received: from [172.16.12.74] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4a8bd8e40;
+	Wed, 19 Aug 2026 16:53:54 +0800 (GMT+08:00)
+Message-ID: <f0151ee4-f660-43d2-a49d-13ab2ad12dbc@rock-chips.com>
+Date: Wed, 19 Aug 2026 16:53:54 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 5/5] drm/bridge: analogix_dp: Add support for optional
+ data-lanes mapping
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, Luca Ceresoli <luca.ceresoli@bootlin.com>
+References: <20260819075238.3007087-1-damon.ding@rock-chips.com>
+ <20260819075238.3007087-6-damon.ding@rock-chips.com>
+ <20260819080422.816771F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Damon Ding <damon.ding@rock-chips.com>
+In-Reply-To: <20260819080422.816771F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa0193a1e7403a8kunmaa6dc6ec3320d4
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCHxodVhgaGUxNHh9MSUkYHlYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=bGWaL0kFdv2F1aJCSHo5LblQ8BYGWkRXUq0Xgx+AOA6nhCbje5jnq6LtjPtvynfZaO0GaFjUP9Bj7lj3/rdF0FpeHYSA4224tQmSChQ4ymGoLKlU8Fc2NYHGdDsDT2FBrTMpDz0S5EnWW9IKYOSasuZthQr+u+khrJw7hl2Uq10=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=g/T2s+HEEMdqXQKh9/wTekMXVfvnMcbFNHDnmwWBfis=;
+	h=date:mime-version:subject:message-id:from;
 
-<sashiko-bot@kernel.org> writes:
-
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Failed runtime suspend leaves the `suspended` flag set to `true`,
-> causing an unrecoverable PM usage counter leak and a potential interrupt =
-storm.
-> - [Low] Compilation Error: undeclared variable `client` used in `mma8452_=
-runtime_suspend`.
->
-> Pre-existing issues:
-> - [High] Unbalanced `regulator_disable()` calls and I2C writes to a power=
-ed-off device in `mma8452_remove()`.
+On 8/19/2026 4:04 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Logic error in hardware lane mapping configuration causes inverted assignments for non-symmetric maps.
+> - [Low] Device Tree endpoint lookup inconsistency when querying lane counts versus reading properties.
 > --
->
-> --- Patch [4]: [PATCH RESEND v5 4/6] iio: accel: mma8452: Support interru=
-pt sharing ---
-> commit 79ad9089167d804daaa97086d058cd3a0e2f4199
-> Author: Esben Haabendal <esben@geanix.com>
->
-> iio: accel: mma8452: Support interrupt sharing
->
-> This commit adds handling of runtime PM suspension in the interrupt handl=
-er
-> to allow sharing interrupts with other devices. It introduces a suspended=
- flag
-> and uses synchronize_irq() to protect against race conditions during runt=
-ime
-> suspend and device removal.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index 1fb43c5b0b72f..25bb2dd69381e 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
+> 
+> --- Patch [5]: [PATCH v7 5/5] drm/bridge: analogix_dp: Add support for optional data-lanes mapping ---
+> commit 1c15eb6132eedc3d606168644e5f97918c8e3651
+> Author: Damon Ding <damon.ding@rock-chips.com>
+> 
+> drm/bridge: analogix_dp: Add support for optional data-lanes mapping
+> 
+> Parse the optional 'data-lanes' device tree property to support
+> custom physical lane mapping configuration. If no valid configuration
+> is found, fall back to the default lane map automatically.
+> 
+>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> index 039e076d2b8ab..cb06347196cef 100644
+>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
 > [ ... ]
->> @@ -1056,14 +1057,19 @@ static irqreturn_t mma8452_interrupt(int irq, vo=
-id *p)
->>  	struct iio_dev *indio_dev =3D p;
->>  	struct mma8452_data *data =3D iio_priv(indio_dev);
->>  	irqreturn_t ret =3D IRQ_NONE;
->> +	int pm_status;
->>  	int src;
->>
->> +	pm_status =3D pm_runtime_get_if_active(&data->client->dev);
->> +	if (pm_status =3D=3D 0 || READ_ONCE(data->suspended))
->> +		return IRQ_NONE; /* device is powered down or being removed */
->> +
->
-> [Severity: High]
-> If mma8452_runtime_suspend() in drivers/iio/accel/mma8452.c fails and
-> leaves data->suspended set to true, can this early return cause a PM
-> usage counter leak and an interrupt storm?
->
-> If the device is kept in the RPM_ACTIVE state after a suspend failure,
-> pm_runtime_get_if_active() will return 1. Because data->suspended is true,
-> the handler will return IRQ_NONE immediately.
->
-> This skips pm_runtime_put_autosuspend(), leaking the usage counter. Also,
-> by returning IRQ_NONE on a shared level-triggered IRQ without clearing the
-> hardware interrupt, wouldn't this trigger an interrupt storm?
-
-Yes, I make sure to call pm_runtime_put_autosuspend() when
-pm_runtime_get_active() returns 0 and suspended flag is set.
-
-Also, I guess we should not set the suspended flag until after checking
-the return value from mma8452_standby() in mma8452_runtime_suspend().
-
-In case one of the regulator_disable() calls fails, the suspended flag
-will be left set to true. But as the device is in standby, no interrupt
-storm should happen.
-
+>> @@ -1240,6 +1240,59 @@ static const struct drm_bridge_funcs analogix_dp_bridge_funcs = {
+>>   	.detect = analogix_dp_bridge_detect,
+>>   };
+>>   
+>> +static int analogix_dp_dt_parse_lanes_map(struct analogix_dp_device *dp)
+>> +{
 > [ ... ]
->> @@ -1768,12 +1778,15 @@ static int mma8452_runtime_suspend(struct device=
- *dev)
->>
->>  	mutex_lock(&data->lock);
->>  	ret =3D mma8452_standby(data);
->> +	WRITE_ONCE(data->suspended, true);
->>  	mutex_unlock(&data->lock);
->>  	if (ret < 0) {
->>  		dev_err(&data->client->dev, "powering off device failed\n");
->>  		return -EAGAIN;
->>  	}
->
-> [Severity: High]
-> If mma8452_standby() fails, should data->suspended be reverted to false?
->
-> When returning -EAGAIN on failure in drivers/iio/accel/mma8452.c,
-> leaving data->suspended set to true creates the inconsistent state that
-> breaks mma8452_interrupt() as noted above.
-
-I will move the WRITE_ONCE() to after checking the ret value, so we
-don't leave suspended set to true in this case.
-
->> +	synchronize_irq(client->irq);
+>> +	num_lanes = drm_of_get_data_lanes_count_ep(dp->dev->of_node, 1, 0, 1,
+>> +						   video_info->max_lane_count);
+>> +	if (num_lanes < 0)
+>> +		return -EINVAL;
 >> +
->
+>> +	endpoint = of_graph_get_endpoint_by_regs(dp->dev->of_node, 1, -1);
+> 
+
+Hi Luca,
+
+Thanks for taking a look at previous v6 patch series. This Sashiko 
+warning was also present in v6. Sorry for CC'ing you out‑of‑the‑blue 
+without prior heads‑up.
+
 > [Severity: Low]
-> Does this code compile?
->
-> There is no local variable named client in mma8452_runtime_suspend() in
-> drivers/iio/accel/mma8452.c. The I2C client is available via
-> data->client or to_i2c_client(dev), so using client->irq directly
-> appears to cause a compilation failure.
->
+> Does passing -1 here potentially retrieve a different endpoint from the one
+> validated with reg=0 above?
+> 
+> If multiple endpoints exist on the DP port and the target endpoint is not
+> positionally first, could this mismatch result in reading the data-lanes
+> property from the wrong endpoint?
+> 
+
+For Analogix DP, port@1 will only ever have a single endpoint. 
+Multi‑output configurations are not supported by the hardware, so 
+passing -1 cannot select a mismatched endpoint. There is no risk of 
+retrieving the 'data‑lanes' property from an unintended endpoint.
+
+>> +	if (!endpoint)
+>> +		return -EINVAL;
+>> +
+>> +	ret = of_property_read_u32_array(endpoint, "data-lanes", tmp, num_lanes);
+>> +	of_node_put(endpoint);
 > [ ... ]
->
+>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
+>> index ea8401293a23a..c1344a3f013ab 100644
+>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
+>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
+> [ ... ]
+>> @@ -48,16 +48,15 @@ void analogix_dp_stop_video(struct analogix_dp_device *dp)
+>>   	writel(reg, dp->reg_base + ANALOGIX_DP_VIDEO_CTL_1);
+>>   }
+>>   
+>> -void analogix_dp_lane_swap(struct analogix_dp_device *dp, bool enable)
+>> +void analogix_dp_lane_mapping(struct analogix_dp_device *dp)
+>>   {
+>> +	u32 *lane_map = dp->video_info.lane_map;
+>>   	u32 reg;
+>>   
+>> -	if (enable)
+>> -		reg = LANE3_MAP_LOGIC_LANE_0 | LANE2_MAP_LOGIC_LANE_1 |
+>> -		      LANE1_MAP_LOGIC_LANE_2 | LANE0_MAP_LOGIC_LANE_3;
+>> -	else
+>> -		reg = LANE3_MAP_LOGIC_LANE_3 | LANE2_MAP_LOGIC_LANE_2 |
+>> -		      LANE1_MAP_LOGIC_LANE_1 | LANE0_MAP_LOGIC_LANE_0;
+>> +	reg = lane_map[0] << LANE0_MAP_SHIFT;
+>> +	reg |= lane_map[1] << LANE1_MAP_SHIFT;
+>> +	reg |= lane_map[2] << LANE2_MAP_SHIFT;
+>> +	reg |= lane_map[3] << LANE3_MAP_SHIFT;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but I noticed a potential problem during
-> device removal in mma8452_remove() in drivers/iio/accel/mma8452.c:
->
-> drivers/iio/accel/mma8452.c:mma8452_remove() {
->     ...
-> 	pm_runtime_disable(&client->dev);
-> 	pm_runtime_set_suspended(&client->dev);
->     ...
-> 	mma8452_standby(iio_priv(indio_dev));
->
-> 	regulator_disable(data->vddio_reg);
-> 	regulator_disable(data->vdd_reg);
-> }
->
-> If the device is already in the RPM_SUSPENDED state when mma8452_remove()=
- is
-> called, its regulators have already been disabled by
-> mma8452_runtime_suspend().
->
-> Because pm_runtime_disable() does not resume the device, calling
-> regulator_disable() again will underflow the regulator enable count. Could
-> this forcefully disable shared regulators and cause system instability?
->
-> Additionally, mma8452_standby() performs an I2C write. Is it safe to
-> unconditionally access the hardware when it might be powered off?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260819-mma8452-=
-open-drain-v5-0-d8aa590d7c36@geanix.com?part=3D4
+> Does this logic incorrectly assign the physical lane value to the logical
+> lane's field?
+> 
+> By shifting the physical lane index (lane_map[i]) into the register field
+> assigned to the logical lane index (LANE<i>_MAP_SHIFT), it appears this
+> inherently applies the inverse of the requested mapping.
+> 
+> While this silently succeeds for symmetric maps (e.g., swapping 0<->3, 1<->2),
+> will it fail for any non-symmetric map (e.g., <1 2 3 0>) by causing physical
+> lanes to carry the wrong logical lanes?
+> 
+> Should the bitwise construction instead be reg |= i << (lane_map[i] * 2)?
+> 
+>>   
+>>   	writel(reg, dp->reg_base + ANALOGIX_DP_LANE_MAP);
+>>   }
+> 
+
+lane_map[] uses index as physical lane, value as logical lane.
+
+This matches training_lane[] / cr_loop[] in struct link_train, whose 
+indexes are physical lanes for DPCD access during link training.
+
+LANE<i>_MAP_SHIFT configures which logical lane is routed onto physical 
+lane i, so current register logic is correct.
+
+Best regards,
+Damon
+
