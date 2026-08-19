@@ -1,108 +1,163 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CD748A8C1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 16:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2C53845B0
+	for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 17:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787157435; cv=pass; b=CthPVr1o/9NHwvgbe+xA2D/GOOJT/Ki4hSTtUers8aOZzso54HBmWl01nqZDvNl3xEJ/8UrG7VehvieqNGlcf+ayKXP1Ivt5egVrhPljlgTzW2HUOkS/YSYy+jPplQt8YdL87W1PpaGedDL6hwwB/63LlaF/2oL6CZXK2OfSv3M=
+	t=1787159187; cv=pass; b=eubOJKxHXJoMsVXbgBl/PKHrAqPaBMUEOx87j7E6sf5QW/6FiRnxjazSoBsw30UDsfuadDfcNa5/FvTCUXRgmzKfgP8XTHrdCaI+zvZ0n4BjsAS1Gp3Wb1Ku1sD3rOeYSqpZGrU/AjHU4ZXAnBal2+dKHkcOiS0J5ToqJV3tXI4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787157435; c=relaxed/simple;
-	bh=9wzb+bkXQhH/592dFpKoXLTjmFDLvUUzyCaHRErkhcQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rYXbNRVIzcoO0Uui/nbeGm+W8WWUEqJTs5Iw5cViEmT1ThtiWJobtN7oRWKbMByhpcggbaSqe1S7yoeKZTKUMH3f6YcWf1a7tYp/0mMd9b+I/QkSWPbwUapiqSXe7OQfQhi5M7LqM2fZ2bDKwU5akHw9S0T3zvQDf5/vX9pqISs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cC92+7JB; arc=pass smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787159187; c=relaxed/simple;
+	bh=XZKDG5oRID/PK9mkYKTUI0I6iYxS7XDXpjoDeuHAFC8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aClMzhIOlAJcn17sYdCzqOrWFKNsVeUC1Q1NtDbM6reNnB3r3TGzfpFD06zy3YhuUG9J7kLfA6gOt0eVEBy/WKls5cjOku2lDuRVKX1GtE6sxr4SAku3CYsHJrE2sNCOfr69fhPaWMFjzMdaqu2xRgY7+bCuXMC6A7g+p6kBBVY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=klJxMM6o; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=zoIjzOai; arc=pass smtp.client-ip=85.215.255.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cC92+7JB"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5b457a0b4e5so1366126e87.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 09:37:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787157432; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FwyYyVJNb9i/W0EaEsIiWcXPX8UMJ6msi4KgPhRnJa9P9MTnLOdSw5I8RwiEcpqZt8
-         Q6YLSe4HTu3bFQdM1xCsrxxFNCx62rcjobOZRIGTZXM+PEZT//LFa5A9p5ukXJHeYK4V
-         734g+ygpRkudoLlt80n0rhekorX+zqAv2BcYgSHEH+EoF71zSGoTr0F5CkBu5YLEZQ/c
-         3syw3rQAEe2sz3p5beXU9xPl03gW+h7iXe4R6eP20rEwkiI1r1SFiU0gJhWbohdzTOJv
-         /zyhSuHLwUFGyckKbur2O0Xwe8Op+UKnXa2GiNnqLntHZVe6QD87yvK+HI8TfH3ChS4y
-         KfBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4/2vYKJSDxn6CwCgQ44O6XRlCA3F0xRGLPQF24ansLE=;
-        fh=DKaxhmaQZl2Mr6QMtx93LDxRDsV+oE9CXq2Lg4UQyFk=;
-        b=W9p19nTNv2rhimNw1ufzy4la9muPxhGlCOkeV5kJF/z+Je9JzoHocjoTWkkcf94wXl
-         MGBGJYBMohUwhimp2xGvEuq2tkZR1gkUuaPXdKkkMItTrKx9v/ISifwJ4dQ4WglP9xs9
-         LZvF9wIbprtVy90Rhc8pEDNpOZwj/FbfDbqBCezecksNCegzW5sQHKdvWHA0OV9XHI0t
-         WUb2mf1CUCGRi7yFdVAolhaSKISWxqeGfxnsZwB53T8xpoXxZ35yEpp1hhdHK7Ti7pPR
-         5Hz1HnaFKVPKaAarjFl3jB+hMFT4Phi3+dYL7itDIItypzhkLCpi2OpiGnuYbjD9t2kA
-         TKBQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787157432; x=1787762232; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4/2vYKJSDxn6CwCgQ44O6XRlCA3F0xRGLPQF24ansLE=;
-        b=cC92+7JBOamJDu2VeKUyEMHx1jk9Y/ubj1AUjQvTw7UWHAI5jaIuIuKqVWqmP9KHxC
-         VxkEljt8PGacodh1/xxP/d9NFjTFnTQhzpTIjJJz52nMLBC81bsJiual7w1mxboZLDMd
-         fb+gmlPa0Hd1PYZHg/ay4/cSgFjDwS/2L++FQCJ971G60v7w3x4Ma0meKy495vIKx25b
-         V9aPPj+cI81rG/TlbFEegexkYy0xZzGQN3TfeE9vvseu0AOzIPqDJksA+lyVGj8UGxYw
-         ZIa/ajNAIHNxt1fPQ77yT8arzdEdHP2m+J8FIw/AjMu5PYUC7U6WTpCndA7SlahhISQV
-         PhVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787157432; x=1787762232;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4/2vYKJSDxn6CwCgQ44O6XRlCA3F0xRGLPQF24ansLE=;
-        b=GqkBiGyICYJEJuNd7J9SMMv7n17Qhn9nvo3r4yZElrvIB5ruvfHoQ9e9pSTPt0G3d9
-         NNubLoAQA1QZnsdgNc2mmGwWZk02kZ0BumcewpJ7Uzgp573XbA+MglXz4fM4vwVG+h0y
-         iNWJz+SAravqOTiwjnEVYgxsxhvEIdYagWv8Z+B7wh4fTm8ImG2Nbr66ytuewvGayV8k
-         XyD7VaZQSAQFBmYICw6OV8RFuBA0qRcRv9B7+VPvtVZtBFhLZrGMWJP31u9qwMGI98L3
-         Bexz++TiGQy851q/43p2+Eou4gnkr5BbwF97DTMnUvA+iUNkFzVkGjqnbt9qh6UUfvh9
-         LxIA==
-X-Gm-Message-State: AOJu0YyW2JS3XJxZdD0U+Q49JZykxdT2TnK4xkWnuzdtPyJGY/DiQCYm
-	CiebzqaXEndsYPpbWHxTySZKORWHY9zub+glSJO8fxK6HhMNMDltdyvL1hGz6YXYTPMc18JrgOD
-	P4hPHaHeN37a6I/H8eDvdPE//BtfkVU4=
-X-Gm-Gg: AR+sD10wdfE7mkUZlINlCx78QUVUxvUNAzXUiKDZOHkqF5L3nnhs17HJpFF+tygd9dH
-	crUZlr7QvQHpb6hxoo0/S6cIgBBdSlZ8aq4Z30OL/7VYZzA/f4qETDg5qgNne3Mj2+tum9260mw
-	g4e4acu+cnJT6JmY18e5hbaoiuwVCmDGbeJBmAYfCujDdSZNshEWpyTPzrrm2TCWuIkyapoZr6c
-	343Jmogqe8HLgNUW9G9/vtt6cvvCYPVznYooqYC0taq+XcNEVWq/AcRRseaWrByfEwbuWFuj751
-	P5KTvkPxSIlI/3WXhZC8evsdbvlLIB2dMHhGO0HmfVcAaWYgG9lZFUKBGoJNAl3QwTsWaxawXcB
-	HCvTWXOSl8ALOjIlvItWNh3f9W2lmcOZMGg==
-X-Received: by 2002:a05:6512:b9b:b0:5b4:58eb:cb6e with SMTP id
- 2adb3069b0e04-5b478b927aemr1863019e87.5.1787157432057; Wed, 19 Aug 2026
- 09:37:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="klJxMM6o";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="zoIjzOai"
+ARC-Seal: i=1; a=rsa-sha256; t=1787159150; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=pLpFwDJQhmteyu6JBvBlORGODRkRCPctPQSFi07HQd8XxJ/6zkz8Z/cNmmLQEWeUHg
+    lUYnk41NqISmc7BpvGiZxzWMD+MM31CI98CmvvnuVfu1HgtaK3UyO9dcORfyAKkktG19
+    DSKtg/i0SVKmPeiaZiU4VnZn8/dDAIlXZ8psLp5/NqyFlIOhce70S9TQ9wyusnEsUYKC
+    6DPfbet/vPJpLx2SDX39uCaOYXM2eXlGTsaSL5S2nnoEBgSWjp1yP2djcbjXZpzsDf89
+    43uVjzG7BVs6c4tmjSz9tmY0Egn3GZalYr6vDjXD8XlYOSQKZvwl6T04dZK33iIg66aq
+    yWjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1787159150;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
+    b=TSBHECkMCsoMqr7AuQsnp0iV55tgISJvv4KT+j9EIPcdTPDE+KoXjuHfsyavabH9KT
+    ZIDFCnbCGIA4Bkbj90CH/QtNkzIn6r06cYX7DTQKbvOt/a9b9d9gSZ0I+aV/wuA3B6X9
+    qGz5BcUIKOYZN0JHkXnKREXCn96H4Vg4BdrvGoZInWXtKDlJ8wvekr80kyYlelzNGPtS
+    qMMf7gS8nM3ctjSOaoR0BPiKqSc1vRr1/INqGyX+s51I/DfXGIsoF6IK/4KIvmY9NNE2
+    aMv2JnWjSJmigdvwb6shEn5O0IXGin7EoQapyMuXaAd2zaYThVFpvatGnnyOneKbek60
+    2GFA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1787159150;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
+    b=klJxMM6oQ7MetJwQ5n/jZBHDuosiDdsQzFrmjrGlTh4nvFsmUT4bLqB+/2Nc4YK86K
+    t3W0+JhTaY218pJbbBR3w9mv9ljW+zKSZI/8hnao7ZjbSDXtANJ73ZLdi1Q3BCVF7ki/
+    Eq9UpBn2rBLPcRpzJfLHUuFAffPZrfLgsb4b+tnHTYYp0cfDyRR6hQt9S0ezRsA8weiy
+    9i6X8wEyp27FNSoyBd1oa35IPZyXNs5x9zGLFek4QphJqR1TzPJPc0ti+vBvTOmhKu06
+    c92aRXj+ClKnhHJ+vpzvQ6Yx38u+AMlEr5wQRC/STTTtIKJI3EZ64IgW+6u0D7qc0yv5
+    qeCA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1787159150;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=2/C/k4fm6iI42koNfQq1rvPva+OpRt+uiPHdqxxkqfo=;
+    b=zoIjzOaiU4bCNXQm66KFYB4T50NC9at8+afHjYJuwJKL++5JLJPf4g8wFOKG+T2C5V
+    sD2q0CO7QxIMHwuHcICg==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.2 AUTH)
+    with ESMTPSA id K171b727JH5nMgH
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Wed, 19 Aug 2026 19:05:49 +0200 (CEST)
+Message-ID: <140b6ce8-d920-46c4-a83c-0d52b8f1c653@hartkopp.net>
+Date: Wed, 19 Aug 2026 19:05:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260819090543.585131-1-Zhipeng.wang_1@oss.nxp.com>
- <20260819090543.585131-5-Zhipeng.wang_1@oss.nxp.com> <20260819092506.832631F000E9@smtp.kernel.org>
- <aoXAXFI3kRWh98R7@SMW015318> <CAOMZO5DT63sfGdUXiKNK=ihMs=rXbA6kBUUO4TmE1o=e6dkxkg@mail.gmail.com>
- <aoXaIc5bX14esW4I@SMW015318>
-In-Reply-To: <aoXaIc5bX14esW4I@SMW015318>
-From: Fabio Estevam <festevam@gmail.com>
-Date: Wed, 19 Aug 2026 13:37:00 -0300
-X-Gm-Features: AcwNN1UdwmcaFSyr80JGaMi_4fZncJ2QrAHvbOJHJp6jkEGX3-W8WbTnt6JqwUo
-Message-ID: <CAOMZO5BrzRYWbJZ5V7ca14znJ7NR4_MwxWMv7WSCeYsfMzLTNQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] irqchip/imx-irqsteer: Mask all interrupts in probe()
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, Zhipeng.wang_1@oss.nxp.com, 
-	Frank.Li@kernel.org, imx@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] can: convert unreliable ARPHRD_CAN type checks to robust
+ can_get_ml_priv()
+To: sashiko-reviews@lists.linux.dev
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>,
+ Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>
+References: <20260819160822.8256-1-socketcan@hartkopp.net>
+ <20260819162609.2EF0E1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260819162609.2EF0E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 19, 2026 at 1:30=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wro=
-te:
 
-> Fabio:
->         Is it okay to let zhipeng to pick your patch to make a serial to
-> avoid conflict at maintainer side?
 
-Yes, sure.
+On 19.08.26 18:26, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Data modification of shared/cloned SKBs in `can_send()` causes payload corruption for concurrent users.
+> --
+> 
+> --- Patch [1]: [PATCH] can: convert unreliable ARPHRD_CAN type checks to robust can_get_ml_priv() ---
+> commit 57320b2cc995d1852816aaacf79460f42c05858d
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
+> 
+> can: convert unreliable ARPHRD_CAN type checks to robust can_get_ml_priv()
+> 
+> This commit updates the CAN subsystem to use can_get_ml_priv() for
+> identifying valid CAN devices instead of relying on ARPHRD_CAN. This
+> prevents issues with TUN/TAP devices that might overwrite their hardware
+> type without properly initializing the midlayer private data.
+> 
+> Cc: stable@kernel.org
+> Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+> 
+>> diff --git a/net/can/af_can.c b/net/can/af_can.c
+>> index 7bc86b176b4de..ef435f22ac933 100644
+>> --- a/net/can/af_can.c
+>> +++ b/net/can/af_can.c
+>> @@ -226,7 +226,7 @@ int can_send(struct sk_buff *skb, int loop)
+>>   		goto inval_skb;
+>>   	}
+>>   
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can modifying the SKB payload here cause
+> data corruption for concurrent receivers?
+> 
+> Earlier in can_send(), the SKB data is directly modified without checking if
+> it is shared:
+> 
+> 	} else if (can_is_canfd_skb(skb)) {
+> 		struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+> 
+> 		skb->protocol = htons(ETH_P_CANFD);
+> 
+> 		/* set CAN FD flag for CAN FD frames by default */
+> 		cfd->flags |= CANFD_FDF;
+> 
+> When routing frames without data modifications, can_can_gw_rcv() creates
+> a cloned SKB using skb_clone() and passes it to can_send():
+> 
+> net/can/gw.c:can_can_gw_rcv() {
+> 	...
+> 	nskb = skb_clone(skb, GFP_ATOMIC);
+> 	...
+> 	can_send(nskb, gwj->limit_hops);
+> }
+> 
+> Since skb_clone() shares the underlying data buffer, wouldn't modifying
+> cfd->flags directly in can_send() corrupt the payload for other concurrent
+> users of the original SKB?
+> 
+
+This is a common remark from Sashiko-bot when looking at this code.
+
+No problem here.
+
+>> -	if (unlikely(skb->dev->type != ARPHRD_CAN)) {
+>> +	if (unlikely(!can_get_ml_priv(skb->dev))) {
+>>   		err = -EPERM;
+>>   		goto inval_skb;
+>>   	}
+> 
+
