@@ -1,216 +1,197 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AA447A0D4;
-	Thu, 20 Aug 2026 15:40:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787240436; cv=none; b=mRK7aXVpVPWrNPWgSEA7q8Ftaj500v0C3pfsSCmh45foyDM5GPnPh30UZdR8zqj+eHC3cDO39eEKXPSrFWSZCajMkXsmUgx5jsyte40aTLbyq9S6Kd1wElRifbSFeSaDVMqKmyD9M7M8NSkfrB4+HLJStVzsTFBRIUvvJ0f8VW0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787240436; c=relaxed/simple;
-	bh=E8sr9qFr5Ob/54fS++IO2VzkuwZrhbRFHpVEAapkQGY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=laNaX5tjD5tm26t8cqztedpjKCMlV+B4CqtdHUi1Ka4G0kZaASP6jX0+F+ZgltsMEt6F4dXM+uiamL7nix65EMQNehF2GKiFy8UFHeZlYcrffxBMBnfuQCF0YJNEfOAeedqevnReAwkoAXjqfMrUmoFYH7pWIPUqfrqxr5j1Oj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Y8G9regC; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F37947DD4B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 17:04:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787245447; cv=pass; b=KHykGSULju2Vht/KjqepkILJmhL4utmWm0ea5/3cZCCCEIGXNveLkeMuSQb0ZgpvMMAhV5CROp7OWzlhrloemuie9CRZTO+aA/RD+4dItnyYfR/KxmIc+XaHhns6RU2F8cUVFV9yoM4BbeivLogrr/UjwfMB1fuX1FgSjpMM12I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787245447; c=relaxed/simple;
+	bh=1WKysWh+k9Nf6ZtBo/sSGuC4ZmwAqH3PAAVd6j9LEHA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Wmd+KvB37a7tKQzZh3ZgVUw/gyFnzXBM6CUd282SE5nAKr3xVlKrHvtD1J4Gd/tcTj6ADw6XahZuc9pNKAi6IdIAqUO480Z+F7kW53mFgAM9P2KUr5zkqtnE/Cvmp0SLOsXZbxF707Sp/tSuwVM8q+6tbfr+EW8IhWdHmmrEpMQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dKI0sO1h; arc=pass smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Y8G9regC"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67KEVjKn2750370;
-	Thu, 20 Aug 2026 15:40:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=dokA88
-	zMvlCBywSbB1oa0Z1etYFrtn2N3SHgKthPByU=; b=Y8G9regCVwtnbPScTfxkwm
-	/aPqHYjsaUjvgeNOHhK9TzV3Ex1ZaxPtSpd/TaSKsQ3lRl5AAakxLhZSgp3OID1h
-	KRlR0jGIO2mNPcdiht3ZeyflygYv2y0RVE1XEp6foaRDrPnozPh5AOiQhzPMOvzk
-	gH2Tzs+1j9jEYG8mpgflBCHwCVzvP+thkAVQPoD315hpAhL4GDRB8EoEGnhK2WNL
-	kla1sfDT+nzUY0KlGhc6QsAiTd+4woNg8V74IV67ZeUqvMy1FyW5Uwxz+IHvf436
-	w6YfPFW3lc0uPhzv98wUEZ4fNp1sDwdyD0+zmYWAQ2QsLT9+/y3RK9Xz1avVm11g
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu0kcrp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 15:40:32 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KFQJu5015361;
-	Thu, 20 Aug 2026 15:40:31 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eqfhha-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 15:40:31 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67KFeRwH42860930
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 20 Aug 2026 15:40:27 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A25532004B;
-	Thu, 20 Aug 2026 15:40:27 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 73C1720043;
-	Thu, 20 Aug 2026 15:40:27 +0000 (GMT)
-Received: from [9.224.91.220] (unknown [9.224.91.220])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 20 Aug 2026 15:40:27 +0000 (GMT)
-Message-ID: <c745570b-5f58-4243-8b6a-275dae830c6b@linux.ibm.com>
-Date: Thu, 20 Aug 2026 17:40:27 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dKI0sO1h"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5b28c91fba5so1774661e87.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 10:04:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787245444; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oI2HxI3yCDctqCCnPSGrmfK+BXzF9Gcu6ibUPXLTZ9D51SVbsVI7IC5+W4p/frQAM+
+         pb7NW4MliBqa65jk17EbfoM9XbZdSYQjnh76OG6MKb/C5xFJodB9O3JyKAs3lwn304fd
+         aNNyRsfuItkvZ0jo8itJUly8TFYtE2wSPCZgbSwqTY8NG0Spy155lgRDNei+A6PfvI4R
+         eYOKcmwNZuRSTRq2QVuvz/69owtZt215vgoT1ItbX8vhCliYn2t9iWsx5wyCCiWapSGd
+         hYno8PjS7AoUdKqkCP5P7w1UmoM82NBcEZa+fDJ17Z//0l7s1imNvBo8BYZXe9TbOCI4
+         /YGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IIkgwb1Qi9IIwPivKlXlZcMTAwsxzm2MJ22/33JPb8g=;
+        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
+        b=O/iIb+fEyCXiNTUVHDq5ObC1ucTMN5+eXPTLtDocCvaUG9+YISa8LDui44s0dP2+VI
+         JS9nBmagSZUJHnfA02INXXshH44SpRZVJ4Gld4lXyGcbSM8DGTs5P4xlYA7rOeWESMjY
+         cQMy9Bzj4mAwdjGAJ1c4IPKb4HkORJmMagR8/JVscWKIqcpiMTSuuxXUnaUpuMaXh+Rd
+         j/trSL2ltScg/iPZfB0MGfbdVfYK+/08ZP2glnQ+6H2c+JFNpAeeyh2stRkkWuOqMyNK
+         NAiuVORBlTiQJavT1Rn6yZl7xauVnDWg7TUA8yqJ1auh2JYjZE7REME7nnH5gCFC1Q4F
+         EVBA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787245444; x=1787850244; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IIkgwb1Qi9IIwPivKlXlZcMTAwsxzm2MJ22/33JPb8g=;
+        b=dKI0sO1h+CGb2CT5poskfOHZ6TDMfCB5zbizymad3mq/NDMVU3JNgpzi+Y+/i4Nsh1
+         6xxxN7XdC93lAow7rI+WSD3wibxV4gdTlPaOV2UjqjqxKRIxHENer6NEMqLOAoZ0iQVR
+         d2t4eMgtwzMYqlHGcOPUTxRgrpSmLACu++l6cdOVT8lG4YPuO9fz13GDKWe6o5NAsgyq
+         A1QTC4I7i7WMcycqoegs1Plep+gHvAgYsCRBfT/TPTzb/fOJs8o788C/JXMIEFA4VVmy
+         V0kvv/O3tY/Cq+hD/ZsBwJJFE8IRb8z0KGr/tDCTbRMI6VTCdrNuS63w/Bpw0noDr246
+         fIwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787245444; x=1787850244;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IIkgwb1Qi9IIwPivKlXlZcMTAwsxzm2MJ22/33JPb8g=;
+        b=AOB6qJCoyE7RJp4DvF8R5dJ6DomIYp7vqC2OBbHyYC597SBQKuWwihBaAHuVMxtlUv
+         mz3i1rkUZ+9Tih/jAp4QACluX00wq5Y3UAXCTM1zkVRxx2Il0zqBctc3/QgwNhxN4aQe
+         OOcpDiy7b/Vb+OqPxlBQNP/b7ReJwe0dK6zN6jrtERYQ0u5pyy9cRph1XKlXZ/kUa01K
+         krMqQ4ih0JSti5aFPf/5Yct4Kt7ZU+1lba9O6+RNA3MtsVmC3HdbM2gz3ZQYZhs6G7/P
+         GUF7obKp6jUhkZcmUHoN6vDM85aVuIix0OgVOVF7AxhzeY6N6O6MsgD2ZITRQ5oslxXE
+         X56Q==
+X-Gm-Message-State: AFuF++kyPNL3UDSJwEroQ2PAFDB7aMwIgJxAQ23WQ898HSvzTjXhO1HC
+	0cLA7B9VQqOJkGhJIEew2qhtNZTERUsVcioLWB3h4r0Yzpvz99hhE266kA+aOemMjcGk4DEZotL
+	Pg3FEXmevinbVlR9vYzy+RaYBvu5zk4127dau
+X-Gm-Gg: AR+sD10OWMXOoNmJd/s/NHkdQsxUAMma43a7sYhnd0seOclRVEYNOsX1+lndxkrQO0j
+	xaKL+bBBYPMxuaISKuj3fzOzHlqW+SA+4Dxw1a+pqsSsRIZ+6Q0u5Axapj36nQHWuWAXc9qbRRn
+	hu55lKrZ5pXFvVdOHZVvFPbhtqWrpMlNhbODtv1bbWXcr7VKTAjDOZ/uji3dqnM+ECVHb/koHvj
+	P8hubiaVz8HVscXvfMm4+O+8uVQFpJHOPLr047KOXFGJNVQWGc5swqOSeyoIRTMGvj714G8cg4e
+	OAMnsWIZIkHeodyXqqzSon7LG+GYbmWWFMvZHTnJEt8=
+X-Received: by 2002:a05:6512:3988:b0:5b2:aa5d:9ce7 with SMTP id
+ 2adb3069b0e04-5b47d4f55ddmr2350758e87.10.1787245443748; Thu, 20 Aug 2026
+ 10:04:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] s390/zcrypt: Validate length in reply before using
- it
+References: <20260820164929.17117-1-mohamedahmedegypt2001@gmail.com>
+ <20260820164929.17117-4-mohamedahmedegypt2001@gmail.com> <20260820170147.C0EFD1F000E9@smtp.kernel.org>
+In-Reply-To: <20260820170147.C0EFD1F000E9@smtp.kernel.org>
+From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+Date: Thu, 20 Aug 2026 21:03:50 +0400
+X-Gm-Features: AcwNN1V9FlMJ-LWtJ9Pc65CSZG9MLJjpQy86MYExt0qd7F4yhYJlqhBo3X8SD7M
+Message-ID: <CAA+WOBtXtzhDn+KrwBJNHMg+F5jw874j6qmGj0nH9upd6f_-9g@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] drm/nouveau/disp: route GSP-RM display MMIO
+ through nvkm_disp_func hooks
 To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20260820140439.892324-1-dengler@linux.ibm.com>
- <20260820140439.892324-2-dengler@linux.ibm.com>
- <20260820142043.F40931F000E9@smtp.kernel.org>
-From: Holger Dengler <dengler@linux.ibm.com>
-Content-Language: en-US, de-DE
-In-Reply-To: <20260820142043.F40931F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=MthiLWae c=1 sm=1 tr=0 ts=6a871ff0 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=n2At5nnwvY2wsksHEjgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: PFLJLf8pVqt1vuMRn2KId73Mid_eNs8C
-X-Proofpoint-GUID: PFLJLf8pVqt1vuMRn2KId73Mid_eNs8C
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDExNyBTYWx0ZWRfX3T2cf8741+AA
- RGciXgtAp1UW5SMJUBykb8G+kRr1kqW13cUOIU1RcaqH9Extt311Txa2bBjX/MNR1uH7KJDOSEE
- oS5AEr0UH12DK125FobDKzGigRUWe/8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDExNyBTYWx0ZWRfX13BihWmXhr+m
- TrMTewN5DwdJ3ut5H0apX8JVWL9M02k13hxKbye3HzhGwpIqO5UW6Z8wexdv/2YB8W9ltV6Zx4+
- pRzjHZmvc2bG5WJyqxk/0KjbcrYmyiOXgNVMJI4r+kMEpcerQ2je+3nflodITBIFJqBidqoVVwR
- 9VFb56x/llsXjtqay0uyCPC0Eya46ULvr0ry9HtGxA6jT4zAmrh/oTzGkDHwm8tiYzwZu0yrfCL
- bUSWOWB+b8LfxOn3u62FWlrDKCy+xOxdGwS31aHt64+GipXdiY6SujIIPtuIupoX5jJN3gwZ244
- OctNyp/2eazzqFruwEl7Ou+oWMQes+gm9lkBs1Jqp5+6MDvsYM/VE7+tO4wDdxJWGV3v9z9llrh
- 2jMPNvJaN+F4iDG1a0Mmq5RUJxKd//ud5YsGNozcZ5G6QWonDrgcL1ZaQjwKjgS4nUjWTPc4F0r
- lSkmJ+1ZW2i51fyARIg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015
- spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200117
+Cc: dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/20/26 16:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
+On Thu, Aug 20, 2026 at 9:01=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
 > Pre-existing issues:
-> - [High] The patch fixes an out-of-bounds read in `_ip_cprb_helper()` but misses identical vulnerabilities in `cca_gencipherkey()` and `_ep11_genaeskey()`.
-> - [High] Unvalidated length fields in the CPRBX response payload are used to advance a memory pointer, causing severe out-of-bounds reads in `cca_query_crypto_facility()`.
+> - [Critical] Pre-existing Use-After-Free and Double Free in `r535_disp_ne=
+w` error path when `nvkm_disp_new_` fails after subdev registration.
+> - [High] Pre-existing NULL pointer dereference in the error path of `r535=
+_disp_new` due to unconditional lock initialization on a potentially NULL p=
+ointer.
 > --
-> 
-> --- Patch [1]: [PATCH v1 1/1] s390/zcrypt: Validate length in reply before using it ---
-> commit 3fcaad86f04a2a9419691d5f1a54cc873f326675
-> Author: Holger Dengler <dengler@linux.ibm.com>
-> 
-> s390/zcrypt: Validate length in reply before using it
-> 
-> The length information in the reply is used to copy the key token to
-> the target buffer. An invalid information in t->len of the reply may
-> cause an over-read of the target buffer and also a over-write of the
-> target buffer. To prevent that, check t->len before using it.
-> 
->> diff --git a/drivers/s390/crypto/zcrypt_ccamisc.c b/drivers/s390/crypto/zcrypt_ccamisc.c
->> index d4ce6352b5b2e..54b8edd1dfc74 100644
->> --- a/drivers/s390/crypto/zcrypt_ccamisc.c
->> +++ b/drivers/s390/crypto/zcrypt_ccamisc.c
->> @@ -1158,8 +1158,21 @@ static int _ip_cprb_helper(u16 cardnr, u16 domain,
->>  
->>  	/* do not check the key here, it may be incomplete */
->>  
->> -	/* copy the vlsc key token back */
->> +	/*
->> +	 * Copy the vlsc key token back.
->> +	 * The available space in the destination (key_token) and the source
->> +	 * (t) buffer is always larger as the valid range of prepparm->kb.len.
->> +	 * Validate t->len ba comparing it with the length information in the
->> +	 * param block of the request (prepparm->kb.len)
->> +	 * The value range of prepparm->kb.len has been checked above.
->> +	 */
->>  	t = (struct cipherkeytoken *)prepparm->kb.tlv1.key_token;
->> +	if (t->len != prepparm->kb.len - 3 * sizeof(uint16_t)) {
->> +		ZCRYPT_DBF_ERR("%s reply with invalid key_token length %u\n",
->> +			       __func__, t->len);
->> +		rc = -EIO;
->> +		goto out;
->> +	}
->>  	memcpy(key_token, t, t->len);
->>  	*key_token_size = t->len;
-> 
+I saw those and can confirm they are very much real. However, fixing
+them is out of scope here (I was actually going to roll them in at
+first), because there are 5 (that I have seen, might be more)
+r535_disp_ functions that have the exact same issues.
+
+>
+> --- Patch [3]: [PATCH v2 03/10] drm/nouveau/disp: route GSP-RM display MM=
+IO through nvkm_disp_func hooks ---
+> commit eaafa1eb740ad36427480951cde140701ddc6d3a
+> Author: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+>
+> drm/nouveau/disp: route GSP-RM display MMIO through nvkm_disp_func hooks
+>
+> The GSP-RM display code in rm/r535/disp.c borrows a few
+> register-programming routines from engine/disp (the head-timing
+> interrupt handler, vblank enables, armed head state and scanout position
+> readback, the AVI/VSI infoframe writers and the GCP AVMute write) and so
+> far picked them by name, which means it has to know which chip it runs
+> on the moment a generation changes any of them.
+>
+> > diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c b/d=
+rivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+> > index cd4451e625122..f3e55253bcbca 100644
+> > --- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+> > +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+> [ ... ]
+> > @@ -1688,6 +1729,7 @@ r535_disp_new(const struct nvkm_disp_func *hw, st=
+ruct nvkm_device *device,
+> >       rm->uevent =3D hw->uevent;
+> >       rm->sor.cnt =3D r535_sor_cnt;
+> >       rm->sor.new =3D r535_sor_new;
+> > +     rm->gsp =3D hw->gsp;
+> >       rm->ramht_size =3D hw->ramht_size;
+> >
+> >       rm->root.oclass =3D gpu->disp.class.root;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but can the error path in r535_disp_new() l=
+ead
+> to a use-after-free and double-free?
+>
+> If nvkm_disp_new_() fails after subdev registration, the subdevice is alr=
+eady
+> attached to the device's subdev list. r535_disp_new() handles the error b=
+y
+> freeing the dynamically allocated rm struct:
+>
+>         ret =3D nvkm_disp_new_(rm, device, type, inst, pdisp);
+>         if (ret)
+>                 kfree(rm);
+>
+> However, disp->func still points to this freed memory. Later, during devi=
+ce
+> teardown on the error path, nvkm_subdev_del() invokes nvkm_disp_dtor() wh=
+ich
+> evaluates the pointer:
+>
+>         if (disp->func && disp->func->dtor)
+>                 disp->func->dtor(disp);
+>
+> This dereferences the freed rm struct and calls r535_disp_dtor(), which
+> subsequently executes kfree(disp->func), causing a double-free.
+>
 > [Severity: High]
-> This isn't a bug introduced by this patch, but since you are fixing the
-> unvalidated length field from the device reply here, should similar validation
-> be added to cca_gencipherkey() and _ep11_genaeskey()?
-> 
-> In drivers/s390/crypto/zcrypt_ccamisc.c:cca_gencipherkey(), the code reads
-> the generated token length directly from the untrusted reply and calculates
-> the copy length without checking bounds against the structure size:
-> 
->     keybuflen = prepparm->kb.tlv1.len - 2 * sizeof(uint16_t);
->     ...
->     if (keybuf) {
->         if (*keybufsize >= keybuflen)
->             memcpy(keybuf, t, keybuflen);
-> 
-> Could a malicious or compromised device return an inflated length, causing
-> memcpy() to read thousands of bytes out-of-bounds from the cprbmem
-> allocation and potentially leak kernel memory to userspace?
-
-The memcpy is only called, if keylen is less equal *keysize (which is
-the available space in keybuf). As far as I can see, this prevents any
-over-writes of the keybuf buffer, even with a malicious response from
-the hardware.
-
-This objection is not relevant.
-
-> A similar unvalidated copy appears in
-> drivers/s390/crypto/zcrypt_ep11misc.c:_ep11_genaeskey(), which relies entirely
-> on the untrusted device data length:
-> 
->     memcpy(keybuf, rep_pl->data, rep_pl->data_len);
-
-In _ep11_genaeskey(), the rep_pl->data_len must be less equal
-*keybufsize, otherwise the function returns with an error.
-
-This objection is false.
-
-> [Severity: High]
-> This is a pre-existing issue, but does a similar vulnerability exist in
-> drivers/s390/crypto/zcrypt_ccamisc.c:cca_query_crypto_facility() where the
-> unvalidated length field is used to advance a memory pointer?
-> 
-> In that function, the code blindly advances ptr using an unchecked length
-> provided by the device payload:
-> 
->     len = *((u16 *)ptr);
->     if (len > sizeof(u16)) {
->         ...
->         ptr += len;
->     }
-> 
-> If the hardware returns a corrupt or malicious length, could ptr advance
-> far beyond the cprbmem buffer bounds, leading to an out-of-bounds dereference
-> on the next iteration or exposing arbitrary kernel memory during the
-> subsequent memcpy()?
-
-This objection is under investigation and will be fixed (if required) in
-another series.
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Holger Dengler
-
+> This is another pre-existing issue, but can the same error path cause a N=
+ULL
+> pointer dereference?
+>
+> If nvkm_disp_new_() fails early before allocating the struct, *pdisp is s=
+et
+> to NULL. r535_disp_new() then unconditionally attempts to initialize a mu=
+tex
+> on it:
+>
+>         ret =3D nvkm_disp_new_(rm, device, type, inst, pdisp);
+>         if (ret)
+>                 kfree(rm);
+>
+>         mutex_init(&(*pdisp)->super.mutex);
+>         return ret;
+>
+> Passing an offset from NULL to mutex_init() will cause a panic when it tr=
+ies
+> to write to the mutex fields.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820164929.17=
+117-1-mohamedahmedegypt2001@gmail.com?part=3D3
