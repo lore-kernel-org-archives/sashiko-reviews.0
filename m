@@ -1,116 +1,171 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm2-f7.google.com (mail-wm2-f7.google.com [74.125.225.135])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28026395D98
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 18:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787251488; cv=pass; b=O5qNzeU2RklyWwgTDhZwtUxh2KEXWwNyOxeBa4MxXeh9tDGHDcFBdEv8NKC06eYbPQdjTDCB5d4m08h8fk4X6Z8gqVSwkJGjrAG0HUCGtcT4Oi6/BZEc1bYbRCXO1950dhQ90ZzUzipIER1Yh0b9xHotT1sqrQJ9UGk8HfXwt5U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787251488; c=relaxed/simple;
-	bh=yLRNqZLs5JEFP4GF85rDalUqa/Nrzf5U89CqwrivLfg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cvMg/AnGSoJGWb7gJUBZHsU1wdgZXbw0VHQQz9nd8gClzrj5VL5XxhQ8BaKgCdHERIUyUsJzavb2Yl4RDeRA7KNdrG4QHxJ0F0zhP0ye6MNuehTgT3wc4V/3r6tijuG1pAPR3Qw2exqvPR4TORxvPuTtypY12pdC0gTQ/J/g3LA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YQWBWsNT; arc=pass smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EB1471CFA
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 19:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.135
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787254086; cv=none; b=p3DHpqAwfrP2Q+ZWNy0dU0yHpX4IxFzLo5oolZvos7LEapd/Te/4ss3rqqqe5Ggo98zFKyuWlr6/54uPJCZLpBicuNwy92+j/w/6Ky5ypJHnNM5KkGUhDJt2W24dAHaLb1rBJIATcPNXkxy8ILKzjK9YUcCeaO1jn3y/tjhWOTE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787254086; c=relaxed/simple;
+	bh=/2golh+DZj7e+88AlqhMTcnLZK5ZchvAMK71sJ38rAU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=h6D2cVSwCSpr/funaGy6nyrPwePp+wx8gs5b+01bwvtmxtzBI2Q0ZX4VXTx2aIEyxCkRnWKIr2A7hyWjL88NwXmtlahDIF/nJvv8AyBGVGG2AZE9SW/L9RVnOjahZ3BLc3gN6lnSerEdP2ScyeDV2h4FGqk8ywZgq1QnU6o5+Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AC1is/nt; arc=none smtp.client-ip=74.125.225.135
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YQWBWsNT"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-480033bdcf4so154075f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 11:44:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787251485; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mnCEX8wuKwtFBRPjqA5wWGqMg7qZtMNPsaa1BAWIIamo3Y64TCNvCmr0kki5t4iaWX
-         Eep4X2oNh1U8cnJ/SaqtV5bfuDwAJKk1HbunMqWqKfn7YenyF5hBuWb3SnuPKT3eEfxj
-         BMFh0sOWisXx86mCHuRPRaocrivAfujAlgeWuMTISLbjjE+xKCrcp7uXlpxwBPSUxLDJ
-         /g3UfKpXC0aoa2ahqaqTq0U7f3+F6eEfGXv3OYrB1OAjOQ+pGRzGm+or7p4Qu3Zee1b7
-         4zVCpJxsYqktkNGYpVvO5nKNoNw4SoIHfiKoH6kmX8U+bYj7sqpTjme0UKXczuFi2bT+
-         sVig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=yLRNqZLs5JEFP4GF85rDalUqa/Nrzf5U89CqwrivLfg=;
-        fh=J2uhi06Dnc8bpWSOt3AGmCPPngCLI991Ezhb9j9TYgE=;
-        b=Yi1rTyA3Oas3CjMv8U10JTRLod5C01BDChSdO/z7muwKTmgvPeU4w9X3kArcPYaoIc
-         XNfcBj53Z9SvYHzjVDiyNtqaLF988u+XC0+HcbL3zAy+MXKy08Milwc72dWdjy/jGEOv
-         GDdzP8GRrEH8DdquX0xnge6f3KDROZdQ2LSnhZaAZs6Y4EUJ/iVHd+nZEexMLk++6t7g
-         JTz218u/3h4OP3P6Ar1HbQm1HYsaYlTFEcXbKQZv7I1/g0D4BzkiD3zY1sSlB0LZ2dlQ
-         qwcye3dtGyHUKnMlxGmmbw94CUNfnpC/1KdApDNJaIhSTzKqmfk1mqzJGn9SPwoOiXAK
-         NcEA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AC1is/nt"
+Received: by mail-wm2-f7.google.com with SMTP id 5b1f17b1804b1-498079e98beso489125e9.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 12:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787251485; x=1787856285; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=yLRNqZLs5JEFP4GF85rDalUqa/Nrzf5U89CqwrivLfg=;
-        b=YQWBWsNTTjuR9hnVs47f62HWMtNP9GmQ+3cDyIi0x84e4tjFebZ1eWV8O+ezgxo9UM
-         Ihj+lqbwf03eTgsPV7nJQuB1RL7i66keV1nWhSfyQCSk+c96Zkjj7T/j36dX5jtqGZx3
-         xqknOwHwWkXKYOt9nuhH2sG5nZEnP6vsskE6+m+tH1ZIbBDWdBCtBZBTFheNoF9uEl5i
-         nhVAafJ/UTB6iYEkCut3nGdTjo4G+crej8jlbWyyw8neHlysB/Lq+jvB0WrgjG4rL+2a
-         ly2WcUyXnNrgBm0HzdNPuy3v9+tHMCzLkOH30JXiAEAlHlzuOK7VECtZdLpibgE7ZRvZ
-         O7oA==
+        d=gmail.com; s=20251104; t=1787254082; x=1787858882; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=uemxqtGhV2C7D/1S+JK/ZhHv3WUnvR7x5H3CzBPQF2w=;
+        b=AC1is/nt8pelXYTiiVVNrmmhZfMLxgn6JKEr8APJ44YByRXb24i1IJxZ+Ts1Q9Y1Gy
+         P5f75PUV9T0WH+wqOSnkxUMKtGaDgG7nkmAFvYUTXfUZ40//6rAOu5X5fwIn1o2vaFLF
+         P4pasZA7iQ9l7umjrrRLijqTtLGqfTMh8uRYa/66JygdqA3ZZ/Im7ueNPWxDLvVhNdJ/
+         VfLWnYGK1QEoQ1L9ahy0l/jq7ONdDow8walod8OFRG+dcV/uYs1zz04y7Eb+Zh3bDi83
+         fu8c8nc+w3xqKKfEBwwGWcHqT6WxdrxSwA1sAStvofMIELPCQUWc+Pm7a48+2skThL/s
+         qBig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787251485; x=1787856285;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1787254082; x=1787858882;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yLRNqZLs5JEFP4GF85rDalUqa/Nrzf5U89CqwrivLfg=;
-        b=IymXFFdlERHoiOjBztNuFDREfUBxkFEJ78E36gBLs4ihrIRva5e1rBvGgmueHo7qGb
-         VIkG81TeTEicQmUnpDp2//BqZjzUoy7A2p+//ZiP4RRNQ+IkrtNiax7UWUjxDARC9PLr
-         rhtk7Tv6G2txNc4WcA4eopgPtomhA9yd/D1ztMQrShpyoP5JgBBBKCNakzp2PbQ6Jc2Y
-         CN6dUrA4JEwi9qbTUhgxoKMOjRipptfieo5gyRD7wCUrfAHMj7Jzju2tkOcSQZSuWPLy
-         /yFZRX5GTNYtg/hi5hg6kFK1rNsmi97u9ILtwTJ2XwoW951i7jirl1v6NEDOP1jclhoU
-         mUOg==
-X-Gm-Message-State: AFuF++ncgVpRPaesDcNeOWxmlGYBRkAoyzvIK2bEdXJ4ffuTx7zaK3EG
-	w5vaQlPUvCDwdGyhOktsFKSdWisgXV8hxa/PHzA4DkiIqR9sL5QUwuE/wWN8zkqKJ8N3q048Lua
-	ndH4rxPdrswW/38JzZYmoPL86WSiXfg0=
-X-Gm-Gg: AR+sD12d1hOopIJhsf0ErZY0gxn/SDhu2sqlVfgWJzLGf1Xcyku4hmbObOx1sPEOQDh
-	2IECLPctDon62gkEEf7Gr8aPy74N2j5karT4WdwvOJD8FypiPV/hOYdlnSUC1nGPWQ9tD78BhzC
-	iWkm+uaD6yv/bJhObyZt4L3nhXLcuH6xS9dNDhV7ahD9vGQGtLmNtsyT4rAmCb/savtGK7yx7ei
-	e3kq45iogMUyyKxafCWMIo2d+ll5ZkDtPsbOZnKrmj246uE8r3k7QPqdYpQ7HQlFNV4nFtUT6t6
-	0iMLpY6RgPmHm0eIuaMBFIKHWk6gYZDkN8rXCXqZ2pV2CJFKHmY14Mi3/6Na9KdsVoIRnKlyoe6
-	N0RnhQSxBWw2GZt/gilXGkuC3A0mi/w==
-X-Received: by 2002:a05:6000:2207:b0:482:a610:7a27 with SMTP id
- ffacd0b85a97d-482c0b9d152mr1364137f8f.20.1787251485416; Thu, 20 Aug 2026
- 11:44:45 -0700 (PDT)
+        bh=uemxqtGhV2C7D/1S+JK/ZhHv3WUnvR7x5H3CzBPQF2w=;
+        b=KMSXwXIKxkkAR8cSwBF+65sV77wis61yqeDwOzsL4W0UR76oTqvJHxr4j9iKXfnOY4
+         HTDSvJlbYP7tVGm6I2uSpQc+zcBvv8WkObHhNma0YcIfYx/TMItAvkU4Ko1CAM9cZRew
+         b21ETEtvQIdjY6fXXewZCeBBSrhyAS63KsjeP73UDdI0pXUFG4HwPb92BH/9NHaNbiQH
+         xyHervxQxIpFsa1myKe4CwfcnQz2PARO5+weirTJJmboXtt7Xwqt4L9GjHCe+0ASrkqz
+         +f558onxTcRzeMp2QB9HpoHOYKmV+lVO4glEGfcWqqdBfO832LrSIp7QghMm5bOnOEDZ
+         zesA==
+X-Gm-Message-State: AOJu0Yx8YtqzZAY7F/0q0mRbzC4IzCVGdGxR68Y8W3Z9OhtFm/igEbLw
+	l25cF9W7of2r3Ow0hPvnxkoJNuHM7ITS/EDFxvEpBXu5DFi/YHfOBrvh6flO1S+2
+X-Gm-Gg: AR+sD13A1gf1FjCEAahLWzGJu3NCr0IPbKlAIf6iStAynAaY6laMzqde/K/fuC4Vh05
+	JdxrcBkEquEwCO0icVIpnGlh/3tj/C8OPUm+zfVNtgdMFqn+tF9+38q76ZXAiriEjCxpZp8CRDJ
+	WqDkc1wUlv2Ehp/sdSaSOyP7//H/TQ2teWLDElGBaY49ZulLW/Uh17IVmvo0MT3TVn7M2Y4fxPs
+	Y7kqXIcFcp80cOg+pKEX6BOvWPhhgqQ6bY4lW203s1H+94HXrsn/yXImbYUasuf5NqOknHvp2vP
+	nIx6trfdLqKumy8bup6+n6Q/Yjrukw/luxl+XO4Bfogg3W7kkkZynzkFKvpJc3GBLpOXnFTe1g9
+	lUEdWvDAcLQOgk3A50ps0B2lMGO8Zfm5NcDDuCj2Q1VYxKNA0Vp0veq15DWW20L5NqSoHiVurn9
+	kyAxbter4bGKsMMvfNESyf4hslVjjIshsL4T9QRxIBXASqzxqMIKDU/0Z4ZiUmX4hNcpypomMJN
+	Nz+jD49qoLj96y6Oyv4aPkD8Qh3u151WihC7sVObBAeCx5UFILpPw7iLnsHnABq6N67da+c0D1c
+	LV+TXFcvH0P62O/OBHMSnUrPn3c=
+X-Received: by 2002:a05:600c:474a:b0:499:b65d:124f with SMTP id 5b1f17b1804b1-499b845709amr19655495e9.11.1787254081474;
+        Thu, 20 Aug 2026 12:28:01 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482b14d05a6sm16104141f8f.35.2026.08.20.12.28.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Aug 2026 12:28:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260819103926.2136712-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260819103926.2136712-13-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260819104926.DBFC21F000E9@smtp.kernel.org> <aoWq7VdKlAl_jGQQ@shikoro>
-In-Reply-To: <aoWq7VdKlAl_jGQQ@shikoro>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Thu, 20 Aug 2026 19:44:18 +0100
-X-Gm-Features: AcwNN1Xgp0Pu-QrUH3se_72By4o489NWiytQVn666RbDbhV3ffzDpMM0wJcWhPQ
-Message-ID: <CA+V-a8v09jMv57WpbYbJfZ0SxiFD-d-9-+=iXdWN++G9hv33yA@mail.gmail.com>
-Subject: Re: [PATCH v4 12/15] rtc: rzn1: use FIELD_PREP/FIELD_GET and GENMASK
- for register access
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org, 
-	devicetree@vger.kernel.org, linux-rtc@vger.kernel.org, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 20 Aug 2026 21:28:00 +0200
+Message-Id: <DKU0P1YGJWHF.3PPZPRDGZX4I3@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH 3/6] selftests/bpf: libarena: Disable IRQs during
+ allocation
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Emil Tsalapatis"
+ <emil@etsalapatis.com>
+X-Mailer: aerc 0.21.0
+References: <20260817191616.11071-1-emil@etsalapatis.com>
+ <20260817191616.11071-4-emil@etsalapatis.com>
+ <20260817192833.63B111F000E9@smtp.kernel.org>
+In-Reply-To: <20260817192833.63B111F000E9@smtp.kernel.org>
 
-Hi Wolfram,
+On Mon Aug 17, 2026 at 9:28 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Unhandled lock failure path in `buddy_alloc` and `buddy_alloc_fr=
+om_new_chunk` leaks newly allocated memory chunks.
+> --
+>
+> --- Patch [3]: [PATCH 3/6] selftests/bpf: libarena: Disable IRQs during a=
+llocation ---
+> commit 33cf3ed979bbaa281367dbd5d393dc12a91a1af9
+> Author: Emil Tsalapatis <emil@etsalapatis.com>
+>
+> selftests/bpf: libarena: Disable IRQs during allocation
+>
+> This commit updates the buddy allocator in libarena to use IRQ-saving
+> spinlocks to prevent ABBA deadlocks. These deadlocks were observed with
+> sched_ext schedulers when an IRQ interrupts an allocation and subsequentl=
+y
+> attempts to take runqueue locks.
+>
+>> diff --git a/tools/testing/selftests/bpf/libarena/src/buddy.bpf.c b/tool=
+s/testing/selftests/bpf/libarena/src/buddy.bpf.c
+>> index c674ee5cfcc1d..2490ab1396de0 100644
+>> --- a/tools/testing/selftests/bpf/libarena/src/buddy.bpf.c
+>> +++ b/tools/testing/selftests/bpf/libarena/src/buddy.bpf.c
+>
+> [ ... ]
+>
+>> @@ -730,9 +727,10 @@ static u64 buddy_alloc_from_existing_chunks(struct =
+buddy __arena *buddy, int ord
+>>   */
+>>  static u64 buddy_alloc_from_new_chunk(struct buddy __arena *buddy, stru=
+ct buddy_chunk __arena *chunk, int order)
+>>  {
+>> +	unsigned long flags;
+>>  	u64 address;
+>>
+>> -	if (buddy_lock(buddy))
+>> +	if (buddy_lock(buddy, flags))
+>>  		return (u64)NULL;
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this leak the newly
+> allocated arena chunk if the lock acquisition fails?
+>
+> When buddy_alloc() needs more memory, it allocates a chunk and passes it
+> here:
+>
+> buddy_alloc()
+>   chunk =3D buddy_chunk_get(buddy);
+>   if (chunk)
+>     address =3D buddy_alloc_from_new_chunk(buddy, chunk, order);
+>
+> If buddy_lock() fails in buddy_alloc_from_new_chunk() (for example, retur=
+ning
+> an error like -ETIMEDOUT under heavy contention), it returns NULL without
+> linking the new chunk to buddy->first_chunk.
+>
+> The NULL return then propagates up to buddy_alloc(), which discards the c=
+hunk
+> pointer completely without freeing it. Since BPF MCS spinlocks can fail u=
+nder
+> heavy task load, could this predictably exhaust arena memory?
+>
+> Should this error path call bpf_arena_free_pages() on the orphaned chunk
+> before returning?
+>
 
-On Wed, Aug 19, 2026 at 2:09=E2=80=AFPM Wolfram Sang
-<wsa+renesas@sang-engineering.com> wrote:
->
->
-> > Would it make sense to wrap this value with FIELD_PREP() to enforce the
-> > compile-time checks and stay consistent with the rest of the patch?
->
-> I don't care, you decide.
->
-I'll leave it as is for now.
+The rest are meh, but this one seems plausible. Please check and follow up.
 
-Cheers,
-Prabhakar
+>>
+>>
+>> @@ -745,7 +743,7 @@ static u64 buddy_alloc_from_new_chunk(struct buddy _=
+_arena *buddy, struct buddy_
+>>
+>>  	address =3D buddy_chunk_alloc(buddy->first_chunk, order);
+>>
+>> -	buddy_unlock(buddy);
+>> +	buddy_unlock(buddy, flags);
+>>
+>>  	return (u64)address;
+>>  }
+>
+> [ ... ]
+
