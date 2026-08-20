@@ -1,177 +1,184 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65B73B776A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787212390; cv=pass; b=V9dHSX5Z/P7rTy420khwcrfFhnQlq+tAw2VIE4a5bgRIXbyMkXh64Q2RSwXm0lThsNAWcB2tRR+cv6+cLiNOeD0XtbRU1F6kYxD7sRv435RWrFH8PgE9WBP2o7x13vRFhYr9/vyvbKeVEms+Agbd/mlf5OTeyeof1uGTal/pfRc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787212390; c=relaxed/simple;
-	bh=3ux/9MYCmRGaVF+WTBt5CVZosKYLKPfKOqqlr1ELLVA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MAMRnC33UAWVocBNkjF3u/RVTQfLXH83kNuSGZnXUar5DrbZxcoWPxS/ALXz/0uDFwUlLLjvk2PLxDpWzCNI5cWUSGvO1jW1Lbi2+4c9iLOQvArQ85tRe3+fqXyzMlOlbKKgXAnl5erYp8eKFd2JdpLMC3j21+QZ0XmyzmK8XME=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TslUAoNW; arc=pass smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983FA2DFA3A;
+	Thu, 20 Aug 2026 08:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787214627; cv=none; b=DX5V755c1VsX3YbboVibvVbvbHghNjVgOpRndtEj4JUkdj6aZ2wX8vgj4F0KDwnD30fEyI3MAyooh/BOWZR657UzBaL6VjWE9nwkqiJj4bR+TPAYauVPOUDmOZlOAobo5oP18Y46rEVQ9uYtx5Q4IHLvYhR0Hbe0VAcesj1sBZ0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787214627; c=relaxed/simple;
+	bh=oDSU8vSQLqwcTh65G5j0qpJyt0M2GSgivvdrWe6Sm1I=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=P/sBneTPCdcNq4rKg8601dP7kOu1Eukl59Y+0wBqWZlnlD9wqUN5mjbSbnnpaXw4JuarxX+um0RQFNzs69ZD6tuIAbAA4+oLMtTHsIt46Q/WrD1RA/GSePRoGDEwHK5Py6ultRKpxU14DE4jaB76HfETa5mZGfQBKhUBcuQuHeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ijoNP3DZ; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TslUAoNW"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8eeadbc5e21so13164356d6.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 00:53:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787212388; cv=none;
-        d=google.com; s=arc-20260327;
-        b=G/73t/CfWnniI4DLIg3nDnhUvWYyR10wukVgMRO+V7wVOh974Loi/dZlT4KiXVxZNf
-         gkQ7Vb9xtrC2dCTYkeXyc55lZwgAz+P2N5LI1QtcXtOk9zMG1xDRNUrX/QGdDEBdo4YH
-         WWHzOQxWHDl/vjvk8UNCUqRVsYX0QR9qGqwN/jJ00Na4XAtLQW5MimeW3V+AN9Z4Hblm
-         k8/fP2hLswsR7SBOABIwuMLCVUjLhmx8sAZ9GKx48wZKNsC0rjPDZfyNY7oWpO9oZeKj
-         +1VD9LflwPPdWuM3ZlxQCliKjt6ViiGvpLkb3QGF1S0q9ZI5UY72nRAi23OHXEn1TTaI
-         BovQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
-        fh=EZuZmZXRu1UyRSJj9ezXMUdPDZEdphtf/LAtIY+x/4c=;
-        b=XrHi9LWOtlTBvQsXmeZjd9EEmk8cHz2dt06EMejMQzWZkyWPCkWGwOcC+xLzqGALw8
-         vQJeYJxvZOrzPhSmtJAHR7ifpYI5RY56K539Uidi06LGIuiYOcYCIS34MkKV/fqBKzdQ
-         4onIoXrbZbu0wUJLzdGFslGaLmhCTHNgJ/GmKQHBQG83Vlr6A01tsvmvclUTMewwz1E2
-         ydeWWzXPH5J43201VbjJhr/1HwrFQvJvdZDg9+lA8lbuK7h7dqEplLeHWLazKmkvH7Ct
-         ZyKLwQlzYrhr1afK5zLR+Wkg4ixw4j+l4yW+2YQ5QqM6H1HLdAHjaTwxGQWk/SQXWc4I
-         ERNA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787212388; x=1787817188; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:mime-version:references:in-reply-to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
-        b=TslUAoNW+ONOVAAPoGaLAsbK9QTDHc/1IHP3fJpN9vJVOViOuTqXAjBcorECYqNUNv
-         7V0DLOpItIfDLNtCOrrs0imah9zOH1cyHcVJeok6UHx8DEuNsygaaxmTqz7r5dSCbTVF
-         Uul+f64v/hYcJl5lpONQtTsIn2tvIIweyw3JlQ4uEKKZBqxl0sEuAy+QHHl8DFfK66d8
-         qI28pM34/f9D90CD8vs/YCvthiT+9GkZu5NdbczTe0/K4sHMf//zSHJSSLJXtgvpJY2m
-         2in1+5FpcJYyHeVeTC8B/sqJS9R5JPaaLJEnaXnQwPVpIbWj1UJcNuBgAPpdMFUYsNJw
-         J3vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787212388; x=1787817188;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:mime-version:references:in-reply-to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
-        b=P8Z0PJWhHNzg5xUCXvWwdvWCgGA2gkOjFM8zqJYTsyggnOjpmdsj2emXL+5Po+LFSM
-         0jaRC06CGEDWrhTnWKwxPG1uedVwJsmZ2ehQb41OS8FnbMsB6lkTMVh7j3mks/vTEYoD
-         +/FnKjcCtLuaTih0CLLND/bSWzGBIPyIbBJ+f0zBdy1TWegb7UZxtp5B59RwOUppG+Tn
-         O5A5X/m4o8sNTWJAO5fKN7r+Q7diVYKKl5ZDVmnc3u3jvzIKtHLDv7DCI8kowY5jSege
-         LfMjdBxXsO9+596tc0Efv2gBTZ0g7ZdxbssNWT6dP/0OM4gLbLlFTMpdoHlf7Tt8HuCU
-         eMwQ==
-X-Gm-Message-State: AFuF++nXbPXq3ZbtJR/ilP7e0unGhAEsyb0Rqi2WOPq2XupLrNmww19p
-	9tozKFcHibt9L3pz4+TY8I64ZfYLYn4HEiNJtXFHVaQ81Mm0HQKTNgbwukAb2MmDtkjrN+zZteF
-	M3/IXJBhzU9ffezZqsrh46s34ik67ie2moAktmHvQUMcKlVKScZ/kCnB1
-X-Gm-Gg: AR+sD11R8Fs+FKYygHG5z7HhLnfCFDhWaoq/MbYXQgHPBrYdZYmRdgCVhcTZWa5cVF7
-	xeAVVBYfCW1lkaEIo8OCVBljpeiT7G2VDuMGLqvYCQUR7QJkVUrz2WFIFkDtSE/zYIuHCsz8QqD
-	MTcL9Cqud8MafWou5TfNmqbNfoaPBs65/5mIEh4V+yX5T0keauW7WogDSl2hI8YR3IOwKoI8hjZ
-	7PIYAmdCj16LhwXiPSVNQsawjVOwxkdk4BINoqEESAUi0IAYIYOiNBAkAq2+kR18kmOpdF4P2CN
-	4l98VUjYXvXVesYb2uThjYeXKy4s6MjPVJKralvLywydFPxdpJZ4aVi9ej45s1AZfiIR6OwaWDZ
-	Zd0wyGL/jHimfbt91QPrLv/25rcj2kF7vhVNBsYo2bg==
-X-Received: by 2002:a05:6214:4014:b0:90a:804c:325a with SMTP id
- 6a1803df08f44-90c5e984419mr106287766d6.13.1787212386932; Thu, 20 Aug 2026
- 00:53:06 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 00:53:06 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 00:53:06 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260818092909.DBA151F00A3D@smtp.kernel.org>
-References: <20260818-gmem-no-return-page-v2-0-5298f42d49bb@google.com>
- <20260818-gmem-no-return-page-v2-2-5298f42d49bb@google.com> <20260818092909.DBA151F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ijoNP3DZ"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67JLVe3D424273;
+	Thu, 20 Aug 2026 08:30:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=xmyTCf
+	YN06PUDU4U3wcc0ii3R3H37NzL/M6KjdO2gQw=; b=ijoNP3DZZkRoek4DfzNH/8
+	STq/MXMmqggn3GaYhRd/komzAYJNnLnB9RoCmy9Cwed7LbNxV5mztG5LdSCVlJgC
+	0cSjVG4IeWzMQUPG3IVueaLGx5dXSbWl30ff1ZHsG9uk+y2tz9tVhvf9nx7lWgol
+	XK7/qFvRZegzgyTVYOiR7S4JgfFnplmtFZLh6XiRAJnEhptrbcG77jpLYjleMjlu
+	52G7v9DWTiUpop71VVwMTsF7onYl9IAOoK3UunpqZk7cNGWP84bsfGSUP6oG5iCs
+	8pC/bDfCrd/gFsno+gYilceJ48XrnKcnRMTVRR9hLT52vDxiYbSwHjzOiN3IidaQ
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1h0x1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Aug 2026 08:30:25 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67K8QL5H027114;
+	Thu, 20 Aug 2026 08:30:24 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ekdffe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Aug 2026 08:30:24 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67K8UKU124183306
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 20 Aug 2026 08:30:20 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 68A3720040;
+	Thu, 20 Aug 2026 08:30:20 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1ED342004B;
+	Thu, 20 Aug 2026 08:30:20 +0000 (GMT)
+Received: from localhost (unknown [9.111.13.52])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 20 Aug 2026 08:30:20 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Date: Thu, 20 Aug 2026 00:53:06 -0700
-X-Gm-Features: AcwNN1WB-tnpCZT-uPr4BO2Hn9hueJ3F68Yv8vagfQAHyYOSy_v0o3BPhF3IvDw
-Message-ID: <CAEvNRgGFy39FmmVQGLc0SZkOGuYg5rXhKd2Ah+FhaSwc13zQVg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] KVM: SEV: Drop page refcount early during RMP
- fault handling
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 20 Aug 2026 10:30:19 +0200
+Message-Id: <DKTMPHUMVTGX.XW4LY4FQKDB4@linux.ibm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Tobias Schumacher"
+ <ts@linux.ibm.com>
+Cc: "Alexander Gordeev" <agordeev@linux.ibm.com>, <linux-s390@vger.kernel.org>,
+        "Vasily Gorbik" <gor@linux.ibm.com>,
+        "Christian Borntraeger" <borntraeger@linux.ibm.com>,
+        "Heiko Carstens"
+ <hca@linux.ibm.com>
+Subject: Re: [PATCH 4/7] s390/pci: fix MSI directed-mode teardown IRQ bit
+ count
+From: "Tobias Schumacher" <ts@linux.ibm.com>
+X-Mailer: aerc 0.22.0
+References: <20260819-s390_irq_domain_fixes-v1-0-826ff27b6e97@linux.ibm.com>
+ <20260819-s390_irq_domain_fixes-v1-4-826ff27b6e97@linux.ibm.com>
+ <20260819090757.3F4051F000E9@smtp.kernel.org>
+In-Reply-To: <20260819090757.3F4051F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a86bb21 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=QwlQo2ZzjPsFoGYGQ3oA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Qm4fQjD-nvMNSnR3RzJWbbAzd4tRVAqf
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDA1NyBTYWx0ZWRfX3wpkgnI+tMRL
+ 6xmXAs3fD52tABJ1D3dMnOCfCcGV9iox7nxxsf6WlV+dG54z5ntK4+dBrBT0UxiuRV8fQF2KfpO
+ axEd/4tuCIF0vyQLAAPcEHYiB1ySHzg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDA1NyBTYWx0ZWRfX7mU2Bu+k4UkP
+ 5rIqURG9Fd/JvK7Hj5o8Bk+uOM2NSdeqzESwA9JV55/IagRPpVqcyMR8aTueYQ+BcX4wewINsgI
+ lWU8eFcjJy6kBvg34Iva4QDp+Lp3nh/3HecqnXoDCSAZZxgmp11BMS6WyaERLf01D2KwUjyZTNj
+ GPe4+Q4XV5l2M/CkS4jdfXqfuiOKBQdhvVdrhfwCNYiPlM80NLvRx+zLMNptG5qM48HXktBotc/
+ q/R8TyQGNoNz9OuNzha6rlYKEZgUkieI65sdbu/oPhMvLZWBt31bxxScm3Rvybuppyw0+mU8OLU
+ wHK6h0K6Yv+lBSZcIUapHLejhUdqhhV1PQhWGdHbXKOncluLHLTMu+6CqH/2MXmV3CChcv0o06K
+ vCHAAUedGl7osak0V6fe6Yp8o4J34Yo2XwWXpH2LYqz0uMfvFTwqmScFpmtm5u5/g4uhiBVug/2
+ 0s7Glpkeix7XyjVB+Zw==
+X-Proofpoint-ORIG-GUID: Qm4fQjD-nvMNSnR3RzJWbbAzd4tRVAqf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200057
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Wed Aug 19, 2026 at 11:07 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
-> - [Medium] Dropping the page refcount early introduces a race condition w=
-here a concurrent `guest_memfd` invalidation can trigger a false-positive '=
-Unexpected RMP fault' kernel warning.
-> --
 >
-> --- Patch [2]: [PATCH v2 2/4] KVM: SEV: Drop page refcount early during R=
-MP fault handling ---
-> commit 7d0f356d8592ce1804052b0fdb61fccf3a11ecaa
-> Author: Sean Christopherson <seanjc@google.com>
->
-> KVM: SEV: Drop page refcount early during RMP fault handling
->
-> When handling an RMP fault, KVM retrieves the PFN for a private GPA from
-> guest_memfd. This patch drops the page reference immediately after retrie=
-ving
-> the PFN instead of holding it across the entire handler, and adopts the M=
-MU
-> invalidation protocol to guard committing anything based on the PFN.
->
->> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
->> index b2738362a928b..b34b11d7f8fad 100644
->> --- a/arch/x86/kvm/svm/sev.c
->> +++ b/arch/x86/kvm/svm/sev.c
->
-> [ ... ]
->
->> @@ -5030,18 +5031,22 @@ void sev_handle_rmp_fault(struct kvm_vcpu *vcpu,=
- gpa_t gpa, u64 error_code)
->>  		return;
->>  	}
->>
->> +	mmu_seq =3D kvm->mmu_invalidate_seq;
->> +	smp_rmb();
->> +
->>  	ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, &page, &order);
->>  	if (ret) {
->>  		pr_warn_ratelimited("SEV: Unexpected RMP fault, no backing page for p=
-rivate GPA 0x%llx\n",
->>  				    gpa);
->>  		return;
->>  	}
->> +	kvm_release_page_unused(page);
->>
->>  	ret =3D snp_lookup_rmpentry(pfn, &assigned, &rmp_level);
->>  	if (ret || !assigned) {
->>  		pr_warn_ratelimited("SEV: Unexpected RMP fault, no assigned RMP entry=
- found for GPA 0x%llx PFN 0x%llx error %d\n",
->>  				    gpa, pfn, ret);
->> -		goto out_no_trace;
->> +		return;
->>  	}
->
-> [Severity: Medium]
-> Since the page reference is dropped before this lookup in
-> sev_handle_rmp_fault(), could a concurrent guest_memfd hole-punch drop
-> the file's reference to the page and free it?
->
-> If the page is freed, the RMP entry would transition to shared/unassigned=
-.
-> Could this then cause snp_lookup_rmpentry() to see the page as unassigned
-> and incorrectly emit this warning before the mmu_invalidate_retry_gfn()
-> check happens?
->
+> Pre-existing issues:
+> - [High] Double-addition logic error in `zpci_msi_clear_airq()` causes ou=
+t-of-bounds memory writes and leaves dangling pointers.
 
-Yes, this can happen. I'll also check for invalidations before
-warning in the next revision.
+yes, see below.
 
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-gmem-no-=
-return-page-v2-0-5298f42d49bb@google.com?part=3D2
+> - [High] Directed MSI teardown leaks uncleared hardware vector bits on CP=
+Us > 0, causing spurious interrupts.
+> - [Medium] Missing RCU pointer assignment when publishing `zdev->aibv` to=
+ `zpci_ibv` array.
+
+The last two findings were already discussed for the previous patches,
+won't comment again here.
+
+> --- Patch [4]: [PATCH 4/7] s390/pci: fix MSI directed-mode teardown IRQ b=
+it count ---
+> commit 061bcdd7920b9b7d42fc840ba0aa403eaf0255a5
+> Author: Tobias Schumacher <ts@linux.ibm.com>
+>
+> s390/pci: fix MSI directed-mode teardown IRQ bit count
+>
+> This commit updates zpci_msi_teardown_directed() to free the actual numbe=
+r of
+> allocated MSI bits (msi_nr_irqs) instead of the maximum supported by the
+> platform (max_msi). This prevents freeing bits that were not actually
+> allocated, which would corrupt the shared IRQ bitmap.
+>
+>> diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+>> index 5e934ac990ac1..e9eda846cb2d2 100644
+>> --- a/arch/s390/pci/pci_irq.c
+>> +++ b/arch/s390/pci/pci_irq.c
+>> @@ -349,7 +349,7 @@ static struct airq_struct zpci_airq =3D {
+>>
+>>  static void zpci_msi_teardown_directed(struct zpci_dev *zdev)
+>>  {
+>> -	airq_iv_free(zpci_ibv[0], zdev->msi_first_bit, zdev->max_msi);
+>> +	airq_iv_free(zpci_ibv[0], zdev->msi_first_bit, zdev->msi_nr_irqs);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this leak hardware vector bits on =
+CPUs
+> other than 0?
+>
+> It looks like this only clears the vector bits for zpci_ibv[0]. Since CPU=
+s
+> greater than 0 have zpci_ibv[cpu] created without AIRQ_IV_ALLOC, their av=
+ail
+> mask is NULL, and airq_iv_free() returns immediately without clearing the=
+ bits
+> in zpci_ibv[cpu]->vector.
+>
+> If a pending hardware interrupt bit is left set on a CPU greater than 0 a=
+fter
+> device teardown, could reallocating that bit index to a new device trigge=
+r a
+> spurious interrupt on that CPU?
+>
+>>  	zdev->msi_first_bit =3D -1U;
+>>  	zdev->msi_nr_irqs =3D 0;
+>>  }
+
+This is correct. The avail mask is NULL on CPUs greater than 0 since all
+per-CPU vectors share one bit layout, so a single allocator is
+sufficient. To fix this issue, we need to change airq_iv_free() to also
+clear leftover interrupts bits if avail is NULL and additionally call
+airq_iv_free() for all for each CPU.
+
+Since directed interrupts are currently not used in the field, this
+should be analyzed more in-depth sparately and be fixed outside this
+series.
+
+Tobias
