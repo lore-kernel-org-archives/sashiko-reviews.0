@@ -1,213 +1,160 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013066.outbound.protection.outlook.com [40.93.196.66])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7261387371
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 06:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787209087; cv=fail; b=D0uZcRKIb1yBBZJYlwp3BhsqmKl9pfRrPHWG6gaSzUYTW+S4jECoGH63vKfongXsERzFb9G6s6WYThDkS804qs1Nz5bmoATvIw70c9y4u5EGyhyzIpyVPqNWaY3+x0GcSaoZpI8zS6ySo3k60gZBbm+OUzAN2flN41mdzsdDoYs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787209087; c=relaxed/simple;
-	bh=9VITe1Mr+65mXr50ukYj/lHzIRMBGIkAwre8oLVyE0k=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=mbQhkM6EnX7nMcTDj4gcpyIP1lpYdA9f1luYF0QjRsuwcSEvWTOYyWl90ZatlydAA5XXEsr2aAUtHCMXn+DfKr3q/azfHiklO/Xy5JufzVE3i87yuN7MZjOm9NITfyKh5fHyqdmhlo1ZD/FwNdp2uLEMjtfRVz8zruZGtenelOQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=ToZYJURG; arc=fail smtp.client-ip=40.93.196.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F2534DCC7;
+	Thu, 20 Aug 2026 07:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787210451; cv=none; b=idzkohZ4EsSXC7rmtMXE1eVbLEO+X8ha4b2YcRcnNrxVKAirrp2vtbi8B2eH1dI5Wt6Cs7gF9YgzYpPAfGVFHoCoUIhffvVQy5zP972AMCDaTT6zbpmdLdXDuDosPzWI8W+8hTSvm7kju41Q7k86bi9JraRCF7wlnLU1MrI8uD0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787210451; c=relaxed/simple;
+	bh=znE98YVST97VaoTwB0m90N3G+mLlJSh0lvMs18OWQ40=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Gh37RrOY0W3OFCAZHhpEYMqyrFZd+niX76EM8iLyt/tAtqvXVlXgXXBMVxeRQaFvYq6VEoEGxRZwurr/J7PnFvLGvtk1KR/NKtsKHRt/anKd5RFbNJALO5calYS4b54+CNZnldpe94ptWjChMUglX4InIrVoXL8LSqp5m50dnMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZJ8FrWHe; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="ToZYJURG"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eEBFJ1wIma/53goUA9l/Ix7ymgxf+OeGr+rhEsD1qtvlcU11VIR0/7CmiHYjx+Qva47KZtaME5Jx3a+PFYjov8po0pgZFTeWX2RFeVWqwn6yETbD9fEUv0f7V6pdVE2XokInO8TXy0QYSLNrvRq/iulG5qyjuvADuBLijgmYXSWb6w8zxMnouxcHOv2v3hw8JuhlZVpV4PleftKnn5HqgYZza1YcV5juMlh9Og6PFnVQFWaEyld9FCshKkZ6/rNaByFDNiiAZBrmWQjp7Die/7AQIusQyyXj/LwWwgPUnthNLWRs6JylIfS0kpCVae9JF4bqrF46R49JPnTP7w3+MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aO9DAcBBtKBHXAV1OT/9qV94kGOK6Y+4LFy5jcN5SaY=;
- b=nO5N6cJE1VscOhlrZ8VI/khhXVdL5AvKsy6dCq3McpnTvDrVrzHMF1K7EKuRPIqk/itBDZCXPA17WSinD+XbCxdpSP62PmaMSqk3Hh6w90PW5B14oJtQnwmnROxCMpMkRtQNrbhFnrQNjRKEAyhhyNQx1hp0fkc9LK87eT0ePdGdc6aHE4U75dw7vHenLD3N0H6nXtjM1/QDj3W8ylbxS3hKW+b/CFPIvJNtJSpiFGorb1kdXLI7DkfYuXXV34KV5C9RxwhyImG95tnEw6TcHoSlW17CG6UMmHb/Ntq9gkjv3KTL8W0t38Uuh7rDL7A5y3AK0tjRkapOWx4KmvanPg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aO9DAcBBtKBHXAV1OT/9qV94kGOK6Y+4LFy5jcN5SaY=;
- b=ToZYJURGbZvn75fw96NfkDA63MqJOXhSksimBxO9FIYfp6soNDT3TUfL2Lvsz37aJIqsuITEOeych/4G5Ak0dYyePtZxt7oKIjLUYsa4ajP+pFnNWC/l6wr0wtq/pXyzBnfIiaMSVLFkYx17knOd33E61TaZ3z0mbdZas5coN54=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS2PR12MB9566.namprd12.prod.outlook.com (2603:10b6:8:279::16)
- by CH0PR12MB8529.namprd12.prod.outlook.com (2603:10b6:610:18d::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.9; Thu, 20 Aug
- 2026 06:58:02 +0000
-Received: from DS2PR12MB9566.namprd12.prod.outlook.com
- ([fe80::2d07:1044:6ee1:830b]) by DS2PR12MB9566.namprd12.prod.outlook.com
- ([fe80::2d07:1044:6ee1:830b%3]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
- 06:58:02 +0000
-Message-ID: <c13b66fa-b3e7-4ac9-a889-36c924049b5f@amd.com>
-Date: Thu, 20 Aug 2026 12:27:57 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] fpga: versal: add dma-buf programming support
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <20260816150734.2092802-1-aravind.thokala@amd.com>
- <20260816150734.2092802-3-aravind.thokala@amd.com>
- <20260816151831.E3C241F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Aravind Thokala <aravind.thokala@amd.com>
-In-Reply-To: <20260816151831.E3C241F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5PR01CA0290.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:21b::15) To DS2PR12MB9566.namprd12.prod.outlook.com
- (2603:10b6:8:279::16)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZJ8FrWHe"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67JLVj5h504052;
+	Thu, 20 Aug 2026 07:20:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=aorygv
+	pdM4lf3q8aNVsqMzRkRTnFGGGVqu4kpdFkPJU=; b=ZJ8FrWHepftqRh5z1nAxDn
+	cbYFYd8uOvGy8L6WoEGM+4v8URJE/9HL1Y/ubHEYI2hLrNTmeLVY3yHD25peQLOL
+	RSi9u9hxT+gYK5AD6kA77spuJMJ2HdfKYsvo9bZiborvAu+3YYasZvPcPWqONJhP
+	kTMyJk8dMaFSwxGHnwH5x65Eiu3o0hoMes8f6aVwfSOMt8rGxj1UXIuYSjTWaOPX
+	Ps3jje9NQzgAbtDfiF13kTeLKjww0VDSX+SzzrnZDC7P+xJ3jpRBc/AAaxFk+mQ0
+	q5FKE2nn8SRrV8a5TG3G9o7+ZOxYF6vFqoCDK+8WPX4+/FRNpQ09SR/Zakf6l5ag
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu48h7k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Aug 2026 07:20:48 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67K7BNVk027589;
+	Thu, 20 Aug 2026 07:20:48 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ekd5vx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Aug 2026 07:20:47 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67K7KhLg40567264
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 20 Aug 2026 07:20:43 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B9E1220043;
+	Thu, 20 Aug 2026 07:20:43 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5C4FC20040;
+	Thu, 20 Aug 2026 07:20:43 +0000 (GMT)
+Received: from localhost (unknown [9.111.13.52])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 20 Aug 2026 07:20:43 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PR12MB9566:EE_|CH0PR12MB8529:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e65334c-a3c1-49fa-4f2a-08defe8860cb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|6133799003|10067099003|11063799006|5023799004|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	pvDhsWT5AWPk1YBYh0Q5op94AVvYF/OfIloUwI3sbfGYu15zkoihd8xtDabUf+9UVthLDOkx3NSoWsKZ5xKlDzcKm3nSr7qSPGkZbqIQnT5koorw0+EEQdiuOFdLUnaX4wpHnHFxCChnye9uLgIZgIjjOSYOw/oldFQy35/S5evSI8pUxk+X4JCDX0hBqmiPiArMz/hqbNaIPuNRDLHUxaSaAZlwc1VCaSmNWwLknRrQfX9DMVCPMFXAaRHQOREf26oqTEP4Tsyp0cP53DHLwAG215+cv5QL4U5Iiwrv3oaBrlZX6MFlhsavCq7NioQSIP2rRyQG5J5EjGZK98DMCE8H/odzjDGkzKJ3o4I5uQ3BWqxPEY/ns0cHlyLzF3gPfwPApV9N1LPmQIsv5FItu8hwgsGIszKZ5TT4UutxWgQ/IH81/sDcO6Ip9o50CNyWD7BwT6FIGNgRG0x4rSywz6OkeXEPVoc8uUYAni+AofrpvYevyfmhkTJcl/g1fHgL+Ck3IgXiJvz3I6cEUqS6ohxSkxQQopk7CJxKS9jK242o6+AZx/BT3S3Pz9EXypeNGb/RmAhINsv8m1TnFyu7xqSCj1gRfefreDfYVQCdcWk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS2PR12MB9566.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(6133799003)(10067099003)(11063799006)(5023799004)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RWpBSUtYVHM2MlZLWHNQQTVhSHpDeTZQeWtxb0tPbUd4NENrK2RQbVF2aVA5?=
- =?utf-8?B?QlNOK2hPdUJDeDFLcmJMVzdYeEg5OFU3S2t1aWwxTjJKYmNVOVNyNjI3bVhj?=
- =?utf-8?B?QUgyYTBsTEVRcll4UFFUT0QvVGlhQXpvRzAyRjl1T2xtSzdXWVp3bTJiWUkv?=
- =?utf-8?B?dUlNVEs1cG9NOXFON3hUYXRNcm1wbFAxcDU4R1VxNmFqalAwci8rOWYxMFVo?=
- =?utf-8?B?NG00bjRZRDgyMnJnRjFaOEZYVjhmOG9GTXFoSjNGT0NMMS9kaUpqMCtwWUl3?=
- =?utf-8?B?K1BZRDFEOVJzbU03WDlwZmZuNjJxTXpUeTBha3VvaWowV1laWm42L1Y3ZmVJ?=
- =?utf-8?B?aWtKRzNkZi9Ob3JiSTRSS0c3MTVINWhGU2NNYWMwNCtweDFXbkxENE1UeWdE?=
- =?utf-8?B?TVZ1VFlKbnBYZFVtcXNzbVRXMTBkV251U1dEN3UyYy91am1CaDRHNEk2RHZ4?=
- =?utf-8?B?K3REZWhYak1PTWhxUlJTYkZKeWIvWUhHTEcvRU91TkpSTy9oRUY5N1lwY0Qw?=
- =?utf-8?B?UEZ0ZVpjZ3lCc1N1dVM3UEdUc1NGQkY3YVJOYytSOEh0L2UzdU8yTXo3a21w?=
- =?utf-8?B?U0l1aGg2QTAzampYWElFTGdPbDFVbTlYSGdnTFZBUG9vcDMvMUNXT1luL3pL?=
- =?utf-8?B?VER2alhMWG9zaVFHYlZmNm0rcmVVOEY3VmhRa0hSYXFSSnMzMWlaOUo5b1Zp?=
- =?utf-8?B?K0FHUUxQbmpXVExMcE12TFpnWmdlN05COUk2cnBvNDE1Z0c0VmNiNjBPSnAx?=
- =?utf-8?B?SHZiTkcvK2YvZDcySWFUY2tLYzlTeWwralF1RHN4Q3FmTk4rMmxNaHN5OFFu?=
- =?utf-8?B?ZlgzZTVWTDR6cEJUdGN3UGRGMnhXYkswQjJHSDVDUW11UEtDYnhhVzFrbHdy?=
- =?utf-8?B?OU91M0VFYWFON0xqaU5CUHdIcmJVTHpsUERrbVZxODgyUHlqSzhQWmdIcGpi?=
- =?utf-8?B?YjBCbUxrNEZZMkF1QmNhdWdJdFZ2Tm12L2dmS1BpbWx2eGk3ejc2VnJUR3lL?=
- =?utf-8?B?aUJTaWtsbHJXUldSOXZZNTJ0cDY1T3dHUVdONjNaajMxRTNaZVU3NDBpRkkx?=
- =?utf-8?B?UWR5a2tmNXZvUm42T245b1V6NlpxcFQ5SWFKY1dJSzZhc0ltSTVXSlpRd3pt?=
- =?utf-8?B?WUcwMm1NOUZ3UU9nMk1HUU11ckx0QXAxSVRBMEIwZlFTNUs4VkpWcVBRNXVD?=
- =?utf-8?B?bTBac01XQUNmSjQxdTB2MUJzcHd5L25xWEgrbS9LS1M1N09zOHZiS1JWdzRj?=
- =?utf-8?B?bW9PREU2Zk1wZ2wxSkxZNlNwOFJwaWE4OUVvM3lrbUhUdEdhYXVaNHgzZzRX?=
- =?utf-8?B?YWhyRlVBRGZuTFJ5cjg1MHd6R0oxNzArT2pQZ3A0NHlSM2tKSnNJSGJhK0R0?=
- =?utf-8?B?UEhtbnQzNTFJSjljS2o4djdNbEtrRmRJMDgzaEE4cmw4VWhBbUFzRDVMbHZW?=
- =?utf-8?B?YXEwRzhNV2pkYnFsMkN0U2JuUXZWbEszMm5iL0lsRGpabzR4Sm5pN2NCa0tn?=
- =?utf-8?B?MXZQTnE2SmdKbkx0Vkw5M0o4cURhUndhU3NWZDIzbDVreEdkZUtWeUlDalkr?=
- =?utf-8?B?VnNOY013bjRsb1QyTE5PalZJMzhhNUF4RzVFRUNtQm92M0hRalByV3h6NU8v?=
- =?utf-8?B?UjY4MkZ5Zkh6Y0lDWEU4V2dnanJJMlpNM2lVc1Z4SCtjcjN2ZHc3bThVSFpH?=
- =?utf-8?B?UHNnaVRVNFN1QkpscGFpQlkxZ213TG9sRkd4K2RwckFZMmZEMkpFYW1sMi9Z?=
- =?utf-8?B?c21Ed05SbEozeUZxdWhqOW1SWHd5T2I1a3R2VEt6dUs2d2c1NHZnREgwL3cz?=
- =?utf-8?B?OFRsdUJqd1c5OFNpOE1ZSUl1L2pkRVJBUFFBY3gzV0trL1cxVjg2YlBzWG8z?=
- =?utf-8?B?ZTFXeVJTOUppblczRjVqVFNYY1N6a25aRGRIdmJOaWJzUWtXaDlEZnQwU214?=
- =?utf-8?B?SS90d3ZEbmtOVkRBUFdkMVRhY0t0QlJLNG9tZndMUlpKT2hoeWNhNXRXVStL?=
- =?utf-8?B?V1RJNkdxVEZ2VndBaDBqMDVHMkpyc3FDNnhuelN0VzVKQXIvbGRlQXhTUEti?=
- =?utf-8?B?Q1RNZWhncE90YU5HUTdsSlhUek54QkJsY2kxMW5yUmVhYnFXMDY4ME4rT21C?=
- =?utf-8?B?QVRpOUJMVFNtd0dTMGZMUk1HUkFUaE5jYlI1UFRrZ0ZCOE93bG1QZklNem1N?=
- =?utf-8?B?STRaM0JxYUhuSXBBc0RZNVZSN2VPUGZFTy9YajBpZVJNcnRmbmduanZnTFdz?=
- =?utf-8?B?bkZBWXZZY3MzK3FPTUpKYTN6S09qcXFDS2N4Y0wxSkw1eUtnYW84ZFFCTmVV?=
- =?utf-8?B?ZkVQNmRlMkVHV3FtNERUNHYxcDRERHJhb0NjVWdYbFF0VE9rejJJdz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e65334c-a3c1-49fa-4f2a-08defe8860cb
-X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9566.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 06:58:02.7155
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FjlMtaFJVTDpcf7RdZTFB4+xniJC+SmP59uOvi/4xmOWqwQ/XxVHG46VFjd+HhkR4AaSNfn5C1uOd4jSpiIfZg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8529
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 20 Aug 2026 09:20:43 +0200
+Message-Id: <DKTL871ACAUC.E4I644TH501X@linux.ibm.com>
+Cc: "Heiko Carstens" <hca@linux.ibm.com>,
+        "Alexander Gordeev"
+ <agordeev@linux.ibm.com>,
+        "Vasily Gorbik" <gor@linux.ibm.com>, <linux-s390@vger.kernel.org>,
+        "Christian Borntraeger"
+ <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH 1/7] s390/pci: fix double-free in zpci MSI cleanup
+From: "Tobias Schumacher" <ts@linux.ibm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Tobias Schumacher"
+ <ts@linux.ibm.com>
+X-Mailer: aerc 0.22.0
+References: <20260819-s390_irq_domain_fixes-v1-0-826ff27b6e97@linux.ibm.com>
+ <20260819-s390_irq_domain_fixes-v1-1-826ff27b6e97@linux.ibm.com>
+ <20260819090308.A0A2C1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260819090308.A0A2C1F00A3A@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=CpuPtH4D c=1 sm=1 tr=0 ts=6a86aad0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=mIJv8-IqlaVkk2WYclUA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: bslE1Oaz45xHy6RXZY2fYVuvZhSQYSKh
+X-Proofpoint-GUID: bslE1Oaz45xHy6RXZY2fYVuvZhSQYSKh
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDA0OSBTYWx0ZWRfX5gpfqA0nBgpN
+ zpxiwW34mfaqm8ctZp5qErgx4gPCu28cmH0SyCnHTzUCnfKIHcIwSaVRs9zkKaFgle40l2+bDwx
+ dzxdReYmR5W7jW/+hwfRcK2yO5F1P6A=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDA0OSBTYWx0ZWRfX9W+oUiPyrAjs
+ AgY7FY1E+RFYY/aFsHliD1LccfQkzccqGwsm1WhLIhxxhrQz7P10s1owGA8pqgSnqWLmoLNsUtJ
+ 5BN5Qm4BYu8mitg8BaZmYv5PYS4jRBsrvwMiUYK22MlymFbDwiO7jLDvgBemRLnnSyrkHMl3LHl
+ u4w7gY3Tgac8ejd5Ml43LXfbv3C7DgvS4bVB+O0rDSmqABlKEPKfovKJw2+Ubo4ccW0xXzzEcIw
+ D88tCc/DsTnnzgUV5YyGLlyxVOZmIqsYtqDguXmWZJbTSSIBy+m8QgM3dCyk5yUwVuNevuPJfXr
+ wc99mDPbhAIJDootzg11DSuhTdcHhZBK5bjiU6e4m2HBPDtLJPdGRWcY/afiLDgOS9qP507NmCu
+ IT4J7cdX0e0H8eJMc57BpLUu7+5+7VuLBnCe55mEa4vQa/ATeBL3aMgB5VcxKoYzEOgkyXk5f6W
+ m9OK2LD0aWjkD6Rn13g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1011 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608200049
 
-Hi,
-
-On 8/16/2026 8:48 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
-> 
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Passing a user-accessible dma-buf directly to the PMC firmware introduces a speculative Time-of-Check to Time-of-Use (TOCTOU) vulnerability that can potentially bypass FPGA bitstream authentication.
+On Wed Aug 19, 2026 at 11:03 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Medium] Pre-existing memory leak of `struct resource_entry` in `zbus->=
+resources` when PCI root bus creation fails.
 > --
-> 
-> --- Patch [2]: [PATCH 2/2] fpga: versal: add dma-buf programming support ---
-> commit 92384704c37fbbfe16cd9659151fbb8646c178cc
-> Author: Aravind Thokala <aravind.thokala@amd.com>
-> 
-> fpga: versal: add dma-buf programming support
-> 
-> This commit adds a .write_sg callback to the Versal FPGA driver to support
-> dma-buf based programming. It extracts the DMA address from the scatter-gather
-> table and passes it directly to the firmware, avoiding an intermediate buffer
-> copy.
-> 
->> diff --git a/drivers/fpga/versal-fpga.c b/drivers/fpga/versal-fpga.c
->> index e6189106c4686..bdaa15a6c9913 100644
->> --- a/drivers/fpga/versal-fpga.c
->> +++ b/drivers/fpga/versal-fpga.c
-> 
-> [ ... ]
-> 
->> @@ -37,11 +38,34 @@ static int versal_fpga_ops_write(struct fpga_manager *mgr,
->>        return ret;
->>   }
->>
->> +static int versal_fpga_ops_write_sg(struct fpga_manager *mgr,
->> +                                 struct sg_table *sgt)
->> +{
->> +     dma_addr_t dma_addr;
->> +
->> +     /* zynqmp_pm_load_pdi() takes a single base address */
->> +     if (sgt->nents != 1) {
->> +             dev_err(&mgr->dev, "dma-buf has %u segments, need exactly 1\n",
->> +                     sgt->nents);
->> +             return -EINVAL;
->> +     }
->> +
->> +     dma_addr = sg_dma_address(sgt->sgl);
->> +
->> +     return zynqmp_pm_load_pdi(PDI_SRC_DDR, dma_addr);
-> 
+
+-- snip --
+
 > [Severity: Medium]
-> Does this expose the firmware to a Time-of-Check to Time-of-Use (TOCTOU)
-> vulnerability if the Xilinx PMC firmware double-fetches the payload?
-> 
-> By extracting the DMA address from the user-provided dma-buf and passing
-> it directly to zynqmp_pm_load_pdi() without copying it to a kernel-owned
-> isolated buffer, a process could potentially modify the bitstream
-> concurrently during the firmware's authentication and loading process.
-> 
-> If a user with CAP_SYS_RAWIO maintains a writable memory mapping to the
-> dma-buf (for instance, using udmabuf) and invokes FPGA_IOCTL_LOAD_DMA_BUF,
-> they could overwrite the memory while the firmware reads it.
-> 
-> If the firmware re-reads any part of the bitstream after authentication,
-> could this be abused to bypass secure boot boundaries?
-> 
->> +}
->> +
-> 
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260816150734.2092802-1-aravind.thokala@amd.com?part=2
+> This is a pre-existing issue, but while reviewing the error path discusse=
+d in
+> the commit message (when pci_create_root_bus() fails), does zpci_bus_rele=
+ase()
+> leak zbus->resources?
+>
+> In arch/s390/pci/pci_bus.c:zpci_bus_alloc(), a resource is added to the l=
+ist:
+>
+>     INIT_LIST_HEAD(&zbus->resources);
+>     zbus->bus_resource.start =3D 0;
+>     zbus->bus_resource.end =3D ZPCI_BUS_NR;
+>     zbus->bus_resource.flags =3D IORESOURCE_BUS;
+>     pci_add_resource(&zbus->resources, &zbus->bus_resource);
+>
+> But in the error path where pci_create_root_bus() fails, zbus->bus is not=
+ set.
+> Later in zpci_bus_release(), pci_free_resource_list() is only called if
+> zbus->bus is true:
+>
+>     if (zbus->bus) {
+>         pci_lock_rescan_remove();
+>         pci_stop_root_bus(zbus->bus);
+>
+>         zpci_free_domain(zbus->domain_nr);
+>         pci_free_resource_list(&zbus->resources);
+>
+>         pci_remove_root_bus(zbus->bus);
+>         pci_unlock_rescan_remove();
+>     }
+>
+> Can this leak the struct resource_entry on this initialization error path=
+?
 
-This patch series provides a zero-copy path for FPGA programming by
-passing a userspace-allocated DMA buffer directly to the firmware.
-Secure bitstream authentication is outside the scope of this series.
-It is handled entirely by the firmware.
+Yes, seems like pci_free_resource_list() should be moved outside the if
+block. But this should be fixed in a separate patch outside this series
+since it is unrelated to the introduction of the irq domains.
 
-This follows the same approach as the existing write callback, which
-also provides a DMA address to zynqmp_pm_load_pdi().
-The dma-buf path does not alter the existing security model.
-
-Kind Regards,
-Aravind.
+Tobias
