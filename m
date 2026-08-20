@@ -1,317 +1,245 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11013042.outbound.protection.outlook.com [52.101.127.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DF1145B27
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 01:06:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787188017; cv=none; b=Jnj1vrhZhPh+XwvpsoBSIQbecLL91PyF4nZ0WJ1VAya8WhpRRDQCzvUthFTVc2Tgg6T1AB/YI7yRmItm7XTteogXnuefNJAil0ZI2RBpHtWCh2KtWr0ImCxHaT0SL0X+iNZsC+x8lM3TtOwdQjIv14t/yk1/px86quFkdvep4AQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787188017; c=relaxed/simple;
-	bh=Uuvqvm9mfg5T5IQT0LKVnIXEIyZhbPwpS2trFNrBETU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aTJc+jAZ2dPjCj5LkVwHyudsj+ENOkvoiECiXBhRTTlloKsRtg0vAc1StijQ9fnBkvORkRGTKkZTm7PisaI8tTOCndYFV1DvYzMfqc++zJQPGdi3Io+sMC2U12A4SLInUcziXRbaIMWfQxj3rSCANpT1bthn2IZoTjgoYBXA5Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oYvxPWb/; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8CF21256C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 03:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787195998; cv=fail; b=XcYgRM10FAwxhEAU+92NAggqe4wvFu7z01WeboSE6vIqfa4De0WpApKHiUQDAoJnCxdYw016IGSAoLUf2QuCEdgBuTfbzpH1cG3tu83glugT7vqOPlDNzAesZvQvzWhb91hRQeWhLOnZO0MuXB4nwc6xEjf4WME/FJKkhLevH3w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787195998; c=relaxed/simple;
+	bh=Q61efY7/F6DpaSoKIa//B7/rp+98+VrS7hCqdolopW0=;
+	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=lAmF1J4Sc2SYZLW0GU8bxq5l/ev/Og3QeYkOOtHKs67YCvnKsZdtfypb8AlSpGfmtLn2y9ozB0JMX1a2b0nIpDhJ08DqblZcVj46+IyIj2QFOfVDAtUIPmlE6ZFjfn/Vo6ZO29i66byyD5YhJa+QnSU/c2IsFr7w1NeQYIoAEXo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=ohM2Q6vc; arc=fail smtp.client-ip=52.101.127.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oYvxPWb/"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-381c51fde6bso2050887a91.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 19 Aug 2026 18:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787188015; x=1787792815; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bgxWYN6UqbEyC1+LxoNwhIkrJ7McHuzDkGEeX5D8eIQ=;
-        b=oYvxPWb/38izn+Q4xZ/E1czW1VEL1Flxs8WtEEqBgfgZfOhBtz1dNTafoOgaI+yfWW
-         pCewTr98oXsSvRrR7Om3yl0lJouCtVrbOAmkIkjICIlClID3xx2MbCcTdte+hz3uoBN/
-         FSxzt8wLU+PYaSrzfalMguMRWZqmD3blYC+tgAOJ3FghtITmljlayMlASjHGajF3Tiq4
-         2wWOk4lc6oCdYtGsJpwQ6MHVXG3l4V/DD3n0U1kCpNPglVQacGLbxPnpdb0W3tjmxECz
-         1nBflYQFnNOVJiuFN5bb2zjdA/BPIDeB2jS2PfjMulQI7u9vvOwJ3WhqlPBaAp54RbFJ
-         3jcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787188015; x=1787792815;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=bgxWYN6UqbEyC1+LxoNwhIkrJ7McHuzDkGEeX5D8eIQ=;
-        b=Bqr0S4YZwi3vQDEF0VMHW18FRsj/wDTPaoOimFynqFzL+NUZBRIHCyqAQ22QbGzjB0
-         nLqyGtk4uqBmpFh7EIR2GLdY0vjxi8HYv6tx7znDcUC9ib1GOrDAhPyUowcJNQ21lNGA
-         5RgVd0fmqSlw4V5Dt6ZJq6+Qdx8xV5w96tEqnTGfkI810Rtsny5zgcg54flg+JgIE+zz
-         VtGzC0PbJK2Pnka8ap3t1CbRwKLa2EmyypKj0FNBzkGL4Fabi7uc16vkO/PZQ8/xTmTi
-         +PXid1QlQyK5E7Be62OgBGAdnkLAci6brxFUmuw9gbzXHrQN2HaLkjj/1jJk1h5VTOEa
-         Lj3w==
-X-Gm-Message-State: AFuF++mCmxp4NaORbX1EsSTFabMnltrovP+WAyOjLOkrR13X8AwG4CZR
-	Q6t0Cm6nTLtFJD0/5TJODMPOQMt0GZexfSC6mIIEa0uSX1kz8GoJM5DG
-X-Gm-Gg: AR+sD104wQg56zBcr9IeIsgPll6VjYfT2mzoO98RyjeoGpxM/nOdUa+OoFov/vQXsbp
-	XWg1ocfoDxBRr0buNPH6h7aMKnh7vqb3utmWAi9z1m4TJz2cEeScqmLY+lciJYUJnr3Y1wqrLaJ
-	2wAurMKWl19xUCqu6GDBrRKx81q+jcJKwyEj+3wjs81wO5RTs+8bwBDztDERCsv5Nm9sh1LKSwS
-	G0AQHiK0ZwRBdos5hAFk4c3upZPso3t2e9y6itVvuxEeDZT3khGrNjMLVHpQ4LWVA/lmS7bLyLI
-	SoevV+WA99h6Tt4A3VOEwFJZmPbMOZI5kaXureOAKjJiH4jdlJ61V3zmsBp7xQ4VnGeL7G9k0On
-	MjF7/fMptOFeB3Q/djLJ4xQl77vwEUiwcyBAu360iMq+3K5bOdh2C2aG1jciieh1XLlH9Rchytp
-	l/T5IV0pd/N7uK6hhl2uK9DPdcVANR0EkzjBPQ1tsmSBb7K2oXxl7bslAX4V0hSPJAGPJetPYpL
-	x9bNrpEgHbNVy74HL2R5ajWpeIk80ShUWSD4H1wjGdv/kAJ
-X-Received: by 2002:a17:90b:3c8f:b0:395:4de4:92c8 with SMTP id 98e67ed59e1d1-395810e9626mr17401300a91.15.1787188014899;
-        Wed, 19 Aug 2026 18:06:54 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3957fbbc017sm4998829a91.15.2026.08.19.18.06.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Aug 2026 18:06:54 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <01a0682b-b7ec-45f0-a19d-df40ed6366a2@roeck-us.net>
-Date: Wed, 19 Aug 2026 18:06:53 -0700
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="ohM2Q6vc"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B6xPJXDIz8m6jAzdXqHNpKyGOtpfcvMSEE28DBBx7hI0JhkZyWyZb5s/xsvFQZk0KwEYHIe8nG6kL6++NfSO9x1x1/TFBDh79lK17mqnRa1UcTh8+9m4vYFJC/s/nzIclS8b+KCrpp3tJ2DfId2LEhE/KiFajGc6Z6B1F9hOh3zXXEUV34wEzuVmCAf/dRNJp8bEvtjoKkmfBh9tjKshKUR+sTlIQDE2ovZ5KxCG9v2VhtYRT801riJhYZ3FGFbfaIdJZwHWEJ9OE8ni9SDx1XsKoL41Jmy3bJGSMinrDmHhxqbiwoszkqdf9bxL+VeC7Ohx0YGhwsi5wo2oWZbF4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3gI2kSjV/g+W5H9v+dNhY1Zom3z3YqWc0iFJhHZ7gB0=;
+ b=tNLlP2KWXpFYAAnY8jN8XHsG7ZFzvAtB9Nn4R/6eqdHhNJg/DjqGGkroluztS5XPnFHn9vbv/zxqHO25YW1dEdiU1T4JVfTiGZTcOsw2ZK7jyGGFst4CGoNIR+QuzKs7bMntezkTDhf5zqYEEbP4jkE8hLEl7oa17miE6ACwX5yyTtdBxAWh7IDxrqvfCtN96fQkOGk9YKP9H+R/lrDL8oXRAYazBxYm+7scgz2Sx1bkv10IEQ6vjlvCYqJpJr+gv/lDaudje0adRGk978AyP+ROhhUhfxmbTFLFrWs4t97lUDMDn4RHRjobkqtD8hNDLMJ5d7ZhT4iR9xg2VDNHIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3gI2kSjV/g+W5H9v+dNhY1Zom3z3YqWc0iFJhHZ7gB0=;
+ b=ohM2Q6vcKZMLaBVn3zhSzEYrd+oT6Nkc5YghuhS91VwJfgDP3N1t7KxSK/8t7dpdQZaVa4EOIhtY5b03E9b/TZ8jJ5rGLXaWCzmNsAMz3lyT7J6Qauu0WlWsD2WeWEne8MbhRFVcFeaiiv/t9490iF7nop8SAtnCQKm8+mL+UGsgCrIJJa8AE/gSIg9NvuxHkntB+P3k9c0cKLlEooNZyGx3noTDr5LPP1QXBv0ECjHFuZKQLFDUV3kPrCq7xrP9gQpEcFRHX8RhLmrUdJOFfL0FfrM74GC80nLNH/FJwmplncWeTPL2Pq3gt6qyyVFQx6JEm1OWPhoXXzIUe6oUxg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
+ by TYSPR06MB7308.apcprd06.prod.outlook.com (2603:1096:405:9d::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
+ 2026 03:19:51 +0000
+Received: from PUZPR06MB4742.apcprd06.prod.outlook.com
+ ([fe80::206c:c661:9838:5571]) by PUZPR06MB4742.apcprd06.prod.outlook.com
+ ([fe80::206c:c661:9838:5571%6]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
+ 03:19:51 +0000
+Message-ID: <5cae2afc-35e7-404c-b943-6ed7cfc4c71d@vivo.com>
+Date: Thu, 20 Aug 2026 11:19:48 +0800
+User-Agent: Mozilla Thunderbird
+From: Fuyu Zhao <zhaofuyu@vivo.com>
+Subject: Re: [RFC PATCH bpf-next v3 1/2] libbpf: support selective kernel
+ module BTF loading via bpf_object_open_opts
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260819090426.267-1-zhaofuyu@vivo.com>
+ <20260819090426.267-2-zhaofuyu@vivo.com>
+ <20260819091250.76CAD1F000E9@smtp.kernel.org>
+In-Reply-To: <20260819091250.76CAD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0002.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::21) To PUZPR06MB4742.apcprd06.prod.outlook.com
+ (2603:1096:301:b5::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt
- compatible data
-To: Aiden Isik <aidenisik@protonmail.com>
-Cc: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>,
- devicetree@vger.kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org,
- conor+dt@kernel.org
-References: <20260818-for-next-lucky7-watchdog-v3-0-2912bd122c57@member.fsf.org>
- <20260818-for-next-lucky7-watchdog-v3-2-2912bd122c57@member.fsf.org>
- <20260818181349.894171F000E9@smtp.kernel.org>
- <k_6CWq_7vPkV72MkyL0wCdcr9ptTffpGOGc6dBLbXjcHBV4DGRzP-35mxO0tdOBaIEhy4BxByYLCh8T5nidgwaMwGcNYD9KCIpxkeF4RRiE=@protonmail.com>
- <83b5d8e7-9504-41c9-9f24-8fce60641de4@roeck-us.net>
- <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com>
- <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net>
- <cTie_daC2kaIY2BT6HkyAeivwspRhq3thkrkGDMVdIpF2vF5Vr38HQxPcvKFK6pvWatAFk-CO7XL2uz3OCfDSwI-EOxQqI8hNylXjG1jrQI=@protonmail.com>
- <XNt95pVriUNFbMMYsr5mnQo9LUABboJjUMboxV5mWYj9FQJb6XGjsGkGRre7eSK4bvCG4oOuTg4YNiujCpX7ZlonVgQSHFBEzpFvZLFTXtw=@protonmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <XNt95pVriUNFbMMYsr5mnQo9LUABboJjUMboxV5mWYj9FQJb6XGjsGkGRre7eSK4bvCG4oOuTg4YNiujCpX7ZlonVgQSHFBEzpFvZLFTXtw=@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PUZPR06MB4742:EE_|TYSPR06MB7308:EE_
+X-MS-Office365-Filtering-Correlation-Id: cadde8c1-838c-4bc0-d8aa-08defe69e586
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|56012099006|6133799003|4143699003|22082099003|18002099003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	/EgpXbFEUlUEUz9rLGTge65j3iqqMEqs7ckEZeNW7FxdrToktiWVaq9zdF0luHGtFpSPvnnIqAprcyfMyX736ztLeHuEEwzFUbL3YvuyxB2EI96uup1asLEaemfJLdgC1qmv4ucoNlSgXNBHsM1EhOxGZ3ncybd9X0Njl74fbMMLQ9KZrNHz5HpUVXZjTryGPB79dKOD3tsA/oBLV6qncS9mQixMt1Sx3nFuzhdiN2ysREStdviiAP1JSGiqcZ7Vegu/nXOHhAfxSsjGpgu/po+YDMAe9P38UHzQrkdzifYi99qFwbmJpNHaAiynxyBxebaYq+OL3xmIyJ4Mg1qqTa3vtGzQlVRqgjR/4Wl2HJqNuAj8HzWzbA/c7RtsmhbCLgEB8iUHKcGzdPd0tDkVoXHEGh8p7YVxRqkR+JUCI7zgKVaM2lg5GHzr/Mui+2Ro70ypfJcXFxGatZGBZG/w2BoLtEPg5KbB7GxJG2ZaBfDkFGSIW+hdGJ6PwbiNZwDqXK5pzTJv6nlt+a8M8lZuP1B5Dsf2cqfLEeMIlvAyApmPvRui7xOk5VZ5Ki18OZt80HkBldIH0NX4X9nwcKq0FEIKkfBfxLtsuCb2LPJL2rOY11k2lXVtnk35TKLRGmCksBQQsaOhGS5e/vhuQnde9WIZK+pqH0PVF0Gk4pEExNU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB4742.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(6133799003)(4143699003)(22082099003)(18002099003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?czBhNzNqQ2RSMU1vVzd4UG83MXc4QytoYXVyc3RDRXV2Zld3bExGOVlUbVB5?=
+ =?utf-8?B?UEFKKytuL1JGdlloMkNMZTVGc28rZkgyYXR5MmcrSldGL3VQSmhwc0lHNGdh?=
+ =?utf-8?B?MGN6VG4ycVpHbzJ0b2NlbnI4NmkyREszQXR6dzZnRWUxOEdaWEZIMWlDUk1G?=
+ =?utf-8?B?clR2UDRJdWdqTjNQZGFaTXcrVVVRbjZzK0N5U0tIVmcvSUM5d3VoYktYRlJH?=
+ =?utf-8?B?V3pPdXJTRUVZSFFNdHRTQkpQczFRbko1SklEbXVMb2R1Y0diMG9zRTc4Rld3?=
+ =?utf-8?B?QTFuMnhZSlN1cnI1SllPVVRaNC9GOUZ0SkhZZDl6aElOVGYzM2Z4WWtEelU2?=
+ =?utf-8?B?eWVNTHRsOEcrMVFNR00xejVVWi80bndpZmxPS2JaQUNjTTFUWTdNcENNeWlW?=
+ =?utf-8?B?K0RuLzdBYXdBL0U2cFUySGx3elJHQVFnblBwemlZRm5ERjZZUDV5NjBPY2Fk?=
+ =?utf-8?B?RmVyZlo1d2xzTzczcXJtMTg3dEM4L3hkZG1XVnVySnNjam1OQ256c1VZakxT?=
+ =?utf-8?B?ZEk0ZE91NmxoVjk2VGdKNWtIOTczWVNZanAzMC9GUzZjSTM1QzhyTC9MNnFW?=
+ =?utf-8?B?aURLRzc2QXhpWCt5MG1XenpGOFdENDZiZEdWWlJYSG9tRHdaL3JFeXhxc1lV?=
+ =?utf-8?B?N3c5c2gzOFlOTjNVTkxrQm9KNnFXWU91dDcxNi8ycDA5b0lrdWNiMEVYSi9k?=
+ =?utf-8?B?ZVdKWlJhUEczbUJNQXNLeUFIbmNCTDVIWDZrUlBEWDlzbUhzWEYzeEZEdDk1?=
+ =?utf-8?B?YmFaamFCWE1ueXdXako3Vm9mOEpGN3Z2RHpoS2wrSXBtY2NwckZGTE16dmZr?=
+ =?utf-8?B?K1NDRFhMbzU4emp5ZS9zSGFxRmJyL3lZOUM4NzVxUlE4ZXpySlFyQlJMa3lt?=
+ =?utf-8?B?RzI0aUgvcDBNMzZxd3hiblE1VzloQzlzSzlOK3J4aXVJQnBPQ1V5Q2dVTkhy?=
+ =?utf-8?B?b0krRFlwcHI2K05HVDJjc0VoRXFGa0Zwb1luTUI5SjFCMm02L3VzN1BjV1Ey?=
+ =?utf-8?B?S2ZES000OHp1Y1Z2ZlhvYU5aUTlJd3R6Ukp1TFdpdk5xMjVqVHZsamZtczAx?=
+ =?utf-8?B?bmQ3S2FNYnMweFp5cGNtZTlNalJpR2FoYUswaXdhVjUyN1pxUnNseFhJalV4?=
+ =?utf-8?B?dFBFVWV2OUdmM3RreTg2ZGVsbllmVDVuVk0zdXJVWUVzVjNEdGZVUEQ2YWlN?=
+ =?utf-8?B?bFBmSnNoRUN2ejBMYWd1QlpGT2dzUitubnhPd2doQTM3Q0VrdE9mTHJrdk9v?=
+ =?utf-8?B?bHRWR09UUDA2TlJXZ1BpYTJaQlJaRmN3SXlkUGE3KzMzcEh3N3ZDbEhEV3Ju?=
+ =?utf-8?B?WnJBOFNhVXJobW5DeDNmUlBaTCtLbk85TDM2dnJ5ektnTC80VjV1NHZkVERo?=
+ =?utf-8?B?VFZLOWZmWTB5RDV5NzNvUEI4ZmMrZURPOURVUnhiR25SUFVMM0FzaENVdFZF?=
+ =?utf-8?B?cko0RURFVGpYeDdzekFqd1VlV0pJNG0yMUFvUWsySWEyb0x3Z3Q2ZlVxT3Y0?=
+ =?utf-8?B?MVUrU1ZFVjNvWnljaVRtVkR2eFgyekJHWEM0VUkwWnQra0E1Ti9KNEFOeUhD?=
+ =?utf-8?B?RUp0bW84T1d3Y2xoTkxWVUNzSW5sSVhBRVpaR3RndUZ3RGViZFpwSUw3bUlo?=
+ =?utf-8?B?MWt3WDBpVjFzUHMwemxoL2FyZHFwa0hZeGhSNEtadlFBeFBrazlIR3FzNjNa?=
+ =?utf-8?B?Q3ZIUUR0VG5tdjd1Z0NmU1Mxa2R2NGNTRnN2S1AyOTRJSDMzOGhEcCs1T0hn?=
+ =?utf-8?B?NVFSZlZibTdXcmZURWdNaVQxZEFJSWF3b3FGeWlQL3l6N1BvbEFKeGROUlp0?=
+ =?utf-8?B?Zjk4em5DK2N1RjRkdEJtd1o5N3hocW4zZmNWUHpQOEFPbW1Yb3VScFJTSjNU?=
+ =?utf-8?B?Wk1XYXJySmh1VGhIL0xLc0tmYVZLQnRsU0IremhxdmxlTWgvaFZ2bWhkSUVF?=
+ =?utf-8?B?aWZwVGRIUG1QRHRVUk00alJkZ04zbE1WNjFSTGJ5VDdHSWdsVnd3dW44Y3k5?=
+ =?utf-8?B?bHBKL1FEL2tZeCt4MUVJN29RTGE5Q0k1enROM2RmVHBJeFp6ZnpIN2VQVDRt?=
+ =?utf-8?B?MUdjUTN5SkNsekpLQjFrVEpVcXlKMmNnSHNVa2pEbjd4TmcvaFlwZnNMc0Jt?=
+ =?utf-8?B?T0R0bUl5czlpMHMyMWJVSHZZd2o0YlZiOERDTG9qNVQwRUtJamZHNDVpa25v?=
+ =?utf-8?B?TEFQLzZieHdoNURyaEI4NmxIT2RDRFc4QW9ZNnprNTA3ZFJWelRmanlmVE9X?=
+ =?utf-8?B?SERCaDd0WnZtSFFQc00vV3dwOEhGT2pNTXdHVDlNUFhVNGIyK08yUGFEaEkx?=
+ =?utf-8?B?UTNleXBRQ3Y1K1RrQ2g2MXpUdTdQWVUxRXFHSXlGbjROVkwyM3kwQT09?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cadde8c1-838c-4bc0-d8aa-08defe69e586
+X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4742.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 03:19:51.2236
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pMW7/wmUzuyhXLnUErwbXLG0ZM9BOrlzxjOUdivvoxhXBbg8x7DTZZbmo+fW92hUQBdRRBkYhjBFTQQ0hNdPzg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB7308
 
-On 8/19/26 16:36, Aiden Isik wrote:
-> Hi again Guenter,
+
+
+On 8/19/2026 5:12 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Premature loop termination in load_module_btfs when kernel contains multiple BTF objects for the same module.
+> - [Low] API design prevents users from explicitly skipping all kernel module BTFs without providing a dummy name.
+> --
 > 
->> Hi Guenter,
->>
->>> On 8/18/26 12:35, Aiden Isik wrote:
->>>> Hi Guenter,
->>>>
->>>>> On 8/18/26 11:33, Aiden Isik wrote:
->>>>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>>>>>> - [Medium] Missing PMU counter enable configuration for Exynos5515 watchdog.
->>>>>>> --
->>>>>>>
->>>>>>> --- Patch [2]: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data ---
->>>>>>> commit 9ce360e3c933b7447ba5da9ba1b7ae3fee989703
->>>>>>> Author: Aiden Isik <aidenisik@member.fsf.org>
->>>>>>>
->>>>>>> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
->>>>>>>
->>>>>>> This commit adds driver data for the Exynos5515 SoC's watchdog timer.
->>>>>>>
->>>>>>>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
->>>>>>>> index e31f93db05096..5592f25fe6c83 100644
->>>>>>>> --- a/drivers/watchdog/s3c2410_wdt.c
->>>>>>>> +++ b/drivers/watchdog/s3c2410_wdt.c
->>>>>>>> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv_data_exynos5420 = {
->>>>>>>>     		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
->>>>>>>>     };
->>>>>>>>
->>>>>>>> +static const struct s3c2410_wdt_variant drv_data_exynos5515 = {
->>>>>>>> +	.mask_reset_reg = EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
->>>>>>>> +	.mask_bit = 2,
->>>>>>>> +	.mask_reset_inv = true,
->>>>>>>> +	.rst_stat_reg = EXYNOS5_RST_STAT_REG_OFFSET,
->>>>>>>> +	.rst_stat_bit = 24,
->>>>>>>> +	.quirks = QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET | \
->>>>>>>> +		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_DBGACK_BIT,
->>>>>>>> +};
->>>>>>>
->>>>>>> [Severity: Medium]
->>>>>>> Does the Exynos5515 PMU require explicit counter enablement like other recent
->>>>>>> Exynos SoCs?
->>>>>>>
->>>>>>> Other variants in this driver (like Exynos850, AutoV920, and GS101) that use
->>>>>>> the NONCPU_INT_EN PMU registers also pair it with a NONCPU_OUT register and
->>>>>>> the QUIRK_HAS_PMU_CNT_EN flag to ensure the watchdog counter ticks.
->>>>>>>
->>>>>>> If the Exynos5515 hardware works similarly, omitting cnt_en_reg, cnt_en_bit,
->>>>>>> and QUIRK_HAS_PMU_CNT_EN here might leave the counter disabled and the
->>>>>>> watchdog silently non-functional. Could you confirm if this variant needs the
->>>>>>> counter enable logic?
->>>>>>
->>>>>> Exynos5515 does not require this.
->>>>>>
->>>>>> Downstream on GS101, as an example, has this struct member set:
->>>>>>
->>>>>>> pmu_count_en_func
->>>>>>
->>>>>> This is not set downstream for Exynos5515, so it is not used for
->>>>>> Exynos5515.
->>>>>>
->>>>>
->>>>> You keep talking about "downstream". What is that ?
->>>>
->>>> By "downstream" I am referring specifically to Samsung's Linux kernel
->>>> fork for Exynos5515.
->>>>
->>>> I host a copy here: https://github.com/Aiden-Isik/linux-android-lucky7
->>>>
->>>> Also in this message I refer to Google's GS101 kernel fork, which can
->>>> be found here:
->>>> https://github.com/LineageOS/android_kernel_google_gs101
->>>>
->>>
->>> Both are completely irrelevant for the upstream kernel. I am most definitely
->>> not going to look into that code. If there is anything relevant - such as
->>> the comment you pointed to earlier - you'll need to provide that as independent
->>> comment(s), not just refer to some downstream code as explanation. The
->>> explanation needs to be provided in the _upstream_ kernel code.
->>>
->>
->> There's not really any explanation for it other than "that is the way it is".
->> Samsung designed the Exynos5515 watchdog timer to not have that quirk,
->> I read the downstream code and learnt that fact, so we don't enable
->> that quirk.
->>
+> --- Patch [1]: [RFC PATCH bpf-next v3 1/2] libbpf: support selective kernel module BTF loading via bpf_object_open_opts ---
+> commit 627a7f9dbb55055d6c4d1331859084b6d2f56792
+> Author: Fuyu Zhao <zhaofuyu@vivo.com>
 > 
-> Just in case I am misunderstanding what you are asking for and you want
-> examples of how I know this is correct to be posted on the mailing list,
-> here you go.
+> libbpf: support selective kernel module BTF loading via bpf_object_open_opts
 > 
-> Unfortunately Samsung doesn't publish technical specifications for their
-> modern SoCs, so the best documentation we have is their own source code,
-> which doesn't really explain the *why*, but it does explain the *what*
-> and the *how*.
+> Add kmod_btf_names and kmod_btf_names_cnt fields to bpf_object_open_opts
+> to support selective kernel module BTF loading. This allows libbpf to
+> load only specified module BTFs and skip others.
 > 
-> I'll do my best to explain it concisely and how we drive the hardware
-> in the same way upstream:
+>> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+>> index b749c01742ee0..957415341caf1 100644
+>> --- a/tools/lib/bpf/libbpf.c
+>> +++ b/tools/lib/bpf/libbpf.c
 > 
-> Google (and/or Samsung since GS101 is Exynos-based) define the struct
-> for the watchdog timer like this:
+> [ ... ]
 > 
->> static const struct s3c2410_wdt_variant drv_data_gs101_cl0 = {
->> 	.noncpu_int_en = EXYNOS_CLUSTER0_NONCPU_INT_EN,
->> 	.noncpu_out = EXYNOS_CLUSTER0_NONCPU_OUT,
->> 	.mask_bit = 2,
->> 	.cnt_en_bit = 8,
->> 	.rst_stat_reg = EXYNOS_RST_STAT_REG_OFFSET,
->> 	.rst_stat_bit = 0,      /* CLUSTER0 WDTRESET */
->> 	.pmu_reset_func = s3c2410wdt_noncpu_int_en,
->> 	.pmu_count_en_func = s3c2410wdt_noncpu_out,
->> 	.quirks = QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_WTCLRINT_REG |
->> 		  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
->> };
+>> @@ -5851,6 +5858,121 @@ int bpf_core_add_cands(struct bpf_core_cand *local_cand,
+>>  	return 0;
+>>  }
 > 
-> Note 'pmu_count_en_func' is set.
+> [ ... ]
 > 
-> Later on in the file, we have this code:
+>> +static int bpf_object__init_kmod_btfs(struct bpf_object *obj,
+>> +				      const struct bpf_object_open_opts *opts)
+>> +{
+>> +	const char **kmod_btf_names;
+>> +	size_t i, kmod_btf_names_cnt;
+>> +	int err;
+>> +
+>> +	kmod_btf_names = OPTS_GET(opts, kmod_btf_names, NULL);
+>> +	if (!kmod_btf_names)
+>> +		return 0;
+>> +
+>> +	kmod_btf_names_cnt = OPTS_GET(opts, kmod_btf_names_cnt, 0);
+>> +	if (!kmod_btf_names_cnt) {
+>> +		pr_warn("kmod_btf_names_cnt must be set when kmod_btf_names is provided\n");
+>> +		return -EINVAL;
+>> +	}
 > 
->> if (wdt->drv_data->pmu_count_en_func) {
->> 	ret = wdt->drv_data->pmu_count_en_func(wdt, true);
->> 	if (ret < 0) {
->> 		dev_info(wdt->dev, "wdt count enable fail\n");
->> 		return ret;
->> 	}
->> }
+> [Severity: Low]
+> If a user wants to optimize BPF object loading by skipping all module BTFs
+> (for instance, when only vmlinux BTF is needed), setting kmod_btf_names to NULL
+> falls back to the default behavior of loading all modules, but providing a
+> valid pointer with kmod_btf_names_cnt = 0 returns -EINVAL.
 > 
-> Which will call the chosen counter enable function if that field is set,
-> which will, well, enable the counter.
-> 
-> Now, for the struct corresponding to Exynos5515 in the same driver:
-> 
->> static const struct s3c2410_wdt_variant drv_data_exynos9_v4 = {
->> 	.noncpu_int_en = EXYNOS_CLUSTER2_NONCPU_INT_EN,
->> 	.mask_bit = 2,
->> 	.rst_stat_reg = EXYNOS5_RST_STAT_REG_OFFSET,
->> 	.rst_stat_bit = 23,	/* CLUSTER2 WDTRESET */
->> 	.pmu_reset_func = s3c2410wdt_noncpu_int_en,
->> 	.quirks = QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_WTCLRINT_REG |
->> 		  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
-> };
-> 
-> We can see that 'pmu_count_en_func' is not set, meaning that code within
-> the if statement shown earlier is not called, and the counter is not manually
-> enabled.
-> 
-> Translating this to upstream, if QUIRK_HAS_PMU_CNT_EN is set as a flag,
-> the following code within the if statement will execute:
-> 
->> if (wdt->drv_data->quirks & QUIRK_HAS_PMU_CNT_EN) {
->> 	ret = s3c2410wdt_enable_counter(wdt, en);
->> 		if (ret < 0)
->> 			return ret;
->> 	}
-> 
-> Which as we can see does the same thing and enables the counter.
-> 
-> So, since 'pmu_count_en_func' is enabled on GS101 in the downstream vendor
-> code, the QUIRK_HAS_PMU_CNT_EN flag is set, as the Sashiko AI points out.
-> However, since it is *not* set for Exynos5515, that means Exynos5515 does
-> not require manual counter enablement and that flag should not be set,
-> which is why the AI's concern is wrong.
-> 
-> I also tested this (with the watchdog actually enabled this time), and it
-> behaves as expected.
+> Does this API design force users to allocate and pass a dummy module name just
+> to skip loading module BTFs entirely?
 > 
 
-All ok, but you do not explain all this as comment in your patches, you just
-point to downstream code. At least some of that downstream code, if I recall
-your previous feedback correctly, actually _did_ explain at least some of
-this.
+The API is not intended to explicitly skip all module BTF loading.
 
-Example: A comment along the line of "According to <place source here>,
-Exynos5515 PMU does not require explicit counter enablement" would do.
-Sashiko does not know the context. I don't either, and neither does
-anyone else.
+A NULL kmod_btf_names means no module filter is specified, so libbpf
+preserves the existing behavior.
 
-So why exactly are you not willing to add such comments ? Please explain.
+When kmod_btf_names is provided, kmod_btf_names_cnt must specify the
+number of entries. A non-NULL list with a zero count is therefore treated
+as invalid API usage, rather than a request to skip all module BTFs.
 
-Guenter
+>> +
+>> +	obj->kmod_btfs = calloc(1, sizeof(*obj->kmod_btfs));
+> 
+> [ ... ]
+> 
+>> +static bool all_needed_kmod_btfs_loaded(const struct bpf_object *obj)
+>> +{
+>> +	return obj->kmod_btfs &&
+>> +	       obj->kmod_btfs->nr_names > 0 &&
+>> +	       obj->kmod_btfs->nr_names == obj->btf_module_cnt;
+>> +}
+> 
+> [Severity: Medium]
+> If a kernel module is unloaded but its BTF object is kept alive by an open file
+> descriptor, and the module is then reloaded, the kernel will contain multiple
+> BTF objects with the same module name.
+> 
+> Because btf_module_cnt increments for every loaded BTF object, but nr_names
+> tracks the number of unique requested module names, can duplicate BTF objects
+> inflate btf_module_cnt?
+> 
+> If a user requests BTFs for multiple modules via kmod_btf_names, would this
+> condition evaluate to true prematurely and skip the remaining requested modules?
+> 
+
+I don't think this can cause premature termination. `load_module_btfs()`
+iterates BTFs in ascending ID order, so a reloaded module gets a higher
+BTF ID and is encountered later. We stop as soon as all requested module
+BTFs are loaded, before reaching such duplicate BTFs.
+
+>> +
+>>  static int load_module_btfs(struct bpf_object *obj)
+>>  {
+> 
+> [ ... ]
+> 
+>> @@ -5939,6 +6066,9 @@ static int load_module_btfs(struct bpf_object *obj)
+>>  			break;
+>>  		}
+>>  		obj->btf_module_cnt++;
+>> +
+>> +		if (all_needed_kmod_btfs_loaded(obj))
+>> +			break;
+>>  	}
+>>  
+>>  	if (err) {
+> 
 
