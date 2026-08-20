@@ -1,101 +1,282 @@
-Received: from mail-24429.protonmail.ch (mail-24429.protonmail.ch [109.224.244.29])
+Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE6D221D89
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.29
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787236261; cv=none; b=L3aWzKD1+JIBVWFnssjKX9MeX9+PIcWTWjnY1+r1E4wwiC4DexDxhH6rD6DOpKELn0rWxC5JKx+ZzMH/yCx5ZXb5DyWc39UodFMynxCnZPq/wtwDWd1ciUR1fdmrUNtO9dF0xmXeWNXx/rt+y5Z0ZRMJl/mUWbVdYrrPRbmdHf0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787236261; c=relaxed/simple;
-	bh=6nZekrGDR1e79cZp3d5jjVTk/CDtiCrwQg6z8O9+w08=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RL0xAQMbUca3EnWN4iXKUMB/khJOPSiYe4ESN3S0cpqZtIsC9mLmpjMt7g2zJUvTzOshE5BV6RuIsPwlAHI//8OpuQrO1SjTgaFPoDFt7cS4QoSfsK24O0NwJ1PdRPJ1z/O7ImP7ViQju9MwmqvjTPqIbAstp6JaHHqWtr/Tr98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=R7WaDDj4; arc=none smtp.client-ip=109.224.244.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F6D36494F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:45:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787237120; cv=pass; b=Y2n35hxCATnY1FgFCvk54/LpinT/CL67y2EP4NkRmYkVJXG4qtosSi1NKAjCoiTaWPu++qNJTgd2chSkkuX1+rrg7CC5rqr+yixZ7futKe1z5a/s+hCn6iC14SpNAmbdp6PqtAFLm22iL9C0WGtA7+GPhsuraMfBWOCB7eLcIng=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787237120; c=relaxed/simple;
+	bh=gZbsgX5OwmT7ALgF1UrQZXysLZ8N2FGn1r8EaIx4gSE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lrQQeO87+RpPIES9wOYqmQwgtBHB7tMrNgpwUx7Ql83oUZKQj5EOP4VHPil/8xB3pAY5tHhVOPZ6EKVJ3oq1AmNB0XPmeiWg6mUnHVdHkrGw+FUoK1UZkYebfC7v1Det0x8rOtavPEt+6TrgwtyYRlUczzpRQu5LpN027AOkR2w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=EIRMG86I; arc=pass smtp.client-ip=136.143.188.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="R7WaDDj4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=bev6y25i6ncctedy32ymibrkma.protonmail; t=1787236253; x=1787495453;
-	bh=6nZekrGDR1e79cZp3d5jjVTk/CDtiCrwQg6z8O9+w08=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=R7WaDDj4uDWfaqWgvp9hz3zmu3Ei0TOFlLNWcdXx8Dh9w4wKgoWIPW+cHVI8nfzUN
-	 fH/AETksbKuyd7FGPgCilPREML61oZWoTNrA2yDzaQnXSPJ3h9tFa0UaHT5i81Tdfp
-	 0kfPCHvHjbhNKN6J/+X4AvV/pUJzlU1botcUUUXvF7AE9C6LYbAd59RNuwVBQlrwUu
-	 mPdarLyk9qH6uCBIXUVJZSv86f/l7u21NB60CuZLrqJNgJ9ov4YPh0ki3+bPBfVtK7
-	 ZxJwr/09bSCRRjeeSwzV+4hQA0R/nqLy9Bc+0+qDntN7+3b8xJfX2etaBmXJi35PNG
-	 F1oG25mCT0DAg==
-Date: Thu, 20 Aug 2026 14:30:50 +0000
-To: sashiko-reviews@lists.linux.dev
-From: quanyeyang <quanyeyang@proton.me>
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH v2] bpf: Annotate bpf_obj_memcpy with data_race
-Message-ID: <dxXTVwpQO7zo4ivW09N7H3v1-xi5XFS2KuY6EG17YJ7MdY5GLbHDXcG-8P3NYOKJHqkEUL8PEUwFX1nCVirLeNXR7y-MBLcx9WfAdt621Rg=@proton.me>
-In-Reply-To: <20260820112634.EC5881F000E9@smtp.kernel.org>
-References: <20260820-bpf-kcsan-obj-memcpy-v2-1-672517a3145f@proton.me> <20260820112634.EC5881F000E9@smtp.kernel.org>
-Feedback-ID: 206494642:user:proton
-X-Pm-Message-ID: 579cd2722e5d9fed5952d59023485ccda98b5b71
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="EIRMG86I"
+ARC-Seal: i=1; a=rsa-sha256; t=1787237115; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=UiRyjSrp8ZVdJwCrPSLx8EfZ6Ht58qyKoWmb2hMv6+t9DO2i8Xzlg1I6KC5c9dTprLAsFamr1w6K8Sdca6a55VOqR6tlghslULaeemTaB/KK2AxKymesh+ze2EZTvZAi3F9lE2der9HFGa69zbCWiaDMA5A6c+b0PatXSY/0NRY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1787237115; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=yPfE/sHUiu2o6V0dJ0UBJAphD1W/z5Eu+CoSCFRLdRA=; 
+	b=R+DuOvDii37wM/+ldOeleFwLijbFDb9RO2EoEoBybu505ef3lNdlVGv7/b3ay9ueA9bB2zk03hTSsWk0Y770OMph/wrsx4vz5j05RWohm7sEb6HQ13x3ODdJoXzp9SC26qT6FdFN0W073qdZZsFoz9aljNaP4EPO3U8tKnUa24k=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787237115;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=yPfE/sHUiu2o6V0dJ0UBJAphD1W/z5Eu+CoSCFRLdRA=;
+	b=EIRMG86IcaSmpPzhjoFaGNTPdAIBbcud+Cx4bpRqlPedm2xs5AZ543fCsH7F9rHq
+	XQW5lm/JRv/Dz2pzdykL0pC31EDJOP+VlonkHxc4MIcr8wzVkSZQj1IWaFiCC7fonsw
+	UoClxGKxzkO6VKDGImUazn/SJhkSl3/oHF7RNIA0=
+Received: by mx.zohomail.com with SMTPS id 1787237112729448.9155883822127;
+	Thu, 20 Aug 2026 07:45:12 -0700 (PDT)
+Received: by venus (Postfix, from userid 1000)
+	id 5D56918082F; Thu, 20 Aug 2026 16:45:09 +0200 (CEST)
+Date: Thu, 20 Aug 2026 16:45:09 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Damon Ding <damon.ding@rock-chips.com>, 
+	sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, robh@kernel.org
+Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
+ samsung DP DT properties
+Message-ID: <aocKgCU2hw1jJsKl@venus>
+References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
+ <20260707040613.1992841-4-damon.ding@rock-chips.com>
+ <20260707041711.4F7351F000E9@smtp.kernel.org>
+ <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
+ <DKSQUNWA86GP.9NHE4ADGYLQH@bootlin.com>
+ <ba494eae-c17f-4a15-8276-fd5dfb372337@rock-chips.com>
+ <DKSXCKHFS3T7.2UK43K8F0TUGZ@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tqb3otqvwl2eytwz"
+Content-Disposition: inline
+In-Reply-To: <DKSXCKHFS3T7.2UK43K8F0TUGZ@bootlin.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/287.221.66
+X-ZohoMailClient: External
+
+
+--tqb3otqvwl2eytwz
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
+ samsung DP DT properties
+MIME-Version: 1.0
 
+Hi,
 
-
-
-
-Sent with Proton Mail secure email.
-
-On Thursday, August 20th, 2026 at PM 7:26, sashiko-bot@kernel.org <sashiko-=
-bot@kernel.org> wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+On Wed, Aug 19, 2026 at 02:37:59PM +0200, Luca Ceresoli wrote:
+> Hello,
 >=20
-> Pre-existing issues:
-> - [High] bpf_obj_memcpy() ignores the long_memcpy parameter when a map va=
-lue contains special BTF fields (rec !=3D NULL), leading to data tearing an=
-d uninitialized memory leaks.
-> --
+> On Wed Aug 19, 2026 at 10:19 AM CEST, Damon Ding wrote:
+> > Hi Luca,
+> >
+> > On 8/19/2026 3:32 PM, Luca Ceresoli wrote:
+> >> Hello Damon,
+> >>
+> >> On Wed Jul 15, 2026 at 10:32 AM CEST, Damon Ding wrote:
+> >>> On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
+> >>>> Thank you for your contribution! Sashiko AI review found 1 potential=
+ issue(s) to consider:
+> >>>> - [Critical] Failing probe when deprecated DT properties are missing=
+ breaks DT ABI and prevents their deprecation.
+> >>>> --
+> >>>>
+> >>>> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore manda=
+tory samsung DP DT properties ---
+> >>>> commit b573dba50acc6087122ffa4a65680322f4d004f8
+> >>>> Author: Damon Ding <damon.ding@rock-chips.com>
+> >>>>
+> >>>> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
+> >>>>
+> >>>> This commit reverts a change that made the samsung,link-rate and
+> >>>> samsung,lane-count properties optional for Exynos DP. It adds error =
+checking
+> >>>> to fail the probe early if these properties are missing, aiming to p=
+revent
+> >>>> link training failures caused by zero values.
+> >>>>
+> >>>>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/d=
+rivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> >>>>> index 8cf6b73bceac0..293d8adfe9856 100644
+> >>>>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> >>>>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> >>>> [ ... ]
+> >>>>> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struc=
+t analogix_dp_device *dp)
+> >>>>>    		 * NOTE: those property parseing code is used for
+> >>>>>    		 * providing backward compatibility for samsung platform.
+> >>>>>    		 */
+> >>>>> -		of_property_read_u32(dp_node, "samsung,link-rate",
+> >>>>> -				     &video_info->max_link_rate);
+> >>>>> -		of_property_read_u32(dp_node, "samsung,lane-count",
+> >>>>> -				     &video_info->max_lane_count);
+> >>>>> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
+> >>>>> +			return dev_err_probe(dp->dev, -EINVAL,
+> >>>>> +					     "Failed to get samsung,link-rate\n");
+> >>>>
+> >>>> [Severity: Critical]
+> >>>> Does failing the probe when this property is missing break the DT AB=
+I?
+> >>>>
+> >>>> Since samsung,link-rate is a deprecated property, a modern schema-co=
+mpliant
+> >>>> Device Tree might intentionally omit it. If a system boots with such=
+ a DT,
+> >>>> this check will fail the probe with -EINVAL and disable the display.
+> >>>>
+> >>>> Could the driver instead fall back to hardware maximums or sensible =
+defaults
+> >>>> when the deprecated property is absent, rather than returning an err=
+or?
+> >>>>
+> >>>
+> >>> I'm afraid it's difficult to provide a universal sensible default val=
+ue
+> >>> here.
+> >>>
+> >>> The samsung,lane-count and samsung,link-rate values vary significantly
+> >>> across Exynos DP device trees, so a generic fallback to hardware
+> >>> maximums cannot guarantee stable link training.
+> >>>
+> >>> Even though these two properties are marked deprecated, all existing =
+DTS
+> >>> files in our projects have already populated them completely. Moreove=
+r,
+> >>> the current link training logic relies on these two parameters; omitt=
+ing
+> >>> either will directly cause link training failures at runtime.
+> >>>
+> >>> Therefore, retaining the mandatory property check in probe is a
+> >>> reasonable approach for now.
+> >>
+> >> I'm still not convinced we should turn an optional property into manda=
+tory,
+> >> after having been optional since 2016 (based on the commit in the Fixe=
+s:
+> >> tag).
+> >>
+> >> The sure thing is we cannot break existing devices which upgrade to a =
+new
+> >> kernel.
+> >>
+> >> Se the question is: if a device is missing one of these properties, or
+> >> both, what happens? The video_info->max_link_rate and/or
+> >> video_info->max_lane_count will be zero, correct? And if they are zero=
+, is
+> >> there even a remote possibility that the device will work somehow, may=
+be
+> >> only with some rare low resolution or whatever?
+> >>
+> >> If the answer is "yes, there is a remote possibility that one sich dev=
+ice,
+> >> with some maybe rare configuration, will work", then no, we cannot make
+> >> this property mandatory now. There can be devices out there working wi=
+thout
+> >> these proberties, and they would be broken.
+> >>
+> >> If the answer is "there is no way at all a device can work without one=
+ or
+> >> both properties", with a good explanation based on the code flow and
+> >> hardware docs, then we can consider this change.
+> >>
+> >
+> > Sorry for the confusion, I just submitted the v7 series which crossed
+> > with your reply.
+> >
+> > To answer your question: there is no way at all a device can work
+> > without these properties. Here is the code flow when either
+> > max_link_rate or max_lane_count is 0 (helped by AI):
+> >
+> >    analogix_dp_commit()
+> >      -> analogix_dp_full_link_train(dp, max_lanes =3D 0, max_rate =3D 0)
+> >
+> >    analogix_dp_full_link_train(max_lanes, max_rate):
+> >        // Read sink capabilities via DPCD and sanitize them
+> >        link_rate   =3D read_dpcd(DP_MAX_LINK_RATE); // >=3D 0x06 after =
+fixup
+> >        lane_count  =3D read_dpcd(DP_MAX_LANE_COUNT);// >=3D 1 after fix=
+up
+> >
+> >        // Clamp by the limits from DT
+> >        if (link_rate > max_rate)                // 0x06 > 0, always true
+> >            link_rate =3D max_rate;                // link_rate =3D 0
+> >        if (lane_count > max_lanes)              // 1 > 0, always true
+> >            lane_count =3D max_lanes;              // lane_count =3D 0
+> >
+> >        // Configure TX with the zeroed values
+> >        set_link_bandwidth(link_rate =3D 0)
+> >            // writel() is only executed for bwtype =3D=3D 0x06/0x0a,
+> >            // so LINK_BW_SET is never written and stays at reset value;
+> >            // phy_configure() is called with link_rate =3D 0.
+> >
+> >        set_lane_count(lane_count =3D 0)
+> >            // writel(0, ANALOGIX_DP_LANE_COUNT_SET) enables 0 lanes;
+> >            // phy_configure() is called with lanes =3D 0.
+> >
+> >        // Program sink for link training
+> >        drm_dp_dpcd_write(DP_LINK_BW_SET, {link_rate =3D 0, lane_count =
+=3D 0})
+> >            // DP spec requires link rate in {0x06, 0x0a, 0x14} and
+> >            // lane count in {1, 2, 4}. Writing zeros is illegal, so the
+> >            // sink cannot enter the training state.
+> >
+> >        // Training loop
+> >        for (lane =3D 0; lane < lane_count /* 0 */; lane++)
+> >            // loop body never executes; training_lane[] stays
+> >            // uninitialized and no training register is ever programmed
+> >
+> > Since the sanitized sink values are always non-zero (link_rate >=3D 0x0=
+6,
+> > lane_count >=3D 1), the clamping with a zero maximum unconditionally
+> > forces the training parameters to zero. Clock recovery can never be
+> > achieved, so link training fails deterministically.
 >=20
-> --- Patch [1]: [PATCH v2] bpf: Annotate bpf_obj_memcpy with data_race ---
-> commit 1f96f25bd23990e4a6c598225059cbcbac9898bf
-> Author: quanyeyang <quanyeyang@proton.me>
->=20
-> bpf: Annotate bpf_obj_memcpy with data_race
->=20
-> This patch annotates the ordinary memcpy() sites in bpf_obj_memcpy() with
-> data_race(), matching bpf_long_memcpy(). This documents the existing
-> concurrency semantics and suppresses KCSAN reports for intentional races
-> without changing behavior.
+> Thank you very much for the detailed analysis! To it is enough to
+> proceed. I'll review your v7.
 
-Thanks for the review.
+Can't the default for missing properties just be changed to 4 lanes
+and 0x14 rate and the DP link training would automatically train to
+less lanes / rates based on hardware capabilities (which would
+render the properties basically useless except for a small speedup
+during link training)?
 
-The per-CPU padding issue is pre-existing and has already been fixed by
-commit 7cf9cd98cf6f ("bpf: Copy per-CPU map value padding in
-copy_map_value_long()"):
+Greetings,
 
-https://lore.kernel.org/bpf/20260624155115.85196-2-leon.hwang@linux.dev/
+-- Sebastian
 
-That commit makes copy_map_value_long() pass
-round_up(map->value_size, 8) to bpf_obj_memcpy(), ensuring that the tail
-padding is copied even when map->record is non-NULL.
+--tqb3otqvwl2eytwz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-My v2 was based on a Linus-tree commit that does not yet contain this
-BPF-tree fix. The data_race() annotations neither introduce nor change
-the padding behavior. I will make sure that the next revision is rebased
-onto the current bpf tree.
+-----BEGIN PGP SIGNATURE-----
 
-As for tearing, bpf_long_memcpy() provides only a best-effort mitigation,
-rather than a strict anti-tearing guarantee. The syzbot update paths
-addressed by this patch use copy_map_value(), not copy_map_value_long().
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmqHEuoACgkQ2O7X88g7
++ppo7xAAoAFq+SlYLTwYJFRpvU7ZU/TcvGu3G8vMyVjzCBk5AsjgJ/o5MkoN5yLT
+vkgGjfeC0UMup7x9jUZsX2zNHVrVDjvkWEOgXmNwDHGYrQm0/hHwwtpf+oCSOkKp
+wfJDq8lxl8goiTGaT9dTb9W5zh++1I96SRqIRhi97jWgKQVbdkCpPFgi0J2RLpP8
+DC/FbESwtEqOwGDthzhMaJfl2J4EoV3G4UZXRyXi0FsPLEm06jLasWZbasG3SBFq
+eXGEV3vDVoVmKAuEC62f/E+NTp+gpDAyoKuThrSfWZfJcse6MDPte/tLCArchN7Q
+16mqk1N9IFwkQ19IZ9Y42dy0SgO1nMeXBjuyeX9lbIBRy+iUp8dQvcpOI21Ituue
+enGdBKGHjeAyGSTsBTCNhVZljLqseHc6wwEb2scambpWSFTNK5h/6HWKZEymrAnR
+4oV3tBkNR04CSq2vsc8YkcUiXZKoGosfJNg24/MkoBhqrODMUsTYVhuh+9ic/gKy
+UIgzMiVCPUwu+UPXPHjk1TLw+lmnvvhSHASOdi4zf9lTVjWQFj6GjI0Zj232vOIu
+UBBoqV6eLxqn3HWsxb52/1G9PjghxZQ/rG06+kVZaZpDsqISnnYwmZ3X5joxsj+E
+JUTHdRiF5GZYZfnEKkqatiaRv+/BEAXyZKGyZSl6mIoi2BQGXlk=
+=hxts
+-----END PGP SIGNATURE-----
 
-quanyeyang
-
+--tqb3otqvwl2eytwz--
