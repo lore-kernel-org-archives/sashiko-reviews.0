@@ -1,151 +1,209 @@
-Received: from mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6FD4756A8
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:13:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787235226; cv=none; b=DRs6DOZkDfBAOr2Dwo1rs99RnisolTqq7t4JHh3s5mpgwmZ3bYxs5Cob9I7fo8gF71+gmFCQE4KE2KAev2VePiRSQFwNKcR/YStXGGDT79tjLmZJd8CHd633IJCtR37+3vu2pFUiB2BRkKmPtc9prPtiSVG/38QjiHceUU2C8qU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787235226; c=relaxed/simple;
-	bh=/I2WaGo2nAOXO4n4LbukrKrZ9QkEc8zRDEEn89KjNCM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840764772A1
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787235893; cv=pass; b=S7RYQlD+wYO+u/uMgEKLYNknNmQKPU2xOgaIYv3/o8rMXFX8rGT9C2wYDyoMmVqIxL5tTIXN9piXONBUwGb/MkbFBXF8JhnsBzhCkri3wKOtk8zy5LeiUH0x80/BuIAee/5tiOiOzBfOh9xwRqlVGz89ycICraCTXgwd6lusqQ4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787235893; c=relaxed/simple;
+	bh=4ua3cxV8dhkHOIff05LR1Y3qFBHcVH6d6nazxugRB7I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ORPDDvKKK28VgtECC6GubYoMbWTgtUxff0Zgos/YccfYjgCyvR+rHa3/rUdaWEWO/u+q2IvJi/KdJ6RduAxT5a3f36id+P06DxG3sYt8iuSRLuR0MtRpVqQOi9Mt+BzHyDRngNFts+fXEHPloien+XEeyPiLLAKe43AdSlu4Ucg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rzELSdmw; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 To:Cc:Content-Type; b=i5bbdduSQYfLU756ksnoD0/zwVkN9xElpjhNW+Qu78BgfswjgglSrbwfF2bEyAbBfG3nXnIl8qn/xKojS9i31q2CBErIfM+wuycCeqsjHUzgeCiKxX0LkdpR0W+AZg7/I7z5jTIFI3mve7bgLrCLZHRpmVQ2UD8X8t3YUMkKiBU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UzHMY9LC; arc=pass smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rzELSdmw"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/I2WaGo2nAOXO4n4LbukrKrZ9QkEc8zRDEEn89KjNCM=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787235222; v=1; x=1787840022;
- b=rzELSdmwyHShl18XM3sM14Y6/hkOv3bP5BUt+ydsjKZ9rfhGC1ZpoqJOU0hy75cBJg7v223u
- L0+mfj0+CUeyvV71wSf6WPf1s+lHK8Ea0V79TqjqMDPsUJXtWvkbw/AmvELsA8P0XXxBD+GO8Yu
- FQMMyrlCQnOH44eAak2iRJ9g=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f46.google.com (209.85.167.46)
-	by smtp.migadu.com with ESMTPS id 3f6365c77541b32c;
-	Thu, 20 Aug 2026 14:13:42 +0000
-X-Mizu-Trace-ID: 3f6365c77541b32c
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5b2a73da7e1so11063e87.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:13:38 -0700 (PDT)
-X-Gm-Message-State: AOJu0YxcWl16+n8SrkQhO8idKguRqSBqJnSUvxiw+MZB44DI/PyiUOwW
-	0QgPzjFnQg7PrfUIzQ7UwQi6886U7ZXxKjAzgXIYTwaPL+EPcTwni6xgqeE6ChGPoJaVIXm1T9E
-	lo8DXk6MlVisd6uZL3cA95r4g16tNwUrc/ENfFPzX
-X-Received: by 2002:a05:6512:1044:b0:5b1:571f:715f with SMTP id
- 2adb3069b0e04-5b47dd8842dmr247207e87.3.1787235217676; Thu, 20 Aug 2026
- 07:13:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UzHMY9LC"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-490cf322ed0so21883105e9.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:24:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787235890; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LSlvyocmaUTa56VugDYfGJcB6ogYrEIOmawfW2/HnlipO5Cox6ueHYiaDEsr1UkXXI
+         q0wrT+z/PtWo0Yprs8+QPXTwbExdcXAnnRygRX4uJxit2yFhdbFC4HTjlw5uz+GQXVGZ
+         pH+GHkSmcs5wNcSRo6U/gZI5mEdS+H6MGjW16ROHEw6TrFWT7UGEPrThT6IrocBU//YX
+         hMzP7VO+NdVKGHmGwrqKLvRMekX+O/Mo5/7aZec4GLSaUf40L8iM1nBP8+kWsNMtgPjp
+         /TYE4oPLpbIBLVyJRZt+deJtwt7P+o/MbeVhh2h2mDVKek1MsE5G7ZM9BoDDC/rwH7An
+         PVQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vGtwPp5SElePleI/4XLp2bHhqRVpPgOhFZ40qM1IKko=;
+        fh=en6g1YjRevizPr9Fe8PH0phWaT1FK8ZA2vuA3bAxWnU=;
+        b=iwLay59BE0NLiWC6FZ1pnWU81QH7EI7CHXkLf23wTxZqaDALdsGJcmnG7cQZ2XEX8o
+         jJSOEJRz7Y1gt2aKUGd5jKMbuT9oVV8jOsBAp8Ti+X252AHy5x8bqNWFaQZQ7Rn+NZKj
+         U2rIdE/K2w7ECpi2O6doRSoKJLkymWeoLyBM3mNFnQWYwdv7piR3Kkw9tkc61G95oBr5
+         FdJrTutMSe6b5rkHnCSA6cvRRLm5KIeokZf2cNC6LgEFAtwgOzq/bqxwrW7potspjohE
+         GvuqjMMEK9Xw6cZbbeyPP2G8CjaAJ3y4ns43siiIyFh4HoXCLumicF/W9ZjN3PqJ13p4
+         7rPQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787235890; x=1787840690; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=vGtwPp5SElePleI/4XLp2bHhqRVpPgOhFZ40qM1IKko=;
+        b=UzHMY9LCVuLZFMgDLrY9L90LoMQbquNq7ZoWlgYyU43R6jE0u+haqDF0AYGL9Vqf1u
+         eoFIwE2n2r2bnuY4JgUjh52jrmQaM43Ml0MmdXcNGqTO0MzcOkh1dl2SmTPKxdd2sd9U
+         dmdg9S/in9zOmlMeUn6D6CsNnHXNJC8Rx/wW13Wql9oeqrA8PtehNoN+9Ca1xITUufJG
+         O1tWE0VlNbMAdX8B33gmM7I0siY8G2ww8XojGbjt/Jlb4yKqhQUNanwTzXDD6OZrNLnj
+         npoo87XynucoZ6zQ6hs9Pk7jssWXC0uqOlGDstLqXwNorhs8zLmB3YRP3S1AliX8DPqA
+         xO1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787235890; x=1787840690;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vGtwPp5SElePleI/4XLp2bHhqRVpPgOhFZ40qM1IKko=;
+        b=fmmjhUV3Kll6/gDdyGfWQOloW31u2N4Pk5bHh5x8afBRTV2kKWRFg1P+pzDMinBpre
+         8X2DhkqE5vOHh+2Nqk6LjXMtoF3hBMPq98t7dkpATyRmNczwGO/rNFlvM/KEPcHC32N+
+         Dh3SZVDxwgG6NZgsWjOF4KAQqHtJ0fBS+puTrlgXQOjR2eKwsnSCGRxRorGOekG551Rw
+         ndhNsY73/nLFEnpV9PdEAfB1dcm9mcQpHXi0YI/OJrncx9Dne75CZWQGivhWtOCqqxJA
+         uVzUClojTvvPYDGsCbmEDHF5khn3efGc2f5bTUXIOwk6e7ih91PSOYLHFmLzqc3ODBR3
+         LbkQ==
+X-Gm-Message-State: AOJu0Yzc9/Ao4Fuv1FuAelZtmqnoqJ3+z9BG+CCl2OB/Y5OZaUbI94v6
+	XLE8E5fpXBtjtSRMyZ6T3KyZDXzZ2xnvuy145Ks5hMmvn1QWWKxVcKeFQ56UE64zvsnnX99MIna
+	PAqj0qOS+ljo6WrDC6VT6wv5689N6CUs=
+X-Gm-Gg: AR+sD11g8va1Qad2GkAbA7GGrMqwLsYW9bSGFnYvl7ydwRrw7vafeFmSNXp4wiWkND0
+	5Iwvjem3rwYd4dava6jjtQOiq7HdXdTc+Ih2chUxpVhXVxEThNxpI/soIoKRuSTci45wDY2ffL0
+	eUFXH2846IQ22L1OEJRM3sfZUPzhEXlOSn1yvbcCBHvO9YFmx2n04ziDyaCYwcfBguxcFXVHalP
+	aaPPxVSiwuwUMtEtCPNg2fNW13q87Nx25iLRkUHj/nWicCHgpVjmihl7fpbv7M7XzNxOePuAdx8
+	PGlvenP0Q/iVqm61LrFni8ZTTjW8VfQw7/O1hppzwrqkHpC5xxPxhot5EgRpsHA4WIg5lv1e9nO
+	zUp8w9BV/pMvmVYIMngypdxeulMWnZi5D9807/BO3
+X-Received: by 2002:a05:600c:3590:b0:493:a966:d5b5 with SMTP id
+ 5b1f17b1804b1-499aa14a75bmr231032105e9.2.1787235889336; Thu, 20 Aug 2026
+ 07:24:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260820125053.2951078-1-fuad.tabba@linux.dev>
- <20260820125053.2951078-3-fuad.tabba@linux.dev> <20260820130302.E89531F000E9@smtp.kernel.org>
-In-Reply-To: <20260820130302.E89531F000E9@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Thu, 20 Aug 2026 15:13:01 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzBRdtjWZSuAS1LZTouRZfP4F9Y=Ht1xN1f_kOzwNto0A@mail.gmail.com>
-X-Gm-Features: AcwNN1XQRj8A7CoqHpb1D6TwxDMQ11ZVchz6u7GyIA7RR0c5V2K-tLNtaCsxaMI
-Message-ID: <CA+EHjTzBRdtjWZSuAS1LZTouRZfP4F9Y=Ht1xN1f_kOzwNto0A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] irqchip/gic-v4: Unwind what its_alloc_vcpu_irqs()
- allocated on failure
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
+References: <20260819103926.2136712-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260819103926.2136712-4-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260819105356.BD7731F000E9@smtp.kernel.org> <aoWpLvrNGHBPvFY5@shikoro>
+In-Reply-To: <aoWpLvrNGHBPvFY5@shikoro>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Thu, 20 Aug 2026 15:24:23 +0100
+X-Gm-Features: AcwNN1XjPbCVWInvwnEJK7fURmifV1Jum9U6XzA0i7unkeraDGkwFi5MdsHj34Y
+Message-ID: <CA+V-a8v23+zevx_xRS-GeHG2yk2k-M2UkPxoC76t-0JewRk9Dw@mail.gmail.com>
+Subject: Re: [PATCH v4 03/15] rtc: rzn1: Fix weekday underflow when alarm
+ crosses month boundary
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
+	linux-rtc@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, 20 Aug 2026 at 14:03, <sashiko-bot@kernel.org> wrote:
+On Wed, Aug 19, 2026 at 2:01=E2=80=AFPM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
 >
-> Pre-existing issues:
-> - [High] vgic_v4_init() truncates its_vm.nr_vpes on vgic_v4_request_vpe_i=
-rq() failure, causing a resource leak of previously allocated VPE IRQs and =
-SGIs during teardown.
-
-https://lore.kernel.org/all/CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2=
-n8Aw@mail.gmail.com/
-
-/fuad
-
-> --
+> > [Severity: High]
+> > This is a pre-existing issue, but does this time_after() comparison
+> > allow bypassing the 1-week hardware limit on 32-bit systems?
 >
-> --- Patch [2]: [PATCH 2/3] irqchip/gic-v4: Unwind what its_alloc_vcpu_irq=
-s() allocated on failure ---
-> commit 09380ca1832d1b65e5229cfbb8e1f8ab95b65846
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> This is fixed later.
 >
-> irqchip/gic-v4: Unwind what its_alloc_vcpu_irqs() allocated on failure
->
-> This commit fixes a resource leak in its_alloc_vcpu_irqs() where SGI
-> domains and vPE irqs were not properly freed if the allocation loop
-> failed midway.
->
-> > diff --git a/drivers/irqchip/irq-gic-v4.c b/drivers/irqchip/irq-gic-v4.=
-c
-> > index 754839e409f88..f707a3cb281aa 100644
-> > --- a/drivers/irqchip/irq-gic-v4.c
-> > +++ b/drivers/irqchip/irq-gic-v4.c
->
-> [ ... ]
->
-> > @@ -189,11 +191,14 @@ int its_alloc_vcpu_irqs(struct its_vm *vm)
-> >               vm->vpes[i]->irq =3D vpe_base_irq + i;
-> >               ret =3D its_alloc_vcpu_sgis(vm->vpes[i], i);
-> >               if (ret)
-> > -                     goto err;
-> > +                     goto err_free_irqs;
-> >       }
+> > [Severity: Medium]
+> > This is a pre-existing issue, but what happens if the RZN1_RTC_ALW regi=
+ster
+> > is uninitialized and wday is 0?
 > >
-> >       return 0;
+> > Calling fls(0) - 1 would evaluate to -1. If the current time is a Satur=
+day
+> > (tm_now.tm_wday =3D=3D 6), delta_days evaluates to 0, which bypasses
+> > the if (delta_days) block and leaves tm->tm_wday =3D -1.
 > >
-> > +err_free_irqs:
-> > +     its_free_sgi_irqs(vm);
-> > +     irq_domain_free_irqs(vpe_base_irq, vm->nr_vpes);
-> >  err:
+> > Since the core function rtc_valid_tm() does not check tm_wday, would th=
+is
+> > propagate a bogus alarm date to the caller?
 >
-> [Severity: High]
-> This is a pre-existing issue, but does the teardown path in
-> its_free_vcpu_irqs() fully clean up resources if its_vm.nr_vpes gets
-> truncated?
+> This looks worth investigating to me. On RZN1, ALW is default 0.
 >
-> If vgic_v4_init() in arch/arm64/kvm/vgic/vgic-v4.c fails to request an IR=
-Q
-> via vgic_v4_request_vpe_irq(), it explicitly truncates nr_vpes to avoid
-> calling free_irq() on unrequested IRQs:
->
-> arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_init() {
->     ...
->     /* Trick: adjust the number of vpes so we know how many to nuke on te=
-ardown... */
->     dist->its_vm.nr_vpes =3D i;
->     break;
->     ...
-> }
->
-> When cleanup subsequently calls its_free_vcpu_irqs(), it relies on this
-> truncated nr_vpes value:
->
-> drivers/irqchip/irq-gic-v4.c:its_free_vcpu_irqs() {
->     ...
->     its_free_sgi_irqs(vm);
->     irq_domain_free_irqs(vm->vpes[0]->irq, vm->nr_vpes);
->     ...
-> }
->
-> Will this sequence leave the previously allocated IRQ domains, fwnodes, a=
-nd
-> SGI domains orphaned for the vCPUs beyond the failure index, since they a=
-re
-> no longer tracked by the truncated nr_vpes count?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820125053.29=
-51078-1-fuad.tabba@linux.dev?part=3D2
+On T2H/N2H too.
+
+I'll create a below patch for it:
+diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
+index 8c70dbf8c7ec..e0fdb591ba91 100644
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -234,13 +234,24 @@ static int rzn1_rtc_read_alarm(struct device
+*dev, struct rtc_wkalrm *alrm)
+        if (ret)
+                return ret;
+
++       ctl1 =3D readl(rtc->base + RZN1_RTC_CTL1);
++       alrm->enabled =3D !!(ctl1 & (RZN1_RTC_CTL1_ALME | RZN1_RTC_CTL1_1SE=
+));
++
+        min =3D readl(rtc->base + RZN1_RTC_ALM);
+        hour =3D readl(rtc->base + RZN1_RTC_ALH);
+-       wday =3D readl(rtc->base + RZN1_RTC_ALW);
+
+        tm->tm_sec =3D 0;
+        tm->tm_min =3D bcd2bin(min);
+        tm->tm_hour =3D bcd2bin(hour);
++
++       /*
++        * If wday is zero, no bit is set in RZN1_RTC_ALW. This is the
++        * register's power-on reset value.
++        */
++       wday =3D readl(rtc->base + RZN1_RTC_ALW);
++       if (!wday)
++               return 0;
++
+        delta_days =3D ((fls(wday) - 1) - tm->tm_wday + 7) % 7;
+        tm->tm_wday =3D fls(wday) - 1;
+
+@@ -249,9 +260,6 @@ static int rzn1_rtc_read_alarm(struct device *dev,
+struct rtc_wkalrm *alrm)
+                rtc_time64_to_tm(alarm, tm);
+        }
+
+-       ctl1 =3D readl(rtc->base + RZN1_RTC_CTL1);
+-       alrm->enabled =3D !!(ctl1 & (RZN1_RTC_CTL1_ALME | RZN1_RTC_CTL1_1SE=
+));
+-
+        return 0;
+ }
+
+Logs:
+    On a cold-booted board with no alarm configured, the following was
+    observed before the fix:
+
+        root@rzn2h-evk:~# cat /proc/driver/rtc
+        rtc_time        : 00:00:19
+        rtc_date        : 2000-01-01
+        alrm_time       : 00:00:00
+        alrm_date       : 2000-01-07
+        alarm_IRQ       : no
+        alrm_pending    : no
+        update IRQ enabled      : no
+        periodic IRQ enabled    : no
+        periodic IRQ frequency  : 1
+        max user IRQ frequency  : 64
+        24hr            : yes
+
+    After the fix:
+
+        root@rzn2h-evk:~# cat /proc/driver/rtc
+        rtc_time        : 00:00:25
+        rtc_date        : 2000-01-01
+        alrm_time       : 00:00:00
+        alrm_date       : 2000-01-01
+        alarm_IRQ       : no
+        alrm_pending    : no
+        update IRQ enabled      : no
+        periodic IRQ enabled    : no
+        periodic IRQ frequency  : 1
+        max user IRQ frequency  : 64
+        24hr            : yes
+
+
+Cheers,
+Prabhakar
