@@ -1,178 +1,177 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F78B2DF3F2;
-	Thu, 20 Aug 2026 07:51:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787212286; cv=none; b=VuL5RJrzVfhVG+GvI/l4XRGS1fgIde/2xg5xxdJhfMEFWEunZy3IDVlPbYEzgVSsg3hwMMuosJryZjyn0p/97BQS/2zTigvjW13Q1mUpyLpxFtCVzHKbuYMD+iDGpYbdoipgvt/9uYKc7F8f6IdvlJfu7PYGsPvudWYqmTiBTiw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787212286; c=relaxed/simple;
-	bh=RipmgSu1VwNstvzmFVwgmwc3ipnUcWkacFVoqYWHF1M=;
-	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=kWvDYVJ757JAt6fNHo/jLMVu7nFLspB0eR2v4po+ThcWU36EfrvQxNNnpkPQcHAk0GPJ+tAcJf4fU+AZL0W31mt89ZsnhQsZim+LSXLvsiaKxdPvMG4JrLvXuC4MPHgvwpcEWYcmT2qRL2f0YvRTDjbeTj+236iPV0L9aa3WILY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Kq/+JGFU; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65B73B776A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787212390; cv=pass; b=V9dHSX5Z/P7rTy420khwcrfFhnQlq+tAw2VIE4a5bgRIXbyMkXh64Q2RSwXm0lThsNAWcB2tRR+cv6+cLiNOeD0XtbRU1F6kYxD7sRv435RWrFH8PgE9WBP2o7x13vRFhYr9/vyvbKeVEms+Agbd/mlf5OTeyeof1uGTal/pfRc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787212390; c=relaxed/simple;
+	bh=3ux/9MYCmRGaVF+WTBt5CVZosKYLKPfKOqqlr1ELLVA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MAMRnC33UAWVocBNkjF3u/RVTQfLXH83kNuSGZnXUar5DrbZxcoWPxS/ALXz/0uDFwUlLLjvk2PLxDpWzCNI5cWUSGvO1jW1Lbi2+4c9iLOQvArQ85tRe3+fqXyzMlOlbKKgXAnl5erYp8eKFd2JdpLMC3j21+QZ0XmyzmK8XME=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TslUAoNW; arc=pass smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Kq/+JGFU"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67JLVjtl424450;
-	Thu, 20 Aug 2026 07:51:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=RipmgS
-	u1VwNstvzmFVwgmwc3ipnUcWkacFVoqYWHF1M=; b=Kq/+JGFUs3WAj0FiP8F0sy
-	c/ENwBU5o+GM2OV0Ak9k8PWRJJCg9I8MU/JJtm0wUCO5uCnXgjCW91ooICx3eP6T
-	WeSJka83T+N5jUGUb8QojAblu0tGDLoPTN4KJoZrkk0WsAI1CGOpYrLA5osgWRQU
-	h+R+i8+rWATcg4Dk5EEy90YxEkgBGlbCw5cvcvC1XR68ArBp1v2Rbxho7LgaYAib
-	IRgWs6Zk0X+t5Q7aJvGgyFaXF3UwJQ1EpcMQY6QANmk4NfqUiQhAjAOLPx0Gy0y1
-	Pdh+1auBgeej+WkiqWZKvjC1REW1rvXWKqMW2erIbZdbXy6lvgbt5B5F0hKE6XyQ
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1gt09-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 07:51:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67K7fGo3020103;
-	Thu, 20 Aug 2026 07:51:23 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yn0x2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 07:51:23 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67K7pMuF5505762
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 20 Aug 2026 07:51:22 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 59A9E58061;
-	Thu, 20 Aug 2026 07:51:22 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 25A905803F;
-	Thu, 20 Aug 2026 07:51:21 +0000 (GMT)
-Received: from [9.111.21.58] (unknown [9.111.21.58])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 20 Aug 2026 07:51:20 +0000 (GMT)
-Message-ID: <279ed76d61fcf4521d545aec0078e8a4ff39f206.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 1/2] s390/pci: Fix missing pci_dev_put() in
- zpci_report_status()
-From: Niklas Schnelle <schnelle@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Heiko
- Carstens <hca@linux.ibm.com>,
-        Christian Borntraeger
- <borntraeger@linux.ibm.com>,
-        Alexander Gordeev	 <agordeev@linux.ibm.com>
-In-Reply-To: <20260819100849.868DB1F000E9@smtp.kernel.org>
-References: 
-	<20260819-fix_zpci_report_status_pdev_leak-v2-0-da0c4aa7c0ca@linux.ibm.com>
-	 <20260819-fix_zpci_report_status_pdev_leak-v2-1-da0c4aa7c0ca@linux.ibm.com>
-	 <20260819100849.868DB1F000E9@smtp.kernel.org>
-Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 09:50:19 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TslUAoNW"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8eeadbc5e21so13164356d6.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 00:53:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787212388; cv=none;
+        d=google.com; s=arc-20260327;
+        b=G/73t/CfWnniI4DLIg3nDnhUvWYyR10wukVgMRO+V7wVOh974Loi/dZlT4KiXVxZNf
+         gkQ7Vb9xtrC2dCTYkeXyc55lZwgAz+P2N5LI1QtcXtOk9zMG1xDRNUrX/QGdDEBdo4YH
+         WWHzOQxWHDl/vjvk8UNCUqRVsYX0QR9qGqwN/jJ00Na4XAtLQW5MimeW3V+AN9Z4Hblm
+         k8/fP2hLswsR7SBOABIwuMLCVUjLhmx8sAZ9GKx48wZKNsC0rjPDZfyNY7oWpO9oZeKj
+         +1VD9LflwPPdWuM3ZlxQCliKjt6ViiGvpLkb3QGF1S0q9ZI5UY72nRAi23OHXEn1TTaI
+         BovQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:dkim-signature;
+        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
+        fh=EZuZmZXRu1UyRSJj9ezXMUdPDZEdphtf/LAtIY+x/4c=;
+        b=XrHi9LWOtlTBvQsXmeZjd9EEmk8cHz2dt06EMejMQzWZkyWPCkWGwOcC+xLzqGALw8
+         vQJeYJxvZOrzPhSmtJAHR7ifpYI5RY56K539Uidi06LGIuiYOcYCIS34MkKV/fqBKzdQ
+         4onIoXrbZbu0wUJLzdGFslGaLmhCTHNgJ/GmKQHBQG83Vlr6A01tsvmvclUTMewwz1E2
+         ydeWWzXPH5J43201VbjJhr/1HwrFQvJvdZDg9+lA8lbuK7h7dqEplLeHWLazKmkvH7Ct
+         ZyKLwQlzYrhr1afK5zLR+Wkg4ixw4j+l4yW+2YQ5QqM6H1HLdAHjaTwxGQWk/SQXWc4I
+         ERNA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787212388; x=1787817188; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:mime-version:references:in-reply-to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
+        b=TslUAoNW+ONOVAAPoGaLAsbK9QTDHc/1IHP3fJpN9vJVOViOuTqXAjBcorECYqNUNv
+         7V0DLOpItIfDLNtCOrrs0imah9zOH1cyHcVJeok6UHx8DEuNsygaaxmTqz7r5dSCbTVF
+         Uul+f64v/hYcJl5lpONQtTsIn2tvIIweyw3JlQ4uEKKZBqxl0sEuAy+QHHl8DFfK66d8
+         qI28pM34/f9D90CD8vs/YCvthiT+9GkZu5NdbczTe0/K4sHMf//zSHJSSLJXtgvpJY2m
+         2in1+5FpcJYyHeVeTC8B/sqJS9R5JPaaLJEnaXnQwPVpIbWj1UJcNuBgAPpdMFUYsNJw
+         J3vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787212388; x=1787817188;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:mime-version:references:in-reply-to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=o51BoL0uW8eYgVaNnvAPkhpysbo2+k4CgPomgwBCyNM=;
+        b=P8Z0PJWhHNzg5xUCXvWwdvWCgGA2gkOjFM8zqJYTsyggnOjpmdsj2emXL+5Po+LFSM
+         0jaRC06CGEDWrhTnWKwxPG1uedVwJsmZ2ehQb41OS8FnbMsB6lkTMVh7j3mks/vTEYoD
+         +/FnKjcCtLuaTih0CLLND/bSWzGBIPyIbBJ+f0zBdy1TWegb7UZxtp5B59RwOUppG+Tn
+         O5A5X/m4o8sNTWJAO5fKN7r+Q7diVYKKl5ZDVmnc3u3jvzIKtHLDv7DCI8kowY5jSege
+         LfMjdBxXsO9+596tc0Efv2gBTZ0g7ZdxbssNWT6dP/0OM4gLbLlFTMpdoHlf7Tt8HuCU
+         eMwQ==
+X-Gm-Message-State: AFuF++nXbPXq3ZbtJR/ilP7e0unGhAEsyb0Rqi2WOPq2XupLrNmww19p
+	9tozKFcHibt9L3pz4+TY8I64ZfYLYn4HEiNJtXFHVaQ81Mm0HQKTNgbwukAb2MmDtkjrN+zZteF
+	M3/IXJBhzU9ffezZqsrh46s34ik67ie2moAktmHvQUMcKlVKScZ/kCnB1
+X-Gm-Gg: AR+sD11R8Fs+FKYygHG5z7HhLnfCFDhWaoq/MbYXQgHPBrYdZYmRdgCVhcTZWa5cVF7
+	xeAVVBYfCW1lkaEIo8OCVBljpeiT7G2VDuMGLqvYCQUR7QJkVUrz2WFIFkDtSE/zYIuHCsz8QqD
+	MTcL9Cqud8MafWou5TfNmqbNfoaPBs65/5mIEh4V+yX5T0keauW7WogDSl2hI8YR3IOwKoI8hjZ
+	7PIYAmdCj16LhwXiPSVNQsawjVOwxkdk4BINoqEESAUi0IAYIYOiNBAkAq2+kR18kmOpdF4P2CN
+	4l98VUjYXvXVesYb2uThjYeXKy4s6MjPVJKralvLywydFPxdpJZ4aVi9ej45s1AZfiIR6OwaWDZ
+	Zd0wyGL/jHimfbt91QPrLv/25rcj2kF7vhVNBsYo2bg==
+X-Received: by 2002:a05:6214:4014:b0:90a:804c:325a with SMTP id
+ 6a1803df08f44-90c5e984419mr106287766d6.13.1787212386932; Thu, 20 Aug 2026
+ 00:53:06 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Aug 2026 00:53:06 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Aug 2026 00:53:06 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260818092909.DBA151F00A3D@smtp.kernel.org>
+References: <20260818-gmem-no-return-page-v2-0-5298f42d49bb@google.com>
+ <20260818-gmem-no-return-page-v2-2-5298f42d49bb@google.com> <20260818092909.DBA151F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a86b1fc cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=0ruoR0joT2hd7_cMhKsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 1tVtc1XwAXLGXo3Kx8JpZSe_TlOdcJBU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDA1MyBTYWx0ZWRfX2V1Xml/DrC/w
- Ep6Fc/xbOa1u6KjAxRUAw7b6M8i7dPMleXWS9WZYXXPRlAfeVYzBnRCWnH3zGOl/OSf4tqRgsQd
- tPbVx39/gDZcQk9znK9woRL7jxQsfAo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDA1MyBTYWx0ZWRfX/mYvBzL9olrW
- jT9F3rJ52To26y7S5/usl2kSCfnVs8upZ0Wm+NeTiHzqn1PFJRL3ohnhuwbiNF+3C+6zM2tJHU+
- /Pnc+woiKP0jBhKy5aDgj/1e0nhc58A57HZ/YQTC2iTQXoPVVsFB7/o5ZG6iFNuchovxsAaMGAj
- 3yWnJNvpvwWg2ZH7+4ha/HqAb7IpCgzjyUWyE8mxHK+Bixs+qf6M8t2MVn8LTTJvVQKdAWvUpvs
- VzZrIfizl9RLsRUUaCk6NnXpy9yPX1ausVWynxZRU9/s01uJRi2Vvl69It3QQVYlCaJL6XviieP
- ObeQsE1qI9GUbHw11uCamUAHE2oCKWn0E77MTBJf7VrOnKWA4GT9LDu6vWpGTw94Q3gN/DJdeFY
- ryQ8j24OMVQJS1v6d2HTvO4MfWqUtQm8i19ftTFN4PIcX4+2ohmelX9uSzB+bEZnqfv83OiCvA5
- 9koocaghPmCn710BEwg==
-X-Proofpoint-ORIG-GUID: 1tVtc1XwAXLGXo3Kx8JpZSe_TlOdcJBU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- adultscore=0 suspectscore=0 impostorscore=0 clxscore=1011 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200053
+Date: Thu, 20 Aug 2026 00:53:06 -0700
+X-Gm-Features: AcwNN1WB-tnpCZT-uPr4BO2Hn9hueJ3F68Yv8vagfQAHyYOSy_v0o3BPhF3IvDw
+Message-ID: <CAEvNRgGFy39FmmVQGLc0SZkOGuYg5rXhKd2Ah+FhaSwc13zQVg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] KVM: SEV: Drop page refcount early during RMP
+ fault handling
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2026-08-19 at 10:08 +0000, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Lockless TOCTOU and Use-After-Free when accessing `pdev->dev.dri=
-ver` and `driver->name`.
+> - [Medium] Dropping the page refcount early introduces a race condition w=
+here a concurrent `guest_memfd` invalidation can trigger a false-positive '=
+Unexpected RMP fault' kernel warning.
 > --
+>
+> --- Patch [2]: [PATCH v2 2/4] KVM: SEV: Drop page refcount early during R=
+MP fault handling ---
+> commit 7d0f356d8592ce1804052b0fdb61fccf3a11ecaa
+> Author: Sean Christopherson <seanjc@google.com>
+>
+> KVM: SEV: Drop page refcount early during RMP fault handling
+>
+> When handling an RMP fault, KVM retrieves the PFN for a private GPA from
+> guest_memfd. This patch drops the page reference immediately after retrie=
+ving
+> the PFN instead of holding it across the entire handler, and adopts the M=
+MU
+> invalidation protocol to guard committing anything based on the PFN.
+>
+>> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+>> index b2738362a928b..b34b11d7f8fad 100644
+>> --- a/arch/x86/kvm/svm/sev.c
+>> +++ b/arch/x86/kvm/svm/sev.c
+>
+> [ ... ]
+>
+>> @@ -5030,18 +5031,22 @@ void sev_handle_rmp_fault(struct kvm_vcpu *vcpu,=
+ gpa_t gpa, u64 error_code)
+>>  		return;
+>>  	}
+>>
+>> +	mmu_seq =3D kvm->mmu_invalidate_seq;
+>> +	smp_rmb();
+>> +
+>>  	ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, &page, &order);
+>>  	if (ret) {
+>>  		pr_warn_ratelimited("SEV: Unexpected RMP fault, no backing page for p=
+rivate GPA 0x%llx\n",
+>>  				    gpa);
+>>  		return;
+>>  	}
+>> +	kvm_release_page_unused(page);
+>>
+>>  	ret =3D snp_lookup_rmpentry(pfn, &assigned, &rmp_level);
+>>  	if (ret || !assigned) {
+>>  		pr_warn_ratelimited("SEV: Unexpected RMP fault, no assigned RMP entry=
+ found for GPA 0x%llx PFN 0x%llx error %d\n",
+>>  				    gpa, pfn, ret);
+>> -		goto out_no_trace;
+>> +		return;
+>>  	}
+>
+> [Severity: Medium]
+> Since the page reference is dropped before this lookup in
+> sev_handle_rmp_fault(), could a concurrent guest_memfd hole-punch drop
+> the file's reference to the page and free it?
+>
+> If the page is freed, the RMP entry would transition to shared/unassigned=
+.
+> Could this then cause snp_lookup_rmpentry() to see the page as unassigned
+> and incorrectly emit this warning before the mmu_invalidate_retry_gfn()
+> check happens?
+>
 
-This is exactly the issue fixed by the second patch.
+Yes, this can happen. I'll also check for invalidations before
+warning in the next revision.
 
-Thanks,
-Niklas
->=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-gmem-no-=
+return-page-v2-0-5298f42d49bb@google.com?part=3D2
