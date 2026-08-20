@@ -1,282 +1,179 @@
-Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011009.outbound.protection.outlook.com [52.101.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F6D36494F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9465437CD52;
+	Thu, 20 Aug 2026 15:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787237120; cv=pass; b=Y2n35hxCATnY1FgFCvk54/LpinT/CL67y2EP4NkRmYkVJXG4qtosSi1NKAjCoiTaWPu++qNJTgd2chSkkuX1+rrg7CC5rqr+yixZ7futKe1z5a/s+hCn6iC14SpNAmbdp6PqtAFLm22iL9C0WGtA7+GPhsuraMfBWOCB7eLcIng=
+	t=1787239490; cv=fail; b=V02YLRgb20VnEnGiHTAYDeBoZz8JjIbtudY6kuAQ/+CHCNKYMwGlwVYpmus5XWW/A39adBaf+p1JU/IIJnKa8pm0hDX+63SDPx9OwJwBzcNbX9y/5nQqNMkfbsjFv4jFP6VlgPpxodkT6M2rDo/tWatJxIpW77IYVT6slbolHwo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787237120; c=relaxed/simple;
-	bh=gZbsgX5OwmT7ALgF1UrQZXysLZ8N2FGn1r8EaIx4gSE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lrQQeO87+RpPIES9wOYqmQwgtBHB7tMrNgpwUx7Ql83oUZKQj5EOP4VHPil/8xB3pAY5tHhVOPZ6EKVJ3oq1AmNB0XPmeiWg6mUnHVdHkrGw+FUoK1UZkYebfC7v1Det0x8rOtavPEt+6TrgwtyYRlUczzpRQu5LpN027AOkR2w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=EIRMG86I; arc=pass smtp.client-ip=136.143.188.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1787239490; c=relaxed/simple;
+	bh=oBasldKKHPmcME4cCasQX9HvKNH6oI4MEq4ogTOcIo0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=uDBmn3P2u2+Pd2wcQVYlZ+t6QpMjMYd8zgQNBeikqVolOZn0uMu4jKq1HNIiivv1l/UdlV8RbheJbm9Bj9Rfg2I1UcJ35zSx5CZNJVi3Th6KEgPTMOYEwE3jLUw4CXVJfdFE7ZewTXIq2oy0J7UTiP8x2/mlnvwJX0zeIaRkDh8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Whw6guma reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="EIRMG86I"
-ARC-Seal: i=1; a=rsa-sha256; t=1787237115; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=UiRyjSrp8ZVdJwCrPSLx8EfZ6Ht58qyKoWmb2hMv6+t9DO2i8Xzlg1I6KC5c9dTprLAsFamr1w6K8Sdca6a55VOqR6tlghslULaeemTaB/KK2AxKymesh+ze2EZTvZAi3F9lE2der9HFGa69zbCWiaDMA5A6c+b0PatXSY/0NRY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1787237115; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=yPfE/sHUiu2o6V0dJ0UBJAphD1W/z5Eu+CoSCFRLdRA=; 
-	b=R+DuOvDii37wM/+ldOeleFwLijbFDb9RO2EoEoBybu505ef3lNdlVGv7/b3ay9ueA9bB2zk03hTSsWk0Y770OMph/wrsx4vz5j05RWohm7sEb6HQ13x3ODdJoXzp9SC26qT6FdFN0W073qdZZsFoz9aljNaP4EPO3U8tKnUa24k=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787237115;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=yPfE/sHUiu2o6V0dJ0UBJAphD1W/z5Eu+CoSCFRLdRA=;
-	b=EIRMG86IcaSmpPzhjoFaGNTPdAIBbcud+Cx4bpRqlPedm2xs5AZ543fCsH7F9rHq
-	XQW5lm/JRv/Dz2pzdykL0pC31EDJOP+VlonkHxc4MIcr8wzVkSZQj1IWaFiCC7fonsw
-	UoClxGKxzkO6VKDGImUazn/SJhkSl3/oHF7RNIA0=
-Received: by mx.zohomail.com with SMTPS id 1787237112729448.9155883822127;
-	Thu, 20 Aug 2026 07:45:12 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id 5D56918082F; Thu, 20 Aug 2026 16:45:09 +0200 (CEST)
-Date: Thu, 20 Aug 2026 16:45:09 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: Damon Ding <damon.ding@rock-chips.com>, 
-	sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robh@kernel.org
-Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
- samsung DP DT properties
-Message-ID: <aocKgCU2hw1jJsKl@venus>
-References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
- <20260707040613.1992841-4-damon.ding@rock-chips.com>
- <20260707041711.4F7351F000E9@smtp.kernel.org>
- <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
- <DKSQUNWA86GP.9NHE4ADGYLQH@bootlin.com>
- <ba494eae-c17f-4a15-8276-fd5dfb372337@rock-chips.com>
- <DKSXCKHFS3T7.2UK43K8F0TUGZ@bootlin.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Whw6guma"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ID9h+ZNqcEO8gJnFnjdNMYcAn0moNTfvpkZEuxTplP8cssSVjyRbJOS/t6MPb9qXYrg/mIWYQl2P+FuB9xr41BZ2bnc2P0JLxU6iFJHv3gvN0BeqjoB+EXlwakrpsPWgVcybe31UA7GGTxKmZm9/XQlaMJ5Wu/oSIg+p/tYzZLFJKmDPOBxhb/eJrMxnps9lDyS1Dcc0f0Zz8ccR1jcxGkUHV32jsTbkVaLIQatVT6mwPIjiirZoNF/ydVgjYiuaZb/Ln2xtDx2j4e9nUP21CS4Hvu3pjSJSUeqXnfKqbHhiaN0b3KAeNQKXpxffxPVTnFFrU2b1dfZjqb4osadMUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tg5o0lMvommvt9HxMKTKSvEsGqCDPSl0ET4qPVX4jhc=;
+ b=LIopN4gA3b5IeEt/EQ7nMCjPlkbwtYEJ5Rj6aWVKnJi3+xTBPUa0ppOGhHF3igHEBLV53N7YuxxtBQXAgJAWTn4KF7oX8YMzD2AzwDaFARzO3D08BEkRJdAnBnzQvYJxai9LZ57lCVAEUFWzmswXoYNanOsaFuR2Nqq8TCejIR/jVbYgA6EN5ffIqD2vnceOmAQOd7JFtjq0SOi10TNRElT1Y3CjE9E+k4626rIUKbEvrXw+/xZM4ueo7XxI+tIfIapcLJvPr4nUzgRSA4N66oDjmKI3VBOqtaQrKFjJvwRUFzV5vydV5kAHjaln7TYnZXDZxD2IatBer9yK2VnFzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tg5o0lMvommvt9HxMKTKSvEsGqCDPSl0ET4qPVX4jhc=;
+ b=Whw6guma5x3ZUMQOdmA5rPUcR9dgiUb6dfJJxQzfPsouSLrYJgiVjMirMa4LVu+8QPHmK+fhaz6XESsZRUKQEK2C5A4dkk8k/sQrNLYlCkCLXG3giS1TwGTid2EH5j+TMJTRQj8fiWgngh/CO/WyYLgmFmg4ONp6IAn83uGbRgGw9W55iB7R/VatuQJtF/SzdjY8HAgwKfoMiRNZxlCGC4BDGayi3LLDtrUJVDerb9op0dzlblGB0fMwgb2qIWJU7GywC3p9vSCQOe/28fpZ4BpyfGUdveERxf+uA4d4tjuFxX/OpouV2+ErmE2StuRlVMhZ6pdWqPzbTS9Je50noQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AM8PR04MB7442.eurprd04.prod.outlook.com (2603:10a6:20b:1d8::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
+ 2026 15:24:45 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
+ 15:24:45 +0000
+Date: Thu, 20 Aug 2026 10:24:38 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: hongxing.zhu@oss.nxp.com, imx@lists.linux.dev, conor+dt@kernel.org,
+	robh@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v1 1/3] arm64: dts: imx95: Avoid 32-bit PCIe window
+ System RAM overlap
+Message-ID: <aoccNh6gCfz3Bz-f@SMW015318>
+References: <20260820083620.877251-1-hongxing.zhu@oss.nxp.com>
+ <20260820083620.877251-2-hongxing.zhu@oss.nxp.com>
+ <20260820084208.5CF311F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260820084208.5CF311F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA1PR02CA0001.namprd02.prod.outlook.com
+ (2603:10b6:806:2cf::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tqb3otqvwl2eytwz"
-Content-Disposition: inline
-In-Reply-To: <DKSXCKHFS3T7.2UK43K8F0TUGZ@bootlin.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/287.221.66
-X-ZohoMailClient: External
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM8PR04MB7442:EE_
+X-MS-Office365-Filtering-Correlation-Id: af617e13-7d10-4b8c-6ecb-08defecf2a36
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|19092799006|6133799003|4143699003|56012099006|10067099003|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	D0hsN3yzBGmASJkRW2dglrRyPGk8aigUeA43RaCdklJ1Yr0y5k0IzGISkNargCNKM89Ltqph0D51TOyWTHguxaAcvmlrDnijxGdTFSnLICDHF/whQd75X/GwGExUK/m3V/9Cz6pQX+ra0oj7XGS6arbM5bskJDZIF+BM2iIJxWYAVxKx2V9mT1MWxXfIfh+IloDdpfTvz5lAcrwxzpUFlcZfRnxZqOsDkvkjk5OvTwUj3PRpOwAibKbvA0xUgLfpJ9zM2nS1Qo4wMlQYX3VtAI140KGxuEETwVMgsXlq0L6xIbhZAee+zl9IZZgHp9bxhWGTVXfGXrt3eN0MyCy3RwU44nCfHczVE1AL1w6A4Uo0X3yD6iWqxzFofgnjUrbITGmjxsYxSGMEXZdRTmmdqEWe1MnT5qvttW26/7LcCmK8rqNwASWHBAx5f+r+Bnnipc/0CgJn6bs7U1L869yXPI5dZ0vZvTA3Zi17J7ULmq0SvxU8hvihs3P/EJhnyTcpoWVQ0qasI84rSR71NHl/bDezuer4hTDgEtc+f5NgplL4MAHdZ1pbmHl1JYYrJzkswwTg72DNYU/hGU4f6sIon/vgQzde4QuFBPvXh4scmTQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(19092799006)(6133799003)(4143699003)(56012099006)(10067099003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?VtpQAMUc7fBvC6QbDCIq9oRogaC5wK2R4Be5ACKdSqNaKYtEMLQeFGEzdU?=
+ =?iso-8859-1?Q?/xEZhJKY/aCyjaWUX/aZA94NH4RfpemtcAUfgWdSeCh2ALB8FsX/ohzKJO?=
+ =?iso-8859-1?Q?JNvAL4SafwpL+uDhRrSp4bLRZ9jI7w0yOKynQKtbBkTEX8pIIy522AoKiP?=
+ =?iso-8859-1?Q?TMnm9EdJPUBGuiJCVK8RS8NAhCsytRb1mpdupxrj42wPTrKFAlz9/POLuG?=
+ =?iso-8859-1?Q?KQEhUPXMoSHMwXs7vX6hwoaNp/AvhOKmel4zTBeWmWkEerzGXyqMwho5MJ?=
+ =?iso-8859-1?Q?hQaObnkCBl7GtjwZOcaiuhm5ZjelZ8qfVEuxJmf398mFTL8Kt3mDfZ3cfw?=
+ =?iso-8859-1?Q?X8sShtRdqgrpMnC2Dj9+mA8kyDi6tgpKsZstX+bzTWGomF10lSe3Vt2py5?=
+ =?iso-8859-1?Q?NSZXNIalEBIUkovaxMGLKaznAJhxPloDcaEeaxQM3xufC5OZbkVsMr52tV?=
+ =?iso-8859-1?Q?DcmZyj6ADew9UJJtuPAwDwXw8n3ZUcybsMkJUcGVrdvVNQIWaXARsS45u4?=
+ =?iso-8859-1?Q?mP652pyoPfggkPqhHQtrL7XHF9Vrzk6FcTvk3qA3yEvGhtr2nqljKVe51+?=
+ =?iso-8859-1?Q?tOzyT3VD4NQNk8zdNLbO7UPf5H97pMyEPrf68jAZSVV+RD0zMR8H32v8Cq?=
+ =?iso-8859-1?Q?PdQ8t6quJAJRMH/E7B31SHZ4WTL8CJrwk8CR+ddR18SwijV51oNXuR3FKu?=
+ =?iso-8859-1?Q?h6fPBuAdpg923WcrNqUOrxLWWGUTxGHnUwFSevD35dPPpi4ulYMGHbcDNV?=
+ =?iso-8859-1?Q?JSiHb1vwNybgG/NKJCCA4FP/eWOJCCoRkrAbH5CD2jBg+Bry7PsHfIhcHC?=
+ =?iso-8859-1?Q?0vsZhy2oyl+4ItlKrhmGOb0heK9V59hbkT6MicajJ2vSrHaSqvj49RaFET?=
+ =?iso-8859-1?Q?wdhrsaHc5wvFAuQJTmjnWXLzw4fAt7sPF506+bLGILItDzWQ3oc53w20P0?=
+ =?iso-8859-1?Q?qOOE7ihbxJFqOZmklafi4mle51/J73vHLBTbTHrkiVCyx6lzq+cgXvtc6h?=
+ =?iso-8859-1?Q?6XjqBQpC0QRtzpH/RlQctqAy39eUoQ4tpnEpSJSXPKTqk20RpcQaARdgH0?=
+ =?iso-8859-1?Q?PZYDGEcE3QU+8TsLX8BmOrGuRvFnjNc6JJCoHavzlaGrBhVvw7cxBksMAa?=
+ =?iso-8859-1?Q?rDvBU/MjpnEKoC0iaM5dadTEIeLO80EJVsdaCna5+hzvPzcjhfFKFqll3X?=
+ =?iso-8859-1?Q?qcpjnXfjsyOrJEfkMAS+uaeHbxK3hr/TGMcwnJ3u2dNA+uzKlXWsQTuzI6?=
+ =?iso-8859-1?Q?qN5TUvEi3xtcAeQ0EU6Dk4leNuXrMsVywJl72VR3rR3lYrdVvtMj71L4sB?=
+ =?iso-8859-1?Q?HM3Qvh4m3gvc6lE5//sKPcpUSfX6JiWpQ8ecE1iLC+RFX3JuSkA8pK/I2Q?=
+ =?iso-8859-1?Q?K1DktcR1UGv3UXU/qeZ44AZSQoiah9xoZnUcaLI98XMjOKZk2IoKpL1rcZ?=
+ =?iso-8859-1?Q?wQ6MFHO5BltRzbCuYnSlw0Nwo9Go9hW7v35IxjZ0UtC/8n0YQxkM3BdIlb?=
+ =?iso-8859-1?Q?5Gnv7sX5taGqu6ITgE1t1vWEHahOVjBkvA3QA6E9q750amEDzp9ycTjwrF?=
+ =?iso-8859-1?Q?NiwKkcY96JJ/9cMpPRvupc3vY3M9sEwmitnr3/zopxjWL4dXizD2OW1MFP?=
+ =?iso-8859-1?Q?8jJrGjTD9FUMGuG9TnDZyN+chFBRO0iB+bJSlieQA8yBmv8QaIUIF4EQNe?=
+ =?iso-8859-1?Q?sBhzDwXmwPOLuoI2apb9xpvdLtB7gQMMHhc/rofHp7dICXxUFcQ9+DDAgw?=
+ =?iso-8859-1?Q?Q17r/6FV3EYoW9mAe7U4y9bX0gCXb5uBZSVy6KBj28RlnC3m5VaW/RByYx?=
+ =?iso-8859-1?Q?/v+01sgCi/WvJIJZ6y81sucwg7XpDyEp3yZYlAdtmqt1wMEKZGn8?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: af617e13-7d10-4b8c-6ecb-08defecf2a36
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 15:24:45.5842
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: B9kzBXsf8k/93mDTqOM6lqJMUNSNTIHZwtVeFQ/yZWgtCMwi7ZyKzwOIwOf7b0khWLqvUBYNwhiQNqPfv7ow/N+kOxCFGJA3OtvFL+4NjQ4WmZTnphEqeBkaNE2UCSAP
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7442
 
+On Thu, Aug 20, 2026 at 08:42:07AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit message inaccurately claims to change the 'CPU address', but the patch actually changes the 'PCI address'.
+> --
+>
+> --- Patch [1]: [PATCH v1 1/3] arm64: dts: imx95: Avoid 32-bit PCIe window System RAM overlap ---
+> commit 1e55a58df93bb33b1e5b78cb2403b958366907f0
+> Author: Richard Zhu <hongxing.zhu@nxp.com>
+>
+> arm64: dts: imx95: Avoid 32-bit PCIe window System RAM overlap
+>
+> This commit updates the device tree configuration for the PCIe controllers
+> on the imx95 platform. It adjusts the ranges property to prevent memory
+> window overlaps.
+>
+> > Move the PCIe non-prefetchable memory CPU address from 0xe0000000
+> > to 0x10000000 to avoid overlap with DRAM.
+>
+> [Severity: Medium]
+> Is this description of the change accurate?
+>
+> The device tree ranges property uses the format:
+> <PCI_HI PCI_MID PCI_LO CPU_HI CPU_LO SIZE_HI SIZE_LO>
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
+> > --- a/arch/arm64/boot/dts/freescale/imx95.dtsi
+> > +++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
+> > @@ -1948,7 +1948,7 @@ pcie0: pcie@4c300000 {
+> [ ... ]
+> >  			reg-names = "dbi", "config", "atu", "app";
+> >  			ranges = <0x43000000 0x9 0x00000000 0x9 0x00000000 0x0 0xe0000000>,
+> > -				 <0x82000000 0x0 0xe0000000 0x9 0xe0000000 0x0 0x10000000>,
+> > +				 <0x82000000 0x0 0x10000000 0x9 0xe0000000 0x0 0x10000000>,
+>
+> Looking at the modification to pcie0, the CPU (parent) bus address is
+> represented by the 4th and 5th cells (0x9 0xe0000000). These cells remain
+> unchanged in this patch.
+>
+> The cell that is updated from 0xe0000000 to 0x10000000 is the 3rd cell,
+> which corresponds to the lower 32 bits of the PCI (child) bus address.
+>
+> Could the commit message be clarified to state that the PCI address is
+> being changed, or was the intent to actually update the CPU address in
+> the 5th cell?
 
---tqb3otqvwl2eytwz
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory
- samsung DP DT properties
-MIME-Version: 1.0
+Sashiko is correct, update your commit message, it is not "cpu address"
 
-Hi,
+it is "PCI bus address", you'd better refer to old sashio thread or
+prevous discuss link.
 
-On Wed, Aug 19, 2026 at 02:37:59PM +0200, Luca Ceresoli wrote:
-> Hello,
->=20
-> On Wed Aug 19, 2026 at 10:19 AM CEST, Damon Ding wrote:
-> > Hi Luca,
-> >
-> > On 8/19/2026 3:32 PM, Luca Ceresoli wrote:
-> >> Hello Damon,
-> >>
-> >> On Wed Jul 15, 2026 at 10:32 AM CEST, Damon Ding wrote:
-> >>> On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
-> >>>> Thank you for your contribution! Sashiko AI review found 1 potential=
- issue(s) to consider:
-> >>>> - [Critical] Failing probe when deprecated DT properties are missing=
- breaks DT ABI and prevents their deprecation.
-> >>>> --
-> >>>>
-> >>>> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore manda=
-tory samsung DP DT properties ---
-> >>>> commit b573dba50acc6087122ffa4a65680322f4d004f8
-> >>>> Author: Damon Ding <damon.ding@rock-chips.com>
-> >>>>
-> >>>> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
-> >>>>
-> >>>> This commit reverts a change that made the samsung,link-rate and
-> >>>> samsung,lane-count properties optional for Exynos DP. It adds error =
-checking
-> >>>> to fail the probe early if these properties are missing, aiming to p=
-revent
-> >>>> link training failures caused by zero values.
-> >>>>
-> >>>>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/d=
-rivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-> >>>>> index 8cf6b73bceac0..293d8adfe9856 100644
-> >>>>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-> >>>>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-> >>>> [ ... ]
-> >>>>> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struc=
-t analogix_dp_device *dp)
-> >>>>>    		 * NOTE: those property parseing code is used for
-> >>>>>    		 * providing backward compatibility for samsung platform.
-> >>>>>    		 */
-> >>>>> -		of_property_read_u32(dp_node, "samsung,link-rate",
-> >>>>> -				     &video_info->max_link_rate);
-> >>>>> -		of_property_read_u32(dp_node, "samsung,lane-count",
-> >>>>> -				     &video_info->max_lane_count);
-> >>>>> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
-> >>>>> +			return dev_err_probe(dp->dev, -EINVAL,
-> >>>>> +					     "Failed to get samsung,link-rate\n");
-> >>>>
-> >>>> [Severity: Critical]
-> >>>> Does failing the probe when this property is missing break the DT AB=
-I?
-> >>>>
-> >>>> Since samsung,link-rate is a deprecated property, a modern schema-co=
-mpliant
-> >>>> Device Tree might intentionally omit it. If a system boots with such=
- a DT,
-> >>>> this check will fail the probe with -EINVAL and disable the display.
-> >>>>
-> >>>> Could the driver instead fall back to hardware maximums or sensible =
-defaults
-> >>>> when the deprecated property is absent, rather than returning an err=
-or?
-> >>>>
-> >>>
-> >>> I'm afraid it's difficult to provide a universal sensible default val=
-ue
-> >>> here.
-> >>>
-> >>> The samsung,lane-count and samsung,link-rate values vary significantly
-> >>> across Exynos DP device trees, so a generic fallback to hardware
-> >>> maximums cannot guarantee stable link training.
-> >>>
-> >>> Even though these two properties are marked deprecated, all existing =
-DTS
-> >>> files in our projects have already populated them completely. Moreove=
-r,
-> >>> the current link training logic relies on these two parameters; omitt=
-ing
-> >>> either will directly cause link training failures at runtime.
-> >>>
-> >>> Therefore, retaining the mandatory property check in probe is a
-> >>> reasonable approach for now.
-> >>
-> >> I'm still not convinced we should turn an optional property into manda=
-tory,
-> >> after having been optional since 2016 (based on the commit in the Fixe=
-s:
-> >> tag).
-> >>
-> >> The sure thing is we cannot break existing devices which upgrade to a =
-new
-> >> kernel.
-> >>
-> >> Se the question is: if a device is missing one of these properties, or
-> >> both, what happens? The video_info->max_link_rate and/or
-> >> video_info->max_lane_count will be zero, correct? And if they are zero=
-, is
-> >> there even a remote possibility that the device will work somehow, may=
-be
-> >> only with some rare low resolution or whatever?
-> >>
-> >> If the answer is "yes, there is a remote possibility that one sich dev=
-ice,
-> >> with some maybe rare configuration, will work", then no, we cannot make
-> >> this property mandatory now. There can be devices out there working wi=
-thout
-> >> these proberties, and they would be broken.
-> >>
-> >> If the answer is "there is no way at all a device can work without one=
- or
-> >> both properties", with a good explanation based on the code flow and
-> >> hardware docs, then we can consider this change.
-> >>
-> >
-> > Sorry for the confusion, I just submitted the v7 series which crossed
-> > with your reply.
-> >
-> > To answer your question: there is no way at all a device can work
-> > without these properties. Here is the code flow when either
-> > max_link_rate or max_lane_count is 0 (helped by AI):
-> >
-> >    analogix_dp_commit()
-> >      -> analogix_dp_full_link_train(dp, max_lanes =3D 0, max_rate =3D 0)
-> >
-> >    analogix_dp_full_link_train(max_lanes, max_rate):
-> >        // Read sink capabilities via DPCD and sanitize them
-> >        link_rate   =3D read_dpcd(DP_MAX_LINK_RATE); // >=3D 0x06 after =
-fixup
-> >        lane_count  =3D read_dpcd(DP_MAX_LANE_COUNT);// >=3D 1 after fix=
-up
-> >
-> >        // Clamp by the limits from DT
-> >        if (link_rate > max_rate)                // 0x06 > 0, always true
-> >            link_rate =3D max_rate;                // link_rate =3D 0
-> >        if (lane_count > max_lanes)              // 1 > 0, always true
-> >            lane_count =3D max_lanes;              // lane_count =3D 0
-> >
-> >        // Configure TX with the zeroed values
-> >        set_link_bandwidth(link_rate =3D 0)
-> >            // writel() is only executed for bwtype =3D=3D 0x06/0x0a,
-> >            // so LINK_BW_SET is never written and stays at reset value;
-> >            // phy_configure() is called with link_rate =3D 0.
-> >
-> >        set_lane_count(lane_count =3D 0)
-> >            // writel(0, ANALOGIX_DP_LANE_COUNT_SET) enables 0 lanes;
-> >            // phy_configure() is called with lanes =3D 0.
-> >
-> >        // Program sink for link training
-> >        drm_dp_dpcd_write(DP_LINK_BW_SET, {link_rate =3D 0, lane_count =
-=3D 0})
-> >            // DP spec requires link rate in {0x06, 0x0a, 0x14} and
-> >            // lane count in {1, 2, 4}. Writing zeros is illegal, so the
-> >            // sink cannot enter the training state.
-> >
-> >        // Training loop
-> >        for (lane =3D 0; lane < lane_count /* 0 */; lane++)
-> >            // loop body never executes; training_lane[] stays
-> >            // uninitialized and no training register is ever programmed
-> >
-> > Since the sanitized sink values are always non-zero (link_rate >=3D 0x0=
-6,
-> > lane_count >=3D 1), the clamping with a zero maximum unconditionally
-> > forces the training parameters to zero. Clock recovery can never be
-> > achieved, so link training fails deterministically.
->=20
-> Thank you very much for the detailed analysis! To it is enough to
-> proceed. I'll review your v7.
+Frank
 
-Can't the default for missing properties just be changed to 4 lanes
-and 0x14 rate and the DP link training would automatically train to
-less lanes / rates based on hardware capabilities (which would
-render the properties basically useless except for a small speedup
-during link training)?
-
-Greetings,
-
--- Sebastian
-
---tqb3otqvwl2eytwz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmqHEuoACgkQ2O7X88g7
-+ppo7xAAoAFq+SlYLTwYJFRpvU7ZU/TcvGu3G8vMyVjzCBk5AsjgJ/o5MkoN5yLT
-vkgGjfeC0UMup7x9jUZsX2zNHVrVDjvkWEOgXmNwDHGYrQm0/hHwwtpf+oCSOkKp
-wfJDq8lxl8goiTGaT9dTb9W5zh++1I96SRqIRhi97jWgKQVbdkCpPFgi0J2RLpP8
-DC/FbESwtEqOwGDthzhMaJfl2J4EoV3G4UZXRyXi0FsPLEm06jLasWZbasG3SBFq
-eXGEV3vDVoVmKAuEC62f/E+NTp+gpDAyoKuThrSfWZfJcse6MDPte/tLCArchN7Q
-16mqk1N9IFwkQ19IZ9Y42dy0SgO1nMeXBjuyeX9lbIBRy+iUp8dQvcpOI21Ituue
-enGdBKGHjeAyGSTsBTCNhVZljLqseHc6wwEb2scambpWSFTNK5h/6HWKZEymrAnR
-4oV3tBkNR04CSq2vsc8YkcUiXZKoGosfJNg24/MkoBhqrODMUsTYVhuh+9ic/gKy
-UIgzMiVCPUwu+UPXPHjk1TLw+lmnvvhSHASOdi4zf9lTVjWQFj6GjI0Zj232vOIu
-UBBoqV6eLxqn3HWsxb52/1G9PjghxZQ/rG06+kVZaZpDsqISnnYwmZ3X5joxsj+E
-JUTHdRiF5GZYZfnEKkqatiaRv+/BEAXyZKGyZSl6mIoi2BQGXlk=
-=hxts
------END PGP SIGNATURE-----
-
---tqb3otqvwl2eytwz--
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260820083620.877251-1-hongxing.zhu@oss.nxp.com?part=1
