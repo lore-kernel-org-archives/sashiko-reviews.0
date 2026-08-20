@@ -1,201 +1,255 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC453DCDBB;
-	Thu, 20 Aug 2026 09:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3183D3D3306;
+	Thu, 20 Aug 2026 09:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787216519; cv=none; b=N713tEcCF+HWB7PStN3D4b9bAon3SM80bqTcFT+5JLImp1hXxBUgrVca6DwzpNOsh8+P3AIgeZT6q6zZ1kPNJVB1/qxQHsp5+P6NEElTe5AZblCu5QHp+5iTsFiVqjhkvsJZcEvfeUA6SBgrmtmKXARb3rlr6idd+xYxhNCZhuE=
+	t=1787216852; cv=none; b=teG/jaX6esh9a0E6hzF1JsLDKhrV2wIbxowZTJibujk1AW+njmqCRsDarBo4g0gXjH54/L7F2XvioydCz+/6b9OLSq8SYtCNFAlj5jhQAcbCNA3Bs4FsuKMsaKNrvhQeftq6h8uDOa7aZAPGkjJsysrv4tdgTFROCL3dxSPB1dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787216519; c=relaxed/simple;
-	bh=FfRqY2ZNqOgj064lCVfkk9FH9ychIdj8XGVtDEWl5Zo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=BaRkniL97CMwDpFuEGVZIAIfh8CkgdTjUpxhxz1UIHm1OT7LirUQ8evKds1ywEZapN/W+YP0LKFohOlFUh4ss7hBZJ51URxajlUi+aeJxu8o7sPMZgFTsotAM7RD20yDysYBug/iNctSzMU8aoWdS6mCOgC+bhn9laT/vU7j7/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=nmRX3sOJ; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1787216852; c=relaxed/simple;
+	bh=6W2azZ1uSmwIVr7f3j4lM3W+QTIq0cH3gahxSI9FzqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JKqIoNZGJElyMXq/kfqiBNczOCRSWOkMJ9740iJv2fw41fUWxg6mSz4UiPQdRqgPKl3CSyYHo8bjAeFvG18JkpuOth0uZo9IWMaeY03XHBE1ksa/prCOg/sCYCh2HQhyf8FlsQ4IyiCGm2c9fC+lEw31zolfVUYPC9Hc9GafVtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=diZygM0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="nmRX3sOJ"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67K8uawB3545134;
-	Thu, 20 Aug 2026 09:01:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=GuAL4q
-	7CQt24jE8dTeyPnHvuOlNkqbSr29hmTTZ0LYw=; b=nmRX3sOJ7GEodEaw1He4Zu
-	aSs2BwOupjFV5f92/mGtANYUKvPF0YZaffI1tzousvdMC6q5dJK6eP2fDSYiOX6n
-	xncoboLodlL4jxZOON/Ikt5sUkPpCmjTyN0jVFQmnxt5B6VoZVf/tw5fy15ICHvE
-	Eq/ZgE7lm5qXzrO4/cvFHhGk2O9t3FFgxFTlXYqdhJrYIcpo1xFlxFV+0lriDVjp
-	lsqUquSPcPZLaNKtFs90cr0VAoroqEA1PdJWlKlfsp74z7Rp0yl4/F8ChVHLH2Wa
-	h3Bz+ZRNyoxrd4dSWGGfpVlZccYeqiyYcfROLdNAqDhTIf4RgHC1ZQgBe1mhUlyw
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu292gu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 09:01:49 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67K8uHTH024786;
-	Thu, 20 Aug 2026 09:01:49 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xhdjcj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Aug 2026 09:01:49 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67K91jCc38142282
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 20 Aug 2026 09:01:45 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4299B2004B;
-	Thu, 20 Aug 2026 09:01:45 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D437D20040;
-	Thu, 20 Aug 2026 09:01:44 +0000 (GMT)
-Received: from localhost (unknown [9.111.13.52])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 20 Aug 2026 09:01:44 +0000 (GMT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="diZygM0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D5F1F000E9;
+	Thu, 20 Aug 2026 09:07:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787216850;
+	bh=nOLC2kGzzcwBMFPJjafG0KvSmE4d6Ma9I+0+fw27vM4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=diZygM0zqUyXXoZ1ZCdl34aqloQqlIiIDjwSbi+wzwUjTSaqWA4Mj6WNa5PUPBiEB
+	 j3EpxWa+CaQ5aLxRw6j7eLmVq9+ie7gZepWCBaLA28rb8tnVPAnT1iTYJXju9U7Zbb
+	 Q18Mm5AeoE01rBd2YFOa3KF0PaNLyMf8mdIssOqFLedG1q7EfW3pXAfA0qSsEfDBQL
+	 qcPt6KHHk966UoA2hdaPJltogKWFK4WnEKGCNr8FFsxkN9R06+O+veVJl58a4IKoJJ
+	 GgAUfC3nRC/Yx7aR7pThc/U1K+XSoN/lXWmzXtxgGBz9TmAW6xEGdbKF2/iRznFfTS
+	 AoUg6ujT7Symw==
+Message-ID: <f9fe2eb6-e9ef-42d0-8a24-8f5c550f0c78@kernel.org>
+Date: Thu, 20 Aug 2026 11:07:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH mptcp-next v3 5/5] Squash to "mptcp: pm: init and release
+ mptcp_pm_ops"
+Content-Language: fr
+To: gang.yan@linux.dev, sashiko-reviews@lists.linux.dev
+Cc: mptcp@lists.linux.dev
+References: <20260819125629.49823-1-gang.yan@linux.dev>
+ <20260819125629.49823-6-gang.yan@linux.dev>
+ <20260819131205.3A0201F000E9@smtp.kernel.org>
+ <7b85c6e1e4e270bd368fb7dc6d24279c1c20c3b2@linux.dev>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <7b85c6e1e4e270bd368fb7dc6d24279c1c20c3b2@linux.dev>
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 20 Aug 2026 11:01:44 +0200
-Message-Id: <DKTNDJPXSMZM.2Y0XXTLMLK6UL@linux.ibm.com>
-Cc: "Vasily Gorbik" <gor@linux.ibm.com>,
-        "Alexander Gordeev"
- <agordeev@linux.ibm.com>,
-        "Christian Borntraeger"
- <borntraeger@linux.ibm.com>,
-        "Heiko Carstens" <hca@linux.ibm.com>, <linux-s390@vger.kernel.org>
-Subject: Re: [PATCH 6/7] s390/pci: add error cleanup in
- zpci_directed_irq_init
-From: "Tobias Schumacher" <ts@linux.ibm.com>
-To: <sashiko-reviews@lists.linux.dev>, "Tobias Schumacher"
- <ts@linux.ibm.com>
-X-Mailer: aerc 0.22.0
-References: <20260819-s390_irq_domain_fixes-v1-0-826ff27b6e97@linux.ibm.com>
- <20260819-s390_irq_domain_fixes-v1-6-826ff27b6e97@linux.ibm.com>
- <20260819090237.E61621F00A3A@smtp.kernel.org>
-In-Reply-To: <20260819090237.E61621F00A3A@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a86c27d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=glX0xfcHcXGri_P-SMIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: vH8AC9ukR2ZIte3CmIyBt-yQg5srhYW6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDA2NSBTYWx0ZWRfX/YZcQ4n0WTDB
- hBaXzIOR6S6yLYqVG6/vE79ly0pC/a0eYaW7nNazgPhZpXOegw8SePO8xPGGLMqhXm2ebIEghYG
- crMZK/lo+yj03TRx0/TkyQDrSkcLzYWgZksZJFgwz/R9WJM69lglM5Bmd27/sJUl7BmNYHFMlTV
- 14sHRAbnG8y2pNwNpDHPk5NbnBuCwBhPXNruALldKyfiYJFDcq3TmHr4glGO8W/VrXXMBdEUF+x
- JpXXbsoUKkyRzsx7BT4IkfnmHAdW4BSXBUKvmJB796heZW8eFoK4a1CyH2plv3Qua0UAwEPVM4H
- jWRnHdVzhzPVyDei1vlPL0dAPwzEKmeFl50sN0K+T5ip4Y72mz2exI/LDnsNNVo2FBk+uWucrKE
- kAEM4+JQ+m4pcNY+sfM4H3FtO0ZvAxwFmVQ0Z0XMvuH5v9KjdPtKm6WdZaegRAnjNYNEY3IGi+D
- WwgUNQ4GisUX6g07bPw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDA2NSBTYWx0ZWRfX59cDUaBXFXRr
- O6svmEDu5KcEy6eXL1DpKdHro5+s1H2gHWwI/p8NV5nXvCPF+3wNOZdMYTowuwesUnlPqNAJQd0
- hEfuIKCmRGgY73SUBIIJTm4HTXwnHGw=
-X-Proofpoint-ORIG-GUID: vH8AC9ukR2ZIte3CmIyBt-yQg5srhYW6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608200065
+Content-Transfer-Encoding: 8bit
 
-On Wed Aug 19, 2026 at 11:02 AM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The newly added error cleanup path in `zpci_directed_irq_init` i=
-ntroduces a DMA use-after-free vulnerability.
-> --
->
-> --- Patch [6]: [PATCH 6/7] s390/pci: add error cleanup in zpci_directed_i=
-rq_init ---
-> commit 5a0360870b410d13391fe09d0a8840ffaa9cb9be
-> Author: Tobias Schumacher <ts@linux.ibm.com>
->
-> s390/pci: add error cleanup in zpci_directed_irq_init
->
-> This commit adds an error cleanup path to zpci_directed_irq_init to relea=
-se
-> airq_iv resources if per-CPU allocation fails, preventing a memory leak.
->
->> diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
->> index 1515d8d7460ea..1ddf6b3625a26 100644
->> --- a/arch/s390/pci/pci_irq.c
->> +++ b/arch/s390/pci/pci_irq.c
->> @@ -586,7 +586,7 @@ static int __init zpci_directed_irq_init(void)
->>
->>  	zpci_ibv =3D kzalloc_objs(*zpci_ibv, num_possible_cpus());
->>  	if (!zpci_ibv)
->> -		return -ENOMEM;
->> +		goto out_free_sbv;
->>
->>  	for_each_possible_cpu(cpu) {
->
-> [ ... ]
->
->> @@ -599,13 +599,25 @@ static int __init zpci_directed_irq_init(void)
->>  					       AIRQ_IV_CACHELINE |
->>  					       (!cpu ? AIRQ_IV_ALLOC : 0), NULL);
->>  		if (!zpci_ibv[cpu])
->> -			return -ENOMEM;
->> +			goto out_free_ibv;
->>  	}
->>  	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
->>
->>  	zpci_irq_chip.irq_set_affinity =3D zpci_set_irq_affinity;
->>
->>  	return 0;
->> +
->> +out_free_ibv:
->> +	for_each_possible_cpu(cpu) {
->> +		if (zpci_ibv[cpu])
->> +			airq_iv_release(zpci_ibv[cpu]);
->> +	}
->> +	kfree(zpci_ibv);
->> +	zpci_ibv =3D NULL;
->> +out_free_sbv:
->> +	airq_iv_release(zpci_sbv);
->
-> [Severity: High]
-> Does this new error path introduce a potential DMA use-after-free?
->
-> Just before the allocation of zpci_ibv, the hardware is configured with t=
-he
-> physical address of zpci_sbv->vector:
->
-> arch/s390/pci/pci_irq.c:zpci_directed_irq_init() {
->     ...
->     iib.diib.disb_addr =3D virt_to_phys(zpci_sbv->vector);
->     zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
->
->     zpci_ibv =3D kzalloc_objs(*zpci_ibv, num_possible_cpus());
->     if (!zpci_ibv)
->         goto out_free_sbv;
->     ...
-> }
->
-> If we jump to out_free_sbv and free zpci_sbv via airq_iv_release(zpci_sbv=
-)
-> without resetting the hardware configuration first, could the adapter
-> corrupt memory by writing to the freed physical page during a spurious
-> interrupt?
->
-> Would it make sense to either defer the zpci_set_irq_ctrl() hardware
-> configuration until all software allocations succeed, or unregister the
-> hardware in the out_free_sbv error path?
+Hi Gang,
 
-zpci_directed_irq_init() is reached from zpci_irq_init(), which
-pci_base_init() calls before any device exists. A function only starts
-generating directed interrupts once it has been registered with
-zpci_set_directed_irq(), called from zpci_msi_prepare()->zpci_set_irq().
+On 20/08/2026 08:36, gang.yan@linux.dev wrote:
+> August 19, 2026 at 9:12 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kernel.org  wrote:
+> 
+>> [Severity: Critical]
+>> Since this series introduces mptcp_pm_ops lifetime handling and module
+>> references, is there a race condition with concurrent MP_JOIN requests?
+>>
+>> When an incoming MP_JOIN request is processed in softirq context,
+>> subflow_token_join_request() gets the socket via mptcp_token_get_sock(),
+>> which doesn't hold lock_sock() or RCU. It then calls:
+>>
+>> net/mptcp/pm.c:mptcp_pm_get_local_id() {
+>>  ...
+>>  return msk->pm.ops->get_local_id(msk, &skc_local);
+>> }
+>>
+>> Concurrently, if a local user closes the socket and triggers
+>> mptcp_disconnect(msk), it calls mptcp_pm_ops_release() which clears the ops
+>> and drops the module reference:
+>>
+>> net/mptcp/pm.c:mptcp_pm_ops_release() {
+>>  ...
+>>  msk->pm.ops = NULL;
+>>  ...
+>>  bpf_module_put(pm_ops, pm_ops->owner);
+>> }
+>>
+>> Could this lead to a NULL pointer dereference or executing freed module code
+>> if subflow_token_join_request() executes concurrently with a socket
+>> disconnect?
+>>
+> 
+> Hi Matt, Geliang
+> 
+> @Matt, Could you help me to trigger the CI?
 
-Tobias
+It looks like GitHub was sick that day. I reset the tag manually.
+
+> And I think it is a pre-existing bug: 
+> 
+> When it calls msk->pm.ops->get_local_id(msk, &skc_local) between
+> 'mptcp_distroy_common' (which calls mptcp_pm_ops_release) and
+> 'mptcp_pm_data_reset'. The pm.ops will be NULL and cause a NULL deref, right?
+
+Can you first check if this can happen? I thought that
+mptcp_destroy_common would first close all subflows, remove the token,
+then release everything linked to the PM → so the PM will no longer be
+called at that point for this msk, right? (I didn't check)
+
+But maybe this will change when the BPF PM will be fully implemented? I
+guess no because msk->pm.ops should only be called from events linked to
+the network, so not after mptcp_destroy_common?
+
+> If I'm right, I think we can using rcu to solve this based on this series, like:
+> 
+>   - Add a helper to get pm.ops, and then call the get_local_id/get_priority under rcu_lock:
+> '''
+> +static struct mptcp_pm_ops *mptcp_pm_deref(struct mptcp_sock *msk)
+> +{
+> +       struct mptcp_pm_ops *pm_ops;
+> +
+> +       pm_ops = rcu_dereference(msk->pm.ops);
+> +       return pm_ops ? pm_ops : &mptcp_pm_kernel;
+> +}
+> +
+> 
+> bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc)
+>  
+>         mptcp_local_address((struct sock_common *)skc, &skc_local);
+>  
+> -       return msk->pm.ops->get_priority(msk, &skc_local);
+> +       return mptcp_pm_deref(msk)->get_priority(msk, &skc_local);
+>  }
+>  
+> So does the mptcp_pm_get_local_id like this.
+
+I think you should then rename the helpers, to make it clear they need
+to be used from a RCU read section, and to get a warning when
+backporting code around that.
+
+> static struct mptcp_sock *subflow_token_join_request(struct request_sock *req)
+>                 return NULL;
+>         }
+>  
+> +       rcu_read_lock();
+>         local_id = mptcp_pm_get_local_id(msk, (struct sock_common *)req);
+>         if (local_id < 0) {
+>                 SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPJOINNOIDFOUND);
+> +               rcu_read_unlock();
+>                 sock_put((struct sock *)msk);
+>                 return NULL;
+>         }
+>         subflow_req->local_id = local_id;
+>         subflow_req->request_bkup = mptcp_pm_is_backup(msk, (struct sock_common *)req);
+> +       rcu_read_unlock();
+>  
+> '''
+> 
+>   - Refactor the mptcp_pm_ops_init to support reuse socket, and put the
+>     mptcp_pm_ops_release into mptcp_destroy:
+> '''
+>  static void mptcp_pm_ops_init(struct mptcp_sock *msk,
+>                               struct mptcp_pm_ops *pm_ops)
+>  {
+> +       struct mptcp_pm_ops *old = msk->pm.ops;
+> +
+>         if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
+>                 pr_warn_once("pm %s fails, fallback to default pm", pm_ops->name);
+>                 pm_ops = &mptcp_pm_kernel;
+>         }
+>  
+> -       msk->pm.ops = pm_ops;
+> +       if (old) {
+> +               if (old == pm_ops) {
+> +                       mptcp_pm_ops_release(msk);
+
+Maybe return here, no need to re-init, right?
+
+> +               } else {
+> +                       rcu_assign_pointer(msk->pm.ops, pm_ops);
+> +                       synchronize_rcu();
+> +                       bpf_module_put(old, old->owner);
+> +               }
+> +       } else {
+> +               rcu_assign_pointer(msk->pm.ops, pm_ops);
+> +       }
+> +
+>         if (msk->pm.ops->init)
+>                 msk->pm.ops->init(msk);
+>  
+> -       pr_debug("pm %s initialized\n", pm_ops->name);
+> +       pr_debug("pm %s initialized\n", msk->pm.ops->name);
+>  }
+>  
+> 
+> 
+> static void mptcp_destroy(struct sock *sk)
+>         /* allow the following to close even the initial subflow */
+>         msk->free_first = 1;
+>         mptcp_destroy_common(msk);
+> +       mptcp_pm_ops_release(msk);
+>         sk_sockets_allocated_dec(sk);
+>  }
+> 
+> '''
+> 
+> But I think it is a large fix, do you have any idea?
+> 
+> And as I said at the beginning, it seeems like not a issue attached to this issue,
+> could you review the v3 code with ignoring it ?
+
+Yes, the 4 first patches can be reviewed.
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
