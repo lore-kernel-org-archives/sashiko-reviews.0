@@ -1,164 +1,205 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-20.mta1.migadu.com [95.215.58.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3BA345EDE
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 06:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1039D3B19D4
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 06:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787206021; cv=none; b=dVJLJkatWmj+WPFOixHiM3N65a6WV+2pRPDrwkKrMCVjmeozgUdM2mpR+wYQoMzVTSRUAebo7d+QwN4V2bWa8gFr3c8zDTN3XVI9W8izQ5BOjPONA9SIzKLi1DoZMkgUawq4knZSVJRnob4z01oZSyZR+u+EhQ6gg1C8+2aWLdE=
+	t=1787207787; cv=none; b=bPhwOOUq4i9NvnkcUBSVsf6Su6JW9zOOp6pI/uvCWr6FZJl8ydLWc/yVA4u73UPZazLCyAgXSapfmcCEki2QrjROksMk0ctLkpH8prCeQJum/2EuZn3LEYnCvp9JpzSqpIt8JM2fniVSrimZ99+X8/oDSs6Dg499RPiu27YfqGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787206021; c=relaxed/simple;
-	bh=lUyIKVpR8TEb2fkJVSvBgQdnGCzJCLHMzTvv3lXreLE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TVDTI19aF5JZTenldcixdHLuB1uy47GA4HSYAeaMaWUweS1LDi9P/lWdChtCPcjAD+gatKr4k9Z9X/NGYbDobX2ZyQAKGOrBBVFtsrHwxlyoPU6gGZ3MJgizv6pcl0NfFM7vU3NLGrZTIy7qb6fiMij4J7mL1BCgIpQndeQ7on0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UWg+BVqY; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1787207787; c=relaxed/simple;
+	bh=zl4m3TH5c31mEN7uxesWzJFt4/YXRA+Gmugnd1W+xTc=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=moRleXJQkmyaBG5VITXP0cdriFiwLg79j+qMZxgGnNYoe3FdRwRLxQbN9R6hcLKOv2aVWNh9wW+uDDrqWttKH2UI8oXA9xkG175E+sAiwPJKtI5rdKC3hrQgVOrNzzbB05Q0mpfLVhgejif+DaJxgL4+frLnT2YdPWBPoLdgHh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=i1W1/Gtc; arc=none smtp.client-ip=95.215.58.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UWg+BVqY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787206019; x=1818742019;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=lUyIKVpR8TEb2fkJVSvBgQdnGCzJCLHMzTvv3lXreLE=;
-  b=UWg+BVqYpBfltNUJ6wuiW43df1kRkTKo9OFtOAuEu9o8nSbzLGOmqjmh
-   c/MYGwwG3Y9BVMXwy7F7MmbKdMxmwqSt5QJWajAW4u9b49YrrzZT0ylbl
-   n+1Er2J8cUBV42sHgpC2vXwPxacJl3SD/krx+HfthDXFeUlB4Ht1CrUu6
-   JsDeKqf4lTUhE7BxydGEhWkiEMZG53oUjxvkfDC9835kxM24w4Z0/NzGN
-   0OZza1Dvg2/ye6r9ZZtnyR2tqhAkck9g72JLP5wWsc95zkzEQcKvzQoye
-   J+h8lxDSpYswcbkY1zS0opiInu2NlC13gZ7AY6rsnNXXNAgK4928ky2wX
-   A==;
-X-CSE-ConnectionGUID: KL+S/dbBTOqNY9TsuEEU1w==
-X-CSE-MsgGUID: NCYu7TOXS5SeUTNeTeiy3g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11880"; a="98325702"
-X-IronPort-AV: E=Sophos;i="6.25,232,1779174000"; 
-   d="scan'208";a="98325702"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 23:06:58 -0700
-X-CSE-ConnectionGUID: NuPOU17bQO+/X6cqz1E9CQ==
-X-CSE-MsgGUID: IFqm/8fQROmCfRjrMX2Wtg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,232,1779174000"; 
-   d="scan'208";a="264543212"
-Received: from unknown (HELO [10.66.116.151]) ([10.66.116.151])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 23:06:57 -0700
-Message-ID: <a8489c72-ad2f-4424-a55f-16fc007af506@Intel.com>
-Date: Thu, 20 Aug 2026 11:36:50 +0530
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="i1W1/Gtc"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=zl4m3TH5c31mEN7uxesWzJFt4/YXRA+Gmugnd1W+xTc=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787207780; v=1; x=1787812580;
+ b=i1W1/Gtcz1I7g4RhILkdfPsIF1sUe9Lfeal8zrdlCt1cMIMRn0UjT+LF+zra+IuLu++kynjR
+ jjZU2S0EveC5FVu0i3UY/u4jyj+WG0hQ4V23S7jTxAdynsIVLa74DnrEi4DrjKqSMWni9v/kuBx
+ FP9Cj13kC2b+2laaczYBHIy0=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from webmail.migadu.com (2001:41d0:303:fc7a::)
+	by smtp.migadu.com with ESMTPS id ea843c083ba60cad;
+	Thu, 20 Aug 2026 06:36:20 +0000
+X-Mizu-Trace-ID: ea843c083ba60cad
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] drm/xe/vram: Report VRAM errors using structured
- xe_log API
+Date: Thu, 20 Aug 2026 06:36:20 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: gang.yan@linux.dev
+Message-ID: <7b85c6e1e4e270bd368fb7dc6d24279c1c20c3b2@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH mptcp-next v3 5/5] Squash to "mptcp: pm: init and release
+ mptcp_pm_ops"
 To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-References: <20260819191442.1957986-1-dnyaneshwar.bhadane@intel.com>
- <20260819191442.1957986-13-dnyaneshwar.bhadane@intel.com>
- <20260819192928.202C21F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@Intel.com>
-Organization: intel
-In-Reply-To: <20260819192928.202C21F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: mptcp@lists.linux.dev
+In-Reply-To: <20260819131205.3A0201F000E9@smtp.kernel.org>
+References: <20260819125629.49823-1-gang.yan@linux.dev>
+ <20260819125629.49823-6-gang.yan@linux.dev>
+ <20260819131205.3A0201F000E9@smtp.kernel.org>
+
+August 19, 2026 at 9:12 PM, sashiko-bot@kernel.org mailto:sashiko-bot@ker=
+nel.org  wrote:
+
+> [Severity: Critical]
+> Since this series introduces mptcp_pm_ops lifetime handling and module
+> references, is there a race condition with concurrent MP_JOIN requests?
+>=20
+>=20When an incoming MP_JOIN request is processed in softirq context,
+> subflow_token_join_request() gets the socket via mptcp_token_get_sock()=
+,
+> which doesn't hold lock_sock() or RCU. It then calls:
+>=20
+>=20net/mptcp/pm.c:mptcp_pm_get_local_id() {
+>  ...
+>  return msk->pm.ops->get_local_id(msk, &skc_local);
+> }
+>=20
+>=20Concurrently, if a local user closes the socket and triggers
+> mptcp_disconnect(msk), it calls mptcp_pm_ops_release() which clears the=
+ ops
+> and drops the module reference:
+>=20
+>=20net/mptcp/pm.c:mptcp_pm_ops_release() {
+>  ...
+>  msk->pm.ops =3D NULL;
+>  ...
+>  bpf_module_put(pm_ops, pm_ops->owner);
+> }
+>=20
+>=20Could this lead to a NULL pointer dereference or executing freed modu=
+le code
+> if subflow_token_join_request() executes concurrently with a socket
+> disconnect?
+>=20
+
+Hi=20Matt, Geliang
+
+@Matt, Could you help me to trigger the CI?
+
+And I think it is a pre-existing bug:=20
+
+When=20it calls msk->pm.ops->get_local_id(msk, &skc_local) between
+'mptcp_distroy_common' (which calls mptcp_pm_ops_release) and
+'mptcp_pm_data_reset'. The pm.ops will be NULL and cause a NULL deref, ri=
+ght?
+
+If I'm right, I think we can using rcu to solve this based on this series=
+, like:
+
+  - Add a helper to get pm.ops, and then call the get_local_id/get_priori=
+ty under rcu_lock:
+'''
++static struct mptcp_pm_ops *mptcp_pm_deref(struct mptcp_sock *msk)
++{
++       struct mptcp_pm_ops *pm_ops;
++
++       pm_ops =3D rcu_dereference(msk->pm.ops);
++       return pm_ops ? pm_ops : &mptcp_pm_kernel;
++}
++
+
+bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc)
+=20
+=20       mptcp_local_address((struct sock_common *)skc, &skc_local);
+=20
+-=20      return msk->pm.ops->get_priority(msk, &skc_local);
++       return mptcp_pm_deref(msk)->get_priority(msk, &skc_local);
+ }
+=20
+So=20does the mptcp_pm_get_local_id like this.
+
+static struct mptcp_sock *subflow_token_join_request(struct request_sock =
+*req)
+                return NULL;
+        }
+=20
++=20      rcu_read_lock();
+        local_id =3D mptcp_pm_get_local_id(msk, (struct sock_common *)req=
+);
+        if (local_id < 0) {
+                SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPJOINNOIDFOUND);
++               rcu_read_unlock();
+                sock_put((struct sock *)msk);
+                return NULL;
+        }
+        subflow_req->local_id =3D local_id;
+        subflow_req->request_bkup =3D mptcp_pm_is_backup(msk, (struct soc=
+k_common *)req);
++       rcu_read_unlock();
+=20
+'''
+
+=20 - Refactor the mptcp_pm_ops_init to support reuse socket, and put the
+    mptcp_pm_ops_release into mptcp_destroy:
+'''
+ static void mptcp_pm_ops_init(struct mptcp_sock *msk,
+                              struct mptcp_pm_ops *pm_ops)
+ {
++       struct mptcp_pm_ops *old =3D msk->pm.ops;
++
+        if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
+                pr_warn_once("pm %s fails, fallback to default pm", pm_op=
+s->name);
+                pm_ops =3D &mptcp_pm_kernel;
+        }
+=20
+-=20      msk->pm.ops =3D pm_ops;
++       if (old) {
++               if (old =3D=3D pm_ops) {
++                       mptcp_pm_ops_release(msk);
++               } else {
++                       rcu_assign_pointer(msk->pm.ops, pm_ops);
++                       synchronize_rcu();
++                       bpf_module_put(old, old->owner);
++               }
++       } else {
++               rcu_assign_pointer(msk->pm.ops, pm_ops);
++       }
++
+        if (msk->pm.ops->init)
+                msk->pm.ops->init(msk);
+=20
+-=20      pr_debug("pm %s initialized\n", pm_ops->name);
++       pr_debug("pm %s initialized\n", msk->pm.ops->name);
+ }
+=20
 
 
+static=20void mptcp_destroy(struct sock *sk)
+        /* allow the following to close even the initial subflow */
+        msk->free_first =3D 1;
+        mptcp_destroy_common(msk);
++       mptcp_pm_ops_release(msk);
+        sk_sockets_allocated_dec(sk);
+ }
 
-On 20-Aug-26 12:59 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] Incomplete replacement of drm_info() with xe_log_info() for VRAM reporting.
-> - [Low] Brittle error handling by hardcoding -ENODEV instead of using the returned error variable.
-> --
-> 
-> --- Patch [12]: [PATCH 12/12] drm/xe/vram: Report VRAM errors using structured xe_log API ---
-> commit 0430f39e6a6ab1de29f7a59722a6a22038b4d848
-> Author: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-> 
-> drm/xe/vram: Report VRAM errors using structured xe_log API
-> 
-> Replace drm_err()/drm_info() with xe_log_err_fatal()/xe_log_info()
-> using the VRAM component tag.
-> 
-> Move the "no CPU visible VRAM" error out of vram_region_init() into its
-> callers so that tile-based usage logs with the tile as location while
-> device-level usage logs with the device. This gives better diagnostics
-> by identifying which tile has no visible VRAM.
-> 
->> Replace drm_err()/drm_info() with xe_log_err_fatal()/xe_log_info()
->> using the VRAM component tag.
-> 
-> [Severity: Low]
-> Were the drm_info() calls in print_vram_region_info() intentionally skipped?
-> 
-> The commit message mentions replacing drm_info(), but print_vram_region_info()
-> in drivers/gpu/drm/xe/xe_vram.c still uses drm_info(). This leaves the VRAM
-> logging inconsistent.
-> 
->> diff --git a/drivers/gpu/drm/xe/xe_vram.c b/drivers/gpu/drm/xe/xe_vram.c
->> index 23eb7edbdd572..9fae593b07413 100644
->> --- a/drivers/gpu/drm/xe/xe_vram.c
->> +++ b/drivers/gpu/drm/xe/xe_vram.c
-> 
-> [ ... ]
-> 
->> @@ -311,14 +311,18 @@ int xe_vram_probe(struct xe_device *xe)
->>   		total_size += region_size;
->>   		available_size += usable_size;
->>   
->> -		err = vram_region_init(xe, tile->mem.vram, &lmem_bar, tile_offset, usable_size,
->> +		err = vram_region_init(xe, tile->mem.vram, &lmem_bar,
->> +				       tile_offset, usable_size,
->>   				       region_size, remain_io_size);
->> -		if (err)
->> +		if (err) {
->> +			xe_log_err_fatal(tile, VRAM, -ENODEV,
->> +					 "without any CPU visible VRAM. Aborting.\n");
-> 
-> [Severity: Low]
-> Would it be better to pass the 'err' variable here instead of hardcoding
-> -ENODEV?
-> 
-> If vram_region_init() is modified in the future to return other error
-> codes (like -ENOMEM), this log message will incorrectly report -ENODEV instead
-> of the actual error code.
+'''
 
-Yes, I should rethink on it. I should pass the extra flag from caller to 
-determine that whether it is coming for gt or device check. I should 
-revert these changes and modify the existing function definition.
+But I think it is a large fix, do you have any idea?
 
-Dnyaneshwar,>
->>   			return err;
->> +		}
->>   
->>   		if (total_size > lmem_bar.io_size) {
->> -			drm_info(&xe->drm, "VRAM: %pa is larger than resource %pa\n",
->> -				 &total_size, &lmem_bar.io_size);
->> +			xe_log_info(xe, VRAM, "%pa is larger than resource %pa\n",
->> +				    &total_size, &lmem_bar.io_size);
->>   		}
->>   
->>   		remain_io_size -= min_t(u64, tile->mem.vram->actual_physical_size, remain_io_size);
->> @@ -326,8 +330,11 @@ int xe_vram_probe(struct xe_device *xe)
->>   
->>   	err = vram_region_init(xe, xe->mem.vram, &lmem_bar, 0, available_size, total_size,
->>   			       lmem_bar.io_size);
->> -	if (err)
->> +	if (err) {
->> +		xe_log_err_fatal(xe, VRAM, -ENODEV,
->> +				 "without any CPU visible VRAM. Aborting.\n");
-> 
-> [Severity: Low]
-> Should this also use the 'err' variable instead of hardcoding -ENODEV?
+And as I said at the beginning, it seeems like not a issue attached to th=
+is issue,
+could you review the v3 code with ignoring it ?
 
-> 
->>   		return err;
->> +	}
->>   
->>   	return devm_add_action_or_reset(xe->drm.dev, vram_fini, xe);
->>   }
-> 
+Thanks
+Gang
 
+
+> --=20
+>=20Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026081912562=
+9.49823-1-gang.yan@linux.dev?part=3D5
+>
