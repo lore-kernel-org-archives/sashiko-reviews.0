@@ -1,289 +1,237 @@
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36ECC3E1225
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 10:18:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787221140; cv=none; b=r8BX7cw7i6T3TxyFizrJr3Gmz9adQ7UXlTyJhxFpBzwV1KMzs/mdOptdN1dSUh+gsN/8IWvuko8OZSoinF1E7/GQYE/WTfReXwC6Weue4DzanEPvXaNCIL2j8qIJ4hbqIcuXAFraEJwywd1oiXE+HUh7s+6QW5lfz6B0a60oTu8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787221140; c=relaxed/simple;
-	bh=ypQhHbVTHOprgtbVHtmQ/UYSIvXiLh8ey5IzfWVbv0o=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WwlQi2eWYiRZPQUnoC3YtLkjsxgjF+nt2tebl+SmcylL6a1STt5/WlvI/W8O0oxNR55cgTuRQ6y1LsVErg2/i+rSWQmtJWxeCq/x5r415TSPLCAsJ3X6ldFqij/cuyN4d7y8+9w7jZQXCgsRLr11sJ+q633744x9rNvOGCcVDAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=pFqSPGbG; arc=none smtp.client-ip=185.70.43.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0636741930C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 10:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787223527; cv=pass; b=SMv36bONM85ya9nvGBR/oII+IQuVRb/0AFaOMoPZuIqLa/h8tQSNbr3+g1igGIPKFBI81bZNZA1y3qqlR/UZNQEb09mLUVwboRZ13P+5wcrkgIc5MsFp8VJTrJbwoKfe0hbIthoMSRBmQKnqsUcl/g0p0+youNdSXQtk4yuX++E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787223527; c=relaxed/simple;
+	bh=P2lCZ64G1tHsyCUN9IGEtfoznMOL0waPTppEGNX4G6o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OnHBi1Ki1UO9JEToMbXk/talPkWPcwrkV3xM6f3FBkgPXcrdJRrMQ06K2HrnuX4D4FYrY5BBO3apldXeDn9cvFbTL9p+tt//t9nKlztM72DVnL3tjSUP6weFmyKadCM1Ervf9aHmrRM2jOJB4OjdI1UK+KHJ9n/o44VeDmUSJEk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai; spf=pass smtp.mailfrom=nebusec.ai; dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b=b0echz2l; arc=pass smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nebusec.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="pFqSPGbG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1787221123; x=1787480323;
-	bh=cAD1H0LhOVgoTCfynNngF4iXHGyiB44K2m2f/TNoWS8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=pFqSPGbGJFOTOwBKPhSIoettKizJfA7lIAxfJnMTWwE/b/RXYcXr3AZAULTIM+13V
-	 tX2+YGCPT1D8usO4bmfMH9jTARPxWrmC2pIUSioDdinnDl6akIc0GafM+pNW5Sijsr
-	 q2hTTjVxlBIFxWuo4M9djsGGvP8PpYvkc1/Q4FHSK7MQz7g4/oS7G3IAiCHgSFTGjD
-	 td3U5aPKnwH88wAXXEVWVxzZjQt1GjS4l8wQTY6+Och1BfK4CyEhSXmDJYy7hmCUkZ
-	 74ftQSzmum4FqdICl7K/1xYDaYPJ8GjQvv7ABOkGxRSfGYxodXuqFw9TMokqw5E9Ko
-	 iOlpFo4cRSkww==
-Date: Thu, 20 Aug 2026 10:18:38 +0000
-To: Guenter Roeck <linux@roeck-us.net>
-From: Aiden Isik <aidenisik@protonmail.com>
-Cc: sashiko-reviews@lists.linux.dev, Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
-Message-ID: <s4LZj1kKLrHHKsrkc1s32s4sh7oKzXqEG4hA_W99bG1YTsgnCj-shElNsnI04D-eVsK4Y0tx7ViBSkjy8LZjZmZ8N4D5UEg0bcU16gOXHP0=@protonmail.com>
-In-Reply-To: <01a0682b-b7ec-45f0-a19d-df40ed6366a2@roeck-us.net>
-References: <20260818-for-next-lucky7-watchdog-v3-0-2912bd122c57@member.fsf.org> <20260818-for-next-lucky7-watchdog-v3-2-2912bd122c57@member.fsf.org> <20260818181349.894171F000E9@smtp.kernel.org> <k_6CWq_7vPkV72MkyL0wCdcr9ptTffpGOGc6dBLbXjcHBV4DGRzP-35mxO0tdOBaIEhy4BxByYLCh8T5nidgwaMwGcNYD9KCIpxkeF4RRiE=@protonmail.com> <83b5d8e7-9504-41c9-9f24-8fce60641de4@roeck-us.net> <-HoGjao7Mdcx5P3JHoh9WjecLbbXBISKawVeEa59KRfhq7rul5NozHGaISvi0T-ZTp2otj7_b5qqb9tQI5XR0Wvp4UzG7crAekiRTXhiOd4=@protonmail.com> <d8191041-a4bc-4674-ab9e-7fb56ca2b56f@roeck-us.net> <cTie_daC2kaIY2BT6HkyAeivwspRhq3thkrkGDMVdIpF2vF5Vr38HQxPcvKFK6pvWatAFk-CO7XL2uz3OCfDSwI-EOxQqI8hNylXjG1jrQI=@protonmail.com> <XNt95pVriUNFbMMYsr5mnQo9LUABboJjUMboxV5mWYj9FQJb6XGjsGkGRre7eSK4bvCG4oOuTg4YNiujCpX7ZlonVgQSHFBEzpFvZLFTXtw=@protonmail.com> <01a0682b-b7ec-45f0-a19d-df40ed6366a2@roeck-us.net>
-Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: 75dd1fe3b66900fa69089a83f0163e7b000f8594
+	dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b="b0echz2l"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cca0c5799eso17409545ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 03:58:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787223523; cv=none;
+        d=google.com; s=arc-20260327;
+        b=XMUYiZ9xDCsQt38bi50kBm3Dh7gKjj2tS3GUCbSOT8/R5H3Gy2f8mEEEp/jUYQrCIS
+         co3ZbePi6y5UFjR5DKqLJhxSeWNCEUvD98IYS5PphCFpFIZvVoRazyUBeqgr0QOgXdV5
+         9ks/Xq+jqF6uP/XEY1criM2ymRdx6ACvLkf88E+w35CNe7H/fkGpP2Xt8Fu+vce60OTX
+         vIZI5by2GLjPOLviDUD5fdsnUVxkywM/YEp8b8h20zd3O8k4xtbYfB53VX+0paPSCO1R
+         xtvd2n6kaVw5CX71CVhxzCQDrFkBPmXv401A7pqHperoyQD+y8mMYkqARJVbnj6Awaau
+         4v0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Cw0p0Zs17OGqL0CpVaUylVnGrKO85tM788BbVvkohK0=;
+        fh=CB5UpkY+O88awVVzOZ6u9gwGodJr4E7oL8gDALqWdIs=;
+        b=PbOX+Ef5lfj/SlcMtsS36u22jiBEJ6kXN0xabm/zJlgFLTqc0Jxni/jEEZOnTuSRp5
+         m8oDOfZRAV0VDK0srUtBIEPV70YtFtrHIWJ0TBPdPL6wt40Ectc0Qw2uavza0jCExtej
+         kwi9+iesxb6SnhbhcBWC6NYPody8rsthQQiUv6IQUdawJWhVts4rKXdHnPLQEWa4dcMZ
+         bNIsrl3Da08DzGM5YujYb6TzVwkfckGd0dFI+jZQM2pZ5lQHZDqAijARDfnCfgDnLMlm
+         8w7voM1Q7qfwlYERZ99r/YBEBua+dlEkujapNh7H9BQhYzMdlGIo7gHW7fbn+EGjGDEc
+         ZGMg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nebusec.ai; s=google; t=1787223523; x=1787828323; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Cw0p0Zs17OGqL0CpVaUylVnGrKO85tM788BbVvkohK0=;
+        b=b0echz2lLVH4TW9txjCi+FUzheZOOcTe0eUvAW2+cVBXU+hAZZNHwjxpPWagu04s3Q
+         krj8nbA9ekKTvjk5pv5GdHJtdKMUif+aqloTZNZ0vNvXJw5FukNYO4zBNjVmOFtewqdA
+         gzJsG5OUS70kex2z/K2Wkg0RCLocZP8YJoT4M+d+Ba39Xq8QvNTzS/QNLsj7IyYkksri
+         IefLapBs0WB8qaWS2p/syWMXGXgptxTpQiEAJKCobbDYvbJVawvNl+bR/k2p0JL/E3Kz
+         AXLaRVXiNa/krI6qyfaU5gh4Psiq/tOYgneZnF9NtkL340VA8wutDW+AUhhR7KBUfP+O
+         5tPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787223523; x=1787828323;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Cw0p0Zs17OGqL0CpVaUylVnGrKO85tM788BbVvkohK0=;
+        b=A1I/FvYpJYX+fexl7kk+wI3ZlG1DmfGjTwf+I59b28IxPPEbnLADvcCj5x46wwNFOi
+         DKCJpnbLZIJFP5NC+6sWD2BuUENx+lvEckEprOhdoWJDdR6NO5/rfwnFsEOp20leJKY+
+         g2eqVELyE4zBTihagx1z3qMVyH5YLSWAot/3Zb5G7Ch7WKCuhSpwhwhsKLojY4MG4aB/
+         Ssp0Y/wqkD9kmom2qIGzGLKh3e0LOgNHHGP2Iq49YF3hxnxLNxUbNw3lk0u6S8RyHK81
+         rRn7PlCL7yvuoNqpihZtQRLyGX9/8P4KRq2yrhezyEp6fOUDX+SGQPrA+15xQo0QdDlw
+         F+ZQ==
+X-Gm-Message-State: AFuF++n4Rv3zY2EeidzJ6LVXeaCnY7YJ5vgibZEh/5d1Et65Tjo0K4Ec
+	pYe7dNjb5zEGaNGSU4fGFltBUb6CDDa9+y4l6v+85xy7522mOLKqLP7XBiozaPZtEMeFbHm0WKw
+	m9WIA2iISvA/naM7XsOc3aTVJL0B/9bn8pr7VWDnZA7ywn2iQqZ7z/CZ23S8=
+X-Gm-Gg: AR+sD13oz226FMnXV0tYfDW1fCkCXZlNr/JLUTS2PPnbzyPmPmnFr2Ctc+g9dJDHOTl
+	QcYPKAjiwtwEcfWeAK/S8JhI8dJWQQOHAOPJifKt0K67N9L0HxYAKcK2lp7stAmz9NMF+v/OC9L
+	uKrfZGe/DMD0Bx+COAqS1kJnx7zNrlpHrYfg6lDuAMjUYDJDeLeNyX3lg1N6hfogqC2aoGXbkTQ
+	xiRYLOTWxfFGRxvR7dd1QVggs7Lg2XJU0XabP+o4ff/EK1vNhIq8a0dhoQtbu9Pz8GlTAowRnv9
+	/n3gWlbWdbwnvBEEYpcOlZXoqFYU7sXKlB5OM93XOLUP
+X-Received: by 2002:a17:902:f706:b0:2ca:1b97:70c5 with SMTP id
+ d9443c01a7336-2d5fd5e5d4fmr224168925ad.4.1787223522392; Thu, 20 Aug 2026
+ 03:58:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <cover.1786497414.git.yuantan098@gmail.com> <e3aeafa4dc2afb7ea36143eae163635eee23395c.1786497414.git.yuantan098@gmail.com>
+ <20260813065630.908AC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260813065630.908AC1F000E9@smtp.kernel.org>
+From: Wei Ren <weir@nebusec.ai>
+Date: Thu, 20 Aug 2026 18:58:50 +0800
+X-Gm-Features: AcwNN1WYyW-8z_95osKXmxJZNbMRNkNVWcxZ23BokIsMPC8k01UieylBReKqe-Q
+Message-ID: <CADfOeh6F-PngQB-F4dYds2CpqBCTfJHpBYLD+0ZhcWNiBtPOeA@mail.gmail.com>
+Subject: Re: [PATCH net v4 1/2] mptcp: hold MP_JOIN msk ref when cloning reqsk
+To: sashiko-reviews@lists.linux.dev
+Cc: mptcp@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> On 8/19/26 16:36, Aiden Isik wrote:
-> > Hi again Guenter,
+On Thu, Aug 13, 2026 at 06:56:30AM +0000, sashiko-bot@kernel.org wrote:
+> This is a pre-existing issue, but does this clone helper also need to
+> handle the migration of token_node for MP_CAPABLE requests?
+
+That is what patch 2/2 of this series does:
+
+  https://lore.kernel.org/all/6abadc83940143e099fa3b54ec6dea2fb95da090.1786=
+497414.git.yuantan098@gmail.com/
+
+It extends this helper with mptcp_token_move_request(), which re-hashes
+the token node onto the clone with hlist_nulls_replace_init_rcu() under
+the token bucket lock, so the clone becomes the single token-table owner
+and the original is left unhashed.  mptcp_token_accept() and
+mptcp_token_destroy_request() re-check ownership under the same lock.
+
+The same question was raised on v3, and v4 was restructured to answer it.
+Reviewing 1/2 in isolation makes it read as an unfixed issue.
+
+Two details of the analysis are inaccurate, for the archive:
+
+> ... leading to hash list corruption and a reliable kernel warning
+
+There is no list corruption.  Nothing in the bucket chain points at the
+clone's copied token_node, so __token_lookup_req() can never return it,
+and both list mutations are gated on "pos =3D=3D subflow_req".  The stale
+node is never passed to hlist_nulls_del_init_rcu().  The splat is the
+only observable effect: the panic_on_warn DoS holds, the corruption does
+not.
+
+> permanently lose the MP_CAPABLE token from the hash table, breaking
+> subsequent MP_JOIN requests for that connection.
+
+The msk insertion sits outside the WARN_ON_ONCE() guard:
+
+if (!WARN_ON_ONCE(pos !=3D req))
+hlist_nulls_del_init_rcu(&req->token_node);
+__sk_nulls_add_node_rcu((struct sock *)msk, &bucket->msk_chain);
+
+so the msk still enters msk_chain, mptcp_token_get_sock() keeps finding
+it, and MP_JOIN for that connection keeps working.  What does drift is
+bucket->chain_len: a net -1 per migrated connection that completes the
+handshake.  It is a signed int, so it goes negative and
+__token_bucket_busy()'s TOKEN_MAX_CHAIN_LEN cap stops limiting that
+bucket.  Patch 2/2 fixes that as well.
+
+Thanks,
+Ruide
+
+
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B48=E6=9C=8813=E6=97=A5=E5=91=
+=A8=E5=9B=9B 14:56=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] TCP request migration clones MPTCP request sockets without updat=
+ing or re-hashing the `token_node` list pointers for MP_CAPABLE requests, l=
+eading to hash list corruption and a reliable kernel warning (`WARN_ON_ONCE=
+`) that can cause a Denial of Service.
+> --
+>
+> --- Patch [1]: [PATCH net v4 1/2] mptcp: hold MP_JOIN msk ref when clonin=
+g reqsk ---
+> commit 2b2ebcd4a3ea728b0d1c8d74d1e09d5e75f65848
+> Author: Ruide Cao <caoruide123@gmail.com>
+>
+> mptcp: hold MP_JOIN msk ref when cloning reqsk
+>
+> TCP request migration clones pending request sockets with
+> inet_reqsk_clone(). For MPTCP MP_JOIN requests this byte-copies
+> subflow_req->msk, but the clone does not take its own reference.
+>
+> Closes: https://lore.kernel.org/all/20260804095051.715355-1-david.lee@tra=
+ilofbits.com/
+>
+> > diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+> > index e1f20ff8fdb42..8f8e1229766d4 100644
+> > --- a/net/mptcp/subflow.c
+> > +++ b/net/mptcp/subflow.c
+> > @@ -47,6 +47,17 @@ static void subflow_req_destructor(struct request_so=
+ck *req)
+> >       mptcp_token_destroy_request(req);
+> >  }
 > >
-> >> Hi Guenter,
-> >>
-> >>> On 8/18/26 12:35, Aiden Isik wrote:
-> >>>> Hi Guenter,
-> >>>>
-> >>>>> On 8/18/26 11:33, Aiden Isik wrote:
-> >>>>>>> Thank you for your contribution! Sashiko AI review found 1 potent=
-ial issue(s) to consider:
-> >>>>>>> - [Medium] Missing PMU counter enable configuration for Exynos551=
-5 watchdog.
-> >>>>>>> --
-> >>>>>>>
-> >>>>>>> --- Patch [2]: [PATCH v3 2/2] watchdog: s3c2410_wdt: Add exynos55=
-15-wdt compatible data ---
-> >>>>>>> commit 9ce360e3c933b7447ba5da9ba1b7ae3fee989703
-> >>>>>>> Author: Aiden Isik <aidenisik@member.fsf.org>
-> >>>>>>>
-> >>>>>>> watchdog: s3c2410_wdt: Add exynos5515-wdt compatible data
-> >>>>>>>
-> >>>>>>> This commit adds driver data for the Exynos5515 SoC's watchdog ti=
-mer.
-> >>>>>>>
-> >>>>>>>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s=
-3c2410_wdt.c
-> >>>>>>>> index e31f93db05096..5592f25fe6c83 100644
-> >>>>>>>> --- a/drivers/watchdog/s3c2410_wdt.c
-> >>>>>>>> +++ b/drivers/watchdog/s3c2410_wdt.c
-> >>>>>>>> @@ -232,6 +232,16 @@ static const struct s3c2410_wdt_variant drv=
-_data_exynos5420 =3D {
-> >>>>>>>>     =09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_AUTO_DISABLE,
-> >>>>>>>>     };
-> >>>>>>>>
-> >>>>>>>> +static const struct s3c2410_wdt_variant drv_data_exynos5515 =3D=
- {
-> >>>>>>>> +=09.mask_reset_reg =3D EXYNOSAUTOV920_CLUSTER0_NONCPU_INT_EN,
-> >>>>>>>> +=09.mask_bit =3D 2,
-> >>>>>>>> +=09.mask_reset_inv =3D true,
-> >>>>>>>> +=09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
-> >>>>>>>> +=09.rst_stat_bit =3D 24,
-> >>>>>>>> +=09.quirks =3D QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESE=
-T | \
-> >>>>>>>> +=09=09  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_DBGACK_BIT,
-> >>>>>>>> +};
-> >>>>>>>
-> >>>>>>> [Severity: Medium]
-> >>>>>>> Does the Exynos5515 PMU require explicit counter enablement like =
-other recent
-> >>>>>>> Exynos SoCs?
-> >>>>>>>
-> >>>>>>> Other variants in this driver (like Exynos850, AutoV920, and GS10=
-1) that use
-> >>>>>>> the NONCPU_INT_EN PMU registers also pair it with a NONCPU_OUT re=
-gister and
-> >>>>>>> the QUIRK_HAS_PMU_CNT_EN flag to ensure the watchdog counter tick=
-s.
-> >>>>>>>
-> >>>>>>> If the Exynos5515 hardware works similarly, omitting cnt_en_reg, =
-cnt_en_bit,
-> >>>>>>> and QUIRK_HAS_PMU_CNT_EN here might leave the counter disabled an=
-d the
-> >>>>>>> watchdog silently non-functional. Could you confirm if this varia=
-nt needs the
-> >>>>>>> counter enable logic?
-> >>>>>>
-> >>>>>> Exynos5515 does not require this.
-> >>>>>>
-> >>>>>> Downstream on GS101, as an example, has this struct member set:
-> >>>>>>
-> >>>>>>> pmu_count_en_func
-> >>>>>>
-> >>>>>> This is not set downstream for Exynos5515, so it is not used for
-> >>>>>> Exynos5515.
-> >>>>>>
-> >>>>>
-> >>>>> You keep talking about "downstream". What is that ?
-> >>>>
-> >>>> By "downstream" I am referring specifically to Samsung's Linux kerne=
-l
-> >>>> fork for Exynos5515.
-> >>>>
-> >>>> I host a copy here: https://github.com/Aiden-Isik/linux-android-luck=
-y7
-> >>>>
-> >>>> Also in this message I refer to Google's GS101 kernel fork, which ca=
-n
-> >>>> be found here:
-> >>>> https://github.com/LineageOS/android_kernel_google_gs101
-> >>>>
-> >>>
-> >>> Both are completely irrelevant for the upstream kernel. I am most def=
-initely
-> >>> not going to look into that code. If there is anything relevant - suc=
-h as
-> >>> the comment you pointed to earlier - you'll need to provide that as i=
-ndependent
-> >>> comment(s), not just refer to some downstream code as explanation. Th=
-e
-> >>> explanation needs to be provided in the _upstream_ kernel code.
-> >>>
-> >>
-> >> There's not really any explanation for it other than "that is the way =
-it is".
-> >> Samsung designed the Exynos5515 watchdog timer to not have that quirk,
-> >> I read the downstream code and learnt that fact, so we don't enable
-> >> that quirk.
-> >>
-> >
-> > Just in case I am misunderstanding what you are asking for and you want
-> > examples of how I know this is correct to be posted on the mailing list=
+> > +void mptcp_subflow_reqsk_clone(struct request_sock *req,
+> > +                            struct request_sock *new_req)
+> > +{
+> > +     struct mptcp_subflow_request_sock *subflow_req;
+> > +
+> > +     subflow_req =3D mptcp_subflow_rsk(new_req);
+> > +
+> > +     if (subflow_req->msk)
+> > +             sock_hold((struct sock *)subflow_req->msk);
+> > +}
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this clone helper also need to
+> handle the migration of token_node for MP_CAPABLE requests?
+>
+> When inet_reqsk_clone() performs a byte-copy of the request socket, it
+> copies the token_node list pointers (pprev and next) as-is:
+>
+> net/ipv4/inet_connection_sock.c:inet_reqsk_clone() {
+>     ...
+>         unsafe_memcpy(&nreq_sk->sk_dontcopy_end, &req_sk->sk_dontcopy_end=
 ,
-> > here you go.
-> >
-> > Unfortunately Samsung doesn't publish technical specifications for thei=
-r
-> > modern SoCs, so the best documentation we have is their own source code=
-,
-> > which doesn't really explain the *why*, but it does explain the *what*
-> > and the *how*.
-> >
-> > I'll do my best to explain it concisely and how we drive the hardware
-> > in the same way upstream:
-> >
-> > Google (and/or Samsung since GS101 is Exynos-based) define the struct
-> > for the watchdog timer like this:
-> >
-> >> static const struct s3c2410_wdt_variant drv_data_gs101_cl0 =3D {
-> >> =09.noncpu_int_en =3D EXYNOS_CLUSTER0_NONCPU_INT_EN,
-> >> =09.noncpu_out =3D EXYNOS_CLUSTER0_NONCPU_OUT,
-> >> =09.mask_bit =3D 2,
-> >> =09.cnt_en_bit =3D 8,
-> >> =09.rst_stat_reg =3D EXYNOS_RST_STAT_REG_OFFSET,
-> >> =09.rst_stat_bit =3D 0,      /* CLUSTER0 WDTRESET */
-> >> =09.pmu_reset_func =3D s3c2410wdt_noncpu_int_en,
-> >> =09.pmu_count_en_func =3D s3c2410wdt_noncpu_out,
-> >> =09.quirks =3D QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_W=
-TCLRINT_REG |
-> >> =09=09  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
-> >> };
-> >
-> > Note 'pmu_count_en_func' is set.
-> >
-> > Later on in the file, we have this code:
-> >
-> >> if (wdt->drv_data->pmu_count_en_func) {
-> >> =09ret =3D wdt->drv_data->pmu_count_en_func(wdt, true);
-> >> =09if (ret < 0) {
-> >> =09=09dev_info(wdt->dev, "wdt count enable fail\n");
-> >> =09=09return ret;
-> >> =09}
-> >> }
-> >
-> > Which will call the chosen counter enable function if that field is set=
-,
-> > which will, well, enable the counter.
-> >
-> > Now, for the struct corresponding to Exynos5515 in the same driver:
-> >
-> >> static const struct s3c2410_wdt_variant drv_data_exynos9_v4 =3D {
-> >> =09.noncpu_int_en =3D EXYNOS_CLUSTER2_NONCPU_INT_EN,
-> >> =09.mask_bit =3D 2,
-> >> =09.rst_stat_reg =3D EXYNOS5_RST_STAT_REG_OFFSET,
-> >> =09.rst_stat_bit =3D 23,=09/* CLUSTER2 WDTRESET */
-> >> =09.pmu_reset_func =3D s3c2410wdt_noncpu_int_en,
-> >> =09.quirks =3D QUIRK_HAS_PMU_CONFIG | QUIRK_HAS_RST_STAT | QUIRK_HAS_W=
-TCLRINT_REG |
-> >> =09=09  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_WTMINCNT_REG,
-> > };
-> >
-> > We can see that 'pmu_count_en_func' is not set, meaning that code withi=
-n
-> > the if statement shown earlier is not called, and the counter is not ma=
-nually
-> > enabled.
-> >
-> > Translating this to upstream, if QUIRK_HAS_PMU_CNT_EN is set as a flag,
-> > the following code within the if statement will execute:
-> >
-> >> if (wdt->drv_data->quirks & QUIRK_HAS_PMU_CNT_EN) {
-> >> =09ret =3D s3c2410wdt_enable_counter(wdt, en);
-> >> =09=09if (ret < 0)
-> >> =09=09=09return ret;
-> >> =09}
-> >
-> > Which as we can see does the same thing and enables the counter.
-> >
-> > So, since 'pmu_count_en_func' is enabled on GS101 in the downstream ven=
-dor
-> > code, the QUIRK_HAS_PMU_CNT_EN flag is set, as the Sashiko AI points ou=
-t.
-> > However, since it is *not* set for Exynos5515, that means Exynos5515 do=
-es
-> > not require manual counter enablement and that flag should not be set,
-> > which is why the AI's concern is wrong.
-> >
-> > I also tested this (with the watchdog actually enabled this time), and =
-it
-> > behaves as expected.
-> >
->=20
-> All ok, but you do not explain all this as comment in your patches, you j=
-ust
-> point to downstream code. At least some of that downstream code, if I rec=
-all
-> your previous feedback correctly, actually _did_ explain at least some of
-> this.
-
-For this specific quirk there are no comments whatsoever. That comment I
-sent is one of the only comments in that file.
-
->=20
-> Example: A comment along the line of "According to <place source here>,
-> Exynos5515 PMU does not require explicit counter enablement" would do.
-> Sashiko does not know the context. I don't either, and neither does
-> anyone else.
->=20
-> So why exactly are you not willing to add such comments ? Please explain.
-
-Initially I did not add a comment before I sent the modifications to
-the mailing list because nothing else seems to have comments justifying
-the flags set or not set.
-
-After you requested an explanation in the code, I thought you wanted
-a full explanation like what I sent above, which would be very unwieldy.
-Which is why I then also sent you that explanation here, because I wasn't
-sure what exactly you were asking for.
-
-But if it's just a comment like the example you described, I can do that.
-Do you want the source to be "Samsung's downstream code", or a link to
-it?
-
->=20
-> Guenter
->=20
->=20
-
-Kind regards,
-- Aiden Isik
+>                       req->rsk_ops->obj_size - offsetof(struct sock, sk_d=
+ontcopy_end),
+>                       /* alloc is larger than struct, see above */);
+>     ...
+> }
+>
+> Because the list pointers are copied without re-hashing or updating them,
+> the original request is destroyed and removes itself from the token hash
+> table, leaving the clone with a stale pprev pointer.
+>
+> When the cloned request is eventually destroyed,
+> mptcp_token_destroy_request() checks hlist_nulls_unhashed(), which return=
+s
+> false due to the stale pointer. It then fails to find the token in the
+> bucket, which triggers a WARN_ON_ONCE:
+>
+> net/mptcp/token.c:mptcp_token_destroy_request() {
+>     ...
+>         pos =3D __token_lookup_req(bucket, subflow_req->token);
+>         if (!WARN_ON_ONCE(pos !=3D subflow_req)) {
+>                 hlist_nulls_del_init_rcu(&pos->token_node);
+>                 bucket->chain_len--;
+>         }
+>     ...
+> }
+>
+> This could cause a kernel panic on systems with panic_on_warn enabled, an=
+d
+> permanently lose the MP_CAPABLE token from the hash table, breaking
+> subsequent MP_JOIN requests for that connection.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1786497414.=
+git.yuantan098@gmail.com?part=3D1
