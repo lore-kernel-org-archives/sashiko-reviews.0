@@ -1,72 +1,65 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010070.outbound.protection.outlook.com [52.101.46.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC01B215075
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 17:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248186; cv=none; b=i9LEldL1F96E7ZUFnNcZiRnZ93spwNzuRASwt/sZlmljpLoacOczhMt99gARYpPBUBqikT8UXNnVSJexO7YRqTOuKKJCKVBa8MAbtkPt4S6w+BnUaL87DOjX0q2PQjxbjDQSP0CYyXlu/R6vJSxiaU5BWawclDqT2xijqOX6dsY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248186; c=relaxed/simple;
-	bh=sJiCG9GMt+8ts/wSdpjtZKthk4D4iZFfORrDzQ4jEXE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rhFOv4z+x/k41/wurk6u5933Xmz1Nhx2AFowLx4lM4QgPBJV2ACe7U7C7s0df5T2saVfrPij+jInmkxlyS66KehiohsspbiPizKXRkMY8HvxEvm/6OzTAgzG9zfOAvJU3st93PF4ZPVH8uHcfaFfJIAucKmhggqFJXOUn6yK6R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Qa2N9n89; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9613F47F779
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 17:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787248440; cv=fail; b=gHhYfEOQaxT/IK+0wjqy+nELi2nuAfvXZ9gs73oGU83P03fvZKGd7f9nUuAEXgTXgy6+TJBgVfAGg31fLRI+2VvZcShUvq4IIws9RpOqHNFXfP2ecoGzNCjQlgwo3fNY/ILfIqHZqg9bSpViedJ9EC+BWWqYKOfnEA+T2gsjwB0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787248440; c=relaxed/simple;
+	bh=6XLCKYpi4nkAz2QhV2qdOfocYvi999K2+zrD66mnlNU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cNIE8EmjOZVkFQ4nrPDPXhOBJIziF7piOHeb/cpmEJqc+q0YDm4qt7M4sP1EkHBZtgWIy56dBn0g5nqVRqzYRoR3oKdnPZTHye+7swgw3Kr5QzLi9cCDClOjZCcheo2SOeNYMeYzT5uVnpNVUKWIPrkSlVHed/xG3mJjw45k87I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=Do3ylpht; arc=fail smtp.client-ip=52.101.46.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Qa2N9n89"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787248183;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6+qiRA0Rr68w6luARuut3h/5z5IL9+5qPOnuZ1Bth1E=;
-	b=Qa2N9n89qzL7LHK1UmEu5L0TouYM7HY9V/YhR2cDJC5yWPXSFcAGiF5BRPJH43wThkwFq1
-	uCRaQR4D1FX0ZmaKzUWqT/aSevBu8DyW9s3fm3pUm5yMHM0XUTjHQxpE3e/o7UhTDAMNs/
-	7+pX/5Pd+yBVaAEerh/G077lLZWBblg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-AYVfnfLUOzmsnGUC8XJm_Q-1; Thu, 20 Aug 2026 13:49:42 -0400
-X-MC-Unique: AYVfnfLUOzmsnGUC8XJm_Q-1
-X-Mimecast-MFC-AGG-ID: AYVfnfLUOzmsnGUC8XJm_Q_1787248181
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-47f6db77430so98047f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 10:49:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787248181; x=1787852981;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6+qiRA0Rr68w6luARuut3h/5z5IL9+5qPOnuZ1Bth1E=;
-        b=lPV9zNgdzEpnhnFfr12U26GRO7ofOrZ5QDNcTFbJUl74JcXjPETMCfW5sOCB9IITkJ
-         SkF8LLbQcoJBguNcK5d0776VKulpP3B/wAjAmNQ5owwlFT05O1xamdzIVEolYsk7X/al
-         5aABf8TzduptyMbb0zAH7qHf/Spw5dPfA4cavRGf6wOWB1fjCUhUr37I8eq2AVuaKZ3l
-         d1/ABqYW2Vm5JiZBVUMBlLfzokeZHUNwstcuw7jEok7YOjD8VkM7cRhjJmKwGt2Kc80e
-         iuJnh5Z2UcEbpUEZOpskDQfkYq7Mpy/Rb7aR6uaRMtAqvhcFDJHaExas20JbtfAXiG3m
-         29/A==
-X-Forwarded-Encrypted: i=1; AHgh+RpxranDSyrZUgiuPe25LUmPCBiyCF3tzOdg7ub4NQ7zbhjMvlyr0FhkIGnINL4e/7dzkb2X4C9u0TK0SpsbAdI=@lists.linux.dev
-X-Gm-Message-State: AFuF++npi0elYoyykLnvxnTrcTQG+MEJQlHkFG8OC1YCn3zC+m6GxQ+4
-	LOLd3ZhC+7EFv2opf4xRgIXw4uhCsspTnLZKRX8SKabWJUp5dwRYe6acQuWX2cq1dncliKVwSkl
-	FOqnhy4vZ2UxavhqsxVlvNnnBeVAC9j+7gFxe863Cq4q6Ug3ZcJIyEY8aKx9LZumJxOXPsw==
-X-Gm-Gg: AR+sD12xWJsKCShI+RdhVMiDYUpVOY3STBCF5BhjSvu/iklcOQ7JEyBLD82V7CpeYsl
-	uuAjgeyPZevL4/y/3DUzqKUlqt3esb+NUKrlRBxwSx/yGGlLVbq2nzF+jDccRSPuVbXBcjwy42A
-	IxguIC2EQQD2ZyWgZwkDKFBxXIH6klImfcS45RfDbGYoLjwpMvfeI+zQlBKDCH/769P/tZN6uD4
-	gRg53vB7+E4H7Kk9IRBDLofMm7dun80QcepxRJGzXPBnalHhlNLm70Xr2ukiDAyjzoCKSCcvQWO
-	SF0GiW6+g1Hcmudc7AzculJuevddjNQqnw9HsTIQ2he59rTo1/wJMIu/xH2wRjJa4xCOMVO/lD3
-	EXinxVtSAeA27iXzQboJmXHoHT9N7oPZ38TDcek2hjR3u8w==
-X-Received: by 2002:a05:6000:184e:b0:47f:f339:556c with SMTP id ffacd0b85a97d-482c0b4a40dmr705159f8f.2.1787248180692;
-        Thu, 20 Aug 2026 10:49:40 -0700 (PDT)
-X-Received: by 2002:a05:6000:184e:b0:47f:f339:556c with SMTP id ffacd0b85a97d-482c0b4a40dmr705081f8f.2.1787248180291;
-        Thu, 20 Aug 2026 10:49:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:11aa:87f0:935:4f8e:b423:64eb? ([2a01:e0a:11aa:87f0:935:4f8e:b423:64eb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482b145d31bsm13853815f8f.16.2026.08.20.10.49.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Aug 2026 10:49:39 -0700 (PDT)
-Message-ID: <e4da5ba4-9a02-4080-9a83-19d401017910@redhat.com>
-Date: Thu, 20 Aug 2026 19:49:36 +0200
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Do3ylpht"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Rorufl91kGdl958VIwJd20zqDe9zr4pbasvgAFDvOoa+iP5c0yZlJLVvfb6So56DQqFKrpShTHBge2LDXVdaNzuRqudeGyuPtToznsHj95kg2iRwgH7rhOSzDV4H4kFWvznbJK7zi4Ak8P3HHQEooM0uIxBfhB3uxisl7PtqfDWpAfnSEcT6PapKviV5dmt3xm0TSwPt3epbRDyB9XThhzi/tMuvrifR+UY+nta66QJW9EoD3P7Li4x5kgM/qpJ+NLu9Z8/lhN89LEuHhgKaRXzZ2iFgvc2mrTyifgsgrfKsmvlTmbEB4cuD1E3yt8Jw797dcnuxtPkqeenFfM4PCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HtvRXU+2dXMne7nyXJuuEbksDuTggJWnNYDgOIaDNlo=;
+ b=kmW3dwIUCcEk7tul5me83I/pL2pPG4bmYpGDe9eCqvb4YwSbsthvMyJnRii0uJ6brHjF9llGW3JmH08Op28ZdMeNxU+o1T/++5X3nWhwrbaLxSzM3XDaNOzfbI3WJtYHzahfd5UOL1u2E+rP1nN7AO+GJlkY1AoOtrLjBZP7olg0lbgYMeC0gkdikNs08gGKBiz5heXupCrjYLMyDEHLrvMXHwbvRnJBSkB13daJQwWeieboD2KhRInhsNktJMpQv/uFeqDKWHwSOQMfYRFUbgmxjEIlJjqcbU/j8mWdSWTq4bpsmE0aQDf0e189izC43EYOb/Qk3LDubstE4mDIBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HtvRXU+2dXMne7nyXJuuEbksDuTggJWnNYDgOIaDNlo=;
+ b=Do3ylphtW0QEvX3XmewyC+iLAocaLadgocese2e3mgy6b6ynZpIHwMzPNH7kkhWxMMFOwyJMyvpFScOqHVbPBr7S7FDJwOsDJMLmTmNlW9nAR8s9WukRGgIrYBb9W1X9wRCC2YWrxgEdDYffBQ6RwPK/E82M8mUqX/tLkvQm+cE=
+Received: from PH7PR03CA0010.namprd03.prod.outlook.com (2603:10b6:510:339::27)
+ by BN5PR12MB9512.namprd12.prod.outlook.com (2603:10b6:408:2ab::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
+ 2026 17:53:56 +0000
+Received: from BY1PEPF000264B4.namprd02.prod.outlook.com
+ (2603:10b6:510:339:cafe::6f) by PH7PR03CA0010.outlook.office365.com
+ (2603:10b6:510:339::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.10 via Frontend Transport; Thu,
+ 20 Aug 2026 17:53:54 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BY1PEPF000264B4.mail.protection.outlook.com (10.167.242.121) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Thu, 20 Aug 2026 17:53:54 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 20 Aug
+ 2026 12:53:19 -0500
+Received: from [192.168.1.8] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.45 via Frontend
+ Transport; Thu, 20 Aug 2026 12:53:17 -0500
+Message-ID: <de9c1174-eea8-4441-b01c-4d37e1fb1c88@amd.com>
+Date: Thu, 20 Aug 2026 23:23:16 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,154 +67,123 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/12] drm/panic: Split into core and helpers
-To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
- airlied@gmail.com, simona@ffwll.ch, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org
-Cc: dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
- amd-gfx@lists.freedesktop.org, rust-for-linux@vger.kernel.org,
- linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, nouveau@lists.freedesktop.org,
- linux-renesas-soc@vger.kernel.org, virtualization@lists.linux.dev,
- sashiko-reviews@lists.linux.dev
-References: <20260818125012.468092-1-tzimmermann@suse.de>
-From: Jocelyn Falempe <jfalempe@redhat.com>
-In-Reply-To: <20260818125012.468092-1-tzimmermann@suse.de>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ArNex43k9e3cFeY-bGWxIYh1FQ-zSPLsMVacpvnueg8_1787248181
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, fr
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 6/7] KVM: SVM: Add LBR/PMC freeze support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
+References: <20260724195040.630468-1-shivansh.dhiman@amd.com>
+ <20260724195040.630468-7-shivansh.dhiman@amd.com>
+ <20260724201344.3816C1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <20260724201344.3816C1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B4:EE_|BN5PR12MB9512:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0682e3b8-a059-4118-9cb3-08defee4006c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|23010399003|1800799024|376014|36860700016|6133799003|56012099006|10067099003|11063799006|4143699003|5023799004|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	Z3UpBT/nZTibEk9wjMe2xfINLfCR2mv0+hEXDmvxdDXQCIaYD23BlsP4zOoBroU0zlVLw2cUodkICeBfR1Dcehg3PGMgqXDRLH+Fl1bsmlA+Ryv7NWgSjbzgZ9V7w5XHzthOYqHG2yI9H3mJeP4HAkNX34EM5fwSMT05afRybaSpGB5y0jD+J7vDQAmmY4f+uMkTjhOAL749vdvJCRbUstvwDjpkFTG1lp5w8uaijn4O10xxvEbzECJe1mEQQer9XLw16O9dzMMfYT65agdInNTdxBVrqvElY6c2ahO0Otk9VDbzhTy2cLqrcrFsiH6ELdNL1d2vm/nio4oq5pyZ/SWFHvqpmUuCQs1dIfB6MyJI8edYNDHTczMKaTrLehXFBk85gBz9xfph7rc89M3pR5lKfnm/NKqVFT5RBIOwGImSeuZi9wDiCYud9UwbXQmtcP0ZepZTgmg2VNuFnVgrUdR7NmYiLuQEfPOSJjKDANyPmSMML+zw8vljfLgV7x/Ap4Kv1hRX/Uc6CMLTv+XUbZskiN0WIPzQJEJFz/OC/GLLnX8n94Z44rUm4vzGCZA5mYFmIjYWuVdcufW8HefLp8jWM8dh1LVyMZE+OCkH+DopICAq4W3P7gL1lLexTV2rddqanrmxg1xHJ2jg5tn+MHl3+fVR8aQu7GFfpDLtny+5ii+gR+fJIGfBki6G7PntslYjFdxG+PI8etrdXd7aWQ==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(23010399003)(1800799024)(376014)(36860700016)(6133799003)(56012099006)(10067099003)(11063799006)(4143699003)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	va/L8RU3hvqXC42EgIeX8/YoPYttckrBmyW6KVqes83UADS9ov16fNFipUB6i2a0AOFTgqAAiue8YkM5huEVJq45DR6YXzzazepuEg3PCVMpr1ePvvdWlVFyiW1Mg7D3b6B5NkgYltHirWXL3ALHSl7+T+ApAHFbC2ErtOkmJE3E7ykLMQfz9L/uhRw7omg158P7okko0fnxRLM2RYCltR1qcfbce5kVUz5EJwOWeMpsIZXHg+xRT7s96Tm0W79tZrnkO5QiOQQzvsOXRfGrgdibO5COH6gO425DHhHoDfgb2YNwuGlcs7kXWmU51tF3wtyKoMtQrATx8X4YcgrQyUsRN2MzirTvYjTMSKkEnLm6OLjrNPTI1CeSDMt2R9bv+Te0aJGOZM8IJZoyXLooV6SVFfrj+9nL8QyIeIg0wThprn0bFNSAGIMMM5mBv2iE
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 17:53:54.4931
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0682e3b8-a059-4118-9cb3-08defee4006c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BY1PEPF000264B4.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9512
 
-On 18/08/2026 14:27, Thomas Zimmermann wrote:
-> Split DRM's current panic handling into a core and a helper module.
-> The core is still part of DRM's core library. The panic helpers are
-> part of DRM's KMS helper module (for now).
-> 
-> The motivation behind this series is to get panic handling's drawing
-> code out of the DRM core. At some point it should share a single
-> module with DRM's other drawing and format conversion.
-> 
-> With the series applied, panic hanlding follows DRM's established
-> design pattern of having a DRM core interface with an dedicated
-> implementation in each driver. Drivers share common code in helper
-> modules. For panic handling, the DRM core still contains the panic
-> entry points, the parameters and the debugfs interface. All drawing
-> is now located in the panic helpers.
-> 
-> Patches 1 to 4 improve several issues in the current panic code. It
-> makes sense to fix them before moving the core around.
-> 
-> Patches 5 to 8 put handling of all panic state and locking into a
-> single place, drm_panic_display_panic_screen(). It is maintained by
-> panic handling's DRM core code. This also enables the test cases to
-> work more independently from the kernel's configuration.
-> 
-> Patches 9 to 11 split the panic-handling code into the core and panic
-> helpers. The former maintain all state, locking and public interfaces.
-> The latter handles drawing and details of the involved framebuffers.
-> 
-> DRM devices that offer panic handling provide a single callback, struct
-> drm_plane_funcs.display_panic_screen. A new initializer macro makes it
-> point to the existing panic-drawing implementation. Hence there's no
-> change in features or functionality. If panic handling is configured
-> off, it all clears out to NULL.
-> 
-> Patch 12 reworks the test cases slighly, so that they can be build as
-> a separate module. Do 'modprobe drm_panic_helper_test' to run them.
-> 
-> Tested under bochs with debugfs and test cases.
 
-Overall the series looks good to me, and I like the split between the 
-helper and the core.
-I would just drop the first two patches, as I don't see much difference 
-between static allocation or kmalloc() at init, and I think that 
-memset() the buffers to 0 is not useful in this case.
 
-Best regards,
+On 25-07-26 01:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] KVM incorrectly advertises AMD_LBR_PMC_FREEZE to the guest even when prerequisite features (mediated PMU or LBR virtualization) are disabled, leading to broken PMU state.
+> - [High] An L1 hypervisor can bypass CPUID capability checks and enable LBR/PMC freeze bits for L2 by injecting them via VMCB12's DEBUGCTL.
+> --
+> 
+> --- Patch [6]: [PATCH 6/7] KVM: SVM: Add LBR/PMC freeze support ---
+> commit 8a4ef61c23eb3f96d674c17183bad9ad198a18dd
+> Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
+> 
+> KVM: SVM: Add LBR/PMC freeze support
+> 
+> This commit adds support for the LBR and PMC freeze-on-PMI feature.
+> It updates CPUID initialization and allows the guest to set the
+> corresponding bits in DEBUGCTL if the feature is advertised.
+> 
+>> diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+>> index d450a5b2499d9..03501b3145eb0 100644
+>> --- a/arch/x86/kvm/cpuid.c
+>> +++ b/arch/x86/kvm/cpuid.c
+>> @@ -1268,6 +1268,7 @@ void kvm_initialize_cpu_caps(void)
+>>  	kvm_cpu_cap_init(CPUID_8000_0022_EAX,
+>>  		F(PERFMON_V2),
+>>  		SCATTERED_F(AMD_LBR_V2),
+>> +		SCATTERED_F(AMD_LBR_PMC_FREEZE),
+>>  	);
+> 
+> [Severity: High]
+> Will this feature remain advertised to the guest even when prerequisite
+> features like mediated PMU or LBR virtualization are disabled?
+> 
+> Looking at svm_hardware_setup() in arch/x86/kvm/svm/svm.c,
+> X86_FEATURE_AMD_LBR_V2 is dynamically cleared when prerequisites are missing:
+> 
+> if (!lbrv || !enable_mediated_pmu ||
+>     !kvm_cpu_cap_has(X86_FEATURE_PERFMON_V2))
+>         kvm_cpu_cap_clear(X86_FEATURE_AMD_LBR_V2);
+> 
+> If X86_FEATURE_AMD_LBR_PMC_FREEZE is not cleared similarly, a guest might
+> see the feature in CPUID and attempt to use it. If the host administrator
+> configured KVM with lbrv=0, svm_set_msr() silently ignores writes to
+> MSR_IA32_DEBUGCTLMSR without injecting a #GP, which could break guest PMU
+> functionality.
 
--- 
+Right, I'll add this in v2.
 
-Jocelyn
 > 
-> Future directions:
+> [ ... ]
 > 
-> - Panic handling shares some drawing code with format conversion and
-> clients. There's even more drawing code in vkms. Later series' can
-> attempt to unify and harmonize all these implementations in a single
-> draw module.
+>> diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+>> index 01dae3828a7aa..105a71d69d68a 100644
+>> --- a/arch/x86/kvm/svm/svm.h
+>> +++ b/arch/x86/kvm/svm/svm.h
+>> @@ -784,7 +784,9 @@ BUILD_SVM_MSR_BITMAP_HELPERS(bool, test, test)
+>>  BUILD_SVM_MSR_BITMAP_HELPERS(void, clear, __clear)
+>>  BUILD_SVM_MSR_BITMAP_HELPERS(void, set, __set)
+>>  
+>> -#define DEBUGCTL_RESERVED_BITS (~DEBUGCTLMSR_LBR)
+>> +#define DEBUGCTL_LBR_PMC_FREEZE_BITS	(DEBUGCTLMSR_FREEZE_LBRS_ON_PMI |	\
+>> +					 DEBUGCTLMSR_FREEZE_PERFMON_ON_PMI)
+>> +#define DEBUGCTL_RESERVED_BITS	(~(DEBUGCTLMSR_LBR | DEBUGCTL_LBR_PMC_FREEZE_BITS))
 > 
-> - The drawing helper drm_plane_helper_display_panic_screen() still
-> implements various access schemes (map, set_pixel, memcpy) in a single
-> function. It could be split up into specifialized helpers.
+> [Severity: High]
+> Does modifying this macro globally allow an L1 hypervisor to bypass CPUID
+> capability checks for its L2 guest?
 > 
-> - If we ever need a driver-specific helper, it is now possible to
-> implement a custom version of display_panic_screen.
+> In arch/x86/kvm/svm/nested.c:nested_vmcb02_prepare_save(), VMCB12's dbgctl
+> is masked directly against DEBUGCTL_RESERVED_BITS:
 > 
-> Thomas Zimmermann (12):
->    drm/panic: Allocate QR-code buffers statically
->    drm/panic: Make allocation of zlib workspace more robust
->    drm/panic: Return -EINVAL if font is not available
->    drm/panic: Return errno codes if panic output fails
->    drm/panic: Pass colors to draw_panic_dispatch()
->    drm/panic: Pass global module parameters to drm_panic_dispatch()
->    drm/panic: Retry in dispatch function if panic output fails
->    drm/panic: Split draw_panic_plane()
->    drm/panic: Display panic screen via per-plane callback
->    drm/panic: Internalize panic locking in DRM core and helpers
->    drm/panic: Move panic display code into helper library
->    drm/panic: Compile KUnit tests as module
+> vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
 > 
->   Documentation/gpu/drm-kms-helpers.rst         |  11 +-
->   Documentation/gpu/drm-kms.rst                 |   3 +
->   MAINTAINERS                                   |  11 +-
->   drivers/gpu/drm/Kconfig                       |   5 +
->   drivers/gpu/drm/Kconfig.debug                 |   1 +
->   drivers/gpu/drm/Makefile                      |   3 +-
->   .../amd/display/amdgpu_dm/amdgpu_dm_plane.c   |   2 +
->   drivers/gpu/drm/ast/ast_mode.c                |   2 +
->   drivers/gpu/drm/drm_atomic_helper.c           |   2 +-
->   drivers/gpu/drm/drm_crtc_internal.h           |   2 -
->   drivers/gpu/drm/drm_drv.c                     |   3 +-
->   drivers/gpu/drm/drm_kms_helper_common.c       |  14 +
->   drivers/gpu/drm/drm_panic.c                   | 914 +----------------
->   drivers/gpu/drm/drm_panic_helper.c            | 915 ++++++++++++++++++
->   ...drm_panic_qr.rs => drm_panic_helper_qr.rs} |   4 +-
->   drivers/gpu/drm/drm_panic_internal.h          |  59 ++
->   drivers/gpu/drm/hyperv/hyperv_drm_modeset.c   |   2 +
->   drivers/gpu/drm/i915/display/i9xx_plane.c     |   3 +
->   .../drm/i915/display/skl_universal_plane.c    |   4 +
->   drivers/gpu/drm/imx/ipuv3/ipuv3-plane.c       |   2 +
->   drivers/gpu/drm/mgag200/mgag200_drv.h         |   4 +-
->   drivers/gpu/drm/nouveau/dispnv50/wndw.c       |   2 +
->   .../gpu/drm/renesas/rcar-du/rcar_du_plane.c   |   2 +
->   .../drm/renesas/shmobile/shmob_drm_plane.c    |   2 +
->   drivers/gpu/drm/sysfb/drm_sysfb_helper.h      |   4 +-
->   drivers/gpu/drm/sysfb/vesadrm.c               |   1 +
->   drivers/gpu/drm/tests/Makefile                |   1 +
->   ...m_panic_test.c => drm_panic_helper_test.c} |  65 +-
->   drivers/gpu/drm/tidss/tidss_plane.c           |   2 +
->   drivers/gpu/drm/tiny/bochs.c                  |   4 +-
->   drivers/gpu/drm/virtio/virtgpu_plane.c        |   2 +
->   include/drm/drm_mode_config.h                 |   4 +-
->   include/drm/drm_modeset_helper_vtables.h      |  11 +-
->   include/drm/drm_panic.h                       | 117 +--
->   include/drm/drm_panic_helper.h                |  40 +
->   include/drm/drm_plane.h                       |  57 ++
->   rust/bindings/bindings_helper.h               |   4 +-
->   37 files changed, 1253 insertions(+), 1031 deletions(-)
->   create mode 100644 drivers/gpu/drm/drm_panic_helper.c
->   rename drivers/gpu/drm/{drm_panic_qr.rs => drm_panic_helper_qr.rs} (99%)
->   create mode 100644 drivers/gpu/drm/drm_panic_internal.h
->   rename drivers/gpu/drm/tests/{drm_panic_test.c => drm_panic_helper_test.c} (80%)
->   create mode 100644 include/drm/drm_panic_helper.h
-> 
-> 
-> base-commit: dc462ab791b686c48545c160ecc81be64f77a846
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
+> By unreserving the freeze bits globally here, an unprivileged L1 hypervisor
+> with LBRV enabled could write DEBUGCTL_LBR_PMC_FREEZE_BITS into its
+> vmcb12->save.dbgctl. Since KVM copies this to L2's VMCB without checking if
+> L1 actually possesses the X86_FEATURE_AMD_LBR_PMC_FREEZE capability, this
+> appears to allow a nested capability bypass.
 
+Will add this as part of the nested implementation of LBRv2.
+
+Thanks.
