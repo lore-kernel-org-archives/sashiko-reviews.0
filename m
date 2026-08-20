@@ -1,43 +1,43 @@
-Received: from mta1.migadu.com (out-150.mta1.migadu.com [95.215.58.150])
+Received: from mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240DA271443
-	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6FD4756A8
+	for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 14:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787235111; cv=none; b=WKFvjJjDXscPRI/KvmBp5x312cX67nZ5rwGGCxdi3oNs1Z+9thAddwNDwGjvgMQUJ1WLW7Au4X6QGqUExOXT1T1+BkAqOUTmgNuD70QGekqnRs1fjJKX/u4585qoshRVkKrQLEpgnJiQpJcNYj0BElgF4jEu9dUrMm3By4ZpBvk=
+	t=1787235226; cv=none; b=DRs6DOZkDfBAOr2Dwo1rs99RnisolTqq7t4JHh3s5mpgwmZ3bYxs5Cob9I7fo8gF71+gmFCQE4KE2KAev2VePiRSQFwNKcR/YStXGGDT79tjLmZJd8CHd633IJCtR37+3vu2pFUiB2BRkKmPtc9prPtiSVG/38QjiHceUU2C8qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787235111; c=relaxed/simple;
-	bh=/FPeC+iW5UnCRy3xNOXJa0cp1E4xq5bXCrysjGn7FHc=;
+	s=arc-20240116; t=1787235226; c=relaxed/simple;
+	bh=/I2WaGo2nAOXO4n4LbukrKrZ9QkEc8zRDEEn89KjNCM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P8CsA+TCsk9HVa6/rAtnbc7W8w6zyXMcCJ5CElozmRPcPBMln+DMn9R83EqKKMBA192Ox06VEpXjGeCINC6qBkSdIyeA2kwiph1TyBP1Az5W0ih+wu48Efy4T8EG0VhZPipw6SJxWdZvvoa43aPdh/f4gIvTJmPPXFVpTdM4H0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ttjs8lVS; arc=none smtp.client-ip=95.215.58.150
+	 To:Cc:Content-Type; b=ORPDDvKKK28VgtECC6GubYoMbWTgtUxff0Zgos/YccfYjgCyvR+rHa3/rUdaWEWO/u+q2IvJi/KdJ6RduAxT5a3f36id+P06DxG3sYt8iuSRLuR0MtRpVqQOi9Mt+BzHyDRngNFts+fXEHPloien+XEeyPiLLAKe43AdSlu4Ucg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rzELSdmw; arc=none smtp.client-ip=95.215.58.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ttjs8lVS"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rzELSdmw"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/FPeC+iW5UnCRy3xNOXJa0cp1E4xq5bXCrysjGn7FHc=;
+DKIM-Signature: a=rsa-sha256; bh=/I2WaGo2nAOXO4n4LbukrKrZ9QkEc8zRDEEn89KjNCM=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787235106; v=1; x=1787839906;
- b=ttjs8lVSb7FSNlW3WxBA2P/WWtaLl9tT8b2KYFY1As/NY586I19VO1kPE20J4wpqY+TMiVaV
- G9fHls6MHYQ/N5tqX6uGtsnxhlYj161taHmxg31lnqldA4F8+r5m24WUE15iLX0RZ20Xz2LqOaQ
- LPZnC1qOxKrfmqSBl48Wu6cs=
+ t=1787235222; v=1; x=1787840022;
+ b=rzELSdmwyHShl18XM3sM14Y6/hkOv3bP5BUt+ydsjKZ9rfhGC1ZpoqJOU0hy75cBJg7v223u
+ L0+mfj0+CUeyvV71wSf6WPf1s+lHK8Ea0V79TqjqMDPsUJXtWvkbw/AmvELsA8P0XXxBD+GO8Yu
+ FQMMyrlCQnOH44eAak2iRJ9g=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f41.google.com (209.85.167.41)
-	by smtp.migadu.com with ESMTPS id 4f217f0037edbede;
-	Thu, 20 Aug 2026 14:11:46 +0000
-X-Mizu-Trace-ID: 4f217f0037edbede
+Received: from mail-lf1-f46.google.com (209.85.167.46)
+	by smtp.migadu.com with ESMTPS id 3f6365c77541b32c;
+	Thu, 20 Aug 2026 14:13:42 +0000
+X-Mizu-Trace-ID: 3f6365c77541b32c
 X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5b2a73da7e1so11032e87.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:11:42 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yxy6C/hS0JoV9q9CMVj73qCLAaiHD1WF+V9Ae/+GV6MWuF8/lSA
-	n7Su+X+XRUyCxdWB0wPWMG7/G7SDsE/R9G/oImEnXbdent10aOpaGb7RosiLSeV0iFtmx674ns8
-	WtpUmvrHAFQO8ckqUPd68YwpAhjA5fWh61PM/FOR4
-X-Received: by 2002:a05:6512:3409:b0:5ae:a4e8:47be with SMTP id
- 2adb3069b0e04-5b47dd9397cmr193818e87.7.1787235099874; Thu, 20 Aug 2026
- 07:11:39 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5b2a73da7e1so11063e87.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 07:13:38 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxcWl16+n8SrkQhO8idKguRqSBqJnSUvxiw+MZB44DI/PyiUOwW
+	0QgPzjFnQg7PrfUIzQ7UwQi6886U7ZXxKjAzgXIYTwaPL+EPcTwni6xgqeE6ChGPoJaVIXm1T9E
+	lo8DXk6MlVisd6uZL3cA95r4g16tNwUrc/ENfFPzX
+X-Received: by 2002:a05:6512:1044:b0:5b1:571f:715f with SMTP id
+ 2adb3069b0e04-5b47dd8842dmr247207e87.3.1787235217676; Thu, 20 Aug 2026
+ 07:13:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,101 +45,107 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260820125053.2951078-1-fuad.tabba@linux.dev>
- <20260820125053.2951078-2-fuad.tabba@linux.dev> <20260820130616.1A7241F000E9@smtp.kernel.org>
-In-Reply-To: <20260820130616.1A7241F000E9@smtp.kernel.org>
+ <20260820125053.2951078-3-fuad.tabba@linux.dev> <20260820130302.E89531F000E9@smtp.kernel.org>
+In-Reply-To: <20260820130302.E89531F000E9@smtp.kernel.org>
 From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Thu, 20 Aug 2026 15:11:03 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
-X-Gm-Features: AcwNN1UO4jbfDArvCU_vsJPDoyO_q6tXOzTT6hgONE-IadCE9Lo9ihDN9V0SpyU
-Message-ID: <CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] irqchip/gic-v4: Clear the domain and fwnode pointers
- after freeing them
+Date: Thu, 20 Aug 2026 15:13:01 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzBRdtjWZSuAS1LZTouRZfP4F9Y=Ht1xN1f_kOzwNto0A@mail.gmail.com>
+X-Gm-Features: AcwNN1XQRj8A7CoqHpb1D6TwxDMQ11ZVchz6u7GyIA7RR0c5V2K-tLNtaCsxaMI
+Message-ID: <CA+EHjTzBRdtjWZSuAS1LZTouRZfP4F9Y=Ht1xN1f_kOzwNto0A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] irqchip/gic-v4: Unwind what its_alloc_vcpu_irqs()
+ allocated on failure
 To: sashiko-reviews@lists.linux.dev
 Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
 	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Oh Sashiko, here we ago again...
-
-On Thu, 20 Aug 2026 at 14:06, <sashiko-bot@kernel.org> wrote:
-...
-> [Severity: High]
-> This is a pre-existing issue, but does this function permanently leak IRQ=
-s
-> and SGI domains?
+On Thu, 20 Aug 2026 at 14:03, <sashiko-bot@kernel.org> wrote:
 >
-> In arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_init(), KVM intentionally trunca=
-tes
-> dist->its_vm.nr_vpes upon failure to allocate VPE IRQs:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
 >
->     dist->its_vm.nr_vpes =3D i;
->
-> This limits the teardown loop in vgic_v4_teardown(), which later calls
-> its_free_vcpu_irqs() with the fatally truncated nr_vpes value.
->
-> Because its_free_vcpu_irqs() relies on vm->nr_vpes to free the IRQ hierar=
-chy
-> and SGI domains originally allocated for all VCPUs, the truncation causes=
- a
-> partial free.
+> Pre-existing issues:
+> - [High] vgic_v4_init() truncates its_vm.nr_vpes on vgic_v4_request_vpe_i=
+rq() failure, causing a resource leak of previously allocated VPE IRQs and =
+SGIs during teardown.
 
-Looks like a bug indeed...
+https://lore.kernel.org/all/CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2=
+n8Aw@mail.gmail.com/
 
-I think the problem is that vgic_v4_init() overloads its_vm.nr_vpes:
-it truncates the count to bound the free_irq() loop, but
-its_free_vcpu_irqs() reads the same count and under-frees what
-its_alloc_vcpu_irqs() allocated at and above the failure index.
-
-The fix I have in mind keeps the two counts apart: teardown frees
-everything allocated, and free_irq() only touches the requested
-doorbells. Marc, what do you think? Something like this (not tested):
-
-@@ vgic_v4_init(), on vgic_v4_request_vpe_irq() failure @@
-                 ret =3D vgic_v4_request_vpe_irq(vcpu, irq);
-                 if (ret) {
-                         kvm_err("failed to allocate vcpu IRQ%d\n", irq);
--                        /*
--                         * Trick: adjust the number of vpes so we know
--                         * how many to nuke on teardown...
--                         */
--                        dist->its_vm.nr_vpes =3D i;
-                         break;
-                 }
-         }
-
--        if (ret)
--                vgic_v4_teardown(kvm);
-+        if (ret) {
-+                /* Undo the doorbells we requested (0..i-1)... */
-+                while (--i >=3D 0) {
-+                        int db =3D dist->its_vm.vpes[i]->irq;
-+                        irq_clear_status_flags(db, DB_IRQ_FLAGS);
-+                        free_irq(db, kvm_get_vcpu(kvm, i));
-+                }
-+                /* ...but free everything its_alloc_vcpu_irqs() allocated.=
- */
-+                its_free_vcpu_irqs(&dist->its_vm);
-+                kfree(dist->its_vm.vpes);
-+                dist->its_vm.nr_vpes =3D 0;
-+                dist->its_vm.vpes =3D NULL;
-+        }
-
-         return ret;
-
-The actual patch would factor the shared teardown tail into a helper
-rather than duplicate it.
-
-If you (Marc) agree, I'll send this as a separate patch (after testing
-it), or as part of a possible respin in a couple of days.
-
-Cheers,
 /fuad
 
-
-
-
+> --
+>
+> --- Patch [2]: [PATCH 2/3] irqchip/gic-v4: Unwind what its_alloc_vcpu_irq=
+s() allocated on failure ---
+> commit 09380ca1832d1b65e5229cfbb8e1f8ab95b65846
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> irqchip/gic-v4: Unwind what its_alloc_vcpu_irqs() allocated on failure
+>
+> This commit fixes a resource leak in its_alloc_vcpu_irqs() where SGI
+> domains and vPE irqs were not properly freed if the allocation loop
+> failed midway.
+>
+> > diff --git a/drivers/irqchip/irq-gic-v4.c b/drivers/irqchip/irq-gic-v4.=
+c
+> > index 754839e409f88..f707a3cb281aa 100644
+> > --- a/drivers/irqchip/irq-gic-v4.c
+> > +++ b/drivers/irqchip/irq-gic-v4.c
+>
+> [ ... ]
+>
+> > @@ -189,11 +191,14 @@ int its_alloc_vcpu_irqs(struct its_vm *vm)
+> >               vm->vpes[i]->irq =3D vpe_base_irq + i;
+> >               ret =3D its_alloc_vcpu_sgis(vm->vpes[i], i);
+> >               if (ret)
+> > -                     goto err;
+> > +                     goto err_free_irqs;
+> >       }
+> >
+> >       return 0;
+> >
+> > +err_free_irqs:
+> > +     its_free_sgi_irqs(vm);
+> > +     irq_domain_free_irqs(vpe_base_irq, vm->nr_vpes);
+> >  err:
+>
+> [Severity: High]
+> This is a pre-existing issue, but does the teardown path in
+> its_free_vcpu_irqs() fully clean up resources if its_vm.nr_vpes gets
+> truncated?
+>
+> If vgic_v4_init() in arch/arm64/kvm/vgic/vgic-v4.c fails to request an IR=
+Q
+> via vgic_v4_request_vpe_irq(), it explicitly truncates nr_vpes to avoid
+> calling free_irq() on unrequested IRQs:
+>
+> arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_init() {
+>     ...
+>     /* Trick: adjust the number of vpes so we know how many to nuke on te=
+ardown... */
+>     dist->its_vm.nr_vpes =3D i;
+>     break;
+>     ...
+> }
+>
+> When cleanup subsequently calls its_free_vcpu_irqs(), it relies on this
+> truncated nr_vpes value:
+>
+> drivers/irqchip/irq-gic-v4.c:its_free_vcpu_irqs() {
+>     ...
+>     its_free_sgi_irqs(vm);
+>     irq_domain_free_irqs(vm->vpes[0]->irq, vm->nr_vpes);
+>     ...
+> }
+>
+> Will this sequence leave the previously allocated IRQ domains, fwnodes, a=
+nd
+> SGI domains orphaned for the vCPUs beyond the failure index, since they a=
+re
+> no longer tracked by the truncated nr_vpes count?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820125053.29=
-51078-1-fuad.tabba@linux.dev?part=3D1
+51078-1-fuad.tabba@linux.dev?part=3D2
