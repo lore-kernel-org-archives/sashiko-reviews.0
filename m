@@ -1,182 +1,213 @@
-Received: from mta0.migadu.com (out-117.mta0.migadu.com [91.218.175.117])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE2839023F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 07:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BC539282C;
+	Fri, 21 Aug 2026 08:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787298749; cv=none; b=SLYYk6A7Yezcm3njhqAnC5IdLzZ8kEzqf5hMwKKV0XdBl2H2nr3/BMKotk7Nkk8CBcuFZUR+RgvIXPqXbUrQ21rfdJPuVA9hT1Tl9mJHPJwCWFxynd/BtzghYNzPuAzJJ4cJOa5WrvdbxPIl8oPZjqXq9jCwFXezVP8BmgYym0U=
+	t=1787299697; cv=none; b=bECVSsAfFTvNCn0s/4LsIV1oaqPP8J4FwK3f7/2pPl82TAMJ13GDczQrbk5J+2UUFcJT3W6VvoKsD+d3SQ1FLn8GUETIk74pjQzqBLrMXi4FutFYR0WuWzQPEnErqnSC54R0+pusWAzLcAKTVywi2v0uLZwY37ZOauaKOfBAXXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787298749; c=relaxed/simple;
-	bh=ZPQouUKwxJF5orocHpl/jnc7cYKNfd3PZ/Xqx3fCIQ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AwVjxxmkjNIudLhBLc5q9PXNit23EN7rKP78GpbdsmLZvOLAbuKC9DFHoG5z7EtLor01aNVgcSaisCWF4su6PBAimlV30CkUjC7ebSJ1+1Ofk5JExk3u0z4QUjXRk9ji69PJIZppZv1vLpzMwsefEMp4gYPS/eFSlsf23DlBWPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ua7J29sy; arc=none smtp.client-ip=91.218.175.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787299697; c=relaxed/simple;
+	bh=lQ/dAX+RXRXAsAeaExiSJ+arco3Cp2j3ILR3ZYZGCjw=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=mGVs5DcgiiwGHMK67CGzjeIucwgduFUzi2bNY0RUoZRjfbykTGueCx7a9NPXB2TisxI+3av4YfdKLITHtk7VBGG0ErpTWDM8LayQwcB955w98H34IgTdeWTCFwDEmQfM1mtCGkj0RUBeXls9t83pp+fmG1uNdi1GdI5rn/lLs98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=GttcPNzQ; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ua7J29sy"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ZPQouUKwxJF5orocHpl/jnc7cYKNfd3PZ/Xqx3fCIQ8=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787298744; v=1; x=1787903544;
- b=ua7J29syiP8SslkeiA/VsmoQ1xiqG/paQyBx6vW8Dbfos3j72k8XnM6ygyz00TJ9jbRwsiS7
- xCn4nmM3EBS3CfcI9VGt2y/cl0aogpmbee5p82IUg36F4PT92Ce/ayrVBxp6YfZ4F0Q0YgiL1Xf
- UPMw3aUVYh9+O8m1bad+HO1E=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f44.google.com (209.85.167.44)
-	by smtp.migadu.com with ESMTPS id b913a3cab014a1ab;
-	Fri, 21 Aug 2026 07:52:24 +0000
-X-Mizu-Trace-ID: b913a3cab014a1ab
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5b2a8173142so3433e87.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 00:52:19 -0700 (PDT)
-X-Gm-Message-State: AFuF++mfG6Mwon/SX1iWCDkyhH2eak52I+g5heMq42zl4kEMiiheqw5J
-	SomPzS34oosEO8SxwNUGpbwmd9CBC+3GerDT69yxxe0De6waQ25hspQ6VjonOo3iv/yaQ5X1s2h
-	kMhocBgzZ/KlAEgGl1H1BMR0hMXzWfGbZ6d4mODw2
-X-Received: by 2002:a05:6512:ba3:b0:5b2:8963:e5d4 with SMTP id
- 2adb3069b0e04-5b484abe418mr134870e87.5.1787298739042; Fri, 21 Aug 2026
- 00:52:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="GttcPNzQ"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67L5WH8k3646036;
+	Fri, 21 Aug 2026 08:08:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=pp1;
+	 bh=eL+8jpYcsZarGjEHQo1e5+TKaOjNsmN3QPixUfvYYLw=; b=GttcPNzQFRzm
+	hmEilZ4LidN0aJ5Nd5pCwL83y9tmpYXMAZf3q/8dDnIKot10BalDJolCjoGuT1Vg
+	dAjou+mcjm+7tttnHKe18aCkiRx1gXixWDmosq9/ItQHeBo7T+9SNVllzhVZZJJ/
+	H5SmJXSufEBbHM+wg0hz4P72JKK05PyooTG7zkb6wXivVqqPpYvMto9me8PYaBD5
+	ThsVyN84JZe0v35FhjGAHVeuHV0qioByQZGHXjm0mqX5fpXJ85cBPu1o+CNdKkN1
+	NO29vRsNsOo976AahiUGh7BYRwTqpqpVN0JsknT815H6b5pagUhcE1i2YojEn5tc
+	rE8WlQVjPA==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu2fvmx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Aug 2026 08:08:14 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67L7uQxO011075;
+	Fri, 21 Aug 2026 08:08:14 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32twkgfy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Aug 2026 08:08:13 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67L88CM626149394
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 21 Aug 2026 08:08:12 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6AE0458058;
+	Fri, 21 Aug 2026 08:08:12 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C3B8058059;
+	Fri, 21 Aug 2026 08:08:11 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 21 Aug 2026 08:08:11 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260821064445.615838-1-fuad.tabba@linux.dev> <20260821064445.615838-5-fuad.tabba@linux.dev>
- <20260821070039.120B51F000E9@smtp.kernel.org>
-In-Reply-To: <20260821070039.120B51F000E9@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Fri, 21 Aug 2026 08:51:42 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTy-wCp=QPnoH8dxwm5H+vfVC+Y-gjBPm5AOWMwh8Y05RA@mail.gmail.com>
-X-Gm-Features: AcwNN1Xbv8e0NthIb3Vxafry6St73eMHFmn6L28IW3_oO47ySmswbhNysUgzJdY
-Message-ID: <CA+EHjTy-wCp=QPnoH8dxwm5H+vfVC+Y-gjBPm5AOWMwh8Y05RA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] KVM: arm64: selftests: Add ITS table save tests
+Date: Fri, 21 Aug 2026 10:08:11 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger
+ <borntraeger@linux.ibm.com>,
+        linux-s390@vger.kernel.org, Vasily Gorbik
+ <gor@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>
+Subject: Re: [PATCH v5 6/8] s390/crypto: Fix handling of EBUSY in PHMAC when
+ req is pushed to crypto engine
+Reply-To: freude@linux.ibm.com
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <20260820143522.7C3221F000E9@smtp.kernel.org>
+References: <20260820141957.19091-1-freude@linux.ibm.com>
+ <20260820141957.19091-7-freude@linux.ibm.com>
+ <20260820143522.7C3221F000E9@smtp.kernel.org>
+Message-ID: <4be21507d2d364d9a36d81512f4b3e5b@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a88076e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=eGWD9COVx0Xut67NzgsA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: gkgFXwFiT6aVgjYdMDDD3dUOAdBbFneN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA1NyBTYWx0ZWRfXxJvPEcgyFhiB
+ U1YYKt3U+9+4gj2p3gNwipR7ScEWYz0XrlG6OVgtj3lGK3JQjnhndwj/lxwDXUBmQ+FUF77V2M/
+ x2rEvsCql8qrdbncgJNbitjccFJb2Y/dusccrG+6sITEx7fLbDJdHR7N+AcfdXTO2rX1egCmfOQ
+ +cTpj0J93yfHiEv6utnNmTj09CtwbNFG+M86oZWooI18RCdYe3TdCWqtWUIlz0MdKUhwjONqWAg
+ N+eroIiywFyC8O1Oraz6ajt1i3R5uPsSwW2/IxHOY+d8rEyFMUTNvQqChmhGzPlbXO+4QoHGIMq
+ oymW2pWtpD2/yZZF23kplaUdogn8Op95XHd+bOiLMJm2CPeQzbRYC4KpQGAVnI6IBq0sm4D/8ql
+ NzXrB28XbKVc015zmY7bulvp3f7OXRzNoF0T4h8bV2gJOr9vvWal/ZrpHuZsQNT78kw/qJuptxj
+ czitypbCwRYcX3qLEBw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA1NyBTYWx0ZWRfXw64Hu/bY1jlc
+ +qjdKQ31baur7viJLv+MvL1YWu1aVPRXK3diItXVTtKn7wGSk1j48rWWr4yrhu+aA3SlFqW1Hrw
+ oBaPh9sIGGSdpN67OAPWIwsb3Brgtlo=
+X-Proofpoint-ORIG-GUID: gkgFXwFiT6aVgjYdMDDD3dUOAdBbFneN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_02,2026-08-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
+ impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608210057
 
-On Fri, 21 Aug 2026 at 08:00, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] Unsafe DMA Buffer Configuration (ITT Size Miscalculation)
-
-The oversized scan stays inside the memory the test allocated for the
-two ITTs, and both cases pass. If the series needs a respin I'll tidy
-this up, but I won't respin just for this.
-
-> - [Medium] Incorrect Endianness Conversion for L1 Device Table
-
-CPU_BIG_ENDIAN depends on BROKEN on arm64, being deprecated [1]
-
-/fuad
-
-[1] https://lore.kernel.org/all/20260811140132.22778-1-will@kernel.org/
-
+On 2026-08-20 16:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Incorrect module teardown order in `s390_phmac_exit` leads to
+> kthread leaks and Use-After-Free of the `crypto_engine`.
 > --
->
-> --- Patch [4]: [PATCH v2 4/4] KVM: arm64: selftests: Add ITS table save t=
-ests ---
-> commit 00c3ff8ee303e906c6d0f346f17949dbb0abf5fc
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> Subject: KVM: arm64: selftests: Add ITS table save tests
->
-> This commit adds selftests for KVM_DEV_ARM_ITS_SAVE_TABLES to cover cases
-> where a guest alters tables. It tests handling of a GITS_BASER<coll> writ=
-e
-> that changes the table, and a device whose L2 block the guest invalidated=
-.
-> Each case is then reset and restored to verify the save functionality.
->
-> > diff --git a/tools/testing/selftests/kvm/arm64/vgic_its_save.c b/tools/=
-testing/selftests/kvm/arm64/vgic_its_save.c
-> > new file mode 100644
-> > index 0000000000000..864da01539f3f
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/kvm/arm64/vgic_its_save.c
-> > @@ -0,0 +1,441 @@
+> 
+> --- Patch [6]: [PATCH v5 6/8] s390/crypto: Fix handling of EBUSY in
+> PHMAC when req is pushed to crypto engine ---
+> commit c74c807c2aeebffc7e981ca45b5b377727342ad1
+> Author: Harald Freudenberger <freude@linux.ibm.com>
+> 
+> s390/crypto: Fix handling of EBUSY in PHMAC when req is pushed to 
+> crypto engine
+> 
+> When a request is transferred to the engine via
+> crypto_transfer_hash_request_to_engine() there are two return codes
+> signaling a successful transfer: EINPROGRESS and EBUSY. However the
+> correct handling of EBUSY was missing and has been added as a return
+> code indicating a successful transfer to the crypto engine.
+> 
+> Cc: stable@vger.kernel.org # 6.17+
+> 
+>> diff --git a/arch/s390/crypto/phmac_s390.c 
+>> b/arch/s390/crypto/phmac_s390.c
+>> index 03ca33ffe6ccf..30c8a59af1a4e 100644
+>> --- a/arch/s390/crypto/phmac_s390.c
+>> +++ b/arch/s390/crypto/phmac_s390.c
+> 
 > [ ... ]
-> > +/*
-> > + * its_send_mapd_cmd() encodes ilog2(itt_size) - 1 as num_eventid_bits=
-, and
-> > + * vgic_its_restore_itt() scans BIT_ULL(num_eventid_bits) * ESZ, so th=
-e size
-> > + * handed to MAPD has to match the ITT allocated for it.
-> > + */
-> > +#define ITT_EVENTID_BITS     13
-> > +#define ITT_MAPD_SIZE                BIT_ULL(ITT_EVENTID_BITS + 1)
->
-> [Severity: Medium]
-> Does this calculation configure the hardware with an ITT size of 128KB in=
-stead
-> of the intended 64KB?
->
-> The test calculates ITT_MAPD_SIZE as BIT_ULL(ITT_EVENTID_BITS + 1) (evalu=
-ating
-> to 16,384) to compensate for its_send_mapd_cmd() subtracting 1. However, =
-KVM's
-> its_cmd_get_size() adds 1 back, resulting in 14 bits of event IDs.
->
-> During restore, KVM computes the scan size as BIT_ULL(14) * 8 =3D 128KB, =
-causing
-> it to read 64KB past the end of the allocated ITT memory.
->
-> > +#define ITT_SZ                       (BIT_ULL(ITT_EVENTID_BITS) * ESZ)
-> [ ... ]
-> > +static void guest_unreachable_device(void)
-> > +{
-> > +     u64 *l1;
-> [ ... ]
-> > +     guest_make_device_table_indirect();
-> > +
-> > +     /* Both L2 blocks present, so both MAPDs are in range. */
-> > +     l1 =3D test_data.device_l1_va;
-> > +     l1[0] =3D L1E_VALID_MASK | (test_data.device_l2[0] & L1E_ADDR_MAS=
-K);
-> > +     l1[1] =3D L1E_VALID_MASK | (test_data.device_l2[1] & L1E_ADDR_MAS=
-K);
->
-> [Severity: Medium]
-> Will this fail on big-endian hosts? The L1 entries are being populated us=
-ing
-> native CPU endianness.
->
-> Since the ARM GICv3 ITS architecture and KVM emulator require these table=
-s to
-> be little-endian (using le64_to_cpu on read), shouldn't these use htole64=
-()
-> when writing them?
->
-> > +
-> > +     its_send_mapd_cmd(test_data.cmdq_base_va, DEVICE_A_ID,
-> > +                       test_data.itt_tables, ITT_MAPD_SIZE, true);
-> > +     its_send_mapd_cmd(test_data.cmdq_base_va, DEVICE_B_ID,
-> > +                       test_data.itt_tables + ITT_SZ, ITT_MAPD_SIZE, t=
-rue);
->
-> [Severity: Medium]
-> This isn't a separate bug, but as a result of the ITT_MAPD_SIZE miscalcul=
-ation
-> above, doesn't this send MAPD commands configuring overlapping, out-of-bo=
-unds
-> ITT tables for the two devices?
->
-> > +
-> > +     /*
-> > +      * Drop the block holding device B. No ITS command and no GITS_BA=
-SER
-> > +      * write is involved, so nothing tells KVM the device is now
-> > +      * unreachable.
-> > +      */
-> > +     l1[1] =3D 0;
-> > +
-> > +     GUEST_DONE();
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260821064445.61=
-5838-1-fuad.tabba@linux.dev?part=3D4
+> 
+>> @@ -716,15 +726,17 @@ static int phmac_finup(struct ahash_request 
+>> *req)
+>>  		/* req->async_op has been set to either OP_FINUP or OP_FINAL */
+>>  		atomic_inc(&tfm_ctx->via_engine_ctr);
+>>  		rc = crypto_transfer_hash_request_to_engine(phmac_crypto_engine, 
+>> req);
+>> -		if (rc != -EINPROGRESS)
+>> +		if (rc == -EINPROGRESS || rc == -EBUSY)
+>> +			cleanup = false;
+>> +		else
+>>  			atomic_dec(&tfm_ctx->via_engine_ctr);
+>>  	}
+>> 
+>> -	if (rc != -EINPROGRESS)
+>> +	if (cleanup && hwh->walkbytes > 0)
+>>  		hwh_advance(hwh, rc);
+>> 
+>>  out:
+>> -	if (rc != -EINPROGRESS)
+>> +	if (cleanup)
+>>  		memzero_explicit(kmac_ctx, sizeof(*kmac_ctx));
+>>  	pr_debug("rc=%d\n", rc);
+>>  	return rc;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but while reviewing this file I noticed a
+> potential module teardown order problem in s390_phmac_exit() in
+> arch/s390/crypto/phmac_s390.c:
+> 
+>     if (phmac_crypto_engine) {
+>         crypto_engine_stop(phmac_crypto_engine);
+>         crypto_engine_exit(phmac_crypto_engine);
+>     }
+> 
+>     for (i = ARRAY_SIZE(phmac_algs) - 1; i >= 0; i--) {
+>         phmac = &phmac_algs[i];
+>         if (phmac->registered)
+>             crypto_engine_unregister_ahash(&phmac->alg);
+>     }
+> 
+> Could this lead to kthread leaks and a use-after-free of the 
+> crypto_engine?
+> 
+> If s390_phmac_init() fails to register a subsequent algorithm after
+> successfully registering the first, it jumps to the error path and
+> calls s390_phmac_exit().
+> 
+> Because the first algorithm is already registered and the module is in
+> MODULE_STATE_COMING, a concurrent userspace program can successfully
+> allocate it and continuously submit hash requests.
+> 
+> Since s390_phmac_exit() calls crypto_engine_stop() before unregistering
+> the algorithms, the continuous stream of requests keeps the engine 
+> busy.
+> This can cause crypto_engine_stop() to time out and return -EBUSY,
+> which leads to crypto_engine_exit() returning without destroying the
+> kworker thread.
+> 
+> Finally, misc_deregister() destroys the device, freeing the 
+> devm-managed
+> crypto_engine struct, and the module is subsequently unloaded.
+> 
+> Would the still-running kworker thread then access freed memory and
+> execute freed module code, potentially causing a kernel panic?
+
+This will be addressed in another series. There is a new tracking 
+bugzilla for this:
+https://bugzilla.linux.ibm.com/show_bug.cgi?id=222134
