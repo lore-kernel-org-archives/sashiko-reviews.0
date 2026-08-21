@@ -1,181 +1,121 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EF3331EA4;
-	Fri, 21 Aug 2026 15:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B42A346E5E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 15:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787325210; cv=none; b=rPpRyVYHzG0ygIav8P57PCgzKZ/0jr1j8XEjtrB2tfXygBExWAkRbBHGKZ6IGpiJBnJktYjx8ZBndK02n0GTv1LHu0IF1LmeowZOLxSAsbT0gtEAeldeCnXnDLSetWqlGyQCJfqgvbRp7GJ8OJOMGg46LM6jeYet0qs2jRYgXjI=
+	t=1787325355; cv=none; b=B5M8d1WvgEijSeF83AIFk4B7MUGPO/jYaO+LlhqXB82FBj6ZldbIBEpQnf4/1VdejxPX7mLv6mP3eCIFeLNlaMqHFVJyYCcY1Lz4PodxgeJ752GGqsxO+ILn0L9eGEn0EZzLr9Q1BCzTYMQJq070bS+Viasjn6wmRz7JxMVyIaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787325210; c=relaxed/simple;
-	bh=9Hr01kZ4gUwoBCSaSAdMX9wlbnucoyuNEl5iG2JZn1I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qSQB78e3LxgJ1uBXjNcK4nnBjj11E1RRTNwOBE8MTdvT+Yi97LYTM3lZeN5vwHu1w83a0oCzgf7ssqonalMm3VbX5T3ohS6PKmqAQuhM/6USgbIAVeP1L5xPs28KWGtl0LdyyapVOI68RLEfM8BeNf6KATJ75IESVGG4lLltNsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=sQJr4s+u; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1787325355; c=relaxed/simple;
+	bh=21ctLwJPvEhRuTDaPX96Y0NOo74oCljgQKriInCzXGM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ptghKZAIipAVErScWPcuFQF/MY0lvrWxHLsxM9UVQGsfpK6n05tL0u9K7Gftx6Y8iQKzepFbTh/1YSBoiG8hL/cjdt5z6teRjddAzdgLfOZkpjZ++Xnz8nK0r+eYULp7ORyKVw32iVVaAuTjFh3ys3n67O++N21Iqn5DWVcB5UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=EonQMfPp; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="sQJr4s+u"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67LD1V8P1530471;
-	Fri, 21 Aug 2026 15:13:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=kL9+7oxbnYphS6GdcDQD1Q9a1I38ys
-	9Zi1DKifjNquk=; b=sQJr4s+uMwWM/XpQ6kFKZV96Yg/wKpX9UGoaM/xs3/qPhA
-	pc8hg3SL0XjoVpCQpNjxjYwHHlGkl0LqOORXQAs3YN+ErjmrJFxZ315ALHKlO9F8
-	w1WE8eJLt+ta7M7q/omm0RxMMrWfWxYjA9L5lonppTYbTnTaJTFUpMTLBTKBsclp
-	49Jxkv0nPS33t35gf8mgl3h9CemqQmbQE2B51x0aui7ebUVArCY0RNRSDfG5L3kr
-	Ss+d0QH5XMOVCzA3jHj2O0iOWTkCbWxWE3KnPnP2hrYl08xRKp6c6pQic72+gO9v
-	MXAKcRF4uWqO1LaLs7elK03C9AtXSD+KaC8BEzCA==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1t880-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 15:13:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LFBFjh007798;
-	Fri, 21 Aug 2026 15:13:26 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yw2rg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 15:13:26 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67LFDQpK29098530
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 21 Aug 2026 15:13:26 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 214C45803F;
-	Fri, 21 Aug 2026 15:13:26 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E24C35804E;
-	Fri, 21 Aug 2026 15:13:25 +0000 (GMT)
-Received: from d (unknown [9.61.29.95])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 21 Aug 2026 15:13:25 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="EonQMfPp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=SEjD
+	crlpVjC60IzAnkU2XTdoDh6O09yHxWnsPLianKw=; b=EonQMfPpmNW8zm7i5Qxq
+	htaVibUaSjeoGvMocQzHE11cdyW2WUujFgybSWgDlXQjyOsVPGm6S2bttz9iVKt4
+	9C2i1rkuUYzT6Deo4YjugUsvoSchsK/NSG4Zw8RZ+bN5GPD8skk0Wu0geWIb/F2Y
+	EFaOuzb6394gOuCKXVBUnlyCXVTPhzx+CG6H2Ap0oYFP+n11Lo3cuUYSEl19gNaR
+	7e2MpQvqk3M3Rb1JzFRQ+TsB7EOIKp6Mwwwln+FkXW4JHqkiFqfYhHAbBjEGtY+T
+	Or7B8jhATJ4ZJ9o7zYg1Qx1SNaY43U2JCAR4ygo4VvRZFPInOhzKMQKKwqMLHlQu
+	/A==
+Received: (qmail 690709 invoked from network); 21 Aug 2026 17:15:51 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 21 Aug 2026 17:15:51 +0200
+X-UD-Smtp-Session: l3s3148p1@mD6oHJBZFr0ujnuu
+Date: Fri, 21 Aug 2026 17:15:51 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v6 3/8] scsi: ibmvfc: define asynchronous sub-queue
-In-Reply-To: <20260817203902.5DEA01F000E9@smtp.kernel.org>
-References: <20260817-ibmvfc-fpin-support-v6-0-62a2d525e70d@linux.ibm.com>
-	<20260817-ibmvfc-fpin-support-v6-3-62a2d525e70d@linux.ibm.com>
-	<20260817203902.5DEA01F000E9@smtp.kernel.org>
-Date: Fri, 21 Aug 2026 10:13:25 -0500
-Message-ID: <871pbry0a2.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: Re: [PATCH v5 10/17] rtc: rzn1: Replace remove callback with
+ devm_add_action_or_reset()
+Message-ID: <aohrp9dtVTAg8sVj@ninjato>
+References: <20260821135608.275233-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260821135608.275233-11-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260821140725.D39CB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a886b17 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=UGRm_XtBAX8pSzKkes8A:9
-X-Proofpoint-GUID: 0qJJ9QSW61pDUXBin6owHt6FjfSsZcPm
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDExNyBTYWx0ZWRfX07Is/xBEXZC7
- fAa57hOehywKTCZmy8cbg1zfy+MqS+rEAb/vLF9qTaczVPzkVfV22WrXWEalkJoihbSILNgkD/6
- unHzosisHBnVDUFKZelZ7xMNILaUN+I=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDExNyBTYWx0ZWRfX37PmRa4olSYk
- hZyuH6yNycTSLyoCjM4Azm5ikSvxvC5rpZ8g1zePuEe1Ki6q25i2a1SdWV8Ww7cHFp5WsiDmw7r
- dlg0qOn5ERZXCW8rqg1x4OP/6rz0ahYgjIKARxZ/AMvmWw+NOY18OJHvZn3WcM6TzFp3dfnfm5O
- CiR2Vk9DF8+7Qoa7/0d4Ldvnx34t6xwHDp0PtBZojJVMH/8MAhX0waqz+Oqoau+uiq1ZLQlVMGK
- pHpgiubepWoO0cvuJYZhURRuyDhEQnfoFwW15n3LrCpnbIt9XS9K6A7fOti5DxYKvhEijxf6YfO
- ALoPgcMx5iU+v6FUiLAZIwVdzSONx5URGXL3v+BIlBf2ffFLrBcWufrBIuiQvKWx26xiqYIC6Vo
- QbMd/56y6cywIAUPjjivPDjM6CXIBvqDOZGwincSEsj290SDkQBQc4oxHfyHYh1IJAgghkua3iQ
- MMLO+htlWKfNmDZyW7w==
-X-Proofpoint-ORIG-GUID: 0qJJ9QSW61pDUXBin6owHt6FjfSsZcPm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-21_04,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- adultscore=0 suspectscore=0 impostorscore=0 clxscore=1011 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210117
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yWIVHNauTBxAm2Qp"
+Content-Disposition: inline
+In-Reply-To: <20260821140725.D39CB1F000E9@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> --- Patch [3]: [PATCH v6 3/8] scsi: ibmvfc: define asynchronous sub-queue ---
-> commit 4682ac13b0e9a18a4a0d6bd0390528a5ffb87d23
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
->
-> scsi: ibmvfc: define asynchronous sub-queue
->
-> Define data structures for asynchronous sub-queue support required for
-> full and extended FPIN functionality.
->
->> Add ibmvfc_async_subq structure to represent async events received via
->> the sub-queue, including FPIN status, link state, event type, and WWPN
->> information.
->> 
->> Update ibmvfc_channel_setup structure to include async_subq_handle field
->> and reduce IBMVFC_MAX_CHANNELS from 502 to 501 to accommodate the async
->> sub-queue. Add async_scrq pointer to ibmvfc_channels structure.
->> 
->> Add capability flags IBMVFC_USE_ASYNC_SUBQ and IBMVFC_SUPPORT_ASYNC_SUBQ
->> for negotiating async sub-queue support with VIOS during login.
->
-> [Severity: Medium]
-> Are these changes missing from the patch? The commit message explicitly claims
-> to define the ibmvfc_async_subq structure, update ibmvfc_channel_setup, reduce
-> IBMVFC_MAX_CHANNELS, add an async_scrq pointer, and introduce several
-> capability flags. However, almost none of these structural changes exist in the
-> actual patch.
+--yWIVHNauTBxAm2Qp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I missed rewriting this commit message after updates to integrate with
-the recent ibmvfc NVMEOF work. Fixed in v7.
 
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc.h b/drivers/scsi/ibmvscsi/ibmvfc.h
->> index e8ca0d30f483f..d8880d02685b3 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc.h
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc.h
->
-> [ ... ]
->
->> @@ -990,6 +990,7 @@ struct ibmvfc_host {
->>  	mempool_t *tgt_pool;
->>  	struct ibmvfc_queue crq;
->>  	struct ibmvfc_queue async_crq;
->> +	struct ibmvfc_queue async_sub_crq;
->
-> [Severity: Medium]
-> The commit message claims to add an async_scrq pointer to ibmvfc_channels,
-> but only async_sub_crq is added to ibmvfc_host here.
-
-Right. Also missed in the commit message. Rewritten in v7.
-
->
+> > +	ret =3D devm_add_action_or_reset(&pdev->dev, rzn1_rtc_disable_hardwar=
+e, &pdev->dev);
+> > +	if (ret)
+> > +		return ret;
+> > +
+>=20
 > [Severity: High]
-> Does the adapter removal process introduce a NULL pointer dereference
+> Since devres executes teardown actions in LIFO order, will registering the
+> hardware disable action here early in rzn1_rtc_probe cause it to run last
+> during driver unbind?
+>=20
+> [ ... ]
+>=20
+> > @@ -468,14 +480,12 @@ static int rzn1_rtc_probe(struct platform_device =
+*pdev)
+> >  	ret =3D devm_request_irq(&pdev->dev, irq, rzn1_rtc_alarm_irq, 0, "RZN=
+1 RTC Alarm", rtc);
+> >  	if (ret) {
+> >  		dev_err(&pdev->dev, "RTC alarm interrupt not available\n");
+> > -		goto dis_runtime_pm;
+> > +		return ret;
+> >  	}
+>=20
+> [Severity: High]
+> If devm_request_irq is called after the hardware disable action is
+> registered, won't the IRQ handlers be freed before the hardware is disabl=
+ed
 > during teardown?
->
-> If an FPIN async event interrupt arrives during the adapter removal process
-> after destroy_workqueue() is called but before free_irq(), the interrupt
-> handler will schedule the tasklet, which executes ibmvfc_handle_async().
->
-> In drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_remove():
->     destroy_workqueue(vhost->fpin_workq);
->     vhost->fpin_workq = NULL;
->
-> Then later in drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_release_crq_queue():
->     free_irq(vdev->irq, vhost);
->     tasklet_kill(&vhost->tasklet);
->
-> And the tasklet dereferences the NULL fpin_workq:
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_handle_async():
->     queue_work(vhost->fpin_workq, &aw->async_work_s);
->
-> Because vhost->fpin_workq was destroyed and set to NULL early in
-> ibmvfc_remove(), calling queue_work(NULL, ...) will immediately panic the
-> kernel.
+>=20
+> If an RTC alarm or 1-second interrupt is active when the driver unbinds,
+> could an interrupt fire in the devres teardown window where the handler is
+> gone but the hardware is still active? This might trigger the generic IRQ
+> subsystem's spurious interrupt detector, which could permanently disable =
+the
+> IRQ line.
 
-Yes, fixed in patch 1 of v7.
+This needs to be checked, I am afraid. It sounds reasonable.
 
--Dave
+
+--yWIVHNauTBxAm2Qp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqIa6cACgkQFA3kzBSg
+KbbjbA/9GjGrjSbxpVZA5XNA6QLp8S2MRsDNo0mGJ/jFVWGPHSm18FsMvv2MxBZd
+3pkTUoTtLCxbPhA38umc6KDf+iHz48ow++JzAr2CmxBchToXpPDVH3RmVEgWyD/Y
+7+OU7dRST6ChqiOPEVf/XcGGM2rtTS/b6dJe6nKDMGvcTtRiFtnPibkjaKlmmFeP
+pKORVErq09hL+iCgBknywjB699+BuRVbpxvsUvVYbtbdNCylzCjEgsfEDwTiJ0ZP
+V1EoKWhszS41Pl/fPVj4nJyag03s7Lx8jmoaRkWtyWHrnHttMm5ckrFSzD0rnlMw
+9m7R3lTG66QDs19E1kd5AWuE6Fn/tV6fsfl/uwiCo+16YUZjLVr3XOLtUVeecwiA
+g3n9HolVGEXGprXDEm/g8QlngYSpkPerWpqbjybAFR2iXe561x2imi+17Lzb52yU
+mB2ZPWQk/d+WSA65MaIV8ZTaI/e7JCQAv7RQcF1wNKKPyOgxA8WoomxgcAQbDuwR
+u115ZnS+jdB/k4B1J3kfdB6Yd6Vxl3UUwWJfZKLAQwitlD988qOWqrxixUnqp6D6
+dkM95157g707FGUxB708z4zy6e+TJeKABv67pXsPW/5Ch1Z2Qbrnpc3vlCXbzrGv
+agjD2qvhQzav7JE2YOSnfxx2hP4Z2pGfv9zdDzVBT2AaKQYnss0=
+=2V3P
+-----END PGP SIGNATURE-----
+
+--yWIVHNauTBxAm2Qp--
