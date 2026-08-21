@@ -1,233 +1,199 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87FB34A78E;
-	Fri, 21 Aug 2026 03:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90031357CF3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 04:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787283992; cv=none; b=oUAUMrmkU4ovd0rt+KsobRzciQWPDd8gK7BeemMLzRLC6HHv3R/FCsDQMUhcPgMM7BXDp8OdHQjYl7S5tgk0AYULvtlaIEsrlf+OMaDwUJfYziAlYzzVOvmBo/CW1AdRCkzxTbpVs+TnoZNQda4eElCkNyGAH1zcOpbF2QD+wzQ=
+	t=1787285360; cv=none; b=oP9uZYBglsGTgIA/1cM73nJCVz+WN2rPZAnCco7mHiib+85nrZcU5zYrN5YYry7KP0Cts8S5PwV4IE5nxXOpT/x49XjSO+3HhnMYqNy3qPiLC4WSAp0UOn6RTPFiQnPys0ts1mUkjYKPPAKmAumJTKAFzEuLGWfeMfJvKOfocEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787283992; c=relaxed/simple;
-	bh=SS5M8CazTi4QpGApjTon0QW7PKmUebZlkE1DSZq1Ap8=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=j57EKLsU5HJMKHt2olUbjxNHoJPSV6j/YZA669EDOfdrLSN0mSyauEpHMe6CPtfaMjbW1wnc5MFw/c5wgDCHV4/Ie1faHov8nzrfbtwEJRVIZVvVVKcUO21lawLI3QeA1O/BYZq56orkzvc0Zu24yzpe9tiIrYXpFEv6ZPpnu4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RB7XZM63; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787285360; c=relaxed/simple;
+	bh=PcGNx992EdYK1LyIkTkLCSIHkNzubUCmgLAxDBJBKMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KpUK44QOkqDfV7pldtsoSZZKpEUdNCU84LmGh10sXutfUxx5D1jGbPjrqkvkUbrsrUwldQymTojXBt4Ktp68F0XZCx/lMohgLui32h1KM6rglIGWy1lCnBDH1bKn+Y9yjVh1NZNK7OF4ZabER3dSfPi8SwApGXohZHcX+CNavOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AWMATaHl; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RB7XZM63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FD61F000E9;
-	Fri, 21 Aug 2026 03:46:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787283988;
-	bh=onJjp9ppWSy/QNCetSyBA0MLXByIviSrOmy5FMS2SjA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=RB7XZM63NJVN6o2vXSy9HZPDh2CXSKmTVDUBZZGgrtYxqaq4NriL0pPWjiRXIzu7d
-	 3dKIh01AI8qLJ2gOkeh0p7oy1/4E10PYCsKmAabYbOCrtlKzjYK1WyqdRpFD3XyJFA
-	 qQYs5B29XJB83bLdfIyynRtXPnIgrJq7PozO+Z4Fq1N8XJ0SRhJ+ow4tVTvIiuXi6K
-	 9Dt+c9pjQXwyyjxKbI+e3iy2FyRJoYNXfSU752IXliLnv8TQHRDgiqE61Dg+fFdvhO
-	 JWAi2Qhw3VePmCSpCMlYzavP3grAn8tKD3hnWky1DoWRIAtMJdmwib3mzvjPfbRcMO
-	 VMA9QwF2HxDZg==
-Date: Fri, 21 Aug 2026 12:46:25 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v12 08/11] tracing/wprobe: Add set_wprobe and
- clear_wprobe event triggers
-Message-Id: <20260821124625.4c7b9794e950aeac38252ce2@kernel.org>
-In-Reply-To: <20260807155440.66C461F000E9@smtp.kernel.org>
-References: <178611679753.237811.10190793347982785419.stgit@devnote2>
-	<178611688737.237811.17143803996766057381.stgit@devnote2>
-	<20260807155440.66C461F000E9@smtp.kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AWMATaHl"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-ca00f126b7eso433279a12.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 20 Aug 2026 21:09:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787285359; x=1787890159; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+NL0QMLbb5CnWsto8yJ2XYwKTXgoQuJxGA8ecQsMppg=;
+        b=AWMATaHl11rHwR+Dc3fG6vPx8/r9k+h1N+Je+3O0Ec/rfdLduRTdYCuVGSnY0RdABt
+         u4QlFS2ppy7bFGHHLnlPUqONzU6UaCpFvEN3S57s8UjIaZDo60aHeZklrf6aNg6Q14gG
+         SR5SKR0VplOrf/riETDg5rLGXDpna/F4HdzuZuD+cpKiMrfxb+iKh89BzUkU5N/k/rJj
+         mMA53jdMlbr8rOMepUpPjqQyWinsjjm6scUxBM858rxJCjP4ktoAcAiV0AAA3tSUhCWx
+         iLOIjWjTCcbUUXfi6GTnoUretIXYN49adfkrqACIdDfn5YhpKOhwt6DmmcxUaCm5BJLZ
+         Ez9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787285359; x=1787890159;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+NL0QMLbb5CnWsto8yJ2XYwKTXgoQuJxGA8ecQsMppg=;
+        b=O825D0Ru/7gTthfHD7i8qhH5Iwp4mJFoXURsGHYZHpQpK+IMHFc3YtzbKiCyVDfU5z
+         abL6fCirIVmie+T6W4p+geUS0AUwRrWwsnHXmONvlRxC62D+HxVlqEh2nwZciyOfAc2b
+         rPNUUuQImZ4ai3Qnw5S8A9v9cDMkOmdCd8f6KPF5X/PHMqLlRImwef5aojXkYQYVihyC
+         WPsFq8MTJsvZIIfYNINY1ENGJhHN/kpX5GazJ7n1zFAtGZ+gGoALZYirUa9IaEqFq0hb
+         QRwkSndJxG3kULBcklCaoybz7r1hY/SteT1dPGmteYdA4XASeHYbTXWwd/FbfpfIIMjm
+         SeMA==
+X-Forwarded-Encrypted: i=1; AHgh+RpElfj7j+8qYbDGyeyqstTRd4v42trlrR7oT9raG9tD3MXHzAFz41O9vrYgMIv/GxZLDev0NL9BMt1NJXK2vu8=@lists.linux.dev
+X-Gm-Message-State: AFuF++ltCnqcpil/wClBd27UYi2q+QhdS/LoOToMUaXJB71ow4k04Uk1
+	TSrFEeM84CYntkg9z/c83RBiMF4/olFxpNzHxrPB0KRzT6ykZLxmiHg=
+X-Gm-Gg: AR+sD12AYChEYpAQGuk+0nyMwLYtupveaYkOOFm8qmmf96VJRO4ghSUIRXIGCmn9VI/
+	e4bEnunQTTf7n1CSxyo7pWUBq7UC5FtZUeopLYD3agASmpnlcZUJEX6b9o5wTCFSziY0xdu+RGy
+	NtKnE0UfwRBXlF1Og7J/VtDC7EPjw81ZFSEfAdke2hG+qf8dRGrQlaFE4+yvzBZQPn9Xru2hJXJ
+	o8L2Fx6wf/b0vl4tfilNGvetD03lW06nsqGg4scd3MYW2t5zX4pSc5at6palUBcq9etqA/SUXFf
+	OkM57k4+qE0Ee0MAHWrJyP0GYUbR11V/fw61+3LZXTVt3kZ4+fEG3yDP2kY34j0Zwl6yidVx1vl
+	IzF6F8ly7oI519P2fwVicJwD7D24E3T5n2yzsMP1i5SerPhunFZJv997mbEon+a7D7EAHo3foql
+	r4UIAVNkFitsjQ+A3hPUFDsUMpNbGRE3lqePHCE0D9tSYYoeVSsZ8UYZQMSuDaEG73Wr8/f2yEs
+	w==
+X-Received: by 2002:a05:6a00:368f:b0:846:8b22:4933 with SMTP id d2e1a72fcca58-851fa1ad69bmr5052274b3a.17.1787285358771;
+        Thu, 20 Aug 2026 21:09:18 -0700 (PDT)
+Received: from DL2XHKPB4.dl.net ([103.63.104.162])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851d3389e83sm2339233b3a.16.2026.08.20.21.09.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Aug 2026 21:09:18 -0700 (PDT)
+From: Triet Hoang <triet.hoang.dev@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: dmitry.torokhov@gmail.com,
+	linux-input@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	triet.hoang.dev@gmail.com
+Subject: [PATCH v2] input: touchscreen: Convert to DEFINE_SIMPLE_DEV_PM_OPS()
+Date: Fri, 21 Aug 2026 11:09:05 +0700
+Message-ID: <20260821040905.104590-1-triet.hoang.dev@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260821025514.31AE01F000E9@smtp.kernel.org>
+References: <20260821025514.31AE01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri, 07 Aug 2026 15:54:39 +0000
-sashiko-bot@kernel.org wrote:
+Convert deprecated SIMPLE_DEV_PM_OPS
+to DEFINE_SIMPLE_DEV_PM_OPS and pm_sleep_ptr().
 
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Mixing scope-based cleanup (`__free()`) with explicit resource management causes double-frees and memory leaks.
-> - [High] Hardware breakpoint fallback address spans adjacent kernel variables, causing NMI storms.
-> - [High] Double initialization of the event trigger reference count causes unconditional memory leaks.
-> - [Medium] Trigger `count` is double-decremented, breaking the `:count=1` feature.
-> - [Medium] The `clear_wprobe` trigger fails to parse its documented optional FIELD parameter.
-> --
-> 
-> --- Patch [8]: [PATCH v12 08/11] tracing/wprobe: Add set_wprobe and clear_wprobe event triggers ---
-> commit cb59d7e61a8c78c308ca9ae32e1de403900f7a05
-> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> Subject: tracing/wprobe: Add set_wprobe and clear_wprobe event triggers
-> 
-> This commit adds set_wprobe and clear_wprobe event triggers to dynamically
-> attach and detach hardware breakpoint address monitoring based on event field
-> contents.
-> 
-> Link: https://lore.kernel.org/all/59637b96946653393a7ad3c7de094094796b39c2.1785067572.git.wangjinchao600@gmail.com/
-> 
-> > diff --git a/kernel/trace/trace_wprobe.c b/kernel/trace/trace_wprobe.c
-> > --- a/kernel/trace/trace_wprobe.c
-> > +++ b/kernel/trace/trace_wprobe.c
-> 
-> [ ... ]
-> 
-> > +static int wprobe_trigger_global_enabled;
-> > +
-> > +#define SET_WPROBE_STR		"set_wprobe"
-> > +#define CLEAR_WPROBE_STR	"clear_wprobe"
-> > +#define WPROBE_DEFAULT_CLEAR_ADDRESS ((unsigned long)&wprobe_trigger_global_enabled)
-> 
-> [Severity: High]
-> Will this 4-byte fallback variable safely accommodate 8-byte hardware
-> breakpoints? 
-> 
-> When a wprobe is temporarily disabled, its hardware breakpoint is pointed here
-> at WPROBE_DEFAULT_CLEAR_ADDRESS, but it retains its configured length (e.g., 8
-> bytes for a 64-bit pointer). 
-> 
-> Could this cause the breakpoint to monitor the 4-byte variable plus 4 adjacent
-> bytes in the .bss section, potentially triggering NMI storms if a frequently
-> accessed kernel variable happens to reside in those adjacent bytes?
+This lets us drop the __maybe_unused annotations
+from the resume and suspend callbacks.
+Also reduces kernel size when CONFIG_PM
+or CONFIG_PM_SLEEP is disabled.
 
-Ah, indeed. This should be fixed.
+Signed-off-by: Triet Hoang <triet.hoang.dev@gmail.com>
+---
+Changes in v2:
+- Remove DEFINE_SIMPLE_DEV_PM_OPS, use only EXPORT_SIMPLE_DEV_PM_OPS for ad7879_pm_ops
+---
+ drivers/input/touchscreen/ad7879-i2c.c | 2 +-
+ drivers/input/touchscreen/ad7879-spi.c | 2 +-
+ drivers/input/touchscreen/ad7879.c     | 7 +++----
+ drivers/input/touchscreen/cyttsp5.c    | 8 ++++----
+ 4 files changed, 9 insertions(+), 10 deletions(-)
 
-> 
-> [ ... ]
-> 
-> > +static void wprobe_trigger(struct event_trigger_data *data,
-> > +			   struct trace_buffer *buffer,  void *rec,
-> > +			   struct ring_buffer_event *event)
-> > +{
-> [ ... ]
-> > +	/* count < 0 means endless, 0 means trigger count exhausted */
-> > +	if (!data->count)
-> > +		goto out;
-> [ ... ]
-> > +	if (changed) {
-> > +		if (data->count > 0)
-> > +			data->count--;
-> 
-> [ ... ]
-> 
-> > +static struct event_command trigger_wprobe_set_cmd = {
-> > +	.name			= SET_WPROBE_STR,
-> [ ... ]
-> > +	.trigger		= wprobe_trigger,
-> > +	.count_func		= event_trigger_count,
-> 
-> [Severity: Medium]
-> Does this manual decrement in wprobe_trigger() conflict with the core
-> event_trigger_count decrement function? 
-> 
-> The trigger commands are assigned .count_func = event_trigger_count, which
-> unconditionally executes before the main .trigger callback and pre-decrements
-> the count. 
-> 
-> If a user specifies :count=1, the core framework reduces it to 0. 
-> wprobe_trigger() will then see a count of 0 and abort immediately. Does this
-> render a single-count trigger completely non-functional?
-
-Ah, good catch! OK, let's use the standard one at this point.
-
-> 
-> [ ... ]
-> 
-> > +static int wprobe_trigger_cmd_parse(struct event_command *cmd_ops,
-> > +				    struct trace_event_file *file,
-> > +				    char *glob, char *cmd,
-> > +				    char *param_and_filter)
-> > +{
-> > +	/*
-> > +	 * set_wprobe:EVENT:FIELD[+OFFS]
-> > +	 * clear_wprobe:EVENT[:FIELD[+OFFS]]
-> > +	 */
-> > +	struct wprobe_trigger_data *wprobe_data __free(free_wprobe_trigger_data) = NULL;
-> > +	struct event_trigger_data *trigger_data __free(kfree) = NULL;
-> 
-> [ ... ]
-> 
-> > +	/* clear_wprobe does not need field. */
-> > +	if (!clear) {
-> > +		char *offs;
-> 
-> [Severity: Medium]
-> Does skipping the field parsing here break the documented optional FIELD
-> parameter for clear_wprobe? 
-> 
-> The documentation claims clear_wprobe:WPEVENT[:FIELD] conditionally clears a
-> watchpoint, but if clear is true, the parsing code skips extracting the field
-> string. 
-> 
-> It looks like the unparsed string is then passed to event_trigger_parse_num(),
-> which expects a numeric string and fails with -EINVAL.
-
-Yeah, I think we can just drop FIELD support for clear_wprobe.
-
-> 
-> [ ... ]
-> 
-> > +	ret = event_trigger_parse_num(param, trigger_data);
-> > +	if (ret) {
-> > +		wprobe_trigger_log_err(file, glob, param - glob, BAD_IMM);
-> > +		return ret;
-> > +	}
-> 
-> [Severity: High]
-> Can this early error path leak memory? 
-> 
-> The trigger_data uses __free(kfree), which performs a shallow free. If
-> event_trigger_parse_num() fails and returns early, does this permanently leak
-> internal allocations like data->name?
-
-Oops, let me fix it.
-
-> 
-> [ ... ]
-> 
-> > +	event_trigger_init(trigger_data);
-> > +
-> > +	ret = event_trigger_register(cmd_ops, file, glob, trigger_data);
-> 
-> [Severity: High]
-> Will this result in a double initialization of the reference count? 
-> 
-> We call event_trigger_init(trigger_data) explicitly here, which increments the
-> reference count. Then event_trigger_register() calls the .reg callback
-> wprobe_register_trigger(), which executes data->cmd_ops->init(data) and
-> increments the reference count a second time. 
-> 
-> When the trigger is later unregistered, wprobe_trigger_free() decrements the
-> count by only 1, leaving a permanent reference and memory leak.
-
-OK, this refcounter updates seems to related to the below error path.
-
-> 
-> > +	if (ret) {
-> > +		event_trigger_reset_filter(cmd_ops, trigger_data);
-> > +		trace_event_enable_disable(wprobe_file, 0, 1);
-> > +		trace_event_put_ref(wprobe_file->event_call);
-> > +		tracepoint_synchronize_unregister();
-> > +		event_trigger_free(trigger_data);
-> > +		return ret;
-> > +	}
-> 
-> [Severity: High]
-> Can this late error path cause a double-free? 
-> 
-> Both trigger_data and wprobe_data are declared with scope-based cleanup
-> (__free). If event_trigger_register() fails, the code manually calls
-> event_trigger_free(trigger_data), freeing both objects. 
-> 
-> When the function returns, the __free macros will execute and attempt to free
-> them a second time.
-
-Let me fix both cases.
-
-Thank you!
-
+diff --git a/drivers/input/touchscreen/ad7879-i2c.c b/drivers/input/touchscreen/ad7879-i2c.c
+index c1ccdf86b74c..7ee5c0abd551 100644
+--- a/drivers/input/touchscreen/ad7879-i2c.c
++++ b/drivers/input/touchscreen/ad7879-i2c.c
+@@ -60,7 +60,7 @@ static struct i2c_driver ad7879_i2c_driver = {
+ 	.driver = {
+ 		.name		= "ad7879",
+ 		.dev_groups	= ad7879_groups,
+-		.pm		= &ad7879_pm_ops,
++		.pm		= pm_sleep_ptr(&ad7879_pm_ops),
+ 		.of_match_table	= of_match_ptr(ad7879_i2c_dt_ids),
+ 	},
+ 	.probe		= ad7879_i2c_probe,
+diff --git a/drivers/input/touchscreen/ad7879-spi.c b/drivers/input/touchscreen/ad7879-spi.c
+index 064968fe57cf..66dcd4aa4711 100644
+--- a/drivers/input/touchscreen/ad7879-spi.c
++++ b/drivers/input/touchscreen/ad7879-spi.c
+@@ -58,7 +58,7 @@ static struct spi_driver ad7879_spi_driver = {
+ 	.driver = {
+ 		.name		= "ad7879",
+ 		.dev_groups	= ad7879_groups,
+-		.pm		= &ad7879_pm_ops,
++		.pm		= pm_sleep_ptr(&ad7879_pm_ops),
+ 		.of_match_table	= of_match_ptr(ad7879_spi_dt_ids),
+ 	},
+ 	.probe		= ad7879_spi_probe,
+diff --git a/drivers/input/touchscreen/ad7879.c b/drivers/input/touchscreen/ad7879.c
+index 31d2a3029d5f..10f8574f478e 100644
+--- a/drivers/input/touchscreen/ad7879.c
++++ b/drivers/input/touchscreen/ad7879.c
+@@ -301,7 +301,7 @@ static void ad7879_close(struct input_dev *input)
+ 		__ad7879_disable(ts);
+ }
+ 
+-static int __maybe_unused ad7879_suspend(struct device *dev)
++static int ad7879_suspend(struct device *dev)
+ {
+ 	struct ad7879 *ts = dev_get_drvdata(dev);
+ 
+@@ -315,7 +315,7 @@ static int __maybe_unused ad7879_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int __maybe_unused ad7879_resume(struct device *dev)
++static int ad7879_resume(struct device *dev)
+ {
+ 	struct ad7879 *ts = dev_get_drvdata(dev);
+ 
+@@ -329,8 +329,7 @@ static int __maybe_unused ad7879_resume(struct device *dev)
+ 	return 0;
+ }
+ 
+-SIMPLE_DEV_PM_OPS(ad7879_pm_ops, ad7879_suspend, ad7879_resume);
+-EXPORT_SYMBOL(ad7879_pm_ops);
++EXPORT_SIMPLE_DEV_PM_OPS(ad7879_pm_ops, ad7879_suspend, ad7879_resume);
+ 
+ static void ad7879_toggle(struct ad7879 *ts, bool disable)
+ {
+diff --git a/drivers/input/touchscreen/cyttsp5.c b/drivers/input/touchscreen/cyttsp5.c
+index 9266c07314be..7b0613156fc1 100644
+--- a/drivers/input/touchscreen/cyttsp5.c
++++ b/drivers/input/touchscreen/cyttsp5.c
+@@ -942,7 +942,7 @@ static const struct i2c_device_id cyttsp5_i2c_id[] = {
+ };
+ MODULE_DEVICE_TABLE(i2c, cyttsp5_i2c_id);
+ 
+-static int __maybe_unused cyttsp5_suspend(struct device *dev)
++static int cyttsp5_suspend(struct device *dev)
+ {
+ 	struct cyttsp5 *ts = dev_get_drvdata(dev);
+ 
+@@ -952,7 +952,7 @@ static int __maybe_unused cyttsp5_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int __maybe_unused cyttsp5_resume(struct device *dev)
++static int cyttsp5_resume(struct device *dev)
+ {
+ 	struct cyttsp5 *ts = dev_get_drvdata(dev);
+ 
+@@ -962,13 +962,13 @@ static int __maybe_unused cyttsp5_resume(struct device *dev)
+ 	return 0;
+ }
+ 
+-static SIMPLE_DEV_PM_OPS(cyttsp5_pm, cyttsp5_suspend, cyttsp5_resume);
++static DEFINE_SIMPLE_DEV_PM_OPS(cyttsp5_pm, cyttsp5_suspend, cyttsp5_resume);
+ 
+ static struct i2c_driver cyttsp5_i2c_driver = {
+ 	.driver = {
+ 		.name = CYTTSP5_NAME,
+ 		.of_match_table = cyttsp5_of_match,
+-		.pm = &cyttsp5_pm,
++		.pm = pm_sleep_ptr(&cyttsp5_pm),
+ 	},
+ 	.probe = cyttsp5_i2c_probe,
+ 	.id_table = cyttsp5_i2c_id,
 -- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+2.53.0
+
