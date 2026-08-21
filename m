@@ -1,131 +1,183 @@
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF3C4C9563
-	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 15:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42EE3451DA;
+	Fri, 21 Aug 2026 15:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787325018; cv=none; b=bJMiftPuIpIFlRAwKAwM0sXEjS71paGSe9qtMtvAHq1ttnZDsC7EYkMfPrRS/tIMdvP50QhCIirp0+x0CxJ3jeH0/86D29eG0gBWMasvHN3uOTwga96Z6ddY1JA4G7ivxUqo1/R8itjqFQo5CPS+wB9BDE9kCao6/HuMrHnEjhQ=
+	t=1787325097; cv=none; b=XsRtboNy5e5ZIE1wH4Uso9V0If5a8AEqd3/T01FKxsDH5s89Fk+1FMluyVRWpHYBGC4KfBNoyk8/P7HTkMmMhgC2JgSkuBbEEtgGJs6JVRTMJOF7OPDOpDP6E3YepqgdLwLTOC2NfwCDody5B9+3PWwjSVwLvWlEKjdg7ChxKiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787325018; c=relaxed/simple;
-	bh=dqRxGkSTo1VRrIDe73RnVqLS9vGMNpCP950CHgyosts=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VIGWMl6n6Rhl/1kWP/gi/xSKeIqAWNLG+PGF5xZrxsd3SyPqu4TWlgS0ImBF6iZ+kFAlSrFLYZ1u2K76+KSptroPjrhHfyTCZjM+jPONxNm52ZOSPNe4HpJrJOKC/KY7rDs47l2PPss8S7y/vVo7nRg5dDf6bjc9YV11oyRo3Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=aoAUH7WB; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+	s=arc-20240116; t=1787325097; c=relaxed/simple;
+	bh=DCBGz7cfzc2BDovy7WHHvTMrYLE3LltyWuXom9eDyC8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aAkbE99xzCvWnb1nHrtY3F5oBnaVdrlcJzOeIUUQiIPZcBj5uHCaBIiEENMI2zKbB3ZROhz1EUiGyQKPhtKnvZmZqkbqnI0q8aTNeTWOOxsCLuqOP6R+D7ajHe17eg61U6IY1PE/Zk7Uayaduhu9xx01NJ5ARMnoUD6I2NQ5bgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=D1rPhCWA; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="aoAUH7WB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=EUBr
-	8qIIL+olxH5I1RSEZWrEOi7bz6A5QbneJ9LGZK4=; b=aoAUH7WBJ+VU1Y6t7lAd
-	JNIUm63MKtBJXlFoUrnFl/WYEsOAe8dasVQ07t7hdauYUJ0SrFjADHS2V7EG8jV+
-	9WKuf/HA4u5P0M1ecG5uI0XCvaJqQVoXbJxO831/EeLJcRQbsgygSV2551kkZamw
-	9B2Fx4y1LnMgULWyKb86y1slKQWxM79uOuDOKvzET4yEFxBjc3p12I3df1/Ug2bs
-	pGoEPjajNwSiKB9tvoMzLi7oCBwQgDKA3mXw7L/LKlEqH91PjYW7cbHuKn7517jV
-	UlcOvNECHGjb78eqwEZcBin4Ur4l+MGhtPqqLVuaYvkB/eqwxxxaQEHeOLvOdRcC
-	Qg==
-Received: (qmail 689046 invoked from network); 21 Aug 2026 17:10:14 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 21 Aug 2026 17:10:14 +0200
-X-UD-Smtp-Session: l3s3148p1@WgqVCJBZ8M0ujnuu
-Date: Fri, 21 Aug 2026 17:10:14 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="D1rPhCWA"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67LD1arQ1585745;
+	Fri, 21 Aug 2026 15:11:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=zuW42G113NzdrZBUDfkdQWzF8P2DfT
+	v8tGxmroOX63g=; b=D1rPhCWAPTU8WMQfLCXkERnyB5WglceW03AnXeasNMO7ks
+	JjE85FCtAZ0ZDExcFrk/BXaZT/sV6a07zqSCDn8HQesDubu7GMQxJ15jXzqpV1oM
+	6at3+TjkTpsAbtdG+SN4MWPfY6Bu9gdoKNOo7e8wK6oszh1VCAIKN+5kmXzV9pl5
+	+rp/4uHG4u+74NAuntkqaT/wmlP5BQI6BCFonjC867/PNkjDGNIHQJa9imBG+quo
+	Klm/8gt2lgIvv59eraPVSDvOfZXaK6nHfTMC8dul4ETIHPYlhVNoq6od4tAUdNUr
+	sV/YF2Vn7h+M/GPBk+IuKFedTE2I6kaMXxbVVb4g==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu0tc7u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Aug 2026 15:11:34 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LFBHJD007819;
+	Fri, 21 Aug 2026 15:11:34 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yw2gs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Aug 2026 15:11:34 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
+	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67LFArdn30016236
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 21 Aug 2026 15:10:54 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 44B4058043;
+	Fri, 21 Aug 2026 15:11:33 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0F89958059;
+	Fri, 21 Aug 2026 15:11:33 +0000 (GMT)
+Received: from d (unknown [9.61.29.95])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 21 Aug 2026 15:11:32 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Prabhakar <prabhakar.csengg@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org,
-	linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v5 06/17] rtc: rzn1: Disable alarm interrupt before
- reprogramming alarm registers
-Message-ID: <aohqVrJV5hiZoWXd@ninjato>
-References: <20260821135608.275233-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260821135608.275233-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260821141041.57A191F000E9@smtp.kernel.org>
+Cc: linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v6 2/8] scsi: ibmvfc: Add NOOP command support
+In-Reply-To: <20260817204153.DC6251F00A3A@smtp.kernel.org>
+References: <20260817-ibmvfc-fpin-support-v6-0-62a2d525e70d@linux.ibm.com>
+	<20260817-ibmvfc-fpin-support-v6-2-62a2d525e70d@linux.ibm.com>
+	<20260817204153.DC6251F00A3A@smtp.kernel.org>
+Date: Fri, 21 Aug 2026 10:11:32 -0500
+Message-ID: <875x13y0d7.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ahu/JitMwqTsonzY"
-Content-Disposition: inline
-In-Reply-To: <20260821141041.57A191F000E9@smtp.kernel.org>
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=MthiLWae c=1 sm=1 tr=0 ts=6a886aa6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=kXrVxv5XiihISqGrbLUA:9
+X-Proofpoint-ORIG-GUID: DxNG_NX3pjCNoQJv4jjsGjXoFruYCkO0
+X-Proofpoint-GUID: DxNG_NX3pjCNoQJv4jjsGjXoFruYCkO0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDExNyBTYWx0ZWRfX4N08gLA82Ksq
+ YGd6Te+VmbGQLmfADr9tjMaF9KMgl9BJSmtA0KxNPwa9bQKKR0OVTpd41IsHAzkHxBiVRJhI0d2
+ s+YDNdQy3OVOpipa7PcgAuTbnJuimOA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDExNyBTYWx0ZWRfXz0QIroVpAZr0
+ LVOv9CIgRuNPgNDpJoQ7IysCNwYx0WwTv4TYbYPwcoUEqFz96pz56qBvt2y3scLFn3UC0sSgEoc
+ jIJb6syqOCh0YdIChdptPM3N9qcKs9K3OxPLr5qlmnxZI3V1EUCa5YjdHXvmqWJpKCGIZyZiIET
+ Tmb7d65oQ34U6AtE+uInbUzTbU1KCnEO4YqeiraUNO5zBqiMCCKuzI+DcTISn+4u/z8pxfaa4ti
+ r7ZBhMbnP0Z5gyc8wdiHbgASqBPosMM4OCzIiUSgrX8TAs15i9lDQm/z/7r8j/VOO6vOiuJm+Zp
+ tZlTPPM9+h4zQ7cYwuPfmmBnbyNVlk6i6uD0wA4vsAbLqUGeWG0ZTouPLfTMA6kV5xbP3ULCc+u
+ uDQbMrthXmXa0sdi6nzX6tPSlbROdykwKuepuI3nBrUL1Gflu8Pd+EOuzeB7xC3gYlkQKdOVSfX
+ TcWmf/CQG2Vej4oL/3w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_04,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 bulkscore=0 phishscore=0 clxscore=1011
+ spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210117
 
+sashiko-bot@kernel.org writes:
 
---ahu/JitMwqTsonzY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Aug 21, 2026 at 02:10:40PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Concurrent lockless read and write of `rtc->tm_alarm` and a race=
- with delayed IRQ handlers can cause a newly configured alarm to be silentl=
-y disabled.
-> --
->=20
-> --- Patch [6]: [PATCH v5 06/17] rtc: rzn1: Disable alarm interrupt before=
- reprogramming alarm registers ---
-> commit 6227942d78d91abfb1648a64bce64f0011716b61
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
->=20
-> rtc: rzn1: Disable alarm interrupt before reprogramming alarm registers
->=20
-> This commit updates rzn1_rtc_set_alarm() to disable the alarm interrupt
-> before reprogramming the alarm registers. This prevents the interrupt from
-> firing while the alarm registers contain a mixture of old and newly writt=
-en
-> values.
->=20
-> > diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
-> > index 44e8db466cb78..09631a3a51345 100644
-> > --- a/drivers/rtc/rtc-rzn1.c
-> > +++ b/drivers/rtc/rtc-rzn1.c
-> > @@ -280,6 +280,11 @@ static int rzn1_rtc_set_alarm(struct device *dev, =
-struct rtc_wkalrm *alrm)
-> >  	if (alarm > farest)
-> >  		return -ERANGE;
-> > =20
-> > +	/* Disable alarm interrupts before reprogramming the alarm. */
-> > +	ret =3D rzn1_rtc_alarm_irq_enable(dev, 0);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> >  	writel(bin2bcd(tm->tm_min), rtc->base + RZN1_RTC_ALM);
-> >  	writel(bin2bcd(tm->tm_hour), rtc->base + RZN1_RTC_ALH);
-> >  	writel(BIT(tm->tm_wday), rtc->base + RZN1_RTC_ALW);
->=20
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 22b4d639e74be..19a3f12615648 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>
+> [ ... ]
+>
+>> @@ -4220,9 +4230,15 @@ static void ibmvfc_handle_scrq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost
+>>  	case IBMVFC_CRQ_CMD_RSP:
+>>  		break;
+>>  	case IBMVFC_CRQ_XPORT_EVENT:
+>> +	case IBMVFC_NOOP:
+>
 > [Severity: High]
-> This is a pre-existing issue, but does this fully protect against a race
-> with a delayed IRQ handler?
+> Does this code check IBMVFC_NOOP against the correct field?
+>
+> The switch statement evaluates crq->valid, but IBMVFC_NOOP is a message
+> format (0x03).  Will the NOOP case be functionally dead here, causing NOOP
+> messages to fall through to the command response handling?
 
-I'll leave it to you but I think this should also be handled
-incrementally.
+Yep, my mistake. Fixed in v7.
 
+>>  		return;
+>>  	default:
+>> -		dev_err(vhost->dev, "Got and invalid message type 0x%02x\n", crq->valid);
+>> +		dev_err(vhost->dev, "Got an invalid message type 0x%02x\n", crq->valid);
+>> +		return;
+>> +	}
+>> +
+>> +	if (unlikely(!evt)) {
+>> +		dev_err(vhost->dev, "Received null event\n");
+>
+> [Severity: High]
+> Does this error path get triggered erroneously for every NOOP sent by the
+> VIOS?
+>
+> If a NOOP message falls through to the command response handling, ioba is
+> likely zero, which would cause evt to be null.  Will this spam the kernel
+> log with 'Received null event' at a high rate and potentially cause disk
+> exhaustion?
 
---ahu/JitMwqTsonzY
-Content-Type: application/pgp-signature; name="signature.asc"
+Fixed in v7 by checking for VFC_NOOP after the switch.
 
------BEGIN PGP SIGNATURE-----
+> [Severity: High]
+> This is a pre-existing issue, but is it safe to dereference evt->queue
+> before validation?
+>
+> Immediately after this null check, the code executes:
+>
+>         if (unlikely(!ibmvfc_valid_event(&evt->queue->evt_pool, evt))) {
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqIalYACgkQFA3kzBSg
-KbbYtRAAmBGBeeUfZjCYLQm2Y/O2Zm3wN4Y9jZLcWjJoBiOiwkJ4IkZG+BdvhT4k
-1JG2HaD5oGj4PmKgpIYhTI22cgocQIgeBmsP+V3ETtHOt+eVD8j1oBU+gsFLzYX8
-3HRoOV8yPlRCVgm4pvxmFluxHnKcmJUYW2vxRngE1MMLhtnMG7Tvk6i84TFbpaX9
-o32KOtCsySA3WSohFhlyDU5AW1bzh+7ZRNswe4uWi4OoBxW4gCna7iCUVJihLb7u
-1rucfrTj6Wn+amBSd1gm+R3ASZ8uJN9gc7RGSK/FfQyYeYJBCy6H7M77BIwthn5E
-Y23xbcrrFP4gl6JjIsxQ/n6SNltELkMlpfiP4HKiBNJ6+JsC0RkLcX0y6zQUpb7F
-LI117lIRoHk3RJ36y9Pcb91Np6nztMn/ltJL49YKCrM9GXQ2OjeQrGvBqYvzQqwj
-uSfXPdJ3yvHQlSCnHa+CULC4FCEsC5TEOCwScezzRwlyVErcKj/6g163PG2vuvs3
-kURrj6+SZGnVde8pO0GSKKk6RnzOFalCA06jX462LyTcLEUM2hoXkfUrdd1w9s44
-I4LyAIuEnf8f99+6cv3GjiU1m1sBtWUeHxQXo4tJUCfdZDIqswUK+C5C8amMf0Ki
-irPk4cRg15vk1HhVcvUY+CNgcHaFze0qkA4OjmCE7stfK18/MBg=
-=SSbb
------END PGP SIGNATURE-----
+There's
 
---ahu/JitMwqTsonzY--
+        if (unlikely(!evt)) {
+        .
+        .
+        .
+
+above. So this *HAS* been validated.
+
+> [Severity: High]
+> Could the destruction of vhost->fpin_workq during module removal cause a
+> use-after-free?
+>
+> In ibmvfc_remove():
+>
+>         destroy_workqueue(vhost->fpin_workq);
+>         vhost->fpin_workq = NULL;
+>
+> If hardware interrupts and tasklets are not disabled until
+> ibmvfc_release_crq_queue() is called later, an IBMVFC_AE_FPIN event could
+> trigger the interrupt handler and schedule the tasklet.
+>
+> Would this result in ibmvfc_handle_async() executing:
+>
+>         queue_work(vhost->fpin_workq, &aw->async_work_s);
+>
+> on the explicitly destroyed and NULL-ed workqueue?
+
+Fixed in patch 1 in v7.
+
+-Dave
