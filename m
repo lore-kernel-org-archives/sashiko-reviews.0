@@ -1,196 +1,133 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5050B2D73A6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 16:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF5E25CC57
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 17:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787331502; cv=none; b=IpqB+uDmXu/iFc00YOu4M2tRxMLgFYs1Zo/JxgqEAKtowmH+z2NtMBnuaI37AHnVA9aKwUegFJecYrA307Z/TkbapYvj9jmQbAGYMs734KhtrV/t34vS9QLv0G3LKaE4kOViPgmtAECEE0LTSYwbtRQZVRZqIaay7UsTVF/Vhn8=
+	t=1787334797; cv=none; b=Ltge8/wkmEtCw392PEckDbQTO4mEkhyKREVKTY4oggRXGjLiVyGyzuE6CU4vJ/6Xa3ifdtTTBIIM/SpcUJKuY0OFSu8n33vd+PGmc2RjFRJShcw35DCUbA8wT95JbcHUU36gqvfZVzZH+Vv7l6uctitojk/laFWvYCac7dZWomY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787331502; c=relaxed/simple;
-	bh=oF7hJRfKcsBhrzRG5UopmiXACltxf5cm0GPOSDldZBI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q1KWrk1r7ii7sdKbZqiJacyKtjWwBO2L23Q3LNH0AYExdpq2mpMSFpasGWwv+vv4+sl46kw3493S8Vb7sPA6YfdIdt/AcewvD/eiDYygGEX2Hy09bUlCaNi8EKCrpyUVzPhiQy0yPq7XjYaqIYsOSdaUWgP1Bzogsi8DFUkel9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TF+0nqrx; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	s=arc-20240116; t=1787334797; c=relaxed/simple;
+	bh=rr1EVL+4iiksKyR165CGqWE5TxhSTv7lkS+ul8ltQUg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=tz9tcL8a0ZxYQzse2n/W1pIG5CxOJMTAyvPPOvaYmz/tbqMNoobAN7VpyyGn+7DqjDBYPZCiw+E40ABeBxLD3A9U2BfIRQrTzMy/z/cama+9gbc2xuo1AP6D7KJ83aAXrRouCyTVL2bYly4WBZmfq1SBrWdI7EUCHGDRPKXTtD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iafW+5ij; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TF+0nqrx"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-84a4d8fd6ecso1254549b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 09:58:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iafW+5ij"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38dfe7eb825so1148398a91.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 10:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787331497; x=1787936297; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Sw/cVXcD5z/4y+bl6d3DM5h/euK53M2j/RQeTGK7GPY=;
-        b=TF+0nqrx7PBv5vPZfAuEL5FTEOyajFutCD86YQf5vKlcmAp4Fbvu4QR9kCE2ToScm7
-         UEPVSe9fpexX83gFjCI7eN9OeCiXW221EUGM+df+kazBHqnV0uxPwvH7vPdxFRWIb/ES
-         zUmRsXyzGn/3+adIJNrJHZBIlxe2PmnHY7+1ZPpvynDOAgHiW46M+IlH3kBF9EpvacD5
-         Y4AUWhrDecREz4QrhA4Qwp4OWO9UYcvqBZFw133cn4B+az3uCqCnPlWkQV+tM27MsarI
-         J6hQlzE+/erwx5oMdr3lg+1WQAdo1NFW+A4NVgrfCKQXXMSkAZ8CKuCzLCZBanislUK6
-         nzUg==
+        d=gmail.com; s=20251104; t=1787334795; x=1787939595; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=x5X2EWJjIO+3uU6HNhskU6QdvAMpHnR+u9hjOMlkEYo=;
+        b=iafW+5ijsci3jkXoVVlPSdXW4kKuO1B5/8MybbK//nniN5tid07n6AMKyjbZawdG44
+         wjNO61K+6HETjhcOK8b0TEFJ6lvBahSHjeCkMh+NGKIXCh1pB2vnt7BKWpxaPca/lhPI
+         yFHXPSzHKxb0IMe699+/aWXhQWI46pU7EC6VT+4dUl2aeOvfI4x+Eyf0Gb6qAEIrcFo7
+         AZPSkTPx0g5ibv3rJ3EptDv1ujgti7xqzKH10j+BFW1ZrAGbfQJpVifceADnP+fg5k7k
+         CSrTLlkKJTXwRo8FG/5+iZng9zM8uPSHoo+ixTHL6dHYmLboaRGOTK98ect3XkFK62MK
+         V1Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787331497; x=1787936297;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Sw/cVXcD5z/4y+bl6d3DM5h/euK53M2j/RQeTGK7GPY=;
-        b=VE+vb3edBax490aOBfDMUPuBYtBIgAdR4SB40cO8oJP5CCQYur+TwAATQ2HHxq+4kd
-         o2Mdn3npj2vCPtCthSiZlgEG4Z4L0uvTAtmxdosQv+yfCzHvQ5oHe/eUJhq5qeYfRSBp
-         4Sxd+UDGXcYrjIRi9hHCcAGX3TG5ir1YxfSP/bDEmMVE62URdYlhJaY4F7WaF5Tma2p+
-         m0riClDBoKwIAacM5AtYGim9j8UuColpZo/wa6IiKKAuaLQxFf6mTw+7OhzjqMiS7/IE
-         QdHijMDBO3H8Ry+shiomfcagCv2UOZ81Nvxd8Qd5/2ddqfkaeRij6S4/c37ye72H6GzM
-         yMdw==
-X-Gm-Message-State: AFuF++lYqmlMTVZYK7OM7qonHhtV7ogYq1koDUrWuqEX/i+rUSFSRIEL
-	U4qyYbRPZHpmlzK8SmMar5H3TgIWOVI+qod3kHiFAAuwr9v7KPbAGC/K+FgagA==
-X-Gm-Gg: AR+sD11ciXOayvFBn0LC1O2hxmMtPJo70mEz7p/xC7gYatTWlNMh0BKDaWyq3e778Qi
-	+b/zmKyjHiBh8dUvIxwedCvJOQFn2ASHAmmXK+PimYCSVN6lIPK4O2f+yyz7C9U/dJFgpNdPOKY
-	KRFOIicJKoXr1mH3oE5Dgr1yMO7Ax6Y0q/7TV7rfsmDcCKXUH4Cty3ohjlios4Gi8Yp2KKmEsGs
-	WOv0aMZzE1aIdImPv457CV+Mp/9fKUn/hVjUM9NhPQy8rXzRNagikm8P0kiDZY1pDrVfcpKuVac
-	FijCsPONxF3Ua4zsUlgmESzNB1vhlDT8T+m66mgU6H0zhmS+V/MwewjFPSTFK8Mw5jqyQQFhwZm
-	lyNdGQgbYDOHGBW9idSdusLJ0NxC57gQFZNJg8gdlHjiPZJh42KLphuusG6QwEMjoJIbjNw3m1M
-	KgXSrFEtfIfbY3L4MZtecwwrqV/Aj75wjQTpFvUUuPwE7j7xNDfQ4JYiJk9SucHtAEgYrlce3Rr
-	qq+Xs0zAaM1Lvx93bxdyJC4MstuICMLj89+WQ==
-X-Received: by 2002:a05:6a00:138c:b0:851:b007:2fe0 with SMTP id d2e1a72fcca58-8520b9c6d39mr67083b3a.1.1787331497279;
-        Fri, 21 Aug 2026 09:58:17 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851d3640dd4sm3076215b3a.41.2026.08.21.09.58.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Aug 2026 09:58:15 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <d1b91675-7675-4b6c-821b-464e8f113144@roeck-us.net>
-Date: Fri, 21 Aug 2026 09:58:14 -0700
+        d=1e100.net; s=20251104; t=1787334795; x=1787939595;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=x5X2EWJjIO+3uU6HNhskU6QdvAMpHnR+u9hjOMlkEYo=;
+        b=NG10R4fzWoVypZeVA9LiWWvN+HmCXy54D69bfrmDuO/+TbenoqKDyh59c6CcmRADk4
+         /B0z45GpmZn+K319mFzkvq0zyF9EqEJdXZXgK73i0n+H1nSUyy20Zrt/kkuCDnjyOntC
+         8Skm8BJMJnLgj1WFgGCeDkUkMDyBRPIgqUeLIzWwr2Q5XJb4JOdCO+uAXlmYWEXUoYx9
+         xH4ONdUWl3T4G0oZZvpdUL8F81B/uJlImgdL8+Civ3oIhcUrCIqg8THwhDXSPgwmJfW+
+         ciCq9sL+PWtBeELeY8I0L0FXNJbUWRD8rFc+sK6YpGylsugQIvXBsS3gWUHtraOWwoVi
+         7PLA==
+X-Forwarded-Encrypted: i=1; AHgh+Rrgj5uDVJOj/XvNdqrm30I2TVcH+0Cfbck+VK1S5p29CGtCBlLDslnWVj/cXGraMVMHnhNMaKZhtwlhLSEbh2U=@lists.linux.dev
+X-Gm-Message-State: AFuF++k7MGF1ag+vXzcdXaRLW1aeNxGoJYIcEUhkGPMqBL1gK0wM6d/3
+	j8CFV2SSv3Irc0SRwDDkd7XBhscHn4vvsCbwZIR76I1Npf7xpgbP2c/w
+X-Gm-Gg: AR+sD12Pta9JiKzIOuQzryXXHZX5QUk7si0xAopBugnF9wg+YufrWWqC3SghwAixrJ5
+	ZejuzAj/AFQ8FSqGlDWA8BVOf6Boh9JilDxAVw4bbPoK4URjHxwIO6Yo6i6tsC1DyD4kUe4Dy+C
+	OTvgE1PBJDTjfO6uMHQn4FmITaLv8mC3h3uezjmaqEea71K7U68YLVtg4Ll9A3UvwKycmS/kGam
+	xpnbfNsQotIk00CeVFaUomc20FE4KcUIOpNj/rBGGI5mBUVO66/zHJ8fORU8vix0d7z7JF+NI8H
+	AwEh88FtG1Nu0T6disLGELW3hmcOt7bhB8fhbvXZDnOuUGPlGoRuJFqwJtx8lAZWDdqqvQ85UBX
+	dzPNXsoIxmdsfy6enPgrQIi7JTR12z6BWWSiM3UVcz+LnRWjxXiiR9QXqSPMtHORxF9A2Bm8gnv
+	LLx19rEjvOoo7eNJmsV518m+bYIEAdzN2IhN3J6fZSjhZ0G7v641D2yGpSj23CfNuDN5XxGOXJZ
+	uzEwYzHkFVpv2KX
+X-Received: by 2002:a17:90b:2c87:b0:392:7f74:58c9 with SMTP id 98e67ed59e1d1-395c3a43766mr16440843a91.15.1787334794978;
+        Fri, 21 Aug 2026 10:53:14 -0700 (PDT)
+Received: from [192.168.0.13] ([38.34.87.7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395c4be47d7sm3987378a91.9.2026.08.21.10.53.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2026 10:53:14 -0700 (PDT)
+Message-ID: <27b3997d5c1920db32650c554398feebeea6f0db.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v7 02/10] bpf: Add helpers to describe the
+ R0:R2 return register pair
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: Yonghong Song <yonghong.song@linux.dev>, sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Date: Fri, 21 Aug 2026 10:53:11 -0700
+In-Reply-To: <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
+References: <20260819055239.3293449-1-yonghong.song@linux.dev>
+	 <20260819055249.3295283-1-yonghong.song@linux.dev>
+	 <20260819061746.0DFE71F00A3A@smtp.kernel.org>
+	 <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-10 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] hwmon: (ina2xx) Decouple in0 and curr1 alarms
-To: sashiko-reviews@lists.linux.dev, Jared Kangas <jkangas@redhat.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260820-upstream-ina2xx-in0-curr1-alarms-v2-0-fdce35abc41e@redhat.com>
- <20260820-upstream-ina2xx-in0-curr1-alarms-v2-4-fdce35abc41e@redhat.com>
- <20260820132304.2B1BA1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260820132304.2B1BA1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Jared,
+On Wed, 2026-08-19 at 08:50 -0700, Yonghong Song wrote:
 
-On 8/20/26 06:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Writing 0 to an inactive alert limit unintentionally clears the currently active alert, breaking the newly introduced alarm decoupling.
-> --
-> 
-> --- Patch [4]: [PATCH v2 4/4] hwmon: (ina2xx) Decouple in0 and curr1 alarms ---
-> commit 0eea1308d1961d2cb0471626855b002f45901d56
-> Author: Jared Kangas <jkangas@redhat.com>
-> 
-> hwmon: (ina2xx) Decouple in0 and curr1 alarms
-> 
-> This commit attempts to decouple shunt voltage and current limit alarms by
-> tracking the active alert type and returning zero during reads if the active
-> alarm is for a different type.
-> 
->> diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
->> --- a/drivers/hwmon/ina2xx.c
->> +++ b/drivers/hwmon/ina2xx.c
-> [ ... ]
->> @@ -484,6 +521,7 @@ static int ina226_alert_limit_write(struct ina2xx_data *data, enum ina2xx_alert_
->>   				 INA226_ALERT_CONFIG_MASK, 0);
->>   	if (ret < 0)
->>   		return ret;
->> +	data->active_alert = INA2XX_ALERT_NONE;
->>   
->>   	ret = regmap_write(regmap, INA226_ALERT_LIMIT,
->>   			   ina226_alert_to_reg(data, reg, val));
->> @@ -492,9 +530,13 @@ static int ina226_alert_limit_write(struct ina2xx_data *data, enum ina2xx_alert_
->>   
->>   	if (val) {
->>   		mask = ina2xx_alert_type_to_mask(alert);
->> -		return regmap_update_bits(regmap, INA226_MASK_ENABLE,
->> -					  INA226_ALERT_CONFIG_MASK, mask);
->> +		ret = regmap_update_bits(regmap, INA226_MASK_ENABLE,
->> +					 INA226_ALERT_CONFIG_MASK, mask);
->> +		if (ret < 0)
->> +			return ret;
->> +		data->active_alert = alert;
->>   	}
->> +
->>   	return 0;
->>   }
-> 
-> [Severity: High]
-> Will this unintentionally disable active alerts if a 0 is written to an
-> inactive alert?
-> 
-> Because the read side was updated in this patch to return 0 for inactive
-> alerts, state restoration tools might now read 0 for an inactive alert and
-> subsequently write 0 back to it during initialization.
-> 
-> When ina226_alert_limit_write() is called with val == 0 for that inactive
-> alert, the code just before this hunk unconditionally clears the hardware
-> mask and the newly added line sets data->active_alert = INA2XX_ALERT_NONE.
-> 
-> Since val is 0, the if (val) block is bypassed, leaving all alerts
-> disabled. This seems to allow writes to an inactive alert to silently
-> disable the currently active alert.
-> 
-> Does this function need an early return or guard to ignore writes of 0
-> if the alert being written to is already inactive?
-> 
-Is that a valid concern ?
+...
 
-Thanks,
-Guenter
+> > > +static int bpf_compute_subprog_ret_regs(struct bpf_verifier_env *env=
+)
+> > > +{
+> > > +	const struct btf *btf =3D env->prog->aux->btf;
+> > > +	const struct btf_type *type;
+> > > +	int subprog;
+> > > +	u32 size;
+> > > +
+> > > +	if (!env->prog->jit_requested || bpf_prog_is_offloaded(env->prog->a=
+ux))
+> > > +		return 0;
+> > > +
+> > > +	/*
+> > > +	 * Skip the main program: its return value is the program's exit co=
+de,
+> > > +	 * read out of R0, so it never uses the register pair. An extension=
+ does
+> > > +	 * have a real prototype for subprog 0, but bpf_check_attach_target=
+()
+> > > +	 * refuses to replace a function returning more than 8 bytes.
+> > > +	 */
+> > > +	for (subprog =3D 1; subprog < env->subprog_cnt; subprog++) {
+> > [Severity: High]
+> > Does this code mishandle extension programs (BPF_PROG_TYPE_EXT)?
+> >=20
+> > The comment mentions that bpf_check_attach_target() refuses to replace =
+a
+> > function returning more than 8 bytes. However, for extension programs,
+> > prog->expected_attach_type is 0, so attach_uses_trampoline_retval(0) ev=
+aluates
+> > to false, bypassing the size check.
+> >=20
+> > If an extension program successfully attaches and replaces a subprogram
+> > returning an __int128 (16 bytes), skipping subprog 0 here means ret_reg=
+_pair
+> > won't be set. Could this result in the verifier failing to enforce the
+> > initialization of R2, potentially leaking uninitialized register conten=
+ts to
+> > the caller?
+>=20
+> But the comment needs update for this version.
+> =C2=A0=C2=A0=C2=A0 bpf_check_attach_target() -> btf_check_func_type_match=
+()
 
+Fixed while applying.
