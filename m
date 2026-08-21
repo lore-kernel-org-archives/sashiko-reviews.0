@@ -1,287 +1,218 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560721EB5E3;
-	Fri, 21 Aug 2026 15:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787327088; cv=none; b=EVO8EBmjPT+nZaSuhdNU++1Bb3D5hN3WuIrE2s0TNwhWiDYJZY2T+fCDaTk1btbVppmhK/kXPXkp/meleRpIHE1tzo6F5B+0S4KA0BGRpCVJC2v3k8FJ/1opBnDteq3TFQRcQV5gupwNOqPA69Vry5xzIypSSQ+roQWiIhAUupQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787327088; c=relaxed/simple;
-	bh=HZ5mLgw2emKZWU4zuIzDGFXNADwbys6IMOEBAKNa5jU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FM3K80p3SX+rtAjHFqbr3uSRRATxMMrbuC9kwjptth2M6zcsyKaUdzHQfmANxwCA/106v+LaMtwewALlFwqsSVw3LVEANad7P/f2LoVCyGPuCUd4/OR1Q3WNhUVejcy68QYyRLcThBg2py/Feb/fyyul+pIU5FaKJr45BSODGTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=hI98dzpF; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FE73F484D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 15:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787327762; cv=fail; b=ORyjwFsgxH4SyPeXzZI0PUCzEuElHSMM4vtijKSX/FV0u8iC/wvC+tTHgViibrLtU1AXvThC9MTGS+YWJ9WWChi2U5tsJWTBBHC5jQVdOAuP9hm3sHzfmWdLeDGMe2z7DoXoecfeV96dCwn4/baSLtvGhTKtETlCwXTI3+OtLWQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787327762; c=relaxed/simple;
+	bh=ZYRsMlIk0CGuCafv1t+pz0BxtQFHA0ezcWFRm0wfDCI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FknkzlGm4tOMAHYi0AaThBIG87etFXm3vpHHJ9btTLI513S/Ys2Ggpmzg2CKy7RBr3c9CIyNirpQCamS5k/PQ+E9EfVKn2v3O5dK7uMmW3c+uDD98CjsSi/pT1AS52OwesYRO1Q0nuX+2hCncFvXPQHjKosOm4YZfcvQ4XH/Cgs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=GWFl3Pe5; dkim=fail (1024-bit key) header.d=ti.com header.i=@ti.com header.b=DDXy73A6 reason="signature verification failed"; arc=fail smtp.client-ip=148.163.154.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="hI98dzpF"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67LD1hQV455148;
-	Fri, 21 Aug 2026 15:44:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=rlKGNjJsWlnkl3U2rEpYzyLq4X7/D0
-	b2xDJRJF/MHc4=; b=hI98dzpFYo5Zeselis62RJQ/gxDr3LgNY3gLFR9CNfJAed
-	zpVBil0ghWudddJRQAjsuGYCDXEU1JyPjf7iCWMW3Qp6EdTxbHFIuFrpJXljtKXO
-	nnNyA+8dJVYnNOYEE4K5ejI+FIge9GMeybNCGHqPHIzg4f9TClnlgB844Klpf3RH
-	XTT/A4aDD89gajN794VJQaVL/GJx6RZXyetW3bq8KaG8dHBX84Gx7YkQcqP/hFzf
-	VUEiIQQ5f8lADxUZNQu/h3yQ5e46Qfuosnfx1sLwTqbHv7U1uig0bsAgiz9DIPtB
-	o2Dv2DKnj4RLeECV9y8vmsVJIstB9HB6js+52qhw==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu2jaqm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 15:44:45 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LFfNHK024713;
-	Fri, 21 Aug 2026 15:44:45 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eqnmjj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 15:44:45 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67LFiiKD20054588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 21 Aug 2026 15:44:44 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 912355805A;
-	Fri, 21 Aug 2026 15:44:44 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 78DAC58062;
-	Fri, 21 Aug 2026 15:44:44 +0000 (GMT)
-Received: from d (unknown [9.61.29.95])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 21 Aug 2026 15:44:44 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v6 7/8] scsi: ibmvfc: register and use asynchronous sub
- CRQ for events
-In-Reply-To: <20260817204231.3364C1F000E9@smtp.kernel.org>
-References: <20260817-ibmvfc-fpin-support-v6-0-62a2d525e70d@linux.ibm.com>
-	<20260817-ibmvfc-fpin-support-v6-7-62a2d525e70d@linux.ibm.com>
-	<20260817204231.3364C1F000E9@smtp.kernel.org>
-Date: Fri, 21 Aug 2026 10:44:44 -0500
-Message-ID: <87jypjwk9f.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="GWFl3Pe5";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DDXy73A6"
+Received: from pps.filterd (m0374956.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67LFpbcr3808909;
+	Fri, 21 Aug 2026 10:55:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=ZXvfYMIT42Vg4QVjjro36fK5BhdBnfY0Hau17hJV1
+	Qc=; b=GWFl3Pe5AN7mvN6a5OfTLkYBfidOEdiAiqpmtU/pzXOLzS47LPq/Q74B1
+	CnyrnEymkj0I6zC+HhvOOylnHUXChYYtpiKef5GzZnJ47wRR8SDpFrNvafnIJEYz
+	u9fJ+klDWFQFjNVNwBXSvON1ioqUmvokD4wL+qmZL1KR5UMcSrikMzYcN0d1vest
+	33wn5cUDNofzEtl7/WnP+3hGNHjOZn8kkNzxPdiiXNFLTql28hPoZLpgsxoWgsqK
+	6Q0Eb0KOWMcE3zks8LLYP530X5gmaN6i1d9SgtkdscyBxbJqxGD4yih1ZKWZnkmf
+	Suv8NGrppfvNPC9OJGd6WBa6tVvBQ==
+Received: from bn1pr04cu002.outbound.protection.outlook.com (mail-eastus2azon11010065.outbound.protection.outlook.com [52.101.56.65])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4g6c9c44m5-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 21 Aug 2026 10:55:44 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=V1yrqP/CcDE1PnxLrsLGuqxzwGKei5MFXg+23auja36hp05Cmn1nzCnHxx6tIgCdrGVFfdOimhFgjh3ThaZodzgfcDdrSHXBCyUGPdLfw8EwfM99s0i/1B7ANjrbOZ8h4AvOzaQZgio10YWzCcW6526DX93j5zKKH5q9Y1aMD3n7hlKYqi693UeO9/bBXumk9tbNFnRRHGxVCgsZL1ZiFGmvBbfv0o1uL3tJuMkWZov2gHVV2ooh4wqvsvK4w55+eqz+bH5p6PjCv7N7BLEHdnsRJ6/iBNP7mDv26z95xcTkZ4luU0porV0jdfGDowVnBjRKJ+1lijDXfwkoRM/QsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/AKYGBi7Y03eKnqHCzm0m+b/Drr/BXiENJzd1prjZps=;
+ b=uqCN/VDPClcSMVFIQJR1BfLaEi3EFlYJR7aOTqCHYwOHlMaTQIu2v6GMbyFmfcz57xikpv5c8g9xB7lqOUXWx6MrsXv3vU9BQOIv2LjxDWX7HM8PER1hfbSHLNbRDFeAfxSzr6uNZL7XP616BrVOxUQ4eTCgAEaO9Pm+XHxiwtVZ0dfKlT91PIEteSmEqVEAPuF0oWovA8zM3dqrFRwfUVK5j1esckRZ41bAhTByqtE8DRbgmRUs0S2OW70hLTnS3Khb1AnL9LeIz3W03qkpOtO6UsVvLVvyg+dehFYXKSi3tPQVavkqtNr0I2mK7b8MJANnznE1YPST1+UJjPxlbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.194) smtp.rcpttodomain=pengutronix.de smtp.mailfrom=ti.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/AKYGBi7Y03eKnqHCzm0m+b/Drr/BXiENJzd1prjZps=;
+ b=DDXy73A60aj6WZhLDhlMXKk+PmwXh8guZrpv00+6tfCdUGeW3WF1SxMhjp6vijWO9oKYnpuRmrXs7S5Kqb+HIl2dMLY9XGtDWzMthtf1jofe0jOM42eCSCOOFUzXjB/37nhDIW/SnsEWgPzCLntzU7ZgJKYRaDdn0OdkYEdQQeQ=
+Received: from SJ0PR13CA0165.namprd13.prod.outlook.com (2603:10b6:a03:2c7::20)
+ by DS3PR10MB997701.namprd10.prod.outlook.com (2603:10b6:8:344::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Fri, 21 Aug
+ 2026 15:55:38 +0000
+Received: from SJ1PEPF00002327.namprd03.prod.outlook.com
+ (2603:10b6:a03:2c7:cafe::52) by SJ0PR13CA0165.outlook.office365.com
+ (2603:10b6:a03:2c7::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.4 via Frontend Transport; Fri, 21
+ Aug 2026 15:55:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.194)
+ smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
+ action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
+Received: from lewvzet200.ext.ti.com (198.47.23.194) by
+ SJ1PEPF00002327.mail.protection.outlook.com (10.167.242.90) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Fri, 21 Aug 2026 15:55:37 +0000
+Received: from DLEE205.ent.ti.com (157.170.170.85) by lewvzet200.ext.ti.com
+ (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 21 Aug
+ 2026 10:55:21 -0500
+Received: from DLEE213.ent.ti.com (157.170.170.116) by DLEE205.ent.ti.com
+ (157.170.170.85) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 21 Aug
+ 2026 10:55:21 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE213.ent.ti.com
+ (157.170.170.116) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Fri, 21 Aug 2026 10:55:21 -0500
+Received: from localhost (uda0506412.dhcp.ti.com [128.247.81.196])
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 67LFtLOO2390988;
+	Fri, 21 Aug 2026 10:55:21 -0500
+Date: Fri, 21 Aug 2026 10:55:21 -0500
+From: Kendall Willis <k-willis@ti.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Marc Kleine-Budde <mkl@pengutronix.de>,
+        Oliver Hartkopp
+	<socketcan@hartkopp.net>,
+        Vincent Mailhol <mailhol@kernel.org>, <robh@kernel.org>,
+        <linux-can@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <conor+dt@kernel.org>, Oleksij Rempel <o.rempel@pengutronix.de>
+Subject: Re: [PATCH v2 1/2] dt-bindings: can: m_can: add out band wakeup
+ property
+Message-ID: <20260821155521.pn6rq2qv4xp2ihyp@uda0506412>
+References: <20260820-temp-v2-0-dd3f8cacc15e@ti.com>
+ <20260820-temp-v2-1-dd3f8cacc15e@ti.com>
+ <20260820214857.712A01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a88726d cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=eF7jxB_lQuaIYKCTfKIA:9
-X-Proofpoint-GUID: btle4ZYQ3AwTZOCpHiWqVuKjNWafMNh5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEyMSBTYWx0ZWRfX9vNtqahM22xw
- 58h8Ho47Jh6O637HNF96giwieHMJQRMLX4AjIg/ECVMaiMazC1ZbNmJQ6/0wm60DbfZA3eocgcO
- 2WGluo0TEiVyYUkTtUPUao4NWsamizqmVk7O3W9DPfaY/BnOkJpfsJjhPMSpxWRJR6iYGvDuQOx
- QBCTGfbvALBMrQupKYoJP1W43maG+ZEJshZp18k7yVPZayG4ITB27g2/1HAZKc+jnGVAzFghsOF
- Q4YTlBiogmG1xL9CUSRVEER1HTo70Qrm4ywWEFaqTsjFNS0DkAOjxMd6szuOJsRgbM6srvnFI5m
- p7MXODDrcbGoQh6S5w3Ev22/OZaXJhbxysJDPR/YwKPt5zZ3qnfobznQkXDpn/BdeB2qUqfvuQl
- yGpymBKBmtoWCN8x5JaLyi2p0jltNOO7ouul3VpglD/UadNvf8o9CY3TOa2qMQ730ZsWe2zCuxI
- x2fusOh9b2A/Yjfs4lg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEyMSBTYWx0ZWRfX20qFXGgYKrnr
- Wp/rQcvt0Od8JlLgPlOpuq3LylgmPjYaqArK270nOB+GFjHWEMGly2C519+gHF9bCFpNN1+lAeV
- wVr49dxLB848/vzshjE8CX1E+LcsUbI=
-X-Proofpoint-ORIG-GUID: btle4ZYQ3AwTZOCpHiWqVuKjNWafMNh5
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260820214857.712A01F000E9@smtp.kernel.org>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002327:EE_|DS3PR10MB997701:EE_
+X-MS-Office365-Filtering-Correlation-Id: e096aa38-d386-4e2f-20dd-08deff9ca4c8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|376014|23010399003|82310400026|1800799024|10067099003|5023799004|4143699003|56012099006|22082099003|18002099003|3023799007|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	l0eS2ia0lqwkFEOaC5p04mhPmJQizkTdlqV8GP4y2ACNWbVEpM7DniSr92UEfvl3esdKiHOXrSo3VQ+0ZhdEyiDEcU6NIQE3483h4v0/kwjwwG/PvIk2nLd3NF7o0nI1CUSAhtTYPckeDscPOawhFqr6ep8ALKkJyd5KsWVMHaUGDfuIpTexQrp6MYfYIj3aJtwMlwpYR8PmWbzET/uIWEESf2S0WQx/6ccHoroaYYewXAIOFF+1FYNq9+vf0gknIj0u1u6mGfaT1ZC3ZdQKBNxiAvhPhPA+TZKyko73pb4xSW/4aBK+6JJ+iBdoM4Qfs7XW3TCi/e1P7SnkHQS5+GCay03KaZL8Rdy9ImSn3+BUPw2H0NtRHpsDtcoKyEynz7TUz7K7EzDTnUtjdtKGXAm4l+By9hPtjqky4+2LfEHKRBlGIsR2f7LWTC+YiWr3BXH51MNRchW+Wj8mSt7DJscOnD9I+7lEbfGFZv72jjycZJjyUFVzsSclwwWQXD9oeO26E2DVUEx5n5I9nm5GhPqoWRL57DAf5zdTYOVUYqzHj87PRqaZ+dKRdAWQgXOc971uFCtDFF2llBRhUC5YYklGk76MQsjsmcyhZD1BCtIAW6eE9ygbJD0N640ecmryUe/2mAqGgqiqLvafeNCfug==
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(376014)(23010399003)(82310400026)(1800799024)(10067099003)(5023799004)(4143699003)(56012099006)(22082099003)(18002099003)(3023799007)(13003099007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	G2q6ED9f6Z+uIx0fgAhQjFZPJOCDgweQsJBr/3UVkaRwL/U3gpecCNIqlTDQsOaW9fW9tyju0YnEtxzaDhKDIBsGaWDPL1VhuT1rVfDM/okRR4ij7S5M1gRdWs3GjFuJwkepN+7G3eo+kmFXQnUXEqDnKHxeRvxyTXaK/nQ6+p+71lrs5tl2yCda47gChpLBkGimGznC7liFotT346iePyc5VvMUTYXP19VhzR3MPh8LA4e3i0FZkoGJ3uk0Cm4Wp5iZIOPpQElu9rcVByO9Z1SgDqYvSRoUguT0kVq1RNx+Uanh9bVrhIzTNuldUhCd4JUYKraiOFPoUnJoKMK6vqIRZ+tS8E1npONw1U+gbJXy+2waRGAACL9L8xeNkpwB2pJZXwQbk/69xBedrcWNrp83Ej21OnZJW69P86/MPoquBKgnXcDD68Qdrb8eNc7m
+X-Exchange-RoutingPolicyChecked:
+	IJIQMimnd3MbSx07BC67F280ywhgNSk0B9/GNMlHFi1tal4RUhCVSAsKqeHBkAGysRW4JSne1++iDLSJWQsgfXP3slyH67OT5EOYDgKsXPpV9Ev2rzG/zi/vpk7YdyVe8AIRdFw2VTP7RzaW29pmWJsY79XYhCYVvJaLyfdwAuL1LZc0AoXTiUFkCEjWSgR61/IOMlNk8/CC/VmrhWyFHhFodPZx/FlLaDy0ze8PNcHXrlp6dY9l9WSEHpwmBT6VlW71H7lqy/kXl7o1ozKrB32VggKvArSvQ3NRz5m7sY2exUCY35WhS84pGXccmxE3hr2+zGJLEBYtIF7otihNiQ==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 15:55:37.6489
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e096aa38-d386-4e2f-20dd-08deff9ca4c8
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF00002327.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS3PR10MB997701
+X-Proofpoint-GUID: WaetbwXAiUGrr55ppPJt9WpbrzOFWAG3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEyNCBTYWx0ZWRfX32wQsZPGJkKJ
+ xlg0EDihoKzgvtBrdU2v6E6gTCqYoP0TSq8C0wo03n3kFyIo36dGs+6Xzhu63pQzKsS9i+m5glh
+ pudKBczw+2/M4YaK8cDHhRHQemeXfnE=
+X-Authority-Analysis: v=2.4 cv=eqjvCIpX c=1 sm=1 tr=0 ts=6a887500 cx=c_pps
+ a=eQn4vQZDn50HuGbH8T6KOA==:117 a=WotqVVQAdb04rnGuttW3Kw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10
+ a=s63m1ICgrNkA:10 a=V5UXEbMT0ywA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Z8NIEmU8O1QQgoT56wFK:22 a=jwouBfj2j3NM8CExmVVE:22 a=NEAV23lmAAAA:8
+ a=c92rfblmAAAA:8 a=sozttTNsAAAA:8 a=VwQbUJbxAAAA:8 a=B_hBFdqMBuDyzTqD-bgA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: WaetbwXAiUGrr55ppPJt9WpbrzOFWAG3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEyNCBTYWx0ZWRfX6pda2BPjflTy
+ 1nP8saFeUkfu0kjhXe9eg9cZFZJlI5Nch+GKdrcTnMbgI+vAz0tKI/rtyYe3a312SkPS+DZqHwc
+ 303I6ZAjVn/Ro9QPUlkL2Xj4e+Z8V+tToVR7Kax6IgG2uCuNjRjCPuGkTFy3j33Gi5PmlWBNw7U
+ ss3+lKg57s2V2VmALwOExDgTR8zGF//IboeUjqR1b+pKApFWChpzHotxvRSfSDyMJLBs6LwfzTH
+ aMXSm5R94KmBpQL3QKpic3ZnHTlzX3q9hc2IdTK277OR9sZRCITTxORnKCQd+HzFWuAIj4ZxuFJ
+ JXN5j31NbyvMRzNQO45YyxhgQB6c18Mt2q2yaLTvro12QFhYy1i3wABtLcmob/8MJGfrxOQQ6ya
+ Pw6U70P8/f3ZzslwbFoF6cTkPpU0wViiddqqz5u6WOMCDVxxTrkkre9n1YHwL6WKpRTYNAdbqEZ
+ 1TO6a4ZaNnnyZrhUGDg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-21_04,2026-08-21_02,2025-10-01_01
+ definitions=2026-08-21_05,2026-08-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608210121
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 spamscore=0
+ adultscore=0 clxscore=1011 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210124
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->
-> New issues:
-> - [High] The newly added async_sub_crq is leaked and leaves its IRQ registered if ibmvfc_alloc_channels() fails during SCSI channel initialization.
-> - [High] The async_sub_crq is completely omitted from the CRQ reset and re-enable sequences, breaking its lifecycle.
->
-> Pre-existing issues:
-> - [Critical] NULL pointer dereference in ibmvfc_channel_setup() when mq_enabled == 0.
-> - [High] Missing bounds checks on hypervisor-provided queue counts can lead to out-of-bounds array accesses.
-> - [High] Error codes from request_irq() are unconditionally clobbered, silently masking critical failures.
+On 21:48-20260820, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The newly added custom device-specific property `out-band-wakeup` is missing a vendor prefix.
 > --
->
-> --- Patch [7]: [PATCH v6 7/8] scsi: ibmvfc: register and use asynchronous sub CRQ for events ---
-> commit 10af0529db6ade6b831181ddc695f2e8713b38ee
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
->
-> scsi: ibmvfc: register and use asynchronous sub CRQ for events
->     
-> Wire the async sub-CRQ into the sub-CRQ lifecycle so it is allocated,
-> registered, and freed alongside the SCSI channel queues.
->
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+> 
+> --- Patch [1]: [PATCH v2 1/2] dt-bindings: can: m_can: add out band wakeup property ---
+> commit 66d860c00379089f5518db1a67a453077a6864ea
+> Author: Kendall Willis <k-willis@ti.com>
+> 
+> dt-bindings: can: m_can: add out band wakeup property
+> 
+> This commit introduces the out-band-wakeup property to the m_can binding.
+> The property indicates if the CAN device is capable of waking up the system
+> even when its power domain is off.
+> 
+> > diff --git a/Documentation/devicetree/bindings/net/can/bosch,m_can.yaml b/Documentation/devicetree/bindings/net/can/bosch,m_can.yaml
+> > index 2c9d37975bedd..b6cb945c225f1 100644
+> > --- a/Documentation/devicetree/bindings/net/can/bosch,m_can.yaml
+> > +++ b/Documentation/devicetree/bindings/net/can/bosch,m_can.yaml
+> > @@ -150,6 +150,11 @@ properties:
+> >      description:
+> >        List of phandles to system idle states in which mcan can wakeup the system.
+> >  
+> > +  out-band-wakeup:
+> > +    type: boolean
+> > +    description:
+> > +      Indicates CAN device is out-of-band wakeup capable.
+> 
+> [Severity: Low]
+> Should this device-specific property have a vendor prefix?
+> 
+> Since this property is not defined in a core common schema like dtschema
+> or can-controller.yaml, the Devicetree specification requires a vendor
+> prefix (such as ti,out-band-wakeup or bosch,out-band-wakeup) to prevent
+> property name collisions.
+
+This is a valid point. I sent a PR to the dtschema repo [1] to add the
+out-band-wakeup property to the core common schema. I will be sending a v3
+to fix the bindings with that PR in mind.
+
+[1] https://github.com/devicetree-org/dt-schema/pull/205
+
+Best,
+Kendall
+
+> 
 > [ ... ]
->> @@ -5792,6 +5794,7 @@ static void ibmvfc_channel_setup_done(struct ibmvfc_event *evt)
->>  		for (i = 0; i < nvme->active_queues; i++)
->>  			nvme->scrqs[i].vios_cookie =
->>  				be64_to_cpu(setup->channel_handles[scsi->active_queues + i]);
->
-> [Severity: High]
-> This is a pre-existing issue, but is it possible for an unexpectedly large
-> response from the hypervisor to cause out-of-bounds array accesses here?
-
-Up to this point in the driver history, we have trusted the answeres
-from PHYP, the IBM PowerVM hypervisor.
-
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_channel_setup_done(),
-> the unvalidated active_queues count returned by the VIOS is used directly
-> as a loop limit to write into the driver's nvme->scrqs and scsi->scrqs
-> arrays.
->
-> Could a malformed or compromised response corrupt adjacent memory?
->
->> +		vhost->async_sub_crq.vios_cookie = be64_to_cpu(setup->async_sub_crq_handle);
->>  
->>  		ibmvfc_dbg(vhost, "Using %u SCSI channels\n",
->>  			   scsi->active_queues);
-> [ ... ]
->> @@ -5851,6 +5854,7 @@ static void ibmvfc_channel_setup(struct ibmvfc_host *vhost)
->>  		for (i = 0; i < nvme_channels; i++)
->>  			setup_buf->channel_handles[scsi_channels + i] =
->>  				cpu_to_be64(nvme->scrqs[i].cookie);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this loop risk a NULL pointer
-> dereference when mq_enabled is 0?
->
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_channel_setup(),
-> if the driver is loaded with mq_enabled=0, ibmvfc_init_sub_crqs() returns
-> early without allocating scsi_scrqs.scrqs. 
->
-> However, if a modern VIOS supports channels, the enquiry succeeds and sets
-> max_vios_scsi_channels > 0.
->
-> This would cause ibmvfc_channel_setup() to compute scsi_channels > 0 and
-> unconditionally execute this loop, accessing the unallocated
-> scsi->scrqs[i].cookie array.
-
-I will study this more, but it will not be fixed in the v7 patch series.
-
->> +		setup_buf->async_sub_crq_handle = cpu_to_be64(vhost->async_sub_crq.cookie);
->>  	}
->>  
->>  	ibmvfc_init_event(evt, ibmvfc_channel_setup_done, IBMVFC_MAD_FORMAT);
-> [ ... ]
->> @@ -6949,7 +6953,9 @@ static void ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
->>  	for (i = 0; i < channels->max_queues; i++) {
->>  		if (ibmvfc_register_channel(vhost, channels, i)) {
->
-> [Severity: High]
-> This is a pre-existing issue, but does ibmvfc_register_channel() silently
-> mask critical failures?
->
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_register_channel(),
-> if request_irq() fails, the code jumps to the irq_failed label where it
-> executes:
->
-> rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
->
-> If the hypervisor successfully frees the sub-CRQ, rc is overwritten with 0
-> (H_SUCCESS). 
->
-> The function then returns 0, falsely indicating success to the caller,
-> which leaves the channel marked active but without an interrupt handler.
-
-Good catch. In v7 I've changed the call to record the returned value in
-a different variable, hcall_rc, so the original rc can be returned to
-the caller of ibmvfc_register_channel().
-
->>  			for (j = i; j > 0; j--)
->> -				ibmvfc_deregister_channel(vhost, channels, j - 1);
->> +				ibmvfc_deregister_channel(
->> +					vhost, channels, j - 1);
->> +
->>  			vhost->do_enquiry = 0;
->>  			return;
->>  		}
-> [ ... ]
->> @@ -7004,10 +7010,27 @@ static int ibmvfc_alloc_channels(struct ibmvfc_host *vhost,
->>  
->>  static void ibmvfc_init_sub_crqs(struct ibmvfc_host *vhost)
->>  {
-> [ ... ]
->> +	/* register async_sub_crq channel */
->> +	if (ibmvfc_register_channel(vhost, &vhost->scsi_scrqs, -1)) {
->> +		ibmvfc_free_queue(vhost, &vhost->async_sub_crq);
->> +		vhost->do_enquiry = 0;
->> +		vhost->mq_enabled = 0;
->> +		return;
->> +	}
->> +
->>  	if (ibmvfc_alloc_channels(vhost, &vhost->scsi_scrqs)) {
->>  		vhost->do_enquiry = 0;
->>  		vhost->mq_enabled = 0;
->>  		return;
->>  	}
->
-> [Severity: High]
-> Does this error path leak the newly added async_sub_crq?
-
-Yes. In v7 I've restructured ibmvfc_init_sub_crqs() to handle errors
-correctly and not leak async_sub_crq.
-
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_init_sub_crqs(),
-> if ibmvfc_alloc_channels() fails during SCSI channel initialization, the
-> function returns early.
->
-> This skips deregistering or freeing the successfully allocated
-> async_sub_crq.
->
->> @@ -7050,6 +7073,9 @@ static void ibmvfc_release_sub_crqs(struct ibmvfc_host *vhost)
->>  	if (!vhost->scsi_scrqs.scrqs)
->>  		return;
->
-> [Severity: High]
-> Could this early return bypass async_sub_crq cleanup entirely?
->
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_release_sub_crqs(),
-> if scsi_scrqs allocation failed earlier, !vhost->scsi_scrqs.scrqs evaluates
-> to true, causing an immediate return. 
->
-> When the module unloads, the memory for async_sub_crq is freed but its
-> IRQ remains registered, potentially causing a use-after-free panic if the
-> hardware triggers an interrupt.
-
-v7 of this patch fixes this problem.
-
->> +	ibmvfc_deregister_channel(vhost, &vhost->scsi_scrqs, -1);
->> +	ibmvfc_free_queue(vhost, &vhost->async_sub_crq);
->> +
->>  	ibmvfc_dereg_sub_crqs(vhost, &vhost->scsi_scrqs);
->
-> [Severity: High]
-> Are there lifecycle regressions during host adapter resets for async_sub_crq?
->
-> Looking at drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_reset_crq(),
-> when the host adapter undergoes a reset, ibmvfc_reset_crq() and
-> ibmvfc_reenable_crq_queue() explicitly deregister and re-register the SCSI
-> and NVMe sub-CRQs. 
->
-> However, async_sub_crq appears to be omitted from these sequences.
->
-> Across a reset, the async_sub_crq registration with the hypervisor becomes
-> stale, which would permanently break the receipt of asynchronous events
-> until the driver is reloaded. 
->
-> Should async_sub_crq be included in the reset path?
-
-Yes. v7 adds code to ibmvfc_reset_crq() and ibmvfc_reenable_crq_queue()
-to deregister and reregister the async sub CRQ.
-
--Dave
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260820-temp-v2-0-dd3f8cacc15e@ti.com?part=1
