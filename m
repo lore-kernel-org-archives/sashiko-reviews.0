@@ -1,133 +1,99 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF5E25CC57
-	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 17:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787334797; cv=none; b=Ltge8/wkmEtCw392PEckDbQTO4mEkhyKREVKTY4oggRXGjLiVyGyzuE6CU4vJ/6Xa3ifdtTTBIIM/SpcUJKuY0OFSu8n33vd+PGmc2RjFRJShcw35DCUbA8wT95JbcHUU36gqvfZVzZH+Vv7l6uctitojk/laFWvYCac7dZWomY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787334797; c=relaxed/simple;
-	bh=rr1EVL+4iiksKyR165CGqWE5TxhSTv7lkS+ul8ltQUg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tz9tcL8a0ZxYQzse2n/W1pIG5CxOJMTAyvPPOvaYmz/tbqMNoobAN7VpyyGn+7DqjDBYPZCiw+E40ABeBxLD3A9U2BfIRQrTzMy/z/cama+9gbc2xuo1AP6D7KJ83aAXrRouCyTVL2bYly4WBZmfq1SBrWdI7EUCHGDRPKXTtD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iafW+5ij; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35B52DA768
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 18:06:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787335567; cv=pass; b=qN8VUaN2MkTre6Hzl2cJupZ2OQFfj4/as32CRnUkmAQy3sJxgTGe3VGsBA4kkgLXXagP9Bs+25Csyf8OB7s3wor9JXeCZ3mexP2lknvzr0/bTIppcu58T5xGSv88Kz1ElKLt92l9KwdnBZ85Haq+KRXuhCMOBxSmlsA+jqaHYT0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787335567; c=relaxed/simple;
+	bh=1LthjORSPcmpyo5UW7oXGx/EBc/qFcqg4eoh5yX5pMc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B8YSLUVndieUgOhhXrdePs0c8l33scESaA51ZAqHqSuOgaG8PWwae33fPJD8WlHru76P2x1/wk1mmxNdry3HAPtGZqcs7tt6F8zOA8k1sHlTwoSwd66TkdLYOWcqvxOraq0rWY3l6fLnl2xa6nswQi8tnqI0AOsVeqNiGsp2zEA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DJnfRaO5; arc=pass smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iafW+5ij"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38dfe7eb825so1148398a91.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 10:53:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DJnfRaO5"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69fec8b4638so1279a12.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 11:06:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787335564; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RYj2AxFuT3of28DrXCQaJgGpMovxGC3SEqBAdU5EYbncqGBP6g0SmmX0YfEdlhFcao
+         UjbyyQAt60oLTnNEJFkN11e6Ako42P60bW4Fnoy/lXd0gX2I0IzH2i13xkYsmbCc8rc6
+         YN9JZ1R/Eg3+d9Trx0TRdiN66r5PiZREeXLEi3yWHkSF8HDPCPbFBIdSnCSP/jBphTVw
+         CJAmmxw8LcNipZ8+Xs3PK0+ShMvZb9GKRyDCpsFrKbkwsQhW8Ui70JgThFbL2a5FWts4
+         PvWFoB+Nh0oJjsaugj6rDqzF64WJvIzobg19TwyYnm+1mSZJXzHNwVJG20H1OFDJLg/M
+         t1HQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1LthjORSPcmpyo5UW7oXGx/EBc/qFcqg4eoh5yX5pMc=;
+        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
+        b=kGeRay9hYP4CXmv9irt3nR+6h0lSyo48W+fP7boylQ4J5qjH33/9sIxLAu+x1T8LqK
+         CVpXpHc/aMQy+61YRfnUy0IxfwtaMrZezcKY4wVlzoludMDVR8FjR/7pIjzjaU/G3AW1
+         SsdaR1DUPJB6w5Ck9hkxr7lsFOBmjhuguBDgLVxzwxlT/S4ocY3iV64H/hJHsEYxHBpH
+         0/qCnjaXB3cM3JfpP8Y5wpn1clYGnR4Xkr5EKEXgQoFMx69Aj9lxUmdqv9JturCVUEVK
+         t4ZIxJiGZuqDJ7JzKVA32FL9RrrWbXwdaORKAZTkgAe+NDOI11Q2cM7jIZicVE2TFrhy
+         Tkww==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787334795; x=1787939595; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=x5X2EWJjIO+3uU6HNhskU6QdvAMpHnR+u9hjOMlkEYo=;
-        b=iafW+5ijsci3jkXoVVlPSdXW4kKuO1B5/8MybbK//nniN5tid07n6AMKyjbZawdG44
-         wjNO61K+6HETjhcOK8b0TEFJ6lvBahSHjeCkMh+NGKIXCh1pB2vnt7BKWpxaPca/lhPI
-         yFHXPSzHKxb0IMe699+/aWXhQWI46pU7EC6VT+4dUl2aeOvfI4x+Eyf0Gb6qAEIrcFo7
-         AZPSkTPx0g5ibv3rJ3EptDv1ujgti7xqzKH10j+BFW1ZrAGbfQJpVifceADnP+fg5k7k
-         CSrTLlkKJTXwRo8FG/5+iZng9zM8uPSHoo+ixTHL6dHYmLboaRGOTK98ect3XkFK62MK
-         V1Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787334795; x=1787939595;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1787335564; x=1787940364; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=x5X2EWJjIO+3uU6HNhskU6QdvAMpHnR+u9hjOMlkEYo=;
-        b=NG10R4fzWoVypZeVA9LiWWvN+HmCXy54D69bfrmDuO/+TbenoqKDyh59c6CcmRADk4
-         /B0z45GpmZn+K319mFzkvq0zyF9EqEJdXZXgK73i0n+H1nSUyy20Zrt/kkuCDnjyOntC
-         8Skm8BJMJnLgj1WFgGCeDkUkMDyBRPIgqUeLIzWwr2Q5XJb4JOdCO+uAXlmYWEXUoYx9
-         xH4ONdUWl3T4G0oZZvpdUL8F81B/uJlImgdL8+Civ3oIhcUrCIqg8THwhDXSPgwmJfW+
-         ciCq9sL+PWtBeELeY8I0L0FXNJbUWRD8rFc+sK6YpGylsugQIvXBsS3gWUHtraOWwoVi
-         7PLA==
-X-Forwarded-Encrypted: i=1; AHgh+Rrgj5uDVJOj/XvNdqrm30I2TVcH+0Cfbck+VK1S5p29CGtCBlLDslnWVj/cXGraMVMHnhNMaKZhtwlhLSEbh2U=@lists.linux.dev
-X-Gm-Message-State: AFuF++k7MGF1ag+vXzcdXaRLW1aeNxGoJYIcEUhkGPMqBL1gK0wM6d/3
-	j8CFV2SSv3Irc0SRwDDkd7XBhscHn4vvsCbwZIR76I1Npf7xpgbP2c/w
-X-Gm-Gg: AR+sD12Pta9JiKzIOuQzryXXHZX5QUk7si0xAopBugnF9wg+YufrWWqC3SghwAixrJ5
-	ZejuzAj/AFQ8FSqGlDWA8BVOf6Boh9JilDxAVw4bbPoK4URjHxwIO6Yo6i6tsC1DyD4kUe4Dy+C
-	OTvgE1PBJDTjfO6uMHQn4FmITaLv8mC3h3uezjmaqEea71K7U68YLVtg4Ll9A3UvwKycmS/kGam
-	xpnbfNsQotIk00CeVFaUomc20FE4KcUIOpNj/rBGGI5mBUVO66/zHJ8fORU8vix0d7z7JF+NI8H
-	AwEh88FtG1Nu0T6disLGELW3hmcOt7bhB8fhbvXZDnOuUGPlGoRuJFqwJtx8lAZWDdqqvQ85UBX
-	dzPNXsoIxmdsfy6enPgrQIi7JTR12z6BWWSiM3UVcz+LnRWjxXiiR9QXqSPMtHORxF9A2Bm8gnv
-	LLx19rEjvOoo7eNJmsV518m+bYIEAdzN2IhN3J6fZSjhZ0G7v641D2yGpSj23CfNuDN5XxGOXJZ
-	uzEwYzHkFVpv2KX
-X-Received: by 2002:a17:90b:2c87:b0:392:7f74:58c9 with SMTP id 98e67ed59e1d1-395c3a43766mr16440843a91.15.1787334794978;
-        Fri, 21 Aug 2026 10:53:14 -0700 (PDT)
-Received: from [192.168.0.13] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395c4be47d7sm3987378a91.9.2026.08.21.10.53.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 10:53:14 -0700 (PDT)
-Message-ID: <27b3997d5c1920db32650c554398feebeea6f0db.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v7 02/10] bpf: Add helpers to describe the
- R0:R2 return register pair
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: Yonghong Song <yonghong.song@linux.dev>, sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Fri, 21 Aug 2026 10:53:11 -0700
-In-Reply-To: <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
-References: <20260819055239.3293449-1-yonghong.song@linux.dev>
-	 <20260819055249.3295283-1-yonghong.song@linux.dev>
-	 <20260819061746.0DFE71F00A3A@smtp.kernel.org>
-	 <b6fbcaf1-295f-43de-a794-7fb546fd4785@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-10 
+        bh=1LthjORSPcmpyo5UW7oXGx/EBc/qFcqg4eoh5yX5pMc=;
+        b=DJnfRaO5CNg9tffNcA5O7hhGoPCB2RNvkotTkn00Lh2QKEexUtAukdGhGSPUHmiLmS
+         i0AutyhQ++JG1BSHO0JK5/uaVYdRBKrMON+Dz8vhy7vL1eeUI3TN69tkgJSoy5qbcnAh
+         N9sQguQLrh8/DIvogBaH8WZ+KrcukCbFlryv99Q72Fhcz5LSKbB5IBZ14/IC43dQRDlw
+         mgL6r2xGJ+Ap3NCNojv+zBoGem4FyGecnHs0Ng5pgXLOA1WJGCB3EIeyNvzUwMzBangk
+         u7VwXdIfCTgRgiRsIDlmZl2QrWvcNbhpzedtDW7nz1glhpy5qKC+9Um8n901g0aanQ7u
+         kEyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787335564; x=1787940364;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=1LthjORSPcmpyo5UW7oXGx/EBc/qFcqg4eoh5yX5pMc=;
+        b=oI+FEHjx+J2Yj9K3E0BBs/xiCxUrE8Ze4zq0KVNEV26Vp4sx1dIJKpk0dxh2WE+PGR
+         iKSe0uwrjR9gpb6iMm0HuuWiye7yIyE78aeS9Ny/YS4viTkD5xstRWOW0l+jpyV7zuvT
+         Ht0Hbyjrlh/8wAtcu3ChCr++DOzW0Ohe6AHuFNW1XKq3PoixAv74iE33Dr8AoUTwMcXn
+         DNm8Gqi1wapPUOFJiv0MHrWsPYrERMTCKy5aJkt7PVerE0Z2OjkKEN5ne6pr0esGgT+m
+         KeN0Duq1iBuzT3RS7xCNIUKsjqyBfUh1knnMOT+6u167Qv4iwy8AcOBfny6Io/RpqUjY
+         S1Ww==
+X-Gm-Message-State: AFuF++kQDnYeXKqdpcXFX83Nge9V4xd1AW5ZYDHxR71//iLqBT5UsGrY
+	YE1F7mNj8bEygtYTLwfWIH2tKW8ZF2ibcBRN2isO1jDH4jzY978LqyoacRADYFeh6DPrF9Hl8VX
+	OUslg/bWOK2UvK+Du4FtHWC7qQWXA1UZwgy9kvhhQB/guM8NU+rHz/zQpWLM=
+X-Gm-Gg: AR+sD100eSfGoFZEGFkowBayJI5MWkHKwOms9gD0mKIqpIIOuyL4GB+VW8usrew+jxD
+	YkV0unGFjNQAdYfc4kkqFhkUzQyVNjVsEEuk4EWkGeTlCcY+izSaScCvfCspsSu78CTVLBfh8Sb
+	XYSZqzu6NRBMlHKFAefjK7iXErxMQsvvmsyzIGy3ufHTTOiNBOnfV08mRMmQyLOd3zXlHBbu8E7
+	g7Twce9fWAKG6+UTWTSidUzscf10RMMh2tf47FTxHaMcOoUF40o6gLOFPj9FC/uUtHTWxr8dJTg
+	OCX5JYDbLz7xmQyMEj+1tenSusY7A6DGfcgPSiLji04ryCrnMYrZM4sghJzvVsDgCa22rKJx1xI
+	IfIdp34tZmKhm6el5xWdLmTiljowqRXx7
+X-Received: by 2002:aa7:d58f:0:b0:69f:d9cd:ec41 with SMTP id
+ 4fb4d7f45d1cf-6a5829285c4mr2112a12.6.1787335563218; Fri, 21 Aug 2026 11:06:03
+ -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260821134521.2211943-1-aniketmaurya@google.com> <20260821140140.652491F000E9@smtp.kernel.org>
+In-Reply-To: <20260821140140.652491F000E9@smtp.kernel.org>
+From: "Aniket ." <aniketmaurya@google.com>
+Date: Fri, 21 Aug 2026 23:35:51 +0530
+X-Gm-Features: AcwNN1Vll-2JGB7PneFsCkdYdlfUsx8ee3WY1745-4slYygAtC_iXP2aaVNBdFs
+Message-ID: <CAMmmMt3t5dPVfoZAir-n5mq9MUaa9LshH_29HQGMPmWKtzB5=A@mail.gmail.com>
+Subject: Re: [PATCH v2] PCI/ASPM: Clear L1SS capability when L1 latency is unacceptable
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 2026-08-19 at 08:50 -0700, Yonghong Song wrote:
+> This isn't a bug introduced by this patch, but the ASPM sysfs show and store
+> functions fetch the link_state pointer locklessly and do not check for NULL
+> before dereferencing it.
 
-...
-
-> > > +static int bpf_compute_subprog_ret_regs(struct bpf_verifier_env *env=
-)
-> > > +{
-> > > +	const struct btf *btf =3D env->prog->aux->btf;
-> > > +	const struct btf_type *type;
-> > > +	int subprog;
-> > > +	u32 size;
-> > > +
-> > > +	if (!env->prog->jit_requested || bpf_prog_is_offloaded(env->prog->a=
-ux))
-> > > +		return 0;
-> > > +
-> > > +	/*
-> > > +	 * Skip the main program: its return value is the program's exit co=
-de,
-> > > +	 * read out of R0, so it never uses the register pair. An extension=
- does
-> > > +	 * have a real prototype for subprog 0, but bpf_check_attach_target=
-()
-> > > +	 * refuses to replace a function returning more than 8 bytes.
-> > > +	 */
-> > > +	for (subprog =3D 1; subprog < env->subprog_cnt; subprog++) {
-> > [Severity: High]
-> > Does this code mishandle extension programs (BPF_PROG_TYPE_EXT)?
-> >=20
-> > The comment mentions that bpf_check_attach_target() refuses to replace =
-a
-> > function returning more than 8 bytes. However, for extension programs,
-> > prog->expected_attach_type is 0, so attach_uses_trampoline_retval(0) ev=
-aluates
-> > to false, bypassing the size check.
-> >=20
-> > If an extension program successfully attaches and replaces a subprogram
-> > returning an __int128 (16 bytes), skipping subprog 0 here means ret_reg=
-_pair
-> > won't be set. Could this result in the verifier failing to enforce the
-> > initialization of R2, potentially leaking uninitialized register conten=
-ts to
-> > the caller?
->=20
-> But the comment needs update for this version.
-> =C2=A0=C2=A0=C2=A0 bpf_check_attach_target() -> btf_check_func_type_match=
-()
-
-Fixed while applying.
+This is a different issue and can be fixed separately.
