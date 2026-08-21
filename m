@@ -1,250 +1,220 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC3D43F4B7;
-	Fri, 21 Aug 2026 19:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787341323; cv=none; b=f6PvS6O/p3OW4pKmgq8G6qC+q38AzfUBsI5OowxBBVAor3iWHfH47/RlPx0oK/skPTSKpaoTVYvlKRpB+UPbWWl33W602Bgp9jVb/0MbJ25FEVhVQyI3U0HSoGJuw9p0UdMRJyM39TJSNTpZkOO2WDl+9vAxHHdTovnxDqc9U1o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787341323; c=relaxed/simple;
-	bh=LDotAO2qFNLBTJP+ewkhg+DlqWWHL/K/vUWbC85vctE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KgvaPaEG2ZIO3EK+9/zUoCNFaRBkOBB9ix5iCb4ahcIEkYFR91y4lUuqAp3WOlv/+C1L7C7k1+jfhyaugVnZ5nkG1Upv7TEF6pT+5nF0mlHQY4ozoOLoEZfMoV8GWTb0t8MBVgJWw722qrPiTiLDvOl5SKO8Isxml8fPm1LclEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=SdlZPD72; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA94E282F1F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 20:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787343373; cv=fail; b=SnP9/oEl+5Xxi8wdi3T/2jfYGkQAVwir2TYmI8nVNLR18317aDnG/ZyjkL2S6BT9VKRTqtK33YaSaJlweROPRVsCe4vAn9Lrz60ce2OBff+qJYp1UdfKGUflbdTiJJkXk116Fw3GvPSsmVdSRXo63vSx5sn1/XrvyjGRzKLnbys=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787343373; c=relaxed/simple;
+	bh=VA4pWE36bmdcxQq2c3LWM7wHllEbk9PTx+RQ3SIC/Ig=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WoKBjrjDdGY5pgP1uyUyyob2SojGlqA/c3k4Jshd3H2pgooK+pW99nVlgvJyBJ7hB4xXMnBFhE6NPb6n9XroCW4wRWxCcROEZvbl59qLAe0F0SQ0Lhbg9YeVA4xkn4Ek7V38TDzT+UlaZRfC1wKqELQb6uRz62yJFm8WmC/zLDo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JZacup+O; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="SdlZPD72"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67LIVpWH2387807;
-	Fri, 21 Aug 2026 19:41:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=YUeUuT
-	QZafZ9YDEHPQegVTAX2bLSddDU8Fn7z2tPMA8=; b=SdlZPD72VCOKaadqy4pTNS
-	s5kiK1gq6f1fH52EPivPHfM+RNzc3JeoemOnPZ6c1Yu+jHnrc0q+exFH5Nj6HGLk
-	jsi48C9BLc03yOF3JL3L9VFNPSmFKuruYcaBQU0o7lLg1p5lLoFpzpV+xnBfFkwS
-	3MgfROzsOhkScIrWclvCqPCuMlbY53C6JDjDdK1DYcBEsv/6DckJS5a/T4B5bjFg
-	i8914wWDoTOyvb6f5SFTYxsj0DMUAVd+fTlXjoAo7YCRNifey+PVMnb1nt++jrKF
-	ZJieXFG3k7kMbQBx3kpabnA9FzqxUzZWLoKxg/NIXoh+tg8HF+tTLX1AJlLfMziQ
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4kkhr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 19:41:58 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LJfHs3008701;
-	Fri, 21 Aug 2026 19:41:57 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yxbre-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Aug 2026 19:41:57 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67LJfrbA10420676
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 21 Aug 2026 19:41:53 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C03772004E;
-	Fri, 21 Aug 2026 19:41:53 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5739520040;
-	Fri, 21 Aug 2026 19:41:53 +0000 (GMT)
-Received: from [9.111.132.173] (unknown [9.111.132.173])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 21 Aug 2026 19:41:53 +0000 (GMT)
-Message-ID: <bf5c2515-d908-4b08-8ae8-45c1502df3de@linux.ibm.com>
-Date: Fri, 21 Aug 2026 21:41:53 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JZacup+O"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787343371; x=1818879371;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=VA4pWE36bmdcxQq2c3LWM7wHllEbk9PTx+RQ3SIC/Ig=;
+  b=JZacup+OzBSEru5b6DwM/w473EMsMxg8NEQ6unUfbDMVH4bdInOExPyi
+   jGDcZg4T9daalpK3MyPJ9ib6JP1cgGfKnq/1x/bf8g3ls1gmI749gtXOp
+   /vAhYnqmqzrfVmLXRgkYIeV/Q4T6cQQgMIIbOpMmRJrBacJQX1JX1auIF
+   D9f006qxhuULr+C53RKRlyMTlXSpooc4CPZkAF3Zqt/NEr9V11CZpaRrH
+   Lyf19LYPRnZTU7bMCe2pwi4fQjr2YbTGJvx8fx7usweK6vmWbYF4nUWpJ
+   AIdSkCar3YvFZNAodsKfCipkKjwU7XUfltE3uubeyDgNMwkWtXrJxnlJV
+   A==;
+X-CSE-ConnectionGUID: qevVmG5qQy6Kv1gqSqpkpQ==
+X-CSE-MsgGUID: NIs+jmvwR125jGHhNfPY4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11882"; a="99054908"
+X-IronPort-AV: E=Sophos;i="6.25,235,1779174000"; 
+   d="scan'208";a="99054908"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2026 13:16:10 -0700
+X-CSE-ConnectionGUID: SsPeoiZAS9GDiCNySiA62A==
+X-CSE-MsgGUID: uLUmn6cVQfSYPWscUf+TtQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,235,1779174000"; 
+   d="scan'208";a="289972971"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2026 13:16:10 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 21 Aug 2026 13:16:09 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Fri, 21 Aug 2026 13:16:09 -0700
+Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.34) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 21 Aug 2026 13:16:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aTu/XItxfHxbg5Brajy0RDn/zPBN+AsFu7zfX8SCMJs/gT4/qr86i22DdHkri2a+rfAmV/rB6kIBw9p4bJgVWAH16NANcwgeBfZc5KNITkF9NOsu8JLDM5+WLrn1jnO8X+vfY9AomNjvJgapqLRzRXMD/4DKQIPXQsKhcdfjPx1oFSKVAwak2kbCWCydfio4fOcdYUQIusMCul+8HWW5ph5EGoTVUNXeEn28lMGDz97u+9UZ+zkzL2RJUC3QcFzTJkl1ucIzI1lEckuQNQA/HnwxvRS53qLyACaHoyJYWc2PYQdXF6Zxhxf7/MRE4lm1uEDggV66aSXVn75wHZMQNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uuiqpmwGkhSAqDhubRmw0h2V88kPZJnjkzV5lyjKUoQ=;
+ b=IaLOUhqxkdQ9HZLBAuSqyPyrjDdlOy47cOmonXj3TqYf73iYvtcteIexvzcJBZS8YYMCv9u7Ixxkp9ZP9sXJ4RxMbJCFkmLT/QTlGEV3v/Otr2oLu2nKRzbzeeu4AQKqy7R/ulyid5RQGR3z8agHqOAT0WQNqX4Wvhi3/BZBkzEq5Iswxm+MFJlv8PdkUf+LSPk2PzbijwZmHqxNLtspfcJ7DtC5km+6Djc6n7CWMWNXX+kXeCXg5BacmitZWuCYDdhWlCmCdSPMK7nDN88Wj+Zd3mdMi9nFOBXEraXOZBOdMomyOeDrcnisxbcFEPL6TynsIJ6IFkvTs6EHL11BXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
+ by SAWPR11MB9736.namprd11.prod.outlook.com (2603:10b6:806:4cb::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.10; Fri, 21 Aug
+ 2026 20:16:08 +0000
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::e721:90d7:9214:2d53]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::e721:90d7:9214:2d53%6]) with mapi id 15.21.0339.010; Fri, 21 Aug 2026
+ 20:16:07 +0000
+Date: Fri, 21 Aug 2026 13:16:04 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v4 2/6] cxl/region: Generalize endpoint position mapping
+Message-ID: <aoiyBPLkSZpaip9m@aschofie-mobl2.lan>
+References: <cover.1787255388.git.alison.schofield@intel.com>
+ <1c9218cf46a96937964e217c9172648a322d86c7.1787255388.git.alison.schofield@intel.com>
+ <20260820234309.6507D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260820234309.6507D1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0078.namprd03.prod.outlook.com
+ (2603:10b6:a03:331::23) To DS4PPF0BAC23327.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Jens Remus <jremus@linux.ibm.com>
-Subject: Re: [RFC PATCH v1 25/25] unwind_user/eh_frame: Add prctl() interface
- for (un)registering .eh_frame_hdr sections
-To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-References: <20260818144954.2320378-1-jremus@linux.ibm.com>
- <20260818144954.2320378-26-jremus@linux.ibm.com>
- <20260818151727.1D4C51F000E9@smtp.kernel.org>
-Content-Language: en-US
-Organization: IBM Deutschland Research & Development GmbH
-In-Reply-To: <20260818151727.1D4C51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CpuPtH4D c=1 sm=1 tr=0 ts=6a88aa06 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=VwQbUJbxAAAA:8 a=AirpqK9rLEaivpbpGasA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: djzNX1Og1TZMDnrqsraDecR3x9v8ocSa
-X-Proofpoint-GUID: djzNX1Og1TZMDnrqsraDecR3x9v8ocSa
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDE1NSBTYWx0ZWRfX1OCxrAELi9V1
- VAjNr0NddWpIV9MRaD/Z86vlkSAuN6Q5qYUmEPB7g/p4P1IdHzmoFcBZsVS6nl5DiNAzBMaPtZq
- /9Kzj0wgtSXpQc7Bc+XCVEXyvu5MMvg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDE1NSBTYWx0ZWRfX1TvpOxKhrX3f
- t7V4io5WjZDJml+T3brcBrnaNw43l1SMPZmvRSFxmHB1CRNXcbqN8np1FIixWLBh4OylMmgXImJ
- iVFTze1mqoo/bB0qXSf4Gl31SW2VsLYP8uN6PlxBHqsf0742c+lFWageLyFLpbeQ2QAGrXAoKT/
- tlAm28ExFPTAKjXrurMsi6MqaL/f574IorX89z+Z5eH1yVpS5kawHs5pK35Jg+g68MF7pp3SB4e
- Z5vPsN7yBGYUpT6O+gTT4N3tJj7Z/xGuAPxZl+z/iYKS5iYCNk3Qk3H4KzonnthkJjREeWQ4tC3
- Ro83p43zJ5LL75y0qi17NjCBnBQ4mhYSL0S5v/b1M4cipMsEkOglMJwyWcOcIsPG9d70ZF3+AVV
- 8IbuoSYF/3vw4THtFfdKqWzZoyB5NNhEl0iS+zD/bP9te1LHS69DxJ7kzXRsEd2k9r7kHJmjrHC
- 003THFgtvrC5s8KWk7w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-21_06,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608210155
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|SAWPR11MB9736:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1c1e3396-fe05-4e40-29c6-08deffc108aa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|10067099003|56012099006|11063799006|4143699003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: lyl/cjxnD4yPoxlPOVZtDs8IlOJAfP/aAuHH95zH8JmC7VfLE0zt5X2nQZvYt6FFD0AaMDg8zs9mTAeSs+nN7BjHyxbUwLMa6kG+qymOGXaVpCvN/SSSwSXOm/V1lyVCHtYRe/Ife+UV4Ca0ACLi9IkqULT0OlHZKuPP7BFtXs6AyuzC7KGvk95kJUGaH+UwxHnngVIwEQkceazAMppLuuLNYKyYIL4KlgEgWR6nNuYoO8Uh8jxax7P5xV3Je/igNFqEQcovUJw9QXCjK6bTCEeD/3f8dLkUaQjzbVjAW1Y1UBAnXAuR99pQGMnmHwJ3xdjnX98OtCRrawFTyWgcyMvx3P+OwykJr30+XI1AbmGFMRMWzPJAbQWWP3PiBlJBmnxNHsWqWUTf4kwjRGNvCpdzp14S36M7283Uc6kSNGXTKHsSntpMl+blMDqTQzLox9MNYS7kROw7XHqL15qPZODsB8oICGELwmdV8pUVAJZr3DqHacTjX8GSsfjJO82OrHb9D1C0aGCKlgO1uC12VwEXWGCpsohed7Pq6v291bH1SQNKaa0wqVssRz30OQtbKjbjHByNCw15gpPf3k7iE9LJt9CxryflTrgyK4OdwzE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(10067099003)(56012099006)(11063799006)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?WcPayu+gFvyemPqX1WGRps4RNVD/4KqMz77WHEQ+ZQvQMK2vmYqohIT0Os?=
+ =?iso-8859-1?Q?dU0ef/Ui2vU9+3q3xYbJRWds5Hlj5xtBw5i5hnEuCooZWZ81nybKpOs9Tv?=
+ =?iso-8859-1?Q?Hqqg7JOa8GaDKbi34nE58kmmVH3EPpzo/5vHk0+yc8tVe3gVAORR3l0v3i?=
+ =?iso-8859-1?Q?T8MsNTYbW5iU9ex40E+6b8tNAmiNA6WhA9wFkks9xbTQL6gMCdiwYJs49/?=
+ =?iso-8859-1?Q?EGzU7F7lYzSruZMil67J8MxshJdP5v8yKdYcZQdr/7HdaIm+RHTBpjU34H?=
+ =?iso-8859-1?Q?kENUVCsVpdXXiPkI4SmCj0pAseCov0yZPJsVNY8u2uu6KZt4N7TBAetMMJ?=
+ =?iso-8859-1?Q?apbtezcHjoE+4PoUeyqP8WzwEiGilBAde4Yz4st4HTfEO3xd7wtDiMfWmP?=
+ =?iso-8859-1?Q?wv122i2sQ/+L8aROoqJRgK4sobOQ+a9mb39xcS0mlQ8Cp6mbKGFRJT2L58?=
+ =?iso-8859-1?Q?ZIsIJw2DFlCpVW586CelSOsMxM+pIc4Fi3tWJe3Cahe7y5VCaRr10iYRTE?=
+ =?iso-8859-1?Q?TwdhTLaqAtB6PZQd7WhqkZV0loXHoRx9A5el5H0FuhtRB4oUlB930bahS2?=
+ =?iso-8859-1?Q?TDoYAYxgILCm3B9CXcyRex1I+wicG42PjTp104yf57C/SjFlHAy5HB5/o7?=
+ =?iso-8859-1?Q?Kj3+Ey0dZfozz4rZqOhxCfWGgxu3jEotzhhNWmvgChvnn9fkvxX3OGo5tJ?=
+ =?iso-8859-1?Q?9+rUY6J17Wcdv+Uf+Lm+o6nc52WsHrzCw3h8S7x7ug0dOlPe+//D/XC3fP?=
+ =?iso-8859-1?Q?gxc/e0icd+GKNxm0e+9OAYF9xUgNsdnhIoCjtpNcFa5bmi33KzREaVn/0X?=
+ =?iso-8859-1?Q?Ek+SHaEdh1jaEgNNHy69ZvNNgmizv8xN3TOI7oz5Pm+aPXp+GB5x3v3lMX?=
+ =?iso-8859-1?Q?TnlMQXmyRK0+eP1ntm3vrfyt6otQpbLuW1N4bOcE5+557GP2x6EGiHXask?=
+ =?iso-8859-1?Q?QHbwYXl6jRDymSQYJ9ZRI/5kTaFhwefl2X2q/FDbhqhD30b60/S/dD5CKm?=
+ =?iso-8859-1?Q?EKVzZe9/Wp/bFhskK8MEgi9efe6Vdzsa2uAVhQT5UpFsfZub4bMh/iEKuO?=
+ =?iso-8859-1?Q?DBihUjUEHDkhKchoLzbA5LKqZ3RZkpAK895b/5Xbja6QVWVdhZ95+jiCTl?=
+ =?iso-8859-1?Q?xH3o6tinhvFtPAzX01IhUMmHS7Nf20RZiP1EL9/G4hW7IBO+u2BayI6pum?=
+ =?iso-8859-1?Q?0IENj8YOkaLewSERG4XRaM1oMTZdAWlLwCbG3SDNd3PtnLPP5jZVIk+wns?=
+ =?iso-8859-1?Q?VyumaHYbFvMnbo69LEuX18U4/cFvWGfVAYnXkqOQoz9QsUdvUgKuUt8lXM?=
+ =?iso-8859-1?Q?sjuKNDKMCeyCqfFZRvL7dCj4Wv6dlVJqos+3nRxqNLzsFzurQFqVWB4EU0?=
+ =?iso-8859-1?Q?axLpQP1Ftkj0LnD7zV2I4bXLipXqJypagU/uPkQUAZxhbS9LXsQ3unepJk?=
+ =?iso-8859-1?Q?6YuVctL2HltNEjqTnD85vls75NN1G5p1QUm6XuKcpBSFgN2teRvH3e1Nnb?=
+ =?iso-8859-1?Q?3eL8AhVBAQzx/kzYynlp4Ud2AzyCb2DnkidEmjBM9QryBmL/glGcoTgHNd?=
+ =?iso-8859-1?Q?RBU8v27P4pCwlXcNNkbSpE+yFHC6yLlzWUAPXlOiQG/uefHp0jb1A+BG/S?=
+ =?iso-8859-1?Q?bR6NCCXGKnnKFh2k/btGB8iqej1DBZhD28/c4+SCBx26ltd2QPdhV7Cxlr?=
+ =?iso-8859-1?Q?9DPCUyQPA0wgD8Tmj/8k+OAcXP5AYL7FHef8v/Xx/i01hEvy7RGzwCqrMc?=
+ =?iso-8859-1?Q?2Ud3SqfsTdDm4z2Sue3uQ75sk8Fr4C5e7EXEnqZ1uMHGFs3onBwd2sWhpu?=
+ =?iso-8859-1?Q?SJnew5+AACcJZnxkHiZtyKEQsftwAcE=3D?=
+X-Exchange-RoutingPolicyChecked: cuxGKJKIitgZamQDjv6y8H4iiPcPNNXXnz4BVbpuBlPgAdlKHvb8XO0cckhMD8EJNc1iZdhGrkXwu6Sgqnk0ohknK1zm1YpRkef9k824Ki7DttcfHx9PE8iKdYhve0ENW2Rby+CAAaLRlgcWPDNBum+kicNe93hPZhoUT1L7a9K+0yHghj4yZU7zD7ey5BdcmIztlhanPGixpU/Zt0hcugMR4RPdhsD+/y11CffruwxJjz7OAhyVk4PAoBwSYmklQdQwbix5lgl/r67RLiAfX0BsZ1HAqT3H5hnRkCkxRyP5plyI7S3y+snj0Nvz5mghUXXMmbc9nT7VddWqbnvlFA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1c1e3396-fe05-4e40-29c6-08deffc108aa
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 20:16:07.5717
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gf0mTRscBU5CplUR+mRo2BUpBd01pm3h1AsadewcKUrCFvV1HrRa61Oix+rItwsxJqIOOSv7ilwmT2oD6lO9g/aVw6/q4l9MzEJdAzkZVJ0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR11MB9736
+X-OriginatorOrg: intel.com
 
-On 8/18/2026 5:17 PM, sashiko-bot@kernel.org wrote:
-> This patch adds two new prctl options to allow dynamic linkers to register
-> and unregister .eh_frame_hdr sections with the kernel. It introduces the
-> eh_frame_setup structure to pass section bounds from userspace and adds the
-> corresponding handlers.
-
->> diff --git a/kernel/unwind/eh_frame.c b/kernel/unwind/eh_frame.c
-
->> +int eh_frame_register(struct eh_frame_setup __user *user_data, __kernel_size_t size)
->> +{
->> +	struct eh_frame_setup data;
->> +	unsigned long eh_frame_hdr_end, text_end;
->> +
->> +	if (!user_data && !size)
->> +		return -EINVAL;
->> +
->> +	if (size != sizeof(data))
->> +		return -EINVAL;
+On Thu, Aug 20, 2026 at 11:43:08PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> [Severity: Medium]
-> Could this strict size check prevent future UAPI extensions from being handled
-> properly by older kernels?
-> 
-> If a newer userspace binary passes a legitimately extended eh_frame_setup
-> struct to an older kernel, it looks like it will be rejected with -EINVAL.
-> 
-> Would it be better to use copy_struct_from_user() here to safely handle
-> zero-padded extensions?
+> Pre-existing issues:
+> - [High] Use-After-Free read of device structure in find_pos_and_gran error path.
+> --
 
-Steven, IIRC you got similar review feedback on your stacktrace syscall
-and rejected it.  Why wouldn't we copy sizeof(data) and check that any
-additional size - sizeof(data) bytes of user data are zero?
+The fix for this issue is in the 7.3 CXL Pull Request.
+I expect the next version of this patchset will be based on 7.3-rc1 so
+this complaint will go away.
+
+https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/commit/?h=next&id=15da704b732332cc1e8f121f624e5e6c05124c5d
+
 
 > 
->> +
->> +	if (copy_from_user(&data, user_data, sizeof(data)))
->> +		return -EFAULT;
+> --- Patch [2]: [PATCH v4 2/6] cxl/region: Generalize endpoint position mapping ---
+> commit 74f53df9f58a0339cb5f29038f2e514904e34cf5
+> Author: Alison Schofield <alison.schofield@intel.com>
 > 
+> cxl/region: Generalize endpoint position mapping
+> 
+> This commit alters the endpoint position calculation to support
+> mixed-granularity regions. It weights each decoder's contribution by its
+> relative granularity instead of assuming a uniform granularity across the
+> interleave hierarchy.
+> 
+> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > index 3b640c9ba5a08..4f367feaf6c84 100644
+> > --- a/drivers/cxl/core/region.c
+> > +++ b/drivers/cxl/core/region.c
 > [ ... ]
+> > @@ -1929,9 +1934,10 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
+> >  		return rc;
+> >  	}
+> >  	cxlsd = to_cxl_switch_decoder(dev);
+> > -	*ways = cxlsd->cxld.interleave_ways;
+> > +	ways = cxlsd->cxld.interleave_ways;
+> > +	*gran = cxlsd->cxld.interleave_granularity;
+> >  
+> > -	for (int i = 0; i < *ways; i++) {
+> > +	for (int i = 0; i < ways; i++) {
+> >  		if (cxlsd->target[i] == port->parent_dport) {
+> >  			*pos = i;
+> >  			rc = 0;
 > 
->> +int eh_frame_unregister(struct eh_frame_setup __user *user_data, __kernel_size_t size)
->> +{
->> +	struct eh_frame_setup data;
->> +
->> +	if (!user_data && !size)
->> +		return -EINVAL;
->> +
->> +	if (size != sizeof(data))
->> +		return -EINVAL;
+> [Severity: High]
+> This is a pre-existing issue, but could the error handling path just after
+> this loop trigger a use-after-free?
 > 
-> [Severity: Medium]
-> As with eh_frame_register(), does this strict size comparison break forward
-> compatibility for future struct extensions?
-
-Likewise.
-
+> Looking at find_pos_and_gran(), if the loop completes without finding a
+> match, rc remains -ENXIO. Immediately after the loop, put_device(dev) is
+> called, and then dev_err() formats an error message using cxlsd:
 > 
->> +
->> +	if (copy_from_user(&data, user_data, sizeof(data)))
->> +		return -EFAULT;
->> +
->> +	/* Unregister only uses eh_frame_hdr_start */
->> +	if (data.eh_frame_hdr_size || data.text_start || data.text_size)
->> +		return -EINVAL;
->> +
->> +	return eh_frame_remove_section(data.eh_frame_hdr_start);
+> 	put_device(dev);
 > 
-> [Severity: Medium]
-> Does this code silently truncate the 64-bit parameter on 32-bit platforms,
-> potentially causing the wrong section to be unregistered?
+> 	if (rc)
+> 		dev_err(port->uport_dev,
+> 			"failed to find %s:%s in target list of %s\n",
+> 			dev_name(&port->dev),
+> 			dev_name(port->parent_dport->dport_dev),
+> 			dev_name(&cxlsd->cxld.dev));
 > 
-> The data.eh_frame_hdr_start parameter is a __u64, but it is passed directly
-> into eh_frame_remove_section() which takes an unsigned long. If userspace
-> provides an out-of-bounds 64-bit value on a 32-bit system, it appears it
-> would be implicitly truncated to a valid 32-bit address rather than being
-> rejected.
-
-Steven, do you have any suggestion?
-
+> Since cxlsd is derived from dev, does calling put_device() before dev_err()
+> release the structure prematurely and cause a read of freed memory?
 > 
-> Looking at the underlying implementation of eh_frame_remove_section() that is
-> exposed by this new prctl, is there a race condition in
-> __eh_frame_remove_section() that could lead to a double-free?
-
-This should be resolved by the fixes to "[RFC PATCH v1 08/25] unwind_user/
-eh_frame: Store .eh_frame_hdr section data in per-mm maple tree".
-
-> 
-> kernel/unwind/eh_frame.c:__eh_frame_remove_section() {
->     ...
->     if (!mtree_erase(&mm->eh_frame_mt, sec->text_start)) {
->         dbg_sec("mtree_erase failed: text=%lx\n", sec->text_start);
->         return -EINVAL;
->     }
->     
->     call_srcu(&eh_frame_srcu, &sec->rcu, eh_frame_free_srcu);
->     ...
-> }
-> 
-> [Severity: Critical]
-> If a thread unregisters the section and a third thread immediately registers
-> a new section at the exact same address, would mtree_erase() erase and return
-> the new section instead?
-> 
-> Because the code evaluates the return value simply as non-NULL, it seems it
-> would proceed to call call_srcu() on the old section again, potentially
-> causing a double-free and SRCU list corruption.
-
-Likewise fixed in other patch.
-
-> 
-> Also, regarding the interaction with the unwinder fast path in eh_frame_find():
-> 
-> kernel/unwind/eh_frame.c:eh_frame_find() {
->     ...
->     if (ret && (ret != -ENOENT && ret != -EOPNOTSUPP)) {
->         dbg_sec("removing bad .eh_frame[_hdr] section\n");
->         if (eh_frame_remove_section(sec->eh_frame_hdr_start))
->     ...
-> }
-> 
-> [Severity: Critical]
-> Can this sequence cause a hard deadlock or NMI-safety violation?
-> 
-> Stack unwinding is frequently invoked from NMI or IRQ contexts. If
-> eh_frame_find() encounters a parsing error, it unconditionally calls
-> eh_frame_remove_section(). This attempts to acquire the mtree_lock spinlock
-> and invokes call_srcu(), both of which are forbidden in NMI/IRQ contexts.
-
-Deferred unwinding of user space does not run in NMI/IRQ context.
-
-Thanks and regards,
-Jens
--- 
-Jens Remus
-Linux on Z Development (D3303)
-jremus@de.ibm.com / jremus@linux.ibm.com
-
-IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
-IBM Data Privacy Statement: https://www.ibm.com/privacy/
-
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/cover.1787255388.git.alison.schofield@intel.com?part=2
