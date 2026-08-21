@@ -1,213 +1,193 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062A5493650
-	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 21:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DD6493650
+	for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 21:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787349394; cv=none; b=i7GfHCRbOg6O80PwUp2qumc42Ldqmp6d/8CMi93CggB5CpzLeZEIf1opJxQNp3TBJTY1xRC9aEEYvh3Tp/3pVESD+3u/IjYXgq3iiDiI+IFZjRJTfm3mn9lYiWojByShbAkhdhMsI8rMwXz4L1EgoBvkJUMbEmh8ki+XwXIIPUI=
+	t=1787349520; cv=none; b=Ic9IpQK2ul7EMroKLuI0+zctVgFXhgVk/OiINqgJx6dK31Or2itgWVZxvVfYIxKM5pbZ1DB4LL+i/ZNSG3mQM7G214TNYVItuUQIHDKJLXrqjB9e0DsR5MtGmMPtbEV77R8rDVeTrsQ13AZHeEv1IAlriiqTBzBD5VSOrzCXSNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787349394; c=relaxed/simple;
-	bh=0hI8p30v9uZIBHSWh+cNU6cN1Eu/rmshYLiKb8Zkue4=;
+	s=arc-20240116; t=1787349520; c=relaxed/simple;
+	bh=bWAs7O+b95mQ2iU1fvI4SpkPXJ7HBqi8EqgAfuFGTSM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=cRehYV6xwYW5sSJBRAtEfJJpTW4atdPwuG+SLw1EkUp+4WwOfLMcXknhV5Iz9k3Mp+8lsDNFRX5zpBpqE3+1s0zD8obv3M5ahBYX6YncibuZ0Rg2OkGHhJ/QfvizXyR7rCekmz7WK/l5sGW5/gLqzVWwprza+LNhl9bp+zad7tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=byDiJOMj; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type:Content-Disposition; b=NqRBFvYlQl70kNkDaHhR7zweUJjeV6dAUWAxMOKFf5PGaqfSQBzsAMNaf9vy+G72T+uMHQv5x/r70G0u/qx6Lbk8zrrSR8AqvLenZtij84lgRvPC3SS0z4EG+Co9oJDh3fC18guliziiz8lVJIWTkQ5RHhe4xNNT0q7T8RRkH98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eraJLTrV; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="byDiJOMj"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eraJLTrV"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787349391;
+	s=mimecast20190719; t=1787349518;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=9cvRNnnz6diZeXE/mz5qkWeRVCtiThgc7rreCUFwDFU=;
-	b=byDiJOMjFingM+fdRYLEkPXk6ptzCC5qUSOmoLfbuC6U1K8C3Be0jjHnJC8js6ylVIc/hL
-	XDJIUHkgBWg7JfrBVhq5o3asXsp4IoE2gWJmzhsQhZNoP26fT8+6zskGdo7cPBeAgPsQOe
-	hsJ8rjkV52LHEP2NmpzMHejSPFFGd+Q=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=x5oCvJjHG+KHWQpbW0YfBmACK+/TCpr7/YzvSYcluQY=;
+	b=eraJLTrVwDZZaIXNs46T4q0dkEyiPfupNGq85kcZhkvF+zJaxJMezqS2mfFkgrhFJC6xu0
+	LXqmi+U0bQJNpyJM2OwvfqSN7NUeOMXmIlB56rJwiIYn2N2gOaALhDzUyQGUZTUEeHI+V5
+	1IPYclyanF4JRxpT4boiuI6It3d+GPo=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-WIyy7ReTMxOnc9620joBgw-1; Fri, 21 Aug 2026 17:56:30 -0400
-X-MC-Unique: WIyy7ReTMxOnc9620joBgw-1
-X-Mimecast-MFC-AGG-ID: WIyy7ReTMxOnc9620joBgw_1787349390
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8efad04d884so25187286d6.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 14:56:30 -0700 (PDT)
+ us-mta-259-_QjOjjMCOpW1Xc07DdMKZA-1; Fri, 21 Aug 2026 17:58:12 -0400
+X-MC-Unique: _QjOjjMCOpW1Xc07DdMKZA-1
+X-Mimecast-MFC-AGG-ID: _QjOjjMCOpW1Xc07DdMKZA_1787349492
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92e8004d60eso254514485a.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 14:58:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787349390; x=1787954190;
+        d=1e100.net; s=20251104; t=1787349492; x=1787954292;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=9cvRNnnz6diZeXE/mz5qkWeRVCtiThgc7rreCUFwDFU=;
-        b=F1OmwpUpGZxxsBuzGVR8a3MLiDwCx986yiA9k5MhqioPjdDFIwBlqYOKV04fi/WEBK
-         WwOaKCpROMYkafZrQ5rGlqzZsn8ahofV6dsv1E05+N4r/h1ep2yG/nccjmLi+5QgQ/JS
-         DYSkzS6IX0RM9OGUGcEu7wBynzxSGiQcywCWEXwr/HGdhYrhnlqnRvatUCD0uRGkeqJD
-         6XAIwBKp6/JGskkILaaNrM6H1RZxxz8ogExoP0HgRD55NpRIO5iuE7PFeqNYmNdWyurI
-         Ht5kT6H/XKlX6kW98/n5N/Atq1MdCSGFvYYR93QjlcScoPV9b1nKysedueUavRU/HTPH
-         y6pQ==
-X-Gm-Message-State: AFuF++ljnxGiMJDbZ8OJnqXNJDqVRRUvnhdksyrbrUVGrmzFw2xKR6jc
-	cR2ODv9pHIzCiR0qxFcOtv4ag7W+dTXKNTzEdj6waOKCe+RYFYMtn7PWB+3zlDGdi6OrxpbNHTn
-	oyY8siTAKWkVXsvQCA0P4EJsOb/Ze1g7dOGglqog/nT7LA5E3CWmRhiEAjHpXrpsj5Xbampskwh
-	1D64BV703jxFf4/LF4AETK8Axtz9NfacYvPUJeZ4QCK1tShHfoN2bHFQ==
-X-Gm-Gg: AR+sD12vxxLoAZo3vfv0LZAFp6NV0juel5uqVGO3djiesrJVZArPUUI1NB1npTBUH41
-	QtOUnNMqOKW1u1/xprwjVUhqRxtTKehd+awXAYji5g0ERBl1zpyqDbL+kKSpZyfELSG+Qi2yOh/
-	ff2wS9wPmasY1fqcIzxhwTtMa1/mAyWB78ibpiZzd86wfOCVt9wThe/0UCpgW52FCvefGYlBpwc
-	041g6sSN+5dHYoTppOhR6dBDsWpce2bug9uP9CKFHYaRVl0TO+/rsLnSS7TRgYRw+YjnBixZIBl
-	KbfFo0fQsy02oX5EFR3lnu8F0+7AIA10m83W1V4nkoFiC1UDZ7bAz6qGqKn1jCJmmLhSHedIxQW
-	Gt9LdVtgIK5rk7aQr/sOPlzHMKuP03EmL3S//nO7w8AFf
-X-Received: by 2002:a05:6214:3284:b0:8ec:cdb2:5e11 with SMTP id 6a1803df08f44-90c80944085mr100181546d6.2.1787349389728;
-        Fri, 21 Aug 2026 14:56:29 -0700 (PDT)
-X-Received: by 2002:a05:6214:3284:b0:8ec:cdb2:5e11 with SMTP id 6a1803df08f44-90c80944085mr100181106d6.2.1787349389232;
-        Fri, 21 Aug 2026 14:56:29 -0700 (PDT)
+        bh=x5oCvJjHG+KHWQpbW0YfBmACK+/TCpr7/YzvSYcluQY=;
+        b=pCd1yca1rRH3ur9BQlV/3IMyLi5BTWTDmkVSE+zYejfSBpsrY3LcKe5f2/dw98+MG5
+         YJvQRUAoyzXx2FLb95+DoJUHTR1U1gLYYvEhYXek16rRwMZUJjC/0XQehx6/i2Gr+0gA
+         0M+1I5AgELMK0aqEiq15YFyWeWM0/BWqXbUUYjo0beHtyh2Sbq2qWq/ZMJvl1KjiOWAN
+         FSmXG5EXOVFx7bbj+57RmtrvWX6U5PDuLGlXhVdqhUZe5Sdn7ja2trPtcMtIT0TuMEGo
+         xOaFAVNAq7mIQDSh3ae6207mrX8lV9iEHGzFMdi2X3abQHavKf0s3f0w3GYZidiE3x7U
+         5KWw==
+X-Gm-Message-State: AFuF++m1YfV//QN6JG2gW39AcepC9FVb4SHof6B/Ta/60uIFCeXhiBes
+	9Avx+u416RfoBq17Ssx/h27gDcYHEAAbmSuaFQv2JOhTZ9XD0JDqlhDedWNao4RrgMZFo/yNurV
+	hnekiX7oR1SR36AfuUrbDnLxBbcymKCgU8zkw5eO8xc3ZeuPGGrja5LjqgvzFpDCyqH+dQBtFtb
+	24ybhUZT3qmXnY2Tjf5JJsqaWkysKd3YQ/Yb1Qw1SYbIQgR+nc6Bx+ng==
+X-Gm-Gg: AR+sD12ve8awOw3Rm3ZHuwnL6Um049QFJ5F8euwgkeJ5IpyBzuYjuiOdrYRS2dZOqMv
+	168OFjkL2+zrMbfH3xwD0TKR0QLYeUQNpLz8xZGn48DtYfO2nZdfGZEp5Fh3nE8nt+T/R9WsF0p
+	ZSv8TD2EV7hDl7YbZLfHYvPokL79stOtfquR8bq2/iIfIo2KLCQAaw6v/GTwKSw8JlzPx4Vp4yx
+	fWg3Y3pX95rps998RcyjiapeDwIMEXIBYxkCcJWDyuA8/cnv234VTu0xqnYb6tWqzpTCDvxsMxx
+	4apY+vJCPR8x8oGqpOW5/KrGInRKImUTC9cTtZtoQ2tzlwJd8rfMx65hllOsxzBXbW/j1WggxaQ
+	nT2/xuARHkdJScShVrMBbmmCvkKNkn3qcaGBtnAZTU0v+
+X-Received: by 2002:a05:620a:2414:10b0:934:b6ba:15d5 with SMTP id af79cd13be357-937395a788emr693040185a.39.1787349492283;
+        Fri, 21 Aug 2026 14:58:12 -0700 (PDT)
+X-Received: by 2002:a05:620a:2414:10b0:934:b6ba:15d5 with SMTP id af79cd13be357-937395a788emr693037485a.39.1787349491650;
+        Fri, 21 Aug 2026 14:58:11 -0700 (PDT)
 Received: from localhost (pool-100-17-17-231.bstnma.fios.verizon.net. [100.17.17.231])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90c5f2a35basm72011986d6.35.2026.08.21.14.56.28
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93749abeaffsm7948385a.9.2026.08.21.14.58.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 14:56:28 -0700 (PDT)
-Date: Fri, 21 Aug 2026 17:56:27 -0400
+        Fri, 21 Aug 2026 14:58:10 -0700 (PDT)
+Date: Fri, 21 Aug 2026 17:58:10 -0400
 From: Eric Chanudet <echanude@redhat.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
-Subject: Re: [PATCH 05/11] mm/cma: charge cma allocation to memcg per area
- counters
-Message-ID: <aojA8A_BEOJi5-kl@echanude-thinkpadx1carbongen13.rmtusma.csb>
+Subject: Re: [PATCH 06/11] memcg: register per-area usage counters in cgroupfs
+Message-ID: <aojJo0Lft4IhoEwz@echanude-thinkpadx1carbongen13.rmtusma.csb>
 References: <20260821-cma-memcg-regions-v1-0-d21b165b8440@redhat.com>
- <20260821-cma-memcg-regions-v1-5-d21b165b8440@redhat.com>
- <20260821192815.319901F000E9@smtp.kernel.org>
+ <20260821-cma-memcg-regions-v1-6-d21b165b8440@redhat.com>
+ <20260821191710.1C3711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260821192815.319901F000E9@smtp.kernel.org>
+In-Reply-To: <20260821191710.1C3711F000E9@smtp.kernel.org>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: EuQkgIHdX61AoRBVxnib722ctCh0eym7Rpj6x_FMa-c_1787349390
+X-Mimecast-MFC-PROC-ID: bWZiN4yJbhX6RMDe3tNEn83hsza4kQZ_skfkYy8FBdA_1787349492
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 21, 2026 at 07:28:14PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Double memcg charging for HugeTLB CMA allocations causing `VM_BUG_ON_FOLIO` panics.
-> - [High] Dynamic reconfiguration of `memory_cma_accounting` leaks charges and crashes the buddy allocator.
-> - [Low] trace_cma_alloc_finish() logs a successful error code when the allocation fails due to memcg charging.
+On Fri, Aug 21, 2026 at 07:17:09PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] CMA pages and memcg charges will leak and trigger a `bad_page()` BUG if `memory_cma_accounting` is disabled at runtime via remount.
+> - [Medium] Potential 32-bit integer overflow when calculating CMA memory usage in `memory_cma_current_show`.
 > --
 > 
-> --- Patch [5]: [PATCH 05/11] mm/cma: charge cma allocation to memcg per area counters ---
-> commit 2d35f7be0d6e01fd43ca7628f3674cf1cec9ac0b
+> --- Patch [6]: [PATCH 06/11] memcg: register per-area usage counters in cgroupfs ---
+> commit 7a745023362168cdad80f7d03d5d5225a5b34c22
 > Author: Eric Chanudet <echanude@redhat.com>
 > 
-> mm/cma: charge cma allocation to memcg per area counters
->     
-> This commit hooks mem_cgroup_charge_cma() and mem_cgroup_uncharge_cma()
-> into the CMA allocation and release paths. It charges pages to the
-> current task's cgroup upon successful allocation, and handles uncharging
-> and releasing pages if the allocation limit is reached.
+> memcg: register per-area usage counters in cgroupfs
 > 
-> > diff --git a/mm/cma.c b/mm/cma.c
-> > index 03f98f6d45a54..03eb3acbd3c75 100644
-> > --- a/mm/cma.c
-> > +++ b/mm/cma.c
-> > @@ -904,6 +904,12 @@ static struct page *__cma_alloc_frozen(struct cma *cma,
-> >  		cma_debug_show_areas(cma);
-> >  	}
-> >  
-> > +	if (page && mem_cgroup_charge_cma(page, count, cma)) {
+> Expose memory.cma.<area>.{current,max} files under each non-root cgroup
+> when cgroupfs memory_cma_accounting option is enabled.
+> memory.cma.<area>.current reports the cgroup's CMA usage for that area.
+> memory.cma.<area>.max is a read-write limit (default: max).
 > 
-> [Severity: Critical]
-> Will this cause a panic for HugeTLB pages backed by CMA?
-> 
-> HugeTLB utilizes CMA for its pool. When the pool is expanded,
-> cma_alloc_frozen_compound() invokes this path, which blindly charges the
-> pages and populates folio->memcg_data.
-> 
-> Later, when a user process faults on the HugeTLB page, alloc_hugetlb_folio()
-> distributes the page to the user and charges it again by calling
-> mem_cgroup_charge_hugetlb(). This eventually invokes commit_charge(), which
-> has this check:
-> 
-> mm/memcontrol.c:commit_charge() {
->     ...
->     VM_BUG_ON_FOLIO(folio_memcg_charged(folio), folio);
->     folio->memcg_data = (unsigned long)objcg;
->     ...
-> }
-> 
-> Since folio->memcg_data was already set during the CMA allocation, won't this
-> trigger the VM_BUG_ON_FOLIO panic?
-> 
-
-Indeed, and charging at allocation just won't work for hugepages in CMA.
-I'm not sure how to reconcile it. Maybe just leave it accounted by
-hugetlb cgroup and memcg as it is until the regular CMA is figured out?
-
-> > +		free_contig_frozen_range(page_to_pfn(page), count);
-> > +		cma_clear_bitmap(cma, &cma->ranges[r], page_to_pfn(page), count);
-> > +		page = NULL;
-> > +	}
-> > +
-> >  	pr_debug("%s(): returned %p\n", __func__, page);
-> >  	trace_cma_alloc_finish(name, page ? page_to_pfn(page) : 0,
-> >  			       page, count, align, ret);
-> 
-> [Severity: Low]
-> Does this tracepoint log a success status when charging fails?
-> 
-> If mem_cgroup_charge_cma() fails, page is set to NULL, but the local variable
-> ret is not updated. Since ret was likely set to 0 by a successful
-> cma_range_alloc() earlier, trace_cma_alloc_finish() will receive ret = 0.
-> 
-> Should ret be updated to an error code like -ENOMEM before the tracepoint
-> executes?
-
-Yes.
-
+> > diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+> > index 3dfc13f31a0c0..39871a7a08a8d 100644
+> > --- a/Documentation/admin-guide/cgroup-v2.rst
+> > +++ b/Documentation/admin-guide/cgroup-v2.rst
 > 
 > [ ... ]
 > 
-> > @@ -997,6 +1003,7 @@ static void __cma_release_frozen(struct cma *cma, struct cma_memrange *cmr,
+> > @@ -1928,6 +1928,21 @@ The following nested keys are defined.
+> >  	This setting has no effect if zswap is disabled, and swapping
+> >  	is allowed unless memory.swap.max is set to 0.
 > >  
-> >  	pr_debug("%s(page %p, count %lu)\n", __func__, (void *)pages, count);
-> >  
-> > +	mem_cgroup_uncharge_cma(pages, count, cma);
+> > +  memory.cma.<area>.current
+> > +        A read-only single value file which exists on non-root cgroups. <area>
+> > +        is the CMA area name (e.g. "reserved" for the default DMA CMA area).
+> > +
+> > +        The total amount of CMA memory currently charged to the cgroup for the
+> > +        given CMA area. Only accounted when memory_cma_accounting is enabled.
 > 
 > [Severity: High]
-> Can this leak charges and crash the buddy allocator if CMA accounting is
-> dynamically reconfigured?
+> What happens if memory_cma_accounting is disabled at runtime via remount?
 > 
-> If the system is booted or mounted with memory_cma_accounting, CMA pages
-> are charged and folio->memcg_data is set. If the cgroup v2 filesystem is
-> later remounted without memory_cma_accounting, mem_cgroup_uncharge_cma()
-> will skip the uncharge because of this check:
+> If an administrator mounts cgroupv2 with memory_cma_accounting enabled,
+> workloads allocate CMA memory, and then the administrator remounts without
+> the option, CGRP_ROOT_MEMORY_CMA_ACCOUNTING is cleared dynamically in
+> kernel/cgroup/cgroup.c:apply_cgroup_root_flags().
 > 
-> mm/memcontrol.c:mem_cgroup_uncharge_cma() {
->     if (mem_cgroup_disabled() || !memcg_accounts_cma())
->         return;
->     ...
-> }
+> When workloads later free their CMA memory, will mem_cgroup_uncharge_cma()
+> return early because memcg_accounts_cma() is false? This would bypass the
+> memcg uncharge while folio->memcg_data is still set.
 > 
-> When these pages are returned to the buddy allocator, they will still have
-> a populated memcg_data field. The buddy allocator detects this in
-> free_pages_prepare() and throws a bad page state:
-> 
-> mm/page_alloc.c:check_free_page_bad() {
->     ...
->     if (unlikely(page->memcg_data))
->         bad_reason = "page still charged to cgroup";
->     ...
-> }
-> 
-> Should the uncharge path rely on the object's state (checking if
-> folio->memcg_data is non-NULL) rather than the global configuration flag?
+> Could this cause the pages to leak and trigger a bad_page BUG trace when
+> they hit the buddy allocator?
 > 
 
-Same as in Patch 4.
+Same as Patch 4.
 
+> > +
+> > +  memory.cma.<area>.max
+> > +        A read-write single value file which exists on non-root cgroups. The
+> > +        default is "max".
+> 
+> [ ... ]
+> 
+> > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> > index 8eca00d30fc50..f28d610a59ce7 100644
+> > --- a/mm/memcontrol.c
+> > +++ b/mm/memcontrol.c
+> 
+> [ ... ]
+> 
+> > @@ -6182,3 +6182,92 @@ void mem_cgroup_show_protected_memory(struct mem_cgroup *memcg)
+> >  		K(atomic_long_read(&memcg->memory.children_min_usage)),
+> >  		K(atomic_long_read(&memcg->memory.children_low_usage)));
+> >  }
+> > +
+> > +#ifdef CONFIG_CMA
+> > +static int memory_cma_current_show(struct seq_file *m, void *v)
+> > +{
+> > +	struct mem_cgroup *memcg = mem_cgroup_from_seq(m);
+> > +	int idx = seq_cft(m)->private;
+> > +	unsigned long cur = page_counter_read(&memcg->cma_counters[idx]);
+> > +
+> > +	seq_printf(m, "%lu\n", cur * PAGE_SIZE);
+> 
+> [Severity: Medium]
+> Could this calculation overflow on 32-bit architectures?
+> 
+> Both cur and PAGE_SIZE are 32-bit unsigned longs on 32-bit systems. If the
+> CMA area usage exceeds 4GB, the multiplication will wrap around before being
+> passed to seq_printf().
+> 
+> Should this value be cast to u64 before multiplying, similar to how it is
+> handled in seq_puts_memcg_tunable()?
+> 
+
+Yes, it be u64.
+
+> > +
+> > +	return 0;
+> > +}
+> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260821-cma-memcg-regions-v1-0-d21b165b8440@redhat.com?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260821-cma-memcg-regions-v1-0-d21b165b8440@redhat.com?part=6
 > 
 
 -- 
