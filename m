@@ -1,182 +1,184 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from LO3P265CU004.outbound.protection.outlook.com (mail-uksouthazon11020106.outbound.protection.outlook.com [52.101.196.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD5537DE84
-	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 20:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B0B2E2840
+	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 20:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.196.106
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787430715; cv=pass; b=myFM4oHqHAL42YchXnJh1DHIndh+wPe12TSaWTy0Fbxn3bbWmNMMTDcTvFOE1ndVK+aVaT11hXLygFdNtA5I9DnAYNk5k4SVHBRMje4yd24hkPGJM15tsHi5MiCdFP7vtr/A3BrlOP/BHPufqjjeFky058Xmwz7fQWoY78o918k=
+	t=1787431639; cv=fail; b=YDhBbFzSqP/IaR2f9a0Ix0poDrRzc8Ciyq7/f6XzrXEBDyp+rc+3OmUwzaxDVvHtGin4L/wxCv0nZWHleROKHmXITFPCm8s/cQwaS3ShQKskZhOrKxbjvCkN9EVxgcXG7oZ+EzRSaPu8rBLq+ZE5DiKjY6MC+b1MA0CEi/Kxalc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787430715; c=relaxed/simple;
-	bh=Gd5wPNxKM3Xn7HAteOv/M+uLlkzSW832aI+Bs3TOIXg=;
-	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=ALusuG4Qk6GyXkuWcBwB4+I+ot1TtHiEJvdnCHM8T4ilLtEgwmjRUCPS7doN9OBQfkcDFM3h64kzvQ9OkVO8WkPYzppto7K+O3f4LWi0gdmcppsTq9gx4by41J2/RTafdG2GdfP2nQvjhHRSQOC3nXlNsLIL2adstCzTHthjpVg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=GYYNzmk5; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="GYYNzmk5"
-ARC-Seal: i=1; a=rsa-sha256; t=1787430712; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=FNHBvD5qis5b7M9+3Yej8L0YaL9QWU0ZvXNQ6nf7uEz1/CkMdXuxF9P0L26Owi26kZ2+ZsYQXoYX8iEA03LhbU+XpCJO1sATl+0p6DTRynZ3JLVAuewn6jeJQMqJhxqK9hkfsvuKhVFsnH1I1jacmwS22LFvMZ1+S9AYNQxZA1E=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1787430712; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=8MprMeXo4N7sgrkHBT5SYGyTPC3NdBhXHg7U8DzoUL0=; 
-	b=i97MixhVUM266+s0m0QO0TDxXWoaqN1spiy1TC/OtkZ/VbhEal3GQxkm6PLqPeKnVOEM4j4Pfod6T0peooED9zPIiul/HX+6hfgXgPeZPqrOkdVu3iySLd4SHJKsyB170SnCNo1Om4aU0TxsYlGl8sN2p84lsBH6vbKo+uqn3Lw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787430712;
-	s=zmail2048; d=rong.moe; i=i@rong.moe;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
-	bh=8MprMeXo4N7sgrkHBT5SYGyTPC3NdBhXHg7U8DzoUL0=;
-	b=GYYNzmk5+AGQ0Ha3wZCrQJ2VFfr046PACi/j+25rovgfTUstzGmGob3ueCEjLc5i
-	vdkP8GWv6O41J8mIv/A2x36/mtWNVNEBk2IBeG8ndlA8x6vdbFqvV1D7NLECbxox//E
-	VuRBkcgocne2sMwUInq8aaANhW/wdbp49Plxbs6q0hNOaVr/lZVYkhVtG0H9bpOJ5X0
-	O7D1vObj0amaESUIvjgBdvnQKa9eiQNsKfwDyzrEMHudY9ND4GXfpcVMBaIYSn4EFhA
-	8i1irw0FnAX5zYLAGe8ZaHHR+aS+LWmMfVsKc6GJcj7k+KAuL6vno2hF/Z+FE2Kb1aO
-	80H12Ondbg==
-Received: by mx.zohomail.com with SMTPS id 1787430708831565.9469100220783;
-	Sat, 22 Aug 2026 13:31:48 -0700 (PDT)
-Message-ID: <434de30b4a6975a245263c72af6f1c94b994ba7e.camel@rong.moe>
-Subject: Re: [PATCH v5 10/12] platform/x86: ideapad-laptop: Decouple
- hardware & classdev brightness for keyboard backlight
-From: Rong Zhang <i@rong.moe>
-To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, linux-leds@vger.kernel.org
-In-Reply-To: <20260821172741.010471F00A3D@smtp.kernel.org>
-References: <20260821-leds-trigger-hw-changed-v5-0-3e00d6c4a936@rong.moe>
-		 <20260821-leds-trigger-hw-changed-v5-10-3e00d6c4a936@rong.moe>
-		 <20260821172741.010471F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 23 Aug 2026 04:26:13 +0800
+	s=arc-20240116; t=1787431639; c=relaxed/simple;
+	bh=P6cVNJhCEeLtzhSlMW/+GlKfVlueWVG1/q6zbjJjG4s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=tiVqRVdLf5N4XfdkNCIPxocAp+dLCymypYUl2PYX6gEqE3WgTmqpEcoJtak7hBm+6BGEbce3Q4XuJujbgw/eSJGJX+YZ8qg5ef+PS7VntsdOIirtVipQ3pssDtJuvIcECY2bUsQI0Z4oStJPaTI1PFZng+cq10id8YWzvlFvEKQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.196.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CeVEdlBFuCM+IwiZXXTIuUSAB8xi+Kg2n+ZP/Gfx2JYXc74VUlX7mzoQq7tgbhvpNV+2/ZquDxJpGrpCFOWe9qzAprenHRRYFMNG/AbywVOv3MgBi/bgI6gVdMIBh3sNqBYFFpfWpLBLjbIcUVER8dP5Be+gOg1HqPyWMXw5Q4Ncmxag2pdMkhW3cLbprLRbn7WJSqfZNlWg33m+6sSkvZYa75UgibCmjSr/u1/x5YDEQKE7EZAoXpcfTtfy7VF9yITdnyND2oKgnxbYXkU66el7ivERs/rUmbrl/GcLS3PuKr26+Lu/0ojwjB1Obv61uF7opDdl2hFlPAIenIbZVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=Hb35nuyfQ5r0KDssPJyPANuRMzg/GJTVlltpI7HWxjY=;
+ b=h0n4oSYDsLfHJRexLDKNNp7yY3IUhjP9Yv3wEjFpYNZbqWJpMSAPMliWi5LZZwLDwe3GxCmT/qFnV82Drz8P0JHVzAqHvrmPeCYooFs6mNNnEcqSR0cp0dfvOeaPmJTEzNCBJ1Z5sGt5qc+4+ViH4MGInsg/L5Xy/EhGBjr1KIKiAgmpT0vvDDvkLb4MqLw8qk3w6XtVPjF43FhWZPNJwpLpey/T6T9WaOVthRx5Skt/os3r5FDUqe1Oc/AxbMbQc9VUtV+Z6R33oZmLrsyjoAu37esXcy1m1ge4iM6KV0hCtMZet736q5hRwWh0sNww/QBbPJK6Prcr7FEaQos8zA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
+ by LO3P123MB3225.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:b6::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sat, 22 Aug
+ 2026 20:47:14 +0000
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0339.010; Sat, 22 Aug 2026
+ 20:47:13 +0000
+Date: Sat, 22 Aug 2026 16:47:12 -0400
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: sashiko-reviews@lists.linux.dev, namhyung@kernel.org, acme@kernel.org, 
+	irogers@google.com
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH perf-tools-next v4 4/4] perf tests: Add shell test for
+ kernel symbol beautifier
+Message-ID: <7rw7wkivh5dqm6npbvvokvypqd6ueer7vqscpvx3dktujg7eh4@hfz7vgbrygkp>
+References: <20260821204930.679027-1-atomlin@atomlin.com>
+ <20260821204930.679027-5-atomlin@atomlin.com>
+ <20260821210155.E243F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260821210155.E243F1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: LO4P265CA0087.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2bd::18) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:400:183::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Evolution 3.56.2-10+b1 
-X-ZohoMailClient: External
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO3P123MB3225:EE_
+X-MS-Office365-Filtering-Correlation-Id: 59aeaa07-d943-4780-da90-08df008e8b84
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|3023799007|6133799003|10067099003|56012099006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	9QXZpEkqzr/zqr4J9CiSC/xVIiZVCjPKRNd3DZvZCpu9ZkrZPOQmDJAs4wBTNxpHNGYAau3t1UvL4bWChHNy06KX40Gu2C00z7qmahuLN8/mUjZ2/3YahoHbHgmPve9fIfM2tGeJE+rK3yFv7ac6UkvtQFQT0SGOJmzeqdiwJLby3jwIoNdMGiXeyPgP0xYg/BsCAy+VBXezpXPy6eG++bfaWP0/MWW6H+Ayfu/0cG6qgxR4xh9apSezA1q62GrNeelsPaWUx34xCHvLHyahjbey3HOx9Y9JZRTOlB54nLSXNQLSTyf+pPXYZOO9CGd5vYxmxDTrX8OAL8/Ocul7nuroIOnDvg3pV3ThYCTB5l/UpUvkaUUO9hrEemHf0lxg9AwASCxdqethGJyiRLM4XI6hHjevDHc1xbOeeiyGWeVc08XnoTmd4o9HqVLsbs6CHta9W5ZedzKUnVqKpURTRo6eOrybp0mooUyZfpybPj9ea5eVoolpkR7kt5/ZaNgxaGVOgxdF1exl6babq6ch4DBCzeLIu0WjnJ5Hc0KGIeOSeqpwjdeLrjKbnUpsX53g1ueFVFEwUaT4QhY35oF1Fok5xiH4pQZD2NNoeeQv1+JPR8UN3badu6Kmwz7XWMlQ4ulttoqlBQZtaZHJuerpSfEW+QnczfJCl9xw9fYtw68=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(3023799007)(6133799003)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?L0oxV2lDcTc5MTVIV1Awd1ZDdC9XQU1DVXJrRlFFdng4TWFDY1JlU3ZBWUUy?=
+ =?utf-8?B?MHlHNW1NZUVGSndWR05Wb0pKdnRKNFdDd0dBbzRoeFhIcEJyQThTY3dhRUx1?=
+ =?utf-8?B?QlNWcyt2elFnNjE0ekdJeXNXemVYTUt0d1Y4NkpvUFFCTDVkOEd2Z25Xcksr?=
+ =?utf-8?B?UUhXbGRVVlRJZ0NobkNKNFhudGU3RUdOYk10bDF6a0pBRWc0ZUZPWWxGdzFF?=
+ =?utf-8?B?SWhrVSszbnkxUUtZOVROVFpUSzVCWXFOTG5RcU1sZFhRK3I4bkJ1Wm1ySzdS?=
+ =?utf-8?B?WjhRSHZsZjZNdUtxTlVHdG1Ecit3M0ZWUGtEcWptOXdkTEhvS2hTdEJST1Zi?=
+ =?utf-8?B?bytoL2F2N28xcGdRektEbFBsRFVIemR2ckFQQlZrbkI2YVo0aFdQbHp1eFBS?=
+ =?utf-8?B?TjU1MGg0b0QrWjU2bFc0LzdlRStMRUIwM1JIZ01vdmViZHU3NUx6c2tDM1dM?=
+ =?utf-8?B?Nnlzc2pNR1VPVWI5ZmMwWU1BNnM2a25rZkJYUkJ4TUx3cHVQUkFPMC83RWY2?=
+ =?utf-8?B?ZStDSVhiTmdSOU1PUUIyYWNQQTdnK3FqT1FnRlhmQUVmbDEzMWpHdjRvTWpI?=
+ =?utf-8?B?ZmlRdUZlOHIyS2ZnSXRHaTlYYlg3a0JTZ3JaZUZiMVE3dWsxbE5SdXdHVXBH?=
+ =?utf-8?B?Zm9NQW9JUm9RNDZVTURlNG9xSUtXZnNWRnJidlA3cjhIeUZCMENOa0xpVnhQ?=
+ =?utf-8?B?QUsxbEo0ZDMxeW5SY1V3eENXcVRPR003cnN1aGZaL0xObWhwaXp2aDV1VVc4?=
+ =?utf-8?B?MXk5VXpQL1k1ZkpacEM0R25mdUZJdTRSZnlsd0tVOElZUzUrZkVJa1I3MkxM?=
+ =?utf-8?B?c0IwdTlETXFTTWxhZWIrb2duNnN6Sk9COGJ6Y214OFRFZjY0QllxYXVvVUFC?=
+ =?utf-8?B?S0lYNmp1anZpOGVtQXNPRFZEMVo3L2doVDRNWGZJUVlnZGo1OVJGMVN3djQ1?=
+ =?utf-8?B?ZWQ1bm9telBLYW9iY05SUkpTMEF4OWpPT2FhVEFtblFYOTFEMFVRbTRsTEVS?=
+ =?utf-8?B?VlBUeXFrYzFUU1V4T2JuWS8zRjh6aFNOaDM3SGdMUEVKOEY4bkpVaWRiNVcw?=
+ =?utf-8?B?ZUgwUFpLWmJiWURUaXB2VWN4aWJ2bjA0KzFXdzVSRFhHOXgzVTlXKzhGS1ht?=
+ =?utf-8?B?Z3VTRjdDeHFVR3pGTWtoTFpFUldJMjZPUFlxTlkzQkxnWlpzaHcyMlV2NHBm?=
+ =?utf-8?B?MGJ5eGRuRS9wQW90ZmhqQU52ODRGMm1lNHhWQjNPUXd0OVo4ODJlUGtDRXNm?=
+ =?utf-8?B?WHloclQwRHYrMjFuM0dEVmdTdktoNDltUTVuc1R4Rk5LOERJeFBFMWpod3RW?=
+ =?utf-8?B?VkU4RUtTVG4xS2xseldHcVFlUE9Ca0xtZWRxZmd5V25CaUdxUHkzTFJna0I1?=
+ =?utf-8?B?NVFrMi94YmJNdVFHTmh1NzFHU01NYzU3N08wWXlzUE04WURXNFVIaHZuSlBt?=
+ =?utf-8?B?TnpFTVB4Z3ZmY0toSzRFUDIxMXdOdHZIbms5M0x3alhEWTJ2SmhOSy91WFpD?=
+ =?utf-8?B?eTVuRG40RVpUSjkvQmZUT05pcTBwTXd1WEVzSG5xVUJ6Q0hTbGtSbkNjeHR2?=
+ =?utf-8?B?N3FtaGU1MjRiQm5pcnV2RjNRREF4NmFPaWlGekJHVjRvVkpQNmJBZHlDQ1A3?=
+ =?utf-8?B?Q0daY0VZVUlSQVZtVFZ4NUIvWFZGZElraEFBU3p1UndYaFZ6L1FlUVlCVElv?=
+ =?utf-8?B?YmNaSnZFTmRyaWZyRWE2aUk1c1hrdUQ2K241Y2F0VG44Z21xN0J4RlREdFcr?=
+ =?utf-8?B?NVNJRUNLaUl3d0dZUVFWVEMxVGxmUHlPTzJnVnRmd3M3SzNiQjJhbnZVNGt3?=
+ =?utf-8?B?RllGM2JuczBNTU02eXpIenUvRFYyam5xR0U1R1FJUFJMd2lOaE9kNi9td2hx?=
+ =?utf-8?B?dW5jMng1QnUyRXJDdmc0QUpzVm5PajBJWjd5UmdLUjJxekpIT2FrcUM3R215?=
+ =?utf-8?B?bWRxQVVDOTY0bC9wV3JlSkdaalhGMm14emQxY3VhL3c0Tk1zeTh0Uzg5YnBF?=
+ =?utf-8?B?ZHk2WnlMVmd3UlVuc1lwejUvT3dEY1EySmxWbnNyS3V3eVpQK0hteDNNU2RW?=
+ =?utf-8?B?cGxkMERvS0oxdjQzNHpDdXNoM2ZoZ0dWUmd1V0lqdnQ4eTZubEg4d2pwdFB0?=
+ =?utf-8?B?OEd3M3hNK1JXR1p0ZTBSTmUrc2VlWk9NbEJreXZMUlZYMU1UM3NYNnJVVU1a?=
+ =?utf-8?B?dzdNeEdFMHNXU3Jud3FVMXlXcVEwSGhZc01SdmE0MXNhVExvbndON0dHUnN0?=
+ =?utf-8?B?MFpHT01mTUhIbFRvb05xZnBHOTZBMHp1SXRWWHh4RzFwWVlDVHBqL1I3UkJG?=
+ =?utf-8?Q?QwP0aA+kxmaKWGR/t2?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59aeaa07-d943-4780-da90-08df008e8b84
+X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 20:47:13.7570
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: L+QMpd4Cf9akg1nHVxsmwaYOzxWhFOcfE+0u8mN8iBoMMgZk/A5tWaIn2CSw3OsYUFMhKG/tZRySH+v/LdYT6Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO3P123MB3225
 
-Hi all,
-
-On Fri, 2026-08-21 at 17:27 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] The conversion of `last_hw_brightness` to an `atomic_t` fails to=
- prevent a TOCTOU (Time-Of-Check to Time-Of-Use) race condition between ACP=
-I notifications and sysfs brightness writes, violating core kernel locking =
-rules.
-
-Please see my reply to Sashiko's review to PATCH 12.
-
-Thanks,
-Rong
-
-> --
->=20
-> --- Patch [10]: [PATCH v5 10/12] platform/x86: ideapad-laptop: Decouple h=
-ardware & classdev brightness for keyboard backlight ---
-> commit b73007a6498db545468f511c09a496e09dfcac31
-> Author: Rong Zhang <i@rong.moe>
->=20
-> platform/x86: ideapad-laptop: Decouple hardware & classdev brightness for=
- keyboard backlight
->=20
-> This commit decouples hardware brightness from LED classdev brightness fo=
-r
-> the keyboard backlight. It also converts last_hw_brightness into an atomi=
-c_t
-> to help prevent potential race conditions.
->=20
-> > diff --git a/drivers/platform/x86/lenovo/ideapad-laptop.c b/drivers/pla=
-tform/x86/lenovo/ideapad-laptop.c
-> > --- a/drivers/platform/x86/lenovo/ideapad-laptop.c
-> > +++ b/drivers/platform/x86/lenovo/ideapad-laptop.c
+On Fri, Aug 21, 2026 at 09:01:55PM +0000, sashiko-bot@kernel.org wrote:
+> --- Patch [4]: [PATCH perf-tools-next v4 4/4] perf tests: Add shell test for kernel symbol beautifier ---
+> commit c9c4a1b0dcd918dc4702b41032200c74d4363a15
+> Author: Aaron Tomlin <atomlin@atomlin.com>
+> 
+> perf tests: Add shell test for kernel symbol beautifier
+> 
+> This commit adds a dedicated shell test script to verify that perf trace
+> properly symbolises kernel virtual addresses and function pointers using
+> both the default kallsyms beautifier and BTF type routing.
+> 
+> > diff --git a/tools/perf/tests/shell/trace_ksym_beautifier.sh b/tools/perf/tests/shell/trace_ksym_beautifier.sh
+> > new file mode 100755
+> > index 0000000000000..c030b03e2b662
+> > --- /dev/null
+> > +++ b/tools/perf/tests/shell/trace_ksym_beautifier.sh
+> > @@ -0,0 +1,43 @@
 > [ ... ]
-> > @@ -1637,32 +1676,37 @@ static enum led_brightness ideapad_kbd_bl_led_c=
-dev_brightness_get(struct led_cla
-> >  	return ideapad_kbd_bl_brightness_get(priv);
-> >  }
-> > =20
-> > -static int ideapad_kbd_bl_brightness_set(struct ideapad_private *priv,=
- unsigned int brightness)
-> > +static int ideapad_kbd_bl_hw_brightness_set(struct ideapad_private *pr=
-iv, int hw_brightness)
-> >  {
-> [ ... ]
-> >  	if (err)
-> >  		return err;
-> > =20
-> > -	priv->kbd_bl.last_brightness =3D brightness;
-> > +	atomic_set(&priv->kbd_bl.last_hw_brightness, hw_brightness);
-> > =20
-> >  	return 0;
-> >  }
-> [ ... ]
-> > @@ -1673,26 +1717,29 @@ static int ideapad_kbd_bl_led_cdev_brightness_s=
-et(struct led_classdev *led_cdev,
-> > =20
-> >  static void ideapad_kbd_bl_notify(struct ideapad_private *priv)
-> >  {
-> > -	int brightness;
-> > +	int hw_brightness, brightness, last_hw_brightness;
-> > =20
-> >  	if (!priv->kbd_bl.initialized)
-> >  		return;
-> > =20
-> > -	brightness =3D ideapad_kbd_bl_brightness_get(priv);
-> > -	if (brightness < 0)
-> > +	hw_brightness =3D ideapad_kbd_bl_hw_brightness_get(priv);
-> > +	if (hw_brightness < 0)
-> >  		return;
-> > =20
-> > -	if (brightness =3D=3D priv->kbd_bl.last_brightness)
-> > -		return;
-> > +	brightness =3D ideapad_kbd_bl_brightness_parse(priv, hw_brightness);
-> > +	if (brightness < 0)
-> > +		return; /* Reject insane values early. */
-> > =20
-> > -	priv->kbd_bl.last_brightness =3D brightness;
-> > +	last_hw_brightness =3D atomic_xchg(&priv->kbd_bl.last_hw_brightness, =
-hw_brightness);
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does converting last_hw_brightness to a=
-n
-> atomic_t fully prevent a time-of-check to time-of-use race condition here=
-?
->=20
-> Since the hardware read and the atomic_xchg() are separate steps, could
-> the following sequence occur?
->=20
-> CPU1 in ideapad_kbd_bl_notify():
->     hw_brightness =3D ideapad_kbd_bl_hw_brightness_get(priv);
->=20
-> CPU2 in ideapad_kbd_bl_hw_brightness_set() via concurrent sysfs write:
->     exec_kblc(priv->adev->handle, value);
->     atomic_set(&priv->kbd_bl.last_hw_brightness, hw_brightness);
->=20
-> CPU1 resumes in ideapad_kbd_bl_notify():
->     last_hw_brightness =3D atomic_xchg(&priv->kbd_bl.last_hw_brightness, =
-hw_brightness);
->=20
-> In this scenario, wouldn't CPU1 overwrite the software cache with a stale
-> hardware state, causing it to become permanently desynchronized from the
-> actual hardware?
->=20
-> Although follow-up patches in this series introduce a notif_mutex, does
-> the sysfs write path ever acquire this mutex to serialize these updates
-> properly?
->=20
-> > +	if (hw_brightness =3D=3D last_hw_brightness)
-> > +		return;
-> > =20
-> >  	led_classdev_notify_brightness_hw_changed(&priv->kbd_bl.led, brightne=
-ss);
-> >  }
+> > +test_ksym_kallsyms() {
+> > +  echo "Testing perf trace kernel symbol beautifier (default kallsyms)"
+> > +  output="$(perf trace -e kmem:kmalloc --max-events=1 2>&1)"
+> 
+> [Severity: Medium]
+> Could this wait indefinitely on a completely quiescent system?
+> 
+> Because it waits system-wide for the kmem:kmalloc event without a timeout
+> or a deterministic workload to trigger it, it might stall the test suite
+> if the event takes too long to fire.
+
+Fair. I will propose: 'perf trace -e kmem:kmalloc --max-events=1 -- true 2>&1'.
+
+> > +test_ksym_btf() {
+> > +  echo "Testing perf trace kernel symbol beautifier (BTF)"
+> > +  if [ ! -f /sys/kernel/btf/vmlinux ]; then
+> > +    echo "Skipping BTF test due to missing vmlinux BTF"
+> > +    return
+> > +  fi
+> > +
+> > +  output="$(perf trace -e csd:csd_function_entry --force-btf --max-events=1 2>&1)"
+> 
+> [Severity: Medium]
+> Will this test fail erroneously on uniprocessor (UP) kernels?
+> 
+> The csd:csd_function_entry tracepoint is defined in kernel/smp.c, which is
+> only available when CONFIG_SMP is enabled. On a UP kernel, perf trace will
+> fail with an unknown tracepoint error, which the script would parse as a
+> symbolization failure.
+> 
+> [Severity: Medium]
+> Additionally, can this cause an indefinite hang on idle SMP systems?
+> 
+> The csd:csd_function_entry event relies on SMP cross-calls (IPIs). On an
+> idle or isolated test VM, this event might not occur organically for
+> extended periods, potentially causing perf trace to block forever without
+> a timeout or a triggering workload.
+
+Acknowledged. Instead: 'perf trace -e timer:hrtimer_start --force-btf --max-events=1 -- sleep 0.01 2>&1'
+
+Kind regards,
+-- 
+Aaron Tomlin
