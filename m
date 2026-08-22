@@ -1,141 +1,208 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out203-205-221-205.mail.qq.com (out203-205-221-205.mail.qq.com [203.205.221.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E473C3F5D;
-	Sat, 22 Aug 2026 13:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A57217659
+	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 14:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787405477; cv=none; b=GCkazGpPWx+hvIaWAiQMOYnPIdxYOJBCAt0hDJJkjSJ70NLtDhbj9fRe0m5Sz/pjRJ3BL1kmoiwPo2U4QJ3txsAcW9dzTwNbMAciadK48d0l3CJA9VLgOR49T/+YHl2iEdmjyf5Dd+1ZxT3Az3VGLTEjMH2ie795g/Tts+wA4SE=
+	t=1787407545; cv=none; b=TZEO+s1Fq4gr+6swjMrMTn5Swiv8UD45YmPM6setGQvbQ0zBlckz4fh8kuHdYp3TYsJGyoteQyVda1zL49UE0Hx9wBcpyA0Tf71peGt8cufdFXIv/RaVmvk/+Z1RtWUe9t5Zdo01dmzWFRhqZKo5UQKAbXT489iubHqN/ihIBuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787405477; c=relaxed/simple;
-	bh=k+EdF9W8FT6uEL8cHTJYqoVPdYZgo///iFdWp6PMzwU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GjodWqwuwps60/EZ56FZQ+8DUyA89O6d3H0UIA6zxJMLZwVaIqFX5yd8XT2R/+xcL+gnuaDE7/xIslX+17DvwV9+XhFHgOjiKkqb/G8IwSyDJQrJpmHgkWaB7GoYpU6uFZ0THpiGkfA/or3R9M61GdG6kvJFi3EWm95tXZivbik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lJ3qq31D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787407545; c=relaxed/simple;
+	bh=KGiCOZS8kERx8kfMf60v2mw/RupajdLO8c2xUpyJGl4=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version; b=cUv5OAw9jTv4Gt4XNq7otY3YzdLBj2OzlLfzHKY0BXuIu0+YIPa+39fl5t/SiNPLrn5Qk9wJ5u/ewBJeGHuPTzXUHddD3dihBjZfjOJYO9hKsEtyb2k7KrrnhSg8BzPeafbBoUksgoHZr9troCwSMo+cFSlXq2ElE2cehNxV6eM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=U817WLZM; arc=none smtp.client-ip=203.205.221.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJ3qq31D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4001F000E9;
-	Sat, 22 Aug 2026 13:31:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787405475;
-	bh=S2DuH4LkYbaqUVT/6CF+JD0DdMCMGyHDRttcKAoUA48=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lJ3qq31DvMKP7tg6UljDAmE/XKBqeb11a3Uh2uZ7liAxzpRN66UjTw5T3tJ8oIbER
-	 lPdcuyAv6K/JipiFExdBQC9soKfvDlTV++oe2EFm0tXyhyYqc5c1jtnA3KcnkUE/mc
-	 cDCGXPDiolQFfS+J+KEUtR+nUJoXY+l+L2fEJTtRcLhZoGqmdk+D7n4W2nqFHKItov
-	 d/tXFbPlcJipiqWDkrLWczVOlZ5yMwXUbepcijSn5WVLPQl5UscXzCKARuTm1Q2f7X
-	 Y45wIptw4eaRjYG+G0DjY0ft7s9wTjv0IfsEfciCyla55jycIi3aVW02HZZRwaPRxH
-	 5MSAgWznU/u0w==
-Date: Sat, 22 Aug 2026 16:31:09 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 11/18] PCI/P2PDMA: Derive peer-to-peer routing from
- ACS control bits
-Message-ID: <20260822133109.GG66924@unreal>
-References: <20260821-fix-p2p-acs-v4-0-v4-0-94426b96de73@nvidia.com>
- <20260821-fix-p2p-acs-v4-0-v4-11-94426b96de73@nvidia.com>
- <20260821195404.5A4901F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="U817WLZM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1787407531; bh=ayWFH8lg+cV+7MtbfXcuspaQjvqArQfxMK8dBwUoI+g=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=U817WLZMuY3eKZwiZ5FWi4O5OKmmmYaAvbisqfR/Z+FOAPpaSpZOUG0cbKo7Gsszw
+	 iTzQoxxbEnYRvoke50jyhsJp+5Ozmw5Oo+GLx23Xf8Zbsqmb3qhqD3JunP2x4p5Snx
+	 AUtZ9uCXeXi7wZKiQoFBMD0+epVHqSdJIPwu4xBw=
+Received: from lxu-ped-host.. ([111.198.231.89])
+	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+	id 15BA18B1; Sat, 22 Aug 2026 22:05:27 +0800
+X-QQ-mid: xmsmtpt1787407527teaasgipo
+Message-ID: <tencent_5F7DC370E96643AEA458177FB76E86C8F305@qq.com>
+X-QQ-XMAILINFO: ND6iFS8+YfQb6EKkgoFEmBQi39Q1RkOdnCgUJLgnQXULb6hfVcoKv4kiWHaVVE
+	 aljn+o5n+z3FTcykek1BAycmHENPv1AhnOZkzpZ/c9lGTaQmpQySlh/yo1xivvnMGNQrcqM6Yo0S
+	 DCLZ5vkxejwLjvj6FOIjlgUT/16fXSjY4Hw4apCPdijhVNaX636EnqNEpL3qOugeXBqn+EqXO8uv
+	 Lac8+mzDN9rLbjwN9GZmJb09rmRgWVQ8N6/R3ikMUdIuUmBT7muWocpfc4urxx+n2uvj+UTNqt4H
+	 W/7IRIFIOcEUtyqvvEf7+KDm/K8qm2187sbtWpm2GxJx5yuPlLntELwV48mf77Ve0V44uq6Bl6Ws
+	 Ww0hSSkixFAJkobbKwaq+hqCAT84AgR15I7mN6wqxx5bss1NptncY6O3U0xX2YOZXhmIsS8YUVLE
+	 gwEFB5JmUsAwvegvUTlSvDQ8IvigVcDLikNGyVC8Tu+66x9/nUDL/Oaquzbb0TCtSHZvcMOHmgm4
+	 fVxOy5oB9UXD5vfBDrADDPFFGWgTVzcXeKjbSvBuCO5+/bgH375l8okXcd9YyQF73EwJozoOc76X
+	 K34/pFJpSKlcjQsofcoCyRYKPBZ0y9TXQpBfT0hQQgOsPsncfcali6b/fkMkx1phv/Bpc/Sz+p40
+	 nsAoYxvXUvtQs2fN7LBSqDj7i1LKhJZuORPaLdiPTlcz1xsXWxyv0tLSbt3BQBwQsqI2+szVmsbD
+	 voaizJNBrgsnMlwQf3btr4DMiFa83yg46zFuJTuwu5AUKbYwk56wYUDeBLxVJLxu5QNbegS75y0B
+	 tkVgSq3g8oGmQfT2nJmdGm6oarSPEUr9hxIp/wUOHXefDeYD1Am7/r014mE7Mfxp+HjUsEuP1pqC
+	 ARljrcfMaTxs1eJYbOJZPagcjPqx+EjyfqQG6Yj1w8LOl6Rozx1eDH8DtxBY+GGDwNM745fSfTj8
+	 OUvfihQw6gJdbyTuoKFs0jASNZKRm0LNEixcFfU/EDS+JakmccKFG7zx8VrZzUVZVuYzA3wEm8zU
+	 gqbzS7p9xdY0u6Bn0ELuThmZyI1vGJ8qrKx6BSQncjCkrzzgWtWxoDyv7wX9USKYcqAAtZA0SYzB
+	 hY0n7bOczg3ky34U1KyUXq7Eji+gRpQIx4xPAauzg5x4qBW2TloMo1qSgX0g==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+From: Edward Adam Davis <eadavis@qq.com>
+To: eadavis@qq.com
+Cc: gregkh@linuxfoundation.org,
+	linux-hwmon@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	me@jackdoan.com,
+	savicaleksa83@gmail.com,
+	syzkaller-bugs@googlegroups.com
+Subject: [PATCH v5] hwmon: (aquacomputer_d5next) valid the data size before reading the sensor data
+Date: Sat, 22 Aug 2026 22:05:28 +0800
+X-OQ-MSGID: <20260822140527.91597-2-eadavis@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <tencent_6A66F77626CA5371C36D2968E3AEC4409705@qq.com>
+References: <tencent_6A66F77626CA5371C36D2968E3AEC4409705@qq.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260821195404.5A4901F000E9@smtp.kernel.org>
 
-On Fri, Aug 21, 2026 at 07:54:03PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ACS Egress Control (EC) is incorrectly bypassed for Completion TLPs, violating the PCIe specification and allowing unworkable P2P DMA paths to be mapped as direct.
-> --
-> 
-> --- Patch [11]: [PATCH v4 11/18] PCI/P2PDMA: Derive peer-to-peer routing from ACS control bits ---
-> commit e4c8e3c20c328ff7022188129cc2873b1613420b
-> Author: Leon Romanovsky <leon@kernel.org>
-> 
-> PCI/P2PDMA: Derive peer-to-peer routing from ACS control bits
-> 
-> This commit modifies the P2PDMA ACS redirection check to separate the logic
-> for Request and Completion TLPs. It evaluates Request Redirect for client
-> requests and Completion Redirect for provider read completions.
-> 
-> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-> > index a364008bbf504..1eda7b2135d70 100644
-> > --- a/drivers/pci/p2pdma.c
-> > +++ b/drivers/pci/p2pdma.c
-> 
-> [ ... ]
-> 
-> > @@ -536,26 +538,35 @@ static struct pci_dev *find_parent_pci_dev(struct device *dev)
-> >  	return NULL;
-> >  }
-> >  
-> > -/*
-> > - * Check if a PCI bridge has its ACS redirection bits set to redirect P2P
-> > - * TLPs upstream via ACS. Returns 1 if the packets will be redirected
-> > - * upstream, 0 otherwise.
-> > - */
-> > -static int pci_bridge_has_acs_redir(struct pci_dev *pdev)
-> > +enum pci_acs_p2pdma_state {
-> > +	PCI_ACS_P2PDMA_DIRECT,
-> > +	PCI_ACS_P2PDMA_REDIRECT,
-> > +};
-> > +
-> > +enum pci_acs_p2pdma_tlp {
-> > +	PCI_ACS_P2PDMA_TLP_REQUEST,
-> > +	PCI_ACS_P2PDMA_TLP_COMPLETION,
-> > +};
-> > +
-> > +static enum pci_acs_p2pdma_state
-> > +pci_acs_p2pdma_state(struct pci_dev *pdev, enum pci_acs_p2pdma_tlp tlp)
-> >  {
-> >  	int pos;
-> >  	u16 ctrl;
-> >  
-> >  	pos = pdev->acs_cap;
-> >  	if (!pos)
-> > -		return 0;
-> > +		return PCI_ACS_P2PDMA_DIRECT;
-> >  
-> > -	pci_read_config_word(pdev, pos + PCI_ACS_CTRL, &ctrl);
-> > +	if (pci_read_config_word(pdev, pos + PCI_ACS_CTRL, &ctrl))
-> > +		return PCI_ACS_P2PDMA_REDIRECT;
-> >  
-> > -	if (ctrl & (PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_EC))
-> > -		return 1;
-> > +	if (tlp == PCI_ACS_P2PDMA_TLP_COMPLETION)
-> > +		return ctrl & PCI_ACS_CR ? PCI_ACS_P2PDMA_REDIRECT :
-> > +					   PCI_ACS_P2PDMA_DIRECT;
-> 
-> [Severity: High]
-> According to PCIe Base Specification 6.12.4, ACS Egress Control applies to
-> all TLPs, including both Requests and Completions.
+The user-forged sensor data is only 65 bytes long; however, aqc_raw_event()
+fails to handle cases where the sensor data length is too small when reading
+the data, resulting in [1] during the read process.
 
-No, it is wrong.
-"PCIe 7.0 explicitly states in §6.12.1.1 and §6.12.1.2: “Completions are never affected
-by ACS P2P Egress Control.” Section 6.12.3 says Completion routing is determined exclusively
-by Completion Redirect. The EC Control bit description in §7.7.12.3 also refers only
-to peer-to-peer Requests."
+Add a data size check, if the size is less than that required for the
+specific data item(includes: Physical/Virtual temperature sensor, Flow
+sensor, Fan speed and related, etc.) to be read, abort the sensor data
+read operation.
 
+[1]
+BUG: KASAN: slab-out-of-bounds in aqc_raw_event+0x213e/0x25d0 drivers/hwmon/aquacomputer_d5next.c:1327
+Read of size 2 at addr ffff888108aba257 by task swapper/1/0
+Call Trace:
+ get_unaligned_be16 include/linux/unaligned.h:48 [inline]
+ aqc_raw_event drivers/hwmon/aquacomputer_d5next.c:1345 [inline]
+ aqc_raw_event+0x213e/0x25d0 drivers/hwmon/aquacomputer_d5next.c:1327
+ __hid_input_report.constprop.0+0x319/0x470 drivers/hid/hid-core.c:2168
+ hid_irq_in+0x55d/0x710 drivers/hid/usbhid/hid-core.c:287
+ __usb_hcd_giveback_urb+0x38d/0x610 drivers/usb/core/hcd.c:1657
+ usb_hcd_giveback_urb+0x3ca/0x4a0 drivers/usb/core/hcd.c:1741
 
+Fixes: 0e35f63f7f4e ("hwmon: add driver for Aquacomputer D5 Next")
+Reported-by: syzbot+9ee5f5dc18673d6b2f37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9ee5f5dc18673d6b2f37
+Tested-by: syzbot+9ee5f5dc18673d6b2f37@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+---
+v1 -> v2: change to check the data item and update comments
+v2 -> v3: check all sub items and update subject
+v3 -> v4: add speed and flow check
+v4 -> v5: remove dbg msg and update comments
 
-> 
-> Does this logic incorrectly bypass Egress Control (PCI_ACS_EC) for Completion
-> TLPs by only evaluating Completion Redirect (PCI_ACS_CR)?
-> 
-> If a PCIe switch has ACS Egress Control configured to isolate P2P traffic,
-> will the hardware drop P2P Read Completions as ACS violations while the
-> kernel incorrectly maps the path as direct? This could lead to Completion
-> Timeouts and potential runtime failures when drivers attempt P2P DMA reads.
-> 
-> > -	return 0;
-> > +	return ctrl & (PCI_ACS_RR | PCI_ACS_EC) ?
-> > +		PCI_ACS_P2PDMA_REDIRECT : PCI_ACS_P2PDMA_DIRECT;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260821-fix-p2p-acs-v4-0-v4-0-94426b96de73@nvidia.com?part=11
-> 
+ drivers/hwmon/aquacomputer_d5next.c | 81 +++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 1ca70e726298..352b227c3015 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -1324,6 +1324,84 @@ static const struct hwmon_chip_info aqc_chip_info = {
+ 	.info = aqc_info,
+ };
+ 
++/* aqc_raw_data_valid()
++ * Does not support special-case sensor readings data size check
++ */
++static bool aqc_raw_data_valid(struct aqc_data *priv, int size)
++{
++	int off, fan_off, i;
++
++	if (!priv)
++		return false;
++
++	/* +1 for get_unaligned_be16(), it reads 2 bytes */
++	off = priv->serial_number_start_offset + SERIAL_PART_OFFSET + 1;
++	if (off >= size)
++		goto invalid;
++
++	off = priv->firmware_version_offset + 1;
++	if (off >= size)
++		goto invalid;
++
++	/* Physical temperature sensor */
++	for (i = 0; i < priv->num_temp_sensors; i++) {
++		off = priv->temp_sensor_start_offset + i * AQC_SENSOR_SIZE + 1;
++
++		if (off >= size)
++			goto invalid;
++	}
++
++	/* Virtual temperature sensor */
++	for (i = 0; i < priv->num_virtual_temp_sensors; i++) {
++		off = priv->virtual_temp_sensor_start_offset +
++		      i * AQC_SENSOR_SIZE + 1;
++
++		if (off >= size)
++			goto invalid;
++	}
++
++	/* Fan speed and related */
++	if (!priv->fan_structure)
++		goto flow;
++
++	for (i = 0; i < priv->num_fans; i++) {
++		fan_off = priv->fan_sensor_offsets[i] + 1;
++		off = fan_off + priv->fan_structure->speed;
++		if (off >= size)
++			goto invalid;
++
++		off = fan_off + priv->fan_structure->power;
++		if (off >= size)
++			goto invalid;
++
++		off = fan_off + priv->fan_structure->voltage;
++		if (off >= size)
++			goto invalid;
++
++		off = fan_off + priv->fan_structure->curr;
++		if (off >= size)
++			goto invalid;
++	}
++
++flow:
++	/* Flow sensor */
++	for (i = 0; i < priv->num_flow_sensors; i++) {
++		off = priv->flow_sensors_start_offset + i * AQC_SENSOR_SIZE + 1;
++		if (off >= size)
++			goto invalid;
++	}
++
++	if (priv->power_cycle_count_offset != 0) {
++		off = priv->power_cycle_count_offset + 3;
++		if (off >= size)
++			goto invalid;
++	}
++
++	return true;
++invalid:
++	return false;
++}
++
+ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
+ {
+ 	int i, j, sensor_value;
+@@ -1334,6 +1412,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 
+ 	priv = hid_get_drvdata(hdev);
+ 
++	if (!aqc_raw_data_valid(priv, size))
++		return 0;
++
+ 	/* Info provided with every report */
+ 	priv->serial_number[0] = get_unaligned_be16(data + priv->serial_number_start_offset);
+ 	priv->serial_number[1] = get_unaligned_be16(data + priv->serial_number_start_offset +
+-- 
+2.43.0
+
