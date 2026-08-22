@@ -1,178 +1,124 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BF82475D0
-	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 03:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8858D39B4A5;
+	Sat, 22 Aug 2026 07:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787369853; cv=none; b=qBPRfq+SQhZyMT0nGSuU+A9mAOM0HR56VsAJc1dvdh8bVhsCdNN4DMp9B5p31mYNV4JZj8FxT9FFAs3/EdGQkIAn0blNqK8RCsc2kUV/KetzJkPMETIrDM4HSQG3VeqUqx7OX5ZtFZMeLhvkIYJN5fx9kPsN8JpVY3JYsL31PWs=
+	t=1787383702; cv=none; b=E7gkQvUUz8Nof8W9MmnRSThD+ceNX1F063/Y8rrk1ZekQ8NPtXITOzFhAmNJrBAA4cgLrMMDwVqLt/0hFupnUo2Z4pzH/IT40xqjliZRpu4ipXGA5iHT3Yt/qBDuMQxvrLPEUFyoFKc5dG1cr6b4ND3XDiXyOCp3RjAuvbHbLIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787369853; c=relaxed/simple;
-	bh=tFVl/RBqtsH1Gr0iDifGVyxnBAgdYdwgdDbNQye+k0o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rJGhlupMebGpmwQS8ADkhV7gFIVZLQ68qNZUBo209jV9FDHXxClcjup1oouXm50+2lDyoO0mNI+wsMUvXwdStof1/ApPm8wveonfJX/EC4QTTDKiy9ctEXEz5hNsWOCQoUTSRsKqPeW1oG+ZG78WBmFwMIWuk1kjcuQ/20h/MLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SqXdJQVH; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787383702; c=relaxed/simple;
+	bh=7EH6nkAv68Ysc/kGnsAbrQ1JTNu6PdTSsRyUlPbTung=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iqTIPbI+ynrOsVsqoo2UnP9aNkygOJ4xJIldip7P6CSN0bL2TtqAyXLfInRFoOIrOyYktIJCK7wwjZ5qe/XmMHgI6UHq7bIuwmOXaOLwOt/eOC7R/i6AGnC5hZAesqklvnraKx4SQgjaEy8/AyiVhYZFQfEVHK+IIKiwP5z/Jfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0tRulmt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SqXdJQVH"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2caced6038eso17327795ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 21 Aug 2026 20:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787369851; x=1787974651; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ElFIS84/+pbNOt4I/LoEzZYQj4y1cn0LPu5DOnWoK34=;
-        b=SqXdJQVH7w2GTJk/DAFMKwG0s3ktSmpXPlhrOPYPWZiWd2pamSMsLdINN5pDeIvZM1
-         yoBLfCObtsjqetfomwCrarOLsyu5T7l9q0J6gexyfQet9DsGFIj/YBzoH8cF701jpoP7
-         iiM7RkX0hjyMvZkeIbOj4kf74aegHxbtXe/fiqvHy1OvuJBfFP45TGasLnELKmswldh+
-         jwCtqYDwUcP8Okjl/FD8f7NQXz3u6woEwRPAxt4g70NGMfP/G2SbbvosUdaH5XP/Tv+N
-         jwT3kOleT67fD8z1vDuNNW9nFYyc/om+uRt1JIYy8O8R6RN+IDB67ttaw5ZK9X/Kq6vB
-         vS4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787369851; x=1787974651;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ElFIS84/+pbNOt4I/LoEzZYQj4y1cn0LPu5DOnWoK34=;
-        b=EgtpwXcp2ZC5vKoDXtSi+roJMXK4/CmNr6z8TPGmLs9xiJ6v1gI5eUB7D/a+b6tGJH
-         EqFG3N2T4h66QvEpuPGuJahPrgcfD+NdYIH9BE3wDGxjVin8vgIXy6PHfOrqLc14s+d6
-         34BvSMQXD3pZcIzcGX7j9Kh4cBgeoXPmvhVlj4a3ErIpGW+jXgcODuunKxJVjp95Y3C+
-         pXxQJnc6B9BTO4evUsBI2Sy70bP21LNlNSt0xAvpen6FRY4IDKCjvbeNB2A7oZGvwHtQ
-         o1LyTZNmXdfihi169fAG5pGgEhcFAw7zvzmTOxe58mbXf1gfMFK2ZHl5tzDTKybkrk0f
-         iNww==
-X-Gm-Message-State: AFuF++lTFVn46AzjCahdHytKesB5es9IN59OJUyqqUnUvwne/b6dvc+y
-	FKA+hJB0HJcgeG3hQqoVayibcwogYjm4XbwwwXftVujZvDNxZDFE7Z+vTCuYcWVh+hg=
-X-Gm-Gg: AR+sD13Z60eglBMZWOZQfOMWxGKh/iJIQMbtdYR0b9vgcfYLsSQ/wLLTJSaLEm7gHXN
-	dBwjgtg1AYGA7cRGRIdA8RwrDzCO3uUg9gX0DoMOJw9+8yE79PVY1k8KEa9KK6NXAOqI2j3MjAm
-	WozmZxDcXmAg/rKTiZEreq5TLqXlLddFVa7g0v/wdwXbJJR2QIMNJOSUeIHlywIrAk1tUJsv1Qq
-	sTNlwSgmpwESvROtQMAbj/lk2ZLWNpWSDWKavvth2bwGaGCayzBTPeP6jm7gnjNyUu1LTUCKQnK
-	mlpPPMQ6hGHC0M6/pO2cwfnIlbegccisKwLsTw8pLzlkEpxD67a0zGP8BfYyQvCEm1ZvqQPlHFd
-	U06Tkw4xPi3nXx09nQ4lE6c3c5w3sEO1UK53VhR7K4uJGqHPFpDHy4qCfN8R8I6jdQjI5BeQWtL
-	XEH9lj6I3VA2uVhp0/Qm5qoyIdrMoXLXaH4z71gaqsm1FwzXM6fe8+0HfeTwjaRKqUDZ0K0SKTw
-	AI7vO/R
-X-Received: by 2002:a17:903:1a84:b0:2ca:12aa:a390 with SMTP id d9443c01a7336-2d64ce3544cmr120353965ad.0.1787369851163;
-        Fri, 21 Aug 2026 20:37:31 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d67678e1b5sm1187555ad.22.2026.08.21.20.37.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Aug 2026 20:37:30 -0700 (PDT)
-Message-ID: <a3c68208-8faa-4902-b105-46bbbe322a0a@gmail.com>
-Date: Sat, 22 Aug 2026 11:37:11 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0tRulmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A3A1F000E9;
+	Sat, 22 Aug 2026 07:28:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787383701;
+	bh=m7jzBL8B5ahaWiykmUYf8brzyElxeR4aRjpZhqmQmkA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=l0tRulmt1MoVU5RU1dY7WA9U7n0oBzm3xOu69YnYEKh8HhLEGYX8ffF4BOylvRDJt
+	 Kesmpgqiq7BeOifrZ1k80ZqjPUFpyK7t90ViDT2dchCKkkjYjsdhFGvbUUJKAiTcIW
+	 DDv2KVOdM4uj2EZ3AnYzogg2lBH7e/eMbqEXA3LvytHy99ktqlBGKgKpiDcuOJcAt7
+	 +Mv71mgjfkKXhc4LcTunzYPUm4nvcwJWo8A+1G3So0XU3UjhXzVyNZYgZu+UqDBhWP
+	 PoXxqO+VzgoP2O+hy8LkfP7XXj8GPsQnKNhBSRXuQuNyn44TmtSZF3GobqWdw79VsF
+	 8oGEvsGDCaeyw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wxg9L-00000000DYv-0gMu;
+	Sat, 22 Aug 2026 07:28:19 +0000
+Date: Sat, 22 Aug 2026 08:28:18 +0100
+Message-ID: <86zeye4nsd.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH 2/2] KVM: arm64: nv: Fix null ptr deref in kvm_nested_s2_unmap() on S2 teardown
+In-Reply-To: <an3lHhgmwS0RnCgI@lucifer>
+References: <20260812-kvm-arm-nested-virt-fix-v1-0-4ad883f1b6a5@kernel.org>
+	<20260812-kvm-arm-nested-virt-fix-v1-2-4ad883f1b6a5@kernel.org>
+	<20260812140101.D77AC1F000E9@smtp.kernel.org>
+	<an3lHhgmwS0RnCgI@lucifer>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next v5 30/32] ext4: add tracepoints for EOF block
- zeroing and disksize-grow I/O
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
-References: <20260814093331.1703882-1-yi.zhang@huaweicloud.com>
- <20260814093331.1703882-31-yi.zhang@huaweicloud.com>
- <20260814101927.E94F51F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260814101927.E94F51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: ljs@kernel.org, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On 8/14/2026 6:19 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Calling `i_size_read()` from the block I/O completion context (softirq) inside the `ext4_iomap_wb_disksize_pending` tracepoint class causes a hard lockup on 32-bit SMP systems.
-> --
+On Thu, 13 Aug 2026 16:56:02 +0100,
+"Lorenzo Stoakes (ARM)" <ljs@kernel.org> wrote:
 > 
-> --- Patch [30]: [PATCH -next v5 30/32] ext4: add tracepoints for EOF block zeroing and disksize-grow I/O ---
-> commit 9f6116e7039af778ef1701a210ea9b800dcc543c
-> Author: Zhang Yi <yi.zhang@huawei.com>
+> On Wed, Aug 12, 2026 at 02:01:01PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [Critical] Use-After-Free on `kvm->arch.nested_mmus` array due to concurrent teardown.
 > 
-> ext4: add tracepoints for EOF block zeroing and disksize-grow I/O
+> Addressed by Marc's changes + discussed over there.
 > 
-> Add tracepoints to track the disksize-grow-pending lifecycle in the
-> writeback path and the block-zero-EOF entry point.
+> > - [Critical] Incomplete Fix: `kvm_nested_s2_wp()` is vulnerable to the same NULL pointer dereference and UAF.
 > 
->> diff --git a/fs/ext4/page-io.c b/fs/ext4/page-io.c
->> index 4f1176b9332f2..4464eb03c9728 100644
->> --- a/fs/ext4/page-io.c
->> +++ b/fs/ext4/page-io.c
-> 
-> [ ... ]
-> 
->> @@ -729,8 +735,11 @@ void ext4_iomap_end_bio(struct bio *bio)
->>   	 * state set in ext4_block_zero_eof() and wake up all waiters
->>   	 * that will update the inode i_disksize.
->>   	 */
->> -	if (io_mode == EXT4_IOMAP_IOEND_DISKSIZE_GROW_IO)
->> +	if (io_mode == EXT4_IOMAP_IOEND_DISKSIZE_GROW_IO) {
->> +		trace_ext4_iomap_wb_disksize_pending_complete(ioend->io_inode,
->> +				ioend->io_offset, ioend->io_size);
->>   		ext4_iomap_clear_disksize_pending(ioend->io_inode);
->> +	}
-> 
->> diff --git a/include/trace/events/ext4.h b/include/trace/events/ext4.h
->> index 4539ef8e5f86c..c9259c2a3e364 100644
->> --- a/include/trace/events/ext4.h
->> +++ b/include/trace/events/ext4.h
-> 
-> [ ... ]
-> 
->> +/* disksize pending I/O tracepoints for iomap Buffered I/O path */
->> +DECLARE_EVENT_CLASS(ext4_iomap_wb_disksize_pending,
->> +	TP_PROTO(struct inode *inode, loff_t io_offset, size_t io_size),
->> +	TP_ARGS(inode, io_offset, io_size),
->> +	TP_STRUCT__entry(
->> +		__field(dev_t, dev)
->> +		__field(u64, ino)
->> +		__field(loff_t, io_offset)
->> +		__field(size_t, io_size)
->> +		__field(loff_t, i_size)
->> +		__field(loff_t, i_disksize)
->> +	),
->> +	TP_fast_assign(
->> +		__entry->dev = inode->i_sb->s_dev;
->> +		__entry->ino = inode->i_ino;
->> +		__entry->io_offset = io_offset;
->> +		__entry->io_size = io_size;
->> +		__entry->i_size = i_size_read(inode);
-> 
-> [Severity: High]
-> Does this code introduce a deadlock on 32-bit SMP systems?
-> 
-> The tracepoint ext4_iomap_wb_disksize_pending_complete is called from
-> ext4_iomap_end_bio(), which executes in softirq context. This happens
-> because ext4_iomap_writeback_submit() clears the BIO_COMPLETE_IN_TASK flag.
-> 
-> When TP_fast_assign() evaluates i_size_read(inode), it uses a read sequence
-> lock on 32-bit SMP systems via read_seqcount_begin(&inode->i_size_seqcount).
-> 
-> If i_size_write() is executing concurrently in process context on the same
-> CPU, it holds the sequence lock without disabling softirqs. If the softirq
-> interrupts the i_size_write() section, i_size_read() will spin infinitely
-> waiting for the sequence count to become even.
-> 
-> Is there a way to avoid reading the inode size in this softirq context, or
-> a safer way to sample it here?
-> 
+> OK interesting!
 
-Yeah, since we already have trace_ext4_iomap_clear_disksize_pending()
-in ext4_iomap_end_bio(), we can move
-trace_ext4_iomap_wb_disksize_pending_complete() into the process
-context of ext4_iomap_finish_ioend().
+Will you respin this series with kvm_nested_s2_wp() fixed in a similar
+way? Something like below.
 
 Thanks,
-Yi.
 
->> +		__entry->i_disksize = READ_ONCE(EXT4_I(inode)->i_disksize);
->> +	),
->> +	TP_printk("dev %d:%d ino %llu io_offset %lld io_size %zu i_size %lld i_disksize %lld",
->> +		  MAJOR(__entry->dev), MINOR(__entry->dev),
->> +		  __entry->ino, __entry->io_offset, __entry->io_size,
->> +		  __entry->i_size, __entry->i_disksize)
->> +);
-> 
+	M.
 
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index 00580ba6e8ba0..ebc4f4dc47836 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -1262,6 +1262,14 @@ void kvm_handle_s1e2_tlbi(struct kvm_vcpu *vcpu, u32 inst, u64 val)
+ 	invalidate_vncr_va(vcpu->kvm, &scope);
+ }
+ 
++static void kvm_invalidate_vncr_ipa_all(struct kvm *kvm)
++{
++	lockdep_assert_held_write(&kvm->mmu_lock);
++
++	if (kvm->arch.mmu.pgt)
++		kvm_invalidate_vncr_ipa(kvm, 0, BIT(kvm->arch.mmu.pgt->ia_bits));
++}
++
+ void kvm_nested_s2_wp(struct kvm *kvm)
+ {
+ 	int i;
+@@ -1278,7 +1286,7 @@ void kvm_nested_s2_wp(struct kvm *kvm)
+ 			kvm_stage2_wp_range(mmu, 0, kvm_phys_size(mmu));
+ 	}
+ 
+-	kvm_invalidate_vncr_ipa(kvm, 0, BIT(kvm->arch.mmu.pgt->ia_bits));
++	kvm_invalidate_vncr_ipa_all(kvm);
+ }
+ 
+ void kvm_nested_s2_unmap(struct kvm *kvm, bool may_block)
+@@ -1297,7 +1305,7 @@ void kvm_nested_s2_unmap(struct kvm *kvm, bool may_block)
+ 			kvm_stage2_unmap_range(mmu, 0, kvm_phys_size(mmu), may_block);
+ 	}
+ 
+-	kvm_invalidate_vncr_ipa(kvm, 0, BIT(kvm->arch.mmu.pgt->ia_bits));
++	kvm_invalidate_vncr_ipa_all(kvm);
+ }
+ 
+ void kvm_nested_s2_flush(struct kvm *kvm)
+
+-- 
+Without deviation from the norm, progress is not possible.
