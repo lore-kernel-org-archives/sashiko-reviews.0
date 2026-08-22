@@ -1,150 +1,97 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4E7493658
-	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 19:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787426214; cv=pass; b=usuASM3Pwo2uqxs4fiUN5Y6G2T6qCE0WxuasX+UPeOeYma85ocT5H865ncj/QIvFovmYidXoBJlIYGs/I753M+Tf/8An4WNRE+25nbtUt1N0lOJ8ms8t3xd9y18Td4hWJBWJIK0DLTwRYOlLEjS6IgMT7vtM/kIC27/KbEn8zN4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787426214; c=relaxed/simple;
-	bh=eVqz7cTe8hTnrBzjfvV68Aj4B3ktVr2wx8c+hb1HKuA=;
-	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=sU2XMYe6v4cnTm7j9kiJv+9Sjj7FGt4stz1ICujpMbZU3fQSGXqhoe2Xtsp1mbgby7IZLZGxtDIVQsYWhkdKmA7+DugSxQ0ZEAF9qN1f69gODNFcNykkneOXkyHD7CqBBdPs5Ng59wGYy34/ie0Gi9AX+KV/u0Wzp7QZNkeyYWA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=mtHkefYc; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC163932D1
+	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 19:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787426564; cv=none; b=R3WdZtbs2wvvSPUevMzwCeZujdMCZolLawrFKGgmBo8/ZULvL+zxfUPIfJ9fUUYCEhIIfB21Qn0TcCpsojNTTvUMdVqxZE3S5AfgPKwkr2VC0dv1PjAEzzcdUSVOZes1ZLyPzV94oLl8ew6ujv/hBt7Oe3kU4uqWV+H4QA/aI0w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787426564; c=relaxed/simple;
+	bh=x6oI0crdivDNn8DnEcADG1LuSOfPDJuvoSs8Td8hvOM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I57/CwXVkvLo+RHIs/+DZkF9vyIvpZgwUAJonVDk/wg/eEOiUA2jvJIYL/76okdq6lWwzZhYPPV665T8ArMiLj3pEzv19bXF4YKDA8mGM7V7+qQFcNe+RvTQ7W2buVd+PuJ7xnm740WJ/mePayTQE09uhCrjfZU49cFIr0SQHhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=FskGE4cu; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="mtHkefYc"
-ARC-Seal: i=1; a=rsa-sha256; t=1787426211; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=IgKplZvniDQWXxa3oyK3bLuoTwQaUs9B4fnr6BR8oI+pW4fCjvelc2VgnJocQOGrLVKHWjamm2YktijWABuYAlySWj5BdypgWbG90Wv35adMis6f28d9l64oZ8BeML8/7XWvY61UuO+23LZRvVtyEMByMH0hM+JAhlQPOANr5cA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1787426211; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=wNLfVSPfxNFh98lDllmGvQ3ZWGgKx4vePWz3EvTn5E4=; 
-	b=fyACwn2HncYvPxz4oSBS7llSS1ueI4bdA9fenxj5fNryeEoOBbYjOd0zCqG9rsyn3py912frNMX8yQQH76VrTDUcMc9Qvx6V9gn8HsPLwOTylTV9nhSxThV2Yn///pDfWlVSX0qu+/1G024kpd9t+0Ut9dtbAhHsnYCnGRu6/Bg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787426211;
-	s=zmail2048; d=rong.moe; i=i@rong.moe;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
-	bh=wNLfVSPfxNFh98lDllmGvQ3ZWGgKx4vePWz3EvTn5E4=;
-	b=mtHkefYcCHL4wKZk5a3zxPHLxAHUTKlIX5bDNYhRw5PXLZV069hYTiCFxtlLIZf9
-	3b3torQykjCmfLo3AhYi2f89ZFxy/5LZVAZsJiR5aKu1zoAjQMqmuQIk5T8Foht9a+m
-	ji46wqVVBEk9Oc1NVyOGUP5CQLt/KJSBTS2FPA+Vrt38vtbvI3maa8223lhFtfV6Yuw
-	LapywsGr0a0gFpSroLMAFZU4/8Z4sxvcuG+VLIDP9PsvVva3RIacKylT/vYVXGNiRqw
-	VfQxsQQQVtkVu7bk662LRdue7kpilLAn0FASHGuKfBpn4tzQ/r1DjXOzxrHrgUN3Fkl
-	P7XxF+k/pw==
-Received: by mx.zohomail.com with SMTPS id 1787426209584445.2634531021255;
-	Sat, 22 Aug 2026 12:16:49 -0700 (PDT)
-Message-ID: <fa46130179d452017734b10978c18b055cd55103.camel@rong.moe>
-Subject: Re: [PATCH v5 07/12] leds: trigger: Enforce strict checks in
- led_trigger_is_hw_controlled()
-From: Rong Zhang <i@rong.moe>
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="FskGE4cu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=x6oI
+	0crdivDNn8DnEcADG1LuSOfPDJuvoSs8Td8hvOM=; b=FskGE4cu47DZhMs3K2jJ
+	DfddjqqyBzpnfrG/Ftk9no3DA5ERJmbvnzDPr8nKyQo/UgDUzEHNvg2WG2DY69D0
+	nFbEIhF13Z/hkrFSPLIo3Gxp2mjB+lY77xzKZ0E04gjvKQBoZM6s6zyt+FNMdS9m
+	Z4qlAklidvNbX+cTBxmmPlbo+DK7w+iqbKu0OQAOdqYMzq9QOw1+3FpBmLxCYFXe
+	nKLMxS0ON3oBldF2oYOdKUV/XdHAJhkv1ad8IvFd4oZd632jFJA22swyfHli3l0Z
+	RRNwYSqdBd1ykAMZ0bRHxADbIAaCRTfn8ZiAQS2voOaFbHBN+/MbNKqQvU1Ks+yu
+	PQ==
+Received: (qmail 1015423 invoked from network); 22 Aug 2026 21:22:24 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 22 Aug 2026 21:22:24 +0200
+X-UD-Smtp-Session: l3s3148p1@+Z45rKdZvt4ujnv+
+Date: Sat, 22 Aug 2026 21:22:23 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, linux-leds@vger.kernel.org
-In-Reply-To: <20260821172737.EF6021F00A3D@smtp.kernel.org>
-References: <20260821-leds-trigger-hw-changed-v5-0-3e00d6c4a936@rong.moe>
-		 <20260821-leds-trigger-hw-changed-v5-7-3e00d6c4a936@rong.moe>
-		 <20260821172737.EF6021F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 23 Aug 2026 03:10:58 +0800
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, linux-rtc@vger.kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 06/17] rtc: rzn1: Disable alarm interrupt before
+ reprogramming alarm registers
+Message-ID: <aon271wPK9H8gAvR@ninjato>
+References: <20260821211032.13554-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260821211032.13554-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260821212612.10E0C1F00A3E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Evolution 3.56.2-10+b1 
-X-ZohoMailClient: External
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T+HODbuYjh5+iWP4"
+Content-Disposition: inline
+In-Reply-To: <20260821212612.10E0C1F00A3E@smtp.kernel.org>
 
-Hi all,
 
-On Fri, 2026-08-21 at 17:27 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+--T+HODbuYjh5+iWP4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Aug 21, 2026 at 09:26:11PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
 >=20
 > Pre-existing issues:
-> - [High] Sysfs attributes are exposed to user-space before the `trigger_l=
-ock` rwsem is initialized, causing uninitialized lock access.
+> - [High] Data race and TOCTOU in IRQ handler leading to spurious interrup=
+ts and incomplete synchronization
+> - [High] Hardware state lockup on timeout in rzn1_rtc_set_time()
+> - [High] Alarm logic erroneously uses 1-second interrupt for past alarms =
+with the same minute
+> - [Medium] Race window in rzn1_rtc_read_time() fallback logic can produce=
+ inconsistent timestamps
 
-Valid concern. This bug was introduced in commit b819dc7d8fb2 ("leds:
-core: Report ENODATA for brightness of hardware controlled LED"), as the
-check is not protected by led_access.
+All pre-existing issues, should be handled incrementally.
 
-Since the series touches what was introduced by the said commit, I will
-prepend a fix commit in the next revision by protecting it with
-led_access.
 
-Thanks,
-Rong
+--T+HODbuYjh5+iWP4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> --
->=20
-> --- Patch [7]: [PATCH v5 07/12] leds: trigger: Enforce strict checks in l=
-ed_trigger_is_hw_controlled() ---
-> commit ebab4e455acab29c44baf2a4a586beae42254bc5
-> Author: Rong Zhang <i@rong.moe>
->=20
-> leds: trigger: Enforce strict checks in led_trigger_is_hw_controlled()
->=20
-> With all existing triggers adopting the new interface, strict checks
-> could be enforced to make the semantics of hardware control triggers
-> clearer.
->=20
-> > diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-> > index de17a8bbb4d48..cb49a02a8b3cf 100644
-> > --- a/drivers/leds/led-triggers.c
-> > +++ b/drivers/leds/led-triggers.c
-> > @@ -42,9 +42,16 @@ static bool __led_trigger_is_hw_controlled(struct le=
-d_classdev *led_cdev)
-> >  	if (!led_cdev->trigger)
-> >  		return false;
-> > =20
-> > +	if (!led_cdev->hw_control_trigger ||
-> > +	    strcmp(led_cdev->hw_control_trigger, led_cdev->trigger->name))
-> > +		return false;
->=20
-> [Severity: High]
-> This is a pre-existing issue, but since this patch modifies the hardware
-> control paths, is it possible to access an uninitialized rw_semaphore her=
-e?
->=20
-> In drivers/leds/led-class.c, the device and sysfs attributes are created
-> and exposed to user-space before the trigger_lock rwsem is initialized:
->=20
-> led_classdev_register_ext() {
->         ...
->         led_cdev->dev =3D device_create_with_groups(&leds_class, parent, =
-0,
->                                                   led_cdev, led_cdev->gro=
-ups,
->                                                   "%s", final_name);
->         ...
->         init_rwsem(&led_cdev->trigger_lock);
->         ...
-> }
->=20
-> If user-space processes the uevent quickly enough and reads the brightnes=
-s
-> attribute, brightness_show() will call led_trigger_is_hw_controlled() bef=
-ore
-> acquiring the led_access mutex:
->=20
-> brightness_show() {
->         if (led_trigger_is_hw_controlled(led_cdev))
->                 return -ENODATA;
->=20
->         mutex_lock(&led_cdev->led_access);
->         ...
-> }
->=20
-> Since led_trigger_is_hw_controlled() eventually accesses trigger_lock, wi=
-ll
-> it attempt to acquire the uninitialized semaphore and cause a crash or
-> lockdep warning?
->=20
-> [ ... ]
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmqJ9uwACgkQFA3kzBSg
+KbYhVw//XlKbkez+l3VpHjspOjHLYiThzVPLaQfz9QAfA9pELhV28RX4kX/HwXm7
+3H66yxD9zqmkYlC56UMHLtIxQWIY1h3Fo0m+KOKawR60VbqJkoGtY28r4qvFUttm
+DOdIAHdaZWGNuMowccKItbz+9gepROsKqwl8mqAGk5Wt/g6sN0dLgJm/xQZgbHmP
+xNWdqBJ1nzC/Ax268hkPvjn00rwgX+KIPgc43mcbzlN78hAU5/t1IMQCWCh0V0mS
+OP5dGZg8cIsBTJbH1WKMr9cTRIpM2Ax1in/gT5FyFIxfNRMXOEBXm1RKs5v25MNj
+fooQE6bCfO+kanxgf7z3UWIRYdyLhOZIjl1WpRprRKFHHoSY+rfvix+SFmmFerLk
+U22qmxP+yYfVlhe3D7txrYUTzX1m3eS7nfKnIOtWPVjND/cvTo0W02sKvSOSXaGW
+9WzdKr6NoQD2GKipB8uEm3scKkx/NOXbAbJ9GHdvdmHebgHXgVEoKtvAx0Hzovch
+hTdHCF5+MeczpChCB9B/Gnrca/xtwwe4rgJE2OuLQVMEh6ByW7OjI+ZxfjPVn1ML
+AGXb70dPPJNESURoYMGgxV5xdxmZDXVMbA0g++mg0PzcHHeOqWyHkn5x5FV+BRV1
+U8h+PQMHrVVx1Lm1GD54ZvtqmQih4OQz+mpUdfNTYd5PKK1i5bk=
+=NvrB
+-----END PGP SIGNATURE-----
+
+--T+HODbuYjh5+iWP4--
