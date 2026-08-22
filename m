@@ -1,136 +1,226 @@
-Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
+Received: from out203-205-221-173.mail.qq.com (out203-205-221-173.mail.qq.com [203.205.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F3F17993
-	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 11:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B91384CEE
+	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 11:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787396872; cv=none; b=TvOpRBdfIqVUGGStBqTqlL/tkkt4hT7nPRud67ei0p7E4YZ0l3ZuHyLOFhUKjogUmdYoYmZbHX5UDMQqgQpG4qh+HDQhjXskVpHki7WD4bwEx25FI7IBJvYVqK3DOMxsIzUxuq/5pcb9AMTYIrZQvK8L+qYIRaYwPaMbUjRiZEw=
+	t=1787398486; cv=none; b=EyCbhRGc1JiqqYpFNpxyLeQW0ZPCPC2GmsZzUA642Or9F0bJLJm8T5nrB/dyLr3V41bw/dO3WpFePzCvgQ2qJP3kKPL7ck0q5lX8NPl9oWaYNK+wdjhXNshW7fy+rUMcrG69LbKEdOTODH9jsfIpA/aWlw7rRLlallwSo35bdcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787396872; c=relaxed/simple;
-	bh=CAtfSaOlJkul5qUL9Z7j8iX7ecWOJLV3W8Iy9iGy7k8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G35CMDZ2JNIBsR3LZjOoTTSh/aWN8Yrlf3iRk0Ch/ctpxFuOQYjg+Z0AwmK5fnsr43w18h0uByOj4PZluNY+2qU66S1dCkcD2IvyiOFs13Kg+hpSpniT2YpTimbIXMim0VAcs9VQ9X2wj/QmElXEdbio+Nvo4ZUlG7yx+PB4fGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=vkYZHO8r; arc=none smtp.client-ip=161.97.139.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
+	s=arc-20240116; t=1787398486; c=relaxed/simple;
+	bh=mB/FW2OPx0UpmHotk7YNbujDwpzAlzAgpNIVNeTw2K0=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version; b=tN74+4couKp26iPoOTNsVKNxQPNw0oqCL4iLvQhch95ikuTNYJ0UtRkp1+jAGj1eG9zl7pfitMD70bOlsr03poAHGPvVLX3JrgnRdPTfsmXJ80fTVLw6gQI8pf/eYtFKWTz4BYQ/NSwNEZjR7p3rHrTuF06sKpALeX8GcNARFKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=MR88520m; arc=none smtp.client-ip=203.205.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="vkYZHO8r"
-Received: from mail.andi.de1.cc ([178.238.236.174])
-	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <andreas@kemnade.info>)
-	id 1wxjZf-00000003W82-0S38
-	for sashiko-reviews@lists.linux.dev;
-	Sat, 22 Aug 2026 13:07:43 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
-	Reply-To:Content-ID:Content-Description;
-	bh=q/82qXQCdNW2X0LkZzIrKAgGSD0VEdBo7O7SAFurDlE=; t=1787396863; x=1788606463; 
-	b=vkYZHO8rN/LRQNcYqwsLK37t2PpYz0T9fXyYHVba4b2bn3wanyRzyYTsyAeYhyS89VBRxmvjFSr
-	XEfvh//fUIhp8KMAjXdWqqLnOi/aQyhq31HbDQ5YZmGuuQtC7hq2JJH140cBH56J0/9mJRJQtHfXo
-	fkDfppQ1b6tsqjaR23ahfo13d9GSP8UkHZmzRqPmRikIy2Hr1ReqBViTs96M3OEWJdKParn0MG3GX
-	Q4Hjw6iQdGct93ODX26XPzSWrBt4qIpi24n6MIQYqUH8MTMlkwJPWaf7ayy3WVBAg2s5sdOxxodiC
-	qfjxx+syve6EVUOl71qClwj/RvppQYeCoxqQ==;
-Date: Sat, 22 Aug 2026 13:05:23 +0200
-From: Andreas Kemnade <andreas@kemnade.info>
-To: Helge Deller <deller@gmx.de>
-Cc: linux-omap <linux-omap@vger.kernel.org>, "linux-fbdev@vger.kernel.org"
- <linux-fbdev@vger.kernel.org>, dri-devel@lists.freedesktop.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] fbdev: omapfb: Fix __be32 sparse warning in
- panel_enabled()
-Message-ID: <20260822130523.116aa1bd@kemnade.info>
-In-Reply-To: <cd542bf5-775e-407f-88cc-4cf18305f2b3@gmx.de>
-References: <20260822094805.421002-1-deller@gmx.de>
-	<20260822095809.1D0651F000E9@smtp.kernel.org>
-	<cd542bf5-775e-407f-88cc-4cf18305f2b3@gmx.de>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="MR88520m"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1787398478; bh=xXRHURo952J7TidMqO5HAkX5f2gFHjg5x2uB14fPe24=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=MR88520mZPXzcAuwKF5J/WnkwhXcrNfzMlaMmOtPresk3ySnJ6K/nwWanfC+KyKKL
+	 A6kD+aWc8Onl2OorXE6nHisGpgI737Ki25LOV8oPzkVXPL1BJ16Wa6djY2xZMErNXd
+	 KKmWjA1KiSC6ZKRMx/I6K0uGW5fTdt2o9Xzhm1C4=
+Received: from lxu-ped-host.. ([111.198.231.89])
+	by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
+	id 8A2BFE7D; Sat, 22 Aug 2026 19:34:34 +0800
+X-QQ-mid: xmsmtpt1787398474tqa1njo83
+Message-ID: <tencent_CE16CF998D9A25B20DEF1275DDCEDDB61907@qq.com>
+X-QQ-XMAILINFO: MB5+LsFw85NohDmAPvvalHs8n4h1EOeA5RJV5kZyfD489FSIsafKXB2rqgXx46
+	 fVjTwQlKpls3TArIY35CZUuqwMm2n9oldVx86j/GqSX0KejzRNV41lWwKpPyeRZllEZJnJBpRkOs
+	 k7SQgbWnplxhtdgo1z382+P92qh1HVfsk82w3Y7b8E5CVtqqTZzSnm3+kCSjTGhEGyKoYKDd91xC
+	 0WkRIRS+rIhSjI/K9YGsm/t8ws2piUendeB/XE1PgkVYsWumZMp7uE7GTdHPq1eAgerzvUiXwVGE
+	 7lAyAAdISBVMDIaIhOfdeiYEy9Ip8Ml2ANbFFfGKPYeWsMgHWmqQLWYvrXbYkbmb628xmNW+YVv3
+	 E6gb/QMJrxuEJ2vjgvC1SLgwbTkNIPg3ozxlkdi8lC7+5wnlIMDD5G8zVzgNpGv7sp25fStye4Hm
+	 Dq3+HkgehBJ+5jjPWEYNr1lBD2wILsCDis8U6uNGWdxHi2TP10muI92nDjlZQzzjpK88AKi/m6Qf
+	 2mbgKTlTBXMFAE4cZNS5JIt37LhkMTKYBYciUtP+CyV2HEXIJSnyn+I8PqpB/V9k5eztAb80RC1o
+	 dtW+pY60lO0q/xljxmHYDHy4+xRwKlJJRbq+zMGNSNigRGISF/Gnt6jnbTU5amtza6YqBwBhXent
+	 8m2mcD1TDiFWtT/vX3NnOdQcSZvQ/WavuSRVVKV4qylkfIHes3D9ctd0sczUJk/M4jyopS1o+ke7
+	 M46poVtUkx+FdtDjrB93p5DgZoHOrcXNJh2vbhFF9xUVYmT8047Rkltv9uYrUeD+Zb73tmLa3X+P
+	 x/HiDwavMHES4+ntmslUVPcs8gnFRaTU5G21EQolLwE4z9vMiwqkSvlWc+91QQaN5f0Fq2RdTv6d
+	 kgQS/RiBi+IT66er1DrDdCrX73DhZAEfVWjUYQGgr2utVxIvDeUPEm4tEowjSQ/vP/dCswSKH+7+
+	 P2grIQG06H6191uUs7dkd/75yh0x03zWEXZgef5cTni8IL/VyjOoUOeMSpZLthfYL7g7e6L82If3
+	 v8BKD9Il3f/JaAVkZgaCiP8KC6nPgUiH54CzPHyj5yDDRHwcNUJoTQfLKrC+90Sldxv+R2r7Mtxr
+	 m5BfKP
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+From: Edward Adam Davis <eadavis@qq.com>
+To: sashiko-bot@kernel.org
+Cc: linux-hwmon@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	me@jackdoan.com,
+	savicaleksa83@gmail.com,
+	syzkaller-bugs@googlegroups.com
+Subject: [PATCH v4] hwmon: (aquacomputer_d5next) valid the data size before reading the sensor data
+Date: Sat, 22 Aug 2026 19:34:35 +0800
+X-OQ-MSGID: <20260822113434.83716-2-eadavis@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260822092616.B9B121F000E9@smtp.kernel.org>
+References: <20260822092616.B9B121F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Sat, 22 Aug 2026 12:23:35 +0200
-Helge Deller <deller@gmx.de> wrote:
+The user-forged sensor data is only 65 bytes long; however, aqc_raw_event()
+fails to handle cases where the sensor data length is too small when reading
+the data, resulting in [1] during the read process.
 
-> CC'ing the linux-omap mailing list, in the hope someone with omap
-> knowledge can judge if the sashiko AI bot is right with his analysis that
-> acx565akm_transfer() might be wrong on big-endian systems?
-> 
+Add a data size check, if the size is less than that required for the
+specific data item to be read, abort the sensor data read operation.
 
-well, it sits behind the spi interface, which should abstract hw oddities.
-So wie should not ask about omap specific stuff.
+[1]
+BUG: KASAN: slab-out-of-bounds in aqc_raw_event+0x213e/0x25d0 drivers/hwmon/aquacomputer_d5next.c:1327
+Read of size 2 at addr ffff888108aba257 by task swapper/1/0
+Call Trace:
+ get_unaligned_be16 include/linux/unaligned.h:48 [inline]
+ aqc_raw_event drivers/hwmon/aquacomputer_d5next.c:1345 [inline]
+ aqc_raw_event+0x213e/0x25d0 drivers/hwmon/aquacomputer_d5next.c:1327
+ __hid_input_report.constprop.0+0x319/0x470 drivers/hid/hid-core.c:2168
+ hid_irq_in+0x55d/0x710 drivers/hid/usbhid/hid-core.c:287
+ __usb_hcd_giveback_urb+0x38d/0x610 drivers/usb/core/hcd.c:1657
+ usb_hcd_giveback_urb+0x3ca/0x4a0 drivers/usb/core/hcd.c:1741
 
-BTW: same issue in drm variant of the driver.
+Fixes: 0e35f63f7f4e ("hwmon: add driver for Aquacomputer D5 Next")
+Reported-by: syzbot+9ee5f5dc18673d6b2f37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9ee5f5dc18673d6b2f37
+Tested-by: syzbot+9ee5f5dc18673d6b2f37@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+---
+v1 -> v2: change to check the data item and update comments
+v2 -> v3: check all sub items and update subject
+v3 -> v4: add speed and flow check
 
-> On 8/22/26 11:58, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] Hardcoded little-endian assumption when transmitting the command byte breaks the driver on big-endian architectures.
-> > --
-> > 
-> > --- Patch [1]: [PATCH] fbdev: omapfb: Fix __be32 sparse warning in panel_enabled() ---
-> > commit a9e06be56fc1b74d7c6e76133e9ea1c25675a615
-> > Author: Helge Deller <deller@gmx.de>
-> > Subject: fbdev: omapfb: Fix __be32 sparse warning in panel_enabled()
-> > 
-> > This commit resolves a sparse warning in panel_enabled() by explicitly
-> > reading the display status into a __be32 variable. It then converts this
-> > value to CPU endianness using __be32_to_cpu() before checking the bits.
-> > 
-> > Closes: https://lore.kernel.org/oe-kbuild-all/202608211811.lps93xao-lkp@intel.com/
-> >   
-> >> diff --git a/drivers/video/fbdev/omap2/omapfb/displays/panel-sony-acx565akm.c b/drivers/video/fbdev/omap2/omapfb/displays/panel-sony-acx565akm.c
-> >> index 8f430d9e80549..0202ca8cbfc23 100644
-> >> --- a/drivers/video/fbdev/omap2/omapfb/displays/panel-sony-acx565akm.c
-> >> +++ b/drivers/video/fbdev/omap2/omapfb/displays/panel-sony-acx565akm.c
-> >> @@ -210,12 +210,13 @@ static void set_display_state(struct panel_drv_data *ddata, int enabled)
-> >>   
-> >>   static int panel_enabled(struct panel_drv_data *ddata)
-> >>   {
-> >> +	__be32 disp_status_be;
-> >>   	u32 disp_status;
-> >>   	int enabled;
-> >>   
-> >>   	acx565akm_read(ddata, MIPID_CMD_READ_DISP_STATUS,
-> >> -			(u8 *)&disp_status, 4);  
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but while looking at endianness fixes in this
-> > file, does acx565akm_transfer() have a similar issue on big-endian
-> > architectures?
-> > 
-> > When acx565akm_read() calls acx565akm_transfer(), it passes the command as
-> > an int:
-> > 
-> > drivers/video/fbdev/omap2/omapfb/displays/panel-sony-acx565akm.c:acx565akm_transfer() {
-> >      ...
-> >      cmd &=  0xff;
-> >      x->tx_buf = &cmd;
-> >      x->bits_per_word = 9;
-> >      x->len = 2;
-> >      ...
-> > }
-> > 
-> > Because bits_per_word > 8, the SPI controller reads the buffer as a 16-bit
-> > integer. Taking the address of a 32-bit int on a little-endian system yields
-> > the command byte in the lowest bits. However, on big-endian systems, &cmd
-> > points to the most significant bytes (which are 0x00).
-> > 
-> > Will the SPI controller end up transmitting 0x0000 instead of the requested
-> > command on big-endian architectures?
-> > 
-Probably yes, at least if I do not see uint32 * as a pointer in the tx_buf there.
-The more interesting thing would be the 9th bit. There would be some requirement
-neded and documented in the spi_transfer struct to put things into 32bit words
-if bits per word is > 8. Nobody would forbid using u16.
+ drivers/hwmon/aquacomputer_d5next.c | 104 ++++++++++++++++++++++++++++
+ 1 file changed, 104 insertions(+)
 
-Regards,
-Andreas
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 1ca70e726298..89c9fc0c77e5 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -1324,6 +1324,107 @@ static const struct hwmon_chip_info aqc_chip_info = {
+ 	.info = aqc_info,
+ };
  
++/* aqc_raw_data_valid()
++ * Does not support special-case sensor readings data size check
++ */
++static bool aqc_raw_data_valid(struct aqc_data *priv, int size)
++{
++	int off, fan_off, i;
++	char *msg;
++
++	if (!priv)
++		return false;
++
++	/* +1 for get_unaligned_be16(), it reads 2 bytes */
++	off = priv->serial_number_start_offset + SERIAL_PART_OFFSET + 1;
++	if (off >= size) {
++		msg = "serial number start offset";
++		goto invalid;
++	}
++
++	off = priv->firmware_version_offset + 1;
++	if (off >= size) {
++		msg = "firmware version offset";
++		goto invalid;
++	}
++
++	/* Physical temperature sensor readings data size check*/
++	for (i = 0; i < priv->num_temp_sensors; i++) {
++		off = priv->temp_sensor_start_offset + i * AQC_SENSOR_SIZE + 1;
++
++		if (off >= size) {
++			msg = "temp sensor start offset";
++			goto invalid;
++		}
++	}
++
++	/* Virtual temperature sensor readings data size check*/
++	for (i = 0; i < priv->num_virtual_temp_sensors; i++) {
++		off = priv->virtual_temp_sensor_start_offset +
++		      i * AQC_SENSOR_SIZE + 1;
++
++		if (off >= size) {
++			msg = "virtual temp sensor start offset";
++			goto invalid;
++		}
++	}
++
++	/* Fan speed and related readings data size check */
++	if (!priv->fan_structure)
++		goto flow;
++
++	for (i = 0; i < priv->num_fans; i++) {
++		fan_off = priv->fan_sensor_offsets[i] + 1;
++		off = fan_off + priv->fan_structure->speed;
++		if (off >= size) {
++			msg = "fan speed offset";
++			goto invalid;
++		}
++
++		off = fan_off + priv->fan_structure->power;
++		if (off >= size) {
++			msg = "fan power offset";
++			goto invalid;
++		}
++
++		off = fan_off + priv->fan_structure->voltage;
++		if (off >= size) {
++			msg = "fan voltage offset";
++			goto invalid;
++		}
++
++		off = fan_off + priv->fan_structure->curr;
++		if (off >= size) {
++			msg = "fan curr offset";
++			goto invalid;
++		}
++	}
++
++flow:
++	/* Flow sensor readings data size check */
++	for (i = 0; i < priv->num_flow_sensors; i++) {
++		off = priv->flow_sensors_start_offset + i * AQC_SENSOR_SIZE + 1;
++		if (off >= size) {
++			msg = "flow sensors start offset";
++			goto invalid;
++		}
++	}
++
++	if (priv->power_cycle_count_offset != 0) {
++		off = priv->power_cycle_count_offset + 3;
++		if (off >= size) {
++			msg = "power cycle count offset";
++			goto invalid;
++		}
++	}
++
++	return true;
++invalid:
++	pr_debug("data size (%d) is less than the %s, %s\n",
++		 size, msg, __func__);
++	return false;
++}
++
+ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
+ {
+ 	int i, j, sensor_value;
+@@ -1334,6 +1435,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 
+ 	priv = hid_get_drvdata(hdev);
+ 
++	if (!aqc_raw_data_valid(priv, size))
++		return 0;
++
+ 	/* Info provided with every report */
+ 	priv->serial_number[0] = get_unaligned_be16(data + priv->serial_number_start_offset);
+ 	priv->serial_number[1] = get_unaligned_be16(data + priv->serial_number_start_offset +
+-- 
+2.43.0
+
