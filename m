@@ -1,113 +1,166 @@
-Received: from mta1.migadu.com (out-204.mta1.migadu.com [95.215.58.204])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3B0286D4D
-	for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 14:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B627EC7C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 18:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787493614; cv=none; b=VHVRyKucUkySW+IRgLEm0cwJbfNRBDmlrI+FdfHgHCJgXBnyRPYXky5D0sueF8QOOKl15DvVRISBSReiO6SniuATG8Lq8dNWzFbpVFNlx9gxaUJwj3O6v7W43NBwVOPT8G7C+AHz9caUA+Cp1e8hYJUOhCK/6X9jROwwgnCs/84=
+	t=1787508991; cv=none; b=qJpeGrj1tNePf0Mj9uRnkZbnJfiWRbb8WcJeuOo3l67raDGryJ9asF/QTv6EcJ9htnaUXdrerBjVapI7Wp+Oeehuh05nMYBVkv5i5x5aY0QrfbrqGq1RjYCHEtvqounUZhywuGulWPRnnL6EWuahq1Ez84uvBm8b+9TvUsQJJyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787493614; c=relaxed/simple;
-	bh=ZHQPcbpeluN4Ir2HuHNeiOJd/qgEjE5WelnXY52IcA4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NJNjgRparTLaTq4QREjF/wr3L6O6wlt/OPRzjH6C7yxsbW9OuYs4c4GFvMfnTAHv6zGbmTrYd2YqbDqk3bJXE4aEuddrW8WrG6JBizJtHTgdGkWWug5zogHecejMMoNIU/E4w6611rriafLqB1U2NYpOj4/4G+xKOYDu54h4egY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=NNSuubZU; arc=none smtp.client-ip=95.215.58.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787508991; c=relaxed/simple;
+	bh=LpxMiqBeM9DqdWGKvg6p3ohK3X1JMmpAnTcT9fKnb1Q=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
+	 References:In-Reply-To; b=Qp1b7eIUPP51CM5fxwOVh3exmsKHBZy6DqIaWLOshnOVTE2oOnxH1PYgVJ+3x2mkBDCMm/R7/9BKmOpFntYdQG0Mzi2RqA5KfYEDrIuQZoCcw62k7B1EnMVmb/m5AbC/oKXQWpN7sasoMkqc7BbvdxNTPv3IuDw1mmDMjK/jyfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PGFV9ba1; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NNSuubZU"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ZHQPcbpeluN4Ir2HuHNeiOJd/qgEjE5WelnXY52IcA4=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787493607; v=1; x=1788098407;
- b=NNSuubZU8xjYAUhLeN64C/lh/TTTF4Us8fZoybMYUbMI/TvhKdGEY7B+Rf1Q75oXe2PCnAtZ
- K9PZq5fEAtuapuIYADvvOmETOz6E7x986yAV9fvAGynArU5v34pw6bEFS/1vdE6NaxqlNEBGFkm
- HwCgXQf3UPoy5OTdatVdyvjA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f42.google.com (209.85.167.42)
-	by smtp.migadu.com with ESMTPS id 732019a27d6b8760;
-	Sun, 23 Aug 2026 13:59:57 +0000
-X-Mizu-Trace-ID: 732019a27d6b8760
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5b2a8173142so5202e87.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 06:59:57 -0700 (PDT)
-X-Gm-Message-State: AFuF++lnKJd41AJWlPcAhCc4EcSFjoWn13X97aX+UB3EUDq45GbqrI0P
-	B6P0+KR5U0ZcEXD+F6SVipGYMz5cOelZIhKnVhlRHmha/W7ZyvfEu5VfFF5r3Fd23Nredpp4GxN
-	znkzS9AFjbo4CpqtVnPnMjjeXk615VsIWGGQpIbnK
-X-Received: by 2002:a05:6512:23a5:b0:5a4:ec:53d9 with SMTP id
- 2adb3069b0e04-5b48c2f7891mr125883e87.1.1787493596422; Sun, 23 Aug 2026
- 06:59:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PGFV9ba1"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c214321dc32so533677066b.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 11:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787508988; x=1788113788; darn=lists.linux.dev;
+        h=in-reply-to:references:cc:subject:from:to:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=isdF4JSpsa/RqqbLXwBpHx2medr6i9gKnOCHIoCrxLE=;
+        b=PGFV9ba1coRHv8seGv0/iuxtTGBuIWhYJdNcDgtiTM3Ca9qIMj9gkaAq8wAehR68dM
+         SirbUWuKuy5TDZURTahnhE11PRcqqMqsl+/w0Okfh0GlXj9Sw7nMT1NuFFXMZbmtrI8I
+         p6QvV1HTMghGtIvOYcBc1uUTsUKFSZwuWYiW8o0YHdCrV4agI4e2+MyJ7B1jO8QmcU4q
+         bNjQyqoq8QF1ItTbdI4Z0g1SZKn7mYE+a4lmhh60eTlMDb3cI60hQnUGzlUlNIjYf+fN
+         /srMSDDd+wOJAA3oLNgrlC0L0RjmgPfqrTMu1e3lp4w3Kf+XJcFNrMLApCMEaGOjOgRf
+         XKdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787508988; x=1788113788;
+        h=in-reply-to:references:cc:subject:from:to:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=isdF4JSpsa/RqqbLXwBpHx2medr6i9gKnOCHIoCrxLE=;
+        b=bXjVIiFyJdkaChsyOltb0G7Sq6Lph2jZ7pPI1i+/9gQjsPqNeSNgqKiIYpK0IwSRKk
+         dHUDrcdv9W6OKh+Usi1kS6F5r3gnwtUyw455yxPmzz/prjc1igCge7DQpyFTxjTXne9c
+         Kh8PKGtjWnQGR+LzOW/tx6Tr+RqayYHOppmVM6M0kW6OvJK1lP/n/zcHiY6XV3Xo+qj0
+         LmcvH3+Upg2nzmW0nkmW/KvB1Kwdo6KWiFC3cUomjAhrppgFO62vbyWNcYQv9M13saSE
+         ng3SNVkAUdgrbnEZO0m0KsDT7IRdCooIS+Bvgq9glWZMx8gCS2XILpY7+d/5rAgM6b0h
+         yt1w==
+X-Gm-Message-State: AFuF++lind4tHsfSjN1Xhuxxx7Ea76syxDWN8B0F1hexICCLldsGOvoI
+	Hb5rJvZgWiceZnYVppT7R4ISJBWkXh8ErPJ1xYBS+e9/o1jYJrVWo8JdiLMgDA==
+X-Gm-Gg: AR+sD12sL52Je70KZfp2hzzNZoJs5z8GEOMbIxUNLU4igrGb2wSu4UjIhWHh0Ozy7nV
+	ds+eqmRHatMifWJeCNwApjlDthZ2aKpB5/s+cRbGTYVLryJQnO1dweG2MtJXcC/qR0TL7UJfpYK
+	hESE0xynwxJjpvSN2P6foq3KritKgw2hGmY1a9VU9lRUUzkwhgd/eVWUbw71FZZSOJPc9WfvISI
+	qAPf43LxUEwosFdG182CDdRojGQmc57d6os1+sH9JqCJM3+g+JI6IGTsERBenrBfbdvpXkVvnQU
+	NP2kLiikCVVkX+leeyWtrnP2Nel1ob/b2VjqZSlDDrObgxwHRGHxtrHXp6zXbtFg8DxQY74NhYl
+	8BLdkRmdepOHyPdbw3K1F+/49Y/P8W9vEHUO016Ld0f6g/0h2lfsjwCQ/ZHL51zz/lxNjZmmWdD
+	LESPyJsjDvaBgktMY5uDDRvghi4KSFe5h2XENDBgKSDUEbC/weOGSM6KYG1ZhJLrXRhA3Kz5MTs
+	g==
+X-Received: by 2002:a17:906:100a:20b0:c16:8799:fcb4 with SMTP id a640c23a62f3a-c246a6a93fbmr1663128166b.19.1787508987743;
+        Sun, 23 Aug 2026 11:16:27 -0700 (PDT)
+Received: from localhost ([2001:4bb8:148:9afb:9d58:e892:a563:60d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2496734bfcsm877491966b.43.2026.08.23.11.16.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Aug 2026 11:16:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260820125053.2951078-1-fuad.tabba@linux.dev>
- <20260820125053.2951078-2-fuad.tabba@linux.dev> <20260820130616.1A7241F000E9@smtp.kernel.org>
- <CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com> <87ik51np8e.wl-maz@kernel.org>
-In-Reply-To: <87ik51np8e.wl-maz@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Sun, 23 Aug 2026 14:59:20 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyaKjHpBHG3ZmwTPj93wZLa5pSVzYNT6YpboE40NaDERA@mail.gmail.com>
-X-Gm-Features: AcwNN1XBeF4e-msnXL6i8e5TMflxrBt2ySrg3N_SRZJ1SYji8_1wNHZKc6XIADQ
-Message-ID: <CA+EHjTyaKjHpBHG3ZmwTPj93wZLa5pSVzYNT6YpboE40NaDERA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] irqchip/gic-v4: Clear the domain and fwnode pointers
- after freeing them
-To: Marc Zyngier <maz@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 23 Aug 2026 20:16:25 +0200
+Message-Id: <DKWJ1VMYAVW6.21J53768947YI@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
+ <javier.carrasco.cruz@gmail.com>, "Guenter Roeck" <linux@roeck-us.net>
+From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
+Subject: Re: [PATCH v2 4/4] hwmon: chipcap2: serialize access to
+ low/high_alarm indicators
+Cc: <linux-hwmon@vger.kernel.org>
+X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
+References: <20260823-chipcap2_locks-v2-0-6a26c8e9e2fc@gmail.com>
+ <20260823-chipcap2_locks-v2-4-6a26c8e9e2fc@gmail.com>
+ <20260823180616.1D53D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260823180616.1D53D1F000E9@smtp.kernel.org>
 
-Hi Marc,
-
-On Sun, 23 Aug 2026 at 10:44, Marc Zyngier <maz@kernel.org> wrote:
-...
-> > The actual patch would factor the shared teardown tail into a helper
-> > rather than duplicate it.
-> >
-> > If you (Marc) agree, I'll send this as a separate patch (after testing
-> > it), or as part of a possible respin in a couple of days.
->
-> Why isn't this as simple as:
->
-> diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
-> index ed236f083f0d7..57a16530801c0 100644
-> --- a/arch/arm64/kvm/vgic/vgic-v4.c
-> +++ b/arch/arm64/kvm/vgic/vgic-v4.c
-> @@ -333,6 +333,8 @@ void vgic_v4_teardown(struct kvm *kvm)
->                 free_irq(irq, vcpu);
->         }
->
-> +       /* Make sure we free all VM-wide, per-CPU resources */
-> +       its_vm->nr_vpes = aromic_read(&kvm->online_vcpus);
->         its_free_vcpu_irqs(its_vm);
->         kfree(its_vm->vpes);
->         its_vm->nr_vpes = 0;
-
-With the typo fixed, it is ;), but on top of patch 3 of this series.
-Without that, a vgic_init() failing after vgic_v4_init() succeeded
-leaves the vPE array behind while precreate still admits vCPUs, so
-online_vcpus can outgrow the array. If you agree, I'll add it after
-patch 3, noting the dependency in the commit message when I respin.
-
-Separately, and I might be missing something: is there anything
-stopping KVM_CREATE_VCPU from running concurrently with vgic_init()?
-Coming from KVM_DEV_ARM_VGIC_CTRL_INIT it makes the same
-created_vcpus/online_vcpus comparison as kvm_vgic_create(), but under
-the config_lock alone, where kvm_vgic_create() holds kvm->lock and the
-vCPU mutexes too. And precreate admits vCPUs until dist->initialized
-is set at the end, so if one lands in the middle, vgic_v4_init() sizes
-vpes[] from one read of online_vcpus and fills it from another. If
-there isn't, I'll send a fix as a separate patch.
-
-Cheers,
-/fuad
-
-> Thanks,
->
->         M.
->
+On Sun Aug 23, 2026 at 8:06 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The `scoped_guard` macro is improperly terminated with a trailin=
+g semicolon, resulting in an empty critical section that leaves the alarm s=
+tate updates unprotected.
 > --
-> Jazz isn't dead. It just smells funny.
+>
+> --- Patch [4]: [PATCH v2 4/4] hwmon: chipcap2: serialize access to low/hi=
+gh_alarm indicators ---
+> commit a0d28bd8208a1d69e597290c8ebb0fdf0731e68b
+> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+>
+> hwmon: chipcap2: serialize access to low/high_alarm indicators
+>
+> This commit attempts to serialize concurrent access to the hardware monit=
+oring
+> alarm indicators. It introduces scoped_guard usage within the threaded
+> interrupt handlers to protect the low and high alarm state updates.
+>
+>> diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+>> index 57d22d65612c2..0a56c55e93942 100644
+>> --- a/drivers/hwmon/chipcap2.c
+>> +++ b/drivers/hwmon/chipcap2.c
+> [ ... ]
+>> @@ -495,9 +495,11 @@ static irqreturn_t cc2_low_interrupt(int irq, void =
+*data)
+>>  	struct cc2_data *cc2 =3D data;
+>>
+>>  	if (cc2->process_irqs) {
+>> +		scoped_guard(hwmon_lock, cc2->hwmon);
+>
+> [Severity: High]
+> Does this trailing semicolon create an empty critical section?
+>
+> Because scoped_guard expands to a for loop, placing a semicolon immediate=
+ly
+> after it makes the loop body empty. This means the lock is acquired and
+> immediately released.
+>
+> The subsequent assignment to cc2->rh_alarm.low_alarm executes entirely ou=
+tside
+> the lock, leaving the data race unmitigated. Should the assignment be wra=
+pped
+> in a compound block without the trailing semicolon?
+>
+
+This feedback is correct. The trailing semicolon is for guard() and not
+scoped_guard(). I will fix that for V3.
+
+>> +			cc2->rh_alarm.low_alarm =3D true;
+>> +
+>>  		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
+>>  				   hwmon_humidity_min_alarm, 0);
+>> -		cc2->rh_alarm.low_alarm =3D true;
+>>  	}
+>>
+>>  	return IRQ_HANDLED;
+>> @@ -508,9 +510,11 @@ static irqreturn_t cc2_high_interrupt(int irq, void=
+ *data)
+>>  	struct cc2_data *cc2 =3D data;
+>>
+>>  	if (cc2->process_irqs) {
+>> +		scoped_guard(hwmon_lock, cc2->hwmon);
+>
+> [Severity: High]
+> Does the same empty critical section issue apply here for the high_alarm
+> update?
+>
+
+Same here.
+
+>> +			cc2->rh_alarm.high_alarm =3D true;
+>> +
+>>  		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
+>>  				   hwmon_humidity_max_alarm, 0);
+>> -		cc2->rh_alarm.high_alarm =3D true;
+>>  	}
+>>
+>>  	return IRQ_HANDLED;
+
+Best regards,
+Javier
