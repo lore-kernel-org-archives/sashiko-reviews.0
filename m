@@ -1,155 +1,276 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67282853F3;
-	Sun, 23 Aug 2026 09:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787478257; cv=none; b=hjnw7/R6jJ9xcYvTo+6yhKfUjHP2WH3XqndMJe+ACW46JTPRhW9/2Et8EU9Gjawek/rU9+Ybn8YfKDc5kOP5+b7F6suGMMB0FghPGjq2t+w0HXcXF6i+aD+SPgOAXWgRu0JKfsDUI98wd0mylqj6BQiDdD5rolIXNM/If73fDaA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787478257; c=relaxed/simple;
-	bh=5jBgebcCXsD6azjR6ZepYpUAG+JKVIPMzh7LwI55EDE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=POSCybJFJ+Shq3p/COqcjWre4pAYSg6t8nmbw9RuT17LbCTQYmPEMzP23u7G4OOkRXtHuNiL19nOpb4xSkoQ5mhZvcSY7enUKZti4w9mUOZusGGilQ7irIXwegGiV2N/0MUUBInNHZFJxjcjIyIyXLFUIoAPHkldMSDxu75OGJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldhqJHbl; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D8C2F12DA
+	for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 10:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787482592; cv=pass; b=q6OC7Y3WUvO5ZZ1d5olTiUNCk2yn9YAEij34KptmxFJrXxx9sf4oQWU036JD/Od2ZTepIG9rGY3fRFaaxCkmhJ2HzeFOoaMSNCpWhi5EgC6Lt4V+MDxgI3t/3Ne7w9lqJaCosfqG5Mrd8Yx5FQxvZj0wgtMyEx8kgDXyfGKu8ZY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787482592; c=relaxed/simple;
+	bh=SmNKaO7P17AWUYHDPs/L+3XxiBghdvIE9KWFsLqkIl0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=JmLkXguU02Od7rnbyA2/OspFHdfq8E+j+xcezJDlw9TiTc9JzhLzq4lMvh/I43c+f4RZeamLblzQ+RfZosLrjtO2P1QrJfdy0AGkmj1zmGm2eNphwxI6zzo2GsEjrHEvOunMJbipOIF5McOMk7ggD7Ndf/wr7/fJd0Scfp0iJEw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com; spf=pass smtp.mailfrom=goldelico.com; dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=e7n9VUiN; dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=AZ7okH+L; arc=pass smtp.client-ip=85.215.255.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldhqJHbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223A41F000E9;
-	Sun, 23 Aug 2026 09:44:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787478255;
-	bh=MgCRRQExKQ1Adq0mlHstpjGTj+XuXxxBeLXFDXLoOW0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=ldhqJHbl3Vbw0vW2u+BVRit/jIf22EJCrxzmNgjqIotXSoFsmJeXQR815ULHeHoLN
-	 0F1/mwPuIkBhTKBiSyWo9hhYBoQeHjYxg/7sYVrIsfS8evdOWqlC2vBGktiSjRXXxZ
-	 IXMaa1vHp09a3EP9YsrXb5UCTl0gWtoO9KsUcH0hEqOfqcHHP4tDDmMKEoT7tkcg3d
-	 X+v861t3L8WWuDVciQfVlXGQxb3zYbRN7H9vP9ACKHLTxm2tSlAciwJpRiCsjPLf5N
-	 u31md802sayZyB3OMD8j8Eue9H1b+Tg+80a1m9uwkEKdJNK6/ZqzKQRD3Pqv1BXNV7
-	 8QCbu+/RInwig==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wy4kO-00000000OSH-3dc8;
-	Sun, 23 Aug 2026 09:44:12 +0000
-Date: Sun, 23 Aug 2026 10:46:41 +0100
-Message-ID: <87ik51np8e.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH 1/3] irqchip/gic-v4: Clear the domain and fwnode pointers after freeing them
-In-Reply-To: <CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
-References: <20260820125053.2951078-1-fuad.tabba@linux.dev>
-	<20260820125053.2951078-2-fuad.tabba@linux.dev>
-	<20260820130616.1A7241F000E9@smtp.kernel.org>
-	<CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="e7n9VUiN";
+	dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="AZ7okH+L"
+ARC-Seal: i=1; a=rsa-sha256; t=1787481868; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=ql/R557KTC8Qzd5rdtBpOA+AsSjI6ABoZkDpQk9wc8LfQ9k66aoixPufIrAy1d+sH1
+    O/YPDHspO9PFXR1IsONyYka25L4GpLxBSriQFXUomYyXuvu56DoGLpDvHcEvGSRSLCig
+    T5okY0bjMhAbEezfEVGXrmB60UbL2k7h2SWcY+16WezOu5nAw7B3kOf+JxySxWHUeFOD
+    irWz3vHf22LQ7Zq/xXdGjH9iOzb2LdrLC4I3Xw6ltpDAyUhPb6hkNJ/APbh/s/HTQh9q
+    LRMnHN34YLkkwRxlYbo3ppHdmEvvkFNbpfPFBzpc3fRPAs+r2qM4Qn8XZ8I1F7wG2/do
+    JWfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1787481868;
+    s=strato-dkim-0002; d=strato.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=rMPaLIi+e8I9vdpbb+h8fITM3Z1acOB7L8F8JGiRZe0=;
+    b=YjH8QBQ6pDL4+7WiH6A+lpaUM090F5H9gBuhf5E3BFtLBh9h2yKPA3s26ZmmxEg3ec
+    12d9zT4QYz9vYgMhoTbrHwo1zV46L40xuX0i+WJ701KwFSKn9cA1RCrKr2u5MSDHXPwX
+    R8/SVrWglfvC8btCyGEdpBvJXDk0n0J1lifZyuJqdGAtptiXuBDp6zbEYXy643DYALCV
+    G+kXt4Vz3MeX4SVYgmJ/OM3fZNq6kZKRypEGkb5lOOb87BnCHyEpuxIFG9Gvkt61rvPV
+    IlxiC6RG7Wk1IiA3TVBkCf9KIRPyH0vVsZzNl5xT3rNY1pIvCjt9ceaGOtBtXWwvnQ/L
+    sXWg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1787481868;
+    s=strato-dkim-0002; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=rMPaLIi+e8I9vdpbb+h8fITM3Z1acOB7L8F8JGiRZe0=;
+    b=e7n9VUiNHjSn7VfeS0vmKNfhUFHCUJHeMXvYuFNEqbyffFsF7ey+h0HNBgeTwirBzl
+    6aalSfIAg5kFzvufKWiMeYV87uCTxsnfMOOv1mLVDzWd2WpL47/F2q3EOW79wLKWXHlF
+    g1UfP3l5WzUoKnyyTq3NI+k7z7DiKo75ZTnI3G2I1TUteBBAENdg7AZadq5+NJU+5fNK
+    6OmacbGu7N7ofNMowkxyGmBj3NwO9J8feOSoc7dPFZxZZf7zmkPN2yM2GqGsGo4lwQFH
+    pxAhYA/ljZ78jwiTjkMUB7SYsbyG5mybE4Khf5UnPg3zy9IVQOPGRzhrvm3g2/YGowjh
+    0yAQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1787481868;
+    s=strato-dkim-0003; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=rMPaLIi+e8I9vdpbb+h8fITM3Z1acOB7L8F8JGiRZe0=;
+    b=AZ7okH+L3QEF/7vGjXDAkk151SWtBze+mpj7KM1CWUKI8AWaBEeUZzFl5aKpomCm2g
+    QC3SPo6nWg/nBce1FgBg==
+X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrQ25oKnciHHK5OAyYE8yLD5e6WBWpu+g6xSmk="
+Received: from smtpclient.apple
+    by smtp.strato.de (RZmta 55.6.2 AUTH)
+    with ESMTPSA id Qfefb327NAiRWqV
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
+	(Client did not present a certificate);
+    Sun, 23 Aug 2026 12:44:27 +0200 (CEST)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
+Subject: Re: [PATCH] drm/ingenic: fix bridge allocation
+From: "H. Nikolaus Schaller" <hns@goldelico.com>
+In-Reply-To: <20260823094523.8E96C1F000E9@smtp.kernel.org>
+Date: Sun, 23 Aug 2026 12:44:17 +0200
+Cc: dri-devel@lists.freedesktop.org,
+ Andreas Kemnade <akemnade@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4B29351A-5DEE-436C-8D1B-6558F28DAEFF@goldelico.com>
+References: <400ba2fe0d4f76484e929d2efaa32f67a940163a.1787477392.git.hns@goldelico.com>
+ <20260823094523.8E96C1F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3826.700.81.1.8)
 
-On Thu, 20 Aug 2026 15:11:03 +0100,
-Fuad Tabba <fuad.tabba@linux.dev> wrote:
-> 
-> Oh Sashiko, here we ago again...
-> 
-> On Thu, 20 Aug 2026 at 14:06, <sashiko-bot@kernel.org> wrote:
-> ...
-> > [Severity: High]
-> > This is a pre-existing issue, but does this function permanently leak IRQs
-> > and SGI domains?
-> >
-> > In arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_init(), KVM intentionally truncates
-> > dist->its_vm.nr_vpes upon failure to allocate VPE IRQs:
-> >
-> >     dist->its_vm.nr_vpes = i;
-> >
-> > This limits the teardown loop in vgic_v4_teardown(), which later calls
-> > its_free_vcpu_irqs() with the fatally truncated nr_vpes value.
-> >
-> > Because its_free_vcpu_irqs() relies on vm->nr_vpes to free the IRQ hierarchy
-> > and SGI domains originally allocated for all VCPUs, the truncation causes a
-> > partial free.
-> 
-> Looks like a bug indeed...
-> 
-> I think the problem is that vgic_v4_init() overloads its_vm.nr_vpes:
-> it truncates the count to bound the free_irq() loop, but
-> its_free_vcpu_irqs() reads the same count and under-frees what
-> its_alloc_vcpu_irqs() allocated at and above the failure index.
-> 
-> The fix I have in mind keeps the two counts apart: teardown frees
-> everything allocated, and free_irq() only touches the requested
-> doorbells. Marc, what do you think? Something like this (not tested):
-> 
-> @@ vgic_v4_init(), on vgic_v4_request_vpe_irq() failure @@
->                  ret = vgic_v4_request_vpe_irq(vcpu, irq);
->                  if (ret) {
->                          kvm_err("failed to allocate vcpu IRQ%d\n", irq);
-> -                        /*
-> -                         * Trick: adjust the number of vpes so we know
-> -                         * how many to nuke on teardown...
-> -                         */
-> -                        dist->its_vm.nr_vpes = i;
->                          break;
->                  }
->          }
-> 
-> -        if (ret)
-> -                vgic_v4_teardown(kvm);
-> +        if (ret) {
-> +                /* Undo the doorbells we requested (0..i-1)... */
-> +                while (--i >= 0) {
-> +                        int db = dist->its_vm.vpes[i]->irq;
-> +                        irq_clear_status_flags(db, DB_IRQ_FLAGS);
-> +                        free_irq(db, kvm_get_vcpu(kvm, i));
-> +                }
-> +                /* ...but free everything its_alloc_vcpu_irqs() allocated. */
-> +                its_free_vcpu_irqs(&dist->its_vm);
-> +                kfree(dist->its_vm.vpes);
-> +                dist->its_vm.nr_vpes = 0;
-> +                dist->its_vm.vpes = NULL;
-> +        }
-> 
->          return ret;
-> 
-> The actual patch would factor the shared teardown tail into a helper
-> rather than duplicate it.
-> 
-> If you (Marc) agree, I'll send this as a separate patch (after testing
-> it), or as part of a possible respin in a couple of days.
+(Response created with ChatGPT analyzing patch, drm subsystem, memory =
+management and Sahsiko comments)
 
-Why isn't this as simple as:
 
-diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
-index ed236f083f0d7..57a16530801c0 100644
---- a/arch/arm64/kvm/vgic/vgic-v4.c
-+++ b/arch/arm64/kvm/vgic/vgic-v4.c
-@@ -333,6 +333,8 @@ void vgic_v4_teardown(struct kvm *kvm)
- 		free_irq(irq, vcpu);
- 	}
- 
-+	/* Make sure we free all VM-wide, per-CPU resources */
-+	its_vm->nr_vpes = aromic_read(&kvm->online_vcpus);
- 	its_free_vcpu_irqs(its_vm);
- 	kfree(its_vm->vpes);
- 	its_vm->nr_vpes = 0;
+> Am 23.08.2026 um 11:45 schrieb sashiko-bot@kernel.org:
+>=20
+> Thank you for your contribution! Sashiko AI review found 4 potential =
+issue(s) to consider:
+>=20
+> New issues:
+> - [High] The patch introduces a lifecycle mismatch and memory leak by =
+using `devm_` allocations for a DRM bridge inside a component bind =
+function, while attaching it to a `drmm_`-managed encoder.
+> - [High] Falsely claiming DRM_BRIDGE_OP_EDID and DRM_BRIDGE_OP_DETECT =
+capabilities on a bridge that lacks the corresponding callback =
+implementations causes a NULL pointer dereference.
+>=20
+> Pre-existing issues:
+> - [High] Unhandled error pointer from =
+devm_drm_panel_bridge_add_typed() leads to invalid memory dereference.
+> - [High] atomic_check phase corrupts global driver state by directly =
+modifying ib->bus_cfg.
+> --
+>=20
+> --- Patch [1]: [PATCH] drm/ingenic: fix bridge allocation ---
+> commit caf3be8c5a53047a7d5ddaf2c5ee3db764a2f7fb
+> Author: H. Nikolaus Schaller <hns@goldelico.com>
+>=20
+> drm/ingenic: fix bridge allocation
+>=20
+> Bridge allocation API has changed and ingenic/drm was broken leading =
+to
+> a warning. This patch replaces the embedded drm_bridge structure with =
+a
+> pointer and uses devm_drm_bridge_alloc() to resolve the issue.
 
-Thanks,
+Thanks for the review.
 
-	M.
+- The devm_drm_bridge_alloc() lifecycle concern appears not to apply =
+here. The DRM bridge is refcounted, and drm_bridge_attach() takes a =
+reference, so the bridge is not simply freed when the device-managed =
+reference is released. The existing Ingenic component unbind path also =
+unregisters and shuts down the DRM device, allowing the bridge/encoder =
+chain to be cleaned up in the normal DRM lifecycle.
+- I agree with the DRM_BRIDGE_OP_EDID / DRM_BRIDGE_OP_DETECT finding; =
+these flags are not backed by callbacks in ingenic_drm_bridge_funcs and =
+will be removed in v2.
+- The devm_drm_panel_bridge_add_typed() error handling and the =
+ib->bus_cfg modification in atomic_check() are pre-existing issues and =
+are unrelated to this patch.
 
--- 
-Jazz isn't dead. It just smells funny.
+BR,
+Nikolaus
+>=20
+>=20
+>=20
+>> diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c =
+b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+>> index 738a80b2550ff..91fe0ee7ae9ad 100644
+>> --- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+>> +++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+>> @@ -802,7 +802,7 @@ static int ingenic_drm_bridge_attach(struct =
+drm_bridge *bridge,
+>> struct ingenic_drm_bridge *ib =3D to_ingenic_drm_bridge(encoder);
+>>=20
+>> return drm_bridge_attach(encoder, ib->next_bridge,
+>> - &ib->bridge, flags);
+>> + bridge, flags);
+>> }
+>>=20
+>> static int ingenic_drm_bridge_atomic_check(struct drm_bridge *bridge,
+>>   struct drm_bridge_state *bridge_state,
+>>   struct drm_crtc_state *crtc_state,
+>>   struct drm_connector_state *conn_state)
+>> {
+>> struct drm_display_mode *mode =3D &crtc_state->adjusted_mode;
+>> struct ingenic_drm_bridge *ib =3D =
+to_ingenic_drm_bridge(bridge->encoder);
+>>=20
+>> ib->bus_cfg =3D bridge_state->output_bus_cfg;
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but does modifying ib->bus_cfg here =
+break
+> the atomic contract?
+>=20
+> Since DRM atomic_check can be called for TEST_ONLY commits that are =
+meant
+> to be discarded, directly overwriting the global driver state here =
+corrupts
+> the display configuration if a real commit later relies on this =
+modified
+> state.
+>=20
+> [ ... ]
+>=20
+>> @@ -1316,10 +1316,26 @@ static int ingenic_drm_bind(struct device =
+*dev, bool has_components)
+>>=20
+>> drm_encoder_helper_add(encoder, &ingenic_drm_encoder_helper_funcs);
+>>=20
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but earlier in this same =
+ingenic_drm_bind()
+> function, what happens if the panel bridge allocation fails?
+>=20
+> if (panel) {
+> bridge =3D devm_drm_panel_bridge_add_typed(dev, panel,
+> DRM_MODE_CONNECTOR_DPI);
+> drm_panel_put(panel);
+> }
+>=20
+> If devm_drm_panel_bridge_add_typed() fails, it returns an ERR_PTR(). =
+This
+> unvalidated error pointer is saved into bridge, and eventually passed =
+into
+> drm_bridge_attach() as ib->next_bridge, where it will be dereferenced =
+and
+> panic the kernel. Should we check this with IS_ERR() here?
+>=20
+>> - ib->bridge.funcs =3D &ingenic_drm_bridge_funcs;
+>> + ib->bridge =3D devm_drm_bridge_alloc(priv->dev, struct drm_bridge,
+>> +   base, &ingenic_drm_bridge_funcs);
+>> + if (IS_ERR(ib->bridge)) {
+>> + ret =3D PTR_ERR(ib->bridge);
+>> + goto err_drvdata;
+>> + }
+>> +
+>> + ib->bridge->of_node =3D priv->dev->of_node;
+>> ib->next_bridge =3D bridge;
+>>=20
+>> - ret =3D drm_bridge_attach(encoder, &ib->bridge, NULL,
+>> + ib->bridge->ops =3D DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
+>=20
+> [Severity: High]
+> Does this bridge actually implement these operations?
+>=20
+> Setting DRM_BRIDGE_OP_EDID and DRM_BRIDGE_OP_DETECT advertises these
+> capabilities to the DRM core. However, the ingenic_drm_bridge_funcs
+> structure lacks the corresponding .detect, .edid_read, or .get_edid
+> callbacks.
+>=20
+> When the core initializes the bridge connector and queries its state,
+> it will unconditionally call these missing functions, leading to a =
+NULL
+> pointer dereference.
+>=20
+>> + ib->bridge->interlace_allowed =3D true;
+>> +
+>> + ret =3D devm_drm_bridge_add(priv->dev, ib->bridge);
+>> + if (ret) {
+>> + dev_err(dev, "Failed to register DRM bridge: %d\n", ret);
+>> + goto err_drvdata;
+>> + }
+>> +
+>> + ret =3D drm_bridge_attach(encoder, ib->bridge, NULL,
+>> DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>=20
+> [Severity: High]
+> Can these devm_ allocations cause a use-after-free or a memory leak on
+> unbind?
+>=20
+> Using devm_drm_bridge_alloc() and devm_drm_bridge_add() inside a =
+component
+> bind function ties the bridge's lifecycle to device removal, not =
+component
+> unbind. This means each bind/unbind cycle leaks memory and leaves =
+stale
+> bridges in the global DRM list.
+>=20
+> Additionally, the parent encoder is allocated via =
+drmm_encoder_alloc(),
+> tying its lifecycle to the DRM device, which can outlive the platform
+> device if userspace holds an open file descriptor. When the platform
+> device is removed, devres frees the bridge early, creating a UAF =
+hazard
+> when the DRM device later attempts to clean up its encoder bridge =
+chains.
+>=20
+>> if (ret) {
+>> dev_err(dev, "Unable to attach bridge\n");
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/400ba2fe0d4f76484e929d2efaa32f67a940163a.17=
+87477392.git.hns@goldelico.com?part=3D1
+
