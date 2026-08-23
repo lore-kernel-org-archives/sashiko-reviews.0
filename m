@@ -1,185 +1,155 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E2E1B808
-	for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 02:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787451369; cv=pass; b=G1VbZut820v9irUU82SnECeKDSOcYNvIC6czhi8jJXak9LRwYjs4zOJtvH+7mvDD5vX+JNxg2XmutFcIOG671SfBSJYJmzsmI+ebG4zQrNPdDkeLxaN5bA14Z8W93BcWRhReV3IRRNphW3EI3JRObaw952+tqyRAZ5aHWnvZXnk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787451369; c=relaxed/simple;
-	bh=C8Hi7dx4Dz9qbEIsmQHMoCO9ghAgOYPYVPNCRQu1bd8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fwMxK+VJ9+XNHwK6lTUv4i5on7XUzMf9CEB2rxFBg6an6JuTV/53SyQ9p6S6j6DXHA9EA2mZPlOdVi/4JBsmmtMP7ZFAG79JQEnQeZmBeJlVTYbjqxEgrBHXQ8wnT/am+UFD9pYsav6OoKRmJlBvdi/2KAGGNSbOGo0Ivct3Z2Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5zMdF+q; arc=pass smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67282853F3;
+	Sun, 23 Aug 2026 09:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787478257; cv=none; b=hjnw7/R6jJ9xcYvTo+6yhKfUjHP2WH3XqndMJe+ACW46JTPRhW9/2Et8EU9Gjawek/rU9+Ybn8YfKDc5kOP5+b7F6suGMMB0FghPGjq2t+w0HXcXF6i+aD+SPgOAXWgRu0JKfsDUI98wd0mylqj6BQiDdD5rolIXNM/If73fDaA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787478257; c=relaxed/simple;
+	bh=5jBgebcCXsD6azjR6ZepYpUAG+JKVIPMzh7LwI55EDE=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=POSCybJFJ+Shq3p/COqcjWre4pAYSg6t8nmbw9RuT17LbCTQYmPEMzP23u7G4OOkRXtHuNiL19nOpb4xSkoQ5mhZvcSY7enUKZti4w9mUOZusGGilQ7irIXwegGiV2N/0MUUBInNHZFJxjcjIyIyXLFUIoAPHkldMSDxu75OGJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldhqJHbl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5zMdF+q"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c214321dc32so450086766b.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 19:16:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787451366; cv=none;
-        d=google.com; s=arc-20260327;
-        b=g1T84d0cm5wqR6T/jb8PdoDEfVh4dM0yQPfySGJi6Llnuxy7C3lbHewKvna52sXvTi
-         HC+uinSeCvfys/JvW7Y+kpP2t24HRNxromdrKSWd/SX8azJQE19egIJo+pvwuEbMdQ3m
-         rf7o3DB252xbXJWx23gDPXsr8s8R29V1NxlVDe6U95ibj6u/IbvDGKgTNKVd5oQap2Zj
-         n8V30Y1+EVtc6TxfUp3IsTgdr1Evm1W8DtWrvkbwK1eVH/7lRB8RdKGvG9ZsguY2YK/J
-         q8/T/p499Cw5nYRj8eNBybNvqX5evGQNHp7DqHJZQkbfSfzmb/b+JbrvislY30KGavP+
-         gSZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=Us09/gQF6ahyllBIsVEPqdqZk7wEzDdiEKXkEKQ8uUDEi1AHLaIH/fPDEcsc21+2Ga
-         3oOLD4wrC4+E7FjYkNTFh0TH+x4++ncr1HTJvLXyreNJz8k2O4w35E2BA6vOcMl5nG2r
-         bVrGhCjhBYs2F7diIJnHSljZAUVm1nL2ftUzu1dZuHG3aRnY54FHF37yeEVk4zKj5k9y
-         /DZAO/qSPmlzSTGy8aG75WzGJzfK8z4+UNTcRon9abHjKViMmkj2Dh8Huf6dSuL7Jkk1
-         +YCpAwW3HxsOs9updnkCQpgOdyDduQ+5jmtE7Ft1c0yJLwQ0jShGBi6wLglGDz8/azoT
-         TtIw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787451366; x=1788056166; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
-        b=V5zMdF+qYTr4jmSvkZeaHmPRM0jsm/s4eLS9D1WNbt097t047sO9oaoZTPuWgFeeij
-         i4pP/2nL5XRf2z3EAFszWvyes8qsoT6Zd30uB4xl0diS9kDG+bkYdfZ9a4hpzG8O5C8A
-         d9urDKuj2URrYIxMbhYU6fpHvIL8Ycs7rXvdFJ0bKN7uxPaFWGyh0RNJzfqK9RIPBqDJ
-         Crft08zUPAjLt8YDHpf/k2u9nlbcctjSG8RueAj/CwPxnDz8d281vz+o+boc/IeDoF8e
-         pBECCiA869DUISD9d0OzvZ4l+itqVZIt8xaln5RmdJOa+Xq23Q9XGgOD6Es0zE9zvUCa
-         7RVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787451366; x=1788056166;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
-        b=as+NrIrwn87Drt46Nt/YuOdSPZZrPGhYv8K/XxH1oXi+tdZwPMtyQEzM28D3Etws1Z
-         vmxxnv7Xpowzb9zNrK0QV6AWUFN6GE9cLSXxik+5KCV3Yb+J8gfchcm7CH75/aKR3HCt
-         zHLPAhFZ5D1nWEY2Ki2kD9LGRo7CCe8XTr8USh1ixFMyZGKitTmyuHYmlJjnrM/v5rlw
-         x4tWR4S4h5XpgG0k9PxcnDe2CURvtj/dP0RHAOn/ZXlcwB9k+vA/7gOF2cD+FKGxjnU3
-         e2a1CB+gVXPRc/GUfuy6vhhIUWdBpPSDH3Ual5PlbAnnCoPP87ACUE8rlgyc8Hu/WdCH
-         UNvQ==
-X-Gm-Message-State: AFuF++keYMaT0i/jBvzzz+FZ5bc4+Xn+j6vx3BsR2gFNTMotSoVNn6eK
-	dLlY+cJ61MYZHkiMR+H86hIchmKhNrwAje8moVIq0BctFnLIVr3tlDExS6t9VhA7FWVVEe8Gl2k
-	CI2HQTsgIRychFS/PrFGRKlkQeNkIM2szw+J+F4M=
-X-Gm-Gg: AR+sD13xqGfi00O/ojs5gUuqjXNO0xO5ALsmgcqJx3+dXK8pmf0j2YsLk0+USzCv1B6
-	FhlUkmE/s0fL7C7PB0/zO+DPB3QKiBSLGsWX+VT980SL1MRRkT7OqLC4uoOpgS3HMQ5JgydPTUs
-	uJktXzThFHPipg2CKXyh6PU/LxjCwZr23/J0zrEMwbtErhthvDqOkINAKkKizeW1HgH9IfR+Xie
-	yddiJHoQEvlrP3tDiKKV3l43Rf9XdTk+ZUDDfPhEQt9AwD3oKRXCe53NBiJiQ8V13pjCAaM44RC
-	JlYUzVcaiNg1PuIwucXjTrF4da2Lp0ganoBbIZ/T/NP3TiWI3FHefSpMCDTpga2Eu/GGZO6Ii3w
-	w
-X-Received: by 2002:a17:907:9346:b0:c1a:5d49:f99d with SMTP id
- a640c23a62f3a-c246a3ab4c2mr2034017966b.7.1787451365510; Sat, 22 Aug 2026
- 19:16:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldhqJHbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223A41F000E9;
+	Sun, 23 Aug 2026 09:44:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787478255;
+	bh=MgCRRQExKQ1Adq0mlHstpjGTj+XuXxxBeLXFDXLoOW0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ldhqJHbl3Vbw0vW2u+BVRit/jIf22EJCrxzmNgjqIotXSoFsmJeXQR815ULHeHoLN
+	 0F1/mwPuIkBhTKBiSyWo9hhYBoQeHjYxg/7sYVrIsfS8evdOWqlC2vBGktiSjRXXxZ
+	 IXMaa1vHp09a3EP9YsrXb5UCTl0gWtoO9KsUcH0hEqOfqcHHP4tDDmMKEoT7tkcg3d
+	 X+v861t3L8WWuDVciQfVlXGQxb3zYbRN7H9vP9ACKHLTxm2tSlAciwJpRiCsjPLf5N
+	 u31md802sayZyB3OMD8j8Eue9H1b+Tg+80a1m9uwkEKdJNK6/ZqzKQRD3Pqv1BXNV7
+	 8QCbu+/RInwig==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wy4kO-00000000OSH-3dc8;
+	Sun, 23 Aug 2026 09:44:12 +0000
+Date: Sun, 23 Aug 2026 10:46:41 +0100
+Message-ID: <87ik51np8e.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH 1/3] irqchip/gic-v4: Clear the domain and fwnode pointers after freeing them
+In-Reply-To: <CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
+References: <20260820125053.2951078-1-fuad.tabba@linux.dev>
+	<20260820125053.2951078-2-fuad.tabba@linux.dev>
+	<20260820130616.1A7241F000E9@smtp.kernel.org>
+	<CA+EHjTzf4C6bdwTGWNN1HeapFWEFWm-AJtxi5gQKHekRS2n8Aw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260823010900.1730708-1-nickolay.lysenko@gmail.com>
- <20260823010900.1730708-4-nickolay.lysenko@gmail.com> <20260823011851.0213D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260823011851.0213D1F000E9@smtp.kernel.org>
-From: Mykola Lysenko <nickolay.lysenko@gmail.com>
-Date: Sat, 22 Aug 2026 19:15:53 -0700
-X-Gm-Features: AcwNN1V8XOzF03yXekhbA-aQZ_JhNkIvdx3R7Ce_2bgQP3RqOFMq2LFBYypxT_g
-Message-ID: <CAMtxOX3MwTE7C4nMdEpR1T16BX8L4TYRFc2uuk=RROXWJB7LBQ@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v6 3/9] selftests/bpf: factor the permissive-mode
- skip suffix into a helper
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Same finding as on v5 3/8, refuted there with a minimal Makefile:
-https://lore.kernel.org/bpf/CAMtxOX3f-u0cnDiXuHyxUuiMWwosC9sj3xmTDy-ATaFAKu=
-X4RA@mail.gmail.com/
-
-On Sat, Aug 22, 2026 at 6:18=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Missing space in the SKIP message for the LINK step causes merged=
- text output.
-> --
->
-> --- Patch [3]: [PATCH bpf-next v6 3/9] selftests/bpf: factor the permissi=
-ve-mode skip suffix into a helper ---
-> commit 0c0b26d03c8f590d99a07e3db037b9c093922751
-> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
->
-> selftests/bpf: factor the permissive-mode skip suffix into a helper
->
-> With BPF_STRICT_BUILD=3D0, eleven recipes append the same tail. This patc=
-h
-> factors the tail into skip_on_fail, parameterized by the SKIP tag, option=
-al
-> extra files to remove, and an optional note. Every call site is intended =
-to
-> keep its exact message and behavior.
->
-> > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selft=
-ests/bpf/Makefile
-> > index 8d71345c2e86c..04eea6ebc75cd 100644
-> > --- a/tools/testing/selftests/bpf/Makefile
-> > +++ b/tools/testing/selftests/bpf/Makefile
-> > @@ -48,6 +48,14 @@ SKIP_CRYPTO        ?=3D
-> >  BPF_STRICT_BUILD ?=3D 1
-> >  PERMISSIVE :=3D $(filter 0,$(BPF_STRICT_BUILD))
+On Thu, 20 Aug 2026 15:11:03 +0100,
+Fuad Tabba <fuad.tabba@linux.dev> wrote:
+> 
+> Oh Sashiko, here we ago again...
+> 
+> On Thu, 20 Aug 2026 at 14:06, <sashiko-bot@kernel.org> wrote:
+> ...
+> > [Severity: High]
+> > This is a pre-existing issue, but does this function permanently leak IRQs
+> > and SGI domains?
 > >
-> > +# Permissive-mode recipe suffix: on failure, remove the target, emit a
-> > +# SKIP marker and report success so the rest of the build continues.
-> > +# $(1) - SKIP tag (BPF, TEST, BENCH, SKEL, LINK, ...)
-> > +# $(2) - optional extra files to remove alongside the target
-> > +# $(3) - optional note appended to the SKIP message
-> > +skip_on_fail =3D $(if $(PERMISSIVE),|| { $(RM) $@ $(2); \
-> > +     printf '  %-12s %s\n' 'SKIP-$(1)' '$(notdir $@)$(if $(3), $(3))' =
-1>&2; })
->
-> [Severity: Low]
-> Does this formatting behave exactly as intended when the note is appended=
-?
->
-> Because GNU Make strips the leading space after the comma in the then-par=
-t
-> of the $(if) function, it appears that $(if $(3), $(3)) will strip the
-> leading space.
->
-> Would this result in appending the note directly to the target name witho=
-ut
-> any whitespace separation?
->
-> [ ... ]
->
-> > @@ -1018,8 +1008,7 @@ $(OUTPUT)/bench: $(OUTPUT)/bench.o \
-> >                $(OUTPUT)/usdt_2.o \
-> >                #
-> >       $(call msg,BINARY,,$@)
-> > -     $(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o =
-$@ $(if $(PERMISSIVE),|| \
-> > -             ($(RM) $@; printf '  %-12s %s\n' 'SKIP-LINK' '$(notdir $@=
-) (some benchmarks may have been skipped)' 1>&2))
-> > +     $(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o =
-$@ $(call skip_on_fail,LINK,,(some benchmarks may have been skipped))
->
-> [Severity: Low]
-> When this build fails in permissive mode on the bench target, the
-> skip_on_fail macro is called with the note as the third argument.
->
-> With the space-stripping behavior above, won't this result in the SKIP
-> message being formatted incorrectly as:
->
-> bench(some benchmarks may have been skipped)
->
-> instead of the previous behavior:
->
-> bench (some benchmarks may have been skipped)
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260823010900.17=
-30708-1-nickolay.lysenko@gmail.com?part=3D3
+> > In arch/arm64/kvm/vgic/vgic-v4.c:vgic_v4_init(), KVM intentionally truncates
+> > dist->its_vm.nr_vpes upon failure to allocate VPE IRQs:
+> >
+> >     dist->its_vm.nr_vpes = i;
+> >
+> > This limits the teardown loop in vgic_v4_teardown(), which later calls
+> > its_free_vcpu_irqs() with the fatally truncated nr_vpes value.
+> >
+> > Because its_free_vcpu_irqs() relies on vm->nr_vpes to free the IRQ hierarchy
+> > and SGI domains originally allocated for all VCPUs, the truncation causes a
+> > partial free.
+> 
+> Looks like a bug indeed...
+> 
+> I think the problem is that vgic_v4_init() overloads its_vm.nr_vpes:
+> it truncates the count to bound the free_irq() loop, but
+> its_free_vcpu_irqs() reads the same count and under-frees what
+> its_alloc_vcpu_irqs() allocated at and above the failure index.
+> 
+> The fix I have in mind keeps the two counts apart: teardown frees
+> everything allocated, and free_irq() only touches the requested
+> doorbells. Marc, what do you think? Something like this (not tested):
+> 
+> @@ vgic_v4_init(), on vgic_v4_request_vpe_irq() failure @@
+>                  ret = vgic_v4_request_vpe_irq(vcpu, irq);
+>                  if (ret) {
+>                          kvm_err("failed to allocate vcpu IRQ%d\n", irq);
+> -                        /*
+> -                         * Trick: adjust the number of vpes so we know
+> -                         * how many to nuke on teardown...
+> -                         */
+> -                        dist->its_vm.nr_vpes = i;
+>                          break;
+>                  }
+>          }
+> 
+> -        if (ret)
+> -                vgic_v4_teardown(kvm);
+> +        if (ret) {
+> +                /* Undo the doorbells we requested (0..i-1)... */
+> +                while (--i >= 0) {
+> +                        int db = dist->its_vm.vpes[i]->irq;
+> +                        irq_clear_status_flags(db, DB_IRQ_FLAGS);
+> +                        free_irq(db, kvm_get_vcpu(kvm, i));
+> +                }
+> +                /* ...but free everything its_alloc_vcpu_irqs() allocated. */
+> +                its_free_vcpu_irqs(&dist->its_vm);
+> +                kfree(dist->its_vm.vpes);
+> +                dist->its_vm.nr_vpes = 0;
+> +                dist->its_vm.vpes = NULL;
+> +        }
+> 
+>          return ret;
+> 
+> The actual patch would factor the shared teardown tail into a helper
+> rather than duplicate it.
+> 
+> If you (Marc) agree, I'll send this as a separate patch (after testing
+> it), or as part of a possible respin in a couple of days.
+
+Why isn't this as simple as:
+
+diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
+index ed236f083f0d7..57a16530801c0 100644
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -333,6 +333,8 @@ void vgic_v4_teardown(struct kvm *kvm)
+ 		free_irq(irq, vcpu);
+ 	}
+ 
++	/* Make sure we free all VM-wide, per-CPU resources */
++	its_vm->nr_vpes = aromic_read(&kvm->online_vcpus);
+ 	its_free_vcpu_irqs(its_vm);
+ 	kfree(its_vm->vpes);
+ 	its_vm->nr_vpes = 0;
+
+Thanks,
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
