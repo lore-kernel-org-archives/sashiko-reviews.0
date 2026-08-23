@@ -1,184 +1,185 @@
-Received: from LO3P265CU004.outbound.protection.outlook.com (mail-uksouthazon11020106.outbound.protection.outlook.com [52.101.196.106])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B0B2E2840
-	for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 20:47:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.196.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E2E1B808
+	for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 02:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787431639; cv=fail; b=YDhBbFzSqP/IaR2f9a0Ix0poDrRzc8Ciyq7/f6XzrXEBDyp+rc+3OmUwzaxDVvHtGin4L/wxCv0nZWHleROKHmXITFPCm8s/cQwaS3ShQKskZhOrKxbjvCkN9EVxgcXG7oZ+EzRSaPu8rBLq+ZE5DiKjY6MC+b1MA0CEi/Kxalc=
+	t=1787451369; cv=pass; b=G1VbZut820v9irUU82SnECeKDSOcYNvIC6czhi8jJXak9LRwYjs4zOJtvH+7mvDD5vX+JNxg2XmutFcIOG671SfBSJYJmzsmI+ebG4zQrNPdDkeLxaN5bA14Z8W93BcWRhReV3IRRNphW3EI3JRObaw952+tqyRAZ5aHWnvZXnk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787431639; c=relaxed/simple;
-	bh=P6cVNJhCEeLtzhSlMW/+GlKfVlueWVG1/q6zbjJjG4s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=tiVqRVdLf5N4XfdkNCIPxocAp+dLCymypYUl2PYX6gEqE3WgTmqpEcoJtak7hBm+6BGEbce3Q4XuJujbgw/eSJGJX+YZ8qg5ef+PS7VntsdOIirtVipQ3pssDtJuvIcECY2bUsQI0Z4oStJPaTI1PFZng+cq10id8YWzvlFvEKQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.196.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CeVEdlBFuCM+IwiZXXTIuUSAB8xi+Kg2n+ZP/Gfx2JYXc74VUlX7mzoQq7tgbhvpNV+2/ZquDxJpGrpCFOWe9qzAprenHRRYFMNG/AbywVOv3MgBi/bgI6gVdMIBh3sNqBYFFpfWpLBLjbIcUVER8dP5Be+gOg1HqPyWMXw5Q4Ncmxag2pdMkhW3cLbprLRbn7WJSqfZNlWg33m+6sSkvZYa75UgibCmjSr/u1/x5YDEQKE7EZAoXpcfTtfy7VF9yITdnyND2oKgnxbYXkU66el7ivERs/rUmbrl/GcLS3PuKr26+Lu/0ojwjB1Obv61uF7opDdl2hFlPAIenIbZVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=Hb35nuyfQ5r0KDssPJyPANuRMzg/GJTVlltpI7HWxjY=;
- b=h0n4oSYDsLfHJRexLDKNNp7yY3IUhjP9Yv3wEjFpYNZbqWJpMSAPMliWi5LZZwLDwe3GxCmT/qFnV82Drz8P0JHVzAqHvrmPeCYooFs6mNNnEcqSR0cp0dfvOeaPmJTEzNCBJ1Z5sGt5qc+4+ViH4MGInsg/L5Xy/EhGBjr1KIKiAgmpT0vvDDvkLb4MqLw8qk3w6XtVPjF43FhWZPNJwpLpey/T6T9WaOVthRx5Skt/os3r5FDUqe1Oc/AxbMbQc9VUtV+Z6R33oZmLrsyjoAu37esXcy1m1ge4iM6KV0hCtMZet736q5hRwWh0sNww/QBbPJK6Prcr7FEaQos8zA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LO3P123MB3225.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:b6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sat, 22 Aug
- 2026 20:47:14 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0339.010; Sat, 22 Aug 2026
- 20:47:13 +0000
-Date: Sat, 22 Aug 2026 16:47:12 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, namhyung@kernel.org, acme@kernel.org, 
-	irogers@google.com
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v4 4/4] perf tests: Add shell test for
- kernel symbol beautifier
-Message-ID: <7rw7wkivh5dqm6npbvvokvypqd6ueer7vqscpvx3dktujg7eh4@hfz7vgbrygkp>
-References: <20260821204930.679027-1-atomlin@atomlin.com>
- <20260821204930.679027-5-atomlin@atomlin.com>
- <20260821210155.E243F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260821210155.E243F1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: LO4P265CA0087.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2bd::18) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	s=arc-20240116; t=1787451369; c=relaxed/simple;
+	bh=C8Hi7dx4Dz9qbEIsmQHMoCO9ghAgOYPYVPNCRQu1bd8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fwMxK+VJ9+XNHwK6lTUv4i5on7XUzMf9CEB2rxFBg6an6JuTV/53SyQ9p6S6j6DXHA9EA2mZPlOdVi/4JBsmmtMP7ZFAG79JQEnQeZmBeJlVTYbjqxEgrBHXQ8wnT/am+UFD9pYsav6OoKRmJlBvdi/2KAGGNSbOGo0Ivct3Z2Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5zMdF+q; arc=pass smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5zMdF+q"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c214321dc32so450086766b.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 22 Aug 2026 19:16:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787451366; cv=none;
+        d=google.com; s=arc-20260327;
+        b=g1T84d0cm5wqR6T/jb8PdoDEfVh4dM0yQPfySGJi6Llnuxy7C3lbHewKvna52sXvTi
+         HC+uinSeCvfys/JvW7Y+kpP2t24HRNxromdrKSWd/SX8azJQE19egIJo+pvwuEbMdQ3m
+         rf7o3DB252xbXJWx23gDPXsr8s8R29V1NxlVDe6U95ibj6u/IbvDGKgTNKVd5oQap2Zj
+         n8V30Y1+EVtc6TxfUp3IsTgdr1Evm1W8DtWrvkbwK1eVH/7lRB8RdKGvG9ZsguY2YK/J
+         q8/T/p499Cw5nYRj8eNBybNvqX5evGQNHp7DqHJZQkbfSfzmb/b+JbrvislY30KGavP+
+         gSZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=Us09/gQF6ahyllBIsVEPqdqZk7wEzDdiEKXkEKQ8uUDEi1AHLaIH/fPDEcsc21+2Ga
+         3oOLD4wrC4+E7FjYkNTFh0TH+x4++ncr1HTJvLXyreNJz8k2O4w35E2BA6vOcMl5nG2r
+         bVrGhCjhBYs2F7diIJnHSljZAUVm1nL2ftUzu1dZuHG3aRnY54FHF37yeEVk4zKj5k9y
+         /DZAO/qSPmlzSTGy8aG75WzGJzfK8z4+UNTcRon9abHjKViMmkj2Dh8Huf6dSuL7Jkk1
+         +YCpAwW3HxsOs9updnkCQpgOdyDduQ+5jmtE7Ft1c0yJLwQ0jShGBi6wLglGDz8/azoT
+         TtIw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787451366; x=1788056166; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
+        b=V5zMdF+qYTr4jmSvkZeaHmPRM0jsm/s4eLS9D1WNbt097t047sO9oaoZTPuWgFeeij
+         i4pP/2nL5XRf2z3EAFszWvyes8qsoT6Zd30uB4xl0diS9kDG+bkYdfZ9a4hpzG8O5C8A
+         d9urDKuj2URrYIxMbhYU6fpHvIL8Ycs7rXvdFJ0bKN7uxPaFWGyh0RNJzfqK9RIPBqDJ
+         Crft08zUPAjLt8YDHpf/k2u9nlbcctjSG8RueAj/CwPxnDz8d281vz+o+boc/IeDoF8e
+         pBECCiA869DUISD9d0OzvZ4l+itqVZIt8xaln5RmdJOa+Xq23Q9XGgOD6Es0zE9zvUCa
+         7RVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787451366; x=1788056166;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=SZkGg/kOEabPgE6XFQkogcC3pK/J2kIC827u/rRa1r8=;
+        b=as+NrIrwn87Drt46Nt/YuOdSPZZrPGhYv8K/XxH1oXi+tdZwPMtyQEzM28D3Etws1Z
+         vmxxnv7Xpowzb9zNrK0QV6AWUFN6GE9cLSXxik+5KCV3Yb+J8gfchcm7CH75/aKR3HCt
+         zHLPAhFZ5D1nWEY2Ki2kD9LGRo7CCe8XTr8USh1ixFMyZGKitTmyuHYmlJjnrM/v5rlw
+         x4tWR4S4h5XpgG0k9PxcnDe2CURvtj/dP0RHAOn/ZXlcwB9k+vA/7gOF2cD+FKGxjnU3
+         e2a1CB+gVXPRc/GUfuy6vhhIUWdBpPSDH3Ual5PlbAnnCoPP87ACUE8rlgyc8Hu/WdCH
+         UNvQ==
+X-Gm-Message-State: AFuF++keYMaT0i/jBvzzz+FZ5bc4+Xn+j6vx3BsR2gFNTMotSoVNn6eK
+	dLlY+cJ61MYZHkiMR+H86hIchmKhNrwAje8moVIq0BctFnLIVr3tlDExS6t9VhA7FWVVEe8Gl2k
+	CI2HQTsgIRychFS/PrFGRKlkQeNkIM2szw+J+F4M=
+X-Gm-Gg: AR+sD13xqGfi00O/ojs5gUuqjXNO0xO5ALsmgcqJx3+dXK8pmf0j2YsLk0+USzCv1B6
+	FhlUkmE/s0fL7C7PB0/zO+DPB3QKiBSLGsWX+VT980SL1MRRkT7OqLC4uoOpgS3HMQ5JgydPTUs
+	uJktXzThFHPipg2CKXyh6PU/LxjCwZr23/J0zrEMwbtErhthvDqOkINAKkKizeW1HgH9IfR+Xie
+	yddiJHoQEvlrP3tDiKKV3l43Rf9XdTk+ZUDDfPhEQt9AwD3oKRXCe53NBiJiQ8V13pjCAaM44RC
+	JlYUzVcaiNg1PuIwucXjTrF4da2Lp0ganoBbIZ/T/NP3TiWI3FHefSpMCDTpga2Eu/GGZO6Ii3w
+	w
+X-Received: by 2002:a17:907:9346:b0:c1a:5d49:f99d with SMTP id
+ a640c23a62f3a-c246a3ab4c2mr2034017966b.7.1787451365510; Sat, 22 Aug 2026
+ 19:16:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO3P123MB3225:EE_
-X-MS-Office365-Filtering-Correlation-Id: 59aeaa07-d943-4780-da90-08df008e8b84
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|3023799007|6133799003|10067099003|56012099006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	9QXZpEkqzr/zqr4J9CiSC/xVIiZVCjPKRNd3DZvZCpu9ZkrZPOQmDJAs4wBTNxpHNGYAau3t1UvL4bWChHNy06KX40Gu2C00z7qmahuLN8/mUjZ2/3YahoHbHgmPve9fIfM2tGeJE+rK3yFv7ac6UkvtQFQT0SGOJmzeqdiwJLby3jwIoNdMGiXeyPgP0xYg/BsCAy+VBXezpXPy6eG++bfaWP0/MWW6H+Ayfu/0cG6qgxR4xh9apSezA1q62GrNeelsPaWUx34xCHvLHyahjbey3HOx9Y9JZRTOlB54nLSXNQLSTyf+pPXYZOO9CGd5vYxmxDTrX8OAL8/Ocul7nuroIOnDvg3pV3ThYCTB5l/UpUvkaUUO9hrEemHf0lxg9AwASCxdqethGJyiRLM4XI6hHjevDHc1xbOeeiyGWeVc08XnoTmd4o9HqVLsbs6CHta9W5ZedzKUnVqKpURTRo6eOrybp0mooUyZfpybPj9ea5eVoolpkR7kt5/ZaNgxaGVOgxdF1exl6babq6ch4DBCzeLIu0WjnJ5Hc0KGIeOSeqpwjdeLrjKbnUpsX53g1ueFVFEwUaT4QhY35oF1Fok5xiH4pQZD2NNoeeQv1+JPR8UN3badu6Kmwz7XWMlQ4ulttoqlBQZtaZHJuerpSfEW+QnczfJCl9xw9fYtw68=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(3023799007)(6133799003)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?L0oxV2lDcTc5MTVIV1Awd1ZDdC9XQU1DVXJrRlFFdng4TWFDY1JlU3ZBWUUy?=
- =?utf-8?B?MHlHNW1NZUVGSndWR05Wb0pKdnRKNFdDd0dBbzRoeFhIcEJyQThTY3dhRUx1?=
- =?utf-8?B?QlNWcyt2elFnNjE0ekdJeXNXemVYTUt0d1Y4NkpvUFFCTDVkOEd2Z25Xcksr?=
- =?utf-8?B?UUhXbGRVVlRJZ0NobkNKNFhudGU3RUdOYk10bDF6a0pBRWc0ZUZPWWxGdzFF?=
- =?utf-8?B?SWhrVSszbnkxUUtZOVROVFpUSzVCWXFOTG5RcU1sZFhRK3I4bkJ1Wm1ySzdS?=
- =?utf-8?B?WjhRSHZsZjZNdUtxTlVHdG1Ecit3M0ZWUGtEcWptOXdkTEhvS2hTdEJST1Zi?=
- =?utf-8?B?bytoL2F2N28xcGdRektEbFBsRFVIemR2ckFQQlZrbkI2YVo0aFdQbHp1eFBS?=
- =?utf-8?B?TjU1MGg0b0QrWjU2bFc0LzdlRStMRUIwM1JIZ01vdmViZHU3NUx6c2tDM1dM?=
- =?utf-8?B?Nnlzc2pNR1VPVWI5ZmMwWU1BNnM2a25rZkJYUkJ4TUx3cHVQUkFPMC83RWY2?=
- =?utf-8?B?ZStDSVhiTmdSOU1PUUIyYWNQQTdnK3FqT1FnRlhmQUVmbDEzMWpHdjRvTWpI?=
- =?utf-8?B?ZmlRdUZlOHIyS2ZnSXRHaTlYYlg3a0JTZ3JaZUZiMVE3dWsxbE5SdXdHVXBH?=
- =?utf-8?B?Zm9NQW9JUm9RNDZVTURlNG9xSUtXZnNWRnJidlA3cjhIeUZCMENOa0xpVnhQ?=
- =?utf-8?B?QUsxbEo0ZDMxeW5SY1V3eENXcVRPR003cnN1aGZaL0xObWhwaXp2aDV1VVc4?=
- =?utf-8?B?MXk5VXpQL1k1ZkpacEM0R25mdUZJdTRSZnlsd0tVOElZUzUrZkVJa1I3MkxM?=
- =?utf-8?B?c0IwdTlETXFTTWxhZWIrb2duNnN6Sk9COGJ6Y214OFRFZjY0QllxYXVvVUFC?=
- =?utf-8?B?S0lYNmp1anZpOGVtQXNPRFZEMVo3L2doVDRNWGZJUVlnZGo1OVJGMVN3djQ1?=
- =?utf-8?B?ZWQ1bm9telBLYW9iY05SUkpTMEF4OWpPT2FhVEFtblFYOTFEMFVRbTRsTEVS?=
- =?utf-8?B?VlBUeXFrYzFUU1V4T2JuWS8zRjh6aFNOaDM3SGdMUEVKOEY4bkpVaWRiNVcw?=
- =?utf-8?B?ZUgwUFpLWmJiWURUaXB2VWN4aWJ2bjA0KzFXdzVSRFhHOXgzVTlXKzhGS1ht?=
- =?utf-8?B?Z3VTRjdDeHFVR3pGTWtoTFpFUldJMjZPUFlxTlkzQkxnWlpzaHcyMlV2NHBm?=
- =?utf-8?B?MGJ5eGRuRS9wQW90ZmhqQU52ODRGMm1lNHhWQjNPUXd0OVo4ODJlUGtDRXNm?=
- =?utf-8?B?WHloclQwRHYrMjFuM0dEVmdTdktoNDltUTVuc1R4Rk5LOERJeFBFMWpod3RW?=
- =?utf-8?B?VkU4RUtTVG4xS2xseldHcVFlUE9Ca0xtZWRxZmd5V25CaUdxUHkzTFJna0I1?=
- =?utf-8?B?NVFrMi94YmJNdVFHTmh1NzFHU01NYzU3N08wWXlzUE04WURXNFVIaHZuSlBt?=
- =?utf-8?B?TnpFTVB4Z3ZmY0toSzRFUDIxMXdOdHZIbms5M0x3alhEWTJ2SmhOSy91WFpD?=
- =?utf-8?B?eTVuRG40RVpUSjkvQmZUT05pcTBwTXd1WEVzSG5xVUJ6Q0hTbGtSbkNjeHR2?=
- =?utf-8?B?N3FtaGU1MjRiQm5pcnV2RjNRREF4NmFPaWlGekJHVjRvVkpQNmJBZHlDQ1A3?=
- =?utf-8?B?Q0daY0VZVUlSQVZtVFZ4NUIvWFZGZElraEFBU3p1UndYaFZ6L1FlUVlCVElv?=
- =?utf-8?B?YmNaSnZFTmRyaWZyRWE2aUk1c1hrdUQ2K241Y2F0VG44Z21xN0J4RlREdFcr?=
- =?utf-8?B?NVNJRUNLaUl3d0dZUVFWVEMxVGxmUHlPTzJnVnRmd3M3SzNiQjJhbnZVNGt3?=
- =?utf-8?B?RllGM2JuczBNTU02eXpIenUvRFYyam5xR0U1R1FJUFJMd2lOaE9kNi9td2hx?=
- =?utf-8?B?dW5jMng1QnUyRXJDdmc0QUpzVm5PajBJWjd5UmdLUjJxekpIT2FrcUM3R215?=
- =?utf-8?B?bWRxQVVDOTY0bC9wV3JlSkdaalhGMm14emQxY3VhL3c0Tk1zeTh0Uzg5YnBF?=
- =?utf-8?B?ZHk2WnlMVmd3UlVuc1lwejUvT3dEY1EySmxWbnNyS3V3eVpQK0hteDNNU2RW?=
- =?utf-8?B?cGxkMERvS0oxdjQzNHpDdXNoM2ZoZ0dWUmd1V0lqdnQ4eTZubEg4d2pwdFB0?=
- =?utf-8?B?OEd3M3hNK1JXR1p0ZTBSTmUrc2VlWk9NbEJreXZMUlZYMU1UM3NYNnJVVU1a?=
- =?utf-8?B?dzdNeEdFMHNXU3Jud3FVMXlXcVEwSGhZc01SdmE0MXNhVExvbndON0dHUnN0?=
- =?utf-8?B?MFpHT01mTUhIbFRvb05xZnBHOTZBMHp1SXRWWHh4RzFwWVlDVHBqL1I3UkJG?=
- =?utf-8?Q?QwP0aA+kxmaKWGR/t2?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 59aeaa07-d943-4780-da90-08df008e8b84
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 20:47:13.7570
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: L+QMpd4Cf9akg1nHVxsmwaYOzxWhFOcfE+0u8mN8iBoMMgZk/A5tWaIn2CSw3OsYUFMhKG/tZRySH+v/LdYT6Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO3P123MB3225
+References: <20260823010900.1730708-1-nickolay.lysenko@gmail.com>
+ <20260823010900.1730708-4-nickolay.lysenko@gmail.com> <20260823011851.0213D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260823011851.0213D1F000E9@smtp.kernel.org>
+From: Mykola Lysenko <nickolay.lysenko@gmail.com>
+Date: Sat, 22 Aug 2026 19:15:53 -0700
+X-Gm-Features: AcwNN1V8XOzF03yXekhbA-aQZ_JhNkIvdx3R7Ce_2bgQP3RqOFMq2LFBYypxT_g
+Message-ID: <CAMtxOX3MwTE7C4nMdEpR1T16BX8L4TYRFc2uuk=RROXWJB7LBQ@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v6 3/9] selftests/bpf: factor the permissive-mode
+ skip suffix into a helper
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 21, 2026 at 09:01:55PM +0000, sashiko-bot@kernel.org wrote:
-> --- Patch [4]: [PATCH perf-tools-next v4 4/4] perf tests: Add shell test for kernel symbol beautifier ---
-> commit c9c4a1b0dcd918dc4702b41032200c74d4363a15
-> Author: Aaron Tomlin <atomlin@atomlin.com>
-> 
-> perf tests: Add shell test for kernel symbol beautifier
-> 
-> This commit adds a dedicated shell test script to verify that perf trace
-> properly symbolises kernel virtual addresses and function pointers using
-> both the default kallsyms beautifier and BTF type routing.
-> 
-> > diff --git a/tools/perf/tests/shell/trace_ksym_beautifier.sh b/tools/perf/tests/shell/trace_ksym_beautifier.sh
-> > new file mode 100755
-> > index 0000000000000..c030b03e2b662
-> > --- /dev/null
-> > +++ b/tools/perf/tests/shell/trace_ksym_beautifier.sh
-> > @@ -0,0 +1,43 @@
+Same finding as on v5 3/8, refuted there with a minimal Makefile:
+https://lore.kernel.org/bpf/CAMtxOX3f-u0cnDiXuHyxUuiMWwosC9sj3xmTDy-ATaFAKu=
+X4RA@mail.gmail.com/
+
+On Sat, Aug 22, 2026 at 6:18=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Missing space in the SKIP message for the LINK step causes merged=
+ text output.
+> --
+>
+> --- Patch [3]: [PATCH bpf-next v6 3/9] selftests/bpf: factor the permissi=
+ve-mode skip suffix into a helper ---
+> commit 0c0b26d03c8f590d99a07e3db037b9c093922751
+> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
+>
+> selftests/bpf: factor the permissive-mode skip suffix into a helper
+>
+> With BPF_STRICT_BUILD=3D0, eleven recipes append the same tail. This patc=
+h
+> factors the tail into skip_on_fail, parameterized by the SKIP tag, option=
+al
+> extra files to remove, and an optional note. Every call site is intended =
+to
+> keep its exact message and behavior.
+>
+> > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selft=
+ests/bpf/Makefile
+> > index 8d71345c2e86c..04eea6ebc75cd 100644
+> > --- a/tools/testing/selftests/bpf/Makefile
+> > +++ b/tools/testing/selftests/bpf/Makefile
+> > @@ -48,6 +48,14 @@ SKIP_CRYPTO        ?=3D
+> >  BPF_STRICT_BUILD ?=3D 1
+> >  PERMISSIVE :=3D $(filter 0,$(BPF_STRICT_BUILD))
+> >
+> > +# Permissive-mode recipe suffix: on failure, remove the target, emit a
+> > +# SKIP marker and report success so the rest of the build continues.
+> > +# $(1) - SKIP tag (BPF, TEST, BENCH, SKEL, LINK, ...)
+> > +# $(2) - optional extra files to remove alongside the target
+> > +# $(3) - optional note appended to the SKIP message
+> > +skip_on_fail =3D $(if $(PERMISSIVE),|| { $(RM) $@ $(2); \
+> > +     printf '  %-12s %s\n' 'SKIP-$(1)' '$(notdir $@)$(if $(3), $(3))' =
+1>&2; })
+>
+> [Severity: Low]
+> Does this formatting behave exactly as intended when the note is appended=
+?
+>
+> Because GNU Make strips the leading space after the comma in the then-par=
+t
+> of the $(if) function, it appears that $(if $(3), $(3)) will strip the
+> leading space.
+>
+> Would this result in appending the note directly to the target name witho=
+ut
+> any whitespace separation?
+>
 > [ ... ]
-> > +test_ksym_kallsyms() {
-> > +  echo "Testing perf trace kernel symbol beautifier (default kallsyms)"
-> > +  output="$(perf trace -e kmem:kmalloc --max-events=1 2>&1)"
-> 
-> [Severity: Medium]
-> Could this wait indefinitely on a completely quiescent system?
-> 
-> Because it waits system-wide for the kmem:kmalloc event without a timeout
-> or a deterministic workload to trigger it, it might stall the test suite
-> if the event takes too long to fire.
-
-Fair. I will propose: 'perf trace -e kmem:kmalloc --max-events=1 -- true 2>&1'.
-
-> > +test_ksym_btf() {
-> > +  echo "Testing perf trace kernel symbol beautifier (BTF)"
-> > +  if [ ! -f /sys/kernel/btf/vmlinux ]; then
-> > +    echo "Skipping BTF test due to missing vmlinux BTF"
-> > +    return
-> > +  fi
-> > +
-> > +  output="$(perf trace -e csd:csd_function_entry --force-btf --max-events=1 2>&1)"
-> 
-> [Severity: Medium]
-> Will this test fail erroneously on uniprocessor (UP) kernels?
-> 
-> The csd:csd_function_entry tracepoint is defined in kernel/smp.c, which is
-> only available when CONFIG_SMP is enabled. On a UP kernel, perf trace will
-> fail with an unknown tracepoint error, which the script would parse as a
-> symbolization failure.
-> 
-> [Severity: Medium]
-> Additionally, can this cause an indefinite hang on idle SMP systems?
-> 
-> The csd:csd_function_entry event relies on SMP cross-calls (IPIs). On an
-> idle or isolated test VM, this event might not occur organically for
-> extended periods, potentially causing perf trace to block forever without
-> a timeout or a triggering workload.
-
-Acknowledged. Instead: 'perf trace -e timer:hrtimer_start --force-btf --max-events=1 -- sleep 0.01 2>&1'
-
-Kind regards,
--- 
-Aaron Tomlin
+>
+> > @@ -1018,8 +1008,7 @@ $(OUTPUT)/bench: $(OUTPUT)/bench.o \
+> >                $(OUTPUT)/usdt_2.o \
+> >                #
+> >       $(call msg,BINARY,,$@)
+> > -     $(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o =
+$@ $(if $(PERMISSIVE),|| \
+> > -             ($(RM) $@; printf '  %-12s %s\n' 'SKIP-LINK' '$(notdir $@=
+) (some benchmarks may have been skipped)' 1>&2))
+> > +     $(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o =
+$@ $(call skip_on_fail,LINK,,(some benchmarks may have been skipped))
+>
+> [Severity: Low]
+> When this build fails in permissive mode on the bench target, the
+> skip_on_fail macro is called with the note as the third argument.
+>
+> With the space-stripping behavior above, won't this result in the SKIP
+> message being formatted incorrectly as:
+>
+> bench(some benchmarks may have been skipped)
+>
+> instead of the previous behavior:
+>
+> bench (some benchmarks may have been skipped)
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260823010900.17=
+30708-1-nickolay.lysenko@gmail.com?part=3D3
