@@ -1,136 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-142.mta0.migadu.com [91.218.175.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2020140E5F;
-	Mon, 24 Aug 2026 00:14:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E51C219E8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 01:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787530449; cv=none; b=rt0LXiodLK2O4mYPxoqZDHNoMrA3/jhaGv1qPJc0/FCobNzKqMwl2IYuQr/rCqzCOr17g/6gafS8v7tmXstQ8gt+q8EUFupJuqMTXH71AmcNThUbEe4PxyQLnPeIhVFIvDPpmziSrmlkYMs3HcT5VP9CXPQzpRFk+90BXYtTpDM=
+	t=1787535741; cv=none; b=L7YP3mt3zaNUrUsdSzdb/eeO1WJYGkGPJE50PyHpnRQ3GaF8bIPnM5+lf4oXwnPnFUtM4KfUeCCutA4BNxR+4D1QY5OwZyTr568SmHD7N8n/rUlCyv27BnNVVT6yzAI0tzI7Hzo7HdwLRatDuogZTdy47H3lBSVWQ/O7fP7kRfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787530449; c=relaxed/simple;
-	bh=vxsH7t+mPViD9HKKDMX23yzinzd+DOPG1IlutqilAk0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B0tkVWIM0/55gDcwBxPSJOzNWZUiqCL/bNYQuIOlMUJne75RmYTKHQmHIzjPz42AwwKMwleFPA2bV8yylhgKag6SBHt58aMgp3ytfgJWEwK04P+zrYn3As7VCHj75hH9D1YjGnYDYRU6Gr9mVDsNvN4CcnWBvuk8fEMB7CAo3J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXv8K0iT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787535741; c=relaxed/simple;
+	bh=jctUx17ZFMHWW2sl5F+Q/EnR4+zqTMNJOEO2Jtoffqs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fLDTh5MslvXHdsfS0ut1Her6lPKcNbyQZw7uvtoC5EDk+uCdewQldGEQGZ+kgKYN40rSGW2EvoZTGzK8538LZ6YLWmbkxu4gvKuWcqm7Fv/sGu5k6JWZmGcUgenop8jAY2hxRSmN6O0bRMShWKUDTgvRWoN+WbExAQY9VNeyC1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=bw+Dw3p7; arc=none smtp.client-ip=91.218.175.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXv8K0iT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691531F000E9;
-	Mon, 24 Aug 2026 00:14:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787530447;
-	bh=Rj9/mR/ZBUVYGOpdaibRJ74gieb4xPfeGCWP3MKyAy4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FXv8K0iTVgzemjA8Do+dPLLnJeyxZ+jIRo7dyAYaHPf+gzH7xoD7AQtu4wjeGh2qh
-	 IgFvUfeYdpjA/SZoJZ8bqVs69SHIxEDaZI9CmK58r2SYmYmruT3f7D5RvWfAE4X7EK
-	 mecxD947RjiEEu5MKgNYQ3XYi0oIF9+odcervWRvDWZeQ9AICbCkhFFWZ6FhuhBlRf
-	 Q6UhLE6X57zMJbEJlVzYHmzACkOMnZzhytKybvjd6KZAChfs4ldapR66L8hQ3gpKXO
-	 d7tZQ3rUDjBLcYBxnpqN7Eyi7wbkppOJ/7U6WYzE/6lEe3ebFZWiGVM/zoiGrNFf91
-	 bi0x+67Qc7Z7Q==
-Date: Sun, 23 Aug 2026 17:14:06 -0700
-From: Wei Liu <wei.liu@kernel.org>
-To: Naman Jain <namjain@linux.microsoft.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-hyperv@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH 1/3] PCI: hv: Set irq_retrigger callback for the Hyper-V
- PCI MSI irqchip
-Message-ID: <20260824001406.GC3566091@liuwe-devbox-debian-v2.local>
-References: <20260728135117.2888175-1-namjain@linux.microsoft.com>
- <20260728135117.2888175-2-namjain@linux.microsoft.com>
- <20260728140427.714311F000E9@smtp.kernel.org>
- <a9d44162-3c90-44c8-aae7-4813678234a9@linux.microsoft.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="bw+Dw3p7"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=jctUx17ZFMHWW2sl5F+Q/EnR4+zqTMNJOEO2Jtoffqs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787535737; v=1; x=1788140537;
+ b=bw+Dw3p7qqd3IVYJDwRXoxGMmezLFHv8fVaenBvxhO2IHArD61QpiDdHmur2kY6oYRYXNOp3
+ OnrYao7P75CbByPqZMV6QO+3r9DhQ8fazTyIAmNs2qaKJpCWNmndO9cF/YOFrEktpe2m0aSwN98
+ SMMX2IJOkRsl9E+RGJ8Qy8HY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [192.168.109.140] (223.70.159.239)
+	by smtp.migadu.com with ESMTPS id a2129daf5ea65be4;
+	Mon, 24 Aug 2026 01:42:17 +0000
+X-Mizu-Trace-ID: a2129daf5ea65be4
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b40f9d8e-99f6-44d0-b783-db2bab6c041f@linux.dev>
+Date: Mon, 24 Aug 2026 09:42:15 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a9d44162-3c90-44c8-aae7-4813678234a9@linux.microsoft.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/17] selftests/cgroup: Drop invalid boot isolation
+ comparison
+To: sashiko-reviews@lists.linux.dev
+Cc: hannes@cmpxchg.org, mkoutny@suse.com, tj@kernel.org
+References: <20260820124202.517160-1-guopeng.zhang@linux.dev>
+ <20260820124202.517160-2-guopeng.zhang@linux.dev>
+ <20260820125337.B1C5D1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guopeng Zhang <guopeng.zhang@linux.dev>
+In-Reply-To: <20260820125337.B1C5D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 30, 2026 at 04:56:27PM +0530, Naman Jain wrote:
-> 
-> 
-> On 7/28/2026 7:34 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] The fix for dropped pending interrupts during CPU hot-unplug was missed in the sister Hyper-V root partition MSI domain.
-> > --
-> > 
-> > --- Patch [1]: [PATCH 1/3] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip ---
-> > commit b8b1c843c457dd145f0d360b44f4b1bf34bd8cf5
-> > Author: Naman Jain <namjain@linux.microsoft.com>
-> > 
-> > PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
-> > 
-> > The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
-> > On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
-> > the outgoing CPU to a new target. As the Hyper-V PCI/MSI chip does not
-> > provide that callback, the pending interrupt is silently dropped, which
-> > can result in lost interrupts, stalls and "No irq handler for vector"
-> > messages.
-> > 
-> > Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-> > Cc: stable@vger.kernel.org
-> > Suggested-by: Long Li <longli@microsoft.com>
-> > Suggested-by: Thomas Gleixner <tglx@kernel.org>
-> > Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-> > 
-> > > diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-> > > index cfc8fa403dad6..89816a2bd7cd3 100644
-> > > --- a/drivers/pci/controller/pci-hyperv.c
-> > > +++ b/drivers/pci/controller/pci-hyperv.c
-> > > @@ -2119,6 +2119,7 @@ static bool hv_pcie_init_dev_msi_info(struct device *dev, struct irq_domain *dom
-> > >   	info->ops->msi_prepare = hv_msi_prepare;
-> > >   	chip->irq_set_affinity = irq_chip_set_affinity_parent;
-> > > +	chip->irq_retrigger = irq_chip_retrigger_hierarchy;
-> > 
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does the sister Hyper-V root
-> > partition MSI domain in arch/x86/hyperv/irqdomain.c also need this fix?
-> > 
-> > Looking at hv_init_dev_msi_info(), it appears to be missing the exact same
-> > callback initialization for the root partition's top-level irq_chip:
-> > 
-> > arch/x86/hyperv/irqdomain.c:hv_init_dev_msi_info() {
-> > 	...
-> > 	if (!msi_lib_init_dev_msi_info(dev, domain, real_parent, info))
-> > 		return false;
-> > 
-> > 	chip->flags |= IRQCHIP_SKIP_SET_WAKE | IRQCHIP_MOVE_DEFERRED;
-> > 
-> > 	info->ops->msi_prepare = pci_msi_prepare;
-> > 
-> > 	return true;
-> > }
-> > 
-> > If a CPU is hot-unplugged while a device MSI interrupt is pending in its
-> > local APIC IRR, could fixup_irqs() fail to resend the pending interrupt
-> > to the new target CPU because this callback is NULL?
-> > 
-> > This could potentially lead to the same lost interrupts and I/O stalls
-> > described in this commit message, just in the root partition MSI domain
-> > instead of the guest paravirtual MSI domain.
-> > 
-> > >   	if (IS_ENABLED(CONFIG_X86))
-> > >   		chip->flags |= IRQCHIP_MOVE_DEFERRED;
-> > > 
-> > 
-> 
-> I am not planning to include this in this series, since this issue is not
-> seen in root partition yet and I am not sure if it is applicable here.
-> Second patch would anyways fix it going forward, but I am OK adding the
-> change for this, if we need.
 
-What's the downside of fixing the root partition irq domain?
 
-We never really attempted to unplug any CPU from the root partition, so
-it is unsurprising that it has not been reported.
-
-Wei
-
+在 2026/8/20 20:53, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Removing the check for /sys/devices/system/cpu/isolated drops critical test coverage for the dynamically updated housekeeping mask.
+> --
 > 
-> Regards,
-> Naman
+> --- Patch [1]: [PATCH 01/17] selftests/cgroup: Drop invalid boot isolation comparison ---
+> commit 9327a9b65fdcaad904f3dc133a330232cb860c67
+> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
+> selftests/cgroup: Drop invalid boot isolation comparison
 > 
+> This commit removes the comparison between the cgroup cpuset.cpus.isolated
+> mask and the housekeeping mask at /sys/devices/system/cpu/isolated in the
+> test_cpuset_prs.sh selftest. The change is intended to fix test failures
+> when isolcpus=domain is present by removing the HKICPUS read and comparison.
+> 
+>> diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+>> index da8f7b9201784..fdb3185570d40 100755
+>> --- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+>> +++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+> [ ... ]
+>> @@ -835,11 +834,6 @@ check_isolcpus()
+>>  	ISOLCPUS=
+>>  	EXPECTED_ISOLCPUS=$EXPECTED_SDOMAIN
+>>  
+>> -	#
+>> -	# The inverse of HK_TYPE_DOMAIN cpumask in $HKICPUS should match $ISOLCPUS
+>> -	#
+>> -	[[ "$ISOLCPUS" != "$HKICPUS" ]] && return 1
+>> -
+> 
+> [Severity: Medium]
+> Does removing this check completely drop critical test coverage for the
+> dynamically updated housekeeping mask?
+> 
+> Commit 6df415aa46ec specifically deferred housekeeping_update() execution to
+> a workqueue. By removing this comparison, the test no longer verifies that
+> those deferred updates correctly apply the isolated CPUs to the housekeeping
+> subsystem.
+> 
+> Instead of removing the check entirely, could we fix it by re-reading
+> HKICPUS inside a retry loop and comparing it against EXPECTED_ISOLCPUS?
+> 
+
+This sysfs file cannot observe the dynamically updated housekeeping
+mask. `print_cpus_isolated()` reports the `HK_TYPE_DOMAIN_BOOT` mask,
+while `housekeeping_update()` updates the `HK_TYPE_DOMAIN` mask.
+Therefore, re-reading `HKICPUS` would still only return the boot-time
+isolated CPUs and would not validate dynamically isolated cpuset CPUs.
+
+The dynamic isolation state is verified through `cpuset.cpus.isolated`
+and the scheduler domains, which reflect the `HK_TYPE_DOMAIN` update.
+Therefore, removing this comparison is intentional.
+
+Thanks,
+Guopeng
+
+>>  	#
+>>  	# Use the sched domain in debugfs to check isolated CPUs, if available
+>>  	#
+> 
+
