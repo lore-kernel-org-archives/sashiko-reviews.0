@@ -1,96 +1,97 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4F8382397
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 18:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBB837C118
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 18:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.7
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787595736; cv=fail; b=Fm979dC9yQXjq5cSRSs5S6D3Iq2E0scpw7Bmh3+9qDDJbDCKct4eRXeGBVaKhhRZ0wcD6u7aaH0vVUMLF2rYwdP8VRgiQYtYaCvHdFZqZtpivsoBXPw3cV0QNuXwngDMqtYrEYWDTdzv/EI3MmZKljoUvjSo5x5MfffaD44IS3M=
+	t=1787596193; cv=fail; b=lPQLlOrxZfy8SafgigpE+RZGTy4NzkhJ3vykZK3K7NNE8/nUFJzvcS+kfeoa1l6DAJXSSFIYS5BIjTgeh2CntbdR64w8b49++qf6qyVKM7yVoQuHCMkYf8wjD0wP+F/v8bzJXq9fRBoPld9aFKv6uLLkIdDEYwpIXOtBqXqbXYM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787595736; c=relaxed/simple;
-	bh=vDWl//Ald3DP0OAI/uosAjKrPOQeYeMOVRAlnqqoBas=;
+	s=arc-20240116; t=1787596193; c=relaxed/simple;
+	bh=0i5FeNkLhDkwwx4FdfxAM4SsibhaZQ2EzsO1qkh7r2g=;
 	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qv2dKGMHd636XXQXtTDjkuDIOHBnjK9IVi1RtXI5dwRo0TnO5AUm+PVgXq/1YwQHv0EOnj6yFGPD/0YK+uWoJLkl12O0WnXUhgKUfrQl/u52uGaIi6ObNDzW2CC5vjBOwhz92IDcuiyaeUgHod5AcC+UyrzfKfTZ9JeIsNzpCv4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RoNSyyWJ; arc=fail smtp.client-ip=192.198.163.8
+	 Content-Disposition:In-Reply-To:MIME-Version; b=S3zSBkaywtVIFbj6mfuCk6oW/da0e8OGWUqEy7KrhuwjTXKcZl+g4NTd25vhta3xj+8ZTl1/4c6CrXhxoM3TQ3Jk9GmOp6O/OJffWMgddMNwr44yw9yvP2vGpaCLJJKiyqGhZ0UUEkpyrKmtXTfIxJoziTPZ7/8WaB/s0iCG5vM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NmfEPwGl; arc=fail smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RoNSyyWJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NmfEPwGl"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787595734; x=1819131734;
+  t=1787596191; x=1819132191;
   h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=vDWl//Ald3DP0OAI/uosAjKrPOQeYeMOVRAlnqqoBas=;
-  b=RoNSyyWJrzYFAkaVi9PLP33NAmh/rj6FBD22mSh1VHWwJy8owzpL4cHJ
-   qmLADtHmizYAivMmo33OcYcza7oL6Z7ciIYTzZQsYgNVP3o75PD4MLWri
-   ywZgpUixJKXhsmsk8D8w7z2SY00EpVEWpjK8L9NnMGEqOfvcOshKjbnQ3
-   +Tt4Wt9CeonmVLnShC2UgeLrG3ZCC2r/0TjtGmm9ccYGzYIYci2vdqTiz
-   PnXPDGuNUnmu111e9bW+Kpj6DDrsFXEwhhTUpjqFqid9+9LsgREyv6wOa
-   Hx0sn1cteMd8MEihHCXf3XaZegxLjo+QSViQAlPOWfy89y6ozsTbiln7Z
-   A==;
-X-CSE-ConnectionGUID: X6jVUO8sRbexlGwnTyPY5Q==
-X-CSE-MsgGUID: Zjn77hDnRL6SkRSjnBAcHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="105589957"
+   in-reply-to:mime-version;
+  bh=0i5FeNkLhDkwwx4FdfxAM4SsibhaZQ2EzsO1qkh7r2g=;
+  b=NmfEPwGlA3JBPs7mufQRMQauoY6mi8FGBTT4ZuxddM73QkYlc2dB+sBh
+   ySsn28LZNjgx8Hww/9huHlMbvY6PPWTXLT3NRsWiqPJNwiEKH1JLhnfel
+   9jZYzJS+OH4ydc3ljoh4exU5co8fuAEDBQbLprZdIC2hLBI6iEncmIDYB
+   FFadbgzOCG0yVwLMevZqW1k0jSupsVoVflsAJPcrt9/8uTrFMuKjXhDe6
+   Yv8XSLMcIiYC7hXJ9X4jzLXzAjaervE4dvFJRJlmMmg3awWWv3u9cFWNx
+   F5yo09gL9JhmtZxyk6QnmaxMGxxh1NnnEVDpC4I3BUYQTcKHMp7xoNZJe
+   g==;
+X-CSE-ConnectionGUID: E0hjCBd7QJq3E2Me61q8+g==
+X-CSE-MsgGUID: NqV8Cwt+SX2sjRdhTC1r0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="113594130"
 X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
-   d="scan'208";a="105589957"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 11:22:13 -0700
-X-CSE-ConnectionGUID: qDU5fJuIRIuWKXACdcI05g==
-X-CSE-MsgGUID: EqGrPI0PR5qUu/fjKkMTZw==
+   d="scan'208";a="113594130"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 11:29:50 -0700
+X-CSE-ConnectionGUID: 5EjAKM8CRMGIeeNYoyrgvA==
+X-CSE-MsgGUID: 7ZJ6DMJlQy6L4FH7KnoyrQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
-   d="scan'208";a="263348357"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 11:22:11 -0700
+   d="scan'208";a="267110950"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 11:29:49 -0700
 Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 24 Aug 2026 11:22:10 -0700
+ 15.2.2562.45; Mon, 24 Aug 2026 11:29:49 -0700
 Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
  FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Mon, 24 Aug 2026 11:22:10 -0700
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.57)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ 15.2.2562.45 via Frontend Transport; Mon, 24 Aug 2026 11:29:49 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.41) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 24 Aug 2026 11:22:10 -0700
+ 15.2.2562.45; Mon, 24 Aug 2026 11:29:49 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XINLJSqSbx1csUdaXHZxcdUAwWwasNFM77VT+T1NDdYKGDWmvf5o5uIybTKx2jxbvyJPQSNS+phosbvklyDedrEh4QaIiqLlRURVDEQzKyofcwRwZLUW1UbamRNLcy1PtgGObIfG5b7Zs0t69+12eoy1RZGShgvmAk2qGKgfvTEA87dAngKaycY3BW4uuRwA3WltuwSw0BxH4lhCKhrW3z0OwLX/S476J6I3c+Nd/hJCviRTi7U7SvcHZxU38c1J8rsMOK889aXjXgy8N+0mwNIrk8p+JPBsNwrLKTMBYMEsHllHvWcTithTWdbbUTBWT4GwCYa0JcSdYt33rK1qog==
+ b=cHXZhFXhuxsEfmlU1g/oHpVWNiMyZB0IxEetoZzSJYNSr+NMSn81gx06rX4lGuyLtPkKxftz4zg6/gblreETo8aoA0tbjQKnBfRd0uNb9yAp6+6C9tNR7qsNREcNCo3xXX9Yi+EeFyMhf1huTHntr5vsuPqY48lOB3bXhdYZ/pDbzTuUPeuSqomppRN0l6p0CFUjSvMgC+DnwGyyUvs396L2BoOAAg+2b8JSFsRT93bP6DWoTU42X+97un05xUBX52kp88zqRI5Moh9y08X98mTzmtwLkz3jw7rDaGKfs1nHaVrPTjWx0sEM8p+/lS288zG2zt97IdehM3WzOCBCpw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xom01fbi6SXs+MQnap8/YQj5yqUkxsGTdR0jDl/kLwY=;
- b=tzMcsOkhd4zdoRxt46V8wjuNeN/M1AvdvialPl72JCN+WYEbsZfB4ndYCqLO8YRDPkFvs713hBxVZCNr5M5ZdBaa0QH4/KR8oRcuLIMCajELSq6whjnGLrAaqxthl+wulHkIl9Icp9N+1QmK2OYFaFCFhwmrhxkm5Jf7YiyFRVFSxZ4xtJduGNru+qJWiPkYWY+qwCXg9AYmKQcCspg5xLpua7Eou/DHmtwICsz13rxNsFBewwy2aiznYvbjWwwpQUNSixPTExhW0Tk8i14n+qb61g6qWyx5xWvg9W/KiRTUlP1bK+9MOHMvtNFPZlKRXhyAl6PfRaI+35YdGhWDUQ==
+ bh=kkjhQZji0XBPSSvycbp98Fu3IwxVQAa3jmBJ/eguuJ0=;
+ b=tcRzVHg5+sFy2GHP1FHi3efm4WKgpAXbrikMjCR0cGjFXydUr4LW6Eu1JLatRMs5tncCKSc0/AHFnncCKdNdbFqXIltIF8ET7zkPzf0pY1nyyNT8W5JM/PYPu+JbemWO3MZVuJ7iX7TKOyHzZ63G8B5jQK6e8+QQ0WYYcRzf5G7gsCnmBlvovJ8jyloEQIFHv6mD3fJeRsUwnwDZqIOoZLk++vKQmZSBMUxXCwm7zUYH8It8pWsIj/90K97+OYhBVf7R70GXiPcnWa4/rANNiojRzCfASPF+Gea5ns20yQ+FX33od71L0UBmGYeVyiTyeS0cyhKrNFEqWFjqgIuZbQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from IA0PR11MB7752.namprd11.prod.outlook.com (2603:10b6:208:442::20)
- by CH3PR11MB8517.namprd11.prod.outlook.com (2603:10b6:610:1ad::10) with
+ by IA1PR11MB8175.namprd11.prod.outlook.com (2603:10b6:208:44f::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 18:22:07 +0000
+ 2026 18:29:44 +0000
 Received: from IA0PR11MB7752.namprd11.prod.outlook.com
  ([fe80::848a:3e54:c19b:11ce]) by IA0PR11MB7752.namprd11.prod.outlook.com
  ([fe80::848a:3e54:c19b:11ce%7]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 18:22:07 +0000
-Date: Mon, 24 Aug 2026 14:22:02 -0400
+ 18:29:44 +0000
+Date: Mon, 24 Aug 2026 14:29:39 -0400
 From: Rodrigo Vivi <rodrigo.vivi@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: Raag Jadav <raag.jadav@intel.com>, <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v10 07/10] drm/xe/pm: Introduce xe_device_suspend/resume()
-Message-ID: <aoyLymx1-fZkEh-k@intel.com>
+To: "Laguna, Lukasz" <lukasz.laguna@intel.com>
+CC: <sashiko-reviews@lists.linux.dev>, Raag Jadav <raag.jadav@intel.com>,
+	<intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging
+Message-ID: <aoyNk9wmOpdyUXgY@intel.com>
 References: <20260821112436.545405-1-raag.jadav@intel.com>
- <20260821112436.545405-8-raag.jadav@intel.com>
- <20260821114306.23BEF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+ <20260821112436.545405-9-raag.jadav@intel.com>
+ <20260821113758.006681F000E9@smtp.kernel.org>
+ <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260821114306.23BEF1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: BY3PR10CA0012.namprd10.prod.outlook.com
- (2603:10b6:a03:255::17) To IA0PR11MB7752.namprd11.prod.outlook.com
+In-Reply-To: <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
+X-ClientProxiedBy: BY3PR05CA0029.namprd05.prod.outlook.com
+ (2603:10b6:a03:254::34) To IA0PR11MB7752.namprd11.prod.outlook.com
  (2603:10b6:208:442::20)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -99,220 +100,168 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR11MB7752:EE_|CH3PR11MB8517:EE_
-X-MS-Office365-Filtering-Correlation-Id: df612776-74bb-459e-bdbb-08df020c9af2
+X-MS-TrafficTypeDiagnostic: IA0PR11MB7752:EE_|IA1PR11MB8175:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e2ac1fd-ea74-4ab9-8d85-08df020dab50
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|6133799003|10067099003|4143699003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 8d4G4vP8EbDy8E9TXQeoGx5VHXTvGTarmK2U2zez3II7PQN+bcvvmdRa4adZKL0znVi+hCe3/oD/qr1RGDBYUk0EJhj/820mRlKV7E1RpRdsXRSM6UGgo2UTVmlx/l+mJs1CqZJq21vZpxVJOsQBTzcdjxxNcuxgCYyqu6d5ag9/vdegjQqonAGwgSwMLTrCVwp5uumq/Ms3FA7Iiwex6M0l2KhvH/k/bB4u6GSZ42zaaVqnHssSqnGMcyB41zc7upocq6e7AQhxU8BVfWKz8AKwiLUi1wXPMeAAxmKBRtwu7aJv57HjY5KNN2eYZU478EyjMHqqlxGMMGIJcUW3LY6FHbBrrCMwFupEZO3RdZKPIckw7edEQ1cKnB7b7xHeOsqPxC4mjLQd1s9sQp9jwKQfBIqzz/02vpJLUWBGWmT1Y2RXEUrlXLHvp4wW0VGqR4xrxF5p25gNI+0HVWdexk4CDuKVQqJY771EIWkCo6pAZvI07lN0QgZNSrJxCsxkU98yIughMBME9is5HYkbN+M2Tt7rIH3v1KzMB0xHnPn7PyTlMXVsXq4RbzVjbs95X2iDfuwiRZahXuel4fxYv5qA59Ez5T59HgYV6CPDajY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR11MB7752.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(6133799003)(10067099003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|10067099003|11063799006|4143699003|56012099006|6133799003|3023799007|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: UrWmnRsjqNrmZyAn1CxeXXfxrACWM96HrHTh3/dcMf3KwSQGDxPeQmDsksn+CoLqEfw+5AP9e7qcaZys1ZpTQBixQqLnaL2+SFtg5RwxYPkFSINN4YwuvgC3Zqj5hq5NrfCJWrJLbtkMVTNOwDLQhEVeeQ3OuNndKbhtBpxLBO4RPZYEdwUaIzQr+IW/IGgQQVgJNl8CKl22pk5z1FpSioPRnOrZ91ATc3B8tnahMUDx7n2DOLpzhCT/T6BF8esl+0J9gfmHryS6PljZQVx9AbEk5hzyHkMio4fmZvnuXe0OiPUApKS8LP7u6GpWagaajmzX4SWy02B4TVY1urSOLLY2LWKltdIawbeBJGonJvkIyokfJmB2owHBKk3lacy1FPm90KTtZMBU/B6AQG6JlMN0VRqGT5KbnL7cBJ9NgrI47SEvEcRbXLarqdbFtsgBMrpz4Vr4O0MmiebFykKBbbvQRwHhVy1eJXBxUOUl/PK+abBp5VNZuf8OD7tVtqnXWFH/K7iw1Pe5AcX+cotucQ0ljEeCsWBOoo1tldJ38knUbI3lmrw2iddxILfv/XL5tUSbn5dH2zsZ2bUuQVuLe1gwHFB0IqvhdH5pi199Um7owtBDBy9vfbdz2EBoMh/59wOxuUZOgc8pBgLOV0AZOF9MYpjYKKNZeY2KnmwCAug=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR11MB7752.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(11063799006)(4143699003)(56012099006)(6133799003)(3023799007)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?NSb63zmgLMu/UZLtUVO6gX+BrYS5dE3ooXHBBna/b6SZgCX/G+FlP69vuo?=
- =?iso-8859-1?Q?9ceo6f66kTFQstl2sxJFwv+ELEa6NeL05IshVh+mRhQLcXOqbpgaMlQriF?=
- =?iso-8859-1?Q?yQeRaKFYahOGUsHKKcBOXyLvPDJF8gGri9mIUd5L59OrEpxOEGRerqmUWv?=
- =?iso-8859-1?Q?l0vm2QURcw4QpDejQfLPnUc3Xf/FivdbAeYPWxRnfwWB4CM8I2XH2O1iV5?=
- =?iso-8859-1?Q?hJ9wgp5dvbTgn63N2WzflyRx9ucbZg3ZCOL0jmJEexCzaA63eZBEbm5jrE?=
- =?iso-8859-1?Q?5t7aSChlAUv4FWXC9ENdy3vgKP00BoT+KbMgTlB5g9o3XxexGcTZ7Cwweb?=
- =?iso-8859-1?Q?/GXGviw3WABs+VSGNN6G2NDD4unhYqwI1CRfOGGzhh1tmXpBUjjd2Q2BdT?=
- =?iso-8859-1?Q?hSIm79OHYQ83GGGjPGsIa+pbapT1jpZPtid7ZHPyhVWJDiTs8KQzz/hvi1?=
- =?iso-8859-1?Q?NpeelaS6LD4XJpdOrfx9zbiqOWc94ndp8//XWvkZzr5sCLGkO15/sFglj1?=
- =?iso-8859-1?Q?zjPEWDjx5Nqb4nv0zljqt3LsKUNcVLRR6aiRlio7Slb5ZgthxxjBtbyn2f?=
- =?iso-8859-1?Q?Cs9fmYrK/D4zNYlwquem49+aTY9eEhmON5IloGZlJiGxVEaCz7J3yurcYv?=
- =?iso-8859-1?Q?TGTt7+vCvKDAxlW3DZQ2s6GLzR/CedXdD61DP7K6Wg24XWvbThb+9Soc7P?=
- =?iso-8859-1?Q?LgFZ41J6rTzSkxsZ8OVJjF4EuOfK837sMJdGir01s/Sw1f/Ava9TvZUY00?=
- =?iso-8859-1?Q?xez20S5x6qN2apzY0RdXODyakOkraUYysUyMfVyY4Wj7y6QK4HFkVY53+a?=
- =?iso-8859-1?Q?mj8gzjeRrkY2TEQKH/UXjCkhsiEIJ3XM+KWon8FeGY5rWuWDJ7jD1L/TW7?=
- =?iso-8859-1?Q?6sxGoy/hPooEUhmWJcZicbfbQxr9EAoFFz7zgMeDFGk4MvOPOWEYGdROXg?=
- =?iso-8859-1?Q?jgMTfkzF+E9qCmSrnhtHHhZzRO8nd8FEvSHzsxOZWChSLz2JygsGRUF+pZ?=
- =?iso-8859-1?Q?7NhvvFldrhScufxvDk3Cl33vi+SUhAgXOBS6/wDzS9D3v+vabxHdq2F/hC?=
- =?iso-8859-1?Q?v3Os02/RWMnp38LtJvhqOonQy07883gjY1H2rWKjSWD1Ehl9r2C78M1uaq?=
- =?iso-8859-1?Q?tc7dI3z2EjYWdqWlCxPzfiCWtOEv6hwGgqHmlTIwgo/W2RQl5MHkRpWP0E?=
- =?iso-8859-1?Q?WWblmaMQSR1ukeTNx6y+ujl90kCKCGEY9jA08Wu3vJ5uR38WSDdrv1PWi8?=
- =?iso-8859-1?Q?6x3U9EnqXH+1OutksPn7QRuEG1ji4ID2qsgGenkE+PTH8db5sCZq1qS7k5?=
- =?iso-8859-1?Q?0N9+4PyYCSaAH4pNjVSsDt0C1o0+XRvN/D5b/a9NLdkIJz2YBznDyP4ord?=
- =?iso-8859-1?Q?5M6WINuiToQkYN5TTwz7l/u0GUrJORGViRDh3c+TW3Khq2CcOQ9MuAZClO?=
- =?iso-8859-1?Q?uEQIKVO5J48+UOiDBWUXfd86jm1lGWmoGgTfBkd2Ojp7z7vlW5Ifutu416?=
- =?iso-8859-1?Q?9i1hboegcZZXdNip9Hu8FCK3FMeMZHK+SW5bXNfb0nL9fzSQUrealE6JCq?=
- =?iso-8859-1?Q?5WlsODCfBmSUUvVbOeR19zKPBE0CRn+GxXaMdpgOm+SFIBMqbv/t2rSKfG?=
- =?iso-8859-1?Q?iH/ZXviD0+o6A9KXUZKkxlfeOIwohVdmAmKwn9qyBIL4Z2CO08an3fD7Iw?=
- =?iso-8859-1?Q?hSlEf0nEzdvTsmN1KVVWwFr29uLll7o5ch0OkJ15ABfImZKVXBwKMTHGSD?=
- =?iso-8859-1?Q?9/VDiI6dk2w0WrBRZRpgDxLPIQsZCeTywcJKEfe0xkGtFrrs/fyT+IhjeL?=
- =?iso-8859-1?Q?irGdXXhjeg=3D=3D?=
-X-Exchange-RoutingPolicyChecked: Mb16PkQNwa4uCyoZLfTLsmiHdjbQPtx9DbGTLpSq0ncJxxAPz+QhrjArv7OT/iqrVfpQJDrF8S9ayJ3B3ETeICCRvdC07NVbM9KfQBxkuJ7RZdtQ6m6sNzlgWccBFdEoIFKTwRDnux0b10XEKhQ4itQ7zQhtfyoy0iQoNSRzvX0+LulCv4MVcwNCAdE+7WDgbmGIaN7fc+NmFfloDqXeY+WJOpjeJi2IULF/YkCfhklWVL9Km7zQPHySJGxn5zWboa+ig0jY+WbiPQ8Ah31vXl+8YPpAPLA/qq5scoGDjhC1s6bOJkoBan/9DZFt6Stn8zpORu9mYRvyss4nRWgwMw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: df612776-74bb-459e-bdbb-08df020c9af2
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?uFqZoUJM6bLpHlYJbwRdWqcva6MdesGzcQqNRygkh50lZBzbuyFsNQU73zpV?=
+ =?us-ascii?Q?xn4FlAnxuGzXu2BsRZ/AjqnLSm84cMlSvf69qu5ozSvxPOc0/SwFyC0xZXeh?=
+ =?us-ascii?Q?TWeC7eVLl2Y0Ujp25ISSyvadjiS0FMc3sjDmXK3YDdNy9dnFIglSLVBHZkNl?=
+ =?us-ascii?Q?q9jq9/K/TXu3t0YawGVbgi/D1BK5LZvDCrtMfQwx+pvtwDy+6Dwu2TTdR27X?=
+ =?us-ascii?Q?yNibMu/Z5wr3Lql2LvDAvORtKy/rW6MaLRoNX7WvJXHTUpp/dD+0vIIBoZ4W?=
+ =?us-ascii?Q?thBdQ+rfUmX7vrFFfoMcrujM5jiCsAWPTLTdSnKEPFbRavvDUCFKavagMuVw?=
+ =?us-ascii?Q?LF5V4iZ0lqXqEdZa54r8xppCilce5RvYpyhglHsmyRv3UtcZ1BAqaod9YFf7?=
+ =?us-ascii?Q?WxrRznesT+pUcv7cawY49WMvvhkxldFW5yemHdomhkNAlIcaveoPSY0QfZ/p?=
+ =?us-ascii?Q?vR+JvGb7KoGWr4m9hUokj0owEGod1TQxfB2a0rkdlWdD1zt5S1XF19sb6i35?=
+ =?us-ascii?Q?pHZHmMgxN8EvPKdVY7J8F4plhICS87xYdgXXS2mYj9+1dPfJn3U63uF5fkyC?=
+ =?us-ascii?Q?qPvicOP7QoD8wNfi9v4tudyX1Dj0B6togV1nEXzCdzZjQq7bLNI74akzUwdR?=
+ =?us-ascii?Q?+M0fssW1TeZ708Vx4ODUr/t1F9WW9i9UJl5wAD7qHViyKbIEuGA7L60ZjIQc?=
+ =?us-ascii?Q?KPiNkda2bPb0crGh4PDMxDNXHFxouFYTGWBrJPCgWNfsDmFpAk2aoBWBmr6Z?=
+ =?us-ascii?Q?bhL04P297t/p+wtB+es9ODWdq9O4W9wBwMzhGL7aR5irimyceX/h6S8tkYVX?=
+ =?us-ascii?Q?0zu23th8K1JEvg/JrRV3gLqzoUVlNyBLf3L6jDBXIkd04j6Mw+MGHcasx2/0?=
+ =?us-ascii?Q?wmBN9uy4+B6lcEeXWx4e6+FI3iwNxYe8uC6pZJIzhhXgSNV8lwlO18cPNb5G?=
+ =?us-ascii?Q?lmD/esXCci7X/3M0oPygA52xrTnbLLvQ5ewimH6kheMKXJD2umSJhyoU+7m3?=
+ =?us-ascii?Q?z6tYQB6QiEbtr6uhTVlm6V+vJeuT/6gaTSpD1M2Ajq3CSMgC/AxWwzL5/KWk?=
+ =?us-ascii?Q?Ax4NQgVdpgj1LqPNW7t0RhvntMcFFJ7ogtPtn50xrcI98PdEAlngYKBQ/W+Q?=
+ =?us-ascii?Q?yKuNf4J96Tp6TdmiGegDKEhV28lYJtdaH5nOyE5g1jsioehm05/SpS6PTRJk?=
+ =?us-ascii?Q?b3I7VBEtdZZQJqYzNtp0y+9QmOwFFd5OncFcaYXRtz2+SQqAXDkrXt2xo43L?=
+ =?us-ascii?Q?9Dbr877gBQ2x8/aulwRIvAb7xCQ6Q4NGqA9EFAy7wadEQB71u/PUU1cj5kIC?=
+ =?us-ascii?Q?oZiZneh9j6vf8maaDYg+B2KvRHJA0HlkjXfAnAYicXVr+T/hOCoNrIn65jZn?=
+ =?us-ascii?Q?pogd0Sezp+dajiY3vTKMxYEYo0egqT4PkO64blGPO+5wv0GQfXSYFJi2BNvd?=
+ =?us-ascii?Q?sVFnk0F3lXHeTuW+WVFYY5bsiZSQ8jZQGhWWsZUEJh/euO40iueloQ9mPWY7?=
+ =?us-ascii?Q?ljrCjjt3mpand/bny4A5H4djeEFbIvtz2JJlePLJy2ecFnu9Za4ux/J4QZTU?=
+ =?us-ascii?Q?oTK+NDBufTrmsWiqi/DnOKQAe+q4VEjHhWpbBeDuxYsx23yXjn8p7+Csy0Se?=
+ =?us-ascii?Q?kHoWvDW13p04Za22CPO5axfQe9XzP9vGpYSkn3aHJYrHZ00Esh6rQQr2+uZf?=
+ =?us-ascii?Q?tgUqSBNQVgWY1ygTc0UJIP3RDKXHL5flFb640FlBwgEulkIUE3FOXhDrgjgv?=
+ =?us-ascii?Q?nyEjwojtrQ=3D=3D?=
+X-Exchange-RoutingPolicyChecked: hhnZSzrHogqCBSQoN34Ye7zahWTNeRvlS1JVeg6LV1bWUxv4tdxzFts/xLvoajm7B1gAfYJHzkjBbfTACoLpItz/1SjpiyvKX9sueKLT4MMw/iW7YBcQcEOurs0auEYoW+C6d44dx/qHB7dERbYwL+nGilyzpuk2Nx9v3LqgDhr3CJvgpm6l5jKUlE1Tnlls+LsUdl+CxkYjVj1Exe0QM2Kl/CXWON2XvG+lnE9Nap5Gfb0UDSoOYaLQ+uenqgT3OVbBCgqr3FvG1UXbc4Kf/57ZtKWQk8XdLLKLPsEVGZgQ5vcE/fHmnRetT/MM04Cuj7/qZVe6BYr9kZEwrtibuw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e2ac1fd-ea74-4ab9-8d85-08df020dab50
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7752.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 18:22:07.5325
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 18:29:44.3714
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KSQH0zwcHvIYcMA2z+lWVpfujKTzzcl/t4Tc2/Y/7wATnQst4Bqtw5CzGoGgujACb8yNA4uevViMyzC3AWcHJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8517
+X-MS-Exchange-CrossTenant-UserPrincipalName: kUvd+orPJbqrZJ22cBaZwGUtAsc3CTg7cCGqOQ80zscoHGWhIu1naEuAVTwvEB79zuO1Zs5M7hbXIqiJfFvOGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8175
 X-OriginatorOrg: intel.com
 
-On Fri, Aug 21, 2026 at 11:43:05AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On Mon, Aug 24, 2026 at 04:30:25PM +0200, Laguna, Lukasz wrote:
 > 
-> New issues:
-> - [Critical] External pinned BOs lose their DMA mappings during FLR suspend but are not unbound from GPU VMs and not restored on FLR resume, leading to an exploitable DMA UAF.
-> - [High] Deadlock in FLR prepare path due to waiting for migration jobs after disabling interrupts and stopping GuC.
+> On 8/21/2026 13:37, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > - [Critical] Sleeping in atomic context due to `mutex_lock()` in `xe_device_declare_wedged()`.
+> 
+> Already discussed, can be addressed in a follow-up series.
 
-Raag, could you please take a look and respond all Sashiko's new findings one by one
-with your analysis?
+Why can't this be addressed in this series? I believe this is worse then the
+below case. But I really dislike that we are going further with the mutex
+inside an atomic context only with a promise of fixing this later without
+seeing the code...
 
-Thanks,
-Rodrigo.
-
 > 
-> Pre-existing issues:
-> - [High] Incomplete rollback on GT suspend failure leaves device in an inconsistent state.
-> --
+> > - [High] Unprotected state modification and double-increment of `wedged.ref` in `prepare_device_for_reset()`.
 > 
-> --- Patch [7]: [PATCH v10 07/10] drm/xe/pm: Introduce xe_device_suspend/resume() ---
-> commit ee6e16bf1e226eef6a606f3d7137d9fbf63f7e82
-> Author: Raag Jadav <raag.jadav@intel.com>
+> Valid. It should be enough to just take the lock and check xe->wedged.perm
+> before taking the reference.
 > 
-> drm/xe/pm: Introduce xe_device_suspend/resume()
->     
-> PCIe FLR prepare/re-initialization flows pretty much reflect system
-> suspend/resume flows with a few notable exceptions. Repurpose existing
-> helpers for PCIe FLR with an explicit flag to distinguish between both
-> flows.
+> > - [High] Temporary wedged state from PCI error recovery leaks PM reference and triggers teardown assert if recovery aborts.
 > 
-> > diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-> > index 396d02eb2af83..012ba47660982 100644
-> > --- a/drivers/gpu/drm/xe/xe_device.c
-> > +++ b/drivers/gpu/drm/xe/xe_device.c
-> [ ... ]
-> > +int xe_device_suspend(struct xe_device *xe, bool flr)
-> > +{
-> > +	struct xe_gt *gt;
-> > +	u8 id;
-> > +	int err;
-> > +
-> > +	err = xe_pxp_pm_suspend(xe->pxp);
-> > +	if (err)
-> > +		return err;
-> > +
-> > +	xe_late_bind_wait_for_worker_completion(&xe->late_bind);
-> > +
-> > +	for_each_gt(gt, xe, id)
-> > +		xe_gt_suspend_prepare(gt);
-> > +
-> > +	if (flr) {
-> > +		for_each_gt(gt, xe, id)
-> > +			xe_gt_flr_prepare(gt);
-> > +	} else {
-> > +		xe_display_pm_suspend(xe);
-> > +
-> > +		/* FIXME: Super racey... */
-> > +		err = xe_bo_evict_all(xe);
-> > +		if (err)
-> > +			goto err_display;
-> > +
-> > +		for_each_gt(gt, xe, id) {
-> > +			err = xe_gt_suspend(gt);
-> > +			if (err)
-> > +				goto err_display;
-> > +		}
-> > +	}
-> > +
-> > +	xe_irq_suspend(xe);
-> > +
-> > +	if (flr) {
-> > +		/* TODO: Drop all user bos */
-> > +		xe_bo_pci_dev_remove_pinned(xe);
+> It seems to be a false report. Reference is taken just before
+> RESULT_RECOVERED.
 > 
-> [Severity: High]
-> Can this cause a deadlock during the PCIe FLR prepare sequence?
+> Lukasz
 > 
-> When flr is true, xe_gt_flr_prepare() stops GuC scheduling. The
-> guc_exec_queue_stop() function explicitly skips banning and triggering
-> cleanup for kernel queues like the migrate engine, leaving pending migration
-> jobs in the scheduler.
-> 
-> Later we call xe_irq_suspend() which disables hardware interrupts. Then
-> xe_bo_pci_dev_remove_pinned() calls xe_tile_migrate_wait(), performing a
-> blocking dma_fence_wait() on the migrate engine's last job fence.
-> 
-> Since GuC is stopped, interrupts are disabled, and TDR wasn't queued, will
-> the fence ever signal?
-> 
-> > +
-> > +		unmap_mapping_range(xe->drm.anon_inode->i_mapping, 0, 0, 1);
-> > +	} else {
-> > +		xe_display_pm_suspend_late(xe);
-> > +
-> > +		xe_i2c_pm_suspend(xe);
-> > +	}
-> > +
-> > +	return 0;
-> > +
-> > +err_display:
-> > +	xe_display_pm_resume(xe);
-> > +	xe_pxp_pm_resume(xe->pxp);
-> > +	return err;
-> > +}
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this error path leave the system in an
-> inconsistent state if we fail during system suspend?
-> 
-> If xe_bo_evict_all() fails (e.g., due to system memory pressure), or
-> xe_gt_suspend() fails on a subsequent GT, we jump to err_display.
-> 
-> The error path only resumes the display and PXP, but doesn't resume the already
-> suspended GTs, undo xe_gt_suspend_prepare(), or restore the evicted BOs. Could
-> this leave the device permanently broken until a reboot?
-> 
-> [ ... ]
-> > +int xe_device_resume(struct xe_device *xe, bool flr)
-> > +{
-> [ ... ]
-> > +	if (flr) {
-> > +		if (err)
-> > +			return err;
-> > +	} else {
-> > +		/*
-> > +		 * Try to bring up display before bailing from GT resume failure,
-> > +		 * so we don't leave the user clueless with a blank screen.
-> > +		 */
-> > +		xe_display_pm_resume(xe);
-> > +		if (err)
-> > +			return err;
-> > +
-> > +		err = xe_bo_restore_late(xe);
-> 
-> [Severity: Critical]
-> Does skipping xe_bo_restore_late() during FLR resume create an IOMMU bypass or
-> Use-After-Free risk?
-> 
-> During FLR suspend, xe_bo_pci_dev_remove_pinned() unmaps DMA for external BOs
-> (dma-bufs), but the GPU page tables (which may reside in system memory and
-> survive FLR) are not updated to remove the old IOVAs.
-> 
-> When resuming from FLR, we take the "flr == true" branch above and skip
-> xe_bo_restore_late(). Since we skip remapping the external BOs, are those BOs
-> left unmapped while their old IOVAs remain in the surviving GPU VMs?
-> 
-> If userspace submits jobs to the old GPU VMs, and the GPU accesses the unmapped
-> IOVAs, could the GPU silently corrupt or exfiltrate memory if the IOMMU has
-> reallocated those IOVAs to another device or process?
-> 
-> > +		if (err)
-> > +			return err;
-> > +
-> > +		if (IS_VF_CCS_READY(xe))
-> > +			xe_sriov_vf_ccs_register_context(xe);
-> > +	}
-> > +
-> > +	xe_pxp_pm_resume(xe->pxp);
-> > +
-> > +	xe_late_bind_fw_load(&xe->late_bind);
-> > +
-> > +	return 0;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260821112436.545405-1-raag.jadav@intel.com?part=7
+> > --
+> > 
+> > --- Patch [8]: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging ---
+> > commit 102094142d418b8de53397ac8e1fbe1c7ca46ae9
+> > Author: Raag Jadav <raag.jadav@intel.com>
+> > 
+> > drm/xe: Introduce temporary device wedging
+> > 
+> > This commit converts the boolean wedged flag to a reference count to allow
+> > temporary wedged states. It also introduces a perm flag for permanent
+> > wedging and a mutex to protect the wedged state transitions.
+> > 
+> > > diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+> > > --- a/drivers/gpu/drm/xe/xe_device.c
+> > > +++ b/drivers/gpu/drm/xe/xe_device.c
+> > [ ... ]
+> > > @@ -1476,36 +1526,40 @@ void xe_device_declare_wedged(struct xe_device *xe)
+> > >   		return;
+> > >   	}
+> > > -	if (!atomic_xchg(&xe->wedged.flag, 1)) {
+> > > -		xe->needs_flr_on_fini = true;
+> > > -		xe_pm_runtime_get_noresume(xe);
+> > > +	mutex_lock(&xe->wedged.lock);
+> > [Severity: Critical]
+> > Can this cause a sleeping in atomic context panic?
+> > 
+> > xe_device_declare_wedged() can be called from hard IRQ contexts, for
+> > example:
+> > 
+> > xe_mert_irq_handler()
+> >    mert_handle_cat_error()
+> >      xe_device_declare_wedged()
+> > 
+> > Since mutex_lock() can sleep, taking it here from an interrupt handler
+> > would lead to a scheduling while atomic regression.
+> > 
+> > [ ... ]
+> > > diff --git a/drivers/gpu/drm/xe/xe_pci_error.c b/drivers/gpu/drm/xe/xe_pci_error.c
+> > > --- a/drivers/gpu/drm/xe/xe_pci_error.c
+> > > +++ b/drivers/gpu/drm/xe/xe_pci_error.c
+> > > @@ -25,8 +25,10 @@ static void prepare_device_for_reset(struct pci_dev *pdev)
+> > >   	 * xe_device_wedged_fini() releases runtime pm if wedged flag is set, so acquire a runtime
+> > >   	 * pm reference to avoid underflow.
+> > >   	 */
+> > > -	if (!atomic_xchg(&xe->wedged.flag, 1))
+> > > -		xe_pm_runtime_get_noresume(xe);
+> > > +	xe_device_wedged_get(xe);
+> > > +
+> > > +	/* TODO: We shouldn't be doing such ugly hacks, reuse FLR helpers and drop this. */
+> > > +	xe->wedged.perm = true;
+> > [Severity: High]
+> > Could this leak a reference and cause an assertion failure during device
+> > teardown if the device is already wedged?
+> > 
+> > Unlike the old atomic_xchg code which checked if the device was already
+> > wedged, xe_device_wedged_get() increments the reference count unconditionally.
+> > If the device is already wedged from a previous event, the reference count
+> > will be incremented twice.
+> > 
+> > During teardown, xe_device_wedged_fini() only drops a single reference
+> > when wedged.perm is true:
+> > 
+> > drivers/gpu/drm/xe/xe_device.c:xe_device_wedged_fini() {
+> >      if (xe->wedged.perm)
+> >          xe_device_wedged_put(xe);
+> > 
+> >      xe_assert(xe, !xe_device_wedged(xe));
+> > }
+> > 
+> > Will the second reference be left behind and trip the xe_assert() check?
+> > Also, should the state modification here be protected by xe->wedged.lock?
+> > 
+> > [ ... ]
+> > > @@ -126,7 +128,7 @@ static pci_ers_result_t xe_pci_error_slot_reset(struct pci_dev *pdev)
+> > >   	xe = pdev_to_xe_device(pdev);
+> > >   	/* Wedge the device to prevent I/O operations till the resume callback */
+> > > -	atomic_set(&xe->wedged.flag, 1);
+> > > +	xe_device_wedged_get(xe);
+> > [Severity: High]
+> > If the PCI error recovery aborts or fails here, and the device is subsequently
+> > unbound, will this leak the runtime PM reference?
+> > 
+> > This code acquires a temporary wedged reference but does not set
+> > xe->wedged.perm to true. If the expected xe_pci_error_resume() is never
+> > called due to a recovery failure, xe_device_wedged_fini() will see
+> > xe->wedged.perm as false and skip dropping the reference, which would
+> > ultimately trigger the xe_assert(xe, !xe_device_wedged(xe)) on teardown.
+> > 
