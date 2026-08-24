@@ -1,294 +1,172 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A9C41D129;
-	Mon, 24 Aug 2026 12:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C0A3F20E3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 12:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787576322; cv=none; b=iFe6TSoYipmE5P7KpYOF4b4KBJ8uK4SowO3WHcbmZxFdDTds2VKBloroO6YX4RBNGJyvEw+R1nvCKRJtbyH6Htw/cWSGH4bZ6XddEwqEdeoUiHAM9rEwdGd8UvJ2NMBK/qncekrx9nq8K8wJ0xpYKhIBwAYxfVLGzZoq4qR3LXE=
+	t=1787576329; cv=none; b=m99i9TOQVDo2FDjBaXa6YZRXtrTr4iacbe1QVKtUAlYRcOg8kBWXElUHdEYBWyMlRiYlsUBs3uD9JvFHzIAJuGbpG0vwCcBLzM1q1d18OkHy5ea0fD/485kX3EmpUFeLebW6YDBJsXFbgDh+2up9RA4XE8TWdX7NUVqKHjuZTsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787576322; c=relaxed/simple;
-	bh=eciJ9jsr7AB7/58KShnubYuqD7EkujTJGBnTFwC9GoQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSBSsHAjGmiKwzuuF6I8BIpIbxPx/pU+NhKXpjjNW3xHsTN0PTR99jloEpDzkOwqgxyBI5YvEh8/A47LPaBbMK8My8KoSxwdij1KX/250KcUfyKoupaxIV8Dco6qoKIG5EJLVLVRrEY6MqjR21RSycb2X/pC7QQNu2bLsshqONE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=obgWw2kz; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=RXT+BYj7; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mwl4c/Tb; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+/lh83EJ; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1787576329; c=relaxed/simple;
+	bh=OfUCBHpV4KCJ5FY/vsm6RRGjTZCfCaE3wh7fqAjmDEI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H+Pc8igtMYplDgr3LSyiayhmrq4w6KYSFuXytZF3KEY5PfbfLh7LGDOUaxbDIQzsa6Bb++iqkSvx6U6QI9qytALbc/vq1JKwMdPqo7Dd8NLf+3Hvn3c+fGZ2LPGxbLLM4ElzGLeRBDo8tvCuadTCaCn4F2iT4bhMga7alMHsz/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=NxHMhYzT; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="obgWw2kz";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="RXT+BYj7";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mwl4c/Tb";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+/lh83EJ"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 855161F793;
-	Mon, 24 Aug 2026 12:52:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787575935; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MC0+KLKbJpYLNfJ5VRFGCqadwDqoWaUxvHFHXz5HZnc=;
-	b=obgWw2kzGBweRTNALmhwjkp4iYGjn81fa1D7NJxa4i1siT6djgftntgpd/z2tW5aWIdh+S
-	uWM1/AcEThWD2yzhAXxxbWaswQ87J1u1sEZFTUZoqGxoNHbx/kS44ViGCtRcP4a6GT5Qgm
-	hqbMy2Y2+eY+6BfOlhUki+1zVsmuxj8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787575935;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MC0+KLKbJpYLNfJ5VRFGCqadwDqoWaUxvHFHXz5HZnc=;
-	b=RXT+BYj7wNzonJqhj1YsE8EcjDo61Rdj7rSLjpDJxNRKHwVuwYxfdezg4lci/Lm6vyIXWK
-	h+3r4Icq4EJv/HCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787575931; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MC0+KLKbJpYLNfJ5VRFGCqadwDqoWaUxvHFHXz5HZnc=;
-	b=mwl4c/Tb/ixoV1iqroX/qzKElQCk9f8DUp30+/eJFXYsVcJNLZYbJbf21tIWM13fCOyV0k
-	HM3k3pwMqsB0sKD120xyZDQyUigH6VIMUyRTr8SkH7NcL7YSaKmWHvARV3CH0UxdS6V3bO
-	4L0XZiosaUlqtPIqdNYoOi8jFNUlPy4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787575931;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MC0+KLKbJpYLNfJ5VRFGCqadwDqoWaUxvHFHXz5HZnc=;
-	b=+/lh83EJjC7C+V05NWqdrrdXbfOmmiT6WFmaEZgIhFk3TBq8Ix8LHWo/uzw6eg3DbJYmXX
-	Rzi9k2oqjbz8S9CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DD823133F6;
-	Mon, 24 Aug 2026 12:52:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id sKzSNHg+jGpyNwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 24 Aug 2026 12:52:08 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: jfalempe@redhat.com,
-	javierm@redhat.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	geert@linux-m68k.org,
-	rdunlap@infradead.org
-Cc: dri-devel@lists.freedesktop.org,
-	linux-doc@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org,
-	rust-for-linux@vger.kernel.org,
-	linux-hyperv@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	nouveau@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 06/13] drm/panic: Pass global module parameters to drm_panic_dispatch()
-Date: Mon, 24 Aug 2026 14:43:37 +0200
-Message-ID: <20260824125201.218863-7-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260824125201.218863-1-tzimmermann@suse.de>
-References: <20260824125201.218863-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="NxHMhYzT"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67OBVdwl1753046;
+	Mon, 24 Aug 2026 12:58:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=Rl9UDe
+	uKmNise3hWbdcqR+XkfRMVwu2m6cIX4b1aLeo=; b=NxHMhYzT5K07GDUyGDPvid
+	KYXeesaIMlnqZKYO+6ZZim07pngaTjbiMfCE2MoBRvvse12mhtYuOqOfgygrbrZ+
+	SFsHj5+XbiIMa1utc0ROzJLYJhhkRt77UkB6jkgx/W+nMRiLiUJe4DFScjsA9N/N
+	dXDSzFCaHktfiS1h6bmwJZyHq5tzM8cGLoe/b4AeiG5gYe3p7FSN8cXVIalMPOcB
+	SML4RRAss+JGHUwcOTpj5TIydumssMmfG1gtVtXF1Dz/b2C+F1T2G5AKaPfoCVyJ
+	H9SupXHOIN5R4EZLJz1WrCAisUiBqkwEpTdNscYpNHWdatbNoZceam8p6WJkGczg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4hc66-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Aug 2026 12:58:47 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OCvIcs004112;
+	Mon, 24 Aug 2026 12:58:46 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jnxxb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Aug 2026 12:58:45 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67OCwfcG21627564
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 24 Aug 2026 12:58:41 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F15B320043;
+	Mon, 24 Aug 2026 12:58:40 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CC2BC20040;
+	Mon, 24 Aug 2026 12:58:40 +0000 (GMT)
+Received: from [9.224.90.36] (unknown [9.224.90.36])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 24 Aug 2026 12:58:40 +0000 (GMT)
+Message-ID: <732e3384-34a6-4309-b3ae-a8f3eccc7dad@linux.ibm.com>
+Date: Mon, 24 Aug 2026 14:58:40 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -6.80
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,linux-m68k.org,infradead.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net v2 3/3] net/iucv: send the window update outside
+ message_q.lock
+To: sashiko-reviews@lists.linux.dev, Bryam Vargas <hexlabsecurity@proton.me>
+Cc: Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
+References: <20260821-b4-disp-3a6e8695-v2-0-37597ff723a8@proton.me>
+ <20260821-b4-disp-3a6e8695-v2-3-37597ff723a8@proton.me>
+ <20260822111737.8DB721F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Alexandra Winter <wintera@linux.ibm.com>
+In-Reply-To: <20260822111737.8DB721F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 3vD741B9jDb-JhKtm3kEK5dH6uvXLQTQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEwNSBTYWx0ZWRfX/71rpmWQdB40
+ sWMC6CbmMEHWIWO3gHUv5Nwr+2cAKsEuovRFA2nlLsKyaUamdJ/IbU5JB9xq2cSnpgJ0+P/cYPs
+ RKUJtv9dhUoX355rR3gj9HTq4QbPbqw=
+X-Proofpoint-GUID: 3vD741B9jDb-JhKtm3kEK5dH6uvXLQTQ
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8c4007 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=UJCqotb1N0z-pNp_86gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEwNSBTYWx0ZWRfXwhax+VZfa/vW
+ 4RHdZYrYixLYxL0Ve6z9+7Z0fwEoZztBIEi22A5gTog6SC1snNm7vrZIOwIjx6rMNBw9McVWcAj
+ ptHRWgBQ87s3jd5NEwHrPnCLUsNftAi2AZaSStu428i4yHBpkCWIxa97I78E9I1I94MoY2GRPzp
+ A1bDcebs7Boch1mijudFUJa8U7eEa88yxW0MripkDvyebmp8d2MEBcml6hnKbr5mmYcfnc6TXgm
+ dQCJrenUxrKOFhhYFeuUHLshgjZi9fAErFhDWG+CeTay6iXbQLzf7lwiUE3iZ9Homxy9z6pvrf3
+ UCN/3sR55PmZABL2U9KasVwWPu8f0KN9qdL83GBCUKwb3CFEQQPMh7KUuxTGbGkOYW2EPuzNjiz
+ VyZlp+h8o+J58V8IkmhcKxc6z3wSNTdl5MwwwK6r1+TV+OKRP1KHq5R5ztWIktqDiwmfKffGdXI
+ w3kIfgBf//nh9dt4Nzg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_03,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240105
 
-Set the panic type and QR version in draw_panic_plane() as a single
-point of truth. Pass the values into the individual drawing functions.
 
-In the test case, always create a QR code with version 40 (i.e., the
-highest supported version).
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
----
- drivers/gpu/drm/drm_panic.c            | 39 ++++++++++++++++----------
- drivers/gpu/drm/tests/drm_panic_test.c |  2 +-
- 2 files changed, 25 insertions(+), 16 deletions(-)
+On 22.08.26 13:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Redundant concurrent window updates cause spurious socket disconnections due to transient errors.
+> - [High] Lockless modification of `sk->sk_state` to `IUCV_DISCONN` in error path corrupts the socket state machine.
+> 
+> Pre-existing issues:
+> - [Critical] Concurrent execution of `iucv_sock_recvmsg` and `iucv_sock_close` can lead to a NULL pointer dereference of `iucv->hs_dev`.
+> - [High] Lockless read-modify-write sequence on `sk->sk_shutdown` in `iucv_send_ctrl` permanently loses concurrent state updates.
+> --
+> 
+> --- Patch [3]: [PATCH net v2 3/3] net/iucv: send the window update outside message_q.lock ---
+> commit 38dc50c2f4dfcebf699da12476bf1a5fb529484e
+> Author: Bryam Vargas <hexlabsecurity@proton.me>
+> 
+> net/iucv: send the window update outside message_q.lock
+> 
+> This patch moves the window update control message dispatch outside the
+> message_q.lock in iucv_sock_recvmsg(). It avoids sleeping in atomic context
+> since iucv_send_ctrl() performs a GFP_KERNEL allocation. A boolean flag is
+> used to defer the send until after the lock is released.
+> 
+>> diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+>> --- a/net/iucv/af_iucv.c
+>> +++ b/net/iucv/af_iucv.c
+> [ ... ]
+>> @@ -1336,15 +1337,18 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+>>  				iucv_process_message_q(sk);
+>>  			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
+>>  			    atomic_read(&iucv->msg_recv) >=
+>> -							iucv->msglimit / 2) {
+>> -				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+>> -				if (err) {
+>> -					sk->sk_state = IUCV_DISCONN;
+>> -					sk->sk_state_change(sk);
+>> -				}
+>> -			}
+>> +							iucv->msglimit / 2)
+>> +				send_win = true;
+>>  		}
+>>  		spin_unlock_bh(&iucv->message_q.lock);
+>> +
+>> +		if (send_win) {
+>> +			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+> 
+> [Severity: High]
+> Because atomic_read(&iucv->msg_recv) is checked inside the lock, but the
+> counter is reset later inside afiucv_hs_send() without holding
+> message_q.lock, can multiple concurrent calls to iucv_sock_recvmsg() set
+> send_win to true and trigger redundant window updates?
+> 
 
-diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-index 834653d288a9..f597ef04c5bc 100644
---- a/drivers/gpu/drm/drm_panic.c
-+++ b/drivers/gpu/drm/drm_panic.c
-@@ -654,7 +654,7 @@ static void drm_panic_qr_exit(void)
- 	stream.workspace = NULL;
- }
- 
--static int drm_panic_get_qr_code_url(u8 **qr_image)
-+static int drm_panic_get_qr_code_url(u8 **qr_image, unsigned int qr_version)
- {
- 	struct kmsg_dump_iter iter;
- 	char url[256];
-@@ -666,7 +666,7 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
- 			   CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
- 			   utsname()->machine, utsname()->release);
- 
--	max_qr_data_size = drm_panic_qr_max_data_size(panic_qr_version, url_len);
-+	max_qr_data_size = drm_panic_qr_max_data_size(qr_version, url_len);
- 	max_kmsg_size = min(MAX_ZLIB_RATIO * max_qr_data_size, QR_BUFFER1_SIZE);
- 
- 	/* get kmsg to buffer 1 */
-@@ -712,11 +712,11 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
- 				     qrbuf1, QR_BUFFER1_SIZE);
- }
- 
--static int drm_panic_get_qr_code_raw(u8 **qr_image)
-+static int drm_panic_get_qr_code_raw(u8 **qr_image, unsigned int qr_version)
- {
- 	struct kmsg_dump_iter iter;
- 	size_t kmsg_len;
--	size_t max_kmsg_size = min(drm_panic_qr_max_data_size(panic_qr_version, 0),
-+	size_t max_kmsg_size = min(drm_panic_qr_max_data_size(qr_version, 0),
- 				   QR_BUFFER1_SIZE);
- 
- 	kmsg_dump_rewind(&iter);
-@@ -729,19 +729,20 @@ static int drm_panic_get_qr_code_raw(u8 **qr_image)
- 				     qrbuf2, QR_BUFFER2_SIZE);
- }
- 
--static int drm_panic_get_qr_code(u8 **qr_image)
-+static int drm_panic_get_qr_code(u8 **qr_image, unsigned int qr_version)
- {
- 	if (strlen(CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL) > 0)
--		return drm_panic_get_qr_code_url(qr_image);
-+		return drm_panic_get_qr_code_url(qr_image, qr_version);
- 	else
--		return drm_panic_get_qr_code_raw(qr_image);
-+		return drm_panic_get_qr_code_raw(qr_image, qr_version);
- }
- 
- /*
-  * Draw the panic message at the center of the screen, with a QR Code
-  */
- static int _draw_panic_screen_qr_code(struct drm_scanout_buffer *sb,
--				      u32 fg_color, u32 bg_color)
-+				      u32 fg_color, u32 bg_color,
-+				      unsigned int qr_version)
- {
- 	const struct font_desc *font = get_default_font(sb->width, sb->height, NULL, NULL);
- 	struct drm_rect r_screen, r_logo, r_msg, r_qr, r_qr_canvas;
-@@ -768,7 +769,7 @@ static int _draw_panic_screen_qr_code(struct drm_scanout_buffer *sb,
- 
- 	max_qr_size = min(3 * sb->width / 4, 3 * sb->height / 4);
- 
--	qr_width = drm_panic_get_qr_code(&qr_image);
-+	qr_width = drm_panic_get_qr_code(&qr_image, qr_version);
- 	if (qr_width < 0)
- 		return qr_width;
- 	else if (!qr_width)
-@@ -812,9 +813,11 @@ static int _draw_panic_screen_qr_code(struct drm_scanout_buffer *sb,
- 	return 0;
- }
- 
--static int draw_panic_screen_qr_code(struct drm_scanout_buffer *sb, u32 fg_color, u32 bg_color)
-+static int draw_panic_screen_qr_code(struct drm_scanout_buffer *sb,
-+				     u32 fg_color, u32 bg_color,
-+				     unsigned int qr_version)
- {
--	if (_draw_panic_screen_qr_code(sb, fg_color, bg_color))
-+	if (_draw_panic_screen_qr_code(sb, fg_color, bg_color, qr_version))
- 		return draw_panic_screen_user(sb, fg_color, bg_color);
- 	return 0;
- }
-@@ -887,17 +890,18 @@ static bool drm_panic_is_format_supported(const struct drm_format_info *format)
- 	return drm_draw_can_convert_from_xrgb8888(format->format);
- }
- 
--static int draw_panic_dispatch(struct drm_scanout_buffer *sb, u32 fg_color, u32 bg_color)
-+static int draw_panic_dispatch(struct drm_scanout_buffer *sb, enum drm_panic_type panic_type,
-+			       u32 fg_color, u32 bg_color, unsigned int qr_version)
- {
- 	int ret;
- 
--	switch (drm_panic_type) {
-+	switch (panic_type) {
- 	case DRM_PANIC_TYPE_KMSG:
- 		ret = draw_panic_screen_kmsg(sb, fg_color, bg_color);
- 		break;
- #if IS_ENABLED(CONFIG_DRM_PANIC_SCREEN_QR_CODE)
- 	case DRM_PANIC_TYPE_QR:
--		ret = draw_panic_screen_qr_code(sb, fg_color, bg_color);
-+		ret = draw_panic_screen_qr_code(sb, fg_color, bg_color, qr_version);
- 		break;
- #endif
- 	case DRM_PANIC_TYPE_USER:
-@@ -947,6 +951,11 @@ static void draw_panic_plane(struct drm_plane *plane, const char *description)
- #else
- 	u32 bg_color = 0x00000000;
- #endif
-+#if IS_ENABLED(CONFIG_DRM_PANIC_SCREEN_QR_CODE)
-+	unsigned int qr_version = panic_qr_version;
-+#else
-+	unsigned int qr_version = 0;
-+#endif
- 
- 	if (!drm_panic_trylock(plane->dev, flags))
- 		return;
-@@ -962,7 +971,7 @@ static void draw_panic_plane(struct drm_plane *plane, const char *description)
- 
- 	drm_panic_set_description(description);
- 
--	ret = draw_panic_dispatch(&sb, fg_color, bg_color);
-+	ret = draw_panic_dispatch(&sb, drm_panic_type, fg_color, bg_color, qr_version);
- 	if (!ret) {
- 		/*
- 		 * Only flush if we have a panic screen to display. Otherwise
-diff --git a/drivers/gpu/drm/tests/drm_panic_test.c b/drivers/gpu/drm/tests/drm_panic_test.c
-index 969a096ec840..196496238d23 100644
---- a/drivers/gpu/drm/tests/drm_panic_test.c
-+++ b/drivers/gpu/drm/tests/drm_panic_test.c
-@@ -58,7 +58,7 @@ static int draw_panic_screen_kmsg_default(struct drm_scanout_buffer *sb)
- #if IS_ENABLED(CONFIG_DRM_PANIC_SCREEN_QR_CODE)
- static int draw_panic_screen_qr_code_default(struct drm_scanout_buffer *sb)
- {
--	return draw_panic_screen_qr_code(sb, 0x00ffffff, 0x00000000);
-+	return draw_panic_screen_qr_code(sb, 0x00ffffff, 0x00000000, 40);
- }
- #endif
- 
--- 
-2.55.0
+No, because of the previous patch that is mentioned as a precondition.
+
+
+> If redundant updates are sent, could transient send buffer exhaustion cause
+> the socket to unintentionally hit the error path below and disconnect?
+
+I'm not sure I understand the question. But I think this works as designed.
+
+
 
