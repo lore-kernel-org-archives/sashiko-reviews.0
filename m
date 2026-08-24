@@ -1,37 +1,50 @@
-Received: from mta1.migadu.com (out-56.mta1.migadu.com [95.215.58.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB1C392803
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 21:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40650370AEC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 21:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787607068; cv=none; b=tX/Omu5drRog/gjtQMo0YR+MXaq4HUIXY1A6DOFcEdFMJ6p6s/DG+/7pL5Jta8cMNY91LNrDAnOl7Clb7WpbuBB+4hKCe6/z1XcL2ZhQvg5255ZMArsn9xRLt65R2/ZmxXaFTRdGxWmchiosqmB6GQJmu4I0P4HYZYE9GLdiny4=
+	t=1787607177; cv=none; b=KpggjTMtHGA4SY6YUP35SDkox/GJ3SX0e/YPLEqyNgSzDJ25pd2YpC6yz7Btgy64eG65pxi95vh9tfcojdb9fC+sg9KhyUrceKvUQXxKEPijk/vDdlDMyJbidnJKg5xRJ12yjfcJAlDi0gp0r3eQifncoROTLu/p0bPrRUIEdcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787607068; c=relaxed/simple;
-	bh=WZcBcfW1L70I1fxAaNA8stbBZTTedz2WeJJI5m9KWhc=;
+	s=arc-20240116; t=1787607177; c=relaxed/simple;
+	bh=rUuAq1ugvnUq9BIrNxm33Yk0Ld+9rTjVp/7XAOUCIgU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ILUEx4I6looaQ/aqgSpeklk8/2zxMsfFXOb5FNnetmU5EGHDDd4jx41iBBGH0mX6BxM2PN03vYoLXo7bRGKHA572EoskOMxr+nYni74zUHb5H89OssKaCYQZEbnxL3vtdxKpH9bpdOv5zvCy4ydJaoTj0726HBXVwckL+TzYXh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=p9KcRQZr; arc=none smtp.client-ip=95.215.58.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=fQD13i5v1NYgjCVkqJYxkHE/rbD1wT4JfBB8sljiYtNY5otQLVUx23sdVa3B3x+lIfOXeoLTFo/nu2bJN0uZ9dMQENizX03Xfs2rrWw763IfX92UH6GT6k0yGFeGmXXrO0ERNQbKgNS3wybVffqk75hRG1JuzyJaRE3xLyg414c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Z2htSF8T; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="p9KcRQZr"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=WZcBcfW1L70I1fxAaNA8stbBZTTedz2WeJJI5m9KWhc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787607063; v=1; x=1788211863;
- b=p9KcRQZrBucBIS/4YWq2uqyS83qwum6PI/oTK1fR+zxALAOEAMWP6atGaM1vQ0j0RSaIwaLU
- tEq77O0vVu1n9uMB2pwCbLwfHfb8ISPdfJv5mJMtbZj/OPJhjWu1zPLm7rOaMcmcEDmJcZbYW2a
- T87c9VVK/j47Ug0Oi6BqQ108=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [IPV6:2a03:83e0:1251:27:f67e:b349:d735:9d02] (2620:10d:c090:500::4:2c42)
-	by smtp.migadu.com with ESMTPS id b8fd059c6c5c5754;
-	Mon, 24 Aug 2026 21:31:03 +0000
-X-Mizu-Trace-ID: b8fd059c6c5c5754
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d94a8330-79d4-485d-ae46-cc93c0ceac5e@linux.dev>
-Date: Mon, 24 Aug 2026 14:30:57 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z2htSF8T"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787607174; x=1819143174;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=rUuAq1ugvnUq9BIrNxm33Yk0Ld+9rTjVp/7XAOUCIgU=;
+  b=Z2htSF8TQOJA0lFZuFJuTYbXnJW1SEjCOY9xG0j152c0bQ5zWxYNu8l6
+   yyhQxcZc4z1WYUzd2C8JQTjp2xOfBOo7p/BYSlGEnQQUr0OABZeSzd/ks
+   RK/NGaRNQ6sy5HiXXn5MlyiUxwzQh5u1ihSnqZoRc/JXQrpmDVKdR4yze
+   kyY3n8zFu1HPjXkTygOB8Cz69ozzhzClzKv8OUcJS2JtmvsXny9+tlr9/
+   bgir75uCiTkRRWE33JCPneXK7ToKvgB2zdimJ69jHEppj+MYDDmJz73Hi
+   +iuFPrQ7Tya3+jK61eZfPBwGjmeNXlo53E500xpM9PSITAEzZGXxTaw4K
+   A==;
+X-CSE-ConnectionGUID: QwvjEyBTTp647jzuwesmIA==
+X-CSE-MsgGUID: coYLvgIoRHeyGD1oArPiHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="90584311"
+X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
+   d="scan'208";a="90584311"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 14:32:53 -0700
+X-CSE-ConnectionGUID: CW7u7kl2SKGyIKRWRkh/mA==
+X-CSE-MsgGUID: 652A0P5wQKG1X3F91NlRrQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
+   d="scan'208";a="266582054"
+Received: from jjgreens-desk24.amr.corp.intel.com (HELO [10.125.108.201]) ([10.125.108.201])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 14:32:53 -0700
+Message-ID: <3189ffc8-d3a5-44e4-9301-4c98189cbab0@intel.com>
+Date: Mon, 24 Aug 2026 14:32:52 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,75 +52,181 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 3/3] selftests/bpf: Enable some of the blocked
- cpuv4 instruction tests for bpf-gcc
+Subject: Re: [PATCH v4 12/13] ACPI: APEI: GHES: Bound AER info copy and
+ sanitize software metadata
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260824210142.3933580-1-vineet.gupta@linux.dev>
- <20260824210142.3933580-4-vineet.gupta@linux.dev>
- <20260824211401.3C3D91F000E9@smtp.kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
+Cc: linux-cxl@vger.kernel.org
+References: <20260824174936.939059-1-dave.jiang@intel.com>
+ <20260824174936.939059-13-dave.jiang@intel.com>
+ <20260824181753.F3F681F000E9@smtp.kernel.org>
+From: Dave Jiang <dave.jiang@intel.com>
 Content-Language: en-US
-In-Reply-To: <20260824211401.3C3D91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260824181753.F3F681F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 8/24/26 2:14 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added `#ifdef __BPF_FEATURE_ADDR_SPACE_CAST` guard unintentionally drops 5 arena tests from the default test_progs flavour for clang.
+On 8/24/26 11:17 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Hardcoding `header_len = 0` and `flit = false` in `ghes_handle_aer()` actively breaks the parsing and printing of legitimate Flit mode TLP logs from CPER AER records.
+> 
+> Pre-existing issues:
+> - [High] Memory allocated for `aer_capability_regs` from the fixed-size `ghes_estatus_pool` is permanently leaked when `aer_recover_queue()` fails to insert into the `aer_recover_ring`.
+> - [High] Memory allocated for `aer_capability_regs` is leaked in `aer_recover_work_func()` when the target PCI device cannot be found.
+> - [High] Direct `memcpy` of raw CPER AER hardware bytes into `struct aer_capability_regs` misaligns fields, causing hardware registers to be incorrectly parsed and printed as TLP Prefix Logs.
+> - [High] Uninitialized and unvalidated software-only fields in `cxl_rch_get_aer_info()` lead to a massive out-of-bounds kernel stack read in `pcie_print_tlp_log()`.
+> - [High] Direct `memcpy` of little-endian CPER AER info into native integer fields of `struct aer_capability_regs` corrupts values on big-endian architectures.
 > --
->
-> --- Patch [3]: [PATCH bpf-next v2 3/3] selftests/bpf: Enable some of the blocked cpuv4 instruction tests for bpf-gcc ---
-> commit ad6608dfd47ddd6a7068cdc6e0e6d467ec3558b8
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
->
-> selftests/bpf: Enable some of the blocked cpuv4 instruction tests for bpf-gcc
->
-> This commit relaxes clang-only checks in BPF selftests by adding specific
-> feature checks like __BPF_FEATURE_LDSX to allow building under bpf-gcc.
-> It also wraps arena tests with __BPF_FEATURE_ADDR_SPACE_CAST to skip them
-> on bpf-gcc.
->
->> diff --git a/tools/testing/selftests/bpf/progs/verifier_ldsx.c b/tools/testing/selftests/bpf/progs/verifier_ldsx.c
->> index e58ea69e38549..75762e11b443f 100644
->> --- a/tools/testing/selftests/bpf/progs/verifier_ldsx.c
->> +++ b/tools/testing/selftests/bpf/progs/verifier_ldsx.c
+> 
+> --- Patch [12]: [PATCH v4 12/13] ACPI: APEI: GHES: Bound AER info copy and sanitize software metadata ---
+> commit 91c35473296c2f22c740c76f30c6c146671ec39a
+> Author: Dave Jiang <dave.jiang@intel.com>
+> 
+> ACPI: APEI: GHES: Bound AER info copy and sanitize software metadata
+> 
+> ghes_handle_aer() copies sizeof(struct aer_capability_regs) out of the
+> fixed 96-byte pcie_err->aer_info. The struct is larger, so the copy reads
+> past the section. Validate error_data_length, zero the destination,
+> bound the copy to the 96-byte source, and clear header_len and flit.
+> 
+> Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=3
+> 
+>> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+>> index 0cc1e63836356..d6643127a2df0 100644
+>> --- a/drivers/acpi/apei/ghes.c
+>> +++ b/drivers/acpi/apei/ghes.c
+> 
 > [ ... ]
->> @@ -263,6 +257,14 @@ __naked void ldsx_ctx_8(void)
->>   	: __clobber_all);
->>   }
->>   
->> +#ifdef __BPF_FEATURE_ADDR_SPACE_CAST
+> 
+>> @@ -664,13 +667,22 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
+>>  						  sizeof(struct aer_capability_regs));
+>>  		if (!aer_info)
+>>  			return;
+>> -		memcpy(aer_info, pcie_err->aer_info, sizeof(struct aer_capability_regs));
 >> +
->> +struct {
->> +	__uint(type, BPF_MAP_TYPE_ARENA);
->> +	__uint(map_flags, BPF_F_MMAPABLE);
->> +	__uint(max_entries, 1);
->> +} arena SEC(".maps");
->> +
-> [Severity: Medium]
-> Does this inner guard unintentionally drop the arena tests for clang under
-> the default test_progs flavour?
->
-> The commit message notes that clang only defines feature macros like this at
-> -mcpu=v4, but successfully assembles the inline asm at -mcpu=v3. Because of
-> this, you kept the clang version checks on the file's main guard to avoid
-> removing tests where they run today.
->
-> However, since this inner guard lacks a || __clang_major__ >= 18 fallback,
-> clang at -mcpu=v3 evaluates this as false,
+>> +		/*
+>> +		 * The CPER source is a fixed 96 bytes, shorter than struct
+>> +		 * aer_capability_regs, so bound the copy to it. header_len and
+>> +		 * flit are software-only and land inside those 96 bytes; clear
+>> +		 * them so firmware cannot drive the pcie_print_tlp_log() loop
+>> +		 * over dw[] out of bounds.
+>> +		 */
+>> +		memset(aer_info, 0, sizeof(struct aer_capability_regs));
+>> +		memcpy(aer_info, pcie_err->aer_info, sizeof(pcie_err->aer_info));
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this direct memcpy
+> misalign fields in struct aer_capability_regs?
+> 
+> The CPER hardware payload expects Root Error Command and Root Error Status
+> at offset 44 and 48 respectively. However, struct aer_capability_regs
+> embeds the software struct pcie_tlp_log at offset 28.
+> 
+> Because pcie_tlp_log is padded for Flit mode and takes up ~60 bytes, doesn't
+> this incorrectly place the hardware's Root Error Command into
+> aer_info->header_log.dw[4], which aliases to prefix[0]?
+> 
+> This would cause pcie_print_tlp_log() to dump entirely unrelated hardware
+> registers as TLP Prefix logs.
+> 
+> [Severity: High]
+> This is another pre-existing issue, but does this direct copy of little-endian
+> CPER AER info into native integer fields corrupt the values on big-endian
+> architectures?
+> 
+> Without le32_to_cpu() conversions, parsing these fields on a big-endian
+> system will interpret the bytes in reverse order, breaking downstream
+> bitwise evaluations.
+> 
+>> +		aer_info->header_log.header_len = 0;
+>> +		aer_info->header_log.flit = false;
+> 
+> [Severity: High]
+> Does hardcoding header_len and flit to 0 and false unconditionally break the
+> parsing and printing of legitimate Flit mode TLP logs from CPER AER records?
+> 
+> If the hardware actually experienced an error in Flit mode, indicated by
+> PCI_ERR_CAP_TLP_LOG_FLIT in aer_info->cap_control, this forcibly discards
+> that state. Won't pcie_print_tlp_log() then ignore the extended Flit mode
+> header DWORDS entirely?
 
-Is this just by review or was it actually tested - I'm guessing former ...
+It will, but there is nothing to discard. Flit mode logs are not decoded on this path today, and this patch does not change that. What it changes is that the failure stops being an out of bounds read.
 
-> silently dropping the arena map
-> and the subsequent 5 arena tests from the default test flavour.
+DJ
 
-... since clang (at least recent ones, I testet recent and a local jan 
-build) defines this for all -mcpus
+> 
+>>  
+>>  		aer_recover_queue(pcie_err->device_id.segment,
+>>  				  pcie_err->device_id.bus,
+>> -				  devfn, aer_severity,
+>> -				  (struct aer_capability_regs *)
+>> -				  aer_info);
+>> +				  devfn, aer_severity, aer_info);
+>>  	}
+>>  #endif
+>>  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this code leak the memory allocated
+> for aer_info from the fixed-size ghes_estatus_pool if aer_recover_queue()
+> fails to insert into the aer_recover_ring?
+> 
+> drivers/pci/pcie/aer.c:aer_recover_queue() {
+>     ...
+>     if (kfifo_in_spinlocked(&aer_recover_ring, &entry, 1,
+>                              &aer_recover_ring_lock))
+>         schedule_work(&aer_recover_work);
+>     else
+>         pr_err("buffer overflow in recovery for ...\n", ...);
+> }
+> 
+> Since aer_recover_queue() returns void, ghes_handle_aer() cannot detect
+> the failure to perform cleanup, permanently leaking the pool memory.
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but is the memory for aer_info leaked
+> in aer_recover_work_func() if the target PCI device cannot be found?
+> 
+> drivers/pci/pcie/aer.c:aer_recover_work_func() {
+>     ...
+>     pdev = pci_get_domain_bus_and_slot(entry.domain, entry.bus,
+>                                        entry.devfn);
+>     if (!pdev) {
+>         pr_err_ratelimited("... no pci_dev found\n");
+>         continue;
+>     }
+>     ...
+> }
+> 
+> The continue statement skips the ghes_estatus_pool_region_free() cleanup
+> call at the bottom of the loop, permanently leaking the memory.
+> 
+> [Severity: High]
+> This isn't a bug in this patch either, but does a similar issue with
+> uninitialized software-only fields exist in cxl_rch_get_aer_info()?
+> 
+> drivers/cxl/core/ras_rch.c:cxl_rch_get_aer_info() {
+>     ...
+>     for (n = 0; n < read_cnt; n++)
+>         aer_regs_buf[n] = readl(aer_base + n * sizeof(u32));
+>     ...
+> }
+> 
+> If it reads from unimplemented MMIO space, it returns 0xFFFFFFFF, which
+> populates the software-only metadata fields on the stack such that flit
+> evaluates to true and header_len becomes 255.
+> 
+> Doesn't this lead to an out-of-bounds stack read later?
+> 
+> drivers/pci/pcie/tlp.c:pcie_print_tlp_log() {
+>     ...
+>     for (i = PCIE_STD_NUM_TLP_HEADERLOG; i < log->header_len; i++) {
+>         len += scnprintf(buf + len, sizeof(buf) - len,
+>                          " %#010x", log->dw[i]);
+>     ...
+> }
+> 
 
-So this is invalid claim.
-
-Thx,
--Vineet
