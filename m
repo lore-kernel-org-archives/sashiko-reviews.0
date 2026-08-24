@@ -1,233 +1,150 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BB734FF62
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 04:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787545677; cv=pass; b=BItpSFyQjD3iBQpoA7+QV/0Snkymdyu8Kw4kC+RquHTInRoTNbCHWkE6aDM0Gh9rYUS2rL2EbOjXFxmommR4ona9PrRHFpP4fDmm9QW1ic6ysior40tPW72R7dV7BVtT62xyKFCVU/gQ4yCJxmtxNp4m8+WEW0y2y/S/Fbu967k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787545677; c=relaxed/simple;
-	bh=hT0QUt5H542PT0X7fGha+PvX663QHj3aTFMv5sI+ia0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AYUoPoRyiS4/tlXErdgblT8fR0ef93gZEkdC80g6SVwXKl3aC5ZniMkTUZ2r/Z8kpAqjytTFOKAzmv1FhEuraDIr6VK456aLCFNdw94XvsSmnwq8Kw1bwPk6iiySgVhio2ALDmyIB0GJXSawlp2DnnNnjOIJxBPyLAtmL8o9S6M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OCJTaz9O; arc=pass smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1988E357CE9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 05:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787548551; cv=none; b=iLW7FMcAYPAFm4KQg/XGrGMz8IH3fwMWhZxhymcYYsOz9Dea/kxNS6lfb3HcXXrYVFte9hXGbQH7twuh7lKvyRkekuMim2u0ElMC6m2A3oyYwuR6Tv9d75hycYl359R7JPUHscLvtVxwGInALIUz3/F5g/jRqOyZFloEbI4tmgs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787548551; c=relaxed/simple;
+	bh=xX+8439tLZFfTCEJmmZz622pCmOTCjFhMJed5gIjWjA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o/WGP+Z4JEFjBEyXDKbiNNsSn7tuq51JRIGDE1zXcqmWWOMmylTn0Cc535fcTRNs2kZ666b2UvfyIhQNxOYQ1uuy058BRnxPC2IWqyJl38sdyAA8Db5TH8xzJ4BuJkY2Xh3QlU5rNSLKB2D4Uf0lyHAs47kFYqTW8eYjEiJS4kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wl/CQ/hB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WfipdtXd; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OCJTaz9O"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-9061a795d76so32588796d6.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 21:27:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787545674; cv=none;
-        d=google.com; s=arc-20260327;
-        b=kUVDFZUK+6Ga2+BDG6PL/3tq5YE6Jx7ZFrhRKqZXe6B26kc/MbaLVWzXle0zHKBhoC
-         5zixq3HLlSu3y67wSUehG44mvN6wibVgWMo7dRCB1Dz/bmFec0VKmxTcJ5NXX/pb+aVz
-         r3Pgy5vwH5lDgMF/1tC9HfjEIXYdwBJwlP8rkwcvcc7Zey4DoVjTpaHlT3jbXXN9wtkK
-         lrdr5lAOFqkyHQcEPkcMoIdeuplzuOUWq3+CxfM7P6TrqR3l8s0T3gxzjtrzOW3eQfNB
-         drcP8WQzeEZycwqz2n09CIJSb2zWTLTAW3PBOUR9ceelbCzEfi7pzWxK3QBi4ZmWkEt1
-         ozEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=Ow00I9KGY7fZXYsA63TM5zImzlELrKld0vpQu6AI6z8=;
-        fh=nOJSOoAFnfBk9KDG0cYVqM6p7pcLeHX5vu/33Yc0CfA=;
-        b=KysRlIYItURpuh4SVWKtytoqoktr/CJzLz3DAVx4jP8lHzANrf/lfpYulKpsKp5STO
-         K/u9BW8Iswrl+vSMH9IhzYUK++e+fUVX4FZ/jnm/+MMfxfGadFJgX9ZCYiuUsRyhIoCW
-         ucQwD2J+BTSxtWvZlvm1otNBsmkq8jrNbZ+1mTopHTUAdzI7G7OWFbGPV5kvmrmq0Ln5
-         RjFxvjVxtxv7nT3TAbYa0OTlJLNntw0Sz8MejkF29c9dIA9dZZeZ28NTyLhSfR/XO+pY
-         EIOFceGPqbuKefwKuTxx5C+UrAg8wS6HZe9E2YY7JZqfEhkzn6rT7blmVrTv/hNzLO5C
-         uYuw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wl/CQ/hB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WfipdtXd"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67O0kmEr268148
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 05:15:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xX+8439tLZFfTCEJmmZz622pCmOTCjFhMJed5gIjWjA=; b=Wl/CQ/hBP0Fu5lMT
+	6lOYYc/hvH/pdwGGzHOMfboWj6m8iXr66weUAyOyXfvPi9PMKda5r2jSAUHkFP+B
+	Elnr05wrYa/jdF8Rhg1a9RPCPSMQfq8kpsWuL7RdRh/I+ISfBpOk3K5htaUrPrRd
+	xikhRGImY/75uGgf6dqBdERQQiGvbMgnzczwxUvXpUmVXzDGkV2YZBjgUQ/WcI0+
+	1FzIlIy/Si7IMhTDtf2U/qR5P4aTsSnbR3m93FAMZWAFh3ayDV4fUsuzLP03MppA
+	5v6opmA9kpTdk/nbJBivTDjaCmQeCdV1rPxBZrly9NJauikQAOEZ1WHLVQIYKDHP
+	wE7W7g==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g744qwd7n-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 05:15:48 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84842381150so3451372b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 23 Aug 2026 22:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787545674; x=1788150474; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ow00I9KGY7fZXYsA63TM5zImzlELrKld0vpQu6AI6z8=;
-        b=OCJTaz9OvVfGt5ZI6YmKldO/V6ltx09h27h8b0c3AtBZa3pT6qLNXgkoUSAuKCQH8G
-         saq/3gZubNkV3tsp2nvysSt2HZpBfOCRGs+NG51VYvxebE1OSUZezo+eiZw6zndmd20l
-         aE7KH0Vw67CHnLyQQH0cKrhVQxxio6hJexDeg2RitDuJzFWG6qeW2Ovge59Q2sv/xRiE
-         IW2Iur5U+TK/85X7Qcb/eWw/ZkBPWy+sLk50SSRg9yF5Xd6xVtmEtJqh5ELPesPs889x
-         LNvRNMnKICgolFXb6gGFD/Ji1tsg8o5owTKuqRZ/sW5cwgjKUxToQr3RCc4Ql/onbt8B
-         bfjA==
+        d=oss.qualcomm.com; s=google; t=1787548548; x=1788153348; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xX+8439tLZFfTCEJmmZz622pCmOTCjFhMJed5gIjWjA=;
+        b=WfipdtXdNJZYNoxbo516XPTWYAOPMTdsJVR6GwPxRf9SFdYAgyvY+lefN91tAg/OBG
+         9MqIolyX7rFNBda24ndI9kW/wX18YrANQFdGt8yGf+AC5qxvXs7viFD/nsnN/vnt6S8R
+         dXqdAF75XMVPUBJbgrDY+9xceD6CUbY+qbkVKmdzTvBw+gnK2zv1ms2A4399MKDNM79U
+         A9QTA8/mIceaDe/98c3RyBg1+9p5XRk+CM7NN95SpXavorWuwK9BG6vfK/nKWyxqrAcM
+         S3s4KsN/Kt66WlrzJcEdtFjwQyvYJ6Yn1aEcQZnduMsz6GCkLDVKgoi+O75Vsl+Bqthp
+         6XWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787545674; x=1788150474;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1787548548; x=1788153348;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Ow00I9KGY7fZXYsA63TM5zImzlELrKld0vpQu6AI6z8=;
-        b=cphSuUKiFc2Th3L4iyAGmTLBMxfTFskcCeZUXXcruRcFrs1G25IcZ8AOyClKhgXuMS
-         FsDlHBVY65qGvYcH3A9wfW/k5n5FxfpRKWbB1bXyIMCgIbELvMy3W8BByn1BE5wMdqhg
-         enNCI3q53VSHey4aXv6pBrKJXwJ7/t10vGu2/1K+k7pUYb9sIgr21bgn5cwlBNeKPTxx
-         aJP2FlbAZ//OPQsotWPEpBUw8qg4I20KwTkEpTKF7gckIgkLOgyquwZ32nBXWEo4ro72
-         pgHC9LuA7CI+EvGFABXXIM+R8cuHGvY00zdMg3OW3ilLIwwOhAMBl2UNT5sbrk2jOXO9
-         8Kig==
-X-Gm-Message-State: AFuF++lOBbiel8Fq0DqolsaAI3WljDkiCPVOJebdpx1gK79zcKqvi9h7
-	9ZJ2Xy33EKD5agI7Y5DxzW4C/2WPVRZigyKdxTLhvhcIE+H3zJMHwd2dMJmBEZn0BMzXHxZUkwf
-	zoGo30zAzYOFUsouv3nA8Znv2pvB1YfP4W4xI0eDm
-X-Gm-Gg: AR+sD12sIlbbabgyY7VxkW+fW0DG3s94ZX2YrNEaYSxReGu7IGN28bhN+ZUXkYjTUv2
-	akl6XW4BhtB2/17giGnKqmvWY/no70YRYg6J+IXdrqYvjnqauXya9r7s39WKEPksWBgR1BJ0ir+
-	tkcBXXCFkpPC2x1gfdsNKQBwotld+0SZCZwsP4k+dL5P4+oME70nXXPHtHdshW5wv6dOAAuzbdv
-	rJcpBUuFpmqEn0PrQPuFIMB4w7xwfAnIGllDLYOHd79lUULoYTgwxnmI7tQiIGfYDSyVGMU5CZI
-	ECAAK//8+infy0dPAguK9NRgxQLuFbTna3yoHfMcQsqEdb0jO5KOVRrcRfvHsQCm3/1wff1VjMU
-	WZ18/VTe7wienElSXi3pRxFLiraBIpMQ=
-X-Received: by 2002:a05:6214:3284:b0:8ec:cdb2:5e11 with SMTP id
- 6a1803df08f44-90c80944085mr245242406d6.2.1787545673632; Sun, 23 Aug 2026
- 21:27:53 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 23 Aug 2026 21:27:52 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 23 Aug 2026 21:27:52 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <aohUbUKcvUaoVFEc@google.com>
-References: <20260818-gmem-no-return-page-v2-0-5298f42d49bb@google.com>
- <20260818-gmem-no-return-page-v2-3-5298f42d49bb@google.com>
- <20260818092717.3F4871F000E9@smtp.kernel.org> <CAEvNRgHEVxO+1Mkoc3-c2+qSrKWnD+BDe04NBvuwGU6BL0amzA@mail.gmail.com>
- <CAEvNRgHX-NebA7z3twusis35E_grJNTrbse7aUZ6+D=qpQn14A@mail.gmail.com> <aohUbUKcvUaoVFEc@google.com>
+        bh=xX+8439tLZFfTCEJmmZz622pCmOTCjFhMJed5gIjWjA=;
+        b=K/1Vljvo3aE7C1Y3U5MPBYcagTWcJHxdYW1bxdzkiaJMMzwT0CcmPCZv2Th1eKWde+
+         o/8qzvhcm/GDgjL0N9zbmATkum9X98GDNHUz2L7eEtFFSe253wRozw3A9ZuNvEH4/S7X
+         I3P0q/M3D4Fi6KEZfucKIzQYUqmybGwdLJR/edKaqImrunmmZP7MQlmsibmJMHXrbK2P
+         +divqurIL8r0p27GMXdwvspIxeTwq3XLdP/U7RGAg28owC1Jm+HJj8Tq4hMwl//azoWz
+         r7q2Xym3lX11bQS8rIrvH3WKEvNWGoWJ+S4g2jJdYKLJkxeOwT2WyhLaaB6BLPC3AbbD
+         1Nnw==
+X-Forwarded-Encrypted: i=1; AHgh+RoqAIePuJ6VpA9CnBZun4Y/2S4aAFOkke9Ba6oHSDSpfC6cNEEhFo7Uiz9CDhv4cNCPH9qoqZ50Ols9d8m52dA=@lists.linux.dev
+X-Gm-Message-State: AFuF++lTQOgRKIeC8VmZbgMQPwJbH/TcWFfGWFCb+tOkT6QxqawHV7h6
+	ooWHxezSCmkgxYAXGmlxaODtob3qgAeq9VqbVIXcGZLud/xT8R43TZbu+sv1i3m5RHb9w8eaJKS
+	6BcTq93IgJY68td556WZbYwIdqqtvR7DaRgUyJnCBbbyLfBS84leDbsBOA/w9BiHmzxg8icw=
+X-Gm-Gg: AR+sD13K2aQN4vwjbZQic4dX7MZLTKTCngl8ZdCd4jOKsnocs+CowUIaaGmO0pMap3O
+	RKbrtV/DEUHuLDZrH0vgPCsc3EFgrVLQxA8s+VUYR/4wIY8/6uXKaKiy/nvNAl6tEAYpjvVIN5G
+	L8XnuwaMf71lZRmWkoZhnaven7xxvBwx1KtjjB8AcF0Xwf815ClRThZdTURr6XyiVXQz4+kmBF7
+	6f0FZA7qqWUe5OLwuCR4BxgGOV+D+lb2ULT9iYP3+LgXQoqsOvDDCAUOOWVfVf4+Fw3CL+x+deK
+	0cmI89jNOfAMPbBPxj+lz+gJ2N6fN9Pgu6es3ukP4F9RWFN7mgoNScdr2V0BCvfsgDpNJ3mb6og
+	BJ0tvI/kvyfXaLDALYZIfEcwiwQEKmv+J
+X-Received: by 2002:a05:6300:278a:20b0:3cd:51ff:1b14 with SMTP id adf61e73a8af0-3cd51ff1dd5mr14316445637.4.1787548547887;
+        Sun, 23 Aug 2026 22:15:47 -0700 (PDT)
+X-Received: by 2002:a05:6300:278a:20b0:3cd:51ff:1b14 with SMTP id adf61e73a8af0-3cd51ff1dd5mr14316404637.4.1787548547495;
+        Sun, 23 Aug 2026 22:15:47 -0700 (PDT)
+Received: from [10.206.101.140] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327f91d37d9sm23580957eec.14.2026.08.23.22.15.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Aug 2026 22:15:47 -0700 (PDT)
+Message-ID: <e917c8e9-0fd6-d61b-a2bc-0d81adbe464a@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 10:45:42 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Sun, 23 Aug 2026 21:27:52 -0700
-X-Gm-Features: AcwNN1WhbH4c-NgfbWkg3bEeOg-8KA8lr3Xwk93Joy7eFGoTTGPATKUswa3gE6A
-Message-ID: <CAEvNRgH5ZQPGYzg+YdtEktZ72DgK9PBbzcmC_QFN6M0_6wuo1w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] KVM: SEV: Drop page refcount early in VMSA reload
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev, Oliver Upton <oupton@kernel.org>, kvm@vger.kernel.org, 
-	kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/5] media: iris: Add dma sync calls for input and
+ output buffers
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        sashiko-reviews@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Cc: conor+dt@kernel.org, media-ci@linuxtv.org, devicetree@vger.kernel.org,
+        robh@kernel.org
+References: <20260818-iris-fixes-dma-pseq-fint-v2-0-8dc8c4b3880e@oss.qualcomm.com>
+ <20260818-iris-fixes-dma-pseq-fint-v2-1-8dc8c4b3880e@oss.qualcomm.com>
+ <20260818160351.4E8F51F000E9@smtp.kernel.org>
+ <4rk2qpalwmwtzcmmn6leezboybfgp7buuevap7pclcbf2f5mfz@zvadm7y5e7uv>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <4rk2qpalwmwtzcmmn6leezboybfgp7buuevap7pclcbf2f5mfz@zvadm7y5e7uv>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: p5Q4ipOKC29d3yB7c9a8qx8NrTa6NebH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA0NCBTYWx0ZWRfX3J7KGL8LVjFX
+ cWG/LQx3CoYXT1c1t+fNfgpFb8u0kWUthJh2oJrCt4MQpCXwXimJTZTmT8syXwwC//llT648neT
+ yVf4NN7s1urRHZoqRaXMY1xt294IoXP9lDWhXTTdhcnCb8qT/jlcx/coKkrgkEDseY9EcuY9tKG
+ HHEZUIc3GHakmK9f5lWKd2aKX6UYIZO7Aue3bLJpu/c8PIKpfKQfyvzye9Ju3MNrHZX3qjyj88l
+ UNOBokOjyQiAxbt4GB2Pgb38mnET3ZGoE0LCusmp+nC9LrkQd3nlxdzxbEaVdE+wwoKHP1miqPJ
+ HYjZjoiloFQFmTjtLhecQJXS7TY93HAX7n9Z5Iqq4RsxSXknLPqA5H6vH5+DDCIkOMOft7CunlM
+ rSCcddsB311nAzUMKCSV4JcymiWphkCvyhM9FDCXUtqev3YAIO7ag7qi2Oe1fLkBqoVAfC/uofx
+ 57OiasrPpE7htDtle2A==
+X-Proofpoint-GUID: p5Q4ipOKC29d3yB7c9a8qx8NrTa6NebH
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA0NCBTYWx0ZWRfXyVSPMclOuTnC
+ MzE4EVUB4uabZjtHb32yjFcxMQZQOqebfI6nQVNSnoL+wtUOe8k1WZWURf5azVQaHunpCILkry+
+ jgiX+k9le8dMBtyDlJbYEfZRSLXdimc=
+X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a8bd384 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=vvLq9R5Q7EL3J8ZDTOcA:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_01,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 adultscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608240044
 
-Sean Christopherson <seanjc@google.com> writes:
 
-> On Fri, Aug 21, 2026, Ackerley Tng wrote:
->> Ackerley Tng <ackerleytng@google.com> writes:
->> >> This is a pre-existing issue, but can this allow a malicious guest to
->> >> cause a host kernel panic?
->> >>
->> >> Looking at sev_gmem_make_shared() in arch/x86/kvm/svm/sev.c:
->> >>
->> >> arch/x86/kvm/svm/sev.c:sev_gmem_make_shared() {
->> >>     ...
->> >> 		rc = rmp_make_shared(pfn, use_2m_update ? PG_LEVEL_2M : PG_LEVEL_4K);
->> >> 		if (WARN_ONCE(rc, "SEV: Failed to update RMP entry for PFN 0x%llx error %d\n",
->> >> 			      pfn, rc))
->> >> 			goto next_pfn;
->> >>     ...
->> >> }
->> >>
->> >> If an untrusted SEV-SNP guest modifies a guest_memfd page state to VMSA
->> >> using RMPADJUST, and the page is subsequently freed, rmp_make_shared()
->> >> will architecturally fail on the VMSA page.
->> >
->> > I need some help with this one.
->> >
->> > For the initial VMSA page, IIUC snp_safe_alloc_page() gets a
->> > non-guest_memfd page. This won't ever go through sev_gmem_make_shared(),
->> > so we're good. snp_leak_pages() doesn't actually leak pages, it just
->> > tracks leaked pages, but __free_page() is skipped so the page is really
->> > leaked.
->> >
->> >> Because the error is bypassed without calling snp_leak_pages(), the
->> >> firmware-owned page is returned to the host page allocator.
->> >
->> > For guest-provided VMSA pages, those can be guest_memfd pages. The
->> > refcount taken is the one guest_memfd holds. Without considering
->> > conversions, just considering truncation, sev_gmem_make_shared() is
->> > called from kvm_gmem_free_folio(). Sashiko is saying that
->> > rmp_make_shared() will fail, and the folio is freed.
->> >
->> > Sounds like this would be a problem if the folio is used elsewhere...?
+On 8/19/2026 4:17 AM, Dmitry Baryshkov wrote:
+> On Tue, Aug 18, 2026 at 04:03:50PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [Critical] Calling `dma_sync_single_*` on an IOVA managed by videobuf2-dma-contig violates the DMA API and can cause severe memory corruption for non-contiguous DMA-BUF imports.
+>> - [High] The DMA synchronization logic for output buffers is fundamentally broken: it synchronizes the CPU cache before the hardware writes, uses the wrong API direction, specifies a zero size, and omits the necessary sync upon completion.
+>> --
 >>
->> I looked closer, "15.36.12 Running SNP-Active Virtual Machines" in APM
->> Vol2 says "After a successful VMRUN, the VMCB page, as well as any AVIC
->> Backing Page and VMSA Page are marked as in-use by hardware, and any
->> attempt to modify the RMP entries for these pages via instructions like
->> RMPUPDATE will result in a FAIL_INUSE response. The in-use marking is
->> automatically cleared by hardware after a #VMEXIT event".
->>
->> So it's not true that rmp_make_shared() will always fail on a VMSA page,
->> it's only true if the guest vCPU is running.
+> Please respond to Sashiko comments. Also, this PR is missing
+> corresponding change for the venus driver.
+
+I will check sashiko comments and fix in next revision if those are genuine
+issues and add this change into venus driver also if applicable.
+
 >
-> Correct.
->
->> RMPADJUST sets up the VMSA page, and telling the host using
->> SVM_VMGEXIT_AP_CREATE is how the VMSA is set up to be usable. Then, the
->> other vCPU needs to be started and running, and then:
->>
->> If the host truncates the VMSA page or host closes the guest_memfd file
->> containing some other vCPU's VMSA page, sev_gmem_make_shared() on the
->> VMSA page should fail, but the page is released anyway and we have a
->> problem.
->>
-
-74bdfb2f6d18 ("KVM: SEV: Forcefully invalidate SNP VMSA if its backing
-gmem page is zapped") fixes this :)
-
-I didn't follow that full discussion and now I get it. Here's an
-explanation from another angle:
-
-This VMSA invalidation is interesting in that there isn't really any
-communication to SNP, because the host doesn't really have a direct way
-undo the RMPADJUST.
-
-What the host can do is to RMPUPDATE the entry to be shared, which is
-what truncation already does. The key thing is that the RMPUPDATE has to
-be done while the vCPU isn't running.
-
-Other than invalidating whatever kvm is tracking in
-svm->sev_es.snp_guest_vmsa_gpa and in svm->vmcb->control.vmsa_pa,
-sev_gmem_invalidate_range() has another side effect, which is that if
-there is an ongoing invalidation in another CPU, it keeps requesting
-KVM_REQ_VMSA_PAGE_RELOAD, which stops the vCPU from entering the
-guest. Keeping the vCPU out of the guest is the thing that allows the
-RMPUPDATE (rmp_make_shared()) to work.
-
-This loop keeps the vCPU out of the guest. It's kicked off by
-kvm_arch_gmem_invalidate_range(), and loops until
-kvm_gmem_invalidate_end() is called.
-
-.free_folio, which does the RMPUPDATE, is called synchronously between
-kvm_gmem_invalidate_start() and kvm_gmem_invalidate_end(), and so we can
-be sure the RMPUPDATE will not happen while the vCPU is running.
-
-
-A guest-provided VMSA is set up for a given vCPU (identified using
-apic_id) at a lower VMPL. I was also wondering: what if a guest just
-decides to _not_ report SVM_VMGEXIT_AP_CREATION? Is it possible to just
-RMPADJUST and not tell the host, such that sev_gmem_invalidate_range()
-doesn't know about the donated VMSA?
-
-From working on the reproducer I don't think this is possible, since
-without informing the host, there's no way for the guest to use the vCPU
-with the RMPADJUST-ed VMSA. If there's no way to run that vCPU, then
-guest_memfd is always free to RMPUPDATE to make that page shared. The
-host can always RMPUPDATE a VMSA page as long as the VMSA page is not in
-use.
-
->> An unsolicited shared->private conversion is fine since the VMSA page is
->> already private.
->>
-
-I need to look at conversions again to take this into account, will
-explain more over on that series.
-
-Meanwhile, there's no issue here because rmp_make_shared() will succeed,
-so the leak won't happen.
-
->> sev_gmem_make_shared() would fail on an unsolicited private->shared
->> conversion. The RMP entry would still indicate private, and guest_memfd
->> would track it as shared...? Bad.
->>
->> I've been trying to write a mini reproducer like a selftest but I've
->> still not gotten it to work yet. If someone knows there's no issue here
->> please let me know!
->
-> I have a reproducer I created to prove and validate 74bdfb2f6d18 ("KVM: SEV:
-> Forcefully invalidate SNP VMSA if its backing gmem page is zapped"), I'll make
-> sure to run it when applying (the final version of) this series.
-
-I got the reproducer working :). I'm guessing sharing the reproducer
-publicly isn't allowed so I won't.
