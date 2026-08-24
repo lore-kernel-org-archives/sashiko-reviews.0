@@ -1,56 +1,69 @@
-Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020109.outbound.protection.outlook.com [52.101.195.109])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010024.outbound.protection.outlook.com [52.101.69.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96464403AE0
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 10:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.109
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AAC3AEF5A;
+	Mon, 24 Aug 2026 10:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787565757; cv=fail; b=CdVfYA8SXUD8VlPOSCQSdRISc4dubIwqOMLq8rIkH1elrvUG+8a56iwizKa1P7HoFDj7tarowmVmpAX9LiceG87nEv1pQU7Em6XBpYOmia4hBufdLkPGZnrgkkX8U5ca/ZWXwleFfAmrEcKlRjIn3s5LV+CNBQ8/aBv3vGaehus=
+	t=1787566123; cv=fail; b=qwLheYSQoxSaNWtT51CuXEn4p44JLJcw3euz3+DeNXXjhoFyusGev6U8nGw9xIYQM281p5zjb3vlNy7iG59OUdf1zih5RCqTlYA+qKCIu8nyV5mRTS28L4tY/6Zhu232w9FCBi6y9EOcibLNGytHIB3gWWi6WHu/n3k19Qmwvu4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787565757; c=relaxed/simple;
-	bh=iAWFxd/ScaSSfgeec1RBD8VHJ42THJtgjr51qyzzxLY=;
+	s=arc-20240116; t=1787566123; c=relaxed/simple;
+	bh=iHLVF9wSRp06PsjGYbwfhKHXCXlOR1oOahLaXCEAO/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=galU9t5p/xl1hfzuYaDfY5flwRu+bT2dcwwh9CAw3+fIYyMEjj9Mej5gMjsXTCuZ03/RqMN8wy8QznXq2q24QSPclNVFf0q6B45JbgV8NyUgOJ3kp0Qa7nHLMOJEZIubfX4TlVdvbKSTgQeZ2YEQWrjKORjJCCLydkh9ZsfIzPE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.195.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+	 Content-Disposition:In-Reply-To:MIME-Version; b=mVtKjyem9bnyEvz5VRvxdEBWpyMI+JvLr9MamgetOOaT0lH0+2osl3xcc7n/vNuIpmyMnqvYEiwFbY723NuqmFxBgvK92tB2dP9049Yw8g7NJKj/xPfxNDUdanM/6ZsZz5s1ygr7unPABeYaSlQFwJRj8Cz77DKLhPWYImdvxe8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=fOm0AYQT; arc=fail smtp.client-ip=52.101.69.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="fOm0AYQT"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EMGJTGL+rhjMQE+EiY3LVXTA+YkF37jc9/Q4vEu+trzZFUeOdowCyoZGB9xQeGFqGS/U7LgIXBuOKiDVNVFSeeNa7jabf3yhDfOAvEeFnQhBh89KbRZ6QD0c7sM5sKGO8V/pvuHZaKUemd9vLPmCcYNX76V3Qg95F0P9+haaf+tNVHH6Xsoa4NmTafnMnhKebM8JYFvdDycttPYUXd8411SOPgpZaS+s6VQqAcvzx2NgepJPRBjlzhFLjYV/SH/vUEJoHKsOMFvRSIWas8SjmZIqhBS2szEhHJnNFEVluz9u0HkRNYgFzwqE742y64lc5ssAj0xdwNE/GwwYP5jbxg==
+ b=LIITdJmCLf6uW9OKBn9+d1SYmP1V3f8u/d9jZIGutPkmhatuWCRlAX6LQmjNycGt3rjkz430l/PNhuSFQ6dmQ1BGdWiZ0iBXKzlZW7Z/Kcxe+Fl85l16EBgV1YtusGrq9rm3pSuptalgf2LkAMnke42aWSZ+sWLzRH3GceXISiDqnZzLnWEIWZoqjYH23NmAexvIi7OeurMj9j1YwIflqpootbTUI7L8HynfwtFI8Uy0BxGB6IB8dzBljVIg1MASz/fHps46uUMaQ6e8T6TCHCSdIOycIayYFWPdkumU9uWtABEanqA11m7ajzt4IsDsI99+d/wh2PfGg3xKiADhYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=une4qxUS0YCuJEgR0WEPph9IrWGAcVN2RhA527BP6xo=;
- b=aMXhnLel11qqh3s9LizZExVmMAwnHqSoodYzV7whP201HVXk28i2lraHAhxlpsaui8Wj5ITwICrGCzfbWQAbbh+6zeGd4BEAciSuhbmZ86mKrFneTw9otcKS0D9DzVPgPQjGk3B8i6bgrnqc+5suPBhM+eYJFjWQ7yj0JdYuS/S//sgFVqUVUA1KFm6YCU0bl0mxZDObVhmrydoZPJMOBDZZUN6NzV1CjEeKAPEg10H/WPuXs5g4+elwzWxVHQOM6c7sgA4AQwBboVKFSZYjl7nBDPV1r6fvshekUrkaz2boKHH5StKMbaH4VNZIlJ4AFJPm/qQOaEi7mA7CSW8Tfw==
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qYVRvnrgg5W1nNO8LGYvsnvX7rcGq6KZ0Axjq/8/ZLQ=;
+ b=M1jxvKtvDK1P1BjjLRYbrEHKf8KUFb1y56MC3W+UsFV1DogZO33Ly+P8iMVHPCOL2j2tylqxsVWPYXcV6dD+Vuo8TpjyDXf8ijCsweWjt6E5vzAgbOcULWll5/B/LpV0PkNcCvv88g5QSXKzW3/M54nL0L/sZo3WJ6pAY7C3Oa+FbFhfhM69vGWdOU8RVCaGScMXu0ACbgYIMbgIHpBdwrlBRgm8ynbkkQ1JoWurZe5qOQMJN+JuhFIQR3AleRJ3CHneGLvV0c4XgjKURpF5GdpwZMeI92LcQ2EDp41nt+k87yZt6M+yhcJyTi/5xozgRRd9uPYitZbra1kK5GLQRA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qYVRvnrgg5W1nNO8LGYvsnvX7rcGq6KZ0Axjq/8/ZLQ=;
+ b=fOm0AYQTZigptSc0ARG3EW3FTlC12hf8hyCAN6ZYMTOXtHdje1qWqXys8+soX0n19p6HdkpFIFdLDjMjqhfx0IeAjaLk44kEFFyUo5ICjCtlgF0JsSe/0bGQ7AFXlHsaG7wv0DkLb8xOiKQ51l+jYdLGJxDwitEHNtnw52jhH3RyFfT+JpYZgHjzdHpOZnYexviWXUZbbHQzKX91ei9+YtKxtVl7aD7CjzrJ4cDHSa8sb7n4kCTZUHztoWahY8ELGJLsaeHZfE5IDmSPgr3N4IU02xmz39UVNDZhrShqtiB0mn8kYoftPcLKzGJnhFRdT3JSeCbGoETEswHyO6f4SQ==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LOAP123MB8927.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:494::13) with
- Microsoft SMTP Server (version=TLS1_2,
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from PA6PR04MB11909.eurprd04.prod.outlook.com
+ (2603:10a6:102:51c::22) by AM8PR04MB7729.eurprd04.prod.outlook.com
+ (2603:10a6:20b:24c::24) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 10:02:31 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 10:02:31 +0000
-Date: Mon, 24 Aug 2026 06:02:29 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, namhyung@kernel.org, 
-	irogers@google.com, acme@kernel.org
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v5 3/4] perf trace: Enhance BTF type
- formatting to symbolise kernel function pointers
-Message-ID: <yqxazca2etvvyh54xf3xhuqxhtortjvjc2cuoqogvf57b6jfww@qmqu27slkdxv>
-References: <20260822213558.704018-1-atomlin@atomlin.com>
- <20260822213558.704018-4-atomlin@atomlin.com>
- <20260822215124.353251F000E9@smtp.kernel.org>
+ 2026 10:08:39 +0000
+Received: from PA6PR04MB11909.eurprd04.prod.outlook.com
+ ([fe80::a4b:fa4e:7fe7:e6a2]) by PA6PR04MB11909.eurprd04.prod.outlook.com
+ ([fe80::a4b:fa4e:7fe7:e6a2%7]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 10:08:39 +0000
+Date: Mon, 24 Aug 2026 18:12:41 +0800
+From: Bough Chen <haibo.chen@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ciprian Costea <ciprianmarian.costea@oss.nxp.com>, robh@kernel.org,
+	conor+dt@kernel.org, Frank.Li@kernel.org,
+	Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>, imx@lists.linux.dev,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Vincent Mailhol <mailhol@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 3/6] can: flexcan: split rx/tx masks per mailbox IRQ
+ line
+Message-ID: <20260824101241.ysq45swzx4ihctel@shlinux89>
+References: <20260713085306.2643794-1-ciprianmarian.costea@oss.nxp.com>
+ <20260713085306.2643794-4-ciprianmarian.costea@oss.nxp.com>
+ <20260713090803.CCE2E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260822215124.353251F000E9@smtp.kernel.org>
-X-ClientProxiedBy: LO4P302CA0021.GBRP302.PROD.OUTLOOK.COM
- (2603:10a6:600:2c1::12) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260713090803.CCE2E1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SI2PR01CA0046.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::18) To PA6PR04MB11909.eurprd04.prod.outlook.com
+ (2603:10a6:102:51c::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -58,192 +71,150 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LOAP123MB8927:EE_
-X-MS-Office365-Filtering-Correlation-Id: 75267987-d74d-4542-225b-08df01c6cfdd
+X-MS-TrafficTypeDiagnostic: PA6PR04MB11909:EE_|AM8PR04MB7729:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ecc165a-359f-4b3e-4fa7-08df01c7aaf4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|10067099003|56012099006|6133799003|3023799007|22082099003|18002099003|4143699003;
+	BCL:0;ARA:13230040|19092799006|376014|7416014|23010399003|1800799024|366016|6133799003|10067099003|4143699003|11063799006|56012099006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	URvsaTCMf7IBjlAcFwxL4tSgkOwTZYeIrvMN6JlpxpgZMU3HD8L33QKwX86gNCOrISK467+/xCUEn+ed9pWI4WPrBmxarOR8laGeF3ayAEXR0jOYLaEe1HCFcRr5o5XhzdgiSMSkMLr4z2EbXJLjmNdeW8LOhZqE/gfPyJ7ned1TGlwW5DYQ4jtYN7YHfdiIyCySkAym9kdx7UxwcS3keZr7JRDzTQmHl9EkaVUB27Jv3oHsvqjshsuU36CyCTZpZfnGi98p2KCX10n2zWDF6EFOb5ILcM3OYudMGOgO2XleqDW/lQUIWH09to+21Cr2W4d9eYRM4ZMpPviuKOu2IlOsJhufGIU9egUzAEESKWuDrR/1qKTPZjZhjVh/8vokvIHWJ/jdOSRn68zBdF47Ukyssq1sRqnu+dbCMYTZp39Qwb2DwvVafJs936W/4iihVgoRx5dUfrN1KLbVwDWSSz2R6dvwLvMSYFRacyN8gUu78tONVaHhwWk1qxBhNoauDvSjds1r3zPMx8GwzqZX8MozafFZbVoqtOdhKZV4fuTcLFp/qI8JwdzlOisyMjsK+2kiWeCozOTYn69T+VoXDNxmO465g4fekVRHvIwr9F60azN6RcQT8eOTtVHwbG3P988AsHeV6eXTSB0fnhYA6eqnlWm0/jE9bdtXXSIHlBI=
+	Rz4FnGhiMFuOuHLWNWQPyxaI5TNTqnmSotn+3gTM6arG4EGcUfGkgaz7gU79vgD1BLOVAVHREVN5lrmEkfVsTY7L0dB+IHSgs5lNyPrZDTaJqlnYkZEJy5ohuUGYkyhOdXanbbDFg1fIDeRAtKX5sSqmvlGKBtHe0oeeuc83ZyXTcBlJOqET+nFQy7181YoBQaIksfUVpSA1692GlZe4oGt8/yMrEuY+KDvjsHbG/44REXeqL6jDv4aLqvMCjR19zzW3igy8umVVDpa5vlaXLnCPXkM9SahMMs4jtgJ1D4oByWcCHI9dD+wkIGIhMPs8tNObcA7g5Usz8FnNZNB04AsPNjlQc+gU6xKdep3NlOOd/w2uYIVo1mEIRFdGhwrF/+/zmoMApHu5nG09pZ3ZMPO/gQNUbD780vejHvQoTgxR68lxH7UEC83WVI44n+TAbvvrZMK6WU9LOuKhx3kW2tK5Ntp0QyuXo2SMCu0VjcJ9w0u49CqAHsebxvpwOzD8+vqeCNgXjXjPrnHlTIOwtOTGKr8rv3hTOFB98tD7UPihb02iTLPmZwa72Vl5xLejJvi3fAYHN6ZndzVZdpZTiR2uA9ALRAl0GDwm1tNmEHg=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(10067099003)(56012099006)(6133799003)(3023799007)(22082099003)(18002099003)(4143699003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA6PR04MB11909.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(7416014)(23010399003)(1800799024)(366016)(6133799003)(10067099003)(4143699003)(11063799006)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TW5FaFJnditmeEZ2OUZJdXNZR3ZiOHM4bVpCOG9BRzIwaUtBVWt4UUJQaVE1?=
- =?utf-8?B?cUxPQ0UzRDlDMEprbnBIMitFU0ZNOTl5QlNXSkEyK2tra1h4OFEySW95UzdS?=
- =?utf-8?B?TEx0c05Fa0h4NDBzTURFV2YwV3ZSUTdnUjFORWdtM1I5MC8wd3JxZTBHSHNj?=
- =?utf-8?B?UHJOZ3EzaHRVdjlNQVFLaldRa3hreW8zMDFDNFBiQml2WWRXeVJ5R0t0dWw1?=
- =?utf-8?B?OWFYeEtsYkZ2K01CcUo2cHV2SU5HaHY3K1J2L0IvcGFzOXJ6eTV5ZEhTalc2?=
- =?utf-8?B?aGlGcnpQazlHUjc4NUJEZjhLRE4zVWk3ZW1wTWZEWTA3Vkl0R1ErTkl4ZHI4?=
- =?utf-8?B?aFN3RXBzQWVBakEya08zNlN4R0poRmU0TlRvVXlZbmZHYnc2cHRweUFHTWdq?=
- =?utf-8?B?Qjk3bE5peVY2NkNnNGkvdDRLYTY1Mm1wMWoxdkZhY3p5Uy9WNjVxUzUzVWNL?=
- =?utf-8?B?NDhZVXZFVHczY0xiZDZ0bU9aeWhqNkVyVzhjenZCZXhwcUpMN3BQb3JFclZT?=
- =?utf-8?B?UXErc3l2UWZTdWZrcUtNcUl3N2xsTWtqVEJiT2dEZjllTE90dFg0YUpxaEtN?=
- =?utf-8?B?UUZzNnBGb0NKUWRJMi9Ld0lLMHVSQjAvWHA3ZlNJMVZ5VGpaN3pQdGVhSlcr?=
- =?utf-8?B?K09jcmJTQUlZcE0yelJqY0VEQzB3bTA2OE1teE50a3RxUEYyZXlUT1BLcDBj?=
- =?utf-8?B?SjN3VTJjUTdjdnZIeCtGY3lkMmVtd2I4VWhOZURNSkpFSDdOTExqeHQ5S25S?=
- =?utf-8?B?WFNzbHllaURZRS9BZXVmeE9TL1NIOWEyZEN2R0M4Zzg5ZlRBbWJtcGtSNGUv?=
- =?utf-8?B?K0RKeG1HR0x2K2FIWGtDUlRoa2Zjek94ci8zMjQ5RkV0SS9PbkRmTlZoZUMw?=
- =?utf-8?B?MDZILzBscmNqWnNUbnlqYnN4M0pzbWxkSDZpeE4ySmt1VlUwczZVbnluZnlH?=
- =?utf-8?B?M3UvNkhMdmM0aDVVTVFqdWhMTUdVa3M3eGl4TWhTcDFzOUxzS3dnZ2lNL3lE?=
- =?utf-8?B?aUUralNyNjJTVFZ5QkxFeW43ZG02bnpUUCtwTVV1ejg2bDlIVW8zZEthZnYx?=
- =?utf-8?B?VzlYWVlZSzdCaWc1Qkk0aG80Zzl6dkowU2JKWDhKYmZFSmdwZUdPQkdla3Nr?=
- =?utf-8?B?empQd1Q5eUZWYWVKVUpsMkNCVW91YThRRFVQdWZURVYxZXh3MFpUcWxuMjAw?=
- =?utf-8?B?dGtLQ004MlphNFpZODlvc0J2NFJ2NmtaY3FjWmdkRmRMQXpMQ0lGbjVlL0Fa?=
- =?utf-8?B?NitFTWJtMXVnblJBQWRFRGt6WGcxdWZGclUvZ0N3cmVIcWRTVWxYVE9GbGtJ?=
- =?utf-8?B?L2crWnNpN1NsQnFsV2pQTkFEN3JrVEFvM2ZSQUtBejA4K2Q5YmFxcU1rZ082?=
- =?utf-8?B?UEdlaHMyTXhzUzUvVWdDd0xkU2dHM3RpaGFEbzBFSHBZTkpoUi9UV2cyRmQ4?=
- =?utf-8?B?TldCdjdkUVlzb2M2Mk5OK3lXT25XZ243YjlsNFlCc1JUUGJaOWl2bUc4ekR3?=
- =?utf-8?B?MlJ4YW8yRVFnRTZRT2RLZzA5cDliNWhXUWpMWFlVT1FXeU9zZTdXNzVIRzFj?=
- =?utf-8?B?TlRBOW9Iak1DTG9FaEVNSGZZMXhNVExtZU9vWExxS1hZTWJoWFZtT21kUkxu?=
- =?utf-8?B?SjV3RFFUcnZHV2dnOStrOUNyV2IrQUVYWElqMlhLTk5mWGxDT0U5Vk1HaE51?=
- =?utf-8?B?OGVzbzlxRlR4TlpZRVB3ZUp2MFIyQXZ4VXN0bytwUmNtang0Y0xtTmJGWFRw?=
- =?utf-8?B?TklqTjQzeU1uMXA5L1l2VkJYSjVhVjVQdWc1SmVxUUsxa0IrcVpKbjdVTkp5?=
- =?utf-8?B?NmNsY3hXMjFqUHBFRlBHL1U4dWNFcXZKTDVaVFEvTjJtdEVFd0tPanJ4Uytn?=
- =?utf-8?B?NnEvZHM1WmtxbGRYVDFQeVFCMmZ0RkRSMG9iclh1eUQrakRpT1YweFoxVHdw?=
- =?utf-8?B?amZyWll5UHlWOC80VGtXMkhtOWhwV3FtTXE2WXp2ZkZRQnZDT0NORWZRK21i?=
- =?utf-8?B?L3kvVzRMRzFvUTdweWsxSGFlcUhDNE93ZHZpRC8vcW5TbkI1TkNQQ2xHcFRJ?=
- =?utf-8?B?KzJTM0dDV2JlVGNoZngzNWIyQlJycExDTG5XWU5Gb0tyWWZJZnVndXd0c1Jz?=
- =?utf-8?B?SjZJd0phcGtpZnBQUnh0S0xwT2s0UitOdTMrUDJKUXhuaWRRRnpBaXRsOHlR?=
- =?utf-8?B?UnM2QmdhS1ZYY2UzdllzdlJ4Qlo0Nkd1MDRyS2htZzk5cXNxVWZDclRyZXc0?=
- =?utf-8?B?KytXQnZMb3ZwTXNtMHgrRmpMVXovTHRNTGphUTZvWityczlGVk95YjZ5eXhq?=
- =?utf-8?Q?cZlaZUtEr6wg7ZIOKK?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 75267987-d74d-4542-225b-08df01c6cfdd
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+	=?utf-8?B?MTc0dm9vRXAxL1RSTjRlZVVSRGVBVDFITTBwRWNKTzFFSHl2RXBRaUkvYWVT?=
+ =?utf-8?B?RGI1VkFucW43dkJjWnlFb05EM3crMlhldzBLMUg2Y0xoVS8xR05pVXJuSW9N?=
+ =?utf-8?B?bHl0NDBxdFBqZnd4SE83SDFoS3pRd1k4bHFoZURaeVM5Rzg5VmgrU2lyQlhU?=
+ =?utf-8?B?YmU2TC9aem9QZ29OM1hoWUpOOVBDdEtnb1pINHV0bFd2VFpOODgzSFV5S1Fw?=
+ =?utf-8?B?ZHhSSGZENjVITTRtcXhlbVo2S2pJNlVrakFpUGdqYTZvZlo5aEE4RVgvdlR3?=
+ =?utf-8?B?ZDdRWjdEampQTU5FQ3I3cmlnSUM4cnhFcWJLakR0cEQwaml0OE5pKzkvdzRw?=
+ =?utf-8?B?ZmFVMWxQVEp5SEZZeHJHMmp4ejR3dUlwc1BWRlFpbExWNTVyK043aGQrZlNB?=
+ =?utf-8?B?M2owLzB1ZTdZUmJ4MVRJTktZZGZMVzJiQXNNeWNtdnZQMU5pcEF3ZlZRbkhw?=
+ =?utf-8?B?SExxamxvNnBDRkFILzNXQlpjTXFtSGxjQ0UwbEZpUDl5MHhSSjFNRGIxV1li?=
+ =?utf-8?B?VnJ2Q1RIaUE0azBQODlYa3kyT1RvOHByUUFiT2YrL1dXNW1IOUdQOEpaL2J2?=
+ =?utf-8?B?RU5uakpqNFBzT2xHZmNDSUhZMGpZR2p1emp4Ti9rRk4rOEJVTVhydi9KMWh2?=
+ =?utf-8?B?MHkrb3RjeUtwT01CM2I1TytJc2pqUkN4QUNSOGZZOGtTZFhPaUpkNUxacG4v?=
+ =?utf-8?B?NExhOUk2UjZxc1N3TzBTSVFlZjJ2Sk5zM0p5V1pDL2JqSUZzWVZDMEI0aGlV?=
+ =?utf-8?B?MGFVYm9PTWRDZkVZQnJtSHNjVTFoREE4Tk5ET2JZTGVzZzdNVXdKbkozNVB4?=
+ =?utf-8?B?WmZsRHNQN3IwWmpScXo0YnpXbDVTalZTYzVpTmVEMEYwRmdnZTNVWEp4T0Yx?=
+ =?utf-8?B?Vi9rYkhHa2dJY3RrT0tlVTlYVmN1c3J5dXZBSDg3c2MwT1lwWXVXb1JMaFJJ?=
+ =?utf-8?B?QTNJaDBuN2NkazRlbWc5ZmxQbTIrdWx0SEtxWlRJSWhqd3RVT2ozVllzcUEw?=
+ =?utf-8?B?VEJJVFl6bmc0Qk04cmh1dXQ5N0t6WHVuVTl3eGFKemMvV3hIV0Q4NnRvU0w5?=
+ =?utf-8?B?czFXUUMwcmhLcGhYU3NtSWYvSHVZbVJVaVY3bjRXTStuMWRBMk5yalExQURu?=
+ =?utf-8?B?RWkwWGJZS2lJcnpTM2NVZU5vV1hTYVdrTFVOT3pMRXlKNVIzUE91Y05qeWRP?=
+ =?utf-8?B?RmFPeTY0YmNoSzQ4MFEwTzRWdENFNEZ5QWR5T2lXdmJ0dHhZQ1hBNU45Q0Vq?=
+ =?utf-8?B?RjYxY2VKa0hXNmxCT1Rob2ZZYWZ1TTNIZ3lVL1FVUzREOFJSWFRNTlBHZENl?=
+ =?utf-8?B?Y3p1RlBiOVYvK1YxZ29yeXA0Sk5ydGw3VTVSaXZUL2IyL0s0YTBZQndoOFRs?=
+ =?utf-8?B?OWFjZ1pqcDF6eHRqSndHS0lIWUp3d3paN2wrTnNCSlVhQkNoNFJYUXJGVXNo?=
+ =?utf-8?B?NktOZnpwSGJMUDJoQm5EV2hWZzN6dVhBZGthRFBjT1NvYk11a0U4RzRadmUz?=
+ =?utf-8?B?UFR3RnJOR1VWNTgrYnI0QVJGVlplVmhFNUhJa2hqbWtoSmhOWnM4b3FyN2F5?=
+ =?utf-8?B?MEJpSXRYandKdGJ0bXRjNGM0eklKSm1QZFpsNEJ6RlliWXdBQ0FMTUF4b0lT?=
+ =?utf-8?B?QWJuQWNXaEpaY0R3bmVvb3NVS2tjN0dZTklTcGxaTGRLVWlDY3ZaTUdsM1BT?=
+ =?utf-8?B?MS9yNVVoTTk0MjBHSXhjQzZnSWZiS2s4bGV6Tnp2SDcrQVlvaDdCQnYxaEtT?=
+ =?utf-8?B?YkFEYWVCdnhEbXVRTi80UzFFVEtWNUhNenluWVhQeUs3bXZLSzNRd2Y3Vkh5?=
+ =?utf-8?B?dlVwRlZocThYZk5ZL0VYSEprMDQ1LzRobkdRY0JRTDZlMUE3RHBNeE50NnNp?=
+ =?utf-8?B?K3F5YURndkxaMVJMUFp0S1BpdDBob0RNV29UZEEwS3YxeTQ2Y0lnNk1jQXdK?=
+ =?utf-8?B?WXdGck9XRmsvejRwMWJaRXhBM2J3RStETkFOb3NWNUJQTy9PUCt4UnJ2NUVD?=
+ =?utf-8?B?NW4zNDhVRGpSZmVQZXhRSVRFWmJ2bFNsUXFhVnU0dmhieXp5ckxIUGhWUXhk?=
+ =?utf-8?B?MWIrSGpRLzl1cXg3RzFPTzdPVHhEbTNQK0UrR3BXbUFEdThYM2REU2NIYnlR?=
+ =?utf-8?B?bGVrQVQ4bUpYKzdhOExiMkxmTUFjS0J0dEVLMWhWWjVtY0tzSkt5WG9ZMWpM?=
+ =?utf-8?B?ekxOZkxLYlFuYlpBOTNkZU5ieXZwM3V1YUh2K0lsUzRHRFExdVpMOC8xQW01?=
+ =?utf-8?B?THFYK3pKYXJCNlFYK2w3am1jYXJSWFJCZThISE5IWU10Z3I3bEg2THArMzhs?=
+ =?utf-8?B?b0l5dUNFdVFxUnhnQ2ROeUVFMUpRRyttK1U4UERjOGNrRExDRkhnNDMrazFG?=
+ =?utf-8?Q?7wov6kLlw62K26vAG1cYjd6Guh1iQk9xtwHM0?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ecc165a-359f-4b3e-4fa7-08df01c7aaf4
+X-MS-Exchange-CrossTenant-AuthSource: PA6PR04MB11909.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 10:02:31.4467
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 10:08:39.1592
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5V6KLyFJXw8jmetKY7sltl4ksnYVsOIsJB9mZLs55QHVDD+MsYM7vBD6U2k8sSkks6zO7EyVv5kweEUU8VXh0g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOAP123MB8927
+X-MS-Exchange-CrossTenant-UserPrincipalName: DigFz6z924GgtNn5cURoLKxytena3rYrD7ZQ39QKt3XlmM2ME/qg933u0kp9LoxCegXRLGpv6MWXP9cJuLMpU0olVdr9D9AlhTbUz1W/v+tb5PBll5PB4lL7+4JgSbhD
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7729
 
-On Sat, Aug 22, 2026 at 09:51:23PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Pointers to function pointers (and deeper pointer indirections) will be incorrectly symbolized as kernel functions due to greedy unwrapping in `btf_is_func_ptr()` and missing pointer checks in `trace__btf_scnprintf()`.
+On Mon, Jul 13, 2026 at 09:08:03AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Medium] Incorrect error handling in `btf_struct_scnprintf` causes `arg->augmented.args` to be inappropriately advanced on failure, leading to an out-of-bounds read in fallback formatters.
+> - [High] Concurrent execution of multiple flexcan IRQ handlers causes lockless list corruption in the can_rx_offload queue.
 > --
 > 
-> --- Patch [3]: [PATCH perf-tools-next v5 3/4] perf trace: Enhance BTF type formatting to symbolise kernel function pointers ---
-> commit 544922c709767641e98cb8ac1eabf4bff305afea
-> Author: Aaron Tomlin <atomlin@atomlin.com>
+> --- Patch [3]: [PATCH v6 3/6] can: flexcan: split rx/tx masks per mailbox IRQ line ---
+> commit 9f143e05fb5957d463ce1d05d4126d168798b0d8
+> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
 > 
-> perf trace: Enhance BTF type formatting to symbolise kernel function pointers
+> can: flexcan: split rx/tx masks per mailbox IRQ line
 > 
-> When BTF (BPF Type Format) metadata is loaded from vmlinux, 'perf trace'
-> can inspect the precise C types of tracepoint and system call parameters.
-> This patch introduces btf_is_func_ptr() to inspect BTF type hierarchies
-> to determine whether a parameter resolves to a function prototype.
+> This commit updates flexcan to process split rx/tx masks based on the
+> mailbox IRQ line for platforms like S32G2. It introduces MB0 and MB1 masks
+> and passes them to flexcan_do_mb() to only process the relevant mailbox
+> range for each IRQ.
 > 
-> > diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-> > index 10fbea7ed4dbf..4f8b4f2cf677e 100644
-> > --- a/tools/perf/builtin-trace.c
-> > +++ b/tools/perf/builtin-trace.c
-> 
-> [ ... ]
-> 
-> > @@ -979,21 +980,61 @@ static size_t syscall_arg__scnprintf_getrandom_flags(char *bf, size_t size,
-> >  #define SCA_GETRANDOM_FLAGS syscall_arg__scnprintf_getrandom_flags
-> >  
-> >  #ifdef HAVE_LIBBPF_SUPPORT
-> > -static void syscall_arg_fmt__cache_btf_enum(struct syscall_arg_fmt *arg_fmt, struct btf *btf, char *type)
-> > +static bool btf_is_func_ptr(const struct btf *btf, const struct btf_type *type)
-> >  {
-> > +	while (type) {
-> > +		if (btf_is_ptr(type) || btf_is_typedef(type) || btf_is_mod(type))
-> > +			type = btf__type_by_id(btf, type->type);
-> > +		else
-> > +			break;
-> > +	}
-> > +	return type && btf_is_func_proto(type);
-> > +}
-> 
-> [Severity: Medium]
-> Will this loop eagerly unwrap all pointer modifiers, failing to enforce a
-> strict single-pointer limit for function pointers?
-> 
-> If perf trace encounters a tracepoint or syscall argument whose type
-> string contains an asterisk but resolves to a function pointer typedef
-> (e.g. bpf_callback_t *), wouldn't this greedily unwrap all pointer
-> indirections, causing pointers to function pointers to be incorrectly
-> symbolized as kernel functions?
-
-At the time of writing, no tracepoint or syscall argument in the Linux
-kernel source tree that uses bpf_callback_t * (or any other function
-pointer typedef with an extra asterisk like work_func_t *).
-
-However, in the next iteration, function btf_is_func_ptr(), will track the
-pointer count and immediately exit if more than one pointer is encountered,
-avoiding any further BTF type lookups.
-
+> > diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
+> > --- a/drivers/net/can/flexcan/flexcan-core.c
+> > +++ b/drivers/net/can/flexcan/flexcan-core.c
 > 
 > [ ... ]
 > 
-> > @@ -1095,8 +1142,10 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
-> >  		return 0;
+> > @@ -1244,8 +1255,14 @@ static irqreturn_t flexcan_irq_mb(int irq, void *dev_id)
+> >  	struct net_device *dev = dev_id;
+> >  	struct flexcan_priv *priv = netdev_priv(dev);
+> >  	irqreturn_t handled;
+> > +	u64 mb_mask = ~0ULL;
+> > +
+> > +	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ)
+> > +		mb_mask = (irq == priv->irq_secondary_mb) ?
+> > +			  FLEXCAN_SECONDARY_MB_IRQ_MB1_MASK :
+> > +			  FLEXCAN_SECONDARY_MB_IRQ_MB0_MASK;
 > >  
-> >  	/* pretty print the struct data here */
-> > -	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) == 0)
-> > +	if (btf_dump__dump_type_data(btf_dump, type_id, augmented_arg->value, type->size, &dump_data_opts) == 0) {
-> > +		btf_dump__free(btf_dump);
-> >  		return 0;
-> > +	}
+> > -	handled = flexcan_do_mb(dev);
+> > +	handled = flexcan_do_mb(dev, mb_mask);
 > >  
-> >  	consumed = sizeof(*augmented_arg) + augmented_arg->size;
-> >  	arg->augmented.args = ((void *)arg->augmented.args) + consumed;
+> >  	if (handled)
+> >  		can_rx_offload_irq_finish(&priv->offload);
 > 
-> [Severity: Medium]
-> This is a pre-existing issue, but does this error handling correctly check
-> for negative error codes from btf_dump__dump_type_data()?
+> [Severity: High]
+> This is a pre-existing issue, but does this concurrent execution risk
+> corrupting the lockless rx-offload queues?
 > 
-> If btf_dump__dump_type_data() returns a negative error code (e.g., -EINVAL),
-> the equality check against 0 evaluates to false. The function incorrectly
-> proceeds to advance the arg->augmented.args pointer by the consumed struct
-> size and returns 0.
+> Since the primary and secondary mailbox IRQs are separate lines (e.g., on
+> S32G2), they can be dispatched concurrently on different CPUs when frames
+> arrive simultaneously for both mailbox groups.
 > 
-> Then, in syscall__scnprintf_args():
+> If both IRQs execute at the same time:
 > 
-> tools/perf/builtin-trace.c:syscall__scnprintf_args() {
->     ...
-> 			if (trace->force_btf || default_scnprintf == NULL ||
-> 			    default_scnprintf == SCA_PTR || default_scnprintf == SCA_KSYM) {
-> 				btf_printed = trace__btf_scnprintf(trace, &arg, bf + printed,
-> 								   size - printed, val, field->type);
-> 				if (btf_printed) {
-> 					printed += btf_printed;
-> 					continue;
-> 				}
-> 			}
+> CPU1
+> flexcan_irq_mb()
+>    flexcan_do_mb()
+>       can_rx_offload_irq_offload_timestamp()
+>          __skb_queue_add_sort(&offload->skb_irq_queue, ...)
 > 
-> 			printed += syscall_arg_fmt__scnprintf_val(&sc->arg_fmt[arg.idx],
-> 								  bf + printed, size - printed, &arg, val);
->     ...
-> }
+> CPU2
+> flexcan_irq_mb()
+>    flexcan_do_mb()
+>       can_rx_offload_irq_offload_timestamp()
+>          __skb_queue_add_sort(&offload->skb_irq_queue, ...)
 > 
-> Because btf_printed is 0, it falls back to the default formatter
-> (syscall_arg_fmt__scnprintf_val). Does this fallback formatter then read from
-> the erroneously advanced arg->augmented.args pointer (now pointing to the
-> next argument or past the buffer end), leading to an out-of-bounds memory
-> access?
+> Or if CPU2 reaches the finish step while CPU1 is still adding:
 > 
+> CPU2
+> flexcan_irq_mb()
+>    can_rx_offload_irq_finish()
+>       skb_queue_splice_tail_init(&offload->skb_irq_queue, ...)
+> 
+> Since __skb_queue_add_sort() and skb_queue_splice_tail_init() operate
+> locklessly on offload->skb_irq_queue, could this lead to corrupted linked
+> list next/prev pointers or infinite loops during list traversal?
 
+Hi Ciprian Costea,
 
-Okay, then:
+Please double check whether S32 can generate these two mb interrupt at the same time, if not, no need change, just comment this feature, if yes, then need to add lock.
 
-    if (btf_dump__dump_type_data(btf_dump, type_id, augmented_arg->value,
-        type->size, &dump_data_opts) <= 0) {
-        btf_dump__free(btf_dump);
-        return 0;
-    }
-
-
-
---
-Aaron Tomlin
+Regards
+Haibo Chen
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260713085306.2643794-1-ciprianmarian.costea@oss.nxp.com?part=3
