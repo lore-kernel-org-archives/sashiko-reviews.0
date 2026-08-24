@@ -1,98 +1,65 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010007.outbound.protection.outlook.com [52.101.69.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B16E1E8332
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 14:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1C225B083;
+	Mon, 24 Aug 2026 14:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.7
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787581839; cv=fail; b=MPecaQ9TefDxelEG/BFZG52fFby2gBlL0uI2mTDULnSzTBrC9XeOw3+SKFibrOdplD/T9ZW60yrU+Ewp2/8py+bitlLBKzd9sCzdrKP0a/RXp77yzNF8Y2e204t00lBIaeUK0b0Pf4ODvw3J/2VqgSptc2NDeDC1MYVU2c13oXc=
+	t=1787582955; cv=fail; b=kV9hdz87wtymHCcCziEyDi7YpFvHt6mDwUAD98n87hWJxonpG07Sw4PMbwQVGTNpNSjaDkTPYOCqx1rPD0B1VF11yoXhfdYMfzhxAhQE9ZLjmmf3a/nXY+WrFKL3L+kXukNBM+aPdfZovxKHkwOd6t8+AmiTHu5YkzSfXB+irZk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787581839; c=relaxed/simple;
-	bh=13vUg0ZMmAFURjjemyVGSqdidqi/QSs9WB3fiqngLHE=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=AwVB3z+R2SGVFaq/0cwqZ+AD1m4Wg2g2aOSuYCcdl6MJ96Pg531ZWCYXu8jhVnlhi/GSwvz0M3AJQDB5CfG1Mp989k+CyScQYDJyknQkZMIGw6cnpdqDOis4eLYPeZ18m8QCLQXMKiGlR2iU8tkVa83sVkUm3XfwOeyGhIji3II=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jkBCAtcG; arc=fail smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1787582955; c=relaxed/simple;
+	bh=Lo3hCahDRr/DpNU3A+syKZQjZ7dvFrOLUIE/viq6qNM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=R9NtF08chCqLDaBR1W2vrgLYY/5NNf66uUqWsMFbGVTb/aovUahTlz41LZfTeOLPsYO4C1LBAh1TeNqn7RUnr1bixTurfoCqYjeI/lYEAD1aUy91pdmqxAppd6jP2e57HgVqUfZroIv2a4xu4mAFnozSAPFzO5JgvqHOpOC8fbk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=oujakUfo reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jkBCAtcG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787581838; x=1819117838;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=13vUg0ZMmAFURjjemyVGSqdidqi/QSs9WB3fiqngLHE=;
-  b=jkBCAtcGykLsyV0c/eOtoZaEvjiFQmwgnq1HRGvOehxFk7DaSUBz672W
-   MjPKM7aDf5LXoTdF6aMmUfegRaOXC71BoD98VmA4QdgqJjqB3MmUYCUGu
-   cV+XRgpynctQ2HTKkMbBKRoIhiFCgEmm6HjjN+Zq8z5GGs/IgaNV2Pp83
-   bbe8oUUkFg+A/Nuu9OzJ+8LX6hICypnG2Af3jdmacEn5N2jyFbSnrLwra
-   yVO1BNzcUjeE6BvfYsffg8gz4IuAayXl+QWaeK5HCbCtcQWoVGhMc6iY0
-   9abg/2AV6LM7WtTkeTBQjDkjsEye6x8g6sBktqu4CJXvfUUTLJmA1ctgN
-   Q==;
-X-CSE-ConnectionGUID: yAkdFetpRciS1USY4GBPwQ==
-X-CSE-MsgGUID: eOR6ecpaQdKFw/BLv5jZEw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="91903639"
-X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; 
-   d="scan'208";a="91903639"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 07:30:38 -0700
-X-CSE-ConnectionGUID: xSSnT3fvTRSX9OkecqeD6w==
-X-CSE-MsgGUID: AAb4rrNGQry0tpgbnUC8Kw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; 
-   d="scan'208";a="296918773"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 07:30:38 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 24 Aug 2026 07:30:37 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Mon, 24 Aug 2026 07:30:37 -0700
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.36)
- by edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 24 Aug 2026 07:30:35 -0700
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="oujakUfo"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oJQa+Cgk+P7XpD6KH70vRE0W5WZ1l1EQpObJWJAe5+vYLLVxMuASo1q6d0LFO20qwKOII1vFkNZK6lk8V6m7PLdNoJfh0Lb6EgcTYq4yCrTzfT0iNmtGP9VwRJLVOpT9h4er+v54BR7BOboAsWqTAgeMk3QNa/J1o3gtSqFMVFFIaxvhD3aJST1A3nrYaVobiSi1dmDxJfNxtjm+Si7YJJLj7meTY02KjGUrsALlpFRqP2wLjauK77NdqJMc+bVImIGStOC0xLVO6gJ3gz34sr3PMhpNSHC3Vc5dDyRUgBgSwg3g6jSpPwtgqWUsuGuJI/bxdqlOmNBmHlY0y3stxA==
+ b=rhkuKxUL/A3d42ngiakKCsOa4+gNK5XfhzO9VkzvKuA6v/UhDW7tRz5DO5T6tKNrsXY2dmIWPjzpi1I+uu+aylvuc6Bs8/hphG0Zzyx6b9TheeLbqe3vIiruPXdBL6COqjxbPDlz6z8KT5lqu5xaI8V1mOzWuSEnzfadiZ7Pl4f4VvLn19A1gp7DsCja4YFvgiGfCdBAkRtlL9h7yJrnxgMZU0/LW+ExzyhGBZdvbFQYyWJrcp2b/S3DaQPqntZB4KMdwl9E8MJH7TGVTDhOkDoURhdfoj1MxROsI0ljqOVIiaZDI2GlDtoMCMdBxTXTSCe0ehIl+PjdCaPZRKnGLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bdESGy1JnyqsAf7w7h1j1rVCoaJ/fYEVG47+A6wGAFQ=;
- b=WyXozdBvPSBPr59wv4eay+GJCBDlK8XmtP0EIdP6QHeigsTzQF2Hrv1ZSv/lYNPMdxm7K7aT3UqRFPIxCvi2kCZJ/OfQztbWLCqusnyl7ob4O5e6zHMTjPuUxCJncO96X9ia0B0frDK906ta4zNzohQGpMN5Ea4y3YVxgkRXg0BYBtYdolTbQEUFIRnx0MyzqIE+QgLL8qnoizaIzk5DKqRwZSf1DUgoDp9mqUlgZpzeARy3ay5saqK9djHx2FDmIxdZ3GfT4WU8pgQzpKFQdtrwIrpOJ982dnLjBWPLwaiowEwQwJU4VBHs8YLhtjusCSQ+ma4vaxnZb0SrXxnWSQ==
+ bh=GIaBEaAu8w2BzfqK0y37hvOLJS0lARci2eMr1xpur6I=;
+ b=tXWvJrzmD3JdGylQgbDBoy9SOxSN2NQL7O6jlph4Q78gjDTa83qXD/kZ0JUi9LSnSsJk0mUuPKwMJmJqqUTXNDsRBvZMZf/CZHN4kLButSO89smIJsvrkKLpBHtLQs5RJyuZ9LUl6UV/nuqOiEIAWV1ho0dtIh2QF6woyoO2ZCeohScyAT52uOAS5Oy8kLfMn13J/ddXHADL4Z/kJ3uFt/zJrG7wmCLOfXK7E0TKIChEHAeFfYK4Kzunz90pqTeALNY4LFu7owi+Ww9dqhL0cRTe5iPmkKpmh9yqMdrHut0x/FCgAlodmmctCnc82ktuuJfjXIcepqx3zZbeYXfV+A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GIaBEaAu8w2BzfqK0y37hvOLJS0lARci2eMr1xpur6I=;
+ b=oujakUfoJa7wAzqTDYJNlqHWXkkJRsE2ny2+3PBs2dFdf3qXlHWggLsYULM6ZGEsS2Bqi21Cc28t3o4n/i8w1we4wPpoEXULsnhJjnEiipmIVG7VaOP4j8TXjc8deb4OMKl8cjGNquWWuBuwKzj1YOy4KP2d21ct9XOMONi0vaIfD2SmkcwnPCyQCSn6T6uqZHAjGGAkur4iizZ99IcO20ZnWRyE1vnu+ILfPoe+g+R9Q4LPvDSIBKg4M9cIci84IBXDY5xOwq1YQR/ADHcJGXOQAv3bNu2MILk3yWO84yPpNkbRBVIqXeLPosuHG6NqS+k6RTEMJeuJdXkSP0OIxQ==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA1PR11MB6195.namprd11.prod.outlook.com (2603:10b6:208:3e9::8)
- by DM3PPF6A4412A55.namprd11.prod.outlook.com (2603:10b6:f:fc00::f2a) with
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB7686.eurprd04.prod.outlook.com (2603:10a6:20b:290::24) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 14:30:29 +0000
-Received: from IA1PR11MB6195.namprd11.prod.outlook.com
- ([fe80::9ca6:19ac:7036:d391]) by IA1PR11MB6195.namprd11.prod.outlook.com
- ([fe80::9ca6:19ac:7036:d391%3]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 14:30:29 +0000
-Message-ID: <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
-Date: Mon, 24 Aug 2026 16:30:25 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging
-To: <sashiko-reviews@lists.linux.dev>, Raag Jadav <raag.jadav@intel.com>
-CC: <intel-xe@lists.freedesktop.org>
-References: <20260821112436.545405-1-raag.jadav@intel.com>
- <20260821112436.545405-9-raag.jadav@intel.com>
- <20260821113758.006681F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Laguna, Lukasz" <lukasz.laguna@intel.com>
-In-Reply-To: <20260821113758.006681F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VIXP296CA0003.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:2a9::8) To IA1PR11MB6195.namprd11.prod.outlook.com
- (2603:10b6:208:3e9::8)
+ 2026 14:49:11 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 14:49:11 +0000
+Date: Mon, 24 Aug 2026 09:49:04 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Stefano Radaelli <stefano.radaelli21@gmail.com>, imx@lists.linux.dev,
+	robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v2 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
+Message-ID: <aoxZ4CILG7YF6FJZ@SMW015318>
+References: <cover.1787566980.git.stefano.r@variscite.com>
+ <f54545f2a08a558977b0e76bd0f44b2cf1158783.1787566980.git.stefano.r@variscite.com>
+ <20260824104141.247111F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260824104141.247111F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA1P222CA0025.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:22c::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -100,172 +67,214 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB6195:EE_|DM3PPF6A4412A55:EE_
-X-MS-Office365-Filtering-Correlation-Id: e6814399-8905-4168-78ae-08df01ec3f1a
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB7686:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e78ea6e-3d51-43f7-eec8-08df01eedba9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|56012099006|6133799003|3023799007|22082099003|18002099003|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info: 9kKosDFNrwLjZp7VEtYH5IFG4CvYkMY0CpPdBBxSIBWL+OzzDoU6eULRV97TBTHekrce2rA0P6aRHGM8TTF6iZn75OKhP7ZdD/JRyD+I3zuAHWmGPB0/hB+Ffe76PnxUyhcIpm3v7J4kMKlhHbeo88W0Wi0huM23p4QM61DsPRhAl82OxnxtmPeCweP0XSYqaNXEhDs5MfEYSDHPSPubv/+xtQjl8afUNTRPzVA/c2ooJtW1RrlpYC3JQ//gAOp2bTELk1WDoOMfpjnHKJgguxy4tx8IsU6CYDntkYekfQyao3NxwE3e1ioB1rLtPvelc2gaFn7Lu8GOcQURzVUVXtO8mQQG4Ht0hUqC6DOuAVF6i3IzkR2hth4uk6yziLHL7MrkjJVIlamFAusT6wuRy3ksdFXj27MaEr8kxSamP+p6ZyW6+TjtCKhqrrDsrnfc9o+tOxqhstBVCUHk7hBdQ4J+PUTTJk66Vn9zKd7j19n8M7DSED733GKARvUuTPciuOGlj9VlUWLUHDoiQdmLWrgZckwSio+HXgmK0KjxOmzyD6ozz6CPgIjtUg/NabfZGnuSS5/lIhaM4yZZHPBoqAxNOO27enax+FpfsQ03vOY64hBcf9GvGan28IRuqpFT9g4FiVuJYe70Xchh4xTrrsQrna1xywbdGm2A0r0zP2E=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB6195.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(6133799003)(3023799007)(22082099003)(18002099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|366016|1800799024|376014|23010399003|10067099003|56012099006|6133799003|3023799007|22082099003|18002099003|4143699003|5023799004|11063799006|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	1D42nJ2gTcTrS5lnw4kH9B2eJ2PEF2S1vMYfJuBHqmT9WpPcEmspT0Nzcn9/LD1Tw0tC57jGb9CluZddSmhi4tMEj52AfC44Rb5X8p8XWrRWMfkdUDIAMdfgFJ6UPdKN/L5h9sWheYH0WGw4y2omOSkIUoH7ZanTzwVTRSitvq3qr/8FxChZWRQ6A61GfCo8qvjP0milBT+Z38Z1GgRNLDeI1rguOyxnryZA0QoblC/usvd5ByGKtXSU2dOZBJMuq8Z8Pc3dQmfetXUKifmWCgXASxUjDYKG6Syes52962ivnBRsT+9sXlizoSh3nQ3kJcnyxZWf5lvqIZlyEZtq8CBQ2UIQA3DjrNqIoawSYCP3dOfzkBKhTuPbo1ZWvamdN/IgO7YFFp+/ME9vOeVgXDa3g48g+vjrsPa0EnE/OHtobp1YBrISzjWpiqgYy4J0DYZmkmkXm8IjO6Xnnm0v/BAYRMcC94/UAW05zno2vfYBRdihFaAMDmavjsXHuMsjzCtUNmuPf7Tw/YOR8b5Q0JnVcjLGAEONCgzzbV+tCg/1i6Suwl+S5vbmk6GOcQZwkr1iPxNlZCn88UNE+ui0WXUHcVHwnKHdshWQUDtENA4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(6133799003)(3023799007)(22082099003)(18002099003)(4143699003)(5023799004)(11063799006)(13003099007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZzR1SWZ4RW1vdHprNkNtbThSSEYrVjl4R2RMR1BjTGdUMUZsTVhmNi84NmRF?=
- =?utf-8?B?QzdGd3pjV3QwSDR3NldSN0lYM1ZFVDkra3pYZkY1T1UzVEt2cTJ5TzFlOHp1?=
- =?utf-8?B?Q1hjVUdXUmJ6WTlJQ3czRm5zcUlzWFpGTEY2RkJNMnZKN01rWm9DajF6MnY4?=
- =?utf-8?B?RlVUQkNRbkJmd1J1Y29DMncrWE5odEJ4QVJXc3RweXc1emtHbGovMk1SZmZp?=
- =?utf-8?B?b0lTNmUxTzcvSnJ4bjZJZGkxMXo2aFFXWkhEL3pKcS9TYjEvY1FmQWZZdUk3?=
- =?utf-8?B?VEJWdjdrc1hpbGJKY1ZkL1poV2wwMXptb1NQQ2N3SXVXQk5LbVhqbkFxZDE1?=
- =?utf-8?B?cEk0ZWlXNU0za3J6dzBnekErejJPZDNJU1dOeHduaTZTcGlpTGRRMWVLUXdo?=
- =?utf-8?B?S0RwZlQ1ck5JWk1yK3UrcW9QTUcxbDRRcDVKcXlISTFwUVVHdXdYYW9tVW13?=
- =?utf-8?B?YU1sdzVkYW9rQU9NbGtZT2RncTlLL2twTnNNYnRjT2dnN3E2c1AvcFVFNW8v?=
- =?utf-8?B?T2c3RW12WFhqcENxek1nUXNhTjVIbHRzTERzdVRVZXJPL051ZXhpa0pjYURL?=
- =?utf-8?B?Tmk4U3NLM3hZMjBMd1pJdUVxeGhaRGJxRUc4OUcyempuNUdXcTdUdG0xcUdR?=
- =?utf-8?B?SjlsdzVUMzY3RTlvQWhBaVVuamNOM1VSa1dYajVkbXgrNXFGZytDOFRYbXo1?=
- =?utf-8?B?YWl2Wk9TQWR6VVVTTlRMVTRrQ01acnlmV0U1ai9BYmRwMkE4aURudEhSYnh3?=
- =?utf-8?B?ZFdDR0svaXpCbW0vcTBqQlZCdUFuUkU3aCtrVXJPdWpYL0JENzIvOTB3NEEx?=
- =?utf-8?B?cExNN0laY1ZSdnE0ekpXZ0s3bHptVzA3SGh0aFNTcjMwMmQrVmlOdDhDVUhK?=
- =?utf-8?B?TnZZK2NRbTJySUpFVW51M0NiMzd0SEwza00yL0puems4WTBWbXhyK0I1R1lW?=
- =?utf-8?B?a2czSzZ2b09ydjZZeVc5K1A4enNNUlF3T1Z0cjZSTVlHRnFQcTNpd2YwRDg0?=
- =?utf-8?B?dUxUVzhCb1BUakRyQ09EVXFJam1LSjFSbnI3SWZNTE1Mc0lXalFiSEttZXY4?=
- =?utf-8?B?cmQ4bnNTT3NqZVJQMmpKa0ZwaUJYd3I1bU5FMjVYQWFmSmZwNFZPamtLcFp5?=
- =?utf-8?B?czM1M1RPSUFYQUF4RVZiV1Z6NlczOWdsTEs2a1dCTXJRWjBYY3lKOXJiQW42?=
- =?utf-8?B?UG9yM3o1dWVDVDg5dzRjOC9ZbE0yZFRoVVRwUDRNdVpVYzZ4ODgrTGE3S3J6?=
- =?utf-8?B?bVhWOFhaVFVLMmFZOXcyTHVrQ3ZaOS9JclVzUktQeVVSYXRRWi91WEpXaHVC?=
- =?utf-8?B?SFBLZUVCMFc1TWF3STJsSGcwQm1FZ2dVWDR6UjNvUmxBd0pGeWFQV3QzMlNO?=
- =?utf-8?B?TDZQWFJEdDF5K0ZNZWJFRW95eWp4MnNkVE1ZRWlFU29ZekQyeGZuSnFaSXFO?=
- =?utf-8?B?UksxbFBQVVFabnRsTHl0dXREVUk1RFJZWURFbitUaG5lM3N4MjFma3FBVUpK?=
- =?utf-8?B?N1YrYjhDQzVvaXVKZmNXQVlDa0hoL2sxTnFXZGROd0lYa1dDanMzTjBiRW9W?=
- =?utf-8?B?ZkpZMFduU0NlQTlaM0UydWtDZU9BL3V6RmpCWkUrbnQyZDFHVm1ReWZET0RI?=
- =?utf-8?B?MHVRNkRQNzhHa0x3NjNaZmtHRWVSSHdBQktSeEVNZkwzNlVpN1U4bVVjZWpG?=
- =?utf-8?B?UWJ1RUZkbFl3aFJ4ejBXbHF6eWw5T0lEMTVIR0wra1E5bDc3MDhiaTJOMzhJ?=
- =?utf-8?B?czVQREk5QjFVR1FiVFp3MnZHZTBwMTBLODNUWlBwaUFlMmJXS016Qnl0bjJz?=
- =?utf-8?B?aVdGcDVtTkZFQkYxNVRrQXg3a0hVWHZrN3FHcy9HcUpQZEE0dVlhOUVnSXJD?=
- =?utf-8?B?d0hPdktjSzEwelJNMnVDVTVWenp5b1dyUk5RRFVSdXZ1WG5nbyt0eFVJTWdR?=
- =?utf-8?B?VGlORUV1UkUvb01qT1FJcmp2WWwxOUtrYjFEcWlrWk5iWVlXUVZtWS9YN2Nu?=
- =?utf-8?B?UHU0SlhCTEV2enZ5RlFHWE5Vc0lhZEpYOUpiNi8rMStOUGVTUU54eW5YTC9J?=
- =?utf-8?B?SHQxOXJLZ3JuNTU0WGk4ZmFHTDcxRExVZ3pXdDBFWlpyb1plTnhFakJQeGdF?=
- =?utf-8?B?RWpINWRzQ2ZBU1VmTDlIdVhXMlF2OGFhNGNFdUhZcTJuaGFnZk9BdnArTVov?=
- =?utf-8?B?RjU3N1VFN1B2dUdJNldTbHdoK1BBUWh0N1A5V09FbmlNc0RFNHByRHVia2Nv?=
- =?utf-8?B?MC8rRTFJcEtLZ0VuQkJZSEdDeDNRQ1NIR3kvQldoaWZUM2JjQ3B5NHlHRlNV?=
- =?utf-8?B?bVBMOVB5RDBWVmx6aXVyUWVDOGR4bml3NUNnODFGU2syZFRsQUFLZz09?=
-X-Exchange-RoutingPolicyChecked: De0ozRFLjstXMmxJdmczWKPwxvFcU71NxQRWrbJ2wSKmjXYxM5m/PfEhd7mOjwXNq7TKRH2MJYvdhx6d7YFJp+yL7KEZX+BFPdNsew7/xqU/R1kGknXU/3t6hgGGvy9J1N5RcnZpt5ExrsovaueoQDRd+6OIj/9K4+1DDmKaK5qU+nxtQH/8jmKhi0IUCfyVr3RNly/ItyOxfVw/525FO56JNMvDZy546ZfLcqsbxX7CeBx2VmJKccbxb8OyRF+gPgQrn4AGh2/ETs+E6lbHzORsdcN+Q1akN3lSA6aZuFUhRoVyrjF2KqY/V+zCtrBfXtzZo0/UwBHV5pBCc7AqAQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: e6814399-8905-4168-78ae-08df01ec3f1a
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB6195.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?Rnp1FFQW/AO93tYHbd+c5Ze6zDpZIvu8aYeVQU7u4emtV9oUNqMRQk8UiR?=
+ =?iso-8859-1?Q?QbBNsqJ8EHgwHvC9xGff04gvjmlVsAVoztmuzz8hGM+Eu8Ppqn63hKj5Gr?=
+ =?iso-8859-1?Q?Qj4XqbrWHf8WXCHZ8nKSmovXtMd3z3kymp1BOCWNkIzojD8NF3ZKcGdU6L?=
+ =?iso-8859-1?Q?r5cwXnna4JJue/LCUGbQhAaKxA2bdd850iocCWYJfAMtvV7JafXW2XvmbJ?=
+ =?iso-8859-1?Q?29ILDHkpohoXLPoMF6kKD/VuCZF8i72+xlRmVvhNC7jdEk7FiT2lRsT0Cq?=
+ =?iso-8859-1?Q?SWjiClOUL8FsKmZ8au8Qy5hFNnM+El4JA9EMtmxHuaobqRdvIuC+O+X52F?=
+ =?iso-8859-1?Q?QP1sF0qo7fiOR1NcTQTpDM9h74Q5I9udwG+mXgw/edzXt7MH9NK+JjCy5v?=
+ =?iso-8859-1?Q?TKvsvs+xMqSSwmx7XueMRPSELnmffoV51xYsr7BGE6AYbigrXs/cxfMQAV?=
+ =?iso-8859-1?Q?EYmtD4RrSKApsJMie23u4Kg26nSkrfVQgI1jJhcK09RSo+eL0o5Wrf1PUk?=
+ =?iso-8859-1?Q?STd6WszWxL7SL9abn8GCg1TON7dI2pNfGX3F/Ho8Kz7BdbLH6ffhpcIGEw?=
+ =?iso-8859-1?Q?eIVNUubOlFr98lLymxteHjAl4asFD+CAA2KJZntivy7UPGeW4nzGfAAro2?=
+ =?iso-8859-1?Q?X92vMPL+lbMM3ZTbqH0W3DkUgan41Id45RI06EtxUsnpAZH2eY2O2Sjtep?=
+ =?iso-8859-1?Q?sn9Oy6dPiCycgRAM5HeIwsEk6nat2gLWTCbClx6E4tmGJ7mAKLm5Xg48y/?=
+ =?iso-8859-1?Q?MLxJjRjULxEUpRZRAAr7n9v0z5vMNMN79IUUj6Uc1l9R9vKfC4iNP0ClEr?=
+ =?iso-8859-1?Q?4pem61xgl9lBQmjbI8jx7b6gT+fEavhdkKYNyHB5xVmd88vcJKS12e1XCx?=
+ =?iso-8859-1?Q?65qwgjqDZpah/DyMPJiNktX4Ff0isOkdTGBbEgnZYkx7mwBJvoJ1fcqV3d?=
+ =?iso-8859-1?Q?T0XFCWnU6g425DgGGycfeU94deF1po1yNRwCOxk+39s7IE+XQEk7ezkBLm?=
+ =?iso-8859-1?Q?EJNwzG1dPjaGLFHyL5acTanRvOW3f/knVr1XQorsf80kezw/Jr1r71FvXS?=
+ =?iso-8859-1?Q?sN5XikKOOKw98hJfIhMazsBYiA7SEyPO5LTDpcpbfmNMo+UepoXkB7EBoy?=
+ =?iso-8859-1?Q?QPIgIkcJdiLYGdECW4vR8Cx4dNvvtUZaEM/pYd2joJsrwB/WHCDQWU10lo?=
+ =?iso-8859-1?Q?Bud/cCebRn6gHu2RDx8X+CaDk6djyFUL+KjftfzsRNy8xg2P6AhlPcmlI3?=
+ =?iso-8859-1?Q?UfajGc4YzicM4j2rbvTrj1nQrlnGdvQVoXGi6EHv/PGE2SnqFG0NMHwQfv?=
+ =?iso-8859-1?Q?kvXKFeYPqgeP5ECiIQ2amAtXKvM2I8Gvh8AEN69Ja6q+IFoUQjpB/VF4ru?=
+ =?iso-8859-1?Q?0zJlhyK/GJZOT6uL8DHpKNvC4inrgIURjFWd4g9ct7YjckNMfKzOPkBLHX?=
+ =?iso-8859-1?Q?Bp0hF7JRGgKt4penemA/XfFVSiGA0B4wpTWgYqT2iPq6YGmPENUi8ZkCCO?=
+ =?iso-8859-1?Q?pYhvh/M4PzYosGLviTc0/91U4R3WjEfP+wZpJU9qPfqeVTC5N4AleRRHVB?=
+ =?iso-8859-1?Q?75Mh4n7cPXmIVIN8UirGkDE9mSnd4wNQgNisKXiUfRie9dGaoOArQ5D2p4?=
+ =?iso-8859-1?Q?aswmxKToQ4905RyXxXiPaEi8tP5MpqAsttrpyEUM1JIjd0EixwLFOx0Ug5?=
+ =?iso-8859-1?Q?JFhN6ALEgUfPOxcpfY4+gr+aT5UD+NyROSN7CokXatuK2iXheqkGhkblEK?=
+ =?iso-8859-1?Q?d9FpTSMkvZVPLLFzWdK45VpctBGFzGSW8w0X1WRlkU3nsU2Vuu8DBeUmaL?=
+ =?iso-8859-1?Q?FYw2siFMyl++FBJJRICIeiUsdJq/sTm8MH5hAJIz8EbXt8EE1TOv?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e78ea6e-3d51-43f7-eec8-08df01eedba9
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 14:30:29.4197
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 14:49:11.2078
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bR4lwPWT8w7gWeWtwg0uYDbuZtwEWuwzhxWI9DXUnrZcGpPh1A8tZ5kP+1qhZcRNjKJy++fxlGMUj8vWVqbg+A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF6A4412A55
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: bGJYIKOrCH9x+9t6ibwvjxcoifyYo+E832Sed+GI+bSxO+I3ROIvHBDg3R0nNhgwJnbszQLv44g+pVfVnhSSJrtGVXRqUNTHNr8PpgHPZmqzG5AYYArjW0ENhqnvYaA+
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7686
 
-
-On 8/21/2026 13:37, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Sleeping in atomic context due to `mutex_lock()` in `xe_device_declare_wedged()`.
-
-Already discussed, can be addressed in a follow-up series.
-
-> - [High] Unprotected state modification and double-increment of `wedged.ref` in `prepare_device_for_reset()`.
-
-Valid. It should be enough to just take the lock and check 
-xe->wedged.perm before taking the reference.
-
-> - [High] Temporary wedged state from PCI error recovery leaks PM reference and triggers teardown assert if recovery aborts.
-
-It seems to be a false report. Reference is taken just before 
-RESULT_RECOVERED.
-
-Lukasz
-
+On Mon, Aug 24, 2026 at 10:41:40AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Overriding `assigned-clocks` in `&sai1` drops essential `SAI1_ROOT_CLK` configuration, breaking audio.
+> - [Low] Missing device tree binding headers in `imx7d-var-som-mx7customboard.dtsi` causing undefined macros.
+> - [Low] The SoM `.dtsi` file incorrectly includes a `/dts-v1/;` directive, leading to duplicate directives in `.dts` files.
+> - [Low] The `usdhc1` and `usdhc3` nodes specify `no-1-8-v` while defining unreachable 100MHz/200MHz pinctrl states.
+> - [Low] Device Tree node names contain underscores, violating DT specifications.
 > --
 >
-> --- Patch [8]: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging ---
-> commit 102094142d418b8de53397ac8e1fbe1c7ca46ae9
-> Author: Raag Jadav <raag.jadav@intel.com>
+> --- Patch [2]: [PATCH v2 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support ---
+> commit f0d7c3577a1db2d9fa7ddee6134d561982409054
+> Author: Stefano Radaelli <stefano.r@variscite.com>
 >
-> drm/xe: Introduce temporary device wedging
+> ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
 >
-> This commit converts the boolean wedged flag to a reference count to allow
-> temporary wedged states. It also introduces a perm flag for permanent
-> wedging and a mutex to protect the wedged state transitions.
+> Add device tree support for the Variscite VAR-SOM-MX7 system on module.
+> The module is based on the NXP i.MX7Dual SoC and is available in
+> multiple configurations and hardware revisions.
 >
->> diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
->> --- a/drivers/gpu/drm/xe/xe_device.c
->> +++ b/drivers/gpu/drm/xe/xe_device.c
+> Link: https://variscite.com/system-on-module-som/i-mx-7/var-som-mx7/
+>
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som-emmc.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-emmc.dtsi
+> > new file mode 100644
+> > index 0000000000000..2f8185f8c526e
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-emmc.dtsi
+> > @@ -0,0 +1,99 @@
 > [ ... ]
->> @@ -1476,36 +1526,40 @@ void xe_device_declare_wedged(struct xe_device *xe)
->>   		return;
->>   	}
->>   
->> -	if (!atomic_xchg(&xe->wedged.flag, 1)) {
->> -		xe->needs_flr_on_fini = true;
->> -		xe_pm_runtime_get_noresume(xe);
->> +	mutex_lock(&xe->wedged.lock);
-> [Severity: Critical]
-> Can this cause a sleeping in atomic context panic?
+> > +&usdhc3 {
+> > +	pinctrl-names = "default", "state_100mhz", "state_200mhz", "sleep";
+> > +	pinctrl-0 = <&pinctrl_usdhc3>;
+> > +	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
+> > +	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
+> > +	pinctrl-3 = <&pinctrl_usdhc3_sleep>;
+> > +	vmmc-supply = <&vgen3_reg>;
+> > +	assigned-clocks = <&clks IMX7D_USDHC3_ROOT_CLK>;
+> > +	assigned-clock-rates = <400000000>;
+> > +	no-1-8-v;
 >
-> xe_device_declare_wedged() can be called from hard IRQ contexts, for
-> example:
+> [Severity: Low]
+> Does this no-1-8-v property conflict with the 100MHz and 200MHz pinctrl states
+> defined above it?
 >
-> xe_mert_irq_handler()
->    mert_handle_cat_error()
->      xe_device_declare_wedged()
+> By forcing the MMC core to stay at 3.3V, UHS-I and high-speed modes that
+> require 1.8V might be disabled, making those pinctrl states unreachable dead
+> code.
+
+Make sense, please check it
+
 >
-> Since mutex_lock() can sleep, taking it here from an interrupt handler
-> would lead to a scheduling while atomic regression.
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi
+> > new file mode 100644
+> > index 0000000000000..ecd4601c12bfb
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi
+> > @@ -0,0 +1,382 @@
+> [ ... ]
+> > +	gpio-keys {
+> > +		compatible = "gpio-keys";
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&pinctrl_gpio_keys>;
+> > +
+> > +		key-back {
+> > +			label = "Back";
+> > +			gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+> > +			linux,code = <KEY_BACK>;
+>
+> [Severity: Low]
+> Are the KEY_BACK, KEY_MENU, and KEY_HOME macros undefined here?
+>
+> It looks like the dt-bindings/input/input.h header is missing from the
+> includes, which could cause a dtc compilation failure.
 >
 > [ ... ]
->> diff --git a/drivers/gpu/drm/xe/xe_pci_error.c b/drivers/gpu/drm/xe/xe_pci_error.c
->> --- a/drivers/gpu/drm/xe/xe_pci_error.c
->> +++ b/drivers/gpu/drm/xe/xe_pci_error.c
->> @@ -25,8 +25,10 @@ static void prepare_device_for_reset(struct pci_dev *pdev)
->>   	 * xe_device_wedged_fini() releases runtime pm if wedged flag is set, so acquire a runtime
->>   	 * pm reference to avoid underflow.
->>   	 */
->> -	if (!atomic_xchg(&xe->wedged.flag, 1))
->> -		xe_pm_runtime_get_noresume(xe);
->> +	xe_device_wedged_get(xe);
->> +
->> +	/* TODO: We shouldn't be doing such ugly hacks, reuse FLR helpers and drop this. */
->> +	xe->wedged.perm = true;
+> > +	reg_hsic_hub_connect: regulator_hsic_hub_connect {
+> > +		compatible = "regulator-fixed";
+>
+> [Severity: Low]
+> Could this node name and regulator_hsic_hub_pwr_on below use hyphens instead
+> of underscores?
+
+Yes, node name should use - instead of _
+
+>
+> Using underscores in node names violates the device tree specification and
+> triggers node_name_chars_strict compiler warnings.
+>
+> [ ... ]
+> > +&usdhc1 {
+> > +	pinctrl-names = "default", "state_100mhz", "state_200mhz";
+> > +	pinctrl-0 = <&pinctrl_usdhc1>, <&pinctrl_usdhc1_gpio>;
+> > +	pinctrl-1 = <&pinctrl_usdhc1_100mhz>, <&pinctrl_usdhc1_gpio>;
+> > +	pinctrl-2 = <&pinctrl_usdhc1_200mhz>, <&pinctrl_usdhc1_gpio>;
+> > +	cd-gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
+> > +	no-1-8-v;
+>
+> [Severity: Low]
+> Does this no-1-8-v property similarly prevent the high-speed pinctrl states
+> from being used on this interface?
+>
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som-wm8731.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-wm8731.dtsi
+> > new file mode 100644
+> > index 0000000000000..af5dd6d459ad2
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-wm8731.dtsi
+> > @@ -0,0 +1,64 @@
+> [ ... ]
+> > +&sai1 {
+> > +	assigned-clocks = <&clks IMX7D_AUDIO_MCLK_ROOT_SRC>,
+> > +			  <&clks IMX7D_AUDIO_MCLK_ROOT_DIV>;
+> > +	assigned-clock-parents = <&clks IMX7D_PLL_AUDIO_POST_DIV>;
+> > +	assigned-clock-rates = <0>, <36864000>;
+> > +	/delete-property/ fsl,sai-mclk-direction-output;
+> > +};
+>
 > [Severity: High]
-> Could this leak a reference and cause an assertion failure during device
-> teardown if the device is already wedged?
+> Does overriding the assigned-clocks here silently drop the required SAI1 root
+> clock configuration defined in the base dtsi?
+
+Please check this also
+
+Frank
 >
-> Unlike the old atomic_xchg code which checked if the device was already
-> wedged, xe_device_wedged_get() increments the reference count unconditionally.
-> If the device is already wedged from a previous event, the reference count
-> will be incremented twice.
+> In imx7d-var-som.dtsi, the assigned-clocks property sets IMX7D_SAI1_ROOT_SRC
+> and IMX7D_SAI1_ROOT_CLK. By overriding it without retaining the original
+> assignments, the SAI1 block might lose its required clock configuration, and
+> deleting fsl,sai-mclk-direction-output forces the pad to become an input,
+> which could break the audio interface entirely.
 >
-> During teardown, xe_device_wedged_fini() only drops a single reference
-> when wedged.perm is true:
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> > new file mode 100644
+> > index 0000000000000..486e9360dea52
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> > @@ -0,0 +1,637 @@
+> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> > +/*
+> > + * Common dtsi for Variscite VAR-SOM-MX7
+> > + *
+> > + * Link: https://variscite.com/system-on-module-som/i-mx-7/var-som-mx7/
+> > + *
+> > + * Copyright (C) 2026 Variscite Ltd. - https://www.variscite.com/
+> > + *
+> > + */
+> > +
+> > +/dts-v1/;
 >
-> drivers/gpu/drm/xe/xe_device.c:xe_device_wedged_fini() {
->      if (xe->wedged.perm)
->          xe_device_wedged_put(xe);
+> [Severity: Low]
+> Will this /dts-v1/; directive cause a duplicate version directive syntax error?
 >
->      xe_assert(xe, !xe_device_wedged(xe));
-> }
+> When this dtsi file is included by carrier board dts files that also declare
+> /dts-v1/;, the expanded source will contain duplicate version directives.
 >
-> Will the second reference be left behind and trip the xe_assert() check?
-> Also, should the state modification here be protected by xe->wedged.lock?
->
-> [ ... ]
->> @@ -126,7 +128,7 @@ static pci_ers_result_t xe_pci_error_slot_reset(struct pci_dev *pdev)
->>   	xe = pdev_to_xe_device(pdev);
->>   
->>   	/* Wedge the device to prevent I/O operations till the resume callback */
->> -	atomic_set(&xe->wedged.flag, 1);
->> +	xe_device_wedged_get(xe);
-> [Severity: High]
-> If the PCI error recovery aborts or fails here, and the device is subsequently
-> unbound, will this leak the runtime PM reference?
->
-> This code acquires a temporary wedged reference but does not set
-> xe->wedged.perm to true. If the expected xe_pci_error_resume() is never
-> called due to a recovery failure, xe_device_wedged_fini() will see
-> xe->wedged.perm as false and skip dropping the reference, which would
-> ultimately trigger the xe_assert(xe, !xe_device_wedged(xe)) on teardown.
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1787566980.git.stefano.r@variscite.com?part=2
 >
