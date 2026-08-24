@@ -1,236 +1,92 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DCA36D51F;
-	Mon, 24 Aug 2026 15:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AB344CF29
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 15:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787585121; cv=none; b=ion65+1tV2p3ZSHteNEXGbbtFFtvMgNyDdGdpiMNbVza6FbJQ2wXl0rwjWNSbLw0vP2QcZvJHSgTPRMtFXwd7jimBUjFilKwDzWAkLtBtkdjz6Sj9VeCHhV8U94aIR0Wp33QiUCRSAv17a8Nj3vc1EVLq/XhiZWP398rCXABiXM=
+	t=1787586074; cv=none; b=fBOPcNsnK89m3k0X8N3k7FZ0TN1mp5A/kzegRwNgDZuEmVVdYNWjTUGvQ7LcyJ4VufaDnngb2Q6i+ZDJvbmwE9FjuCs5tDCk8lBDEaO+OlsZ2PaHOeioCQ7R69He+4w6oFt+i/NinQjXKqKeAc+wEexbKvQ9SWWeln/yrKzCbyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787585121; c=relaxed/simple;
-	bh=KKGcEXFe4ZxRx85agFPZ67EVtV94+pM4/zrtVMpMh/I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qMkFT0xWOthYbiaxozYZLol3e65l8o0H9W1iHpeHK4WdgQ+aYFxvSmzEEwMzIzkknPcwfD+EDBgAJBe11I270QSW1M/j1IwuW+lfqK7RHQtGtDkrADJxHpRofnzPdFElmJnwig5U/jpRhYui8VtIJ9gTC328t6izJgv9N5gyT70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ke8btP9a; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1787586074; c=relaxed/simple;
+	bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F84hxgQERFa8lxaK0pkxxj5do2sQqa5e7JefKTEYnSKpEFjNYFxNi+3iMzExhNg6N+rMlDAZheLNp1kiQPJhO9y1AvwBkMzUjGgMPWer9lhao/Un7BSaQZ0PucMlo7zDZc+9391vPW8EhcvGAnaEbV0yIrgouBRZf08QWtuetyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjQY9n9o; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ke8btP9a"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67OD1VIi1957820;
-	Mon, 24 Aug 2026 15:25:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=8klEpw9hKUJ5rXKrIrtNier1mKSI+W
-	zQjX2Bac6Mq/Y=; b=ke8btP9aipO8B02Z0/3XZJncTqrzUNkVsjnwsKgTs9TEJn
-	HNGady9Zdh/nVKMEITh6ojISHdxOanRwtetrjms1cBHSGyxhd3W1Im86urEmonch
-	huvwJmbaGnYyrhFMG+Nfxqrtm8lq58bZAgGZwWMqP2Qag31TYi332Vcb4hr/QFI1
-	/3LLKXGUXIMDcAiS0SB3XgNOx6004Jy8UvgKjDQ9qqHh7nJO3hDeAJ5VJxSJ4F4l
-	5J4CNz1qnYjZbLeR9cpZZTWg62pDkuKBnWA2qQCMVhZe9Ey68ms463jf6OHkqw7A
-	+18wqCyThJEsQEv6rJZ2oFeicXG6/QDGj7DCV+gA==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4j99g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Aug 2026 15:25:18 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFBJO1025577;
-	Mon, 24 Aug 2026 15:25:17 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgxq8q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Aug 2026 15:25:17 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67OFPGXX32244308
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 24 Aug 2026 15:25:17 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DD9FC58060;
-	Mon, 24 Aug 2026 15:25:16 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C696D58056;
-	Mon, 24 Aug 2026 15:25:16 +0000 (GMT)
-Received: from d (unknown [9.61.150.207])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 24 Aug 2026 15:25:16 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjQY9n9o"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6983d3dae7aso50263a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 08:41:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787586066; x=1788190866; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
+        b=RjQY9n9o4OM9GQYgbETDYPtpGfu54wM2i9qOOyMlth+U/+qZ/0iZjeXmxzfVSBUlXj
+         gsa/6UaEUyqld7KUZoIvOg9VX2AWWdfr343hYFeBuEkhQ+SGXYPv87XlQKTpMdTai7xS
+         /zVUNvO7m/9AqMjsLe8iSJi0uDUpW3iP9UCPo+puBjdZ/7wj74Vlp2LEhA/6dUoPtZRr
+         /22g0za7CYF/qPO3H7ruRtCMnpNomR/15kfUBzT7j8iE4FAcQqeu7qT8KgMoGngAlfzr
+         umet351clsSKax95DMv8NhMo27MKLpzzTKQXKYCBLSG3l1D6sQciGZ+89hW/BcGo/wer
+         WdhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787586066; x=1788190866;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
+        b=SeOr41TKjP/5KIhTtD53kRNwV+Di+29O3rH4BVD9JsSOSg87pK9vP25QekTJfDoZeP
+         wcpz3o+ArGpBmdsvkN83LJHyvU81icuIH4GSlr9G4S05h49R0chfjEUTbXKoMcaifNFw
+         LOBHQfXp4gmHK1QkOl+4rdsTHcg/kOqcLeO5gVJXA33JaAI3VMFehHYv3P2bDkjqXazi
+         SDnChhNjA5U7VvobKoSa9gCZAeED62/+SolRU9zfiKJ/BAJPZbk01Y4bsIcLguK7m2H6
+         jZzLiLxQMSbtie6E0F6UrdEDwYEdmL5A865Hv8IWW6iKa4SRl/KVA35DU8xExGOCmZlB
+         0WzA==
+X-Gm-Message-State: AFuF++lF53aNmH3WufLprao3CdUq1ax5/NMSXtGZbdTi4kbye1cSl89G
+	4rGK8azxtmoHnOixpcR+kYhMhBdf4xTvV8WkABWJM2o96EXx1WwiTMQD7/zZFQ==
+X-Gm-Gg: AR+sD13wPkZSlON+t0Z+XzjvLJbn/F2QwwQ4yNegX+ogDF0+dPqVgZGl92/tzuBhFxP
+	RFIIEq5BQaw04geDdcme6aXfR4VrvmyrbmD0TvjbRDL4+Uokh2x94zCG0djssnvHUGykd69pDAv
+	L/UIaegViVvRcz9fHgr4/j0WChtt8S9+UJcTDiCKdnZeOeRbO7DWIRJb8/bc6WZOMKDq5bwD1yf
+	y4bRQ0Bm0o78gDRXSI21Q1c/1FNTnRVjOkbDM2gTEIEDsU4Eoj8Vgcd2tRSPgl148qNRircn+s3
+	+2U656IArE3wGmbPtdxKf1Ml45zvwShxEJts/DS7b6pPmHy846xja2JqILcyI1QCMXswE5Z4Ty7
+	QSi4Sdnf4DLK5vddjo0eG35eC/aguJ1go0f4EOknBMPC15ZqX3N+MYdmJs/foJXoarf8WMbT9Ai
+	v0phxrvIwEVXG7OZhp1Nk54HQ1xSM6zkwqYmVaRwwiDAmfNv9BZJEWuxMNL6l/z9xwNAwijecDH
+	MY09a5GD1OSSB6QgAe5t2suHRKRyJYbbz8rr3hh6dCV1mlTWcQChE/u572cZUY0cQo=
+X-Received: by 2002:a17:907:60cd:b0:c12:8a:7d7b with SMTP id a640c23a62f3a-c24e2aa65c6mr12519166b.1.1787586065638;
+        Mon, 24 Aug 2026 08:41:05 -0700 (PDT)
+Received: from GLaDOS.station (mob-5-90-208-169.net.vodafone.it. [5.90.208.169])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c249606b60asm1230685366b.9.2026.08.24.08.41.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Aug 2026 08:41:05 -0700 (PDT)
+Date: Mon, 24 Aug 2026 17:41:02 +0200
+From: Stefano Radaelli <stefano.radaelli21@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v6 8/8] scsi: ibmvfc: handle extended FPIN events
-In-Reply-To: <20260817204153.384DC1F000E9@smtp.kernel.org>
-References: <20260817-ibmvfc-fpin-support-v6-0-62a2d525e70d@linux.ibm.com>
-	<20260817-ibmvfc-fpin-support-v6-8-62a2d525e70d@linux.ibm.com>
-	<20260817204153.384DC1F000E9@smtp.kernel.org>
-Date: Mon, 24 Aug 2026 10:25:16 -0500
-Message-ID: <87se43mtgj.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+	Frank.Li@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH v3 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
+Message-ID: <aoxmDpCMITmyuHHO@GLaDOS.station>
+References: <cover.1787583584.git.stefano.r@variscite.com>
+ <aa8af884a709961f155f855b8a480488ef4c47d1.1787583584.git.stefano.r@variscite.com>
+ <20260824153400.119F61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RslBIyo3iB1a-EGzXtFWdxdFEyx6a5OL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX5YB9ZYuk5wwM
- p2Mck1W7rvLORBSWnVC0rjg5Wdy9hTINRuIKK5Qw1EqB+x43+b8YeReI5NNdBub2IMDF4vW1by2
- 5DwOuszX0L5TYfjBxmfKYGWefzYNwL0=
-X-Proofpoint-GUID: RslBIyo3iB1a-EGzXtFWdxdFEyx6a5OL
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8c625e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=uDYi2d91FQ9Up9g7aLIA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX0KCz6ZJaHklQ
- 8s9VFqHw/6KcT64j7RPwRuRQpjxGdscyZ0luHCnq9cTdVGdvsGp8V/EHCCJzG7mqQvGwWV6KtVJ
- VLICXyO/0R8osNfjcmIb2u3mKGUfgtkFwtkNI6r+O2tRCvKOvuyWGtHsvCpJLq5NP9O0YuzDI3H
- EbknB5nZRlHGrWoPbQcsNqBITTYpbmjcz5GtsHRgCTTiW+qPVQG4O2bGZN2YbVVIJCiYVFm30Dm
- VN7sce85R1DZ1rDjsDkzf2OwYEBQZqfmT7D38Rx+TmLIe3ABbPCjRh2j1ckijGfePKPQNFP5sv1
- Jqe/LwMKA2lfvEGlbDSUpRoTOJ8iTlsRDtupVwLTPUrGZl9BqwNF+jf7jRiOYL8Zh/ZLUzycb04
- X1+EU/mBjj+egy3sse5HXfY5TengSDIYs75V0nMGE0WLjk8llZy0q3TUqvxUBjdq4MBpyihOLcK
- TpkcuDCOFRia7Zbcfyg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240126
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260824153400.119F61F000E9@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
+On Mon, Aug 24, 2026 at 03:33:59PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] The ads7846 touchscreen specifies an active-high GPIO for pendown, which conflicts with its active-low interrupt and breaks touch detection.
+> - [High] The V1 hardware WiFi regulator (`reg_vmmc_wl`) lacks a `gpio` property and relies on a userspace script to enable WiFi power, breaking automatic device probing.
+> - [Medium] The `wm8904` codec's `IN1L` pin is configured as a digital microphone input but is simultaneously routed to an analog 'Microphone Jack' in the DAPM topology.
+> - [Low] Non-generic node names and invalid characters are used for the touchscreen, audio codec devices, and regulators.
 
-> [Severity: High]
-> Will extended FPIN events be incorrectly discarded here because of how the
-> target lookup is performed?
->
-> In the earlier part of ibmvfc_process_async_work(), node_name is read from
-> the subq structure:
->
-> ibmvfc_process_async_work() {
->         ...
->         if (is_subq) {
->                 subq = &aw->crq.subq;
->                 scsi_id = 0;
->                 wwpn = subq->wwpn;
->                 node_name = (subq->flags & IBMVFC_ASYNC_ID_IS_ASSOC_ID) ? 0 : subq->id.node_name;
->         }
->         ...
->         tgt = ibmvfc_find_target(&vhost->scsi_scrqs.targets, scsi_id, wwpn, node_name);
->         ...
->
-> Because the ibmvfc_async_subq_fpin structure overlaps with the id union in
-> ibmvfc_async_sub_crq, reading subq->id.node_name for extended FPINs will
-> extract garbage bytes from the fpin_data.event_threshold and event_data
-> fields.
->
-> Does this cause ibmvfc_find_target() to fail and drop valid events?
 
-Yes, quite possibly. I've updated the code that sets node_name in
-ibmvfc_process_async_work() and ibmvfc_handle_async() to take into
-account that node_name isn't available in the extended FPIN case.
+I'm going to fix these errors.
 
-> [Severity: High]
-> Can this lead to a NULL pointer dereference during driver removal?
->
-> When ibmvfc_remove() is called, the fpin_workq is destroyed:
->
-> ibmvfc_remove() {
->         ...
->         destroy_workqueue(vhost->fpin_workq);
->         vhost->fpin_workq = NULL;
->         ...
-> }
->
-> If an FPIN interrupt arrives before the CRQ queues are disabled, the
-> interrupt handler unconditionally queues work to it:
->
-> ibmvfc_handle_async() {
->         ...
->         case IBMVFC_AE_FPIN:
->                 aw = kzalloc(sizeof(struct ibmvfc_async_work), GFP_ATOMIC);
->                 if (aw) {
->                         ...
->                         queue_work(vhost->fpin_workq, &aw->async_work_s);
->                 ...
-> }
->
-> Should the interrupts be disabled prior to tearing down the workqueue, or
-> should we check if fpin_workq is NULL before queuing work?
-
-Yes, fixed in v8.
-
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
->> index 444e6e6e1c390..ce938b93ecb45 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
-> [ ... ]
->> @@ -225,9 +226,118 @@ static void ibmvfc_full_fpin_test(struct kunit *test)
->>  			post[IBMVFC_AE_FPIN_CONGESTION_CLEARED]);
->>  }
->>  
->> +#define IBMVFC_TEST_FPIN_EXT(fs, ev, stat, crq) {		\
->> +	crq.valid = 0x80;					\
->> +	crq.flags = IBMVFC_ASYNC_IS_FPIN_EXT;			\
->> +	crq.link_state = IBMVFC_AE_LS_LINK_UP;			\
->> +	crq.fpin_status = (fs);					\
->> +	crq.event = cpu_to_be16(IBMVFC_AE_FPIN);		\
->> +	crq.wwpn = cpu_to_be64(tgt->wwpn);			\
->> +	crq.fpin_data.flags = IBMVFC_FPIN_EVENT_TYPE_VALID;	\
->> +	crq.fpin_data.event_type = cpu_to_be16((ev));		\
->> +	pre = READ_ONCE(tgt->rport->fpin_stats.stat);		\
->> +	ibmvfc_handle_async((struct ibmvfc_crq *)&crq, vhost, true);	\
->> +	msleep(1U);							\
->> +	post = READ_ONCE(tgt->rport->fpin_stats.stat);		\
->> +}
->
-> [Severity: Medium]
-> Is it expected that this macro only reads the pre and post statistics without
-> asserting any changes? The KUNIT_EXPECT_* macros seem to be missing here
-> to validate the update.
-
-Yes, there is no validation. This is merely meant to exercise the
-extended FPIN processing paths in the kernel and in multipathd.
-
-> Additionally, could relying on msleep(1U) for synchronization lead to flaky
-> test results when running under heavy load?
-
-Fixed to use flush_workqueue().
-
->> +
->> +/**
->> + * ibmvfc_extended_fpin_test - unit test for extended FPIN events
->> + * @test: pointer to kunit structure
->> + *
->> + * Tests
->> + *
->> + * Return: void
->> + */
->> +static void ibmvfc_extended_fpin_test(struct kunit *test)
->> +{
-> [ ... ]
->> +	for (fs = IBMVFC_AE_FPIN_LINK_CONGESTED; fs <= IBMVFC_AE_FPIN_CONGESTION_CLEARED; fs++) {
->> +		switch (fs) {
->> +		case IBMVFC_AE_FPIN_PORT_CLEARED:
->> +		case IBMVFC_AE_FPIN_CONGESTION_CLEARED:
->> +			crq[fs].valid = 0x80;
->> +			crq[fs].flags = IBMVFC_ASYNC_IS_FPIN_EXT;
->> +			crq[fs].link_state = IBMVFC_AE_LS_LINK_UP;
->> +			crq[fs].fpin_status = fs;
->> +			crq[fs].event = cpu_to_be16(IBMVFC_AE_FPIN);
->> +			crq[fs].wwpn = cpu_to_be64(tgt->wwpn);
->> +			crq[fs].fpin_data.flags = IBMVFC_FPIN_EVENT_TYPE_VALID;
->> +			crq[fs].fpin_data.event_type = cpu_to_be16(FPIN_CONGN_CLEAR);
->> +			pre = READ_ONCE(tgt->rport->fpin_stats.cn_clear);
->> +			ibmvfc_handle_async((struct ibmvfc_crq *)&crq[fs], vhost, true);
->> +			msleep(1U);
->> +			post = READ_ONCE(tgt->rport->fpin_stats.cn_clear);
->> +			break;
->
-> [Severity: Medium]
-> Similar to the macro above, this inline manual test logic is missing
-> assertions to verify the stats actually changed. Does it need a KUNIT_EXPECT_*
-> call here?
-
-Same answer as above. Exercising the extended FPIN paths.
-
--Dave
+Stefano
