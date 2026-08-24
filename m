@@ -1,74 +1,58 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AB344CF29
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 15:41:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDB842125A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 16:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787586074; cv=none; b=fBOPcNsnK89m3k0X8N3k7FZ0TN1mp5A/kzegRwNgDZuEmVVdYNWjTUGvQ7LcyJ4VufaDnngb2Q6i+ZDJvbmwE9FjuCs5tDCk8lBDEaO+OlsZ2PaHOeioCQ7R69He+4w6oFt+i/NinQjXKqKeAc+wEexbKvQ9SWWeln/yrKzCbyE=
+	t=1787587728; cv=none; b=WG9fxIgQhdgWmrOReUFuW98Xtf12OPyCs3KnbcMH9nj4b2IFjmjPoBkQw8ncHDNZJprT4n337694qmj710ipvHcTVxmmQmT2z5WSXaaqb/1U/pTVpiLfxoD3zCXBENQxlq1cG2KsdV5cNnR6QZleFrX5W6SZQ5PHcBgmXLxeBuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787586074; c=relaxed/simple;
-	bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
+	s=arc-20240116; t=1787587728; c=relaxed/simple;
+	bh=Wuj3p3MT8J4IciJ3DEAn7NumzaK3EjJYqrOdQxYpsFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F84hxgQERFa8lxaK0pkxxj5do2sQqa5e7JefKTEYnSKpEFjNYFxNi+3iMzExhNg6N+rMlDAZheLNp1kiQPJhO9y1AvwBkMzUjGgMPWer9lhao/Un7BSaQZ0PucMlo7zDZc+9391vPW8EhcvGAnaEbV0yIrgouBRZf08QWtuetyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjQY9n9o; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=s6L++JfLgg2LIRIPOis1SK9zvC8y2UYRXnzymiZbD19W3h+tbX9iWyApc8eHNo1Kcl8XcNMMw1fDTw92J63ocviQpJd0LP53Hx17jZ+kXVUZXI0omnz2TBMA6saKuOny2EKKzQPtMHW5o2qa+CMa6Ls8PBEiSvBCdTLygr38SW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BD3kxUtH; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjQY9n9o"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6983d3dae7aso50263a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 08:41:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787586066; x=1788190866; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
-        b=RjQY9n9o4OM9GQYgbETDYPtpGfu54wM2i9qOOyMlth+U/+qZ/0iZjeXmxzfVSBUlXj
-         gsa/6UaEUyqld7KUZoIvOg9VX2AWWdfr343hYFeBuEkhQ+SGXYPv87XlQKTpMdTai7xS
-         /zVUNvO7m/9AqMjsLe8iSJi0uDUpW3iP9UCPo+puBjdZ/7wj74Vlp2LEhA/6dUoPtZRr
-         /22g0za7CYF/qPO3H7ruRtCMnpNomR/15kfUBzT7j8iE4FAcQqeu7qT8KgMoGngAlfzr
-         umet351clsSKax95DMv8NhMo27MKLpzzTKQXKYCBLSG3l1D6sQciGZ+89hW/BcGo/wer
-         WdhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787586066; x=1788190866;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7nzi9LdeZlJGO2flzp6bpA5/lhCxsE5kF1q18AfvrOQ=;
-        b=SeOr41TKjP/5KIhTtD53kRNwV+Di+29O3rH4BVD9JsSOSg87pK9vP25QekTJfDoZeP
-         wcpz3o+ArGpBmdsvkN83LJHyvU81icuIH4GSlr9G4S05h49R0chfjEUTbXKoMcaifNFw
-         LOBHQfXp4gmHK1QkOl+4rdsTHcg/kOqcLeO5gVJXA33JaAI3VMFehHYv3P2bDkjqXazi
-         SDnChhNjA5U7VvobKoSa9gCZAeED62/+SolRU9zfiKJ/BAJPZbk01Y4bsIcLguK7m2H6
-         jZzLiLxQMSbtie6E0F6UrdEDwYEdmL5A865Hv8IWW6iKa4SRl/KVA35DU8xExGOCmZlB
-         0WzA==
-X-Gm-Message-State: AFuF++lF53aNmH3WufLprao3CdUq1ax5/NMSXtGZbdTi4kbye1cSl89G
-	4rGK8azxtmoHnOixpcR+kYhMhBdf4xTvV8WkABWJM2o96EXx1WwiTMQD7/zZFQ==
-X-Gm-Gg: AR+sD13wPkZSlON+t0Z+XzjvLJbn/F2QwwQ4yNegX+ogDF0+dPqVgZGl92/tzuBhFxP
-	RFIIEq5BQaw04geDdcme6aXfR4VrvmyrbmD0TvjbRDL4+Uokh2x94zCG0djssnvHUGykd69pDAv
-	L/UIaegViVvRcz9fHgr4/j0WChtt8S9+UJcTDiCKdnZeOeRbO7DWIRJb8/bc6WZOMKDq5bwD1yf
-	y4bRQ0Bm0o78gDRXSI21Q1c/1FNTnRVjOkbDM2gTEIEDsU4Eoj8Vgcd2tRSPgl148qNRircn+s3
-	+2U656IArE3wGmbPtdxKf1Ml45zvwShxEJts/DS7b6pPmHy846xja2JqILcyI1QCMXswE5Z4Ty7
-	QSi4Sdnf4DLK5vddjo0eG35eC/aguJ1go0f4EOknBMPC15ZqX3N+MYdmJs/foJXoarf8WMbT9Ai
-	v0phxrvIwEVXG7OZhp1Nk54HQ1xSM6zkwqYmVaRwwiDAmfNv9BZJEWuxMNL6l/z9xwNAwijecDH
-	MY09a5GD1OSSB6QgAe5t2suHRKRyJYbbz8rr3hh6dCV1mlTWcQChE/u572cZUY0cQo=
-X-Received: by 2002:a17:907:60cd:b0:c12:8a:7d7b with SMTP id a640c23a62f3a-c24e2aa65c6mr12519166b.1.1787586065638;
-        Mon, 24 Aug 2026 08:41:05 -0700 (PDT)
-Received: from GLaDOS.station (mob-5-90-208-169.net.vodafone.it. [5.90.208.169])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c249606b60asm1230685366b.9.2026.08.24.08.41.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2026 08:41:05 -0700 (PDT)
-Date: Mon, 24 Aug 2026 17:41:02 +0200
-From: Stefano Radaelli <stefano.radaelli21@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
-	Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v3 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
-Message-ID: <aoxmDpCMITmyuHHO@GLaDOS.station>
-References: <cover.1787583584.git.stefano.r@variscite.com>
- <aa8af884a709961f155f855b8a480488ef4c47d1.1787583584.git.stefano.r@variscite.com>
- <20260824153400.119F61F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BD3kxUtH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787587728; x=1819123728;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Wuj3p3MT8J4IciJ3DEAn7NumzaK3EjJYqrOdQxYpsFQ=;
+  b=BD3kxUtHY63zUbBb1tDJ97AKMnc7mW1efTVIE6ki7LhH0If440BX8DjG
+   FgTkqqgg+LfU8xtbN8d992opdgOhkmfnEeYEauKz8u9SMJeoNB9vvO0qa
+   gvUtDW26yrhfBKwf8QaZEP12xbw6D8GULI7v7QQ3HKM/DnjMWkRakgLlP
+   rIxAB0UrlgDHdimdS7JV+ICRcp1ze9gTVWeuVZ5ffgZhxyfzfa0iBNqkz
+   UigPtze42bvmUj3ui9HXZFMFT+9w2IFtpSRhGUjLyHyJ3YpqghYuvcTgq
+   +PqMlVS4jWvB4fFYbNcyyb5qf9jj6S5HrUf3Y+2b1OuAgnkskc3kFeXBr
+   Q==;
+X-CSE-ConnectionGUID: tmLbto4BT/ywNP7xJ1kYHQ==
+X-CSE-MsgGUID: CiZXA+UNQ1aO5/wrSBvJew==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="105421132"
+X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; 
+   d="scan'208";a="105421132"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 09:08:37 -0700
+X-CSE-ConnectionGUID: ENRoVwL1TMC38GiF2/hjxA==
+X-CSE-MsgGUID: UWP15+/qTyq2l6PUTOJz2Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; 
+   d="scan'208";a="264425244"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 09:08:36 -0700
+Date: Mon, 24 Aug 2026 18:08:33 +0200
+From: Raag Jadav <raag.jadav@intel.com>
+To: "Laguna, Lukasz" <lukasz.laguna@intel.com>
+Cc: sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging
+Message-ID: <aoxsgT0tRuJecTbp@black.igk.intel.com>
+References: <20260821112436.545405-1-raag.jadav@intel.com>
+ <20260821112436.545405-9-raag.jadav@intel.com>
+ <20260821113758.006681F000E9@smtp.kernel.org>
+ <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -77,16 +61,24 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260824153400.119F61F000E9@smtp.kernel.org>
+In-Reply-To: <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
 
-On Mon, Aug 24, 2026 at 03:33:59PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] The ads7846 touchscreen specifies an active-high GPIO for pendown, which conflicts with its active-low interrupt and breaks touch detection.
-> - [High] The V1 hardware WiFi regulator (`reg_vmmc_wl`) lacks a `gpio` property and relies on a userspace script to enable WiFi power, breaking automatic device probing.
-> - [Medium] The `wm8904` codec's `IN1L` pin is configured as a digital microphone input but is simultaneously routed to an analog 'Microphone Jack' in the DAPM topology.
-> - [Low] Non-generic node names and invalid characters are used for the touchscreen, audio codec devices, and regulators.
+On Mon, Aug 24, 2026 at 04:30:25PM +0200, Laguna, Lukasz wrote:
+> On 8/21/2026 13:37, sashiko-bot@kernel.org wrote:
 
+...
 
-I'm going to fix these errors.
+> > - [High] Unprotected state modification and double-increment of `wedged.ref` in `prepare_device_for_reset()`.
+> 
+> Valid. It should be enough to just take the lock and check xe->wedged.perm
+> before taking the reference.
 
-Stefano
+We have a xe_device_wedged() sanity check before landing here, so ideally
+we shouldn't be at this point with an active ref. But as mentioned in the
+comment, the plan is to drop the whole prepare_device_for_reset() once we
+land this series.
+
+Raag
+
+> > > +	/* TODO: We shouldn't be doing such ugly hacks, reuse FLR helpers and drop this. */
+> > > +	xe->wedged.perm = true;
