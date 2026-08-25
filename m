@@ -1,149 +1,144 @@
-Received: from mta1.migadu.com (out-194.mta1.migadu.com [95.215.58.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpo63.interia.pl (smtpo63.interia.pl [217.74.67.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2B73ED5C9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 09:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDB67E105
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 09:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.74.67.63
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787649934; cv=none; b=abpf+Kr4hFgN3Z2sRAA9sRFV0C5C4s1ZPSoSQzDR4AMHd705OLOH9csdRsAi+Jb5gjvkitW7zehT5nUOdMXJlc5lzihjrPagIGeY0w4ADb3yERscG1WtoD7tMDlcOnSc82hh4gbxuGpiOdVHQ0hYzRdVoAU8aKPH7DyphkiYOnQ=
+	t=1787651205; cv=none; b=VgxnYDSwNUSdwruXxFb8Qr7iumH1t2NerfV61colvHEGI7C2Eh7x3uHLiRKqRUcMtCvLjdSunqpOxNbi1RKjptXvQSZYsbX8aCuhISwGcDOLiDD5i5HZap5YPt/iM0oQFVGYv1f2W1RnJGvE39v8cp1qxLm46j3+r+kuPttI++s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787649934; c=relaxed/simple;
-	bh=Me0T5+G6GU+yqK+pfWnftzQNd1qwsvqsRERpiPzCgCs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KU0L+Vv6pEjoIU5ueBdCpkkUOeEJOwKTTgVOq5qSm8I4LMo918QGAT2S1YfIIyRRK05NAPTDJh74amWzOFEqyeFrOiWzLS8JP+xMk+r4c6QVlWWSFRtWOJVoVehgTqxxl4i92zIEZzM1/daXsYkZm9G9W1HhHkd5Auc98IQzLO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sJJK9A91; arc=none smtp.client-ip=95.215.58.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787651205; c=relaxed/simple;
+	bh=fmiVhvFRiGsrLjl8bbtw3ypouRNG4Hb3E/7h/x864v8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sBy7DMDPdIy+h8DbFcwDB4jgreJGYIv5/ix/CpDOCofyuulwf4f0p3JaOdOv94tXqjBx6hiFahGUd01C25D3vLWdKhaW8p45eOGE4jso1B+1mpHJ5i+xanCxMkb815JqmrM/n0irUix2emlSKmT3irjovIH+2wSTN34SEpG6R/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm; spf=pass smtp.mailfrom=poczta.fm; dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b=orbBPggv; arc=none smtp.client-ip=217.74.67.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=poczta.fm
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sJJK9A91"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Me0T5+G6GU+yqK+pfWnftzQNd1qwsvqsRERpiPzCgCs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787649930; v=1; x=1788254730;
- b=sJJK9A91oOq/SQ6f5hvjT6cX1z9D6s2FvK6HAEXsZfao1ftVM99QQUM+nNdaD0K2Qa63k2ci
- yl6hkPFEZJbYQcPp46HTILaMiB/1ZhZ9LkZBdKuTcXjFwFVg+sI8jyPj+YgVOp/hqr8Q9BbCrsj
- Z/2EbFzrvFVRkfGGOS+Rj1f4=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from mail-lf1-f50.google.com (209.85.167.50)
-	by smtp.migadu.com with ESMTPS id 3cb13eb8cb0bbc2e;
-	Tue, 25 Aug 2026 09:25:30 +0000
-X-Mizu-Trace-ID: 3cb13eb8cb0bbc2e
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5b2a73da7e1so1051e87.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 02:25:26 -0700 (PDT)
-X-Gm-Message-State: AFuF++k+L7Z9rjIuLtvM9ZQ5PM++VHIpMfrcSdyRSt2wsGKFfoFFeuhx
-	hnQJfcs9cUr2sQ/eFPu3aeKPZUPIEEUJ37cbrkGKi3dDxmRyv9MtSbATpGQwkpDX4/yOC9HyOj1
-	hnZFYS04BfRR29iGGEzYJxKDWo1NKeRkModtssHNg
-X-Received: by 2002:a05:6512:3ca1:b0:5b2:a967:c0e1 with SMTP id
- 2adb3069b0e04-5b49ddd8905mr67230e87.0.1787649925547; Tue, 25 Aug 2026
- 02:25:25 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b="orbBPggv"
+Received: from nr200 (unknown [80.68.231.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by poczta.interia.pl (INTERIA.PL) with ESMTPSA;
+	Tue, 25 Aug 2026 11:46:36 +0200 (CEST)
+Date: Tue, 25 Aug 2026 11:46:34 +0200
+From: Slawomir Stepien <sst@poczta.fm>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
+Message-ID: <ao1ketQ4oxNiWGAM@nr200>
+References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
+ <20260825074432.0B4511F00A3A@smtp.kernel.org>
+ <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260825085948.1674721-1-fuad.tabba@linux.dev>
- <20260825085948.1674721-3-fuad.tabba@linux.dev> <20260825091816.F361E1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260825091816.F361E1F00A3A@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 25 Aug 2026 10:24:49 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTw8wN-MgXXsYr0GtOUWJZ5=25GofefuDjqKfF3b5P4uaQ@mail.gmail.com>
-X-Gm-Features: AcwNN1Xjr3NXNfeX6K1obDu2zEHXIEui6hZzl_xWAkvM-wr4YjqGEMNUSRhqSAY
-Message-ID: <CA+EHjTw8wN-MgXXsYr0GtOUWJZ5=25GofefuDjqKfF3b5P4uaQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] KVM: arm64: Do not clear VM-wide SVE feature on vCPU
- init failure
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poczta.fm; s=dk;
+	t=1787651198; bh=MvH/GZjMBZncc502+FYWTWv0K2Z8oMHl739kUmAgO54=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=orbBPggvICoii+Nd15hkuQdaVT4uWhs0z4sbW4il/lbCDnVOE6amIE9ygg+Ht4iYT
+	 CYHDmQ3C1E1Ty9JxV9OQg0L2sziOirldjm08W1Mh1nhm3Ng9xDbmKL3qZb6705X/kq
+	 sQ+RYSnnW1c6qCNhYORfySESlYl9GLL9YB/U8T8Q=
 
-On Tue, 25 Aug 2026 at 10:18, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Hypervisor DoS via WARN_ON() upon page table allocation failure
+On sie 25, 2026 10:00, Thomas Zimmermann wrote:
+> (cc: Slawomir)
+> 
+> Hi,
 
-Nope [1]
+Hello,
 
-[1] https://lore.kernel.org/all/CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso=
-2=3D38PJUg@mail.gmail.com/
+> thanks for the fix. Please see below for changes that should go into the
+> patch.
 
-> --
->
-> --- Patch [2]: [PATCH 2/4] KVM: arm64: Do not clear VM-wide SVE feature o=
-n vCPU init failure ---
-> commit 1188c411e2a65143d7371d1038c2752c0f2de6c0
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Do not clear VM-wide SVE feature on vCPU init failure
->
-> pkvm_vcpu_init_sve() clears KVM_ARM_VCPU_SVE in kvm->arch.vcpu_features
-> when it fails, but vcpu_has_sve() tests KVM_ARCH_FLAG_GUEST_HAS_SVE,
-> which is left set. Later vCPUs on that VM then skip the SVE setup and
-> register with a NULL sve_state, which the guest's first FP access hands
-> to sve_load_state().
->
-> Return the error without touching vcpu_features.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/p=
-kvm.c
-> > index c31b9d46b8b60..4340b13ee295b 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
->
-> [ ... ]
->
-> > @@ -462,24 +462,19 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcp=
-u *hyp_vcpu, struct kvm_vcpu *h
-> >       sve_max_vl =3D min(READ_ONCE(host_vcpu->arch.sve_max_vl), kvm_hos=
-t_sve_max_vl);
-> >       sve_state =3D kern_hyp_va(READ_ONCE(host_vcpu->arch.sve_state));
-> >
-> > -     if (!sve_vl_valid(sve_max_vl) || !sve_state) {
-> > -             ret =3D -EINVAL;
-> > -             goto err;
-> > -     }
-> > +     if (!sve_vl_valid(sve_max_vl) || !sve_state)
-> > +             return -EINVAL;
-> >
-> >       sve_state_size =3D sve_state_size_from_vl(sve_max_vl);
-> >
-> >       ret =3D hyp_pin_shared_mem(sve_state, sve_state + sve_state_size)=
-;
-> >       if (ret)
-> > -             goto err;
-> > +             return ret;
->
-> [Severity: High]
-> This is a pre-existing issue, but can the call to hyp_pin_shared_mem()
-> trigger a hypervisor panic if EL2 memory is exhausted?
->
-> Looking at hyp_pin_shared_mem() in arch/arm64/kvm/hyp/nvhe/mem_protect.c,
-> it wraps the mapping allocation in a WARN_ON:
->
->         if (p->refcount =3D=3D 1)
->                 WARN_ON(pkvm_create_mappings_locked((void *)cur,
->                                                     (void *)cur + PAGE_SI=
-ZE,
->                                                     PAGE_HYP));
->
-> At EL2 under nVHE/pKVM, WARN_ON() expands to a BRK instruction which pani=
-cs
-> the hypervisor and brings down the host.
->
-> Since host userspace can repeatedly invoke KVM ioctls to create VMs or vC=
-PUs
-> and exhaust the bounded EL2 memory pool, pkvm_create_mappings_locked()
-> might eventually fail and return -ENOMEM.
->
-> Does this allow an unprivileged host process to hit the WARN_ON and crash
-> the host system?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825085948.16=
-74721-1-fuad.tabba@linux.dev?part=3D2
+thanks I will look into them and make a manual v2!
+
+> Best regards
+> Thomas
+> 
+> Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
+> > - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
+> > --
+> > 
+> > --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
+> > commit 75467ead62a494b6afbc057c666ab59f7e4b8915
+> > Author: Slawomir Stepien <sst@poczta.fm>
+> > 
+> > drm/cirrus-qemu: Validate BAR0 size during probe
+> > 
+> > This commit adds a check during PCI probe to verify that the BAR0 resource
+> > length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
+> > page faults caused by writing past the end of the mapped I/O memory when
+> > smaller BARs are presented.
+> > 
+> > Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+> > 
+> > > diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > index 075221b431d37..70c995025f508 100644
+> > > --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+> > >   	dev = &cirrus->dev;
+> > > +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
+> > > +		return -ENODEV;
+> > > +
+> > [Severity: High]
+> > Does this strict equality check unintentionally break valid QEMU
+> > configurations that have more than 4 MB of VRAM?
+> > 
+> > When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
+> > the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
+> > to true (since 8 MB is not equal to 4 MB) and rejects the device by
+> > returning -ENODEV.
+> > 
+> > Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
+> > instead of requiring an exact match?
+
+It seems that 4MB is the default one and 8 and 16MB are just for compatibility:
+
+(qemu hw/display/cirrus_vga.c):
+
+2951     /*
+2952      * Follow real hardware, cirrus card emulated has 4 MB video memory.
+2953      * Also accept 8 MB/16 MB for backward compatibility.
+2954      */
+2955     if (s->vga.vram_size_mb != 4 && s->vga.vram_size_mb != 8 &&
+2956         s->vga.vram_size_mb != 16) {
+2957         error_setg(errp, "Invalid cirrus_vga ram size '%u'",
+2958                    s->vga.vram_size_mb);
+2959         return;
+2960     }
+
+I will add the 8 and 16MB then in v2.
+
+> > [Severity: High]
+> > Is it safe to place this validation check after the call to
+> > aperture_remove_conflicting_pci_devices() earlier in cirrus_pci_probe()?
+> > 
+> > If this new size check fails (either due to a malformed device or a larger
+> > valid VRAM size), cirrus_pci_probe() aborts with -ENODEV. However, because
+> > aperture_remove_conflicting_pci_devices() was already executed at the start
+> > of the probe function, the firmware framebuffers (like efifb or simplefb)
+> > have been permanently destroyed.
+> > 
+> > Could this leave the system with a dead display output? Would it make sense
+> > to move this PCI configuration check to the very beginning of the probe
+> > function, before any destructive actions occur?
+
+Yeah I guess this new check can be before aperture_remove_conflicting_pci_devices().
+
+> > >   	cirrus->vram = devm_ioremap(&pdev->dev, pci_resource_start(pdev, 0),
+> > >   				    pci_resource_len(pdev, 0));
+> > >   	if (cirrus->vram == NULL)
+
+-- 
+Slawomir Stepien
