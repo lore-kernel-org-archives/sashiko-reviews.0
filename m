@@ -1,72 +1,72 @@
-Received: from mail-pg1-f227.google.com (mail-pg1-f227.google.com [209.85.215.227])
+Received: from mail-oa1-f99.google.com (mail-oa1-f99.google.com [209.85.160.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796F3382F2F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601F23D525F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659226; cv=none; b=k7slzUC/4StdhfEHoiKdZoANis9bKu42rmk1lfGoFnar4OuS1QUSM2t+yxoQ21Y38jsfORasVAV9kTfp1vAHDUqFIAJvbp4rOyyOr/+ItvpFXSZwcPozrEsIl9gUzyDqKJEEbQHpM/3pJiE2ZlV9U1F3uxTnc5PCudwG1dNxStM=
+	t=1787659411; cv=none; b=qreXQRCNuAw0qNyUOAr9HR70XTWPZzNX3yUR+hQv20Dv3+cCHRinWZUf4wawsooMwTHy/uXfE9UaUsMuWrKBxQqL3LNbX2YJRHIb8vTIh1jVrSzn309ynl1eqdfcuDot1udSlEY6T/RcTrDb7rFWfzG14QIQJOd0nX9m9kDmSDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659226; c=relaxed/simple;
-	bh=6nDwEzYL6LGS6iVcoc2ndZK996y2y6ILQBMNfsgAAtg=;
+	s=arc-20240116; t=1787659411; c=relaxed/simple;
+	bh=WzIzAlMJXGhgQlTL8o3nyWFBg0lbRz9p678p4+dnpZg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WWxf4sKkwzLYrkxecYkhR2xJpbxGm7jM5b20XaL2hExDILteVX3BtZe1qQ3RDR41dI8BBpoxWwhWOQcKHMDLFb1EdHJUGY+UfBOr7W8DFvfE6x+SUrlQywWeElR3emsWO+OfQ8iVrJsMzrMk94GtkWAyVXLHojLdxmeYGCHD1T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=czQZGvnI; arc=none smtp.client-ip=209.85.215.227
+	 To:Cc:Content-Type; b=bi2zCZ37pQMXz6Rh0wtPnlon++RcxR51dpkc7hlvG3gAbkaEvq5weP6ySnIm/4/jjMhJl4TklVCT7xb5i8DGW7RcNa7UknvCe3gjQQXa9Devn2jH2eK3Ien+2shLgvZYMwD/nNiwTsSILPvGUvjTX5fIMsDYtdtO26zRWtgZzzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Ib8FI+oh; arc=none smtp.client-ip=209.85.160.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="czQZGvnI"
-Received: by mail-pg1-f227.google.com with SMTP id 41be03b00d2f7-cbedbaba5fdso2791586a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:00:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Ib8FI+oh"
+Received: by mail-oa1-f99.google.com with SMTP id 586e51a60fabf-4560d6f82edso4433709fac.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:03:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659224; x=1788264024;
+        d=1e100.net; s=20251104; t=1787659408; x=1788264208;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=RNJhj1cajIas0/cpsUFrnsXM6Xpa0hpqFOQvF+YzwVk=;
-        b=IrbYzXh/XxATXj1BOob3pjpDffToDTs7RVEQ15ydHJZISxzZ0vB9QOWS+XfUO6YTPt
-         XXy5mvVyW6cjWC+iNnrYkAiSw0Mo1Lf2fnKUbl2ZILquZqssS/re51YK3zCxoRGYpOki
-         1mot3D6A9794zDvBPwz+sJA8RvBVpRjD5MTf8v+f1Irz6PzaHIbY0fe3kTlQr3R+wAKG
-         U8svClgaMy/GASZkoOrC4+r133t9y8Y0fCmSzyjE4z48AWq2YxslcSBjPIAI37RVUUjQ
-         cg9N8nNjr9AK5HcZp/KMXdNcw0+qniQTbq55SIrg9HUDCE/+mVeg8DTqEzYIBI+OQqWs
-         d0Qw==
-X-Gm-Message-State: AFuF++nr+jLaTcw+jYtgSSPc3q3yNXxM3cFBM/Vws3ASZcgRcpDVb1l0
-	0FXNAx4BZe6UciDP1plpuRdqUTUvrEO4cayhcKnV5wF5e+eZWlue1yh/2OQCR7io3+ysXptnbNs
-	8JrvuOQJEG+LqlYxBLb7q7th6uW800wp+DJnLspIFNuihHpvmMDCK4hwO/nxIHmqNb/xBkicAqI
-	zhpoKEItchFObsNt0TzPJk6llyqb7EdVK9SN8VJ2hPiQ3idDqQF+bq30xdVO6iq7Us2NpY5lsUp
-	o+IQIxOyuyffTE2uJRwBjOBEAQLQhA=
-X-Gm-Gg: AR+sD13WMPq/ENGTIGlMcm19V6hnXMGlfk2GIr7RIZommEaG1YXpNz22j8/ackhZjCy
-	eitWJJRqexNjiYFPYhZjkq+EpNd2BNfS32gQrv0o+ReCbpNUUzeXdm2v6pmz9OySge5Dekbr5Hr
-	rM4i5WnARyvz82X8dd/xUtxdDvA3KXkStwTeu4ym7eeMz0uantGSuZk96Ekl3ktnNIW4RixjDPw
-	gyX/oRfYvhz1f0lEetP+OfPIeTpBTvbcdgVm2rl7iflS18PfTAkld8kSeMoDnHxPbKmaWoBhWcK
-	bMfiV9SyCnzv4IItVQGZ6sDZ3pr/aMyk+R72FWkHyhqOiH26L1jvVmAYs7OXmupkLSKcDhQsgma
-	LCr28iI/Bu32NvRZIVXMPil1KK5CUDfa4MwLEvg6JF1jqYOslSqv7bjwb6hsZtdD+xzY8jTcWKD
-	srg/aPz4kfR7UR1q179XO8WrCKtGeeoYOosEVZo8i1OgmMMQ==
-X-Received: by 2002:a17:90b:3bc6:b0:393:194d:5366 with SMTP id 98e67ed59e1d1-395c354da4fmr63671001a91.10.1787659221345;
-        Tue, 25 Aug 2026 05:00:21 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39645a47fb2sm1313626a91.1.2026.08.25.05.00.20
+        bh=JE/ZOPxsdEwwiv+1vnBN6Pw2uRHGM/YXmkBGXBQWYro=;
+        b=L42BcA7h3ZjvnE7/FOWW7cRz2NQdlUndxJk/Gnko20yEAl71mjeRfoN+c+iInZ0qkD
+         gJYwjNOmS6+N1au4tbhdneHlQMJljBtaZ6dvEU1U5AtLwefva6mUdWzMrcikq7lzRJfe
+         L8XW0TCjmu4T0FogP+dqEL7WDSl4GXX18J2ZRxS7iMD1WjOPXJJa+sD40qDgm1AcFAPp
+         zmN6p2SAiR6N6AFVQUwEtxL8oB7LkuYuirogJUrr8bzQCqWFC/rrXzsvo3CZuzpKkikx
+         +0SV6drLCczUhVETONUPnVv5PQOurwvRd0hLDb7RJYGB8CPYhCiP7TKfV5GQU054BYQN
+         vHPA==
+X-Gm-Message-State: AFuF++nelvcpzL19ji25r5OgsTsddRb1PJkJLi8aTVKzep/1lpUkBFm7
+	QsRULQJc7EiBrr9IUFcfP085h1JH+peR7qv2EQQg9+6qtl0O2GB8tfL3SuQiVCdj0mChfVzFDY4
+	L1QA3/PDn7rs/12E2iq/d48qKoaVaeXbjeD8L+42WMTtdm6kknEGNEw90Uz0NuwLdomMKbeenZ5
+	KDZn0RawNxI7ugc8ay655cuiI9UC84YPuF+foOAjXWgDAgiZX3Tx7GCPmS9KeEfqLNeVWTJeWjT
+	4NdCnNFg9rgZKZ+mPGnEKMLvSNxhhU=
+X-Gm-Gg: AR+sD13SMOwrzRZA0f0n9OCENu6aaG8Khdjv+GXWSiuTsR2GwkcsGXunQB2MoTDVyNg
+	Td5FERdiQxuYzLkXxbN7KoCYqs9Sl/tyKj1xkp6yVxLkXrbBCiY5cCTEUF+FjJzxzHjtB8oHPeR
+	hf5qE7iPiFCU9r0N80tdhwbRsj4HCs6E3UfJsKyIWKuCKpgKDukKh/Kknki9DHEOVJtQQN9WJGe
+	3Nq0+GZ9WFHFeF0uhxZZQ88GPzRPCMAFYuTkrbj/akr18zcTE+AV6qtvQnhbKc70xlPCrqZ/F5O
+	WCaWw8XKGVGtOmpXeUVWQYuF1dmYMwEmwgtv5rf/hjJxU/uIYEN3u3IEhhXSy1E0FsuGwIKBO4K
+	l2fsW7gsvf3h2R+N60Kl6wyWypXRPZWVMS+5L/3nCg4ND/UmNvKfY0MziHZGYq1dPMtq48nB5Pq
+	k4JuD8UR+2uurxhWlJVswsZKn4yCbe0KQpUDHQaCRCzCc=
+X-Received: by 2002:a4a:ec4b:0:b0:69d:e4c8:86f6 with SMTP id 006d021491bc7-6b1592b8c96mr32484565eaf.15.1787659394137;
+        Tue, 25 Aug 2026 05:03:14 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-20.dlp.protect.broadcom.com. [144.49.247.20])
+        by smtp-relay.gmail.com with ESMTPS id a92af1059eb24-141860b860dsm578861c88.6.2026.08.25.05.03.13
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:00:21 -0700 (PDT)
+        Tue, 25 Aug 2026 05:03:14 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6a5c483cdc7so970435a12.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:00:20 -0700 (PDT)
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c15dfd34e4cso308457966b.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787659219; x=1788264019; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1787659392; x=1788264192; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RNJhj1cajIas0/cpsUFrnsXM6Xpa0hpqFOQvF+YzwVk=;
-        b=czQZGvnI4k2K16mMSQLWVZ7KILq7zGUIUaLlFGPW9weTjzTWYeIUIjl3CeK63kdA8r
-         DoG28gkzq3V4Xg278Q0B2BgJFGDSB46Obx81ITFL7gW6QGjZQeNE/1WQoZPC+pDjkC9R
-         qMSsvd34iApgWXkjO9HJHY/nWZWUhT1wKv6K4=
-X-Received: by 2002:a05:6402:52d5:b0:6a0:a644:355e with SMTP id 4fb4d7f45d1cf-6a42f1848fdmr38376150a12.2.1787659219331;
-        Tue, 25 Aug 2026 05:00:19 -0700 (PDT)
-X-Received: by 2002:a05:6402:52d5:b0:6a0:a644:355e with SMTP id
- 4fb4d7f45d1cf-6a42f1848fdmr38376038a12.2.1787659218630; Tue, 25 Aug 2026
- 05:00:18 -0700 (PDT)
+        bh=JE/ZOPxsdEwwiv+1vnBN6Pw2uRHGM/YXmkBGXBQWYro=;
+        b=Ib8FI+oh3DcccSB3AqSGezcH9JqtnVgtFQmcd2JH417hGJsUXcNUCQ3QWh6Rr7ZdHN
+         ruGGBPpW8DLPoQupiodUY1P91totb45K15Vior7oaaSGuG4y6XcxROgccCmiB14TzPFD
+         X+GhVc9ce7MP61vuFJ5J+pvdT4M/A5xuwR8cY=
+X-Received: by 2002:a17:906:81d8:b0:c16:12ff:dc93 with SMTP id a640c23a62f3a-c246a6ca584mr3089111766b.18.1787659391513;
+        Tue, 25 Aug 2026 05:03:11 -0700 (PDT)
+X-Received: by 2002:a17:906:81d8:b0:c16:12ff:dc93 with SMTP id
+ a640c23a62f3a-c246a6ca584mr3088936766b.18.1787659377959; Tue, 25 Aug 2026
+ 05:02:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,228 +74,188 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-2-chandrakanth.patil@broadcom.com> <20260818181445.E16AC1F000E9@smtp.kernel.org>
-In-Reply-To: <20260818181445.E16AC1F000E9@smtp.kernel.org>
+ <20260818231426.58105-3-chandrakanth.patil@broadcom.com> <20260818181511.75BDB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260818181511.75BDB1F000E9@smtp.kernel.org>
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:30:06 +0530
-X-Gm-Features: AcwNN1VAPTA4rWxBjUPsQoU9UTFgOrTogCkW2LJainwVlu7AupCZS8A-ecz2k54
-Message-ID: <CABvwm=NVoHZ6md78xN7xkx9yEb6RXKPs0kteDVk7Rh-66oyKqg@mail.gmail.com>
-Subject: Re: [PATCH 01/17] mpi3mr: Fix buffer overflow in BSG passthrough
- request copy
+Date: Tue, 25 Aug 2026 17:32:45 +0530
+X-Gm-Features: AcwNN1XSCYKA_lTmPmP4hry_7_KUZ2M0Z9aRq9LVID3g4DN2NmTwJ_TzVVVVtRo
+Message-ID: <CABvwm=OM7-iDg33KL8TksqjUjEZx1yk_oJhwAayvKznrLjuADA@mail.gmail.com>
+Subject: Re: [PATCH 02/17] mpi3mr: Fix out-of-bounds read when copying BSG MPI requests
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000c56d860659ddd8d7"
+	boundary="0000000000000a4f5e0659dde3da"
 
---000000000000c56d860659ddd8d7
+--0000000000000a4f5e0659dde3da
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026 at 11:44=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 18, 2026 at 11:45=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [Critical] Pointer arithmetic wrap-around on 32-bit architectures allow=
-s bypassing bounds checks, leading to arbitrary kernel memory read/write vi=
-a DMA.
-> - [High] DMA coherent memory allocated for NVMe PRPs is leaked on BSG com=
-mand timeout or submission failure.
-> - [High] Target device `block_io` atomic counter is leaked if BSG command=
- submission fails.
-> - [High] Lockless TOCTOU check of `MPI3MR_CMD_COMPLETE` causes a Use-Afte=
-r-Free of `sense_buff_k` and data races on `reply` buffers.
-> - [High] Missing validation of the BSG request length (`job->request_len`=
-) allows a user to send an undersized request buffer, leading to out-of-bou=
-nds memory reads and kernel panics.
+> - [Critical] On 32-bit architectures, pointer wrap-around and integer tru=
+ncation bypass buffer bounds checks, leading to arbitrary kernel memory rea=
+d/write.
+> - [Critical] The driver fails to validate the user-provided `job->request=
+_len` before casting and parsing the BSG request packet, leading to an out-=
+of-bounds heap read and a kernel panic.
+> - [High] Failure to decrement `stgt_priv->block_io` on early failure of `=
+mpi3mr_admin_request_post`.
+> - [High] DMA coherent memory allocated for PRP lists is leaked on command=
+ timeout or post failure.
 > --
 >
-> --- Patch [1]: [PATCH 01/17] mpi3mr: Fix buffer overflow in BSG passthrou=
-gh request copy ---
-> commit ed6513158d24e842e223917348ef598d4d161609
+> --- Patch [2]: [PATCH 02/17] mpi3mr: Fix out-of-bounds read when copying =
+BSG MPI requests ---
+> commit 0259dbaa420364e7270c5c71574f90668291edf7
 > Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-> Subject: mpi3mr: Fix buffer overflow in BSG passthrough request copy
 >
-> This commit fixes a buffer overflow in the BSG passthrough request copy.
-> The check for an incoming BSG request size used a narrower variable than
-> its source field, allowing large values to wrap and pass the check.
-> The variable is widened to ensure the full size is validated properly.
+> mpi3mr: Fix out-of-bounds read when copying BSG MPI requests
+>
+> The MPI request is copied out of the caller supplied payload without
+> first checking that the requested amount is actually present, so the
+> copy can read past the end of the payload buffer.
+>
+> Check the range before copying.
+>
+> Fixes: 506bc1a0d6ba ("scsi: mpi3mr: Add support for MPT commands")
+> Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 >
 > > diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi=
 3mr_app.c
-> > index 1353a8ff9c85d..8e5d24793efd0 100644
+> > index 8e5d24793efd0..1cd1c38dcd565 100644
 > > --- a/drivers/scsi/mpi3mr/mpi3mr_app.c
 > > +++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-> > @@ -2384,7 +2384,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bs=
-g_job *job)
-> >       long rval =3D -EINVAL;
-> >       struct mpi3mr_ioc *mrioc =3D NULL;
-> >       u8 *mpi_req =3D NULL, *sense_buff_k =3D NULL;
-> > -     u8 mpi_msg_size =3D 0;
-> > +     u32 mpi_msg_size =3D 0;
-> >       struct mpi3mr_bsg_packet *bsg_req =3D NULL;
-> >       struct mpi3mr_bsg_mptcmd *karg;
-> >       struct mpi3mr_buf_entry *buf_entries =3D NULL;
-> > @@ -2538,7 +2538,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bs=
-g_job *job)
+> > @@ -2538,6 +2538,14 @@ static long mpi3mr_bsg_process_mpt_cmds(struct b=
+sg_job *job)
 > >                               rval =3D -EINVAL;
 > >                               goto out;
 > >                       }
-> > -                     memcpy(mpi_req, sgl_iter, buf_entries->buf_len);
-> > +                     memcpy(mpi_req, sgl_iter, mpi_msg_size);
-> >                       break;
-> >               default:
-> >                       invalid_be =3D 1;
+> > +                     if (sgl_iter + mpi_msg_size >
+> > +                         dout_buf + job->request_payload.payload_len) =
+{
 >
 > [Severity: Critical]
-> This is a pre-existing issue, but can the pointer arithmetic nearby lead =
-to
-> an integer wrap-around on 32-bit architectures?
+> This is a pre-existing issue, but can pointer arithmetic wrap around on 3=
+2-bit
+> architectures and bypass this new bounds check?
 >
-> When iterating over buffer entries in the same function:
->
->         case MPI3MR_BSG_BUFTYPE_DATA_OUT:
->                 sgl_iter =3D sgl_dout_iter;
->                 sgl_dout_iter +=3D buf_entries->buf_len;
->
-> If a user submits a BSG request with a crafted buf_len, does the u32 valu=
-e wrap
-> the sgl_dout_iter pointer on 32-bit systems? This wrapped pointer could t=
-hen
-> bypass the later bounds check:
->
->         if (sgl_dout_iter > (dout_buf + job->request_payload.payload_len)=
-) {
->
-> and allow arbitrary kernel memory access during subsequent payload proces=
-sing.
->
-> While reviewing this patch, I noticed a few other pre-existing issues.
->
-> > drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_request()
-> > {
-> >       long rval =3D -EINVAL;
-> >       unsigned int reply_payload_rcv_len =3D 0;
-> >
-> >       struct mpi3mr_bsg_packet *bsg_req =3D job->request;
-> >
-> >       switch (bsg_req->cmd_type) {
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this function properl=
-y
-> validate job->request_len before dereferencing bsg_req->cmd_type?
->
-> If userspace submits a BSG request with a request_len of zero, could this
-> trigger a zero size pointer dereference and cause a kernel panic? Similar=
-ly,
-> if the length is too small, would this read uninitialized heap memory?
->
-> > drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_process_mpt_cmds()
-> > {
-> [ ... ]
-> >       if (block_io) {
-> >               tgtdev =3D mpi3mr_get_tgtdev_by_handle(mrioc, dev_handle)=
-;
-> >               if (tgtdev && tgtdev->starget && tgtdev->starget->hostdat=
-a) {
-> >                       stgt_priv =3D (struct mpi3mr_stgt_priv_data *)
-> >                           tgtdev->starget->hostdata;
-> >                       atomic_inc(&stgt_priv->block_io);
-> >                       mpi3mr_tgtdev_put(tgtdev);
-> >               }
-> >       }
-> [ ... ]
-> >       rval =3D mpi3mr_admin_request_post(mrioc, mpi_req,
-> >           MPI3MR_ADMIN_REQ_FRAME_SZ, 0);
-> >
-> >       if (rval) {
-> >               mrioc->bsg_cmds.is_waiting =3D 0;
-> >               dprint_bsg_err(mrioc,
-> >                   "%s: posting bsg request is failed\n", __func__);
-> >               rval =3D -EAGAIN;
-> >               goto out_unlock;
-> >       }
->
-> [Severity: High]
-> This is a pre-existing issue, but does this error path permanently leak t=
+> If a userspace application sends an MPI3MR_MPT_CMD BSG request with a cra=
+fted
+> buf_len (e.g., 0x10001000) such that the sum modulo 2^32 remains small, t=
 he
-> block_io atomic counter?
+> sgl_iter pointer wrap-around could mathematically bypass both the end-of-=
+buffer
+> limit check and this newly added check.
 >
-> If mpi3mr_admin_request_post() fails, the goto out_unlock bypasses the
-> atomic_dec(&stgt_priv->block_io) that occurs after the completion timeout
-> logic. Does this leave the SCSI target device blocked indefinitely?
+> Concurrently, can kern_buf_len / MPI3MR_IOCTL_SGE_SIZE truncate from 0x10=
+001
+> to 1 in the u16 needed_desc variable in mpi3mr_map_data_buffer_dma()?
+>
+> This would bypass the descriptor limits, allowing the driver to create DM=
+A
+> mappings for arbitrary kernel addresses.
+>
+> > +                             dprint_bsg_err(mrioc, "%s: MPI request bu=
+f exceeds dout_buf\n",
+> > +                                            __func__);
+> > +                             mutex_unlock(&mrioc->bsg_cmds.mutex);
+> > +                             rval =3D -EINVAL;
+> > +                             goto out;
+> > +                     }
+> >                       memcpy(mpi_req, sgl_iter, mpi_msg_size);
+> >                       break;
+> >               default:
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does the driver validate job->request_l=
+en
+> before casting and parsing the BSG request packet?
+>
+> If a userspace application submits a BSG request with request_len set to =
+0,
+> the BSG core invokes memdup_user(), which returns ZERO_SIZE_PTR (0x10).
+>
+> Will the driver unconditionally dereference this pointer here?
+>
+> drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_request() {
+>         ...
+>         switch (bsg_req->cmd_type) {
+>         ...
+> }
+>
+> Could this lead to an immediate unhandled kernel panic?  Additionally, if=
+ a
+> small non-zero length is provided, does the driver read bufcnt from the
+> unvalidated payload in mpi3mr_bsg_process_mpt_cmds() and loop over unallo=
+cated
+> heap memory?
 >
 > [Severity: High]
-> Similarly, this is a pre-existing issue, but does the same goto out_unloc=
-k
-> skip freeing the DMA memory allocated for NVMe PRPs?
+> This is a pre-existing issue, but is there a missing decrement of
+> stgt_priv->block_io on early failure of mpi3mr_admin_request_post()?
 >
-> If mpi3mr_build_nvme_prp() successfully allocated DMA memory in
-> mrioc->prp_list_virt earlier in this function, the jump to out_unlock ski=
-ps
-> the success-path cleanup block:
+> When processing a SCSI task management request that specifies blocking I/=
+O,
+> stgt_priv->block_io is incremented. If mpi3mr_admin_request_post() fails,
+> the code jumps directly to out_unlock:
 >
+> drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_process_mpt_cmds() {
+>         ...
+>                 goto out_unlock;
+>         ...
+> }
+>
+> Does this skip the atomic_dec(&stgt_priv->block_io) matching the earlier
+> increment, permanently blocking all future I/O to the affected SCSI targe=
+t?
+>
+> [Severity: High]
+> This is a pre-existing issue, but is DMA coherent memory allocated for PR=
+P
+> lists leaked on command timeout or post failure?
+>
+> When an NVMe encapsulated request utilizes a PRP list, mpi3mr_build_nvme_=
+prp()
+> allocates a DMA coherent buffer in mrioc->prp_list_virt.
+>
+> If mpi3mr_admin_request_post() fails, or if wait_for_completion_timeout()
+> times out, the code branches to out_unlock without freeing the memory:
+>
+> drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_process_mpt_cmds() {
+>         ...
 >         if (mrioc->prp_list_virt) {
 >                 dma_free_coherent(&mrioc->pdev->dev, mrioc->prp_sz,
->                     mrioc->prp_list_virt, mrioc->prp_list_dma);
+>         ...
+> }
 >
-> Would subsequent commands overwrite mrioc->prp_list_virt and permanently
-> leak the previous DMA coherent allocation?
->
-> > drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_admin_reply_desc()
-> > {
-> [ ... ]
-> >       cmdptr =3D mpi3mr_get_drv_cmd(mrioc, host_tag, def_reply);
-> >       if (cmdptr) {
-> >               if (cmdptr->state & MPI3MR_CMD_PENDING) {
-> >                       cmdptr->state |=3D MPI3MR_CMD_COMPLETE;
-> >                       cmdptr->ioc_loginfo =3D ioc_loginfo;
-> [ ... ]
-> >                       if (sense_buf && cmdptr->sensebuf) {
-> >                               cmdptr->is_sense =3D 1;
-> >                               memcpy(cmdptr->sensebuf, sense_buf,
-> >                                      MPI3MR_SENSE_BUF_SZ);
-> >                       }
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does setting the
-> MPI3MR_CMD_COMPLETE flag before the memory copy create a race condition?
->
-> If the application thread in mpi3mr_bsg_process_mpt_cmds() wakes up from =
-a
-> natural timeout exactly when this flag is set, it performs a lockless che=
-ck:
->
->         if (!(mrioc->bsg_cmds.state & MPI3MR_CMD_COMPLETE)) {
->
-> Could the application thread assume the handler has fully finished, proce=
-ed
-> to read uninitialized reply memory, and free sense_buff_k before the inte=
-rrupt
-> handler finishes copying into it? Would this result in a use-after-free w=
-hen
-> the interrupt handler eventually executes the memcpy?
+> Would a subsequent NVMe command blindly overwrite mrioc->prp_list_virt wi=
+th a
+> new allocation, permanently leaking the previous DMA buffer?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D1
+105-1-chandrakanth.patil@broadcom.com?part=3D2
 
 Thanks for the review.
 
 New issues:
-- None. This patch specifically fixes a buffer overflow during BSG MPT
-command copy by widening mpi_msg_size to u32.
+- None. This patch specifically fixes an out-of-bounds read during BSG
+MPI request copy by checking that sgl_iter + mpi_msg_size does not
+exceed the payload length.
 
 Pre-existing issues:
-- Issue #3 (block_io counter leak on post failure) is already
-addressed by Patch 3/17 in this series.
-- Issues #1, #2, #4, and #5 are pre-existing in the driver and will be
+- The block_io counter leak on post failure is already addressed by
+Patch 3/17 in this series.
+- The pointer wrap-around on 32-bit, job->request_len validation, and
+PRP DMA memory leaks are pre-existing in the driver and will be
 addressed in a separate follow-up series.
 
---000000000000c56d860659ddd8d7
+--0000000000000a4f5e0659dde3da
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -389,13 +349,13 @@ LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
 tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
 YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
 YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCDU2jit1XVKm0OzIkIDYxYXjV5ZUQ5oXJFyGmyMi3QLZjAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjAwMTlaMFwGCSqG
+oIHHMC8GCSqGSIb3DQEJBDEiBCBk/h3MlnUzOqrlOFBCWlH+DGjtHg/Ma6qf5vCsP0Yi4zAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjAzMTJaMFwGCSqG
 SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAUNa1Q1CaV
-p6yEVvhLtHoE1tQDySY92F/LHqH/iy2Q+6H/eq89M90sYPVssgwJ9Lksi1/tOqAB0iBFSTuxitz+
-zFpoh32LbWtjcoE3zy3/pIO03qyvTdVis1DjwKtZIHfhFbv2eYq8/oZh1xKAr9RvhCX/keGJzHGS
-6j4vu/1yhYuEJA8fkPaTwtYOVOU3ZI59a6z3BydRxc7EDiRjKKeAJPOTbwHURdaMLbb09K5Emqhc
-4Fr9ln0mYu9l4vqsiQ0pGTc4KY5LCJQjSjHoOn7k89RnzHhQLWPcpO6WQOop1symK4OsxKFtng5+
-h7RphVMpssoi2XUqk5b//ljC0eJq
---000000000000c56d860659ddd8d7--
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQALVAnWBqxi
+oPm2c+veyKMuf1901xgaq1clxcSYxTT7Mk2fFzS8bgC65EguM8P8mjfpsjbYOYV/3uySc0so/qu1
+QNNJfCXOPOYOTIO5JK6M0yp6TF27/UjYRvsHfI4tND4VNKFMsViNAN9+0w6Kna9koqlGZ0T42i+0
+zJLIwslcvm0IyM6V3CSLeYZvclWjK6jn0wjW4l283MERLaVYlbkI4jKyGxj6563cBEA2YwWXWabg
+a2NmVaaRZdPRddA2OMxrpSO6oTs0pb7IaaXu+T8+0z7Twx3gQe5GTz6XpguqVx2UpItQ7xrzTo5r
+ATdn4nO+yfynK6Bm8HU188YUpvO7
+--0000000000000a4f5e0659dde3da--
