@@ -1,81 +1,81 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C113D6CB0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2558D3D566A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787644860; cv=none; b=BDPPmn1+nm4aG4mFadJBy730yxVhceShYkdd8UUr+m/o1kJ3anqpPBm0CZT8PaI6MDAL8h2p/LR8+YX3b/hT3eiFlFzEHtDBMLi92DnnuWFgW39Cv5VeFzLG9wAUluRktkL3UlDzHVPX6qGT50IET+FQ3VInbPc/hZDKk7v+D6s=
+	t=1787645070; cv=none; b=PFM1SdT/bZLbGWBoxJ+jNGh0Dgz8ew0RN1SZyqUBb6GeEJsVfuyrqCu8BXWxFz8BA40dzjMF5VkKiLQJ5Q3mqpU2kkuAWUdSwlV0jUOAETgAAx8aThK1NwTRgUw385Lfwrn/9zjn57qDA2ob3x9HhADTZIFQ+T1D4hkdK1aDNqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787644860; c=relaxed/simple;
-	bh=4wuKdClDEtyiCer3EcQsfP1rv7pakVvgh/SVlmX65tY=;
+	s=arc-20240116; t=1787645070; c=relaxed/simple;
+	bh=YIgOcEqlXxGDmHqaTSG+nd9YT4QvrWEYUv+HGBTYdtI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qlt4vfgxW0YUiToiqxty84bN8/rwS/YnNhGdPn1UA1XUsplKbLT66TVkfCmthb3f+HHLGVtBAl02c82z1CRZyV4j4nKPAs/qdK7IuwM2z8MtpIRDD7959ZAP2R+Yu7XxYGqh4CeWMUKdtTsxWJIowDditZqP20MBG7hPfguOAGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=sQCagDmq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2NLh5ZER; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=y+VpEsA0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Q2Qkf/9G; arc=none smtp.client-ip=195.135.223.130
+	 In-Reply-To:Content-Type; b=t7Nn/ydpjj9A4OkqFugTlL2DOd+9eFroKE3hO7cp0+uVWaPqb6/UCyxfZbld339z4ZbI5anjzzZ3o9Y5KNgAcqlncQAPJwls/Ludg6eixpLIzr1k+zUVTaTbI9SgBcLz0GoCu59sXxE6qB9NUv6XUhXnQ1ov/g4FEOqYG1cmA7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GtZ7A56A; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2IOcNjl4; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mT02T1rm; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=rMuFyHjb; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="sQCagDmq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2NLh5ZER";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="y+VpEsA0";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Q2Qkf/9G"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GtZ7A56A";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2IOcNjl4";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mT02T1rm";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="rMuFyHjb"
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id EBF0E86D2E;
-	Tue, 25 Aug 2026 08:00:47 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 2054F1F7B4;
+	Tue, 25 Aug 2026 08:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787644853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1787644989; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
-	b=sQCagDmq4peuTng23qhcJG6M4r9xOAd3Cuz5f1XNti6+c0ZmrqjuwEyN5YB39Rq3mRPp8j
-	3UhnWvdms8uQaUjWxRXqI4hhU0sNybTxPdlcNo1RFYBqMT9TxpB2ertWLXeW9+vL3W4jPJ
-	US2MKY2tIjcH4+TaTN5aXW2pJSG1wMg=
+	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
+	b=GtZ7A56AXk533T7hb0WZlDenwwyYIcxvWDAs0Si4OGZzLL/NIE9PDLF8DUrOoX9Md9ZT2V
+	xKJ6cpoAgsEVneICh41847FlpLbIKHOxxG0uQZaAfrppeR8MqUT797j2o5K4lcE+Kf4s4L
+	0luN4ESGlQioXnnd+4Oaeh52jryCUUY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787644853;
+	s=susede2_ed25519; t=1787644989;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
-	b=2NLh5ZERTPBVrMuypQYRhEnyIQmd8LgFJtqI+gOqO+r5MUdvWOR6+kayyfK+fQnv7ykorS
-	1DKOHjNgame+wOAA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y+VpEsA0;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Q2Qkf/9G"
+	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
+	b=2IOcNjl4+1CM/av9PHv7NyYlQiP4vcSZunXERPDaqTmkqOtQFFcW5rh2M3pM7SyJ7/aCUI
+	sYqAZnY5iX/VeZBw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mT02T1rm;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rMuFyHjb
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787644847; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1787644985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
-	b=y+VpEsA0xHwysqE9yxmGDTRhylsKhDEAy5b1WoOHJYCbv2ZeWJEAHcBX8zjCNRjhaMBrRE
-	eBEEvVpw8j9nKDNKvsyvZBwZyZbErDJzs8Dl77e7HbIPlBBDIzFsIO1ZjudBVLoliU+xyb
-	Jhpji2I+csN5UaXagCCFme0olCgNB0E=
+	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
+	b=mT02T1rm6QVnTaCmbaJHQDo/i21HMFLNigdnFOfbbc5UDvKzAFMQPub5OYsbynemTdtjjt
+	p36NnQ7kRzh5hwTQtprrmNirDBqAZNYcA8z1Ddkrh8/bQfQGCH9JSUOEw93VlCTRB/gGoz
+	fQEpYUmmyHJP7KtjK58Rv/sioXk9fYI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787644847;
+	s=susede2_ed25519; t=1787644985;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
-	b=Q2Qkf/9G4xRnKvTmpGkTmp7pUNHTyQa9D4XZSkZ9MLX3foSfKXZJfjtM1DkjAfa/D2Lc7Y
-	ZylZtGdWpMU95PCw==
+	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
+	b=rMuFyHjbvzB2V4bhNUn/pQmlitoeC6NY/WoSQ0YVX93NQHd9bYTX98xWN5xY+Ct0IQHLro
+	uCWK2kvlFCVCqaBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CCA1913335;
-	Tue, 25 Aug 2026 08:00:47 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 959A713332;
+	Tue, 25 Aug 2026 08:03:04 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 3U/RMK9LjWoacgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 25 Aug 2026 08:00:47 +0000
-Message-ID: <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
-Date: Tue, 25 Aug 2026 10:00:47 +0200
+	id kQfPHThMjWracwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 25 Aug 2026 08:03:04 +0000
+Message-ID: <778c33e1-8391-48d0-bef4-97298e06d43d@suse.de>
+Date: Tue, 25 Aug 2026 10:03:04 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,11 +83,18 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
-To: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>, sst@poczta.fm
-Cc: dri-devel@lists.freedesktop.org
-References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
- <20260825074432.0B4511F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v2 0/7] vga_switcheroo, drm: Push fbcon handling into DRM
+ clients
+To: lukas@wunner.de, jfalempe@redhat.com, alexander.deucher@amd.com,
+ christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+ rodrigo.vivi@intel.com, tursulin@ursulin.net, lyude@redhat.com,
+ dakr@kernel.org, deller@gmx.de
+Cc: dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ intel-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ linux-fbdev@vger.kernel.org, sashiko-reviews@lists.linux.dev
+References: <20260709092215.168172-1-tzimmermann@suse.de>
 Content-Language: en-US
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Autocrypt: addr=tzimmermann@suse.de; keydata=
@@ -114,109 +121,98 @@ Autocrypt: addr=tzimmermann@suse.de; keydata=
  SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
  Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
  4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260825074432.0B4511F00A3A@smtp.kernel.org>
+In-Reply-To: <20260709092215.168172-1-tzimmermann@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-4.51 / 50.00];
 	BAYES_HAM(-3.00)[100.00%];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
 	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
 	MX_GOOD(-0.01)[];
-	FREEMAIL_TO(0.00)[lists.linux.dev,kernel.org,poczta.fm];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_TO(0.00)[wunner.de,redhat.com,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,intel.com,ursulin.net,gmx.de];
 	MIME_TRACE(0.00)[0:+];
 	ARC_NA(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[poczta.fm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
 	MID_RHS_MATCH_FROM(0.00)[];
 	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[poczta.fm:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,syzkaller.appspot.com:url,suse.com:url,suse.de:mid,suse.de:dkim];
+	TO_DN_NONE(0.00)[];
 	RCVD_COUNT_TWO(0.00)[2];
 	TO_MATCH_ENVRCPT_ALL(0.00)[];
 	DKIM_TRACE(0.00)[suse.de:+]
 X-Spam-Flag: NO
 X-Spam-Score: -4.51
 X-Spam-Level: 
-X-Rspamd-Queue-Id: EBF0E86D2E
+X-Rspamd-Queue-Id: 2054F1F7B4
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
 
-(cc: Slawomir)
+gentle ping for a review from the DRM side
 
-Hi,
-
-thanks for the fix. Please see below for changes that should go into the 
-patch.
-
-Best regards
-Thomas
-
-Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
-> - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
-> --
+Am 09.07.26 um 11:15 schrieb Thomas Zimmermann:
+> Vga_switcheroo currently invokes fb_switch_outputs() to inform fbcon
+> about switching of the physical outputs among framebuffer devices. But
+> new DRM clients to not use fbdev/fbcon and might require their own
+> vga_switcheroo support. Let's strictly separate them from each other.
 >
-> --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
-> commit 75467ead62a494b6afbc057c666ab59f7e4b8915
-> Author: Slawomir Stepien <sst@poczta.fm>
+> Remove fbdev/fbcon from vga_switcheroo. Introduce a pre_switch callback
+> for vga_switcheroo clients to do the fbcon update. Allows for removing
+> all direct interactions between vga_switcheroo and fbdev/fbcon.
 >
-> drm/cirrus-qemu: Validate BAR0 size during probe
+> There are only four drivers that support vga_switcheroo: amdgpu,
+> radeon, i915 and nouveau. Update each of them with the new callback.
+> When vga_switcheroo now invokes pre_switch, each DRM driver forwards
+> to aquire_outputs and lets the DRM clients handle the new outputs.
 >
-> This commit adds a check during PCI probe to verify that the BAR0 resource
-> length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
-> page faults caused by writing past the end of the mapped I/O memory when
-> smaller BARs are presented.
+> At the same time, push the fbcon update into DRM's client for fbdev
+> emulation. Do this with the new DRM client callback acquire_outputs,
+> so that other clients can have their own handling of vga_switcheroo.
 >
-> Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+> Also replace the existing reprobe hook with post_switch for symetry.
+> For nouveau, this is merely a rename of the helper function. The other
+> drivers dor not implement reprobe.
 >
->> diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
->> index 075221b431d37..70c995025f508 100644
->> --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
->> +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
->> @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
->>   
->>   	dev = &cirrus->dev;
->>   
->> +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
->> +		return -ENODEV;
->> +
-> [Severity: High]
-> Does this strict equality check unintentionally break valid QEMU
-> configurations that have more than 4 MB of VRAM?
+> Tested with radeon on a notebook with Radeon HD 4225 and HD 5430.
 >
-> When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
-> the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
-> to true (since 8 MB is not equal to 4 MB) and rejects the device by
-> returning -ENODEV.
+> v2:
+> - implement all of pre_switch in a single commit to avoid possible
+>    deadlock in intermediate state (Sashiko)
+> - fix erroneous docs (Sashiko)
 >
-> Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
-> instead of requiring an exact match?
+> Thomas Zimmermann (7):
+>    drm/edid: Include <linux/fb.h>
+>    drm/client: Add acquire_outputs callback; implement for fbdev
+>      emulation
+>    vga_switcheroo: Add pre_switch callback to client ops
+>    vga_switcheroo: Add post_switch callback to client ops
+>    drm: Implement struct vga_switcheroo_client_ops.pre_switch
+>    drm: Implement vga_switcheroo_client_ops.post_switch
+>    vga-switcheroo: Remove unused interfaces
 >
-> [Severity: High]
-> Is it safe to place this validation check after the call to
-> aperture_remove_conflicting_pci_devices() earlier in cirrus_pci_probe()?
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  9 ++++-
+>   drivers/gpu/drm/clients/drm_fbdev_client.c | 23 ++++++++----
+>   drivers/gpu/drm/drm_client_event.c         | 18 ++++++++++
+>   drivers/gpu/drm/drm_edid.c                 |  1 +
+>   drivers/gpu/drm/i915/i915_switcheroo.c     | 11 +++++-
+>   drivers/gpu/drm/nouveau/nouveau_vga.c      | 28 +++++++++------
+>   drivers/gpu/drm/radeon/radeon_device.c     |  9 ++++-
+>   drivers/gpu/vga/vga_switcheroo.c           | 41 +++++-----------------
+>   drivers/video/fbdev/core/fbcon.c           |  8 -----
+>   include/drm/drm_client.h                   | 14 ++++++++
+>   include/drm/drm_client_event.h             |  3 ++
+>   include/linux/vga_switcheroo.h             | 29 ++++++++-------
+>   12 files changed, 121 insertions(+), 73 deletions(-)
 >
-> If this new size check fails (either due to a malformed device or a larger
-> valid VRAM size), cirrus_pci_probe() aborts with -ENODEV. However, because
-> aperture_remove_conflicting_pci_devices() was already executed at the start
-> of the probe function, the firmware framebuffers (like efifb or simplefb)
-> have been permanently destroyed.
 >
-> Could this leave the system with a dead display output? Would it make sense
-> to move this PCI configuration check to the very beginning of the probe
-> function, before any destructive actions occur?
->
->>   	cirrus->vram = devm_ioremap(&pdev->dev, pci_resource_start(pdev, 0),
->>   				    pci_resource_len(pdev, 0));
->>   	if (cirrus->vram == NULL)
+> base-commit: 88c6be63ac7e9238c7791977d3f496ce6623afe4
 
 -- 
 --
