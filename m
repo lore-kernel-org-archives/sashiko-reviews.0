@@ -1,142 +1,136 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887E325CC79
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 07:04:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7FE3D3D0C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 07:38:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787641456; cv=none; b=kmQQNID1KmwRxyAR8M6RhFFm4MLQDpzg3Y0lELl8w1/Mxd0lMYJbX8EVPQ1dm4DRU+75e8Udz7IZ2dnf6d+NC6X8XYa5rvicJrOWxPoudG30FQcN6Lu19s/TjLw/u/Yiu60dKpfqRD2HN3zh2GeVKbnH5WRAckT/uwDHUn02Zfo=
+	t=1787643502; cv=none; b=a4iGI9jfFZz1o0uqRbplBvZWd7dVDR6KcS/hLZs4KeFWY0VMiDB2w3x/8ls9yRbQoAN2BbX425blMzLSSgakrieRIJ1FctcCQBg2bUur8i9ZkSZQ0nw9H5Zt2ZctsOqbr6ZeA/Mv0CpxniBEsvwyn2jWyXvEHqopIXjVWIE2jK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787641456; c=relaxed/simple;
-	bh=7QzfSxxXOZc7Sg+1rnXXpNsNdIw13HsMt9k9cbp05dg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:Cc:From:
-	 References:In-Reply-To; b=e7/BfeeleyJ3YEcgRRq4NF65ntX2+Ukaju/P4ibXNwoZqljdzoepeoXEdXW+h9shanoW2kKj4PQwnzmgLvhLsBraL58Eye1JrkFG9LRgBevMZ1j88l5G8p9EtOYSLlA5YufAU2rWjNXjwuI3YMsfY8S5DYDgZ21n5sYXRq+NQ1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=wlufZJ8k; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1787643502; c=relaxed/simple;
+	bh=bVP40eq90ECJv96cWe7uOzircfK6Px2vNnwRuK9hyFE=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=JkdTNHMaLZGzQWFXDEcg7FefIDzqa2Yu3oFzTCWGV+rMAZe0zwo+kaIKK0MKQRUYUwzpCoqEgk+nV8Vc1QFMgnRsLVMz7kwxUAhLe7ui63lmSqi7gu/jTUGGlc1AOKIeSt50bP/oAd0wcgQJXH568mO7Vc1gwVCE1FiG2XBpCow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=cBA4hRE1; arc=none smtp.client-ip=113.46.200.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="wlufZJ8k"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 47DBD1A1810;
-	Tue, 25 Aug 2026 07:04:06 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 15286604C4;
-	Tue, 25 Aug 2026 07:04:06 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EBE6711C79627;
-	Tue, 25 Aug 2026 09:03:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1787641441; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=waD4o/I1Ndx/IZ1UJER8xvX3Xn3Bx5OwJxxwZTGepWA=;
-	b=wlufZJ8kpt2bS0nqetdBOK2T+x5s8+LmgGaijPyZZyvw8eoPNBHAFykY8Tyj68tr2Ah8Ml
-	Us3oCCmJzGgDfzgh6cMGH7/FZVRsTHSki2MPBndKcTQ+V/0OeroxXV4yo8giHkPGRPdWwo
-	g8Cd7lj5BupqgmvDA1xBzrii/ju8oVZljIiNiDG18hi9LHqGh9IpDITjw8lRrcQbnIinvn
-	JdUicZOxqdwpgZG7pFwvBPdvFmAlbU3xQGF2nM6Y7YmjTh2JjdhS2CVWNRY0VX9Sz1ZOs/
-	VYHh+/RKfkambEAAQpuag/tT9Mv6+oaCAiqiy0psg5nyYy5v8N13LYN8jQa3Fw==
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="cBA4hRE1"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=EgaY3Knct4LZKRUc6oJxHCLQeLjGFOvfd65tQPQOrz0=;
+	b=cBA4hRE1rrmDH+aO540jk0ugRby++QmEHkoEYKvhzLuYCHsgGe7MYEjbp1kixg3WWW/hn2t+O
+	xYa6JTTJv/Qy76LAPjS/FWT+aZ4QiprVL04ZhYnMOyt2FOcJYlErST7+qEJZEMW+kfSzFIUqz+8
+	nBmz8p6wpsIfraQfWc+xYPM=
+Received: from mail.maildlp.com (unknown [172.19.162.144])
+	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4hTfWg1jm7z1T4Fq;
+	Tue, 25 Aug 2026 15:27:59 +0800 (CST)
+Received: from dggpemf500015.china.huawei.com (unknown [7.185.36.143])
+	by mail.maildlp.com (Postfix) with ESMTPS id 0750E4056E;
+	Tue, 25 Aug 2026 15:38:08 +0800 (CST)
+Received: from [10.67.121.110] (10.67.121.110) by
+ dggpemf500015.china.huawei.com (7.185.36.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 25 Aug 2026 15:38:07 +0800
+Subject: Re: [PATCH v2 1/2] hisi_acc_vfio_pci: fix live migration enable
+ conditions for PF passthrough
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+References: <20260824082851.1436129-1-liulongfang@huawei.com>
+ <20260824082851.1436129-2-liulongfang@huawei.com>
+ <20260824084207.C8A391F00A3A@smtp.kernel.org>
+From: liulongfang <liulongfang@huawei.com>
+Message-ID: <e25014f1-31d5-4714-7b7c-1bb8f3c5b5c7@huawei.com>
+Date: Tue, 25 Aug 2026 15:38:06 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 25 Aug 2026 09:03:59 +0200
-Message-Id: <DKXU03VFF1HG.1LI7OCCH41D5E@bootlin.com>
-To: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>, "Ihor Solodrai"
- <ihor.solodrai@linux.dev>, <sashiko-reviews@lists.linux.dev>,
- =?utf-8?b?QWxleGlzIExvdGhvcsOpIChlQlBGIEZvdW5kYXRpb24p?=
- <alexis.lothore@bootlin.com>
-Subject: Re: [PATCH bpf-next v7 4/9] bpf, x86: emit KASAN checks in x86
- JITed programs
-Cc: <bpf@vger.kernel.org>, "Alexei Starovoitov" <ast@kernel.org>
-From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260822-kasan-v7-0-99afee6ef7fd@bootlin.com>
- <20260822-kasan-v7-4-99afee6ef7fd@bootlin.com>
- <20260821233332.1D2201F00A3A@smtp.kernel.org>
- <DKWOG6YKM2NY.1FJHLE7BKZW9Y@gmail.com>
- <fa7cc4ad-6b8d-4bdf-8e2c-66d98ddef7df@linux.dev>
- <DKXLJLAMA1KZ.14CXAXXD5S0WQ@gmail.com>
-In-Reply-To: <DKXLJLAMA1KZ.14CXAXXD5S0WQ@gmail.com>
-X-Last-TLS-Session-Version: TLSv1.3
+MIME-Version: 1.0
+In-Reply-To: <20260824084207.C8A391F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ dggpemf500015.china.huawei.com (7.185.36.143)
 
-Hi Ihor, Kumar,
+On 2026/8/24 16:42, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The `set_reset_flag` lock tracker is never reset to false after a successful lock acquisition, allowing subsequent failed resets to erroneously clear the global `QM_RESETTING` lock.
+> --
+> 
+> --- Patch [1]: [PATCH v2 1/2] hisi_acc_vfio_pci: fix live migration enable conditions for PF passthrough ---
+> commit e8e63b8a17edd44cc9b69e8ca3472ee6c656873c
+> Author: Longfang Liu <liulongfang@huawei.com>
+> 
+> hisi_acc_vfio_pci: fix live migration enable conditions for PF passthrough
+> 
+> This commit fixes a crash in PF passthrough mode by adding validity
+> checks for uninitialized PF pointers during device probe, error
+> handling, and migration initialization.
+> 
+>> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>> index 86362ec424a50..e95d0ab0f11ab 100644
+>> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+> [ ... ]
+>> @@ -1174,8 +1179,12 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
+>>  	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
+>>  	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
+>>  
+>> -	if (hisi_acc_vdev->set_reset_flag)
+>> -		clear_bit(QM_RESETTING, &qm->misc_ctl);
+>> +	if (hisi_acc_vdev->set_reset_flag) {
+>> +		if (qm && qm->io_base)
+>> +			clear_bit(QM_RESETTING, &qm->misc_ctl);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it possible that
+> hisi_acc_vdev->set_reset_flag is never reset to false after a successful
+> lock acquisition?
+> 
+> If a prior reset succeeds, hisi_acc_vdev->set_reset_flag is left as true.
+> 
+> If a subsequent reset attempt times out in hisi_acc_vf_pci_reset_prepare()
+> because another agent already holds the QM_RESETTING lock:
+> 
+> hisi_acc_vf_pci_reset_prepare() {
+>     ...
+>     while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
+>         msleep(1);
+>         if (++delay > QM_RESET_WAIT_TIMEOUT) {
+>             dev_err(dev, "reset prepare failed\n");
+>             return;
+>         }
+>     }
+>     ...
+> }
+> 
+Your analysis makes sense. After `reset_done`, if subsequent reset processing occurs,
+`set_reset_flag` remains set to true. Therefore, the reset flag handling will be
+executed regardless of whether `reset_prepare` succeeds or not,
+which is unreasonable.
 
-On Tue Aug 25, 2026 at 2:26 AM CEST, Kumar Kartikeya Dwivedi wrote:
+Thanks.
+Longfang.
 
-[...]
-
->>>> If %r10 is clobbered, could this corrupt the stashed BPF_REG_0 and pot=
-entially
->>>> cause a crash when real_dst_reg is used as a memory pointer in the sub=
-sequent
->>>> emit_ldx() call?
->>>>
->>>> arch/x86/net/bpf_jit_comp.c:do_jit() {
->>>>     ...
->>>>     /* Load old value */
->>>>     emit_ldx(&prog, BPF_SIZE(insn->code), BPF_REG_0, real_dst_reg, ins=
-n->off);
->>>>     ...
->>>>     /* Restore R0 after clobbering RAX */
->>>>     emit_mov_reg(&prog, true, BPF_REG_0, BPF_REG_AX);
->>>>     ...
->>>> }
->>>
->>> This looks like a real bug, R10 is used for both atomics and constant b=
-linding.
->>> We probably also should save R11.
->>
->>
->> Hi Kumar, Alexis.
->>
->> This topic has a bit of history now [1][2].
->
-> From [1],
->
-> "I built the kernel with gcc 11.5, gcc 15.2 and clang 22 and
-> disassembled __asan_{load,store}{1,2,4,8}: none of them touch r10 or
-> r11. gcc goes up to r8, clang uses nothing above rdi."
->
-> Isn't this dependent on register pressure inside the function, i.e. depen=
-ding on
-> different code or whatever, it might begin using those registers?
->
->> I don't quite like it, but IMO we should give in to the bots.
->>
->> Reasons to save r10 and r11:
->> * SystemV ABI
->> * bots wouldn't shut up about it (think of future llm bot reports!)
->> * if our analysis of the kasan helpers is wrong about r10/r11 usage OR
->>   if something changes (the helpers themselves, the compilers, build
->>   flags, JIT's usage of r10/r11 etc.) - we'll get clobbered regs
-
-Indeed, there's this risk of future versions of compilers deciding to
-change the way those asan helpers are compiled, it will then silently
-break (not sure how big of a risk it is, though).
-
->> Reasons to *not* save r10 and r11:
->> * we make the bpf prog a bit smaller and faster, the win is not very
->>   clear but it's percentages, not a factor
->>
->
-> Yeah, also, we're already saving a ton of other registers, I don't know w=
-hether
-> saving two would matter, even if it wasn't incorrect. I wouldn't worry to=
-o much
-> about KASAN performance, it's already orders of magnitude slower than nor=
-mal
-> kernel build.
-
-Ok, let's settle this then, I'll re-apply the r10/r11 save/restore
-mechanism. If we eventually end up wanting to optimize it, this can be
-revisited later.
-
-Alexis
-
---=20
-Alexis Lothor=C3=A9, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+> The code returns early and leaves set_reset_flag as true.
+> 
+> When hisi_acc_vf_pci_aer_reset_done() is subsequently invoked by the PCI
+> error recovery flow, it observes the stale true flag and unconditionally
+> clears QM_RESETTING.
+> 
+> Does this prematurely clear the lock currently owned by the other agent?
+> 
+>> +		else
+>> +			dev_err(&pdev->dev, "PF QM not available for reset done\n");
+>> +	}
+>>  
+>>  	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
+>>  		return;
+> 
