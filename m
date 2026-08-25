@@ -1,73 +1,49 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C0637D11A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 07:58:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC492264B0;
+	Tue, 25 Aug 2026 08:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787644739; cv=none; b=Pygi9NuaPsnAhV/NJgeRNJwR34xAsvofGjhT4d+obTVwNIRwIjkQjsPauU3dhDmiZI+b3d8iPincDVX7MMlG+3lEiJR0I4gZTtr8oibwGyzoYhKpxyZxBZ0fgkO8iVeRd++goq0G+na6L+Ayhg1gKpy4ybVNIQZQpf6N8gpANrg=
+	t=1787644834; cv=none; b=TPcK9B0BUCrwaJmf6jJbu4Eami5mjzKxKcZCuDHhLLZ8mHvkDrIqcgFnV6GznmsH0mcJ3N6iLWXW6BOJ+xmWCIxTdHFtu2je5lflhxPm8ABeOg+znFEaxS5kapMslykxt/wbKMffbels1Xapc3fH+Zqrq37ReXlIy9lwUgjMzvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787644739; c=relaxed/simple;
-	bh=s3x3RNU/eA7uy/SJ1qUVWhAw0EVi7d4DWm+cDdSIGDY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WquqOoSbhM9iv8Y6M/M/OJYaMGwbaaKdme+DEGCAcZoQWAQx7hk7pfIobl01VBkvaIlyQkr+zrKEh13h2+LQRHWI2+AvL0A9vH6fDUE6oZpfS5tr9ObFeqkZ87/oiF0GCReKjwmdbj9bt2uoNfWFoxPhKixVroEGCoR/8WkeLgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMFn/Rmg; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMFn/Rmg"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d530328efbso38303525ad.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 00:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787644738; x=1788249538; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=BCxIjrQYLQM8XDCQ4pvIySM2CoxYiO6JYpvvBpStof4=;
-        b=HMFn/Rmgrdcwz6Y2ew7QVbRZX+Foymntko9yzy25VV54lq6rq9X1ErXcB1MZeRd4bs
-         td4cnkY9i9ciVhXdpgZbJuuswaPbN0aBwAInhbXgZTP7V4DAxCRU/fk8vdXTYqs+B6II
-         nFhFKirGAV8Qm4q2VQX+W2XTZaBmbc3sB+anwEztOFKJQzKgZOM1JSIr1JfACdlX41iv
-         bco/e9on1pH/ubqzAxGeQL9t6s1MnLzqH1jl+gQACOf+9uVb/5a0S4d2zWscHBtF6CLj
-         Ozwxgq/G1J58cBVpIo04Cc+dFhXG4+fV2CNGk/t1I4pnja+SWxSF3ZYSxXgLrMhoVovm
-         crkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787644738; x=1788249538;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BCxIjrQYLQM8XDCQ4pvIySM2CoxYiO6JYpvvBpStof4=;
-        b=LIqRZvUsF7hYlcTew0uLe5j1cA33ZMYtDKPD2UrCGvN7LtnUjSUIY0Z5D775Rs+UYi
-         Nj3TXOSL0pUN887Rb6c+771MXa5gucaycXl/UojK1sO1xIYFCRq4Fa6RIgv0B77Vgiqp
-         DoJkjT2YJMC8wdMmYWhfjvUOlGuFKQIcCnqGdZAvtISfAnCrFdtpGf5V+n+3KyNs2qf2
-         332S9X9H/pnpEPHoHPXXP6LGGL4e8fThorNHPwNT2JkIBF9dDjP7fe61Afuxz7n3CGdU
-         Fn2D+CFo0Jk4PkMdFZ3pk3s9Xm5F14PALrPx+eG5lBnZuXFg7MHl7sYstdOBseena1WI
-         /ttA==
-X-Gm-Message-State: AFuF++nP/G4NOrSHUGvEnNvhuUNB1iozfwYJv5ipDaPAhMhgFFHdbyOK
-	4jXV9uVzJtinR/HTcIiCWpmlzlghpFEttR+4mlRAuvEJMs+0YPWTtD3ZDBdhhMnz
-X-Gm-Gg: AR+sD1037L+ovsetK35JzaA3NprWuiD2k2uyCNxAuIA14w9dC5fvsmNeUc9+OdscSJz
-	fv+iuRDUKw9V4G+Su1kmXgvs4q6TtmTyNts7/tS/u/KuyeYzoZy7IWVF95vQ/+OGC6eoawEwg99
-	uvfI1FpUSJMOW4L8WeoICG2e5MV1mE6xTKBqnQg+LCYRDR90FbvAX2hXmGQ7Q0H4ZYweXKiKmqs
-	rV7gWIDiqsLE5G2lgJDt1mP7y/ZsLwmjGmxw5WYkb46VQwL544/TrASsP9r/tcTDO94TEXPp7sg
-	19ZeITDZFF7sq4E5sMfZazfK+6SdHObjilTGWFdnxZ03g8m0+1McXImFzavxxvsjyPz+vbE5rc0
-	hrnWwJY79WqeqSaGCs614MqnMwzl418Dh0eChO0sfoPa8CArlzvo5a53Exmr73ypuEwJDPQURqp
-	sm7ooi5GHvC8wlS426F2m4l/Mg7bPgFaCIj1l/YdLSwhXo7X8ZOkMedXqrFCTMcOrmHhk/B8HP5
-	8/sNqNVVvM=
-X-Received: by 2002:a17:90b:4a81:b0:37d:f206:a2ac with SMTP id 98e67ed59e1d1-395c33ec558mr55513154a91.7.1787644737768;
-        Tue, 25 Aug 2026 00:58:57 -0700 (PDT)
-Received: from volcano9f8e-host.amd.com ([165.204.217.251])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3282525562dsm6041392eec.31.2026.08.25.00.58.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 00:58:57 -0700 (PDT)
-From: Hemanth Selam <hemanth.selam@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-ext4@vger.kernel.org,
-	tytso@mit.edu
-Subject: Re: [PATCH] ext4: skip extra isize expansion while unmounting
-Date: Tue, 25 Aug 2026 13:28:36 +0530
-Message-ID: <20260825075836.2693545-1-hemanth.selam@gmail.com>
-X-Mailer: git-send-email 2.43.7
-In-Reply-To: <20260824100141.86E351F000E9@smtp.kernel.org>
-References: <20260824094512.2436628-1-hemanth.selam@gmail.com> <20260824100141.86E351F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1787644834; c=relaxed/simple;
+	bh=Z4kAGEmMRQEF9ppuXsT0f5Wrj8330ReQKn/7VM3gG3s=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=bEazxyNV37SGFS9yueYNGHxwDFc6KQJzk/fAxQ0Ci27XUK3P90Q61HY1yzD+olk98HBTmexngYTXidNTjFpZoylCAaVaDXnXcsfRYcMo9iDl4sjrNbHGRUQk+PU96/7abHHQ5bK8WIcY+XUZqn4HDeWFkf7Dx/spbKUOQ4PlJyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 06a0dadaa05b11f19a56ed5b684f684d-20260825
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:e4eaa579-a734-431f-b042-5a2caf6aaa59,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:079686635116dc1dcda7a1f79f1d9a8b,BulkI
+	D:nil,BulkQuantity:0,SF:80|81|82|83|102|850|865|898,TC:nil,Content:0|15|50
+	,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,O
+	SA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 06a0dadaa05b11f19a56ed5b684f684d-20260825
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1565334611; Tue, 25 Aug 2026 16:00:23 +0800
+From: Liang Luo <luoliang@kylinos.cn>
+To: sashiko-bot@kernel.org
+Cc: luoliang@kylinos.cn,
+	sashiko-reviews@lists.linux.dev,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH] sched_ext: Fix missing @slice and @vtime descriptions in finish_dispatch() kernel-doc
+Date: Tue, 25 Aug 2026 16:00:20 +0800
+Message-Id: <20260825080020.2463550-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260825055849.ECF201F000E9@smtp.kernel.org>
+References: <20260825055849.ECF201F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -76,39 +52,26 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 24, 2026 at 10:01:41AM +0000, sashiko-bot@kernel.org wrote:
-> This isn't a bug introduced by this patch, but does checking s_root here
-> without synchronization leave a race open during unmount?
+On Tue, Aug 25, 2026 at 05:58:49AM +0000, sashiko-bot@kernel.org wrote:
+> Looking at the code, finish_dispatch() does not appear to have slice or
+> vtime parameters in its signature:
+> 
+> static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
+>                             struct task_struct *p,
+>                             unsigned long qseq_at_dispatch,
+>                             u64 dsq_id, u64 enq_flags)
 
-The s_root test is advisory, like the SB_ACTIVE test next to it, and the
-patch does not change that.  The race you describe is the
-check-then-dereference inside ext4_xattr_inode_create() itself, between
-the s_root == NULL test and the inode->i_sb->s_root->d_inode dereference
-eleven lines below it.  That predates this patch and is untouched by it.
+The review appears to be against a tree predating commit 13f1eae3b662
+("sched_ext: Synchronize slice and dsq_vtime writes"), which added the
+slice and vtime parameters to finish_dispatch(). In current mainline,
+the signature is:
 
-What the patch changes is how often that code is reached.  Without it,
-anything that dirties an inode after shrink_dcache_for_umount() has
-cleared s_root and before SB_ACTIVE is cleared walks into
-ext4_xattr_block_set() and hits the warning.  That is the path syzbot
-reproduces, and there the caller is the unmounting task itself - iput() of
-a lazytime inode - so no second thread is involved.  With the patch those
-callers get -EBUSY first, so the window your scenario needs gets smaller
-rather than larger.
+    static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
+                                struct task_struct *p,
+                                unsigned long qseq_at_dispatch, u64 dsq_id,
+                                u64 slice, u64 vtime, u64 enq_flags)
 
-Of the two workers: ext4_ea_inode_work() only iput()s EA inodes, which
-carry no in-body xattrs, so it never reaches
-ext4_xattr_inode_lookup_create().  ext4_end_io_rsv_work() does reach
-ext4_mark_inode_dirty() via ext4_convert_unwritten_extents() and is only
-flushed in ext4_put_super(), so it can run in that window - and with this
-patch it gets -EBUSY there too.
-
-> Or if s_root is cleared right before the warning check inside
-> ext4_xattr_inode_create(), wouldn't we still hit the original warning?
-
-Yes, and it returns -EINVAL exactly as it does today.  The patch removes
-the deterministic path syzbot found, not that check.  Flushing
-rsv_conversion_wq and s_ea_inode_work before shrink_dcache_for_umount()
-would close the rest; I can send that separately if it is wanted.
-
-Thanks,
-Hemanth
+scripts/kernel-doc -none kernel/sched/ext/ext.c reports the two
+"function parameter not described" warnings before this patch and
+produces no warnings after it, so no "Excess function parameter"
+warning is introduced.
