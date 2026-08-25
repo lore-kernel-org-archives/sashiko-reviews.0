@@ -1,46 +1,46 @@
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC083B52E6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 19:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0872F3B42F2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 19:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787686629; cv=none; b=stx78xju6340fq21E+3czOxKXjtlF+OSYZG3M+3Hp/BvEMc27qwI9Bfle0o1BNco86EmJvp0W2A1StL6xassAyAvtigqWAK7ZVwjE/Q64MYEnqAyHoBNcsswKbabqDYYpb2fwa63xiiwjfK0oZhWp5RTnNy/Jp8uyd+c/3ECq88=
+	t=1787686753; cv=none; b=icQspN1kQETi7pIK8j/tnl1qJ2t9ZBPWbzjjRETohom9Yex4d7fbjo+pmQaBj6/r/5X3Jl0yWchg2a7gDf87iDjPLGxVDRHVRL9H+NG2NljRBybLXs2IFr11zftkmwQCgx3yDhnuBzd5yxh31vcKsVH3Nx/pe6Opw7GrMg9OvhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787686629; c=relaxed/simple;
-	bh=7m7TNZhyYbcvU8NmAPii/n8q+O2MozWQnPW2147/foQ=;
+	s=arc-20240116; t=1787686753; c=relaxed/simple;
+	bh=wJlIrnPa1ELGKttibf10LQqW1x5icmf3RZbUmWgO0eE=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=o/ngEUP+3GAkJYC1+Xnk3RbsiIdUvjJZWyrt+nq0wHyfxmzuU5gSykc5BNuIn3xYENA/zFB8lufrphW1ZIoLPyd4lQa6pPT1EUlmBbxpZaqq7JLhcgpZdScukQmF1SzEHeCi2h0k8TCf9aZ8UHDT+F71pHjghiV4xdtbDG9sGdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=luKPtGn3; arc=none smtp.client-ip=185.67.36.66
+	 Content-Type:MIME-Version; b=U51W7TYts5Asi/Gj3D3nxRbwwxZFcqt056QQJCrFeJj1uk7t4sNp1aOR6XLd3VDjaLZLIUPkzxAvSVdKIz1pVRb/kwtLHucj8r95j647mZOqGllMS+TMHoNj6399FLR297Z4grEpNDFftTwXO6IlxKyHiH/UFV5VDC5MrQ2XrUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=ZjV769av; arc=none smtp.client-ip=185.67.36.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="luKPtGn3"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="ZjV769av"
 Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 68D38240105
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 21:36:59 +0200 (CEST)
+	by mout01.posteo.de (Postfix) with ESMTPS id E0BFF240027
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 21:39:09 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1787686619;
-	bh=p4qU8UEuk8hAWA4J8Z8HVyWYj+RRgr9W0B2GQX/5MrY=;
+	s=1984.8680eb; t=1787686749;
+	bh=u8kvdAmzPEum42wdXGKSH8TfZE8hg9/yVfvI2oRJMLA=;
 	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
 	 MIME-Version:OpenPGP:From;
-	b=luKPtGn3Uwr7q+C6llJ3Sz2tmSQk4qA3Fe5GNLGk1bL9P40+aWajI032aC8xvAiG2
-	 WC/aaPrZIkhvz2RqasvO5hDVhCL72Xb0ngL2BGAKURYLFoC5qeoXexYtulz4IGdGLA
-	 llsr/boLtvaDIF+VbO1y09WLo5qKBnue8i6MsyjU5YL94VDx26yYURFzR4uzBH/17j
-	 VfbihwCUc/z1hVwXg+5lg/SuGlQa+Yhzwcskp0Iz+QX5UtCh+q3PnhTMoQxR0HaC65
-	 Y15OQBUPR5N6Cvk4kt9Suum68tJa1YOpmUDomGCRFNpyaA2Qmwt0zwEsbAmRR76gjs
-	 0qOeh8hz5jK0A==
+	b=ZjV769avtv2aKu/6SniJd1+SrDT332Xx5cS87vedsN5uH0w7HJ6uQskpcNH0a9/vD
+	 tkm14i1KYL58gbEOIsKOYXoZatkgH8ZD4oc/bynbbTD7Dstf/y3sMPdz6bS9R+uJwm
+	 Yf7zbRqk07oVT892vRUZysMEesu1ri8xDXk9ucgtFryUNFM3whQZsusbVrpXNwLSSf
+	 jMqf8aqvhWEi2lniyz0QSNMWc0puoFxcE46h56vg8FubFiZgAhta4fcLxQci9PZPzW
+	 Nrpfw5iE5n48bEHCf7ao9saKY6kkZRxvCgkWsU7z3IUcrTvzvJMH6R50g23mpZPpRN
+	 Y7rmDEhQej2EA==
 Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hTyhp2kcNz9rxB;
-	Tue, 25 Aug 2026 21:36:58 +0200 (CEST)
-Message-ID: <3827a4e6be868e8726c140281a140a85e706aacc.camel@posteo.de>
+	by submission (posteo.de) with ESMTPSA id 4hTylJ6cG7z9rxL;
+	Tue, 25 Aug 2026 21:39:08 +0200 (CEST)
+Message-ID: <b40173948eb2150fcac0983b13781a3f7690488b.camel@posteo.de>
 Subject: Re: [PATCH v6 5/6] rtc: s35390a: Add pinctrl
 From: Markus Probst <markus.probst@posteo.de>
 To: Linus Walleij <linusw@kernel.org>, sashiko-reviews@lists.linux.dev
 Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
 	devicetree@vger.kernel.org, linux-rtc@vger.kernel.org, conor+dt@kernel.org,
  	robh@kernel.org
-Date: Tue, 25 Aug 2026 19:36:59 +0000
+Date: Tue, 25 Aug 2026 19:39:09 +0000
 In-Reply-To: <CAD++jLnpzMs5h-k49HQ_asppECRMm1wGQK8X+vTmiC+S70fZgw@mail.gmail.com>
 References: <20260824-rtc_s35390a_int1-v6-0-df96569e3412@posteo.de>
 	 <20260824-rtc_s35390a_int1-v6-5-df96569e3412@posteo.de>
@@ -91,7 +91,7 @@ Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  dQNGrZ91M9nlIBKw8Y7c7xZ4098qX2b8JX/CxD+gC1r4C8vuA3GkhFLx+KlkON7LyiJPkrePp6Qky
  jfGillcaQOqFZ3WwVqyzG1BUfTow==
 Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-HigqI20tf/dH56WXWSZ/"
+	protocol="application/pgp-signature"; boundary="=-b4D/z1X2q9gJ4181j8By"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -101,7 +101,7 @@ MIME-Version: 1.0
 OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
 
---=-HigqI20tf/dH56WXWSZ/
+--=-b4D/z1X2q9gJ4181j8By
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -118,6 +118,13 @@ dropped
 > > on platforms without PINCTRL enabled?
 >=20
 > Maybe just select PINCTRL then, it's a valid point.
+There are no stubs in the include headers for this case, so then it
+would be a linking error on build.
+
+Thanks
+- Markus Probst
+
+
 >=20
 > > > +     err =3D pinctrl_enable(pctl);
 > > > +     if (err)
@@ -138,48 +145,30 @@ essly
 > > after pinctrl_enable() has made the pinctrl device available?
 >=20
 > That's a valid concern.
-I don't think so.
-
-`s35390a_pinctrl_set_mux` itself will take a lock for the operation.
-
-`pinfunction[i]` is a 32-bit integer, so there should be no load
-tearing.
-
-If we take a lock here, it shouldn't change anything. In a normal
-condition this shouldn't happen anyway, as `pinctrl_enable` should
-block until the default state is selected. If another driver is
-concurrently selecting a pinctrl state of this device while we probe
-(which is the only time pinfunction should be modified here
-concurrently), it is still a race condition whether the fallback
-applies or not.
-
-Thanks
-- Markus Probst
-
 >=20
 > Yours,
 > Linus Walleij
 
---=-HigqI20tf/dH56WXWSZ/
+--=-b4D/z1X2q9gJ4181j8By
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmqN7tQbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSQg4P/izzncyNk2s4i2KbAmF8
-DyrPryK/Za2VM2tJwnPq1yVS5A8DWfnCoA2+bRjBkNY2XlT/R5Fn+76qvjJKipfo
-G/93ift9ra3MaShNhvGypUg7d2x2gWe8tb+PNBazlPdevejZBAxzf9X0rlI3IFCX
-Urvq/9bPEY9OrFIdl9RViWESlncGxofN99XztvGNBIKr7EXlrkkqGwq46lfk2T6l
-aD95kqboD+EAhTXQr3xEele5y2ctimcY9J09uS9AE7pSv9fAg63Xpf75mgeztp/g
-dosYx4/8bwZhrULSc44585hUqcIFQdAA1eMRPT45bbBKEkoa4cudeA9NMa9PIpUE
-P9YcXF0JPFQk6xgEeq3wiFTl6XPd9mBTWaw15YlW5Eltce4478J5q0qUqMuxXxgI
-aZAq/MtCyMWRjBF9ZFoKRMKHXE39txWG3qCSqGQ3Xz/01xJZOlG8fWkDXJsV7sgy
-sv07fLSDgp2AJBgOka0GvnutpzjjujTnjbdYXbAk7CbJuf1cPg+XosLsoVw+WA8G
-/BcGbBXQmxEONjLNYmHs/yFL8gRlRTbYKt7bWsEb/uL6vpYwIRX4Gnq6D8sy+vmO
-ObzBOH0k6s/gIRzRiqvrCMRFHFwiD3nKL+8JJQ86Zn3FQQOZrOsS2aafG/yeatHp
-nVCOIgxNYZpsHVgb4zlqjEcq
-=877B
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmqN71wbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSotgP/0t6GCyBRcvR4JG1E8nA
+zLnCL9t73syLikqCQJ0Dnbevg9ZZmxDK8lF7jDtccRgcTtAE1oyZJtClVQdwCb0y
+AMjBsZ+QncibPk3h8Yzt7XU4BTjo/2bqMGBVACZ7Ega/5v6cE+HfmU2rK9zHsTX+
+/5jGBGHmtplraVO4Dr7G3hz4d49bTlHN7mTEaRhR3qb4656v773J+fmOCLLAGW5F
+YbuLfwlWDx77bsTrFaRczU76PWHMcKI8hqztY0P/2twKUq+MIp9SblwyOfrtg9sU
+sNlDjP3S2S++78QJ0z7CrN/7kb9NuK5hnQFF/66gIj+AgzsWqy09YUKPKruzn09F
+q11dIvGfBTvZur/+zag6lVGcMl0xpO6N2h0DMmXLY2ShLrmr8MGnjoUa8xp1qugX
+Yupu4b739T4OQq1PFB+S3jFwKQ4tQkf++lYuteDtz8IzNEDe6/9xRb7uKew1VsMb
+aFs1twZKV0LRyjZvFpzWiGLzdzVHitO2aBg3e4kBKZLENS+37WWBCmKGxRVvyqIp
+PJeuGrtODe4CadALNwQJDEU8QAbeuMACmfWFRmwsaBlohNwWzHGYmrqnsfI3qKzk
+WWOFNgsEaDVvaLafdklcKa7mbnIcIknYxhKYynY44RGB22Aexcw9ZKjmvtMtwz+X
+vMw50eiQ54ajl+qW6GP0hm2B
+=uZf/
 -----END PGP SIGNATURE-----
 
---=-HigqI20tf/dH56WXWSZ/--
+--=-b4D/z1X2q9gJ4181j8By--
