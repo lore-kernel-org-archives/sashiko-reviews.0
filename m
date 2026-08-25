@@ -1,228 +1,109 @@
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD943FD14F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 13:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5EC401A18;
+	Tue, 25 Aug 2026 14:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664393; cv=none; b=L2i0n23BZKrIDVtUdaJdRDT2ZYo8uFE8GEBXnFiCaeD5Hexpb1gdrWU5kBjYFoggFIJzX7HD4N52gLtb07aHBux4lJsZYdOHaylBL0k81aChw3gWfSXJGltgCv2bDif3eYcZDmOULHi9NtvWnrTFBmA98u7iwYYRU6CtuSQ+5tE=
+	t=1787666770; cv=none; b=Azq9nZCoConDjd6gnzid3Qx8I7REzvh7/mUImZvlCnc/E33ENQICcBdw+VNhZv7+F6yIVBFJZhnr5hroOEFBfksSfJxRPaG78hK+ImnwAI2aS5zm83T6KmJzcEVy88Ho3ZtekF+2v7/gdoWB7tQJToYzkRE1YgZXf5pbNc/8zWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664393; c=relaxed/simple;
-	bh=+wabpMdqtsliqdIXgzzV3mZNMO0dOr8R4C5EtXhaqjc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LiAa0RIwz4BTXfZ+JhpxtANSCJFUenqw9qnRXVlBeQBtbbxy95MQn+FQRc0B4tOSLyThghKv5WZeaJW+CVV9uGDo1OpBqnE47V+JsAezRXL6pKMadGU6OfJ88+1B3MgZZ/oDCwoLSDWp1n1v0fEIrt0n2PQ9uNc0i1phnW2DkMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=SBMqDdHT; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1787666770; c=relaxed/simple;
+	bh=bET5m+wsbVA3KT9DMiJYc1Evez01O5UKs18POIMxK8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lkx365194ULuD5tXV5SPRSN6dfRgRMSDP6DInCpjTQ+h2LYvz307MCRA9wo9KFDk3ix+JuCqg+ebfB/ClkfNlNjOyzfav7WvbiOv7JjnuKHtu3wPmivKg0I8B8QR5YDIu4JiHwWenM0U3YMTID5+5Q9v84r9twa7er/71OIO/qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=KjDYTbMa; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="SBMqDdHT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1787664369; x=1787923569;
-	bh=Xcobj1WbtNCpSLg5LjYRTxyLeZGzjny7gDMENHUb54M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=SBMqDdHTIXWTLJ+9MfdFqqubFT5XKN37KOebg4JrRGoN+uuQt5xEi2HaRKAtCgpnh
-	 l+cLNkls5rrB65suOzYMDvaif0JDcix1atUKFR6f5RpCE+s9v1Oam5Br62KkkBdwgt
-	 hoPL3UnkB7mKLZEVZxeKa4fZJbaPPdrdQgvhFk/5J5v1uTInSWFbKT6Z3LBY4wUKBi
-	 ZAB3buHM/ITyElLH8pezewOLsTi2wV02lTJyVl+oAHFMlJdmdBvPu0zXLiGvLuMOMW
-	 T6FMfW+v18J+Da8k8Oe89fpyJzqQpOqonac64/HlFFZs9EmcC6sIB2fsHQVHtU8Laq
-	 M7e561pjbbY6Q==
-X-Pm-Submission-Id: 4hTpSv2jsFz2ScdY
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <robh@kernel.org>,
-  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v6 5/9] iio: accel: mma8452: Allow open drain interrupt
- pin configuration
-In-Reply-To: <20260825084232.C01211F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:42:32
-	+0000")
-References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
-	<20260825-mma8452-open-drain-v6-5-9b252804ee80@geanix.com>
-	<91GhVUP-80gkcISIz0dE2ynhBCleQAdud8LjQ0jw35yVrdKs2GYLWLJmrR5D1F66rapeWHP1SLbjJSWs5dv5sA==@protonmail.internalid>
-	<20260825084232.C01211F000E9@smtp.kernel.org>
-Date: Tue, 25 Aug 2026 15:26:06 +0200
-Message-ID: <8733w2nxg1.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="KjDYTbMa"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=O9pxOFjmhzfspSsmHJDLgQWciEpCS1zx82fh/O4yVZo=; b=KjDYTbMaVOpf+QfiYgIGtokzdT
+	rErPkdsJNgvxcNhC8a3gxASWI2KYENcRf9YSQHGIJCNsV2IXjF2SxbxTouX2E9df4to673NLzD5xD
+	vflGPKWHNmdd/6am3ptIRm3y15g7xooOQetyfrI71KlBsbZ1/6Pevi4gpLI6h46pZ7k8f/uuAJG1C
+	ueRzS2lSJGlI5MRLxNh/cQoKWPmYMPq7e89cd6NZ86IIh9qUlWyXmnWDM08vX4x8lUwMUiO/aF7g/
+	O6kZFwwXeojLJdCXxXS8XR+1BNUr8kvWPo55HBuPsHoOszTiLWPoI/kvxSVnXC3Kd1XBghueoC8jM
+	gjZnYGJA==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1wyrmw-00EUTR-0p;
+	Tue, 25 Aug 2026 14:06:06 +0000
+Date: Tue, 25 Aug 2026 07:06:02 -0700
+From: Breno Leitao <leitao@debian.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH] bpf: arena: reschedule while freeing the arena pages
+Message-ID: <ao2gP7Y6UJ2o2tUc@gmail.com>
+References: <20260824-b4-bpf-arena-free-resched-v1-1-5c447477a64b@debian.org>
+ <20260824170831.33E051F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260824170831.33E051F000E9@smtp.kernel.org>
+X-Debian-User: leitao
 
-<sashiko-bot@kernel.org> writes:
-
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Critical device register configurations are lost after a runtime=
- suspend/resume cycle because `mma8452_runtime_resume` fails to restore the=
-m.
-> - [High] Sysfs read/write callbacks and write_raw paths access the device=
- hardware over I2C without waking it from runtime suspend.
-> - [High] The `mma8452_remove()` function accesses unpowered I2C registers=
- and causes unbalanced regulator disables if the device is runtime suspende=
-d.
-> - [High] `mma8452_runtime_resume` modifies device active state and config=
-uration registers without holding `data->lock`, causing a TOCTOU race with =
-`mma8452_change_config`.
-> - [High] Read-modify-write operations on I2C registers in sysfs operation=
-s are performed without holding `data->lock`.
-> --
->
-> --- Patch [5]: [PATCH v6 5/9] iio: accel: mma8452: Allow open drain inter=
-rupt pin configuration ---
-> commit 0eb3a6b1fa62842d47690cc795da7896eb5b7153
-> Author: Esben Haabendal <esben@geanix.com>
-> Subject: iio: accel: mma8452: Allow open drain interrupt pin configuration
->
-> This commit introduces the ability to configure the interrupt pin of mma8=
-452
-> chips in open-drain mode. It reads the "drive-open-drain" property during
-> probe and updates the hardware configuration accordingly.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index 8eb97e6793d6f..d1e8eb2a4ad3a 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
-> [ ... ]
->> @@ -1829,6 +1853,10 @@ static int mma8452_runtime_resume(struct device *=
-dev)
->>
->>  	WRITE_ONCE(data->suspended, false);
->>
->> +	ret =3D mma8452_set_interrupt_pin_mode(data);
->> +	if (ret)
->> +		goto runtime_resume_failed;
->> +
->>  	ret =3D mma8452_active(data);
->>  	if (ret < 0)
->>  		goto runtime_resume_failed;
->
+On Mon, Aug 24, 2026 at 05:08:30PM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+> > index 7b6847200b431..c5f6bebbb15c3 100644
+> > --- a/kernel/bpf/arena.c
+> > +++ b/kernel/bpf/arena.c
+> > @@ -364,6 +364,7 @@ static int existing_page_cb(pte_t *ptep, unsigned long addr, void *data)
+> >  	 * the freed page. So it all relies on 1.
+> >  	 */
+> >  	__free_page(page);
+> > +	cond_resched();
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does mma8452_runtime_resume() fail to
-> restore critical configurations?
->
-> When the device autosuspends, mma8452_runtime_suspend() disables the VDD
-> regulator, which cuts power to the chip and loses volatile register state.
-> Upon resume, only CTRL_REG1 and CTRL_REG3 are restored.
->
-> Are essential configurations set during probe (like DATA_CFG, TRANSIENT_T=
-HS,
-> CTRL_REG4 for interrupt enables, and CTRL_REG5) lost after the first
-> autosuspend?
-
-Yes, I think they are lost. Looks like suspend/resume is not fully
-implemented in this driver.
-
-> [Severity: High]
-> This is a pre-existing issue, but does mma8452_runtime_resume() introduce=
- a
-> race condition by not holding data->lock?
->
-> The device state is modified to ACTIVE outside of the mutex lock here. If=
- a
-> concurrent sysfs write checks mma8452_is_active() and sees STANDBY, could
-> this activation occur just before the I2C write executes?
->
-> Would this cause the hardware to silently ignore the write since the devi=
-ce
-> was unexpectedly transitioned to ACTIVE mode?
-
-Yes. That sounds like something that could happen. But even more, all
-the sysfs attributes does not even try to resume the device if it is
-suspended. Which is also your next comment/issue.
-
-So as mentioned above, suspend/resume implementation in this driver
-seems very much incomplete.
-
-> [Severity: High]
-> This is a pre-existing issue, but do the sysfs read/write callbacks and
-> write_raw paths access the device hardware over I2C without waking it from
-> runtime suspend?
->
-> drivers/iio/accel/mma8452.c:mma8452_write_raw() {
->     ...
-> 	if (!iio_device_claim_direct(indio_dev))
-> 		return -EBUSY;
->
-> 	ret =3D __mma8452_write_raw(indio_dev, chan, val, val2, mask);
->     ...
+> Does adding cond_resched() here violate the lazy MMU mode contract?
+> 
+> The callback existing_page_cb() is a pte_fn_t called by apply_to_pte_range(),
+> which establishes an atomic context by wrapping the callback loop in
+> lazy_mmu_mode_enable():
+> 
+> mm/memory.c:apply_to_pte_range() {
+> ...
+> 	lazy_mmu_mode_enable();
+> 	if (fn) {
+> 		do {
+> 			if (create || !pte_none(ptep_get(pte))) {
+> 				err = fn(pte, addr, data);
+> ...
 > }
->
-> Functions like mma8452_write_raw() and mma8452_show_hp_cutoff_avail() do
-> direct I2C accesses without wrapping the operation in
-> pm_runtime_resume_and_get() and pm_runtime_put().
->
-> If the device is autosuspended, will the unpowered chip fail to ACK the
-> transfers and return -EREMOTEIO?
+> 
+> On architectures like PowerPC64 with hash MMUs, lazy_mmu_mode_enable()
+> explicitly disables preemption. Since preemption is disabled, cond_resched()
+> evaluates to a no-op, which means it won't actually yield the CPU and will
+> fail to resolve the original softlockup.
+> 
+> Additionally, if CONFIG_DEBUG_ATOMIC_SLEEP is enabled, this could trigger a
+> "sleeping function called from invalid context" bug during teardown.
 
-Probably will.
+That is a good point, I think a better approach would be to drop the
+cond_resched() from the callback -- existing_page_cb() goes back to its
+original form.
 
-> [Severity: High]
-> This is a pre-existing issue, but does mma8452_remove() access unpowered =
-I2C
-> registers and cause unbalanced regulator disables?
->
-> drivers/iio/accel/mma8452.c:mma8452_remove() {
->     ...
-> 	mma8452_standby(iio_priv(indio_dev));
->
-> 	regulator_disable(data->vddio_reg);
-> 	regulator_disable(data->vdd_reg);
->     ...
-> }
->
-> If the device is runtime suspended, the vdd and vddio regulators are alre=
-ady
-> disabled. Since pm_runtime_disable() does not wake the device,
-> mma8452_remove() unconditionally calls mma8452_standby() which will time =
-out
-> on an unpowered bus.
->
-> Will the subsequent unconditional regulator_disable() calls drive the usa=
-ge
-> counts below zero?
+Then we walks the range in chunks from arena_map_free() instead, so the
+resched happens outside the lazy MMU section (FREE_CHUNK_SZ is SZ_64M):
 
-Yes and yes.
+      addr = bpf_arena_get_kern_vm_start(arena);
+      end = addr + SZ_4G + GUARD_SZ / 2;
+      while (addr < end) {
+              u64 size = min_t(u64, end - addr, FREE_CHUNK_SZ);
 
-> [Severity: High]
-> This is a pre-existing issue, but are read-modify-write operations on I2C
-> registers in sysfs operations performed without holding data->lock?
+              apply_to_existing_page_range(&init_mm, addr, size,
+                                           existing_page_cb, arena);
+              cond_resched();
+              addr += size;
+      }
 
-Yes. But I don't think the data->lock is supposed to be used for this
-purpose. It looks like the purpose is to protect the ACTIVE/STANDBY
-state handling in mma8452_change_config().
-
->
-> drivers/iio/accel/mma8452.c:mma8452_write_event_config() {
->     ...
-> 	case IIO_EV_DIR_RISING:
-> 		val =3D i2c_smbus_read_byte_data(data->client, ev_regs->ev_cfg);
-> 		if (val < 0)
-> 			return val;
->     ...
-> }
->
-> In functions like mma8452_write_event_config(), an I2C read of the
-> configuration register happens completely outside data->lock.
->
-> If two threads execute this concurrently, could they both read the old
-> state, modify different bits, and serialize on mma8452_change_config(),
-> causing the second thread to unconditionally overwrite the first thread's
-> modifications?
-
-Looks like a bug. I will try to write up a fix for this and all the
-other similar race conditions that this driver seems to have quite a few
-of.
-
-/Esben
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825-mma8452-=
-open-drain-v6-0-9b252804ee80@geanix.com?part=3D5
+Would this be a better approach?
+--breno
