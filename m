@@ -1,115 +1,401 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pg1-f227.google.com (mail-pg1-f227.google.com [209.85.215.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CBE3FF1B4
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796F3382F2F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659051; cv=none; b=Q50VEpd149OoeVof9SlDQvWsMKlAjTuD7MHkYorWIwj/s5E600e4iDTadkCqciplAL2wDfqIgQhkwPNS5qsogmYmLXdza/MP7KQoJONx5Lt8niQTZlWgZlssxdazqgaDcgt9LRpGT4/eMwmYA/os6me9f7lDqlBZt41Jw0T5i9k=
+	t=1787659226; cv=none; b=k7slzUC/4StdhfEHoiKdZoANis9bKu42rmk1lfGoFnar4OuS1QUSM2t+yxoQ21Y38jsfORasVAV9kTfp1vAHDUqFIAJvbp4rOyyOr/+ItvpFXSZwcPozrEsIl9gUzyDqKJEEbQHpM/3pJiE2ZlV9U1F3uxTnc5PCudwG1dNxStM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659051; c=relaxed/simple;
-	bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UBF+VhLu9brO7g3vhYEnWor43r6mNJ+//DNn6dx8YyHPMO24YqK4pgqnGBJKWCMz/4UvB/T9TvzizNt15J4R5vTu8ywj1S3sEqX71uUcaYUCWiLMv3OWuXA1fMdt1sbi/pHwb+exIT35mttaI5kuRfew8wNRhxLkGSRB9ViS+gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEg2wCvK; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787659226; c=relaxed/simple;
+	bh=6nDwEzYL6LGS6iVcoc2ndZK996y2y6ILQBMNfsgAAtg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WWxf4sKkwzLYrkxecYkhR2xJpbxGm7jM5b20XaL2hExDILteVX3BtZe1qQ3RDR41dI8BBpoxWwhWOQcKHMDLFb1EdHJUGY+UfBOr7W8DFvfE6x+SUrlQywWeElR3emsWO+OfQ8iVrJsMzrMk94GtkWAyVXLHojLdxmeYGCHD1T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=czQZGvnI; arc=none smtp.client-ip=209.85.215.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEg2wCvK"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2d032846c95so55591915ad.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 04:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787659049; x=1788263849; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
-        b=BEg2wCvK1PuIEOmzLLWFSFEX5i74twdY+ZUnJRZdZmSeTN3gfOdB4sA3mX5/eDnqi+
-         /NmIjD2gJzd/Izxfe/E0u/BUI7vjKsyNeFpLJokibBsly6w1DE/3pSIe/jOvv21ChTG5
-         Ejfc2gWMLctMoJbqHxEUqGwap/Fb05pfH0dLH2CbVCEc+jC92u1ZSloMcPsm+VmnXtcj
-         1KJy93RlOfAFOFpCs5iSCWsknhaKU8SJ9Df9Ht5cm6v+0gQ8woEkAaMbyu6JzR2memHX
-         h3DWOHIp3AeMb+VuT7CPge9uEIQgKycg7da/0raozP1BopMSJ+cmharl4oCCOOoDorfW
-         28xA==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="czQZGvnI"
+Received: by mail-pg1-f227.google.com with SMTP id 41be03b00d2f7-cbedbaba5fdso2791586a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:00:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659049; x=1788263849;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=1e100.net; s=20251104; t=1787659224; x=1788264024;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RNJhj1cajIas0/cpsUFrnsXM6Xpa0hpqFOQvF+YzwVk=;
+        b=IrbYzXh/XxATXj1BOob3pjpDffToDTs7RVEQ15ydHJZISxzZ0vB9QOWS+XfUO6YTPt
+         XXy5mvVyW6cjWC+iNnrYkAiSw0Mo1Lf2fnKUbl2ZILquZqssS/re51YK3zCxoRGYpOki
+         1mot3D6A9794zDvBPwz+sJA8RvBVpRjD5MTf8v+f1Irz6PzaHIbY0fe3kTlQr3R+wAKG
+         U8svClgaMy/GASZkoOrC4+r133t9y8Y0fCmSzyjE4z48AWq2YxslcSBjPIAI37RVUUjQ
+         cg9N8nNjr9AK5HcZp/KMXdNcw0+qniQTbq55SIrg9HUDCE/+mVeg8DTqEzYIBI+OQqWs
+         d0Qw==
+X-Gm-Message-State: AFuF++nr+jLaTcw+jYtgSSPc3q3yNXxM3cFBM/Vws3ASZcgRcpDVb1l0
+	0FXNAx4BZe6UciDP1plpuRdqUTUvrEO4cayhcKnV5wF5e+eZWlue1yh/2OQCR7io3+ysXptnbNs
+	8JrvuOQJEG+LqlYxBLb7q7th6uW800wp+DJnLspIFNuihHpvmMDCK4hwO/nxIHmqNb/xBkicAqI
+	zhpoKEItchFObsNt0TzPJk6llyqb7EdVK9SN8VJ2hPiQ3idDqQF+bq30xdVO6iq7Us2NpY5lsUp
+	o+IQIxOyuyffTE2uJRwBjOBEAQLQhA=
+X-Gm-Gg: AR+sD13WMPq/ENGTIGlMcm19V6hnXMGlfk2GIr7RIZommEaG1YXpNz22j8/ackhZjCy
+	eitWJJRqexNjiYFPYhZjkq+EpNd2BNfS32gQrv0o+ReCbpNUUzeXdm2v6pmz9OySge5Dekbr5Hr
+	rM4i5WnARyvz82X8dd/xUtxdDvA3KXkStwTeu4ym7eeMz0uantGSuZk96Ekl3ktnNIW4RixjDPw
+	gyX/oRfYvhz1f0lEetP+OfPIeTpBTvbcdgVm2rl7iflS18PfTAkld8kSeMoDnHxPbKmaWoBhWcK
+	bMfiV9SyCnzv4IItVQGZ6sDZ3pr/aMyk+R72FWkHyhqOiH26L1jvVmAYs7OXmupkLSKcDhQsgma
+	LCr28iI/Bu32NvRZIVXMPil1KK5CUDfa4MwLEvg6JF1jqYOslSqv7bjwb6hsZtdD+xzY8jTcWKD
+	srg/aPz4kfR7UR1q179XO8WrCKtGeeoYOosEVZo8i1OgmMMQ==
+X-Received: by 2002:a17:90b:3bc6:b0:393:194d:5366 with SMTP id 98e67ed59e1d1-395c354da4fmr63671001a91.10.1787659221345;
+        Tue, 25 Aug 2026 05:00:21 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39645a47fb2sm1313626a91.1.2026.08.25.05.00.20
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Aug 2026 05:00:21 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6a5c483cdc7so970435a12.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:00:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1787659219; x=1788264019; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
-        b=fBeRLXEBk4G17ppJujTJ/5LeeFXI6ZjigELHGSBlsPpsqsPGc6m0T4FqUAqVDZ3OMH
-         BeE8NGQC136Z/+Zpvf1KPpCHaIXkf7fWcKKPWYQ6+VTtpnBqgDN1aUmQztjCI0zm5tIY
-         MaKWrrMB3MpwJl8UvFcOrTA693+EYHbhHHRv5S97R3ETuMU1ev/Zq6xZ0KINtxEgZvo5
-         kemHXnWlMSytqsqMvTHs6OQhgZ8U8jTpPcGG/XXuhvUHPoGqWIvYK9d6fBkqW7WU7XJJ
-         +dZESW1LaHY++zQsJdvc2SiYqp3I1nZBv1bQb+ukuFvWmuP6i2M4a/886oms+tEjiM0t
-         j8kQ==
-X-Gm-Message-State: AFuF++nk5rF4DXBl19z9fmLjWZ9JWTX9SxcKdNwGqCBMAyBdWxvQxPWc
-	83ML1tRDcL+UBp5wFsEX9nZHXaM9UJS4YR8Wdpug/PhNDqVe34p9XKwXRF9UgQ==
-X-Gm-Gg: AR+sD12jhB0RDBaVMWZS5LNDoh38QsroR4pZEz0hCI9FYWQGoJgTZ/nU9F/SP0fZNj7
-	jVOjhDLTficMkkm872rHbxaih9Zj5jgP4yfckxZJ9OHvffr2kCD7nBwhebvQIUzxHSLVL25PElN
-	ydmJwuU3ddD/HRKk2bSJQN/kpnlXA3M3Z41LUNh/YZ+FOvlkqH1Rx7m45dlYIpdYXunhB1kAK4w
-	G7KO4vPH+GBemcQDcZUaV252akL1ssdRN20oBb+U0PZq/QtuOfMpfK10dJz+nnpEAe2uD3oVRIE
-	wGGmwrFUmeDuhMTv3QWPWgcD82hj8xoMSyY2zHGdy9R7e/leHzXIsrFUfAVRUuV7zboNGBjQYuw
-	TfaYgACR6n2Ar+n44od5Q4AuyrB6f4bbnsrBBVPgHIlJNutJoyjP+eL45Nr1hgHPjvo2YMSFXUI
-	QSKFhBz8imveePsQOGKdCWHc/aEdpVjiEISqT5tyXBuPtt+lP4flU5phowmkbVRBT4PttKpyFzD
-	/QDPt7b4THNWFntXgk2rca2
-X-Received: by 2002:a17:90b:520c:b0:37f:ed7e:7e42 with SMTP id 98e67ed59e1d1-395c3867ac5mr65374029a91.14.1787659049210;
-        Tue, 25 Aug 2026 04:57:29 -0700 (PDT)
-Received: from localhost.localdomain ([103.120.31.178])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327f91d37cesm41861522eec.15.2026.08.25.04.57.25
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 25 Aug 2026 04:57:28 -0700 (PDT)
-From: Khawar Ahemad <ahemadkhawar123@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	eddyz87@gmail.com,
-	memxor@gmail.com
-Subject: Re: [PATCH bpf-next] bpf: Fix stream capacity leak and spurious -ENOSPC in bpf_stream_stage_commit
-Date: Tue, 25 Aug 2026 17:27:21 +0530
-Message-ID: <20260825115722.85375-1-ahemadkhawar123@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260825113948.85020-1-ahemadkhawar123@gmail.com>
-References: <20260825113948.85020-1-ahemadkhawar123@gmail.com>
+        bh=RNJhj1cajIas0/cpsUFrnsXM6Xpa0hpqFOQvF+YzwVk=;
+        b=czQZGvnI4k2K16mMSQLWVZ7KILq7zGUIUaLlFGPW9weTjzTWYeIUIjl3CeK63kdA8r
+         DoG28gkzq3V4Xg278Q0B2BgJFGDSB46Obx81ITFL7gW6QGjZQeNE/1WQoZPC+pDjkC9R
+         qMSsvd34iApgWXkjO9HJHY/nWZWUhT1wKv6K4=
+X-Received: by 2002:a05:6402:52d5:b0:6a0:a644:355e with SMTP id 4fb4d7f45d1cf-6a42f1848fdmr38376150a12.2.1787659219331;
+        Tue, 25 Aug 2026 05:00:19 -0700 (PDT)
+X-Received: by 2002:a05:6402:52d5:b0:6a0:a644:355e with SMTP id
+ 4fb4d7f45d1cf-6a42f1848fdmr38376038a12.2.1787659218630; Tue, 25 Aug 2026
+ 05:00:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
+ <20260818231426.58105-2-chandrakanth.patil@broadcom.com> <20260818181445.E16AC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260818181445.E16AC1F000E9@smtp.kernel.org>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Date: Tue, 25 Aug 2026 17:30:06 +0530
+X-Gm-Features: AcwNN1VAPTA4rWxBjUPsQoU9UTFgOrTogCkW2LJainwVlu7AupCZS8A-ecz2k54
+Message-ID: <CABvwm=NVoHZ6md78xN7xkx9yEb6RXKPs0kteDVk7Rh-66oyKqg@mail.gmail.com>
+Subject: Re: [PATCH 01/17] mpi3mr: Fix buffer overflow in BSG passthrough
+ request copy
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000c56d860659ddd8d7"
 
-Hi Sashiko reviewer,
+--000000000000c56d860659ddd8d7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the thoughtful analysis. Addressing both points:
+On Tue, Aug 18, 2026 at 11:44=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Pointer arithmetic wrap-around on 32-bit architectures allow=
+s bypassing bounds checks, leading to arbitrary kernel memory read/write vi=
+a DMA.
+> - [High] DMA coherent memory allocated for NVMe PRPs is leaked on BSG com=
+mand timeout or submission failure.
+> - [High] Target device `block_io` atomic counter is leaked if BSG command=
+ submission fails.
+> - [High] Lockless TOCTOU check of `MPI3MR_CMD_COMPLETE` causes a Use-Afte=
+r-Free of `sense_buff_k` and data races on `reply` buffers.
+> - [High] Missing validation of the BSG request length (`job->request_len`=
+) allows a user to send an undersized request buffer, leading to out-of-bou=
+nds memory reads and kernel panics.
+> --
+>
+> --- Patch [1]: [PATCH 01/17] mpi3mr: Fix buffer overflow in BSG passthrou=
+gh request copy ---
+> commit ed6513158d24e842e223917348ef598d4d161609
+> Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+> Subject: mpi3mr: Fix buffer overflow in BSG passthrough request copy
+>
+> This commit fixes a buffer overflow in the BSG passthrough request copy.
+> The check for an incoming BSG request size used a narrower variable than
+> its source field, allowing large values to wrap and pass the check.
+> The variable is widened to ensure the full size is validated properly.
+>
+> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi=
+3mr_app.c
+> > index 1353a8ff9c85d..8e5d24793efd0 100644
+> > --- a/drivers/scsi/mpi3mr/mpi3mr_app.c
+> > +++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+> > @@ -2384,7 +2384,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bs=
+g_job *job)
+> >       long rval =3D -EINVAL;
+> >       struct mpi3mr_ioc *mrioc =3D NULL;
+> >       u8 *mpi_req =3D NULL, *sense_buff_k =3D NULL;
+> > -     u8 mpi_msg_size =3D 0;
+> > +     u32 mpi_msg_size =3D 0;
+> >       struct mpi3mr_bsg_packet *bsg_req =3D NULL;
+> >       struct mpi3mr_bsg_mptcmd *karg;
+> >       struct mpi3mr_buf_entry *buf_entries =3D NULL;
+> > @@ -2538,7 +2538,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bs=
+g_job *job)
+> >                               rval =3D -EINVAL;
+> >                               goto out;
+> >                       }
+> > -                     memcpy(mpi_req, sgl_iter, buf_entries->buf_len);
+> > +                     memcpy(mpi_req, sgl_iter, mpi_msg_size);
+> >                       break;
+> >               default:
+> >                       invalid_be =3D 1;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but can the pointer arithmetic nearby lead =
+to
+> an integer wrap-around on 32-bit architectures?
+>
+> When iterating over buffer entries in the same function:
+>
+>         case MPI3MR_BSG_BUFTYPE_DATA_OUT:
+>                 sgl_iter =3D sgl_dout_iter;
+>                 sgl_dout_iter +=3D buf_entries->buf_len;
+>
+> If a user submits a BSG request with a crafted buf_len, does the u32 valu=
+e wrap
+> the sgl_dout_iter pointer on 32-bit systems? This wrapped pointer could t=
+hen
+> bypass the later bounds check:
+>
+>         if (sgl_dout_iter > (dout_buf + job->request_payload.payload_len)=
+) {
+>
+> and allow arbitrary kernel memory access during subsequent payload proces=
+sing.
+>
+> While reviewing this patch, I noticed a few other pre-existing issues.
+>
+> > drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_request()
+> > {
+> >       long rval =3D -EINVAL;
+> >       unsigned int reply_payload_rcv_len =3D 0;
+> >
+> >       struct mpi3mr_bsg_packet *bsg_req =3D job->request;
+> >
+> >       switch (bsg_req->cmd_type) {
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this function properl=
+y
+> validate job->request_len before dereferencing bsg_req->cmd_type?
+>
+> If userspace submits a BSG request with a request_len of zero, could this
+> trigger a zero size pointer dereference and cause a kernel panic? Similar=
+ly,
+> if the length is too small, would this read uninitialized heap memory?
+>
+> > drivers/scsi/mpi3mr/mpi3mr_app.c:mpi3mr_bsg_process_mpt_cmds()
+> > {
+> [ ... ]
+> >       if (block_io) {
+> >               tgtdev =3D mpi3mr_get_tgtdev_by_handle(mrioc, dev_handle)=
+;
+> >               if (tgtdev && tgtdev->starget && tgtdev->starget->hostdat=
+a) {
+> >                       stgt_priv =3D (struct mpi3mr_stgt_priv_data *)
+> >                           tgtdev->starget->hostdata;
+> >                       atomic_inc(&stgt_priv->block_io);
+> >                       mpi3mr_tgtdev_put(tgtdev);
+> >               }
+> >       }
+> [ ... ]
+> >       rval =3D mpi3mr_admin_request_post(mrioc, mpi_req,
+> >           MPI3MR_ADMIN_REQ_FRAME_SZ, 0);
+> >
+> >       if (rval) {
+> >               mrioc->bsg_cmds.is_waiting =3D 0;
+> >               dprint_bsg_err(mrioc,
+> >                   "%s: posting bsg request is failed\n", __func__);
+> >               rval =3D -EAGAIN;
+> >               goto out_unlock;
+> >       }
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this error path permanently leak t=
+he
+> block_io atomic counter?
+>
+> If mpi3mr_admin_request_post() fails, the goto out_unlock bypasses the
+> atomic_dec(&stgt_priv->block_io) that occurs after the completion timeout
+> logic. Does this leave the SCSI target device blocked indefinitely?
+>
+> [Severity: High]
+> Similarly, this is a pre-existing issue, but does the same goto out_unloc=
+k
+> skip freeing the DMA memory allocated for NVMe PRPs?
+>
+> If mpi3mr_build_nvme_prp() successfully allocated DMA memory in
+> mrioc->prp_list_virt earlier in this function, the jump to out_unlock ski=
+ps
+> the success-path cleanup block:
+>
+>         if (mrioc->prp_list_virt) {
+>                 dma_free_coherent(&mrioc->pdev->dev, mrioc->prp_sz,
+>                     mrioc->prp_list_virt, mrioc->prp_list_dma);
+>
+> Would subsequent commands overwrite mrioc->prp_list_virt and permanently
+> leak the previous DMA coherent allocation?
+>
+> > drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_admin_reply_desc()
+> > {
+> [ ... ]
+> >       cmdptr =3D mpi3mr_get_drv_cmd(mrioc, host_tag, def_reply);
+> >       if (cmdptr) {
+> >               if (cmdptr->state & MPI3MR_CMD_PENDING) {
+> >                       cmdptr->state |=3D MPI3MR_CMD_COMPLETE;
+> >                       cmdptr->ioc_loginfo =3D ioc_loginfo;
+> [ ... ]
+> >                       if (sense_buf && cmdptr->sensebuf) {
+> >                               cmdptr->is_sense =3D 1;
+> >                               memcpy(cmdptr->sensebuf, sense_buf,
+> >                                      MPI3MR_SENSE_BUF_SZ);
+> >                       }
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does setting the
+> MPI3MR_CMD_COMPLETE flag before the memory copy create a race condition?
+>
+> If the application thread in mpi3mr_bsg_process_mpt_cmds() wakes up from =
+a
+> natural timeout exactly when this flag is set, it performs a lockless che=
+ck:
+>
+>         if (!(mrioc->bsg_cmds.state & MPI3MR_CMD_COMPLETE)) {
+>
+> Could the application thread assume the handler has fully finished, proce=
+ed
+> to read uninitialized reply memory, and free sense_buff_k before the inte=
+rrupt
+> handler finishes copying into it? Would this result in a use-after-free w=
+hen
+> the interrupt handler eventually executes the memcpy?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
+105-1-chandrakanth.patil@broadcom.com?part=3D1
 
-1. Regarding 0-byte elements (Low):
-A 0-byte element in BPF streams carries no payload and no delimiter
-(unlike NUL-terminated strings in userspace, streams are raw byte logs).
-When bpf_stream_read() encounters a 0-byte element, min(0, rem_len) is 0,
-copy_to_user() copies 0 bytes, and the element is immediately popped and
-freed. Staging and committing a purely 0-byte stage transfers zero bytes
-of data to readers; returning early when ss->len == 0 safely avoids
-unnecessary atomic operations and lock contention on stream->log.
+Thanks for the review.
 
-2. Regarding the rollback path and commit description (Medium):
-In normal sequential execution, ss->len > 0 implies ss->log is non-empty
-because ss->len is only incremented upon successful element enqueue.
-The if (!list) rollback check is defensive programming: in the unpatched
-code, if list was NULL, the function returned 0 without considering any
-capacity consumed. Adding bpf_stream_release_capacity() ensures that even
-under abnormal or future decoupled states, capacity accounting remains
-strictly symmetric with queue state.
+New issues:
+- None. This patch specifically fixes a buffer overflow during BSG MPT
+command copy by widening mpi_msg_size to u32.
 
-The primary immediate functional fix is preventing spurious -ENOSPC:
-when stream->capacity is at BPF_STREAM_MAX_CAPACITY, calling
-bpf_stream_consume_capacity(stream, 0) returned -ENOSPC due to the
-atomic_read(&stream->capacity) >= BPF_STREAM_MAX_CAPACITY check,
-incorrectly failing zero-byte stage commits.
+Pre-existing issues:
+- Issue #3 (block_io counter leak on post failure) is already
+addressed by Patch 3/17 in this series.
+- Issues #1, #2, #4, and #5 are pre-existing in the driver and will be
+addressed in a separate follow-up series.
 
-Thanks,
-Khawar Ahemad <ahemadkhawar123@gmail.com>
+--000000000000c56d860659ddd8d7
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
+2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
+phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
+a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
+ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
+07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
+SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
+rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGpzCCBI+g
+AwIBAgIMAgfxQ1Z7DrZKmCE/MA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
+ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
+MDIzMB4XDTI1MDYyMDEwMzUwNFoXDTI3MDYyMTEwMzUwNFowgekxCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
+MDExNzEOMAwGA1UEBBMFUGF0aWwxFTATBgNVBCoTDENoYW5kcmFrYW50aDEWMBQGA1UEChMNQlJP
+QURDT00gSU5DLjEoMCYGA1UEAwwfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTEuMCwG
+CSqGSIb3DQEJARYfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAJwyF5qSHwwr1zJWkKvkMnY7V/sVFYYjTpjgxS4XA76pD6eLsZvS
+4J73HkKSNEzORxBE7OyZSnuBJ9zeeRcypuItG9YrHm+0OSF0psIWsH15FBYJ0nvsUnlFbCSNvOdr
+Co0WJ1KTe/7caj014uRZM2j7zH1vC+9fjEgrJdDRZakZXarl8M7k9okvVj1N+EuHiYUMvsAuMadE
+a3p31Z6QdvMpr+30UdJXHshV1mXca+UBpCx26GbY6NgxhHM2LtHiaCK8Vn4HMofDkFg4nQ6eK4ai
+uCiTtPj5aNlkdpcCzcZ+j1eCu6ZfPIq2ycwDaHi8d6Dwcgm+XoxDmD97Ehp2FOkCAwEAAaOCAeMw
+ggHfMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggr
+BgEFBQcwAoY6aHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1l
+Y2EyMDIzLmNydDA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2Ny
+NnNtaW1lY2EyMDIzMGUGA1UdIAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGg
+MgoDAjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5
+LzBBBgNVHR8EOjA4MDagNKAyhjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWlt
+ZWNhMjAyMy5jcmwwKgYDVR0RBCMwIYEfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTAT
+BgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSMEGDAWgBQAKTaeXHq6D68tUC3boCOFGLCgkjAdBgNV
+HQ4EFgQUyqNnwId/JCbRPslVl3nm48YRek0wDQYJKoZIhvcNAQELBQADggIBAKPmllSh8cRXzNRs
+3OATCVDgrdOfIsZMB9UVXcYQ+HtR1fu9bafeyuuupF9gcCmi+onLsANYRKaEDjC8h+V5FMAgm6TI
+bww4EFGpWvP/XEVKrpcpMkYNMLw89lagx9ZZDhx9DmfQMI9gG9MPpCkSMEPnJvEs7gqtOo08aL1+
+ts10tGfePsHF/I42Da21hJIJ01XN+Z91y//1cJkHwCBvDmoB8gdMXp3g4sjzahTxRZ25BdZB9W+n
+0jfWJXFKtp9MYS1SaVo17usfrlTeyaH3zPyDvfAfGoLB5+i8vyVL6wta2vgVpfsL9iwhbJnAIxr+
+ljECWkh1weDJw3UnV6nooG1RztnwqbG4eAG/KSCToXgVH9qSDv5S1lve5mvhv9AHzLjGLs+QtMeg
+WEdMM4G0PWyibzGgNrmVgKaLjV6EMo/IZW7KjBtvjyKQZhes90D4GyxXv+/mrTo2rruz53+FoSc/
+nuyLmg/SxnnZRaf7JGHFvu0IbwkeINwdHynAanOg9AD4zits7k7jjQ0fwIdhCaoRA3ao7PXUL1t8
+LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
+tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
+YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
+YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
+oIHHMC8GCSqGSIb3DQEJBDEiBCDU2jit1XVKm0OzIkIDYxYXjV5ZUQ5oXJFyGmyMi3QLZjAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjAwMTlaMFwGCSqG
+SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAUNa1Q1CaV
+p6yEVvhLtHoE1tQDySY92F/LHqH/iy2Q+6H/eq89M90sYPVssgwJ9Lksi1/tOqAB0iBFSTuxitz+
+zFpoh32LbWtjcoE3zy3/pIO03qyvTdVis1DjwKtZIHfhFbv2eYq8/oZh1xKAr9RvhCX/keGJzHGS
+6j4vu/1yhYuEJA8fkPaTwtYOVOU3ZI59a6z3BydRxc7EDiRjKKeAJPOTbwHURdaMLbb09K5Emqhc
+4Fr9ln0mYu9l4vqsiQ0pGTc4KY5LCJQjSjHoOn7k89RnzHhQLWPcpO6WQOop1symK4OsxKFtng5+
+h7RphVMpssoi2XUqk5b//ljC0eJq
+--000000000000c56d860659ddd8d7--
