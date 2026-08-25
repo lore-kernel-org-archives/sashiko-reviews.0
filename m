@@ -1,72 +1,72 @@
-Received: from mail-ua1-f100.google.com (mail-ua1-f100.google.com [209.85.222.100])
+Received: from mail-pg1-f228.google.com (mail-pg1-f228.google.com [209.85.215.228])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECED3D647F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC86401A2E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.228
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659647; cv=none; b=S+eJo2RGZdzgrcx3/KvSJF1X6BjbD6uh4XDP6TVVzH+tIY06IazSKP6MN7E4F0vAlIcMh77KhgSsMy8C1x18bjYVSERXV4hlsIGonwRPgyhQEPfL3JhsVBWgCX7sQlcYBux+lgzvJ3A8y4uZ8b+chATCzQaole5jSUvKNwMjOHA=
+	t=1787659711; cv=none; b=JcOM4SmeBmf1yJ0v7cWbpN6z9iaQmhVIebpOHNuoigEdEXbqcrCtKzsKscfBqGWWOdFCG6i+nKeoxgAAMXqrUajngc6Pox4vAsKVHcC3PD5znGfoyK/sbmpXxsKidKCv+OssK+13cwt7Y991OBE9VkFZ3vz0EkEfpS/zD43HU9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659647; c=relaxed/simple;
-	bh=9/JnWtpjveVM/2KodEmlxIjIoLJuYcJxUBDpDwKC4f4=;
+	s=arc-20240116; t=1787659711; c=relaxed/simple;
+	bh=HaxPYDuxBW6bfqGcGnhLrbNc2F4EZIpEA2EjU8n/hzI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DuHYzy3LE8LMAcu1IMkMBglRmAUDu9EDZSMtEgCdrtYEiaE17Dlj+qHkpuHpxlF4bt38XfgrKfAZ7hqQcK/C5jCGjkKn3isicrzum5IpmFN9cOWaSiRI83DYicTB20yrzAyojv+R74M8y6FoLb5EM4d0uebH5GqdK2S78Ko+WGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=A4Z4bT39; arc=none smtp.client-ip=209.85.222.100
+	 To:Cc:Content-Type; b=NFKTcL0S8ZIw1f6CKekDBIgxWtzc5aQqYDbLmUwVNOe5Ue3x7pA8cK/mLjIu4GeJ84ZjCLJx6WZlcss6VkZ60Jc7UpLJkdKnMjfkhVpmJJ4/XcANvdX1Xp1vgHrH1Zlel/glS9QfxyeJvuUKHGy5yxIVDlmXMCaE3wV2C6S3eKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=DAoHwIQ4; arc=none smtp.client-ip=209.85.215.228
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="A4Z4bT39"
-Received: by mail-ua1-f100.google.com with SMTP id a1e0cc1a2514c-963f63fe025so1236809241.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:07:25 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="DAoHwIQ4"
+Received: by mail-pg1-f228.google.com with SMTP id 41be03b00d2f7-cc11a905ba5so3401085a12.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:08:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659645; x=1788264445;
+        d=1e100.net; s=20251104; t=1787659709; x=1788264509;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Ek+S5qmDFZys/KhlAURzM708qwtexVx53XakKPshyk0=;
-        b=iZF+0KI38R4QSt2EetH5JSkcIeLYGITw8Tfo6M6sle8onrOT6XJrewAjbCxVi/1+9g
-         7SlcbXYmGry0ey0BcGriU3TXim1LUH3VhYzYzgeST5iUUJ0QgQxjHjMck1OJxQMUAbBy
-         eQNEaRaQy5W6xuCYlQ02PIvDTiGIBiswB5x4cX6AgMJ1GuvqKNFUZPjeuwBelOOHzwIv
-         5wYVwWMz2Ou3Fh7cb2NhOLQHV1kvDdRZqm+d3qMokXTpcGPpU/SfF8CNPjEKz0urWg/9
-         +y4Hpbkz1eqOVaULc7hmUe3c6e0mHgXgH0X88xxoGqDuwHwsC7KIijASboonVofNXcbe
-         r/+A==
-X-Gm-Message-State: AFuF++kwL/EPbHlBI0PkpiY9P5eRn+AJZiUIO/3ZLuJqIOf9rXgkBxet
-	2FwcdUxaliuZYQ4GP3FRZVMxCeo1RNl2cdMcT9YOeyPyhgTKh042EGv/vSJ9njZZdUwzByj9xhK
-	BOHPPlap8ZktqZhaR9JTwPeuHR8swyLNE7qOAlOJM2eplEzC4oKPu/yXxQFZ/qchPeqsmaVoLQl
-	/BIofkPzzR+BevhCnXXAKbsGxAsx4JHnIASX2q6gy2Bb6hO25q8jXqaGEzlJ62CKGR2RQEWwwIY
-	Cy1UwZEhcCFqWxEm7HEd+pXF1s3bJU=
-X-Gm-Gg: AR+sD12ImakPPxj3fBA09mdLKZfJw/rBUv91hwXl+Leiclhp5DB1M9YnnXoQk2maoLA
-	lh1NPzrenNukohL9BecO5ROCouC3mc1WJjXH42RnnGxU/OxZRJfgB2xoLXGgM+zr2HfPeJJ6oAm
-	q3BUwLQPNTORJSC4KVnn8sCiiEDWdQV6Xbemvx/mil1DelS3OHYK0P49Jque8IPj4Vo0VJqPrDL
-	nTb8NlTAtrf4Ny2gzkbOIv/AXp9MpCGtxHAKs1MLzciZXfNbxh6HJUt4Kv7yNfjZIroDT1A9WBR
-	B4u97hlStfQwgZ7t3/LdYVHl/V+SPnSYDL6rOLR1rQPqx2s+yPz/oLcbQfi2FfAGXjB35YCKrPP
-	63LCAQi+lO9nfMi8nF9g1n7s3ih7Lf3GmaV6sKPs4PrnBo+X4WSBjAGPb9lDPObo4zyDi62ZWyL
-	ZFUX2RELrvX6nb5FaWU2X1SzMq8fWQVdkdw5dQhF+Cp4UAGQ==
-X-Received: by 2002:a05:6102:222b:b0:77f:fb50:8822 with SMTP id ada2fe7eead31-77ffb509178mr1251607137.7.1787659644570;
-        Tue, 25 Aug 2026 05:07:24 -0700 (PDT)
+        bh=kG+yu2LYobBAey9jcSWIVKG1fLcv30b17kKWJV8xKWo=;
+        b=prw+rb3U+oM7R4VReK81RkafQQpuvU7sUV/hNdcnwbjm8bAZgyBtouJvGcnWAsbjOF
+         kh973iT2b2W5+sJZNgpTcMzUMRFuD8Rf3vuDQpKrg0nBWSzLYZDkOtwFd9LLHhOnBKpg
+         V36HkgemqajTCh0zRUAERuAGKFTwCVl3VM1xnHcqNGVngkK/UwcYFSKrbWEXmgEclWNI
+         Bed6wsD2OpmIllm3QlLsxbTMPkY5LHv2RBOO/gKdGmy8L1r0skla4b0ysOVkugoBn7CK
+         oxHOxy4DFsS3kMbctFgbnhFYsFE54Jb5vY9xZPZDdoc62qOCoxQL/yUHVtLWEUKljwg2
+         nLgA==
+X-Gm-Message-State: AFuF++ka655OHBQxhomL8o5QT3sm1U0GnZJ/G1MziD+iRDAI/ThXaBjX
+	xRcq1TtoP63Zv3kT+sPW4YWSLDGyK1CdP0xOIjrdTErz4pvrFd0Md8o60ShVWodY6SoM1i3P3cW
+	KngqejUjJpzJM235xOSLeNFJRciJmsiM2Fyg9pnYpjngn7DxApbT3cHT2eOdF8luQuaqpglPV16
+	8ATzSRw20cKprTDpX9uPabzcPbbl0pdQMN3D8lSQFW3G42qfX/VIZorId1TiDN6qq0qChJAtBmE
+	KLU9jL582wsQI3kveVaj8RspOOUbbQ=
+X-Gm-Gg: AR+sD11yM1f1t2T+z6OamBCeOc5d0ipxj2fXZLR8UcJEEsUy9D+gnTV0eLyY3Xk8S8a
+	0Fc4KE9UKVxtAerwDuK/Eq+fj+UXPDfucHyGD3nlVo4kkhQOSY7LPcS0T37YorSaMaY4+Zf6TDJ
+	uH9VZ2Cu/3X+icHbiDwXoq+VuGEjdqzkL+uUg6Q0IRhDzL/tGGCeeHHQF2GAHdhYW0Ht1aNbSim
+	x4s0u7rIbc2XCESpAQf4H7yRmZ6J2NnlGqHLWgI0TlXgVS40y/Z4tqJvcYaGu1vqY7rDqFA3LRM
+	Bqqc4kvTn5esqRFKYQ2/TMxFzUZpmZ/liu5mayBDq8uxEthpiIQoXzEENXYvzl8inTPA0I+4+4O
+	BqkL1t/UYb6SF3DNTDrLS6Hw/CTUprQw7D9/+0wZnUSaI8t8hqC774OvQziRHNa8wwonxQRIqPm
+	+moJEMUEqLnwQ0JXxOkpFOmQpOKHOTR3hu4GSyv7lphvHKPw==
+X-Received: by 2002:a17:90b:5750:b0:38e:c232:9d3f with SMTP id 98e67ed59e1d1-396463362d3mr12927025a91.5.1787659708837;
+        Tue, 25 Aug 2026 05:08:28 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id ada2fe7eead31-77d85bedbebsm51375137.23.2026.08.25.05.07.24
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39645a394c1sm1258930a91.1.2026.08.25.05.08.28
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:07:24 -0700 (PDT)
+        Tue, 25 Aug 2026 05:08:28 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c2192261d79so522607766b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:07:24 -0700 (PDT)
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c210c66672eso561178266b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787659643; x=1788264443; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1787659707; x=1788264507; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ek+S5qmDFZys/KhlAURzM708qwtexVx53XakKPshyk0=;
-        b=A4Z4bT39kmIP4U3WGvxC68BUxg/q5cYIImmBSv4XOEhb0Boea+QJe0I8Xy1gDnNE4W
-         HfK5B1VEol4oTkjEiHbAPUTedx+tZjeOCtbdUjGPkPib6dKUBQIkKnGGliiylmHI82jj
-         i27PRnfb+tM6SvuY1rxDibmmD7ZWeT3Vm12xs=
-X-Received: by 2002:a17:907:e008:10b0:c25:254:292e with SMTP id a640c23a62f3a-c2502542c16mr165075166b.0.1787659642935;
-        Tue, 25 Aug 2026 05:07:22 -0700 (PDT)
-X-Received: by 2002:a17:907:e008:10b0:c25:254:292e with SMTP id
- a640c23a62f3a-c2502542c16mr165067266b.0.1787659642359; Tue, 25 Aug 2026
- 05:07:22 -0700 (PDT)
+        bh=kG+yu2LYobBAey9jcSWIVKG1fLcv30b17kKWJV8xKWo=;
+        b=DAoHwIQ4PgxMoSVcHhXjwiKx4JkupwoPPVXLFscWbQQIOJQfjIEbotnIlf2K5li8lw
+         4xqJV32GQKq9fOhSESrvslwGgBQ7wcR4ZJt/Qqyoya3Oot3kkhPng85YB1pLajsFh4tJ
+         kbTG6mbpI0w3VeW5lv+q5QyQdCAjwP+Bt0Jhg=
+X-Received: by 2002:a17:907:1889:b0:c25:4a9:ab95 with SMTP id a640c23a62f3a-c2504a9aefcmr153247466b.14.1787659705823;
+        Tue, 25 Aug 2026 05:08:25 -0700 (PDT)
+X-Received: by 2002:a17:907:1889:b0:c25:4a9:ab95 with SMTP id
+ a640c23a62f3a-c2504a9aefcmr153237166b.14.1787659705185; Tue, 25 Aug 2026
+ 05:08:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,20 +74,20 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-7-chandrakanth.patil@broadcom.com> <20260818181106.04AE11F000E9@smtp.kernel.org>
-In-Reply-To: <20260818181106.04AE11F000E9@smtp.kernel.org>
+ <20260818231426.58105-8-chandrakanth.patil@broadcom.com> <20260818181137.5F35A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260818181137.5F35A1F000E9@smtp.kernel.org>
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:37:09 +0530
-X-Gm-Features: AcwNN1VRRyOKEi3sH19OogBOfQbFXj8_CujrPRUzOrQeAoUuS1fdYkbdo9yCdd0
-Message-ID: <CABvwm=NMKu4P-Hxj2P=R=K3yRgNABVTce+tQkpE_dDs2FG0fVg@mail.gmail.com>
-Subject: Re: [PATCH 06/17] mpi3mr: Fix out-of-bounds reply frame access
+Date: Tue, 25 Aug 2026 17:38:12 +0530
+X-Gm-Features: AcwNN1WTdZt4HCRYrjle2YIU_wkIPigXPDqKqnyzSPtcHaicCVCZsyPT5YFDdK8
+Message-ID: <CABvwm=PNTiRRK1kKhuENkViZaZ3wEGqsM8ivR87iS=FWDw4Now@mail.gmail.com>
+Subject: Re: [PATCH 07/17] mpi3mr: Fix out-of-bounds sense buffer access
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000000539eb0659ddf2d6"
+	boundary="000000000000d2e2010659ddf5a9"
 
---0000000000000539eb0659ddf2d6
+--000000000000d2e2010659ddf5a9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -97,96 +97,116 @@ On Tue, Aug 18, 2026 at 11:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 e(s) to consider:
 >
 > New issues:
-> - [Low] The newly added modulo operation `((phys_addr - mrioc->reply_buf_=
-dma) % mrioc->reply_sz)` implicitly performs a 64-bit division, causing a b=
-uild failure (linker error) on 32-bit platforms where `dma_addr_t` is 64-bi=
-t.
+> - [Low] 64-bit division by a non-constant integer causes a `__umoddi3` li=
+nk error on 32-bit platforms with 64-bit DMA addresses.
 >
 > Pre-existing issues:
-> - [High] An integer overflow in the reply pool size calculation allows a =
-malicious or compromised device to trigger a massive out-of-bounds DMA writ=
-e, leading to host memory corruption.
+> - [High] Missing `dma_rmb()` in the operational and admin reply queue pol=
+ling loops.
 > --
 >
-> --- Patch [6]: [PATCH 06/17] mpi3mr: Fix out-of-bounds reply frame access=
- ---
-> commit 144f6c8866bb0bb9ede9699c897280faf1028d42
+> --- Patch [7]: [PATCH 07/17] mpi3mr: Fix out-of-bounds sense buffer acces=
+s ---
+> commit 7536a65ff98a39b2e42c7eb228f93604d2b3086e
 > Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 >
-> mpi3mr: Fix out-of-bounds reply frame access
+> mpi3mr: Fix out-of-bounds sense buffer access
 >
-> This commit tightens the validation of reply frame addresses by requiring
-> the address to be frame-aligned and ensuring a whole frame fits within th=
-e
-> pool.
+> The sense buffer address reported on completion is turned into a
+> virtual address with no range check, so an address outside the pool
+> resolves to memory that does not belong to it.
+>
+> Check that it lies within the pool and is correctly aligned.
 >
 > > diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3=
 mr_fw.c
-> > index 681868716ebdb..5e61448d8dbc6 100644
+> > index 5e61448d8dbc6..103ce9dd22666 100644
 > > --- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
 > > +++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-> > @@ -128,7 +128,8 @@ void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc =
-*mrioc,
+> > @@ -141,6 +141,12 @@ void *mpi3mr_get_sensebuf_virt_addr(struct mpi3mr_=
+ioc *mrioc,
+> >       if (!phys_addr)
 > >               return NULL;
 > >
-> >       if ((phys_addr < mrioc->reply_buf_dma) ||
-> > -         (phys_addr > mrioc->reply_buf_dma_max_address))
-> > +         (phys_addr > mrioc->reply_buf_dma_max_address - mrioc->reply_=
-sz) ||
-> > +         ((phys_addr - mrioc->reply_buf_dma) % mrioc->reply_sz))
+> > +     if (phys_addr < mrioc->sense_buf_dma ||
+> > +         (phys_addr > mrioc->sense_buf_dma +
+> > +          (mrioc->num_sense_bufs * MPI3MR_SENSE_BUF_SZ) - MPI3MR_SENSE=
+_BUF_SZ) ||
+> > +         ((phys_addr - mrioc->sense_buf_dma) % MPI3MR_SENSE_BUF_SZ))
 >
 > [Severity: Low]
-> Will this modulo operation cause a linker error on 32-bit platforms?
+> Does this modulo operation cause a build failure on 32-bit platforms with
+> 64-bit DMA addresses?
 >
-> Since dma_addr_t can be 64-bit on 32-bit architectures (like x86 PAE), us=
-ing
-> the modulo operator on it might implicitly perform a 64-bit division. Thi=
-s
-> typically results in an undefined reference to __umoddi3 during the build=
-.
+> When building for a 32-bit architecture with CONFIG_ARCH_DMA_ADDR_T_64BIT
+> enabled (such as x86 PAE or ARM LPAE), dma_addr_t is 64-bit. Modulo
+> dividing a 64-bit integer by a runtime variable forces the compiler to
+> emit a call to __umoddi3, which is not exported in the kernel.
 >
-> Could this be avoided by using explicit division macros like div64_u64_re=
-m()
-> or similar?
+> The issue was flagged in mpi3mr_get_reply_virt_addr() within the same fil=
+e:
 >
-> >               return NULL;
-> >
-> >       return mrioc->reply_buf + (phys_addr - mrioc->reply_buf_dma);
+> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_get_reply_virt_addr() {
+>     ...
+>         if ((phys_addr < mrioc->reply_buf_dma) ||
+>             (phys_addr > mrioc->reply_buf_dma_max_address - mrioc->reply_=
+sz) ||
+>             ((phys_addr - mrioc->reply_buf_dma) % mrioc->reply_sz))
+>                 return NULL;
+>     ...
+> }
 >
 > [Severity: High]
-> This is a pre-existing issue, but does the reply pool size calculation in
-> mpi3mr_alloc_reply_sense_bufs() suffer from a 32-bit integer overflow?
+> This is a pre-existing issue, but does the reply queue processing miss
+> memory barriers?
 >
-> If a device provides crafted values for maximum outstanding requests and
-> reply frame size, this multiplication might overflow:
+> Looking at the polling loops for both the operational and admin reply que=
+ues,
+> the phase bit is checked without a subsequent dma_rmb():
 >
-> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_alloc_reply_sense_bufs() {
+> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_op_reply_q() {
 >     ...
->     u32 sz;
->     ...
->     sz =3D mrioc->num_reply_bufs * mrioc->reply_sz;
->     ...
-> }
->
-> If this overflows, an undersized DMA pool would be created. Later, in
-> mpimr_initialize_reply_sbuf_queues(), the driver loops over the expected
-> number of buffers and writes out-of-bounds DMA addresses to the hardware:
->
-> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpimr_initialize_reply_sbuf_queues() {
->     ...
->     for (i =3D 0, phy_addr =3D mrioc->reply_buf_dma;
->          i < mrioc->num_reply_bufs; i++, phy_addr +=3D mrioc->reply_sz)
->         mrioc->reply_free_q[i] =3D cpu_to_le64(phy_addr);
+>         if ((le16_to_cpu(reply_desc->reply_flags) &
+>             MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) !=3D exp_phase) {
+>                 atomic_dec(&op_reply_q->in_use);
+>                 return 0;
+>         }
 >     ...
 > }
 >
-> Could this allow a malicious or compromised device to trigger out-of-boun=
-ds
-> DMA writes into host memory?
+> And similarly in mpi3mr_process_admin_reply_q():
+>
+> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_admin_reply_q() {
+>     ...
+>         if ((le16_to_cpu(reply_desc->reply_flags) &
+>             MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) !=3D exp_phase) {
+>                 atomic_dec(&mrioc->admin_reply_q_in_use);
+>                 return 0;
+>         }
+>     ...
+> }
+>
+> Under high concurrent I/O throughput on weakly-ordered architectures like
+> ARM64, when the hardware DMAs a reply descriptor, could the CPU speculati=
+vely
+> execute reads for the descriptor payload or sense buffer before the phase=
+ bit
+> condition is definitively synchronized?
+>
+> If the phase bit changes, without a memory barrier, subsequent reads to o=
+ther
+> descriptor fields might bypass the phase bit evaluation and read stale me=
+mory
+> data from the previous iteration.
+>
+> > +             return NULL;
+> > +
+> >       return mrioc->sense_buf + (phys_addr - mrioc->sense_buf_dma);
+> >  }
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D6
+105-1-chandrakanth.patil@broadcom.com?part=3D7
 
 Thanks for the review.
 
@@ -196,10 +216,11 @@ submission. switching to do_div() for alignment checking to avoid
 64-bit division issues on 32-bit platforms.
 
 Pre-existing issues:
-- The reply pool size calculation overflow is a pre-existing issue in
-the driver and will be addressed in a separate follow-up patch series.
+- The missing dma_rmb() memory barrier in reply queue processing is a
+pre-existing issue in the driver and will be addressed in a separate
+follow-up patch series.
 
---0000000000000539eb0659ddf2d6
+--000000000000d2e2010659ddf5a9
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -293,13 +314,13 @@ LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
 tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
 YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
 YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCBDJ5XJ89IBzL1OjVZHFDAyAk7jF4U9INPCWSGsiHBYmDAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA3MjNaMFwGCSqG
+oIHHMC8GCSqGSIb3DQEJBDEiBCDVCgYsHs58Gi4GjebSjJ0+dmQPr7leBWrOQos+PfROezAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA4MjdaMFwGCSqG
 SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQACMkZ3zx8M
-DelULhFCenbtVc1uT3e4uZbvkgpc2PhyRGv6s8eaOorKRuVHBJshFjRgQNVgQxNGS+Mm+ZUn2OyS
-1B6tDc6ueGUkn8JOs85304NTX0dKo5juK5sUxrakrGDC3zVRESz9VcO/8/I85lSUKFzFLD0uHNXU
-FYXreTMp43QXsXyunQx+xzx0n/nzAc2LIiDCGqTiSItkdty8iQAJekfIffYZP7OxZF9BVnsXEbyH
-UnKvHWI6Ha7pTHy913vbvK4IkILZLyYovoKEnu1pyqukVXNYAdQQjXnIzJ4hITzFs625+hfCl0X1
-gN90pkn/SseUqSVUdUR6o6lj/x7B
---0000000000000539eb0659ddf2d6--
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAU+wV+dIJh
+Oik++eelyWgQms+czjBhRpE330mOvadcRIyrEIWbWEYW/a5F1ItT0pPNjN6cGV29dttmxSITk4gH
+Ditl7XTY+jnLVfhU5YAndf0fZ7A9hUjgUEo2Rc3BrbG5flzKfcSxXuvUyKHj404ZMjBnrqiV007q
+bRjTssvvgb2shuDza3cTHBUPtc0GE6aRy7RfBsaRHXmtn0Kf61LTag4xrqf8Dw6cGwh+vmIrYB0L
+FHMG2Kvm9bXrFjtYMwaVb0xWNho2Big7bUC7MXL9MpyHT+a9SI0xVtHyn+o0bYupFD8rvC5rWuga
+RlrXbVZzveUEgTFkQzEqZmH+7OHp
+--000000000000d2e2010659ddf5a9--
