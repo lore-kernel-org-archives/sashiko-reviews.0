@@ -1,136 +1,155 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C0E446830
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787662340; cv=none; b=Av3iT3Ve7I8M1tGpGxSMMgBDlfoYkxOik6nWKhYlPbFGq+Q4OPNv1ZHsQkIGtkX1h7T5r91rF8LHbJOgdMJYvRdk2S3fRyqHm1ZV7cWDfoGHll3uncTRdkql6Jbd4n0EK16rD9MGoKxvFQmvqa6c0Udu49/jFP1iqaKQaiyEIFQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787662340; c=relaxed/simple;
-	bh=AJOQz1WA8ph1ReEu9bpHwzXC3pVsd01wSnP1cQHvM0Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cx2RxK4fSefD1YKHgwMhBnCAasLsUWMSMtuYawFGZpXj67apbC0LX4lsq13LuWafwBnvNoBBJjybeSmKrIiKRPvyErrFLmA9zGW3xY/D3b0MLtliA7zYHnoAecexdUnqmUGOEJo6kPCzJWA54B2WVEfv+awKRHlZ8lGBjyZ3hU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MfWXyncu; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07260463B87
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 13:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787663449; cv=pass; b=Rcjv02e+ZmNwwcQwcFB1rFl/FxoBKTpckIXzHD8gKaRQ8VAKpgl4wGZKmMVB4I8YFAjk8jidaVAZAxIvHhEH871EY2cLSrwavKd1Qr+GmOZTjrg+j29d/074NoEcfrtSaztG8p2c96LX0++8dUILNG2KracCVFocJ6WsiGK2rfg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787663449; c=relaxed/simple;
+	bh=02FhfIBqMMvQXAFc8ywza3WsDbF2gi0rUDQddC21ZyA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YLGKZ4v/Eu/l+95GvJsE/4Gb4gp3qHOShncPXKLLGK8yHg6/hfWo66gytKEpfiGvC/rdUsnIx5HDi9TMZDEjaltZ/E9HlI9Ervye/A3rzj9dIJQfbIHRp87zrzofxN1IXpRILWTOXtcja6re37QwwDYWk37F38liaDtEr2cqjoQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XPqZKLiq; arc=pass smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MfWXyncu"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4815bce4652so2435968f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:52:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPqZKLiq"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c197e7e4e94so827328266b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 06:10:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787663437; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DtEqzPEmjyUyzDHY0aQPTKwo3xvwUAoKsZQz388LO5QQeNCqqbjE/dqZeKe4Rq9CKT
+         kWxjCVLLXNai0Sdb5/SKfKotKEXfUbtWAsayguMZpD7yTDUFQ1yaK2/JXtZUZMLkGA8N
+         eBsQLh42pAtHCI8K35YDBANYxOqK1RCyXs1spTZOJ7t9vQOHdIjORCWB1fU5tq0SBg09
+         5IVxpaVPSJ6zD2NxGmL7PzJkvTMDnUvAiK5FKf0lYZrWO+BIq5/AtQjTWXUu589Fp/PQ
+         QoiTSVB/Z3xr3SAI7ygXUMHIlN9f1xBvoQQCCmTrhKdROVaa+AP4hGtYUojYKLXlFrCh
+         w18A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=iuMwj835HhD4A5CZXk1Hdm7IMcB4Kfutchy14lcyny8=;
+        fh=RVy3TjFC8fYjZ1IjA+8bDQkISlxCmaZnsdSV5zLAIsg=;
+        b=febMGoSmZCWkdzQ0fOHUbeQXaBpUQX8+pdgKErPkznGYfmqwwcXRfQsnfpFNnN6YRA
+         0S2cwSEqOaC4Jg09nhojxvVfMcp+Z6OaOl9ydvWpJwt3Aob0/pPFZJtiz9w4xrsOzsDd
+         njddPYnUARUF9Q5LVv1yY6QB7ZpyPLHwuSJL1fTJHBn+oWddr3gjJet2NWLKndauzwXt
+         R9cZiQmEES6tP4YvapGJpVRg8DN02iuxzP/J/uPgvY0zmaXiwX8sGbICXXTn8YdJPvkG
+         Yf50iq/dKd52HkYR0DRPtl4bv4krAOQcLrRkIxiA0nRTGS5S0rRoR8/pJKedy9hz1pzk
+         5/Mw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787662336; x=1788267136; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1787663437; x=1788268237; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=XefrAv44KfW3PE7FNjIrUOwNn6ljxjVjZviYqzfKW+0=;
-        b=MfWXyncuj1C7KIYAvQubewlXCdM84NZzrLa3DLseOI2iPADHs/KHPTi6Y52Hl5GbcK
-         9F94SXY1C1jmSIB+l1xdux/XxJDM5Xgt+0XgNOKlcPDVJuXk4VJ7oZf46dWfSeoJAQpC
-         DmDBjdoHU96ae+RCuQ39yBuHTxE6X3Q1ePQ/+BqtK17Ou7VbklMSJ6vHwQZobjpTAL4Z
-         NcxfJvntpNTBWRzm9F0wRTRTK1hu4Y2u9J2CVIGimoM0tlGPTKB0lTafFDjxAKRgoWTe
-         xd5hJpEbfagsOI6WQtSGpPK7ILVrcQRdJZ05n3hI+ypI04LcBj3vewbKquo5Th4156JL
-         EjNQ==
+        bh=iuMwj835HhD4A5CZXk1Hdm7IMcB4Kfutchy14lcyny8=;
+        b=XPqZKLiqMjlnfM0JM0e3SiKcvG+bPAhoDPm2s02HsqHWk8455IKlawSHYO/uaqq049
+         c4Zb7DXpalq1QnAMsXqzaOUeCIed9TCqzGklZ2nxu5WlqnqYLsx/h4z3h9beFxb+Tw3n
+         ZCVGsuprtqcuqZR1Va1t/LFMAeaS/+1kMRiBML0Wl9Dh6ztz4q+FYeyyFO01FrGOOP99
+         HvjuSTGd0iivL6CK1HovHxmWb/224GECVATrYEzUAg26n31E5TCR20Y+t8qNASigVYue
+         x6em44rTrQzi2QrTcbzoUIHDqa/3cEAYjxJ9SvdPQccOuYqqIktBk/L8uBVfjbC7ELRT
+         s25g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787662336; x=1788267136;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1787663437; x=1788268237;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=XefrAv44KfW3PE7FNjIrUOwNn6ljxjVjZviYqzfKW+0=;
-        b=Fcxekr6n3ndQePEeAjN7k5ucOO/Pjk14YebhIHlI8GMl89ydnowZL/k3SC8dPehVZp
-         REw3bNmIn1Y3G5U44siHYq7NXH9DYGARGNL1V2BPP3BmeYTMRdxhy7nQbJqH9cZlMreu
-         Pq1t5b8hJPqODH7nYOjVxu7GV3xE1QeQt4+z08iORlIhXVXf1WqhhWpVv0ch8PMu9raB
-         L3LM8mhTFIfirx7bu7Xm0epErgkA+VCOAeljjMZfNpXin8pQecIpbQjwcOlThPaBFIwO
-         70n7y7t3TlxL1zi6IB3F4PWSDwnlq4X9mm8j5DfL1yBYdKKNAtmMskjDo5++CtLCUSbg
-         /f0g==
-X-Forwarded-Encrypted: i=1; AHgh+Rp+fO9tTkEIonmTtCq6by6d4c2IpqmKGYIzYtGS7fE8zAa5RaqqDNGO84sWXt8OPRRkqDBQSMrRCr1KWZDtibY=@lists.linux.dev
-X-Gm-Message-State: AFuF++nc3y/B9v6fT8e/vd379eWdxYyZoralcTDu31Re7uapWpleH4yn
-	OD64RZ02RCifQxs0rSvPvHVrnujMy4f0GY9S9WJaElce4nqcqi5hXNQPB89Pj1bF8lnC6RWpKzL
-	x71dBHlSA8qE=
-X-Gm-Gg: AR+sD10BN7BYuw9OwUyvwJ7AkUUIjfdwKzE9ag3Tcj/yO9kEKHlQWH/BdcKJmSguZtj
-	iMJAZirE6YwOak8GMTg38VEq8ezRwCcH2WpAYCkF0ORFnG3paFvTFVnHHeAApLISJGfHY6WRqMR
-	6eyeMejMzEFdDDYPsHdmcbktxX2r1YRFWaMZ+moWA6MoGWX8SYsm9dEHSj+6fwVW/3grz23bH2T
-	BtmtgYG19w/5Pr/SDLGn7PZwmOXq0Rx5DkTi1UrUc/2Ym6H9Tq9Pffs/CGOT9NVJGz6ARAxGW3g
-	exnAOrqEa7+N+9P8tp2kMiHoOdeXWDshgzDVuYGX0rt/3YswamAjC6MSuvg2mBQKIJiSZizxT4S
-	5CgX78B/4ldblV/+LRgOtHwedH8zyTdG5Tpc49idreYuXdL4OrlVslkwuyu0nlwBBbVOLBw4HW+
-	GqpWIskyOJplWnMaVinzCRNnYKvaqgEP9aY//f+Ftt3cfeibIP4hpAV7oT6VQsB6x5gWsqpd1fA
-	zuXnjH5YBDMLPkbQT3R2ZskHunjQL+D
-X-Received: by 2002:a5d:5f8b:0:b0:482:a9c4:bfd6 with SMTP id ffacd0b85a97d-482d9efe45fmr8958222f8f.7.1787662335425;
-        Tue, 25 Aug 2026 05:52:15 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482c9c146f1sm11512374f8f.33.2026.08.25.05.52.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 05:52:14 -0700 (PDT)
-Date: Tue, 25 Aug 2026 13:52:11 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/3] tracing: Fix subbuf resize races with
- trace_pipe_raw readers
-Message-ID: <ao2P-4a2aJFYVT6k@google.com>
-References: <20260817134750.3909384-1-vdonnefort@google.com>
- <20260817134750.3909384-2-vdonnefort@google.com>
- <20260817140812.2C7D41F00A3A@smtp.kernel.org>
- <20260822110424.346fa3c8@fedora>
- <aotTYT0zE5LNik06@google.com>
- <20260824105315.27377f30@gandalf.local.home>
- <ao1Rn8ZKr5XafWRZ@google.com>
- <20260825084707.4c9cf9f5@gandalf.local.home>
+        bh=iuMwj835HhD4A5CZXk1Hdm7IMcB4Kfutchy14lcyny8=;
+        b=Tlj7yjRBDjl/Q/BnN8fK/ngnZr9P3tfouj2mX9FsKXwhZysvdbEasZ9XM1w0h1xZqq
+         C0jYMwB7ZRpQ+zKWF1RViA84op9XDTKFzGbV9923Zbmf3DpYQp+qenYxZE5eHWrL0AmS
+         q1+z4Ma9wzt+xExBl2p4HP/Lq50Rgqu1luvANZqIDibI7YXpbcUETRfUT7b+FYFmyAkP
+         UlYXzP47dHWwAEa9GLqP6xdxYrwp8yhheKO3Vm1fkJbW1OX3FshHMAPKbtUZtKikz6UU
+         6iDKlAxVlKSvLbdEl45bxVHbx3utm8OCaIu+/s/yEm32AfbCqEeW26RssbPSKRcJ4BN6
+         HXbQ==
+X-Gm-Message-State: AFuF++mlveJxVknEEJnTiRHSpwV9vdWwnNXLwoSlL7KqlsxyyX3tczu8
+	4qesCv/bEnCXRLled8HRrtjeVZp5C2SVHclhg8URtsTPw6UvAIlglFSQv4Olfvv+wUOaT+JjUsU
+	cPoxBZye3WcpRmjhtsyTyXlfmAAb7jVeluke+
+X-Gm-Gg: AR+sD11eWvPk90C6+8cV3Fty8+BPgFwvldSdCNzlmHLKafsLfJ1AzC7Uky238ZbdzU7
+	De4EN6xCnt4MvK6p8gJUf6mq//YjVkbpHVHGmFUahsED56tQt7ykI+z1n4Kjo7uq3PHE/AJKoi4
+	0xEjgWH1CRJ+jL+sZNBxvTpqymCMQJRCCjP/MMhITmDQckXtqGPoWzV2QQMgz5Cn4M4Rmq6xURh
+	fo2LAvMpGLEeLJSUNf+qkEJ4YV0rdXlbt+jHE0q1IaPb/ZDrqtF/MxQJpKqu10xJPKvEK9WLq5u
+	D1Ceedazh2yvs6BU3/uSEThEQHd5eF6nlOvDtXkrcY5Dg9c=
+X-Received: by 2002:a17:907:60ca:b0:c24:6985:d7a1 with SMTP id
+ a640c23a62f3a-c24924b79ebmr3067182966b.7.1787663436768; Tue, 25 Aug 2026
+ 06:10:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260825084707.4c9cf9f5@gandalf.local.home>
+References: <20260824125523.131762-1-biju.das.jz@bp.renesas.com>
+ <20260824125523.131762-7-biju.das.jz@bp.renesas.com> <20260824130453.D03C01F000E9@smtp.kernel.org>
+In-Reply-To: <20260824130453.D03C01F000E9@smtp.kernel.org>
+From: Biju Das <biju.das.au@gmail.com>
+Date: Tue, 25 Aug 2026 14:10:25 +0100
+X-Gm-Features: AcwNN1Uq7B_OPhhUOfAGvmbEHdK5dtPV8yVIVtP8a8LSe8nf83A3g2sBuIV4qcY
+Message-ID: <CADT+UeBsPrADZdx34qS4YLyDwmO9Lq9qJMYWzhw0HW7+f_yZCQ@mail.gmail.com>
+Subject: Re: [PATCH v7 6/9] dt-bindings: pwm: Document RZ/G3E GPT support
+To: sashiko-reviews@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	linux-pwm@vger.kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 25, 2026 at 08:47:07AM -0400, Steven Rostedt wrote:
-> On Tue, 25 Aug 2026 09:26:07 +0100
-> Vincent Donnefort <vdonnefort@google.com> wrote:
-> 
-> > 
-> > Do you think it is still worth to reduce the window of discrepency between
-> > buffer->subbuf_order and buffer_page->order?
-> 
-> Can you elaborate more on what you mean?
-> 
-> -- Steve
+Hello Sashiko,
 
-Something like this.
+pwm.yaml  already defines this property[1] as required.
 
-@@ -7469,8 +7473,6 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
-        /* Make sure all commits have finished */
-        synchronize_rcu();
- 
--       buffer->subbuf_order = order;
--
-        /* Make sure all new buffers are allocated, before deleting the old ones */
-        for_each_buffer_cpu(buffer, cpu) {
- 
-@@ -7500,6 +7502,7 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
-                /* Allocate the new size buffer */
-                INIT_LIST_HEAD(&cpu_buffer->new_pages);
-                if (__rb_allocate_pages(cpu_buffer, nr_pages,
-+                                       order,
-                                        &cpu_buffer->new_pages)) {
-                        /* not enough memory for new pages */
-                        err = -ENOMEM;
-@@ -7507,6 +7510,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
-                }
-        }
- 
-+       buffer->subbuf_order = order;
-+
-        for_each_buffer_cpu(buffer, cpu) {
-                struct buffer_data_read_page old_free_data_page;
-                struct list_head old_pages;
+[1]https://elixir.bootlin.com/linux/v6.0-rc4/source/Documentation/devicetre=
+e/bindings/pwm/pwm.yaml#L23
 
-
-But now with the idea of copying the data when data_page->order !=
-reader_page->order, I am less convinced there's any gain.
-
--- 
-Vincent
+On Mon, Aug 24, 2026 at 2:04=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Add `#pwm-cells` to the `required` list. The binding omits thi=
+s mandatory property for PWM providers.
+> --
+>
+> --- Patch [6]: [PATCH v7 6/9] dt-bindings: pwm: Document RZ/G3E GPT suppo=
+rt ---
+> commit 9a7d174b7aaab1e8640a8415696ce9830442c765
+> Author: Biju Das <biju.das.jz@bp.renesas.com>
+>
+> dt-bindings: pwm: Document RZ/G3E GPT support
+>
+> This commit documents the device tree bindings for the General PWM Timer
+> (GPT) on the Renesas RZ/G3E SoC. It details properties for the 16-channel
+> 32-bit timer, including interrupts, clocks, resets, and power domains.
+>
+> > diff --git a/Documentation/devicetree/bindings/pwm/renesas,rzg3e-gpt.ya=
+ml b/Documentation/devicetree/bindings/pwm/renesas,rzg3e-gpt.yaml
+> > new file mode 100644
+> > index 0000000000000..cb4ffab5f47fe
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pwm/renesas,rzg3e-gpt.yaml
+>
+> [ ... ]
+>
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - interrupts
+> > +  - interrupt-names
+> > +  - clocks
+> > +  - clock-names
+> > +  - power-domains
+> > +  - resets
+> > +  - reset-names
+>
+> [Severity: Medium]
+> Since this hardware is a PWM provider and defines #pwm-cells in its
+> properties, should #pwm-cells be added to this required list?
+>
+> Leaving it out allows incomplete device tree nodes to pass schema validat=
+ion.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260824125523.13=
+1762-1-biju.das.jz@bp.renesas.com?part=3D6
