@@ -1,189 +1,204 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020132.outbound.protection.outlook.com [52.101.195.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF60313277;
-	Tue, 25 Aug 2026 16:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787676289; cv=none; b=ajeXRrlzH57guTtCt3b/7mPsjoppJI4MR04HZUko3Yz6kb4PRNtOy+nM3cAKjE8IHO5ShOMOSVVw0flrFJ4aq79+yqcNNg8qqoALfciANjfWH/plZADOAIuvmdaPlH/7wao9C9WVJjk19tYaidM2IChu9NPprDyMjoHKvxwgiHs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787676289; c=relaxed/simple;
-	bh=ZD5f55GpiA+x6ovlG3Ilmw+iNQH4hpxWxI+/7DJp8hs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pLBwiCrfo7R0KsfCZ0BtAC2zizbUlb/vcdq/UHtnTDsoFtzAhTcLJI1AsTY7qb/hxOMP7jlr6oZYjkj4EferM+SpRUB2oSoACIDbsTQCjdu3UH2OAlkWfx6VjMXA8Rf6J7diEBxaeU/pcTcSHrk85aOVHLG8GWx/CmPyL5GasMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=E+4ZxeTd; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E43334C39
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 18:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.132
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787683346; cv=fail; b=bGvkoFDbrxR5uOZOet8NGj+z5AkHKTECzlxlJbiX8Os/DBsPplyldVuuYRpJw4Rps1YdFwzu4Z3iPM7swkFDrdVyRWa0LrIeBYw8NbPC+Poc6vpS+m54IuIYshNxfV6y0pzwkD5wA1XqjDuoh6DE1r30vvJHnseDbAoMjywF1E8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787683346; c=relaxed/simple;
+	bh=b+LPVPRII167OLUxcv9fc2b9Qg77clDwqodQ2gjnVuY=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:MIME-Version; b=buvDKUZU/AaQK90WPqKnR+6QqMMF5P16PHDoXGFQ33d8je4KRDn/mcZj3N2HYEDdec0snMK4T6ENwCFTuw5XxoFUon42AaG6/POVudVE+VzzAEDJhwEpX+MGVFcdu3QBXB+Y/zHfwOJX8r5A1gOEG9PHqFY/4gGNSDqLSf0HLUg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=COOXiJic; arc=fail smtp.client-ip=52.101.195.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="E+4ZxeTd"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67PEYXNO3461678;
-	Tue, 25 Aug 2026 16:44:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=p7MisM
-	6EHdZZJlZ+jksdnE0TRLat/nBOc2QmshVRUME=; b=E+4ZxeTd39v0FZvAh/icvF
-	ai+RL0m2oSSXWuDok+Ui2P76a/5OuZarJ1UhgeWdvbRzrHFOQX1a4VU/uL/ccv0t
-	djRRO+8NxBQQalw78jUCcifUYUSTqPeG1/OpkzOe+Y0xJSvS6HNSckXdgksUww4j
-	SPnWST1dY7LDLGaS7P7z/Rf18HnYNcgwFnwAuKhGFmA5YDOrto4l6rF7JY650VWe
-	yJCZG436RuTzw2dpPHYl64QhFuRgzjJLUpTiyKtkzLqjqHS6qxrZpkHvlxLm1+FM
-	mgxiFYAmQ816FdnEk7qHCMxYPUplT4DB3DzHv38yc+eXzWRVhQfxV1oEucfgpi8w
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqsd3a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Aug 2026 16:44:47 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67PGfOJ8003413;
-	Tue, 25 Aug 2026 16:44:46 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragd2f2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Aug 2026 16:44:46 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
-	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67PGijhp58982794
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 25 Aug 2026 16:44:45 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 14D7558055;
-	Tue, 25 Aug 2026 16:44:45 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2E2E15804B;
-	Tue, 25 Aug 2026 16:44:44 +0000 (GMT)
-Received: from [9.61.150.162] (unknown [9.61.150.162])
-	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 25 Aug 2026 16:44:44 +0000 (GMT)
-Message-ID: <dfe22a19-49a0-413f-96e8-35fab4be1a84@linux.ibm.com>
-Date: Tue, 25 Aug 2026 12:44:43 -0400
+	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="COOXiJic"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J/WR3lNfOl4iM/K0x6a++xD8YCjpJaFdH/NVvcFvGxGVlY7YYBO3JvMsUqqzQNzlDuWhx5QJVDwSUPycMUD/++O18LxtiTe0s5qqQSV3s6M1ObsEcfUga49x8uqNKCLwwdYrofsy9X8b75ltpjd4uCI7WqxAq5XMX3QU26MFJX2/X1/8kpbznhZ9tdFlGim9qyNPTLJ3QHWorsqtlTu94pk+IWiUXfD1i3uvruR78GndFSHDmWIIKZ0bAPOuZYcTwYF/WyLWZLUwsvr68VeMX/Fa0kVcEbfx2C0rz8QOwN+cm1xmQmt18i9yz4rQ2KTzuA1AootTmbFMDQoxZpiSXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OQ95RzM53okDdYKUg0AUMtDzTpDAQWjs5WZYSdgFwhQ=;
+ b=FCoijbjw1jLQ7AeLBklLoRLkiBajQbcgO8UYdYVog+znPkQNRlkJNNKidlVOQTKJKv1eRR7ZXdx1SmDQGoHbDe7skx3ps4z9o6Kqgzec97vKNDxQVLOfZXYXOjQZNSpffvxCdzes3U7K9m3DOgyd/3FozBAHF2xf+dZPv8uueUsaMNTPB/0ox4VA/YQ33n6mMDV0hLAR2/muR9miG2nYxKs1LHbUhPgpR7BS+O8FikruHUAmRMtz+d/0+OVpSz7Vx63D/zgYlc4ORsxUWI9JCu3yd1w5fk5zn1M7ocbmKHNk/TV43YFEQ7Ls9Bj5mdxcj2yRlogCU+l5ondQqQHKhw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OQ95RzM53okDdYKUg0AUMtDzTpDAQWjs5WZYSdgFwhQ=;
+ b=COOXiJic1C+AkARZUGgr+q/0BWFKevTksSMU6t82yoxIUdfQ5mEVWNWcmsTX09cte+N4zbPs90+erenEGHLnIc6IebgohjgcRB+wPbbDkf1UjE3GOVgqxiMrqReezaGozfaBJrAC9PcFdDJsAbYUDJV2Okfe6ZuXBWD188sUkhc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4ab::19)
+ by LOBP265MB8753.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:490::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
+ 2026 18:42:20 +0000
+Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::f60b:1537:68d7:4fc1]) by LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::f60b:1537:68d7:4fc1%4]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
+ 18:42:20 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 25 Aug 2026 19:42:19 +0100
+Message-Id: <DKY8USKYJJVM.17HQ78YIYZMFV@garyguo.net>
+Cc: <devicetree@vger.kernel.org>, <conor+dt@kernel.org>, <robh@kernel.org>,
+ <ukleinek@kernel.org>
+Subject: Re: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver
+From: "Gary Guo" <gary@garyguo.net>
+To: "Andrea della Porta" <andrea.porta@suse.com>,
+ <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.22.0
+References: <cover.1784539788.git.andrea.porta@suse.com>
+ <a83d65b2d91865eb722337c547c94dce175e6086.1784539788.git.andrea.porta@suse.com> <20260720100212.BEF1D1F000E9@smtp.kernel.org> <amN-5B5POX3rNb29@apocalypse>
+In-Reply-To: <amN-5B5POX3rNb29@apocalypse>
+X-ClientProxiedBy: LO4P123CA0165.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18a::8) To LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:4ab::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] s390/vfio-ap: Fix leak of pinned NIB and
- registered NISC in vfio_ap_irq_enable()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, kvm@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev
- <agordeev@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260824215603.819379-1-akrowiak@linux.ibm.com>
- <20260824215603.819379-2-akrowiak@linux.ibm.com>
- <20260824220737.95C7C1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260824220737.95C7C1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: alujLJKviTYLMthXsLI5gYj88kN8vcY-
-X-Proofpoint-ORIG-GUID: alujLJKviTYLMthXsLI5gYj88kN8vcY-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE0MSBTYWx0ZWRfX1u4Hll8uLax/
- jDpoNzoCfm4z51EgnStQfnMHfmdx/3fJjMnaVs22qbCUGLtm+rvAd2zIe/lKS4cGpHSfuo2dKv9
- g1B45pvKEPWClTktJd1i8QDlqjjMGZmHyj7RSCKcV6FWeNs/EhTJNXnxvbYG0LPz8wAvydY5J/E
- IkrBR13rvjLunIzfhI4nF1J2hP8PcxmYPycyZPojYW3TzUGxUsJ9qnsZdnAIpLE2tMCAq+JzT6R
- 0IKeSUrRPRrW9T1VlNbOpAGKYRQeILuA6WW7OZO3Kp/ZSBuUawDrtkg+dtINrnKAxgzjcVG/5YI
- a0wGHXrzi5i3wwH3CRU1F4pltxvPnpw0+8k46EyeuYhsKM6xaCZcF0slBZcpTRUAqR+zb3DJ3Pg
- l7QmuB5EDMuYzC0qiTEr1qurw1Luj8pWRq2NluNoxji7SafqXulTQTjsfVpssJkR3OaLoxvYqq7
- 9V505u8p0MSTOw6QBKw==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8dc67f cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=rwj9XuUJh5HgoYXlIQcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE0MSBTYWx0ZWRfX8nQzzV8EivT2
- 5QiD7kFm/DP3yS9Z7aK5l7GUfFLjh1lP8V8EH4GrLLihC38JLa+YysCC/Wqb3W1ZdtO2p+UWyDB
- 5K1hz270PvZs5X5+YvvdO8cWBjyOHeo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250141
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LOAP265MB8560:EE_|LOBP265MB8753:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54e7c6d5-c75b-43bf-05ee-08df02d89835
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|18002099003|22082099003|5023799004|56012099006|3023799007|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	FxaKySLIdbFdpqRH3uitXIGuVirnc7KvIfdosa2OZIngOfe7LMVA3ia1T6Z3qg5OgsQUeBrvaSimALpFf/cN3tKTW0jk8MlEsZH9amSKW+27pcmKgX5n/GVC0MczbgcsZS+9h8770MoN3FnLSDG3xYpFUEfGxpqZeEbrxnIzvfV9uHk+5wHZlXrlpY2x+5+obHX66g25GYN8T9ZgRjCHPIb3SswHTIBVr/1Oy1jKx2akJEB33/woe3KFBI+5yR0TmAurRQYzkQV5Lvb4K4eZMtIQMJqwnm/TDsnkUqwuwVfA9O3iTtKziXoyP+GdCMrp1V+zVBS7p16MevT1Pej3nUYul3gI+uTsDZa6EwCAIAFu1yWEQVanU2yIpPhxUbw4gBd8QZGSbFXIO74N+juefpZxW0bO+khO0yagROSmiZqJgRQMTh4adcRjcMT5vlUJwRsZl2xUcxEhW4Lu0f9DvaS+LvlbRUed6Ap5aLZsismfDAXTksjYHr3cItYCiRY96bnuSEsClQbVSu6HinvKCdAbq1qt96hNvPkp3Cs6ACz6a+Wq5LVZf0aLamrhf3I4JYn9srgtRGEXflsA/EogL4gtDZ98G+2dk+kH8+WINFGJkNRLkVEzmw4/r1gx+OjfMaCTeyraJruWkRarAC1YjDTM7nr335BbZ0Q0AoRHFi4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(18002099003)(22082099003)(5023799004)(56012099006)(3023799007)(4143699003)(10067099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VkgvbnpqdUFZZnZOemUzSHRRaHpXYWZPTU9FdXBDc2lXQU9DRzJEbGxMQTdM?=
+ =?utf-8?B?bzdYRkduQWdSYm9UNFJRMG1KRVA4akVWb0FkNUtFVENCRGpEd015Rys4SVIw?=
+ =?utf-8?B?aE1aZmh3QVF6b29XVDlSM0MxMmF1VjZabDhuc3JaTktHdzNXektSck5XeDRE?=
+ =?utf-8?B?bnRSdEs5OEhQMURndklHTGhMMWd2NlB3RUFoZVlWSUpjeXllbUF0WjNpOGZ6?=
+ =?utf-8?B?S2E5MFYwUEs3cEhadHJTTkI3ZitabkhxTVErN1h5REFVZmpXQ0Jtem40ajcv?=
+ =?utf-8?B?SUx0QkYxUFdXMmg0QjRFU1RuNGtZY1VINVdiSCs0ZzY3K1NNQWtXS1JiWTY4?=
+ =?utf-8?B?M3JaT29TcDhDeEU2alg1YXl0ZVJpSXZWYVVrc1Z6N2lkNXlwMVRNY0xXMFdn?=
+ =?utf-8?B?V3pDTjBDMlZQT1Rhakd4YjFIaVF6OWZkSUlFbGRLNkFETmE1UU9YK0c0ZVJu?=
+ =?utf-8?B?bkp1aW9seVRJSmlEUVdMcWJsb2Q2TTd4RlJMZE5yV2RtZTRrMDE3OEFkdjhV?=
+ =?utf-8?B?NXNGbFBpYXBsekVXWWppVDBYTlJsaU9wK2xsTHdLS3V5NHByQ1NtZERaOHUz?=
+ =?utf-8?B?RUJoeXRjY1lYbEFDTHdhWjRxdWxNOGQ1d0VSRGRGcUNMNU9uNkFFOU5iTmxa?=
+ =?utf-8?B?eVBWbTFPeklnMHUwM2Foa3dtRmk5TWpCQW1vNkxGeWIrNkRwamY4TnRudklh?=
+ =?utf-8?B?eVZBVlQ4bnYzVnNQSXcxVlRIeEdEQVhzbGxucVdmajh1blBneUhzVXZFQnZr?=
+ =?utf-8?B?WFNzaVJIbDZWWGVSaUFLNGZleVhtOTAxWXAxNkV2Sk00ajFvQWlVWFVlSEYz?=
+ =?utf-8?B?VEl2SG1rcVJEL0Z6Kzh4QTdvZ251cFQ4RWZYOXhLQWpPWUQwVVZ5MEpuaUtU?=
+ =?utf-8?B?dm9nNDR1RUFmRUVYQnR3RW5sQUhjS1h0ZGoyaEV6YnJkZ1J2UHQrUzVOMzcw?=
+ =?utf-8?B?NGpTNFBJeFZqbTB6bE1YSmg1ZHp3NDRXT0ZKSGlhK2dWL1lMWjFCZ1hLUEIy?=
+ =?utf-8?B?MFI0Q2JPdUxRZC9ob3JuT2FPamVvb1EyNm5BeWRwREpmRm5sK2FHTjdNREl6?=
+ =?utf-8?B?RlBWdE40OVY1N2VkN3kycERLRXdySnJzclE1Ry9sWnhvZnhiT2dUbnlTSlM4?=
+ =?utf-8?B?c0FwcjlPR0NYZy91OVMxMlF5SG1OejRoRU43SFB0MlBJQ1U3NjVtWjJzaDJC?=
+ =?utf-8?B?V3Y3MXdtR25lcEQvVXNGem15TDZkU3B2L2FqUHBNRkZzQlVndkU2VFhoM2tk?=
+ =?utf-8?B?bmxGdTBWQW42RERtdDhmaGVndHhDZ2dLL2ZLMTdjV1lER0FFeDJrRnBicjd2?=
+ =?utf-8?B?NjJweGVVcXdLNDg3bnU1UTdzTnZWUWE3SzhNUllqQmFaZWlJaTNyMkJNUUVm?=
+ =?utf-8?B?Vlo0dXhnc0RIZXNIYXB1S0tYa0gzNFZxNHMxRDdwVkN1RVhUOTU0TFpKQlRN?=
+ =?utf-8?B?TGxwcUM2V0VFQ1A4d2FVenE4ZkFKalZGSVc0eTJUMjd0ajQ5c3FvN0tVbzRv?=
+ =?utf-8?B?VXBvRzF3dHBxWkhUbGU5SHhlYnZETURNbUM1ZGhCZ1o1QmM1TUFqQVp0dTRQ?=
+ =?utf-8?B?RWJCdUpuQWdMNGttRE04OGxjbVQyREpVT3J4c2cvQmNEbVY5aVFkVmVYU3or?=
+ =?utf-8?B?NHlpcUpyNmcza3Y5aDl2TFVxaWxMZnpEOGE4aHB0ajVvKzE1REpVWi8vcXJF?=
+ =?utf-8?B?d1E4eS91bXdqaVAwNTliRmVSVFozSVpBUnlvNk0rVUM0bWgxb0pWM29MQVNE?=
+ =?utf-8?B?ZEtsQjRJR25kdzhqdDlFT0xzeVNMMndaL0xmem5hWkRVN0ZzSitjNTAvY0kr?=
+ =?utf-8?B?K3dhdlJGMElRRkFzSEtIY1cxWmhNTm1JWTAwUlN0cXJPZ21iUWpUUWxGSm9U?=
+ =?utf-8?B?YmFJWVlkb0R4T1hMa2NJb2xJZEdCdS80VjYvcThDSUNZY04xQmFCcnZ4S3A0?=
+ =?utf-8?B?WGNEalUyUzZYdDg5TnlRYldIZ3c1dmVMdVdNN3Z5VHY0WUpqWUM2RGVGWkFw?=
+ =?utf-8?B?bkdVL2dFWWgxQ014ZDRWbW9sNWFUWE85cUEzeWh0eExKTTUrU01EMjhLOENj?=
+ =?utf-8?B?NXlLWmZaM3JTTzBtR280ajlpVUlwanhrMDRZdHBMNHQ3dE16aGhXVlJTeEY3?=
+ =?utf-8?B?cGY5NGU0NTFIc0lSMnVlVW9WRTk4TDR2OWlSQnJQOWhOQ0VkVitVQkZ2N2Zp?=
+ =?utf-8?B?TjQzcE5ObHp2dWZSWVBaMnA3bXYzUjNHRWsrWDhMWXNneXM4REVRbFFlTnRS?=
+ =?utf-8?B?MTMydWN2TUcrbTV2TmJJTGw4NGtVRjJDbkU4a1BrRElHdHU1L3JzcnZ5M1Ni?=
+ =?utf-8?Q?yvw5zf0zeJmptX6vcz?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54e7c6d5-c75b-43bf-05ee-08df02d89835
+X-MS-Exchange-CrossTenant-AuthSource: LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 18:42:20.3056
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7fLLYHszumJ/nCqnqqNbM8BK5SjWC74oFzzkyHyMSTO/RDlFs56OFpuwisC27NLh9YU2u4LgBUFS9O1VBXiKpw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOBP265MB8753
 
+On Fri Jul 24, 2026 at 4:04 PM BST, Andrea della Porta wrote:
+> Hi,
+>
+> On 10:02 Mon 20 Jul     , sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 3 potential iss=
+ue(s) to consider:
+>> - [High] Missing `.remove` callback leads to Use-After-Free in the PWM a=
+nd Syscon cores and leaks clock resources on driver unbind.
+>> - [High] Register context loss on suspend/resume silently breaks PWM out=
+put.
+>> - [High] Unclamped hardware duty ticks lead to integer underflow in the =
+PWM core for normal polarity.
+>> --
+>>=20
+>> --- Patch [2]: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver --=
+-
+>> commit 0c98703d857577902e57d25b42a3d46dfbde5795
+>> Author: Naushir Patuck <naush@raspberrypi.com>
+>>=20
+>> pwm: rp1: Add RP1 PWM controller driver
+>>=20
+>> The Raspberry Pi RP1 southbridge features an embedded PWM controller wit=
+h
+>> 4 output channels, alongside an RPM interface to read the fan speed on t=
+he
+>> Raspberry Pi 5. Add the supporting driver.
+>=20
+>> > +static struct platform_driver rp1_pwm_driver =3D {
+>> > +	.probe =3D rp1_pwm_probe,
+>> > +	/*
+>> > +	 * .remove is not needed because this driver cannot be removed/unbou=
+nd
+>> > +	 * cause it relies on syscon which cannot be removed
+>> > +	 */
+>> > +	.driver =3D {
+>> > +		.name =3D "rp1-pwm",
+>>=20
+>> [Severity: High]
+>> Is it safe to omit the remove callback here?
+>>=20
+>> Even with suppress_bind_attrs set on the driver, if the parent RP1 PCIe
+>> device is removed, reset, or unbound via sysfs, it will forcibly unbind =
+all
+>> child devices.
+>>=20
+>> Without a remove callback to run cleanup, pwmchip_remove() is never call=
+ed
+>> and the clock is left enabled. Because the backing memory is devm-manage=
+d,
+>> the devres subsystem will eventually free the pwm_chip and regmap memory=
+.
+>> This can leave dangling pointers in the core pwm_chips IDR and the globa=
+l
+>> syscon_list, which could result in a use-after-free.
+>
+> This is true. Uwe, I guess I should reintroduce the .remove callback,
+> what do you think?
+>
 
+How is remove going to work with syscon? The previous version seems to just
+ignore it completely.
 
-On 8/24/26 6:07 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Potential host memory corruption if `vfio_ap_irq_disable` times out while the hardware queue is busy.
-> --
->
-> --- Patch [1]: [PATCH v2 1/4] s390/vfio-ap: Fix leak of pinned NIB and registered NISC in vfio_ap_irq_enable() ---
-> commit 85cfee5e61842e2a3b3b8993da6d14f25c2209a2
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Fix leak of pinned NIB and registered NISC in vfio_ap_irq_enable()
->
-> This commit fixes a resource leak in vfio_ap_irq_enable() by explicitly
-> unregistering the NISC and unpinning the NIB in the default switch case,
-> rather than relying on vfio_ap_irq_disable().
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 940c0ff668bee..22a6ceaa7b562 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->
->> @@ -503,9 +503,12 @@ static struct ap_queue_status vfio_ap_irq_enable(struct vfio_ap_queue *q,
->>   		vfio_unpin_pages(&q->matrix_mdev->vdev, nib, 1);
->>   		break;
->>   	default:
->> -		pr_warn("%s: apqn %04x: response: %02x\n", __func__, q->apqn,
->> -			status.response_code);
->> -		vfio_ap_irq_disable(q);
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but pre-exists in the
-> vfio_ap_irq_disable() function that was previously called here.
->
-> Can this lead to host memory corruption if vfio_ap_irq_disable() times out
-> while the hardware queue is busy?
->
-> If a guest repeatedly sends requests to keep the AP queue busy, then issues a
-> PQAP(AQIC) instruction with the IR bit cleared (or unmaps memory),
-> vfio_ap_irq_disable() is invoked. If the queue remains busy, ap_aqic() returns
-> AP_RESPONSE_BUSY repeatedly.
->
-> After retries, vfio_ap_irq_disable() falls through to end_free:
->
-> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_irq_disable() {
-> 	...
-> 	} while (retries--);
->
-> 	WARN_ONCE(1, "%s: ap_aqic status %d\n", __func__,
-> 		  status.response_code);
-> end_free:
-> 	vfio_ap_free_aqic_resources(q);
-> }
->
-> By unconditionally unpinning the NIB (Notification Indicator Byte) page via
-> vfio_ap_free_aqic_resources() while the hardware still holds its address and
-> expects to write to it, the page may be reallocated to another process.
->
-> When the hardware eventually triggers an interrupt, wouldn't it perform a DMA
-> write to this freed page, causing host memory corruption?
+Also, do you actually need syscon here? Given that the pwm fan device is go=
+ing
+to depend on the PWM fan device anyway, you could just EXPORT_SYMBOL_NS an =
+API
+from the rp1 driver that returns the tachometer reading when supplied with =
+a rp1
+pwm device pointer?
 
-This is a valid concern and is similar to the problem fixed by this patch.
-It was also introduced by the same patch identified in the Fixes: tag,
-so I will add the fix for the issue pointed out above to this patch and
-resubmit it.
-
->
->> +		/* We could not modify IRQ settings: clear new configuration */
->> +		ret = kvm_s390_gisc_unregister(kvm, isc);
->> +		if (ret)
->> +			VFIO_AP_DBF_WARN("%s: kvm_s390_gisc_unregister: rc=%d isc=%d, apqn=%#04x\n",
->> +					 __func__, ret, isc, q->apqn);
->> +		vfio_unpin_pages(&q->matrix_mdev->vdev, nib, 1);
->>   		break;
->>   	}
+Best,
+Gary
 
