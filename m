@@ -1,166 +1,149 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011062.outbound.protection.outlook.com [40.107.208.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-194.mta1.migadu.com [95.215.58.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8C73E49DB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.62
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787647220; cv=fail; b=oScfsSP+Hoc8pT+bWg3bklCOL+wHcNhRvNp6BP3dXxiHgRf6Q/q1sZk3rG1Q25p2qxVySboEcQbCmiqNqvCEmH0MHbAV0qSYNBXHVSynGpWrJUfTWTPUK0n1vbzjhNZ7U4WlOd/7AuypqRtpF2oNUKV3FMKHbgXpMMnSGXlxxaA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787647220; c=relaxed/simple;
-	bh=GmXjqDoPTBgdbfPicOYMHRHM8DC3jLsMGME47VcoHks=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=mGRQFkB8JTrYofoT9dDXGIzSpW0mailceEBEJCOvyMTHqR986Y1buqSB3QT6ir+77RrP6tLrVaiWZ7SPzWrg2euAUKdFC4xLyMK9a03ucAWS4q7vcHlpavBM09RChXKmKWBWsmbrz/M1vnfaU96TxFPRwMxJsy57kPWRzdd41h8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=KTrYcgG7; arc=fail smtp.client-ip=40.107.208.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2B73ED5C9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 09:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.194
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787649934; cv=none; b=abpf+Kr4hFgN3Z2sRAA9sRFV0C5C4s1ZPSoSQzDR4AMHd705OLOH9csdRsAi+Jb5gjvkitW7zehT5nUOdMXJlc5lzihjrPagIGeY0w4ADb3yERscG1WtoD7tMDlcOnSc82hh4gbxuGpiOdVHQ0hYzRdVoAU8aKPH7DyphkiYOnQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787649934; c=relaxed/simple;
+	bh=Me0T5+G6GU+yqK+pfWnftzQNd1qwsvqsRERpiPzCgCs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KU0L+Vv6pEjoIU5ueBdCpkkUOeEJOwKTTgVOq5qSm8I4LMo918QGAT2S1YfIIyRRK05NAPTDJh74amWzOFEqyeFrOiWzLS8JP+xMk+r4c6QVlWWSFRtWOJVoVehgTqxxl4i92zIEZzM1/daXsYkZm9G9W1HhHkd5Auc98IQzLO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sJJK9A91; arc=none smtp.client-ip=95.215.58.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="KTrYcgG7"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qP1Cs5TI9NpxbPh9W+ILik0Mv2TeWtqTRybFpTPZIcjc1r+0MQCQC8L17ysDSQ+2ymANcg3IbOn/uPQ0EyRbmd4BKDQAEo1CZb6ibTcRa3Cm6qJxShjlGQ+16WE913Zkp6GK2CjXs9CwOzoLbvDvS88PbMSMb/MjUc0DcrzX/v/NAzgvVTv9PkUvY8GwTfOn4Z6hBhohx8p3/spf2UJYk2QiPhueGuoeDyduqbfXM97N37VQsQ45/GOpJHtak7gORFAi5UEQE8HjzCnGhdbvKBOtQyMYTzCZTa/uIm+MjqO76a8+hpOQpnN5e3BSeTZVSt9jfzj2LedVxWdH9NF0wg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VxbTZ0R9PtZ8P942pgh6heQAGMxEIZbQQn9JJKO6FBk=;
- b=rmfuoR9wdIM04n9sHEP+OEcA7AWBT/yvr7Y7nodAeaDvnqT5ZTUV3pdFTbKU7xgB8ODwE95BmqmXi/8tchuHLUKauXoW7M1Or6wu1WbT5+pGl2yz5CVh6H1CLde1n+nWhUUuYG/QXi9SWwQJawy5tWrIl5aVO5Ewudzdlrk6sfeIZqJuJngv+H3rT9qoSaPJpkvNjstH+C84gKjIZqs22XZ30k8e1yDYLfwnO2M9kYJXrHgdnUYxGm/urAeI0W8uyiJYeItv1mQTOy+PM0zPRvMhOjO5GDeMb21wY8/+OM+Q3/XUHU6uBlnTzr15UfVz3KgMFHJxmSO90xhRhX2jsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 149.199.90.133) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com;
- dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VxbTZ0R9PtZ8P942pgh6heQAGMxEIZbQQn9JJKO6FBk=;
- b=KTrYcgG76C7EGh9Y91kBJfsTKCXRn+54m+3hx5Nxms/0GZ8n06xEBn1oBMMWtB99MqsuLiTwE6vhnr+kB+N6T/+rOR2TFqV8r/xCVjJxLIPO7ROq10vZ8MIPMZf6sgvU6c6gC76+ElAjpxS/PK7jxqgeVVx0ZoH4Gfwpx7SA2iY=
-Received: from PH8PR05CA0024.namprd05.prod.outlook.com (2603:10b6:510:2cc::12)
- by DS0PR12MB6415.namprd12.prod.outlook.com (2603:10b6:8:cc::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
- 2026 08:40:15 +0000
-Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
- (2603:10b6:510:2cc:cafe::1d) by PH8PR05CA0024.outlook.office365.com
- (2603:10b6:510:2cc::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.6 via Frontend Transport; Tue, 25
- Aug 2026 08:40:15 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
- 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=quarantine header.from=amd.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- amd.com discourages use of 149.199.90.133 as permitted sender)
-Received: from satlexmb07.amd.com (149.199.90.133) by
- SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 08:40:14 +0000
-Received: from [10.85.33.190] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
- 2026 03:40:13 -0500
-Message-ID: <327c7769-8ef6-40c3-869a-93c29ec9fa9f@amd.com>
-Date: Tue, 25 Aug 2026 14:10:10 +0530
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sJJK9A91"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Me0T5+G6GU+yqK+pfWnftzQNd1qwsvqsRERpiPzCgCs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787649930; v=1; x=1788254730;
+ b=sJJK9A91oOq/SQ6f5hvjT6cX1z9D6s2FvK6HAEXsZfao1ftVM99QQUM+nNdaD0K2Qa63k2ci
+ yl6hkPFEZJbYQcPp46HTILaMiB/1ZhZ9LkZBdKuTcXjFwFVg+sI8jyPj+YgVOp/hqr8Q9BbCrsj
+ Z/2EbFzrvFVRkfGGOS+Rj1f4=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from mail-lf1-f50.google.com (209.85.167.50)
+	by smtp.migadu.com with ESMTPS id 3cb13eb8cb0bbc2e;
+	Tue, 25 Aug 2026 09:25:30 +0000
+X-Mizu-Trace-ID: 3cb13eb8cb0bbc2e
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5b2a73da7e1so1051e87.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 02:25:26 -0700 (PDT)
+X-Gm-Message-State: AFuF++k+L7Z9rjIuLtvM9ZQ5PM++VHIpMfrcSdyRSt2wsGKFfoFFeuhx
+	hnQJfcs9cUr2sQ/eFPu3aeKPZUPIEEUJ37cbrkGKi3dDxmRyv9MtSbATpGQwkpDX4/yOC9HyOj1
+	hnZFYS04BfRR29iGGEzYJxKDWo1NKeRkModtssHNg
+X-Received: by 2002:a05:6512:3ca1:b0:5b2:a967:c0e1 with SMTP id
+ 2adb3069b0e04-5b49ddd8905mr67230e87.0.1787649925547; Tue, 25 Aug 2026
+ 02:25:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <sashiko-reviews@lists.linux.dev>,
-	<kvm@vger.kernel.org>, Vasant Hegde <vasant.hegde@amd.com>
-Subject: Re: [PATCH v2 1/2] x86/uaccess: Extend CMPXCHG user helpers to
- 128-bit operands
-Content-Language: en-US
-To: Sean Christopherson <seanjc@google.com>
-References: <20260706063035.1139-1-sarunkod@amd.com>
- <20260706063035.1139-2-sarunkod@amd.com>
- <20260706065212.CCD741F000E9@smtp.kernel.org>
- <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com> <anpsjpCQHjJCH7TU@google.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <anpsjpCQHjJCH7TU@google.com>
+References: <20260825085948.1674721-1-fuad.tabba@linux.dev>
+ <20260825085948.1674721-3-fuad.tabba@linux.dev> <20260825091816.F361E1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260825091816.F361E1F00A3A@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Tue, 25 Aug 2026 10:24:49 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTw8wN-MgXXsYr0GtOUWJZ5=25GofefuDjqKfF3b5P4uaQ@mail.gmail.com>
+X-Gm-Features: AcwNN1Xjr3NXNfeX6K1obDu2zEHXIEui6hZzl_xWAkvM-wr4YjqGEMNUSRhqSAY
+Message-ID: <CA+EHjTw8wN-MgXXsYr0GtOUWJZ5=25GofefuDjqKfF3b5P4uaQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] KVM: arm64: Do not clear VM-wide SVE feature on vCPU
+ init failure
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|DS0PR12MB6415:EE_
-X-MS-Office365-Filtering-Correlation-Id: b18c58e3-cfa0-4c2b-f0b7-08df02847c16
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|82310400026|36860700016|376014|56012099006|10067099003|3023799007|22082099003|11063799006|4143699003|18002099003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	W20uM9au7iSFRsxlv4QNk6VXO0HBHRZtDPQhDJc91vOKMgQfkO/ucSRV3PWfXQAtfd9JjW6mat9WxJPLU2nq4hJNtGerksLogAfTFLWI5357YLiKchPqrdZp0fjE+7G5CfiZJC+yHQ8WVQAZJcHZdN1gphIIe34Zvo0wLbD2e0w6gpdgIohlSrOQ88M/Mn6RJLgfZlnNBVv4rBrnUamZCK5Wv/DLzBXvDH9AIpJ+rsiu9DXYgXYamsmKLRqBRG5BzgzXMgk+HZwaY02XmdhJocRtMJ/DJKbvF/jRjp+Lhevt+Al3DThH1HIMluV76xypCDqa8ImdGQ0ooOIQ+SeiD/ZEWRT47kAKTZSIXgexlfPoRRMZFWzrox5C0wrwXWK7m7NIzF7SyH+j2Jz7pgvhV9ItVrQfZgnGMB66eOqQB2ggKFnSvJmSC1hZ+ospVcf5ZCFNbPSUGsLoy50aQyj22dyxKIQrfTIcd5CJmsrHznHI8icYbex6eGOwghTZU7xFw6sxOc18gPZ5bvoiUgVYAmO/ypNEuzF60Zbb4zPIx6jiYcx6t26iyhVYheQSWveHmQnTwlZYNsP1XCSE201WIu1+tnixMJjJ9hl6MNwCpD7kLmXq1uLFTmEE6aPllwQjV3ZjrkXT7PcTNANmhkZ3aA==
-X-Forefront-Antispam-Report:
-	CIP:149.199.90.133;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:unknown-90-133.xilinx.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(82310400026)(36860700016)(376014)(56012099006)(10067099003)(3023799007)(22082099003)(11063799006)(4143699003)(18002099003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	4ZwRxFa7oZVgn+k6yZXZNuLzwElx0ngVDVf+nkT1iaU8sb3DZ5q8iRe5ODbDYbyLj6luNrP2Czvl4nO8FVcYIkywiTuyXRL6qbn4ZGJsIz6Kh/3/eP4iZqh1EkowVxaZkAtsfVMD+1kqwBqBf/XUGFhbWn6wZC3YnNxi8iqeagAWltTF3eMrBIxPgEw+oCMP7LNmFTf1YVFr3SuyuuO8RhwgfHw+yfGz9m1YbURWm4sXgi3z993RElTUSVmSXDhLo825i2S93aQv684bKX3qUUiMDiX28qKFiuE5decDJapsrOucyAOK+fBu6xuuUVTqHAwI+vNySbm6vkzEuIlf8X9YDD9up2Jm3pNL1eBWnJvKXaooImAk5/KmmpTzfhQBj7yWSf9EHZ9ce3yp7lcCXHY2OiJ1CplL4KEjTWUg9vE733xXboYYRt6RNJ7Fuzlz
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 08:40:14.9481
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b18c58e3-cfa0-4c2b-f0b7-08df02847c16
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[149.199.90.133];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF0002529D.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6415
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, 25 Aug 2026 at 10:18, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Hypervisor DoS via WARN_ON() upon page table allocation failure
 
+Nope [1]
 
-On 8/11/2026 5:57 AM, Sean Christopherson wrote:
-> On Mon, Jul 06, 2026, Sairaj Kodilkar wrote:
->> On 7/6/2026 12:22 PM, sashiko-bot@kernel.org wrote:
->>>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
->>>> index 367297b188c39..123755d471099 100644
->>>> --- a/arch/x86/include/asm/uaccess.h
->>>> +++ b/arch/x86/include/asm/uaccess.h
->>> [ ... ]
->>>
->>>> @@ -551,11 +594,18 @@ do {                                                                            \
->>>>
->>>>   extern void __try_cmpxchg_user_wrong_size(void);
->>>>
->>>> -#ifndef CONFIG_X86_32
->>>> +#ifdef CONFIG_X86_32
->>>> +/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e. cmpxchg16b
->>>> + * instruction).
->>>> + */
->>>> +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
->>> [Severity: Medium]
->>> Does this 32-bit stub correctly signal failure?
->>>
->>> Since this macro evaluates to 1, won't the surrounding unsafe_try_cmpxchg_user
->>> macro treat this as success (true) rather than failure (false)?
->>>
->>> This could cause the wrapper to negate the value and return 0 (success) to the
->>> caller, falsely signaling a successful memory exchange without actually
->>> updating memory or the old value. Even though there are no current 32-bit
->>> callers using a 16-byte operand, should this evaluate to 0 instead of 1 to
->>> ensure theoretical future callers don't encounter a silent atomicity break?
->>>
->>> --
->>> Sashiko AI review · https://sashiko.dev/#/patchset/20260706063035.1139-1-sarunkod@amd.com?part=1
->> Hi,
->>
->> Right, It should return 0 instead of 1, will rectify this in the next patch.
-> 
-> Is it possible to fail the build instead?  Attempting to generate CMPXCHG16B on
-> 32-bit should straigt up fail.
+[1] https://lore.kernel.org/all/CA+EHjTyPxcObTOwi25QTUDbLwAYaKnWY0QJVB_aMso=
+2=3D38PJUg@mail.gmail.com/
 
-Hi Sean,
-
-A compile-time failure in __try_cmpxchg128_user_asm would unfortunately
-break i386 builds even for callers that never use a 16-byte operand.
-
-unsafe_try_cmpxchg_user dispatches on sizeof(*(_ptr)) via a switch, and
-the 128-bit path is one of those cases. As noted in the comment above
-the macro, Clang/LLVM tends to compile all switch arms when expanding
-this macro, and only discards unused paths afterward.
-
-One way to solve this is to create two different macros of
-unsafe_try_cmpxchg_user for 32 and 64 bit, right now I am in favour of
-returning failure. Let me know what do you think about it.
-
-Thanks
-Sairaj
+> --
+>
+> --- Patch [2]: [PATCH 2/4] KVM: arm64: Do not clear VM-wide SVE feature o=
+n vCPU init failure ---
+> commit 1188c411e2a65143d7371d1038c2752c0f2de6c0
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: Do not clear VM-wide SVE feature on vCPU init failure
+>
+> pkvm_vcpu_init_sve() clears KVM_ARM_VCPU_SVE in kvm->arch.vcpu_features
+> when it fails, but vcpu_has_sve() tests KVM_ARCH_FLAG_GUEST_HAS_SVE,
+> which is left set. Later vCPUs on that VM then skip the SVE setup and
+> register with a NULL sve_state, which the guest's first FP access hands
+> to sve_load_state().
+>
+> Return the error without touching vcpu_features.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/p=
+kvm.c
+> > index c31b9d46b8b60..4340b13ee295b 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+>
+> [ ... ]
+>
+> > @@ -462,24 +462,19 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcp=
+u *hyp_vcpu, struct kvm_vcpu *h
+> >       sve_max_vl =3D min(READ_ONCE(host_vcpu->arch.sve_max_vl), kvm_hos=
+t_sve_max_vl);
+> >       sve_state =3D kern_hyp_va(READ_ONCE(host_vcpu->arch.sve_state));
+> >
+> > -     if (!sve_vl_valid(sve_max_vl) || !sve_state) {
+> > -             ret =3D -EINVAL;
+> > -             goto err;
+> > -     }
+> > +     if (!sve_vl_valid(sve_max_vl) || !sve_state)
+> > +             return -EINVAL;
+> >
+> >       sve_state_size =3D sve_state_size_from_vl(sve_max_vl);
+> >
+> >       ret =3D hyp_pin_shared_mem(sve_state, sve_state + sve_state_size)=
+;
+> >       if (ret)
+> > -             goto err;
+> > +             return ret;
+>
+> [Severity: High]
+> This is a pre-existing issue, but can the call to hyp_pin_shared_mem()
+> trigger a hypervisor panic if EL2 memory is exhausted?
+>
+> Looking at hyp_pin_shared_mem() in arch/arm64/kvm/hyp/nvhe/mem_protect.c,
+> it wraps the mapping allocation in a WARN_ON:
+>
+>         if (p->refcount =3D=3D 1)
+>                 WARN_ON(pkvm_create_mappings_locked((void *)cur,
+>                                                     (void *)cur + PAGE_SI=
+ZE,
+>                                                     PAGE_HYP));
+>
+> At EL2 under nVHE/pKVM, WARN_ON() expands to a BRK instruction which pani=
+cs
+> the hypervisor and brings down the host.
+>
+> Since host userspace can repeatedly invoke KVM ioctls to create VMs or vC=
+PUs
+> and exhaust the bounded EL2 memory pool, pkvm_create_mappings_locked()
+> might eventually fail and return -ENOMEM.
+>
+> Does this allow an unprivileged host process to hit the WARN_ON and crash
+> the host system?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825085948.16=
+74721-1-fuad.tabba@linux.dev?part=3D2
