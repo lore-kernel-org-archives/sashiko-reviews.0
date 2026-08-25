@@ -1,130 +1,174 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E6F33A70A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 10:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787655319; cv=pass; b=r5TSCPTxw9iGtFxpRdeiStEMtifx+DVFM2d3sYFuhTOKntfpozaZC9Sxl8p7fECpYGlLoa81TmcZg0VD+NNF2RzXrChWzTbVO1TRHRdYrUr2NygyBnocmwyWtlhwc3aD6CN3Urc3eGmNV5TpJnPoW8Zf938mIrv21PjLAhqEypY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787655319; c=relaxed/simple;
-	bh=YjhBNYLp1+JOi4PAwGzdbKWKT1rkCzEPvCpcv+Z302c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jAV9qBm8+UFgIdOJBsyM90zWmWD0GCbIiVQcmFZyzYxlCbK2Qobo7M80YMXEKMn2QXG4e0lrBedTZP1HJxU4UksGLrUefY5z3IWxFdAXK3m/Zq1mkhKHTzfjomfkOu/zS1C+PzhwRj5fVFqvI++TtGwYCqG/nm5gIcqenf/G2rE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f3NM8rJh; arc=pass smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6D73FDBEA
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787656515; cv=none; b=TXMREqAFishrG+Xu45nIXfqR/tJ7IuvURPpEeZtVD7ECLAPApFqYbMsT4AdwBkYPY9MRCig0/JTutQJFxDg6bSGDxQ4OJ791MQNeAhOi/aUDKOHwUXBOHNXfPph45UlVAOcScDEOnN8lzrFLCVMo+cKJc6Mr/+SnWvO+vlXujIs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787656515; c=relaxed/simple;
+	bh=rgO8WxAzGYA1IAaWkCLnezd4kffh98VeD+zgztdDmBc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=I28uum/ejYJpHXZdCKPxKkiICycqePX84ThKF1saHjaLeL7XlKytRCIKHPFRVU5yw16N7cCOnrBkoUyN4qNIxme80THowGiwppSPfjgBqCorCBNYrAyhqI3F3Vee6M8ArWCflsxiBvynTvPvzHspFJNzcijTWFvHlpcEwyXINj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=bVEHik/M; arc=none smtp.client-ip=185.70.43.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f3NM8rJh"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84847482584so484462b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 03:55:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787655317; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NkDxNElh83XPdOBShAism3FSZkH16UuiOjjTSjM/ZhIS7ruYG3tpp+Krqs13+kczGb
-         J9gztkx3EY4t3bhuBT6she50zBoy1tta2YscVL0hRUJ02L6jMj5OXLV74Aaky0tlEdu8
-         PH62SfUJM5pEHs2ABs5cs2CFCTTr2DSe3S2VveJWFMEEazS+neuXwN1Ina6dpL/BZlKN
-         j0jnoJKccqhIOHMvRDsQQgnzNMHQ+pv8Ph/S9CcqtyUq8Ai6b+Fe90zA20k94puLlA3W
-         IygCJ4sRjU0S8Ir9XUW3UiCbDICkvDpfQVfgPig0bclqNIbB+cDZm2WeoNtm+CO7wBQ3
-         qUHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
-        fh=DHjdiazyXdowSKc8QFJ0cQPiw6JytCzKGsbsz5/ouWo=;
-        b=RIfQTpea27n1F0VSSdB0BvXEi1MJ+CK7T0Mg9FxWd+9IWOiTd2jpH0HALldZGNMXM+
-         AJrxhpBDHoHdGasRVN6fiGcDB0MaCDtiLMMfjmVwzsxsbI6kLZgvuuROOHCSwn2gjVFz
-         /E3PAcPQOnmOozv8ugRpNpMTHT6PpiOJZE1jMlHa2d6XpQceTCuOuG8Jpk6TBPR9Kzp6
-         Wr0rqTdh8urc0YJk7yRwoqmV7ZdpACJ1PI/g7hFM90dP495ThMTCYyQvscWiBaq23Yyf
-         uBt26Qzf99jSUObrEVwwI2l3jMhH/06x8Ez+qnDeaRm5oh2MKKtBZ72H/707grMTWUpL
-         p7Rw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787655317; x=1788260117; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
-        b=f3NM8rJhKrAzDDvVgwdUVLAzrRfqBx75HeWdonpxiLJYgpzXqggy9Y3rM8wJOgG1Ty
-         2ee25IGcUhn1vmJ1L2aeAGn0bSv2jdmbdKlTUS9l+cKEBfHFnchmA6bG4ilScHpDlLBE
-         3BRJGTFbWddjeMZNjtOV3qACjJsrxz0uIHaKn8O+FDCawSrQIHDXQe7GVnpaU1787QpP
-         k7yP7XoVZKYLnz+lCkjaGtYTgz1cQXCqRmrMJQhPaAnnxxMMVJAba+nVCIkZqxXoGQ9y
-         ZfeNb4rse8syM0rjQSPH5y9ZFqrjBL49fyt60oKCPu4sCnfTsMNf8gY2mIUhP5Stbaxb
-         i4ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787655317; x=1788260117;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
-        b=qU1E1NDWoOKT0ptn8SfIMFcoEeVrJS8N1BCTtG4B8/Lx/oKQGrttwLQpCCCBK0WWoy
-         Sza8g1tiSp2PFgo6P4HwmEajNFW+upjYy6KzGBpUPt92Nsp/Oy5pge4CwAVe6PIty1HY
-         VUBnCxVobydFj1ELtTkB1zURL/jnY5lQTdleRPUAoxN+212wLXnpnHEAQ9uTlrETsptk
-         oVm0E5Mo10G3Voq7l1Jgf4fXqvJtzmplOsk/P44QPkBPIEPz3UxxEv6qOmgJahpY4Ttz
-         74+TbkMCXc117y3eUP5xN/zbqMmyC0BH79qCw5wCf0plra2Ri+6YJSsG6aTuudbYtX6P
-         DexA==
-X-Gm-Message-State: AFuF++m5qnwWjGwBGMgUXVdFl3LpWdcz7OWfGKa8m2LSLDCbnumIcR/T
-	SstP/+bHBTfMjgE1+v4GjH4rzfqaTqVb+oXK6MtPNiZdcNR6/ZlaABmSUs3qr//DfYll/B6Wc0G
-	P2AHR3bXNmnfKs6Q8fcG7ZgIpu5qAgZYPVAc6
-X-Gm-Gg: AR+sD10SJGHR198TzjZWxOstjlYqOm8x/MkMOLCbtcflksW5NNZSy277qskZyCxhKzB
-	W6FkfHAuzdvG5klQwbkk5SZlLBxhnLsLPo6dSjJBSZr9yU4cl0yWdTnUpaot4PeIGEoiaXq/w/Q
-	hL7DpbUL/XqzAU7MwZXFWxF2y7/l/BaHfGCPB7jdwkTAy1LdFzNQgsnQ+93dhiqERxNoADKaEwX
-	9sdtJnbKXYEKerY7w05tHIHbPG7CT1tuO5nEBZHU6R9VKOdvoHzY5Vfxke+/EE3spF/m7iCGEL8
-	ZLvyZtRaXHmrx+9WqswJYIpKBylXoHMfTp66ca2+JXcTofBtsT7R/qni+Y+1cqqKOXemuDz1ZHn
-	kMygjsjXw+1D+Wv4lgZq+CXQTE4gfY3PNgqj+s0s0s9sB6nFSRPNYVM/G
-X-Received: by 2002:a05:6a00:18a1:b0:84a:32ba:a262 with SMTP id
- d2e1a72fcca58-8523baee6a0mr6196886b3a.7.1787655317063; Tue, 25 Aug 2026
- 03:55:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="bVEHik/M"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1787656508; x=1787915708;
+	bh=jt6JmGogQkBpzPG4dOzOQgmcS6RIhCTyLzPIOBRmgfY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=bVEHik/McdKFjKE88dEnE3GiZM2xhUIxaO+ql4DhYrEPsjNOlpxmjJa20kdxn4jzh
+	 Mwo5hLubgmTgXOIApkiGA39Tdzjn+AuFHwT/j9d2mSl1L97+Lkuk/GmfVC2fAnMy7/
+	 fDS0sAPzV5FpqRTE3VlaLf3E1JXInLGNMt14BYkzqTfTrZbacZl3VtlWKQw1iza/uj
+	 VBz2vq0YWhMUQrRtQDTw/0SeVnJaA+RNQkHPqDzAw1F/W2AmoZ0GhnlioMKd9vBNGF
+	 VWJ3Ak1W29HNrayXDvslaTOJlIj27XBR/o57wVsGUSTQiGJbUxLX50kvfA04h+pWM8
+	 kwEJA6I/M5blg==
+X-Pm-Submission-Id: 4hTlYl0b0Dz1DF7G
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <devicetree@vger.kernel.org>,
+  <robh@kernel.org>,  <conor+dt@kernel.org>
+Subject: Re: [PATCH v6 6/9] iio: accel: mma8452: Reuse existing dev pointer
+ in mma8452_probe()
+In-Reply-To: <20260825083802.C3D821F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:38:02
+	+0000")
+References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
+	<20260825-mma8452-open-drain-v6-6-9b252804ee80@geanix.com>
+	<L6z2_8mrgRvVwG5aZBq5LTTYkeXmAEBX8ycp5-n_HC7aAydrlcmzV-c9zRFNEULDUJ9zsbkbReCbJJdj4F1eFw==@protonmail.internalid>
+	<20260825083802.C3D821F000E9@smtp.kernel.org>
+Date: Tue, 25 Aug 2026 13:15:06 +0200
+Message-ID: <87bjaqo3id.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260824100901.31675-1-phucduc.bui@gmail.com> <20260825100929.5F3D51F000E9@smtp.kernel.org>
-In-Reply-To: <20260825100929.5F3D51F000E9@smtp.kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Tue, 25 Aug 2026 17:55:06 +0700
-X-Gm-Features: AcwNN1XO-UxS2toBrwsjemVQr3JZE7SN6j1yX-KK_iflO1nCuB3BirBvu27LfcM
-Message-ID: <CAABR9nE5eWgOXEnpquG+KoLPL+KC93_2cgv3gNVsWDEfyA9d_g@mail.gmail.com>
-Subject: Re: [PATCH net] net: ethernet: sun4i-emac: Fix IRQ error handling
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+<sashiko-bot@kernel.org> writes:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Low] Undocumented scope modification and suboptimal pointer dereferenc=
+ing.
+>
 > Pre-existing issues:
-> - [High] Unconditional call to `dma_release_channel(db->rx_chan)` in the `emac_probe()` error path can cause a kernel panic if DMA configuration fails.
-> - [High] The driver unconditionally enables MAC interrupts during system resume, even if the network interface was logically down, which can permanently break the interface.
+> - [High] Device teardown accesses powered-off hardware and causes unbalan=
+ced regulator disables.
+> - [Low] Unconditional assignment of PM callbacks causes dead code when PM=
+ is disabled.
 > --
+>
+> --- Patch [6]: [PATCH v6 6/9] iio: accel: mma8452: Reuse existing dev poi=
+nter in mma8452_probe() ---
+> commit 04da87f5e80c506bb658d3dd5161087ce55fa6b0
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> iio: accel: mma8452: Reuse existing dev pointer in mma8452_probe()
+>
+> This commit refactors mma8452_probe() to use a local 'dev' variable inste=
+ad
+> of repeatedly referencing &client->dev. It aims to improve code readabili=
+ty.
+>
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index d1e8eb2a4ad3a..7ef1a9a91c31f 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
+>
+> [ ... ]
+>
+>> @@ -1801,7 +1799,8 @@ static void mma8452_remove(struct i2c_client *clie=
+nt)
+>>  #ifdef CONFIG_PM
+>>  static int mma8452_runtime_suspend(struct device *dev)
+>>  {
+>> -	struct iio_dev *indio_dev =3D i2c_get_clientdata(to_i2c_client(dev));
+>> +	struct i2c_client *client =3D to_i2c_client(dev);
+>> +	struct iio_dev *indio_dev =3D i2c_get_clientdata(client);
+>>  	struct mma8452_data *data =3D iio_priv(indio_dev);
+>>  	int ret;
+>>
+>> @@ -1809,7 +1808,7 @@ static int mma8452_runtime_suspend(struct device *=
+dev)
+>>  	ret =3D mma8452_standby(data);
+>>  	mutex_unlock(&data->lock);
+>>  	if (ret < 0) {
+>> -		dev_err(&data->client->dev, "powering off device failed\n");
+>> +		dev_err(&client->dev, "powering off device failed\n");
+>
+> [Severity: Low]
+> The commit message states the changes are restricted to reusing the dev
+> pointer in mma8452_probe(), but this modifies mma8452_runtime_suspend().
+> Should the commit message be updated to reflect this scope change?
+>
+> Also, since the function already receives a struct device *dev parameter,
+> and &client->dev evaluates to that exact same pointer, wouldn't it be
+> simpler to use dev directly here rather than dereferencing client?
 
-Both issues are pre-existing and are not introduced by this patch.
-I will keep the scope of this patch limited to IRQ error handling and
-will not address these issues here.
+Yes. Using the dev pointer directly is the right thing to do.  Added for
+next version.
 
-For the first issue, the cleanup could be separated so that
-dma_release_channel() is only reached after
-successful DMA configuration:
----------------------------------------------------------
--       if (emac_configure_dma(db))
-+       ret = emac_configure_dma(db);
-+       if (ret) {
-               netdev_info(ndev, "configure dma failed. disable dma.\n");
-+              goto out_dispose_mapping;
-+       }
-...
-       if (IS_ERR(db->clk)) {
-               ret = PTR_ERR(db->clk);
--              goto out_dispose_mapping;
-+              goto out_release_dma;
-       }
-...
-+out_release_dma:
-+       dma_release_channel(db->rx_chan);
- out_dispose_mapping:
-       irq_dispose_mapping(ndev->irq);
--      dma_release_channel(db->rx_chan);
-------------------------------------------------------------
+And also, the change that adds the client pointer will be rebased into
+patch 4, where the client pointer is used. Sorry about that.
 
-I will not include this change in the current patch.
-These issues would be better addressed and tested by someone with
-access to the hardware.
+>>  		return -EAGAIN;
+>>  	}
+>
+>
+> As a related note, looking at the device teardown path in mma8452_remove(=
+):
+>
+> static void mma8452_remove(struct i2c_client *client)
+> {
+> [ ... ]
+> 	pm_runtime_disable(&client->dev);
+> 	pm_runtime_set_suspended(&client->dev);
+> [ ... ]
+> 	mma8452_standby(iio_priv(indio_dev));
+>
+> 	regulator_disable(data->vddio_reg);
+> 	regulator_disable(data->vdd_reg);
+> }
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this teardown sequence access
+> potentially powered-off hardware?
+>
+> If the device is in the RPM_SUSPENDED state when remove() is called, its
+> regulators have already been disabled by mma8452_runtime_suspend(). The
+> call to mma8452_standby() attempts an I2C write to the powered-off device,
+> which might hang the I2C bus or cause transaction timeouts.
+>
+> Furthermore, unconditionally calling regulator_disable() drops the usage
+> counts below zero, triggering a kernel warning for unbalanced disables.
+>
+> Should pm_runtime_get_sync(&client->dev) be called at the beginning of
+> mma8452_remove() to ensure the hardware is active before teardown?
+>
+>
+> Finally, regarding the PM ops assignment in the driver struct:
+>
+> [Severity: Low]
+> This isn't a bug introduced by this patch, but does the unconditional
+> assignment of &mma8452_pm_ops to the .pm field in mma8452_driver produce
+> dead code when CONFIG_PM is disabled?
+>
+> According to the power management subsystem guidelines, this pointer shou=
+ld
+> be wrapped in pm_ptr(&mma8452_pm_ops) to allow the compiler to eliminate
+> the dead code.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825-mma8452-=
+open-drain-v6-0-9b252804ee80@geanix.com?part=3D6
