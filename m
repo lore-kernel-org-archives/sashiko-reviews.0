@@ -1,72 +1,72 @@
-Received: from mail-pg1-f228.google.com (mail-pg1-f228.google.com [209.85.215.228])
+Received: from mail-vk1-f225.google.com (mail-vk1-f225.google.com [209.85.221.225])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC86401A2E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EE6400E1A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659711; cv=none; b=JcOM4SmeBmf1yJ0v7cWbpN6z9iaQmhVIebpOHNuoigEdEXbqcrCtKzsKscfBqGWWOdFCG6i+nKeoxgAAMXqrUajngc6Pox4vAsKVHcC3PD5znGfoyK/sbmpXxsKidKCv+OssK+13cwt7Y991OBE9VkFZ3vz0EkEfpS/zD43HU9c=
+	t=1787659780; cv=none; b=Vkwi+rCGYBQIpE2S/vet+znsRWtMwYnAatBsqEXF1UnMilBU4bOayq7v9xvM2ly8HhhhBxqNdXn1kfvmG1vIvnqpZG91AMhyOJvbZP77AnvyK1oIJwGM26HyW9DXbfTiW/r4iMYhL+xIzJlZ4wXwVgwhNirFmNSHdwnAxMCpGc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659711; c=relaxed/simple;
-	bh=HaxPYDuxBW6bfqGcGnhLrbNc2F4EZIpEA2EjU8n/hzI=;
+	s=arc-20240116; t=1787659780; c=relaxed/simple;
+	bh=Kq18tjNqV3UlsEjJdRqY3jUU1HznSGcI9mSWhx7qbUs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NFKTcL0S8ZIw1f6CKekDBIgxWtzc5aQqYDbLmUwVNOe5Ue3x7pA8cK/mLjIu4GeJ84ZjCLJx6WZlcss6VkZ60Jc7UpLJkdKnMjfkhVpmJJ4/XcANvdX1Xp1vgHrH1Zlel/glS9QfxyeJvuUKHGy5yxIVDlmXMCaE3wV2C6S3eKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=DAoHwIQ4; arc=none smtp.client-ip=209.85.215.228
+	 To:Cc:Content-Type; b=hRO0r88KeMRFEJQtQr70K4o4iYZrvCYdUgIFm/7pF9KepTyQH+gISZ5bfQWs3dejiZZDTQUoNf4hWTxMG+0blHE9Q86hTR3RvBlGOIDE21+iRhoeXRuoFR96yXvDbNMDmwA4jIvQCLxy9hmOS2uwrhGbOnLJlAM0AyZjlqLapTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gTbnA3Co; arc=none smtp.client-ip=209.85.221.225
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="DAoHwIQ4"
-Received: by mail-pg1-f228.google.com with SMTP id 41be03b00d2f7-cc11a905ba5so3401085a12.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:08:29 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gTbnA3Co"
+Received: by mail-vk1-f225.google.com with SMTP id 71dfb90a1353d-5bfc5b77c02so3886061e0c.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:09:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659709; x=1788264509;
+        d=1e100.net; s=20251104; t=1787659778; x=1788264578;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=kG+yu2LYobBAey9jcSWIVKG1fLcv30b17kKWJV8xKWo=;
-        b=prw+rb3U+oM7R4VReK81RkafQQpuvU7sUV/hNdcnwbjm8bAZgyBtouJvGcnWAsbjOF
-         kh973iT2b2W5+sJZNgpTcMzUMRFuD8Rf3vuDQpKrg0nBWSzLYZDkOtwFd9LLHhOnBKpg
-         V36HkgemqajTCh0zRUAERuAGKFTwCVl3VM1xnHcqNGVngkK/UwcYFSKrbWEXmgEclWNI
-         Bed6wsD2OpmIllm3QlLsxbTMPkY5LHv2RBOO/gKdGmy8L1r0skla4b0ysOVkugoBn7CK
-         oxHOxy4DFsS3kMbctFgbnhFYsFE54Jb5vY9xZPZDdoc62qOCoxQL/yUHVtLWEUKljwg2
-         nLgA==
-X-Gm-Message-State: AFuF++ka655OHBQxhomL8o5QT3sm1U0GnZJ/G1MziD+iRDAI/ThXaBjX
-	xRcq1TtoP63Zv3kT+sPW4YWSLDGyK1CdP0xOIjrdTErz4pvrFd0Md8o60ShVWodY6SoM1i3P3cW
-	KngqejUjJpzJM235xOSLeNFJRciJmsiM2Fyg9pnYpjngn7DxApbT3cHT2eOdF8luQuaqpglPV16
-	8ATzSRw20cKprTDpX9uPabzcPbbl0pdQMN3D8lSQFW3G42qfX/VIZorId1TiDN6qq0qChJAtBmE
-	KLU9jL582wsQI3kveVaj8RspOOUbbQ=
-X-Gm-Gg: AR+sD11yM1f1t2T+z6OamBCeOc5d0ipxj2fXZLR8UcJEEsUy9D+gnTV0eLyY3Xk8S8a
-	0Fc4KE9UKVxtAerwDuK/Eq+fj+UXPDfucHyGD3nlVo4kkhQOSY7LPcS0T37YorSaMaY4+Zf6TDJ
-	uH9VZ2Cu/3X+icHbiDwXoq+VuGEjdqzkL+uUg6Q0IRhDzL/tGGCeeHHQF2GAHdhYW0Ht1aNbSim
-	x4s0u7rIbc2XCESpAQf4H7yRmZ6J2NnlGqHLWgI0TlXgVS40y/Z4tqJvcYaGu1vqY7rDqFA3LRM
-	Bqqc4kvTn5esqRFKYQ2/TMxFzUZpmZ/liu5mayBDq8uxEthpiIQoXzEENXYvzl8inTPA0I+4+4O
-	BqkL1t/UYb6SF3DNTDrLS6Hw/CTUprQw7D9/+0wZnUSaI8t8hqC774OvQziRHNa8wwonxQRIqPm
-	+moJEMUEqLnwQ0JXxOkpFOmQpOKHOTR3hu4GSyv7lphvHKPw==
-X-Received: by 2002:a17:90b:5750:b0:38e:c232:9d3f with SMTP id 98e67ed59e1d1-396463362d3mr12927025a91.5.1787659708837;
-        Tue, 25 Aug 2026 05:08:28 -0700 (PDT)
+        bh=Ui/VySqFLgg+W5tJbTpomj2roRXg51+Uj30Q0p2oewM=;
+        b=gMj/KsjT7QiYh9Vz0J49aGs6W2VWVMaFpDGfg08E8IgzH5ytqjXigR0wvpzLQXTo5J
+         rOuA5o2Mfsre6bqnhhb4rJt28IYlU5ZLTcg04DH5u65asBUngVwvmy62rt3zEM8qZG+b
+         gjZ65RvNi16XmJDLZ+vNqimSuZq+75z5yrBBeDbBmB6YlN3h2YGN8qlKgUjMFhb+ipc6
+         ofH2gPbNkyY1AXjxBcT7PyJsh+z4scHUUO7npWezorQgqk5Aa2Gq6ve2bPazV4xYKjBR
+         h7yed15R/WR719p9Zw8oI6k2Zor9xbZFn8tYbM+M0R+KoJr7NeD1/U5nuFpT7YYjorMp
+         5wdA==
+X-Gm-Message-State: AFuF++mH5Qk2wJL+UfS2Ct9UfumlgFu/gTPRdZlyWKz42OczVtTZJ3T+
+	LzAyLqXBfncGjhzChJDSM2qCKReoUCgeE+oKseEfiW2jrLHyay2IigGP2wAJFupGfVVMJ4rTrEA
+	9u0+50ap+zCOOk9oLd4VsaoFqhfsKHfnurkK+Tz39Ufab9GQzW7LYWWYGi6fjkpuCgOlknbzy+H
+	qu/IOQMaP80i4lSmtXgcr40mmrbKUyZTwXNfs/1SP1gii+Lhbteyk07yEHHCtlX7AZ+YnMAbxt4
+	Rj8HGc0xFm2RLttZm7SF1CHwBEcL/E=
+X-Gm-Gg: AR+sD11OgnF3l1cT6rWNeM74+Id0lC2XRVBZOrc1mZTM9ifg2cT74rbF3Km/hgKe0Oq
+	e8/lKHjQojF5+6aIBV1e9CUy6ZD4XLKDJ1/ugIJmwf0qdvrhnA8e6vJ0TM0EetMpUbupHz07xlu
+	1uoX2DajneChF85Wj6q47LIRjkW0d0iON1z3X81n9UebtxfNXk5QC6yMKswNoGMMjJ2lz8uogGZ
+	Qpi6HupV/K4t2vMOtL9RUg71UuKgxn9v3Kk3ptF1iDSxRrqGQPVCEK2KdJ4vYCSxBYZyaoBDz1H
+	Qdc26Qs8b4geoEAOlfLRTT+ICAknRNuB7mMjhLlt7ApjZVZKylT/4XDv31NtUp3GN0v9TPjulQ/
+	Dxv5sDJ363yeRlkqDnDpCajdnd0Ni1lNyHcsf7wWPnJCRDgi+Dngpw+Jawj/eU+MgsoPmzWj4oZ
+	rmKeqG7kbtMPuOQqv8QePzzuTzeM6uQUFTkh6VPhRSMC5vuw==
+X-Received: by 2002:a05:6122:221a:b0:5bd:73b5:6d2b with SMTP id 71dfb90a1353d-5c60deafa17mr10611231e0c.8.1787659777716;
+        Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39645a394c1sm1258930a91.1.2026.08.25.05.08.28
+        by smtp-relay.gmail.com with ESMTPS id 71dfb90a1353d-5c623e2e6b0sm1996214e0c.8.2026.08.25.05.09.37
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:08:28 -0700 (PDT)
+        Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c210c66672eso561178266b.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:08:27 -0700 (PDT)
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c15ceb17a28so354068166b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787659707; x=1788264507; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1787659776; x=1788264576; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kG+yu2LYobBAey9jcSWIVKG1fLcv30b17kKWJV8xKWo=;
-        b=DAoHwIQ4PgxMoSVcHhXjwiKx4JkupwoPPVXLFscWbQQIOJQfjIEbotnIlf2K5li8lw
-         4xqJV32GQKq9fOhSESrvslwGgBQ7wcR4ZJt/Qqyoya3Oot3kkhPng85YB1pLajsFh4tJ
-         kbTG6mbpI0w3VeW5lv+q5QyQdCAjwP+Bt0Jhg=
-X-Received: by 2002:a17:907:1889:b0:c25:4a9:ab95 with SMTP id a640c23a62f3a-c2504a9aefcmr153247466b.14.1787659705823;
-        Tue, 25 Aug 2026 05:08:25 -0700 (PDT)
-X-Received: by 2002:a17:907:1889:b0:c25:4a9:ab95 with SMTP id
- a640c23a62f3a-c2504a9aefcmr153237166b.14.1787659705185; Tue, 25 Aug 2026
- 05:08:25 -0700 (PDT)
+        bh=Ui/VySqFLgg+W5tJbTpomj2roRXg51+Uj30Q0p2oewM=;
+        b=gTbnA3ColhqD1J/PpRU8HIE593wVeJCuvZAfa+ItqeteJzwgpFJ6ZWDL+AfJCr9lVI
+         FiLKTO5H/deT5LjHAicLmMPKRrr/b+/i0U68gUI8yQYbyRvJzTGcWHUKU3um1hrTYCNT
+         ZrifrGKNjRJ9vAmOPxSC0+4chzHUJLZ+MxNZg=
+X-Received: by 2002:a17:907:8e86:b0:c1c:4db0:8314 with SMTP id a640c23a62f3a-c24e5b55335mr637061366b.13.1787659776109;
+        Tue, 25 Aug 2026 05:09:36 -0700 (PDT)
+X-Received: by 2002:a17:907:8e86:b0:c1c:4db0:8314 with SMTP id
+ a640c23a62f3a-c24e5b55335mr637054166b.13.1787659775454; Tue, 25 Aug 2026
+ 05:09:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,153 +74,184 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-8-chandrakanth.patil@broadcom.com> <20260818181137.5F35A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260818181137.5F35A1F000E9@smtp.kernel.org>
+ <20260818231426.58105-9-chandrakanth.patil@broadcom.com> <20260818181328.867D91F00A3A@smtp.kernel.org>
+In-Reply-To: <20260818181328.867D91F00A3A@smtp.kernel.org>
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:38:12 +0530
-X-Gm-Features: AcwNN1WTdZt4HCRYrjle2YIU_wkIPigXPDqKqnyzSPtcHaicCVCZsyPT5YFDdK8
-Message-ID: <CABvwm=PNTiRRK1kKhuENkViZaZ3wEGqsM8ivR87iS=FWDw4Now@mail.gmail.com>
-Subject: Re: [PATCH 07/17] mpi3mr: Fix out-of-bounds sense buffer access
+Date: Tue, 25 Aug 2026 17:39:22 +0530
+X-Gm-Features: AcwNN1V9k4hTCVhdLv-o8dzzS_z3oUxwt68AJqkd7n3_vraCkHzF5wRYHaIiDbc
+Message-ID: <CABvwm=NVp8RmHhwM4dSt1wRSLrZky0_s102t0=niRMeo6DMA5A@mail.gmail.com>
+Subject: Re: [PATCH 08/17] mpi3mr: Fix out-of-bounds bitmap access during
+ device removal
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000d2e2010659ddf5a9"
+	boundary="000000000000f46bd30659ddf9cd"
 
---000000000000d2e2010659ddf5a9
+--000000000000f46bd30659ddf9cd
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026 at 11:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 18, 2026 at 11:43=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
 >
 > New issues:
-> - [Low] 64-bit division by a non-constant integer causes a `__umoddi3` li=
-nk error on 32-bit platforms with 64-bit DMA addresses.
+> - [High] Placement of the newly added bounds check introduces a delayed c=
+ommand queue stall and async chain breakage.
 >
 > Pre-existing issues:
-> - [High] Missing `dma_rmb()` in the operational and admin reply queue pol=
-ling loops.
+> - [Critical] Concurrent lockless modification of delayed lists from proce=
+ss and IRQ contexts.
+> - [High] TOCTOU race window during delayed command hardware dispatch allo=
+ws double-free.
 > --
 >
-> --- Patch [7]: [PATCH 07/17] mpi3mr: Fix out-of-bounds sense buffer acces=
-s ---
-> commit 7536a65ff98a39b2e42c7eb228f93604d2b3086e
+> --- Patch [8]: [PATCH 08/17] mpi3mr: Fix out-of-bounds bitmap access duri=
+ng device removal ---
+> commit 498a49c2b9e406ac25107bbe9cd216b5c786f292
 > Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 >
-> mpi3mr: Fix out-of-bounds sense buffer access
+> mpi3mr: Fix out-of-bounds bitmap access during device removal
 >
-> The sense buffer address reported on completion is turned into a
-> virtual address with no range check, so an address outside the pool
-> resolves to memory that does not belong to it.
+> Device handles reported by the controller are used to index the remove
+> pending bitmap and to build a task management request without being
+> compared against the maximum handle the controller reported.
 >
-> Check that it lies within the pool and is correctly aligned.
+> Check the handle before using it.
 >
-> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3=
-mr_fw.c
-> > index 5e61448d8dbc6..103ce9dd22666 100644
-> > --- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-> > +++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-> > @@ -141,6 +141,12 @@ void *mpi3mr_get_sensebuf_virt_addr(struct mpi3mr_=
-ioc *mrioc,
-> >       if (!phys_addr)
-> >               return NULL;
+> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3=
+mr_os.c
+> > index f80a21ec161b6..7ae4b4fad3f4a 100644
+> > --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
+> > +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+> > @@ -2401,7 +2401,8 @@ static void mpi3mr_dev_rmhs_complete_iou(struct m=
+pi3mr_ioc *mrioc,
+> >               ioc_info(mrioc,
+> >                   "%s :dev removal handshake completed successfully: ha=
+ndle(0x%04x)\n",
+> >                   __func__, drv_cmd->dev_handle);
+> > -             clear_bit(drv_cmd->dev_handle, mrioc->removepend_bitmap);
+> > +             if (drv_cmd->dev_handle < mrioc->facts.max_devhandle)
+> > +                     clear_bit(drv_cmd->dev_handle, mrioc->removepend_=
+bitmap);
+> >       }
 > >
-> > +     if (phys_addr < mrioc->sense_buf_dma ||
-> > +         (phys_addr > mrioc->sense_buf_dma +
-> > +          (mrioc->num_sense_bufs * MPI3MR_SENSE_BUF_SZ) - MPI3MR_SENSE=
-_BUF_SZ) ||
-> > +         ((phys_addr - mrioc->sense_buf_dma) % MPI3MR_SENSE_BUF_SZ))
->
-> [Severity: Low]
-> Does this modulo operation cause a build failure on 32-bit platforms with
-> 64-bit DMA addresses?
->
-> When building for a 32-bit architecture with CONFIG_ARCH_DMA_ADDR_T_64BIT
-> enabled (such as x86 PAE or ARM LPAE), dma_addr_t is 64-bit. Modulo
-> dividing a 64-bit integer by a runtime variable forces the compiler to
-> emit a call to __umoddi3, which is not exported in the kernel.
->
-> The issue was flagged in mpi3mr_get_reply_virt_addr() within the same fil=
-e:
->
-> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_get_reply_virt_addr() {
->     ...
->         if ((phys_addr < mrioc->reply_buf_dma) ||
->             (phys_addr > mrioc->reply_buf_dma_max_address - mrioc->reply_=
-sz) ||
->             ((phys_addr - mrioc->reply_buf_dma) % mrioc->reply_sz))
->                 return NULL;
->     ...
-> }
+> >       if (!list_empty(&mrioc->delayed_rmhs_list)) {
 >
 > [Severity: High]
-> This is a pre-existing issue, but does the reply queue processing miss
-> memory barriers?
+> This is a pre-existing issue, but is there a race window here if the
+> hardware request completes extremely quickly?
 >
-> Looking at the polling loops for both the operational and admin reply que=
-ues,
-> the phase bit is checked without a subsequent dma_rmb():
+> mpi3mr_dev_rmhs_send_tm() sends the request to hardware. Only after it
+> returns does the code list_del() and kfree() the delayed_dev_rmhs node:
 >
-> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_op_reply_q() {
->     ...
->         if ((le16_to_cpu(reply_desc->reply_flags) &
->             MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) !=3D exp_phase) {
->                 atomic_dec(&op_reply_q->in_use);
->                 return 0;
->         }
->     ...
+> mpi3mr_dev_rmhs_complete_iou()
+> {
+>         ...
+>         mpi3mr_dev_rmhs_send_tm(mrioc, drv_cmd->dev_handle, drv_cmd,
+>             drv_cmd->iou_rc);
+>         list_del(&delayed_dev_rmhs->list);
+>         kfree(delayed_dev_rmhs);
+>         return;
 > }
 >
-> And similarly in mpi3mr_process_admin_reply_q():
+> If the completion executes concurrently and triggers another call to
+> mpi3mr_dev_rmhs_complete_iou(), could it dequeue and dispatch the exact
+> same node before the first thread has a chance to remove it, leading to
+> a double-free?
 >
-> drivers/scsi/mpi3mr/mpi3mr_fw.c:mpi3mr_process_admin_reply_q() {
->     ...
->         if ((le16_to_cpu(reply_desc->reply_flags) &
->             MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) !=3D exp_phase) {
->                 atomic_dec(&mrioc->admin_reply_q_in_use);
->                 return 0;
->         }
->     ...
-> }
+> Similar patterns seem to exist in mpi3mr_complete_evt_ack().
 >
-> Under high concurrent I/O throughput on weakly-ordered architectures like
-> ARM64, when the hardware DMAs a reply descriptor, could the CPU speculati=
-vely
-> execute reads for the descriptor payload or sense buffer before the phase=
- bit
-> condition is definitively synchronized?
+> [Severity: Critical]
+> This is also a pre-existing issue, but I noticed there might be unprotect=
+ed
+> list operations on delayed_rmhs_list.
 >
-> If the phase bit changes, without a memory barrier, subsequent reads to o=
-ther
-> descriptor fields might bypass the phase bit evaluation and read stale me=
-mory
-> data from the previous iteration.
+> The delayed_rmhs_list is appended to in mpi3mr_dev_rmhs_send_tm():
 >
-> > +             return NULL;
+>         list_add_tail(&delayed_dev_rmhs->list,
+>             &mrioc->delayed_rmhs_list);
+>
+> And it is removed from in mpi3mr_dev_rmhs_complete_iou():
+>
+>         list_del(&delayed_dev_rmhs->list);
+>
+> Are these list operations safe from concurrent modifications between proc=
+ess
+> and IRQ contexts, or should they be protected by a spinlock to prevent
+> list corruption? Similar patterns exist for delayed_evtack_cmds_list.
+>
+> [ ... ]
+>
+> > @@ -2564,6 +2565,12 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3m=
+r_ioc *mrioc, u16 handle,
+> >       drv_cmd->callback =3D mpi3mr_dev_rmhs_complete_tm;
+> >       drv_cmd->dev_handle =3D handle;
+> >       drv_cmd->iou_rc =3D iou_rc;
+> > +     if (handle >=3D mrioc->facts.max_devhandle) {
+> > +             ioc_err(mrioc, "dev_remove_hs: handle(0x%04x) >=3D max_de=
+vhandle(0x%04x)\n",
+> > +                     handle, mrioc->facts.max_devhandle);
+> > +             goto out_failed;
+> > +     }
 > > +
-> >       return mrioc->sense_buf + (phys_addr - mrioc->sense_buf_dma);
-> >  }
+>
+> [Severity: High]
+> If handle >=3D mrioc->facts.max_devhandle, the code goes to out_failed.
+> This frees the command slot synchronously but does not invoke the
+> completion callback.
+>
+> If this was called from mpi3mr_dev_rmhs_complete_iou() to process a delay=
+ed
+> command, would this synchronous failure prevent any subsequent delayed
+> items from being processed since the completion chain is broken?
+>
+> Also, because this check is placed here, out-of-bounds handles can still =
+be
+> appended to the delayed_rmhs_list earlier in this function when command
+> slots are full:
+>
+> mpi3mr_dev_rmhs_send_tm()
+> {
+>         ...
+>         if (cmd_idx >=3D MPI3MR_NUM_DEVRMCMD) {
+>                 delayed_dev_rmhs =3D kzalloc_obj(*delayed_dev_rmhs, GFP_A=
+TOMIC);
+>                 ...
+>                 delayed_dev_rmhs->handle =3D handle;
+>                 list_add_tail(&delayed_dev_rmhs->list, ...);
+>                 return;
+>         }
+>         ...
+> }
+>
+> Should the bounds check happen before allocating and adding to the delaye=
+d
+> list?
+>
+> >       tm_req.dev_handle =3D cpu_to_le16(handle);
+> >       tm_req.task_type =3D MPI3_SCSITASKMGMT_TASKTYPE_TARGET_RESET;
+> >       tm_req.host_tag =3D cpu_to_le16(drv_cmd->host_tag);
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D7
+105-1-chandrakanth.patil@broadcom.com?part=3D8
 
 Thanks for the review.
 
 New issues:
-- The 32-bit build issue is valid and will be fixed in the v2
-submission. switching to do_div() for alignment checking to avoid
-64-bit division issues on 32-bit platforms.
+- The observation regarding the placement of the handle bounds check
+is valid and will be fixed in the v2 submission by moving the check to
+the entry of mpi3mr_dev_rmhs_send_tm().
 
 Pre-existing issues:
-- The missing dma_rmb() memory barrier in reply queue processing is a
-pre-existing issue in the driver and will be addressed in a separate
-follow-up patch series.
+- The lockless list operations and race window in delayed command
+queue handling are pre-existing issues in the driver and will be
+addressed in a separate follow-up patch series.
 
---000000000000d2e2010659ddf5a9
+--000000000000f46bd30659ddf9cd
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -314,13 +345,13 @@ LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
 tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
 YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
 YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCDVCgYsHs58Gi4GjebSjJ0+dmQPr7leBWrOQos+PfROezAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA4MjdaMFwGCSqG
+oIHHMC8GCSqGSIb3DQEJBDEiBCDzGUTVjmGaqvy/v+bq9ufoV7mYQTfKsd0dG6N1cF8ZzTAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA5MzZaMFwGCSqG
 SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAU+wV+dIJh
-Oik++eelyWgQms+czjBhRpE330mOvadcRIyrEIWbWEYW/a5F1ItT0pPNjN6cGV29dttmxSITk4gH
-Ditl7XTY+jnLVfhU5YAndf0fZ7A9hUjgUEo2Rc3BrbG5flzKfcSxXuvUyKHj404ZMjBnrqiV007q
-bRjTssvvgb2shuDza3cTHBUPtc0GE6aRy7RfBsaRHXmtn0Kf61LTag4xrqf8Dw6cGwh+vmIrYB0L
-FHMG2Kvm9bXrFjtYMwaVb0xWNho2Big7bUC7MXL9MpyHT+a9SI0xVtHyn+o0bYupFD8rvC5rWuga
-RlrXbVZzveUEgTFkQzEqZmH+7OHp
---000000000000d2e2010659ddf5a9--
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBcanAK8Zdl
+GtgIHtQZZCqxU6KGhsjlJ7vFWsbRaStnlnPryBnq4alraupj9xeJl9KVrcMQImVJQGGEUZ88gPK7
+L8IlS/1lJ4RnVIkm6LzwSOp5FqvYjabW+X8KmjgziIras0Jw3mrUN6RFgE4j2Cg3cICsvhQibK8r
+qarveTi5bi6wxXgTJC65G8axQI+0IA5wO3xkdp3bTYR4OjXo8OiNJ8YP6DBnqVqnuJ0DOl1UTS81
+XvMJyApu8WZacPgFSSUI2Xd+zij7TdqmhcCyD+9hY20aTY56SfTKTBRYZ96TCbYITg6b5K34mZ7F
+u+HDL4jcfv6JBcFwB9Higf16HmfQ
+--000000000000f46bd30659ddf9cd--
