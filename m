@@ -1,72 +1,72 @@
-Received: from mail-yw1-f227.google.com (mail-yw1-f227.google.com [209.85.128.227])
+Received: from mail-vk1-f225.google.com (mail-vk1-f225.google.com [209.85.221.225])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498633EB106
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DFC3EB106
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659465; cv=none; b=cJoV/exItzz5IWSbgy6sMpKSAcQukS6XR67VX8iMIvQ/jD2CEfxTU/HEcvkJh0JM+7f9+3Z+Trmnw9TkRF7moLTR39ty4TiDSlbHKeUi2Oic5PKGM1hh7G425plFkQixy5cZQHnoIGCj4LwZ5qhRb2oa82j/LqR9oGvr1MlDb0w=
+	t=1787659542; cv=none; b=dG2Ibzhlr6C0VpXO42UiNs7FiuNYjvqmC6P9oqaage8cveno96xHh7qHyh093KFYlcc7o8aHOQUzcHzrJ0lztsqaYQoYfZwheIzWZBzNzdZTm5Bb/KEauMpkiX+cY/jf66u0rXsmAIRDuSca+lV7zv3JDXncnEqFN9Jb9yLgUas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659465; c=relaxed/simple;
-	bh=g6I/Orra56zWGx5yk7b2CX2N3Z6PN+67HjR06jQprPA=;
+	s=arc-20240116; t=1787659542; c=relaxed/simple;
+	bh=1P5BkH5XZ6BAa1l5D0mYYJgfmudQaGpN6gPeS1/dXdw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TAqf0OYJAa8SSzcjvMn1PaLf3CiPelZosnlvjcZ+cZnFmeOLN9jgckuTogUfdW9BYOnMVtSqWOUu1q5ilFJcl3POPe+RLFoclfWrpteeeaYfR3KkDxd0RKcOcgZQuIMueH+2MWIRh3w1ih06TPtVUo1s5RnEY+mwmFbRNMuKajA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=d2cLURC0; arc=none smtp.client-ip=209.85.128.227
+	 To:Cc:Content-Type; b=iO+myshTyiXh0aFZZyFpJelUYu7ZAwICF/0E7KIZCex/bSIBQ1pBqoALCfKVx14LP8iXqSr038cdzSDXoOXL2A81EDEkr/48MM+BG6GnbO9UmzIE+54s+JeHKJBC0MEEyYhEvz0fmae9WTohgBw0hWJ88V9oOfvXMkNBP5lEb7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=eNmQFoeh; arc=none smtp.client-ip=209.85.221.225
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="d2cLURC0"
-Received: by mail-yw1-f227.google.com with SMTP id 00721157ae682-8565d77c277so2905477b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:04:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="eNmQFoeh"
+Received: by mail-vk1-f225.google.com with SMTP id 71dfb90a1353d-5bf83925ddaso1708951e0c.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:05:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659463; x=1788264263;
+        d=1e100.net; s=20251104; t=1787659540; x=1788264340;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lcGsrF7wWIV1sZo1R5aNGez4WNHaaIfcQrPlf6yncLU=;
-        b=dZYry3YWgtArR/KkecnQAYAYzAMqMtLMTLjMy3zFH64U1iLvY2LrAgGIMaOUghY8hi
-         +fPJbjHFcjnVj7jR6zuKUeHQdmYTU6jmO6hEuaw92qR+uiCkq1ugePSKtLrbukezRXHK
-         nMojBFQIr92h8yP0bL+TYtK4bd87fMsUr3pxB6kNXYBLnbpB9KgrqzyyIYAxleL1PJ2x
-         zjX2CMwn5fCLv7i5E/ulounfs0OR0KopWQcU5L4eH62NOcV7SKTD+AQoNgwTGnu55tuL
-         6/+KljDTONa6uTlXjNvfRvdxN/OCUEnVUoOgrGuPy/1k5IsTDhKVv++Zi8RQ7F/QOE53
-         BdBg==
-X-Gm-Message-State: AFuF++kafsbSVS2DEUbjxXxSA8n/HMsTzR2CEF4Ek2fA0H8nvfeVPGjp
-	nYg95M3TTHwHbuFVpV69RaQwEyT4uHmPB26ecbVOrrB/8zVhfdvmlCyjGqJ72A8veEzlbTwQnzb
-	MpCgqWWRJpAr00FXtwnp2I7/pmeTh2NUePpdDoN/VM8afEIBxs1BMrjM5iVTjMLC+s//18U9xXU
-	8fkbRQTKvk94RWMT0iFY+SzEG99pns6mU7V8BOgZNLxpcMwELNuRdSXxn1nNop2NLrfJfFU231z
-	VmDLLFzSYWuBNN8eSLxhwgqurGSJLc=
-X-Gm-Gg: AR+sD11i8wA+Uqw5rLdTLreuK9J32hkzkOxOBxahtpgArgZdwyjapGX7TihH/hlYeLO
-	SbJQbdKbs/YC4S4ynhA/oF5HP/18ha4C7llGhhEOQ5H8ENjDVZdAIxf1JmjqeYBUubVREjmmbY9
-	qeMAEZSgIGPgVGtkczCKqqjQ0hUv5nSyUt7JaHxQYdDpPtlFGYXCywZtzj7rs3kIHAB3w1sQQqw
-	DPHKy/sAFVdQuQr3JAoWazPE3zGeW8XNrx1sU4glvjDGUEjMfOAZUW1jDaaXCLcv8+Sln5Wgklz
-	aEGG8OXjrFQ+PsdHKVhyKQFpLKhOnvkwtH6efjC4Q3G7SMDdDZAU/B8nmu4FLUmhs9g0kg6YBuO
-	1VhCoYD5qOoUD02qTUvZP9dH2xuInxhoVtlJ2jjZwG6wcDVfFB2dZRvSib3omyjhfcyeIeSmYjW
-	oz5UDJylQhLC3KS6PzDYV9FoYUsu9R2pk7ba8DV/YHp3I=
-X-Received: by 2002:a53:b211:0:b0:668:99f0:92f0 with SMTP id 956f58d0204a3-66cf223f5f1mr6099101d50.48.1787659462695;
-        Tue, 25 Aug 2026 05:04:22 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-20.dlp.protect.broadcom.com. [144.49.247.20])
-        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-84cb1c5eee9sm884037b3.5.2026.08.25.05.04.22
+        bh=qZGBwIR/bxmniOSKM1iPXQpE4j67XWeYPW4FBMwtqsE=;
+        b=kBCwnIBPMpGEIaGWOdTxQp3NP4xvsBwF2AaESgcvNKEpuyWFe7F8URW149sSrOqSAB
+         HQwDk+os7WROxUe2YAETwWhjcvX5maJhtTv1/RLjfqhzRECqaLr8ffkix2sj6n+GdidS
+         lh2Y0p63MqRbLQAw5GpEhYtz4GMJSF936SIL+xQ23SHxej1AnIHwC7rQdTjZV0OjdHKg
+         anDTC/lpM3V6RxXHtV47B2j4SiSLeC8Y0H2cDjJ2xwTKbMA4mT34ON4BqlY7zi7bex1h
+         tNvLAs2Y0JvE6AJ79rq0MeAq349yJ99ABLmCrDsFNtYhxiCgFoP1hWY1j6RZMMb3oQE2
+         Aasg==
+X-Gm-Message-State: AFuF++ltc6dDONMCeqyZJzvDtUgqhrtMr1HuRULs680HZJkYfZhvbV7l
+	orqPghRAO7ut8LpVeDCNwNV+SI0I0c3t1JOlkewawr91QFqMwLrGWsotRZelvgQMCkMG+jDZkMu
+	rg87L+lK17WK9NGiO3TkbSl4JfE7n9wTPVqiPMbSjTxOQVLw2FW8G9C+1jofR3hAXx34F/6olF+
+	BqAb2ePusLdgFnC2KDUjl4V526vNtBNz63KjQO1frYAxDwt8RlOUDgFk5dK6FPiVfisBHL6oC0f
+	zvnBmDZzj/7KZcaDg36pZPPm96CmLc=
+X-Gm-Gg: AR+sD11DVUHqrv+N3PImViF2Lof4pwpNBSowoM4Hn4Ob6sqdW1wxFO8m9STojehcdSM
+	HaJyvvpqwYHeQlbaUSEDUk94bw7Xpo6RD2kajezNJjmL76qwy7sLo63Y3DuCXNV+/NSBntgPqXH
+	zi+sXoC4fCdejk2LLRR233g93LxL30THLo9VK94DxXV3U8MCE67gdntIGu4DGFMN0waLxfSYPgq
+	tLGPDov2HnyEzlePGLIeSspUbQTzMyHb4K3NhdeKMAsoWAizkppRULcWpZV8F22yZiSFPE5gFzE
+	wTYgY204rqXotOujpLC5jLhrmiNBzcm7eRD9MVhkFi+bt7DE0kkokJ4DA3hATz51jofJhyqQxd5
+	N34CzygtzJlpDyKMY/zxE7c1Bt1dyrFumTroMOdyPYyQ0czyjkTd/xexrWh561V1ZaDr+xOsyHV
+	s9nJNiap0Hj4yrg6+yCBKMTcD0ByQ0l+073MXjVzQoaJs=
+X-Received: by 2002:a05:6122:3c47:b0:5bd:86ac:a847 with SMTP id 71dfb90a1353d-5c60de75d5dmr9615001e0c.6.1787659539728;
+        Tue, 25 Aug 2026 05:05:39 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-16.dlp.protect.broadcom.com. [144.49.247.16])
+        by smtp-relay.gmail.com with ESMTPS id 71dfb90a1353d-5c623dedb48sm2142647e0c.6.2026.08.25.05.05.39
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:04:22 -0700 (PDT)
+        Tue, 25 Aug 2026 05:05:39 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c15c6a68406so313368266b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:04:21 -0700 (PDT)
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c1c4715cf0eso199974866b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787659461; x=1788264261; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1787659538; x=1788264338; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lcGsrF7wWIV1sZo1R5aNGez4WNHaaIfcQrPlf6yncLU=;
-        b=d2cLURC0Hr0Xyflb6GKq/njiO7Sb4q5DhMObpbPbb4v0xwwhKf9nO1cqbHL77Yg9lF
-         J1oN5PwpMH4l5jdojscLrJRsOvAlhgeHTKUeF+XNYr8hxX2sV9AWcXzGfWMRRfbdxSgu
-         dCcPbcx/zJIcJbVYw03Ca+DAxc0nv5eoNiIyI=
-X-Received: by 2002:a17:907:d0c:b0:c20:53c7:488d with SMTP id a640c23a62f3a-c24e5ade3a4mr674422466b.14.1787659460764;
-        Tue, 25 Aug 2026 05:04:20 -0700 (PDT)
-X-Received: by 2002:a17:907:d0c:b0:c20:53c7:488d with SMTP id
- a640c23a62f3a-c24e5ade3a4mr674411666b.14.1787659460085; Tue, 25 Aug 2026
- 05:04:20 -0700 (PDT)
+        bh=qZGBwIR/bxmniOSKM1iPXQpE4j67XWeYPW4FBMwtqsE=;
+        b=eNmQFoeheo8J8IvbBixo0AYxEbJ7kLSiklM1XeCZrGloywojbSwrAe1Eyna6/UFlJd
+         RDICVXy4wy8mZyBKe/7ZDy8RsaJx6mpF4W73QzGgAf4ENAee/eX5HhxuSI57CSaJFtfo
+         Q2CjWTh7OQi96SEYUyvBnFrnlTeu0ZA3KPNx0=
+X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id a640c23a62f3a-c24925eb3ffmr3098083966b.10.1787659537596;
+        Tue, 25 Aug 2026 05:05:37 -0700 (PDT)
+X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id
+ a640c23a62f3a-c24925eb3ffmr3098037966b.10.1787659535255; Tue, 25 Aug 2026
+ 05:05:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,126 +74,122 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-4-chandrakanth.patil@broadcom.com> <20260818181131.B7A541F000E9@smtp.kernel.org>
-In-Reply-To: <20260818181131.B7A541F000E9@smtp.kernel.org>
+ <20260818231426.58105-5-chandrakanth.patil@broadcom.com> <20260818181328.01D701F000E9@smtp.kernel.org>
+In-Reply-To: <20260818181328.01D701F000E9@smtp.kernel.org>
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:34:08 +0530
-X-Gm-Features: AcwNN1XQsIL_k4kkB_41hzk8OMRP6ENZANiYMBGV0XWL9qsRT8zcNUxRiKSP9-4
-Message-ID: <CABvwm=PWk07NjVmTCQzkU=rC53gGWdFSLttb_qBzb+f_3gBxKg@mail.gmail.com>
-Subject: Re: [PATCH 03/17] mpi3mr: Fix I/O block counter leak on admin request
- post failure
+Date: Tue, 25 Aug 2026 17:35:22 +0530
+X-Gm-Features: AcwNN1WorFaTdd8RFtiqotNs17zTPd5A0NeViKybnTKlMfb8TJ5XGialo7tK2XE
+Message-ID: <CABvwm=NaWiC5=_+kFwTE+mQ5N70p86uxAWerGvL11gXGvZgLrg@mail.gmail.com>
+Subject: Re: [PATCH 04/17] mpi3mr: Fix target device reference leak in BSG
+ task management
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000002b37740659dde7a9"
+	boundary="000000000000c577b90659ddeb21"
 
---0000000000002b37740659dde7a9
+--000000000000c577b90659ddeb21
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026 at 11:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 18, 2026 at 11:43=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [Critical] Dereferencing `stgt_priv` on the error and timeout/completio=
-n paths leads to a Use-After-Free if the SCSI target is concurrently remove=
-d.
+> - [High] Use-after-free of SCSI target private data (`stgt_priv`) during =
+completion of BSG task management commands if the device is hot-removed.
+> - [High] Unprotected lockless access to `tgtdev->starget` can lead to a N=
+ULL pointer dereference or Use-After-Free.
+> - [High] Missing bounds validation on the BSG `request_len` allows an Out=
+-of-Bounds read when accessing the variable-length buffer entry list.
+> - [High] Little-endian `__le16` fields from the user request are assigned=
+ to CPU-endian `u16` variables without `le16_to_cpu()` conversion.
 > --
 >
-> --- Patch [3]: [PATCH 03/17] mpi3mr: Fix I/O block counter leak on admin =
-request post failure ---
-> commit 1533f8fc86e8eb7e7a5042ad5aab564671eb7b8c
+> --- Patch [4]: [PATCH 04/17] mpi3mr: Fix target device reference leak in =
+BSG task management ---
+> (Note: The format of this review has been altered to a free-form summary =
+due
+> to automated recitation restrictions. The original patch diff is not quot=
+ed.)
+>
+> commit c103d1267a7a6a9328e7aab3dbe852bbbb68d3e6
 > Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 >
-> mpi3mr: Fix I/O block counter leak on admin request post failure
+> mpi3mr: Fix target device reference leak in BSG task management
 >
-> This commit addresses an issue where the per-device I/O block counter is =
-not
-> decremented if posting a task management request fails. It lowers the cou=
-nter
-> on the failure path to prevent I/O from remaining blocked.
+> This commit fixes a reference leak for the target device during BSG task
+> management command processing. The reference is now dropped whenever the
+> lookup succeeds, regardless of whether the SCSI target data is fully setu=
+p.
 >
-> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi=
-3mr_app.c
-> > index 1cd1c38dcd565..a4fe10a05cb3a 100644
-> > --- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-> > +++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-> > @@ -2782,6 +2782,8 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bs=
-g_job *job)
-> >               dprint_bsg_err(mrioc,
-> >                   "%s: posting bsg request is failed\n", __func__);
-> >               rval =3D -EAGAIN;
-> > +             if (block_io && stgt_priv)
-> > +                     atomic_dec(&stgt_priv->block_io);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this add another path that can tri=
-gger
-> a use-after-free if the SCSI target is concurrently removed?
->
-> Looking at mpi3mr_bsg_process_mpt_cmds(), stgt_priv is fetched from
-> tgtdev->starget->hostdata, but the tgtdev reference is immediately droppe=
-d
-> before posting the bsg request:
->
->         if (block_io) {
->                 tgtdev =3D mpi3mr_get_tgtdev_by_handle(mrioc, dev_handle)=
-;
->                 if (tgtdev) {
->                         if (tgtdev->starget && tgtdev->starget->hostdata)=
- {
->                                 stgt_priv =3D (struct mpi3mr_stgt_priv_da=
-ta *)
->                                     tgtdev->starget->hostdata;
->                                 atomic_inc(&stgt_priv->block_io);
->                         }
->                         mpi3mr_tgtdev_put(tgtdev);
->                 }
->         }
->
-> Because there are no references or locks held, if the device is concurren=
-tly
-> removed (e.g., via hot-unplug), the SCSI midlayer can invoke
-> mpi3mr_target_destroy(), which unconditionally frees the hostdata memory:
->
-> mpi3mr_target_destroy() {
->         ...
->         kfree(starget->hostdata);
->         ...
-> }
->
-> Since the original completion path also dereferences stgt_priv after slee=
-ping
-> in wait_for_completion_timeout(), both the timeout/completion path and th=
+> [Severity: High]
+> This isn't a bug introduced by this patch, but there appears to be a use
+> after free risk regarding the SCSI target private data. In
+> mpi3mr_bsg_process_mpt_cmds(), the block_io counter is incremented on
+> stgt_priv, and then the target device reference is dropped before sleepin=
+g
+> via wait_for_completion_timeout(). If the target is hot-removed during th=
 is
-> newly added error path seem to potentially call
-> atomic_dec(&stgt_priv->block_io) on freed memory.
+> sleep, mpi3mr_target_destroy() will free starget->hostdata. Upon waking,
+> does the atomic_dec() on stgt_priv->block_io write to freed memory?
 >
-> >               goto out_unlock;
-> >       }
-> >       wait_for_completion_timeout(&mrioc->bsg_cmds.done,
+> [Severity: High]
+> This is a pre-existing issue, but the access to the target device's starg=
+et
+> pointer seems unprotected. In mpi3mr_bsg_process_mpt_cmds(), tgtdev->star=
+get
+> is checked for NULL and then dereferenced locklessly to access hostdata.
+> Since mpi3mr_target_destroy() can concurrently set tgtdev->starget to NUL=
+L
+> under the tgtdev_lock, could this result in a NULL pointer dereference if
+> the compiler emits multiple loads and the pointer becomes NULL between th=
+e
+> check and the dereference?
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but there might be an out of
+> bounds read when iterating over the BSG buffer entries. In
+> mpi3mr_bsg_process_mpt_cmds(), the loop reads buf_type and buf_len from t=
+he
+> buf_entries list. Is there any validation that the number of entries
+> provided by the user does not exceed the bounds of the allocated
+> job->request_len? Could a small request length with a large entry count r=
+ead
+> arbitrary slab memory?
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there a missing endianness conversio=
+n
+> when parsing the device handle? In mpi3mr_bsg_process_mpt_cmds(),
+> tm_req->dev_handle is an __le16 field, but it is assigned directly to a u=
+16
+> local variable without le16_to_cpu(). Similarly,
+> mpi_header->function_dependent is passed directly to mpi3mr_issue_tm(). O=
+n
+> big-endian architectures, will this block IO on the wrong device and fail
+> to block IO on the actual target of the task management command?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D3
+105-1-chandrakanth.patil@broadcom.com?part=3D4
 
 Thanks for the review.
 
 New issues:
-- None. This patch specifically fixes an I/O block counter leak when
-posting a task management request fails by decrementing
-stgt_priv->block_io on the failure path.
+- None. This patch specifically fixes a target device reference leak
+in BSG task management by ensuring mpi3mr_tgtdev_put() is called
+whenever tgtdev lookup succeeds.
 
 Pre-existing issues:
-- The stgt_priv lifecycle/UAF risk during concurrent target removal is
-a pre-existing issue in mpi3mr_bsg_process_mpt_cmds() (also present on
-the completion path)
-  and will be addressed in a separate follow-up series.
+- The reported issues (stgt_priv UAF, lockless starget access,
+request_len bounds check, and dev_handle endianness conversion) are
+pre-existing in the driver and will
+  be addressed in a separate follow-up series.
 
---0000000000002b37740659dde7a9
+--000000000000c577b90659ddeb21
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -287,13 +283,13 @@ LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
 tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
 YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
 YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCAujwE1rZDmhaQlD+qiq4gP3cT8dV3KTX9QmgvNicRoyTAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA0MjFaMFwGCSqG
+oIHHMC8GCSqGSIb3DQEJBDEiBCBYzF5EH/0Y4k0SP7CPAL0HcvEoVU6qt1BmJ+IM7SppYjAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA1MzhaMFwGCSqG
 SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQA3yOULt/wq
-WHRhcbpm1Y39Fo693WbKQjObc1A2sNHzh1HpEY1rjppuq5BQ0ql7NOEfKviU3Jh9Wf3MzKJxVwII
-QYD1vKz/hUKKyCkjzdUJj3ONNOMAPSwI6P5CMsAoa302DJYsSOUMSuruIuEFO07dV6hefnjzFen5
-LPiEmSPv3P9uSxugleAOWnGH3amtkBrhh1U128GXHOS77AFd+Tip3cdTwwwARwmZCntl9OdIJU5B
-SWtrwJvIONTBGx27HsAa8uCKIaa00q1xzCZoXdPGX7zlRjDVJeBAZ0l6kLC/BFTXoqWNxg7YEypi
-o7NOhSqDs/ITMEax/rwKz91C7hBz
---0000000000002b37740659dde7a9--
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQB/Ro7/y29d
+6+b/WZpQRcEg7pO6hMyRvg0E6KYcZb5/wWwPRTnaEevO/x80Uh7lr3KOfKyhqRF8lv0n6LAk9lYx
+Kw2TUn3fbOcI3hULYuL3bkmUHJ6MT0SdW0gVZSeRllY1CIAiM12+3EbBt+xTJXQ50t06YmQ9TLg4
+zbNyh72aaecskVEFnRump6HjLjsdoJR5w8bhWl4IRCwg/YUSdvjwD7OkC0+Mh88JeZP3o5w6UC4H
+DWJGUYk7jWw10b2/FzkjT5KSrAVGDAmrkobq98Sc99L0hRXhVRy7MtRondpf2kt2TiNbvu/9vzLt
+D0h5lTV0tMx5g/nLndYSrdUlWlCq
+--000000000000c577b90659ddeb21--
