@@ -1,72 +1,72 @@
-Received: from mail-pj1-f99.google.com (mail-pj1-f99.google.com [209.85.216.99])
+Received: from mail-pj1-f97.google.com (mail-pj1-f97.google.com [209.85.216.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE7A393DF9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE683F99F4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787660050; cv=none; b=QRlU77s3nYdPx3BorrENmy3ODCRnDLGsfL0813ZJaOSyvK2aXz/9UdFIYuU1dlhQu085+iDv38fR9HYbeg3ZbP0GlVgPsniOKXZzRDBBLAuRA3ZlDCkzkisqirXJrFy1L/j1CEBVm55mJJ7IQltlwmBeXu+C2g4GjbBwSJIdIcg=
+	t=1787660139; cv=none; b=B5hJwCwxB4dE6s5zpoeTzW7wHfBASUWGYsEz9u71QjMOVXSkD2sljtg/jIxL63HamaSVGxRZjLx2cAEC3VNl2A2I2L1JXahpYzlm/C/CiHoElQezZPoPbpcEHF9RK0xz6WwAUEMq26c0KekqT5+yLDmYQt2ZBHWE+8d70uM32nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787660050; c=relaxed/simple;
-	bh=NVbkKI6QFsXk17rOg7lcPfRf5F+RTbGPKucUVaamswM=;
+	s=arc-20240116; t=1787660139; c=relaxed/simple;
+	bh=fApTRrt9gmEka+IlyM/INDKVLFbftCvlP0IR5zys5EQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NgII8j6kKSUBCIYoQHjKo3kPN6atWufx+xmK1/IckknZLzFRHYm4TKp4AOUDzOjJ0zmtuiw3oWQC1uxpkQnIFDtm+B3rPGJX5S9RAnLj/k/GwrnIeRbGMfe3ygWYrNoG7O/2pA83tCPwfoEIMK7suPMNE+mtrY6p9fGDpcdqcnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hor/xZB/; arc=none smtp.client-ip=209.85.216.99
+	 To:Cc:Content-Type; b=jq1pue3It4OpWFvziYv53ysmSui7hhkuJUTBgDN1Em/7jev5KbHT6aeQeN13eYAokmtAoz00ExQA5jvlfO1/JlhPWTnC0GLqo7qCrpdaczLkjXCG6OHNaE1tRnY8W+CqmD4RRoxnFU/o1xF50Vi2NtGFTu3SBMEGEbq7nJovbGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Od/Gnt2D; arc=none smtp.client-ip=209.85.216.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hor/xZB/"
-Received: by mail-pj1-f99.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so6468855a91.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:14:00 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Od/Gnt2D"
+Received: by mail-pj1-f97.google.com with SMTP id 98e67ed59e1d1-39652a6e963so522540a91.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:15:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787660040; x=1788264840;
+        d=1e100.net; s=20251104; t=1787660136; x=1788264936;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xB7RDS/L44/MrXoSm7Y3WAOETyxE7JFt48XjjgX9L7c=;
-        b=jrOEdksUjt8/6kMzapnBwHxL/OX3zlIejDy3RFpPgF7aowBitc/C+JAey3gZRsPm50
-         qmXtcNFT5AH5Upgajytu94LjcEHSkywZGiPqu8LZN9DI6b65xfGil293JqLkRvhgrwNY
-         z45ut+No1mupUYJjUS+UABe4+ZodxABlAdKAekrXBtHWko0cZFce5N3erXHztil3Cg3e
-         MvlkWSrYaVPJudzeO7jYCrrCaIvOdZ1evWDrr6uGEArlnRuWpCN0OvKzs0LtPvYbEajg
-         v/WNKe6fdUvmmmFQhy3cKzBYQcrJanHioKyPahG+Ut0VGWBWcC+xUmpzSHJs3cTM0gR0
-         tBRQ==
-X-Gm-Message-State: AFuF++l5mzkJwpSpyS1eJ2YTlrBeopGVr+qKbZ2Rt15ay9tN+q7SHGsU
-	zoAoM2SfE84HSphOZj6WNmzGd5QmzTrpL9KhEczeSsdjtTbliTD/FWaTY8XEzSExgxud7riJRAp
-	whd1NL+fT28/uFNvu217MMu/HkUffhmp0X40nQrP6nuh0g0Zz+TVsddmOaEqu6m+prWgRAI1+//
-	trScZSAQwPOEhxCGuAkP3QmYfwOWYWpHQ8NIOqMm93aWAcxFai6ZE3+aCUy7Nx7g1t7UBaVJNoK
-	uLi3bYFJpzYZCCD9YO+XBU+RkcMQ6A=
-X-Gm-Gg: AR+sD13fcYmNr1arr+M+tKYXiwrkK81D7HATefnSnEmnoNWpHEXd39DjRLVNHr9QmB9
-	/eX1ZVjDlgZMb7xJaqJfGyIVpSnniimSdZrNQNoeaEhmY+1mCmggOGLm5yKcvEGoDw/H+yAxO5C
-	M7O0berkFzdOjKlPlGv/uI6VszZpi2gMNCSgcVGMMml40wnX6rNIEQQUqyOaVzsjxih/Q/lnxeM
-	SPfextPd0eDy8oj2+0xc3K7LvWNlXRWy5f9z3pumZ+Yr3gF+yew1vfQAsG4nZtgmi4n4JLhXZUb
-	88m/UhA3JydeyTUJDS211MfmJEBiGTtNT/coA/defYrrtnSeF2/KBtggxtqOaOKA6HJkjJdbmK1
-	YSbVxS4TZ25RDOeoFR0Xk90yejeWVgkSvnmzRvLq+iR/jIri3bh/FIgxbY5oNUHfTzmeEr1zxu2
-	F6z/2r5EQ4vhQiERfpv3zxb1j/5qOKSD5JdYcH+OsN/Z587g==
-X-Received: by 2002:a17:90b:384d:b0:38e:6aa7:68ad with SMTP id 98e67ed59e1d1-395c3503b04mr55426014a91.5.1787660039978;
-        Tue, 25 Aug 2026 05:13:59 -0700 (PDT)
+        bh=3h59E4QAomM0xqV8La4WX/RYRGeXjWvQ8H5gMqWnVEc=;
+        b=TCrh9j8Ob+LJWLfIv/JfTwGGmZVPNx0VszfWFirhuWpjNXDikbdWJBqRyQeaYOEBkI
+         5V3KhVS89PXv1HY4FmzeyD03BBMLaU2BsX2JNKrOqzmk5inakKS9V+8oV1CNNDPOZkbn
+         Na252J/+USGJ5qGjVv2qROxhg+t0jUXmtiJ5kzpd0wPgZS2dpeSxVK5O4+3M3zYBlsAW
+         lKxPAihksj0q63CPuyoAUNGc/Z/Tz9y67l5FR3LFbbB9F8Cb19LpM4TzKWYZgD0unJuN
+         FQ0j1AQtaB3rfcwWPe2hkX1IetruwKcQRjVHObL2e3qF7hff6MALFEEfaRzXg8EGQwR2
+         5B7Q==
+X-Gm-Message-State: AFuF++m3FECirLvKXTCcvMqOTbf4P/iiBkk6GdC698T0H8HZ4zTTXtmT
+	ceMVooh5VLtLc6S4nMicjUN02bsWijtJi8gS0W/oeleb8fexfTK7UthlUXtCzLQYvMyuBJWtnpF
+	mYWt6vIBSZ7r3RJHjXMdyi2DcnlE7jOIfIcVtwcj2Bc8vwInc5a5opjLKNoiXfxinFfFepkto1P
+	SYta0M38UDqxOyBOX8EbvSUo1sHCvDPj0qY93Vs4K9+OAOEREIVB+ytmeusCR0w0IrAnyYbwuQ4
+	Z3RAY4oEdxUcZ+qEiH12KS8YGSNZsI=
+X-Gm-Gg: AR+sD110lTOWeJf+M1LCaGXoNNFKHrd3d8a8i45XDIY0vkvJ6f0VkrANJxXb27DxbR7
+	Aw83+s2sWJPw17JYQMJ4jUcpya/7MHxr4H9Bi1ROyNF1Jv0dD4uGqsRhIaF2ZBQ4Y7G0F6niKQW
+	hN1ZpEiiL4iywAhej9N0jRqxDuAoOre4PtHyp43Vz9Cnhau0SfGWcwAhgjZz8fZcpYc6P4ntSaY
+	6SaiHD8tMnxRQcya7woh+hI3hIkbh5gj/gA0PMg4sysUdkSyWJvRTeLVbcZEXIYrK+Gq+42O5/u
+	7qOYpGmlpb64nqz1oyGeTzwqKmVjMsaR2vEBS9fPOaGvPX3gem+giKVnnJ9uoBhz9VE2z6Juaz9
+	DDRtdJJN70HY/hExI0xQH2XwyR18ruLm2BXp+GPZivyjjDKGGpXBvKptAG+2DNr0ZuaQwuIHmv+
+	ndqR8mSDJPO8S8lFKkR4Pn5JEdDsj5l1cU0culrx4kpFzinA==
+X-Received: by 2002:a17:90b:4b42:b0:390:84db:888e with SMTP id 98e67ed59e1d1-39645b1c818mr6325466a91.7.1787660135823;
+        Tue, 25 Aug 2026 05:15:35 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39645a47fb2sm1328139a91.1.2026.08.25.05.13.59
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-396423e5d33sm434180a91.1.2026.08.25.05.15.35
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:13:59 -0700 (PDT)
+        Tue, 25 Aug 2026 05:15:35 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c1670dd0f5dso155483366b.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:13:58 -0700 (PDT)
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c15e82278cbso324511666b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787660038; x=1788264838; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1787660133; x=1788264933; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xB7RDS/L44/MrXoSm7Y3WAOETyxE7JFt48XjjgX9L7c=;
-        b=hor/xZB/Tj6MIU1xUrLFk6SBX/OKw9/N7uSjlroxdw7JFUu2O4iMqFUvIfaOEFApQb
-         FP6/YnyR2iT1JejcyW22uKeyWFih7pmqF5JCn00hmo269IHjIGUdXi51y0JJlbtX4P9e
-         CYpoI4ZjwXQbUeyHYh0F2Dj8qBKrH7CT3zIMY=
-X-Received: by 2002:a17:907:72c4:b0:c24:4128:c19f with SMTP id a640c23a62f3a-c2491e838dcmr3144571866b.11.1787660037802;
-        Tue, 25 Aug 2026 05:13:57 -0700 (PDT)
-X-Received: by 2002:a17:907:72c4:b0:c24:4128:c19f with SMTP id
- a640c23a62f3a-c2491e838dcmr3144560366b.11.1787660037107; Tue, 25 Aug 2026
- 05:13:57 -0700 (PDT)
+        bh=3h59E4QAomM0xqV8La4WX/RYRGeXjWvQ8H5gMqWnVEc=;
+        b=Od/Gnt2D1sf2VnvgliZFtJ0XprlUr2o+t/D0VqFkWt/CKIpzWW49JJXphnCnFUKzV6
+         HHKS4SZ3lwdcFVGovUyOp/12wbkIVTu1PTWbxvMohwC0T8bNxmzLiPxv525JaQc+XxVd
+         QfVSaEvxULypx8HqnZ++K3XPIE6dD8KNo9LVk=
+X-Received: by 2002:a17:907:3d4e:b0:c20:1bc5:7002 with SMTP id a640c23a62f3a-c246a4ad6abmr3940787466b.3.1787660133471;
+        Tue, 25 Aug 2026 05:15:33 -0700 (PDT)
+X-Received: by 2002:a17:907:3d4e:b0:c20:1bc5:7002 with SMTP id
+ a640c23a62f3a-c246a4ad6abmr3940775666b.3.1787660132791; Tue, 25 Aug 2026
+ 05:15:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,148 +74,150 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-11-chandrakanth.patil@broadcom.com> <20260818181045.7CBF71F000E9@smtp.kernel.org>
-In-Reply-To: <20260818181045.7CBF71F000E9@smtp.kernel.org>
+ <20260818231426.58105-12-chandrakanth.patil@broadcom.com> <20260818181602.2719A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260818181602.2719A1F000E9@smtp.kernel.org>
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:43:44 +0530
-X-Gm-Features: AcwNN1UTq6wJv08bfjrK9RzwoxMPphpXriGAnLWliGSFxCINI_cq8Fu9mwi7JSg
-Message-ID: <CABvwm=OQ252QjjQP3E7kUCcguzuFpC5DAbFmiCJnpeY4Lf27ng@mail.gmail.com>
-Subject: Re: [PATCH 10/17] mpi3mr: Fix out-of-bounds read in SAS topology
- change events
+Date: Tue, 25 Aug 2026 17:45:20 +0530
+X-Gm-Features: AcwNN1Vj3-x4W8uyf0ZQ0D-GhLSmLG_9lfaEMri9xwMdLkB88szqvGzTvwlvjIc
+Message-ID: <CABvwm=McLhOrzxvQAbYRu0Ex8Biiyo0XB8vQQyyufxVdwbFKsg@mail.gmail.com>
+Subject: Re: [PATCH 11/17] mpi3mr: Fix out-of-bounds read of event data
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000008d95e20659de0978"
+	boundary="0000000000004285a40659de0fa3"
 
---0000000000008d95e20659de0978
+--0000000000004285a40659de0fa3
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026 at 11:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 18, 2026 at 11:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
 >
+> New issues:
+> - [High] Bottom-half event handlers perform out-of-bounds heap reads on t=
+he `fwevt` buffer because they trust unvalidated loop bounds against the ne=
+wly clamped allocation size.
+>
 > Pre-existing issues:
-> - [High] Missing bounds checking in PCIe topology change event handlers.
-> - [High] Incomplete fix: early return in SAS top-half bypasses bottom-hal=
-f cancellation.
-> - [High] Event data length is unbounded by host DMA buffer size.
+> - [High] Top-half event handlers perform out-of-bounds DMA reads on the r=
+eply buffer due to missing or flawed bounds checking for variable-length ar=
+rays.
+> - [High] `MPI3_EVENT_DEVICE_INFO_CHANGED` incorrectly falls through to `M=
+PI3_EVENT_LOG_DATA`, silently dropping events and bypassing its required bo=
+ttom-half processing.
+> - [High] Accessing a potentially freed work item during event cleanup via=
+ `cancel_work_sync`.
 > --
 >
-> --- Patch [10]: [PATCH 10/17] mpi3mr: Fix out-of-bounds read in SAS topol=
-ogy change events ---
-> commit bab975c5553e402733c8341f728b4c3f336df543
+> --- Patch [11]: [PATCH 11/17] mpi3mr: Fix out-of-bounds read of event dat=
+a ---
+> commit 4872e2f7b284da8f062de528f26e6b6482b6a169
 > Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+> Subject: mpi3mr: Fix out-of-bounds read of event data
 >
-> mpi3mr: Fix out-of-bounds read in SAS topology change events
->
-> The number of entries in a SAS topology change event is used to walk
-> the entry array without being compared against the amount of event data
-> that was received, so the walk can run past the end of the buffer.
->
-> Work out how many entries the payload can hold and skip the event if it
-> claims more.
+> The commit clamps the event data length read from the reply to what the
+> frame can hold. This prevents out-of-bounds reads when caching log data
+> and when sizing the buffer allocated for the bottom-half event handlers.
 >
 > > diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3=
 mr_os.c
-> > index b18e7ea873030..1291c60b4d98c 100644
+> > index 1291c60b4d98c..68b13c2ad2244 100644
 > > --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 > > +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+> > @@ -3170,7 +3170,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *=
+mrioc,
+> >       case MPI3_EVENT_DEVICE_INFO_CHANGED:
+> >       case MPI3_EVENT_LOG_DATA:
+>
+> [Severity: High]
+> This is a pre-existing issue, but does MPI3_EVENT_DEVICE_INFO_CHANGED
+> intentionally fall through to MPI3_EVENT_LOG_DATA without setting
+> process_evt_bh =3D 1?
+>
+> Because process_evt_bh is not set, the bottom-half handler is completely
+> bypassed, leaving mpi3mr_devinfochg_evt_bh() as effectively dead code:
+>
+> mpi3mr_fwevt_bh() {
+>     ...
+>     case MPI3_EVENT_DEVICE_INFO_CHANGED:
+>     {
+>         dev_pg0 =3D (struct mpi3_device_page0 *)fwevt->event_data;
+>         perst_id =3D le16_to_cpu(dev_pg0->persistent_id);
+>         if (perst_id !=3D MPI3_DEVICE0_PERSISTENTID_INVALID)
+>             mpi3mr_devinfochg_evt_bh(mrioc, dev_pg0);
+>     ...
+> }
+>
+> Will this cause the driver to fail to process queue depth changes for tar=
+get
+> devices?
+>
+> > -             sz =3D event_reply->event_data_length * 4;
+> > +             if (mrioc->reply_sz > offsetof(struct mpi3_event_notifica=
+tion_reply, event_data))
+> > +                     avail_reply_room =3D mrioc->reply_sz -
+> > +                         offsetof(struct mpi3_event_notification_reply=
+, event_data);
+> > +             else
+> > +                     avail_reply_room =3D 0;
+> > +             sz =3D min_t(u16, event_reply->event_data_length * 4, ava=
+il_reply_room);
+> >               mpi3mr_app_save_logdata_th(mrioc,
+> >                       (char *)event_reply->event_data, sz);
+> >               break;
 >
 > [ ... ]
 >
-> > @@ -2819,11 +2819,26 @@ static void mpi3mr_sastopochg_evt_th(struct mpi=
-3mr_ioc *mrioc,
-> >       struct mpi3_event_data_sas_topology_change_list *topo_evt =3D
-> >           (struct mpi3_event_data_sas_topology_change_list *)event_repl=
-y->event_data;
-> >       int i;
-> > -     u16 handle;
-> > -     u8 reason_code;
-> > +     u16 handle, avail_len;
-> > +     u8 reason_code, max_entries;
-> >       struct mpi3mr_tgt_dev *tgtdev =3D NULL;
-> >       struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data =3D NULL;
-> >
-> > +     avail_len =3D event_reply->event_data_length * 4;
+> > @@ -3204,7 +3209,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *=
+mrioc,
+> >               dprint_event_th(mrioc,
+> >                   "scheduling bottom half handler for event(0x%02x) - (=
+0x%08x), ack_required=3D%d\n",
+> >                   evt_type, le32_to_cpu(event_reply->event_context), ac=
+k_req);
+> > -             sz =3D event_reply->event_data_length * 4;
+> > +             if (mrioc->reply_sz > offsetof(struct mpi3_event_notifica=
+tion_reply, event_data))
+> > +                     avail_reply_room =3D mrioc->reply_sz -
+> > +                         offsetof(struct mpi3_event_notification_reply=
+, event_data);
+> > +             else
+> > +                     avail_reply_room =3D 0;
+> > +             sz =3D min_t(u16, event_reply->event_data_length * 4, ava=
+il_reply_room);
+> >               fwevt =3D mpi3mr_alloc_fwevt(sz);
 >
 > [Severity: High]
-> This is a pre-existing issue, but does event_reply->event_data_length
-> need to be validated against the host DMA buffer size before being used?
+> Does clamping the allocation size here introduce an out-of-bounds heap re=
+ad in
+> the bottom-half handlers?
 >
-> Since event_data_length is provided by the firmware, if it exceeds the
-> hardware DMA reply frame size (mrioc->reply_sz), could this calculation
-> artificially inflate avail_len and defeat the bounds check?
+> The patch correctly limits the allocation of fwevt to sz, but the payload
+> copied into it can still contain an unmodified, untrusted num_entries fro=
+m
+> the firmware.
 >
-> Also, looking at mpi3mr_os_handle_events(), this unvalidated length
-> appears to be used for a memory copy:
+> When the bottom-half worker executes, won't it iterate up to num_entries,
+> reading past the end of the strictly clamped fwevt allocation?
 >
-> mpi3mr_os_handle_events() {
+> mpi3mr_sastopochg_evt_bh() {
 >     ...
->     sz =3D event_reply->event_data_length * 4;
->     fwevt =3D mpi3mr_alloc_fwevt(sz);
+>     for (i =3D 0; i < event_data->num_entries; i++) {
+>         handle =3D le16_to_cpu(event_data->phy_entry[i].attached_dev_hand=
+le);
 >     ...
->     memcpy(fwevt->event_data, event_reply->event_data, sz);
 > }
 >
-> Could this result in an out-of-bounds read from the DMA reply frame pool?
->
-> > +     if (avail_len < offsetof(struct mpi3_event_data_sas_topology_chan=
-ge_list, phy_entry)) {
-> > +             ioc_err(mrioc, "SAS topology event: event data too small =
-(%u bytes)\n",
-> > +                     avail_len);
-> > +             return;
+> Can this lead to an out-of-bounds read on the kernel heap?
 >
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does returning early here
-> leave the bottom-half handler scheduled with unvalidated data?
+> This is a pre-existing issue, but does mpi3mr_pcietopochg_evt_th() also
+> lack proper bounds checking before looping over num_entries?
 >
-> In mpi3mr_os_handle_events(), the bottom-half scheduling flag is set
-> before the top-half runs:
->
-> mpi3mr_os_handle_events() {
->     ...
->     process_evt_bh =3D 1;
->     mpi3mr_sastopochg_evt_th(mrioc, event_reply);
-> }
->
-> If we hit this early return (or the one below), process_evt_bh remains 1.
-> When mpi3mr_sastopochg_evt_bh() subsequently runs, it will iterate over t=
-he
-> unvalidated event_data->num_entries, potentially reading out-of-bounds.
->
-> Should this function clear the bottom-half scheduling flag or return an e=
-rror
-> code when validation fails?
->
-> > +     }
-> > +     max_entries =3D (avail_len -
-> > +                   offsetof(struct mpi3_event_data_sas_topology_change=
-_list, phy_entry)) /
-> > +                   sizeof(struct mpi3_event_sas_topo_phy_entry);
-> > +     if (topo_evt->num_entries > max_entries) {
-> > +             ioc_err(mrioc, "SAS topology event: num_entries(%d) excee=
-ds max(%d)\n",
-> > +                     topo_evt->num_entries, max_entries);
-> > +             return;
-> > +     }
-> > +
-> >       for (i =3D 0; i < topo_evt->num_entries; i++) {
-> >               handle =3D le16_to_cpu(topo_evt->phy_entry[i].attached_de=
-v_handle);
-> >               if (!handle)
->
-> [Severity: High]
-> This is a pre-existing issue, but should a similar bounds check be applie=
-d
-> to the PCIe topology change events?
->
-> Looking at mpi3mr_pcietopochg_evt_th() and mpi3mr_pcietopochg_evt_bh(),
-> both handlers blindly iterate over the variable-length port_entry array
-> using the unvalidated num_entries provided by firmware:
+> It iterates directly based on the untrusted num_entries:
 >
 > mpi3mr_pcietopochg_evt_th() {
 >     ...
@@ -225,32 +227,77 @@ e);
 >     ...
 > }
 >
-> Could a maliciously large num_entries provided by a device cause an
-> out-of-bounds memory read here as well?
+> Similarly, in mpi3mr_sastopochg_evt_th(), the bounds check relies on
+> the unclamped event_data_length instead of mrioc->reply_sz:
+>
+> mpi3mr_sastopochg_evt_th() {
+>     avail_len =3D event_reply->event_data_length * 4;
+>     ...
+>     max_entries =3D (avail_len - offsetof(...)) / sizeof(...);
+>     if (topo_evt->num_entries > max_entries) return;
+> }
+>
+> Will this result in out-of-bounds DMA reads during top-half event process=
+ing if
+> the firmware sends an erroneously large event_data_length?
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there a use-after-free risk during
+> driver cleanup?
+>
+> In mpi3mr_cleanup_fwevt_list(), current_event is read locklessly and pass=
+ed to
+> mpi3mr_cancel_work():
+>
+> mpi3mr_cleanup_fwevt_list() {
+>     ...
+>     if (mrioc->current_event) {
+>         fwevt =3D mrioc->current_event;
+>         ...
+>         mpi3mr_cancel_work(fwevt);
+>     ...
+> }
+>
+> Concurrently, the worker thread can drop the reference count and free fwe=
+vt
+> before clearing mrioc->current_event:
+>
+> mpi3mr_fwevt_bh() {
+>     ...
+> out:
+>     mpi3mr_fwevt_put(fwevt);
+>     mrioc->current_event =3D NULL;
+> }
+>
+> Could mpi3mr_cleanup_fwevt_list() pass a freed fwevt pointer to
+> cancel_work_sync(&fwevt->work)?
+>
+> >               if (!fwevt) {
+> >                       dprint_event_th(mrioc,
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D10
+105-1-chandrakanth.patil@broadcom.com?part=3D11
 
 Thanks for the review.
 
 New issues:
-- None. This patch specifically bounds the num_entries iteration count
-in SAS topology change events against the received event data payload
-length.
+- The bottom-half event handlers trusting num_entries without
+validating against the copied fwevt size is a pre-existing structural
+issue in the bottom-half event processing logic.
+  This patch specifically fixes the top-half out-of-bounds read by
+clamping event data size to avail_reply_room, preventing memcpy() and
+mpi3mr_app_save_logdata_th() from reading past
+  the end of the reply buffer. Bottom-half payload validation will be
+addressed in a separate follow-up patch series.
 
 Pre-existing issues:
-- The event_data_length check against reply_sz is addressed in
-"mpi3mr: Fix out-of-bounds read of event data" in this same series.
-- The PCIe topology change event bounds check is addressed in "mpi3mr:
-Fix out-of-bounds read in PCIe topology change events" in this same
-series.
-- The top-half early return behavior and bottom-half event handling
-structure are pre-existing in the driver design and will be addressed
-in a
-  separate follow-up patch series.
+- The MPI3_EVENT_DEVICE_INFO_CHANGED fallthrough, top-half DMA bounds
+checks, and cleanup race condition in mpi3mr_cleanup_fwevt_list() are
+all pre-existing issues in the driver and
+  will be addressed in separate follow-up patch series.
 
---0000000000008d95e20659de0978
+--0000000000004285a40659de0fa3
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -344,13 +391,13 @@ LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
 tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
 YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
 YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCCWC7DlnV0yN71WpDDaWDCbBtCqgbTDAyN1sHQt3eDybDAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjEzNThaMFwGCSqG
+oIHHMC8GCSqGSIb3DQEJBDEiBCCPM/Yr0IepwKzTf9eCJCTF7i+XuMZyk8ZnrXo6VhD+TTAYBgkq
+hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjE1MzNaMFwGCSqG
 SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBCzJJ/cwka
-mqEmfwv+wgUhYVXEjynjLzXz3D2BTI8UQfpKOCt/PGd9Yx6cHjd29SzBLi1yfYl0jnw7X+w9rhOj
-5Gt2Nhh6IjrjyzCsdVdhf6Ppms9iefPhnhnOkOuAxvy1Kmdm1iPYzAxV1JYMYklG0msuNnk2cGE1
-j8WXeZ+ub48FFpCJ9S5RuZ2al6pJvbKBKcEQB4KlSyIqFci4bpHvijPijzbp8zNxgxL5vXwWS3s8
-Zn5uCb7fuuRY92KF+5MDptSjfN4cxRZyRcJYsolDos4DcXUuXfMlg8eYY9OXK+os8Zc1phnHJ46N
-HRcuQZ8OEY+TPHWA94PgJgQVNjxz
---0000000000008d95e20659de0978--
+hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAdIOphxkgK
+Iahe0nE3eGktTKlhjO164NoCVL2FjL+c1ouPqV8yCDnPjs6A3vAk3djuG/AmZ9ixUqEDsWrHSohW
+2IcmIkNnJ86mEqFZn3LX0dko5usxL9ll4bXkVIY+qmsotC5y5KzTNwcvR8SVZwVwc8TLqbB4I5iA
+bpEjjS5+Y5ChjKdLHgbJmCA9fJO8IuLXLn9oJetCoixG7ARRKps/4cGaxIk2EDusvyi+N+Z5xX4S
+UAqcH9W8rAy2HMVkZQG9vtajSJaoxe3crf1kG2nmgpy8hu5LCuMnvzlrpeYKtrsS8Lrbd0TKRGy6
+TFOj/Ec9K4beOn6luhHxvWjlVum7
+--0000000000004285a40659de0fa3--
