@@ -1,207 +1,155 @@
-Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11013033.outbound.protection.outlook.com [52.101.127.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F86F3093CB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 03:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787629350; cv=fail; b=QyI2vozCnjqEpjrOQbiN1VTG5zbdHmrCoJ0hjlv5c1qhwgKtDhT1uiQ+BH1YiF/ijPVqAkmMNcbkoBvtXdisnUX5RauTAjZE57nIJB8MtkkwcaAxl6I2c4Lg63AjpJp0yNDjxihFq8WGKdabffzAcXULKJVotoIbVj/syvgVryw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787629350; c=relaxed/simple;
-	bh=t6uKGfZLEoAfsKYuc7CHHph6a0xiyKZvr75SWejqqzo=;
-	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=cS09YjtxYzbA2z7micfPRtcOtPM+DWfuVw0nrO6NafaBxwzpcXK3Hm2zNx8pWf0KryI22lMnFxYJiOQEPCTQJf//YTVy+Kc56yu9YkCYPTLb0VEkFjwp4GF2ZmIPp0gZ7FYxnEn5Q5USEYnaNvJR7LoiJp6tarsnaOqhz163YMM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=T4K7iZet; arc=fail smtp.client-ip=52.101.127.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48D123019D8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 04:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787632927; cv=none; b=SLqONQ7/nC/SBtqk+hRVmj3oD+iRBL8sVmdCQLmHr+0fevcEi+mwRkfCn0jFULXSsGA1K9m0Lcceh6InuN+xwb3nVUi5skMjChnARTqkFCNBGwmstVHUHairfpxDHxZF9IhgxhKSf/h16VxUw3cE4x3mbV/hQSM4u2Aj0v0iemE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787632927; c=relaxed/simple;
+	bh=XE2Ab0GG9kmt8pSqRAwcSHToJNuqWMlTyG0wNh2OK0k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LBJOaejqDuqU4qW8Z1UeZe/Cg7h0Nv2HJgyLNBlFFi8gdKGbFtu3PF1zr24E84KR75gdu6kFqSWmkRRu0J5wKF9w2JYCE9UXdNVyw/7X0zf8MXweiGsq401/9+BUXvLYA4c1jspcV4gItX6TvzXVDMnxnW9cbcSAs9x7IHvFr/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Q1WplNng; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="T4K7iZet"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N/NnG0hnSKxGFKFHjrfk2/DuDabSwxNW6luYBDIeRUZMipPhe4FFog4hlrwR+vAqu4z8FBF0I1E0RDlup2y11qafGK3bj288qdmdeuVTGkPaXJ36mBgDYjg8UBJnalPsxOHTmkx6Tf+p8q9ib3H4d4AHhGLBUXxZtlhEmbv3JY9MLu9B64D2i/MWiKUfe4HWZWPtMgDmfPVlMP3nBIPRDxnNL7PKQOOVn9HfYt1HPx0ukMe9UA8caRuusrVJCLBrF2mGxFw4oWfhsyOHYm3Uy71A/JLuCNCFro2OTsnQWcDN+DenHQoR48294VNqWjgfrSFwdKnfE0uq/V8ZsgyM7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YU9zVG43/+BjZXme8wiL+oDFGPr5j37iNjnxlaa1srk=;
- b=H4R5e+gHCym1PsCxgSnvFzwpASQvK97Std9fSpavu0uaoEAEhDilu7a4sqdf07c225qUbsz1htix0Sb51V4bfr/AMnsSzVoWnyDnFk+0mOGrk5Nvk+CLnQ5/N4qxDV8dPs8s2vv9MqgEhvWLaxB4FQi3NOh/BHT5d+E/60lz/TBOE9+ixymxp56qpUCx+4Dc9dcs6Q7rgn3UW8iLkQ0QhXggi4sXf1oClnzNOMCO/y2hwGcfkAUWFvLz165MbBmmHKVxjDjIYCUpsRyS14Z3j80UYqmsuK1l62RWMtImknKTpEpQRfih/rzrHwHjQPoo6re8kczpzys9HDT+P0HNHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YU9zVG43/+BjZXme8wiL+oDFGPr5j37iNjnxlaa1srk=;
- b=T4K7iZet3Ny1Lli4A8KKe/wJYE6212mndlY4CTawf7Y+Y9dLADIW1Udd6LEwI2Eh+BFZdtFeyFvzmPN9OIKIozLJ0J6MemHpx/H/Kqh7SObwBcvPJ5ceC0ZxKHetBaReaPxq37ykilyWz2X2kCIETaah7zNg5+KlLCOXlaLVyuIK/QbzhROiYcnKjpHQEpOu6LK3htbdMeDncyB9KmFPpeb9n/9rUZlKq3ZbE5K0D9mf9LBzdV0YPOTHtLjwnNUJKhy7nhK3iyFfjbQ03OJw3Zzf3I9aoj2gYlHKlavBsRsjjEO9Feaz+6QLJiidoW4eebiSy+pj90qNZv5tMq1FkQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
- by KUZPR06MB8967.apcprd06.prod.outlook.com (2603:1096:d10:86::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 03:42:23 +0000
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571]) by PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571%6]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
- 03:42:23 +0000
-Message-ID: <507d54af-a50a-4370-b0ee-ea80c87b1a45@vivo.com>
-Date: Tue, 25 Aug 2026 11:42:18 +0800
-User-Agent: Mozilla Thunderbird
-From: Fuyu Zhao <zhaofuyu@vivo.com>
-Subject: Re: [PATCH bpf-next v4 1/2] libbpf: support selective kernel module
- BTF loading via bpf_object_open_opts
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260824125310.1384-1-zhaofuyu@vivo.com>
- <20260824125310.1384-2-zhaofuyu@vivo.com>
- <20260824130806.51B591F000E9@smtp.kernel.org>
-In-Reply-To: <20260824130806.51B591F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0008.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:2::20) To PUZPR06MB4742.apcprd06.prod.outlook.com
- (2603:1096:301:b5::13)
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Q1WplNng"
+Received: from [192.168.1.70] (unknown [4.194.122.170])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 87D7B20B7166;
+	Mon, 24 Aug 2026 21:41:32 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 87D7B20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1787632894;
+	bh=2UJlLi20XMSxA7zww1xtzN2KILuXIuj1I5rEPmJqvNE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Q1WplNng40iw7ncVS17Q5u1PqVWhUxNiymQEfSN2ArTnRFvLIzqzVvrww0xrEqg1H
+	 605U3ofKhG4QG2QZbp5FvZSFQ10JfKF3DhAhyBM/lCbHojurIl9xiwjqRPVpg779RO
+	 KCffdDFS9wVMw8jEDoxV6SdBi7lbwZjj4JUZgeh4=
+Message-ID: <fb4dfd8a-599d-4c4d-be76-4caef290da23@linux.microsoft.com>
+Date: Tue, 25 Aug 2026 10:12:01 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4742:EE_|KUZPR06MB8967:EE_
-X-MS-Office365-Filtering-Correlation-Id: 341259d2-b408-455c-3baa-08df025adf44
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|22082099003|18002099003|11063799006|56012099006|3023799007|6133799003|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	yBLiUnURVm7V0Dud2IPIhgMbbQthv4zRToL7RKLDGxhdRzaPCb0kZ/kIY/SxpAqJx1gyWB0tpIjrhSCEHxdQvJSWHf5FUzWlQzGP0/IovgivXrABI/Y9X9o4nL/X3inLdlCkbQwzKaIyvyhoiXX9gg8eCGQGhBFknv7ryDTRGD4Y0ylfgIHdat20j1hKDnvRUewDqfYkQXLD12LzVn+/xyocTbu4DtdZA1jPHn9La3xXT5ECqrT28QdYgJiSC+24CV7AnqT5queXH0OFBhIZVSJaatIg94JigGyMFrQqgr0R4qfKdVWcGj6YGQDDa3HceUYan/A7vqogHF9I/yfi5gLGBAP/25I5z0Kg18jc8V+yhr4LyISjZaYkFV841zqKkTxaz44L3tCibhMUdB2WPISmLk3KiorlE1cd80X3vdXPmP/w7Uab2Qdo8uC3zfOWAqOH7b1qhRawIWl6TxX7mp2qRQxpT32RjLHYUUsFWU39q5Uo1oN53f1ZfME2lz+myMZSLQdJHbokwGSMCv+Dy9AeVgZwmvp10Xocvy03uRpdfgoKsX0gUXdYNYb0Hlf//xCjsUyPwf1AMjhreVgm+ttZeLuXIArDPQ7uwcubi8Z/363riYkphmHQkH6j921MQ+PpIF4nH0D7GaN3n1whSV6wbFsQSAKZbjl7t+4Lbuw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB4742.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(22082099003)(18002099003)(11063799006)(56012099006)(3023799007)(6133799003)(4143699003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?eEw0QStMY0VtalFFc25GYjFWT2pKOXljYTk0ZDJpY0RNaERNK2k3VTRubXhY?=
- =?utf-8?B?Q1M1QUYyUmp3YklkRkkzOTdlMVJDdGc4c2FOclNBM2ZpSUw2TXJ1ekZ0ZWNu?=
- =?utf-8?B?Tzl3YkZJemtQcExTUEtmcU1sRzdDcmgyR05OQjlQTEkrNTFncDhSTzRvUTRJ?=
- =?utf-8?B?dGhZYzBJN0lKRHhaTTh4U1pHcVJJYmU4RGNjMzU1N2J3NkZrNG94NlI5UzMr?=
- =?utf-8?B?VCtCMGIxb2hYRHAvSFlsbGU3TlZSVzZOcENGOTlQbjJYdDVobHE5WUYxZDdi?=
- =?utf-8?B?MytVWWgvR0xhVHhwVGF0NVAwLzM2WjlNd0h6Zyt0ODhRRG12MjdEd3NoS0xW?=
- =?utf-8?B?MkFhc3ZiYzNFT3drZWhHV0pzSmVkWWducVRvT0RLZ0k4UnNJcEROeTNQQ0Jz?=
- =?utf-8?B?WFVGK1BsWXJSUjVDMEZBSG9mK3AzVjk5aEFzU2hwd1BMNFcrNnMrUDlDcndw?=
- =?utf-8?B?ZnZiUzhmODJubWdPbGZrODE4aGxhdGdIZTNXR1REeGhtUlRkZjk4OG9Wam5C?=
- =?utf-8?B?MHE4VFFlQ0UzWGkwdGVDcFYxUG5IT3lIRk5sNEJEdGNkNHo0T3hyUlJCTENV?=
- =?utf-8?B?SGsyeFZSYUthYTN0RzJ5TFVYbzVyWVhkUVVFcmp0MTlnd2Y5bzAvYkxZN041?=
- =?utf-8?B?dnROUnp6OURkRUU0cnRDdDl5QS9FUXdaZm1BdmJJMU01Sm5NNnlJTktpUWxL?=
- =?utf-8?B?YkgyemNQQ2JqOGx0VnJLa0pxSlcvd1Fzb3VzWk9KNWZDQmgreWttV2NQUFNN?=
- =?utf-8?B?Uy9HR1AzTzY3cTJQWWFoZmtDVm5GdWJHQ0FiWFNaYXZiTnlaWnNoUGtiMTFr?=
- =?utf-8?B?Q2YySnNONnU4WWszVWFXamlmaHlMdldVWWI0U3dwbnIyMTQwRU1oSlYwQmNy?=
- =?utf-8?B?ZU5aN3EzMWE1ZXQ0NFFJUE0zWThSZUE0VFN0am5NZHFaR2dBTnRiU05OUGFL?=
- =?utf-8?B?U21lUzF6SHRrMVlkRjBrVXFlTzBYczNKYWpmdVlWWGxmNXVsRlIxL25oeDl1?=
- =?utf-8?B?M2R1dVJSaHJmZmpyUWdPbDRma2U3MkRNQ1RiWmsrS2hqRjBHU0FRenU5WGwv?=
- =?utf-8?B?aDBuS2duNVRETnpkUllaTGxHNmMwUldiT09qQVRsa0UyZ0pST2FqRjAyRVJn?=
- =?utf-8?B?dVNNRGtFUWhTemFNT2g2SWFjbkY2SnVJNVBjZ1M2SHZtVVJ3STJIUzc2TXNH?=
- =?utf-8?B?VnFwL043OWQ5UElFZUhqWlVOemlLMEJDaDZrZlZnTVhEajdwVzdwVzk4ZlBm?=
- =?utf-8?B?Z1ROdzRORTZFTUlJdVppZ1BwMEVDcXNKREZXVy9idGdqV0U3c1dWSU03QkVh?=
- =?utf-8?B?VmY2QVlyMXZGZS80Q3Y5ZzI1SWJTSzhGNHAvOTg4UUFVbWpiQS8vQVJBWVM0?=
- =?utf-8?B?ZHNmU0JiZmphWVh4dUxFNmZhUVZHTUJEaG1Ud3ZNU25NQzJaZnNrVWwzZVh5?=
- =?utf-8?B?cWQzSTN4MHo0bmhLYUJhSGdtbk9QeWxud3JvZE4zQmdhVkloeGRlR2hWNTJq?=
- =?utf-8?B?OVFhMWRaeVlXMWZPL2h6TkhZYWVIcmFEcjFxcGF6bXRGYk9ubThWeC8xb05m?=
- =?utf-8?B?N3gvc25ZZnJJcGxYTTNWRTdlQ1IyN2ZOOUdHSjgwWi9TWi9KOVE1cnNGRStw?=
- =?utf-8?B?WHVTQ1R4ZXkyYzIwNHRyZDczUTJzeGx3OS9ZUmczTVBiZEZ1K2ZDYzVrelJD?=
- =?utf-8?B?b21Xd0ZZdkFrMFJtUWxSR2NLWlcvRitkOU52RXVvNEVHVG1wNFFvYjYvbDhM?=
- =?utf-8?B?Ui9jVFlWUm9memc0bW1QenRyd3k5QUUrUDJmSEg5TlVOSFVwNk9XNnBrN2lz?=
- =?utf-8?B?K2NLRHhPdE0vajNpVjVBdEVhWXJUeHNzSFRmY2s3KzVjdStpZE5FeUx1dnVs?=
- =?utf-8?B?eFJpL2NzQU0rdlNKR0kxcVhjZVRGYXI5N3FMdFRhajhrNllkdmJnS0g3SWNE?=
- =?utf-8?B?UWRtZ3BmK3I1UE1vb0REQVo4UXYyV3cwMFdaMHo1dHN6MEtxdTBKeU9yWldB?=
- =?utf-8?B?L1p2MmdaRW92S2R5TDFxQkRNeERSUHdwY0l6T0orNUx0Vm1kaHRsV3NuTUcv?=
- =?utf-8?B?ZmNKY3A4Y2ZnM0hzZktrM2U1MklTTVF4dXFWaXdMeVFuY3hVN3lnNk5GR1kx?=
- =?utf-8?B?QXVlMm9HWHJ0ZUE4MkRRaGhmMllpVWVteFRrQWtIMGdXTE42cjRsOHBTR0NK?=
- =?utf-8?B?N1pTRCs0akZjVjZNY2tvNVBCbGhKNnBCbm9Ldk41WHI2THJaOVNEWmMwZUZY?=
- =?utf-8?B?YW5xK2dxdTBDWHVqSkdPby9vUzNoZjU0RnowTzUwZC9hMVh3WWtDaTR6Znpk?=
- =?utf-8?B?U2ZBaEt5TG1NdGlzbExSckFnVUJHYWZsSlVZMkZoSUUzTlBFOVZQUT09?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 341259d2-b408-455c-3baa-08df025adf44
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4742.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 03:42:22.7491
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wjTvJrK3R54MeFxKpwye+gbCi4tU7qy7cgt/Yy75l2I60QjnKq1eLldZNsdHGhGAFm2Yu4lAXBXw4SMsJ6oFoQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB8967
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] PCI: hv: Set irq_retrigger callback for the Hyper-V
+ PCI MSI irqchip
+To: Wei Liu <wei.liu@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
+ linux-hyperv@vger.kernel.org
+References: <20260728135117.2888175-1-namjain@linux.microsoft.com>
+ <20260728135117.2888175-2-namjain@linux.microsoft.com>
+ <20260728140427.714311F000E9@smtp.kernel.org>
+ <a9d44162-3c90-44c8-aae7-4813678234a9@linux.microsoft.com>
+ <20260824001406.GC3566091@liuwe-devbox-debian-v2.local>
+ <c165f17f-b214-4a96-a446-6dd4e6cb2161@linux.microsoft.com>
+ <20260824165908.GC3665124@liuwe-devbox-debian-v2.local>
+Content-Language: en-US
+From: Naman Jain <namjain@linux.microsoft.com>
+In-Reply-To: <20260824165908.GC3665124@liuwe-devbox-debian-v2.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
-On 8/24/2026 9:08 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Failure to short-circuit BTF loading when the requested module list is empty.
-> --
+On 8/24/2026 10:29 PM, Wei Liu wrote:
+> On Mon, Aug 24, 2026 at 11:57:56AM +0530, Naman Jain wrote:
+>>
+>>
+>> On 8/24/2026 5:44 AM, Wei Liu wrote:
+>>> On Thu, Jul 30, 2026 at 04:56:27PM +0530, Naman Jain wrote:
+>>>>
+>>>>
+>>>> On 7/28/2026 7:34 PM, sashiko-bot@kernel.org wrote:
+>>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>>>
+>>>>> Pre-existing issues:
+>>>>> - [High] The fix for dropped pending interrupts during CPU hot-unplug was missed in the sister Hyper-V root partition MSI domain.
+>>>>> --
+>>>>>
+>>>>> --- Patch [1]: [PATCH 1/3] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip ---
+>>>>> commit b8b1c843c457dd145f0d360b44f4b1bf34bd8cf5
+>>>>> Author: Naman Jain <namjain@linux.microsoft.com>
+>>>>>
+>>>>> PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
+>>>>>
+>>>>> The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
+>>>>> On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
+>>>>> the outgoing CPU to a new target. As the Hyper-V PCI/MSI chip does not
+>>>>> provide that callback, the pending interrupt is silently dropped, which
+>>>>> can result in lost interrupts, stalls and "No irq handler for vector"
+>>>>> messages.
+>>>>>
+>>>>> Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+>>>>> Cc: stable@vger.kernel.org
+>>>>> Suggested-by: Long Li <longli@microsoft.com>
+>>>>> Suggested-by: Thomas Gleixner <tglx@kernel.org>
+>>>>> Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+>>>>>
+>>>>>> diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
+>>>>>> index cfc8fa403dad6..89816a2bd7cd3 100644
+>>>>>> --- a/drivers/pci/controller/pci-hyperv.c
+>>>>>> +++ b/drivers/pci/controller/pci-hyperv.c
+>>>>>> @@ -2119,6 +2119,7 @@ static bool hv_pcie_init_dev_msi_info(struct device *dev, struct irq_domain *dom
+>>>>>>     	info->ops->msi_prepare = hv_msi_prepare;
+>>>>>>     	chip->irq_set_affinity = irq_chip_set_affinity_parent;
+>>>>>> +	chip->irq_retrigger = irq_chip_retrigger_hierarchy;
+>>>>>
+>>>>> [Severity: High]
+>>>>> This isn't a bug introduced by this patch, but does the sister Hyper-V root
+>>>>> partition MSI domain in arch/x86/hyperv/irqdomain.c also need this fix?
+>>>>>
+>>>>> Looking at hv_init_dev_msi_info(), it appears to be missing the exact same
+>>>>> callback initialization for the root partition's top-level irq_chip:
+>>>>>
+>>>>> arch/x86/hyperv/irqdomain.c:hv_init_dev_msi_info() {
+>>>>> 	...
+>>>>> 	if (!msi_lib_init_dev_msi_info(dev, domain, real_parent, info))
+>>>>> 		return false;
+>>>>>
+>>>>> 	chip->flags |= IRQCHIP_SKIP_SET_WAKE | IRQCHIP_MOVE_DEFERRED;
+>>>>>
+>>>>> 	info->ops->msi_prepare = pci_msi_prepare;
+>>>>>
+>>>>> 	return true;
+>>>>> }
+>>>>>
+>>>>> If a CPU is hot-unplugged while a device MSI interrupt is pending in its
+>>>>> local APIC IRR, could fixup_irqs() fail to resend the pending interrupt
+>>>>> to the new target CPU because this callback is NULL?
+>>>>>
+>>>>> This could potentially lead to the same lost interrupts and I/O stalls
+>>>>> described in this commit message, just in the root partition MSI domain
+>>>>> instead of the guest paravirtual MSI domain.
+>>>>>
+>>>>>>     	if (IS_ENABLED(CONFIG_X86))
+>>>>>>     		chip->flags |= IRQCHIP_MOVE_DEFERRED;
+>>>>>>
+>>>>>
+>>>>
+>>>> I am not planning to include this in this series, since this issue is not
+>>>> seen in root partition yet and I am not sure if it is applicable here.
+>>>> Second patch would anyways fix it going forward, but I am OK adding the
+>>>> change for this, if we need.
+>>>
+>>> What's the downside of fixing the root partition irq domain?
+>>
+>> No downside as such. It would be a latent bug, exposed only if we exercise
+>> hotplug in root partition, which seems like we don't. After patch 2 of this
+>> series, that would go away anyways. If you tell me, I can add a change
+>> similar to patch 1, which is backportable, but then I would need to remove
+>> it similarly in patch 3.
 > 
-> --- Patch [1]: [PATCH bpf-next v4 1/2] libbpf: support selective kernel module BTF loading via bpf_object_open_opts ---
-> commit 45ee1cea8b0fa604bfa594a065030f18301877c5
-> Author: Fuyu Zhao <zhaofuyu@vivo.com>
+> Yes, please fix that for the root partition, too. Being consistent
+> across different use cases is going to save us some headache in the
+> future.
 > 
-> libbpf: support selective kernel module BTF loading via bpf_object_open_opts
-> 
-> This commit adds btf_module_names and nr_btf_module_names to
-> bpf_object_open_opts, allowing selective loading of kernel module BTFs. When a
-> list is provided, libbpf will skip module BTFs not in the list to reduce BPF
-> object loading time.
-> 
->> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
->> index b749c01742ee0..d8ef6ecc6f5dd 100644
->> --- a/tools/lib/bpf/libbpf.c
->> +++ b/tools/lib/bpf/libbpf.c
-> 
-> [ ... ]
-> 
->> @@ -5851,6 +5854,94 @@ int bpf_core_add_cands(struct bpf_core_cand *local_cand,
-> 
-> [ ... ]
-> 
->> +static bool all_needed_module_btfs_loaded(const struct bpf_object *obj)
->> +{
->> +	return obj->btf_module_names &&
->> +	       obj->nr_btf_module_names == obj->btf_module_cnt;
->> +}
->> +
->>  static int load_module_btfs(struct bpf_object *obj)
->>  {
-> 
-> [Severity: Medium]
-> Could we short-circuit this function earlier when the requested module list is
-> empty?
-> 
-> If a user passes a non-NULL btf_module_names with nr_btf_module_names = 0
-> (meaning no module BTFs should be loaded), this function still proceeds into
-> the while (true) loop, issuing system calls for every BTF object on the
-> system.
-> 
-> [ ... ]
-> 
->> @@ -5915,6 +6006,11 @@ static int load_module_btfs(struct bpf_object *obj)
->>  			continue;
->>  		}
->>  
->> +		if (!is_module_btf_needed(obj, name)) {
->> +			close(fd);
->> +			continue;
->> +		}
->> +
-> 
-> [Severity: Medium]
-> Does this continue bypass the early exit check when nr_btf_module_names is 0?
-> 
-> When the requested list is empty, is_module_btf_needed() always returns false,
-> triggering this continue on every iteration. This skips the
-> all_needed_module_btfs_loaded() check at the bottom of the loop entirely,
-> causing the loop to exhaustively iterate all BTFs unnecessarily.
-> 
->>  		btf = btf_get_from_fd(fd, obj->btf_vmlinux);
->>  		err = libbpf_get_error(btf);
-> 
+> Wei
 
-This makes sense. Passing an empty list currently causes unnecessary
-iterations. I'll add a `no_module_btfs_requested()` helper before entering
-the `while (true)` loop to handle this case and exit the loop early in the
-next version.
+Acked.
 
+Regards,
+Naman
 
