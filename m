@@ -1,119 +1,168 @@
-Received: from mta0.migadu.com (out-83.mta0.migadu.com [91.218.175.83])
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C151E351C13
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 15:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78112486639
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 15:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787671486; cv=none; b=MQ3qjIH91TP5S9a36j/UDZochWm58C6FAGOaDVtnlni1gTGaJ8egQPzGTPpXWbapprTtqNvLQbskQ9lDkr7dtXGQt6S1+xFU9/62lLqQ9QFfR4xb2HZvBmTm9etn9bBLveDSL9EGrJu0ycSthmxaUqP9NV+tldguUKepwyzqxPE=
+	t=1787671709; cv=none; b=VzluOi+QOyM8cUCQR87fdTg2o0B62Wjs/SS2lDAk5XZnt0UpyMrk7xbI0D5Flr0UuRLFyZlwZ5H1Q0NRhlCv0YIekmXY/H8JBrJCJpxnA8MBXCulBXnmsO9tHZBn8Fj/ZnnM/0fiXbxL4WTrSYuoA0uVvGrmv2PTUooRhL5QBVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787671486; c=relaxed/simple;
-	bh=BlQgacaKCXuF6uhvqy6ozhI7v2wSV9sOQFmkulfc+Bk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DDXeG9sbGvUfEFQIKdbG4Dl5hfvcF8tAiT0zY2vvnpgGOAY9TqWjkCGzE7sQ4tLJLLY44x7Sh/THoVud/BqROugo6Hr5DzyZe1qFuzl/78wjugyiA19pojoMGK4JbEKnEOOctAay5DNwrWOLSuDXqvxKp5aByoQGGFxg1fEIZhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Rqzb3zwZ; arc=none smtp.client-ip=91.218.175.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787671709; c=relaxed/simple;
+	bh=loYqtnWXMGjjT8NDFhyil776wzBbOGoJ8kBMmOt6a6E=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=n8GMrZTDstqmPD0giMzSx+g9qAFV0gEr64iit/oWJSjF5eC2P9D6wdRDE0LWKuxdy63TozO2YVtnYLEsjD9VHKATGEdOmq16JSo6nJOy6TYiQBz08yu5dYkV4CbkEeCckYMguxmHZfbx81wmFtKpWTcrfZkc7j0f3PY8gbqmwY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=obzBFt8o; arc=none smtp.client-ip=209.85.210.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Rqzb3zwZ"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=BlQgacaKCXuF6uhvqy6ozhI7v2wSV9sOQFmkulfc+Bk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787671481; v=1; x=1788276281;
- b=Rqzb3zwZokBMw5i4NI6rrtb0qv1swZBHp6DshqjVkTDfWWYikkauO1g4st2v+LFmiyPlNKYm
- Axh9NhTwSl7JILn4pkZxOZyvG5QyBRPSgL6Rvo5DpnWp3Ubbi/imjPgE+y7T4Dxc3MHvybrYfza
- j2B1T+mH0q6lvXTzZRRReoX4=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [10.54.27.89] (210.22.144.162)
-	by smtp.migadu.com with ESMTPS id 87de6394280db31c;
-	Tue, 25 Aug 2026 15:24:41 +0000
-X-Mizu-Trace-ID: 87de6394280db31c
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <99716abe-9b40-42ac-88a5-e26324a97397@linux.dev>
-Date: Tue, 25 Aug 2026 23:24:37 +0800
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="obzBFt8o"
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84e048a801dso6782326b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787671708; x=1788276508; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Z2PSz/zBXLlU1jZmPieSmrOStF8SdBY8YCSvnTzrOXM=;
+        b=obzBFt8oPdd0DO7gC3ibDVRAI2o+Ouae1aEiNCJgaZqcoLcUO1j5bYRTp+ueZdxqIZ
+         MebjcQTVLxNcdQu1cf2Zp9mA6M2Q5jvMLSPh/beKt3GzbFS0AoJEWmc9SLzBvUahfJmT
+         php/XxLJEaL/y20iE9x1SNnx9aSRi8hAzbnsmQAE9KSWm6ternEu7gwiJvu6/89jt/S2
+         XVbtLqGXIsvqNMIiY4S2MlaDT2StCyM6rJ5qauJIXsF73UAMSmPa31wkUUIbaZzx7CAb
+         8UvqQ4OeNwqZSDrtDicCFsjyX8cukxVhP93OPqG5PG3bGnjQQdJEgmiaDYVE0tTVYBg/
+         R2sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787671708; x=1788276508;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z2PSz/zBXLlU1jZmPieSmrOStF8SdBY8YCSvnTzrOXM=;
+        b=rR0n9l5ERVvw3A0E6Gg+NNTlN4lZYMonOSbOAH29Q7eaoBp7kHPVurOWohJwgwz9Og
+         ZvzMQ82kk/vG4NF0gXGDeOa2eN0VBp/KYwUyh6fz6m0Uv0ArcqUH5Au7KsXf+6v1EOpU
+         Xc+rEgyXt6BdNRHLuzsIhlF5euusR2ZFg8w1ipft5Dh8n2zYdsOpIqLxQ+28RtZSx5tV
+         vUXXG0nsJiHU4kjVms/wuTTFI2O9c0/uQYealXs7rPs3a6m3OGeRD5Ye1EUwhPXX9mec
+         zT+DAj+ulV6zar+D9L83+4Q1G6AnLg7R1McAgVCz21IFkbtTtzTw/PGNZygIXUpQTaZQ
+         gbtA==
+X-Gm-Message-State: AFuF++nmyo7Q7JAUiDRQAEmnJ+UIlv11g+gHEwmkzSnRm1fd+NajrsZ1
+	PB4CEdnx6iv7fN6ktSBRX7TNbOkV6vViFbmwuNbyhEJtC579SPxScEe2eIw7GVB3+ZDb4m7N25p
+	ntA0r3w==
+X-Received: from pgbd17-n1.prod.google.com ([2002:a05:6a02:64d1:10b0:cc1:8a49:bf91])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:7d02:b0:3cd:a1e2:f238
+ with SMTP id adf61e73a8af0-3cda1e303bbmr4127115637.16.1787671707506; Tue, 25
+ Aug 2026 08:28:27 -0700 (PDT)
+Date: Tue, 25 Aug 2026 08:28:26 -0700
+In-Reply-To: <327c7769-8ef6-40c3-869a-93c29ec9fa9f@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v2 2/2] selftests/bpf: Add test for usdt probe with
- page-crossing nop10
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260825150444.31603-1-jiayuan.chen@linux.dev>
- <20260825150444.31603-2-jiayuan.chen@linux.dev>
- <20260825151342.F3A601F000E9@smtp.kernel.org>
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260825151342.F3A601F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260706063035.1139-1-sarunkod@amd.com> <20260706063035.1139-2-sarunkod@amd.com>
+ <20260706065212.CCD741F000E9@smtp.kernel.org> <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com>
+ <anpsjpCQHjJCH7TU@google.com> <327c7769-8ef6-40c3-869a-93c29ec9fa9f@amd.com>
+Message-ID: <ao20mmzg6dMLukMo@google.com>
+Subject: Re: [PATCH v2 1/2] x86/uaccess: Extend CMPXCHG user helpers to
+ 128-bit operands
+From: Sean Christopherson <seanjc@google.com>
+To: Sairaj Kodilkar <sarunkod@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	Vasant Hegde <vasant.hegde@amd.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Aug 25, 2026, Sairaj Kodilkar wrote:
+> On 8/11/2026 5:57 AM, Sean Christopherson wrote:
+> > On Mon, Jul 06, 2026, Sairaj Kodilkar wrote:
+> >> On 7/6/2026 12:22 PM, sashiko-bot@kernel.org wrote:
+> >>>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/u=
+access.h
+> >>>> index 367297b188c39..123755d471099 100644
+> >>>> --- a/arch/x86/include/asm/uaccess.h
+> >>>> +++ b/arch/x86/include/asm/uaccess.h
+> >>> [ ... ]
+> >>>
+> >>>> @@ -551,11 +594,18 @@ do {                                          =
+                                  \
+> >>>>
+> >>>>   extern void __try_cmpxchg_user_wrong_size(void);
+> >>>>
+> >>>> -#ifndef CONFIG_X86_32
+> >>>> +#ifdef CONFIG_X86_32
+> >>>> +/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e=
+. cmpxchg16b
+> >>>> + * instruction).
+> >>>> + */
+> >>>> +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
+> >>> [Severity: Medium]
+> >>> Does this 32-bit stub correctly signal failure?
+> >>>
+> >>> Since this macro evaluates to 1, won't the surrounding unsafe_try_cmp=
+xchg_user
+> >>> macro treat this as success (true) rather than failure (false)?
+> >>>
+> >>> This could cause the wrapper to negate the value and return 0 (succes=
+s) to the
+> >>> caller, falsely signaling a successful memory exchange without actual=
+ly
+> >>> updating memory or the old value. Even though there are no current 32=
+-bit
+> >>> callers using a 16-byte operand, should this evaluate to 0 instead of=
+ 1 to
+> >>> ensure theoretical future callers don't encounter a silent atomicity =
+break?
+> >>>
+> >>> --
+> >>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026070606303=
+5.1139-1-sarunkod@amd.com?part=3D1
+> >> Hi,
+> >>
+> >> Right, It should return 0 instead of 1, will rectify this in the next =
+patch.
+> >=20
+> > Is it possible to fail the build instead?  Attempting to generate CMPXC=
+HG16B on
+> > 32-bit should straigt up fail.
+>=20
+> Hi Sean,
+>=20
+> A compile-time failure in __try_cmpxchg128_user_asm would unfortunately
+> break i386 builds even for callers that never use a 16-byte operand.
+>=20
+> unsafe_try_cmpxchg_user dispatches on sizeof(*(_ptr)) via a switch, and
+> the 128-bit path is one of those cases. As noted in the comment above
+> the macro, Clang/LLVM tends to compile all switch arms when expanding
+> this macro, and only discards unused paths afterward.
 
-On 8/25/26 11:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The search loop limit `2 * page_sz` for locating the USDT probe can cause the test to falsely fail if the compiler generates a prologue of 11 bytes or larger.
-> --
->
-> --- Patch [2]: [PATCH bpf v2 2/2] selftests/bpf: Add test for usdt probe with page-crossing nop10 ---
-> commit 3ab03ec0febc59ef7c61c7f1449047ef827d5e7b
-> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
->
-> selftests/bpf: Add test for usdt probe with page-crossing nop10
->
-> This commit adds a USDT probe layout where the nop10 crosses a page boundary.
-> It verifies that attaching to it succeeds and the probe fires without the
-> uprobe being shifted onto the nop10 incorrectly.
->
->> diff --git a/tools/testing/selftests/bpf/prog_tests/usdt.c b/tools/testing/selftests/bpf/prog_tests/usdt.c
->> index 8004c9568ffa5..eff1e57ab13c0 100644
->> --- a/tools/testing/selftests/bpf/prog_tests/usdt.c
->> +++ b/tools/testing/selftests/bpf/prog_tests/usdt.c
-> [ ... ]
->> @@ -342,6 +343,57 @@ static void subtest_optimized_attach(void)
->>   	test_usdt__destroy(skel);
->>   }
->>   
->> +/*
->> + * Test attachment to a USDT probe whose nop10 crosses a page boundary.
->> + * The kernel can't optimize such nop10, so libbpf keeps the uprobe on
->> + * the preceding 1-byte nop. Do not assume any particular placement
->> + * here, though: however the probe ends up attached, the attachment
->> + * must succeed and the probe must fire.
->> + */
->> +static void subtest_optimized_attach_cross_page(void)
->> +{
->> +	long page_sz = sysconf(_SC_PAGESIZE);
->> +	struct test_usdt *skel;
->> +	__u8 *addr = NULL;
->> +	long i;
->> +
->> +	/* combo is placed up to a page of padding after the function start */
->> +	for (i = 0; i < 2 * page_sz; i++) {
-> [Severity: Medium]
-> Will this loop bound of 2 * page_sz (8192) cause the test to falsely fail on
-> builds with larger compiler prologues (like ASAN builds or those with frame
-> pointers enabled)?
->
-> If the compiler generates a prologue of size P, the offset to the probe is
-> P + align_padding (up to 4095) + skip_padding (4086) = P + 8181.
->
-> If P is 11 bytes or larger, the offset reaches 8192, which would exceed
-> this i < 2 * page_sz search bound and cause a spurious ASSERT_OK_PTR
-> failure.
+If that's actually happening, then this code is already broken, because u12=
+8
+exists only on (some) 64-bit kernels.
 
-I got such review locally, but I want to say that if such a compiler 
-existed, the existing tests would break before
+A straight static_assert() will fail, but BUILD_BUG_ON() (or more precisely=
+,
+__compiletime_assert())  and all of the associated magic exists for these e=
+xact
+scenarios.  Unlike static_assert(), __compiletime_assert() relies on dead-c=
+ode
+elimination, i.e. does exactly what we want.
 
-this one: find_instr() in subtest_optimized_attach() only scans 10 bytes 
-past the function start.
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.=
+h
+index a58d50d7a219..710a0b42eeef 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -595,10 +595,7 @@ do {										\
+ extern void __try_cmpxchg_user_wrong_size(void);
+=20
+ #ifdef CONFIG_X86_32
+-/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e. cmpxc=
+hg16b
+- * instruction).
+- */
+-#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
++#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) ({ BUILD_BUG_O=
+N(1); 1; })
+ #else
+ #define __try_cmpxchg64_user_asm(_ptr, _oldp, _nval, _label)		\
+ 	__try_cmpxchg_user_asm("q", "r", (_ptr), (_oldp), (_nval), _label)
 
->> +		if (!memcmp((void *)usdt_2_cross_page + i, nop1_nop10_combo, 11)) {
->> +			addr = (void *)usdt_2_cross_page + i;
->> +			break;
->> +		}
->> +	}
->> +	if (!ASSERT_OK_PTR(addr, "find_nop1_nop10_combo"))
->> +		return;
