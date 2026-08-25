@@ -1,200 +1,115 @@
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2EA3FFAD7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CBE3FF1B4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:57:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787658003; cv=none; b=QIa6bW4PKE7Xod7LBrrn4mJHq1PLpbbIT4691LcVlBsyBiIsDy1BaYyzSH92vh+xYd7Gu6uJql2ReyvXqwRnB8kQItV3/CQdKh/M+B+DFtkMg+itRxuxHxtdgloDtIwSu/2cG1o4CRdCWHaibt+yG0JxA7saDafxU03iUgmG4lI=
+	t=1787659051; cv=none; b=Q50VEpd149OoeVof9SlDQvWsMKlAjTuD7MHkYorWIwj/s5E600e4iDTadkCqciplAL2wDfqIgQhkwPNS5qsogmYmLXdza/MP7KQoJONx5Lt8niQTZlWgZlssxdazqgaDcgt9LRpGT4/eMwmYA/os6me9f7lDqlBZt41Jw0T5i9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787658003; c=relaxed/simple;
-	bh=L/6/DNj0Yio1x00kZr2rxT+p/qQuZdl/Cm127py1fro=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OWBHppDPehPh9jP4g/02qUV4nOY6hcT8QK6+Rz4/zuVPxRFzaHt/qrLgGVVFs+psZL/vfJZk+tOpp1abB+ncth+UKc1zX5pbW6SBy3k4hyDZnJhbCK/TTG/3DuAzi2xt3wZYgGXP0X9dq5yve36hzsRh1wINfAMlv74Wq276CXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=IRBKF1Ch; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1787659051; c=relaxed/simple;
+	bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UBF+VhLu9brO7g3vhYEnWor43r6mNJ+//DNn6dx8YyHPMO24YqK4pgqnGBJKWCMz/4UvB/T9TvzizNt15J4R5vTu8ywj1S3sEqX71uUcaYUCWiLMv3OWuXA1fMdt1sbi/pHwb+exIT35mttaI5kuRfew8wNRhxLkGSRB9ViS+gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEg2wCvK; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="IRBKF1Ch"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1787657996; x=1787917196;
-	bh=asyZ9V5PRGB1ApJnRmBxuu35L5F7opXjmpLJsMizme8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=IRBKF1ChGTNQNemHhc+CKy/oAFMDFBPMvV2CXaB9Uy3WfF+QRoxt5hvoihKtQGi31
-	 qq3/7yehXrziM65pOJbX8ekkN+TPE8bb6DGh1mXiLqHMZJgkj6ZP4v4Re3a1NDqS/H
-	 gr7FyI5raMEyL/vUP6fKOo95hef0xPPYMK8oIGkNSvfTcEaQy2lGcOhGxS+DgPeJlA
-	 cYuWeqZGbNtuyN9cS5CWncIu1A2K3Fm0bfjKBGPJa8xNXeER5943Dg8EvTx1nzq9wT
-	 o7TVcqIBMfIjNYV5eiHib3EjEnXBp64AsCuwb5FsSRDhl7ccMG+EgVLpCrRcjuQTxI
-	 IxG4XyTzkKu3A==
-X-Pm-Submission-Id: 4hTm6K1xj7z1DFFC
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <robh@kernel.org>,
-  <devicetree@vger.kernel.org>,  <conor+dt@kernel.org>
-Subject: Re: [PATCH v6 4/9] iio: accel: mma8452: Support interrupt sharing
-In-Reply-To: <20260825084221.582281F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:42:20
-	+0000")
-References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
-	<20260825-mma8452-open-drain-v6-4-9b252804ee80@geanix.com>
-	<YAaf9j1P6vPR2vJqoPFnYqJcHanWcLOeDXn0md6ZcwU_laH0F2kqktrI6TXLQQLQQZjN7_8Bqav7gL8TA5JxFA==@protonmail.internalid>
-	<20260825084221.582281F000E9@smtp.kernel.org>
-Date: Tue, 25 Aug 2026 13:39:52 +0200
-Message-ID: <877bleo2d3.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEg2wCvK"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2d032846c95so55591915ad.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 04:57:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787659049; x=1788263849; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
+        b=BEg2wCvK1PuIEOmzLLWFSFEX5i74twdY+ZUnJRZdZmSeTN3gfOdB4sA3mX5/eDnqi+
+         /NmIjD2gJzd/Izxfe/E0u/BUI7vjKsyNeFpLJokibBsly6w1DE/3pSIe/jOvv21ChTG5
+         Ejfc2gWMLctMoJbqHxEUqGwap/Fb05pfH0dLH2CbVCEc+jC92u1ZSloMcPsm+VmnXtcj
+         1KJy93RlOfAFOFpCs5iSCWsknhaKU8SJ9Df9Ht5cm6v+0gQ8woEkAaMbyu6JzR2memHX
+         h3DWOHIp3AeMb+VuT7CPge9uEIQgKycg7da/0raozP1BopMSJ+cmharl4oCCOOoDorfW
+         28xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787659049; x=1788263849;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j5Afy2as19W32q8jX2j1wSb9qr7wYiWdDuuQVS6+rk0=;
+        b=fBeRLXEBk4G17ppJujTJ/5LeeFXI6ZjigELHGSBlsPpsqsPGc6m0T4FqUAqVDZ3OMH
+         BeE8NGQC136Z/+Zpvf1KPpCHaIXkf7fWcKKPWYQ6+VTtpnBqgDN1aUmQztjCI0zm5tIY
+         MaKWrrMB3MpwJl8UvFcOrTA693+EYHbhHHRv5S97R3ETuMU1ev/Zq6xZ0KINtxEgZvo5
+         kemHXnWlMSytqsqMvTHs6OQhgZ8U8jTpPcGG/XXuhvUHPoGqWIvYK9d6fBkqW7WU7XJJ
+         +dZESW1LaHY++zQsJdvc2SiYqp3I1nZBv1bQb+ukuFvWmuP6i2M4a/886oms+tEjiM0t
+         j8kQ==
+X-Gm-Message-State: AFuF++nk5rF4DXBl19z9fmLjWZ9JWTX9SxcKdNwGqCBMAyBdWxvQxPWc
+	83ML1tRDcL+UBp5wFsEX9nZHXaM9UJS4YR8Wdpug/PhNDqVe34p9XKwXRF9UgQ==
+X-Gm-Gg: AR+sD12jhB0RDBaVMWZS5LNDoh38QsroR4pZEz0hCI9FYWQGoJgTZ/nU9F/SP0fZNj7
+	jVOjhDLTficMkkm872rHbxaih9Zj5jgP4yfckxZJ9OHvffr2kCD7nBwhebvQIUzxHSLVL25PElN
+	ydmJwuU3ddD/HRKk2bSJQN/kpnlXA3M3Z41LUNh/YZ+FOvlkqH1Rx7m45dlYIpdYXunhB1kAK4w
+	G7KO4vPH+GBemcQDcZUaV252akL1ssdRN20oBb+U0PZq/QtuOfMpfK10dJz+nnpEAe2uD3oVRIE
+	wGGmwrFUmeDuhMTv3QWPWgcD82hj8xoMSyY2zHGdy9R7e/leHzXIsrFUfAVRUuV7zboNGBjQYuw
+	TfaYgACR6n2Ar+n44od5Q4AuyrB6f4bbnsrBBVPgHIlJNutJoyjP+eL45Nr1hgHPjvo2YMSFXUI
+	QSKFhBz8imveePsQOGKdCWHc/aEdpVjiEISqT5tyXBuPtt+lP4flU5phowmkbVRBT4PttKpyFzD
+	/QDPt7b4THNWFntXgk2rca2
+X-Received: by 2002:a17:90b:520c:b0:37f:ed7e:7e42 with SMTP id 98e67ed59e1d1-395c3867ac5mr65374029a91.14.1787659049210;
+        Tue, 25 Aug 2026 04:57:29 -0700 (PDT)
+Received: from localhost.localdomain ([103.120.31.178])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327f91d37cesm41861522eec.15.2026.08.25.04.57.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 25 Aug 2026 04:57:28 -0700 (PDT)
+From: Khawar Ahemad <ahemadkhawar123@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	eddyz87@gmail.com,
+	memxor@gmail.com
+Subject: Re: [PATCH bpf-next] bpf: Fix stream capacity leak and spurious -ENOSPC in bpf_stream_stage_commit
+Date: Tue, 25 Aug 2026 17:27:21 +0530
+Message-ID: <20260825115722.85375-1-ahemadkhawar123@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260825113948.85020-1-ahemadkhawar123@gmail.com>
+References: <20260825113948.85020-1-ahemadkhawar123@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-<sashiko-bot@kernel.org> writes:
+Hi Sashiko reviewer,
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] If regulator_disable() fails in mma8452_runtime_suspend(), the data->suspended flag is not rolled back, leading to a permanent IRQ storm on subsequent interrupts.
->
-> Pre-existing issues:
-> - [High] mma8452_remove() does not wake up the device before disabling runtime PM, leading to unbalanced regulator disables (underflow) and illegal I2C access while powered off.
-> - [High] Registers are not restored after runtime resume, causing the device to lose critical configuration.
-> --
->
-> --- Patch [4]: [PATCH v6 4/9] iio: accel: mma8452: Support interrupt sharing ---
-> commit 5bc641da9d60875f38db9937a3a1dae1afd9a94e
-> Author: Esben Haabendal <esben@geanix.com>
->
-> iio: accel: mma8452: Support interrupt sharing
->
-> This commit adds handling of runtime PM suspension in the interrupt handler
-> to allow sharing the interrupt with other devices. It introduces a suspended
-> flag and uses synchronize_irq() to protect against race conditions during
-> runtime suspend and device removal.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index 1fb43c5b0b72f..8eb97e6793d6f 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
-> [ ... ]
->> @@ -1056,14 +1057,24 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
->>  	struct iio_dev *indio_dev = p;
->>  	struct mma8452_data *data = iio_priv(indio_dev);
->>  	irqreturn_t ret = IRQ_NONE;
->> +	int pm_status;
->>  	int src;
->>
->> +	pm_status = pm_runtime_get_if_active(&data->client->dev);
->> +	if (pm_status == 0)
->> +		return IRQ_NONE; /* device is powered down */
->> +	if (READ_ONCE(data->suspended)) {
->> +		/* device is being removed */
->> +		ret = IRQ_NONE;
->> +		goto out_runtime_put;
->> +	}
->
-> [Severity: High]
-> Is the READ_ONCE(data->suspended) check reachable during normal suspend?
->
-> Since pm_runtime_get_if_active() returns 0 when the device state is
-> RPM_SUSPENDING, it seems the handler will return early before reaching
-> the data->suspended check.
+Thanks for the thoughtful analysis. Addressing both points:
 
-Yes. That is on purpose. If pm_runtime_get_if_active() returns 0,
-runtime PM is enabled and the device is not RPM_ACTIVE. We don't want to
-process irq for the device, and we must not call pm_runtime_put() as
-that would cause counter underflow.
+1. Regarding 0-byte elements (Low):
+A 0-byte element in BPF streams carries no payload and no delimiter
+(unlike NUL-terminated strings in userspace, streams are raw byte logs).
+When bpf_stream_read() encounters a 0-byte element, min(0, rem_len) is 0,
+copy_to_user() copies 0 bytes, and the element is immediately popped and
+freed. Staging and committing a purely 0-byte stage transfers zero bytes
+of data to readers; returning early when ss->len == 0 safely avoids
+unnecessary atomic operations and lock contention on stream->log.
 
-> [ ... ]
->> @@ -1774,6 +1789,10 @@ static int mma8452_runtime_suspend(struct device *dev)
->>  		return -EAGAIN;
->>  	}
->>
->> +	WRITE_ONCE(data->suspended, true);
->> +
->> +	synchronize_irq(client->irq);
->> +
->>  	ret = regulator_disable(data->vddio_reg);
->>  	if (ret) {
->>  		dev_err(dev, "failed to disable VDDIO regulator\n");
->>  		return ret;
->>  	}
->
-> [Severity: High]
-> If regulator_disable() fails here, the function returns without resetting
-> data->suspended to false.
->
-> If this happens, the PM core leaves the device in RPM_ACTIVE. Would this
-> cause a permanent IRQ storm since the next interrupt will see pm_status > 0,
-> but data->suspended is true, causing it to continually return IRQ_NONE
-> without clearing the level-triggered interrupt?
+2. Regarding the rollback path and commit description (Medium):
+In normal sequential execution, ss->len > 0 implies ss->log is non-empty
+because ss->len is only incremented upon successful element enqueue.
+The if (!list) rollback check is defensive programming: in the unpatched
+code, if list was NULL, the function returned 0 without considering any
+capacity consumed. Adding bpf_stream_release_capacity() ensures that even
+under abnormal or future decoupled states, capacity accounting remains
+strictly symmetric with queue state.
 
-If regulator_disable() fails here, the device will be in STANDBY mode,
-and interrupts should not happen. The INT_SOURCE (MMA8452_INT_SRC)
-register is reset when switching from ACTIVE to STANDBY mode, and the
-analog subsystem is disabled, so no irq should be asserted by the chip.
+The primary immediate functional fix is preventing spurious -ENOSPC:
+when stream->capacity is at BPF_STREAM_MAX_CAPACITY, calling
+bpf_stream_consume_capacity(stream, 0) returned -ENOSPC due to the
+atomic_read(&stream->capacity) >= BPF_STREAM_MAX_CAPACITY check,
+incorrectly failing zero-byte stage commits.
 
-> [ ... ]
->> @@ -1808,6 +1827,8 @@ static int mma8452_runtime_resume(struct device *dev)
->>  		return ret;
->>  	}
->>
->> +	WRITE_ONCE(data->suspended, false);
->> +
->>  	ret = mma8452_active(data);
->>  	if (ret < 0)
->>  		goto runtime_resume_failed;
->
-> [Severity: High]
-> This is a pre-existing issue, but does mma8452_runtime_resume() need to
-> restore other device registers like MMA8452_CTRL_REG4 and
-> MMA8452_DATA_CFG?
->
-> When the regulators are disabled during suspend, the device loses power and
-> these registers are reset. If they aren't restored here, will the device
-> lose its configuration and permanently disable hardware interrupts since
-> CTRL_REG4 defaults to 0?
-
-According to data sheet, both CTRL_REG4 (0x2d) and XYZ_DATA_CFG (0x0e)
-is preserved on transition from ACTIVE to STANDBY. But yes, we probably
-need to restore these when regulator have been disabled.
-
-Is it okay if I address this in a follow-up patch?
-
-> [ ... ]
->> @@ -1822,6 +1843,7 @@ static int mma8452_runtime_resume(struct device *dev)
->>  	return 0;
->>
->>  runtime_resume_failed:
->> +	WRITE_ONCE(data->suspended, true);
->>  	regulator_disable(data->vddio_reg);
->>  	regulator_disable(data->vdd_reg);
->>
->
-> [Severity: High]
-> This is a pre-existing issue, but if the device is unbound via sysfs while
-> runtime-suspended, will mma8452_remove() run into issues?
->
-> drivers/iio/accel/mma8452.c:mma8452_remove() {
->     ...
-> 	pm_runtime_disable(&client->dev);
-> 	pm_runtime_set_suspended(&client->dev);
->     ...
-> 	mma8452_standby(iio_priv(indio_dev));
->
-> 	regulator_disable(data->vddio_reg);
-> 	regulator_disable(data->vdd_reg);
-> }
->
-> Since pm_runtime_disable() leaves the device suspended, won't
-> mma8452_standby() attempt an I2C write on an unpowered chip? Also, won't
-> calling regulator_disable() here cause an underflow since the regulators
-> were already disabled during runtime suspend? Does this need a
-> pm_runtime_get_sync() before teardown?
-
-I don't know if that is the correct approach. But it does look like an
-easy fix.
-
-/Esben
+Thanks,
+Khawar Ahemad <ahemadkhawar123@gmail.com>
