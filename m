@@ -1,70 +1,542 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-44.mta0.migadu.com [91.218.175.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9CE3947AC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 24 Aug 2026 22:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF6EEB3
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 00:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787609365; cv=none; b=L8lM5M7SIYu+sinx5Z6Ma8agiUgBF3gsOF+lU2bD0KrN0/HGg77qxnc8uQ4S/SrTExWuO7Dhmyfl69iRRQNz63UKGig1IGoL0srCcrTlc8g0j0d8IjAtF/xKnLDGr+t/M13npaviF95235wTDfvQA5mugA3ZxO4iwDYW5IirNpg=
+	t=1787616785; cv=none; b=Rdki8wQ18HOS8+jC7co8LsqiYylsMBbBXITXTwO0yA+UEZuHNYjXW1+/ZZoPLjOfK/Rn7U73PGyp42ICS79v775Qc8rw1tKCmYhWRfLtJHHg5Sa4oRzxkJtoJnpyvNWV2owRS3vMjkTqbIUcT0SDIH9a+qt1GLg67IzPPHEPRRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787609365; c=relaxed/simple;
-	bh=sWz6hlKCZ3oN6pn4Ad0oYGOeLu7OCQmrvxiWfD0t7R8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TyLSKekeNMaHHvyA8AoRXQt2hxhR30UgmR0B4JHvzuAgutmZxwbXTPAf3dGspBgQfjoN145ivme4RlwRQR+uI88bomUfztHVoVackcj5fVpkUUseVenX6sfl6K0Xrg1F9PpQW5Jo0DyzbFmaB6GdqQKTfKfGBdcQQRhXt5/9U+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=O6pkfoP5; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1787616785; c=relaxed/simple;
+	bh=f9qG1bMVWhb5KSslSocg1dwy/aeSjv0KZLGcHBO1/uI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mavg5eslf8i9+l5waZ0v0WfT4Op7KuwuYWqUc6+LPIKOohY0yJAjYGQrfYLQUh8ainYJDrK25lTcYm/5dWV0nUB3dLTrW3yRvgGeekiCC+1YPNOML5kjixRlF8HlYp532x58L5G/2pO4aqEO9xveyVyofwfGBop6ASwwiIt8Mn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Vu9UkSTX; arc=none smtp.client-ip=91.218.175.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="O6pkfoP5"
-Received: from L30177.local (unknown [IPv6:2a01:e0a:ac2:22b0:9a6:acd5:d8dc:dcdb])
-	(Authenticated sender: vjardin@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 6714C2003C3;
-	Tue, 25 Aug 2026 00:09:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1787609360;
-	bh=sWz6hlKCZ3oN6pn4Ad0oYGOeLu7OCQmrvxiWfD0t7R8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O6pkfoP58l9Xv39H+FDKPJMp2bY0IpEEG3Jdq/Y8fEwENV7BBdhSN29PlEZKd+SB7
-	 tCMRfoLay+EUs4JhjW5PjCSrGeuJL5SNZ8BChn42RIIsHNu1wO8DGW+UKy89aR91Sy
-	 MGK2t7Ae75Zfm7CPlJr+AZk6B0VbMdRRKCBPIMZGXsOQexzonQ9V7KbLmv2znH/Blp
-	 cMn74OpslD15lUlQB2OHF2uVXl/+nDMkQ0XBDbAr91rFkWGVxAUmvKQTOoZt+MQjB6
-	 l3neEbE1WaOIaV3UcMzgBfqPwhNA4WW1M7F5fWmoAlKzs9jMgjxRKVcWeT0obGXxF2
-	 c79+SGIzETI2w==
-Date: Tue, 25 Aug 2026 00:09:14 +0200
-From: Vincent Jardin <vjardin@free.fr>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
-	conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH] dt-bindings: hwmon: ti,tmp401: add vcc-supply and
- #thermal-sensor-cells
-Message-ID: <aozBCv7L_Hk81Rx8@L30177.local>
-References: <20260824-for-upstream-dt-tmp401-vcc-tsc-v1-1-ecb5ef7898bd@free.fr>
- <20260824155758.CD2F11F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Vu9UkSTX"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=f9qG1bMVWhb5KSslSocg1dwy/aeSjv0KZLGcHBO1/uI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787616777; v=1; x=1788221577;
+ b=Vu9UkSTX86U3wNE5lw4ebt3KdqJ1iZO42iUb9Iwd7f99T3v00q+4e1n0fBWlDTionat/kVTm
+ 07klTlPnj9DzDpt63q9j4P0X+2UdmKev5b3qTn3En8sQ690+sBv9Jnu2CSB9Txg428jMAA1pVgr
+ EcdYrx0tmIFvY01X+h1FODsg=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [IPV6:2a03:83e0:125c:1:cef:bdf9:9d01:faef] (2620:10d:c090:500::7:8921)
+	by smtp.migadu.com with ESMTPS id b49edbb2b77230b7;
+	Tue, 25 Aug 2026 00:12:57 +0000
+X-Mizu-Trace-ID: b49edbb2b77230b7
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <fa7cc4ad-6b8d-4bdf-8e2c-66d98ddef7df@linux.dev>
+Date: Mon, 24 Aug 2026 17:12:49 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v7 4/9] bpf, x86: emit KASAN checks in x86 JITed
+ programs
+To: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ sashiko-reviews@lists.linux.dev,
+ =?UTF-8?Q?Alexis_Lothor=C3=A9_=28eBPF_Foundation=29?=
+ <alexis.lothore@bootlin.com>
+Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>
+References: <20260822-kasan-v7-0-99afee6ef7fd@bootlin.com>
+ <20260822-kasan-v7-4-99afee6ef7fd@bootlin.com>
+ <20260821233332.1D2201F00A3A@smtp.kernel.org>
+ <DKWOG6YKM2NY.1FJHLE7BKZW9Y@gmail.com>
+Content-Language: en-US
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <DKWOG6YKM2NY.1FJHLE7BKZW9Y@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260824155758.CD2F11F000E9@smtp.kernel.org>
 
-Hi Bot,
+On 8/23/26 3:30 PM, Kumar Kartikeya Dwivedi wrote:
+> On Sat Aug 22, 2026 at 1:33 AM CEST, sashiko-bot wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] `emit_kasan_check` fails to save the caller-saved register %r10 (BPF_REG_AX), which corrupts BPF_REG_0 and memory pointers during atomic fetch operations.
+>> --
+>>
+>> --- Patch [4]: [PATCH bpf-next v7 4/9] bpf, x86: emit KASAN checks in x86 JITed programs ---
+>> commit 6bca50db6e9af9416363fe2e60f4e42f924950c9
+>> Author: Alexis Lothor√© (eBPF Foundation) <alexis.lothore@bootlin.com>
+>>
+>> bpf, x86: emit KASAN checks in x86 JITed programs
+>>
+>> Insert KASAN shadow memory checks before memory load and store
+>> operations in JIT-compiled BPF programs. This helps detect memory safety
+>> bugs such as use-after-free and out-of-bounds accesses at runtime.
+>>
+>>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>>> index 13ba3232993ac..8134d028a2f2c 100644
+>>> --- a/arch/x86/net/bpf_jit_comp.c
+>>> +++ b/arch/x86/net/bpf_jit_comp.c
+>>
+>> [ ... ]
+>>
+>>> @@ -1110,6 +1121,92 @@ static void maybe_emit_1mod(u8 **pprog, u32 reg, bool is64)
+>>>  	*pprog = prog;
+>>>  }
+>>>
+>>> +static int emit_kasan_check(struct bpf_verifier_env *env, u8 **pprog,
+>>> +			    u32 addr_reg, struct bpf_insn *insn, u8 *ip,
+>>> +			    bool is_write)
+>>> +{
+>>> +#ifdef CONFIG_BPF_JIT_KASAN
+>>> +	u32 bpf_size = BPF_SIZE(insn->code);
+>>> +	s32 off = insn->off;
+>>> +	u8 *prog = *pprog;
+>>> +	void *kasan_func;
+>>> +
+>>> +	if (!env)
+>>> +		return 0;
+>>> +
+>>> +	/* Derive KASAN check function from access type and size */
+>>> +	switch (bpf_size) {
+>>> +	case BPF_B:
+>>> +		kasan_func = is_write ? __asan_store1 : __asan_load1;
+>>> +		break;
+>>> +	case BPF_H:
+>>> +		kasan_func = is_write ? __asan_store2 : __asan_load2;
+>>> +		break;
+>>> +	case BPF_W:
+>>> +		kasan_func = is_write ? __asan_store4 : __asan_load4;
+>>> +		break;
+>>> +	case BPF_DW:
+>>> +		kasan_func = is_write ? __asan_store8 : __asan_load8;
+>>> +		break;
+>>> +	default:
+>>> +		return -EINVAL;
+>>> +	}
+>>> +
+>>> +	/* Save rax */
+>>> +	EMIT1(0x50);
+>>> +	/* Save rcx */
+>>> +	EMIT1(0x51);
+>>> +	/* Save rdx */
+>>> +	EMIT1(0x52);
+>>> +	/* Save rsi */
+>>> +	EMIT1(0x56);
+>>> +	/* Save rdi */
+>>> +	EMIT1(0x57);
+>>> +	/* Save r8 */
+>>> +	EMIT2(0x41, 0x50);
+>>> +	/* Save r9 */
+>>> +	EMIT2(0x41, 0x51);
+>>> +	/*
+>>> +	 * SystemV ABI states that we should also save r10/r11, but in
+>>> +	 * practice those registers are _not_ used by the limited set of
+>>> +	 * kasan helpers we are calling here, so that's fine not to save those.
+>>> +	 */
+>>> +
+>>> +	/* mov rdi, addr_reg */
+>>
+>> [Severity: High]
+>> Is it safe to skip saving %r10 and %r11 here?
+>>
+>> In the x86 BPF JIT, %r10 is mapped to BPF_REG_AX. During atomic fetch
+>> operations, BPF_REG_0 is stashed into BPF_REG_AX before calling
+>> emit_kasan_check():
+>>
+>> arch/x86/net/bpf_jit_comp.c:do_jit() {
+>>     ...
+>>     /* Will need RAX as a CMPXCHG operand so save R0 */
+>>     emit_mov_reg(&prog, true, BPF_REG_AX, BPF_REG_0);
+>>     if (src_reg == BPF_REG_0)
+>>         real_src_reg = BPF_REG_AX;
+>>     if (dst_reg == BPF_REG_0)
+>>         real_dst_reg = BPF_REG_AX;
+>>
+>>     if (!bpf_atomic_is_load_store(insn)) {
+>>         if (!accesses_stack_only) {
+>>             err = emit_kasan_check(env, &prog, real_dst_reg, insn, ip, true);
+>>     ...
+>> }
+>>
+>> Since the KASAN helpers are standard C functions, they are permitted by the
+>> System V AMD64 ABI to clobber caller-saved registers like %r10 (especially if
+>> kasan_report is called).
+>>
+>> If %r10 is clobbered, could this corrupt the stashed BPF_REG_0 and potentially
+>> cause a crash when real_dst_reg is used as a memory pointer in the subsequent
+>> emit_ldx() call?
+>>
+>> arch/x86/net/bpf_jit_comp.c:do_jit() {
+>>     ...
+>>     /* Load old value */
+>>     emit_ldx(&prog, BPF_SIZE(insn->code), BPF_REG_0, real_dst_reg, insn->off);
+>>     ...
+>>     /* Restore R0 after clobbering RAX */
+>>     emit_mov_reg(&prog, true, BPF_REG_0, BPF_REG_AX);
+>>     ...
+>> }
+> 
+> This looks like a real bug, R10 is used for both atomics and constant blinding.
+> We probably also should save R11.
 
-Le 24/08/26 15:57, sashiko-bot@kernel.org a Ècrit :
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The commit message contains a major factual error: it justifies adding the `vcc-supply` property by claiming it is fetched by `lm90_probe()` in `drivers/hwmon/lm90.c`, but the `ti,tmp401` and `ti,tmp411` devices are actually backed by `drivers/hwmon/tmp401.c`, which completely lacks regulator support.
 
-You have the points.
+Hi Kumar, Alexis.
 
-The vcc-supply justification in the commit message is wrong assuption for
-this device.
+This topic has a bit of history now [1][2].
+I don't quite like it, but IMO we should give in to the bots.
 
-v2 will drop vcc-supply and it will keep only #thermal-sensor-cells.
+Reasons to save r10 and r11:
+* SystemV ABI
+* bots wouldn't shut up about it (think of future llm bot reports!)
+* if our analysis of the kasan helpers is wrong about r10/r11 usage OR
+  if something changes (the helpers themselves, the compilers, build
+  flags, JIT's usage of r10/r11 etc.) - we'll get clobbered regs
 
-The #thermal-sensor-cells topics is better explained in v2.
+Reasons to *not* save r10 and r11:
+* we make the bpf prog a bit smaller and faster, the win is not very
+  clear but it's percentages, not a factor
 
-Thanks for the review,
-  Vincent
+A counter-argument to clobbering is that a kasan bug here most likely
+means a bug in the verifier, so it doesn't matter if machine dies.
+
+A counter-argument to that would be: why deliberately increase the bug
+surface and let the machine die if we can easily prevent it?
+
+Pasting below a clobbering reproducer from my clanker.
+
+[1] https://lore.kernel.org/all/5f38c9a5-a8a3-4bed-bb8c-b7260a1c1a11@linux.dev/
+[2] https://lore.kernel.org/all/CAADnVQ+c9h_wuNwj8pjx885oNErGY7bxxCwKi+DiJ0XKSpyYfg@mail.gmail.com/
+
+
+diff --git a/tools/testing/selftests/bpf/prog_tests/kasan.c b/tools/testing/selftests/bpf/prog_tests/kasan.c
+index 2b424767a0f3..160445395ddc 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kasan.c
++++ b/tools/testing/selftests/bpf/prog_tests/kasan.c
+@@ -309,6 +309,149 @@ static void run_blinding_subtest(void)
+ 	free(ctx);
+ }
+ 
++/*
++ * Value-integrity subtests.
++ *
++ * The suite above only checks that a KASAN report was emitted. A report is not
++ * fatal here (the kernel runs with kasan_multi_shot and panic_on_warn=0), so
++ * the program keeps executing afterwards and its state must be intact. These
++ * two subtests check the two places where the JIT keeps live BPF state in
++ * BPF_REG_AX (x86 r10) across the injected __asan_* call.
++ */
++#define R0_SENTINEL	0x5EEDFACE
++#define ST_SENTINEL	0x0B0BCAFE
++
++static void run_atomic_fetch_integrity_subtest(struct test_ctx *ctx,
++					       struct kasan *skel)
++{
++	struct test_spec spec = {
++		.prog_type = "atomic_fetch_r0_integrity",
++		.is_write = true,
++	};
++
++	if (!test__start_subtest("atomic_fetch_r0_integrity"))
++		return;
++
++	strncpy(ctx->prog_name, "atomic_fetch_r0_integrity", PROG_NAME_MAX_LEN);
++
++	/*
++	 * Control run: same instruction, same instrumentation, unpoisoned
++	 * target. No report, so nothing may be disturbed. If this one fails,
++	 * the test itself is wrong.
++	 */
++	skel->data->poison_target = false;
++	skel->bss->r0_after_atomic = 0;
++	spec.expect_no_report = true;
++	exec_subtest(ctx, &spec, 8, false);
++	ASSERT_EQ(skel->bss->r0_after_atomic, R0_SENTINEL,
++		  "control: r0 preserved when no report fires");
++
++	skel->data->poison_target = true;
++	skel->bss->r0_after_atomic = 0;
++	spec.expect_no_report = false;
++
++	/* Asserts that the report fired: the check must have been emitted. */
++	exec_subtest(ctx, &spec, 8, false);
++
++	/*
++	 * ... and that returning from it left r0 alone. The JIT saves r0 into
++	 * BPF_REG_AX before the CMPXCHG loop and restores it after, with the
++	 * KASAN check in between.
++	 */
++	ASSERT_EQ(skel->bss->r0_after_atomic, R0_SENTINEL,
++		  "r0 preserved across a KASAN report in a fetch atomic");
++}
++
++static void run_atomic_fetch_addr_subtest(struct test_ctx *ctx,
++					  struct kasan *skel)
++{
++	struct test_spec spec = {
++		.prog_type = "atomic_fetch_r0_addr",
++		.is_write = true,
++	};
++
++	if (!test__start_subtest("atomic_fetch_r0_addr"))
++		return;
++
++	strncpy(ctx->prog_name, "atomic_fetch_r0_addr", PROG_NAME_MAX_LEN);
++	exec_subtest(ctx, &spec, 8, false);
++
++	ASSERT_EQ(skel->bss->r0_addr_after, skel->bss->r0_addr_ref,
++		  "r10 (used as the atomic base address) preserved");
++}
++
++static void run_atomic_fetch_oob_c_subtest(struct test_ctx *ctx)
++{
++	struct test_spec spec = {
++		.prog_type = "atomic_fetch_oob_c",
++		.is_write = true,
++	};
++
++	if (!test__start_subtest("atomic_fetch_oob_c"))
++		return;
++
++	strncpy(ctx->prog_name, "atomic_fetch_oob_c", PROG_NAME_MAX_LEN);
++	exec_subtest(ctx, &spec, 8, false);
++}
++
++static void run_blinding_integrity_subtest(void)
++{
++	struct test_spec spec = {
++		.prog_type = "st_blinded_integrity",
++		.is_write = true,
++	};
++	char bpf_jit_harden = '2';
++	struct kasan_write_val val;
++	struct kasan_harden *skel;
++	struct test_ctx *ctx;
++	__u32 key = 0;
++	int ret;
++
++	if (!test__start_subtest("st_blinded_integrity"))
++		return;
++
++	ctx = calloc(1, sizeof(*ctx));
++	if (!ASSERT_OK_PTR(ctx, "alloc blinding ctx"))
++		return;
++	ctx->klog_fd = -1;
++
++	ret = set_bpf_jit_harden(&bpf_jit_harden);
++	if (!ASSERT_OK(ret, "set bpf_jit_harden"))
++		goto free_ctx;
++
++	skel = kasan_harden__open_and_load();
++	if (!ASSERT_OK_PTR(skel, "open and load blinded prog"))
++		goto restore;
++
++	ctx->klog_fd = open_kernel_logs();
++	if (!ASSERT_OK_FD(ctx->klog_fd, "open kernel logs"))
++		goto destroy;
++
++	ctx->obj = skel->obj;
++	strncpy(ctx->prog_name, "st_blinded_integrity", PROG_NAME_MAX_LEN);
++
++	/* Asserts that the report fired. */
++	exec_subtest(ctx, &spec, 8, false);
++
++	/* ... and that the blinded store still wrote the right value. */
++	ret = bpf_map__lookup_elem(skel->maps.test_map, &key, sizeof(key),
++				   &val, sizeof(val), 0);
++	if (!ASSERT_OK(ret, "read back blinded store target"))
++		goto close_klog;
++	ASSERT_EQ(val.data_8, ST_SENTINEL,
++		  "blinded store value preserved across a KASAN report");
++
++close_klog:
++	close(ctx->klog_fd);
++destroy:
++	kasan_harden__destroy(skel);
++restore:
++	ASSERT_OK(set_bpf_jit_harden(&bpf_jit_harden),
++		  "restore hardening configuration");
++free_ctx:
++	free(ctx);
++}
++
+ static struct test_spec tests[] = {
+ 	{
+ 		.prog_type = "st",
+@@ -439,11 +582,16 @@ void test_kasan(void)
+ 		run_subtest(ctx, test);
+ 	}
+ 
++	run_atomic_fetch_integrity_subtest(ctx, skel);
++	run_atomic_fetch_addr_subtest(ctx, skel);
++	run_atomic_fetch_oob_c_subtest(ctx);
++
+ 	/*
+ 	 * Blinding subtest is handled differently as it needs the
+ 	 * corresponding program to be loaded with bpf_jit_harden raised
+ 	 */
+ 	run_blinding_subtest();
++	run_blinding_integrity_subtest();
+ 
+ close:
+ 	close(ctx->klog_fd);
+diff --git a/tools/testing/selftests/bpf/progs/kasan.c b/tools/testing/selftests/bpf/progs/kasan.c
+index ea29197646b0..68a041f14353 100644
+--- a/tools/testing/selftests/bpf/progs/kasan.c
++++ b/tools/testing/selftests/bpf/progs/kasan.c
+@@ -459,4 +459,111 @@ int ldx_oob(struct __sk_buff *skb)
+ 	return tmp.data_1;
+ }
+ 
++/*
++ * Value-integrity tests: a KASAN report must not change what the program
++ * computes. The kernel keeps running after a report under kasan_multi_shot,
++ * so every register the JIT holds live across the injected __asan_* call must
++ * come back unchanged.
++ */
++#define R0_SENTINEL	0x5EEDFACE
++
++/*
++ * The JIT lowers an RMW fetch atomic into a CMPXCHG loop and needs RAX as the
++ * CMPXCHG operand, so it stashes BPF r0 into BPF_REG_AX (x86 r10) before the
++ * loop and restores it afterwards. The KASAN check sits between the two, so
++ * r10 holds live BPF state across the call.
++ *
++ * Keep a sentinel in r0 across the atomic and publish it afterwards: if the
++ * check clobbers r10, the restored r0 is garbage.
++ */
++__u64 r0_after_atomic = 0;
++/* Cleared by the control run, which must not produce a report at all. */
++bool poison_target = true;
++
++SEC("tcx/ingress")
++int atomic_fetch_r0_integrity(struct __sk_buff *skb)
++{
++	struct kasan_test_val *val;
++	__u32 key = 0;
++
++	val = bpf_map_lookup_elem(&test_map, &key);
++	if (!val)
++		return 0;
++
++	if (poison_target)
++		bpf_kfunc_kasan_poison(val, sizeof(struct kasan_test_val));
++	asm volatile ("r0 = %[sentinel];"
++		      "r1 = 8;"
++		      "r1 = atomic_fetch_or((u64 *)(%[val] + 8), r1);"
++		      "*(u64 *)(%[out] + 0) = r0;"
++		      :
++		      : [val] "r" (val), [out] "r" (&r0_after_atomic),
++			[sentinel] "i" (R0_SENTINEL)
++		      : "r0", "r1", "memory");
++	if (poison_target)
++		bpf_kfunc_kasan_unpoison(val, sizeof(struct kasan_test_val));
++
++	return 0;
++}
++
++/*
++ * Same lowering, but with the target pointer in r0. The JIT then uses
++ * BPF_REG_AX as real_dst_reg, i.e. r10 is not merely holding a value across
++ * the KASAN check - it is the base address of the ldx and of the locked
++ * cmpxchg that follow it.
++ */
++__u64 r0_addr_after = 0;
++__u64 r0_addr_ref = 0;
++
++SEC("tcx/ingress")
++int atomic_fetch_r0_addr(struct __sk_buff *skb)
++{
++	struct kasan_test_val *val;
++	__u32 key = 0;
++
++	val = bpf_map_lookup_elem(&test_map, &key);
++	if (!val)
++		return 0;
++
++	bpf_kfunc_kasan_poison(val, sizeof(struct kasan_test_val));
++	asm volatile ("r0 = %[val];"
++		      "r1 = 8;"
++		      "r1 = atomic_fetch_or((u64 *)(r0 + 8), r1);"
++		      "*(u64 *)(%[out] + 0) = r0;"
++		      "*(u64 *)(%[ref] + 0) = %[val];"
++		      :
++		      : [val] "r" (val), [out] "r" (&r0_addr_after),
++			[ref] "r" (&r0_addr_ref)
++		      : "r0", "r1", "memory");
++	bpf_kfunc_kasan_unpoison(val, sizeof(struct kasan_test_val));
++
++	return 0;
++}
++
++/*
++ * Plain C, no asm: the second lookup returns the map value pointer in r0 and
++ * the compiler leaves it there for the fetch atomic, so the JIT uses
++ * BPF_REG_AX (r10) as the base address of the post-check ldx and cmpxchg.
++ */
++SEC("tcx/ingress")
++int atomic_fetch_oob_c(struct __sk_buff *skb)
++{
++	struct kasan_test_val *val, *val2;
++	__u32 key = 0;
++
++	val = bpf_map_lookup_elem(&test_map, &key);
++	if (!val)
++		return 0;
++
++	bpf_kfunc_kasan_poison(val, sizeof(struct kasan_test_val));
++
++	val2 = bpf_map_lookup_elem(&test_map, &key);
++	if (!val2)
++		return 0;
++	__sync_fetch_and_or(&val2->data_8, 8);
++
++	bpf_kfunc_kasan_unpoison(val, sizeof(struct kasan_test_val));
++	return 0;
++}
++
+ char LICENSE[] SEC("license") = "GPL";
+diff --git a/tools/testing/selftests/bpf/progs/kasan_harden.c b/tools/testing/selftests/bpf/progs/kasan_harden.c
+index a2756bbfd529..9172a1017a8e 100644
+--- a/tools/testing/selftests/bpf/progs/kasan_harden.c
++++ b/tools/testing/selftests/bpf/progs/kasan_harden.c
+@@ -38,4 +38,36 @@ int st_blinded(struct __sk_buff *skb)
+ 	return 0;
+ }
+ 
++/*
++ * Constant blinding lowers a BPF_ST_MEM into
++ *   BPF_REG_AX = imm ^ rnd; BPF_REG_AX ^= rnd; *(dst + off) = BPF_REG_AX
++ * and the JIT emits the KASAN check before that store, so BPF_REG_AX (x86 r10)
++ * holds the value to be written across the __asan_* call.
++ *
++ * Written in asm to guarantee a raw BPF_ST opcode regardless of -mcpu: at
++ * -mcpu=v3 clang lowers an immediate store to MOV+STX, which is not blinded
++ * through BPF_REG_AX and does not exercise this path.
++ */
++#define ST_SENTINEL	0x0B0BCAFE
++
++SEC("tcx/ingress")
++int st_blinded_integrity(struct __sk_buff *skb)
++{
++	struct kasan_test_val *val;
++	__u32 key = 0;
++
++	val = bpf_map_lookup_elem(&test_map, &key);
++	if (!val)
++		return 0;
++
++	bpf_kfunc_kasan_poison(val, sizeof(struct kasan_test_val));
++	asm volatile ("*(u64 *)(%[val] + 8) = %[sentinel];"
++		      :
++		      : [val] "r" (val), [sentinel] "i" (ST_SENTINEL)
++		      : "memory");
++	bpf_kfunc_kasan_unpoison(val, sizeof(struct kasan_test_val));
++
++	return 0;
++}
++
+ char LICENSE[] SEC("license") = "GPL";
+-- 
+2.53.0-Meta
+
+
