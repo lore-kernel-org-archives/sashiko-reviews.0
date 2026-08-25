@@ -1,113 +1,130 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0F3F5BE4
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 10:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787653343; cv=none; b=FJeoOTpABgOyNXBVVbJKG7yCdQ1AraUsrSaZ1F0jLsjHXqVAi3VJx5lVXHZWcUPzxgJzVMt19P0cEHOQIlPLlnRAUYGZ7b5mm7vVpy+jwn16c4kMzzjSLXP4hotBobAsYMvuHWvuTB6eUJ27xzJ0aribpapiynMeUs9IPftzNb8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787653343; c=relaxed/simple;
-	bh=bpyMKPh7/3WNSBuz427KUcFcISOpmmmELcZwiaD6o4g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l4/HoaRuiKcOGf4IOLgqRdqdq8DVrnhQbYMwb1KnuwFajXoBDtR8ngX4n3RHvcFEbStSkgP/e1RulWaxqVudOHo8jfTOAGUpYob3OVsQd9HXLX4J7FW+sYpmm1b39V37VvgNPgleGdq7rHnHYgMzunhla1MQgO40hsE5pVWyMPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WKLR/0vc; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E6F33A70A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 10:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787655319; cv=pass; b=r5TSCPTxw9iGtFxpRdeiStEMtifx+DVFM2d3sYFuhTOKntfpozaZC9Sxl8p7fECpYGlLoa81TmcZg0VD+NNF2RzXrChWzTbVO1TRHRdYrUr2NygyBnocmwyWtlhwc3aD6CN3Urc3eGmNV5TpJnPoW8Zf938mIrv21PjLAhqEypY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787655319; c=relaxed/simple;
+	bh=YjhBNYLp1+JOi4PAwGzdbKWKT1rkCzEPvCpcv+Z302c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jAV9qBm8+UFgIdOJBsyM90zWmWD0GCbIiVQcmFZyzYxlCbK2Qobo7M80YMXEKMn2QXG4e0lrBedTZP1HJxU4UksGLrUefY5z3IWxFdAXK3m/Zq1mkhKHTzfjomfkOu/zS1C+PzhwRj5fVFqvI++TtGwYCqG/nm5gIcqenf/G2rE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f3NM8rJh; arc=pass smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKLR/0vc"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c96b08cdd1cso3769189a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 03:22:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f3NM8rJh"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84847482584so484462b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 03:55:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787655317; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NkDxNElh83XPdOBShAism3FSZkH16UuiOjjTSjM/ZhIS7ruYG3tpp+Krqs13+kczGb
+         J9gztkx3EY4t3bhuBT6she50zBoy1tta2YscVL0hRUJ02L6jMj5OXLV74Aaky0tlEdu8
+         PH62SfUJM5pEHs2ABs5cs2CFCTTr2DSe3S2VveJWFMEEazS+neuXwN1Ina6dpL/BZlKN
+         j0jnoJKccqhIOHMvRDsQQgnzNMHQ+pv8Ph/S9CcqtyUq8Ai6b+Fe90zA20k94puLlA3W
+         IygCJ4sRjU0S8Ir9XUW3UiCbDICkvDpfQVfgPig0bclqNIbB+cDZm2WeoNtm+CO7wBQ3
+         qUHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
+        fh=DHjdiazyXdowSKc8QFJ0cQPiw6JytCzKGsbsz5/ouWo=;
+        b=RIfQTpea27n1F0VSSdB0BvXEi1MJ+CK7T0Mg9FxWd+9IWOiTd2jpH0HALldZGNMXM+
+         AJrxhpBDHoHdGasRVN6fiGcDB0MaCDtiLMMfjmVwzsxsbI6kLZgvuuROOHCSwn2gjVFz
+         /E3PAcPQOnmOozv8ugRpNpMTHT6PpiOJZE1jMlHa2d6XpQceTCuOuG8Jpk6TBPR9Kzp6
+         Wr0rqTdh8urc0YJk7yRwoqmV7ZdpACJ1PI/g7hFM90dP495ThMTCYyQvscWiBaq23Yyf
+         uBt26Qzf99jSUObrEVwwI2l3jMhH/06x8Ez+qnDeaRm5oh2MKKtBZ72H/707grMTWUpL
+         p7Rw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787653342; x=1788258142; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/gUh7XFtmJKxfjCV7HF7ELVXykDcyipXT3K2LjOMcIo=;
-        b=WKLR/0vcIMXvpwPEvhrGHTh4E98oZ6JHH0/Ci0HdeCRv6bEoSLTxEpuwH3e8DALsTy
-         LLSerTiTlZxId/vEp3g0MYZdkA7fL0PvSCIGclMbIX2FT2XIUw6KsT0AL6aZdigauTDv
-         rMDMX+tHi6nIjQ1esAIb8JZFrv3qBR1Xd//BdTRW36ifDdE2ux1w/odsg+x9igIEeBHw
-         ZK2UXuVHkLzybw9JSyF2ZxpgUysZ0Nb/pu0CYJsV/9PyKyDf2OdZvFMIrcrXO7kP0arl
-         a1UPAIB9pSNklZMCz4JD8Qku9Ad9V+C7zY3jA6O+cLb3zGewQuGb+5AJdpFe3B0I2f7j
-         nHsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787653342; x=1788258142;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787655317; x=1788260117; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/gUh7XFtmJKxfjCV7HF7ELVXykDcyipXT3K2LjOMcIo=;
-        b=f8WdnkBIU4HF3MP9KC0cNNk5pzrO+/NhMkyt249J7AYSzFvrimvMNFTy/Abu3+K1WR
-         OlVnKMMfO64o6OsTZufj7GtBLRj9Qg6LXwwRPcofaVjv5Omi4q2RJueXsmtOuX8hQCT6
-         ARdr4j/SntgmLKOFfoRyldMWu/iMeKn1U6X3JEpUGsLDsDztg5gMgTAuePM/foYZ3uvv
-         g55e3GtCUQ6G028m49o47lhcNd/gsMGi8rjSxPLS8TMMid5rOuFxoMzT5dNNuxfC9fSQ
-         gn7ClysklNGKLhUz3rrcQitaBnZw77QQKvEUe2Bl4JSpycbd38y+2bEn+wn4AJAa7NkO
-         Kmyg==
-X-Gm-Message-State: AFuF++lgsy2qkB6pyLd8dTKSfkcoZNktEBIe4cvlNxC+e84Ejjpd1qNv
-	JZh1qlZgDeV6GgQUyQ8rFvQNw6OQlSGfkk26D3i3xEWHCN+sZWKcIvnqzfBNGQ==
-X-Gm-Gg: AR+sD12nqcstyWhtus9oLgbKoI6VGKQDkraSZoOtZaczdShAeos0F39CzbWRaBsMd1u
-	xxyIpLeieI7uW/l++OKnRoZEorMXXJrZStYHBT5eCRB2FRZufSEy9BqQLeVIvrtmS302n/xtOKa
-	ptsdsScR4yt9S8aegBpG6klC/Yd+v2t2UWBqYtPd4plkVHZbQWncuLyrZQLGMIEv7bh6bwO7co0
-	gO9Nlca85v1oc43gZlgWnxUgNzN96L0e2dGMKWoMvpY+v7/Z4FbgZFDel7blYs40w/tyfSnxeLc
-	Ms7Z6yer62E8DBNxaT1nvHjpmX0Fk05udDppltKZfRbWZXvCGtFGGSA8dbcRCDa/7ya4gkOL1Rs
-	2CHgia1KxHYM8ujJ1c0WJLR2LkqrlkYNgf2z31A1IEd65ZnUCFR6lBUL2unbNT5iKQulGbSRaVm
-	WfTnaZodMoaF5IpsHKMoPPYSAc9LUY3dPavy3Fo678tjALfEaKyBBDNoHwm7Oxg+d+vPrF4b3zG
-	R/nAuxgfyZ/Kl+z1/U65tA+
-X-Received: by 2002:a17:90a:d605:b0:38e:5964:97a8 with SMTP id 98e67ed59e1d1-395df5e8fefmr48118718a91.16.1787653341676;
-        Tue, 25 Aug 2026 03:22:21 -0700 (PDT)
-Received: from localhost.localdomain ([103.120.31.178])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327f923615asm35567646eec.29.2026.08.25.03.22.19
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 25 Aug 2026 03:22:21 -0700 (PDT)
-From: Khawar Ahemad <ahemadkhawar123@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org,
-	jiayuan.chen@linux.dev
-Subject: Re: [PATCH bpf-next v6 1/4] bpf: Add a sleepable page allocator for map memory
-Date: Tue, 25 Aug 2026 15:52:15 +0530
-Message-ID: <20260825102215.83662-1-ahemadkhawar123@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260825094955.83240-2-ahemadkhawar123@gmail.com>
-References: <20260825094955.83240-2-ahemadkhawar123@gmail.com>
+        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
+        b=f3NM8rJhKrAzDDvVgwdUVLAzrRfqBx75HeWdonpxiLJYgpzXqggy9Y3rM8wJOgG1Ty
+         2ee25IGcUhn1vmJ1L2aeAGn0bSv2jdmbdKlTUS9l+cKEBfHFnchmA6bG4ilScHpDlLBE
+         3BRJGTFbWddjeMZNjtOV3qACjJsrxz0uIHaKn8O+FDCawSrQIHDXQe7GVnpaU1787QpP
+         k7yP7XoVZKYLnz+lCkjaGtYTgz1cQXCqRmrMJQhPaAnnxxMMVJAba+nVCIkZqxXoGQ9y
+         ZfeNb4rse8syM0rjQSPH5y9ZFqrjBL49fyt60oKCPu4sCnfTsMNf8gY2mIUhP5Stbaxb
+         i4ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787655317; x=1788260117;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=0HHXpTM+gQhoNIJQAMx/pYhBXi6CPIRaEt/OoWjkNVY=;
+        b=qU1E1NDWoOKT0ptn8SfIMFcoEeVrJS8N1BCTtG4B8/Lx/oKQGrttwLQpCCCBK0WWoy
+         Sza8g1tiSp2PFgo6P4HwmEajNFW+upjYy6KzGBpUPt92Nsp/Oy5pge4CwAVe6PIty1HY
+         VUBnCxVobydFj1ELtTkB1zURL/jnY5lQTdleRPUAoxN+212wLXnpnHEAQ9uTlrETsptk
+         oVm0E5Mo10G3Voq7l1Jgf4fXqvJtzmplOsk/P44QPkBPIEPz3UxxEv6qOmgJahpY4Ttz
+         74+TbkMCXc117y3eUP5xN/zbqMmyC0BH79qCw5wCf0plra2Ri+6YJSsG6aTuudbYtX6P
+         DexA==
+X-Gm-Message-State: AFuF++m5qnwWjGwBGMgUXVdFl3LpWdcz7OWfGKa8m2LSLDCbnumIcR/T
+	SstP/+bHBTfMjgE1+v4GjH4rzfqaTqVb+oXK6MtPNiZdcNR6/ZlaABmSUs3qr//DfYll/B6Wc0G
+	P2AHR3bXNmnfKs6Q8fcG7ZgIpu5qAgZYPVAc6
+X-Gm-Gg: AR+sD10SJGHR198TzjZWxOstjlYqOm8x/MkMOLCbtcflksW5NNZSy277qskZyCxhKzB
+	W6FkfHAuzdvG5klQwbkk5SZlLBxhnLsLPo6dSjJBSZr9yU4cl0yWdTnUpaot4PeIGEoiaXq/w/Q
+	hL7DpbUL/XqzAU7MwZXFWxF2y7/l/BaHfGCPB7jdwkTAy1LdFzNQgsnQ+93dhiqERxNoADKaEwX
+	9sdtJnbKXYEKerY7w05tHIHbPG7CT1tuO5nEBZHU6R9VKOdvoHzY5Vfxke+/EE3spF/m7iCGEL8
+	ZLvyZtRaXHmrx+9WqswJYIpKBylXoHMfTp66ca2+JXcTofBtsT7R/qni+Y+1cqqKOXemuDz1ZHn
+	kMygjsjXw+1D+Wv4lgZq+CXQTE4gfY3PNgqj+s0s0s9sB6nFSRPNYVM/G
+X-Received: by 2002:a05:6a00:18a1:b0:84a:32ba:a262 with SMTP id
+ d2e1a72fcca58-8523baee6a0mr6196886b3a.7.1787655317063; Tue, 25 Aug 2026
+ 03:55:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260824100901.31675-1-phucduc.bui@gmail.com> <20260825100929.5F3D51F000E9@smtp.kernel.org>
+In-Reply-To: <20260825100929.5F3D51F000E9@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Tue, 25 Aug 2026 17:55:06 +0700
+X-Gm-Features: AcwNN1XO-UxS2toBrwsjemVQr3JZE7SN6j1yX-KK_iflO1nCuB3BirBvu27LfcM
+Message-ID: <CAABR9nE5eWgOXEnpquG+KoLPL+KC93_2cgv3gNVsWDEfyA9d_g@mail.gmail.com>
+Subject: Re: [PATCH net] net: ethernet: sun4i-emac: Fix IRQ error handling
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sunxi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+> Pre-existing issues:
+> - [High] Unconditional call to `dma_release_channel(db->rx_chan)` in the `emac_probe()` error path can cause a kernel panic if DMA configuration fails.
+> - [High] The driver unconditionally enables MAC interrupts during system resume, even if the network interface was logically down, which can permanently break the interface.
+> --
 
-Thanks for the careful review. After tracing the call path in full,
-this finding is a false positive. Here is the evidence:
+Both issues are pre-existing and are not introduced by this patch.
+I will keep the scope of this patch limited to IRQ error handling and
+will not address these issues here.
 
-alloc_pages_nolock() is implemented as alloc_frozen_pages_nolock_noprof()
-in mm/page_alloc.c. Regardless of which gfp_flags the caller passes, the
-implementation unconditionally ORs in __GFP_ZERO before calling
-get_page_from_freelist():
+For the first issue, the cleanup could be separated so that
+dma_release_channel() is only reached after
+successful DMA configuration:
+---------------------------------------------------------
+-       if (emac_configure_dma(db))
++       ret = emac_configure_dma(db);
++       if (ret) {
+               netdev_info(ndev, "configure dma failed. disable dma.\n");
++              goto out_dispose_mapping;
++       }
+...
+       if (IS_ERR(db->clk)) {
+               ret = PTR_ERR(db->clk);
+-              goto out_dispose_mapping;
++              goto out_release_dma;
+       }
+...
++out_release_dma:
++       dma_release_channel(db->rx_chan);
+ out_dispose_mapping:
+       irq_dispose_mapping(ndev->irq);
+-      dma_release_channel(db->rx_chan);
+------------------------------------------------------------
 
-  /* mm/page_alloc.c, alloc_frozen_pages_nolock_noprof() */
-  gfp_t alloc_gfp = __GFP_NOWARN | __GFP_ZERO | __GFP_NOMEMALLOC | __GFP_COMP
-                  | gfp_flags;
-
-The comment at that exact site makes the intent explicit:
-
-  "Specify __GFP_ZERO to make sure that call to kmsan_alloc_page() below
-   is safe in any context. Also zeroing the page is mandatory for
-   BPF use cases."
-
-So even though __bpf_alloc_page() passes only __GFP_ACCOUNT to
-alloc_pages_nolock(), the allocator enforces __GFP_ZERO unconditionally.
-The returned page is always zeroed before being handed to the caller.
-There is no path through which uninitialized kernel memory can be mapped
-into a BPF arena.
-
-The API documentation in include/linux/gfp.h also states that
-__GFP_ACCOUNT is the only caller-supplied flag alloc_pages_nolock()
-accepts, precisely because the implementation controls all others itself.
-
-No code change is needed.
-
-Khawar Ahemad <ahemadkhawar123@gmail.com>
+I will not include this change in the current patch.
+These issues would be better addressed and tested by someone with
+access to the hardware.
