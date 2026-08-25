@@ -1,174 +1,132 @@
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtpo63.interia.pl (smtpo63.interia.pl [217.74.67.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6D73FDBEA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03403F44FC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.74.67.63
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787656515; cv=none; b=TXMREqAFishrG+Xu45nIXfqR/tJ7IuvURPpEeZtVD7ECLAPApFqYbMsT4AdwBkYPY9MRCig0/JTutQJFxDg6bSGDxQ4OJ791MQNeAhOi/aUDKOHwUXBOHNXfPph45UlVAOcScDEOnN8lzrFLCVMo+cKJc6Mr/+SnWvO+vlXujIs=
+	t=1787657229; cv=none; b=G9fzGxslKADHA1z9wfG6IFRhlmpfUm58hs9c1B527lE5yCZzwv9CjxUtcXkP8boIxOkAN57Qgd/1USQ/ygT9tPI/PDHWRZtzYGUOkgqZJSkd+OgoCxhQoxKINiBPxI7/vwiXbkKzH7wTZJXPSSMKJ0lHyOCfW+KB+QJ9+xZt7Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787656515; c=relaxed/simple;
-	bh=rgO8WxAzGYA1IAaWkCLnezd4kffh98VeD+zgztdDmBc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I28uum/ejYJpHXZdCKPxKkiICycqePX84ThKF1saHjaLeL7XlKytRCIKHPFRVU5yw16N7cCOnrBkoUyN4qNIxme80THowGiwppSPfjgBqCorCBNYrAyhqI3F3Vee6M8ArWCflsxiBvynTvPvzHspFJNzcijTWFvHlpcEwyXINj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=bVEHik/M; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1787657229; c=relaxed/simple;
+	bh=/nanS065TlBm8RMB1VQp3Q7XNBTCXcLcKnG17dOhiGs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SPjgzwdf1+9diDB2SWjfT7ovmDBOauE6dyed6X4/pXBrUWzPFkRvxtwh5Kgo3lDg87rXo40NeHP50FnBXk+mdxDiMEZH9Y01zXWu5cXPT4IFpqDgL9DaCxfFj6bmrHI5E27Vuj2UeKyepXdQsDW6J9FgtdCLHkrHMcnlI/EHxqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm; spf=pass smtp.mailfrom=poczta.fm; dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b=cmhpM67M; arc=none smtp.client-ip=217.74.67.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=poczta.fm
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="bVEHik/M"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1787656508; x=1787915708;
-	bh=jt6JmGogQkBpzPG4dOzOQgmcS6RIhCTyLzPIOBRmgfY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=bVEHik/McdKFjKE88dEnE3GiZM2xhUIxaO+ql4DhYrEPsjNOlpxmjJa20kdxn4jzh
-	 Mwo5hLubgmTgXOIApkiGA39Tdzjn+AuFHwT/j9d2mSl1L97+Lkuk/GmfVC2fAnMy7/
-	 fDS0sAPzV5FpqRTE3VlaLf3E1JXInLGNMt14BYkzqTfTrZbacZl3VtlWKQw1iza/uj
-	 VBz2vq0YWhMUQrRtQDTw/0SeVnJaA+RNQkHPqDzAw1F/W2AmoZ0GhnlioMKd9vBNGF
-	 VWJ3Ak1W29HNrayXDvslaTOJlIj27XBR/o57wVsGUSTQiGJbUxLX50kvfA04h+pWM8
-	 kwEJA6I/M5blg==
-X-Pm-Submission-Id: 4hTlYl0b0Dz1DF7G
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <devicetree@vger.kernel.org>,
-  <robh@kernel.org>,  <conor+dt@kernel.org>
-Subject: Re: [PATCH v6 6/9] iio: accel: mma8452: Reuse existing dev pointer
- in mma8452_probe()
-In-Reply-To: <20260825083802.C3D821F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:38:02
-	+0000")
-References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
-	<20260825-mma8452-open-drain-v6-6-9b252804ee80@geanix.com>
-	<L6z2_8mrgRvVwG5aZBq5LTTYkeXmAEBX8ycp5-n_HC7aAydrlcmzV-c9zRFNEULDUJ9zsbkbReCbJJdj4F1eFw==@protonmail.internalid>
-	<20260825083802.C3D821F000E9@smtp.kernel.org>
-Date: Tue, 25 Aug 2026 13:15:06 +0200
-Message-ID: <87bjaqo3id.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b="cmhpM67M"
+Received: from nr200 (unknown [80.68.231.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by poczta.interia.pl (INTERIA.PL) with ESMTPSA;
+	Tue, 25 Aug 2026 13:27:01 +0200 (CEST)
+Date: Tue, 25 Aug 2026 13:26:58 +0200
+From: Slawomir Stepien <sst@poczta.fm>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
+Message-ID: <ao18Ag6ucRMqGRVI@nr200>
+References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
+ <20260825074432.0B4511F00A3A@smtp.kernel.org>
+ <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
+ <ao1ketQ4oxNiWGAM@nr200>
+ <7a61b8fc-68f4-4d8d-b5ff-0ffd9a9507fc@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7a61b8fc-68f4-4d8d-b5ff-0ffd9a9507fc@suse.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poczta.fm; s=dk;
+	t=1787657222; bh=u849jbuokEGJrG4MX8DSBd4S8qyShqARHeqPFRwMBnk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=cmhpM67MEZ37ijAG671Dl4j3ZWeRnGYqh4YR7REM468lXUCBDEwTY2dm9SMflzmzn
+	 JduRxTM2zNKIbkSGGj59M9QbOwS6aOtC1Y5ijxDslfEiyxjN0zCrmwfbRtAbHbnA3U
+	 8FnXHmcHG4cGlxrKxQpWhzRsOKsb/Hh9rtZGhwGM=
 
-<sashiko-bot@kernel.org> writes:
+On sie 25, 2026 12:21, Thomas Zimmermann wrote:
+> Hi
+> 
+> Am 25.08.26 um 11:46 schrieb Slawomir Stepien:
+> > On sie 25, 2026 10:00, Thomas Zimmermann wrote:
+> > > (cc: Slawomir)
+> > > 
+> > > Hi,
+> > Hello,
+> > 
+> > > thanks for the fix. Please see below for changes that should go into the
+> > > patch.
+> > thanks I will look into them and make a manual v2!
+> > 
+> > > Best regards
+> > > Thomas
+> > > 
+> > > Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
+> > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
+> > > > - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
+> > > > --
+> > > > 
+> > > > --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
+> > > > commit 75467ead62a494b6afbc057c666ab59f7e4b8915
+> > > > Author: Slawomir Stepien <sst@poczta.fm>
+> > > > 
+> > > > drm/cirrus-qemu: Validate BAR0 size during probe
+> > > > 
+> > > > This commit adds a check during PCI probe to verify that the BAR0 resource
+> > > > length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
+> > > > page faults caused by writing past the end of the mapped I/O memory when
+> > > > smaller BARs are presented.
+> > > > 
+> > > > Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+> > > > 
+> > > > > diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > > > index 075221b431d37..70c995025f508 100644
+> > > > > --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > > > +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
+> > > > > @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+> > > > >    	dev = &cirrus->dev;
+> > > > > +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
+> > > > > +		return -ENODEV;
+> > > > > +
+> > > > [Severity: High]
+> > > > Does this strict equality check unintentionally break valid QEMU
+> > > > configurations that have more than 4 MB of VRAM?
+> > > > 
+> > > > When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
+> > > > the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
+> > > > to true (since 8 MB is not equal to 4 MB) and rejects the device by
+> > > > returning -ENODEV.
+> > > > 
+> > > > Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
+> > > > instead of requiring an exact match?
+> > It seems that 4MB is the default one and 8 and 16MB are just for compatibility:
+> > 
+> > (qemu hw/display/cirrus_vga.c):
+> > 
+> > 2951     /*
+> > 2952      * Follow real hardware, cirrus card emulated has 4 MB video memory.
+> > 2953      * Also accept 8 MB/16 MB for backward compatibility.
+> > 2954      */
+> > 2955     if (s->vga.vram_size_mb != 4 && s->vga.vram_size_mb != 8 &&
+> > 2956         s->vga.vram_size_mb != 16) {
+> > 2957         error_setg(errp, "Invalid cirrus_vga ram size '%u'",
+> > 2958                    s->vga.vram_size_mb);
+> > 2959         return;
+> > 2960     }
+> > 
+> > I will add the 8 and 16MB then in v2.
+> 
+> Please check that  it is >= VRAM_SIZE, so we're flexible.
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Low] Undocumented scope modification and suboptimal pointer dereferenc=
-ing.
->
-> Pre-existing issues:
-> - [High] Device teardown accesses powered-off hardware and causes unbalan=
-ced regulator disables.
-> - [Low] Unconditional assignment of PM callbacks causes dead code when PM=
- is disabled.
-> --
->
-> --- Patch [6]: [PATCH v6 6/9] iio: accel: mma8452: Reuse existing dev poi=
-nter in mma8452_probe() ---
-> commit 04da87f5e80c506bb658d3dd5161087ce55fa6b0
-> Author: Esben Haabendal <esben@geanix.com>
->
-> iio: accel: mma8452: Reuse existing dev pointer in mma8452_probe()
->
-> This commit refactors mma8452_probe() to use a local 'dev' variable inste=
-ad
-> of repeatedly referencing &client->dev. It aims to improve code readabili=
-ty.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index d1e8eb2a4ad3a..7ef1a9a91c31f 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
->
-> [ ... ]
->
->> @@ -1801,7 +1799,8 @@ static void mma8452_remove(struct i2c_client *clie=
-nt)
->>  #ifdef CONFIG_PM
->>  static int mma8452_runtime_suspend(struct device *dev)
->>  {
->> -	struct iio_dev *indio_dev =3D i2c_get_clientdata(to_i2c_client(dev));
->> +	struct i2c_client *client =3D to_i2c_client(dev);
->> +	struct iio_dev *indio_dev =3D i2c_get_clientdata(client);
->>  	struct mma8452_data *data =3D iio_priv(indio_dev);
->>  	int ret;
->>
->> @@ -1809,7 +1808,7 @@ static int mma8452_runtime_suspend(struct device *=
-dev)
->>  	ret =3D mma8452_standby(data);
->>  	mutex_unlock(&data->lock);
->>  	if (ret < 0) {
->> -		dev_err(&data->client->dev, "powering off device failed\n");
->> +		dev_err(&client->dev, "powering off device failed\n");
->
-> [Severity: Low]
-> The commit message states the changes are restricted to reusing the dev
-> pointer in mma8452_probe(), but this modifies mma8452_runtime_suspend().
-> Should the commit message be updated to reflect this scope change?
->
-> Also, since the function already receives a struct device *dev parameter,
-> and &client->dev evaluates to that exact same pointer, wouldn't it be
-> simpler to use dev directly here rather than dereferencing client?
+Sure!
 
-Yes. Using the dev pointer directly is the right thing to do.  Added for
-next version.
-
-And also, the change that adds the client pointer will be rebased into
-patch 4, where the client pointer is used. Sorry about that.
-
->>  		return -EAGAIN;
->>  	}
->
->
-> As a related note, looking at the device teardown path in mma8452_remove(=
-):
->
-> static void mma8452_remove(struct i2c_client *client)
-> {
-> [ ... ]
-> 	pm_runtime_disable(&client->dev);
-> 	pm_runtime_set_suspended(&client->dev);
-> [ ... ]
-> 	mma8452_standby(iio_priv(indio_dev));
->
-> 	regulator_disable(data->vddio_reg);
-> 	regulator_disable(data->vdd_reg);
-> }
->
-> [Severity: High]
-> This is a pre-existing issue, but does this teardown sequence access
-> potentially powered-off hardware?
->
-> If the device is in the RPM_SUSPENDED state when remove() is called, its
-> regulators have already been disabled by mma8452_runtime_suspend(). The
-> call to mma8452_standby() attempts an I2C write to the powered-off device,
-> which might hang the I2C bus or cause transaction timeouts.
->
-> Furthermore, unconditionally calling regulator_disable() drops the usage
-> counts below zero, triggering a kernel warning for unbalanced disables.
->
-> Should pm_runtime_get_sync(&client->dev) be called at the beginning of
-> mma8452_remove() to ensure the hardware is active before teardown?
->
->
-> Finally, regarding the PM ops assignment in the driver struct:
->
-> [Severity: Low]
-> This isn't a bug introduced by this patch, but does the unconditional
-> assignment of &mma8452_pm_ops to the .pm field in mma8452_driver produce
-> dead code when CONFIG_PM is disabled?
->
-> According to the power management subsystem guidelines, this pointer shou=
-ld
-> be wrapped in pm_ptr(&mma8452_pm_ops) to allow the compiler to eliminate
-> the dead code.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825-mma8452-=
-open-drain-v6-0-9b252804ee80@geanix.com?part=3D6
+-- 
+Slawomir Stepien
