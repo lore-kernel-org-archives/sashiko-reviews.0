@@ -1,77 +1,229 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC492264B0;
-	Tue, 25 Aug 2026 08:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C113D6CB0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:00:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787644834; cv=none; b=TPcK9B0BUCrwaJmf6jJbu4Eami5mjzKxKcZCuDHhLLZ8mHvkDrIqcgFnV6GznmsH0mcJ3N6iLWXW6BOJ+xmWCIxTdHFtu2je5lflhxPm8ABeOg+znFEaxS5kapMslykxt/wbKMffbels1Xapc3fH+Zqrq37ReXlIy9lwUgjMzvw=
+	t=1787644860; cv=none; b=BDPPmn1+nm4aG4mFadJBy730yxVhceShYkdd8UUr+m/o1kJ3anqpPBm0CZT8PaI6MDAL8h2p/LR8+YX3b/hT3eiFlFzEHtDBMLi92DnnuWFgW39Cv5VeFzLG9wAUluRktkL3UlDzHVPX6qGT50IET+FQ3VInbPc/hZDKk7v+D6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787644834; c=relaxed/simple;
-	bh=Z4kAGEmMRQEF9ppuXsT0f5Wrj8330ReQKn/7VM3gG3s=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bEazxyNV37SGFS9yueYNGHxwDFc6KQJzk/fAxQ0Ci27XUK3P90Q61HY1yzD+olk98HBTmexngYTXidNTjFpZoylCAaVaDXnXcsfRYcMo9iDl4sjrNbHGRUQk+PU96/7abHHQ5bK8WIcY+XUZqn4HDeWFkf7Dx/spbKUOQ4PlJyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 06a0dadaa05b11f19a56ed5b684f684d-20260825
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:e4eaa579-a734-431f-b042-5a2caf6aaa59,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:7db8b62,CLOUDID:079686635116dc1dcda7a1f79f1d9a8b,BulkI
-	D:nil,BulkQuantity:0,SF:80|81|82|83|102|850|865|898,TC:nil,Content:0|15|50
-	,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,O
-	SA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 06a0dadaa05b11f19a56ed5b684f684d-20260825
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1565334611; Tue, 25 Aug 2026 16:00:23 +0800
-From: Liang Luo <luoliang@kylinos.cn>
-To: sashiko-bot@kernel.org
-Cc: luoliang@kylinos.cn,
-	sashiko-reviews@lists.linux.dev,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH] sched_ext: Fix missing @slice and @vtime descriptions in finish_dispatch() kernel-doc
-Date: Tue, 25 Aug 2026 16:00:20 +0800
-Message-Id: <20260825080020.2463550-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260825055849.ECF201F000E9@smtp.kernel.org>
-References: <20260825055849.ECF201F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1787644860; c=relaxed/simple;
+	bh=4wuKdClDEtyiCer3EcQsfP1rv7pakVvgh/SVlmX65tY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qlt4vfgxW0YUiToiqxty84bN8/rwS/YnNhGdPn1UA1XUsplKbLT66TVkfCmthb3f+HHLGVtBAl02c82z1CRZyV4j4nKPAs/qdK7IuwM2z8MtpIRDD7959ZAP2R+Yu7XxYGqh4CeWMUKdtTsxWJIowDditZqP20MBG7hPfguOAGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=sQCagDmq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2NLh5ZER; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=y+VpEsA0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Q2Qkf/9G; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="sQCagDmq";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2NLh5ZER";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="y+VpEsA0";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Q2Qkf/9G"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id EBF0E86D2E;
+	Tue, 25 Aug 2026 08:00:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787644853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
+	b=sQCagDmq4peuTng23qhcJG6M4r9xOAd3Cuz5f1XNti6+c0ZmrqjuwEyN5YB39Rq3mRPp8j
+	3UhnWvdms8uQaUjWxRXqI4hhU0sNybTxPdlcNo1RFYBqMT9TxpB2ertWLXeW9+vL3W4jPJ
+	US2MKY2tIjcH4+TaTN5aXW2pJSG1wMg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787644853;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
+	b=2NLh5ZERTPBVrMuypQYRhEnyIQmd8LgFJtqI+gOqO+r5MUdvWOR6+kayyfK+fQnv7ykorS
+	1DKOHjNgame+wOAA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y+VpEsA0;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Q2Qkf/9G"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787644847; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
+	b=y+VpEsA0xHwysqE9yxmGDTRhylsKhDEAy5b1WoOHJYCbv2ZeWJEAHcBX8zjCNRjhaMBrRE
+	eBEEvVpw8j9nKDNKvsyvZBwZyZbErDJzs8Dl77e7HbIPlBBDIzFsIO1ZjudBVLoliU+xyb
+	Jhpji2I+csN5UaXagCCFme0olCgNB0E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787644847;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f9+UYLkhFMeqJpdRKe3KSbiCGXI7lAcmJIinawqugjk=;
+	b=Q2Qkf/9G4xRnKvTmpGkTmp7pUNHTyQa9D4XZSkZ9MLX3foSfKXZJfjtM1DkjAfa/D2Lc7Y
+	ZylZtGdWpMU95PCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CCA1913335;
+	Tue, 25 Aug 2026 08:00:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 3U/RMK9LjWoacgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 25 Aug 2026 08:00:47 +0000
+Message-ID: <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
+Date: Tue, 25 Aug 2026 10:00:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
+To: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>, sst@poczta.fm
+Cc: dri-devel@lists.freedesktop.org
+References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
+ <20260825074432.0B4511F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260825074432.0B4511F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FREEMAIL_TO(0.00)[lists.linux.dev,kernel.org,poczta.fm];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[poczta.fm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
+	RCVD_TLS_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[poczta.fm:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,syzkaller.appspot.com:url,suse.com:url,suse.de:mid,suse.de:dkim];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
+X-Rspamd-Queue-Id: EBF0E86D2E
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
 
-On Tue, Aug 25, 2026 at 05:58:49AM +0000, sashiko-bot@kernel.org wrote:
-> Looking at the code, finish_dispatch() does not appear to have slice or
-> vtime parameters in its signature:
-> 
-> static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
->                             struct task_struct *p,
->                             unsigned long qseq_at_dispatch,
->                             u64 dsq_id, u64 enq_flags)
+(cc: Slawomir)
 
-The review appears to be against a tree predating commit 13f1eae3b662
-("sched_ext: Synchronize slice and dsq_vtime writes"), which added the
-slice and vtime parameters to finish_dispatch(). In current mainline,
-the signature is:
+Hi,
 
-    static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
-                                struct task_struct *p,
-                                unsigned long qseq_at_dispatch, u64 dsq_id,
-                                u64 slice, u64 vtime, u64 enq_flags)
+thanks for the fix. Please see below for changes that should go into the 
+patch.
 
-scripts/kernel-doc -none kernel/sched/ext/ext.c reports the two
-"function parameter not described" warnings before this patch and
-produces no warnings after it, so no "Excess function parameter"
-warning is introduced.
+Best regards
+Thomas
+
+Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
+> - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
+> --
+>
+> --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
+> commit 75467ead62a494b6afbc057c666ab59f7e4b8915
+> Author: Slawomir Stepien <sst@poczta.fm>
+>
+> drm/cirrus-qemu: Validate BAR0 size during probe
+>
+> This commit adds a check during PCI probe to verify that the BAR0 resource
+> length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
+> page faults caused by writing past the end of the mapped I/O memory when
+> smaller BARs are presented.
+>
+> Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+>
+>> diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
+>> index 075221b431d37..70c995025f508 100644
+>> --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
+>> +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
+>> @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+>>   
+>>   	dev = &cirrus->dev;
+>>   
+>> +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
+>> +		return -ENODEV;
+>> +
+> [Severity: High]
+> Does this strict equality check unintentionally break valid QEMU
+> configurations that have more than 4 MB of VRAM?
+>
+> When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
+> the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
+> to true (since 8 MB is not equal to 4 MB) and rejects the device by
+> returning -ENODEV.
+>
+> Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
+> instead of requiring an exact match?
+>
+> [Severity: High]
+> Is it safe to place this validation check after the call to
+> aperture_remove_conflicting_pci_devices() earlier in cirrus_pci_probe()?
+>
+> If this new size check fails (either due to a malformed device or a larger
+> valid VRAM size), cirrus_pci_probe() aborts with -ENODEV. However, because
+> aperture_remove_conflicting_pci_devices() was already executed at the start
+> of the probe function, the firmware framebuffers (like efifb or simplefb)
+> have been permanently destroyed.
+>
+> Could this leave the system with a dead display output? Would it make sense
+> to move this PCI configuration check to the very beginning of the probe
+> function, before any destructive actions occur?
+>
+>>   	cirrus->vram = devm_ioremap(&pdev->dev, pci_resource_start(pdev, 0),
+>>   				    pci_resource_len(pdev, 0));
+>>   	if (cirrus->vram == NULL)
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
+
