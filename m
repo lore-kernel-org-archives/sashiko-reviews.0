@@ -1,225 +1,143 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2558D3D566A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BA83DE420
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787645070; cv=none; b=PFM1SdT/bZLbGWBoxJ+jNGh0Dgz8ew0RN1SZyqUBb6GeEJsVfuyrqCu8BXWxFz8BA40dzjMF5VkKiLQJ5Q3mqpU2kkuAWUdSwlV0jUOAETgAAx8aThK1NwTRgUw385Lfwrn/9zjn57qDA2ob3x9HhADTZIFQ+T1D4hkdK1aDNqg=
+	t=1787646375; cv=none; b=haDKISr6GvUqe+U2WayVt0HbMSQZ0PzdB468tdF4GDmXysaxe9a8jLNdrYNENorGc0AFxbMx5RareOPVaCRD9n8qCZksm+ep9acQ0m8y+XW7KjrV6iKoxiDhWylJQ4C/MRutIhTdRcca36NsXMxduwM9maR/mtykyF0BoKu1UfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787645070; c=relaxed/simple;
-	bh=YIgOcEqlXxGDmHqaTSG+nd9YT4QvrWEYUv+HGBTYdtI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t7Nn/ydpjj9A4OkqFugTlL2DOd+9eFroKE3hO7cp0+uVWaPqb6/UCyxfZbld339z4ZbI5anjzzZ3o9Y5KNgAcqlncQAPJwls/Ludg6eixpLIzr1k+zUVTaTbI9SgBcLz0GoCu59sXxE6qB9NUv6XUhXnQ1ov/g4FEOqYG1cmA7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GtZ7A56A; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2IOcNjl4; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mT02T1rm; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=rMuFyHjb; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1787646375; c=relaxed/simple;
+	bh=P8dDe9WGJaB5/v6G6RAFPTJUDTZnGgg0DTzE8KtbvoU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B6MACdaEZAwjCcMv/hX3B8RwghfNfk2jbMKLRVokh73VD5fFGxSVpqhwzCcm7Ws+nX361SyEFc/lWuxrM2IxBdHj/havbpZa336SJ1ca7mIORITVQfvTbfxIQmsQEcZTpyhd0SamjpBXhLb6dz4FO9iZdVkQuj/CUcZBY4+eJu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lkNf090b; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GtZ7A56A";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2IOcNjl4";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mT02T1rm";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="rMuFyHjb"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 2054F1F7B4;
-	Tue, 25 Aug 2026 08:03:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787644989; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
-	b=GtZ7A56AXk533T7hb0WZlDenwwyYIcxvWDAs0Si4OGZzLL/NIE9PDLF8DUrOoX9Md9ZT2V
-	xKJ6cpoAgsEVneICh41847FlpLbIKHOxxG0uQZaAfrppeR8MqUT797j2o5K4lcE+Kf4s4L
-	0luN4ESGlQioXnnd+4Oaeh52jryCUUY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787644989;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
-	b=2IOcNjl4+1CM/av9PHv7NyYlQiP4vcSZunXERPDaqTmkqOtQFFcW5rh2M3pM7SyJ7/aCUI
-	sYqAZnY5iX/VeZBw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mT02T1rm;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rMuFyHjb
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787644985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
-	b=mT02T1rm6QVnTaCmbaJHQDo/i21HMFLNigdnFOfbbc5UDvKzAFMQPub5OYsbynemTdtjjt
-	p36NnQ7kRzh5hwTQtprrmNirDBqAZNYcA8z1Ddkrh8/bQfQGCH9JSUOEw93VlCTRB/gGoz
-	fQEpYUmmyHJP7KtjK58Rv/sioXk9fYI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787644985;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=6QbiygY5iShhauvkTuo+8pW+HCymPbATkAPpp9mm6Y8=;
-	b=rMuFyHjbvzB2V4bhNUn/pQmlitoeC6NY/WoSQ0YVX93NQHd9bYTX98xWN5xY+Ct0IQHLro
-	uCWK2kvlFCVCqaBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 959A713332;
-	Tue, 25 Aug 2026 08:03:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id kQfPHThMjWracwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 25 Aug 2026 08:03:04 +0000
-Message-ID: <778c33e1-8391-48d0-bef4-97298e06d43d@suse.de>
-Date: Tue, 25 Aug 2026 10:03:04 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lkNf090b"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49800c6a846so36118305e9.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 01:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787646372; x=1788251172; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LX5TxyIQ51uP9mPCb4WWu473qdFXpXWJJ9AlVry9ycg=;
+        b=lkNf090b8QFUHisH8XvNsIIAqgJfyo9Vb6NRhL1t1PgCybc3Dm0lExgr23p+G46UGt
+         p2xXEupu6GaEWbng/Y/WfVAAdT0TMLrkmmqpH86yNZRMejAPDHhA5ehTTwh2vUC55Xgx
+         W4t2RoQxQjYTcIGXjrs3liJVyB5YhpVALst54ADlUbq9KSCj7aWDPxpwh+z1HudKvJKv
+         uCB+j/6u/k3H9toYQ7TOPVJ/jpTfVwqe7gRhPZXAz77oK7xUosYqM4p001lEwjmKtdAD
+         tpGS0f57dRfJTOpBNFPxPnVOgVXEtnWG4CzBRb2YlX4L9iz7VSky3itGfFuiNqeuw0L5
+         jSIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787646372; x=1788251172;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LX5TxyIQ51uP9mPCb4WWu473qdFXpXWJJ9AlVry9ycg=;
+        b=nMfqp027cA1EOOqLsatzbG5M/H78OTIm9Y7BOTaSM+3TQQPH/fTvbCYDIwF37QyHPe
+         UBDsGhwvVH70lkhwIY9VG3a/vWMQJXvtrqv3xomryllL6Jzax0pxLM10odMDNZR3AbAh
+         4gJFYyV1CNiHZio190jXylONaEdNPIG3FVIiFXh3TKn7EdYSqfxJ33BJ8XUUXcu7il82
+         etwbRVDwadY7wnqYAI02ISBqWwNA2AF53/IFE12Iy3HU+8l7PZVCUu2OquTUr+Wmy/5n
+         /1zbNfjoOCmLQWGAQmQ8QzsAbwCme3OySsY7aHgQcHJ/0Xg2GlZthlVJwjHDY5Ix350O
+         fscA==
+X-Forwarded-Encrypted: i=1; AHgh+RrjSJmX2AWhDjZQ5GRiiDMDjc8OhOBt/BlYAaVyFssR3D4nJMIhKjn8zGe6IoGcR/3UYNsR1XyY8HmFIAuihdU=@lists.linux.dev
+X-Gm-Message-State: AFuF++krp2GNCfFagL+JiLQeEG1O2ARGGvZP1Z0Xq298r8BQYEucn+CS
+	/gzFokhVT6rrA4GvX0L3d3m3k7faQ8Qk5jrS85kobInb6ejG/OYA/fdEmBnPNwRad1Kr/YrNDEH
+	zWe9GXfK/qw0=
+X-Gm-Gg: AR+sD10EpCP1QbjjRjHAFGNtBlXSHbPVqPikYLs6dkPQSKQLovIb/pblVajmuhZcczc
+	OgNDCQ1af56UKBURpTZlwpXxzjFPvx38njnbtwfDcaiUarOBR87ABTn/G8MLPzLKo/eJDgBqtxL
+	35UmbD3paYrFZDGJq3tozrn2XiaAHhoOUko8B1xzExEJzFFoRc1lBzWW4grn4+y2Agg9/ZPFyAI
+	E1SXlQ5253h4fktJJnQIeakrWA94Hg8BbE6SL/jw3teDoP3rFGnRvGwYoZuzcBbcm/0GqFVLa2S
+	aQXr/KdAHfO54B3DumIelZT8R5KSBUCV+Jh3jgOnxQKNAY1XQ4nL/ME4mLCEUKWV795OCAryNzp
+	WJ4RO7kA7SYHvWhJq26xq25VvkBxDXWHf2qpw2EZXKpxRoeUDuMvkspmHzisyvW1lPjtErqhx1t
+	goT7qLcb/AHIeBdb9JHhGVxdvfG2UrZehgD8GOMsuFlgMrdkHzX/ZeMnhTbPE5njMVNAr6NWRpq
+	IJTjRGECydKnNimzOIO+Miy5uMuacsmbc5QEg==
+X-Received: by 2002:a05:600c:3b9f:b0:499:8ae1:b900 with SMTP id 5b1f17b1804b1-499d652362amr52626925e9.12.1787646371723;
+        Tue, 25 Aug 2026 01:26:11 -0700 (PDT)
+Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499d633506bsm21294465e9.3.2026.08.25.01.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2026 01:26:11 -0700 (PDT)
+Date: Tue, 25 Aug 2026 09:26:07 +0100
+From: Vincent Donnefort <vdonnefort@google.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] tracing: Fix subbuf resize races with
+ trace_pipe_raw readers
+Message-ID: <ao1Rn8ZKr5XafWRZ@google.com>
+References: <20260817134750.3909384-1-vdonnefort@google.com>
+ <20260817134750.3909384-2-vdonnefort@google.com>
+ <20260817140812.2C7D41F00A3A@smtp.kernel.org>
+ <20260822110424.346fa3c8@fedora>
+ <aotTYT0zE5LNik06@google.com>
+ <20260824105315.27377f30@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] vga_switcheroo, drm: Push fbcon handling into DRM
- clients
-To: lukas@wunner.de, jfalempe@redhat.com, alexander.deucher@amd.com,
- christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
- rodrigo.vivi@intel.com, tursulin@ursulin.net, lyude@redhat.com,
- dakr@kernel.org, deller@gmx.de
-Cc: dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- linux-fbdev@vger.kernel.org, sashiko-reviews@lists.linux.dev
-References: <20260709092215.168172-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260709092215.168172-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[wunner.de,redhat.com,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,intel.com,ursulin.net,gmx.de];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 2054F1F7B4
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260824105315.27377f30@gandalf.local.home>
 
-gentle ping for a review from the DRM side
+On Mon, Aug 24, 2026 at 10:53:15AM -0400, Steven Rostedt wrote:
+> On Sun, 23 Aug 2026 21:09:05 +0100
+> Vincent Donnefort <vdonnefort@google.com> wrote:
+> 
+> > > > [Severity: High]
+> > > > If ring_buffer_read_page() returns -EAGAIN because the subbuffer order was
+> > > > updated but cpu_buffer->reader_page->order hasn't been updated yet, this
+> > > > branches back to the again label.
+> > > > 
+> > > > Since the loop does not yield the CPU or call cond_resched(), could this cause
+> > > > a hard lockup if the reader and the resize thread are on the same CPU?  
+> > > 
+> > > Hmm, this looks legit. We should at least have a way to break out if it
+> > > loops too many times.  
+> > 
+> > Can this happen only on !CONFIG_PREEMPT systems?
+> 
+> It can happen with RT tasks as they don't yield. If this task is of higher
+> priority than the one resizing, then it will loop forever even with a
+> cond_resched().
 
-Am 09.07.26 um 11:15 schrieb Thomas Zimmermann:
-> Vga_switcheroo currently invokes fb_switch_outputs() to inform fbcon
-> about switching of the physical outputs among framebuffer devices. But
-> new DRM clients to not use fbdev/fbcon and might require their own
-> vga_switcheroo support. Let's strictly separate them from each other.
->
-> Remove fbdev/fbcon from vga_switcheroo. Introduce a pre_switch callback
-> for vga_switcheroo clients to do the fbcon update. Allows for removing
-> all direct interactions between vga_switcheroo and fbdev/fbcon.
->
-> There are only four drivers that support vga_switcheroo: amdgpu,
-> radeon, i915 and nouveau. Update each of them with the new callback.
-> When vga_switcheroo now invokes pre_switch, each DRM driver forwards
-> to aquire_outputs and lets the DRM clients handle the new outputs.
->
-> At the same time, push the fbcon update into DRM's client for fbdev
-> emulation. Do this with the new DRM client callback acquire_outputs,
-> so that other clients can have their own handling of vga_switcheroo.
->
-> Also replace the existing reprobe hook with post_switch for symetry.
-> For nouveau, this is merely a rename of the helper function. The other
-> drivers dor not implement reprobe.
->
-> Tested with radeon on a notebook with Radeon HD 4225 and HD 5430.
->
-> v2:
-> - implement all of pre_switch in a single commit to avoid possible
->    deadlock in intermediate state (Sashiko)
-> - fix erroneous docs (Sashiko)
->
-> Thomas Zimmermann (7):
->    drm/edid: Include <linux/fb.h>
->    drm/client: Add acquire_outputs callback; implement for fbdev
->      emulation
->    vga_switcheroo: Add pre_switch callback to client ops
->    vga_switcheroo: Add post_switch callback to client ops
->    drm: Implement struct vga_switcheroo_client_ops.pre_switch
->    drm: Implement vga_switcheroo_client_ops.post_switch
->    vga-switcheroo: Remove unused interfaces
->
->   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  9 ++++-
->   drivers/gpu/drm/clients/drm_fbdev_client.c | 23 ++++++++----
->   drivers/gpu/drm/drm_client_event.c         | 18 ++++++++++
->   drivers/gpu/drm/drm_edid.c                 |  1 +
->   drivers/gpu/drm/i915/i915_switcheroo.c     | 11 +++++-
->   drivers/gpu/drm/nouveau/nouveau_vga.c      | 28 +++++++++------
->   drivers/gpu/drm/radeon/radeon_device.c     |  9 ++++-
->   drivers/gpu/vga/vga_switcheroo.c           | 41 +++++-----------------
->   drivers/video/fbdev/core/fbcon.c           |  8 -----
->   include/drm/drm_client.h                   | 14 ++++++++
->   include/drm/drm_client_event.h             |  3 ++
->   include/linux/vga_switcheroo.h             | 29 ++++++++-------
->   12 files changed, 121 insertions(+), 73 deletions(-)
->
->
-> base-commit: 88c6be63ac7e9238c7791977d3f496ce6623afe4
+Ha yes of course!
+
+> 
+> > 
+> > I can add a cond_resched() here though, I believe that would make sense: if an
+> > order modification is pending, writing is disabled anyway and we are about to
+> > loose the stored events.
+> 
+> For RT tasks, cond_resched() wouldn't be enough.
+> 
+> > 
+> > Additionally I can reduce the window where buffer::subbuf_order differs from the
+> > reader page order by adding an "order" argument to __rb_allocate_pages() and
+> > only set buffer::subbuf_order later in ring_buffer_subbuf_order_set().
+> 
+> I'm wondering if we even care if data_page->order != cpu_buffer->reader_page->order
+> and should change it to being a force copy instead.
+> 
+> If the reader_page is bigger than the dpage, and only copy what the dpage
+> can hold. It would also update the read value of the reader_page which
+> would allow another copy to get the rest. If the data page is bigger, then
+> just copy everything.
+> 
+> It's not like this will happen often.
+> 
+> -- Steve
+
+
+That sounds interesting... that would get rid of the -EAGAIN. Let me try.
+
+Do you think it is still worth to reduce the window of discrepency between
+buffer->subbuf_order and buffer_page->order?
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
-
+Vincent
