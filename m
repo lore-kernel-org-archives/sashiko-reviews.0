@@ -1,37 +1,68 @@
-Received: from mta1.migadu.com (out-84.mta1.migadu.com [95.215.58.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010060.outbound.protection.outlook.com [52.101.61.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ED93BFE21
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 06:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787638982; cv=none; b=DsnszM8r/oZUyQSOkcDYJXJjOctpST4v3csMRjasgIoYwI2ULnSFFaDwhqLfdlGzj7UNMqOk4z/ipFYDH5j2zmVnHzJE8gflqorF4z3LsJn/aEOQStj5QnZeanS08mj6TC3R5zfViWWlBm2lAkyA3sSjmkVkSzf12ZFKSVGYf/w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787638982; c=relaxed/simple;
-	bh=6q7j5Ff4GbGeQY3dCFVc6z7uFHjXuAyD8kY5kMwE+iI=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CR5jhjvD1bZauxSttCvxI1rPZTvC9KGj30lZEN7Vh5JtqEc8ZxlEK6TwabvmcL3AVgB2ytZ4jIUbAj9CFo2y4JdNJgsSKnBwJyP2GUxcUGqyPcK6NYw0c6df6bEJN1QCSmeHFQpsGDgv1bowL+grPOrax2Ew+EZxyoKPKE8qYMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Qmx/1/+B; arc=none smtp.client-ip=95.215.58.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD29B3CE4B1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 06:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787640247; cv=fail; b=gEkum2dQoxo+F/kRLwIiXCehazZOwDp4zTBiQTeaGXNlGhAI8RQDY/9RPxcEVlZcGZtyuUenN53sr1APgdq/a/KCbm3WX4HUrYuvBuwBDmYsZlDn2Fx4UZH0/UjFV3c5fAt6Bnot6ArTyD4e9+P3cxBXdTOOvqXmWHqIUGqzukI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787640247; c=relaxed/simple;
+	bh=NZsXAF6U+5c35T6gI8PrVmReM40KjdCC1ypra5voawE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BHFMBEW/Oj9LM3zi2IhM5lTL6atcCancHd3/qh0lhZwQWB9i2nUzUeny21ASu/bn2Ry1dguIqHMJHdFjFjA5Faep4akFy03sA0Pnbw6mZqDurzb/dKz42iy//mLPTLcTfA3kHG3eOO1WpM6Mz5HKzpCFoIdxoNof0KX9KNjs+l4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=0U8GfJjv; arc=fail smtp.client-ip=52.101.61.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Qmx/1/+B"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=6q7j5Ff4GbGeQY3dCFVc6z7uFHjXuAyD8kY5kMwE+iI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787638976; v=1; x=1788243776;
- b=Qmx/1/+BFXqjwSDsz4n/Z6l5Vgji/JEO0yks/vW+FBdP6CluW2hSUNxSW9t5WNaF4PNRWHf2
- ska8kxYDCecUl3EIBVbxgz8I/sd7s+dBJ/2AWhxbj4g5kKCxg/mLAd2tdtjwz6U/LKisepUfC3g
- 2cth1nFdWfR/ObHWr3HGZhMo=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: from [192.168.110.173] (223.70.159.239)
-	by smtp.migadu.com with ESMTPS id 3176caf5f8563946;
-	Tue, 25 Aug 2026 06:22:56 +0000
-X-Mizu-Trace-ID: 3176caf5f8563946
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <42b9aed5-15aa-47da-897a-0c966ffbd59a@linux.dev>
-Date: Tue, 25 Aug 2026 14:22:54 +0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="0U8GfJjv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CGN/7evLk6MzUBwSW6HRy6QgSLHLzPJHg8PjhIvautHkxYrgPcOqOjGqdr8fZjXyx542ecRN+AaIb5swRhDksGDufCpRs2BjwwRk7GF0WiC4u/1l6E2hztvX7ik06uzcvqH+s2zQg/gywRBACNlNmi33oGCu7wZTbDlJmYIyNVg/1wVwwaLq8X8VSj2bOsxi/+aThic/v2ntE/Z1kCShVl0i7CWyXZ5AzZeC/G1L1eRdFOPcXg5RW+xxIPAFUmUuR0zyzaowWAn/fNo43b8vycj4kbiuW9RtWpVgSrz5lmngxy3bemfMgLw0daUOCEu4e0B+AdMBC8oSU+8fn4qjOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9JHjIxOITqJtWYfUXh9uGXwjmw/FcWF6jhTGt6MzD38=;
+ b=rmCvCkrzOWvu5dHtDygAuT3JQdnjWggmSwVNWhWMIA1ypK7Os7wUUyJfknBXsojTTQkF5YzN3A8rYqI2q0YFl9VC1A1ylf4kE7ZR/4lOQHpijCNVIQl3x0x/U0pumybg4DULttR98AMr6qkCMLenife0gkho13ezKVVDiVIkjSt00Bv1kySWYPqziLQPZt0Zk1EjE611WpCbzmNGLUXacrEJl9gXskhmRyy1wWpXjafvVeyZXYla9Xp6adWgbmjBalZleQrHgpHL3YoWEpNDDrWe8thcIqc6ziE/Qw360A5oSE+Bqsg7LR2FVvVjAgQojPYbCWh4Q42ZNMbfvxs2Ew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 149.199.90.133) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9JHjIxOITqJtWYfUXh9uGXwjmw/FcWF6jhTGt6MzD38=;
+ b=0U8GfJjv6NJiVMEglu/nDS/sdNrMV+w9wPfTzKAz7T8Ag/88piTb16zgsHu+nlPd3WpOk2g2XNV9d7Xg8B4J/V1FSeLdN6Zw8+Mdsr0rguf0xh3IT6xwq6joc83WsCBgOV1r+2VVawW8vyYJgCMwHgRRmHYQfuus72qtZgmkP5E=
+Received: from MN2PR22CA0014.namprd22.prod.outlook.com (2603:10b6:208:238::19)
+ by PH0PR12MB5678.namprd12.prod.outlook.com (2603:10b6:510:14e::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Tue, 25 Aug
+ 2026 06:43:57 +0000
+Received: from BN1PEPF0000468B.namprd05.prod.outlook.com
+ (2603:10b6:208:238:cafe::8a) by MN2PR22CA0014.outlook.office365.com
+ (2603:10b6:208:238::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.12 via Frontend Transport; Tue,
+ 25 Aug 2026 06:43:57 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=quarantine header.from=amd.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ amd.com discourages use of 149.199.90.133 as permitted sender)
+Received: from satlexmb07.amd.com (149.199.90.133) by
+ BN1PEPF0000468B.mail.protection.outlook.com (10.167.243.136) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 06:43:56 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
+ 2026 01:43:55 -0500
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
+ 2026 01:43:55 -0500
+Received: from [10.136.18.168] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.45 via Frontend
+ Transport; Tue, 25 Aug 2026 01:43:54 -0500
+Message-ID: <7fd7a6dc-9429-44d4-94b7-c7930536043a@amd.com>
+Date: Tue, 25 Aug 2026 12:13:53 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,105 +70,92 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, sched-ext@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be
- sleepable
-To: sashiko-reviews@lists.linux.dev
-References: <20260825052336.46746-1-cui.tao@linux.dev>
- <20260825053648.EF7D41F000E9@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260825053648.EF7D41F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] KVM: SVM: Clear VMCB save area instead of entire VMCB on
+ shutdown intercept
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
+References: <20260824131824.6040-1-shivansh.dhiman@amd.com>
+ <20260824135155.6B0A41F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <20260824135155.6B0A41F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF0000468B:EE_|PH0PR12MB5678:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e2df9d2-5912-448d-31e4-08df02743cd5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|1800799024|23010399003|82310400026|376014|56012099006|10067099003|6133799003|3023799007|5023799004|22082099003|18002099003|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	OlAAhhEaOMOC0IAqGxszA7xDPWpiKNqT7hJAMsx1KbV+Je25/TtguUGLGhjvch975bsFLA7Q75Q3jfP/9iBT0vfmTlOvT9gVowNockyPgOZrej9bPm0bpSlbw1JLMP7SlFTknRBgSP2IKlbHm1xE7f+HTDAPxpsrCzKJXd1Sgc9eX1DOdoSdQ+UKcPWbI5naNvdl9KVPLDz6CUOs1KcYiq9YAiLWIKh+CMfB04wc+ERWc9mIvHRXK/x47Hibgd/bUdL4L/GoBks8nMWaXHIcbWMRXV2vPX5eILhsvno69opXjc8i3jtPveRrtM8PjXI+JyrS+VmMRwc2CrO118zZmAs8rvnmbqQbAtEysMp6W1kF32K616UpCr2tiIUfK+5vbQRGXz4NLEl22VOx5Wv8WN66YqpDPEK/Tms85JaPR2eIkgccUDcUXSokEXC0Umt4+cLxpAeCnfOtecJov1OuiXCs41r45RLnnvVj9e5ow+O8nGMFndvZjfjKeBAzbMOrlBkyx/K6AgMIiFQvQvC8+9qIJ2DvF0mXjYFBmuWPllkwUXfCFnMGH5+Dm7Rl0XYP32HDf4XN0f1RABUjlHZR1Q6cr+QA7xf5r4/hIHXI3b/OGgsMpYOITDecDjlIDdGJ4W2ji+hKIYzc1FWIYAShvzdmQmWK/zDaNbGzCaIeSMGE7sX7QR11mz+MOkAQ7077sZke2dfGT/UVSW926eMNiA==
+X-Forefront-Antispam-Report:
+	CIP:149.199.90.133;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:unknown-90-133.xilinx.com;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(23010399003)(82310400026)(376014)(56012099006)(10067099003)(6133799003)(3023799007)(5023799004)(22082099003)(18002099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	3aV3o7j6fj54IHOIWP6PVrB3nCTYD87d/LyHRq3BMiaKLzff5DE24yHDk/Cq1Y51M03Ivzm9jfbulJIck8F9uhc3CECfkFwfhNkTBEfm/y7pGnrtBgMAcXXi5ZjixCcNE7fXFtiCmQsomoyUUHgG+mVhAh9swqndrkWuvaPNNseUIZeEOVSa9uUw31YXqB31Uel/5/PiM13eQ3iLk0edLqN1KRoRIEEGiNQrqa/k7Nob09WmeMeLmA/GP5g3KV3W5jEdB4TiR/NkxJk0JH37pD3uYNtA2e/tDl0tCdGmSrgK825nKdJNj0eJpyu1YIJFyia6Yh+1QsD9HZ7zCgo8vQ9j6bWkKtAI5bNogkTUtjwju+duGm8jTHl80PSe6D8GY5kW1B2/p3YgAgv6ZpCJqJf8PHWjn3JyHRiVzR4x4nRfFvD+KeSMiI3cJo1C/Xr9
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 06:43:56.8189
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e2df9d2-5912-448d-31e4-08df02743cd5
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[149.199.90.133];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN1PEPF0000468B.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5678
 
-Hello,
 
-在 2026/8/25 13:36, sashiko-bot@kernel.org 写道:
+
+On 24-08-26 19:21, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Concurrent cgroup writes to `cpu.weight`, `cpu.shares`, or `cpu.idle` can permanently desynchronize the core scheduler and BPF scheduler state, and cause data races on SCX fields.
+> - [High] Removing `clear_page(svm->vmcb)` leaves the `control->event_inj` and `control->event_inj_err` fields intact across a SHUTDOWN reset, causing KVM to spuriously inject stale events into the newly reset guest and leading to an immediate crash or triple fault.
 > --
 > 
-> --- Patch [1]: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable ---
-> commit 1a01a0e2918fcf8ca79c6152b56ecfa3e223935c
-> Author: Tao Cui <cuitao@kylinos.cn>
+> --- Patch [1]: [PATCH] KVM: SVM: Clear VMCB save area instead of entire VMCB on shutdown intercept ---
+> commit 887c839299b43bfbaf990edaf22e0335bb4c3119
+> Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
 > 
-> sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable
+> KVM: SVM: Clear VMCB save area instead of entire VMCB on shutdown intercept
 > 
-> ops.cgroup_set_weight() and ops.cgroup_set_idle() are delivered from
-> scx_group_set_weight() and scx_group_set_idle(), which run from the
-> cpu.weight and cpu.idle cgroup interface write paths. This patch adds
-> them to the allow-list so these callbacks can allocate on demand.
+> This commit updates KVM's handling of intercepted shutdowns for AMD SVM.
+> Instead of clearing the entire VMCB, it now only clears the save area and a
+> few undefined fields in the control area, aligning with updated APM
+> specifications.
 > 
->> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
->> index c539d15cda637..dd4ecc0b5201d 100644
->> --- a/kernel/sched/ext/ext.c
->> +++ b/kernel/sched/ext/ext.c
->> @@ -8079,7 +8079,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
->>  	case offsetof(struct sched_ext_ops, cgroup_init):
->>  	case offsetof(struct sched_ext_ops, cgroup_exit):
->>  	case offsetof(struct sched_ext_ops, cgroup_prep_move):
->> +	case offsetof(struct sched_ext_ops, cgroup_set_weight):
->>  	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
->> +	case offsetof(struct sched_ext_ops, cgroup_set_idle):
+>> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+>> --- a/arch/x86/kvm/svm/svm.c
+>> +++ b/arch/x86/kvm/svm/svm.c
+> [ ... ]
+>> @@ -2164,18 +2164,23 @@ static int shutdown_interception(struct kvm_vcpu *vcpu)
+> [ ... ]
+>>  	if (!is_sev_es_guest(vcpu)) {
+>> -		clear_page(svm->vmcb);
+>> +		struct vmcb_control_area *control = &svm->vmcb->control;
+>> +
+>> +		memset(&svm->vmcb->save, 0, sizeof(svm->vmcb->save));
+>> +		control->int_ctl &= ~GENMASK(15, 0);
+>> +		control->int_state = 0;
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does making these operations
-> sleepable widen a race condition where concurrent cgroup writes could
-> permanently desynchronize the core scheduler and BPF scheduler state?
+> Since clear_page() was replaced with targeted clearing, do we also need to
+> clear control->event_inj and control->event_inj_err here?
 > 
-> Looking at kernel/sched/core.c:cpu_weight_write_u64(), the core scheduler is
-> updated inside sched_group_set_shares() (which takes and drops shares_mutex),
-> leaving a gap before the BPF scheduler is updated:
+> According to the AMD APM, hardware does not clear the EVENTINJ field in the
+> VMCB on a VM exit, which leaves the VALID bit set if an exit occurs during
+> event delivery (such as a triple fault leading to SVM_EXIT_SHUTDOWN).
 > 
-> kernel/sched/core.c:cpu_weight_write_u64() {
->     ...
-> 	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
-> 	if (!ret)
-> 		scx_group_set_weight(css_tg(css), cgrp_weight);
->     ...
-> }
+> If the EVENTINJ field is left intact across this shutdown reset, will KVM
+> execute the subsequent VMRUN with the stale EVENTINJ_VALID flag still set?
 > 
-> Inside scx_group_set_weight(), the SCX scheduler state and tg->scx.weight
-> are updated without serialization (holding only a read lock):
-> 
-> kernel/sched/ext/ext.c:scx_group_set_weight() {
->     ...
-> 	SCX_CALL_OP(sch, cgroup_set_weight, NULL, tg_cgrp(tg), weight);
-> 
-> 	tg->scx.weight = weight;
->     ...
-> }
-> 
-> The same pattern exists in kernel/sched/core.c:cpu_idle_write_s64() calling
-> scx_group_set_idle() and updating tg->scx.idle.
-> 
-> If two threads concurrently write to cpu.weight or cpu.idle, they serialize on
-> shares_mutex but drop it before calling the SCX functions. Because this patch
-> allows ops.cgroup_set_weight and ops.cgroup_set_idle to sleep, could the
-> threads execute out of order? 
-> 
-> If Thread B's core scheduler update runs after Thread A's, but Thread B's BPF
-> callback finishes before Thread A's, the final state in the core scheduler
-> would be B, while the SCX state ends up as A. Can this lead to incorrect
-> functional behavior and data races on tg->scx.weight and tg->scx.idle?
-> 
-
-That race is pre-existing: the window between
-sched_group_set_shares() dropping its lock and scx_group_set_weight()
-running is unserialized even without a sleepable callback. Making
-the callbacks sleepable only widens the window.
-
-Michal's "Lift cgroup update locking to core to prevent CFS/SCX
-divergence" series covers both updates with core-side locking and
-fixes it, so this patch doesn't grow a fix for it.
-
-Thanks.
-
->>  #endif
->>  	case offsetof(struct sched_ext_ops, cpu_online):
-> 
-> [ ... ]
-> 
+> Could this cause KVM to spuriously inject the old fault into the newly
+> reset real-mode vCPU on its first instruction, leading to an immediate
+> crash or an infinite triple-fault loop?
+The latest APM says otherwise. The #VMEXIT sequence in APM ends with "clear
+EVENTINJ field in VMCB". Hardware clears the field on every exit, so there
+is nothing stale to carry across the shutdown reset and the scenario can't
+arise.
 
