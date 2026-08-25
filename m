@@ -1,357 +1,113 @@
-Received: from mail-vk1-f225.google.com (mail-vk1-f225.google.com [209.85.221.225])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EE6400E1A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.225
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787659780; cv=none; b=Vkwi+rCGYBQIpE2S/vet+znsRWtMwYnAatBsqEXF1UnMilBU4bOayq7v9xvM2ly8HhhhBxqNdXn1kfvmG1vIvnqpZG91AMhyOJvbZP77AnvyK1oIJwGM26HyW9DXbfTiW/r4iMYhL+xIzJlZ4wXwVgwhNirFmNSHdwnAxMCpGc8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787659780; c=relaxed/simple;
-	bh=Kq18tjNqV3UlsEjJdRqY3jUU1HznSGcI9mSWhx7qbUs=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BC2401A0A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787659846; cv=pass; b=TkGKUJBM/jGB4ewcRKV76QBj1UUUB7gLPWm1JUx8GVOCtdFtSxEdPIHVaduKoSbWDsXOIuEm65jEfrn1qoi6Tirji38+7br3ZKsezsgp5AogvsrKnu9im2PTiQ/6aZfG2aUyqWW3UzumfhLn5iNgC92OaG2SKf20/h3FI0SX0zk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787659846; c=relaxed/simple;
+	bh=kJ9hrWQedvb79ipaVMOGn2vkaw9mO7jS+bNOdzYa/Ss=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hRO0r88KeMRFEJQtQr70K4o4iYZrvCYdUgIFm/7pF9KepTyQH+gISZ5bfQWs3dejiZZDTQUoNf4hWTxMG+0blHE9Q86hTR3RvBlGOIDE21+iRhoeXRuoFR96yXvDbNMDmwA4jIvQCLxy9hmOS2uwrhGbOnLJlAM0AyZjlqLapTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gTbnA3Co; arc=none smtp.client-ip=209.85.221.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	 To:Cc:Content-Type; b=ib8OF/ZacA2hXjCLKodrzys+8WKdrWFGJlU6Mb8pS6TEYp4XUsp2roPYWkHhpxZQJ91PMtOUwBIiJ30bWoifuaPwTPxB1DBMg0ztuIYzMnKixUuEzZODwnGaXZiAc8iv+0RZY2GcOwdTjxyiEQKBiu8YLNi3cg4dc66Kurjd8Xs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LWRVDmjq; arc=pass smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gTbnA3Co"
-Received: by mail-vk1-f225.google.com with SMTP id 71dfb90a1353d-5bfc5b77c02so3886061e0c.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:09:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787659778; x=1788264578;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Ui/VySqFLgg+W5tJbTpomj2roRXg51+Uj30Q0p2oewM=;
-        b=gMj/KsjT7QiYh9Vz0J49aGs6W2VWVMaFpDGfg08E8IgzH5ytqjXigR0wvpzLQXTo5J
-         rOuA5o2Mfsre6bqnhhb4rJt28IYlU5ZLTcg04DH5u65asBUngVwvmy62rt3zEM8qZG+b
-         gjZ65RvNi16XmJDLZ+vNqimSuZq+75z5yrBBeDbBmB6YlN3h2YGN8qlKgUjMFhb+ipc6
-         ofH2gPbNkyY1AXjxBcT7PyJsh+z4scHUUO7npWezorQgqk5Aa2Gq6ve2bPazV4xYKjBR
-         h7yed15R/WR719p9Zw8oI6k2Zor9xbZFn8tYbM+M0R+KoJr7NeD1/U5nuFpT7YYjorMp
-         5wdA==
-X-Gm-Message-State: AFuF++mH5Qk2wJL+UfS2Ct9UfumlgFu/gTPRdZlyWKz42OczVtTZJ3T+
-	LzAyLqXBfncGjhzChJDSM2qCKReoUCgeE+oKseEfiW2jrLHyay2IigGP2wAJFupGfVVMJ4rTrEA
-	9u0+50ap+zCOOk9oLd4VsaoFqhfsKHfnurkK+Tz39Ufab9GQzW7LYWWYGi6fjkpuCgOlknbzy+H
-	qu/IOQMaP80i4lSmtXgcr40mmrbKUyZTwXNfs/1SP1gii+Lhbteyk07yEHHCtlX7AZ+YnMAbxt4
-	Rj8HGc0xFm2RLttZm7SF1CHwBEcL/E=
-X-Gm-Gg: AR+sD11OgnF3l1cT6rWNeM74+Id0lC2XRVBZOrc1mZTM9ifg2cT74rbF3Km/hgKe0Oq
-	e8/lKHjQojF5+6aIBV1e9CUy6ZD4XLKDJ1/ugIJmwf0qdvrhnA8e6vJ0TM0EetMpUbupHz07xlu
-	1uoX2DajneChF85Wj6q47LIRjkW0d0iON1z3X81n9UebtxfNXk5QC6yMKswNoGMMjJ2lz8uogGZ
-	Qpi6HupV/K4t2vMOtL9RUg71UuKgxn9v3Kk3ptF1iDSxRrqGQPVCEK2KdJ4vYCSxBYZyaoBDz1H
-	Qdc26Qs8b4geoEAOlfLRTT+ICAknRNuB7mMjhLlt7ApjZVZKylT/4XDv31NtUp3GN0v9TPjulQ/
-	Dxv5sDJ363yeRlkqDnDpCajdnd0Ni1lNyHcsf7wWPnJCRDgi+Dngpw+Jawj/eU+MgsoPmzWj4oZ
-	rmKeqG7kbtMPuOQqv8QePzzuTzeM6uQUFTkh6VPhRSMC5vuw==
-X-Received: by 2002:a05:6122:221a:b0:5bd:73b5:6d2b with SMTP id 71dfb90a1353d-5c60deafa17mr10611231e0c.8.1787659777716;
-        Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id 71dfb90a1353d-5c623e2e6b0sm1996214e0c.8.2026.08.25.05.09.37
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c15ceb17a28so354068166b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:09:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LWRVDmjq"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-836ce6cbe1eso67235867b3.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:10:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787659844; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SK2HXHQox2S2YFtppmsj2dxd315ZwdQk1xmYTcfaOflbg5SStk7jUvwp65IWJapzCF
+         /T8+Hnwh1WY2rYUG/5v2aa+bUIJNr4t6/Tn3/jkFJA/K2cYMGyull4W+B25oV5OQy95w
+         SBdO/swzUpfm+UCWKi8V+4u7yw2YMiuZwvNlCLEgyW/sUXUsoa3202nLBhI3zt/Q0EXD
+         1e0b5N38ewjcmK0moy7NYzW88vQ8O3/2ibNKMRqlI4W1Ld6SuLTe1yZxbBFI1XvoWoHg
+         SR9epBxoc+Uv68qU1VtkgLpoyQUO2+/urrDrThWbQBUNAs//kDvxONjSGKZa6aQmcr7z
+         6bUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kJ9hrWQedvb79ipaVMOGn2vkaw9mO7jS+bNOdzYa/Ss=;
+        fh=wzIjvSGmjLs+/q285zguamRmv+TLlu4WF7jdwujDeAc=;
+        b=Xx+PWJLalhMmobQjANHL8WQ5XoVN7l9cLdj7aij/FZd9kUdz1hLiZA1MVlB49G7iHP
+         vKO9Pw8qvsU0oyere6SKu6hZ0us/p7yc554cJJN+IoGE0c/wIP+D0QSIPMKEnaCmbIOL
+         zMGjn81duJcZ4aq6TegRog3p2g7tvzCeQUjs9+ItPMsTRvcopr9JBl10BYDD+EWlZpv7
+         IeJmfz4jhbcQSMTaVQNhlmI5J3AghDjc9CJ38HnM9GJJfoOHJpNLpNzBq3UbuyrWnT7M
+         JYToD1OxsXtZCl/oTsesHOMRDx1geyRH5mTSA6DC/xL9Kqfmy6YJbImJe+K3h2nveOVo
+         ARjA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787659776; x=1788264576; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787659844; x=1788264644; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kJ9hrWQedvb79ipaVMOGn2vkaw9mO7jS+bNOdzYa/Ss=;
+        b=LWRVDmjq8eCgoSDxCp3aoHN18IiliyiEeulV29ZxCFa7btsN9P3zb0i0yBYj85W3by
+         Z+z4aBEb4FGYNNUQk2TPew1O7I3dfeyN4Sdy/8rGS5Wt5EIKkAseTpSrOvVuJvNtu96M
+         vyfqj7Zp5xLcMyHVFC+/QB1IG1ZLxlYrXoXzKWQYU6DgF/0JMB0MitDlwwMDHG+Wsd3/
+         q50T7Q0aRB7dRjn7K0DVut5jpoFOyZwyPDKZV7pkSJKOXl6riG6q2QOLhSDDbR6rJdgn
+         ka0Q2cEbTZ/utu7wHZyc2y7q6IZksa5wGQgPMz7xtlofXr+wwUqY/9IiOW+UNzzhldjL
+         BvXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787659844; x=1788264644;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ui/VySqFLgg+W5tJbTpomj2roRXg51+Uj30Q0p2oewM=;
-        b=gTbnA3ColhqD1J/PpRU8HIE593wVeJCuvZAfa+ItqeteJzwgpFJ6ZWDL+AfJCr9lVI
-         FiLKTO5H/deT5LjHAicLmMPKRrr/b+/i0U68gUI8yQYbyRvJzTGcWHUKU3um1hrTYCNT
-         ZrifrGKNjRJ9vAmOPxSC0+4chzHUJLZ+MxNZg=
-X-Received: by 2002:a17:907:8e86:b0:c1c:4db0:8314 with SMTP id a640c23a62f3a-c24e5b55335mr637061366b.13.1787659776109;
-        Tue, 25 Aug 2026 05:09:36 -0700 (PDT)
-X-Received: by 2002:a17:907:8e86:b0:c1c:4db0:8314 with SMTP id
- a640c23a62f3a-c24e5b55335mr637054166b.13.1787659775454; Tue, 25 Aug 2026
- 05:09:35 -0700 (PDT)
+        bh=kJ9hrWQedvb79ipaVMOGn2vkaw9mO7jS+bNOdzYa/Ss=;
+        b=AKc+appJ13gWNM2bORygc9tNwbzx6Y+P0pTEL70NvbkSI/14zJqh8m+k4ncg9OCnm8
+         kRpRNtV4PcS5K1qDrzC9OVtE2WLXGE/Uc8nmHBhzni9vwOADYaKT1b9+Lb/XhK6RoRaQ
+         YNK+Mn3pmt6M2U5ALwhHzG4fdJMDdlrXo0OPg+rngP++dDdGo1DK11OnV3draMY4Vqus
+         1ZKg7mAdT6XWoNw5ThrUBbYM6UnMUAgli/7PnavxXvDSzkXY/hEL2ISo8BIaLN1PE6ww
+         cNcYP6YqJkJ/QL1juhAfJFENdbsK5oR53tIEvoPuuVDSvvXLelwTiaWJKVaChlv5+LiY
+         +yrg==
+X-Gm-Message-State: AFuF++lG2wA0a+YEkgnC+0cIZHW901Fxmxqxrq1yEjK6o2GCKpnABvz3
+	292fRzg1hhMHpuCt9G1cvQl6ru8MAw+36AtjuwsWI6QysMAYgz04WvEvo+IU78167zHjlhhcXjw
+	wR1kkFByaUYDUuk6kLAMpsDNOduw50nTrttYPAFE=
+X-Gm-Gg: AR+sD1255wrjz3lSBkBDO8eLZpni/B/gw7HRxzpyHH33pbuOWaaQ5cdMK6N8p+q8xN3
+	Y7aP6Utuhed1gOu6IHAbExFgsgLVFqxPseLq8soT3Q2qeWJ0ZO+CitVMpD+rzSOeYM7iEl3nbnI
+	eNI4Ur8Fpy/D6sl0byTyKARCHz/PrfpOBVMF9uad8uXpYXT5FWw5YRHYo4w4uBoZBGwRjqRU6Qr
+	95S8hf2MXxa0W5YCW9t7MEWgL8vApwBfqIRRaDV41g54fhSWYWK+hwZE54h6E0QsZ9tna6ZPRX1
+	3/z0Y/kMvIeCN+lTfqLt2KYuWFNsGcvLLOLsblFx3dGxC36DdkQoSyuHtWvvLQk1QYgs7VkkVn9
+	3LA==
+X-Received: by 2002:a05:690c:660a:b0:7ff:1a93:be35 with SMTP id
+ 00721157ae682-849f2453bf8mr135633127b3.16.1787659844109; Tue, 25 Aug 2026
+ 05:10:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-9-chandrakanth.patil@broadcom.com> <20260818181328.867D91F00A3A@smtp.kernel.org>
-In-Reply-To: <20260818181328.867D91F00A3A@smtp.kernel.org>
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:39:22 +0530
-X-Gm-Features: AcwNN1V9k4hTCVhdLv-o8dzzS_z3oUxwt68AJqkd7n3_vraCkHzF5wRYHaIiDbc
-Message-ID: <CABvwm=NVp8RmHhwM4dSt1wRSLrZky0_s102t0=niRMeo6DMA5A@mail.gmail.com>
-Subject: Re: [PATCH 08/17] mpi3mr: Fix out-of-bounds bitmap access during
- device removal
+References: <20260825114641.80452-1-laoar.shao@gmail.com> <20260825114641.80452-4-laoar.shao@gmail.com>
+ <20260825115949.50A6E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260825115949.50A6E1F000E9@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Tue, 25 Aug 2026 20:10:08 +0800
+X-Gm-Features: AcwNN1UuC7F10aj4YHVAMkQvoflardyEu4XV_wVleTpEOQfCZEfcg6pMaNlgGIM
+Message-ID: <CALOAHbB99x=RxEmpqiwD+Z1F9BDUTr4gPEGHdT2zM8FfHOtupQ@mail.gmail.com>
+Subject: Re: [PATCH v7 for-next 3/8] livepatch: Implement replace set for
+ scoped atomic replace
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000f46bd30659ddf9cd"
-
---000000000000f46bd30659ddf9cd
+Cc: mbenes@suse.cz, jpoimboe@kernel.org, joe.lawrence@redhat.com, 
+	pmladek@suse.com, song@kernel.org, jikos@kernel.org, 
+	live-patching@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 18, 2026 at 11:43=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 25, 2026 at 7:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [High] Placement of the newly added bounds check introduces a delayed c=
-ommand queue stall and async chain breakage.
->
-> Pre-existing issues:
-> - [Critical] Concurrent lockless modification of delayed lists from proce=
-ss and IRQ contexts.
-> - [High] TOCTOU race window during delayed command hardware dispatch allo=
-ws double-free.
-> --
->
-> --- Patch [8]: [PATCH 08/17] mpi3mr: Fix out-of-bounds bitmap access duri=
-ng device removal ---
-> commit 498a49c2b9e406ac25107bbe9cd216b5c786f292
-> Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
->
-> mpi3mr: Fix out-of-bounds bitmap access during device removal
->
-> Device handles reported by the controller are used to index the remove
-> pending bitmap and to build a task management request without being
-> compared against the maximum handle the controller reported.
->
-> Check the handle before using it.
->
-> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3=
-mr_os.c
-> > index f80a21ec161b6..7ae4b4fad3f4a 100644
-> > --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-> > +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-> > @@ -2401,7 +2401,8 @@ static void mpi3mr_dev_rmhs_complete_iou(struct m=
-pi3mr_ioc *mrioc,
-> >               ioc_info(mrioc,
-> >                   "%s :dev removal handshake completed successfully: ha=
-ndle(0x%04x)\n",
-> >                   __func__, drv_cmd->dev_handle);
-> > -             clear_bit(drv_cmd->dev_handle, mrioc->removepend_bitmap);
-> > +             if (drv_cmd->dev_handle < mrioc->facts.max_devhandle)
-> > +                     clear_bit(drv_cmd->dev_handle, mrioc->removepend_=
-bitmap);
-> >       }
-> >
-> >       if (!list_empty(&mrioc->delayed_rmhs_list)) {
->
-> [Severity: High]
-> This is a pre-existing issue, but is there a race window here if the
-> hardware request completes extremely quickly?
->
-> mpi3mr_dev_rmhs_send_tm() sends the request to hardware. Only after it
-> returns does the code list_del() and kfree() the delayed_dev_rmhs node:
->
-> mpi3mr_dev_rmhs_complete_iou()
-> {
->         ...
->         mpi3mr_dev_rmhs_send_tm(mrioc, drv_cmd->dev_handle, drv_cmd,
->             drv_cmd->iou_rc);
->         list_del(&delayed_dev_rmhs->list);
->         kfree(delayed_dev_rmhs);
->         return;
-> }
->
-> If the completion executes concurrently and triggers another call to
-> mpi3mr_dev_rmhs_complete_iou(), could it dequeue and dispatch the exact
-> same node before the first thread has a chance to remove it, leading to
-> a double-free?
->
-> Similar patterns seem to exist in mpi3mr_complete_evt_ack().
->
-> [Severity: Critical]
-> This is also a pre-existing issue, but I noticed there might be unprotect=
-ed
-> list operations on delayed_rmhs_list.
->
-> The delayed_rmhs_list is appended to in mpi3mr_dev_rmhs_send_tm():
->
->         list_add_tail(&delayed_dev_rmhs->list,
->             &mrioc->delayed_rmhs_list);
->
-> And it is removed from in mpi3mr_dev_rmhs_complete_iou():
->
->         list_del(&delayed_dev_rmhs->list);
->
-> Are these list operations safe from concurrent modifications between proc=
-ess
-> and IRQ contexts, or should they be protected by a spinlock to prevent
-> list corruption? Similar patterns exist for delayed_evtack_cmds_list.
->
-> [ ... ]
->
-> > @@ -2564,6 +2565,12 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3m=
-r_ioc *mrioc, u16 handle,
-> >       drv_cmd->callback =3D mpi3mr_dev_rmhs_complete_tm;
-> >       drv_cmd->dev_handle =3D handle;
-> >       drv_cmd->iou_rc =3D iou_rc;
-> > +     if (handle >=3D mrioc->facts.max_devhandle) {
-> > +             ioc_err(mrioc, "dev_remove_hs: handle(0x%04x) >=3D max_de=
-vhandle(0x%04x)\n",
-> > +                     handle, mrioc->facts.max_devhandle);
-> > +             goto out_failed;
-> > +     }
-> > +
->
-> [Severity: High]
-> If handle >=3D mrioc->facts.max_devhandle, the code goes to out_failed.
-> This frees the command slot synchronously but does not invoke the
-> completion callback.
->
-> If this was called from mpi3mr_dev_rmhs_complete_iou() to process a delay=
-ed
-> command, would this synchronous failure prevent any subsequent delayed
-> items from being processed since the completion chain is broken?
->
-> Also, because this check is placed here, out-of-bounds handles can still =
-be
-> appended to the delayed_rmhs_list earlier in this function when command
-> slots are full:
->
-> mpi3mr_dev_rmhs_send_tm()
-> {
->         ...
->         if (cmd_idx >=3D MPI3MR_NUM_DEVRMCMD) {
->                 delayed_dev_rmhs =3D kzalloc_obj(*delayed_dev_rmhs, GFP_A=
-TOMIC);
->                 ...
->                 delayed_dev_rmhs->handle =3D handle;
->                 list_add_tail(&delayed_dev_rmhs->list, ...);
->                 return;
->         }
->         ...
-> }
->
-> Should the bounds check happen before allocating and adding to the delaye=
-d
-> list?
->
-> >       tm_req.dev_handle =3D cpu_to_le16(handle);
-> >       tm_req.task_type =3D MPI3_SCSITASKMGMT_TASKTYPE_TARGET_RESET;
-> >       tm_req.host_tag =3D cpu_to_le16(drv_cmd->host_tag);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D8
+> - [Medium] Contradiction between documentation/commit message and actual =
+code regarding the 'obsoletes' list.
 
-Thanks for the review.
+Ah, the provides ID is not included in the obsoletes list.
+I will update it.
 
-New issues:
-- The observation regarding the placement of the handle bounds check
-is valid and will be fixed in the v2 submission by moving the check to
-the entry of mpi3mr_dev_rmhs_send_tm().
-
-Pre-existing issues:
-- The lockless list operations and race window in delayed command
-queue handling are pre-existing issues in the driver and will be
-addressed in a separate follow-up patch series.
-
---000000000000f46bd30659ddf9cd
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
-2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
-phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
-a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
-ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
-07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
-SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
-rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGpzCCBI+g
-AwIBAgIMAgfxQ1Z7DrZKmCE/MA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
-ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
-MDIzMB4XDTI1MDYyMDEwMzUwNFoXDTI3MDYyMTEwMzUwNFowgekxCzAJBgNVBAYTAlVTMRMwEQYD
-VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
-MDExNzEOMAwGA1UEBBMFUGF0aWwxFTATBgNVBCoTDENoYW5kcmFrYW50aDEWMBQGA1UEChMNQlJP
-QURDT00gSU5DLjEoMCYGA1UEAwwfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTEuMCwG
-CSqGSIb3DQEJARYfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBAJwyF5qSHwwr1zJWkKvkMnY7V/sVFYYjTpjgxS4XA76pD6eLsZvS
-4J73HkKSNEzORxBE7OyZSnuBJ9zeeRcypuItG9YrHm+0OSF0psIWsH15FBYJ0nvsUnlFbCSNvOdr
-Co0WJ1KTe/7caj014uRZM2j7zH1vC+9fjEgrJdDRZakZXarl8M7k9okvVj1N+EuHiYUMvsAuMadE
-a3p31Z6QdvMpr+30UdJXHshV1mXca+UBpCx26GbY6NgxhHM2LtHiaCK8Vn4HMofDkFg4nQ6eK4ai
-uCiTtPj5aNlkdpcCzcZ+j1eCu6ZfPIq2ycwDaHi8d6Dwcgm+XoxDmD97Ehp2FOkCAwEAAaOCAeMw
-ggHfMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggr
-BgEFBQcwAoY6aHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1l
-Y2EyMDIzLmNydDA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2Ny
-NnNtaW1lY2EyMDIzMGUGA1UdIAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGg
-MgoDAjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5
-LzBBBgNVHR8EOjA4MDagNKAyhjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWlt
-ZWNhMjAyMy5jcmwwKgYDVR0RBCMwIYEfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTAT
-BgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSMEGDAWgBQAKTaeXHq6D68tUC3boCOFGLCgkjAdBgNV
-HQ4EFgQUyqNnwId/JCbRPslVl3nm48YRek0wDQYJKoZIhvcNAQELBQADggIBAKPmllSh8cRXzNRs
-3OATCVDgrdOfIsZMB9UVXcYQ+HtR1fu9bafeyuuupF9gcCmi+onLsANYRKaEDjC8h+V5FMAgm6TI
-bww4EFGpWvP/XEVKrpcpMkYNMLw89lagx9ZZDhx9DmfQMI9gG9MPpCkSMEPnJvEs7gqtOo08aL1+
-ts10tGfePsHF/I42Da21hJIJ01XN+Z91y//1cJkHwCBvDmoB8gdMXp3g4sjzahTxRZ25BdZB9W+n
-0jfWJXFKtp9MYS1SaVo17usfrlTeyaH3zPyDvfAfGoLB5+i8vyVL6wta2vgVpfsL9iwhbJnAIxr+
-ljECWkh1weDJw3UnV6nooG1RztnwqbG4eAG/KSCToXgVH9qSDv5S1lve5mvhv9AHzLjGLs+QtMeg
-WEdMM4G0PWyibzGgNrmVgKaLjV6EMo/IZW7KjBtvjyKQZhes90D4GyxXv+/mrTo2rruz53+FoSc/
-nuyLmg/SxnnZRaf7JGHFvu0IbwkeINwdHynAanOg9AD4zits7k7jjQ0fwIdhCaoRA3ao7PXUL1t8
-LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
-tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
-YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
-YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCDzGUTVjmGaqvy/v+bq9ufoV7mYQTfKsd0dG6N1cF8ZzTAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjA5MzZaMFwGCSqG
-SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBcanAK8Zdl
-GtgIHtQZZCqxU6KGhsjlJ7vFWsbRaStnlnPryBnq4alraupj9xeJl9KVrcMQImVJQGGEUZ88gPK7
-L8IlS/1lJ4RnVIkm6LzwSOp5FqvYjabW+X8KmjgziIras0Jw3mrUN6RFgE4j2Cg3cICsvhQibK8r
-qarveTi5bi6wxXgTJC65G8axQI+0IA5wO3xkdp3bTYR4OjXo8OiNJ8YP6DBnqVqnuJ0DOl1UTS81
-XvMJyApu8WZacPgFSSUI2Xd+zij7TdqmhcCyD+9hY20aTY56SfTKTBRYZ96TCbYITg6b5K34mZ7F
-u+HDL4jcfv6JBcFwB9Higf16HmfQ
---000000000000f46bd30659ddf9cd--
+--=20
+Regards
+Yafang
