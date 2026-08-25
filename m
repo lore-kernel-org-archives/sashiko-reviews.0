@@ -1,132 +1,200 @@
-Received: from smtpo63.interia.pl (smtpo63.interia.pl [217.74.67.63])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03403F44FC
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:27:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.74.67.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2EA3FFAD7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787657229; cv=none; b=G9fzGxslKADHA1z9wfG6IFRhlmpfUm58hs9c1B527lE5yCZzwv9CjxUtcXkP8boIxOkAN57Qgd/1USQ/ygT9tPI/PDHWRZtzYGUOkgqZJSkd+OgoCxhQoxKINiBPxI7/vwiXbkKzH7wTZJXPSSMKJ0lHyOCfW+KB+QJ9+xZt7Tg=
+	t=1787658003; cv=none; b=QIa6bW4PKE7Xod7LBrrn4mJHq1PLpbbIT4691LcVlBsyBiIsDy1BaYyzSH92vh+xYd7Gu6uJql2ReyvXqwRnB8kQItV3/CQdKh/M+B+DFtkMg+itRxuxHxtdgloDtIwSu/2cG1o4CRdCWHaibt+yG0JxA7saDafxU03iUgmG4lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787657229; c=relaxed/simple;
-	bh=/nanS065TlBm8RMB1VQp3Q7XNBTCXcLcKnG17dOhiGs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SPjgzwdf1+9diDB2SWjfT7ovmDBOauE6dyed6X4/pXBrUWzPFkRvxtwh5Kgo3lDg87rXo40NeHP50FnBXk+mdxDiMEZH9Y01zXWu5cXPT4IFpqDgL9DaCxfFj6bmrHI5E27Vuj2UeKyepXdQsDW6J9FgtdCLHkrHMcnlI/EHxqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm; spf=pass smtp.mailfrom=poczta.fm; dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b=cmhpM67M; arc=none smtp.client-ip=217.74.67.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=poczta.fm
+	s=arc-20240116; t=1787658003; c=relaxed/simple;
+	bh=L/6/DNj0Yio1x00kZr2rxT+p/qQuZdl/Cm127py1fro=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OWBHppDPehPh9jP4g/02qUV4nOY6hcT8QK6+Rz4/zuVPxRFzaHt/qrLgGVVFs+psZL/vfJZk+tOpp1abB+ncth+UKc1zX5pbW6SBy3k4hyDZnJhbCK/TTG/3DuAzi2xt3wZYgGXP0X9dq5yve36hzsRh1wINfAMlv74Wq276CXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=IRBKF1Ch; arc=none smtp.client-ip=185.70.43.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b="cmhpM67M"
-Received: from nr200 (unknown [80.68.231.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by poczta.interia.pl (INTERIA.PL) with ESMTPSA;
-	Tue, 25 Aug 2026 13:27:01 +0200 (CEST)
-Date: Tue, 25 Aug 2026 13:26:58 +0200
-From: Slawomir Stepien <sst@poczta.fm>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>,
-	dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
-Message-ID: <ao18Ag6ucRMqGRVI@nr200>
-References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
- <20260825074432.0B4511F00A3A@smtp.kernel.org>
- <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
- <ao1ketQ4oxNiWGAM@nr200>
- <7a61b8fc-68f4-4d8d-b5ff-0ffd9a9507fc@suse.de>
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="IRBKF1Ch"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1787657996; x=1787917196;
+	bh=asyZ9V5PRGB1ApJnRmBxuu35L5F7opXjmpLJsMizme8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=IRBKF1ChGTNQNemHhc+CKy/oAFMDFBPMvV2CXaB9Uy3WfF+QRoxt5hvoihKtQGi31
+	 qq3/7yehXrziM65pOJbX8ekkN+TPE8bb6DGh1mXiLqHMZJgkj6ZP4v4Re3a1NDqS/H
+	 gr7FyI5raMEyL/vUP6fKOo95hef0xPPYMK8oIGkNSvfTcEaQy2lGcOhGxS+DgPeJlA
+	 cYuWeqZGbNtuyN9cS5CWncIu1A2K3Fm0bfjKBGPJa8xNXeER5943Dg8EvTx1nzq9wT
+	 o7TVcqIBMfIjNYV5eiHib3EjEnXBp64AsCuwb5FsSRDhl7ccMG+EgVLpCrRcjuQTxI
+	 IxG4XyTzkKu3A==
+X-Pm-Submission-Id: 4hTm6K1xj7z1DFFC
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <robh@kernel.org>,
+  <devicetree@vger.kernel.org>,  <conor+dt@kernel.org>
+Subject: Re: [PATCH v6 4/9] iio: accel: mma8452: Support interrupt sharing
+In-Reply-To: <20260825084221.582281F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:42:20
+	+0000")
+References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
+	<20260825-mma8452-open-drain-v6-4-9b252804ee80@geanix.com>
+	<YAaf9j1P6vPR2vJqoPFnYqJcHanWcLOeDXn0md6ZcwU_laH0F2kqktrI6TXLQQLQQZjN7_8Bqav7gL8TA5JxFA==@protonmail.internalid>
+	<20260825084221.582281F000E9@smtp.kernel.org>
+Date: Tue, 25 Aug 2026 13:39:52 +0200
+Message-ID: <877bleo2d3.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7a61b8fc-68f4-4d8d-b5ff-0ffd9a9507fc@suse.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poczta.fm; s=dk;
-	t=1787657222; bh=u849jbuokEGJrG4MX8DSBd4S8qyShqARHeqPFRwMBnk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	b=cmhpM67MEZ37ijAG671Dl4j3ZWeRnGYqh4YR7REM468lXUCBDEwTY2dm9SMflzmzn
-	 JduRxTM2zNKIbkSGGj59M9QbOwS6aOtC1Y5ijxDslfEiyxjN0zCrmwfbRtAbHbnA3U
-	 8FnXHmcHG4cGlxrKxQpWhzRsOKsb/Hh9rtZGhwGM=
+Content-Type: text/plain
 
-On sie 25, 2026 12:21, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 25.08.26 um 11:46 schrieb Slawomir Stepien:
-> > On sie 25, 2026 10:00, Thomas Zimmermann wrote:
-> > > (cc: Slawomir)
-> > > 
-> > > Hi,
-> > Hello,
-> > 
-> > > thanks for the fix. Please see below for changes that should go into the
-> > > patch.
-> > thanks I will look into them and make a manual v2!
-> > 
-> > > Best regards
-> > > Thomas
-> > > 
-> > > Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
-> > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
-> > > > - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
-> > > > --
-> > > > 
-> > > > --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
-> > > > commit 75467ead62a494b6afbc057c666ab59f7e4b8915
-> > > > Author: Slawomir Stepien <sst@poczta.fm>
-> > > > 
-> > > > drm/cirrus-qemu: Validate BAR0 size during probe
-> > > > 
-> > > > This commit adds a check during PCI probe to verify that the BAR0 resource
-> > > > length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
-> > > > page faults caused by writing past the end of the mapped I/O memory when
-> > > > smaller BARs are presented.
-> > > > 
-> > > > Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
-> > > > 
-> > > > > diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > > > index 075221b431d37..70c995025f508 100644
-> > > > > --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > > > +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > > > @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
-> > > > >    	dev = &cirrus->dev;
-> > > > > +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
-> > > > > +		return -ENODEV;
-> > > > > +
-> > > > [Severity: High]
-> > > > Does this strict equality check unintentionally break valid QEMU
-> > > > configurations that have more than 4 MB of VRAM?
-> > > > 
-> > > > When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
-> > > > the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
-> > > > to true (since 8 MB is not equal to 4 MB) and rejects the device by
-> > > > returning -ENODEV.
-> > > > 
-> > > > Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
-> > > > instead of requiring an exact match?
-> > It seems that 4MB is the default one and 8 and 16MB are just for compatibility:
-> > 
-> > (qemu hw/display/cirrus_vga.c):
-> > 
-> > 2951     /*
-> > 2952      * Follow real hardware, cirrus card emulated has 4 MB video memory.
-> > 2953      * Also accept 8 MB/16 MB for backward compatibility.
-> > 2954      */
-> > 2955     if (s->vga.vram_size_mb != 4 && s->vga.vram_size_mb != 8 &&
-> > 2956         s->vga.vram_size_mb != 16) {
-> > 2957         error_setg(errp, "Invalid cirrus_vga ram size '%u'",
-> > 2958                    s->vga.vram_size_mb);
-> > 2959         return;
-> > 2960     }
-> > 
-> > I will add the 8 and 16MB then in v2.
-> 
-> Please check that  it is >= VRAM_SIZE, so we're flexible.
+<sashiko-bot@kernel.org> writes:
 
-Sure!
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> New issues:
+> - [High] If regulator_disable() fails in mma8452_runtime_suspend(), the data->suspended flag is not rolled back, leading to a permanent IRQ storm on subsequent interrupts.
+>
+> Pre-existing issues:
+> - [High] mma8452_remove() does not wake up the device before disabling runtime PM, leading to unbalanced regulator disables (underflow) and illegal I2C access while powered off.
+> - [High] Registers are not restored after runtime resume, causing the device to lose critical configuration.
+> --
+>
+> --- Patch [4]: [PATCH v6 4/9] iio: accel: mma8452: Support interrupt sharing ---
+> commit 5bc641da9d60875f38db9937a3a1dae1afd9a94e
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> iio: accel: mma8452: Support interrupt sharing
+>
+> This commit adds handling of runtime PM suspension in the interrupt handler
+> to allow sharing the interrupt with other devices. It introduces a suspended
+> flag and uses synchronize_irq() to protect against race conditions during
+> runtime suspend and device removal.
+>
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index 1fb43c5b0b72f..8eb97e6793d6f 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
+> [ ... ]
+>> @@ -1056,14 +1057,24 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
+>>  	struct iio_dev *indio_dev = p;
+>>  	struct mma8452_data *data = iio_priv(indio_dev);
+>>  	irqreturn_t ret = IRQ_NONE;
+>> +	int pm_status;
+>>  	int src;
+>>
+>> +	pm_status = pm_runtime_get_if_active(&data->client->dev);
+>> +	if (pm_status == 0)
+>> +		return IRQ_NONE; /* device is powered down */
+>> +	if (READ_ONCE(data->suspended)) {
+>> +		/* device is being removed */
+>> +		ret = IRQ_NONE;
+>> +		goto out_runtime_put;
+>> +	}
+>
+> [Severity: High]
+> Is the READ_ONCE(data->suspended) check reachable during normal suspend?
+>
+> Since pm_runtime_get_if_active() returns 0 when the device state is
+> RPM_SUSPENDING, it seems the handler will return early before reaching
+> the data->suspended check.
 
--- 
-Slawomir Stepien
+Yes. That is on purpose. If pm_runtime_get_if_active() returns 0,
+runtime PM is enabled and the device is not RPM_ACTIVE. We don't want to
+process irq for the device, and we must not call pm_runtime_put() as
+that would cause counter underflow.
+
+> [ ... ]
+>> @@ -1774,6 +1789,10 @@ static int mma8452_runtime_suspend(struct device *dev)
+>>  		return -EAGAIN;
+>>  	}
+>>
+>> +	WRITE_ONCE(data->suspended, true);
+>> +
+>> +	synchronize_irq(client->irq);
+>> +
+>>  	ret = regulator_disable(data->vddio_reg);
+>>  	if (ret) {
+>>  		dev_err(dev, "failed to disable VDDIO regulator\n");
+>>  		return ret;
+>>  	}
+>
+> [Severity: High]
+> If regulator_disable() fails here, the function returns without resetting
+> data->suspended to false.
+>
+> If this happens, the PM core leaves the device in RPM_ACTIVE. Would this
+> cause a permanent IRQ storm since the next interrupt will see pm_status > 0,
+> but data->suspended is true, causing it to continually return IRQ_NONE
+> without clearing the level-triggered interrupt?
+
+If regulator_disable() fails here, the device will be in STANDBY mode,
+and interrupts should not happen. The INT_SOURCE (MMA8452_INT_SRC)
+register is reset when switching from ACTIVE to STANDBY mode, and the
+analog subsystem is disabled, so no irq should be asserted by the chip.
+
+> [ ... ]
+>> @@ -1808,6 +1827,8 @@ static int mma8452_runtime_resume(struct device *dev)
+>>  		return ret;
+>>  	}
+>>
+>> +	WRITE_ONCE(data->suspended, false);
+>> +
+>>  	ret = mma8452_active(data);
+>>  	if (ret < 0)
+>>  		goto runtime_resume_failed;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does mma8452_runtime_resume() need to
+> restore other device registers like MMA8452_CTRL_REG4 and
+> MMA8452_DATA_CFG?
+>
+> When the regulators are disabled during suspend, the device loses power and
+> these registers are reset. If they aren't restored here, will the device
+> lose its configuration and permanently disable hardware interrupts since
+> CTRL_REG4 defaults to 0?
+
+According to data sheet, both CTRL_REG4 (0x2d) and XYZ_DATA_CFG (0x0e)
+is preserved on transition from ACTIVE to STANDBY. But yes, we probably
+need to restore these when regulator have been disabled.
+
+Is it okay if I address this in a follow-up patch?
+
+> [ ... ]
+>> @@ -1822,6 +1843,7 @@ static int mma8452_runtime_resume(struct device *dev)
+>>  	return 0;
+>>
+>>  runtime_resume_failed:
+>> +	WRITE_ONCE(data->suspended, true);
+>>  	regulator_disable(data->vddio_reg);
+>>  	regulator_disable(data->vdd_reg);
+>>
+>
+> [Severity: High]
+> This is a pre-existing issue, but if the device is unbound via sysfs while
+> runtime-suspended, will mma8452_remove() run into issues?
+>
+> drivers/iio/accel/mma8452.c:mma8452_remove() {
+>     ...
+> 	pm_runtime_disable(&client->dev);
+> 	pm_runtime_set_suspended(&client->dev);
+>     ...
+> 	mma8452_standby(iio_priv(indio_dev));
+>
+> 	regulator_disable(data->vddio_reg);
+> 	regulator_disable(data->vdd_reg);
+> }
+>
+> Since pm_runtime_disable() leaves the device suspended, won't
+> mma8452_standby() attempt an I2C write on an unpowered chip? Also, won't
+> calling regulator_disable() here cause an underflow since the regulators
+> were already disabled during runtime suspend? Does this need a
+> pm_runtime_get_sync() before teardown?
+
+I don't know if that is the correct approach. But it does look like an
+easy fix.
+
+/Esben
