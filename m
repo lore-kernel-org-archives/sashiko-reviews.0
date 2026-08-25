@@ -1,204 +1,199 @@
-Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020132.outbound.protection.outlook.com [52.101.195.132])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E43334C39
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 18:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.132
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787683346; cv=fail; b=bGvkoFDbrxR5uOZOet8NGj+z5AkHKTECzlxlJbiX8Os/DBsPplyldVuuYRpJw4Rps1YdFwzu4Z3iPM7swkFDrdVyRWa0LrIeBYw8NbPC+Poc6vpS+m54IuIYshNxfV6y0pzwkD5wA1XqjDuoh6DE1r30vvJHnseDbAoMjywF1E8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787683346; c=relaxed/simple;
-	bh=b+LPVPRII167OLUxcv9fc2b9Qg77clDwqodQ2gjnVuY=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
-	 In-Reply-To:MIME-Version; b=buvDKUZU/AaQK90WPqKnR+6QqMMF5P16PHDoXGFQ33d8je4KRDn/mcZj3N2HYEDdec0snMK4T6ENwCFTuw5XxoFUon42AaG6/POVudVE+VzzAEDJhwEpX+MGVFcdu3QBXB+Y/zHfwOJX8r5A1gOEG9PHqFY/4gGNSDqLSf0HLUg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=COOXiJic; arc=fail smtp.client-ip=52.101.195.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09083AFD1D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 18:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787683954; cv=none; b=grArvkbQ0RW+a+9tJOor97j2vAV/crKtLjcwrQ3vNdxCnGbOuHl9TxxgSH7V/Rt33tnW+t0974ug/bKg4YvajyLgUq3NIvL23C3f61B+KftvZMK7NY5DQvluShees/BpgXqrHWLm9D4DL+8I+A4CJ/3Enzf6ifyjIp/6kiWKPDA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787683954; c=relaxed/simple;
+	bh=iStqqgKaDOp8m1KWZdx/6hHxM8ne6J1JQXJJy3Fb+f8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EUelQDSzgotvkG+ZLJpx8tfpSSOH59OEkEvynPCTnBnp0oeJW66ZUXt7ZvhftCF8AUmoBqF9DONZS4HoX2ZzxeNlQiJSC9B6NgXLIflfpyMOrTHskQL8aAqKdSVgWFSL+ytWPKf8qK+TQ0vcjYRLGTcwX0jc1Du2anXrxyX3J4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VgnZ1aFO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GOUZhYz9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="COOXiJic"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J/WR3lNfOl4iM/K0x6a++xD8YCjpJaFdH/NVvcFvGxGVlY7YYBO3JvMsUqqzQNzlDuWhx5QJVDwSUPycMUD/++O18LxtiTe0s5qqQSV3s6M1ObsEcfUga49x8uqNKCLwwdYrofsy9X8b75ltpjd4uCI7WqxAq5XMX3QU26MFJX2/X1/8kpbznhZ9tdFlGim9qyNPTLJ3QHWorsqtlTu94pk+IWiUXfD1i3uvruR78GndFSHDmWIIKZ0bAPOuZYcTwYF/WyLWZLUwsvr68VeMX/Fa0kVcEbfx2C0rz8QOwN+cm1xmQmt18i9yz4rQ2KTzuA1AootTmbFMDQoxZpiSXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OQ95RzM53okDdYKUg0AUMtDzTpDAQWjs5WZYSdgFwhQ=;
- b=FCoijbjw1jLQ7AeLBklLoRLkiBajQbcgO8UYdYVog+znPkQNRlkJNNKidlVOQTKJKv1eRR7ZXdx1SmDQGoHbDe7skx3ps4z9o6Kqgzec97vKNDxQVLOfZXYXOjQZNSpffvxCdzes3U7K9m3DOgyd/3FozBAHF2xf+dZPv8uueUsaMNTPB/0ox4VA/YQ33n6mMDV0hLAR2/muR9miG2nYxKs1LHbUhPgpR7BS+O8FikruHUAmRMtz+d/0+OVpSz7Vx63D/zgYlc4ORsxUWI9JCu3yd1w5fk5zn1M7ocbmKHNk/TV43YFEQ7Ls9Bj5mdxcj2yRlogCU+l5ondQqQHKhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OQ95RzM53okDdYKUg0AUMtDzTpDAQWjs5WZYSdgFwhQ=;
- b=COOXiJic1C+AkARZUGgr+q/0BWFKevTksSMU6t82yoxIUdfQ5mEVWNWcmsTX09cte+N4zbPs90+erenEGHLnIc6IebgohjgcRB+wPbbDkf1UjE3GOVgqxiMrqReezaGozfaBJrAC9PcFdDJsAbYUDJV2Okfe6ZuXBWD188sUkhc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4ab::19)
- by LOBP265MB8753.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:490::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 18:42:20 +0000
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1]) by LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1%4]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
- 18:42:20 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 25 Aug 2026 19:42:19 +0100
-Message-Id: <DKY8USKYJJVM.17HQ78YIYZMFV@garyguo.net>
-Cc: <devicetree@vger.kernel.org>, <conor+dt@kernel.org>, <robh@kernel.org>,
- <ukleinek@kernel.org>
-Subject: Re: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver
-From: "Gary Guo" <gary@garyguo.net>
-To: "Andrea della Porta" <andrea.porta@suse.com>,
- <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.22.0
-References: <cover.1784539788.git.andrea.porta@suse.com>
- <a83d65b2d91865eb722337c547c94dce175e6086.1784539788.git.andrea.porta@suse.com> <20260720100212.BEF1D1F000E9@smtp.kernel.org> <amN-5B5POX3rNb29@apocalypse>
-In-Reply-To: <amN-5B5POX3rNb29@apocalypse>
-X-ClientProxiedBy: LO4P123CA0165.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:18a::8) To LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:4ab::19)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VgnZ1aFO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GOUZhYz9"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67PHdSj72446397
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 18:52:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EfBd5iljf3sWm63em7lw8B2SG/E3mmlz2ll4N9yEOmU=; b=VgnZ1aFO7Vkvlw7x
+	FV5+s9eAreScu2NIupxB7T+CSpbKghHNmOLqzk52Y+kyVWTEM652X0jMdMCfbwKF
+	OwORz2RmZQyOAWcHDmuXWMZq+AsEAoKY5kY2AuoX7zHpxu/w8AJNBCxcS7pp1/s7
+	mxFXIr2ZWpVI7I7hK/zbxPtCTL0olpNbGceOtzDyuk87DccVHt7EOSXaabsH89ps
+	tCjW91wir5mChY73YjK0d+ew8g17qQLEcBLjGFk6I96ZaL9ruMNcuq3+gL6IS6sa
+	7Zxvc0QN0okRH8g6SJOnMpj+V3snjDNKZ0PUkgMpDGOg820mrmp4yA3L5EH5ShYD
+	NBxAgw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9fcercky-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 18:52:30 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-52de05de414so1740951cf.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 11:52:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1787683949; x=1788288749; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EfBd5iljf3sWm63em7lw8B2SG/E3mmlz2ll4N9yEOmU=;
+        b=GOUZhYz9P6D6q3MfiYgZ6rKRmXo+r8/NWk/OeDRhbcBWHnlFvbTDRV4cv1n24jbmV9
+         GiPzTUatW5KnCv1merbWjdWuoTeY65EtCah+zz80Rua+9N6OrBIhuwzQa+0A80f7d9Pi
+         iSFBekKgfQjRVfiQ2DQCNemzRZMOdJqbbNn2k5EDkhzplUwYif5c+Z3d/ixhWauj5Sni
+         AJ5OzQHnDPf54KdBqhpfgQKt2thh22/hTFGq0Qe4z17y4OWiOhLzEediC+lnZcforRnw
+         JYghXRlc+GxdAo0a3ztMtohinsnU2GOEDDkqANQXWDsxzBR/Z1jIErrCZM/9mJndGRFx
+         Ga+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787683949; x=1788288749;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EfBd5iljf3sWm63em7lw8B2SG/E3mmlz2ll4N9yEOmU=;
+        b=UrdMAAo6SVr1WFRBqLbyKnHc3VLhsEKaorZZjSXWgl07LMbySPWtLXxcaUx6rQVl96
+         T+5MxMcBkRtAnJHjVOl1xXi+/IyZQV1R5Nz1mUULQHozHLlT1IQYo+2J8wdax6RLf41K
+         K44JbW6LUrAhutjtxZOhHf4wIrRJf0Ep2byQnj4y/AIUDeOwjWD4WJfid+m8GbzPAuZV
+         UyqcAk6CBCZqom9Igl1aiKNLSZM7m4HXrj6VUCiFg8hNvuRjjkmsw7mw/EuSgQ0bi+/x
+         seVJ8D6T8C47tg0qjWPmrQTHu2TEP3cGIUidqlnODJbEhgyhlg8+wccEvwpUqaDcCvX9
+         92Gg==
+X-Gm-Message-State: AFuF++nn87WVfvabmZErkaza6HrjcA5FzF4mFVKE4eFIOAusj7rZXo5Z
+	E9UE5rpdHvQ5IX9p5QH0BL7aixp9Oi2OKWUvQ6EyBkKZN6fY1whnNhkgUcfZ2aXaFFsiak1Imav
+	2COGqcWQdMBXEqjMUXViIgPR6hbOi8jO0VBn/yS1mwhryNyaxbbmiTsHlmszsPXWRal99mkvUvn
+	H933Q=
+X-Gm-Gg: AR+sD13L+h3gbCRvh++BPo7KcLpU86BkppFXfVPQWI7/NOH5BeFuxWz+wOG3aT36bYK
+	Q8e9naR8HHIAftFwSTlFTKLiSQQeQqF9MTa7dutX+urdUiYT7xUSkjvJaGFk6RCFeoRhr1GF9PX
+	LInBFiaZ5+BLDEgsg4eCobFj/0+oT+c4avap/MEoJ0caKzsC0V1Ca6AAyZH7GIn8RTwPDwSpCWg
+	hFspWpho6pLXhdXNgbCfulVRjuF0KJUZ0R6esjFc2RE9yDLO1L38RWeBxLD4KDVlPM1+yujmbal
+	AOvWOwZCnHhuiy4S+mdjUhdLXpNm0ZqLnAiwZodNJc8xpvWWOzibEKIbjx6u7+XzrFhjen8jXGi
+	gH9KYHsVa7FlXpIlXfkg5QjA3XGyg
+X-Received: by 2002:ac8:5747:0:b0:51b:e92f:ec5 with SMTP id d75a77b69052e-52e4222de12mr12288141cf.3.1787683949354;
+        Tue, 25 Aug 2026 11:52:29 -0700 (PDT)
+X-Received: by 2002:ac8:5747:0:b0:51b:e92f:ec5 with SMTP id d75a77b69052e-52e4222de12mr12287631cf.3.1787683948886;
+        Tue, 25 Aug 2026 11:52:28 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.219.214])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c250a88ac46sm102859966b.29.2026.08.25.11.52.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2026 11:52:27 -0700 (PDT)
+Message-ID: <f2705937-0966-4161-96df-88541762f147@oss.qualcomm.com>
+Date: Tue, 25 Aug 2026 20:52:26 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOAP265MB8560:EE_|LOBP265MB8753:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54e7c6d5-c75b-43bf-05ee-08df02d89835
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|18002099003|22082099003|5023799004|56012099006|3023799007|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	FxaKySLIdbFdpqRH3uitXIGuVirnc7KvIfdosa2OZIngOfe7LMVA3ia1T6Z3qg5OgsQUeBrvaSimALpFf/cN3tKTW0jk8MlEsZH9amSKW+27pcmKgX5n/GVC0MczbgcsZS+9h8770MoN3FnLSDG3xYpFUEfGxpqZeEbrxnIzvfV9uHk+5wHZlXrlpY2x+5+obHX66g25GYN8T9ZgRjCHPIb3SswHTIBVr/1Oy1jKx2akJEB33/woe3KFBI+5yR0TmAurRQYzkQV5Lvb4K4eZMtIQMJqwnm/TDsnkUqwuwVfA9O3iTtKziXoyP+GdCMrp1V+zVBS7p16MevT1Pej3nUYul3gI+uTsDZa6EwCAIAFu1yWEQVanU2yIpPhxUbw4gBd8QZGSbFXIO74N+juefpZxW0bO+khO0yagROSmiZqJgRQMTh4adcRjcMT5vlUJwRsZl2xUcxEhW4Lu0f9DvaS+LvlbRUed6Ap5aLZsismfDAXTksjYHr3cItYCiRY96bnuSEsClQbVSu6HinvKCdAbq1qt96hNvPkp3Cs6ACz6a+Wq5LVZf0aLamrhf3I4JYn9srgtRGEXflsA/EogL4gtDZ98G+2dk+kH8+WINFGJkNRLkVEzmw4/r1gx+OjfMaCTeyraJruWkRarAC1YjDTM7nr335BbZ0Q0AoRHFi4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(18002099003)(22082099003)(5023799004)(56012099006)(3023799007)(4143699003)(10067099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VkgvbnpqdUFZZnZOemUzSHRRaHpXYWZPTU9FdXBDc2lXQU9DRzJEbGxMQTdM?=
- =?utf-8?B?bzdYRkduQWdSYm9UNFJRMG1KRVA4akVWb0FkNUtFVENCRGpEd015Rys4SVIw?=
- =?utf-8?B?aE1aZmh3QVF6b29XVDlSM0MxMmF1VjZabDhuc3JaTktHdzNXektSck5XeDRE?=
- =?utf-8?B?bnRSdEs5OEhQMURndklHTGhMMWd2NlB3RUFoZVlWSUpjeXllbUF0WjNpOGZ6?=
- =?utf-8?B?S2E5MFYwUEs3cEhadHJTTkI3ZitabkhxTVErN1h5REFVZmpXQ0Jtem40ajcv?=
- =?utf-8?B?SUx0QkYxUFdXMmg0QjRFU1RuNGtZY1VINVdiSCs0ZzY3K1NNQWtXS1JiWTY4?=
- =?utf-8?B?M3JaT29TcDhDeEU2alg1YXl0ZVJpSXZWYVVrc1Z6N2lkNXlwMVRNY0xXMFdn?=
- =?utf-8?B?V3pDTjBDMlZQT1Rhakd4YjFIaVF6OWZkSUlFbGRLNkFETmE1UU9YK0c0ZVJu?=
- =?utf-8?B?bkp1aW9seVRJSmlEUVdMcWJsb2Q2TTd4RlJMZE5yV2RtZTRrMDE3OEFkdjhV?=
- =?utf-8?B?NXNGbFBpYXBsekVXWWppVDBYTlJsaU9wK2xsTHdLS3V5NHByQ1NtZERaOHUz?=
- =?utf-8?B?RUJoeXRjY1lYbEFDTHdhWjRxdWxNOGQ1d0VSRGRGcUNMNU9uNkFFOU5iTmxa?=
- =?utf-8?B?eVBWbTFPeklnMHUwM2Foa3dtRmk5TWpCQW1vNkxGeWIrNkRwamY4TnRudklh?=
- =?utf-8?B?eVZBVlQ4bnYzVnNQSXcxVlRIeEdEQVhzbGxucVdmajh1blBneUhzVXZFQnZr?=
- =?utf-8?B?WFNzaVJIbDZWWGVSaUFLNGZleVhtOTAxWXAxNkV2Sk00ajFvQWlVWFVlSEYz?=
- =?utf-8?B?VEl2SG1rcVJEL0Z6Kzh4QTdvZ251cFQ4RWZYOXhLQWpPWUQwVVZ5MEpuaUtU?=
- =?utf-8?B?dm9nNDR1RUFmRUVYQnR3RW5sQUhjS1h0ZGoyaEV6YnJkZ1J2UHQrUzVOMzcw?=
- =?utf-8?B?NGpTNFBJeFZqbTB6bE1YSmg1ZHp3NDRXT0ZKSGlhK2dWL1lMWjFCZ1hLUEIy?=
- =?utf-8?B?MFI0Q2JPdUxRZC9ob3JuT2FPamVvb1EyNm5BeWRwREpmRm5sK2FHTjdNREl6?=
- =?utf-8?B?RlBWdE40OVY1N2VkN3kycERLRXdySnJzclE1Ry9sWnhvZnhiT2dUbnlTSlM4?=
- =?utf-8?B?c0FwcjlPR0NYZy91OVMxMlF5SG1OejRoRU43SFB0MlBJQ1U3NjVtWjJzaDJC?=
- =?utf-8?B?V3Y3MXdtR25lcEQvVXNGem15TDZkU3B2L2FqUHBNRkZzQlVndkU2VFhoM2tk?=
- =?utf-8?B?bmxGdTBWQW42RERtdDhmaGVndHhDZ2dLL2ZLMTdjV1lER0FFeDJrRnBicjd2?=
- =?utf-8?B?NjJweGVVcXdLNDg3bnU1UTdzTnZWUWE3SzhNUllqQmFaZWlJaTNyMkJNUUVm?=
- =?utf-8?B?Vlo0dXhnc0RIZXNIYXB1S0tYa0gzNFZxNHMxRDdwVkN1RVhUOTU0TFpKQlRN?=
- =?utf-8?B?TGxwcUM2V0VFQ1A4d2FVenE4ZkFKalZGSVc0eTJUMjd0ajQ5c3FvN0tVbzRv?=
- =?utf-8?B?VXBvRzF3dHBxWkhUbGU5SHhlYnZETURNbUM1ZGhCZ1o1QmM1TUFqQVp0dTRQ?=
- =?utf-8?B?RWJCdUpuQWdMNGttRE04OGxjbVQyREpVT3J4c2cvQmNEbVY5aVFkVmVYU3or?=
- =?utf-8?B?NHlpcUpyNmcza3Y5aDl2TFVxaWxMZnpEOGE4aHB0ajVvKzE1REpVWi8vcXJF?=
- =?utf-8?B?d1E4eS91bXdqaVAwNTliRmVSVFozSVpBUnlvNk0rVUM0bWgxb0pWM29MQVNE?=
- =?utf-8?B?ZEtsQjRJR25kdzhqdDlFT0xzeVNMMndaL0xmem5hWkRVN0ZzSitjNTAvY0kr?=
- =?utf-8?B?K3dhdlJGMElRRkFzSEtIY1cxWmhNTm1JWTAwUlN0cXJPZ21iUWpUUWxGSm9U?=
- =?utf-8?B?YmFJWVlkb0R4T1hMa2NJb2xJZEdCdS80VjYvcThDSUNZY04xQmFCcnZ4S3A0?=
- =?utf-8?B?WGNEalUyUzZYdDg5TnlRYldIZ3c1dmVMdVdNN3Z5VHY0WUpqWUM2RGVGWkFw?=
- =?utf-8?B?bkdVL2dFWWgxQ014ZDRWbW9sNWFUWE85cUEzeWh0eExKTTUrU01EMjhLOENj?=
- =?utf-8?B?NXlLWmZaM3JTTzBtR280ajlpVUlwanhrMDRZdHBMNHQ3dE16aGhXVlJTeEY3?=
- =?utf-8?B?cGY5NGU0NTFIc0lSMnVlVW9WRTk4TDR2OWlSQnJQOWhOQ0VkVitVQkZ2N2Zp?=
- =?utf-8?B?TjQzcE5ObHp2dWZSWVBaMnA3bXYzUjNHRWsrWDhMWXNneXM4REVRbFFlTnRS?=
- =?utf-8?B?MTMydWN2TUcrbTV2TmJJTGw4NGtVRjJDbkU4a1BrRElHdHU1L3JzcnZ5M1Ni?=
- =?utf-8?Q?yvw5zf0zeJmptX6vcz?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54e7c6d5-c75b-43bf-05ee-08df02d89835
-X-MS-Exchange-CrossTenant-AuthSource: LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 18:42:20.3056
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7fLLYHszumJ/nCqnqqNbM8BK5SjWC74oFzzkyHyMSTO/RDlFs56OFpuwisC27NLh9YU2u4LgBUFS9O1VBXiKpw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOBP265MB8753
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/11] dtc: dt-check-style: Handle root node in
+ overlays
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260803-n-dts-style-checker-continued-v3-0-6c9776928cea@oss.qualcomm.com>
+ <20260803-n-dts-style-checker-continued-v3-3-6c9776928cea@oss.qualcomm.com>
+ <20260803091808.99C0C1F000E9@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260803091808.99C0C1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=a8AAM0SF c=1 sm=1 tr=0 ts=6a8de46e cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Rrq01w7Obhnz-bXyAW4A:9
+ a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE2MCBTYWx0ZWRfX29U8cszyFH/N
+ BatSfCrXTN/GGRIPSBt8en5Mr+VAfZw3zlcDJMJlS9C1rstrvFczt/vAVi70YL/YQXIwpNuul6j
+ 4rgVh1U/B2JgCdRayeChe9DYGdiW5K4=
+X-Proofpoint-ORIG-GUID: M-Y9hyG_WA5HuyTv9Lqt26EyxG8Cnj4r
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE2MCBTYWx0ZWRfXxiaI4YK64xt7
+ i2FjP5XEJ6CCwsY6aB1/2kFkp7BUINvTfenzxjF1670gsaD7itCM1Go7qenAgbHuCHTAWaTfqYU
+ TzKRGo1BUfR2mkZgN7dhcDAlgQPmLZlaIXdg2dWBUeAniDnKA86csc+cN7FX+91VMW/y4HF6C6e
+ gsQpPIQqFyXloiu7zDPVjFBodvs74Z3+dl5N5+RGuU7DcbAlLW/jt+A7esoBSP/+FCIxsLPUsbQ
+ y5PN4N2D9HBtUtgvK4AkFXf4/DmVpgTUsHFHKmPqOvq4JMQmyYc1pe68ChFAKOIhFHtFvQu2UpG
+ 5iaPYPlF2ipxeAtuTRxR09FT2wuyPhUdQ+TtJy4wJgcfmNXWe8N/QAo1wvgVdHHqvwGyqFnkcmT
+ 2jzudY5DIFCvbwAE/shRz0ekCAdRBNDYOVD1BnYa/9re6JnlfCDGmebGohvXv/IWLAeHQSGHUfK
+ n6VDHZNPR1osKcLiO9Q==
+X-Proofpoint-GUID: M-Y9hyG_WA5HuyTv9Lqt26EyxG8Cnj4r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_05,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250160
 
-On Fri Jul 24, 2026 at 4:04 PM BST, Andrea della Porta wrote:
-> Hi,
->
-> On 10:02 Mon 20 Jul     , sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 3 potential iss=
-ue(s) to consider:
->> - [High] Missing `.remove` callback leads to Use-After-Free in the PWM a=
-nd Syscon cores and leaks clock resources on driver unbind.
->> - [High] Register context loss on suspend/resume silently breaks PWM out=
-put.
->> - [High] Unclamped hardware duty ticks lead to integer underflow in the =
-PWM core for normal polarity.
->> --
->>=20
->> --- Patch [2]: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver --=
--
->> commit 0c98703d857577902e57d25b42a3d46dfbde5795
->> Author: Naushir Patuck <naush@raspberrypi.com>
->>=20
->> pwm: rp1: Add RP1 PWM controller driver
->>=20
->> The Raspberry Pi RP1 southbridge features an embedded PWM controller wit=
-h
->> 4 output channels, alongside an RPM interface to read the fan speed on t=
-he
->> Raspberry Pi 5. Add the supporting driver.
->=20
->> > +static struct platform_driver rp1_pwm_driver =3D {
->> > +	.probe =3D rp1_pwm_probe,
->> > +	/*
->> > +	 * .remove is not needed because this driver cannot be removed/unbou=
-nd
->> > +	 * cause it relies on syscon which cannot be removed
->> > +	 */
->> > +	.driver =3D {
->> > +		.name =3D "rp1-pwm",
->>=20
->> [Severity: High]
->> Is it safe to omit the remove callback here?
->>=20
->> Even with suppress_bind_attrs set on the driver, if the parent RP1 PCIe
->> device is removed, reset, or unbound via sysfs, it will forcibly unbind =
-all
->> child devices.
->>=20
->> Without a remove callback to run cleanup, pwmchip_remove() is never call=
-ed
->> and the clock is left enabled. Because the backing memory is devm-manage=
-d,
->> the devres subsystem will eventually free the pwm_chip and regmap memory=
-.
->> This can leave dangling pointers in the core pwm_chips IDR and the globa=
-l
->> syscon_list, which could result in a use-after-free.
->
-> This is true. Uwe, I guess I should reintroduce the .remove callback,
-> what do you think?
->
+On 03/08/2026 11:18, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The patch fails to address the issue claimed in the commit message, introduces dead logic for overlay root nodes, and causes a regression for standard unspaced root nodes.
+> --
+> 
+> --- Patch [3]: [PATCH v3 03/11] dtc: dt-check-style: Handle root node in overlays ---
+> commit 099936d5537a0ed41e9b6886979ab1b9de2421d1
+> Author: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> 
+> dtc: dt-check-style: Handle root node in overlays
+> 
+> This patch aims to handle root nodes in overlays correctly by detecting
+> them and storing an is_root attribute in DtsLine, intending to fix false
+> positives for property order.
+> 
+>> This fixes false positives for property order for root nodes in overlays.
+> 
+> [Severity: Medium]
+> Does this patch actually update check_property_order()? 
+> 
+> The diff modifies check_child_name_order() instead, leaving the
+> check_property_order() function completely unchanged.
 
-How is remove going to work with syscon? The previous version seems to just
-ignore it completely.
+False positive
 
-Also, do you actually need syscon here? Given that the pwm fan device is go=
-ing
-to depend on the PWM fan device anyway, you could just EXPORT_SYMBOL_NS an =
-API
-from the rp1 driver that returns the tachometer reading when supplied with =
-a rp1
-pwm device pointer?
+> 
+>> diff --git a/scripts/dtc/dt-check-style b/scripts/dtc/dt-check-style
+>> index 96deffc0d8a7c..d9f76d6d9179e 100755
+>> --- a/scripts/dtc/dt-check-style
+>> +++ b/scripts/dtc/dt-check-style
+> [ ... ]
+>> @@ -228,7 +229,10 @@ def classify_lines(text):
+>>              continue
+>>  
+>>          if code.endswith('{'):
+>> -            dl = DtsLine(i, raw, LineType.NODE_OPEN, depth, indent_str, code)
+>> +            is_root = False
+>> +            if code == '&{/} {' or re.search(r'^/\s+\{$', code):
+>> +                is_root = True
+>> +            dl = DtsLine(i, raw, LineType.NODE_OPEN, depth, indent_str, code, is_root=is_root)
+> 
+> [Severity: Medium]
+> Will this regex handle standard unspaced root nodes like "/{"?
 
-Best,
-Gary
+Ack
 
+> 
+> The regex pattern ^/\s+\{$ strictly requires whitespace. Valid unspaced
+> root nodes or labelled root nodes might bypass this logic and incorrectly
+> evaluate to is_root = False.
+> 
+> [ ... ]
+>> @@ -550,7 +554,9 @@ def check_child_name_order(ctx):
+>>          for c in children:
+>>              if c.node_addr is not None:
+>>                  continue
+>> -            if c.node_name in (None, '/'):
+>> +            if c.node_name is None:
+>> +                continue
+>> +            if c.is_root:
+>>                  continue
+> 
+> [Severity: Medium]
+> Is the c.is_root check reachable for overlay root nodes?
+
+Seems this change is not needed.
+
+Best regards,
+Krzysztof
