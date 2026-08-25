@@ -1,164 +1,196 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011018.outbound.protection.outlook.com [52.101.52.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AF4339362
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 16:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD6919CC0F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 16:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787675718; cv=pass; b=D1cxxY2zFD2ta1gYO5q/G7GGGhZJHBVKJk/oQuv7QxCSm9hXiHgz9dLgMlLXDgn4jc2GObvX1+Z0UqAQUmdlk/GqqVBber3LPQ+g7SF+9iT0FSd8rEJt6nfO+aGrZiTkyJ0TDJ82pNPVAk3Sp+f5z7eRXgc7JCoFXM7l+zsSvI0=
+	t=1787675729; cv=fail; b=qBlTumWnFv6xzk/64IrZceNQHwV/QzHqeDqxV0JtEP7e77i5AcXzIYXJTV3aOFoNRrAQ4mFEYyvePA4rm7WVOXfv+dxsFoTszAp1q/fw0Dx/hzqOG4MLZ8XghuUYQWW/JM/VAcUydjBY80hf9Oc98B1qfpxXQvifkW5Rh1oh/bk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787675718; c=relaxed/simple;
-	bh=XEFaONL8xYC/7ZTJ7N0jE0D6XCHhZNztG+W53n6kkco=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PcJfYY7JVAsNMK5hWFgIrEfHLfziY0BbvB3GWzKODjg2DpH/VH0tdpHTCpzCBOuiA7ich62MHfhbRhpgbyYW5xNLNpjKEZh3YYjoGE3x9GtaI/KVwWF+m4uaIIw9T/F1Y9zcCGxtaeNh/s9/9OG9d5CWn2LOdsrTOb4qWe4AWqg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YIwL1bq4; arc=pass smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787675729; c=relaxed/simple;
+	bh=zvyUnAXW5rmE5dMbuoG905w1hFewi7MfBVAboz0v1e0=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ctg3fAc1ptkbnuk9w/bsrQYFHtoR4NpE9dMWCkzy90l/ZyAtVeT6e9/1k6OfAnPhEFMBQVFapyIDmeK/VhH2nO/4WOYveeVYh8RpwBXV4RTMSIcG74Y1oUYkj9/Ao9iueo0T7u1xSb2pAOwthQwh3DTDWN48P2Ub3Y0DMYeVOb8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=BwiEM5F9; arc=fail smtp.client-ip=52.101.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YIwL1bq4"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8525efa7274so35937b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 09:35:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787675716; cv=none;
-        d=google.com; s=arc-20260327;
-        b=S0sJviFsBC2VRwDNrB79lvDxVYcZdqWeSCSC6hIUYF9a+wVga4R1cKqtmvz1jdINws
-         Q5XTph37Pks/9tfvsWSAa8fVsoG83CJi6+ASvfUr9SFzvK3IAhIX50AXvN93KFjXJ4SZ
-         8PH74/SLtV8wii3m3IH+jv367g5t9cUogxeUTTbMb7KnpGoypS/+eL5dLizMC13swE91
-         NsGFV672EWcYqAtr6ZtD9QGDh/lT1xrNIVzExI3E+bMD7Lt+MwKdwieL+hTIgJIW+Zwv
-         MSdCIEVBFq84fzLdlRJZE8SFwQ/4InF92qKTbkYdaGe9Hwypc3H3Zay0sZTWuWqOpbQ9
-         3t8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=H0MU9SiN4cYunR3HktWWkcncktf+nU2XpGwFxF8Xzfs=;
-        fh=sHSwKhqh6iGF3nFukHD0Uc9l2ekH8AYEQ5T+YJecXIE=;
-        b=fmw+Eh43B0QlMTH4IfCJs/MGLn7G2rdTacoR6FfZrWNatK7u+EZXbUCcBoYzXB4B+B
-         MDcwQz0s337/hI6BorFAEVtiwvp4ahulOYxTJwH7PSNFsyMyG+T9+GJ6nrJ1elJwl463
-         4C8z/oyIcbITyac1PERQPIkj0QrVUHHj0uQ/NRtih+Zf0TEuvoWEb0zaFVQKhhTgS49M
-         xrXcTVmrWW2s6SokYtQxTO81aE0F7EzBO89raR7mD/8hgB+QgywztXPvgyOlNQMkHCuR
-         zdpWKv0NZBqmgy7LFLd2Mz9IzFgx37B0twT6LliE2rQSwV5Ebxf+QyQXHPtqA7nPr7xT
-         dsyQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787675716; x=1788280516; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=H0MU9SiN4cYunR3HktWWkcncktf+nU2XpGwFxF8Xzfs=;
-        b=YIwL1bq4zDbon0g0pFK1au206A/6xrhpNTJpU9PPzj0QVtttWO/ZN366HckpatRRvX
-         H50ljXPd+YhJCG1ll/jy34NKEP1dFHxhOxjrWoJ5CJc0ONPCznCEEwsnIwsQDz4CYJPL
-         qZt44010n0H92wuJdJHgdiKAVVXnBAanGxYa+HWh3LeISaT00NWCBuzszfE45dDQv7fl
-         IcK/yF9+eeoKMM56bS3I1Kaunb/aJ+sKz0xlOztQa6gQ6GCpuHkRV4p1/RT+Oq3xb0uR
-         bLr1mxYBoFQOobvXBTW3q1VxLqkO9hjmmxHz6yOzsxgukdX4gD9/HgUsEnapoJdQVbL8
-         UvIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787675716; x=1788280516;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=H0MU9SiN4cYunR3HktWWkcncktf+nU2XpGwFxF8Xzfs=;
-        b=jYkY31/PGG5mDI9Utdu0MdP8W+dEdcMWrxCF/O+8ngqt/GYzslEHpfkzUokZQVYyR0
-         WyAe08jaBfA4AOg1aD9M0764bRritNXovAVqNRAXqo7DP0lf91rS/OnhEaXBmt0rtBGK
-         XbXw3vFEKdu85EXdZ9VrhiDgJ+0zuG2xrNmJ0Z0w4sa/mBMihBBroUG2O8zecuvPjbDF
-         wBmU+R/iKGh6W7EvchiaP78DF7gsDT1HrMiKGWbIxI9gbktxUbKLELDqic4QkNSPoXFG
-         CgrQmuNUCwAP5aSVD6p6pM4LKbWoZgR5/NJFNZWgAWOo8DPvD6VYKhRksmA5sytDv3sq
-         SQfw==
-X-Gm-Message-State: AFuF++mLH3EbsLmGCxjt92OQnJIpOOuzFDcvT5YK8CoSKDriGNZ6btik
-	zaJGomnwcfbZWUA5T0noi2N8qB11JjQQGOZUM7Mh0XenJfrr/TuV4jZyMf3ZgZGcBdCb0Uyrhn/
-	FUsE4zy5f8JOnTOqwlzxnLMd3L8xI4mc=
-X-Gm-Gg: AR+sD13jPVDKOnc7ds2wFWQQr8PmbNDApx9nldXyfE0NqZJ21QUcoGRofqE//FSlPoP
-	NX1vucQnOGKsQ1yNCRAt44JL9KHAprJzmtBl242ZI8bwCxg0TKIJlh48KvVsPW3I1GZUWvwOCSf
-	X1kGesUDf2TaVbs0/mKLWKpJpOQzjuNyQ9CZMGZKKJfErjNvZZcHFGM6HLq4pKaMt8uy4moJ+gG
-	QQOjd2hJcJLpwrX8zSbl/lFk85T3k7VgMy8lWZfEF4mJYLqo7rsZAYX7Iv9LbnwoJyQsmXlEXoz
-	YNiigJ3du5Z1Zu7Gnffxk5LWuGR5KooUK1yRv+FwRaRTGPC29mTg38xTpL/lJsEZP+833X2RRQE
-	7kSDi3raq+bJ+47B0u7+OylC/0WI9UQQSzteZ7bu9k2clXwOi9dP+R8Br2eOy
-X-Received: by 2002:a05:6a00:2ea0:b0:847:99bb:b6d0 with SMTP id
- d2e1a72fcca58-8523c9474b5mr12854188b3a.15.1787675714932; Tue, 25 Aug 2026
- 09:35:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="BwiEM5F9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GdQsUf7yrXHqFUEc1h7S5EC9jugAQTE8jv5IdY503ULCdWR4bMeJatR+5gxQdNV7xyIGLdauKHQkxFXTuQGtTM9kwHsaJt+6MdRfRj7QuCEgAnQTNXqym9Ch44u6Ob7pcnNFmZjvRGsPriEa83vhFR4lLJ8F+DJMHlFhNqpD72/K8L96yueJH1aYU16ZlXFehcFZCKkDhOn3DZ4R4fOsspAmuiUnA6od2Iu6jHztff72RFDZLq5EpSzOBKtv0ORpyB+pete55UUZwZ6UCQSC1tjClTf3RlQwarhPgyzobpdk0nO/zF4rfnOJ/58sliv2Vq7zyTfn5xFwMXHnOq7dYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vvbIB2+9aYz7o5jkUy8YAyp79g3NEHhO/xaTp74Z0zM=;
+ b=SYdg03H3csYZIevEO3Ngr2c7oRDg1HJK65Kut/Z7mvyrJOF2QyI1NokCfEnEoz0coDldbMu45/IT0JV9LfMkGZ1ZorJ+N+zBIQDYmG64AdZ7w0LjWAF5YGCaTCigoZxxtrZFnIwcNN01o+Rqk+1YC4cmiV+7rMTvY3uBCzjD5K31nDeMi9VjR54d7ie0jHjZhusnQbytruClfE6EwP81HkZK4FnAlz3cb3QIBX+YvaLXVr8tY+FT82+MaJwv17OPlAmjrvwKHSHhzsYLoFYg4iuAPMF8+G6OLUSiPDShyIZPDEf61mhbcdBT2XV1dbPkHeQlXX87MtDtJ98Rh+jiAg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 149.199.90.133) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com;
+ dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vvbIB2+9aYz7o5jkUy8YAyp79g3NEHhO/xaTp74Z0zM=;
+ b=BwiEM5F9HVOWxo0jTIADCc2rVaEPv9ivdE5xZNIRd69EIr4gCeCRX3mdlH23lgyLzqAjLNE4Vot9PP0S4A8+8ixAgj5U/jKEBrNf79RaC2y9cdhKLS4v/2X+3pelHmdy+a0NqVyhdttxzQnzVWsL7tsh8ZuQ4u0YnfYLORDUiJY=
+Received: from BN9PR03CA0722.namprd03.prod.outlook.com (2603:10b6:408:110::7)
+ by CY8PR12MB9033.namprd12.prod.outlook.com (2603:10b6:930:71::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
+ 2026 16:35:19 +0000
+Received: from BL02EPF0001A108.namprd05.prod.outlook.com
+ (2603:10b6:408:110:cafe::7) by BN9PR03CA0722.outlook.office365.com
+ (2603:10b6:408:110::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.6 via Frontend Transport; Tue, 25
+ Aug 2026 16:35:19 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=quarantine header.from=amd.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ amd.com discourages use of 149.199.90.133 as permitted sender)
+Received: from satlexmb07.amd.com (149.199.90.133) by
+ BL02EPF0001A108.mail.protection.outlook.com (10.167.241.138) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 16:35:19 +0000
+Received: from [192.168.1.3] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
+ 2026 11:35:16 -0500
+Message-ID: <221341e0-2657-4cdf-9ce7-3857e5195a47@amd.com>
+Date: Tue, 25 Aug 2026 22:05:13 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260824-b4-bpf-arena-free-resched-v1-1-5c447477a64b@debian.org>
- <20260824170831.33E051F000E9@smtp.kernel.org> <ao2gP7Y6UJ2o2tUc@gmail.com>
-In-Reply-To: <ao2gP7Y6UJ2o2tUc@gmail.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Tue, 25 Aug 2026 09:35:03 -0700
-X-Gm-Features: AcwNN1WjlWkMaVf3-1mw13hLMnxI3KEyHvkkyPcaIqvfs5peMp6PpF-5TCuL0uE
-Message-ID: <CAADnVQKP8R=1aZiDcnfkqD3mA=32R2Yrw642u3w7de4JSfMWKg@mail.gmail.com>
-Subject: Re: [PATCH] bpf: arena: reschedule while freeing the arena pages
-To: Breno Leitao <leitao@debian.org>
-Cc: sashiko-reviews@lists.linux.dev, bpf <bpf@vger.kernel.org>
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <sashiko-reviews@lists.linux.dev>,
+	<kvm@vger.kernel.org>, Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 1/2] x86/uaccess: Extend CMPXCHG user helpers to
+ 128-bit operands
+Content-Language: en-US
+To: Sean Christopherson <seanjc@google.com>
+References: <20260706063035.1139-1-sarunkod@amd.com>
+ <20260706063035.1139-2-sarunkod@amd.com>
+ <20260706065212.CCD741F000E9@smtp.kernel.org>
+ <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com> <anpsjpCQHjJCH7TU@google.com>
+ <327c7769-8ef6-40c3-869a-93c29ec9fa9f@amd.com> <ao20mmzg6dMLukMo@google.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <ao20mmzg6dMLukMo@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A108:EE_|CY8PR12MB9033:EE_
+X-MS-Office365-Filtering-Correlation-Id: 030de3dc-7cf6-4f0c-abf7-08df02c6da03
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700016|376014|1800799024|23010399003|11063799006|4143699003|56012099006|10067099003|3023799007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	Z2PsGVb/w2yyYQCXtOacuSuc13iXxFblViSLZLsfpf3CJrA2BimOoLR50Zb80+dQ6dClsAaoBXWm8e9jMpcH0b6BVASNwbelmiSku7MKM7cAfiicT0CQBACZ8fSjs+NrVXt79nbI3psIIJaQsKSjJaNoHER5FwL/E5iFCLyPZwa6JyTuOucojw2fPGgyu6e4LfWpF1U1s7w8+fs24bcbsX4jJLv/3tygowW4f7Cabu6dz4732BBALcwOJCDTirZvVQLFGRCX0ZAK/Q6RCZJiSrE9YufkJ8PsHuuQmzE1EOTYncjARUlP5Eipax9PxIa1TdDxYgvLintCjNMgSqxzg2AZrTsQK6ps2nhfRHmbGz7SjgDrb02hetWqOXd+Juq5JcpRjwo3KM2MlzgInrjz9D3T47EXVGEoZNW89PPCdzBpT/jwj7dhw0jEvLJMDza/kyNz34cdNDg67Nl6Awbm9IRK31LVHbr1QhXiwDMFMadqnetpC8F7qYvpG405WgMqSo2TlFxNbqFna7kCTYLVpAVr4CfjHNCmdZsPQpzNqbzMZvaWm3V8HXWYvYannbpgrjXJhVWO49CTPGMEqyar0EqYO7ontYqq9yNiHu8PTExJohAaPP3xCTk8/iY4UveBt/zSMKPW3UewnvOs1pp9lA==
+X-Forefront-Antispam-Report:
+	CIP:149.199.90.133;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:unknown-90-133.xilinx.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700016)(376014)(1800799024)(23010399003)(11063799006)(4143699003)(56012099006)(10067099003)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	sFqph4vv8Bcj9p5criHKBXl7iJ0SFkK5VLAWaHl4lvc5y5av70rrEVZD5Ek0oYGweuevD60T5GlNNh6Iu3jZE3fJxljbYv9TgUi1fxsKX+jZ7OKv2BQVACxzU+2vZyuUDhddpxnZaSEXlookRnwtTB7PQSGo59jDORpqJyy6IEjnntX5bQeDykINzdB/BsMOfK+BT/xOEkP5u/9uZAB1ru+ORMvoWTUCi9jyk0BOdWnJQc1g7+IDWiYne4ZSboxN9c/jsjUNfb1ojGINeodQxHi9kkePEHvHuiEDBJ41hY0e9rZP/VhIp5SVnF9XFiGg0/9FyuNPmYpKgGRHCpCkJCaez7WHIwdcqIB0W6cvPyTgY+SPvLj+ccXCpBt6Cj8Qd8Co7/5ObZCoeAM9Jv5VajMiEEf8poI3947/QCawHka26eFUId4rVV9uCLTIJlGC
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 16:35:19.2605
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 030de3dc-7cf6-4f0c-abf7-08df02c6da03
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[149.199.90.133];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0001A108.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB9033
 
-On Tue, Aug 25, 2026 at 7:29=E2=80=AFAM Breno Leitao <leitao@debian.org> wr=
-ote:
->
-> On Mon, Aug 24, 2026 at 05:08:30PM +0000, sashiko-bot@kernel.org wrote:
-> > > diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-> > > index 7b6847200b431..c5f6bebbb15c3 100644
-> > > --- a/kernel/bpf/arena.c
-> > > +++ b/kernel/bpf/arena.c
-> > > @@ -364,6 +364,7 @@ static int existing_page_cb(pte_t *ptep, unsigned=
- long addr, void *data)
-> > >      * the freed page. So it all relies on 1.
-> > >      */
-> > >     __free_page(page);
-> > > +   cond_resched();
-> >
-> > [Severity: High]
-> > Does adding cond_resched() here violate the lazy MMU mode contract?
-> >
-> > The callback existing_page_cb() is a pte_fn_t called by apply_to_pte_ra=
-nge(),
-> > which establishes an atomic context by wrapping the callback loop in
-> > lazy_mmu_mode_enable():
-> >
-> > mm/memory.c:apply_to_pte_range() {
-> > ...
-> >       lazy_mmu_mode_enable();
-> >       if (fn) {
-> >               do {
-> >                       if (create || !pte_none(ptep_get(pte))) {
-> >                               err =3D fn(pte, addr, data);
-> > ...
-> > }
-> >
-> > On architectures like PowerPC64 with hash MMUs, lazy_mmu_mode_enable()
-> > explicitly disables preemption. Since preemption is disabled, cond_resc=
-hed()
-> > evaluates to a no-op, which means it won't actually yield the CPU and w=
-ill
-> > fail to resolve the original softlockup.
-> >
-> > Additionally, if CONFIG_DEBUG_ATOMIC_SLEEP is enabled, this could trigg=
-er a
-> > "sleeping function called from invalid context" bug during teardown.
->
-> That is a good point, I think a better approach would be to drop the
-> cond_resched() from the callback -- existing_page_cb() goes back to its
-> original form.
->
-> Then we walks the range in chunks from arena_map_free() instead, so the
-> resched happens outside the lazy MMU section (FREE_CHUNK_SZ is SZ_64M):
->
->       addr =3D bpf_arena_get_kern_vm_start(arena);
->       end =3D addr + SZ_4G + GUARD_SZ / 2;
->       while (addr < end) {
->               u64 size =3D min_t(u64, end - addr, FREE_CHUNK_SZ);
->
->               apply_to_existing_page_range(&init_mm, addr, size,
->                                            existing_page_cb, arena);
->               cond_resched();
->               addr +=3D size;
->       }
->
-> Would this be a better approach?
 
-Just to be clear.. Is this needed to backport to some older kernel?
-New kernel with CONFIG_PREEMPT_LAZY=3Dy shouldn't need
-this old practice of sprinkling cond_resched().
+
+On 8/25/2026 8:58 PM, Sean Christopherson wrote:
+> On Tue, Aug 25, 2026, Sairaj Kodilkar wrote:
+>> On 8/11/2026 5:57 AM, Sean Christopherson wrote:
+>>> On Mon, Jul 06, 2026, Sairaj Kodilkar wrote:
+>>>> On 7/6/2026 12:22 PM, sashiko-bot@kernel.org wrote:
+>>>>>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+>>>>>> index 367297b188c39..123755d471099 100644
+>>>>>> --- a/arch/x86/include/asm/uaccess.h
+>>>>>> +++ b/arch/x86/include/asm/uaccess.h
+>>>>> [ ... ]
+>>>>>
+>>>>>> @@ -551,11 +594,18 @@ do {                                                                            \
+>>>>>>
+>>>>>>   extern void __try_cmpxchg_user_wrong_size(void);
+>>>>>>
+>>>>>> -#ifndef CONFIG_X86_32
+>>>>>> +#ifdef CONFIG_X86_32
+>>>>>> +/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e. cmpxchg16b
+>>>>>> + * instruction).
+>>>>>> + */
+>>>>>> +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
+>>>>> [Severity: Medium]
+>>>>> Does this 32-bit stub correctly signal failure?
+>>>>>
+>>>>> Since this macro evaluates to 1, won't the surrounding unsafe_try_cmpxchg_user
+>>>>> macro treat this as success (true) rather than failure (false)?
+>>>>>
+>>>>> This could cause the wrapper to negate the value and return 0 (success) to the
+>>>>> caller, falsely signaling a successful memory exchange without actually
+>>>>> updating memory or the old value. Even though there are no current 32-bit
+>>>>> callers using a 16-byte operand, should this evaluate to 0 instead of 1 to
+>>>>> ensure theoretical future callers don't encounter a silent atomicity break?
+>>>>>
+>>>>> --
+>>>>> Sashiko AI review · https://sashiko.dev/#/patchset/20260706063035.1139-1-sarunkod@amd.com?part=1
+>>>> Hi,
+>>>>
+>>>> Right, It should return 0 instead of 1, will rectify this in the next patch.
+>>>
+>>> Is it possible to fail the build instead?  Attempting to generate CMPXCHG16B on
+>>> 32-bit should straigt up fail.
+>>
+>> Hi Sean,
+>>
+>> A compile-time failure in __try_cmpxchg128_user_asm would unfortunately
+>> break i386 builds even for callers that never use a 16-byte operand.
+>>
+>> unsafe_try_cmpxchg_user dispatches on sizeof(*(_ptr)) via a switch, and
+>> the 128-bit path is one of those cases. As noted in the comment above
+>> the macro, Clang/LLVM tends to compile all switch arms when expanding
+>> this macro, and only discards unused paths afterward.
+> 
+> If that's actually happening, then this code is already broken, because u128
+> exists only on (some) 64-bit kernels.
+> 
+> A straight static_assert() will fail, but BUILD_BUG_ON() (or more precisely,
+> __compiletime_assert())  and all of the associated magic exists for these exact
+> scenarios.  Unlike static_assert(), __compiletime_assert() relies on dead-code
+> elimination, i.e. does exactly what we want.
+
+Sorry, I got confused between static assertion and compile time
+assertion. BUILD_BUG_ON() should work. Will update and repost the patches.
+
+Thanks
+Sairaj
+
+> 
+> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+> index a58d50d7a219..710a0b42eeef 100644
+> --- a/arch/x86/include/asm/uaccess.h
+> +++ b/arch/x86/include/asm/uaccess.h
+> @@ -595,10 +595,7 @@ do {										\
+>  extern void __try_cmpxchg_user_wrong_size(void);
+>  
+>  #ifdef CONFIG_X86_32
+> -/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e. cmpxchg16b
+> - * instruction).
+> - */
+> -#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
+> +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) ({ BUILD_BUG_ON(1); 1; })
+>  #else
+>  #define __try_cmpxchg64_user_asm(_ptr, _oldp, _nval, _label)		\
+>  	__try_cmpxchg_user_asm("q", "r", (_ptr), (_oldp), (_nval), _label)
+> 
+
