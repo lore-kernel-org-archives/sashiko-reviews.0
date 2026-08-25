@@ -1,395 +1,307 @@
-Received: from mail-vk1-f228.google.com (mail-vk1-f228.google.com [209.85.221.228])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012029.outbound.protection.outlook.com [40.107.209.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD093F4106
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.228
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787660499; cv=none; b=ltSOHK5auYoUkcEokrmCTbfcl1vaLL/xmHUp8uzbdx+yeKrl3Itgt4ue9AnyFkjF4Y0mRUf6YUWujSfWnprKMRT4rLFW0Abokli+wOdSOxoAYBlF4Ya4zIBOddRtleaKlz1eY5N+m0TyUzqjAcYSgrYjEB6XYgn/R389ikjwI1o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787660499; c=relaxed/simple;
-	bh=C5EoN9W+isltHuB8jc1SobwJnf5brojfVsC/ugzBeJM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aWAU/UTqX+I61k6zpdjhkMU2iuB62OlLPW83rWCaifdjJMKsdPGUKibrGU6w1/ZRH1CNS8hVb2A6ewsQxl769VX88/MPrYkfd/AFOTLAD5ERsLpblJBxKmJLFfydDenjq9aV8GbBW9qp/Ue6hwfaTqJ/A+zBYOE9oHdKMhojPSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=RiGe+kmz; arc=none smtp.client-ip=209.85.221.228
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B283F6C58
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 12:45:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.29
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787661925; cv=fail; b=aRMMvJUl92zXq4vHv4w1YOGZ/zBq/7E6VM8Qx8ykxmDeu0N7PY1bTDWRXgHTF8DsQUluMpYHv59VqK+Le/0HLiSSkNRkgmFIIJI3gS+1oBGWPWf7hN/4vV/0BA31BsQvnsJJSCMngODBsWpXBCsds85d3CUwLx/ne0SK8jQO6qs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787661925; c=relaxed/simple;
+	bh=jHhadrk2/X+IJnLvTU/Vx3L0jkSUM19kuthEGrOu2NU=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=SraXdnQHWBlwM5IHuNQxql4u0mRNvhbrshqnGZe88Yl+y7Uu9bc/OJZk+EX0KcFiYvGN48nlFqWeVFaDbrK6prQqiDcZ/mzZpmDg6Pj/gjPXzRz8GTl/rYB2sazr6dLo4v624sltJ3WkRxp/om4gj8vCzYara1O15x7MtU616wM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MpNTgI1J; arc=fail smtp.client-ip=40.107.209.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="RiGe+kmz"
-Received: by mail-vk1-f228.google.com with SMTP id 71dfb90a1353d-5c2c0e261aeso1583787e0c.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:21:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787660487; x=1788265287;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XOyOdwxExS2kPPMEh/LlkxNzHi2vboMg4n9A6FSjmkQ=;
-        b=IDH8+xVaGOnTvTrX/CMi4k+YWMi4UhItZtCJ0Cg9nD8RTFlpnsSSM3U0lfeKW/Hjh3
-         MzPbCtMQidafy3+ZwdHcC6xufFXBNt+Id1EHuOnX1vNOUo4gAwYZ+zVsygOjOA7TaMX5
-         IGBMxslBHUNhxW8DINi6oH+yceG/RWhVh2pSgl/8uJEYhmE+6hTQefurUBHf7wwTFQCB
-         /sJuOPRzwBxVpGVWZNAsMd0GfZNrt9nHedPzqyKxp4AgxBG7NOGbHCQBZqEa2nhtr7YC
-         7/PjnFMiLt8NhweuautwnahSasbds3HzoJUo9V7fLThAS9nbTkpERKE9R7/dNmZ1CG0w
-         jntQ==
-X-Gm-Message-State: AFuF++mkpESoo+i+ZWDbWyZZCWiPCzbj5/GRb00qant8zq/Nm9Rm65B8
-	MCmUafYTDAlz1gN38PqD/ainav0FxMtE5Xbxj/b1188x8B54UJiJ2/oOLJ7nDp8tOfONQkA+y3p
-	5Dc4nVAv7hUNIseVCCsWmHC1PalQpBhAFj6VnUhjbKkn2xTb2WUCELDtyx7YpuTRKo93Lf6XLKg
-	bQYjABhUISkTnRlFkGslWH/Xyq3Q21RbTJRkgpdkt56L9vYUKotLYAQ5a+SPGRkORd8GuT7aaV3
-	smnHcNEZIZ5VYN6VO0daSPUyvDq1kY=
-X-Gm-Gg: AR+sD130YcAelBQJWM2RNM+3B07/de0HbwJm6K3r/fnC3GcIFwmfIFULwP6FYXut3s6
-	W5sa2QXOkQvj9HwdUfnYqvbvegGo+DQz+B7s3f0nPNViiPKg5WQO9MszaqjWHHZF2axVfCMYw13
-	dZaswDNmn18deu3gxpjtFH7omarhB3p9Cxkd+PX85qUQf5hknz3NJBbpV1XJyq0DnjfycAlwkM9
-	Lh3e2VIAxkMdfIrm4LuFHyrsyJNkHlfmJCelyCLhSWGaQFVsSExJB0psX1D+vhTgaUYvlnCGQz3
-	go/dmSIm9VeewSuq7dukACv972GmC5MMAJEvtCEy3L1fHDAEi+/r37xdk/J7bphVQPNFFWD+MYp
-	Tc8d2fVhdGLT5KYlnZt0PyRv6qKe3BkKmZ1tND0Spp4gpqvNr1S5XXjrNuFCg4yQKmGe6sDycU5
-	260NkUkaHvdX2fwZUyDSSAPVMDrMGBh6ErF/8uTWec17+cCQ==
-X-Received: by 2002:a05:6122:4b18:b0:5bf:4522:fca7 with SMTP id 71dfb90a1353d-5c60de2fba8mr9915467e0c.4.1787660486915;
-        Tue, 25 Aug 2026 05:21:26 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id 71dfb90a1353d-5c6238a2f08sm2264840e0c.0.2026.08.25.05.21.26
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2026 05:21:26 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c1f3117bc6bso428987466b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 05:21:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787660485; x=1788265285; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XOyOdwxExS2kPPMEh/LlkxNzHi2vboMg4n9A6FSjmkQ=;
-        b=RiGe+kmzJdSp8Xqc35RVxzUmyIn3EKjq5mJ4E0+M0dedhukuoH2kUvGcKD4bWMRDKQ
-         NnE6BRZAOPfKF0/gqUr2luKqXNJbmwjnpK1PO4QXX+AR7n1YPs6rnlntOg1HVS5cgB0a
-         SfRnS2Z/3x3r+CFntrINzOEf+dSNWV9CV/FYc=
-X-Received: by 2002:a17:907:5c5:b0:c20:f6d9:d8c7 with SMTP id a640c23a62f3a-c24e5c0d2d7mr643431766b.24.1787660485329;
-        Tue, 25 Aug 2026 05:21:25 -0700 (PDT)
-X-Received: by 2002:a17:907:5c5:b0:c20:f6d9:d8c7 with SMTP id
- a640c23a62f3a-c24e5c0d2d7mr643424666b.24.1787660484646; Tue, 25 Aug 2026
- 05:21:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MpNTgI1J"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iXZFWJaKwR/Az3Li9Y73pWt4s8GEFRVVjwBniKoR4jcbGkmV8h0oVZWfVCvUD+tCxNP020QUXXF/oZM0zVzMuqL0NcgHs3q8gsttK6a/2XRWPxDe0jxquPwcEG2NHmD9NQcn4WozMemDBXCtO1bC/nQHFu6Zfkqz954IFnLdbYsRyc5QY+ieSwRYhdU+q88lw/KrQYAGaP1k1kO8cC2fd7Hc8j2YhmKyLhGTuvGR3MkjszWkB0PsCtf4JkexnSpDAHe6Ybl0fachE5qB1jOzrIifBlacRUGj6sBsxVhB27VhgfFulo7iaWHDpN75rx6MRwFfeAWot6VomaxBkjds6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0Ja4Pd4Ld2bZEhvFJQmroP7AGo0A35du+JadU9ubyVs=;
+ b=RcJv3tbQCV/2izui35njLPloojwSIKIOCepmfJRDKMpDVBaT7aRHIokDdMzTasZdu4xzhQSJDTWXIyXzUrCS9/bizRNUrm6eYLEB0fSotN+coS1t7r5zqRi4mpA6l921EWzHYWOKSSVTO65NIjrwIP3xO0LboSqj65Pw43kJ8riErEUgJO6DDbaGDLynPVKrWCkviunYbD/KqzkIxYTU4nZz7QjmHthjFzTAX15gB0Jq7H0iQZ2CIIt6t2BjwVaxsRHAa6ml7Vhbzs0yUBtamp3hJ3D7s+so0p6Ft8oKJOuey7l4P3sEOPSTZhw2IZH9KTE9qLJLdha9zMlAK3IF5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0Ja4Pd4Ld2bZEhvFJQmroP7AGo0A35du+JadU9ubyVs=;
+ b=MpNTgI1JPpm+qKGz0LqUJxf3H5xoIEOU4SrGyEuHR5t6qmaoyG2PxsJypFDVRgTi4h0JpvOY8cs01r74V4CT92MzMfsTA2BCehdfOO+U7YeBWIh0J6Wu/Fw12aBdW8N2jTECJ11FpGXRm960e/hnaJiyt6u1BQDcfryErll+p8dr+G39YqBFcl9rvz8cBnQUKnpXycvqYdoB6iVUwrka/jSGFouRZDIhinaq9rGQQOYvWxnnsvyystTmQ/UYL2TgZ4q3aT5rvCfgoepejjLYblnygcX49XadWrOFKh5oHwm2LgTlidUbEK2JdWh4z++fl4ZgzmBNdzTwEw8lhs/kZQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA0PR12MB8351.namprd12.prod.outlook.com (2603:10b6:208:40e::5)
+ by PH8PR12MB7301.namprd12.prod.outlook.com (2603:10b6:510:222::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
+ 2026 12:45:13 +0000
+Received: from IA0PR12MB8351.namprd12.prod.outlook.com
+ ([fe80::d0fa:3021:dd0f:59e0]) by IA0PR12MB8351.namprd12.prod.outlook.com
+ ([fe80::d0fa:3021:dd0f:59e0%4]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
+ 12:45:12 +0000
+Message-ID: <9b166536-d684-4f56-a197-cb0390b40b72@nvidia.com>
+Date: Tue, 25 Aug 2026 18:15:07 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1] PCI/MSI: Don't touch the MSI-X table while the Link is
+ contained
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+References: <20260817195626.3091331-1-vidyas@nvidia.com>
+ <20260817201203.34B9E1F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Vidya Sagar <vidyas@nvidia.com>
+In-Reply-To: <20260817201203.34B9E1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN4P287CA0006.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:26a::12) To IA0PR12MB8351.namprd12.prod.outlook.com
+ (2603:10b6:208:40e::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260818231426.58105-1-chandrakanth.patil@broadcom.com>
- <20260818231426.58105-18-chandrakanth.patil@broadcom.com> <20260818183223.B90ED1F000E9@smtp.kernel.org>
-In-Reply-To: <20260818183223.B90ED1F000E9@smtp.kernel.org>
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Date: Tue, 25 Aug 2026 17:51:11 +0530
-X-Gm-Features: AcwNN1UEJAAr2zNOE0ngWzZwtuLIypR8Nz7OpKyeLvnGkxdY54gwLoITZGTW9V4
-Message-ID: <CABvwm=PRFH1cdco_o0MLbEK1cGhjwawaxxtRyy=kyvaWQzN9ag@mail.gmail.com>
-Subject: Re: [PATCH 17/17] mpi3mr: Fix NULL pointer dereference on PCI error recovery
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000003a7b030659de2426"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR12MB8351:EE_|PH8PR12MB7301:EE_
+X-MS-Office365-Filtering-Correlation-Id: 16332ff2-e4f2-4b73-d837-08df02a6b45c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|18002099003|22082099003|5023799004|56012099006|11063799006|3023799007|6133799003|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	yLYLUxYowXLHcLWR+Q85Sy3omKrxHjGqqoQOtOZMft5nCJLVCeNl4kYySoJnZs36yD+WqD5PsHoXP3WVS5vph85tT7lsZVozYMMhAhMkzZGVJq9kY401KYXBzVg+IuZd13O9Y5gislh48W3d0yBonGUbW4QDBfNMJV3i0qkj77Rhgz5Zk1wTzBXtgJkTOnrvSPT9VI7li+vLp9QvnGGO4y6nYWNu6CbqHP3ONhOR+EPVmxQ/Lunc2THJ5CqhTJRqE600G14b6AbbcHcJCWBB2KsMVI69CeoIZVu7ZiKuXtQlDups3Tpz7LRQSE84dDpaJ9Y+pLa9nRK3zJLBYx/xy2IeorVrC9cV7CXeYJD8NqnK/4ApYp+bPq4QJkU1zNEsCusEkEP/WmLkLOsnxHk9jZnIx8jGbmLfCidnExdyZueQ5IJgQRpvrJmF2QSi/y6ILMtTR4Vp0m9shUydAR0RF9sqQRhZAPq8ypM6xXHn8HQuMWYN6YHE5jTIPyxpz35RQAsNVW4pZFT3xz3IfmfSVM/ND8yCp0g7WwRy7YprN5DiwZr+dFa7L83lrhk9VAHRC3m1TUUJwiO3A0SVtdtkKkoVAfC6YbtoRGwdueS4ExAZ1mU3xBEapgi7hKIZi8pnCga1ejFRAbIa2WRGE+7Tdn0QTvuzxbS9RN4qeUJaMj8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8351.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(22082099003)(5023799004)(56012099006)(11063799006)(3023799007)(6133799003)(4143699003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?b090M2lZMmV2eFpmd0NCNWVLRDdWUHIyamluNG1Ma1JwM1A5TjBpTUhwbnYx?=
+ =?utf-8?B?MTRLYnpaa01MYzZ4YW1lVWtKL1Y0QUlPUHhSVW53UDhWQUtMVXY1NmZndFQ1?=
+ =?utf-8?B?VTlKbW5KSjdXYlNmV2d4SmVXVDNKQWNVNlhWTXJJTFRYQ25uckIzYnZzcUx3?=
+ =?utf-8?B?SGNVU25LQ3U1TXEyaExXRURvdk5FWjNPb2tPZ083RERIM2lEWmxWRFBPTGpG?=
+ =?utf-8?B?V0RtQ1RmZDBqeFRqMWlhLzMva3I0M293bzl6bDZvQU5YL2NORU1aQVl5aUky?=
+ =?utf-8?B?Q1QraTA1UCtXczBnZThwYk1SUWIxYTFWREVJUjJtMTh3SEFPc2EzNU5rNkhp?=
+ =?utf-8?B?MVFvR1o2ZjNySTIrTUdmeUV3NkJndDRxS1NLSWZVV09JamhTOENmN3VTZEtJ?=
+ =?utf-8?B?OWs4VFFnR0ptOHJtbHhnWVppbzV1MVN5eExBeWNITlZNd1BENjRkMkpUM2ts?=
+ =?utf-8?B?Z3d0cFVoR2U5QkZZSjN3bW9UNFF3WHQvN1owbnV5M0Q2a0pMZGg2U1N6ZVBQ?=
+ =?utf-8?B?dk1MbThDakJsZWRGcEhyY0JPN1FsYUExeVJHdVpSVkFMWDduSU52c1cwdSty?=
+ =?utf-8?B?Tk5RQTdXdlFFa0hDTTIwVWVSZDBsWVVZZXFjL2FYcGpzbzFyV1MreUxQbGls?=
+ =?utf-8?B?d0d2QUlHcWNNMjBBVDZLNUtWMTh1Z09DLzNpOXY5UkhkekxaUkphbnpqa1Zy?=
+ =?utf-8?B?aFZsTER6Y29XMHh2UDNsY2N2c25kNmVOS1AvMG94emVZRkRzQnhMNVh3cnZp?=
+ =?utf-8?B?aDJQNUFCQzhVRHBLbzZraXJYMkplREx4VVQ1dzdXb3F4eEpUcGg3V0dJNEFG?=
+ =?utf-8?B?Q2I4SEJ3ZDBWeDYyejBlNnBtK0ZpbHJhODNmTXlvanZPN3N1RFhNbFdWdlJI?=
+ =?utf-8?B?R2IzMXRnTCtaZU5qUmdyYTNPaitsUUpzendJQkJ4RmZqRXhiMjgvaTlWS0p6?=
+ =?utf-8?B?SThGOGhXM2VBRExKbDJUdnpuVG9Jdy9CTXFKdlpqTTcvSjZ5Mi9zMEM2RjB5?=
+ =?utf-8?B?UkFiY1hkS0FOUDNWdm5EbDZIUmF4MFczZWl2V2Q1L0pVcUFSVHFDN1M4R2Nx?=
+ =?utf-8?B?YnRnZ0tobThoZFFZaHNjZzZCUHBJTWEzT2tlNnpLaEpjKzRiNTduaFJXYS9V?=
+ =?utf-8?B?TjZTVXd1MzNOLzJOVGROMnVCV2FyTzUzck9XWTYxaFVGOXJSOUdzOHdmY3NI?=
+ =?utf-8?B?NlRiL0RlZDJ0LytqSVZvQkhMRE8wbHFuSW1hS1c3dFVMeEk3UEhORnFKTkh2?=
+ =?utf-8?B?dVJhM0h6YTc1S0ZyalpSQTdONmpoUy9UcGhJdm1Mc2psd1BZMDB5OVcwV2lK?=
+ =?utf-8?B?L2t5MW5SZXFlaVhudUZuZE8xV0U3WHFXbGdENDU5c1BlWW95VzM3b28xRjVp?=
+ =?utf-8?B?c09ndFlsZ1pEWnNDV0lVMGxYbVJNRUNpakJsRDRsN3BhRldxV1R4SXNJaFRF?=
+ =?utf-8?B?alY3OEREb0d1ZGVTM28weVFTL1Z6ZERCRzNmVHJIZ0x5bXJRZjhkZDhySDRv?=
+ =?utf-8?B?QUdpRjg3LzZmUzNDYnNBKytGWmJabWVMWWVjRmd0eWJhK1FNOERyMGhyNFVk?=
+ =?utf-8?B?M3lvK1piRCtyUkt5cUdZRkdEWTN4U1UwTWFVL0llYzF0NkJ1b0ZhYmttdSs5?=
+ =?utf-8?B?Vyt5eDJMOGlXSDZEMEwwckRyYitzSStBSEJrME56MDZTWjIxS3Q0cW5QZGR3?=
+ =?utf-8?B?Qkx4ekgyQjBnOURwV2l5OGVuMXhXQmpYU3F1RThGUmhkSGJPZDAxV3dWejEr?=
+ =?utf-8?B?K2lGWDhtV3ZaS2V3Qkp2RlJza1VPSTh5MmdRWmlHZFc5bnQ4Y2hGblhic0dU?=
+ =?utf-8?B?eS9LNjJuWUZaMm9LY0ZQeFVvV08yZWNkYlRvL2UzSlNqTHhsMzgvYjdMZmxQ?=
+ =?utf-8?B?QnQ0NjJLeVlzeTZvRm9EK3ZNTWcrd0VMMkhvQnhIUFBGQ3dMOGtHM2ZYYjZh?=
+ =?utf-8?B?NG9OVThPSE44UnZUMlBLRXMwbUV4VmFhcTltaWFzcThHcHREUTViMVhFM3pW?=
+ =?utf-8?B?eHV2ZnBUQTJ3UjJNNm04MTBSMEJFTEhVZm5BOGJ3azBBSnV6RDlzdXU3dXMx?=
+ =?utf-8?B?czFqK2lKMDJuQno5NkVVL2o5aUR1OEZ4bkdIZE1oVzNCSytUQk1qVHJWdW9y?=
+ =?utf-8?B?RmgxZTVaWGZzWWNKNHozMTc5cHo4dWY5N0VRMTViWGd2ME04UitjUnJES2dt?=
+ =?utf-8?B?N1cvM0VhdnExa1FIcXFuaUw4ZU9FRHFTeFRObFZRU0FOSStJMTZJZ2JCWmNG?=
+ =?utf-8?B?cUFpMEJmZ3BqUkZITFR5YUhsMktzbnAxdE1pbjVMa09oeGw1V1ZEd2FrWEh6?=
+ =?utf-8?Q?YPovVHZP/bBI9ZHBCG?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 16332ff2-e4f2-4b73-d837-08df02a6b45c
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8351.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 12:45:12.6454
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tC3ncYj6rUQKS0DKrt784gk558QPoiOOwadVvMe7sTFI665G6HS3aSf450pxVkQ3YJ9y0ouz1+JPH17cjhex9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7301
 
---0000000000003a7b030659de2426
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Aug 19, 2026 at 12:02=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Calling `mpi3mr_cleanup_fwevt_list` during PCI error recovery ca=
-uses a deadlock due to a race with the fwevt worker thread calling SML func=
-tions.
-> - [High] Setting `stop_drv_processing =3D 1` during PCI channel freeze br=
-eaks transparent I/O recovery by permanently failing commands with `DID_NO_=
-CONNECT`.
->
+On 18-08-2026 01:42, sashiko-bot@kernel.org wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] Unprotected and unreferenced access to `mrioc->current_event` an=
-d `fwevt` in `mpi3mr_cleanup_fwevt_list` leads to a Use-After-Free, exacerb=
-ated by the patch executing it asynchronously during PCI error recovery.
-> - [High] Skipping `cancel_work_sync` for events blocked in the SCSI mid-l=
-ayer (SML) leaves the worker thread running, allowing access to unmapped re=
-gisters on suspend.
-> - [High] Missing memory barriers between `stop_drv_processing` and `mrioc=
-->current_event` allows the worker thread to bypass the abort check and acc=
-ess unmapped memory.
+> - [High] Unprotected `readl()` operations in `pci_msix_write_tph_tag()`, `__pci_read_msi_msg()`, and `msix_prepare_msi_desc()` circumvent the MSI-X MMIO containment fix.
+Thanks for looking at this. The three sites do exist as described, but
+they are not equivalent, and only one of them needs a change. Taking
+them in turn.
 > --
->
-> --- Patch [17]: [PATCH 17/17] mpi3mr: Fix NULL pointer dereference on PCI=
- error recovery ---
-> commit 21853a66ae88d53ee80d24101e9ce79158e66a4e
-> Author: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
->
-> mpi3mr: Fix NULL pointer dereference on PCI error recovery
->
-> On a frozen PCI channel the driver unmaps the register window and frees
-> the interrupts, but leaves the firmware event workqueue running. An
-> event handler that is already in flight can still reach the register
-> window after it has been unmapped. Stop event processing and drain the
-> queue first, and start it again when the channel resumes.
->
-> > --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-> > +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-> > @@ -5972,6 +5972,8 @@ mpi3mr_pcierr_error_detected(struct pci_dev *pdev=
-, pci_channel_state_t state)
-> >                       return PCI_ERS_RESULT_DISCONNECT;
-> >               }
-> >
-> > +             mrioc->stop_drv_processing =3D 1;
->
+> 
+> --- Patch [1]: [PATCH V1] PCI/MSI: Don't touch the MSI-X table while the Link is contained ---
+> commit aba17efd26855fb96d48aa82a9f367120d469a3f
+> Author: Vidya Sagar <vidyas@nvidia.com>
+> 
+> PCI/MSI: Don't touch the MSI-X table while the Link is contained
+> 
+> The MSI-X table lives in device MMIO space behind a BAR, so it is only
+> reachable while the Link is up. While a Downstream Port has the Link
+> contained by DPC it completes accesses to the table with Unsupported
+> Request, and the read returns all ones.
+> 
+>> diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
+>> index 209373c92e9e1..5612cf2ff2800 100644
+>> --- a/drivers/pci/msi/msi.c
+>> +++ b/drivers/pci/msi/msi.c
+>> @@ -249,7 +249,7 @@ void __pci_write_msi_msg(struct msi_desc *entry, struct msi_msg *msg)
+>>  {
+>>       struct pci_dev *dev = msi_desc_to_pci_dev(entry);
+>>
+>> -     if (dev->current_state != PCI_D0 || pci_dev_is_disconnected(dev)) {
+>> +     if (dev->current_state != PCI_D0 || pci_msix_mmio_unsafe(dev)) {
+>>               /* Don't touch the hardware now */
+>>       } else if (entry->pci.msi_attrib.is_msix) {
+>>               pci_write_msg_msix(entry, msg);
+>> [ ... ]
+>> diff --git a/drivers/pci/msi/msi.h b/drivers/pci/msi/msi.h
+>> index 0b420b319f50f..e372e9c875087 100644
+>> --- a/drivers/pci/msi/msi.h
+>> +++ b/drivers/pci/msi/msi.h
+>> [ ... ]
+>> +/*
+>> + * The MSI-X Table lives in device MMIO space, so it is only reachable while
+>> + * the Link is usable. While a Downstream Port has the Link contained by DPC
+>> + * it completes these accesses with Unsupported Request, which the Root Port
+>> + * in turn reports as an RP PIO error and answers with a DPC of its own,
+>> + * taking down every other device below it.
+>> + */
+>> +static inline bool pci_msix_mmio_unsafe(struct pci_dev *pdev)
+>> +{
+>> +     return pdev->error_state != pci_channel_io_normal ||
+>> +            pci_dev_is_disconnected(pdev);
+>> +}
+> 
 > [Severity: High]
-> Does setting stop_drv_processing to 1 here break transparent I/O recovery=
-?
->
-> If mrioc->stop_drv_processing evaluates to true in mpi3mr_qcmd(), it
-> preempts the block_on_pci_err check. Instead of returning
-> SCSI_MLQUEUE_HOST_BUSY to allow the midlayer to safely pause and retry
-> I/Os once the PCI channel recovers, it causes all incoming queued
-> read/write commands to immediately fail with DID_NO_CONNECT:
->
-> mpi3mr_qcmd() {
->     ...
->     if (mrioc->stop_drv_processing && !(mpi3mr_allow_scmd_to_fw(scmd))) {
->         scmd->result =3D DID_NO_CONNECT << 16;
->         scsi_done(scmd);
->         goto out;
->     }
->     ...
-> }
->
-> Could this lead to immediate I/O errors and potential filesystem corrupti=
-on
-> instead of transparently pausing I/O?
->
-> [Severity: High]
-> This is a pre-existing issue, but does the lack of explicit memory barrie=
-rs
-> here allow a race condition?
->
-> The synchronization between writing stop_drv_processing here and reading
-> mrioc->current_event in mpi3mr_cleanup_fwevt_list() appears to be lockles=
-s.
-> Concurrently, mpi3mr_fwevt_bh() writes mrioc->current_event and reads
-> stop_drv_processing.
->
-> Without smp_mb(), could the CPU reorder these operations such that
-> mpi3mr_pcierr_error_detected() reads a NULL current_event while
-> mpi3mr_fwevt_bh() sees stop_drv_processing as 0? This would let the worke=
-r
-> continue and access PCI registers after they have been unmapped.
->
-> > +             mpi3mr_cleanup_fwevt_list(mrioc);
->
-> [Severity: High]
-> Can calling mpi3mr_cleanup_fwevt_list() during PCI error recovery cause a
-> deadlock?
->
-> During PCI error recovery, mrioc->block_on_pci_err is true. This cleanup
-> function reads fwevt->pending_at_sml locklessly. If the worker hasn't yet
-> set pending_at_sml to 1, the cleanup function sees 0 and calls
-> cancel_work_sync(), which blocks the PCI error handler.
->
-> The worker thread could then set pending_at_sml to 1 and call SCSI mid-la=
-yer
-> functions like scsi_remove_target(), issuing I/O commands like
-> SYNCHRONIZE_CACHE. Because mpi3mr_allow_scmd_to_fw() permits these bypass
-> commands, mpi3mr_qcmd() will hit the block_on_pci_err check and return
-> SCSI_MLQUEUE_HOST_BUSY.
->
-> Since the SCSI mid-layer retries indefinitely, the worker thread remains
-> permanently blocked, and cancel_work_sync() deadlocks the PCI error handl=
-er.
->
-> [Severity: High]
-> This is a pre-existing issue, but does the asynchronous call to
-> mpi3mr_cleanup_fwevt_list() introduced here exacerbate a use-after-free
-> risk?
->
-> In mpi3mr_cleanup_fwevt_list(), mrioc->current_event is read locklessly
-> into a local fwevt pointer. Concurrently, the firmware event worker threa=
-d
-> might finish its execution, drop all references via mpi3mr_fwevt_put(), a=
-nd
-> free the mpi3mr_fwevt structure.
->
-> If mpi3mr_cleanup_fwevt_list() accesses fwevt->pending_at_sml or fwevt->w=
-ork
-> after the last reference is dropped but before mrioc->current_event is
-> set to NULL, does this trigger a use-after-free?
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does skipping
-> cancel_work_sync() in mpi3mr_cleanup_fwevt_list() when
-> fwevt->pending_at_sml is set leave the worker thread running?
->
-> If the event is pending at the SCSI mid-layer, the code sets
-> fwevt->discard =3D 1 and returns early without stopping the worker thread=
-:
->
-> mpi3mr_cleanup_fwevt_list() {
->     ...
->     if (current_work() =3D=3D &fwevt->work || fwevt->pending_at_sml) {
->         fwevt->discard =3D 1;
->         return;
->     }
->     ...
-> }
->
-> During operations like system suspend where pci_err_recovery is false, th=
-e
-> caller unmaps mrioc->sysif_regs. Once unblocked, the worker thread contin=
-ues
-> to mpi3mr_process_event_ack() and mpi3mr_admin_request_post().
->
-> Since pci_err_recovery is false, it blindly dereferences the unmapped
-> mrioc->sysif_regs to post the request, causing a kernel panic.
->
-> >               scsi_block_requests(mrioc->shost);
-> >               mpi3mr_stop_watchdog(mrioc);
-> >               mpi3mr_cleanup_resources(mrioc);
->
-> [ ... ]
->
-> > @@ -6069,6 +6071,7 @@ static void mpi3mr_pcierr_resume(struct pci_dev *=
-pdev)
-> >
-> >       if (mrioc->block_on_pci_err) {
-> >               mrioc->block_on_pci_err =3D false;
-> > +             mrioc->stop_drv_processing =3D 0;
-> >               scsi_unblock_requests(shost);
-> >               mpi3mr_start_watchdog(mrioc);
-> >       }
->
+> This is a pre-existing issue, but could this regression still occur through
+> other unprotected MSI-X MMIO accesses?
+> 
+> While this patch successfully shields the vector control write inside
+> pci_msix_write_vector_ctrl() using this new check, there appear to be
+> unprotected readl() operations that still bypass it.
+> 
+> For example, in drivers/pci/msi/msi.c:pci_msix_write_tph_tag():
+> 
+>     FIELD_MODIFY(PCI_MSIX_ENTRY_CTRL_ST, &msi_desc->pci.msix_ctrl, tag);
+>     pci_msix_write_vector_ctrl(msi_desc, msi_desc->pci.msix_ctrl);
+>     /* Flush the write */
+>     readl(pci_msix_desc_addr(msi_desc));
+> 
+> The flush readl() is unconditional. It bypasses the safety check and
+> would complete with an Unsupported Request if the link is contained.
+Agreed, and this one is worth fixing. It is also worse than you state:
+it is not purely pre-existing, because this patch is what makes the
+write conditional while leaving its paired flush read unconditional. So
+after this patch the function can issue a non-posted read to flush a
+write that never happened.
+
+pcie_tph_set_st_entry() already propagates an error by disabling TPH, so
+the caller can cope. I will bail out early in v2:
+
+	if (!pdev->msix_enabled)
+		return -ENXIO;
+
++	/*
++	 * The tag update below is a write to the MSI-X Table followed by a
++	 * flush read, neither of which can be completed while the Link is
++	 * contained. Let the caller disable TPH instead.
++	 */
++	if (pci_msi_dev_inaccessible(pdev))
++		return -EIO;
++
+	virq = msi_get_virq(&pdev->dev, index);
+
+> 
+> Similarly, in drivers/pci/msi/msi.c:__pci_read_msi_msg():
+> 
+>     msg->address_lo = readl(base + PCI_MSIX_ENTRY_LOWER_ADDR);
+>     msg->address_hi = readl(base + PCI_MSIX_ENTRY_UPPER_ADDR);
+>     msg->data = readl(base + PCI_MSIX_ENTRY_DATA);
+The only caller of __pci_read_msi_msg() in the tree is
+pseries_msi_compose_msg() on powerpc/pseries, which already selects
+between reading the device and using the cached message based on device
+state. pseries uses firmware-mediated EEH rather than native DPC, so the
+escalation this patch is about does not arise there.
+
+More importantly, this is a read whose value the caller consumes. The
+write sites are safe to skip only because msi_desc::msix_ctrl caches the
+intent and __pci_restore_msix_state() replays it once the Link is back
+up. A read has no such fallback, so "guarding" it would mean returning
+uninitialised or all-ones data, which is worse than the UR. Making it
+safe would require an error return and propagation through
+irq_compose_msi_msg(), which is a different and much larger change.
+
+> 
+> And in drivers/pci/msi/msi.c:msix_prepare_msi_desc():
+> 
+>     if (dev->dev_flags & PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST)
+>         writel(0, addr + PCI_MSIX_ENTRY_DATA);
+>     desc->pci.msix_ctrl = readl(addr + PCI_MSIX_ENTRY_VECTOR_CTRL);
+> 
+> If an IRQ affinity rebalancing event triggers a TPH tag update while
+> the link is contained, or if the link becomes contained concurrently
+> during MSI-X initialization, won't these unprotected accesses still
+> escalate to a Root Port PIO error and trigger a DPC?
+Guarding this one would introduce a bug. That readl() seeds the
+msix_ctrl cache from hardware. If it were skipped the cache would read
+back as zero, i.e. unmasked, while the hardware vector is masked, which
+is the reset default. Every later mask/unmask decision would then work
+off an inverted cache, and __pci_restore_msix_state() would replay the
+wrong state.
+
+The specific sequence you describe also has no deterministic path.
+report_slot_reset() moves the device back to pci_channel_io_normal
+before it invokes the driver callback:
+
+	if (!pci_dev_set_io_state(dev, pci_channel_io_normal) ||
+	    !pdrv || !pdrv->err_handler || !pdrv->err_handler->slot_reset)
+		goto out;
+
+	vote = err_handler->slot_reset(dev);
+
+So a driver re-enabling MSI-X from .slot_reset() runs with error_state
+already normal and nothing is skipped. That same ordering is why this
+patch does not break pci_restore_state() ->
+__pci_restore_msix_state() during recovery.
+
+In principle yes, and that is inherent rather than something this patch
+regresses. error_state is a notification set by the DPC/AER handler
+after containment has already happened; it is not a lock. Containment is
+asynchronous, so any MMIO to any device can race with it, and no
+placement of these checks changes that. Closing the race properly would
+require serialising every MSI-X mask against containment, i.e. a lock in
+the interrupt masking path.
+
+What the patch does close is the deterministic window, which is the
+interval between report_frozen_detected() and report_slot_reset(). In
+that window the kernel already knows the Link is contained, and driver
+.error_detected() and prepare-for-reset callbacks nonetheless call
+pci_free_irq_vectors(), which masks every descriptor and flushes each
+mask with a non-posted read. That is reproducible on every contained
+device that tears down its interrupts before the reset, and it is what I
+observed escalating a Downstream Port containment event into one at the
+Root Port.
+
+For v2 I will also rename the helper to pci_msi_dev_inaccessible(),
+since in __pci_write_msi_msg() it gates the Configuration Space MSI path
+as well, and the previous name implied MSI-X MMIO only.
+
+Thanks,
+Vidya Sagar
+> 
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818231426.58=
-105-1-chandrakanth.patil@broadcom.com?part=3D17
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260817195626.3091331-1-vidyas@nvidia.com?part=1
 
-Thanks for the review.
-
-New issues:
-- The observations regarding stop_drv_processing and
-mpi3mr_cleanup_fwevt_list() are valid and will be fixed in v2:
-  1. Setting stop_drv_processing during pci_channel_io_frozen caused
-mpi3mr_qcmd() to fail I/Os with DID_NO_CONNECT instead of pausing them
-with SCSI_MLQUEUE_HOST_BUSY
-     via block_on_pci_err. In v2, stop_drv_processing and
-mpi3mr_cleanup_fwevt_list() calls have been removed from
-pci_channel_io_frozen.
-  2. To prevent in-flight firmware event handlers from accessing
-unmapped MMIO register space during PCI error recovery,
-mpi3mr_fwevt_bh() now checks mrioc->pci_err_recovery
-     and safely skips event processing when PCI recovery is in
-progress. Incoming I/O remains safely paused via block_on_pci_err for
-transparent recovery.
-
-Pre-existing issues:
-- The lockless current_event UAF in mpi3mr_cleanup_fwevt_list(),
-missing cancel_work_sync() for pending SML events, and memory barrier
-observations are pre-existing issues
-  in the driver and will be addressed in a separate follow-up patch series.
-
---0000000000003a7b030659de2426
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
-2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
-phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
-a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
-ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
-07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
-SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
-rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGpzCCBI+g
-AwIBAgIMAgfxQ1Z7DrZKmCE/MA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
-ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
-MDIzMB4XDTI1MDYyMDEwMzUwNFoXDTI3MDYyMTEwMzUwNFowgekxCzAJBgNVBAYTAlVTMRMwEQYD
-VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
-MDExNzEOMAwGA1UEBBMFUGF0aWwxFTATBgNVBCoTDENoYW5kcmFrYW50aDEWMBQGA1UEChMNQlJP
-QURDT00gSU5DLjEoMCYGA1UEAwwfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTEuMCwG
-CSqGSIb3DQEJARYfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBAJwyF5qSHwwr1zJWkKvkMnY7V/sVFYYjTpjgxS4XA76pD6eLsZvS
-4J73HkKSNEzORxBE7OyZSnuBJ9zeeRcypuItG9YrHm+0OSF0psIWsH15FBYJ0nvsUnlFbCSNvOdr
-Co0WJ1KTe/7caj014uRZM2j7zH1vC+9fjEgrJdDRZakZXarl8M7k9okvVj1N+EuHiYUMvsAuMadE
-a3p31Z6QdvMpr+30UdJXHshV1mXca+UBpCx26GbY6NgxhHM2LtHiaCK8Vn4HMofDkFg4nQ6eK4ai
-uCiTtPj5aNlkdpcCzcZ+j1eCu6ZfPIq2ycwDaHi8d6Dwcgm+XoxDmD97Ehp2FOkCAwEAAaOCAeMw
-ggHfMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggr
-BgEFBQcwAoY6aHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1l
-Y2EyMDIzLmNydDA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2Ny
-NnNtaW1lY2EyMDIzMGUGA1UdIAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGg
-MgoDAjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5
-LzBBBgNVHR8EOjA4MDagNKAyhjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWlt
-ZWNhMjAyMy5jcmwwKgYDVR0RBCMwIYEfY2hhbmRyYWthbnRoLnBhdGlsQGJyb2FkY29tLmNvbTAT
-BgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSMEGDAWgBQAKTaeXHq6D68tUC3boCOFGLCgkjAdBgNV
-HQ4EFgQUyqNnwId/JCbRPslVl3nm48YRek0wDQYJKoZIhvcNAQELBQADggIBAKPmllSh8cRXzNRs
-3OATCVDgrdOfIsZMB9UVXcYQ+HtR1fu9bafeyuuupF9gcCmi+onLsANYRKaEDjC8h+V5FMAgm6TI
-bww4EFGpWvP/XEVKrpcpMkYNMLw89lagx9ZZDhx9DmfQMI9gG9MPpCkSMEPnJvEs7gqtOo08aL1+
-ts10tGfePsHF/I42Da21hJIJ01XN+Z91y//1cJkHwCBvDmoB8gdMXp3g4sjzahTxRZ25BdZB9W+n
-0jfWJXFKtp9MYS1SaVo17usfrlTeyaH3zPyDvfAfGoLB5+i8vyVL6wta2vgVpfsL9iwhbJnAIxr+
-ljECWkh1weDJw3UnV6nooG1RztnwqbG4eAG/KSCToXgVH9qSDv5S1lve5mvhv9AHzLjGLs+QtMeg
-WEdMM4G0PWyibzGgNrmVgKaLjV6EMo/IZW7KjBtvjyKQZhes90D4GyxXv+/mrTo2rruz53+FoSc/
-nuyLmg/SxnnZRaf7JGHFvu0IbwkeINwdHynAanOg9AD4zits7k7jjQ0fwIdhCaoRA3ao7PXUL1t8
-LfSp/K5DCYsrXNqitPmQaAAGAiG4d4WDxBev6vtoyH7ejLcuCKkxCefrLO5qYnuDHsMNCObdslAe
-tMVer+USn6AqB//6EwmqdiLr4o20UQ79jxNFMAEKdwyNkA8mVCVUAtTe3mPrMYICVzCCAlMCAQEw
-YjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xv
-YmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMAgfxQ1Z7DrZKmCE/MA0GCWCGSAFlAwQCAQUA
-oIHHMC8GCSqGSIb3DQEJBDEiBCD8KveVI0uxHIa6V3enaaroBkT5hqD5o0VwngED74TjHzAYBgkq
-hkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjA4MjUxMjIxMjVaMFwGCSqG
-SIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZI
-hvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAU7CCctauu
-FrO1wyVYNRngWszv8ruEtifWx88XlcDYh9r4A9hjgaCr6xcNuHjCPTp/MWTfUUF8PZmU7Wqf9kfk
-xMzFsAOg8edKl7XZnlm+60qKVfeIrHf2WxCqBDQAj0503bKN7S34Eqpj6/eGgYgb9TFP7nqpMN6E
-9aEBv2SE0UbuDmOY7HXy68TTf4tpdCCS6PiQ/MbH0mhZ8Sq4ZMcjFPxHPdUZgpcsyfRY2Tb65Rzn
-/clSiY1m3xCo5G4DujBvbkzNMxcMplYf1RJohBAnH25YXmm4TT8Tk7N4y/l2MRRXjmxvWteJjh3I
-RiiFbYbHQJCyEbgPPfc7OoEJpH68
---0000000000003a7b030659de2426--
