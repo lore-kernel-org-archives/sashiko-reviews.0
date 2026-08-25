@@ -1,144 +1,179 @@
-Received: from smtpo63.interia.pl (smtpo63.interia.pl [217.74.67.63])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail-244108.protonmail.ch (mail-244108.protonmail.ch [109.224.244.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDB67E105
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 09:46:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.74.67.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97F8348C6F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 10:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787651205; cv=none; b=VgxnYDSwNUSdwruXxFb8Qr7iumH1t2NerfV61colvHEGI7C2Eh7x3uHLiRKqRUcMtCvLjdSunqpOxNbi1RKjptXvQSZYsbX8aCuhISwGcDOLiDD5i5HZap5YPt/iM0oQFVGYv1f2W1RnJGvE39v8cp1qxLm46j3+r+kuPttI++s=
+	t=1787652840; cv=none; b=X889K2r9jKY8JpSd5U3di1j6xW7INM+b8zE+S4/lVfrpl5VSwvpVA5XIB45iynp8aHtJYAVVBBCkwjj8UVMMFcSyjc2Mw5umm9dEcSa5joYcfAGDk2pNxnb2Lxj/3s9ysRmkRuxTON3UT93jmqKg9vLt3+D69qIoiLhXqgWamZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787651205; c=relaxed/simple;
-	bh=fmiVhvFRiGsrLjl8bbtw3ypouRNG4Hb3E/7h/x864v8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sBy7DMDPdIy+h8DbFcwDB4jgreJGYIv5/ix/CpDOCofyuulwf4f0p3JaOdOv94tXqjBx6hiFahGUd01C25D3vLWdKhaW8p45eOGE4jso1B+1mpHJ5i+xanCxMkb815JqmrM/n0irUix2emlSKmT3irjovIH+2wSTN34SEpG6R/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm; spf=pass smtp.mailfrom=poczta.fm; dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b=orbBPggv; arc=none smtp.client-ip=217.74.67.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=poczta.fm
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=poczta.fm
+	s=arc-20240116; t=1787652840; c=relaxed/simple;
+	bh=cdWDnk+pCmudlmOu4mqCm1nZeyD6KR9y7vFIGoF2kbY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TPHjMzj45//E7LrgphiddcRH8M6XtkBQTJuAmo6bHyMrU5b4DguJoJ9JcI0CwKRElq+PUmjaACQSZybIx+h8ifiF9GZcvAduJDt+RunLN7gsJEwbD0/at7DqCIjJCEgLp5q4s0amPfRFs+LhXJjZV1LV777AVo1c17NHMrEWFko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=ajKemV2w; arc=none smtp.client-ip=109.224.244.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=poczta.fm header.i=@poczta.fm header.b="orbBPggv"
-Received: from nr200 (unknown [80.68.231.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by poczta.interia.pl (INTERIA.PL) with ESMTPSA;
-	Tue, 25 Aug 2026 11:46:36 +0200 (CEST)
-Date: Tue, 25 Aug 2026 11:46:34 +0200
-From: Slawomir Stepien <sst@poczta.fm>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: sashiko-reviews@lists.linux.dev, syzbot <syzbot@kernel.org>,
-	dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe
-Message-ID: <ao1ketQ4oxNiWGAM@nr200>
-References: <b11f8965-5896-4119-98b7-6bd0eb9fa139@mail.kernel.org>
- <20260825074432.0B4511F00A3A@smtp.kernel.org>
- <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="ajKemV2w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1787652830; x=1787912030;
+	bh=mLYnEk4zxlRkMBFZndTuGiFtQNuyUOtWaqNB08diNQo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=ajKemV2wRSGrR7EZAwwOpkHiq3/UXYQ7IcUEIfhCpFPgOEXC9FvAUt/t/LRe0pl9G
+	 QRFV+q7JyyKivbmz8XtO0HRdfwwvOVJfyXA3wIJk/26aRL78ywV/dVxlre3+o4Nu6T
+	 WyMLRiygwMwSxEnWuAKg7pcdNlLJFIyECVSnL4LEQuC6rdtKfxL4Iy7adZp/OP8Ez6
+	 obK8yX11FJV6oN+LCb08t5kIU3SFXhDUcjOjtrW/P+7gjkfV/OcDdntgxoOxvwvVzZ
+	 n8ShMmy72OGt/xjMPplnuzgB+irO6Hj2H4ewMeNZF/T3xmKudODUQ/eVg9SIb/UG4m
+	 MmKm7C2ykWTnQ==
+X-Pm-Submission-Id: 4hTkC13Vm9z2Schg
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v3 4/5] drm/bridge: nwl-dsi: Add error handling of
+ nwl_dsi_mode_set()
+In-Reply-To: <20260810072257.2ABD61F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Mon, 10 Aug 2026 07:22:56
+	+0000")
+References: <20260810-nwl-dsi-fixes-v3-0-256da9d672e1@geanix.com>
+	<20260810-nwl-dsi-fixes-v3-4-256da9d672e1@geanix.com>
+	<5q9c0nOychvLDFd3tAjzhmVICVDZQWFIPqhVqa1FQJGcjJTarKOeTu1dJqvF_NiZXLKlWwb68VedbPjlDsJ8gg==@protonmail.internalid>
+	<20260810072257.2ABD61F000E9@smtp.kernel.org>
+Date: Tue, 25 Aug 2026 12:13:49 +0200
+Message-ID: <87jypeo6ci.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ce0912d6-fdc4-4ead-9388-a9e0e9a1954c@suse.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poczta.fm; s=dk;
-	t=1787651198; bh=MvH/GZjMBZncc502+FYWTWv0K2Z8oMHl739kUmAgO54=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	b=orbBPggvICoii+Nd15hkuQdaVT4uWhs0z4sbW4il/lbCDnVOE6amIE9ygg+Ht4iYT
-	 CYHDmQ3C1E1Ty9JxV9OQg0L2sziOirldjm08W1Mh1nhm3Ng9xDbmKL3qZb6705X/kq
-	 sQ+RYSnnW1c6qCNhYORfySESlYl9GLL9YB/U8T8Q=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On sie 25, 2026 10:00, Thomas Zimmermann wrote:
-> (cc: Slawomir)
-> 
-> Hi,
+<sashiko-bot@kernel.org> writes:
 
-Hello,
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Unbalanced resource teardown and PM runtime underflow in mode_se=
+t error path.
+> --
+>
+> --- Patch [4]: [PATCH v3 4/5] drm/bridge: nwl-dsi: Add error handling of =
+nwl_dsi_mode_set() ---
+> commit 0db3c1cc2f73a9bc66aea2633f754029dd76b743
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> drm/bridge: nwl-dsi: Add error handling of nwl_dsi_mode_set()
+>
+> This commit adds a return value check for nwl_dsi_mode_set() in
+> nwl_dsi_bridge_mode_set(), jumping to an error path on failure.
+>
+>> diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/n=
+wl-dsi.c
+>> index 3fd41212933c8..e90588299c5ea 100644
+>> --- a/drivers/gpu/drm/bridge/nwl-dsi.c
+>> +++ b/drivers/gpu/drm/bridge/nwl-dsi.c
+>> @@ -884,7 +884,9 @@ nwl_dsi_bridge_mode_set(struct drm_bridge *bridge,
+>>  	}
+>>
+>>  	/* Step 2 from DSI reset-out instructions */
+>> -	nwl_dsi_mode_set(dsi);
+>> +	ret =3D nwl_dsi_mode_set(dsi);
+>> +	if (ret < 0)
+>> +		goto runtime_put;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does taking the runtime_put error path =
+here
+> lead to unbalanced resource teardown and PM runtime underflows?
 
-> thanks for the fix. Please see below for changes that should go into the
-> patch.
+Yes, it looks like it does. Similar to the existing error flows unfortunate=
+ly.
 
-thanks I will look into them and make a manual v2!
+> Because the drm_bridge_funcs.mode_set callback returns void, failures can=
+not be
+> propagated to the DRM core to abort the commit. If nwl_dsi_mode_set() fai=
+ls and
+> jumps to runtime_put, it calls pm_runtime_put_sync() and returns early.
+>
+> However, the DRM core still considers the bridge pipeline state to be 'en=
+abled',
+> and will unconditionally call nwl_dsi_bridge_atomic_disable() during the =
+next
+> pipeline teardown.
+>
+> When atomic_disable() runs, it unconditionally calls pm_runtime_put(), le=
+ading
+> to a reference count underflow:
+>
+> drivers/gpu/drm/bridge/nwl-dsi.c:nwl_dsi_bridge_atomic_disable() {
+> 	...
+> 	pm_runtime_put(dsi->dev);
+> }
 
-> Best regards
-> Thomas
-> 
-> Am 25.08.26 um 09:44 schrieb sashiko-bot@kernel.org:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] The exact equality check for BAR0 size (`!= CIRRUS_VRAM_SIZE`) incorrectly rejects valid QEMU configurations with larger VRAM.
-> > - [High] The VRAM size validation check is placed after `aperture_remove_conflicting_pci_devices()`, meaning the firmware framebuffer is permanently destroyed even if the driver ultimately fails to bind.
-> > --
-> > 
-> > --- Patch [1]: [PATCH] drm/cirrus-qemu: Validate BAR0 size during probe ---
-> > commit 75467ead62a494b6afbc057c666ab59f7e4b8915
-> > Author: Slawomir Stepien <sst@poczta.fm>
-> > 
-> > drm/cirrus-qemu: Validate BAR0 size during probe
-> > 
-> > This commit adds a check during PCI probe to verify that the BAR0 resource
-> > length equals CIRRUS_VRAM_SIZE. This is intended to prevent supervisor write
-> > page faults caused by writing past the end of the mapped I/O memory when
-> > smaller BARs are presented.
-> > 
-> > Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
-> > 
-> > > diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > index 075221b431d37..70c995025f508 100644
-> > > --- a/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > +++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
-> > > @@ -602,6 +602,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
-> > >   	dev = &cirrus->dev;
-> > > +	if (pci_resource_len(pdev, 0) != CIRRUS_VRAM_SIZE)
-> > > +		return -ENODEV;
-> > > +
-> > [Severity: High]
-> > Does this strict equality check unintentionally break valid QEMU
-> > configurations that have more than 4 MB of VRAM?
-> > 
-> > When a VM is booted with a configuration like -device cirrus-vga,vgamem_mb=8,
-> > the BAR0 size will be 8 MB. The check in cirrus_pci_probe() evaluates
-> > to true (since 8 MB is not equal to 4 MB) and rejects the device by
-> > returning -ENODEV.
-> > 
-> > Would it be safer to check if pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE
-> > instead of requiring an exact match?
+Maybe we should use pm_runtime_get_sync() instead of
+pm_runtime_resume_and_get() in nwl_dsi_bridge_mode_set(), and then call
+pm_request_idle() on error instead of pm_runtime_put_sync(). This way we
+can keep the pm_runtime_put() in nwl_dsi_bridge_atomic_disable() without
+risk of counter undeflow.
 
-It seems that 4MB is the default one and 8 and 16MB are just for compatibility:
+We would need to do something about the initial early return on
+nwl_dsi_get_dphy_params() error, to avoid that causing counter
+underflow. I think it should be safe to call pm_runtime_get_synmc()
+first thing in nwl_dsi_bridge_mode_set().
 
-(qemu hw/display/cirrus_vga.c):
+Is it possible to do this in a follow-up patch series, so that we can
+proceed with merging this without causing more complications by dealing
+with this tricky pre-existing issue?
 
-2951     /*
-2952      * Follow real hardware, cirrus card emulated has 4 MB video memory.
-2953      * Also accept 8 MB/16 MB for backward compatibility.
-2954      */
-2955     if (s->vga.vram_size_mb != 4 && s->vga.vram_size_mb != 8 &&
-2956         s->vga.vram_size_mb != 16) {
-2957         error_setg(errp, "Invalid cirrus_vga ram size '%u'",
-2958                    s->vga.vram_size_mb);
-2959         return;
-2960     }
+> Furthermore, atomic_disable() unconditionally calls nwl_dsi_disable(), wh=
+ich
+> blindly attempts to tear down the PHY:
+>
+> drivers/gpu/drm/bridge/nwl-dsi.c:nwl_dsi_bridge_atomic_disable() {
+> 	...
+> 	nwl_dsi_disable(dsi);
+> 	...
+> }
+>
+> Since nwl_dsi_mode_set() already cleans up its own PHY resources on inter=
+nal
+> failure,
+>
+> this double-disable pushes the PHY framework's power_count and
+> init_count to -1. The next attempt to initialize the display will increme=
+nt
+> these counters to 0, skipping the actual hardware ops->power_on() and
+> ops->init() calls, permanently leaving the display broken until the modul=
+e is
+> reloaded.
 
-I will add the 8 and 16MB then in v2.
+True. That is a pre-existing issue, but I don't see how it is affected
+by this change. In case nwl_dsi_mode_set() fails, it did internal cleanup/d=
+isable
+of PHY resources before this change, and does so after this change in
+the same way.
 
-> > [Severity: High]
-> > Is it safe to place this validation check after the call to
-> > aperture_remove_conflicting_pci_devices() earlier in cirrus_pci_probe()?
-> > 
-> > If this new size check fails (either due to a malformed device or a larger
-> > valid VRAM size), cirrus_pci_probe() aborts with -ENODEV. However, because
-> > aperture_remove_conflicting_pci_devices() was already executed at the start
-> > of the probe function, the firmware framebuffers (like efifb or simplefb)
-> > have been permanently destroyed.
-> > 
-> > Could this leave the system with a dead display output? Would it make sense
-> > to move this PCI configuration check to the very beginning of the probe
-> > function, before any destructive actions occur?
+> While this broken error path already existed for clock initialization fai=
+lures
+> in this function, wiring up nwl_dsi_mode_set's return value to it exposes=
+ the
+> PHY breakage on a new failure path.
 
-Yeah I guess this new check can be before aperture_remove_conflicting_pci_devices().
+I don't think that is true. The changed behavior in case
+nwl_dsi_mode_set() fails is that we are now skipping deassert of rst_esc
+and rst_byte and doing pm_runtime_put_sync(), where as before we were
+executin g the deassert of rst_esc and rst_byte and not doing
+pm_runtime_put_sync(). The PHY double-disable issue is unchanged.
 
-> > >   	cirrus->vram = devm_ioremap(&pdev->dev, pci_resource_start(pdev, 0),
-> > >   				    pci_resource_len(pdev, 0));
-> > >   	if (cirrus->vram == NULL)
-
--- 
-Slawomir Stepien
+>>
+>>  	/* Step 3 from DSI reset-out instructions */
+>>  	ret =3D reset_control_deassert(dsi->rst_esc);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810-nwl-dsi-=
+fixes-v3-0-256da9d672e1@geanix.com?part=3D4
