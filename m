@@ -1,143 +1,166 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011062.outbound.protection.outlook.com [40.107.208.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BA83DE420
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787646375; cv=none; b=haDKISr6GvUqe+U2WayVt0HbMSQZ0PzdB468tdF4GDmXysaxe9a8jLNdrYNENorGc0AFxbMx5RareOPVaCRD9n8qCZksm+ep9acQ0m8y+XW7KjrV6iKoxiDhWylJQ4C/MRutIhTdRcca36NsXMxduwM9maR/mtykyF0BoKu1UfI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787646375; c=relaxed/simple;
-	bh=P8dDe9WGJaB5/v6G6RAFPTJUDTZnGgg0DTzE8KtbvoU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B6MACdaEZAwjCcMv/hX3B8RwghfNfk2jbMKLRVokh73VD5fFGxSVpqhwzCcm7Ws+nX361SyEFc/lWuxrM2IxBdHj/havbpZa336SJ1ca7mIORITVQfvTbfxIQmsQEcZTpyhd0SamjpBXhLb6dz4FO9iZdVkQuj/CUcZBY4+eJu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lkNf090b; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8C73E49DB
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 08:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787647220; cv=fail; b=oScfsSP+Hoc8pT+bWg3bklCOL+wHcNhRvNp6BP3dXxiHgRf6Q/q1sZk3rG1Q25p2qxVySboEcQbCmiqNqvCEmH0MHbAV0qSYNBXHVSynGpWrJUfTWTPUK0n1vbzjhNZ7U4WlOd/7AuypqRtpF2oNUKV3FMKHbgXpMMnSGXlxxaA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787647220; c=relaxed/simple;
+	bh=GmXjqDoPTBgdbfPicOYMHRHM8DC3jLsMGME47VcoHks=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mGRQFkB8JTrYofoT9dDXGIzSpW0mailceEBEJCOvyMTHqR986Y1buqSB3QT6ir+77RrP6tLrVaiWZ7SPzWrg2euAUKdFC4xLyMK9a03ucAWS4q7vcHlpavBM09RChXKmKWBWsmbrz/M1vnfaU96TxFPRwMxJsy57kPWRzdd41h8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=KTrYcgG7; arc=fail smtp.client-ip=40.107.208.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lkNf090b"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49800c6a846so36118305e9.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 01:26:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787646372; x=1788251172; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LX5TxyIQ51uP9mPCb4WWu473qdFXpXWJJ9AlVry9ycg=;
-        b=lkNf090b8QFUHisH8XvNsIIAqgJfyo9Vb6NRhL1t1PgCybc3Dm0lExgr23p+G46UGt
-         p2xXEupu6GaEWbng/Y/WfVAAdT0TMLrkmmqpH86yNZRMejAPDHhA5ehTTwh2vUC55Xgx
-         W4t2RoQxQjYTcIGXjrs3liJVyB5YhpVALst54ADlUbq9KSCj7aWDPxpwh+z1HudKvJKv
-         uCB+j/6u/k3H9toYQ7TOPVJ/jpTfVwqe7gRhPZXAz77oK7xUosYqM4p001lEwjmKtdAD
-         tpGS0f57dRfJTOpBNFPxPnVOgVXEtnWG4CzBRb2YlX4L9iz7VSky3itGfFuiNqeuw0L5
-         jSIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787646372; x=1788251172;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LX5TxyIQ51uP9mPCb4WWu473qdFXpXWJJ9AlVry9ycg=;
-        b=nMfqp027cA1EOOqLsatzbG5M/H78OTIm9Y7BOTaSM+3TQQPH/fTvbCYDIwF37QyHPe
-         UBDsGhwvVH70lkhwIY9VG3a/vWMQJXvtrqv3xomryllL6Jzax0pxLM10odMDNZR3AbAh
-         4gJFYyV1CNiHZio190jXylONaEdNPIG3FVIiFXh3TKn7EdYSqfxJ33BJ8XUUXcu7il82
-         etwbRVDwadY7wnqYAI02ISBqWwNA2AF53/IFE12Iy3HU+8l7PZVCUu2OquTUr+Wmy/5n
-         /1zbNfjoOCmLQWGAQmQ8QzsAbwCme3OySsY7aHgQcHJ/0Xg2GlZthlVJwjHDY5Ix350O
-         fscA==
-X-Forwarded-Encrypted: i=1; AHgh+RrjSJmX2AWhDjZQ5GRiiDMDjc8OhOBt/BlYAaVyFssR3D4nJMIhKjn8zGe6IoGcR/3UYNsR1XyY8HmFIAuihdU=@lists.linux.dev
-X-Gm-Message-State: AFuF++krp2GNCfFagL+JiLQeEG1O2ARGGvZP1Z0Xq298r8BQYEucn+CS
-	/gzFokhVT6rrA4GvX0L3d3m3k7faQ8Qk5jrS85kobInb6ejG/OYA/fdEmBnPNwRad1Kr/YrNDEH
-	zWe9GXfK/qw0=
-X-Gm-Gg: AR+sD10EpCP1QbjjRjHAFGNtBlXSHbPVqPikYLs6dkPQSKQLovIb/pblVajmuhZcczc
-	OgNDCQ1af56UKBURpTZlwpXxzjFPvx38njnbtwfDcaiUarOBR87ABTn/G8MLPzLKo/eJDgBqtxL
-	35UmbD3paYrFZDGJq3tozrn2XiaAHhoOUko8B1xzExEJzFFoRc1lBzWW4grn4+y2Agg9/ZPFyAI
-	E1SXlQ5253h4fktJJnQIeakrWA94Hg8BbE6SL/jw3teDoP3rFGnRvGwYoZuzcBbcm/0GqFVLa2S
-	aQXr/KdAHfO54B3DumIelZT8R5KSBUCV+Jh3jgOnxQKNAY1XQ4nL/ME4mLCEUKWV795OCAryNzp
-	WJ4RO7kA7SYHvWhJq26xq25VvkBxDXWHf2qpw2EZXKpxRoeUDuMvkspmHzisyvW1lPjtErqhx1t
-	goT7qLcb/AHIeBdb9JHhGVxdvfG2UrZehgD8GOMsuFlgMrdkHzX/ZeMnhTbPE5njMVNAr6NWRpq
-	IJTjRGECydKnNimzOIO+Miy5uMuacsmbc5QEg==
-X-Received: by 2002:a05:600c:3b9f:b0:499:8ae1:b900 with SMTP id 5b1f17b1804b1-499d652362amr52626925e9.12.1787646371723;
-        Tue, 25 Aug 2026 01:26:11 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499d633506bsm21294465e9.3.2026.08.25.01.26.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 01:26:11 -0700 (PDT)
-Date: Tue, 25 Aug 2026 09:26:07 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/3] tracing: Fix subbuf resize races with
- trace_pipe_raw readers
-Message-ID: <ao1Rn8ZKr5XafWRZ@google.com>
-References: <20260817134750.3909384-1-vdonnefort@google.com>
- <20260817134750.3909384-2-vdonnefort@google.com>
- <20260817140812.2C7D41F00A3A@smtp.kernel.org>
- <20260822110424.346fa3c8@fedora>
- <aotTYT0zE5LNik06@google.com>
- <20260824105315.27377f30@gandalf.local.home>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="KTrYcgG7"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qP1Cs5TI9NpxbPh9W+ILik0Mv2TeWtqTRybFpTPZIcjc1r+0MQCQC8L17ysDSQ+2ymANcg3IbOn/uPQ0EyRbmd4BKDQAEo1CZb6ibTcRa3Cm6qJxShjlGQ+16WE913Zkp6GK2CjXs9CwOzoLbvDvS88PbMSMb/MjUc0DcrzX/v/NAzgvVTv9PkUvY8GwTfOn4Z6hBhohx8p3/spf2UJYk2QiPhueGuoeDyduqbfXM97N37VQsQ45/GOpJHtak7gORFAi5UEQE8HjzCnGhdbvKBOtQyMYTzCZTa/uIm+MjqO76a8+hpOQpnN5e3BSeTZVSt9jfzj2LedVxWdH9NF0wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VxbTZ0R9PtZ8P942pgh6heQAGMxEIZbQQn9JJKO6FBk=;
+ b=rmfuoR9wdIM04n9sHEP+OEcA7AWBT/yvr7Y7nodAeaDvnqT5ZTUV3pdFTbKU7xgB8ODwE95BmqmXi/8tchuHLUKauXoW7M1Or6wu1WbT5+pGl2yz5CVh6H1CLde1n+nWhUUuYG/QXi9SWwQJawy5tWrIl5aVO5Ewudzdlrk6sfeIZqJuJngv+H3rT9qoSaPJpkvNjstH+C84gKjIZqs22XZ30k8e1yDYLfwnO2M9kYJXrHgdnUYxGm/urAeI0W8uyiJYeItv1mQTOy+PM0zPRvMhOjO5GDeMb21wY8/+OM+Q3/XUHU6uBlnTzr15UfVz3KgMFHJxmSO90xhRhX2jsA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 149.199.90.133) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com;
+ dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VxbTZ0R9PtZ8P942pgh6heQAGMxEIZbQQn9JJKO6FBk=;
+ b=KTrYcgG76C7EGh9Y91kBJfsTKCXRn+54m+3hx5Nxms/0GZ8n06xEBn1oBMMWtB99MqsuLiTwE6vhnr+kB+N6T/+rOR2TFqV8r/xCVjJxLIPO7ROq10vZ8MIPMZf6sgvU6c6gC76+ElAjpxS/PK7jxqgeVVx0ZoH4Gfwpx7SA2iY=
+Received: from PH8PR05CA0024.namprd05.prod.outlook.com (2603:10b6:510:2cc::12)
+ by DS0PR12MB6415.namprd12.prod.outlook.com (2603:10b6:8:cc::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
+ 2026 08:40:15 +0000
+Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
+ (2603:10b6:510:2cc:cafe::1d) by PH8PR05CA0024.outlook.office365.com
+ (2603:10b6:510:2cc::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.6 via Frontend Transport; Tue, 25
+ Aug 2026 08:40:15 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=quarantine header.from=amd.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ amd.com discourages use of 149.199.90.133 as permitted sender)
+Received: from satlexmb07.amd.com (149.199.90.133) by
+ SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 08:40:14 +0000
+Received: from [10.85.33.190] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
+ 2026 03:40:13 -0500
+Message-ID: <327c7769-8ef6-40c3-869a-93c29ec9fa9f@amd.com>
+Date: Tue, 25 Aug 2026 14:10:10 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260824105315.27377f30@gandalf.local.home>
-
-On Mon, Aug 24, 2026 at 10:53:15AM -0400, Steven Rostedt wrote:
-> On Sun, 23 Aug 2026 21:09:05 +0100
-> Vincent Donnefort <vdonnefort@google.com> wrote:
-> 
-> > > > [Severity: High]
-> > > > If ring_buffer_read_page() returns -EAGAIN because the subbuffer order was
-> > > > updated but cpu_buffer->reader_page->order hasn't been updated yet, this
-> > > > branches back to the again label.
-> > > > 
-> > > > Since the loop does not yield the CPU or call cond_resched(), could this cause
-> > > > a hard lockup if the reader and the resize thread are on the same CPU?  
-> > > 
-> > > Hmm, this looks legit. We should at least have a way to break out if it
-> > > loops too many times.  
-> > 
-> > Can this happen only on !CONFIG_PREEMPT systems?
-> 
-> It can happen with RT tasks as they don't yield. If this task is of higher
-> priority than the one resizing, then it will loop forever even with a
-> cond_resched().
-
-Ha yes of course!
-
-> 
-> > 
-> > I can add a cond_resched() here though, I believe that would make sense: if an
-> > order modification is pending, writing is disabled anyway and we are about to
-> > loose the stored events.
-> 
-> For RT tasks, cond_resched() wouldn't be enough.
-> 
-> > 
-> > Additionally I can reduce the window where buffer::subbuf_order differs from the
-> > reader page order by adding an "order" argument to __rb_allocate_pages() and
-> > only set buffer::subbuf_order later in ring_buffer_subbuf_order_set().
-> 
-> I'm wondering if we even care if data_page->order != cpu_buffer->reader_page->order
-> and should change it to being a force copy instead.
-> 
-> If the reader_page is bigger than the dpage, and only copy what the dpage
-> can hold. It would also update the read value of the reader_page which
-> would allow another copy to get the rest. If the data page is bigger, then
-> just copy everything.
-> 
-> It's not like this will happen often.
-> 
-> -- Steve
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <sashiko-reviews@lists.linux.dev>,
+	<kvm@vger.kernel.org>, Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 1/2] x86/uaccess: Extend CMPXCHG user helpers to
+ 128-bit operands
+Content-Language: en-US
+To: Sean Christopherson <seanjc@google.com>
+References: <20260706063035.1139-1-sarunkod@amd.com>
+ <20260706063035.1139-2-sarunkod@amd.com>
+ <20260706065212.CCD741F000E9@smtp.kernel.org>
+ <84113ba5-ddb8-47aa-abe0-c6968feb3fea@amd.com> <anpsjpCQHjJCH7TU@google.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <anpsjpCQHjJCH7TU@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|DS0PR12MB6415:EE_
+X-MS-Office365-Filtering-Correlation-Id: b18c58e3-cfa0-4c2b-f0b7-08df02847c16
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|82310400026|36860700016|376014|56012099006|10067099003|3023799007|22082099003|11063799006|4143699003|18002099003|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	W20uM9au7iSFRsxlv4QNk6VXO0HBHRZtDPQhDJc91vOKMgQfkO/ucSRV3PWfXQAtfd9JjW6mat9WxJPLU2nq4hJNtGerksLogAfTFLWI5357YLiKchPqrdZp0fjE+7G5CfiZJC+yHQ8WVQAZJcHZdN1gphIIe34Zvo0wLbD2e0w6gpdgIohlSrOQ88M/Mn6RJLgfZlnNBVv4rBrnUamZCK5Wv/DLzBXvDH9AIpJ+rsiu9DXYgXYamsmKLRqBRG5BzgzXMgk+HZwaY02XmdhJocRtMJ/DJKbvF/jRjp+Lhevt+Al3DThH1HIMluV76xypCDqa8ImdGQ0ooOIQ+SeiD/ZEWRT47kAKTZSIXgexlfPoRRMZFWzrox5C0wrwXWK7m7NIzF7SyH+j2Jz7pgvhV9ItVrQfZgnGMB66eOqQB2ggKFnSvJmSC1hZ+ospVcf5ZCFNbPSUGsLoy50aQyj22dyxKIQrfTIcd5CJmsrHznHI8icYbex6eGOwghTZU7xFw6sxOc18gPZ5bvoiUgVYAmO/ypNEuzF60Zbb4zPIx6jiYcx6t26iyhVYheQSWveHmQnTwlZYNsP1XCSE201WIu1+tnixMJjJ9hl6MNwCpD7kLmXq1uLFTmEE6aPllwQjV3ZjrkXT7PcTNANmhkZ3aA==
+X-Forefront-Antispam-Report:
+	CIP:149.199.90.133;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:unknown-90-133.xilinx.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(82310400026)(36860700016)(376014)(56012099006)(10067099003)(3023799007)(22082099003)(11063799006)(4143699003)(18002099003)(13003099007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	4ZwRxFa7oZVgn+k6yZXZNuLzwElx0ngVDVf+nkT1iaU8sb3DZ5q8iRe5ODbDYbyLj6luNrP2Czvl4nO8FVcYIkywiTuyXRL6qbn4ZGJsIz6Kh/3/eP4iZqh1EkowVxaZkAtsfVMD+1kqwBqBf/XUGFhbWn6wZC3YnNxi8iqeagAWltTF3eMrBIxPgEw+oCMP7LNmFTf1YVFr3SuyuuO8RhwgfHw+yfGz9m1YbURWm4sXgi3z993RElTUSVmSXDhLo825i2S93aQv684bKX3qUUiMDiX28qKFiuE5decDJapsrOucyAOK+fBu6xuuUVTqHAwI+vNySbm6vkzEuIlf8X9YDD9up2Jm3pNL1eBWnJvKXaooImAk5/KmmpTzfhQBj7yWSf9EHZ9ce3yp7lcCXHY2OiJ1CplL4KEjTWUg9vE733xXboYYRt6RNJ7Fuzlz
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 08:40:14.9481
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b18c58e3-cfa0-4c2b-f0b7-08df02847c16
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[149.199.90.133];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002529D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6415
 
 
-That sounds interesting... that would get rid of the -EAGAIN. Let me try.
 
-Do you think it is still worth to reduce the window of discrepency between
-buffer->subbuf_order and buffer_page->order?
+On 8/11/2026 5:57 AM, Sean Christopherson wrote:
+> On Mon, Jul 06, 2026, Sairaj Kodilkar wrote:
+>> On 7/6/2026 12:22 PM, sashiko-bot@kernel.org wrote:
+>>>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+>>>> index 367297b188c39..123755d471099 100644
+>>>> --- a/arch/x86/include/asm/uaccess.h
+>>>> +++ b/arch/x86/include/asm/uaccess.h
+>>> [ ... ]
+>>>
+>>>> @@ -551,11 +594,18 @@ do {                                                                            \
+>>>>
+>>>>   extern void __try_cmpxchg_user_wrong_size(void);
+>>>>
+>>>> -#ifndef CONFIG_X86_32
+>>>> +#ifdef CONFIG_X86_32
+>>>> +/* Always fail on 32 bit arch as it do not support 128 cmpxchg (i.e. cmpxchg16b
+>>>> + * instruction).
+>>>> + */
+>>>> +#define __try_cmpxchg128_user_asm(_ptr, _pold, _new, label) (1)
+>>> [Severity: Medium]
+>>> Does this 32-bit stub correctly signal failure?
+>>>
+>>> Since this macro evaluates to 1, won't the surrounding unsafe_try_cmpxchg_user
+>>> macro treat this as success (true) rather than failure (false)?
+>>>
+>>> This could cause the wrapper to negate the value and return 0 (success) to the
+>>> caller, falsely signaling a successful memory exchange without actually
+>>> updating memory or the old value. Even though there are no current 32-bit
+>>> callers using a 16-byte operand, should this evaluate to 0 instead of 1 to
+>>> ensure theoretical future callers don't encounter a silent atomicity break?
+>>>
+>>> --
+>>> Sashiko AI review · https://sashiko.dev/#/patchset/20260706063035.1139-1-sarunkod@amd.com?part=1
+>> Hi,
+>>
+>> Right, It should return 0 instead of 1, will rectify this in the next patch.
+> 
+> Is it possible to fail the build instead?  Attempting to generate CMPXCHG16B on
+> 32-bit should straigt up fail.
 
--- 
-Vincent
+Hi Sean,
+
+A compile-time failure in __try_cmpxchg128_user_asm would unfortunately
+break i386 builds even for callers that never use a 16-byte operand.
+
+unsafe_try_cmpxchg_user dispatches on sizeof(*(_ptr)) via a switch, and
+the 128-bit path is one of those cases. As noted in the comment above
+the macro, Clang/LLVM tends to compile all switch arms when expanding
+this macro, and only discards unused paths afterward.
+
+One way to solve this is to create two different macros of
+unsafe_try_cmpxchg_user for 32 and 64 bit, right now I am in favour of
+returning failure. Let me know what do you think about it.
+
+Thanks
+Sairaj
