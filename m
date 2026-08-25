@@ -1,48 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8D7282F13
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 01:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81349303A35
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 01:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787621692; cv=none; b=U/Cl/ZjtJK7k5EbBsUGGezv9nT19WcessNVfPQ7Gvglv7kN+eeweocGXTeT6DhIjnTVO/oVQLK0wqJCQzR2puejKWJa0CrYKYbyyYCn1a8gQS6aJjxz4CtyDfQNmJvzZ4uYy6ub30qE2u4C93tyITP9XahCxlM5M/rXJ3bZGzbk=
+	t=1787621953; cv=none; b=Y0L4bl7o3OVRkPczkCWV1aex5CbV3dqIsd4d86WgmU693m2LhV0ZrfmMiJIMdG6hw52rJjIz4Eig3fyScI3p8iPadynA5xvhYoPftvPiksNCz5+wn88xILNxyxJ18vaC6vO2XXnWH0//vFsJTsFTULAPuO0YqJHzz+VexYK8QdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787621692; c=relaxed/simple;
-	bh=P7/QO4JPQEHE3dTd5tAJtnTSwCT6vZGtX9SRMO4FEJ0=;
+	s=arc-20240116; t=1787621953; c=relaxed/simple;
+	bh=HppttFZUnV05ZjcfDIysacaMYtZ4JAJRmsjJmcj4SPM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gAmLPcXOvmiQgxkmaLnlgazHeM8PG4sRwdq1ihATfAqYqqQBjx5RCFF4ipBtNFxKgopJ/d+DqL2k2f0xSM1wT1PVGkVohvIwCe7YfAMus+4SqMfC6HshJ+G4az5L9rmSUbwInSLevuiE22hxAX3OtGxSOwS/JlaZg3p1cj88YR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dh1uu3q6; arc=none smtp.client-ip=192.198.163.15
+	 In-Reply-To:Content-Type; b=uHbNfwoTs6W6h4zoMG/VxkyBpaDUcWa54aDCVBNDr5tksm9bvXPscwvExxcksAJpO5KL4J3vYCXTHJA/tC19N6gkknsH71E3ZrmyrbWjKuQFe2vbERldhPxpSAgxCl2XNhDl0sWhhSISqoAj9ScOW75WwvsDR5S8EXWqWcWv2wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jjaVSo6P; arc=none smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dh1uu3q6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jjaVSo6P"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787621690; x=1819157690;
+  t=1787621951; x=1819157951;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=P7/QO4JPQEHE3dTd5tAJtnTSwCT6vZGtX9SRMO4FEJ0=;
-  b=Dh1uu3q6XXhSBIGKDkNXhn9m1TuU6Wyycx+eiBeI46yHQr7Iwu7PGVvU
-   R5J8IxwwNjUS6nwSq0Kgjti6+B/E8iusuJO2CG6ttlBwdkglRsbxUApru
-   Yk8ckjhvIqlJ8KIdq7IlZHlbd8gnV6rOx9UW/CVt700S1Wm94m0smxmLc
-   l6mtkiicY9OVG85KP0CzpommM1H5aARm/eItA4nKwfjU8Ix4PftzgrCKr
-   xx5WX8aDU0Zedrr+nN7MUjyI2NrLC0BAdrfW9wf+bP2iFNSRk6adMjvor
-   CY5cUiG9ttgz80HmUXk5IxSok59iM2P1S9rzYI8yiY4tbJrXpe0Ga/R6c
-   g==;
-X-CSE-ConnectionGUID: uSg1aLCvTr+m6XTVij77sQ==
-X-CSE-MsgGUID: /m2vA5i5S1CzyAs7PimVpg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="88209369"
+  bh=HppttFZUnV05ZjcfDIysacaMYtZ4JAJRmsjJmcj4SPM=;
+  b=jjaVSo6PpIW43ZmzSd1NEg61mxFKojfdV8Xz5n8M91YAPorHSF1/oJDn
+   pJWhQkkcmCBAyH4fG3g2jyvfbgUXIZnyr8QuN/QRhTQbmyM0Sa8SDdijW
+   DixKV4MIjHIgQgGpwid9INCY0yJ+0hub3W9monkFgOX6A/Q8W4CgSmNcv
+   LrSLBmIjmnZfi998oMGFKjEn9cepRXf9ZRexy2FBKsZ9MmZpL1sds26nj
+   WGmkbpF6G+Kk6+z4SVFm1kc6rwY4H6JLTn/Bj4DqhSuoiBJIrE0iiNSG6
+   qa6LF6KES3eKyJ6WAdYQPyVoen7SkuctZMDv2tV+KoIcVWUe30W6n5T+Z
+   w==;
+X-CSE-ConnectionGUID: QxZXwcfITA+hTIELdTMWlQ==
+X-CSE-MsgGUID: 4gsTEk5uSSWXqoiVe+coug==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="88099435"
 X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
-   d="scan'208";a="88209369"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 18:34:50 -0700
-X-CSE-ConnectionGUID: /kfgpZcGSTmubjB/fNLP0Q==
-X-CSE-MsgGUID: ULyKWZofSqqD/ALE8vjMiw==
+   d="scan'208";a="88099435"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 18:39:11 -0700
+X-CSE-ConnectionGUID: QKIjbG4cSjeDevp3O+PJXw==
+X-CSE-MsgGUID: aIctfTmCQ3q7Hy1E1rgWVQ==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,241,1779174000"; 
+   d="scan'208";a="297064615"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 18:34:49 -0700
-Message-ID: <c62c2c19-cf0b-4634-89f4-b8b87843552b@linux.intel.com>
-Date: Tue, 25 Aug 2026 09:34:47 +0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 18:39:10 -0700
+Message-ID: <be04bda2-91d4-4af4-8d54-982480eea814@linux.intel.com>
+Date: Tue, 25 Aug 2026 09:39:08 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -50,100 +52,71 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND Patch v10 19/23] perf/x86: Support SSP sampling using
- sample_regs_* fields
+Subject: Re: [RESEND Patch v10 23/23] perf/x86/intel: Add sanity check for
+ PEBS record/fragment size
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
 References: <20260824082731.1013973-1-dapeng1.mi@linux.intel.com>
- <20260824082731.1013973-20-dapeng1.mi@linux.intel.com>
- <20260824093900.A8BBB1F000E9@smtp.kernel.org>
+ <20260824082731.1013973-24-dapeng1.mi@linux.intel.com>
+ <20260824090815.AD6A41F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260824093900.A8BBB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260824090815.AD6A41F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
-On 8/24/2026 5:39 PM, sashiko-bot@kernel.org wrote:
+On 8/24/2026 5:08 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 >
 > Pre-existing issues:
-> - [Critical] Arbitrary kernel memory read or kernel panic (page fault) via out-of-bounds pointer dereference in `perf_reg_value()` when triggering a hardware event via BPF.
+> - [High] setup_arch_pebs_sample_data() parses PEBS fragment payloads based on the presence of bit flags without verifying that the implied payload size fits within header->size or the buffer boundary.
 > --
 >
-> --- Patch [19]: [RESEND Patch v10 19/23] perf/x86: Support SSP sampling using sample_regs_* fields ---
-> commit f68aca90e443a6b899f0ff2729c1f378ec1fb548
+> --- Patch [23]: [RESEND Patch v10 23/23] perf/x86/intel: Add sanity check for PEBS record/fragment size ---
+> commit 573a2a9becb54c34e2eef68662afc34b55c514f9
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> perf/x86: Support SSP sampling using sample_regs_* fields
+> perf/x86/intel: Add sanity check for PEBS record/fragment size
 >
-> This commit adds support for sampling the CET SSP register via the
-> sample_regs_* fields. It uses the spare space reclaimed from the original
-> XMM space and is gated behind the sample_simd_regs_enabled flag.
+> This patch adds sanity checks for corrupted PEBS records or fragment
+> sizes to prevent potential infinite loops. If a corrupted fragment is
+> detected, the entire PEBS record and all subsequent records are dropped.
 >
->> diff --git a/arch/x86/kernel/perf_regs.c b/arch/x86/kernel/perf_regs.c
->> index 7d4233ed859cd..f8952f7c36cce 100644
->> --- a/arch/x86/kernel/perf_regs.c
->> +++ b/arch/x86/kernel/perf_regs.c
->> @@ -72,6 +72,11 @@ u64 perf_reg_value(struct pt_regs *regs, int idx)
->>  					return 0;
->>  				return perf_regs->egpr_regs[idx - PERF_REG_X86_R16];
->>  			}
->> +			if (idx == PERF_REG_X86_SSP) {
->> +				if (!perf_regs->ssp)
->> +					return 0;
->> +				return *perf_regs->ssp;
->> +			}
-> [Severity: Critical]
-> This is a pre-existing issue, but does this function correctly handle the case
-> where regs is not embedded in a struct x86_perf_regs?
+>> diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
+>> index 39028de75e4f6..4448144387158 100644
+>> --- a/arch/x86/events/intel/ds.c
+>> +++ b/arch/x86/events/intel/ds.c
+>> @@ -2657,6 +2657,9 @@ static void setup_arch_pebs_sample_data(struct perf_event *event,
+>>  
+>>  again:
+>>  	header = at;
+>> +	if (!header->size)
+>> +		return;
+>> +
+>>  	next_record = at + sizeof(struct arch_pebs_header);
+>>  	if (header->basic) {
+> [Severity: High]
+> This is a pre-existing issue, but since this patch explicitly aims to safely
+> handle corrupted PEBS records, could a corrupted record have a small
+> header->size but multiple structural flags set?
 >
-> If a hardware event is added to a BPF_MAP_TYPE_PERF_EVENT_ARRAY map and
-> triggered by a BPF program calling bpf_perf_event_output(),
-> perf_prepare_sample() uses the raw pt_regs from the BPF context.
-> perf_sample_regs_user() then sets the sample's user regs to
-> task_pt_regs(current).
+> In setup_arch_pebs_sample_data(), next_record is advanced based on the
+> presence of bit flags without checking against header->size or the buffer
+> boundary:
 >
-> When perf_output_sample_regs() subsequently calls perf_reg_value(), it blindly
-> casts this raw pt_regs pointer to struct x86_perf_regs using container_of():
+>     if (header->gpr) {
+>         gprs = next_record;
+>         next_record = gprs + 1;
+>         __setup_pebs_gpr_group(event, regs, ...);
 >
-> arch/x86/kernel/perf_regs.c:perf_reg_value() {
->     ...
->     if (idx > PERF_REG_X86_R15) {
->         perf_regs = container_of(regs, struct x86_perf_regs, regs);
->         if (perf_regs->abi == PERF_SAMPLE_REGS_ABI_NONE)
->             return 0;
->     ...
-> }
->
-> Since task_pt_regs(current) is located at the very end of the task's stack
-> page, reading fields like the abi or xmm_regs pointer accesses the vmap stack
-> guard page, which can trigger a kernel panic. Can this be avoided by verifying
-> the origin of the regs pointer before casting?
+> Would this lead to out-of-bounds memory reads if the hardware generates a
+> corrupted record where the implied payload exceeds header->size? While
+> intel_pmu_drain_arch_pebs() checks that header->size fits in the buffer,
+> it doesn't seem to verify if the payload itself fits within header->size.
 
-Same concern with patch 13/23 "perf/x86: Support XMM sampling using
-sample_simd_vec_reg_* fields". Copy the comments here.
-
-"
-
-This concern would never happen. Currently any event trying to sample SIMD
-and other extended registers would check if its PMU supports the
-PERF_PMU_CAP_SIMD_REGS or PERF_PMU_CAP_EXTENDED_REGS (XMM) capability. If
-not, the event creation would fail at the beginning. Thanks.
-
-    if (!(pmu->capabilities & PERF_PMU_CAP_SIMD_REGS) &&
-        event_has_simd_regs(event)) {
-        ret = -EOPNOTSUPP;
-        goto err_destroy;
-    }
-
-    if (!(pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS) &&
-        event_has_extended_regs(event)) {
-        ret = -EOPNOTSUPP;
-        goto err_destroy;
-    }
-
-"
+Yes, this concern could happen in theory. This patch mainly focus on the 0
+size issue, the issue could be addressed by another patch if necessary. Thanks.
 
 
 >
