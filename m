@@ -1,136 +1,85 @@
-Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7FE3D3D0C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 07:38:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67133B19AB
+	for <sashiko-reviews@lists.linux.dev>; Tue, 25 Aug 2026 07:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787643502; cv=none; b=a4iGI9jfFZz1o0uqRbplBvZWd7dVDR6KcS/hLZs4KeFWY0VMiDB2w3x/8ls9yRbQoAN2BbX425blMzLSSgakrieRIJ1FctcCQBg2bUur8i9ZkSZQ0nw9H5Zt2ZctsOqbr6ZeA/Mv0CpxniBEsvwyn2jWyXvEHqopIXjVWIE2jK0=
+	t=1787643694; cv=none; b=Gfv2/YQtM0jF8yiCBpr80WrDR6WyeM14xxtuKvaUA5CuFIKLZHYLkNzz2yEl8htaU6ML+Q4M+aoKG2NQCmQJ/e0IJG3iiOKF9+WBtSpn3GltzM3h0CjSQaLBNjiJ3IMYOTC178JuHB9RPw6Foy8Aac1vjbywl1tOCCoqMYZ5uKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787643502; c=relaxed/simple;
-	bh=bVP40eq90ECJv96cWe7uOzircfK6Px2vNnwRuK9hyFE=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=JkdTNHMaLZGzQWFXDEcg7FefIDzqa2Yu3oFzTCWGV+rMAZe0zwo+kaIKK0MKQRUYUwzpCoqEgk+nV8Vc1QFMgnRsLVMz7kwxUAhLe7ui63lmSqi7gu/jTUGGlc1AOKIeSt50bP/oAd0wcgQJXH568mO7Vc1gwVCE1FiG2XBpCow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=cBA4hRE1; arc=none smtp.client-ip=113.46.200.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1787643694; c=relaxed/simple;
+	bh=pqrup3IFBPNsy52D6KGNlh2U2xD769wP546ycJAeeiw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DGkVKUTfjHM7CyYjB/NsrSLfPZFvBQFS7fCYws8SYWVm4psatUxWA9wFujx/n35ThdQVmurIjIJeLwGbitCz1lcnh64lNELDdjkD588ds/f3vhQq+PU0EnqecKMe6ZMF2CNr7hA6hHapFStf0lm4z159VHsE7f7EYRvC5yfF5FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=B0XQpMjr; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="cBA4hRE1"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=EgaY3Knct4LZKRUc6oJxHCLQeLjGFOvfd65tQPQOrz0=;
-	b=cBA4hRE1rrmDH+aO540jk0ugRby++QmEHkoEYKvhzLuYCHsgGe7MYEjbp1kixg3WWW/hn2t+O
-	xYa6JTTJv/Qy76LAPjS/FWT+aZ4QiprVL04ZhYnMOyt2FOcJYlErST7+qEJZEMW+kfSzFIUqz+8
-	nBmz8p6wpsIfraQfWc+xYPM=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4hTfWg1jm7z1T4Fq;
-	Tue, 25 Aug 2026 15:27:59 +0800 (CST)
-Received: from dggpemf500015.china.huawei.com (unknown [7.185.36.143])
-	by mail.maildlp.com (Postfix) with ESMTPS id 0750E4056E;
-	Tue, 25 Aug 2026 15:38:08 +0800 (CST)
-Received: from [10.67.121.110] (10.67.121.110) by
- dggpemf500015.china.huawei.com (7.185.36.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 25 Aug 2026 15:38:07 +0800
-Subject: Re: [PATCH v2 1/2] hisi_acc_vfio_pci: fix live migration enable
- conditions for PF passthrough
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>
-References: <20260824082851.1436129-1-liulongfang@huawei.com>
- <20260824082851.1436129-2-liulongfang@huawei.com>
- <20260824084207.C8A391F00A3A@smtp.kernel.org>
-From: liulongfang <liulongfang@huawei.com>
-Message-ID: <e25014f1-31d5-4714-7b7c-1bb8f3c5b5c7@huawei.com>
-Date: Tue, 25 Aug 2026 15:38:06 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="B0XQpMjr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787643693; x=1819179693;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pqrup3IFBPNsy52D6KGNlh2U2xD769wP546ycJAeeiw=;
+  b=B0XQpMjrn8nXxbD2k5Z69JLP9yeSbZdKFFZeJQWNx28HbufOTx/UcbU0
+   bZLsiD5Wj2kU4KhA/o/TEa4DoG3m+xQaOh+2GjfhxIK3c/+tjv77Ihxpc
+   2s4SRWg1oOc10Pq7rRlI8hlQGHj4vUsvA4Ow8Xm+VusEMGX9AUx+NGPRV
+   qLn2KMksSZpqchA34tNfpzyNikKKccet9vN4NsCZe//nVg4EEERooIa7P
+   RobOnzZPWX1ysZt1IYofHFtxhUWY5wc+bPp5rJygCels4gPVqifGHDLv8
+   NLSsjnxWFLjPijBPCKrB0ybdiSE5Ejwd01qd8bVpUL/hv1ynnhDktWvQs
+   Q==;
+X-CSE-ConnectionGUID: QK54Es58Q5OZyTy/O+azRg==
+X-CSE-MsgGUID: Jr9HyX0cRYO78/0HQfWrOA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="88306542"
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; 
+   d="scan'208";a="88306542"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2026 00:41:32 -0700
+X-CSE-ConnectionGUID: dRyIzPsrS9azPB3OjlEZLg==
+X-CSE-MsgGUID: gmfhvveFTiCbOKNVsb5U9w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; 
+   d="scan'208";a="263479748"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2026 00:41:31 -0700
+Date: Tue, 25 Aug 2026 09:41:28 +0200
+From: Raag Jadav <raag.jadav@intel.com>
+To: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: "Laguna, Lukasz" <lukasz.laguna@intel.com>,
+	sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH v10 08/10] drm/xe: Introduce temporary device wedging
+Message-ID: <ao1HKIZjbV8Z6rZR@black.igk.intel.com>
+References: <20260821112436.545405-1-raag.jadav@intel.com>
+ <20260821112436.545405-9-raag.jadav@intel.com>
+ <20260821113758.006681F000E9@smtp.kernel.org>
+ <45efbcf8-b598-463e-b415-dfee2a3afe66@intel.com>
+ <aoyNk9wmOpdyUXgY@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260824084207.C8A391F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- dggpemf500015.china.huawei.com (7.185.36.143)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aoyNk9wmOpdyUXgY@intel.com>
 
-On 2026/8/24 16:42, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Mon, Aug 24, 2026 at 02:29:39PM -0400, Rodrigo Vivi wrote:
+> On Mon, Aug 24, 2026 at 04:30:25PM +0200, Laguna, Lukasz wrote:
+> > On 8/21/2026 13:37, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > > - [Critical] Sleeping in atomic context due to `mutex_lock()` in `xe_device_declare_wedged()`.
+> > 
+> > Already discussed, can be addressed in a follow-up series.
 > 
-> Pre-existing issues:
-> - [High] The `set_reset_flag` lock tracker is never reset to false after a successful lock acquisition, allowing subsequent failed resets to erroneously clear the global `QM_RESETTING` lock.
-> --
-> 
-> --- Patch [1]: [PATCH v2 1/2] hisi_acc_vfio_pci: fix live migration enable conditions for PF passthrough ---
-> commit e8e63b8a17edd44cc9b69e8ca3472ee6c656873c
-> Author: Longfang Liu <liulongfang@huawei.com>
-> 
-> hisi_acc_vfio_pci: fix live migration enable conditions for PF passthrough
-> 
-> This commit fixes a crash in PF passthrough mode by adding validity
-> checks for uninitialized PF pointers during device probe, error
-> handling, and migration initialization.
-> 
->> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> index 86362ec424a50..e95d0ab0f11ab 100644
->> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> [ ... ]
->> @@ -1174,8 +1179,12 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
->>  	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
->>  	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
->>  
->> -	if (hisi_acc_vdev->set_reset_flag)
->> -		clear_bit(QM_RESETTING, &qm->misc_ctl);
->> +	if (hisi_acc_vdev->set_reset_flag) {
->> +		if (qm && qm->io_base)
->> +			clear_bit(QM_RESETTING, &qm->misc_ctl);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is it possible that
-> hisi_acc_vdev->set_reset_flag is never reset to false after a successful
-> lock acquisition?
-> 
-> If a prior reset succeeds, hisi_acc_vdev->set_reset_flag is left as true.
-> 
-> If a subsequent reset attempt times out in hisi_acc_vf_pci_reset_prepare()
-> because another agent already holds the QM_RESETTING lock:
-> 
-> hisi_acc_vf_pci_reset_prepare() {
->     ...
->     while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
->         msleep(1);
->         if (++delay > QM_RESET_WAIT_TIMEOUT) {
->             dev_err(dev, "reset prepare failed\n");
->             return;
->         }
->     }
->     ...
-> }
-> 
-Your analysis makes sense. After `reset_done`, if subsequent reset processing occurs,
-`set_reset_flag` remains set to true. Therefore, the reset flag handling will be
-executed regardless of whether `reset_prepare` succeeds or not,
-which is unreasonable.
+> Why can't this be addressed in this series? I believe this is worse then the
+> below case. But I really dislike that we are going further with the mutex
+> inside an atomic context only with a promise of fixing this later without
+> seeing the code...
 
-Thanks.
-Longfang.
+Because this is pre-existing issue and we don't sneak in fixes as part of
+unrelated features. They need to be sent separately so that they are easier
+to backport.
 
-> The code returns early and leaves set_reset_flag as true.
-> 
-> When hisi_acc_vf_pci_aer_reset_done() is subsequently invoked by the PCI
-> error recovery flow, it observes the stale true flag and unconditionally
-> clears QM_RESETTING.
-> 
-> Does this prematurely clear the lock currently owned by the other agent?
-> 
->> +		else
->> +			dev_err(&pdev->dev, "PF QM not available for reset done\n");
->> +	}
->>  
->>  	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
->>  		return;
-> 
+Raag
