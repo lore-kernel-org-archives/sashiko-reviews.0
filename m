@@ -1,103 +1,151 @@
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+Received: from mta0.migadu.com (out-219.mta0.migadu.com [91.218.175.219])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E2E3C76A2
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7D5449B2C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787769586; cv=none; b=RxRM0pa/csEivHbA5oPhfKHKIboi7WiNphrz62kal2I1A6qi931K+BkuCbbrTBxmFJlsYlQbafVzAGwjB13Rd2F9MvKa0uzwRuZx3aHl1b1Dfn1VYhBiT67+LcwGgS1b17XmN7j3uyy9rgQwbgmtTSXHnGHQdzVsx62JOaxXEcM=
+	t=1787769684; cv=none; b=ZobaiEJqWx6nGR6d0yorFLc7YVZTF2/vb0EmjM3ANS6uaqBjMI1+pYUaDfr4xjP/cuWiaLZvX5O+JXOPcym5h1DNH80sAFOf+Rr9+r0hg6pwN5aQT8wOt33IQLF5f7tmnAP9ZaR3Z36rUh5daXOadVaUSLugVU0u1mLLTg9e2gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787769586; c=relaxed/simple;
-	bh=X4dCGd6bkEA2cJ06CQNeFxBd0mqF1n9gi4l2ifHtpuc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=XbWhc38k2gv5hBpWwUIiMUTCv1fgNmVYD0Tum/4hFOe51vCjpSR+86Dx+P6JlFBcFCyvGCECu1h1tNu8+OHF9JQKkVxT4RVneAFtThngh9FAL6A/Sbi+qLhdQyx1ZnX7n+Id0Bz7bIrwtHdpWo7EXeWrboknzWVNvxtBgaAWf2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qeSLysCt; arc=none smtp.client-ip=209.85.214.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1787769684; c=relaxed/simple;
+	bh=fR+qmeFuYVojzmd9KL3a9Aq7SkbtCSm984LXr3KYgUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NG5UyrNRnHSen/rNZgbPYXWLp7ZDTbx4hwtBEBUWDITkG28ulU5/mk7KG4FihehC4uXo7nJA/ptZsDOQGCvCUU78gnuJVuj8u/Ov3sVAM0MYnnJklcY9lMC8nRMYdzMEmbuyt+hQMc4+UToawHXNSPLpMK76+ZARsvKFhcGkCK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=UIgxWBJw; arc=none smtp.client-ip=91.218.175.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qeSLysCt"
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ce7dfd33ffso12347935ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 11:39:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787769578; x=1788374378; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=svW7REwf0C0yKBjSVBykLwlE0W36sIYmzgsGuY78Nos=;
-        b=qeSLysCt8edruCs3TJH+mIOXsCo1yaabf2N6ZlTA6xT9ulTEK85BUzeLGvPN8VeixG
-         5KSwvrg3sKTt0sF6otflUYYvctp/PX/PH1NbiqV0Q0aBJwt0fYbJ47+ajtsS5ZOxUjh7
-         mnF/Ku01TiOCb7++UKScTL6gfdICoE2EVzDyhG5taEjzD2t7V/xX7o04z5uPF9ov46UI
-         8z9jZN3NtYV+bSXSLZRVTA/mVOinKYnsDZ/6MWqoW05afC58X/T38JVnNd8ar31SkpDV
-         CDKnHwsAR6kikPQEWInu/9p+hD2Z7L73l1U0H2qVxIo+T21eooVXBCgDru5mpJcOJWwZ
-         g4oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787769578; x=1788374378;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=svW7REwf0C0yKBjSVBykLwlE0W36sIYmzgsGuY78Nos=;
-        b=TVVtmGkoIXTMuhv4TzjbmxVk7TjX0x72DUmJr2uePz5iYI5YZeSCEClfTB9vjAMNtp
-         6u7DaUpPH0d+ilcTXI4Nrq5K8QJB3jzf7wMARs8z4tevRrZvPWXl9+b7n9NKlHqaQzxx
-         Rq7K8sWKUftJ510H8sr5sBZTwcaaoJ0EqSAdT4mvvRx9VrKsydoxEGD0Fny9JxfgIO+r
-         f4x26dJ5H/LZNevCzC2df3LxEMHjLmE3C9oLlMrbX9eMTwKqZykxlD60vmRjURRNagSZ
-         VZzr3YxlWSoEB/E7diE+5Gzubn+b0Pp23WhS2WP220cgLPoF8stqAjcQKhqRaCvcBQ3D
-         B/0Q==
-X-Gm-Message-State: AFuF++nv7kXFonVsw3LrCxX4t9itkaPW5cm8V/IyiOu6m5oS1pZFSv3a
-	1OhpYcCkpjKFa1OafXyTPkSJargTB173ney5uqFRtPsHSQS1mEzrg9NQ5gFT5UdEn6q8cs0rU6h
-	iEtb8tpL2NUOrwt25yWvHb8tSKgjnbJL351mQISbuZ8KX727Zd+RX2kkWQVo2RSA5SUcvY+J4wj
-	28ETlLCxQ4ka1scgC5lcntniotdQrBRxfJK+/Xv3EN1kbCSxY8
-X-Received: from plbks11.prod.google.com ([2002:a17:903:84b:b0:2cb:3f5b:b116])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2392:b0:2d0:cc92:f7a3
- with SMTP id d9443c01a7336-2d707a53a0fmr177647795ad.2.1787769577699; Wed, 26
- Aug 2026 11:39:37 -0700 (PDT)
-Date: Wed, 26 Aug 2026 11:39:37 -0700
-In-Reply-To: <20260826171151.959AC1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="UIgxWBJw"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=fR+qmeFuYVojzmd9KL3a9Aq7SkbtCSm984LXr3KYgUs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787769661; v=1; x=1788374461;
+ b=UIgxWBJwwHNuG48qJbgIHB2xLJOHxOnd2IyVRpZZNXScTtZLC0RXdFC4as/OmHGFsFXU+9pT
+ nZ8FEwr3jbHK5FYhdyGLsnpze9WYrpVzGcfJFTtRcmVMVLAB8sCg0II1aLcEKKR99+gq1PxQG2R
+ htEBG2cuLg0DCoAPqxFRVG9Q=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [IPV6:2a03:83e0:1151:15:1c5e:37e8:36:dd37] (2620:10d:c090:500::7:2cdc)
+	by smtp.migadu.com with ESMTPS id 3f27429ce5984fda;
+	Wed, 26 Aug 2026 18:41:01 +0000
+X-Mizu-Trace-ID: 3f27429ce5984fda
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <2074813a-269b-4ddb-82c7-e9b99eaa7f69@linux.dev>
+Date: Wed, 26 Aug 2026 11:40:59 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260826165647.769231-1-seanjc@google.com> <20260826171151.959AC1F000E9@smtp.kernel.org>
-Message-ID: <ao8y6d5gMN1wG_C0@google.com>
-Subject: Re: [PATCH v2] KVM: guest_memfd: Elaborate on how release() vs.
- get_pfn() is safe against UAF
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 06/10] bpf: Allow a global function to return
+ arena pointers by value
+Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: bpf@vger.kernel.org
+References: <20260825205412.1320099-1-yonghong.song@linux.dev>
+ <20260825205443.1323867-1-yonghong.song@linux.dev>
+ <20260825211254.88DBA1F000E9@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260825211254.88DBA1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 26, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index b596486d184ca..7f1c6a0f8039d 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> [ ... ]
-> > @@ -300,17 +300,55 @@ static int kvm_gmem_release(struct inode *inode, struct file *file)
-> >  	 * dereferencing the slot for existing bindings needs to be protected
-> >  	 * against memslot updates, specifically so that unbind doesn't race
-> >  	 * and free the memslot (kvm_gmem_get_file() will return NULL).
-> >  	 */
-> >  	mutex_lock(&kvm->slots_lock);
-> >  
-> >  	filemap_invalidate_lock(inode->i_mapping);
-> >  
-> > +	/*
-> > +	 * Note!  synchronize_srcu() is _not_ needed after nullifying memslot
-> [ ... ]
-> > +	 * Obviously KVM would be broken in many places if the synchronization
-> > +	 * were omitted, but it's important to note that get_file_active() does
-> > +	 * NOT guarantee a reference to the correct file was obtained, only
-> > +	 * that the file doesn't point at a reallocated object.
-> > +	 */
-> >  	xa_for_each(&f->bindings, index, slot)
-> >  		WRITE_ONCE(slot->gmem.file, NULL);
-> >  
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but could bypassing filemap_invalidate_lock in
-> kvm_gmem_unbind() when the file is dying allow concurrent xarray modifications
-> that result in a use-after-free?
 
-Yep, already reported by Sashiko and being fixed:
-https://lore.kernel.org/all/20260823-shivank-gmem-fix-split-v1-1-512a29fb8e86@amd.com
+
+On 8/25/26 2:12 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] BPF_PROG_TYPE_EXT (freplace) programs are erroneously rejected when replacing a global function that returns an arena pointer or a struct containing an arena pointer.
+> - [High] Callers of global functions returning arena pointers receive a `SCALAR_VALUE` instead of `PTR_TO_ARENA`, causing valid dereferences to be rejected.
+> --
+>
+> commit 9797a7277b67bb03067fdf11db423996a277abbd
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Allow a global function to return arena pointers by value
+>
+> This commit relaxes BTF verification to allow global functions to return
+> arena pointers or structures containing arena pointers. It updates the
+> verifier's return type validation to recognize these types when processing
+> subprograms.
+>
+>> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+>> index b1f4ef614d4c4..70481fadacc0f 100644
+>> --- a/kernel/bpf/btf.c
+>> +++ b/kernel/bpf/btf.c
+>> @@ -7972,14 +7972,18 @@ static int btf_validate_return_type(struct bpf_verifier_env *env, struct btf *bt
+>>   
+>>   	if (btf_type_is_struct(t) && t->size <= 16) {
+>>   		/*
+>> -		 * A global function's caller models the return as an opaque
+>> -		 * scalar pair, so it may only return scalars by value. A local
+>> -		 * function is verified inline, so a pointer field stays tracked
+>> -		 * and needs no such restriction.
+>> +		 * A global function may return a struct with scalar(s) or arena
+>> +		 * pointer(s) as its members. A local function is verified inline,
+>> +		 * so its caller receives the real register state and any member
+>> +		 * is fine.
+>>   		 */
+>>   		bool local_func = subprog && !is_global;
+>> +		u32 member_kinds = BTF_MEMBER_SCALAR;
+>>   
+>> -		if (local_func || btf_struct_is_composed_of(env, btf, t, BTF_MEMBER_SCALAR))
+>> +		if (subprog)
+>> +			member_kinds |= BTF_MEMBER_ARENA_PTR;
+> [Severity: High]
+> Does this subprog condition inadvertently reject valid BPF_PROG_TYPE_EXT
+> (freplace) programs?
+>
+> When replacing a global function that returns an arena pointer, the
+> extension's main program must have an identical BTF signature to the target.
+> During verification of the extension's main program (where subprog is 0),
+> btf_prepare_func_args() is called. Since subprog evaluates to false,
+> BTF_MEMBER_ARENA_PTR isn't added to member_kinds, causing the verifier to
+> fall back and return -EOPNOTSUPP.
+
+This analysis is correct. The above 'subprog' is not 0 (not for main prog),
+so if it wants to return an arena point, the verifier will reject.
+
+>
+> [Severity: High]
+> Even though this patch allows global functions to return arena pointers,
+> won't callers still be unable to dereference them?
+>
+> In check_func_call() inside kernel/bpf/verifier.c, the return registers of
+> global functions are unconditionally marked as unknown scalars:
+>
+> 	if (!returns_void) {
+> 		nregs = bpf_ret_reg_pair(env, subprog) ? 2 : 1;
+> 		for (i = 0; i < nregs; i++)
+> 			mark_reg_unknown(env, caller->regs, ret_regs[i]);
+> 		bpf_diag_mod_end(env);
+> 	}
+>
+> Since the C type returned by the function (void __arena *) matches the type
+> in the caller, the compiler doesn't emit an addr_space_cast instruction.
+> Without this cast, the scalar is never promoted back to a PTR_TO_ARENA,
+> causing check_mem_access() to reject subsequent dereferences with an "invalid
+> mem access 'scalar'" error.
+
+We should be okay here. For example, for returning type is a struct and
+one of its member is an arena pointer (tagged with __arena). The compiler
+will generate proper address_space conversion code due to __arena.
+
+In kernel side, we will have something like below:
+
+                         if (BPF_CLASS(insn->code) == BPF_ALU64) {
+                                 if (insn->imm) {
+                                         /* off == BPF_ADDR_SPACE_CAST */
+                                         mark_reg_unknown(env, regs, insn->dst_reg);
+                                         if (insn->imm == 1) /* cast from as(1) to as(0) */
+                                                 dst_reg->type = PTR_TO_ARENA;
+   	
+
+>
+>> +
+>> +		if (local_func || btf_struct_is_composed_of(env, btf, t, member_kinds))
+>>   			return 0;
+>>   	}
+>>
+
