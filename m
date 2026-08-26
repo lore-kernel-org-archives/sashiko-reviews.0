@@ -1,61 +1,86 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010012.outbound.protection.outlook.com [52.101.46.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA47372075
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 09:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787735840; cv=fail; b=EMn0UYjSVemAem1Kwi6+zG3fKkL1GBTcviMP0Mn8iqEnu2etDrI/7L/AfudRCrbLaflBZsgVWE24U7q8E+bw3GiYGIlHo2ai/dwNKBmvrZD9+1Bsr8RdS+3VVlj2nPU5zBgfzA37N8CoJAxIiteiAQIE6nUyOfxfy+kqcPCs1Zc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787735840; c=relaxed/simple;
-	bh=zp9xi4BwWRTxuUPu0IvGlbLFkjD/vEuEvqHitb2lR5E=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qIO4+bwyphLBFJHD9wsdnwIdmPw2A601CnuOnJGNHTFZFB2rLTo3QElsh/QbB+SX2nv6+FlscLGXclGU/Klk/PzNfWNZoTlbt8nmFcdU5vxsE4XdkGIdUJIW7f3sZz9ewiEY/MJqbo9HhCPo3aQ62MBP9NYQPiOwjAZFHXCuVNE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kfE388R/; arc=fail smtp.client-ip=52.101.46.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C963D5661
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 10:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787738443; cv=none; b=bHNYsYSpVMfZXZ6fCmhuczRbsqvdTy4wyYLaicTjJV95++1a3NLEAr+8bZ5ICTEUh0p9AicY6uQGRVt90Ktr9T3hnzNuObfnM7ox9UH0nL2aPV8Cqj1zShKp4/DC+uBJhisoC84bPmGyw4j828rNenDUbb8qt4n7kaSup0hYRmY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787738443; c=relaxed/simple;
+	bh=2tIay9utLpnlcwtUgSKhbgoQuNFe+ipOGrnK5lR27AA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YKXlT50xqBMRbzwKjRzlGVXrV+fXRkhLL+aIQGCud5AZydn8tYMZwZuOIIV1nyEsHgsK/WSuFxV8GpH8ySrq5j8+V7hASoAbMar8UZ0seGK2og3IxMwPOs2w7n8KldBAsiRbK8QWtKSaIfO99EOKOuTjvS82iC47STNvAhgYCuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=efRCbKGR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e/klQoLp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kfE388R/"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YBMUr4HVDNuvi/AujpNfiRAdoVUjrnSEJRInnxda8WMN97x27dGUWcLyPHR0ivvz4FbZkgTgw0RacR+haFLcRmVRWmXSI7W1EztM0BEu5glQNMvk2YZixtB0r/Wo/0oCe0S4zIUtWhvwy1wjSziW8ER45wapxG1v3BMzBV0rJ5dJ8TRYkX8qzSnF63dCiPQ1cK0c1eBOFs1EHg1HGwH+aVBKLxnNzXKDjfU9O/Q1eKfdCzhQwRrJ0coxsauh5FWMmGsmflA5AB6SQVnEhMdr61cX6DrAeIibWavcd3mCxxKh8qcyY6psZcAL1TSwu2ViXnv6Yi/sGOUVuLY7qFfHSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NvbiTwmzXhey9lsOHgUD8DDfPjcpC7SHVSAZnzT/Aik=;
- b=vSZfTHgotLZq6YjEdoSK/0e1wAjPHVHlf+RR1HM5J20geTrcwJknZFtv7mmoJw5Eh31U/FA49n1geUaF7PQcp4IcxRIQqkUTZob+U7RgdDE7EK/lIb0Stha0N9s20uo7B1QGo3u36Xfae1bYyKb2JrszO0Rok608g+bHvW0BSl3X83UhTIoX0SbqlZ5lzATKK2U4efj4xV0JwXRWH4rmP35bEGDjv/5ItCpjIHY5ALl11rlj/AeTvP03ayrAJtpYpN9BjShdh7+IvVucCpGXYc6BfZgHGWXVdki4I5a+7WKClNZW6skCk4ECF7nnrY9vC8KJOIr68OtMAArVW/rgPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 149.199.90.133) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NvbiTwmzXhey9lsOHgUD8DDfPjcpC7SHVSAZnzT/Aik=;
- b=kfE388R/EnSii6SkdvxlMZPXL4ZBoFjJHrnft3Ln2rSga4kMU76Sv8XetNp0dhoio9bRM+CNQvsUh+4STA+2mCOTljWUU5xB0az+iGcvC8XYhWuylV2a16HxWWRdX3KKWVaAOdJtWcFB636QjH0SpL7wMvJD4K3pazhxM5pd7us=
-Received: from MN2PR01CA0061.prod.exchangelabs.com (2603:10b6:208:23f::30) by
- SJ5PPFCB5E1B8F5.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::9a1) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Wed, 26 Aug
- 2026 09:17:14 +0000
-Received: from BN2PEPF0000A891.namprd04.prod.outlook.com
- (2603:10b6:208:23f:cafe::4f) by MN2PR01CA0061.outlook.office365.com
- (2603:10b6:208:23f::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.8 via Frontend Transport; Wed, 26
- Aug 2026 09:17:14 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
- 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=quarantine header.from=amd.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- amd.com discourages use of 149.199.90.133 as permitted sender)
-Received: from satlexmb07.amd.com (149.199.90.133) by
- BN2PEPF0000A891.mail.protection.outlook.com (10.167.248.183) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.3 via Frontend Transport; Wed, 26 Aug 2026 09:17:14 +0000
-Received: from [10.85.33.190] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 26 Aug
- 2026 04:17:09 -0500
-Message-ID: <59242bff-f597-4f49-99b9-8f31675e63da@amd.com>
-Date: Wed, 26 Aug 2026 14:47:07 +0530
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="efRCbKGR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e/klQoLp"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67Q9CIbK1510586
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 10:00:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2tIay9utLpnlcwtUgSKhbgoQuNFe+ipOGrnK5lR27AA=; b=efRCbKGRAGKH736B
+	0xt6t+7AVMFogL1nq7xV9gW/MdN24i1hlHokj0OzCf59Djjsah11YL7G9vsKHPtq
+	WBP81czebBWDhqfBr3AJhO0LNUTFvs56pxpr1BG/jt5U+xPWoXxJAPxAkoyFiq4R
+	MEJ8roPSkzSuI18v/1rDxDOUpovU8fb000KX7nagLimQmSm8C/HbkEDdBIMYnjp9
+	+UVkYQB4NbQW+juu5p6mSlQ27fGIoF/9jcS+bTl8Xr0rEAAq38Dpyh3+iVxtYy1Q
+	ajsvegJxJLwA/1sB1ivdKnMNywFSXDliwpW/Hp7uPtdZE0/SXeiwygUHPxAonCYQ
+	dAPLFA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9uq1rna7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 10:00:41 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-51c0408254aso22898641cf.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 03:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1787738440; x=1788343240; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2tIay9utLpnlcwtUgSKhbgoQuNFe+ipOGrnK5lR27AA=;
+        b=e/klQoLpsYn+TrZZfjh9gH2MgbxoYKoKl3/v7R+dhOHtQ7dKvPpI1EJ1yeFJTJlWDg
+         1Jpct6vHhHBL8kti6Il+Zcg2SRZjIC/0g+vKQy/4pxnuNh4CtBMxYn4SY66ddRoypaQv
+         PYzpwQYjN/mk73YBmIZhvMMqg4igz51QpOl5kENquzXqnYdp0tV5YurZCvZzZ0JspqpI
+         D9PdtKXoBe4xSdZPoCZ8RYHTOqY49SBaGl4sLw1GhNVkqujG3fMuLmdC6GV0MYb9GJwF
+         uSu+RPeF9ZTfy9cd/okt5dFj3ks2HEh9VxDoStAJENxsuVu9SxdqfXJvRE3HZtDa8bMn
+         kd7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787738440; x=1788343240;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2tIay9utLpnlcwtUgSKhbgoQuNFe+ipOGrnK5lR27AA=;
+        b=fZdUyYjltYoOEtTLoxjv20mfbPY9EoLn0UgF2MnjWP/NDZyGKpLKYbKBEXoSulu193
+         zINawZOXTGjFMROozqD+yRBYw1Sz1hQUjC1J+y5RAE0D3kA2QDvg3kC5z3DW9ENvu9Nu
+         0nJS9QHyFgCSTJhJOhtu6u4tRWAbcKRWLlo3eVfIS3SMIt2ao24AvOvgttEwgXVHgZH8
+         BzruDkuj/ke0ExBvnrGdllmuERvqatcaRJPMHPZOdh6tZ7uQlvQnZ1Yv1BuOQWgP10oP
+         sCxxEAgmRTmVOoomR4yyOTphuo3C8YdpylJGtC9e6i/AIsqfbGFpufmJtn4brCk2prRs
+         Mlvw==
+X-Gm-Message-State: AFuF++kGgFL397rfuivoe9PGAXbZlHKh/tw91EduI5YcMlUs9KgQXqR7
+	qhliQCg2J69XTXE5QAFfok/XMkv1Tjgq8oqGt/X90KUzJHOnQU8156pnOpPLgjmVa9Na8W7Dgmm
+	U+AXwKV7/kYarbBvMdH2BzWWEzO1nd2sizplbO6/sBt6LNfrHoy7zGIAlxPblGu6gFUYbVpjFC1
+	rhubA=
+X-Gm-Gg: AR+sD11Kyln+p0DOnuHGwkWtKzV/jqUci4K+5ASMSkM77Fg6zoT63QKBipYDyibYYhB
+	v2QLlGNyHSOmkowtV0XyzXijQxgh5Oxbj6LPfli8rTT2fWWsR+anrs/MM/HcWxGrfbl0zQHDtIJ
+	R1T55G5NsjRGaQzL/MbOVkcbct7EXMb+Kc3co0rL35uqNLhEvE/b1Y9sjaIhdBbrmVKAEqYPQ2P
+	cDjWPcP3tW/2AD/Mk1aYWaGmzqd/Iswx0y30YmMbiB+IGF7j/eF7ptKJJ8dmoHOybb4qjvC2w9M
+	6SbDiLnXeHWN1G1DfjY3WyyJfpPmT+U7au0lKsKqZ++rN/F979UBHJXn3RNJ2oYFGKGqz9+a7eA
+	XGxWWpmXMmlhoWakVWEn+n+UkFQ2X
+X-Received: by 2002:a05:622a:490:b0:517:63df:91a5 with SMTP id d75a77b69052e-52e2ed34ebcmr132647421cf.19.1787738439888;
+        Wed, 26 Aug 2026 03:00:39 -0700 (PDT)
+X-Received: by 2002:a05:622a:490:b0:517:63df:91a5 with SMTP id d75a77b69052e-52e2ed34ebcmr132635921cf.19.1787738433413;
+        Wed, 26 Aug 2026 03:00:33 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.219.214])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482e27ab1f3sm2254758f8f.11.2026.08.26.03.00.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2026 03:00:32 -0700 (PDT)
+Message-ID: <11b5ad91-84a9-4506-ae1b-73a64b49d08c@oss.qualcomm.com>
+Date: Wed, 26 Aug 2026 12:00:30 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -63,205 +88,51 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] KVM: x86: Add support for cmpxchg16b emulation
+Subject: Re: [PATCH v4 03/10] dtc: dt-check-style: Fix alignment of values in
+ continued property lines
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260826-n-dts-style-checker-continued-v4-0-022e60091965@oss.qualcomm.com>
+ <20260826-n-dts-style-checker-continued-v4-3-022e60091965@oss.qualcomm.com>
+ <20260826071345.A3C2E1F000E9@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>
-References: <20260826070004.8100-1-sarunkod@amd.com>
- <20260826070004.8100-3-sarunkod@amd.com>
- <20260826073159.B37641F000E9@smtp.kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260826073159.B37641F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20260826071345.A3C2E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF0000A891:EE_|SJ5PPFCB5E1B8F5:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e008bf4-e0b0-4ec5-c3c6-08df0352d144
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|1800799024|36860700016|23010399003|6133799003|3023799007|56012099006|10067099003|11063799006|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	XGLa03z6dyVq1k6us7foy7i/Ht8TYvWwEf6r8wkAGO1uXAIR/hU6/kTM4XJTSn6jQPlyl2hXil88U4MxwYO1Jdl4e7kwm8QN6pvy9TOX/tQZAh91JBOUcJLJ2KOxBLK0Hkv+aUyVjK4FMRMKhHYmFU3O3gZRhgU6nkI3Ur4RDCgos19GzGAQUiPe+967SAJaf4MsnoaAf5KFcOk5qCX4nIfcOuMRm/acL+iqCTdrS4RcvX4v8f8QzQBlpX4fpMiLA+31ann60Ai1nbfXppimZ+qdAEyMa7ANxzU84zsvdZ5dO7RpQKgdhzb4qURyVFvPsjfNEoCK8l01q7QVssAYqTP1O7sOcgcb2RpedQA2Swkg/+birqdD+hLDBkQciCg+Ug7TTL+ItieToeoHK/7+2+IxxavJ1toAo4TG3qSyRK8MOjD3470+prOFOt6qd0dPUUYQHsAsVk7fZKtVpWFINr3+gyht3FQTC0+kRYgG3uPc2hsOs0OUl+w8C3KAJYgAIl1tnTnIwGcfO3OUGL3vjp37nYJ0W/mKyF0ZDRKxGILi0TNlrbfYVXnZ42YaW4Fntij7d0r5UvOZaQ9IYYSuXa1d/ouSnB+t7BZVu9KK+lIZ+XNthwi2rzc2oZM8ibCFwEIkVUF9jQoDIs5ttW4pOwRjGDrdLf9uhm//tasj0O3uZ1FsO2jkOEeVJ+chjgS1k/mEhKLnyvSexeQDFiMzbw==
-X-Forefront-Antispam-Report:
-	CIP:149.199.90.133;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:unknown-90-133.xilinx.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(1800799024)(36860700016)(23010399003)(6133799003)(3023799007)(56012099006)(10067099003)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	RbW6UwKSKKOWdXCrG8ftm5AoFx8UHgQ2FL02laPfJiWY70s9BwWZ+WROt+q/5cmiOftCLX3t8jjfeqrfM1XbbNRJ/IROh3CXvPRQaqei5dV1edFqY6sJyL8l/Q36D7PMQLm9ZMn+umBvp67yl2MUiefiOWmTxvldsL86LLbfvPpvAyDjH3vn5krG9dIJHsiNsXx4LjQMzjbY6loo8y0MZNVdei8CvXB8rUjAVBmfe4PfTzdA9xE44geCPz/y9nyQxdh1+aFuRZ8/OSsDgN3Pv1QMFSYaIXFzElzCkwdZkz0iRV0Uovev48tEL2Cnq1U/5e9BWQw19/8OM2bsDPTKJOrM8J82v7Y8bw3PF+/ISv+RO1WhKRrcsg6VrzdwAWL8a5ZvlB1wSHbWV2CPa1b5uF+tFTw5znAPxqh94bVWlGcquRqBlGzwp3ciTnNMzzHK
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 09:17:14.1265
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e008bf4-e0b0-4ec5-c3c6-08df0352d144
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[149.199.90.133];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN2PEPF0000A891.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFCB5E1B8F5
+X-Proofpoint-GUID: Rc5WSzGkCvnb9kIfgBATxj-8ELaON9sv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA4MiBTYWx0ZWRfX5pWbHENjy4qq
+ qVKYAZFivp/va/a/ZYUkgaEKebEzNJxg50tfF4XuRCfVPeMpAAuAePqrHc5oU36NwpOaFIWJnrd
+ cikT8zBlPZL+loy7pOvq2tNQfDuBKDHRPt9XKIN+vsOY+zXuf8jtj2oAkdo6lN0v3oDGyUH066h
+ KXxKjiEGAwQ4MxRyq5QgDWimje8eKPQpKrntkQ9eq83KKuhn7A4v1Nk763oQLVkVE2w1n9PlBZ1
+ 4fH6Ych+A35tjgzor8a2ZCUUXvbWXNLaAOIH00v0wTeFYsGtSP6YztlAlbncRsWn1sv00bAaYp9
+ R8fYlirV/2WpLGi/TzdXt6AldsqEXcRo1HthpKpImEiENGQyWvUfyLfreyThq89d7hCSjFbEBlE
+ ywPe3VjHo5hm8EQxxH9RapPfm81zbutOHzu8NfSg3xN538pkVPXzvLK9ErMLTpaW/Ob7M5JH//4
+ CX7XxhGyK06oawngpZw==
+X-Authority-Analysis: v=2.4 cv=Y77IdBeN c=1 sm=1 tr=0 ts=6a8eb949 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=PCuQmCvmEBbr5SZVerEA:9 a=QEXdDO2ut3YA:10 a=arBHhYMabMMA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: Rc5WSzGkCvnb9kIfgBATxj-8ELaON9sv
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA4MiBTYWx0ZWRfX3mAm+Qqw5O3c
+ vSwx3UE1aFY6mFn2CW5aJD97FmDeAnTTY8M6pVrg8GiqWfYVfQjFdOzgxCvnQ9aRhU5gxCdA1/A
+ EmHpnty7JsrYUJfjII6dG19U1RKYoz0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_02,2026-08-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260082
 
+On 26/08/2026 09:13, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Trailing whitespace or comments break multi-line property alignment validation.
 
+Ack
 
-On 8/26/2026 1:01 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Emulation of CMPXCHG16B lacks the mandatory 16-byte alignment check, leading to a guest-triggerable VM crash.
-> - [Low] The macro `em_cmpxchg8b_16b` incorrectly captures the variable `ctxt` from the surrounding scope instead of solely using its argument `__c`.
-> 
-> Pre-existing issues:
-> - [Critical] TOCTOU vulnerability in atomic CMPXCHG emulation leads to silent data corruption in the guest when a native compare fails.
-> --
-> 
-> commit f6a8a67f38b03c4522f119ac54d63d97691e1289
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
-> 
-> KVM: x86: Add support for cmpxchg16b emulation
-> 
-> This patch adds support for emulating cmpxchg16b when the destination memory
-> is 128-bit and REX.W = 1. This prevents QEMU guests from hitting emulation
-> failures during 256-bit device table entries accesses on AMD vIOMMU.
-> 
->> diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
->> index c1b21282187f3..f38c4f1a99c31 100644
->> --- a/arch/x86/kvm/emulate.c
->> +++ b/arch/x86/kvm/emulate.c
-> 
-> [ ... ]
-> 
->> @@ -2184,24 +2184,36 @@ static int em_call_near_abs(struct x86_emulate_ctxt *ctxt)
->>  	return rc;
->>  }
->>  
->> +#define em_cmpxchg8b_16b(__c, rbits, mbits)\
->> +do {												\
->> +	u##mbits old = __c->dst.orig_val##mbits;						\
->> +												\
->> +	BUILD_BUG_ON(rbits * 2 != mbits);							\
->> +												\
->> +	if (((u##rbits) (old >> 0) != (u##rbits) reg_read(ctxt, VCPU_REGS_RAX)) ||		\
-> 
-> [Severity: Low]
-> Does this macro intentionally reference the unpassed variable ctxt instead of
-> the provided argument __c?
-> 
-> This uses ctxt to read registers, which makes the macro rely on the specific
-> variable name ctxt in the caller's scope instead of its parameter.
-> 
-
-Its a bug, the macro should use __c instead of ctxt everywhere.
-
->> +	    ((u##rbits) (old >> rbits) != (u##rbits) reg_read(ctxt, VCPU_REGS_RDX))) {		\
->> +		*reg_write(ctxt, VCPU_REGS_RAX) = (u##rbits) (old >> 0);			\
->> +		*reg_write(ctxt, VCPU_REGS_RDX) = (u##rbits) (old >> rbits);			\
->> +		ctxt->eflags &= ~X86_EFLAGS_ZF;							\
->> +	} else {										\
->> +		ctxt->dst.val##mbits = ((u##mbits)reg_read(ctxt, VCPU_REGS_RCX) << rbits) |	\
->> +					(u##rbits) reg_read(ctxt, VCPU_REGS_RBX);		\
->> +												\
->> +		ctxt->eflags |= X86_EFLAGS_ZF;							\
->> +	}											\
->> +} while(0)
->> +
->>  static int em_cmpxchg8b(struct x86_emulate_ctxt *ctxt)
->>  {
->> -	u64 old = ctxt->dst.orig_val64;
->> -
->> -	if (ctxt->dst.bytes == 16)
->> +	if (WARN_ON_ONCE(8 + !!(ctxt->rex_bits & REX_W) * 8 != ctxt->dst.bytes))
->>  		return X86EMUL_UNHANDLEABLE;
->>  
->> -	if (((u32) (old >> 0) != (u32) reg_read(ctxt, VCPU_REGS_RAX)) ||
->> -	    ((u32) (old >> 32) != (u32) reg_read(ctxt, VCPU_REGS_RDX))) {
->> -		*reg_write(ctxt, VCPU_REGS_RAX) = (u32) (old >> 0);
->> -		*reg_write(ctxt, VCPU_REGS_RDX) = (u32) (old >> 32);
->> -		ctxt->eflags &= ~X86_EFLAGS_ZF;
->> -	} else {
->> -		ctxt->dst.val64 = ((u64)reg_read(ctxt, VCPU_REGS_RCX) << 32) |
->> -			(u32) reg_read(ctxt, VCPU_REGS_RBX);
->> -
->> -		ctxt->eflags |= X86_EFLAGS_ZF;
->> -	}
->> +	if (!(ctxt->rex_bits & REX_W))
->> +		em_cmpxchg8b_16b(ctxt, 32, 64);
->> +#ifdef CONFIG_X86_64
->> +	else
->> +		em_cmpxchg8b_16b(ctxt, 64, 128);
->> +#endif
-> 
-> [Severity: High]
-> Are we missing a 16-byte alignment check for the destination memory when
-> executing CMPXCHG16B here?
-> 
-> The x86 architecture strictly mandates that the memory operand for CMPXCHG16B
-> must be 16-byte aligned. If it is not, a #GP(0) exception is generated
-> unconditionally.
-> 
-> Without this check, KVM will later attempt a native unaligned lock cmpxchg16b,
-> which will raise a host #GP(0). The host exception table catches this and
-> returns -EFAULT, translating to X86EMUL_UNHANDLEABLE, which immediately
-> crashes the VM via KVM_EXIT_INTERNAL_ERROR. Can this regression be used by a
-> guest to trigger a denial of service?
-
-insn_alignment checks for any alignment issues. Its comment explicitly
-mentions that
-
-"Also included is CMPXCHG16B which is not a vector instruction, yet it
-is subject to the same check.  FXSAVE and FXRSTOR are checked here too
-as their 512 bytes of data must be aligned to a 16 byte boundary."
-
-Hence kvm will raise an #GP(0) to guest before it performs cmpxchg8b.
-
-Thanks
-Sairaj
-
-> 
->>  	return X86EMUL_CONTINUE;
->>  }
-> 
-> [ ... ]
-> 
->> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
->> index 79468ddfe4736..60be16f05d794 100644
->> --- a/arch/x86/kvm/x86.c
->> +++ b/arch/x86/kvm/x86.c
-> 
-> [ ... ]
-> 
->> @@ -5311,6 +5311,11 @@ static int emulator_cmpxchg_emulated(struct x86_emulate_ctxt *ctxt,
->>  	case 8:
->>  		r = emulator_try_cmpxchg_user(u64, hva, old, new);
->>  		break;
->> +#ifdef CONFIG_X86_64
->> +	case 16:
->> +		r = emulator_try_cmpxchg_user(u128, hva, old, new);
->> +		break;
->> +#endif
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does the emulation of atomic CMPXCHG suffer
-> from a TOCTOU race leading to silent data corruption in the guest?
-> 
-> When emulator_try_cmpxchg_user() fails due to concurrent memory modification,
-> emulator_cmpxchg_emulated() returns X86EMUL_CMPXCHG_FAILED.
-> 
-> However, in x86_emulate_insn(), this failure appears to be silently swallowed:
-> 
-> arch/x86/kvm/emulate.c:x86_emulate_insn() {
->     ...
->     if (rc == X86EMUL_CONTINUE)
->         writeback_registers(ctxt);
-> 
->     return (rc == X86EMUL_UNHANDLEABLE) ? EMULATION_FAILED : EMULATION_OK;
-> }
-> 
-> Because rc is not X86EMUL_CONTINUE, writeback_registers() is skipped and the
-> guest registers are not updated. Because EMULATION_OK is returned, KVM retires
-> the instruction as successful, advancing RIP and leaving the guest with a
-> stale ZF=1 flag. Doesn't this cause the guest to mistakenly believe it
-> acquired a lock?
-> 
-
+Best regards,
+Krzysztof
