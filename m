@@ -1,267 +1,210 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012052.outbound.protection.outlook.com [52.101.66.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B67943E06B;
-	Wed, 26 Aug 2026 15:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787757973; cv=none; b=fEwXE0DhG2SFhYVWZnvdjbYuqqTTpFMTO5vxJmT2e+kZ6MKdzuRFPsUSLV6LxqBLlAgL/2w1dSTmT6w4fwFoKUsHNG47mMlct8TzRFGT1e3G0op8NoQp6naQgBDymg8BTLrL2foVNCw+cf9C0L2W1RwML+DXUHEpv7SOwrkMjPY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787757973; c=relaxed/simple;
-	bh=7IyDZ0s/GydxtolyVpLq8v22+Z0AOPAUCl+LMUWlh0c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AAS9Quq5oetJZs4tAJDBD6nQtEdPETUZywSbQmq8BsfaokV590vC/jEjuFx39xIn7ClI47Am+ARRtUtYJqlOBBDqqOmw0SuxHDoWaVihUG/+my79EsR2FEWH54kBDQEE9zD+t0HFgUZcBme0x8jxNyGPYE/j4rVyM0GjlePquCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=b68/g829; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7126340F726;
+	Wed, 26 Aug 2026 15:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787760000; cv=fail; b=QnsZNTd5gRfsCBIhUig23iumydgc3268j6cVkzkEyt0CM6KM+ictMT3BqPoNKLOgacfftLukldAU+PAYxft51mzUogbe3XXM6dS2XUe5HT+OCNObZ4UrIzCrI34QUSvqQu+im4echQm3qysSTph1QzUbpHgm72/78Z1O2r+LltA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787760000; c=relaxed/simple;
+	bh=zsm4AvylXipP/p5PpezupoFnsRxQWylqNWoA2slS7EE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=j7E+4eFb/quFC6gzrdowTi9dV6h2xz688FntzKB7uNw04mGkJgF/+lc/5lHv8vGfrq9h5k7EtZVMJPcpbQ7pI6DgnQrrjqTM4MtPpS5qAq3nXarN6eF68wXU02TGEW8oDAaWqiDBeOoSKYZcaEPCxTNJAaoO2/578akP9a9EPbg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=oVkysQqB; arc=fail smtp.client-ip=52.101.66.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="b68/g829"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67QE1jh84099852;
-	Wed, 26 Aug 2026 15:26:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=vFZaXV
-	96JCW1M3RkJfoXLd46a3WQxGEFbAq0U+hqbOM=; b=b68/g82955wX+noqP/M8Du
-	UmXtdsgWgLKcLuCPCr2FEY89cqIz0rdI+8ipTNlky3UXVWQ8yOgZ6WKvBOOW+2/e
-	nnNGOi0LMPUkwdw/QprgUcxvqhn+qn0N7m5qXmOeQTzHTO00fdRoMtOUF0FX0KLS
-	wVhfCgDS6NXAOm3rCe1XTwTWsesgn24kFkAnHM67EWW3+jWKeYpi7MaMa7/EQ+Ck
-	cJgGETtNeP9DFmIvVNGZ7ye1dqGv8MT70tgjtNNhWIAYWs45X89ZediTNysPEGfe
-	WmGbJFso0CUoQc78sw9L/+3ae1IG5q9wuwEozCQg/q3FqmR5VSGo84RdFZgq3Ixg
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hymym-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Aug 2026 15:26:06 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QFBH1V004371;
-	Wed, 26 Aug 2026 15:26:05 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhakxe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Aug 2026 15:26:05 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67QFQ4du30540406
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 26 Aug 2026 15:26:04 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A5D2E58067;
-	Wed, 26 Aug 2026 15:26:04 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0226158065;
-	Wed, 26 Aug 2026 15:26:04 +0000 (GMT)
-Received: from [9.61.175.92] (unknown [9.61.175.92])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 26 Aug 2026 15:26:03 +0000 (GMT)
-Message-ID: <012724fa-1979-4d46-8474-a7c8407a3c9b@linux.ibm.com>
-Date: Wed, 26 Aug 2026 11:26:03 -0400
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="oVkysQqB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NxU+9H/nQCF/OxZbuJd8fTH7ZxmxLXiKh+nNxVWVQOP7lWk4WNCat/jTwYvO8TRLh4J+250ZW8HpIGx81/Yiiu35R18hb06f1UovERe/k8iUfS7qTNwjT6d+dA6BQUIFX7b9Nfac/aYdvKF2UmH4bHrEkFhAnDSZb1aNNlSTjypVlsSpYjxPXJ5/3eNPJCCjyq1J60jol5JsyD+C1eFh+m4MiBwPxNICN9RrQs13YRk+XtMdyKQg4N2EXwArtoJLN/XJS+Jz2NO74a87+zhSZipnw2SYvPwP/uER/JpN7F5mAFJpEEZ9YgtyWs4QCsd5vgBrimuJALNEYe+c0pFG8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PiN1jyk71nki+2XjEqKzxM8TAYZkH+OoxHg3LPtgbm0=;
+ b=RdxYYDVQOsY2ouDyhdu3v/FojVqrNrEQtFsO4kY4ShqA9Zc1wu6RStIK9Wy6sBYTHJVOmIguGPcC2iYWYEAO+BS1svkkzs0U55fZc/O47Zk4Qy7cmODWzpCuc+5bNB39QJhmz8FCicObEa0tIs0R0iNQk3k+mY0axbh+CQny3U8nBeanr7APnThDl6hpj9NJRM22KUb9dnMMtYifLPbRHPPScu7us1Uw3lgAp3P2BTfH7YBWEsMOpVaRAnb9YmnTI8VKjVCYA5BRE45j6YvJtMujsCwj979FKk9MJ8OKFjdFIyYPcx+PdLjXHrWgD3eRpB7OHeOS4w4vtFBkLeIiwQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PiN1jyk71nki+2XjEqKzxM8TAYZkH+OoxHg3LPtgbm0=;
+ b=oVkysQqBRJ0A/UVav6r4UAmyldjXZBFjuUoqvcIjXGvE7ZCCwL/k4U+mAJOf3aI5ARsAIMC6GGfMCzi5lemmx09RdL2Mn5lw40DDjGL2GmFybTdiVLbniEWGzgBGKEm5IxllMf4O/WxMhbKWD5QWSd4um9LD4/QAaoRqLVtczM0yH2fNnhhw8jo1Ng2s6iBOSvmGJtWmQfPrNTLl3LBdSV771eam+fHhN9eSJBhMjfDgLC5afCi3bLBIwHfP1BIgdILE+CCwUSWnLfQi0ALEdS7p8jnmKwTd6zz+y4k6RH3azUXMGYFsg/2ht4DaaVkDx14/+cv7kZhSrgIuRjUg5Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by GVXPR04MB10201.eurprd04.prod.outlook.com (2603:10a6:150:1b7::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Wed, 26 Aug
+ 2026 15:59:56 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0339.012; Wed, 26 Aug 2026
+ 15:59:55 +0000
+Date: Wed, 26 Aug 2026 10:59:47 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Stefano Radaelli <stefano.radaelli21@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	Frank.Li@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v5 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
+Message-ID: <ao8Ncyeuu8XrmE5B@SMW015318>
+References: <cover.1787674237.git.stefano.r@variscite.com>
+ <749f32d1a92ec87ce76f1ac0ce0d780c431fdde2.1787674237.git.stefano.r@variscite.com>
+ <20260826083133.C97A21F000E9@smtp.kernel.org>
+ <ao6lTMiwplBt-4zm@GLaDOS.station>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ao6lTMiwplBt-4zm@GLaDOS.station>
+X-ClientProxiedBy: SA9PR13CA0102.namprd13.prod.outlook.com
+ (2603:10b6:806:24::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] s390/vfio-ap: Fix unbounded loop in
- apq_reset_check()
-To: sashiko-reviews@lists.linux.dev
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        kvm@vger.kernel.org, linux-s390@vger.kernel.org,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260824215603.819379-1-akrowiak@linux.ibm.com>
- <20260824215603.819379-4-akrowiak@linux.ibm.com>
- <20260824221128.891FB1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260824221128.891FB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX9wdQRgcw/fnU
- IFYsjfnELnKCvxoV49VPUfFhSbuW9nNoHwv7+0N9IIXohVJ0lWn5aOJ6WeiIcG7M6klwPbyjf9N
- zbJirkUkQZp+A4C3+V2UTnO8+rcE4SA=
-X-Proofpoint-GUID: Hzzh01mlRC5akCLOs9GzIQTprJmKsCqH
-X-Proofpoint-ORIG-GUID: Hzzh01mlRC5akCLOs9GzIQTprJmKsCqH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX5149zwK9tCsu
- 1jMZT2nc9jfzNhIgbDTAH/WOmp9GadS27dZh5Go4TYofetzs6U0WMOe+dIYARzQxGjwyXd4ziF7
- AYoR8TUp+9YETDXzhYpKXBHMjr0ai/nm6mC8RI54rcxsl67uSabVyz1WhXFraKJzsBDv//uPEii
- 4xV6LIdduBLXn4E/xYT7WAEtYOkmCQzgh8UbpQ2tT1tg8vwyvVeZ4m/kqrek0y6eP4JMTF9hvJ8
- MwtIooPVYDaOSpWL8cC8Sz2czzMSrZNdHAj++MizIQyak6V8lWq0ZoH0TQOPWnm63EhS1xgavI6
- 1/v/QpzGviW4GuP+ltGa/qix8rZydFosIlNgMwqSAfFKckVrzmPBuzpp7ZiI/Cqwu/eFVYmRDnw
- RGXC9Iy1z6u/lk3OGsoVEdjbtDrs129FmU9xA0AMxvDLAux8nXmkWU3Bx/OvNuqs/iq2SOb+3YH
- vGZ/0ubC32aZLT08cUg==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8f058e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=cNjGuAkbeVCNKkcG-F4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260125
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GVXPR04MB10201:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f244dbc-60e8-4bea-bf65-08df038b1251
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|376014|366016|23010399003|1800799024|10067099003|56012099006|4143699003|6133799003|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	OmNbpiTU/C5Mdy0sgIpEtVUVGhSEhvMvasekgeWppmjJrQ3HFdhYLNVn8//8yrEA3b5Bf3I6rqQvzuFjWeFKUdF+0VysQ6PZ9FcYJtF8c5SSRSsT/nGDXI6UxGRUZTRZmpCn/pv28LqQKgwCMdWCKiK5cQjhtTKXScLZD3jHXLYVSvC3gcNDw12M0sMnUluvn2PIwJEUXpPW/vq/LJXDy/xf/eGutTRbVdUjDirXj9oPOh2gNOW34+weGA64UcnrkhvsV0y8PrxTMgxxFshMh+pJ18fWdKoQRpvHSUpMNlyvcTYc+XjaAXCK5REHd9NSKC2vydXybAC4wA8yz8cj6Wlj16VRuhRDBtSMR+82ODsYLPraqCAA9iQQ8CUvrfBMWY2KwWtudYWes4HBCuMaDDJsJPgbFNEPsRlfKl9mQAgucxwQLfHhs4piRJSkuRRkY7LJYK7nyZywJaU0n6Nyo8/eFYxgi7CIUTVR8Lsu8PuixDuiYYa7YSE8Tl4ShvPC4Ac2jsU0d052z51cgvzRggUlNDXF5K/GFDivE6xuOfGmvCGOYr8cTrlHhdiTyq1flyM2TRdyj/XJsTTvj3oMIHTH/arl1PseDNZSntBtmNxOYWACBYSzD39nUU/YFQ6c9kGD02y0RDqqyBvp33UTpiVBJK6QqpFdyDcn+OMQHco=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(4143699003)(6133799003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?zgy+cCuHzZVz8C9sVx0EOZO7y/MenUkkpPyRFHJteFC9vXKpaSUmyWjHNhiv?=
+ =?us-ascii?Q?XfMS1r0SSaJVAPeOnATFLH0ZHvu508jIpnH2UfOz6zn5tj3lg3kZ0ijErPsx?=
+ =?us-ascii?Q?GWnNQedJ4dHVoklgj3vX8Q1HJcmaTj45tMq9STdqVYJzCA6dZlomxv6O4tJk?=
+ =?us-ascii?Q?w0reTxuYEm7lvx8ww5FEZW69BqC+dU+MhYQUhuO3cwT2Y9ms6XBUZ5FrzvCi?=
+ =?us-ascii?Q?gVu0EQboAar8rngx5ibVX+TzQkPQOMSpNBcDtgYqGLfIN61JkGcDGCKAcXK4?=
+ =?us-ascii?Q?eUhOd6PAr8ZukFuA+nwgK8krH9A/I/Vi6QSCOXP1w+UpvxS0j1Rwkzmlv2wL?=
+ =?us-ascii?Q?iG+m1MEp/kWV6rEaGOPvHegEAfbhxnf1GAhVneaLVhZuj4R00wv9FcZFYFjn?=
+ =?us-ascii?Q?e/4uDnKXR/oKXvVovqrjWnjpccmgAefgxshEGCMEprHWEZ0GrEa8t5YCBRXm?=
+ =?us-ascii?Q?579r76SJ3GLaDR+5Ip5EM/m27ZHL4DMcfsZL1rMwxftcUoukBxWtjoJDmqkm?=
+ =?us-ascii?Q?ktJKp1wfis9bEJq20QLNb/xct2ESk8oBeLZjmyYs3FJv1Yczc38alAWQJm/X?=
+ =?us-ascii?Q?gyj0vUktla0pumwXh1lSrj4mvsaNsxT2vyUfYR1kAkuBAZFvtz6qEG7Hj5uJ?=
+ =?us-ascii?Q?0XGAr9tggdM+nBElEmo+jATmng2ZGxrOl37oXMVNAWkjcZbifuA29TXNOOLM?=
+ =?us-ascii?Q?DCzBNbq9GgMm1yl5envmRNu59DVbfaIP5UElk175rIiuV+aJB9UpaHD9c5He?=
+ =?us-ascii?Q?rTUSdsFwemWLO0a2VZo56deW0Ma8oyWt6itdYr0beMBTgqPxLTMXax+4QkuK?=
+ =?us-ascii?Q?x32/xjTQP8ZMnrFAnCKKCFcDWGBYC5k8qkSDcUXKOI/HsYAzu3FE2QX1PmCg?=
+ =?us-ascii?Q?5oSTqsJuY7/kU9u5DxKvcVKgeopl18TZ7RIV/qzYaGc0r71iJJt7WDtYNoXB?=
+ =?us-ascii?Q?IPXARNzuydS4RP4rbExRWRmmqlkbB5kb7+e7Lr9tuhbnokJLRakTHdsBR6sg?=
+ =?us-ascii?Q?DRJX+14S3XNEMgr5Yp2w7Yz3Sx49fqC3ZM0UGgTjNq8MlU2y+stfWfNeHn++?=
+ =?us-ascii?Q?26p5Igbg++GC7HVaWuDWvH8HamBIsIT62YCwf1rfRmOj4vmFOJzdEHXMxT/O?=
+ =?us-ascii?Q?qwriFw+rGpoqGZB1fsxyVwSB5ikEp68Z8sQkmm2INWTNRKSS9V/jdmqihHF5?=
+ =?us-ascii?Q?nYX/kxCOpB0Bk3xJ6khABxcONeWg6R4Rd49Pea/t2RQreMggoZnA8/SuppEs?=
+ =?us-ascii?Q?eXivVqzGpaenLyHsHlLFUq+AOzkEF+LxYsJlHc9/ml42JomrPLRhIqntn0DT?=
+ =?us-ascii?Q?A9TLW4wlLDJDj9kbihSgsbxQqx1qqLAaYqwRrWbS9NuDQGXDzMjxJGb4aPaO?=
+ =?us-ascii?Q?WNtVBRpVx4MerM8tDYk0aosZlPT9EYeKBJtdin7sHzDE0cNoCX/sK0EI0Bep?=
+ =?us-ascii?Q?s5FufPFCPHQKloaNZ4ESxpFrLN+bzaTMKLBZSFBUtlHoTW6Wzr1Ze4s940N4?=
+ =?us-ascii?Q?osR+rN5yCE+bTwZ1+GKYpskNHTbV26no9L7Y7eWFNxkiqkmQNGPDOlDWpOsA?=
+ =?us-ascii?Q?F0KVJvOaQRwlED2zKtRxJ5/NVNdJX3u+BX+6FOo06+entkpkiX8W/KovETbi?=
+ =?us-ascii?Q?Db8Bw9lfu1u+5XTYsAvBm8Wtj1tO0VHN0a3TeUW/AjlGGXvhDN+bxAAhE8Fk?=
+ =?us-ascii?Q?fKjIILHBTILvoJswXc4QMxSHr9w1ga3EVNk6wMeO/O5ekcPIkhrakrGEK1u/?=
+ =?us-ascii?Q?ZS/OYGZdOk90TypIc4n5l5a10MW6ftd8+HbCEjcwkulQ35a11r9B?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f244dbc-60e8-4bea-bf65-08df038b1251
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 15:59:55.5409
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 43Iu5Xk0ll8eUUvEoqHQHEDzUFr+Gx9b/GKlWoFpyUdgJ8HeGx5rvRmYzp31EYaPTonmg6rQ7tViHGDNhgl1FIYSI6AHrrm0u+Vomn0eWr6LAky/k6b7eg/vaMUutyyd
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB10201
 
-
-
-On 8/24/26 6:11 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+On Wed, Aug 26, 2026 at 10:35:24AM +0200, Stefano Radaelli wrote:
+> On Wed, Aug 26, 2026 at 08:31:32AM +0000, sashiko-bot@kernel.org wrote:
+> > > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi
+> > > index 0000000000000..aecc8c747f041
+> > > --- /dev/null
+> > > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som-mx7customboard.dtsi
+> > [ ... ]
+> > > +&usdhc1 {
+> > > +	pinctrl-names = "default", "state_100mhz", "state_200mhz";
+> > > +	pinctrl-0 = <&pinctrl_usdhc1>, <&pinctrl_usdhc1_gpio>;
+> > > +	pinctrl-1 = <&pinctrl_usdhc1_100mhz>, <&pinctrl_usdhc1_gpio>;
+> > > +	pinctrl-2 = <&pinctrl_usdhc1_200mhz>, <&pinctrl_usdhc1_gpio>;
+> > > +	cd-gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
+> > > +	no-1-8-v;
+> >
+> > [Severity: Medium]
+> > Does including the no-1-8-v property here needlessly cap SD card performance
+> > by explicitly disabling all 1.8V capabilities and preventing UHS-I
+> > negotiation?
+> >
+> > The pinctrl configurations below for SD1_VSELECT prove the hardware supports
+> > 1.8V switching:
+> >
+> > > +	pinctrl_usdhc1_gpio: usdhc1-gpiogrp {
+> > > +		fsl,pins = <
+> > > +			MX7D_PAD_SD1_CD_B__GPIO5_IO0		0x59
+> > > +			MX7D_PAD_GPIO1_IO08__SD1_VSELECT	0x59
+> > > +		>;
+> > > +	};
+> >
+> > With no-1-8-v present, the MMC subsystem will never switch to 1.8V, rendering
+> > the UHS-I pinctrl states dead code and capping speeds at 50MHz.
 >
-> New issues:
-> - [Critical] The timeout mechanism intentionally skips unpinning the NIB page to avoid a driver-level UAF, but fails to realize the VFIO core will automatically unpin and free the page when the device is closed, resulting in a critical hardware DMA Use-After-Free.
-> - [Critical] The timeout handler leaves `q->saved_iova` and `q->saved_isc` populated with the old guest's state, leading to cross-guest resource corruption when the queue is assigned to a new mdev.
-> - [High] The timeout error path deliberately leaks the registered guest ISC and pinned NIB page, which permanently exhausts ISCs and directly causes a host kernel WARN when the KVM guest terminates.
-> - [High] The worker can still loop indefinitely because the new timeout check is bypassed in the 'else' branch when retrying the reset via ap_zapq().
-> - [Medium] The commit message explicitly claims that AQIC resources are freed on the early exit path, but the code does the exact opposite.
->
-> Pre-existing issues:
-> - [High] The worker returns early on `-EIO` without writing the final hardware status back to `q->reset_status`.
-> --
->
-> --- Patch [3]: [PATCH v2 3/4] s390/vfio-ap: Fix unbounded loop in apq_reset_check() ---
-> commit 84304c1f304fd7bd597c0aa370c7ee8ddc904d98
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Fix unbounded loop in apq_reset_check()
->
-> This commit introduces a maximum wait timeout in the apq_reset_check worker
-> to prevent indefinite loops when the hardware continuously returns a busy
-> response. On timeout, the function writes the busy status back and breaks out
-> of the loop.
->
->> Fix this by introducing AP_RESET_MAX_WAIT (2000ms) and breaking out
->> of the poll loop when elapsed time reaches that threshold. On
->> timeout the final busy status is written back to q->reset_status
->> so that callers inspecting reset_status.response_code after
->> flush_work() see a non-zero value and can return an appropriate
->> error. vfio_ap_free_aqic_resources() is called before returning
->> to release any KVM ISC registration and pinned NIB page,
->> consistent with all other early-exit paths in the function.
-> [Severity: Medium]
-> Is this description accurate? The code in the patch explicitly omits calling
-> vfio_ap_free_aqic_resources() on the timeout path and includes a large
-> comment explaining why it must leak these resources.
-
-The description needs to change to match the code change.
-
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 3f99b239fa959..7a9b5448e90a0 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->> @@ -1971,6 +1972,27 @@ static void apq_reset_check(struct work_struct *reset_work)
->>   					      status.response_code,
->>   					      status.queue_empty,
->>   					      status.irq_enabled);
-> [Severity: High]
-> This is a pre-existing issue, but does the early return on -EIO just above
-> this block need to update q->reset_status before returning?
-
-The response status returned from the tapq needs to be co
-
->
-> If ap_zapq() initially succeeded, q->reset_status.response_code would be 0.
-> If a subsequent ap_tapq() results in an -EIO from apq_status_check(), the
-> function returns immediately. Will the caller vfio_ap_mdev_reset_queues()
-> incorrectly assume the reset was successful because it sees a 0 response code?
->
->> +			if (elapsed >= AP_RESET_MAX_WAIT) {
->> +				/*
->> +				 * Timed out waiting for reset to complete.
->> +				 *
->> +				 * The AQIC resources associated with this queue - the pinned page
->> +				 * containing the NIB and the registered guest ISC - cannot be freed
->> +				 * here. The NIB is the active DMA target for AP interrupt delivery
->> +				 * until the reset completes; freeing the pinned page while the
->> +				 * hardware may still write to it would result in a use-after-free
->> +				 * kernel crash.
-> [Severity: Critical]
-> The comment mentions leaking the NIB page to avoid a use-after-free, but does
-> the driver hold an independent reference to the page?
->
-> When the user process terminates and the VFIO container is closed, the VFIO
-> core automatically unpins tracked pages. Will the physical page be returned to
-> the buddy allocator while the active hardware can still perform a DMA write to
-> it, potentially corrupting memory reallocated to other processes?
-
-Pages pinned via vfio_pin_pages() are reference-counted by the VFIO layer
-and are not automatically unpinned unless the driver calls
-vfio_unpin_pages(). The page is genuinely leaked (intentionally), not
-silently freed.
-
-The driver does hold an independent reference to the page, so it should
-freed when the kvm is torn down, the mdev is removed, a queue is
-removed from the device driver or a queue is unassigned from the mdev.
-This will be fixed in a forthcoming patch.
-
->
->> +				 *
->> +				 * If the reset eventually completes, interrupts will be terminated
->> +				 * and the pinned NIB page and ISC registration will be leaked. This
-> [Severity: High]
-> By intentionally skipping vfio_ap_free_aqic_resources(),
-> kvm_s390_gisc_unregister() is never called. Does this mean KVM ISCs are
-> permanently depleted for the guest?
->
-> Also, when the KVM guest is torn down, will kvm_s390_gisa_destroy() trigger a
-> host kernel WARN due to the non-zero alert mask?
-
-This is a legitimate concern. Similar to my response above, this will be
-fixed in a forthcoming patch.
-
->
->> +				 * is preferable to either a use-after-free or waiting indefinitely:
->> +				 * apq_reset_check() holds the matrix_dev->mdevs_lock mutex, which
->> +				 * serializes access to all mdev objects system-wide, so blocking
->> +				 * here would stall all other guests using AP queues.
->> +				 */
->> +				memcpy(&q->reset_status, &status, sizeof(status));
->> +				return;
->> +			}
-> [Severity: Critical]
-> If the timeout handler leaves q->saved_iova and q->saved_isc populated, what
-> happens when this queue is assigned to a new mdev?
->
-> When the new guest enables interrupts, vfio_ap_free_aqic_resources() will
-> process the old guest's saved IOVA and ISC using the new guest's KVM and
-> VFIO container. Could this unpin an active page in the new guest or corrupt
-> its GISA state?
-
-This is a legitimate concern that will be fixed by clearing these resources
-before any queue can get assigned to another mdev (see above responses).
+> This is intentional. The board does not support reliable 1.8V signaling
+> on this SD interface, so no-1-8-v is required despite the presence of
+> the VSELECT pinmux.
 
 
->
->>   		} else {
->>   			if (q->reset_status.response_code == AP_RESPONSE_RESET_IN_PROGRESS ||
->>   			    q->reset_status.response_code == AP_RESPONSE_BUSY ||
->>   			    q->reset_status.response_code == AP_RESPONSE_STATE_CHANGE_IN_PROGRESS ||
->>   			    ret == -EAGAIN) {
->>   				status = ap_zapq(q->apqn, 0);
->>   				memcpy(&q->reset_status, &status, sizeof(status));
->>   				continue;
->>   			}
-> [Severity: High]
-> Does this bypass the timeout check entirely if apq_status_check() returns
-> -EAGAIN?
->
-> The loop will drop into this else block, re-issue ap_zapq(), update the
-> status, and continue without evaluating the elapsed time. Will the worker
-> spin indefinitely if the hardware continuously returns a state that triggers
-> -EAGAIN?
+Needn't pinctrl_usdhc1_100mhz and pinctrl_usdhc1_200mhz if don't support
+sd3.0
 
-Yes. This will be fixed in v3.
-
+Frank
 >
->>   			if (q->saved_isc != VFIO_AP_ISC_INVALID)
->>   				vfio_ap_free_aqic_resources(q);
->>   			break;
->>   		}
-
+> >
+> > > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> > > index 0000000000000..158158afc3391
+> > > --- /dev/null
+> > > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> > [ ... ]
+> > > +	codec_wm8904: sound {
+> > > +		compatible = "simple-audio-card";
+> > > +		simple-audio-card,bitclock-master = <&dailink_master>;
+> > > +		simple-audio-card,format = "i2s";
+> > > +		simple-audio-card,frame-master = <&dailink_master>;
+> > > +		simple-audio-card,name = "wm8904-audio";
+> > > +		simple-audio-card,routing =
+> > > +			"Headphone Jack", "HPOUTL",
+> > > +			"Headphone Jack", "HPOUTR",
+> > > +			"IN2L", "Line In Jack",
+> > > +			"IN2R", "Line In Jack",
+> > > +			"IN1L", "Microphone Jack",
+> > > +			"IN1R", "Microphone Jack",
+> > > +			"Microphone Jack", "MICBIAS";
+> >
+> > [Severity: Medium]
+> > Does this routing contradict the configuration of IN1L as a digital input?
+> >
+> > The routing maps the analog Microphone Jack to IN1L. However, the wm8904
+> > node configures IN1L as a digital microphone input via wlf,in1l-as-dmicdat1:
+> >
+> > > +	wm8904: audio-codec@1a {
+> > > +		compatible = "wlf,wm8904";
+> > > +		reg = <0x1a>;
+> > [ ... ]
+> > > +		/* DMIC is connected to IN1L */
+> > > +		wlf,in1l-as-dmicdat1;
+> > > +	};
+> >
+> > Because IN1L is placed in digital mode, does this cause the analog signal
+> > from the Microphone Jack to be ignored and break analog audio capture?
+>
+>
+> This is intentional. IN1L is used as DMICDAT1, while the analog
+> microphone path is handled through the remaining codec input routing.
+> The current routing matches the board hardware configuration.
+>
+> Stefano
