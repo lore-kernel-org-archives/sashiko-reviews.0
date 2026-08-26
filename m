@@ -1,140 +1,168 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF14394793
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 21:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF8F3A785A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 21:38:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787779176; cv=none; b=jvlmgG1TxlX43Lqypdpyyd9SsXIPtRk8QzPAkCkaNsX8Jw4v85WCYBo9piW/gS8z/5jVuyDkLGC0CxlhXaeKd9LVn6lnQGc812p1q3fvoaL7Rn7JnUn31kzujq0SEj5HdgkNkpr3Cnqjp4EMQiR9UHl4qytqSFW7FvvElKbztXk=
+	t=1787780305; cv=none; b=CtnvMdWSAvpdUr7+1VWesj4Ku+me+nSzgGmhX92eVdcYPA8Wcsh+QBViF21BtHbmyJ/xVnvfAtzZ38Hc2RfQlIwzAkOSqhHaWEm80Nvfk15qinFGtwg3Ix/R7v+iRUKRIcnB4zX1Un5FVUMTof74NnqYm+/m9/U4AhPYYZxDjgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787779176; c=relaxed/simple;
-	bh=zOU3jhEls2nlcQi6nn7A7bCR5iYoUqPrg5AVUP9NoEo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cYbuWQXSqJMxI8w8ENDhzAz0wrYxaHcPlgvjYqtXQhoxYh/FHjdGj2j2BSBhPIvkZfxj1lh2lAufNFzh+IyEBAtraNGWCcrFYVGhq2nJKx9L94MdaEfzeITtwh6xhIYZ5wwbAV5qFj5iKajMnvXqaXKq6gmtm0cKp3ktq8raoZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DU6dx+t6; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1787780305; c=relaxed/simple;
+	bh=KJxiocFFulx1gyvaIva7hCGCdkW8RxYUKtNlSyCVR0I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bg8Sjx3MK77FAR4OwLYc60zWxDgjIAvZ730diY4LBTFocfS3wP6mhKF3LKY2uTY0ECUga2SbuTUxhAsB7uRf3YnkkQcmgIzbKF5MLONcoN06mMq2ogfjhCNFA+fcipaUSf/tXH0qB8YFlOiKyhKq65Y1zz5w9IwOSKCtewvY64c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MFblkIgG; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DU6dx+t6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787779173;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Hs9Hk1Yz77p64quQu3QJjbDqz+Gy/YAoNjsZDx24MPE=;
-	b=DU6dx+t6OTHni+B0JCLYPCmkq08K1am2brNggm4PwOIh/sipNjP4G6s3dAepKmo7vpcE2J
-	jlmF5UyVsUpt8S+JZGO/BV6fe7yrk/nlX2w5J4yAtYc5/e4p9UuNmRXIyV20ctGpsDYvDc
-	bG0dPsP6r0P7sxXXSmBd/Dv95iRdQLU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-YYCLZT3COUyWOrjWsmIGgA-1; Wed, 26 Aug 2026 17:19:32 -0400
-X-MC-Unique: YYCLZT3COUyWOrjWsmIGgA-1
-X-Mimecast-MFC-AGG-ID: YYCLZT3COUyWOrjWsmIGgA_1787779172
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-93771aa0379so4964685a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 14:19:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787779172; x=1788383972;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MFblkIgG"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc1cc97b84bso39103a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 14:38:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787780304; x=1788385104; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Hs9Hk1Yz77p64quQu3QJjbDqz+Gy/YAoNjsZDx24MPE=;
-        b=hMR/2Gc6JVojcYWhGUATUSXiBWEmyQt2252lS5aUHVpNxSNh4WgzwhE6cxhYvS0kxh
-         cK7NCmbZSyQU6nx18iM1oZkM8OT0BJUeExReQEsZUb3UPiYmq7pI0/oDKuDh8NQIRZPT
-         1Nhu57wXWj5Kokn2SYcc4rNLkl6J5QmrN8V5McQWzgX4VTY+EvT5p5GWKtqldWvVkOl5
-         XHmBxBakQdbiFQMHfrpaRNjfWNjwkmtrzLGzjIxcdu5Xa+hN+lfskAWjz9oFcoFcsNgo
-         BV1nHFPmY75I5fAJ9vrjtIsDKLG+fHLOGMBRCOJO9N/vsyNrgAdaCb/aXbrzcpgare0P
-         oRQg==
-X-Gm-Message-State: AFuF++lMx2tnxSUNMS7OTMfL5PpgjNO8KZOqr1hg1fNv3bP7+UqZFGrv
-	WAuQdHP/TFVt741jw73QWg/ZZRdU4Vc+z8ODjQRhop42bXX3ZbNdCP1fNKjHbqkYoNY3w9iwNfi
-	wVDZlYCBhA8YrZrtLRGh/3nuS4dOTZ5OE7d1WP8SagGBdgDr6Cf/mCIKv6uPqUCPe0m1SdZdpa9
-	NwSw==
-X-Gm-Gg: AR+sD11AYifYBcetjTg1kZGr6hQujpe85KXcdp9LAo8n9a2zt4TxjMYP7x5WzTRi/b6
-	ZeAlBw4HEH6bGDTplzrIdhsAeVOrkRN8WattImIUSX1eLiOkSM58xpyodC5M60eQacOtm27qWvL
-	hsNxZFPjshzFOr2FgKCXD3Mq5VNQX+qFeX4bJ23JNH+ptijhgxpKLpGWyOi/Xte9NyrNIXzmkPe
-	6Brg8K48y4J0ZxpDExbSErhclLKP2YxjWULIZFUsv5FjPO7pHlj7DicDDHass89sVpA+IG2AZZv
-	vB4BnS7SOeT282KlqPe2ehfsb4Ihn7JrJfnrL5/RUmFzdbHSqpPA6HRwlQVgLMYEsWwrGhH9lGY
-	EtaD98VRQnbQeuHwCy42XaQHz+iJyv12b
-X-Received: by 2002:a05:620a:3622:b0:937:4524:68d7 with SMTP id af79cd13be357-937803e1d93mr868630785a.22.1787779172212;
-        Wed, 26 Aug 2026 14:19:32 -0700 (PDT)
-X-Received: by 2002:a05:620a:3622:b0:937:4524:68d7 with SMTP id af79cd13be357-937803e1d93mr868626985a.22.1787779171607;
-        Wed, 26 Aug 2026 14:19:31 -0700 (PDT)
-Received: from crwood-thinkpadp16vgen1.minnmso.csb ([2601:447:cc01:6890:c623:cd89:345e:99f3])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9377e36879asm301819285a.17.2026.08.26.14.19.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 14:19:30 -0700 (PDT)
-Message-ID: <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
-Subject: Re: [PATCH 1/4] tracing/osnoise: Per-cpu mutex and fd detachment
-From: Crystal Wood <crwood@redhat.com>
-To: Steven Rostedt <rostedt@goodmis.org>, sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
-Date: Wed, 26 Aug 2026 16:19:29 -0500
-In-Reply-To: <20260826153132.1333fac6@gandalf.local.home>
-References: <20260824211544.3984835-1-crwood@redhat.com>
-		<20260824211544.3984835-2-crwood@redhat.com>
-		<20260824213037.F41B11F000E9@smtp.kernel.org>
-	 <20260826153132.1333fac6@gandalf.local.home>
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44)
+        bh=D8v0eLC3lqB1O4ht8TaGs8/rxS1/v9Xyd+T9SvWAlPQ=;
+        b=MFblkIgGFjpUavOqtfCphj0wOOkg3yUrtG8/nAJqNsZDOQMncX2yh3vwzoQLj7VImz
+         5Qr0eBV+6IJVUmBcOxMbE8iR7f47ToC4E8gzoPm2jzZfxf39ojF2AA6UeTnP0fDsfNaA
+         NstbWsNoNN8vjvj7DDVRHwXDIncP378rFvl4zjwWMCfEL9xTbD0IQBKtHS051i0K1it/
+         K2Cta1DU8Vi6oG0pycy6IhjPl+mB2lCp7D9T+/zUeuymBI9bUbTVDH91WgnRS+xqpROT
+         tEzKeXx/ZejZUHtwu7KG75odSTCGMn6BqCwsr9opTwg3C5PUBQVSozUrPdfUXLeQZDfS
+         Tyrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787780304; x=1788385104;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=D8v0eLC3lqB1O4ht8TaGs8/rxS1/v9Xyd+T9SvWAlPQ=;
+        b=R0G1MJr3qZ6jL92blBNtN0ZJam8KNdRkqYr4h5H2TNgUkB0/C5yGJtgxAKpX/oCoOr
+         L4rPzqc2YBNqc8JlvZwYDGmxX2ZG3AZgJ0dwa8ZTvgg37+Ql0Te7TVZi3c9NUUFQuIoR
+         GZ1M44J+r3Koq1ySf90TwVJlJGzH9lBdTgXbfEtPSrMBKkDAMMYfd+k83g+5rz+W8ffj
+         uXz9cjDdOJx/WiiitVyXvThElKdszkqpsY2EQolSh+dXf7bHnbaruYn8DiBPa4Q2Lk4q
+         5xipxoVHNceMVY3aW4L9d63vOrq4tevxwA29E+OSjjd0hfnqstnsMmL2xbQH2REsPm25
+         DWpQ==
+X-Gm-Message-State: AFuF++k3TBcxJxDg7wz1ARP61l9ubesA3Qn0Hj/V9ZfpiWmx1ejUozdJ
+	jPOwkAWGFFKqkJLZp9ymm+bzjq4y5tqHrAQAs89QdpW7gkhUOCAuHhF4jssDyg==
+X-Gm-Gg: AR+sD119kFkh/LLMDOIBSHCYOPy4/VTOpBC+7/sRou5nGR19jMaLJ4moVdzStaFu2FY
+	pj5VMd6ehp8/xYm8EK3ywVzu2sEslN+mPhJiC5uaxCQT/tOMyN/652FYXrfcAdB0ZlKrXuvS7fJ
+	jQC9vubWyf3A8DXnM6PyMLMa2LwX8Jt0UzZtr7blfOD52Om4ctD3g1kORWHan9N+EL7QRayb2/k
+	Ql8XAWWdBhmT0yNktxNc3WxzyasL1slQBcNXGLp1v8X/wAp7E+iWSFDKRVYWCipCFzWm3apQV5g
+	p97NyLrY54uQds9733sLZ+mGQI/x2hx9UM0sclY3GfKSXXvtAkzpvFHBCzbAQXZ1HVzPIo3UHuk
+	eFLp04X8iuxTO8XpplEzyk6+at9AHdFyhn/FE9sjG3CRqrQBcXvb0DB1MgJhkTjX9QObtLXBhLk
+	KB9LALBc3P0X4YSuV8Ii9YFyWlG0VeJz2wsiXq8+nDcneDlUXk+UqyQgRknfzWWS5Ok23lfevk2
+	Ma0kdKhhDuSU7u9GZX7Jq63vOSFKm9gJg/DAQ==
+X-Received: by 2002:a17:90b:380b:b0:366:3517:1aa2 with SMTP id 98e67ed59e1d1-3966d002fffmr19304395a91.0.1787780303532;
+        Wed, 26 Aug 2026 14:38:23 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396686e8e74sm5737255a91.1.2026.08.26.14.38.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2026 14:38:21 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <e942dc40-891f-4612-bbbb-2ff41fd88a24@roeck-us.net>
+Date: Wed, 26 Aug 2026 14:38:20 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: xD6RYkJ2juLfaNVksfzOqtigSKNb38eexPlg0h4TLiA_1787779172
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] watchdog: keembay_wdt: Convert to
+ DEFINE_SIMPLE_DEV_PM_OPS()
+To: sashiko-reviews@lists.linux.dev, Triet Hoang <triet.hoang.dev@gmail.com>
+Cc: linux-watchdog@vger.kernel.org
+References: <20260826060839.203297-1-triet.hoang.dev@gmail.com>
+ <20260826060839.203297-4-triet.hoang.dev@gmail.com>
+ <20260826061737.EF6B91F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260826061737.EF6B91F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 2026-08-26 at 15:31 -0400, Steven Rostedt wrote:
-> On Mon, 24 Aug 2026 21:30:37 +0000
-> sashiko-bot@kernel.org wrote:
->=20
-> > [Severity: High]
-> > Can holding osn_var->lock while calling kthread_stop() cause a deadlock=
-?
-> >=20
-> > kthread_stop() blocks waiting for the target kthread to exit. However, =
-if
-> > the kthread is currently handling a migration request in
-> > osnoise_migration_pending() (shown slightly earlier in the diff), it wi=
-ll
-> > attempt to acquire this same osn_var->lock before it can clear its stat=
-e and
-> > exit:
->=20
-> This code has a lot of nastiness in the locking with regard to the thread=
-.
-> I haven't looked deeply at your patch, but the fact that Sashiko pointed
-> out a possible deadlock I think you may be hitting the mess I was hitting=
-.
->=20
-> Have you looked at this thread: https://lore.kernel.org/all/2024082013000=
-1.124768-1-tglozar@redhat.com/
+On 8/25/26 23:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The driver uses `pm_sleep_ptr()` for the `dev_pm_ops` structure pointer in the platform driver definition, which violates the strict subsystem guidelines mandating `pm_ptr()`.
+> --
+> 
+> commit a755ace210f3814431fd01a8ffbd96e121f18dda
+> Author: Triet Hoang <triet.hoang.dev@gmail.com>
+> 
+> watchdog: keembay_wdt: Convert to DEFINE_SIMPLE_DEV_PM_OPS()
+> 
+> This commit converts the deprecated SIMPLE_DEV_PM_OPS() to
+> DEFINE_SIMPLE_DEV_PM_OPS() and wraps the PM operations pointer with
+> pm_sleep_ptr(). This enables dropping the __maybe_unused annotations from
+> the suspend and resume callbacks.
+> 
+>> diff --git a/drivers/watchdog/keembay_wdt.c b/drivers/watchdog/keembay_wdt.c
+>> index 2a39114dbc641..9424ea4155f07 100644
+>> --- a/drivers/watchdog/keembay_wdt.c
+>> +++ b/drivers/watchdog/keembay_wdt.c
+> [ ... ]
+>> @@ -285,7 +285,7 @@ static struct platform_driver keembay_wdt_driver = {
+>>   	.driver	= {
+>>   		.name		= "keembay_wdt",
+>>   		.of_match_table	= keembay_wdt_match,
+>> -		.pm		= &keembay_wdt_pm_ops,
+>> +		.pm		= pm_sleep_ptr(&keembay_wdt_pm_ops),
+> 
+> [Severity: Low]
+> Is it correct to use pm_sleep_ptr() here for the dev_pm_ops structure pointer?
+> The PM subsystem guidelines require using pm_ptr() for dev_pm_ops structure
+> pointers, reserving pm_sleep_ptr() for the sleep callbacks themselves.
+> 
 
-That thread is about user fd sync, which is what this patch is trying to
-address.
+The use of pm_sleep_ptr() for .pm is widely used in the kernel, but at
+least Sashiko's guidance suggests that pm_ptr() should be used instead.
+Please do that for .pm pointers.
 
-This particular deadlock is with kernel threads, in a corner case of
-getting migrated even though we try to pin them to one cpu.  We can get
-rid of this migration code and just have stop_kthread() take care of it,
-adding a get/put_task_struct() so that it's OK for the thread to die
-early.  This way we can also handle any other abnormal thread exits.
-
-I'll respond to the rest of the Sashiko comments soon.
-
->=20
-> It has some tests I ran along with tracing that detected issues. Of cours=
-e,
-> everything needs to be run with lockdep enabled too.
-
-I did run with lockdep (and some custom hacky state tracking) but
-forcing migration is a hole in my test coverage.
-
-Is there a particular test you're suggesting?
-
--Crystal
+Thanks,
+Guenter
 
