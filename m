@@ -1,85 +1,231 @@
-Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5BB396D1C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BEA3C76A2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787769052; cv=none; b=hk0mHV1fm9U0lrfPCR61ab4mOFnMhBa1DBez0qFPps3GOEJYkWGEtO2GaLAWs/LcC3vuXEG4BC6l9ctaznzdWAOukJkPAgQe4GoYQCa00hL+d9dRRiAlEgdfj1dSP+syLpXnpGEcVgcrtLkZ/0eJ9+wRZIVDwR6up0naoey5GOU=
+	t=1787769381; cv=none; b=fnYFPrc7n12B1YhQlOyB9KrTye7RiE+j0nHeTUDIgmFezZBZEKhY645GhiluJPeVFiZ8NY8uYbFV+BAC/rCOG6IFScVWb/NNkz0pOcosv+NvhwMSJgtUQ27SH3CabylBaOI633iIX2oA8PXdy0YLRsTEx3isTQHvaULYRQ5KqdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787769052; c=relaxed/simple;
-	bh=IiJ6o9p4RdhW/e+YbM46z7SC+oyYsBTOEyeha9FqVlU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OXAIT9XNUXHvoNvBdZuCDK81DYlucBdhBsaHDm7ojmMKkBfv6lFyVY59Q00CJnpu2a2WdDI8n3kBiHBV/K8IVmXKj57zQoxUBi322RMHU52qeTcsPWVcwOp/6oHBUgiyI31WgAKCbdUd2gKcxI886aQ0eygmysI6w7x6mYX7ELo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=J1/Yr6f1; arc=none smtp.client-ip=216.40.44.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1787769381; c=relaxed/simple;
+	bh=XmRgFxnssCa/NMxFYU0vyhZ0ZtzDJbIT3aLWUknj6vc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=jSCi57CF/LqvLBQle9nZ3pamCQLxbkrOieEempU4Zz6+2e2YT2rfCMTPJX4/jo51COsCxqGlb9vUJ2EbzC0VskzxuGJI/ti1zKm3FhPwot7JL00YD/dx+v9JVrrO9V/IsGsXb3fUrVIPzjN2EqQ1HgxWqIolp81PyzLHtjsgRmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gqS50Znn; arc=none smtp.client-ip=209.85.215.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="J1/Yr6f1"
-Received: from omf09.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay10.hostedemail.com (Postfix) with ESMTP id 5623EC01D4;
-	Wed, 26 Aug 2026 18:30:39 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf09.hostedemail.com (Postfix) with ESMTPA id B847D20025;
-	Wed, 26 Aug 2026 18:30:37 +0000 (UTC)
-Date: Wed, 26 Aug 2026 14:31:23 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Vincent Donnefort <vdonnefort@google.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 1/3] tracing: Fix subbuf resize races with
- trace_pipe_raw readers
-Message-ID: <20260826143123.1b3e3854@gandalf.local.home>
-In-Reply-To: <ao8TQ-SvhjYgy43-@google.com>
-References: <20260826094528.3738023-1-vdonnefort@google.com>
-	<20260826094528.3738023-2-vdonnefort@google.com>
-	<20260826095947.4FF8B1F000E9@smtp.kernel.org>
-	<20260826103736.2b55b464@gandalf.local.home>
-	<ao8TQ-SvhjYgy43-@google.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gqS50Znn"
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cc1c5810451so1353542a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 11:36:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787769364; x=1788374164; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oUsJXArdjHCp7I2TiQoIKYOSCAzkeNjkQvWi8w0K0Xg=;
+        b=gqS50ZnnhaST26WKdv5/S5HGcTbi/Ao93SnKNMlNb1Hrf4V71mMxycSJZoKsgBISOt
+         AsumGwBIlNrsTPaa7udXsT7r3PVx/KVZqba/FcyAlaiI1byI1uyJN5QuhIDwy9L/2IrM
+         D8/Cmn0xQGoCUS9oHiubDmc3TfIvqjLHYzf2K7hSJ0LaB1p0alOzuyKXeGJIPuxEovm5
+         2FvBqvVmHSvOVtOZH2XYbew3Hm4t4Y6zpEpRv0ya7zIEXhnDxtfixM9jMNJ1CBHNreVm
+         waw8txmOCx1kkzoswBNUPsxCQR4dAXAu/cmtzFrt2gR11iMUM9K+CEJYoEs+h7e/Ntc3
+         djEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787769364; x=1788374164;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oUsJXArdjHCp7I2TiQoIKYOSCAzkeNjkQvWi8w0K0Xg=;
+        b=CDt/ucsRlSt2Q/DF7Xy/MwIgR6fgvXdBrESUUlluqgu28p/SIfVz63Qpqz7LkN60v0
+         sMOOLqN5cS0x99wi6Rc+lliNow9ewW6R2L94AXJKFqfGEa7cE2zWehB28VMIW9UX2/ya
+         cwqzpePdQXwOwOQkTD2KU63r0flsdShNeTOWxvCpqLwArQiM9q+BHhkP08frBj5abGJg
+         WY37awvi5/iIGD6RR00lXDWazjXv2/vOcY9gvlNJmXvSMP2i99fg0+xlSyA5RcKnW6g8
+         PLzuVEP/663fM3SCXBIS2HDbE45op3My9COc6a8JwLf26Te+y2Yx8twXzIZQQaVhT+v8
+         cDCw==
+X-Gm-Message-State: AFuF++mSJvE0Xk8cRlWPbKdwel33h1w7jcGJ3l6XuC/804VS/qcctijh
+	1vlhg9KwdfnSQC1pif2eBIrffbgEFPgskI12O9NnLUNIZFowx+zaRTchfXQ05uhIzeBbQTWCn90
+	Ef82KPfZLTwtk+c1yM10LVz72Sw1H5hZL8bZsmP+c62IYsSe2li8VeH4zRtV77ly40RKHidn61Z
+	dmg1udjjb0/rgcUy6wC1hFTUp7ShERgvNxwAcA17/8G4Y6KXQe
+X-Received: from pgcp24.prod.google.com ([2002:a63:7418:0:b0:cc1:5ec7:8f7b])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:44ca:b0:84f:77cc:63cd
+ with SMTP id d2e1a72fcca58-853757b9231mr17349081b3a.17.1787769363830; Wed, 26
+ Aug 2026 11:36:03 -0700 (PDT)
+Date: Wed, 26 Aug 2026 11:36:03 -0700
+In-Reply-To: <20260826170551.BEF801F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: 9arpc6uhcx1uaw3q5wr7uxxjdfp5ge4u
-X-Rspamd-Server: rspamout06
-X-Rspamd-Queue-Id: B847D20025
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18XxAdD1sfi8kUlzNUzj98ULs5E5VPo0Mw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=2MXGXKcjH51S/C76vlkXxPmKewipWiV9ccLaJ+mi+vE=; b=J1/Yr6f1+J5Rv8jfzxDTn4UeyErGMH3/Nr2uZ9alYACah5lcl4mmfg3MV86YEKt5A6RHZ7bpkyfgSuKaojTsINpiYCdFOzznk8t5l6yxBBQXVyMenkbSpE1hpMEX90SJoQLgJ6IvZk8TYeAKOzrBfuhny7RAuNmNkdAw5FJrrJ0=
-X-HE-Tag: 1787769037-13725
-X-HE-Meta: U2FsdGVkX19vRzPEJka9ItcAL7AUiglo++gXaRZHmOQvgj3FGI+yZMrXH3+cZclO2C2iGwMFk+tjxY+vOq6jJhWI9Y2ST6teaSvUKOpAjM+u2iaUz+OmfoiwRzm6+c4idUjszeh9cf1E9uL/linc1xq34hyXF6CIbRUQh55ko65rWjBz7owrABefdKNt2aSWA7E5sjDmfGrW1TKgxLlbKtxOci4vZ918UPdWmfT828vvCLXWIswVdJH37O5MbbcyRkTQahNS52C/3cTY9v3yY71MT8uScLIpjiVitFpaL7JfR0ndDNoiUPTg2vIGnb27r0B44vT6AILh7KoO/FpWYqwxp7vKsDo5
+Mime-Version: 1.0
+References: <20260826165154.766699-1-seanjc@google.com> <20260826165154.766699-3-seanjc@google.com>
+ <20260826170551.BEF801F000E9@smtp.kernel.org>
+Message-ID: <ao8yE-g5L9IzwwND@google.com>
+Subject: Re: [PATCH 2/2] KVM: guest_memfd: Drop superfluous WRITE_ONCE() when
+ binding a memslot
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, 26 Aug 2026 17:24:35 +0100
-Vincent Donnefort <vdonnefort@google.com> wrote:
-
-> > This is a legitimate concern. But with an easy solution. Perhaps just add:
-> > 
-> > 	if (full &&
-> > 	    (!read || (len < (size - read)) ||
-> > -	     cpu_buffer->reader_page == cpu_buffer->commit_page))
-> > +	     cpu_buffer->reader_page == cpu_buffer->commit_page) &&
-> > +	    data_page->order == buffer->subbuf_order)
-> > 		return -1;
-> > 
-> > If the user is changing the buffer size at the same time as reading raw
-> > pages, they get what they deserve! I just don't want to let the kernel go
-> > into an infinite loop.
-> > 
-> > -- Steve
-> >   
+On Wed, Aug 26, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 1ef9e29164237..1d2de9a1bc3f0 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -653,7 +653,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+> >  	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
+> >  	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
+> >  	 */
 > 
-> Sounds good. Do you prefer to get a v9 or you fold this into the existing commit?
+> [Severity: High]
+> This is a pre-existing issue, but is the new memslot actually completely
+> invisible here?
 > 
+> In virt/kvm/kvm_main.c:kvm_set_memory_region(), the new memslot is bound and
+> published to guest_memfd before its architecture metadata is prepared:
+> 
+> 	r = kvm_gmem_bind(kvm, new, mem->guest_memfd, mem->guest_memfd_offset);
+> 
+> When virt/kvm/guest_memfd.c:kvm_gmem_bind() executes, it inserts the partially
+> initialized memslot into the bindings xarray and drops the lock:
+> 
+> 	xar = xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL);
+> 
+> If userspace concurrently issues a FALLOC_FL_PUNCH_HOLE on the guest_memfd with
+> an offset greater than the memslot's offset, it can acquire the lock, iterate
+> over f->bindings, and find this uninitialized memslot. This triggers an MMU
+> invalidation over the uninitialized memslot:
+> 
+> virt/kvm/guest_memfd.c:__kvm_gmem_invalidate_start() {
+>     ...
+> 	flush |= kvm_mmu_unmap_gfn_range(kvm, &gfn_range);
+>     ...
+> }
+> 
+> On x86 with rmaps, gfn_to_rmap() will perform pointer arithmetic on the
+> unallocated slot->arch.rmap (which is NULL), yielding an invalid non-NULL
+> pointer. This bypasses the NULL check in slot_rmap_walk_okay() and causes
+> a kernel panic in kvm_zap_rmap().
+> 
+> Does this race condition allow a concurrent hole punch to dereference an invalid
+> pointer?
 
-Please send a v9. It makes the patchwork flow much better. If I modify a
-patch, it makes patchwork not be able to automate the status updates as it
-moves around git trees.
+Fuuuuudge.  Sashiko is right, the slot is reachable as soon as it's stored in
+the binding.  I've fiddled with a few ideas, and they're all awful.  Ok, that's
+not entirely true.  Moving the call to kvm_gmem_bind() into kvm_set_memslot() is
+very doable, I'm just annoyed that the aesthetically pleasing prototype for
+kvm_set_memslot() gets polluted with gmem parameters. :-/
 
-Thanks,
+AFAICT, binding after the memslot is prepared is the only sane option.  Because
+memslots are protected by SRCU, it's simply not possible to ensure readers can't
+see half-baked state if the binding is established before the memslot is fully
+prepared.
 
--- Steve
+And if the slot is committed before bindings are established, then PUNCH_HOLE
+won't zap SPTEs created between the slot being reachable and the bindings being
+established.  That, and KVM has a ton of code that assumes kvm_commit_memory_region()
+occurs after the point of no return, i.e. unwinding the commit is a non-starter.
 
+I think this would work?  Compile-tested only.
+
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 65eb26a0520d..19b50be4fe20 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1887,7 +1887,8 @@ static void kvm_update_flags_memslot(struct kvm *kvm,
+ static int kvm_set_memslot(struct kvm *kvm,
+ 			   struct kvm_memory_slot *old,
+ 			   struct kvm_memory_slot *new,
+-			   enum kvm_mr_change change)
++			   enum kvm_mr_change change,
++			   unsigned int gmem_fd, uoff_t gmem_offset)
+ {
+ 	struct kvm_memory_slot *invalid_slot;
+ 	int r;
+@@ -1931,20 +1932,16 @@ static int kvm_set_memslot(struct kvm *kvm,
+ 	}
+ 
+ 	r = kvm_prepare_memory_region(kvm, old, new, change);
+-	if (r) {
+-		/*
+-		 * For DELETE/MOVE, revert the above INVALID change.  No
+-		 * modifications required since the original slot was preserved
+-		 * in the inactive slots.  Changing the active memslots also
+-		 * release slots_arch_lock.
+-		 */
+-		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+-			kvm_activate_memslot(kvm, invalid_slot, old);
+-			kfree(invalid_slot);
+-		} else {
+-			mutex_unlock(&kvm->slots_arch_lock);
+-		}
+-		return r;
++	if (r)
++		goto err;
++
++	if (new && new->flags & KVM_MEM_GUEST_MEMFD) {
++		if (WARN_ON_ONCE(change != KVM_MR_CREATE))
++			goto err;
++
++		r = kvm_gmem_bind(kvm, new, gmem_fd, gmem_offset);
++		if (r)
++			goto err;
+ 	}
+ 
+ 	/*
+@@ -1977,6 +1974,20 @@ static int kvm_set_memslot(struct kvm *kvm,
+ 	kvm_commit_memory_region(kvm, old, new, change);
+ 
+ 	return 0;
++
++err:
++	/*
++	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
++	 * required since the original slot was preserved in the inactive slots.
++	 * Changing the active memslots also release slots_arch_lock.
++	 */
++	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
++		kvm_activate_memslot(kvm, invalid_slot, old);
++		kfree(invalid_slot);
++	} else {
++		mutex_unlock(&kvm->slots_arch_lock);
++	}
++	return r;
+ }
+ 
+ static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
+@@ -2058,7 +2069,7 @@ static int kvm_set_memory_region(struct kvm *kvm,
+ 		if (WARN_ON_ONCE(kvm->nr_memslot_pages < old->npages))
+ 			return -EIO;
+ 
+-		return kvm_set_memslot(kvm, old, NULL, KVM_MR_DELETE);
++		return kvm_set_memslot(kvm, old, NULL, KVM_MR_DELETE, -1, 0);
+ 	}
+ 
+ 	base_gfn = (mem->guest_phys_addr >> PAGE_SHIFT);
+@@ -2105,21 +2116,14 @@ static int kvm_set_memory_region(struct kvm *kvm,
+ 	new->npages = npages;
+ 	new->flags = mem->flags;
+ 	new->userspace_addr = mem->userspace_addr;
+-	if (mem->flags & KVM_MEM_GUEST_MEMFD) {
+-		r = kvm_gmem_bind(kvm, new, mem->guest_memfd, mem->guest_memfd_offset);
+-		if (r)
+-			goto out;
+-	}
+ 
+-	r = kvm_set_memslot(kvm, old, new, change);
++	r = kvm_set_memslot(kvm, old, new, change,
++			    mem->guest_memfd, mem->guest_memfd_offset);
+ 	if (r)
+-		goto out_unbind;
++		goto out;
+ 
+ 	return 0;
+ 
+-out_unbind:
+-	if (mem->flags & KVM_MEM_GUEST_MEMFD)
+-		kvm_gmem_unbind(new);
+ out:
+ 	kfree(new);
+ 	return r;
