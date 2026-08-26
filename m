@@ -1,398 +1,267 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010067.outbound.protection.outlook.com [52.101.84.67])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26BC2C17A3;
-	Wed, 26 Aug 2026 15:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.67
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787757350; cv=fail; b=kT6LahfXAA/TU2d9RAkeCgIklOs6M/FIbQxwD0kxHzFdgSANQ29x9ZpwjDiWZuCu3V9FjY+2FapoVyoGzzl23KmouhPI6mjWO+4jfCA6R1v3lV/WEQseLCxfj/hBntU6GrriczmAW/OqcGhPigXykY2dglL+m4VX0BOR9K6G10c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787757350; c=relaxed/simple;
-	bh=d+BYIzsahhXlQx7TRB5asYWFIrCA8Guu03RDbwaFZt0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=D4ClkRUAEbV+8dozGxBkiI2v61Vywc2rZgS+X5B96H3ht07Wa1Rg75I7tUBsIoene8qoyFakpeDKHpgET414wHZu4DhCM+Wg/+QiSoZFeKn3rRBwTwJ4PkddFTJWO4Rz0i++nU4YeYGNU/usX5MfzFKiVv86slX3tZkn6prc4jQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=kRHEdWRW; arc=fail smtp.client-ip=52.101.84.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B67943E06B;
+	Wed, 26 Aug 2026 15:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787757973; cv=none; b=fEwXE0DhG2SFhYVWZnvdjbYuqqTTpFMTO5vxJmT2e+kZ6MKdzuRFPsUSLV6LxqBLlAgL/2w1dSTmT6w4fwFoKUsHNG47mMlct8TzRFGT1e3G0op8NoQp6naQgBDymg8BTLrL2foVNCw+cf9C0L2W1RwML+DXUHEpv7SOwrkMjPY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787757973; c=relaxed/simple;
+	bh=7IyDZ0s/GydxtolyVpLq8v22+Z0AOPAUCl+LMUWlh0c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AAS9Quq5oetJZs4tAJDBD6nQtEdPETUZywSbQmq8BsfaokV590vC/jEjuFx39xIn7ClI47Am+ARRtUtYJqlOBBDqqOmw0SuxHDoWaVihUG/+my79EsR2FEWH54kBDQEE9zD+t0HFgUZcBme0x8jxNyGPYE/j4rVyM0GjlePquCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=b68/g829; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="kRHEdWRW"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v8lBTUIQwqGiCDbYKyZ3Fcn9UplHb8h+rzze6BHth6zZK/U0TG6eOc6iYKus8Sv0TbqcM2BxSrdwf2BoIuQt5L2AfcdW/E6Zv7qSDw2KYQXAWqGW/b+ay6Qlysjnax/hCnBlk1EdIsyjwNI+EBd/OZk9k7wWiNdp+aEAjj1Rc16T+6MwVoc4KrhfkGAkDY71rSlFKqBXW/AxWGlXk2U6WywFRuJ1xxsD2WzdmcbJxEA3H63ccIFBmeaENA8nrmcjRITJiNticuQkn0B/phXtDsIf1jhFaYwj9DsPE5tujyxKL5Tvm0lXAVCZ1Drn3LOFPWJSQE0igMkWpAE9SnEDAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5DdrrlLtuUpxY/3VWA4ipNa/ATpLbZ7fJ6pdLZW4cVc=;
- b=lKCntjSlh1QHRwi/QoTdfOIrFtzSxU3Y8T2FegwpotXbj2jmwdqjcbHPmWmzX7fRKK7DL/kjan1YA5yz02VnXmJ+6ZMDckQALE9ZU/3lmVJ1a/ITsZGNVn07AywX/qM5P00kO/H6j4cxZinFevxnYRub76ZwEWroyxinuNvph4ALtlDV/tuBH3X44TEoQPKIaj54cMZrzwOplDSh93LbwEMjVLKLXXI18OwMFF9x/42Ho5RfxOV7foZGmf0mWTZpyy8ZHxhkvShKE+bBMMJEECvkJ/VDXqitS2ISvyu0GHIFn+aGhOWkUra12PWSpdeb4qAKmE3Xx7nBaQTcvFa0jw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5DdrrlLtuUpxY/3VWA4ipNa/ATpLbZ7fJ6pdLZW4cVc=;
- b=kRHEdWRWPlX7Q1e8IrB+LjZveiAdx+KykO19LOWGLvG7BKEylE1DxXAK5qjZGAaozuHsgUYdL3gO2WiYf0g4I2v5MQ4zbhnmQQpKZgcK4+Bw7J5xnbNWL1gLrADHg90o+C2zmXxvcaosE5pKQ+Xaak+eKAnkjvRAQ+ZU4J1K2DzF23efkAMbxY/duz78UDI6RrM/p2JnfCHytztZTOg+5Rc5E5BXx2bPYje5XVvCNGU0DietFzpC2qW7/0xCxRaqBlyXF4kydFUM4dOseS4EwNxqxnGzltatc8MqvGjqgNmJALt8lXDs+0ttrEVoBjxlwO5XophCwkySbe5iyMTQtg==
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com (2603:10a6:150:32a::5)
- by DU7PR04MB11186.eurprd04.prod.outlook.com (2603:10a6:10:5b2::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Wed, 26 Aug
- 2026 15:15:42 +0000
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035]) by GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035%5]) with mapi id 15.21.0360.005; Wed, 26 Aug 2026
- 15:15:42 +0000
-From: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
-To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>
-CC: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>
-Subject: RE: [PATCH v42 5/7] firmware: imx: adds miscdev
-Thread-Topic: [PATCH v42 5/7] firmware: imx: adds miscdev
-Thread-Index: AQHdM+62vM6+B38BAEOIJdyhzzlrGLateiYAgAFknoCAAZIpEA==
-Date: Wed, 26 Aug 2026 15:15:42 +0000
-Message-ID:
- <GV2PR04MB12271A88AE415E200228B8A0D95AE2@GV2PR04MB12271.eurprd04.prod.outlook.com>
-References: <20260825-imx-se-if-v42-0-2e8efac0bb16@nxp.com>
- <20260825-imx-se-if-v42-5-2e8efac0bb16@nxp.com>
- <20260824175010.E8E2E1F000E9@smtp.kernel.org> <ao2vea2Z6RvDL4oy@SMW015318>
-In-Reply-To: <ao2vea2Z6RvDL4oy@SMW015318>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Enabled=True;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_SiteId=686ea1d3-bc2b-4c6f-a92c-d99c5c301635;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_SetDate=2026-08-26T15:05:56.0000000Z;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Name=NXP
- Confidential;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_ContentBits=3;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Method=Standard
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR04MB12271:EE_|DU7PR04MB11186:EE_
-x-ms-office365-filtering-correlation-id: 598dcb9e-f265-44bc-17c0-08df0384e524
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|19092799006|366016|1800799024|23010399003|56012099006|10067099003|6133799003|3023799007|11063799006|5023799004|22082099003|4143699003|18002099003|38070700021;
-x-microsoft-antispam-message-info:
- ntTEeC3xYLmvysfCiwc5X2V1gFBmef0TuLND8jZeS/HetIeg2OxPwmNLsyj7fuKo9mQSNA6n8pA2x6Q2mVv7b2gA2/uDmRpAUYXmAEO2PXd3k0M3s7YPGrSTYB3dDjrwteFFTBIPN9BNkkV+2/bl78B5ax4RQWp/bfkVrdPQz9VL5SZWNWfSZsO+4pM5J+7+EOJxc51e0E+iqgOG5C3rGYZoSWksZ8kEVm9iXWrHnl5Scj3HDV7hoCTIDh9aEx4Kf83krIt398xKKOCtzFvU/A7NZ1Ix8+gQ4V/6mzI/PVkLYp6RZf+nZ/GybUcqIStV7Iwc4zugWUQCgGdHZs1L2Q4mLR0q4FYlNoyKrI+W4bkXp/BnjC2RSLphgRV0Ja/BejkLHSRFuVw/q/p++ny7vFQ4Lof08Z2OTPr0WBu+3O3mBTiHhf27/nsxDjBgPbeQ4EAgls0SWyBwmx2IIPq1vMhY0d/i0wASiFVBNNSalrcpRnuJmQtouKrBPZOicaHEwx0chMdMmCuI+VdtSM0ifZzvJIr2MUbRoP4HflTCNqZ+QJxUNj9qcqEVzqDgcBOdxKQ33FZZshRzzbEpVVoQGDkCP17vcKNVAdwjEvguDytw/szl8KI9jcZEu3DrLcej9ivkA6eljFNVajL4xpAXhl0ueFszRmpPx0TjrqFHMLE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12271.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(366016)(1800799024)(23010399003)(56012099006)(10067099003)(6133799003)(3023799007)(11063799006)(5023799004)(22082099003)(4143699003)(18002099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ZiElI/s56oVN7oysqBoEZ204Rs6GtgVuZLlW4XgxrmV/oGpW53R+W6L7H5v2?=
- =?us-ascii?Q?3UFHRWntlHeAtGKkQeMlC/UkXerHaD76dvPutpqZnb2Dpmn3sJWINPRjzcVD?=
- =?us-ascii?Q?WE82rW5yPUjsM2WIDQkywxkt2dilA5yJSccvZM6R+0vnmBrfSudWilw2UrQs?=
- =?us-ascii?Q?xk89VKZmvAmXlJErRz7G3lkIiwP2/dOqUB1R7Nre+X3ikCeUhgEoBoZgAgJs?=
- =?us-ascii?Q?4R4PyHlsIM/o3+awjcCLL7iZfw1ky2gyxOxRsmRxNh7F7KWYyEQc3090KHU6?=
- =?us-ascii?Q?qBQS95vYabD294/mm/1XJX9Xdhpy7wM5MP8J1AbiEf1VVy2n6x9S081Tr0oM?=
- =?us-ascii?Q?Oq9ZytqOtfBByfES+WBoGlM7V9XpBcGEOmZQWAs8zHRyUzsSUE4HRixhaax9?=
- =?us-ascii?Q?dJsq1xJNVGWA5+IhXFguJOASv1NzPhUTmzhSmHkg30WswP5NavgYV78B4qde?=
- =?us-ascii?Q?8IogKSfKf18VktTqx+w6CFmzfZ+pTenu9As5mqF7pEDjNKI/iKdTjf8wCkq2?=
- =?us-ascii?Q?E0PUTyMjjnhru3kYukLAnM3lNC2qng0pspliRR/c7SWjJAu104j5nIF14UNP?=
- =?us-ascii?Q?wbEbhkDA2h5SBvOt0YH6h/AoQAgi+SyaWM9MgSjJQV4J0RzLm0R+4dkAiSSy?=
- =?us-ascii?Q?+rmqb8zrvbU3z1RELxWyLJmTjf5qinOHSooHGRHWnDYns/VSLP+y0lhlD1rQ?=
- =?us-ascii?Q?Eaa28mFzuovNfoiqexx9bPcjCtNlzODRZHSAwlgaPOK8479RRffi1MUxXPNG?=
- =?us-ascii?Q?6OJaAb/MDmXCYwhDsOe3orSR3f+jD1OB07+RQYre7nLQqpp04fwl6QW2qRlK?=
- =?us-ascii?Q?pnXRmsM7vrt8HTNTUtdzBbGFIYIiyRgM2xYe9j02uu7JBk1xo6SEnPLGrhiE?=
- =?us-ascii?Q?dU82PbigctUAj1WNQGZiKhc1yZucHWJCuwxaXm7w8lRNt8WUQJcZ95qA5Q27?=
- =?us-ascii?Q?VSe2wSvi6XkqgtaroB1PrItF3S0CKktgS1/YBc9MXSITORQX5YaTy7yoQVCz?=
- =?us-ascii?Q?jWJo/1nzhfD14i5B+PiD8S7JdBmDU1ZkEXJn5WKWDOsmtSDhfRVUHlzSD354?=
- =?us-ascii?Q?MUoudN1Jl7PO2tWueD1MCDV1rLmanNW6rEbzLQ0coMkSesbY2YoxpunCKZxh?=
- =?us-ascii?Q?rVRCivQXtXu4wOT2Y/MTfj6j57lMQgkFpQjO4mg19YgRz3IUD6ipfaJrXwh9?=
- =?us-ascii?Q?JiSAwD8+oGQpCzkq+R0Rn5lYi/8l6maHmgoQvD4elY5egDy8Pj1j8LYQZJ7P?=
- =?us-ascii?Q?4yjLjFsKD9Q8SfFBlgB5iST2HM2K5EnTCAv9hZIMwUHAWOBHdPf3GhV0a7fo?=
- =?us-ascii?Q?tXPqnIZntFGDCCXWN+pnJDq5sTkrT5KkDvqB7hhmkUBrVYTApvDUxjRdPK9N?=
- =?us-ascii?Q?6k9FzZgnVrdR5T0JIPZAIjLV4d7vROdjJ4GDOYrZ3sj24gcpd/SRRCa3ndj8?=
- =?us-ascii?Q?SyVvfAkSh6xZUCiUWrmSfYnNi0GG+e5M3hmtbH36rpB8ZJzsNu7Y6FZ9nqMi?=
- =?us-ascii?Q?Arbcwlml65pSiAlHJl9q6Ap/PrVaGd3NGotte6f6CpD5Pzbt+7vniOFc4G3/?=
- =?us-ascii?Q?3YUQKyJpsd91z6nGhXjFfKQQaHYqlEAeN5KGnffVgZxhubH21fnbkUgdrWbw?=
- =?us-ascii?Q?IKzhlBzCuWUMBQvVwlfQCHKRhPaOsMi1E+7pXv84NoXVypgrrF1cym6/T6wB?=
- =?us-ascii?Q?QeWtkpUAMwyzDR9+8S5j7QeFde/yR514hDSpzpJUSiyDJk76Dp+1UB49rlSS?=
- =?us-ascii?Q?ygc8yNS9WQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="b68/g829"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67QE1jh84099852;
+	Wed, 26 Aug 2026 15:26:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=vFZaXV
+	96JCW1M3RkJfoXLd46a3WQxGEFbAq0U+hqbOM=; b=b68/g82955wX+noqP/M8Du
+	UmXtdsgWgLKcLuCPCr2FEY89cqIz0rdI+8ipTNlky3UXVWQ8yOgZ6WKvBOOW+2/e
+	nnNGOi0LMPUkwdw/QprgUcxvqhn+qn0N7m5qXmOeQTzHTO00fdRoMtOUF0FX0KLS
+	wVhfCgDS6NXAOm3rCe1XTwTWsesgn24kFkAnHM67EWW3+jWKeYpi7MaMa7/EQ+Ck
+	cJgGETtNeP9DFmIvVNGZ7ye1dqGv8MT70tgjtNNhWIAYWs45X89ZediTNysPEGfe
+	WmGbJFso0CUoQc78sw9L/+3ae1IG5q9wuwEozCQg/q3FqmR5VSGo84RdFZgq3Ixg
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hymym-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Aug 2026 15:26:06 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QFBH1V004371;
+	Wed, 26 Aug 2026 15:26:05 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhakxe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Aug 2026 15:26:05 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67QFQ4du30540406
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 26 Aug 2026 15:26:04 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A5D2E58067;
+	Wed, 26 Aug 2026 15:26:04 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0226158065;
+	Wed, 26 Aug 2026 15:26:04 +0000 (GMT)
+Received: from [9.61.175.92] (unknown [9.61.175.92])
+	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 26 Aug 2026 15:26:03 +0000 (GMT)
+Message-ID: <012724fa-1979-4d46-8474-a7c8407a3c9b@linux.ibm.com>
+Date: Wed, 26 Aug 2026 11:26:03 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12271.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 598dcb9e-f265-44bc-17c0-08df0384e524
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2026 15:15:42.4495
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tf9zX6lztroPkfolJpjLtDYrfDSqSfnLt3JmJNVqiZGI85I3pPVyXLuN8isKyB+s14fmmlTAQK8cG8tITjCO1w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU7PR04MB11186
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] s390/vfio-ap: Fix unbounded loop in
+ apq_reset_check()
+To: sashiko-reviews@lists.linux.dev
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        kvm@vger.kernel.org, linux-s390@vger.kernel.org,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260824215603.819379-1-akrowiak@linux.ibm.com>
+ <20260824215603.819379-4-akrowiak@linux.ibm.com>
+ <20260824221128.891FB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260824221128.891FB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX9wdQRgcw/fnU
+ IFYsjfnELnKCvxoV49VPUfFhSbuW9nNoHwv7+0N9IIXohVJ0lWn5aOJ6WeiIcG7M6klwPbyjf9N
+ zbJirkUkQZp+A4C3+V2UTnO8+rcE4SA=
+X-Proofpoint-GUID: Hzzh01mlRC5akCLOs9GzIQTprJmKsCqH
+X-Proofpoint-ORIG-GUID: Hzzh01mlRC5akCLOs9GzIQTprJmKsCqH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX5149zwK9tCsu
+ 1jMZT2nc9jfzNhIgbDTAH/WOmp9GadS27dZh5Go4TYofetzs6U0WMOe+dIYARzQxGjwyXd4ziF7
+ AYoR8TUp+9YETDXzhYpKXBHMjr0ai/nm6mC8RI54rcxsl67uSabVyz1WhXFraKJzsBDv//uPEii
+ 4xV6LIdduBLXn4E/xYT7WAEtYOkmCQzgh8UbpQ2tT1tg8vwyvVeZ4m/kqrek0y6eP4JMTF9hvJ8
+ MwtIooPVYDaOSpWL8cC8Sz2czzMSrZNdHAj++MizIQyak6V8lWq0ZoH0TQOPWnm63EhS1xgavI6
+ 1/v/QpzGviW4GuP+ltGa/qix8rZydFosIlNgMwqSAfFKckVrzmPBuzpp7ZiI/Cqwu/eFVYmRDnw
+ RGXC9Iy1z6u/lk3OGsoVEdjbtDrs129FmU9xA0AMxvDLAux8nXmkWU3Bx/OvNuqs/iq2SOb+3YH
+ vGZ/0ubC32aZLT08cUg==
+X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8f058e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=cNjGuAkbeVCNKkcG-F4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260125
 
-> > >   err =3D ele_msg_rcv(dev_ctx, &priv->waiting_rsp_clbk_hdl);
-> > >
-> > >   if (priv->waiting_rsp_clbk_hdl.signal_rcvd) {
-> > >           /*
-> > >            * Signal was deferred until the FW/kernel protocol
-> resynchronized.
-> > >            * On success report -ERESTARTSYS for the interrupted wait;
-> the
-> > >            * command is not re-sent. Keep real errors like -
-> ETIMEDOUT.
-> > >            */
-> > >           if (err > 0)
-> > >                   err =3D -ERESTARTSYS;
-> >
-> > [Severity: High]
-> > Could this leak firmware resources when a non-fatal signal arrives?
-> > If a firmware response successfully arrives but defers a non-fatal
-> > signal, this code overwrites the positive success size with -ERESTARTSY=
-S.
-> > Then in se_ioctl_cmd_snd_rcv_rsp_handler(), this is converted to
-> > -EINTR and returns early without copying the response payload to
-> userspace.
-> > Because userspace never receives the newly generated handles (e.g.,
-> > keys or contexts), it cannot issue cleanup commands.
-> >
-> > > [ ... ]
-> > > @@ -660,11 +660,11 @@ void se_if_rx_callback(struct mbox_client
-> *mbox_cl, void *msg)
-> > >           se_clbk_hdl =3D &priv->waiting_rsp_clbk_hdl;
-> > >           spin_lock_irqsave(&se_clbk_hdl->clbk_rx_lock, flags);
-> > >           if (!se_clbk_hdl->rx_msg) {
-> > >                   if (atomic_read(&priv->fw_busy))
-> > >                           schedule_fw_busy_work =3D true;
-> > >                   spin_unlock_irqrestore(&se_clbk_hdl->clbk_rx_lock,
-> flags);
-> > >
-> > >                   if (schedule_fw_busy_work)
-> > >                           schedule_work(&priv->fw_busy_work);
-> >
-> > [Severity: High]
-> > Could this lead to a use-after-free of the priv object?
-> > In se_if_probe_cleanup(), cancel_work_sync() is called to wait for and
-> > cancel fw_busy_work before the rx_chan mailbox is disabled. If a late
-> > firmware response arrives in this window, this callback will execute.
-> > Because the callback schedules the work unconditionally if fw_busy is
-> > set without checking going_away, the work could be re-queued after
-> > cancel_work_sync() returns, causing it to access the freed priv object =
-when
-> the unbind finishes.
-> >
-> > > diff --git a/drivers/firmware/imx/ele_fw_api.c
-> > > b/drivers/firmware/imx/ele_fw_api.c
-> > > index 0000000000000..0000000000000
-> > > --- a/drivers/firmware/imx/ele_fw_api.c
-> > > +++ b/drivers/firmware/imx/ele_fw_api.c
-> > > [ ... ]
-> > > @@ -155,10 +155,10 @@ int ele_uapi_allowed_fw_cmd(struct
-> se_if_device_ctx *dev_ctx, struct se_msg_hdr *he
-> > >           /*
-> > >            * Reject the storage-open request when another context is
-> > >            * already registered as the command receiver.
-> > >            */
-> > >           scoped_guard(mutex, &priv->modify_lock)
-> > >                   if (priv->cmd_receiver_clbk_hdl.dev_ctx &&
-> > >                       priv->cmd_receiver_clbk_hdl.dev_ctx !=3D dev_ct=
-x)
-> > >                           ret =3D -EBUSY;
-> >
-> > [Severity: High]
-> > Can this create a TOCTOU race condition?
-> > The modify_lock is dropped immediately after checking the receiver
-> > availability, opening a window before the command reaches firmware.
-> > If two threads concurrently send ELE_STORAGE_OPEN_REQ, both could
-> pass
-> > this check and receive valid storage handles.
-> >
-> > > [ ... ]
-> > > @@ -244,11 +244,11 @@ void fw_api_specific_ops(struct
-> se_if_device_ctx *dev_ctx, struct se_api_msg *rx
-> > >           rc =3D set_dev_ctx_as_command_receiver(dev_ctx, false);
-> > >           if (rc)
-> > >                   dev_err(priv->dev,
-> > >                           "Failed to register %s as CMD-
-> Receiver: %d\n",
-> > >                           dev_ctx->devname, rc);
-> > >           break;
-> > >   }
-> >
-> > [Severity: High]
-> > Following the race condition above, if one thread successfully
-> > registers as the command receiver but the other fails here, the
-> > failure to register only logs an error and returns void. Does this
-> > allow the ioctl to return success, routing the second thread's
-> > firmware callbacks to the first thread and allowing interception of NVM
-> traffic?
-> >
-> > > diff --git a/drivers/firmware/imx/ele_msg_addr_field.c
-> > > b/drivers/firmware/imx/ele_msg_addr_field.c
-> > > index 0000000000000..0000000000000
-> > > --- a/drivers/firmware/imx/ele_msg_addr_field.c
-> > > +++ b/drivers/firmware/imx/ele_msg_addr_field.c
-> > > [ ... ]
-> > > @@ -51,7 +51,7 @@ static const struct se_cmd_addr_field
-> ele_oem_auth_cntr_addr_fields[] =3D {
-> > >    * Output buffers must be fully bounded; input-only buffers are saf=
-e
-> with
-> > >    * addr-only checks.
-> > >    */
-> > >   { .lsb_idx =3D 1, .msb_idx =3D 0, .has_msb =3D true, .flag_idx =3D
-> SE_CMD_ADDR_ALWAYS,
-> > >     .size_idx =3D SE_CMD_ADDR_NO_SIZE },                    /*
-> container_hdr_addr */
-> > >  };
-> >
-> > [Severity: High]
-> > Can this unbounded input buffer allow arbitrary out-of-bounds DMA
-> reads?
-> > The descriptor specifies SE_CMD_ADDR_NO_SIZE and a zero buf_size,
-> > which bypasses end-bounds checks. If a malicious userspace process
-> > places the buffer at the very end of the shared memory window and
-> > crafts a header with a huge size field, couldn't the firmware read
-> > beyond the mapped shared memory window into unmapped space and
-> trigger AXI bus faults?
-> >
-> > > [ ... ]
-> > > @@ -138,7 +138,7 @@ static const struct se_cmd_addr_field
-> ele_keystore_reprov_en_addr_fields[] =3D {
-> > >    * memory the caller already owns. Output buffers must be fully
-> bounded;
-> > >    * input-only buffers are safe with addr-only checks.
-> > >    */
-> > >   { .lsb_idx =3D 1, .msb_idx =3D 0, .has_msb =3D true, .flag_idx =3D
-> SE_CMD_ADDR_ALWAYS,
-> > >     .size_idx =3D SE_CMD_ADDR_NO_SIZE },                    /*
-> signed_msg_addr */
-> > >  };
-> >
-> > [Severity: High]
-> > This appears to be another instance where an unbounded input buffer
-> > might allow arbitrary sized DMA reads by the firmware. Is there a way
-> > to safely bound this input payload?
-> >
-> > > diff --git a/drivers/firmware/imx/se_ctrl.c
-> > > b/drivers/firmware/imx/se_ctrl.c index 0000000000000..0000000000000
-> > > --- a/drivers/firmware/imx/se_ctrl.c
-> > > +++ b/drivers/firmware/imx/se_ctrl.c
-> > > [ ... ]
-> > > @@ -746,10 +746,10 @@ static void se_if_probe_cleanup(void
-> *plat_dev)
-> > >   while (true) {
-> > >           dev_ctx =3D NULL;
-> > >
-> > >           scoped_guard(mutex, &priv->modify_lock) {
-> > >                   if (list_empty(&priv->dev_ctx_list))
-> > >                           goto out_done;
-> >
-> > [Severity: High]
-> > Is there a devres initialization order issue here?
-> > Because devres actions execute in reverse order (LIFO), modify_lock
-> > will be destroyed before se_if_probe_cleanup() is invoked, since it
-> > was initialized after devm_add_action_or_reset. When the cleanup
-> > function later attempts to lock this destroyed mutex, could this lead
-> > to undefined behavior or crashes during device unbind?
+
+
+On 8/24/26 6:11 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
 >
-> Please check this
-Accepted and will be fixed in v43.
+> New issues:
+> - [Critical] The timeout mechanism intentionally skips unpinning the NIB page to avoid a driver-level UAF, but fails to realize the VFIO core will automatically unpin and free the page when the device is closed, resulting in a critical hardware DMA Use-After-Free.
+> - [Critical] The timeout handler leaves `q->saved_iova` and `q->saved_isc` populated with the old guest's state, leading to cross-guest resource corruption when the queue is assigned to a new mdev.
+> - [High] The timeout error path deliberately leaks the registered guest ISC and pinned NIB page, which permanently exhausts ISCs and directly causes a host kernel WARN when the KVM guest terminates.
+> - [High] The worker can still loop indefinitely because the new timeout check is bypassed in the 'else' branch when retrying the reset via ap_zapq().
+> - [Medium] The commit message explicitly claims that AQIC resources are freed on the early exit path, but the code does the exact opposite.
+>
+> Pre-existing issues:
+> - [High] The worker returns early on `-EIO` without writing the final hardware status back to `q->reset_status`.
+> --
+>
+> --- Patch [3]: [PATCH v2 3/4] s390/vfio-ap: Fix unbounded loop in apq_reset_check() ---
+> commit 84304c1f304fd7bd597c0aa370c7ee8ddc904d98
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: Fix unbounded loop in apq_reset_check()
+>
+> This commit introduces a maximum wait timeout in the apq_reset_check worker
+> to prevent indefinite loops when the hardware continuously returns a busy
+> response. On timeout, the function writes the busy status back and breaks out
+> of the loop.
+>
+>> Fix this by introducing AP_RESET_MAX_WAIT (2000ms) and breaking out
+>> of the poll loop when elapsed time reaches that threshold. On
+>> timeout the final busy status is written back to q->reset_status
+>> so that callers inspecting reset_status.response_code after
+>> flush_work() see a non-zero value and can return an appropriate
+>> error. vfio_ap_free_aqic_resources() is called before returning
+>> to release any KVM ISC registration and pinned NIB page,
+>> consistent with all other early-exit paths in the function.
+> [Severity: Medium]
+> Is this description accurate? The code in the patch explicitly omits calling
+> vfio_ap_free_aqic_resources() on the timeout path and includes a large
+> comment explaining why it must leak these resources.
+
+The description needs to change to match the code change.
 
 >
-> >
-> > > [ ... ]
-> > > @@ -1151,9 +1151,9 @@ int set_dev_ctx_as_command_receiver(struct
-> se_if_device_ctx *dev_ctx, bool is_io
-> > >   if (se_clbk_hdl->dev_ctx)
-> > >           return -EBUSY;
-> > >
-> > >   if (!dev_ctx->strg_hdl)
-> > >           return -EINVAL;
-> > >
-> > >   if (is_ioctl)
-> > >           return -ENOMEM;
-> >
-> > [Severity: High]
-> > Does this check render the SE_IOCTL_ENABLE_CMD_RCV_STATUS ioctl
-> broken?
-> > When se_ioctl() invokes this function with is_ioctl set to true, it
-> > will unconditionally return -ENOMEM here and the command receiver will
-> > never be registered via the API.
->
-> Please check this
-Split the function into two, to make it acceptable.
->
-> >
-> > > [ ... ]
-> > > @@ -1532,9 +1532,9 @@ static int se_ioctl_get_mu_info(struct
-> se_if_device_ctx *dev_ctx,
-> > >   struct se_if_node *if_node;
-> > >   int err =3D 0;
-> > >
-> > >   if_node =3D container_of(priv->if_defs, typeof(*if_node), if_defs);
-> > >
-> > >   if_info.se_if_id =3D 0;
-> > >   if_info.interrupt_idx =3D 0;
-> > >   if_info.tz =3D 0;
-> > >   if_info.did =3D 0;
-> > >   if_info.cmd_tag =3D priv->if_defs->cmd_tag;
-> >
-> > [Severity: Medium]
-> > Are these structural identification fields intentionally populated
-> > with hardcoded zeroes? Setting se_if_id, interrupt_idx, tz, and did to
-> > 0 prevents userspace from dynamically identifying the secure enclave's
-> > type or configuration.
->
-> Is it true?
+>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+>> index 3f99b239fa959..7a9b5448e90a0 100644
+>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+> [ ... ]
+>> @@ -1971,6 +1972,27 @@ static void apq_reset_check(struct work_struct *reset_work)
+>>   					      status.response_code,
+>>   					      status.queue_empty,
+>>   					      status.irq_enabled);
+> [Severity: High]
+> This is a pre-existing issue, but does the early return on -EIO just above
+> this block need to update q->reset_status before returning?
 
-In earlier version, it was populated by instance id. There are multiple ins=
-tance id for i.MX95, and onwards.
-For i.MX8ULP, it is only one instance id, that is 0.
-There was a comment to remove that field. Will add this filed with the patc=
-h-set that enabled i.MX95.
-Hence, it is correct what it is now.
+The response status returned from the tapq needs to be co
 
 >
-> Frank
-> >
-> > > [ ... ]
-> > > @@ -1614,11 +1614,11 @@ static void cleanup_dev_ctx(struct
-> se_if_device_ctx *dev_ctx, bool is_fclose)
-> > >                           struct se_if_device_ctx *tx_ctx =3D is_fclo=
-se ?
-> dev_ctx :
-> > >                                                   dev_ctx->priv-
-> >priv_dev_ctx;
-> > >
-> > >                           if (dev_ctx->strg_hdl &&
-> se_close_storage(tx_ctx,
-> > >
-> dev_ctx->strg_hdl))
-> > >                                   dev_err(dev_ctx->priv->dev, "failed
-> to close storage.\n");
-> > >                           if (dev_ctx->sess_hdl &&
-> se_close_session(tx_ctx,
-> > >
-> dev_ctx->sess_hdl))
-> > >                                   dev_err(dev_ctx->priv->dev, "failed
-> to close session.\n");
-> > >                   }
-> >
-> > [Severity: High]
-> > Will firmware session handles leak if a process exits via a fatal signa=
-l?
-> > If se_close_storage() encounters a pending SIGKILL, its
-> > wait_for_completion aborts instantly and arms the fw_busy circuit
-> breaker.
-> >
-> > When se_close_session() runs immediately afterward, it sees fw_busy is
-> > set and aborts the session close command without sending it. Does this
-> > permanently leak the session handle on the secure enclave?
-> >
-> > --
-> > Sashiko AI review *
-> > https://sashiko.dev/#/patchset/20260825-imx-se-if-v42-0-2e8efac0bb16@n
-> > xp.com?part=3D5
+> If ap_zapq() initially succeeded, q->reset_status.response_code would be 0.
+> If a subsequent ap_tapq() results in an -EIO from apq_status_check(), the
+> function returns immediately. Will the caller vfio_ap_mdev_reset_queues()
+> incorrectly assume the reset was successful because it sees a 0 response code?
+>
+>> +			if (elapsed >= AP_RESET_MAX_WAIT) {
+>> +				/*
+>> +				 * Timed out waiting for reset to complete.
+>> +				 *
+>> +				 * The AQIC resources associated with this queue - the pinned page
+>> +				 * containing the NIB and the registered guest ISC - cannot be freed
+>> +				 * here. The NIB is the active DMA target for AP interrupt delivery
+>> +				 * until the reset completes; freeing the pinned page while the
+>> +				 * hardware may still write to it would result in a use-after-free
+>> +				 * kernel crash.
+> [Severity: Critical]
+> The comment mentions leaking the NIB page to avoid a use-after-free, but does
+> the driver hold an independent reference to the page?
+>
+> When the user process terminates and the VFIO container is closed, the VFIO
+> core automatically unpins tracked pages. Will the physical page be returned to
+> the buddy allocator while the active hardware can still perform a DMA write to
+> it, potentially corrupting memory reallocated to other processes?
 
-NXP Confidential
+Pages pinned via vfio_pin_pages() are reference-counted by the VFIO layer
+and are not automatically unpinned unless the driver calls
+vfio_unpin_pages(). The page is genuinely leaked (intentionally), not
+silently freed.
+
+The driver does hold an independent reference to the page, so it should
+freed when the kvm is torn down, the mdev is removed, a queue is
+removed from the device driver or a queue is unassigned from the mdev.
+This will be fixed in a forthcoming patch.
+
+>
+>> +				 *
+>> +				 * If the reset eventually completes, interrupts will be terminated
+>> +				 * and the pinned NIB page and ISC registration will be leaked. This
+> [Severity: High]
+> By intentionally skipping vfio_ap_free_aqic_resources(),
+> kvm_s390_gisc_unregister() is never called. Does this mean KVM ISCs are
+> permanently depleted for the guest?
+>
+> Also, when the KVM guest is torn down, will kvm_s390_gisa_destroy() trigger a
+> host kernel WARN due to the non-zero alert mask?
+
+This is a legitimate concern. Similar to my response above, this will be
+fixed in a forthcoming patch.
+
+>
+>> +				 * is preferable to either a use-after-free or waiting indefinitely:
+>> +				 * apq_reset_check() holds the matrix_dev->mdevs_lock mutex, which
+>> +				 * serializes access to all mdev objects system-wide, so blocking
+>> +				 * here would stall all other guests using AP queues.
+>> +				 */
+>> +				memcpy(&q->reset_status, &status, sizeof(status));
+>> +				return;
+>> +			}
+> [Severity: Critical]
+> If the timeout handler leaves q->saved_iova and q->saved_isc populated, what
+> happens when this queue is assigned to a new mdev?
+>
+> When the new guest enables interrupts, vfio_ap_free_aqic_resources() will
+> process the old guest's saved IOVA and ISC using the new guest's KVM and
+> VFIO container. Could this unpin an active page in the new guest or corrupt
+> its GISA state?
+
+This is a legitimate concern that will be fixed by clearing these resources
+before any queue can get assigned to another mdev (see above responses).
+
+
+>
+>>   		} else {
+>>   			if (q->reset_status.response_code == AP_RESPONSE_RESET_IN_PROGRESS ||
+>>   			    q->reset_status.response_code == AP_RESPONSE_BUSY ||
+>>   			    q->reset_status.response_code == AP_RESPONSE_STATE_CHANGE_IN_PROGRESS ||
+>>   			    ret == -EAGAIN) {
+>>   				status = ap_zapq(q->apqn, 0);
+>>   				memcpy(&q->reset_status, &status, sizeof(status));
+>>   				continue;
+>>   			}
+> [Severity: High]
+> Does this bypass the timeout check entirely if apq_status_check() returns
+> -EAGAIN?
+>
+> The loop will drop into this else block, re-issue ap_zapq(), update the
+> status, and continue without evaluating the elapsed time. Will the worker
+> spin indefinitely if the hardware continuously returns a state that triggers
+> -EAGAIN?
+
+Yes. This will be fixed in v3.
+
+>
+>>   			if (q->saved_isc != VFIO_AP_ISC_INVALID)
+>>   				vfio_ap_free_aqic_resources(q);
+>>   			break;
+>>   		}
+
