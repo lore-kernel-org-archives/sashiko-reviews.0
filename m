@@ -1,105 +1,103 @@
 Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EAE3A9DB1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E2E3C76A2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 18:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787769518; cv=none; b=Wj7YDEN+fJ4LR9nKRUtRbhYnnpGlP3zuhb12bhkJ1RgebCDzfd0ivckGXR2MLt4KZafkrsQYQfkTazjU+cop71gVUAng6zVxNbe+hGIwVTGdd+eFMkaXmyaqTqgVrh6p6wrS3lgHxQIBpU0Gb6ZRS/9Fguc8iAz506DCnggAg3U=
+	t=1787769586; cv=none; b=RxRM0pa/csEivHbA5oPhfKHKIboi7WiNphrz62kal2I1A6qi931K+BkuCbbrTBxmFJlsYlQbafVzAGwjB13Rd2F9MvKa0uzwRuZx3aHl1b1Dfn1VYhBiT67+LcwGgS1b17XmN7j3uyy9rgQwbgmtTSXHnGHQdzVsx62JOaxXEcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787769518; c=relaxed/simple;
-	bh=vLfznco5gDgs29HBkuk6g4sKUBP9AD9WYgLJyybzCXk=;
+	s=arc-20240116; t=1787769586; c=relaxed/simple;
+	bh=X4dCGd6bkEA2cJ06CQNeFxBd0mqF1n9gi4l2ifHtpuc=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=LcnrS5U4mqGz0omR9bprUiltvYAwMqhzbYsNH/Mi7DDrZ3JIOpwng38BV9pOzXwVbE1cO01DEx+LHG6uJKue3OjVCMPlnE/trd/JYMlGRgiVxojshYG6E6V1VpSkNH0iUNdi9o7B8GK7l4hudAk3ND5YbkI5eloly9qhmN+RwCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hSvvfjxp; arc=none smtp.client-ip=209.85.214.199
+	 To:Cc:Content-Type; b=XbWhc38k2gv5hBpWwUIiMUTCv1fgNmVYD0Tum/4hFOe51vCjpSR+86Dx+P6JlFBcFCyvGCECu1h1tNu8+OHF9JQKkVxT4RVneAFtThngh9FAL6A/Sbi+qLhdQyx1ZnX7n+Id0Bz7bIrwtHdpWo7EXeWrboknzWVNvxtBgaAWf2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qeSLysCt; arc=none smtp.client-ip=209.85.214.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hSvvfjxp"
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2d7293f13c6so1421715ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 11:38:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qeSLysCt"
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ce7dfd33ffso12347935ad.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 11:39:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787769503; x=1788374303; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1787769578; x=1788374378; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=C1t+srGUYqUnv7fl4EGsK1emSikJui6QHHfx1hD3meA=;
-        b=hSvvfjxpzVrPdXdJKz5bVOkC8JUR79Lp4giLGN81wLG3MCGDfMmVcszve9/9eaFsyK
-         Auo5RlaKcUrW+2/q/vpvdiXZUqO4tlZ+SEXVjDTdvXw7sRN+1lf6cXsWYjRt9qWEsExX
-         kaIobqQ0znulXQcyABWQFdT+VNUB31QrNHDgd5WpjdW4c5RzlkubuLbQvee7VpySYDGz
-         /HhDGbRshnJYdlv8o0Ori5/l76/ca3o5y98Esy8kT1Rsl6uc4+stYwYM4wl5Gml0ETig
-         u2/1r+FAo/wA2aGoH2q/EZlxTTdTUZFnX+CXXv1wXjfQ4yvg7I1SYvEyd4pOOPPqX3sj
-         0D4Q==
+        bh=svW7REwf0C0yKBjSVBykLwlE0W36sIYmzgsGuY78Nos=;
+        b=qeSLysCt8edruCs3TJH+mIOXsCo1yaabf2N6ZlTA6xT9ulTEK85BUzeLGvPN8VeixG
+         5KSwvrg3sKTt0sF6otflUYYvctp/PX/PH1NbiqV0Q0aBJwt0fYbJ47+ajtsS5ZOxUjh7
+         mnF/Ku01TiOCb7++UKScTL6gfdICoE2EVzDyhG5taEjzD2t7V/xX7o04z5uPF9ov46UI
+         8z9jZN3NtYV+bSXSLZRVTA/mVOinKYnsDZ/6MWqoW05afC58X/T38JVnNd8ar31SkpDV
+         CDKnHwsAR6kikPQEWInu/9p+hD2Z7L73l1U0H2qVxIo+T21eooVXBCgDru5mpJcOJWwZ
+         g4oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787769503; x=1788374303;
+        d=1e100.net; s=20251104; t=1787769578; x=1788374378;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=C1t+srGUYqUnv7fl4EGsK1emSikJui6QHHfx1hD3meA=;
-        b=QuWmRF1xM5KUD9HXtNNgl6qR64LSsZ+0/2LQ1xqguPrZIbCuWeImpuJJ+zCnU8aw4k
-         ugh4gHyqIsHdKget4PTQi4wEIdSfRJGfOU5VRxWSJ7dLoczHO++mozI0VQRQvPsOMkbO
-         JdrFMeXGkZRZvruk+7qynA/papb33EMLAPDzXsjmb0cKahwMkuc5mgsBzffFi/YrhlhD
-         gKQ8aKZw602Rq8LBU6Y0q2B3a2oLUJm2ud5PNlDnPwU7yGeKbALtVdIJXqAW9EKFV8OW
-         t8e9Er/3AjOClaZWYrrbTHxQCXyNyT1l1Ejga5GuGF87QUG1yGbetY8JNhs0EhbH9m35
-         6fTA==
-X-Gm-Message-State: AFuF++l02QjUxUwAQuSX2DP5wJIjbWIaxRlHq1lnm2KjPBTgzlRW9xdS
-	i6eFJYZs+W6HJ8rut/V3eySSw49XVTH6PqB6E1cdD7/NshklG+VH5tuoeckldmgzm64ZK5g/4e7
-	KcuFP0E0MJwmIVwPnXMe4rG2dPeBRZUFcQgolvRfg8gaQkKNuNFrKhN6CytykQU2Dacuqa66qOs
-	XcVBQQ3GC0dMDJBv3SKif3QF/Meys0PVTr2+q8MZlewk9nPia6
-X-Received: from pghp22.prod.google.com ([2002:a63:fe16:0:b0:c8a:3e7c:1e5d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:3d8d:b0:3cd:9f0b:f7a2
- with SMTP id adf61e73a8af0-3cf84444964mr16293253637.11.1787769502521; Wed, 26
- Aug 2026 11:38:22 -0700 (PDT)
-Date: Wed, 26 Aug 2026 11:38:21 -0700
-In-Reply-To: <20260826172227.7246A1F000E9@smtp.kernel.org>
+        bh=svW7REwf0C0yKBjSVBykLwlE0W36sIYmzgsGuY78Nos=;
+        b=TVVtmGkoIXTMuhv4TzjbmxVk7TjX0x72DUmJr2uePz5iYI5YZeSCEClfTB9vjAMNtp
+         6u7DaUpPH0d+ilcTXI4Nrq5K8QJB3jzf7wMARs8z4tevRrZvPWXl9+b7n9NKlHqaQzxx
+         Rq7K8sWKUftJ510H8sr5sBZTwcaaoJ0EqSAdT4mvvRx9VrKsydoxEGD0Fny9JxfgIO+r
+         f4x26dJ5H/LZNevCzC2df3LxEMHjLmE3C9oLlMrbX9eMTwKqZykxlD60vmRjURRNagSZ
+         VZzr3YxlWSoEB/E7diE+5Gzubn+b0Pp23WhS2WP220cgLPoF8stqAjcQKhqRaCvcBQ3D
+         B/0Q==
+X-Gm-Message-State: AFuF++nv7kXFonVsw3LrCxX4t9itkaPW5cm8V/IyiOu6m5oS1pZFSv3a
+	1OhpYcCkpjKFa1OafXyTPkSJargTB173ney5uqFRtPsHSQS1mEzrg9NQ5gFT5UdEn6q8cs0rU6h
+	iEtb8tpL2NUOrwt25yWvHb8tSKgjnbJL351mQISbuZ8KX727Zd+RX2kkWQVo2RSA5SUcvY+J4wj
+	28ETlLCxQ4ka1scgC5lcntniotdQrBRxfJK+/Xv3EN1kbCSxY8
+X-Received: from plbks11.prod.google.com ([2002:a17:903:84b:b0:2cb:3f5b:b116])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2392:b0:2d0:cc92:f7a3
+ with SMTP id d9443c01a7336-2d707a53a0fmr177647795ad.2.1787769577699; Wed, 26
+ Aug 2026 11:39:37 -0700 (PDT)
+Date: Wed, 26 Aug 2026 11:39:37 -0700
+In-Reply-To: <20260826171151.959AC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260826171246.777729-1-seanjc@google.com> <20260826171246.777729-5-seanjc@google.com>
- <20260826172227.7246A1F000E9@smtp.kernel.org>
-Message-ID: <ao8ynQ8OfJFhF-sR@google.com>
-Subject: Re: [PATCH v2 4/8] KVM: VMX: Rename posted interrupt prefixes from
- "vmx" to "vt"
+References: <20260826165647.769231-1-seanjc@google.com> <20260826171151.959AC1F000E9@smtp.kernel.org>
+Message-ID: <ao8y6d5gMN1wG_C0@google.com>
+Subject: Re: [PATCH v2] KVM: guest_memfd: Elaborate on how release() vs.
+ get_pfn() is safe against UAF
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Wed, Aug 26, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Incomplete refactoring: The common helper function `vmx_needs_pi_wakeup` was not renamed to `vt_needs_pi_wakeup`.
-> --
-> 
-> commit 3f6ac2d22873c9d6eb23bb3aab8ab0ad05bd4863
-> Author: Sean Christopherson <seanjc@google.com>
-> 
-> KVM: VMX: Rename posted interrupt prefixes from "vmx" to "vt"
-> 
-> This commit renames posted interrupt APIs that are shared between VMX and TDX
-> to use the "vt" prefix instead of "vmx". This is a non-functional change.
-> 
-> > diff --git a/arch/x86/kvm/vmx/posted_intr.c b/arch/x86/kvm/vmx/posted_intr.c
-> > index 24221ba553be1..359ef3e6ebbe4 100644
-> > --- a/arch/x86/kvm/vmx/posted_intr.c
-> > +++ b/arch/x86/kvm/vmx/posted_intr.c
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index b596486d184ca..7f1c6a0f8039d 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
 > [ ... ]
-> > @@ -219,10 +219,10 @@ static bool vmx_needs_pi_wakeup(struct kvm_vcpu *vcpu)
-> >  	 * back to the pi_wakeup_handler() function.
+> > @@ -300,17 +300,55 @@ static int kvm_gmem_release(struct inode *inode, struct file *file)
+> >  	 * dereferencing the slot for existing bindings needs to be protected
+> >  	 * against memslot updates, specifically so that unbind doesn't race
+> >  	 * and free the memslot (kvm_gmem_get_file() will return NULL).
 > >  	 */
-> >  	return (vmx_can_use_ipiv(vcpu) && !is_td_vcpu(vcpu)) ||
-> > -		vmx_can_use_vtd_pi(vcpu->kvm);
-> > +		vt_can_use_vtd_pi(vcpu->kvm);
-> >  }
+> >  	mutex_lock(&kvm->slots_lock);
+> >  
+> >  	filemap_invalidate_lock(inode->i_mapping);
+> >  
+> > +	/*
+> > +	 * Note!  synchronize_srcu() is _not_ needed after nullifying memslot
+> [ ... ]
+> > +	 * Obviously KVM would be broken in many places if the synchronization
+> > +	 * were omitted, but it's important to note that get_file_active() does
+> > +	 * NOT guarantee a reference to the correct file was obtained, only
+> > +	 * that the file doesn't point at a reallocated object.
+> > +	 */
+> >  	xa_for_each(&f->bindings, index, slot)
+> >  		WRITE_ONCE(slot->gmem.file, NULL);
+> >  
 > 
-> [Severity: Low]
-> This isn't a bug, but does vmx_needs_pi_wakeup() also need to be renamed to
-> vt_needs_pi_wakeup()?
+> [Severity: Critical]
+> This is a pre-existing issue, but could bypassing filemap_invalidate_lock in
+> kvm_gmem_unbind() when the file is dying allow concurrent xarray modifications
+> that result in a use-after-free?
 
-Doh, yes.  I meant to change it, but got distracted by vmx_can_use_ipiv(), which
-_is_ VMX specific, and forgot to revisit vmx_needs_pi_wakeup().
-
-If there are no other issues in the series, I'll just fix this one up when
-applying.
+Yep, already reported by Sashiko and being fixed:
+https://lore.kernel.org/all/20260823-shivank-gmem-fix-split-v1-1-512a29fb8e86@amd.com
