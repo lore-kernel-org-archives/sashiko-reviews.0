@@ -1,140 +1,111 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43A241D11C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 12:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCFB424D48
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 14:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787747381; cv=none; b=ZNhJBFSE1qmFFTxZSjs59jxaXYAIXvppL9JuA+YfMOx/V1mh83YpWmXU9I0XWs/MEZZ5e3r1L+rOQarFq61NsP8KpfGdd4abjtCt3sQ5i1mn+jEm1moWJ2H3OsptjoGPecqpmJzfJ64RtMjmzbyGGb+o874kFpIlR82JVTAtENA=
+	t=1787755017; cv=none; b=RtB3gb8ExRbo1vbeYDMqQXo1ZT1CsJFP40h7VKEF0mN3Zl0Af0GnvDbE+1mA4e+1Fn9PTzYOLGtBoWZQPVkG0rldtDclMQVZF7zUrLJxcigM1T+uekpchGVksQVJkPzSKF7bTtiYJ+xA4+0ibleMDeYWkAOX66B9e9IvA1p3X/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787747381; c=relaxed/simple;
-	bh=1YEPH6fyCfdk+VtHwEVBmZ2Q4SPTrHVnUjJjwSGahC4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OvJtk52EogthBmtst5rVr8MdwcOaa/q6HIUCJAmlsCEcdi8KLQTAu/6Png3zKe4aP44eQx9XGGZVMaZW16yBaMg+UwTTQxqWPQinnjwS2sRAVrDvWqOjq2iirlfRNQhFKJ1C7/PnDahwmEoYCmXbz2QxhFqy8WAouKVSzUjheFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvgvQSJO; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787755017; c=relaxed/simple;
+	bh=BFlIYPg5r9toqxM+0alEDZcm7K7Zh4h1iVhW9V086cE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ue8nFbysSCklpRMxaC9KfCA8CO4TCvdItY811BXjZFDs9CRWZNjKPJs6G94QOV7WjbY7wrpTN5wBYqFqyiy/axX+BSMSBKdDYDEB4a4Lplg68cQXdKj0VyOuxBw/+E3MVTf2jkKKtULCy7iqfzJn+YrhYx9m2Ptv+YFa6hd08as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=w//Ijzbo; arc=none smtp.client-ip=216.40.44.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvgvQSJO"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2caea3f742bso14985465ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 05:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787747379; x=1788352179; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Hz1GwVL5UrSeb6anZfq9UpCexQvVXd/F42ozF8YHT78=;
-        b=IvgvQSJO4+9r6wdr8C4u4K+7zv1OTC+yth2cexQYIRyGkbuJepqmRkXsZI3JeLz2Hu
-         Me3267tzN78uz9/Oz8AGZBYkrreYs/KiQyy7uKfWOmeDXHq3nijHegQBGt1ILiixc5Uv
-         Y3ThFyL58l1z/psFV5JbXqziNO5aEN/J1q2Op494+lF5i47N7m6/bcLx0/SL1XUoapA9
-         vTmhIMQcEFauG/sDrv2xydJkB7g45B6wlhs5RQTnWEDFehx82rTYERK6WBk5T9zemFWJ
-         h48yhd/h9zMwlUYtJlFhwWYPlHPVr+IWoQ09kmCoz6m1LRXPWJsh20XHJA8KRlNl6HWz
-         +8Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787747379; x=1788352179;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Hz1GwVL5UrSeb6anZfq9UpCexQvVXd/F42ozF8YHT78=;
-        b=sQI24OyBnxpaTihYPn3PGWWMerpCiPW6hCyTXYlzQDHBzLZvQqkeZ8SJlH36Lx3kzF
-         pFe420VnwQdin/NkTOLpe2BkVM2UOVbOu9uGPLaEbrffTO/lblvrGp24u22LDK1bjkmT
-         2CNUCAgy50EuVGP5cDI68FUiu+GERgtO5tHs4V5S1j6j1ATgTJnmBzAXZIDMrvMr03cO
-         T6pz8Ix/PxDnKGuLDrqQgt3OdCubP2ob59MYaJF26Oa+NlDxr6Wrd1zrLFLz1ks2JnZz
-         Z5l6ozc4zOV+pYgbVX2A8NpvWSCccNrJxreau50Sk9FzG+kXepJ/RO9tb8ETTO1W0Dzs
-         Mf3w==
-X-Gm-Message-State: AFuF++lslBA2ZuSJyg7iMbsbnl/mBA/3HXnbyi3niHIOEnOZJRWk+uVz
-	iifxjBSbmhu8Tcs7CJGqCRy4BxUdiT5WxVaLIRgX+hhhty/3UJIPn2zx
-X-Gm-Gg: AR+sD13+V6U4Ne4SDrXDHRYkUvbGbliD62rg8s7dY/JCvAAPh21qfSGEPj8D8E3kzn3
-	SRFJ7uJahW2QLkiyA5BYNSNEZHWq7m270qCnLyQBpYGdNqt4rR5BKp1HkQe+AWSHUdbOSmtryyY
-	5Zn/ZaqTzGpJlsLljHAnz/P5ytPUodllgHsEJQArtTkiXbsmfuiUeD7RiGYH6IhCDTvA29RKkPZ
-	z3Oep8cQlKK+NlrvBEMg1Lvdx9ez+8EwfLPOLZ/wR1Kx+TG8X/lubk7By36z84j+bbzIi2EA393
-	a9q7k0fGcj+HEHYDWXM47OhSjfNuKcNLzgxCdnLQCWvEF5lOSg/jjSsvyY441FlZ1uaQ+YOX3u8
-	jYNxMNQCM1CFykk5Cqhe1dYdSKCpbGZ+DNdiOkv0SJ/siNsNcrQWPRHlv0O4RkGfEUErkJPmB2D
-	LLVX/ro89j9wQQIoarr6lld2Bcz16uL9yqpj+BmZc5soSyGtsmA7C5IApYr4q0ZpyKcL5nV0wCm
-	8iIaeuC2hEWmd9Pzn6b39OyzB6r
-X-Received: by 2002:a17:903:1b43:b0:2d1:1d3d:97b2 with SMTP id d9443c01a7336-2d707b4638emr127553445ad.11.1787747379127;
-        Wed, 26 Aug 2026 05:29:39 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:5877:641:857b:1318])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d8861d3sm13158441eec.18.2026.08.26.05.29.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 05:29:38 -0700 (PDT)
-Date: Wed, 26 Aug 2026 05:29:35 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Alvin =?utf-8?Q?=C5=A0ipraga?= <alvin.sipraga@analog.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-input@vger.kernel.org
-Subject: Re: [PATCH] Input: adp5588-keys - cache GPIO state before
- registering the gpiochip
-Message-ID: <ao7bQHVDPObeaISA@google.com>
-References: <20260818-adp5588-gpio-cache-v1-1-650a2674fc0d@analog.com>
- <20260818161119.E25A31F00A3A@smtp.kernel.org>
- <aoSFhKxPk-QPv2EQ@analog.com>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="w//Ijzbo"
+Received: from omf01.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay01.hostedemail.com (Postfix) with ESMTP id 9AC6E1C00D0;
+	Wed, 26 Aug 2026 14:36:53 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf01.hostedemail.com (Postfix) with ESMTPA id E0DBC60010;
+	Wed, 26 Aug 2026 14:36:51 +0000 (UTC)
+Date: Wed, 26 Aug 2026 10:37:36 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Vincent Donnefort"
+ <vdonnefort@google.com>, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 1/3] tracing: Fix subbuf resize races with
+ trace_pipe_raw readers
+Message-ID: <20260826103736.2b55b464@gandalf.local.home>
+In-Reply-To: <20260826095947.4FF8B1F000E9@smtp.kernel.org>
+References: <20260826094528.3738023-1-vdonnefort@google.com>
+	<20260826094528.3738023-2-vdonnefort@google.com>
+	<20260826095947.4FF8B1F000E9@smtp.kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aoSFhKxPk-QPv2EQ@analog.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: 8shnaieq386df1g9kcsq9qbk9mrg6gwi
+X-Rspamd-Server: rspamout06
+X-Rspamd-Queue-Id: E0DBC60010
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX196Vtf+CFc8/XxF79fZUi6wVh/MPRUJRgg=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=HKqjgjDUb/PaWHKag6Zf2P3OkqH5QHAY6Oe+S+NvXC4=; b=w//IjzboT5nUTRYTY/mCJlrRhOsr7Dmjoht5bq4feXRLOrbuWd9nVXabsXAAc7iONu6y21JTuxZw1BMF7V1pGkVI5TDgfU2qpCTYNyp8Fnaw7VxhV9Yv2iZkEEGw8E+UHaLgjPqc1lc0daT542BLfrO01ieC9uck0Y6imlcEXn0=
+X-HE-Tag: 1787755011-646789
+X-HE-Meta: U2FsdGVkX18tLrerqf/wT5Qsue6qphBciHUjJ9l11sDr63tsPMNuM5Sy4MZCXUpKksrua6b4TPXfGw74e7B9OYEw9sR2UfRLYtOsEJI4Fwof8pF7w2CXwUcGWSQgCbVAVg2hLCAB7mfcMgVQND9VgLY/25qT1sL0v/2GfV5FCghK6tBBiWtg+mgqyTzKNiHz9Juy84Pa4h07xtGB/y4PuxGqnWZ/TdAau0/7VEb+URJ7laZ2f/gNbFsePYGqHZz4YrOh4HSUJBCkNEOX/UcsmnUB4mqLX5hgJ7qqOjCfwdUu8WG52CAb4tj+dm+8vhdcW+67T52vgQKoazGh4aT082k1h6Sw+SEQ
 
-On Tue, Aug 18, 2026 at 06:27:21PM +0200, Alvin Šipraga wrote:
-> Thanks for your review sashiko-bot,
-> 
-> On Tue, Aug 18, 2026 at 04:11:19PM +0000, sashiko-bot@kernel.org wrote:
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but this patch actively
-> > exacerbates the consequences of a pre-existing issue with missing error
-> > handling on I2C reads. 
-> > 
-> > If adp5588_read() fails due to a bus fault, it returns a negative error
-> > code (e.g., -EIO). In adp5588_gpio_add(), these negative values are
-> > silently truncated to 8-bit unsigned values and stored in the driver's
-> > cached GPIO state (dat_out, dir, pull_dis). 
-> > 
-> > Because this patch moves this caching to occur before 
-> > devm_gpiochip_add_data(), when a GPIO hog is subsequently applied, the
-> > driver inadvertently clobbers the real hardware state by writing back this
-> > error-corrupted cache. Can this actively undermine the patch's stated goal
-> > of preserving bootloader GPIO configurations if an I2C read fails during
-> > probe?
-> 
-> If the reads fail, I would not expect the driver to behave properly at
-> all - neither before nor after this patch. It's true that this patch
-> might trade some broken behavior for another type of broken behavior
-> though. But only on systems where I2C reads are failing.
-> 
-> If the argument is that such a trade can be considered a regression, I
-> would point out that the suggestion here - to add error checking and to
-> fail probe on bus errors - would invariably cause probe failure on such
-> systems with buggy I2C reads. That's also a regression.
-> 
-> > Additionally, this same missing error check causes severe issues elsewhere.
-> > In adp5588_report_events(), the error is bitwise-ANDed with KEY_EV_MASK, 
-> > resulting in an invalid, large key value. This yields a calculated code
-> > index that exceeds the bounds of the kpad->keycode array, causing an
-> > out-of-bounds heap read and leaking phantom key presses to userspace. 
-> > 
-> > Finally, in adp5588_gpio_get_value(), a negative error code evaluates to
-> > true, incorrectly reporting the pin state as HIGH.
-> > 
-> > Would it be appropriate to add proper error checking to adp5588_read() or
-> > its callers to prevent state corruption and out-of-bounds memory access
-> > during I2C faults?
-> 
-> Sure the driver can be improved by adding error checking, but that would
-> be a much larger change. I hope that is not an impediment to getting
-> this particular issue fixed.
+On Wed, 26 Aug 2026 09:59:46 +0000
+sashiko-bot@kernel.org wrote:
 
-No, not at all. Especially something that was identified as a
-pre-existing issue will not usually block the acceptance.
+> > diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+> > --- a/kernel/trace/ring_buffer.c
+> > +++ b/kernel/trace/ring_buffer.c  
+> [ ... ]
+> > @@ -7183,7 +7218,8 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
+> >  	 */
+> >  	if (read || (len < (size - read)) ||
+> >  	    cpu_buffer->reader_page == cpu_buffer->commit_page ||
+> > -	    rb_is_static(cpu_buffer)) {
+> > +	    rb_is_static(cpu_buffer) ||
+> > +	    data_page->order != reader->order) {
+> >  		struct buffer_data_page *rpage = cpu_buffer->reader_page->page;
+> >  		unsigned int rpos = read;
+> >  		unsigned int pos = 0;  
+> 
+> [Severity: High]
+> Does this new condition break splice reads when the buffer order changes?
+> 
+> When tracing_buffers_splice_read() allocates a read page with the new order
+> and calls ring_buffer_read_page() with full=1, it will now enter this manual
+> copy block because the subbuffer orders no longer match.
+> 
+> However, just a few lines down inside this block in ring_buffer_read_page(),
+> there is the following check:
+> 
+>         if (full &&
+>             (!read || (len < (size - read)) ||
+>              cpu_buffer->reader_page == cpu_buffer->commit_page))
+>                 return -1;
+> 
+> Since the reader page typically hasn't been partially read yet (read == 0),
+> and full == 1 from splice, this check evaluates to true and immediately
+> returns -1 instead of copying the data.
+> 
+> Because tracing_buffers_splice_read() loops and ultimately returns -EAGAIN
+> on failure, will this cause an infinite loop of -EAGAIN for userspace tools
+> trying to read across buffer resizes?
+> 
 
-And please, take Sashiko's reviews with a grain of salt, not everything
-that it identifies as an issue is actually correct finding.
 
-Thanks.
+This is a legitimate concern. But with an easy solution. Perhaps just add:
 
--- 
-Dmitry
+	if (full &&
+	    (!read || (len < (size - read)) ||
+-	     cpu_buffer->reader_page == cpu_buffer->commit_page))
++	     cpu_buffer->reader_page == cpu_buffer->commit_page) &&
++	    data_page->order == buffer->subbuf_order)
+		return -1;
+
+If the user is changing the buffer size at the same time as reading raw
+pages, they get what they deserve! I just don't want to let the kernel go
+into an infinite loop.
+
+-- Steve
+
