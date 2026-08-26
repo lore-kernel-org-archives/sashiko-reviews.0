@@ -1,91 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8A33242D9;
-	Wed, 26 Aug 2026 04:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D2E376A05
+	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 05:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787719001; cv=none; b=qtdLiyQO23afmFyRi4IEtRm2UbmQ614UMuMwNkyMDcl+KXKsjXZ/pRJvxkBF51Re1Sb/vQi46nucjG62el8g0i5IMbc8WZ8vbwcj8tzaEqJW/reSymbdZVzjteJtYOFNjAkq3C/1p8UDdea6NV2KvK1vZ4QGtAtzd+8DC7kDU8g=
+	t=1787720419; cv=none; b=FO4SIAZzQpMfhF1M4dN+S9cut31/ztPwlOlKCSCojWJRA8OhDfl8NKoQzMV7kRjwLuxw91Gwd17ukUKYiIrV1ZxUc/ifCod2VEPGhzMMWgD8bwtB2BS0ejiNoNlq1jeLOWALebctNzXs6Ju0jAWaNLg7yTPdkTC6L76a08ja+0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787719001; c=relaxed/simple;
-	bh=XtU2mh97knpLCJ2602JJ33nuXKeHg8Sn0/yN7aDD7xQ=;
+	s=arc-20240116; t=1787720419; c=relaxed/simple;
+	bh=UXRmdD8MPLUWuE3hJ4sbIE/ZOI1vBPxw0RSPJKjZ53g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RMkuhNrm+I1jR1bTsEpAoHaSgC8Gr/B9b5Qp2KTq2fZAWGKfqBF9YIQAZD8Jw2nETPyEyPSML+eC3nNcmHXsbeO9NG3VoQhBmE7PM0ZxEz5RYvCuFq/REMrcc4+T788v9lvuhHi2JxKCzxMButEZ81h6nSYN1GC+tkP5f16W1LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nLIHnr7X; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nLIHnr7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998E61F000E9;
-	Wed, 26 Aug 2026 04:36:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787718999;
-	bh=wQJpuKQVyofqXNydKg7+rvhxd0UaO08shOn9OeCnGg0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nLIHnr7XaI8bb2QkcKNcufMAHiZkkPRjexpuXKlS6sr4thugydK/FjLTqyFrSSpbO
-	 pUJYR/t4gEMENiWwP3Ra0ToF1hk4Smyd1oKldch8z4swQ0TqKCiwX1d3e49TjcNtRV
-	 Ng0UwbQmV/6uJtWLuskMIJc7nOu4MmkjJHxcHstLe5eVBveZCNoQ5Za1NWwfhifAQB
-	 z5yoLeVbQPMTlWqOhs2YHvVqGsDyauhPqW1fGDtUVW6Y193ThLf6vjeJ9C7CvUVg28
-	 qWRdfkXcs1FQvLqJpyYvTWHxkMkO9h5rMijXFbSkMOgyr9JjI8ftFBM13gP6IjJzfA
-	 S/Cj2h1DC5wQQ==
-Date: Wed, 26 Aug 2026 04:36:36 +0000
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=WWoYjrOZubxY4cJycd0XcIIznj5vpoApdT53gF8RXKSslfWhr8d//QTeciE2Zm1o6ADup4dfn2QGTEe+WFMgv0qmzsxUtiAX7b/FNfT+wD9A70ssSx6aQ7cSGwySgvs269KYm0YbZemXi3gzE/EO72oZBrOjeg35QOA/Y5X3lNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 4AC74201923;
+	Wed, 26 Aug 2026 07:00:12 +0200 (CEST)
+Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ore@pengutronix.de>)
+	id 1wz5kC-003Nmx-0a;
+	Wed, 26 Aug 2026 07:00:12 +0200
+Received: from ore by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
+	(envelope-from <ore@pengutronix.de>)
+	id 1wz5kC-0000000GEoD-0Aoq;
+	Wed, 26 Aug 2026 07:00:12 +0200
+Date: Wed, 26 Aug 2026 07:00:12 +0200
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 To: sashiko-reviews@lists.linux.dev
-Cc: Wanming Gao <wanming.gao@mediatek.com>, linux-watchdog@vger.kernel.org
-Subject: Re: [PATCH] watchdog: mediatek: Enable pretimeout support
-Message-ID: <ao5tVCpb1pMu14Tb@google.com>
-References: <20260824132914.2662346-1-wanming.gao@mediatek.com>
- <20260824133823.884931F000E9@smtp.kernel.org>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>,
+	Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: Re: [PATCH] can: j1939: cancel all pending ECUs on device stop
+Message-ID: <ao5y3Mp5yotE1zOY@pengutronix.de>
+References: <20260824155406.246942-1-dmantipov@yandex.ru>
+ <20260824160844.4FBFF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260824133823.884931F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260824160844.4FBFF1F000E9@smtp.kernel.org>
+X-Sent-From: Pengutronix Hildesheim
+X-URL: http://www.pengutronix.de/
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
 
-On Mon, Aug 24, 2026 at 01:38:23PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -230,14 +230,17 @@ static int mtk_wdt_restart(struct watchdog_device *wdt_dev,
-> >  {
-> >  	struct mtk_wdt_dev *mtk_wdt = watchdog_get_drvdata(wdt_dev);
-> >  	void __iomem *wdt_base;
-> > +	unsigned long flags;
-> >  	u32 reg;
-> >  
-> >  	wdt_base = mtk_wdt->wdt_base;
-> >  
-> >  	/* Enable reset in order to issue a system reset instead of an IRQ */
-> > +	spin_lock_irqsave(&mtk_wdt->lock, flags);
+Hi Dmitry,
+
+On Mon, Aug 24, 2026 at 04:08:43PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
-> [Severity: High]
-> Does acquiring this spinlock unconditionally risk a deadlock during a system
-> panic?
+> New issues:
+> - [High] AB-BA deadlock between `priv->lock` and `hrtimer_cancel()` when stopping the device.
+> - [High] Unconditional cancellation of all ECUs on any socket closure breaks address claiming for the entire CAN interface.
+
+Can you please take a look to this issues.
+
+> Pre-existing issues:
+> - [Critical] Unlocked list deletion in `__j1939_ecu_release()` leads to list corruption.
+
+No need to worry about pre-existing, except you wont to.
+
+> --
 > 
-> The restart handler is called during emergency restarts. If another CPU was
-> stopped via an IPI while holding mtk_wdt->lock (such as during the 70
-> microsecond delay in mtk_wdt_deassert_irq()), the panicking CPU will spin
-> infinitely here and hang the emergency reboot.
-
-The .restart() callback can be called during a normal reboot or an emergency
-restart.  In either case, local interrupts are disabled and there should be
-no other concurrent CPU running this piece of code.  The lock acquisition is
-unnecessary here and can be safely dropped to avoid the deadlock risk.
-
-> > +static void mtk_wdt_deassert_irq(struct watchdog_device *wdd)
+> --- Patch [1]: [PATCH] can: j1939: cancel all pending ECUs on device stop ---
+> commit f80db37c4e58ab7d9daa72ce8c93a7552521ee48
+> Author: Dmitry Antipov <dmantipov@yandex.ru>
+> 
+> can: j1939: cancel all pending ECUs on device stop
+>     
+> This patch modifies the device stop routine to cancel all pending ECU
+> timers to prevent a situation where an ECU continues holding a reference
+> to the private data structure after the device stops processing.
+>     
+> Reported-by: syzbot+489e907b2a026a6f5fa0@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=489e907b2a026a6f5fa0
+> Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+> 
+> > diff --git a/net/can/j1939/bus.c b/net/can/j1939/bus.c
+> > --- a/net/can/j1939/bus.c
+> > +++ b/net/can/j1939/bus.c
+> > @@ -96,6 +96,16 @@ void j1939_ecu_unmap(struct j1939_ecu *ecu)
+> >  	write_unlock_bh(&ecu->priv->lock);
+> >  }
+> >  
+> > +void j1939_ecu_cancel_all(struct j1939_priv *priv)
 > > +{
-> > +	struct mtk_wdt_dev *mtk_wdt = watchdog_get_drvdata(wdd);
+> > +	struct j1939_ecu *ecu, *tmp;
+> > +
+> > +	write_lock_bh(&priv->lock);
+> > +	list_for_each_entry_safe(ecu, tmp, &priv->ecus, list)
+> > +		j1939_ecu_timer_cancel(ecu);
 > 
 > [Severity: High]
-> Will watchdog_get_drvdata() return NULL here if a pending interrupt fires
-> during probe?
+> Could this introduce an AB-BA deadlock with the timer callback?
 > 
-> In mtk_wdt_probe(), devm_request_irq() is called to enable the interrupt before
-> watchdog_set_drvdata() initializes the driver data. If the bootloader left the
-> pretimeout interrupt enabled and it fires immediately during probe,
-> mtk_wdt_isr() will run and call mtk_wdt_deassert_irq().
+> The loop holds the lock while cancelling the timer:
 > 
-> This would result in watchdog_get_drvdata() returning NULL, followed by a NULL
-> pointer dereference when accessing mtk_wdt->wdt_base.
+> write_lock_bh(&priv->lock);
+> list_for_each_entry_safe(ecu, tmp, &priv->ecus, list)
+>         j1939_ecu_timer_cancel(ecu);
+> 
+> If j1939_ecu_timer_handler() is currently executing on another CPU, it
+> will unconditionally attempt to acquire the exact same lock:
+> 
+> net/can/j1939/bus.c:j1939_ecu_timer_handler() {
+>     ...
+>     write_lock_bh(&priv->lock);
+>     ...
+> }
+> 
+> Would this cause hrtimer_cancel() to spin waiting for the callback to
+> finish, while the callback waits for the lock held by this thread?
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but iterating this list might
+> expose a pre-existing list corruption issue.
+> 
+> When j1939_ecu_timer_cancel() drops the reference via j1939_ecu_put(), or
+> when a temporary reference is dropped in j1939_ac_recv(), it can trigger
+> the final release:
+> 
+> net/can/j1939/bus.c:__j1939_ecu_release() {
+>     ...
+>     list_del(&ecu->list);
+>     ...
+> }
+> 
+> The list_del() executes without holding priv->lock. If this happens
+> concurrently while another thread is iterating priv->ecus (like the loop
+> introduced here), could it corrupt the list and cause a use-after-free or
+> kernel panic?
+> 
+> > +	write_unlock_bh(&priv->lock);
+> > +}
+> > +
+> >  void j1939_ecu_unmap_all(struct j1939_priv *priv)
+> 
+> [ ... ]
+> 
+> > diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
+> > --- a/net/can/j1939/main.c
+> > +++ b/net/can/j1939/main.c
+> > @@ -306,6 +306,7 @@ struct j1939_priv *j1939_netdev_start(struct net_device *ndev)
+> >  
+> >  void j1939_netdev_stop(struct j1939_priv *priv)
+> >  {
+> > +	j1939_ecu_cancel_all(priv);
+> 
+> [Severity: High]
+> Does unconditionally cancelling all ECUs here break address claiming for
+> the shared interface?
+> 
+> It appears j1939_netdev_stop() is called whenever any local user closes
+> a J1939 socket, but the CAN interface itself might still be in use by
+> other sockets. Calling j1939_ecu_cancel_all() before checking the shared
+> rx_kref count could disrupt network management for those remaining users.
+> 
+> >  	kref_put_mutex(&priv->rx_kref, __j1939_rx_release, &j1939_netdev_lock);
+> >  	j1939_priv_put(priv);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260824155406.246942-1-dmantipov@yandex.ru?part=1
+> 
 
-To prevent the race condition, it would be safer to use IRQF_NO_AUTOEN when
-calling request_irq() and call enable_irq() when the driver is fully ready.
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
