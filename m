@@ -1,123 +1,150 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55C337B3FE;
-	Thu, 27 Aug 2026 16:56:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787849804; cv=none; b=Ro9pF583WNZhqBQJK8muT+w3CV5XVVz8RoFnucIWH0s89nlnvoJ7OJjAXp7EDBnARpgBorS3QGRg0MWtxvQEal1flZHdX+Z3buuh5TSycf9Gk5UA3NPFmBPyEqLTAnHji3br1oQZ9SST2s/6mLPs5svW+V6b+TbE6hXzICPmdoc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787849804; c=relaxed/simple;
-	bh=vzBZhdaIgl31+yOBeaR3Ppwf1WX/+Vm/3QwrSZCJW1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jC9FpktThH2Cx813p7b2267G9U16U0Y5p3pZ/4KyY+aCIb4CmiFRCGIv4h8pZNC5t9P3uH/R/tSVp5UJRuTu+6dzwb2W4fDSU8a8DgWDgQtIvxOvGpgf/oy0UQyAszf5bl3rAEoHqMev4qYIR/S6lnGSJ9dC4kt16BocBuaeoTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZsPpygA; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583D23859F5
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 17:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787850149; cv=pass; b=koZzbnSF+RqZ4KtE+T4IBXlYa5b979qTspc02mv7K2HXU0M91nP2dgTXrsMEOMEMSgNgewUndRn2ccbueD8/HYxkUCuanzpHWT+Adfjn7k3rDHNIVJPYg2ssWViKywBNYxtOh7bKgrBYocOEY5AXKjyb9mSnjZ9KbX8i1M4O7dk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787850149; c=relaxed/simple;
+	bh=0rsCnwel9LvZsUcpCHlRHr/3V7TF2eV7fdDbCyrMo/c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rFQsbk379pu2KcN2xihWpYrCM+Nw709ycYWt/J11Jhd2yKrdRxrrNLbcK5z5wJOOCm0V313LB/u8+eiDlXb76pP4BY3yx4tLNsPx+7RQ2sGYsx6w+oZN5HTcJvGPebT9BDZT8IWGtIusuZQGiWBRYsWSHH+feud8g0vIE7DcILU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=sCMpVgU3; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=cyruwPtr; arc=pass smtp.client-ip=85.215.255.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZsPpygA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADC81F000E9;
-	Thu, 27 Aug 2026 16:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787849802;
-	bh=Z3MUP6Bwv+cqPINMRPGl0CTTrm0ni+uUUE/06XCeKXo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CZsPpygAdsQrJ7wjPofRHT90cZfGcXchVOs/uitKLQa594tzi/x2vLXmrlI4Jjz8z
-	 YBBpogntFb+Z+L6via882L5FIB1Kl1ZjXBnPm5XVGPCkavSimOMEMuKFb+hqzWmML4
-	 2zCy6bIV0Y/Y1gLlE03yCC6xZMD1PIXnIS8iUqIgxNzATbB1Ly1qspQJ6WzLc7Y8qE
-	 cxsGacuk1UECz3o+rMySGerUs6/SPVs+/yx+z/R7Qqqv27vl7jQEc5LXbvO6MEWNEs
-	 9i+UGUw2CJIM1AkzqAlL9CEmlp7XjphmnUwzBHk03VjF+adEXHgEUx5WCPnChZ1sdn
-	 EuFIv9zLUYLqA==
-Date: Thu, 27 Aug 2026 17:56:38 +0100
-From: Lee Jones <lee@kernel.org>
-To: Stefan Wahren <wahrenst@gmx.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	Jonas Rebmann <jre@pengutronix.de>
-Subject: Re: [PATCH V4] leds: rgb: leds-group-multicolor: Implement
- default-intensity
-Message-ID: <20260827165638.GH2943942@google.com>
-References: <20260813091428.9072-1-wahrenst@gmx.net>
- <20260813092522.0228D1F00A3A@smtp.kernel.org>
- <20260813095330.GZ1072730@google.com>
- <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="sCMpVgU3";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="cyruwPtr"
+ARC-Seal: i=1; a=rsa-sha256; t=1787850112; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=XHWpSsyhHCJR7wmYNCnaR8uTYKLYXs5z0RBjFid5DpawJEuPfS1P6Ca/DBKY3SSAtA
+    KW/QQAf9UOT5ECVYTTkVgReXevrgT6nReH/qzWWJvUbsAZHADiZkHmlp1TdonH14G1yZ
+    o/Bv+lhu9EWxw0TgJucRJ7URVQmPwbzbDumfAjg+uUiBn1CBiCgPHCq4dCLrPGXYgzkT
+    SDltOARdBKD8+8Rz+bTBHpMmYP5ajezD32AIixkaWC4yAT9Zu15PkqV47WW5JSxqtCFi
+    uAMkNdUxezB3w0jpF4z30Sjk3Pzk8xC1BHNy3a7zv9Os5Y75F/ChU3jtcN1m8G5AgNPv
+    0UUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1787850112;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=BlR77JsNVZOZaqMIIuyfx4w9MoUhgUy42ggcI/AkgR0=;
+    b=HvKw+UrrCG4kGv2EG9hQPi9BUUpnCluvrFayREUjTYF3WM3yAIUNN901NARP5HWoxP
+    rlvebQrHGoebBj+9yDjy7wRYSMdXQsW14ljgSAOn8I1e2smFsfc+uRbdf8nZOkAWR9VR
+    NYo1B0Hi4FwAyrJmwVu+80HiaLTWurZWAWbxfdE+H4Zoxc3s1Okh5H96+AKNNsz4PEIi
+    YhJf3hOwdlOmx9VlGWKiIbIKjyuV8L+KDjYYVtnnHbugQqnAMc+gq5Rv1Z8Ybmzi8++w
+    ixurXck5VckxUgHlAdcDEbFZQ3YN85QabZ1M4JnE+ancweg1pEgF4LnTgvyC+tHEJCDR
+    QDIA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1787850112;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=BlR77JsNVZOZaqMIIuyfx4w9MoUhgUy42ggcI/AkgR0=;
+    b=sCMpVgU3Ulhi1afGB3lLMfeYV5eaBeh8k2wn4lOgAkRf0Do82ciXyKHnw33eoqKgPj
+    +OwdlzpkFB2fQUeSvopbr6mz/snG3td/tfU14Vnb71oFc3X4GFvjfcHga3vlhZtyzhlg
+    3yAfmYLT8zpYh5PtrMPxonSZO8k/FrPvcKTB1SdNyTwVM6da0FxVq/AyFPd/5FvUMTEo
+    W+HcjEjDVqlfpi9lgDWZnz/bW6GP4a/PjkmFHlX/ZXsYtY4cdWbXhgttwF894ThkpBhe
+    nA418KzTi3vZFqopNWhL1+xIhEJghI2P8U3dQtBIbHAmUr19+0jni5rETXrsHLCd+txl
+    HUeg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1787850112;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=BlR77JsNVZOZaqMIIuyfx4w9MoUhgUy42ggcI/AkgR0=;
+    b=cyruwPtr1xfq+XqZSVYKWlABN8z9yeQ8yXdmwYYcu1NZDL+JOKyR2jZY1jD3CZlVsd
+    SfnY/L7sucTamFMSqiDA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.2 AUTH)
+    with ESMTPSA id K171b727RH1q2IS
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 27 Aug 2026 19:01:52 +0200 (CEST)
+Message-ID: <54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net>
+Date: Thu, 27 Aug 2026 19:01:46 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net 10/14] can: dev: can_put_echo_skb(): free skb on
+ invalid echo index
+To: sashiko-reviews@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: linux-can@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>
+References: <20260826121036.2706424-1-mkl@pengutronix.de>
+ <20260826121036.2706424-11-mkl@pengutronix.de>
+ <20260827121052.975831F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260827121052.975831F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 13 Aug 2026, Stefan Wahren wrote:
 
-> Hi,
+
+On 27.08.26 14:10, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> Am 13.08.26 um 11:53 schrieb Lee Jones:
-> > On Thu, 13 Aug 2026, sashiko-bot@kernel.org wrote:
-> > 
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [Medium] The `default-intensity` property read from individual monochromatic LED nodes is applied to the multicolor group without rescaling, causing incorrect brightness calculations.
-> > Please review, explain or fix the Sashiko review(s).
-> > 
-> > If this is a set, this request includes the other patches too.
-> Sorry, I don't get the problem with "incorrect brightness calculation", I
-> tought the intensity setting is independent from the brightness. Btw the
-> intensity is applied to the monochromatic LED not to the group itself.
-> hallucination?
+> Pre-existing issues:
+> - [High] Modifying SKB payload in can_skb_init_valid() without unsharing causes data corruption for concurrent observers.
+> --
 > 
-> Does mixing PWM and GPIO LED in a RGB multicolor group make sense at all?
-
-Couldn't honestly tell you without digging in myself.
-
-I did just provide some concerns from Gemini though.  PGTAL.
-
-> > > --
-> > > 
-> > > --- Patch [1]: [PATCH V4] leds: rgb: leds-group-multicolor: Implement default-intensity ---
-> > > commit 13399f1aaceaf09afa7e252e35000d7d61ab1925
-> > > Author: Stefan Wahren <wahrenst@gmx.net>
-> > > 
-> > > leds: rgb: leds-group-multicolor: Implement default-intensity
-> > > 
-> > > This commit introduces support for the default-intensity property during
-> > > boot for LED multicolor groups. If the property is missing, the code falls
-> > > back to the previous behavior of configuring the sub-LED intensity to its
-> > > maximum.
-> > > 
-> > > > diff --git a/drivers/leds/rgb/leds-group-multicolor.c b/drivers/leds/rgb/leds-group-multicolor.c
-> > > > --- a/drivers/leds/rgb/leds-group-multicolor.c
-> > > > +++ b/drivers/leds/rgb/leds-group-multicolor.c
-> > > > @@ -108,8 +108,10 @@ static int leds_gmc_probe(struct platform_device *pdev)
-> > > >   		subled[i].color_index = led_cdev->color;
-> > > > -		/* Configure the LED intensity to its maximum */
-> > > > -		subled[i].intensity = max_brightness;
-> > > > +		ret = device_property_read_u32(led_cdev->dev, "default-intensity",
-> > > > +					       &subled[i].intensity);
-> > > > +		if (ret || subled[i].intensity > max_brightness)
-> > > > +			subled[i].intensity = max_brightness;
-> > > [Severity: Medium]
-> > > Does this logic properly scale the intensity when the individual LEDs in the
-> > > group have different maximum brightness values?
-> > > 
-> > > If a multicolor group consists of LEDs with vastly different maximum brightness
-> > > capabilities (like a GPIO LED maxing at 1 and a PWM LED maxing at 255), the
-> > > overall group max_brightness will evaluate to 255.
-> > > 
-> > > When reading the default-intensity from the device tree, the value is typically
-> > > specified on the scale of the individual sub-LED's max brightness. If this
-> > > value is assigned directly to subled[i].intensity without being scaled up to
-> > > the group's max_brightness, the sub-LED might be initialized with only a tiny
-> > > fraction of its intended intensity, often resulting in the LED being completely
-> > > unlit instead of at the requested intensity.
-> > > 
-> > > >   	}
-> > > >   	/* Initialise the multicolor's LED class device */
-> > > -- 
-> > > Sashiko AI review · https://sashiko.dev/#/patchset/20260813091428.9072-1-wahrenst@gmx.net?part=1
+> commit 6a48fe2d96b6f1ca706da34b2f7bdd872d06941f
+> Author: Cunhao Lu <1579567540@qq.com>
+> can: dev: can_put_echo_skb(): free skb on invalid echo index
 > 
+> This patch fixes a potential leak in can_put_echo_skb() when the echo index
+> is out of bounds. It ensures the socket buffer is freed before returning
+> -EINVAL so that all error paths correctly consume the SKB.
+> 
+> Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
+> 
+>> diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+>> index c7be21ed70ddf..faafb1033d423 100644
+>> --- a/drivers/net/can/dev/skb.c
+>> +++ b/drivers/net/can/dev/skb.c
+> 
+> [ ... ]
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but already existed in the
+> codebase. Does can_skb_init_valid() in this same file modify shared memory
+> without unsharing it first?
+> 
+> drivers/net/can/dev/skb.c:can_skb_init_valid() {
+>          ...
+>          /* set CANFD_FDF flag for CAN FD frames */
+>          if (can_is_canfd_skb(skb)) {
+>              struct canfd_frame *cfd;
+> 
+>              cfd = (struct canfd_frame *)skb->data;
+>              cfd->flags |= CANFD_FDF;
+>          }
+>          ...
+> }
+> 
+> If a user with CAP_NET_RAW injects a CAN FD frame via an AF_PACKET socket,
+> the packet goes to dev_queue_xmit() where it may be cloned for packet
+> sniffers like tcpdump.
+> 
+> When the original SKB reaches the driver's transmit function and calls
+> can_dev_dropped_skb() -> can_dropped_invalid_skb() -> can_skb_init_valid(),
+> it modifies the payload (cfd->flags |= CANFD_FDF) without verifying
+> skb_cloned(skb) or calling skb_unshare().
+> 
+> Can this cause data corruption for concurrent observers receiving the clones?
 > 
 
--- 
-Lee Jones
+No.
+
+https://lore.kernel.org/linux-can/ac22b59e-129b-4883-b9c6-da5e69e4078d@hartkopp.net/
+
+
