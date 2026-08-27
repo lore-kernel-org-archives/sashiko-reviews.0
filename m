@@ -1,74 +1,145 @@
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-166.mta0.migadu.com [91.218.175.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0084B368277
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 00:41:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943DD37A83A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 01:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787791313; cv=none; b=tQ4B/98Cju5t7RtKjbX8KgFzno9Y4PQjaELQXNP3aC5hUIXdwEiqJM756r6EB/8ZifzsTMS5TncuIzZYlPxYZYS1Xrlez5pfuhaj8w1opAfTIZPgCmXBB0cobFX2EOMjbSpDkj/feQLz2cjtvpUwCyeMJZ+3qlICtlMY7Th8Cw0=
+	t=1787794166; cv=none; b=GXhbJ4DQulGT3ifH+0ZbNKjsty9eCSv1pSPpRQwL6EyDvO8lQ+apqX3qSNwofrNHt82biL2lSg/KfQqqlpvK2OLVUs+Wu9yO5Egzp2y7coFzYX2J7WMX5kyxYkAY7E1bMqInZPhiyrWqFm9QwFDAOFqU9ul9BCNnsl/VpSZx6sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787791313; c=relaxed/simple;
-	bh=Q4mCk+bDxvLmed9HE+r122Jun2S+D6BfTY6PxWJJGGc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SX++KASs9oOOIjiUrl2z57Ty9ZNKTINSv6KSSW0x+m2SoD/MIgnrXqw7T4c3YQQCqHBlflL68MOQW50DLhZ+SYZADfZzQss74Y/TuSe13KBmhkt9V7r8nz37N0X1EhS8GVQLXXUQM234N/YEoICVb0pZMhzJrgi5Q6GJa/XfrQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=2Bd5YG/d; arc=none smtp.client-ip=216.40.44.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1787794166; c=relaxed/simple;
+	bh=ty7M5gzOIO5H9mgZxPQZ/JV3HDbpyWkFk0E9P6s6O2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z8iHtZCp6+SN8DmHtQ0ne3Wzp1VVcRNLTZgryoyGM7mEYxsP0+BQzD/MAQheTgeXmyUEIzQ9qti6xFGKBHbpbtAPdzo26hSKoIsPHpz5IdW6DsP+E6NHf2tFTp9rq7cWdi8AHgoq1PtEJUp8VgaLZrbh9A+nBPf5t7GKSq2nbqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HytpGnmD; arc=none smtp.client-ip=91.218.175.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="2Bd5YG/d"
-Received: from omf08.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay02.hostedemail.com (Postfix) with ESMTP id 33690120268;
-	Thu, 27 Aug 2026 00:41:47 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf08.hostedemail.com (Postfix) with ESMTPA id 8C9AE20026;
-	Thu, 27 Aug 2026 00:41:45 +0000 (UTC)
-Date: Wed, 26 Aug 2026 20:41:44 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Crystal Wood <crwood@redhat.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] tracing/osnoise: Per-cpu mutex and fd detachment
-Message-ID: <20260826204144.73f89699@fedora>
-In-Reply-To: <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
-References: <20260824211544.3984835-1-crwood@redhat.com>
-	<20260824211544.3984835-2-crwood@redhat.com>
-	<20260824213037.F41B11F000E9@smtp.kernel.org>
-	<20260826153132.1333fac6@gandalf.local.home>
-	<588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HytpGnmD"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=ty7M5gzOIO5H9mgZxPQZ/JV3HDbpyWkFk0E9P6s6O2A=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787794160; v=1; x=1788398960;
+ b=HytpGnmD8Zog6jb3sj/ugriQJYZ58cVmRzTuOJpS2qCV1/iYso0ZzIs6zV1/YsaickZwRz74
+ oZh35evMSJMuceD+RRNZbUpsD4g8pluyl5NA3qgXEZ6iGwUAI2QVZWdwSG6x9ulnYj5/W23Hn8W
+ lHjzvnwzbTeYFeQz1f0gkPPA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: from [10.63.107.123] (14.29.108.92)
+	by smtp.migadu.com with ESMTPS id f04850b71e0deefd;
+	Thu, 27 Aug 2026 01:29:20 +0000
+X-Mizu-Trace-ID: f04850b71e0deefd
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <0c606cf9-2b5a-4549-8ab1-0be619487412@linux.dev>
+Date: Thu, 27 Aug 2026 09:29:13 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: i9mzzaowpwj9rm7rijyb57kw9ano5u13
-X-Rspamd-Server: rspamout02
-X-Rspamd-Queue-Id: 8C9AE20026
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+KbKiQmYmCfx9BIzC5w8LNXUZW+Ypqp64=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=Ev6a+8iRkV2YP1SE7eFYyB2JggOsFEQUP4GAetf/URU=; b=2Bd5YG/dncrfD/Cp8RJdJDHgVl9uIwawmB8ji1trFp5SQQli9fyieNsO89xIP9DKk/p6HnjomTgwnudAlx1P6JQRs6UBt+AnlpCNh/UAkpMv+lAdD8n0/kydpPKm29DzFJtkyt8UceCV3acwf4qp+J4GWnmmBqOjtMcW9KLjME0=
-X-HE-Tag: 1787791305-56214
-X-HE-Meta: U2FsdGVkX18uBUkZr8Z6X4Fit7tQmbPqRGFV0K9AV5bjMnAr7QDMlqRTmJkwTgzeAVGKuTktUZ050tbpazKGe7CZN6PK0yGSlZZRR/b5ErZKv/WMxBk9a4p46TSVno5hI3bn/dKSkW1xsMcREU8cGVPkQB+qBEccsGkvdi6Sgmfq75Hx3C0r204cFvj0mn86n37k6do2SEAw2iLoMqweLS5kS4Qc6VGRpWei2UxgdiQ06gWZdHS3q/GSamsKrewYK4JXc7Ve/SBC8x0NVHZHRAypxP9kMiGiQmPj4oDxgU5+EcVXlz+2ISVoLqfSWSVTqnMHDsBWtkgyXLTj+WMdSd4k2LRlIraF
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] mm/mglru: fix ineffective memory protection for
+ non-kswapd reclaim
+To: sashiko-reviews@lists.linux.dev
+Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
+References: <20260826133054.88529-1-ridong.chen@linux.dev>
+ <20260826134733.051941F000E9@smtp.kernel.org>
+From: Ridong Chen <ridong.chen@linux.dev>
+In-Reply-To: <20260826134733.051941F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 26 Aug 2026 16:19:29 -0500
-Crystal Wood <crwood@redhat.com> wrote:
 
-> > 
-> > It has some tests I ran along with tracing that detected issues. Of course,
-> > everything needs to be run with lockdep enabled too.  
+
+On 8/26/2026 9:47 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> I did run with lockdep (and some custom hacky state tracking) but
-> forcing migration is a hole in my test coverage.
+> Pre-existing issues:
+> - [High] Integer overflow in `effective_protection()` calculations on systems with >= 16TB RAM.
+> --
 > 
-> Is there a particular test you're suggesting?
 
-I think I mostly did:
+Thanks for the careful analysis. You're right that this is pre-existing in 
+effective_protection() and not introduced by this patch.
 
-  $ while true; do rtla timerlat top -u -q & PID=$!; sleep 5;
+I'm not sure it's worth fixing in practice, though — the overflow requires 
+systems with >= 16TB of RAM, which I've never encountered
+myself. So I'd rather not fold a fix for it into this patch.
 
-or variations of it. IIRC, that would cause a lockdep splat here or
-there.
+I'd like to hear the maintainers' thoughts on whether this is worth addressing 
+separately.
 
--- Steve
+> commit 0b95b34e75bd94d348d96210ff25235304802608
+> Author: Ridong Chen <chenridong@xiaomi.com>
+> 
+> mm/mglru: fix ineffective memory protection for non-kswapd reclaim
+> 
+> This commit fixes a bug where memory protection (memory.min/low) is silently
+> bypassed during non-kswapd global reclaim. It introduces
+> mem_cgroup_protection_path() to compute emin/elow correctly without a full
+> tree walk.
+> 
+>> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+>> index 11b85f4b6828b..a334974333cb6 100644
+>> --- a/mm/memcontrol.c
+>> +++ b/mm/memcontrol.c
+>> @@ -5197,6 +5197,48 @@ void mem_cgroup_calculate_protection(struct mem_cgroup *root,
+> 
+> [ ... ]
+> 
+>> +	rcu_read_lock();
+>> +	for (i = root_level + 1; i <= cg->level; i++) {
+>> +		struct mem_cgroup *cur;
+>> +
+>> +		cur = mem_cgroup_from_css(cgroup_css(cg->ancestors[i],
+>> +						    &memory_cgrp_subsys));
+>> +		if (cur)
+>> +			page_counter_calculate_protection(&root->memory,
+>> +					&cur->memory, recursive_protection);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but since we are relying on
+> page_counter_calculate_protection() here, is there a risk of an integer
+> overflow during the protection calculation on systems with large memory?
+> 
+> Looking at effective_protection() in mm/page_counter.c, the function uses
+> 64-bit unsigned long values to represent memory limits in pages:
+> 
+> mm/page_counter.c:effective_protection() {
+>      ...
+> 	if (siblings_protected > parent_effective)
+> 		return protected * parent_effective / siblings_protected;
+>      ...
+> }
+> 
+> If a system has >= 16TB of RAM, both protected and parent_effective can
+> exceed 2^32 pages (since 16TB is 2^32 pages of 4KB). The multiplication
+> protected * parent_effective will exceed 2^64 - 1 and wrap around.
+> 
+> This also seems to happen in a secondary distribution path in the same
+> function:
+> 
+> mm/page_counter.c:effective_protection() {
+>      ...
+> 		unclaimed = parent_effective - siblings_protected;
+> 		unclaimed *= usage - protected;
+>      ...
+> }
+> 
+> Here, multiplying unclaimed and (usage - protected) can also multiply two
+> page counts that each exceed 2^32, causing an overflow for the same reasons.
+> 
+> Could this overflow result in a drastically reduced effective protection
+> value, effectively bypassing cgroup memory protection and causing cgroups
+> to be unfairly reclaimed on machines with very large memory?
+> 
+>> +	}
+>> +	rcu_read_unlock();
+>> +}
+> 
+
+-- 
+Best regards
+Ridong
+
