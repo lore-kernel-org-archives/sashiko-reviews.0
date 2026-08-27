@@ -1,211 +1,256 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755BA3B38BF
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 08:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2EA3DD86C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 08:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787818071; cv=none; b=C2hlpNmNQFnkvzlW12HGGNrkP1vZsNmqQJvGrkiCWleG2bS4VFCbMbrwZN4EDbzNRZnFjOaXXyPkimy4f7pn4IT1EtpFYQN6rg6WleZD0zrD1eFxdrHGFoWoGdUvx0Qj/qGZT30O//ufYllBbfEEaOs1cqJoy2NpyO42ADvok8g=
+	t=1787820670; cv=none; b=uh/iHebHXRSYKVhxDQ6cLi8jnk+ycV/PRZk4Yp1DTYUgHGNGDRGkssFHrB3Ltg1yxwJQs5E+t8Bz1lQDz5b3keueEXe7QcXLZnticlD/DD3XBgTFcYQrDEIWPUkdcU5pZJrBGAHOTzEU16sXFKNjLDYIKulnXP3JFvmV06bddXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787818071; c=relaxed/simple;
-	bh=OmI6SkkcPYSYjkgVU0gPuuOLO58LVFJH4UPNHkXXev4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lQT5Vv32dFvaTz8JS+fbrr/8u48bU7Xvnz/upgpJ1ape9Bu+3Kpr/WnrsEjmhCsx7z04jWb6mOgWq1STVMIu9keNfZBiu6+bXIzKzyZGLwfgTKNBHE+3GIBuxwBD9SQe1Mt0KshgPmlmGM0tl1QrBNxyf3ArdkJ7ahb18c/4DFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinsec.com.cn; spf=pass smtp.mailfrom=kylinsec.com.cn; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinsec.com.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinsec.com.cn
-X-QQ-mid: zesmtpgz7t1787818048t73969d49
-X-QQ-Originating-IP: 26/NJi8eHhdKqI2rx/1uAQmiNBDl3cY1AZulyYou38w=
-Received: from [192.168.64.241] ( [111.8.45.130])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 27 Aug 2026 16:07:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14659579519580919907
-Message-ID: <1DEB0773A8C9D6DD+0de3c2e3-2201-4670-a899-5bcc89b35cb5@kylinsec.com.cn>
-Date: Thu, 27 Aug 2026 16:07:23 +0800
+	s=arc-20240116; t=1787820670; c=relaxed/simple;
+	bh=V7f3mO3z8lJ4TwwIBXW3L3UKZCx34uNnG/3o1Yvd7bc=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EnpksAWvbtrLR8JuKMdePHt9XgLHqMDDAIw7E5ENw82EKUkYQ6fAdYZSG+MIadNHmm1Whxn6eiIoqrxnLfu+u3MQHnaiz11Ek5IRSx31bK4uLeWEAfGKjt001tQ6GmocE1N25eWOtP429HKQGuCXDd9FyLLnoutABrYPjK//B7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=JAihs0Ak; arc=none smtp.client-ip=43.163.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="JAihs0Ak"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1787820656; bh=MkVAz+nziKZdCTn6HmvN/NomSd/COxgGaSRyDjl50UA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JAihs0AkYXHVUWlVxhG89wNjalEeGvHFGgfceVWgC5bRNSRDoBQ55GebIh+QHgwLx
+	 9rg5QtjZ/HxBKxr6Ta/GEMbo+7EUeaFw8tYpmOqQK1jsZ/a+amuKcHHQ2t02Nb2m+6
+	 robKvqOrMEQzcpDFtceCjB53vsx4AnB1/LWiay4w=
+Received: from DESKTOP-AT5F202.localdomain ([183.242.244.64])
+	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+	id CB527A6F; Thu, 27 Aug 2026 16:50:53 +0800
+X-QQ-mid: xmsmtpt1787820653tenvsk5pw
+Message-ID: <tencent_DBADB12BBC6D88300488F16E75A384FAE505@qq.com>
+X-QQ-XMAILINFO: ODafEzNm5ExjyRyvYuhEnPZXoeEln5e2S2zBV2pNntpeSDN8DTevB9gCk1ENw7
+	 SjIz5UT8CQkf/6UKM1Vl1MDaTpaxqlMJ08xPhbaZu/e344rxtcy+v9elLQxseJTr0Dvj5+6A5zew
+	 wNDQmSk0mKfktzrG0QoEgvZpcRiVADtWR2LdBBShLvYCI4j2y5pfTptTuN0EX5bF4mElCcEqbZxF
+	 fFaHOcsmBP5j0XCDSee5f4rRRCPwEGXdLdTtTyO/lfpDvXDBRngFt9J67xaxPf5I205Ax0zzp6jJ
+	 i5WhvLSOmMHqGt3qBen1ybCQdGV60WLYinDYBoo89X2SMceAIP1YJFqFsmsVDS753SnoxPIA03+3
+	 9BOHqlouKL4JN6oHdTTsDhOpl2cndZoA/KK984r0+6fPOEzD18tjtq/e9qzbZIi3261JnR+JDZBt
+	 9XQaUHzRW2B2YqvYNKEjOkx6sJVccm7uulCpJVFUPxBVkcbJ0lVi5Nhj46L4qFfWdAIGLAn13wwH
+	 rYU/dLxfcp6Twrw0csjEzVk13j6bU5hjrG5yC2z6/oLo6wu3uU2cGK751qn2OATaNndwFgFlM5ae
+	 2Gzcnj0ijJeqG4JUSqzGEWMpqy1BwxXCFZPEy5qjd3jknfsjL7uGlb3iHQVXskULSkD1EYegM0y6
+	 HH5iE5FC8Dj2cHWS734WxU3hVW9V3IOJsrfOKYOYzZpUeJeV7dEShztsQ4abr5Om4bkJbEsywB1i
+	 G/cz7cCzXxTZ0Xty1RfAxetbL4THRWZrTPLoWvzsiAgRwQtZXwaRtdDiCoLWFfTAeXjVRlr2RLfx
+	 rDVf1+pOgDThfgbdsqJV9scM6n7vsHiKRwSspHvA+PQiBgZIJAiDeLMhK9oPdcgEX+zdy1HniSyB
+	 oLznFPVoqaLrJEYjOJk0aVk+P5Z0Rr7NlzaZ+asVUrwC3G4SWFGRfK3FIS0gGUXl+NVCfM2N351V
+	 wIgBrqEJt97wPWioyAc2/MhgHLMZoFgDaZT4qD/hAW4FrbIngF9B+qHo68+U2XZ4xsUV55z+Pgwp
+	 aHKNZhzU6rsIwtpQ4WcR5Dh5oQb+JeSbcq7Yw1oxopr7WbmFyK
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+Date: Thu, 27 Aug 2026 16:50:52 +0800
+From: shuo chen <1289151713@qq.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
+Subject: Re: [PATCH V3] Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
+X-OQ-MSGID: <ao_6bP7yWpEHM8Bs@DESKTOP-AT5F202.localdomain>
+References: <aoJ4bJZNgNAt4pLD@mit.edu>
+ <tencent_5FCFA1D9100C4691D5AA92A597B846A8F007@qq.com>
+ <20260822164543.96A9F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] rtc: ftrtc010: fix integer overflow in time
- calculation
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
- linux-rtc@vger.kernel.org
-References: <20260827021054.0963C1F000E9@smtp.kernel.org>
- <20260827063019.3342085-1-liudalin@kylinsec.com.cn>
- <B06A3E7BF268E081+20260827063019.3342085-4-liudalin@kylinsec.com.cn>
- <20260827065312.CECC11F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: liudalin <liudalin@kylinsec.com.cn>
-In-Reply-To: <20260827065312.CECC11F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:kylinsec.com.cn:qybglogicsvrgz:qybglogicsvrgz6b-0
-X-QQ-XMAILINFO: MmpliBmRb3iCf/gg9VH2OFmiM+0zxG3gub41txy8rh+FeBWUceTds6+2
-	RyqDvws+tkYNpOi2kVBOzUjNFTr1vnbNN6DWPZO6OHAIs5AmYinmY5v6x7H2uQApdxJpDHS
-	D1D7YhL833LMPfPyLiKO2vXIdZDDib3njLMa9KDQnhKVksY4O6DjCLPCbuQclZG3n3huQY0
-	w5cuOhiij8VuuALFjTa+iuz7anPfNDcL5M9u46i9jMxExGqh3lnkXmKQ546uKizrzt2bf8b
-	ySxYgs2fJplu06b8vEa17YEfK4nE6+zQzY8uKJtdVpEYR77/V0plaodD+UyTuf0HAD5yF3i
-	A/fjHp2dg1IYBBhHDVlWXzWDOnkXrDlUWXNmMzXv5IzR5vI3IAEXymyapIXMkop6j54GwTH
-	92qQezLVjywKkObL2Qy6+WpBusSzWN7FfRnnkgXzPeHBKFWCY1qVnZ6pTP0TELXa/eWFFHN
-	WggXrdrGVt3c+Hc1Q0gsbaKkK47mGif8RRT0LomCBdtXRaYS3CIc6CjguwbJM2P8NnXrK20
-	nE3fPCYqb4iuo6cZbnve99VUK/q0zvQ3zMh4dITzTgPBCsIxuq5wHbHEvwliP98eyCY3Qw1
-	29b6r80biVjuK8BKH03jC+qzF7EvjxPv4TMIoZh2DFQwzkLrM/tLmvWEqfAnJeBApuYyB0v
-	Ac9H/Kyz1c20w0P9IeglTacUkvJ8gbesaKg6twP7CkEU449DsKEbFe8mGevKUQ3jJtbgXZO
-	uBDI8fAi3b92nW4i1q4t3nA9emipHSlrDeM5R+zSchNrWyfkV7Hpg5YMZXacppi18/Vgcpz
-	XhnQc3jf4hRksWx2O57FGdxheC4dSH8U1am2S/qW+t2+TLYPstmWh6S+KvjtIAgQwRQkGJg
-	buwMXLT2oozccW8QG+uRTHMSbEpM0BhtN/kbCSdOMPP0TNX2lTJWT1T3PV38X0yl0qsiSZt
-	8s7i9XKBgJh+wSuxj/sLnZkODR5dAer7YHAbSgKgAs8DsBU7dEBDaOKij1NRkXKC3pygpvQ
-	7pj2QtOtw5PvLXA+e3LomlpPb8Qek=
-X-QQ-XMRINFO: Mp0Kj//9VHAxGvRtF542+ONDzknxnUqv0w==
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20260822164543.96A9F1F00A3A@smtp.kernel.org>
 
-On Thu, 27 Aug 2026, Sashiko AI wrote:
-
- > [Severity: High]
- > Does this transition to 64-bit arithmetic zero-extend negative time
- > offsets? If the offset is negative, casting it directly to timeu64_t
- > breaks the two's complement modulo arithmetic required to correctly
- > decode negative time differences, which could cause the clock to
- > erroneously jump about 136 years into the future.
-
-Thank you for the thorough analysis. This is a valid issue and has been
-fixed in v2.
-
-The original code cast each operand individually to timeu64_t:
-   time = (timeu64_t)offset + (timeu64_t)days * 86400 + ...
-
-When offset is a negative time difference stored as u32 (e.g.,
-0xFFFFFFFE for -2), zero-extension produces 0x00000000FFFFFFFE,
-causing a ~136-year forward jump.
-
-The fix is to perform the addition in 32-bit arithmetic first,
-then cast the result to 64-bit:
-   time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
-
-The u32 addition naturally wraps using two's complement, and the
-final cast to timeu64_t preserves the correct value.
-
-For ftrtc010_rtc_set_time(), no change is needed -- the offset is
-assigned to a u32 variable, which automatically truncates to 32 bits,
-preserving the correct two's complement result.
-
- > [Severity: High]
- > This isn't a bug introduced by this patch, but can these unsynchronized,
- > non-atomic reads of consecutive RTC time registers produce corrupted
- > timestamps?
-
-Please see the response to the same concern on patches 1 and 2. The
-1 Hz tick rate makes this negligible in practice, and the hardware
-provides no latching mechanism. This is outside the scope of this
-patch.
-
- > [Severity: High]
- > This isn't a bug introduced by this patch, but can this sequential read
- > result in computing an improperly desynchronized offset?
-
-Same as above -- outside the scope of this patch.
-
- > [Severity: High]
- > Does this calculation incorrectly wrap offset into a large 32-bit
- > integer? If the target Unix time is numerically smaller than the
- > hardware's internal uptime counters, the difference becomes negative.
-
-The offset variable is u32, which stores the negative difference as
-a two's complement value. When read back in ftrtc010_rtc_read_time(),
-the u32 addition wraps correctly. This is the intended behavior of
-the driver's offset-based timekeeping design.
-
---
-2.43.0
-
-在 2026/8/27 14:53, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Transition to 64-bit arithmetic zero-extends negative time offsets, causing the clock to erroneously jump ~136 years into the future.
->
-> Pre-existing issues:
-> - [High] Unsynchronized, non-atomic reads of consecutive RTC time registers can produce severely corrupted timestamps if a hardware tick and rollover occurs during the read sequence.
+On Sat, Aug 22, 2026 at 04:45:43PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
+> - [Critical] Misordered metadata update causes corrupt directory `i_size` on disk.
+> - [Critical] Unconditional BUG_ON() crash in `ext4_free_blocks()` on error paths for allocations > 1 block.
+> - [High] Permanent block leak when `ext4_ext_insert_extent` fails with an error other than EDQUOT or ENOSPC.
+> - [High] Concurrent inode metadata changes are overwritten during error recovery.
+> - [High] Permanent space leak due to hardcoded extent length of 1 block.
+> - [High] Missing `i_blocks` accounting for newly allocated physical blocks.
+> - [Medium] The commit message describes a completely different change.
 > --
->
-> commit 0451b19111beae8b1f5abde3e58d176d4ad642f2
-> Author: Liu Dalin <liudalin@kylinsec.com.cn>
->
-> rtc: ftrtc010: fix integer overflow in time calculation
->
-> This commit addresses an integer overflow in ftrtc010_rtc_read_time and
-> ftrtc010_rtc_set_time. It casts the 32-bit time variables to timeu64_t before
-> multiplication to ensure 64-bit arithmetic, preventing overflow for dates
-> beyond year 2106.
->
->> diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
->> index 2f610a0fc6e9b..6fff537cad27e 100644
->> --- a/drivers/rtc/rtc-ftrtc010.c
->> +++ b/drivers/rtc/rtc-ftrtc010.c
->> @@ -73,7 +73,8 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
->>   	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
->>   	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
+> 
+> --- Patch [1]: [PATCH V3] Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir ---
+> commit 1cb52ec17c1b86718dd26a2d224b02e260c85e40
+> Author: pipishuo <1289151713@qq.com>
+> Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
+> 
+> The commit message describes adding a state check in ext4_readdir, but the
+> patch refactors ext4_convert_inline_data_nolock and introduces a new block
+> allocation mechanism for inline data conversion.
+> 
+> >     Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
+> >     
+> >     Resend as v3 because I forgot to add the version number
+> 
+> [Severity: Medium]
+> Is the commit message mismatched with the actual code changes? The subject
+> and message describe adding a state check in ext4_readdir, but the patch
+> entirely refactors ext4_convert_inline_data_nolock and introduces a new
+> block allocation mechanism for inline data conversion without mentioning it.
+Got it
+> 
+> > --- a/fs/ext4/inline.c
+> > +++ b/fs/ext4/inline.c
+> [ ... ]
+> > @@ -1079,21 +1080,115 @@ static int ext4_update_inline_dir(handle_t *handle, struct inode *dir,
+> >  	return 0;
+> >  }
+> >  
+> > -static void ext4_restore_inline_data(handle_t *handle, struct inode *inode,
+> > -				     struct ext4_iloc *iloc,
+> > -				     void *buf, int inline_size)
+> > +static int ext4_set_inline_data_block(handle_t *handle, struct inode *inode, ext4_fsblk_t block,
+> > +					unsigned int len, struct buffer_head *bh)
+> >  {
+> [ ... ]
+> > +		struct ext4_extent newex;
+> > +
+> > +		newex.ee_block = cpu_to_le32(0);
+> > +		newex.ee_len = cpu_to_le16(1);
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but can these unsynchronized,
-> non-atomic reads of consecutive RTC time registers produce corrupted
-> timestamps?
->
-> If a hardware tick and rollover occurs during the read sequence:
->
-> ftrtc010_rtc_read_time()
->      sec  = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
->      min  = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
->      ...
->
-> It appears possible to read desynchronized values, which could result in
-> permanent time corruption up to 1 day.
->
->> -	time = offset + days * 86400 + hour * 3600 + min * 60 + sec;
->> +	time = (timeu64_t)offset + (timeu64_t)days * 86400 +
->> +	       (timeu64_t)hour * 3600 + (timeu64_t)min * 60 + sec;
+> Does this permanently leak physical blocks if the allocator returns more
+> than 1 block? When ext4_mb_new_blocks() returns a larger allocation
+> (e.g., due to cluster normalization on bigalloc filesystems), hardcoding
+> the extent length to 1 abandons the extra blocks. Should this use the
+> allocated length (len parameter) instead?
+The excess blocks will be stored in i_prealloc_node, so setting the length
+to 1 is fine.
+> 
+> > +		ext4_ext_store_pblock(&newex, block);
+> > +		path = ext4_ext_insert_extent(handle, inode, path, &newex, 0);
+> 
 > [Severity: High]
-> Does this transition to 64-bit arithmetic zero-extend negative time offsets?
->
-> If the offset is negative, casting it directly to timeu64_t breaks the two's
-> complement modulo arithmetic required to correctly decode negative time
-> differences, which could cause the clock to erroneously jump about 136 years
-> into the future.
->
->> @@ -93,7 +94,8 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
->>   	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
->>   	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+> Does this miss accounting for the newly allocated physical blocks?
+> Manually inserting the extent bypasses the normal ext4_map_blocks()
+> pipeline, meaning ext4_inode_add_physical_space() is never called to
+> increment inode->i_blocks. Could this lead to stat() inconsistencies and
+> fsck failures?
+I don't have a deep understanding of the i_blocks update mechanism, 
+but I still believe that i_blocks should not be updated here.
+> 
+> > +		if (IS_ERR(path)) {
+> > +			error = PTR_ERR(path);
+> > +			if (error == -EDQUOT || error == -ENOSPC) {
+> > +				goto recovery;
+> > +			} else {
+> > +				ext4_forget(handle, 0, inode, bh, block);
+> > +				goto nofree;
+> > +			}
+> > +		} else {
+> > +			ext4_free_ext_path(path);
+> > +		}
+> > +	} else {
+> > +		EXT4_I(inode)->i_data[0] = cpu_to_le32(block);
+> > +	}
+> > +	error = ext4_xattr_ibody_find(inode, &i, &is);
+> > +	if (error)
+> > +		goto recovery;
+> > +	if (!is.s.not_found)
+> > +		error = ext4_xattr_ibody_set(handle, inode, &i, &is);
+> > +recovery:
+> > +	if (error) {
+> > +		ext4_discard_preallocations(inode);
+> > +		ext4_free_blocks(handle, inode, bh, block, len, EXT4_FREE_BLOCKS_FORGET);
+> 
+> [Severity: Critical]
+> Can this trigger a BUG_ON() crash in ext4_free_blocks() on bigalloc
+> filesystems? If the length (len) is greater than 1, calling
+> ext4_free_blocks() with both a valid buffer_head (bh) and the
+> EXT4_FREE_BLOCKS_FORGET flag will unconditionally hit the
+> BUG_ON(count > 1) check inside ext4_free_blocks().
+Got it
+> 
+> > +nofree:
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but can this sequential read
-> result in computing an improperly desynchronized offset?
->
-> If a tick occurs between reads:
->
-> ftrtc010_rtc_set_time()
->      sec = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
->      min = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
->      ...
->
-> It seems this could permanently corrupt the stored RTC offset and skew the
-> time until it is reset.
->
->> -	offset = time - (day * 86400 + hour * 3600 + min * 60 + sec);
->> +	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
->> +			 (timeu64_t)min * 60 + sec);
+> Does the jump to the nofree label earlier permanently leak the allocated
+> blocks if the extent insertion fails with an error other than -EDQUOT or
+> -ENOSPC? Jumping here bypasses the ext4_free_blocks() call during error
+> recovery. Because ext4_forget() only removes the buffer from the journal
+> without freeing the physical blocks in the buddy bitmap, the blocks appear
+> to be permanently leaked.
+Got it
+> 
+> > +		memcpy((void *)raw_inode, inode_buf, inode_size);
+> 
 > [Severity: High]
-> Does this calculation incorrectly wrap offset into a large 32-bit integer?
->
-> If the target Unix time is numerically smaller than the hardware's internal
-> uptime counters, the difference becomes negative. This can happen on offline
-> embedded devices where the initial OS time defaults to 1970-01-01.
->
-> Casting this negative 32-bit offset to timeu64_t zero-extends it instead of
-> allowing the required 32-bit modulo arithmetic. This could lead to a massive
-> forward jump when ftrtc010_rtc_read_time is subsequently called.
->
+> Could this non-atomic memcpy() overwrite concurrent metadata updates?
+> The i_data_sem protects the block mapping, but background flushers or
+> other operations might have updated the inode's timestamps or extended
+> attributes in the raw_inode while we were allocating blocks. Blindly
+> copying back the old inode_buf could silently discard those changes.
+Got it
+> 
+> > +		memcpy(ei->i_data, raw_inode->i_block, EXT4_MIN_INLINE_DATA_SIZE);
+> > +		ext4_clear_inode_flag(inode, EXT4_INODE_EXTENTS);
+> > +	} else {
+> > +		ext4_clear_inode_flag(inode, EXT4_INODE_INLINE_DATA);
+> > +		get_bh(is.iloc.bh);
+> > +		error = ext4_mark_iloc_dirty(handle, inode, &is.iloc);
+> > +		EXT4_I(inode)->i_inline_off = 0;
+> > +		EXT4_I(inode)->i_inline_size = 0;
+> > +		ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+> > +		if (S_ISDIR(inode->i_mode)) {
+> > +			i_size_write(inode, inode->i_sb->s_blocksize);
+> > +			EXT4_I(inode)->i_disksize = inode->i_sb->s_blocksize;
+> > +		}
+> 
+> [Severity: Critical]
+> Does this permanently save a stale directory size to disk?
+> The raw metadata buffer is marked dirty via ext4_mark_iloc_dirty()
+> before the VFS inode size and i_disksize are updated. Since this patch
+> removed the later ext4_mark_inode_dirty() call, is there a risk the
+> updated size fields never make it to the on-disk raw_inode?
+Got it
+> 
+> > +		brelse(bh);
+> > +	}
+> [ ... ]
+> > @@ -1168,24 +1263,28 @@ static int ext4_convert_inline_data_nolock(handle_t *handle,
+> >  						   inode, data_bh);
+> >  	} else {
+> >  		unlock_buffer(data_bh);
+> > -		inode->i_size = inode->i_sb->s_blocksize;
+> > -		i_size_write(inode, inode->i_sb->s_blocksize);
+> > -		EXT4_I(inode)->i_disksize = inode->i_sb->s_blocksize;
+> > -
+> >  		error = ext4_init_dirblock(handle, inode, data_bh,
+> >  			  le32_to_cpu(((struct ext4_dir_entry_2 *)buf)->inode),
+> >  			  buf + EXT4_INLINE_DOTDOT_SIZE,
+> >  			  inline_size - EXT4_INLINE_DOTDOT_SIZE);
+> > -		if (!error)
+> > -			error = ext4_mark_inode_dirty(handle, inode);
+> >  	}
+> > +out_bh:
+> > +	if (error) {
+> > +		int flags = 0;
+> >  
+> > -out_restore:
+> > -	if (error)
+> > -		ext4_restore_inline_data(handle, inode, iloc, buf, inline_size);
+> > +		if (data_bh)
+> > +			flags |= EXT4_FREE_BLOCKS_FORGET;
+> > +		struct ext4_inode_info *ei = EXT4_I(inode);
+> >  
+> > +		down_write(&ei->i_data_sem);
+> > +		ext4_discard_preallocations(inode);
+> > +		ext4_free_blocks(handle, inode, data_bh, newblock, allocated_block, flags);
+> 
+> [Severity: Critical]
+> Similarly, could this also trigger the BUG_ON(count > 1) in
+> ext4_free_blocks() on failure? If allocated_block is greater than 1
+> (e.g., bigalloc) and data_bh is valid, flags will include
+> EXT4_FREE_BLOCKS_FORGET, which crashes when freeing multiple blocks
+> with a provided buffer_head.
+Got it
+I'll fix these issues and send V4.
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/tencent_5FCFA1D9100C4691D5AA92A597B846A8F007@qq.com?part=1
+
