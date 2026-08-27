@@ -1,123 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from forward500d.mail.yandex.net (forward500d.mail.yandex.net [178.154.239.208])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D32346E43;
-	Thu, 27 Aug 2026 04:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A19449362B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 06:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.208
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787806404; cv=none; b=ZSVAgM8kt8BGKSyJS3ljEDnRwrZ9VTkmu8Q/NorQCq512Tq5g/nm7cnUUYs/nlbxaMlMOrV92AFOYpXpdLmGqXPNAwaySZBeYfxjoSFHL2N2SB2oWvTGcYCPIBv3fUBQkQKB5NAdiqUMFF7jcwVRTbSMCgSUOfklN7IMvt7OkVI=
+	t=1787810759; cv=none; b=ttvMAg5csq5/7MdvRkFF+PMTVVRl2bjCszT72oEG8PeejM95OIfPlXP7Jvtrp3ZluxaVrXeNlGvTpXmqNd0B7fitaM2tpuVRvdfvniBI7g8ZgZam1IZypjpTOnGpbrHbJR3Ur6RxMajJ91tPJhotyrBaoOi80v0a9ythWjtt3mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787806404; c=relaxed/simple;
-	bh=gTJqrXUDmPmlOhXdaDmayZiPEvr1bAU//RPSvEs0fak=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VNocGmmAXeNlDiOhfAwmErqlopXKEuNHmlZH7DuWjDQlp5hi8vssk71CG5lHnQjMb+1ctuK+t1oMh0/JouekUZTJW7VPYe9OpS8oZS/eXzLcH12Yw9hWXYwY/yckFiELJnRek8ZyplDE6NgelqUhofp5M2pT2GVw6o78pD4qn0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vnm8mpeR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787810759; c=relaxed/simple;
+	bh=wz0QWMRQKg4OnRErALbmyJggv7TZGILU3iOTa874PG4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S+dlF7Ma+vAQjaBRSBLcX/ZOcr3O9OqZJvSd7Lqn8X6K/8FDO7PpsOvmkHeXPlDzfgGnnM/oBwiivf/BulqvqpJkZp06H9d7eeVY53B/NOEvJzIjcsxVF9rLviIArdlsz6BiBcnBG/VhfpuZC4pb1FCDtE3wkTg3nzk40SXE39M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=o/HY8OQW; arc=none smtp.client-ip=178.154.239.208
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vnm8mpeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A7B1F000E9;
-	Thu, 27 Aug 2026 04:53:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787806403;
-	bh=TNxTJXH87MyrN/p2FhZSULngNC/hfZtET3XVBjM++5w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vnm8mpeR6C3y3Ng1qPUocItKQZdiLqwo5wtco1Lus/v0+K89GEaHo3ROopl7/rCw1
-	 0/UHE+5w36aE4ZgiRWzA0nynd20VBNtHiu660Efi+a/tUCq4RYKngC6Axt34vj76lQ
-	 LXzueOuK3ZM1mtv5DEC4PZfA80VR03ELd7U5t8RlS/alNHUSs5bfYOVzEWaoxz6aCe
-	 J826Ok2Ae7OYJrkADpS4lZBkY0BJn5kW8k4BO7FOjSiey2nHTiW3xGOPN7fWZpx9vP
-	 Ezweo2ub4Kq15GmLMfpRshKYiHqEF7Y+8SbtKau1SsC6veKHVgTRSJhClw007lqw2A
-	 BXSJyM+Tuo2Cg==
-Date: Thu, 27 Aug 2026 04:53:20 +0000
-From: Tzung-Bi Shih <tzungbi@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Triet Hoang <triet.hoang.dev@gmail.com>, linux-watchdog@vger.kernel.org
-Subject: Re: [PATCH 4/8] watchdog: msc313e_wdt: Convert to
- DEFINE_SIMPLE_DEV_PM_OPS()
-Message-ID: <ao_CwKrBhJzA8NHH@google.com>
-References: <20260826060839.203297-1-triet.hoang.dev@gmail.com>
- <20260826060839.203297-5-triet.hoang.dev@gmail.com>
- <20260826062035.7645D1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="o/HY8OQW"
+Received: from mail-nwsmtp-smtp-production-main-58.iva.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-58.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:8b0f:0:640:dbc5:0])
+	by forward500d.mail.yandex.net (postfix) with ESMTPS id EF16C82058;
+	Thu, 27 Aug 2026 08:58:47 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-58.iva.yp-c.yandex.net (smtp) with ESMTPSA id iwWcbN5dBOs0-RnkgyIP2;
+	Thu, 27 Aug 2026 08:58:47 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1787810327; bh=wz0QWMRQKg4OnRErALbmyJggv7TZGILU3iOTa874PG4=;
+	h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+	b=o/HY8OQWL/y8iTv0zE1oq0mZ26p9bYnU9qwCTvp2w67J0ulBeDiuXvxoj4FIJRqFB
+	 8+p9cOOAeleHZLB7QXZKAuePvtoIrZaIdDEsd5q9t17fHedJli2DAdiOv13KkpuLeX
+	 HJRlF8tlsp3wc51PqGfW8jbyaCTc9OQfvWyaUtVU=
+Authentication-Results: mail-nwsmtp-smtp-production-main-58.iva.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+Message-ID: <e6a2025c-6c98-49c7-99da-7219dedc185f@yandex.ru>
+Date: Thu, 27 Aug 2026 08:58:44 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826062035.7645D1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] can: j1939: cancel all pending ECUs on device stop
+To: Oleksij Rempel <o.rempel@pengutronix.de>, sashiko-reviews@lists.linux.dev
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oliver Hartkopp <socketcan@hartkopp.net>
+References: <20260824155406.246942-1-dmantipov@yandex.ru>
+ <20260824160844.4FBFF1F000E9@smtp.kernel.org>
+ <ao5y3Mp5yotE1zOY@pengutronix.de>
+Content-Language: en-US
+From: Dmitry Antipov <dmantipov@yandex.ru>
+In-Reply-To: <ao5y3Mp5yotE1zOY@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 26, 2026 at 06:20:35AM +0000, sashiko-bot@kernel.org wrote:
-> Pre-existing issues:
-> - [High] Missing platform_set_drvdata() or dev_set_drvdata() in the probe function leads to a guaranteed NULL pointer dereference during suspend/resume operations.
-> - [High] The driver accesses hardware registers without ensuring the required clock is enabled, which can lead to a synchronous bus fault.
+On 8/26/26 8:00 AM, Oleksij Rempel wrote:
 
-They are real issues.  Sent [1] for fixing if they are still relevant.
+>> - [High] AB-BA deadlock between `priv->lock` and `hrtimer_cancel()` when stopping the device.
 
-[1] https://lore.kernel.org/linux-watchdog/20260827044700.554333-1-tzungbi@kernel.org
+Will likely resend with an extra quirk, see https://syzkaller.appspot.com/text?tag=Patch&x=14fe5625580000.
 
-> > -static int __maybe_unused msc313e_wdt_suspend(struct device *dev)
-> > +static int msc313e_wdt_suspend(struct device *dev)
-> >  {
-> >  	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this result in a NULL
-> pointer dereference when the system suspends?
-> 
-> The PM core invokes msc313e_wdt_suspend() and passes the platform device as the
-> dev parameter. However, msc313e_wdt_probe() never calls platform_set_drvdata()
-> or dev_set_drvdata() for the platform device:
-> 
-> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_probe() {
->     ...
-> 	watchdog_set_drvdata(&priv->wdev, priv);
-> 
-> 	watchdog_init_timeout(&priv->wdev, timeout, dev);
-> 	watchdog_stop_on_reboot(&priv->wdev);
-> 	watchdog_stop_on_unregister(&priv->wdev);
-> 
-> 	return devm_watchdog_register_device(dev, &priv->wdev);
-> }
-> 
-> Because the driver data is uninitialized, dev_get_drvdata(dev) evaluates to
-> NULL. The callback then computes an offset into this NULL pointer via
-> &priv->wdev and passes it to watchdog_active(), which unconditionally
-> dereferences it via test_bit(WDOG_ACTIVE, &wdd->status), causing a fatal
-> page fault.
-> 
-> The identical NULL pointer dereference logic also executes on the resume path
-> in msc313e_wdt_resume().
+>> - [High] Unconditional cancellation of all ECUs on any socket closure breaks address claiming for the entire CAN interface.
 
-https://lore.kernel.org/linux-watchdog/20260827044700.554333-2-tzungbi@kernel.org
+Sure it breaks address claiming. But, and this is the question for real
+(not like me) CAN experts: if the device is forced to stop, what else we can do?
 
-> [Severity: High]
-> This is also a pre-existing issue, but does this driver access hardware
-> registers without ensuring the required clock is enabled?
-> 
-> The probe function reads from hardware registers without first calling
-> clk_prepare_enable(), which can crash if the clock is disabled by the
-> bootloader:
-> 
-> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_probe() {
->     ...
-> 	/* If the period is non-zero the WDT is running */
-> 	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16))
-> 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
->     ...
-> }
-> 
-> Additionally, because the clock is never enabled in the probe function, when
-> the Common Clock Framework's late_initcall executes, it physically disables
-> the unreferenced clock. If the watchdog is already running at boot time, the
-> watchdog core will periodically call the background ping callback:
-> 
-> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_ping() {
->     ...
-> 	writew(1, priv->base + REG_WDT_CLR);
->     ...
-> }
-> 
-> Writing to these unclocked watchdog registers will trigger a synchronous
-> bus fault.
-
-https://lore.kernel.org/linux-watchdog/20260827044700.554333-3-tzungbi@kernel.org
+Dmitry
