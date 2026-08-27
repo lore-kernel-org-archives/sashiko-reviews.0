@@ -1,161 +1,74 @@
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E26390237
-	for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 23:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0084B368277
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 00:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787787501; cv=none; b=EY6xHeznEyQBnAny7J0u8c10Ob4ac7rLE9diAXvpOXT2RGi3FhLeKRDBIZ5lNSEqB0sDKvgw/FNNeajDoGwxUj8eRLnYXHl+BjEdPbCI9UL1ZN74HZWwtu2biLrkVSGML7JcZT1d8oMBB6QW6tD6enYrMNYVnUQtQzJXGmPxjho=
+	t=1787791313; cv=none; b=tQ4B/98Cju5t7RtKjbX8KgFzno9Y4PQjaELQXNP3aC5hUIXdwEiqJM756r6EB/8ZifzsTMS5TncuIzZYlPxYZYS1Xrlez5pfuhaj8w1opAfTIZPgCmXBB0cobFX2EOMjbSpDkj/feQLz2cjtvpUwCyeMJZ+3qlICtlMY7Th8Cw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787787501; c=relaxed/simple;
-	bh=5tBZ0Lp6Mtupk3SqAudUdIW44a3ph9FaTgWVVua/8yM=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=u6tMb/PKLZLeMmjCsuO2SJ1zLH3RQmKbyQohgNkLAog1b4LYVGusX31SC07Vet4rNI2Gs/z3eXA12LFLsUjy6S7FiYjUHiKRnjGG19cZfYL9Reqb6Wt1hDToaba1a6Ai5ozDSy2FfgsJXEGSEltjEn/gOZx+iYZnWjGC02LtX9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Vb3LghMn; arc=none smtp.client-ip=209.85.214.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1787791313; c=relaxed/simple;
+	bh=Q4mCk+bDxvLmed9HE+r122Jun2S+D6BfTY6PxWJJGGc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SX++KASs9oOOIjiUrl2z57Ty9ZNKTINSv6KSSW0x+m2SoD/MIgnrXqw7T4c3YQQCqHBlflL68MOQW50DLhZ+SYZADfZzQss74Y/TuSe13KBmhkt9V7r8nz37N0X1EhS8GVQLXXUQM234N/YEoICVb0pZMhzJrgi5Q6GJa/XfrQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=2Bd5YG/d; arc=none smtp.client-ip=216.40.44.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Vb3LghMn"
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2d6df0a1e18so23166185ad.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 26 Aug 2026 16:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787787500; x=1788392300; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=HC0L0IhxTSjXe4UbRtdaQNXjymrT4RVRL+ppaVsTI8g=;
-        b=Vb3LghMnh2+AJTHPQmdsd00aTsBqu+krxCvOZIuXxctGF0G6U2uAphZ/+w9mra3Z67
-         LTuAH6HUscjS+X0XJSPuu6iZGmrm+UpLXWk+LKVkn9+sZM7J/N9c/5q8D+yaVZVByAr1
-         u3Wew2HdjUTTZpWGz466Ypp7HWLl0hHq7sYPCGGik/KlJerrt0YLnSnJQ5tNMp9bP1y9
-         ctmyKnCibfqWBMDsaud+/+GOg2G8xFfFUhSNOGZoh3coZGw7CFHDlRu2YkJ99tlcnpyu
-         49FqCeqAJkpC78ZcA12pOqCZInWhVPG2n0BAwr+k8tApaCYGIgMYXAw7AAs48z7gDcdI
-         n9nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787787500; x=1788392300;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HC0L0IhxTSjXe4UbRtdaQNXjymrT4RVRL+ppaVsTI8g=;
-        b=HVp47FPv0N+vsdMmfoPM+DobI9VH25gcQHstQNH509seqNapEdftyBjT18bJsnmZq6
-         Wer9D60nZKFSOrOuL02tKyP5feTAn2J/QSY5ZvqSXh2PmXHBAvlmJ1aUZVOvTjrjFpuU
-         zTiegEnHqfKQ1vbq1RsowjLtOkrT2T5E3oiLygstS55Z6wLmp6M4CI+upkk5F/r/qFYK
-         Kq4osCl1LPHqUSudFsDwoQQtO4fMnQjw8R7LxTgkOh1SKdwtXXIpQi2nWNK7on0YEuJT
-         ixMOSrgrbV8DzdWxeKkR7QMOnLunmPo3cSKUyWCxGafiN0VdiMPd9U4h+2LuwtcDqehn
-         gPtw==
-X-Gm-Message-State: AFuF++kzaUUu3k9a61sLbb0GryiCtW+6VZDGpJ/tmkevtVzg5jF86ycr
-	QzTr4F9t8syCne3Rh1d8IC6AgjYGg/Ubyuj6x/AJV+7BzI9N5Tm9kxaSNVTYsLKvtoCo3WaI1RT
-	TA+EGmkdW7/cajqvCCygXeWJ6D8XGU+89czD/Vv1qgYDTLC6YkrVfWY8oQDhnVaDphZCzykBqg+
-	ZQdmighgsaWxIGrDwXkXga8RQTv8/QJkOS2luk3TcbgxXfCSJi
-X-Received: from plfn17.prod.google.com ([2002:a17:902:e551:b0:2d3:2362:d799])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:f78e:b0:2c9:deec:f564
- with SMTP id d9443c01a7336-2d707c0d370mr139890095ad.13.1787787499444; Wed, 26
- Aug 2026 16:38:19 -0700 (PDT)
-Date: Wed, 26 Aug 2026 16:38:18 -0700
-In-Reply-To: <20260826232224.782021F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="2Bd5YG/d"
+Received: from omf08.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay02.hostedemail.com (Postfix) with ESMTP id 33690120268;
+	Thu, 27 Aug 2026 00:41:47 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf08.hostedemail.com (Postfix) with ESMTPA id 8C9AE20026;
+	Thu, 27 Aug 2026 00:41:45 +0000 (UTC)
+Date: Wed, 26 Aug 2026 20:41:44 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Crystal Wood <crwood@redhat.com>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] tracing/osnoise: Per-cpu mutex and fd detachment
+Message-ID: <20260826204144.73f89699@fedora>
+In-Reply-To: <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
+References: <20260824211544.3984835-1-crwood@redhat.com>
+	<20260824211544.3984835-2-crwood@redhat.com>
+	<20260824213037.F41B11F000E9@smtp.kernel.org>
+	<20260826153132.1333fac6@gandalf.local.home>
+	<588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260826230511.972824-1-seanjc@google.com> <20260826230511.972824-3-seanjc@google.com>
- <20260826232224.782021F000E9@smtp.kernel.org>
-Message-ID: <ao946gGsIkSkEwAs@google.com>
-Subject: Re: [PATCH 02/20] KVM: selftests: Bump the minimum GPA for page
- tables to 0x200000
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
-	Marc Zyngier <maz@kernel.org>, Tianrui Zhao <zhaotianrui@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
-	Huacai Chen <chenhuacai@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: i9mzzaowpwj9rm7rijyb57kw9ano5u13
+X-Rspamd-Server: rspamout02
+X-Rspamd-Queue-Id: 8C9AE20026
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+KbKiQmYmCfx9BIzC5w8LNXUZW+Ypqp64=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=Ev6a+8iRkV2YP1SE7eFYyB2JggOsFEQUP4GAetf/URU=; b=2Bd5YG/dncrfD/Cp8RJdJDHgVl9uIwawmB8ji1trFp5SQQli9fyieNsO89xIP9DKk/p6HnjomTgwnudAlx1P6JQRs6UBt+AnlpCNh/UAkpMv+lAdD8n0/kydpPKm29DzFJtkyt8UceCV3acwf4qp+J4GWnmmBqOjtMcW9KLjME0=
+X-HE-Tag: 1787791305-56214
+X-HE-Meta: U2FsdGVkX18uBUkZr8Z6X4Fit7tQmbPqRGFV0K9AV5bjMnAr7QDMlqRTmJkwTgzeAVGKuTktUZ050tbpazKGe7CZN6PK0yGSlZZRR/b5ErZKv/WMxBk9a4p46TSVno5hI3bn/dKSkW1xsMcREU8cGVPkQB+qBEccsGkvdi6Sgmfq75Hx3C0r204cFvj0mn86n37k6do2SEAw2iLoMqweLS5kS4Qc6VGRpWei2UxgdiQ06gWZdHS3q/GSamsKrewYK4JXc7Ve/SBC8x0NVHZHRAypxP9kMiGiQmPj4oDxgU5+EcVXlz+2ISVoLqfSWSVTqnMHDsBWtkgyXLTj+WMdSd4k2LRlIraF
 
-+LoongArch folks (question below for you)
+On Wed, 26 Aug 2026 16:19:29 -0500
+Crystal Wood <crwood@redhat.com> wrote:
 
-On Wed, Aug 26, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/tes=
-ting/selftests/kvm/include/kvm_util.h
-> > index 5a7a455b53875..70906a0d1003c 100644
-> > --- a/tools/testing/selftests/kvm/include/kvm_util.h
-> > +++ b/tools/testing/selftests/kvm/include/kvm_util.h
-> > @@ -175,7 +175,7 @@ static inline struct userspace_mem_region *vm_get_m=
-em_region(struct kvm_vm *vm,
-> > =20
-> >  /* Minimum allocated guest virtual and physical addresses */
-> >  #define KVM_UTIL_MIN_VADDR		0x2000
-> > -#define KVM_GUEST_PAGE_TABLE_MIN_PADDR	0x180000
-> > +#define KVM_GUEST_PAGE_TABLE_MIN_PADDR	0x200000
->=20
-> [Severity: High]
-> Does bumping the minimum GPA to 0x200000 cause the guest page tables to o=
-verlap
-> with the VGIC redistributor on ARM64?
+> > 
+> > It has some tests I ran along with tracing that detected issues. Of course,
+> > everything needs to be run with lockdep enabled too.  
+> 
+> I did run with lockdep (and some custom hacky state tracking) but
+> forcing migration is a hole in my test coverage.
+> 
+> Is there a particular test you're suggesting?
 
-This is definitely a Marc/Oliver question.  FWIW, I didn't see failures on =
-arm64,
-but I also have no idea if the hardware I was using supports the v3 tests, =
-so
-it's entirely possible this is a real and obvious problem.
+I think I mostly did:
 
-> In tools/testing/selftests/kvm/arm64/vgic_init.c:subtest_v3_redist_region=
-s(),
-> the redistributor is hardcoded to be placed at the same address:
->=20
->     addr =3D REDIST_REGION_ATTR_ADDR(2, 0x200000, 0, 0);
->     kvm_device_attr_set(v->gic_fd, KVM_DEV_ARM_VGIC_GRP_ADDR,
->                         KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION, &addr);
->=20
-> Because KVM maps the redistributor over memory, wouldn't the hardware MMU=
-'s
-> stage-1 page table walk attempt to read page table entries from an emulat=
-ed IO
-> region?
->=20
-> This seems like it would cause a stage-2 fault that KVM cannot handle for=
- a
-> stage-1 page table walk, leading to an infinite exception loop.
->=20
-> Additionally, does starting allocations at 0x200000 severely reduce the
-> available memory in memslot 0?
->=20
-> In tools/testing/selftests/kvm/lib/kvm_util.c:vm_nr_pages_required(), mem=
-slot 0
-> is sized to be just slightly larger than 2MB:
->=20
->     nr_pages =3D 512;
->    =20
->     /* Account for the per-vCPU stacks on behalf of the test. */
->     nr_pages +=3D nr_runnable_vcpus * DEFAULT_STACK_PGS;
+  $ while true; do rtla timerlat top -u -q & PID=$!; sleep 5;
 
-Ugh, right, because this doesn't change the base of the memslot.
+or variations of it. IIRC, that would cause a lockdep splat here or
+there.
 
-Why does LoongArch use 0x200000 instead of 0x180000 as the base?  I switche=
-d the
-common macro purely because I thought it would be the path of least resista=
-nce,
-but maybe "fixing" LoongArch to use KVM_GUEST_PAGE_TABLE_MIN_PADDR is easie=
-r?
-
-> It seems like this leaves only a few pages for page tables. If a test has
-> multiple vCPUs, wouldn't it exhaust this tiny pool and trigger the abort =
-in
-> tools/testing/selftests/kvm/lib/kvm_util.c:____vm_phy_pages_alloc()?
->=20
->     enomem:
->         fprintf(stderr, "No guest physical page available, min_gpa: 0x%lx=
- "
->                 "page_size: 0x%x memslot: %u\n",
->                 min_gpa, vm->page_size, memslot);
->         fputs("---- vm dump ----\n", stderr);
->         vm_dump(stderr, vm, 2);
->         abort();
->=20
-> > =20
-> >  #define DEFAULT_GUEST_STACK_VADDR_MIN	0xab6000
-> >  #define DEFAULT_STACK_PGS		5
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260826230511.97=
-2824-1-seanjc@google.com?part=3D2
+-- Steve
