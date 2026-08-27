@@ -1,148 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E574503EC;
-	Thu, 27 Aug 2026 17:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9154477F5
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 18:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787850189; cv=none; b=fmHvN8NNRSlbkJTYlyC//fTMDEgK6NrM/c4/xGv2JWuewoRYqxTEFwf/Ry1VO0xRn2z0HBZ+PRP6WNgKPell6fPRJqoXdwfwmrRh3vmRNtZxudiaf+lIlmN+JeP8E2/3vvdwpSD2I/dW9Y6sd96GxOKfnheeWxvrqgPI4irayz8=
+	t=1787854470; cv=none; b=Y+F5WSj1WQm0xI2SgKP5VijnobJgojSWF8pQ/6Ulz87J7Uu5d/bfv9zmLmjZD6Smyn9H0n7oIBCvG20ZtE3zlqJDvaAkf5BWEHEJSDWE+0AbwrN6AtmtISWDW4xS6m7tyKqwK8x5S1XOc4VZx2Fbl2Uk1DcsuQYPC0Y6VC+e/zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787850189; c=relaxed/simple;
-	bh=YfVyNI9c9azuVieacpxUOb6yNvbNo1dV0E31hl56n/8=;
+	s=arc-20240116; t=1787854470; c=relaxed/simple;
+	bh=nqFcIRWHO1gbZDISpCn+623PYl+5K+bwxrZWcbI+yHw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XFeZ86Ck56TSE9mitkXJq+SOElL0jGDEt2st6tsNfICdFMTJAm+D6an9mwnIAREfFwm5xUlqMR2l3vyi2Vsic3hKJ8tZ7y0ADrM2041SPzivWt7HiN1amLZnopil08rfDeKUUED+zY482pIdQOWONY8PgyjRccHid/IWLCziTEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sxz6S1N4; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=APw7xtAIFgbW+vqseDxGLcGHfg9IDViPdRfhOJOVdLYwpMn2h6/VOCmnXx2U6ngNoBk/22lga8XED0j+/sGvwv/P0Nm05ekKZP4uitpNUKndPA1NiqNSl/QGCdy6hAHax+beE4kUrw7rzcq3gUfQP7aPpIZX8yJGf87kuHgfRqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5MOZoK1; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sxz6S1N4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1BF1F000E9;
-	Thu, 27 Aug 2026 17:03:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787850185;
-	bh=zKmwoEwzdTZwEdpvUj5AMclNii4LDqHyo+svB88BdpA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Sxz6S1N4JOc3d5vGHNPprv4A/0VWeWwYco1y4dh8YodMwPyZ3y/ESJnqHFUzuXpbt
-	 Yrzr7SAbkhn/0+UQ8xLpU8LwNCYXMoUZujn7TNotc/x8kG/5VxVx8109QXZckfm1LP
-	 39qf7EgYMi43CJEJEo1tMaJDQ07LClFNW6Wtswk0lDnyhgTaMT8rGlnHfHHYjUEFi1
-	 QzlmdZFksZMp3wjDzibT6WrfNqkBHXVD//NoBX+jJqdjz4q1iN6JBhVtD4WFTHKNas
-	 jELAX1y1JKOT8Y9gxVW/FbZjffKEBeRtOOE9eNt1x5B0Be4KEN4PyWfurgCiGit4g3
-	 D+sr4VM60qr3g==
-Date: Thu, 27 Aug 2026 18:03:01 +0100
-From: Lee Jones <lee@kernel.org>
-To: Stefan Wahren <wahrenst@gmx.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	Jonas Rebmann <jre@pengutronix.de>
-Subject: Re: [PATCH V4] leds: rgb: leds-group-multicolor: Implement
- default-intensity
-Message-ID: <20260827170301.GI2943942@google.com>
-References: <20260813091428.9072-1-wahrenst@gmx.net>
- <20260813092522.0228D1F00A3A@smtp.kernel.org>
- <20260813095330.GZ1072730@google.com>
- <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5MOZoK1"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-47f71156e1aso55241f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 11:14:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787854467; x=1788459267; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=C5ubgqku7GUa3LZMLWFNhgKYbrJvkm44caMPa+3aLQo=;
+        b=h5MOZoK14ZWXFVth0/mPi7jLth92N4Kx0S33QWlinjZVVrfaN7wPgRW86WE0NMg1X9
+         lr+Hf/NB9lqfZ+EFkF82v58ZbbWbpbsdl/Ii5iIEd1APNoLdxkhpiA1X9Ged5gXwUIzq
+         oaqvtWaRTsw85uZbDb9uIwFOuZyKAoWLsHNgzhTXaOHY8hj6rmvhylc1bByyN7WaIXtZ
+         eZuSSQQ0l2NxGpE19/UJmfXxdSQFRslMGPmAssWLipPOkLKorqgPGRobWOumXVTxImLj
+         AUhALGeXVYxKT+aCAvq01+DLNLarwm84b62rAbie65QxM8cO+oQHL+naxS4Otrt1ER5H
+         ejFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787854467; x=1788459267;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=C5ubgqku7GUa3LZMLWFNhgKYbrJvkm44caMPa+3aLQo=;
+        b=FHt+bU6aQ/1/yUvNAMzM4mZrNpXYvhZv6nkpdN1JyKDkZXe7zhfh5mhOQ3KS6wQSq8
+         YVf7TR5iZhVZf42ujJ5oFmm6xBxBBvFNuKUDf4xtvm5chX1TivtdU8OEbo7UnJboT6yX
+         JjA6R5xeNtFZ28zJdKtktsEZjI3MnpBDX7Gl/vA/v21TvTgsGGm0jUkEB0qG+/BjUxCd
+         nSlhVDKmhjo1QshaM59GqRg3McSREMEsY65jOTyArDlqWXBZyU3zL5w0RGUrg18AiOFv
+         UFpgoC6zTx6Bd0F9CeXeKtFH5l0OvkFBPfc9BqPOxpnXHmZWp1LWqN6UpJuo8syvp06s
+         frxA==
+X-Gm-Message-State: AFuF++nWlRY1QK8EaAO4lHD59V2ahReWv+MDen9YaXFSeSfdLIZ2fq6r
+	P35eHgxoEk2mb+LZl/hKU/b9WQxvTtXf5Gv3bEJeU/U/DesEBnbhyTXcdFxTcw==
+X-Gm-Gg: AR+sD10Cre4Jl6hEK0zURw9omtreT529VT01Xdbxa4CD45j8B2c+efKVRdC3+wr/Rs8
+	vcAXeBQxc39gxmdfaifg/+eILQydsfYtNbbne0sHrGDOb9WOVrrv/HrIujwtFtaFJ40Nt9SLaBZ
+	z8C+hrXwOR4d7mBuedRd7CxQmYmTMMfNVQAqgMNjBe3621XJIKOMRJWtxtf1hUtufzyCE3eVRRt
+	rOye7UzT10KNEO1sKAW/tKgV+TKAKS9omXkgf03CPjhF26OMq8wNiJwozgFZM/dm/y8KjKA0/pI
+	nEwGHxnXg91Vvu+20SpH9DMXK0juHNpwKO4XrDkJlfCxWmLxnRxdpOayP5/G6HarglPNHecLm/H
+	KwWjVFbGMvBoQ2UQdt9wiJ5i9Jyo0hh4ZXe2E3gLRN3a3YUc8hRASv7UW9KwqBTo97rbG/yCjv8
+	wJZgXlgV6Wbh0Zn8MHIVJv1Kh2181NNYY9iK1f81jHMcDNVebu+3L75pJCPKN/oCMHKEOQmP4CG
+	pDsejl7C8sh6whO2RCrGNGtSZiaxtL8L8iIvBYV6vuY4yME7Lk+Uxe6vUxJYNQT69iAMlgh
+X-Received: by 2002:a05:6000:4211:b0:482:f530:c45b with SMTP id ffacd0b85a97d-482f798a6c1mr970197f8f.5.1787854466843;
+        Thu, 27 Aug 2026 11:14:26 -0700 (PDT)
+Received: from GLaDOS.station (net-93-144-65-248.cust.dsl.teletu.it. [93.144.65.248])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482e28dc13fsm10426102f8f.24.2026.08.27.11.14.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Aug 2026 11:14:26 -0700 (PDT)
+Date: Thu, 27 Aug 2026 20:14:24 +0200
+From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+	imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH v6 2/3] ARM: dts: imx7d: add Variscite VAR-SOM-MX7 support
+Message-ID: <apB-gMzH2cQNtv_Z@GLaDOS.station>
+References: <cover.1787851637.git.stefano.r@variscite.com>
+ <11592f9d727337fedf02fdb107a24e935f3ebce4.1787851637.git.stefano.r@variscite.com>
+ <20260827174206.8A4B61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
+In-Reply-To: <20260827174206.8A4B61F000E9@smtp.kernel.org>
 
-On Thu, 13 Aug 2026, Stefan Wahren wrote:
-
-> Hi,
+On Thu, Aug 27, 2026 at 05:42:06PM +0000, sashiko-bot@kernel.org wrote:
+> [ ... ]
 > 
-> Am 13.08.26 um 11:53 schrieb Lee Jones:
-> > On Thu, 13 Aug 2026, sashiko-bot@kernel.org wrote:
-> > 
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [Medium] The `default-intensity` property read from individual monochromatic LED nodes is applied to the multicolor group without rescaling, causing incorrect brightness calculations.
-> > Please review, explain or fix the Sashiko review(s).
-> > 
-> > If this is a set, this request includes the other patches too.
-> Sorry, I don't get the problem with "incorrect brightness calculation", I
-> tought the intensity setting is independent from the brightness. Btw the
-> intensity is applied to the monochromatic LED not to the group itself.
-> hallucination?
+> > +&i2c2 {
+> > +	wm8731: audio-codec@1a {
+> > +		compatible = "wlf,wm8731";
+> > +		reg = <0x1a>;
+> > +		#sound-dai-cells = <0>;
+> > +		AVDD-supply = <&vgen6_reg>;
+> > +		DBVDD-supply = <&vgen6_reg>;
+> > +		DCVDD-supply = <&vgen6_reg>;
+> > +		HPVDD-supply = <&vgen6_reg>;
+> > +		clocks = <&clks IMX7D_AUDIO_MCLK_ROOT_DIV>;
+> > +		clock-names = "mclk";
 > 
-> Does mixing PWM and GPIO LED in a RGB multicolor group make sense at all?
-
-I asked my little helper for you:
-
-<gemini>
-
-While mixing a GPIO LED (essentially binary) and a PWM LED in a single
-multicolor group is technically possible, it is indeed highly unusual and
-unlikely to produce a desirable colour-mixing effect in practice.
-
-Regarding the Sashiko review, there is a valid point hidden in the noise.
-The multicolor framework uses 'subled[i].intensity' as a relative ratio
-against the overall group's 'max_brightness'. If a sub-LED's native
-intensity scale differs from the group's scale, assigning the raw value
-from the 'default-intensity' property directly without scaling it could
-lead to unexpected dimness or brightness. Should we look into whether we
-need to normalise this value against 'max_brightness' to maintain
-consistency?
-
-</gemini>
-
-Hope it helps.
-
-> > 
-> > > --
-> > > 
-> > > --- Patch [1]: [PATCH V4] leds: rgb: leds-group-multicolor: Implement default-intensity ---
-> > > commit 13399f1aaceaf09afa7e252e35000d7d61ab1925
-> > > Author: Stefan Wahren <wahrenst@gmx.net>
-> > > 
-> > > leds: rgb: leds-group-multicolor: Implement default-intensity
-> > > 
-> > > This commit introduces support for the default-intensity property during
-> > > boot for LED multicolor groups. If the property is missing, the code falls
-> > > back to the previous behavior of configuring the sub-LED intensity to its
-> > > maximum.
-> > > 
-> > > > diff --git a/drivers/leds/rgb/leds-group-multicolor.c b/drivers/leds/rgb/leds-group-multicolor.c
-> > > > --- a/drivers/leds/rgb/leds-group-multicolor.c
-> > > > +++ b/drivers/leds/rgb/leds-group-multicolor.c
-> > > > @@ -108,8 +108,10 @@ static int leds_gmc_probe(struct platform_device *pdev)
-> > > >   		subled[i].color_index = led_cdev->color;
-> > > > -		/* Configure the LED intensity to its maximum */
-> > > > -		subled[i].intensity = max_brightness;
-> > > > +		ret = device_property_read_u32(led_cdev->dev, "default-intensity",
+> [ ... ]
 > 
-> Should we verify if 'led_cdev->dev' is the correct device to query here?
-> Normally, 'led_cdev->dev' is the class device and might not have the fwnode
-> associated directly in the same way as the underlying platform or fwnode
-> device. Would using 'led_cdev->dev->parent' or querying the fwnode directly
-> be safer?
+> > +&sai1 {
+> > +	assigned-clock-rates = <0>, <36864000>;
+> > +	/delete-property/ fsl,sai-mclk-direction-output;
+> > +};
 > 
-> > > > +					       &subled[i].intensity);
-> > > > +		if (ret || subled[i].intensity > max_brightness)
-> > > > +			subled[i].intensity = max_brightness;
-> > > [Severity: Medium]
-> > > Does this logic properly scale the intensity when the individual LEDs in the
-> > > group have different maximum brightness values?
-> > > 
-> > > If a multicolor group consists of LEDs with vastly different maximum brightness
-> > > capabilities (like a GPIO LED maxing at 1 and a PWM LED maxing at 255), the
-> > > overall group max_brightness will evaluate to 255.
-> > > 
-> > > When reading the default-intensity from the device tree, the value is typically
-> > > specified on the scale of the individual sub-LED's max brightness. If this
-> > > value is assigned directly to subled[i].intensity without being scaled up to
-> > > the group's max_brightness, the sub-LED might be initialized with only a tiny
-> > > fraction of its intended intensity, often resulting in the LED being completely
-> > > unlit instead of at the requested intensity.
-> > > 
-> > > >   	}
-> > > >   	/* Initialise the multicolor's LED class device */
-> > > -- 
-> > > Sashiko AI review · https://sashiko.dev/#/patchset/20260813091428.9072-1-wahrenst@gmx.net?part=1
+> [Severity: High]
+> Does removing the 'fsl,sai-mclk-direction-output' property break the master
+> clock for the WM8731 codec?
 > 
+> The wm8731 node configures the codec to expect an internal SoC master clock
+> by setting clocks = <&clks IMX7D_AUDIO_MCLK_ROOT_DIV>.
+> 
+> By deleting the 'fsl,sai-mclk-direction-output' property from the sai1
+> node, the SAI1_MCLK pad is configured as an input instead of driving the
+> clock out to the codec.
+> 
+> Will this prevent the WM8731 codec from functioning on this board variant
+> because it never receives a clock?
 > 
 
--- 
-Lee Jones
+The WM8731 MCLK is provided by the configured audio clock root and this
+setup has been validated on hardware.
+Removing fsl,sai-mclk-direction-output is intentional for this board
+variant.
+
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> > new file mode 100644
+> > index 0000000000000..158158afc3391
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx7d-var-som.dtsi
+> 
+> [ ... ]
+> 
+> > +&iomuxc {
+> > +	/* GPIO Used in User Space init script */
+> > +	pinctrl_bt: btgrp {
+> > +		fsl,pins = <
+> > +			MX7D_PAD_GPIO1_IO14__GPIO1_IO14			0x80000000
+> > +		>;
+> > +	};
+> 
+> [Severity: Medium]
+> Are these Bluetooth power sequences improperly delegated to user-space
+> scripts instead of kernel device drivers?
+> 
+> The pinctrl_bt node defines the BT_REG_ON (GPIO1_IO14) pin strictly as a
+> pinctrl definition with no corresponding power sequencer or regulator
+> binding.
+> 
+> Since the comment explicitly notes it is used in a user space init script,
+> will this prevent the kernel from autonomously enumerating the UART Bluetooth
+> device during boot?
+> 
+> [ ... ]
+> 
+> > +&iomuxc_lpsr {
+> 
+> [ ... ]
+> 
+> > +	/* GPIO Used in User Space init script */
+> > +	pinctrl_wlan: wlangrp {
+> > +		fsl,pins = <
+> > +			MX7D_PAD_LPSR_GPIO1_IO04__GPIO1_IO4		0x09
+> > +		>;
+> > +	};
+> 
+> [Severity: Medium]
+> Is this Wi-Fi power sequence improperly delegated to user-space scripts
+> instead of an MMC power sequence?
+> 
+> The pinctrl_wlan node defines the WL_REG_ON (GPIO1_IO4) pin strictly as a
+> pinctrl definition without a corresponding power sequencer or regulator
+> binding.
+> 
+> Will this prevent the kernel from autonomously enumerating the SDIO Wi-Fi
+> device during boot?
+> 
+
+Both Bluetooth and Wi-Fi are intentionally handled in userspace,
+as on our other platforms
+
+Stefano
