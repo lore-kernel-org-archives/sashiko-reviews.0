@@ -1,257 +1,160 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82761221546
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7533CB8F1
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787841647; cv=none; b=m5ol4yUKG2VZTdU3kmpZzS+9CTa1bx5zHalSWwfQMq9dFTybhKjjw5Bq+Z9sSqSjIk3S3Ht42BVoGJBdGyuSk0tvERKJ/XjxAzmhozt/iKLEb3RXMHkpojK5M/HHbcLMfHg/S7FmRR5EreBoXKpMJx/BdzBSZtKMu6cjaG7Rva4=
+	t=1787841842; cv=none; b=apHobFatwnbxHvVJfSoNQHTTXts4/FzW24ryz/SONt7oPyVvuR/hncTY/mLTXhahN2g/ctVtMSK5wnB+X/ndqBO2oGBsTf5s2vwpSvVvJwtQlEJ+Xa7Hn+UGHWUELd65dnW28H/A4LcsXrH1+959apa1mnmNFgy+M8dgTt5+w78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787841647; c=relaxed/simple;
-	bh=oW9+Z3bl0AXqHUyYvNsiQM1udMzOWiuqPs3j+lxniqI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lbRUt+zQnRJl9ayMO+IdUUbc2+tAtXtx3EVr3OhU9xVD6mjRsiuFoCNYnsy+ZnxtskuKZOWmeJl38zVNVO6xSnnZT2cV+HPAXrjPGnp89323p4bcqdNCzzSDWhQmDg19MYy3UFWNn8STBmakXy5JT91eYOCrkm5vzCcAnbi+k3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=xBEIQA3x; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=mIX4BbA3; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=AGZsoRoE; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=GxRUaVBp; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="xBEIQA3x";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="mIX4BbA3";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="AGZsoRoE";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="GxRUaVBp"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 1AD821FB32;
-	Thu, 27 Aug 2026 14:40:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787841633; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=9NhmnwAY3zQtddsW+n18+q9WpvJ+kUU3nXAO3crVuNQ=;
-	b=xBEIQA3xRu783NZ5z651ZEYQcYzoKh9XbPfSg1Zx83P9DponKnycrbX7LMTnopHA6h482t
-	G+/arDx7pFdyXL4y+lqKYC8b1DKHctPuY+sw9SW6KtAkKxBEZHLKXDPikB+pMZ7qSN9vA8
-	k36s6jYG2m4VZB6QWVM3G53kO4m8uRs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787841633;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=9NhmnwAY3zQtddsW+n18+q9WpvJ+kUU3nXAO3crVuNQ=;
-	b=mIX4BbA3kPPwAsq6KinCd1opMoTs7AqkkyzCTVT63pH9GviQ4VAKyerFjTpsd2VeJ2mDW0
-	paujlBWkKcaxUHAg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AGZsoRoE;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GxRUaVBp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787841629; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=9NhmnwAY3zQtddsW+n18+q9WpvJ+kUU3nXAO3crVuNQ=;
-	b=AGZsoRoEL/XwFjMfR6C+sFBB9UP7cJf+tiuBafaRMG3HO494gEkVzRafPqfaGc4BYHSbX6
-	MXcIAHHwW0XOCmxN7oyOn09BQKTIDsXZvCnm1XZG7stpgFDGa2DkhRNQ8qfeS5+xdrwmeq
-	6jE/hKVJw861kQ1WatSwVy/wyvL9b/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787841629;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=9NhmnwAY3zQtddsW+n18+q9WpvJ+kUU3nXAO3crVuNQ=;
-	b=GxRUaVBpdiQpmtDuj8SMabAzbgK/+b12NVtsDJrHuGauO2YJDbrvF3EvxthcK6IGeNDfIY
-	UjubrMAlLNztqNAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 037191352C;
-	Thu, 27 Aug 2026 14:40:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id uFI9O1xMkGpXNgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 27 Aug 2026 14:40:28 +0000
-Message-ID: <b336b262-4662-44f7-b1b7-db3b42f6d7e0@suse.de>
-Date: Thu, 27 Aug 2026 16:40:28 +0200
+	s=arc-20240116; t=1787841842; c=relaxed/simple;
+	bh=2yMOlEQj7jAQnVYrnxq92q5cPb+VkABylohPsNFpaTw=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=aS8XbY3INetpbYZasX1mr4lv9sEbI+ZREC418Pc94wlWAx2Njxl1lXMQLAQj79/Vwc+JO+MNfU/HJBgwjuuHlHA6VvhspaqrGxmxqLg2ZloqXYPxU90QU9r0RX/Gi4bsz0yp8bJ889O7j8w+vk9AV7veEtA9qPQ+1T8lrIllTkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hW45831P8zYQv2l
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 22:43:24 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 5F49E40678
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 22:43:55 +0800 (CST)
+Received: from [10.174.176.103] (unknown [10.174.176.103])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCXhUQoTZBqI_p3Dw--.9575S2;
+	Thu, 27 Aug 2026 22:43:55 +0800 (CST)
+Subject: Re: [PATCH bpf v2] bpf: Fix UAF due to concurrent consumption of
+ waiting_for_gp_ttrace
+To: Pu Lehui <pulehui@huaweicloud.com>, sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260827084013.1062816-1-pulehui@huaweicloud.com>
+ <20260827084756.EC4271F000E9@smtp.kernel.org>
+ <f17ac4ba-3276-4fef-b9e5-5423956b68fa@huaweicloud.com>
+From: Hou Tao <houtao@huaweicloud.com>
+Message-ID: <9e28e21e-9e84-0104-40b2-490735b3451c@huaweicloud.com>
+Date: Thu, 27 Aug 2026 22:43:52 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] drm/edid: Add drm_edid_get_preferred_size()
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260827140726.420734-1-tzimmermann@suse.de>
- <20260827140726.420734-2-tzimmermann@suse.de>
- <20260827141954.2AC011F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260827141954.2AC011F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <f17ac4ba-3276-4fef-b9e5-5423956b68fa@huaweicloud.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Score: -4.51
-X-Rspamd-Queue-Id: 1AD821FB32
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
+Content-Language: en-US
+X-CM-TRANSID:_Ch0CgCXhUQoTZBqI_p3Dw--.9575S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxGr48GrWxXw1fKw15Wr4UArb_yoWrGry3pF
+	Z5XFyUArZ8AFZakrnFqw48GryfAw4Iq345GayUXFySkry3Aw1jgr4jqrWj9F9xAr4kCa47
+	trn093s7Zr1UZaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUkG14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvEwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7I2V7IY0VAS07AlzVAY
+	IcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
+	v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkG
+	c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
+	MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUdEfOUUU
+	UU=
+X-CM-SenderInfo: xkrx3t3r6k3tpzhluzxrxghudrp/
 
+Hi,
 
-
-Am 27.08.26 um 16:19 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Pointer Dereference and Logic Error in drm_edid_get_preferred_size
-
-This is just a pretty stupid typo. Will be fixed.
-
-> - [High] Missing EDID Hardware Validation for Detailed Timing Descriptor
-
-Will also be fixed.
-
-
-> --
+On 8/27/2026 7:45 PM, Pu Lehui wrote:
 >
-> commit 2d529ec582fce7d82757afd45c986da44f50ceb6
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
-> Subject: drm/edid: Add drm_edid_get_preferred_size()
+> On 2026/8/27 16:47, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential
+>> issue(s) to consider:
+>>
+>> Pre-existing issues:
+>> - [High] The patch fixes concurrent consumption for
+>> `waiting_for_gp_ttrace` but incorrectly claims `free_by_rcu_ttrace`
+>> is safe. A race condition during cache destruction leads to a
+>> Use-After-Free on `free_by_rcu_ttrace`.
+>> -- 
+>>
+>> commit ed5f43858e59ce799a585eeedfe466c5543df6aa
+>> Author: Pu Lehui <pulehui@huawei.com>
+>> Subject: bpf: Fix UAF due to concurrent consumption of
+>> waiting_for_gp_ttrace
+>>
+>> This commit fixes a use-after-free caused by concurrent consumption of
+>> waiting_for_gp_ttrace nodes by alloc_bulk() and __free_rcu(). It
+>> introduces
+>> a raw spinlock to synchronize operations on this list.
+>>
+>> The commit message notes:
+>>> Note that free_by_rcu_ttrace does not suffer from this issue as it only
+>>> has a single active consumer during normal operation.
+>>
+>>> diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+>>> index e9662db7198fe..58296e92a4fed 100644
+>>> --- a/kernel/bpf/memalloc.c
+>>> +++ b/kernel/bpf/memalloc.c
+>> [ ... ]
+>>> @@ -297,6 +307,7 @@ static void enque_to_free(struct bpf_mem_cache
+>>> *c, void *obj)
+>>>   static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
+>>>   {
+>>>       struct llist_node *llnode, *t;
+>>> +    unsigned long flags;
+>>>         if (atomic_xchg(&c->call_rcu_ttrace_in_progress, 1)) {
+>>>           if (unlikely(READ_ONCE(c->draining))) {
+>>>               llnode = llist_del_all(&c->free_by_rcu_ttrace);
+>>>               free_all(c, llnode, !!c->percpu_size);
+>>>           }
+>>
+>> [Severity: High]
+>> This is a pre-existing issue, but does free_by_rcu_ttrace actually
+>> suffer
+>> from a similar race condition during cache destruction?
+>>
+>> If userspace triggers destruction of a BPF memory allocator via
+>> bpf_mem_alloc_destroy(), CPU 0 sets c->draining = true and synchronizes
+>> the irq_work:
+>>
+>> CPU 0: bpf_mem_alloc_destroy()
+>>      WRITE_ONCE(c->draining, true);
+>>      irq_work_sync(&c->refill_work);
+>>
+>> Meanwhile, CPU 1 could be executing alloc_bulk() inside the refill work,
+>> consuming from free_by_rcu_ttrace:
+>>
+>> CPU 1: alloc_bulk()
+>>      obj = llist_del_first(&c->free_by_rcu_ttrace);
+>>
+>> If CPU 1 reads the head pointer in llist_del_first() but is delayed
+>> before
+>> READ_ONCE(entry->next), and concurrently an RCU callback on CPU 2 calls
+>> do_call_rcu_ttrace(), CPU 2 will observe draining == true here and
+>> immediately free the nodes.
+>>
+>> When CPU 1 resumes and executes READ_ONCE(entry->next), won't this
+>> result
+>> in a use-after-free on the node that was just freed to the slab
+>> allocator?
 >
-> This commit adds drm_edid_get_preferred_size() to extract the panel's
-> preferred display resolution from a given EDID. This is required for
-> DRM's panel orientation quirks.
->
->> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
->> index df3c25bac761d..650ccd05977be 100644
->> --- a/drivers/gpu/drm/drm_edid.c
->> +++ b/drivers/gpu/drm/drm_edid.c
-> [ ... ]
->
->> @@ -2844,6 +2844,46 @@ u32 drm_edid_get_panel_id(const struct drm_edid *drm_edid)
->>   }
->>   EXPORT_SYMBOL(drm_edid_get_panel_id);
->>   
->> +/**
->> + * drm_edid_get_preferred_size - Get a panel's preferred size from EDID
->> + * @drm_edid: EDID that contains panel ID.
->> + * @width: Returns the panel's width in pixels per scanline, if given
->> + * @height: Returns the panel's height in scanlines, if given
->> + *
->> + * This function detects the preferred size of a panel from the given
->> + * EDID. There is no such information stored in the EDID block directly,
->> + * but the preferred mode often corresponds to the panel's native geometry.
->> + *
->> + * Return: Zero on success, or a negative errno code otherwise.
->> + */
->> +int drm_edid_get_preferred_size(const struct drm_edid *drm_edid,
->> +				unsigned int *width, unsigned int *height)
->> +{
->> +	const struct edid *edid = drm_edid->edid;
->> +	const struct detailed_pixel_timing *pt;
->> +
->> +	if (drm_edid->size < EDID_LENGTH)
->> +		return -EINVAL;
->> +
->> +	/*
->> +	 * Use whatever the Preferred Timing Descriptor tells us. For old
->> +	 * and obscure displays, we might need better heuristics.
->> +	 */
->> +
->> +	if (edid->revision < 4 && !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
->> +		return -EINVAL; /* no Preferred Timing Descriptor */
->> +
->> +	pt = &edid->detailed_timings[0].data.pixel_data;
-> [Severity: High]
-> Does this safely handle non-compliant or corrupted EDIDs where the first
-> detailed timing block might be a Display Descriptor rather than a pixel
-> timing descriptor?
->
-> In the EDID specification, a detailed timing block is only a Detailed Timing
-> Descriptor if its pixel clock is non-zero. If the pixel clock is 0, the block
-> is a Display Descriptor like an ASCII monitor name. By unconditionally
-> accessing it as pixel data without validating it, could we end up reading
-> overlapping union fields and returning garbage display geometry data to the
-> driver?
->
->> +
->> +	if (*width)
->> +		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
->> +	if (*height)
->> +		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
-> [Severity: High]
-> Does this logic incorrectly dereference the pointers before checking if they
-> are valid?
->
-> The kernel doc mentions that width and height are optional, which implies
-> callers might pass a NULL pointer. If a caller passes NULL for width or
-> height, evaluating if (*width) will cause a NULL pointer dereference crash.
->
-> Additionally, if a caller passes a valid pointer to a 0-initialized variable,
-> evaluating if (*width) will result in false, skipping the assignment entirely
-> and leaving the output as 0. Should these conditions check if (width) and
-> if (height) instead?
->
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(drm_edid_get_preferred_size);
+> Quoting what Hou Tao said earlier [0]:
+> ```
+> The only possible way when there is concurrent llist_del_all()
+> and llist_del_first() is during bpf_mem_alloc_destroy().
+> bpf_mem_alloc_destroy() will set draining as true and do_call_rcu_ttrace
+> will invoke free_all in advance. But right then, the caller of
+> bpf_mem_alloc_destroy() will ensure there is no active allocation and
+> there will be no invocation of llist_del_first().
+> ```
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
+Er, I need to take it back. bpf_mem_alloc_destroy() could ensure there
+is no caller for unit_alloc(), but under PREEMPT_RT, alloc_bulk may
+still be running in the irq work kthread, and there will be the same
+problem.
+>
+> [0]
+> https://lore.kernel.org/bpf/05446fdb-2e94-47b0-91fb-b4f84b6baaa3@huawei.com/T/#m7b523472481ed192f4004517a6f877dc72d02370
 
