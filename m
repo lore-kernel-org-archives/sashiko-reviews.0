@@ -1,30 +1,72 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AC0447813
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 11:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787831114; cv=none; b=n407FLLr+a1zRNh6sNLuYSMNOTPQQepm0SKFmu1kcbQ/EP1uEa7ZEWNLwarRxe8BX4m+8WSRKmgUd04BQq9Y4xJ82cMRAitUiLNHWvEx49a7sVYfRBXiOH/HJYzj8Fh0ZFf6qdYzYZuQnGQtkjuFGkjYCxl3sIyFpVkVS4nI+tw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787831114; c=relaxed/simple;
-	bh=cXPp8pKkXgP0gQxOjb/WfC7X59/smhaiCLkEXz7eNTA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86F8455182
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 12:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787834705; cv=pass; b=j0HxydFS58Ow5QmnPr6cfvd/ctQ7DoF0IKDetd6zMykQTWHA/bmbD2CRrgxiB/SoALIcQzD+I4bTh3vyyb1VMoMCi1Bg77a0VyLmcGNk0askPkVi9xWlVjmr9C7gXAIwihPjli4DhPviATcuU43dTacmQn4Pbc3/ufRX4pA5zNQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787834705; c=relaxed/simple;
+	bh=d8RMf7P+oetRdU/wcSv5Mc1tyswaEInp6kq11mxn6ho=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cjJRysBtZgv+lb0dKBz0q7fujiMxD9ZbDa/RVBpQPrptdVFo289Es5XWIbaMmgAQGWk1PmHVXBnCcqSkm6sJolF/TvCGn5E8qfMTc78ITC6FQv+r/E9rEcP9IWfMRHo4vMeOiEo3ov07nCFH+XvMID49W971UgAIDr5d1axHRqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hW06p3FymzYQvB4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 19:44:34 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 357C840572
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 19:45:05 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgD35UQ_I5Bqvq1oDw--.56879S2;
-	Thu, 27 Aug 2026 19:45:05 +0800 (CST)
-Message-ID: <f17ac4ba-3276-4fef-b9e5-5423956b68fa@huaweicloud.com>
-Date: Thu, 27 Aug 2026 19:45:03 +0800
+	 In-Reply-To:Content-Type; b=Ow/UKE2QUFQxIObi4ITwOPfPCSJbV+OS2iRHyPVRvJN5EQMGJmue7ATam1Q1f5I/7MpbD931LwXY0b+IMie5mcBFRRDHoDuhLKrqGzPnYJDgyywLbv/VKof5da3j7S4UjHBlBx3pn271edaR+BgIG8f75m0kS3z8Szg5hI7ClgQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=Nxh0GVDD; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=41+qXHfm; arc=pass smtp.client-ip=85.215.255.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Nxh0GVDD";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="41+qXHfm"
+ARC-Seal: i=1; a=rsa-sha256; t=1787834510; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=gRjF6oUlrzKKLr0GSZFjakadwd6/AYQ+wtFFy+xyk3MOO1XIg28YGRiB4q7n0eUqj9
+    kip2FR9xFmlr/Pf7D9KhBmY9KXkGk0MXpruXR2NNSEhx44Z7ezV1Ri98Q9cVehM6I0PA
+    ZgVcZ5np/WujtUXlnBqun+ITNTV1uj3jz3WE1QXlK0tp4/IIcdASv9pctYdTpl8anBfP
+    5PshQUuyeSk6Yz5p2Dawgjfh/B5Mbx1GUGYhxsFJkmBI4lCY/yXXFJyJYNOo0F5q0S5t
+    fzUHoAudKRh0a6NZblDrQ96l6i6XfFCTmapS9TwPEEmkKahXv3aTUO9vzvAB4+7B62U/
+    9EjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1787834510;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=hq0MddlqMVPMP9Ni7F39xn90k6avYwm2zB4x5ugIGoo=;
+    b=gCPNZRHvAyexuilMSNdt2axv7juCkgwlK7ecOUwMolz7tOU5oDrcXLZ0pBS8yilbvS
+    DNZwcmhXmlPRUFzVPjdVsF13Nc+5I/B6LUAOBzWA8a99E0G1c8HFPpzWznRPZFkkjMTH
+    PLLAZNpQDhLzQtLC+Nn1XmkfDEnNn5TfA05j5I06sSxJPFlDxHGlgugzvzIL+FOEId/v
+    7wnzjC3g0YArfquH+KsfbrDfSiXWVANit1P1sqHM/at15OdbXJDPlGoGWXGjjd1boGXK
+    E82/KPAAw9NzDWvPIvcvzorkdFBhVfdAdFWtHdVqDTY3F1mDcQ3x/0rw5MzG86By8mlh
+    Wcmw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1787834510;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=hq0MddlqMVPMP9Ni7F39xn90k6avYwm2zB4x5ugIGoo=;
+    b=Nxh0GVDD7Jo+VRDbCQRqvXpMU+HRbEJL42Gy5AMWBuVqPE0oATPR3HD7N4YgICQikc
+    bT89uXJWZ5PB/f6RerC+HfvKHRUpWUq//vnqydA89elxoDSEhnwxV5NHE6FLpjMKR4lq
+    UIYTjoAHcAgcevUyCuay9oqVRlLmqNWaI8AP5+NygZPNI4Ovjpx7i6hWbvZcKhwe8M1+
+    trI4pbY+0LqLa0+aJ4f92OU1F/NZt7x8K1TxNk8wso/PMSfXraCcAhaf3cG7YqLjAfN5
+    4g3jT494teXGNlWyPnjeFAkg+WMSYrnApfVOeKbYQmsU1evlmkWuVe1437H2btyhIPcL
+    EwDg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1787834510;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=hq0MddlqMVPMP9Ni7F39xn90k6avYwm2zB4x5ugIGoo=;
+    b=41+qXHfm9U2jORUD74JLEUPx7nnOyS1HhWAf2nWRWlSzUEJs5zudYmG7rVApcqxudU
+    0PvpuzVZisow9kGCY4BA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4Kp38="
+Received: from [192.168.20.237]
+    by smtp.strato.de (RZmta 55.6.2 SBL|AUTH)
+    with ESMTPSA id K171b727RCfo0Pm
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 27 Aug 2026 14:41:50 +0200 (CEST)
+Message-ID: <9eb78fcb-49e4-458b-a280-c2a2748c3f61@hartkopp.net>
+Date: Thu, 27 Aug 2026 14:41:45 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,108 +74,98 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v2] bpf: Fix UAF due to concurrent consumption of
- waiting_for_gp_ttrace
+Subject: Re: [PATCH net 02/14] can: convert unreliable ARPHRD_CAN type checks
+ to robust can_get_ml_priv()
+To: sashiko-reviews@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org
+References: <20260826121036.2706424-1-mkl@pengutronix.de>
+ <20260826121036.2706424-3-mkl@pengutronix.de>
+ <20260827121055.141C21F00A3A@smtp.kernel.org>
 Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Hou Tao <houtao@huaweicloud.com>
-References: <20260827084013.1062816-1-pulehui@huaweicloud.com>
- <20260827084756.EC4271F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260827084756.EC4271F000E9@smtp.kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260827121055.141C21F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgD35UQ_I5Bqvq1oDw--.56879S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw13KFWrZr43WFW8Xrb_yoW5ZFW5pF
-	Z3Gry5Ars8ZFWS93Wqqw48CFWfAa1xW347GayUWrySkry3Zw1jgF4IkrWUZF98Cr4vk347
-	tryq9wn7Ar1UZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUyS14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcVAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCF04k20xvY0x0EwIxGrwCF
-	x2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14
-	v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY
-	67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2
-	IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUywZ7UUUUU=
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
 
-On 2026/8/27 16:47, sashiko-bot@kernel.org wrote:
+
+On 27.08.26 14:10, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] The patch fixes concurrent consumption for `waiting_for_gp_ttrace` but incorrectly claims `free_by_rcu_ttrace` is safe. A race condition during cache destruction leads to a Use-After-Free on `free_by_rcu_ttrace`.
+> - [High] Modifying cloned SKB data without unsharing causes data races and potential silent data corruption in shared CAN FD buffers.
 > --
 > 
-> commit ed5f43858e59ce799a585eeedfe466c5543df6aa
-> Author: Pu Lehui <pulehui@huawei.com>
-> Subject: bpf: Fix UAF due to concurrent consumption of waiting_for_gp_ttrace
+> commit cd014a29d1194dd4eff54897a5d2062f2ec32a0c
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
 > 
-> This commit fixes a use-after-free caused by concurrent consumption of
-> waiting_for_gp_ttrace nodes by alloc_bulk() and __free_rcu(). It introduces
-> a raw spinlock to synchronize operations on this list.
+> can: convert unreliable ARPHRD_CAN type checks to robust can_get_ml_priv()
+>      
+> This patch converts unreliable ARPHRD_CAN type checks to use the robust
+> can_get_ml_priv() function. This prevents TUN/TAP devices from spoofing
+> their hardware type to bypass CAN device validation.
 > 
-> The commit message notes:
->> Note that free_by_rcu_ttrace does not suffer from this issue as it only
->> has a single active consumer during normal operation.
+> Link: https://patch.msgid.link/20260819160822.8256-1-socketcan@hartkopp.net
 > 
->> diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
->> index e9662db7198fe..58296e92a4fed 100644
->> --- a/kernel/bpf/memalloc.c
->> +++ b/kernel/bpf/memalloc.c
-> [ ... ]
->> @@ -297,6 +307,7 @@ static void enque_to_free(struct bpf_mem_cache *c, void *obj)
->>   static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
->>   {
->>   	struct llist_node *llnode, *t;
->> +	unsigned long flags;
+>> diff --git a/net/can/af_can.c b/net/can/af_can.c
+>> index 7bc86b176b4de..ef435f22ac933 100644
+>> --- a/net/can/af_can.c
+>> +++ b/net/can/af_can.c
+>> @@ -226,7 +226,7 @@ int can_send(struct sk_buff *skb, int loop)
+>>   		goto inval_skb;
+>>   	}
 >>   
->>   	if (atomic_xchg(&c->call_rcu_ttrace_in_progress, 1)) {
->>   		if (unlikely(READ_ONCE(c->draining))) {
->>   			llnode = llist_del_all(&c->free_by_rcu_ttrace);
->>   			free_all(c, llnode, !!c->percpu_size);
->>   		}
+>> -	if (unlikely(skb->dev->type != ARPHRD_CAN)) {
+>> +	if (unlikely(!can_get_ml_priv(skb->dev))) {
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does free_by_rcu_ttrace actually suffer
-> from a similar race condition during cache destruction?
+> This is a pre-existing issue, but while reviewing the changes in can_send(),
+> I noticed a potential data race when handling cloned SKBs.
 > 
-> If userspace triggers destruction of a BPF memory allocator via
-> bpf_mem_alloc_destroy(), CPU 0 sets c->draining = true and synchronizes
-> the irq_work:
+> When the CAN gateway forwards a frame without modification functions,
+> can_can_gw_rcv() forwards a cloned SKB:
 > 
-> CPU 0: bpf_mem_alloc_destroy()
->      WRITE_ONCE(c->draining, true);
->      irq_work_sync(&c->refill_work);
+> net/can/gw.c:can_can_gw_rcv() {
+>      ...
+>      nskb = skb_clone(skb, GFP_ATOMIC);
+>      ...
+>      can_send(nskb, gwj->limit_hops);
+> }
 > 
-> Meanwhile, CPU 1 could be executing alloc_bulk() inside the refill work,
-> consuming from free_by_rcu_ttrace:
+> Then in can_send() just above this diff hunk, the SKB data area is modified
+> unconditionally for CAN FD frames:
 > 
-> CPU 1: alloc_bulk()
->      obj = llist_del_first(&c->free_by_rcu_ttrace);
+> net/can/af_can.c:can_send() {
+>      ...
+>      } else if (can_is_canfd_skb(skb)) {
+>          struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+>          ...
+>          /* set CAN FD flag for CAN FD frames by default */
+>          cfd->flags |= CANFD_FDF;
+>      }
+>      ...
+> }
 > 
-> If CPU 1 reads the head pointer in llist_del_first() but is delayed before
-> READ_ONCE(entry->next), and concurrently an RCU callback on CPU 2 calls
-> do_call_rcu_ttrace(), CPU 2 will observe draining == true here and
-> immediately free the nodes.
+> Since skb_clone() shares the data area with the original SKB, does modifying
+> cfd->flags without unsharing the SKB first cause a data race?
 > 
-> When CPU 1 resumes and executes READ_ONCE(entry->next), won't this result
-> in a use-after-free on the node that was just freed to the slab allocator?
+> On architectures without atomic byte-store instructions, this performs a
+> word-sized read-modify-write operation. If the original SKB is concurrently
+> processed by other receivers, could this silently corrupt adjacent fields?
+> Given that an unprivileged user with CAP_NET_ADMIN in a user namespace can
+> set up a virtual CAN interface and trigger this path, is this safe?
 
-Quoting what Hou Tao said earlier [0]:
-```
-The only possible way when there is concurrent llist_del_all()
-and llist_del_first() is during bpf_mem_alloc_destroy().
-bpf_mem_alloc_destroy() will set draining as true and do_call_rcu_ttrace
-will invoke free_all in advance. But right then, the caller of
-bpf_mem_alloc_destroy() will ensure there is no active allocation and
-there will be no invocation of llist_del_first().
-```
+Yes. Sashiko groundhog day ...
 
-[0] 
-https://lore.kernel.org/bpf/05446fdb-2e94-47b0-91fb-b4f84b6baaa3@huawei.com/T/#m7b523472481ed192f4004517a6f877dc72d02370
+https://lore.kernel.org/linux-can/ac22b59e-129b-4883-b9c6-da5e69e4078d@hartkopp.net/
+
+
+> 
+>>   		err = -EPERM;
+>>   		goto inval_skb;
+>>   	}
+> 
+> [ ... ]
+> 
 
