@@ -1,185 +1,140 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1CF348465
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 09:05:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF1940F734
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 09:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787821507; cv=none; b=WwBnI2N9jkwlKTpqOk1WsfiI/W3KNVst6xkTUISMDWYwBWWSkYz8hh0vUkwo88KXyL26SeSkFReUkIe27pFWEl0Qis7h520ioAa5K7JoKnc/Nce3m8LfKaCHnBy4tayeAvjP6IwZz8VRO/m+5kEW+VAWCpzr10SCNksDour6I9A=
+	t=1787822811; cv=none; b=ErIeNuvZX8O0Exkal/ydzjxsu1wpqileHiQcZ8GRGbZC+eI1MIDcRZ2756i5InWISx8FhTixt8mXwuGoH0EvA+eSILyOGvaD/IOjZDANe8e/4fNbW9YGZ+7qxNfrPVZIMTcVpX+GA87MD0ENACdFWF9QusNCNNRnB6Er2cHPu54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787821507; c=relaxed/simple;
-	bh=lx4MOuPt2kP7MGAbn5bWo4Ms1Qte1SBmSD75PUOM2gc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FOnCN4U47swNZMYz9hb2aVE2p08+XHL5XDyyfPburyDE21WqaVRVSeouf/aIA8q3xaeARzpwZhmilY8ZNvct2+2YcfXUIS4mgtXV70BtteiufiUApqAqazVbN9LNXXdJYL1CGm2OeGl0FYxc0zTVF8eTX92qSqxArDnGZlkacME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QI7DPiwj; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1787822811; c=relaxed/simple;
+	bh=CSb//Yyfi6yM9PjxFa7J5F68VS2QYfjeIUlC13z5vwM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XMBWM2+lfJTQtkyIvXN3CsOPMiPUknE4RMtqopBQ7TB9gyaGlukhJXRnz2tWDwBEknuCHxgo6V53kp3kWb8rFaGP3Ulxknnx0NaPeF9hicFmNx6Zg1uYaF8nTGn1M8kKlZI8zIW7aMG4ocgM+Dgxz9y6oX3IESco9efHK3/3RqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=dTlnNwZO; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QI7DPiwj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787821499;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mLLq8yOxwzR5S4mcnBaUPftModHZoRx/qzRb/ATZRCA=;
-	b=QI7DPiwjzMVlyY8DD4ks7FmfgbkSggSzSuRUKeZkoRJG4CcDDsjj+6moSyQbfAjDjdVSJf
-	BZofiNp4fhP8Ww4i6WDG3RsJQtYbKs9gUR/NuXe5ylEyfMkTaxsRVNPIIovPCGH/mD/rwm
-	MNLuU7Pv569stAAwueSjKA62hE0Javg=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-4eo4tKcLOAqSDFPCs-NfwQ-1; Thu, 27 Aug 2026 05:04:57 -0400
-X-MC-Unique: 4eo4tKcLOAqSDFPCs-NfwQ-1
-X-Mimecast-MFC-AGG-ID: 4eo4tKcLOAqSDFPCs-NfwQ_1787821496
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c213d5fb55aso214432566b.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 02:04:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="dTlnNwZO"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-482c58a8683so335589f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 02:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1787822808; x=1788427608; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=CSb//Yyfi6yM9PjxFa7J5F68VS2QYfjeIUlC13z5vwM=;
+        b=dTlnNwZO6J+t/+bWwsgbh9Wz2ttg3GYZf/KVpTZwJFaJSP8l05bVMmWaHxNZPT37aY
+         OFkD+6BvtPBMRe9isJghxOTzTnxPDv0nZcyxgtcqr+XFn0DF88Mhvk3z54y0IzIGixR+
+         rHkSAucg1vzOs0UVDAXrWU8k9VuKhMH/mZboghhHhdmKgTcaBOrOmmHJt1M+dluAHyZ/
+         waVWvO4EgnO0ZiFwkXjoCs+YJwdhZAQWZd2FeBQFE8TyBohhEMrlsOQGsmzddTY5527o
+         PFmBZ+XupvVmIXDy4Rk2GnvzTkXT6lGOKy8mIpYMeQPPROmmIBgfh7YcxKK/6ecGoOXz
+         YsIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787821496; x=1788426296;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1787822808; x=1788427608;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mLLq8yOxwzR5S4mcnBaUPftModHZoRx/qzRb/ATZRCA=;
-        b=qyquGVrZ+Mqm9qQ62bs1SIa2oAMjWKfMBnQcMycn7poQJGgq1CU31T6z99RkCgRNf1
-         kIK1Fl0WwxLxpehMHw/raML5WImq0ybZ2f20+Me5pti4Hw7NastyNVowL5B8CDJdnFLT
-         gjmOhVre9L2bBfxJUheZzqaYFkDMZOAw3L5KK/pQRdqjsgJsbW5dTsy1swDayYC8XTTn
-         3VFoMsjzZvRopHxFwGQUKr8WMGvWVk+p/c+YpCmjeMbL7+/EgUgISvbisJ9wASBc31NY
-         769Ds6pcemFGvAQpsTagn26kqQV7WuGfPHlkD1kWxH0YqhuptsKnVEokVU45L6fTji7p
-         O0qA==
-X-Forwarded-Encrypted: i=1; AHgh+Ros/pLtG94x0X9gWDYLh+GtWbWHykX64zPoiUEap/XCh8t3Yb14aV63i+DpfKhH183uFbZg364H72Mzddd108Y=@lists.linux.dev
-X-Gm-Message-State: AFuF++lppRRMcUv+NQsJNaMOyuQ4ANGOUdnwak0qnkjzmOLCNhBBCaNm
-	Q0+ZK8rELN7nmbAlLdv0YoSqa9Gp8/b/uFI355R6gmz/ikSsuap2VurCwCbz3j/amMag3vOLwJf
-	prhOnow1gIDcKdxg6MJpqdMx0EDOnd8wh/ToYG+uxik4fU+QSRaUKMJgiXxp6IwfJLLSoj1o7Pi
-	21bozZAn8R+eOfjSypL7N16DfmvlioFzCUp5qpI1Tqz70Mud1T0V2X8Hs=
-X-Gm-Gg: AR+sD13AYjOtscNWEJk2I7Nshv24q4Z4KuzVJU1+f3VKZOAEkcdMJcgbEpMj8MnXlSw
-	0CdGjMlobpUYg5t02r20qcq6j1HuWPw8u7N+6zR7N5F1bhOLE1ly8Izy9UIvIfqzg8xR2IOCEsL
-	8zXe5UXvgJ1Cqfamo1H8EIfkOjZG1fJoKImDVrTXZXXpFDTuVX74ysSVbI
-X-Received: by 2002:a17:907:3e26:b0:c12:83c9:d41 with SMTP id a640c23a62f3a-c250c595aaamr1332874566b.12.1787821495964;
-        Thu, 27 Aug 2026 02:04:55 -0700 (PDT)
-X-Received: by 2002:a17:907:3e26:b0:c12:83c9:d41 with SMTP id
- a640c23a62f3a-c250c595aaamr1332868566b.12.1787821495442; Thu, 27 Aug 2026
- 02:04:55 -0700 (PDT)
+        bh=CSb//Yyfi6yM9PjxFa7J5F68VS2QYfjeIUlC13z5vwM=;
+        b=i0WEw3nonI2Vobs+IdHNesu/Ls/Fwg/8pn5yKC8SDjW5KJ2zfQdQDxnHyt/O2aBU6O
+         VbZCP4bs7u2oRxGhFX7i7lNCOXUn4YUBjidX2b4pDWybWnfwPp1JlNghm44aAclds4xz
+         qlaCHHo/08Cn0qqHhudEQfE9lZMzqjcw/MW/lA1LxTkOrqQdHRQbFxygz+MWHJyt/qtU
+         NWEheOuUyjJIY5P1ENdi77ZuIthQSlZSO3Tk9kliQ+XNVBY4/FIbZ0V5OPPZzJVZP4bV
+         Un1L/7QXQEW0eqlylb/LXdKvnHmLZvsLZAuJRBtQAk2J116tgE6H7sqSnOesea4n1tKP
+         FMeQ==
+X-Gm-Message-State: AFuF++nFJxBLDAEcaePmS+T4gWNucd9L81Pc3ZKaDtDuvuK/4HYcKN8j
+	yg84S3Yi3DcnibpcR9t9uYvXof0f2wwvWfqtT9JM2F+sJ6TtpdfoqfNBlY03mdaFFO4=
+X-Gm-Gg: AR+sD122kMH3+HO5FhgWzPlaeWphv4hxdFl3nme+twSPdenaX6J8Q84DgR9xFj5okWD
+	4ryVdCVKifUYw9fJgmimdkNDe6TCil6yxg12Wa8cddc+FFoV4pvscl6q5L5aPVaWLYmWKRPS9AB
+	8Iq6rwrezXu2ZONzbZYm6QM7Z5NQQoxLkZ3oSo6V6HgX+Q4JRcU/VT+CspNyM/DumCsODEsbLqR
+	iaYQcWo1FAbuQOFa/FqEq6sxGgcjxEtX/b9sNAP7wWE0b1iIWl0Fg9fG+Gn2BBSEq6kL60/t8yw
+	JDGqxYEK2T/JqZIBM9yIiKo/e+jvuYWeC3Ysjo8djneEj01eXUKN812dYyn3agBIxEPzFW9XyUK
+	KXF2pTCeVjoHbPpAvLIoMns+EgQqh8rs7vF2mnY8gVwLeY3mI6iDiLmMc1Omo3WWXAnpdYLLP9w
+	wIeESl5eZlMrtLY3mFwgNIeWk5VUblnPXMyypijvZzaNTV833WMRoofNy8xsFdvbw=
+X-Received: by 2002:a05:600c:c87:b0:499:d22a:8973 with SMTP id 5b1f17b1804b1-499dc6f47ccmr119410575e9.1.1787822807532;
+        Thu, 27 Aug 2026 02:26:47 -0700 (PDT)
+Received: from localhost.localdomain ([2001:af0:8000:1409:193:86:92:181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49b49cc6446sm32113475e9.7.2026.08.27.02.26.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Aug 2026 02:26:46 -0700 (PDT)
+Date: Thu, 27 Aug 2026 11:26:45 +0200
+From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+To: Ridong Chen <ridong.chen@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org, 
+	"open list:CONTROL GROUP - MEMORY RESOURCE CONTROLLER (MEMCG)" <linux-mm@kvack.org>
+Subject: Re: [RFC PATCH] mm/mglru: fix ineffective memory protection for
+ non-kswapd reclaim
+Message-ID: <apABJglqDFcB02VO@localhost.localdomain>
+References: <20260826133054.88529-1-ridong.chen@linux.dev>
+ <20260826134733.051941F000E9@smtp.kernel.org>
+ <0c606cf9-2b5a-4549-8ab1-0be619487412@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260824211544.3984835-1-crwood@redhat.com> <20260824211544.3984835-2-crwood@redhat.com>
- <20260824213037.F41B11F000E9@smtp.kernel.org> <20260826153132.1333fac6@gandalf.local.home>
- <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
-In-Reply-To: <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
-From: Tomas Glozar <tglozar@redhat.com>
-Date: Thu, 27 Aug 2026 11:04:44 +0200
-X-Gm-Features: AcwNN1UNmFxRU8e_F0pysLHFjW-g2Nsy76t0iEs7XkgqngUUF9dD7UYeAqSVmKk
-Message-ID: <CAP4=nvTZ3ZKf23j=P_=ZpMD7AHvnHOK=f0W=Aa+1Af-zBrBVYw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] tracing/osnoise: Per-cpu mutex and fd detachment
-To: Crystal Wood <crwood@redhat.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>, sashiko-bot@kernel.org, 
-	sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ZPqp_L-f95PV0_kvbGWna4dAHmj90ySqtayxFImTjZQ_1787821496
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xzefaujiz7w5j4fo"
+Content-Disposition: inline
+In-Reply-To: <0c606cf9-2b5a-4549-8ab1-0be619487412@linux.dev>
+
+
+--xzefaujiz7w5j4fo
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [RFC PATCH] mm/mglru: fix ineffective memory protection for
+ non-kswapd reclaim
+MIME-Version: 1.0
 
-st 26. 8. 2026 v 23:21 odes=C3=ADlatel Crystal Wood <crwood@redhat.com> nap=
-sal:
->
-> On Wed, 2026-08-26 at 15:31 -0400, Steven Rostedt wrote:
-> > On Mon, 24 Aug 2026 21:30:37 +0000
-> > sashiko-bot@kernel.org wrote:
-> >
-> > > [Severity: High]
-> > > Can holding osn_var->lock while calling kthread_stop() cause a deadlo=
-ck?
-> > >
-> > > kthread_stop() blocks waiting for the target kthread to exit. However=
-, if
-> > > the kthread is currently handling a migration request in
-> > > osnoise_migration_pending() (shown slightly earlier in the diff), it =
-will
-> > > attempt to acquire this same osn_var->lock before it can clear its st=
-ate and
-> > > exit:
-> >
-> > This code has a lot of nastiness in the locking with regard to the thre=
-ad.
-> > I haven't looked deeply at your patch, but the fact that Sashiko pointe=
-d
-> > out a possible deadlock I think you may be hitting the mess I was hitti=
-ng.
-> >
-> > Have you looked at this thread: https://lore.kernel.org/all/20240820130=
-001.124768-1-tglozar@redhat.com/
->
-> That thread is about user fd sync, which is what this patch is trying to
-> address.
->
-> This particular deadlock is with kernel threads, in a corner case of
-> getting migrated even though we try to pin them to one cpu.  We can get
-> rid of this migration code and just have stop_kthread() take care of it,
-> adding a get/put_task_struct() so that it's OK for the thread to die
-> early.  This way we can also handle any other abnormal thread exits.
->
-> I'll respond to the rest of the Sashiko comments soon.
->
-> >
-> > It has some tests I ran along with tracing that detected issues. Of cou=
-rse,
-> > everything needs to be run with lockdep enabled too.
->
-> I did run with lockdep (and some custom hacky state tracking) but
-> forcing migration is a hole in my test coverage.
->
-> Is there a particular test you're suggesting?
->
-> -Crystal
+Hi Ridong.
 
-The race window is practically really small. I had success of
-reproducing the migration deadlock in a virtual machine with a bash
-script [1] that deliberately slows down the kernel/osnoise tracer with
-perf, ftrace, and bpftrace hooks:
+On Thu, Aug 27, 2026 at 09:29:13AM +0800, Ridong Chen <ridong.chen@linux.de=
+v> wrote:
+> On 8/26/2026 9:47 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> >=20
+> > Pre-existing issues:
+> > - [High] Integer overflow in `effective_protection()` calculations on s=
+ystems with >=3D 16TB RAM.
+> > --
+> >=20
+>=20
+> Thanks for the careful analysis. You're right that this is pre-existing in
+> effective_protection() and not introduced by this patch.
+>=20
+> I'm not sure it's worth fixing in practice, though =E2=80=94 the overflow=
+ requires
+> systems with >=3D 16TB of RAM, which I've never encountered
+> myself. So I'd rather not fold a fix for it into this patch.
+>=20
+> I'd like to hear the maintainers' thoughts on whether this is worth
+> addressing separately.
 
-[root@cs9 tglozar]#
-/home/tglozar/dev/linux/tools/tracing/rtla/osnoise_migration_race.sh
-13 10000
-cpu=3D13 mask=3D0,1,2,3,4,5,6,7,8,9,10,11,12 iters=3D10000 stop=3Dnop
-iter 1 ok (kpid 265080)
-iter 2 ok (kpid 265086)
-...
-iter 422 ok (kpid 267814)
-*** hang iter 423  kthread=3D267821  affiner=3D267823  stopper=3D267827
-    cat /proc/267821/stack /proc/267827/stack
-    do not rmdir instances/ or write current_tracer/online; reboot
-[root@cs9 tglozar]# cat /proc/267821/stack; echo -------; cat /proc/267827/=
-stack
-[<0>] timerlat_main+0x266/0x3f0
-[<0>] kthread+0xe6/0x120
-[<0>] ret_from_fork+0x1be/0x250
-[<0>] ret_from_fork_asm+0x1a/0x30
--------
-[<0>] kthread_stop+0x6b/0x180
-[<0>] stop_kthread+0x86/0xc0
-[<0>] stop_per_cpu_kthreads+0xf/0x40
-[<0>] osnoise_workload_stop.part.0+0xc/0xa0
-[<0>] timerlat_tracer_reset+0x9/0x40
-[<0>] tracing_set_tracer+0x14d/0x300
-[<0>] tracing_set_trace_write+0x7f/0xe0
-[<0>] vfs_write+0xf8/0x410
-[<0>] ksys_write+0x65/0xe0
-[<0>] do_syscall_64+0xc1/0x460
-[<0>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Machines with >=3D16 TiB aren't completely out of reach [1]. Then
+configuring such protections to attain the overflow is another
+condition, so I'd consider this a nice to have but not a
+pressing fixup (separately, with thorough review of occurences where
+total page counts/bytes might get multiplied).
 
-[1] https://gitlab.com/-/snippets/6045758
+HTH,
+Michal
 
-Note that any path that is calling kthread_stop() can trigger the
-deadlock (together with the migration), that is, both making the CPU
-offline and stopping the osnoise tracer. Sashiko flagged the former,
-my reproducer used the latter (the script can do both).
+[1] E.g. https://aws.amazon.com/ec2/instance-types/u7i/
 
+--xzefaujiz7w5j4fo
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Tomas
+iJEEABYKADkWIQRCE24Fn/AcRjnLivR+PQLnlNv4CAUCapACwBsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMiwyLDIACgkQfj0C55Tb+AjofAD+NsuFu0PDFJHyrulcXKzI
+igkF85NY5/lYAU523FvrLmwBAKSa/iEpzYpKL0GrbsrBCZng/5QlqrJuwRFlL0SD
+bvIF
+=UNaW
+-----END PGP SIGNATURE-----
 
+--xzefaujiz7w5j4fo--
