@@ -1,66 +1,142 @@
-Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2E5472526
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 13:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EA8377AAC;
+	Thu, 27 Aug 2026 13:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787836518; cv=none; b=X++7vDQA7Fd1alILYnQN15O10dbbXRq6thgX68cj8JZCFYB6slC9ldmCO4UlH+5pt03cRgeC010pkDwic0axgOYQq7XX3mK+o9VHNv2ueTrR67Fe11Ns3qDgj9FnpPo06hDDtY/0yWBDXa6E2ONX9gdqTNbFRXXdcTdFHKHnISI=
+	t=1787837882; cv=none; b=Epj6u7vZh79hglQEtFkN608Hp1iz5CUpwEHcYX6s0FTsNFVzmpQSgoYKsBvOajlfpvX3UiXHG/NKhpy+22/vcpvsRw6RPKUWOpiLg+zPcXHta07AWs/6IN+s05xZ5STQ3d8pCM61KCFW6+9d5kdfoGFZwSMGF5r7i6Dwp7xuyWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787836518; c=relaxed/simple;
-	bh=jR4mRqs32IUcI/m/KbwQ7Vym5B+Z9w2bM9qUGSorNQw=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tn/p4UL6twqLosU+EeLyBwSv4C+GX/mXK/8LTGAkuI80P2qZsiUYYi4ossiNIIbxKNOS47IgqKMMKC1SqpMI8u+AmS26oo8TXBifRMTCnh2g3qLq/2Dg29dYmYkKniVQIp/qZARhfCT1KGZ8BANWd2UDpoXGQK59g2+l5tXkjFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=NCvWKzhD; arc=none smtp.client-ip=216.40.44.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1787837882; c=relaxed/simple;
+	bh=rHy1abmSY//SLJlyP9T3y7I71atpRIDlo9GzDV78SeY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UcQrW4UDHPGjSjilKyuE7YrJxTMwpPBdmVcWusOR43aef5kSeSrmyxFOB3QYImzIXJoVXTOohrJVzGXBxILE+zzGuy2xjqYXfe0Pgh7KtHKZfa7xCuMPKxrvZAP4vnWY9rcaTKxRhnV5fa3gtM5wpZL5mo1BOHlKNetloncpX+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmD9+yI0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="NCvWKzhD"
-Received: from omf03.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay10.hostedemail.com (Postfix) with ESMTP id AEC85C024A;
-	Thu, 27 Aug 2026 13:14:55 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf03.hostedemail.com (Postfix) with ESMTPA id F35216000A;
-	Thu, 27 Aug 2026 13:14:53 +0000 (UTC)
-Date: Thu, 27 Aug 2026 09:15:41 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Vincent Donnefort <vdonnefort@google.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 1/3] tracing: Fix subbuf resize races with
- trace_pipe_raw readers
-Message-ID: <20260827091541.5d03e33c@gandalf.local.home>
-In-Reply-To: <ao_Zu0ThaWThj9YZ@google.com>
-References: <20260826094528.3738023-1-vdonnefort@google.com>
-	<20260826094528.3738023-2-vdonnefort@google.com>
-	<20260826095947.4FF8B1F000E9@smtp.kernel.org>
-	<20260826103736.2b55b464@gandalf.local.home>
-	<ao8TQ-SvhjYgy43-@google.com>
-	<20260826143123.1b3e3854@gandalf.local.home>
-	<ao_Zu0ThaWThj9YZ@google.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmD9+yI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8341F000E9;
+	Thu, 27 Aug 2026 13:37:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787837876;
+	bh=rhu3+8lhSkVJ+AKix0VoEWkhpLmjUA+bCjlH9jfkmWo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fmD9+yI0HwknrT979Gwc/OenIcqSz9X9+l/8sF123x1XqzQIzP3aVwKJZjH6CW55G
+	 P1pi8KSVT+fXhUXyecP1Do2rnxWf5aMFDLwRMOCCZy2g/QY/jfTJG4HElXdfFmMyG+
+	 eBMu7G1Rj62NOtte3rCJ6KBb1K429+O+fOhd1hS+FgitWpMAYzvjdoAub+8XTFfhe0
+	 asvo2jKkHZiYl8j9GjynmJ/v0OjVVHqXpdX9aUOMDtcRE1Z5ZJhUbvAqG6wwUpOnQ8
+	 M41Qp/ImVW2I2F/kaesdc+zeHazkC9uBm+l+ShFw0qjH7JYbc01e1FiEurHOXHM1Yo
+	 1kwoVrqLo0irw==
+Date: Thu, 27 Aug 2026 14:37:53 +0100
+From: Lee Jones <lee@kernel.org>
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org
+Subject: Re: [PATCH v6] leds: rgb: leds-qcom-lpg: Fix LED color balancing in
+ HW pattern mode
+Message-ID: <20260827133753.GM770273@google.com>
+References: <20260716-lpg-rgb-color-balance-fix-v6-1-b49d51528f61@oss.qualcomm.com>
+ <20260717045523.A762B1F000E9@smtp.kernel.org>
+ <7e474cdf-fcb2-468d-844d-f8afb5976d16@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: F35216000A
-X-Stat-Signature: finf3sszcgs4ra44k5w4fxt1pd3g9mnb
-X-Rspamd-Server: rspamout07
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+8bBjpjX1rb7w6M/De5rieedWYuH6n+gM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=4rx+Jukd69U71oXhkK+4brjCaBl56wc/fNZAnDqZX4M=; b=NCvWKzhD8HeIKPFs/HWTNtoXZVkZn3mAZ3k1SngPrwLQzmKhcxRRIsiVR+bw14uo5zUN4b9ip4Vy0SFVCfH9plKBICCEYVmt3jIMYlQGXPSI+zRqH0L5KvlWMCN6UAHOguNLvkdi5rD7Z+EJABkLzvnKwj29sW5IRK9v7GvqsqE=
-X-HE-Tag: 1787836493-618963
-X-HE-Meta: U2FsdGVkX19EkAXce3d40tLst0oN3wPKZV7hunF6l4RG3LT5ud9ihlYhdwzfHiK0aRQ10BPDP5CUR9PpH8vNPWN2Ki+B8uLm555FF0fjhS9QvTtPHu1XJCWLJSFQvRPF8F7wro7PkXaQ0kSU9XdO7Mxdd1qXxpk0dkaTqFCVHSu8tqHyuI55+fSKAZZCx+T316qWz9ksfYOEEPXWux6iGgR6rJLsFvKKgB7N1LdNa5+2J0U9AMI8Prsq9aATnT/BaLk4NGpye16WI7nSHxONpXqHcKgXQqYwfGq92iwN02lJ8XBrrEqv2DnbH3l6X6aogqyTSfGzDZHKNYqUa5nOoL8g3LoSJyfATGBHarzwo8ULJ9lTCYT0sQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7e474cdf-fcb2-468d-844d-f8afb5976d16@oss.qualcomm.com>
 
-On Thu, 27 Aug 2026 07:31:23 +0100
-Vincent Donnefort <vdonnefort@google.com> wrote:
+On Tue, 25 Aug 2026, Fenglin Wu wrote:
 
-> Looking at the function again, shouldn't we add !rb_is_static(cpu_buffer) as
-> well to the full page test?
+> 
+> 
+> On 7/17/2026 12:55 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] The driver permanently leaks a hardware LUT slot and fails to trigger patterns when a 2-step palindrome pattern evaluates to an `actual_len` of 1.
+> > --
+> > 
+> > --- Patch [1]: [PATCH v6] leds: rgb: leds-qcom-lpg: Fix LED color balancing in HW pattern mode ---
+> > commit c5b003f7bc9326bf3784a70ad883c39b215ae496
+> > Author: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> > Subject: leds: rgb: leds-qcom-lpg: Fix LED color balancing in HW pattern mode
+> > 
+> > This commit splits out pattern preparation into lpg_prepare_pattern() and
+> > adds support for per-channel scaling so the hardware pattern respects
+> > multi-color LED balances. It also updates the LUT storage paths to handle
+> > the dynamically allocated scaled patterns.
+> > 
+> >> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> >> index d7d6518de30f2..24b1f570f5244 100644
+> >> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> >> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> > 
+> > [ ... ]
+> > 
+> >> @@ -1087,43 +1098,64 @@ static int lpg_pattern_set(struct lpg_led *led, struct led_pattern *led_pattern,
+> >>  	 * duration of all steps.
+> >>  	 */
+> >>  	if (lpg->lut_base || lpg->lut_sdam) {
+> >> -		lo_pause = pattern[0].delta_t;
+> >> -		hi_pause = pattern[actual_len - 1].delta_t;
+> >> +		prep->lo_pause = pattern[0].delta_t;
+> >> +		prep->hi_pause = pattern[actual_len - 1].delta_t;
+> >>  	} else {
+> >>  		if (delta_t != pattern[0].delta_t || delta_t != pattern[actual_len - 1].delta_t)
+> >> -			goto out_free_pattern;
+> >> +			return -EINVAL;
+> >> +		prep->lo_pause = 0;
+> >> +		prep->hi_pause = 0;
+> >>  	}
+> >>  
+> >> +	prep->data = no_free_ptr(pattern);
+> >> +	prep->len = actual_len;
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does this logic permanently leak a
+> > hardware LUT slot if a 2-step palindrome pattern is provided?
+> > 
+> > If a user-space process provides a 2-step pattern where both steps have the
+> > same brightness, the ping_pong logic earlier in lpg_prepare_pattern() will
+> > calculate actual_len = (2 + 1) / 2, which evaluates to 1.
+> > 
+> > When this length-1 pattern is subsequently stored, it allocates 1 slot where
+> > lo_idx and hi_idx are equal. Because they are equal, lpg_brightness_set()
+> > treats the configuration as a static brightness instead of playing the
+> > pattern.
+> > 
+> > Later, when the pattern is cleared and lpg_lut_free() is called with this
+> > lo_idx and hi_idx, it hits this early return:
+> > 
+> > static void lpg_lut_free(struct lpg *lpg, unsigned int lo_idx, unsigned int hi_idx)
+> > {
+> > 	int len;
+> > 
+> > 	len = hi_idx - lo_idx + 1;
+> > 	if (len == 1)
+> > 		return;
+> > 
+> > 	bitmap_clear(lpg->lut_bitmap, lo_idx, len);
+> > }
+> > 
+> > Does this early return bypass bitmap_clear() and permanently leak the LUT
+> > slot for the remainder of the device lifecycle?
+> > 
+> 
+> I think this should go into a separate patch, since it isn’t introduced
+> by this change. On the fix itself, rather than checking "(len == 1)" to
+> clear the bitmap, we should add a new flag to track whether the bitmap
+> has been allocated and only free it when that flag is true.
+> 
+> @Jones, what do you think? Would you prefer that I include this fix in
+> the current change, or should I push a separate fix after this one?
 
-Why? 
+It's Lee! =:-)
 
--- Steve
+I don't tend to look at existing issues, but if you'd like to submit a
+patch for it, great!
+
+-- 
+Lee Jones
