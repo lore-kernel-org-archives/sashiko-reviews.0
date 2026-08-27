@@ -1,101 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D90437EFF3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 16:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55C337B3FE;
+	Thu, 27 Aug 2026 16:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787849793; cv=none; b=SuYC4j55+HGd4xlcnF61AnSlQEf2nDM2b/8FDqgRg+D35ktkBzd0H5eCGABIkCMlKdY51CeTWhsno+sB/OW1iAR+p+bs1WrEvKarH9863+ikP8qpczM9WCUEOs4+yGhMdB6VLnZ59KFPZRpOEmOJ36+ld3AjxO9JKxKjbQv/el0=
+	t=1787849804; cv=none; b=Ro9pF583WNZhqBQJK8muT+w3CV5XVVz8RoFnucIWH0s89nlnvoJ7OJjAXp7EDBnARpgBorS3QGRg0MWtxvQEal1flZHdX+Z3buuh5TSycf9Gk5UA3NPFmBPyEqLTAnHji3br1oQZ9SST2s/6mLPs5svW+V6b+TbE6hXzICPmdoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787849793; c=relaxed/simple;
-	bh=Wx8ZuaPdOk0CUD+4O2fpoWYPaklYZrXNxnA+Ab2hPY8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=b6Fpk3SaRwGfiluGLjvfTz3/rXeU8KaZwcuE4lBKdputqfXt6Rxqvmrof1sSWnSp2Wg+w8f14HaIKaGNdCvO8KHnFhjW4JpzDY8rX/E0TByX1lTp16o/dcdpAKuTqcH52pKi/tMS2NiACyhjGSDuT3Oqr6nY/En+EDa3RQ7JUhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpFNVGfH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787849804; c=relaxed/simple;
+	bh=vzBZhdaIgl31+yOBeaR3Ppwf1WX/+Vm/3QwrSZCJW1w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jC9FpktThH2Cx813p7b2267G9U16U0Y5p3pZ/4KyY+aCIb4CmiFRCGIv4h8pZNC5t9P3uH/R/tSVp5UJRuTu+6dzwb2W4fDSU8a8DgWDgQtIvxOvGpgf/oy0UQyAszf5bl3rAEoHqMev4qYIR/S6lnGSJ9dC4kt16BocBuaeoTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZsPpygA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpFNVGfH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8286A1F00A3A;
-	Thu, 27 Aug 2026 16:56:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZsPpygA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADC81F000E9;
+	Thu, 27 Aug 2026 16:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787849792;
-	bh=PbiTD6lzL8qqMsoKt5E4d4Ayp91dEtIczbslfDTernQ=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=gpFNVGfHXO/gCOfYA2cLuKJbDlfK0Mxqsd4xCT9qdunvj7WZ2h6c60fB0g0dlrK45
-	 YndQkehYxUQr1yQuTlC4NTWkurCx331FzaYrVk5mOL/mUCrpl6VoCL9edgaqZNHljF
-	 INYlQmIvJixWtD5EyDRfm3iOUw6388dpbWABRKNJwxG6DKKXI3dNhbXYoHCouahaLj
-	 5o10IUghnnhTeA5JpRz9+k8GK37VSWgyFUAHreYN8+sNX4tlqWPlGaRbzMyvBUmxYZ
-	 +gIYdpYdCeBRti8+tQnmlDxlQlqUgdemgMz41wIPtDnKCysUFLTHbBX0YkHw7ol0pj
-	 t6IpRQeSUtlXg==
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id 03D231980076;
-	Thu, 27 Aug 2026 12:56:30 -0400 (EDT)
-Received: from ams-imap-11 ([10.64.2.31])
-  by ams-compute-02.internal (MEProxy); Thu, 27 Aug 2026 12:56:30 -0400
-X-ME-Sender: <xms:OWyQan4WD-YjUbHh6nbpXq9Z6FGE0Wu3BCx7HveKiEDwpOi5YnbdhA>
-    <xme:OWyQanubWF67u4o-E7XSuoCe9vO1ODalpxcTOiKExUM8px81qtKTHBdOaiefgUMiK
-    Xy1ZhpaUYzJobCfxLSwA-0CM5-sXjSHiMZHti2uELT8iUiooe8RSjk>
-X-ME-Proxy-Cause: dmFkZTGDLpveOOxF6h8KGY3t4+bTyWJouTCSmu9bofi2/ONhA+GjJ171fe+Abs3vV4Sc9e
-    XewEnlNATcru2t36sA6e8F8bHdzyXdv3OY5dRS4H6Dqa6nNroOz4cmAX3Bg5tjLZejz3eS
-    wHM5fzNAqbNNRc8hBW/cEgB7IQlkRkZ04yVCb6WZyJdrrvqE/xoxEveb0AgsHGdsb6ojdh
-    D/GlFlnGbplLnEDTFnu/f40vQaV1pVHFE8dV5xtTcHZ31a26IP6Us94m8/KEwZSoDlcg27
-    bdY7h6OWdH7WqAJvnrRL6uEYIPCw8fdv4Du+Yjzocz4y2xrIwKu4BeAA2CVGV3RSqMBwa9
-    HOyqUNkCn1ZAMi/uLPBBLyiTXUGyAQELvFqCwF+HMt+1pK6glz8FxVAB+T+UfZaolTdDC5
-    RsPJWaUUOUndtuwG4lzQkt4GUnSqVigRnLOqBVElQr1vb5ZNCt0njEJqyBCMVQYJOvXK9D
-    9wTsNgQdxEcoP/hXBWtyPHioP0prl9Vk5xCfW5G+UXnWc2r5wT2HQWGU2gNpQLy8Hu404v
-    B/irtfrYX3kd2QeGdr2jo29cSxwzeaD32mgqrcLY6eC4HO7C9roQ3N+uqAU6JihtoVSgTI
-    RL1IWZE8MpNp56P6GA8ad4hSJ4oR86dOfq+FkE/dh7XORw9SiXyqVgnv8dOQ
-X-ME-Proxy: <xmx:PGyQaiw4R3y9UG18vT5r0i-yruqCVrF6N-IvVhe896wddsf_wObsKw>
-    <xmx:PGyQamZEWQLQT9R2DxaMotC1tcl9qeJ-xC4U-WvYpGw0fY5T11OthQ>
-    <xmx:PGyQaj3RFn_t4zxFQ550xBRuAnVcx38jUiN6buQTmpLjxi9yT3T2Lg>
-    <xmx:PGyQaodjWrl02KoFmJK6amxLvxGZqymVF_kkzgw0nrFn4U38XCP-xA>
-    <xmx:PGyQagLMS3D2Dtq7amJUyUvF0rMNSdrt8iT5hHT1jCnTww9Pv-ZbQI6G>
-Feedback-ID: ice86485a:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id C7774F8007A; Thu, 27 Aug 2026 12:56:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=k20260515; t=1787849802;
+	bh=Z3MUP6Bwv+cqPINMRPGl0CTTrm0ni+uUUE/06XCeKXo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=CZsPpygAdsQrJ7wjPofRHT90cZfGcXchVOs/uitKLQa594tzi/x2vLXmrlI4Jjz8z
+	 YBBpogntFb+Z+L6via882L5FIB1Kl1ZjXBnPm5XVGPCkavSimOMEMuKFb+hqzWmML4
+	 2zCy6bIV0Y/Y1gLlE03yCC6xZMD1PIXnIS8iUqIgxNzATbB1Ly1qspQJ6WzLc7Y8qE
+	 cxsGacuk1UECz3o+rMySGerUs6/SPVs+/yx+z/R7Qqqv27vl7jQEc5LXbvO6MEWNEs
+	 9i+UGUw2CJIM1AkzqAlL9CEmlp7XjphmnUwzBHk03VjF+adEXHgEUx5WCPnChZ1sdn
+	 EuFIv9zLUYLqA==
+Date: Thu, 27 Aug 2026 17:56:38 +0100
+From: Lee Jones <lee@kernel.org>
+To: Stefan Wahren <wahrenst@gmx.net>
+Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	Jonas Rebmann <jre@pengutronix.de>
+Subject: Re: [PATCH V4] leds: rgb: leds-group-multicolor: Implement
+ default-intensity
+Message-ID: <20260827165638.GH2943942@google.com>
+References: <20260813091428.9072-1-wahrenst@gmx.net>
+ <20260813092522.0228D1F00A3A@smtp.kernel.org>
+ <20260813095330.GZ1072730@google.com>
+ <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 27 Aug 2026 18:56:05 +0200
-From: "Ard Biesheuvel" <ardb@kernel.org>
-To: "Thomas Zimmermann" <tzimmermann@suse.de>,
- "Javier Martinez Canillas" <javierm@redhat.com>,
- "Ilias Apalodimas" <ilias.apalodimas@linaro.org>,
- "Jani Nikula" <jani.nikula@linux.intel.com>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- "Simona Vetter" <simona@ffwll.ch>, "David Airlie" <airlied@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-Message-Id: <6b778c42-577b-4df1-a364-d4123f45080a@app.fastmail.com>
-In-Reply-To: <20260827140726.420734-1-tzimmermann@suse.de>
-References: <20260827140726.420734-1-tzimmermann@suse.de>
-Subject: Re: [PATCH 0/3] sysfb: Fix display output on Lenovo D330 (and others)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aaeb87f7-5a04-4592-ab59-b4114b005aab@gmx.net>
 
-Hello Thomas,
+On Thu, 13 Aug 2026, Stefan Wahren wrote:
 
-On Thu, 27 Aug 2026, at 16:01, Thomas Zimmermann wrote:
-> The kernel mis-interprets the display geometry given by the Lenovo
-> D330 as incorrect. The values are correct, but the display output
-> is rotated by 90=C2=B0. With the kernel's firmware quirk applied the o=
-utput
-> is garbled.
->
-> Remove the firmware quirk for the Lenovo D330 and let DRM's sysfb
-> drivers set the correct panel orientation instead. To make this work
-> for any display mode, use the panel size for looking up the correct
-> orientation.
->
-> Tested on a Lenovo D330-10IGM IdeaPad.
->
-> Thomas Zimmermann (3):
->   drm/edid: Add drm_edid_get_preferred_size()
->   drm/sysfb: Use preferred panel size for panel orientation quirks
->   firmware/sysfb: Remove rotation quirk for Lenovo D330
->
+> Hi,
+> 
+> Am 13.08.26 um 11:53 schrieb Lee Jones:
+> > On Thu, 13 Aug 2026, sashiko-bot@kernel.org wrote:
+> > 
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [Medium] The `default-intensity` property read from individual monochromatic LED nodes is applied to the multicolor group without rescaling, causing incorrect brightness calculations.
+> > Please review, explain or fix the Sashiko review(s).
+> > 
+> > If this is a set, this request includes the other patches too.
+> Sorry, I don't get the problem with "incorrect brightness calculation", I
+> tought the intensity setting is independent from the brightness. Btw the
+> intensity is applied to the monochromatic LED not to the group itself.
+> hallucination?
+> 
+> Does mixing PWM and GPIO LED in a RGB multicolor group make sense at all?
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Couldn't honestly tell you without digging in myself.
+
+I did just provide some concerns from Gemini though.  PGTAL.
+
+> > > --
+> > > 
+> > > --- Patch [1]: [PATCH V4] leds: rgb: leds-group-multicolor: Implement default-intensity ---
+> > > commit 13399f1aaceaf09afa7e252e35000d7d61ab1925
+> > > Author: Stefan Wahren <wahrenst@gmx.net>
+> > > 
+> > > leds: rgb: leds-group-multicolor: Implement default-intensity
+> > > 
+> > > This commit introduces support for the default-intensity property during
+> > > boot for LED multicolor groups. If the property is missing, the code falls
+> > > back to the previous behavior of configuring the sub-LED intensity to its
+> > > maximum.
+> > > 
+> > > > diff --git a/drivers/leds/rgb/leds-group-multicolor.c b/drivers/leds/rgb/leds-group-multicolor.c
+> > > > --- a/drivers/leds/rgb/leds-group-multicolor.c
+> > > > +++ b/drivers/leds/rgb/leds-group-multicolor.c
+> > > > @@ -108,8 +108,10 @@ static int leds_gmc_probe(struct platform_device *pdev)
+> > > >   		subled[i].color_index = led_cdev->color;
+> > > > -		/* Configure the LED intensity to its maximum */
+> > > > -		subled[i].intensity = max_brightness;
+> > > > +		ret = device_property_read_u32(led_cdev->dev, "default-intensity",
+> > > > +					       &subled[i].intensity);
+> > > > +		if (ret || subled[i].intensity > max_brightness)
+> > > > +			subled[i].intensity = max_brightness;
+> > > [Severity: Medium]
+> > > Does this logic properly scale the intensity when the individual LEDs in the
+> > > group have different maximum brightness values?
+> > > 
+> > > If a multicolor group consists of LEDs with vastly different maximum brightness
+> > > capabilities (like a GPIO LED maxing at 1 and a PWM LED maxing at 255), the
+> > > overall group max_brightness will evaluate to 255.
+> > > 
+> > > When reading the default-intensity from the device tree, the value is typically
+> > > specified on the scale of the individual sub-LED's max brightness. If this
+> > > value is assigned directly to subled[i].intensity without being scaled up to
+> > > the group's max_brightness, the sub-LED might be initialized with only a tiny
+> > > fraction of its intended intensity, often resulting in the LED being completely
+> > > unlit instead of at the requested intensity.
+> > > 
+> > > >   	}
+> > > >   	/* Initialise the multicolor's LED class device */
+> > > -- 
+> > > Sashiko AI review · https://sashiko.dev/#/patchset/20260813091428.9072-1-wahrenst@gmx.net?part=1
+> 
+> 
+
+-- 
+Lee Jones
