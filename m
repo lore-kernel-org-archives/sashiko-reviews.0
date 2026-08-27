@@ -1,124 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AF44078DF;
-	Thu, 27 Aug 2026 13:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2897137EFFC
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787838986; cv=none; b=UCAXDQtu2o0fyQ0N5nm73fbseNVQD8EmMdMbwEh4wizq/gh8UTDftJgtVDKMXiO9cXq9ASsqIYMpkVQG0V9bzrKSRG9uUmdF5/WM34CTyQc6uNuvMNAkh7PSAOd2r9kZ7zVpsUPhUlKn2vDjrXZG8hqaJ8BovHlqaJAth5w1vIU=
+	t=1787839739; cv=none; b=BzO7rfdNcmCvLiq5ScEIdKSxoaZJEHiCKUsREStWu41GOZt5mmbxVdGKCnPEdhEjbTWF7SVJzyoVWkeIKmGfY7nEWy5vRj9vt1TOGgtuuCrH1rAIKKHx0lUnIf55ELNC0cFyF9AjJ9lx7fB6YDpmbOk07O1E2JQv5efljcM5wnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787838986; c=relaxed/simple;
-	bh=/b+aWL7ASttO4LoGImr7pimmlclsoRV5dyY1Lk9F7LI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mJPY1h52ieuFVt5m+4syPUjP00CjV5UTu8X/pxYZ9vaZtWW09rpyBc1uvaYnD8qtcVjBgAabeflsQ4aCApgzGM9RAM9cat+Q0OSyyRx/hkcGoJduj3EAM4iZ32p8QtvwCcPC1OX93/JYK4ewWYWdPODL3Y3/Q61ZMdg2UebBvk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2grpNb+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787839739; c=relaxed/simple;
+	bh=Ca3PoKBt5YojbmsMUD2c3cCKZKqgHo2oirWHwI+0DAU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LGNSigYw957XXB8zE3EsghbA61wC4gYKJIEURsSWmNcubDPqD3bsFuTBNav8wMHlyxwGuYl9cCAJedjeB1s7zEBevTLdmMoo161fzPE5+xnXO2VH01XmQDoxijzfwyBL8zT6FQgq/4x/8R/N+5mCPhv8cJilt8UovUFesTpePMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=scWtY0Mp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=7QnZuwy7; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=J7e/mTEp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=NzSRZ1CL; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2grpNb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBF01F00A3A;
-	Thu, 27 Aug 2026 13:56:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787838984;
-	bh=TsZEyFLUJAXiiwBH948qkb5SC4n5awjiQq+9Qs++JKA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=X2grpNb++TjsXY0pU2amcEugeERBzIs1EAQfpiLLuNTX1t2xIeYi9xHVFCAGRGVnk
-	 T/3sNt97jSfugjR9FVXK869S8+wZqUoivvj3TO+0dQj7opYLdY+/SNfRZcOPBywKsz
-	 F/pGXtevP/v8Bf/vhEcbVf1yvujItTgowdDJV5KIVFnzUciX64BcLVRH/muSzdbv6b
-	 hc3JBwL9FGj1AqKzFzqCj2giW+0bzx7uO6QYONDd+kWO0SfdW0YYgnnDNmMJp5HOk/
-	 rsxbZcO12guovkkhNOXPrhI6w7Xf49cutP+tRDeWmTqfJ7WZwK7CK7npCXEuE+z22T
-	 axiLFEiUM103w==
-Date: Thu, 27 Aug 2026 14:56:21 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Rillian Grant <rillian.grant@gmail.com>, linux-leds@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] leds: flash: Add support for the TI LM3643 dual
- LED flash driver
-Message-ID: <20260827135621.GQ770273@google.com>
-References: <20260821083620.68324-1-rillian.grant@gmail.com>
- <20260821083620.68324-3-rillian.grant@gmail.com>
- <20260821084622.B77771F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="scWtY0Mp";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="7QnZuwy7";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="J7e/mTEp";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="NzSRZ1CL"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 7D0E61F841;
+	Thu, 27 Aug 2026 14:07:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787839656; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=inMzVHiVBcCLJ2+S7e7paRJRrABOr+WAxBkmBAGotf4=;
+	b=scWtY0MpjphaXr5P2UwQzhPVGTt/ohsX2XliSbhDuh8Mf5u6M3Mq/VpJjVTdNrDm4S+BLM
+	6DbhQHVRojnY29OVlcuXdTvXDEnVlOwQVuUUCL6CsBfsMaVsMzMCwgvg+vpFNJKGWTJdEj
+	fk/fo9rba7NPOFgZRtB50HdavfkFySc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787839656;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=inMzVHiVBcCLJ2+S7e7paRJRrABOr+WAxBkmBAGotf4=;
+	b=7QnZuwy71biK55TMmHsWTEMR7zuvwfpCEzIIfTzWcMXPxmQiYaqctwrnjiEONxOQ36trwm
+	1wVh7OOPOwr+sgDQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="J7e/mTEp";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NzSRZ1CL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787839652; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=inMzVHiVBcCLJ2+S7e7paRJRrABOr+WAxBkmBAGotf4=;
+	b=J7e/mTEpZoVKw2gNUopxUmZ18igpsEGpQHffTL+N4eZkXgN4r2qA72tuKA+TKOb/UzG5Bz
+	aSXN+IqBeqmVTshzKNbn+i2A4lLDP3xXp6A0XFmKFnDNxd3VG8WmVHPgnAzFRPv7iZRarR
+	OoiGLV7k0kIyeUUIhYIOv91uKGJSMKk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787839652;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=inMzVHiVBcCLJ2+S7e7paRJRrABOr+WAxBkmBAGotf4=;
+	b=NzSRZ1CLtTPRBUTERgxjWFBgcSKrDBCGBai0ax2S+IMOHCab/pGcICbEimCAkpVrqfVIl2
+	EtW7PiAxnUI7ZpCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E5EC91352C;
+	Thu, 27 Aug 2026 14:07:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id xG6WNqNEkGp0FQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 27 Aug 2026 14:07:31 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: javierm@redhat.com,
+	ardb@kernel.org,
+	ilias.apalodimas@linaro.org,
+	jani.nikula@linux.intel.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	simona@ffwll.ch,
+	airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org,
+	linux-efi@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 0/3] sysfb: Fix display output on Lenovo D330 (and others)
+Date: Thu, 27 Aug 2026 16:01:36 +0200
+Message-ID: <20260827140726.420734-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260821084622.B77771F000E9@smtp.kernel.org>
+X-Spam-Score: -3.51
+X-Rspamd-Queue-Id: 7D0E61F841
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	ARC_NA(0.00)[];
+	FREEMAIL_TO(0.00)[redhat.com,kernel.org,linaro.org,linux.intel.com,ffwll.ch,gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
 
-On Fri, 21 Aug 2026, sashiko-bot@kernel.org wrote:
+The kernel mis-interprets the display geometry given by the Lenovo
+D330 as incorrect. The values are correct, but the display output
+is rotated by 90Â°. With the kernel's firmware quirk applied the output
+is garbled.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Turning off an LED fails to clear the chip mode bits, causing power drain and breaking flash strobe teardown.
+Remove the firmware quirk for the Lenovo D330 and let DRM's sysfb
+drivers set the correct panel orientation instead. To make this work
+for any display mode, use the panel size for looking up the correct
+orientation.
 
-Please review, explain or fix the Sashiko review(s).
+Tested on a Lenovo D330-10IGM IdeaPad.
 
-If this is a set, this request includes the other patches too.
+Thomas Zimmermann (3):
+  drm/edid: Add drm_edid_get_preferred_size()
+  drm/sysfb: Use preferred panel size for panel orientation quirks
+  firmware/sysfb: Remove rotation quirk for Lenovo D330
 
-> --
-> 
-> --- Patch [2]: [RFC PATCH 2/2] leds: flash: Add support for the TI LM3643 dual LED flash driver ---
-> commit bdf1945ab184ca005c2f401ecd5408571ece1de3
-> Author: Rillian Grant <rillian.grant@gmail.com>
-> 
-> leds: flash: Add support for the TI LM3643 dual LED flash driver
->     
-> The LM3643 is an I2C dual LED flash driver. Its two high-side current
-> sources share a synchronous boost converter and each supports torch and
-> flash modes with programmable current and flash timeout alongside fault
-> reporting.
-> 
-> > diff --git a/drivers/leds/flash/leds-lm3643.c b/drivers/leds/flash/leds-lm3643.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/drivers/leds/flash/leds-lm3643.c
-> 
-> [ ... ]
-> 
-> > +static int lm3643_torch_set_brightness(struct led_classdev *led_cdev,
-> > +				       enum led_brightness brightness)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	if (brightness == 0)
-> > +		return regmap_update_bits(led->regmap, LM3643_REG_ENABLE,
-> > +				chan->enable_bit, 0);
-> 
-> [Severity: High]
-> When brightness is 0, this only clears the channel's enable bit but leaves
-> the LM3643_MODE_MASK bits intact. If no other LEDs are active, does this
-> leave the chip in an active power state (Torch or Flash mode) instead of
-> transitioning to LM3643_MODE_STANDBY, potentially causing continuous battery
-> drain?
-> 
-> [ ... ]
-> 
-> > +static int lm3643_flash_strobe_set(struct led_classdev_flash *fled_cdev, bool state)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	if (!state) {
-> > +		if (mode != LM3643_MODE_FLASH || !(enable_reg & chan->enable_bit))
-> > +			return 0;
-> > +
-> > +		return regmap_update_bits(led->regmap, LM3643_REG_ENABLE,
-> > +			LM3643_MODE_MASK, LM3643_MODE_STANDBY);
-> > +	}
-> 
-> [Severity: High]
-> If the torch brightness was set to 0 during a flash, the channel's enable
-> bit will have been cleared. During the subsequent teardown call to
-> lm3643_flash_strobe_set() with state = false, does this early return trigger
-> because the enable bit is no longer set?
-> 
-> This would fail to restore the mode to LM3643_MODE_STANDBY, permanently
-> stranding the driver's state machine in Flash mode.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260821083620.68324-1-rillian.grant@gmail.com?part=2
+ drivers/firmware/efi/sysfb_efi.c |  9 -------
+ drivers/gpu/drm/drm_edid.c       | 40 ++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/sysfb/efidrm.c   | 17 +++++++++++++-
+ drivers/gpu/drm/sysfb/ofdrm.c    | 16 ++++++++++++-
+ drivers/gpu/drm/sysfb/vesadrm.c  | 17 +++++++++++++-
+ include/drm/drm_edid.h           |  2 ++
+ 6 files changed, 89 insertions(+), 12 deletions(-)
 
+
+base-commit: dc462ab791b686c48545c160ecc81be64f77a846
 -- 
-Lee Jones
+2.55.0
+
