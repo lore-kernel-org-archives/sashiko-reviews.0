@@ -1,160 +1,302 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7533CB8F1
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5792379EE4
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787841842; cv=none; b=apHobFatwnbxHvVJfSoNQHTTXts4/FzW24ryz/SONt7oPyVvuR/hncTY/mLTXhahN2g/ctVtMSK5wnB+X/ndqBO2oGBsTf5s2vwpSvVvJwtQlEJ+Xa7Hn+UGHWUELd65dnW28H/A4LcsXrH1+959apa1mnmNFgy+M8dgTt5+w78=
+	t=1787841865; cv=none; b=CtMxWrMVOVp/XgpWkQRFTZy88ht6f1Gb41EKTENzVzmzZ+zVwviWkILgbrBjMTV3/R0BRvd9TnmEgQTu0HQHoYuxO7Ygu01iI14uY9XvtE8Iathf/m1SqPHtpMPPqZ87nKhm749ji2fp5S4bQNTFbXOUuTtK8MG7i/sINTHpz5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787841842; c=relaxed/simple;
-	bh=2yMOlEQj7jAQnVYrnxq92q5cPb+VkABylohPsNFpaTw=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=aS8XbY3INetpbYZasX1mr4lv9sEbI+ZREC418Pc94wlWAx2Njxl1lXMQLAQj79/Vwc+JO+MNfU/HJBgwjuuHlHA6VvhspaqrGxmxqLg2ZloqXYPxU90QU9r0RX/Gi4bsz0yp8bJ889O7j8w+vk9AV7veEtA9qPQ+1T8lrIllTkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hW45831P8zYQv2l
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 22:43:24 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 5F49E40678
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 22:43:55 +0800 (CST)
-Received: from [10.174.176.103] (unknown [10.174.176.103])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCXhUQoTZBqI_p3Dw--.9575S2;
-	Thu, 27 Aug 2026 22:43:55 +0800 (CST)
-Subject: Re: [PATCH bpf v2] bpf: Fix UAF due to concurrent consumption of
- waiting_for_gp_ttrace
-To: Pu Lehui <pulehui@huaweicloud.com>, sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260827084013.1062816-1-pulehui@huaweicloud.com>
- <20260827084756.EC4271F000E9@smtp.kernel.org>
- <f17ac4ba-3276-4fef-b9e5-5423956b68fa@huaweicloud.com>
-From: Hou Tao <houtao@huaweicloud.com>
-Message-ID: <9e28e21e-9e84-0104-40b2-490735b3451c@huaweicloud.com>
-Date: Thu, 27 Aug 2026 22:43:52 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+	s=arc-20240116; t=1787841865; c=relaxed/simple;
+	bh=zgojuW5dyUIosgiyZLORpmsAFjli11g5I7JugqOK/Mw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iA1dzIwmSpiaDenrb51/8PCiGO+EIqHkprWQky3KcfNo/YBY4WVv2g3gr4Nw/fNh5qMHl/+/s3RzbXt+mQb/iKkn36Pn5j2I+8ujFzJdQVIDDJIVZGdzsDw+1BM8R2H9h/vbUtCVLGVVzH/NQDN0uC19Vc47VCzhvw4ebYFAciM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RfNgf9YI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=DKiqoyjk; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fSBCyOpL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cPePCkT2; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RfNgf9YI";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="DKiqoyjk";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fSBCyOpL";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cPePCkT2"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id C1EA31F854;
+	Thu, 27 Aug 2026 14:44:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787841857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
+	b=RfNgf9YIsa9KxC38fRXNaAI3N2c47cOEvEhl9dr+Ne3eX0FhjKxDfTaZL6qsJ9PF+wsILq
+	QGCXaYbxawOOcFr75/oacM1Mo7FEdwPnBv9Ic1IBFwDjltw7ITqldrhVW0RgseUIWxdHmz
+	aaMCxxDShjeq6p/Y1kLsDYqN50oMD+Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787841857;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
+	b=DKiqoyjk7elnZApU+yVkjHAXmz+CDqW4SeVSr0kDXj6JjCRf8X+P4Rlt46KA7tySIti/Dp
+	WT0pRYGt8YaWdjBA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fSBCyOpL;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cPePCkT2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1787841853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
+	b=fSBCyOpLfN7tieZbkj8eR2ZHj68O06bKRXojlNTcdsiA/1jEoKtSD01ZZRjVUdnfOLWL/A
+	KenEuqO1+zNlZKFGI+Q5/tSrcgTcc99r6w4/hhra+pJN4HHZwsHe3XI73e9OBwrTtyYs3k
+	L+7knFMZsrLCb/K1nX37zJz+83cQoyo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1787841853;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
+	b=cPePCkT25V+zw08qFXwMEHztIQYruUYtcyjAdrtoqMwPWklRHgd9vkcu/iI6pl5s9A3FVD
+	J8wljhx5dZDwphCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AA9D01352C;
+	Thu, 27 Aug 2026 14:44:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id iqECKD1NkGreOQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 27 Aug 2026 14:44:13 +0000
+Message-ID: <eca20b6f-0f46-47c1-b6c7-5c906b23b7d6@suse.de>
+Date: Thu, 27 Aug 2026 16:44:13 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <f17ac4ba-3276-4fef-b9e5-5423956b68fa@huaweicloud.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] drm/sysfb: Use preferred panel size for panel
+ orientation quirks
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260827140726.420734-1-tzimmermann@suse.de>
+ <20260827140726.420734-3-tzimmermann@suse.de>
+ <20260827142139.E0D121F00A3A@smtp.kernel.org>
 Content-Language: en-US
-X-CM-TRANSID:_Ch0CgCXhUQoTZBqI_p3Dw--.9575S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxGr48GrWxXw1fKw15Wr4UArb_yoWrGry3pF
-	Z5XFyUArZ8AFZakrnFqw48GryfAw4Iq345GayUXFySkry3Aw1jgr4jqrWj9F9xAr4kCa47
-	trn093s7Zr1UZaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkG14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
-	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
-	2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
-	W8JwACjcxG0xvEwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7I2V7IY0VAS07AlzVAY
-	IcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
-	v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkG
-	c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
-	MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUdEfOUUU
-	UU=
-X-CM-SenderInfo: xkrx3t3r6k3tpzhluzxrxghudrp/
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260827142139.E0D121F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: C1EA31F854
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCVD_TLS_ALL(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
 
-Hi,
 
-On 8/27/2026 7:45 PM, Pu Lehui wrote:
->
-> On 2026/8/27 16:47, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] The patch fixes concurrent consumption for
->> `waiting_for_gp_ttrace` but incorrectly claims `free_by_rcu_ttrace`
->> is safe. A race condition during cache destruction leads to a
->> Use-After-Free on `free_by_rcu_ttrace`.
->> -- 
->>
->> commit ed5f43858e59ce799a585eeedfe466c5543df6aa
->> Author: Pu Lehui <pulehui@huawei.com>
->> Subject: bpf: Fix UAF due to concurrent consumption of
->> waiting_for_gp_ttrace
->>
->> This commit fixes a use-after-free caused by concurrent consumption of
->> waiting_for_gp_ttrace nodes by alloc_bulk() and __free_rcu(). It
->> introduces
->> a raw spinlock to synchronize operations on this list.
->>
->> The commit message notes:
->>> Note that free_by_rcu_ttrace does not suffer from this issue as it only
->>> has a single active consumer during normal operation.
->>
->>> diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
->>> index e9662db7198fe..58296e92a4fed 100644
->>> --- a/kernel/bpf/memalloc.c
->>> +++ b/kernel/bpf/memalloc.c
->> [ ... ]
->>> @@ -297,6 +307,7 @@ static void enque_to_free(struct bpf_mem_cache
->>> *c, void *obj)
->>>   static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
->>>   {
->>>       struct llist_node *llnode, *t;
->>> +    unsigned long flags;
->>>         if (atomic_xchg(&c->call_rcu_ttrace_in_progress, 1)) {
->>>           if (unlikely(READ_ONCE(c->draining))) {
->>>               llnode = llist_del_all(&c->free_by_rcu_ttrace);
->>>               free_all(c, llnode, !!c->percpu_size);
->>>           }
->>
->> [Severity: High]
->> This is a pre-existing issue, but does free_by_rcu_ttrace actually
->> suffer
->> from a similar race condition during cache destruction?
->>
->> If userspace triggers destruction of a BPF memory allocator via
->> bpf_mem_alloc_destroy(), CPU 0 sets c->draining = true and synchronizes
->> the irq_work:
->>
->> CPU 0: bpf_mem_alloc_destroy()
->>      WRITE_ONCE(c->draining, true);
->>      irq_work_sync(&c->refill_work);
->>
->> Meanwhile, CPU 1 could be executing alloc_bulk() inside the refill work,
->> consuming from free_by_rcu_ttrace:
->>
->> CPU 1: alloc_bulk()
->>      obj = llist_del_first(&c->free_by_rcu_ttrace);
->>
->> If CPU 1 reads the head pointer in llist_del_first() but is delayed
->> before
->> READ_ONCE(entry->next), and concurrently an RCU callback on CPU 2 calls
->> do_call_rcu_ttrace(), CPU 2 will observe draining == true here and
->> immediately free the nodes.
->>
->> When CPU 1 resumes and executes READ_ONCE(entry->next), won't this
->> result
->> in a use-after-free on the node that was just freed to the slab
->> allocator?
->
-> Quoting what Hou Tao said earlier [0]:
-> ```
-> The only possible way when there is concurrent llist_del_all()
-> and llist_del_first() is during bpf_mem_alloc_destroy().
-> bpf_mem_alloc_destroy() will set draining as true and do_call_rcu_ttrace
-> will invoke free_all in advance. But right then, the caller of
-> bpf_mem_alloc_destroy() will ensure there is no active allocation and
-> there will be no invocation of llist_del_first().
-> ```
 
-Er, I need to take it back. bpf_mem_alloc_destroy() could ensure there
-is no caller for unit_alloc(), but under PREEMPT_RT, alloc_bulk may
-still be running in the irq work kthread, and there will be the same
-problem.
+Am 27.08.26 um 16:21 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
-> [0]
-> https://lore.kernel.org/bpf/05446fdb-2e94-47b0-91fb-b4f84b6baaa3@huawei.com/T/#m7b523472481ed192f4004517a6f877dc72d02370
+> New issues:
+> - [Medium] The sysfb drivers parse unvalidated EDID data to extract the preferred size.
+
+If we read bogus values, the panel orientation could be wrong. Nothing 
+worse happens.  Apart from that, most drivers call 
+drm_edid_header_is_valid(). I'll add this call to ofdrm, which is 
+currently missing it.
+>
+> Pre-existing issues:
+> - [High] drm_edid_get_preferred_size() incorrectly checks the value pointed to by width/height instead of validating the pointers themselves.
+
+That's just fallout from the typo in patch 1.
+
+> --
+>
+> commit df008c5490e15b30036ebe81983d7a6c0c6e5b33
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
+>
+> drm/sysfb: Use preferred panel size for panel orientation quirks
+>
+> Sysfb drivers currently use the given display mode for looking up the
+> panel orientation. But the look-up table stores the native geometry of
+> the panels, so the lookup fails if the current mode sizes differs.
+>
+> Get the panel's native geometry with drm_edid_get_preferred_size() from
+> the EDID and use it for looking up the panel orientation.
+>
+>> diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
+>> index 3f9cd5d03efb2..7a7d12003304f 100644
+>> --- a/drivers/gpu/drm/sysfb/efidrm.c
+>> +++ b/drivers/gpu/drm/sysfb/efidrm.c
+> [ ... ]
+>> @@ -217,6 +218,20 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>>   		sysfb->edid = dpy->edid.dummy;
+>>   #endif
+>> +
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but I wanted to ask about the
+> semantics of drm_edid_get_preferred_size(). In drivers/gpu/drm/drm_edid.c,
+> it does:
+>
+> 	if (*width)
+> 		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
+> 	if (*height)
+> 		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
+>
+> This incorrectly checks the values pointed to by width/height instead of
+> validating the pointers themselves. A caller passing a NULL pointer for
+> either width or height will cause a kernel panic (NULL pointer dereference).
+>
+> Furthermore, passing a pointer to a zero-initialized variable evaluates to
+> false, causing the function to silently skip populating the preferred size.
+> While this patch bypasses the crash by passing non-NULL pointers initialized
+> to >0, is it worth fixing the generic API so other callers do not trip over
+> this?
+>
+> [Severity: Medium]
+> Does parsing an unvalidated EDID block pose a risk here? The sysfb drivers
+> parse unvalidated EDID data to extract the preferred size.
+>
+> If the firmware provides a corrupted EDID where only the 8-byte header is
+> valid, this code extracts geometry from potentially corrupted firmware data,
+> which can result in bogus resolutions being passed to the panel orientation
+> quirk lookup.
+>
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+> [ ... ]
+>> diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdrm.c
+>> index 819aed466727e..6cf2440d7d9e2 100644
+>> --- a/drivers/gpu/drm/sysfb/ofdrm.c
+>> +++ b/drivers/gpu/drm/sysfb/ofdrm.c
+> [ ... ]
+>> @@ -994,6 +995,19 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>>   		sysfb->fb_gamma_lut_size = OFDRM_GAMMA_LUT_SIZE;
+>>   	sysfb->edid = edid;
+>>   
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+> [Severity: Medium]
+> Similarly here in ofdrm_device_create(), unvalidated EDID data is parsed.
+> Could this lead to bogus geometry being extracted from a corrupted EDID?
+>
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+> [ ... ]
+>> diff --git a/drivers/gpu/drm/sysfb/vesadrm.c b/drivers/gpu/drm/sysfb/vesadrm.c
+>> index 6a67b2d2e451b..8c52bbac6d2ff 100644
+>> --- a/drivers/gpu/drm/sysfb/vesadrm.c
+>> +++ b/drivers/gpu/drm/sysfb/vesadrm.c
+> [ ... ]
+>> @@ -484,6 +485,20 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>>   		sysfb->edid = dpy->edid.dummy;
+>>   #endif
+>> +
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+> [Severity: Medium]
+> Likewise in vesadrm_device_create(), parsing unvalidated EDID data may
+> result in bogus resolutions being passed to the panel orientation quirk
+> lookup. Should the EDID be fully validated first?
+>
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
 
