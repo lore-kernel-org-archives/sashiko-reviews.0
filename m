@@ -1,256 +1,185 @@
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.54])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2EA3DD86C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 08:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1CF348465
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 09:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787820670; cv=none; b=uh/iHebHXRSYKVhxDQ6cLi8jnk+ycV/PRZk4Yp1DTYUgHGNGDRGkssFHrB3Ltg1yxwJQs5E+t8Bz1lQDz5b3keueEXe7QcXLZnticlD/DD3XBgTFcYQrDEIWPUkdcU5pZJrBGAHOTzEU16sXFKNjLDYIKulnXP3JFvmV06bddXI=
+	t=1787821507; cv=none; b=WwBnI2N9jkwlKTpqOk1WsfiI/W3KNVst6xkTUISMDWYwBWWSkYz8hh0vUkwo88KXyL26SeSkFReUkIe27pFWEl0Qis7h520ioAa5K7JoKnc/Nce3m8LfKaCHnBy4tayeAvjP6IwZz8VRO/m+5kEW+VAWCpzr10SCNksDour6I9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787820670; c=relaxed/simple;
-	bh=V7f3mO3z8lJ4TwwIBXW3L3UKZCx34uNnG/3o1Yvd7bc=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EnpksAWvbtrLR8JuKMdePHt9XgLHqMDDAIw7E5ENw82EKUkYQ6fAdYZSG+MIadNHmm1Whxn6eiIoqrxnLfu+u3MQHnaiz11Ek5IRSx31bK4uLeWEAfGKjt001tQ6GmocE1N25eWOtP429HKQGuCXDd9FyLLnoutABrYPjK//B7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=JAihs0Ak; arc=none smtp.client-ip=43.163.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1787821507; c=relaxed/simple;
+	bh=lx4MOuPt2kP7MGAbn5bWo4Ms1Qte1SBmSD75PUOM2gc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FOnCN4U47swNZMYz9hb2aVE2p08+XHL5XDyyfPburyDE21WqaVRVSeouf/aIA8q3xaeARzpwZhmilY8ZNvct2+2YcfXUIS4mgtXV70BtteiufiUApqAqazVbN9LNXXdJYL1CGm2OeGl0FYxc0zTVF8eTX92qSqxArDnGZlkacME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QI7DPiwj; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="JAihs0Ak"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1787820656; bh=MkVAz+nziKZdCTn6HmvN/NomSd/COxgGaSRyDjl50UA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JAihs0AkYXHVUWlVxhG89wNjalEeGvHFGgfceVWgC5bRNSRDoBQ55GebIh+QHgwLx
-	 9rg5QtjZ/HxBKxr6Ta/GEMbo+7EUeaFw8tYpmOqQK1jsZ/a+amuKcHHQ2t02Nb2m+6
-	 robKvqOrMEQzcpDFtceCjB53vsx4AnB1/LWiay4w=
-Received: from DESKTOP-AT5F202.localdomain ([183.242.244.64])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id CB527A6F; Thu, 27 Aug 2026 16:50:53 +0800
-X-QQ-mid: xmsmtpt1787820653tenvsk5pw
-Message-ID: <tencent_DBADB12BBC6D88300488F16E75A384FAE505@qq.com>
-X-QQ-XMAILINFO: ODafEzNm5ExjyRyvYuhEnPZXoeEln5e2S2zBV2pNntpeSDN8DTevB9gCk1ENw7
-	 SjIz5UT8CQkf/6UKM1Vl1MDaTpaxqlMJ08xPhbaZu/e344rxtcy+v9elLQxseJTr0Dvj5+6A5zew
-	 wNDQmSk0mKfktzrG0QoEgvZpcRiVADtWR2LdBBShLvYCI4j2y5pfTptTuN0EX5bF4mElCcEqbZxF
-	 fFaHOcsmBP5j0XCDSee5f4rRRCPwEGXdLdTtTyO/lfpDvXDBRngFt9J67xaxPf5I205Ax0zzp6jJ
-	 i5WhvLSOmMHqGt3qBen1ybCQdGV60WLYinDYBoo89X2SMceAIP1YJFqFsmsVDS753SnoxPIA03+3
-	 9BOHqlouKL4JN6oHdTTsDhOpl2cndZoA/KK984r0+6fPOEzD18tjtq/e9qzbZIi3261JnR+JDZBt
-	 9XQaUHzRW2B2YqvYNKEjOkx6sJVccm7uulCpJVFUPxBVkcbJ0lVi5Nhj46L4qFfWdAIGLAn13wwH
-	 rYU/dLxfcp6Twrw0csjEzVk13j6bU5hjrG5yC2z6/oLo6wu3uU2cGK751qn2OATaNndwFgFlM5ae
-	 2Gzcnj0ijJeqG4JUSqzGEWMpqy1BwxXCFZPEy5qjd3jknfsjL7uGlb3iHQVXskULSkD1EYegM0y6
-	 HH5iE5FC8Dj2cHWS734WxU3hVW9V3IOJsrfOKYOYzZpUeJeV7dEShztsQ4abr5Om4bkJbEsywB1i
-	 G/cz7cCzXxTZ0Xty1RfAxetbL4THRWZrTPLoWvzsiAgRwQtZXwaRtdDiCoLWFfTAeXjVRlr2RLfx
-	 rDVf1+pOgDThfgbdsqJV9scM6n7vsHiKRwSspHvA+PQiBgZIJAiDeLMhK9oPdcgEX+zdy1HniSyB
-	 oLznFPVoqaLrJEYjOJk0aVk+P5Z0Rr7NlzaZ+asVUrwC3G4SWFGRfK3FIS0gGUXl+NVCfM2N351V
-	 wIgBrqEJt97wPWioyAc2/MhgHLMZoFgDaZT4qD/hAW4FrbIngF9B+qHo68+U2XZ4xsUV55z+Pgwp
-	 aHKNZhzU6rsIwtpQ4WcR5Dh5oQb+JeSbcq7Yw1oxopr7WbmFyK
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-Date: Thu, 27 Aug 2026 16:50:52 +0800
-From: shuo chen <1289151713@qq.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-Subject: Re: [PATCH V3] Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
-X-OQ-MSGID: <ao_6bP7yWpEHM8Bs@DESKTOP-AT5F202.localdomain>
-References: <aoJ4bJZNgNAt4pLD@mit.edu>
- <tencent_5FCFA1D9100C4691D5AA92A597B846A8F007@qq.com>
- <20260822164543.96A9F1F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QI7DPiwj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1787821499;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mLLq8yOxwzR5S4mcnBaUPftModHZoRx/qzRb/ATZRCA=;
+	b=QI7DPiwjzMVlyY8DD4ks7FmfgbkSggSzSuRUKeZkoRJG4CcDDsjj+6moSyQbfAjDjdVSJf
+	BZofiNp4fhP8Ww4i6WDG3RsJQtYbKs9gUR/NuXe5ylEyfMkTaxsRVNPIIovPCGH/mD/rwm
+	MNLuU7Pv569stAAwueSjKA62hE0Javg=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-4eo4tKcLOAqSDFPCs-NfwQ-1; Thu, 27 Aug 2026 05:04:57 -0400
+X-MC-Unique: 4eo4tKcLOAqSDFPCs-NfwQ-1
+X-Mimecast-MFC-AGG-ID: 4eo4tKcLOAqSDFPCs-NfwQ_1787821496
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c213d5fb55aso214432566b.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 02:04:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787821496; x=1788426296;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mLLq8yOxwzR5S4mcnBaUPftModHZoRx/qzRb/ATZRCA=;
+        b=qyquGVrZ+Mqm9qQ62bs1SIa2oAMjWKfMBnQcMycn7poQJGgq1CU31T6z99RkCgRNf1
+         kIK1Fl0WwxLxpehMHw/raML5WImq0ybZ2f20+Me5pti4Hw7NastyNVowL5B8CDJdnFLT
+         gjmOhVre9L2bBfxJUheZzqaYFkDMZOAw3L5KK/pQRdqjsgJsbW5dTsy1swDayYC8XTTn
+         3VFoMsjzZvRopHxFwGQUKr8WMGvWVk+p/c+YpCmjeMbL7+/EgUgISvbisJ9wASBc31NY
+         769Ds6pcemFGvAQpsTagn26kqQV7WuGfPHlkD1kWxH0YqhuptsKnVEokVU45L6fTji7p
+         O0qA==
+X-Forwarded-Encrypted: i=1; AHgh+Ros/pLtG94x0X9gWDYLh+GtWbWHykX64zPoiUEap/XCh8t3Yb14aV63i+DpfKhH183uFbZg364H72Mzddd108Y=@lists.linux.dev
+X-Gm-Message-State: AFuF++lppRRMcUv+NQsJNaMOyuQ4ANGOUdnwak0qnkjzmOLCNhBBCaNm
+	Q0+ZK8rELN7nmbAlLdv0YoSqa9Gp8/b/uFI355R6gmz/ikSsuap2VurCwCbz3j/amMag3vOLwJf
+	prhOnow1gIDcKdxg6MJpqdMx0EDOnd8wh/ToYG+uxik4fU+QSRaUKMJgiXxp6IwfJLLSoj1o7Pi
+	21bozZAn8R+eOfjSypL7N16DfmvlioFzCUp5qpI1Tqz70Mud1T0V2X8Hs=
+X-Gm-Gg: AR+sD13AYjOtscNWEJk2I7Nshv24q4Z4KuzVJU1+f3VKZOAEkcdMJcgbEpMj8MnXlSw
+	0CdGjMlobpUYg5t02r20qcq6j1HuWPw8u7N+6zR7N5F1bhOLE1ly8Izy9UIvIfqzg8xR2IOCEsL
+	8zXe5UXvgJ1Cqfamo1H8EIfkOjZG1fJoKImDVrTXZXXpFDTuVX74ysSVbI
+X-Received: by 2002:a17:907:3e26:b0:c12:83c9:d41 with SMTP id a640c23a62f3a-c250c595aaamr1332874566b.12.1787821495964;
+        Thu, 27 Aug 2026 02:04:55 -0700 (PDT)
+X-Received: by 2002:a17:907:3e26:b0:c12:83c9:d41 with SMTP id
+ a640c23a62f3a-c250c595aaamr1332868566b.12.1787821495442; Thu, 27 Aug 2026
+ 02:04:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260822164543.96A9F1F00A3A@smtp.kernel.org>
+References: <20260824211544.3984835-1-crwood@redhat.com> <20260824211544.3984835-2-crwood@redhat.com>
+ <20260824213037.F41B11F000E9@smtp.kernel.org> <20260826153132.1333fac6@gandalf.local.home>
+ <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
+In-Reply-To: <588ce7912915573ccba7439d7e50a90d7941c764.camel@redhat.com>
+From: Tomas Glozar <tglozar@redhat.com>
+Date: Thu, 27 Aug 2026 11:04:44 +0200
+X-Gm-Features: AcwNN1UNmFxRU8e_F0pysLHFjW-g2Nsy76t0iEs7XkgqngUUF9dD7UYeAqSVmKk
+Message-ID: <CAP4=nvTZ3ZKf23j=P_=ZpMD7AHvnHOK=f0W=Aa+1Af-zBrBVYw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] tracing/osnoise: Per-cpu mutex and fd detachment
+To: Crystal Wood <crwood@redhat.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>, sashiko-bot@kernel.org, 
+	sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: ZPqp_L-f95PV0_kvbGWna4dAHmj90ySqtayxFImTjZQ_1787821496
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 22, 2026 at 04:45:43PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> - [Critical] Misordered metadata update causes corrupt directory `i_size` on disk.
-> - [Critical] Unconditional BUG_ON() crash in `ext4_free_blocks()` on error paths for allocations > 1 block.
-> - [High] Permanent block leak when `ext4_ext_insert_extent` fails with an error other than EDQUOT or ENOSPC.
-> - [High] Concurrent inode metadata changes are overwritten during error recovery.
-> - [High] Permanent space leak due to hardcoded extent length of 1 block.
-> - [High] Missing `i_blocks` accounting for newly allocated physical blocks.
-> - [Medium] The commit message describes a completely different change.
-> --
-> 
-> --- Patch [1]: [PATCH V3] Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir ---
-> commit 1cb52ec17c1b86718dd26a2d224b02e260c85e40
-> Author: pipishuo <1289151713@qq.com>
-> Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
-> 
-> The commit message describes adding a state check in ext4_readdir, but the
-> patch refactors ext4_convert_inline_data_nolock and introduces a new block
-> allocation mechanism for inline data conversion.
-> 
-> >     Add EXT4_STATE_MAY_INLINE_DATA check in ext4_readdir
-> >     
-> >     Resend as v3 because I forgot to add the version number
-> 
-> [Severity: Medium]
-> Is the commit message mismatched with the actual code changes? The subject
-> and message describe adding a state check in ext4_readdir, but the patch
-> entirely refactors ext4_convert_inline_data_nolock and introduces a new
-> block allocation mechanism for inline data conversion without mentioning it.
-Got it
-> 
-> > --- a/fs/ext4/inline.c
-> > +++ b/fs/ext4/inline.c
-> [ ... ]
-> > @@ -1079,21 +1080,115 @@ static int ext4_update_inline_dir(handle_t *handle, struct inode *dir,
-> >  	return 0;
-> >  }
-> >  
-> > -static void ext4_restore_inline_data(handle_t *handle, struct inode *inode,
-> > -				     struct ext4_iloc *iloc,
-> > -				     void *buf, int inline_size)
-> > +static int ext4_set_inline_data_block(handle_t *handle, struct inode *inode, ext4_fsblk_t block,
-> > +					unsigned int len, struct buffer_head *bh)
-> >  {
-> [ ... ]
-> > +		struct ext4_extent newex;
-> > +
-> > +		newex.ee_block = cpu_to_le32(0);
-> > +		newex.ee_len = cpu_to_le16(1);
-> 
-> [Severity: High]
-> Does this permanently leak physical blocks if the allocator returns more
-> than 1 block? When ext4_mb_new_blocks() returns a larger allocation
-> (e.g., due to cluster normalization on bigalloc filesystems), hardcoding
-> the extent length to 1 abandons the extra blocks. Should this use the
-> allocated length (len parameter) instead?
-The excess blocks will be stored in i_prealloc_node, so setting the length
-to 1 is fine.
-> 
-> > +		ext4_ext_store_pblock(&newex, block);
-> > +		path = ext4_ext_insert_extent(handle, inode, path, &newex, 0);
-> 
-> [Severity: High]
-> Does this miss accounting for the newly allocated physical blocks?
-> Manually inserting the extent bypasses the normal ext4_map_blocks()
-> pipeline, meaning ext4_inode_add_physical_space() is never called to
-> increment inode->i_blocks. Could this lead to stat() inconsistencies and
-> fsck failures?
-I don't have a deep understanding of the i_blocks update mechanism, 
-but I still believe that i_blocks should not be updated here.
-> 
-> > +		if (IS_ERR(path)) {
-> > +			error = PTR_ERR(path);
-> > +			if (error == -EDQUOT || error == -ENOSPC) {
-> > +				goto recovery;
-> > +			} else {
-> > +				ext4_forget(handle, 0, inode, bh, block);
-> > +				goto nofree;
-> > +			}
-> > +		} else {
-> > +			ext4_free_ext_path(path);
-> > +		}
-> > +	} else {
-> > +		EXT4_I(inode)->i_data[0] = cpu_to_le32(block);
-> > +	}
-> > +	error = ext4_xattr_ibody_find(inode, &i, &is);
-> > +	if (error)
-> > +		goto recovery;
-> > +	if (!is.s.not_found)
-> > +		error = ext4_xattr_ibody_set(handle, inode, &i, &is);
-> > +recovery:
-> > +	if (error) {
-> > +		ext4_discard_preallocations(inode);
-> > +		ext4_free_blocks(handle, inode, bh, block, len, EXT4_FREE_BLOCKS_FORGET);
-> 
-> [Severity: Critical]
-> Can this trigger a BUG_ON() crash in ext4_free_blocks() on bigalloc
-> filesystems? If the length (len) is greater than 1, calling
-> ext4_free_blocks() with both a valid buffer_head (bh) and the
-> EXT4_FREE_BLOCKS_FORGET flag will unconditionally hit the
-> BUG_ON(count > 1) check inside ext4_free_blocks().
-Got it
-> 
-> > +nofree:
-> 
-> [Severity: High]
-> Does the jump to the nofree label earlier permanently leak the allocated
-> blocks if the extent insertion fails with an error other than -EDQUOT or
-> -ENOSPC? Jumping here bypasses the ext4_free_blocks() call during error
-> recovery. Because ext4_forget() only removes the buffer from the journal
-> without freeing the physical blocks in the buddy bitmap, the blocks appear
-> to be permanently leaked.
-Got it
-> 
-> > +		memcpy((void *)raw_inode, inode_buf, inode_size);
-> 
-> [Severity: High]
-> Could this non-atomic memcpy() overwrite concurrent metadata updates?
-> The i_data_sem protects the block mapping, but background flushers or
-> other operations might have updated the inode's timestamps or extended
-> attributes in the raw_inode while we were allocating blocks. Blindly
-> copying back the old inode_buf could silently discard those changes.
-Got it
-> 
-> > +		memcpy(ei->i_data, raw_inode->i_block, EXT4_MIN_INLINE_DATA_SIZE);
-> > +		ext4_clear_inode_flag(inode, EXT4_INODE_EXTENTS);
-> > +	} else {
-> > +		ext4_clear_inode_flag(inode, EXT4_INODE_INLINE_DATA);
-> > +		get_bh(is.iloc.bh);
-> > +		error = ext4_mark_iloc_dirty(handle, inode, &is.iloc);
-> > +		EXT4_I(inode)->i_inline_off = 0;
-> > +		EXT4_I(inode)->i_inline_size = 0;
-> > +		ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-> > +		if (S_ISDIR(inode->i_mode)) {
-> > +			i_size_write(inode, inode->i_sb->s_blocksize);
-> > +			EXT4_I(inode)->i_disksize = inode->i_sb->s_blocksize;
-> > +		}
-> 
-> [Severity: Critical]
-> Does this permanently save a stale directory size to disk?
-> The raw metadata buffer is marked dirty via ext4_mark_iloc_dirty()
-> before the VFS inode size and i_disksize are updated. Since this patch
-> removed the later ext4_mark_inode_dirty() call, is there a risk the
-> updated size fields never make it to the on-disk raw_inode?
-Got it
-> 
-> > +		brelse(bh);
-> > +	}
-> [ ... ]
-> > @@ -1168,24 +1263,28 @@ static int ext4_convert_inline_data_nolock(handle_t *handle,
-> >  						   inode, data_bh);
-> >  	} else {
-> >  		unlock_buffer(data_bh);
-> > -		inode->i_size = inode->i_sb->s_blocksize;
-> > -		i_size_write(inode, inode->i_sb->s_blocksize);
-> > -		EXT4_I(inode)->i_disksize = inode->i_sb->s_blocksize;
-> > -
-> >  		error = ext4_init_dirblock(handle, inode, data_bh,
-> >  			  le32_to_cpu(((struct ext4_dir_entry_2 *)buf)->inode),
-> >  			  buf + EXT4_INLINE_DOTDOT_SIZE,
-> >  			  inline_size - EXT4_INLINE_DOTDOT_SIZE);
-> > -		if (!error)
-> > -			error = ext4_mark_inode_dirty(handle, inode);
-> >  	}
-> > +out_bh:
-> > +	if (error) {
-> > +		int flags = 0;
-> >  
-> > -out_restore:
-> > -	if (error)
-> > -		ext4_restore_inline_data(handle, inode, iloc, buf, inline_size);
-> > +		if (data_bh)
-> > +			flags |= EXT4_FREE_BLOCKS_FORGET;
-> > +		struct ext4_inode_info *ei = EXT4_I(inode);
-> >  
-> > +		down_write(&ei->i_data_sem);
-> > +		ext4_discard_preallocations(inode);
-> > +		ext4_free_blocks(handle, inode, data_bh, newblock, allocated_block, flags);
-> 
-> [Severity: Critical]
-> Similarly, could this also trigger the BUG_ON(count > 1) in
-> ext4_free_blocks() on failure? If allocated_block is greater than 1
-> (e.g., bigalloc) and data_bh is valid, flags will include
-> EXT4_FREE_BLOCKS_FORGET, which crashes when freeing multiple blocks
-> with a provided buffer_head.
-Got it
-I'll fix these issues and send V4.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/tencent_5FCFA1D9100C4691D5AA92A597B846A8F007@qq.com?part=1
+st 26. 8. 2026 v 23:21 odes=C3=ADlatel Crystal Wood <crwood@redhat.com> nap=
+sal:
+>
+> On Wed, 2026-08-26 at 15:31 -0400, Steven Rostedt wrote:
+> > On Mon, 24 Aug 2026 21:30:37 +0000
+> > sashiko-bot@kernel.org wrote:
+> >
+> > > [Severity: High]
+> > > Can holding osn_var->lock while calling kthread_stop() cause a deadlo=
+ck?
+> > >
+> > > kthread_stop() blocks waiting for the target kthread to exit. However=
+, if
+> > > the kthread is currently handling a migration request in
+> > > osnoise_migration_pending() (shown slightly earlier in the diff), it =
+will
+> > > attempt to acquire this same osn_var->lock before it can clear its st=
+ate and
+> > > exit:
+> >
+> > This code has a lot of nastiness in the locking with regard to the thre=
+ad.
+> > I haven't looked deeply at your patch, but the fact that Sashiko pointe=
+d
+> > out a possible deadlock I think you may be hitting the mess I was hitti=
+ng.
+> >
+> > Have you looked at this thread: https://lore.kernel.org/all/20240820130=
+001.124768-1-tglozar@redhat.com/
+>
+> That thread is about user fd sync, which is what this patch is trying to
+> address.
+>
+> This particular deadlock is with kernel threads, in a corner case of
+> getting migrated even though we try to pin them to one cpu.  We can get
+> rid of this migration code and just have stop_kthread() take care of it,
+> adding a get/put_task_struct() so that it's OK for the thread to die
+> early.  This way we can also handle any other abnormal thread exits.
+>
+> I'll respond to the rest of the Sashiko comments soon.
+>
+> >
+> > It has some tests I ran along with tracing that detected issues. Of cou=
+rse,
+> > everything needs to be run with lockdep enabled too.
+>
+> I did run with lockdep (and some custom hacky state tracking) but
+> forcing migration is a hole in my test coverage.
+>
+> Is there a particular test you're suggesting?
+>
+> -Crystal
+
+The race window is practically really small. I had success of
+reproducing the migration deadlock in a virtual machine with a bash
+script [1] that deliberately slows down the kernel/osnoise tracer with
+perf, ftrace, and bpftrace hooks:
+
+[root@cs9 tglozar]#
+/home/tglozar/dev/linux/tools/tracing/rtla/osnoise_migration_race.sh
+13 10000
+cpu=3D13 mask=3D0,1,2,3,4,5,6,7,8,9,10,11,12 iters=3D10000 stop=3Dnop
+iter 1 ok (kpid 265080)
+iter 2 ok (kpid 265086)
+...
+iter 422 ok (kpid 267814)
+*** hang iter 423  kthread=3D267821  affiner=3D267823  stopper=3D267827
+    cat /proc/267821/stack /proc/267827/stack
+    do not rmdir instances/ or write current_tracer/online; reboot
+[root@cs9 tglozar]# cat /proc/267821/stack; echo -------; cat /proc/267827/=
+stack
+[<0>] timerlat_main+0x266/0x3f0
+[<0>] kthread+0xe6/0x120
+[<0>] ret_from_fork+0x1be/0x250
+[<0>] ret_from_fork_asm+0x1a/0x30
+-------
+[<0>] kthread_stop+0x6b/0x180
+[<0>] stop_kthread+0x86/0xc0
+[<0>] stop_per_cpu_kthreads+0xf/0x40
+[<0>] osnoise_workload_stop.part.0+0xc/0xa0
+[<0>] timerlat_tracer_reset+0x9/0x40
+[<0>] tracing_set_tracer+0x14d/0x300
+[<0>] tracing_set_trace_write+0x7f/0xe0
+[<0>] vfs_write+0xf8/0x410
+[<0>] ksys_write+0x65/0xe0
+[<0>] do_syscall_64+0xc1/0x460
+[<0>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+[1] https://gitlab.com/-/snippets/6045758
+
+Note that any path that is calling kthread_stop() can trigger the
+deadlock (together with the migration), that is, both making the CPU
+offline and stopping the osnoise tracer. Sashiko flagged the former,
+my reproducer used the latter (the script can do both).
+
+
+
+Tomas
 
