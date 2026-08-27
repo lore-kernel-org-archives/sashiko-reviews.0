@@ -1,104 +1,101 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3323CEBB8
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 16:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D90437EFF3
+	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 16:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787847707; cv=none; b=rY8LOalQ58Ht490y4c/WBi2iZNJaQVgRFc9ENyC46vMj3NtxkrAN73LHCJt4DHxovP847H/eserYxNzpin2vOS5x1k0EDC5XdlZ1TIqDW1i+/rzeMR3R+pQCObiwYU/qaxmeRIyDZgsSy5RkwpKYBN9AKsIWUG73FxeWXx6O3jE=
+	t=1787849793; cv=none; b=SuYC4j55+HGd4xlcnF61AnSlQEf2nDM2b/8FDqgRg+D35ktkBzd0H5eCGABIkCMlKdY51CeTWhsno+sB/OW1iAR+p+bs1WrEvKarH9863+ikP8qpczM9WCUEOs4+yGhMdB6VLnZ59KFPZRpOEmOJ36+ld3AjxO9JKxKjbQv/el0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787847707; c=relaxed/simple;
-	bh=O80S3pjkeXSWObOAxYWMssL152HBOgoLeVg1gUU1MFc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ll7A3H95gw9crqfxoo7Y8HXCWSoVN41sB8XjcB9LNtvHKWhWsvNStKbDRzu82BhF5QGOcCB4g2bmLubIdee80FSG5njniUQ4bxZ/Ho1tHS1jifBi36/f+GYiD3ke0xKLmRSdYq8xDynMIqSnxDkswX2Czz2Re/GimacbQFtVx3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FnjEw0dt; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1787849793; c=relaxed/simple;
+	bh=Wx8ZuaPdOk0CUD+4O2fpoWYPaklYZrXNxnA+Ab2hPY8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=b6Fpk3SaRwGfiluGLjvfTz3/rXeU8KaZwcuE4lBKdputqfXt6Rxqvmrof1sSWnSp2Wg+w8f14HaIKaGNdCvO8KHnFhjW4JpzDY8rX/E0TByX1lTp16o/dcdpAKuTqcH52pKi/tMS2NiACyhjGSDuT3Oqr6nY/En+EDa3RQ7JUhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpFNVGfH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FnjEw0dt"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-495590dde14so22131585e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 09:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787847704; x=1788452504; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xgZRRPFD/4tuccx91/eOfBZb+vhsoVmREaFx21ykfHI=;
-        b=FnjEw0dt2jChG+qnBZGS0CWu+6UQ8d2S/yJWlOpMjKkZbGk8UUZJ8nH5bMWoGz0KhS
-         sQ1OOhg0s103X0wiUr2wqbZ9NAL3JvrwKZRowlgurJnAv7IZp7mkY11C7qzjK/UC4KVU
-         64zSY+TSvpgULsDIzNA1CmvFY830IVQmbbtf/ap81CjJamx7pt5ZTM3fiLIUyCcmKfrv
-         vHzB/nHoB1k68qcMeS7jQ7sLmasyEq9JX2b47WOgP6scqIzUIBVFmm1obKdF7bU6QYRP
-         3PLRB8RL+UUurSmPqzMBhnzQ/UvdiDu32+srmAhk8cmgcNTUbacBkOvdiB+g4k73wOCW
-         +Slg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787847704; x=1788452504;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xgZRRPFD/4tuccx91/eOfBZb+vhsoVmREaFx21ykfHI=;
-        b=Wg+6nC2Lfo5cxoeMYfo9YLa1ToVGsAz+erk5Bum5pBiFfZxf7WkL+Ixk5CcUOcjZgo
-         DFiXbvZurhrs/KEQEoFdkAZ+g3WET6nGM3iCg/Mvpgc8d9yWHJOEV0EwSpOrKkVceaVp
-         ecARHM55dhxwtWpnN9jj2hVUp3CS9OYO2/LEB5ljD5YMEH48TCp5uSHwjikh+IiT2xYy
-         aberwrRISBhtTt23Rv2aN2qDbAqSPAG1C87gsaMMl0RrrQtvyrt8ahtxVOi80HN1ogPW
-         uCNYllOgrHPViEuY9FMz2hCYZq2LwXDwDWkNoJlTjRGl7c3OLNMp+AWeWFtFgsnAWW1q
-         xiyg==
-X-Forwarded-Encrypted: i=1; AHgh+Rraw8shO5MkZ5ftuNVpLT+keVYIqnJ77AzXl1aI9DEreWlN6ETglDd7fRkrIN/RmcpecB7prkU+nKWsW9TwfMU=@lists.linux.dev
-X-Gm-Message-State: AFuF++mkdZsAG7jELaYMek4YhS86SD2HQHqF9L5qD8hijz6zXAjLDdth
-	APDcNbubRnUomfKksOGvCuFQEcNI0i3DnDaCW5uy1oODXAFoSNZ7sOdt1EpIpEeD8A==
-X-Gm-Gg: AR+sD10vyXpPTWERfdg6EpH9XsXNdKkPsfGGvarHs9IVh8fIeYZ2yswO7RqEPDy9hi7
-	PvXfPliz/UuRLLjAAjJDxLSxhi+3wmyuA4EI7reALrArooTNJ2kJEk9DH3CkxYTM53+DY0hkM/Q
-	4UVtll2AGXry5DT9mfVNVaFs26A1FnHy6cPMf6luGh96zBmHAGIrwgz5r/Blt5fC5SApnrZRN2h
-	yBLklVLIviu2uZHmRxC1AVEiMXiUv8ZrTlomftI76uYGN/Pc0bCJ55P8SZvoXmMPHv5MqF136bg
-	Ki0ohuWmp7FcCh3rJLVE7Pmj2oIo/+p9vi8eWTdhf5VuRNreBx+tCnUkTNq9j+B9Xm844oem0nk
-	/SUrOCw2VtlwI/if55Zhh7N3heOrkGEpT0LaGOFyua3yX5l06Tt1z74E3G/6L9SrCQXk+QOX3+0
-	+rc5uRa1tNsSF4/eSQWxOfPc+MqNuKWN8V2MrZfW4hsAlJ99MXahLc8Bcz369zRm424WpL42RB2
-	IazoK4ihGOstd8SpLiAo9tjAa0wFYiq
-X-Received: by 2002:a05:600c:8885:b0:49b:909e:922e with SMTP id 5b1f17b1804b1-49b91c4884amr767005e9.10.1787847703719;
-        Thu, 27 Aug 2026 09:21:43 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49b91c52609sm108385e9.2.2026.08.27.09.21.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2026 09:21:42 -0700 (PDT)
-Date: Thu, 27 Aug 2026 17:21:39 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 1/3] tracing: Fix subbuf resize races with
- trace_pipe_raw readers
-Message-ID: <apBhLDTEa_3yYZP5@google.com>
-References: <20260826094528.3738023-1-vdonnefort@google.com>
- <20260826094528.3738023-2-vdonnefort@google.com>
- <20260826095947.4FF8B1F000E9@smtp.kernel.org>
- <20260826103736.2b55b464@gandalf.local.home>
- <ao8TQ-SvhjYgy43-@google.com>
- <20260826143123.1b3e3854@gandalf.local.home>
- <ao_Zu0ThaWThj9YZ@google.com>
- <20260827091541.5d03e33c@gandalf.local.home>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpFNVGfH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8286A1F00A3A;
+	Thu, 27 Aug 2026 16:56:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787849792;
+	bh=PbiTD6lzL8qqMsoKt5E4d4Ayp91dEtIczbslfDTernQ=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=gpFNVGfHXO/gCOfYA2cLuKJbDlfK0Mxqsd4xCT9qdunvj7WZ2h6c60fB0g0dlrK45
+	 YndQkehYxUQr1yQuTlC4NTWkurCx331FzaYrVk5mOL/mUCrpl6VoCL9edgaqZNHljF
+	 INYlQmIvJixWtD5EyDRfm3iOUw6388dpbWABRKNJwxG6DKKXI3dNhbXYoHCouahaLj
+	 5o10IUghnnhTeA5JpRz9+k8GK37VSWgyFUAHreYN8+sNX4tlqWPlGaRbzMyvBUmxYZ
+	 +gIYdpYdCeBRti8+tQnmlDxlQlqUgdemgMz41wIPtDnKCysUFLTHbBX0YkHw7ol0pj
+	 t6IpRQeSUtlXg==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 03D231980076;
+	Thu, 27 Aug 2026 12:56:30 -0400 (EDT)
+Received: from ams-imap-11 ([10.64.2.31])
+  by ams-compute-02.internal (MEProxy); Thu, 27 Aug 2026 12:56:30 -0400
+X-ME-Sender: <xms:OWyQan4WD-YjUbHh6nbpXq9Z6FGE0Wu3BCx7HveKiEDwpOi5YnbdhA>
+    <xme:OWyQanubWF67u4o-E7XSuoCe9vO1ODalpxcTOiKExUM8px81qtKTHBdOaiefgUMiK
+    Xy1ZhpaUYzJobCfxLSwA-0CM5-sXjSHiMZHti2uELT8iUiooe8RSjk>
+X-ME-Proxy-Cause: dmFkZTGDLpveOOxF6h8KGY3t4+bTyWJouTCSmu9bofi2/ONhA+GjJ171fe+Abs3vV4Sc9e
+    XewEnlNATcru2t36sA6e8F8bHdzyXdv3OY5dRS4H6Dqa6nNroOz4cmAX3Bg5tjLZejz3eS
+    wHM5fzNAqbNNRc8hBW/cEgB7IQlkRkZ04yVCb6WZyJdrrvqE/xoxEveb0AgsHGdsb6ojdh
+    D/GlFlnGbplLnEDTFnu/f40vQaV1pVHFE8dV5xtTcHZ31a26IP6Us94m8/KEwZSoDlcg27
+    bdY7h6OWdH7WqAJvnrRL6uEYIPCw8fdv4Du+Yjzocz4y2xrIwKu4BeAA2CVGV3RSqMBwa9
+    HOyqUNkCn1ZAMi/uLPBBLyiTXUGyAQELvFqCwF+HMt+1pK6glz8FxVAB+T+UfZaolTdDC5
+    RsPJWaUUOUndtuwG4lzQkt4GUnSqVigRnLOqBVElQr1vb5ZNCt0njEJqyBCMVQYJOvXK9D
+    9wTsNgQdxEcoP/hXBWtyPHioP0prl9Vk5xCfW5G+UXnWc2r5wT2HQWGU2gNpQLy8Hu404v
+    B/irtfrYX3kd2QeGdr2jo29cSxwzeaD32mgqrcLY6eC4HO7C9roQ3N+uqAU6JihtoVSgTI
+    RL1IWZE8MpNp56P6GA8ad4hSJ4oR86dOfq+FkE/dh7XORw9SiXyqVgnv8dOQ
+X-ME-Proxy: <xmx:PGyQaiw4R3y9UG18vT5r0i-yruqCVrF6N-IvVhe896wddsf_wObsKw>
+    <xmx:PGyQamZEWQLQT9R2DxaMotC1tcl9qeJ-xC4U-WvYpGw0fY5T11OthQ>
+    <xmx:PGyQaj3RFn_t4zxFQ550xBRuAnVcx38jUiN6buQTmpLjxi9yT3T2Lg>
+    <xmx:PGyQaodjWrl02KoFmJK6amxLvxGZqymVF_kkzgw0nrFn4U38XCP-xA>
+    <xmx:PGyQagLMS3D2Dtq7amJUyUvF0rMNSdrt8iT5hHT1jCnTww9Pv-ZbQI6G>
+Feedback-ID: ice86485a:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id C7774F8007A; Thu, 27 Aug 2026 12:56:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260827091541.5d03e33c@gandalf.local.home>
+Date: Thu, 27 Aug 2026 18:56:05 +0200
+From: "Ard Biesheuvel" <ardb@kernel.org>
+To: "Thomas Zimmermann" <tzimmermann@suse.de>,
+ "Javier Martinez Canillas" <javierm@redhat.com>,
+ "Ilias Apalodimas" <ilias.apalodimas@linaro.org>,
+ "Jani Nikula" <jani.nikula@linux.intel.com>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ "Simona Vetter" <simona@ffwll.ch>, "David Airlie" <airlied@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+Message-Id: <6b778c42-577b-4df1-a364-d4123f45080a@app.fastmail.com>
+In-Reply-To: <20260827140726.420734-1-tzimmermann@suse.de>
+References: <20260827140726.420734-1-tzimmermann@suse.de>
+Subject: Re: [PATCH 0/3] sysfb: Fix display output on Lenovo D330 (and others)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 27, 2026 at 09:15:41AM -0400, Steven Rostedt wrote:
-> On Thu, 27 Aug 2026 07:31:23 +0100
-> Vincent Donnefort <vdonnefort@google.com> wrote:
-> 
-> > Looking at the function again, shouldn't we add !rb_is_static(cpu_buffer) as
-> > well to the full page test?
-> 
-> Why? 
-> 
-> -- Steve
+Hello Thomas,
 
-So that the splice can make progress when the ring-buffer is presistent or
-user-mapped. Or do we say that's expected behaviour? 
+On Thu, 27 Aug 2026, at 16:01, Thomas Zimmermann wrote:
+> The kernel mis-interprets the display geometry given by the Lenovo
+> D330 as incorrect. The values are correct, but the display output
+> is rotated by 90=C2=B0. With the kernel's firmware quirk applied the o=
+utput
+> is garbled.
+>
+> Remove the firmware quirk for the Lenovo D330 and let DRM's sysfb
+> drivers set the correct panel orientation instead. To make this work
+> for any display mode, use the panel size for looking up the correct
+> orientation.
+>
+> Tested on a Lenovo D330-10IGM IdeaPad.
+>
+> Thomas Zimmermann (3):
+>   drm/edid: Add drm_edid_get_preferred_size()
+>   drm/sysfb: Use preferred panel size for panel orientation quirks
+>   firmware/sysfb: Remove rotation quirk for Lenovo D330
+>
 
--- 
-Vincent
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
