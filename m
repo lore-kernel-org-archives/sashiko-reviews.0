@@ -1,302 +1,103 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5792379EE4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 27 Aug 2026 14:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57A3367B94;
+	Thu, 27 Aug 2026 15:24:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787841865; cv=none; b=CtMxWrMVOVp/XgpWkQRFTZy88ht6f1Gb41EKTENzVzmzZ+zVwviWkILgbrBjMTV3/R0BRvd9TnmEgQTu0HQHoYuxO7Ygu01iI14uY9XvtE8Iathf/m1SqPHtpMPPqZ87nKhm749ji2fp5S4bQNTFbXOUuTtK8MG7i/sINTHpz5s=
+	t=1787844250; cv=none; b=DiUfkZ8FFMTA94w8Wr8ICxh6PaIYwPp8LvYV3LcMVd62H/2GmqjEPKVhOWWn7ZHvjoC4BhmUL1FWHRbeBOe9pn4bJTDL//hXS91MCuJl6LY6e7OMrCaTMnqkTvlG9CxJPLrsJ7OZ+UhzWkWsd5A2OBPSBQuHawaTLlCptDA5UvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787841865; c=relaxed/simple;
-	bh=zgojuW5dyUIosgiyZLORpmsAFjli11g5I7JugqOK/Mw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iA1dzIwmSpiaDenrb51/8PCiGO+EIqHkprWQky3KcfNo/YBY4WVv2g3gr4Nw/fNh5qMHl/+/s3RzbXt+mQb/iKkn36Pn5j2I+8ujFzJdQVIDDJIVZGdzsDw+1BM8R2H9h/vbUtCVLGVVzH/NQDN0uC19Vc47VCzhvw4ebYFAciM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RfNgf9YI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=DKiqoyjk; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fSBCyOpL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cPePCkT2; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1787844250; c=relaxed/simple;
+	bh=xCsBRArtQOlXcEBVVAZGskJ9yhW8/2TLUCCS7V4l/jU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A47DeqqBX+2BdpS9hWk2idL23kh83b4Ljm+XHsbZMYyaLAxJpPkZHHKrUu32+zX1addNJyInqG0NKSbf1+j0J/CJJyg6IgKjcFr6rUujkR8j+F0WL5AG2eKro5nzRE1QfmWQikHYREDmRKD77r6J67/tLHdg4ivXHSdRCWxhM50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQS16A7z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RfNgf9YI";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="DKiqoyjk";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fSBCyOpL";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cPePCkT2"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id C1EA31F854;
-	Thu, 27 Aug 2026 14:44:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787841857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
-	b=RfNgf9YIsa9KxC38fRXNaAI3N2c47cOEvEhl9dr+Ne3eX0FhjKxDfTaZL6qsJ9PF+wsILq
-	QGCXaYbxawOOcFr75/oacM1Mo7FEdwPnBv9Ic1IBFwDjltw7ITqldrhVW0RgseUIWxdHmz
-	aaMCxxDShjeq6p/Y1kLsDYqN50oMD+Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787841857;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
-	b=DKiqoyjk7elnZApU+yVkjHAXmz+CDqW4SeVSr0kDXj6JjCRf8X+P4Rlt46KA7tySIti/Dp
-	WT0pRYGt8YaWdjBA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fSBCyOpL;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cPePCkT2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1787841853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
-	b=fSBCyOpLfN7tieZbkj8eR2ZHj68O06bKRXojlNTcdsiA/1jEoKtSD01ZZRjVUdnfOLWL/A
-	KenEuqO1+zNlZKFGI+Q5/tSrcgTcc99r6w4/hhra+pJN4HHZwsHe3XI73e9OBwrTtyYs3k
-	L+7knFMZsrLCb/K1nX37zJz+83cQoyo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1787841853;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xfdt9NuC3X1wEU8idm0OQAVUYE0XtkUGS6bU1nGq/iI=;
-	b=cPePCkT25V+zw08qFXwMEHztIQYruUYtcyjAdrtoqMwPWklRHgd9vkcu/iI6pl5s9A3FVD
-	J8wljhx5dZDwphCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AA9D01352C;
-	Thu, 27 Aug 2026 14:44:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id iqECKD1NkGreOQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 27 Aug 2026 14:44:13 +0000
-Message-ID: <eca20b6f-0f46-47c1-b6c7-5c906b23b7d6@suse.de>
-Date: Thu, 27 Aug 2026 16:44:13 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQS16A7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653271F00A3A;
+	Thu, 27 Aug 2026 15:24:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787844249;
+	bh=qevHd4DzHs/J/T2zqw/1+MSFbPysy9aHGLu1eo3P3uA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kQS16A7zlvn7oCq3SxA5gVseJXoATjZ1UPe7sI8rqlXlL2iqJMmAWyZZR7gOx+gHC
+	 NuGQZ0BCfYak+42VYzpfDqTrqeyxtmH9AmR59iTnmJevuMBN03d5ekYEiB/7kOnewS
+	 6S45toKk7GCgsfq/uq8a15QUpDMHdK2gNPAOSqu+oysXEf6vCyH+OpqVXTZGVLEWUa
+	 s0Rad6CSaWWEJIX8C+eOwaQA4mer0/5qkvb3H0w7x5r2v/gcbpkQe2ijN7FfO58uVg
+	 Z7al3LjWKmFW6TA4+C+lqnTaytLOvBKTBwVKByiimbBpceCROkW5nXNJvlOOkl8ALQ
+	 VyJkBXjTv2/wg==
+Date: Thu, 27 Aug 2026 16:24:05 +0100
+From: Lee Jones <lee@kernel.org>
+To: Thomas Richard <thomas.richard@bootlin.com>
+Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev
+Subject: Re: [PATCH 3/4] mfd: cgbc: Add virtual I2C bus support
+Message-ID: <20260827152405.GE2943942@google.com>
+References: <20260804-cgbc-i2c-storage-devices-support-v1-0-fed38510671c@bootlin.com>
+ <20260804-cgbc-i2c-storage-devices-support-v1-3-fed38510671c@bootlin.com>
+ <20260804154824.458301F000E9@smtp.kernel.org>
+ <20260812112037.GJ1072730@google.com>
+ <cc76739a-1957-4973-afb9-2703e238f0ec@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] drm/sysfb: Use preferred panel size for panel
- orientation quirks
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260827140726.420734-1-tzimmermann@suse.de>
- <20260827140726.420734-3-tzimmermann@suse.de>
- <20260827142139.E0D121F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260827142139.E0D121F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: C1EA31F854
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_TLS_ALL(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cc76739a-1957-4973-afb9-2703e238f0ec@bootlin.com>
 
+On Wed, 12 Aug 2026, Thomas Richard wrote:
 
+> On 8/12/26 1:20 PM, Lee Jones wrote:
+> > On Tue, 04 Aug 2026, sashiko-bot@kernel.org wrote:
+> > 
+> >> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >> - [Low] Hard-coded cell IDs are used for the newly added `cgbc-i2c` subdevice instead of `PLATFORM_DEVID_AUTO`.
+> >> --
+> >>
+> >> --- Patch [3]: [PATCH 3/4] mfd: cgbc: Add virtual I2C bus support ---
+> >> commit 4f0038d5dc42bfd45540675cdbf89f68ab3673d5
+> >> Author: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
+> >>
+> >> mfd: cgbc: Add virtual I2C bus support
+> >>
+> >> This commit adds a new I2C cell to support the internal virtual I2C bus 
+> >> provided by the Board Controller.
+> >>
+> >>> diff --git a/drivers/mfd/cgbc-core.c b/drivers/mfd/cgbc-core.c
+> >>> index 4a409234e66c8..81bd0a381ca13 100644
+> >>> --- a/drivers/mfd/cgbc-core.c
+> >>> +++ b/drivers/mfd/cgbc-core.c
+> >>> @@ -240,6 +240,7 @@ static struct mfd_cell cgbc_devs[] = {
+> >>>  	{ .name = "cgbc-gpio"	},
+> >>>  	{ .name = "cgbc-i2c", .id = 1 },
+> >>>  	{ .name = "cgbc-i2c", .id = 2 },
+> >>> +	{ .name = "cgbc-i2c", .id = 3 },
+> >>
+> >> [Severity: Low]
+> >> Should this use PLATFORM_DEVID_AUTO instead of hard-coding the cell ID?
+> > 
+> 
+> I use mfd_add_devices() with PLATFORM_DEVID_NONE.
+> So I2C busses will have platform_id from 0 to 2 [1].
+> And I2C adapter is selected using the platform device id [2].
+> 
+> I'm not 100% convinced by this implementation. I planned to add new I2C
+> busses and new boards support, and each board selects some busses. I
+> guess it will be the right time to rework it. If you have any idea to
+> implement this in a better way, please let me know.
 
-Am 27.08.26 um 16:21 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] The sysfb drivers parse unvalidated EDID data to extract the preferred size.
+Yes, the solution is to use PLATFORM_DEVID_AUTO as recommended.
 
-If we read bogus values, the panel orientation could be wrong. Nothing 
-worse happens.  Apart from that, most drivers call 
-drm_edid_header_is_valid(). I'll add this call to ofdrm, which is 
-currently missing it.
->
-> Pre-existing issues:
-> - [High] drm_edid_get_preferred_size() incorrectly checks the value pointed to by width/height instead of validating the pointers themselves.
-
-That's just fallout from the typo in patch 1.
-
-> --
->
-> commit df008c5490e15b30036ebe81983d7a6c0c6e5b33
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
->
-> drm/sysfb: Use preferred panel size for panel orientation quirks
->
-> Sysfb drivers currently use the given display mode for looking up the
-> panel orientation. But the look-up table stores the native geometry of
-> the panels, so the lookup fails if the current mode sizes differs.
->
-> Get the panel's native geometry with drm_edid_get_preferred_size() from
-> the EDID and use it for looking up the panel orientation.
->
->> diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
->> index 3f9cd5d03efb2..7a7d12003304f 100644
->> --- a/drivers/gpu/drm/sysfb/efidrm.c
->> +++ b/drivers/gpu/drm/sysfb/efidrm.c
-> [ ... ]
->> @@ -217,6 +218,20 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
->>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
->>   		sysfb->edid = dpy->edid.dummy;
->>   #endif
->> +
->> +	panel_width = width;
->> +	panel_height = height;
->> +
->> +	if (sysfb->edid) {
->> +		const struct drm_edid *drm_edid;
->> +
->> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
->> +		if (drm_edid) {
->> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
-> [Severity: High]
-> This isn't a bug introduced by this patch, but I wanted to ask about the
-> semantics of drm_edid_get_preferred_size(). In drivers/gpu/drm/drm_edid.c,
-> it does:
->
-> 	if (*width)
-> 		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
-> 	if (*height)
-> 		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
->
-> This incorrectly checks the values pointed to by width/height instead of
-> validating the pointers themselves. A caller passing a NULL pointer for
-> either width or height will cause a kernel panic (NULL pointer dereference).
->
-> Furthermore, passing a pointer to a zero-initialized variable evaluates to
-> false, causing the function to silently skip populating the preferred size.
-> While this patch bypasses the crash by passing non-NULL pointers initialized
-> to >0, is it worth fixing the generic API so other callers do not trip over
-> this?
->
-> [Severity: Medium]
-> Does parsing an unvalidated EDID block pose a risk here? The sysfb drivers
-> parse unvalidated EDID data to extract the preferred size.
->
-> If the firmware provides a corrupted EDID where only the 8-byte header is
-> valid, this code extracts geometry from potentially corrupted firmware data,
-> which can result in bogus resolutions being passed to the panel orientation
-> quirk lookup.
->
->> +			drm_edid_free(drm_edid);
->> +		}
->> +	}
->> +
-> [ ... ]
->> diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdrm.c
->> index 819aed466727e..6cf2440d7d9e2 100644
->> --- a/drivers/gpu/drm/sysfb/ofdrm.c
->> +++ b/drivers/gpu/drm/sysfb/ofdrm.c
-> [ ... ]
->> @@ -994,6 +995,19 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
->>   		sysfb->fb_gamma_lut_size = OFDRM_GAMMA_LUT_SIZE;
->>   	sysfb->edid = edid;
->>   
->> +	panel_width = width;
->> +	panel_height = height;
->> +
->> +	if (sysfb->edid) {
->> +		const struct drm_edid *drm_edid;
->> +
->> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
->> +		if (drm_edid) {
->> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
-> [Severity: Medium]
-> Similarly here in ofdrm_device_create(), unvalidated EDID data is parsed.
-> Could this lead to bogus geometry being extracted from a corrupted EDID?
->
->> +			drm_edid_free(drm_edid);
->> +		}
->> +	}
->> +
-> [ ... ]
->> diff --git a/drivers/gpu/drm/sysfb/vesadrm.c b/drivers/gpu/drm/sysfb/vesadrm.c
->> index 6a67b2d2e451b..8c52bbac6d2ff 100644
->> --- a/drivers/gpu/drm/sysfb/vesadrm.c
->> +++ b/drivers/gpu/drm/sysfb/vesadrm.c
-> [ ... ]
->> @@ -484,6 +485,20 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
->>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
->>   		sysfb->edid = dpy->edid.dummy;
->>   #endif
->> +
->> +	panel_width = width;
->> +	panel_height = height;
->> +
->> +	if (sysfb->edid) {
->> +		const struct drm_edid *drm_edid;
->> +
->> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
->> +		if (drm_edid) {
->> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
-> [Severity: Medium]
-> Likewise in vesadrm_device_create(), parsing unvalidated EDID data may
-> result in bogus resolutions being passed to the panel orientation quirk
-> lookup. Should the EDID be fully validated first?
->
->> +			drm_edid_free(drm_edid);
->> +		}
->> +	}
->> +
+> [1]
+> https://elixir.bootlin.com/linux/v7.2-rc7/source/drivers/mfd/mfd-core.c#L164-L167
+> [2]
+> https://elixir.bootlin.com/linux/v7.2-rc7/source/drivers/i2c/busses/i2c-cgbc.c#L374
+> 
+> 
+> Best Regards,
+> Thomas
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
-
+Lee Jones
