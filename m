@@ -1,214 +1,167 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83AE0357D18
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ADB039E6FC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787908356; cv=none; b=uZbHIvF12AxEpVhwFOjyOyIy4fThoIUfoUEjBWsBD46Nxm6yW8WW9VX4EAoNk3Hp++kQ7mM/7/IZ8f4kCV4QL/qsXGzjTJS5dOpustiSZFZAMZp3s3RORE8IWtdpVMdSUYV7lrY65MMxgAPGUH7aGh78He6atToKHJDzlEHuI64=
+	t=1787909064; cv=none; b=SbXl6bEMfMEzK8yoOZUKavtb3CQkv8N3lfp05M1JL/XF5AVnUysIkcKfEY6hh8EUh7LWcxMMe+ODQjK3GyTd8OckTKfO2N3onx4ATi//QCJCiolUcWC81pTkhNnTPj5EV/U+jT0HOyZQC8DR5ommo1DvpLUqTn3KRyxa2Fcadt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787908356; c=relaxed/simple;
-	bh=jLrld5ELw2bEkJ1H2U5JSeJni6GVj8ohfuNyxmo6roA=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=uM5B/8fLlCPouE9CF6kafuHFtA4kHItU3SETXuFXTa/nLnJJlhsOTI03OO3Xw4vsu7PJeY9JOkgR2e3jvBOcN3KyrNHRNNdFseDNz+ZsxmakEGQI41Mxq4WuJGCZCDQCQ7JpD8E94QWxgF9LilDOocLIBwyqbOVRqIivHsp1Alo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [123.138.236.242])
-	by gateway (Coremail) with SMTP id _____8DxztL+UJFqiw0GAA--.16931S3;
-	Fri, 28 Aug 2026 17:12:31 +0800 (CST)
-Received: from [10.130.40.83] (unknown [123.138.236.242])
-	by front1 (Coremail) with SMTP id qMiowJDxRs37UJFqZ1IVAA--.29910S2;
-	Fri, 28 Aug 2026 17:12:27 +0800 (CST)
-Subject: Re: [PATCH bpf-next v1] selftests/bpf: Add test for indirect
- struct_ops trampoline
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260828042715.16546-1-yangtiezhu@loongson.cn>
- <20260828043635.D16DC1F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <34521092-ad56-d20f-4782-6fc661275e41@loongson.cn>
-Date: Fri, 28 Aug 2026 17:12:27 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1787909064; c=relaxed/simple;
+	bh=EfFkWn5Ea9fb3/vBlRDSbeB2qRbCKw1lZeGp5o1jUxU=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=N9ZZGji+Zzi+ED4Iv9cHUq+CmECM2wWl2E5fUNYb1o4Y9MjMpN0KGkKbL+lCURawAydC6TbNwSXhU63LfVp/hGkjcGgcMoNvQycUEAr4T1Pu36uDhjWguaPRqcie6k7geU1SiK3RaVTm+9aYmoXNQleZ4jVfmCs43UyIt2IlV7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=W0oA2ujG; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="W0oA2ujG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=b3JYRN3m8NMiKBzPnAZQCZuNlnzhkxP/E
+	l487CcLr0Q=; b=W0oA2ujGxZN1Q8ySVaWAQ2x+FViDQ2VB0s0P+GnPVxFNIsBi2
+	aYIMM3K7L3pKHLWZeKjZksAulkLcWYPkv2DhaUrFzIApuqYWsZ/oCLGxYP0GDvkx
+	A+ln5I1HXakf9eaEfebQ4hG+j7eS1VAKHuDicYvSY+NCPp9gvluBHmvQ/I=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwBHds3DU5FqjmoBAA--.217S2;
+	Fri, 28 Aug 2026 17:24:19 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260828043635.D16DC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJDxRs37UJFqZ1IVAA--.29910S2
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxKry8Xry8ZF4DWryUGw4UAwc_yoW7ur1fpF
-	y8JF12yF4DXrWkXFy8Xa18ZF4Sgan7ZayUGFWUKr95uas5X3s8tF10qFySyr95G395ZFnI
-	y3ZYvr1DZ3WxZ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
-	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
-	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-	4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07Ui
-	iSdUUUUU=
+Subject: Re: [PATCH 1/2] dmaengine: dw-axi-dmac: Fix AXI burst length
+ encoding
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, dmaengine@vger.kernel.org, 
+ Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260828005905.03C3C1F000E9@smtp.kernel.org>
+References: <20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com>
+ <20260828-dma-fix-v1-1-a6947f487e07@ultrarisc.com>
+ <20260828005905.03C3C1F000E9@smtp.kernel.org>
+Date: Fri, 28 Aug 2026 17:24:05 +0800
+Message-Id: <178790904597.157024.15514368863692379180.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787909046; l=4031;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=EfFkWn5Ea9fb3/vBlRDSbeB2qRbCKw1lZeGp5o1jUxU=;
+ b=MqRt5cd4xOzGp/uizX968CWaKGy5jGUlTJEPgwe4PPJgTAitJ1dYFnm6MUnaUgWaOYbRc+yG4
+ EXgcxGSaK9CA+xLWAsKHAzY3lA3Ncx433uhY3zWf24mS0AZp8/IVlxI
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwBHds3DU5FqjmoBAA--.217S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXF1UKryruF4rZw4UJFyxKrg_yoWrWF1UpF
+	W5Ka1YyFyrtrnIya1kGw1xZry0va15GFWUuF4jvw1fua43Zw1vkrnxK3yrWF9rur1Fya40
+	qF4jv34fAF1jva7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUva14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
+	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
+	6r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
+	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
+	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyT
+	uYvjfUehL0UUUUU
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAMEWqPrHsAIwAVsY
 
-On 2026/8/28 下午12:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Use-After-Free and data races due to statically assigned and uncleared struct_ops pointer.
+On 2026-08-28 00:59 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The error handling path for descriptor allocation failures calls `dma_pool_free` with NULL pointers and underflows the `descs_allocated` counter.
+> - [High] Missing validation of transfer lengths (`len`, `buf_len`, `period_len`) in DMA prep functions leads to division-by-zero panics and out-of-bounds array accesses.
 > --
 > 
-> commit 23e6150eb62c7059e7721142219a9a87264e2e46
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
+> commit 1edc02c6412e562b16e650ad23de4b1395cbcb68
+> Author: Jia Wang <wangjia@ultrarisc.com>
 > 
-> selftests/bpf: Add test for indirect struct_ops trampoline
+> dmaengine: dw-axi-dmac: Fix AXI burst length encoding
 > 
-> This commit adds a test case to verify that arguments passed on the stack
-> are correctly read by the indirect struct_ops trampoline. It ensures the
-> correctness of stack offsets on architectures like LoongArch and RISC-V.
+> The snps,axi-max-burst-len property describes the number of beats in an
+> AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
 > 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/test_struct_ops_trampoline.c b/tools/testing/selftests/bpf/prog_tests/test_struct_ops_trampoline.c
->> new file mode 100644
->> index 0000000000000..5a21aedd02fc5
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/test_struct_ops_trampoline.c
->> @@ -0,0 +1,41 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +#include <test_progs.h>
->> +#include "struct_ops_trampoline.skel.h"
->> +
->> +#if defined(__loongarch__) || defined(__riscv)
->> +static void run_struct_ops_trampoline(void)
->> +{
+> The driver keeps axi_rw_burst_len as the actual burst length so that
+> dma_device.max_burst reports the correct value. However, it also programs
+> that unencoded value directly into the hardware fields. A value of 256
+> therefore overflows the 8-bit fields and can cause AXI decode errors.
+> 
+> Subtract one only when constructing hardware descriptors, while keeping
+> the actual value for dma_device.max_burst.
+> 
+> > diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > index eebed2474210d..742e08cfab435 100644
+> > --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> 
 > [ ... ]
->> +	bpf_link__destroy(link);
->> +cleanup:
->> +	struct_ops_trampoline__destroy(skel);
+> 
+> > @@ -975,7 +975,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+> >  
+> >  		reg = CH_CTL_H_LLI_VALID;
+> >  		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+> > -			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
+> > +			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
 > 
 > [Severity: High]
-> Does this call to struct_ops_trampoline__destroy() free the map?
+> This is a pre-existing issue, but does the error handling in this
+> function cause a kernel panic if descriptor allocation fails?
 > 
-> Later in this diff, we see that st_ops_trampoline in bpf_testmod.c is
-> assigned dynamically allocated memory from this map. When the map is freed
-> here, st_ops_trampoline appears to become a dangling pointer.
+> If axi_desc_get() fails to allocate a descriptor (e.g., due to memory
+> exhaustion), the code jumps to err_desc_get and calls axi_desc_put(desc):
 > 
->> +}
->> +#endif
+> 	hw_desc->lli = axi_desc_get(chan, &hw_desc->llp);
+> 	if (unlikely(!hw_desc->lli))
+> 		goto err_desc_get;
 > 
-> [ ... ]
+> axi_desc_put() unconditionally loops over all requested descriptors and calls
+> dma_pool_free() with hw_desc->lli. For elements that were not successfully
+> allocated, hw_desc->lli is NULL, which causes dma_pool_free() to dereference
+> a NULL pointer.
 > 
->> diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
->> index 850cf4f830c48..be96bbc1b7c04 100644
->> --- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
->> +++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-> [ ... ]
->> @@ -637,6 +640,9 @@ bpf_testmod_test_read(struct file *file, struct kobject *kobj,
->>   
->>   	bpf_testmod_test_struct_ops3();
->>   
->> +	if (st_ops_trampoline && st_ops_trampoline->test_trampoline)
->> +		st_ops_trampoline->test_trampoline(1, 2, 3, 4, 5, 6, 7, 8, 9999);
+> Additionally, axi_desc_put() subtracts the full requested number of
+> descriptors from chan->descs_allocated instead of the successfully allocated
+> count, which could underflow the counter:
+> 
+> 	atomic_sub(descs_put, &chan->descs_allocated);
 > 
 > [Severity: High]
-> Since st_ops_trampoline is never cleared after the map is freed, could this
-> result in a use-after-free?
+> This is also a pre-existing issue, but does this function lack validation for
+> transfer lengths?
 > 
-> Any subsequent or parallel test in the suite that triggers
-> trigger_module_test_read() will invoke bpf_testmod_test_read(), incorrectly
-> evaluate st_ops_trampoline as valid, and dereference the freed memory.
+> If a DMA client driver provides a len of 0 in dma_chan_prep_dma_memcpy(),
+> num evaluates to 0 and the transfer setup loop is skipped. The function then
+> attempts to write to index -1, causing memory corruption:
 > 
->> +
->>   	struct_arg3 = kmalloc((sizeof(struct bpf_testmod_struct_arg_3) +
->>   				sizeof(int)), GFP_KERNEL);
-> [ ... ]
->> @@ -1619,6 +1625,10 @@ static int bpf_testmod_ops_init_member(const struct btf_type *t,
->>   		((struct bpf_testmod_ops *)kdata)->data = ((struct bpf_testmod_ops *)udata)->data;
->>   		return 1;
->>   	}
->> +
->> +	if (member->offset == offsetof(struct bpf_testmod_ops, test_trampoline) * 8)
->> +		st_ops_trampoline = (struct bpf_testmod_ops *)kdata;
+> 	/* Set end-of-link to the last link descriptor of list */
+> 	set_desc_last(&desc->hw_desc[num - 1]);
 > 
-> [Severity: High]
-> Is it safe to unconditionally assign this global pointer to the map's
-> dynamically allocated memory during initialization without setting up a
-> cleanup mechanism?
+> Similarly, in dw_axi_dma_chan_prep_cyclic(), can a period_len of 0 cause an
+> unhandled division-by-zero panic when calculating num_periods?
 > 
-> Additionally, this assignment appears to occur without locking at map creation
-> time, meaning parallel test runs could race to overwrite this pointer.
+> 	num_periods = buf_len / period_len;
+> 
+> And if buf_len is 0 in dw_axi_dma_chan_prep_cyclic(), making total_segments 0,
+> does this access out of bounds on the 0-length allocation?
+> 
+> 	llp = desc->hw_desc[0].llp;
+> 
 
-You are right. I will fix the use-after-free and race conditions.
+I checked these paths and confirmed that the issues are pre-existing and
+not introduced by this series. To keep this dmatest-driven fix series
+scoped, I will address them in a separate follow-up series.
 
-Here is the incremental diff based on this v1 patch:
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com?part=1
+> 
 
-diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c 
-b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-index be96bbc1b7c0..471e4ed4192e 100644
---- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-+++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-@@ -589,7 +589,7 @@ noinline int bpf_testmod_trampoline_count_test(void)
-         return 0;
-  }
+Best regards,
+Jia Wang
 
--struct bpf_testmod_ops;
-+static DEFINE_MUTEX(st_ops_trampoline_mutex);
-  static struct bpf_testmod_ops *st_ops_trampoline;
-
-  noinline ssize_t
-@@ -640,8 +640,10 @@ bpf_testmod_test_read(struct file *file, struct 
-kobject *kobj,
-
-         bpf_testmod_test_struct_ops3();
-
-+       mutex_lock(&st_ops_trampoline_mutex);
-         if (st_ops_trampoline && st_ops_trampoline->test_trampoline)
-                 st_ops_trampoline->test_trampoline(1, 2, 3, 4, 5, 6, 7, 
-8, 9999);
-+       mutex_unlock(&st_ops_trampoline_mutex);
-
-         struct_arg3 = kmalloc((sizeof(struct bpf_testmod_struct_arg_3) +
-                                 sizeof(int)), GFP_KERNEL);
-@@ -1626,8 +1628,16 @@ static int bpf_testmod_ops_init_member(const 
-struct btf_type *t,
-                 return 1;
-         }
-
--       if (member->offset == offsetof(struct bpf_testmod_ops, 
-test_trampoline) * 8)
-+       if (member->offset == offsetof(struct bpf_testmod_ops, 
-test_trampoline) * 8) {
-+               mutex_lock(&st_ops_trampoline_mutex);
-+               if (st_ops_trampoline) {
-+                       pr_err("st_ops_trampoline has already been 
-registered\n");
-+                       mutex_unlock(&st_ops_trampoline_mutex);
-+                       return -EEXIST;
-+               }
-                 st_ops_trampoline = (struct bpf_testmod_ops *)kdata;
-+               mutex_unlock(&st_ops_trampoline_mutex);
-+       }
-
-         return 0;
-  }
-@@ -1663,6 +1673,10 @@ static int bpf_dummy_reg(void *kdata, struct 
-bpf_link *link)
-
-  static void bpf_dummy_unreg(void *kdata, struct bpf_link *link)
-  {
-+       mutex_lock(&st_ops_trampoline_mutex);
-+       if (st_ops_trampoline == (struct bpf_testmod_ops *)kdata)
-+               st_ops_trampoline = NULL;
-+       mutex_unlock(&st_ops_trampoline_mutex);
-  }
-
-  static int bpf_testmod_test_1(void)
-
-Thanks,
-Tiezhu
 
