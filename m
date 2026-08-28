@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAEA368291;
-	Fri, 28 Aug 2026 16:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F6D2C21F1;
+	Fri, 28 Aug 2026 16:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787934411; cv=none; b=g1qf9V/Db5chdyjEaECy6WJZf/67aEUqSRIxJxsKHqdOnpZNhNvUOFcz23dVigJne3siid/bavxK+E4LDp11L6DvUjSOEGrIsXR0EN2F4wNxGbpuud7Q26slZPyMon9mHzLozUdmBVN0JkYolom0Kes/Ths+lAG8XBWCiS2XR0U=
+	t=1787934434; cv=none; b=bEcNzUk3GE6uwSTKIDhNERifJALk6yptpt7Kk1GreXC2ys43Tji/1wXPELNyz4i8f6InQp5LjCrxGTiZikLhGm4UqcPUjTK82R3qmwA9wUk2NsB1Sjhwt4qmHbxa7fdo107ihh2Xu0HNdTK7dAZXtEGvD9v29S3mY5fMCCppdqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787934411; c=relaxed/simple;
-	bh=uGU/tK761axMKObg46mrHlRLkSOHLCWFRvMNEXpmAC4=;
+	s=arc-20240116; t=1787934434; c=relaxed/simple;
+	bh=Zp3gl3BLHIFjGhPdB7/HixUPcsrcKbxO2UTGW+H53a0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCzAJO8Fl0VJ5smp7fsvsa7BVbfR98sGGFTwZI+9FIjceUnYH2sM7KUh0DRkPAAiIEO6hafZVyBVMO4RW3cT4YcEUIqBEPuOLW/xAy/ly/l0hg7iLHgeNqkLtebK0PzzYjdSj1sssAQCP/vdD5cdPpu8SCleyZnWf6Tz1WOtA7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EspMPQUd; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=VHD3P569R85/tdEeO9c71YcKwKlFe7Oypy/zsiPFEXRl1782SeOWF3F7nwVHEWjvPG58ZwbCSmlT1daQuLLJI2o1nE35N7PojUOlFnv8yIMEVjF+mqeyVSm/pOGrneefaUn4EfIAS74EyH3RBrps09xUIRSJj3j2gEBv52u4oQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lN7xAN8z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EspMPQUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0611F000E9;
-	Fri, 28 Aug 2026 16:26:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lN7xAN8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FFA1F000E9;
+	Fri, 28 Aug 2026 16:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787934409;
-	bh=lxj6QhoYnrSKWwkA3HA7HCTk0UWUeubmFmIa1ZNkJ3o=;
+	s=k20260515; t=1787934433;
+	bh=aqGzQQ0lZSOLhL3NUGJDbil/FFvt+SQxvywbO9biUXY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EspMPQUds4Vb6rPojif8ugDkDXhmVPhFPvLH5nvnYla4hOHEIMsVkacdf1HpzJ9AZ
-	 Bu4Hfh+qXBPR4loF9vFsWd1eAhhBzk94yhydq8LCKJr/fZApbkC3y6YWq3UitSsQPv
-	 tsMkoXH/6xS4f2oEGTW2DSTwccL5kvzrIdbu6lb3eZqrkwv5ecgPgPfcdAOeVwsvUE
-	 ss2n+JZwQWSFvVAIRRD4YRFfPadVntIqtJuV6IznjsbuyO1wYgqYFry5hcx7YWRPop
-	 HrMMjNzTrNi4f2KIYPenCiNI/KXXMdmw+2lZ/WPcTXADTcjekoHwLipT+FKU5P2RtD
-	 8e7QLeWR8g4qQ==
-Date: Sat, 29 Aug 2026 00:26:46 +0800
+	b=lN7xAN8zpobkoEFcbiXxb5GhDgrcehV9TJ6ic0sUHqZ/oTI4OTyB0Z20m6GsrtknO
+	 6KCSqdr2IXm4EOCYGSq5Y6UKEJBco6KbWOD/u5RkNfVgZqXapSs6cgdL/RTMtE6k65
+	 Qpc/9xRu509cIN7HeFW9Z7xSo8U/25ro2ODGVDJHX9n1t/diXe2XXZXOo8cpKN3aFf
+	 5jeVQ1DJfNAy1dvH/KbZ9U33GEjuer9NjltsmImWgNYcI1KmArp9HdtLf7hSlXpIuo
+	 LkrGnb4WS6QHgrHRHtyItG5v9l/rGZSv0A70O13AahScGBDs2E4dwpx6fl9MnfBK+T
+	 F1cwMGHy65l6g==
+Date: Sat, 29 Aug 2026 00:27:10 +0800
 From: Tzung-Bi Shih <tzungbi@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-watchdog@vger.kernel.org
-Subject: Re: [PATCH 2/2] watchdog: msc313e: Enable clock before accessing
- hardware registers
-Message-ID: <apG2xtpMxylEoCmu@tzungbi-laptop>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH 1/2] watchdog: msc313e: Fix NULL pointer dereference in
+ PM callbacks
+Message-ID: <apG23kG_hz_pxsSI@tzungbi-laptop>
 References: <20260827044700.554333-1-tzungbi@kernel.org>
- <20260827044700.554333-3-tzungbi@kernel.org>
- <20260827050107.9AD441F000E9@smtp.kernel.org>
- <e860d0c8-99c2-4978-b15d-290759ae4f7e@roeck-us.net>
+ <20260827044700.554333-2-tzungbi@kernel.org>
+ <20260827045746.C79091F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,122 +44,92 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e860d0c8-99c2-4978-b15d-290759ae4f7e@roeck-us.net>
+In-Reply-To: <20260827045746.C79091F000E9@smtp.kernel.org>
 
-On Fri, Aug 28, 2026 at 07:48:18AM -0700, Guenter Roeck wrote:
-> On 8/26/26 22:01, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [Medium] Clock reference count is leaked on the probe error path if watchdog registration fails.
-> > 
+On Thu, Aug 27, 2026 at 04:57:46AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
 > 
-> That seems real.
-
-Fixed it in v2.
-
-https://lore.kernel.org/all/20260828161348.13212-5-tzungbi@kernel.org
-
-> 
-> > Pre-existing issues:
-> > - [High] Repeatedly setting the watchdog timeout leaks clock prepare and enable references, potentially leading to refcount overflow.
-> > - [High] System will unexpectedly reset during suspend if the hardware watchdog is running but was never opened by userspace.
-> > - [High] Potential division by zero if clk_get_rate() returns 0.
+> Pre-existing issues:
+> - [High] Hardware watchdog is not properly stopped during system suspend if it was started by the bootloader but not opened by userspace.
+> - [High] The resume callback ignores the return value of msc313e_wdt_start().
+> - [High] Potential division by zero during `max_timeout` calculation.
+> - [High] Clock reference count leak and unintended hardware activation in `msc313e_wdt_settimeout`.
+> - [Low] Struct initialization uses commas instead of semicolons.
 
 Proposed fixes for them in the series [1].
 
 [1] https://lore.kernel.org/all/20260828161348.13212-1-tzungbi@kernel.org
 
-> > > @@ -120,9 +121,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
-> > >   	priv->wdev.max_timeout = U32_MAX / clk_get_rate(priv->clk);
-> > 
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does this code cause a division
-> > by zero panic during device probe if clk_get_rate() returns 0?
+> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_suspend()
+>     if (watchdog_active(&priv->wdev))
+>         msc313e_wdt_stop(&priv->wdev);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this bypass stopping the hardware
+> watchdog if userspace hasn't opened the device?
+> 
+> If the hardware was started by the bootloader but not yet opened by userspace,
+> the ping worker is frozen during suspend. Since watchdog_active() checks if
+> userspace has opened it, will the active hardware timer continue running and
+> trigger a spurious system reset during system suspend?
+
+https://lore.kernel.org/all/20260828161348.13212-6-tzungbi@kernel.org
+
+> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_resume()
+>     if (watchdog_active(&priv->wdev))
+>         msc313e_wdt_start(&priv->wdev);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it safe to ignore the return value of
+> msc313e_wdt_start()?
+> 
+> If the clock enable fails inside msc313e_wdt_start(), the function will
+> silently discard the error. Will subsequent register operations in the watchdog
+> then access unclocked memory and cause a system crash?
+
+https://lore.kernel.org/all/20260828161348.13212-9-tzungbi@kernel.org
+
+> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_probe()
+>     priv->wdev.info = &msc313e_wdt_ident,
+>     priv->wdev.ops = &msc313e_wdt_ops,
+>     priv->wdev.parent = dev;
+> 
+> [Severity: Low]
+> This isn't a bug introduced by this patch, but are these assignments using
+> comma operators intentionally instead of semicolons?
+> 
+> While syntactically valid, this violates standard kernel coding style and
+> could cause unintended behavior during refactoring.
+
+https://lore.kernel.org/all/20260828161348.13212-10-tzungbi@kernel.org
+
+> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_probe()
+>     priv->wdev.min_timeout = MSC313E_WDT_MIN_TIMEOUT;
+>     priv->wdev.max_timeout = U32_MAX / clk_get_rate(priv->clk);
+>     priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but could this calculation result in a division
+> by zero panic?
+> 
+> If clk_get_rate() returns 0 for an uninitialized clock, using it directly as a
+> denominator here will trigger a division by zero exception during probe.
 
 https://lore.kernel.org/all/20260828161348.13212-3-tzungbi@kernel.org
 
-> > 
-> > >   	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
-> > > +	ret = clk_prepare_enable(priv->clk);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > >   	/* If the period is non-zero the WDT is running */
-> > > -	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16))
-> > > +	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16)) {
-> > >   		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
-> > > +		/*
-> > > +		 * Keep the clock enabled. The watchdog core will skip the next
-> > > +		 * start() and a future stop() will balance the CCF reference
-> > > +		 * count.
-> > > +		 */
-> > > +	} else {
-> > > +		clk_disable_unprepare(priv->clk);
-> > > +	}
-> > >   	watchdog_set_drvdata(&priv->wdev, priv);
-> > >   	platform_set_drvdata(pdev, priv);
-> > 
-> > [Severity: Medium]
-> > If the hardware watchdog is already running at boot, the driver intentionally
-> > leaves the clock enabled here. However, if devm_watchdog_register_device()
-> > subsequently fails:
-> > 
-> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_probe() {
-> >      ...
-> > 	return devm_watchdog_register_device(dev, &priv->wdev);
-> > }
-> > 
-> > Does this regression leak the clock reference count on the error path if
-> > device registration fails, since the prepared clock is never disabled?
-> > 
-> Yes, that will need to be fixed.
-
-https://lore.kernel.org/all/20260828161348.13212-5-tzungbi@kernel.org
-
-> > [Severity: High]
-> > This is a pre-existing issue, but repeatedly setting the watchdog timeout
-> > leaks clock prepare and enable references, potentially leading to refcount
-> > overflow.
-> > 
-> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_settimeout() {
-> >      ...
-> > 	return msc313e_wdt_start(wdev);
-> > }
-> > 
-> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_start() {
-> >      ...
-> > 	err = clk_prepare_enable(priv->clk);
-> >      ...
-> > }
-> > 
-> > Since the set_timeout callback directly wraps msc313e_wdt_start(), does this
-> > sequence unconditionally increment the clock refcount every time the timeout
-> > is updated, without a corresponding decrement?
-> > 
+> drivers/watchdog/msc313e_wdt.c:msc313e_wdt_settimeout()
+>     wdev->timeout = new_time;
 > 
-> Worse, it starts the watchdog even if it isn't running. Separate problem, though.
+>     return msc313e_wdt_start(wdev);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does unconditionally calling
+> msc313e_wdt_start() here cause a clock reference leak or unintended hardware
+> activation? 
+> 
+> If the watchdog is already active, this would increment the clock reference
+> count redundantly. If it is stopped, it inadvertently starts the hardware timer
+> without the watchdog core tracking it, which could cause an unexpected system
+> reset.
 
 https://lore.kernel.org/all/20260828161348.13212-4-tzungbi@kernel.org
-
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but will the system unexpectedly
-> > reset during suspend if the hardware watchdog is running but was never opened
-> > by userspace?
-> > 
-> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_suspend() {
-> >      ...
-> > 	if (watchdog_active(&priv->wdev))
-> > 		msc313e_wdt_stop(&priv->wdev);
-> >      ...
-> > }
-> > 
-> > If the watchdog was left running by the bootloader (WDOG_HW_RUNNING is set)
-> > but never opened by userspace, watchdog_active() is false and the driver
-> > skips stopping it. Meanwhile, the watchdog core suspends its background ping
-> > worker.
-> > 
-> > Since the hardware timer continues counting down without being pinged, will
-> > it expire and reset the suspended system?
-
-https://lore.kernel.org/all/20260828161348.13212-6-tzungbi@kernel.org
