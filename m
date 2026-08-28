@@ -1,169 +1,168 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97034241686
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 16:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030523515C5
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 16:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787932887; cv=none; b=VRNyAh1qAXtihcpxHrD1fWuv2cl9Bf7QkGqIWbkm4vruhyI5RpQvC2BH9ep777qk3sqT98n8bupcTS6dMkgis0zy88h0Mq1AB5ujmzaSmq7NslPmrzff4fPxUhn7pheWDc7IDXkCfInXIpeR9vgRJcDXCPV5bQ648WoPzlAqM2E=
+	t=1787932907; cv=none; b=aQ6qqFsibqu/k74SHRFyDXVE+2mrM0IkEw+TLoTv3/e6rsQWWjeN16kIvNoY/d6Ah1ertRU87epEMNpf324Nop2r15roaJG/RfPXA0EgfwLsPWJo1xbsJx5FlWCxpVQm8vVklhSRZ9zQ6I3az7/EOx2YGlwc3uCmRvsflGrYArU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787932887; c=relaxed/simple;
-	bh=oQqNEQbcnXBTfUIv5IgxbO7DhuJL8CYmkSWZxLpRWX0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UkAqQ37w+Wpb2RkRP4zqER2XRnTHtJQgiN9kcZbYnhQ3WYgF9lT3Ad7vknrtDyw45OKskuVHbZa5Jm8ttLBX72rrjycq9M8sF1blfqiNHuOXFO5t8qb1703qVoqLu0GES9fylaNyjCBe1WU4YGC6y8xdI3bTR/W20nvalGHiBv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UYdjelnJ; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787932907; c=relaxed/simple;
+	bh=UuWnHtXL8N/w/Q5WNTbDJxeFR+DQc7c1YtM6Y9NEeTw=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ovp8WLmZzTDDDsKDDoVCgkCKHkOqVXUbngHGKpJfvDW+RiVQtk5cbQ3oPmLZmvmbhkZUGqt6jWeUiDr5sqMRaheru+CGSOGojucm9tNchBBuPRk6JhngtPGr53UG4Qv+NuQe+JlHz6LJG/fO6q+1uUj3e9YMa7oDrB29vYrafd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hZZO/tuq; arc=none smtp.client-ip=209.85.218.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYdjelnJ"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e347638adso1165810a91.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:01:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hZZO/tuq"
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c15f4732dfaso105928566b.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787932886; x=1788537686; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Il4EamAEW7KbExBmjcSAYVqBQdsFVVnM7I2Ys4LmgiQ=;
-        b=UYdjelnJSoYQm36i8vOdh7x1OJJGlKHFQal4NTKySkJwWP737fMUCHZRq0aR9bEIGM
-         WfMcurRgXX9khaLJsznthpM9j9ghbPKL0mnoVf7SA2RATEDyK7OL5b/FX7ijyJO15Zib
-         Z12brIwNaFr1a2sIYJDE+Z1E1FipwNv6fexy1U1gvk7W+H5x/7rAu8+HOFda3NI73E9N
-         s34OSW/CLZwWV9+JUj5BjsqROI8IgGVWkumzp3jlDE1DxnuCuZpyGE4/bC7xWu6TOkFz
-         s+7niE0mwqq4b+ihb82m0Xn/qee7+2FFlcVjpQ07RuXRROwm3WuOPxt1wwXHVZ4An0mo
-         rq/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787932886; x=1788537686;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+        d=google.com; s=20251104; t=1787932904; x=1788537704; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Il4EamAEW7KbExBmjcSAYVqBQdsFVVnM7I2Ys4LmgiQ=;
-        b=mE581fkKQ+FEJzq1f9bkX/HJvva2QBKNpsuvQffB3L5/Cwk+lbeC/SxcW5Ce++Fux2
-         BgIdOImfVtj5qUKbmCugpZQ26RqQMAJZibqx0qCaoD6c9KxG0rVBrtKNvQaEV1APzM1W
-         MMhN5vBbSg0vTL6QT6wUo96/dQYq8VEGxIbhoCmAqjJsvODliIr3e09cdutr5rLFQr6U
-         m2O4SIAZa69lgJXlbLh+KL4BtivGcsegM/DQnWQzAlUVknYzX5Y9jr3RNcjW4uqNB2wq
-         UhZIxyWOEo2NNXRs1frsoyI1cliL7WOZJYNyptXZuON7xaYRWz62Ebs3HlR3agnaxfQZ
-         +05Q==
-X-Gm-Message-State: AFuF++mWao9iOV0LqRoxxJCFW484FAZBpCem4C92IGRQT567LKDdRm7q
-	g1iv30eB3Qe0EQYHQzaSHAvytGw4cdk3L4G1MCCuXvbqRxX0pPvtE0rKoaMM+Q==
-X-Gm-Gg: AR+sD12bH5qJvNI4287xD4o78PgXZPUNr1+vmqxIi3cFxbBWy4nOmalTJ8KLeCwtEoK
-	St6ukO/krnRu1ofb1lh/SeG2P3VC6JUakYVkGYiBmgV8C1iDJ+h9qRUjAzTEMRHO2mToB2kLkwN
-	JRZ/4xxRbkFyLa7UaCGXRZbDtYCJiaIb42eV8zEcAx6jzhe+tbRjOmtrSr3UmNQn/pZ49nx343Q
-	EWYq3oEnIB4N9EFh2BJJo8yXzB6olRw1Fj3pbKWobJnENkoO81KNvTvJ5I6TIMNAYRI6xuOztvd
-	s/pHw/w5sYr6kh7MFNlhFHk9wwGLK19I8VtjQFWrJm9A/oBv/NyGQjttiYtFHmgs0W1ElQoU4HQ
-	Qnc2cFT0UvHMtMBoxCO/m3uV3+sTERkgXyVaJ5eLF2m32MdmajLijEeMP61OjZnJ+T4QM0o/SIP
-	dBTaLUalCjcod6AaTDfZYm2mI0AazrojJry74cjIfKLfNqddu7chxvj09UPEEgWFyTcZ/DVE9Pu
-	NvLwQrcWE6Ga6wsMqWJc3c7uG6sf1ku5Yv1JA==
-X-Received: by 2002:a17:90b:4a06:b0:38e:9045:bac0 with SMTP id 98e67ed59e1d1-396d0ea50b4mr14347664a91.5.1787932885607;
-        Fri, 28 Aug 2026 09:01:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-398a14d3e83sm79670a91.10.2026.08.28.09.01.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Aug 2026 09:01:24 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <0ad5b673-d800-4ea1-8239-223404eb88f8@roeck-us.net>
-Date: Fri, 28 Aug 2026 09:01:23 -0700
+        bh=rbwr+K5nPn6tIRCwsto5KEIPiqdePxzLIo1QhD83FDw=;
+        b=hZZO/tuqOaC5BZZ/Ue/DdKohKdxNaJas+bhFlU7MJYa37BARax7wN1CJhOK/VvnX8B
+         nQMzTub4TVagPLz2zxkRVuoxguqCVmIgVCwSzwv2GSyCHAD+BiAT0hz7jUsJ7Lh5WPg5
+         TTgc3Rm2DmDmGYJSblwmXsnz/P7whE6Fe8pBPSgSg0m7xO9u9a18ivcVRHpsNqjaTA0+
+         ujkcLAV1DDAXaWEwSDH/xXG6oJ9oUn+WEAbh1VqUznMCDnkMeKcnPWERlpRR9phWj7h4
+         FPimTN0Ot8fpFtBbAA/MJQBudzIqcMCKjdMjnxdpVcn9LeMs4A6lse6R7VOR5KhQsDvD
+         /J+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787932904; x=1788537704;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rbwr+K5nPn6tIRCwsto5KEIPiqdePxzLIo1QhD83FDw=;
+        b=IZEzY9AuWpm7ezKyKlcCISFy0lVcWaeoipBqX702S/khUkBCUecBUs+W7+kCX4Tsrj
+         3yEWi0jhJYRWcuderKnNbI5fM7BQemSOMM3/YuG7nftaNEU9oLLjbqDA5HQypJiHLP7P
+         8g0/iU41iVJYSKdrJCdkeaaTRzljvc/YEdOIKkZRX2pnTJtJlaVgBFWU06Yi7m6nLP60
+         SJnPzQNFbaKw6Z8rbXMMAGFZ/CSUE5jbg6WVgVms/TkY+0dYaX0YLymE7w00UaonfbTT
+         5EcSVEtOwws0nGll7vyxxPY47y1zADiRtWqnWr9xlpz48w5RCnP/nRC9KOnxKjqiGncU
+         3u5Q==
+X-Gm-Message-State: AFuF++kKH/S7etP0E50meQyo0HxoK9PRHP2yUljfY/sLohz8XZNtUhrN
+	fsk7tV5ngcvTjwvvUXwyIeEkR7QPBYIOf2rVvjnaawaGuALeLkevh4NzLi9AKvyuky6Xd4GjmoV
+	7WFuliEpoDciI+XjnZSzySNvzdhbKd3NXVRQ4jvh4EE3dnV91xM5R6nhyu6Jds1uDGTQHjBRU6A
+	hYdlbALUoiypvVH4m941tVnEVQFgaiMpMuj7w81GbgncDQFYJrzCSdiRF3gOgKyv5M
+X-Received: from edj18.prod.google.com ([2002:a05:6402:3252:b0:6a0:9689:91c0])
+ (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:455a:b0:6a3:f74d:6a47 with SMTP id 4fb4d7f45d1cf-6a60d157efamr5227378a12.0.1787932903626;
+ Fri, 28 Aug 2026 09:01:43 -0700 (PDT)
+Date: Fri, 28 Aug 2026 16:01:43 +0000
+In-Reply-To: <20260821144335.1BE1F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] hwmon: Add Minisforum UM780 XTX EC monitoring and
- fan control
-To: sashiko-reviews@lists.linux.dev, =?UTF-8?Q?Sebasti=C3=A1n_Peyrott?=
- <speyrott@gmail.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260825184107.355980-1-speyrott@gmail.com>
- <20260825184107.355980-2-speyrott@gmail.com>
- <20260825185125.A82D51F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260825185125.A82D51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260821142414.150892-1-djeffery@redhat.com> <20260821142414.150892-3-djeffery@redhat.com>
+ <20260821144335.1BE1F1F000E9@smtp.kernel.org>
+Message-ID: <9huzh5kez120.fsf@tarunix.c.googlers.com>
+Subject: Re: [PATCH 2/9] driver core: prevent device_add() during system shutdown
+From: tarunsahu@google.com
+To: sashiko-reviews@lists.linux.dev, David Jeffery <djeffery@redhat.com>
+Cc: linux-scsi@vger.kernel.org, linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/25/26 11:51, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Missing Kconfig dependency on ACPI_EC leads to undefined reference errors at link time.
+sashiko-bot@kernel.org writes:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Race condition in device_add() abort path during system shutdown=
+ leading to Use-After-Free.
 > --
-> 
-> commit 95c2944ab1799dbc9f42157b5a4c6a9050da57ae
-> Author: Sebastián Peyrott <speyrott@gmail.com>
-> 
-> hwmon: Add Minisforum UM780 XTX EC monitoring and fan control
-> 
-> This commit adds a DMI-gated hardware monitoring driver for the embedded
-> controller used by the Minisforum UM780 XTX. It exposes CPU and system fan
-> control temperatures and tachometers, utilizing the ACPI EC transport.
-> 
->> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
->> index 81a9a1d40eec8..45ac04c89b23d 100644
->> --- a/drivers/hwmon/Kconfig
->> +++ b/drivers/hwmon/Kconfig
+>
+> --- Patch [2]: [PATCH 2/9] driver core: prevent device_add() during syste=
+m shutdown ---
+> commit 17748fb46ccfdb0adadd634adbfe70a9fd601b9a
+> Author: Tarun Sahu <tarunsahu@google.com>
+>
+> driver core: prevent device_add() during system shutdown
+>
+> This commit adds system state checks to device_add() to prevent new
+> devices from being added while the system is halting, powering off, or
+> restarting. It re-checks the state under devices_kset->list_lock to
+> avoid a TOCTOU race window with device_shutdown().
+>
+>> diff --git a/drivers/base/core.c b/drivers/base/core.c
+>> --- a/drivers/base/core.c
+>> +++ b/drivers/base/core.c
 > [ ... ]
->> @@ -1490,6 +1490,22 @@ config SENSORS_MENF21BMC_HWMON
->>   	  This driver can also be built as a module. If so the module
->>   	  will be called menf21bmc_hwmon.
->>   
->> +config SENSORS_MINISFORUM_UM780XTX
->> +	tristate "Minisforum UM780 XTX EC hardware monitoring"
->> +	depends on ACPI && DMI && X86
-> 
-> [Severity: Low]
-> Does this also need to depend on ACPI_EC?
-> 
-Yes, it does, which also explains the build error reported by 0-day.
+>> @@ -3699,6 +3720,18 @@ int device_add(struct device *dev)
+>>  		goto Error;
+>>  	}
+>> =20
+>> +	/*
+>> +	 * Check system_state again under list_lock to prevent a TOCTOU race
+>> +	 * where device_shutdown() runs concurrently and misses this device.
+>> +	 */
+>> +	spin_lock(&devices_kset->list_lock);
+>> +	if (unlikely(system_is_shutting_down())) {
+>> +		spin_unlock(&devices_kset->list_lock);
+>> +		error =3D -ESHUTDOWN;
+>> +		goto ShutdownError;
+>
+> [Severity: High]
+> Does this error path introduce a use-after-free race with device_shutdown=
+()?
+>
+> If device_add() successfully links the device to devices_kset->list via
+> kobject_add(), device_shutdown() could concurrently run and pull the
+> newly added device from the list:
+>
+> device_shutdown() {
+>     ...
+>     spin_lock(&devices_kset->list_lock);
+>     ...
+>     dev =3D list_entry(devices_kset->list.prev, struct device, kobj.entry=
+);
+>     ...
+>     list_del_init(&dev->kobj.entry);
+>     spin_unlock(&devices_kset->list_lock);
+>     ...
+> }
+>
+> If device_add() then resumes, acquires the list lock, and sees
+> system_is_shutting_down(), it will jump to ShutdownError and return
+> -ESHUTDOWN.
+>
+> The caller of device_add() will typically treat this as a failure and
+> free the device and its associated private data. Meanwhile,
+> device_shutdown() is already outside the lock and actively executing the
+> shutdown callbacks on that exact same device:
+>
+> device_shutdown() {
+>     ...
+>     if (dev->bus && dev->bus->shutdown) {
+>         ...
+>         dev->bus->shutdown(dev);
+>     }
+>     ...
+> }
+>
+> Can this lead to device_shutdown() accessing freed device memory?
 
-Thanks,
-Guenter
+We can make device_add and device_shutdown synchronise like
 
-> If a user configures the kernel with CONFIG_ACPI enabled but leaves
-> CONFIG_ACPI_EC unselected, will this driver fail to build? It appears this
-> would lead to undefined references to ec_read, ec_write, ec_transaction,
-> and ec_get_handle at link time.
-> 
++device_block_adding();
++wait_for_device_add();
+
+calling these two in device_shutdown similiarly we have for probing.
+
+~Tarun
+
+>
+>> +	}
+>> +	spin_unlock(&devices_kset->list_lock);
+>> +
+>>  	/* notify platform of device entry */
+>>  	device_platform_notify(dev);
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260821142414.15=
+0892-1-djeffery@redhat.com?part=3D2
