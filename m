@@ -1,168 +1,202 @@
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030523515C5
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 16:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1258C286881
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 16:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787932907; cv=none; b=aQ6qqFsibqu/k74SHRFyDXVE+2mrM0IkEw+TLoTv3/e6rsQWWjeN16kIvNoY/d6Ah1ertRU87epEMNpf324Nop2r15roaJG/RfPXA0EgfwLsPWJo1xbsJx5FlWCxpVQm8vVklhSRZ9zQ6I3az7/EOx2YGlwc3uCmRvsflGrYArU=
+	t=1787933847; cv=none; b=dawhAcihbcmKBnaDy67GYKxNUAU7WM1J1rX3h/egctv0/bE95B6+2546zB2bnOf6CigdEZpiGBsvuwSFTvE9iixb9KckJGG4K+UBS6yKMaZRIVLfNSdWXIj98ObFBP1r24cS8z0ua5JU9eUGIJJCVogRQVE1N/lCBEILsFn9Ssc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787932907; c=relaxed/simple;
-	bh=UuWnHtXL8N/w/Q5WNTbDJxeFR+DQc7c1YtM6Y9NEeTw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ovp8WLmZzTDDDsKDDoVCgkCKHkOqVXUbngHGKpJfvDW+RiVQtk5cbQ3oPmLZmvmbhkZUGqt6jWeUiDr5sqMRaheru+CGSOGojucm9tNchBBuPRk6JhngtPGr53UG4Qv+NuQe+JlHz6LJG/fO6q+1uUj3e9YMa7oDrB29vYrafd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hZZO/tuq; arc=none smtp.client-ip=209.85.218.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
+	s=arc-20240116; t=1787933847; c=relaxed/simple;
+	bh=qmn6C5At/XvU+fYiCZ+/ZwUU2PH+msJobqIWY++3OmY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q/9Xsg3sYHzyoPaAG0gTkYcL1WkExmsP9If4JZRAHyI/FEgcH2H9COVL8lfUuztsexpB43ElKS1hbseh06k4uYEZsZNZrozSDLdLaMtv1yzI1LbMzpLad/w6wHu+okGhH+YRwaRYzCf7t4STUrhsx3aP50nR1mIQPeKxb/CRSjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hctDdane; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hZZO/tuq"
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c15f4732dfaso105928566b.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:01:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hctDdane"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2ceab75934dso11458575ad.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787932904; x=1788537704; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rbwr+K5nPn6tIRCwsto5KEIPiqdePxzLIo1QhD83FDw=;
-        b=hZZO/tuqOaC5BZZ/Ue/DdKohKdxNaJas+bhFlU7MJYa37BARax7wN1CJhOK/VvnX8B
-         nQMzTub4TVagPLz2zxkRVuoxguqCVmIgVCwSzwv2GSyCHAD+BiAT0hz7jUsJ7Lh5WPg5
-         TTgc3Rm2DmDmGYJSblwmXsnz/P7whE6Fe8pBPSgSg0m7xO9u9a18ivcVRHpsNqjaTA0+
-         ujkcLAV1DDAXaWEwSDH/xXG6oJ9oUn+WEAbh1VqUznMCDnkMeKcnPWERlpRR9phWj7h4
-         FPimTN0Ot8fpFtBbAA/MJQBudzIqcMCKjdMjnxdpVcn9LeMs4A6lse6R7VOR5KhQsDvD
-         /J+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787932904; x=1788537704;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787933845; x=1788538645; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=rbwr+K5nPn6tIRCwsto5KEIPiqdePxzLIo1QhD83FDw=;
-        b=IZEzY9AuWpm7ezKyKlcCISFy0lVcWaeoipBqX702S/khUkBCUecBUs+W7+kCX4Tsrj
-         3yEWi0jhJYRWcuderKnNbI5fM7BQemSOMM3/YuG7nftaNEU9oLLjbqDA5HQypJiHLP7P
-         8g0/iU41iVJYSKdrJCdkeaaTRzljvc/YEdOIKkZRX2pnTJtJlaVgBFWU06Yi7m6nLP60
-         SJnPzQNFbaKw6Z8rbXMMAGFZ/CSUE5jbg6WVgVms/TkY+0dYaX0YLymE7w00UaonfbTT
-         5EcSVEtOwws0nGll7vyxxPY47y1zADiRtWqnWr9xlpz48w5RCnP/nRC9KOnxKjqiGncU
-         3u5Q==
-X-Gm-Message-State: AFuF++kKH/S7etP0E50meQyo0HxoK9PRHP2yUljfY/sLohz8XZNtUhrN
-	fsk7tV5ngcvTjwvvUXwyIeEkR7QPBYIOf2rVvjnaawaGuALeLkevh4NzLi9AKvyuky6Xd4GjmoV
-	7WFuliEpoDciI+XjnZSzySNvzdhbKd3NXVRQ4jvh4EE3dnV91xM5R6nhyu6Jds1uDGTQHjBRU6A
-	hYdlbALUoiypvVH4m941tVnEVQFgaiMpMuj7w81GbgncDQFYJrzCSdiRF3gOgKyv5M
-X-Received: from edj18.prod.google.com ([2002:a05:6402:3252:b0:6a0:9689:91c0])
- (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:455a:b0:6a3:f74d:6a47 with SMTP id 4fb4d7f45d1cf-6a60d157efamr5227378a12.0.1787932903626;
- Fri, 28 Aug 2026 09:01:43 -0700 (PDT)
-Date: Fri, 28 Aug 2026 16:01:43 +0000
-In-Reply-To: <20260821144335.1BE1F1F000E9@smtp.kernel.org>
+        bh=PCz7PmgI80ZKCd5ensb+gqUeVoQsl5zpnesQh9e6pXw=;
+        b=hctDdanegvRq1EN+Va/19XwPr2ko5vTU8e3OcZJyTE+CpJ+lwU3Jms3HiHzUMjJJgX
+         oV904n9GJG+01q4pR9gRKpfKnikErR2oNQCPY5lA5TqZwb7izCj9SuZ/e1yZTfUCcKm7
+         jBZoIulypXozJyEHEuoahEiTNKuKEVRzqf6jnuFoG12n6GqU7uZ8Xrl7XzD5fIY2eDCz
+         G+ldLr3+OPNPwP7dhdezsROgCSNPo1JBy4c60tnNpkWNVBt84MO9/7bLr2NfA/KWE2u5
+         DuSrLNAB11AuM3UmXo+coTguCyAaGdCFO8hesNtJjZphwKHaJl3DReHIzeU8uV9lPWJT
+         fIFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787933845; x=1788538645;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=PCz7PmgI80ZKCd5ensb+gqUeVoQsl5zpnesQh9e6pXw=;
+        b=QRAn4km0kkaHzt+z+1msTTZwpx3ishXcW51H+ePesj7fboT+Yf0FwKZVg4OpOgSLLv
+         tLHxpbPXT3Gf7xjumm6p6JHzYinyX+PLVuEuSqiJf622P0AW+EV2//Lg5KJPpUmmM7zU
+         WIcKVAivVt3GUcMzbnnGfqeLLIFHPX4lWM4O+lRWHdXKWxcT7yjfU/DzRGFdhtXbMy2Z
+         22zY0cYJ+AojhqJGl/Er7TKaYWO5W5+RIhiR0ndC/d6FO3T0hIspYS2ciwbCjK+zfG/R
+         Zet59kwSYrfiDkVVxjfCRDsJBh94aMskvCoqPCBCeLO1QasH+gNfDCUANmG1pOuKOvUC
+         x4BQ==
+X-Gm-Message-State: AFuF++nHkOu1qd+AXCwlV13Sp7kSwx8SP2xr3vF2v8VW7AqBZRd6gG29
+	YR5vwhE9gK88b1+mz4vB46xk+TuqEL0M8DO5u8ABzVunWp+sB1dssRSJa4dUyA==
+X-Gm-Gg: AR+sD13ftFPY1KvRIe0Zut4bOIW06yM49CKcBPhrlAABI9Hks68p9l12XSXK3NtxSEx
+	3XB+gYZV/6XdUgIvorgrUMJoSlCGpdmWiKJFujNZP43FkNNSZTcD45r2KLDfqZsSDkkYabKrf+j
+	SFsIu9DkCWn7iqnIQ7N2+n/YqXbzOpKGPrBlubSTcgs459Q8yZ+h8ODejJRMaxPkjmBX29isEl3
+	/gQMvDtTDDzzpWyFnY/Dpq3qvZc4gtw/uduihmhKOrKeSxNNzan7AjRX6EM8hvCbNMUmbnq4Hc3
+	mSMH4M4lT1V88sRyy/ZUckmt1IAOBU/+m/rPpSESYBWDmc1mlzeyO5wgdCzpjkKXJbw6dPNdD/b
+	D4ti3xgtMIpCe6DSo0FmKIXHMQQ6e8HKdx2X46tn8G0yRkTiv3B6RMEqYinFc4oClZ4EmGnGwKp
+	Pgw121SYihGwWWyKo163SLBYXjvzR/wIBl9PjyNm8OZRt3qdGy3aPagL7pf2YLf9wkYSEcpl2RE
+	vKwx/HFPXoMtuM7dRYEXiEiCeoOnwoVx17xYg==
+X-Received: by 2002:a17:902:f78b:b0:2c9:df1b:e948 with SMTP id d9443c01a7336-2d74dc78debmr158990145ad.4.1787933845333;
+        Fri, 28 Aug 2026 09:17:25 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f956658sm7303038eec.19.2026.08.28.09.17.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Aug 2026 09:17:24 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <57665923-dba8-4619-878f-8ed76a0e5c6c@roeck-us.net>
+Date: Fri, 28 Aug 2026 09:17:23 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260821142414.150892-1-djeffery@redhat.com> <20260821142414.150892-3-djeffery@redhat.com>
- <20260821144335.1BE1F1F000E9@smtp.kernel.org>
-Message-ID: <9huzh5kez120.fsf@tarunix.c.googlers.com>
-Subject: Re: [PATCH 2/9] driver core: prevent device_add() during system shutdown
-From: tarunsahu@google.com
-To: sashiko-reviews@lists.linux.dev, David Jeffery <djeffery@redhat.com>
-Cc: linux-scsi@vger.kernel.org, linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] hwmon: (nct6683) Add pwm[1-8]_enable
+To: sashiko-reviews@lists.linux.dev, Johan Dahlin <jdahlin@gmail.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260825092546.669450-1-jdahlin@gmail.com>
+ <20260825092546.669450-4-jdahlin@gmail.com>
+ <20260825094401.0E4391F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
+ oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
+ VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
+ 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
+ onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
+ DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
+ rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
+ WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
+ qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
+ 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
+ qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
+ H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
+ njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
+ dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
+ j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
+ scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
+ zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
+ RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
+ F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
+ FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260825094401.0E4391F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-sashiko-bot@kernel.org writes:
+On 8/25/26 02:44, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The sysfs callbacks `show_pwm_enable()` and `store_pwm_enable()` incorrectly cast their attribute argument to `struct sensor_device_attribute_2 *`, leading to type confusion with `struct sensor_device_attribute` and causing failures on Big-Endian architectures.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Race condition in device_add() abort path during system shutdown=
- leading to Use-After-Free.
+Yes. Please fix.
+
+Thanks,
+Guenter
+
 > --
->
-> --- Patch [2]: [PATCH 2/9] driver core: prevent device_add() during syste=
-m shutdown ---
-> commit 17748fb46ccfdb0adadd634adbfe70a9fd601b9a
-> Author: Tarun Sahu <tarunsahu@google.com>
->
-> driver core: prevent device_add() during system shutdown
->
-> This commit adds system state checks to device_add() to prevent new
-> devices from being added while the system is halting, powering off, or
-> restarting. It re-checks the state under devices_kset->list_lock to
-> avoid a TOCTOU race window with device_shutdown().
->
->> diff --git a/drivers/base/core.c b/drivers/base/core.c
->> --- a/drivers/base/core.c
->> +++ b/drivers/base/core.c
+> 
+> --- Patch [3]: [PATCH 3/5] hwmon: (nct6683) Add pwm[1-8]_enable ---
+> commit ae1360636538f417a87b23c1e1c204ef9329c018
+> Author: Johan Dahlin <jdahlin@gmail.com>
+> 
+> hwmon: (nct6683) Add pwm[1-8]_enable
+> 
+> This commit exposes the manual-control bitmap as pwm[1-8]_enable for fan
+> control on supported boards, falling back to read-only hardware control
+> on unsupported variants.
+> 
+> Link: https://github.com/Fred78290/nct6687d
+> Link: https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
+> 
+>> diff --git a/drivers/hwmon/nct6683.c b/drivers/hwmon/nct6683.c
+>> index b43e915f9d0fb..0324ace707a53 100644
+>> --- a/drivers/hwmon/nct6683.c
+>> +++ b/drivers/hwmon/nct6683.c
 > [ ... ]
->> @@ -3699,6 +3720,18 @@ int device_add(struct device *dev)
->>  		goto Error;
->>  	}
->> =20
->> +	/*
->> +	 * Check system_state again under list_lock to prevent a TOCTOU race
->> +	 * where device_shutdown() runs concurrently and misses this device.
->> +	 */
->> +	spin_lock(&devices_kset->list_lock);
->> +	if (unlikely(system_is_shutting_down())) {
->> +		spin_unlock(&devices_kset->list_lock);
->> +		error =3D -ESHUTDOWN;
->> +		goto ShutdownError;
->
-> [Severity: High]
-> Does this error path introduce a use-after-free race with device_shutdown=
-()?
->
-> If device_add() successfully links the device to devices_kset->list via
-> kobject_add(), device_shutdown() could concurrently run and pull the
-> newly added device from the list:
->
-> device_shutdown() {
->     ...
->     spin_lock(&devices_kset->list_lock);
->     ...
->     dev =3D list_entry(devices_kset->list.prev, struct device, kobj.entry=
-);
->     ...
->     list_del_init(&dev->kobj.entry);
->     spin_unlock(&devices_kset->list_lock);
->     ...
-> }
->
-> If device_add() then resumes, acquires the list lock, and sees
-> system_is_shutting_down(), it will jump to ShutdownError and return
-> -ESHUTDOWN.
->
-> The caller of device_add() will typically treat this as a failure and
-> free the device and its associated private data. Meanwhile,
-> device_shutdown() is already outside the lock and actively executing the
-> shutdown callbacks on that exact same device:
->
-> device_shutdown() {
->     ...
->     if (dev->bus && dev->bus->shutdown) {
->         ...
->         dev->bus->shutdown(dev);
->     }
->     ...
-> }
->
-> Can this lead to device_shutdown() accessing freed device memory?
-
-We can make device_add and device_shutdown synchronise like
-
-+device_block_adding();
-+wait_for_device_add();
-
-calling these two in device_shutdown similiarly we have for probing.
-
-~Tarun
-
->
->> +	}
->> +	spin_unlock(&devices_kset->list_lock);
+>> @@ -962,25 +963,93 @@ store_pwm(struct device *dev, struct device_attribute *attr, const char *buf,
+> [ ... ]
+>> +static ssize_t
+>> +show_pwm_enable(struct device *dev, struct device_attribute *attr, char *buf)
+>> +{
+>> +	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
+> 
+> [Severity: Medium]
+> Does this cast cause type confusion with struct sensor_device_attribute?
+> 
+> The template initializes the attribute as a struct sensor_device_attribute,
+> which uses an int for the index field, but it is cast here to a struct
+> sensor_device_attribute_2, which uses a u8 for the index.
+> 
+> On Big-Endian architectures, reading a u8 from an int field aliases the MSB.
+> Would this result in an index of 0, effectively mapping all manual fan
+> control operations to channel 0 and breaking functionality for fans 1-7?
+> 
+>> +	struct nct6683_data *data = dev_get_drvdata(dev);
+>> +	u8 mode;
 >> +
->>  	/* notify platform of device entry */
->>  	device_platform_notify(dev);
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260821142414.15=
-0892-1-djeffery@redhat.com?part=3D2
+>> +	mutex_lock(&data->update_lock);
+>> +	mode = nct6683_read(data, NCT6683_REG_FAN_CTRL_MODE);
+>> +	mutex_unlock(&data->update_lock);
+>> +
+>> +	return sysfs_emit(buf, "%d\n", (mode & BIT(sattr->index)) ? 1 : 2);
+>> +}
+>> +
+>> +static ssize_t
+>> +store_pwm_enable(struct device *dev, struct device_attribute *attr,
+>> +		 const char *buf, size_t count)
+>> +{
+>> +	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
+> 
+> [Severity: Medium]
+> Is there a similar type confusion issue on the store path?
+> 
+> Casting to struct sensor_device_attribute_2 and reading the u8 index might
+> similarly fail on Big-Endian systems during store operations, causing writes
+> to unintended channels.
+> 
+>> +	struct nct6683_data *data = dev_get_drvdata(dev);
+>> +	u8 bit = BIT(sattr->index);
+> [ ... ]
+> 
+
