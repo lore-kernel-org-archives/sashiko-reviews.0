@@ -1,196 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509773B3BE2
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 20:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEACE364941
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 21:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787948540; cv=none; b=NjhbpNkiXwCBLQkVyWyiGm1gFKPSYT+YhaiaafInPRO5HKcH9Me6mSJFLZ84z0V/26+tOg/M1H9+qb9yiIUABejcidcFatTc/V5IbFnmslunkyJxacLfDI77ekpWCcoPgOLgb1FF2O8sksndZBvVGlcCECiVsEs6dIZhWHs/49c=
+	t=1787950949; cv=none; b=UDuEnmomNDm8tJ6QyKDdDZmQ5E57aZxu/Q6LwfyNhAwY18N+49i8cniXqdLEVvb7sj4wLVOiCG7/a/euzxp/wYESxPqURlz4BnNPX3hxhvb/aQ/1jBe0X3ggFWZmelLwE23YvboxhcKcszIesdavXLolyjePzHOaUsU9HBBPcAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787948540; c=relaxed/simple;
-	bh=+STKQwumvZwRHD0R+KPdZUSZl0+nlRs8ym/kTUCDp84=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UfdZsE/XL25mPVnS7+IBF1CLmTOEpEXCC8k1ESEmnzNit227SEIq4t+dACNTsZD2sz8ungFZ1InhNYbQKKHfxBPPSj672syBOspZyVI6haAye4BOXdQW4kaWonpvq7ql9MSQLjF7gHt5tOfTUuvscxh1xQDM9sTKRvCeMvdiT6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Qch2syLV; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1787950949; c=relaxed/simple;
+	bh=EBbufZZ+sAD2y0V21+jCB7JK65ijPEhb88MVaJjhjEc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lPF83SbFHCCDQWjuuhm+0YDva6nj0Qi2o/3XEc+0OU8umjvVWjQiUTO2IfCJZus7sEyYD/lp3fMAL0qNPHeVsv5UihpRh+Xp35xJKzFs/ZbpKCJDipnZYWGZA/MsP7z2uPkVfMlvKTVbx/RFLVJuARtZAodHXa9M9ZXmGJMSdFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=IdcQsXYv; arc=none smtp.client-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Qch2syLV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787948538; x=1819484538;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+STKQwumvZwRHD0R+KPdZUSZl0+nlRs8ym/kTUCDp84=;
-  b=Qch2syLVO3oUEYZwm+Je9zIEWPOu5WXsU9U8UexD6P4sFZw4w6N74Qq9
-   a+bW/bfL0XzWCxey8fIV53IKg1UUxqgALPzTuZ4kNzSUAE0oS84oeYNri
-   zTK6uQpuT5XNiidqs8Fsm35hnxWQqYq+CHZ1yP6e+9N33gIBIfTLazNp1
-   RwXngpHcfetI2Y4ecdGkf3jkcCYNBu23hvRpwhm6+qbJKnMS+y9d0PEeM
-   tRuCQot7cJNkDCX8P11+qrX1YTWW77vNAARkCMv5i079aykYWqKpBaSmA
-   i5AyQB4SOcJKM1p8j5kfMxlSI+4nMpjlQT/6BcTOBXz2lDFXynb5wCOCi
-   A==;
-X-CSE-ConnectionGUID: 6CZaxmWAST6DOe5oAzPMGg==
-X-CSE-MsgGUID: 3MqjSi54QCecjnnaws0PTg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11889"; a="87594846"
-X-IronPort-AV: E=Sophos;i="6.25,249,1779174000"; 
-   d="scan'208";a="87594846"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 13:22:17 -0700
-X-CSE-ConnectionGUID: ZP1ULuRcS/iwejxusn9ULA==
-X-CSE-MsgGUID: p1k/nzROSE6y+2Y0AF2jYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,249,1779174000"; 
-   d="scan'208";a="272464134"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 13:22:17 -0700
-Message-ID: <18d181c1-ccfc-42c7-950a-6104714c20c0@intel.com>
-Date: Fri, 28 Aug 2026 15:22:16 -0500
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="IdcQsXYv"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7ee37dc91f5so857270a34.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 14:02:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1787950946; x=1788555746; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=EBbufZZ+sAD2y0V21+jCB7JK65ijPEhb88MVaJjhjEc=;
+        b=IdcQsXYvMFX+Q+Oby/rd7TnQ37qoJ+gWJqyb603CAk5ljEUjcUJEDXIjDPGEcr5lNm
+         fsnf0DqOOVA+DdJhg8rwV9Jdu3R+MAw5C4QwYURatO1nhVUfM0nWHJifWofyWhdyApQY
+         JVxKgcE3luIOm9IorvwVCwNAnsbjilVDNpRjs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787950946; x=1788555746;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EBbufZZ+sAD2y0V21+jCB7JK65ijPEhb88MVaJjhjEc=;
+        b=TbnQV4nzQ/vQhB1YflYQ1b6A1zUdn5Nx+gimOPtp/B6l2qtyyGxrlg1m4i8HrFnVwf
+         OVsGKc4g6ADQxCTSeFnzk+t2mRl5xZljqa5DDd606rlztfYqndPHvqBkVsjpFVGmZZhk
+         rqc+49cfuCXYmirJQrWzJ3wruseWcX6aFxqgkGN+Z/5CMXlwAaAsP3pffs/apszUjJJH
+         4OEc0sSnRQmS3XKQa8afqHjso+tYkup0o805SBmFHbC4O+y+nPvBgIiawKByDWVTdSDq
+         6a6ochVlWgc9sDu8t72tKBPaonajZHuyRzlpAjsVShuApM8HUW+VWVelHJg1KSUtJbgv
+         dijQ==
+X-Gm-Message-State: AFuF++lNhkBbh8QQfhMAdP9sHuoRe+hV4TA0/TEZoiXVxP/E55yuYgv3
+	i7Uyf0uszC7FObzoyMm174yUFFh7EMeruo2L1pr2Dlh+m3mYZW3rgyXLjRexkys91Pkat5yC+6w
+	sw2wueY8=
+X-Gm-Gg: AR+sD13KlGjAY65NT8XH05rF4CFDfRyayiRnKwbboN8FOcsPVX6RZKTad01yFQVY3sK
+	6yLJbeClWGUR2VqWFqC2lQNz3/3sx+jYxXOWTR3jjPeD0fw+bzTCj/+fJ8m/fGcWVfXNuMJjVyo
+	ezHnRWpyBCOcd833X/wFXuxSWBbxPDCLuAMjvdbu5udIZ1tJOaw7IAJ+fciX/qnwaIW2eKao2mu
+	VXWwpNvgH+GYMvPU0uTmRmR6LwV/fFzbHKKuGSZ9e/Rm02QoA3UVwHEkmN4Rpe4F+rU+rYessDU
+	lHEFmRC8dorRgmNBodcTol+5BCPm4rEG8adBp2QjNj3WcJ5g9Q5mj3E1Ht1SWL0boxMcILxvJzh
+	gVuF80Zz3k046iNwlvrWyMTCbDBm//fkkUEif1KqWb7qktlaWuBxtEQEZPks2iPHNFvFzBJtpox
+	r9FmAPrikTmA5mrqEteKr2pmAai2fMq8WkUXGuOX8XWR2bGLqqpYmpWNtOMjcINqp4NNL10L5lm
+	YhV0yUmGwdMgyRf0IfNgQMNjmMlsTWdACE0sWAILmA=
+X-Received: by 2002:a05:6820:180d:b0:6b0:589e:42f4 with SMTP id 006d021491bc7-6b1c66b745cmr9469438eaf.20.1787950945751;
+        Fri, 28 Aug 2026 14:02:25 -0700 (PDT)
+Received: from com-75606 ([199.47.143.7])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b1ce14f77bsm2321969eaf.7.2026.08.28.14.02.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Aug 2026 14:02:25 -0700 (PDT)
+Date: Fri, 28 Aug 2026 14:02:21 -0700
+From: Kyle Zeng <kylebot@openai.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH] KVM: x86: Restrict saved GPA writes to hardware write
+ faults
+Message-ID: <apH3XVa_uzt2ieGa@com-75606>
+References: <20260828193055.59623-1-kylebot@openai.com>
+ <20260828194912.E4DCC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/16] KVM: x86/pmu: Emulate the GLOBAL_STATUS_SET and
- GLOBAL_INUSE MSRs
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260827223755.143247-1-zide.chen@intel.com>
- <20260827223755.143247-12-zide.chen@intel.com>
- <20260827230531.9652B1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260827230531.9652B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260828194912.E4DCC1F000E9@smtp.kernel.org>
 
+> the hardware does not set PFERR_GUEST_FINAL_MASK
+> (as this bit requires GMET or SEV-ES).
 
+Is that requirement documented somewhere? AFAICT, these are ordinary NPF
+bits. Bit 32 identifies a fault on the final GPA, and bit 33 identifies
+a fault during a guest page-table walk. Both are already described in the
+Current AMD manual
+(https://kib.kiev.ua/x86docs/AMD/AMD64/24593_APM_v2-r3.44.pdf)
 
-On 8/27/2026 6:05 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Incorrect IN_USE bit calculation for fixed counters in IA32_PERF_GLOBAL_INUSE omits the INTEL_FIXED_0_ENABLE_PMI condition.
-> - [Medium] Emulated writes to MSR_CORE_PERF_GLOBAL_STATUS_SET fail to trigger a PMI when the corresponding global_ctrl bit is set.
-> --
-> 
-> commit a29f967a55c3b6e45cb682091b4b9a33c0b976dc
-> Author: Zide Chen <zide.chen@intel.com>
-> 
-> KVM: x86/pmu: Emulate the GLOBAL_STATUS_SET and GLOBAL_INUSE MSRs
-> 
-> Intel PerfMon v4 introduces IA32_PERF_GLOBAL_STATUS_SET (0x391) and
-> IA32_PERF_GLOBAL_INUSE (0x392). This patch adds emulation for both MSRs
-> in KVM, but there appear to be a few issues with the implementation.
-> 
->> diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
->> index 437a7bc49bf84..7c05cf5157bfc 100644
->> --- a/arch/x86/kvm/pmu.c
->> +++ b/arch/x86/kvm/pmu.c
-> [ ... ]
->> @@ -931,6 +934,12 @@ int kvm_pmu_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
->>  		if (!msr_info->host_initiated)
->>  			pmu->global_status &= ~data;
->>  		break;
->> +	case MSR_CORE_PERF_GLOBAL_STATUS_SET:
->> +		if (data & pmu->global_status_rsvd)
->> +			return 1;
->> +		if (!msr_info->host_initiated)
->> +			pmu->global_status |= data;
->> +		break;
-> 
-> [Severity: Medium]
-> Will emulated guest writes to MSR_CORE_PERF_GLOBAL_STATUS_SET fail to trigger
-> a PMI when the corresponding global_ctrl bit is set?
-> 
-> This handler correctly updates the global status, but it appears to omit the
-> required secondary side-effect of generating a performance monitoring interrupt.
-> 
-> If a guest writes a 1 to a bit in MSR_CORE_PERF_GLOBAL_STATUS_SET while the
-> corresponding bit in IA32_PERF_GLOBAL_CTRL is enabled, it seems the interrupt
-> will silently fail to generate because the code doesn't check global_ctrl or
-> set KVM_REQ_PMI.
+KVM also started preserving these hardware-provided bits in
+5e3525195196 ("KVM: nSVM: propagate the NPF EXITINFO to the guest")
+back in 2014. See the original patch (https://lkml.iu.edu/1409.0/01003.html).
 
-According to the Intel SDM, IA32_PERF_GLOBAL_STATUS_SET only sets the
-corresponding bits in IA32_PERF_GLOBAL_STATUS, but not generate a PMI.
+If a CPU really doesn't set FINAL for a final-GPA write fault, then yes,
+falling back to a software walk would be a problem for SEV. I haven't
+tested this on Naples or Rome, though. Is there a known erratum, or an
+actual EXITINFO1 value showing this on either CPU?
 
-Generating a PMI / KVM_REQ_PMI on writes to this MSR would deviate from
-hardware behavior and cause spurious PMIs in the guest, e.g., during
-live migration state restoration, or during KVM pmu context switch.
-
-> 
->>  	case MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_SET:
->>  		if (!msr_info->host_initiated)
->>  			pmu->global_status |= data & ~pmu->global_status_rsvd;
-> [ ... ]
->> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
->> index 4df55a3e21da9..3070fba2687f4 100644
->> --- a/arch/x86/kvm/vmx/pmu_intel.c
->> +++ b/arch/x86/kvm/vmx/pmu_intel.c
-> [ ... ]
->> @@ -341,6 +343,38 @@ static bool intel_pmu_handle_lbr_msrs_access(struct kvm_vcpu *vcpu,
->>  	return true;
->>  }
->>  
->> +static u64 intel_pmu_get_global_inuse(struct kvm_vcpu *vcpu)
->> +{
->> +	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
->> +	unsigned long fixed_mask = kvm_fixed_pmc_mask(pmu);
->> +	unsigned long gp_mask = kvm_gp_pmc_mask(pmu);
->> +	bool pmi_inuse = false;
->> +	u64 eventsel, data = 0;
->> +	u32 fixed_ctrl;
->> +	int i;
->> +
->> +	kvm_for_each_gp_counter(i, gp_mask) {
->> +		eventsel = pmu->gp_counters[i].eventsel;
->> +
->> +		if (eventsel & ARCH_PERFMON_EVENTSEL_EVENT)
->> +			data |= BIT_ULL(i);
->> +		pmi_inuse |= eventsel & ARCH_PERFMON_EVENTSEL_INT;
->> +	}
->> +	kvm_for_each_fixed_counter(i, fixed_mask) {
->> +		fixed_ctrl = fixed_ctrl_field(pmu->fixed_ctr_ctrl, i);
->> +
->> +		if (fixed_ctrl & (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER))
->> +			data |= BIT_ULL(KVM_FIXED_PMC_BASE_IDX + i);
-> 
-> [Severity: Medium]
-> Does this code improperly omit INTEL_FIXED_0_ENABLE_PMI when calculating the
-> IN_USE bit for fixed counters?
-> 
-> If a fixed counter is configured only for PMI (without OS or User bits), this
-> code seems to falsely report it as unused, which violates the Intel SDM
-> specification for FCn_InUse. 
-> 
-> Should INTEL_FIXED_0_ENABLE_PMI be included in this condition to ensure the
-> availability check remains accurate?
-
-False positive. The implementation strictly follows the SDM:
-
-IA32_PERF_GLOBAL_INUSE.FC0_InUse[bit 32]: This bit reflects the logical
-state of (IA32_FIXED_CTR_CTRL[1:0] != 0).
-
-Also I verified that the behavior is same between the host and the guest
-in this regard.
-
-Note that in practice, reading this MSR on the host may be inconsistent.
-The Linux perf driver clear the EN bit but not the whole EvtSel MSRs
-after a perf event finishes, so the corresponding bits in INUSE may
-remain set. In contrast, kvm_pmu_put_guest_pmcs() explicitly clears
-these MSRs, which means the in-use bits will be cleared on physical CPUs
-running a vCPU.
-
-
-
-> 
->> +		pmi_inuse |= fixed_ctrl & INTEL_FIXED_0_ENABLE_PMI;
->> +	}
->> +	pmi_inuse |= pmu->pebs_enable;
->> +
->> +	if (pmi_inuse)
->> +		data |= PERF_GLOBAL_INUSE_PMI_INUSE;
->> +
->> +	return data;
->> +}
-> 
-
+Thanks,
+Kyle
