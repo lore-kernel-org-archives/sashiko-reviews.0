@@ -1,68 +1,68 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203AA35E1B1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 15:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97034241686
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 16:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787932723; cv=none; b=JSOUPXhQQRCd5upWe/4YNcf033HbWjUARBubMZ0eoebVrkuDOhKIU7Pbob8dap7B09mKC6hwdcMsxoTvsmCCp9d5vikV5kJZdbog5e1X4DO58zvDRLw+Eu+IYy5xwECj3JKV/8fb1kmaO5OduRQU4nfL1ycG+DhEL08ot7MwjZk=
+	t=1787932887; cv=none; b=VRNyAh1qAXtihcpxHrD1fWuv2cl9Bf7QkGqIWbkm4vruhyI5RpQvC2BH9ep777qk3sqT98n8bupcTS6dMkgis0zy88h0Mq1AB5ujmzaSmq7NslPmrzff4fPxUhn7pheWDc7IDXkCfInXIpeR9vgRJcDXCPV5bQ648WoPzlAqM2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787932723; c=relaxed/simple;
-	bh=QjDYzM+B84BbFBFY2XiRrMaalijI6ccJ60p4UBFt1qU=;
+	s=arc-20240116; t=1787932887; c=relaxed/simple;
+	bh=oQqNEQbcnXBTfUIv5IgxbO7DhuJL8CYmkSWZxLpRWX0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BKbCfPTCsx8lvzLlNNthWm/VdmcW0XnJbNHQRZy9dtzhcKbp2Ue5cojFWxLML7OJtnSNg78NDkIjtr0qBoyE/iDxksq4JxLaOh2Sa54h6zOFlvY+GMPqHygEcaOEMPVjbGOHO8VH/wYYe8M/uiJTvaUogjJNu/JRdsTU+5ZuOe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYNeMlii; arc=none smtp.client-ip=209.85.216.45
+	 In-Reply-To:Content-Type; b=UkAqQ37w+Wpb2RkRP4zqER2XRnTHtJQgiN9kcZbYnhQ3WYgF9lT3Ad7vknrtDyw45OKskuVHbZa5Jm8ttLBX72rrjycq9M8sF1blfqiNHuOXFO5t8qb1703qVoqLu0GES9fylaNyjCBe1WU4YGC6y8xdI3bTR/W20nvalGHiBv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UYdjelnJ; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYNeMlii"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38e7109321dso919802a91.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 08:58:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYdjelnJ"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e347638adso1165810a91.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 09:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787932721; x=1788537521; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1787932886; x=1788537686; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=J5wUVUOJ+BNRj/aLvsZKiuH7D96YZP/aRZ4u0ysxDiw=;
-        b=fYNeMliizfqXlDVfrShuig6hf8GzozNQUUzz6wnywVsaceiWEkghno/kwkySn2Iemm
-         iu+0JuumVDQRCpVbQu2wVyj31XpuDH3w2ajIBBQgDxr0c/MBgGqAxP5oO+eDZAODLwuO
-         34Pw/cSFLw9SdI7QSAR8b4iOyBJ2G1rUXnNrFUX0Ch2OW3mP11kF4oP1DVX5fmgtKYcM
-         SK3/EZeRy55OTLQcwi64xr+ubVPIYOseN0mYe/+P2xTwL5QhMnmG/qHR4UJ/+qUbD+32
-         vtvd3WpqnPQRuf193COujTUv9vjD9Hpu/sHP+nsPAY5AJi5sJvScB4izxLjfViQhrQVX
-         9tUw==
+        bh=Il4EamAEW7KbExBmjcSAYVqBQdsFVVnM7I2Ys4LmgiQ=;
+        b=UYdjelnJSoYQm36i8vOdh7x1OJJGlKHFQal4NTKySkJwWP737fMUCHZRq0aR9bEIGM
+         WfMcurRgXX9khaLJsznthpM9j9ghbPKL0mnoVf7SA2RATEDyK7OL5b/FX7ijyJO15Zib
+         Z12brIwNaFr1a2sIYJDE+Z1E1FipwNv6fexy1U1gvk7W+H5x/7rAu8+HOFda3NI73E9N
+         s34OSW/CLZwWV9+JUj5BjsqROI8IgGVWkumzp3jlDE1DxnuCuZpyGE4/bC7xWu6TOkFz
+         s+7niE0mwqq4b+ihb82m0Xn/qee7+2FFlcVjpQ07RuXRROwm3WuOPxt1wwXHVZ4An0mo
+         rq/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787932721; x=1788537521;
+        d=1e100.net; s=20251104; t=1787932886; x=1788537686;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=J5wUVUOJ+BNRj/aLvsZKiuH7D96YZP/aRZ4u0ysxDiw=;
-        b=J25X1+FrpTa6d5EeETgYYYQY6OC2afLDr0ceL0JWJdJZ8PrNRjwvN3gUI+X4fLSsUy
-         eBg/KQMpSzeKNeI93s32eGmRrjUyCxwRVyeFq8UCBPR/1FfvlOgJmnsnml/nknptw3hr
-         DyAWLDu54h2evtPPiHxta9xaB0uYVCl6L+vlLGjDffB/DjwYEBCGLX8Pe+9XK6PE6qRh
-         era7SzFy7e7nmnQgJ8Isz2WsKvWQwa4QtubCGxuQZaQfTHZLG71G90vixd7I0gSw4Rfq
-         Ud9GUxqAolcPS49QDplgHXuYkNm/PIPVv0LhrcW6QsrHrsA0N8nV5QDkvaPka+UKFIxL
-         3bvQ==
-X-Gm-Message-State: AFuF++lfTSOx4+D4+yrLCSICA46aQlsMfTRZ4PVrdLGRSsMmt63ddPYq
-	QIj8BpGk5o6Y1kK3kRaHAuvKNSqHFHfzEyKWCmLaPvo4KABSImtNNqNHJnA6vg==
-X-Gm-Gg: AR+sD1249KxjJYl3F2nQnXxZ6wM6gyUtylIFeYY8ENVPB8JXyU9B5+5IxHBlvQmBDIX
-	VBc8Quh7oadOcOrv4tq7OOrE8N4fIgWswPfh5rjG9U1P3ytwxUL89Wg3AqunC5+G9IV3x2QZe+U
-	jgTurjhJblY+Abz4jTYhS87n28eZVO4BK/wlqHMP1Cw+MGrxtTZCVqCv+qDK5BnTb7W2LPO3QGF
-	zaEfNVaFkl4++I4DnLfUJRKMadCWdCzWUqxqhBV57QxWf89e+N2Py0FvQAKsjtCqJrsCztDSr96
-	mchCYm0OtLe2d6osEsFrGS+NAsEuxs7KmN3b6gD/OdaaAWAv1QGXPE6EmzVPEwXSW3hSkqNHvTE
-	mtkeYPfEtwqtK0Gb4s+BCtu74zflIRc/132/o0YqwOi3q62yICaKoGYoqXNRtPwstTqjlbz4e1X
-	wlZjGruQHM/gcSXhFxoboF7aKRpHWjvB1ZRYjDIw6395by66chRP3nB/EeHxhVaApHaWfCURv4y
-	X5PB4EaXgxvHZFyk3HPpVPcETUznbfNZbmWjg==
-X-Received: by 2002:a17:90b:1f87:b0:395:5f43:4ec4 with SMTP id 98e67ed59e1d1-396d0a6589dmr17223817a91.0.1787932721178;
-        Fri, 28 Aug 2026 08:58:41 -0700 (PDT)
+        bh=Il4EamAEW7KbExBmjcSAYVqBQdsFVVnM7I2Ys4LmgiQ=;
+        b=mE581fkKQ+FEJzq1f9bkX/HJvva2QBKNpsuvQffB3L5/Cwk+lbeC/SxcW5Ce++Fux2
+         BgIdOImfVtj5qUKbmCugpZQ26RqQMAJZibqx0qCaoD6c9KxG0rVBrtKNvQaEV1APzM1W
+         MMhN5vBbSg0vTL6QT6wUo96/dQYq8VEGxIbhoCmAqjJsvODliIr3e09cdutr5rLFQr6U
+         m2O4SIAZa69lgJXlbLh+KL4BtivGcsegM/DQnWQzAlUVknYzX5Y9jr3RNcjW4uqNB2wq
+         UhZIxyWOEo2NNXRs1frsoyI1cliL7WOZJYNyptXZuON7xaYRWz62Ebs3HlR3agnaxfQZ
+         +05Q==
+X-Gm-Message-State: AFuF++mWao9iOV0LqRoxxJCFW484FAZBpCem4C92IGRQT567LKDdRm7q
+	g1iv30eB3Qe0EQYHQzaSHAvytGw4cdk3L4G1MCCuXvbqRxX0pPvtE0rKoaMM+Q==
+X-Gm-Gg: AR+sD12bH5qJvNI4287xD4o78PgXZPUNr1+vmqxIi3cFxbBWy4nOmalTJ8KLeCwtEoK
+	St6ukO/krnRu1ofb1lh/SeG2P3VC6JUakYVkGYiBmgV8C1iDJ+h9qRUjAzTEMRHO2mToB2kLkwN
+	JRZ/4xxRbkFyLa7UaCGXRZbDtYCJiaIb42eV8zEcAx6jzhe+tbRjOmtrSr3UmNQn/pZ49nx343Q
+	EWYq3oEnIB4N9EFh2BJJo8yXzB6olRw1Fj3pbKWobJnENkoO81KNvTvJ5I6TIMNAYRI6xuOztvd
+	s/pHw/w5sYr6kh7MFNlhFHk9wwGLK19I8VtjQFWrJm9A/oBv/NyGQjttiYtFHmgs0W1ElQoU4HQ
+	Qnc2cFT0UvHMtMBoxCO/m3uV3+sTERkgXyVaJ5eLF2m32MdmajLijEeMP61OjZnJ+T4QM0o/SIP
+	dBTaLUalCjcod6AaTDfZYm2mI0AazrojJry74cjIfKLfNqddu7chxvj09UPEEgWFyTcZ/DVE9Pu
+	NvLwQrcWE6Ga6wsMqWJc3c7uG6sf1ku5Yv1JA==
+X-Received: by 2002:a17:90b:4a06:b0:38e:9045:bac0 with SMTP id 98e67ed59e1d1-396d0ea50b4mr14347664a91.5.1787932885607;
+        Fri, 28 Aug 2026 09:01:25 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396b0ea7fa9sm7912829a91.4.2026.08.28.08.58.40
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-398a14d3e83sm79670a91.10.2026.08.28.09.01.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Aug 2026 08:58:40 -0700 (PDT)
+        Fri, 28 Aug 2026 09:01:24 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <b9792be3-fcd6-468c-9149-7e33640ee167@roeck-us.net>
-Date: Fri, 28 Aug 2026 08:58:39 -0700
+Message-ID: <0ad5b673-d800-4ea1-8239-223404eb88f8@roeck-us.net>
+Date: Fri, 28 Aug 2026 09:01:23 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,12 +70,14 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hwmon: (gpio-fan) fix pm_runtime imbalance for alarm-only
- fans
-To: sashiko-reviews@lists.linux.dev, Cong Nguyen <congnt264@gmail.com>
+Subject: Re: [PATCH v3 1/1] hwmon: Add Minisforum UM780 XTX EC monitoring and
+ fan control
+To: sashiko-reviews@lists.linux.dev, =?UTF-8?Q?Sebasti=C3=A1n_Peyrott?=
+ <speyrott@gmail.com>
 Cc: linux-hwmon@vger.kernel.org
-References: <20260828105018.2392383-1-congnt264@gmail.com>
- <20260828110142.725E61F000E9@smtp.kernel.org>
+References: <20260825184107.355980-1-speyrott@gmail.com>
+ <20260825184107.355980-2-speyrott@gmail.com>
+ <20260825185125.A82D51F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -121,70 +123,47 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260828110142.725E61F000E9@smtp.kernel.org>
+In-Reply-To: <20260825185125.A82D51F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/28/26 04:01, sashiko-bot@kernel.org wrote:
+On 8/25/26 11:51, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Converting to `devm_pm_runtime_enable()` and placing it at the end of `probe()` incorrectly reverses the teardown order, causing PM runtime to be disabled too early. This leads to a regulator enable count leak and exposes a sysfs race condition on driver unbind.
+> - [Low] Missing Kconfig dependency on ACPI_EC leads to undefined reference errors at link time.
 > --
 > 
-> commit 728a875c515df8244bd554b338f4f008d88b3b9e
-> Author: Cong Nguyen <congnt264@gmail.com>
+> commit 95c2944ab1799dbc9f42157b5a4c6a9050da57ae
+> Author: Sebastián Peyrott <speyrott@gmail.com>
 > 
-> hwmon: (gpio-fan) fix pm_runtime imbalance for alarm-only fans
+> hwmon: Add Minisforum UM780 XTX EC monitoring and fan control
 > 
-> This commit changes the driver to use devm_pm_runtime_enable() during probe
-> and removes the manual pm_runtime_disable() from gpio_fan_stop(). This ensures
-> PM runtime is automatically disabled on unbind, fixing an imbalance for
-> alarm-only fans.
+> This commit adds a DMI-gated hardware monitoring driver for the embedded
+> controller used by the Minisforum UM780 XTX. It exposes CPU and system fan
+> control temperatures and tachometers, utilizing the ACPI EC transport.
 > 
->> diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
->> index 084828e1e2817..0bd5561b7a405 100644
->> --- a/drivers/hwmon/gpio-fan.c
->> +++ b/drivers/hwmon/gpio-fan.c
->> @@ -524,8 +524,6 @@ static void gpio_fan_stop(void *data)
->>   	mutex_lock(&fan_data->lock);
->>   	set_fan_speed(data, 0);
->>   	mutex_unlock(&fan_data->lock);
->> -
->> -	pm_runtime_disable(fan_data->dev);
->>   }
+>> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+>> index 81a9a1d40eec8..45ac04c89b23d 100644
+>> --- a/drivers/hwmon/Kconfig
+>> +++ b/drivers/hwmon/Kconfig
+> [ ... ]
+>> @@ -1490,6 +1490,22 @@ config SENSORS_MENF21BMC_HWMON
+>>   	  This driver can also be built as a module. If so the module
+>>   	  will be called menf21bmc_hwmon.
 >>   
->>   static int gpio_fan_probe(struct platform_device *pdev)
->> @@ -581,7 +579,9 @@ static int gpio_fan_probe(struct platform_device *pdev)
->>   	}
->>   
->>   	pm_runtime_set_suspended(&pdev->dev);
->> -	pm_runtime_enable(&pdev->dev);
->> +	err = devm_pm_runtime_enable(&pdev->dev);
->> +	if (err)
->> +		return err;
+>> +config SENSORS_MINISFORUM_UM780XTX
+>> +	tristate "Minisforum UM780 XTX EC hardware monitoring"
+>> +	depends on ACPI && DMI && X86
 > 
-> [Severity: High]
-> Does moving the pm_runtime_disable() action to the end of probe reverse the
-> teardown order in a way that breaks unbind?
+> [Severity: Low]
+> Does this also need to depend on ACPI_EC?
 > 
-> Because devm unwinds in LIFO order, registering devm_pm_runtime_enable() at
-> the end of gpio_fan_probe() means pm_runtime_disable() will execute first
-> during unbind. The cleanup action for gpio_fan_stop() is registered
-> earlier in probe via devm_add_action_or_reset(), so it will execute after
-> PM runtime has already been disabled.
-> 
-> When gpio_fan_stop() calls set_fan_speed(..., 0), it invokes
-> pm_runtime_put_sync(). Since PM runtime is already disabled, this will
-> fail with -EACCES. This bypasses the runtime suspend callback, leaving the
-> hardware regulator permanently enabled and causing a regulator enable count
-> leak.
-> 
-Seems to me that this will need a more comprehensive fix.
+Yes, it does, which also explains the build error reported by 0-day.
 
 Thanks,
 Guenter
 
->>   	/* If current GPIO state is active, mark RPM as active as well */
->>   	if (fan_data->speed_index > 0) {
->>   		int ret;
+> If a user configures the kernel with CONFIG_ACPI enabled but leaves
+> CONFIG_ACPI_EC unselected, will this driver fail to build? It appears this
+> would lead to undefined references to ec_read, ec_write, ec_transaction,
+> and ec_get_handle at link time.
 > 
-
