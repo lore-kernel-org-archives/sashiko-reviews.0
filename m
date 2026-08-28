@@ -1,224 +1,118 @@
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-198.mta0.migadu.com [91.218.175.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E16E401A00
-	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 10:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B840DB3C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 28 Aug 2026 10:16:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787911222; cv=none; b=oAMT1e2MxCgRUcgxhaw4q9bGbluGZGsANn6MnQ9lILGlv5oIEzUvn5ga26Ay8MylOPMPZQS5Lsb0ZVbj49Nttvdl+7m59UBU17Lx88d6SJ8wMZIGtRfAqbmYz9Y09FIKRSOixfGmyihQEuebGec2ZrWtc2/yzTQHpXL5wHghknM=
+	t=1787912221; cv=none; b=kwbCLtEGFpT5nA1nNq+fdx9z3pev7G7zntSiw4/DVuevJhSkyHdzj7dT64IJ2ZjgTSOnUL8a9Fo7ckcMCXMH4PbK53mY4VQYdXyPGBTNG55Ql6WV0TcrhlSRIJmMgYdLxs3WKF/hiH7XJ2R+sYhXEb5Sh9hnmmsN2rTMC29xszI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787911222; c=relaxed/simple;
-	bh=iBOyV8R0sA6BILHO3RmTUOYCnic4haZ9Opz5CAaQiaU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bq/mBmDF81vFuKZCfhroJEQqCck30iQ6AGqNLY72kqWnsZCHE3HBc/phxjIwkg5rEp+hvGMWH6tf70iS90tmFrI4J8DhfPpZFhx/izLlO/evU21NXcFP5RUeWQ9J4tOLiGq7g0pDSqxnxXUhSHu+pSt7WUgE5l8p9m8YDKs/GIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=TpGeLH8r; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1787912221; c=relaxed/simple;
+	bh=V5420hYO/NVmdI8rPNYD2i5L9vtWHV4RvXT0HAKC03w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ma261cJBh3wfnHdV8yVWzcwI6XG1N8GdeRyZacUFDLAztSRUapnhE4WgfwGoMe6vn0FkcVEbxpHm/c6yl3NxLwBtPJ94hzS9ffBAIVt64p5jFJF2ctLI4Li408ZzVnUnEHNyBvhyCzWY5LPlSI2Dx7RCKzEARQNxrT04SrFT6WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jdu2w6nH; arc=none smtp.client-ip=91.218.175.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="TpGeLH8r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1787911215; x=1788170415;
-	bh=aL8dOK0Z12/AeZreZ5ToySnMoJipK21wXJHe9zbA5LY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=TpGeLH8r4im+hfNOVZVFoidShe/vutPhm8zzwZnlp2xIKy7TefvY602tO1dix+X5+
-	 qLXRhqLQJApFX/36WtNoCtPOI0Z8Tfh+jC0mMdjy16DG8EYT2nXIir4/T9iVurlZ/P
-	 NDJfZMtogZWmpeHLzKVhEPt/8IX9QVjYOqygktzZwBUzMSa6HBuCVce/y0PD/PujW/
-	 ZlS8AFgSjnxKqZ939O5oA4CKSi3Bj/okyNNThcsKGnr8qxBo8mt3tmBwsSFBiqb+c7
-	 gVQTxqi+httzAmMTFcBJ6qY6LqUitcLgFBJMbmgKsjdE2bQiFj9wAKGeVzfK9IveZi
-	 GntvPWlRfdt+w==
-X-Pm-Submission-Id: 4hWYlx61YGz1DDXH
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <conor+dt@kernel.org>,
-  <devicetree@vger.kernel.org>,  <robh@kernel.org>
-Subject: Re: [PATCH v6 2/9] iio: accel: mma8452: Optimize struct
- mma8452_data member orders
-In-Reply-To: <20260825083858.A5F391F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Tue, 25 Aug 2026 08:38:58
-	+0000")
-References: <20260825-mma8452-open-drain-v6-0-9b252804ee80@geanix.com>
-	<20260825-mma8452-open-drain-v6-2-9b252804ee80@geanix.com>
-	<52mazOc3yYsstoPliCVc4oyvGKzUi8nU5NIjPfVBcXZ7qAvSjQtfOaXWc0_nQJgs0iCKMoowMZjilbzv5JbIVw==@protonmail.internalid>
-	<20260825083858.A5F391F000E9@smtp.kernel.org>
-Date: Fri, 28 Aug 2026 12:00:12 +0200
-Message-ID: <87h5key383.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="jdu2w6nH"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=V5420hYO/NVmdI8rPNYD2i5L9vtWHV4RvXT0HAKC03w=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787912216; v=1; x=1788517016;
+ b=jdu2w6nHJFwyjsLOV3Y2v1L6nhgAYGoZtK6Qf3kb8hzAzHoVrEC1XHDzCxb6OVV/gnXDxrm/
+ wIW/VfDofucc9+o8q2yDFkyXgMM7VltM5MC9qYGtN52gXgtVhJc2YTSgLK6+BSKdZZhfVjBcGzd
+ j/UwoMK0SER9S3Ha6b4sQbNQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id ed2b19f510ac4fd7;
+	Fri, 28 Aug 2026 10:16:56 +0000
+X-Mizu-Trace-ID: ed2b19f510ac4fd7
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <abcf2053-8857-451e-853c-1fa9c21eb98c@linux.dev>
+Date: Fri, 28 Aug 2026 18:16:49 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] mm/page_counter: avoid integer overflow in
+ effective_protection()
+To: sashiko-reviews@lists.linux.dev
+Cc: mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
+References: <20260828092432.1257917-1-ridong.chen@linux.dev>
+ <20260828092432.1257917-2-ridong.chen@linux.dev>
+ <20260828094314.C6E241F000E9@smtp.kernel.org>
+From: Ridong Chen <ridong.chen@linux.dev>
+In-Reply-To: <20260828094314.C6E241F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<sashiko-bot@kernel.org> writes:
 
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Short I2C reads lead to an uninitialized kernel stack memory lea=
-k to userspace.
-> - [Medium] Runtime PM reference leak on I2C communication failure.
-> - [Medium] Unbalanced regulator disable and unpowered I2C access during m=
-odule removal.
-> - [Medium] Data race during read-modify-write of event configuration regi=
-sters.
+
+On 8/28/2026 5:43 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] A non-atomic read race allows the 128-bit division quotient in `mul_u64_u64_div_u64` to exceed 64 bits. On x86-64, this triggers a `#DE` hardware panic. On architectures using the generic C fallback, it returns `~0ULL`, causing `ep` to destructively wrap around.
 > --
->
-> --- Patch [2]: [PATCH v6 2/9] iio: accel: mma8452: Optimize struct mma845=
-2_data member orders ---
-> commit 26f60bee6a5ce9626d25a99fe80c0216eb010682
-> Author: Esben Haabendal <esben@geanix.com>
->
-> iio: accel: mma8452: Optimize struct mma8452_data member orders
->
-> Reorder struct mma8452_data members to avoid holes.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index 7d683686dd9d6..f645a5c6fd1c2 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
->> @@ -106,10 +106,7 @@ struct mma8452_data {
->>  	struct i2c_client *client;
->>  	struct mutex lock;
->>  	struct iio_mount_matrix orientation;
->> -	u8 ctrl_reg1;
->> -	u8 data_cfg;
->>  	const struct mma_chip_info *chip_info;
->> -	int sleep_val;
->>  	struct regulator *vdd_reg;
->>  	struct regulator *vddio_reg;
->>
->> @@ -118,6 +115,10 @@ struct mma8452_data {
->>  		__be16 channels[3];
->>  		aligned_s64 ts;
->>  	} buffer;
->> +
->> +	int sleep_val;
->> +	u8 ctrl_reg1;
->> +	u8 data_cfg;
->>  };
->
-> [Severity: Medium]
-> This is a pre-existing issue, but does this early return leak the runtime=
- PM
-> reference count?
->
-> drivers/iio/accel/mma8452.c:mma8452_read() {
-> ...
-> 	ret =3D i2c_smbus_read_i2c_block_data(data->client, MMA8452_OUT_X,
-> 					    3 * sizeof(__be16), (u8 *)buf);
-> 	if (ret < 0)
-> 		return ret;
-> ...
-> }
->
-> If i2c_smbus_read_i2c_block_data() fails, the function returns directly,
-> skipping the mma8452_set_runtime_pm_state() call.
->
-> A similar issue appears in mma8452_data_rdy_trigger_set_state() where a
-> failure during i2c_smbus_read_byte_data() skips dropping the autosuspend
-> reference if state was true.
+> 
+> commit 37c14765d82e3cf06ff691a1063f41818d86e6de
+> Author: Ridong Chen <chenridong@xiaomi.com>
+> 
+> mm/page_counter: avoid integer overflow in effective_protection()
+>      
+> effective_protection() distributes a parent's protection among its children
+> with two proportional calculations. This commit changes the calculations to
+> use mul_u64_u64_div_u64() to avoid integer wrap-around on systems with >= 16TB
+> RAM.
+> 
+> Link: https://sashiko.dev/#/patchset/20260826133054.88529-1-ridong.chen@linux.dev?part=1
+> 
+>> diff --git a/mm/page_counter.c b/mm/page_counter.c
+>> index 661e0f2a5127a..311153b0e0020 100644
+>> --- a/mm/page_counter.c
+>> +++ b/mm/page_counter.c
+> [ ... ]
+>> @@ -399,9 +401,9 @@ static unsigned long effective_protection(unsigned long usage,
+>>   	    usage > protected) {
+>>   		unsigned long unclaimed;
+>>   
+>> -		unclaimed = parent_effective - siblings_protected;
+>> -		unclaimed *= usage - protected;
+>> -		unclaimed /= parent_usage - siblings_protected;
+>> +		unclaimed = mul_u64_u64_div_u64(parent_effective - siblings_protected,
+>> +						usage - protected,
+>> +						parent_usage - siblings_protected);
+> 
+> [Severity: Critical]
+> Could this division cause a #DE hardware panic on x86-64 or return ~0ULL
+> on other architectures due to a non-atomic read race?
+> 
+> Because page_counter_try_charge() increments the child's usage before the
+> parent's, concurrent memory charging (e.g., THP allocations) can cause
+> the child's usage to transiently exceed the parent's by a large margin.
+> 
+> If page_counter_calculate_protection() reads these non-atomically (child
+> then parent), it preserves this inverted state. If the parent has
+> memory.low=max, parent_effective is PAGE_COUNTER_MAX.
+> 
+> In this scenario, mul_u64_u64_div_u64(PAGE_COUNTER_MAX, diff, 1) could
+> yield a quotient > 2^64, which would overflow the 64-bit quotient.
+> 
+> Any unprivileged user who can allocate memory in a cgroup could trigger
+> this race by allocating memory concurrently while the parent cgroup has
+> memory.low=max.
+> 
 
-Adressed in follow-up patch series.
+Thanks for the analysis, you're right. I'll update the patch and fix it.
 
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but during module removal, does
-> mma8452_remove() execute operations on an already suspended device?
->
-> drivers/iio/accel/mma8452.c:mma8452_remove() {
-> ...
-> 	pm_runtime_disable(&client->dev);
-> 	pm_runtime_set_suspended(&client->dev);
->
-> 	if (client->irq)
-> 		free_irq(client->irq, indio_dev);
->
-> 	iio_triggered_buffer_cleanup(indio_dev);
-> 	mma8452_trigger_cleanup(indio_dev);
-> 	mma8452_standby(iio_priv(indio_dev));
->
-> 	regulator_disable(data->vddio_reg);
-> 	regulator_disable(data->vdd_reg);
-> ...
-> }
->
-> If the module is removed while the device is in a runtime-suspended state,
-> pm_runtime_disable() does not wake up the device. Subsequent calls to
-> mma8452_standby() and regulator_disable() are then executed on an unpower=
-ed
-> device.
+>>   
+>>   		ep += unclaimed;
+>>   	}
+> 
 
-> [Severity: Medium]
-> This is a pre-existing issue, but can concurrent sysfs writes cause a data
-> race when updating event configuration registers?
->
-> drivers/iio/accel/mma8452.c:mma8452_write_event_config() {
-> ...
-> 	case IIO_EV_DIR_RISING:
-> 		val =3D i2c_smbus_read_byte_data(data->client, ev_regs->ev_cfg);
-> 		if (val < 0)
-> 			return val;
-> ...
-> 		return mma8452_change_config(data, ev_regs->ev_cfg, val);
-> ...
-> }
->
-> The read-modify-write sequence is performed without acquiring the internal
-> driver lock.
->
-> If two threads concurrently write to different event attributes in sysfs,
-> could the initial read and bitwise modifications race, overwriting each
-> other's configuration bits?
+-- 
+Best regards
+Ridong
 
-Adressed in follow-up patch series.
-
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can a short I2C read result
-> in uninitialized stack memory being leaked to userspace?
->
-> drivers/iio/accel/mma8452.c:mma8452_read() {
-> ...
-> 	ret =3D i2c_smbus_read_i2c_block_data(data->client, MMA8452_OUT_X,
-> 					    3 * sizeof(__be16), (u8 *)buf);
-> 	if (ret < 0)
-> 		return ret;
->
-> 	ret =3D mma8452_set_runtime_pm_state(data->client, false);
->
-> 	return ret;
-> }
->
-> If i2c_smbus_read_i2c_block_data() encounters a short read, it returns a
-> positive number less than the requested size. The condition ret < 0 is fa=
-lse,
-> so the code proceeds and overwrites ret with the return value of
-> mma8452_set_runtime_pm_state(), which is 0.
->
-> When mma8452_read() returns 0 instead of propagating the short read:
->
-> drivers/iio/accel/mma8452.c:mma8452_read_raw() {
-> ...
-> 		ret =3D mma8452_read(data, buffer);
-> ...
-> 		*val =3D sign_extend32(be16_to_cpu(
-> 			buffer[chan->scan_index]) >> chan->scan_type.shift,
-> 			chan->scan_type.realbits - 1);
-> ...
-> }
->
-> Does the caller process and return the uninitialized stack memory from bu=
-ffer
-> via *val?
-
-I will be converting the i2c register access to regmap in the follow-up
-patch series I am working on, and the regmap API does not have this
-issue, so should resolve this issue also.
-
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825-mma8452-=
-open-drain-v6-0-9b252804ee80@geanix.com?part=3D2
-
-/Esben
