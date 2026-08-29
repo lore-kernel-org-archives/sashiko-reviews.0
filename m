@@ -1,167 +1,126 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EA33346A8
-	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788034638; cv=pass; b=D06z6M27z6eanQo/v2HDyiGTtHB1pP9NeJ6o+yzLmyo6HEOiSmqQbuJS8rHwu4fmeSFqRkLr5rh1bkMr0MTFss4C7ijGaB4PD3BeDP8NCJMAYByP8bDGR6lNDxostASLBAQJjTmWjglJsa82wdnjGJplQiRCtacTY9eiL57TgG0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788034638; c=relaxed/simple;
-	bh=zV+6p4ubGKbiLmgem3EajeC60iHzJEHcw1TiAsOWq/E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HQTlcWX2k1fPH+aXxwMvm1SJaptJms7r4uH7b/QkwykkFv5Bp5rcMZfPTF8i/Ogi0EWfalAvxLuFMFDGN483OLNzAleNPycWG13e3ST09gxoZ0O5q7YANIXNoutkksK2A+R199TBW4DA3aFvXRrb3o5d4tA/RWS76GBiWSWk8Q8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=divinehawk.com; spf=pass smtp.mailfrom=divinehawk.com; arc=pass smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=divinehawk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=divinehawk.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c20e70a0962so283334966b.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 13:17:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788034635; cv=none;
-        d=google.com; s=arc-20260327;
-        b=s65CX/I2BHNx/BDlUXJ4bddBZP/tLZ1TWdJcA3V3tuBnCmvMmTjUn8vfvSyDa61kVw
-         0DFbwSlXCx/lQY8qgyDjyCUAxX1RAQLwHk1OJzKhtT9m0/TO5iXTZ2hK1R5djkPEEpGR
-         mhvZ2gjlSeOBZw/X1DJxkYgMU/iOmeUpUKe2A4nwc8RNrvcLok8PR3t9Qm6dts5j+r9Y
-         xEfgNFw6bsibjNpEZiiiBvRO/P2l/dPgz7I20lCqcCQJdCqzLz+CrIm7amnhysquZXRd
-         yyXk9dSpROHXzc6mmFsAwTUvkNlNfpMl4dH0cMcq+3BHpvHmHl3Fj3caeLpHIjPTY7Tn
-         9Apw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=6C6ojXuUuOCnp6lQZBCyXJ7Yhmo+q/tVeeyZp6SEgy4=;
-        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
-        b=hwT6bEpbZtz4yilWAOq7kfSrR/29K7T9OUXP83QZ9qxHmBLPGKKdhmF5vQyMNoG7Kh
-         Uoi0SyivZXkE3dkZxRZY4yIs99ZH7/DG84KDCIc1KZEiL/1hOVsD910pY1A9Xjvpn4p+
-         HGMbX7mrnHAUgjNvUUZHZHwdpxQN9Mc3y8O/1tj5corHz1Oatg4IrO1z9vXff7zfcwfG
-         SDrB4k0g2HKqpIqZihP0KaUeBGXU/exDDvcOq74FFs2+z4LCUyDuSoBVQyavk1v9Wd+V
-         B/5VOKrFlqPD+JJuIC0gG8uFr4RGLaJnCVR3wfXjAKAhK6KcxDfzbQL3claD95S1iRES
-         zxJQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788034635; x=1788639435;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6C6ojXuUuOCnp6lQZBCyXJ7Yhmo+q/tVeeyZp6SEgy4=;
-        b=lWO8A1rxGUsELVZHFy1hKiBbiqeMQQzGrhq7tOqVyFnsIjtI4kHcEzKXImvvyvIxXC
-         YrMii36AMTj7GsCxVXrbIn10CHH9Jc1Y/isXd0d0MDBWVW6sTfIbb7xmU0VuJvO3OzRG
-         Fkzp/0uurEaQp/4NC/voNsDFaHkw4G1dP0fc02kNKwWe4+SG/nBeFvOh80wICNOJpbPQ
-         wIUi/T8OBtiBnA+WoYu4wYOehdteepJXFOMBucXhQo48MxjpDMWKtIC69MxXTlIELwrD
-         niM4Tkt4FnwIXNowTA/KGOSbNlPiyuHlw2bV0VlhBSnICmChl2ufYWV25E8/JUbKoE7k
-         ZNpg==
-X-Gm-Message-State: AFuF++loAP7zwQvGYOZGWYBWIxT9nFYmFIU1SV0J7AVB4bN91MwJEd5H
-	XFQDsMXLnaKcFctZOXhpF+0lNxoHC2DddWWrXz4lgmqqRrqq9AJfq96gv+zmbseqw/X6rUVFyja
-	/MyPgqznOuVAqOOZ/mNYfvVEH1pwERmy3gmeRpTM1PBNXitSZaqoESrxwPWQ=
-X-Gm-Gg: AR+sD103Zv9SKq8sxLrY5yjanxkN3dTZwxU8qONTQztHRCUOKqG8gArrNYpn3BuJ/QV
-	KmhKXdXjrSSQJmFEWPuTytLUPYrUkbxn8iSHpIewdO8e5/49X9MBwr2faoi42JRvVc+gA2Di7Jd
-	gRu62cOZL8FGxGQN/SzXNaPWA0gtJjBDDSLbY2zERrko48oAyZ5okCNJsxlvP2U/NIkJumJHIN1
-	vPdCkuDkvLr2a7Ya8MYpJ0sgyQFivrtfEuBHJrqHsbFC0PkZCkB/S5Z2nW36BheVlyMdE2UDBx9
-	uAuTiJWDascayx0h8ROnT9/+NmpiqRvHe8rXWk8Q9YYuAUpboen2NqSYZmmedalhU/udlYQY/zf
-	VzTcn5OQupXdHfr+6r0z2UHpQEJcFRZamRp8=
-X-Received: by 2002:a17:907:c06:b0:c19:5572:d234 with SMTP id
- a640c23a62f3a-c2556c250fdmr1045810766b.1.1788034634928; Sat, 29 Aug 2026
- 13:17:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549503F106C
+	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788034712; cv=none; b=FPRFzp4Ozo8bNRuSua80LtI4gfdA+NZtPe2MXqaedNkri5NjklqXEnpub2pgjfSekw8wkYG9GyhmFzxQV/yfApv5mjIGhcSUs8xEkwCMBwwunjk68Q3ysIyv/8E7UdaQWtElHxUbpSYwLiTTTnX0hWGf3Jan7yWOl9hrr40z3GI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788034712; c=relaxed/simple;
+	bh=X1KEZO6u63eMOK44PuiZkrtaZhMnvdNl0vdSm8nwUBM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YIQheafqDAxI97nrpJlGM5VfXYWIFtTZ599h1s4dY/9b+XUNcLzBGSfPTSbD/T13jo11Tb9XJ8lFgqfljNpjKDPhP1KzXGMIgjpDE2H2e/b19O8KwgQWMd2YcFWnbuPYSRvklIxgzbmpS/OIdIE+xASvb3KFFRwoA52evJhylJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=DMse7pzQ; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=UlG2hGF6; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="DMse7pzQ";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="UlG2hGF6"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1788034695; bh=99oQqqsmDdYcuU1KZ1BBNtz
+	eXvz/eiQA8iTcrFoXqIQ=; b=DMse7pzQkebE9ELqmn+vxiJj6jWBXBCV+5si2YDBWZEdK+dhgn
+	m1OWgG1o8czZieM+5Qk6arZUiTbW+8+2j5LGv/+/I5yT1DEKrV/VH8HvzlV8QfNwGzg65t03+R9
+	ubaDBpIccNehc9VUPSA5PHUr3APYa7xsbiPgVM+VErO+K8aGBsLfIHEe8jhBh44FwZQe8CVzYQK
+	QJ0pp3Lb4U7PrOrkBq2ZcGg+SJXTDZ3QcEZKGg2RLiNpeUKAE/qSjFWNqCCqp5lc0uPgpGH1pSw
+	biqduohF338vjs1uFJkKbAShvDvcnWGTrIKxyh3QqjNs+WMbGH3+SEPjg3I42yKMJxg==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1788034695; bh=99oQqqsmDdYcuU1KZ1BBNtz
+	eXvz/eiQA8iTcrFoXqIQ=; b=UlG2hGF6ZkfucljrhX0AKlQZZojfgmvDL/P0ciu+VPUv7kdO3l
+	u+6HiXxMKHT5D9eq8oPbtI/CjMsi8An3PYDA==;
+Message-ID: <6e0e03f6-8ce9-4c01-9f04-206b163d5664@mainlining.org>
+Date: Sat, 29 Aug 2026 23:18:14 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260829-ipq4019-dwc3-migration-v1-0-cc66b54ce21c@divinehawk.com>
- <20260829-ipq4019-dwc3-migration-v1-1-cc66b54ce21c@divinehawk.com> <20260829194119.815D31F000E9@smtp.kernel.org>
-In-Reply-To: <20260829194119.815D31F000E9@smtp.kernel.org>
-From: Matt Eaton <linux@divinehawk.com>
-Date: Sat, 29 Aug 2026 22:17:03 +0200
-X-Gm-Features: AcwNN1Xj8NKGsRmzdt0hKXWDVNEsssaRHa4Edn_9AFU7qkNXFXgwIkcbj9GNJIo
-Message-ID: <CABUBpLc=ebrTh65revLHEtND3KGFtMYsLXJEw+w8FUO9zG0tmg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,snps-dwc3: relax interrupt
- requirements for ipq4019
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/2] dt-bindings: display: panel: Add bindings for
+ Novatek NT51021
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: robh@kernel.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, conor+dt@kernel.org
+References: <20260829-qcom-novatek-nt51021-panels-v1-0-cc1ca61bd261@mainlining.org>
+ <20260829-qcom-novatek-nt51021-panels-v1-1-cc1ca61bd261@mainlining.org>
+ <20260829201500.796D31F000E9@smtp.kernel.org>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <20260829201500.796D31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 29, 2026 at 9:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Relaxing the global minimum constraints for 'interrupts' and '=
-interrupt-names' unintentionally leaves multiple SoCs underconstrained, all=
-owing invalid DT configurations to pass validation.
+
+29.08.2026 23:14, sashiko-bot@kernel.org пишет:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Commit message and schema description contradict the schema's compatible list by claiming to only support 'boe,tv101wum-nx0' while silently including 'boe,tv080wum-nx2'.
+> - [Medium] The description for `reset-gpios` incorrectly specifies the polarity as '(active high)', which contradicts the example and typical panel reset semantics.
 > --
 >
-> commit 245becf7a38f613732404251842cf1f13abb06d5
-> Author: Matt Eaton <linux@divinehawk.com>
-> dt-bindings: usb: qcom,snps-dwc3: relax interrupt requirements for ipq401=
-9
+> commit 4949971c710c300054975d637c238b42bc5c2c75
+> Author: Nickolay Goppen <setotau@mainlining.org>
 >
-> This commit lowers the global minimum interrupt count for qcom,snps-dwc3 =
-to 1
-> to accommodate qcom,ipq4019-dwc3, adding a dedicated if-then block for it=
-.
-> It also notes that several other SoCs relied on the top-level minimum and
-> are subsequently left unconstrained at the low end.
+> dt-bindings: display: panel: Add bindings for Novatek NT51021
 >
-> > diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml =
-b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> > index 7d784a648b7d9..28e78302b814d 100644
-> > --- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> > @@ -137,11 +137,11 @@ properties:
-> >                                 only on SoCs with non-QUSB2 targets wit=
-h
-> >                                 exception of SDM670/SDM845/SM6350.
-> >          - ss_phy_irq: Used for remote wakeup in Super Speed mode of op=
-eration.
-> > -    minItems: 3
-> > +    minItems: 1
-> >      maxItems: 19
-> >
-> >    interrupt-names:
-> > -    minItems: 3
-> > +    minItems: 1
+> This commit introduces device tree bindings for the Novatek NT51021 display
+> driver IC. It explicitly states support is added for the BOE TV101WUM-NX0
+> WUXGA video mode panel.
 >
+>> diff --git a/Documentation/devicetree/bindings/display/panel/novatek,nt51021.yaml b/Documentation/devicetree/bindings/display/panel/novatek,nt51021.yaml
+>> new file mode 100644
+>> index 0000000000000..a3e4ed10e645d
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/display/panel/novatek,nt51021.yaml
+>> @@ -0,0 +1,93 @@
+> [ ... ]
+>> +description: |
+>> +  The NT51021 IC from Novatek is a generic DSI Panel IC used to drive dsi
+>> +  panels.
+>> +  Right now, support is added only for a BOE WUXGA LCD display panels with a
+>> +  resolution of 1200x1920. They are video mode DSI panels.
+>> +
+>> +allOf:
+>> +  - $ref: panel-common.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - boe,tv101wum-nx0
+>> +          - boe,tv080wum-nx2
 > [Severity: Medium]
-> Does lowering the global minimum here unintentionally break validation fo=
-r
-> SoCs that relied on the global minimum? For example, device trees definin=
-g
-> qcom,ipq5018-dwc3 or qcom,ipq5332-dwc3 with an incomplete interrupt
-> specification (like 1 interrupt instead of the required 3 or 4) will no
-> longer report an error during dtbs_check.
+> The commit message and the schema description state that support is added
+> only for the BOE TV101WUM-NX0 panel, but this adds boe,tv080wum-nx2 to the
+> compatible list.
+>
+> Is this regression intended, or should the description and commit message be
+> updated to reflect support for both panels?
 >
 > [ ... ]
->
-> > @@ -508,6 +508,25 @@ allOf:
-> >            contains:
-> >              enum:
-> >                - qcom,ipq4019-dwc3
-> > +    then:
-> > +      properties:
-> > +        interrupts:
-> > +          minItems: 1
-> > +          maxItems: 6
-> > +        interrupt-names:
-> > +          minItems: 1
-> > +          items:
-> > +            - const: dwc_usb3
-> > +            - const: pwr_event
-> > +            - const: hs_phy_irq
-> > +            - const: dp_hs_phy_irq
-> > +            - const: dm_hs_phy_irq
-> > +            - const: ss_phy_irq
->
+Will be addressed in v2
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  reset-gpios:
+>> +    maxItems: 1
+>> +    description: phandle of gpio for reset line - This should be 8mA, gpio
+>> +      can be configured using mux, pinctrl, pinctrl-names (active high)
 > [Severity: Medium]
-> The commit message explicitly notes that qcom,ipq9574-dwc3,
-> qcom,qcm2290-dwc3, qcom,sar2130p-dwc3 and qcom,sm6375-dwc3 are left
-> unconstrained at the low end by this change. Should new if-then
-> conditional blocks be added here for these SoCs to properly enforce their
-> original interrupt minimum counts? Without them, invalid configurations f=
-or
-> these variants will silently pass validation.
+> Could this description cause regressions for users configuring the reset
+> line?
 >
-I have a fix prepped for v2. Standing by for any other feedback.
+> The text explicitly specifies (active high) for the reset-gpios polarity,
+> but typical panel semantics and the example block further down use active
+> low:
+>
+>              reset-gpios = <&tlmm 62 GPIO_ACTIVE_LOW>;
+>
+> If users follow this text description instead of the example, could they
+> drive the physical line incorrectly and prevent the panel from initializing?
+Will be addressed in v2
 
-Much appreciated,
-Matt Eaton
+-- 
+Best regards,
+Nickolay
+
