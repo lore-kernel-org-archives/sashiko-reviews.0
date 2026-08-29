@@ -1,196 +1,167 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAE3C9ED0
-	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 17:05:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788023118; cv=none; b=f3m42xCbicsUvztq3ohdIX0GTMXRRlgMi+V5k2icoGnAOrxs7gLy3QKg3KESd96QeXszI1/T8Z57b1V5zRdvJ6JJZ4vdbjjnXqhogEVl/V93C8/6ASRRG7oVtIgUYmsOKOgYu9mGGVT8dFRFCL/O5ZUjbvthnaSS1VT8gW1RWaI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788023118; c=relaxed/simple;
-	bh=awt/n+oNORYB2YhDK5rTQcAxY6y1IVVts1XEDrCgSzc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mMGPGkzt1nIvG8gomOSK8eoHlQnaIB2qOjq4mJ6EKv6Bw6GWtLmZSKiwnbedtspWCwRboL1nIzSCsv2w94tGCthr/rm8wc6ArBa+jSocr6h89oppbPS5vIz+/z24zVvKliLxFBdJNTnV2mgMzOmjo1yDAQOy6+BKNxk7KVnJZEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Abu47pku; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Abu47pku"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2d71ae3455aso31349695ad.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 10:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788023117; x=1788627917; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ln2KbbtEjRGd/LI6Li0KRF+ySsS1VE0IamdH6+rdBvI=;
-        b=Abu47pkuzTolsTolxAcEGcSyELpBiGektQnqiFriIwbIV0eHd7kQzSGo6qcleeQC9C
-         zGH04+md9ZOiK467FAys04l9PJqBdc3IECm7HQMtEWXdp3MVlEQe9wYZWJyAfA9hSCDB
-         0Xu4fcFhHTxZKroNFH4bICLrljWlSkN7C50vE1J8Hpjr97zyY0H3GizkdN7lLlgHMwjF
-         +RG29rBlRzvtXZUrayfIW58WI9ETJ9YjnwZ9lyFO6+YYmkd7mK59ooec0mKUHRG/yzja
-         MxFxUO41iSd0E1uW8GytmZQzQA5M9j0ZhWnmvKJH4/LCmWIIeAWc3Uagpto62aT/Bh9u
-         sxAA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EA33346A8
+	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788034638; cv=pass; b=D06z6M27z6eanQo/v2HDyiGTtHB1pP9NeJ6o+yzLmyo6HEOiSmqQbuJS8rHwu4fmeSFqRkLr5rh1bkMr0MTFss4C7ijGaB4PD3BeDP8NCJMAYByP8bDGR6lNDxostASLBAQJjTmWjglJsa82wdnjGJplQiRCtacTY9eiL57TgG0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788034638; c=relaxed/simple;
+	bh=zV+6p4ubGKbiLmgem3EajeC60iHzJEHcw1TiAsOWq/E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HQTlcWX2k1fPH+aXxwMvm1SJaptJms7r4uH7b/QkwykkFv5Bp5rcMZfPTF8i/Ogi0EWfalAvxLuFMFDGN483OLNzAleNPycWG13e3ST09gxoZ0O5q7YANIXNoutkksK2A+R199TBW4DA3aFvXRrb3o5d4tA/RWS76GBiWSWk8Q8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=divinehawk.com; spf=pass smtp.mailfrom=divinehawk.com; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=divinehawk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=divinehawk.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c20e70a0962so283334966b.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 13:17:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788034635; cv=none;
+        d=google.com; s=arc-20260327;
+        b=s65CX/I2BHNx/BDlUXJ4bddBZP/tLZ1TWdJcA3V3tuBnCmvMmTjUn8vfvSyDa61kVw
+         0DFbwSlXCx/lQY8qgyDjyCUAxX1RAQLwHk1OJzKhtT9m0/TO5iXTZ2hK1R5djkPEEpGR
+         mhvZ2gjlSeOBZw/X1DJxkYgMU/iOmeUpUKe2A4nwc8RNrvcLok8PR3t9Qm6dts5j+r9Y
+         xEfgNFw6bsibjNpEZiiiBvRO/P2l/dPgz7I20lCqcCQJdCqzLz+CrIm7amnhysquZXRd
+         yyXk9dSpROHXzc6mmFsAwTUvkNlNfpMl4dH0cMcq+3BHpvHmHl3Fj3caeLpHIjPTY7Tn
+         9Apw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=6C6ojXuUuOCnp6lQZBCyXJ7Yhmo+q/tVeeyZp6SEgy4=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=hwT6bEpbZtz4yilWAOq7kfSrR/29K7T9OUXP83QZ9qxHmBLPGKKdhmF5vQyMNoG7Kh
+         Uoi0SyivZXkE3dkZxRZY4yIs99ZH7/DG84KDCIc1KZEiL/1hOVsD910pY1A9Xjvpn4p+
+         HGMbX7mrnHAUgjNvUUZHZHwdpxQN9Mc3y8O/1tj5corHz1Oatg4IrO1z9vXff7zfcwfG
+         SDrB4k0g2HKqpIqZihP0KaUeBGXU/exDDvcOq74FFs2+z4LCUyDuSoBVQyavk1v9Wd+V
+         B/5VOKrFlqPD+JJuIC0gG8uFr4RGLaJnCVR3wfXjAKAhK6KcxDfzbQL3claD95S1iRES
+         zxJQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788023117; x=1788627917;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Ln2KbbtEjRGd/LI6Li0KRF+ySsS1VE0IamdH6+rdBvI=;
-        b=Qt0omBuhTmiJsF1Alw8/DI9W3fb4Hu8fk5mi0oxopNPQ9HtQN5fgBfrZdXuGMRNaAe
-         /sdEDpIwFT9HfHxuiY5/M/JQs91K9EgGZyu2u+qODacgY2lG88HqLwEpy/XSeMS4g1ch
-         7joeQ2wHT/cB38daBSjBoEDeRaVBOiBX/hTDVEicbwcoM+3ti53RapPteiMeZU+npVRM
-         AmrT1iMwTs9iqWYn7Wi9WmtMLNCmOUUKvIr4uaMNMATLO+WPER0hKGtxcUJRrwszjxw+
-         bB98YrpdsqLlCzeRjZ0v34RIUcBdZNjkYLp+WCM6zQ5OgHjIjLWyL1+3Lh4ftQdn2eKZ
-         v/rA==
-X-Gm-Message-State: AFuF++mQPc+BZjKpg7Aw2kdISiSHpkptS6QxE0o9vIebKHR+9jEFE/wy
-	ZODUE23QT5vmJn5inVWsVESJZzS78QBRIA7LXFvTQKrltLAtsd5kUqgae+KMYw==
-X-Gm-Gg: AYBFou1/FZxbD6fi19M2CxvBSO83nFr72Fk+Qlten8hBh+/NdIM4d3LDRxBgWUDlrYN
-	aTXIkHrZYk1dFNdsoYORiEIGIyTrfXQpznH3iwqvloPJ6ZENJ+KVS7kA/dPo2xNqX61+NZ/M7wr
-	fXYSBfFYeNQXxgezzumogUFyOvvmdNLSIvUxjqCNiSz5/gEhHxuSstDrTuDKdEnvEgRKi26oZLH
-	V5lb+JMY/aXSwc3b6W92wA66fnx7/SNn9Se2/TV3x8orGWWrGYDTIJMZV6cGvAZTNsMbl+I5JRh
-	01XM0RQF2L1mQhYFgYEmyhIkGANytp1xbecNHTneskA1Hv+v3dNrZCbbktZwMlQt5QpyUSSk469
-	fjOv7hO7o5VlDa3/go4ypMZn/X9Hc6gGGlE9z2xwIX9pj2XPZxB0OyVW+8f+43Elg9yd8c4PKtZ
-	yeBI7Gsoxmd/tZhzRoMdnj6WiVWO6129EtgKNb6AvQ5VSLxbWV8qLv5P4keRhFeaBLvC01RQ7c6
-	AqkIwGmmZ7p+wjKQnAQVL3Il5ka+xgbyFBW8w==
-X-Received: by 2002:a17:903:8d0:b0:2d7:4cd4:5a7f with SMTP id d9443c01a7336-2d74def6351mr288967185ad.12.1788023116608;
-        Sat, 29 Aug 2026 10:05:16 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f7be607sm17361289eec.10.2026.08.29.10.05.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Aug 2026 10:05:15 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <89971e52-a88c-49bd-a0a6-17e48820974d@roeck-us.net>
-Date: Sat, 29 Aug 2026 10:05:13 -0700
+        d=1e100.net; s=20251104; t=1788034635; x=1788639435;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6C6ojXuUuOCnp6lQZBCyXJ7Yhmo+q/tVeeyZp6SEgy4=;
+        b=lWO8A1rxGUsELVZHFy1hKiBbiqeMQQzGrhq7tOqVyFnsIjtI4kHcEzKXImvvyvIxXC
+         YrMii36AMTj7GsCxVXrbIn10CHH9Jc1Y/isXd0d0MDBWVW6sTfIbb7xmU0VuJvO3OzRG
+         Fkzp/0uurEaQp/4NC/voNsDFaHkw4G1dP0fc02kNKwWe4+SG/nBeFvOh80wICNOJpbPQ
+         wIUi/T8OBtiBnA+WoYu4wYOehdteepJXFOMBucXhQo48MxjpDMWKtIC69MxXTlIELwrD
+         niM4Tkt4FnwIXNowTA/KGOSbNlPiyuHlw2bV0VlhBSnICmChl2ufYWV25E8/JUbKoE7k
+         ZNpg==
+X-Gm-Message-State: AFuF++loAP7zwQvGYOZGWYBWIxT9nFYmFIU1SV0J7AVB4bN91MwJEd5H
+	XFQDsMXLnaKcFctZOXhpF+0lNxoHC2DddWWrXz4lgmqqRrqq9AJfq96gv+zmbseqw/X6rUVFyja
+	/MyPgqznOuVAqOOZ/mNYfvVEH1pwERmy3gmeRpTM1PBNXitSZaqoESrxwPWQ=
+X-Gm-Gg: AR+sD103Zv9SKq8sxLrY5yjanxkN3dTZwxU8qONTQztHRCUOKqG8gArrNYpn3BuJ/QV
+	KmhKXdXjrSSQJmFEWPuTytLUPYrUkbxn8iSHpIewdO8e5/49X9MBwr2faoi42JRvVc+gA2Di7Jd
+	gRu62cOZL8FGxGQN/SzXNaPWA0gtJjBDDSLbY2zERrko48oAyZ5okCNJsxlvP2U/NIkJumJHIN1
+	vPdCkuDkvLr2a7Ya8MYpJ0sgyQFivrtfEuBHJrqHsbFC0PkZCkB/S5Z2nW36BheVlyMdE2UDBx9
+	uAuTiJWDascayx0h8ROnT9/+NmpiqRvHe8rXWk8Q9YYuAUpboen2NqSYZmmedalhU/udlYQY/zf
+	VzTcn5OQupXdHfr+6r0z2UHpQEJcFRZamRp8=
+X-Received: by 2002:a17:907:c06:b0:c19:5572:d234 with SMTP id
+ a640c23a62f3a-c2556c250fdmr1045810766b.1.1788034634928; Sat, 29 Aug 2026
+ 13:17:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] hwmon: (starfive-fan-tach) Add fan tach driver for
- StarFive JHB100
-To: sashiko-reviews@lists.linux.dev,
- Changhuang Liang <changhuang.liang@starfivetech.com>
-Cc: devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20260824030234.9321-1-changhuang.liang@starfivetech.com>
- <20260824030234.9321-3-changhuang.liang@starfivetech.com>
- <20260824032750.0749D1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260824032750.0749D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260829-ipq4019-dwc3-migration-v1-0-cc66b54ce21c@divinehawk.com>
+ <20260829-ipq4019-dwc3-migration-v1-1-cc66b54ce21c@divinehawk.com> <20260829194119.815D31F000E9@smtp.kernel.org>
+In-Reply-To: <20260829194119.815D31F000E9@smtp.kernel.org>
+From: Matt Eaton <linux@divinehawk.com>
+Date: Sat, 29 Aug 2026 22:17:03 +0200
+X-Gm-Features: AcwNN1Xj8NKGsRmzdt0hKXWDVNEsssaRHa4Edn_9AFU7qkNXFXgwIkcbj9GNJIo
+Message-ID: <CABUBpLc=ebrTh65revLHEtND3KGFtMYsLXJEw+w8FUO9zG0tmg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,snps-dwc3: relax interrupt
+ requirements for ipq4019
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/23/26 20:27, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing explicit initialization of interrupt and channel enable registers during probe
+On Sat, Aug 29, 2026 at 9:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Relaxing the global minimum constraints for 'interrupts' and '=
+interrupt-names' unintentionally leaves multiple SoCs underconstrained, all=
+owing invalid DT configurations to pass validation.
 > --
-> 
-> --- Patch [2]: [PATCH v3 2/2] hwmon: (starfive-fan-tach) Add fan tach driver for StarFive JHB100 ---
-> commit ea266a681c03cda9faa04f08b171c20f1e003841
-> Author: Changhuang Liang <changhuang.liang@starfivetech.com>
-> 
-> hwmon: (starfive-fan-tach) Add fan tach driver for StarFive JHB100
-> 
-> This commit adds a new driver for the fan tachometer controller found on the
-> StarFive JHB100 SoC. It provides support for up to 16 independent fan
-> tachometer inputs and reports fan speed in RPM through the hwmon sysfs
-> interface.
-> 
->> diff --git a/drivers/hwmon/starfive-fan-tach.c b/drivers/hwmon/starfive-fan-tach.c
->> new file mode 100644
->> index 0000000000000..7f56ecc87c1c8
->> --- /dev/null
->> +++ b/drivers/hwmon/starfive-fan-tach.c
-> [ ... ]
->> +static int starfive_fan_tach_probe(struct platform_device *pdev)
->> +{
-> [ ... ]
->> +	ret = reset_control_deassert(priv->rst);
->> +	if (ret) {
->> +		clk_disable_unprepare(priv->clk);
->> +		return dev_err_probe(dev, ret, "Failed to deassert reset\n");
->> +	}
->> +
->> +	ret = devm_add_action_or_reset(dev, starfive_fan_tach_disable, priv);
->> +	if (ret)
->> +		return ret;
->> +
->> +	writel(STARFIVE_FAN_TACH_STALL_INT_MASK | STARFIVE_FAN_TACH_SLOW_INT_MASK,
->> +	       priv->regs + STARFIVE_FAN_TACH_STATUS);
->> +	writel(priv->clk_rate / STARFIVE_FAN_DEFAULT_MEASURE_RATIO,
->> +	       priv->regs + STARFIVE_FAN_TACH_MEASURE_TIME);
-> 
+>
+> commit 245becf7a38f613732404251842cf1f13abb06d5
+> Author: Matt Eaton <linux@divinehawk.com>
+> dt-bindings: usb: qcom,snps-dwc3: relax interrupt requirements for ipq401=
+9
+>
+> This commit lowers the global minimum interrupt count for qcom,snps-dwc3 =
+to 1
+> to accommodate qcom,ipq4019-dwc3, adding a dedicated if-then block for it=
+.
+> It also notes that several other SoCs relied on the top-level minimum and
+> are subsequently left unconstrained at the low end.
+>
+> > diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml =
+b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> > index 7d784a648b7d9..28e78302b814d 100644
+> > --- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> > @@ -137,11 +137,11 @@ properties:
+> >                                 only on SoCs with non-QUSB2 targets wit=
+h
+> >                                 exception of SDM670/SDM845/SM6350.
+> >          - ss_phy_irq: Used for remote wakeup in Super Speed mode of op=
+eration.
+> > -    minItems: 3
+> > +    minItems: 1
+> >      maxItems: 19
+> >
+> >    interrupt-names:
+> > -    minItems: 3
+> > +    minItems: 1
+>
 > [Severity: Medium]
-> Could this code be susceptible to an interrupt storm if the bootloader leaves
-> the FAN-TACH controller enabled with unmasked interrupts?
-> 
-> Since the driver only deasserts the reset line during probe (and does not
-> assert it first), the hardware state might be retained from before the kernel
-> booted. Any read-modify-write operations on STARFIVE_FAN_TACH_INT_EN and
-> STARFIVE_FAN_TACH_CH_EN later in the driver would then preserve these stray
-> bits.
-> 
-> Once devm_request_irq() is called, any unexpected unmasked interrupts will
-> trigger. If the interrupt condition is continuous (e.g., a disconnected or
-> stalled fan), the ISR will clear the STATUS bit, but the hardware will
-> immediately re-assert it. Because the driver's ISR does not mask unexpected
-> interrupts in INT_EN (it only signals completions if armed_stall or
-> armed_slow are set), wouldn't this lead to an interrupt storm?
-> 
-> Should the interrupt and channel enable registers be explicitly initialized
-> to 0 before requesting the IRQ to ensure a known safe hardware state?
-> 
-Please either implement as suggested or explain why it is not needed.
-In that case, please add a comment into the code explaining the reason.
+> Does lowering the global minimum here unintentionally break validation fo=
+r
+> SoCs that relied on the global minimum? For example, device trees definin=
+g
+> qcom,ipq5018-dwc3 or qcom,ipq5332-dwc3 with an incomplete interrupt
+> specification (like 1 interrupt instead of the required 3 or 4) will no
+> longer report an error during dtbs_check.
+>
+> [ ... ]
+>
+> > @@ -508,6 +508,25 @@ allOf:
+> >            contains:
+> >              enum:
+> >                - qcom,ipq4019-dwc3
+> > +    then:
+> > +      properties:
+> > +        interrupts:
+> > +          minItems: 1
+> > +          maxItems: 6
+> > +        interrupt-names:
+> > +          minItems: 1
+> > +          items:
+> > +            - const: dwc_usb3
+> > +            - const: pwr_event
+> > +            - const: hs_phy_irq
+> > +            - const: dp_hs_phy_irq
+> > +            - const: dm_hs_phy_irq
+> > +            - const: ss_phy_irq
+>
+> [Severity: Medium]
+> The commit message explicitly notes that qcom,ipq9574-dwc3,
+> qcom,qcm2290-dwc3, qcom,sar2130p-dwc3 and qcom,sm6375-dwc3 are left
+> unconstrained at the low end by this change. Should new if-then
+> conditional blocks be added here for these SoCs to properly enforce their
+> original interrupt minimum counts? Without them, invalid configurations f=
+or
+> these variants will silently pass validation.
+>
+I have a fix prepped for v2. Standing by for any other feedback.
 
-Thanks,
-Guenter
-
+Much appreciated,
+Matt Eaton
