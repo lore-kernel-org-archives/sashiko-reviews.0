@@ -1,171 +1,88 @@
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F34195A6
-	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686883F1055;
+	Sat, 29 Aug 2026 20:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788035724; cv=none; b=MOM3trs8mgcLECZV3GhNunCC/TDEhEDEdaNFvAMfQMrMo1fbBCz0C0nU15KzmgkqFZcTJB6hrcoFoeAOWFXh7IBlAfvr3JnWOkWvaQpirPhY0YEkUnSNgim27qxJs3wLCXeJqAdlwmIjgz9ee1JSMnsEb5OJlfs4L8zA9uT2hoQ=
+	t=1788036143; cv=none; b=HYQ3VeYQd8iqTK08eytQmYQTBoPVkwA38O7NLi0DuCuXVr9rZWIKpwClLXq13mDGgTXL3r2tY1My6uKT6atdW6DZfIYKSz7CYDPw9gexfKTrkc/O3BoRZmEaGXDnbulrdEqfLkTnhzosJXpQ7PLcIkaSIghxwh5KQ32v3s/pU80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788035724; c=relaxed/simple;
-	bh=PYYWrSq6umAqqljgngamChzu4Ycr5pm91IxQTMqpDIQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BOuv6nxxNNg/Dflo/Cc3gws0YDGS1fyzZvYyBDWPm7a0GDgG+n2z4aY2SD2eijfoGk+0w9V0STW7EEbtaVL8cyXqbFSWxzVH97KlLVFfAR7ipAXlH3wmm0LODEEobcCUYZS7RmTEOH5AJO8OHqr9CXmzBj1hWNid1rMdtvhYjbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HDqj+Bcf; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=TW++Hb4n; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+	s=arc-20240116; t=1788036143; c=relaxed/simple;
+	bh=7pnisAbPvZCl6hLVMmKKSLCR5ypPoXZrCyuBQrB8SHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I+H5pJyd/VZ9oojEpvHPG7+Cu+znwha2gOAJICDlryGybA+Pl2Oiay4OMNV/rEK/XR2B0flA81tC651kQ7ZiQ6QLor89TJAsJhB/f1BpJdVKrf0hYLUHwWhFFMqiHzt+VTBAplxE2yT0HnrzshDNMiJBRA+vFm/rytc+tRkOM/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kPZtiwog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HDqj+Bcf";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="TW++Hb4n"
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1788035714; bh=D9gR527E+crHrw708MCpBEa
-	Z4Y72U3o4s32o2HAIkWA=; b=HDqj+Bcf+gxvZGfa/NKGolduwSX8HUos7+EQ/JOy9gaY40F20h
-	EnKFYgfeGWqqvdcuhtxF/1Qx+383VhffOSLURYqGdgIXTDdk3hI3GKfswC59HO8Kapv08uCv8CJ
-	4CTkccCWQfjEJ1kxn2YyHXuuzi9Mf2akzWNqZCl0j9BoNNfzMjXCmsWSbsdhJp0Q7GpD21bZ39x
-	cqbglG2Pnx+3PH0sa9LUnB/X8kt8CmuHTLyD+3DwmU0nAf68qXIwmWI2p9aqZXnZPJ4NzPc14q5
-	0qlHE3tlTqO6gzXzYsas1ICPmrFtS0D5+M4D0TBVEoQONwp5H7YKEQudF6l1YdEXJNw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1788035714; bh=D9gR527E+crHrw708MCpBEa
-	Z4Y72U3o4s32o2HAIkWA=; b=TW++Hb4ny+BHSbjlsDX2npsNK2m4ErIaD6NPlVl6MvPpreFEbj
-	sjlD2ivRfvPA0fInUecx5/lbrevgpFvDIhCg==;
-Message-ID: <7a48378b-4a5d-4dfc-8bf9-9187b6ca6a0c@mainlining.org>
-Date: Sat, 29 Aug 2026 23:35:14 +0300
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kPZtiwog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68F11F000E9;
+	Sat, 29 Aug 2026 20:42:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788036142;
+	bh=AIe+WCr6esoZ5QMqOj0zl4Z3E8z646FJXD6VeghVE0s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kPZtiwogselmZhmHLaFQ7HjmJ5Y1mUWLACb+/EYUaQ2t6lTFMRf5ctnIMmSHXPGYM
+	 XFYkNyKBT0VIg/WRIIJZ7qGfvV5EKbAuwNBnu60ZIwbOFMM9Pivlz/MugDHRkSKtba
+	 mM7qiuKfonLETNygzYWbq75hMmyjYyrX3NHZWk33/qQjzMgn06Fosg6eMut8FrKlmy
+	 QVVbE70C915UeCcXy9DYFE9IT1f9y4iIDdWC4lRTiq2Y3eX2djI9HsRTNGq1bxew4H
+	 VO1DRZrIwnMEqNNfKVmeql7TkZ3O/U+48tHUPeD3bj7PjHzYOOLe13Bq1uDo++XkaF
+	 scWrcQ+QjXXZQ==
+Date: Sat, 29 Aug 2026 13:42:20 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: Triet Hoang <triet.hoang.dev@gmail.com>
+Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] perf unwind: handle allocation failure in
+ libdw__get_entries()
+Message-ID: <apNELHaLHzBrPwrd@google.com>
+References: <20260818142902.639F51F000E9@smtp.kernel.org>
+ <20260818144837.741469-1-triet.hoang.dev@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/2] drivers: gpu: drm: panel: Add BOE NT51021 driver
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260829-qcom-novatek-nt51021-panels-v1-0-cc1ca61bd261@mainlining.org>
- <20260829-qcom-novatek-nt51021-panels-v1-2-cc1ca61bd261@mainlining.org>
- <20260829201932.1BFEB1F000E9@smtp.kernel.org>
-Content-Language: ru-RU, en-US
-From: Nickolay Goppen <setotau@mainlining.org>
-In-Reply-To: <20260829201932.1BFEB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260818144837.741469-1-triet.hoang.dev@gmail.com>
 
+On Tue, Aug 18, 2026 at 02:48:37PM +0000, Triet Hoang wrote:
+> Check the return value of zalloc() before dereferencing the allocated
+> dwfl_ui_ti structure.
+> 
+> Return -ENOMEM when the allocation fails to avoid a NULL pointer
+> dereference.
+> 
+> Signed-off-by: Triet Hoang <triet.hoang.dev@gmail.com>
 
-29.08.2026 23:19, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The panel initialization sequence lacks the DCS 'Set Display On' (0x29) command.
-> - [Medium] Missing reset assertion and stabilization delay during panel preparation.
-> --
->
-> commit 864f3dccc86bc8a97845ebafd73a7df32e9d6b9e
-> Author: Nickolay Goppen <setotau@mainlining.org>
->
-> drivers: gpu: drm: panel: Add BOE NT51021 driver
->
-> This commit adds support for the BOE NT51021-based 8-inch and 10-inch DSI
-> video mode panels used in Xiaomi Mi Pad 4 tablets. It includes panel
-> initialization sequences and content-adaptive brightness control.
->
->> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt51021.c b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
-> [ ... ]
->> +static void nt51021_boe_reset(struct boe_nt51021_desc *ctx)
->> +{
->> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
->> +	usleep_range(10000, 11000);
->> +}
-> [Severity: Medium]
-> Does the panel require an explicit reset assertion pulse before de-asserting
-> the reset line? The current code only de-asserts the reset line here. Without
-> an explicit assertion pulse and delay prior to de-assertion, the hardware
-> might not be guaranteed a valid minimum reset pulse width once power is stable.
->
-> [ ... ]
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 
-Downstream reset sequence is just a deassertion of a reset line [1].
+Thanks,
+Namhyung
 
-[1] 
-https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/xiaomi/mi/clover/dsi-panel-nt51021-boe-10wu-video.dtsi#L331
-
->> +static int nt51021_boe_8_init(struct boe_nt51021_desc *ctx)
->> +{
->> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> [ ... ]
->> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
->> +	mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
->> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
->> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->> +
->> +	nt51021_cabc_on(&dsi_ctx);
->> +
->> +	return dsi_ctx.accum_err;
->> +}
-> [Severity: Medium]
-> Does this initialization sequence miss a DCS "Set Display On" command?
-> The panel is awakened from sleep mode via mipi_dsi_dcs_exit_sleep_mode_multi(),
-> but it is never explicitly instructed to turn on the display output here in
-> nt51021_boe_8_init(). This could cause the panel to remain blank on some DSI
-> hosts.
->
-> [ ... ]
->> +static int nt51021_boe_10wu_init(struct boe_nt51021_desc *ctx)
->> +{
->> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> [ ... ]
->> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
->> +	mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
->> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
->> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->> +
->> +	nt51021_cabc_on(&dsi_ctx);
->> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->> +
->> +	return dsi_ctx.accum_err;
->> +}
-> [Severity: Medium]
-> Similarly to nt51021_boe_8_init(), the 10-inch variant initialization path
-> also appears to omit the mipi_dsi_dcs_set_display_on_multi() command.
->
->> +static int nt51021_boe_off(struct boe_nt51021_desc *ctx)
->> +{
->> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
->> +
->> +	nt51021_cabc_off(&dsi_ctx);
->> +
->> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0xa5);
->> +	mipi_dsi_msleep(&dsi_ctx, 20);
->> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
-> [Severity: Medium]
-> The power-off sequence explicitly turns the display off using
-> mipi_dsi_dcs_set_display_off_multi(). Should there be a matching turn-on
-> command in the initialization sequences to ensure the display activates
-> correctly across power cycles?
->
-> [ ... ]
->> +static int nt51021_boe_prepare(struct drm_panel *panel)
->> +{
->> +	struct boe_nt51021_desc *ctx = to_boe_panel(panel);
->> +	struct device *dev = &ctx->dsi->dev;
->> +	int ret;
->> +
->> +	ret = regulator_bulk_enable(ARRAY_SIZE(nt51021_boe_supplies), ctx->supplies);
->> +	if (ret < 0) {
->> +		dev_err(dev, "Failed to enable regulators: %d\n", ret);
->> +		return ret;
->> +	}
->> +	nt51021_boe_reset(ctx);
-> [Severity: Medium]
-> Does the panel require a stabilization delay after enabling the regulators
-> and before de-asserting the reset line? The current code immediately calls
-> nt51021_boe_reset(ctx). Without a delay, the reset logic might execute
-> before the regulators have fully ramped up, potentially leading to unstable
-> hardware initialization.
->
-> [ ... ]
->
--- 
-Best regards,
-Nickolay
-
+> ---
+> Changes in v2:
+> - Free the ui structure before returning -ENOMEM to avoid memory leak.
+> ---
+>  tools/perf/util/unwind-libdw.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
+> index 7f35042be567..fd8a5125468c 100644
+> --- a/tools/perf/util/unwind-libdw.c
+> +++ b/tools/perf/util/unwind-libdw.c
+> @@ -379,6 +379,11 @@ int libdw__get_entries(unwind_entry_cb_t cb, void *arg,
+>  		dwfl = dwfl_ui_ti->dwfl;
+>  	} else {
+>  		dwfl_ui_ti = zalloc(sizeof(*dwfl_ui_ti));
+> +		if (!dwfl_ui_ti) {
+> +			free(ui);
+> +			return -ENOMEM;
+> +		}
+> +
+>  		dwfl = dwfl_begin(&offline_callbacks);
+>  		if (!dwfl)
+>  			goto out;
+> -- 
+> 2.53.0
+> 
