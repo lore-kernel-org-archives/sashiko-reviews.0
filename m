@@ -1,205 +1,196 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020083.outbound.protection.outlook.com [52.101.228.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89DE374A14;
-	Sat, 29 Aug 2026 14:11:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.83
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788012681; cv=fail; b=GRjrEm9s52Z58rN5tZmZUpQlK23xAw1dlyW+pjH1htvLKvwi1uL15nRRJu8XsYENalTJBJs8eHRmjxl6EEHmi5wEBUq5HAeZ/E9Vb03B5jBBGb8/IjyNAD9HZlA0oXTMb4tpGfRyZIe0NdL45JIaqMf7DV7/Vf+o2TlItt1fbIk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788012681; c=relaxed/simple;
-	bh=c5dm9CutOui1VpbuiPfg0pbX3Xh2DrEGEHEbzrUfovg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=dcfzq1ASJEd4OeVCIc3Gnde9ascozIy5J3dGRE+/nrRdPkSdcKGO7PfoHgCffYjn3xGDIeYlwztpGg+VBbEQoPQShbbvJvGfzX9CN+B70GHNNhSJ3Lfm3sIhW64Aerjugk4TXzhcJMcoeBzoOO9MpsK5SSPBuNCrQQ8WAx8tJrc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=gqI4Zg3H reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAE3C9ED0
+	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 17:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788023118; cv=none; b=f3m42xCbicsUvztq3ohdIX0GTMXRRlgMi+V5k2icoGnAOrxs7gLy3QKg3KESd96QeXszI1/T8Z57b1V5zRdvJ6JJZ4vdbjjnXqhogEVl/V93C8/6ASRRG7oVtIgUYmsOKOgYu9mGGVT8dFRFCL/O5ZUjbvthnaSS1VT8gW1RWaI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788023118; c=relaxed/simple;
+	bh=awt/n+oNORYB2YhDK5rTQcAxY6y1IVVts1XEDrCgSzc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mMGPGkzt1nIvG8gomOSK8eoHlQnaIB2qOjq4mJ6EKv6Bw6GWtLmZSKiwnbedtspWCwRboL1nIzSCsv2w94tGCthr/rm8wc6ArBa+jSocr6h89oppbPS5vIz+/z24zVvKliLxFBdJNTnV2mgMzOmjo1yDAQOy6+BKNxk7KVnJZEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Abu47pku; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="gqI4Zg3H"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=thpH1bF3kgG6yS6avXw1BrMeCtY/lURsTavC5jCmywIs9hY94BNRcfWj2JZmIpxqKBR+Vmtv1EGaKfGDWhtGwVrV6aPoyoe9se4VmWgIcq+FKOTXfrKbt5pi0Jxc9cKENAqcHfx48xANMRf7U+a9Wwz/rRoR1OYMrl/xgRq5BsRvUj9X2IrEFD+D7o73V69L/auTsKroxBd5JmqSIb0wY5L9pkILRg2Iaq6GkknQm2WBr5+B20Srqjp7ncTbAiG54K3FC0OmiYUPcix3wFfIRVXUKucRt/NouSjMLCEDHsc3uDeW+Qs8ZgcxSH2bj3/KB4vLOhkgfsJFVbU4cy6QMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CX0K+xCXGL7JtjyZqqNV66SR/FgI7mRpxlG5xE7/W2E=;
- b=O7qleCX2kccG3dvRzZla1FSWvd7raPiHWvAAlXMjfTzXptQkRxeJcVyeNZoyl2ZMvYcSQnLJ9ds/aw/H76P6z2MRGvciTT3w6hKAmZZDHDfJ1ovz31b/OVlTpAr79oxJRHEWdHUTibxQzn0wwGHvAeHu/CNd5PN6N5Y3DMKA6Y5o/fnYq0wju1knIpIGljtEK1DmPjGbLd/0WIFHjPHQL70ea/wNKaYAf3deLWr9dGWc9+DvdZc7ZHMHp3Wir0NKFGDFPrW5aNSK/pByNiSnUOBXy7aKJ4s3UdItISC98ZyZjM9Wd4R28/wR9Uhwm5eYchpGRQufPpAL42GzQAMs6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CX0K+xCXGL7JtjyZqqNV66SR/FgI7mRpxlG5xE7/W2E=;
- b=gqI4Zg3HpI9clVszc6VFh7JbERDRYGW6rVIPK45cqOpm11AwBWus2TKYtBLyBK+stW5xl3Yo8DPPoItsDohupjATbXiXIi+nBGj+tD5OIkACCdPyhjLwOJ7VA1sxirLGqBBFrN9BwwjKCbOL9U/C1WrfyaysKNaWdkif9S32kNI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TYWP286MB2889.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2f8::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.12; Sat, 29 Aug
- 2026 14:11:15 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%4]) with mapi id 15.21.0360.008; Sat, 29 Aug 2026
- 14:11:15 +0000
-Date: Sat, 29 Aug 2026 23:11:13 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: ntb@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 2/3] PCI: dw-rockchip: Support fixed MSI-X table and PBA
- on RK3588
-Message-ID: <6qpbmznz2w6pgrjkrlpjiq2rwmxouwgmqwefp4bpe4gkdimigf@pk4sromhxms2>
-References: <20260827182012.1984960-1-den@valinux.co.jp>
- <20260827182012.1984960-3-den@valinux.co.jp>
- <20260827184108.00F6F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260827184108.00F6F1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TY4PR01CA0047.jpnprd01.prod.outlook.com
- (2603:1096:405:372::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Abu47pku"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2d71ae3455aso31349695ad.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 10:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788023117; x=1788627917; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ln2KbbtEjRGd/LI6Li0KRF+ySsS1VE0IamdH6+rdBvI=;
+        b=Abu47pkuzTolsTolxAcEGcSyELpBiGektQnqiFriIwbIV0eHd7kQzSGo6qcleeQC9C
+         zGH04+md9ZOiK467FAys04l9PJqBdc3IECm7HQMtEWXdp3MVlEQe9wYZWJyAfA9hSCDB
+         0Xu4fcFhHTxZKroNFH4bICLrljWlSkN7C50vE1J8Hpjr97zyY0H3GizkdN7lLlgHMwjF
+         +RG29rBlRzvtXZUrayfIW58WI9ETJ9YjnwZ9lyFO6+YYmkd7mK59ooec0mKUHRG/yzja
+         MxFxUO41iSd0E1uW8GytmZQzQA5M9j0ZhWnmvKJH4/LCmWIIeAWc3Uagpto62aT/Bh9u
+         sxAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788023117; x=1788627917;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Ln2KbbtEjRGd/LI6Li0KRF+ySsS1VE0IamdH6+rdBvI=;
+        b=Qt0omBuhTmiJsF1Alw8/DI9W3fb4Hu8fk5mi0oxopNPQ9HtQN5fgBfrZdXuGMRNaAe
+         /sdEDpIwFT9HfHxuiY5/M/JQs91K9EgGZyu2u+qODacgY2lG88HqLwEpy/XSeMS4g1ch
+         7joeQ2wHT/cB38daBSjBoEDeRaVBOiBX/hTDVEicbwcoM+3ti53RapPteiMeZU+npVRM
+         AmrT1iMwTs9iqWYn7Wi9WmtMLNCmOUUKvIr4uaMNMATLO+WPER0hKGtxcUJRrwszjxw+
+         bB98YrpdsqLlCzeRjZ0v34RIUcBdZNjkYLp+WCM6zQ5OgHjIjLWyL1+3Lh4ftQdn2eKZ
+         v/rA==
+X-Gm-Message-State: AFuF++mQPc+BZjKpg7Aw2kdISiSHpkptS6QxE0o9vIebKHR+9jEFE/wy
+	ZODUE23QT5vmJn5inVWsVESJZzS78QBRIA7LXFvTQKrltLAtsd5kUqgae+KMYw==
+X-Gm-Gg: AYBFou1/FZxbD6fi19M2CxvBSO83nFr72Fk+Qlten8hBh+/NdIM4d3LDRxBgWUDlrYN
+	aTXIkHrZYk1dFNdsoYORiEIGIyTrfXQpznH3iwqvloPJ6ZENJ+KVS7kA/dPo2xNqX61+NZ/M7wr
+	fXYSBfFYeNQXxgezzumogUFyOvvmdNLSIvUxjqCNiSz5/gEhHxuSstDrTuDKdEnvEgRKi26oZLH
+	V5lb+JMY/aXSwc3b6W92wA66fnx7/SNn9Se2/TV3x8orGWWrGYDTIJMZV6cGvAZTNsMbl+I5JRh
+	01XM0RQF2L1mQhYFgYEmyhIkGANytp1xbecNHTneskA1Hv+v3dNrZCbbktZwMlQt5QpyUSSk469
+	fjOv7hO7o5VlDa3/go4ypMZn/X9Hc6gGGlE9z2xwIX9pj2XPZxB0OyVW+8f+43Elg9yd8c4PKtZ
+	yeBI7Gsoxmd/tZhzRoMdnj6WiVWO6129EtgKNb6AvQ5VSLxbWV8qLv5P4keRhFeaBLvC01RQ7c6
+	AqkIwGmmZ7p+wjKQnAQVL3Il5ka+xgbyFBW8w==
+X-Received: by 2002:a17:903:8d0:b0:2d7:4cd4:5a7f with SMTP id d9443c01a7336-2d74def6351mr288967185ad.12.1788023116608;
+        Sat, 29 Aug 2026 10:05:16 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f7be607sm17361289eec.10.2026.08.29.10.05.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Aug 2026 10:05:15 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <89971e52-a88c-49bd-a0a6-17e48820974d@roeck-us.net>
+Date: Sat, 29 Aug 2026 10:05:13 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYWP286MB2889:EE_
-X-MS-Office365-Filtering-Correlation-Id: c646e252-7654-4870-c708-08df05d7631e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|366016|376014|23010399003|22082099003|18002099003|56012099006|3023799007|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	gybhXbPTWawCv5YY/ChnGs6stoDapEDgR8hKTV1FzEMVnbMGjjn9WbcdE3SK32s9VYWGiTSUXEk9LqrH0P4JxzNKLB6OVt+a5ho65qEzHril46KtPgiWIIilCM7yAYSsZ1U7xWPUzwAHyiV4GjPI+gcS1r4kZ/o3/3Hckq5sxpCVh9EStnk9JmmBqHbcqQv8O6HmzENkIZfBZzHxcNm1DzRUdghgh3MkJ/oNgug+lP7rtz0XexhbyqO2k3WJMC9rTNuiDpEiSygeJQb5XzSgTtuEoebwip5LuKAUuu/XnIZGvwAjiCt2qQo58wsa4A80IPx2TgSonZIKbqKXrr6ypk6ZzXXP9GRFMwGiWP1ja106DDc6oTIYeHz3EednZS7RRQjIajFubov43cpV7qKX8myfYZeukb9QFY0guA9NP2PKDudnMQSKGN3qcgTc++IpVcLmS7LP0OB4hq9QZeZ+mOVu2acPSUext3pAk+1seEPaiWmfSsOjZz4AkJFO//JG3hj6VviLDi7Hsrz8CBycRwvmDK/MOMa1iZUukc8nKvAPkBJ0wEcGPTrb5jGT8aWPpkmuOVtfc3zk1ukM5o0S0rpxy+f5F+JWrGjg7rhv1nA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(376014)(23010399003)(22082099003)(18002099003)(56012099006)(3023799007)(4143699003)(10067099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?Ur37oxA1F2drb9v3uOnPpRyZ6HPCMwRqHA2BNwjyoxRQ6Tscshre3DzibJ?=
- =?iso-8859-1?Q?pPlIOE8gswXreRlpn29F/x0dygpj5qPWV29ocVdAO/jPcYU0KK5Qx7IdAU?=
- =?iso-8859-1?Q?izL5mZPzu9TuWfeVMxWDHxWZVwTh5f0m8a16eRCj6AOxw9WQlEUwS69QZ7?=
- =?iso-8859-1?Q?og8ty0FQPAGtGuEfNnemL6XYd+PeCyzY3fb/gRaN8PcnG9BqPz3+LMi+dv?=
- =?iso-8859-1?Q?g8aOYqDSMs23VdbSmSQ5vrHJVbgrfK13yCNG/nZet+YNlYBhNUCppL0zzB?=
- =?iso-8859-1?Q?5OgDs4dkkcSKkQnC5ZwG1BsdB78KCKdcG+POVt1jB5bLHUKoPmqMp5XbEA?=
- =?iso-8859-1?Q?ro58tqv10D5p+9oaIBVgrhqi5g8VejchhXpIC/5x6N03GxEc1VGy0FbV8B?=
- =?iso-8859-1?Q?QSAhfXlgHIUfwDCnWKKz3R3+oDR2NPNxT9+srgJw8NiZTy8quZBCSSDWGp?=
- =?iso-8859-1?Q?9+8B5qfHnU5Gb+fRkny+m5S6WyhF4fdfxqyqRej0tUjEjmj8Gs56LMtiZl?=
- =?iso-8859-1?Q?xTrMYRuGDyjutmBTG6xtC9b2yir7jcvWjoT4T9KQ0xppYf8RKkwt9rzZY2?=
- =?iso-8859-1?Q?N2pN8jHGe6mwYk8d4h9gpnWJVQQgjYudqR2dOBbx5BPCxP+w7tYxGiG3Yp?=
- =?iso-8859-1?Q?m0q0L3agrYye66fYlKfOxGW29oQZ35I1JUrOlXoqY5FK3xBFANFdmjGrPQ?=
- =?iso-8859-1?Q?0mqDujZdi/AcWI6ymsvqsU+TTc5xGUABdjZTld3Seiz0j5LIWjeiqScStW?=
- =?iso-8859-1?Q?F39tgkrFNBWAA8ME9eEMofuZWKmu91bRsLSowR0bW2o1zi9+XSOg5Fz5B/?=
- =?iso-8859-1?Q?aICxetLFA2Ag/tYCEFp3KjojQyIADbzAW6og6dLW/DnX4soztFVeZaLevW?=
- =?iso-8859-1?Q?HwutmmGHfI2dT6rUW/y3S2gLIH5NUQWRqjTIXin4Aby9ZAh7EeuTVteBcX?=
- =?iso-8859-1?Q?APytFWnUJE9gm6a6hgt+2ETTW2OY9epajFWcU+21Y7/oP/++0t9u2il94P?=
- =?iso-8859-1?Q?F8DFEzmiq4l30Uj9hCNxrDil3BKNCBSO33m2ltyASfrfijIAU5pBqleEpV?=
- =?iso-8859-1?Q?1MLIxBcrVhdbPXxjoX2CnAVEJJ614PXESr4CmLvoW1ywh7N+U8PaRD8noX?=
- =?iso-8859-1?Q?Zzfh1poo5c244NrDwcSQA1pEPfKJE4L7MT884wiDowmJali4clh1k/ZYGp?=
- =?iso-8859-1?Q?ZEPTvyHHZPc/9IAWPOaFSMfGnJLuSg90J/qxPKWEMUDsFWEI9zyjLge/j9?=
- =?iso-8859-1?Q?xNGLDv+d+YjTLjgZ9hxY5sKKqXUB0BvObOk+5I7G7xNGWUJIUbEG0YXCBW?=
- =?iso-8859-1?Q?ZBBc8rRCXduuKfeJh5RRR9y7liARpGyqrAV1XP80IspFVkaCg8uW1OpqGB?=
- =?iso-8859-1?Q?fYeR+44zmw24NW/U5ZijeV77jCXbugpCdkfj+zQCpRNqN4dGRlOVsWpc7/?=
- =?iso-8859-1?Q?Kuc4Fl38owQwTZ7SqKz54SDSZ+VdPJpziedz/X79eYZ/ErLIEGcvyt6TcJ?=
- =?iso-8859-1?Q?PRD6tFiFYH94TqkYar26WGlLOwD3J7r3B68GJ7/0V+92MmZlSPeGek2HkE?=
- =?iso-8859-1?Q?UQRt61dDE7bYVbw8goEgRK1mEBkuI/DoxWQR2vx/sQpztZRnqA2P6d6wgE?=
- =?iso-8859-1?Q?jHh6jwBBzPooGYbtoOq0Mj4jwZ+QFUpMusrzH5p1Rz/M/oHpJRly8WBFe9?=
- =?iso-8859-1?Q?a8yx9I35OwD54RZkUHeFjoGeefcOUguvUJ3jjZvpwN19v1eyfLCBIsmUON?=
- =?iso-8859-1?Q?7ZNECYLEJlQUCT19d6A8VkYgk/pKFw61raNY84wpFiYcretL0NjjsC5UiG?=
- =?iso-8859-1?Q?SJ7urEAf9faew9cUkMgE24egVK9WWAZ9WwWpvaRDUHXiBJR0MevK?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: c646e252-7654-4870-c708-08df05d7631e
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2026 14:11:14.9974
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZpxZpSBZTxVsTwq0exTroU7VvfbPoYkrl2bVS8DFM/UO/0U2TciXUqoldOHVuo21jq1/K7bGfuNgbUOEbgvQkQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB2889
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] hwmon: (starfive-fan-tach) Add fan tach driver for
+ StarFive JHB100
+To: sashiko-reviews@lists.linux.dev,
+ Changhuang Liang <changhuang.liang@starfivetech.com>
+Cc: devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20260824030234.9321-1-changhuang.liang@starfivetech.com>
+ <20260824030234.9321-3-changhuang.liang@starfivetech.com>
+ <20260824032750.0749D1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260824032750.0749D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 27, 2026 at 06:41:07PM +0000, sashiko-bot@kernel.org wrote:
+On 8/23/26 20:27, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unmapped epf_bar[bir] access in dw_pcie_ep_raise_msix_irq() causes kernel panic when msix_hw_owned is true
+> - [Medium] Missing explicit initialization of interrupt and channel enable registers during probe
 > --
 > 
-> commit d51d0db24756ed54917db6dbe19e86f2adfdc77f
-> Author: Koichiro Den <den@valinux.co.jp>
+> --- Patch [2]: [PATCH v3 2/2] hwmon: (starfive-fan-tach) Add fan tach driver for StarFive JHB100 ---
+> commit ea266a681c03cda9faa04f08b171c20f1e003841
+> Author: Changhuang Liang <changhuang.liang@starfivetech.com>
 > 
-> PCI: dw-rockchip: Support fixed MSI-X table and PBA on RK3588
+> hwmon: (starfive-fan-tach) Add fan tach driver for StarFive JHB100
 > 
-> This commit adds support for fixed MSI-X tables and PBA on the RK3588
-> controller by marking BAR4 as a reserved region. It introduces the
-> msix_hw_owned flag to track when a hardware-owned layout is selected. The
-> RK3588 then overrides the MSI-X raise behavior to use the controller
-> doorbell when this flag is set.
+> This commit adds a new driver for the fan tachometer controller found on the
+> StarFive JHB100 SoC. It provides support for up to 16 independent fan
+> tachometer inputs and reports fan speed in RPM through the hwmon sysfs
+> interface.
 > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > index 147b043589f02..bc2b63814dea1 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+>> diff --git a/drivers/hwmon/starfive-fan-tach.c b/drivers/hwmon/starfive-fan-tach.c
+>> new file mode 100644
+>> index 0000000000000..7f56ecc87c1c8
+>> --- /dev/null
+>> +++ b/drivers/hwmon/starfive-fan-tach.c
 > [ ... ]
-> > @@ -764,6 +784,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-> >  	reg = ep_func->msix_cap + PCI_MSIX_PBA;
-> >  	val = layout->pba_offset | layout->pba_bar;
-> >  	dw_pcie_ep_writel_dbi(ep, func_no, reg, val);
-> > +	ep_func->msix_hw_owned = dw_pcie_ep_msix_layout_is_hw_owned(ep, layout);
+>> +static int starfive_fan_tach_probe(struct platform_device *pdev)
+>> +{
+> [ ... ]
+>> +	ret = reset_control_deassert(priv->rst);
+>> +	if (ret) {
+>> +		clk_disable_unprepare(priv->clk);
+>> +		return dev_err_probe(dev, ret, "Failed to deassert reset\n");
+>> +	}
+>> +
+>> +	ret = devm_add_action_or_reset(dev, starfive_fan_tach_disable, priv);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	writel(STARFIVE_FAN_TACH_STALL_INT_MASK | STARFIVE_FAN_TACH_SLOW_INT_MASK,
+>> +	       priv->regs + STARFIVE_FAN_TACH_STATUS);
+>> +	writel(priv->clk_rate / STARFIVE_FAN_DEFAULT_MEASURE_RATIO,
+>> +	       priv->regs + STARFIVE_FAN_TACH_MEASURE_TIME);
 > 
 > [Severity: Medium]
-> Does introducing the msix_hw_owned state here create a potential NULL pointer
-> dereference in the generic dw_pcie_ep_raise_msix_irq() handler?
-
-I don't see any reachable path to this NULL dereference.
-
-RK3588 and Tegra194 are currently the only DWC glue drivers that describe
-PCI_EPC_BAR_RSVD_MSIX_(TBL|PBA)_RAM in BAR_RESERVED BARs. epf_func->epf_bar[] is
-NULL for those BARs, but:
-
-- RK3588 routes hardware-owned layout through
-  dw_pcie_ep_raise_msix_irq_doorbell(), as added by this series.
-- Tegra uses its controller-specific MSI-X path and does not call
-  dw_pcie_ep_raise_msix_irq().
-
-No other in-tree DWC glue driver that calls dw_pcie_ep_raise_msix_irq()
-currently advertises a hardware-owned MSI-X layout.
-
+> Could this code be susceptible to an interrupt storm if the bootloader leaves
+> the FAN-TACH controller enabled with unmasked interrupts?
 > 
-> When msix_hw_owned is true, the MSI-X table is backed by a hardware-reserved
-> BAR, meaning the EPF driver does not map epf_bar[bir].
+> Since the driver only deasserts the reset line during probe (and does not
+> assert it first), the hardware state might be retained from before the kernel
+> booted. Any read-modify-write operations on STARFIVE_FAN_TACH_INT_EN and
+> STARFIVE_FAN_TACH_CH_EN later in the driver would then preserve these stray
+> bits.
 > 
-> While the RK3588 controller correctly intercepts this state to avoid calling
-> the generic dw_pcie_ep_raise_msix_irq(), the generic function itself (which
-> is exported and serves as the default MSI-X handler for DesignWare) is not
-> updated.
+> Once devm_request_irq() is called, any unexpected unmasked interrupts will
+> trigger. If the interrupt condition is continuous (e.g., a disconnected or
+> stalled fan), the ISR will clear the STATUS bit, but the hardware will
+> immediately re-assert it. Because the driver's ISR does not mask unexpected
+> interrupts in INT_EN (it only signals completions if armed_stall or
+> armed_slow are set), wouldn't this lead to an interrupt storm?
 > 
-> If any other DW controller adds a hardware-owned layout and falls back to
-> this default handler, it will unconditionally dereference the NULL
-> ep_func->epf_bar[bir]:
+> Should the interrupt and channel enable registers be explicitly initialized
+> to 0 before requesting the IRQ to ensure a known safe hardware state?
 > 
-> drivers/pci/controller/dwc/pcie-designware-ep.c:dw_pcie_ep_raise_msix_irq() {
-> 	...
-> 	tbl_offset &= PCI_MSIX_TABLE_OFFSET;
-> 
-> 	msix_tbl = ep_func->epf_bar[bir]->addr + tbl_offset;
-> 	...
-> }
-> 
-> Should dw_pcie_ep_raise_msix_irq() be updated to check msix_hw_owned and
-> return an error, or otherwise avoid accessing the unmapped array?
+Please either implement as suggested or explain why it is not needed.
+In that case, please add a comment into the code explaining the reason.
 
-Still, I agree that the helper should reject this case. It is not an automatic
-fallback in the DWC core. Each glue driver chooses the MSI-X path in its
-.raise_irq() callback. A two-line check here can catch a bad choice in a future
-.raise_irq() implementation and return an error instead of crashing.
+Thanks,
+Guenter
 
-I'll add it in v2.
-
-Best regards,
-Koichiro
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260827182012.1984960-1-den@valinux.co.jp?part=2
