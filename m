@@ -1,35 +1,35 @@
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0383F104C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F34195A6
+	for <sashiko-reviews@lists.linux.dev>; Sat, 29 Aug 2026 20:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788035536; cv=none; b=e8kM6SzLGRo8XZhqYwTyJ+T2u/N+Q7wVJKmRDaNX7igm/19QEVonwV/bnehxP92SJVDtrnMXj1+W93KwoambbeBGOxMVj6FjUGvcddm3VmvqSSJFfbai4pD/mJsqfno3JKg0TDlkc7kFNDyTgps0NomUjB5OIJ3F4dJ+kNwCr5A=
+	t=1788035724; cv=none; b=MOM3trs8mgcLECZV3GhNunCC/TDEhEDEdaNFvAMfQMrMo1fbBCz0C0nU15KzmgkqFZcTJB6hrcoFoeAOWFXh7IBlAfvr3JnWOkWvaQpirPhY0YEkUnSNgim27qxJs3wLCXeJqAdlwmIjgz9ee1JSMnsEb5OJlfs4L8zA9uT2hoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788035536; c=relaxed/simple;
-	bh=Vhk48iFDOhHqwgo4419VinkqsSoLjeS/yP7VskSvkpw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=K7FnU6OqjpyZHqCtcqs4n/PTUmM/IIhWqLB2mrBq/nU8z7QqPzvLMSHOWIYLUzonGAnwpp7CP/biWzPM0lqbalWcCpmw4AoR1TCYHP/xZHXdRQT97z1FxBE55KQfhBOLY129tIJUudofwYzNm5x8oWAtcZ7NY0iMMQ4mMLvMY9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=UfdfxhdR; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=dNiWAgLH; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1788035724; c=relaxed/simple;
+	bh=PYYWrSq6umAqqljgngamChzu4Ycr5pm91IxQTMqpDIQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BOuv6nxxNNg/Dflo/Cc3gws0YDGS1fyzZvYyBDWPm7a0GDgG+n2z4aY2SD2eijfoGk+0w9V0STW7EEbtaVL8cyXqbFSWxzVH97KlLVFfAR7ipAXlH3wmm0LODEEobcCUYZS7RmTEOH5AJO8OHqr9CXmzBj1hWNid1rMdtvhYjbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HDqj+Bcf; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=TW++Hb4n; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="UfdfxhdR";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="dNiWAgLH"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HDqj+Bcf";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="TW++Hb4n"
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:From:Subject:Date:Message-ID; t=1788035525; bh=/8JPUzF/NwBFDk55D7nwKtH
-	3M3ZmU38Vs7gpzX8ELMA=; b=UfdfxhdRX2lAa3QTRMVQz8hLTO9z3nqL6TkFHsrrqprWzDrOMa
-	MwAeR6Ig6BeNBN1ADJX85ylcUfaJSusmTIECaa9Hw12USkgFNkC95uMwtFBPzIXCwJ87chunS2R
-	iL8sFtxzIu40MPV5n4HiOMXYSUe9awzRyBzPBwqxT6pLM7Gg4ZZUIj1wIm8lS1CtpXOwz5g/4Rz
-	j4bSav2FWGJSzMxDapl5ruPxIiPmiQXJjYy5HIjGSDeyKBUu7BLchmNpZuoFoEaz52YnSVR4RSi
-	GRR6vPLOFICX8tNhGCt9+qK234ungn1rY5ECEMBQJH6hoHPDCj3iZVRAjbFBmnJ3Lwg==;
+	h=From:To:Subject:Date:Message-ID; t=1788035714; bh=D9gR527E+crHrw708MCpBEa
+	Z4Y72U3o4s32o2HAIkWA=; b=HDqj+Bcf+gxvZGfa/NKGolduwSX8HUos7+EQ/JOy9gaY40F20h
+	EnKFYgfeGWqqvdcuhtxF/1Qx+383VhffOSLURYqGdgIXTDdk3hI3GKfswC59HO8Kapv08uCv8CJ
+	4CTkccCWQfjEJ1kxn2YyHXuuzi9Mf2akzWNqZCl0j9BoNNfzMjXCmsWSbsdhJp0Q7GpD21bZ39x
+	cqbglG2Pnx+3PH0sa9LUnB/X8kt8CmuHTLyD+3DwmU0nAf68qXIwmWI2p9aqZXnZPJ4NzPc14q5
+	0qlHE3tlTqO6gzXzYsas1ICPmrFtS0D5+M4D0TBVEoQONwp5H7YKEQudF6l1YdEXJNw==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:From:Subject:Date:Message-ID; t=1788035525; bh=/8JPUzF/NwBFDk55D7nwKtH
-	3M3ZmU38Vs7gpzX8ELMA=; b=dNiWAgLH1rLukD1Oc3lIlF66sDWdSPo/4cZHgUcL6iTE/3sDkO
-	te8vpx9KtSULxd25cOwH8iCwRcmCI1eWeEAw==;
-Message-ID: <99803359-751a-4c3a-b7b4-9caa1d978ec8@mainlining.org>
-Date: Sat, 29 Aug 2026 23:32:04 +0300
+	h=From:To:Subject:Date:Message-ID; t=1788035714; bh=D9gR527E+crHrw708MCpBEa
+	Z4Y72U3o4s32o2HAIkWA=; b=TW++Hb4ny+BHSbjlsDX2npsNK2m4ErIaD6NPlVl6MvPpreFEbj
+	sjlD2ivRfvPA0fInUecx5/lbrevgpFvDIhCg==;
+Message-ID: <7a48378b-4a5d-4dfc-8bf9-9187b6ca6a0c@mainlining.org>
+Date: Sat, 29 Aug 2026 23:35:14 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,154 +38,133 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 2/2] drivers: gpu: drm: panel: Add BOE NT51021 driver
-From: Nickolay Goppen <setotau@mainlining.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: robh@kernel.org, dri-devel@lists.freedesktop.org,
  devicetree@vger.kernel.org, conor+dt@kernel.org
 References: <20260829-qcom-novatek-nt51021-panels-v1-0-cc1ca61bd261@mainlining.org>
  <20260829-qcom-novatek-nt51021-panels-v1-2-cc1ca61bd261@mainlining.org>
  <20260829201932.1BFEB1F000E9@smtp.kernel.org>
- <251807b0-9775-4391-b212-22afc9b35792@mainlining.org>
 Content-Language: ru-RU, en-US
-In-Reply-To: <251807b0-9775-4391-b212-22afc9b35792@mainlining.org>
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <20260829201932.1BFEB1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
-29.08.2026 23:27, Nickolay Goppen wrote:
+29.08.2026 23:19, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The panel initialization sequence lacks the DCS 'Set Display On' (0x29) command.
+> - [Medium] Missing reset assertion and stabilization delay during panel preparation.
+> --
 >
-> 29.08.2026 23:19, sashiko-bot@kernel.org пишет:
->> Thank you for your contribution! Sashiko AI review found 2 potential 
->> issue(s) to consider:
->> - [Medium] The panel initialization sequence lacks the DCS 'Set 
->> Display On' (0x29) command.
->> - [Medium] Missing reset assertion and stabilization delay during 
->> panel preparation.
->> -- 
->>
->> commit 864f3dccc86bc8a97845ebafd73a7df32e9d6b9e
->> Author: Nickolay Goppen <setotau@mainlining.org>
->>
->> drivers: gpu: drm: panel: Add BOE NT51021 driver
->>
->> This commit adds support for the BOE NT51021-based 8-inch and 10-inch 
->> DSI
->> video mode panels used in Xiaomi Mi Pad 4 tablets. It includes panel
->> initialization sequences and content-adaptive brightness control.
->>
->>> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt51021.c 
->>> b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
->>> new file mode 100644
->>> --- /dev/null
->>> +++ b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
->> [ ... ]
->>> +static void nt51021_boe_reset(struct boe_nt51021_desc *ctx)
->>> +{
->>> +    gpiod_set_value_cansleep(ctx->reset_gpio, 0);
->>> +    usleep_range(10000, 11000);
->>> +}
->> [Severity: Medium]
->> Does the panel require an explicit reset assertion pulse before 
->> de-asserting
->> the reset line? The current code only de-asserts the reset line here. 
->> Without
->> an explicit assertion pulse and delay prior to de-assertion, the 
->> hardware
->> might not be guaranteed a valid minimum reset pulse width once power 
->> is stable.
->>
->> [ ... ]
->>> +static int nt51021_boe_8_init(struct boe_nt51021_desc *ctx)
->>> +{
->>> +    struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
->> [ ... ]
->>> + mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
->>> +    mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
->>> +    mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
->>> +    mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->>> +
->>> +    nt51021_cabc_on(&dsi_ctx);
->>> +
->>> +    return dsi_ctx.accum_err;
->>> +}
->> [Severity: Medium]
->> Does this initialization sequence miss a DCS "Set Display On" command?
->> The panel is awakened from sleep mode via 
->> mipi_dsi_dcs_exit_sleep_mode_multi(),
->> but it is never explicitly instructed to turn on the display output 
->> here in
->> nt51021_boe_8_init(). This could cause the panel to remain blank on 
->> some DSI
->> hosts.
->>
->> [ ... ]
+> commit 864f3dccc86bc8a97845ebafd73a7df32e9d6b9e
+> Author: Nickolay Goppen <setotau@mainlining.org>
 >
-> The downstream init sequence (that this driver generated from) doesn't 
-> contain such command.
+> drivers: gpu: drm: panel: Add BOE NT51021 driver
 >
->>> +static int nt51021_boe_10wu_init(struct boe_nt51021_desc *ctx)
->>> +{
->>> +    struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
->> [ ... ]
->>> + mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
->>> +    mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
->>> +    mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
->>> +    mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->>> +
->>> +    nt51021_cabc_on(&dsi_ctx);
->>> +    mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
->>> +
->>> +    return dsi_ctx.accum_err;
->>> +}
->> [Severity: Medium]
->> Similarly to nt51021_boe_8_init(), the 10-inch variant initialization 
->> path
->> also appears to omit the mipi_dsi_dcs_set_display_on_multi() command.
->>
->>> +static int nt51021_boe_off(struct boe_nt51021_desc *ctx)
->>> +{
->>> +    struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
->>> +
->>> +    nt51021_cabc_off(&dsi_ctx);
->>> +
->>> +    mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0xa5);
->>> +    mipi_dsi_msleep(&dsi_ctx, 20);
->>> +    mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
->> [Severity: Medium]
->> The power-off sequence explicitly turns the display off using
->> mipi_dsi_dcs_set_display_off_multi(). Should there be a matching turn-on
->> command in the initialization sequences to ensure the display activates
->> correctly across power cycles?
->>
->> [ ... ]
->>> +static int nt51021_boe_prepare(struct drm_panel *panel)
->>> +{
->>> +    struct boe_nt51021_desc *ctx = to_boe_panel(panel);
->>> +    struct device *dev = &ctx->dsi->dev;
->>> +    int ret;
->>> +
->>> +    ret = regulator_bulk_enable(ARRAY_SIZE(nt51021_boe_supplies), 
->>> ctx->supplies);
->>> +    if (ret < 0) {
->>> +        dev_err(dev, "Failed to enable regulators: %d\n", ret);
->>> +        return ret;
->>> +    }
->>> +    nt51021_boe_reset(ctx);
->> [Severity: Medium]
->> Does the panel require a stabilization delay after enabling the 
->> regulators
->> and before de-asserting the reset line? The current code immediately 
->> calls
->> nt51021_boe_reset(ctx). Without a delay, the reset logic might execute
->> before the regulators have fully ramped up, potentially leading to 
->> unstable
->> hardware initialization.
->>
->> [ ... ]
-> In practice, My xiaomi-clover-plus' panel initializes fine every 
-> kernel boot
-However, I remembered some cases, when the panel didn't initialize properly
+> This commit adds support for the BOE NT51021-based 8-inch and 10-inch DSI
+> video mode panels used in Xiaomi Mi Pad 4 tablets. It includes panel
+> initialization sequences and content-adaptive brightness control.
+>
+>> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt51021.c b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
+> [ ... ]
+>> +static void nt51021_boe_reset(struct boe_nt51021_desc *ctx)
+>> +{
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+>> +	usleep_range(10000, 11000);
+>> +}
+> [Severity: Medium]
+> Does the panel require an explicit reset assertion pulse before de-asserting
+> the reset line? The current code only de-asserts the reset line here. Without
+> an explicit assertion pulse and delay prior to de-assertion, the hardware
+> might not be guaranteed a valid minimum reset pulse width once power is stable.
+>
+> [ ... ]
 
+Downstream reset sequence is just a deassertion of a reset line [1].
+
+[1] 
+https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/xiaomi/mi/clover/dsi-panel-nt51021-boe-10wu-video.dtsi#L331
+
+>> +static int nt51021_boe_8_init(struct boe_nt51021_desc *ctx)
+>> +{
+>> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+> [ ... ]
+>> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
+>> +	mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
+>> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
+>> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+>> +
+>> +	nt51021_cabc_on(&dsi_ctx);
+>> +
+>> +	return dsi_ctx.accum_err;
+>> +}
+> [Severity: Medium]
+> Does this initialization sequence miss a DCS "Set Display On" command?
+> The panel is awakened from sleep mode via mipi_dsi_dcs_exit_sleep_mode_multi(),
+> but it is never explicitly instructed to turn on the display output here in
+> nt51021_boe_8_init(). This could cause the panel to remain blank on some DSI
+> hosts.
+>
+> [ ... ]
+>> +static int nt51021_boe_10wu_init(struct boe_nt51021_desc *ctx)
+>> +{
+>> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+> [ ... ]
+>> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
+>> +	mipi_dsi_usleep_range(&dsi_ctx, 5000, 6000);
+>> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0x00);
+>> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+>> +
+>> +	nt51021_cabc_on(&dsi_ctx);
+>> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+>> +
+>> +	return dsi_ctx.accum_err;
+>> +}
+> [Severity: Medium]
+> Similarly to nt51021_boe_8_init(), the 10-inch variant initialization path
+> also appears to omit the mipi_dsi_dcs_set_display_on_multi() command.
+>
+>> +static int nt51021_boe_off(struct boe_nt51021_desc *ctx)
+>> +{
+>> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+>> +
+>> +	nt51021_cabc_off(&dsi_ctx);
+>> +
+>> +	mipi_dsi_generic_write_seq_multi(&dsi_ctx, 0x8f, 0xa5);
+>> +	mipi_dsi_msleep(&dsi_ctx, 20);
+>> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
+> [Severity: Medium]
+> The power-off sequence explicitly turns the display off using
+> mipi_dsi_dcs_set_display_off_multi(). Should there be a matching turn-on
+> command in the initialization sequences to ensure the display activates
+> correctly across power cycles?
+>
+> [ ... ]
+>> +static int nt51021_boe_prepare(struct drm_panel *panel)
+>> +{
+>> +	struct boe_nt51021_desc *ctx = to_boe_panel(panel);
+>> +	struct device *dev = &ctx->dsi->dev;
+>> +	int ret;
+>> +
+>> +	ret = regulator_bulk_enable(ARRAY_SIZE(nt51021_boe_supplies), ctx->supplies);
+>> +	if (ret < 0) {
+>> +		dev_err(dev, "Failed to enable regulators: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +	nt51021_boe_reset(ctx);
+> [Severity: Medium]
+> Does the panel require a stabilization delay after enabling the regulators
+> and before de-asserting the reset line? The current code immediately calls
+> nt51021_boe_reset(ctx). Without a delay, the reset logic might execute
+> before the regulators have fully ramped up, potentially leading to unstable
+> hardware initialization.
+>
+> [ ... ]
+>
 -- 
 Best regards,
 Nickolay
