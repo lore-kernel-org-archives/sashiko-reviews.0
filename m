@@ -1,189 +1,224 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BBF3346A6;
-	Sat, 29 Aug 2026 21:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF07E1D5AD4
+	for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 00:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788038192; cv=none; b=HrHxXAwFiaxQIP9ShEjfLcOi1sDe2HPjvzg3aF+qcfnxz1HwptAgXw/MrhSfnXuU4L4tZg+r2iLUm0tzK1f8H2J4PqgLO4Xyx1r+pax8f5/JslhfkXJVY1nN86rFq70cF6cv/EaMi8rH0F4dtsMKZd3nAmsH8H7A4MSyOaar8tM=
+	t=1788051097; cv=none; b=C0SG7hlvL+EMxSw9GepbQz8xYJ9tDPeglNVuZp65KeHkSFaSUvM0hqZMIXaZiZsKCfvCJgEN25Fme2snukjafOzIWlVCt8/6wc1cUmLCTsgv4eaW4yyUTdjeWj6CE3gwcu2zrOf4C8XLxNqkJc6JNEQbHwymkbIsTemk3UUCtmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788038192; c=relaxed/simple;
-	bh=EJV2TB420ZnEEfFdTeVSon8O/uii/pZDjhNK7C4p32Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DNWGh1bYBkfAIBmHsVhA46sy/8k7QYPtlsGnRcKkorRFQ7rmetH07fT9xp+biiuOC9yDlcCSSOXIZ/RRjq39MmniRhkbxq9UK61K4aNqYAp18H2qI7O+K3Gp3HDwno1/+jWb7GAt2GNUPLD2IKE+qF54fZiCPLBnEcnbHjVJa7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLx8qE7U; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788051097; c=relaxed/simple;
+	bh=zW6crNdoSe3nbWW5dWWo7jURAfz7zLhxzzJoPHkO0Ic=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Z81i8YG3q1R4mvjH7QxaCoQCahTifEtTGccxMHLGB2YK6liAn4UquzunwmHE9U429U1v22oIax/sJn9a/1j6NblPk3j9YlrKgL2JAhbwTYvs2JGqnho9jRsjSHLnfccYsgWEbv98qDTpmTgW43/5LgrWQcRMHdp6PiiVnsERGSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=xeoNp/IN; arc=none smtp.client-ip=216.40.44.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLx8qE7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23901F000E9;
-	Sat, 29 Aug 2026 21:16:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788038191;
-	bh=tQSBh8HHZIoNEOUDVfZe1FU25EMqr9DFZVM2Kan8l5c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MLx8qE7Ucogo3voSDlogBRHAMIKbfp20IXBisdrxvQgAbA7vS6pm+FVDISL4tpPJs
-	 rcQvVMKtvOOS1YpPfRhjmRz+GQKkCwts74M7K975G8OqGJ6Pp1EpWqXCWzsFSbuxg5
-	 itB4WCSDMb+YZao/GkWv82DxEpQlg9GDY8Jq/hLCDwN/YSrZgqZW3NzdghTS08sgEL
-	 VUXuq6TqOzM6dxjvMiPMZbV9HZNodybQ5OEPkd0ZvwW5Y5kz26HjM9ZCbfYXfLr1EE
-	 SOWG9+h9HUMoG1oLuPtBwAOVZHL+aqCcMv+ZaYBXAc00H5Iet7AWD/OJivPfoMrXxX
-	 bdJtKbxzPBRjA==
-Date: Sat, 29 Aug 2026 14:16:29 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Andi Kleen <ak@linux.intel.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v4 3/4] perf tools: Add support for displaying weights in
- annotate
-Message-ID: <apNMLUna4pngFX3O@google.com>
-References: <20260818230229.1491871-1-ak@linux.intel.com>
- <20260818230229.1491871-4-ak@linux.intel.com>
- <20260818231536.6E7761F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="xeoNp/IN"
+Received: from omf07.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay07.hostedemail.com (Postfix) with ESMTP id 7CC9D160209;
+	Sun, 30 Aug 2026 00:51:33 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf07.hostedemail.com (Postfix) with ESMTPA id E2C3B2002E;
+	Sun, 30 Aug 2026 00:51:31 +0000 (UTC)
+Date: Sat, 29 Aug 2026 20:51:29 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] ftrace: Take trace_array reference before accessing
+ its ftrace_ops
+Message-ID: <20260829205129.21556287@robin>
+In-Reply-To: <20260829025528.49A831F000E9@smtp.kernel.org>
+References: <20260828223901.29e26edb@robin>
+	<20260829025528.49A831F000E9@smtp.kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260818231536.6E7761F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: E2C3B2002E
+X-Stat-Signature: jfhosd4q6t39yd54i58nfqypxczdgjuc
+X-Rspamd-Server: rspamout03
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+8OQ7RM4ZrJKJ5oasfvnOOD+fp9d3eKDk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=XfUPGPeY5Ofsz5f2snPBvKI87ji6KptMmOdpD1Q2RIk=; b=xeoNp/INE7uOvw9ssmwCDUBBj+uU4Gn0qcU6ErT4UOiVMKL2d5xJx8bRNk3/yf28P6jJL2WTNba+96PGOyp9eV556Mty28K6Txut1dTkA6Oyn29saC2lMWpA+IIR6i7F1PECfyDHr/cGV9fmDEf8Dm1onhoR3XLuOjLqv4zCGS8=
+X-HE-Tag: 1788051091-310000
+X-HE-Meta: U2FsdGVkX18hIkuW4gDuufvgW5TtUd4gnc6Wm8ZDz/AzzmfospIKTL2WwPiQJgLBWjcRoQeHP9f3ihsMqSBccb64VznSfefKMD89deXafzsOVzofhVIcD8idJlzKyyRoCP9ICNYxW5j2uzXhR1iRMj1NLW9wrH0EpNWLqYhDnRtG0u/tSXxTxi2ZgWToZRAgbi6zKTwPfkbahvDgzFW47jhRYFPm4kUie42FGneyUp1K15NH4WOda7kiG8/fEAAoljlB93QtOqUKXSnGMmq/Mf2kGTyR40l4/bV3oqON79vKZixMjqR+yQlOdsXw61gmuLAgsCaZXQssbeY7NWBUOa6bh9wVB+S+xZbhWmpHlngtDf8Z8B0YhU7RPaoX4KpktwbQAUR77WIgZMBlsFSLebf7D57q/XTReIhfj6Qt5P8=
 
-Hi Andi,
+On Sat, 29 Aug 2026 02:55:27 +0000
+sashiko-bot@kernel.org wrote:
 
-On Tue, Aug 18, 2026 at 11:15:36PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Medium] The TUI browser width calculation omits cycle and branch counter widths, leading to visual truncation.
-> - [Medium] Toggling weight columns globally freezes the weight mask for all symbols, breaking accurate display.
-> - [Medium] Use of compile-time host architecture macros breaks cross-platform analysis for weight modes.
-> - [Low] Typographical error in the `--weights` command-line option description.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] ABA problem in trace_array lookup allows a file descriptor to attach to a newly created trace instance instead of failing.
+> 
+> Pre-existing issues:
+> - [High] If `allocate_fgraph_ops` fails in `ftrace_create_function_files`, `tr->ops` is freed but not set to `NULL`. During instance removal, this dangling pointer causes a Use-After-Free and Double Free.
+> - [High] Concurrent lockless calls to `ftrace_ops_init` can lead to double `mutex_init` and list corruption.
 > --
 > 
-> --- Patch [3]: [PATCH v4 3/4] perf tools: Add support for displaying weights in annotate ---
-> commit 9eb5862996d191c9f87138b1476aa94808cc5008
-> Author: Andi Kleen <ak@linux.intel.com>
+> commit f37f9bc71afd70bff68b27fdd3afcdd0c07c7ae7
+> Author: Steven Rostedt <rostedt@goodmis.org>
 > 
-> perf tools: Add support for displaying weights in annotate
+> ftrace: Take trace_array reference before accessing its ftrace_ops
 > 
-> Add support for showing all the three possible per IP weights in
-> annotate. The weights are shown by defaults if any are non zero. This
-> is useful, especially with the new insn lat statistics, but also
-> for all the existing weights.
+> The trace instance files set_ftrace_filter and set_ftrace_notrace was
+> updated to work with specific trace instances (trace_arrays). This patch
+> changes the files to pass the trace_array as the file private data,
+> allowing the trace_array reference to be incremented before touching
+> the ftrace_ops.
 > 
-> Add a hotkey to the interactive browser to turn them off (w), as well
-> as a perf annotate command line option.
+> Fixes: 591dffdade9f0 ("ftrace: Allow for function tracing instance to filter functions")
+> Closes: https://lore.kernel.org/all/apGORjltZgAiAYHT@gmail.com/
 > 
-> > diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
-> > index 69cb72b2082a6..998f472152e2f 100644
-> > --- a/tools/perf/builtin-annotate.c
-> > +++ b/tools/perf/builtin-annotate.c
+> > diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+> > index f9d80c7bd9f16..c7cf36f2dd7be 100644
+> > --- a/kernel/trace/ftrace.c
+> > +++ b/kernel/trace/ftrace.c  
 > [ ... ]
-> > @@ -719,6 +719,8 @@ int cmd_annotate(int argc, const char **argv)
-> >  	OPT_BOOLEAN(0, "tui", &annotate.use_tui, "Use the TUI interface"),
-> >  #endif
-> >  	OPT_BOOLEAN(0, "stdio", &annotate.use_stdio, "Use the stdio interface"),
-> > +	OPT_BOOLEAN(0, "weights", &symbol_conf.annotate_weight,
-> > +		    "Hide or hide weight columns in annotation. Default show if non zero."),
-> 
-> [Severity: Low]
-> This isn't a bug, but there is a typo in the help text here. "Hide or hide"
-> should probably be "Show or hide" to match the identical option added to
-> builtin-report.c.
-
-Please fix.
-
-> 
-> > diff --git a/tools/perf/ui/browsers/annotate.c b/tools/perf/ui/browsers/annotate.c
-> > index e47a467750890..16713d85db7c5 100644
-> > --- a/tools/perf/ui/browsers/annotate.c
-> > +++ b/tools/perf/ui/browsers/annotate.c
+> > @@ -4691,26 +4692,45 @@ ftrace_avail_addrs_open(struct inode *inode, struct file *file)  
 > [ ... ]
-> > @@ -1091,6 +1093,15 @@ static int annotate_browser__run(struct annotate_browser *browser,
-> >  				symbol_conf.show_total_period = true;
-> >  			annotation__update_column_widths(notes);
-> >  			continue;
-> > +		case 'w':
-> > +			symbol_conf.annotate_weight = !symbol_conf.annotate_weight;
-> > +			symbol_conf.weight_mask_user = true;
-> > +			symbol_conf.weight_mask = !symbol_conf.annotate_weight ?
-> > +				0 : sym_hist__weight_mask(annotation__histogram(notes, evsel));
-> 
-> [Severity: Medium]
-> Does toggling weight columns globally freeze the weight mask for all symbols?
-> 
-> Because symbol_conf is global, when the 'w' hotkey sets
-> symbol_conf.weight_mask_user to true, all subsequently viewed symbols will
-> use the frozen mask from this current symbol.
-> 
-> If a newly opened symbol has different weights (for example, WEIGHT_INSNLAT
-> instead of WEIGHT_WEIGHT), those relevant columns might incorrectly remain
-> hidden.
-> 
+> >  int
+> > -ftrace_regex_open(struct ftrace_ops *ops, int flag,
+> > +ftrace_regex_open(struct trace_array *tr, struct ftrace_ops *ops, int flag,
+> >  		  struct inode *inode, struct file *file)
+> >  {  
 > [ ... ]
-> > @@ -1228,7 +1239,7 @@ int __hist_entry__tui_annotate(struct hist_entry *he, struct map_symbol *ms,
-> >  	browser.b.width = notes->src->widths.max_line_len;
-> >  	browser.b.nr_entries = notes->src->nr_entries;
-> >  	browser.b.entries = &notes->src->source;
-> > -	browser.b.width += 18; /* Percentage */
-> > +	browser.b.width += annotation__pcnt_width(notes, evsel);
+> > +	if (!ops)
+> > +		ops = tr->ops;
+> > +
+> > +	if (WARN_ON_ONCE(!ops))
+> > +		goto out;
+> > +
+> > +	ftrace_ops_init(ops);  
 > 
-> [Severity: Medium]
-> Could this width calculation result in visual truncation of the TUI browser?
+> [Severity: High]
+> This is a pre-existing issue, but can concurrent lockless calls to
+> ftrace_ops_init() lead to double mutex initialization?
 > 
-> By replacing the hardcoded 18 with annotation__pcnt_width() in
-> __hist_entry__tui_annotate(), the browser width calculation remains strictly
-> bound to the percentage and weight columns. It doesn't appear to make any
-> allowance for the IPC, cycles, or branch counters that might be displayed.
+> In ftrace_regex_open(), this function is called locklessly in the VFS open
+> path. Inside ftrace_ops_init(), it checks if the initialized flag is set:
 > 
-> If no weights are present, the padding drops significantly, which might set
-> the horizontal scroll limit too narrow to show the full annotated line.
+> kernel/trace/ftrace.c:ftrace_ops_init() {
+>     if (!(ops->flags & FTRACE_OPS_FL_INITIALIZED)) {
+>         mutex_init(&ops->local_hash.regex_lock);
+>         INIT_LIST_HEAD(&ops->subop_list);
+>         ops->func_hash = &ops->local_hash;
+>         ops->flags |= FTRACE_OPS_FL_INITIALIZED;
+>     }
+> }
+> 
+> If multiple threads concurrently open the filter file on a newly created
+> trace instance, both could observe the flag as unset.
+> 
+> Could one thread lock the newly initialized mutex just as the second thread
+> calls mutex_init() on it, potentially corrupting the mutex wait list?
 
-I don't remember where 18 came from but it seems we need to check
-different annotation mode like IPC or branch counters with this change.
+Hmm, yeah this probably needs some locking to synchronize.
 
 > 
-> > diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
-> > index df70e95a84704..d4886e18275ef 100644
-> > --- a/tools/perf/util/annotate.c
-> > +++ b/tools/perf/util/annotate.c
 > [ ... ]
-> > @@ -778,6 +797,47 @@ static bool needs_type_info(struct annotated_data_type *data_type)
-> >  	return (data_type != &stackop_type) && (data_type != &canary_type);
-> >  }
+> > @@ -4788,21 +4808,19 @@ ftrace_regex_open(struct ftrace_ops *ops, int flag,
+> >  static int
+> >  ftrace_filter_open(struct inode *inode, struct file *file)
+> >  {
+> > -	struct ftrace_ops *ops = inode->i_private;
+> > +	struct trace_array *tr = inode->i_private;
 > >  
-> > +static const char *annotation__weight_mode_str(enum symbol__weight_mode mode)
-> > +{
-> > +	switch (mode) {
-> > +	case WEIGHT_NONE:
-> > +		return "";
-> > +	case WEIGHT_WEIGHT:
-> > +		return "Weight";
-> > +	case WEIGHT_INSNLAT:
-> > +		return "InsnLat";
-> > +	case WEIGHT_WEIGHT3:
-> > +#ifdef __powerpc__
-> > +		return "PCycleLat";
-> > +#elif defined(__x86_64__)
-> > +		return "RetireLat";
-> > +#else
-> > +		return "Weight3";
-> > +#endif
+> > -	/* Checks for tracefs lockdown */
+> > -	return ftrace_regex_open(ops,
+> > -			FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
+> > -			inode, file);
+> > +	return ftrace_regex_open(tr, NULL,
+> > +				 FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
+> > +				 inode, file);  
 > 
-> [Severity: Medium]
-> Does using compile-time host architecture macros break cross-platform
-> analysis for weight modes?
+> [Severity: High]
+> Does this lockless trace_array pointer retrieval introduce an ABA problem?
 > 
-> If an ARM64 host machine analyzes an x86_64 perf.data file, it will
-> incorrectly display "Weight3" instead of "RetireLat".
+> If a thread pauses after reading tr from inode->i_private, a concurrent
+> instance removal could free the original trace_array. If a subsequent mkdir
+> allocates a new trace instance at the exact same memory address, the paused
+> thread would resume with the old address.
 > 
-> Would it be better to dynamically inspect the ELF machine constant
-> (e_machine) via the evsel or session structures instead of relying on host
-> compile-time macros?
+> When ftrace_regex_open() calls tracing_check_open_get_tr(tr), it ultimately
+> validates the pointer in trace_array_get() by comparing the raw pointer
+> against the global list:
+> 
+> kernel/trace/trace.c:trace_array_get() {
+>     ...
+>     list_for_each_entry(this_tr, &ftrace_trace_arrays, list) {
+>         if (tr == this_tr) {
+>             return __trace_array_get(tr);
+>         }
+>     }
+> }
+> 
+> Because the new instance was allocated at the same address, this comparison
+> would succeed, incorrectly attaching the file descriptor to the new trace
+> instance. 
+> 
+> Could this lead to cross-instance state corruption?
 
-Right, I think you can pass an evsel and get a session then e_machine
-from it.
+The would at most open the wrong file in the new instance that was
+meant for the old instance. It may confuse the administrator doing the
+open, but if they are also deleting and creating instances (which are
+very big operations that do a lot) and opening one of the files that
+they are deleting, then we know they are likely already confused!
 
-Thanks,
-Namhyung
+As long as it doesn't crash the kernel, this side effect is an issue
+for the administrator to not do stupid things or they may get stupid
+results.
+
 
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260818230229.1491871-1-ak@linux.intel.com?part=3
+> >  }  
+> [ ... ]
+> > diff --git a/kernel/trace/trace_functions.c b/kernel/trace/trace_functions.c
+> > index cd37f20137581..c879d43a5fbb2 100644
+> > --- a/kernel/trace/trace_functions.c
+> > +++ b/kernel/trace/trace_functions.c
+> > @@ -101,7 +101,7 @@ int ftrace_create_function_files(struct trace_array *tr,
+> >  		return ret;
+> >  	}
+> >  
+> > -	ftrace_create_filter_files(tr->ops, parent);
+> > +	ftrace_create_filter_files(tr, parent);
+> >  
+> >  	return 0;
+> >  }  
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does a failure in allocate_fgraph_ops()
+> leave a dangling tr->ops pointer?
+> 
+> Just above this hunk in ftrace_create_function_files(), if
+> allocate_fgraph_ops() fails, it frees tr->ops but doesn't set it to NULL:
+> 
+> kernel/trace/trace_functions.c:ftrace_create_function_files() {
+>     ret = allocate_fgraph_ops(tr, tr->ops);
+>     if (ret) {
+>         kfree(tr->ops);
+>         return ret;
+>     }
+> }
+> 
+> Since tracefs setup ignores the error, the instance creation succeeds but
+> leaves a dangling pointer inside the active trace_array.
+> 
+> Later, when the instance is removed, ftrace_destroy_function_files() will call
+> ftrace_destroy_filter_files(tr->ops) and ftrace_free_ftrace_ops(tr), which might
+> result in a use-after-free and a double free. 
+> 
+> Should tr->ops be set to NULL after kfree(tr->ops)?
+> 
+
+Probably, will investigate.
+
+-- Steve
+
