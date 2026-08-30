@@ -1,66 +1,183 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DC32D77E6;
-	Sun, 30 Aug 2026 04:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B758B3F104C;
+	Sun, 30 Aug 2026 05:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788064339; cv=none; b=hZAY+SB1DMMuwkYrl/tbPZYGNdBL4RPKRpoWhbrUr0EZEjEQLNa+meIVvpKToWp3Vje7ssWxvzi993/kOQ5Gursz66WaOn0lSVOgGSbAaQuV32luXAp1HWDtKbXydZlG8qK7VJEiiP7rqSFalzxY7VCzavUjrcHMVjBnxHdIHbI=
+	t=1788068114; cv=none; b=b6fFNAf0yS3f7Uy1+2Hk/aKDUtKqDmngm+9UI6PvB4jQ+Ye+dvmJ0ZSLjWfECKwaGXnLLmGC8aeHxlfppwRL+eJzssdz8fILyh4t7PM5QUgQJyokRao6v6E5PLlxiCoXhA33DsKW8gWjr+xaJTReFGc7zs3DcJTf2BtZzjIUgt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788064339; c=relaxed/simple;
-	bh=/6/Kudc+rto/PiO0BGoY1rVw2Jh24n3qNXrado/+7k8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PIniT66MWJN2alxBh5oVh7TnqLbP1uUVvPubR0ypcyaHk/qv9NdKGQGXCU28YnoFns+u5ZtZ0/qAGwM8Ct5lmO0fgoUh30ETDVqGBFrVWkQtryl7xgEbDiFISCblwUOAT4GQoFgX+OI76k+CEazfhMRh3cVV1FLXFl2xpeXmdZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=GvgsSC4z; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1788068114; c=relaxed/simple;
+	bh=VZ/6roZBGSz+RN8ytXxzivU/IHRaLsw2q8iG6ckchyA=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=aHEGPujVaXfX341p2gM+pWvqtUWpmOpq0IeX4GQ4XH/CMnKKfhCAGoAEML0KVbw2T+kHV5rtAFcfWili0Je0LtbbdxZ9d06mzg2cCuAYtr3b3kfmzqWNWUvUvNti5kyP81Ltz1H40qC073IYwdounElcjfH+7VHp2i8EfyOPBL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RabyRp6e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="GvgsSC4z"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=X3Vph7s0LxXOOxnknxssBy1Vh6d6iLqKfeqP8yyMQYM=; b=GvgsSC4zFzBVYA9pDs1drldvKc
-	wyntdBfuse8LjISe+HCpWn7bHFTHKL2j8EJiqFRNDTBuMbzHVXe+x8/6VonGp/SNyacdPg0nPXT7l
-	YxDwY2lGlbrcg+W4k0aamVXIxRVcnx63sMh/kWyfpHmGlWMQsR/Ox/wwPBOfSq4Z1V7PICwfgTGK6
-	zHpsjiVqmabpqYrdCz7fmjEB+yIKAEKK/dc7uGqDJ5j1yP6CB/9yspAjFk0F2L3sXoC/l7/XoqLwr
-	SNymM/e2cAxNMHXKI7dLht3mp/iYwFejSTwYVaUq/zFY9RTMOnsLgjn/x79gZ+uQGHGINZyrwcYNI
-	kuwCTsXA==;
-Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1x0XDM-000000001yS-0qMQ;
-	Sun, 30 Aug 2026 04:32:16 +0000
-Date: Sun, 30 Aug 2026 05:32:15 +0100
-From: Matthew Wilcox <willy@infradead.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RabyRp6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23081F000E9;
+	Sun, 30 Aug 2026 05:35:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788068113;
+	bh=OfcyBa6g3GlyYMSTvkUtDb1Jm2JpFQlqGt1iiYWJ7Do=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=RabyRp6enEo+N5DXek3DHfpxGqKhpfR2lFWJ/aeQJARx5vFDqVoq68sdJoMFG7tte
+	 zDEC5Y6LrdcJSCtlGNzMUgnrXnsDOF0KPTmgcvwWJrfMo126q9CZrriPr9Dqqa4zsf
+	 UbXQhHJmY5Z50Amp7++UrgTccAU1aG9M5Ae/0iIXmvPxdNnC9/rbkYG+WaPdFnVdef
+	 Cb4SF3RJGoUP8Vp5k42GRJquc3mD8lN5PQNTSbb5BVnKzikCobVDUCnJjZcMX7OBTA
+	 ORzE58ygVK7wnMYaCAMtceQKEgLcOcl2CtX47Q7VmOI3whKPHXpEoItiwkwNZr3Omg
+	 BKEhMIJW/y8HQ==
+Date: Sun, 30 Aug 2026 14:35:09 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Jeff Layton <jlayton@kernel.org>, Anna Schumaker <anna@kernel.org>,
-	tytso@mit.edu, Chuck Lever <cel@kernel.org>,
-	linux-ext4@vger.kernel.org
-Subject: Re: [PATCH 9/9] filemap: Remove FGP_NOFS
-Message-ID: <apOyT6uKUPY5P_JR@casper.infradead.org>
-References: <20260830041901.2668-1-willy@infradead.org>
- <20260830041901.2668-10-willy@infradead.org>
- <20260830042742.84E321F000E9@smtp.kernel.org>
+Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org,
+ linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v13 02/12] x86/hw_breakpoints: Make DR7 updates NMI safe
+Message-Id: <20260830143509.12601f973b9eb2d5d716d489@kernel.org>
+In-Reply-To: <20260822094107.349031F00A3A@smtp.kernel.org>
+References: <178739053919.1520941.17662338993878200834.stgit@devnote2>
+	<178739056219.1520941.16843776326995549779.stgit@devnote2>
+	<20260822094107.349031F00A3A@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260830042742.84E321F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sun, Aug 30, 2026 at 04:27:42AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Does this removal break the build for f2fs?
-> 
-> Looking at f2fs_write_begin() in fs/f2fs/data.c, it still relies on the
-> removed FGP_NOFS flag:
-> 
-> 	folio = f2fs_filemap_get_folio(mapping, index,
-> 				FGP_LOCK | FGP_WRITE | FGP_CREAT | FGP_NOFS,
-> 				mapping_gfp_mask(mapping));
+On Sat, 22 Aug 2026 09:41:06 +0000
+sashiko-bot@kernel.org wrote:
 
-Hi Sashiko, the tree you've applied this to for analysis doesn't include
-commit 35e5554ec14b which removes this flag.  That commit was merged
-into Linus' tree in 115bd364ab20, please update your tree.
+> > -static __always_inline void local_db_restore(unsigned long dr7)
+> > +static __always_inline void local_db_restore(unsigned long dr7,
+> > +					     unsigned int dr7_seq)
+> >  {
+> > +	unsigned int seq;
+> > +
+> >  	/*
+> >  	 * Ensure the compiler doesn't raise this statement into
+> >  	 * the critical section; enabling breakpoints early would
+> >  	 * not be good.
+> >  	 */
+> >  	barrier();
+> > -	if (dr7)
+> > +
+> > +	do {
+> > +		seq = this_cpu_read(cpu_dr7_seq);
+> > +		if (seq == dr7_seq) {
+> > +			if (!dr7)
+> > +				return;
+> > +		} else {
+> > +			dr7 = this_cpu_read(cpu_dr7);
+> > +			if (!dr7)
+> > +				dr7 = DR7_FIXED_1;
+> > +		}
+> > +
+> >  		set_debugreg(dr7, 7);
+> > +		barrier();
+> > +	} while (unlikely(seq != this_cpu_read(cpu_dr7_seq)));
+> >  }
+> 
+> [Severity: High]
+> If KVM intentionally clears the hardware DR7 state to isolate the guest from
+> host breakpoints before VMENTER without modifying the host's cpu_dr7 shadow
+> state:
+> 
+> arch/x86/kvm/x86.c:vcpu_enter_guest() {
+>     ...
+>     if (unlikely(vcpu->arch.switch_db_regs &&
+>                  !(vcpu->arch.switch_db_regs & KVM_DEBUGREG_AUTO_SWITCH))) {
+>         set_debugreg(DR7_FIXED_1, 7);
+>     ...
+>     } else if (unlikely(hw_breakpoint_active())) {
+>         set_debugreg(DR7_FIXED_1, 7);
+>     }
+>     ...
+> }
+> 
+> Could an NMI firing shortly after this permanently undo this isolation
+> upon return?
+> 
+> If an NMI (such as a perf event) fires before vmlaunch/vmresume, exc_nmi
+> calls local_db_save, saving dr7=0. If the NMI modifies a breakpoint,
+> cpu_dr7_seq increments.
+> 
+> When exc_nmi calls local_db_restore, the sequence mismatch causes it to
+> discard the saved dr7=0 state and instead unconditionally restore the host's
+> active breakpoints (this_cpu_read(cpu_dr7)) to the hardware DR7. This could
+> leak host hardware breakpoints into a KVM guest and cause unexpected #DB
+> exceptions.
+
+OK, this seems only happen when KGDB/KDB sets the watchpoint from
+NMI context (right after KVM disables dr7 for transient to guest).
+We can avoid this by early returning if dr7 == 0 in local_db_restore().
+(But..., if user intensively set the dr7 in that timing, it will be
+ignored.)
+
+> 
+> [ ... ]
+> > diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+> > index 9bba1e2f03af7..8dba9cd04bfa5 100644
+> > --- a/arch/x86/kernel/cpu/mce/core.c
+> > +++ b/arch/x86/kernel/cpu/mce/core.c
+> [ ... ]
+> > @@ -2139,20 +2139,22 @@ static __always_inline void exc_machine_check_user(struct pt_regs *regs)
+> >  DEFINE_IDTENTRY_MCE(exc_machine_check)
+> >  {
+> >  	unsigned long dr7;
+> > +	unsigned int dr7_seq;
+> >  
+> > -	dr7 = local_db_save();
+> > +	local_db_save(&dr7, &dr7_seq);
+> >  	exc_machine_check_kernel(regs);
+> > -	local_db_restore(dr7);
+> > +	local_db_restore(dr7, dr7_seq);
+> >  }
+> >  
+> >  /* The user mode variant. */
+> >  DEFINE_IDTENTRY_MCE_USER(exc_machine_check)
+> >  {
+> >  	unsigned long dr7;
+> > +	unsigned int dr7_seq;
+> >  
+> > -	dr7 = local_db_save();
+> > +	local_db_save(&dr7, &dr7_seq);
+> >  	exc_machine_check_user(regs);
+> > -	local_db_restore(dr7);
+> > +	local_db_restore(dr7, dr7_seq);
+> >  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does task migration during user-mode
+> machine check exceptions corrupt hardware debug registers on the new CPU?
+> 
+> exc_machine_check_user invokes irqentry_exit_to_user_mode, which processes
+> pending thread work (like TIF_NEED_RESCHED), enabling interrupts and allowing
+> the task to be scheduled out and migrate to a new CPU:
+> 
+> CPU1
+> exc_machine_check()
+>     local_db_save(&dr7, &dr7_seq);
+>     exc_machine_check_user(regs)
+>         irqentry_exit_to_user_mode(regs)
+>             // Task migrates to CPU2
+> 
+> CPU2
+>     local_db_restore(dr7, dr7_seq);
+> 
+> When it resumes on the new CPU, local_db_restore is executed with the dr7
+> and dr7_seq values saved from the old CPU. If the new CPU's cpu_dr7_seq
+> matches the old CPU's saved dr7_seq, it would erroneously write the old CPU's
+> hardware DR7 state to the new CPU's hardware DR7 register. Could this cause
+> spurious #DB exceptions or break hardware breakpoints on the new CPU?
+
+OK, this is another problem to be fixed in a bugfix patch. We should do
+local_db_save/restore() inside exc_machine_check_user() before calling
+irqentry_exit_to_user_mode().
+
+Thank you,
+
+-- 
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
