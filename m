@@ -1,187 +1,237 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC9D3BB687
-	for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 15:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788102079; cv=pass; b=UavgUfI+R7VaihDQPFt4c/Xhl8BT3tVrylFcwcwv5DPa5+UW3G4iIxd22webLLWdBZ2ULkv1feJUWE9fpglZ8w5WVIU2Sqa4Jp69vbcZcl+pf6zw+ZA66jCTboPRuSBj1lV7e3Edbtv0v8cnD0JTfhPtYx9vFUJDPK46S1xx8zw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788102079; c=relaxed/simple;
-	bh=rdWB5ozj+spTYlkn8FMONqaJsNfKg3Tmj30iWcgt0Sg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=be/gMMD/Nr0rno4YXTW16BqjuF7u9ArFcnJe33/MoVsqH7Kl42IOK2Gn4u5/1fzHjZgOuGf98aVas/e3RoBTuCeLHk0V9DZyOvIo/qxk9qLpZ4PMkucU+NrG8rs1WWun7xT0yzMnCSuPG9hgjqvgLlE+87PitLbokxXEVAqAomY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sdrFU6ws; arc=pass smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F81A9FBC;
+	Sun, 30 Aug 2026 18:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788115141; cv=none; b=JdbKNM1QT0+i0E3vvCgQKohQClJ61MOhBxLDn3tG9CbbnWw7QPzGdQYnRFyZoRaPvyjBSjPmE1DN7vNRWJVDj+l0YG9nWDulcU8AiJ/qYY3r9hALtRCc8bLuaCT9mEv56OUdaNvX5Ed6to6/qhxDMoA1BrS2YYD9EiZWQRUGBxE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788115141; c=relaxed/simple;
+	bh=5+kMpCgaKPSF3S5rboa5bIFVDlKw122brlojSY68E6I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AqhzvNR62NgQju3vaEkuU9WdgMYgk5oeMcAhfQEHM5i7WCmAdtt7MHygDgnSiwz8Bo7o7XClrp908CPlz+c2EwLbjpyU6rlcPZItlvq85k1IyoMMLCT87F1THof/67UVUgc2al2BYa1n5A7fF9P++wThTR2wWGCckgFhD9an5r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D6hjMYwd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sdrFU6ws"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-81e6f0b4610so24247157b3.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 08:01:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788102077; cv=none;
-        d=google.com; s=arc-20260327;
-        b=f95ISuoxiIdym9oNvhbBrGH/QWmT8tbR2IGSAKP2tmxZHdVGLmhkWUpjizTREqDGVN
-         +CnE299u09usVq1kS0iN8do+n4Pupq1UrCksDm5DSbxy99/vtIscTQ7to1yWL9VXLtrk
-         pr6VZh3dn3MAPWbvgKwMaJOjVZHoXXbBYybqTR1KdiqH1aYUCdJRakAF7uQ243eYCOI0
-         CadqXMZFalgf35bWhDiDKMPTNDoNKO7XJOv544yYxIeha4VE9lvyh10hvPrWTb354u5I
-         3E+opW+C/DlZU3eepey53qbV3IQ4cP72U6NWm6+15wE90i1VKry2OsYm6SasQzzD0/QI
-         uLlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RWv8kE5NmPuamDTVj3WkgrA2uKgkqjgEkM+C+nZ/9jU=;
-        fh=r5URhQl6whOcnDbP2Lcwh2ZUr6KpnezK+hz/MEOF1jk=;
-        b=Ugv982NXEyt41oZV0WvFxUKkqICBwKUQ6Upc3r/3WBqHPRcy2/gnTnyPN/tKLz9FFM
-         0MC3sorOZyiPzWWqDs2VjpFt962gmqxgXcz5ZfOFgr0tGz9pC5PvGIYv1HxOVHVOoHpD
-         yjxTZo+9l43pjtahRd//6Z6Tl2xC2tw1NQ8r4CJtCcWhIlqHQ3wm6v4mgErD+tuwn/R1
-         gKi5gZgd5Ixs0ExZql6IG0SKEj5jzb7SUy8ujh2wKhQRzkG/JlnarbO5qp2Ytqv4rCzd
-         5PMUO019LACEphKkNRSn7nvJqZZfiB/U4EAx/v7WZi65LyqyvxgmeVbbwiS3yB4Ky5LX
-         Qfwg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788102077; x=1788706877; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RWv8kE5NmPuamDTVj3WkgrA2uKgkqjgEkM+C+nZ/9jU=;
-        b=sdrFU6wsK1UQluWBe2R978ct/48/pPgX0bI2gUGkMP4TlqlsjhzxOR81PAwt+b2QZf
-         TLbaLUQBZlrSoF+Se4jn6HlsUGcFD1KtzL0njZ3SWlTcu2/ZTGF0qjaDwA8CxjLyRe0V
-         DwSBruX3gpDBsGQjRtAOX/GOtta4On5rOybQUMwbkVwgZwiVTMLGaDSO9vOMubDU3JOB
-         B8ezLHRwjq7qFzAU9o2mbxf6pZ0T6uFzWovMnSdcC+HbiCfusKXacfWaftNrC12zF/9z
-         8+8Uzl2ngRtFt5GnKyVU25srs+mWpudFsXtysJvdZOgGOVC3hySO8xQA1TpbSJJJ1xbW
-         L1qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788102077; x=1788706877;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RWv8kE5NmPuamDTVj3WkgrA2uKgkqjgEkM+C+nZ/9jU=;
-        b=T9IyDMDJ9ftPsd7fq3I8ezb871d7oprkaytLoBMgH16ZjhsJqz5dUo5xXHmTea1+cU
-         twb8ahZyqZ+J93XPHEBtXdPMzx9VXy4FjEPQYVQcK8mDsaOW8ZZ6XPH5x509oof9/K3J
-         rl9DnOhNjNhz6GunLWtGnTAafj4E6h7esN4TtiCFH/HDlYD2I/EWr8HE1ET+OnIaNTzQ
-         JVSfVMzXduZy7zdZT/7HuiAgF/uIBXTMdOqtRVcz8WasPogql2qPk67N0DfuJp21LQ1Z
-         x35+GqPK5UaTFwfl5sJDt0E7SmHWrZuB+2de4ei/si8QwUBd+JUCdUWyBVAkqS/oYLN1
-         asDg==
-X-Gm-Message-State: AFuF++mQ+bz2Hf8dOqWzMTYoPi2504IsOeVmwhqaGBMYHqXkWZuauv6e
-	DuNxyMnMpb3Dai3kodqErvcaGZ702mqe8d/D8Z7+yT2QPqgr6zMKGcczSAkl9YG1RcVEtfuGOnX
-	YSRYEF94fzsHbpLM5pkfANgY0ilazfr20ic0y
-X-Gm-Gg: AYBFou3U4a8Wgc1vufr4hszzsUrtxvJmHjN663Ph08Numkt97Z8yqcpgdny5IBN7EFy
-	cpVTAqRGz54CbrcuyKYzULKzmW5wATm7nio6GIILHErW9SDznoJfdzP+8xaaOAnlZkyNsQPtFpk
-	eIxpMvb+1sqb5DmLy4OIztb2/KCQd3V7HB7u1AV0FPVytkSEqyhpVLyUJ0mskH8WBaosFPEflYl
-	GDekGXjVWAeypThG51FtBxVw6ev9JPwvZdvJcd40KxjPLJdwnpAsHuiksE7VWMuXMXwQu1Bhl3R
-	SFEvJlcMky887TEy3KWKPeHftCOuy5I9XJ80WMdI9zg=
-X-Received: by 2002:a05:690c:a1cd:b0:854:9062:73ae with SMTP id
- 00721157ae682-85d6ea15febmr62989437b3.33.1788102077303; Sun, 30 Aug 2026
- 08:01:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6hjMYwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BDF1F000E9;
+	Sun, 30 Aug 2026 18:38:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788115139;
+	bh=E3bBZzmOMZCA2M4AQFe7Y+81H39aGr1Oh/9zopZqbiE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=D6hjMYwd+oKzSBJk9n9d9WYX3Z4VDuegnX5OreStuxUQo+U93MFlQv/+YlVVx2Hjr
+	 dRZzw9DTJ7wHm2mzWWOdz/v0uSfs2IncYsmVev7rR9OhJnLGG4WwFYGIEowSEJnSLR
+	 0IBV9ZMfXVelcYX96A/M2qerjIO5KtbJ28G7jbylMl5jBTHnZcuamLV/Lh32c7Frkz
+	 mP2VWIUm4PJrXA5e8FM00eovwmcRL2Gv8vwmwl4sndpDiVbpwG4fU0JcxQQyGQJgbi
+	 XIOyOgEily8i3nRajpj4D2M2ncDZPvH+O744kAmsjNjc/ukhqwNb101vHpcR/uJ4hx
+	 KPNcrzM5ckQEQ==
+From: SJ Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	sashiko-bot@kernel.org,
+	damon@lists.linux.dev,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] mm/damon/core: fix unconditionally skip last region
+Date: Sun, 30 Aug 2026 11:38:51 -0700
+Message-ID: <20260830183851.106396-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260830082948.18940-1-aethernet65535@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260828105018.2392383-1-congnt264@gmail.com> <20260828110142.725E61F000E9@smtp.kernel.org>
- <b9792be3-fcd6-468c-9149-7e33640ee167@roeck-us.net>
-In-Reply-To: <b9792be3-fcd6-468c-9149-7e33640ee167@roeck-us.net>
-From: =?UTF-8?B?Tmd1eeG7hW4gQ8O0bmc=?= <congnt264@gmail.com>
-Date: Sun, 30 Aug 2026 22:01:05 +0700
-X-Gm-Features: AcwNN1XkumPf31B2w75HyCXH4F80TLKJg296rVJgGwLqokfmQZs_182PytFZij8
-Message-ID: <CAJpJ=GtEXcxu+NCwVxx-N+MbX-LAuk7t_4Mm-_kfgUyxk__KOg@mail.gmail.com>
-Subject: Re: [PATCH] hwmon: (gpio-fan) fix pm_runtime imbalance for alarm-only fans
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 28, 2026 at 10:58=E2=80=AFPM Guenter Roeck <linux@roeck-us.net>=
- wrote:
->
-> On 8/28/26 04:01, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [High] Converting to `devm_pm_runtime_enable()` and placing it at the=
- end of `probe()` incorrectly reverses the teardown order, causing PM runti=
-me to be disabled too early. This leads to a regulator enable count leak an=
-d exposes a sysfs race condition on driver unbind.
+On Sun, 30 Aug 2026 16:29:46 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+
+> On Sun, 30 Aug 2026 06:47:07 +0000 sashiko-bot@kernel.org wrote:
+> 
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] A preexisting bug causes DAMOS scheme application to permanently stall for all subsequent targets if `quota->charge_target_from` points to a target that becomes invalid or loses all its regions.
 > > --
-> >
-> > commit 728a875c515df8244bd554b338f4f008d88b3b9e
-> > Author: Cong Nguyen <congnt264@gmail.com>
-> >
-> > hwmon: (gpio-fan) fix pm_runtime imbalance for alarm-only fans
-> >
-> > This commit changes the driver to use devm_pm_runtime_enable() during p=
-robe
-> > and removes the manual pm_runtime_disable() from gpio_fan_stop(). This =
-ensures
-> > PM runtime is automatically disabled on unbind, fixing an imbalance for
-> > alarm-only fans.
-> >
-> >> diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
-> >> index 084828e1e2817..0bd5561b7a405 100644
-> >> --- a/drivers/hwmon/gpio-fan.c
-> >> +++ b/drivers/hwmon/gpio-fan.c
-> >> @@ -524,8 +524,6 @@ static void gpio_fan_stop(void *data)
-> >>      mutex_lock(&fan_data->lock);
-> >>      set_fan_speed(data, 0);
-> >>      mutex_unlock(&fan_data->lock);
-> >> -
-> >> -    pm_runtime_disable(fan_data->dev);
-> >>   }
-> >>
-> >>   static int gpio_fan_probe(struct platform_device *pdev)
-> >> @@ -581,7 +579,9 @@ static int gpio_fan_probe(struct platform_device *=
-pdev)
-> >>      }
-> >>
-> >>      pm_runtime_set_suspended(&pdev->dev);
-> >> -    pm_runtime_enable(&pdev->dev);
-> >> +    err =3D devm_pm_runtime_enable(&pdev->dev);
-> >> +    if (err)
-> >> +            return err;
-> >
+> > 
+> > commit 630d73d512e66245612cbdfe5c49647aa6ed2874
+> > Author: Liew Rui Yan <aethernet65535@gmail.com>
+> > 
+> > mm/damon/core: fix unconditionally skip last region
+> > 
+> > This patch fixes an issue where the last region of a tracked target could
+> > be unconditionally skipped and reset without being processed when a scheme
+> > quota is exhausted. By modifying the reset logic, it ensures the last region
+> > is appropriately handled rather than always skipped.
+> > 
+> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > > index 644daf5a16560..fb76b530bbc68 100644
+> > > --- a/mm/damon/core.c
+> > > +++ b/mm/damon/core.c
+> > > @@ -2342,36 +2342,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
+> > >  {
+> > >  	struct damos_quota *quota = &s->quota;
+> > >  	unsigned long sz_to_skip;
+> > > +	bool skip = false;
+> > >  
+> > >  	/* Skip previously charged regions */
+> > >  	if (quota->charge_target_from) {
+> > >  		if (t != quota->charge_target_from)
+> > >  			return true;
+> > 
 > > [Severity: High]
-> > Does moving the pm_runtime_disable() action to the end of probe reverse=
- the
-> > teardown order in a way that breaks unbind?
-> >
-> > Because devm unwinds in LIFO order, registering devm_pm_runtime_enable(=
-) at
-> > the end of gpio_fan_probe() means pm_runtime_disable() will execute fir=
-st
-> > during unbind. The cleanup action for gpio_fan_stop() is registered
-> > earlier in probe via devm_add_action_or_reset(), so it will execute aft=
-er
-> > PM runtime has already been disabled.
-> >
-> > When gpio_fan_stop() calls set_fan_speed(..., 0), it invokes
-> > pm_runtime_put_sync(). Since PM runtime is already disabled, this will
-> > fail with -EACCES. This bypasses the runtime suspend callback, leaving =
-the
-> > hardware regulator permanently enabled and causing a regulator enable c=
-ount
-> > leak.
-> >
-> Seems to me that this will need a more comprehensive fix.
+> > This isn't a bug introduced by this patch, but does this logic cause all
+> > subsequent targets to permanently stall if the target currently stored in
+> > quota->charge_target_from becomes invalid?
+> > 
+> > If the monitored process dies before the next window, kdamond_apply_schemes()
+> > appears to bypass it without clearing the saved target:
+> > 
+> > mm/damon/core.c:kdamond_apply_schemes() {
+> >     ...
+> > 		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+> > 			continue;
+> > 		damos_apply_target(c, t, max_region_sz);
+> >     ...
+> > }
+> > 
+> > Because the target is skipped entirely, we never call damos_apply_target()
+> > and never reach the clearing mechanism inside damos_skip_charged_region().
+> > 
+> > When this happens, wouldn't all other valid targets continue to evaluate
+> > (t != quota->charge_target_from) as true here, permanently skipping scheme
+> > applications?
+> > 
+> > It appears a local user could reliably trigger this by setting a restrictive
+> > quota on a memory-intensive process they own, waiting for the quota to
+> > exhaust, and then terminating the process.
+> 
+> Thank you for pointing this out!  Yes, this can happens.
+> 
+> I just wrote a simple fix, this fix introduces damon_target->'bool
+> has_charged', which was added to prevent entering the
+> damon_target_remove_ref() (new function introduces by this fix) loop
+> every time an invalid target is encountered.  However, adding this field
+> may be unnecessary, or it might better to use something like 'unsigned
+> int charged_ref_count' instead.
+> 
+> '''
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 0c8b7ddef9ab..19d46d792858 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -93,6 +93,7 @@ struct damon_region {
+>  struct damon_target {
+>  	struct pid *pid;
+>  	bool obsolete;
+> +	bool has_charged;
 
-Confirmed, Sashiko's right. v1 registered devm_pm_runtime_enable() after
-gpio_fan_stop()'s devm action, so LIFO teardown ran pm_runtime_disable()
-first -- gpio_fan_stop()'s pm_runtime_put_sync() got -EACCES and never
-reached the regulator disable.
+I'd prefer not introducing new field.
 
-v2 moves devm_pm_runtime_enable() earlier so gpio_fan_stop() runs first
-again. Sending shortly.
+>  /* private: */
+>  	/* Number of monitoring target regions of this target. */
+>  	unsigned int nr_regions;
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a1656..6c14b2d4e9cd 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2630,6 +2630,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+>  		if (damos_quota_is_full(quota, c->min_region_sz)) {
+>  			quota->charge_target_from = t;
+>  			quota->charge_addr_from = r->ar.end;
+> +			t->has_charged = true;
+>  		}
+>  	}
+>  	if (s->action != DAMOS_STAT)
+> @@ -3216,6 +3217,26 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
+>  	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
+>  }
+>  
+> +static void damon_target_remove_ref(struct damon_ctx *c,
+> +					 struct damon_target *t)
+> +{
+> +	struct damos *s;
+> +
+> +	damon_for_each_scheme(s, c) {
+> +		struct damos_quota *quota = &s->quota;
+> +
+> +		if (!quota->charge_target_from)
+> +			continue;
+> +
+> +		if (quota->charge_target_from == t) {
+> +			quota->charge_target_from = NULL;
+> +			quota->charge_addr_from = 0;
+> +		}
+> +	}
+> +
+> +	t->has_charged = false;
+> +}
+> +
+>  static void kdamond_apply_schemes(struct damon_ctx *c)
+>  {
+>  	struct damon_target *t;
+> @@ -3241,8 +3262,11 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+>  	max_region_sz = damon_region_sz_limit(c);
+>  	mutex_lock(&c->walk_control_lock);
+>  	damon_for_each_target(t, c) {
+> -		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+> +		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
+> +			if (t->has_charged)
+> +				damon_target_remove_ref(c, t);
+>  			continue;
+> +		}
+>  		damos_apply_target(c, t, max_region_sz);
+>  	}
 
-thanks,
-Cong
+I think damos_adjust_quota() is a better place to do this.  For example,
 
->
-> Thanks,
-> Guenter
->
-> >>      /* If current GPIO state is active, mark RPM as active as well */
-> >>      if (fan_data->speed_index > 0) {
-> >>              int ret;
-> >
->
+'''
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3530,6 +3530,22 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+        trace_damos_esz(cidx, sidx, quota->esz);
+ }
+
++static void damos_reset_invalid_charge_target_from(struct damos_quota *quota,
++               struct damon_ctx *c)
++{
++       struct damon_target *t;
++
++       t = quota->charge_target_from;
++       if (!t)
++               return;
++       if (!c->ops.target_valid)
++               return;
++       if (c->ops.target_valid(t))
++               return;
++       quota->charge_target_from = NULL;
++       quota->charge_addr_from = 0;
++}
++
+ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ {
+        struct damos_quota *quota = &s->quota;
+@@ -3570,6 +3586,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+                        damos_trace_esz(c, s, quota);
+        }
+
++       damos_reset_invalid_charge_target_from(quota, c);
++
+        if (!c->ops.get_scheme_score)
+                return;
+'''
+
+> '''
+> 
+> SJ, when should this bug be fixed?  Along with this patch, or before
+> this patch?
+
+Whenever the fix is ready.  If you don't mind, I will take this.
+
+
+Thanks,
+SJ
+
+[...]
