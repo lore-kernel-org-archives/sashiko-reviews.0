@@ -1,224 +1,194 @@
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF07E1D5AD4
-	for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 00:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FA8233920;
+	Sun, 30 Aug 2026 02:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788051097; cv=none; b=C0SG7hlvL+EMxSw9GepbQz8xYJ9tDPeglNVuZp65KeHkSFaSUvM0hqZMIXaZiZsKCfvCJgEN25Fme2snukjafOzIWlVCt8/6wc1cUmLCTsgv4eaW4yyUTdjeWj6CE3gwcu2zrOf4C8XLxNqkJc6JNEQbHwymkbIsTemk3UUCtmU=
+	t=1788055392; cv=none; b=HrAxua4dxOFLWRohWbFMD0y2nZs16MWPk7Va7qeki9uXvvna/4ewzsXoLoL/2kSDUpP7Jp7IegD03uOhEciKgWSrQ0k19prsUNPPW2bAOcEOmxtEp/7zfBgDORzOyxz57uAkfPCOiN2UeHtY1w6dIzY95qKMP2kRWvFbnMEpgsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788051097; c=relaxed/simple;
-	bh=zW6crNdoSe3nbWW5dWWo7jURAfz7zLhxzzJoPHkO0Ic=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z81i8YG3q1R4mvjH7QxaCoQCahTifEtTGccxMHLGB2YK6liAn4UquzunwmHE9U429U1v22oIax/sJn9a/1j6NblPk3j9YlrKgL2JAhbwTYvs2JGqnho9jRsjSHLnfccYsgWEbv98qDTpmTgW43/5LgrWQcRMHdp6PiiVnsERGSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=xeoNp/IN; arc=none smtp.client-ip=216.40.44.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1788055392; c=relaxed/simple;
+	bh=VoNfsu5VvErQPBCPoMqHdcWjY9UjqGyv1ZsdN5gf7KI=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=dPcWEtT1NXh6+NrKhtMslJKvzeEJiWDq++szOSLkMKeAOAeKDHh27pp5kBb1mWOx/ydpuwoC5sLT2e7SyxsAD5+D/ihU6eiZGGXzgc76mMYuj7sh4DPMulgJSCgOWdKNGGdI4jN+ShC9EjOLyCjyYo0e5z4KBKzz1cTHwW1AN5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fxyoR8bw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="xeoNp/IN"
-Received: from omf07.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay07.hostedemail.com (Postfix) with ESMTP id 7CC9D160209;
-	Sun, 30 Aug 2026 00:51:33 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf07.hostedemail.com (Postfix) with ESMTPA id E2C3B2002E;
-	Sun, 30 Aug 2026 00:51:31 +0000 (UTC)
-Date: Sat, 29 Aug 2026 20:51:29 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] ftrace: Take trace_array reference before accessing
- its ftrace_ops
-Message-ID: <20260829205129.21556287@robin>
-In-Reply-To: <20260829025528.49A831F000E9@smtp.kernel.org>
-References: <20260828223901.29e26edb@robin>
-	<20260829025528.49A831F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fxyoR8bw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CAA1F000E9;
+	Sun, 30 Aug 2026 02:03:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788055390;
+	bh=AGPn+JSeEy6Wu4RHz3HXB53TjkIxBZthZYcPrGoyEhY=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=fxyoR8bwzhcVClCyk67AWxp4xmDByrCifujOAFkczYby/MeGg8gQ/jTYeLWyrwVB0
+	 5t4hPovU+ohloucCDDiiJCytKJv065+EtxPhqudckfej1c53lEsWzz/SVbfoSz6Hbm
+	 EY2MdTQP5d6FVCcIWE2zshgP/vpTKaUdtiWfu9bEfhwo9sH+qmbFAgG8/jaO8Kfzpo
+	 Vea4HzZLTHs+GgPvd2kx7D28JsNjo4CiEger1tQmEsondEOqIjsUgpCXXi5aqnh8sB
+	 t0KafscUon70meUNvxSx4pPELty/lUbH4ywuEv8Uu8ugWVX4cW09SJ82Bh6N5PnDQQ
+	 j4fTLGHJpA4jg==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: E2C3B2002E
-X-Stat-Signature: jfhosd4q6t39yd54i58nfqypxczdgjuc
-X-Rspamd-Server: rspamout03
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+8OQ7RM4ZrJKJ5oasfvnOOD+fp9d3eKDk=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=XfUPGPeY5Ofsz5f2snPBvKI87ji6KptMmOdpD1Q2RIk=; b=xeoNp/INE7uOvw9ssmwCDUBBj+uU4Gn0qcU6ErT4UOiVMKL2d5xJx8bRNk3/yf28P6jJL2WTNba+96PGOyp9eV556Mty28K6Txut1dTkA6Oyn29saC2lMWpA+IIR6i7F1PECfyDHr/cGV9fmDEf8Dm1onhoR3XLuOjLqv4zCGS8=
-X-HE-Tag: 1788051091-310000
-X-HE-Meta: U2FsdGVkX18hIkuW4gDuufvgW5TtUd4gnc6Wm8ZDz/AzzmfospIKTL2WwPiQJgLBWjcRoQeHP9f3ihsMqSBccb64VznSfefKMD89deXafzsOVzofhVIcD8idJlzKyyRoCP9ICNYxW5j2uzXhR1iRMj1NLW9wrH0EpNWLqYhDnRtG0u/tSXxTxi2ZgWToZRAgbi6zKTwPfkbahvDgzFW47jhRYFPm4kUie42FGneyUp1K15NH4WOda7kiG8/fEAAoljlB93QtOqUKXSnGMmq/Mf2kGTyR40l4/bV3oqON79vKZixMjqR+yQlOdsXw61gmuLAgsCaZXQssbeY7NWBUOa6bh9wVB+S+xZbhWmpHlngtDf8Z8B0YhU7RPaoX4KpktwbQAUR77WIgZMBlsFSLebf7D57q/XTReIhfj6Qt5P8=
+Subject: Re: [PATCH v4 03/10] iio: adc: add the ti-ads1262 driver
+From: Jonathan Cameron <jic23@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Kurt Borja <kuurtb@gmail.com>, conor+dt@kernel.org, robh@kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20260828065211.C05B11F00A3F@smtp.kernel.org>
+References: <20260828-ads126x-v4-0-1dc27e9c0260@gmail.com>
+ <20260828-ads126x-v4-3-1dc27e9c0260@gmail.com>
+ <20260828065211.C05B11F00A3F@smtp.kernel.org>
+Date: Sun, 30 Aug 2026 03:02:55 +0100
+Message-Id: <178805537532.2788519.12150005140246669583.b4-reply@b4>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4199;
+ i=jonathan.cameron@oss.qualcomm.com; h=from:subject:message-id;
+ bh=VoNfsu5VvErQPBCPoMqHdcWjY9UjqGyv1ZsdN5gf7KI=;
+ b=owEBfwKA/ZANAwAKAVSFNJnE9BaIAcsmYgBqk49QQj/K4mdBdLg+PAk09Fa2JBiYkSGXPZxcI
+ a/Q9Pq8aUqJAkUEAAEKAC8WIQRuKWazh4QGUpEmgbFUhTSZxPQWiAUCapOPUBEcamljMjNAa2Vy
+ bmVsLm9yZwAKCRBUhTSZxPQWiAIKD/9M8vNXYNfs5hiLNQv0iI0OQaUm0wazfwqRBslScbEjCTt
+ V4TXo/5qqj0ayKAZddeSO34+s3k6GIQ0RDSAvUYOctCdnxEsIqXPntHlYtTMWja39A/Mgji7g+W
+ RR9oE//2vuYAMbasIyVfZYJJbuv416rfhsC75QYuhVKHoXjgpoczEIQhIg5Ceh+cJr+ZCnvuPwq
+ h4CN9uwZ4CZSnjgQMJdWV+v17ZCeIilur+KCgtDsHxsWCSEh3b7hFbBcpuIpzoybamIEatpMeYi
+ /op++FbUq9TIbpnD5ukT5ytkRBhn4tvRwSSJXq9g4CBqNfF6vshwjKcEwVak/8WpVclWaoV11P5
+ Tf6f02hb33m3i4UwP78e+rUwMRR6D5lVGekBz0vL45w5x+/DArIpoWBu/6sEZ1A2NbW5yKPv8wh
+ GHa0pLHK1EueUadFz3F++/29RFjsqpEf4z3t5ZEzpEkK7QspPHSb8m78u9hdHEufFjt1EhZrWgi
+ G7aTWYK69yWbq3i8mOeXBIXGtBtR4gUlXpnHeM5Dmc9+ZwecQuub6ovbEOogRnD/WAaQxObs5j8
+ dit6duNacYzhJqFJyXJRr5MY3dUez0fdRK7SrGOlUNEJuuRiafrHnYm3TlSkvYdf3bC5mPR8gLo
+ DBkHfDEcYaRlvjeMiQlDhlmU1nz3sZ7Xk/Ie+3w==
+X-Developer-Key: i=jonathan.cameron@oss.qualcomm.com; a=openpgp;
+ fpr=6E2966B387840652912681B154853499C4F41688
 
-On Sat, 29 Aug 2026 02:55:27 +0000
-sashiko-bot@kernel.org wrote:
+> commit 6093db1ff45e9e897720bc6b278550ffbef67e85
+> Author: Kurt Borja <kuurtb@gmail.com>
+> 
+> iio: adc: add the ti-ads1262 driver
+> 
+> Add the ti-ads1262 driver with initial support for the primary ADC (ADC1).
+> Various features such as accurate timeout delays, per-channel reference
+> sources, scale, offset, and diagnostics are intentionally left out for
+> future support.
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+One particularly interesting point from sashiko about regmap debugfs.
+
 > 
-> New issues:
-> - [High] ABA problem in trace_array lookup allows a file descriptor to attach to a newly created trace instance instead of failing.
+> > diff --git a/drivers/iio/adc/ti-ads1262.c b/drivers/iio/adc/ti-ads1262.c
+> > new file mode 100644
+> > --- /dev/null
+> > +++ b/drivers/iio/adc/ti-ads1262.c
 > 
-> Pre-existing issues:
-> - [High] If `allocate_fgraph_ops` fails in `ftrace_create_function_files`, `tr->ops` is freed but not set to `NULL`. During instance removal, this dangling pointer causes a Use-After-Free and Double Free.
-> - [High] Concurrent lockless calls to `ftrace_ops_init` can lead to double `mutex_init` and list corruption.
-> --
-> 
-> commit f37f9bc71afd70bff68b27fdd3afcdd0c07c7ae7
-> Author: Steven Rostedt <rostedt@goodmis.org>
-> 
-> ftrace: Take trace_array reference before accessing its ftrace_ops
-> 
-> The trace instance files set_ftrace_filter and set_ftrace_notrace was
-> updated to work with specific trace instances (trace_arrays). This patch
-> changes the files to pass the trace_array as the file private data,
-> allowing the trace_array reference to be incremented before touching
-> the ftrace_ops.
-> 
-> Fixes: 591dffdade9f0 ("ftrace: Allow for function tracing instance to filter functions")
-> Closes: https://lore.kernel.org/all/apGORjltZgAiAYHT@gmail.com/
-> 
-> > diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-> > index f9d80c7bd9f16..c7cf36f2dd7be 100644
-> > --- a/kernel/trace/ftrace.c
-> > +++ b/kernel/trace/ftrace.c  
-> [ ... ]
-> > @@ -4691,26 +4692,45 @@ ftrace_avail_addrs_open(struct inode *inode, struct file *file)  
-> [ ... ]
-> >  int
-> > -ftrace_regex_open(struct ftrace_ops *ops, int flag,
-> > +ftrace_regex_open(struct trace_array *tr, struct ftrace_ops *ops, int flag,
-> >  		  struct inode *inode, struct file *file)
-> >  {  
-> [ ... ]
-> > +	if (!ops)
-> > +		ops = tr->ops;
+
+> > +static int ads1262_channel_read(struct iio_dev *indio_dev,
+> > +				const struct iio_chan_spec *spec, __be32 *val)
+> > +{
+> > +	struct ads1262 *st = iio_priv(indio_dev);
+> > +	int ret;
 > > +
-> > +	if (WARN_ON_ONCE(!ops))
-> > +		goto out;
+> > +	IIO_DEV_ACQUIRE_DIRECT_MODE(indio_dev, claim);
+> > +	if (IIO_DEV_ACQUIRE_FAILED(claim))
+> > +		return -EBUSY;
 > > +
-> > +	ftrace_ops_init(ops);  
+> > +	ret = ads1262_set_runmode(st, ADS1262_RUNMODE_PULSE);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = ads1262_channel_enable(st, spec);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	reinit_completion(&st->drdy);
+> > +
+> > +	ret = ads1262_dev_start_one(st);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = ads1262_wait_for_conversion(st);
+> > +	if (ret)
+> > +		return ret;
 > 
-> [Severity: High]
-> This is a pre-existing issue, but can concurrent lockless calls to
-> ftrace_ops_init() lead to double mutex initialization?
+> [Severity: Medium]
+> Does this error path leave the hardware running if the wait is interrupted?
 > 
-> In ftrace_regex_open(), this function is called locklessly in the VFS open
-> path. Inside ftrace_ops_init(), it checks if the initialized flag is set:
+> If ads1262_wait_for_conversion() returns an error (like -ERESTARTSYS from
+> a signal), the driver exits immediately without stopping the hardware. If a
+> subsequent read calls reinit_completion(&st->drdy), but the abandoned
+> hardware conversion finishes and asserts the DRDY interrupt right after,
+> could the new read prematurely fetch stale data from the old conversion?
 > 
-> kernel/trace/ftrace.c:ftrace_ops_init() {
->     if (!(ops->flags & FTRACE_OPS_FL_INITIALIZED)) {
->         mutex_init(&ops->local_hash.regex_lock);
->         INIT_LIST_HEAD(&ops->subop_list);
->         ops->func_hash = &ops->local_hash;
->         ops->flags |= FTRACE_OPS_FL_INITIALIZED;
->     }
-> }
-> 
-> If multiple threads concurrently open the filter file on a newly created
-> trace instance, both could observe the flag as unset.
-> 
-> Could one thread lock the newly initialized mutex just as the second thread
-> calls mutex_init() on it, potentially corrupting the mutex wait list?
+> Should this path ensure the hardware is stopped and synchronized with the
+> interrupt handler on timeout or interrupt?
 
-Hmm, yeah this probably needs some locking to synchronize.
+For me this is obscure enough I'm not sure we care about stale data.
 
 > 
 > [ ... ]
-> > @@ -4788,21 +4808,19 @@ ftrace_regex_open(struct ftrace_ops *ops, int flag,
-> >  static int
-> >  ftrace_filter_open(struct inode *inode, struct file *file)
-> >  {
-> > -	struct ftrace_ops *ops = inode->i_private;
-> > +	struct trace_array *tr = inode->i_private;
-> >  
-> > -	/* Checks for tracefs lockdown */
-> > -	return ftrace_regex_open(ops,
-> > -			FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
-> > -			inode, file);
-> > +	return ftrace_regex_open(tr, NULL,
-> > +				 FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
-> > +				 inode, file);  
 > 
-> [Severity: High]
-> Does this lockless trace_array pointer retrieval introduce an ABA problem?
+> > +static int ads1262_dev_configure(struct ads1262 *st)
+> > +{
+> > +	struct device *dev = &st->spi->dev;
+> > +	int id, ret;
+> > +
+> > +	ret = ads1262_dev_reset(st);
+> > +	if (ret)
+> > +		return dev_err_probe(dev, ret, "failed to reset device\n");
+> > +
+> > +	guard(mutex)(&st->xfer_lock);
+> > +
+> > +	ret = regmap_read(st->regmap, ADS1262_ID_REG, &id);
 > 
-> If a thread pauses after reading tr from inode->i_private, a concurrent
-> instance removal could free the original trace_array. If a subsequent mkdir
-> allocates a new trace instance at the exact same memory address, the paused
-> thread would resume with the old address.
+> [Severity: Low]
+> Is the type of id correct here?
 > 
-> When ftrace_regex_open() calls tracing_check_open_get_tr(tr), it ultimately
-> validates the pointer in trace_array_get() by comparing the raw pointer
-> against the global list:
-> 
-> kernel/trace/trace.c:trace_array_get() {
->     ...
->     list_for_each_entry(this_tr, &ftrace_trace_arrays, list) {
->         if (tr == this_tr) {
->             return __trace_array_get(tr);
->         }
->     }
-> }
-> 
-> Because the new instance was allocated at the same address, this comparison
-> would succeed, incorrectly attaching the file descriptor to the new trace
-> instance. 
-> 
-> Could this lead to cross-instance state corruption?
+> The regmap_read() API expects an unsigned int * for its third argument, but
+> id is declared as an int. Could this trigger a -Wpointer-sign compiler
+> warning?
 
-The would at most open the wrong file in the new instance that was
-meant for the old instance. It may confuse the administrator doing the
-open, but if they are also deleting and creating instances (which are
-very big operations that do a lot) and opening one of the files that
-they are deleting, then we know they are likely already confused!
-
-As long as it doesn't crash the kernel, this side effect is an issue
-for the administrator to not do stupid things or they may get stupid
-results.
-
+This one is minor but good to tidy up.
 
 > 
-> >  }  
 > [ ... ]
-> > diff --git a/kernel/trace/trace_functions.c b/kernel/trace/trace_functions.c
-> > index cd37f20137581..c879d43a5fbb2 100644
-> > --- a/kernel/trace/trace_functions.c
-> > +++ b/kernel/trace/trace_functions.c
-> > @@ -101,7 +101,7 @@ int ftrace_create_function_files(struct trace_array *tr,
-> >  		return ret;
-> >  	}
-> >  
-> > -	ftrace_create_filter_files(tr->ops, parent);
-> > +	ftrace_create_filter_files(tr, parent);
-> >  
-> >  	return 0;
-> >  }  
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does a failure in allocate_fgraph_ops()
-> leave a dangling tr->ops pointer?
+> > +static const struct regmap_config ads1262_regmap_config = {
+> > +	.reg_bits = 8,
+> > +	.val_bits = 8,
+> > +	.writeable_reg = ads1262_writeable_reg,
+> > +	.readable_reg = ads1262_readable_reg,
+> > +	.volatile_reg = ads1262_volatile_reg,
+> > +	.reg_defaults = ads1262_reg_defaults,
+> > +	.num_reg_defaults = ARRAY_SIZE(ads1262_reg_defaults),
+> > +	.max_register = ADS1262_ADC2FSC1_REG,
+> > +	.can_sleep = true,
+> > +	.cache_type = REGCACHE_MAPLE,
+> > +};
 > 
-> Just above this hunk in ftrace_create_function_files(), if
-> allocate_fgraph_ops() fails, it frees tr->ops but doesn't set it to NULL:
+> [ ... ]
 > 
-> kernel/trace/trace_functions.c:ftrace_create_function_files() {
->     ret = allocate_fgraph_ops(tr, tr->ops);
->     if (ret) {
->         kfree(tr->ops);
->         return ret;
->     }
-> }
+> > +static int ads1262_regmap_read(void *context, const void *reg_buf,
+> > +			       size_t reg_size, void *val_buf, size_t val_size)
+> > +{
+> > +	struct ads1262 *st = context;
+> > +	u8 tx[2];
+> > +
+> > +	lockdep_assert_held(&st->xfer_lock);
 > 
-> Since tracefs setup ignores the error, the instance creation succeeds but
-> leaves a dangling pointer inside the active trace_array.
+> [Severity: Medium]
+> Will this lockdep assertion fail if the register is read via debugfs?
 > 
-> Later, when the instance is removed, ftrace_destroy_function_files() will call
-> ftrace_destroy_filter_files(tr->ops) and ftrace_free_ftrace_ops(tr), which might
-> result in a use-after-free and a double free. 
+> Because ads1262_regmap_config does not set disable_locking = true and does
+> not provide custom lock/unlock callbacks, regmap uses its own internal
+> mutex. When regmap's debugfs interface is read, the regmap core acquires
+> its internal mutex and calls the driver's ads1262_regmap_read() callback
+> without holding st->xfer_lock.
 > 
-> Should tr->ops be set to NULL after kfree(tr->ops)?
-> 
+> Could this bypass the xfer_lock, triggering the lockdep splat and allowing
+> debugfs SPI operations to interleave with driver-initiated SPI transactions?
 
-Probably, will investigate.
+This is a corner I'd not thought about in adding lockdep markings to these
+functions.  Up to you how you want to fix it.
 
--- Steve
 
