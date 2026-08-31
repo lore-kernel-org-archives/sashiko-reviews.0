@@ -1,244 +1,572 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013053.outbound.protection.outlook.com [40.107.159.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CF139FCD8;
-	Mon, 31 Aug 2026 14:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788188139; cv=fail; b=b9BVU5IclN3Lkhb/muxKdMM/fJguuG+hQbaUfQsnmU66rH/FCaRg26i4/rDPzg9GKM6Ak/m26Q+Az9xPuYR4Y74iCJOPNA/07nze/UwIrXnteK2igTIdlCsulw4xIoI5rnUC/IssfTyCO5cl0IYMFuO0+91+5xQzRMB2wBbKwV0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788188139; c=relaxed/simple;
-	bh=gOgRgjf8LHe3zANsdDtLee1I2pyu5iiwwch/MG/t6Q8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=as9OKRnvGtFIJEQFGXCVfbRypkv99FlKDztLNu5z6vzxn0aFk/CzbxJ5GpY6RxDZAr3dYcltLKHaK3OHsZdPwc17z7FkmGlzHt29jsOKbU23jXXbCh+jPFGU8MV+AC8n9xy/uZ6qFdDE+AbQyWDr+DFfwg3jscggn2MhzBJa8QA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=MZWISRim; arc=fail smtp.client-ip=40.107.159.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B4945A2BB
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 15:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788188611; cv=none; b=pcf8cmb2Evp+45jBcbzGYOmTst3Kalrw7q/1UHlv7B2A+e2Yd7RGVGy/7jzFynZkcyZY7wO121CIiebpXPt6cd7ccnsYGy78GJeyfR43zgIVOivSPeTMbGbeSpoC5ENhuxZbTY/8kwGcY9kGKuWNPotwLXbZSJk6oW6sjLExwBI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788188611; c=relaxed/simple;
+	bh=B+vAhdP9jHPlmTdF6Nwg6XSnuL073f88xMrD7YEyGLA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aBNpEKHPmRr37iuzHOw8lHEGKkdXxxgFdU2q+XsjsLt5Idr4AJE8NJuKmTvxH8a6I3FoUqqm7XNzfuo0iBRDtUXak9VwdX1KYl3tefikuMkdNYVJe58+wD7ZE6uZdZ+HA7vmLQIpAwXbF2xjLdcqronz6IqAW73frKT5hMnqcpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BM266owM; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="MZWISRim"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lZ5KqW3ZhBtNEjiUO72QepbbYauZoUq6oFcosQS7HFyzQICEUU64ZRoL9IwJsW0vElaTuzj0a2gHTPscMOhqK3AoVpLE9kKso5Hkc2nzAtm7++85HDikJ81Vw7fD318hPIBaG6ftnHx1z753iFeMwZhRpZQuiojgzJDoKoy1GtbOoC0wDg7hhUQdulnjytbTd38dp34SxH8+CqCGuGiSnXWIZeYKb1YeD1GcLFvG1eVPHZzwmcJ1M4QXqE/5teDnAAFbbsZQTT7KSUGe63DhajNotuiDpnTZsLRy/pv1OMYQWJOjZpcUFfA8mjpfkTtYcFXEljgJXzxy9uJcyXNnVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KMB8AiJAAjc1F0KweYf/U+g69nZfsck0QFelr5Qts0k=;
- b=eKydWdMYT51yME4S8dgxKUQakN9SkBOGH80LknLSO5VUzVLf4z8Qwaz3QL1gAGQwwewo/5RC2xEkpnlAqG/OLfNcT7YV9FcoEy35KwE5n4Z5WEBe7f5DeGzvLQpWZ1bRCOXpqeOiUt9FGsTKnCePDSpSv8e3SFggHQQe/p4WoSbOC6uCHV0o6prdRUnR72fsOSspAvizmjTPHLhcRUf0FpbTdwKT89yI+rO5JuJBP4uGDxUZO9wKhDERxrgu61028bAHvBHsf6jWibmj/5l6qQDF2KY3OatioiAbdO9dc4TOZURa54A3ZTknlpz6Jt9LkmG2VF0OdwTtfXW7VvvT6w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KMB8AiJAAjc1F0KweYf/U+g69nZfsck0QFelr5Qts0k=;
- b=MZWISRimFVqdV72+Bw1RGfglfE7RCGvNytqNpIG+QGCOJVwZR2i6JVQFFpc1KplwMvNWFqignTXjcPQpvf/fGvRi8nL+lNT+9dGn7kD58IJ49gBL1lrZG86Ti4gZAxhDzF9uc8bwuEbpu73p1qYmqHTX+wlg97hZ6scIQ8Utn35DF4DdWPhI7aVC0jFKygFTM8og+7zhF3XcYEE9fxIGFVt1HlqNhe3K3ct9q9vYxn3FQnQKaIgIlATwcyr4l2lmhJ/MaoGdBufy4OCenjMXDb0BfmI2mKmLvUyi+HJx/EdJsf+6yVl+d7TJFGSUA70gQRvjq9qVtlimPGNyhNDKyw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DU0PR04MB9659.eurprd04.prod.outlook.com (2603:10a6:10:320::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 14:55:33 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 14:55:33 +0000
-Date: Mon, 31 Aug 2026 09:55:23 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Stefan Wahren <wahrenst@gmx.net>
-Cc: sashiko-reviews@lists.linux.dev, Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oleksij Rempel <o.rempel@pengutronix.de>, conor+dt@kernel.org,
-	olteanv@gmail.com, vkoul@kernel.org, devicetree@vger.kernel.org,
-	linux-phy@lists.infradead.org, Frank.Li@kernel.org, robh@kernel.org,
-	neil.armstrong@linaro.org, Oliver Hartkopp <socketcan@hartkopp.net>,
-	linux-can@vger.kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH V2 3/3] arm64: dts: freescale: Add chargebyte Charge
- Control Y
-Message-ID: <apWV22qLzOLOux7N@SMW015318>
-References: <20260831083539.8287-1-wahrenst@gmx.net>
- <20260831083539.8287-4-wahrenst@gmx.net>
- <20260831090445.0F50B1F000E9@smtp.kernel.org>
- <ceccb248-8801-402b-b147-916eb9ed3883@gmx.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ceccb248-8801-402b-b147-916eb9ed3883@gmx.net>
-X-ClientProxiedBy: PH1PEPF000132FB.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:518:1::2c) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BM266owM"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-482e2fdf5abso1653448f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 08:03:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788188607; x=1788793407; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=owVS0SJzm5gU3Z17acnnop852XewDdkB8HGSaazL4pk=;
+        b=BM266owMBNTim8gy6JEaG0zYHLt2Ky02msqKGvex+ZS5+61EQzTU2b9USzCOGQ6Lsw
+         AnQWkcgPA+IEZ1bOctHabB9NG60KVrzptNULSjQozcB172ydJ+DUgt/yHNoJtUDZBuqU
+         V2m+Nlf/eMOENJVKsPFvBKwdt+c6a5ig1tqpkcOR06ZcHEs2B1u+X/3/D2H6pEkP/wef
+         FwLQqrOaAWiwuWg4ezHfLlf6SpZWHPlEocyCpp4ygoFoAA5ZpMyeVRhVn0lNObu1TJv5
+         PG+WzBAwaDhmHAhO/6UjVzZvOlBzf5fqHHqo9LMYXclHr836QmgnxC21+KF5OacqHS+U
+         BT0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788188607; x=1788793407;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=owVS0SJzm5gU3Z17acnnop852XewDdkB8HGSaazL4pk=;
+        b=dMyG+dM90xLQ30kPemNDlwZGCyPqACSOo/zaWgLLHFQph1djonqYBkyWl3R83QS8SN
+         AOYsIbbPPrHPZJEwtRwgWT31UNiY99cmRUubTz4dueUQqbcG+kx94QNpcKvXvi4On80S
+         NIMH0/pNdFuyRJ7UhTo/Qyo114ms98Xz7kHT7H8aXiDw4gH+Io5E0I1vOgR36CjOQjYu
+         214te9SMmB8dg1WM9znmtggixlROUZCIeGCT1Wy9MZQwSsMk8IECQepnuuO7WB3YPo1z
+         rxj0SjOYrsB9TihybMxDJMeR+JrGAwV6lxYm0r2tzG/zRFeKGGiofHT2g7LKj2VclOHB
+         GNtg==
+X-Forwarded-Encrypted: i=1; AKwUvBy1m9cBdEczfIVUUiUI3g2miw10FJM8XgjIply+BWh2a4gR1JulRrw094ljuYhNNl0umINKpg2m7dM2uzxkK/U=@lists.linux.dev
+X-Gm-Message-State: AFuF++lw5aX3Rc3+ASwbKQozPxqotqXQXYN5nNgP+PSXrbJ1alZ+q5BR
+	7ywAOvq8EZHtndOWzMGPEdyXGQTsQh9PirC/19lPRlyj3quhDctsufEM
+X-Gm-Gg: AYBFou0ue+rEcMUYy39AfTpZRFCAbN66HY/7eKJuJXMUCQuqsEuQJip2Rl1ujLjiiyN
+	OEHr9VRfE/WK/ZQXRLz81wcMklVNurjt2V3A6+v+SCyHVjvTReR2LxBozO/YrlZ2CFrGQMp2/ny
+	x6mDYa3ilXWCen/LOys6I92Qq3l9Mw+h1IFepQxE+bylWYnAKEXV26PLcZfzT+8/MIRHoC41aZz
+	AFrrQWWVHzHihNBZTVOvyTQXR2xfWUbk15sY1j85IxdjEgv0meM+GmyrGTtBv4x80oGp3ySgCRz
+	037ANi9An6LWIaSrim1h6Sz/x/aiNXx3BUR92iDtuDDbpH3aac+nepkILOoGrL29ZtmsSsQiwx3
+	CB2Hmfq1duGIXcJSFHD0yoXqXFu+blpkkg+Z0tPTwwXw+2yrd3z7xDhyciEpETldJSDq9YdO4Xb
+	HltoD4Q2Ap81mmmNbqK90YwrPn9xwsLzKNyhT3AXxEU8aXesxM6w/hDdkTIlM5gupGAOasgn4kB
+	Czf8wIrOkZSzLjJZdlz3IiepO4KKwbFrrHkYxSOkH13aYfAPJluAHs=
+X-Received: by 2002:a05:6000:2512:b0:484:3f46:12f6 with SMTP id ffacd0b85a97d-4843f4615f2mr5572192f8f.19.1788188606127;
+        Mon, 31 Aug 2026 08:03:26 -0700 (PDT)
+Received: from 1Z10 ([78.213.92.213])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482fbb2794dsm24149228f8f.25.2026.08.31.08.03.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2026 08:03:25 -0700 (PDT)
+From: Maurizio Casciano <mauriziocasciano7@gmail.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	linux-input@vger.kernel.org
+Cc: David Heidelberg <david@ixit.cz>,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Maurizio Casciano <mauriziocasciano7@gmail.com>,
+	Sashiko AI review <sashiko-bot@kernel.org>
+Subject: [PATCH v7] Input: drv260x: Fix suspend and resume sequencing
+Date: Mon, 31 Aug 2026 17:03:23 +0200
+Message-ID: <20260831150323.2922792-1-mauriziocasciano7@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831082820.063D81F00A3D@smtp.kernel.org>
+References: <20260831082820.063D81F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU0PR04MB9659:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8c70b070-1854-4f24-3945-08df076fe815
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|7416014|376014|1800799024|19092799006|6133799003|22082099003|18002099003|56012099006|3023799007|4143699003|11063799006|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	XVD2cinQWuQVGXU/hw0n2gQPNB0wU7VnhicUCtQMhFkbwrhzGHUNxksozuwPkVTlTO3yAUr+YDgbzunfkHVFNvXiSyhIfgaFmqPUbEvCaD/rL44cOILjyc6Twy5OkI1+ZrPWcAHR0x83cqMAXE0GiIS8q0PkWS7NI/1+sGg8VDiiDyawln6Zy2eGAi9+ww6zviX3mxS/ekpiVDBo1jkYIjXuVxG56QWeIg0sVOzd34Tl4kNRpGdtpGe1TVjBlUyvw909FAXnLFHFBDD83YssdbS/EM1fB2XyscuGV0WNZj1WJPw9c3GXf2075aHXAXRiPrJM9EwuGQ78UIsPMalFdmT4l3ouopxFQH6kTHMDi56GW2e2JV9c09zvZiYlXA+QxI4bqyZfaH3FOCHjZAVSEYdmt+wdN9m1qaqtosAy/MqEZcx+4Igm/uXpEAOe0V2obaZP84a8bVWMXJ/I4foxvSci277Remqq1cIYYoAZizhg0h+sJZWiRScnWtyg1SUw7ywGYsqGA2bYk0nb50dcL4Xi57KOCQuuzgJPbO+Nrux3qAywiwFRy80fPxijAjuzAFcS1cGCk1/WaSnI2xmQ/z5K7lFRZQ8IDUOR5AkFdje2EE/gTkKMse+iu8/3mN2qLk9/2N6fIjuZBv9zL44xguFJMKrr+rayfSVcDEcwhCY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(7416014)(376014)(1800799024)(19092799006)(6133799003)(22082099003)(18002099003)(56012099006)(3023799007)(4143699003)(11063799006)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Vq1kqUQmR5P8GC8zojMbLhIP7SmlOrNmhmRR8UkiKouQRZnW3Ffx0aEGKEOY?=
- =?us-ascii?Q?x5esPI10VMxYNjF2tmdloeknl83k7BUntfgp2S+K0IDMgFQjT5B791fQbMrS?=
- =?us-ascii?Q?FaOragU5OEffIOh5HvCcNCq5OOlhriEJ2gqzeGgnCw1WSN1gIv5dbC778JZV?=
- =?us-ascii?Q?4d9WY0mCdrTcCmPArkBfWbCtHLifgs+7ZC/YPj53NW6Mj5dtvqbHM3OFqS9w?=
- =?us-ascii?Q?CLZ9nxH8A/3e6/nwZV/oK9N6XQH8C9AgIKxEa6Muw2V4rGGx8zW+BF/zZEfk?=
- =?us-ascii?Q?gRdwcMyDhlb76vCxyl1Ntwqf3g2pnODIw2WtDfcmNzG/GUOE3gNWD+OUzk/1?=
- =?us-ascii?Q?hyVOHMkovF5rz5b7R466+9SUOGhXLk645mfx+hWtO72Soz9QqqADeEucrPrb?=
- =?us-ascii?Q?5key8D17/a6uHT6G65Ll/X17WaxZKvXPzB+yW6bE/4fe352uLLDWBIRNCyVK?=
- =?us-ascii?Q?biF4bkEeiyvL5F8GVrk5obMu4vdInUjAZ5xYNY2AOq6eezs4Gjqe3TkWGW00?=
- =?us-ascii?Q?sZul4d4gwUOncLdOSTI+ss7mX3kqKuf5bfvYaxXBVNZhZML7dn+cdoRJjaop?=
- =?us-ascii?Q?cM0M5b08TtbXV6CdrSY74XmtWCV1NX4amkaFxwgJpScHKYlrFaI10DkoVFGh?=
- =?us-ascii?Q?UUbKDT2OawujZ6nktBXIOij3g1mhEkisPh3Hm0Z2vu4FPgibipxlY2YQQ5cW?=
- =?us-ascii?Q?qjUhOaYXVoncE9sreSLED2AfaqQriMcDjGGsTWCed4tGQzvETJ3pqYP6w58R?=
- =?us-ascii?Q?K+pS/lcki+5OBNZ4HK/NYa4Adghfb2cuM7tuXMfs9julpZ3KJfdGYvLwkoIi?=
- =?us-ascii?Q?xkGlM0VufO9907pl2F21eRiAaMwsY7yYW9So21zadp71Y8bEI+1i75J4bCdl?=
- =?us-ascii?Q?aReuF11mL8URpiObfBWbOr/bqNsN70jrHtJxwTSlMXTSFZlqVxKxAN1U7enf?=
- =?us-ascii?Q?et29p6djfQTmWvsdGhBJSd0ZS8zT6+FyY7wvO0hw44J4gvU+V+Z32y1F5oyL?=
- =?us-ascii?Q?f1bmu8PcEOKCLzT9SUvdQ3NkICQHtM/CEVE/ZFiHKBLemoh4qp+p98JQDPP8?=
- =?us-ascii?Q?A4/0LFu7I9j9VSC+fvihJJH07FcBKSPcFWpBhkJ85kKpRhYlatIsCUvdmG58?=
- =?us-ascii?Q?1Rw6GzaW7MknaJgfxBNhnM+UbWZmR0G+4lfQw4Md0782b8uX4CkKv5+XGC3f?=
- =?us-ascii?Q?2PWMCwwCg4d3jnYuvIyjvo1lJSmLQWPz651cWcZAkhYs4BLuDDrllw3/CoqX?=
- =?us-ascii?Q?29DEyFM6DY8PKpLfiaooKxuoDpvOxfCGIB6BHcdCFrjrmuPjicJnopowDrbn?=
- =?us-ascii?Q?vWSF58bPCXY/RPs6lLDFokoZfltL43LdmEH4nL+gouA2entGbx/0rxIvxwss?=
- =?us-ascii?Q?dFU86H6pw1ER4V1jV2eqnm8J+0jYz9PEwZhfYwASbq2bunXqjSUJIKTuqrw3?=
- =?us-ascii?Q?eZKnjlqTAtyhKjeSUUGUVAjwoPj0O/eFt7DpodGKf1XEkwdeBAbCxLWk74AX?=
- =?us-ascii?Q?xf3gkckdEvC/iBB0oZerI6lxfW8XSbSuOOxwrInkIwvGc/+dLFx0bvyISvcg?=
- =?us-ascii?Q?vbfDTveEHDYdrQPNL15PNmYZYXPAwLIBsLmOBofcLjfJvhg1qgGCq8l4ilhq?=
- =?us-ascii?Q?JV++kFXb79kbnKcV3RQOc2B1mjh9wECzif3acZCoN8G6Dc+OdAOhjX4+LM6+?=
- =?us-ascii?Q?nIFg22lo4c1RciaacQ7W8C8rXuZJKCpTnnHYlfbTN8d6AenuekOZMZy5slLx?=
- =?us-ascii?Q?48S/BXLJVLCIHe3YTS3XTXXzyhlE4u9dQhsHuNAxuD1pI/xkc1+K?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c70b070-1854-4f24-3945-08df076fe815
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 14:55:32.9329
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gbBnkFkhhwOIVChAsiQFO/wUGkzTPxb/FggbhRqVTQ6DTSEov4CC790bL1WVPqsyre9eqw+BMr0DUZseddKggdn8YhpFs9ecCYeklnojCLNlX/KyJKV1cPXG1GA3+lmN
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR04MB9659
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 31, 2026 at 03:47:15PM +0200, Stefan Wahren wrote:
-> Am 31.08.26 um 11:04 schrieb sashiko-bot@kernel.org:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > - [Medium] Missing GPIO initialization / Unused pin for X_nRST_LAN
-> > - [Medium] Missing Pin Mux Configuration for USDHC2_VSELECT in default state
-> > - [Low] DT Binding Violation: Undocumented compatible string 'microchip,mcp2542'
-> > --
-> >
-> > commit c595019b7dc419cc298a111c2b215904a12f65e1
-> > Author: Stefan Wahren <wahrenst@gmx.net>
-> > arm64: dts: freescale: Add chargebyte Charge Control Y
-> >
-> > This commit introduces device tree support for the chargebyte Charge Control Y,
-> > an Electrical Vehicle Supply Equipment for MCS charging stations based on the
-> > phyCORE-i.MX 93 ARM SoM. It defines necessary pin multiplexing, peripherals
-> > like CAN and Ethernet, and device-specific layouts.
-> >
-> > > diff --git a/arch/arm64/boot/dts/freescale/imx93-charge-control-y.dts b/arch/arm64/boot/dts/freescale/imx93-charge-control-y.dts
-> > > new file mode 100644
-> > > index 0000000000000..0405098cc05c4
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/freescale/imx93-charge-control-y.dts
-> > [ ... ]
-> >
-> > > +	// Heartbeat LED of phyCore is not populated
-> > > +	/delete-node/ leds;
-> > > +
-> > > +	flexcan1_tc: can-phy0 {
-> > > +		compatible = "microchip,mcp2542", "ti,tcan1042";
-> > [Severity: Low]
-> > Is the "microchip,mcp2542" compatible string documented in any devicetree
-> > binding schema?
-> This is included in patch #2.
-> > Using an undocumented compatible string here might cause `make dtbs_check`
-> > validation tooling to fail.
-> I verified this patch series with "make dtbs_check". False positive?
-> >
-> > > +		#phy-cells = <0>;
-> > > +		max-bitrate = <1000000>;
-> > > +	};
-> > [ ... ]
-> >
-> > > +	pinctrl_flexcan1: flexcan1grp {
-> > > +		fsl,pins = <
-> > > +			MX93_PAD_PDM_BIT_STREAM0__CAN1_RX	0x139e
-> > > +			MX93_PAD_PDM_CLK__CAN1_TX		0x1382
-> > > +		>;
-> > > +	};
-> > > +
-> > > +	pinctrl_gpio1: gpio1grp {
-> > > +		fsl,pins = <
-> > > +			MX93_PAD_I2C2_SDA__GPIO1_IO03		0x31e
-> > [Severity: Medium]
-> > Does the X_nRST_LAN reset pin (GPIO1_IO03) need a GPIO hog or a driver
-> > consumer (e.g., via a reset-gpios property) in the device tree?
-> >
-> > Since the upstream lan865x SPI kernel driver does not parse or manage
-> > reset-gpios, leaving its functional state unmanaged here might result in the
-> > hardware reset pin floating or being left in an indeterminate state.
-> >
-> > Could this cause the LAN8651 Ethernet interface to fail to emerge from reset
-> > and initialize properly on a cold boot?
-> As already mentioned in the cover letter, I like to proceed with the version
-> until the reset management is implemented in LAN8651.
-> The pin is not floating because there is a pull resistor in hardware.
->
-> Should I move the explanation to the commit message of this patch or add a
-> comment in the DTS?
+Force-feedback playback is queued asynchronously, but system suspend can
+cut power while the worker is pending. Disable and drain the work item
+before entering standby, and keep force-feedback quiesced until resume has
+restored communication.
 
-Comments in code.
+An input device can be closed and reopened without playing an effect in
+between. Since close lowers the enable GPIO, assert it and observe the
+startup delay in the open callback so a following suspend can access the
+registers.
 
-Frank
+Disabling the regulator may remove power and erase the device
+configuration. Preserve the actuator mode selected by firmware, cache the
+initial automatic-calibration results, and reapply the complete
+configuration during resume. Use repeatable multi-register writes instead
+of registering persistent regmap patches, which would append another copy
+on every reinitialization.
 
-> >
-> > > +			MX93_PAD_PDM_BIT_STREAM1__GPIO1_IO10	0x382
-> > > +		>;
-> > > +	};
-> > > +
-> > > +	pinctrl_gpio4: gpio4grp {
-> > [ ... ]
-> >
-> > > +	pinctrl_usdhc2_cd: usdhc2cdgrp {
-> > > +		fsl,pins = <
-> > > +			MX93_PAD_SD2_CD_B__GPIO3_IO00		0x31e
-> > > +		>;
-> > > +	};
-> > > +
-> > > +	/* need to config the SION for data and cmd pad, refer to ERR052021 */
-> > > +	pinctrl_usdhc2_default: usdhc2grp {
-> > > +		fsl,pins = <
-> > > +			MX93_PAD_SD2_CLK__USDHC2_CLK		0x119e
-> > > +			MX93_PAD_SD2_CMD__USDHC2_CMD		0x4000139e
-> > > +			MX93_PAD_SD2_DATA0__USDHC2_DATA0	0x4000138e
-> > > +			MX93_PAD_SD2_DATA1__USDHC2_DATA1	0x4000138e
-> > > +			MX93_PAD_SD2_DATA2__USDHC2_DATA2	0x4000138e
-> > > +			MX93_PAD_SD2_DATA3__USDHC2_DATA3	0x4000139e
-> > [Severity: Medium]
-> > Should MX93_PAD_SD2_VSELECT__USDHC2_VSELECT be included in this default
-> > state group?
-> >
-> > The MMC core initially brings up the SD card in the default 3.3V state. Without
-> > the USDHC2_VSELECT pad configured here, the controller might not be able to
-> > actively manage the IO voltage selection in its default state.
-> >
-> > Could this absence lead to unpredictable external voltage regulator behavior or
-> > SD card initialization failures?
-> Nice catch, will fix it
->
-> Best regards
-> >
-> > > +		>;
-> > > +	};
-> > > +
-> > > +	/* need to config the SION for data and cmd pad, refer to ERR052021 */
-> > > +	pinctrl_usdhc2_100mhz: usdhc2-100mhzgrp {
->
+Remember that configuration may have been lost across suspend even when
+the input device was closed and resume therefore skipped hardware access.
+Restore it on the next open. If resume recovery failed, let a later open
+retry regulator enablement and initialization before re-enabling playback
+work, instead of leaving the device permanently inaccessible.
+
+Track whether this consumer has enabled the regulator so devres cleanup
+does not issue an unbalanced disable after a resume failure. Make regulator
+and work reference counts idempotent across PM retries. On removal,
+unregister the input device to shut down the ff-memless timer before the
+final work cancellation, preventing the timer from requeueing work during
+teardown.
+
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-input/20260831082820.063D81F00A3D@smtp.kernel.org/
+Link: https://lore.kernel.org/linux-input/20260831011526.24AB11F000E9@smtp.kernel.org/
+Link: https://lore.kernel.org/linux-input/20260830143050.03E081F000E9@smtp.kernel.org/
+Link: https://lore.kernel.org/linux-input/20260829230740.126461F000E9@smtp.kernel.org/
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/linux-input/apLD91vzHIrLOPWC@google.com/
+Link: https://www.ti.com/lit/ds/symlink/drv2604.pdf
+Assisted-by: Codex:gpt-5.6-sol [sparse]
+Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
+---
+Changes in v7:
+- Recover a failed-resume work-disable state from the next input open instead
+  of returning -EIO permanently.
+- Mark configuration for deferred restoration when suspend occurred while
+  the input device was closed, and restore it on the next open.
+- Add an explicit remove callback which unregisters the input device before
+  cancelling the work item, closing the ff-memless timer requeue window.
+- Expand cached-calibration write error handling and retain idempotent work
+  and regulator state tracking across PM retries.
+
+Validation:
+- Integration commit 780663f0af3b, containing the exact drv260x blob
+  1eb71e6adc53, passed olddefconfig, a focused W=1 C=2 CHECK=sparse build,
+  and a full Debian package build on x86_64. The full build log contains no
+  warning in drivers/input/misc/drv260x.c.
+- Lenovo Yoga Book YB1-X91L running
+  7.2.0-yogabook-20260831-153058 passed a 15-second s2idle cycle with RTC
+  wake. Both DRV2604 devices then passed five open/close cycles and a
+  force-feedback rumble upload/play/erase sequence.
+- Camera streaming, SOF playback and capture, and idle runtime-PM state were
+  rechecked after resume. No drv260x, I2C, regulator-balance, or severe kernel
+  error was present in the boot log.
+- The tablet uses dummy vbat regulators for both DRV2604 devices, so actual
+  regulator power loss and injected resume-error cleanup could not be
+  exercised on this hardware.
+
+ drivers/input/misc/drv260x.c | 264 ++++++++++++++++++++++++++++-------
+ 1 file changed, 216 insertions(+), 48 deletions(-)
+
+diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
+index 6c5c4c53753b..1eb71e6adc53 100644
+--- a/drivers/input/misc/drv260x.c
++++ b/drivers/input/misc/drv260x.c
+@@ -181,7 +181,12 @@
+  * @work: Work item used to off load the enable/disable of the vibration
+  * @enable_gpio: Pointer to the gpio used for enable/disabling
+  * @regulator: Pointer to the regulator for the IC
++ * @regulator_enabled: Whether this consumer has enabled the regulator
++ * @work_disabled: Whether playback work is disabled pending PM recovery
++ * @needs_reinit: Whether device configuration must be restored on open
++ * @calibration_valid: Whether calibration results have been cached
+  * @magnitude: Magnitude of the vibration event
++ * @calibration_data: Cached automatic calibration results
+  * @mode: The operating mode of the IC (LRA_NO_CAL, ERM or LRA)
+  * @library: The vibration library to be used
+  * @rated_voltage: The rated_voltage of the actuator
+@@ -194,7 +199,12 @@ struct drv260x_data {
+ 	struct work_struct work;
+ 	struct gpio_desc *enable_gpio;
+ 	struct regulator *regulator;
++	bool regulator_enabled;
++	bool work_disabled;
++	bool needs_reinit;
++	bool calibration_valid;
+ 	u8 magnitude;
++	u8 calibration_data[3];
+ 	u32 mode;
+ 	u32 library;
+ 	int rated_voltage;
+@@ -215,6 +225,24 @@ static int drv260x_calculate_voltage(unsigned int voltage)
+ 	return (voltage * 255 / 5600);
+ }
+ 
++static void drv260x_disable_work(struct drv260x_data *haptics)
++{
++	if (haptics->work_disabled)
++		return;
++
++	disable_work_sync(&haptics->work);
++	haptics->work_disabled = true;
++}
++
++static void drv260x_enable_work(struct drv260x_data *haptics)
++{
++	if (!haptics->work_disabled)
++		return;
++
++	enable_work(&haptics->work);
++	haptics->work_disabled = false;
++}
++
+ static void drv260x_worker(struct work_struct *work)
+ {
+ 	struct drv260x_data *haptics = container_of(work, struct drv260x_data, work);
+@@ -243,8 +271,6 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
+ {
+ 	struct drv260x_data *haptics = input_get_drvdata(input);
+ 
+-	haptics->mode = DRV260X_LRA_NO_CAL_MODE;
+-
+ 	/* Scale u16 magnitude into u8 register value */
+ 	if (effect->u.rumble.strong_magnitude > 0)
+ 		haptics->magnitude = effect->u.rumble.strong_magnitude >> 8;
+@@ -258,21 +284,6 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
+ 	return 0;
+ }
+ 
+-static void drv260x_close(struct input_dev *input)
+-{
+-	struct drv260x_data *haptics = input_get_drvdata(input);
+-	int error;
+-
+-	cancel_work_sync(&haptics->work);
+-
+-	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
+-	if (error)
+-		dev_err(&haptics->client->dev,
+-			"Failed to enter standby mode: %d\n", error);
+-
+-	gpiod_set_value(haptics->enable_gpio, 0);
+-}
+-
+ static const struct reg_sequence drv260x_lra_cal_regs[] = {
+ 	{ DRV260X_MODE, DRV260X_AUTO_CAL },
+ 	{ DRV260X_CTRL3, DRV260X_NG_THRESH_2 | DRV260X_RTP_UNSIGNED_DATA },
+@@ -338,9 +349,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 
+ 	switch (haptics->mode) {
+ 	case DRV260X_LRA_MODE:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_lra_cal_regs,
+-					      ARRAY_SIZE(drv260x_lra_cal_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_lra_cal_regs,
++					       ARRAY_SIZE(drv260x_lra_cal_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write LRA calibration registers: %d\n",
+@@ -351,9 +362,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		break;
+ 
+ 	case DRV260X_ERM_MODE:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_erm_cal_regs,
+-					      ARRAY_SIZE(drv260x_erm_cal_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_erm_cal_regs,
++					       ARRAY_SIZE(drv260x_erm_cal_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write ERM calibration registers: %d\n",
+@@ -374,9 +385,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		break;
+ 
+ 	default:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_lra_init_regs,
+-					      ARRAY_SIZE(drv260x_lra_init_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_lra_init_regs,
++					       ARRAY_SIZE(drv260x_lra_init_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write LRA init registers: %d\n",
+@@ -398,6 +409,19 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		return 0;
+ 	}
+ 
++	if (haptics->calibration_valid) {
++		error = regmap_bulk_write(haptics->regmap, DRV260X_CAL_COMP,
++					  haptics->calibration_data,
++					  ARRAY_SIZE(haptics->calibration_data));
++		if (error) {
++			dev_err(&haptics->client->dev,
++				"Failed to restore calibration registers: %d\n", error);
++			return error;
++		}
++
++		return 0;
++	}
++
+ 	error = regmap_write(haptics->regmap, DRV260X_GO, DRV260X_GO_BIT);
+ 	if (error) {
+ 		dev_err(&haptics->client->dev,
+@@ -423,7 +447,13 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		}
+ 	} while (cal_buf == DRV260X_GO_BIT);
+ 
+-	return 0;
++	error = regmap_bulk_read(haptics->regmap, DRV260X_CAL_COMP,
++				 haptics->calibration_data,
++				 ARRAY_SIZE(haptics->calibration_data));
++	if (!error)
++		haptics->calibration_valid = true;
++
++	return error;
+ }
+ 
+ static const struct regmap_config drv260x_regmap_config = {
+@@ -434,11 +464,110 @@ static const struct regmap_config drv260x_regmap_config = {
+ 	.cache_type = REGCACHE_NONE,
+ };
+ 
++static int drv260x_regulator_enable(struct drv260x_data *haptics)
++{
++	int error;
++
++	if (haptics->regulator_enabled)
++		return 0;
++
++	error = regulator_enable(haptics->regulator);
++	if (!error)
++		haptics->regulator_enabled = true;
++
++	return error;
++}
++
++static int drv260x_regulator_disable(struct drv260x_data *haptics)
++{
++	int error;
++
++	if (!haptics->regulator_enabled)
++		return 0;
++
++	error = regulator_disable(haptics->regulator);
++	if (!error)
++		haptics->regulator_enabled = false;
++
++	return error;
++}
++
+ static void drv260x_power_off(void *data)
+ {
+ 	struct drv260x_data *haptics = data;
+ 
+-	regulator_disable(haptics->regulator);
++	drv260x_regulator_disable(haptics);
++}
++
++static int drv260x_open(struct input_dev *input)
++{
++	struct drv260x_data *haptics = input_get_drvdata(input);
++	bool recover_work = haptics->work_disabled;
++	int disable_error, error;
++
++	if (recover_work) {
++		error = drv260x_regulator_enable(haptics);
++		if (error) {
++			dev_err(&haptics->client->dev,
++				"Failed to enable regulator: %d\n", error);
++			return error;
++		}
++	}
++
++	gpiod_set_value(haptics->enable_gpio, 1);
++	/* Data sheet says to wait 250us before trying to communicate */
++	fsleep(250);
++
++	if (haptics->needs_reinit || recover_work) {
++		error = drv260x_init(haptics);
++		if (error) {
++			dev_err(&haptics->client->dev,
++				"Failed to restore configuration: %d\n", error);
++			gpiod_set_value(haptics->enable_gpio, 0);
++			if (recover_work) {
++				disable_error = drv260x_regulator_disable(haptics);
++				if (disable_error)
++					dev_err(&haptics->client->dev,
++						"Failed to disable regulator: %d\n",
++						disable_error);
++			}
++			return error;
++		}
++
++		haptics->needs_reinit = false;
++	}
++
++	if (recover_work)
++		drv260x_enable_work(haptics);
++
++	return 0;
++}
++
++static void drv260x_close(struct input_dev *input)
++{
++	struct drv260x_data *haptics = input_get_drvdata(input);
++	int error;
++
++	/* PM has not restored register access yet. */
++	if (haptics->work_disabled)
++		return;
++
++	cancel_work_sync(&haptics->work);
++
++	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
++	if (error)
++		dev_err(&haptics->client->dev,
++			"Failed to enter standby mode: %d\n", error);
++
++	gpiod_set_value(haptics->enable_gpio, 0);
++}
++
++static void drv260x_remove(struct i2c_client *client)
++{
++	struct drv260x_data *haptics = i2c_get_clientdata(client);
++
++	input_unregister_device(haptics->input_dev);
++	cancel_work_sync(&haptics->work);
+ }
+ 
+ static int drv260x_probe(struct i2c_client *client)
+@@ -506,7 +635,7 @@ static int drv260x_probe(struct i2c_client *client)
+ 		return error;
+ 	}
+ 
+-	error = regulator_enable(haptics->regulator);
++	error = drv260x_regulator_enable(haptics);
+ 	if (error) {
+ 		dev_err(dev, "Failed to enable regulator: %d\n", error);
+ 		return error;
+@@ -528,6 +657,7 @@ static int drv260x_probe(struct i2c_client *client)
+ 	}
+ 
+ 	haptics->input_dev->name = "drv260x:haptics";
++	haptics->input_dev->open = drv260x_open;
+ 	haptics->input_dev->close = drv260x_close;
+ 	input_set_drvdata(haptics->input_dev, haptics);
+ 	input_set_capability(haptics->input_dev, EV_FF, FF_RUMBLE);
+@@ -569,62 +699,99 @@ static int drv260x_probe(struct i2c_client *client)
+ static int drv260x_suspend(struct device *dev)
+ {
+ 	struct drv260x_data *haptics = dev_get_drvdata(dev);
+-	int error;
++	bool restore_work = false;
++	int error, restore_error;
+ 
+-	guard(mutex)(&haptics->input_dev->mutex);
++	mutex_lock(&haptics->input_dev->mutex);
+ 
+ 	if (input_device_enabled(haptics->input_dev)) {
++		restore_work = !haptics->work_disabled;
++		drv260x_disable_work(haptics);
++
++		/* A failed resume can leave the device already powered down. */
++		if (!haptics->regulator_enabled)
++			goto mark_reinit;
++
+ 		error = regmap_update_bits(haptics->regmap,
+ 					   DRV260X_MODE,
+ 					   DRV260X_STANDBY_MASK,
+ 					   DRV260X_STANDBY);
+ 		if (error) {
+ 			dev_err(dev, "Failed to set standby mode\n");
+-			return error;
++			goto err_enable_work;
+ 		}
+ 
+ 		gpiod_set_value(haptics->enable_gpio, 0);
+ 
+-		error = regulator_disable(haptics->regulator);
++		error = drv260x_regulator_disable(haptics);
+ 		if (error) {
+ 			dev_err(dev, "Failed to disable regulator\n");
+-			regmap_update_bits(haptics->regmap,
+-					   DRV260X_MODE,
+-					   DRV260X_STANDBY_MASK, 0);
+-			return error;
++			goto err_leave_standby;
+ 		}
+ 	}
+ 
++mark_reinit:
++	haptics->needs_reinit = true;
++	mutex_unlock(&haptics->input_dev->mutex);
+ 	return 0;
++
++err_leave_standby:
++	gpiod_set_value(haptics->enable_gpio, 1);
++	fsleep(250);
++	restore_error = regmap_update_bits(haptics->regmap,
++					   DRV260X_MODE,
++					   DRV260X_STANDBY_MASK, 0);
++	if (restore_error) {
++		dev_err(dev, "Failed to leave standby mode: %d\n", restore_error);
++		restore_work = false;
++	}
++err_enable_work:
++	if (restore_work)
++		drv260x_enable_work(haptics);
++	mutex_unlock(&haptics->input_dev->mutex);
++	return error;
+ }
+ 
+ static int drv260x_resume(struct device *dev)
+ {
+ 	struct drv260x_data *haptics = dev_get_drvdata(dev);
+-	int error;
++	int disable_error, error;
+ 
+-	guard(mutex)(&haptics->input_dev->mutex);
++	mutex_lock(&haptics->input_dev->mutex);
+ 
+ 	if (input_device_enabled(haptics->input_dev)) {
+-		error = regulator_enable(haptics->regulator);
++		drv260x_disable_work(haptics);
++
++		error = drv260x_regulator_enable(haptics);
+ 		if (error) {
+ 			dev_err(dev, "Failed to enable regulator\n");
+-			return error;
++			goto err_unlock;
+ 		}
+ 
+-		error = regmap_update_bits(haptics->regmap,
+-					   DRV260X_MODE,
+-					   DRV260X_STANDBY_MASK, 0);
++		gpiod_set_value(haptics->enable_gpio, 1);
++		fsleep(250);
++
++		error = drv260x_init(haptics);
+ 		if (error) {
+-			dev_err(dev, "Failed to unset standby mode\n");
+-			regulator_disable(haptics->regulator);
+-			return error;
++			dev_err(dev, "Failed to restore configuration: %d\n", error);
++			goto err_disable_regulator;
+ 		}
+ 
+-		gpiod_set_value(haptics->enable_gpio, 1);
++		haptics->needs_reinit = false;
++		drv260x_enable_work(haptics);
+ 	}
+ 
++	mutex_unlock(&haptics->input_dev->mutex);
+ 	return 0;
++
++err_disable_regulator:
++	gpiod_set_value(haptics->enable_gpio, 0);
++	disable_error = drv260x_regulator_disable(haptics);
++	if (disable_error)
++		dev_err(dev, "Failed to disable regulator: %d\n", disable_error);
++err_unlock:
++	mutex_unlock(&haptics->input_dev->mutex);
++	return error;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(drv260x_pm_ops, drv260x_suspend, drv260x_resume);
+@@ -657,6 +824,7 @@ MODULE_DEVICE_TABLE(of, drv260x_of_match);
+ 
+ static struct i2c_driver drv260x_driver = {
+ 	.probe		= drv260x_probe,
++	.remove		= drv260x_remove,
+ 	.driver		= {
+ 		.name	= "drv260x-haptics",
+ 		.acpi_match_table = ACPI_PTR(drv260x_acpi_match),
+-- 
+With Best Regards,
+Maurizio Casciano
