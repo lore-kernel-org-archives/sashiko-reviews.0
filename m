@@ -1,40 +1,60 @@
-Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C0634FF41;
-	Mon, 31 Aug 2026 09:37:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4E62EDD58;
+	Mon, 31 Aug 2026 09:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788169054; cv=none; b=n3GLlBUiA7ob8+k7dYpWn1EcGn2I0oLACK+zZr6kbTx3HZu27ndGBIVwIAzmMtOn4BGngZH+B6wLXVS0onEJJgPhPJ/PW7n73eTK5OS9uLtGgo6ExSczjmyfuFUloSA/0naVNudJ8+evATVm2DcP8JBakazupA2t3GOUhAjgr7E=
+	t=1788169565; cv=none; b=B2ezkqmSzVhiLzp/g6Vx+G8Ha8VsWJ0Bl2aODtYG2OBmQxsinb4oCLqaJwmoo2WUNCuXbMUFJ/er2EngCI6rx/v1TOenYVdzpZM4/3ZVlfmsKr9h7lB/1aWvZyTLU1snBrIBhgJtpRuw/YYB7I+9mucqug4mxBBLwo2h64gc1yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788169054; c=relaxed/simple;
-	bh=iK6xfi84WmdzkiINZsc/AcFowbeVUr0PYoVNHiRZVZc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PSgx1AndoJflpVJ6KdgJL7lX+2Z0GBK8phRFQ/irSIX9P2PqEsc2jmU9axon5dw7jDp05C42TfNsNRFdHsqiP1T3HhWDcUGG6PEFKEuAzdIbvsT9DeCuLhQgWRi4rwqlC0catNcnkmCkrmyz6XgoGWoud4uKYSCcwmzlIsNQRTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=T9OXODxV; arc=none smtp.client-ip=113.46.200.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1788169565; c=relaxed/simple;
+	bh=as7/h87CJrSKdiExzIP9kWlyW8yUhqofyrfZ/i0b3hg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Dg7ub9nu91ZNxbyDxDWlGaXr7Hy5V0e71AtiCE8aQJsxn/h6EMZSOUAo46/sSlLtgjdsTLkJDT1ho+2l1PSNsFEY0A1QIJB8G4noc2G3SurUHx7wbg+jCpgAK5+0xqDt21SkkjsrL2GoT5bKW+pOLVLvHVi81rwt64DD3U0qjF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=FcHkSMvU; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="T9OXODxV"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=fxyHUPDqedlVwnPeXPKRGHtoFJm4kHYf1rIkAIu3MBM=;
-	b=T9OXODxVF6+EY1qmsgL6L2p1IoaD1/XHSKcAlfsVOZ0TxpvZZimqfUnsmHPTHgnE2TODureA2
-	aBJdZHm4Gl1G4F1VhIghoy0+mb8SiPRpX8Lv2ILgyRd/2YbyrRqQSAC33CYLo5bJzg2zJ2hg55h
-	g3uRi2geIOas7pzSdLIAO2I=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4hYNsg6psTz1prlh;
-	Mon, 31 Aug 2026 17:26:31 +0800 (CST)
-Received: from kwepemr100010.china.huawei.com (unknown [7.202.195.125])
-	by mail.maildlp.com (Postfix) with ESMTPS id 7952B4057D;
-	Mon, 31 Aug 2026 17:37:22 +0800 (CST)
-Received: from [10.67.120.103] (10.67.120.103) by
- kwepemr100010.china.huawei.com (7.202.195.125) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 31 Aug 2026 17:37:21 +0800
-Message-ID: <67dcf2d1-48e6-4aac-b516-1bb78b537c3f@huawei.com>
-Date: Mon, 31 Aug 2026 17:37:21 +0800
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="FcHkSMvU"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67V82ckK1698544;
+	Mon, 31 Aug 2026 09:46:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=DJDlk+
+	21iEyGdiob6pnueUqF8yRN/cK/rq6kM/U/zqo=; b=FcHkSMvUDnp0Sd9NdBOad0
+	4YAr3eyIA/pCqUKGFQCpwn+tlM7Wp9AnTcehK/+qd1ZteDEziQSkf8RKfA/07023
+	DRP0Fbgo53wgf8cbGoMfpWAR3oEzriNpF9xE1u/+iQM2DYbHPDLcYtxF7IvyuVUl
+	sghR4O7bXXluPywk+w5ZfJIVhEa5zOI3mnJ5L8p0prE5sdhy0kH9+7FaxDpKHxki
+	kIfajPIbmiCxAnLjdypqEzRBRTWDp08rUlj6fyVYMoLw+wHWnTx+DwG0Llvjp2mD
+	r32RH9M0DGFQjF569QTg1wnLG/tpv0zZbZJWXNBvbfW8KESr5V4qOSolF/vmyzcw
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq2t097y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Aug 2026 09:46:02 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67V9fp38009855;
+	Mon, 31 Aug 2026 09:46:01 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarjw5sr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Aug 2026 09:46:01 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67V9jvqm42598812
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 31 Aug 2026 09:45:57 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B3F0F2004B;
+	Mon, 31 Aug 2026 09:45:57 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8FE7F20049;
+	Mon, 31 Aug 2026 09:45:57 +0000 (GMT)
+Received: from [9.224.77.157] (unknown [9.224.77.157])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 31 Aug 2026 09:45:57 +0000 (GMT)
+Message-ID: <d3ad41b1-909d-48a7-af89-2234a9a84627@linux.ibm.com>
+Date: Mon, 31 Aug 2026 11:45:57 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,226 +62,128 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/6] KVM: arm64: Add HDBSS per-vCPU buffer management
-To: <sashiko-reviews@lists.linux.dev>
-CC: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
-	<kvmarm@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20260709104026.2612599-1-zhengtian10@huawei.com>
- <20260709104026.2612599-5-zhengtian10@huawei.com>
- <20260709111538.0AEDD1F000E9@smtp.kernel.org>
-From: Tian Zheng <zhengtian10@huawei.com>
-In-Reply-To: <20260709111538.0AEDD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- kwepemr100010.china.huawei.com (7.202.195.125)
+Subject: Re: [PATCH] s390/pai: Prevent ioctl(PERF_EVENT_IOC_REFRESH)
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>
+References: <20260827064612.3161950-1-tmricht@linux.ibm.com>
+ <20260827065709.D6E561F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Richter <tmricht@linux.ibm.com>
+Organization: IBM
+In-Reply-To: <20260827065709.D6E561F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=bc1bluPB c=1 sm=1 tr=0 ts=6a954d5a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=xFIhE92wB2fsFhFsdGIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDA4MiBTYWx0ZWRfX56T71mQYRMJw
+ HVNnvKT1WZLDTP7rlg387WaRYrHxqxp3Y7S3oqgGZrnc6rpGJuWhJi0pO2/EyAj7n+lJ9+Gdvtc
+ cP/8FLA0+S49mfAlBCaZrKUgYnwFMrI=
+X-Proofpoint-ORIG-GUID: -huyQ5QNAlefzXP1CRhnPQ6jtnDMQaQJ
+X-Proofpoint-GUID: -huyQ5QNAlefzXP1CRhnPQ6jtnDMQaQJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDA4MiBTYWx0ZWRfX13ICUpKvxUCK
+ JwZWJflGuFTmMOXKswW8B1I4o/cSzqnYuASUH/MqgAQv/J8hEWJV14Dn6Blp2XCt6RKOXAZbtKe
+ lYS4Tv8hhOOT3DFsEAcxTgTI2swCxEhYaGOUmduFCFgc8XZkT+UlNBM1itAXqLlU3wYCJgYxM8r
+ Z4H8BAOd+gn5tr1lP/an6jXC0p/rIPA77XEFRkdZi0OmyZc9etBSMHiqyqsWKoXsLoJCKV4bBZk
+ ZgjCRGyCC0jOrTZ1cTZsT9jiwvZEOFbrdhaOOakqaHfDVUi9AGq2IpPNWx+SSE8VmCksoP9r9oy
+ ukO54h30TChCye93d7A0Y0AK5BHnkPqPFoQYleyfq+FiLnBOG/J8pao26HjKPpnwVLPOWOkUAcj
+ mHelNxDU3ig9PZ7sVPqnnwPzPFXu/mFpO2shsoQ0vcvwGNdtTk5iTfSgArwNfnjxbYV2VK9Ol2I
+ r4hMZyBwTQgBxssFxIg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-31_03,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608310082
 
-
-
-On 7/9/2026 7:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] Broken error handling in `kvm_arch_vcpu_create` leads to success masking and hypervisor memory leaks.
-> - [High] The hardware producer index `SYS_HDBSSPROD_EL2` is lost during vCPU context switch.
-> - [High] `__load_hdbss()` risks a fatal UNDEFINED exception on hardware lacking HDBSS.
-> - [High] Misinterpretation of the `order` parameter causes memory waste or buffer undersizing on non-4KB page granules.
-> - [Medium] Missing context synchronization event (ISB) after control-plane system register write.
-> - [Low] Memory leak when an allocation resolves to physical address 0.
+On 8/27/26 08:57, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unprotected modification of core perf_event state (pending_kill, event_limit) causes data races, dropped signals, and silently breaks the PERF_EVENT_IOC_REFRESH API.
 > --
 > 
-> --- Patch [4]: [PATCH v4 4/6] KVM: arm64: Add HDBSS per-vCPU buffer management ---
-> commit 1967caa637e339cacc49eecff93c9e0e02ecad9e
-> Author: eillon <yezhenyu2@huawei.com>
+> commit ae843d6ca679921720078776be6911f36a1931c1
+> Author: Thomas Richter <tmricht@linux.ibm.com>
 > 
-> KVM: arm64: Add HDBSS per-vCPU buffer management
+> s390/pai: Prevent ioctl(PERF_EVENT_IOC_REFRESH)
 > 
-> This commit introduces the infrastructure for HDBSS (Hardware Dirty Bit State
-> Structure) per-vCPU buffer management, including allocation, freeing, and
-> loading of HDBSS registers during vCPU load.
+> This commit prevents ioctl(fd, PERF_EVENT_IOC_REFRESH, XXX) from taking effect
+> on PAI PMU events by clearing event->pending_kill and event->event_limit. The
+> intention is to prevent counter resets that conflict with the schedule-out
+> readouts these PMUs are designed for.
 > 
->> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
->> --- a/arch/arm64/kvm/arm.c
->> +++ b/arch/arm64/kvm/arm.c
->> @@ -565,6 +566,12 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
->>   	err = kvm_share_hyp(vcpu, vcpu + 1);
->>   	if (err)
->>   		kvm_vgic_vcpu_destroy(vcpu);
->>   
->> +	if (vcpu->kvm->arch.enable_hdbss) {
->> +		err = kvm_arm_vcpu_alloc_hdbss(vcpu, vcpu->kvm->arch.hdbss_order);
+>> diff --git a/arch/s390/kernel/perf_pai.c b/arch/s390/kernel/perf_pai.c
+>> index cdb8006220ca0..e43b2f1c94471 100644
+>> --- a/arch/s390/kernel/perf_pai.c
+>> +++ b/arch/s390/kernel/perf_pai.c
+>> @@ -658,6 +658,8 @@ static void pai_have_sample(struct perf_event *event, struct pai_map *cpump)
+>>  
+>>  	if (!event)		/* No event active */
+>>  		return;
+>> +	event->pending_kill = 0;	/* prevent ioctl(IOC_REFRESH) */
+>> +	atomic_set(&event->event_limit, 0);
 > 
 > [Severity: High]
-> Does this code mask kvm_share_hyp() failures? If kvm_share_hyp() fails, the
-> code falls through. If HDBSS is enabled and allocation succeeds, err is
-> overwritten to 0.
+> Does this unprotected modification of core perf_event state (pending_kill,
+> event_limit) cause data races, dropped signals, and silently break the
+> PERF_EVENT_IOC_REFRESH API?
 > 
-> Additionally, if kvm_share_hyp() succeeds but kvm_arm_vcpu_alloc_hdbss() fails,
-> is the hypervisor mapping leaked since kvm_unshare_hyp() isn't called before
-> returning?
+> Bypassing core perf locking rules to directly mutate event_limit and
+> pending_kill causes data races, silently drops pending SIGIO signals, and
+> breaks the API contract. The ioctl will return success, but userspace will
+> never receive the requested signal, leading to application hangs.
+
+A: The PERF_EVENT_IOC_REFRESH API is disabled on purpose. The PAI PMU
+   relies on data collection on schedule out of a task. This is
+   done by design. Invoking ioctl(fd, PERF_EVENT_IOC_REFRESH API, X)
+   breaks this behavior and should be blocked.
+
+   The modifications of members perf_event::event_limit and
+   perf_event::pending_kill are protected. The invocation
+   is triggered by the schedule out path and protected via
+   perf_pmu_sched_task()
+   +--> __perf_pmu_sched_task()
+        +--> perf_ctx_lock()
+
+   This locks the event and protects the states of the event.
+
 > 
->> +		if (err)
->> +			kvm_vgic_vcpu_destroy(vcpu);
->> +	}
->> +
->>   	return err;
->>   }
+> If a userspace application calls ioctl(fd, PERF_EVENT_IOC_REFRESH, N) on a
+> PAI event, and concurrently, a context switch calls pai_have_sample(),
+> writing to event_limit will race with atomic_add() in the core subsystem,
+> and clearing pending_kill will race with perf_event_wakeup().
+
+This requires a common code change to block an ioctl(fd, PERF_EVENT_IOC_REFRESH, N)
+similar to the PMU check_period call back function.
+
 > 
->> diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
->> --- /dev/null
->> +++ b/arch/arm64/kvm/dirty_bit.c
-> [ ... ]
->> +int kvm_arm_vcpu_alloc_hdbss(struct kvm_vcpu *vcpu, unsigned int order)
->> +{
->> +	struct page *hdbss_pg = NULL;
->> +
->> +	if (vcpu->arch.hdbss.hdbssbr_el2 || !system_supports_hdbss())
->> +		return 0;
->> +
->> +	if (order > HDBSS_MAX_ORDER)
->> +		return -EINVAL;
->> +
->> +	hdbss_pg = alloc_pages(GFP_KERNEL_ACCOUNT, order);
->> +	if (!hdbss_pg)
->> +		return -ENOMEM;
->> +
->> +	vcpu->arch.hdbss = (struct vcpu_hdbss_state) {
->> +		.base_phys = page_to_phys(hdbss_pg),
->> +		.hdbssbr_el2 = HDBSSBR_EL2(page_to_phys(hdbss_pg), order),
+> PMU drivers should not directly mutate these core fields to implicitly break
+> an ioctl. This approach creates cross-CPU data races because it lacks the
+> synchronization (ctx->mutex for limits, irq_work execution order for signals)
+> used by the core subsystem. Any user with access to the PAI PMU can trigger
+> this state corruption.
+> 
+>>  	pp = &pai_pmu[PAI_PMU_IDX(event)];
+>>  	rawsize = pai_copy(cpump->save, cpump->area, pp,
+>>  			   (unsigned long *)PAI_SAVE_AREA(event),
 > 
 
-Addressed in v5, The error path now returns immediately on
-kvm_share_hyp() failure, and HDBSS allocation failure calls
-kvm_unshare_hyp():
 
-```
-err = kvm_share_hyp(vcpu, vcpu + 1);
-if (err) {
-         kvm_vgic_vcpu_destroy(vcpu);
-         return err;
-}
+-- 
+Thomas Richter, Dept 3303, IBM s390 Linux Development, Boeblingen, Germany
+--
+IBM Deutschland Research & Development GmbH
 
-err = kvm_arm_vcpu_alloc_hdbss(vcpu);
-if (err) {
-         kvm_unshare_hyp(vcpu, vcpu + 1);
-         kvm_vgic_vcpu_destroy(vcpu);
-         return err;
-}
-```
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
 
-> [Severity: High]
-> Is the order parameter interpreted differently depending on the page granule
-> size? The order parameter is used both for alloc_pages() (which scales by
-> PAGE_SIZE) and HDBSSBR_EL2() (which expects an absolute hardware size).
-> 
-> On 64KB pages, supplying order=9 for a 2MB buffer would allocate 32MB from the
-> buddy allocator, while order=5 would configure the hardware for 128KB.
-> 
->> +		.hdbssprod_el2 = 0,
->> +	};
->> +
->> +	return 0;
->> +}
->> +
->> +void kvm_arm_vcpu_free_hdbss(struct kvm_vcpu *vcpu)
->> +{
->> +	struct page *hdbss_pg;
->> +
->> +	if (!vcpu->arch.hdbss.hdbssbr_el2) {
->> +		return;
->> +	}
-> 
+Geschäftsführung: David Faller
 
-Fixed in v5. The order parameter is removed. Buffer size is tracked in
-bytes, with separate conversions for the buddy allocator (get_order) and
-hardware SZ encoding (ilog2(size) - 12).
-
-> [Severity: Low]
-> Could this leak the buffer if the buddy allocator returns physical address 0
-> and order is 0? The resulting HDBSSBR_EL2 value would be 0, causing this
-> early return to intercept a valid allocation.
-> 
->> diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
->> --- a/arch/arm64/kvm/hyp/vhe/switch.c
->> +++ b/arch/arm64/kvm/hyp/vhe/switch.c
-> [ ... ]
->> @@ -213,6 +214,19 @@ static void __vcpu_put_deactivate_traps(struct kvm_vcpu *vcpu)
->>   	local_irq_restore(flags);
->>   }
->>   
->> +static void __load_hdbss(struct kvm_vcpu *vcpu)
->> +{
->> +	struct kvm *kvm = vcpu->kvm;
->> +
->> +	if (!kvm->arch.enable_hdbss)
->> +		return;
->> +
->> +	write_sysreg_s(vcpu->arch.hdbss.hdbssbr_el2, SYS_HDBSSBR_EL2);
-> 
-
-Addressed in v5. vcpu_hdbss_state now stores a struct page * instead of
-a physical address, and the allocation check uses the page pointer. This
-eliminates the PA == 0 special case entirely.
-
-> [Severity: High]
-> Will __load_hdbss() trigger a fatal UNDEFINED exception on hardware without
-> HDBSS? The function relies solely on kvm->arch.enable_hdbss. If it is enabled
-> but the hardware lacks support, accessing SYS_HDBSSBR_EL2 could panic the
-> hypervisor.
-> 
->> +	write_sysreg_s(vcpu->arch.hdbss.hdbssprod_el2, SYS_HDBSSPROD_EL2);
-> 
-
-v5 already handles this. vcpu_hdbss_enabled() checks hw_mmu->vtcr &
-VTCR_EL2_HDBSS, and that bit only gets set through
-kvm_arm_enable_hdbss_global(), which is guarded by
-system_supports_hdbss(). So __load_hdbss() doesn't need to check again.
-Hardware support is already guaranteed at that point.
-
-> [Severity: Medium]
-> Is an isb() required immediately after writing to SYS_HDBSSBR_EL2? ARM64
-> subsystem rules state that every write to a control-plane system register must
-> be followed by an isb() as the very next instruction.
-> 
->> +
->> +	isb();
->> +}
->> +
->>   void kvm_vcpu_load_vhe(struct kvm_vcpu *vcpu)
->>   {
->>   	host_data_ptr(host_ctxt)->__hyp_running_vcpu = vcpu;
->> @@ -220,6 +234,7 @@ void kvm_vcpu_load_vhe(struct kvm_vcpu *vcpu)
->>   	__vcpu_load_switch_sysregs(vcpu);
->>   	__vcpu_load_activate_traps(vcpu);
->>   	__load_stage2(vcpu->arch.hw_mmu);
->> +	__load_hdbss(vcpu);
->>   }
->>   
->>   void kvm_vcpu_put_vhe(struct kvm_vcpu *vcpu)
->>   {
->>   	__vcpu_put_deactivate_traps(vcpu);
->>   	__vcpu_put_switch_sysregs(vcpu);
->>   
->>   	host_data_ptr(host_ctxt)->__hyp_running_vcpu = NULL;
->>   }
-> 
-
-Not required. The architecture only requires an ISB to make the effects
-visible, and it's fine to batch multiple system register writes with one
-trailing ISB. __load_hdbss() follows the same pattern as
-__load_stage2(), which writes VTCR_EL2 and VTTBR_EL2 back-to-back with a
-single ISB. So the existing isb() in __load_hdbss() is sufficient.
-
-> [Severity: High]
-> Are the hardware producer index updates lost during context switch?
-> 
-> The producer index is loaded in kvm_vcpu_load_vhe(), but it doesn't appear KVM
-> reads and saves it back to vcpu->arch.hdbss.hdbssprod_el2 during
-> kvm_vcpu_put_vhe(). Would this rewind the hardware index on the next load?
-> 
-
-Addressed in v5, kvm_vcpu_put_vhe() now saves HDBSSPROD_EL2 into vcpu-
- >arch.hdbss.hdbssprod_el2, and __load_hdbss() restores it on the next
-load, so the producer index survives context switches and cross-CPU
-migration.
-
-Thanks!
-Tian
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart, HRB 243294
