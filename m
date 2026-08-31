@@ -1,140 +1,135 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from mail-43172.protonmail.ch (mail-43172.protonmail.ch [185.70.43.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D61DA62E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A0B3321AA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:12:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788181639; cv=none; b=rA7nbbzLoBU9EPl1aDfVV4nRaTa4sq5QbnoMVmLzikFsP1hn6Z+Hkr26GM8HvIZnBvivLg06cyR8qpOVcVQPnMM12QiAE9eDOSFbcK9weZslA/SxHepM8+Ugw7KEN+8PuD5uaLrCGdL3dmBpJAHjtzpgZQl5JkELm1RcQ+YZb9E=
+	t=1788181977; cv=none; b=ci3QIF4aGBbr7hGUgbscsW1q2+S1leX899s3zepaDgATh28nRZ5R3C9V4SpuX6KuKxCXpevzsE+mqnBeU4kF3bkAQLsTQAEynm5oqGWXMUT1DnFJKFHMXnONsGoa4mrrFoqy4TEiTsfZ3xQ6Ih2tLM9MsPSkXYE0kVpMdXqk5tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788181639; c=relaxed/simple;
-	bh=ZPn8Y1cGxYriJLJHPvq8nupoqNdcrIK5QvTnEGmkvzg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HmMJ7X+zvYsxYkJrXcNJ7Os5jeOzAiNw+YBb7dcOiaMDxil6AUv/hvdqGmm9Rfg+64D7V1X5zp5t77KrUM+KqJc+dgCo4b/IYN+qVmhIuNeL7OxkghCYT/ekqoMeRkWQIGOzn+dCiorsxTnnNK/RR1VclATd0rT4Ogcui6c9YEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hYTlZ2q1XzYQttg
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 21:06:34 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id 23BA040598
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 21:07:12 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgDXvwp+fJVqfc75AA--.63438S2;
-	Mon, 31 Aug 2026 21:07:12 +0800 (CST)
-Message-ID: <4acae7de-fdd7-4534-bb73-43502dc760a0@huaweicloud.com>
-Date: Mon, 31 Aug 2026 21:07:10 +0800
+	s=arc-20240116; t=1788181977; c=relaxed/simple;
+	bh=HlFhCR/6m1YLucYxACJuWmm110bGSLvv1dIixVh19uo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YqODQXubX4lTExdXi2QFqzafMNV4kFOR56QeSCzRJOJv+OQUTe3lz2OcY+yCeSGZfO41A1xEPIuQfdUX41sN1/8KemCVCm6vymwxr9OWAf/9nR6np7OP5ZyAAZP+2KcD/PY3RCkxhNY9Qd9r8gGmwsuajhRmm7vFF0Z30o9hlic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=PiP6A4d1; arc=none smtp.client-ip=185.70.43.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="PiP6A4d1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1788181970; x=1788441170;
+	bh=PD8ylREOH/STTl+VwOLFllFTP2Iaf1nif5PoLXQ6+Vc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=PiP6A4d1/z+qvt0uLv4MtLU0qiID2lWEb/rgc4fbWrWRLXUlffQTr2NfPgJRTnrCd
+	 4daaTdp1642C3ffqU73I8PXQ2XqhRBAvVgLzCjSrdSnc5bsLWiASnzUA8htQ0Yuvh/
+	 M6AqwPUQFV5V5JbUA/HvXNbVqqYz058O/mtzaC6/WBq0zcaucPlu+xrvgcDh02O4Kw
+	 sgQ0GyU7DU0hWxos77KbznvJisxIoe4rJO5JMrSi6cu/bpFdmW+pBZikQyFdngGwHi
+	 7cT4cwd8dZdPjVpt9wiLpw54ghQ+qu25dv8f2uicDVxkE5AqtRGCsFT5FQaRr3tNN0
+	 J0PDU9bXpcz3g==
+X-Pm-Submission-Id: 4hYTtl3ZLjz2ScWc
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v3 5/5] drm/bridge: nwl-dsi: Correct MIPI DSI horizontal
+ sync timing
+In-Reply-To: <20260810072653.515921F00A3A@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Mon, 10 Aug 2026 07:26:52
+	+0000")
+References: <20260810-nwl-dsi-fixes-v3-0-256da9d672e1@geanix.com>
+	<20260810-nwl-dsi-fixes-v3-5-256da9d672e1@geanix.com>
+	<mcSGy7EoSsDpaVsJfV5nJkv5f6NekcgqWjEc2a3y2pu4msCAOuHkbW_dOtdeGcj9_RY7DxBTu8Q1UxmtQYxR9w==@protonmail.internalid>
+	<20260810072653.515921F00A3A@smtp.kernel.org>
+Date: Mon, 31 Aug 2026 15:12:46 +0200
+Message-ID: <87qzjev3g1.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 22/23] perf annotate-arm64: Support per-cpu variable
- access tracking
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
- <20260808122400.2961238-23-wutengda@huaweicloud.com>
- <20260808131848.43DEF1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260808131848.43DEF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgDXvwp+fJVqfc75AA--.63438S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJw1UGw48GFyrAr4fZrb_yoW5WFy8pa
-	95CayrGr1rXr4FganrZw4rXFyS9ws7WrWF9Fyqkr4avr9avr97KF97tay5KFW7Gr95Aa12
-	qws8tr47Zw1093DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7
-	CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain
 
+<sashiko-bot@kernel.org> writes:
 
-
-On 2026/8/8 21:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete offset calculation for multi-register memory operands causes inaccurate type resolution.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Implicit 64-bit division using the `/` operator causes link errors on 32-bit architectures.
+> - [Low] Integer overflow in `dsi->mode.clock * 1000` for high pixel clocks.
+> - [Low] Redundant picosecond period conversion introduces precision loss and forces 64-bit math.
 > --
-> 
-> --- Patch [22]: [PATCH v4 22/23] perf annotate-arm64: Support per-cpu variable access tracking ---
-> commit d7e10ade80ba3983e6d311e1ab11f19b4af2d53e
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> Subject: perf annotate-arm64: Support per-cpu variable access tracking
-> 
-> This commit extends update_insn_state() for arm64 to handle per-cpu variable
-> addressing. It identifies per-cpu base initialization and propagates type
-> information to subsequent instructions. This allows the tracker to correctly
-> resolve the actual variable type in per-cpu flows.
-> 
->> diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
->> index 7fe5b979563f7..8b0584486cce9 100644
->> --- a/tools/perf/util/annotate-data.c
->> +++ b/tools/perf/util/annotate-data.c
->> @@ -1253,11 +1253,33 @@ static enum type_match_result check_matching_type(struct type_state *state,
->>  	}
->>  
->>  	if (state->regs[reg].kind == TSR_KIND_PERCPU_BASE) {
->> -		u64 var_addr = dloc->op->offset;
->> +		u64 var_addr;
->>  		int var_offset;
-> 
+>
+> --- Patch [5]: [PATCH v3 5/5] drm/bridge: nwl-dsi: Correct MIPI DSI horizontal sync timing ---
+> commit 54cf1e5377e7b6795c12c78939b18d1607d54031
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> drm/bridge: nwl-dsi: Correct MIPI DSI horizontal sync timing
+>
+> The commit updates the NWL MIPI Host controller's horizontal sync timing
+> calculations. It converts hfp, hsa, and hbp to DSI packet bytes and
+> subtracts the packet header size. This aligns the timing configuration
+> with the i.MX 8M reference manual.
+>
+>> diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
+>> index e90588299c5ea..87d22b3bd79c7 100644
+>> --- a/drivers/gpu/drm/bridge/nwl-dsi.c
+>> +++ b/drivers/gpu/drm/bridge/nwl-dsi.c
 > [ ... ]
-> 
->> +		var_addr = dloc->op->offset;
+>> @@ -317,9 +322,62 @@ static int nwl_dsi_config_dpi(struct nwl_dsi *dsi)
+>>  			      dsi->mode.hdisplay);
+>>  	}
+>>
+>> -	nwl_dsi_write(dsi, NWL_DSI_HFP, hfront_porch);
+>> -	nwl_dsi_write(dsi, NWL_DSI_HBP, hback_porch);
+>> -	nwl_dsi_write(dsi, NWL_DSI_HSA, hsync_len);
+>> +	pclk_period = DIV_ROUND_UP_ULL(PSEC_PER_SEC, dsi->mode.clock * 1000);
+>
+> [Severity: Low]
+> Could this multiplication overflow on high pixel clocks? dsi->mode.clock is a
+> signed 32-bit integer, so multiplying by 1000 could overflow if the clock
+> exceeds roughly 2.147 GHz. The resulting negative number would then be
+> sign-extended into a large unsigned long long for DIV_ROUND_UP_ULL(). Perhaps
+> casting to 1000ULL would avoid this?
+
+There is no 32-bit platform using this driver. Should/could we mark this
+driver in some way to make it clear for sashiko-bot and others that it
+is not relevant to consider 32-bit integer calculations for this driver?
+
+>> +	DRM_DEV_DEBUG_DRIVER(dsi->dev, "pclk_period: %llu\n", pclk_period);
 >> +
->>  		if (dloc->op->multi_regs) {
->>  			int reg2 = dloc->op->reg2;
-> 
-> [Severity: Medium]
-> Does the TSR_KIND_GLOBAL_ADDR handling later in check_matching_type() need
-> similar logic for multi-register operands to ensure accurate type resolution?
-> 
-> Currently, for TSR_KIND_GLOBAL_ADDR, the logic does not consider multi-register
-> operands:
-> 
-> 	if (state->regs[reg].kind == TSR_KIND_GLOBAL_ADDR) {
-> 		u64 var_addr = state->regs[reg].imm_value + dloc->op->offset;
-> 		int var_offset;
-> 
-> This calculation omits adding state->regs[reg2].imm_value for multi-register
-> operands, unlike the TSR_KIND_PERCPU_BASE logic in the same function. The
-> omission also appears to apply to TSR_KIND_TYPE and TSR_KIND_POINTER.
-> 
-> Can this incomplete offset calculation cause incorrect type resolution in
-> tools/perf/util/annotate-data.c:check_matching_type() when perf processes a
-> memory instruction where op->multi_regs is true, the primary register is
-> TSR_KIND_GLOBAL_ADDR (or TYPE/POINTER), and the secondary register is
-> TSR_KIND_CONST?
-> 
+>> +	hs_period = DIV_ROUND_UP_ULL(PSEC_PER_SEC, dsi->phy_cfg.mipi_dphy.hs_clk_rate);
+>> +	DRM_DEV_DEBUG_DRIVER(dsi->dev, "hs_period: %llu\n", hs_period);
+>> +
+>> +	/*
+>> +	 * Calculate the bytes needed, according to the RM formula:
+>> +	 * Time of DPI event = time to transmit x number of bytes on the DSI
+>> +	 * interface
+>> +	 * dpi_event_size * dpi_pclk_period = dsi_bytes * 8 * hs_bit_period /
+>> +	 * num_lanes
+>> +	 * ===>
+>> +	 * dsi_bytes = dpi_event_size * dpi_pclk_period * num_lanes /
+>> +	 * (8 * hs_bit_period)
+>> +	 */
+>> +	hfp = hfront_porch * pclk_period * dsi->lanes / (8 * hs_period);
+>> +	hbp = hback_porch * pclk_period * dsi->lanes / (8 * hs_period);
+>> +	hsa = hsync_len * pclk_period * dsi->lanes / (8 * hs_period);
+>
+> [Severity: Low]
+> Does calculating the period in picoseconds introduce unnecessary precision loss?
+> By calculating pclk_period and hs_period first and then dividing them, the
+> math effectively does (10^12 / pclk) / (10^12 / hs_clk). For example, 148.5MHz
+> becomes 6735ps instead of 6734.0067ps. Using the raw clock rates directly
+> might eliminate intermediate rounding errors.
 
-Perhaps we need a helper function at the beginning of check_matching_type() to
-calculate the accurate offset value. I can see several cases:
+I change the calculation to use the raw clock rates directly for next version.
 
-1. single register addressing
-   [reg, #offset]
+> [Severity: High]
+> Will this standard division operator cause build failures on 32-bit platforms?
+> pclk_period and hs_period are 64-bit variables, so using the / operator here
+> will result in undefined reference to __udivdi3 during linking on 32-bit
+> architectures. Using div64_u64() or refactoring to use a 32-bit denominator
+> would prevent this link error.
 
-2. post-index addressing
-   [reg], #offset
+As mentioned above, there is no use of this driver on 32-bit platforms.
 
-3. SIB-like addressing
-   [base, index, lsl #3]
-
-4. multi-reg addressing with constant register.
-   [base, reg2]  // reg2 is a const
-
-Thanks,
-Tengda
-
+/Esben
