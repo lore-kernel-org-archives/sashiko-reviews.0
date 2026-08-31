@@ -1,56 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFD437DEBB;
-	Mon, 31 Aug 2026 22:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA68E3BBFDA;
+	Mon, 31 Aug 2026 22:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788214192; cv=none; b=QzzADkQ0wZ38pUhrM3X2rAbTtl8UIAOtZmqsg0oxc7MKW2CFom9g0hnVUHC1a1anr/1pJSsDwk4XAgaZ/Nm3ECPhSLq1eqo8wtmqXesgWqvrnnfqoeMfOwsePd7kWMKLt7V9y2SVZGlUiiQY64Vxn1ECJiN4QOwlBsi8qoVJKNU=
+	t=1788216200; cv=none; b=RaiK2AAw/8dbN6+zFq7G13wWiCwroTN6taoYfYWk1fa0/9RSnnXgqrMQMSTJEFFwrSMwfD/hVgIPE/xxQxjyRpl8v8uceYVPVJE2EXq2duaTPnJM5gQanM4/7cWGYwAbZv2wigUBL4n/FjnPc60Mk7VWS6iNGy4c1VUXwpFK1Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788214192; c=relaxed/simple;
-	bh=/iC6xJJUIQpfixwHpH/e8GK63KK0JkBeM0VC2ufMo7U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SLuuwH7OIuBs+htyk9Ft5Lf9DdetEGM3NINWUe7AlFhXW25CHIwz+0d4OmBhbw3FzOzxAoNnIMCfXmgZAgQ2bGtxhQCyxwMCn/egzJZ8vo3pEl4OmV46zbdbkcbHkKP0wgBynlkM/4KUBKtvONtDdHrLmiZpeBL0SI8c7uHQzPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2UioUEu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788216200; c=relaxed/simple;
+	bh=C86cLwqiVQjgoUmy6okisb8H6iBfeqc014Ec4WxbZhc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Subject; b=YF1Nt/XEJKB+cx20CFz/fz9EnKRCHIn3TnrZB1YF8C38CHEypvFavjza6EBMJjTX5mK9/b0nuI8/1TTPJY1pAOXJhm81vkvae2iY80QVDvLxhIzmXv36mBVlI8XkCQqKTISnyTKxzqNebGmpuOoyW05gBG13CDOBmaDot4geRCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=trc7TcJ5; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2UioUEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB01F000E9;
-	Mon, 31 Aug 2026 22:09:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788214191;
-	bh=PzWWnr0hiy9peB+s9jyKzukHRtZJ6bRxbLzBUNXAu08=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=l2UioUEu30O9vSijgHY9Ls4ZtLZd8dYtj8hBJTytWSmXTysWW34NwXZATF3cFea0M
-	 Ir/AIkz+L5Aa8OfYoxcNjENvwz56q5iozRw+xdGjt275tc/pWlGFVseuC66vXnL7Vr
-	 RViANhetW8wUNDEtLAZot2g6mW/ymJqRCMNKqZpkWOpsH3J9q6xN1eQ9402gPjDudy
-	 wMQ3/xJh3nuTH4JxXGF3t4XHncSwoNW9NPdwYdvho5jRM98TPtkRxj3Fx+3vu08UTD
-	 bMVwdk3mL44NgCtV55raLCEcb4Iv+pIz+7dIkaFAzLxxQASWX3PsUnLx4ulp0BmZMd
-	 AKRa2+qNCuD9Q==
-Date: Mon, 31 Aug 2026 15:09:50 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
-Subject: Re: [PATCH RESEND] raid6: add missing vzeroupper to AVX-512 code
-Message-ID: <20260831220950.GI86114@quark>
-References: <20260831212316.213896-1-ebiggers@kernel.org>
- <20260831220754.8CD601F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="trc7TcJ5"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=JgABZjKONoUgmU+jz86iozL3tdgr8GNXvtkYvMs144k=; b=trc7TcJ5em4eCn4LpAsA+5zfUE
+	XW0Rce9463xoN5+Z9eiHAur7vUwu0YvGLm3SPuBh61ysIZ3j9YI5buVuMYN001UP/J2rup/hasf1x
+	/fs8pDBf7x9WVPoleRLq3Yf1xffUbmVr3xlYcBzTu9wUEcM6yntEv/OGE8PLQlurW03vd14LIfoh8
+	iZF99A0eSbWFrYR68XIf4ErPwnz4wyoKeBnLzcBZdA8mRhT81xrCU5fdokLUjmJuWJ0ZYuWl4C8Sy
+	qiKP/zGJHUf7UyEVS1XHtkHAClYufc7YCkXiyPEEjt9vUOHhGS80npVqWIhslEyRf9DDI2sNYgdJx
+	nusVhRBA==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1x1Aik-0000000095W-1bI9;
+	Mon, 31 Aug 2026 16:43:19 -0600
+Message-ID: <53a3a210-518b-46eb-b73f-bc9ddc51a108@deltatee.com>
+Date: Mon, 31 Aug 2026 16:43:17 -0600
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260831220754.8CD601F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, linux-pci@vger.kernel.org, Frank.Li@kernel.org,
+ dmaengine@vger.kernel.org
+References: <20260831191403.207631-1-logang@deltatee.com>
+ <20260831191403.207631-4-logang@deltatee.com>
+ <20260831215146.4EC931F000E9@smtp.kernel.org>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <20260831215146.4EC931F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, vkoul@kernel.org, linux-pci@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v5 03/12] dmaengine: switchtec-dma: always clear DMA base
+ registers on chan_stop()
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-On Mon, Aug 31, 2026 at 10:07:54PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+
+
+On 2026-08-31 15:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
 > 
-> Pre-existing issues:
-> - [High] Missing `vzeroupper` in AVX and AVX2 RAID6 and XOR implementations
-> - [High] Missing `vzeroupper` in ARIA GFNI AVX512 crypto routines
+> New issues:
+> - [High] Clearing DMA base registers to 0 redirects runaway DMA to physical address 0, causing critical memory corruption.
+> - [High] Unconditional memory leak of DMA descriptor rings during device hot-unplug because -ENODEV is treated as a halt timeout.
+> - [High] Dangling pointers allow intentionally leaked DMA memory to be accidentally freed on subsequent channel allocation failure, risking hardware memory corruption.
 
-Already addressed by other patches I sent.
+Ugg, ok yes. Seems patches 3 and 4 still have issues that I thought were
+resolved. I'll drop them for now and resend a v6 without them tomorrow.
 
-- Eric
+Sorry, for the noise. I was wrong about this one.
+
+Logan
