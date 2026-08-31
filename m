@@ -1,299 +1,298 @@
-Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C05B43C7D3;
-	Mon, 31 Aug 2026 13:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7047340E8C5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 14:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184644; cv=none; b=Ggw9jnVm3lnGrd1Z8fcN7ZX528fG2AV42OZDCTkOLgvLmXo/S/kWasjtDstSc59yedF7BwZdog4/OaCKp9JUl6cejEEDTiwv5LzUtXtO51W41uVfduCrg6LXt6Vdko5f3rTj1VxtYyHXDr9TgmtABknsyESRQvxZhtTIqau34cw=
+	t=1788185525; cv=none; b=hvFuQze90N+BCzte0LjSVY9yC1l7dwGVPLbQ8coobSWkp6Ncy5si7/n2SMgvZ/BCPFwfavPnZkkMuvXtGtoY9kI1QEG7iqjv0eXNBtIPFdmmo5nqX8eqHb/4zWWYYzOb0ox+4q2LHekNQOQX0fQtT2bUFq8f6GFMwnqrcIIHg8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184644; c=relaxed/simple;
-	bh=DYy7Yh5VuqJ1tPQ5cWpknZiVqRNrR5tqzqmfJyw4ppI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dKjjmtCFjoHbvsp2PAOTU+Ks8qX/TeHz1DfCS9dlaql03B7fnL9+GIJyaMhg/qxEsjNQxHYQZY4AjZDbobD4YOSV0818iilDxyJWdli1KVoSTJ6jXZWr2JK9ZknegJj0TEvV/ssIFZ0oaBdtD5H8njr6XlJjdI+xl/x3/hknx5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=tmZnaFti; arc=none smtp.client-ip=113.46.200.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1788185525; c=relaxed/simple;
+	bh=HWPIBWzzbMwumgFMc17vWU1woudco/zjK0YqQJv0io0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PyH+i7ymOWmUui49Z1W3D/kSDa1hpUss9jSfdK/RUr5ZdPk8RzhMtctQIIWWrEg6OuGIGce5gPxwRXYKx5r/DEIS9acBbhlXJeSiGSYx9Y2PfhhyiJd8xVluE1ndsTKBe/SbDim6dGIfszcEmUuN+chZdsJUQ0dFMiLDIuaW0Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ebXZQqIz; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="tmZnaFti"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=yJ/L9x3rTRjFD26y3XQs185XmGwXv5WubIyollA9Msw=;
-	b=tmZnaFtiFCAbBFLgoaXNhmkgyAZn/eVaaDzcPuviyReaeVQ4TD//qtIEmx0GJiwhGW1k2SCyt
-	h8PQASl+cY89VEVoEeuVgvyyp0YRBaHPTBARcK/M0YSRoP6lj4OXBstkdbKE68K+tFgdDzQ8SBr
-	JUY+2lNhfV6cP/l4j100xas=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4hYVdZ5QqnzRhWS;
-	Mon, 31 Aug 2026 21:46:26 +0800 (CST)
-Received: from kwepemr100010.china.huawei.com (unknown [7.202.195.125])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8CB724057D;
-	Mon, 31 Aug 2026 21:57:13 +0800 (CST)
-Received: from [10.67.120.103] (10.67.120.103) by
- kwepemr100010.china.huawei.com (7.202.195.125) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 31 Aug 2026 21:57:13 +0800
-Message-ID: <5f750f14-1b80-49d7-96ec-415eb6457224@huawei.com>
-Date: Mon, 31 Aug 2026 21:57:12 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ebXZQqIz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788185522; x=1819721522;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=HWPIBWzzbMwumgFMc17vWU1woudco/zjK0YqQJv0io0=;
+  b=ebXZQqIzFrvNFH6pHlmTCQZK1gZaoN8H0sAlqxxaL3qfyYxSudC+82EI
+   v9uZgsT7wK/lxXTmp/R7j9Xf+O8FC7lf2dyrovTEZ8LxmrsoslR40feD6
+   5z74Ph4WMW4XNSyJjYQ9xcogY12PVo4H53gfEzNKSpTta4rVUCHMFgxn3
+   cEPJrwzzE2qU952pxI7JbUfVZrGJhSrr5EYodUXXWrdqYhfVALvpKUMy6
+   5Mcn7i2KUVPebJPqRTnrIIvm6MhuSf1/gCBQbQVpAOl3Zy/GG+kYeSW2u
+   lYSSC9RfEO8s9Jm4F5BNRml/Uw1mPDcYr7sd6Cvr6duQk/L60e+mZYVvJ
+   w==;
+X-CSE-ConnectionGUID: 1bhNjooTQyqqW8+BI9YpxQ==
+X-CSE-MsgGUID: mQVIpQxaQhS1hT+RusN+Qg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="92403400"
+X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
+   d="scan'208";a="92403400"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 07:12:01 -0700
+X-CSE-ConnectionGUID: D5dIK2cQQPCScyCrBeUCIQ==
+X-CSE-MsgGUID: FdFGga3oRZ+6F2o1qpQk+g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
+   d="scan'208";a="274079290"
+Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.22])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 07:11:58 -0700
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
+ ardb@kernel.org, ilias.apalodimas@linaro.org,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
+ airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2 3/3] drm/sysfb: Use preferred panel size for panel
+ orientation quirks
+In-Reply-To: <abe7ae7c-9df7-44d2-8760-2378fc72cf38@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20260831093020.494701-1-tzimmermann@suse.de>
+ <20260831093020.494701-4-tzimmermann@suse.de>
+ <81d5820013693b38a88084d6818c5809373c16c2@intel.com>
+ <abe7ae7c-9df7-44d2-8760-2378fc72cf38@suse.de>
+Date: Mon, 31 Aug 2026 17:11:56 +0300
+Message-ID: <f48489c047930ee02295a3f3f3b61258f57e86c8@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/6] KVM: arm64: Add HDBSS fault handling and buffer
- flush
-To: <sashiko-reviews@lists.linux.dev>
-CC: Oliver Upton <oupton@kernel.org>, <kvmarm@lists.linux.dev>,
-	<kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20260709104026.2612599-1-zhengtian10@huawei.com>
- <20260709104026.2612599-6-zhengtian10@huawei.com>
- <20260709112655.339D91F000E9@smtp.kernel.org>
-From: Tian Zheng <zhengtian10@huawei.com>
-In-Reply-To: <20260709112655.339D91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- kwepemr100010.china.huawei.com (7.202.195.125)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> Hi
+>
+> Am 31.08.26 um 15:23 schrieb Jani Nikula:
+>> On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>>> Sysfb drivers currently use the given display mode for looking up the
+>>> panel orientation. But the look-up table stores the native geometry of
+>>> the panels, so the lookup fails if the current mode sizes differs.
+>>>
+>>> Get the panel's native geometry with drm_edid_get_preferred_size() from
+>>> the EDID and use it for looking up the panel orientation.
+>>>
+>>> v2:
+>>> - ofdrm: validate EDID header before using it (Sashiko)
+>>>
+>>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>>> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+>>> ---
+>>>   drivers/gpu/drm/sysfb/efidrm.c  | 17 ++++++++++++++++-
+>>>   drivers/gpu/drm/sysfb/ofdrm.c   | 18 ++++++++++++++++--
+>>>   drivers/gpu/drm/sysfb/vesadrm.c | 17 ++++++++++++++++-
+>>>   3 files changed, 48 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efi=
+drm.c
+>>> index 3f9cd5d03efb..7a7d12003304 100644
+>>> --- a/drivers/gpu/drm/sysfb/efidrm.c
+>>> +++ b/drivers/gpu/drm/sysfb/efidrm.c
+>>> @@ -152,6 +152,7 @@ static struct efidrm_device *efidrm_device_create(s=
+truct drm_driver *drv,
+>>>   	const struct screen_info *si;
+>>>   	const struct drm_format_info *format;
+>>>   	int width, height, stride;
+>>> +	unsigned int panel_width, panel_height;
+>>>   	s64 vsize;
+>>>   	u64 mem_flags;
+>>>   	struct resource resbuf;
+>>> @@ -217,6 +218,20 @@ static struct efidrm_device *efidrm_device_create(=
+struct drm_driver *drv,
+>>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) =3D=3D 8)
+>>>   		sysfb->edid =3D dpy->edid.dummy;
+>>>   #endif
+>>> +
+>>> +	panel_width =3D width;
+>>> +	panel_height =3D height;
+>>> +
+>>> +	if (sysfb->edid) {
+>>> +		const struct drm_edid *drm_edid;
+>>> +
+>>> +		drm_edid =3D drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>>> +		if (drm_edid) {
+>>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>>> +			drm_edid_free(drm_edid);
+>>> +		}
+>>> +	}
+>>> +
+>> Unrelated to the patch at hand, but does all of this code assume EDID is
+>> always just one block? Scary. The whole sysfs->edid being a u8 pointer
+>> without size feels like a footgun.
+>
+> For UEFI and VESA it's always one block of 128 bytes in size. The boot=20
+> parameters hard-code this value and there's no space for additional=20
+> blocks. [1]=C2=A0 On OpenFirmware, ofdrm checks the size to be EDID_LENGT=
+H.=20
+> [2] I guess there could more blocks there, but AFAIK the DT property=20
+> only exists on ancient PPC MACs. I have no means of testing, but the=20
+> test file I obtained from such a system is 128 bytes.
+>
+> [1]=20
+> https://elixir.bootlin.com/linux/v7.2.2/source/arch/x86/include/uapi/asm/=
+bootparam.h#L133
+> [2]=20
+> https://elixir.bootlin.com/linux/v7.2.2/source/drivers/gpu/drm/sysfb/ofdr=
+m.c#L229
+>
+>
+>>
+>> Here, the above should work, but I've been kind of hoping to eradicate
+>> EDID_LENGTH assumptions and calculations from everywhere outside of
+>> drm_edid.c, because it's complicated.
+>
+> We need some way of importing the raw data block into drm_edid.c, which=20
+> in turn needs the buffer size. The drivers could do this without=20
+> EDID_LENGTH if that helps. Note that the drivers use the regular=20
+> machinery from drm_edid.c for dissecting the EDID block. See [3].
+>
+> [3]=20
+> https://elixir.bootlin.com/linux/v7.2.2/source/drivers/gpu/drm/sysfb/drm_=
+sysfb_modeset.c#L594
+
+Okay, thanks for the pointers.
+
+BR,
+Jani.
 
 
+>
+> Best regards
+> Thomas
+>
+>
+>>
+>>
+>> BR,
+>> Jani.
+>>
+>>
+>>>   	sysfb->fb_mode =3D drm_sysfb_mode(width, height, 0, 0);
+>>>   	sysfb->fb_format =3D format;
+>>>   	sysfb->fb_pitch =3D stride;
+>>> @@ -340,7 +355,7 @@ static struct efidrm_device *efidrm_device_create(s=
+truct drm_driver *drv,
+>>>   	drm_connector_helper_add(connector, &efidrm_connector_helper_funcs);
+>>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>>> -						       width, height);
+>>> +						       panel_width, panel_height);
+>>>   	if (sysfb->edid)
+>>>   		drm_connector_attach_edid_property(connector);
+>>>=20=20=20
+>>> diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdr=
+m.c
+>>> index 9d60db45139c..a0a865aee098 100644
+>>> --- a/drivers/gpu/drm/sysfb/ofdrm.c
+>>> +++ b/drivers/gpu/drm/sysfb/ofdrm.c
+>>> @@ -229,7 +229,7 @@ static const u8 *display_get_edid_of(struct drm_dev=
+ice *dev, struct device_node
+>>>   {
+>>>   	int ret =3D of_property_read_u8_array(of_node, "EDID", buf, EDID_LEN=
+GTH);
+>>>=20=20=20
+>>> -	if (ret)
+>>> +	if (ret || drm_edid_header_is_valid(buf) !=3D 8)
+>>>   		return NULL;
+>>>   	return buf;
+>>>   }
+>>> @@ -828,6 +828,7 @@ static struct ofdrm_device *ofdrm_device_create(str=
+uct drm_driver *drv,
+>>>   	enum ofdrm_model model;
+>>>   	bool big_endian;
+>>>   	int width, height, depth, linebytes;
+>>> +	unsigned int panel_width, panel_height;
+>>>   	const struct drm_format_info *format;
+>>>   	u64 address;
+>>>   	const u8 *edid;
+>>> @@ -998,6 +999,19 @@ static struct ofdrm_device *ofdrm_device_create(st=
+ruct drm_driver *drv,
+>>>   		sysfb->fb_gamma_lut_size =3D OFDRM_GAMMA_LUT_SIZE;
+>>>   	sysfb->edid =3D edid;
+>>>=20=20=20
+>>> +	panel_width =3D width;
+>>> +	panel_height =3D height;
+>>> +
+>>> +	if (sysfb->edid) {
+>>> +		const struct drm_edid *drm_edid;
+>>> +
+>>> +		drm_edid =3D drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>>> +		if (drm_edid) {
+>>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>>> +			drm_edid_free(drm_edid);
+>>> +		}
+>>> +	}
+>>> +
+>>>   	drm_dbg(dev, "display mode=3D{" DRM_MODE_FMT "}\n", DRM_MODE_ARG(&sy=
+sfb->fb_mode));
+>>>   	drm_dbg(dev, "framebuffer format=3D%p4cc, size=3D%dx%d, linebytes=3D=
+%d byte\n",
+>>>   		&format->format, width, height, linebytes);
+>>> @@ -1069,7 +1083,7 @@ static struct ofdrm_device *ofdrm_device_create(s=
+truct drm_driver *drv,
+>>>   	drm_connector_helper_add(connector, &ofdrm_connector_helper_funcs);
+>>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>>> -						       width, height);
+>>> +						       panel_width, panel_height);
+>>>   	if (edid)
+>>>   		drm_connector_attach_edid_property(connector);
+>>>=20=20=20
+>>> diff --git a/drivers/gpu/drm/sysfb/vesadrm.c b/drivers/gpu/drm/sysfb/ve=
+sadrm.c
+>>> index 6a67b2d2e451..8c52bbac6d2f 100644
+>>> --- a/drivers/gpu/drm/sysfb/vesadrm.c
+>>> +++ b/drivers/gpu/drm/sysfb/vesadrm.c
+>>> @@ -402,6 +402,7 @@ static struct vesadrm_device *vesadrm_device_create=
+(struct drm_driver *drv,
+>>>   	const struct screen_info *si;
+>>>   	const struct drm_format_info *format;
+>>>   	int width, height, stride;
+>>> +	unsigned int panel_width, panel_height;
+>>>   	s64 vsize;
+>>>   	struct resource resbuf;
+>>>   	struct resource *res;
+>>> @@ -484,6 +485,20 @@ static struct vesadrm_device *vesadrm_device_creat=
+e(struct drm_driver *drv,
+>>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) =3D=3D 8)
+>>>   		sysfb->edid =3D dpy->edid.dummy;
+>>>   #endif
+>>> +
+>>> +	panel_width =3D width;
+>>> +	panel_height =3D height;
+>>> +
+>>> +	if (sysfb->edid) {
+>>> +		const struct drm_edid *drm_edid;
+>>> +
+>>> +		drm_edid =3D drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>>> +		if (drm_edid) {
+>>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>>> +			drm_edid_free(drm_edid);
+>>> +		}
+>>> +	}
+>>> +
+>>>   	sysfb->fb_mode =3D drm_sysfb_mode(width, height, 0, 0);
+>>>   	sysfb->fb_format =3D format;
+>>>   	sysfb->fb_pitch =3D stride;
+>>> @@ -585,7 +600,7 @@ static struct vesadrm_device *vesadrm_device_create=
+(struct drm_driver *drv,
+>>>   	drm_connector_helper_add(connector, &vesadrm_connector_helper_funcs);
+>>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>>> -						       width, height);
+>>> +						       panel_width, panel_height);
+>>>   	if (sysfb->edid)
+>>>   		drm_connector_attach_edid_property(connector);
 
-On 7/9/2026 7:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [Critical] Acquiring `kvm->mmu_lock` inside the preempt notifier (`kvm_sched_out` -> `kvm_arch_vcpu_put`) creates an ABBA deadlock with the runqueue lock.
-> - [High] `kvm_flush_hdbss_buffer` calls `kvm_vcpu_mark_page_dirty` without holding `srcu_read_lock(&kvm->srcu)`, leading to Use-After-Free.
-> - [High] `kvm_arch_sync_dirty_log` silently misses dirty pages for vCPUs outside guest mode due to `KVM_REQUEST_WAIT` semantics.
-> - [High] Flushing the entire HDBSS buffer in a single tight loop can overflow the KVM dirty ring, resulting in dropped dirty pages.
-> - [High] Directly accessing the EL2 register `SYS_HDBSSPROD_EL2` from the host kernel will crash in nVHE mode.
-> - [Medium] Missing immediate Context Synchronization Event (`isb()`) after writing to control-plane system register `SYS_HDBSSPROD_EL2`.
-> --
-> 
-> --- Patch [5]: [PATCH v4 5/6] KVM: arm64: Add HDBSS fault handling and buffer flush ---
-> commit ac61acd739dfa5c2e5304969807c386e60452069
-> Author: eillon <yezhenyu2@huawei.com>
-> Date:   Thu Jul 9 10:40:25 2026 +0000
-> 
->      KVM: arm64: Add HDBSS fault handling and buffer flush
-> 
-> This patch adds handling for HDBSS (Hardware Dirty Bit State Stream) faults,
-> triggering flush requests when the hardware buffer becomes full. It implements
-> kvm_flush_hdbss_buffer to sync the hardware buffer to the dirty bitmap, which
-> is invoked during vcpu_put, request checks, and dirty log synchronization.
-> 
->> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
->> index bf6688245d83a..566953a4e23a1 100644
->> --- a/arch/arm64/kvm/arm.c
->> +++ b/arch/arm64/kvm/arm.c
->> @@ -755,6 +755,9 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
->>   		kvm_vcpu_put_hw_mmu(vcpu);
->>   	kvm_arm_vmid_clear_active();
->>   
->> +	if (vcpu->kvm->arch.enable_hdbss)
->> +		kvm_flush_hdbss_buffer(vcpu);
->> +
-> 
-> [Severity: Critical]
-> Could this create an ABBA deadlock with the runqueue lock?
-> 
-> When the scheduler preempts a vCPU thread, it invokes the KVM preempt
-> notifier kvm_sched_out() with the runqueue lock (rq->lock) held and
-> interrupts disabled. This calls kvm_arch_vcpu_put(), which in turn
-> calls kvm_flush_hdbss_buffer().
-> 
-> The flush function then acquires vcpu->kvm->mmu_lock. Because other
-> standard KVM execution paths acquire mmu_lock and may subsequently
-> wake up tasks (which acquires rq->lock), this establishes an unavoidable
-> locking inversion between rq->lock and mmu_lock.
-> 
-
-v5 uses srcu_read_lock(&kvm->srcu) in the flush path, not mmu_lock. The
-flush is also moved from vcpu_put() to the run-loop exit path, so no
-lock inversion is possible.
-
-> [Severity: High]
-> Is it safe to call kvm_flush_hdbss_buffer() here without holding the
-> KVM SRCU read lock?
-> 
-> The kvm_flush_hdbss_buffer() function calls kvm_vcpu_mark_page_dirty(),
-> which dereferences the KVM memslots array via kvm_vcpu_gfn_to_memslot().
-> 
-> When this flush is invoked from kvm_arch_vcpu_put() during vcpu_put(),
-> kvm->srcu is not held. The mmu_lock does not protect the memslots array
-> structure itself, which could lead to a use-after-free if memslots are
-> concurrently modified.
-> 
-> [ ... ]
-> 
->> @@ -1971,7 +1977,15 @@ long kvm_arch_vcpu_unlocked_ioctl(struct file *filp, unsigned int ioctl,
->>   
->>   void kvm_arch_sync_dirty_log(struct kvm *kvm, struct kvm_memory_slot *memslot)
->>   {
->> +	/*
->> +	 * Flush all CPUs' dirty log buffers to the dirty_bitmap.  Called
->> +	 * before reporting dirty_bitmap to userspace. Send a request with
->> +	 * KVM_REQUEST_WAIT to flush buffer synchronously.
->> +	 */
->> +	if (!kvm->arch.enable_hdbss)
->> +		return;
->>   
->> +	kvm_make_all_cpus_request(kvm, KVM_REQ_FLUSH_HDBSS | KVM_REQUEST_WAIT);
->>   }
-> 
-
-Fixed in v5. kvm_flush_hdbss_buffer() now holds srcu_read_lock(&kvm-
- >srcu) around memslot lookups.
-
-> [Severity: High]
-> Will this wait for vCPUs that have exited to userspace?
-> 
-> The KVM_REQUEST_WAIT flag causes KVM to wait only for vCPUs that are
-> currently executing in guest mode. If a vCPU has exited the guest to host
-> userspace, it is not in guest mode, but its HDBSS hardware buffer might
-> still contain unflushed dirty pages.
-> 
-> Since the flush request is pended but not waited for, could this return
-> immediately and cause userspace to read an incomplete dirty bitmap during
-> live migration?
-> 
->> diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
->> index 6c7a6ef66b5aa..002366337637c 100644
->> --- a/arch/arm64/kvm/dirty_bit.c
->> +++ b/arch/arm64/kvm/dirty_bit.c
->> @@ -50,3 +50,65 @@ void kvm_arm_vcpu_free_hdbss(struct kvm_vcpu *vcpu)
-> 
-> [ ... ]
-> 
->> +void kvm_flush_hdbss_buffer(struct kvm_vcpu *vcpu)
->> +{
->> +	int idx, curr_idx;
->> +	u64 *hdbss_buf;
->> +	struct kvm *kvm = vcpu->kvm;
->> +
->> +	if (!kvm->arch.enable_hdbss)
->> +		return;
->> +
->> +	curr_idx = HDBSSPROD_IDX(read_sysreg_s(SYS_HDBSSPROD_EL2));
-> 
-
-The kvm_vcpu_kick() is indeed asynchronous; it only forces vCPUs
-currently in guest mode to exit, where the exit path flushes their HDBSS
-buffer.
-
-vCPUs that have already exited to userspace have already flushed the
-buffer on their way out, and while parked in userspace they cannot
-accumulate new entries. For the racing case where a vCPU is kicked but
-still in userspace, it will flush before re-entering the guest, but not
-immediately.
-
-This is fine by design: the generic KVM dirty-log API explicitly
-documents that concurrent bitmap writes may race with KVM_GET_DIRTY_LOG
-(see the comment above kvm_get_dirty_log_protect() in virt/kvm/
-kvm_main.c). The GET/CLEAR protocol is self-healing — any bit set after
-the snapshot is taken won't be cleared by the matching
-KVM_CLEAR_DIRTY_LOG, so it survives to the next iteration. The migration
-protocol handles this iteratively, and the final snapshot is taken with
-the guest paused, ensuring completeness.
-
-> [Severity: High]
-> Can this safely execute in nVHE mode?
-> 
-> This reads the SYS_HDBSSPROD_EL2 register directly from host context.
-> In KVM nVHE mode, the host kernel executes at EL1. Accessing an EL2
-> register from EL1 will trigger an undefined instruction exception and
-> panic the host.
-> 
->> +
->> +	/* Do nothing if HDBSS buffer is empty or br_el2 is NULL */
->> +	if (curr_idx == 0 || vcpu->arch.hdbss.hdbssbr_el2 == 0)
->> +		return;
->> +
->> +	hdbss_buf = page_address(phys_to_page(vcpu->arch.hdbss.base_phys));
->> +	if (!hdbss_buf)
->> +		return;
->> +
->> +	guard(write_lock_irqsave)(&vcpu->kvm->mmu_lock);
->> +	for (idx = 0; idx < curr_idx; idx++) {
->> +		u64 gpa;
->> +
->> +		gpa = hdbss_buf[idx];
->> +		if (!(gpa & HDBSS_ENTRY_VALID))
->> +			continue;
->> +
->> +		gpa &= HDBSS_ENTRY_IPA;
->> +		kvm_vcpu_mark_page_dirty(vcpu, gpa >> PAGE_SHIFT);
-> 
-
-Not an issue. HDBSS is VHE-only. system_supports_hdbss() guards all
-register accesses, so nVHE never hits this path.
-
-> [Severity: High]
-> Does this tight loop risk overflowing the dirty ring?
-> 
-> When the KVM dirty ring is enabled, kvm_vcpu_mark_page_dirty() pushes
-> entries to the per-vCPU ring. The dirty ring signals userspace
-> cooperatively when it reaches its soft limit.
-> 
-> Because the entire HDBSS buffer is flushed in one tight loop, the soft
-> limit signal is ignored until the loop finishes. If the number of HDBSS
-> entries exceeds the remaining free slots before the hard limit, could
-> the ring push fail and silently drop the dirty pages?
-> 
->> +	}
->> +
->> +	/* reset HDBSS index */
->> +	write_sysreg_s(0, SYS_HDBSSPROD_EL2);
->> +	vcpu->arch.hdbss.hdbssprod_el2 = 0;
->> +	isb();
-> 
-
-Valid point. It will cause a WARN_ON_ONCE(kvm_dirty_ring_full) during 
-live migration with dirty-ring + HDBSS. Fixed in v5 by two changes:
-
-1. The flush now runs on every VM exit before handle_exit(), so
-check_vcpu_requests() sees the pushed entries on the next loop iteration
-and exits to userspace when soft-full.
-
-2. The dirty ring reservation is wired up via kvm_cpu_dirty_log_size()
-so rsvd = 64 + hdbss_entries, guaranteeing room for a full buffer flush
-— and in dirty-ring mode the HDBSS buffer is fixed at PAGE_SIZE, which 
-maximizes performance by minimizing drain frequency.
-
-> [Severity: Medium]
-> Is the context synchronization event misplaced here?
-> 
-> The architectural rules state that every write to a control-plane system
-> register must be followed by an isb() as the very next instruction.
-> 
-> There is a memory store (vcpu->arch.hdbss.hdbssprod_el2 = 0) placed
-> between the write_sysreg_s() and the isb(). Could this leave the CPU
-> operating under a stale configuration for several cycles?
-> 
->> +}
->> +
->> +int kvm_handle_hdbss_fault(struct kvm_vcpu *vcpu)
->> +{
->> +	u64 prod;
->> +	u64 fsc;
->> +
->> +	prod = read_sysreg_s(SYS_HDBSSPROD_EL2);
-> 
-
-Same answer as the ISB comment on patch 4.
-
-> [Severity: High]
-> Like in kvm_flush_hdbss_buffer() above, does reading SYS_HDBSSPROD_EL2
-> from the host kernel risk triggering an undefined instruction exception
-> if the system is running in nVHE mode?
-> 
->> +	fsc = FIELD_GET(HDBSSPROD_EL2_FSC_MASK, prod);
-> 
-> [ ... ]
-> 
-
-Not an issue. HDBSS is VHE-only. system_supports_hdbss() is false on
-nVHE, so the registers are never accessed there. We note this in the
-cover letter and leave nVHE for future work.
-
-Thanks!
-Tian
+--=20
+Jani Nikula, Intel
