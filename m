@@ -1,255 +1,271 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3679635CB8C
-	for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 23:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253154763
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 00:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788133699; cv=none; b=BuBnh+av7yMF/Bl2VAUcmpbAQ4mDbcA5hEj0K4YcDs1kEA8hs4rsqNd+aUvUo9x6FDU7e4TXIm2l6UohlGUl2YSyLSG5OeZIv8cqEyzQPrGC556DVci8D5E7o6Y5qzLrvaIOeP1bQ9OvMSoVYRXM1t2UEErsgLDiBXfQxHZkdas=
+	t=1788137907; cv=none; b=lj1PKTJNSmSRLjGRWgijtqjcmBgh/2hwsJ0RxfulyfmzwuTOn1oi55woQjKQ7SaLMmSdfudsMmybMGFtvMNspYCbGJyc3XeA9iyDSppm3IW0PoRC5bliGL1SjTO4DL4zh4SRKel0qpqJHxh7o/ZqtdBFQrMVP6zJGeqe2pnFpH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788133699; c=relaxed/simple;
-	bh=QOkOlz84VHzYD9uUI4Hnc+gmPdY/yyAXtbgll765AIU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mb+BPKJex+iKVIk4Ysrri9E3+JfE6wxkPAQHO++Y57RG/o1VYWeIyN3qdCELBTHgm//5Qvqd76IunpobrfbfJvagGYbg4HquW5yx4qsN3lS9tyKpxoioKpx/X55eA9vk8tts2JK/VmylCj3KGdxTJ3fbZsJnN819o5+edc5xZLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=laA8yP+d; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1788137907; c=relaxed/simple;
+	bh=xDrToFTxMizEvfjrSm0CQkl5StWE6tmGzCHRfUUoOEg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HZhu9nJyYW4hWr/0mi/y3/bcxvwaF4SzawbQdqynxn5HeDI219Dbmzn8gc09j2rDmXOiLo1fxyy5FEgAbhXN8qHmDW6+ROlATNt+aQjaULZ3H6K+m1P4zktvHGpOieXttUdKEjzWXgcLsYISGaPtP0rpTFWcZSN0pVW3WZIqspo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pJ62Dx6q; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="laA8yP+d"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1788133688; x=1788738488; i=w_armin@gmx.de;
-	bh=4U1tjhrw6ymyqCMBUqpuphGSk0tCCtngSGk2nY8HAZk=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=laA8yP+djLQ2TuIkdIsaktsy2d0/3vn/0MEXRigyffb/tNIxLQ6mViB+NV3Tb6y9
-	 jNTQoYTlRRwCR1MNqz0nDNqd88k2BQz05f2bbcVbDqz0JB3fZRgTwV/Bjz04DEjc2
-	 zE/lxH7YH9TTwAOkhFVCdANP3ZCydQr8cTUY/bwSywdYwoCXVpKzZJ57Cj9zZjd/2
-	 6Pwji3yQF+QEvj+BRhbgzwNisGL1uXMKkZNljzRU2qGmgbFnJtLNYRzPSydQNDmI9
-	 TBcOsO5bOrmUmZLlLKpyhK/aoMyOUh4DQNEXHn7rWKvPZai9DU/2MQ3rvuz/5TnQr
-	 TrH09sWED0jB7ohUBg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxDou-1wgqae1PMe-011KS2; Mon, 31
- Aug 2026 01:48:08 +0200
-Message-ID: <b5c0b655-e158-430b-b663-70913a99ce9e@gmx.de>
-Date: Mon, 31 Aug 2026 01:48:08 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJ62Dx6q"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-398c1101c1bso996653a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 17:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788137905; x=1788742705; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=e/jH7rAxcdrwS4CyOEI+sguLbWI5WKj0tmm2sr7tsXM=;
+        b=pJ62Dx6qeEcGxuz+Y+q16L/pnqjbotKGJQ0sVbHcsWkJGBTaVBu5jFvJUqY3BEfQ5o
+         7HSpZm85b3qcJMJIQrL72sqcXs0vFfG5YkgOnbcwz4kEtC5pJjf1WnS2tlQ5FodsYL0E
+         X6YVrpjUqopSbCubzgK70Bor7r0s52kGmyqXSVFjBJZ6NtKX0jSLG15P2wbJXaTG1bzF
+         4EjBnzgZ4EN52FUZ72sek1vNHjT2zsz2qHj+Eutb5B/CR0L2SIrZGdQKzIUifjS+Bb+P
+         HWe+hbEcV6mF8GyXk6JPdbSdOimzZIikNHdFxA4yiVTuT6xJntaBMpNtPAHJmPl7Bq0Y
+         jq1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788137905; x=1788742705;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=e/jH7rAxcdrwS4CyOEI+sguLbWI5WKj0tmm2sr7tsXM=;
+        b=cJpNxyWpznlUJxW4NCgLsuByN3QEVCHNuprVGoS3QKrRSkty+KJoAR38naacKensYD
+         81CfrBM8zPxiobyZYGMvuUckUne/uMQtva4K2XdueWVrtpXwbh1hLiyTGJnmc1BKuyN0
+         vhVtGbjbuaqP945SIoL5KGYIvqNsMb4SGyRG8caeMvY9kWTMGy/GUx5T4pG8JiGxmcDF
+         pkx6DwB9iwW9fzLyv9qytEE5elI2gxx0XGw1QvHUlP2/G2vImQ1BBxgonYweQ1nH/SC4
+         jHBbYsZykoHnmgd7SOjQ3MG8bvfAw8p62L8Ze/ZW8TPZel5T9W7kph8e9tlaKuQjRPUC
+         162g==
+X-Forwarded-Encrypted: i=1; AKwUvBxOFVFrUdlD4Ow4gZucw45hx3oU8FOlGbZv7FkZN6pE80PrD/UXcm2rrBTpfId1yKkCjgF2O4ltffuXwSETtsM=@lists.linux.dev
+X-Gm-Message-State: AFuF++kQ6wDa7zo6XcYAzjmCXMXrPH2AQD5FEFsVWQoN05feWJHLhqLr
+	LFn2f0VonmMLNM4HTf6Nx6bqzfCOWzaIcBKMFLHOa9TDtLee1sY7A2wp
+X-Gm-Gg: AYBFou3at75iGvLSQzsnkX9TXeLoI2CxVakFUNCTJxYCFOpNK5uuWrvMxAFOBVS2LfQ
+	KBcaihBeuZqLUQB/INko8CTj5k0l1qcfGG7E6MOzAk82dbTCTjvcgGWddZNlJ95PCRuj67x76Bj
+	HK4F5o9+4w16TRix/dfwsQT9YTrx//m8BdJpjhC7cTro0lTjqcActASzUFiFH0bDc5kP8Svo8LW
+	n4h9pvm8qga/Nt5RzV33kkcRv5zDJH+fNKlmBaQke27Ge8yUO509913a82Mc41MxGyfT3K0wwY9
+	G7/Jz0lJ+Tb6zop/o5ZPJJCXmfOurwGIFr+hSHcvYi04g9YiMc09Fdrxir5w2l4NZBSguG3fYJN
+	zZdMU2dqEWzj5dGAiolxuhDIcLEfIoKjwdmgNmnu7mpqQs0/gA4OHQfzgNG0dbAPv3YuAZ6dmeP
+	WIF3cB8SQ6QXaGxEzAYoh6oysePdhMYtHNuyUbzZbs1kd+zkK8EJVljayMpmEaEHMC1Rzptynho
+	9MA7VUWo9Hqhbo8
+X-Received: by 2002:a17:90a:120f:b0:398:ba0e:96f6 with SMTP id 98e67ed59e1d1-398ba0e9e53mr9669382a91.23.1788137904715;
+        Sun, 30 Aug 2026 17:58:24 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396b0ea7fa9sm18758777a91.4.2026.08.30.17.58.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Aug 2026 17:58:24 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: aethernet65535@gmail.com,
+	damon@lists.linux.dev,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] mm/damon/core: fix unconditionally skip last region
+Date: Mon, 31 Aug 2026 08:57:56 +0800
+Message-ID: <20260831005834.5270-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260830183851.106396-1-sj@kernel.org>
+References: <20260830183851.106396-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hwmon: (spd5118) Select page 0 unconditionally during
- probe
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-References: <20260830233009.322206-1-W_Armin@gmx.de>
- <20260830234131.498F71F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Armin Wolf <W_Armin@gmx.de>
-In-Reply-To: <20260830234131.498F71F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:bkcTAWvSUYRUokhx92F/podWmCUrb6Fl5YzniukDaiv3UzrfmUF
- US0iTYT9pjLrVlajWVp3H+BJU1h6wHfWQXuWiqDYlMUgvSJkGr9p/MsqzjYn0CL7Cn5miOn
- ezKlMjHwGPr0GAe/6DqCeIpGsHAMyTZpTOog7WMu5BK/8uOr+bFuUfeRWWk9ekwyQxC6/WV
- L1nPil/+w6zfNvhCbAQBg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Ss9zj/gOpIg=;/zyvVkgrAPORTSyXBZtcNjkC5G7
- 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
- MFpx4lLlw8s=
+Content-Transfer-Encoding: 8bit
 
-Am 31.08.26 um 01:41 schrieb sashiko-bot@kernel.org:
+On Sun, 30 Aug 2026 11:38:51 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential iss=
-ue(s) to consider:
-> - [High] Unconditional I2C write in `probe()` before verifying device id=
-entity can cause permanent data corruption on mismatched devices.
-> - [Medium] Failing probe on read-only buses entirely drops temperature m=
-onitoring capabilities.
-> --
->
-> commit 83cea797ff679bd0608e7bc406325588975c70cb
-> Author: Armin Wolf <W_Armin@gmx.de>
->
-> hwmon: (spd5118) Select page 0 unconditionally during probe
->
-> This commit makes the driver write to the legacy mode register
-> unconditionally during probe to select page 0. This intentional write
-> fails on controllers where the BIOS blocks writes to the SPD device,
-> thereby avoiding issues on such controllers by refusing to probe.
->
->> diff --git a/drivers/hwmon/spd5118.c b/drivers/hwmon/spd5118.c
->> index 9724cf70b61d4..95b7cbd2f111c 100644
->> --- a/drivers/hwmon/spd5118.c
->> +++ b/drivers/hwmon/spd5118.c
-> [ ... ]
->> @@ -637,45 +638,32 @@ static int spd5118_i2c_init(struct i2c_client *cl=
-ient)
->>   				     I2C_FUNC_SMBUS_WORD_DATA))
->>   		return -ENODEV;
->>  =20
->> -	regval =3D i2c_smbus_read_word_swapped(client, SPD5118_REG_TYPE);
->> -	if (regval < 0 || (regval && regval !=3D 0x5118))
->> -		return -ENODEV;
->> -
-> [ ... ]
->> +	mode =3D i2c_smbus_read_byte_data(client, SPD5118_REG_I2C_LEGACY_MODE=
-);
->> +	if (mode < 0)
->> +		return mode;
->> +
->> +	FIELD_MODIFY(SPD5118_LEGACY_PAGE_MASK, &mode, 0);
->> +	err =3D i2c_smbus_write_byte_data(client, SPD5118_REG_I2C_LEGACY_MODE=
-, mode);
-> [Severity: High]
-> Does this unconditional I2C write in spd5118_i2c_init() risk permanent d=
-ata
-> corruption if the driver is bound to a mismatched device?
->
-> Because the device identity check reading SPD5118_REG_TYPE has been move=
-d
-> until after this write, any device mistakenly probed (via sysfs or incor=
-rect
-> firmware tables) in the 0x50-0x57 address range will have its byte at of=
-fset
-> 0x0B overwritten.
->
-> For an ordinary EEPROM, this clears bits 0-2 permanently before the
-> subsequent type check fails and aborts the probe.
+> On Sun, 30 Aug 2026 16:29:46 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> 
+> > On Sun, 30 Aug 2026 06:47:07 +0000 sashiko-bot@kernel.org wrote:
+> > 
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > 
+> > > Pre-existing issues:
+> > > - [High] A preexisting bug causes DAMOS scheme application to permanently stall for all subsequent targets if `quota->charge_target_from` points to a target that becomes invalid or loses all its regions.
+> > > --
+> > > 
+> > > commit 630d73d512e66245612cbdfe5c49647aa6ed2874
+> > > Author: Liew Rui Yan <aethernet65535@gmail.com>
+> > > 
+> > > mm/damon/core: fix unconditionally skip last region
+> > > 
+> > > This patch fixes an issue where the last region of a tracked target could
+> > > be unconditionally skipped and reset without being processed when a scheme
+> > > quota is exhausted. By modifying the reset logic, it ensures the last region
+> > > is appropriately handled rather than always skipped.
+> > > 
+> > > > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > > > index 644daf5a16560..fb76b530bbc68 100644
+> > > > --- a/mm/damon/core.c
+> > > > +++ b/mm/damon/core.c
+> > > > @@ -2342,36 +2342,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
+> > > >  {
+> > > >  	struct damos_quota *quota = &s->quota;
+> > > >  	unsigned long sz_to_skip;
+> > > > +	bool skip = false;
+> > > >  
+> > > >  	/* Skip previously charged regions */
+> > > >  	if (quota->charge_target_from) {
+> > > >  		if (t != quota->charge_target_from)
+> > > >  			return true;
+> > > 
+> > > [Severity: High]
+> > > This isn't a bug introduced by this patch, but does this logic cause all
+> > > subsequent targets to permanently stall if the target currently stored in
+> > > quota->charge_target_from becomes invalid?
+> > > 
+> > > If the monitored process dies before the next window, kdamond_apply_schemes()
+> > > appears to bypass it without clearing the saved target:
+> > > 
+> > > mm/damon/core.c:kdamond_apply_schemes() {
+> > >     ...
+> > > 		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+> > > 			continue;
+> > > 		damos_apply_target(c, t, max_region_sz);
+> > >     ...
+> > > }
+> > > 
+> > > Because the target is skipped entirely, we never call damos_apply_target()
+> > > and never reach the clearing mechanism inside damos_skip_charged_region().
+> > > 
+> > > When this happens, wouldn't all other valid targets continue to evaluate
+> > > (t != quota->charge_target_from) as true here, permanently skipping scheme
+> > > applications?
+> > > 
+> > > It appears a local user could reliably trigger this by setting a restrictive
+> > > quota on a memory-intensive process they own, waiting for the quota to
+> > > exhaust, and then terminating the process.
+> > 
+> > Thank you for pointing this out!  Yes, this can happens.
+> > 
+> > I just wrote a simple fix, this fix introduces damon_target->'bool
+> > has_charged', which was added to prevent entering the
+> > damon_target_remove_ref() (new function introduces by this fix) loop
+> > every time an invalid target is encountered.  However, adding this field
+> > may be unnecessary, or it might better to use something like 'unsigned
+> > int charged_ref_count' instead.
+> > 
+> > '''
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index 0c8b7ddef9ab..19d46d792858 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> > @@ -93,6 +93,7 @@ struct damon_region {
+> >  struct damon_target {
+> >  	struct pid *pid;
+> >  	bool obsolete;
+> > +	bool has_charged;
+> 
+> I'd prefer not introducing new field.
+> 
+> >  /* private: */
+> >  	/* Number of monitoring target regions of this target. */
+> >  	unsigned int nr_regions;
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 644daf5a1656..6c14b2d4e9cd 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -2630,6 +2630,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+> >  		if (damos_quota_is_full(quota, c->min_region_sz)) {
+> >  			quota->charge_target_from = t;
+> >  			quota->charge_addr_from = r->ar.end;
+> > +			t->has_charged = true;
+> >  		}
+> >  	}
+> >  	if (s->action != DAMOS_STAT)
+> > @@ -3216,6 +3217,26 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
+> >  	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
+> >  }
+> >  
+> > +static void damon_target_remove_ref(struct damon_ctx *c,
+> > +					 struct damon_target *t)
+> > +{
+> > +	struct damos *s;
+> > +
+> > +	damon_for_each_scheme(s, c) {
+> > +		struct damos_quota *quota = &s->quota;
+> > +
+> > +		if (!quota->charge_target_from)
+> > +			continue;
+> > +
+> > +		if (quota->charge_target_from == t) {
+> > +			quota->charge_target_from = NULL;
+> > +			quota->charge_addr_from = 0;
+> > +		}
+> > +	}
+> > +
+> > +	t->has_charged = false;
+> > +}
+> > +
+> >  static void kdamond_apply_schemes(struct damon_ctx *c)
+> >  {
+> >  	struct damon_target *t;
+> > @@ -3241,8 +3262,11 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+> >  	max_region_sz = damon_region_sz_limit(c);
+> >  	mutex_lock(&c->walk_control_lock);
+> >  	damon_for_each_target(t, c) {
+> > -		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+> > +		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
+> > +			if (t->has_charged)
+> > +				damon_target_remove_ref(c, t);
+> >  			continue;
+> > +		}
+> >  		damos_apply_target(c, t, max_region_sz);
+> >  	}
+> 
+> I think damos_adjust_quota() is a better place to do this.  For example,
+> 
+> '''
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -3530,6 +3530,22 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+>         trace_damos_esz(cidx, sidx, quota->esz);
+>  }
+> 
+> +static void damos_reset_invalid_charge_target_from(struct damos_quota *quota,
+> +               struct damon_ctx *c)
+> +{
+> +       struct damon_target *t;
+> +
+> +       t = quota->charge_target_from;
+> +       if (!t)
+> +               return;
+> +       if (!c->ops.target_valid)
+> +               return;
+> +       if (c->ops.target_valid(t))
+> +               return;
+> +       quota->charge_target_from = NULL;
+> +       quota->charge_addr_from = 0;
+> +}
+> +
+>  static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+>  {
+>         struct damos_quota *quota = &s->quota;
+> @@ -3570,6 +3586,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+>                         damos_trace_esz(c, s, quota);
+>         }
+> 
+> +       damos_reset_invalid_charge_target_from(quota, c);
+> +
+>         if (!c->ops.get_scheme_score)
+>                 return;
+> '''
+> 
+> > '''
+> > 
+> > SJ, when should this bug be fixed?  Along with this patch, or before
+> > this patch?
+> 
+> Whenever the fix is ready.  If you don't mind, I will take this.
 
-The detection code is unchanged, and we need that write in order to read r=
-egisters.
+I do not mind, thank you :>
 
->> +	if (err < 0)
->> +		return err;
-> [Severity: Medium]
-> Will failing the probe completely on read-only buses deprive users of al=
-l
-> temperature monitoring capabilities?
->
-> If spd5118_i2c_init() returns an error here when probed on an Intel
-> controller that rejects writes, the driver completely drops support for =
-that
-> device.
->
-> Previously, the probe would succeed and at least allow reading the memor=
-y
-> temperature. Could this degrade gracefully instead, perhaps by marking t=
-he
-> regmap as read-only and disabling suspend/resume writes, rather than tot=
-ally
-> preventing hardware monitoring?
-
-No, because the driver will then block suspend/resume on those devices.
-
-Thanks,
-Armin Wolf
-
->> +
->> +	regval =3D i2c_smbus_read_word_swapped(client, SPD5118_REG_TYPE);
->> +	if (regval < 0)
->> +		return regval;
->> +
->> +	if (regval !=3D 0x5118)
->> +		return -ENODEV;
->>  =20
->>   	/* We are reasonably sure that this is really a SPD5118 hub controll=
-er */
->>   	return 0;
+Best regards,
+Rui Yan
