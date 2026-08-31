@@ -1,130 +1,480 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9758938D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 06:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4581D3CB578
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 08:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788158549; cv=none; b=TUAfSWFSb48ud7H93W9CyVJBZ73naiUu1IApIDJ6Xd2rGn+ZPjwMzVZqN0+KPgS7RUKjrquTKmQWDykTpt4fh5wu41bp9Gx/klRlBKA5okS56h+c+xDl/+hnb9/EypyDvgW8bATHjzDbcipYk0NKKjTWCJSmqTeWlcKB1ghpiuk=
+	t=1788163974; cv=none; b=AxJN65lNp6i+t/kLYFxt4A2ZlmVm1p/ebh459qyb4+OVHm/WqU+Q30MWfvC/Mnu6RtyHA2T6UMAFOe+TJZoNOCYicarYnuHT+P3uIbBdBH2WxGyWhjMHi2YVtqlZbqM5rllHwT3mSskEEvyasMBh+vEYBz4Fh+0Xo0v9rcmIGfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788158549; c=relaxed/simple;
-	bh=taYV8ip3HYX017n+fLy+sGpTkBIlklQhY8Wl79DuX2s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NqHEZyakPhli9oTTC/1Ze6/1iIFHO7SuTUDDl5rVj4CKLKpjkOt4LnS0xqzbG+pmMcoA4mUkntZFc08meEl1GlKvL/7kDmNsddFQJO9CmzwNJ8Xu2+sETQ9C7FpSAR0xiZXA0JqSz0Dd4zV9AxZUb3s2zgqFvAJtBC7Srwp4MXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=GldzoT8B; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1788163974; c=relaxed/simple;
+	bh=SI0KtZwvMUILN/hDtGjS/7nrR1HaiiJ8KS3di14dvjk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qcLKKMgpqahyg5Vq9VeqY9muR8oh0zzfA2tHG/YqpilZjeYvrmBuwyyBiwwA8xVYa25zk202D5nJuJeIlY1aGgaDJWfigpuNkTJjVnVNiy8UeNy+NVLdw49XIXtvIHvlChpJvvvqoVmQ5TlrJsBl6OZWwUzKeBqYpeOeilhzTMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ONjb8rKu; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="GldzoT8B"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=Tz5alX+HaI6xug9ngSXJqyUnMaYjDwjMcSK6cXv1pMw=;
-	b=GldzoT8B8M797j8UuzwaBhOoTFNH4kvkIA8waHpnKKgnSqEIyAZUvuYCB0rpkj
-	SI5kRTv0WdpBHOFtgxNo5MwEPg1SDwFpj2Af7E2saeEP7ylWQogtpV/+MOy/NsVM
-	5XEVf4OHGWYRAaeCEg4mQnqoJ1MNy3rdabM9ejr4nn+go=
-Received: from [10.42.12.49] (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wC3015LIpVqDOd_Sg--.7758S2;
-	Mon, 31 Aug 2026 14:42:20 +0800 (CST)
-Message-ID: <e09baa74-368a-40b7-8e7e-44d1f6cf0968@163.com>
-Date: Mon, 31 Aug 2026 14:42:18 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ONjb8rKu"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47ddf7b09e5so2928189f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 01:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788163970; x=1788768770; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FicFc67fgcIc5tl+0E7N6HsbJ3qaqQibwFytoA9PM/c=;
+        b=ONjb8rKuez8CHa8/UoKCmASc1pq6YNq+XG4BQS8LghA4EiJB58IXgWfpezLnQJV1Yh
+         4t3letnU48C9DODgg3hu8rjn2wrKkUIaUove25zNmPfcFxRI/oGqsL454qt+5FGKj39m
+         LVHGIjgob2611zFKKnYmq1SY5saw4oGyY1nBJbwZc7jU5PSXbj+doZrnw5xw1+T+cigB
+         828IboNu/HxBG2avRiWt3OSdykDorhJK0r5w5kABZubnGCJLMJvi0mzbNvKcrDawEP+M
+         RLRodCSWlvq6MF+fHaWnlMUvnfm//5R6d2L5PzE/bpoDYKvFSgK2jokjl7F5eJtFUmVb
+         dWiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788163970; x=1788768770;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FicFc67fgcIc5tl+0E7N6HsbJ3qaqQibwFytoA9PM/c=;
+        b=ZyqLS5JiDiV1nBTmb0vSUvnEKmbCU0BkHeYeZPmrmoQDMFyY+Pep3Q5H1PF1pXm/RV
+         L2F7al7v7dRES/YnlQ/19L1rQxvGhQWi2VUSJQkFBRSmlF/ZKMs/+EIFmDlBHGZ4lq5t
+         bPhK9zvzXWFosleVcPSwZBNDpGfIgMvzk+wsvsBJTj21aMOQmJ2LcTrmdbvijGTOsPcJ
+         daNTok1mp975HuW60leFV/Rwmr9yISlk6vRqmHO+zWY35Tl9sdtRlGdCHQhUrPKL/Etx
+         bgnoFbwF0+Zfx/kRhgi1rpOOnJN4cvhPyyMZFG2ioYO8b/XrCEwXW6ShFIyLfFs7I/Wf
+         u2HQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwi62FFKAtj5rbiBW+1RGHZpBnG6uSZC5GMT78lWPCqyFZx5oIgPUucbaQap9O7HG+yhq0m7z+CjYaDOC1wYe8=@lists.linux.dev
+X-Gm-Message-State: AFuF++m9Anxz0aeJ6eTrbJR8Tw2FVW2Zc6me7sifMEvO9h0Cm2tFyovw
+	9wH6XujL0EULyBLLvmrnt+c68jx8GFZVUOZTG1aSjLp/1OpopIW6yHwH
+X-Gm-Gg: AYBFou0EQQmptVMlYZ0KCkqrKIb7M4aCm+JNOGxX0yb8LXNdiZSczrUfbWqfFbPGsN6
+	Y2E3DpPWJVAGFY5JqEsZbCXilopQiQ9up641ZmY3Oc2qEVqac5587cT3bHflD0VKvyfYuavs4Fx
+	U9g7IpPwOd1aVaEKTvbyWxu8W81NBZubCp8bHsN4HGkri55Oy4srklbU1DS6J1iod5VhulYw6n7
+	pTao5xC9FH4dIvk3hZ15NvKVw8qYKcGHG6UAuPCFAMpOFQffb5Wx5IsapnjYEfLaHa+k6ahebxL
+	dH45bDF7fQcMp/9XmB3ei9gU/YMNirNevDAMVhCIsdP2xD77eS35aO5BT3WV8BAdVQxv+uxSzCt
+	02fLWV8Oj0x7euJ61DBgwlEXzz9E+V642F0CfCxDu7812+SNvBXPP2CMWW0Tp0tYCbq/kqKku5H
+	dwDN00VxThCTG6s1VAwCQsoLuG9PMNWFJOSHIXEFW/Q5znWFTFrsRBmj31MFBDpfqWXIN4Dk7Qf
+	ftrJAWzgOdiU1yhNLBdWfp6neVkIiwfGLZaX7GNvpn5
+X-Received: by 2002:a05:6000:41dd:b0:484:3311:6f68 with SMTP id ffacd0b85a97d-4843311735emr19882504f8f.25.1788163950308;
+        Mon, 31 Aug 2026 01:12:30 -0700 (PDT)
+Received: from 1Z10 ([78.210.155.123])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482fbab3fcesm20061275f8f.5.2026.08.31.01.12.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2026 01:12:29 -0700 (PDT)
+From: Maurizio Casciano <mauriziocasciano7@gmail.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	linux-input@vger.kernel.org
+Cc: David Heidelberg <david@ixit.cz>,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Maurizio Casciano <mauriziocasciano7@gmail.com>,
+	Sashiko AI review <sashiko-bot@kernel.org>
+Subject: [PATCH v6] Input: drv260x: Fix suspend and resume sequencing
+Date: Mon, 31 Aug 2026 10:12:27 +0200
+Message-ID: <20260831081227.1794986-1-mauriziocasciano7@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831011526.24AB11F000E9@smtp.kernel.org>
+References: <20260831011526.24AB11F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RISC-V: KVM: Fix sdata leak and stale snapshot_addr in
- snapshot_set_shmem
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260826064117.58029-1-min_halo@163.com>
- <20260826065551.DC6791F000E9@smtp.kernel.org>
-From: Zongmin Zhou <min_halo@163.com>
-In-Reply-To: <20260826065551.DC6791F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wC3015LIpVqDOd_Sg--.7758S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxAF17Ar15Kr1UJw1xWF1ftFb_yoW5urWDpF
-	WfCayYqrs5tw10k34DZF4ktFyUArZ8WrZ8GFnxGryrCws8Cr15Ars7KFWrua1Yyw48W392
-	qr45CFykAFs0vaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zR5GYJUUUUU=
-X-CM-SenderInfo: pplqsxxdorqiywtou0bp/xtbC0gybR2qVIkwgrQAA3e
 
+Force-feedback playback is queued asynchronously, but system suspend can
+cut power while the worker is pending. Disable and drain the work item
+before entering standby, and keep force-feedback quiesced until resume has
+restored communication.
 
-在 2026/8/26 14:55, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Guest-triggerable `pr_warn` allows a malicious guest to spam the host kernel log.
-> --
->
-> commit 26a57cbd434dd543af868b0052521f7a8fda7faa
-> Author: Zongmin Zhou <zhouzongmin@kylinos.cn>
->
-> RISC-V: KVM: Fix sdata leak and stale snapshot_addr in snapshot_set_shmem
->
-> A guest may call SBI_PMU_SNAPSHOT_SET_SHMEM repeatedly. Each call overwrites
-> kvpmu->sdata without freeing the old buffer, and if a later guest write
-> fails, the error path frees sdata but leaves snapshot_addr stale. This
-> clears the previously installed snapshot area before installing a new one.
->
->> diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
->> index 752f1014d633e..14f73490f12cb 100644
->> --- a/arch/riscv/kvm/vcpu_pmu.c
->> +++ b/arch/riscv/kvm/vcpu_pmu.c
->> @@ -454,6 +454,14 @@ int kvm_riscv_vcpu_pmu_snapshot_set_shmem(struct kvm_vcpu *vcpu, unsigned long s
->>   		}
->>   	}
->>   
->> +	/*
->> +	 * Clear any previously installed snapshot area to avoid leaking
->> +	 * the old sdata and to keep sdata/snapshot_addr consistent if
->> +	 * the re-install fails below.
->> +	 */
->> +	if (kvpmu->snapshot_addr != INVALID_GPA)
->> +		kvm_pmu_clear_snapshot_area(vcpu);
->> +
->>   	kvpmu->sdata = kzalloc(snapshot_area_size, GFP_ATOMIC | __GFP_ACCOUNT);
->>   	if (!kvpmu->sdata) {
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while reviewing the PMU
-> snapshot code I noticed a pre-existing issue in the same file.
->
-> In kvm_riscv_vcpu_pmu_ctr_start(), a guest can intentionally trigger a host
-> kernel log spam if the shared memory becomes invalid:
->
->          if (kvm_vcpu_read_guest(vcpu, kvpmu->snapshot_addr, kvpmu->sdata,
->                                  sizeof(struct riscv_pmu_snapshot_data))) {
->                  pr_warn("Unable to read snapshot shared memory while starting counters\n");
->                  sbiret = SBI_ERR_FAILURE;
->                  goto out;
->          }
->
-> Because this pr_warn() is unconditional and not rate-limited, a guest can
-> configure a valid snapshot area, invalidate the backing memory, and repeatedly
-> call SBI_EXT_PMU_COUNTER_START to spam the host log, leading to a denial of
-> service.
->
-> Should this pr_warn() be converted to a rate-limited print, or perhaps dropped
-> since the error is already returned to the guest?
-Thanks. Note this is a pre-existing issue unrelated to this patch.
+An input device can be closed and reopened without playing an effect in
+between. Since close lowers the enable GPIO, assert it and observe the
+startup delay in the open callback so a following suspend can access the
+registers.
 
-The printk hygiene concern is fair, though the flagged path is not
-actually guest-triggerable: snapshot_addr is installed only after
-kvm_vcpu_write_guest() succeeds, and a later kvm_vcpu_read_guest() on
-that GPA can only fail if the (trusted) VMM removes or remaps the
-host-side mapping -- the guest has no control over the memslots.
-If I'm missing a path, happy to be corrected.
+Disabling the regulator may remove power and erase the device
+configuration. Preserve the actuator mode selected by firmware, cache the
+initial automatic-calibration results, and reapply the complete
+configuration during resume. Use repeatable multi-register writes instead
+of registering persistent regmap patches, which would append another copy
+on every reinitialization.
 
-The clearly guest-triggerable one is pr_warn("Invalid counter id ...")
-in pmu_ctr_read(): cidx comes straight from the 
-SBI_EXT_PMU_COUNTER_FW_READ ecall,
-so a guest can loop it without any VMM involvement.
-The same applies to the similar warning in pmu_fw_ctr_read_hi() on RV32.
+Track whether this consumer has enabled the regulator so devres cleanup
+does not issue an unbalanced disable after a resume failure. Keep the work
+item disabled after failed recovery, and make regulator and work reference
+counts idempotent across PM retries.
 
-If desired, I can send a separate cleanup patch converting those to
-pr_warn_once() (as already used in this file), pr_warn_ratelimited(),etc.
->
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-input/20260831011526.24AB11F000E9@smtp.kernel.org/
+Link: https://lore.kernel.org/linux-input/20260830143050.03E081F000E9@smtp.kernel.org/
+Link: https://lore.kernel.org/linux-input/20260829230740.126461F000E9@smtp.kernel.org/
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/linux-input/apLD91vzHIrLOPWC@google.com/
+Link: https://www.ti.com/lit/ds/symlink/drv2604.pdf
+Assisted-by: Codex:gpt-5.6-sol [sparse]
+Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
+---
+Changes in v6:
+- Assert EN from the input open callback, without reinitializing the device
+  merely because EN was toggled.
+- Reapply configuration after regulator power loss and cache the initial
+  automatic-calibration results instead of rerunning calibration on resume.
+- Replace regmap_register_patch() with repeatable multi-register writes so
+  resume does not append persistent patches to the regmap.
+- Keep the firmware-selected actuator mode immutable across playback.
+- Track the regulator consumer state and make enable/disable operations
+  idempotent across PM retries and devres cleanup.
+- Retain the v5 work-disable accounting and explicit PM error unwinding.
 
+Validation:
+- Server build at integration commit f565dc5ad36e, containing the exact
+  drv260x blob 71996f6d7d7745ebbc1a8c099d2e6c18657c822f:
+  olddefconfig, focused W=1 C=2 CHECK=sparse build, and full Debian package
+  build all passed.
+- Lenovo Yoga Book YB1-X91L running
+  7.2.0-yogabook-20260831-033805: both DRV2604 FF devices passed before and
+  after an eight-second s2idle cycle. The test stopped the only userspace
+  consumer to force the last close(), reopened both devices without playing
+  an effect, and then suspended successfully. No drv260x, I2C, or unbalanced
+  regulator error appeared in the test journal.
+- This tablet uses dummy vbat regulators for both DRV2604 devices, so actual
+  regulator power loss and injected resume-error cleanup could not be
+  exercised on this hardware.
+
+ drivers/input/misc/drv260x.c | 183 ++++++++++++++++++++++++++++-------
+ 1 file changed, 150 insertions(+), 33 deletions(-)
+
+diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
+index 6c5c4c53753b..71996f6d7d77 100644
+--- a/drivers/input/misc/drv260x.c
++++ b/drivers/input/misc/drv260x.c
+@@ -181,7 +181,11 @@
+  * @work: Work item used to off load the enable/disable of the vibration
+  * @enable_gpio: Pointer to the gpio used for enable/disabling
+  * @regulator: Pointer to the regulator for the IC
++ * @regulator_enabled: Whether this consumer has enabled the regulator
++ * @work_disabled: Whether playback work is disabled pending PM recovery
++ * @calibration_valid: Whether calibration results have been cached
+  * @magnitude: Magnitude of the vibration event
++ * @calibration_data: Cached automatic calibration results
+  * @mode: The operating mode of the IC (LRA_NO_CAL, ERM or LRA)
+  * @library: The vibration library to be used
+  * @rated_voltage: The rated_voltage of the actuator
+@@ -194,7 +198,11 @@ struct drv260x_data {
+ 	struct work_struct work;
+ 	struct gpio_desc *enable_gpio;
+ 	struct regulator *regulator;
++	bool regulator_enabled;
++	bool work_disabled;
++	bool calibration_valid;
+ 	u8 magnitude;
++	u8 calibration_data[3];
+ 	u32 mode;
+ 	u32 library;
+ 	int rated_voltage;
+@@ -215,6 +223,24 @@ static int drv260x_calculate_voltage(unsigned int voltage)
+ 	return (voltage * 255 / 5600);
+ }
+ 
++static void drv260x_disable_work(struct drv260x_data *haptics)
++{
++	if (haptics->work_disabled)
++		return;
++
++	disable_work_sync(&haptics->work);
++	haptics->work_disabled = true;
++}
++
++static void drv260x_enable_work(struct drv260x_data *haptics)
++{
++	if (!haptics->work_disabled)
++		return;
++
++	enable_work(&haptics->work);
++	haptics->work_disabled = false;
++}
++
+ static void drv260x_worker(struct work_struct *work)
+ {
+ 	struct drv260x_data *haptics = container_of(work, struct drv260x_data, work);
+@@ -243,8 +269,6 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
+ {
+ 	struct drv260x_data *haptics = input_get_drvdata(input);
+ 
+-	haptics->mode = DRV260X_LRA_NO_CAL_MODE;
+-
+ 	/* Scale u16 magnitude into u8 register value */
+ 	if (effect->u.rumble.strong_magnitude > 0)
+ 		haptics->magnitude = effect->u.rumble.strong_magnitude >> 8;
+@@ -258,11 +282,29 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
+ 	return 0;
+ }
+ 
++static int drv260x_open(struct input_dev *input)
++{
++	struct drv260x_data *haptics = input_get_drvdata(input);
++
++	if (haptics->work_disabled)
++		return -EIO;
++
++	gpiod_set_value(haptics->enable_gpio, 1);
++	/* Data sheet says to wait 250us before trying to communicate */
++	fsleep(250);
++
++	return 0;
++}
++
+ static void drv260x_close(struct input_dev *input)
+ {
+ 	struct drv260x_data *haptics = input_get_drvdata(input);
+ 	int error;
+ 
++	/* PM has not restored register access yet. */
++	if (haptics->work_disabled)
++		return;
++
+ 	cancel_work_sync(&haptics->work);
+ 
+ 	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
+@@ -338,9 +380,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 
+ 	switch (haptics->mode) {
+ 	case DRV260X_LRA_MODE:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_lra_cal_regs,
+-					      ARRAY_SIZE(drv260x_lra_cal_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_lra_cal_regs,
++					       ARRAY_SIZE(drv260x_lra_cal_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write LRA calibration registers: %d\n",
+@@ -351,9 +393,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		break;
+ 
+ 	case DRV260X_ERM_MODE:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_erm_cal_regs,
+-					      ARRAY_SIZE(drv260x_erm_cal_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_erm_cal_regs,
++					       ARRAY_SIZE(drv260x_erm_cal_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write ERM calibration registers: %d\n",
+@@ -374,9 +416,9 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		break;
+ 
+ 	default:
+-		error = regmap_register_patch(haptics->regmap,
+-					      drv260x_lra_init_regs,
+-					      ARRAY_SIZE(drv260x_lra_init_regs));
++		error = regmap_multi_reg_write(haptics->regmap,
++					       drv260x_lra_init_regs,
++					       ARRAY_SIZE(drv260x_lra_init_regs));
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
+ 				"Failed to write LRA init registers: %d\n",
+@@ -398,6 +440,11 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		return 0;
+ 	}
+ 
++	if (haptics->calibration_valid)
++		return regmap_bulk_write(haptics->regmap, DRV260X_CAL_COMP,
++					 haptics->calibration_data,
++					 ARRAY_SIZE(haptics->calibration_data));
++
+ 	error = regmap_write(haptics->regmap, DRV260X_GO, DRV260X_GO_BIT);
+ 	if (error) {
+ 		dev_err(&haptics->client->dev,
+@@ -423,7 +470,13 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 		}
+ 	} while (cal_buf == DRV260X_GO_BIT);
+ 
+-	return 0;
++	error = regmap_bulk_read(haptics->regmap, DRV260X_CAL_COMP,
++				 haptics->calibration_data,
++				 ARRAY_SIZE(haptics->calibration_data));
++	if (!error)
++		haptics->calibration_valid = true;
++
++	return error;
+ }
+ 
+ static const struct regmap_config drv260x_regmap_config = {
+@@ -434,11 +487,39 @@ static const struct regmap_config drv260x_regmap_config = {
+ 	.cache_type = REGCACHE_NONE,
+ };
+ 
++static int drv260x_regulator_enable(struct drv260x_data *haptics)
++{
++	int error;
++
++	if (haptics->regulator_enabled)
++		return 0;
++
++	error = regulator_enable(haptics->regulator);
++	if (!error)
++		haptics->regulator_enabled = true;
++
++	return error;
++}
++
++static int drv260x_regulator_disable(struct drv260x_data *haptics)
++{
++	int error;
++
++	if (!haptics->regulator_enabled)
++		return 0;
++
++	error = regulator_disable(haptics->regulator);
++	if (!error)
++		haptics->regulator_enabled = false;
++
++	return error;
++}
++
+ static void drv260x_power_off(void *data)
+ {
+ 	struct drv260x_data *haptics = data;
+ 
+-	regulator_disable(haptics->regulator);
++	drv260x_regulator_disable(haptics);
+ }
+ 
+ static int drv260x_probe(struct i2c_client *client)
+@@ -506,7 +587,7 @@ static int drv260x_probe(struct i2c_client *client)
+ 		return error;
+ 	}
+ 
+-	error = regulator_enable(haptics->regulator);
++	error = drv260x_regulator_enable(haptics);
+ 	if (error) {
+ 		dev_err(dev, "Failed to enable regulator: %d\n", error);
+ 		return error;
+@@ -528,6 +609,7 @@ static int drv260x_probe(struct i2c_client *client)
+ 	}
+ 
+ 	haptics->input_dev->name = "drv260x:haptics";
++	haptics->input_dev->open = drv260x_open;
+ 	haptics->input_dev->close = drv260x_close;
+ 	input_set_drvdata(haptics->input_dev, haptics);
+ 	input_set_capability(haptics->input_dev, EV_FF, FF_RUMBLE);
+@@ -569,62 +651,97 @@ static int drv260x_probe(struct i2c_client *client)
+ static int drv260x_suspend(struct device *dev)
+ {
+ 	struct drv260x_data *haptics = dev_get_drvdata(dev);
+-	int error;
++	bool restore_work = false;
++	int error, restore_error;
+ 
+-	guard(mutex)(&haptics->input_dev->mutex);
++	mutex_lock(&haptics->input_dev->mutex);
+ 
+ 	if (input_device_enabled(haptics->input_dev)) {
++		restore_work = !haptics->work_disabled;
++		drv260x_disable_work(haptics);
++
++		/* A failed resume can leave the device already powered down. */
++		if (!haptics->regulator_enabled)
++			goto out_unlock;
++
+ 		error = regmap_update_bits(haptics->regmap,
+ 					   DRV260X_MODE,
+ 					   DRV260X_STANDBY_MASK,
+ 					   DRV260X_STANDBY);
+ 		if (error) {
+ 			dev_err(dev, "Failed to set standby mode\n");
+-			return error;
++			goto err_enable_work;
+ 		}
+ 
+ 		gpiod_set_value(haptics->enable_gpio, 0);
+ 
+-		error = regulator_disable(haptics->regulator);
++		error = drv260x_regulator_disable(haptics);
+ 		if (error) {
+ 			dev_err(dev, "Failed to disable regulator\n");
+-			regmap_update_bits(haptics->regmap,
+-					   DRV260X_MODE,
+-					   DRV260X_STANDBY_MASK, 0);
+-			return error;
++			goto err_leave_standby;
+ 		}
+ 	}
+ 
++out_unlock:
++	mutex_unlock(&haptics->input_dev->mutex);
+ 	return 0;
++
++err_leave_standby:
++	gpiod_set_value(haptics->enable_gpio, 1);
++	fsleep(250);
++	restore_error = regmap_update_bits(haptics->regmap,
++					   DRV260X_MODE,
++					   DRV260X_STANDBY_MASK, 0);
++	if (restore_error) {
++		dev_err(dev, "Failed to leave standby mode: %d\n", restore_error);
++		restore_work = false;
++	}
++err_enable_work:
++	if (restore_work)
++		drv260x_enable_work(haptics);
++	mutex_unlock(&haptics->input_dev->mutex);
++	return error;
+ }
+ 
+ static int drv260x_resume(struct device *dev)
+ {
+ 	struct drv260x_data *haptics = dev_get_drvdata(dev);
+-	int error;
++	int disable_error, error;
+ 
+-	guard(mutex)(&haptics->input_dev->mutex);
++	mutex_lock(&haptics->input_dev->mutex);
+ 
+ 	if (input_device_enabled(haptics->input_dev)) {
+-		error = regulator_enable(haptics->regulator);
++		drv260x_disable_work(haptics);
++
++		error = drv260x_regulator_enable(haptics);
+ 		if (error) {
+ 			dev_err(dev, "Failed to enable regulator\n");
+-			return error;
++			goto err_unlock;
+ 		}
+ 
+-		error = regmap_update_bits(haptics->regmap,
+-					   DRV260X_MODE,
+-					   DRV260X_STANDBY_MASK, 0);
++		gpiod_set_value(haptics->enable_gpio, 1);
++		fsleep(250);
++
++		error = drv260x_init(haptics);
+ 		if (error) {
+-			dev_err(dev, "Failed to unset standby mode\n");
+-			regulator_disable(haptics->regulator);
+-			return error;
++			dev_err(dev, "Failed to restore configuration: %d\n", error);
++			goto err_disable_regulator;
+ 		}
+ 
+-		gpiod_set_value(haptics->enable_gpio, 1);
++		drv260x_enable_work(haptics);
+ 	}
+ 
++	mutex_unlock(&haptics->input_dev->mutex);
+ 	return 0;
++
++err_disable_regulator:
++	gpiod_set_value(haptics->enable_gpio, 0);
++	disable_error = drv260x_regulator_disable(haptics);
++	if (disable_error)
++		dev_err(dev, "Failed to disable regulator: %d\n", disable_error);
++err_unlock:
++	mutex_unlock(&haptics->input_dev->mutex);
++	return error;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(drv260x_pm_ops, drv260x_suspend, drv260x_resume);
+-- 
+2.53.0
