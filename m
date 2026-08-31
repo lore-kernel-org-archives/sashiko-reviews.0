@@ -1,282 +1,184 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7590D286417
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 01:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A4C3438BF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 01:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788138029; cv=none; b=Qc+R1zPMmaTGijCZ0H50MgJo1foDl9Pc3eRkBkA6vhzISWx1b4D58bFFANtpSze5RTWDwcqaTkU/aO3lpGeNg6EEwf0odvIdCr4IwJbCLCwsS9aWYcrmPpaCjTVpQgTSM3aEpCYEQSDYvR82NimUBlibBrHTRE4nHloTwL97DbY=
+	t=1788138706; cv=none; b=rUaaDPx9pR6yRPVT1vG2Mj+Mc8LpnZwFqMGeqsZuUVaP/3XwYVKlOYZkO1xAvB9g1DeDK9Sjl11X3p65ZxG5ci0F0T18WaTq5cSuWVxQ1ATIgNuAPFw6Zyho+eer/U/+BETxn47NzZqJvrSYn8jYk4VSp6PWjiRVdC3RX7UJcuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788138029; c=relaxed/simple;
-	bh=XbWILXbWMzDMgR7qzIX1vHxh8m1MflRutzuKQqnUTsU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJyGgPadDGeev9OcKBu37JI1A4mSY15dS3AicMIK0VIRpNMZ/bxf+EddZPBMNY+5pi4clcrMRHGdZ2GkX1F1tTj8Twu6G2YQFObgrD8pf0B5x5FUglVdGZ0/yxeg9I6BCs/eSOGTsamCpeZ9oO+3YSPBXf3YKVdNYLmELnMS0+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jaSiYgrm; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788138706; c=relaxed/simple;
+	bh=7UmMN1K0B3ovALPeaoztcWuz5nL6IxnpQy7fd0Gu6kY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uPM2EBqIQrt3VagRked6fXwd+KZVE6LkAHngKspJ/xWrsyJwYnM7n9TEsF6I1fKrq3ynfPadIko+KY5qG5WqqB2Uc2hsV1U9M/Jd2pL231fQWDy9NfVn6u0Ww56V7FuU0sCWzNPiLQ0rdKFhgjIFDw+DBqe/E5djFLdjI/RVzac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DM5JVk7L; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RBDLOy8t; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jaSiYgrm"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so27327785e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 18:00:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DM5JVk7L";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RBDLOy8t"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67UMg7NU1626103
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 01:11:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	h1D1TQvrH8BzeCG32FmB1x7kyZWd14bC0HSgfQg4E1s=; b=DM5JVk7LnyHq9p2W
+	Tm5JJ+hSCdSA3qaSqp8rgLOsaJBlVer55JY7zCvwSekbHRE1grZcYy0v9B5KTAPT
+	GUrVGS+SRKjVAmhbWDOj3JmxJl3YWI1YuV07Lt2DQY6SMBXplN65xnLIZ8hlGsWp
+	tfYNn9Cw+RBIx9mmQfK7VGWQnm28IGMo1Rn8BInb94JVu6NFwEG4dOxKCSaEQnaR
+	/wqQRZv8v77sb3Lxw+wlFcRK3/yjeRk6MNusuJ3l78kRqcYi0P66jsaAPzpa6Rd8
+	UqjFsPkJKHGVfcjfLYNu5mNCtAmNAZd/v+qWfxh3Vv56X4UtOURF0MtXeff3/MP8
+	ciCk1Q==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gbqe2c2ux-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 01:11:44 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38f5ac7416eso3957774a91.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 30 Aug 2026 18:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788138025; x=1788742825; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FCVsu0gee0/HYHL2XBs9n2zsPu5Jg0UWEowDR7lZR/Q=;
-        b=jaSiYgrmasla/T5MLf4qEgIl8zkBzstrRj0WM29Z0zM6lZGsIM2FWpqDaQkfECjVY+
-         AauuHtFRaC1M2ndPsDB6A7pVaxrW1LJoImHGFYiaBCx3gIT/Dmu8vIwIi+0oKlBZYKLI
-         DMl1VN2Lwh1w5XOlS+edCRQXjR+Y2jWamuiG2uYkt9nVUCzKODKWoK6M7G1reGgAYQPP
-         QKo4EefnIrFTmCMY7dFBoz8hgXtK09v9h3RJI70z1r+QK1AQABOz5ntpwtIkSb3bx2Hl
-         HWCH32hCodFC+szZ34K2WRRgM3XFklVM4ch0W+/P7v5kSuzYtxds2fupn71+3TvJPQlS
-         kVYw==
+        d=oss.qualcomm.com; s=google; t=1788138703; x=1788743503; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=h1D1TQvrH8BzeCG32FmB1x7kyZWd14bC0HSgfQg4E1s=;
+        b=RBDLOy8tD+dyCukYDxyQtDW/bWafBYk7YMXjUYRO5hPv3eaxOLYZQKjVSl+80tXxql
+         Y/qAH0XKLHshtsgs6b+Hv+O7Cc16FEKsbeCHaF/6PCrnKBj1q4gTuURL3BWJwYMSveP0
+         iUh9iv033SXw+RMFpAcUshuPrCf+np0hQc+GBL/COWzFpECLUbco9OCsbp/MqjhtkzkS
+         WEPq5RBvdHh2xrOsGZof174R0FpJlniWhTVgi9+A2BI4P3kKsGVhJp9dEFoXYxPWcJ17
+         TctRkl10y8oUEeMEm6gaos8OqqzAqK+ewpUUXsh+8qUJlG3tSJC++CbE10LJs2XUwTIE
+         +ZYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788138025; x=1788742825;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FCVsu0gee0/HYHL2XBs9n2zsPu5Jg0UWEowDR7lZR/Q=;
-        b=ooNUY3ZsTTT71v7R3zZVv6LnuxLGoYYXfA7VcK1hQ1DweQw3GtxjzyXAe1DSg5/1kD
-         YR+up2mo2954jKUwxUH7GuoTtA4yCSxTvH6S2kdldktkB2RBDlmuEQbstMtXdkXVxtWD
-         d1ctoIEqZt73NEhX9ZWIF71p6K+TYbRcW2eCau79ENLjuWvU+Qkb9xfoZlbVDGkKetgB
-         ciUK+X6n0JZ8Ek18JH/hTKcVDuJ3ocTM97eISftWbhLZDY+rdm9sadrgal79/pCmCqQJ
-         Qxps1kNcZloFdHyisIiS/oaoJidbCmj8gs/ZgvTPF13a4SFUtIurlOvCuPF38Qz2SfY+
-         1Jxg==
-X-Forwarded-Encrypted: i=1; AHgh+RqcwBdyr97ydjJCSjtw/M1O/LnlmJDvs4i0B90cJdOFPP+3bUoJtGF7rY3BCcRS27ylFTDpFgMDC+s0yTCc+us=@lists.linux.dev
-X-Gm-Message-State: AFuF++ksGP/YY1JwMPNXDxaeewtzBRL4W4TKMR6jeuVMPhN80mzw1V6b
-	KPZICaDnMZg0f3QBcSVslDFZDC6VOCcRc8oqdvVjlqwX9zgEAI2Srt+4
-X-Gm-Gg: AR+sD11ah29UAk7GAADb4/Nk7V5RQPr+NGFWZsVxo1YsXnwJU24AthbjURNvYYREKWW
-	VzFX4iEfUavIpQgJNEpOf4rj3O9AIdfQGdvgB3/e/rsaKvyH/l4psj83fqjFj7YXUjk8TGibRKa
-	GbMbW6fOKifjjmMCrd2ZnwGnJOhSm5jGU3usWU4cul/0BysLRhJcWaHrlHJ0yGH5dT6BQ0z/XO/
-	HaGL1rWzUtSC5+sncqY76LE35jSk9tai1VhQTM7y1MMs0hNMwMDSuyPfvaGBbM/q3x5ttjvVUzz
-	1WRqeKqTwF7ehYRhO4wuXu7HQbZt7fyrzEITj/s/V2rGfFEZPTxFf+jDFDUI60TsEkVV3iILkTi
-	tCojjWxrxJQgBcTRixI15agMIU4se0izvSlDQiyoHSCAY8FTeWf6Z37tUxsHwV7OCH+flJ1rMBv
-	1Sh68YwnLtkmzAGW50vTbELSHxkPn4YzSHrJwtd/xnMC0eghSHfGC7dS1PhnP1iZvsxBVjzsN2q
-	iQdnhYuLKS3aLM5iSLfaFLCixIG9fjY6TYg37eXN2Y=
-X-Received: by 2002:a05:600c:1c0a:b0:499:51f0:a9b2 with SMTP id 5b1f17b1804b1-49b91c1dd3fmr364364395e9.1.1788138024483;
-        Sun, 30 Aug 2026 18:00:24 -0700 (PDT)
-Received: from 1Z10 ([37.161.215.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ccea87e1asm109869685e9.2.2026.08.30.18.00.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Aug 2026 18:00:23 -0700 (PDT)
-From: Maurizio Casciano <mauriziocasciano7@gmail.com>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Maurizio Casciano <mauriziocasciano7@gmail.com>,
-	Sashiko AI review <sashiko-bot@kernel.org>
-Subject: [PATCH v5] Input: drv260x: Fix suspend and resume sequencing
-Date: Mon, 31 Aug 2026 03:00:20 +0200
-Message-ID: <20260831010020.673316-1-mauriziocasciano7@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260830143050.03E081F000E9@smtp.kernel.org>
-References: <20260830143050.03E081F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1788138703; x=1788743503;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=h1D1TQvrH8BzeCG32FmB1x7kyZWd14bC0HSgfQg4E1s=;
+        b=m05MtFOW8Wa5xLiOlMDQWKH6wyWGIuWST7wqsIqddH2Io4bP+mDrtVqCiGA/ck8FHl
+         MC1E6ldzDYrlEjp1yp7IRTjHjf2erDSLK3LywhWJ7gHZfTgoe4RO2JuTEOkMXmcHFRky
+         wqvR3wQyZx6R7G/SHB8QRgrx/9aeiIIp2Z8pru3oYkYxhB0oH8kwIMJL0vbhbBTYd7GR
+         1qEtvJ9jXMLeVmKhAbNHTunBZ4tghVZawIlh+II98K3ejp/oVfR9POSp+Dm3Ovj9asmy
+         QGYrAISszX2vbtECdbXkwuJYtCV/FJnh0SKeWnMaGX1jTfQt+MsarVD2XGLV1qcgPuxI
+         w74A==
+X-Gm-Message-State: AFuF++mPc7SBnlWFj6vIcP3ntaNNjRBNBgAPEJnTDG8JT/HLpTNK4cVN
+	mkeO+2bV85+iBs95tVI7MxmSj8l9Xv0YTEunI8FwwdCjWLEbCWCT8LUyd68bWeSqMpdkDcsycY4
+	V0KNAro3FyG8O08sgphRe4Eek9gr26KQlYFxcVh5YqAJ/rMw4ECq2sCkLs+tm5XUUWHmn3faEOZ
+	cpItbsQQ==
+X-Gm-Gg: AYBFou0fnAwMNg7VIkIi9CObIfkT6NJyateHH0oSeCZGBE+lSFRTxxMBJwov2zBbR0E
+	7voYcH+UOgrrNadxeW0v7ZeK9acMvOXADiczXsgtspaLT9MHgrzP88u4URWO7f7I8P76o0pqpZH
+	x8Ptv8Yeb4nxfkYKHF3PrMLcRMP7f7CfLfL7tcg+tywcuHdHkR3wOQaCHsPv5ZgfooOqU1VXIT2
+	waAN7smTkCVdqJXi2Tk4y+jxG7/yBY97RI7XNcqMRjeO2mYV/luu6Kzx9CMyQNZaFDcnO9qqO8U
+	KTFX5UNzUMVjNanAhSvtt0ONdBUJYGPPFvj12Ypal7lrD4fSBTdODvjX2ToojHJlZaf78hVIspP
+	EjtHayIH2rfKAW+jfbbidHP4VkU1RshBy80xXMNYyZ7s+lGeXNAgW17TrV/HZl2urss5Omw==
+X-Received: by 2002:a17:90b:17c7:b0:38e:9ef9:eb97 with SMTP id 98e67ed59e1d1-396d0fc1b2fmr34041148a91.16.1788138703178;
+        Sun, 30 Aug 2026 18:11:43 -0700 (PDT)
+X-Received: by 2002:a17:90b:17c7:b0:38e:9ef9:eb97 with SMTP id 98e67ed59e1d1-396d0fc1b2fmr34041100a91.16.1788138702705;
+        Sun, 30 Aug 2026 18:11:42 -0700 (PDT)
+Received: from [10.133.33.138] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396dda7eb6bsm14314442a91.8.2026.08.30.18.11.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Aug 2026 18:11:42 -0700 (PDT)
+Message-ID: <e714caa4-26d5-4c41-9f43-9e9f71e63612@oss.qualcomm.com>
+Date: Mon, 31 Aug 2026 09:11:40 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/2] dt-bindings: input: Add Qualcomm SPMI PMIC haptics
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, devicetree@vger.kernel.org, conor+dt@kernel.org,
+        linux-input@vger.kernel.org, robh@kernel.org
+References: <20260828-qcom-spmi-haptics-v7-0-0367b3ac2e1e@oss.qualcomm.com>
+ <20260828-qcom-spmi-haptics-v7-1-0367b3ac2e1e@oss.qualcomm.com>
+ <20260828095932.EF7541F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <20260828095932.EF7541F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Iskutr/g c=1 sm=1 tr=0 ts=6a94d4d0 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=skNwuv_u4mlSdyqJbrIA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: Hz2gsGf57_aL2HXddZ0pYaTFdT6Ds7zy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDAwOCBTYWx0ZWRfX05BtvnO5VheQ
+ A92mVXhL4Ime4xwsc0iwgaEIfFPhR3y2u6dAG+n8y3ULM4tfozzRuP8uLhVQ98QszQrGs1wCyFP
+ 8XuNxogjFO99Gj+GBTypNr1+vYOqeulfkZQwAwKH/5hzKL6ylIFTzpsMR6Q6eTyCOCeOncWwdwA
+ L3m/wCXptuqA4OGrxG49PnKiyeyP094Vts8MjLNA0YwogA6KV58k8a1npfRndtsj9XbzW/xzypq
+ yUjMDshZRGAY/fiiQbucWELTXhclkkvbIoE0D3QdBp8gxn/9jYBo+WZh2Y9I0ul444B1fUGsQjB
+ vbJUIgglZbx1VzH0dLKo1LEPhcUb5V61Ga8E2wISXoHNrNXKZgj6nM2jj+6ULvPBSgtejZ1zX7c
+ dzjPcuRiqgyqH3xoaeMFF2DwgD1NRQZ9+egVZ8XlLcVVYEKORc5CYpDTlGZqKzFBVSibuVAC2D7
+ xVbF00KcUXkopvrOQWQ==
+X-Proofpoint-ORIG-GUID: Hz2gsGf57_aL2HXddZ0pYaTFdT6Ds7zy
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDAwOCBTYWx0ZWRfX7N5WpAQXsvHn
+ SBPk3zbO4bRMq+317AuJ/ZGhPMaYYABV8fgNt2y4l10L7IbnZ4WBXF4xk5K+6OHRaLGdeTYRojB
+ M11jBlpcUbHgW3oJJ76Vyc76AD1KQjM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-30_07,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310008
 
-Force-feedback playback is queued asynchronously, but system suspend can
-cut power while the worker is pending. Disable and drain the work item
-before entering standby, and keep force-feedback quiesced until resume has
-restored communication.
 
-The enable GPIO gates I2C access without resetting the device. Raise it and
-observe the startup delay before leaving standby after resume or a failed
-regulator shutdown.
 
-Use explicit locking and goto-based error unwinding. Keep the work item
-disabled after a resume failure. Track whether it is already disabled
-under the input mutex, so another suspend or a direct resume retry does not
-increment the disable count and a later successful resume balances it
-exactly once. Skip close-time register access while recovery remains
-pending.
+On 8/28/2026 5:59 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The new `haptics` device tree node will cause validation failures because it is not permitted by its parent MFD schema.
+> --
+> 
+> commit 69b46ca6dd857a336fadfc81c3a26d260c9c10ea
+> Author: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> 
+> dt-bindings: input: Add Qualcomm SPMI PMIC haptics
+> 
+> Add binding document for the haptics module inside Qualcomm PMIC PMIH0108.
+> 
+>> diff --git a/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+>> new file mode 100644
+>> index 0000000000000..ce2c9e893a0d7
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+> 
+> [ ... ]
+> 
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/irq.h>
+>> +    #include <dt-bindings/spmi/spmi.h>
+>> +
+>> +    pmic@7 {
+>> +        compatible = "qcom,pmih0108", "qcom,spmi-pmic";
+>> +        reg = <0x7 SPMI_USID>;
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +
+>> +        haptics@f000 {
+>> +            compatible = "qcom,pmih0108-haptics", "qcom,spmi-haptics";
+> 
+> [Severity: Low]
+> Will the haptics child node cause device tree validation failures against the
+> parent MFD schema?
+> 
+> The parent schema for qcom,spmi-pmic enforces additionalProperties: false,
+> but it does not define a patternProperties regular expression that permits
+> a haptics node. Running dt_binding_check or dtbs_check on this example, or
+> any actual device tree using this node under the SPMI PMIC, will fail
+> validation.
 
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-input/20260829230740.126461F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-input/20260830143050.03E081F000E9@smtp.kernel.org/
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/linux-input/apLD91vzHIrLOPWC@google.com/
-Assisted-by: Codex:gpt-5.6-sol [sparse]
-Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
----
-Changes in v5:
-- Keep the work item disabled after every resume failure, so force-feedback
-  cannot reach hardware whose regulator is off.
-- Track the disabled state to avoid incrementing the work disable count again
-  on a later suspend or direct resume retry.
-- Enable the work item only after resume has fully restored the regulator,
-  enable GPIO, and standby state, balancing the disable count exactly once.
-- Avoid close-time register access while PM recovery is pending.
+The change which adds haptics child node in MFD qcom,spmi-pmic schema
+has been applied here:
 
- drivers/input/misc/drv260x.c | 80 ++++++++++++++++++++++++++++++------
- 1 file changed, 67 insertions(+), 13 deletions(-)
+https://lore.kernel.org/linux-input/178602255123.2917765.7426706813083510078.b4-ty@b4/
 
-diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
-index 6c5c4c53753b..f261bb32fdc0 100644
---- a/drivers/input/misc/drv260x.c
-+++ b/drivers/input/misc/drv260x.c
-@@ -181,6 +181,7 @@
-  * @work: Work item used to off load the enable/disable of the vibration
-  * @enable_gpio: Pointer to the gpio used for enable/disabling
-  * @regulator: Pointer to the regulator for the IC
-+ * @work_disabled: Whether playback work is disabled pending PM recovery
-  * @magnitude: Magnitude of the vibration event
-  * @mode: The operating mode of the IC (LRA_NO_CAL, ERM or LRA)
-  * @library: The vibration library to be used
-@@ -194,6 +195,7 @@ struct drv260x_data {
- 	struct work_struct work;
- 	struct gpio_desc *enable_gpio;
- 	struct regulator *regulator;
-+	bool work_disabled;
- 	u8 magnitude;
- 	u32 mode;
- 	u32 library;
-@@ -215,6 +217,24 @@ static int drv260x_calculate_voltage(unsigned int voltage)
- 	return (voltage * 255 / 5600);
- }
- 
-+static void drv260x_disable_work(struct drv260x_data *haptics)
-+{
-+	if (haptics->work_disabled)
-+		return;
-+
-+	disable_work_sync(&haptics->work);
-+	haptics->work_disabled = true;
-+}
-+
-+static void drv260x_enable_work(struct drv260x_data *haptics)
-+{
-+	if (!haptics->work_disabled)
-+		return;
-+
-+	enable_work(&haptics->work);
-+	haptics->work_disabled = false;
-+}
-+
- static void drv260x_worker(struct work_struct *work)
- {
- 	struct drv260x_data *haptics = container_of(work, struct drv260x_data, work);
-@@ -263,6 +283,10 @@ static void drv260x_close(struct input_dev *input)
- 	struct drv260x_data *haptics = input_get_drvdata(input);
- 	int error;
- 
-+	/* PM has not restored register access yet. */
-+	if (haptics->work_disabled)
-+		return;
-+
- 	cancel_work_sync(&haptics->work);
- 
- 	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
-@@ -569,18 +593,22 @@ static int drv260x_probe(struct i2c_client *client)
- static int drv260x_suspend(struct device *dev)
- {
- 	struct drv260x_data *haptics = dev_get_drvdata(dev);
--	int error;
-+	bool restore_work = false;
-+	int error, restore_error;
- 
--	guard(mutex)(&haptics->input_dev->mutex);
-+	mutex_lock(&haptics->input_dev->mutex);
- 
- 	if (input_device_enabled(haptics->input_dev)) {
-+		restore_work = !haptics->work_disabled;
-+		drv260x_disable_work(haptics);
-+
- 		error = regmap_update_bits(haptics->regmap,
- 					   DRV260X_MODE,
- 					   DRV260X_STANDBY_MASK,
- 					   DRV260X_STANDBY);
- 		if (error) {
- 			dev_err(dev, "Failed to set standby mode\n");
--			return error;
-+			goto err_enable_work;
- 		}
- 
- 		gpiod_set_value(haptics->enable_gpio, 0);
-@@ -588,14 +616,28 @@ static int drv260x_suspend(struct device *dev)
- 		error = regulator_disable(haptics->regulator);
- 		if (error) {
- 			dev_err(dev, "Failed to disable regulator\n");
--			regmap_update_bits(haptics->regmap,
--					   DRV260X_MODE,
--					   DRV260X_STANDBY_MASK, 0);
--			return error;
-+			goto err_leave_standby;
- 		}
- 	}
- 
-+	mutex_unlock(&haptics->input_dev->mutex);
- 	return 0;
-+
-+err_leave_standby:
-+	gpiod_set_value(haptics->enable_gpio, 1);
-+	fsleep(250);
-+	restore_error = regmap_update_bits(haptics->regmap,
-+					   DRV260X_MODE,
-+					   DRV260X_STANDBY_MASK, 0);
-+	if (restore_error) {
-+		dev_err(dev, "Failed to leave standby mode: %d\n", restore_error);
-+		restore_work = false;
-+	}
-+err_enable_work:
-+	if (restore_work)
-+		drv260x_enable_work(haptics);
-+	mutex_unlock(&haptics->input_dev->mutex);
-+	return error;
- }
- 
- static int drv260x_resume(struct device *dev)
-@@ -603,28 +645,40 @@ static int drv260x_resume(struct device *dev)
- 	struct drv260x_data *haptics = dev_get_drvdata(dev);
- 	int error;
- 
--	guard(mutex)(&haptics->input_dev->mutex);
-+	mutex_lock(&haptics->input_dev->mutex);
- 
- 	if (input_device_enabled(haptics->input_dev)) {
-+		drv260x_disable_work(haptics);
-+
- 		error = regulator_enable(haptics->regulator);
- 		if (error) {
- 			dev_err(dev, "Failed to enable regulator\n");
--			return error;
-+			goto err_unlock;
- 		}
- 
-+		gpiod_set_value(haptics->enable_gpio, 1);
-+		fsleep(250);
-+
- 		error = regmap_update_bits(haptics->regmap,
- 					   DRV260X_MODE,
- 					   DRV260X_STANDBY_MASK, 0);
- 		if (error) {
--			dev_err(dev, "Failed to unset standby mode\n");
--			regulator_disable(haptics->regulator);
--			return error;
-+			dev_err(dev, "Failed to leave standby mode: %d\n", error);
-+			goto err_disable_regulator;
- 		}
- 
--		gpiod_set_value(haptics->enable_gpio, 1);
-+		drv260x_enable_work(haptics);
- 	}
- 
-+	mutex_unlock(&haptics->input_dev->mutex);
- 	return 0;
-+
-+err_disable_regulator:
-+	gpiod_set_value(haptics->enable_gpio, 0);
-+	regulator_disable(haptics->regulator);
-+err_unlock:
-+	mutex_unlock(&haptics->input_dev->mutex);
-+	return error;
- }
- 
- static DEFINE_SIMPLE_DEV_PM_OPS(drv260x_pm_ops, drv260x_suspend, drv260x_resume);
--- 
-2.53.0
+> 
+
