@@ -1,60 +1,80 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCDE2D781B;
-	Mon, 31 Aug 2026 10:30:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D78A1DE894
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 10:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788172249; cv=none; b=c/GEJ/i4rXx8h54viTlfeGY6XA6NBV0uXKiG6ociicQR5gVA/UhA8vai/a9MXOZMIfM8AarnPctheoeScCF69dp8S8thbPZyux+5EgVkjvJpKI7oF4Q1ZdyowY1gySdo2GYnHLYp+6KcJI49PN0XGnQ7GFKx8M97iSWnr4OZTFc=
+	t=1788172495; cv=none; b=E4JDbusbRnmCafEfFXCxM4Rgu4bxFUWbDPqOZDEPTu22VH0tZsr+muYxZEpvmPZpOIRnUVmeCum2Gpse2loq1JTOX977YWu6YXCHc7B3jKZThXE6hSG5a72n5gLl8cumS42xYbh8Hy1NWsyiJAjK+k6UbyIcIR0PG1Xs7JDgmro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788172249; c=relaxed/simple;
-	bh=Ue8rScCqsgQwVU9eRcaCG6I8bspucEAE0U9uhwqA8Ns=;
+	s=arc-20240116; t=1788172495; c=relaxed/simple;
+	bh=CLLsnLIum5WCxVAklsCNgE1+4Hz+aP/bsEccy1Rn9bY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dFP/kgbKTEaerR8Ud8jJ8h1E8M9Yk2qwshURm+iZvfqX/+iHsM6R1pK3qdZ66/NeT9QUB+X3GiUqEKAta/DAQpO7lVrsPgKv0KjGC1c1Gs54iU2N5IdvwY0iXyDWorjriV1kRP7qKgubCCHdF/10Qs0/rOwbQNaklawxoRNi6aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Jawdq48k; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=WJQKXqf3kIDkNnUZfHatF6WBYjHCz80OeIw6zT1MC0lErOwcuWo3DDMMod/xZ19OhW1Ql7Qbyw0LDdsZclqs8b7i/FaqckWAag0YtZxnD9EyIiCmzBSr9nZL1PmfJmxN6Ul1S2n0lrCogFSh380UtL7a+EGU+CjtOcc3o4Ivsxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=tnaxwRdv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=SyiJ4uzs; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MI8emGWn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yuQjlVim; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Jawdq48k"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67V82GOf1530799;
-	Mon, 31 Aug 2026 10:30:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=evGkbM
-	QEP+5mb1V6gxg3J2QclLIKC91JRKvgKC5iC9A=; b=Jawdq48k6gJ+HX+XljNsUK
-	fwMwYZ+9A5go4Wypiv0IP7xE+OQEE9krNqrOYbD1uGNCEnzZ7Ns+flf4cJs35x1r
-	Wd1AZuRuI29xe0pNw8roqV6tSeB1OcLKMQ/XuDRLuqp5INUCuq3KqQ2s/KtuJ1/n
-	02bgS/XE1hB9xN6aLocwiOMqrD0N5qgHXkbMfUvGG+umlJHG8hjGjghFgxP/SUtO
-	XN2ar0rfPcr2O3NTPRr8pgyfqFy70+181VATZQPrSPBW0XrGSgPHJT69TT0fs6oa
-	YG8xz/QKMgVlNddxMB2VjKBUf5FyHAYiJkv/2aBg1oEkdb/+mhCNEU4/QWOTRwaQ
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuhgtkb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 10:30:46 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VAQGWj028110;
-	Mon, 31 Aug 2026 10:30:46 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexw44u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 10:30:46 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67VAUigZ24117888
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 31 Aug 2026 10:30:45 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D8E085804B;
-	Mon, 31 Aug 2026 10:30:44 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1E74F58059;
-	Mon, 31 Aug 2026 10:30:44 +0000 (GMT)
-Received: from [9.61.70.47] (unknown [9.61.70.47])
-	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 31 Aug 2026 10:30:43 +0000 (GMT)
-Message-ID: <e25ef4a2-947e-4caa-94eb-fecaed8b0432@linux.ibm.com>
-Date: Mon, 31 Aug 2026 06:30:43 -0400
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="tnaxwRdv";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="SyiJ4uzs";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MI8emGWn";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yuQjlVim"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 5FDA622605;
+	Mon, 31 Aug 2026 10:34:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788172487; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Phv0ZebiZfK+29VSYNMS4Vd8RhCPIJFdfiNAqlZZrGY=;
+	b=tnaxwRdv/5j3nK7Gd2aAUwPqiyVOs5ArI039YSDgAoC54UpFtPVIGS3VUdpNyTdALI/0OP
+	F6Tm4OttKrN8zZ4zL3/VgaX+Oud62AaF8VWi8TdH3opkQbaFEMIrUO2aPTDHQ9qD6/QT9d
+	INA9O1bEQhOGL6B44Z4ZgeKkI2nqYak=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788172487;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Phv0ZebiZfK+29VSYNMS4Vd8RhCPIJFdfiNAqlZZrGY=;
+	b=SyiJ4uzspc7Jym8wwbzgAtLZBPbBrgpnVLJLqWDgJNavPFYP9xkbPL/J8uFtEP+qFud6+t
+	PmhSprbE6WRFwYAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788172481; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Phv0ZebiZfK+29VSYNMS4Vd8RhCPIJFdfiNAqlZZrGY=;
+	b=MI8emGWnpKBjTS5/k+LxWZFbPlhw6p8+oAiqQF3p53TtwecICqnL5n1U7JqD2gfWWSrOH6
+	tWRxITmbwWHS5W5t+MyTgg2kOx5DuLxlh7cvhUptgWk/QDggXS9+XKzbbZXivsvzzHwkiM
+	v7kBMoFJ3q0t89XJQE9jhmgDWngYXm8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788172481;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Phv0ZebiZfK+29VSYNMS4Vd8RhCPIJFdfiNAqlZZrGY=;
+	b=yuQjlVimRqK7Oy6UzL8qJOirq0NwUaZg9AaspkNZ33NolC8QidRDudt037ib9NptiejeGU
+	aVX8MueE/T8r0sBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96BBE13515;
+	Mon, 31 Aug 2026 10:34:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 2tOOI71YlWpeFAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 31 Aug 2026 10:34:37 +0000
+Message-ID: <efaaeafb-2fb3-452b-a18f-cbcde3183fd4@suse.de>
+Date: Mon, 31 Aug 2026 12:34:37 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,193 +82,110 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] s390/vfio-ap: Fix leak of pinned NIB and
- registered NISC in vfio_ap_irq_enable/disable()
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>
-References: <20260828214653.1087009-1-akrowiak@linux.ibm.com>
- <20260828214653.1087009-2-akrowiak@linux.ibm.com>
- <20260828215749.5B3EA1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 0/3] sysfb: Fix display output on Lenovo D330 (and others)
+To: Ard Biesheuvel <ardb@kernel.org>,
+ Javier Martinez Canillas <javierm@redhat.com>,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ Simona Vetter <simona@ffwll.ch>, David Airlie <airlied@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20260827140726.420734-1-tzimmermann@suse.de>
+ <6b778c42-577b-4df1-a364-d4123f45080a@app.fastmail.com>
 Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260828215749.5B3EA1F000E9@smtp.kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <6b778c42-577b-4df1-a364-d4123f45080a@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wUplwUnnJ8ANJYzbiIiBijqP2Wx_ASZn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDA4NiBTYWx0ZWRfX+UWbXUZC/jnF
- BpFGDuGbC6MMWyOSHeTjGR2UrpgZmM3WO9HureYqpQc399Fy7C6hXl7PmkNtKIVRb6D5TZG1m4K
- 6Jn5Lps3UVwJ7hDeKK2RHENedWaxwNXdLOWrJmP5CuyE4W2mr3bSce9tw7FTh0dSAhDLHRjzCPo
- CoIKgbcMtz7PpecyoA4XfistOZWHktdIdTbQ+PINkG00Plrfs6z4KbYoX7wKoMP4qHbNtjtWDvK
- KRRB4gis1kk/qlc4TRshQhhutPNEfeAujHHlymcZp0INs8sliHH19f3aF0cJzz9UM+wmppXHc8I
- mKWazvXIuxjt8PIyMsIOe1XKk1tPZJYem6J9rxvLSZF9f+uWxwygJ0mfcFOnbq8xvFj5XnMYmdn
- UbIq+YKK3VM6zyqv5Ui1G8/DOT3F1z80rJPEkgsUsQzaBlLtPLD7yhtHG5RYNpkkWW5u1k8adNS
- KljL3oECTleDcOun4dg==
-X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a9557d7 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=X6a0j2lC6GQecTCcd7cA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDA4NiBTYWx0ZWRfX5w2Op2MDiq3v
- Ih+LE7L7IAPR7+VnGDeEORN4L/+2xaKEwOgdcVzlo396USGjR7vpO86O+zxzCcYsgihZbO0M7YE
- uYv3qnIMFGhrx/h4uIsiNBvM+i/gT4Q=
-X-Proofpoint-ORIG-GUID: wUplwUnnJ8ANJYzbiIiBijqP2Wx_ASZn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_03,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310086
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -4.30
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[kernel.org,redhat.com,linaro.org,linux.intel.com,ffwll.ch,gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MIME_TRACE(0.00)[0:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.com:url,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
+
+Hi Ard
+
+Am 27.08.26 um 18:56 schrieb Ard Biesheuvel:
+> Hello Thomas,
+>
+> On Thu, 27 Aug 2026, at 16:01, Thomas Zimmermann wrote:
+>> The kernel mis-interprets the display geometry given by the Lenovo
+>> D330 as incorrect. The values are correct, but the display output
+>> is rotated by 90°. With the kernel's firmware quirk applied the output
+>> is garbled.
+>>
+>> Remove the firmware quirk for the Lenovo D330 and let DRM's sysfb
+>> drivers set the correct panel orientation instead. To make this work
+>> for any display mode, use the panel size for looking up the correct
+>> orientation.
+>>
+>> Tested on a Lenovo D330-10IGM IdeaPad.
+>>
+>> Thomas Zimmermann (3):
+>>    drm/edid: Add drm_edid_get_preferred_size()
+>>    drm/sysfb: Use preferred panel size for panel orientation quirks
+>>    firmware/sysfb: Remove rotation quirk for Lenovo D330
+>>
+> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+
+The Sashiko bot warns that the quirk is required on the device's older 
+UEFI firmware revisions.  I can confirm that the quirk breaks display 
+output for the latest firmware (ver 8NCN43WW).  How is this usually 
+being handled? Can I expect affected users to update their firmware?
+
+Best regards
+Thomas
 
 
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
 
-On 8/28/26 5:57 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Critical] Prematurely unpinning the new NIB page on a hardware timeout in `vfio_ap_irq_enable` causes a host use-after-free and wild DMA write if the hardware later completes the asynchronous interrupt configuration.
->
-> Pre-existing issues:
-> - [High] Guest-reachable `WARN_ONCE` in `vfio_ap_wait_for_irqstate` and `vfio_ap_irq_disable` violates KVM subsystem guidelines and creates a denial of service vector on `panic_on_warn` systems.
-> --
->
-> commit f514ef27dfc693d5c326ffed4fd1a9985acce1d0
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Subject: s390/vfio-ap: Fix leak of pinned NIB and registered NISC in vfio_ap_irq_enable/disable()
->
-> This commit addresses resource leaks by restructuring how the AQIC
-> instruction responses are handled for AP queues. It introduces a polling
-> mechanism to wait and confirm asynchronous hardware transitions before freeing
-> resources.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 940c0ff668bee..24e93fb7f81a2 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->
->> @@ -245,8 +259,8 @@ static void vfio_ap_wait_for_irqclear(int apqn)
->>   		switch (status.response_code) {
->>   		case AP_RESPONSE_NORMAL:
->>   		case AP_RESPONSE_RESET_IN_PROGRESS:
->> -			if (!status.irq_enabled)
->> -				return;
->> +			if (status.irq_enabled == ir)
->> +				return true;
->>   			fallthrough;
->>   		case AP_RESPONSE_BUSY:
->>   			msleep(20);
->> @@ -257,12 +271,15 @@ static void vfio_ap_wait_for_irqclear(int apqn)
->>   		default:
->>   			WARN_ONCE(1, "%s: tapq rc %02x: %04x\n", __func__,
->>   				  status.response_code, apqn);
->> -			return;
->> +			return true;
->>   		}
->>   	} while (--retry);
->>   
->> -	WARN_ONCE(1, "%s: tapq rc %02x: %04x could not clear IR bit\n",
->> -		  __func__, status.response_code, apqn);
->> +	WARN_ONCE(1, "%s: tapq rc %02x: timed out waiting for interrupts %s for %02x.%04x\n",
->> +		  __func__, status.response_code,
->> +		  ir ? "enabled" : "disabled",
->> +		  AP_QID_CARD(apqn), AP_QID_QUEUE(apqn));
->> +	return false;
->>   }
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this guest-reachable
-> warning violate KVM subsystem guidelines?
->
-> A malicious guest can intentionally manipulate AP queue states or rapidly
-> spam PQAP instructions to stall the hardware, triggering these warnings on
-> non-operational states or polling timeouts. On systems configured with
-> panic_on_warn, this creates a host denial of service vector.
->
-> Could these be converted to rate-limited debug messages or dropped entirely?
-
-Responded to with v3, not legitimate.
-
->
-> [ ... ]
->
->> @@ -326,18 +365,46 @@ static struct ap_queue_status vfio_ap_irq_disable(struct vfio_ap_queue *q)
->>   		case AP_RESPONSE_Q_NOT_AVAIL:
->>   		case AP_RESPONSE_DECONFIGURED:
->>   		case AP_RESPONSE_CHECKSTOPPED:
->> +			/* AP not operational; no further interrupts possible */
->> +			WARN_ONCE(1, "%s: ap_aqic status %d\n", __func__,
->> +				  status.response_code);
->> +			goto end_free;
->>   		case AP_RESPONSE_INVALID_ADDRESS:
->>   		default:
->> -			/* All cases in default means AP not operational */
->> +			/*
->> +			 * The AQIC disable was rejected; IRQ is still enabled
->> +			 * and the hardware still holds the NIB address. Do not
->> +			 * free resources.
->> +			 */
->>   			WARN_ONCE(1, "%s: ap_aqic status %d\n", __func__,
->>   				  status.response_code);
->> -			goto end_free;
->> +			goto end_fail;
->>   		}
-> [Severity: High]
-> This is also a pre-existing issue, but can this similarly be triggered by
-> an unprivileged guest manipulating the queue into an unavailable state during
-> a disable attempt?
-
-Responded to with v3, not legitimate.
-
-
->
-> [ ... ]
->
->> @@ -489,13 +557,49 @@ static struct ap_queue_status vfio_ap_irq_enable(struct vfio_ap_queue *q,
->>   	status = ap_aqic(q->apqn, aqic_gisa, h_nib);
->>   	switch (status.response_code) {
->>   	case AP_RESPONSE_NORMAL:
->> -		/* See if we did clear older IRQ configuration */
->> +		/*
->> +		 * AQIC initiates an asynchronous process; however, AP_RESPONSE_NORMAL
->> +		 * does not guarantee the IR bit is set yet.  Wait to confirm before
->> +		 * committing the new NIB and freeing the old resources.
->> +		 */
->> +		if (!vfio_ap_wait_for_irqstate(q->apqn, AP_IRQ_ENABLED)) {
->> +			/*
->> +			 * Timed out: the hardware may not have accepted the new
->> +			 * NIB.  Clean up the new resources and return
->> +			 * OTHERWISE_CHANGED to signal the guest to retry.
->> +			 */
->> +			ret = kvm_s390_gisc_unregister(kvm, isc);
->> +			if (ret) {
->> +				msg = "%s: kvm_s390_gisc_unregister: rc=%d isc=%d, apqn=%#04x\n";
->> +				VFIO_AP_DBF_WARN(msg, __func__, ret, isc, q->apqn);
->> +			}
->> +			vfio_unpin_pages(&q->matrix_mdev->vdev, nib, 1);
->> +			memset(&status, 0, sizeof(status));
->> +			status.response_code = AP_RESPONSE_OTHERWISE_CHANGED;
->> +			break;
->> +		}
-> [Severity: Critical]
-> Does unpinning the new NIB page here introduce a race that could lead to a
-> wild DMA write and host memory corruption?
->
-> Because ap_aqic() returned AP_RESPONSE_NORMAL, the hardware accepted the
-> asynchronous request. If the hardware is merely stalled (e.g., due to a
-> malicious guest spamming instructions) and vfio_ap_wait_for_irqstate() times
-> out, the hardware might still eventually complete the transition and write
-> interrupt status bytes to the new NIB.
->
-> If vfio_unpin_pages() is called here, that physical page could be reallocated
-> by the host kernel for a different purpose before the delayed hardware DMA
-> write completes.
-
-Legitimate concern, will be fixed in v5
-
->
 
