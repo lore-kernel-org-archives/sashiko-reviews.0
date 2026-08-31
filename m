@@ -1,60 +1,40 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from canpmsgout02.his.huawei.com (canpmsgout02.his.huawei.com [113.46.200.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FF93F482A;
-	Mon, 31 Aug 2026 12:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDF63F58FE;
+	Mon, 31 Aug 2026 12:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.217
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788178466; cv=none; b=EhWX2/VPgYu8UaqeBgASaRkRDc5UVo964uBEESD9YOnmVSgzbucIKuAm0ZFNtduKPoOGfaSOV4OfVuozyouk/st4WRagScVOT2SIVSxD2FK5SUgxolvQ1Jgm0Gcvoo4wQE6LrMwytK5OInwjFJ0Z5HJ7jc5mdFw3MXZBpBxWs+I=
+	t=1788179016; cv=none; b=bBRnEPWpXcpNRi3Wzn+Tg28eunQXqQzjtyCWAt+I5mDt3lgBBehtUQ/tyMonV9xk4TuY0jfKSpOupMMyxjarjtyonqRHX/tpFl/BMCiBgbh1pL7cPPoEwMgiQUi7wmHGNP0QerJ+S5yTTnDxmZWUMClveoraFwi9n/SEv02jLuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788178466; c=relaxed/simple;
-	bh=azEBWLfAkO6B8Pqb3rqyqFapx7soZ0/o4+mTq1peHJM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HggPa4YulGPyH7NfvLCTPs0P11t9PjTZ/tVFdtF6+aoCwElbEOWaVchEe6Opva6nltUc3RdKlUFApoecNTLUOfGxSnyK6R8gkmX1KyZ7NcXV2cknvtk6tIyTdwF5VCUGeFhHgIrxYuzevAWoDAvMLkhAy5k+v8izIwmXQMiIpYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=PGJQBX9D; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1788179016; c=relaxed/simple;
+	bh=K7lYS7+eiBdH4SFRMzi07LtPoeALTT7nKyau2FxTa2I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=vAA2iLlXnwDT6TFRvr1QVWD19rWzE2OJWCp/UqhO6eBEuswSqEasOPu1bPzOX5SHMA0WT8Fw0cyp/ZZpqKPI/MxC/Btji+TtUyKhgCJZuz+rd7ql6ioqNCGht19C1HO4XeSWjunC+i0+6+V8c/r4STWPeiUm1MNkcUZ2WBaJHUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=dP74fKIJ; arc=none smtp.client-ip=113.46.200.217
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="PGJQBX9D"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67VBW73r2142487;
-	Mon, 31 Aug 2026 12:14:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=LBrGsS
-	JdfvY2ecwrvS0hcETW0ul3ptQjtuFMlPB/+r0=; b=PGJQBX9D9ttefz4r3gMOut
-	qqpC2YMF2xtfB962r2m1E3jnjdycFB7sMRSWyM/0BeYc2XNUUT2POd2P+GToujkC
-	RWixrdecde4fPKiwJV2KXyAL2wEVi2blSlgZRekuA3jviE2NiIUvkTwbeXm/wbm8
-	OrerWn5RIxJw6Y5gtxGcOlcfcc78MJnU8Afbr8YJrIJf9YCRC8W6+OE2R0UTqg79
-	S9n7gwC3bdJnDPXNs+bLHQf3rEqyTCvGo8FzuUVwQMuBCXA2C2pf0zqVNmuNhtJR
-	iTdYfBCLxXCEWFqjmmXektwZ3HgqkKT52qp7YTTxtQ3WEXAmOMBBulcTEtgubVjw
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq2t0xbg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 12:14:24 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VCBIXi017166;
-	Mon, 31 Aug 2026 12:14:23 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vwtw3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 12:14:23 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67VCEJiI47317356
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 31 Aug 2026 12:14:19 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7F30F2004B;
-	Mon, 31 Aug 2026 12:14:19 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4A02620043;
-	Mon, 31 Aug 2026 12:14:19 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.4.184])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 31 Aug 2026 12:14:19 +0000 (GMT)
-Message-ID: <43d49c51-0a9c-40fa-8967-2439331972bc@linux.ibm.com>
-Date: Mon, 31 Aug 2026 14:14:19 +0200
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="dP74fKIJ"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=Cuh/1B82iF/ngnjO4OCGUJIoo5abhoSYv5LIeH6KToU=;
+	b=dP74fKIJHRNy/3yksVERoCDFyJRzf0yMRPSgASCSECCRuNWmNut9BdSmBTfXsc7K1r10XqJ7R
+	9IXZLS2Cd9vyb78zc6hYkvIi/vb9hxa9/9W7vm/y8FuGZ582/vBztnw0HmOR+l5TOPRg3eUKgkH
+	d6ll7j5RCtAdthtlEJg6ldU=
+Received: from mail.maildlp.com (unknown [172.19.163.104])
+	by canpmsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4hYSYT4Mx2zcb0T;
+	Mon, 31 Aug 2026 20:12:45 +0800 (CST)
+Received: from kwepemr100010.china.huawei.com (unknown [7.202.195.125])
+	by mail.maildlp.com (Postfix) with ESMTPS id D01784058C;
+	Mon, 31 Aug 2026 20:23:27 +0800 (CST)
+Received: from [10.67.120.103] (10.67.120.103) by
+ kwepemr100010.china.huawei.com (7.202.195.125) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 31 Aug 2026 20:23:27 +0800
+Message-ID: <8a593c94-3fa5-4504-bbd3-4f9bbaf78264@huawei.com>
+Date: Mon, 31 Aug 2026 20:23:26 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,133 +42,314 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] s390/ebcdic: Add character classes for the
- invariant subset of EBCDIC
-To: sashiko-reviews@lists.linux.dev
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>
-References: <20260828140057.1728173-1-iii@linux.ibm.com>
- <20260828140057.1728173-2-iii@linux.ibm.com>
- <20260828140945.EAA981F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260828140945.EAA981F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 6/6] KVM: arm64: Add auto HDBSS enable/disable on dirty
+ logging change
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, <kvmarm@lists.linux.dev>, Oliver Upton
+	<oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20260709104026.2612599-1-zhengtian10@huawei.com>
+ <20260709104026.2612599-7-zhengtian10@huawei.com>
+ <20260709113436.951C81F000E9@smtp.kernel.org>
+From: Tian Zheng <zhengtian10@huawei.com>
+In-Reply-To: <20260709113436.951C81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=bc1bluPB c=1 sm=1 tr=0 ts=6a957020 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=fjRjbmclWrV-STaFBfAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfX32+nnqd2KUo4
- A9swljJu/mtjr6FejBT3+FasMBx3f+CanSFowytrAkfKlXxZp/saDI0Jl5w21DGOHqXHsZVmXGE
- w3vkD9NMTZm+f3RmrsEYEWlOkVbRNC4=
-X-Proofpoint-ORIG-GUID: uUpb2QZS9Su09G5tz6iy_hwiuEfuBvyR
-X-Proofpoint-GUID: uUpb2QZS9Su09G5tz6iy_hwiuEfuBvyR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfX0tYTs20JXyOq
- P1y4b4eZvCVfAzjzPz0wMcVylamVa8OCjh8v8yyhPtwK5NUca72mWq831YdPQVLQ+gY3R1woClo
- U6bGM3grKz1fUVQSolGhWGAr25f6QF86tYlNnWivuMnsTTDW8Jn8V1ILPyr3hkiQmumSx60lL6f
- 9FTF7LrO9MnBcM2p7gbDXNAusy34srjjAkwWhGp0RNtcIr2rsecCkcWe0t+VSTKLOshVoU3561z
- BrXY+mwO3e2h5HEuhp/oT5g3PoNslv++xCJ96UMii2UPp0ugkHSrloMYJwrO/fWqF3DZcgS55SY
- BUBo3pSHM2orExyO0sokmMqnOGTpQzFwvwDz0RmyjaX2n+Wyli0nA07WtY5qGIlMpdFM1KwanJm
- EDcYBhDalCP80PkQ4tlt9a2imHwFNT2BxUNxC5XqDwDz5NIutHqN0LApbRZwnBQ+QloQTYL8vBe
- +39dMbXrxdXxzeXQNkg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310104
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ kwepemr100010.china.huawei.com (7.202.195.125)
 
 
 
-On 8/28/26 16:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] `_ebctype_inv` maps variant EBCDIC characters as invariant punctuation, violating the definition of the invariant subset.
+On 7/9/2026 7:34 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
+> - [Critical] Freeing HDBSS buffers synchronously in `kvm_arm_disable_hdbss_global()` without kicking vCPUs causes a hardware Use-After-Free and host memory corruption.
+> - [High] The patch fails to enforce eager page table splitting when `KVM_DIRTY_LOG_INITIALLY_SET` is used, violating the HDBSS requirement.
+> - [High] Global enable/disable functions mutate per-vCPU HDBSS state across all vCPUs without proper locking or KVM request mechanisms.
+> - [High] Missing `kvm_unshare_hyp()` on the vCPU creation error path breaks pKVM memory ownership.
+> - [High] Memslots are accessed without SRCU protection when flushing the HDBSS buffer.
+> - [Medium] The dynamically calculated HDBSS buffer order is never saved, causing newly created vCPUs to allocate incorrect 1-page buffers.
+> - [Medium] A conditional check in `kvm_arm_vcpu_destroy` leaks HDBSS buffers if a TOCTOU race left a vCPU with an allocated buffer while `enable_hdbss` is false.
+> - [Medium] Missing immediate Context Synchronization Events (ISB) for control-plane system registers.
 > --
 > 
-> commit 4c4158381dc4e63b906d199cf0d49673aee1a203
-> Author: Ilya Leoshkevich <iii@linux.ibm.com>
+> --- Patch [6]: [PATCH v4 6/6] KVM: arm64: Add auto HDBSS enable/disable on dirty logging change ---
+> commit c993a05c79f4338df277681c6534d32f65490e56
+> Author: eillon <yezhenyu2@huawei.com>
 > 
-> s390/ebcdic: Add character classes for the invariant subset of EBCDIC
->      
-> Add _ctypes-like array for the invariant subset of EBCDIC, which
-> consists of characters that should have the same assignments on all
-> EBCDIC code pages that use the Latin alphabet [1].
+> KVM: arm64: Add auto HDBSS enable/disable on dirty logging change
 > 
->> diff --git a/arch/s390/kernel/ebcdic.c b/arch/s390/kernel/ebcdic.c
->> index 0e51fa537262b..15cbb0b42aa6e 100644
->> --- a/arch/s390/kernel/ebcdic.c
->> +++ b/arch/s390/kernel/ebcdic.c
->> @@ -392,10 +392,48 @@ __u8 _ebc_toupper[256] =
+> This commit adds VM-level HDBSS enable/disable support tied to dirty logging
+> changes. It automatically enables HDBSS when dirty logging starts and disables
+> it when all memslots stop dirty logging.
+> 
+>> diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
+>> index 002366337637c..c5bf866c23ef2 100644
+>> --- a/arch/arm64/kvm/dirty_bit.c
+>> +++ b/arch/arm64/kvm/dirty_bit.c
 > [ ... ]
->> +/*
->> + * EBCDIC -> character classes
->> + */
->> +const __u8 _ebctype_inv[256] = {
->> +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x00-0x07 */
->> +	_C,     _C,    _C,    _C|_S, _C|_S, _C|_S, _C,    _C,	/* 0x08-0x0f */
->> +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x10-0x17 */
->> +	_C,     _C,    _C,    _C,    _C,    _C,    _C,    _C,	/* 0x18-0x1f */
->> +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x20-0x27 */
->> +	_C,     _C,    _C,    _C,    _C,    _C,    _C,    _C,	/* 0x28-0x2f */
->> +	0,      0,     _C,    _C,    _C,    _C,    _C,    _C,	/* 0x30-0x37 */
->> +	_C,     _C,    _C,    _C,    _C,    _C,    0,     _C,	/* 0x38-0x3f */
->> +	_S|_SP, 0,     0,     0,     0,     0,     0,     0,	/* 0x40-0x47 */
->> +	0,      0,     _P,    _P,    _P,    _P,    _P,    _P,	/* 0x48-0x4f */
+>> +static int kvm_arm_enable_hdbss_global(struct kvm *kvm)
+>> +{
+>> +	int err;
+>> +	unsigned long i;
+>> +	unsigned int order;
+>> +	struct kvm_vcpu *vcpu;
+> [ ... ]
+>> +	/* Turn it on */
+>> +	order = hdbss_auto_select_order(kvm);
+>> +	kvm_for_each_vcpu(i, vcpu, kvm) {
+>> +		err = kvm_arm_vcpu_alloc_hdbss(vcpu, order);
 > 
 > [Severity: Medium]
-> Does this array incorrectly include variant EBCDIC characters?
+> Will newly created vCPUs allocate buffers of the correct size?
 > 
-> 0x4A is mapped as _P (invariant punctuation) here, but isn't it a variant
-> character (e.g., '¢' in US 037, '[' in German 273)?
+> The optimal HDBSS buffer order is calculated here based on memslot sizes and
+> used to allocate buffers for currently online vCPUs, but the value doesn't
+> seem to be saved to kvm->arch.hdbss_order.
 > 
-> If a kernel command line contains these bytes, they might be incorrectly
-> accepted as valid invariant EBCDIC.
+> When a new vCPU is created later, it appears kvm_arch_vcpu_create() allocates
+> its buffer using the uninitialized kvm->arch.hdbss_order:
 > 
->> +	_P,     0,     0,     0,     0,     0,     0,     0,	/* 0x50-0x57 */
->> +	0,      0,     _P,    _P,    _P,    _P,    _P,    _P,	/* 0x58-0x5f */
->> +	_P,     _P,    0,     0,     0,     0,     0,     0,	/* 0x60-0x67 */
->> +	0,      0,     _P,    _P,    _P,    _P,    _P,    _P,	/* 0x68-0x6f */
->> +	0,      0,     0,     0,     0,     0,     0,     0,	/* 0x70-0x77 */
->> +	0,      _P,    _P,    _P,    _P,    _P,    _P,    _P,	/* 0x78-0x7f */
->> +	0,      _L|_X, _L|_X, _L|_X, _L|_X, _L|_X, _L|_X, _L,	/* 0x80-0x87 */
->> +	_L,     _L,    0,     0,     0,     0,     0,     _P,	/* 0x88-0x8f */
->> +	0,      _L,    _L,    _L,    _L,    _L,    _L,    _L,	/* 0x90-0x97 */
->> +	_L,     _L,    0,     0,     0,     0,     0,     0,	/* 0x98-0x9f */
->> +	0,      _P,    _L,    _L,    _L,    _L,    _L,    _L,	/* 0xa0-0xa7 */
->> +	_L,     _L,    0,     0,     0,     0,     0,     0,	/* 0xa8-0xaf */
->> +	_P,     0,     0,     0,     0,     0,     0,     0,	/* 0xb0-0xb7 */
->> +	0,      0,     _P,    _P,    0,     0,     0,     0,	/* 0xb8-0xbf */
->> +	_P,     _U|_X, _U|_X, _U|_X, _U|_X, _U|_X, _U|_X, _U,	/* 0xc0-0xc7 */
+> arch/arm64/kvm/arm.c:kvm_arch_vcpu_create() {
+>      ...
+>      err = kvm_arm_vcpu_alloc_hdbss(vcpu, vcpu->kvm->arch.hdbss_order);
+>      ...
+> }
 > 
+> Could this cause new vCPUs to receive order-0 buffers instead of the
+> dynamically selected size, leading to mismatched sizes and excessive
+> buffer-full exits?
+> 
+
+Addressed by redesign in v5. The dynamic order calculation is removed.
+The buffer size is now stored in kvm->arch.hdbss_buffer_size (bytes),
+set either by the user via KVM_CAP_ARM_HDBSS_BUFFER_SIZE (before vCPU
+creation), or by kvm_arch_dirty_ring_size_updated() when dirty-ring is
+configured, or defaults to PAGE_SIZE. Since it is stored in kvm->arch
+before any vCPU exists, all vCPUs — including later-created ones —
+allocate a consistent size.
+
+> [Severity: High]
+> Is it safe to directly mutate per-vCPU HDBSS state across all vCPUs from the
+> thread handling the memslot ioctl?
+> 
+> This loop directly calls kvm_arm_vcpu_alloc_hdbss() to mutate vcpu->arch.hdbss
+> without holding vcpu->mutex or using the KVM vCPU requests framework.
+> 
+> Could concurrently running vCPUs undergoing a context switch (like
+> __load_hdbss) or fault path read partially updated, torn, or freed state,
+> leading to unpredictable hardware register programming?
+> 
+>> +		if (err)
+>> +			goto error_alloc;
+>> +	}
+> [ ... ]
+>> +void kvm_arm_disable_hdbss_global(struct kvm *kvm)
+>> +{
+>> +	unsigned long i;
+>> +	struct kvm_vcpu *vcpu;
+>> +
+>> +	if (!kvm->arch.enable_hdbss) /* Already Off */
+>> +		return;
+>> +
+>> +	/* Turn it off */
+>> +	kvm->arch.mmu.vtcr &= ~(VTCR_EL2_HD | VTCR_EL2_HDBSS | VTCR_EL2_HA);
+>> +
+>> +	kvm_for_each_vcpu(i, vcpu, kvm)
+>> +		kvm_arm_vcpu_free_hdbss(vcpu);
+> 
+
+Addressed by redesign in v5. Enable/disable no longer touch any per-vCPU 
+state. Buffers are pre-allocated at vCPU creation, and enable/disable 
+only flips VTCR bits in kvm->arch.mmu.vtcr (a VM-level field written 
+only from the memslot-ioctl path under slots_lock) followed by a kick. 
+vCPUs pick up the new VTCR when __load_stage2() reprograms vtcr_el2 on 
+re-entry.
+
+
+> [Severity: Critical]
+> Does this code risk hardware use-after-free and host memory corruption?
+> 
+> When dirty logging is disabled, the enable_hdbss flag and VTCR_EL2 bits are
+> cleared, and the physical pages are immediately freed. Since this occurs under
+> kvm->slots_lock, which does not prevent vCPUs from executing in guest mode,
+> running vCPUs could continue executing with their hardware VTCR_EL2 and
+> HDBSSBR_EL2 registers still active.
+> 
+> Should this function force running vCPUs to exit (e.g., via kvm_vcpu_kick() or
+> a KVM request) before freeing the physical pages to prevent the hardware MMU
+> from asynchronously writing dirty page records into newly freed memory?
+> 
+>> +
+>> +	kvm->arch.enable_hdbss = false;
+>> +}
+> [ ... ]
+>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>> index 949fb895add6a..484f48dae0003 100644
+>> --- a/arch/arm64/kvm/mmu.c
+>> +++ b/arch/arm64/kvm/mmu.c
+>> @@ -2588,6 +2588,9 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
+>>   {
+>>   	bool log_dirty_pages = new && new->flags & KVM_MEM_LOG_DIRTY_PAGES;
+> [ ... ]
+>>   	if (log_dirty_pages) {
+>>   
+>>   		if (change == KVM_MR_DELETE)
+>>   			return;
+>>   
+>>   		/*
+>>   		 * Huge and normal pages are write-protected and split
+>>   		 * on either of these two cases:
+>>   		 *
+>>   		 * 1. with initial-all-set: gradually with CLEAR ioctls,
+>>   		 */
+>>   		if (kvm_dirty_log_manual_protect_and_init_set(kvm))
+>>   			return;
+> 
+
+Valid point, addressed by redesign in v5. kvm_arm_disable_hdbss_global() 
+no longer frees buffers at all — it only clears the VTCR HDBSS bits and 
+kicks vCPUs out of guest mode via KVM_REQ_OUTSIDE_GUEST_MODE. Buffers 
+are allocated at vCPU creation and freed only at vCPU destruction 
+(PML-style), so there is no window where the MMU can write into freed 
+memory.
+
+> [Severity: High]
+> Does this early return violate the HDBSS requirement for eager page table
+> splitting?
+> 
+> The commit message states that enabling HDBSS requires disabling lazy split so
+> that all block mappings are eagerly broken down before the buffer starts
+> recording. However, if userspace utilizes KVM_DIRTY_LOG_INITIALLY_SET, this
+> path returns early without calling kvm_mmu_split_memory_region().
+> 
+> Since HDBSS was already globally enabled earlier in this function, could it
+> now operate on block mappings instead of page-granularity tables, defeating
+> the hardware expectation and corrupting the dirty log state?
+> 
+
+Not an issue in the v5 design. With KVM_DIRTY_LOG_INITIALLY_SET, 
+userspace clears the bitmap via CLEAR ioctls; the clear path 
+write-protects, and v5's wrprotect strips DBM from blocks (->RO) so the 
+first write faults and triggers the split, while level-3 pages go WC 
+(DBM=1, S2AP_W=0) and are re-tracked by HDBSS. Since v5 supports lazy 
+split in the HDBSS flow, the early return on INITIALLY_SET does not 
+break dirty tracking.
+
+
 > [Severity: Medium]
-> Is 0xC0 also a variant character?
+> Can a Time-of-Check to Time-of-Use (TOCTOU) race leak HDBSS buffers during
+> vCPU destruction?
 > 
-> It is classified as _P here, but it can represent '{' in US 037 or 'Ä'
-> in German 273.
+> Looking at kvm_arm_vcpu_destroy() in arch/arm64/kvm/reset.c:
 > 
-> This seems to violate the definition of the invariant subset and could lead
-> to missed warnings for garbled boot parameters.
+> kvm_arm_vcpu_destroy() {
+>      ...
+>      if (vcpu->kvm->arch.enable_hdbss)
+>          kvm_arm_vcpu_free_hdbss(vcpu);
+>      ...
+> }
 > 
->> +	_U,     _U,    0,     0,     0,     0,     0,     0,	/* 0xc8-0xcf */
->> +	_P,     _U,    _U,    _U,    _U,    _U,    _U,    _U,	/* 0xd0-0xd7 */
+> If KVM_CREATE_VCPU allocates an HDBSS buffer but kvm_arm_disable_hdbss_global()
+> runs before the vCPU is added to online_vcpus, the global disable loop would
+> miss the vCPU and clear enable_hdbss. When the VM is destroyed, the condition
+> would evaluate to false, skipping the cleanup.
+> 
+> Since kvm_arm_vcpu_free_hdbss() natively checks for the existence of the
+> buffer, is the outer check against enable_hdbss necessary?
 > 
 
-This is a naming and not a functional issue. The IBM037 punctuation
-marks must be present in the table for the series to make sense.
+Addressed in v5. kvm_arm_vcpu_destroy() calls kvm_arm_vcpu_free_hdbss() 
+unconditionally (the function itself checks for buffer existence), and 
+the enable_hdbss conditional — along with the flag itself — no longer 
+exists.
 
-I guess a 100% proper name here would be something along the lines of
-"invariant with IBM037 punctuation" or "IBM037 without weird
-characters", but I don't think it's that important: one can look up
-the Wikipedia reference in the commit message to get to the exact table
-I used here.
+> [Severity: High]
+> Does the vCPU creation error path break pKVM memory ownership by missing a
+> call to kvm_unshare_hyp()?
+> 
+> In arch/arm64/kvm/arm.c, kvm_arch_vcpu_create() shares the vCPU struct memory
+> with the hypervisor. If the new allocation fails, the function cleans up and
+> returns the error:
+> 
+> kvm_arch_vcpu_create() {
+>      ...
+>      if (vcpu->kvm->arch.enable_hdbss) {
+>          err = kvm_arm_vcpu_alloc_hdbss(vcpu, vcpu->kvm->arch.hdbss_order);
+>          if (err)
+>              kvm_vgic_vcpu_destroy(vcpu);
+>      }
+> 
+>      return err;
+> }
+> 
+> Could the memory for the vcpu struct be subsequently freed back to the host
+> allocator while still marked as shared with the hypervisor, violating pKVM
+> trust boundaries and triggering a hypervisor panic upon reuse?
+> 
 
-I will defer it to the maintainers, whether I need to change comments,
-names, or the commit message here.
+Not applicable. HDBSS is VHE-only. The error path does not touch pKVM 
+ownership — it simply cleans up the local allocation. pKVM support is 
+explicitly out of scope and left as future work.
+
+> [Severity: High]
+> Does flushing the HDBSS buffer access memslots without SRCU protection?
+> 
+> kvm_flush_hdbss_buffer() processes dirty pages by resolving GFNs via
+> kvm_vcpu_mark_page_dirty():
+> 
+> arch/arm64/kvm/dirty_bit.c:kvm_flush_hdbss_buffer() {
+>      ...
+>      kvm_vcpu_mark_page_dirty(vcpu, gpa >> PAGE_SHIFT);
+>      ...
+> }
+> 
+> This internal function requires srcu_read_lock(&kvm->srcu) to safely access
+> the KVM memslots array. However, kvm_flush_hdbss_buffer() is invoked from
+> kvm_arch_vcpu_put() and check_vcpu_requests(), neither of which hold the SRCU
+> read lock.
+> 
+> Could this create a use-after-free risk when memslots are concurrently
+> modified?
+> 
+
+Valid point, addressed in v5. kvm_flush_hdbss_buffer() now holds 
+srcu_read_lock(&kvm->srcu) around the loop that resolves GFNs through 
+the memslots, and releases it before resetting HDBSSPROD_EL2.
+
+> [Severity: Medium]
+> Are immediate Context Synchronization Events (ISB) missing for control-plane
+> system registers?
+> 
+> The ARM64 subsystem rules require that every write to a control-plane system
+> register must be followed by an isb() as the very next instruction.
+> 
+> In arch/arm64/kvm/dirty_bit.c, a memory store executes between the write and
+> the isb():
+> 
+> kvm_flush_hdbss_buffer() {
+>      ...
+>      write_sysreg_s(0, SYS_HDBSSPROD_EL2);
+>      vcpu->arch.hdbss.hdbssprod_el2 = 0;
+>      isb();
+>      ...
+> }
+> 
+> Similarly, in arch/arm64/kvm/hyp/vhe/switch.c, two sysreg writes occur
+> back-to-back without an intervening isb():
+> 
+> __load_hdbss() {
+>      ...
+>      write_sysreg_s(vcpu->arch.hdbss.hdbssbr_el2, SYS_HDBSSBR_EL2);
+>      write_sysreg_s(vcpu->arch.hdbss.hdbssprod_el2, SYS_HDBSSPROD_EL2);
+>      ...
+> }
+> 
+> Could these patterns risk observing undefined pipeline state?
+>
+
+
+Duplicate of the ISB comments on patches 4/5.
+
+Thanks!
+Tian
+
+
