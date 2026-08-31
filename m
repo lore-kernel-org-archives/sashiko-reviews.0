@@ -1,149 +1,236 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013024.outbound.protection.outlook.com [52.101.72.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8553CC313
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 08:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788165998; cv=none; b=j4lFpig5I34AEsY65Lr9LHrJqfb49zt+wyeO7JMw/2Lw+vNspm+wCktYqqaCwouMPFQdoG0dCKzPvX0IKKZpfr3ui2TCFbSc181WrA+gtdmCEfyBv5W1TP1WUuzpw5hd6lzVugi/Jzmi88K9CUlnym8VE1Txuxw/BE34gmkonpg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788165998; c=relaxed/simple;
-	bh=LtL4dKR17MxcHpQnJgQbUWi7Lxy8UUcxFoB3RAaXA7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ti+g/xv5+dG7ROg1GL+KE/mi0glDMY+zyRWJHk3ZkuxWSpjtJIUuEdRMjVFEYGi2PzPWDSt0Ih5H2X5TRZYx2IhzW5I0GqmBhmD3xp1ieRqZDn/06JKLWI1X/PpplsBwbtQvNTTb9ySnVWLwR082mDwlSu2yMHorjWKROZh/Nr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=MovG2GY2; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170583B0597;
+	Mon, 31 Aug 2026 08:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788166307; cv=fail; b=Uraf0DVSYUCrsnQ04x956iyf2dtBQ8prGQ21CeeI7+tyJdUomHbrLZs71ZOkLfVw9H+wUa9Ui+Jr32gOI5BuY4VoQmb77QOeH88xoGOhQS6ex2SUUK8/JITF2OJynpNzY+w1tyQTSwqRoSdKJ7F49HR2BUBxPiNXynk3yiI3XLk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788166307; c=relaxed/simple;
+	bh=6ifz7vQ++bj6xJPc9OTcXsFmKJp53blZxrNRPvvleIo=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ssUkTv04gUCU/wn/Unc/c5yaNl03+dbYulPWoU87PK5opy4F3BxumNcuJHUFAvSoMrQON/D3BjW3ePb9h9ykvVdyIH/PD2M8XpGGJ/WK4qqMDIj3t/bP/Epp0Xw7SmyW6wRpEbhAUNuKiz+YYjbPDP3W2KnSPn3U7uRPC0ChWMw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=HQgy3Pv/; arc=fail smtp.client-ip=52.101.72.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="MovG2GY2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=VLrNFBb+HkD4+F2K1pz6M+GL9jAEqixZHMEFWb9Etys=;
-	b=MovG2GY2kqGN2SLUCxG5FI4sMlC1of5cbbUzw3iUZJcIy0hndxphkHo8UwTAaW
-	AaJZwMkO5nfRrmqOHPbDl0tvNW0qTdxKlGRsvCUm3f9QHW7XqT023SythxCTIMrW
-	uPVnIx6PF8A+5bKLlQ08ad+x+h1gvbDPAHuYfE3Hxed0Y=
-Received: from [10.42.12.49] (unknown [])
-	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wCn5Z9kP5VqnHvgTA--.1543S2;
-	Mon, 31 Aug 2026 16:46:28 +0800 (CST)
-Message-ID: <1bb7c920-e891-4cfd-ae47-15056ceecc5a@163.com>
-Date: Mon, 31 Aug 2026 16:46:28 +0800
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="HQgy3Pv/"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z7G9XzG8ect4KhJDWkSZffGUqyha03hzoXTGHKfl/2/0tfW2/407yxgQxDvZfWs6K2i5wKGgvU+PUYz/2dIf4T+FR3dVrMcKdkIJ1DPJL6kgadg4QdrZYVX/VgiICgh/0E0Ii+LQnCjc3X6cX4OAXdYdbXQA2N6V42LkIU+5OGrW46lbP5rSae6AE7SV7adQE6P3CUYHW7+mwLIBxxoMxcoycrb08DoHoXltJblCMSAuBVS6UPWIDbQ3sHoaji0mZPBeT6fsGWXvBSdygVonK6rlvVCg0ArMhxHyZVUFswpzTkwQvl+xXR2sxc18lzF16B/bx8KRtPbG81PXOaq8xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PhacesnqQl1WiqjaUV1wauuGmBSB6RCk7RgM7wkjplw=;
+ b=rZFaL/UxSTHF4VZqRlzKPIWjkv6B+Gqn/uyM6yoYv5FTxL0Wmf/avmIic9s/hf5muWJMZHs0p2VWfsl1/xNP1RGZHyQIJ0UQjjuKc/lw2zncaxO16SrQrutMdtfdhNiiPCG4FmM/teG9b7rPZXRzQpf3GqILnJzqhWfVJ5MynFn4qT/B+DlhiHOO385HHHDDiIIgHIRSereabrWvqUkakf3QZh7UekPAiLhbCrARv+Cqd5mnCAmDRamhEpmMi/EXOSwxnh8Z3y+40FZGx3CqzV+UkjyggPkJAuxdT9xBv35eRokaNJNXHolQuSjLwts11d7HukgslMXVj6x5HJzidg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PhacesnqQl1WiqjaUV1wauuGmBSB6RCk7RgM7wkjplw=;
+ b=HQgy3Pv/l41QbdQ4fO/A9hwQPAok02hEcnOmbz1vVA80p6+Up1LDhh2nzQu0qAfFsJyW57j4mZ1IJfGjISz8VOmt/X5jUm8HidZzB7cwBwPMV80i8MuWLjPwXmXpqcm+2C2SIUg/3prumWQsk3VF/mRqdP6AH1r8mrE3/LlsAecCRKGzY2fQK+BO/07ZBeHPck2+lhuJBjPC4NsS3nQsNjL5uX1HWFP9MRu9epS1RKgr99hRVno0g8ToIXzP4rQUFCG3zCb8OON68QVejVD2PD7c12sp+msefrF4PZWj1TBPbMq5nrjZ0V+y/ZXg4NgVkpm6gNjmeHPVg6jp7oJJVA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from AM0PR04MB5858.eurprd04.prod.outlook.com (2603:10a6:208:132::23)
+ by DU4PR04MB12151.eurprd04.prod.outlook.com (2603:10a6:10:640::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Mon, 31 Aug
+ 2026 08:51:42 +0000
+Received: from AM0PR04MB5858.eurprd04.prod.outlook.com
+ ([fe80::bdf4:c9d1:4e3f:68c6]) by AM0PR04MB5858.eurprd04.prod.outlook.com
+ ([fe80::bdf4:c9d1:4e3f:68c6%3]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
+ 08:51:42 +0000
+Message-ID: <0bf5e10a-a3f6-4f71-a23b-d065cc5681a4@oss.nxp.com>
+Date: Mon, 31 Aug 2026 11:51:39 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/6] can: flexcan: disable all IRQ lines in
+ flexcan_chip_interrupts_enable()
+To: Bough Chen <haibo.chen@oss.nxp.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-can@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+ Frank.Li@kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>, conor+dt@kernel.org,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>, devicetree@vger.kernel.org,
+ s32@nxp.com
+References: <20260713085306.2643794-1-ciprianmarian.costea@oss.nxp.com>
+ <20260713085306.2643794-3-ciprianmarian.costea@oss.nxp.com>
+ <20260713090705.9F7671F000E9@smtp.kernel.org>
+ <20260824085716.ejrveo5udehy4ijc@shlinux89>
+Content-Language: en-US
+From: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+In-Reply-To: <20260824085716.ejrveo5udehy4ijc@shlinux89>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR4P281CA0246.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f5::15) To AM0PR04MB5858.eurprd04.prod.outlook.com
+ (2603:10a6:208:132::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] KVM: riscv: Fix NACL hfence entry update order
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260826075009.68952-1-min_halo@163.com>
- <20260826080204.09A0C1F000E9@smtp.kernel.org>
-From: Zongmin Zhou <min_halo@163.com>
-In-Reply-To: <20260826080204.09A0C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wCn5Z9kP5VqnHvgTA--.1543S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxAF13WryfKw18tF45tw1kZrb_yoWrXFyrpF
-	Wftay8KF4rKr1fKwn7Zws7ZrWag3ZYgFy5Gw15ZF1Uuws8ZryFvwnFqFZ8uF95Jw1UWw10
-	yr4jkFyvvFn8Aa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zROeOJUUUUU=
-X-CM-SenderInfo: pplqsxxdorqiywtou0bp/xtbC0QTolGqVP2QyzAAA3z
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB5858:EE_|DU4PR04MB12151:EE_
+X-MS-Office365-Filtering-Correlation-Id: 11cdd3bc-2664-4562-3763-08df073d1403
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|376014|7416014|366016|23010399003|1800799024|10067099003|6133799003|18002099003|22082099003|11063799006|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	x30x1JeQLq2nGwrXC8JZzk75htCX+hr2+nkEO9SFl5LUKyXbSpjrRyV0CofcuDoyQcAecdetFREccDSCimZAh7LCy7b2RicDBSdDaev69fE+jqpzXTqlTN55d/PtFi9LsWsHAFmDvp6x0HYVK0HPk2/0SX5XfAMin5N9LQhHAY1EfDZ5flyfxAAabmwaES2iyQcLy3F+UvNueXwa9CGAbGz+xgjW7bq/JPP97bY6bkoAQKrFB59jmVdAxPXC04UqWurU1Od9W9NjBJaDQTfevMyDtfwnwBwg/EtCKMRuvI2jOAF3X3NgMcSVTFqtNoxi5wUeXWZyrF48rP4MmbMh8/YCP+Gm9LqwvXz3x+4Cp5TvE0wg0UCh1ZwvTzSMsJk/99GY/PtpDBJv48a6NED7HiTpM89EqF72gdTlG3CRXl8Zx6uXIzhyT4DPbC0LKistVCeLDKLTy5mBe1iClQYzI4YI8PbfCagshaoY5YCjh5jIVRmMIMkIWo0ew/7IJjHtvWntx736Mi1WQXXbjf4k/ENnfhD8HtBHtoptZCgKLpIeyD5aoKY5pi1n6JDLmUWcLpUuZ++kK8vEdTsF4u1VgHsGAAhU5ytWj+ICsR5bu/c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB5858.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(7416014)(366016)(23010399003)(1800799024)(10067099003)(6133799003)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TXFjTVo3WnhwdlQ1VllCK2hvQkxwWGhBWFdBTHM3TGNlQ2RjS0tCbGY3UC9x?=
+ =?utf-8?B?N3pmZkhCdGZYa082MmJYeHRQOGFpems3MTZLazJ1bTBDWURkekg5cHcrREw0?=
+ =?utf-8?B?T0dVd3R2MENtbWM0M3ZOSmxNaitrdUxvcmVETXhrRHlqdmFzTlk0aFl1N0ZV?=
+ =?utf-8?B?cGtFQXM5R0kwZWV5Mmc5a1lqbUJMd1Jvd2ZYSkNyblVUQXEzTzE4Q3hGbXkz?=
+ =?utf-8?B?L25XSFMzOGIyMTliNFZ1a3lBQzljckZmWFZYYmVERG1KVmZuYzQ5N0x1ZHhT?=
+ =?utf-8?B?MDk1dVZqeFNHN0xpK1V2OFpoa1JsS29Eb2llRzJ4Q0oreGhoTGJLdDhxMmpT?=
+ =?utf-8?B?WG4xYTBSZW1QUFJjalRUV0tod0VkK1Y0K3VvRiszc0xjUVpQTXB2MWhSU0lh?=
+ =?utf-8?B?TmlwSmNvMzFINE93V0JuNEcvYkM1RlNrL21tRkNuMnZSRDVHeUdXaTVQcGow?=
+ =?utf-8?B?TmpZVmkxZCtJbWlrVlEvVjJzcFZoSk9pbExVT3lrVE9oa0I1NGorMy8wL2lQ?=
+ =?utf-8?B?Tzk3NDhSM3hRRDBmSjk3NlhacEIva09JZEkxNVhxZWZrOUpDenpya0d3aTRQ?=
+ =?utf-8?B?US9CNlhCbmNCVWxqSjZ1ZzNXZW1yejlTVk5MYlN1TTNMQVdLeHVROWNEUm9I?=
+ =?utf-8?B?UitpVE5NK0Jja0YwbTQ2bUpza3VtSjhVWnRlSTc5aGhpV1loZlplUXNhV0pI?=
+ =?utf-8?B?K1l1amdpclNrNkdIdU9SSndWRklPSXJqZzNrZS91UGtmRldaalN1bEVZZFps?=
+ =?utf-8?B?L2lMNWRNNEtCeVR1Tmxpd1NyTUJFa0lkS2tVbGgwVXh1Q3JiUGxjS2piYVRS?=
+ =?utf-8?B?ZjlCRXdLVW50SXVjbWJ0VnZXaXBFaXE3WlpSZVFKam1kc0p6aTRoVmVmZER5?=
+ =?utf-8?B?STBjK2NnNzIzaE5DUmVGRDQ0ODRjeFA2MEs5MHg1aHBUODZ2K3V2OWNaTng5?=
+ =?utf-8?B?aGlVcFlMZ3Nod1dyeTBMak91NC9uRjB3ZjlKb3Fya0w3K0ZkTzNhSVBxL1VJ?=
+ =?utf-8?B?Qk9tZVVzbm1yNlRGNDF2eWNNSWsxTFBuOFhkckRWS05vb1h1K0o2em1NZ0Ra?=
+ =?utf-8?B?UmRxckJ6YkpsUk5zTEJVc0FOZU9vNG9wTVpvUFF0SnpBUWM5b1ZmYzY0Q01E?=
+ =?utf-8?B?R2M3bno0OU1GQTBOZitlMWdpZENOTEJYeVVkVWpEbmlmM21URFF2dlFDQXJ1?=
+ =?utf-8?B?dDFQbTQwVTllMDZtOTBiLzcvcEJqL3Q4MytYYjMreXluRTJiQ0tzUk11QXla?=
+ =?utf-8?B?RXBaZ1ZOaElLVHhsek93ODVEemJXUFBXREU5cG5scHRnclVXVFZBaW96Skk0?=
+ =?utf-8?B?a2lYTXNvUGJrbGZ6alhSRU9Nb3RXcnBxSjZKdC85OWJicmxVWnJGdWJDNWtR?=
+ =?utf-8?B?TVY4NjBxejdTZVB2NGdDSDJPQ2VkODlaWTh6cytSQjVnTndSU21qVHFvaDRs?=
+ =?utf-8?B?d2hucjRwblBqUXZUYWx0R2NIdGI0NmlZcm1FS0srMHVWL0pTdldwdEptTDVu?=
+ =?utf-8?B?T1RQQ0F2ZkgzU0ZOQ244cmpIais2aUNFQkZqcEJIZTZ6aEZIT1M5Ri9HL0VO?=
+ =?utf-8?B?TzhRTnJRbnFxMmZVWXg4emkzMi93Q2dsS2VRNHVMMGVYOUhGZ0xHQ2prSFJT?=
+ =?utf-8?B?aTVjTzBIOEVCUTFmQjViRWt6ZUszQlNwd01YWFJiWFVpQWE1ZE9zLzFXbDRl?=
+ =?utf-8?B?bnB4OTZONlRnRXJQU09LRFJXNHdHSWpENDEvUUU3V3RnNDhHVUR2NUlXRGl3?=
+ =?utf-8?B?RFJVWVVpT1UzSXVScktCV01KOTM0OTJPZVRYS1BHUk5BRFZvMUZGNmQzb2RN?=
+ =?utf-8?B?djZLRVJmWDRMOEtRZHV3Q3NOV3djSlREdjNZS3haQk5MMVZTUzJPY2R4dURL?=
+ =?utf-8?B?a2RCSkNrNk9SQndFaDR5dEdpQ2ZTOFluMVlRVlZwQ21GQ2hoNVRTQ240dURF?=
+ =?utf-8?B?U3JFRk5MR0FNZVNIUnBnMnhvUkpXdUJiMzViNWtwc0F0YVVMak14WUM1VVh5?=
+ =?utf-8?B?TzZIUFNoeUNqZFBjWkpZTm5FR0EvQWhtd3RlY1RRNUdDVnVvdGV5eTdGL3hC?=
+ =?utf-8?B?ZzEyb3VhaDZyb29LS1ZCdUhkZlI2SUpDM0RhdzdRK3poelUwMlF3WDI1allF?=
+ =?utf-8?B?dVM3V3UybGtPOU1maDZkVmRmUFJwOGtwaDhBOEw3ZVhGVlp3NjloR1E2N1BG?=
+ =?utf-8?B?M25Oa2pOa3Y5RGJmODZJOXhudzc0WmhscDVuTVJabTNHQkJHV3JEVlVyY0pD?=
+ =?utf-8?B?ZDR0b1pDTi9wWWdHSG9oamFOaEhCL0oyL2dSV2xwT2dBTWhWWDkyK3dBZG5s?=
+ =?utf-8?B?aExxa2Q1aTBET0l5VVNRajkyMlRaRGVOTGN2WlExMDE0cHZuUThOTkt6VGNG?=
+ =?utf-8?Q?6pKUb1d/YmCZQXFc=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11cdd3bc-2664-4562-3763-08df073d1403
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB5858.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 08:51:42.1473
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oe9UXyIdMZVPd06+vkC7SIVoNw+nG7Gd8tigAs3m5ghbjqmr/7pKV17BaDO3WTmmKCvvn0a9WP7Z+yDqlujaywmtgC3I0mVt3IOelQ0GKTY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB12151
 
-
-在 2026/8/26 16:02, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Using `smp_wmb()` instead of `dma_wmb()` or `wmb()` to synchronize with a hardware device or external agent.
-Agreed. This shared memory is read by an external agent (SBI firmware or 
-NACL hardware), not only host CPUs.
-Since arch/riscv KVM can be built without CONFIG_SMP, `smp_wmb()`
-would fall back to a pure compiler‑only barrier() on !SMP builds,
-without emitting any hardware fence instruction.
-I will replace `smp_wmb()` with `wmb()` in v2, which unconditionally
-provides the required ordering guarantee across all kernel configurations.
->
-> Pre-existing issues:
-> - [High] The retry loop in `__kvm_riscv_nacl_hfence` can spin indefinitely because `try_count` is never decremented.
-> --
-Already fixed by commit e971f19e4c82 ("KVM: riscv: Fix infinite loop in 
-NACL hfence entry allocation").
-The code snippet referenced in the AI review corresponds to an older 
-version and does not match the current source tree.
->
-> commit 7e01a77077e49fef54c573574fad3624c0817345
-> Author: Zongmin Zhou <zhouzongmin@kylinos.cn>
->
-> KVM: riscv: Fix NACL hfence entry update order
->
-> The commit fixes the order in which nested HFENCE entries are populated
-> by writing the page number and count first, then the config word. It uses
-> WRITE_ONCE() and smp_wmb() to prevent hardware or firmware from observing
-> incomplete entries.
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at the retry logic in
-> arch/riscv/kvm/nacl.c:__kvm_riscv_nacl_hfence():
->
->      if (ent < 0) {
->          if (try_count) {
->              nacl_sync_hfence(-1UL);
->              goto again;
->          } else {
->              ...
->
-> Does this loop run indefinitely? I noticed try_count is initialized to 5
-> but doesn't appear to be decremented anywhere in this path. If the NACL
-> hardware or SBI implementation stalls and fails to clear pending entries,
-> could this cause a host CPU soft lockup?
->
->> diff --git a/arch/riscv/kvm/nacl.c b/arch/riscv/kvm/nacl.c
->> index 08a95ad9ada2c..f922e9f62fee3 100644
->> --- a/arch/riscv/kvm/nacl.c
->> +++ b/arch/riscv/kvm/nacl.c
-> [ ... ]
->> @@ -42,12 +42,24 @@ void __kvm_riscv_nacl_hfence(void *shmem,
->>   		}
->>   	}
->>   
->> -	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
->> -	*entp = cpu_to_lelong(control);
->> +	/*
->> +	 * Per SBI v3.0 section 15.1.2, the Page_Number and Page_Count
->> +	 * words must be updated before the Config word with its Pending
->> +	 * bit set. WRITE_ONCE() stops the compiler from reordering the
->> +	 * stores and smp_wmb() makes the parameter words globally
->> +	 * visible to the SBI implementation (or NACL hardware) before
->> +	 * the Pending bit is set.
->> +	 */
->>   	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PNUM(i);
->> -	*entp = cpu_to_lelong(page_num);
->> +	WRITE_ONCE(*entp, cpu_to_lelong(page_num));
->>   	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PCOUNT(i);
->> -	*entp = cpu_to_lelong(page_count);
->> +	WRITE_ONCE(*entp, cpu_to_lelong(page_count));
->> +
->> +	/* Ensure the parameter words are visible before the Pending bit */
->> +	smp_wmb();
->> +
-> [Severity: High]
-> Does smp_wmb() provide the necessary hardware ordering guarantees on all
-> configurations?
->
-> Looking at arch/riscv/kvm/nacl.c:__kvm_riscv_nacl_hfence(), since the
-> memory is coherent and shared with an external agent or NACL hardware, I am
-> concerned about non-SMP kernel builds (!CONFIG_SMP) where smp_wmb()
-> degrades to a simple compiler barrier (barrier()) and emits no actual
-> hardware fence instructions.
->
-> Would it be safer to use dma_wmb() or wmb() here to ensure the memory
-> ordering is strictly enforced against external hardware, regardless of
-> the kernel's SMP configuration?
->
->> +	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
->> +	WRITE_ONCE(*entp, cpu_to_lelong(control));
->>   }
+On 8/24/2026 11:57 AM, Bough Chen wrote:
+> On Mon, Jul 13, 2026 at 09:07:04AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >>
+>> Pre-existing issues:
+>> - [High] On multi-IRQ platforms, Wake-on-CAN is broken because `flexcan_suspend` only arms the primary IRQ (`dev->irq`) for wakeup, completely ignoring the state/BOFF interrupt (`priv->irq_boff`) which actually handles the wakeup event.
+>> - [High] In `flexcan_resume`, the network queue is restarted (`netif_device_attach` and `netif_start_queue`) before the hardware is initialized (`flexcan_chip_start`). This creates a race condition where a packet can be queued for transmission just before the hardware undergoes a soft reset, leading to a permanent TX stall.
+>> --
+>>
+>> --- Patch [2]: [PATCH v6 2/6] can: flexcan: disable all IRQ lines in flexcan_chip_interrupts_enable() ---
+>> commit ca7ea75d45df1ecf13f11dcec0bd19377eccf3c6
+>> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+>>
+>> can: flexcan: disable all IRQ lines in flexcan_chip_interrupts_enable()
+>>
+>> flexcan_chip_interrupts_enable() disables only the primary IRQ line while
+>> writing to the IMASK and CTRL registers. On multi-IRQ platforms, the
+>> additional IRQ lines remain active so their handlers can fire while registers
+>> are inconsistent. This commit disables all registered IRQ lines around the
+>> IMASK/CTRL writes.
+>>
+>>> diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
+>>> index f73ff442d5304..7dde2e623defe 100644
+>>> --- a/drivers/net/can/flexcan/flexcan-core.c
+>>> +++ b/drivers/net/can/flexcan/flexcan-core.c
+>>> @@ -1519,14 +1519,28 @@ static void flexcan_chip_interrupts_enable(const struct net_device *dev)
+>>>   {
+>>>   	const struct flexcan_priv *priv = netdev_priv(dev);
+>>>   	struct flexcan_regs __iomem *regs = priv->regs;
+>>> +	u32 quirks = priv->devtype_data.quirks;
+>>>   	u64 reg_imask;
+>>>   
+>>>   	disable_irq(dev->irq);
+>>> +	if (quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
+>>> +		disable_irq(priv->irq_boff);
+>>
+>> [Severity: High]
+>> This is a pre-existing issue, but on multi-IRQ platforms, is Wake-on-CAN
+>> broken because we only arm the primary IRQ during suspend?
+>>
+>> In drivers/net/can/flexcan/flexcan-core.c:flexcan_suspend(), we see:
+>>
+>> 	if (device_may_wakeup(device)) {
+>> 		enable_irq_wake(dev->irq);
+>> 		err = flexcan_enter_stop_mode(priv);
+>>
+>> Since the hardware asserts irq_boff (which handles FLEXCAN_ESR_WAK_INT) for
+>> wakeup events, doesn't irq_boff need to be armed with enable_irq_wake() as
+>> well? Otherwise, the system might fail to wake from suspend since the
+>> interrupt controller won't treat the asserted IRQ line as a wakeup source.
+> 
+> Yes, this need to be addressed.
+> 
+>>
+>> [Severity: High]
+>> This is also a pre-existing issue, but does flexcan_resume() restart the
+>> network queue prematurely?
+>>
+>> In drivers/net/can/flexcan/flexcan-core.c:flexcan_resume(), the queue is
+>> restarted before hardware initialization:
+>>
+>> 	if (netif_running(dev)) {
+>> 		netif_device_attach(dev);
+>> 		netif_start_queue(dev);
+>> 		if (device_may_wakeup(device)) {
+>> 			...
+>> 		} else {
+>> 			...
+>> 			err = flexcan_chip_start(dev);
+>>
+>> If netif_start_queue() is called before flexcan_chip_start() reinitializes
+>> the hardware, could the networking stack concurrently call ndo_start_xmit
+>> (flexcan_start_xmit) and queue a packet?
+>>
+>> If so, would the subsequent flexcan_chip_start() soft reset wipe out the
+>> freshly populated message buffers, aborting the transmission and leading to a
+>> permanent TX stall since the completion interrupt will never fire?
+> 
+> Good catch, those two findings should be addressed in another patch set.
+> 
+> Regards
+> Haibo Chen
+
+Agree. Since these two findings are pre-existing I will target them in a 
+new patchset separate from S32N79 Flexcan enablement.
+
+Best Regards,
+Ciprian
+
+>>
+>> [ ... ]
+>>
+>> -- 
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260713085306.2643794-1-ciprianmarian.costea@oss.nxp.com?part=2
 
