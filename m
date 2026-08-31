@@ -1,335 +1,188 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mta1.migadu.com (out-78.mta1.migadu.com [95.215.58.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE6240BCBD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 12:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9622F3C07
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788181031; cv=none; b=Kmtcq099nw0sXbq23lETn4t2OK6jANn2k9FhdkYhp5cz6CNg+MDoYxPRVi66FyHm1UK4o/92RCK7imYMVCbbvC1bp3sXqCyruYqvBzhsThweFjS/dAy1WuxtejhOub03FJrfB6+a5ao13foaMGEgO4qsg4gYx+5tqUevnFBO70k=
+	t=1788181270; cv=none; b=NSlLSEgPZBP6l4G7jeLZO8rmdY0DFc9iisbB8b2rMVkKg1QE691qAMGsucwSgPnp6MHvVulQQ2YpwIXGcS85fsSRlI70pPyQLkrh+OpmuhMtnpf6Q4Zxj2Zk3URnhM8xzvDEOm1bJcfCGLxILkPRXe7OHN2N9KQkbPJgZL4A0jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788181031; c=relaxed/simple;
-	bh=8Osa2PuSG7NB9dJZI5amIi1Tsefo0mCPT5lN1eFX25U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kOZSnozlrL/rydDgulhXLH1ne3UrpwVjoctcRHF3j9iXPrcCumHOCncwUCkEwbtr3sTRJgp4JxxFw4VxLsF6aVwg193aYuMYVon1mXxKB20JHSC6Az41yYRgpyWnGIJ/qTbPUkPTxXZpW2nwYFnBIfiFRxwDwQ94vdUzVq1L9N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=JGGjQIIS; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1788181270; c=relaxed/simple;
+	bh=lmELAjPNU5BB6haXlmWjM/xqcLlRME3nIN8QwH36o7U=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=QumcjOGhKhHKcJRen7osiCl5znofxyawxZThlavMXE9AaIj8uKWeDm1U43wQbvpuhzH6AuPaPTGzwGUPwtXCsNCGydYewpNr13U2mpVFfkDXgtFnWDZY5z91iGOydqrXuwo9+At303Psp/nWNUjuLItqr6tMjV+zU/Uq8R5HJO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xZaR/Yv7; arc=none smtp.client-ip=95.215.58.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="JGGjQIIS"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-484362f5c4aso1277222f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 05:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1788181027; x=1788785827; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ZQJDQy5rb/uJP6b6BKCnJ/LPglbNUPImqzRgdlzJPKA=;
-        b=JGGjQIIS9vqItY5XbclOZd+BqCrI/Jk3m6dWyn/MAfxCrCuMk2yNLzxd7OFGgQpZ4v
-         JndIOyodsvpTm6tVmteSnKMyybW2ii+JoDu1Cuhcxi+I8lTvIuRgwXMuc4tUwWJ3aP0Z
-         J332jxTMGywOxBf4LYkb6kYVvZ9fkSV0GssJF8dla3zsWJ6QVUg6k0XozKetYk9GfEPx
-         ZrCm/KbmD9xftRJLyuhAiztoeI89lriyIWD/QSyvsEJlw1aUTdrqkBvmBYaitSHhGy8S
-         trhuVjXkjxttY/JJlNvhzxrHoiwLS4MCf0zr2sfU3SoKoyKZ1boxdiLCAcVLxnuezgsU
-         Kxjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788181027; x=1788785827;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZQJDQy5rb/uJP6b6BKCnJ/LPglbNUPImqzRgdlzJPKA=;
-        b=o8GrSYPJk4DATMqkDOAnlERYCMky6M693oev2dZVfnFRmFoTmbAsao/ZNGs7SZO9QD
-         U0kIrvh3tLHRZZW489LWsrXInBrVEsfjogRrXYuMC8N6rYphWWPitLX4a90XN9ic7ry8
-         wEXjxf0Kki/5o8BNKX4el340Z1v+KQWtdzi5anmg7/VQeTBW9wrlvGSNOxNDXYc6TTLn
-         RkWJ3YyHqMDbnB5ZLp6EA+RizISOK6/S6BkuGN0xDIhbDjOU71qvJk5p9o3L5xP46EV8
-         +jC4VgWZ2LE28sdZKWRhxWw+/0ELEJcgnTN9ej6Ee9mJItSZbsAdhKVIFeP4YcJorC+o
-         UH+w==
-X-Gm-Message-State: AFuF++md5cGwNUZWfBN/f73zQpf53+4wGE3kuaBNZf/bHTMAikP9m+A0
-	S8GRxRlWVWjfM2p08BzGB3nEaNeQDfXjQgRLTj/9NyUen6cXvxcS1Uzzy5P7HtaVrynB5ZNhGHB
-	RuGv5cuw=
-X-Gm-Gg: AR+sD11uiK14Nbqt95crbEvdIrlUpBYg6ZTVV96ioahpULsDT2UZHKjxeA8i5vFnhft
-	RQ//CgWA5muXcIvdJu3JDf7xPcxC1krPd5XF9cfBs5kgoE/gDCgfuBtU4st4rup6wqLrvhiow/G
-	ngYJoO/7etayehvCOpozPT3Fx4Hsjmeaput+OB2pNaKiFF8+eOqPxTJi/tCgBwd33eLsPm//RvY
-	EfV1d4fxcMTI3JJXToGNIYT36t9IDcjDKIhhj3SON4X4qDVz4+Pb2CJ1lr3EHyyopIrIvhdsc+3
-	ssys6TuqPHN3il3ylPVQAbGhe7lQUc9BDUpVyxkSGpiMEbz5CKPc27FS5Mrz7cDYRXbm9HH2edG
-	ooewx7x7VJxHBO9grITwbRrMkigxBu0de8Td8ymPsSoBUtviTiu2gIa++TTGUeghy88RlPizWnT
-	DNWsHUbmuTq0swVbg1l56GYHNRQkq+z+9Z6sRJlLdn6G+EaY0c5Kgea/OAgRcOkw==
-X-Received: by 2002:a05:600c:8b88:b0:49b:4d64:bbc4 with SMTP id 5b1f17b1804b1-49cdc4403e4mr7292785e9.8.1788181027219;
-        Mon, 31 Aug 2026 05:57:07 -0700 (PDT)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cdb13f094sm31431385e9.3.2026.08.31.05.57.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 05:57:06 -0700 (PDT)
-Date: Mon, 31 Aug 2026 14:57:04 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Harry Hsu <x90613@gmail.com>, jpoimboe@kernel.org,
-	linux-kernel@vger.kernel.org, jikos@kernel.org,
-	joe.lawrence@redhat.com, live-patching@vger.kernel.org,
-	mbenes@suse.cz
-Subject: Re: [PATCH 3/3] livepatch: Clean up klp_init_object_loaded() when
- fails
-Message-ID: <apV6IPGhqhK7cGeh@pathway.suse.cz>
-References: <20260830173343.52759-1-x90613@gmail.com>
- <20260830173343.52759-4-x90613@gmail.com>
- <20260830175608.4BABB1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xZaR/Yv7"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=lmELAjPNU5BB6haXlmWjM/xqcLlRME3nIN8QwH36o7U=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788181263; v=1; x=1788786063;
+ b=xZaR/Yv7xZ7nJYgifgHu24DogYG9L4Sg4iIrdAr4aoLlyUGHP1cEoyajVyfMO+y1Wh5/gg1O
+ Sbh5i72n9lNg9RqLyrBEBDHUFZZvSWyaS6h/ghbwDDDjkl5pwNURd9/eqlyJcuCtsvtfZ84al1g
+ Gdria0gDBRhV+cKuV3G5Shtk=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id fff74117a86ebb1b;
+	Mon, 31 Aug 2026 13:00:59 +0000
+X-Mizu-Trace-ID: fff74117a86ebb1b
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <739848e0-1d35-4ed7-afd7-4b0609ddb8d0@linux.dev>
+Date: Mon, 31 Aug 2026 21:00:52 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260830175608.4BABB1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, mptcp@lists.linux.dev
+Subject: Re: [PATCH mptcp-next 2/2] mptcp: pm: skip extra_subflows accounting
+ on disconnected msk
+To: sashiko-reviews@lists.linux.dev
+References: <20260831093206.689827-1-cui.tao@linux.dev>
+ <20260831093206.689827-3-cui.tao@linux.dev>
+ <20260831101129.203081F000E9@smtp.kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260831101129.203081F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun 2026-08-30 17:56:07, sashiko-bot@kernel.org wrote:
+Hi,
+
+Thanks for the review. 
+
+在 2026/8/31 18:11, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> New issues:
-> - [Medium] Failing `klp_apply_object_relocs()` triggers spurious architectural warnings due to unconditional clearing of unapplied relocations in the newly added error path.
-> 
 > Pre-existing issues:
-> - [High] If `klp_pre_patch_callback()` or `klp_patch_object()` fails during `klp_module_coming()`, the successfully initialized state from `klp_init_object_loaded()` is leaked. The cleanup function `klp_cleanup_module_patches_limited()` intentionally skips the currently failing patch, leaving applied relocations in the livepatch module uncleared and causing subsequent load attempts of the target module to persistently fail.
+> - [High] Subflows in `join_list` can be leaked due to unsynchronized zeroing of `cb_flags` in `mptcp_disconnect`.
+> - [High] Data race on `pm->reset` and `pm->rm_list_*` fields due to missing `pm->lock` in `mptcp_pm_data_reset()`.
+
+Both findings are pre-existing issues rather
+than regressions from this series, but I had a look at them:
+
+For the join_list leak, I agree it is real. When an MP_JOIN is
+processed while the parent socket is being disconnected, the subflow
+is queued in msk->join_list and MPTCP_FLUSH_JOIN_LIST is set under
+the data lock, but mptcp_disconnect() then clears msk->cb_flags with
+a plain write. The flag is lost, mptcp_release_cb() never flushes
+the list, and since mptcp_destroy_common() only iterates conn_list,
+those subflow sockets are leaked. The plain write also drops flags
+that were already pending before the disconnect, so taking the data
+lock around it is not enough. What I have in mind is to keep the
+flush-related bits across the disconnect and let release_sock()
+process the join list as originally intended, or to drain it
+explicitly in the disconnect path, checking the lock nesting
+commented in mptcp_destroy_common().
+
+For the pm->reset data race, the lasting effect is the counter
+imbalance this series now clamps and traces, and the other fields
+are discarded on a closed socket anyway. The direct fix is to take
+pm->lock around the reset in mptcp_pm_data_reset(), after checking
+the lock ordering on all callers.
+
+These are two separate bugs with separate Fixes: targets, so I plan
+to submit them as their own series rather than folding them into
+this one.
+
+Tao
+
 > --
 > 
-> commit a90c142b7a6f2c5551f83382ec1fcf15614ffbac
-> Author: Petr Mladek <pmladek@suse.com>
+> commit 179deded54d27540d6b26de1228c24065e1fa9d4
+> Author: Tao Cui <cuitao@kylinos.cn>
 > 
-> livepatch: Clean up klp_init_object_loaded() when fails
+> mptcp: pm: skip extra_subflows accounting on disconnected msk
 > 
-> When a module is loaded, klp_module_coming() iterates over patches and
-> calls klp_init_object_loaded(). If initialization fails, it delegates
-> cleanup to klp_cleanup_module_patches_limited(). This commit updates
-> klp_free_object_loaded() to revert all and only changes made by
-> klp_init_object_loaded().
+> This commit addresses a WARN_ON_ONCE crash related to extra_subflows
+> underflow by skipping the PM accounting when the mptcp socket is in the
+> TCP_CLOSE state. It replaces the warnings with rate-limited prints and
+> avoids modifying the counters for disconnected sockets.
 > 
-> Closes: https://lore.kernel.org/r/20260823062313.1321B1F000E9@smtp.kernel.org
+> Link: https://github.com/multipath-tcp/mptcp_net-next/issues/629
 > 
-> > diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-> > index a6796cd6b65fd..706a4a7193514 100644
-> > --- a/kernel/livepatch/core.c
-> > +++ b/kernel/livepatch/core.c
-> 
-> [ ... ]
-> 
-> > @@ -916,11 +920,17 @@ static int klp_init_object_loaded(struct klp_patch *patch,
-> >  		if (!ret) {
-> >  			pr_err("kallsyms size lookup failed for '%s' replacement\n",
-> >  			       func->old_name);
-> > -			return -ENOENT;
-> > +			ret = -ENOENT;
-> > +			goto err;
-> >  		}
-> >  	}
-> >  
-> >  	return 0;
-> > +
-> > +err:
-> > +	klp_free_object_loaded(patch, obj);
-> > +
-> > +	return ret;
-> >  }
-> 
-> [Severity: Medium]
-> Does this unconditionally clear unapplied relocations?
-
-Ah, I thought that this should be OK.
-
-> When klp_init_object_loaded() fails (for example, if a symbol lookup fails
-> after klp_apply_object_relocs() succeeds, or if klp_apply_object_relocs()
-> itself fails), this newly added error path calls klp_free_object_loaded().
-> 
-> This unconditionally invokes klp_clear_object_relocs(), which iterates over
-> all .klp.rela sections and attempts to un-apply them via
-> clear_relocate_add().
-> 
-> However, for sections that were never applied, the target memory remains
-> unmodified (zeroed). On architectures like x86, clear_relocate_add() uses
-> memcmp() to verify that the memory contains the expected relocated value.
-> Since it does not, it prints an "Invalid relocation target" warning for
-> every unapplied relocation entry, resulting in significant spurious warning
-> spam in the kernel log.
-
-Sashiko is right. __write_relocate_add() really checks the original
-value even when clearing relocation at least on x86_64.
-
-Only klp_write_object_relocs() knows which relocations were updated.
-So it has to clear its own mess.
-
-I am going to do the following changes on top of this patch
-(just compile tested at the moment):
-
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 1c217ac49d2b..b6ae3a518ca9 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -342,14 +342,17 @@ int klp_apply_section_relocs(struct module *pmod, Elf_Shdr *sechdrs,
- 					secndx, objname, true);
- }
- 
--static int klp_write_object_relocs(struct klp_patch *patch,
--				   struct klp_object *obj,
--				   bool apply)
-+static int klp_write_object_relocs_limited(struct klp_patch *patch,
-+					   struct klp_object *obj,
-+					   bool apply, int limit)
- {
- 	int i, ret;
- 	struct klp_modinfo *info = patch->mod->klp_info;
- 
--	for (i = 1; i < info->hdr.e_shnum; i++) {
-+	if (!limit || limit > info->hdr.e_shnum)
-+		limit = info->hdr.e_shnum;
-+
-+	for (i = 1; i < limit; i++) {
- 		Elf_Shdr *sec = info->sechdrs + i;
- 
- 		if (!(sec->sh_flags & SHF_RELA_LIVEPATCH))
-@@ -359,13 +362,23 @@ static int klp_write_object_relocs(struct klp_patch *patch,
- 					       info->secstrings,
- 					       patch->mod->core_kallsyms.strtab,
- 					       info->symndx, i, obj->name, apply);
--		if (ret)
-+		if (ret) {
-+			if (apply)
-+				klp_write_object_relocs_limited(patch, obj, false, i);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
- }
- 
-+static int klp_write_object_relocs(struct klp_patch *patch,
-+				   struct klp_object *obj,
-+				   bool apply)
-+{
-+	return klp_write_object_relocs_limited(patch, obj, apply, 0);
-+}
-+
- static int klp_apply_object_relocs(struct klp_patch *patch,
- 				   struct klp_object *obj)
- {
-@@ -902,7 +915,7 @@ static int klp_init_object_loaded(struct klp_patch *patch,
- 		 */
- 		ret = klp_apply_object_relocs(patch, obj);
- 		if (ret)
--			goto err;
-+			return ret;
- 	}
- 
- 	klp_for_each_func(obj, func) {
-
-
-
-> [ ... ]
-> 
-> > @@ -1274,8 +1284,8 @@ static void klp_cleanup_module_patches_limited(struct module *mod,
-> >  			klp_unpatch_object(obj);
-> >  
-> >  			klp_post_unpatch_callback(obj);
-> > -			klp_clear_object_relocs(patch, obj);
-> > -			klp_free_object_loaded(obj);
-> > +			klp_free_object_loaded(patch, obj);
-> > +			obj->mod = NULL;
-> >  			break;
-> >  		}
-> >  	}
+>> diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
+>> index b10895606542a..60276eb1ef384 100644
+>> --- a/net/mptcp/pm.c
+>> +++ b/net/mptcp/pm.c
+>> @@ -676,9 +676,18 @@ void mptcp_pm_subflow_check_next(struct mptcp_sock *msk,
+>>  	update_subflows = subflow->request_join || subflow->mp_join;
+>>  	if (mptcp_pm_is_userspace(msk)) {
+>>  		if (update_subflows) {
+>> +			/* The PM counters have already been cleared if the
+>> +			 * msk got disconnected while this subflow was still
+>> +			 * queued in the join list
+>> +			 */
+>> +			if (inet_sk_state_load(sk) == TCP_CLOSE)
+>> +				return;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this cleanup logic leak relocations
-> if klp_module_coming() fails after klp_init_object_loaded() succeeds?
+> This is a pre-existing issue, but does mptcp_disconnect() leak subflows when
+> zeroing cb_flags non-atomically?
 > 
-> If klp_pre_patch_callback() or klp_patch_object() fails during
-> klp_module_coming(), the successfully initialized state from
-> klp_init_object_loaded() is leaked.
+> If a concurrent mptcp_finish_join() receives an MP_JOIN ACK for a subflow
+> while the parent socket is being disconnected, it can hit the
+> sock_owned_by_user(parent) branch. The subflow is added to msk->join_list
+> and MPTCP_FLUSH_JOIN_LIST is set in msk->cb_flags while holding the parent's
+> data lock.
 > 
-> The cleanup function intentionally skips the currently failing patch:
+> Simultaneously, mptcp_disconnect() executes msk->cb_flags = 0 without holding
+> the mptcp_data_lock, erasing the MPTCP_FLUSH_JOIN_LIST flag:
 > 
-> kernel/livepatch/core.c:klp_cleanup_module_patches_limited() {
+> net/mptcp/protocol.c:mptcp_disconnect() {
 > 	...
-> 	klp_for_each_patch(patch) {
-> 		if (patch == limit)
-> 			break;
+> 	msk->cb_flags = 0;
 > 	...
 > }
 > 
-> This prevents its newly applied relocations from being cleared. Since these
-> relocations modify the livepatch module's memory, they persist even after
-> the target module's load attempt is aborted.
+> When the lock is released, release_sock() invokes mptcp_release_cb(), but
+> since the flag was erased, it skips the flush:
 > 
-> Upon a subsequent attempt to load the target module,
-> klp_apply_object_relocs() will attempt to apply the relocations again. On
-> architectures like x86, apply_relocate_add() verifies that the target
-> memory is zero; finding it non-zero, it returns -ENOEXEC. This causes
-> klp_module_coming() to fail, permanently preventing the target module
-> from being loaded as long as the livepatch is loaded.
+> net/mptcp/protocol.c:mptcp_release_cb() {
+> 	...
+> 	if (flags & BIT(MPTCP_FLUSH_JOIN_LIST))
+> 		__mptcp_flush_join_list(sk, &join_list);
+> 	...
+> }
+> 
+> Can this lead to the sockets in join_list being completely leaked when
+> mptcp_destroy_common() later iterates only over conn_list?
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is there a data race on pm->reset and
+> pm->rm_list_* fields when mptcp_pm_data_reset() is called during disconnect?
+> 
+> When mptcp_disconnect() sets sk->sk_state to TCP_CLOSE, it calls
+> mptcp_pm_data_reset(msk), which modifies PM structures without acquiring
+> pm->lock:
+> 
+> net/mptcp/pm.c:mptcp_pm_data_reset() {
+> 	...
+> 	memset(&pm->reset, 0, sizeof(pm->reset));
+> 	pm->rm_list_tx.nr = 0;
+> 	pm->rm_list_rx.nr = 0;
+> 	...
+> }
+> 
+> At the same time, subflow receive paths can process incoming MP_JOIN or
+> RM_ADDR packets in BH context, holding only pm->lock and lock_sock(ssk) rather
+> than lock_sock(msk). For example:
+> 
+> net/mptcp/pm.c:mptcp_pm_allow_new_subflow() {
+> 	...
+> 	spin_lock_bh(&pm->lock);
+> 	if (READ_ONCE(pm->accept_subflow)) {
+> 		ret = pm->extra_subflows < limit_extra_subflows;
+> 	...
+> }
+> 
+> Could this unprotected memset in mptcp_pm_data_reset() cause torn writes and
+> corrupted PM state when racing with readers and writers that only hold
+> pm->lock?
+> 
+> [ ... ]
+> 
 
-Sigh, I got a bit lost in all the cycles. I believe that this should
-get fixed the the following changes on top of this patch:
-
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 1c217ac49d2b..09b6f4aa6217 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -1360,7 +1373,7 @@ int klp_module_coming(struct module *mod)
- 			if (ret) {
- 				pr_warn("pre-patch callback failed for object '%s'\n",
- 					obj->name);
--				goto err;
-+				goto err_free_object;
- 			}
- 
- 			ret = klp_patch_object(obj);
-@@ -1368,8 +1381,7 @@ int klp_module_coming(struct module *mod)
- 				pr_warn("failed to apply patch '%s' to module '%s' (%d)\n",
- 					patch->mod->name, obj->mod->name, ret);
- 
--				klp_post_unpatch_callback(obj);
--				goto err;
-+				goto err_unpatch_callback;
- 			}
- 
- 			if (patch != klp_transition_patch)
-@@ -1383,6 +1395,10 @@ int klp_module_coming(struct module *mod)
- 
- 	return 0;
- 
-+err_unpatch_callback:
-+	klp_post_unpatch_callback(obj);
-+err_free_object:
-+	klp_free_object_loaded(patch, obj);
- err:
- 	/*
- 	 * If a patch is unsuccessfully applied, return
-
-
-Note: This is called when it fails in the middle of
-
-		klp_for_each_object(patch, obj) {
-
-      Naive approach would be to implement another *_limited
-      variant which would revert the action for all already
-      proceed "obj" structures.
-
-      But this is called in klp_module_coming() so only one
-      struct object should match. All others are skipped.
-      This is why it should be enough to revert only the last "obj"
-      in the err_* goto targets.
-
-      We propably should enforce this => add another patch
-      which would reject livepatches which contain two
-      struct object for the same object.
-
-Best Regards,
-Petr
-
-PS: I am going to wait few more days for a possible feedback.
-    Then I would v4 of this whole patchset with the additional
-    changes.
-
-    I hope that the 1st patch from Harry won't need more changes.
-    So, I will only fix my part of the patchset. /o\
-
-Best Regards,
-Petr
