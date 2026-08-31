@@ -1,36 +1,30 @@
-Received: from mta1.migadu.com (out-78.mta1.migadu.com [95.215.58.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9622F3C07
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D61DA62E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788181270; cv=none; b=NSlLSEgPZBP6l4G7jeLZO8rmdY0DFc9iisbB8b2rMVkKg1QE691qAMGsucwSgPnp6MHvVulQQ2YpwIXGcS85fsSRlI70pPyQLkrh+OpmuhMtnpf6Q4Zxj2Zk3URnhM8xzvDEOm1bJcfCGLxILkPRXe7OHN2N9KQkbPJgZL4A0jo=
+	t=1788181639; cv=none; b=rA7nbbzLoBU9EPl1aDfVV4nRaTa4sq5QbnoMVmLzikFsP1hn6Z+Hkr26GM8HvIZnBvivLg06cyR8qpOVcVQPnMM12QiAE9eDOSFbcK9weZslA/SxHepM8+Ugw7KEN+8PuD5uaLrCGdL3dmBpJAHjtzpgZQl5JkELm1RcQ+YZb9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788181270; c=relaxed/simple;
-	bh=lmELAjPNU5BB6haXlmWjM/xqcLlRME3nIN8QwH36o7U=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=QumcjOGhKhHKcJRen7osiCl5znofxyawxZThlavMXE9AaIj8uKWeDm1U43wQbvpuhzH6AuPaPTGzwGUPwtXCsNCGydYewpNr13U2mpVFfkDXgtFnWDZY5z91iGOydqrXuwo9+At303Psp/nWNUjuLItqr6tMjV+zU/Uq8R5HJO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xZaR/Yv7; arc=none smtp.client-ip=95.215.58.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xZaR/Yv7"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=lmELAjPNU5BB6haXlmWjM/xqcLlRME3nIN8QwH36o7U=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788181263; v=1; x=1788786063;
- b=xZaR/Yv7xZ7nJYgifgHu24DogYG9L4Sg4iIrdAr4aoLlyUGHP1cEoyajVyfMO+y1Wh5/gg1O
- Sbh5i72n9lNg9RqLyrBEBDHUFZZvSWyaS6h/ghbwDDDjkl5pwNURd9/eqlyJcuCtsvtfZ84al1g
- Gdria0gDBRhV+cKuV3G5Shtk=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id fff74117a86ebb1b;
-	Mon, 31 Aug 2026 13:00:59 +0000
-X-Mizu-Trace-ID: fff74117a86ebb1b
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <739848e0-1d35-4ed7-afd7-4b0609ddb8d0@linux.dev>
-Date: Mon, 31 Aug 2026 21:00:52 +0800
+	s=arc-20240116; t=1788181639; c=relaxed/simple;
+	bh=ZPn8Y1cGxYriJLJHPvq8nupoqNdcrIK5QvTnEGmkvzg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HmMJ7X+zvYsxYkJrXcNJ7Os5jeOzAiNw+YBb7dcOiaMDxil6AUv/hvdqGmm9Rfg+64D7V1X5zp5t77KrUM+KqJc+dgCo4b/IYN+qVmhIuNeL7OxkghCYT/ekqoMeRkWQIGOzn+dCiorsxTnnNK/RR1VclATd0rT4Ogcui6c9YEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hYTlZ2q1XzYQttg
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 21:06:34 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 23BA040598
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 21:07:12 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP1 (Coremail) with UTF8SMTPA id cCh0CgDXvwp+fJVqfc75AA--.63438S2;
+	Mon, 31 Aug 2026 21:07:12 +0800 (CST)
+Message-ID: <4acae7de-fdd7-4534-bb73-43502dc760a0@huaweicloud.com>
+Date: Mon, 31 Aug 2026 21:07:10 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,151 +32,109 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, mptcp@lists.linux.dev
-Subject: Re: [PATCH mptcp-next 2/2] mptcp: pm: skip extra_subflows accounting
- on disconnected msk
+Subject: Re: [PATCH v4 22/23] perf annotate-arm64: Support per-cpu variable
+ access tracking
 To: sashiko-reviews@lists.linux.dev
-References: <20260831093206.689827-1-cui.tao@linux.dev>
- <20260831093206.689827-3-cui.tao@linux.dev>
- <20260831101129.203081F000E9@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260831101129.203081F000E9@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260808122400.2961238-1-wutengda@huaweicloud.com>
+ <20260808122400.2961238-23-wutengda@huaweicloud.com>
+ <20260808131848.43DEF1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260808131848.43DEF1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:cCh0CgDXvwp+fJVqfc75AA--.63438S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJw1UGw48GFyrAr4fZrb_yoW5WFy8pa
+	95CayrGr1rXr4FganrZw4rXFyS9ws7WrWF9Fyqkr4avr9avr97KF97tay5KFW7Gr95Aa12
+	qws8tr47Zw1093DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7
+	CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Hi,
 
-Thanks for the review. 
 
-在 2026/8/31 18:11, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Subflows in `join_list` can be leaked due to unsynchronized zeroing of `cb_flags` in `mptcp_disconnect`.
-> - [High] Data race on `pm->reset` and `pm->rm_list_*` fields due to missing `pm->lock` in `mptcp_pm_data_reset()`.
-
-Both findings are pre-existing issues rather
-than regressions from this series, but I had a look at them:
-
-For the join_list leak, I agree it is real. When an MP_JOIN is
-processed while the parent socket is being disconnected, the subflow
-is queued in msk->join_list and MPTCP_FLUSH_JOIN_LIST is set under
-the data lock, but mptcp_disconnect() then clears msk->cb_flags with
-a plain write. The flag is lost, mptcp_release_cb() never flushes
-the list, and since mptcp_destroy_common() only iterates conn_list,
-those subflow sockets are leaked. The plain write also drops flags
-that were already pending before the disconnect, so taking the data
-lock around it is not enough. What I have in mind is to keep the
-flush-related bits across the disconnect and let release_sock()
-process the join list as originally intended, or to drain it
-explicitly in the disconnect path, checking the lock nesting
-commented in mptcp_destroy_common().
-
-For the pm->reset data race, the lasting effect is the counter
-imbalance this series now clamps and traces, and the other fields
-are discarded on a closed socket anyway. The direct fix is to take
-pm->lock around the reset in mptcp_pm_data_reset(), after checking
-the lock ordering on all callers.
-
-These are two separate bugs with separate Fixes: targets, so I plan
-to submit them as their own series rather than folding them into
-this one.
-
-Tao
-
+On 2026/8/8 21:18, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Incomplete offset calculation for multi-register memory operands causes inaccurate type resolution.
 > --
 > 
-> commit 179deded54d27540d6b26de1228c24065e1fa9d4
-> Author: Tao Cui <cuitao@kylinos.cn>
+> --- Patch [22]: [PATCH v4 22/23] perf annotate-arm64: Support per-cpu variable access tracking ---
+> commit d7e10ade80ba3983e6d311e1ab11f19b4af2d53e
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> Subject: perf annotate-arm64: Support per-cpu variable access tracking
 > 
-> mptcp: pm: skip extra_subflows accounting on disconnected msk
+> This commit extends update_insn_state() for arm64 to handle per-cpu variable
+> addressing. It identifies per-cpu base initialization and propagates type
+> information to subsequent instructions. This allows the tracker to correctly
+> resolve the actual variable type in per-cpu flows.
 > 
-> This commit addresses a WARN_ON_ONCE crash related to extra_subflows
-> underflow by skipping the PM accounting when the mptcp socket is in the
-> TCP_CLOSE state. It replaces the warnings with rate-limited prints and
-> avoids modifying the counters for disconnected sockets.
-> 
-> Link: https://github.com/multipath-tcp/mptcp_net-next/issues/629
-> 
->> diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
->> index b10895606542a..60276eb1ef384 100644
->> --- a/net/mptcp/pm.c
->> +++ b/net/mptcp/pm.c
->> @@ -676,9 +676,18 @@ void mptcp_pm_subflow_check_next(struct mptcp_sock *msk,
->>  	update_subflows = subflow->request_join || subflow->mp_join;
->>  	if (mptcp_pm_is_userspace(msk)) {
->>  		if (update_subflows) {
->> +			/* The PM counters have already been cleared if the
->> +			 * msk got disconnected while this subflow was still
->> +			 * queued in the join list
->> +			 */
->> +			if (inet_sk_state_load(sk) == TCP_CLOSE)
->> +				return;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does mptcp_disconnect() leak subflows when
-> zeroing cb_flags non-atomically?
-> 
-> If a concurrent mptcp_finish_join() receives an MP_JOIN ACK for a subflow
-> while the parent socket is being disconnected, it can hit the
-> sock_owned_by_user(parent) branch. The subflow is added to msk->join_list
-> and MPTCP_FLUSH_JOIN_LIST is set in msk->cb_flags while holding the parent's
-> data lock.
-> 
-> Simultaneously, mptcp_disconnect() executes msk->cb_flags = 0 without holding
-> the mptcp_data_lock, erasing the MPTCP_FLUSH_JOIN_LIST flag:
-> 
-> net/mptcp/protocol.c:mptcp_disconnect() {
-> 	...
-> 	msk->cb_flags = 0;
-> 	...
-> }
-> 
-> When the lock is released, release_sock() invokes mptcp_release_cb(), but
-> since the flag was erased, it skips the flush:
-> 
-> net/mptcp/protocol.c:mptcp_release_cb() {
-> 	...
-> 	if (flags & BIT(MPTCP_FLUSH_JOIN_LIST))
-> 		__mptcp_flush_join_list(sk, &join_list);
-> 	...
-> }
-> 
-> Can this lead to the sockets in join_list being completely leaked when
-> mptcp_destroy_common() later iterates only over conn_list?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is there a data race on pm->reset and
-> pm->rm_list_* fields when mptcp_pm_data_reset() is called during disconnect?
-> 
-> When mptcp_disconnect() sets sk->sk_state to TCP_CLOSE, it calls
-> mptcp_pm_data_reset(msk), which modifies PM structures without acquiring
-> pm->lock:
-> 
-> net/mptcp/pm.c:mptcp_pm_data_reset() {
-> 	...
-> 	memset(&pm->reset, 0, sizeof(pm->reset));
-> 	pm->rm_list_tx.nr = 0;
-> 	pm->rm_list_rx.nr = 0;
-> 	...
-> }
-> 
-> At the same time, subflow receive paths can process incoming MP_JOIN or
-> RM_ADDR packets in BH context, holding only pm->lock and lock_sock(ssk) rather
-> than lock_sock(msk). For example:
-> 
-> net/mptcp/pm.c:mptcp_pm_allow_new_subflow() {
-> 	...
-> 	spin_lock_bh(&pm->lock);
-> 	if (READ_ONCE(pm->accept_subflow)) {
-> 		ret = pm->extra_subflows < limit_extra_subflows;
-> 	...
-> }
-> 
-> Could this unprotected memset in mptcp_pm_data_reset() cause torn writes and
-> corrupted PM state when racing with readers and writers that only hold
-> pm->lock?
+>> diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
+>> index 7fe5b979563f7..8b0584486cce9 100644
+>> --- a/tools/perf/util/annotate-data.c
+>> +++ b/tools/perf/util/annotate-data.c
+>> @@ -1253,11 +1253,33 @@ static enum type_match_result check_matching_type(struct type_state *state,
+>>  	}
+>>  
+>>  	if (state->regs[reg].kind == TSR_KIND_PERCPU_BASE) {
+>> -		u64 var_addr = dloc->op->offset;
+>> +		u64 var_addr;
+>>  		int var_offset;
 > 
 > [ ... ]
 > 
+>> +		var_addr = dloc->op->offset;
+>> +
+>>  		if (dloc->op->multi_regs) {
+>>  			int reg2 = dloc->op->reg2;
+> 
+> [Severity: Medium]
+> Does the TSR_KIND_GLOBAL_ADDR handling later in check_matching_type() need
+> similar logic for multi-register operands to ensure accurate type resolution?
+> 
+> Currently, for TSR_KIND_GLOBAL_ADDR, the logic does not consider multi-register
+> operands:
+> 
+> 	if (state->regs[reg].kind == TSR_KIND_GLOBAL_ADDR) {
+> 		u64 var_addr = state->regs[reg].imm_value + dloc->op->offset;
+> 		int var_offset;
+> 
+> This calculation omits adding state->regs[reg2].imm_value for multi-register
+> operands, unlike the TSR_KIND_PERCPU_BASE logic in the same function. The
+> omission also appears to apply to TSR_KIND_TYPE and TSR_KIND_POINTER.
+> 
+> Can this incomplete offset calculation cause incorrect type resolution in
+> tools/perf/util/annotate-data.c:check_matching_type() when perf processes a
+> memory instruction where op->multi_regs is true, the primary register is
+> TSR_KIND_GLOBAL_ADDR (or TYPE/POINTER), and the secondary register is
+> TSR_KIND_CONST?
+> 
+
+Perhaps we need a helper function at the beginning of check_matching_type() to
+calculate the accurate offset value. I can see several cases:
+
+1. single register addressing
+   [reg, #offset]
+
+2. post-index addressing
+   [reg], #offset
+
+3. SIB-like addressing
+   [base, index, lsl #3]
+
+4. multi-reg addressing with constant register.
+   [base, reg2]  // reg2 is a const
+
+Thanks,
+Tengda
 
