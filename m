@@ -1,572 +1,222 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B4945A2BB
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 15:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E345952B1FA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 15:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788188611; cv=none; b=pcf8cmb2Evp+45jBcbzGYOmTst3Kalrw7q/1UHlv7B2A+e2Yd7RGVGy/7jzFynZkcyZY7wO121CIiebpXPt6cd7ccnsYGy78GJeyfR43zgIVOivSPeTMbGbeSpoC5ENhuxZbTY/8kwGcY9kGKuWNPotwLXbZSJk6oW6sjLExwBI=
+	t=1788188915; cv=none; b=scHUoocDI8aoEQSQKa5K8tYu5MkH1xqFfVY0KjWxUZeRwfgn7J/7rXRDYEo5OhrK/6D//J4/rQNonUeSpnAQ0ozuAIgO1Dasmw7yHKCtZ08fU947d3Pe+YHNntpCbYA8KNENesEXZRkwvtxO14F+RICgxH2tYrQIy4dfJEeH8pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788188611; c=relaxed/simple;
-	bh=B+vAhdP9jHPlmTdF6Nwg6XSnuL073f88xMrD7YEyGLA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBNpEKHPmRr37iuzHOw8lHEGKkdXxxgFdU2q+XsjsLt5Idr4AJE8NJuKmTvxH8a6I3FoUqqm7XNzfuo0iBRDtUXak9VwdX1KYl3tefikuMkdNYVJe58+wD7ZE6uZdZ+HA7vmLQIpAwXbF2xjLdcqronz6IqAW73frKT5hMnqcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BM266owM; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1788188915; c=relaxed/simple;
+	bh=aa0jBTsW/JXDtcKMDtqMSHuvl+U9c2RkzktfkdnVFdU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L9P8+5EHffcKmqOtm6HJpTwM4g9okzG3+AcT4O+Cfl+yfvZK1mrRQ2svMFzp0ajfnaIkaDNI352hIKRBcl5rft8M3+XngnD4+KWUN1Ifs3kVwoysWzE+YOCWbDAJz2EVTzxgB8i+SwfhUjLGojz6K3D9L8OSxczmgjACY1J5Kzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ATpAXxJu; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BM266owM"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-482e2fdf5abso1653448f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 08:03:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ATpAXxJu"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-85339ed040aso3127778b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 08:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788188607; x=1788793407; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=owVS0SJzm5gU3Z17acnnop852XewDdkB8HGSaazL4pk=;
-        b=BM266owMBNTim8gy6JEaG0zYHLt2Ky02msqKGvex+ZS5+61EQzTU2b9USzCOGQ6Lsw
-         AnQWkcgPA+IEZ1bOctHabB9NG60KVrzptNULSjQozcB172ydJ+DUgt/yHNoJtUDZBuqU
-         V2m+Nlf/eMOENJVKsPFvBKwdt+c6a5ig1tqpkcOR06ZcHEs2B1u+X/3/D2H6pEkP/wef
-         FwLQqrOaAWiwuWg4ezHfLlf6SpZWHPlEocyCpp4ygoFoAA5ZpMyeVRhVn0lNObu1TJv5
-         PG+WzBAwaDhmHAhO/6UjVzZvOlBzf5fqHHqo9LMYXclHr836QmgnxC21+KF5OacqHS+U
-         BT0A==
+        d=gmail.com; s=20251104; t=1788188913; x=1788793713; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TGZsE5pPPeNtqINqn2XOWd3ygllW4wLJTLRsuLko6xI=;
+        b=ATpAXxJukr+0iiczSmbWqJjHyuOYyJq6B876x3Y45N2EEbKm1owVgg58oclbKOik7i
+         0/F1aXGgZMUa2VCeyhqgxbaPnd0xV4Ht/fKGpAesb95ypICaHAw+0pw/b4Z4ytQCr6yR
+         kKO/d5Ny5kWPXkSDrj49HRWsJ63JfZsO/dyDaux7omRaGEel3lDC/yndGYMLism9h/Le
+         +FkyzzUsK01YwZ23J9upTvRe+WY91dG6f3UVeY7RYj4lWlRMw3ggIuhVAAUeqSldfV7H
+         QXrzlaL2w+RI8VOq/VmzifhMAFzT+GxvrUUXBSMfnbLY5j3Lv801drl4MWTlFNo57PwG
+         Isow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788188607; x=1788793407;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=owVS0SJzm5gU3Z17acnnop852XewDdkB8HGSaazL4pk=;
-        b=dMyG+dM90xLQ30kPemNDlwZGCyPqACSOo/zaWgLLHFQph1djonqYBkyWl3R83QS8SN
-         AOYsIbbPPrHPZJEwtRwgWT31UNiY99cmRUubTz4dueUQqbcG+kx94QNpcKvXvi4On80S
-         NIMH0/pNdFuyRJ7UhTo/Qyo114ms98Xz7kHT7H8aXiDw4gH+Io5E0I1vOgR36CjOQjYu
-         214te9SMmB8dg1WM9znmtggixlROUZCIeGCT1Wy9MZQwSsMk8IECQepnuuO7WB3YPo1z
-         rxj0SjOYrsB9TihybMxDJMeR+JrGAwV6lxYm0r2tzG/zRFeKGGiofHT2g7LKj2VclOHB
-         GNtg==
-X-Forwarded-Encrypted: i=1; AKwUvBy1m9cBdEczfIVUUiUI3g2miw10FJM8XgjIply+BWh2a4gR1JulRrw094ljuYhNNl0umINKpg2m7dM2uzxkK/U=@lists.linux.dev
-X-Gm-Message-State: AFuF++lw5aX3Rc3+ASwbKQozPxqotqXQXYN5nNgP+PSXrbJ1alZ+q5BR
-	7ywAOvq8EZHtndOWzMGPEdyXGQTsQh9PirC/19lPRlyj3quhDctsufEM
-X-Gm-Gg: AYBFou0ue+rEcMUYy39AfTpZRFCAbN66HY/7eKJuJXMUCQuqsEuQJip2Rl1ujLjiiyN
-	OEHr9VRfE/WK/ZQXRLz81wcMklVNurjt2V3A6+v+SCyHVjvTReR2LxBozO/YrlZ2CFrGQMp2/ny
-	x6mDYa3ilXWCen/LOys6I92Qq3l9Mw+h1IFepQxE+bylWYnAKEXV26PLcZfzT+8/MIRHoC41aZz
-	AFrrQWWVHzHihNBZTVOvyTQXR2xfWUbk15sY1j85IxdjEgv0meM+GmyrGTtBv4x80oGp3ySgCRz
-	037ANi9An6LWIaSrim1h6Sz/x/aiNXx3BUR92iDtuDDbpH3aac+nepkILOoGrL29ZtmsSsQiwx3
-	CB2Hmfq1duGIXcJSFHD0yoXqXFu+blpkkg+Z0tPTwwXw+2yrd3z7xDhyciEpETldJSDq9YdO4Xb
-	HltoD4Q2Ap81mmmNbqK90YwrPn9xwsLzKNyhT3AXxEU8aXesxM6w/hDdkTIlM5gupGAOasgn4kB
-	Czf8wIrOkZSzLjJZdlz3IiepO4KKwbFrrHkYxSOkH13aYfAPJluAHs=
-X-Received: by 2002:a05:6000:2512:b0:484:3f46:12f6 with SMTP id ffacd0b85a97d-4843f4615f2mr5572192f8f.19.1788188606127;
-        Mon, 31 Aug 2026 08:03:26 -0700 (PDT)
-Received: from 1Z10 ([78.213.92.213])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482fbb2794dsm24149228f8f.25.2026.08.31.08.03.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 08:03:25 -0700 (PDT)
-From: Maurizio Casciano <mauriziocasciano7@gmail.com>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	linux-input@vger.kernel.org
-Cc: David Heidelberg <david@ixit.cz>,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Maurizio Casciano <mauriziocasciano7@gmail.com>,
-	Sashiko AI review <sashiko-bot@kernel.org>
-Subject: [PATCH v7] Input: drv260x: Fix suspend and resume sequencing
-Date: Mon, 31 Aug 2026 17:03:23 +0200
-Message-ID: <20260831150323.2922792-1-mauriziocasciano7@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831082820.063D81F00A3D@smtp.kernel.org>
-References: <20260831082820.063D81F00A3D@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1788188913; x=1788793713;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=TGZsE5pPPeNtqINqn2XOWd3ygllW4wLJTLRsuLko6xI=;
+        b=q8/E11tvVk3NCiBhNV2U3K8u9Az9+JjmLNwSx+6JAdtGrPjwCHiZmrcKMHf4Vnm7Vc
+         tfJ2EErt2kuJiD72xgfWbPNB1X8+4HpXMo8ajZhjk+szvQfWW40SKIW1U2iU565ZgtEp
+         GFBLJLbxQuEExzZrHTEyYcwq3GSjJXHpGiKONYeLFd2PvGJn3j+YzrY4IElwk7c9AJ6u
+         igW0ifFPD0vY5l4Q3T5e597ab+3Ylrps4+bJCxinsRQK+2EPIxUiCYXw/Q85BKGq3+8m
+         yKpIgwpoqMgt4myePawlhEJ2G0iuYpqDghoVFiIq8yKGQtSN7EO1uSO69yOm5++5A5S1
+         nGQA==
+X-Forwarded-Encrypted: i=1; AHgh+Rr33K+ZmMIADvpBVWmREoOsQvJDScbtHX7VT3EaiUiOx79wh2v5y2F/6MVyMcvDnwdWRy+WpfoF6ReaZj7djAc=@lists.linux.dev
+X-Gm-Message-State: AFuF++lArKwAUEYlReQJVyOris9tJzPt+iAf935igduZq+Baa+ZHHhSk
+	BdDU2TlkKQdSVwxegTxoNr1sf3eLD8zEXh9QODuZB8MXI6DxAGDFJr8Q0Vph/w==
+X-Gm-Gg: AR+sD13svgZoC88yU0vsWB96OEHohkp2L6e01UrvfhVBDIsUmCBd3DS4Yog7o03JxsZ
+	NWdkgLwoM2crd+A+Z7gtlo1oIGmr3MbIoe2gCi6YdK4c6fykZJGgMcs+F05Ug+zBiSsBcRSRi1n
+	vG+ixneNfOH4uEcaDwMMpzcgQJik6jTN/Df8+I8DTQkUCy8R470OVK2CMMjQWIuxNv3ygYAOi6t
+	FGNvRRUAbOf/g76LZzqevyG/Q1PMG1KjbUXg+RTM5XPO8St/ef3HqJXmpEAIxpc5VSk4lha2h2+
+	gt7SF2EmwZy0NZUJqhVGFUgOOS31FxAdOwOxmRHTeeHm0dAeqkptD/df0PQwijvxN9Zb7aCORdq
+	APQaIj6CfnsbDccMYrM0G9GgEAlX20cnnxkM1DhyIqhrTDHAmu56AqdDoV6FRcp3NxFOjMrX2hc
+	uv0aAGvXg13oAJPw5HFxSV/mhWYkRw6ZZim9OayeLMzsHBC1oY7wejI0jYa4fmBZ+vVqtmouuEq
+	pJ+40f84eFKNClvngWipMbCvvBOzfpSHHOyLg==
+X-Received: by 2002:a05:6a00:aa85:b0:857:7384:b5fd with SMTP id d2e1a72fcca58-85b5c4d0ebamr2583437b3a.25.1788188913160;
+        Mon, 31 Aug 2026 08:08:33 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc1f301f166sm4561693a12.0.2026.08.31.08.08.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Aug 2026 08:08:32 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <b2636e28-4c54-40f4-b129-08ded94dd9e5@roeck-us.net>
+Date: Mon, 31 Aug 2026 08:08:31 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hwmon: (spd5118) Select page 0 unconditionally during
+ probe
+To: Armin Wolf <W_Armin@gmx.de>, sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+References: <20260830233009.322206-1-W_Armin@gmx.de>
+ <20260830234131.498F71F000E9@smtp.kernel.org>
+ <b5c0b655-e158-430b-b663-70913a99ce9e@gmx.de>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <b5c0b655-e158-430b-b663-70913a99ce9e@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Force-feedback playback is queued asynchronously, but system suspend can
-cut power while the worker is pending. Disable and drain the work item
-before entering standby, and keep force-feedback quiesced until resume has
-restored communication.
+Hi Armin,
 
-An input device can be closed and reopened without playing an effect in
-between. Since close lowers the enable GPIO, assert it and observe the
-startup delay in the open callback so a following suspend can access the
-registers.
+On 8/30/26 16:48, Armin Wolf wrote:
+> Am 31.08.26 um 01:41 schrieb sashiko-bot@kernel.org:
+> 
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] Unconditional I2C write in `probe()` before verifying device identity can cause permanent data corruption on mismatched devices.
+>> - [Medium] Failing probe on read-only buses entirely drops temperature monitoring capabilities.
+>> -- 
+>>
+>> commit 83cea797ff679bd0608e7bc406325588975c70cb
+>> Author: Armin Wolf <W_Armin@gmx.de>
+>>
+>> hwmon: (spd5118) Select page 0 unconditionally during probe
+>>
+>> This commit makes the driver write to the legacy mode register
+>> unconditionally during probe to select page 0. This intentional write
+>> fails on controllers where the BIOS blocks writes to the SPD device,
+>> thereby avoiding issues on such controllers by refusing to probe.
+>>
+>>> diff --git a/drivers/hwmon/spd5118.c b/drivers/hwmon/spd5118.c
+>>> index 9724cf70b61d4..95b7cbd2f111c 100644
+>>> --- a/drivers/hwmon/spd5118.c
+>>> +++ b/drivers/hwmon/spd5118.c
+>> [ ... ]
+>>> @@ -637,45 +638,32 @@ static int spd5118_i2c_init(struct i2c_client *client)
+>>>                        I2C_FUNC_SMBUS_WORD_DATA))
+>>>           return -ENODEV;
+>>> -    regval = i2c_smbus_read_word_swapped(client, SPD5118_REG_TYPE);
+>>> -    if (regval < 0 || (regval && regval != 0x5118))
+>>> -        return -ENODEV;
+>>> -
+>> [ ... ]
+>>> +    mode = i2c_smbus_read_byte_data(client, SPD5118_REG_I2C_LEGACY_MODE);
+>>> +    if (mode < 0)
+>>> +        return mode;
+>>> +
+>>> +    FIELD_MODIFY(SPD5118_LEGACY_PAGE_MASK, &mode, 0);
+>>> +    err = i2c_smbus_write_byte_data(client, SPD5118_REG_I2C_LEGACY_MODE, mode);
+>> [Severity: High]
+>> Does this unconditional I2C write in spd5118_i2c_init() risk permanent data
+>> corruption if the driver is bound to a mismatched device?
+>>
+>> Because the device identity check reading SPD5118_REG_TYPE has been moved
+>> until after this write, any device mistakenly probed (via sysfs or incorrect
+>> firmware tables) in the 0x50-0x57 address range will have its byte at offset
+>> 0x0B overwritten.
+>>
+>> For an ordinary EEPROM, this clears bits 0-2 permanently before the
+>> subsequent type check fails and aborts the probe.
+> 
+> The detection code is unchanged, and we need that write in order to read registers.
+> 
 
-Disabling the regulator may remove power and erase the device
-configuration. Preserve the actuator mode selected by firmware, cache the
-initial automatic-calibration results, and reapply the complete
-configuration during resume. Use repeatable multi-register writes instead
-of registering persistent regmap patches, which would append another copy
-on every reinitialization.
+The device could have been instantiated manually with a write to new_device,
+which would bypass detection. It doesn't hurt to write the old mode back if
+the write succeeded and this turns out to not be a spd5118 device, so
+let's do that if the code below bails out.
 
-Remember that configuration may have been lost across suspend even when
-the input device was closed and resume therefore skipped hardware access.
-Restore it on the next open. If resume recovery failed, let a later open
-retry regulator enablement and initialization before re-enabling playback
-work, instead of leaving the device permanently inaccessible.
+Thanks,
+Guenter
 
-Track whether this consumer has enabled the regulator so devres cleanup
-does not issue an unbalanced disable after a resume failure. Make regulator
-and work reference counts idempotent across PM retries. On removal,
-unregister the input device to shut down the ff-memless timer before the
-final work cancellation, preventing the timer from requeueing work during
-teardown.
+>>> +    if (err < 0)
+>>> +        return err;
+>> [Severity: Medium]
+>> Will failing the probe completely on read-only buses deprive users of all
+>> temperature monitoring capabilities?
+>>
+>> If spd5118_i2c_init() returns an error here when probed on an Intel
+>> controller that rejects writes, the driver completely drops support for that
+>> device.
+>>
+>> Previously, the probe would succeed and at least allow reading the memory
+>> temperature. Could this degrade gracefully instead, perhaps by marking the
+>> regmap as read-only and disabling suspend/resume writes, rather than totally
+>> preventing hardware monitoring?
+> 
+> No, because the driver will then block suspend/resume on those devices.
+> 
+> Thanks,
+> Armin Wolf
+> 
+>>> +
+>>> +    regval = i2c_smbus_read_word_swapped(client, SPD5118_REG_TYPE);
+>>> +    if (regval < 0)
+>>> +        return regval;
+>>> +
+>>> +    if (regval != 0x5118)
+>>> +        return -ENODEV;
+>>>       /* We are reasonably sure that this is really a SPD5118 hub controller */
+>>>       return 0;
+> 
 
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-input/20260831082820.063D81F00A3D@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-input/20260831011526.24AB11F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-input/20260830143050.03E081F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-input/20260829230740.126461F000E9@smtp.kernel.org/
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/linux-input/apLD91vzHIrLOPWC@google.com/
-Link: https://www.ti.com/lit/ds/symlink/drv2604.pdf
-Assisted-by: Codex:gpt-5.6-sol [sparse]
-Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
----
-Changes in v7:
-- Recover a failed-resume work-disable state from the next input open instead
-  of returning -EIO permanently.
-- Mark configuration for deferred restoration when suspend occurred while
-  the input device was closed, and restore it on the next open.
-- Add an explicit remove callback which unregisters the input device before
-  cancelling the work item, closing the ff-memless timer requeue window.
-- Expand cached-calibration write error handling and retain idempotent work
-  and regulator state tracking across PM retries.
-
-Validation:
-- Integration commit 780663f0af3b, containing the exact drv260x blob
-  1eb71e6adc53, passed olddefconfig, a focused W=1 C=2 CHECK=sparse build,
-  and a full Debian package build on x86_64. The full build log contains no
-  warning in drivers/input/misc/drv260x.c.
-- Lenovo Yoga Book YB1-X91L running
-  7.2.0-yogabook-20260831-153058 passed a 15-second s2idle cycle with RTC
-  wake. Both DRV2604 devices then passed five open/close cycles and a
-  force-feedback rumble upload/play/erase sequence.
-- Camera streaming, SOF playback and capture, and idle runtime-PM state were
-  rechecked after resume. No drv260x, I2C, regulator-balance, or severe kernel
-  error was present in the boot log.
-- The tablet uses dummy vbat regulators for both DRV2604 devices, so actual
-  regulator power loss and injected resume-error cleanup could not be
-  exercised on this hardware.
-
- drivers/input/misc/drv260x.c | 264 ++++++++++++++++++++++++++++-------
- 1 file changed, 216 insertions(+), 48 deletions(-)
-
-diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
-index 6c5c4c53753b..1eb71e6adc53 100644
---- a/drivers/input/misc/drv260x.c
-+++ b/drivers/input/misc/drv260x.c
-@@ -181,7 +181,12 @@
-  * @work: Work item used to off load the enable/disable of the vibration
-  * @enable_gpio: Pointer to the gpio used for enable/disabling
-  * @regulator: Pointer to the regulator for the IC
-+ * @regulator_enabled: Whether this consumer has enabled the regulator
-+ * @work_disabled: Whether playback work is disabled pending PM recovery
-+ * @needs_reinit: Whether device configuration must be restored on open
-+ * @calibration_valid: Whether calibration results have been cached
-  * @magnitude: Magnitude of the vibration event
-+ * @calibration_data: Cached automatic calibration results
-  * @mode: The operating mode of the IC (LRA_NO_CAL, ERM or LRA)
-  * @library: The vibration library to be used
-  * @rated_voltage: The rated_voltage of the actuator
-@@ -194,7 +199,12 @@ struct drv260x_data {
- 	struct work_struct work;
- 	struct gpio_desc *enable_gpio;
- 	struct regulator *regulator;
-+	bool regulator_enabled;
-+	bool work_disabled;
-+	bool needs_reinit;
-+	bool calibration_valid;
- 	u8 magnitude;
-+	u8 calibration_data[3];
- 	u32 mode;
- 	u32 library;
- 	int rated_voltage;
-@@ -215,6 +225,24 @@ static int drv260x_calculate_voltage(unsigned int voltage)
- 	return (voltage * 255 / 5600);
- }
- 
-+static void drv260x_disable_work(struct drv260x_data *haptics)
-+{
-+	if (haptics->work_disabled)
-+		return;
-+
-+	disable_work_sync(&haptics->work);
-+	haptics->work_disabled = true;
-+}
-+
-+static void drv260x_enable_work(struct drv260x_data *haptics)
-+{
-+	if (!haptics->work_disabled)
-+		return;
-+
-+	enable_work(&haptics->work);
-+	haptics->work_disabled = false;
-+}
-+
- static void drv260x_worker(struct work_struct *work)
- {
- 	struct drv260x_data *haptics = container_of(work, struct drv260x_data, work);
-@@ -243,8 +271,6 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
- {
- 	struct drv260x_data *haptics = input_get_drvdata(input);
- 
--	haptics->mode = DRV260X_LRA_NO_CAL_MODE;
--
- 	/* Scale u16 magnitude into u8 register value */
- 	if (effect->u.rumble.strong_magnitude > 0)
- 		haptics->magnitude = effect->u.rumble.strong_magnitude >> 8;
-@@ -258,21 +284,6 @@ static int drv260x_haptics_play(struct input_dev *input, void *data,
- 	return 0;
- }
- 
--static void drv260x_close(struct input_dev *input)
--{
--	struct drv260x_data *haptics = input_get_drvdata(input);
--	int error;
--
--	cancel_work_sync(&haptics->work);
--
--	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
--	if (error)
--		dev_err(&haptics->client->dev,
--			"Failed to enter standby mode: %d\n", error);
--
--	gpiod_set_value(haptics->enable_gpio, 0);
--}
--
- static const struct reg_sequence drv260x_lra_cal_regs[] = {
- 	{ DRV260X_MODE, DRV260X_AUTO_CAL },
- 	{ DRV260X_CTRL3, DRV260X_NG_THRESH_2 | DRV260X_RTP_UNSIGNED_DATA },
-@@ -338,9 +349,9 @@ static int drv260x_init(struct drv260x_data *haptics)
- 
- 	switch (haptics->mode) {
- 	case DRV260X_LRA_MODE:
--		error = regmap_register_patch(haptics->regmap,
--					      drv260x_lra_cal_regs,
--					      ARRAY_SIZE(drv260x_lra_cal_regs));
-+		error = regmap_multi_reg_write(haptics->regmap,
-+					       drv260x_lra_cal_regs,
-+					       ARRAY_SIZE(drv260x_lra_cal_regs));
- 		if (error) {
- 			dev_err(&haptics->client->dev,
- 				"Failed to write LRA calibration registers: %d\n",
-@@ -351,9 +362,9 @@ static int drv260x_init(struct drv260x_data *haptics)
- 		break;
- 
- 	case DRV260X_ERM_MODE:
--		error = regmap_register_patch(haptics->regmap,
--					      drv260x_erm_cal_regs,
--					      ARRAY_SIZE(drv260x_erm_cal_regs));
-+		error = regmap_multi_reg_write(haptics->regmap,
-+					       drv260x_erm_cal_regs,
-+					       ARRAY_SIZE(drv260x_erm_cal_regs));
- 		if (error) {
- 			dev_err(&haptics->client->dev,
- 				"Failed to write ERM calibration registers: %d\n",
-@@ -374,9 +385,9 @@ static int drv260x_init(struct drv260x_data *haptics)
- 		break;
- 
- 	default:
--		error = regmap_register_patch(haptics->regmap,
--					      drv260x_lra_init_regs,
--					      ARRAY_SIZE(drv260x_lra_init_regs));
-+		error = regmap_multi_reg_write(haptics->regmap,
-+					       drv260x_lra_init_regs,
-+					       ARRAY_SIZE(drv260x_lra_init_regs));
- 		if (error) {
- 			dev_err(&haptics->client->dev,
- 				"Failed to write LRA init registers: %d\n",
-@@ -398,6 +409,19 @@ static int drv260x_init(struct drv260x_data *haptics)
- 		return 0;
- 	}
- 
-+	if (haptics->calibration_valid) {
-+		error = regmap_bulk_write(haptics->regmap, DRV260X_CAL_COMP,
-+					  haptics->calibration_data,
-+					  ARRAY_SIZE(haptics->calibration_data));
-+		if (error) {
-+			dev_err(&haptics->client->dev,
-+				"Failed to restore calibration registers: %d\n", error);
-+			return error;
-+		}
-+
-+		return 0;
-+	}
-+
- 	error = regmap_write(haptics->regmap, DRV260X_GO, DRV260X_GO_BIT);
- 	if (error) {
- 		dev_err(&haptics->client->dev,
-@@ -423,7 +447,13 @@ static int drv260x_init(struct drv260x_data *haptics)
- 		}
- 	} while (cal_buf == DRV260X_GO_BIT);
- 
--	return 0;
-+	error = regmap_bulk_read(haptics->regmap, DRV260X_CAL_COMP,
-+				 haptics->calibration_data,
-+				 ARRAY_SIZE(haptics->calibration_data));
-+	if (!error)
-+		haptics->calibration_valid = true;
-+
-+	return error;
- }
- 
- static const struct regmap_config drv260x_regmap_config = {
-@@ -434,11 +464,110 @@ static const struct regmap_config drv260x_regmap_config = {
- 	.cache_type = REGCACHE_NONE,
- };
- 
-+static int drv260x_regulator_enable(struct drv260x_data *haptics)
-+{
-+	int error;
-+
-+	if (haptics->regulator_enabled)
-+		return 0;
-+
-+	error = regulator_enable(haptics->regulator);
-+	if (!error)
-+		haptics->regulator_enabled = true;
-+
-+	return error;
-+}
-+
-+static int drv260x_regulator_disable(struct drv260x_data *haptics)
-+{
-+	int error;
-+
-+	if (!haptics->regulator_enabled)
-+		return 0;
-+
-+	error = regulator_disable(haptics->regulator);
-+	if (!error)
-+		haptics->regulator_enabled = false;
-+
-+	return error;
-+}
-+
- static void drv260x_power_off(void *data)
- {
- 	struct drv260x_data *haptics = data;
- 
--	regulator_disable(haptics->regulator);
-+	drv260x_regulator_disable(haptics);
-+}
-+
-+static int drv260x_open(struct input_dev *input)
-+{
-+	struct drv260x_data *haptics = input_get_drvdata(input);
-+	bool recover_work = haptics->work_disabled;
-+	int disable_error, error;
-+
-+	if (recover_work) {
-+		error = drv260x_regulator_enable(haptics);
-+		if (error) {
-+			dev_err(&haptics->client->dev,
-+				"Failed to enable regulator: %d\n", error);
-+			return error;
-+		}
-+	}
-+
-+	gpiod_set_value(haptics->enable_gpio, 1);
-+	/* Data sheet says to wait 250us before trying to communicate */
-+	fsleep(250);
-+
-+	if (haptics->needs_reinit || recover_work) {
-+		error = drv260x_init(haptics);
-+		if (error) {
-+			dev_err(&haptics->client->dev,
-+				"Failed to restore configuration: %d\n", error);
-+			gpiod_set_value(haptics->enable_gpio, 0);
-+			if (recover_work) {
-+				disable_error = drv260x_regulator_disable(haptics);
-+				if (disable_error)
-+					dev_err(&haptics->client->dev,
-+						"Failed to disable regulator: %d\n",
-+						disable_error);
-+			}
-+			return error;
-+		}
-+
-+		haptics->needs_reinit = false;
-+	}
-+
-+	if (recover_work)
-+		drv260x_enable_work(haptics);
-+
-+	return 0;
-+}
-+
-+static void drv260x_close(struct input_dev *input)
-+{
-+	struct drv260x_data *haptics = input_get_drvdata(input);
-+	int error;
-+
-+	/* PM has not restored register access yet. */
-+	if (haptics->work_disabled)
-+		return;
-+
-+	cancel_work_sync(&haptics->work);
-+
-+	error = regmap_write(haptics->regmap, DRV260X_MODE, DRV260X_STANDBY);
-+	if (error)
-+		dev_err(&haptics->client->dev,
-+			"Failed to enter standby mode: %d\n", error);
-+
-+	gpiod_set_value(haptics->enable_gpio, 0);
-+}
-+
-+static void drv260x_remove(struct i2c_client *client)
-+{
-+	struct drv260x_data *haptics = i2c_get_clientdata(client);
-+
-+	input_unregister_device(haptics->input_dev);
-+	cancel_work_sync(&haptics->work);
- }
- 
- static int drv260x_probe(struct i2c_client *client)
-@@ -506,7 +635,7 @@ static int drv260x_probe(struct i2c_client *client)
- 		return error;
- 	}
- 
--	error = regulator_enable(haptics->regulator);
-+	error = drv260x_regulator_enable(haptics);
- 	if (error) {
- 		dev_err(dev, "Failed to enable regulator: %d\n", error);
- 		return error;
-@@ -528,6 +657,7 @@ static int drv260x_probe(struct i2c_client *client)
- 	}
- 
- 	haptics->input_dev->name = "drv260x:haptics";
-+	haptics->input_dev->open = drv260x_open;
- 	haptics->input_dev->close = drv260x_close;
- 	input_set_drvdata(haptics->input_dev, haptics);
- 	input_set_capability(haptics->input_dev, EV_FF, FF_RUMBLE);
-@@ -569,62 +699,99 @@ static int drv260x_probe(struct i2c_client *client)
- static int drv260x_suspend(struct device *dev)
- {
- 	struct drv260x_data *haptics = dev_get_drvdata(dev);
--	int error;
-+	bool restore_work = false;
-+	int error, restore_error;
- 
--	guard(mutex)(&haptics->input_dev->mutex);
-+	mutex_lock(&haptics->input_dev->mutex);
- 
- 	if (input_device_enabled(haptics->input_dev)) {
-+		restore_work = !haptics->work_disabled;
-+		drv260x_disable_work(haptics);
-+
-+		/* A failed resume can leave the device already powered down. */
-+		if (!haptics->regulator_enabled)
-+			goto mark_reinit;
-+
- 		error = regmap_update_bits(haptics->regmap,
- 					   DRV260X_MODE,
- 					   DRV260X_STANDBY_MASK,
- 					   DRV260X_STANDBY);
- 		if (error) {
- 			dev_err(dev, "Failed to set standby mode\n");
--			return error;
-+			goto err_enable_work;
- 		}
- 
- 		gpiod_set_value(haptics->enable_gpio, 0);
- 
--		error = regulator_disable(haptics->regulator);
-+		error = drv260x_regulator_disable(haptics);
- 		if (error) {
- 			dev_err(dev, "Failed to disable regulator\n");
--			regmap_update_bits(haptics->regmap,
--					   DRV260X_MODE,
--					   DRV260X_STANDBY_MASK, 0);
--			return error;
-+			goto err_leave_standby;
- 		}
- 	}
- 
-+mark_reinit:
-+	haptics->needs_reinit = true;
-+	mutex_unlock(&haptics->input_dev->mutex);
- 	return 0;
-+
-+err_leave_standby:
-+	gpiod_set_value(haptics->enable_gpio, 1);
-+	fsleep(250);
-+	restore_error = regmap_update_bits(haptics->regmap,
-+					   DRV260X_MODE,
-+					   DRV260X_STANDBY_MASK, 0);
-+	if (restore_error) {
-+		dev_err(dev, "Failed to leave standby mode: %d\n", restore_error);
-+		restore_work = false;
-+	}
-+err_enable_work:
-+	if (restore_work)
-+		drv260x_enable_work(haptics);
-+	mutex_unlock(&haptics->input_dev->mutex);
-+	return error;
- }
- 
- static int drv260x_resume(struct device *dev)
- {
- 	struct drv260x_data *haptics = dev_get_drvdata(dev);
--	int error;
-+	int disable_error, error;
- 
--	guard(mutex)(&haptics->input_dev->mutex);
-+	mutex_lock(&haptics->input_dev->mutex);
- 
- 	if (input_device_enabled(haptics->input_dev)) {
--		error = regulator_enable(haptics->regulator);
-+		drv260x_disable_work(haptics);
-+
-+		error = drv260x_regulator_enable(haptics);
- 		if (error) {
- 			dev_err(dev, "Failed to enable regulator\n");
--			return error;
-+			goto err_unlock;
- 		}
- 
--		error = regmap_update_bits(haptics->regmap,
--					   DRV260X_MODE,
--					   DRV260X_STANDBY_MASK, 0);
-+		gpiod_set_value(haptics->enable_gpio, 1);
-+		fsleep(250);
-+
-+		error = drv260x_init(haptics);
- 		if (error) {
--			dev_err(dev, "Failed to unset standby mode\n");
--			regulator_disable(haptics->regulator);
--			return error;
-+			dev_err(dev, "Failed to restore configuration: %d\n", error);
-+			goto err_disable_regulator;
- 		}
- 
--		gpiod_set_value(haptics->enable_gpio, 1);
-+		haptics->needs_reinit = false;
-+		drv260x_enable_work(haptics);
- 	}
- 
-+	mutex_unlock(&haptics->input_dev->mutex);
- 	return 0;
-+
-+err_disable_regulator:
-+	gpiod_set_value(haptics->enable_gpio, 0);
-+	disable_error = drv260x_regulator_disable(haptics);
-+	if (disable_error)
-+		dev_err(dev, "Failed to disable regulator: %d\n", disable_error);
-+err_unlock:
-+	mutex_unlock(&haptics->input_dev->mutex);
-+	return error;
- }
- 
- static DEFINE_SIMPLE_DEV_PM_OPS(drv260x_pm_ops, drv260x_suspend, drv260x_resume);
-@@ -657,6 +824,7 @@ MODULE_DEVICE_TABLE(of, drv260x_of_match);
- 
- static struct i2c_driver drv260x_driver = {
- 	.probe		= drv260x_probe,
-+	.remove		= drv260x_remove,
- 	.driver		= {
- 		.name	= "drv260x-haptics",
- 		.acpi_match_table = ACPI_PTR(drv260x_acpi_match),
--- 
-With Best Regards,
-Maurizio Casciano
