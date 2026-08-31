@@ -1,115 +1,81 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B63914FF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE32A476CD8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 17:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788195406; cv=none; b=qcYi6uw5js9N5Iw0siEpmtPvPjzrZ1tKGoaN72hf02ZmrIG/SsAz98XuMf+tQAArfKXfDe7a7xQkpU9R3UjNWrN5kyDZB7ExLNtGC0TPtZ19cZDGFByWpamLEYvBe7ZstJxNO0aqYMTcjhiJaYPp/wdi04aZWrImMcpwbyDL1Wc=
+	t=1788197719; cv=none; b=dlEZ/pcbaXGlv3UIneqrNG2SpYRnawIKa4k+zDqC3SY3NkM5OvR3fgd5BCrVLwFf2Hd+Jwjto+bJmc/j2V0TbHdgEbgyK0z9lDKYnwMISlq0EAPJ1EyOAPA3HrByuf4sQrk+BIuXKCI4lLInUk1ZrBRI2JiQ8ICmj5EZCIHYLWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788195406; c=relaxed/simple;
-	bh=F+YjOfzFMf/cGJqzs1nRuvBR83gYIDUgBV6ieH5zoJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KG5wEWacO1s4OcBPBBXTM9UlxJd8Am5MhgXIglpzlKuQxRd2ZfEM3xTwn1AAItvHH0jpZWlIgEBbzZxytdOWCcq4UzDk9WrL4juAnYfOaRv13lkZpNm5b3RLwRwX/yB9wR/3o0X4yDIKYBWrOzCmua+BQfdjjJTs5hpaV9RKbKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=im01zoch; arc=none smtp.client-ip=198.175.65.17
+	s=arc-20240116; t=1788197719; c=relaxed/simple;
+	bh=c1yWASdiCI0Ti3RjiShC8xPEVoNiAUP0055Sw56I8Qg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=InnCuWRDxYkCDRQ5c2CFCLIbouYwZqtuCAZUzBHbhPpQcUXHVC9zkFtHD+iAGhTu9dLXSznYJsxK+gnXyoSrvQHBa9ePXsykfGKO3Lk4YHokuRU+UUaUVIeM0jqaz7Ll7FOj7iOtISPscOVIKgkg7Ftu5t6PGMM+6ULkaxVZ56o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PUX7H+zz; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="im01zoch"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PUX7H+zz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788195405; x=1819731405;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=F+YjOfzFMf/cGJqzs1nRuvBR83gYIDUgBV6ieH5zoJQ=;
-  b=im01zochxGnKy0v40bVw0mPkD/z7hhp6F/OzxAlsH7PWTnSgx8Sn8wvV
-   INiAyA+5vLGZilolcnKHzLP11lZWlLUEDkGdDHgY05+5P6d023d7Vjvqg
-   txyln3RPEnbKtlYR1ImZWF+55s2KMaiwaXe8XI7DfGzDBA4s+SumQu3ez
-   NMe55q4JafALqRHT/MmQs02lvEVke9HnKtiYjo3W4d61m7nVXzJIpRC6S
-   htZIQMqERgC+XN1CG+rboTXNDVoJrZi/Qufz5wxKKIlXy1uFhcCZBCC9r
-   JTDBWRqPTew6i0P7T69r9jVmlm222emBz8K0jNM3hgN1rGh6yjRE/dwDd
-   g==;
-X-CSE-ConnectionGUID: Bj8KbHB0Q/ac6jSAOhIZ9A==
-X-CSE-MsgGUID: 76r+Gzy6S/277n7O/sRfMg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="88631907"
+  t=1788197718; x=1819733718;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=c1yWASdiCI0Ti3RjiShC8xPEVoNiAUP0055Sw56I8Qg=;
+  b=PUX7H+zzTAIM+bPayt7h49FQ0Bt4OrII0VeDbH/oHphJusPKP3AJccwM
+   VnCGwwumxLAiWbh59y2tuToMg+mKl/+ucJTAQO2t4H10Q/l0uxBn9SUuD
+   gSVRe0ZjCoQ1IUfYDg7i/Za/09R39mIaoypO/+/4sNnyR6rJReBeGo8yg
+   Xvae8iDu807Zgj2ZEiVRBcO/60IXq2apItgmKL4JZYioG3uy9JQ7SOEQf
+   F32QYN9nNPU1Ibzxk4PpsUUahvf2KHFget5EIsoJnq3JfmAAtCng+is5s
+   ybU4fmtmfd0vOrgkh2irqIFDKLGt3o188mO+FmpxOWBb79HGo4yobHxPU
+   w==;
+X-CSE-ConnectionGUID: OxC+8skQQY+uC1bTRz+H2Q==
+X-CSE-MsgGUID: YCjLX9CSSreEDBPhUQt0Qg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="88635977"
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="88631907"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 09:56:44 -0700
-X-CSE-ConnectionGUID: SSe1RcJ4TqeY9OtvJLfjPQ==
-X-CSE-MsgGUID: 1DJb7QDxQHCB7ZRFExjuAA==
+   d="scan'208";a="88635977"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:35:17 -0700
+X-CSE-ConnectionGUID: QMR8T15sSnGLmhpjGwYpQg==
+X-CSE-MsgGUID: 3/JXeut0ThuOVCMgFGJRig==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="292343217"
-Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.22])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 09:56:40 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
- ardb@kernel.org, ilias.apalodimas@linaro.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
- airlied@gmail.com
-Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 2/3] drm/edid: Add drm_edid_get_preferred_size()
-In-Reply-To: <4645113d-3b31-4d92-b392-5d5284225211@suse.de>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20260831093020.494701-1-tzimmermann@suse.de>
- <20260831093020.494701-3-tzimmermann@suse.de>
- <f5f1ab9e6fab9499e49f116369858ee4da626025@intel.com>
- <4645113d-3b31-4d92-b392-5d5284225211@suse.de>
-Date: Mon, 31 Aug 2026 19:56:37 +0300
-Message-ID: <ff8f369ace3f0cb322f2711b88b88b7b65063c6a@intel.com>
+   d="scan'208";a="293691555"
+Received: from tassilo.jf.intel.com (HELO tassilo) ([10.54.38.190])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:35:17 -0700
+Date: Mon, 31 Aug 2026 10:35:15 -0700
+From: Andi Kleen <ak@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] perf tools top: Add --weight option
+Message-ID: <apW7Uy6QOvWEGVSE@tassilo>
+References: <20260830193459.2840519-1-ak@linux.intel.com>
+ <20260830193459.2840519-3-ak@linux.intel.com>
+ <20260830194358.0584A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260830194358.0584A1F000E9@smtp.kernel.org>
 
-On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> Hi
->
-> Am 31.08.26 um 15:13 schrieb Jani Nikula:
->> On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->>> +
->>> +	/*
->>> +	 * Use display mode from the Preferred Timing Descriptor. For old
->>> +	 * and obscure displays, we might need better heuristics.
->>> +	 */
->>> +
->>> +	if (edid->revision < 4 && !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
->> The preferred timing mode should always be there starting from EDID
->> 1.3. The bit doesn't indicate whether it's there or not. It should be
->> always set for EDID 1.3, and for EDID 1.4 it indicates whether the
->> preferred timing includes the native pixel format and the preferred
->> refresh rate.
->>
->> I think just if (edid->revision < 3) should be enough.
->
-> Ok
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this code write out of bounds or
+> dereference a NULL pointer?
+> 
+> If reallocarray() fails, tmp is NULL, so minors->minors and minors->minors_len
+> are not updated.
 
-I think I may have gotten this one wrong, and your original was correct.
+OOM checking in user space is generally a folly anyways because if it
+ever happens you're already in russian roulette with the OOM killer
+killing you.
 
-I didn't double check what the EDID spec definition of pixel format is:
-"Native Pixel Format is defined as the number of physical pixels along
-the horizontal axis by the number of physical pixels along the vertical
-axis of the display device."
+The right fix would be to use a xreallocarray that exits on error.
 
-i.e. exactly what you're looking for. Usually, I would not consider
-"pixel format" to include resolution.
+But it has nothing to do with these patches.
 
-The preferred timing will still be there as I described, and I would
-*guess* preferred most likely equals native, but your original is the
-more cautious approach.
-
-My bad, sorry for the noise.
-
-
-BR,
-Jani.
-
-
--- 
-Jani Nikula, Intel
+-Andi
