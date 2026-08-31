@@ -1,155 +1,353 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA2F43D501;
-	Mon, 31 Aug 2026 13:37:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5250151A736
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183449; cv=none; b=WVILZno4BVaK/7BjNGKix1P010ONOdo+vo+HSox3tTInWI82VDJXzXK2w59ipySl0iSfTKQrLckZNIofb9oKJSWUCpL3IbOD75IIvWlyvuJ6P21GfDiktOzH7nADH9jcaW7oeLv0AW3AA8w7jGkp285qKlaDSPrF7Eaxp18Ec9Y=
+	t=1788183819; cv=none; b=G3M2qXjMDntXJydzIGzHT0YfIX13sw8eaJ+1MIT9LX/qNMzRQhq/dnHXvnV0856zwMg2RXKyLcLW8+bDA/xMnaBxd4xAOaYkUbG4bTURr7mlpE35n4108Z8MDNekWUJQJrFAuomBCooElihuhzy1l29GJ83tK+zDI1KvcNve708=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183449; c=relaxed/simple;
-	bh=rzhKHiZhbJczQxCSf8YeS0RQnX+NC9a5nAFu5PYb1rg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ijYF2AQm5euy4VON3kwDPVXQbFZXW7ev5nAAayqb60r2UrL80s/A3bK/9ipbiJAxh2DhkK1ACYdSirqoYW6Seh9CQw2tQFhDZ+HzgPz7myCnqK1w5G3fF14ZfjlxM8i14o86NNYXclJArR8XC7Ey+I49+yrnNh+veTcVijXFVoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=h1lQ5RQP; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1788183819; c=relaxed/simple;
+	bh=KtHcUEidokwEgyATus27k0A9whjwXePvA74qlGrYftI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DG7s5VM07kLy5vRZ45l2/eFsMjln/GRB//iYxJRsxpn/PbXgVBVeSLwrVjIfQcZJ4qH1y/ccQd9MwyYREuWfILa2/C5dT1XIerMgYlNYfLUZZwQKjtC6KrQWyFnHyH/t0VXo6z/OUMb1nHQiqeKxdMMg0RrM8GuD8N75scpIf0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ypPd5Cbg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+mpBXmlM; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Z4EiA1w2; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cJ5vZl/K; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="h1lQ5RQP"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67VBVXQ32083773;
-	Mon, 31 Aug 2026 13:37:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=otTD/p
-	mpS21gFWrEyYn3w686LmTfhTTidUa/EHv5Jws=; b=h1lQ5RQPmpLxqFEY5cmUs+
-	Erf1Dg31ro1pqtOoRbcXA+pr+CB4gKByHVE1OKPuy82G6yPETt6xNyWdgEsrB3RP
-	/8gBkAQzYROH7Z8MfNWuX59N5N0RkS+DFxB0coPEEMn7hNXvFqij+g/o+93dXeTj
-	P76YOKgKnbVgKj4m042/ynr29DoNPc9yWHQQnjhVm7cm+K6uIBzcKGFR2rWFUV6l
-	pVHoQkyXI9NSuvRjzUT7OlEMObXBiwfDXF6EZRZFiFjbWJuR2HtgoqEggyU9VOOl
-	YDNAOuutVPMPBLA9InzxkLHX9ujV6j2NAt5U3OE2iz6sIWYRh0QLdZ1Ds1a+e8lw
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq54hj2a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 13:37:27 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VDQHYS016879;
-	Mon, 31 Aug 2026 13:37:26 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vx6ur-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 13:37:26 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67VDbL6v30278370
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 31 Aug 2026 13:37:22 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D20E12004F;
-	Mon, 31 Aug 2026 13:37:21 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9027E2004E;
-	Mon, 31 Aug 2026 13:37:21 +0000 (GMT)
-Received: from osiris (unknown [9.111.81.24])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 31 Aug 2026 13:37:21 +0000 (GMT)
-Date: Mon, 31 Aug 2026 15:37:20 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: Re: [PATCH v3 1/2] s390/ebcdic: Add character classes for the
- invariant subset of EBCDIC
-Message-ID: <20260831133720.34274Baf-hca@linux.ibm.com>
-References: <20260828140057.1728173-1-iii@linux.ibm.com>
- <20260828140057.1728173-2-iii@linux.ibm.com>
- <20260828140945.EAA981F000E9@smtp.kernel.org>
- <43d49c51-0a9c-40fa-8967-2439331972bc@linux.ibm.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ypPd5Cbg";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+mpBXmlM";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Z4EiA1w2";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cJ5vZl/K"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 550E61FD3D;
+	Mon, 31 Aug 2026 13:43:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788183798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=pvDe9DXy2/YFgDABCJ+VWyiyngHjo5GiNuW8ZNScJnQ=;
+	b=ypPd5CbgZnCvj3WOTcXl7aANQQY2pGOfla8mevfXX8F4xKeTXSrXHLHHOacYOSfQWgi0/H
+	cWw0ETWG13tXyR9nztW35wUS0ROrPOwQ94GagF+b/OlNxOt4lfhffJZI6JaUgntygIGh7Y
+	VfMHMTVCeadxgl/dYaIE/zqV/SbNbOQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788183798;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=pvDe9DXy2/YFgDABCJ+VWyiyngHjo5GiNuW8ZNScJnQ=;
+	b=+mpBXmlMJpxH5Fwf52L9vhiOPlnxzu+cpLQNBfI8Xrc4Ti5UGsyllJqrfByyQ5aaSIgrCz
+	AII7/8CI2iXhlTAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788183794; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=pvDe9DXy2/YFgDABCJ+VWyiyngHjo5GiNuW8ZNScJnQ=;
+	b=Z4EiA1w2Bd8XibPMFbxMAs1tTVRYS+BypiCGRonbLf54PvaPnr0iHIjlqFYnlckWWsqf+Y
+	lfY3SQTJYPfJXuzNCGd+RTILmrjchf3TOPq8/uk8zzV8oRKJ7+Z2TTdPqEZ57GVhaqQbCd
+	8Z1lHIo/FDd2ts0TMPzC2zTNmy5c33c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788183794;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=pvDe9DXy2/YFgDABCJ+VWyiyngHjo5GiNuW8ZNScJnQ=;
+	b=cJ5vZl/K2RC6WB15rabjyfsmcqpxRGOx14DFFj8ogJbjbx+NsYbdVJFVL43bFrrjRF+WMG
+	FkvVbI1P505POUDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E22E413515;
+	Mon, 31 Aug 2026 13:43:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id p/baNfGElWrQTwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 31 Aug 2026 13:43:13 +0000
+Message-ID: <abe7ae7c-9df7-44d2-8760-2378fc72cf38@suse.de>
+Date: Mon, 31 Aug 2026 15:43:13 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] drm/sysfb: Use preferred panel size for panel
+ orientation quirks
+To: Jani Nikula <jani.nikula@linux.intel.com>, javierm@redhat.com,
+ ardb@kernel.org, ilias.apalodimas@linaro.org,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
+ airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20260831093020.494701-1-tzimmermann@suse.de>
+ <20260831093020.494701-4-tzimmermann@suse.de>
+ <81d5820013693b38a88084d6818c5809373c16c2@intel.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <81d5820013693b38a88084d6818c5809373c16c2@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <43d49c51-0a9c-40fa-8967-2439331972bc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDExNyBTYWx0ZWRfX5ZFm4uWKj5BL
- fOdjx6zpV9qoTvfM7/g7mTBBmaiytTEWDhMr5//GsU039uKrCwkzOD/OE3mTSqZ1bWLlBgDh6TY
- j29GKBeJ2BbRtmLYVZQisL56zpb753oVRpL+Ot0z87UhL9Q3kyWvhojxmbHAq0IFYDG2ABBEl1/
- x/zMFNjP7s9cuBmS8c9h3LLVgaw6iPhf/GEyYPxHKww1ARyfklssNV+LU4YMt9ABiJ6WNgbZ7rP
- P9gUFcWIJLQSn6iZOZhynSyoDODAwCcIyq1pi6WfVLeRpGgzC/oiPDmI9P7TAFS1Q82U/meG0SV
- lubxNnTNDVggfkAeHx9oKR4zRG5hwjAiznl6A7xwzBAJxx4g+JPIMuiDRK6Co87eDI8qtjkmg6f
- M4BpjcrKxt9LJpee2v2c4zzYTnd8nS2W64OlQDJ5Sj72Wnxqso6tJx/ahCtUXkHEv4yahR+bVn1
- luUfOe0A9fE0cyU3TDA==
-X-Proofpoint-ORIG-GUID: 6g7MuHV04mVIQ00BVmOSctCNUd8gqmVf
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a958397 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=xmvgcqXOEkXRZdUCUdsA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-GUID: 6g7MuHV04mVIQ00BVmOSctCNUd8gqmVf
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDExNyBTYWx0ZWRfXwr2jb2qoR1cO
- 3IhwI1dWpVf7bKPeAGs+6EYJSxfF0fXIvswI8awtUJv1ivltwV5tdhsHJI7uq2bRBO5ePCOPxGT
- AaFZKkL8Og/CcApgPjDiCXSu4bBGoOE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310117
+X-Spam-Level: 
+X-Spam-Score: -4.30
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[linux.intel.com,redhat.com,kernel.org,linaro.org,ffwll.ch,gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MIME_TRACE(0.00)[0:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:email,suse.de:mid,bootlin.com:url,imap1.dmz-prg2.suse.org:helo]
 
-On Mon, Aug 31, 2026 at 02:14:19PM +0200, Ilya Leoshkevich wrote:
-> > > +const __u8 _ebctype_inv[256] = {
-> > > +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x00-0x07 */
-> > > +	_C,     _C,    _C,    _C|_S, _C|_S, _C|_S, _C,    _C,	/* 0x08-0x0f */
-> > > +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x10-0x17 */
-> > > +	_C,     _C,    _C,    _C,    _C,    _C,    _C,    _C,	/* 0x18-0x1f */
-> > > +	_C,     _C,    _C,    _C,    _C,    _C|_S, _C,    _C,	/* 0x20-0x27 */
-> > > +	_C,     _C,    _C,    _C,    _C,    _C,    _C,    _C,	/* 0x28-0x2f */
-> > > +	0,      0,     _C,    _C,    _C,    _C,    _C,    _C,	/* 0x30-0x37 */
-> > > +	_C,     _C,    _C,    _C,    _C,    _C,    0,     _C,	/* 0x38-0x3f */
-> > > +	_S|_SP, 0,     0,     0,     0,     0,     0,     0,	/* 0x40-0x47 */
-> > > +	0,      0,     _P,    _P,    _P,    _P,    _P,    _P,	/* 0x48-0x4f */
-> > 
-> > [Severity: Medium]
-> > Does this array incorrectly include variant EBCDIC characters?
-> > 
-> > 0x4A is mapped as _P (invariant punctuation) here, but isn't it a variant
-> > character (e.g., '¢' in US 037, '[' in German 273)?
+Hi
 
-I guess this is indeed wrong, and 0x4a should be mapped to "0"?
+Am 31.08.26 um 15:23 schrieb Jani Nikula:
+> On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> Sysfb drivers currently use the given display mode for looking up the
+>> panel orientation. But the look-up table stores the native geometry of
+>> the panels, so the lookup fails if the current mode sizes differs.
+>>
+>> Get the panel's native geometry with drm_edid_get_preferred_size() from
+>> the EDID and use it for looking up the panel orientation.
+>>
+>> v2:
+>> - ofdrm: validate EDID header before using it (Sashiko)
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+>> ---
+>>   drivers/gpu/drm/sysfb/efidrm.c  | 17 ++++++++++++++++-
+>>   drivers/gpu/drm/sysfb/ofdrm.c   | 18 ++++++++++++++++--
+>>   drivers/gpu/drm/sysfb/vesadrm.c | 17 ++++++++++++++++-
+>>   3 files changed, 48 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
+>> index 3f9cd5d03efb..7a7d12003304 100644
+>> --- a/drivers/gpu/drm/sysfb/efidrm.c
+>> +++ b/drivers/gpu/drm/sysfb/efidrm.c
+>> @@ -152,6 +152,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>>   	const struct screen_info *si;
+>>   	const struct drm_format_info *format;
+>>   	int width, height, stride;
+>> +	unsigned int panel_width, panel_height;
+>>   	s64 vsize;
+>>   	u64 mem_flags;
+>>   	struct resource resbuf;
+>> @@ -217,6 +218,20 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>>   		sysfb->edid = dpy->edid.dummy;
+>>   #endif
+>> +
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+> Unrelated to the patch at hand, but does all of this code assume EDID is
+> always just one block? Scary. The whole sysfs->edid being a u8 pointer
+> without size feels like a footgun.
 
-> > > +	_P,     _U|_X, _U|_X, _U|_X, _U|_X, _U|_X, _U|_X, _U,	/* 0xc0-0xc7 */
-> > 
-> > [Severity: Medium]
-> > Is 0xC0 also a variant character?
-> > 
-> > It is classified as _P here, but it can represent '{' in US 037 or 'Ä'
-> > in German 273.
-> > 
-> > This seems to violate the definition of the invariant subset and could lead
-> > to missed warnings for garbled boot parameters.
-> 
-> This is a naming and not a functional issue. The IBM037 punctuation
-> marks must be present in the table for the series to make sense.
-> 
-> I guess a 100% proper name here would be something along the lines of
-> "invariant with IBM037 punctuation" or "IBM037 without weird
-> characters", but I don't think it's that important: one can look up
-> the Wikipedia reference in the commit message to get to the exact table
-> I used here.
-> 
-> I will defer it to the maintainers, whether I need to change comments,
-> names, or the commit message here.
+For UEFI and VESA it's always one block of 128 bytes in size. The boot 
+parameters hard-code this value and there's no space for additional 
+blocks. [1]Â  On OpenFirmware, ofdrm checks the size to be EDID_LENGTH. 
+[2] I guess there could more blocks there, but AFAIK the DT property 
+only exists on ancient PPC MACs. I have no means of testing, but the 
+test file I obtained from such a system is 128 bytes.
 
-For 0xc0 I don't see a problem - it matches what we have in lib/ctype.c, which
-also maps "{" to _P.
+[1] 
+https://elixir.bootlin.com/linux/v7.2.2/source/arch/x86/include/uapi/asm/bootparam.h#L133
+[2] 
+https://elixir.bootlin.com/linux/v7.2.2/source/drivers/gpu/drm/sysfb/ofdrm.c#L229
 
-That only leaves the question above about 0x4a.
+
+>
+> Here, the above should work, but I've been kind of hoping to eradicate
+> EDID_LENGTH assumptions and calculations from everywhere outside of
+> drm_edid.c, because it's complicated.
+
+We need some way of importing the raw data block into drm_edid.c, which 
+in turn needs the buffer size. The drivers could do this without 
+EDID_LENGTH if that helps. Note that the drivers use the regular 
+machinery from drm_edid.c for dissecting the EDID block. See [3].
+
+[3] 
+https://elixir.bootlin.com/linux/v7.2.2/source/drivers/gpu/drm/sysfb/drm_sysfb_modeset.c#L594
+
+Best regards
+Thomas
+
+
+>
+>
+> BR,
+> Jani.
+>
+>
+>>   	sysfb->fb_mode = drm_sysfb_mode(width, height, 0, 0);
+>>   	sysfb->fb_format = format;
+>>   	sysfb->fb_pitch = stride;
+>> @@ -340,7 +355,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>>   	drm_connector_helper_add(connector, &efidrm_connector_helper_funcs);
+>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>> -						       width, height);
+>> +						       panel_width, panel_height);
+>>   	if (sysfb->edid)
+>>   		drm_connector_attach_edid_property(connector);
+>>   
+>> diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdrm.c
+>> index 9d60db45139c..a0a865aee098 100644
+>> --- a/drivers/gpu/drm/sysfb/ofdrm.c
+>> +++ b/drivers/gpu/drm/sysfb/ofdrm.c
+>> @@ -229,7 +229,7 @@ static const u8 *display_get_edid_of(struct drm_device *dev, struct device_node
+>>   {
+>>   	int ret = of_property_read_u8_array(of_node, "EDID", buf, EDID_LENGTH);
+>>   
+>> -	if (ret)
+>> +	if (ret || drm_edid_header_is_valid(buf) != 8)
+>>   		return NULL;
+>>   	return buf;
+>>   }
+>> @@ -828,6 +828,7 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>>   	enum ofdrm_model model;
+>>   	bool big_endian;
+>>   	int width, height, depth, linebytes;
+>> +	unsigned int panel_width, panel_height;
+>>   	const struct drm_format_info *format;
+>>   	u64 address;
+>>   	const u8 *edid;
+>> @@ -998,6 +999,19 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>>   		sysfb->fb_gamma_lut_size = OFDRM_GAMMA_LUT_SIZE;
+>>   	sysfb->edid = edid;
+>>   
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+>>   	drm_dbg(dev, "display mode={" DRM_MODE_FMT "}\n", DRM_MODE_ARG(&sysfb->fb_mode));
+>>   	drm_dbg(dev, "framebuffer format=%p4cc, size=%dx%d, linebytes=%d byte\n",
+>>   		&format->format, width, height, linebytes);
+>> @@ -1069,7 +1083,7 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>>   	drm_connector_helper_add(connector, &ofdrm_connector_helper_funcs);
+>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>> -						       width, height);
+>> +						       panel_width, panel_height);
+>>   	if (edid)
+>>   		drm_connector_attach_edid_property(connector);
+>>   
+>> diff --git a/drivers/gpu/drm/sysfb/vesadrm.c b/drivers/gpu/drm/sysfb/vesadrm.c
+>> index 6a67b2d2e451..8c52bbac6d2f 100644
+>> --- a/drivers/gpu/drm/sysfb/vesadrm.c
+>> +++ b/drivers/gpu/drm/sysfb/vesadrm.c
+>> @@ -402,6 +402,7 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>>   	const struct screen_info *si;
+>>   	const struct drm_format_info *format;
+>>   	int width, height, stride;
+>> +	unsigned int panel_width, panel_height;
+>>   	s64 vsize;
+>>   	struct resource resbuf;
+>>   	struct resource *res;
+>> @@ -484,6 +485,20 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>>   	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>>   		sysfb->edid = dpy->edid.dummy;
+>>   #endif
+>> +
+>> +	panel_width = width;
+>> +	panel_height = height;
+>> +
+>> +	if (sysfb->edid) {
+>> +		const struct drm_edid *drm_edid;
+>> +
+>> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+>> +		if (drm_edid) {
+>> +			drm_edid_get_preferred_size(drm_edid, &panel_width, &panel_height);
+>> +			drm_edid_free(drm_edid);
+>> +		}
+>> +	}
+>> +
+>>   	sysfb->fb_mode = drm_sysfb_mode(width, height, 0, 0);
+>>   	sysfb->fb_format = format;
+>>   	sysfb->fb_pitch = stride;
+>> @@ -585,7 +600,7 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>>   	drm_connector_helper_add(connector, &vesadrm_connector_helper_funcs);
+>>   	drm_connector_set_panel_orientation_with_quirk(connector,
+>>   						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+>> -						       width, height);
+>> +						       panel_width, panel_height);
+>>   	if (sysfb->edid)
+>>   		drm_connector_attach_edid_property(connector);
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 NÃ¼rnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG NÃ¼rnberg)
+
+
