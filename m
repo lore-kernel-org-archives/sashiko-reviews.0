@@ -1,48 +1,48 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFAD3002B9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4983D438473
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 13:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183169; cv=none; b=DiXcDBlpHB6N1am13YkpNDpqdxPLMRSQvS+B9h/KwZcFV81ShYUFS+H7LQkn/nVKc7zGoaRFuirHXEc97VJ/0nKLEMgYY/xHInZ1H254nIpGATZTpk0lgPAjFWvvXpn0jtA2XiF+Mp25mv9rbdrw00q7Jqk9EwSvmkD8bBGiCfA=
+	t=1788183375; cv=none; b=mQihb1etEEfiZFUVMfOZKK1K1aBCKS2Kj3TcI68k7YK8L69B3y7ricQ0H+knQj5LtdyJoMNcDJImkyjn+LffDzf2uBUKBdlPlC8WQO7XiUjtLn+o2110rDQuCNpQrUPargMSui6UhowSDpdQxMX9LFq1wHzzN5GhslrrxGIoeD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183169; c=relaxed/simple;
-	bh=vxZm/tRDZyNZQcA5cU5ZQNQgkb9Y9quu5/0wsDyUHOg=;
+	s=arc-20240116; t=1788183375; c=relaxed/simple;
+	bh=zZM95wC5xa3y/ynEioVC9ujjbxihojs8MB7oUzWpMJg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Upqq12phV8ztL3hKKgKdyCx5FfqIWfVz4nG3dESNv0oIEtX7VcB757vq1N5gxsWQEYT6cdYs997ZirsKs0lSqkkKv3fQNDpadYDn+e2zdOHH9OOvVWCc8KG4a9BslEHea78yCVDWNIl3JV6MhD5r+ZBMXsvYrIx+gg7zh21gf3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iKlXozt9; arc=none smtp.client-ip=192.198.163.10
+	 MIME-Version:Content-Type; b=q36MkM6d1RoTQlavNMrC+UKbvESSISljYnveyAXkP4zzfl96TfZQvKyH0bv7uXIPmhtEja9yJYAu83NfSPoN+ThkTwaoFiVhNh+/Vvt0y7Eacjjt0bg/+1QO7n3jsjkhUtWobwQn6vZ7SVvXZxIl3vs/mjLJ5pMAXrr5H4/2b5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mPyfRjG0; arc=none smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iKlXozt9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mPyfRjG0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788183167; x=1819719167;
+  t=1788183374; x=1819719374;
   h=from:to:cc:subject:in-reply-to:references:date:
    message-id:mime-version:content-transfer-encoding;
-  bh=vxZm/tRDZyNZQcA5cU5ZQNQgkb9Y9quu5/0wsDyUHOg=;
-  b=iKlXozt9l7MNeEUNW31Diw2sAXFStCC1LKKxbHL9eWd706NfXOYPGry5
-   VGBNJKBYQT+RQ9Ta6IGGtqyAt+WIAFcmj+Cf3Qj0eQAEvbC/S0Et7hUk6
-   CtOjCijI7xOUlSEEZU1ssPOzY2M+dHumF8wOu8BVlnDsyvxP9Z+wjOtu+
-   eV8ITSLbWFhWUC+nWcCT0KblbYxwadJL8r+n7M26rRwxu73CXca6WL1Xu
-   oha/N7RVr80jccHcEWoA0e9gFs2jVAninsAlarc/3KYuHyKTO9bTOUT+g
-   gR459AYBG79xtvK/hTkntM33AsEi9X1B29Hh1mLk0F8JST8hhWOOzo/TP
-   w==;
-X-CSE-ConnectionGUID: bk2rnTAJRZiF9MzJI2A7oA==
-X-CSE-MsgGUID: pWfIed4qSge3cBnNRabU0Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="99940759"
+  bh=zZM95wC5xa3y/ynEioVC9ujjbxihojs8MB7oUzWpMJg=;
+  b=mPyfRjG0GOimpadRaSGN3RQRUdaN7t2atBejul3jQI+0qJ9Sv/4UpiaS
+   9utAMiJYxNSCP7MdKFgvHDrbMGcaZ8N2PzcJ2ddiYkrD0b1g8eh4bTTns
+   dO2h0lEEQeQGJcYT6OO9tB+dC3uEHZrjp7nnviFMpoTMpZIEIwZKjaznK
+   A8rOaKGxzo7ubOeOzPA1RS5EAuZMir9QqbK22iij9zN0aLuC2BO7Q/tGy
+   A0eZIatzwy/jtZx915SzQvBzNjq+1Ov3ECoHMWKe7L8yaBYs0fuOb+Wff
+   34zpnYaaG+JKniK5javKaGp5zMHbQ9XaWn3vTTaevhixh3WDEX462G0na
+   g==;
+X-CSE-ConnectionGUID: xm+HaeHhRXeT6A9Wj7vGPg==
+X-CSE-MsgGUID: AU2JUP+kQOqcfeLfy9z8/g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="88601942"
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="99940759"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 06:32:47 -0700
-X-CSE-ConnectionGUID: I9e9ZFCQS6K606NT3ndNZg==
-X-CSE-MsgGUID: utGvlpgGTLaGxtI619LODQ==
+   d="scan'208";a="88601942"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 06:36:13 -0700
+X-CSE-ConnectionGUID: zKscVdwFREaMaNs/TX5SHg==
+X-CSE-MsgGUID: PjGE/sbmRtS8CF8mVpGbvQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="269389954"
+   d="scan'208";a="268839312"
 Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.22])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 06:32:43 -0700
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 06:36:10 -0700
 From: Jani Nikula <jani.nikula@linux.intel.com>
 To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
  ardb@kernel.org, ilias.apalodimas@linaro.org,
@@ -50,17 +50,16 @@ To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
  airlied@gmail.com
 Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
  sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/3] firmware/sysfb: Remove rotation quirk for Lenovo
- D330
-In-Reply-To: <88e53706-d237-46e3-afc3-deff5e372725@suse.de>
+Subject: Re: [PATCH v2 2/3] drm/edid: Add drm_edid_get_preferred_size()
+In-Reply-To: <4645113d-3b31-4d92-b392-5d5284225211@suse.de>
 Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
  6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 References: <20260831093020.494701-1-tzimmermann@suse.de>
- <20260831093020.494701-2-tzimmermann@suse.de>
- <5f8aceb5b36607877509995550d6dbbfad675ba7@intel.com>
- <88e53706-d237-46e3-afc3-deff5e372725@suse.de>
-Date: Mon, 31 Aug 2026 16:32:39 +0300
-Message-ID: <5211e49433f3483266bb10fce786fccd154f84b6@intel.com>
+ <20260831093020.494701-3-tzimmermann@suse.de>
+ <f5f1ab9e6fab9499e49f116369858ee4da626025@intel.com>
+ <4645113d-3b31-4d92-b392-5d5284225211@suse.de>
+Date: Mon, 31 Aug 2026 16:36:07 +0300
+Message-ID: <5126b708b6e77b6bb15a355f858fcd54b732f653@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -71,24 +70,20 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> Am 31.08.26 um 14:49 schrieb Jani Nikula:
->> On Mon, 31 Aug 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->>> The Lenovo D330 is a notebook with unmountable display. The display
->> Please elaborate on what you mean by "unmountable display".
->>
->> No comments on the patch itself, I just haven't heard that before.
->
-> Sorry, that word doesn't exist; maybe "mountable".=C2=A0 I think "detacha=
-ble"=20
-> is the correct word.=C2=A0 The notebook's display can be removed from the=
+> Absolutely.=C2=A0 The only reason I added this helper is that the driver=
 =20
-> keyboard to act like a tablet.
+> needs the size for setting up the display pipeline before the connector=20
+> exists. I looked into using the existing code without the connector, but=
+=20
+> that refactoring seemed to do more harm than good. Hence the new helper.
 
-Ah, *lightbulb*. :)
+Heh, I looked into that too while reviewing, and agreed.
 
-Though arguably it's the keyboard that's detachable, as the display is
-the main part that keeps working without the keyboard, not the other way
-round.
+> Should the new function be named drm_edid_detect_panel_size() to signal=20
+> the use case?
+
+Surprisingly, no strong feelings either way, both work for me.
+
 
 BR,
 Jani.
