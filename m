@@ -1,143 +1,260 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623DE3F7875
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 12:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDEB3D412B;
+	Mon, 31 Aug 2026 12:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788179315; cv=none; b=YD0uLrtbSnd1vj/5h+U7hH0ToqGC58UTxOHWRSo8vwIFsVeWN/2k5hOB4pbCMJSeQ+fh2vXDpeUX8l8Qdrm5Tq+pL7dMv/68RK3f8PAJShd6aNKbxyXT8Xk+Z61+2rCoDnbx/XAe7YlKn42DwYzRYolozQNBpG2bfYcGH3ZtGw8=
+	t=1788179932; cv=none; b=gfVZc6BrWHsPtBVGoHHH+YJVoQZpW8Vzu6mMdxqatC8snvNCc0NBOkPibUck0pKS+NzeG7t2E6mpYDrHPPRFTHnom/djozR3Ce+zsY2UIYpRq0TRvagoTsYg8c6jRkRx/U0+cmmIYnepXXLvk6d1uA1499x0i/3drWCrhjnrhlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788179315; c=relaxed/simple;
-	bh=ZKp4/QBeYSAV2k9bPiW/sTkKtSRTNNMONHn+AGg4GEk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMKfjFVeCah71AThGw4/Ge2NN0ZiR6uX+5tWIK2moagbQAEJ3O+aatlFSKPoxUFj9xFXqGHdBzx48JLzNr1jd4Ny6EPRRwLL6CsJq7Edygia9nO4VJVOPA30juQ2tdYXTITGJrRra0mepOfu4K6Rsha9hbiTC0k/FckczTzLDYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OESiEI3Z; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788179932; c=relaxed/simple;
+	bh=0hgLm5DHq1vq36c5PXnjohJW19MNVXBX09vpqiKOjEw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eFR2I0/lckLqo3z4MAD3DR8JD8Endp6+u2BCQrpohBD/Hz4I7yssRTwbHShTGANgqc/CjZ24I+TZ+xA/HC9F4jejNujXOxnX37eC3Ufi+3n2S9aOTTJLF1ARKLyIJoGVjXNQgv+fn9b2NqvzFNwGJ2xSFec7Fgk8D6U0AaFQdCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=HjHxTfg1; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OESiEI3Z"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cbe6295f05bso3326815a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 05:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788179314; x=1788784114; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2jyu9EWq7gK0JjEZiz+ImWml7ed1HDT5ZIEVxolEFw4=;
-        b=OESiEI3ZB8xgY3FbC+yzVD1agEkuO8Kcxq8/M0kFJwBlcDkZ48yPl11dqjZFlpUKob
-         qDpziCXmcuE9lD/mkmZ5I+3BOwaQI/WW4FIfoshHwsPx137eov61LK+wU/bdmcR5jjYq
-         FPVAyvVisyQp0sHRkKYnIMNWvX7wbw5RPb5F7yFwdbm6agUpt9tKNuiTKHY/t52NtiGu
-         37kPDK5xai3J3Bh1LJBtmVU7U5R2O4TL40y3W5W0xz5X11R9D862JbeH19CFIGHwN0fP
-         i4hQtqHlejc4hrKtKq/qtyk7Cm7OkSQv3PI+1XYo1wytZsIMmom4hN2Brg69ds/KoWBR
-         MiNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788179314; x=1788784114;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2jyu9EWq7gK0JjEZiz+ImWml7ed1HDT5ZIEVxolEFw4=;
-        b=mdptiiX/dLYmcfPm4+nPXuN25veuZvBAU0Q6jefcNKIzoUemwt+irxPs3h0GMpW5x6
-         x2ARF0pv2YIZCdXI23RukqErlnB1TbcEWJYEjoOIYqzgdXbIS7QKiX9NQdEsRnpJYsIP
-         qRb9g4R8phbP5vaes3OG/ZrYIN7suXHlPc32AfD1+vmOfjaYvfc2vGwbkLe5Cd1iBnZM
-         qyE1YTdaSKk9HaHN7hjnzeHeek4I26Da/vLRGgnIbya8OL8suGUw2+DqGAl0B13WQACk
-         cfPg//Mel5oipPhFQN6OqaCZkbE06DvNviXQ/Yo2uNgH404ZJzkeTbUREFnobzlzKXSd
-         0xUw==
-X-Forwarded-Encrypted: i=1; AKwUvBxh528RBt3cpB5kRlyfQS9yUId9KJYMUXXtRKVIbOzHLflTOygMz50XY1fsY8IqvlgsG9v82RfgX9I9nRNul4A=@lists.linux.dev
-X-Gm-Message-State: AFuF++kumzANIXepM/8hexcXmil4k2Ix6f8WqVL7BWAI6rEeTd4uLZdL
-	7Vw0l9T4dm0Rhx9iCh6RszT9W/EVZZf7h47Bsc5FBFYvMMcntUY44lq5
-X-Gm-Gg: AYBFou2tP+rPFxRyyvoOGYZ/Df4g1WSQy08UzowDvBhsEbSrwSnpD6NryWmcI5vbCak
-	DusavhVM7OE6ksbUx+VSmLLJBiOUp2gswoFTZzhLAdiP9t3yRo7+ezyrVqbO9e3J77t8GJaaik8
-	g2clmOt84Rr1qxMajQCXRn5ryN82FjtGMaG9rp8B9YoubOL9FNy5zryX779azj4SgdC9aGQp3YG
-	WbKEhy2WOqW63E7qtqHH1wpfRAH3JdoNhDqt2JyVJ2Nxr+7NTR9BUJXrrqPyqZIms0d+dYx1Jvo
-	3Dlqbyk4XME+DP0LhNe+azsPnmTAlEcaE7n7OXu1/YtfHlYTlTiQT9wrrSbG31jnWfmHklROuXK
-	n1NqL0MK0mfT+MZYZ2IlMdnzuv59FrxzWfliXa9D9EcFhgo+GMeN1v2a8UGthUgZg2I/f8dT8ft
-	Mtwtg5Jzgv0jEA9iI2OAID/fxAjgzPa6RKmYNoAVlagqHwk00nrQbpHx9WD3B3GvfB
-X-Received: by 2002:a17:902:988b:b0:2d9:2b1b:878a with SMTP id d9443c01a7336-2d92b1b8824mr24362505ad.10.1788179313600;
-        Mon, 31 Aug 2026 05:28:33 -0700 (PDT)
-Received: from celestia ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d7594fc0a6sm34514055ad.15.2026.08.31.05.28.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 05:28:33 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/tests/core-kunit: add test for unconditionally skipping the last region
-Date: Mon, 31 Aug 2026 20:28:15 +0800
-Message-ID: <20260831122842.9091-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831115015.3A53C1F000E9@smtp.kernel.org>
-References: <20260831115015.3A53C1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="HjHxTfg1"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67VBVed72088347;
+	Mon, 31 Aug 2026 12:38:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=8gzkJJ
+	4zvaruZfp8DKnUZXzCVf3gQ5FSUz4NrgBFc7k=; b=HjHxTfg1VX6Kw1jdMzLb+1
+	Lb+uAR4OHec6S4jhJ+bd5yyUPCEMhT0QaG+/PD7Kx7Ncccwct+oJDUKlnnaF6t1A
+	gxANEswzCO1ia2OCf7+hO6RMdC3MRuu6f/WPkx0TmcblE4Fu3eucjN9tfz3vzjbW
+	YGgCDU8RkIN+PWiLn7BJEUYYiT104dHhtTXuVgmJR4v2SvoqJ/gLTZ+UULNMFKgr
+	VbcHoJlyujzXu5BoO+qT1M9RbTlnD2EzoJN5BTisk+tYBJ1Z242MR3MCyAq6Aj6P
+	OcTR2DnpUF39cq511ctfYQkjl6K6T36sY9Auq1qAhxxYtEqNPYgfaxjCbIBJYPYg
+	==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx598vt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Aug 2026 12:38:48 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VCQFcQ015577;
+	Mon, 31 Aug 2026 12:38:47 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexwm8n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Aug 2026 12:38:47 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67VCckWx26280672
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 31 Aug 2026 12:38:47 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E026258056;
+	Mon, 31 Aug 2026 12:38:46 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 44D7A58052;
+	Mon, 31 Aug 2026 12:38:46 +0000 (GMT)
+Received: from [9.61.29.117] (unknown [9.61.29.117])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 31 Aug 2026 12:38:46 +0000 (GMT)
+Message-ID: <8b10d2d5-1039-4165-9e55-9ae09ea4e2ba@linux.ibm.com>
+Date: Mon, 31 Aug 2026 08:38:45 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] s390/vfio-ap: Fix unbounded loop in
+ apq_reset_check()
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org,
+        Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato
+ <mjrosato@linux.ibm.com>,
+        Halil Pasic <pasic@linux.ibm.com>
+References: <20260828214653.1087009-1-akrowiak@linux.ibm.com>
+ <20260828214653.1087009-4-akrowiak@linux.ibm.com>
+ <20260828220201.595A81F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260828220201.595A81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a9575d8 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=BQq3glUuSdYeObrb-csA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: pO9kvgHlZm3yYpJWGD5EmQElmtNrADqM
+X-Proofpoint-ORIG-GUID: pO9kvgHlZm3yYpJWGD5EmQElmtNrADqM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEwOCBTYWx0ZWRfX15MwphLewJlT
+ /2rT9s9WIWMdR1hJKoCeKZOyX7ruNTT+GT/1MkC4HL6n4WTugtnoOeuc1aqGW0I/BPlw7MKYmcj
+ 1FpPtrN72nD5mqjktkQjjBipw9xYpOI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEwOCBTYWx0ZWRfX5LZXdSFSNlm0
+ LrP2zWVZOvWaXicyR7sX89dU6QIN6Uldgu6BNe4KBUbmNP6at3MS5e9TOkgMgN1Y/HW/enlQwP8
+ na5jg+yMOXfMG3pKtKWmBfnq9EtT147Hwmz4dBjyXZhiLsRXe5ZcgKZMUSRw7PwhrnXszzPmCvE
+ XN3vvhyaE4T4eM8AgFU8SGJju8zeyWdEaw24bFPB90O6WCGfIWfYcy4/cVoi7lfFxYQ02AE6gDI
+ ERPqHWW+PLbkLEOHys5qvavjM3taWJXcxadoCCaaSWYiUtoXyUiwCoI/MuToHkqWWlnJ3qmAsWz
+ yKgx1or0Ss5db6USYwS12+XRkie9pPYGrSK0UOx3hmFLI7aNKPJJNA+R/dLjjp01ySweQbfMqgH
+ UbNZgPPH/W0zT2uey8BmBseucri4TJgG8p6g3yHPg4WLNkZEuXtoIwtBLtj0vSGb/XgNO0glMtG
+ Dj05MxFvXsv3fLEq8Kg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608310108
 
-On Mon, 31 Aug 2026 11:50:14 +0000 sashiko-bot@kernel.org wrote:
 
-> commit 7f67629ee782b9649498afa3088f50459bfb8f3b
-> Author: Liew Rui Yan <aethernet65535@gmail.com>
-> 
-> mm/damon/tests/core-kunit: add test for unconditionally skipping the last region
-> 
-> This commit introduces a KUnit test to verify that the last region is not
-> skipped before being processed.
-> 
-> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> > index 4a536d41cdb2d..90b0fda34fba2 100644
-> > --- a/mm/damon/tests/core-kunit.h
-> > +++ b/mm/damon/tests/core-kunit.h
+
+On 8/28/26 6:02 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] The timeout path incorrectly treats an idle queue state as a completed reset, bypassing the necessary zeroize command and causing Use-After-Free.
+> - [High] The reset operation silently reports success to callers when the reset times out, masking the failure and misleading userspace.
+> - [Medium] The `elapsed` timer is not reset when a new reset command is issued, causing subsequent resets to prematurely time out.
+> --
+>
+> commit 3ef072206a03ac06e2b0604371727e31f5cba1a8
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: Fix unbounded loop in apq_reset_check()
+>
+> This commit introduces a 2000ms timeout for queue reset operations in
+> apq_reset_check() to prevent indefinite blocking in the worker thread.
+> Upon timeout, it skips freeing AQIC resources to avoid a use-after-free,
+> leaking them instead.
+>
+> Fixes: dd174833e44e ("s390/vfio-ap: remove upper limit on wait for queue reset to complete")
+> Cc: stable@vger.kernel.org
+>
+> The commit message states:
+>
+>>     Note that on timeout, q->reset_status will hold the status from the most
+>>     recent reset operation so that callers inspecting
+>>     q->reset_status.response_code after flush_work() will see the value
+>>     and can return an appropriate return code.
+> Is this description accurate?
+
+Yes
+
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+>> index 363d9e53e2490..3f5b012be450c 100644
+>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+>> @@ -2067,6 +2068,37 @@ static void apq_reset_check(struct work_struct *reset_work)
+>>   		ret = apq_status_check(q->apqn, &status);
+>>   		if (ret == -EIO)
+>>   			return;
+>> +		if (elapsed >= AP_RESET_MAX_WAIT) {
+>> +			/*
+>> +			 * If the status check determined that the reset completed
+>> +			 * successfully or the queue is not operational, clean up
+>> +			 * the AQIC resources because queue reset disables
+>> +			 * interrupts, or because interrupts are not possible on a
+>> +			 * non-operational queue.
+>> +			 */
+>> +			if (!ret)
+>> +				goto done;
+> [Severity: Critical]
+> Does this incorrectly treat an idle queue as a successfully reset queue?
+>
+> If the queue is continuously busy for 2000ms, the initial ap_zapq() command
+> is rejected (returning AP_RESPONSE_BUSY). On the exact iteration where
+> elapsed reaches AP_RESET_MAX_WAIT (2000ms), if the queue finally stops being
+> busy, ap_tapq() returns 0.
+>
+> Could this misinterpret the 0 as a completed reset, jump to done, and free
+> the AQIC resources? Since the queue was never actually zeroized, interrupts
+> remain enabled. Can this lead to a host kernel use-after-free if the hardware
+> writes to the freed NIB page?
+
+After further review of the architecture, it can't be assumed that 
+AP_RESPONSE_VALID
+indicates the zeroize is complete because the initial response code only 
+indicates
+that the ZAPQ was successfully initiated, but the zeroizing of the queue 
+is being
+done asynchronously. To verify it has completed, the following bits in 
+the status
+returned from TAPQ must be checked:
+
+queue_empty == 1
+replies_waiting == 0
+irq_enabled == 0
+async == 0
+
+This will be fixed in v5
+
+>
+>> +			/*
+>> +			 * Timed out without being able to verify reset completed.
+>> +			 *
+>> +			 * The AQIC resources associated with this queue - the pinned page
+>> +			 * containing the NIB and the registered guest ISC - cannot be freed
+>> +			 * here. The NIB is the active DMA target for AP interrupt delivery
+>> +			 * until the reset completes; freeing the pinned page while the
+>> +			 * hardware may still write to it would result in a use-after-free
+>> +			 * kernel crash.
+>> +			 *
+>> +			 * If the reset eventually completes, interrupts will be terminated
+>> +			 * and the pinned NIB page and ISC registration will be leaked. This
+>> +			 * is preferable to either a use-after-free or waiting indefinitely:
+>> +			 * the caller of apq_reset_check() holds mdevs_lock while flush_work()
+>> +			 * blocks holds the matrix_dev->mdevs_lock mutex, which
+>> +			 * serializes access to all mdev objects system-wide, so blocking
+>> +			 * here would stall all other guests using AP queues.
+>> +			 */
+>> +
+>> +			return;
+> [Severity: High]
+> Does this return early on timeout without updating q->reset_status to indicate
+> a failure?
+>
+> If the queue reset times out and q->reset_status.response_code was 0 from the
+> initial accepted command, it remains unmodified.
+>
+> Would callers like vfio_ap_mdev_reset_queues() check this unmodified response
+> code, incorrectly assume the reset succeeded, and mislead userspace into
+> believing the VFIO device was successfully reset while the hardware is still
+> operational?
+
+See previous response
+
+>
 > [ ... ]
-> > @@ -1632,6 +1632,48 @@ static void damon_test_rand(struct kunit *test)
-> >  	}
-> >  }
-> >  
-> > +static void damon_test_last_region_quota_reset(struct kunit *test)
-> > +{
-> > +	struct damos s = {0};
-> > +	struct damon_target *t;
-> > +	struct damon_region *r1, *r2;
-> > +	unsigned long min_region_sz = 10;
-> > +	bool skipped;
-> [ ... ]
-> > +	s.quota.charge_target_from = t;
-> > +	s.quota.charge_addr_from = r1->ar.end;
-> > +
-> > +	skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
-> > +
-> > +	/* 'r2' is not processed, it should not skip */
-> > +	KUNIT_EXPECT_EQ(test, skipped, false);
-> 
+>
+>> @@ -2083,11 +2115,13 @@ static void apq_reset_check(struct work_struct *reset_work)
+>>   				memcpy(&q->reset_status, &status, sizeof(status));
+>>   				continue;
 > [Severity: Medium]
-> Does this patch omit the fix for the core logic?
-> 
-> Without an accompanying fix for damos_skip_charged_region() in
-> mm/damon/core.c, won't this new test unconditionally fail and break CI?
-> 
-> Because the underlying bug is not fixed in this patch, the old logic still
-> triggers and returns true when it processes the last region:
-> 
-> mm/damon/core.c:damos_skip_charged_region() {
-> 	...
-> 	if (quota->charge_target_from) {
-> 		if (t != quota->charge_target_from)
-> 			return true;
-> 		if (r == damon_last_region(t)) {
-> 			quota->charge_target_from = NULL;
-> 			quota->charge_addr_from = 0;
-> 			return true;
-> 		}
-> 	...
-> }
+> Is the elapsed timer supposed to be reset when a new reset command is issued
+> here?
+>
+> If the queue is initially busy, takes time (e.g., 1980ms) to become idle, and
+> requires a retry of the ap_zapq() command, the next loop iteration will
+> instantly hit the 2000ms limit because elapsed was not cleared.
+>
+> Could this prematurely time out subsequent legitimate reset operations and
+> result in resource leaks?
 
-This test is add for [1].  Therefore, this patch can only be merged
-after [1] is merged.
+This makes sense and will be changed for v5.
 
-[1] https://lore.kernel.org/damon/20260830063159.6347-1-aethernet65535@gmail.com
+>
+>>   			}
+>> -			if (q->saved_isc != VFIO_AP_ISC_INVALID)
+>> -				vfio_ap_free_aqic_resources(q);
+>> -			break;
+>> +			goto done;
+>>   		}
+>>   	}
+>> +
+>> +done:
+>> +	if (q->saved_isc != VFIO_AP_ISC_INVALID)
+>> +		vfio_ap_free_aqic_resources(q);
+>>   }
 
-Best regards,
-Rui Yan
