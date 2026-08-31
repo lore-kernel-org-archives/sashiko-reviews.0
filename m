@@ -1,65 +1,74 @@
-Received: from mail-244108.protonmail.ch (mail-244108.protonmail.ch [109.224.244.108])
+Received: from 013.lax.mailroute.net (013.lax.mailroute.net [199.89.1.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E02354CF70
-	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 15:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB15C4A013B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 16:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788191309; cv=none; b=ep/hx71Za+zK7kc6B0z5Sg5goiwvO4ds/n9sAcSvU9XK/hqwuBv+hKniO6xlK96KzSPX1VteMcp/cTtcXaYe7P8AXJyPKaXSArmlK/mAzN04cvunz5yFSNgSuC8ATMqzZRJ5M0pT5xPdsnQHJjjCGf7MRyTVEbM29gEnndRQsZk=
+	t=1788194095; cv=none; b=JVHOkyUDQkgMm0PvMvJr1vrRhJO57w6hk3vD/X3OlQ2q8SXk5ggsjQq2q2/hP30HgBQHwZt2pH4lbopWL9+hnCA+24JqDkm3VPqrHuZZICXr6UONqcEA7Grue3IXDUvrkhnUZXsw1XXwSvu4OCiX/gMo29gO4hWjrOWzQO4T26M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788191309; c=relaxed/simple;
-	bh=B4q23QcyZOU803kPBuDAYqlch9MLSpY/C6zECX4IRtE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KjSPVCVupljf4QMYoCJcuL+3maJOOvndqNPdRn1yfQliEJGIS0fez+IvvSVZuLcaMCwAhGqmkP0uIPH/G5ubS+ugNNONsK4QU6fAcSbgHT9J6XV0wrpr3+fGRRBT0D/yyTTM0zOLb9OA7l7D/jLe6p27Q2FuKT4yvqyHkpTn8VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=3GmfDnF1; arc=none smtp.client-ip=109.224.244.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1788194095; c=relaxed/simple;
+	bh=lgCoZHIIMHoV0moUguW+p/nrHAa/1bjZoE2R+p37zyk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=M++3Z5wbTK+xnqZ2KQES3rQDRQ1PwKsdaTR6vZR2CluLETXd8XpWmJOixtu0/pbVq6zU0zGC9V9F1ieSSCrILhN35Y+g2EF4+AlOOYMS+cPXSRtVAt0kijt2NulyYWbLuBVosE2Q11GDwyLpAKJoJ5CiDzBayiyzFgUuSe/X4Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=qPrrX9NC; arc=none smtp.client-ip=199.89.1.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="3GmfDnF1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1788191304; x=1788450504;
-	bh=B4q23QcyZOU803kPBuDAYqlch9MLSpY/C6zECX4IRtE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=3GmfDnF1WXVvlnqqE11jbgPw5RR7VCdzrHzjoZQpHa+gcniy4GnWSkMjDXwu9gPlH
-	 6/bOSW702/LOZve9aPC2H0QYu/QpFMP7YU/EqdjI42bFrSrYZxA/3tqp2DvCvQChtu
-	 3RXkHZIAEmFBb6m6vL5NEoM6W14bPY3nAzB8NeQ4Bu8t9Fe1vngPUscF6nDjaUgJPA
-	 RVv3SxS4+naRWT0znaE1c6EU0DAuYYgC1amhIWalcVzPkC76KuLgodrXlcFrpQm0f0
-	 i6e5XcicvDMYr997eBF//pMlnFV89EYS3nVd2YZdXEHp2C4M29HGIiAhaBMILxgDFP
-	 aEpdIlcJZ7XNg==
-X-Pm-Submission-Id: 4hYYLF4dCGz2ScPH
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <devicetree@vger.kernel.org>,
-  <robh@kernel.org>,  <conor+dt@kernel.org>
-Subject: Re: [PATCH v7 8/8] iio: accel: mma8452: Use proper error code when
- missing device model
-In-Reply-To: <20260831122856.BC5821F00A3E@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 31 Aug 2026 12:28:56
-	+0000")
-References: <20260831-mma8452-open-drain-v7-0-22946812c928@geanix.com>
-	<20260831-mma8452-open-drain-v7-8-22946812c928@geanix.com>
-	<GLsiBXMl7MICRWdgbnxO5JMAYIYQJNMOzCLl4lpTIqLags2We11Fx26bnL1jRGDutC0Si7dBWxu1SuQX4KbNgA==@protonmail.internalid>
-	<20260831122856.BC5821F00A3E@smtp.kernel.org>
-Date: Mon, 31 Aug 2026 17:48:21 +0200
-Message-ID: <87a4q2uw8q.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="qPrrX9NC"
+Received: from localhost (localhost [127.0.0.1])
+	by 013.lax.mailroute.net (Postfix) with ESMTP id 4hYZMw3s3Mzlfvps;
+	Mon, 31 Aug 2026 16:34:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1788194087; x=1790786088; bh=lgCoZHIIMHoV0moUguW+p/nr
+	HAa/1bjZoE2R+p37zyk=; b=qPrrX9NCFby35myPe7Cu21zwEKQ2qPnX46Ok6USx
+	bHoaPc7/klv1oRXagRVzdxe+FCyynBj9VWJI6p+l//lL7JjjQPBNnTBrA4qqqGS2
+	j6J2kOYPmSfa/as5AYpv6bjcdMGsvLUZV0CZdTzENrD+uYLTTFNtCktPI6hsNOpy
+	a6toGqDhsneCR/8Wxv18t0chma3KNh92S0YPmmyIkFfWYNY1US0RADATrnnYEcTF
+	pW7NOG3+VAeARh3KftqTN8RgPQgLayViQJOEP1u73yqWpC0G1gGar25fAnTJavZp
+	czq+FP1P/AbGa0CC6gGads4xAX38Hc+JQ+toR1sE6dihmQ==
+X-Virus-Scanned: by MailRoute
+Received: from 013.lax.mailroute.net ([127.0.0.1])
+ by localhost (013.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id WkPBcNu41mxN; Mon, 31 Aug 2026 16:34:47 +0000 (UTC)
+Received: from [IPV6:2a00:79e0:2ed2:d:a104:ffdc:9983:687c] (unknown [104.135.182.40])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 013.lax.mailroute.net (Postfix) with ESMTPSA id 4hYZMm63R4zlfvpM;
+	Mon, 31 Aug 2026 16:34:44 +0000 (UTC)
+Message-ID: <6aefc443-b86b-491b-a9b3-363ac2c01b9f@acm.org>
+Date: Mon, 31 Aug 2026 09:34:43 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] scsi: core: Drop Scsi_Host.default_lock
+To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
+ Vasily Gorbik <gor@linux.ibm.com>, dlemoal@kernel.org, cassel@kernel.org,
+ linux-ide@vger.kernel.org, Christian Borntraeger
+ <borntraeger@linux.ibm.com>, linux-scsi@vger.kernel.org
+References: <20260831095821.3486994-1-john.g.garry@oracle.com>
+ <20260831102141.7FD301F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20260831102141.7FD301F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<sashiko-bot@kernel.org> writes:
+On 8/31/26 3:21 AM, sashiko-bot@kernel.org wrote:
+> - [High] Interrupt state corruption in `blogic_qcmd_lck` due to mismatched spinlock APIs.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Pre-existing memory leak of iio_trigger in mma8452_probe error paths.
+Since this is a pre-existing issue it should not block adoption of this
+patch. Anyway, I plan to post a patch soon that will fix this complaint.
 
-I have a fix for this queued up for the follow-up series that I have
-ready to send once this series is merged.
-
-/Esben
+Bart.
