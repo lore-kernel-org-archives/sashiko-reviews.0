@@ -1,40 +1,67 @@
-Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C71A6809
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 01:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A083DB97A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 02:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788226953; cv=none; b=eIyqOW3WKqkOFgKOeOQc7vulIeIAyUvyAY3ijBwNzFouvRxL8Yy44SjOwd+Cgd/+aLx3FJGEeKaaJuWgdPYC4sxuubB+4jhXUBfdYqS90Tu7KjCtpnMV4nhFdXQXLyoV5VOVmwQ9HCOY4N+nCSX7VpbXNlRgdDHidFbcSxXwYRI=
+	t=1788228219; cv=none; b=OO1qxx3AV5AdVtAnMb700x8bR+vMrr4FmaICI3gipHseUd+hMirnH0SBBnzcFicMqVDCaORu0yjs4TGbb2LEps63+ywQO/lbOs+7/8lqWXLRCRwIuQAH2wjbK4UsgvRGk4lUMhCB3oCaSB2O7nuLuDBUR07xBrO4l+3gKzYWfAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788226953; c=relaxed/simple;
-	bh=ivKmB6QoDiiQSjmuz0wRnzNXAllAQSwupIkNeKB337c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rwhBlMd8JQk13jfNk2q7ziiBy0Tyt0eveq3vSrL3awQpqIf7F6UEX53US2VL8MX5N2vbpxFbGm9E2I8IrZi3FBOqhANn/0lYKlQctDWtfCMTf/cl3/NzbJxfVLGG6zZiz/3WYvYmDfWhpin6b7B0U7rC/0XHXNLQlqmTw/BP/RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=kztRRxSE; arc=none smtp.client-ip=113.46.200.222
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1788228219; c=relaxed/simple;
+	bh=TX6r7q1YQURmuBkaszMdOQ7QsmdJGZBe7gLlm0x5dJU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BPdGi9GdEGKyfeMagyWtqwXHMbGRzAZDIF7WLtT59vY/sQhWWjv+6o4igSV3cNqjfuNuoJ7rvDyLBHHw7fQU+R36NvDtUPaECQ/hmOwEVolOin/klg9kcqCxMFx37uG2tJkNDjepO6O5yNAIPBaEGSxsKDSazTn0w69gWLDYwk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=NqXTKBfq; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="kztRRxSE"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=FmUs38s23l+JbXkfrYJCAspVpkyYV3TPYuQ5Y22fLOw=;
-	b=kztRRxSEBv52FoofIixwylbPRXSaUQNU0bYGR53Rha80RxDk/wjjaWjzm3mIbGHcJRY8TKfbE
-	yWiadQ6hpgC/5MfSOMlSVHpLNoqsZsFMP8XoHnwTtr2Boz47HzOkupD9HeEji4WuPxiWVmXyToI
-	LmO4glr2/D9W0+EcJYtE6Os=
-Received: from mail.maildlp.com (unknown [172.19.163.200])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4hYpH76Rn8zLlX5;
-	Tue,  1 Sep 2026 09:31:31 +0800 (CST)
-Received: from dggpemf500011.china.huawei.com (unknown [7.185.36.131])
-	by mail.maildlp.com (Postfix) with ESMTPS id 17D9E40563;
-	Tue,  1 Sep 2026 09:42:21 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- dggpemf500011.china.huawei.com (7.185.36.131) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 1 Sep 2026 09:42:20 +0800
-Message-ID: <a2984749-be88-4e69-9a9b-050225d71e4b@huawei.com>
-Date: Tue, 1 Sep 2026 09:42:19 +0800
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="NqXTKBfq"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-52f9e79ed93so41169881cf.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 19:03:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1788228194; x=1788832994; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CEaLnco64T9D+NWKBTWVLYxPTE2JIhEmYG1CXe1LYlI=;
+        b=NqXTKBfqHrvsB9WiQja4hPJdu4A3VIbBDTTcx1QM0eEgq/B/mtDo7g9ZFV424crs6D
+         TudKIFpK6mx9L0CmJpzNz4eKkcQApmdi69GGTtfA9ThDus/folnP1U2xw0olRDvswqMY
+         62RUjhvq9rtaq45jpWMSvDU5C1j7dLpoZDXgEAF+NzQWsWzEP7GUgKviHAF1A+1j08PZ
+         /9RQ7wlx5YVsnVZ/GFwNVmCpI9Wytg0I4J+Vjnh05aWBZHew3y8WZCMW9cIRDYGBJ4vN
+         1g5/3CIMGBQniYDtT6egvWzmWHjk5MkRQzaIKIFjBzQsrFtKM8v4Wm+VjOuNW8EPr8FK
+         jYnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788228194; x=1788832994;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CEaLnco64T9D+NWKBTWVLYxPTE2JIhEmYG1CXe1LYlI=;
+        b=HsIlFv38NqsrIT221tZz7VIEUqZ3UtReUd7zcqTZR3CFXJ0DTIsersLpcPDihPFbwZ
+         glq6UsIdUZ2WN0PsCDsdvd3hsN9sAhnBJCfKANaba6U5ZDsNLRdWZngh1MGawIEAVgV8
+         PkIMCGPDFOuGk7n1qlwrkw8jrkjaXjvma4BUS67/VVUJMhi70m6sLH52OMPjhJSg27wg
+         cpLEvrEpFEjDgf2mZKqNz3otfSew+6OfJWjLVqDVzxtPol6mY9uqjuc5Hiw+dkBXSByK
+         FLVHvtB4eLzZ5sJ5/+TAINCh+si6J4ARRd2AAses62m9sXI1S3dO2CSr5u0CnJ9mFepb
+         Dh3Q==
+X-Gm-Message-State: AFuF++kOGD4b15W2qo3jRw3xHZGB33WL0kWjH1i/VJsPsWDQ7pyW6Q8G
+	rPTRiHcJuCeY+9pDFI4O4x/MNoj2ZSxHnIAkgWTf++dKYW9DuWSt4MjDLe642O3oC8i3to1KdKs
+	mkalB3U8=
+X-Gm-Gg: AR+sD11y5YSjrPS61FLyNsESn0nXzmOdBuOgb3ukHbX75JfsJUFRJsIkAKoleWs1EQo
+	w7tmprnTwZiD2U4O2XBkLmW/nP86STYZdSF4ebXoRujZJURCRjVFEfIIy/hnh6qs3zstXDTHJMi
+	OknBYRGMHssylvxzpUA+T0Q9I1Tf2ucr2WeLCGWigx6klSi07K4fHsW/xBk7Y2aPGNsgO/BUAW4
+	wkfI9uwxTLPI622bpbcXI5w81+6hR/vZMTc5Dk28QLsbCm17kTxretTtTXNA1eerzUJCTML5Nnw
+	dP3NLyUUijyO5VDumUj8qPh8BRti34PmzEfbBD8cTeY4HPmU6zV14meFqY1Zyg1D3BUjCo0ur9I
+	UtwMYiP/nLRKLoB6O6x5gmz9t1wtXQDXhOFez4o4RhB+APrEq1T7J0u0WWkhHO+q2hZQF1JR5Tk
+	3KLPqU3kVMubf0I2BoxJzjpbQoTBWukhdInwYhCiBEg2T0acnJP5bMXY6RNAhQ
+X-Received: by 2002:ac8:7f11:0:b0:52d:78c9:9377 with SMTP id d75a77b69052e-52fb9665892mr352804801cf.36.1788228193699;
+        Mon, 31 Aug 2026 19:03:13 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90ce44f5157sm97576386d6.24.2026.08.31.19.03.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Aug 2026 19:03:13 -0700 (PDT)
+Message-ID: <50176d59-0f7e-4b38-8760-551eff80bb88@riscstar.com>
+Date: Mon, 31 Aug 2026 21:03:09 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,78 +69,68 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] user_namespace: Use acquire/release for nr_extents
- synchronization
-To: <sashiko-reviews@lists.linux.dev>
-CC: Marc Kleine-Budde <mkl@pengutronix.de>, <linux-can@vger.kernel.org>,
-	<tytso@mit.edu>, <linux-ext4@vger.kernel.org>, Oliver Hartkopp
-	<socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, Oleksij
- Rempel <o.rempel@pengutronix.de>
-References: <20260825095422.3166067-1-ruanjinjie@huawei.com>
- <20260825095422.3166067-2-ruanjinjie@huawei.com>
- <20260826095421.73E0A1F00A3E@smtp.kernel.org>
-From: Jinjie Ruan <ruanjinjie@huawei.com>
-In-Reply-To: <20260826095421.73E0A1F00A3E@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- dggpemf500011.china.huawei.com (7.185.36.131)
+Subject: Re: [PATCH v3 4/4] of: address: kill of_node_is_pcie()
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ linux-pci@vger.kernel.org
+References: <20260901011338.1323243-1-elder@riscstar.com>
+ <20260901011338.1323243-5-elder@riscstar.com>
+ <20260901011827.730521F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260901011827.730521F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-在 2026/8/26 17:54, sashiko-bot@kernel.org 写道:
+On 8/31/26 8:18 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch missed replacing `READ_ONCE()` and `smp_rmb()` with `smp_load_acquire()` in `copy_mnt_idmap()` within `fs/mnt_idmapping.c`.
+> - [Low] Outdated comment in `of_bus_pci_match()` incorrectly claims a warning is issued.
 > --
 > 
-> --- Patch [1]: [PATCH 01/11] user_namespace: Use acquire/release for nr_extents synchronization ---
-> commit 1bcd6fdf3ca65990e2c5f3f0896df9c586813872
-> Author: Jinjie Ruan <ruanjinjie@huawei.com>
+> commit 0ffaade5a7eebd20cc4d79d7c8ed0d49f6da1857
+> Author: Alex Elder <elder@riscstar.com>
 > 
-> user_namespace: Use acquire/release for nr_extents synchronization
+> of: address: kill of_node_is_pcie()
 > 
-> This commit replaces smp_wmb() and smp_rmb() with smp_store_release() and
-> smp_load_acquire() for nr_extents in user namespaces. This aims to improve
-> performance on architectures with native acquire/release instructions.
+> The of_bus->match function for the "PCI" bus type is fairly liberal
+> in what it accepts as a PCI bus devicetree node.  If a node has no
+> device_type property, it even allows a node named "pcie@" to be
+> accepted as represnting a devicetree bus, though it issues a warning
+> in that case.
 > 
->> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
->> index 0bed462e9b2a2..576b667a88136 100644
->> --- a/kernel/user_namespace.c
->> +++ b/kernel/user_namespace.c
+>> diff --git a/drivers/of/address.c b/drivers/of/address.c
+>> index 499d37ceae210..ee2eb44884d85 100644
+>> --- a/drivers/of/address.c
+>> +++ b/drivers/of/address.c
 > 
 > [ ... ]
 > 
->> @@ -1098,8 +1100,8 @@ static ssize_t map_write(struct file *file, const char __user *buf,
->>  		map->forward = new_map.forward;
->>  		map->reverse = new_map.reverse;
->>  	}
->> -	smp_wmb();
->> -	map->nr_extents = new_map.nr_extents;
->> +	/* Pairs with smp_load_acquire() in map_id_range_{up,down}() and m_start(). */
->> +	smp_store_release(&map->nr_extents, new_map.nr_extents);
+>> @@ -156,7 +146,7 @@ static int of_bus_pci_match(struct device_node *np)
+>>   	 * "ht" is hypertransport
+>>   	 *
+>>   	 * If none of the device_type match, and that the node name is
+>>   	 * "pcie", accept the device as PCI (with a warning).
+>>   	 */
+>>   	return of_node_is_type(np, "pci") || of_node_is_type(np, "pciex") ||
+>>   		of_node_is_type(np, "vci") || of_node_is_type(np, "ht") ||
+>> -		of_node_is_pcie(np);
+>> +		of_node_name_eq(np, "pcie");
+>>   }
 > 
-> [Severity: Medium]
-> Does this code miss updating copy_mnt_idmap() in fs/mnt_idmapping.c?
-> 
-> Since map_write() now uses smp_store_release() to update nr_extents, should
-> the reader in copy_mnt_idmap() also be migrated to use smp_load_acquire()?
-> 
-> Currently it still uses the old barrier pattern and contains a stale comment:
-> 
-> fs/mnt_idmapping.c:copy_mnt_idmap() {
->     ...
-> 	u32 nr_extents = READ_ONCE(map_from->nr_extents);
-> 	/* Pairs with smp_wmb() when writing the idmapping. */
-> 	smp_rmb();
->     ...
-> }
+> [Severity: Low]
+> Does the comment block above this return statement need to be updated?
 
-Will fix it in v2.
+Yes it does.  I will issue a v4 of the series with this correction
+after others have had a chance for review.
+
+					-Alex
 
 > 
-> While the release-store correctly pairs with the existing smp_rmb() under the
-> Linux Kernel Memory Model, leaving the old barrier in place defeats the stated
-> goal of avoiding the cost of full one-way barriers on architectures like arm64
-> for this specific code path.
+> Since the patch replaces the call to of_node_is_pcie() with a direct check
+> of the node name to avoid duplicate warnings, the comment in of_bus_pci_match()
+> claiming that it accepts the device "(with a warning)" seems to be a minor
+> documentation regression.
+> 
+> Could we update the comment to reflect the new behavior?
 > 
 
