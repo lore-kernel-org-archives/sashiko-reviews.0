@@ -1,95 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201F415E5DC;
-	Tue,  1 Sep 2026 22:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5AA472530;
+	Tue,  1 Sep 2026 22:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788302917; cv=none; b=Kc2/294/QvOf/cAv197T3sEm8mCb6iCrakxt/Sw53av6QIs6IwgOXrI1FyvQS0OBXx3BG4Lo6orAqJQ0e0m1Ni7J3/FNsCZ81AHoJ8tgMIw4pcyUAKl8R9R2ofRj0DveLMQ9LuXExm+1GzxkfGVXgTYUazEZ3C3LCBkU3Mk4WwE=
+	t=1788303368; cv=none; b=cqks2DgzOSrpL8jazGmuyQQ+5TvIsS8nl2492KRi/F0NEUNvNStf/SuP20bOfvs1FuZHdxqhSlmXe1ccwsMyi3YYx3z6u6Td7CCyWo4smxWvghAsTQNMTYXk45n4yng6Lyy0OXoY6wqJXBRQpESLOslrcO/fcCF7q0yoRYscOq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788302917; c=relaxed/simple;
-	bh=oAPagxXKSG903Fz2+yDbyEBCts+GqLEH8Ui0mXOZbwk=;
+	s=arc-20240116; t=1788303368; c=relaxed/simple;
+	bh=s+q459yaN0F55+u/je5aCNFYxAThkd8ArmeHWDZ0wiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CtZAYFBDL7G+sx/osRswyh3SjEWs+7Wta02OhCjfJuZqJKWtION94FjMjfovB8wW0nwD3nPN9YGoD0fmOewqbpIGhNkyEnhG/f0xY575IN6u1jRRQkYZhT8dAzMcNxJ3WfCOIp0mIm/TRhNeQ+oobWIfYJHRK7zp+jBHK8jErRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLk2WBba; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=fActWntNSAZyx1IY8DdctotMLgYyvWZl8+KK8h4HGNdE91u+PL4bA/YyFNzpI4tJthNqZdIAJoNiXJW6s2Jo3ME2zBHD5AazBkC7F2zSZ5Y12hYObdXTv5zRBKeJr7u7jvMmTpBRMF+MxQry242ZtgRUJUplIdFJeL+TBH3zd+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XO7rRgPY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLk2WBba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2071F000E9;
-	Tue,  1 Sep 2026 22:48:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XO7rRgPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292081F00A3D;
+	Tue,  1 Sep 2026 22:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788302915;
-	bh=oAPagxXKSG903Fz2+yDbyEBCts+GqLEH8Ui0mXOZbwk=;
+	s=k20260515; t=1788303367;
+	bh=IDp+efHeDEGLzMGKCGDhAFfyBmcn87nrQlkYRT8DJw0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iLk2WBbaD6peeI5BDaS4Bx+VSnGTLf011nilr8S9KU3CctqkKp97TrKH89DFjBzEW
-	 1fzVss90v1lOKkV4yLOoKHorhxEqyeH7XhbhtZEKbZ0MUyTmylMhujNu5yOSZMa8RQ
-	 ERdqZVp907JaX5RBipioirsflBjtQFa388i0HeEI/FbTCeEpBYKSBJxoyr1jpPbZTD
-	 WX0NDtAN6WRhMLqCH3tPXs+HEE0lU178b2LbZs4RvKYb24BfYDSMQIQRnZrr0TvvwX
-	 NPXQkQd28EXVydEH4zj7Rp5fSmtbB4/YqReABJnlbaTZfDVFe4v8CSwdiLM4SC9EsN
-	 CIaX3G/BJENGg==
-Date: Tue, 1 Sep 2026 23:48:32 +0100
-From: Mark Brown <broonie@kernel.org>
+	b=XO7rRgPY6fPyhnXwuX7jKevwJyoThN1v0+xO9JxwWkl3iNs9yLoCd7ZW1T38NneBt
+	 Mwj/3jv6BtulAtHHPvRxspGw9K1YtP+RDhlTwDkrWSNf4aV07HUc1X3Q53K8uFluOq
+	 SbWBLJKJEWENqk/n2HNEfECErD+8oy0E5qNQaywq3WzfeMM4TOSs6o8+pp9lTsn54s
+	 Hyjr1YwynoCbJCn9Hesg8vLfrAcP2IQNXQdRriloXpgXJWUDrnR1gSEYO94MIC74BX
+	 aywZVwHuuviIBXbN/lFm2q7+e0Ygwt0uvN4Sz26ZEtdnS/Ie8HH47g5iNxqboxjENR
+	 hgkUt9Zt3x/XQ==
+Date: Tue, 1 Sep 2026 15:56:06 -0700
+From: Wei Liu <wei.liu@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v20 08/14] KVM: arm64: Enforce EXLOCK for SPSR and ELR
-Message-ID: <33d383ad-9715-4aa7-a7a3-79b3cb1e243d@sirena.org.uk>
-References: <20260901-arm64-gcs-v20-0-f31750bdfadb@kernel.org>
- <20260901-arm64-gcs-v20-8-f31750bdfadb@kernel.org>
- <20260901221520.B0CB01F000E9@smtp.kernel.org>
+Cc: Thara Gopinath <tgopinath@linux.microsoft.com>,
+	linux-hyperv@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [RFC PATCH 02/12] drivers: hv: hv_common: Allocate Hyper-V
+ output arg page when VSM is enabled
+Message-ID: <20260901225606.GA2583463@liuwe-devbox-debian-v2.local>
+References: <20260901165647.3160413-1-tgopinath@linux.microsoft.com>
+ <20260901165647.3160413-3-tgopinath@linux.microsoft.com>
+ <20260901171238.834601F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="U9c1PxmpW/gL7TXH"
-Content-Disposition: inline
-In-Reply-To: <20260901221520.B0CB01F000E9@smtp.kernel.org>
-X-Cookie: Prevent forest fires.
-
-
---U9c1PxmpW/gL7TXH
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260901171238.834601F00A3A@smtp.kernel.org>
 
-On Tue, Sep 01, 2026 at 10:15:20PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Sep 01, 2026 at 05:12:38PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] hv_apicid_to_vp_index() unconditionally dereferences the unallocated hyperv_pcpu_output_arg pointer in standard/SNP guests.
+> --
+> 
+> commit 0ee3313e113c9ca7969923f2af5a1ed18ddb25d2
+> Author: Thara Gopinath <tgopinath@linux.microsoft.com>
+> 
+> drivers: hv: hv_common: Allocate Hyper-V output arg page when VSM is enabled
+> 
+> This commit extends hv_output_page_exists() to return true when 
+> CONFIG_HYPERV_VSM is enabled. This ensures the per-CPU output argument
+> page is allocated at boot for VSM hypercalls.
+> 
+> > diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+> > index 31256cb22b39e..44f4a10984618 100644
+> > --- a/drivers/hv/hv_common.c
+> > +++ b/drivers/hv/hv_common.c
+> > @@ -259,7 +259,8 @@ static void hv_kmsg_dump_register(void)
+> >  
+> >  static inline bool hv_output_page_exists(void)
+> >  {
+> > -	return hv_parent_partition() || IS_ENABLED(CONFIG_HYPERV_VTL_MODE);
+> > +	return hv_parent_partition() || IS_ENABLED(CONFIG_HYPERV_VTL_MODE) ||
+> > +		IS_ENABLED(CONFIG_HYPERV_VSM);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but modifying this function highlights a
+> vulnerability for SEV-SNP guests where VSM and VTL modes are disabled.
+> 
+> When an SEV-SNP guest boots secondary CPUs, hv_smp_prepare_cpus() overrides
+> the wakeup callback with hv_snp_boot_ap(), which then calls
+> hv_apicid_to_vp_index() in arch/x86/hyperv/ivm.c.
+> 
+> If CONFIG_HYPERV_VSM and CONFIG_HYPERV_VTL_MODE are both disabled,
+> hv_output_page_exists() evaluates to false. This means hyperv_pcpu_output_arg
+> is never allocated during hv_common_init() and remains NULL.
+> 
+> Consequently, arch/x86/hyperv/hv_init.c:hv_apicid_to_vp_index() dereferences
+> this unallocated pointer:
+> 
+> arch/x86/hyperv/hv_init.c:hv_apicid_to_vp_index() {
+>         ...
+>         output = *this_cpu_ptr(hyperv_pcpu_output_arg);
+>         ...
+>         status = hv_do_hypercall(HVCALL_GET_VP_ID_FROM_APIC_ID, input, output);
+>         ...
+> }
+> 
+> Since this_cpu_ptr(NULL) resolves to the base of the per-CPU area, it
+> dereferences a garbage pointer. This is then passed to hv_do_hypercall(),
+> causing the hypervisor to overwrite random physical memory with the hypercall
+> result, and eventually oopsing the kernel when output[0] is read.
+> 
 
-> > +static inline bool sysregs_exlocked(struct kvm_vcpu *vcpu)
+This looks like a real bug. It should / will be fixed separately.
 
-> According to the ARM Architecture Reference Manual, the pseudocode for
-> AArch64.CheckEXLOCK(target_el) restricts EXLOCK exception generation to c=
-ases
-> where PSTATE.EL =3D=3D target_el.
->=20
-> When a guest running at vEL2 accesses ELR_EL1 or SPSR_EL1, the target_el =
-is 1,
-> but the PSTATE.EL is 2. Since 2 !=3D 1, the hardware would not generate an
-> exception here. However, by checking the running EL's EXLOCKEN (GCSCR_EL2)
-> and ignoring the target EL of the register written to, KVM will inject a
-> spurious EXLOCK exception into the nested EL2 guest.
->=20
-> Can we update this to skip the check when target_el !=3D PSTATE.EL to pre=
-vent
-> spurious exceptions during guest context switching?
-
-AFAICT this conflates the conditions for setting PSTATE.EXLOCK with the
-register write checks being done here.
-
---U9c1PxmpW/gL7TXH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqXVj8ACgkQJNaLcl1U
-h9DNRwf8Cy74ZvWijPzQEY8kuiFEkmVkOT2UVU4f0J7hSM49Q9/KuYRQFWmRsH1o
-6drltcpzJBC5rCantg9Cf3U1KLoWCBQ56Sc3zEUa5/B29/o1xh7cKeK7yqchHj3V
-rIUmN8MmHPp7uFDd5iMn5/kmnz6A5KiXtKi1sIro7MTkysR6xLdonlKvynKB8Apj
-nDZp+HMvgF51k1jsMq5TUO6jMJ9Qg8VrmR1q5k7sk22EwUymCK0EcR1AJ6K9dKMM
-xAMVVk6i65OeVCHWtcsIhyuj9F3xNWHtPPRX4/Qcm+arY+N6U+jFIZqPrMVhKqwi
-5yQfYfn5qePT48mGdiKsKxuCMGwRJw==
-=BwoE
------END PGP SIGNATURE-----
-
---U9c1PxmpW/gL7TXH--
+Wei
