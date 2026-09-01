@@ -1,218 +1,189 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010030.outbound.protection.outlook.com [52.101.84.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C5F3D6CCE;
-	Tue,  1 Sep 2026 14:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788273864; cv=fail; b=K5+lH0dlB7KAyDUFv4UujvJNnYqvf2qRWYZHjidYiB38yoZBqGC/fZSfXFiEfMe4NJ+VjAWhElBO2D92DiwFIoDbMSN2gqFdDFN/cPhbMHZVRYHe2z9DdfCls3+mVghEBJwYzhv4JU/r5s1xalr8MO1gvRckURIoTtGLBqQ8bRQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788273864; c=relaxed/simple;
-	bh=YTwko38JfkgKmPxX1rtlIdsARqqNBupiXQfqKp+OjS0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=JhUe6sRcmIZTxbbackjz61SsrselaHuE+r6bKd2L7pw3c8ofU/AD2KPGDjpusbz/i1RkO2qYLMrXCf4pfR0Jd2oN0SFE5l/RH70dRUSI6GnvjBrqWqzc5GKUiF/gicizKqh7KpgRr6/bmtlUwqEv3X0zEOvb9wjqpvG/aqS2to8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=rt9RBxbR; arc=fail smtp.client-ip=52.101.84.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C4040681D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 14:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788274021; cv=none; b=Pe1lWvOehp840/GN1In6tsDT3iV1Y+K8dbMDJ/6vMjb6PzkSeq0DtzrOkYLdCAREywAFw35eHc8aU8qrHLXe61rP6uyW40N2Vj20j9x6CcfD7zqY8c5hqnJq7xJrrnmHtpPcQU6D3NefBXqhEz47rtHitHuR8R2NRTRtE9Mv6jk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788274021; c=relaxed/simple;
+	bh=D9eeyQ2yzHaX3YGpTuDpx9hYk5aU1AyRCVFQ38n2MYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bx/xqUlnsPLgWL4IouPV+0+ExhCPNKR5lVuRwM2AIA0GCLcGG+2CwRtjZIodvOhJpB7iHsthidqoutN3B7TwkQqwXHRkdnGLn5wk4asTLaYJK81WhFR3AFCT8rlbWM3XcQMxffG+H4ABwni/hSwRetTYXyRDe+VTLcyp0UUDIh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P2xBHY4j; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="rt9RBxbR"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NWi2HMS8oBVPdRLS7SePAT0fR6Ki1l1CVorHrjek2tr5XgTJ02//94Uz1jUVtQUw2M+kDW8MsaSb/mcyCg159v/PNVhT9CJK0BsEEfpYFRN2EDfOD8WxbqtYkTxr8NoTYTQ05JScsFkEEM2cb2aBJmZrd3b2ienUyap0jc7t5dpQYzlqe3f/snysxqboM7fsHB7syTstbWeihd6fS2XkIhF7RAvUdqQRprZys4M5GRHQNyrXw76tXdSfYMDIBfC1i7gKuIuTjn9yVfi2FRWvIWISJ5rhHiyNz9ZOZFUvhXwKJ2cdP4Ad+pCTbzP+fvzUq3B0RlO4jXDni2vNJRpj3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8ycEDgQKrZCHYIoWL2FsHFmCGQx5RSzH8VV9yNpwaKs=;
- b=D51dwl0FjBNmsQ7tyH/wqqCjXNVz17EKHOZVi1wBR9DLKJ85xbHdv8RcZCaCS3zateTVO7CkDUib74zK9Nd0ikXUPLrco/VR5XQruLLvo657N5y0yo76BNMsaMCkQgra2WqWP/w3c8yuKqSd7JMNuUCjU+BYjG1RvWuK1fWrxHxfrJdIxLENUm8QokGHNGHF4UGn+NZVY/oQkv4DYzIbGreN6hfxAPgFxK8vJ/DTFZoj9nmV2mjj8Tvc9ML6tsK8Tw5/iCd+Fe4B+TeInF25B6CP5eRwbsRI6zSMS79LRb+1wm2iPI1208VButxuheZEwt9VBqtyHwYosmkz0IE+4w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8ycEDgQKrZCHYIoWL2FsHFmCGQx5RSzH8VV9yNpwaKs=;
- b=rt9RBxbRMarC2QqC/a0IhxY2LVoCT2ajakuRva/XpTGRPcwdSAwdNP2XsU1tMumAWwXXkdSxVnHdZl/yIvgBGSUVMI9XYEFbLncMNj/bHKWqsXUZsf25C1cIZFN+6Scys1iSeaH5QPtpewT/NZu4sPr4pL9EwNXLfKwAeU94c2Tsm4yVj29ZvNHn9O6fcof4dDvD8L92XVq29Nzvh8OnzV+RFB4hvjXoRG4iKZPOwNeNStWSjqJxqi4q9UjTbt/RRk5KDAhc1K66rwmWd+vB8qnbyspFcBxr5TtNZeYM1Ayhn1q8p4JoEeVtjItgwrG5uHxNIghn3cgKMVtMtKNDKA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AM0PR04MB5858.eurprd04.prod.outlook.com (2603:10a6:208:132::23)
- by GV1PR04MB10942.eurprd04.prod.outlook.com (2603:10a6:150:20f::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
- 2026 14:44:17 +0000
-Received: from AM0PR04MB5858.eurprd04.prod.outlook.com
- ([fe80::bdf4:c9d1:4e3f:68c6]) by AM0PR04MB5858.eurprd04.prod.outlook.com
- ([fe80::bdf4:c9d1:4e3f:68c6%3]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
- 14:44:17 +0000
-Message-ID: <cc806640-bb65-486e-a574-1d6e615e6df8@oss.nxp.com>
-Date: Tue, 1 Sep 2026 17:44:14 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/6] can: flexcan: use dedicated IRQ handlers for
- multi-IRQ platforms
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P2xBHY4j"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6a5f968ada7so2474512a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 07:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1788274018; x=1788878818; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FTTAEK9YzkBAMJ3JEL82g1HyXYeS1+m4mN6z3yJo0GY=;
+        b=P2xBHY4j/Dr9s9sraOmwOGntGMbr+zhhVJwFbkTrTZuAp07TI+Z1gLtxsrITmrHVuh
+         wrcrmqyQccRLJOQG5UWw39vtR0l0lpGEhq337nA1lpjyfxHw1G/46Lyjag/RKyoF363p
+         Yk0AO9F9EdbPFaHknJdoq08/PexGGy9FZWUyyau12iCJwyBPm6wl65WOybW9E45o0yjr
+         mLJcqaFx6kOP0E0Z0UmgA7VjV459MyRyKsJcv2X7M3ezHLU1DrJUKMOYG89KRu5RZVxJ
+         6zFg6YrTmThc9EkDACim1nNrAKWar9lIwtAkW9Nb9j/MMpjL1KZGxdOGMAERNCz0n9xG
+         pPIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788274018; x=1788878818;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=FTTAEK9YzkBAMJ3JEL82g1HyXYeS1+m4mN6z3yJo0GY=;
+        b=eEIFXQsFglHD9OogQWbHDgTezFcxHHSjYdvayOF/yi3H6fBcTJeafuqivB5rO4k/dk
+         zhqueUyHN6s5nmNvOyH3J5XFzcCcD3n7NohyVFXX35ZDiTftTqekfRJxkCE8pkfJVDgc
+         BeA09T9kHSMjdEtsNWGOH4diKKUU6vPyhHpdY5AAoY9Kh9wVuv8vBTZr8CoXR/JhMPWd
+         RPR7noC920PlmTfkPXMZs9Q141+7QYyNsQoNYJp01PH/QxOiyQetO5u5qVuR3BerbzeN
+         X72du9q8+RBc8lslpjuwMn5InGp8jlCNvaSanHOEt3Y7B9gV29CxHpkfsHy+4z0qiQBF
+         6REA==
+X-Gm-Message-State: AFuF++kWLttQVeR87fqNOyx69LBVAN5KbkiJ5QQAXbo7bJ9YRkSGMSA4
+	2RTc7ZpgdLHZ4XqxBvf/NEqFW39cyIdkwt1cqGEX6KZMJ5CRS7MtSc3/wYvhsEWAAObIm3aEOJQ
+	LGDtKfg==
+X-Gm-Gg: AYBFou3J3YkOkTXIMpwZPSfgwAPcbzTlZpzTNA//yVpg8ZwhAtxOebsPZ6G8vfE0QXH
+	lIJevakCM84dYX4tljYhAgYJxaSblsTHxOvhUw2ETwpMNZWJ+m+1qSi5IjJgkmdU0sP2HACyHfK
+	P6PzDY+hzGZCUe1wG19I/RtCQwz6ETNXUoXtllGqjWHWZtlZP/AuJ20njxzGzTpP9eUBo2nu5ef
+	ojaDHMT1IeSZr7Wb/mY9zBTfA5616PYQ1lLLMcmdseicYKNQMwjVntKHRYj2TmDUwq2zykiEE7o
+	z+5fwlX0Zbd+mq7Qnl7AzZETHswMNmML3ucbqF+Fhw99qNQd1ZTalu9vd183LcV+nYwsK2fVkPk
+	ymjNvl97ZoWMrbt1kmu96+bkS5Hlf1JW5tpSFe/H6B5u49qcpEUrNnzR0Js4XYjWYc8njgY3Rzo
+	3c8cjbsoZVBpuXAHHx8lE2JX+OOPXP/DEgxpQ/biuaLbxoxbmwdr2xm7ZGl+UwQA2Jz8QvcxiAK
+	TEt41/aS/2sJIICJtkm1tCO5vjXAlg92vmoh2crGR8=
+X-Received: by 2002:a05:6402:46c4:b0:6a5:dfb6:360c with SMTP id 4fb4d7f45d1cf-6a66a5b5e75mr3988587a12.2.1788274016327;
+        Tue, 01 Sep 2026 07:46:56 -0700 (PDT)
+Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a66ccdc436sm1160781a12.10.2026.09.01.07.46.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2026 07:46:55 -0700 (PDT)
+Date: Tue, 1 Sep 2026 15:46:52 +0100
+From: Vincent Donnefort <vdonnefort@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>, imx@lists.linux.dev,
- Frank.Li@kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>, s32@nxp.com,
- imx@lists.linux.dev
-References: <20260831143449.12828-1-ciprianmarian.costea@oss.nxp.com>
- <20260831143449.12828-2-ciprianmarian.costea@oss.nxp.com>
- <20260831180131.B55E61F00ACA@smtp.kernel.org>
-Content-Language: en-US
-From: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
-In-Reply-To: <20260831180131.B55E61F00ACA@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM8P190CA0028.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:20b:219::33) To AM0PR04MB5858.eurprd04.prod.outlook.com
- (2603:10a6:208:132::23)
+Cc: Fuad Tabba <fuad.tabba@linux.dev>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	linux-trace-kernel@vger.kernel.org, Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v4 11/11] KVM: arm64: Tag host-VA hypercall parameters
+ __kern
+Message-ID: <apblXIuD6d2JVIfM@google.com>
+References: <20260901140326.3812068-1-fuad.tabba@linux.dev>
+ <20260901140326.3812068-12-fuad.tabba@linux.dev>
+ <20260901141548.3D6921F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM0PR04MB5858:EE_|GV1PR04MB10942:EE_
-X-MS-Office365-Filtering-Correlation-Id: d1fb735a-0de0-43d0-6482-08df08378007
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|7416014|366016|6133799003|4143699003|10067099003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	uCDc68qwayAh8Erktk0ewQuw8gJmVoD/YzBYrQO4zi6OZz6CkbZCs8omKZBTn/F7CdmClLraTawdz0b4RJHvouFNMh0VrVScPvqyVQMmBONfUTSYN7TfVvgWlkAoprXT0JdVwLidZw//ePcZtEzwp5LI8b1v+Wdq83teVITXIJJ+5yCJJ8Akmh1cVKtQ/mSp3rVVPOtEC9vEf2zSeqzfrpTLlyR5FBZnoTXPGbAlgbiIHRX8a8vm5vydA4F3TCDKjJOmFKLQyEtr+1MQ3qUBlkGopPd+TX5dxBCDKWJ3OEscXwk/+7xKlVIDXm1ltbg5twWkGgaoAgBUs61hJft+3c1WIWXrUS5wCerP4y6/cmulORa9jD3e9Gbo+X3fxDLarG0Uamimom1kcDNOy8ghdmCV3TS2SBwqzOFuTSZjQAlA/14NXKHrYSpHVbGowdghvUNuOwRAfsJ4o9I2AWm/gLf682XcwXdJWm0gIkKDi6+oRjJp/oOn3nqlGF3eIrFkMuCTrvhrI3rgOkX5kQfJVjzcUQOe4w88jsV4J/rktWKCjkqUSXVjtq+ifMAhk9wQNQIoVsjOfDeYMsuV6Fj3g6tvbUi6dIVSpsgqcHnwtDMqK+Wr25thRc5XpNj9bQ4/
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB5858.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(7416014)(366016)(6133799003)(4143699003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Rk9GeGVmd1Vub0d5cUo2bjUzS3JrM3JaNmpWQ1JmL1JSdmhOMTB1L0wvUEFt?=
- =?utf-8?B?MWpLaHR1SFhFdFA3N2Z1dlhWQnZ1MXR2dGU3cmZzV2pwU0Q5UUdUeitldTJS?=
- =?utf-8?B?OVYvM0JxcWt0aGxSem1oUWFMRUNiSFNxWDAzZFJEQ0dPN2tOSXA3ek1ETHU1?=
- =?utf-8?B?TU9yby9sL2RLdC96Qlg5L1g3TEdSOGdtSXJsaGY4WkQwanpwS2EzNEJWYXM0?=
- =?utf-8?B?VU5rTVlVWVRpeWYzUnE1NDFiS1J0UGFiendpOGtxbjY0UVNNS0lqVkhHelRh?=
- =?utf-8?B?VU9TUStHSTVkNWZlcWZGcEJmc1V6dXQ3dys1bG12WHRUUUlUaVNGNHpKRlRF?=
- =?utf-8?B?S3ZPMVQrTmVqNDdWeGQ2NnVqMlpwd1dyQlEyRHN6QkdnTWRrYnB5WG91OEFn?=
- =?utf-8?B?VDJTQjhBSmlwVDFRYlZXUVVvU1FxU2UxMzkxaW54WG91bndlTXUxZnNPaWdR?=
- =?utf-8?B?MHNqcmFhaWdxeUlxakFzWXZDTmhoTk9VQ1pMNEFRVUlKRE05bnM3Y2ZSN1pG?=
- =?utf-8?B?anpLUWpYNnQzb2VZT2xEbVJPbEdYOUtRaERDcnVHcjhHWUVrYjNTNCt6M0Fn?=
- =?utf-8?B?Si9SSVd2elFRRnZKWTB1aE9JdVhnVUkzaitqWFVMV3BOZ29qcnpsVWE3bVRQ?=
- =?utf-8?B?b0V4ZVRMY280bWlwNmFjMDlJUzVUQVRpOVNPbWpzakpuU09reWJ4aERkeStJ?=
- =?utf-8?B?SGN6U3VPbzFsRzZubDVtanN0RjJtenUzdUFOeUNaSm1RMmZtcE0vbEJ2WnNJ?=
- =?utf-8?B?K1YzRHBFVlRmWm9WcDZScVVNN1VkQTNYbSt0aklsN0lWeXFjTC83SGg4eXpV?=
- =?utf-8?B?ckpvYnZ5bVBvYmV3Y2MvMjIxdDF2SjB5SC9FZFZnT0VoMjVDWkN4bWNuR3pM?=
- =?utf-8?B?RzFGV0tXalV1Yk1HUzJhZDdSTlJZM2psSE9pUGJCZ1FtTy9XNFZMUktjN05I?=
- =?utf-8?B?ektqd21ZcURscUszc3FRUm9mQjJVZ2JDclo0MlZhaEFrdHRXSHZocStsd3E3?=
- =?utf-8?B?S1loVTZNZERtRjJyRUplbGRKdnJTSDZmVy9ZSlJST3oxejhvNkhzMVhPdmtH?=
- =?utf-8?B?SkNvb0dYSndWWW1NbDFla29EM1pEZFZBUUdSbGxRVy9qUjFpVWNGSGdFTkNn?=
- =?utf-8?B?Qjd3R2IzT2NKRG5PQUhiVkJyUUJSWDV4SlZTMWhkR1plZThDTnZ1clJMOGpS?=
- =?utf-8?B?b0VKOVE1NFZVaGIyZDJIOWc0UWFFK3haSFR0b05WYTFaN3dGTWlhWWdORDdC?=
- =?utf-8?B?eERvMW0yUjhycWcreXBjTEU0TjdOeGNSS0g2VmFFVlAweEFnMktYSkljcWlN?=
- =?utf-8?B?SStMcXdOamE3TU81cm9tRHlKdGtXK290WmI0ZlZDMHpFSDRpMUZvS3hUck04?=
- =?utf-8?B?MmRxSlpKY1N6ZFNSOXlrTERNOHIzZHVoc01VdnRid1dUYzNiL1pKU2dXeDhX?=
- =?utf-8?B?SmFKWVJLV0s4NUptYmlhMTMrTC80eTl6RCswK0FhQmdHY1REVnZkb01iUnFz?=
- =?utf-8?B?dW1lL21md3VxMGFUaHZ2RWREN013aE9UTDNGcFlBQzBkc285RVJJMFhVOWc5?=
- =?utf-8?B?Tlh3bHBmQ2pUUDRxaTE1MlhySlp3SHN5MFBxN2x2VDN2UVdMUkwvOVdSekVP?=
- =?utf-8?B?b3BFd2U2WFFXc2dKb21Lb1kzWW5LbUcyb2NxTzhwbGhBbTVueEtRelN3TnQz?=
- =?utf-8?B?ZjhnMkJMM2RCS010R3U1Y0sybEdtTXpVdUMzNjlZSVB0eWg3Wk1hejdHMmJq?=
- =?utf-8?B?UEh6NFF1aUNpcnJtY3ZKR1I2bFhmVlI4MzZrREE0QUxMbE1JN0ZTQzViVzRs?=
- =?utf-8?B?bjJVSzFjOHFheDloTWF2MGVLbFkxUkdKc3M1dkVzb1kySkp4SUgvanFPMFNi?=
- =?utf-8?B?clpkNmgyUXhHTFAveG1Vc1ZNSzd4Y1RrOVIzclFFR3ZObGluNVlJMktiZHll?=
- =?utf-8?B?L3hQbHV6YnlFbHN4NFJOS2tzRW9XR0E1Y2hVRVNtdWxYNjZRRWlxNndyZFdo?=
- =?utf-8?B?TEJmUXhhMk1YWUZVNHZXdm9OQ2pBcGdPcDgrazlRU1BUeDNsZm9QekM5cnhk?=
- =?utf-8?B?K3ZpOUNMNUc4Y0pCbGNxajV0cE11S0h2YVZXS0hQaXdVdDRMK0hiZU1qRU1H?=
- =?utf-8?B?b014dmFIcTg1OEdLYk1uMEt6WW8vdFQ1UUl2aE4zNDlDcllsUENSaEI3V0dt?=
- =?utf-8?B?emp1WjBwWWEyYkZFTExYbmNKVmlnQnBRRTJlZmJFcXE4UGlBVWxBejIrbmh5?=
- =?utf-8?B?bWl5aGpaMEpsL2NXditGL3ovY3c3TUdvS25WTUNmcVJxaVBaMTJ4eTFoQ0dR?=
- =?utf-8?B?OGswVHhpOWtKaE5oRU9QblZCckI1UjFKcEl2eElNaERneUdMOWl2c2RIdjlQ?=
- =?utf-8?Q?G4nyBQYj5ZGN6OG0=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1fb735a-0de0-43d0-6482-08df08378007
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB5858.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 14:44:17.6551
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YOIP6nyCrlDoVYkd2+vguWU7FdnlYFn2KCwt6YAv/zSl6QnZZL2vBqBjeqSkSLL5AeV5tdEIVwJeyOPcDkh0rv9GUi+wm9rWXPPo7M7MrRk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10942
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260901141548.3D6921F000E9@smtp.kernel.org>
 
-On 8/31/2026 9:01 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Tue, Sep 01, 2026 at 02:15:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] The split IRQ handlers fail to resolve multi-IRQ concurrency for device state processing, leading to lockless list corruption.
+> - [Critical] The __kvm_adjust_pc hypercall translates and uses a host-provided vcpu pointer without validation, allowing a malicious host kernel to corrupt protected guest state.
+> - [High] __pkvm_host_donate_hyp wraps fallible allocator primitives in WARN_ON(), allowing unprivileged host userspace to trigger a hypervisor panic.
 > --
 > 
-> commit f3f261bafd25e44254ad99cda953074bc68ed987
-> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+> commit f41e99c0d7eef41b448f7016f3b2a6ae6358d4c0
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> Subject: KVM: arm64: Tag host-VA hypercall parameters __kern
 > 
-> can: flexcan: use dedicated IRQ handlers for multi-IRQ platforms
+> This commit introduces the __kern sparse address space to tag host virtual
+> addresses passed to EL2 hypercalls. It updates the hypercall declarations
+> and unwrapping functions to ensure host VAs are explicitly translated
+> before use, preventing unchecked dereferences at EL2.
 > 
-> This commit splits the monolithic flexcan_irq handler into dedicated
-> functions for mailbox, device state, and bus error processing. The split
-> handlers are then registered to specific multi-IRQ lines depending on the
-> platform quirks.
-> 
->> diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
->> index f5d22c61503fa..2e9df2d14b341 100644
->> --- a/drivers/net/can/flexcan/flexcan-core.c
->> +++ b/drivers/net/can/flexcan/flexcan-core.c
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > index 9085f46c2880f..91e74a1a334f0 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
 > [ ... ]
->> +/* Process device state change events */
->> +static irqreturn_t flexcan_do_state(struct net_device *dev)
->> +{
+> > @@ -548,9 +548,9 @@ DEFINE_KVM_HOST_HCALL(int, __pkvm_host_mkyoung_guest,
+> >  }
+> >  
+> >  DEFINE_KVM_HOST_HCALL(void, __kvm_adjust_pc,
+> > -	struct kvm_vcpu *, vcpu)
+> > +	struct kvm_vcpu __kern *, vcpu)
+> >  {
+> > -	__kvm_adjust_pc(kern_hyp_va(vcpu));
+> > +	__kvm_adjust_pc(kern_hyp_va_host(vcpu));
+> >  }
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this hypercall fail to validate the
+> translated vcpu pointer?
+> 
+> If a compromised host kernel issues the __kvm_adjust_pc hypercall and passes
+> a forged virtual address, kern_hyp_va_host() could resolve it to the
+> physical memory of a protected VM's pkvm_hyp_vcpu structure residing in the
+> EL2 linear map.
+> 
+> Since this pointer is then used directly in __kvm_adjust_pc() to modify
+> flags like PENDING_EXCEPTION or INCREMENT_PC, could this allow a malicious
+> host to corrupt protected guest state and bypass pKVM isolation boundaries?
+> 
 > [ ... ]
->> +	/* state change interrupt or broken error state quirk fix is enabled */
->> +	if ((reg_esr & FLEXCAN_ESR_ERR_STATE) ||
->> +	    (priv->devtype_data.quirks &
->> +	    (FLEXCAN_QUIRK_BROKEN_WERR_STATE | FLEXCAN_QUIRK_BROKEN_PERR_STATE)))
->> +		flexcan_irq_state(dev, reg_esr);
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> > index 6c8e33ebf8bb6..5cdb0318fa7ba 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+> [ ... ]
+> > @@ -657,9 +657,9 @@ static size_t pkvm_get_hyp_vm_size(unsigned int nr_vcpus)
+> >  		size_mul(sizeof(struct pkvm_hyp_vcpu *), nr_vcpus));
+> >  }
+> >  
+> > -static void *map_donated_memory_noclear(void *host_va, size_t size)
+> > +static void *map_donated_memory_noclear(void __kern *host_va, size_t size)
+> >  {
+> > -	void *va = kern_hyp_va(host_va);
+> > +	void *va = kern_hyp_va_host(host_va);
+> >  
+> >  	if (!PAGE_ALIGNED(va))
+> >  		return NULL;
+> > @@ -671,7 +671,7 @@ static void *map_donated_memory_noclear(void *host_va, size_t size)
+> >  	return va;
+> >  }
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does calling flexcan_irq_state()
-> concurrently corrupt the lockless SKB queue?
+> This isn't a bug introduced by this patch, but can this donation path lead
+> to a hypervisor panic triggered by unprivileged host userspace?
 > 
-> If the boff and err handlers execute flexcan_do_state() concurrently,
-> they will both allocate error SKBs and insert them into
-> offload->skb_irq_queue using the lockless __skb_queue_add_sort().
+> Host userspace can issue KVM_CREATE_VM or KVM_CREATE_VCPU ioctls, which
+> trigger hypercalls like __pkvm_init_vm and __pkvm_init_vcpu. These
+> eventually call map_donated_memory_noclear() and __pkvm_host_donate_hyp().
 > 
-> Can this concurrent insertion corrupt the list pointers (skb->next and
-> skb->prev), potentially causing infinite loops or use-after-free
-> conditions?
+> Looking at arch/arm64/kvm/hyp/nvhe/mem_protect.c:__pkvm_host_donate_hyp():
 > 
-> [ ... ]
->> +/* Bus error IRQ handler for multi-IRQ platforms */
->> +static irqreturn_t flexcan_irq_berr(int irq, void *dev_id)
->> +{
->> +	struct net_device *dev = dev_id;
->> +	struct flexcan_priv *priv = netdev_priv(dev);
->> +	irqreturn_t handled;
->> +
->> +	handled = flexcan_do_berr(dev);
->> +
->> +	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_BROKEN_PERR_STATE)
->> +		handled |= flexcan_do_state(dev);
+> 	__hyp_set_page_state_range(phys, size, PKVM_PAGE_OWNED);
+> 	WARN_ON(pkvm_create_mappings_locked(virt, virt + size, PAGE_HYP));
+> 	WARN_ON(host_stage2_set_owner_locked(phys, size, PKVM_ID_HYP));
 > 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but could this multi-IRQ
-> setup lead to concurrent device state mutations?
+> Both pkvm_create_mappings_locked() and host_stage2_set_owner_locked()
+> allocate page tables from the hypervisor's memory pool and can fail with
+> -ENOMEM if the pool is exhausted.
 > 
-> On platforms like s32g2 and mcf5441x with FLEXCAN_QUIRK_NR_IRQ_3 and
-> FLEXCAN_QUIRK_BROKEN_PERR_STATE, a hardware bus error or state change
-> can trigger both the boff and berr interrupts on distinct IRQ lines.
-> 
-> Since flexcan_irq_berr() and flexcan_irq_boff() execute on different
-> CPUs, couldn't they both call flexcan_do_state(dev) at the same time?
-> 
+> Since WARN_ON() at EL2 expands to a fatal BRK instruction, could an
+> unprivileged user exhaust EL2 memory and trigger these paths to crash the
+> entire system, rather than safely returning an error and rolling back?
 
-multi-IRQ concurrency findings in this series should be covered by the 
-following patchset [1]
+I have had this one as well several times.
 
-[1] 
-https://lore.kernel.org/all/20260901114848.500591-1-ciprianmarian.costea@oss.nxp.com/T/#t
+We should teach Sashiko that at the moment, both the hyp stage-1 and the host
+stage-2 pool are dimensioned so allocation will never fail.
 
-Regards,
-Ciprian
+Perhaps that will be my first Sahisko contribution...
 
+-- 
+Vincent
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260901140326.3812068-1-fuad.tabba@linux.dev?part=11
+> 
