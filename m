@@ -1,218 +1,173 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4D44A2A44
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 20:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93E830C617
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 20:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788293997; cv=none; b=N9AqT6T+1ZKQFC8AxE3Lqm+4PSKzbC3cf822r1QlD+jnRHBzTD9zlPlgSp1gCYLtTpdyGdk5QBZu08Tl3cQG9Wf94x52Ctf8uO+ypsoADTCCojMkCtmIhKZEV+DLbyYdABmWCYBibSninoc9rmRKCuPQ63803N+MDeI5eL95p5k=
+	t=1788295273; cv=none; b=FLdUNYVBWtUUcu3iwJ4waVN3CYzUZo5cD1q8F0WAvi2jZjjh+pxurMwL9ciA8+OC/JnEhtOjc4voFVXTvNjx67BVN4MeTWCcK4s5qVa/Tn0f2jBtcCSyQlg8jqquz4gPQFG1wjcM9UkfGEmju/Yd2fjPGIvknUSQjZ/dSzxrVOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788293997; c=relaxed/simple;
-	bh=2vrFX13Q2xq55tR6vY0ajYJCi8sf6gwHFJWZQ6UfzJ8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=ac7c+j8+RUbqhJT5QApdLto9JRaA6CbQ3oFtqK8p8xMJxH8hRCXQityyTdlfa0CN38oeM7OnOaDc15FMOqyKMmg/SYovLHUhvCIvxH4UWo8gNy9hFihkVbn46YPhphPIrJ2McgR/eZ1IlsegtyglRb/5Be824vdIAvsRqUBW0fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r9oX77Oz; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788295273; c=relaxed/simple;
+	bh=psMMOFJtF+kXmhZbIqCEwWB9ZeF9nIpvSaKhQSOCImE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=M6Nqb7A8YEThsO1oumrp2fEF5G+uMHC+d285Vr3Xzr/tZ06JsLQhesOpO3swxB8JK46AhVH2soEvhYN/XulJok5zgSHDLLO4sRiFdm1dtFOYUeHwGXvx+Fr9mxaLXGLcI9VdNYTp2zyUEDdKLhmmb8LOVBio4cZGawpjrTkBdMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RcFhCdrU; arc=none smtp.client-ip=209.85.210.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r9oX77Oz"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-48441a2ba14so295396f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 13:19:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RcFhCdrU"
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8485d853b08so392148b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 13:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788293994; x=1788898794; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=c8CVgkVR/XaIisVA7GQ1DF+bXEJ2xiWA/zkss4Eq01g=;
-        b=r9oX77OzQYGAZxMYwbQlFd22JNIdtHpzE0vqz3LZVeJhT1y6yGFFu7LsgA7RQIL//i
-         lHDmCKU31aBHTTvPOdv3gDtch1wJbBJuk3W6sPL2GMUHYHtgUC4QlXSewxGvAp9T1iES
-         CU38Io26th9foOg+xI+pdEwu2wEmdoLNNQB31jdOkISQ9V0Z9J7KHcxmawIXRKyd+eIa
-         4az4dECSxx+9yD3Nkg2oNjlE7whp/dN4rBX1NfmnlKOUJ543pcIkyGX0z//3F3s9LNF8
-         2S3tRrIYPQVAPl5C8UnAKSxEVrwzjtfLMRyZxyurMcAlJB5cpgZvTeo6zKkMsbLPYEWf
-         zOfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788293994; x=1788898794;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1788295271; x=1788900071; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=c8CVgkVR/XaIisVA7GQ1DF+bXEJ2xiWA/zkss4Eq01g=;
-        b=oj5RZZZU+fHiAIED2vyJFFhRIys+gdB9aiFvIZbZWnDW3sxEtu7RZTMnIOO7aCa5/T
-         VGe48OJFY4HavYZVyWzgTiNR/B4MOPhNU80tm8NcPWQSR71I983CHRlX0g0O5lP9RC5K
-         /EefSfTpWdimX5NQvYFIZz4FMxKdsdu8Ihibb85V+VZwyfM2P0PTY999w/XPqkGdcL3p
-         qlPfrhiIprCCa9JUJ/wdsAMHyP53gRviRDOcL3dPAS0GsorEI7TEi8xQWAtwxH05iQRT
-         u/uTK2GQ0eht8bC/ccwwNqV+1kSMu+0Qncan00GDxsaL1k/G7fDJU8spwjNdn447dOgO
-         Zejg==
-X-Gm-Message-State: AFuF++m4gZaT1RL1nKRrDN3Ubu6sWDKK9unH1JOS8YihyR+hhRHe9qoB
-	6GB9VcnIjqDIlkvJlXZ5RviCLB/+GFRpip2PZKmeuODZKBWywk8O3PYVKokOtQ==
-X-Gm-Gg: AR+sD12Ehj91e8jxcQDKWyW5LAwexf38bnG2lHm2HDY+hQOtuxqeJ4b0fzREBrlJFjs
-	SxLmnYXzqZKvyb/6zyDe2iBMrQn/HF3PXVk5JTVhhR2UHf9yvbmr5B6uew3MMAqxTBlLm8UFTxh
-	BfuLd2PbP5Q7LE2ieYUDlPBD41qMe+1ZKajJIn63ndaJy3VXh8gE++rqNOuufEXy1+LBMOVx9N6
-	yXWFwtWTVcrMCzDpyk0OuB+3Pm34WIHB4320LqicMjRKK4ftDqVkHuPXO9xWaNf3Fc8odoHhYLM
-	6D/WGnJaMMvYnOUn0hyVjMVpZkD35KNdzJwDEZJKr5OfaCvbYqpRjPA2DgdSKwPY+pKOrISjFTE
-	jXTU/XDXzd9RJxwSs53sl4y+GFOuG9M+edfp5I3y9waQcMezG0ACY6agz3wdwgCUAaIhGasHI95
-	webQG3GmpeJeyH8lw76bQNkqqKjbIUFLieLVipnth9vQYzlDGg3EYOePVGyAeF+wWGSqKX38hf
-X-Received: by 2002:a05:600c:3113:b0:49b:924e:9a28 with SMTP id 5b1f17b1804b1-49ce58163aemr2032655e9.1.1788293993799;
-        Tue, 01 Sep 2026 13:19:53 -0700 (PDT)
-Received: from localhost ([2001:4bb8:16d:f647:967c:bbf0:49e2:fbf])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cdce10148sm89545935e9.5.2026.09.01.13.19.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Sep 2026 13:19:53 -0700 (PDT)
+        bh=hejcjb1fztMCJ1CJSchSzKPJN30uncRZpwDIFNQIfN8=;
+        b=RcFhCdrUMA0xCKES88jFZOc6qUxx5nsBPvhh4NhCdPNdZaXqNa24hk1B+PVAFa5k4C
+         AbHySTisG5c7ad9Pj+b1ud575gc9T00otu4dIQzGkzSmE9fz7tyWxth7+rH1eqDOrys4
+         7EjXaj4YztX5VUZurxs2rQq+qWgUijBiviVBAID4yKA7cc/0glC2Wb5SmDjZW2tOCwvY
+         bRA8xF9ZQVRvssZ32kQJKvyQ/9HN2Jn5tEl9oxNfmHDVS5qjvBPqNMkkkInci8Q8QipS
+         d1J5hFxl+Lp6uZkF4zOSmkGptNnwdQFaYOzkYTG1/xjyuulypiXVVY6JT8RE/NXUnyWE
+         JLgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788295271; x=1788900071;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hejcjb1fztMCJ1CJSchSzKPJN30uncRZpwDIFNQIfN8=;
+        b=AJx4KhrVCZ4zxuodxMo6yUjQOaYIlNoEPlAn+IpATpfxbux4R23yq4yc7aGJBCHahj
+         38R0UvYEVSxWO+sWaLazjVEGhv4Lw5AtERRbZz8dHxE2teRo9fSx3j2BRveMsicyEueB
+         ZJW23sjELtdj3g9pGdEHmcujJxWrJfcxJpfJEXfoNNLzA4BkkNX7C5QFJ8w1OLrHq7cg
+         PFC9zhGdZZYIWou6AkQ2Ty9KvKzFaI6xIN541sA6/Qq02zwIEeMvtIQzBN3NI3SXqK7a
+         v8A6x26s9h0ajtFdjvBkuThGUsCwwTp6laGYFEYDm+x80Lk/bOVkZld1CduwZStnyMj4
+         fWqw==
+X-Gm-Message-State: AFuF++lsveyEwAbIuupc5cNfIzoTKWo/FPAtrx6YkWjkk4YwpO2AVsC6
+	JuC9RzpTgxPSn3RFdeGhWCljSI1cXrbAQ0uCpLr3dQ1UEXBJcz4x3ahs6lcRK4WQMoJGW+eCPua
+	ygZxZbC2CPWrwyZGogxxNu98x4B8+gUmt/JCf1fYy894DCjnSkYlYhFHYWUI4eL1Boywu4Aqe1Z
+	i7JMzGQ/Sq+8n35UYN5Eox2vsrIzzwYbiKInZzRPFsQ4kGw5h+
+X-Received: from pgdf1.prod.google.com ([2002:a05:6a02:5141:b0:c9a:ffcc:19c8])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:cc0e:b0:3cc:faf3:331a
+ with SMTP id adf61e73a8af0-3d7ae5e7fbfmr18016806637.10.1788295270941; Tue, 01
+ Sep 2026 13:41:10 -0700 (PDT)
+Date: Tue, 1 Sep 2026 13:41:10 -0700
+In-Reply-To: <20260829000926.176E51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Sep 2026 22:19:51 +0200
-Message-Id: <DL49BADYC1U8.2N2F6YW5ZR5S2@gmail.com>
-Subject: Re: [PATCH v8 4/4] iio: light: veml6031x00: add support for events
- and trigger
-Cc: <linux-iio@vger.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
- <javier.carrasco.cruz@gmail.com>, "Jonathan Cameron" <jic23@kernel.org>
-From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
-References: <20260901-veml6031x00-v8-0-532cb4f2168a@gmail.com>
- <20260901-veml6031x00-v8-4-532cb4f2168a@gmail.com>
- <20260901132208.EE64C1F000E9@smtp.kernel.org>
-In-Reply-To: <20260901132208.EE64C1F000E9@smtp.kernel.org>
+References: <20260828235840.63227-1-kylebot@openai.com> <20260829000926.176E51F000E9@smtp.kernel.org>
+Message-ID: <apc4Zn1wZtqfwv0h@google.com>
+Subject: Re: [PATCH v2] KVM: x86: Restrict saved GPA writes to hardware write faults
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Kyle Zeng <kylebot@openai.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue Sep 1, 2026 at 3:22 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [High] Use-After-Free of iio->pollfunc in IRQ handler during device unb=
-ind or probe failure.
-> - [Medium] Unintended I2C read of configuration register when pushing tim=
-estamp to buffer
-> - [Medium] The interrupt_users counter can permanently underflow during e=
-rror recovery, breaking hardware interrupt control.
-> --
->
-> commit c87f3d48e1ee614fc184995b816c8f8679a6b774
-> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
->
-> iio: light: veml6031x00: add support for events and trigger
->
-> The device provides a shared interrupt line to notify events and data rea=
-dy.
-> Add support for configurations with and without an interrupt line, provid=
-ing
-> events and trigger support when an interrupt line is available.
->
->> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml603=
-1x00.c
->> index 3d5a27a0baaed..7bd7975eb1a76 100644
->> --- a/drivers/iio/light/veml6031x00.c
->> +++ b/drivers/iio/light/veml6031x00.c
-> [ ... ]
->> +static irqreturn_t veml6031x00_irq(int irq, void *private)
->> +{
-> [ ... ]
->> +	if (trigger_poll) {
->> +		iio->pollfunc->timestamp =3D timestamp;
->> +		iio_trigger_poll_nested(data->trig);
->> +	}
->> +
->> +	pm_runtime_put(dev);
->> +
->> +	return IRQ_HANDLED;
->> +}
->
+On Sat, Aug 29, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > index 79468ddfe4736..aa5deb7c73aa2 100644
+> > --- a/arch/x86/kvm/x86.c
+> > +++ b/arch/x86/kvm/x86.c
+> > @@ -5088,8 +5088,13 @@ static int emulator_read_write_onepage(unsigned long addr, void *val,
+> >  	 * Note, this cannot be used on string operations since string
+> >  	 * operation using rep will only have the initial GPA from the NPF
+> >  	 * occurred.
+> > +	 *
+> > +	 * The guest may have changed the instruction since the fault.  Reuse
+> > +	 * the GPA for writes only if hardware reported a write access;
+> > +	 * otherwise, recheck permissions for the decoded access.
+
+Eh, I would just omit this comment, because a RMW operation is far more likely
+than the guest playing TLB games.
+
+> >  	 */
+> > -	if (ctxt->gpa_available && emulator_can_use_gpa(ctxt) &&
+> > +	if ((ctxt->gpa_access & (write ? ACC_WRITE_MASK : ACC_READ_MASK)) &&
+> > +	    emulator_can_use_gpa(ctxt) &&
+> 
 > [Severity: High]
-> Could this lead to a use-after-free of the pollfunc during device unbind =
-or
-> if probe fails?
->
-> Because the IRQ is requested via devres inside veml6031x00_init_iiodev()
-> before the triggered buffer is set up in veml6031x00_probe(), devres will
-> tear down the buffer (and free iio->pollfunc) before freeing the IRQ. If =
-an
-> interrupt fires during this teardown window, the IRQ thread could be
-> preempted and then dereference the freed iio->pollfunc here.
->
-> Would it be safer to ensure devm_iio_triggered_buffer_setup() is called
-> before the IRQ is requested?
->
+> Will this break the write phase of read-modify-write (RMW) instructions for
+> SEV guests?
+> 
+> If a SEV guest executes an RMW instruction (like OR [mem], reg) on an
+> unmapped MMIO page, the hardware triggers a Nested Page Fault (NPF) on the
+> initial read access. KVM will set gpa_access to ACC_READ_MASK.
+> 
+> When the emulator attempts the write phase, it appears this check will fail
+> because ACC_WRITE_MASK is not set. This causes emulator_read_write_onepage()
+> to fall back to vcpu_mmio_gva_to_gpa().
+> 
+> Does this fallback attempt a software page table walk that will fail on
+> encrypted guest page tables, resulting in a spurious #PF and crashing the
+> SEV guest?
 
-I will register the IRQ right after calling
-devm_iio_triggered_buffer_setup(), removing it from
-veml6031x00_init_iiodev(). It was there not to check i2c->irq twice,
-because that is also necessary to properly initialize the IIO device
-with the right data, but it is true that the tear down is not clean at
-the moment.
+Ugh, SEV.  Part of me wants to take an erratum for the whole mess, but that would
+be quite gross since the behavior would be conditional for non-SEV guests.  And
+it should be easy enough to make this work for just SEV guests.
 
+> 
+> >  	    (addr & ~PAGE_MASK) == (ctxt->gpa_val & ~PAGE_MASK)) {
+> >  		gpa = ctxt->gpa_val;
+> >  		ret = vcpu_is_mmio_gpa(vcpu, addr, gpa, write);
+> 
 > [ ... ]
->> +static int __veml6031x00_set_trigger_state(struct veml6031x00_data *dat=
-a, bool state)
->> +	__must_hold(&data->irq_lock)
->> +{
-> [ ... ]
->> +	data->trig_en =3D state;
->> +
->> +	return 0;
->> +
->> +clear_interrupt:
->> +	veml6031x00_set_interrupt(data, !state);
->> +
->> +	return ret;
->> +}
->
-> [Severity: Medium]
-> Can data->interrupt_users permanently underflow here during error recover=
-y?
->
-> If an I2C error occurs in __veml6031x00_set_trigger_state() while disabli=
-ng
-> the trigger, this error recovery path calls veml6031x00_set_interrupt() t=
-o
-> revert the counter, but fails to update the software state (data->trig_en=
-).
->
-> If a subsequent successful disable happens later, the counter will be
-> decremented again, potentially underflowing to UINT_MAX and silently skip=
-ping
-> all future hardware writes.
->
-> [ ... ]
+> 
+> > @@ -6454,7 +6459,10 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+> >  
+> >  		/* With shadow page tables, cr2 contains a GVA or nGPA. */
+> >  		if (vcpu->arch.mmu->root_role.direct) {
+> > -			ctxt->gpa_available = true;
+> > +			/* A write fault can require a read for RMW emulation. */
 
-That is not true because the error path will *increment* the counter to
-re-enable the IRQ and keept it consistent with data->trig_en. If an I2C
-operation fails, the trigger will stay enabled in the device registers,
-and therefore data-trig_en should stay enabled.
+Heh, my brain fart notwithstanding, just drop this comment.  Because while RMW
+operations are why KVM needs to get this correct, it's doesn't explain why it's
+correct to allow reads on write faults.  We could write a comment for that, but
+I think anyone that cares enough will be able to quickly deduce that reads are
+allowed because x86 paging doesn't support write-only mappings.
 
-I tested it by adding some hacks to force that situation, and what may
-actually happen is that if *on top* of that failure, the I2C operation
-in veml6031x00_set_interrupt() also fails, interrupt_users will be
-decremented (as it should, because the interrupt could not be
-re-enabled), and *then* a second call to disable the trigger will set
-interrupt_users to UINT_MAX.
+> > +			ctxt->gpa_access = ACC_READ_MASK;
+> > +			if (emulation_type & EMULTYPE_PF_WRITE)
+> > +				ctxt->gpa_access |= ACC_WRITE_MASK;
+> 
+> [Severity: High]
+> Does this limit gpa_access too strictly for read faults on RMW instructions?
+> 
+> As mentioned above, if an instruction naturally faults on its first (read)
+> access, it will only get ACC_READ_MASK here. This seems to be the root cause
+> that later prevents the write phase from reusing the GPA during MMIO
+> emulation.
 
-Although this is very unlikely, the fix seems to be trivial:
+For !SEV, that's fine.  In practice, I highly doubt RMW operations are used in
+fast paths, e.g. Linux-as-a-guest straight up supports only MOV instructions.
 
- if (state) {
- 	data->interrupt_users++;
- 	if (data->interrupt_users > 1)
- 		return 0;
- } else {
- 	+	if (!data->interrupt_users)
- 	+		return 0;
+For SEV, this as fixup?  And then if someone cares enough (I don't think I care?),
+we could add an entry in Documentation/virt/kvm/x86/errata.rst for SEV.
 
- 	data->interrupt_users--;
- 	if (data->interrupt_users > 0)
- 		return 0;
- }
-
-Note that this fix is not a hack to just get rid of reaching UINT_MAX, it
-reflects the fact that the previous failed operations lead to a disabled
-interrupt and an enabled trigger in the hardware, and there is no need
-to act on the interrupt again when trying to disable the trigger a
-second time.
-
-I will add it for V9 after testing it with some hacks to force that
-scenario.
-
-Best regards,
-Javier
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 3db88742ea9a..4f6659aa72ec 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -6459,9 +6459,17 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 
+ 		/* With shadow page tables, cr2 contains a GVA or nGPA. */
+ 		if (vcpu->arch.mmu->root_role.direct) {
+-			/* A write fault can require a read for RMW emulation. */
+ 			ctxt->gpa_access = ACC_READ_MASK;
+-			if (emulation_type & EMULTYPE_PF_WRITE)
++			/*
++			 * Always allow writes for SEV guests, as the guest's
++			 * page tables are encrypted, i.e. KVM can't walk the
++			 * guest's page tables and so must always use the GPA
++			 * from the initial fault.  Restricting use of the GPA
++			 * to the access type that faulted would prevent KVM
++			 * from emulating RMW operations for SEV guests.
++			 */
++			if ((emulation_type & EMULTYPE_PF_WRITE) ||
++			    is_sev_guest(vcpu))
+ 				ctxt->gpa_access |= ACC_WRITE_MASK;
+ 			ctxt->gpa_val = cr2_or_gpa;
+ 		}
