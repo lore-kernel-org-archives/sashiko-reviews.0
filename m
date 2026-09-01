@@ -1,165 +1,162 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C4D27FD76
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 12:27:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E09333F368
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 12:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788265668; cv=none; b=k9fgSqRZ9CZHgeGhhVYWAPeoUNMpt464LEvSboPLjFvdbz/v7zi2NIIeJEkTSf7lZNho2l6WhH3gIVNNENet7FqNDjqQgd8njbqFhc/6ExrNoh77JToQXY3POTtg5uLcR5wze+qXoj6o3pyWPpRaRgsRH47sTSu9Wm68hRpLJ10=
+	t=1788266491; cv=none; b=OwMBTRhGxlTJ/vq7jE8v9FUvfko5FFId/CDmySILzkNOpVCabrcaElMjjconE43YT3nLtRHoD7IfAeXzXIs+GtDbsL7s6kj5jyMqaR+1jplpl/bv5+63xlNV7kAGrA49ze4t19bC5stV4sNBHN3npRdCw5N/f/wHeiRlDj7R3DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788265668; c=relaxed/simple;
-	bh=KMkH8UQjn4EkAkYr2SGlhFXYgxkOYKrOGdm3H+LFE0g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MqfJD3vsqJhXlxsm6twWbW2pU0ZZa72VlZUinrj6Np+i08rGpfQbxnk8lBhSgPY7jX40bFpw5uS4mBEoqU39XJSCq5dBR3OM4vEvHjZ68RRuUm0qDqgos2/jV9yRz1LYWQDebUkKSZ6S77jpWzg4H7EZfEIy12mECPjzhpTArZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=U6jOc/Vg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zLFlewVl; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=w4DMk6j/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0RDXPt/J; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1788266491; c=relaxed/simple;
+	bh=b8gsAP+P4ZBYdXqjS0oXJ6Oj9aG7F9plGT4MLePL0x8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=o+aaEMgKywG2SGFa6TFWSDNU4XhBoqvl1LinJmpgZOAuLBh9LchLb3OC9uSDXdgfpU54e0vVUUQ7eLUYiIx61E4DS/SGmhgKGWU2JsL1cB3736rJWpIT9pq1f1wnEZI+T5+mepk/WYgivgFpIRtVpV74YOaQUFUYJpHSjiza+sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bEDInNOZ; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="U6jOc/Vg";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zLFlewVl";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="w4DMk6j/";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0RDXPt/J"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 6882822780;
-	Tue,  1 Sep 2026 12:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1788265660; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=DEuLE0BgQA8LZ20x0JkYmbROZW9RhG/RMzIm2/7GesQ=;
-	b=U6jOc/VgE3cHi6Z80nxckF1JXjV4p2AzrBaJKHcEoYVGhn5K03ogrwDviweAd/Ll+kCZqj
-	ysLIlhheZP40xRlLzHQU7m3Dz27y23IYY1j+6OltXy/fghTaJlq5ZDcmdofLZi7wffhjJl
-	KQOTPuCUSi1FrqIPgRgd8nmr42PdcWk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1788265660;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=DEuLE0BgQA8LZ20x0JkYmbROZW9RhG/RMzIm2/7GesQ=;
-	b=zLFlewVleg3IVEXDRJjWsKtRo2DGwrOfWvo5zaqzlngA0gzf4tPanZH8Y5umU/ZrVcG0Pp
-	SOqb+60MeofuwkBA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="w4DMk6j/";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="0RDXPt/J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1788265656; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=DEuLE0BgQA8LZ20x0JkYmbROZW9RhG/RMzIm2/7GesQ=;
-	b=w4DMk6j/9xdV5uiGKoBopU/CLkKZmAvi2blcq/eZHHos/vmw8NaSPhdChm9jx/BtbGuSJo
-	oVqNN7u+EFJF5uei1/oS2prpGxkShnOHBDMfw+NBHYz4D2AsbTBNDx6aSYmCYYnYxN0wZ6
-	mBTB7UBZrF53W240eKQOV7UjWcoHsrw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1788265656;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=DEuLE0BgQA8LZ20x0JkYmbROZW9RhG/RMzIm2/7GesQ=;
-	b=0RDXPt/JzZbW/218XCXeh15YyQ1hZDxARBEuRFort4fL10dZbGy6xmqokbFcsKkD7YpX0g
-	e3xnnmLpzuCWimAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 07CA7136A2;
-	Tue,  1 Sep 2026 12:27:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id xOqkALjElmq2dgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 01 Sep 2026 12:27:36 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	daniels@collabora.com,
-	leandro.ribeiro@collabora.com,
-	pekka.paalanen@collabora.com,
-	lowry.li@arm.com
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH] drm/atomic: Set plane-state pixel_blend_mode to default
-Date: Tue,  1 Sep 2026 14:25:26 +0200
-Message-ID: <20260901122731.83854-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bEDInNOZ"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d5335cf904so44746135ad.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 05:41:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788266489; x=1788871289; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=UYiynw6vM0fgHMzi4l0VXX5lqoSkw24de4a4ijW/A5g=;
+        b=bEDInNOZSp4OSjX8Wvv6WUArENpke74SsEZ3fUcWeSr2sJHtydHh0sbOyoz1ok8bz3
+         eLAgR79Wfpt/dZjRqrY1uIK57rKI+z+D8ZG8gCOolJClzE7yNwdQvYCdBkBKP/iDrKk5
+         gK1Q1b6EVeT78fxOHhppmUkKslr6HaJKoDmaGzrRdv5v4Nd/APEoqWon3cXRcmPvz5ho
+         KgduGBhX7ZVFeqUAhmSYevn0n+674V+CMGy75L24roaI0UPwHzs4xyN8ql6WAIRwpog+
+         vfXwkYJhHcDebTpX69q2l1GHTYcz5Qw7OxvcqoHWNNj1Lfr99zcjrzcG7k+95ym7ubIg
+         vp4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788266489; x=1788871289;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UYiynw6vM0fgHMzi4l0VXX5lqoSkw24de4a4ijW/A5g=;
+        b=Af4fg1eWgZoGOUXzYeOzouYCxu9jO637OHGIwZfGLKxJ2NzkW9u2JppgbFOH0Bx0o2
+         US895IPvZksgwdzHFNvHoSyQZwoPBEHUyjlHN++VmPSlRn0T4Y7XUAfw+7stMraGAAOH
+         4wGTrpN81RWCYaF8ZCkq8qkF9EUslwie/zdafkV3hGFG9HD4CQom4RalhRIVblbEsyl9
+         5jC6swqPZW8Fa2XZqgH98xYEe9yekCFDM+fWIaVeGqVjSOEOvjt1on7wtkewJkx+Tp9W
+         AmeFJaLM0Qnm2GmYyUA2yohunhUrXlvc9BffdbfKsndxUyLi9/a6A6VyjsT/CrOxWD6K
+         OjMw==
+X-Forwarded-Encrypted: i=1; AKwUvBzeqzwCC39r3vzaiDhPcoWcdNkG9RltHz59kn0LUcomqewTddEy7zYGBgnPInsaZNRUYobmhd8hZd6C00CuTgI=@lists.linux.dev
+X-Gm-Message-State: AFuF++m1l4uQTGA/BpjllZlkFS14jjkjHadc2sf06qmBo8R5xx0/HAPm
+	+moKRnBZ27ofmp1pqiDgETf8PqE5eBCH56vbilRt2DixrPJcMpwXF0+H
+X-Gm-Gg: AR+sD130UFQH7CgQN1fglEonIZOxzbMp4lfIY/qmdI00cq9WsKSqGn1hk8dPFlmIX5x
+	nZAgRXkohj/qsKUU5jdlOyDun1XrpvScIMjhC8S0YvkAahXpAW5s+I7GZNrt84JKZjjBwjwWU56
+	/FdY6M0gjoEY/RwEASUlN+YQ4iNucU8Cw6QAcLlqEUaF7GfJxsDdELEqbStsoL3iAp/8Mym0M5r
+	JK07SVyJLGF4WWnsEMMp9qTDecfb172QhOstu/gwUPvmPr3sqSKcbK/8neVVio88FXsCF9f7KyE
+	L7HxjDJdt24LH9KMpBgX0Cb52NpdhN9LiBMUtCWVMTz9LevYoqAQxRAytXAF3qFOsNKCKZOWWPP
+	FfQ177DwxGnva9EKgIv/EcJwqocWe/Jl5ovtWh7VJhfSTVdCT7jUdaX11W38X+XFDBty24S6zoS
+	AhsM8+YWlAhZVDKlNnVG87HlqerhnrigWIAsVFbdLJrian0YRSUmt690xRXSVN19K9Y/C4svgMI
+	KgLL59xCCB04nfp
+X-Received: by 2002:a17:903:1105:b0:2d8:d4cc:be68 with SMTP id d9443c01a7336-2d94a930366mr99475175ad.21.1788266489409;
+        Tue, 01 Sep 2026 05:41:29 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d75988cabasm51180135ad.65.2026.09.01.05.41.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2026 05:41:28 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sashiko-bot@kernel.org,
+	sj@kernel.org
+Cc: aethernet65535@gmail.com,
+	damon@lists.linux.dev,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] mm/damon/core: fix quota could not be set to zero
+Date: Tue,  1 Sep 2026 20:40:50 +0800
+Message-ID: <20260901124138.8460-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260901111440.A39471F00A3E@smtp.kernel.org>
+References: <20260901111440.A39471F00A3E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 6882822780
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,collabora.com,arm.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,suse.de:dkim,suse.de:email,suse.de:mid,intel.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Flag: NO
-X-Spam-Score: -3.01
 
-Initialize the plane state's pixel_blend_mode value to the plane
-property's default value. Resolves an inconsistency on planes that
-do not support PREMULTI.
+On Tue, 01 Sep 2026 11:14:40 +0000 sashiko-bot@kernel.org wrote:
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 860e748bddcc ("drm: ensure blend mode supported if pixel format with alpha exposed")
-Cc: Leandro Ribeiro <leandro.ribeiro@collabora.com>
-Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
-Cc: Daniel Stone <daniels@collabora.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
----
-It's not clear what Fixes should point to, so I picked the commit that
-introduced the stricter validation of the blend-mode property.
----
- drivers/gpu/drm/drm_atomic_state_helper.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch places the `if (esz)` check after the throughput calculation, inadvertently reverting a previous fix (commit 8bbde987c2b8) and causing schemes with low throughput to permanently deactivate.
+> --
+> 
+> commit a1511f591a76665e55c325a03d3d47bf4ba87dc6
+> Author: Liew Rui Yan <aethernet65535@gmail.com>
+> 
+> mm/damon/core: fix quota could not be set to zero
+> 
+> This commit modifies the damos quota setting logic to skip clamping to
+> min_region_sz when the effective size quota is already zero. This is
+> intended to allow the temporal tuner's zero quota goal to be respected.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 3f89cfdf5f022..fdec7c0fe913a 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -3122,7 +3122,8 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
+> >  		else
+> >  			throughput = PAGE_SIZE * 1024;
+> >  		esz = min(throughput * quota->ms, esz);
+> > -		esz = max(ctx->min_region_sz, esz);
+> > +		if (esz)
+> > +			esz = max(ctx->min_region_sz, esz);
+> 
+> [Severity: High]
+> Does placing the if (esz) check after the throughput calculation inadvertently
+> revert the fix from commit 8bbde987c2b8 and cause a regression where slow
+> schemes permanently deactivate?
+> 
+> If a damos scheme with a time quota processes regions slowly, integer division
+> can cause throughput to truncate to 0. When this happens, the calculation
+> esz = min(throughput * quota->ms, esz) evaluates to 0.
+> 
+> Because the new if (esz) check is placed after this min() calculation, the 0
+> value causes the check to fail, skipping the max(ctx->min_region_sz, esz)
+> clamp.
+> 
+> With esz == 0, damos_quota_is_full() always returns true, bypassing all
+> scheme operations. Since no regions are processed, total_charged_ns and
+> total_charged_sz are never updated. This leaves throughput permanently at 0,
+> resulting in an unrecoverable starvation loop.
 
-diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
-index d90d1d7c9cf9..0325caee528a 100644
---- a/drivers/gpu/drm/drm_atomic_state_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_state_helper.c
-@@ -278,7 +278,13 @@ void __drm_atomic_helper_plane_state_init(struct drm_plane_state *plane_state,
- 	plane_state->rotation = DRM_MODE_ROTATE_0;
+Thank you for pointing out this!  Yes, this can happen, and this is what
+8bbde987c2b8 was fixing.
+
+damos_goal_tune_esz_bp_temporal() will set quota->esz_bp to zero when
+goal is archived, so this need fix by adding a check for quota->esz_bp.
+
+'''
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 644daf5a1656..c07ae66caa49 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3118,6 +3118,9 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
+        if (quota->sz && quota->sz < esz)
+                esz = quota->sz;
  
- 	plane_state->alpha = DRM_BLEND_ALPHA_OPAQUE;
--	plane_state->pixel_blend_mode = DRM_MODE_BLEND_PREMULTI;
++       if (!quota->esz_bp)
++               esz = quota->esz_bp / 10000;
 +
-+	if (plane->blend_mode_property) {
-+		if (!drm_object_property_get_default_value(&plane->base,
-+							   plane->blend_mode_property,
-+							   &val))
-+			plane_state->pixel_blend_mode = val;
-+	}
- 
- 	if (plane->color_encoding_property) {
- 		if (!drm_object_property_get_default_value(&plane->base,
--- 
-2.55.0
+        quota->esz = esz;
+ }
+'''
 
+I will change this in next revision.
+
+> 
+> >  	}
+> >  
+> >  	if (quota->sz && quota->sz < esz)
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260901105951.106246-1-aethernet65535@gmail.com?part=1
+
+Best regards,
+Rui Yan
