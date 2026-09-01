@@ -1,125 +1,119 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622A43451C8
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 00:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C71A6809
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 01:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788224126; cv=none; b=IGjD2XTuZFr+DQGxhXPIg/3NytFlR1RBP8Jc7bdA/TohIdp3gsgN+3580ZZGpT3E7IpWoP2NlCZfHF1S5q7fa9Xc+vReb461/hSlAgbcIWg3oD2oYZAip/loakPDehRNLAzy/MhLCIQdvE4r8SZwfIyH8G8WYSJ82/jbeCo5jA8=
+	t=1788226953; cv=none; b=eIyqOW3WKqkOFgKOeOQc7vulIeIAyUvyAY3ijBwNzFouvRxL8Yy44SjOwd+Cgd/+aLx3FJGEeKaaJuWgdPYC4sxuubB+4jhXUBfdYqS90Tu7KjCtpnMV4nhFdXQXLyoV5VOVmwQ9HCOY4N+nCSX7VpbXNlRgdDHidFbcSxXwYRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788224126; c=relaxed/simple;
-	bh=IqYrkw4ZPVFVKybd0wcsvf1eFIs3TB1ctmHqPhb25Mg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckMVA5OzKjK54CbNfuj1WNAydtJa4m3WUXEnuqEQu3+SY8YvBiSCCKIB7RR6auBj1AGgGHkIIw+wWM/+SOqZFF2WgO1HkQV4HrSYl/JzjXyIwDt3S2l38oI6s5v6GTEZzFm6AaAhq087t4wDF3o50r5rwP57WAJWcJUZiY83cIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L766QKjT; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788226953; c=relaxed/simple;
+	bh=ivKmB6QoDiiQSjmuz0wRnzNXAllAQSwupIkNeKB337c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rwhBlMd8JQk13jfNk2q7ziiBy0Tyt0eveq3vSrL3awQpqIf7F6UEX53US2VL8MX5N2vbpxFbGm9E2I8IrZi3FBOqhANn/0lYKlQctDWtfCMTf/cl3/NzbJxfVLGG6zZiz/3WYvYmDfWhpin6b7B0U7rC/0XHXNLQlqmTw/BP/RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=kztRRxSE; arc=none smtp.client-ip=113.46.200.222
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L766QKjT"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-381b831d535so693122a91.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 17:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788224122; x=1788828922; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=lM4ssctoMm3dM3zUI1p8Cv/4BMA+1Rtrokinp6Bez+Y=;
-        b=L766QKjTkAPmXA15F5FoUdn6wMKzAbIgaZpEL9uwaSyiYVZ6VbGmp9kFlXTAK4wg1i
-         kV0F8dX6bh0GQPMOiU++CNUreQIJ2SoPHCQQV6RZWmm6z4k9C2Z+T9RiPiHUy+FL2rE3
-         Ae7o+anGf/anys0GgVPOM9PgiqRBDMrUGCesGq6v/UMStS07wwl8ZpxZoKFL8AmwrxKu
-         FaYvX9zCAar2KlOM0Idzew6auTxHXDxRCG4xHCiRUuSb/vKmpSmJcgQMh2PXYuSvJSw7
-         pP+YeFZ3Fy1hzH0jjPNwdL69ejHdx8mcha5pZRcP7STfMP1rke00NvrrTHoB9Xnh38oK
-         rgEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788224122; x=1788828922;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lM4ssctoMm3dM3zUI1p8Cv/4BMA+1Rtrokinp6Bez+Y=;
-        b=H0cFfudOSWEBkSFICrGFHNCaEjR/iEDBP48Gnftecy5Aho/H+lHb5Ot7HpdsQmytwT
-         GzzEpUUO7a/X9QMANC2D91SghwVSBcP140z6lL3/fgBhhu6nhQzACMJR5YZkDp/7qcFj
-         VmnDx3lJ6C45ZPGDUI8/FQO1CmQ96+wEjbiWl9/3RoRq0/EMzYgEQcyWn3FJB8Cf6XSJ
-         XK6K0E93mlhgQobfPonVRjfmcdRCAQEt91+gETkq7UU32iskNJ/pXB5t+XICwHwfsu7w
-         PmPBmjVYV70nmiCPxwfW/tVHjMEvOtSKpApVcifixZz5+djTBh6V/EKVK1Yp1Pzx7q2N
-         JqPg==
-X-Forwarded-Encrypted: i=1; AKwUvBwlHRqd/u2Igssd0ZQMaGBSqvbib3gVqDaIbYNmfr6jnf4AvtqWcYyb9M0z57VqKMnBui+oYwTzuWZYQZi0yE8=@lists.linux.dev
-X-Gm-Message-State: AFuF++mlN6T8QpXLp2fht/H3GyL035Umi10EI8+DIYs09KUizaok+bA0
-	kQeIhDdW5ekASuw1jucmcEDeZZ3VXTXXNsIWJs3mAphykzyo7t1vwEVH
-X-Gm-Gg: AYBFou0HZagl49VgLIryDxfx7l7CmHmwOEGhyZzEih34XGMo/V8f2tzKLnjPPBpzRA6
-	ykURwsxndtrnm/QB89mMlhcld74sTJ52eUKpZA5+PUosYKyM6T5t9TiOlZTh8TbAcKCLUvBDvj6
-	DosrrDXInIZLednf5mirBO/qGtsYjm+Of2Or4cQAfqBXp4nUj3qcdxOoU46t7KxM4IMof9cze0D
-	SVfau1jsN/d/LhLWP/xUfhGa36qkytFxx9SXmmKfaHL0YGhi6d7rYsD98uUZeip83xkEDcRk2N7
-	3BRRMb+PKsUNWFUiTPNqKMZHhp+57RUCYOqIx5+gZ2eG+gj2sd/zD7SC09bIbV9W3skHKBZw/gi
-	4klt8BqzjcqOY+LCJQgm+9rwvqiz41QCrrz5e7lsMw7pNmqDLs18vSdU6O43S16yoYlEyX4LQyl
-	obTS5bObIsdd8eZ31qSYQ7dTwNE9uRMYOAz4Np0TOmeJL7XhiH0rSSOFNU+n9WL841TQkSfsdDw
-	oAvYBzj8s8Q99ew
-X-Received: by 2002:a17:90b:5447:b0:399:ecd:d68d with SMTP id 98e67ed59e1d1-3990ecdddd7mr3479915a91.22.1788224121502;
-        Mon, 31 Aug 2026 17:55:21 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3990ba8cbf6sm2351263a91.0.2026.08.31.17.55.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 17:55:21 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/tests/core-kunit: add test for unconditionally skipping the last region
-Date: Tue,  1 Sep 2026 08:55:31 +0800
-Message-ID: <20260901005531.46620-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260901002515.88585-1-sj@kernel.org>
-References: <20260901002515.88585-1-sj@kernel.org>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="kztRRxSE"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=FmUs38s23l+JbXkfrYJCAspVpkyYV3TPYuQ5Y22fLOw=;
+	b=kztRRxSEBv52FoofIixwylbPRXSaUQNU0bYGR53Rha80RxDk/wjjaWjzm3mIbGHcJRY8TKfbE
+	yWiadQ6hpgC/5MfSOMlSVHpLNoqsZsFMP8XoHnwTtr2Boz47HzOkupD9HeEji4WuPxiWVmXyToI
+	LmO4glr2/D9W0+EcJYtE6Os=
+Received: from mail.maildlp.com (unknown [172.19.163.200])
+	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4hYpH76Rn8zLlX5;
+	Tue,  1 Sep 2026 09:31:31 +0800 (CST)
+Received: from dggpemf500011.china.huawei.com (unknown [7.185.36.131])
+	by mail.maildlp.com (Postfix) with ESMTPS id 17D9E40563;
+	Tue,  1 Sep 2026 09:42:21 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ dggpemf500011.china.huawei.com (7.185.36.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 1 Sep 2026 09:42:20 +0800
+Message-ID: <a2984749-be88-4e69-9a9b-050225d71e4b@huawei.com>
+Date: Tue, 1 Sep 2026 09:42:19 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] user_namespace: Use acquire/release for nr_extents
+ synchronization
+To: <sashiko-reviews@lists.linux.dev>
+CC: Marc Kleine-Budde <mkl@pengutronix.de>, <linux-can@vger.kernel.org>,
+	<tytso@mit.edu>, <linux-ext4@vger.kernel.org>, Oliver Hartkopp
+	<socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, Oleksij
+ Rempel <o.rempel@pengutronix.de>
+References: <20260825095422.3166067-1-ruanjinjie@huawei.com>
+ <20260825095422.3166067-2-ruanjinjie@huawei.com>
+ <20260826095421.73E0A1F00A3E@smtp.kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20260826095421.73E0A1F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ dggpemf500011.china.huawei.com (7.185.36.131)
 
-On Mon, 31 Aug 2026 17:25:14 -0700 SJ Park <sj@kernel.org> wrote:
 
-> On Mon, 31 Aug 2026 20:28:15 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> 
-> > On Mon, 31 Aug 2026 11:50:14 +0000 sashiko-bot@kernel.org wrote:
-> [...] 
-> > > [Severity: Medium]
-> > > Does this patch omit the fix for the core logic?
-> > > 
-> > > Without an accompanying fix for damos_skip_charged_region() in
-> > > mm/damon/core.c, won't this new test unconditionally fail and break CI?
-> > > 
-> > > Because the underlying bug is not fixed in this patch, the old logic still
-> > > triggers and returns true when it processes the last region:
-> > > 
-> > > mm/damon/core.c:damos_skip_charged_region() {
-> > > 	...
-> > > 	if (quota->charge_target_from) {
-> > > 		if (t != quota->charge_target_from)
-> > > 			return true;
-> > > 		if (r == damon_last_region(t)) {
-> > > 			quota->charge_target_from = NULL;
-> > > 			quota->charge_addr_from = 0;
-> > > 			return true;
-> > > 		}
-> > > 	...
-> > > }
-> > 
-> > This test is add for [1].  Therefore, this patch can only be merged
-> > after [1] is merged.
-> 
-> Makes sense.
-> 
-> > 
-> > [1] https://lore.kernel.org/damon/20260830063159.6347-1-aethernet65535@gmail.com
-> 
-> I wonder if you are open to repost this after the dependent patch is merged
-> into mm-new.  It would be definitely inconvenient for you, but that would help
-> us getting AI review help.  What do you think?
 
-Okay!  That will not be inconvenient :>
+在 2026/8/26 17:54, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The patch missed replacing `READ_ONCE()` and `smp_rmb()` with `smp_load_acquire()` in `copy_mnt_idmap()` within `fs/mnt_idmapping.c`.
+> --
+> 
+> --- Patch [1]: [PATCH 01/11] user_namespace: Use acquire/release for nr_extents synchronization ---
+> commit 1bcd6fdf3ca65990e2c5f3f0896df9c586813872
+> Author: Jinjie Ruan <ruanjinjie@huawei.com>
+> 
+> user_namespace: Use acquire/release for nr_extents synchronization
+> 
+> This commit replaces smp_wmb() and smp_rmb() with smp_store_release() and
+> smp_load_acquire() for nr_extents in user namespaces. This aims to improve
+> performance on architectures with native acquire/release instructions.
+> 
+>> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
+>> index 0bed462e9b2a2..576b667a88136 100644
+>> --- a/kernel/user_namespace.c
+>> +++ b/kernel/user_namespace.c
+> 
+> [ ... ]
+> 
+>> @@ -1098,8 +1100,8 @@ static ssize_t map_write(struct file *file, const char __user *buf,
+>>  		map->forward = new_map.forward;
+>>  		map->reverse = new_map.reverse;
+>>  	}
+>> -	smp_wmb();
+>> -	map->nr_extents = new_map.nr_extents;
+>> +	/* Pairs with smp_load_acquire() in map_id_range_{up,down}() and m_start(). */
+>> +	smp_store_release(&map->nr_extents, new_map.nr_extents);
+> 
+> [Severity: Medium]
+> Does this code miss updating copy_mnt_idmap() in fs/mnt_idmapping.c?
+> 
+> Since map_write() now uses smp_store_release() to update nr_extents, should
+> the reader in copy_mnt_idmap() also be migrated to use smp_load_acquire()?
+> 
+> Currently it still uses the old barrier pattern and contains a stale comment:
+> 
+> fs/mnt_idmapping.c:copy_mnt_idmap() {
+>     ...
+> 	u32 nr_extents = READ_ONCE(map_from->nr_extents);
+> 	/* Pairs with smp_wmb() when writing the idmapping. */
+> 	smp_rmb();
+>     ...
+> }
 
-Best regards,
-Rui Yan
+Will fix it in v2.
+
+> 
+> While the release-store correctly pairs with the existing smp_rmb() under the
+> Linux Kernel Memory Model, leaving the old barrier in place defeats the stated
+> goal of avoiding the cost of full one-way barriers on architectures like arm64
+> for this specific code path.
+> 
+
