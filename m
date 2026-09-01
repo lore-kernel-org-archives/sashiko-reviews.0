@@ -1,371 +1,213 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013016.outbound.protection.outlook.com [40.107.162.16])
+Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423B543CE46;
-	Tue,  1 Sep 2026 16:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0F13DA5AF;
+	Tue,  1 Sep 2026 16:11:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.152.168
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788278854; cv=fail; b=oCHP+4fl2yeANd3OHGcdLVQBfRU+nVbz6XMMsV4HnrltI3WWoG9TSM9jvOW15rW40ux8z1P/AAUF+W18C6gLHGyl9xTJ0I/LOAvpzBzWMokjA3arR0vqirKkqQKTWiwCX44w1DvQW9YytDhczoT5ETx7DiWcr1R7I4eZKzGBoJE=
+	t=1788279083; cv=fail; b=Rsr6pLz5BVK7c51fNPeV+Wz4bioLvs5gFOevuVap45Xpzjr3FkBJqXkILqrFxCYUKh20AzeS+FpHdiJoi7DbrSwKGWLrQL/t3IA7yjr9lB/zawVuyvRYlAmSgWy7uKtn9mFx/cuMjM7523inAAXzVGAUwKSqCJGFayf1LAjwTK4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788278854; c=relaxed/simple;
-	bh=h3RO1Hv4hNtWOlrM89pLmnhIP7/70Pj5NKwF23uInwg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cL0Ly80Ip7+F+8J27TNLbUa64gPMkKMpJje1jj/TR4jnXPjDxz42FODvgK5GbZJt2nQsgADJVBOCTqnJCREzj/i3/nmS48KYj8M7wMioAdaZJrK6AXxiCHJz1R1D1T8fp5dIENOoLd4/6qYavZMTPdY316ZJNAlZBl+kjaE2ruE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NHHUunsu reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1788279083; c=relaxed/simple;
+	bh=ruvSx0sH0ktBJYAL2h9mH5eOKmHnIyJSTu8Apt9WAQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CO/ND4Dj0Az70LbGZOUt0lNQpPpcNufaMwRyZapywrmfEtWF/1UUxqGXI3BRdSxnr2pljg6h66VYIzMMc3yaQJeuaP6qY1ZHTD7unNII7ZL5+EE7bCAqD2FBCFJBu8QkfwPP964zG9vMcUYcZWssTbPCr6XTjwKrwIeIpz6rSdM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=YOBX7Io5; dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b=hA4SxohG; arc=fail smtp.client-ip=67.231.152.168
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NHHUunsu"
+	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="YOBX7Io5";
+	dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b="hA4SxohG"
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+	by mx0b-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 681EMbND3139182;
+	Tue, 1 Sep 2026 11:11:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	PODMain02222019; bh=MXYM11KpN4+3NOjOfVq+0NBJaXcW14wWDW3tJnW+NjM=; b=
+	YOBX7Io5b/IUxuQR5nveI+kc3yKZ0WbAqrbm9OyNR9NDkc9ROOslYRwi719CEyG3
+	uXHAJfdEVtkjysAJhUlBF9Aa19lr5oP/BfX7sPicDHTV2zeplBYzxe97gNGHgNrF
+	PNE3+4XaN/4CiVUr9SZ6/V7wm0I7eouhjufYBsP3OWbg+Q1pUHKH3a45BthhZ94y
+	cnvewpNTtwnoI+m6Eim0RwW78KIQBCwN6TkKtq3VKdOmtyGircy5gIgBCq7eCkbf
+	/R+IloYSTeIfXdD0pXoYKGWh3VAKj68Fy//IY8gUeq8VHhUqzOJDhlxtWR+HZ01l
+	NhBCUXRiiL3l2y8nxF0Ang==
+Received: from bn8pr05cu002.outbound.protection.outlook.com (mail-eastus2azon11021072.outbound.protection.outlook.com [52.101.57.72])
+	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 4gduntgnyw-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 01 Sep 2026 11:11:18 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=e+FvTn5tW52xiNyDTzYHelGB6vkARIyG24cuJrzhGWBGtxHw4fBowrtaM2jMpNMjY2Qv4EMiqp7VOfjbA4vpTeBuvabPdcH9MJK5FW0Ky1v0wSrQjU+GWnWz9qTRLRNUrKbdqYhaomQ2D25dFd8WOhJA76voBT20i/DXhMI+sr7mgVo1Z9xkv3/c9oAyBttuqsp5bkrwTzXrdkJlRIAyMfEBh7GtTcA3dheLZwa2fXmM2RVHTe79v8i1aqQsDxpYgtyPCzBaglmBMhdd/s58KouU50A4ZWeVfpbqIwMpbIbfZclt5Rywpd4zOTTOJCZD/KDWe8++48n2HgppddTl0w==
+ b=t/BQ4YX/Sbcx1rPS7mpgbO47c6xCYdFijLtpQIUYKIXxFHGPSgTJIfNo47q/s5H/UTjtJe5uzfz9LuOM4/KDRQdP6gaw+BmNEqlpBLePeV5ZYx4CGxdw/q43rpRjapeSOqqIENKRzbbExmIk8FnT7p44yBX4taHAkkMt+ENcGp7UHtXsRqYt4fIY54upqf9oo+waoNXsg8IY+TPL77NoaMckgLQl8cguL2udS+Ap6A8LtU6ISPbOvqM3HbY9oF+9nyRhCC10T5/N58aDLrBVS/k+gWdENVkYYkMbZtBbAd0K2uwP9DFWvJT5/ich4tyfEUUf3sw4HF+lLps18+1HAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5wqon2cQYgTHT/XzuaUb0aLpxMZSiuI2IIZZcLUyjkM=;
- b=H9Q+oBzelM+tmA0GFdurVXvLTsJURrrOmibHlLXoyqhy9rzGofqhVX879d9n4N+lblQGkdUkXdjRxCFHTzdwPrSSMhFBwCPjRdaclZzqQMuuUjaVGWIHPJaOs+BHt8NdUEbC/8PSUCjxBj4MKcYwKucsU9snTqFzEu6MkKRH+GGDhD0UBxS9Ohnk4d47GN9rczgT3rs2Mpj9x+/jN83iaCVhuhvhZFDQQPrzaTDwiSY3BoO9tDGnb26tmt5d0z+bc/WwjyCovEysxqJ7jr9MAbgs4VTx0jCWLc1yawKregVk4t6iJRjM5WTpyME7ppYZicXkIOS/FbfzJ8uY/3dcQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ bh=MXYM11KpN4+3NOjOfVq+0NBJaXcW14wWDW3tJnW+NjM=;
+ b=Q5ZUQjSgM+eqNMRPMGlhGfA7uabpey8WQWh9KOe9ngptEZv3JIaYzWoBdCRLpKGBCDKiQK+ZO67ygySb2whnR593nPAj+rhx9esJoIWPar6gaVb5OsY2Uebxs7EKT9eOCTtg+8A90pzWqlA+KcS6BSRDZTB9VMOrg6Y8c5UbCnffadjBD5+IZaTNvpAcvoEkzSsRySJhod/V2rWoldxnLwrWiX3XrFNi3judHZ1AiNYaX0xfN7A9G/cJnpL+jT2YW2n0viC++CmKNslv9cf70w5oX9EaZ4ZE8I3iOsVgOQGmMhZLGkrAO2h48f5LazvlbywrkcPHAnz4CfNzurEg1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 84.19.233.75) smtp.rcpttodomain=kernel.org
+ smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
+ action=oreject header.from=opensource.cirrus.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5wqon2cQYgTHT/XzuaUb0aLpxMZSiuI2IIZZcLUyjkM=;
- b=NHHUunsuqVThQeVxHYshdWJuNinbxe+edZcCt5ScNdYO5q/6DYUXoXlH9r0s8HgapVTljYzh+ov5eHEHB58PWi5M1p93cbPy0jz9ditLfSrsPcJYYN+ooyzbPLAQFvrbvmk9I8iA8PSmJtJo9zc/NXEVzCoUy2s+brHvWBoRImd7ZosA9djKGYT1TvcEKWyaE3JRdISmcmhv8hTiJrO2OdWd3/1Sefm0NLoPQvwbWg5tgVNz2klw/+viL6830Wbu9rZt4A7r9GlKql9BDLIAAltNNVfWny16nU/jbn7FOutgm+M6D4GI2LX0Cv+vHUhwC7K1r6GXnjCOuMV+PL+SAQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI0PR04MB10291.eurprd04.prod.outlook.com (2603:10a6:800:245::5) with
+ bh=MXYM11KpN4+3NOjOfVq+0NBJaXcW14wWDW3tJnW+NjM=;
+ b=hA4SxohGYbD88LHquOR/RMi4X+mBMcH8oHvIDDw45n0e6dmnUVVMAdd+KoruQG/s7xZnp9Y27BYfCWG7tQcomSD7wS5n12TLJq7lo02oRgR4YmLUgdnIfR514Eadu3o9TxhjwoI2NJSzfAQe49fNqc/cb4qfzSN8xX71u4e2jqU=
+Received: from DS7PR07CA0020.namprd07.prod.outlook.com (2603:10b6:5:3af::12)
+ by PH8PR19MB7166.namprd19.prod.outlook.com (2603:10b6:510:216::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Tue, 1 Sep
- 2026 16:07:26 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
- 16:07:26 +0000
-Date: Tue, 1 Sep 2026 12:07:19 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"robh@kernel.org" <robh@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"Frank.Li@kernel.org" <Frank.Li@kernel.org>
-Subject: Re: [PATCH v43 5/7] firmware: imx: adds miscdev
-Message-ID: <apb4NwD6WnHHOb01@lizhi-Precision-Tower-5810>
-References: <20260831-imx-se-if-v43-0-a3deadbda4ef@nxp.com>
- <20260831-imx-se-if-v43-5-a3deadbda4ef@nxp.com>
- <20260831070508.252E01F000E9@smtp.kernel.org>
- <GV2PR04MB12271118795C0D2201499034495A82@GV2PR04MB12271.eurprd04.prod.outlook.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <GV2PR04MB12271118795C0D2201499034495A82@GV2PR04MB12271.eurprd04.prod.outlook.com>
-X-ClientProxiedBy: CY5PR15CA0200.namprd15.prod.outlook.com
- (2603:10b6:930:82::22) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
+ 2026 16:11:10 +0000
+Received: from BN2PEPF0000A801.namprd02.prod.outlook.com
+ (2603:10b6:5:3af:cafe::57) by DS7PR07CA0020.outlook.office365.com
+ (2603:10b6:5:3af::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.10 via Frontend Transport; Tue, 1
+ Sep 2026 16:11:09 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is 84.19.233.75)
+ smtp.mailfrom=opensource.cirrus.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=oreject header.from=opensource.cirrus.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ opensource.cirrus.com discourages use of 84.19.233.75 as permitted sender)
+Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
+ BN2PEPF0000A801.mail.protection.outlook.com (10.167.245.170) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
+ via Frontend Transport; Tue, 1 Sep 2026 16:11:08 +0000
+Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 6D99C40654A;
+	Tue,  1 Sep 2026 16:11:07 +0000 (UTC)
+Received: from [141.131.156.184] (unknown [141.131.156.184])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 8E4D0820247;
+	Tue,  1 Sep 2026 16:11:06 +0000 (UTC)
+Message-ID: <5dd66981-8b03-48f1-b8c0-90e391784257@opensource.cirrus.com>
+Date: Tue, 1 Sep 2026 11:10:59 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/2] ASoC: cs35l45: Adds support for SYNC bus
+To: sashiko-reviews@lists.linux.dev, Mark Brown <broonie@kernel.org>
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260828-sound-for-next-cs35l45-sync-v4-v5-0-fe3feba709ff@opensource.cirrus.com>
+ <20260828-sound-for-next-cs35l45-sync-v4-v5-2-fe3feba709ff@opensource.cirrus.com>
+ <20260828155715.233751F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
+In-Reply-To: <20260828155715.233751F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB10291:EE_
-X-MS-Office365-Filtering-Correlation-Id: 24bc9248-1bfd-4b8f-0dd5-08df08431d6c
+X-MS-TrafficTypeDiagnostic: BN2PEPF0000A801:EE_|PH8PR19MB7166:EE_
+X-MS-Office365-Filtering-Correlation-Id: 94872d75-a8d7-41ff-d6fb-08df0843a208
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|23010399003|3023799007|10067099003|56012099006|11063799006|5023799004|4143699003|18002099003|22082099003;
+	BCL:0;ARA:13230040|36860700016|61400799027|23010399003|82310400026|376014|34020700016|4143699003|11063799006|10067099003|56012099006|16102099003|18002099003|22082099003|4076005;
 X-Microsoft-Antispam-Message-Info:
-	bfLbx0tiSPk/aKiTlyuy+92Cenywh1FszqpFQ291dDJjEW9nM7TQlXtQNRUEhoNl3xb75DMMpXtQMStGUQDqfire2FjU4WDuUvnIC2QIVGJ8+GTQJbLGTz+rS2ezJa4SDl8R/aF+S7OFfmj//N/DETsyjzWnynQMYL1VkSEU+b16UKhNrNxbQOu2tBWtzIxLpnVC7CTVS8AC7gqnxUBlN8fqrfNvhHTQCF7B6VjKwyV6ydYCcpy12YNe0Y9z/QB3d6GfzP9N7RG3SRhtPLe9csd3Z2sZay3Jmw/ueKn9m/WbTG/CBJUgMS9zlzgvUiWklKhlv3j6OTKq4D8Kiie2jVzsg2ykf37s9iOaA48/Wbjn9p30Ok0Jzj7HSLWFEl/ifLnHlRGDMjRWmqEmLXoClpEPpj0crH36rd+yFUo56gAElyjzYxClG8tLQg/XUXBi7cu7Nyx5oySdLOXMA4gGurHBXBDWHvuWv/Vi1nr9JjxXGFn9GreoQT75tNtJ4Wn1+PFB8rvQjZMsaiUfE38yolxx35Aw5GDaFG/NxGudVRHBJiUXLSOwGyLHiBFWaRKsfzNnfLqiP/AoiQrjoMX9usAAwiVRLoRJh89bWzXeMqo=
+	Odk0qQfw1THQeYB3IxknWUELk4C+jE0fY9prI7hz+JizDcMwml1mupxzJIBH6v3bfRxse1/oHwHmTqT2F38DPMjXfDUsNYTAzDBtfBisd5r0pdEwLIHlNulFXPGZsCcAoHnf+Pmgt8mTNDGxQyUoiBvRLYLdf/K3NXEvY7NDIT8EqzhR5e//06qinyg/0fTHhcTSYsuM+RJptz9NwK6gpW2vdNPJyaYsFMqJPwJE/S+lK6XERA7lqpgU5PSihsa3TJmAdngg0e0q4k+9T6wH1ro7aZfpKbe/1ilPwftiiB+Hyh+CrdvSh5DQxbC0kPqXpZyXSFaq/Mjki5jyyzp2py0osHAdhWMNtQttMMlHgfPcg9/SxXIiDb170Wo+7+E8dnsRUTZQKmqFkSPy7t7dh/VLTMuqkrpAsLcry7GFd/vbbfjXi6TltPZX84mRsDAI9WQGaBga70mgzIJMAiLqzB931qKvMLFFaNk30rpsQmc8DZufnXljaxSMAnsUBHwNopDhg8XLQwobnagHBZ0AccTiHn+/TDoS8IfRshUZWqEb+91xdrHheOvH3Yf2Qw+xC5WfWMkH5+dELFAWSU7JF17bQEDAdGQZx1FUec9W0UqPmleyOFaABUg4xgcG4+DKFsmmAWcvbmjYCEdzCV7z6LXxu4rIr3bewSxd4t4fiDXdsvO5qVLtbZ7fUwsGUAHpOUsUtycanmDcNatCZK9Uh4xpPz09RwMmVGIpDDEhGnmjkbG4BEOjMiPd1pxtoF3C
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(23010399003)(3023799007)(10067099003)(56012099006)(11063799006)(5023799004)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(61400799027)(23010399003)(82310400026)(376014)(34020700016)(4143699003)(11063799006)(10067099003)(56012099006)(16102099003)(18002099003)(22082099003)(4076005);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?BGuMeHg1FwLY0X+LdUC4JSxM20fO92pahrHHtHkU317datkzIqCbtghRXk?=
- =?iso-8859-1?Q?k+5RPW+PvMh/WY7dLwbRqfFvWRe7xSJMo1T0VZghCDyvVXEVtp31RMVfp4?=
- =?iso-8859-1?Q?SwMdawWkWEbudtGNv6hsD6ow2UL3ybUJ0NJEHJpkpUYelK2kevdY00V4R7?=
- =?iso-8859-1?Q?6UPnY2zVtGWkOUe0THstlfkpJ3/4A/t8bk9ETWN45QRMWD7yhPiSDJXSGr?=
- =?iso-8859-1?Q?MD/DW2JTGDUXWNSYtyRW/QkTt5hHjNxhshmaUfryGMpLzhwiFBOzJYq6Ht?=
- =?iso-8859-1?Q?daj4pRivpFsa09b+f3bBmfldfDl3NTLcO44GwoPX9FTvJAOPZJzVw/fLSW?=
- =?iso-8859-1?Q?PSIK1mqDGIu1RXSKa9ybVW4lECjjX3cnI2bpD7Za2b8s/B94ziioTxv9s5?=
- =?iso-8859-1?Q?6thjRHW7THa1du1kh9Ux7s/lzhPKmK9MlGNsMnbtAu6rEE/pq4ww8g1I74?=
- =?iso-8859-1?Q?SU0kP7l8bGKXCpcR+erJlh9Mw3uoVufW/VUnpvcWWf1OSFSz9PFVt0SkZW?=
- =?iso-8859-1?Q?JONrV0FUukc9LtQ9uWNCbfneSinn1KSGxoIxOKIEGpQkfy4tCaijQkp9hG?=
- =?iso-8859-1?Q?Heiwm9jhVmOAxOjkMbZhQYhENAbOxo+ZynIFQCbp0soX0BIEVR5OYvX6Np?=
- =?iso-8859-1?Q?Ufrz0MHwkKUTAcctbHzKCVtWgkbXVGnV3e53z25Bcm5/qdNNvO7JzIlm0S?=
- =?iso-8859-1?Q?IVjO71YJmyl9Sgxidkxtjbl8oASkIQLZNzI1kChOkyv543iaXvE7G5IGPW?=
- =?iso-8859-1?Q?Ht/wfGUpiZ2LboRGT5/yFilSL4YZPWkVPoGs/ODboVU0f4m+OtBjbAFboi?=
- =?iso-8859-1?Q?BlP2HsBWGAJpStGBDzOJHRV+foKJe2dXhctsmePhppcHPlUUW8j8qtgRby?=
- =?iso-8859-1?Q?6NVS3oOCpZXCmr2xN6TWiJXpKq1y1dHEvORmjwKsCyHnSwwbEBE7xn19rH?=
- =?iso-8859-1?Q?nnEd5mN02yfHpAHYfOtlqFCdg+jhUldgoGokTRUA3+jaGQIezMdXIt6Awx?=
- =?iso-8859-1?Q?onUZY8ouVQU3bJlRZNP/bNGVzC4s0rZp6iKOYaFkQoXaFD9b+mi5y2tzsX?=
- =?iso-8859-1?Q?12Bmpvq3ZZD7EJik7niYBN/nHspa8aecarbjiWrhJx125lf/NgEG7fyzVx?=
- =?iso-8859-1?Q?9fmEodYEem0OdZ0x52ocQ2ZFPuFkBJYgqharnFRcm8FcM8VGlyG4KLYBGE?=
- =?iso-8859-1?Q?4/vGECi4hHFlAzUAtyDYliYqFyxWg0+YdZlIFy2zKn7H9sD0bVBHEzpMU9?=
- =?iso-8859-1?Q?i/SsYbNQNn6U9ZLxsl5acFBGgXfZ75eGJf22LHW9KTqKDTfyd5QlTXWt3Q?=
- =?iso-8859-1?Q?AeRAUKeKG3F4X6cgRYibG6uJrZi/2wYo0oM8qv6jcekV15JTQmW0HoGOJ1?=
- =?iso-8859-1?Q?i6x0kDPZV3VAEOTlRLttazA/4APqWQiJgZ6cz2FTznnq5B/8N6GAjDL43D?=
- =?iso-8859-1?Q?R3ovcpugIK2cZl6IFQ4fxjy4MZoEB72g6Ume8FRyAthczW/Wra1fuBgX/Y?=
- =?iso-8859-1?Q?P/oVfVcAxVCB1SI7tTbus+GTjukuL5k/ByJEWXARKXw+HltdTC9K1nOCCY?=
- =?iso-8859-1?Q?1sagY7odAZ4dtyvkfuZ7WJhbYDjG3UdZ5yVqMWZbME7uVNN4TKbBrLweQ3?=
- =?iso-8859-1?Q?3i4PkH7jjDAcVPqvBq35KUwG6YnW5wCxN+8lr9zTZ5wyhgol83O/eOpelG?=
- =?iso-8859-1?Q?IOCONVJxjezsviJ5e1Wq0V1ZDA6TeOZrnaSvg3AU9w6PXEq5Yv5aG+1mZl?=
- =?iso-8859-1?Q?8jjcPzvXFmpKCSRBCKLG2tRlDPcJW0yaWX3MiMxCmsa6n2TyzFvMET7Epm?=
- =?iso-8859-1?Q?k4aIvpfBZXYjEDOO2FFtmUqmngJZV7g=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24bc9248-1bfd-4b8f-0dd5-08df08431d6c
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 16:07:26.3543
+	JIDFrKE9+XQLRn6SRvSKbAInjvwT0Q36LQlev3VjkYj54lL3f9hqhnlw55hB7xy4CuzzZCJ64T7os5LCoEU6ewPexM7I1Y4lK/bbx7xbOywakzUuBkBBrsfQgSfmCLy94ShW4N+41+yw7z0JgxddCzL5N8QA6d5WRxqZVhnJVeRiSvtaIz0sWFlbT8ajtfjHgL14h+YqmbmaSYFudj6tD32DOLBp72ObFy1uDA3iHgXM9GyyqleFpxuH08Z5E1j3DnT9f7jmfwGfuEip/PzcBueKOlX/NlvoiwRmqtJRCCaxRVBuGGhgiKgzjyLNOOTbi3HJdzp0iEtZiYCkpBkYFXhQmWQn8cQCtQ/PWDkJa5oixMyZnkUSCmaIpS/2ytmnyaOQdpZ/rLpGtPewhZGBuh2GyWsd12vxKLM63CKJDe4RJ5Cv62dL5rpDuG0F7+uF
+X-Exchange-RoutingPolicyChecked:
+	4zXKXS6cGMpStlfzys9aelYTLInttDvQTPL9lVkOG3j2Sh0+gFlmVFEdO3ZhWI9iBn0ta+hcxyEv69ntPOmfXbuZRG4kWAcJmJ6KZVHFPABqNFPxqema88JDZxl0iI4eO+G0WmeI2QgbbsALeN+2kh/MEcQCXlWXksK9YL4WoBOxOAyEpde1n4O8eLBNFwIpgCFVDw1wzlRXHiZ2poqt0xmIAfVj890/pzEptfAsbEJ30o1P8jOhYO8Pode4Ov272tA8e1EnyIEfvWDjAcKQ3aaDZOwTkeVRj1ApzPqo7wQG+4o3UPiu3B5agmDhzVqLwieahuIcX8RmD7GxT7UcbQ==
+X-OriginatorOrg: opensource.cirrus.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 16:11:08.2086
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DMQBw2s0sUqbY9uElyXyaBNIp7GWdUlaXR/MIVXDbynbtf0HZrdIBWET18ts/8/yP8zJjWEW9kNcZbeAwh71wNJR+yLeG+UT7orPnVpEUAo23DFQzrtP0ql5pqS3NUqF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10291
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94872d75-a8d7-41ff-d6fb-08df0843a208
+X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-BN2PEPF0000A801.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR19MB7166
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE0MyBTYWx0ZWRfX3SxgOIgG/Rsc
+ 0Y2m67st+GueznTPO/g12PdNKkbJ8mKNA/gyWlgRprAiyC1jOt4Mm8hdJuUxwhodMV7RUuF97jL
+ 8t+VTR09X7vYnAltCQy2KJu4vLFhQleEADvynpsUGRS68vncw9BZbEuF3JrBPa8q4yIwVlAyzCp
+ W39IsDUK7UyNbCOFLbG8l0ynWdVfV655m4uaSlGzKw5DpbijQlcrrs8OqFgfIHjijIiShLZ2PXK
+ qK/bm028FNAFGKqbU2m1X22qPttLLvi/8o24h3l9D5Hw/KTJ+EoR9pmAeICi05uFbF290/XUOqJ
+ 6vgC1IhK4lwCn8LBOed2TcY3HvEvZoKpMHhZVhHjdufzGnIDpvJbCJdE9LnxxX/xNA9LrnBh59w
+ gcBSRDCAnoJwTeHgFV8zF6MLt/vZCxH+3sPM+oHdVkSEacoyNhGkgZvzNJViNluDVj2tFwQVHpn
+ UmA0OaOmy50Vx4wh0qg==
+X-Authority-Analysis: v=2.4 cv=X4Zi7mTe c=1 sm=1 tr=0 ts=6a96f926 cx=c_pps
+ a=Tmenz91GMLKLa+Z4vsoKoQ==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=iX4cTi3TZMoOKdANLEfx:22 a=KfkQE9S9VqCBgivYGm0O:22
+ a=VwQbUJbxAAAA:8 a=w1d2syhTAAAA:8 a=WZT3RY53rtRZdRUujCAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE0MyBTYWx0ZWRfX89NF9UmLotJ1
+ wZjjw8YjY7FouugLv0mt3s0p5jZEaFw9XDbFjatepRh6pAwsh0i6yG+/8VNi5sg+rz9Au1KQPft
+ pYDpopAlNcfCumHZ3cpM+SJZqP3ze2Q=
+X-Proofpoint-ORIG-GUID: g3MFCamI9YYDpKAROEHVykkdDEGHgie6
+X-Proofpoint-GUID: g3MFCamI9YYDpKAROEHVykkdDEGHgie6
+X-Proofpoint-Spam-Reason: safe
 
-On Tue, Sep 01, 2026 at 03:52:35PM +0000, Pankaj Gupta (OSS) wrote:
-> > > --- a/drivers/firmware/imx/se_ctrl.c
-> > > +++ b/drivers/firmware/imx/se_ctrl.c
-> > [ ... ]
-> > > +           switch (cmd) {
-> > > +           case SE_IOCTL_ENABLE_CMD_RCV_STATUS: {
-> > > +                   guard(mutex)(&priv->modify_lock);
-> > > +                   err = check_cmd_rcvr_status(dev_ctx);
-> > > +                   if (err)
-> > > +                           dev_err(priv->dev, "Failed[%ld] to register %s
-> > as CMD-Receiver.\n",
-> > > +                                   err, dev_ctx->devname);
-> > > +           break;
-> > > +           }
-> >
-> > [Severity: High]
-> > Is it intentional that se_ioctl() only checks the status here but does not actually
-> > perform the registration?
-> >
-> > It appears set_dev_ctx_as_command_receiver() is never called, causing the ioctl
-> > to fail its intended purpose and always return -ENXIO if not already registered.
-> >
->
-> NOT A BUG. SE_IOCTL_ENABLE_CMD_RCV_STATUS is a status-query IOCTL, not a
-> registration IOCTL. Its purpose is to report whether the calling file descriptor
-> is already the registered command receiver, via check_cmd_rcvr_status().
-> Registration is performed by set_dev_ctx_as_command_receiver(), called from
-> fw_api_specific_ops() during the storage session open flow
-> (ELE_STORAGE_OPEN_REQ). The error log message "Failed to register" is
-> admittedly misleading but the underlying logic is correct. The log message
-> will be improved in a follow-up cleanup patch.
+Mark,
 
-Maybe error message "Failed[%ld] to register %s as CMD-Receiver", miss
-leading AI.
+On 8/28/26 10:57 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Hardware I/O errors in cs35l45_sync_en_put cause permanent state desynchronization.
+> --
+> 
+> commit 81445881eb3cef5b79a02d7516346532c3f3f907
+> Author: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
+> ASoC: cs35l45: Adds support for SYNC bus
+> 
+> Adds support for the multidevice synchronization (SYNC) bus. The SYNC
+> bus is an opaque one wire bus that is shared between Cirrus devices.
+> 
+>> diff --git a/sound/soc/codecs/cs35l45.c b/sound/soc/codecs/cs35l45.c
+>> index a032bb23b4ac7..763cd83b5d6d8 100644
+>> --- a/sound/soc/codecs/cs35l45.c
+>> +++ b/sound/soc/codecs/cs35l45.c
+> [ ... ]
+>> @@ -195,6 +196,46 @@ static int cs35l45_activate_ctl(struct snd_soc_component *component,
+> [ ... ]
+>> +static int cs35l45_sync_en_put(struct snd_kcontrol *kcontrol,
+>> +				      struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+>> +	struct cs35l45_private *cs35l45 =
+>> +			snd_soc_component_get_drvdata(component);
+>> +	struct snd_soc_dapm_context *dapm =
+>> +			snd_soc_component_to_dapm(component);
+>> +
+>> +	snd_soc_dapm_mutex_lock(dapm);
+>> +
+>> +	if ((bool)ucontrol->value.integer.value[0] == cs35l45->sync_en) {
+>> +		snd_soc_dapm_mutex_unlock(dapm);
+>> +		return 0;
+>> +	}
+>> +
+>> +	if ((bool)ucontrol->value.integer.value[0])
+>> +		regmap_set_bits(cs35l45->regmap, CS35L45_BLOCK_ENABLES2, CS35L45_SYNC_EN_MASK);
+>> +	else
+>> +		regmap_clear_bits(cs35l45->regmap, CS35L45_BLOCK_ENABLES2, CS35L45_SYNC_EN_MASK);
+>> +
+>> +	cs35l45->sync_en = (bool)ucontrol->value.integer.value[0];
+> 
+> [Severity: Medium]
+> Could this lead to permanent state desynchronization if the hardware I/O fails?
+> The regmap API calls can fail (e.g., returning -EIO on I2C/SPI errors), but the
+> error is ignored here and the software cache (cs35l45->sync_en) is updated
+> unconditionally.
+> 
+> If this happens, the ALSA control state becomes desynchronized from the hardware.
+> Because of the fast-path check at the beginning of this function:
+> 
+>      if ((bool)ucontrol->value.integer.value[0] == cs35l45->sync_en) {
+>          ...
+> 
+> Any subsequent attempts from userspace to set the correct value will be dropped,
+> making the failure permanent until explicitly toggled to the opposite state and
+> back again. Should the return values of regmap_set_bits() and regmap_clear_bits()
+> be checked before updating the cached state?
 
-SE_IOCTL_ENABLE_CMD_RCV_STATUS
-	 ^^^   also miss leading, according to you description, look like
+Are you expecting this comment to be addressed? I am not opposed, but 
+the suggestion does not fit the style of the rest of the subsystem.
 
-SE_IOCTL_GET_CMD_RCV_STATUS
+Ultimately, your call.
 
-Frank
->
-> > [ ... ]
-> > > +static int se_ioctl_cmd_snd_rcv_rsp_handler(struct se_if_device_ctx *dev_ctx,
-> > > +                                       void __user *uarg)
-> > > +{
-> > [ ... ]
-> > > +   rsp_status_err =
-> > > +           se_val_rsp_hdr_n_status(priv, rx_msg, tx_msg-
-> > >header.command,
-> > > +                                   rx_msg->header.size << 2,
-> > > +                                   tx_msg->header.ver == priv->if_defs-
-> > >base_api_ver);
-> >
-> > [Severity: High]
-> > Could passing the firmware-declared size (rx_msg->header.size << 2) instead of
-> > the caller's allocated size (rx_buf_sz) lead to out-of-bounds reads?
-> >
-> > If a user submits an intentionally small rx_buf_sz, the subsequent validation in
-> > se_val_rsp_hdr_n_status() and fw_api_specific_ops() might read past the
-> > bounds of the allocated rx_msg buffer when accessing data[0] or data[1].
->
-> NOT A BUG. se_val_rsp_hdr_n_status() only accesses msg->header fields (tag,
-> command, size, ver) and msg->data[0] (the firmware status word). The sz
-> argument is used solely as a consistency check against header->size to detect
-> a mismatch; it is never used to index or iterate over the buffer. No
-> out-of-bounds read is possible regardless of what the firmware header claims.
->
-> If userspace provides an rx_buf_sz smaller than the firmware response, the
-> MU/mailbox layer silently truncates the response. This is a caller contract
-> violation: the userspace library (plat_os_abs_cmd_snd_rcv_rsp()) is expected
-> to allocate an rx buffer matching the maximum expected response size for the
-> given command. Returning -ENOSPC in this case would orphan any
-> firmware-allocated handle (the firmware command already succeeded), creating
-> inconsistent state between firmware and userspace that cannot be recovered
-> without a reset.
->
-> The correct handling is a dev_warn diagnostic only to flag the mismatch to developers.
->
-> >
-> > [ ... ]
-> > > +static int se_if_probe(struct platform_device *pdev) {
-> > [ ... ]
-> > > +   ret = devm_mutex_init(dev, &priv->se_if_cmd_lock);
-> > > +   if (ret)
-> > > +           return dev_err_probe(dev, ret,
-> > > +                                "Failed to init mutex: priv
-> > se_if_cmd_lock.\n");
-> > > +   ret = devm_mutex_init(dev, &priv->modify_lock);
-> > > +   if (ret)
-> > > +           return dev_err_probe(dev, ret,
-> > > +                                "Failed to init mutex: priv modify_lock.\n");
-> >
-> > [Severity: High]
-> > Does binding the lifecycle of these mutexes to device unbind create a use-after-
-> > free risk?
-> >
-> > Since priv is refcounted and can outlive device unbind (e.g., if a file descriptor
-> > remains open), closing the file later calls dlink_n_cleanup_dev_ctx() and
-> > cleanup_dev_ctx(), which will attempt to acquire these destroyed mutexes.
-> >
-> BUG - FIXED in this series. You are correct. devm_mutex_init() was used for
-> priv->se_if_cmd_lock and priv->modify_lock. Because priv is reference-counted
-> (kref) and can outlive device unbind when a file descriptor remains open, the
-> devm cleanup at unbind destroys these mutexes while they are still reachable.
-> A subsequent close() would acquire a destroyed mutex - a use-after-free of
-> mutex state.
->
-> Fixed by replacing devm_mutex_init() with plain mutex_init() for both mutexes.
-> The mutexes are embedded directly inside struct se_if_priv (not separately
-> allocated) and are released automatically when kfree(priv) runs in
-> se_if_priv_release() once the last kref is dropped. Explicit
-> mutex_destroy() is added before kfree().
->
-> > [ ... ]
-> > > +static int se_if_probe(struct platform_device *pdev) {
-> > [ ... ]
-> > > +   priv = kzalloc_obj(*priv);
-> > > +   if (!priv)
-> > > +           return -ENOMEM;
-> > > +
-> > > +   priv->dev = dev;
-> > > +   /*
-> > > +    * Pin the parent device for the lifetime of priv. A file descriptor may
-> > > +    * stay open after the device is unbound; close() then still passes
-> > > +    * priv->dev to dma_free_coherent()/dev_warn(). Without this reference
-> > > +    * the struct device could be freed while priv->dev still points at it,
-> > > +    * so the reference is dropped in se_if_priv_release() via put_device().
-> > > +    */
-> > > +   get_device(priv->dev);
-> > > +   kref_init(&priv->refcount);
-> > > +   priv->if_defs = &if_node->if_defs;
-> > > +   dev_set_drvdata(dev, priv);
-> > > +
-> > [ ... ]
-> > > +   ret = devm_mutex_init(dev, &priv->se_if_cmd_lock);
-> > > +   if (ret)
-> > > +           return dev_err_probe(dev, ret,
-> > > +                                "Failed to init mutex: priv
-> > se_if_cmd_lock.\n");
-> >
-> > [Severity: Medium]
-> > If devm_mutex_init() fails, does this function return directly without cleaning
-> > up?
-> >
-> > It appears this would leak the priv structure and leave the device reference
-> > unreleased, since devm_add_action_or_reset() has not been registered yet.
->
-> NOT A BUG after the fix above. With the change to mutex_init() (which cannot
-> fail), the early-return path at devm_mutex_init() no longer exists. There is
-> no leak because mutex_init() always succeeds. No additional cleanup path is
-> needed.
->
-> >
-> > [ ... ]
-> > > +static int se_if_fops_open(struct inode *nd, struct file *fp) {
-> > [ ... ]
-> > > +   priv->dev_ctx_mono_count++;
-> > > +   err = init_device_context(priv, priv->dev_ctx_mono_count, &dev_ctx);
-> > > +   if (err) {
-> > > +           dev_err(priv->dev, "Failed to create dev-ctx.\n");
-> > > +           goto out_unlock_misc;
-> > > +   }
-> >
-> > > +static int init_se_shared_mem(struct se_if_device_ctx *dev_ctx) {
-> > [ ... ]
-> > > +   se_shared_mem_mgmt->non_secure_mem.ptr =
-> > > +                   dma_alloc_coherent(priv->dev,
-> > MAX_DATA_SIZE_PER_USER,
-> > > +                                      &se_shared_mem_mgmt-
-> > >non_secure_mem.dma_addr,
-> > > +                                      GFP_KERNEL);
-> >
-> > [Severity: High]
-> > Does this code allow unbounded DMA coherent memory allocation?
->
-> NOT A BUG. init_device_context() calls init_se_shared_mem(), which calls
-> dma_alloc_coherent(). If the CMA/DMA pool is exhausted, dma_alloc_coherent()
-> returns NULL and the error propagates as -ENOMEM back to open(), which fails.
-> This naturally self-limits allocation: once CMA is exhausted, further open()
-> calls fail with -ENOMEM. The kernel's CMA pool size is a system-wide tunable
-> and the driver does not need to impose an additional per-device open count
-> cap on top of that. No change needed.
->
-> >
-> > If a userspace process repeatedly calls open() in a loop, it seems it would allocate
-> > 128KB each time without any limit, which could quickly exhaust contiguous
-> > DMA memory.
-> >
-> > > diff --git a/drivers/firmware/imx/ele_msg_addr_field.c
-> > > b/drivers/firmware/imx/ele_msg_addr_field.c
-> > > --- a/drivers/firmware/imx/ele_msg_addr_field.c
-> > > +++ b/drivers/firmware/imx/ele_msg_addr_field.c
-> > [ ... ]
-> > > +static const struct se_cmd_addr_field ele_oem_auth_cntr_addr_fields[] = {
-> > > +   /*
-> > > +    * Container Header address: a 64-bit physical address split across two
-> > > +    * words. data[0] holds the 32-bit MSB and data[1] holds the 32-bit LSB
-> > > +    * (ELE API spec Table 27, word size = 0x3, so the command is header +
-> > > +    * MSB + LSB only). The message carries no length word for this buffer;
-> > > +    * the container size is variable and not communicated in the MU
-> > payload,
-> > > +    * and no static firmware-defined maximum is specified. Because this is a
-> > > +    * read-only input buffer (the ELE ROM/FW copies the container header
-> > > +    * into its internal memory for authentication and does not write back
-> > > +    * through this address), enforcing only the start-address range check is
-> > > +    * acceptable: a rogue caller can at most cause firmware to read within
-> > > +    * the shared-memory window, which is memory the caller already
-> > owns.
-> > > +    * Output buffers must be fully bounded; input-only buffers are safe
-> > with
-> > > +    * addr-only checks.
-> > > +    */
-> > > +   { .lsb_idx = 1, .msb_idx = 0, .has_msb = true, .flag_idx =
-> > SE_CMD_ADDR_ALWAYS,
-> > > +     .size_idx = SE_CMD_ADDR_NO_SIZE },                    /*
-> > container_hdr_addr */
-> > > +};
-> >
-> > [Severity: High]
-> > Can the lack of size validation here allow the firmware to read past the bounds
-> > of the allocated DMA buffer?
-> >
-> > If a user submits a command with an address pointing to the very end of the
-> > shared memory window, the firmware might read unmapped or unowned
-> > memory, potentially causing an IOMMU fault.
-> NOT A BUG.
-> Both ELE_OEM_AUTH_CONTAINER_REQ and ELE_KEYSTORE_REPROV_ENABLE_REQ pass
-> read-only input buffers; firmware never writes back through these addresses.
-> A rogue caller can at most supply invalid authentication data, causing the
-> firmware operation to fail - not corrupt kernel memory. Firmware is
-> responsible for container bounds validation. If firmware reads past the
-> shared-memory window, the IOMMU will fault and the access will be terminated
-> by hardware before any kernel memory is affected. The original
-> SE_CMD_ADDR_NO_SIZE entries with buf_size = 0 are correct and the existing
-> comment in the source already documents this design decision. No change needed.
->
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260831-imx-se-if-v43-0-
-> > a3deadbda4ef@nxp.com?part=5
->
-> NXP Confidential
+Ricardo
