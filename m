@@ -1,126 +1,215 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDAE48A2A1
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 16:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481B619EED3
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 17:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788281957; cv=none; b=D+BW7PZMxxurmTSbk/Ds3dBdfPAg+bpomWmbb+KxcnKzthS7nCmy1JbnnodRk3T64mOI6OrRJI+Ghuyvj7VmHEAbRbRf8h/lPUsesFzL4TUmdBuKnu8yCXCMBvTFaFMFNCgPUkNUq5xVTMG13rpQJ5nd38OafkXGmUGABt6j9cQ=
+	t=1788283952; cv=none; b=l8jt0miuKx6PBrvaEOr5xjHhwnEfSsrCitpzITP2QHv2wrm9ZYy9R6Rd6OOi6ltJzZEDGLTvwcCow4O1+a3a6yS2Daa0TVhxL4qotjkl6+FQVRUYnXpxTn48WSKYAUBzDNflQRKdWGGKas/bBIqnh9ZYX1zSanVKFm7rjG+akNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788281957; c=relaxed/simple;
-	bh=Yrc9AyOh+cbhmWx/2m8p/aD6UbD4nC8vkcj5HtUZEj4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sn9Z+wPkBBLbbVYTXk/oQfV3aCsI5i70eAOywovLywxLriyBEAiwWxjAvZ/bNeJJjkmPqYVrnN7w2hcgm8gnbr+crlTw+iGvEM/0qAADHKqFwYcP3CYsWxBVV5OaUsm/sMhxpky743Gjh/7PZ6s7b2389TNIb1gh0CvuwtWcudY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=iuF4AF0p; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1788283952; c=relaxed/simple;
+	bh=0UnN7pOWdscf3V3uG2oqNtzUQ7WE4DwVAqmUMMlArLo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DMbe5947Egfd7NOGOk/L25aNwRP4FvXmNHq7MM+rapxZFRmwTfwurKayEJLb6AJLUKid+g9r/+h8tPqLsrjjhsgAByjoJyt6L2/xV/frZo5NhJrNwxH5Q0KQYzZYF2XKrDyulV/i4yDfeVg/A8I/QY6NBOGv/QuBrGrtjViwc74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnYIGei7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="iuF4AF0p"
-Received: by dvalin.narfation.org (Postfix) id CFE7020396;
-	Tue, 01 Sep 2026 16:59:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1788281949;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6H72fJ6kyOlrK3Fr6O2GXskmmT15SVIoLWNy5VHEGUg=;
-	b=iuF4AF0pOqbEOUd8OL8Fc4G0ffHHfH/O9b4gwxRdpeigsyhJc/S5oMd95mcyQv0H4bj3mF
-	nsBwANQM3+oAhQLv95uryuRamgH1dFzAaLdaqNAu1ZjTHOIIjwpYl/j9eJbNoZre0s4JAm
-	O5Ad5El8Nnq8Qx4uNmg6lvaicnn9njw=
-From: Sven Eckelmann <sven@narfation.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: marek.lindner@mailbox.org, sw@simonwunderlich.de, antonio@mandelbit.com,
- netdev@vger.kernel.org
-Subject:
- Re: [PATCH net-next 06/15] batman-adv: ensure u16 aligned mac address arrays
- on stack
-Date: Tue, 01 Sep 2026 18:59:04 +0200
-Message-ID: <3637364.QJadu78ljV@sven-desktop>
-In-Reply-To: <20260901140000.035F51F000E9@smtp.kernel.org>
-References:
- <20260831135117.574836-1-sw@simonwunderlich.de>
- <20260831135117.574836-7-sw@simonwunderlich.de>
- <20260901140000.035F51F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnYIGei7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044F41F00A3D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 17:32:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788283951;
+	bh=gHmwpsKoLpq6NlHt2ZG2kyAm1yl7EZ9b4eNKciqlHGQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=hnYIGei7berEk4f09pt7Uznq9FrHE5VMGk9m4S7GRB2D7zws4zl8ExruAFc/EBjyy
+	 dbvv7i+f6nhiuTyF2K/5ZpSbFrLa5EIkTIPpNn67dPvoZ5G6ESvxlBQnjqEnfl3tbU
+	 g0y30awX8y3er9u7Pf1JIfjHELtRmJ5qsfhZaW38IPIVGqtj91/7D1s4glWIH3lsKe
+	 sLgvDbWSRuA4YeDmKjhpDiThlIV1MLqm2JE0dD2LEgfxIng1ZqAkk9vwGj4+afCCwc
+	 kpnUgXxRI+I1M6KU79SH1+9UyMxcrJ7Kz2Ia3/bCbNQCAnKy+zRtuan+d5KPi+/Alx
+	 m3dhyONeiHWMw==
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3a20367cf82so807441fa.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 10:32:30 -0700 (PDT)
+X-Gm-Message-State: AFuF++lRl1oUEJsNKste7PggxrXL7Oe54YcksG6PcjF/KOgYTvS/OkSk
+	rboxjwh3syMmyzw8DoTPftA9qPv4rFnupV+0gkvBn9iELI1WwXeq5wDXVskv73iWnusmGi64BHo
+	AIhTExw3ANWBkf4CCfBrbI/Bm1OVRN/Q=
+X-Received: by 2002:a05:651c:211c:b0:3a3:2585:3bc5 with SMTP id
+ 38308e7fff4ca-3a325853cebmr42466371fa.3.1788283949159; Tue, 01 Sep 2026
+ 10:32:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1977324.CQOukoFCf9";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-
---nextPart1977324.CQOukoFCf9
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
+References: <3435655.aeNJFYEL58@rafael.j.wysocki> <10913616.nUPlyArG6x@rafael.j.wysocki>
+ <20260831201426.92F091F000E9@smtp.kernel.org>
+In-Reply-To: <20260831201426.92F091F000E9@smtp.kernel.org>
+From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Date: Tue, 1 Sep 2026 19:31:33 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0i9+UaHF__1C+nZHjerChegZSewYsnU3viP=HW5Mq9UHw@mail.gmail.com>
+X-Gm-Features: AcwNN1WpAOu2_0FJ-2hVzFHffFn7LMFme4B-bGrNMakdHK13wBDpU2UyL7ExrlE
+Message-ID: <CAJZ5v0i9+UaHF__1C+nZHjerChegZSewYsnU3viP=HW5Mq9UHw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/7] ACPI: scan: Stop calling acpi_bus_init_power() early
 To: sashiko-reviews@lists.linux.dev
-Date: Tue, 01 Sep 2026 18:59:04 +0200
-Message-ID: <3637364.QJadu78ljV@sven-desktop>
-In-Reply-To: <20260901140000.035F51F000E9@smtp.kernel.org>
-MIME-Version: 1.0
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tuesday, 1 September 2026 15:59:59 CEST sashiko-bot@kernel.org wrote:
-[...]
-> If memory allocation fails for bat_priv->bla.backbone_hash, the previously
-> allocated claim_hash is destroyed but the pointer is left dangling:
-> 
-> net/batman-adv/bridge_loop_avoidance.c:batadv_bla_init() {
->         ...
->         bat_priv->bla.backbone_hash = batadv_hash_new(32);
->         if (!bat_priv->bla.backbone_hash) {
->                 batadv_hash_destroy(bat_priv->bla.claim_hash);
->                 return -ENOMEM;
->         }
->         ...
+On Mon, Aug 31, 2026 at 10:14=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [High] Transient failures in early PCI enumeration due to unmet ACPI de=
+pendencies permanently disable ACPI power management for the device.
+> - [High] Concurrent execution of `acpi_device_set_power` and `acpi_bus_at=
+tach` leads to power resource reference count leaks.
+> - [High] Bitfield data race on `struct acpi_device_flags` leading to corr=
+upted device flags.
+> - [High] Unprivileged sysfs access to a child's power state bypasses the =
+parent's power resource initialization, leading to reference count underflo=
+w and permanent power leaks.
+> --
+>
+> commit 00db710bd9860a36a16f28aa782d074b11d43aab
+> Author: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>
+> ACPI: scan: Stop calling acpi_bus_init_power() early
+>
+> This commit prevents premature transition into the D0 power state for
+> devices with missing dependencies by changing when acpi_bus_init_power()
+> is called. It updates acpi_device_set_power() to initialize power upfront
+> and adjusts acpi_bus_attach() to use ACPI power state tracking instead of
+> the initialized flag.
+>
+> Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref=
+-fix-v2-1-29818173ea13@linux.spacemit.com/ [1]
+>
+> > diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+> > index aa55ecfc2923c..a680e6972a8c2 100644
+> > --- a/drivers/acpi/device_pm.c
+> > +++ b/drivers/acpi/device_pm.c
+>
+> [ ... ]
+>
+> > @@ -168,6 +168,12 @@ int acpi_device_set_power(struct acpi_device *devi=
+ce, int state)
+> >           || (state < ACPI_STATE_D0) || (state > ACPI_STATE_D3_COLD))
+> >               return -EINVAL;
+> >
+> > +     if (device->power.state =3D=3D ACPI_STATE_UNKNOWN &&
+> > +         acpi_bus_init_power(device)) {
+> > +             device->flags.power_manageable =3D 0;
+>
+> [Severity: High]
+> If acpi_bus_init_power() fails transiently here because dependencies are
+> unmet (for instance, _PSC or _ON evaluations fail during early PCI
+> discovery), does this permanently disable ACPI power management for the
+> device? Since the prior restoration logic was removed from
+> acpi_bus_attach(), it appears there is no mechanism to recover from this
+> transient failure when dependencies are met later.
+
+Good point.
+
+> [Severity: High]
+> Because struct acpi_device_flags is a bitfield, does modifying
+> power_manageable here without mutual exclusion risk a data race?
+>
+> If acpi_device_set_power() runs concurrently with async enumeration
+> (such as acpi_bus_attach() calling acpi_device_set_enumerated()), they
+> could perform concurrent read-modify-write operations on the bitfield.
+> This could cause one of the flag updates (like the visited or enumerated
+> flag) to be silently lost.
+
+This will not happen AFAICS, but in fact it is not necessary to clear
+flags.power_manageable in acpi_device_set_power() which will also
+address the previous comment.
+
+The power state will remain ACPI_STATE_UNKNOWN until it gets properly
+initialized either during acpi_device_set_power() execution or by
+acpi_bus_attach() which both call acpi_bus_init_power() if the power
+state is unknown.
+
+>
+> > +             return -ENODEV;
+> > +     }
+> > +
+> >       acpi_handle_debug(device->handle, "Power state change: %s -> %s\n=
+",
+> >                         acpi_power_state_string(device->power.state),
+> >                         acpi_power_state_string(state));
+>
+> [ ... ]
+>
+> > diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+> > index f48715ed827c7..1ad8dffc2dafe 100644
+> > --- a/drivers/acpi/scan.c
+> > +++ b/drivers/acpi/scan.c
+>
+> [ ... ]
+>
+> > @@ -2364,16 +2361,13 @@ static int acpi_bus_attach(struct acpi_device *=
+device, void *first_pass)
+> >
+> >       acpi_ec_register_opregions(device);
+> >
+> > -     if (!device->flags.initialized) {
+> > -             device->flags.power_manageable =3D
+> > -                     device->power.states[ACPI_STATE_D0].flags.valid;
+> > -             if (acpi_bus_init_power(device))
+> > -                     device->flags.power_manageable =3D 0;
+> > +     if (device->flags.power_manageable &&
+> > +         device->power.state =3D=3D ACPI_STATE_UNKNOWN &&
+> > +         acpi_bus_init_power(device))
+>
+> [Severity: High]
+> Is it possible for acpi_bus_attach() (running asynchronously via
+> acpi_scan_clear_dep_fn()) and acpi_device_set_power() (reachable via
+> sysfs power/control) to execute concurrently?
+
+This can only happen for PCI devices and only when their initial
+power-up fails to initialize the ACPI power state.
+
+> Both paths now perform a lockless check of
+> device->power.state =3D=3D ACPI_STATE_UNKNOWN and subsequently call
+> acpi_bus_init_power(). Could this lead to both threads acquiring power
+> resource references via acpi_power_on_resources(), keeping the hardware
+> powered on indefinitely when the second set of references is leaked?
+
+This can be addressed by pulling the PCI device checks from the last
+patch into the first one.
+
+> [Severity: High]
+> Could an unprivileged user reading the real_power_state sysfs attribute
+> of a child device bypass this parent initialization?
+>
+> If a sysfs read calls acpi_device_get_power() on the child, it can
+> locklessly mutate the parent's state to ACPI_STATE_D0:
+>
+> acpi_device_get_power() {
+>     ...
+>     if (!device->power.flags.ignore_parent && parent &&
+>         parent->power.state =3D=3D ACPI_STATE_UNKNOWN &&
+>         result =3D=3D ACPI_STATE_D0)
+>             parent->power.state =3D ACPI_STATE_D0;
+>     ...
 > }
-> 
-> This failure propagates up to batadv_mesh_init() and register_netdevice(),
-> which rolls back by calling the device's priv_destructor 
-> (batadv_meshif_free()).
-> 
-> This destructor calls batadv_mesh_free() which unconditionally calls
-> batadv_bla_free(). Could batadv_bla_free() then use the dangling non-NULL
-> claim_hash pointer:
-> 
-> net/batman-adv/bridge_loop_avoidance.c:batadv_bla_free() {
->         ...
->         if (bat_priv->bla.claim_hash) {
->                 batadv_bla_purge_claims(bat_priv, primary_if, 1);
->                 batadv_hash_destroy(bat_priv->bla.claim_hash);
->                 bat_priv->bla.claim_hash = NULL;
->         }
->         ...
-> }
-> 
-> leading to a use-after-free in batadv_bla_purge_claims() and a double free
-> via batadv_hash_destroy()?
-> 
-> Would it be safer to set bat_priv->bla.claim_hash = NULL immediately after
-> destroying it in batadv_bla_init()?
-> 
-> 
+>
+> If this occurs before acpi_bus_attach() runs for the parent, the
+> lockless check here in acpi_bus_attach() will see a state other than
+> ACPI_STATE_UNKNOWN and skip calling acpi_bus_init_power().
+>
+> Does this result in the parent's power resources never being initialized,
+> leading to a reference count underflow when the device later transitions
+> to D3?
 
-Completely out-of-scope for this patch. Submitted patch for review to 
-https://patch.msgid.link/20260901-claim-avoid-err-double-free-v1-1-6d6f081f5151@narfation.org
+Good catch.  This parent power state update is fishy and shouldn't be
+done anyway.
 
-Regards,
-	Sven
-
---nextPart1977324.CQOukoFCf9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCapcEWAAKCRBND3cr0xT1
-y5BVAQDFGx1qM0SkIVnCp5qmK5Q/Pmtn5ScyGmW/C5PWtQo09QD7BzSQgk6ULsJS
-HDpkD5cWCszVKXdEfY/5Cop9YIV5SAg=
-=r7L6
------END PGP SIGNATURE-----
-
---nextPart1977324.CQOukoFCf9--
-
-
-
+> > +             device->flags.power_manageable =3D 0;
+> >
+> > -             device->flags.initialized =3D true;
+> > -     } else if (device->flags.visited) {
+> > +     if (device->flags.visited)
+> >               goto ok;
+> > -     }
+>
+> --
