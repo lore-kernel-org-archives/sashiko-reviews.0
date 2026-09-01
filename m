@@ -1,147 +1,224 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B247247207D
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 08:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012E735CBD6
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 08:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788250145; cv=none; b=Vnr+1R9tiP8sbGC0mFlKHOvC4fp83Ct/FGp1tgFvZ0zvGNpAHHwpXcNRBTUwpuhFJs+KHBqw59C84fS6cnbMp1JukdUsURFhEPSi2aF+FkQSsk5/DckAFeMIM8xYkiqhhPcNY2lI6mJdWW+PRoijE8DXuQfFnXxNpelGgfjWQcY=
+	t=1788250877; cv=none; b=ikHYSc2+3XEufBImMFXsT62eWxA9VqqpqK9uffJC+0fXHfFzcrHKocyHDlu7Hj0Ov5TZztuLTX+S/e0id2q/3P1QqrSSdcJW/9dWkVdzGyz+j4OvBwo2cXimJnjAOCIlHrmYugiD9uAULLPrOQa6Kpcs748hHsic3zs70hnvOfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788250145; c=relaxed/simple;
-	bh=mO+bHFbqo9tsrly6mVmy1ocgyRFE6syW3MWGj2ORxa4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P5WOa96ZsYsQfuf7FwNNF/6HB3P3Nvmga6L5hPitQDrYwnYDSVfvMzDDVc+W0CMp1Y5iZR1HejtwD4+jMth10346wbNhTH4z/XIIfnYOop4eDhHJYO7pbuLieEMiuV44nd5b9hUlOVgB4d+WdE4t7krcFzNvlszM/B3aS3H0q8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YbPREcnx; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1788250877; c=relaxed/simple;
+	bh=lMr95ZLhUJUmUV7/tM7okiIpldS3NsaAHszTvswpFLg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KpZUvnqlRAPxpj9xnFZFWFqeplyJLhsb+JliFXzAl1K2Rca7whSYTXZCKIisalMe1Go+M4FRT3j2QECLn3UhbKZA7iz9z2KkL+ZxfPGiTOpmtp1xXZmi+vRwDvfvh6bh54Agpd1vIL7FdH1jlJYHVR+xlHlFVJEUKv02wyXOzZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Pv3jR78t; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Vh7VeuC0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Eh0RnWt8; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=GxYj3aUF; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YbPREcnx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1788250142;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Pv3jR78t";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Vh7VeuC0";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Eh0RnWt8";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="GxYj3aUF"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A43A61FD80;
+	Tue,  1 Sep 2026 08:21:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788250869; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4l21st1u8jY9b4j7j3tAgD/EY2/nE/37rmIDNVn7xOs=;
-	b=YbPREcnxdop3LDFuzbtuNYZO5MRHiXlEOK3F8+wnfZUI477ZPH+vLFQ/QL0ZJ69kYu7ML3
-	Nc4yzKiU6Ep3DrGnlLHGdfqMWROW8bz54S4ZQkAqa3qUYGFMuzhq5FGSPMskKkuyN3BIm4
-	yxON18f6cwNTlePNzdCrJADuF6IocrU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-A8E7iQu-MmCxDTZH-Ii7VA-1; Tue, 01 Sept 2026 04:09:01 -0400
-X-MC-Unique: A8E7iQu-MmCxDTZH-Ii7VA-1
-X-Mimecast-MFC-AGG-ID: A8E7iQu-MmCxDTZH-Ii7VA_1788250140
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49991beee7aso41250665e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 01:09:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788250140; x=1788854940;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XdL8zzc8V9JkK2rUeyT0WO94d4yIRGolbKfwcYc2drU=;
-        b=bPfSXDyHqxJkStAzx91DRqVIFr6UxGcuEfjYfcRpTfEPHav35l4JBNJH1/R9q3Q1+v
-         Lvy/2bBSmMkBbTmxMiu8UIfNkJruHL/RNMsMSt9CSZgKVzJicJPunvlNBz7WBYCBpK22
-         YHDQH88z/9qIRF0rYpMsR2shspN3zcI5xf9ifCTyMKp4KzvyFuOwKhEiF6N/eVWanFsx
-         DiPv+I5qsj/mqUSaJiXKpXlRITcSfl2rcB8g0V2NE7FNnYoNtnt8Ur9lre4VobVs8XXS
-         fua9rpw1dJ+MBYc5qCldePtalhgPwi729Ix5BwCol+q9XQV+/I246CChjC/SJVMCHgnD
-         cDZQ==
-X-Gm-Message-State: AFuF++nFmLXxIuhRZoLkaMJFU0VkO1rLOzPlWK0lyYeJN5evaxrCrNPg
-	Stl5vqMSSye5QwUQXghWdGlW1c/l6sjx6N6BwDzxYyLwfg4jWzANWHbjaFxEZFeQdTGAj/5cCMC
-	T/uezuX2lq2cWQzOwMlUdwlQrq/a4G1tjZTxFDQQ5ZK+C6Kjyi4r4sUPFc6AKXNXGGBgOJftJjo
-	XHNN0hHbay4nB8IpB8FPzMWWFL9HvDbA9p4ytktGeosyneklMt
-X-Gm-Gg: AR+sD13RnMH9pSt1satafs0d3Ggd4KEkQaoTCr+B8hhH1h3VCpxBBQne50ZRsE3dPZI
-	lDXfdpQQ+Ob5v+ZjH/euz3myziyAxKZ6oDMLO+m3Xiz+v7GJGlNnC0dQGqowqfKuhle6Jr9RK1z
-	LHtM5RG2qya/OhylMnDBfMd1KjOlczTZasiqoOgqb6JfxOI7x0JBFzATf1HmhDTEV3fwVqHWVVy
-	ZG9S2K5PnoYLW4NHtlW5m+HEE1ot5zVJJjrr8tofl1CZ50+yrojBrq9aaNlOOhqYByIyc0cthKX
-	2Xk00zx9RP1UthMWLjHA3yUtt95wWqc0iAd85DZEeWhrBNmQk1yewfqRecM27i126wlrmEbFnML
-	q+JZn9ZIo90JuLN74+ut9f3qCKRQ=
-X-Received: by 2002:a05:600c:a418:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-49cdc558513mr105413905e9.10.1788250140372;
-        Tue, 01 Sep 2026 01:09:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:a418:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-49cdc558513mr105413065e9.10.1788250139923;
-        Tue, 01 Sep 2026 01:08:59 -0700 (PDT)
-Received: from alrua-x1.borgediget.toke.dk (alrua-x1.borgediget.toke.dk. [2a0c:4d80:42:443::2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cd8148fbdsm74332025e9.3.2026.09.01.01.08.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 01:08:58 -0700 (PDT)
-Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
-	id EA00497C4A1; Tue, 01 Sep 2026 10:02:59 +0200 (CEST)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v2 2/4] bpf: selftests: Check for flag presence
- in bpf_program__flags()
-In-Reply-To: <20260831134450.680941F000E9@smtp.kernel.org>
-References: <20260831132648.65843-1-toke@redhat.com>
- <20260831132648.65843-2-toke@redhat.com>
- <20260831134450.680941F000E9@smtp.kernel.org>
-X-Clacks-Overhead: GNU Terry Pratchett
-Date: Tue, 01 Sep 2026 10:02:59 +0200
-Message-ID: <87y0dlv1os.fsf@toke.dk>
+	bh=c4mkO4Iwn+BHkXvq70/8/xMCcRd0R1cwKq46ZqtGKh4=;
+	b=Pv3jR78tYFNY1u4ue1Vkc+h9b2aii4AhMQd+TZUBbDf3PVIK/7IYQ7KyHm/qGTkHhFSrag
+	9F9A2ZbB0V/yNwnXWZO/3HCwWoyWsprAIaHCTbbtNBYHQIi1yocvXHhS/m+BI2ajioNv0z
+	ihIeKgMD5QKkruDNKzHgZpipDLfGj2Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788250869;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=c4mkO4Iwn+BHkXvq70/8/xMCcRd0R1cwKq46ZqtGKh4=;
+	b=Vh7VeuC0SiQThaiTVtODC93RBnuS9Ko2Xtqtn5myE3DVryptq7xWhw9q9A+cj5yQ15uGqI
+	Lngzh6f7UZmkSrDw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Eh0RnWt8;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GxYj3aUF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788250865; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=c4mkO4Iwn+BHkXvq70/8/xMCcRd0R1cwKq46ZqtGKh4=;
+	b=Eh0RnWt8Dgi/F6nDTvESi8M4vMb+QcOZkdLVY2SdeIc5nSCHECxIjVOBodfs1SDhyAKv7G
+	mxMzRR9zS3KITc+C8TVDWLWOwbK7w2cLtRKCIOjhSjjB0mJ/R2NA7mAiH89+/92u3g8ktH
+	yyEMnZ3NTbh0k0El9t39+wtpyqme900=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788250865;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=c4mkO4Iwn+BHkXvq70/8/xMCcRd0R1cwKq46ZqtGKh4=;
+	b=GxYj3aUFMRL+JlqBmrP3hS+I9wKpj3yN7+CN8UToSJWn63Paz3oB+MS+AdrRSfW2EPTtwP
+	xBi5t/MB1LeXC4AQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3A985136B2;
+	Tue,  1 Sep 2026 08:21:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id ICH4DPGKlmqFfAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 01 Sep 2026 08:21:05 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: javierm@redhat.com,
+	ardb@kernel.org,
+	ilias.apalodimas@linaro.org,
+	jani.nikula@linux.intel.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	simona@ffwll.ch,
+	airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org,
+	linux-efi@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 2/3] drm/edid: Add drm_edid_detect_panel_size()
+Date: Tue,  1 Sep 2026 10:17:36 +0200
+Message-ID: <20260901082057.37617-3-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260901082057.37617-1-tzimmermann@suse.de>
+References: <20260901082057.37617-1-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: nMGcA-eB4RpLSRUkVIS7KxRR6kcLW3oomc0uovYN0Mk_1788250140
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: A43A61FD80
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FREEMAIL_TO(0.00)[redhat.com,kernel.org,linaro.org,linux.intel.com,ffwll.ch,gmail.com];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
+X-Spam-Score: -3.01
 
-sashiko-bot@kernel.org writes:
+Add drm_edid_detect_panel_size() to extract the panel's preferred
+display resolution from a given EDID. Required for setting up DRM's
+panel orientation quirks in sysfb drivers.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Missing NULL pointer check on the result of bpf_object__next_p=
-rogram() causes a potential test crash.
-> --
->
-> commit 357b58adee859a9375d4063d6f64aa4a923e7790
-> Author: Toke H=C3=B8iland-J=C3=B8rgensen <toke@redhat.com>
->
-> bpf: selftests: Check for flag presence in bpf_program__flags()
->
-> This commit adds checks to verify that the BPF_F_XDP_HAS_FRAGS and
-> BPF_F_SLEEPABLE flags are correctly exposed by bpf_program__flags(). It
-> introduces assertions in multiple selftests immediately after retrieving
-> the BPF program structures.
->
->> diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_frags.c b=
-/tools/testing/selftests/bpf/prog_tests/xdp_adjust_frags.c
->> index fce203640f8cf..a894b1ab46f4e 100644
->> --- a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_frags.c
->> +++ b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_frags.c
->> @@ -18,6 +18,9 @@ static void test_xdp_update_frags(void)
->>  =09=09return;
->> =20
->>  =09prog =3D bpf_object__next_program(obj, NULL);
->> +=09ASSERT_EQ(bpf_program__flags(prog) & BPF_F_XDP_HAS_FRAGS,
->> +=09=09  BPF_F_XDP_HAS_FRAGS, "frags in program flags");
->> +
->
-> [Severity: Medium]
-> What happens if bpf_object__next_program() returns a NULL pointer here?
->
-> The prog pointer is passed directly to bpf_program__flags(), which
-> unconditionally dereferences it. While the object file is expected to con=
-tain
-> programs during normal builds, if it does not, could this cause the test =
-suite
-> to hard crash with a segmentation fault instead of failing gracefully?
->
-> Prior to this patch, a NULL prog would be handled more safely, as the lat=
-er
-> call to bpf_program__fd() explicitly checks for NULL and returns an error
-> code.=20
->
-> Does it make sense to add a check like ASSERT_OK_PTR(prog, "prog") before
-> accessing its flags?
+v3:
+- mention use case in documentation (Jani)
+- use is_detailed_timing_descriptor() (Jani)
+- rename helper to drm_edid_detect_panel_size()
+v2:
+- handle EDID without pixel timing descriptor (Sashiko)
+- fix checks for width and height pointers
 
-No. This won't happen, and existing code already use the pointer without
-checking it.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+---
+ drivers/gpu/drm/drm_edid.c | 47 ++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_edid.h     |  2 ++
+ 2 files changed, 49 insertions(+)
 
--Toke
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 9990a836d0b6..d5d9e77dc91b 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -7852,3 +7852,50 @@ bool drm_edid_is_digital(const struct drm_edid *drm_edid)
+ 		drm_edid->edid->input & DRM_EDID_INPUT_DIGITAL;
+ }
+ EXPORT_SYMBOL(drm_edid_is_digital);
++
++/**
++ * drm_edid_detect_panel_size - Get a panel's size from EDID
++ * @drm_edid: EDID of the panel.
++ * @width: Returns the panel's width in pixels per scanline, if given
++ * @height: Returns the panel's height in scanlines, if given
++ *
++ * This function detects the preferred size of a panel from the given
++ * EDID. There is no such information stored in the EDID block directly,
++ * but the preferred mode often corresponds to the panel's native geometry.
++ *
++ * This helper should only be used during initialization before the
++ * connector is available. For regular use, retrieve the available display
++ * modes with the connector functions.
++ *
++ * Return: Zero on success, or a negative errno code otherwise.
++ */
++int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
++			       unsigned int *width, unsigned int *height)
++{
++	const struct edid *edid = drm_edid->edid;
++	const struct detailed_timing *dt;
++	const struct detailed_pixel_timing *pt;
++
++	/*
++	 * Use display mode from the Preferred Timing Descriptor. For old
++	 * and obscure displays, we might need better heuristics.
++	 */
++
++	if (edid->revision < 4 && !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
++		return -EINVAL; /* no Preferred Timing Descriptor */
++
++	dt = &edid->detailed_timings[0];
++
++	if (!is_detailed_timing_descriptor(dt))
++		return -EINVAL;
++
++	pt = &dt->data.pixel_data;
++
++	if (width)
++		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
++	if (height)
++		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
++
++	return 0;
++}
++EXPORT_SYMBOL(drm_edid_detect_panel_size);
+diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+index 04f7a7f1f108..a2617aa34edf 100644
+--- a/include/drm/drm_edid.h
++++ b/include/drm/drm_edid.h
+@@ -490,5 +490,7 @@ u32 drm_edid_get_panel_id(const struct drm_edid *drm_edid);
+ bool drm_edid_match(const struct drm_edid *drm_edid,
+ 		    const struct drm_edid_ident *ident);
+ bool drm_edid_has_quirk(struct drm_connector *connector, enum drm_edid_quirk quirk);
++int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
++			       unsigned int *width, unsigned int *height);
+ 
+ #endif /* __DRM_EDID_H__ */
+-- 
+2.55.0
 
