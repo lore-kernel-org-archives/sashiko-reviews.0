@@ -1,200 +1,221 @@
-Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013005.outbound.protection.outlook.com [52.101.72.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D384A310784;
-	Tue,  1 Sep 2026 08:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.152.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77F134751B;
+	Tue,  1 Sep 2026 09:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.5
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788252102; cv=fail; b=fi3FHWgAdKtf1/8GSf91IMF+AzvAKyeyfsr9/YJw6ksjFa3ZIPbE8aR7tH3VRx5PAn1InqEE4bBaOgSkfuQXVWs39ySk14t4oyuee8xXjpDMbwXtQ9MtXC/PoxhqZAnZTCjwn0DF4L/AWh6lhnOm80u0E3SeEtrzniBCP1fVrjc=
+	t=1788253340; cv=fail; b=R2shiE126hdJ5A5xIerL/CmUoZpEnusjX8kwzs8MCawxCs9kesl+HRU1F/6CYvu3Qmp0SXVUivqZd9y0q96FtNDlEICM6e1x6cfH/GGSqlL5fiP8cDDi7n6i8Fph46JY2yyONCP7wWRtElJ8G72c7ZUK7pfCEf55e9xY59SuYdo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788252102; c=relaxed/simple;
-	bh=ko2R+Q6RbLrFh/ECLr6u6vPJ2rkR1+G4RqMKMT4kU68=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uq+sePsAH5l6UioCdxLPwclBGs79YwnZosNQIw4jqT6Bfblk1aYfZhbxbvfPTREEKe4AUJVUxjvkoylvVcTXh73DlZLL054KE8qAZLVdY5iCKEwZ7bZOc7VBdzYLep+nAf051PTOE+uYsKQERqkAeLNlsQHPKp59AeZIOCkZZR8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=MQui410s; dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b=i4u96pmz; arc=fail smtp.client-ip=67.231.152.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
+	s=arc-20240116; t=1788253340; c=relaxed/simple;
+	bh=15p+hfInyifzPjauhSIlkcafd+7oLUz0Alg0F6VifZI=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=a3W9sLSdVwNRhCUp+xp8xjR/lKlr2q6XwzEOTXoc2w3cTrfSiPdkFEF64jaeMwn075ALA95XYrrrO7cwXxvPIhtjUgbCl8Uy+qiOrhXVYX8fCdJtrRbU4cAStd8qrGzb0WBVkSPUscAWgQAO4SvxUlQGxuNS+qToSjDGmGqpiKc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=iA6FfVDl; arc=fail smtp.client-ip=52.101.72.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="MQui410s";
-	dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b="i4u96pmz"
-Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
-	by mx0b-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6814pQir2167073;
-	Tue, 1 Sep 2026 03:41:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=PODMain02222019; bh=BJPC7IAQVVMwJeVlZ1
-	LgQkV/NIAJEnVxYPqoQFrA5CY=; b=MQui410s72WX7lKWIhwbdd3Lscclsoqe/X
-	gERGeaIPYjTIMvdsOX+WvQ2+PH36Zz6cl+wW5AFEVM2PayO+D8AlkLpiUePpGr7K
-	u0TbHQqWGc3Zf5/1YTN0U1KJuiDaxaWjya5YYmmoQ67cnEeSMNnu0Q9MwhH9WqkI
-	2zOPXrvAphYNEp8PVvew/HZc+65/aYdG2qf5SuXPHqRKCMXGEgMJagb4oE6HMVxJ
-	haiFuMUNB7Q9rZoYy+NFUHXMDuLO2fBo7UAJM5S6YuiVIiXf8+Gjtt2zUAvMqF6A
-	B1w3OBkBHbkCqbAI592HryBTa0pMqRJ4DqGyDdOimlaVIEdW/y+w==
-Received: from dm1pr04cu001.outbound.protection.outlook.com (mail-centralusazon11020112.outbound.protection.outlook.com [52.101.61.112])
-	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 4gbuuh3f0w-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 01 Sep 2026 03:41:25 -0500 (CDT)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="iA6FfVDl"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rXUf13g0ikDbGO58ERbDnF7F2j/xZ+GwMOtGuJkG7iGuVOpa/b1w5vnT6eaJpxos6FjCXlmHTljgy5QOUTYiveXpQt+AL+4uC5VkqxUrwyK9Q4W5sDLNWu1BDfaojTNrnHMSnJkJhKog1vLisphxWasGuThMF8MZPXxCbTL8zxbti7d0ZmnP0zO2lxABa8+5UDrLSpEBVPULgAd8tyIEK+SE6PvEjbwH9rRjM1Ks3z8GoWIThh0z5tlj2OZl/XhE95tSVYs/HsxQ9mqvtx68nGHsYWC3W14UrXb7ZAxNPpi91tErFGv/kY0sfNWVhTMhRJsWJyH4Php1ka7ze4xdKw==
+ b=H+Xg/JJynuaWO74Sk2iurKj2jLsxQf6pCbMaXlhXsiuz77CgMv6d0s28PnshQT47mSAWDJkKZuNzzlDOnczbpEqsXW5KR3qMmNiDdPwq1IOM78Bo4K8m1qZRHqsdKtDci4UCgxEpxCIYEgSLXHYepOPbTfcoopUJlXeWO1ANqoqJHfnAz/oP+R75fuWthzmANjnPpuv0jx1lu3LaCHi5Y7M+a7AAoK8fUhrNDfs4zDDaA0naAIQTZ+lDr0iUFG1BtUcGcUIPdXrF4a07OWMZQxsDe8meAOfDG8H+LEwhrNgQlqFCEB/1VoUGOJy63pEreeHOEkjsKmaz9V4hnelD2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BJPC7IAQVVMwJeVlZ1LgQkV/NIAJEnVxYPqoQFrA5CY=;
- b=rAvwRzFCr4Ai4YgtWoTHIl0ZEYrltb/6wJ+OOAupk93Or6rG3RT+s7yQ0smC7MJkFGctW0XuZY4I9tFHiiyYmd5rFYm1WFjPxT/g98dKgw2d+gPMBuracKMCoWyfEDfQizwqKWQ0THIxSBAH0Z+KU2tL724MEmjfzV4YZKd9DTg8SRy9iyqnVzIw8XBqyzyerW17tDGnxC34aI/x5Aafe0dAMGF9Gc81YJFK1OOWAI0NEJ4UeEAc0/Q4BdpR8174zmsrkj29JKQ1mn5DocDFH8UuZwsteeewmHRb9wbGc9OXgAmNx0y8byfWKeuNkZ6Jkdzt7gJpCowry0c+EAs9sQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 84.19.233.75) smtp.rcpttodomain=kernel.org
- smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
- action=oreject header.from=opensource.cirrus.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
+ bh=tUZnrkL+dy+POt40s1JO1P2mxVtT+GuG2olKav0wzu8=;
+ b=ox2sgBd/t9CsiBPuC0ioItgcadyJII3fToeL53huBqOnb5kDqPJwGnJ9MMoXqMNAayFY4Mwijy5MEbryQtlvlmCxW6rgzp0GfKQyx88ci88G+0vpjIxvwlhza+8TZPBaOYEiXQl51Ca6UUEMSOwQgznfI8FEPlajpnL9hElNpP4RlMResBN6jmhfBZuHE2E6TeDETkuD36w9nvgPslLkkUDA7oVe8ktwfe+yMESqaMuH0UM4jgEUHGtT53W0Zvlqne63zXU0RwjUrijNaieFaR0HoXncONxM8SI7kIgCICXm4VWJ9Pb1PD35bNk3KtRgjP9H4uJo/ykVufb68Qub5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BJPC7IAQVVMwJeVlZ1LgQkV/NIAJEnVxYPqoQFrA5CY=;
- b=i4u96pmzkbCsVdf2idoWQUTS9X/OPBlKbU+fwRDcNf7f+UfJRuvzUUYdMsOAq0Zr4FJ0h0LBnWcxJLNVPPULe3GLJxHokhO7GOmoHcGshzso9dRcQ9JNlEnKqhnU/5nWT81kECI5saLPiGOdf8h4/AHsvrDvSLBz6AFsxkHd84U=
-Received: from BL1P221CA0038.NAMP221.PROD.OUTLOOK.COM (2603:10b6:208:5b5::9)
- by IA0PPFD89007390.namprd19.prod.outlook.com (2603:10b6:20f:fc04::cd1) with
+ bh=tUZnrkL+dy+POt40s1JO1P2mxVtT+GuG2olKav0wzu8=;
+ b=iA6FfVDlfwAcNUKflO10w7NLOkwjKJhVx2rPS7wS0xZlyya2JzhhxWPatBGUx8YkAw1RYnW4FqE083tVJHadqlcbqv3LN6+rLT3JFY7KM1Pk0zh5n1Ar1aJjI4lwOvpVX4rsYJ+dC9HN1yKOwSYuNZvsJJxc0vanINUmWN4MHg10c4w7eHQtQ9wHSYtEv/ICDWNm2nl1eYtb5khFY+6q28JPwmJBPt0oBW4j98OwJSiezFOfuGGMA4huWWNGZXfUSKV36xOFB5hUqQgtPdg0sI2egVymKzQMwVWKZs46va5l7rdsV2US7ZWz4wMOedctzZa+9lTRdiap81gcKF9OSQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from AM0PR04MB5858.eurprd04.prod.outlook.com (2603:10a6:208:132::23)
+ by AM7PR04MB6837.eurprd04.prod.outlook.com (2603:10a6:20b:10b::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
- 2026 08:41:21 +0000
-Received: from BL02EPF0001A105.namprd05.prod.outlook.com
- (2603:10b6:208:5b5:cafe::8f) by BL1P221CA0038.outlook.office365.com
- (2603:10b6:208:5b5::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.10 via Frontend Transport; Tue, 1
- Sep 2026 08:41:21 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is 84.19.233.75)
- smtp.mailfrom=opensource.cirrus.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=oreject header.from=opensource.cirrus.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- opensource.cirrus.com discourages use of 84.19.233.75 as permitted sender)
-Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
- BL02EPF0001A105.mail.protection.outlook.com (10.167.241.137) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
- via Frontend Transport; Tue, 1 Sep 2026 08:41:20 +0000
-Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 88A1E406544;
-	Tue,  1 Sep 2026 08:41:19 +0000 (UTC)
-Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 74615820247;
-	Tue,  1 Sep 2026 08:41:19 +0000 (UTC)
-Date: Tue, 1 Sep 2026 09:41:18 +0100
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+ 2026 09:02:15 +0000
+Received: from AM0PR04MB5858.eurprd04.prod.outlook.com
+ ([fe80::bdf4:c9d1:4e3f:68c6]) by AM0PR04MB5858.eurprd04.prod.outlook.com
+ ([fe80::bdf4:c9d1:4e3f:68c6%3]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
+ 09:02:14 +0000
+Message-ID: <5baecf27-b4a9-49b0-ba68-f6808a8c1b41@oss.nxp.com>
+Date: Tue, 1 Sep 2026 12:02:11 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] can: at91_can: add missing can_rx_offload_del() in
+ at91_can_remove()
 To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, mfd@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] soundwire: Add a helper function to indicate a
- device will detach
-Message-ID: <apaPrtVYpG19GVKR@opensource.cirrus.com>
-References: <20260831140157.1736905-1-ckeepax@opensource.cirrus.com>
- <20260831140157.1736905-2-ckeepax@opensource.cirrus.com>
- <20260831175145.9CD581F000E9@smtp.kernel.org>
+Cc: Vincent Mailhol <mailhol@kernel.org>, imx@lists.linux.dev,
+ Frank.Li@kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>, linux-can@vger.kernel.org,
+ s32@nxp.com
+References: <20260901083927.316283-1-ciprianmarian.costea@oss.nxp.com>
+ <20260901083927.316283-3-ciprianmarian.costea@oss.nxp.com>
+ <20260901084931.0AB111F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+In-Reply-To: <20260901084931.0AB111F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM8P189CA0027.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:218::32) To AM0PR04MB5858.eurprd04.prod.outlook.com
+ (2603:10a6:208:132::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260831175145.9CD581F000E9@smtp.kernel.org>
-X-EOPAttributedMessage: 0
+X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A105:EE_|IA0PPFD89007390:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce29d0d5-91a7-463e-3e91-08df0804cc57
+X-MS-TrafficTypeDiagnostic: AM0PR04MB5858:EE_|AM7PR04MB6837:EE_
+X-MS-Office365-Filtering-Correlation-Id: 23be5e81-b442-4330-cd76-08df0807b780
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|34020700016|61400799027|23010399003|36860700016|82310400026|10067099003|4143699003|56012099006|11063799006|6133799003|22082099003|18002099003|16102099003;
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|10067099003|4143699003|11063799006|18002099003|22082099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	oaTaTbsix8m8ya1Lg7qRfOjZQYnXyWFDVyq4SjPDilUcxcbCRS0nnA30McXVTOWw8XaYACJneKc/OSKEHGyH0cnvhMXVvGdBSfJ6G5Db/0IqPMZLXr0irfJbpAXjdzA4f79nqLWMlvXx0KOfYq7TIwin1gp2fu4vm65qeP6cAoS3arKyxWvYIykRBDJE7rnA02dv8VfXf2M/FgsQ4iHCCXj3phPuK19FGymTetZ26wSKaQaI4/o28hOtdA4qD6Jo73uNPfMfOFWHy6MPOTY6/IZAQOWVaHw3yehP6J1FKvpE+ROoNMIF0p9G9zP+cx/+dfJIS1UPu9NFGv/cs8XD2gBI5mTuxt4eYarc+VcdBaMynIs0pNEJxFyYQbcJaC0b/ZXI9PQiHpCTaPInIL+Iy4K6PPnM2YXEAOAO+jKN/4wgqHqAEsPHOnE+D9R5n9ZR/fp6G6YoE5ZSlP5w0BfFsUzIkgZ0Ki8MvbecFpmsgA1KKw1y2NYhu3qGPvgj2hlxXEIPlZLqLV91nNMSNruXTiB0QK+rLdsNLfhSgVUqV5YDHmoNXQY34bwHsojnQKrHD17L6RvP9M9kxd/v/S45JANepPN+KLxbeVZnwNsFGyxIj0CVI57NqyBhA5auJ9hrEyOBwMY1yRnvqqgKrWM2tuSFYE2QjVZzIXHtSqpeUFIO9FE2jKsetv+PEDBHE/TZg6l1r5FH/v7QBK2ISCH+tQ==
+	wgr0Eu/dng7DAncXiItaq8T87N1OZ7CzW4FL/Q0T3qcN8D7cyMHJ8gYRrmIogcSkjI3ki5LL+LOam88PYZ0wa0E2Wdh9Gnl3GlKCH1TDDE9garfYMrdiAYg2EKhE2U6bWw1asuE0baHsc89kEfzRC9LFJNucpQiTtn7Smtr7gO9J6zuT1kLvkqFUHGXXrXPFPiUBvXUdhRhjj1AY0ntxSBswHw+laM6xi/aXESzQLym0Owa1aDNJaSvX2GgJJJYWkViyNP9NglrSLpXJznGNliOCJlJwUnZ7D4vrXp6o/PyIYcyqPeuhI9T6UNr6HW5+GXNmaKbUtEB5/K92wx483e5pbZBSHKk9ruoAEs8wBfkEddZpGuL/JN47ne5qd96PgdKzsplsRpSaIvytG+kRN0sQaaxiR+zFBOZDqjMxJ4Fs37+cWyMFeWpVUVNJ4es4hFdkfQPugGLDLAufCPwsiTkK/wtBhB4uyxV0bVmvB3wCs6/cLeaJY0tlzOGAnMnTaAYtq5TA+5iDxR7kSwrlk7Oj/TgMnQHmUPKc+cmuawwLl2I6RZmwnzMk6v/e5fVr7kBvU89ODobcnV3JP44XzuMT7z8ykgF4ExWotlYW2bm6dxgtz7VRCwZjnYJyjVwS/Q/t2xKbiKNlCShARzifi/bw7qGDH1jbDGdz+Gao6xY=
 X-Forefront-Antispam-Report:
-	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(34020700016)(61400799027)(23010399003)(36860700016)(82310400026)(10067099003)(4143699003)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003)(16102099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB5858.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(10067099003)(4143699003)(11063799006)(18002099003)(22082099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	BW8lfgnMdUW1TtOSjushqM8hCzJY0PPDJ5/254UPUHxQCgRi2yhlsvWLSnMudeNcwZkbaA5XsFnQTYCr3W4i4L6o2RSlfmuJlIEr4xBsFvDcDFsJw0NS1ZXFk8aOIZeAkwHIFQulKZnbssCRHMjLUfiXip9/6xd1gpRdSoJPicQiLka8TGho2wZWij+Dm62XrVqVtP+ywm7QQBG95ZopfH9FJgI5xdGzpZN7rsHiudG4YHFcyrcLMI0G01eO4U5ao1yNGLxg/suG/0M8Qu/ukW5MhMXOjIfcRDIkZgDkIaUKwYP7y95IsLFLTBO5QwLbCyrQKFsSMYG0dn1uWpowD7vUdriU/j2NBeUHAJ7fAtYrYISfeA4gC4Blr77hA2KM/BPqltRJAezPLWtndGm1Uu2TtLnlevk2w+13EvqeYUpxNWfS7xEJTIz+hxxUEwEC
-X-Exchange-RoutingPolicyChecked:
-	ZLG3VJuD/74QH/vJSWCknYGI4JmEAbMD2XAg2HGIHjfmCB+k7vXJtPv3ROXTVys1Rcs5zmVhko74CwtzrwQ9JgAPM4x9PhgWEmrJpxZtCIQ9y1ubJIc8EkXhm70wQgVpGGGG0EPpBA20r0MjgjpdxHroEAB0pQVEQYnMrMbaH9OavWaBTMwdMGtqUKX8w5n3MrVr9TA2m5fjtk6sChzp65Zya5pjzrIv9XtUTKjXrQFZCVrpf2ZesOPPGM4BLgNk5t9HBtXkXmGbxf2oH1RZsYF5WzzQb8PjeG4eoxoS9gqIql49X+5Qe2qdiWnur9dhUklvqyxW9MgL6D0Ed4F+yQ==
-X-OriginatorOrg: opensource.cirrus.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 08:41:20.8941
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce29d0d5-91a7-463e-3e91-08df0804cc57
-X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
+	=?utf-8?B?UmFqUVpobXR4Sm5LdVNIckQzNHdyanZvQWlSWGg2eEhYNGRiQVJ2QjgxcHY3?=
+ =?utf-8?B?V1k3Sm1GaVhlUWVycWMyQ3hHeFBubTNXNHlCOG9YYlMyeEdkWnltS2NYbWNW?=
+ =?utf-8?B?WEtpcUp3NlMwanNoU0loWmt3RzRDTlowbkRxSzlsMDRIZitNdmhwb0wrK3ZQ?=
+ =?utf-8?B?OWNGckRodGo4VUF0c2RMNGNoYkI3VitpRDhaQXVTRlhyNHZ3WmZOQzM2cDY2?=
+ =?utf-8?B?TXd0cXkzYUdWODF5QkF4a0lONUJ1OXkrYVhmc2JmUCt0MXZ2eDVHUTdhbGZu?=
+ =?utf-8?B?WEN4cENDNkNjaG9ZUEc4MklkZWdOcHVNcG1WbGNJNzF4alBpQ1FTckR5Smh0?=
+ =?utf-8?B?YXJyemZ4cDVCTnZ4NVhWTkxVbnNaY2pNd3NoNnY3LzZKQW1KTyt3ZEsrVnZu?=
+ =?utf-8?B?dmNGUzRUd094OXp3N0VwTEJYVHFpMW5nZGJNcjdnbVRtKzV0ajI0S3kwcDBL?=
+ =?utf-8?B?NkdCV2VjUkg4amZoNTkzSG12U1NBNTV5R3lIT2hFRkJFQjV0T0JGd3JReklY?=
+ =?utf-8?B?WWlQbW4yejQ5Vmp0N2Y4M1BCSlI1MUxraGdMcHNXLzNTMHBDdm1CNXpkd254?=
+ =?utf-8?B?dGtRNHorVEdtVTVDNVFXbmV3VFdadDZENHdtdHlhVGFkRTFoL3U2Q2tEazhv?=
+ =?utf-8?B?aVZITWxqTDhyYkhsR1dTczRCNHNBU0oxMXREejdVREZURWlCeXl4UGNPeUNG?=
+ =?utf-8?B?cHB6Q2syRGtNZnpBOEVycFJ5czBJODU4MmdPT1gzbGcwdm45ZjgwY3YzZnF1?=
+ =?utf-8?B?Zit2YVVqMzNldW1aa1F6azFUOWdjc0xHR3VhTENJTXVESzNNc1dxbVQvelZH?=
+ =?utf-8?B?c0hDVlVabnFybm9RaHZ6eEtldUUrTmRobXJoTmRtbnBIemc3NUlBSWJRQUI0?=
+ =?utf-8?B?Ymg5dlNNM09MVGpRdUV0K0JKT3RvdkFGbENieitBdE5wVS9FcEFPcnhYei9h?=
+ =?utf-8?B?bGNwVVMxYmtjeXd0MTVRM2k5VU45ZG1td0kzMW54RUM4N1BKMlRFaTRVK0xY?=
+ =?utf-8?B?RlVOYlVFN3Vqc0s3dS8wTEVXU1ZOdEdCb3QxL25hQ0ViRnlPb0YzdC9ZYlMz?=
+ =?utf-8?B?SzNoZVZSUTA3QWlYb3hvV05pU3dCZDlJOVZvNWhDYnlocnBvZThEdHNJKzFa?=
+ =?utf-8?B?Y01QSjJLZy95QVdHS1NXbk1aUFF1ZzFEMVZlZ0loZDU2dE0yTlY3Z21Gcjcv?=
+ =?utf-8?B?dlQ2WVdiVkNvcGpSUzJ4SzNhSXNyWng5d3JuL3BNZTJkTVhrUkRoRk1rQlpt?=
+ =?utf-8?B?MnV5cFdUdGNKYTh6bGNiMlFHYjdFMFh3NXZyMEdsVS9YNnpPSHMza3B5TzRt?=
+ =?utf-8?B?OEFtYndrMkV3TlVhSm45RTRaaTNjeGxmVk1tcGRzTnBVMWRYdXV2YzdSYmdH?=
+ =?utf-8?B?cWtKVU45WERnTGg0NmI1T1JuZ3JnWHZyNWhKWk8zdjljR2FKVkVJYSsydWRt?=
+ =?utf-8?B?KzZMRFlPSjA3b2h0UWNienVuQzY1WXpVTTUyNkJGN0N2dHpLR2NteVA0V3dq?=
+ =?utf-8?B?eXBrMkd3bHhvNUJhdnM4TjJrb0JyTnNjWWRzMStDaFp2L1lMY3NzVDE1d3FJ?=
+ =?utf-8?B?K0RqRmZjcURhNlNEWXg3dDZoZ000TzBzVUZGZGljWjBkdHNYTjJyZ2R6M3o4?=
+ =?utf-8?B?NllGd1lldUd5dU9ucHF4YXg5UkprcWMvZHRJM0VoSVpKSFlPK2tYdWZyVUhs?=
+ =?utf-8?B?ZVIybHo5QmhZUFVPcTRkZm5ydHdSR2xybE9qYXpGTEVLUFhERlNKZ2FXMDZs?=
+ =?utf-8?B?Mjh2KzNIZ2xBQ0RJeHR2TXBuMDEwM0EySlVwUFZxOS9FZWUydTJyZ3VYSkgr?=
+ =?utf-8?B?Q2pPbFhRMmFWZUlFTFI2OW1VOTFPY1JuSGNOMUJ0ZlRxT1hERUcwbk0wNEtr?=
+ =?utf-8?B?bTh5WnJ1d0lJMUxCNUhsVVk0Q0Fjam1NWnNHaE41SjRCWXJqeFRzOWltRjVL?=
+ =?utf-8?B?QWJ6VUpjY1Y4eXppZS9WL3FYYmJBMStyL1FEM1RWV3gzR2haMk10WmUwSFJx?=
+ =?utf-8?B?d3NsU2dLN2VKeHp4VTJlUks5T3BaOUJnd3hMZ0hRVTNZUkhpREdlWTZkSGty?=
+ =?utf-8?B?QUtPaDAvdUJLbllmMTJsMjQyaWFtODdGcEV4Z0lnb1cvOXFIRXpIVkx1VnRi?=
+ =?utf-8?B?a1NjRjNjSjNJK1RsVE5GeEs2ZlBzVjlOYnR1d29xczZKQ3NOME5MTWF4NUF6?=
+ =?utf-8?B?Ni9MRW5DNXdES1p5MWExQ2s1ZGFtVTJMZ0hlZzdRZkdXYUVSeitSRTNVV3FQ?=
+ =?utf-8?B?VnZvNnRSanh2OEdLdVZGYmF3UGhjc3UzT2Q1d0l6dDNaUlBuTXFUaEVDOEJl?=
+ =?utf-8?B?M0V6RTFjQTNVeldMVTVDZXl2VHBmY3ZDNUFkTUNPTnBuRDZnaGdsYmRXYytN?=
+ =?utf-8?Q?8TMF9vpVPfZdduZ4=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23be5e81-b442-4330-cd76-08df0807b780
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB5858.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-BL02EPF0001A105.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPFD89007390
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA3NiBTYWx0ZWRfX9r+YVuFgP/zg
- vGHnMl/T9IDsm2USozy8Vf2czrgCN+6aYBo+Bq+PvNbkdFthNc/ct5gv3e6q3MpjpzLwQ6o7Rgd
- M4g8y1Wa0OYRuBuB2ld0uxs6YhicEyPV9jCR9Uvk3jgzT8SKmdHduv/jnmPLYQ5eCpw4vQBdtJs
- jBvAEFI/jMPY0TCGUGNd0Qq9KTDOcr+HCM/wp+MJHtxL1UBGnx+FvhcSN3SXtvsQBVQvews1tcj
- gduXRQQ9eEgKTBAlpJJ5CJdjDiThoellHt7+nDmLqPrA7M0EE62tOEUrHJSV2907+VJV8lE8agc
- 8Wc6uJVVJ+jlCFFLPqd889g7Sdcw01B57dUYxOY5Zy6OEoQyxoURz8ImCG2xVEQb7PCBRLGghJh
- T+VNHebs6OTxvcAKTm5ICTS39ra3GyMYHusB6zGaYTGwuhKwzv3saMMEMgS80miKB9QAwmccb8D
- RY5d4raI+lVRuZ0N67g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA3NiBTYWx0ZWRfXxQYY37gcZptK
- yim01Snv4w214vp60DVParhBGlWSmpJCb97U8SnLJwz/PqAPDbh1znGzjJ1UmOHTJYsp54ZXDTj
- SpyPnp8M7FZTAq0hBT5aMOgMtb5ekik=
-X-Proofpoint-GUID: 3lJu1QOkCFBBxwEu8064G4VvaxNKYzbR
-X-Proofpoint-ORIG-GUID: 3lJu1QOkCFBBxwEu8064G4VvaxNKYzbR
-X-Authority-Analysis: v=2.4 cv=d4nFDxjE c=1 sm=1 tr=0 ts=6a968fb5 cx=c_pps
- a=xiYOG/ZI8GhAbW/PPonVsg==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=iX4cTi3TZMoOKdANLEfx:22 a=KfkQE9S9VqCBgivYGm0O:22
- a=VwQbUJbxAAAA:8 a=ag9wvhxpiAUrDwjAiL4A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Reason: safe
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 09:02:14.8927
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 73n3djcUr6lI7xb8WnPbDHb2rkc5KmcIkRTxRdTCHb4Wk1qvyeUuYCMziDASbTzJ0OPKjGsaBl78nf+ZJ92+gzziyer4vMmHqFHHghmMQQs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR04MB6837
 
-On Mon, Aug 31, 2026 at 05:51:45PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -1214,6 +1221,25 @@ static inline int sdw_update_no_pm(struct sdw_slave *slave, u32 addr, u8 mask, u
-> >  
-> >  #endif /* CONFIG_SOUNDWIRE */
-> >  
-> > +/**
-> > + * sdw_slave_signal_unattach - Signal that the peripheral is about to detach
-> > + * @slave: Pointer to the SoundWire peripheral.
-> > + *
-> > + * Inform the core that the peripheral is about to detach from the bus, this
-> > + * is usually due to some implementation defined reset mechanism. After this
-> > + * sdw_slave_wait_for_init() should be called to wait for the device to
-> > + * return.
-> > + */
-> > +static inline void sdw_slave_signal_unattach(struct sdw_slave *slave)
-> > +{
-> > +	if (!slave)
-> > +		return;
-> > +
-> > +	slave->unattach_request = SDW_UNATTACH_REQUEST_SLAVE_RESET;
-> > +	reinit_completion(&slave->enumeration_complete);
-> > +	reinit_completion(&slave->initialization_complete);
+On 9/1/2026 11:49 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> [Severity: Medium]
-> Could this lockless modification of completion variables race with the
-> SoundWire bus core?
+> Pre-existing issues:
+> - [High] The driver ignores the return value of `can_rx_offload_add_timestamp()`, leading to a kernel panic upon allocation failure, and also misses cleanup in the probe error path.
+> --
 > 
-> If a slave driver calls sdw_slave_signal_unattach() to initiate a soft reset
-> concurrently with the SoundWire bus master processing an asynchronous status
-> change (such as a bus bounce):
+> commit 480793d438a773b528d044a7ee532ec7fbf0bc18
+> Author: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
 > 
-> CPU1
-> sdw_slave_signal_unattach()
->    reinit_completion(&slave->initialization_complete);
+> can: at91_can: add missing can_rx_offload_del() in at91_can_remove()
 > 
-> CPU2
-> sdw_handle_slave_status()
->    complete_all(&slave->initialization_complete);
+> at91_can_probe() sets up rx-offload via can_rx_offload_add_timestamp(),
+> but at91_can_remove() never calls can_rx_offload_del(). The NAPI
+> instance added by can_rx_offload_add_timestamp() is therefore never
+> removed on unbind.
 > 
-> If CPU2's complete_all() runs immediately after CPU1's reinit_completion(),
-> the completion variable is marked as done.
+> [ ... ]
 > 
-> Will a subsequent sdw_slave_wait_for_init() by the driver return immediately
-> instead of waiting for the device to re-attach, causing the driver to
-> mistakenly communicate with a detached resetting device?
+>> diff --git a/drivers/net/can/at91_can.c b/drivers/net/can/at91_can.c
+>> index 58da323f14d7c..3ee908817add8 100644
+>> --- a/drivers/net/can/at91_can.c
+>> +++ b/drivers/net/can/at91_can.c
+>> @@ -1165,6 +1165,8 @@ static void at91_can_remove(struct platform_device *pdev)
+>>   
+>>   	unregister_netdev(dev);
+>>   
+>> +	can_rx_offload_del(&priv->offload);
+>> +
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while fixing this missing
+> cleanup in at91_can_remove(), is there a similar leak in the at91_can_probe()
+> error path?
+> 
+> If register_candev() fails during probe, the exit_free error path is taken
+> but it misses calling can_rx_offload_del(). Could this leave a dangling NAPI
+> instance and leak the per-CPU queues?
+> 
+> drivers/net/can/at91_can.c:at91_can_probe() {
+> 	...
+> 	err = register_candev(dev);
+> 	if (err) {
+> 		dev_err(&pdev->dev, "registering netdev failed\n");
+> 		goto exit_free;
+> 	}
+> 	...
+>   exit_free:
+> 	free_candev(dev);
+> 	...
+> }
+> 
+> Additionally, the return value of can_rx_offload_add_timestamp() in
+> at91_can_probe() is ignored.
+> 
+> If the allocation fails under memory pressure and returns an error like
+> -ENOMEM, the probe continues without allocating the per-CPU queues. When a
+> hardware interrupt eventually fires:
+> 
+> drivers/net/can/dev/rx-offload.c:can_rx_offload_irq_offload_timestamp() {
+> 	...
+> 	irq_queue = get_cpu_ptr(offload->skb_irq_queue);
+> 	...
+> 	__skb_queue_add_sort(irq_queue, skb, can_rx_offload_compare);
+> }
+> 
+> Could this result in passing an uninitialized NULL skb_irq_queue pointer to
+> get_cpu_ptr(), producing an invalid memory address and causing a fatal page
+> fault when dereferenced by __skb_queue_add_sort()?
+> 
+> Does at91_can_probe() need to check the return value of
+> can_rx_offload_add_timestamp() and handle the allocation error?
+> 
+>>   	iounmap(priv->reg_base);
+>>   
+>>   	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> 
 
-I don't think this is worth stressing about. I think it is
-technically correct (although any idea why reinit_completion
-doesn't take the lock?), however we don't really expect slaves to
-just fall off the bus. AFAIK all the current soundwire drivers
-will exhibit fairly broken behaviour if the device plops off the
-bus unexpectedly and this function is informing the core of an
-expected detach, so should be called before that happens.
+Good finding. Will fix in V3.
 
-Thanks,
-Charles
+Ciprian
+
