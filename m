@@ -1,152 +1,213 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6114A43B6CB
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 13:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D063B14D1;
+	Tue,  1 Sep 2026 14:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788270612; cv=none; b=Q4fVZDG7Bz99uzAu3z6QasE/72bEiEC0zoPToaa4wRkHrQQTzGEiYOBsVZRzDdVBbVe6snA1Fhx52n4wyElwdZZ4hTHJoquzEdEEDobx8w++hRs3VeSRb8tRLNAvDfmfXIbVrzH1Wc7lkmvA1249sSn+AFPnyfotUsdSS/m/mA8=
+	t=1788272761; cv=none; b=lJCuJEs1HimesrGnkIcjDKJlkmHVXQx7WnisBe0orjh8vn22foP1OaPZqi+xFtcHqJ+tjFgBuKUnu9v+/DB3fNGFbAAF+M3tJkg4fSOg8A0oKVB8WK2yB51E1v88FO6ln7j0sDBl44uM2MCV6W4rKwMHJdcS0dQkec+/K4N3768=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788270612; c=relaxed/simple;
-	bh=OsPt/cT8BwFgc2l35blwbFE8qUUU6lxYABA1mI2KYMI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MQ85e+05wEw247YWISZ/HSbO7osHgRC0wCvB9eX0UWJfxkTDyoj9zUGKLiGHA2vB5zEYw8nvxnGHanY7Sb2i5C4V2PByUNT7t83oEqCp5Lto8Dz80g4tGeaj+qvXf1lcMSkldnj2546aMdtk9B3e+jfx34kNwJxMA3scUDy6vjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ogiErb9K; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788272761; c=relaxed/simple;
+	bh=LOTCQsOY3jSCnGN/hhjKW7agRKqthDpdG20/R1oZR58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m1iSw4PHpMldT0KCij8GH6bk2DTuimHaM7FfBp7tAFC2wCsC8KD21cM2wlAr619tGVGabk/mwxZu+Ge9ME/nClmkLKpH9R22xdzwQy66bQf/y2mfOK4UCN4Q4UmIcCGlNYL6zLJEVlhLaTcwx70htkiEE9j/rAAIU3Q1fCES3UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=T7/i7PwW; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ogiErb9K"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-482f9309813so890560f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 06:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788270607; x=1788875407; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rRkUL/OFvGAZqvO4fpwddKnaKIcFlaNkl3QdtF7lN4w=;
-        b=ogiErb9KGReE127RltJ5au5kCp1hHcV8zBayGOAKixWT43lZ/9vPv692Dduwo1Nm/Y
-         RfZhKNov2TmP2HmweBvoDOblArA6Ez2jmH/LyPN8FFMAj3EM7SkG7JLlemRRZzs+DF5T
-         hC0PvBAJeceNBTLto1D6U7nGvcRQOJdYqnvWgtHMf6wWu+bM4BFBl1BO4Y3oKS6eREb1
-         Ru/VSaqRAWw2I5xnizKYyyRPS5aKqkniaFwc0qjx3/zCI1QY4Mh9O9/tK9BfgFOkimsR
-         mNEBcV5/rAGizhMbKYYAMa4qgsKXPT5DzYcWiTuWihPis7konfw3jgortSY+V99y15aq
-         rPTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788270607; x=1788875407;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=rRkUL/OFvGAZqvO4fpwddKnaKIcFlaNkl3QdtF7lN4w=;
-        b=j1eck5cnh+e70TtKWh2+ZxVOsKOXerbozVcjBMxQFva6Bo8z1JYGv+KP697dJ3xVuq
-         Rhdh9VTGq9biHtm7YfNZwTW4EIRcdbRQL9DXHnSKy/lqaOkpMcWJEe8Sl1roZDogUqmo
-         j/uR/t2RtSMDhzwVYyWtet2ymx04TiGHOQirmQRh6vR+/dMEzRHDxIwVVA4cEFY28MkP
-         exrBBtWRJQb1HauWk5DKqhdJ4zKxKzkoEl35OY2hNKPgqZ+ReFYVb5EO3EVtSABeIBKp
-         HYoE0Fcjvy6QBOIPVeKT+iMLh+uFxF2l7CVFuTZsYy6/YTFVbD9ppFQLErQrhSB/HjtT
-         ACdw==
-X-Gm-Message-State: AFuF++lG2Ph46+uyufTfNeYjH3eV0C5QMig48lOcLgBdXPCF3UOLtVmh
-	WtjnhjDTiuTLJ1PCLUda777tRZm53gamiMD7u0r/iFDbZ7snHy5AQduq39fL8q3f
-X-Gm-Gg: AYBFou141hEFURwRVcDO6LKx3RaH8sN9pIOdMN76oc0N0otiabC7MwHz2lxdzIBr3uV
-	JMmg7VWtRHrEPBe2zEWeeeCidL0RLtU5+9L9ft2aPnJPMlu3nflj1n5kFpZdhlyksrTJ5PbWW7D
-	5E8dIqsTBqYNLb5UtqY/gwXgyzau4Jc5ZddwKADAF3O4YK23Kp7bFONa+zSFpsh6EDljt2Ou/y2
-	ifWeyPr7RjM2i7UNvrznU2yVWLJSU2nCm3kInQJALTY+RCAeLLbXLJ4UX1WN/Kutet/d4oAiXpc
-	xcqA4qt5lNl5DC7/wO5TmTP00HanOdsBXe3k5wW5T5cLI2ByA1LS52HkyWxdGtLXKitVrtM0qPM
-	lh6tjnD5cfZUJkiKVPpgSQAjSpvOENLfWV0PSv1xD2iDt58pM4t0LtmeIIJ14n5lGIQbtGaKno8
-	kJmTXpBsqlDyJHe4Lnt6XJa22ypps9DL7hAnlkufpQlIiXYkKRq2Ytj8Na/IEfQheoaLL+jqKZQ
-	olA5gVEvAYi/4jItsn3jFBl8G9WJHg=
-X-Received: by 2002:a05:6000:4548:b0:484:4789:9bb8 with SMTP id ffacd0b85a97d-48447899d60mr2616212f8f.2.1788270606921;
-        Tue, 01 Sep 2026 06:50:06 -0700 (PDT)
-Received: from [10.25.209.52] ([128.77.115.157])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48442d6dc16sm3988721f8f.20.2026.09.01.06.50.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 06:50:06 -0700 (PDT)
-Message-ID: <9e6de8ae-aca6-41ac-bcef-f591d9fe8462@gmail.com>
-Date: Tue, 1 Sep 2026 06:50:05 -0700
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="T7/i7PwW"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 681DW7nt1333760;
+	Tue, 1 Sep 2026 14:25:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=+UtEPetIYbkEkW6qpX4mMtufgGpeic
+	fdKvgGmBH7Gn0=; b=T7/i7PwWo6P8vr/7z+0bsP8WwsHALlmwWKlvv+bhERGQrL
+	LnZzPQlrH1SaTxN6Bfnny7vz7UTI/tRjSlO9C3wFXKWU4oABDcKFLI0hroMwDrC3
+	p8opmR3IwTbOq6x/g8zH7QZT6S7j/ofCb5328UNeK1s3/sWT44Bt6tr6djrr8WIt
+	RT9X+fajRfh+8DU30umg1eGDkAbmQ+flnF2jJMOs4gxBhxKZ8pfi0P94D0xDEW7u
+	VvR5fGyq2S5FSwPdE92WKLvGCqhWaiEZU/UGldEgwSHm5FrJGPSGGfrxCcY+PjlA
+	4sM2KKZxCn5PU9hSDMMKkS9Q/NJsEwIk+cyfOoXg==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5gcs6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Sep 2026 14:25:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 681EBgZa008556;
+	Tue, 1 Sep 2026 14:25:55 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hc3dy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Sep 2026 14:25:55 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 681EPpV143319568
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 1 Sep 2026 14:25:51 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7A45E20043;
+	Tue,  1 Sep 2026 14:25:51 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5069120040;
+	Tue,  1 Sep 2026 14:25:51 +0000 (GMT)
+Received: from osiris (unknown [9.224.76.185])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue,  1 Sep 2026 14:25:51 +0000 (GMT)
+Date: Tue, 1 Sep 2026 16:25:50 +0200
+From: Steffen Eiden <seiden@linux.ibm.com>
+To: Janosch Frank <frankja@linux.ibm.com>
+Cc: sashiko-reviews@lists.linux.dev,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
+        kvm@vger.kernel.org, linux-s390@vger.kernel.org,
+        Marc Zyngier <maz@kernel.org>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>
+Subject: Re: [PATCH v2 11/20] KVM: s390: arm64: Query Available Arm features
+Message-ID: <20260901142550.231001-C-seiden@linux.ibm.com>
+References: <20260831145536.913567-1-seiden@linux.ibm.com>
+ <20260831145536.913567-12-seiden@linux.ibm.com>
+ <20260831194654.39B451F000E9@smtp.kernel.org>
+ <d6fcf081-7613-4d3a-ab62-6c4f9a42816b@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: freescale: add MR-NAVQ95 basic board
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev,
- conor+dt@kernel.org, robh@kernel.org
-References: <20260901131918.1189-1-laurentiumihalcea111@gmail.com>
- <20260901131918.1189-3-laurentiumihalcea111@gmail.com>
- <20260901132721.9559B1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Laurentiu Mihalcea <laurentiumihalcea111@gmail.com>
-In-Reply-To: <20260901132721.9559B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d6fcf081-7613-4d3a-ab62-6c4f9a42816b@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a96e074 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=p5KpVjJDTnW5N_pSrO4A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: mc49I7FBG0xrHGz3VQJjUctauGACZLM9
+X-Proofpoint-ORIG-GUID: mc49I7FBG0xrHGz3VQJjUctauGACZLM9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDEyNCBTYWx0ZWRfX6/oBK93Dt9LR
+ txAuLkSk+bRZIh/S4A0fP5ahlvLDqPoYHoTUaM7MpKoCLNW5RmoF+MLpBvGIWSzglikErSRS3Fx
+ mbiaXVxDyozoAl7fggjYeIi+r18y2KA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDEyNCBTYWx0ZWRfX6K8rBzagABvv
+ 3KzyHV8As6lOiT3mhqrQ66jpH4ksjs2JmY6Z5Lt9yJGQSdw3F6Azr28n2Qjt94J05eArHGxbH4c
+ 8AvKdF9G525D4YRjr7rFodiCqYw5NmMygPI66S6/r62lqf95bO3Uf6bzF1SSYtPe4PjeaAi0eLj
+ 4+WWHBrvkxomIFAvEGUTZtkeiIPk/aYyxkgB+XOWP0p80VPsgT1pbXeLu1p5vHtRm76kTFF4DhD
+ rxIKZAzJLkKk5x1QEHZOby5NI2FDCmsyvtlYmZbej6fklF1oLH7lMBGEWKc2LpA39oT+vYZr8Rl
+ AxNl+68AFM6L7I6iVKRY1J2F8bcn5a1MPDeKzl1wXfw6irhwch1rwISSHRXMWvWpOozsGyk5V5F
+ EICxgjuAHFi0LgXZBGTqeKTT6MpkE3/2TNIBGo66bn4NE9TWoQk+Y9cQn5ucjX61tIHHw1xaN9o
+ O1NrKw/RXDo36bSZE0w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-01_03,2026-09-01_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609010124
+
+On Tue, Sep 01, 2026 at 01:44:09PM +0200, Janosch Frank wrote:
+> On 8/31/26 9:46 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> > - [Critical] The EX_TABLE entry in the `qaaf` inline assembly incorrectly places the exception fixup label on the non-faulting `lhi` instruction instead of the potentially faulting `.insn` instruction, which will cause unhandled hardware exceptions to panic the kernel.
+> > - [High] `aef_sysfs_init()` unconditionally calls `aef_init_save_area()`, failing to skip it when the AEF facility is not present, causing a crash on older hardware.
+> > - [High] Off-by-two index error when accessing the QAAF registers array in `kvm_qaaf_read_ftr_reg()`, causing KVM to read incorrect memory offsets for all features.
+> > - [High] If QAAF initialization fails, the global capability flag `info.arm_guest_supp` is not cleared, leading KVM to initialize using uninitialized hardware capability data.
+> > --
+> 
+> [...]
+> 
+> > > diff --git a/arch/s390/kernel/aef.c b/arch/s390/kernel/aef.c
+> > > new file mode 100644
+> > > index 0000000000000..825e2643a8921
+> > > --- /dev/null
+> > > +++ b/arch/s390/kernel/aef.c
+> > [ ... ]
+> > > +static int  __init aef_query_info(void)
+> > > +{
+> > > +	int ret;
+> > > +
+> > > +	if (IS_ENABLED(CONFIG_KVM_S390_ARM64)) {
+> > > +		info.sae_avail = sclp.has_aef;
+> > > +		info.ptff_avail = ptff_query(PTFF_QAGTO) &&
+> > > +				  ptff_query(PTFF_QAGPT);
+> > > +		info.arm_guest_supp = info.sae_avail && info.ptff_avail;
+> > > +	}
+> > > +	if (!info.sae_avail)
+> > > +		return 0;
+> > > +
+> > > +	ret = qaaf(QAAF_FC_QMC, (union qaaf_block *)&qmc);
+> > > +	if (ret)
+> > > +		return ret;
+> > 
+> > [Severity: High]
+> > If the qaaf instruction fails and returns an error here, `info.arm_guest_supp`
+> > remains set to true.
+> > 
+> > Because aef_sysfs_init() is called via an arch_initcall, the initialization
+> > failure is ultimately ignored by the kernel. Later, kvm_s390_arm64_init()
+> > checks `aef_info()->arm_guest_supp` and will proceed to initialize KVM using
+> > the uninitialized `qmc` block.
+> > 
+> > Should `info.arm_guest_supp` be cleared before returning when qaaf() fails?
+> 
+> No, we can instead check the sclp bit for sae_avail and early return before
+> the assignments.
+> I don't see a gain in having this information shadowed considering the two
+> patchsets that are floating around. Maybe you need it at a later time?
+
+I'll dump it into sysfs and use it in the init of kvm-arm64.
+
+The main use is to have a single stop check in the sysfs to find out if
+arm-on-s390 is supported bu the machine. The check in init is just a
+second use.
+
+> 
+> 
+> sae_avail is also used in patch #20 where it makes even less sense.
+> Either the machine and KVM have sae capabilities or we don't need the sysfs
+> files. So why even add it as a file?
+> 
+> It's not like UV where we need to opt in, it's either supported or not.
+> If it's not supported there's no need to have sysfs files.
+> 
+
+The idea behind this is to provide some information on why kvm-arm64 is
+not available:
+It might be because ptff has not all the supported calls or aef is not
+there. Both must be present.
+
+> 
+> > 
+> > [ ... ]
+> > > +static int __init aef_sysfs_init(void)
+> 
+> aef_info_init()?
+> 
+> > > +{
+> > > +	int rc = -ENOMEM;
+> > > +
+> > > +	if (!IS_ENABLED(CONFIG_KVM_S390_ARM64))
+> > > +		return 0;
+> > > +
+> > > +	rc = aef_query_info();
+> > > +	if (rc)
+> > > +		return rc;
+> > > +
+> > > +	rc = aef_init_save_area();
+> > > +	if (rc)
+> > > +		return rc;
+> > 
+> > [Severity: High]
+> > Will this execute the new qaaf instruction unconditionally on all hardware?
+> > 
+> > aef_query_info() correctly returns 0 if the AEF facility is absent (since
+> > `info.sae_avail` would be false). However, aef_init_save_area() is called
+> > immediately after without checking if the facility is actually supported.
+> > 
+> > Could this trigger an operation exception on older hardware?
+> 
+FWIW: this is a valid finding.
 
 
-
-On 9/1/2026 6:27 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing memory node in device tree
-> - [Medium] Missing USB controller and Type-C implementation
-> --
-> 
-> commit 3130a84e68bcdc800ca07e4c01ec3d00e67a37c4
-> Author: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
-> 
-> arm64: dts: freescale: add MR-NAVQ95 basic board support
-> 
-> This commit adds basic device tree support for the NXP MR-NAVQ95 board
-> based on the i.MX95 SoC. It defines initial aliases, chosen nodes,
-> regulators, and various pin configurations.
-> 
->>    Add basic support for NXP's MR-NAVQ95 board. This board is designed for
->>    robotics applications (e.g. drones, rovers, humanoids, etc..) and has the
->>    following hardware feats (list is not exhaustive):
->>    
->>    * based on i.MX95 19x19 SoC
->>    * 64GB eMMC
->>    * up to 16GB of LPDDR5 memory
->>    * 1 x USB 2.0 TypeC
->>    * 1 x USB 3.0 TypeC
->>    * 1 x RJ45 port with RTL8211 PHY
-> 
-> [Severity: Medium]
-> The commit message claims hardware features of 1 x USB 2.0 TypeC and 1 x USB 3.0
-> TypeC, but looking at the device tree file, it completely omits any USB nodes
-> or Type-C definitions. Will this leave the USB ports non-functional in Linux,
-> and should they be added to match the hardware description?
-
-This is intentional. USB nodes will be added later on.
-
-> 
->> diff --git a/arch/arm64/boot/dts/freescale/imx95-navq.dts b/arch/arm64/boot/dts/freescale/imx95-navq.dts
->> new file mode 100644
->> index 0000000000000..1366dc2d2bfa4
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/freescale/imx95-navq.dts
->> @@ -0,0 +1,222 @@
->> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
->> +/*
->> + * Copyright 2026 NXP
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "imx95.dtsi"
->> +
->> +/ {
->> +	model = "NXP MR-NAVQ95";
->> +	compatible = "fsl,imx95-navq", "fsl,imx95";
->> +
->> +	aliases {
-> 
-> [Severity: Medium]
-> Should there be a memory node defined here at the root level (e.g.,
-> memory@80000000)? Omitting the memory node breaks standard DT conventions for
-> root nodes and can cause boot failures if the bootloader expects an existing
-> node to update and does not dynamically inject it from scratch.
-> 
-
-ACK. To be fixed in V4.
-
+	Steffen
