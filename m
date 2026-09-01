@@ -1,239 +1,272 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1936626E165;
-	Tue,  1 Sep 2026 11:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788263058; cv=none; b=tIsySNJiWRnazd77ejFIwDFhnQB4/MI2EsyduSIhp3ZI8WN2NRz/7f06fj/MJTMvllHIFVGc4iReYUYsaxtj1U+EehvVYWOdy0cqcb3Nj6Q3o7kOxmmTbRpVmoMsiFwrCQVUjz8CoU9/Cwbi4J2m9ARTj/JkZ5eCoQQ5L3fNEoY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788263058; c=relaxed/simple;
-	bh=BUkjbYV758lMApBwAFvI7Bv71IVahOGeBJ9ExLaKqqc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rjnQFskEOJNX3kNJTK5MzN4j0sINmmMS6WYv7g4TAt53iwBekkJYHNY7SSb3mBHDsAeMQY8Aw7iXuQsdaNYIeRFA2MtULslUYyVWIwBo7fAhg3/xg5j76r2gRjVkBtdQpm/rGjMz7+nJZwrS5q05zMbP26+RaLUxSkFq1rstlVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=rh/Jsoh6; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B904C352002
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 11:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788263905; cv=fail; b=lrxE4QqQJbR8l2qdMlxg26rD+1CKcaRoAgyUudIspk2fT3sk0jc2e1SBDphLAz36adBcMKr/RzhIWPPCGetHKuJIMTgoW4NY9sLesCY2N5fnggmf6ABkkZIAZpcwrw+ghGZoY0uB410tsSMgX4+j6A9N5CgS2vfl4reA91cYpiU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788263905; c=relaxed/simple;
+	bh=/HSoadtXTERaWiBCMoK/GVtMtuVggD8IDXi/IPfEj/g=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Ed3uo3XTDbv526Ze9osNU4C2d3u3KsATVFQP5I/aiaIZ3OlT2DqCbeQrjEctAyGaxrOZq3kr5T75/L5y497fjCwk6MmnhFW0m+lgZTjRp6tFemPqqhTgsiJWXiJ6jCpFwi0Kxk8k35xlgTdORYdWqsw2OTDKhuRLs76X+Um7AR0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HS8Uc6FE; arc=fail smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="rh/Jsoh6"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 681AVYfv3265923;
-	Tue, 1 Sep 2026 11:44:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=QPmWBm
-	P82I5GiaGgd8aguFLASxy+GfhCgxgB3aMu9+U=; b=rh/Jsoh6S1QmGFAmK230YG
-	OMBq/rQniI3uEHXuy+hk3YYZ5bVDm9rUBWmEtkUa3UFOV1f0Env5AE4/kXWnz1D7
-	Vi3peyUBYzk2jWDawY+zXbo7Ab/xE8KdIvnWfACSEDkgdYDgefJQDUmI4LcqzQpN
-	Lg4z1wPpegDjIGSOo20PIbl7HyIXmjseXe5L8CbOpbpXclGCUHUSLAozFQ8c9Koc
-	CpsODoxBduTEUWc6VoDy7zU0PEvVOZauAJd6UQhYYU3X9HEyiGAuq4pMg93TipuH
-	iIUI34/df4/akqIl6d+WQN+2y8HIpnX9c4nT9BlE5C3cG5VBz6YjFfIo3R7AZ1Nw
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3r7evf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Sep 2026 11:44:14 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 681BfGmx028160;
-	Tue, 1 Sep 2026 11:44:14 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcbygb8p2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Sep 2026 11:44:13 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 681BiA6G45416822
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 1 Sep 2026 11:44:10 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2EC0F20040;
-	Tue,  1 Sep 2026 11:44:10 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DC6F92004B;
-	Tue,  1 Sep 2026 11:44:09 +0000 (GMT)
-Received: from [9.111.27.156] (unknown [9.111.27.156])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  1 Sep 2026 11:44:09 +0000 (GMT)
-Message-ID: <d6fcf081-7613-4d3a-ab62-6c4f9a42816b@linux.ibm.com>
-Date: Tue, 1 Sep 2026 13:44:09 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HS8Uc6FE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788263903; x=1819799903;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=/HSoadtXTERaWiBCMoK/GVtMtuVggD8IDXi/IPfEj/g=;
+  b=HS8Uc6FE0Nc2SWW83w5FbT7nltxo0vaiD89egePTNTXF8k6QXYYpS8eL
+   on20gSWRPb/LrgZJTfy3YgZPUXvMPFtvRXyz0JHtN47bGG2htxhjqA5PL
+   hCCRqsJPpUbW0UpG6kVo00AHetBJw2SKHXbYuSg8n/hq9PdrA6ijErRWp
+   JVH0aBKhXNqpUieVjwaPIGFdM49XVqKsfsxpyhEgGVhBu8Nxr7UVMywo5
+   xVRiaHM7+y5snvnLL/l4ppNmcOtSuOm9a8yXXtn7+N9FtlsKek1dGJEIC
+   nymqtpCjckbgQ3RiL8UDePxKTK05AqjLwXk8++ci0wWHXlcIExp7d3hWM
+   w==;
+X-CSE-ConnectionGUID: O5J/MijKQQKkOTpVbeCFtg==
+X-CSE-MsgGUID: 2+8OKVyNTQePPIuY/m5+6A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="88567638"
+X-IronPort-AV: E=Sophos;i="6.25,255,1779174000"; 
+   d="scan'208";a="88567638"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2026 04:58:22 -0700
+X-CSE-ConnectionGUID: ditK5dAuSkmsFXzUU8VGCA==
+X-CSE-MsgGUID: xx56svqnSkCcyRYKsRcJqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,255,1779174000"; 
+   d="scan'208";a="292586236"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2026 04:58:21 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 1 Sep 2026 04:58:21 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Tue, 1 Sep 2026 04:58:21 -0700
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.10) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 1 Sep 2026 04:58:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t5ToF8u/9tUWHn6dLFS9PBDx9rtktAW/9aOGwtXqXqBAhsuMBYYgBYMcN7porQ7HHBC98nPxJsfd5JvBTOtwJIxefYa+UNRYzM1B+0wLnp1Aapvuk4tWiL2FsUJMa8vLcAjpcupgWoVt+Uue9H5Vk2WQB+mi57qItjmGwss5gz9nfPgac2CY7uhE9mQkWLkR+NaEuBqY+vCrQMCEAHDWqN88uN0EJIGbqOc8wqTvoMCdE5NYxJMjrNvRlRVqXVHYhEP+KqQDE1kqeFTBtKFE/dsi/L2FmSAbLS+DgnHyt59AJKlvy+VfSYLxnG5i0NOnmUVuhnZ3/0A1bvjf0bvyxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tX1kR75t5PwoTc+lyDbtBWp+UfUfhQbvz9uYCfP6FP4=;
+ b=aPevYrGqRFwmm+rQiP3QX4OLMm5QgdfgRbdTm5NrY/VAkvGY5K8DBYpfnyTtfIcrAv1rk8TuAx39UGwybCB7kU1boRYYVsF0dapUMIDKIwIf4L1kCat1txhg0WuFzdUeduGpXaBXrlLWw6rGDelo9rBPgDrYgx/upMLU/cWmqGkSvZviBbxBiJqaI/6+LPmeLlw+SgxsGGYDlKgDvADsP1U14+LvMeQLHY4hRojZYn6XsCvwZxUmcpF6qIPOQXQcECzoFI6sop2bKM9zZ/EmTTCmQjApMx/HagZymCE0Dx+bFI+dpyfOZ/dYKSxsZ77K7tktk8S0N2MiviaWdA6eBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH0PR11MB7424.namprd11.prod.outlook.com (2603:10b6:510:287::7)
+ by SJ2PR11MB7645.namprd11.prod.outlook.com (2603:10b6:a03:4c6::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
+ 2026 11:58:17 +0000
+Received: from PH0PR11MB7424.namprd11.prod.outlook.com
+ ([fe80::c448:1138:6981:52e2]) by PH0PR11MB7424.namprd11.prod.outlook.com
+ ([fe80::c448:1138:6981:52e2%5]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
+ 11:58:17 +0000
+Date: Tue, 1 Sep 2026 11:58:07 +0000
+From: Krzysztof Karas <krzysztof.karas@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v5 3/6] iommu/dma: Catch scatterlist length overflows
+Message-ID: <i6vqmzifkewq4ryhwvldefkxdcxer2wkqgda3pewp2d3xloyva@un7hvq2vqs3l>
+"Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173,
+ 80-298 Gdansk - KRS 101882 - NIP 957-07-52-316"
+References: <20260817095648.2438192-1-krzysztof.karas@intel.com>
+ <20260817095648.2438192-4-krzysztof.karas@intel.com>
+ <20260817101110.799001F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260817101110.799001F000E9@smtp.kernel.org>
+X-ClientProxiedBy: DUZPR01CA0265.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b9::15) To PH0PR11MB7424.namprd11.prod.outlook.com
+ (2603:10b6:510:287::7)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/20] KVM: s390: arm64: Query Available Arm features
-To: sashiko-reviews@lists.linux.dev, Steffen Eiden <seiden@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
-        kvm@vger.kernel.org, linux-s390@vger.kernel.org,
-        Marc Zyngier <maz@kernel.org>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>
-References: <20260831145536.913567-1-seiden@linux.ibm.com>
- <20260831145536.913567-12-seiden@linux.ibm.com>
- <20260831194654.39B451F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Janosch Frank <frankja@linux.ibm.com>
-Autocrypt: addr=frankja@linux.ibm.com; keydata=
- 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
-In-Reply-To: <20260831194654.39B451F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a96ba8e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=H2J1ql-I7Lu3LdE3378A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDEwMiBTYWx0ZWRfX7Rp5TiDnhW7Z
- s6tGkTTKphiYFN3rDzD3A4YJANiITqPpDo3HWgJ7OuNy1Z94P/luD8mHjNBxPrBaKo5DAA208If
- Yxt/+LNPHNejHNlj9PUldGbqrcTi7qLEYYZQWVpeCQ0GnNbke9jOD+fPpFQOmJlLHMgNqYZZfCl
- 9W+MmNtOr8VIMj3y6v5PRI7Iv+Pg1iDHj5H3sL51XIPIs+d/axutCqINy/KsztJXPwKLw8+ll8A
- B5syXdk6N+5/QRUUhlmaEsHAKX3lgS9xRL3k137JMuWTPfJq9CIhpyfJr3gSbzKuJn2Pu/LG9fm
- taMwp323xeXYj5yMLyzTWmDTRKoakBLqlgQKlfk3avR2AqJeI5a1IKsHNSrozseQQRW2HhUUrEQ
- nuqS+jFV3hly20fScyRRzYllkqbflfYbK4ZDA8hSfRldLaou/0JtjIkHv3e3TVhZJIQ6jr9LgfB
- Otx2YNMHEUC5TpDKJ9Q==
-X-Proofpoint-GUID: Tg0JgOrFhG86iz5Frw-Y2jhVn3D-Bx65
-X-Proofpoint-ORIG-GUID: Tg0JgOrFhG86iz5Frw-Y2jhVn3D-Bx65
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDEwMiBTYWx0ZWRfX6uotoSvz98jg
- hrLXAKcZNpJmScHyqLpf/SghfIxEPX4e36BFMj0Di6R2WTFGTg60N4isi+/Sf+LYqXsGb5Qf4uu
- xCN7+lftNkRnGtWW0BUoiWYrF3qQ3rc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-01_03,2026-08-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010102
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR11MB7424:EE_|SJ2PR11MB7645:EE_
+X-MS-Office365-Filtering-Correlation-Id: dce1eefe-040e-4327-28f0-08df08204f32
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|11063799006|56012099006|4143699003|10067099003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 030CH8h1AUtEkME8rZEIZNB5tViVXazbrBfn1lEO+CtmSOvyrvjFk3bsjNRahOE4OdNrlrEU5eIgks8DYCb2mfuUEf4rcj4YTC1KEW52fVfnSOjKAJ82mZEa/pR01EpDKoB4EgleHKAzGMUXEiSNuB96Oei8BebjlSXJUYyg4yty4wQYFABW6lssnetpqW/DV178VMOXaGf8S6ZwSNjU1UKQUd/++BLoSpcE3p++yi0m2c6GsCOducCeQ25JYNfwpqrP7oHdLD/Lz/pxHrx/dDNsVPHUF67loEi5IK2Trvg13R5y5me004zvhTyHkn6wqIEX2AUwPANK++hjdfCR9CV5i+wc9FuPzBIQnVQhngYGuFtzEiBgAilEp6vFp4Zagw6mEq00f6BruOsQZtpeDkSc+Tn6b7bc4hlq6XxhCf3Atd8VaKIokQQKd0zeNE1OzH40axOZkDDTIN4RFRLqO63TecppOrd5iYAXr8J4Wnz7byjvxvV7nU1JmdXu21Vu6f6weZY91Zu+6fR/a2QFdvXs4YZWsH7HYDm5DgAxhGGY1YXqinh4mc+898tKp7pG9t8/XMtDMun0/pTMeeqR+ECt14BJhlOiwox7jHzkQJE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB7424.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(11063799006)(56012099006)(4143699003)(10067099003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SGFJcXpQWXo4U09YZUM5M05EdEhSVU4wOUdJTTQrTFVGUjFGNkpYck1kS3N1?=
+ =?utf-8?B?M2dUK3hyajlmSVQzQ3diOGFzSlZYSndoa2QzYkJtc0xZLzhzQ2hHeHRxOUlC?=
+ =?utf-8?B?N2diYlp5OEJoSzdrYVM1ZDRCVzY0cWIwaEs4WlF5Z1IvOE9hWU8zSm9tL1JV?=
+ =?utf-8?B?VTlFTVRwMmNWNjhkRXRpeVFhTEZzalVoK3VrR3VwMlhrT1R3aVh4dkdBY0w3?=
+ =?utf-8?B?SEJwdUUwYWJwcG1JeUlzOEo5b2JISWsrSU9Ec1hLb0dFc3lwSSsyTzV6RXRJ?=
+ =?utf-8?B?RHpYMThuZ2Z2YkNzemUyMjJ1OFkvOEt1cnpPNkltK0tvUEZZa2E2YWVOcVJi?=
+ =?utf-8?B?cng3T28zOE5PeXU1UjBGanhpQkVwbkhETGhLeVIxaXJXR1RYMWo1S01OUVNS?=
+ =?utf-8?B?dzRqcUpLQjVqelBaZHRjWmNKNDc5UlhybU40dUsxbElsUjBVRmlrWmh1N1dI?=
+ =?utf-8?B?bVFNdW9SbFRCVW5xQ3o3b0tKcGpqQzVPOFlwRCtVRkFqT2FtWUZEYk11bFFX?=
+ =?utf-8?B?SGF5VFdpQlBvTUhzemxaUCtlb2dqWnVBNjJZM3RaTUdDRFdhc2E3RmJsRHly?=
+ =?utf-8?B?eklmZmtQS3ZhaS9hV2JMdXQyWUxDWk1PeEdTY25PeWJrSlBaLzJWZjhEbFJj?=
+ =?utf-8?B?VXpoUEVqUlVYcjEyQmpDdFVsYlFjbUlybXgyb1pudWxJMGh2TXpWc3JwVXBa?=
+ =?utf-8?B?V1Y4QlpHMi9wWGVpM2N6eDdwM211Tlg4a1JMZkcxUzI1NUYyTXg4bUpPWDd6?=
+ =?utf-8?B?endSS28xRFp1cDNkWDBqQWJwK0k2cDZjQkdITTBEV29XM3NOTWtVdXdyMEI0?=
+ =?utf-8?B?NS8wNHVGTVQ2S1VDNGlrbFRvYUFqbmV3dU1QUEZUR0p3UHd3alN1VEVEekJa?=
+ =?utf-8?B?M21jZ2hLVjBVb1oyNTN4Tk5sVFBLSVJ5ZHlUVlpZWmZJaUdyUkNpYVB5OGVO?=
+ =?utf-8?B?UVNaaFhZWHBLaUhoTUtRcDJkZllIUEM5d2hGUXNEK2orYnB2MDdMTE9hdllN?=
+ =?utf-8?B?NVRBZkcwU3pSVW44dDkwM1hjcjZXK2x4bVZhUkxHa1NyN0tCNEQ2UFFQSzhk?=
+ =?utf-8?B?VGZqKzJXS3h2WC9MNW1XUkM3RnFEM09IbFFWZUV4ekZtdlErUG5FbktwQUFk?=
+ =?utf-8?B?d1J3ZHFXdDc3djhIUmxjNWJHNkdKd2FQcTh6c3Fac1ZuWkpKeHFqNmVXUGMw?=
+ =?utf-8?B?dy9WeGk1S1NGdzdHckpIckxMd2ZUdWYzWHE1ODRNRi91a3JBQ1pnZG9JWnox?=
+ =?utf-8?B?NEJ2bHEvWGU1THFYTjd1SUtURzlseWVvS1pDME1sTGc1V1ZrVm1sYWdacHFP?=
+ =?utf-8?B?MXVWNTd6aCtsdkFzUzZXQXpyajgrWmdSWTlaeFlFb240aXlESjB3Tjk2aWN0?=
+ =?utf-8?B?dkNSdy9seDNBWHc2cWlVRzEveFFCc1l5U1V2SFVJbzY0YThRcWNFZU01QVAv?=
+ =?utf-8?B?dG9CdllseHYvSUdrOWFmN2dESjUyUVhHUjBmZ3h1WTFxWFdZZllDVXdzRGdK?=
+ =?utf-8?B?ZkJRd1pyS0xSOFZNUm9UTWk2UDJ0OW5mOCt5bmc2Vy95TnIzbDRLM1R0OG5i?=
+ =?utf-8?B?aUZ0TlBmSDF1c21aQzBrQ0ozRkFTOW1VUU9VZlZtNFgzWEpMSWFCSHFaVUJZ?=
+ =?utf-8?B?aUxWcy9OUWU4VTRYREJYSzVxNHBJSUFIdlAvSXo3TzZ5MUIycnlMRFdzeEJj?=
+ =?utf-8?B?UmU3Vk00ekpkZGVJTitaUllGRmF6VmVCMzFVb0lrZElkMmw3TXhGdE13eUxJ?=
+ =?utf-8?B?ZUY0RXMvbUNpSXVlaUJRSlhuWlNLclhHRkhFMXFJamoyUjA2M0c5U21KRjl2?=
+ =?utf-8?B?VE5jTEpKZ044ZmNJbWhsc1NBMUNQV1BuTFVrQ2ZlSjF0QmRMTkxGc3Y2Y0lh?=
+ =?utf-8?B?S3RydUtHekgzSHhrQzRTelh2WWt0RnpwVXJxSWtYOG40dGNEMWd0Vk9vR3Vn?=
+ =?utf-8?B?TEMxMEg5SzJsQ05zNzIyNmRtZytqQTFaZzlWWC9TMTFjUlR2elNmSUdLR0VT?=
+ =?utf-8?B?eEJrZjlJa1FvNHNpKythVDRyelNKNnVNTlNvaVpvY1hGQzdxMEJsM3JNS3dH?=
+ =?utf-8?B?eDgwUkJaTnM4OHo2SkpiQy9uR1MzdHYya0QvUkhQRDd2UTlTNmU2V1JJdVFB?=
+ =?utf-8?B?Sjl2bXB3eFFsTFEzS0tEV3AwM281UEN2ODdSd3U4TkJCYkE5MTlUMHFoZ3B0?=
+ =?utf-8?B?UXFxM3ZqcXJTYjdPbFhQeWNUYU1XKzN1Um5nUk5GNjFEK2QxUlZER2hVdWtG?=
+ =?utf-8?B?OWJGL29BNStTZ0hpNkhZaDNIeXpkdjI0UHdOSnhpYXl0WUVuZWJyRi84UHFp?=
+ =?utf-8?B?UlhaTGk0WjVTM0NxekwzMUlVT2lkdUlJSWFyVFRSVkUvN1k4VHFkU3UvSEVt?=
+ =?utf-8?Q?NEo2R5E13zX37mUg=3D?=
+X-Exchange-RoutingPolicyChecked: K7wqn4PGwdX6CkA5KI/OaW6cBk+eWKoMDjh90lSvgRkU9Vo12tKmZjUehH/mXu/Srl3V/UOyLLOV3Du+2H/QoGsAwqhbNHeipIDGIIS0+3/3zFa4xdHiLQNpxPpFwXE72Hph91z4HmmI+NKV9RQ7xydUBFI/Y0Nn/IAHrtiVYqk67X8GB0wjLSSZJSBEwCU6ETCOdBRuG+aVAzymKk+L31h4b+oBCXH2ZFTX5kkvPcz0hByYitYkmbc22BMDbaM/lzBDujZGZVIMcWFQMW8ANCqNeFOgrmj3e1RNvFY4ZAjvH50x1SmK6sRP/pz2GX2UV4BrJNOh5jKrPwxxO0xzmw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: dce1eefe-040e-4327-28f0-08df08204f32
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB7424.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 11:58:17.1909
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kR20MlxECT06IXdhlq+mY6AU/SQd50L452iTyZFO2LQjVbb9sGQX/u/x/hQFbrWkHznHkgkTh6smPUBXSlVYOuuzCWWDYx4MiIm4Z4dV3UI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7645
+X-OriginatorOrg: intel.com
 
-On 8/31/26 9:46 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] The EX_TABLE entry in the `qaaf` inline assembly incorrectly places the exception fixup label on the non-faulting `lhi` instruction instead of the potentially faulting `.insn` instruction, which will cause unhandled hardware exceptions to panic the kernel.
-> - [High] `aef_sysfs_init()` unconditionally calls `aef_init_save_area()`, failing to skip it when the AEF facility is not present, causing a crash on older hardware.
-> - [High] Off-by-two index error when accessing the QAAF registers array in `kvm_qaaf_read_ftr_reg()`, causing KVM to read incorrect memory offsets for all features.
-> - [High] If QAAF initialization fails, the global capability flag `info.arm_guest_supp` is not cleared, leading KVM to initialize using uninitialized hardware capability data.
+Hello,
+
+On 2026-08-17 at 10:11:10 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Error path `out_restore_sg` corrupts unprocessed elements of reused scatterlists.
+> - [High] Accumulator `iova_len` silently overflows on 32-bit systems for mappings exceeding 4GB.
 > --
-
-[...]
-
->> diff --git a/arch/s390/kernel/aef.c b/arch/s390/kernel/aef.c
->> new file mode 100644
->> index 0000000000000..825e2643a8921
->> --- /dev/null
->> +++ b/arch/s390/kernel/aef.c
+> 
+> --- Patch [3]: [PATCH v5 3/6] iommu/dma: Catch scatterlist length overflows ---
+> commit 955c8f50877d1e47058e0056fd63e5f20f4d62b9
+> Author: Krzysztof Karas <krzysztof.karas@intel.com>
+> Subject: iommu/dma: Catch scatterlist length overflows
+> 
+> This commit introduces overflow detection for scatterlist length fields to
+> prevent silent wrapping when very large mappings use only one scatterlist.
+> It adds check_add_overflow() and overflows_type() checks to
+> iommu_dma_map_sg(), failing early if limits are exceeded.
+> 
+> > diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+> > index 9a07eb39336eb..61cb64bcbd3cc 100644
+> > --- a/drivers/iommu/dma-iommu.c
+> > +++ b/drivers/iommu/dma-iommu.c
 > [ ... ]
->> +static int  __init aef_query_info(void)
->> +{
->> +	int ret;
->> +
->> +	if (IS_ENABLED(CONFIG_KVM_S390_ARM64)) {
->> +		info.sae_avail = sclp.has_aef;
->> +		info.ptff_avail = ptff_query(PTFF_QAGTO) &&
->> +				  ptff_query(PTFF_QAGPT);
->> +		info.arm_guest_supp = info.sae_avail && info.ptff_avail;
->> +	}
->> +	if (!info.sae_avail)
->> +		return 0;
->> +
->> +	ret = qaaf(QAAF_FC_QMC, (union qaaf_block *)&qmc);
->> +	if (ret)
->> +		return ret;
+> > @@ -1476,7 +1478,22 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
+> >  		sg_dma_address(s) = s_iova_off;
+> >  		sg_dma_len(s) = s_length;
+> >  		s->offset -= s_iova_off;
+> > -		s_length = iova_align(iovad, s_length + s_iova_off);
+> > +
+> > +		if (check_add_overflow(s_length, s_iova_off, &s_length_tmp)) {
+> > +			ret = -EOVERFLOW;
+> > +			goto out_restore_sg;
+> > +		}
 > 
 > [Severity: High]
-> If the qaaf instruction fails and returns an error here, `info.arm_guest_supp`
-> remains set to true.
+> This isn't a bug introduced by this patch, but these newly added early return
+> paths make it much more likely to trigger a pre-existing issue in
+> __invalidate_sg().
 > 
-> Because aef_sysfs_init() is called via an arch_initcall, the initialization
-> failure is ultimately ignored by the kernel. Later, kvm_s390_arm64_init()
-> checks `aef_info()->arm_guest_supp` and will proceed to initialize KVM using
-> the uninitialized `qmc` block.
+> If a driver reuses a scatterlist without calling sg_init_table(), and the
+> subsequent mapping fails here during element iteration, __invalidate_sg() will
+> loop over all elements rather than just the processed ones.
 > 
-> Should `info.arm_guest_supp` be cleared before returning when qaaf() fails?
-
-No, we can instead check the sclp bit for sae_avail and early return 
-before the assignments.
-I don't see a gain in having this information shadowed considering the 
-two patchsets that are floating around. Maybe you need it at a later time?
-
-
-sae_avail is also used in patch #20 where it makes even less sense.
-Either the machine and KVM have sae capabilities or we don't need the 
-sysfs files. So why even add it as a file?
-
-It's not like UV where we need to opt in, it's either supported or not.
-If it's not supported there's no need to have sysfs files.
-
+> For unvisited elements, sg_dma_address(s) retains the stale IOVA from a
+> previous mapping. __invalidate_sg() erroneously adds this stale IOVA to
+> s->offset:
+> 
+> drivers/iommu/dma-iommu.c:__invalidate_sg() {
+>     ...
+>     if (sg_dma_address(s) != DMA_MAPPING_ERROR)
+>         s->offset += sg_dma_address(s);
+>     ...
+> }
+> 
+> Will this corrupted offset lead to wild physical address calculations in
+> sg_phys() upon retry or buffer access, resulting in arbitrary DMA memory
+> corruption?
+Fixing this issue is outside the scope of this patch series and
+will be addressed separately.
 
 > 
 > [ ... ]
->> +static int __init aef_sysfs_init(void)
-
-aef_info_init()?
-
->> +{
->> +	int rc = -ENOMEM;
->> +
->> +	if (!IS_ENABLED(CONFIG_KVM_S390_ARM64))
->> +		return 0;
->> +
->> +	rc = aef_query_info();
->> +	if (rc)
->> +		return rc;
->> +
->> +	rc = aef_init_save_area();
->> +	if (rc)
->> +		return rc;
+> > @@ -1493,7 +1510,18 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
+> >  		 *   time through here (i.e. before it has a meaningful value).
+> >  		 */
+> >  		if (pad_len && pad_len < s_length - 1) {
+> > -			prev->length += pad_len;
+> > +			unsigned int new_prev_len;
+> > +			/*
+> > +			 * For large mappings spanning multiple GBs we
+> > +			 * may not be able to fit all needed padding into
+> > +			 * sg->length.
+> > +			 */
+> > +			if (check_add_overflow(prev->length, pad_len, &new_prev_len)) {
+> > +				ret = -EOVERFLOW;
+> > +				goto out_restore_sg;
+> > +			}
+> > +
+> > +			prev->length = new_prev_len;
+> >  			iova_len += pad_len;
 > 
 > [Severity: High]
-> Will this execute the new qaaf instruction unconditionally on all hardware?
-> 
-> aef_query_info() correctly returns 0 if the AEF facility is absent (since
-> `info.sae_avail` would be false). However, aef_init_save_area() is called
-> immediately after without checking if the facility is actually supported.
-> 
-> Could this trigger an operation exception on older hardware?
+> This is a pre-existing issue, but since the patch addresses scatterlist length
+> overflows, could iova_len silently overflow here on 32-bit systems for
+> mappings exceeding 4GB?
+Changing this is outside of the scope of this series and this
+patch already got r-b from Robin without this check, so it is
+not desired.
 
 > 
+> If the size_t iova_len accumulator wraps around when adding pad_len or
+> s_length, it would lead to an undersized IOVA allocation. iommu_map_sg()
+> would then map the full physical memory range, overrunning the allocated IOVA
+> space and corrupting IOMMU page tables.
+> 
+> Should there be overflow checks for iova_len accumulation as well?
+> 
+> >  		}
+> >
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260817095648.2438192-1-krzysztof.karas@intel.com?part=3
 
+-- 
+Best Regards,
+Krzysztof
