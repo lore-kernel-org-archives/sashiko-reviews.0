@@ -1,67 +1,67 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F50F42E8E7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181563A6B71
 	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 02:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788230586; cv=none; b=XdibPTr9XI58QtR4nrzei63Ucnv/pnTLfsm2F7hRwxutVh82griEjhoOnyTnLGW2IaAAZ9vp4kf2pVVvWFDxOXdTLa9ykErkI/EyUeLxquxGy/bKZHWtxJNKF0kykhNpi803g48jRnAo5eQWC59kBZWPs2ASG7n0+q7erCaIdsE=
+	t=1788230588; cv=none; b=XF8MW7Yz0JaDC7+mDm2kxykavNne6oQL/AaTOCGCNMfT/3UEWFDbWqiA1JY4R7d0MJL7YAzWQljCJ4Fw0U2Wx/G5CKhjverAt7OcnQtmzGFN6k9K/ysn7YiVl0Mfz0WZY990r+Nw3PP+mangKMQKp5XKOC6h+//ElMmNCEHv/dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788230586; c=relaxed/simple;
-	bh=cavPLdZ3EM365UmMDeiKEQPWG/ZtK6GBzxNXSfWmPAs=;
+	s=arc-20240116; t=1788230588; c=relaxed/simple;
+	bh=sSqNFSEIRBnxWbpBl9DNQaV0K0s7qNoKhmjQApcnyt4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CcgG9x6HQuRs5CnZXepC8Y1ryMMx+85/5+ZFJomqlvCRqdw4FT5t3WFFT8TXH2drTuNe7AyfEo4T7QdzFzy5+XTZBXQUnFAgPGueorLr9vQGgsKLUysl9Y2YMLR0bPNDIoFfqlpkn3Ea7GC5Ed/cm9KWGkVNVOKXP2aHz5SOpOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=ege3M29C; arc=none smtp.client-ip=209.85.222.179
+	 In-Reply-To:Content-Type; b=mflas7ZI4sMFYHeI1g/k8WQF2PZ3Te3WEWnoIMXjpjQ7zJTUgKzOUvEySMBjm5C3i0pevcsdQi1xR79/12YF3nHiycf5c7UeANAWmjfYmnEU/zpQy5bNU4CIlu2n0aMx1+52pUVTK5v56rfFZSiyfwjU3+795RmThG01hwnrSSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=KgFlS97p; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="ege3M29C"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-9377f717879so26891185a.1
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="KgFlS97p"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-930c0f9c1b1so317643085a.1
         for <sashiko-reviews@lists.linux.dev>; Mon, 31 Aug 2026 19:42:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1788230571; x=1788835371; darn=lists.linux.dev;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1788230570; x=1788835370; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CPbdamFgACK5fDGcrO4A3g8qwBFcMj5srbjsH4obLc4=;
-        b=ege3M29CJG9HTCc3IqXx5t+HDmdkFZ6OPP2nKR0x3RU0VJIprKWrdl8ikU1sJb/87p
-         ztj+4lt4SxzFFEHZmADNMnQMYKxgQxB7ZkwotjF/aInCn8RmSqYfV4L+ioiRYtMBgXtQ
-         cEKlFWhkJbuzwgXQGjiE5Usk7Y21JwUjYaWDz7EvYKQEAgN70NOj3HwJFuvMOY4mbUOS
-         wgzW1UR0QNmfLe42hvmOjSCNWhljGqeU4eHT30GyQh64enwEphC8t8BeEl30/chw744A
-         95RLcFWQctNOkYNkPhurz+o2EKJsbZY0IrLd8PB3lwgbrx/jhmlDJPWIb2CpeBrHg/aG
-         AVEQ==
+        bh=uiSGP8UCJwVnm4V+RqkD0yHeg4awqeThcks0aUo6ivg=;
+        b=KgFlS97pgw727/rTS8axvJNY927XI1jpZrIS1Yln/DabEXSVjwXq7/BFu16O8ekisl
+         ZQTZnM5SjNjmUTrUperFad9DsohMrhhOu0Bd8n+j4rfyuxKH9xOy/5/BksSKGAL9Tftl
+         qzB1auyc5ANDrTlExXLJVcqr7lymI68e365a1MYny+tdBIIHHa6HUWvUXdSdmCXysKIs
+         V9tHIS2lQEcywyjqsaIlrM4r1lTGDO7921GnzYtFw7baCKqoNrRLsPBMqPo/moFfrPsh
+         snorccOF68vTuIHkLlxiLd3ZCMDgH5IVUTeYFhr4z31+dMo5trQwHKd3mD9CrQ7gz+/1
+         mWSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788230571; x=1788835371;
+        d=1e100.net; s=20251104; t=1788230570; x=1788835370;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=CPbdamFgACK5fDGcrO4A3g8qwBFcMj5srbjsH4obLc4=;
-        b=XNx2r3Qv3/FXERLIFZpNM7ryy4ks8+x4UnBFobvFOwFwarQ4iIkkra0gvxEivxryW9
-         l0xICqlJrh86D1QaJaNwyYxyJm+Pye7HA7oG5Ur70TQbqsGEzW3FPbkmHPd6RVpEPttI
-         gBhMBDAasHO4H99v9abapfyKETH7GAjQ8XHdqqsZH9YuV60bU1QzmvhCnFO/nsqUtpy7
-         KyJo8uGNz4fLkuISzdXvlMEB8/MByA4WsbrWfxkWZuOFRvTCWT1vu7ob/jinu7deoaOB
-         bQnVfLUzOWo4+UVT52NIa+nMFI1vJa4Waf2P7JIakQpqiXWDBkvRNU5HT+IyS1XQsGvq
-         2zSw==
-X-Gm-Message-State: AFuF++kpS9L/kvyp3pVJ2uDXJDr7ORh8cKLYE2iX7o89Zb8tbDcxmX92
-	is5VfMhjABh0QplYLuIIzLRcjN5t8MgnU7aK8Jm7jbMIH7RWOemncOhVr0rYC5TpKAD+s1yvGeu
-	Z9DSucxc=
-X-Gm-Gg: AR+sD13jDv3qAjNksiECSNa8j/xvgPnK/bqF8sTEqrI4ySfoF+0YtkbkfironoOxS95
-	6pmb19GVVB1poJA+CO5BjP2yFEAF5ev7TS4fKHq5UDg+G6dGMkdIh8cmsRXa62ia7cm1n4yLIhf
-	Y/GK7CIGhsnjqcJUzwAdsPAriNpBUay1LYkKX8y2CGF6f7EEq4OegHYGdq6Ukbr5ekcYHhFNM+d
-	acMdt3Hc3C/86BFt39FM7yuNfNaMgMuPHgJax3AP7zb9Im4bTovKuTEAJhDyYORcTdrUHIrHy9h
-	9boYzZTZkKQsZmZE5l7b0M3xMZW+teBs1+LoEGjsJpUgcmQhkWrjPksz3JWBsGOOvZY+3C+VT0R
-	Pb2CBIw1b6qylDCPoqLxIdFtxjkm9S0bY0GQ2l4KzGxeW859HtK7ut8ibIQsB5qEJGssS+kZ1AK
-	WLxUyDMT+FZ6Pr/EaSUhmROLhwqtt2H0cvUhBvnxXedRlgcstfiK8VPJAvJiRw
-X-Received: by 2002:a05:620a:a0cc:10b0:930:a26a:fb2a with SMTP id af79cd13be357-939137af782mr2704459585a.2.1788230571171;
-        Mon, 31 Aug 2026 19:42:51 -0700 (PDT)
+        bh=uiSGP8UCJwVnm4V+RqkD0yHeg4awqeThcks0aUo6ivg=;
+        b=tLlIdwVc9HpkpaMNZcaj8gH40RqppEBOovwAwRp1fjrwNTdKxTlPxFDYDN0EH2/uLN
+         wzNcrVS14BE9H+diGdnCJgTQveJ7n1U42PPrFkvtR0ypzdiJxuZAASw/fOiDrUZ5uq/c
+         EtZ34a2REl2EHNzuKs/uWdf2H6eSZMQWAjqgIiqO3T5CYabXeiSIPIzf1lhjN7Zon6lB
+         dU7Ba2LSwtxWlVFGYn5jyUrHQwp0YlQgFIJ9m3RCBuE+eFRDcleq0vfQ14EyOpiWdfRS
+         86FmWqsH7jTH+BK4nzQSU4aBG0M0LtGQRuGlT3mSdA6QOGTNV1CoJp7acKEz0rWSU0tt
+         IQ1g==
+X-Gm-Message-State: AFuF++nJ42p81swKdfk6HcH/KvKqMBNVkvOjvSQqlkZ02MH5keqVDHzd
+	qwNbv4y/OWlRWmS09w4GrjuIELBpoXfJKP4+U3N7p8TDKauLfGLfWlrQeZya4cyI7UIE4SitUEB
+	km8H9Xh8=
+X-Gm-Gg: AR+sD12AZ2AJwNmrZvmLXgRfGL2B+gNo0nMrTY6heYMKOlhJ4QXQlRTJVLP7SpIJo2p
+	ZbfStFRcniEK/Z0gObgwTqvm0pQ87MtNL+nxamp4xzlkKhR94yWYmX3IWjHYiHSF7h3a+bYiGjH
+	YrX9eDw4lxt41FwZEKgqEb6FJu9Vnv8B4LpT7MVgAbsC+Z8DuYPYyQnW+HkUpmlKk6RbdFmuCPr
+	a+jBkx66sy/Q1Ezg21O0I/HDqWdww4wio8/l9MsJsOuI4IEzYnIGuNRgC/Qtj9x4S3ougPvgJTw
+	/axCWTts45gSenX2KUfXK3JUsdGQJkD2mS5ZcRxuGDjD9/xR5j9hTMQHJtVTvs84SIG3QDiBt/l
+	Sq7D4CyKHnE21H7ACRbJhHdSlTo+ThRcNtLMjpI+pKPc9ob1JQfISz8ysYjGDffMhA+BlYuHh82
+	hYD61hzmXaNlgMOnyDox9jOfOeNrWk0JIRtKHPuk4bZm6bEgR0EDQIrili2Zva
+X-Received: by 2002:a05:620a:3703:b0:939:1fc6:3fd6 with SMTP id af79cd13be357-93948086f3emr719892985a.18.1788230569828;
+        Mon, 31 Aug 2026 19:42:49 -0700 (PDT)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93917016ed4sm929269085a.9.2026.08.31.19.42.50
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93917016ed4sm929269085a.9.2026.08.31.19.42.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Aug 2026 19:42:50 -0700 (PDT)
-Message-ID: <d95aebf1-8319-4307-9d62-f1f3dc7ace61@riscstar.com>
-Date: Mon, 31 Aug 2026 21:42:48 -0500
+        Mon, 31 Aug 2026 19:42:49 -0700 (PDT)
+Message-ID: <cde3da8f-933a-41ef-b7b8-f78317ca2d67@riscstar.com>
+Date: Mon, 31 Aug 2026 21:42:46 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,92 +69,101 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] PCI: of: don't zero flags in
- of_pci_get_addr_flags()
+Subject: Re: [PATCH v3 3/4] PCI: of: introduce of_pci_verify_node()
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
- conor+dt@kernel.org
+Cc: robh@kernel.org, linux-pci@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org
 References: <20260901011338.1323243-1-elder@riscstar.com>
- <20260901011338.1323243-3-elder@riscstar.com>
- <20260901012046.1BF371F000E9@smtp.kernel.org>
+ <20260901011338.1323243-4-elder@riscstar.com>
+ <20260901012128.2AC6E1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260901012046.1BF371F000E9@smtp.kernel.org>
+In-Reply-To: <20260901012128.2AC6E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/31/26 8:20 PM, sashiko-bot@kernel.org wrote:
+On 8/31/26 8:21 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Potential NULL pointer dereference in of_pci_prop_compatible if kasprintf fails.
+> - [Medium] The check in of_pci_verify_node() falsely flags compliant CardBus and PowerPC PCIe bridges as having an invalid device_type.
 
-This issue was reported before, and I responded that I would fix it.
-I *do* have a fix, but I have not yet posted it for review (waiting
-for the end of the merge window).  I will post it soon.
+I was unfortunately not considering those types of bridges,
+and don't have experience with (or access to) either.
+
+In the devicetree code, of_bus_pci_match() does check for
+device_type "pciex" but does not handle "cardbus" (at least,
+not explicitly--the "default-flags" bus type might do the
+right thing).
+
+I would love to get some pointers from others on how to
+do this correctly, but in any case I'll do a little more
+research on this before I post version 4.
 
 					-Alex
 
 > --
 > 
-> commit 036872e87dc6e9201c6f86349afb91815a638d1e
+> commit 72a980b9469901bec37d04c04dd8de642179aa44
 > Author: Alex Elder <elder@riscstar.com>
 > 
-> PCI: of: don't zero flags in of_pci_get_addr_flags()
+> PCI: of: introduce of_pci_verify_node()
 > 
-> The flags variable whose address is passed to of_pci_get_addr_flags()
-> is zeroed before assigning a value to it.  Skip the zeroing and just
-> assign it instead.
+> This commit introduces a runtime check to verify PCI devicetree nodes. It
+> ensures that bridge devices have the "pci" device_type property and that
+> endpoint devices do not.
 > 
->> diff --git a/drivers/pci/of_property.c b/drivers/pci/of_property.c
->> index 505226b876c56..22fea1905a080 100644
->> --- a/drivers/pci/of_property.c
->> +++ b/drivers/pci/of_property.c
->> @@ -82,12 +82,10 @@ static int of_pci_get_addr_flags(const struct resource *res, u32 *flags)
->>   	else
->>   		return -EINVAL;
->>   
->> -	*flags = 0;
->> +	*flags = FIELD_PREP(OF_PCI_ADDR_FIELD_SS, ss);
->>   	if (res->flags & IORESOURCE_PREFETCH)
->>   		*flags |= OF_PCI_ADDR_FIELD_PREFETCH;
->>   
->> -	*flags |= FIELD_PREP(OF_PCI_ADDR_FIELD_SS, ss);
->> -
+>> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+>> index a51dff91b196d..1838a3109514c 100644
+>> --- a/drivers/pci/of.c
+>> +++ b/drivers/pci/of.c
+> 
+> [ ... ]
+> 
+>> @@ -1085,3 +1085,34 @@ int of_pci_get_equalization_presets(struct device *dev,
 >>   	return 0;
 >>   }
+>>   EXPORT_SYMBOL_GPL(of_pci_get_equalization_presets);
+>> +
+>> +/**
+>> + * of_pci_verify_node - Sanity check some PCI device node properties
+>> + * @pdev: The PCI device whose device node is checked
+> [ ... ]
+>> +void of_pci_verify_node(struct pci_dev *pdev)
+>> +{
+>> +	struct device_node *np = pci_device_to_OF_node(pdev);
+>> +	bool device_is_bridge;
+>> +	bool device_type_pci;
+>> +
+>> +	/* Nothing to check if there's no pre-existing devicetree node */
+>> +	if (!np)
+>> +		return;
+>> +
+>> +	device_is_bridge = pci_is_bridge(pdev);
+>> +	device_type_pci = of_node_is_type(np, "pci");
+>> +
+>> +	/* Bridges should have device type "pci"; endpoints should not */
+>> +	if (device_is_bridge == device_type_pci)
+>> +		return;
+>> +
+>> +	dev_err(&pdev->dev, "PCI %s have \"pci\" device_type property\n",
+>> +		device_is_bridge ? "bridge should" : "endpoint should not");
 > 
-> [Severity: High]
-> This is a pre-existing issue, but I noticed a potential null pointer
-> dereference in this file under low memory conditions.
+> [Severity: Medium]
+> Will this falsely flag compliant CardBus and PowerPC PCIe bridges as having an
+> invalid device type?
 > 
-> Looking at of_pci_prop_compatible(), kasprintf() can fail and return a null
-> pointer:
+> The check in of_pci_verify_node() expects all bridges to have a device type of
+> exactly "pci". However, valid PCI bridges can legitimately use "cardbus" or
+> "pciex" as their device_type property.
 > 
-> drivers/pci/of_property.c:of_pci_prop_compatible() {
-> 	...
-> 	compat_strs[PROP_COMPAT_PCI_VVVV_DDDD] =
-> 		kasprintf(GFP_KERNEL, "pci%x,%x", pdev->vendor, pdev->device);
-> 	...
-> 	ret = of_changeset_add_prop_string_array(ocs, np, "compatible",
-> 						 compat_strs, PROP_COMPAT_NUM);
-> 	...
-> }
+> When a PCI bridge with one of these valid types is added, the following call
+> chain unconditionally triggers this error:
 > 
-> If kasprintf() fails, the compat_strs array will contain a null pointer.
-> When this array is passed to of_changeset_add_prop_string_array(), it
-> unconditionally dereferences the strings to calculate their lengths:
+> pci_bus_add_device()
+>    of_pci_verify_node()
 > 
-> drivers/of/dynamic.c:of_changeset_add_prop_string_array() {
-> 	...
-> 	prop.length = 0;
-> 	for (i = 0; i < sz; i++)
-> 		prop.length += strlen(str_array[i]) + 1;
-> 	...
-> }
+> This could emit a false dev_err() during boot on platforms using these
+> standard bridges, which might alarm users by polluting the kernel logs.
 > 
-> Would it be better to add a check for allocation failures in
-> of_pci_prop_compatible() before passing the array to
-> of_changeset_add_prop_string_array() to prevent this?
+>> +}
 > 
 
