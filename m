@@ -1,189 +1,137 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C4040681D
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 14:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588A418340
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 15:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788274021; cv=none; b=Pe1lWvOehp840/GN1In6tsDT3iV1Y+K8dbMDJ/6vMjb6PzkSeq0DtzrOkYLdCAREywAFw35eHc8aU8qrHLXe61rP6uyW40N2Vj20j9x6CcfD7zqY8c5hqnJq7xJrrnmHtpPcQU6D3NefBXqhEz47rtHitHuR8R2NRTRtE9Mv6jk=
+	t=1788275267; cv=none; b=HyT2NcKqvy2pguoIH5xHNLqcxPj1zWWC2466NAP4U798ljaKpaMf2Yk14SJ0mBM4V7R0cfOoBSMWowvfIX/iEpqOxSXZgWd5vGBk8Q27MjMJWbLwnyUoXSJFYw+e8gZKJOBOHlf4RKlg6njQDb2f4wEJsNFYKzk25kPomvGKKx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788274021; c=relaxed/simple;
-	bh=D9eeyQ2yzHaX3YGpTuDpx9hYk5aU1AyRCVFQ38n2MYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bx/xqUlnsPLgWL4IouPV+0+ExhCPNKR5lVuRwM2AIA0GCLcGG+2CwRtjZIodvOhJpB7iHsthidqoutN3B7TwkQqwXHRkdnGLn5wk4asTLaYJK81WhFR3AFCT8rlbWM3XcQMxffG+H4ABwni/hSwRetTYXyRDe+VTLcyp0UUDIh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P2xBHY4j; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1788275267; c=relaxed/simple;
+	bh=kpVTPF6YcMH1QZmiPfRQzvfUeeNBeoMwT+uB/2f6RVM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qZVPhehEcj6X9aPgvhK/pBohN+RQTg+iFWtz1ws/NseBiH6P8Q/oymIK3wzI6DYJT4cQq5MRw7NCo7C7fuLZlEyUDOYYun/bsRrpIBNAqDvkoqK8P8cKsSs0jsuUQV8d4Jrqf8j+uF+/ucmQt8vvh8LUjMcM9Zer/DXyOb/DmyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LSfft4ud; arc=none smtp.client-ip=209.85.215.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P2xBHY4j"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6a5f968ada7so2474512a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 07:46:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LSfft4ud"
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cbedb8673ceso1129819a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 01 Sep 2026 08:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788274018; x=1788878818; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FTTAEK9YzkBAMJ3JEL82g1HyXYeS1+m4mN6z3yJo0GY=;
-        b=P2xBHY4j/Dr9s9sraOmwOGntGMbr+zhhVJwFbkTrTZuAp07TI+Z1gLtxsrITmrHVuh
-         wrcrmqyQccRLJOQG5UWw39vtR0l0lpGEhq337nA1lpjyfxHw1G/46Lyjag/RKyoF363p
-         Yk0AO9F9EdbPFaHknJdoq08/PexGGy9FZWUyyau12iCJwyBPm6wl65WOybW9E45o0yjr
-         mLJcqaFx6kOP0E0Z0UmgA7VjV459MyRyKsJcv2X7M3ezHLU1DrJUKMOYG89KRu5RZVxJ
-         6zFg6YrTmThc9EkDACim1nNrAKWar9lIwtAkW9Nb9j/MMpjL1KZGxdOGMAERNCz0n9xG
-         pPIg==
+        d=google.com; s=20251104; t=1788275265; x=1788880065; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=V87m4tzcVVZPHB4ukY5ehbJLwQ14VPIAPm5q3nc4QvU=;
+        b=LSfft4udPHUFdwE4DTygnM1TXQ2EiMPi6SwPb567dwsFBvbakltutewHDZv8JCKpSY
+         a8f7PdkmHwBFSO1pOu87R9gKH+T/zTnuOuuXobl39TaKg452KMdcgIZlukbmjSbBN8DW
+         LOFp0lADTzgZGg7pkcnpWUtl+30cY/DfxuP4pFkp50YdTqaZ6M3hDBmYGSuQxjr9moH7
+         295KxovYU7OxUWxR1Sep2GdyvIKNg+Gfi4xm1b3YPK6JhowWkR96KYtk4vVHFlGdjuBz
+         tozJAjH989zWTZo+mnTJ4tecZncFYNPPdLKHj+FKB8b6PnhPXVe0oPRLiGovWcN7laDP
+         GDqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788274018; x=1788878818;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=FTTAEK9YzkBAMJ3JEL82g1HyXYeS1+m4mN6z3yJo0GY=;
-        b=eEIFXQsFglHD9OogQWbHDgTezFcxHHSjYdvayOF/yi3H6fBcTJeafuqivB5rO4k/dk
-         zhqueUyHN6s5nmNvOyH3J5XFzcCcD3n7NohyVFXX35ZDiTftTqekfRJxkCE8pkfJVDgc
-         BeA09T9kHSMjdEtsNWGOH4diKKUU6vPyhHpdY5AAoY9Kh9wVuv8vBTZr8CoXR/JhMPWd
-         RPR7noC920PlmTfkPXMZs9Q141+7QYyNsQoNYJp01PH/QxOiyQetO5u5qVuR3BerbzeN
-         X72du9q8+RBc8lslpjuwMn5InGp8jlCNvaSanHOEt3Y7B9gV29CxHpkfsHy+4z0qiQBF
-         6REA==
-X-Gm-Message-State: AFuF++kWLttQVeR87fqNOyx69LBVAN5KbkiJ5QQAXbo7bJ9YRkSGMSA4
-	2RTc7ZpgdLHZ4XqxBvf/NEqFW39cyIdkwt1cqGEX6KZMJ5CRS7MtSc3/wYvhsEWAAObIm3aEOJQ
-	LGDtKfg==
-X-Gm-Gg: AYBFou3J3YkOkTXIMpwZPSfgwAPcbzTlZpzTNA//yVpg8ZwhAtxOebsPZ6G8vfE0QXH
-	lIJevakCM84dYX4tljYhAgYJxaSblsTHxOvhUw2ETwpMNZWJ+m+1qSi5IjJgkmdU0sP2HACyHfK
-	P6PzDY+hzGZCUe1wG19I/RtCQwz6ETNXUoXtllGqjWHWZtlZP/AuJ20njxzGzTpP9eUBo2nu5ef
-	ojaDHMT1IeSZr7Wb/mY9zBTfA5616PYQ1lLLMcmdseicYKNQMwjVntKHRYj2TmDUwq2zykiEE7o
-	z+5fwlX0Zbd+mq7Qnl7AzZETHswMNmML3ucbqF+Fhw99qNQd1ZTalu9vd183LcV+nYwsK2fVkPk
-	ymjNvl97ZoWMrbt1kmu96+bkS5Hlf1JW5tpSFe/H6B5u49qcpEUrNnzR0Js4XYjWYc8njgY3Rzo
-	3c8cjbsoZVBpuXAHHx8lE2JX+OOPXP/DEgxpQ/biuaLbxoxbmwdr2xm7ZGl+UwQA2Jz8QvcxiAK
-	TEt41/aS/2sJIICJtkm1tCO5vjXAlg92vmoh2crGR8=
-X-Received: by 2002:a05:6402:46c4:b0:6a5:dfb6:360c with SMTP id 4fb4d7f45d1cf-6a66a5b5e75mr3988587a12.2.1788274016327;
-        Tue, 01 Sep 2026 07:46:56 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a66ccdc436sm1160781a12.10.2026.09.01.07.46.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 07:46:55 -0700 (PDT)
-Date: Tue, 1 Sep 2026 15:46:52 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Fuad Tabba <fuad.tabba@linux.dev>, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	linux-trace-kernel@vger.kernel.org, Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v4 11/11] KVM: arm64: Tag host-VA hypercall parameters
- __kern
-Message-ID: <apblXIuD6d2JVIfM@google.com>
-References: <20260901140326.3812068-1-fuad.tabba@linux.dev>
- <20260901140326.3812068-12-fuad.tabba@linux.dev>
- <20260901141548.3D6921F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1788275265; x=1788880065;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=V87m4tzcVVZPHB4ukY5ehbJLwQ14VPIAPm5q3nc4QvU=;
+        b=L1tJbl5V/8t9H2cqrvf0ZCu4SigJFNVzimuOMGnAVQnfIvzlz0n5lHHjLo/iJqoM7Y
+         6lmtSDTgaUF/I6XdB2tdOjVNI59p5mXPgbZkLwQm1aIz/iuexBtDIM1yQKqa1HF279PK
+         A35uq25C1Q4wmeOP+UbVOBqK8lE2YAvQ00VLdthf7fbtthEz5rbBry5FAng9Ftd2PBUl
+         0ZW5WqFkqY+5Da2X27i8rmrX6Th0dtBkbRPnEmypwGQ1ANybzuS8ZB9ObAMCaICuCh4h
+         D4thRgGLq8iri+7hDzras2+B6+x1/rASZrEOSGef+KcBqADQ3/7KtVQD0HtghWSMA12Q
+         wCZg==
+X-Gm-Message-State: AFuF++kiqX0N2WBUICKnzes0loffZoBBOmY1n5UI7Sjkhh8Kc1rgfjFa
+	ET85TV88Py+ZPoZRi6Kp/4dtQrQTlXXoXcuOfIo/EPCxXjvqdKxg/LdlarHfqHXGQmazV/WCBz6
+	rA+Rb6A==
+X-Received: from pgbbz34.prod.google.com ([2002:a05:6a02:622:b0:cc2:87f5:aa80])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:6e88:b0:3c3:a31b:3949
+ with SMTP id adf61e73a8af0-3d2686a3247mr60346849637.11.1788275264489; Tue, 01
+ Sep 2026 08:07:44 -0700 (PDT)
+Date: Tue, 1 Sep 2026 08:07:43 -0700
+In-Reply-To: <0a98f85d164cc7eac4ca584b094aa402508efb10.camel@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260901141548.3D6921F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260901-gmem-selftests-fix-v2-0-5a273153354c@amd.com>
+ <20260901-gmem-selftests-fix-v2-4-5a273153354c@amd.com> <20260901083920.1C86F1F000E9@smtp.kernel.org>
+ <0a98f85d164cc7eac4ca584b094aa402508efb10.camel@amd.com>
+Message-ID: <apbqPyRIyR2qZeH_@google.com>
+Subject: Re: [PATCH v2 4/4] KVM: selftests: use allowed NUMA nodes in guest_memfd_test
+From: Sean Christopherson <seanjc@google.com>
+To: Shivank Garg <shivankg@amd.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue, Sep 01, 2026 at 02:15:47PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Tue, Sep 01, 2026, Shivank Garg wrote:
+> On Tue, 2026-09-01 at 08:39 +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Stack buffer overflow in test_mbind when retrieving memory policy on 32-bit architectures.
+> > --
+> > 
+> > commit c29a637608e8b3ee37278728fd941b62df184a8b
+> > Author: Shivank Garg <shivankg@amd.com>
+> > 
+> > KVM: selftests: use allowed NUMA nodes in guest_memfd_test
+> > 
+> > guest_memfd_test assumes that nodes 0 and 1 exist and have memory. Select
+> > the required nodes from MPOL_F_MEMS_ALLOWED instead. The sysfs helpers for
+> > finding maxnode are no longer needed.
+> > 
+> > > diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
+> > > index 2233d871a38f4..aee80dda62295 100644
+> > > --- a/tools/testing/selftests/kvm/guest_memfd_test.c
+> > > +++ b/tools/testing/selftests/kvm/guest_memfd_test.c
+> > [ ... ]
+> > >  static void test_mbind(int fd, size_t total_size)
+> > >  {
+> > > -	const unsigned long nodemask_0 = 1; /* nid: 0 */
+> > > -	unsigned long nodemask = 0;
+> > > -	unsigned long maxnode = BITS_PER_TYPE(nodemask);
+> > > +	unsigned long nodemask, bind_nodemask;
+> > > +	unsigned long maxnode = BITS_PER_TYPE(nodemask) + 1;
+> > 
+> > [Severity: Medium]
+> > Can this cause a stack buffer overflow in test_mbind() on 32-bit architectures?
+> > 
+> > The nodemask variable is declared as a single unsigned long, which is
+> > 4 bytes on 32-bit architectures. However, maxnode is set to
+> > BITS_PER_TYPE(nodemask) + 1, which evaluates to 33.
+> > 
+> > >  	int policy;
+> > >  	char *mem;
+> > > +	int nid;
+> > >  	int ret;
+> > >  
+> > > -	if (!is_multi_numa_node_system())
+> > > +	if (!get_numa_node_ids(&nid, 1))
+> > >  		return;
+> > >  
+> > > +	bind_nodemask = 1UL << nid;
+> > >  	mem = kvm_mmap(total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd);
+> > >  
+> > >  	/* Test MPOL_INTERLEAVE policy */
+> > > -	kvm_mbind(mem, page_size * 2, MPOL_INTERLEAVE, &nodemask_0, maxnode, 0);
+> > > +	kvm_mbind(mem, page_size * 2, MPOL_INTERLEAVE, &bind_nodemask, maxnode, 0);
+> > >  	kvm_get_mempolicy(&policy, &nodemask, maxnode, mem, MPOL_F_ADDR);
+> > 
+> > When maxnode is passed to kvm_get_mempolicy() here, the kernel must
+> > write at least 5 bytes to return 33 bits of node status. This rounds up to
+> > 8 bytes (two 32-bit words).
+> > 
+> > Will this overwrite the 4-byte nodemask buffer and corrupt adjacent
+> > variables on the stack?
+> > 
 > 
-> Pre-existing issues:
-> - [Critical] The __kvm_adjust_pc hypercall translates and uses a host-provided vcpu pointer without validation, allowing a malicious host kernel to corrupt protected guest state.
-> - [High] __pkvm_host_donate_hyp wraps fallible allocator primitives in WARN_ON(), allowing unprivileged host userspace to trigger a hypervisor panic.
-> --
-> 
-> commit f41e99c0d7eef41b448f7016f3b2a6ae6358d4c0
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> Subject: KVM: arm64: Tag host-VA hypercall parameters __kern
-> 
-> This commit introduces the __kern sparse address space to tag host virtual
-> addresses passed to EL2 hypercalls. It updates the hypercall declarations
-> and unwrapping functions to ensure host VAs are explicitly translated
-> before use, preventing unchecked dereferences at EL2.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > index 9085f46c2880f..91e74a1a334f0 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> [ ... ]
-> > @@ -548,9 +548,9 @@ DEFINE_KVM_HOST_HCALL(int, __pkvm_host_mkyoung_guest,
-> >  }
-> >  
-> >  DEFINE_KVM_HOST_HCALL(void, __kvm_adjust_pc,
-> > -	struct kvm_vcpu *, vcpu)
-> > +	struct kvm_vcpu __kern *, vcpu)
-> >  {
-> > -	__kvm_adjust_pc(kern_hyp_va(vcpu));
-> > +	__kvm_adjust_pc(kern_hyp_va_host(vcpu));
-> >  }
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this hypercall fail to validate the
-> translated vcpu pointer?
-> 
-> If a compromised host kernel issues the __kvm_adjust_pc hypercall and passes
-> a forged virtual address, kern_hyp_va_host() could resolve it to the
-> physical memory of a protected VM's pkvm_hyp_vcpu structure residing in the
-> EL2 linear map.
-> 
-> Since this pointer is then used directly in __kvm_adjust_pc() to modify
-> flags like PENDING_EXCEPTION or INCREMENT_PC, could this allow a malicious
-> host to corrupt protected guest state and bypass pKVM isolation boundaries?
-> 
-> [ ... ]
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > index 6c8e33ebf8bb6..5cdb0318fa7ba 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-> [ ... ]
-> > @@ -657,9 +657,9 @@ static size_t pkvm_get_hyp_vm_size(unsigned int nr_vcpus)
-> >  		size_mul(sizeof(struct pkvm_hyp_vcpu *), nr_vcpus));
-> >  }
-> >  
-> > -static void *map_donated_memory_noclear(void *host_va, size_t size)
-> > +static void *map_donated_memory_noclear(void __kern *host_va, size_t size)
-> >  {
-> > -	void *va = kern_hyp_va(host_va);
-> > +	void *va = kern_hyp_va_host(host_va);
-> >  
-> >  	if (!PAGE_ALIGNED(va))
-> >  		return NULL;
-> > @@ -671,7 +671,7 @@ static void *map_donated_memory_noclear(void *host_va, size_t size)
-> >  	return va;
-> >  }
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can this donation path lead
-> to a hypervisor panic triggered by unprivileged host userspace?
-> 
-> Host userspace can issue KVM_CREATE_VM or KVM_CREATE_VCPU ioctls, which
-> trigger hypercalls like __pkvm_init_vm and __pkvm_init_vcpu. These
-> eventually call map_donated_memory_noclear() and __pkvm_host_donate_hyp().
-> 
-> Looking at arch/arm64/kvm/hyp/nvhe/mem_protect.c:__pkvm_host_donate_hyp():
-> 
-> 	__hyp_set_page_state_range(phys, size, PKVM_PAGE_OWNED);
-> 	WARN_ON(pkvm_create_mappings_locked(virt, virt + size, PAGE_HYP));
-> 	WARN_ON(host_stage2_set_owner_locked(phys, size, PKVM_ID_HYP));
-> 
-> Both pkvm_create_mappings_locked() and host_stage2_set_owner_locked()
-> allocate page tables from the hypervisor's memory pool and can fail with
-> -ENOMEM if the pool is exhausted.
-> 
-> Since WARN_ON() at EL2 expands to a fatal BRK instruction, could an
-> unprivileged user exhaust EL2 memory and trigger these paths to crash the
-> entire system, rather than safely returning an error and rolling back?
+> Thanks sashiko for report. This looks like false-positive.
+> 32-bit KVM selftest are not supported. In kvm_util.h, no VM_MODE_DEFAULT
+> exist for 32-bit arch.
 
-I have had this one as well several times.
-
-We should teach Sashiko that at the moment, both the hyp stage-1 and the host
-stage-2 pool are dimensioned so allocation will never fail.
-
-Perhaps that will be my first Sahisko contribution...
-
--- 
-Vincent
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260901140326.3812068-1-fuad.tabba@linux.dev?part=11
-> 
+Unless I'm misreading a pile of things, this has nothing to do with 32-bit
+architectures.  Sashiko is simply confused by the kernel's godwaful, poorly
+documented off-by-one bug.
