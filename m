@@ -1,109 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5AA472530;
-	Tue,  1 Sep 2026 22:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E821258CE7
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 23:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788303368; cv=none; b=cqks2DgzOSrpL8jazGmuyQQ+5TvIsS8nl2492KRi/F0NEUNvNStf/SuP20bOfvs1FuZHdxqhSlmXe1ccwsMyi3YYx3z6u6Td7CCyWo4smxWvghAsTQNMTYXk45n4yng6Lyy0OXoY6wqJXBRQpESLOslrcO/fcCF7q0yoRYscOq4=
+	t=1788304425; cv=none; b=posVUWZ9sbfdimbaWluVOczN++ldMdwC3rImCbQ2U61BnLGFeFDvHUxjUC8FfM2nu/CMxW8DNeKvRCloeLNkeWqjvCRL5QsCJ4lt59bkvl4Uy4WuwcUtIxC2bwbWITSHiLv0PEqA0AjcvV1EVA+EL610MBzl9pkmRBVn4cUXWEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788303368; c=relaxed/simple;
-	bh=s+q459yaN0F55+u/je5aCNFYxAThkd8ArmeHWDZ0wiU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fActWntNSAZyx1IY8DdctotMLgYyvWZl8+KK8h4HGNdE91u+PL4bA/YyFNzpI4tJthNqZdIAJoNiXJW6s2Jo3ME2zBHD5AazBkC7F2zSZ5Y12hYObdXTv5zRBKeJr7u7jvMmTpBRMF+MxQry242ZtgRUJUplIdFJeL+TBH3zd+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XO7rRgPY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788304425; c=relaxed/simple;
+	bh=CMg8EnicEcBtJJY6z/2G7WoIQ6/fvphazvoroAr7x0U=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UDJThh5EwJHqQfTKZ6xlEP4oyTudGK6lP5ZTjns3GRPgjPkhepT1YBtz8Od8qYp1e4SRhDuUvR9gnmsvAdks1tSoFLbK6HuhWrG0kavDfFCghnm9yPdpJA21yQLKVRq3g99G1Hu8GUN8tR3ivon+3fUyS9ZWsyHsSThXr+cYNtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=KQY9VhMC; arc=none smtp.client-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XO7rRgPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292081F00A3D;
-	Tue,  1 Sep 2026 22:56:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788303367;
-	bh=IDp+efHeDEGLzMGKCGDhAFfyBmcn87nrQlkYRT8DJw0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XO7rRgPY6fPyhnXwuX7jKevwJyoThN1v0+xO9JxwWkl3iNs9yLoCd7ZW1T38NneBt
-	 Mwj/3jv6BtulAtHHPvRxspGw9K1YtP+RDhlTwDkrWSNf4aV07HUc1X3Q53K8uFluOq
-	 SbWBLJKJEWENqk/n2HNEfECErD+8oy0E5qNQaywq3WzfeMM4TOSs6o8+pp9lTsn54s
-	 Hyjr1YwynoCbJCn9Hesg8vLfrAcP2IQNXQdRriloXpgXJWUDrnR1gSEYO94MIC74BX
-	 aywZVwHuuviIBXbN/lFm2q7+e0Ygwt0uvN4Sz26ZEtdnS/Ie8HH47g5iNxqboxjENR
-	 hgkUt9Zt3x/XQ==
-Date: Tue, 1 Sep 2026 15:56:06 -0700
-From: Wei Liu <wei.liu@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Thara Gopinath <tgopinath@linux.microsoft.com>,
-	linux-hyperv@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [RFC PATCH 02/12] drivers: hv: hv_common: Allocate Hyper-V
- output arg page when VSM is enabled
-Message-ID: <20260901225606.GA2583463@liuwe-devbox-debian-v2.local>
-References: <20260901165647.3160413-1-tgopinath@linux.microsoft.com>
- <20260901165647.3160413-3-tgopinath@linux.microsoft.com>
- <20260901171238.834601F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="KQY9VhMC"
+Received: from omf12.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay06.hostedemail.com (Postfix) with ESMTP id BEA06A4402;
+	Tue,  1 Sep 2026 23:13:42 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf12.hostedemail.com (Postfix) with ESMTPA id 3B33319;
+	Tue,  1 Sep 2026 23:13:41 +0000 (UTC)
+Date: Tue, 1 Sep 2026 19:13:39 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] tracing: Take trace_array reference when opening
+ options file
+Message-ID: <20260901191339.25a5a060@robin>
+In-Reply-To: <20260901205421.5832E1F000E9@smtp.kernel.org>
+References: <20260901163620.6cbe0ada@gandalf.local.home>
+	<20260901205421.5832E1F000E9@smtp.kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260901171238.834601F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: y4gwk7bankse1xsqoiyhczpnnwtou531
+X-Rspamd-Server: rspamout06
+X-Rspamd-Queue-Id: 3B33319
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+d1yI+SllBX+/x/1VAQa2tyusVLFyiG3w=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=VpZd83Dau/0k0soWwaL4NH7We7iw+l/e5YU5ZKkI9ik=; b=KQY9VhMCIR11aXfm5SfsLEbZK3upNoxglcqK41k9pNSmBDYVUL5f8yMExc7gF46gy7F/Q0gYbcCVUBSZYVB1sYujSASEKP7heyuxl8Z1Cxj7eatA1mGeAmkPmNjKI4PytPgury/tEXhlRAL6LOHIyy3VI7+MGCm97qe5ElnXkE0=
+X-HE-Tag: 1788304421-134859
+X-HE-Meta: U2FsdGVkX1+cO5+8/HWq9sSXJaW4Sd/adHEvsf1HeFvEmoCRVbOBJwrB4gWLAb9v7HmxMhmB3iyGbTleqwKxpx8CqUGM5Ck4BdwN0GP4rx778I6ek35qjvJS/g8S4iaX7eU173AqcgrgN//i6Ac+Q96JPSpV1uFq8Kh8yUj5O1+h/e8o8Oguq9WPOw0OwqwygFzpx4TaDcRT0q9vOgZ1zBemLiF0rimcLm9st6+K49NW9Rl+8sB0lFUjtW+zuIyXJDaLHenf6+yiu04ILYbSLERCjO+4yycfpPhTyVsWYbKoL6/K2NEAuCvZYv/zlJux7ileS868MA0TjUFL3/LLOF8K7SBke2vq
 
-On Tue, Sep 01, 2026 at 05:12:38PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] hv_apicid_to_vp_index() unconditionally dereferences the unallocated hyperv_pcpu_output_arg pointer in standard/SNP guests.
-> --
-> 
-> commit 0ee3313e113c9ca7969923f2af5a1ed18ddb25d2
-> Author: Thara Gopinath <tgopinath@linux.microsoft.com>
-> 
-> drivers: hv: hv_common: Allocate Hyper-V output arg page when VSM is enabled
-> 
-> This commit extends hv_output_page_exists() to return true when 
-> CONFIG_HYPERV_VSM is enabled. This ensures the per-CPU output argument
-> page is allocated at boot for VSM hypercalls.
-> 
-> > diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
-> > index 31256cb22b39e..44f4a10984618 100644
-> > --- a/drivers/hv/hv_common.c
-> > +++ b/drivers/hv/hv_common.c
-> > @@ -259,7 +259,8 @@ static void hv_kmsg_dump_register(void)
-> >  
-> >  static inline bool hv_output_page_exists(void)
-> >  {
-> > -	return hv_parent_partition() || IS_ENABLED(CONFIG_HYPERV_VTL_MODE);
-> > +	return hv_parent_partition() || IS_ENABLED(CONFIG_HYPERV_VTL_MODE) ||
-> > +		IS_ENABLED(CONFIG_HYPERV_VSM);
-> 
+On Tue, 01 Sep 2026 20:54:20 +0000
+sashiko-bot@kernel.org wrote:
+
 > [Severity: High]
-> This is a pre-existing issue, but modifying this function highlights a
-> vulnerability for SEV-SNP guests where VSM and VTL modes are disabled.
+> Does this raw memory address comparison account for reallocation of the
+> trace_array struct?
 > 
-> When an SEV-SNP guest boots secondary CPUs, hv_smp_prepare_cpus() overrides
-> the wakeup callback with hv_snp_boot_ap(), which then calls
-> hv_apicid_to_vp_index() in arch/x86/hyperv/ivm.c.
+> If a trace instance is deleted, its trace_array is freed. If a new instance
+> is subsequently created, it could be allocated at the exact same memory
+> address. Could a user holding an O_PATH file descriptor to a core options
+> file of the deleted instance reopen it and manipulate the tracer flags of
+> the newly allocated instance?
+
+Yes, and we don't care ;-)
+
+If the admin is deleting and creating trace instances and opening
+option files at the same time, it's their own fault if the wrong trace
+instance option gets changed.
+
 > 
-> If CONFIG_HYPERV_VSM and CONFIG_HYPERV_VTL_MODE are both disabled,
-> hv_output_page_exists() evaluates to false. This means hyperv_pcpu_output_arg
-> is never allocated during hv_common_init() and remains NULL.
+> > +			return __trace_array_get(tr);  
 > 
-> Consequently, arch/x86/hyperv/hv_init.c:hv_apicid_to_vp_index() dereferences
-> this unallocated pointer:
+> [Severity: Low]
+> Will this compile successfully? It appears __trace_array_get() is an
+> undeclared function, which might cause a build failure.
+
+Really?
+
+Then what's this: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/kernel/trace/trace.c#n614
+?
+
 > 
-> arch/x86/hyperv/hv_init.c:hv_apicid_to_vp_index() {
->         ...
->         output = *this_cpu_ptr(hyperv_pcpu_output_arg);
->         ...
->         status = hv_do_hypercall(HVCALL_GET_VP_ID_FROM_APIC_ID, input, output);
->         ...
+> > +	}
+> > +	return -ENODEV;
+> > +}  
+> 
+> [ ... ]
+> 
+> >  static const struct file_operations trace_options_core_fops = {
+> > -	.open = tracing_open_generic,
+> > -	.read = trace_options_core_read,
+> > -	.write = trace_options_core_write,
+> > -	.llseek = generic_file_llseek,
+> > +	.open		= trace_options_open,
+> > +	.read		= trace_options_core_read,
+> > +	.write		= trace_options_core_write,
+> > +	.llseek		= generic_file_llseek,
+> > +	.release	= trace_options_release,
+> >  };  
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this same Use-After-Free
+> vulnerability also exist for tracer-specific options and other
+> per-instance files?
+> 
+> While this patch addresses core option files by replacing
+> tracing_open_generic with trace_options_open, files like
+> tracing_max_latency and tracer-specific options still appear to use
+> tracing_open_generic, which doesn't take a reference to the
+> trace_array.
+> 
+> For example, if a user opens a per-instance tracing_max_latency file,
+> keeps the descriptor open, and the instance is removed, could a
+> subsequent write dereference the freed memory?
+> 
+> kernel/trace/trace.c:tracing_max_lat_write() {
+>     ...
+>     return tracing_nsecs_write(filp->private_data, ubuf, cnt, ppos);
 > }
 > 
-> Since this_cpu_ptr(NULL) resolves to the base of the per-CPU area, it
-> dereferences a garbage pointer. This is then passed to hv_do_hypercall(),
-> causing the hypervisor to overwrite random physical memory with the hypercall
-> result, and eventually oopsing the kernel when output[0] is read.
-> 
+> Where tracing_nsecs_write would perform an unlocked write to the
+> freed pointer?
 
-This looks like a real bug. It should / will be fixed separately.
+Possibly, but this one was a bit more complex than those others will be
+to fix.
 
-Wei
+-- Steve
