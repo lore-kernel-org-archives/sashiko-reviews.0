@@ -1,124 +1,153 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8677431A5C;
-	Tue,  1 Sep 2026 16:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48283515DF
+	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 16:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788281864; cv=none; b=s2VLh+Mnvy3guE6SnJ2Z0y85y9zT561Xb6zQRa3gWBVYGMeDIgGw0TFIXEgi3GbqkytxLMv14nveE3QjR7assFuMNM3QPQlTtF+EQMza199/s45jj9CCe7eE6EXKkAc1TCJgTsq/tmyiNn+mbIBbvGkvPgwgG7xhCdrKMbTdEl0=
+	t=1788281925; cv=none; b=GBCXLAQqzJ+gL4LCCrA6xY7BkD6QfodC9dyykW7ay1Exrm4Wa/Hy59N/TdfOYF6zdhL6fijABVgy5RpFBtV9GhB/wRlY6DzL4XpxzjNRpt89tvxgOqJkoTzcrHrCWRUct5ot+kePnfBQx2bfK/u6iPlMiOWpeeQd7oCNvK8CGe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788281864; c=relaxed/simple;
-	bh=8y/ZGX5qliXeV7zOiReFbIWuQE0twdWnLhic6h0ssQ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UHn+RqGk1T67xmk0qFxnZx+AlZU7XsTRbE2qO6fcxM7SGj7VOFkJxTnpNun26aFdm78YGQIaGSiyahU5TGYScv83Css/Ah9yblXbdP0HtGo9vwH81NQYgo6PL4f3vKtZiVcuLdVjfi80lpQp+dzZ1YwHmelkgTcQH8Me+jidZ/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UtgwO02D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788281925; c=relaxed/simple;
+	bh=zHfBMTxRqkaPOBK226KbK5Bs6Zd5qsfNptK1yMeOWjw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cV2FwlttzZ+/wUJmbgqVfnwo0FkzK1F9Hlo8HpL81qWhx6WaOh4JCBvnZrfwstyv5DyCCnc7qSPUL4BlrOJsq4+v39q5o8TM561OPIr9Pzs6C0pQ1M9sImnUMn0v5/NDlm9zPESUzXWOVmZgw5cR0iBXynkDn05Y+ll7N0qDBrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=1gZ9qniC; arc=none smtp.client-ip=213.160.73.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UtgwO02D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B181F00A3A;
-	Tue,  1 Sep 2026 16:57:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788281862;
-	bh=OhvZtQ0eU3bcnUaAynNGwXmOtzlnlhGl4PsopzQ50LE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UtgwO02DSb8NjYFrfujZWaYC/msXiWExIkXQfzDGRj6dBF3MkBqK9cNBxD25xK5kl
-	 v49yYSos4FTtRTE/Xo7YxmUevfEhhqyPKoeT1w3aWQFv0fLAKCmXVTJ8VhXcwgk/wh
-	 EVoDUOQqGk05t74HEYGfDgxsj4hCpKkO0tHLfrZtN7uB1cJTELRNKI75dy3FomiJaV
-	 g7nnmFmeqfDCho9One6Q5pZa1NrIaf6ZRP902fHkhhLg8zehBnwSDlRx7A54hXtk60
-	 Eap/MBs8gpELCNf6qwKHt6YF1/mNjbOeOFffnRtstBOEZQ2rI7uoMVpzqWAqojX6c7
-	 n6YCr1JTLx0gQ==
-Date: Tue, 1 Sep 2026 18:57:38 +0200
-From: Benjamin Tissoires <bentiss@kernel.org>
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="1gZ9qniC"
+Received: by dvalin.narfation.org (Postfix) id C19D72043A;
+	Tue, 01 Sep 2026 16:58:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1788281917;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OKUWbeHCL4+HuZrAgf7m2Euvx5NSGOwv6Pqkpgugprw=;
+	b=1gZ9qniCkWTSOAwLZmX0offKwfcEC2JcNq2HsvE4VL7w1Aeot9dVhrRawsTSoLlrh51E9A
+	/RkV+OC912ZHybOdoJQjdfyTxRs8WPkvD9IAWFYPT1Gls0xp7BPf3qJ4PzQp6Rix12kiNM
+	CSsdBp20Mgie/npf0v8msxjq8BakSPY=
+From: Sven Eckelmann <sven@narfation.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Shen Yongchao <grayhat@foxmail.com>, dmitry.torokhov@gmail.com, 
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH] HID: bpf: serialize device reference release in
- struct_ops destroy path
-Message-ID: <apcDYuGfT6Q1B10p@beelink>
-References: <tencent_6C4272FCE4F12C891C300445A9D8E6C68C0A@qq.com>
- <20260803145000.E44E91F000E9@smtp.kernel.org>
+Cc: antonio@mandelbit.com, marek.lindner@mailbox.org, sw@simonwunderlich.de,
+ netdev@vger.kernel.org
+Subject:
+ Re: [PATCH net-next 12/15] batman-adv: tt: use protected flag modifications
+Date: Tue, 01 Sep 2026 18:58:35 +0200
+Message-ID: <2369228.iZASKD2KPV@sven-desktop>
+In-Reply-To: <20260901140003.62B041F000E9@smtp.kernel.org>
+References:
+ <20260831135117.574836-1-sw@simonwunderlich.de>
+ <20260831135117.574836-13-sw@simonwunderlich.de>
+ <20260901140003.62B041F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260803145000.E44E91F000E9@smtp.kernel.org>
+Content-Type: multipart/signed; boundary="nextPart2056107.PYKUYFuaPT";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
 
-Just for the record, because this broke both our brains for long enough
-(Jiri and I)
+--nextPart2056107.PYKUYFuaPT
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Sven Eckelmann <sven@narfation.org>
+To: sashiko-reviews@lists.linux.dev
+Date: Tue, 01 Sep 2026 18:58:35 +0200
+Message-ID: <2369228.iZASKD2KPV@sven-desktop>
+In-Reply-To: <20260901140003.62B041F000E9@smtp.kernel.org>
+MIME-Version: 1.0
 
-On Aug 03 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Time-of-check to time-of-use (TOCTOU) race leading to a Use-After-Free of `hdev` during lock acquisition.
-> - [High] Early return bypasses `list_del_rcu()` and `synchronize_srcu()`, leaving a freed BPF ops object in the device's active program list.
-> --
-> 
-> --- Patch [1]: [PATCH] HID: bpf: serialize device reference release in struct_ops destroy path ---
-> commit cfdd4ce27d8a975674b1f3418e6b5078b5d94946
-> Author: Shen Yongchao <grayhat@foxmail.com>
-> Subject: HID: bpf: serialize device reference release in struct_ops destroy path
-> 
-> This patch aims to fix a double-put race condition in the HID BPF struct_ops
-> destroy and unreg paths. It serializes the remove/NULL decision under
-> hdev->bpf.prog_list_lock to ensure exactly one path releases the device
-> reference.
-> 
-> > diff --git a/drivers/hid/bpf/hid_bpf_struct_ops.c b/drivers/hid/bpf/hid_bpf_struct_ops.c
-> > index 702c22fae136a..049df06477610 100644
-> > --- a/drivers/hid/bpf/hid_bpf_struct_ops.c
-> > +++ b/drivers/hid/bpf/hid_bpf_struct_ops.c
-> > @@ -250,6 +250,11 @@ static void hid_bpf_unreg(void *kdata, struct bpf_link *link)
+On Tuesday, 1 September 2026 16:00:02 CEST sashiko-bot@kernel.org wrote:
+[...]
+> > @@ -1351,10 +1391,17 @@ u16 batadv_tt_local_remove(struct batadv_priv *bat_priv, const u8 *addr,
+> >  	}
 > >  
-> >  	mutex_lock(&hdev->bpf.prog_list_lock);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is it possible for hdev to be completely
-> freed between being read from ops->hdev and used here in mutex_lock()?
-> 
-> If hid_bpf_unreg() reads hdev = ops->hdev and is then preempted, could
-> __hid_bpf_ops_destroy_device() execute concurrently, clear ops->hdev, and
-> drop the registration's device reference via hid_put_device(hdev)?
-> 
-> If that was the final reference, the device could be freed, leading to a
-> use-after-free when the unreg thread resumes and attempts to lock
-> &hdev->bpf.prog_list_lock.
-
-This is actually tackled by the commit description.
-
-> 
-> > +	if (!ops->hdev) {
-> > +		mutex_unlock(&hdev->bpf.prog_list_lock);
-> > +		return;
+> >  	if (!(tt_local_entry->common.flags & BATADV_TT_CLIENT_NEW)) {
+> > -		batadv_tt_local_set_pending(bat_priv, tt_local_entry, flags,
+> > -					    message);
+> > +		tt_local_entry->common.flags |= BATADV_TT_CLIENT_PENDING;
+> > +		pending = true;
 > > +	}
+> > +	spin_unlock_bh(&tt_local_entry->common.flags_lock);
 > > +
+> > +	if (pending) {
+> > +		batadv_tt_local_set_pending_event(bat_priv, tt_local_entry, flags,
+> > +						  message);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this early return safely handle list
-> cleanup?
+> Does detaching the DEL event emission from the flag update create a
+> split-brain routing state?
 > 
-> In __hid_bpf_ops_destroy_device(), e->hdev = NULL is set, but the node is
-> intentionally left linked in hdev->bpf.prog_list.
+> By setting the BATADV_TT_CLIENT_PENDING flag under the flags_lock but
+> delaying the emission of the DEL event (via
+> batadv_tt_local_set_pending_event) until after the lock is released,
+> there is a window where concurrent operations can interleave.
 > 
-> If hid_bpf_unreg() runs, sees !ops->hdev under the lock, and returns early
-> here, it entirely bypasses list_del_rcu(&ops->list) and
-> synchronize_srcu(&hdev->bpf.srcu).
+> If a concurrent batadv_tt_local_add() executes within this window, it
+> will clear the PENDING flag and queue an ADD event:
 > 
-> Since the BPF framework will subsequently free the ops map memory, wouldn't
-> this leave a freed object in hdev->bpf.prog_list?
+> CPU1: batadv_tt_local_remove()
+>     tt_local_entry->common.flags |= BATADV_TT_CLIENT_PENDING;
+>     spin_unlock_bh(&tt_local_entry->common.flags_lock);
+>     // Preempted
 > 
-> If a driver .remove callback then triggers hid_bpf_hw_request() (for example,
-> to turn off LEDs), it would traverse the list under SRCU and access the freed
-> ops object.
+> CPU2: batadv_tt_local_add()
+>     tt_local->common.flags &= ~BATADV_TT_CLIENT_PENDING;
+>     spin_unlock_bh(&tt_local->common.flags_lock);
+>     batadv_tt_local_event(bat_priv, tt_local, BATADV_NO_FLAGS); // Queues ADD
+> 
+> If the OGM worker runs now, it broadcasts the ADD.
+> 
+> CPU1: batadv_tt_local_remove() (resumes)
+>     batadv_tt_local_set_pending_event(..., BATADV_TT_CLIENT_DEL, ...);
+> 
+> The next OGM broadcasts the DEL event. The local node considers the MAC
+> active (because PENDING was cleared), but the rest of the mesh drops it
+> due to the DEL event, leading to persistent split-brain routing.
 
-Sashiko is wrong here: when we call hid_bpf_destroy(), there is a guard
-that is set (.destroyed) which prevents further iterations over the RCU
-lists. So the next .remove() call triggered from the device_del() will
-not iterate over the freed data.
+This is not how TT works. The events are a best effort in informing other 
+originators. But it is not the source of all truth.
 
-Cheers,
-Benjamin
+And this is not changed by this patch.
+
+> > @@ -1394,21 +1441,37 @@ static void batadv_tt_local_purge_list(struct batadv_priv *bat_priv,
+[...]
+> > -		batadv_tt_local_set_pending(bat_priv, tt_local_entry,
+> > -					    BATADV_TT_CLIENT_DEL, "timed out");
+> > +		batadv_tt_local_set_pending_event(bat_priv, tt_local_entry,
+> > +						  BATADV_TT_CLIENT_DEL, "timed out");
+> 
+> [Severity: High]
+> Can this sequence similarly cause a split-brain state?
+> 
+> Like in batadv_tt_local_remove(), this delays the DEL event emission
+> until after the lock is dropped. A concurrent batadv_tt_local_add()
+> could interleave during this window, resulting in the local node
+> keeping the entry active while the rest of the mesh removes it.
+
+This is not how TT works. The events are a best effort in informing other 
+originators. But it is not the source of all truth.
+
+And this is not changed by this patch.
+
+Regards,
+	Sven
+--nextPart2056107.PYKUYFuaPT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCapcEOwAKCRBND3cr0xT1
+y+ypAPwNsBB8875SiRiAf9g792ominFBw/KSJHrVUEPeJ2iqcgD/Y3ZrDN5RaMQh
+8YOzJMln1ALipilC8XKlI0c51l+wSQA=
+=1RgT
+-----END PGP SIGNATURE-----
+
+--nextPart2056107.PYKUYFuaPT--
+
+
 
