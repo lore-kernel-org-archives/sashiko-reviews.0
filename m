@@ -1,217 +1,268 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFF631F98E;
-	Wed,  2 Sep 2026 11:03:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAD047A88D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 11:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788347028; cv=none; b=NzmlMmAMgzdsEus3z9iL6Wbq3emkhmw9ITCy2brpQRAveUskbDSxtW6riyiJ+8iZafzLDCSk9Rw0zWQ1g/BVdm3NfyOKL/iDblGqe+zM+dDeUUi0oOT+qKfEl/ccuv9dr7/fz4MYPnrQCki+cooy9rTpGg7EtvXkKTI1SPPzh7M=
+	t=1788347211; cv=none; b=oQWq4hnZPrFo3DSsRlkxrNBr0XQSrd7H2hJuRFCOda+ze8OTCEklmWAFYlOpSPnOsXgsGXKEpdyZh4YHL+GU6YoaaQhAzlW9DJg5hhJZpHI+zxRwyyRVFGse5ybhXq9l+7SoKuHELkKYN0cg5ouzzgGgk5qy3/4Jm/BhDFGZeM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788347028; c=relaxed/simple;
-	bh=ulib2FxU7/7qkD/xjF0V/zMk/K3gFKkLQSocwhDjl10=;
+	s=arc-20240116; t=1788347211; c=relaxed/simple;
+	bh=Q4ImRTjBzBhYse+/OcG6vj8zIBPUtJr8YOhW2BFMIec=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cyf2pZutQsklfgR6wQ8ZK1XgSciyp/3syKbrArjwQZ6riQ5ANm5Wk2or6cuHQZ2+gMhioWR5A3pxlgdmjkLaulklGcuS42wXkwgf7pusWzQiMNYJw9YYa01wjrseQLoA7fCH6+kZvtqrRW9pDdtU9OeoKFgVb9KG3irrRfiO2Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RrW9cwDi; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=IBUfmXY3ZxW6eu+YhU8Be+4Pq2osqzQCN4fLP54sUriWSXTPoPpNjhgpXiy9q21EfNeYFIZvPoBtibIng7I9YgkgqPVpDIcAQ4+dJFl8mJBhxgpqAImf30GPaeB/wwF0AVhs9JyJmc6PmhjtEKsLhW5GpZC+CIwomqmw9gbRQHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=B1JaIv6E; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=RX4G2UPT; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zhTUZgxM; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UveK7SZK; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RrW9cwDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6876C1F000E9;
-	Wed,  2 Sep 2026 11:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788347025;
-	bh=6Rzs0/DQGET9NSqst0PdWuOtgQe5rwYBXBRpcRgwgQU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=RrW9cwDiYJiOsBuMBWuRgtT86sJhUMrf/Z/C/nvM8MDyZmVLGuIPCd/JhinnoLYam
-	 rD+IihuoQcmglgyKjn1VC4iAftTp3iHnRGBs0J8TIrf+bjnYjm/UqH5ExvMoH776YH
-	 PhqyYcY/3KyGZqU1fdpxsuHcpCVQuVxTeERoHLyoXwcdGAKTN31yPJLEmxHnN2o+Xx
-	 7vadcR5fpM8GBk96ifSuolbegWbqHP9YTvQz5+snhS7wKGI9AAh52oxTvrDhpCrTtZ
-	 V+0HRzVUH+Lq24xVSvoTxs0UUR0Iuys5bZrEdWomab0ns18t2jJaXd55nQ2faI5Res
-	 B77Cnmo0ZIRGw==
-Message-ID: <db4d28a9-f751-493e-8270-44e206ebecbb@kernel.org>
-Date: Wed, 2 Sep 2026 13:03:42 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="B1JaIv6E";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="RX4G2UPT";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zhTUZgxM";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UveK7SZK"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 19D8F21D89;
+	Wed,  2 Sep 2026 11:06:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788347202; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=NDZnR+WrNJW7WgXTyjTEUCWyg16URLKBsflVxpbY274=;
+	b=B1JaIv6EciIpqoE1+zd8eYFovsK6ei8NLvzPW/o1yAwLML7z3aOnxf2dy1GvKqk7vh1KCB
+	rDGBLx5vYwWbl9uY+aJVvu1ou/jyqZ2nKhrwu6EQnIIMR5s+GGyb7APD7Dp6huetHiN0Xc
+	73YsXajGJjcqDkMZle/tpgikJ6rMI28=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788347202;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=NDZnR+WrNJW7WgXTyjTEUCWyg16URLKBsflVxpbY274=;
+	b=RX4G2UPT/8+/FSkHkSUfq3pV99x7+d+O5TzFsvCDC+WtbyiZ9xPjilYAsLn6BAUdHIhLlO
+	chF63Nd7yfv2YrCw==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zhTUZgxM;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=UveK7SZK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788347198; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=NDZnR+WrNJW7WgXTyjTEUCWyg16URLKBsflVxpbY274=;
+	b=zhTUZgxMzjUjtbSMNWJxpYMPdCjQdaHMdEzIVoAV9jLIw0zphcx74kkMYycXNRs2EK4Yod
+	jIR4EqWLbMNSeDK+1HkJRK91wg+BPUDKQQjrM5t1rjhkft7Ot1GUj9Hq2imjNcqs7IxxaA
+	WZAEWecQRDtU6bedNzUrIdcK/uZhxgE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788347198;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=NDZnR+WrNJW7WgXTyjTEUCWyg16URLKBsflVxpbY274=;
+	b=UveK7SZKIil3unePiJhKOK0Mia3N1PIs8SVnFz7SyShpiGYJsxvZn6G9sOYKK3AGMLgSAU
+	lcMkcqe/s6pdwHDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A652113736;
+	Wed,  2 Sep 2026 11:06:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id gy4qJz0DmGqGRQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 02 Sep 2026 11:06:37 +0000
+Message-ID: <32790b27-0b11-4e2c-b3ad-052df38ffded@suse.de>
+Date: Wed, 2 Sep 2026 13:06:36 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH net-next v3] mptcp: normalize seq numbers reported in
- mptcp_info
-Content-Language: fr
-To: sashiko-reviews@lists.linux.dev,
- Kalpan Jani <kalpan.jani@mpiricsoftware.com>
-Cc: mptcp@lists.linux.dev
-References: <20260902102125.2035540-1-kalpan.jani@mpiricsoftware.com>
- <20260902103649.04FD81F000E9@smtp.kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260902103649.04FD81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] drm/edid: Add drm_edid_detect_panel_size()
+To: Jani Nikula <jani.nikula@linux.intel.com>, javierm@redhat.com,
+ ardb@kernel.org, ilias.apalodimas@linaro.org,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
+ airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20260901082057.37617-1-tzimmermann@suse.de>
+ <20260901082057.37617-3-tzimmermann@suse.de>
+ <6d2a818833af42b5d9160b7e72822b2d2b4bf04a@intel.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <6d2a818833af42b5d9160b7e72822b2d2b4bf04a@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -4.51
+X-Rspamd-Queue-Id: 19D8F21D89
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[linux.intel.com,redhat.com,kernel.org,linaro.org,ffwll.ch,gmail.com];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.com:url];
+	URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
 
-Hi Kalpan,
+Hi
 
-On 02/09/2026 12:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Changing existing UAPI sequence fields from absolute to relative breaks backwards compatibility.
-> - [High] Normalization falls back to 0 when `msk->first` is NULL, causing massive UAPI metric jumps for closed sockets.
-> - [Medium] Data race on `subflow->iasn` and `subflow->remote_key_valid` yields corrupted UAPI values.
-> --
-> 
-> commit 630c5d1d1841bed28f7903466f4319e79bf43c4c
-> Author: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
-> 
-> mptcp: normalize seq numbers reported in mptcp_info
-> 
-> mptcpi_write_seq, mptcpi_snd_una and mptcpi_rcv_nxt report the raw
-> 64-bit data sequence numbers, seeded from the connection's IDSN/IASN.
-> Since the IDSN/IASN come from mptcp_crypto_key_sha(), these fields
-> carry an effectively random offset and are not useful to userspace as
-> absolute values. This commit normalizes mptcpi_write_seq, mptcpi_snd_una
-> and mptcpi_rcv_nxt in mptcp_diag_fill_info() by subtracting the local and
-> remote initial sequence numbers.
-> 
-> Link: https://github.com/multipath-tcp/mptcp_net-next/issues/445
-> 
->> diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
->> index fcf6feb2a9eb5..88bd75672c96e 100644
->> --- a/net/mptcp/sockopt.c
->> +++ b/net/mptcp/sockopt.c
-> [ ... ]
->> @@ -1008,9 +1009,22 @@ void mptcp_diag_fill_info(struct mptcp_sock *msk, struct mptcp_info *info)
->>  	info->mptcpi_flags = flags;
->>  
->>  	slow = lock_sock_fast(sk);
+Am 02.09.26 um 10:45 schrieb Jani Nikula:
+> On Tue, 01 Sep 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> Add drm_edid_detect_panel_size() to extract the panel's preferred
+>> display resolution from a given EDID. Required for setting up DRM's
+>> panel orientation quirks in sysfb drivers.
+>>
+>> v3:
+>> - mention use case in documentation (Jani)
+>> - use is_detailed_timing_descriptor() (Jani)
+>> - rename helper to drm_edid_detect_panel_size()
+>> v2:
+>> - handle EDID without pixel timing descriptor (Sashiko)
+>> - fix checks for width and height pointers
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+>> ---
+>>   drivers/gpu/drm/drm_edid.c | 47 ++++++++++++++++++++++++++++++++++++++
+>>   include/drm/drm_edid.h     |  2 ++
+>>   2 files changed, 49 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+>> index 9990a836d0b6..d5d9e77dc91b 100644
+>> --- a/drivers/gpu/drm/drm_edid.c
+>> +++ b/drivers/gpu/drm/drm_edid.c
+>> @@ -7852,3 +7852,50 @@ bool drm_edid_is_digital(const struct drm_edid *drm_edid)
+>>   		drm_edid->edid->input & DRM_EDID_INPUT_DIGITAL;
+>>   }
+>>   EXPORT_SYMBOL(drm_edid_is_digital);
 >> +
->> +	if (msk->first) {
->> +		struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(msk->first);
+>> +/**
+>> + * drm_edid_detect_panel_size - Get a panel's size from EDID
+>> + * @drm_edid: EDID of the panel.
+>> + * @width: Returns the panel's width in pixels per scanline, if given
+>> + * @height: Returns the panel's height in scanlines, if given
+>> + *
+>> + * This function detects the preferred size of a panel from the given
+>> + * EDID. There is no such information stored in the EDID block directly,
+>> + * but the preferred mode often corresponds to the panel's native geometry.
+>> + *
+>> + * This helper should only be used during initialization before the
+>> + * connector is available. For regular use, retrieve the available display
+>> + * modes with the connector functions.
+>> + *
+>> + * Return: Zero on success, or a negative errno code otherwise.
+>> + */
+>> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
+>> +			       unsigned int *width, unsigned int *height)
+>> +{
+>> +	const struct edid *edid = drm_edid->edid;
+>> +	const struct detailed_timing *dt;
+>> +	const struct detailed_pixel_timing *pt;
 >> +
->> +		local_idsn = subflow->idsn;
->> +		/* subflow->iasn is incremented once in subflow_set_remote_key()
->> +		 * to account for the peer's virtual SYN; undo that here so
->> +		 * rcv_nxt normalizes against the same baseline write_seq and
->> +		 * snd_una use.
->> +		 */
->> +		remote_idsn = subflow->remote_key_valid ? subflow->iasn - 1 : 0;
-> 
-> [Severity: High]
-> When the MPTCP connection enters TCP_CLOSE, msk->first can be set to NULL.
-> When diagnostic queries execute mptcp_diag_fill_info(), local_idsn and
-> remote_idsn will remain 0.
-> 
-> Does subtracting 0 cause the UAPI output to abruptly revert to the raw 64-bit
-> absolute sequence numbers?
-> 
-> For diff-based monitoring tools relying on the new relative behavior, could
-> this cause an astronomical jump in reported sequence values?
-
-I would say (without checking the details), in this case:
-
-- either we return 0 for the 3 different values below
-
-- or, when closing the first subflow, the 3 fields in the msk are
-updated with the offset.
-
-But, before that, is it still possible to retrieve info from this socket
-after the destroy part? If I'm not mistaken, this destroy part is
-reached only after a "close(fd)", not a disconnect or anything else. So
-the userspace shouldn't reach it via a `getsockopt(MPTCP_INFO)` (or
-similar).
-
-I guess there is still possible to reach this code after the destroy
-part when diag info are obtained from netlink (e.g. `ss`) in parallel.
-But that seems to be more a race than a specific "post-close" query, no?
-If yes, then the main point is not to crash. Then maybe a workaround is
-enough, e.g. resetting fields, or modifying them with an offset.
-
-> [Severity: Medium]
-> Is there a data race when accessing subflow->remote_key_valid and subflow->iasn
-> here?
-> 
-> mptcp_diag_fill_info() accesses these fields under lock_sock_fast(), which only
-> acquires the process context lock. Concurrently, subflow_set_remote_key()
-> writes to these fields in softirq context under mptcp_data_lock():
-> 
-> net/mptcp/subflow.c:subflow_set_remote_key() {
-> 	...
-> 	subflow->remote_key_valid = 1;
-> 	subflow->remote_key = mp_opt->sndr_key;
-> 	mptcp_crypto_key_sha(subflow->remote_key, NULL, &subflow->iasn);
-> 	subflow->iasn++;
-> 	...
-> }
-> 
-> Because remote_key_valid is set to 1 before mptcp_crypto_key_sha() populates
-> iasn, can this diagnostic code read iasn while it contains garbage?
-
-Set "remote_key_valid = 1" after having set iasn?
-
-> 
->> +	}
+>> +	/*
+>> +	 * Use display mode from the Preferred Timing Descriptor. For old
+>> +	 * and obscure displays, we might need better heuristics.
+>> +	 */
 >> +
->>  	info->mptcpi_csum_enabled = READ_ONCE(msk->csum_enabled);
->>  	info->mptcpi_token = msk->token;
->> -	info->mptcpi_write_seq = msk->write_seq;
->> +	info->mptcpi_write_seq = msk->write_seq - local_idsn;
-> 
-> [Severity: Critical]
-> Does changing the established UAPI semantics of mptcpi_write_seq,
-> mptcpi_snd_una, and mptcpi_rcv_nxt from absolute cryptographic sequence numbers
-> to 0-indexed relative values cause a regression in the kernel's ABI?
-> 
-> Could any userspace application or tracing tool that relies on these fields to
-> correlate socket state with on-the-wire MPTCP packets (e.g., using tcpdump to
-> match DSS sequence numbers) break immediately?
+>> +	if (edid->revision < 4 && !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
+>> +		return -EINVAL; /* no Preferred Timing Descriptor */
+> Okay, so I should've asked this n versions ago, but should that be
+> s/&&/||/ instead?
 
-That's on purpose, adding a specific note in the commit message is
-enough? People shouldn't expect these counters to be exactly the same as
-on the wire.
+You're right. And I could have sworn that I took this logic from 
+somewhere in this file, but that doesn't seem to be the case. Apologies 
+for such a stupid mistake.
 
-Cheers,
-Matt
+Best regards
+Thomas
+
+>
+>> +
+>> +	dt = &edid->detailed_timings[0];
+>> +
+>> +	if (!is_detailed_timing_descriptor(dt))
+>> +		return -EINVAL;
+>> +
+>> +	pt = &dt->data.pixel_data;
+>> +
+>> +	if (width)
+>> +		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
+>> +	if (height)
+>> +		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL(drm_edid_detect_panel_size);
+>> diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+>> index 04f7a7f1f108..a2617aa34edf 100644
+>> --- a/include/drm/drm_edid.h
+>> +++ b/include/drm/drm_edid.h
+>> @@ -490,5 +490,7 @@ u32 drm_edid_get_panel_id(const struct drm_edid *drm_edid);
+>>   bool drm_edid_match(const struct drm_edid *drm_edid,
+>>   		    const struct drm_edid_ident *ident);
+>>   bool drm_edid_has_quirk(struct drm_connector *connector, enum drm_edid_quirk quirk);
+>> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
+>> +			       unsigned int *width, unsigned int *height);
+>>   
+>>   #endif /* __DRM_EDID_H__ */
+
 -- 
-Sponsored by the NGI0 Core fund.
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
 
