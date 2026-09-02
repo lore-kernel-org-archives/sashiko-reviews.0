@@ -1,188 +1,223 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD85146F4AD;
-	Wed,  2 Sep 2026 11:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788348645; cv=none; b=cp1VM3tf1HXk7VXqwlg3Q4gePoRrQVl6PmwfFF9Y5PrwfgR+BjjOu3HhX3ycmzYpx/0MtMAAZNJZVyswUmm2RQnAAw+oYu+DGR9O/67Q7Tl6iAa0y0/Ha5vctR85yQLj69SKph26SwA2a3xZ+esBztEzjaa+UMxWIwnGlmM2EUk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788348645; c=relaxed/simple;
-	bh=rsiPb+N3NBg42jR8oIV7SEKwZHQQaAyFyFV6MMqxWdU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=a5hRKZVvODVafQyrqdaKyvwpseXGVaDrS+6fP35HPuXHXomS3EfGpenAvDEvF32vi/diECSyk2yAhwtuIf+dq9kgepaCScXuBd0UV8P2ZVgDldtprxpIdt+CNowzeGbK1aC7l3U31FgGa2C651mJ3yfeEfTHAOM8MzCfUJ7E374=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=hweE4dzD; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C047A895
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 11:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788350173; cv=pass; b=PU7udQh5kxPxIpNcLA+wIFarHPEEoPmCxa7ZX69IzjYc0uXHo1nlzabMjm7T2sPnj93iMJHk7qDDFVM6gtnHd/e2cECWr/p4Sz7yTPpq8ch2Nni53HBROlnvrUVDt+aTv8Pk47zMkWO/6aze9R/04q1N7GLR0JZ8cAdHOp1vMi0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788350173; c=relaxed/simple;
+	bh=9aTnB/VsolXmMC6foR77V4yJLHZj5i7uyuB5JvSk0e8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DATiT4WLjiUUzJtK8YARqYqmIhEsn240SllPE2BWAekSN039mvpSq8Fzzc+S6TclcLxEn+Lr3M1nUhOibMDUdG6+N7oDF1XSuesAX27L6AAqZzuImtX7reov1J0HG1ntR9yD6MjmAt3He86eruZwLSQTGYWTxfHnT4JZg/kWgm4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cKDg8Dkq; arc=pass smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="hweE4dzD"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 16EE72F;
-	Wed,  2 Sep 2026 04:30:35 -0700 (PDT)
-Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1AAAB3F85F;
-	Wed,  2 Sep 2026 04:30:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788348638; bh=rsiPb+N3NBg42jR8oIV7SEKwZHQQaAyFyFV6MMqxWdU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hweE4dzD7xK1qCxh/+uOl5ZdIsajcvREw9IFsj3T2/PKYOhQcKwLRyEK5cV4CQlnp
-	 /PeVsjc9FyOPt8GrzSAK9kySvbt3aEAPHD3ZU4EhCsJCOTAiDF/WXDX4ASUC6sN1m+
-	 vShxw2HLrxVt1RA3iwVLkifwnqnt9zSQnC1LMkR8=
-From: Leonardo Bras <leo.bras@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Leonardo Bras <leo.bras@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH 2/5] KVM: arm64: Add KVM_PGTABLE_PROT_DIRTY
-Date: Wed,  2 Sep 2026 12:30:35 +0100
-Message-ID: <apgI27i_huhue2iP@LeoBrasDK>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260901173453.038E01F000E9@smtp.kernel.org>
-References: <20260901171558.2674031-1-leo.bras@arm.com> <20260901171558.2674031-3-leo.bras@arm.com> <20260901173453.038E01F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cKDg8Dkq"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5b4a95ab94fso2078338e87.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 04:56:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788350163; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HydUHuajt+B1gyS/4/SqWYY+Au2HSyINFRXSaunA+3G/DYXa9fp9/V+gMyqvjI/M2s
+         bTVUq4yaKi3AtkebgxMaY0q0rAJ2k0JK228ndN3U7uoaZmDA7A9eL86EpouBoC6rnGjY
+         wUQQ9cj4ZjqmQ+e4TBeeeuB8j9+gx/RLCQRyNfAUvRBIHH5yZ9YBEPBCo/c9STmRzZiI
+         krSZtcs4izai7ESOeDeqBTxkIAtKKwRzI8h6yPnQ0P+NfXdLpmUzWlmgD4DJNom64dDV
+         mPlqy3o1bKHyXyzZyxQZ4ndyON0QqIIJZLiRy4QZlQPSVmzgGpA/pAJ9NqN7cThl+atB
+         jwWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=y22TOZ6sV36PcowpSzMqJvb3Bgbt/VKIj2SdBO0JWFE=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=LeX+Db85S4a8u7j1H/2aLzMxt8wLW2QXkZuYVUe7A3SY2LGSNYBNG6CODr9ZEoFMUM
+         DjEqr9/BMyiwTJ6eYoZur8eNYRsgHdUkaM2rDBqyJm1dHSphqqQsA54VgZPpYqbjWhyU
+         7u8rlk+aSWtTd61EqRFcMGbdjyH8SBs2trwBHSFX/DGhv85S0OFnbWfhU62jWSlKI0sm
+         6THDXCIFLyVlrvPHKlB1uJvGb+BU0nCbcpXyn/E1aD+YJnLs0z2WsX93ZiHD+oVxxXC/
+         5q0fSEbvy0C4dXSbx//RB62bwx8t9qTvhoMfsulREvx71pMcPi99mLyIIXoVX7hhWefO
+         tbzg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788350163; x=1788954963; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=y22TOZ6sV36PcowpSzMqJvb3Bgbt/VKIj2SdBO0JWFE=;
+        b=cKDg8DkqBYJiuulmtz6A7bCNe/x81io9uUYbNzMJVTu7WFqj7pTEzEkBa+eAmoW0R3
+         tGlmWIirATouzg43/WlD3CFfpHjryEHMasSTtbi7wAh8h04Ud+tjpF12WucUEjaJXdfF
+         I9SzyoUh9pqIRoLra13RII4vGDg52BhZ63DnozwHDIavpHgYOTMc0gVUslKbKUMe1kPN
+         XBKlzgX2rX1mjfsedw5XBXwjirekMr1W0Jf0aJmdh0CLB8zzjkVi9cvtAa3FHxLZozR0
+         cagO/4IpE+i7wf04Mw2H2yhZWewEz+LL4XrMk2WD771fj2gyd6RlTvRPEORYlpAkaHpr
+         BouA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788350163; x=1788954963;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=y22TOZ6sV36PcowpSzMqJvb3Bgbt/VKIj2SdBO0JWFE=;
+        b=eh0a5Q5JxsT9gROOUVyyRJNEeIllO6DImCFDkur74lKEdfvvSrFXBVLSPevCk4xhby
+         9ArThcEYPO7JB2wGkWQXpRBRDDHzuXH9/uKkEWl9XWQMIKbuDSk1Q8QAtzOvBGVX/nnu
+         CyVplzeNcffVQO3h4yQ93EBA2C9r9HBEmDgE7tyodUSYeumORMKGuhnZpE2cNeiJIHK2
+         xKXHke3LSS9Qo2+bvbhtfIebwgqR/wQBxbEgdY65JKvLgJfD+Tc6hh42hAdUo5jjk1O/
+         jlKH5Wr8nbQonfN3PDab0fp5SAQhGKa9tT4y5U6PXawt4iwEvAmxl1QHHT6neXMdTz8z
+         f5Vg==
+X-Gm-Message-State: AFuF++mNYiYBGow4fvIOMfCBfWxdevHKYtbr4I2wn4WaXglfKw6+8R4N
+	evqR7skmmNXYIjBa+lf0R5p2FMb7yRMwYUJOwAX5JUmUQ5MmR3HMA9dpzUR/OmftF22tcDbKOUz
+	6J3xsr8EliqztgFQA0ZE6E6yfU1lhZvMMorSDoOU=
+X-Gm-Gg: AYBFou3WaLnYgc7jiz3cXN0c85qHgGrnYNSkR1wo7y/Yi7eQy4jWe9s70TvUVsiy/7E
+	c1/7kNTuCp2Bj3mUeT/NCo1JBKjtDpcTqxR8YFupX9DwPAWW9HWAG3m2/WsPBp1Rxuy/XeORl5y
+	MMAZ0YxLJIC2M7ENYtj45kmiiCiX4YlMtTbX8OnW0nnR6fNnnjemro4L+w5vHtWc4BiJJcjXJg1
+	iAV2AlXoWLOGJDeZgxdJmIVEiyZteWK0fukm1I0TICVPdLvx9555v+q26F8ALUj/k3cjbKQEs6T
+	9uEgZ8dBbtSsc6Ke0ouW7p9sjDLjH0C5jIohJvQmRx9RH3FZSxWk+mhurDEgMURUz6dxaGsg5cF
+	I8GWtSnjgCn+GsAw1Z9c9YmwUr4ISQ81YtVvSYPDF1P/Ml8v7tqBFQ2feGA==
+X-Received: by 2002:a05:6512:130c:b0:5b6:421:8adb with SMTP id
+ 2adb3069b0e04-5b60c31a2bdmr833645e87.16.1788350162785; Wed, 02 Sep 2026
+ 04:56:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <20260901083325.3445-1-kerneljasonxing@gmail.com> <20260902083344.1D9311F00A3A@smtp.kernel.org>
+In-Reply-To: <20260902083344.1D9311F00A3A@smtp.kernel.org>
+From: Jason Xing <kerneljasonxing@gmail.com>
+Date: Wed, 2 Sep 2026 19:55:25 +0800
+X-Gm-Features: AcwNN1UKyixZhZk_9axNe7uo1mtPY0hJ2kYRqzyzHcRHmsAWEFEpNH_CSNhZsJQ
+Message-ID: <CAL+tcoBBqzUo5cKS1MSUSvYd9P3obf210tKZNdUEhz538KPYhA@mail.gmail.com>
+Subject: Re: [PATCH net v2] xsk: set network header on skb at generic transmit
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 01, 2026 at 05:34:52PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Silent data corruption and loss of guest memory due to missing host folio dirty tracking with hardware Dirty Bit Management (HW DBM).
+On Wed, Sep 2, 2026 at 4:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Medium] The patch incorrectly anchors the network header at the L2 bou=
+ndary (MAC header), which violates standard SKB semantics and contradicts t=
+he AF_PACKET convention it claims to follow.
+>
+> Pre-existing issues:
+> - [High] Missing initialization of `skb->mac_header` in the AF_XDP generi=
+c transmit path leaves it at `~0U` (0xFFFF), causing out-of-bounds memory a=
+ccesses in network drivers that unconditionally read the MAC header.
 > --
-> 
-> commit c5bf76c3d6bf3edf785c54c123328d74e2186585
-> Author: Leonardo Bras <leo.bras@arm.com>
-> KVM: arm64: Add KVM_PGTABLE_PROT_DIRTY
-> 
-> This commit introduces KVM_PGTABLE_PROT_DIRTY to distinguish between writable
-> but not dirty pages and writable and dirty pages in the Stage2 PTE descriptor.
-> It evaluates these concepts on a per-case basis across KVM ARM64 page tables.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> > --- a/arch/arm64/kvm/hyp/pgtable.c
-> > +++ b/arch/arm64/kvm/hyp/pgtable.c
-> [ ... ]
-> > @@ -731,8 +731,12 @@ static int stage2_set_prot_attr(struct kvm_pgtable *pgt, enum kvm_pgtable_prot p
-> >  	if (prot & KVM_PGTABLE_PROT_R)
-> >  		attr |= KVM_PTE_LEAF_ATTR_LO_S2_S2AP_R;
-> >  
-> > -	if (prot & KVM_PGTABLE_PROT_W)
-> > -		attr |= KVM_PTE_LEAF_ATTR_HI_S2_DBM | KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W;
-> > +	if (prot & KVM_PGTABLE_PROT_W) {
-> > +		attr |= KVM_PTE_LEAF_ATTR_HI_S2_DBM;
-> > +
-> > +		if (prot & KVM_PGTABLE_PROT_DIRTY)
-> > +			attr |= KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W;
-> > +	}
-> 
-> [Severity: Critical]
-> Could this translation enable hardware DBM bypass for pages not marked
-> PROT_DIRTY? This translates the software PROT_W without PROT_DIRTY into
-> the hardware PTE state (DBM=1, S2AP_W=0), setting up the HW DBM bypass.
+>
+> commit 8222314e7d9b572394dd3fc2b9acb0b3706abd3e
+> Author: Jason Xing <kerneljasonxing@gmail.com>
+>
+> xsk: set network header on skb at generic transmit
+>
+> This commit fixes an issue in the XSK generic transmit path where the net=
+work
+> header was left uninitialized. It adds a call to skb_reset_network_header=
+(skb)
+> in xsk_skb_init_misc() to ensure the network header is correctly anchored=
+ to
+> the start of the frame. This prevents a crash when the skb is handled by
+> tunnel drivers.
+>
+> Closes: https://syzkaller.appspot.com/bug?extid=3Df16c1b285c9f63994eec
+> Link: https://lore.kernel.org/all/20260826012052.51028-1-kerneljasonxing@=
+gmail.com/
+>
+> >     Reset the network header so skb_network_offset() is valid (0). Note=
+ this
+> >     anchors it at the start of the frame (L2 for an ethernet device), w=
+hich
+> >     is the same convention AF_PACKET uses on TX.
+>
+> [Severity: Medium]
+> Does anchoring the network header at the L2 boundary (MAC header) here
+> violate SKB semantics and contradict the AF_PACKET convention?
+>
+> In AF_PACKET's packet_snd(), skb_reset_network_header(skb) is explicitly
+> called before skb_reserve(skb, -reserve) prepends the L2 header, correctl=
+y
+> anchoring the network header at the L3 boundary (after hard_header_len by=
+tes).
 
-That's the desired effect, as we can use HAFDBS/HDBSS to automatically 
-update and track them.
+I will remove this in V3. I misunderstood the boundary in AF_PACKET logic.
 
-> 
-> [ ... ]
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> [ ... ]
-> > @@ -1681,10 +1683,10 @@ static int gmem_abort(const struct kvm_s2_fault_desc *s2fd)
-> >  	}
-> >  
-> >  out_unlock:
-> > -	kvm_release_faultin_page(kvm, page, !!ret, prot & KVM_PGTABLE_PROT_W);
-> > +	kvm_release_faultin_page(kvm, page, !!ret, prot & KVM_PGTABLE_PROT_DIRTY);
-> 
-> [Severity: Critical]
-> Does limiting the dirty tracking here to PROT_DIRTY instead of the mapping
-> writability (PROT_W) cause host folio dirty tracking to be missed when HAFDBS
-> is enabled?
-> 
+>
+> By anchoring the network header directly at skb->data (the L2 header) in
+> xsk_skb_init_misc(), won't any subsystem, offload logic, or tunneling dri=
+ver
+> that relies on skb_network_header(skb) erroneously parse the Ethernet hea=
+der
+> as an IP header?
 
-Yes, that's why for dirty-tracking host should either disable HAFDBS or 
-enable HDBSS if available.
+No, at least until now. That's why resetting is sufficient.
 
-> [ ... ]
-> > @@ -1984,11 +1986,14 @@ static int kvm_s2_fault_compute_prot(const struct kvm_s2_fault_desc *s2fd,
-> >  
-> >  	*prot = KVM_PGTABLE_PROT_R;
-> >  
-> > -	if (s2vi->map_writable && (s2vi->device ||
-> > -				   !memslot_is_logging(s2fd->memslot) ||
-> > -				   kvm_is_write_fault(s2fd->vcpu)))
-> > +	if (s2vi->map_writable) {
-> >  		*prot |= KVM_PGTABLE_PROT_W;
-> >  
-> > +		if (s2vi->device || !memslot_is_logging(s2fd->memslot) ||
-> > +		    kvm_is_write_fault(s2fd->vcpu))
-> > +			*prot |= KVM_PGTABLE_PROT_DIRTY;
-> > +	}
-> 
-> [Severity: Critical]
-> On a read fault when HAFDBS is enabled, this leaves KVM_PGTABLE_PROT_DIRTY
-> unset while KVM_PGTABLE_PROT_W is set. Can this allow the hardware to
-> locklessly dirty the page later without KVM knowing?
-
-That's the desired behavior. If we need tracking, see above comment.
-
-> 
-> [ ... ]
-> > @@ -2019,7 +2024,7 @@ static int kvm_s2_fault_map(const struct kvm_s2_fault_desc *s2fd,
-> >  			    void *memcache)
+>
+> > diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+> > index 33475b180ea6f..2077bb6299ca9 100644
+> > --- a/net/xdp/xsk.c
+> > +++ b/net/xdp/xsk.c
+> > @@ -947,6 +947,8 @@ static int xsk_skb_init_misc(struct sk_buff *skb, s=
+truct xdp_sock *xs,
 > >  {
-> >  	enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_SHARED;
-> > -	bool writable = prot & KVM_PGTABLE_PROT_W;
-> > +	bool dirty = prot & KVM_PGTABLE_PROT_DIRTY;
-> 
-> [Severity: Critical]
-> By deriving the dirty status for host folio tracking strictly from PROT_DIRTY
-> instead of PROT_W, are we setting up the host MM to track the folio as clean
-> on read faults?
-> 
+> >       int err;
+> >
+> > +     skb_reset_network_header(skb);
+> > +
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it also necessary to ca=
+ll
+> skb_reset_mac_header(skb) here?
 
-Yes. The main idea is that a read fault does _not_ dirty a folio, just as 
-it already happens when dirty-tracking is enabled.
+I think it should be merged as a fix:
+https://lore.kernel.org/all/20260817153957.3177627-1-poros@redhat.com/
 
-> [ ... ]
-> > @@ -2082,7 +2087,7 @@ static int kvm_s2_fault_map(const struct kvm_s2_fault_desc *s2fd,
-> >  	}
-> >  
-> >  out_unlock:
-> > -	kvm_release_faultin_page(kvm, s2vi->page, !!ret, writable);
-> > +	kvm_release_faultin_page(kvm, s2vi->page, !!ret, dirty);
-> 
-> [Severity: Critical]
-> Releasing the folio to the host MM as clean on read faults could break host
-> folio dirty tracking.
-> 
-> If a guest later writes to this page and the CPU locklessly sets S2AP_W=1
-> without trapping, KVM won't be aware. Since KVM ARM64 does not harvest this
-> dirty bit during MMU notifier invalidations, the host Linux MM never learns
-> the folio was dirtied. When the host reclaims the folio under memory
-> pressure, does this result in data corruption and loss of guest memory by
-> discarding the modified data instead of writing it to swap?
+Thanks,
+Jason
 
-Ah, good catch. IIUC:
-CPU0					CPU1
-kvm_s2_fault_map - WC - pageA
-	sets dirty=false
-	...				HAFDBS sets pageA dirty
-	kvm_release_faultin_page
-		kvm_release_page_clean
-
-So, in this case, I think it would be better to use writable instead of 
-clean, as IIUC there should be no issue marking a clean page as dirty other 
-than a bit of overhead on calling kvm_set_page_dirty().
-
-Does it work?
-
-Thanks!
-Leo
-
-
+>
+> The AF_XDP generic TX path allocates packets via __alloc_skb(), which lea=
+ves
+> mac_header uninitialized at ~0U (0xFFFF). Because AF_XDP generic TX bypas=
+ses
+> standard egress paths (like __dev_queue_xmit()) that would normally set t=
+he
+> MAC header, the SKB is handed to __dev_direct_xmit() with an invalid
+> mac_header.
+>
+> When physical NIC drivers unconditionally read eth->h_proto via
+> skb_mac_header(skb) during transmit, this evaluates to skb->head + 0xFFFF=
+.
+>
+> For example, in drivers/net/ethernet/intel/ice/ice_txrx.c:ice_xmit_frame_=
+ring():
+>
+>         eth =3D (struct ethhdr *)skb_mac_header(skb);
+>
+>         if ((ice_is_switchdev_running(vsi->back) ||
+>              ice_lag_is_switchdev_running(vsi->back)) &&
+>             vsi->type !=3D ICE_VSI_SF)
+>                 ice_eswitch_set_target_vsi(skb, &offload);
+>         else if (unlikely((skb->priority =3D=3D TC_PRIO_CONTROL ||
+>                            eth->h_proto =3D=3D htons(ETH_P_LLDP)) &&
+>                            vsi->type =3D=3D ICE_VSI_PF &&
+>                            vsi->port_info->qos_cfg.is_sw_lldp))
+>
+> Dereferencing this out-of-bounds pointer crosses page boundaries and caus=
+es
+> a paging violation (kernel panic). Should skb_reset_mac_header(skb) be ad=
+ded
+> alongside the network header reset to prevent this out-of-bounds read?
+>
+> >       err =3D xsk_skb_destructor_set_addr(skb, addr);
+> >       if (unlikely(err))
+> >               return err;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901083325.34=
+45-1-kerneljasonxing@gmail.com?part=3D1
