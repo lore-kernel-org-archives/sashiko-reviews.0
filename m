@@ -1,162 +1,121 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46873822BB
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 08:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788338747; cv=none; b=AxEDsXURWBQIljDefly2npg8YGOoxXifN6U+dvxY8cec25UjQFws8v9XTx4mry/z6OMunVazk2H0b15+03EoR0GrAlS+uvf7dVd+Mnbfm6G+W2kqqKF5Y0S8zfxpZb21SuukmGU9kAhFRDGXaP2lBWJzrzE0/0oe7RBmLXtiaOY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788338747; c=relaxed/simple;
-	bh=5IORO+Q20OWL7KmEpNWvWv2Q4ojrAuwXm8g14vC5f38=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o8k5VNBziXWqFb8W760mz9TK5QUgXdybkF0ql5Fi+T5fJwrNpiQT8jpXRnTC2atHB5eEO6CpiH4UBk97FoOGevLsE8LVh4BoOeLqCPmkTyKnImPrC5nW0xbCxq37/XqaL2BxZ5uQzG0ZqMndTS1tDNI1Sq5/ZIPcupixcI7WbiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gVNBOIt3; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C534A403AFB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 08:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788338868; cv=pass; b=DSjlfj0y7lTxPtMRp6gFR+v9KfWPqN8S6ceFS2cYPA5gnaPFFnJElanR3867IPbThPKavdoOUITe+TPs8+qysRM9dTiHvLcJ2ujPzQYYFTHyskabep22F/lEjc0+EJmZvS1RdS1hye4X4ER9gg0A/piAeGZoY5h3TDQ+5Zk83n0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788338868; c=relaxed/simple;
+	bh=MYMnfWqyZs8fhoupAqZEoP21jVypdUTvrAIwa7LBw+w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SoVSSYpRX6rm7pSpIT0rsHvFOu18PaWlML5vTBtiS/Jx8mG7D/1ibBk2ue9vTlvHTzZP+vKm6nKUAe8kgTCnnkXj+fTtWdvMtx4aBc5/ZF9WGJsq4XbHVvJXKCEo16t4C+whjcrzSfR1n5SsOODTxYl33ujyT+t9V4qMquHnIKM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTdVNV21; arc=pass smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gVNBOIt3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788338746; x=1819874746;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=5IORO+Q20OWL7KmEpNWvWv2Q4ojrAuwXm8g14vC5f38=;
-  b=gVNBOIt3R3H0W8QIpE0gmmJDeT91dTT9zIXkI/+Susun6NoI9F7oLkLf
-   b0QlH79MpQ3M6ISCbXj/8FrH1d6yjg9NGcNEFpkmAdTsm1quwarEIHeKw
-   uqB5jjrld7fW9vTvH27kIcGY36K359gi9+Tmk4ZLVgQWTu0xhqEj9fv8t
-   mL+V97xFcv+3qMWaxBcX05J79oehoRQ/GMvdxIZP7wF067FvF/fs18bcz
-   OuiAfXniPioGCO1bDUhj7kFG4OhlxD2nKi8fvk1f4yoNLEAk7ZyGEao1n
-   Vk0P+viLu8QklJPj5lCSJUiVOkMglCqJswEFynJmHVybGOGeW9UQhYrwd
-   Q==;
-X-CSE-ConnectionGUID: z+rA4oEnRUqlMjRQkYVP0g==
-X-CSE-MsgGUID: Fn/fY13fS6qvQQ8L5xgdBg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="92657970"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; 
-   d="scan'208";a="92657970"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 01:45:46 -0700
-X-CSE-ConnectionGUID: SgDu0KLKSjaPPOP1bxc0qA==
-X-CSE-MsgGUID: /H76fkTkTvWMVrahOPWn9A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; 
-   d="scan'208";a="265052650"
-Received: from hrotuna-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.84])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 01:45:38 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
- ardb@kernel.org, ilias.apalodimas@linaro.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
- airlied@gmail.com
-Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
- sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v3 2/3] drm/edid: Add drm_edid_detect_panel_size()
-In-Reply-To: <20260901082057.37617-3-tzimmermann@suse.de>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20260901082057.37617-1-tzimmermann@suse.de>
- <20260901082057.37617-3-tzimmermann@suse.de>
-Date: Wed, 02 Sep 2026 11:45:36 +0300
-Message-ID: <6d2a818833af42b5d9160b7e72822b2d2b4bf04a@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTdVNV21"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6b1b881a8e9so314468eaf.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 01:47:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788338865; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IY3LnFA3oPJ8+giACytvrRU5mSwIeUsoaMVrlMHkIOVme6lT2wuNI4q8XGGulNJja+
+         0YTzCWnVLIPc5nqcGkLhQm5WNrs0mIkpLTCtmJv07IoUYPfHHP9nOIvp5O7COZhlY3JX
+         OiKPoXUtHDi6MnBqWUxMjoutidrwkPMFVhTMq4dAaglXG0/50QE4cHB8c4RxV8V1yKh7
+         3QlMOKoQ28MoX9/vXkH9gLsBSeSibY18KdWexpSv3Ap3m0w2CNho/0DRGs7vdMl73OHK
+         Pn9SqfITk34yZxufu2BysqSkbuAlmXVrRXS+3T11gtEEvS97wnV3wrc28foI+F6Yevlb
+         RDMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=MYMnfWqyZs8fhoupAqZEoP21jVypdUTvrAIwa7LBw+w=;
+        fh=qp9zvjwP9AiX68ta9TMtiLbJz8tMK7t3RPhXCq3dr9s=;
+        b=efnQbOwFRGNpRKVCjY7LNyTVdpai8TwJy6SasfzZU5bR58FGtrSEGcuYGWS6DAaXB0
+         5goDW6udWbsOA2hv+YN6fJkiHP1X8hi0wZ3uJNjzNLzk5EDLFxUSxgb25j05qNPL7Ean
+         CF9G4fyWcqN5o5lmjuFrsAskf4B19sFiWui0bbON8og4ue47v6NipTh9Tht+8jBg0o5Z
+         jQwhFaOSrQsdejytQJbPuyM37B+2AfFvXRkh6m7JAM7Bk9b8ISrntF2fojcAnLZZv5wY
+         gEMVRH1DCCuhWsN/Ay1TNtjphLzvY9lPTuuBTuSn4+lzH5YGe2zKTnWLg9GpNSf3CDTC
+         zBuw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788338865; x=1788943665; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=MYMnfWqyZs8fhoupAqZEoP21jVypdUTvrAIwa7LBw+w=;
+        b=JTdVNV21g2YWyfe6GhHZDvldy2EdW34Au/wroMVXg5/ZaYPu0fHVKxjJs4EoTz4wVi
+         KTLST7CdSaFpOlQZdN/gHRSeNn1foi3o9kfjl4fb3E7mDwShpsWC6bGryTPFtyaV3T18
+         kXEwa2vLY0YowMeRxlejjE7HQGfhK1HkXCTPco+soVfJOHFXRO6V+0qL20bwiBM9vjUp
+         NDUjuyEgM4/j4LeVX1TRAGjktFiTNWftB2l+XPioBVxYIWF7JF0E6ATcRttOfYRV80CM
+         6mErKduuimdxrcGOeI/Bu9Jp3PwN61HsLr1Nc/g+TWsrSgIuzlomtsp0uHGx/F+BfMD2
+         hmUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788338865; x=1788943665;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MYMnfWqyZs8fhoupAqZEoP21jVypdUTvrAIwa7LBw+w=;
+        b=Grn7MqzAA9z73i2LcqCR4ir9fiYckOhHwiYqZ/rwOASUZqK93KIdp/A/7qy1rJ6hJF
+         curSOeFT2M4QMUM+kRIHrZbIuDu1LAjXOx0ibW6ydTd5OnWY5/36Doe7sjnGsD8yTa0N
+         J6nWME7TFHpt5zixbzo0XB7ANDLxPG2PgJR07kuujYYzwrxB6pupLcbS68844PKapqzw
+         qy6PBPwVgmhw1SS75PPWcyDG3s2kq1d3oVhneBw3uWKASZ6fWEf887uXj7nfPvwkvCbk
+         EFq+YNmR9iMioWd1SpsOGXp94ufzftwMgn0X6oFWnstmZ8Q3BXpeCpF1j9mp9tKi+O8F
+         GRPA==
+X-Gm-Message-State: AFuF++nNC8gUv/UdoZhyYS79+Qyr5kb5s02ZEhDkNcpa44JMd4Els/sF
+	HiNQnnRDdv6YfFT357wjTuW4E0acNhUQxzPUHRxIU85vZpmN2TxbxNoxTqBjHAay8ZAxFxjaVcA
+	qAvTEnle8LipNDDAAXgGG6ieNi4TW/1vdzJJt
+X-Gm-Gg: AR+sD12H1W/hBKd7SSki1CTp2bv8cqhgMc8DUckrjHWIBUWUXbR3DfJk8JQ4YBDD/Ps
+	Xbj7H9I8U95UZZCw24WlqK3cnJJNS2+Oaj1HMX+bi/JCUMAie1Bgux1uBRBXtXJUgM/uNo+nJ75
+	6WbLeHbs9XwztEGQJEIexMiNPNNtBaJHtgbkJV9tOCfV97dhpnI4PaD3zqKj74LzuZYH8Xa0811
+	XYj7G3awiTeIM+Te/cb7stzvnqq9hmiL1ulQtOpPpr4Iy3CCuooi3x27oGxEj75T1N2RgzBbk5W
+	0XOB6luh+U9bNB0cPZaZ4VPro+musRcFf7eKZh+YaLPL4dMsWnh34wxO3Fbj4zvFKIRvFYMj29K
+	asQ==
+X-Received: by 2002:a05:6820:189a:b0:6b3:68a9:79e5 with SMTP id
+ 006d021491bc7-6b47edceea1mr2290029eaf.6.1788338865560; Wed, 02 Sep 2026
+ 01:47:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260823111959.17029-1-amit.barzilai22@gmail.com>
+ <20260823111959.17029-7-amit.barzilai22@gmail.com> <20260823113402.D7F9F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260823113402.D7F9F1F000E9@smtp.kernel.org>
+From: Amit Barzilai <amit.barzilai22@gmail.com>
+Date: Wed, 2 Sep 2026 11:47:33 +0300
+X-Gm-Features: AcwNN1Vo44MBmJfOcBB8zzBfrsBJUHYQroJ08viZBYwnFe3YB46ZksIwW3AFHfo
+Message-ID: <CAOEgbEqhvoz-J0o08_igTAJdfEHN6vZcxgd72An=BKO2L2jhOQ@mail.gmail.com>
+Subject: Re: [PATCH v5 6/6] drm/ssd130x: Add SSD135X_FAMILY and SSD1351 support
+To: sashiko-reviews@lists.linux.dev, 
+	Javier Martinez Canillas <javierm@redhat.com>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 01 Sep 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> Add drm_edid_detect_panel_size() to extract the panel's preferred
-> display resolution from a given EDID. Required for setting up DRM's
-> panel orientation quirks in sysfb drivers.
->
-> v3:
-> - mention use case in documentation (Jani)
-> - use is_detailed_timing_descriptor() (Jani)
-> - rename helper to drm_edid_detect_panel_size()
-> v2:
-> - handle EDID without pixel timing descriptor (Sashiko)
-> - fix checks for width and height pointers
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Acked-by: Ard Biesheuvel <ardb@kernel.org>
-> ---
->  drivers/gpu/drm/drm_edid.c | 47 ++++++++++++++++++++++++++++++++++++++
->  include/drm/drm_edid.h     |  2 ++
->  2 files changed, 49 insertions(+)
->
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index 9990a836d0b6..d5d9e77dc91b 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -7852,3 +7852,50 @@ bool drm_edid_is_digital(const struct drm_edid *drm_edid)
->  		drm_edid->edid->input & DRM_EDID_INPUT_DIGITAL;
->  }
->  EXPORT_SYMBOL(drm_edid_is_digital);
-> +
-> +/**
-> + * drm_edid_detect_panel_size - Get a panel's size from EDID
-> + * @drm_edid: EDID of the panel.
-> + * @width: Returns the panel's width in pixels per scanline, if given
-> + * @height: Returns the panel's height in scanlines, if given
-> + *
-> + * This function detects the preferred size of a panel from the given
-> + * EDID. There is no such information stored in the EDID block directly,
-> + * but the preferred mode often corresponds to the panel's native geometry.
-> + *
-> + * This helper should only be used during initialization before the
-> + * connector is available. For regular use, retrieve the available display
-> + * modes with the connector functions.
-> + *
-> + * Return: Zero on success, or a negative errno code otherwise.
-> + */
-> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
-> +			       unsigned int *width, unsigned int *height)
-> +{
-> +	const struct edid *edid = drm_edid->edid;
-> +	const struct detailed_timing *dt;
-> +	const struct detailed_pixel_timing *pt;
-> +
-> +	/*
-> +	 * Use display mode from the Preferred Timing Descriptor. For old
-> +	 * and obscure displays, we might need better heuristics.
-> +	 */
-> +
-> +	if (edid->revision < 4 && !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
-> +		return -EINVAL; /* no Preferred Timing Descriptor */
+On Sun, Aug 23, 2026 at 2:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> [Severity: High]
+> Will this cause a DMA fault on stack memory? Callers like ssd130x_write_c=
+md()
+> allocate the command array on the kernel stack (e.g. u8 buf[8]). Passing
+> cmd + 1 to ssd130x_write_data() results in a regmap_bulk_write(). On SPI
+> devices, this passes the buffer directly to the SPI DMA engine. Because
+> vmalloc-backed kernel stacks forbid DMA, this might cause an immediate
+> kernel panic or fault during device probe and runtime updates.
 
-Okay, so I should've asked this n versions ago, but should that be
-s/&&/||/ instead?
-
-> +
-> +	dt = &edid->detailed_timings[0];
-> +
-> +	if (!is_detailed_timing_descriptor(dt))
-> +		return -EINVAL;
-> +
-> +	pt = &dt->data.pixel_data;
-> +
-> +	if (width)
-> +		*width = (pt->hactive_hblank_hi & 0xf0) << 4 | pt->hactive_lo;
-> +	if (height)
-> +		*height = (pt->vactive_vblank_hi & 0xf0) << 4 | pt->vactive_lo;
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(drm_edid_detect_panel_size);
-> diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
-> index 04f7a7f1f108..a2617aa34edf 100644
-> --- a/include/drm/drm_edid.h
-> +++ b/include/drm/drm_edid.h
-> @@ -490,5 +490,7 @@ u32 drm_edid_get_panel_id(const struct drm_edid *drm_edid);
->  bool drm_edid_match(const struct drm_edid *drm_edid,
->  		    const struct drm_edid_ident *ident);
->  bool drm_edid_has_quirk(struct drm_connector *connector, enum drm_edid_quirk quirk);
-> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
-> +			       unsigned int *width, unsigned int *height);
->  
->  #endif /* __DRM_EDID_H__ */
-
--- 
-Jani Nikula, Intel
+This looks like a false positive. regmap_bulk_write() does not pass the cal=
+ler's
+buffer to the bus. Since the map has a bus and val_bits is 8,
+map->format.parse_inplace is non-NULL, so regmap_bulk_write() takes the
+branch that kmemdup()s the data into a slab-allocated buffer and passes tha=
+t
+to regmap_raw_write(). Slab memory is DMA-safe, and the caller's buffer is
+only ever read via memcpy(). The finding would be valid if the driver calle=
+d
+regmap_raw_write() or regmap_noinc_write() directly, since those can hand
+the pointer straight to bus->gather_write() and into spi_transfer.tx_buf,
+but it doesn't.
