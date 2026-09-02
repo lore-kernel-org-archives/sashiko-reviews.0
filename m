@@ -1,107 +1,99 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011007.outbound.protection.outlook.com [52.101.62.7])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C544AFE39
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 22:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE3D40B11F
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 23:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788389131; cv=fail; b=VUL4nCl/inJZEIFPG/yErZKBob+Rly0p2qlfr4jUFOGa+neoC9YBQP3Su5OPh/fIIPo8SWODu8jg6Iev643o/w81tHtuFU2by0tpY3kPjfh4cqEGu8+KjvWoYtKyWUHrL1xaRlBIbYMXrtBToKfULwrrtOA1z7LEDhdZeEAP00o=
+	t=1788390264; cv=fail; b=XALCMDQejzOql2ec75rtUgl+4YZSLNB/rMcoH7OaJavWbFzXu/PUIqi1ayOVxaBeF/RdF1YMeB2tvvJw4vIiZqR1KFtX5NHPMKWDlr7eSOMrpJKBXh1XoTVL43YquPLP5INhfQKetFDM0r/fTBtcUTBSiEVidS51XRbzw2epEfM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788389131; c=relaxed/simple;
-	bh=V1h7x9o4BSDHE5iso+JrZN0RV5tstXxVDBneCLgn/EQ=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ECEKz0xh2DJYUt151rTDZ7o5aNJP2g9swwUud5o36AyBn26F2txm2fB8lPsq4BT4zm0hBQ0tMODNiVO3eqXLrmV2ep7I3cY4LL3AvxHcBMJT0sF1v3p7HXG2oCFMJNSXuEW8ci2yLg9N8rfXHrXDXpLooaV3s9T3lAfPJ+8YZPg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nhdks4xv; arc=fail smtp.client-ip=52.101.62.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1788390264; c=relaxed/simple;
+	bh=vhk5EMZxPoJWgx359j+teEY5sVUC4F+c/D1vpXmUUT0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=nqLYcJhdH1RQBANRDsmla9LC6mSWs8mGQ2w6rQusd2FOQQ/vbeARDA0wX/1zXj9h2N31u7p9zjK0exVxwuhCGKr69DIJM2hhUotofcxHUR1h8Hjo2Fov8vC1B5TQ0eIgBLOjugJjiWWc22kP2mGB7L6VxqXmLQOGDVxEftEh04Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PEdY3NC6; arc=fail smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nhdks4xv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PEdY3NC6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788390261; x=1819926261;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=vhk5EMZxPoJWgx359j+teEY5sVUC4F+c/D1vpXmUUT0=;
+  b=PEdY3NC6jTXLKLGhTA0L6nUfRg2tu6Dfah1Uu0j9Hjpgn99NEfSqYn1l
+   D/tc537vkGQIUdqogg7eLRextCGx1oaUQtc0gx/WhG3YWHiRdaB/q49tb
+   SRXHyEEDDN/VfjvHS+Z35zl4rA8zwhIuxQAPLHMwZRAw2iJjgqA7Z8wca
+   FvKx9jxuyQI+l/fRWADvWaMNYe4+9G7mRI5IH6NmM4hCeJBFm6dZM+9gU
+   ydKL2nYcE0Ir0ze/VzBI308q56OWfUbw0pm7JCjXNXJaA2AmMPlt0F1XY
+   Rogwdvs5g8PBiQLEag4pH7jpbNqcJ0eQtqqTmH6m+0GrUPnYyZ1u/gFOL
+   w==;
+X-CSE-ConnectionGUID: LobVw2NVQGGInSAiWdAing==
+X-CSE-MsgGUID: K4+9o6rjRqWvvvgTChhR4g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11894"; a="89073529"
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="89073529"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 16:04:20 -0700
+X-CSE-ConnectionGUID: TE1XpzvBR1uONjPYmyenmQ==
+X-CSE-MsgGUID: qUIbn2DpSli8rVhLuQwjjQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="274830700"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 16:04:19 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 2 Sep 2026 16:04:19 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 16:04:19 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.17) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 2 Sep 2026 16:04:16 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E/zcSW+upyBqkCgBpLX4tmon2Xx0RK+ZTD0JJg0cZElMplY+oCaQBszKHoLuK9Cq/Ns3q0kpJ9aO9AXClUy71l0Sm+9HiKJaRmt0+Q9AIx56gx/bPi8R8GlJx7NB4vTvcST9Cp3R8mX3ARbtUuBAN3XFG9fo9u6kVH9MyNfHCDNtVAqHofRKhdc/JPjq1j32cZZAbvn3OhV1hAS6UXXl/px9oUb6bXWfteZ4dcuA+TkCIzA1XJMNP3aB4n0OLuuxwiKLbgod63+EA9qbX5ry7ib5Mj6Shv1BDYtNohbmVBMoh5+35vjSvdd9Ok5IMvqhRkpi47OUNf01uZsEEJHePg==
+ b=l8h0jcxKiVhdGGcQ+ZgXlOOOMUFJvzO5J+uXGVZs2qPRNAE2xiEiX+828zsXA6HXGSy3vkCAxVqb/Nc8viKYAMCSsb7OKhcVFrs3HUJlkR+9RgBpysQg8YrfU0aQspUr/X8LSLfz6zWPuGlQvkXdDCuHHqWX1zr3fZtiZievcsW1fAeGpteU28BS3XN2XhUTopb1kYTLP0z50Wbq5z5E/xi7OKpaIg2x0aAdJhfO0djoIhelE34Ytyk/qP45bn46MKNovnxoJnfyvwQvZXmTrNdt2HtrO/7GQMUDbPyUcXQQHdhGVj0vD92E6q1VvnEQ4oHhwH3898P0SLfXtACrSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kAYNXb+dCS9A+PtOKaFGV7fcABxYEU7zpwpQllqUg1Q=;
- b=Cngj68eKcKhYO/h0FPWNcc10JV2/2NgS2X3B1n0662Y/ae/zF6lisCanLR4kbPhRQrSMarzCRzDp56dnZ88LgX2e7U62QlxHTcWnXQ5MOuHs6CkX3zeK7DxrH9PiAH4W2aLrev2R5RwMbCtME0a8umTB53NO09kMJ5NElud9YYuLKo+MPZC+ExW7z7Nv4nr04rBHAGI3EFdIqGftWrCpQ+wZphCdnff9G3sX6F3F9lFJ9nBY0IOuybVfI7/9racJXAy4JTZIGBt617Kcz4g1gnK4/aAC095yWHJgI0TfFZZ2hiY0b7PWxDy2HoZY5FDW9aARYMVyZLdpFc9ivlOInQ==
+ bh=wxBK1E/eec73mkG6/rnK1pe5ap6fdS6+RtuvRR9/BGc=;
+ b=KPBDetcodCZrqjKcwk3xSPzB7i+gXN3oj0iAKQKNSCPw5Gwlsa7EIAP2QlxHVDvZ5hv+PsDzwJwjmGYfQVLbuuFz8av6h4H9hBixgzHsYH32GGdONAQMrpUHhSq6HZOd2Ax2NEEeG2c509BVYhwQDdWCuAF8gzH6fJDqeNM7Y7dEqi6kluc4gimqfWI3/gk5kkboTLx21bFyAUCyC81F8hVi/dHN8wjioJR/E73z/lR9AKqZcJrQYhlwJhLRXCsrJ6ZR77mXeRkZyAGtdSWc+7rW9u/gQygEkVtZxTC+HUunwkA7PVBEhMyDIp0VTkNXPR/UYDLtJvWW/MzpTgW1bw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kAYNXb+dCS9A+PtOKaFGV7fcABxYEU7zpwpQllqUg1Q=;
- b=nhdks4xvgwFjDQat3KR3ec/4RqmLjbB0QyWBLi4eKgIYmWAaWsNfSoQ9va15MF96kokVjRHNmW+56BpA0eCqVsdPcyqulao0vvlA3LHtX8xiPRUcN57GGu+nbXJxlIHVeCk5YuK9ahMlLZTj+n84X7H7vijdAFotvRfCPYup+KY=
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
- by CY5PR12MB6647.namprd12.prod.outlook.com (2603:10b6:930:40::11) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com (2603:10b6:510:212::12)
+ by PH7PR11MB5913.namprd11.prod.outlook.com (2603:10b6:510:137::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 22:45:16 +0000
-Received: from BL3PR12MB9049.namprd12.prod.outlook.com
- ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
- ([fe80::ae6a:9bdd:af5b:e9ad%5]) with mapi id 15.21.0382.007; Wed, 2 Sep 2026
- 22:45:16 +0000
-Message-ID: <77e56212-95cf-46db-852c-6ceb0b9589bc@amd.com>
-Date: Wed, 2 Sep 2026 17:45:15 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 5/5] x86/sev: Re-enable RMP optimizations on SNP guest
- shutdown
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <cover.1788296083.git.ashish.kalra@amd.com>
- <e8a8d0ec63bda2db61cde7cf298a4ccb6a502c20.1788296083.git.ashish.kalra@amd.com>
- <20260902220140.BE6131F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Kalra, Ashish" <ashish.kalra@amd.com>
-Autocrypt: addr=ashish.kalra@amd.com; keydata=
- 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
-In-Reply-To: <20260902220140.BE6131F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+ 2026 23:04:12 +0000
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::e0c5:6cd8:6e67:dc0c]) by PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::e0c5:6cd8:6e67:dc0c%4]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
+ 23:04:12 +0000
+Date: Wed, 2 Sep 2026 16:04:09 -0700
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	<intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH V20 09/15] drm/xe/vram: Add VRAM page offline fault
+ handler
+Message-ID: <apiraQytMqBPagvH@gsse-cloud1.jf.intel.com>
+References: <20260902145343.465686-17-tejas.upadhyay@intel.com>
+ <20260902145343.465686-26-tejas.upadhyay@intel.com>
+ <20260902162540.841011F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: DS1PR07CA0026.namprd07.prod.outlook.com
- (2603:10b6:8:44d::11) To BL3PR12MB9049.namprd12.prod.outlook.com
- (2603:10b6:208:3b8::21)
+In-Reply-To: <20260902162540.841011F000E9@smtp.kernel.org>
+X-ClientProxiedBy: MW4P220CA0009.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:303:115::14) To PH7PR11MB6522.namprd11.prod.outlook.com
+ (2603:10b6:510:212::12)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -109,167 +101,353 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|CY5PR12MB6647:EE_
-X-MS-Office365-Filtering-Correlation-Id: dee42114-bd20-4078-1a1f-08df0943dbd0
+X-MS-TrafficTypeDiagnostic: PH7PR11MB6522:EE_|PH7PR11MB5913:EE_
+X-MS-Office365-Filtering-Correlation-Id: e90a11ef-f59a-47b3-ff34-08df09468085
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|3023799007|6133799003|18002099003|22082099003|56012099006|10067099003|11063799006|5023799004|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	YG4EgA1IH1+hIjf60bf49G4M/ugT6Eq7VPXkAVIXLpB9L+jYlUzu+u0t0SwhuIyKSxGdRhdoH/9gkFdn9ngggr3xejkUCIhs4dx1ALwWEbJXbzVUqPTfK8CnjYF8QdGD7Ce4NWKjef7eR70+SDlvfIrU1lnWB9KhHHxsrwQqdjPzMaTnnC7RlIKnkuRTXY2tU9w6zcvJXnIaVdev5RldXjq1R7Zq0s7GnjbWsi8XFfqeq3UHN36/IhqBeOa4bYuh6hCAawWGjmPG6dfonptrvLsuzRP4ftt8kj30TcnjgXNKubv2CThQUP/V1K1OJewvjgmswOUIe9Bgag49gyMam51VhE020lDGpaljvGXc4IYQ33+atsubAtvHkYIRPJmrQ+nw7Tdc23rk2W9M92a8DcLeQpXwx+p2kbewrqJ5hb/ek2dWB0hQFASLCDaCdoMwgplmP2wv5JJEcs+m9K61PXnvDD0W3KsvrPdkvFL9iOBJ35hLZ5Tdal4SFAgCqU6YqQoQVcuqOse5zNi1vyd93ZmOJE6UiPjOaVu3qEKLJKlQTGqfiTEOvX4Gk9Ug/95hzEIJ+2iP70Ox0i+Xu/xqrejCpvW0N2X9JTWxyDyTCZ6NK28w7gbOylu9H2av2SMbKlNLouBJhnoKbrazXAnWaO0Dqk/HW7uoXqqtmAFJxL0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(3023799007)(6133799003)(18002099003)(22082099003)(56012099006)(10067099003)(11063799006)(5023799004)(4143699003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|18002099003|22082099003|56012099006|10067099003|6133799003|4143699003|5023799004|11063799006;
+X-Microsoft-Antispam-Message-Info: R2iAPjcKhm2wS63FwEY2aMdQjWHxishYTfchhbkA4jIFkoao+s4BeCHGX+ihUcpdmN/CD2k+wQjv2rnJCu0zwMbtGbESMEcSPHEgiEXHuUtUE+QWr4lGv1jA9Qf4XV4Jm8V02gCoT8kVaId1baHYJCH0JnVy/rln7f43ElZ9EGRFu0N94DJzdweFbODAm5rwP/3Q3SvCpc6YOgMXOx6vz0+82fJqCM3qiYlvTpXoLtugrTNr/SDn2DIwUgkwqsx8htz+ahxJVBWAF0KdYi3ycEqb1kUZrFO0jfJixkFAIqsxmOpVhdanQZ1aa17mqJggtWULSHrGT7DaXgJNUJObGORr6gP+eQQ1RJeencql7tAkjugwQ8Pt0UiNHzcJS5zmx+n8vflBK8pW6wbQFu74+jcHuxGY17StZ92M0utsNoODOV9BltdorcT3P4QOmnoUcTVaGo+1CQMyJyjebMI2G1nFKqyidj8xoIh+P/IMKlZZ2uI/YL6qj6VhJLG2FYiBSlv34WzBItq9ndKrlqGVhwBfHC/nQ+At94uFZyv4epDZ61zCWK3hjn8vYP49n5ScItJirGg58gZkc83Tn+YQb2IKT3pVegSVg174bPPXIwc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(18002099003)(22082099003)(56012099006)(10067099003)(6133799003)(4143699003)(5023799004)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NDJabHBiQXdtU0t6OGFsY25vMzNvZmwraWgyV01sNkUyNHgwenJBV2NMREty?=
- =?utf-8?B?K0ZiZHQzVVVnZmMxVk8zMzV6c29SbFlhdVBwTXpvR0ZOVWZyRk1kRTRudklO?=
- =?utf-8?B?am9EenhUQ04zK21NNTFlaXFnejlrTnVBaEp2NmxPYmh6QldQcVZoRDU4S0dp?=
- =?utf-8?B?S3JuYzhtcFpCV3YrK2pOdC8vWkFLck80ZFJnZXhhR3E5aVQ0bHllMWlyVURG?=
- =?utf-8?B?SE1ucW5DdTFGZHl2M2NBZXRmQ2h4cWNJZlRwK1ptZ2RuWlk0ajA4SHhGQlgy?=
- =?utf-8?B?Smx6OVM5ckJJSnAzbUxuN0pzZWxHUHFISE9KaEVydzdlNExLSXoyZ3dHRDhW?=
- =?utf-8?B?bjU1ZHZNZWFxSUdkVmtKa0V2bkVPZEt3NDh1bVlPZXFCNHpwUEZkdG15Wnkv?=
- =?utf-8?B?RDVXU2xwelh1WVB3aGRUUXNwNndzZi84QTVBVWJyV20zaEp2czAvVDY4SVRN?=
- =?utf-8?B?OHNWbjNoTWJINzBUK05FdmJ6b0s1MHlObm52U1Z4Y2hQbHBGOXlTVG9kRjJp?=
- =?utf-8?B?SEJIb2NFRzAwTzhEYzRsVU9KK0p0aDRUd0szajRXV0p3T1dFL0k4S3M3Q1Az?=
- =?utf-8?B?N3pjZXRJRzlQUGdXTlB2VUM3cDh1d3VXbXlTbHFFK2ppUkt1OE9jMlRYYmta?=
- =?utf-8?B?SEU0dkF5bGkraWZnMmlnaEo4UmtnM3c3MW9aUEFZU2gzOG5SMFllMW00WVV6?=
- =?utf-8?B?UEdrMm43dHNSMldzc0pnQWFoZCtnSy90R3paMlRUVGRJRkZaZG5JcWZyVUhz?=
- =?utf-8?B?KzVTSW9wZC85N1NKd0pJY1V2YndhNHJYSXV5aWZ4TVZYWEZiZVZQd3lFRHNL?=
- =?utf-8?B?QUphZyswK1U0OUhYbnlBSUZqcFJRR0IrSkJvNElCNW4zeFZsV2YxTWk3Z3dm?=
- =?utf-8?B?YXJGRU5VZlJsOE42Y0FvMHlZVnZIWnE3VWljRFp4d3JxbVZ2a3BjTGF6Z2Jm?=
- =?utf-8?B?RjYzVHRGN2traG0vWmNpSHhhSnBIZkVSRHo1VXVUMUMwakg3THNESzZrNmR0?=
- =?utf-8?B?d1BjMVlWRFBSMlplb2tEem4rMEJQZEVXd2FTTCs5Z0ZRRlJVOTN3bjV5Vnk0?=
- =?utf-8?B?eTFxYjI3VlhDSkhNMENSYmcxN0hxWFdMeGxHSlozd2lGb2w1UkJvVVd3Q0pQ?=
- =?utf-8?B?WEl6aVBFQjQ2QTcwNjY0N3RkaUUvUnJCeURTazZBMnJHT0d6NkNtSmNkQ3pD?=
- =?utf-8?B?ZmloQ05VeFJ1T0djYWI2b2xEQUFxYzYrUkcwNk9lZ0wxc2lnWVQ3a3B0bUw3?=
- =?utf-8?B?VmhmYnBMRFlrUE0vMlFtTm9rMi92NjNidjN4Ymk0VmdZV0g4a085OTFSSFFi?=
- =?utf-8?B?b0Vjc2ZyMWhWZ2JvSFA4UUw1Wk9wVW9RdEdUektqWDVKaEU1clVrZjdsQ04y?=
- =?utf-8?B?TUN3RllhSHlGSnpQcWlTY3hSdy9kTTB2aDFLaGtxS21OakRHZTNTbTlGMUNm?=
- =?utf-8?B?cXQ3UFBZdE8xeW4xZ0NuV2NJL0hjN3RVeDBHbjVMSVo0bm51M09BYUQrSjJW?=
- =?utf-8?B?SWdXOE9TSGduNUFSY1AvT2xpckU4RW9ONlBWWWJKN0dYZXBBY0kreWNldFZ6?=
- =?utf-8?B?Z1J5UXRhQ3o2Vkl3Um5DRUEzaHJ4eWJ3S3BVWmt5ZUlwUGZFVnlMb21JWWZT?=
- =?utf-8?B?T2xOMDN5RzZFMTZFdnBUaU5LSGFWUnk3YkxzbVpQZXdYb2NEdG5XUTNNMW5S?=
- =?utf-8?B?cTZQV3o1K20xN0tUNjlVa1REekhwS2h2TkNtYllaakVQVk5QbnhMcnJ5bGkv?=
- =?utf-8?B?Uk9pamhISVZnM2dPTXdCc01zSEh3Zlk4Mk5ndjliVUVTa1g0Y3M4VVlYc2xX?=
- =?utf-8?B?NXA5aXltNWNTWHVDUS9BQlh4bFkzVEhmNG9kVVVoVG80c0VqcDJKOTFPbS9M?=
- =?utf-8?B?UG03SmlBRkc0TjRWNWJWSnBWdFFVS2duekx2Z25MRmJPQjJKcTBnYnJyK2lE?=
- =?utf-8?B?TlZHRHdMSmRSS3cyNFc4U3l2RXA4Y2g3T01lOGNUWFRDaUgyanM2aFJiYzg1?=
- =?utf-8?B?SGtuRUVjRmJOK3lPaDFMVlQ1Q0R2ZHI5VzA1d3A2UGJzMllDT0Z4OEEzVXYx?=
- =?utf-8?B?N3dZc3Vzc2FIUWYzWk81ZXBrenBQSy95K0FqZE01cVRheWlqRnBySWxSUG03?=
- =?utf-8?B?RmRLZjFxWnF2eVFCdjRDSXZReGxSQVpDbkNOVWQ3eXo4dVkwd1VWc2hrS3R0?=
- =?utf-8?B?eDBvZCt6SW1iNnJhMHNkR0RYM1BJbVhmY1pORDNIUmo2aHZINy9Cd3BQQUha?=
- =?utf-8?B?YWxpRXhuNDliemZKUCtaeHVPc01vMGdsQnR4RmYvb3VsS1JZS2pXUFFRRk1z?=
- =?utf-8?Q?5j6KzLX2zGxUwQtAVd?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dee42114-bd20-4078-1a1f-08df0943dbd0
-X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?fGcGOJNP57M0Td9dmtnYLlGdm9lYQ2oydyk+vHiw4ml9ga0gwojW6diXlr?=
+ =?iso-8859-1?Q?qu9yJHHJn7kSc1doLZZJiPugjgtuJeP0hgR/xw7VUaJvTLmO/d19UFViL/?=
+ =?iso-8859-1?Q?3IuJaL56xBV4Qw5uLiO2rFrkS0j9sP+GELPfTInaxz3Gt0XoABst8al7qg?=
+ =?iso-8859-1?Q?fwdZBzWU7rYhqRDdLSxIuAahD1bgw+kID0RyW5aJUjd9N0Ng9Erg43i+vL?=
+ =?iso-8859-1?Q?5T46G6FxNEWLJfjcinXuh3avycArEsOG5y1O2S+ojMOcrae2DdXQpriMfS?=
+ =?iso-8859-1?Q?v0PAVUX3rI1mFVj3B8/fGDtdZbrUuidJYtiZA6ZvR3AnrOX3YtaSB2osKZ?=
+ =?iso-8859-1?Q?kqBuv7azVT29mZoAFxUcMRXbr4aWsY6wvB1J6+pI5LvGiM3E0uiRpiRr9+?=
+ =?iso-8859-1?Q?MlYv58HJ7+LC5S5ldVtpErmxjUOsAX1V8XKtdPsIwdGfZNf5MJxYM+xBrX?=
+ =?iso-8859-1?Q?fGIutAQHHPgdI8ItaT1emMJQu7zSIOLoJCkKKuIQeWgjbQwEtzMta/nfqA?=
+ =?iso-8859-1?Q?Hn4E5jQDkT0u0CRrH5vIwKrmWf+uSPZmVejoRcClb0iIJK3joVcBApDDWs?=
+ =?iso-8859-1?Q?hu4jiNgSPeLMkbRAZ2eajAyq473oiOPxVYEEstgGzrcxSrM8K+Ic9gZziu?=
+ =?iso-8859-1?Q?3awUxpou0Y3pQninMEMxMSXOlcOYsmCWyXRPWp2FoQjWRWwgs8sGH9QeDR?=
+ =?iso-8859-1?Q?YaowB+cAKyd8S1c56jsLVOledNrfDazZ+iXE4EcKLpD5kTQAfYkdPjy4t6?=
+ =?iso-8859-1?Q?PP1MTnsgCXFI2BCNTJ9n3tmkmDiPc/oAPbM0Z465vSnkjMEIO6HyATN0Nl?=
+ =?iso-8859-1?Q?SdhMe/039QymfjI1ZGy+BLr27m9rcWUlkuSBIHdhFcz65Zr+tkwPmSoJ4L?=
+ =?iso-8859-1?Q?EPVpvbEaxkKtYQ/Zjm7lyCL7fq2qJvr4Hg3ItS91oMN1i0wSl+8aQyrUbL?=
+ =?iso-8859-1?Q?8yerQxCKjda92xxjrFvdte5TMjZnuV0hlpNPErdVLC0pBuj+40H8UgzRXi?=
+ =?iso-8859-1?Q?boFHgmRuwwPqJC4QpLrd8QPblDGppSa7hLnC14epWSQc2LowAxmoaTUB7t?=
+ =?iso-8859-1?Q?MT19UAeiS+vDTC3/l0ZfOYHUFu+zDDoNX+30toEMIlBGVmMZGN53ies4Gh?=
+ =?iso-8859-1?Q?/Ew68vtXqOq9lq4BlbbaROFf116Prc6G6b+oJDAGwfQuTQFag/D+k7PKOe?=
+ =?iso-8859-1?Q?ZTMna7l0H7jtfB5guVhyIEHXopf1MA0cYSV9wd7QadGYpgoxxwd9kgkJhk?=
+ =?iso-8859-1?Q?BOekKrBsktAzedkaqMXO6hW8F1EXYuyPPoQHBUmDvHJR5GqX7ZlKDT+hWD?=
+ =?iso-8859-1?Q?pIQiL+utBHG59D1yMrmKLpz7S1N25PFHXzAst3k/024vZfFwkaekc2kUi+?=
+ =?iso-8859-1?Q?e0JFmLJFDodmsms/WammzUcMSqlU5yb5UPozO1dsIHLHaL9qMG9hjI4Fzu?=
+ =?iso-8859-1?Q?+esGr1QYlvuxod6na6suVL3d+59sZ+qRxP3aXXh4pUu76WrDOiguY9PjIT?=
+ =?iso-8859-1?Q?WV7p8wGs+N3BvzVrGiCiTm3AzXBSN4QRu+fW26nH4SWmapZbU+iF1AYz3C?=
+ =?iso-8859-1?Q?syzetuTt/PwsXPMlA5pZhPM8vx9D0wgig8WGngaLOBIMNZtYM/wHb8YeTn?=
+ =?iso-8859-1?Q?VFzfZkVaV78Bm1Fsp+59VgFy+jxN799bsAwrRuN3baUItnslQURbxokCV1?=
+ =?iso-8859-1?Q?7KC8fGFAMM89K4aHN/lWfUnEqWXQxP0IsG+3Z4OYFquFixwSJ4gMsnPSV2?=
+ =?iso-8859-1?Q?C1P8qHODr3W+82bWdve5YE7LXLLzilHaonyCxx7zk/rnKmg3Q8RQqHqMsi?=
+ =?iso-8859-1?Q?6rYETskBxbWN6EiID88AIYPrQD6iX4Q=3D?=
+X-Exchange-RoutingPolicyChecked: pu6RN0aE7FAeTPlRy5LCY72CDnIxIDTERPcUiHg+u/p9CUbAjhHKrfvOpGbnGS4IxICARje+hMH395gLUsTTs6M2YCX4J/5SvWTACiX5qxz6Dza+XOwsNnDg7Js+tXO7BNUMQyN+ourpazx63b8P8YU/QSVB7RovAkQqN/WVZA1TJV/t6OjE3ckQJn6ljtkINZ42QNk/Any6W0tqLQ+D/PqB1Invghdg9yn5enpeOT3pJAezNkx4NOoMOWVLzicsxUN+xPLo783EQR8koTc8mubKPK+aDNRhL1l112VpytZRd6kMbUZN9TfFhNxLmqwOfo6qdRDuy7EEv9JRTtIxWg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: e90a11ef-f59a-47b3-ff34-08df09468085
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6522.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 22:45:16.6229
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 23:04:12.0017
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: w9xXLhN5sftwUTeqc6Vnx6qiPc5grgEM1w2mhEROMIxHapnFMBF1kHLSqY4YDqt/neY4s9N4I5/j8og/YLkqQQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6647
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3tdQDRLNaFzysVBzxEbScM6jizY8xbNhPon4K/iyr1d3OAA92ZO3/k4gEK+OXGxqdCWulZmRveIo331WR9ugvQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB5913
+X-OriginatorOrg: intel.com
 
-
-On 9/2/2026 5:01 PM, sashiko-bot@kernel.org wrote:
-> Pre-existing issues:
-> - [High] Redundant and costly RMP optimization scan in hardirq context causing severe CPU stalls
+On Wed, Sep 02, 2026 at 04:25:40PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Lockless read of `res->bo` in `xe_ttm_vram_block_owner_get` leads to a Use-After-Free when racing with a TTM ghost object transfer.
+> - [High] Race condition when offlining a free VRAM page allows the faulty page to be allocated and never purged.
+> - [High] Forcefully unpinning BOs in `xe_ttm_vram_purge_page` violates pin counting semantics and creates TOCTOU vulnerabilities.
+> - [High] `xe_ttm_vram_addr_to_region` ignores the `kernel_vram` region, causing hardware faults in critical kernel memory to be silently ignored.
+> - [Medium] A race condition between two-phase page reservation and synchronous BO eviction falsely marks successfully offlined pages as failed.
 > --
 > 
-> commit f95e55ff4f3219c5a1e0b2d2fc34fde539f227f7
-> Author: Ashish Kalra <ashish.kalra@amd.com>
-> x86/sev: Re-enable RMP optimizations on SNP guest shutdown
+> commit 23a2bf9a5461265765230ffd0e7a9d24c27ca918
+> Author: Tejas Upadhyay <tejas.upadhyay@intel.com>
+> Subject: drm/xe/vram: Add VRAM page offline fault handler
 > 
-> This commit introduces a mechanism to re-optimize memory on SNP guest
-> shutdown using a delayed work queue to batch multiple terminations.
+> This commit introduces a hardware VRAM page offline fault handler for the xe
+> driver. It adds functionality to purge the buffer object containing the faulty
+> address, ban the associated VM or exec queue, and reserve the hardware page in
+> the buddy allocator to prevent future use.
 > 
->> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
->> index a4c0fe49b9ec7..fb66a1aa6fc35 100644
->> --- a/arch/x86/virt/svm/sev.c
->> +++ b/arch/x86/virt/svm/sev.c
+> > diff --git a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+> > index d97739a84a2d1..0ab92bc3c6998 100644
+> > --- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+> > +++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
 > [ ... ]
->> @@ -659,6 +659,33 @@ static void do_rmpopt_work(struct work_struct *work)
->>  	on_each_cpu_mask(cpu_primary_thread_mask, rmpopt_scan_range, NULL, true);
->>  }
->>  
->> +/*
->> + * Delay, in milliseconds, before the RMP re-optimization pass runs after an
->> + * SNP guest is torn down.
+> > @@ -580,3 +618,295 @@ u64 xe_ttm_vram_get_avail(struct ttm_resource_manager *man)
 > [ ... ]
->> +void snp_rmpopt_all_physmem(void)
->> +{
->> +	if (!rmpopt_capable())
->> +		return;
->> +
->> +	guard(mutex)(&rmpopt_wq_mutex);
->> +
->> +	if (!rmpopt_wq)
->> +		return;
->> +
->> +	mod_delayed_work(rmpopt_wq, &rmpopt_delayed_work,
->> +			 msecs_to_jiffies(RMPOPT_WORK_TIMEOUT));
->> +}
+> > +static int xe_ttm_vram_purge_page(struct xe_device *xe, struct xe_bo *bo)
+> > +{
+> [ ... ]
+> > +	xe_bo_set_purgeable_state(bo, XE_MADV_PURGEABLE_DONTNEED);
+> > +	ttm_bo_unmap_virtual(&bo->ttm);   /* nuke CPU mmap + VRAM IO mappings */
+> > +	if (xe_bo_is_pinned(bo))
+> > +		xe_bo_unpin(bo);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but queueing the do_rmpopt_work task upon guest 
-> teardown exposes the host to severe CPU stalls.
+> Does this forcefully break the pin counting contract by unpinning a BO on
+> behalf of an unknown owner?
 > 
-> Looking at do_rmpopt_work, it broadcasts an IPI to all primary threads:
+> In xe_ttm_vram_purge_page(), this unconditionally unpins the BO if it is
+> pinned, stealing a pin reference belonging to another subsystem (such as the
+> display controller). When the true owner later unpins the BO, could this
+> trigger an underflow crash?
 > 
-> arch/x86/virt/svm/sev.c:do_rmpopt_work() {
->     ...
->     migrate_disable();
->     rmpopt_scan_range(NULL);
->     migrate_enable();
+> > +	ret = xe_ttm_bo_purge(&bo->ttm, &ctx);
+> > +	xe_bo_unlock(bo);
+> > +
+> > +out:
+> [ ... ]
+> > +static struct xe_bo *xe_ttm_vram_block_owner_get(struct gpu_buddy_block *block)
+> > +{
+> > +	struct ttm_resource *res = block->private;
+> > +	struct ttm_buffer_object *tbo;
+> > +	struct xe_bo *bo;
+> > +
+> > +	if (!res)
+> > +		return NULL;
+> > +
+> > +	/*
+> > +	 * res->bo is updated under bdev->lru_lock by ttm_resource_set_bo().
+> > +	 * Racing with a ghost transfer here is benign: we either see the old
+> > +	 * owner (whose purge is a no-op and the retry path recovers) or the
+> > +	 * ghost (rejected below).
+> > +	 *
+> > +	 * A ghost is a bare ttm_transfer_obj, not an xe_bo, so ttm_to_xe_bo()
+> > +	 * on one would be out of bounds. xe_bo_is_xe_bo() rejects it since
+> > +	 * only our own BOs carry xe_ttm_bo_destroy().
+> > +	 */
+> > +	tbo = READ_ONCE(res->bo);
+> > +	if (!tbo || !xe_bo_is_xe_bo(tbo))
+> > +		return NULL;
+> > +
+> > +	bo = ttm_to_xe_bo(tbo);
 > 
->     on_each_cpu_mask(cpu_primary_thread_mask, rmpopt_scan_range, NULL, true);
-> }
+> [Severity: High]
+> Is it safe to read res->bo locklessly and pass it to xe_bo_is_xe_bo()?
 > 
-> The IPI handler rmpopt_scan_range executes the rmpopt hardware instruction 
-> in hardirq context over up to 2TB of memory:
+> In xe_ttm_vram_block_owner_get(), tbo is read locklessly. A concurrent
+> accelerated move or pipelined gutting can transfer the resource to a TTM
+> ghost object under bdev->lru_lock. This drops the last reference to the
+> original BO, freeing it via kfree(). 
 > 
-> arch/x86/virt/svm/sev.c:rmpopt_scan_range() {
->     ...
->     for (pa = rmpopt_pa_start; pa < rmpopt_pa_end; pa += SZ_1G)
->         rmpopt(pa);
->     ...
-> }
+> If the thread is preempted and resumes after the original BO is freed,
+> passing the stale tbo pointer to xe_bo_is_xe_bo(tbo) will dereference
+> tbo->destroy on freed memory, causing a use-after-free regression.
 > 
-> Since rmpopt is a very slow instruction, does iterating it over massive 
-> memory ranges inside an IPI handler lead to soft lockups or host denial of 
-> service, especially if frequent VM churn repeatedly tears down SNP guests 
-> to trigger this scan?
 
-Two things bound this:
+This one is correct and this memory unsafe here.
 
-1. Coalescing. snp_rmpopt_all_physmem() uses mod_delayed_work() with a 10 s
-delay that is reset on every call, so a burst of guest teardowns does not
-queue one scan per teardown — the pass runs once, 10 s after the last
-teardown. Frequent VM churn is coalesced into a single pass, not amplified.
+Luckily, this fix is easy...
 
-2. The IPI does not run an uncached scan. do_rmpopt_work() first runs
-rmpopt_scan_range() once on the worker's own CPU under migrate_disable()
-(interrupts on, preemptible), which does the expensive part and populates
-the shared RMPOPT table — all primary threads share the same RMPOPT_BASE.
-Only then does on_each_cpu_mask() fan out, and those RMPOPTs are cache hits
-(reads of the already-computed result), so the IRQ-disabled window per CPU
-is bounded by the cache-hit cost, not the scan cost — measured at ~320 ms
-over the largest configuration tested, well under the soft-lockup/NMI
-thresholds.
+This one will need to be fixed, snippet below:
 
+diff --git a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+index 6a954018012a..ff937ab3837a 100644
+--- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
++++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+@@ -733,7 +733,8 @@ static bool xe_ttm_vram_page_already_processed(struct xe_ttm_vram_mgr *mgr,
+  * blocks will hit xe_ttm_vram_mgr_del() on their own and the pending
+  * reservation is retried from there.
+  */
+-static struct xe_bo *xe_ttm_vram_block_owner_get(struct gpu_buddy_block *block)
++static struct xe_bo *xe_ttm_vram_block_owner_get(struct xe_device *xe,
++                                                struct gpu_buddy_block *block)
+ {
+        struct ttm_resource *res = block->private;
+        struct ttm_buffer_object *tbo;
+@@ -742,6 +743,8 @@ static struct xe_bo *xe_ttm_vram_block_owner_get(struct gpu_buddy_block *block)
+        if (!res)
+                return NULL;
+
++       guard(spinlock)(&xe->ttm.lru_lock);
++
+        /*
+         * res->bo is updated under bdev->lru_lock by ttm_resource_set_bo().
+         * Racing with a ghost transfer here is benign: we either see the old
+@@ -788,7 +791,7 @@ static int xe_ttm_vram_reserve_page_at_addr(struct xe_device *xe, u64 addr,
+                nentry->addr = addr;
+
+                if (block) {
+-                       pbo = xe_ttm_vram_block_owner_get(block);
++                       pbo = xe_ttm_vram_block_owner_get(xe, block);
+
+                        /*
+                         * Critical kernel BO? Best-effort check without resv lock;
+
+
+> > +
+> > +	/* The BO may already be in teardown with a zero refcount */
+> > +	return xe_bo_get_unless_zero(bo) ? bo : NULL;
+> > +}
+> > +
+> > +static int xe_ttm_vram_reserve_page_at_addr(struct xe_device *xe, u64 addr,
+> > +					    struct xe_ttm_vram_mgr *vram_mgr, struct gpu_buddy *mm)
+> > +{
+> [ ... ]
+> > +		if (block) {
+> > +			pbo = xe_ttm_vram_block_owner_get(block);
+> > +
+> > +			/*
+> > +			 * Critical kernel BO? Best-effort check without resv lock;
+> > +			 * worst case a concurrent pin causes reset path unnecessarily.
+> > +			 */
+> > +			if (pbo && ((pbo->ttm.type == ttm_bo_type_kernel &&
+> > +				     !(pbo->flags & XE_BO_FLAG_PINNED_LATE_RESTORE)) ||
+> > +				    (xe_bo_is_user(pbo) && xe_bo_is_pinned(pbo)))) {
 > 
-> Additionally, because rmpopt_wq is created as WQ_UNBOUND, the worker 
-> thread might run on an SMT sibling. If so, wouldn't the initial local scan 
-> execute on a CPU where MSR_AMD64_RMPOPT_BASE was never configured, 
-> potentially leading to undefined behavior or faults?
+> [Severity: High]
+> Does this lockless pin check create a time-of-check to time-of-use race condition?
+> 
+> In xe_ttm_vram_reserve_page_at_addr(), xe_bo_is_pinned(pbo) is checked
+> without holding the appropriate locks. A user BO could be pinned right after
+> this check (e.g., for display scanout), and then forcefully unpinned and
+> purged. 
+> 
+> The display hardware could then continue scanning out the old physical
+> address, potentially leaking data of whatever new BO is allocated there.
+>
 
-MSR_AMD64_RMPOPT_BASE has core scope, so programming it on each core's primary
-thread configures it for both SMT threads of that core. A WQ_UNBOUND worker
-that happens to run on a secondary thread therefore still executes RMPOPT
-against a validly-configured RMPOPT_BASE (its core's), and since CPU hotplug
-is disabled while SNP is active, every core stays configured. There is no CPU
-on which RMPOPT_BASE is unconfigured, so no fault or undefined behaviour.
+We should probably file a Jira for this, as I agree this possible with
+the right race + NIC trying to pin the BO, but unsure how to handle one
+properly.
+ 
+> > +				kfree(nentry);
+> > +				pbo_to_put = pbo;
+> > +				drm_err(&xe->drm,
+> > +					"%s: addr: 0x%llx is critical kernel bo, requesting SBR\n",
+> > +					__func__, addr);
+> > +				break;
+> > +			}
+> > +		}
+> > +		/* Queue both free and occupied (to-be-purged) pages */
+> > +		++vram_mgr->n_queued_pages;
+> > +		list_add_rcu(&nentry->queued_link, &vram_mgr->queued_pages);
+> > +	}
+> > +
+> > +	/* Deferred put outside lock to avoid recursive deadlock */
+> 
+> [Severity: High]
+> Can a concurrent allocation claim a faulty free page when the lock is dropped?
+> 
+> In xe_ttm_vram_reserve_page_at_addr(), when a hardware fault occurs at a free
+> address, gpu_buddy_allocated_addr_to_block() returns NULL, meaning pbo is
+> NULL. The page is queued and vram_mgr->lock is dropped to prevent deadlocks.
+> 
+> During this lockless window, a concurrent TTM allocation can claim this
+> exact free buddy block. When the fault handler later re-acquires the lock
+> and attempts xe_ttm_vram_buddy_alloc(), it will fail, returning 0 without
+> purging (since pbo was NULL). This leaves the newly allocated BO using a
+> faulty hardware page, which will cause persistent hardware errors.
+> 
 
-Thanks,
-Ashish
+This also looks right. So I think:
+
+@@ -804,10 +807,17 @@ static int xe_ttm_vram_reserve_page_at_addr(struct xe_device *xe, u64 addr,
+                                        __func__, addr);
+                                break;
+                        }
++
++                       /* Queue both free and occupied (to-be-purged) pages */
++                       ++vram_mgr->n_queued_pages;
++                       list_add_rcu(&nentry->queued_link, &vram_mgr->queued_pages);
++               } else {
++                       /* Immediately offline */
++                       return xe_ttm_vram_buddy_alloc(vram_mgr, addr, addr + size,
++                                                      size, size, &nentry->blocks,
++                                                      GPU_BUDDY_RANGE_ALLOCATION,
++                                                      NULL, &nentry->used_visible_size);
+                }
+-               /* Queue both free and occupied (to-be-purged) pages */
+-               ++vram_mgr->n_queued_pages;
+-               list_add_rcu(&nentry->queued_link, &vram_mgr->queued_pages);
+        }
+
+
+> > +	if (pbo_to_put) {
+> > +		xe_bo_put(pbo_to_put);
+> > +		/* Hint System controller driver for reset with -EIO  */
+> > +		return -EIO;
+> > +	}
+> > +
+> > +	if (pbo) {
+> > +		/*
+> > +		 * Purge BO containing address - reference held from above.
+> > +		 * This does not necessarily free the blocks synchronously: if
+> > +		 * the BO is not idle, ttm_bo_pipeline_gutting() hands the
+> > +		 * resource to a ghost object and it is released only once the
+> > +		 * move fences signal. The reservation below then fails and is
+> > +		 * retried from xe_ttm_vram_mgr_del().
+> > +		 */
+> > +		ret = xe_ttm_vram_purge_page(xe, pbo);
+> > +		xe_bo_put(pbo);
+> > +		if (ret)
+> > +			drm_warn(&xe->drm, "Purge failed at addr:0x%llx, ret:%d\n", addr, ret);
+> > +	}
+> > +
+> > +	scoped_guard(mutex, &vram_mgr->lock) {
+> > +		ret = xe_ttm_vram_buddy_alloc(vram_mgr, addr, addr + size,
+> > +					      size, size, &nentry->blocks,
+> > +					      GPU_BUDDY_RANGE_ALLOCATION,
+> > +					      NULL, &nentry->used_visible_size);
+> > +		if (ret) {
+> > +			nentry->status = XE_PAGE_RESERVE_FAIL;
+> > +			drm_dbg(&xe->drm,
+> > +				"Page at addr:0x%llx still busy (%d), deferring reservation\n",
+> > +				addr, ret);
+> > +			return 0;
+> > +		}
+> 
+> [Severity: Medium]
+> Does this unconditionally attempt buddy allocation without checking if the
+> retry path already succeeded?
+> 
+> In xe_ttm_vram_reserve_page_at_addr(), if xe_ttm_vram_purge_page() frees the
+> BO's VRAM resource synchronously, it invokes xe_ttm_vram_mgr_del() which
+> triggers xe_ttm_vram_retry_queued_pages(). The retry logic will successfully
+> allocate the buddy block.
+> 
+> When the original thread re-acquires the lock here and blindly calls
+> xe_ttm_vram_buddy_alloc(), it will fail with -ENOSPC because the block is
+> already reserved. The page's status is then falsely marked as
+> XE_PAGE_RESERVE_FAIL, leading to misleading internal state.
+> 
+> > +
+> > +		list_for_each_entry_safe(pos, n, &vram_mgr->queued_pages, queued_link) {
+> [ ... ]
+> > +static struct xe_vram_region *xe_ttm_vram_addr_to_region(struct xe_device *xe, u64 addr)
+> > +{
+> > +	struct xe_tile *tile;
+> > +	u8 id;
+> > +
+> > +	for_each_tile(tile, xe, id) {
+> > +		struct xe_vram_region *vr = tile->mem.vram;
+> > +
+> > +		if (!vr)
+> > +			continue;
+> 
+> [Severity: High]
+> Does this skip checking the kernel-dedicated VRAM region?
+> 
+> In xe_ttm_vram_addr_to_region(), the address lookup loop only checks
+> tile->mem.vram and neglects tile->mem.kernel_vram. If a hardware fault occurs
+> within kernel_vram, the address mapping fails and returns
+> ERR_PTR(-EOPNOTSUPP). This causes faults in kernel memory to be silently
+> ignored instead of triggering a system reset.
+> 
+
+tile->mem.kernel_vram = tile->mem.vram in the current code but for
+completeness, this likely right too. I'd check the kernel_vram if
+tile->mem.kernel_vram != tile->mem.vram.
+
+Matt
+
+> > +
+> > +		if (addr >= vr->dpa_base && addr < (vr->dpa_base + vr->usable_size))
+> > +			return vr;
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260902145343.465686-17-tejas.upadhyay@intel.com?part=9
