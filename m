@@ -1,36 +1,37 @@
-Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
+Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E821258CE7
-	for <sashiko-reviews@lists.linux.dev>; Tue,  1 Sep 2026 23:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E136B155757
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 00:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788304425; cv=none; b=posVUWZ9sbfdimbaWluVOczN++ldMdwC3rImCbQ2U61BnLGFeFDvHUxjUC8FfM2nu/CMxW8DNeKvRCloeLNkeWqjvCRL5QsCJ4lt59bkvl4Uy4WuwcUtIxC2bwbWITSHiLv0PEqA0AjcvV1EVA+EL610MBzl9pkmRBVn4cUXWEg=
+	t=1788309174; cv=none; b=btj95mCywIi1SkZ5bj/WfgO21NIAeSao8bn7fLIwcbYmxrdtpMR4el0N6xCFlBS9ijU5vDavQz9F3TNqaXL7AQjX9virc1DcMpQ0dIVtOtx4WgBFwHC6ne7Egfu/NFA0YDtiUrXzlnZ0Isi1t6SonDHxHi7cvlf6Cg2TIhZH90Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788304425; c=relaxed/simple;
-	bh=CMg8EnicEcBtJJY6z/2G7WoIQ6/fvphazvoroAr7x0U=;
+	s=arc-20240116; t=1788309174; c=relaxed/simple;
+	bh=WLy4VAeO/OhjwdEd4R/MQIyy2jTP3RfdRwsMY59iZmE=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UDJThh5EwJHqQfTKZ6xlEP4oyTudGK6lP5ZTjns3GRPgjPkhepT1YBtz8Od8qYp1e4SRhDuUvR9gnmsvAdks1tSoFLbK6HuhWrG0kavDfFCghnm9yPdpJA21yQLKVRq3g99G1Hu8GUN8tR3ivon+3fUyS9ZWsyHsSThXr+cYNtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=KQY9VhMC; arc=none smtp.client-ip=216.40.44.17
+	 MIME-Version:Content-Type; b=fXRYRgEEcJ5tKvZcDnBUtq4JTZCA71HDL+CKGWgC7f4S2sCVoyz+dfIg1IYmU2y7aW9ol/sWb4+VygM8PDVSKOGOziKBcss6fukTl9g1ysWPLMPaDAoCB3+ARmef5lRREZGA5id6cJK4BSuORq4VL8hDWALv5g7yzCcbvPPAq74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=M0gk/sfd; arc=none smtp.client-ip=216.40.44.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="KQY9VhMC"
-Received: from omf12.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay06.hostedemail.com (Postfix) with ESMTP id BEA06A4402;
-	Tue,  1 Sep 2026 23:13:42 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf12.hostedemail.com (Postfix) with ESMTPA id 3B33319;
-	Tue,  1 Sep 2026 23:13:41 +0000 (UTC)
-Date: Tue, 1 Sep 2026 19:13:39 -0400
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="M0gk/sfd"
+Received: from omf14.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay03.hostedemail.com (Postfix) with ESMTP id 1C1B9A05BE;
+	Wed,  2 Sep 2026 00:32:46 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf14.hostedemail.com (Postfix) with ESMTPA id 6B2F530;
+	Wed,  2 Sep 2026 00:32:44 +0000 (UTC)
+Date: Tue, 1 Sep 2026 20:32:43 -0400
 From: Steven Rostedt <rostedt@goodmis.org>
 To: sashiko-bot@kernel.org
 Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
 Subject: Re: [PATCH] tracing: Take trace_array reference when opening
  options file
-Message-ID: <20260901191339.25a5a060@robin>
-In-Reply-To: <20260901205421.5832E1F000E9@smtp.kernel.org>
+Message-ID: <20260901203243.350c2e8a@robin>
+In-Reply-To: <20260901191339.25a5a060@robin>
 References: <20260901163620.6cbe0ada@gandalf.local.home>
 	<20260901205421.5832E1F000E9@smtp.kernel.org>
+	<20260901191339.25a5a060@robin>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -40,89 +41,40 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Stat-Signature: y4gwk7bankse1xsqoiyhczpnnwtou531
-X-Rspamd-Server: rspamout06
-X-Rspamd-Queue-Id: 3B33319
+X-Rspamd-Queue-Id: 6B2F530
+X-Stat-Signature: pijhu9a6k1az355su3i9nsn58umcf333
+X-Rspamd-Server: rspamout07
 X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+d1yI+SllBX+/x/1VAQa2tyusVLFyiG3w=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=VpZd83Dau/0k0soWwaL4NH7We7iw+l/e5YU5ZKkI9ik=; b=KQY9VhMCIR11aXfm5SfsLEbZK3upNoxglcqK41k9pNSmBDYVUL5f8yMExc7gF46gy7F/Q0gYbcCVUBSZYVB1sYujSASEKP7heyuxl8Z1Cxj7eatA1mGeAmkPmNjKI4PytPgury/tEXhlRAL6LOHIyy3VI7+MGCm97qe5ElnXkE0=
-X-HE-Tag: 1788304421-134859
-X-HE-Meta: U2FsdGVkX1+cO5+8/HWq9sSXJaW4Sd/adHEvsf1HeFvEmoCRVbOBJwrB4gWLAb9v7HmxMhmB3iyGbTleqwKxpx8CqUGM5Ck4BdwN0GP4rx778I6ek35qjvJS/g8S4iaX7eU173AqcgrgN//i6Ac+Q96JPSpV1uFq8Kh8yUj5O1+h/e8o8Oguq9WPOw0OwqwygFzpx4TaDcRT0q9vOgZ1zBemLiF0rimcLm9st6+K49NW9Rl+8sB0lFUjtW+zuIyXJDaLHenf6+yiu04ILYbSLERCjO+4yycfpPhTyVsWYbKoL6/K2NEAuCvZYv/zlJux7ileS868MA0TjUFL3/LLOF8K7SBke2vq
+X-Session-ID: U2FsdGVkX19rsLzF1mXs9bT0fyOB+CaMVsBOuxxQbjE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=JOtgYTFntyaLgKro8FRfk/JDhdSIMLDtCgBFmt7+kO4=; b=M0gk/sfd8d5gvTYupDZtJWqO9QOnREV55/o0Z9KcOJhppS2vTc4V1EDlh8d4id6d0LS3qpGBDu2FOD2ePdY9lRAn/bTY0qQTJMO/fnjyKnfxqewasaePFwOL1jGPkIeFHZJoZtHPyMfiLfE9yOXPjR+/i6L15L6EXSbrw7wRYAg=
+X-HE-Tag: 1788309164-618110
+X-HE-Meta: U2FsdGVkX18r/rjO2D8QQrdsH4rl0jJ0JGki/ECvulCmQjfMfdgpLlKfYsWPrxwKm6w6hba0ML19HgmbCSvCQs6KVNI9QEv0uNd2zoXOgUIMRhMBCsVEGd7FToBf9gp7LR62hved4AJHZ91fZFAHw+fDBdo4ZtqnNgTHm89Rc5WqfgXmWUsKzS1EaANQtTiUO/vD98LdF4XHI8l6GhHpXMW+ixsmybVKHr8v++HszQB8/8Lb4gOBuM1Cu1RyCQLfIeirQLMpCi1Ru8saxACXZsIRePvIu/9XIW9dSqahkrDP3Rh6wPpxw3RQfd9/MxtYQJYykGFWy6+5M+w6HqZVtlTYbncoRNxX7LSa/zMp6aUlzb7sy8nGmOOTVqG7BFqv
 
-On Tue, 01 Sep 2026 20:54:20 +0000
-sashiko-bot@kernel.org wrote:
+On Tue, 1 Sep 2026 19:13:39 -0400
+Steven Rostedt <rostedt@goodmis.org> wrote:
 
-> [Severity: High]
-> Does this raw memory address comparison account for reallocation of the
-> trace_array struct?
-> 
-> If a trace instance is deleted, its trace_array is freed. If a new instance
-> is subsequently created, it could be allocated at the exact same memory
-> address. Could a user holding an O_PATH file descriptor to a core options
-> file of the deleted instance reopen it and manipulate the tracer flags of
-> the newly allocated instance?
+> > For example, if a user opens a per-instance tracing_max_latency file,
+> > keeps the descriptor open, and the instance is removed, could a
+> > subsequent write dereference the freed memory?
 
-Yes, and we don't care ;-)
+Not sure what tree you are looking at.
 
-If the admin is deleting and creating trace instances and opening
-option files at the same time, it's their own fault if the wrong trace
-instance option gets changed.
+> > 
+> > kernel/trace/trace.c:tracing_max_lat_write() {
 
-> 
-> > +			return __trace_array_get(tr);  
-> 
-> [Severity: Low]
-> Will this compile successfully? It appears __trace_array_get() is an
-> undeclared function, which might cause a build failure.
+That function has been moved to trace_snapshot.c
 
-Really?
+> >     ...
+> >     return tracing_nsecs_write(filp->private_data, ubuf, cnt, ppos);
+> > }
+> > 
+> > Where tracing_nsecs_write would perform an unlocked write to the
+> > freed pointer?  
 
-Then what's this: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/kernel/trace/trace.c#n614
-?
+and this has been fixed by:
 
-> 
-> > +	}
-> > +	return -ENODEV;
-> > +}  
-> 
-> [ ... ]
-> 
-> >  static const struct file_operations trace_options_core_fops = {
-> > -	.open = tracing_open_generic,
-> > -	.read = trace_options_core_read,
-> > -	.write = trace_options_core_write,
-> > -	.llseek = generic_file_llseek,
-> > +	.open		= trace_options_open,
-> > +	.read		= trace_options_core_read,
-> > +	.write		= trace_options_core_write,
-> > +	.llseek		= generic_file_llseek,
-> > +	.release	= trace_options_release,
-> >  };  
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this same Use-After-Free
-> vulnerability also exist for tracer-specific options and other
-> per-instance files?
-> 
-> While this patch addresses core option files by replacing
-> tracing_open_generic with trace_options_open, files like
-> tracing_max_latency and tracer-specific options still appear to use
-> tracing_open_generic, which doesn't take a reference to the
-> trace_array.
-> 
-> For example, if a user opens a per-instance tracing_max_latency file,
-> keeps the descriptor open, and the instance is removed, could a
-> subsequent write dereference the freed memory?
-> 
-> kernel/trace/trace.c:tracing_max_lat_write() {
->     ...
->     return tracing_nsecs_write(filp->private_data, ubuf, cnt, ppos);
-> }
-> 
-> Where tracing_nsecs_write would perform an unlocked write to the
-> freed pointer?
+  7d660c9b2bc95 ("tracing: Have tracing_max_latency inc the trace array ref count")
 
-Possibly, but this one was a bit more complex than those others will be
-to fix.
+That was added in 2023.
 
 -- Steve
