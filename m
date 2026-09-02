@@ -1,266 +1,222 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010069.outbound.protection.outlook.com [52.101.84.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4836A49C4A2;
-	Wed,  2 Sep 2026 13:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.69
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788354914; cv=fail; b=Sj6ogxx6w9A8MeJabevwiHOseXhEtLRjEEB5Zyq9sCs08vKBsgsBFXvutLrm6mP4shbUveqG/TY5twM1tYVMqQndM1UM/e1VmsknfNM+/nEDg6H4OXNxCT69a7gmefSuIZtvX6uUvySSRYp+ndVJ+jUFz24JFNKDFdYGZ1Cxb8M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788354914; c=relaxed/simple;
-	bh=G5mWxceL4WP4/MKzclT9NybkLV+OelDj7l7s7Y0yD9A=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=dFkF3lT5NFPUm3KzkaH8gC/FfV4Qj70h+ueSzVAd6IiqUBvu0VMXUZ8NRAX9s0PP2O8m8L4mpLFatbkA+8XG0o6yE0Dhh0Qmk3MqxF4/kdNa9yjTUtx275XyTIqGWlcBGRMnmo4Qbaut0nwLYrFD7wGeHb14A50zSUY8oc5pwRA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=BsxEWb4o; arc=fail smtp.client-ip=52.101.84.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5DF649CF4C;
+	Wed,  2 Sep 2026 13:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788355001; cv=none; b=YDHlyow8wwjqBlzUFZ0oTRYfYY9s4rPfL4Hn+WxGJfjpA3tsq4r8weTR7dYfifGR0YnCwfE+0uqSIm38NGtwvSN+NxyPl0aVjiW0p9IojoJ7EaePiIm8rRS0xPxt1s5qrKoWbpUGxYrAIoiwLJ5mk00CFRhDdOzOZ/PXbkRJJY0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788355001; c=relaxed/simple;
+	bh=EEj/IqgjIH10x26odgxcdN5+m52mq6BOJ7mkONw/e7w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=OLylpa1BBXAWB4A9Os2ztwza9emjYrfEFJSEzrQqhyV1eSP8QYB31vlHYvOFfXs/KXxl+aGY3j49uy0mm5b215k1ceThmJ4O2Pwb9E3OA3BgLOC2hVlIbZHggtw5dtEDrVe9K4ZkUZgGA22YQ6yb0ACxtBGMBVlJb2drn2WVDyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=hA2HBPBU; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="BsxEWb4o"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KZsXOjE/TiVxLLDgVn86YjFlpPB4bbz9SA0vVzrhzikjtGKuKXpOAlJUAS2Hc7YDndsmCgZo8KHRVvpFbqafH4vMzWRjPqXBSUqoQLMhKoYHdywSrrmORU+4N9zZc7H0VSbSq1/2HXXfuxnF0x8I6hVYuU2ZTHNrCaZdKno9Lh79Oe4TWZUMFrfDnPPHOUXwfi3PQl8XaqLlEmIlKXCvJk5YxCO3Ll54Lny+GCRFB5/MpQuAe+FJceoUCL7OKqGsWQRaIi7iLsq8zrH1uaZGaZDUw8NYoOR/v8qDe5d8hegziFJ7oc17KXIVU8brKztkowKkKFLXHrZlC7qBq0Zsqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=G5mWxceL4WP4/MKzclT9NybkLV+OelDj7l7s7Y0yD9A=;
- b=RWP5JPUFfEwDsgY5o46KFrM93k2/1znK4PhQpU2/x+mrn5yZ8+G+30HbqbSHuGguioJWWs75nx08k3h/pJsbahxLuH6s0wqKZRqk7N7GTUaugLGwaz5k/upM/kpA+iGmjDkILLaiosE3QE5zcBnoUcaw2iHgoxXDmrS3GBH3CQxBJgp2dOujZB7G6Q+W85eWkKnqXozOV4mY1fRomGU6tm816DNGJmx9oepIyNLIHL2LO8Nc4VdkY5mBJ9aTVOwZlDUBwukfQE/WH/KIqXPZaa1ypPUknVqXcHWDC0BcZ7uPFoHw2AGnTZkgR4S5zMiAl3Wkx8fKwqSniomkGVNqoQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=G5mWxceL4WP4/MKzclT9NybkLV+OelDj7l7s7Y0yD9A=;
- b=BsxEWb4oHl2gq2rxcgZ38SYkycLrtXyXcbrLU4sATvY9yGn0OxTVbW5wdpieNDXHMuc/B2AlybwdRtNeLBc4dHE5zC0RF8mbP694GxA7eZ7GrvChXztjLIw1tOC6f8rabxMXFW5XuC/SOqt7EuZ/y8v59vMD3e20msqNkCjjxZ83Z3B4lB+AMVzeZ3zJbxApyrNGCtYfaVpUc7r4sr7O+0f1Or7ng8XhYdRPZa68RsxBw1ILgY/vKEJqatZF0HXovwW8G0Bjzpv+0RykcAsSd7rQIm191XOlGd7e63RRk57w7wbU0tO7RkrSHy90KFkNqtXgS4nAbxnbx5dkRngAkQ==
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com (2603:10a6:150:32a::5)
- by FRRPR04MB12619.eurprd04.prod.outlook.com (2603:10a6:d10:1d1::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 13:15:08 +0000
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035]) by GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035%5]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 13:15:08 +0000
-From: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"robh@kernel.org" <robh@kernel.org>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"Frank.Li@kernel.org" <Frank.Li@kernel.org>
-Subject: RE: [PATCH v45 5/7] firmware: imx: adds miscdev
-Thread-Topic: [PATCH v45 5/7] firmware: imx: adds miscdev
-Thread-Index: AQHdOssA3cyMid4w/kSQ0s/BDGWiVra7JRyAgAAO4KA=
-Date: Wed, 2 Sep 2026 13:15:08 +0000
-Message-ID:
- <GV2PR04MB122713015DD30F535100C7A3B95B72@GV2PR04MB12271.eurprd04.prod.outlook.com>
-References: <20260902-imx-se-if-v45-0-6e400879d8ec@nxp.com>
- <20260902-imx-se-if-v45-5-6e400879d8ec@nxp.com>
- <20260902112233.C49181F000E9@smtp.kernel.org>
-In-Reply-To: <20260902112233.C49181F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Enabled=True;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_SiteId=686ea1d3-bc2b-4c6f-a92c-d99c5c301635;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_SetDate=2026-09-02T12:15:47.0000000Z;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Name=NXP
- Confidential;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_ContentBits=3;MSIP_Label_0d9c909a-577b-4ba2-96de-69ada94b137a_Method=Standard
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR04MB12271:EE_|FRRPR04MB12619:EE_
-x-ms-office365-filtering-correlation-id: f5200044-ff51-48a7-8ec2-08df08f43652
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|10070799003|376014|23010399003|19092799006|366016|38070700021|6133799003|3023799007|4143699003|10067099003|11063799006|56012099006|18002099003|22082099003|5023799004;
-x-microsoft-antispam-message-info:
- j0Nh+KK6IiTl0/FO1RPbrOgBOx3nV06tfY9aq22x6irbBmymsPv6IqAq384H3pf5BppxDPLvAK/HMdsu+LF4BsbYI7RYHN3gRNYf0yIy9SmaTQkJ4iqAr8sGf3EFrNoRO2M4bfRnN2cky2tJGrN+n4x/Ji+WRAQ44czyLY6ZhIgohGFZZQv7MxhVU6PlrTIbbCKGzPsbxKc2psZsiwMg/my7JRqJZ8FyEXMJyiQnoE2xsfRrIGwxOg5sRyiWlMizKIpaX0zO+99fFE/LyB93z+MReAwTSvs14QuAhh029AyBD0HKM/H2hP2y0Tei0/8Z/MN+wbCH3W67RwBKsQVytUszDAC6vP6AMjP2o1iirzMsJKPGEq+ZINU6VLztb3PpHSO8egGMEoRfiBYMLeAgk/PG3I7XaKkNsY2LCk9q0/xvvk6DLewVocG5h+Ff9ZIA04klr+oOn5ax29Avm6QV+cbDwM4elL+/ul+7S/BUK4ze/r6SkS9e7mRDIgZi2yq4KMSBhaXllO528mEXRGDpkifk+Axm8HEsU7O3JDCYB30C53wsW+GwbKJkPZAjCy4LYfwDHs9QZRHvtBP/YFkIMTnb3P8ecSm2EW0B6hxGH4rqRldztyI5eSeOyCqMkiKh0R2gzPoup2Kb90CBPkjq+wGIKRDZWy+VAT4IAD9KMIQ=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12271.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(376014)(23010399003)(19092799006)(366016)(38070700021)(6133799003)(3023799007)(4143699003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003)(5023799004);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?TGVHNldiZDFMSm5PTldzYmhkb2FZcUtiWU5yeVY3bFN6Q25PZE5qbWRLNjhV?=
- =?utf-8?B?aFhNZ2pwMDJZVWtDMUFkSWQwL1lUZGg4WlBSWnUvWUs4VlQrSHkxQ0VCNSt4?=
- =?utf-8?B?YTFRVVNsbyt0ZnJXcUMvQ1EweEZ2d2VKOGhZUHN0UEtEUDFzNEVyME9aVTlX?=
- =?utf-8?B?OE5tN2hiSkxqb0VmNS84YWFrSTJXei9MZ3JIeFBlYXdZM0ZveEM1dS9vTUE2?=
- =?utf-8?B?VUx5TnVlSXNmZFdvckFaWXUrcHQrazRUNHNreHo0WHJwOVY3Q0NqN1RSYUZG?=
- =?utf-8?B?SVRiSmJiMXhyV1JBNzFzSi9ZcjNXZytTRnpCSUQxczdjRTJwYzZnSXJXSmlX?=
- =?utf-8?B?TlFnVWZoVzE2dG1ZdUs4WGdKRXpRZkxwRVhEMlJvc0hGdjNmd090SXRFZTU1?=
- =?utf-8?B?WS9hSGpocEZkRjlIckxvOWc4b200b0FrOUR4RjhwelAxRzNLQzdub0taMzZZ?=
- =?utf-8?B?SGdnWkc4UHk4QyszQXh6TitCb09peW80U3pUUWRFdXFzTThZVFI0dnpPa0FR?=
- =?utf-8?B?OG55djNzZEgyYnRIakdnNExnemFLSUlHbXRkcXVwNmtJNVgySm1hRyt0c1d2?=
- =?utf-8?B?aDhicHFNOVFTb2R1RE5vd1BLZVJqU0lmV1V3dmUrbFRsT3kvYnZWcVNnY0c0?=
- =?utf-8?B?Z3lkRUs0RGxuTWF3cFBuMlBTWmRCQU0zUXkzeTJidjBlZ3IwdzBtYkgxOGpx?=
- =?utf-8?B?angrbXhHTHhMaHUvUFpSVVROL3owMmZ3cW9YS1E2N3Y0VlZTWUFGVUdxTHFB?=
- =?utf-8?B?cU1VRnh5NS9wWWF3UzZBWnN3OTE0RkViNzd0U3ZmbVg1R2hxa2V3OEZVNXN3?=
- =?utf-8?B?Y0orejYrWDlMbVpwc3Y0aU01byt0M3F5TGNQR0dxbDNYNkpZMEtFZnhUd0hH?=
- =?utf-8?B?R0EzRU5FNTRpWVZFZ3A0dVBaWnJablhseHBuY1NlTVJpMnhxbTFYc1U4bXVu?=
- =?utf-8?B?RHYrVG01T3Z5UUxVZG4yWmtQdzYwWFp1bDNyWDhqa3BNazNNSHdoWVBRbWlh?=
- =?utf-8?B?Q3MrVSt4TjErT0FXSlVYdWZ3a1g3L2RycVA4cXZxYXozSjNvZTNRc1NaUTNS?=
- =?utf-8?B?NGFBbzJDWXJmcFVZTzQydTVZZXhBeUJtYVRsbnlJNVA5WTBFblpXbzdzSXBK?=
- =?utf-8?B?VFE3TE0zS1lSVWJQVkxvUG9Fdll4TFY4WUFkZXhhUWdkVytKbFZnaEF1UEJO?=
- =?utf-8?B?WU5tSEdYMThCUXVJL0V1ckY1SXozZnNOTFdMZ1lJbHJ5MW5CQWFLai9aamcy?=
- =?utf-8?B?VFFQSSswby9VZXBCS0tKNHEyOHV3bG5lY1BhMXRFMHFQVnNFc1JhcUl0TEF2?=
- =?utf-8?B?ZVZnQlVtWXdFWS9FM1AwRkVpV0NWbzNlWjFrcVpmMHhmV0pRMGdOSDFaUmps?=
- =?utf-8?B?aWg3MXhleU9kazdkbUpNeFM0Z2JTdjJRTVpKQ1U2cWRudUUzQ3k0T1MxMkdt?=
- =?utf-8?B?N2tiTU95Tk1qcktqREVobGdwMnBhUzhmdnhmRVYzc3R5TStsVkNTd3AwSkNJ?=
- =?utf-8?B?d3BuVVlpbVhHUnpteW9FUGZkZ2lnaXA1dzJXamU4ZFJ5S09OYVVvQjJJQjB0?=
- =?utf-8?B?UFhPajN5Z2JUbkg5bHB6TWQ4eXpUQ3VkYkhWeWdpOW5GOWJlOUhQYmt1S0ZJ?=
- =?utf-8?B?aExjK05rbkVObys0d2pnT2pLRk5oMnZpYlJPblYvSlpHMW5CeFpaR0tmMnRy?=
- =?utf-8?B?UzJsZWRSYmdUTGoxamhWcVAvWVBBMG1WUlFzT1Z2S2VhYmRFWU1uek85dGlq?=
- =?utf-8?B?ak1ic1ZNeWdQU2s0ZG9xNVVZMVNHR3YweVdUYmVrM25zT25TR2Rpa0d3bXhz?=
- =?utf-8?B?VEdLbHNxTUhnQ3hZZXBGd0U5aFFxQnI4MDhDbUt1blYydnllcUxWeHJQMXFR?=
- =?utf-8?B?QUxDWGs3VHZqNi9CL0drckdWcnR2NHNlOFh3NkwzTXNnM05VOHdIZnI1VjNM?=
- =?utf-8?B?SVIzazZBYjB0cFU5NFgxLzRMTktCNVFFSFJrRUNDZlMyRFIrWGRFOUNrTVdp?=
- =?utf-8?B?VU8rR1RRY3JyT1kvRTA5eHRSdGNtYnlRbnV6cUJDZm1JN0NNSHFmejlmSzNw?=
- =?utf-8?B?TlpMbHR3emlOSkVBcVB3eFdSZmdyLzdjNTFsQ3F4eVRzbm4xQXBFeUNQLzlH?=
- =?utf-8?B?RjhiUVJzUFpnQ1BkS2tGcmhaUGFtK1JPdU9sdUllTG1LakV4eXlWSjdZdUp3?=
- =?utf-8?B?MUJWWnQvdzNFUUdLUE5FWFV1NVhJRXU4MkxkVFZMQm5URTVnTndPT0xUdnV4?=
- =?utf-8?B?bVM4NlFKT205YXZCaXpYT1ZjVmtLcUt4Sm1JSlc5STRxeDl2VDkxWitubUdi?=
- =?utf-8?B?RnQzMTc5M2hkSmlHN2JKQjEyS29wYWtHUlBKOHoxMjBvc0hyekFoSkIxTTV0?=
- =?utf-8?Q?3c/4RyXQC4WwTtNHhVxlTQzyx8WgqLkwg5rCZqcZR33st?=
-x-ms-exchange-antispam-messagedata-1: UFXWK8g1wN7/Og==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="hA2HBPBU"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 14CFD165C;
+	Wed,  2 Sep 2026 06:16:34 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12B423F85F;
+	Wed,  2 Sep 2026 06:16:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788354997; bh=EEj/IqgjIH10x26odgxcdN5+m52mq6BOJ7mkONw/e7w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hA2HBPBUz92C+n/weV0lyjGaKbAM8pTQhmP/dQ8sth/u0sI64jaacup2LxEHdlcUm
+	 KaNhX435SfRFqzqCVznznz2DO+Qo9hMEgD6dnwAO8ZKigMaLomxrykJbEtxLOv9bW5
+	 hiBVLNzhzJpogOROiSIvLIZHpeAaRsgjJe0hyP/U=
+From: Leonardo Bras <leo.bras@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH 5/5] KVM: arm64: Enable HAFDBS for guests not on migration
+Date: Wed,  2 Sep 2026 14:16:31 +0100
+Message-ID: <apghr-z0qXzTy_Hm@LeoBrasDK>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260901174941.7C56A1F000E9@smtp.kernel.org>
+References: <20260901171558.2674031-1-leo.bras@arm.com> <20260901171558.2674031-6-leo.bras@arm.com> <20260901174941.7C56A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12271.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f5200044-ff51-48a7-8ec2-08df08f43652
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2026 13:15:08.6145
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: t41SqdFsq6wye2HBeyw6p8TDOKcSMkEA513LDbiQE/Zg/x632vdrZ0S9d0pTJNKrjga8KEcIcKjMKiwmHc9l2Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRRPR04MB12619
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2Zpcm13YXJlL2lteC9zZV9jdHJsLmMNCj4gPiBiL2Ry
-aXZlcnMvZmlybXdhcmUvaW14L3NlX2N0cmwuYyBpbmRleCAwNzkyZTUxNTI0MzZiLi41Yzc3ZGFi
-YmM0ZTQwDQo+ID4gMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9maXJtd2FyZS9pbXgvc2VfY3Ry
-bC5jDQo+ID4gKysrIGIvZHJpdmVycy9maXJtd2FyZS9pbXgvc2VfY3RybC5jDQo+IFsgLi4uIF0N
-Cj4gPiBAQCAtMzgzLDI4ICs4NzQsNTQgQEAgc3RhdGljIGludCBzZV9pZl9wcm9iZShzdHJ1Y3Qg
-cGxhdGZvcm1fZGV2aWNlDQo+ID4gKnBkZXYpDQo+IFsgLi4uIF0NCj4gPiAtICAgLyoNCj4gPiAt
-ICAgICogSW5pdGlhbGl6ZSBsb2FkX2Z3X2xvY2sgYmVmb3JlIHJlZ2lzdGVyaW5nIHRoZSBtaXNj
-IGRldmljZS4NCj4gPiAtICAgICogQSB1c2Vyc3BhY2UgcHJvY2VzcyBjb3VsZCBvcGVuIHRoZSBk
-ZXZpY2UgYW5kIHRyaWdnZXINCj4gc2VfbG9hZF9maXJtd2FyZSgpDQo+ID4gLSAgICAqIHZpYSBJ
-T0NUTCBpbW1lZGlhdGVseSBhZnRlciBtaXNjX3JlZ2lzdGVyKCksIHNvIHRoZSBtdXRleCBtdXN0
-IGJlDQo+IHJlYWR5DQo+ID4gLSAgICAqIGJlZm9yZSB0aGUgZGV2aWNlIGJlY29tZXMgdmlzaWJs
-ZS4NCj4gPiAtICAgICovDQo+ID4gICAgIGlmIChzZV9pbmZvLT5zZV9md19pbWdfbm0uc2Vjb19m
-d19ubV9pbl9yZnMpIHsNCj4gPiAgICAgICAgICAgICBsb2FkX2Z3ID0gZ2V0X2xvYWRfZndfaW5z
-dGFuY2UocHJpdik7DQo+ID4gLSAgICAgICAgICAgcmV0ID0gZGV2bV9tdXRleF9pbml0KGRldiwg
-JmxvYWRfZnctPmxvYWRfZndfbG9jayk7DQo+ID4gLSAgICAgICAgICAgaWYgKHJldCkNCj4gPiAt
-ICAgICAgICAgICAgICAgICAgIHJldHVybiBkZXZfZXJyX3Byb2JlKGRldiwgcmV0LA0KPiA+IC0g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIkZhaWxlZCB0byBpbml0IG11
-dGV4Og0KPiBsb2FkX2Z3X2xvY2suXG4iKTsNCj4gPiArICAgICAgICAgICBtdXRleF9pbml0KCZs
-b2FkX2Z3LT5sb2FkX2Z3X2xvY2spOw0KPiA+ICAgICAgICAgICAgIGxvYWRfZnctPnNlX2Z3X2lt
-Z19ubSA9ICZzZV9pbmZvLT5zZV9md19pbWdfbm07DQo+ID4gICAgICAgICAgICAgbG9hZF9mdy0+
-aXNfZndfdG9iZV9sb2FkZWQgPSB0cnVlOw0KPiA+ICAgICB9DQo+IFsgLi4uIF0NCj4gPiArc3Rh
-dGljIHZvaWQgc2VfaWZfcHJpdl9yZWxlYXNlKHN0cnVjdCBrcmVmICprcmVmKSB7DQo+IFsgLi4u
-IF0NCj4gPiArICAgcHV0X2RldmljZShwcml2LT5kZXYpOw0KPiA+ICsgICBtdXRleF9kZXN0cm95
-KCZwcml2LT5sb2FkX2Z3LmxvYWRfZndfbG9jayk7DQo+DQo+IFtTZXZlcml0eTogTWVkaXVtXQ0K
-PiBEb2VzIHRoaXMgdW5jb25kaXRpb25hbCBkZXN0cnVjdGlvbiBjYXVzZSBsb2NrZGVwIHdhcm5p
-bmdzIG9uIHN5c3RlbXMgd2l0aG91dA0KPiBhIGZpcm13YXJlIGltYWdlPw0KPg0KPiBJbiBzZV9p
-Zl9wcm9iZSgpLCBtdXRleF9pbml0KCZsb2FkX2Z3LT5sb2FkX2Z3X2xvY2spIGlzIGV4ZWN1dGVk
-IGNvbmRpdGlvbmFsbHkuDQo+IElmIHRoZSBTb0MgY29uZmlndXJhdGlvbiBkb2VzIG5vdCBzcGVj
-aWZ5IGEgZmlybXdhcmUgaW1hZ2UsIHRoZSBtdXRleCByZW1haW5zDQo+IHVuaW5pdGlhbGl6ZWQg
-bWVtb3J5LCB3aGljaCB0cmlnZ2VycyBhIGxvY2tkZXAgd2FybmluZyB3aGVuIG11dGV4X2Rlc3Ry
-b3koKSBpcw0KPiBjYWxsZWQgaGVyZSBvbiBtb2R1bGUgdW5sb2FkIG9yIGRldmljZSB1bmJpbmQu
-DQo+DQpBY2NlcHRlZCB3aWxsIGZpeCBpbiB2NDYuDQoNClBhbmthag0KPiBbIC4uLiBdDQo+ID4g
-K3N0YXRpYyBpbnQgc2VfaW9jdGxfY21kX3NuZF9yY3ZfcnNwX2hhbmRsZXIoc3RydWN0IHNlX2lm
-X2RldmljZV9jdHggKmRldl9jdHgsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHZvaWQgX191c2VyICp1YXJnKQ0KPiA+ICt7DQo+IFsgLi4uIF0NCj4gPiArICAg
-c3RydWN0IHNlX2FwaV9tc2cgKnJ4X21zZyBfX2ZyZWUoa2ZyZWUpID0NCj4gPiArICAgICAgICAg
-ICBremFsbG9jKGNtZF9zbmRfcmN2X3JzcF9pbmZvLnJ4X2J1Zl9zeiwgR0ZQX0tFUk5FTCk7DQo+
-ID4gKyAgIGlmICghcnhfbXNnKSB7DQo+ID4gKyAgICAgICAgICAgc2VfaW9jdGxfY21kX3NuZF9y
-Y3ZfY2xlYW51cChkZXZfY3R4LCB1YXJnLA0KPiAmY21kX3NuZF9yY3ZfcnNwX2luZm8pOw0KPiA+
-ICsgICAgICAgICAgIHJldHVybiAtRU5PTUVNOw0KPiA+ICsgICB9DQo+IFsgLi4uIF0NCj4gPiAr
-ICAgcnNwX3N0YXR1c19lcnIgPQ0KPiA+ICsgICAgICAgICAgIHNlX3ZhbF9yc3BfaGRyX25fc3Rh
-dHVzKHByaXYsIHJ4X21zZywgdHhfbXNnLQ0KPiA+aGVhZGVyLmNvbW1hbmQsDQo+ID4gKyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcnhfbXNnLT5oZWFkZXIuc2l6ZSA8PCAyLCB0
-eF9tc2ctDQo+ID5oZWFkZXIudmVyKTsNCj4gPiArDQo+ID4gKyAgIGlmICghcnNwX3N0YXR1c19l
-cnIpIHsNCj4gPiArICAgICAgICAgICAvKg0KPiA+ICsgICAgICAgICAgICAqIFRoZSByZXNwb25z
-ZSBpcyB3ZWxsIGZvcm1lZCBhbmQgZnVsbHkgZml0cyB0aGUgY2FsbGVyJ3MNCj4gPiArICAgICAg
-ICAgICAgKiBidWZmZXIsIHNvIGFueSBGVy1hbGxvY2F0ZWQgc2Vzc2lvbi9zdG9yYWdlIGhhbmRs
-ZSBpdCBjYXJyaWVzDQo+ID4gKyAgICAgICAgICAgICogKGRhdGFbMV0pIGhhcyBiZWVuIGRlbGl2
-ZXJlZC4gUmVjb3JkIGl0IG5vdywgYmVmb3JlIHRoZQ0KPiA+ICsgICAgICAgICAgICAqIGNvcHkt
-b3V0IHN0ZXBzIGJlbG93LiBUaGUgRlcgaGFzIGFscmVhZHkgY29tbWl0dGVkIHRoZQ0KPiBoYW5k
-bGU7DQo+ID4gKyAgICAgICAgICAgICogcnVubmluZyBmd19hcGlfc3BlY2lmaWNfb3BzKCkgb25s
-eSBhZnRlciBhIHN1Y2Nlc3NmdWwNCj4gPiArICAgICAgICAgICAgKiBzZV9kZXZfY3R4X2NweV9v
-dXRfZGF0YSgpL2NvcHlfdG9fdXNlcigpIHdvdWxkIGxlYXZlIHRoZQ0KPiA+ICsgICAgICAgICAg
-ICAqIGhhbmRsZSB1bnRyYWNrZWQgLSBhbmQgc28gbmV2ZXIgY2xvc2VkIG9uIHRlYXJkb3duLCBs
-ZWFraW5nDQo+IGl0DQo+ID4gKyAgICAgICAgICAgICogaW4gRlcgLSB3aGVuZXZlciB0aGUgY2Fs
-bGVyIHN1cHBsaWVkIGEgYmFkIG91dHB1dCBwb2ludGVyLg0KPiA+ICsgICAgICAgICAgICAqLw0K
-PiA+ICsgICAgICAgICAgIGZ3X2FwaV9zcGVjaWZpY19vcHMoZGV2X2N0eCwgcnhfbXNnLCBmYWxz
-ZSk7DQo+DQo+IFtTZXZlcml0eTogSGlnaF0NCj4gQ2FuIHRoaXMgbGVhZCB0byBhbiBvdXQtb2Yt
-Ym91bmRzIHJlYWQgaWYgdGhlIHVzZXJzcGFjZS1zdXBwbGllZCBidWZmZXIgaXMNCj4gc21hbGxl
-ciB0aGFuIHRoZSBmaXJtd2FyZSByZXNwb25zZT8NCj4NCj4gcnhfbXNnIGlzIGFsbG9jYXRlZCB1
-c2luZyBjbWRfc25kX3Jjdl9yc3BfaW5mby5yeF9idWZfc3osIGJ1dCB0aGUgZmlybXdhcmUtDQo+
-IGRlY2xhcmVkIHNpemUgKHJ4X21zZy0+aGVhZGVyLnNpemUgPDwgMikgaXMgcGFzc2VkIHRvDQo+
-IHNlX3ZhbF9yc3BfaGRyX25fc3RhdHVzKCkgYW5kIHN1YnNlcXVlbnRseSB1c2VkIGluIGZ3X2Fw
-aV9zcGVjaWZpY19vcHMoKS4NCj4NCj4gVGhpcyB0cnVzdHMgdGhlIGZpcm13YXJlLWRlY2xhcmVk
-IHNpemUgaW5zdGVhZCBvZiB0aGUgY2xhbXBlZCByZWNlaXZlZCBzaXplLA0KPiBhbGxvd2luZyBv
-dXQtb2YtYm91bmRzIHJlYWRzIGludG8gbXNnLT5kYXRhWzBdIGFuZCByeF9tc2ctPmRhdGFbMV0g
-dG8gbGVhaw0KPiBrZXJuZWwgaGVhcCBtZW1vcnkgaW50byBwZXJzaXN0ZW50IGhhbmRsZXMuDQoN
-Ck5vdCBhbiBpc3N1ZS4NClRoZSBhbGxlZ2VkIE9PQiBzY2VuYXJpbyByZXF1aXJlcyBgcnhfbXNn
-LT5oZWFkZXIuc2l6ZSA8PCAyYCB0byBleGNlZWQgYGNtZF9zbmRfcmN2X3JzcF9pbmZvLnJ4X2J1
-Zl9zemAgKHRoZSBhbGxvY2F0aW9uIHNpemUpLg0KVGhpcyBpcyBpbXBvc3NpYmxlIGZvciB0d28g
-cmVhc29uczoNCg0KMS4gYHNlX3ZhbF9yc3BfaGRyX25fc3RhdHVzKClgIHdvdWxkIHJlamVjdCBz
-dWNoIGEgcmVzcG9uc2UuX18NClRoZSBmdW5jdGlvbiBjaGVja3M6DQppZiAoKHN6ICUgNCkgfHwg
-KGhlYWRlci0+c2l6ZSAhPSAoc3ogPj4gMikgJiYgIWNoZWNrX2hkcl9leGNlcHRpb25fZm9yX3N6
-KC4uLikpKQ0KICAgIHJldHVybiAtRUlOVkFMOw0KDQpgc3pgIGlzIHBhc3NlZCBhcyBgcnhfbXNn
-LT5oZWFkZXIuc2l6ZSA8PCAyYC4gVGhlIGNoZWNrIHZlcmlmaWVzIGBoZWFkZXItPnNpemUgPT0g
-c3ogPj4gMmAsDQp3aGljaCBpcyBhIHRhdXRvbG9neSAtIGl0IGFsd2F5cyBob2xkcy4gU28gdGhl
-IHNpemUgY2hlY2sgZG9lcyBub3QgY2F0Y2ggbWlzbWF0Y2hlcyB3aXRoIHRoZSBidWZmZXIuDQoN
-CjIuIFRoZSBtYWlsYm94IHJlY2VpdmUgY2FsbGJhY2sgYWxyZWFkeSBlbmZvcmNlcyB0aGUgYm91
-bmRhcnkuX18NCmBlbGVfbXNnX3NlbmRfcmN2KClgIHBhc3NlcyBgZXhwX3J4X21zZ19zeiA9IGNt
-ZF9zbmRfcmN2X3JzcF9pbmZvLnJ4X2J1Zl9zemAgdG8gdGhlIHJlY2VpdmUgcGF0aC4NClRoZSBS
-WCBjYWxsYmFjayBjb3BpZXMgYXQgbW9zdCBgZXhwX3J4X21zZ19zemAgYnl0ZXMgaW50byBgcnhf
-bXNnYC4NCkFueXRoaW5nIHRoZSBmaXJtd2FyZSBkZWNsYXJlZCBiZXlvbmQgdGhhdCBpcyB0cnVu
-Y2F0ZWQgYXQgY29weSB0aW1lOg0KIC0gdGhlIGhlYWRlciB3b3JkIGl0c2VsZiAoaW5jbHVkaW5n
-IGBoZWFkZXItPnNpemVgKSBpcyB3cml0dGVuIGludG8gYHJ4X21zZ2AgYXMgcmVjZWl2ZWQsDQog
-ICBidXQgdGhlIGBkYXRhW11gIHdvcmRzIGJleW9uZCBgcnhfYnVmX3N6YCBhcmUgbmV2ZXIgd3Jp
-dHRlbi4NCg0KMy4gYGZ3X2FwaV9zcGVjaWZpY19vcHMoKWAgb25seSByZWFkcyBgZGF0YVsxXWAg
-KHRoZSBoYW5kbGUpLl9fDQogIC0gIGBFTEVfU0VTU0lPTl9PUEVOX1JTUF9TWmAgYW5kIGBFTEVf
-U1RPUkFHRV9PUEVOX1JTUF9TWmAgYXJlIGJvdGggYDB4MENgDQogICAgICgxMiBieXRlcyA9IDMg
-d29yZHM6IGhlYWRlciArIGRhdGFbMF0gKyBkYXRhWzFdKS4NCiAgLSBUaGUgbWluaW11bSB2YWxp
-ZCBgcnhfYnVmX3N6YCBpcyBlbmZvcmNlZCBieSBgZWxlX3VhcGlfYWxsb3dlZF9md19jbWQoKWAg
-YmVmb3JlIHRoZSBjb21tYW5kIGlzIGV2ZW4gc2VudDoNCiAgICAgaWYgKHJ4X21zZ19zeiA8IEVM
-RV9TRVNTSU9OX09QRU5fUlNQX1NaKSAgIC8vIDEyIGJ5dGVzDQogICAgICAgICAgIHJldCA9IC1F
-SU5WQUw7DQogICAgU28gYHJ4X2J1Zl9zeiA+PSAxMmAgaXMgZ3VhcmFudGVlZCBhdCB0aGUgcG9p
-bnQgYGZ3X2FwaV9zcGVjaWZpY19vcHMoKWAgcmVhZHMgYGRhdGFbMV1gLg0KICAgVGhlIGFsbG9j
-YXRpb24gYGt6YWxsb2MocnhfYnVmX3N6KWAgY292ZXJzIGFsbCAxMiBieXRlcy4gTm8gT09CIHJl
-YWQgaXMgcG9zc2libGUuDQoNCj4NCj4gWyAuLi4gXQ0KPiA+ICtzdGF0aWMgc3NpemVfdCBzZV9p
-Zl9mb3BzX3dyaXRlKHN0cnVjdCBmaWxlICpmcCwgY29uc3QgY2hhciBfX3VzZXIgKmJ1ZiwNCj4g
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZV90IHNpemUsIGxvZmZfdCAqcHBvcykN
-Cj4gPiArew0KPiA+ICsgICBzdHJ1Y3Qgc2VfaWZfZGV2aWNlX2N0eCAqZGV2X2N0eCA9IGZwLT5w
-cml2YXRlX2RhdGE7DQo+ID4gKyAgIHN0cnVjdCBzZV9pZl9wcml2ICpwcml2Ow0KPiA+ICsgICBp
-bnQgZXJyOw0KPiA+ICsNCj4gPiArICAgc2NvcGVkX2NvbmRfZ3VhcmQobXV0ZXhfaW50ciwgcmV0
-dXJuIC1FUkVTVEFSVFNZUywgJmRldl9jdHgtDQo+ID5mb3BzX2xvY2spIHsNCj4gPiArICAgICAg
-ICAgICBpZiAoZGV2X2N0eC0+Y2xlYW51cF9kb25lKQ0KPiA+ICsgICAgICAgICAgICAgICAgICAg
-cmV0dXJuIC1FTk9ERVY7DQo+IFsgLi4uIF0NCj4gPiArICAgICAgICAgICBlcnIgPSBlbGVfbXNn
-X3NlbmQoZGV2X2N0eCwgdHhfbXNnLCBzaXplKTsNCj4gPiArDQo+ID4gKyAgICAgICAgICAgcmV0
-dXJuIGVycjsNCj4gPiArICAgfQ0KPiA+ICt9DQo+DQo+IFtTZXZlcml0eTogSGlnaF0NCj4gRG9l
-cyB0aGlzIGV4cG9zZSB0aGUgc2hhcmVkIG1haWxib3ggdG8gY29uY3VycmVudCB3cml0ZXM/DQo+
-DQo+IFRoZSBmdW5jdGlvbiBhY3F1aXJlcyB0aGUgcGVyLWNvbnRleHQgZm9wc19sb2NrIGJ1dCBm
-YWlscyB0byBhY3F1aXJlIHRoZSBnbG9iYWwNCj4gc2VfaWZfY21kX2xvY2sgYmVmb3JlIGNhbGxp
-bmcgZWxlX21zZ19zZW5kKCksIHdoaWNoIGludm9rZXMNCj4gbWJveF9zZW5kX21lc3NhZ2UoKSBv
-biB0aGUgc2hhcmVkIHByaXYtPnR4X2NoYW4uDQo+DQo+IEJlY2F1c2UgZm9wc19sb2NrIGlzIHBl
-ciBmaWxlIGRlc2NyaXB0b3IsIG11bHRpcGxlIHByb2Nlc3NlcyBjYW4gY2FsbCB3cml0ZSgpDQo+
-IGNvbmN1cnJlbnRseSBhbmQgZGlzcGF0Y2ggbWVzc2FnZXMgc2ltdWx0YW5lb3VzbHkgdG8gdGhl
-IHNhbWUgY2hhbm5lbCwgd2hpY2gNCj4gY2FuIGNvcnJ1cHQgdGhlIGhhcmR3YXJlIG1haWxib3gg
-c3RhdGUuDQoNCk5vdCBhbiBpc3N1ZS4NCkl0IGlzIHVzZWQgYnkgY29tbWFuZCByZWNlaXZlciBv
-bmx5LiBDb21tYW5kIHJlY2VpdmVyIGlzIHNsYXZlIHRvIEZXLg0KV2hlbiBjb21tYW5kIGlzIGlu
-dm9rZWQgc2VfaWZfY21kX2xvY2sgaXMgdGFrZW4uIEl0IGlzIG5vdCByZWxlYXNlZCB3aWxsIEZX
-IHJlc3BvbmRzLg0KVG8gY29ycmVjdGx5IHJlc3BvbmQsIEZXIHRhbGtzIHRvIGl0cyBzbGF2ZSBj
-bWQtcmVjZWl2ZXIgd2l0aCBsb2NrIHRha2VuLg0KDQo+DQo+IC0tDQo+IFNhc2hpa28gQUkgcmV2
-aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MDkwMi1pbXgtc2UtaWYt
-djQ1LTAtDQo+IDZlNDAwODc5ZDhlY0BueHAuY29tP3BhcnQ9NQ0KDQpOWFAgQ29uZmlkZW50aWFs
-DQo=
+On Tue, Sep 01, 2026 at 05:49:41PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Data race and TOCTOU on `kvm->arch.mmu.vtcr` between vCPU setup and memslot updates, breaking dirty logging.
+> - [High] Missing context-wide TLB invalidation after modifying `VTCR_EL2.HD` results in hardware bypassing write-protection.
+> - [High] Disabling HAFDBS globally for dirty logging causes massive performance degradation on non-logging memslots due to unnecessary permission faults.
+> - [Low] Unreachable `KVM_MR_DELETE` check inside `log_dirty_pages` block.
+> --
+> 
+> commit 54d7950cd735bc1edc3a9503d03ebffb8e6ca046
+> Author: Leonardo Bras <leo.bras@arm.com>
+> 
+> KVM: arm64: Enable HAFDBS for guests not on migration
+> 
+> This patch enables hardware management of access and dirty bits (HAFDBS)
+> for KVM guests on arm64 when dirty logging is disabled. It modifies
+> vCPU setup and memslot commit paths to dynamically toggle VTCR_EL2.HD
+> based on the presence of dirty-logged memslots.
+> 
+> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > index 1e528d53d0931..76aebaa95cdab 100644
+> > --- a/arch/arm64/kvm/arm.c
+> > +++ b/arch/arm64/kvm/arm.c
+> 
+> [ ... ]
+> 
+> > @@ -1683,6 +1683,13 @@ static int kvm_setup_vcpu(struct kvm_vcpu *vcpu)
+> >  	if (!ret && vcpu_has_nv(vcpu))
+> >  		ret = kvm_vcpu_init_nested(vcpu);
+> >  
+> > +	/* Enable HAFDBS by default if VHE && !nested  */
+> > +	if (kvm_supports_hafdbs(kvm) &&
+> > +	    atomic_read(&kvm->nr_memslots_dirty_logging) == 0)
+> > +		kvm->arch.mmu.vtcr |= VTCR_EL2_HD;
+> > +	else
+> > +		kvm->arch.mmu.vtcr &= ~VTCR_EL2_HD;
+> > +
+> 
+> [Severity: Critical]
+> Does this read-modify-write of kvm->arch.mmu.vtcr (holding config_lock)
+> create a data race against kvm->slots_lock?
+> 
+> In kvm_set_hafdbs() below, this same variable is modified while holding
+> kvm->slots_lock. If userspace concurrently initializes vCPUs and enables
+> dirty logging, VTCR_EL2_HD could be incorrectly left at 1. This would cause
+> the hardware to silently update dirty bits without trapping, bypassing
+> software dirty logging and resulting in lost dirty pages during migration.
+
+I think that this may be a hard to hit scenario, but to be sure I think it 
+should not hurt to hold the slots lock here as well.
+
+Have to properly check if I won't cause any kind of dead/live lock here, 
+though.
+
+> 
+> >  	return ret;
+> >  }
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > index 9d4f70430bbea..94094ab56d90f 100644
+> > --- a/arch/arm64/kvm/mmu.c
+> > +++ b/arch/arm64/kvm/mmu.c
+> > @@ -1989,7 +1989,8 @@ static int kvm_s2_fault_compute_prot(const struct kvm_s2_fault_desc *s2fd,
+> >  	if (s2vi->map_writable) {
+> >  		*prot |= KVM_PGTABLE_PROT_W;
+> >  
+> > -		if (s2vi->device || !memslot_is_logging(s2fd->memslot) ||
+> > +		if (s2vi->device ||
+> > +		    !(memslot_is_logging(s2fd->memslot) || kvm_supports_hafdbs(kvm)) ||
+> >  		    kvm_is_write_fault(s2fd->vcpu))
+> >  			*prot |= KVM_PGTABLE_PROT_DIRTY;
+> 
+> [Severity: High]
+> Can checking the static capability kvm_supports_hafdbs() here instead of
+> the dynamic vtcr state starve non-logging slots of the software fallback?
+> 
+> When dirty logging is enabled on one memslot, kvm_set_hafdbs() disables
+> VTCR_EL2.HD globally. However, if a guest writes to an unrelated
+> non-logging slot that was mapped writable-clean, won't the hardware now
+> generate a stage-2 permission fault?
+> 
+> This could cause performance degradation across the entire VM whenever any
+> single memslot (like a VGA framebuffer) enables dirty logging.
+> 
+
+Yes, that's an expected tradeoff. I believed it would be fine as the 
+usecase I had in mind for dirty-tracking was live migration, which usually 
+tracks all memory at once, causing no performance degradation.
+
+If we are dirty-tracking a memslot during the whole VM runtime, as is the 
+case for a VGA framebuffer, maybe this is a special scenario, and we should 
+make the page dirty as well.
+
+If there is a common use case for tracking a single memory slot of regular 
+memory (not used as device memory and so on), then maybe this patch has to 
+be reworked to take that into account.
+
+> [ ... ]
+> 
+> > @@ -2577,6 +2578,20 @@ int __init kvm_mmu_init(u32 hyp_va_bits)
+> >  	return err;
+> >  }
+> >  
+> > +static void kvm_set_hafdbs(struct kvm *kvm, bool set)
+> > +{
+> > +	/* Check if no action required */
+> > +	if (!!(kvm->arch.mmu.vtcr & VTCR_EL2_HD) == set)
+> > +		return;
+> > +
+> > +	if (set)
+> > +		kvm->arch.mmu.vtcr |= VTCR_EL2_HD;
+> > +	else
+> > +		kvm->arch.mmu.vtcr &= ~VTCR_EL2_HD;
+> 
+> [Severity: Critical]
+> Does modifying kvm->arch.mmu.vtcr here under kvm->slots_lock race against
+> the unprotected updates in kvm_setup_vcpu() as noted above?
+> 
+
+There is a comment on that above.
+
+> > +
+> > +	kvm_make_all_cpus_request(kvm, KVM_REQ_RELOAD_STAGE2);
+> 
+> [Severity: High]
+> Is KVM_REQ_RELOAD_STAGE2 sufficient here to ensure the hardware observes
+> the changed VTCR_EL2 state?
+> 
+
+This is called when we enable dirty-tracking, and the next steps after that 
+will be to clean the dirty-bits and then do a TLBi, so it should be fine 
+for that scenario.
+
+Maybe I should add a comment to explain the caller is responsible to carry 
+a TLBi.
+
+
+> The ARM architecture permits translation regime registers like VTCR_EL2 to
+> be cached in the TLB (or a context cache). Modifying this register
+> typically requires a full VMID TLB invalidation (like calling
+> kvm_flush_remote_tlbs(kvm)) to guarantee global visibility. 
+> 
+> Without it, the CPU might continue using cached translations with HD=1 in
+> the write-protected memslot, silently bypassing write-protection.
+> 
+> > +}
+> > +
+> >  void kvm_arch_commit_memory_region(struct kvm *kvm,
+> >  				   struct kvm_memory_slot *old,
+> >  				   const struct kvm_memory_slot *new,
+> > @@ -2594,6 +2609,10 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
+> >  		if (change == KVM_MR_DELETE)
+> >  			return;
+> 
+> [Severity: Low]
+> Is this KVM_MR_DELETE condition reachable?
+> 
+> The log_dirty_pages variable checked just before this is initialized as
+> 'new && new->flags & KVM_MEM_LOG_DIRTY_PAGES'. During a KVM_MR_DELETE
+> change, the 'new' parameter passed into kvm_arch_commit_memory_region() is
+> strictly NULL. Therefore, log_dirty_pages will always be false for
+> deletes, making this nested check dead code.
+
+Not sure what this is trying to point. 
+
+Yes, disabling HAFDBS will not happen if we are deleting the memslot, and 
+also it will not enable it again if it's already enabled, so we should be 
+safe.
+
+Thanks!
+Leo
