@@ -1,193 +1,111 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7FD374187
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 18:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788375191; cv=pass; b=YUvoPyLx3x3770aXIzpbg/JPHlRjeJ7mBCLcG1S15yOJfGdWbBXW5lGDz+OiTeLSlG7OMZXKXWGuW6mxxsk4h0ZEfA3MpovsODKJMuO2hjhO55O9F3NF1RJUsEIYicLK3xkdhmuIf0tl9xsqzJoNv41dZYUS0LRxGtTB4EtQ5jI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788375191; c=relaxed/simple;
-	bh=3HzMz6cpOVxDpNPk12kmD4iOuPDxMaY7EWtOzXlikGc=;
-	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=Eo/HARi4agEWy0/Bpp1VuibPAXtzvjkp6Za9fQFv6jovQkrzKfKyD2zY1qgGe+VzBQoxG4XlHPXR9fRH1v+E80PRZBkbkckclNn0NY5HL2Fr9OeVdv/c0ze3ZxnlOd7jlv4Ro8tWR46hTvPw7mKlkG3kPNg4hArsrACFK9pJlzE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=ZtPG67kZ; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374B4AC16C
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 19:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.198
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788375641; cv=none; b=DT2rmfxA/0OUMAQD8X5uyZWv3v7m085EGznM7CIIj0KPb2WSAcCNb9H6NG+RxRWxZihPzDsPXAqa4ZS9j3K5QREDy8LWBR/C8jaajn9wsb4C/dDQKOaaep+iOPKm0luEix3WPtdQNzlRoovms0so/M7aIZQsLkBlgCr9kK1vWGw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788375641; c=relaxed/simple;
+	bh=9+PtoNWtYvyeFwm3scPlfJtr20of9eAKhZzlkDiBk6g=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Mslk3Zy+SGhaW0IeJ7hDzrbAFSXbXy+vPoKFXKyjhz3HoTVRTKpXxpo9nkmc1rwhvsEchdFiDtq3t29lTFOA98m6bqVN7FNgA3wF1z+kEuQy7pJn2eZf5NLX/4QngDurKZ5V3OA0IG/Xsz/MDn9Sud1mwAjOVq/HvB2wNGzZWUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SDGz+fmS; arc=none smtp.client-ip=209.85.210.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="ZtPG67kZ"
-ARC-Seal: i=1; a=rsa-sha256; t=1788375187; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ZJKpxIzyTYz6P8azkOgShxjRGvfyvDC9S/nIzANZtwYCpfz2Y5wiEjVRoc28SGX0VYu+nXez4Grv69R9GKpKMk5UOnyBNwW+5ascapNHJtb6dAGlqmHktV9B3ZZShRt7OEE6b14N4XoCMyXuFSA6W5SfP6fJASIUjpowObfczU4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1788375187; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tSVIRVzo2G9NDGNpxpVkhQf6nKFH1i5GvQikg87nwnM=; 
-	b=f5BdIgM5G8Yqlsdcszh/0H5HnnggiAA9CeHV7q4znUCp4PKCiwfdSbjD16TroWLClNx+9AuYWmRfzO8dCKsjz3fKbqQt0pMcTm8B3Rqz7Ka0nKNQguuvzUR+zT/68Kfk8E4R10deKHw3cwGnpk9D3dOCIK6XpIUyjzhA/7ooyJc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788375187;
-	s=zmail2048; d=rong.moe; i=i@rong.moe;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
-	bh=tSVIRVzo2G9NDGNpxpVkhQf6nKFH1i5GvQikg87nwnM=;
-	b=ZtPG67kZIaTPZiZ0AZHG0Y+2vCvxVujOpp8uLEE5ZYETdJav7bs2d6/hyu5dwISw
-	7Kv2qIh7ebSgaczkau8ghh9M1ie6H+roYWnKdY78pHedEB+TD8D9r8q95A02MF9Dorv
-	M5MeUO6TpzbGeCyikwhfAYFgxX543c9BiHu/+MqGdoIwHU/Mo4AfQWw1c7zTMh7DY3m
-	yu3K2NZ+/E44CQMtRcQeipv7+43s/XXOif7swusfAb9sUyEWToOWaW3iSlsIPpuvHe8
-	5Q04g9P31h9IpDRuMOhGTIEshfyvGgUvf1FIk63KDUqef6O9henH89DGfvyg92dsaNO
-	PWgBgVj4Rg==
-Received: by mx.zohomail.com with SMTPS id 1788375184816506.92234216563656;
-	Wed, 2 Sep 2026 11:53:04 -0700 (PDT)
-Message-ID: <d25a81519d383e3cc05b72e188e8f038abf842e4.camel@rong.moe>
-Subject: Re: [PATCH v6 07/12] leds: trigger: netdev: Implement offloaded()
- callback
-From: Rong Zhang <i@rong.moe>
-To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, linux-leds@vger.kernel.org
-In-Reply-To: <20260902181553.C40091F00A3A@smtp.kernel.org>
-References: <20260902-leds-trigger-hw-changed-v6-0-55693cd78877@rong.moe>
-	 <20260902-leds-trigger-hw-changed-v6-7-55693cd78877@rong.moe>
-	 <20260902181553.C40091F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 03 Sep 2026 02:47:13 +0800
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SDGz+fmS"
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-84e13b57b2cso1783779b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 12:00:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1788375628; x=1788980428; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5bnqlH6sbBHV8BzHgW7BD+Nz3+m4Dg1ukrAP/BXotBg=;
+        b=SDGz+fmSPcDfEuZNQ1X8qnKgJQRxID99DU1thWDMKKPzMGFlczo2OaoSQZvXyONBUi
+         ofTAooXDnGmwZB7uz1wyjimtce723IJ5q3aPr1oXqNe9NsyDNX2VtFcy+jNthH5HhrXx
+         tiPXMo82jT3tA99SOtyNYldj8OwKX99dT1W4tQQDRxC3hqdz7auvAIndtXcvh5TwA9QM
+         DSFWfZ2c8r+maXMdZ1wr12Rl3wK0lwB+pIwIRBpzEhbt1RG/PDmqM5aYnMOzKLtH4YX4
+         y45dAVYS/o1IJ4YQTjUrLWD0LhrlSXS4rDs7ToPiQpGaLWW2tyvxK3RjVqhP1+N8qHi5
+         maQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788375628; x=1788980428;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5bnqlH6sbBHV8BzHgW7BD+Nz3+m4Dg1ukrAP/BXotBg=;
+        b=jz5Drb6r5094bfwelbgh1Tf3Yj3dJfl5lw17QIrVveUNY2+9uD1JfZd8K9mZb2juSn
+         nRCbZeGWMdfQku+zmxjp7Pr12XdGvR5vtDdS+eoUg9xSe8OTC9b+yke3Ov23RobcUCiU
+         3DtiwGtKynfx+xL0aCK8pvJWpTDg8OK7c7eWThhaCYT62EkrnI1apCuAP0lwfc90VJPg
+         5LCUWfLs7aUweS+UMn8/0vCT2M/Ue7+GPCQmm89TWUPSslS+R8R8P2nxO2hXxe1ciTnj
+         /tL3qZn9mpaVPpaLa9o549vlE9ovwc1RF1UDeRPYsYTq7zNxvZTuaEFvWVbJJpSfaxeq
+         Xe1Q==
+X-Gm-Message-State: AFuF++mKKYILF776zx3YRH5CzeggEm/LSAPj6wCp7O1LNQEcXHIRzk4S
+	8S+L4WyvHxmB4mmpXJoHuBjawvihCqg4omil5/8q0LSarueTJb7+HeLV+3ZhGO4vxafrSuOWESv
+	elThIUoaap/s68ODUiT5HLZ015/cnUF5nsM9K06Zngl3Bd+rpHs6gbcgCCWOdSuUIJ/iQR69wLC
+	mTjK5ncuJWKn6b/EfMSCB3MgYk8x88zl47rUcTXsYaMm/ba1Ns
+X-Received: from pfcp10.prod.google.com ([2002:a05:6a00:a24a:b0:84c:2e68:a493])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:409a:b0:84f:dfa8:57c5
+ with SMTP id d2e1a72fcca58-85ed398aec5mr10724755b3a.13.1788375627681; Wed, 02
+ Sep 2026 12:00:27 -0700 (PDT)
+Date: Wed, 2 Sep 2026 12:00:27 -0700
+In-Reply-To: <20260902183634.9E9711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Evolution 3.56.2-10+b1 
-X-ZohoMailClient: External
+Mime-Version: 1.0
+References: <20260902182020.2615443-1-seanjc@google.com> <20260902182020.2615443-5-seanjc@google.com>
+ <20260902183634.9E9711F000E9@smtp.kernel.org>
+Message-ID: <aphySzgAce0I1Cox@google.com>
+Subject: Re: [PATCH v2 4/4] KVM: guest_memfd: Drop superfluous WRITE_ONCE()
+ when binding a memslot
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-Hi Lee,
-
-On Wed, 2026-09-02 at 18:15 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->=20
+On Wed, Sep 02, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] Resource leak of `net_device` in `netdev_trig_activate()` error =
-path.
-> - [High] Race condition in `netdev_led_attr_store()` leading to lost conf=
-iguration updates and a Use-After-Free of `net_device`.
-
-The series has nothing to do with these issues. Therefore, fixing them is
-out of the scope of the series.
-
-Thanks,
-Rong
-
+> - [Critical] Modifying the guest_memfd xarray outside of filemap_invalidate_lock on the error path causes a Use-After-Free and permanent MMU invalidation lockup.
 > --
->=20
-> commit 2e9edb75c55c3a99bfaf5dc0eea11b9a95851115
-> Author: Rong Zhang <i@rong.moe>
->=20
-> leds: trigger: netdev: Implement offloaded() callback
->=20
-> "netdev" can run in hardware control according to hardware capabilities
-> and trigger options. Implement offloaded() callback to provide its hardwa=
-re
-> control state to the LED core, and document the relation between the cust=
-om
-> "offloaded" attribute and the generic "trigger_may_offload" attribute.
->=20
-> [ ... ]
->=20
-> > diff --git a/drivers/leds/trigger/ledtrig-netdev.c b/drivers/leds/trigg=
-er/ledtrig-netdev.c
-> > index 5b4e92c14dbb4..2e9af48a74dbf 100644
-> > --- a/drivers/leds/trigger/ledtrig-netdev.c
-> > +++ b/drivers/leds/trigger/ledtrig-netdev.c
->=20
-> [ ... ]
->=20
-> > @@ -798,10 +798,18 @@ static void netdev_trig_deactivate(struct led_cla=
-ssdev *led_cdev)
-> >  	kfree(trigger_data);
-> >  }
-> > =20
-> > +static bool netdev_trig_offloaded(struct led_classdev *led_cdev)
-> > +{
-> > +	struct led_netdev_data *trigger_data =3D led_get_trigger_data(led_cde=
-v);
-> > +
-> > +	return trigger_data->hw_control;
-> > +}
-> > +
-> >  static struct led_trigger netdev_led_trigger =3D {
-> >  	.name =3D "netdev",
-> >  	.activate =3D netdev_trig_activate,
->=20
+> 
+> commit c377e9963148427885842d70319259945c649a8a
+> Author: Sean Christopherson <seanjc@google.com>
+> 
+> KVM: guest_memfd: Drop superfluous WRITE_ONCE() when binding a memslot
+> 
+> Drop the superfluous WRITE_ONCE() when setting a memslot's guest_memfd file
+> during initial binding, as the memslot *must* be inactive and unreachable.
+> The superfluous WRITE_ONCE() was added by commit 67b43038ce14 to
+> maintain rough "parity" with the existing rcu_assign_pointer().
+> 
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 2c8d8735de5fe..323159c9b5f34 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -653,7 +653,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+> >  	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
+> >  	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
+> >  	 */
+> > -	WRITE_ONCE(slot->gmem.file, file);
+> > +	slot->gmem.file = file;
+> >  	slot->gmem.pgoff = start;
+> >  	if (kvm_gmem_supports_mmap(inode))
+> >  		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does netdev_trig_activate() leak the
-> net_device reference on its error path?
->=20
-> When supports_hw_control is true, setting the device name acquires a
-> reference to the net_device via dev_get_by_name():
->=20
-> drivers/leds/trigger/ledtrig-netdev.c:netdev_trig_activate() {
->     ...
->     if (supports_hw_control(led_cdev)) {
->         ...
->         set_device_name(trigger_data, name, strlen(name));
->         ...
->     }
->     ...
->=20
-> If register_netdevice_notifier() subsequently fails, the error path frees
-> trigger_data but does not drop the net_device reference:
->=20
->     rc =3D register_netdevice_notifier(&trigger_data->notifier);
->     if (rc)
->         kfree(trigger_data);
->     ...
-> }
->=20
-> Can this leak prevent the network interface from being completely unregis=
-tered,
-> causing operations like network namespace destruction or module removal t=
-o hang
-> indefinitely in the netdev_wait_allrefs loop?
->=20
-> [Severity: High]
-> This is a pre-existing issue, but is there a race condition in
-> netdev_led_attr_store() that leads to lost configuration updates and a
-> use-after-free of net_device?
->=20
-> netdev_led_attr_store() executes concurrently with
-> netdev_trig_notify(NETDEV_UNREGISTER). Since the sysfs store function
-> doesn't acquire trigger_data->lock, it can schedule trigger_data->work
-> locklessly after the notifier has called cancel_delayed_work_sync():
->=20
-> drivers/leds/trigger/ledtrig-netdev.c:netdev_led_attr_store() {
->     ...
->     cancel_delayed_work_sync(&trigger_data->work);
->     ...
->     set_baseline_state(trigger_data); // Schedules delayed work outside l=
-ock
->     ...
-> }
->=20
-> If netdev_trig_notify() drops the net_device reference and sets it to NUL=
-L:
->=20
-> drivers/leds/trigger/ledtrig-netdev.c:netdev_trig_notify() {
->     ...
->     case NETDEV_UNREGISTER:
->         dev_put(trigger_data->net_dev);
->         trigger_data->net_dev =3D NULL;
->     ...
-> }
->=20
-> If the scheduled delayed work (netdev_trig_work()) runs concurrently, it
-> reads trigger_data->net_dev locklessly. Could it read the pointer before
-> the notifier sets it to NULL, but execute dev_get_stats() after the notif=
-ier
-> has called dev_put(), resulting in a use-after-free?
->=20
-> >  	.deactivate =3D netdev_trig_deactivate,
-> > +	.offloaded =3D netdev_trig_offloaded,
-> >  	.groups =3D netdev_trig_groups,
-> >  };
+> This isn't a bug introduced by this patch, but modifying the xarray outside
+> the filemap_invalidate_lock on the error path further down in this function
+> appears to cause a use-after-free and a permanent MMU invalidation lockup.
+> 
+> If xa_store_range() encounters -ENOMEM during the store, it can abort and
+> leave the slot partially inserted in the tree. kvm_gmem_bind() then explicitly
+> drops filemap_invalidate_lock before executing its error path. 
+
+LOL, I think I get the point...
