@@ -1,265 +1,154 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11023081.outbound.protection.outlook.com [40.93.196.81])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD213B14D8
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 20:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.81
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788379485; cv=fail; b=F+WsGB2o+I/XAUSReQqLUXZ67uWsv4G8nMcuXkyT8Z7aX1sIdhkm+wBAYAuoEGoJEuXXKUIZsw24WaTpACNN/tCI6bknhykdHcqX85muE12Mst2t4aQofzqk3UVzWxoOAdaX9MKqJy/0p1rcjX/jWGJ8hUwakWSJUwDfFuuR8Qs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788379485; c=relaxed/simple;
-	bh=Vz+QS4nQd/ZBak0djDpKBgpBjhJy/qkoZbI53HJah/8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=CFOaMuzjt0rj4zalJjgCYh2cZMzHkd3LtPEeufnivvP2t7cwLKge1YRKns4Y+Z7U5dJeGcnYRiK/ksLQOGGeMjiss4QKAjiY61+UR0sH+1BcIxZOPgVi1xyxzpqTsoYE3wzaVMjU2qkOb6EUgLnS5GOb6SakfWr1GDJYByRY0aM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=DhtQYRE+; arc=fail smtp.client-ip=40.93.196.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5769388E6F;
+	Wed,  2 Sep 2026 20:29:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788380946; cv=none; b=ei4LNqd26AWjMmF2E83wxbfxNJWqt3y+Nnk2+IiDVEgm7dzGzRNABMQxkFToIA2XxN8JqdQ3RlekmApxKc9SKW6t50XGL0MArXk+XhFUpW1PJNi1j5YPrcp2pWhoZzXJhZR33thPHAk+Qz02foWVbnaOpuX8k2dvOBIlH0/DDfc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788380946; c=relaxed/simple;
+	bh=GYsSWGNbF/bfcdlErn3oiNNvvnmJ0vS0+jKODtxyp7E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PBEPmhRRAnolwg63LZm546zzKo8vZU9eKkZHFtrSEL/1S5GMaacgPs6KqT4vbb5V9Mo1ee0MKEEGYtgZ8ORpj31UXYFxjTHlcYk8A0r3TGijSCs7ShqoGqsalbpFvxArq08BLigh/yjxc9D1c4NNaEasLlSDQHOoyND6coGoT3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZZKlc6FQ; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="DhtQYRE+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f9HjjIzrhs/WbSEjiWRcfCUJcLpLsVn/SR3znKc0wP+Lpzzk4g8jrR4Thhnp3FsaqYq+E49xpgy5trGQpnXoISY2B+xTgrBTvMkPX7znQwsB0vjrnc5RkjUzjL6gLVVlWKdV7wy5k++1IpiSVD3RBAl8694GpoUtdmYxR4QX+/lOwGbv1GiPKScLSlLjOaY/IPWZqUKW3KZjwVIzqjPQ6m0Dr1XX2PMyBSiZ+Pugblb+k2Mwmp6MuB2DRW7txL0QO1VBpnKCpgBgrqK+hl7VDxv+32NoqjFvQiuSrqFFDuOBsvMw1K2HXmnkM/pfkjibkOZml6mg1dBAQItAuUdLSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ztl0h64uLhecwaWnw9rNLOpYSIMinzw5Lasfikc0QeI=;
- b=HmJXG/pLyOeF9IO8WIDwbB+Qmy2/JoGPYqhuhGuracSk6D9L5ICbMDyierdEKwNeZIeu7vpABneKKRd/2tQAFIPBQSeGaArPp6+SAZdkhpuGH/NzlQjQSyi9fXZ3jCVd+F2QICkrIzFPcBaGU5jJrvwJx3PGlf0A8zHLBEHD/gOM31tXWlsN/isqfGfa5s5M0y+IeF/NiSiIaB9hACO8wUyUTG06XM89tKuxltOWVlerSx32fZmV+aLFgrX1pGspyVYEttQeqBReUipse72wSXS9k9SD1hC0HtQmybjTxEyJzd46rF0mkqt8yHmrqFhpnBQoWqk2ntxhkUHBp5k0Ug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ztl0h64uLhecwaWnw9rNLOpYSIMinzw5Lasfikc0QeI=;
- b=DhtQYRE+jOM+ZGRdquGgwmOMkg+3iEHVbmnnWoChLoumkUw1q+EKVvMAMOoX02fQsg0AYAOXamLroqUqi5+meWD+yWrzbFoidOBII05ngLkACe07YgkFCagbLQUSvQpa+1ZlnOon2kC4KNpefhpyDtbdnZZQw2zx9XDEzU9TGFc=
-Received: from SA1PR21MB6683.namprd21.prod.outlook.com (2603:10b6:806:4a4::6)
- by SA8PPF2C584C8BB.namprd21.prod.outlook.com (2603:10b6:80f:fc04::bc4) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.1; Wed, 2 Sep 2026
- 20:04:42 +0000
-Received: from SA1PR21MB6683.namprd21.prod.outlook.com
- ([fe80::8bad:6294:8a07:fe18]) by SA1PR21MB6683.namprd21.prod.outlook.com
- ([fe80::8bad:6294:8a07:fe18%6]) with mapi id 15.21.0315.008; Wed, 2 Sep 2026
- 20:04:42 +0000
-From: Long Li <longli@microsoft.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
-Subject: RE: [EXTERNAL] Re: [PATCH net-next v4 4/4] net: mana: add dynamic HWC
- queue depth with reinit path
-Thread-Topic: [EXTERNAL] Re: [PATCH net-next v4 4/4] net: mana: add dynamic
- HWC queue depth with reinit path
-Thread-Index: AQHdOkyoLoqALwCy5kOCFjCZG31uALa7twgAgAAA01A=
-Date: Wed, 2 Sep 2026 20:04:42 +0000
-Message-ID:
- <SA1PR21MB6683A552F3B64B4649D1C10ACEB72@SA1PR21MB6683.namprd21.prod.outlook.com>
-References: <20260901200018.3194525-1-longli@microsoft.com>
- <20260901200018.3194525-5-longli@microsoft.com>
- <20260902200118.793F51F00A3A@smtp.kernel.org>
-In-Reply-To: <20260902200118.793F51F00A3A@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=42d74204-3150-4239-858d-2311876ad2cf;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-09-02T20:04:15Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
- 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR21MB6683:EE_|SA8PPF2C584C8BB:EE_
-x-ms-office365-filtering-correlation-id: cd5f6e77-7740-4078-453a-08df092d6d7e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|38070700021|6133799003|3023799007|7146999003|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- 63JaTbKkvTwcncC54ys3NoWJ7YC7gDn0+eMnyyHzYznHTnGovxwOy+cj146HCBTEPra9mpEqrdzwnMuG0ITtgnBFtWzteN+ZR0eQgEuzWdi76vu4zqOASk6Ll0ntyw/POECt3vT2wWXCCpMc0dCWPQ4hGd/rxwbOdnMVwOmIO/vKz32ZpbLl5xB750FPMW2Cy8WZbPR5JKNuux5W7nC4DRdGRwmIzC9IOodZi9YTbvVQLhc4em0+965tVa3plK1xZV+46OntiUjx6UCZ4p9ApnaOEixWQGam5g2qAJKXiVGUUNq4p22q2FMw3koIdojN4ZI0lDIVA1UE0IMfTZr9qOyA/KEL6WGTkBPF0+8nztLbx/AmM8dTUD4k1QoATqCST8MST+erqmDAa+sDr//qKF1DZ1lAdzrvZImxLUVleRjrdY4IGF9V5iM65iyXEbKAcTJctiMvUNqSZNb8d0auNjzjEdEAtgDDBh3K/PAmlOMEDi3Fyun2l0H4uu60CseA/V3jpUt0YwgzbyxwOP2RzWQ3mpfNzdAeIzNMDygj7Bwj3sKOHfIDPoECW0bnAwRIj9fd/88pXRa/wE6Q0cK80NpxIpbCqBEqo8hFgp1/GIhzy/O5OcLXA+C+0VB+cgHzMvLsLY8OCveWpCsFaEGRGqZ7nu2+GIAgs0h83nNq/TmoA9EElUwdv11g7SdTdXavwacnsGFryDii5F6FqEx5pKrrNZVdVtrNmpgaT1KCD44=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB6683.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(38070700021)(6133799003)(3023799007)(7146999003)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?Pmq49GITOrKtI3ZFG72T+Vx50HX6bnfQsfOxukKgugt+ePqpsHGu9kwh8oR5?=
- =?us-ascii?Q?OyLT3h6BrglbPutKqB4UxFAxHzCw7cib6gNsskKucbUr63gsXe5pnQT5Mlj7?=
- =?us-ascii?Q?st0avIEWZ9r8AJ9s8YzxDiub1ybkAenCYrZ81KfXx4P1Rz9Iq8UCVw0+p9fb?=
- =?us-ascii?Q?RAxSEKM5c1dvdYJKRyADL6MlrTS+imgvJt8BjYkbYoHdPCoTOtk7WfGE5Zq4?=
- =?us-ascii?Q?3AdUdSj2Z3g3d7lcUc3+B3dWan5//YcHlq/SnL9C3jTolphqcKtg6T3vSSIu?=
- =?us-ascii?Q?EPu6RjJVPbDQT2v5RBjZixXW1qlFekDdLcI5m8lI11U6bVT5U1uSkc7HrW3Q?=
- =?us-ascii?Q?3A0e7TV/bh3jTJbBc8g7DLCb50rhMBeswLWM6E1cFIaRfCpFLJKu4VxcLjoi?=
- =?us-ascii?Q?mIDCkaM417T+wi9P8tjvQ/ToCAmFFsCUcU3pjP2+ebEjAuyKhPZZEKf/xu4Q?=
- =?us-ascii?Q?/YzxPigGAfefj3Sk2htvbpqbswK016piIE18mMgoTY+OWbzrrHc9XQeBEGWs?=
- =?us-ascii?Q?XR66pTYarifIKOYQdkmT4sAzUMvasl5FLgpHnvDkWb8/H2pCUBMwawVRAqJv?=
- =?us-ascii?Q?+uDuBlWdNXJfyvYEoZuaOLEc8l2r5P9/7ii7dPID/9n8HvY10hnmv8m5MVnf?=
- =?us-ascii?Q?RRIkVln5O89AfUkTfrbsyx9pI8GWrbcCprP8BBIR8C+6np9sC22oUS2HToqq?=
- =?us-ascii?Q?Od+rh410mDA/SXx0rqXx3FCLzFPjpwrFdQcW9brTb54yVInMA0j8gsrDvVZR?=
- =?us-ascii?Q?ulaIlNhaFhDkA8JMFav20P3SwPdy6r+uKdYEsenwMIUEM6peFAmw8pmS/ILo?=
- =?us-ascii?Q?CKZXcFJxK+w4YDZvNM1hna3Rt2WXIfjYLE8mxcOY5ytMbcYNQbg7B/QOFOfP?=
- =?us-ascii?Q?Pe5O4QKt93/VaGJoJSBDy7zklhG1JQvw15l9o/XJNB+o1H2Y7DagmYjULhhg?=
- =?us-ascii?Q?OCVqex3FzeUfMKeoq2tTtKL5o5OyD1louTRDJ+3Z2QYepAhkBjlxlgtEAuPQ?=
- =?us-ascii?Q?XlqmvCB67VAs+fV+eQOp0MxGAXTTQksN48b8NE/UjgYGfI0zNxAFxT2Y9240?=
- =?us-ascii?Q?7qpugH2sHpeVwEq1bMkaABIIrxGLocCU7ggY6eRgo/TfWXm6W4eSEr7hlUZx?=
- =?us-ascii?Q?c7D8quw2Is7fB7kroom7SW5fJ79CL2vJSqMqQCg8NyiV/7kri5c/zVWv9jwB?=
- =?us-ascii?Q?q0wnfq2cKS0ny2BBNJItkf4eHTnEFFkfJtJNcmLVqL7oIp+g9jANcvzr/CA4?=
- =?us-ascii?Q?a34mDztLNFIcErnfFGpHlsT8ktua0xAhC1OmfaQbQLTWbV1ix5TsN0KX06rr?=
- =?us-ascii?Q?Dsr/n46zTYoGgElZzm78ciLzbSS+Y5hngcPQ0z3MiSsw+LqkExOnnu4deNVW?=
- =?us-ascii?Q?cnv+cSRSCzf+GurzrKYVZCadrHHMoTEvTUUIObckTYtRNoWoVKLnXhBmYE/x?=
- =?us-ascii?Q?CfagDVZN04EP+DpZTt+eKxmEeprL6T797zy2eU6nrCW3UC5q7spA1Bvc7gqp?=
- =?us-ascii?Q?LDT7yEyvNrQPe4nUNNDL1MDKozM/m2NaehlyoNXQ3LpS5TzjdjGX6UEhfbHj?=
- =?us-ascii?Q?MZiLDZ14HLmmUD2vWLL2Rv9YK2bKlq0/3oCNmwu3AqfjnZJPcGwCI+tHSUXK?=
- =?us-ascii?Q?OTs9mXnKWoiyNkvqY3l93RgJcoAx/RdGHYU/RlX9aPHO0IGO6B0tngXh4aZt?=
- =?us-ascii?Q?qzYz2IoVX7Thpo2Swg/tAiNzkkOZ5PzJPSsv95lZkbAns39E?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZZKlc6FQ"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 682I1k1C607698;
+	Wed, 2 Sep 2026 20:29:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=bQvV3fX8kzsGZh3s1468/I5/2DdnTQ
+	a8LB6Sjq6Ve08=; b=ZZKlc6FQukvOSRSVLwxLIIra8sPFyJ8+yXU50QBZrmPIHB
+	qJCiKt9Z7TB5YEORqQwsZ5CxQSPn8zzgAzqPqTHUQJBjd9mBSUGYDnzRh5Q/B6UP
+	HSjfJDpo+2ZjhNUCWuLsDJ0A6E/AHvAZN89oaQhuQStWbMI+MmPDmvV6byTzCZN6
+	VZw7X1QqJWiZpXsdeEgv/RL3893HF0BwiwSiz7sWCqYVNmxlZd0duQO91bMzK4me
+	PJy7dAUTBfqcAi02VmCAg1mLs30AWHiiR/2p1PNLI/seKq1wP0rn75XF1KjuWjWH
+	szMMGhcC4kdclvzSGsWMmBDW/B3JZzTVvaTeLxjA==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuj15bg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Sep 2026 20:29:03 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682KQeE8025329;
+	Wed, 2 Sep 2026 20:29:02 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcceyc1kv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Sep 2026 20:29:02 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 682KT1A529164148
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 2 Sep 2026 20:29:01 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CD2FA5803F;
+	Wed,  2 Sep 2026 20:29:01 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 99CAA58054;
+	Wed,  2 Sep 2026 20:29:01 +0000 (GMT)
+Received: from d (unknown [9.61.186.94])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed,  2 Sep 2026 20:29:01 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v7 1/8] scsi: ibmvfc: add basic FPIN support
+In-Reply-To: <20260831213004.085A21F000E9@smtp.kernel.org>
+References: <20260831-ibmvfc-fpin-support-v7-0-77d0b9809080@linux.ibm.com>
+	<20260831-ibmvfc-fpin-support-v7-1-77d0b9809080@linux.ibm.com>
+	<20260831213004.085A21F000E9@smtp.kernel.org>
+Date: Wed, 02 Sep 2026 15:29:00 -0500
+Message-ID: <87ld9j1joz.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB6683.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cd5f6e77-7740-4078-453a-08df092d6d7e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2026 20:04:42.4443
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GEH1P7A/NcMngdrdmZnYQPsEqrqAA+zaBWMHPTUBS7DrYi6oU5me7UQdSllfFQMEaMV9iZbR9timz+XxwIi1Jg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA8PPF2C584C8BB
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Vyj4DqEg9yPppTYDCPcjL_aCP2a9Kk8w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE3NyBTYWx0ZWRfX//yVkTAT6Lr4
+ j/iBv8KxPiwO0QUBI9EBj5NawY0Zwoq6kE9ZpoQhaNbgZdmjqUwnn7Q+/MjAUrE0yr8yvYy5XqJ
+ kLBjZn4jqN/tAvx3ct/omFQ09ySYJuveOsVPIuzql8b0/wyTGg4U310AU4f5YLbn6B7GFTO3bQ7
+ bdmDOtZck6q0NcRxCyYF2kisHhM5TvWEhqfInXkc9bnSplnRqFon8TY/bSR1+6FnGBqlhTlXk4S
+ SRcmSQPH8Ofr5MfE/hrHi3uFb+nhr134oQ7k+oJY9Tsetr6PgdbB/NUPo+T49zvJY8OaVgu99Y8
+ PrsVm52kUAV1iuSR5aicijOOSQZYYNiMjyYfvEF0Cir0XNlKi/j9ZFS6M7irB0qviktcz2AtZDa
+ B0j2Lgd+wYIWcD25QeKcBpCIfAWJcTO28q6gEXN4SSZ3LdMZnfgJ/0ALJ+zWnqOvN2ZGos3QSmr
+ CuKlxaJIc84qDxBGAUA==
+X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a98870f cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=yFWVqRbnEUxo6LrtKUYA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE3NyBTYWx0ZWRfX3p7FC7bdBk5w
+ cCAq3laxFt42NyAEQrzX+iuyAAxLY4EtvWI5Oa+P9zzwspd50r5TvpSHQnQSzrKePWwD4xJczyL
+ MGhIWlMHQUy7mOmXoPZpsJOhchLz7hI=
+X-Proofpoint-ORIG-GUID: Vyj4DqEg9yPppTYDCPcjL_aCP2a9Kk8w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-02_04,2026-09-02_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020177
 
+sashiko-bot@kernel.org writes:
 
-
-> -----Original Message-----
-> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
-> Sent: Wednesday, September 2, 2026 1:01 PM
-> To: Long Li <longli@microsoft.com>
-> Cc: linux-hyperv@vger.kernel.org
-> Subject: [EXTERNAL] Re: [PATCH net-next v4 4/4] net: mana: add dynamic
-> HWC queue depth with reinit path
->=20
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s)
-> to consider:
->=20
-> Pre-existing issues:
-> - [Critical] Use-after-free of `hwc_cq->comp_buf` during queue teardown
-> because memory is freed before the EQ IRQ is deregistered.
-> - [High] NULL pointer dereference on `gc->cq_table` during HWC reinit
-> fallback on error paths because `gc->max_num_cqs` is updated
-> asynchronously before table allocation.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Teardown ordering race allows FPIN works to execute on an unregistered `fc_host`.
+> - [Medium] Lockless traversal of global `ibmvfc_head` list in KUnit test risks use-after-free.
+> - [Medium] The KUnit test accesses `tgt->rport` outside of the `host_lock`.
 > --
->=20
-> commit b3057022f465825e22d893f907cd5cd5dd291b2f
-> Author: Long Li <longli@microsoft.com>
->=20
-> net: mana: add dynamic HWC queue depth with reinit path
->=20
-> This patch dynamically adjusts the hardware channel (HWC) queue depth by
-> tearing down the bootstrap channel and rebuilding it at a device-supporte=
-d
-> maximum depth. This allows more management commands to be in flight.
->=20
-> > diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-> > b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-> > --- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-> > +++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
->=20
+>
+> commit 6a259111a28ef932ad14496cabbef71084312dfe
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>
+> scsi: ibmvfc: add basic FPIN support
+>
+> Implement support for a basic level of Fabric Performance Impact
+> Notifications (FPIN) in the ibmvfc driver to enable monitoring of
+> fabric congestion and link integrity events. Offloads FPIN processing
+> to a dedicated workqueue and adds a KUnit test module for validation.
+>
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index b3bc3ce872d6d..78be00d31a064 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
 > [ ... ]
->=20
-> > @@ -872,13 +916,64 @@ static int mana_hwc_init_queues(struct
-> > hw_channel_context *hwc, u16 q_depth,
-> [ ... ]
-> > +static void mana_hwc_destroy_queues(struct hw_channel_context *hwc) {
-> > +	struct gdma_context *gc =3D hwc->gdma_dev->gdma_context;
-> > +
-> > +	/* Destroy CQ first to deregister the EQ from the interrupt
-> > +	 * handler list before freeing caller_ctx, TXQ, or RXQ memory.
-> > +	 * A pending interrupt handler could still reach handle_resp()
-> > +	 * which dereferences caller_ctx.
-> > +	 */
-> > +	if (hwc->cq) {
-> > +		mana_hwc_destroy_cq(gc, hwc->cq);
->=20
-> [Severity: Critical]
-> This is a pre-existing issue, but since this patch dynamically tears down=
- and
-> reconstructs the active HWC queues on the main probe path, does it turn a
-> teardown race into a reachable use-after-free regression?
->=20
-> Inside mana_hwc_destroy_cq(), the memory for hwc_cq->comp_buf is freed
-> before the EQ interrupt is deregistered:
->=20
-> mana_hwc_destroy_cq() {
->     kfree(hwc_cq->comp_buf);
->=20
->     if (hwc_cq->gdma_cq)
->         mana_gd_destroy_queue(gc, hwc_cq->gdma_cq);
->     if (hwc_cq->gdma_eq)
->         mana_gd_destroy_queue(gc, hwc_cq->gdma_eq); ...
->=20
-> If an EQ interrupt fires concurrently (or a stray interrupt occurs), the =
-interrupt
-> handler mana_gd_intr() calls the completion callback
-> mana_hwc_comp_event(). That callback will read the freed comp_buf pointer
-> and pass it to mana_gd_poll_cq(), causing out-of-bounds DMA completions
-> to be written into the freed memory.
->=20
-> > +		hwc->cq =3D NULL;
-> > +	}
->=20
-> [ ... ]
->=20
-> > @@ -926,8 +1021,200 @@ int mana_hwc_create_channel(struct
-> gdma_context
-> > *gc)
-> [ ... ]
-> > +reinit_fallback:
-> > +	/* Restore bootstrap-depth channel so the device remains
-> functional.
-> > +	 * Free cq_table if it was allocated by a partially successful
-> > +	 * establish attempt.
-> > +	 */
-> > +	dev_warn(hwc->dev, "HWC reinit failed, falling back to bootstrap
-> > +depth\n");
-> > +
-> > +	mana_hwc_destroy_queues(hwc);
->=20
+>> @@ -6962,6 +7231,8 @@ static void ibmvfc_remove(struct vio_dev *vdev)
+>>  	ibmvfc_complete_purge(&purge);
+>>  	ibmvfc_release_sub_crqs(vhost);
+>>  	ibmvfc_release_crq_queue(vhost);
+>> +	destroy_workqueue(vhost->fpin_workq);
+>> +	vhost->fpin_workq = NULL;
+>>  
+>>  	ibmvfc_free_mem(vhost);
+>>  	spin_lock(&ibmvfc_driver_lock);
+>
 > [Severity: High]
-> This is a pre-existing issue, but does this fallback path expose a null p=
-ointer
-> dereference on gc->cq_table?
->=20
-> If mana_hwc_establish_channel() fails after the firmware updates
-> gc->max_num_cqs (via an EQ event) but before gc->cq_table is allocated
-> (for example, if vcalloc fails or the doorbell is missing), we jump to
-> reinit_fallback.
->=20
-> In this path, mana_hwc_destroy_queues() is called before gc->max_num_cqs
-> is cleared. This calls down into mana_gd_destroy_cq(), which assumes
-> gc->cq_table is safely allocated if id < max_num_cqs:
->=20
-> mana_gd_destroy_cq() {
->     if (id >=3D gc->max_num_cqs)
->         return;
->     if (!gc->cq_table[id])
->         return;
-> ...
->=20
-> This will dereference the null gc->cq_table pointer.
->=20
-> > +
-> > +	old_cq_table =3D gc->cq_table;
-> > +	gc->cq_table =3D NULL;
-> > +	/* Clear the bound with the table, as above. */
-> > +	gc->max_num_cqs =3D 0;
-> > +	synchronize_rcu();
-> > +	vfree(old_cq_table);
->=20
-> --
+> Could this teardown ordering race cause a regression by allowing FPIN works to
+> execute on an unregistered fc_host?
+>
+> Earlier in ibmvfc_remove(), fc_remove_host() is called which destroys
+> fc_host->work_q and sets it to NULL. This happens before disabling FPIN
+> interrupts via ibmvfc_release_sub_crqs() and ibmvfc_release_crq_queue(), and
+> before destroying the new fpin_workq here.
+>
+> If an FPIN interrupt arrives concurrently before the queues are released,
+> it can queue a work item to fpin_workq. When that work executes
+> fc_host_fpin_rcv(), it calls fc_queue_event(). Because scsi_remove_host() has
+> not yet executed to clear state_in_sysfs, fc_queue_event() may attempt to
+> queue work to the already destroyed fc_host->work_q via queue_work(NULL, ...),
+> resulting in a kernel crash.
 
-Those are both pre-existing issues. The patch set implements multi queue de=
-pth support and doesn't attempt to fix the existing issues.
+Yes, this is a problem. I plan to solve this by moving the calls to
+fc_remove_host() and scsi_remove_host() to just after the call to
+ibmvfc_release_crq_queue().
 
-If needed, I will submit a separate patch to fix the existing issue. The pa=
-tch is not related to this patch series.
-
-Long
+-Dave
