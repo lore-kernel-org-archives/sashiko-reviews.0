@@ -1,111 +1,154 @@
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374B4AC16C
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 19:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.198
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788375641; cv=none; b=DT2rmfxA/0OUMAQD8X5uyZWv3v7m085EGznM7CIIj0KPb2WSAcCNb9H6NG+RxRWxZihPzDsPXAqa4ZS9j3K5QREDy8LWBR/C8jaajn9wsb4C/dDQKOaaep+iOPKm0luEix3WPtdQNzlRoovms0so/M7aIZQsLkBlgCr9kK1vWGw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788375641; c=relaxed/simple;
-	bh=9+PtoNWtYvyeFwm3scPlfJtr20of9eAKhZzlkDiBk6g=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Mslk3Zy+SGhaW0IeJ7hDzrbAFSXbXy+vPoKFXKyjhz3HoTVRTKpXxpo9nkmc1rwhvsEchdFiDtq3t29lTFOA98m6bqVN7FNgA3wF1z+kEuQy7pJn2eZf5NLX/4QngDurKZ5V3OA0IG/Xsz/MDn9Sud1mwAjOVq/HvB2wNGzZWUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SDGz+fmS; arc=none smtp.client-ip=209.85.210.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB46F4AA3E1
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 19:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788375672; cv=pass; b=QFhvcMP22SyLu3t19yiUiyo3+m3tykppDarAd0nKhs4UpPN7a/10b1CADOEzPrZ+axo4DWY+UtFDsTvZ9rsYUQGXwVlSuiYJS6byLKYuL1BapBA9KxDYeXLCvE2vY2Yrh6qoKI7wgt5RFcKWAY4vo3oSMPI0C5oyhHI1KLUqRPM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788375672; c=relaxed/simple;
+	bh=AZeXCAXSxyA+r1whZeXSB0tEx+2h7yVQTltpmLt+cgU=;
+	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
+	 Date:MIME-Version; b=K81vNQi5gRZ+kMzX9OZ2/CWtle9f0UVKb76VELb1rl88Sx78UbFFNPekgMwopc5oisifzaiXddC4OTEq0KbHDW0odpuYxrXS2avkzSsvbnoZ4C3jHYH4/+eCxHi4rYG4tz7jinjtY4kzmK5mNB6RmC/caadowuDo/mmyP07S5Fg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=jCACT9Ra; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SDGz+fmS"
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-84e13b57b2cso1783779b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 12:00:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788375628; x=1788980428; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5bnqlH6sbBHV8BzHgW7BD+Nz3+m4Dg1ukrAP/BXotBg=;
-        b=SDGz+fmSPcDfEuZNQ1X8qnKgJQRxID99DU1thWDMKKPzMGFlczo2OaoSQZvXyONBUi
-         ofTAooXDnGmwZB7uz1wyjimtce723IJ5q3aPr1oXqNe9NsyDNX2VtFcy+jNthH5HhrXx
-         tiPXMo82jT3tA99SOtyNYldj8OwKX99dT1W4tQQDRxC3hqdz7auvAIndtXcvh5TwA9QM
-         DSFWfZ2c8r+maXMdZ1wr12Rl3wK0lwB+pIwIRBpzEhbt1RG/PDmqM5aYnMOzKLtH4YX4
-         y45dAVYS/o1IJ4YQTjUrLWD0LhrlSXS4rDs7ToPiQpGaLWW2tyvxK3RjVqhP1+N8qHi5
-         maQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788375628; x=1788980428;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5bnqlH6sbBHV8BzHgW7BD+Nz3+m4Dg1ukrAP/BXotBg=;
-        b=jz5Drb6r5094bfwelbgh1Tf3Yj3dJfl5lw17QIrVveUNY2+9uD1JfZd8K9mZb2juSn
-         nRCbZeGWMdfQku+zmxjp7Pr12XdGvR5vtDdS+eoUg9xSe8OTC9b+yke3Ov23RobcUCiU
-         3DtiwGtKynfx+xL0aCK8pvJWpTDg8OK7c7eWThhaCYT62EkrnI1apCuAP0lwfc90VJPg
-         5LCUWfLs7aUweS+UMn8/0vCT2M/Ue7+GPCQmm89TWUPSslS+R8R8P2nxO2hXxe1ciTnj
-         /tL3qZn9mpaVPpaLa9o549vlE9ovwc1RF1UDeRPYsYTq7zNxvZTuaEFvWVbJJpSfaxeq
-         Xe1Q==
-X-Gm-Message-State: AFuF++mKKYILF776zx3YRH5CzeggEm/LSAPj6wCp7O1LNQEcXHIRzk4S
-	8S+L4WyvHxmB4mmpXJoHuBjawvihCqg4omil5/8q0LSarueTJb7+HeLV+3ZhGO4vxafrSuOWESv
-	elThIUoaap/s68ODUiT5HLZ015/cnUF5nsM9K06Zngl3Bd+rpHs6gbcgCCWOdSuUIJ/iQR69wLC
-	mTjK5ncuJWKn6b/EfMSCB3MgYk8x88zl47rUcTXsYaMm/ba1Ns
-X-Received: from pfcp10.prod.google.com ([2002:a05:6a00:a24a:b0:84c:2e68:a493])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:409a:b0:84f:dfa8:57c5
- with SMTP id d2e1a72fcca58-85ed398aec5mr10724755b3a.13.1788375627681; Wed, 02
- Sep 2026 12:00:27 -0700 (PDT)
-Date: Wed, 2 Sep 2026 12:00:27 -0700
-In-Reply-To: <20260902183634.9E9711F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="jCACT9Ra"
+ARC-Seal: i=1; a=rsa-sha256; t=1788375669; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Boh6a1yphSqrIPCCi8E7ZvmCOLEzzZoSaJF+2Uf+eoku0eiXq2LjbxdaCpVqPHp8EToaNFKKJ+aTHsskmAZsfoLjqSbBTu05FQ2LpP9aJIgpC1lCcUK/L8oDvkxQG34fVUgBZJo+PChLZqPuGGAMNfBg44MoZyG1PdgKcY0NOwg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1788375669; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=T3LrZ5YU9HVJNF/itFRT31JE/x7CGcQ2B9zuc++xBLg=; 
+	b=PwBLgfsrS+jCGMJWY8ijh1d9jWnch/vXjMTdHOkGv9cO9sANlrvRMULhCps+hGILU86MO4dfcLrHGdbi7sK8Z/gbhO8TayRb8ul1b715UyyAQvoR1GgsqC8jcalGVElVRB/p7KEIw3bF0vNZ+/1rzvpnoxcc470j9iR0PTZwFns=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=rong.moe;
+	spf=pass  smtp.mailfrom=i@rong.moe;
+	dmarc=pass header.from=<i@rong.moe>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788375669;
+	s=zmail2048; d=rong.moe; i=i@rong.moe;
+	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
+	bh=T3LrZ5YU9HVJNF/itFRT31JE/x7CGcQ2B9zuc++xBLg=;
+	b=jCACT9RaA7TiZl9p73KtD+Ez1RdWOihrfXPBkdNCVIItwGRRzpwhX4MXPsb8U1y/
+	rYra/g1fdV6GmROqTS5/aK6C4pCXd4hf8fyyJthby1DC+KIumvYduy0V8OWwQREZuRy
+	iwqDt+WQ8MD5SwlShVo8OmC20pe1n/X4e6lDLS66nm67NVoyUZRNKtcAYHChxJ4bX91
+	kvBNDfwbIseYM+/k4xkyeXK5QeDrFXwtk+5xspSYFbiyEd2DpP5CP8oplUx7Jy2+bMO
+	a20Qo2SLod2oQodyOus34xxw5sJUvF+aoDB33yLI0MV8YfYKAUnPrGHLNBhUNLv8Kyk
+	qLNEE6qfWQ==
+Received: by mx.zohomail.com with SMTPS id 1788375667697804.0882437888594;
+	Wed, 2 Sep 2026 12:01:07 -0700 (PDT)
+Message-ID: <0b2f92a242002f22dfabfda546dc14e8df4f1162.camel@rong.moe>
+Subject: Re: [PATCH v6 09/12] leds: trigger: Add
+ led_trigger_notify_hw_control_changed() interface
+From: Rong Zhang <i@rong.moe>
+To: sashiko-reviews@lists.linux.dev
+Cc: lee@kernel.org, linux-leds@vger.kernel.org
+In-Reply-To: <20260902181556.9BB481F00A3A@smtp.kernel.org>
+References: <20260902-leds-trigger-hw-changed-v6-0-55693cd78877@rong.moe>
+	 <20260902-leds-trigger-hw-changed-v6-9-55693cd78877@rong.moe>
+	 <20260902181556.9BB481F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 03 Sep 2026 02:56:04 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260902182020.2615443-1-seanjc@google.com> <20260902182020.2615443-5-seanjc@google.com>
- <20260902183634.9E9711F000E9@smtp.kernel.org>
-Message-ID: <aphySzgAce0I1Cox@google.com>
-Subject: Re: [PATCH v2 4/4] KVM: guest_memfd: Drop superfluous WRITE_ONCE()
- when binding a memslot
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+User-Agent: Evolution 3.56.2-10+b1 
+X-ZohoMailClient: External
 
-On Wed, Sep 02, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Modifying the guest_memfd xarray outside of filemap_invalidate_lock on the error path causes a Use-After-Free and permanent MMU invalidation lockup.
+Hi Lee,
+
+On Wed, 2026-09-02 at 18:15 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Uninitialized work_struct leads to NULL pointer dereference
+
+I believe this is an LLM hallucination. See below.
+
 > --
-> 
-> commit c377e9963148427885842d70319259945c649a8a
-> Author: Sean Christopherson <seanjc@google.com>
-> 
-> KVM: guest_memfd: Drop superfluous WRITE_ONCE() when binding a memslot
-> 
-> Drop the superfluous WRITE_ONCE() when setting a memslot's guest_memfd file
-> during initial binding, as the memslot *must* be inactive and unreachable.
-> The superfluous WRITE_ONCE() was added by commit 67b43038ce14 to
-> maintain rough "parity" with the existing rcu_assign_pointer().
-> 
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index 2c8d8735de5fe..323159c9b5f34 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -653,7 +653,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >  	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
-> >  	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
-> >  	 */
-> > -	WRITE_ONCE(slot->gmem.file, file);
-> > +	slot->gmem.file = file;
-> >  	slot->gmem.pgoff = start;
-> >  	if (kvm_gmem_supports_mmap(inode))
-> >  		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
-> 
+>=20
+> commit b9b9203cb3b45eb3bbf3490673a89b53a7df12ae
+> Author: Rong Zhang <i@rong.moe>
+>=20
+> leds: trigger: Add led_trigger_notify_hw_control_changed() interface
+>=20
+> This commit introduces a new interface to notify the LED core about
+> hardware-initiated trigger transitions. It adds a workqueue deferral
+> mechanism to safely handle these transitions.
+>=20
+> > diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+> > index 7e571bd1de5b3..3b438d8da5e0c 100644
+> > --- a/drivers/leds/led-class.c
+> > +++ b/drivers/leds/led-class.c
+>=20
+> [ ... ]
+>=20
+> > @@ -611,6 +611,9 @@ int led_classdev_register_ext(struct device *parent=
+,
+> >  	led_trigger_set_default(led_cdev);
+> >  #endif
+> > =20
+> > +	if (led_cdev->flags & LED_TRIG_HW_CHANGED)
+> > +		led_trigger_init_hw_changed(led_cdev);
+> > +
+>=20
 > [Severity: High]
-> This isn't a bug introduced by this patch, but modifying the xarray outside
-> the filemap_invalidate_lock on the error path further down in this function
-> appears to cause a use-after-free and a permanent MMU invalidation lockup.
-> 
-> If xa_store_range() encounters -ENOMEM during the store, it can abort and
-> leave the slot partially inserted in the tree. kvm_gmem_bind() then explicitly
-> drops filemap_invalidate_lock before executing its error path. 
+> Is it safe to initialize the work_struct after activating the default
+> trigger?
+>=20
+> By the time led_trigger_init_hw_changed() is called,
+> led_trigger_set_default() has already run and the device is active. If a
+> hardware interrupt or userspace action fires in this small window, it cou=
+ld
+> invoke the notification before the work_struct is fully initialized.
+>=20
+> >  	mutex_unlock(&led_cdev->led_access);
+>=20
+> [ ... ]
+>=20
+> > diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
+> > index cb49a02a8b3cf..a9d992a886161 100644
+> > --- a/drivers/leds/led-triggers.c
+> > +++ b/drivers/leds/led-triggers.c
+>=20
+> [ ... ]
+>=20
+> > +void led_trigger_notify_hw_control_changed(struct led_classdev *led_cd=
+ev, bool activate)
+> > +{
+> > +	/* Restricted to private triggers. */
+> > +	if (WARN_ON(!(led_cdev->flags & LED_TRIG_HW_CHANGED) ||
+> > +		    !led_cdev->hw_control_trigger || !led_cdev->trigger_type))
+> > +		return;
+> > +
+> > +	WRITE_ONCE(led_cdev->triggers_hw_changed, activate);
+> > +
+> > +	schedule_work(&led_cdev->triggers_hw_changed_work);
+>=20
+> [Severity: High]
+> If this notification is triggered during the registration window mentione=
+d
+> above, will this schedule an uninitialized work_struct?
 
-LOL, I think I get the point...
+The LED driver apparently cannot call anything on the LED device during
+the registration. If the driver lost its sanity and did so, it would
+break tons of things, not limited to the "concern" here.
+
+Therefore, this is not a valid concern and should be considered as an LLM
+hallucination.
+
+Thanks,
+Rong
+
+>=20
+> Scheduling a zero-initialized work_struct means the function pointer is N=
+ULL,
+> which will cause a kernel panic when the worker thread attempts to execut=
+e it.
+>=20
+> > +}
