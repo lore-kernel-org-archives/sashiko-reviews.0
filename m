@@ -1,59 +1,75 @@
-Received: from out203-205-221-149.mail.qq.com (out203-205-221-149.mail.qq.com [203.205.221.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87216287518
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 12:24:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3589D47F2F6
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 12:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788351863; cv=none; b=YaFOcS1/6RUVNlqeaYay9C5WhZVLfPdJKQHmQced6zD6lIqJnGH89YaRRyjfqqPZ0jG6Jp6E/o0ExGy3rmPm8kFqwTLCvMwY3LPIgPGRBCuBtNDd6M6lYmmEkxELnl+Elw+gOyLPTfjHOuJ4PlXsSq/2oWC6fmiLvhm/zxtV8a4=
+	t=1788351866; cv=none; b=sUwsoAbQRfeeLnImRooufS7S51ENNDXgw4XZDnkAqod05pzTp5MtZQA+3rDrVtRyAWMfp8v6PYJ+PtVovjy2SQ1clmz9uKidAHSJ5f1b3l1pr3bjlIg3FllpXIcH4aU3E4dJO9mV3YFNXI/bYifEZHE6FgltLOhu/CHt5nTTCA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788351863; c=relaxed/simple;
-	bh=+D4ZnZz93GRWzPOKqT/L1qWle797X9rbuFtqH2+tal8=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gYjudmvDM6Z1WaVAO8F0jVtJV+7V5/6Yhb+/tIZ/F9IvHta9Bh8NM2jcbvNYMrhWP+ReBvszQNh14m9sn3MK8XBu3UzniAfTIw7HhD2j961bKSqdddPiBEfq3m4aKjwN9/6icWHLv80kgysHoYF6i0AiY4b3fSqtnzy30YdhFiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=qxYVZytw; arc=none smtp.client-ip=203.205.221.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1788351866; c=relaxed/simple;
+	bh=oTS+YDDaFxN0Q1LeraRZY2cqh7z1qPcDOqRuWiPId8c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WhmGo67nYOEODKqS3J6ixTYZ+E0L9/SWdDW8gOLwuwZjBmiPhLVh39hiZnOH0HhN1UhShRHZAEB51IYrwTzCECQm0gNl2ExdpxWqBu4lvnDMj0b3RSjlNpIp8tG8MPp9gIuNowKZvnkqk1OP7HehyCERpO4JKT7dzqYruDabTyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dC+p+U9u; arc=none smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="qxYVZytw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1788351851; bh=oeGrkJR2LSXUl4C5e/Md9Vtxpmk92D1xpVjUamNgopI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=qxYVZytwXSsqjG/92w+vPp9aduaJe3t0/8+zvgCuVnPpOqPrgXI2rPXTPRA3GUs17
-	 NpBz/R9FDegqrYWpe79W2Oz3Vv2YuwovnYIEvEyTP9vnfL/Z5KJOb68yspR5RgpaLB
-	 s3SoDRls5AYZT+R0qX69m0yVyk64al0IyxBIYmMg=
-Received: from DESKTOP-AT5F202.localdomain ([183.242.244.64])
-	by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
-	id 6081624C; Wed, 02 Sep 2026 20:24:08 +0800
-X-QQ-mid: xmsmtpt1788351848tzmyo217w
-Message-ID: <tencent_93CC3232AC6A9418BCE4372286770F91850A@qq.com>
-X-QQ-XMAILINFO: N3M5peIGJjWzMxDt5MokuLIQ1zBP/tMNx0YBamqxXhtx+Qh32IkzPoS3/8r0On
-	 1rDWuFFOX3D72dHB/pbmn/pmeD5khSbFgCVmArv+xKZSD3Wly9u03N8jow3CSkxPY+JjYcgvuxI1
-	 +nCQ4PcCfAXUO7p/cTDT9JNBggr1/TEDVo4WtSyEdDKOVbCKWI5e/IgEhuJhFdC53JuJIxI3DGnX
-	 FUmC8Tv1zWGOY1cCoSBmpgMnoSMx/Fchn0WRlN9s2m9Zh9edlmiMn4gvOvLvpS/udyGx6kURVQTz
-	 9l30+wDnyGZ5dAwx0wpyi+D7gX2qnodlAsxA1G/hX0EIsxgnvySHUKIg/8H+WPE/6czUZOGHcsxR
-	 sjeSe3u41XsvAvlSAv94iclK7966x1WMUqtn5WyahXuuBV7V+csOibq959OrVZfX/M1ti3coOJ48
-	 JaqwWh/kWtwhJutm1qfEklO4kDmBhulKmOUnjMC2ULISQ15TyjrCIF3mrJ27UCsNxhcBmF+uA1w2
-	 oqkIDjnNr70hQianJxgVLRLkPm72VF9uMkxInBMl/ZyUPHuML2Ztym6x9DD04fyRMJSJKxAQwjjq
-	 jzsRB6xnYsr44ErAW9CaXgSMsyNygPKFF+upb/I+IKRQNaeGEbNHNV3tBvGQDx/5X0H82p2MV9/Z
-	 o9YdIjMu9uDpAuMnBMmNhPxlcH+G8+8s44rmHwU3J8MIhkhRqxkRcSSJ7Wzdu42ziTIuSRFs7hH2
-	 I2mUL4y1N3agBecFz23XBOmeF9zExPxYbuYcpNZ8xTlj8uKO7nLVDFdgzIV8k1HACjvkYCSgHhVz
-	 Oy+Jj3WeB1GvBrAiM8ZEfICDaepQpZHdJ8MJQMJpxRgAKm5F6cuxgIOcnuZAB6H2zQyi++xPbI94
-	 UP2IPPJiMo87n/wPzRxRl6YWt5sCmqcOibhPRyyXdW50eiKrHcZTFr8q6qNVjnsK/D6Bg2xb6dY8
-	 qCANk+ogBXVxZsLEXo9DABo/YAKIJeukBwXs+aDItFj7h9+XcHj3YGA5+xlE24O/Rl9LLZ5A2tk5
-	 lDPe7VtnVfk0OCl136GeDg07+hmAt0t0sH4dnrLX7BnntAdFnpVU9LeMz1QXTkUIr3Hl3qnMb2wG
-	 PGqqt9
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-Date: Wed, 2 Sep 2026 20:24:06 +0800
-From: shuo chen <1289151713@qq.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dC+p+U9u"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-66bd7857841so1455822d50.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 05:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788351864; x=1788956664; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RArsbmdfySTb2QuEZZ7/chE2iY/l9of1tF9d4mgeG4M=;
+        b=dC+p+U9ujizTBEMMPDU4QkllEWDTZIwa8K7zB4EiYYbKleRZL43pmxadzfo20J5uuB
+         /M22Kjf1V5dLHhoBtxWPtSYVRtktmotfl5NoyJleI7cQSchLCejYd3amlY4hgL4fMddg
+         XhUGRx08ZFRq4AnNLYorhbYTTyu/Yr6qfXZgOCJFyhFaodg9Oa7/RytPbozqD70ytg3E
+         CbKjbnrgy825GTPQkfxHF052bM1aTOmnoHTtXqaKkEqK3K5Exn1/72+c8R/UlNMTtswf
+         d0fr9QXNVH3EQYX8R+/PPaboqha8r97N2uicvH4bjbJu4yhGHCpwzwMzsvfBoPegFbjZ
+         G+GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788351864; x=1788956664;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=RArsbmdfySTb2QuEZZ7/chE2iY/l9of1tF9d4mgeG4M=;
+        b=E1rxQIMgFRpMcKoZg1ON4/RHs4HtWfOxvMiU4dKH/OTrq9FZ88u/jJkMTFpwsGam/j
+         8AMgzHV+QMt+gctOb/bptLYa3rCiErN4RVbld1sp2z/upGNqM/Y3ZhJT3oQGzg7JHSyY
+         HVPiFkaxqWtYgU5pnU+k1qgyDUHEjbGvy9+Cfi1cewwnybilljyb2ahxPD1dpBCwJcFX
+         JfjcRSABxbR/bLRSUKYe2dZVceo9tBcR1r4MJjx4OvLWHid8weuT9maouv6DGLL8m8H1
+         YjuxaF7cBOjLe3wFYi0XwoTX7s+KHM+5wj7qTuoeiTho+eEVpjSeXqJDkCUGRUZW2r3M
+         c67w==
+X-Gm-Message-State: AFuF++n0BuBkkE+Q0gM/AsNPwY6GU2PpBy+piVZaMIeCEgESQgjvk7uH
+	Ab7PmRIGhTWsWQDEzs8T03EONh/3tQDg6U+nlCU5zyfd2Fx7ho7KmVlzyF6NA3wq
+X-Gm-Gg: AYBFou1lUIyCX2XBN0XmPTCQ+JD8cXId7QS17o0YbnJDPz1VMliS7WLbJV5AyVremZB
+	/ppvxQif5LIzBxvESpgxIra5D/tMgCU0U+Lfff6werdE1MigkBjUZRfn3DJ7HC2+VWkRoZcZTey
+	L3wwbeLK6CFwXZSML75d7Q3FlduN+buQjx7F06YGpoV/fwebbPFbhEQ6KFLGxnQwy/umj83RgYX
+	+Zk3AfFiB/sCw04hNp4wM+J1Af4fPfEIZ4iRFrgG7V8ARWMmNDPDK/N0u0p4DDXfZQSYFgXUkFF
+	k7hE8bcy4HkVUIWixXV947PhJmlc7qEGhDwPPFQkuouxdecSDseUwYkQN7mztazfJJKY/0XwpoY
+	zBxfNdmxAGY2UsZWnLoYpdugf3w9TH+P5WMbClUb1uHH2NOu6pfRwSzyBZ89xgwSg6bB8u6K6pH
+	QSzJBcrsmswjyucfZs9uHTffOhiWucgO0VLjeG4xyq2tZI5i6rAHBMKDQNKJkYoRBsKaVoSrcUG
+	mwbuB48ss+pQt5ODD1v0A==
+X-Received: by 2002:a05:690e:b83:b0:668:180c:bf6a with SMTP id 956f58d0204a3-66f9bc3fc3dmr1314531d50.37.1788351863969;
+        Wed, 02 Sep 2026 05:24:23 -0700 (PDT)
+Received: from zenbox ([2600:1700:18fb:6011:f78:4c8c:a6cc:a58e])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66f98697fbasm1721817d50.18.2026.09.02.05.24.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 05:24:23 -0700 (PDT)
+Date: Wed, 2 Sep 2026 08:24:23 -0400
+From: Justin Suess <utilityemal77@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-Subject: Re: [PATCH v5] ext4: rewrite ext4_convert_inline_data_nolock to make
- it safer
-X-OQ-MSGID: <apgVZm_atVxWr7tY@DESKTOP-AT5F202.localdomain>
-References: <tencent_8756434A305EF41A89C387860E424A199709@qq.com>
- <tencent_FBF9C69AF090A1BF9003C68555A8928D1707@qq.com>
- <20260902102416.6FDE61F00A3D@smtp.kernel.org>
+Cc: bpf@vger.kernel.org, linux-security-module@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 14/15] selftests/bpf: Test the LSM policy object
+ kfuncs with Landlock
+Message-ID: <apgTQKnhwMyFdQcr@zenbox>
+References: <20260831145858.3869191-1-utilityemal77@gmail.com>
+ <20260831145858.3869191-15-utilityemal77@gmail.com>
+ <20260831195327.1282C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -63,69 +79,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260902102416.6FDE61F00A3D@smtp.kernel.org>
+In-Reply-To: <20260831195327.1282C1F000E9@smtp.kernel.org>
 
-On Wed, Sep 02, 2026 at 10:24:16AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Mon, Aug 31, 2026 at 07:53:26PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] File descriptors leak on the error path in test_restrict_binprm_discard().
+> --
 > 
-> [Severity: High]
-> Does initializing .not_found to 0 set up a false positive match instead of
-> the expected -ENODATA?
+> commit 7fa3010dd885254cc82b6aa2f6f254ee83a13717
+> Author: Justin Suess <utilityemal77@gmail.com>
 > 
-> If a filesystem image is mounted where a file has EXT4_INODE_INLINE_DATA
-> set but lacks the EXT4_STATE_XATTR flag, ext4_xattr_ibody_find() will exit
-> early without modifying is.s.not_found.
+> selftests/bpf: Test the LSM policy object kfuncs with Landlock
 > 
-> Because it was initialized to 0 (meaning 'found'), later in this function:
+> This commit adds tests for LSM policy object kfuncs interacting with Landlock.
+> It tests execution confinement, audit log flags, and concurrent application
+> using a syscall program and BPF RCU lock management.
 > 
->     error = ext4_xattr_ibody_find(inode, &i, &is);
->     if (error)
->         goto recovery;
->     if (!is.s.not_found)
->         error = ext4_xattr_ibody_set(handle, inode, &i, &is);
-> 
-> The code believes a valid xattr entry exists at is.s.here (which points to
-> uninitialized space). This causes ext4_xattr_ibody_set() to attempt to
-> delete a bogus entry, potentially leading to out-of-bounds memory
-> operations and a kernel panic.
-Got it.
-> 
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/lsm_policy_landlock.c b/tools/testing/selftests/bpf/prog_tests/lsm_policy_landlock.c
+> > new file mode 100644
+> > index 0000000000000..9270b39f5e3a7
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/prog_tests/lsm_policy_landlock.c
 > [ ... ]
-> > +		struct ext4_extent newex;
+> > +static void test_restrict_binprm_discard(void)
+> > +{
+> > +	struct policy_test_env env;
+> > +	char garbage_path[] = "/tmp/lsm_policy_garbage_XXXXXX";
+> > +	int garbage_fd, pipe_fds[2];
+> > +	char buf = 0;
+> > +	pid_t pid;
 > > +
-> > +		newex.ee_block = cpu_to_le32(0);
-> > +		newex.ee_len = cpu_to_le16(1);
-> > +		ext4_ext_store_pblock(&newex, block);
-> > +		path = ext4_ext_insert_extent(handle, inode, path, &newex, 0);
-> > +		if (IS_ERR(path)) {
-> > +			error = PTR_ERR(path);
-> > +			if (error == -EDQUOT || error == -ENOSPC)
-> > +				goto recovery;
-> > +		} else {
-> > +			ext4_free_ext_path(path);
-> > +		}
+> > +	if (setup_env(&env))
+> > +		goto out;
+> [ ... ]
+> > +	if (!ASSERT_OK(pipe(pipe_fds), "pipe"))
+> > +		goto out_unlink;
+> > +
+> > +	/*
+> > +	 * Cannot use spawn_exec_child(): the same process must test its
+> > +	 * write access after the failed exec.
+> > +	 */
+> > +	pid = fork();
+> > +	if (!ASSERT_GE(pid, 0, "fork"))
+> > +		goto out_unlink;
 > 
-> [Severity: Critical]
-> Does this restricted error check silently swallow fatal failure codes
-> (like -ENOMEM or -EIO) from ext4_ext_insert_extent()?
+> [Severity: Low]
+> Does this code leak the file descriptors created by pipe() if fork() fails? 
 > 
-> If ext4_ext_insert_extent() fails due to memory pressure or I/O error, the
-> restricted check allows the failure to fall through.
+> If fork() fails here, the code jumps directly to the out_unlink label, and it 
+> appears neither pipe_fds[0] nor pipe_fds[1] are closed before exiting the
+> function. 
 > 
-> The unhandled error code is then overwritten shortly after:
-> 
->     error = ext4_xattr_ibody_find(inode, &i, &is);
-> 
-> This completely masks the prior failure, causing the function to complete
-> successfully. The inline data flag is cleared, but the newly allocated
-> block is never added to the file's extent tree, permanently losing the
-> file's data and leaking the block.
-Got it.I will make the inode revert to inline data when the error is 
-neither EDQUOT nor ENOSPC,but it will not free the blocks.
-If the error is neither EDQUOT nor ENOSPC,freeing blocks here could 
-lead to a more severe error.See the patch 
-"avoid infinite loops caused by residual data"
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/tencent_FBF9C69AF090A1BF9003C68555A8928D1707@qq.com?part=1
+> The spawn_exec_child() helper function introduced in this same commit properly 
+> closes both descriptors on fork failure. Should similar cleanup be added here?
+>
+Will fix.
 
+I think that's sashiko's only nit for this patchset.
+
+https://sashiko.dev/#/patchset/20260831145858.3869191-1-utilityemal77@gmail.com
+
+The BPF CI AI review bot didn't run on this since the patchset can't
+based on a bpf tree until it catches up to the recent Landlock changes.
+
+Justin
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260831145858.3869191-1-utilityemal77@gmail.com?part=14
