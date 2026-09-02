@@ -1,41 +1,41 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E44348821D
-	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 12:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126B148A2DF
+	for <sashiko-reviews@lists.linux.dev>; Wed,  2 Sep 2026 12:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788352155; cv=none; b=uRii7NfcfYDRIMVQsF8ACrYGodoxCJrKsxbJPPWdWzu9U81omvXT1/+eKOws1VA2AeEQCfuS5gKUvj/LWhD9Z+vrTc5D46VjSb7PAXNcWvPbc9yFA5JB2AtOskeMhg7s/r3U6JFyl8jQJPgduYHgpEuoiSYJ2uPCgpDxk2Lfh4s=
+	t=1788352702; cv=none; b=KdNjDQ7RFuQmDYVlK/ZWNbQG/LpxNy9hydYKyUIi+zTfZxkSOqdLd3nUP1af/tLiNjBWMfJpPbR5YpoDTSf2cwiJzO4qDKdjGmmKelBo4C6bm0gVpbuasfCaZGF3qkMV6FrU1AerjhqXoweci8rZ734kVvY0aqUMJN5PzCvqrtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788352155; c=relaxed/simple;
-	bh=LGAL9YftWcmFJ8L3ntQbbDzmCUkKhkp8pke+48cobO0=;
+	s=arc-20240116; t=1788352702; c=relaxed/simple;
+	bh=+KtcP51bt2puyj4IaCAqFSxq2jDN920XHLDvA2hG6x4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X8OmF1JTzimyq/dwuSeGp4h6QfWd5yDDRUBtrG1r4ia2PthfzKL3YtWRaFT453jq7v8YIDuA8UdPyYvRTwSfzIWu8wJQSQM3gj+MDOYSrZXi6SdEKxgd5ku2yvX9+GJcc5P6rSeUou937FGzyYobibFdRKmBFbu5n12rfJcs2nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=DtKn3qgM; arc=none smtp.client-ip=217.140.110.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=feLaEXnm9aBas6T0AW5295hEQPgaCu/NR0M/LTkGBqPYzO/t2CzAzJXiTvZgf/djJmxjPffVYKJbkYvyt1p+TsmdwWFvxqfoJrq0XLyQxd/+RUnrQjCffLm1RIFOMDwzbgF8SRV+HG4Zibfuf+0l9RUFl9Zt+6UpVOVt1brtybY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=reNiMHDD; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="DtKn3qgM"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="reNiMHDD"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0EF931682;
-	Wed,  2 Sep 2026 05:29:09 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0A6D6165C;
+	Wed,  2 Sep 2026 05:38:13 -0700 (PDT)
 Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2C1233F882;
-	Wed,  2 Sep 2026 05:29:12 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4343D3F882;
+	Wed,  2 Sep 2026 05:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788352152; bh=LGAL9YftWcmFJ8L3ntQbbDzmCUkKhkp8pke+48cobO0=;
+	t=1788352696; bh=+KtcP51bt2puyj4IaCAqFSxq2jDN920XHLDvA2hG6x4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DtKn3qgMeXD8A4W+/dPPSO5wac8VZYu+QezoJ7OhvpGWWzOgEf+8myVvqpBmBUb5R
-	 JQzYvvNKUt18o8RpYNUTj0w+pFbnaPKMKHMMgso0wAkaXlKDUgG+wASjmi0RhlLyyD
-	 V8bazawkbOWuim7hj0KKw077Q1LydDbrbl86tKww=
-Date: Wed, 2 Sep 2026 13:29:09 +0100
+	b=reNiMHDDHVK+DlEsDqgOpb3cq3KUa78KmBh8IUwLDwiqH86ZaVXyKa1etVQatXOr4
+	 38XftIj/Eyw0u41FnbVSqaKHnQHpxx00IPUHNo5pWasYAzCD7tozBvBXqh/qKzEiNb
+	 Fi+BnGGKywGYOc3bs08tUz4gWJooNtjCrBw8VCyk=
+Date: Wed, 2 Sep 2026 13:38:13 +0100
 From: Yeoreum Yun <yeoreum.yun@arm.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: Yeoreum Yun <yeoreum.yun@arm.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH RFC v3 15/21] x86: mm: skip collapse_pud_page() when
- CONFIG_X86_DIRECT_GBPAGES disabled
-Message-ID: <apgWlRtcGwZhKMFO@e129823.arm.com>
+Subject: Re: [PATCH RFC v3 09/21] loongarch: kvm: remove stack copy address
+ of pXd in pXd_offset()
+Message-ID: <apgYtdl_DjBIqikK@e129823.arm.com>
 References: <20260902-dummy_ptxp3-v3-0-5d8f5b17c25c@arm.com>
- <20260902-dummy_ptxp3-v3-15-5d8f5b17c25c@arm.com>
- <20260902121721.9A2FD1F000E9@smtp.kernel.org>
+ <20260902-dummy_ptxp3-v3-9-5d8f5b17c25c@arm.com>
+ <20260902121912.CF9161F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,44 +44,65 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260902121721.9A2FD1F000E9@smtp.kernel.org>
+In-Reply-To: <20260902121912.CF9161F000E9@smtp.kernel.org>
 
-On Wed, Sep 02, 2026 at 12:17:21PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Sep 02, 2026 at 12:19:12PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Incorrect Kconfig macro name `CONFIG_X86_FEATURE_GBPAGES` unconditionally disables PUD page collapsing on x86.
+> 
+> Pre-existing issues:
+> - [High] Missing `pud_leaf()` / huge page check before traversing to PMD level, causing invalid memory dereference on 1GB huge pages.
 > --
 > 
-> commit e72cd2f328b1fab1c51fad6dcdfc5273b0764f4b
+> commit 7df2ea4ead6f791e1840ca23d67765ca06e93e1b
 > Author: Yeoreum Yun <yeoreum.yun@arm.com>
 > 
-> x86: mm: skip collapse_pud_page() when CONFIG_X86_DIRECT_GBPAGES disabled
+> loongarch: kvm: remove stack copy address of pXd in pXd_offset()
 > 
-> This commit skips collapse_pud_page() when gbpages are disabled to prepare 
-> for compile-time folded page table changes.
+> This commit refactors host_pfn_mapping_level() to prepare for generic
+> compile-time folded page tables. It replaces direct uses of stack-based pXd
+> values with pXd_offset_lockless(), passing the pointers directly.
 > 
-> > diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-> > index a1a061d995b31..07a873775279f 100644
-> > --- a/arch/x86/mm/pat/set_memory.c
-> > +++ b/arch/x86/mm/pat/set_memory.c
-> > @@ -1315,7 +1315,7 @@ static int collapse_pud_page(pud_t *pud, unsigned long addr,
-> >  	pmd_t *pmd, first;
-> >  	int i;
+> > diff --git a/arch/loongarch/kvm/mmu.c b/arch/loongarch/kvm/mmu.c
+> > index e104897aa5328..837b40bb694f4 100644
+> > --- a/arch/loongarch/kvm/mmu.c
+> > +++ b/arch/loongarch/kvm/mmu.c
+> [ ... ]
+> > @@ -698,19 +698,23 @@ static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn,
+> [ ... ]
+> > -	pud = pudp_get(pud_offset(&p4d, hva));
+> > +	pudp = pud_offset_lockless(p4dp, p4d, hva);
+> > +	pud = pudp_get(pudp);
+> >  	if (pud_none(pud) || !pud_present(pud))
+> >  		goto out;
 > >  
-> > -	if (!direct_gbpages)
-> > +	if (!IS_ENABLED(CONFIG_X86_FEATURE_GBPAGES) || !direct_gbpages)
+> > -	pmd = pmdp_get(pmd_offset(&pud, hva));
+> > +	pmdp = pmd_offset_lockless(pudp, pud, hva);
+> > +	pmd = pmdp_get(pmdp);
 > 
 > [Severity: High]
-> Does CONFIG_X86_FEATURE_GBPAGES exist as a Kconfig option? The commit
-> message mentions CONFIG_X86_DIRECT_GBPAGES, so it looks like the Kconfig
-> macro might have been mixed up with the CPU feature flag X86_FEATURE_GBPAGES.
+> This is a pre-existing issue, but does this code need a check to see if the
+> PUD is a leaf entry before stepping down to the PMD level?
 > 
-> Because this Kconfig option does not exist, IS_ENABLED() will resolve to 0,
-> making the condition unconditionally true. Will this completely disable PUD
-> page collapsing on x86, preventing 1GB huge pages from being collapsed in
-> the kernel direct map?
+> In arch/loongarch/kvm/mmu.c:host_pfn_mapping_level(), the code reads the PUD
+> entry and verifies that it is present, but it does not check if it is a 1GB
+> huge page leaf entry before traversing to the PMD level.
+> 
+> If a guest memory region is backed by a 1GB huge page on the host, the PUD
+> entry will contain a PFN-encoded value and metadata flags. By unconditionally
+> passing this to pmd_offset_lockless(), the macro may interpret the PFN encoded
+> value as a kernel virtual address directory pointer. This produces a bogus
+> pointer that pmdp_get() will then dereference, causing an invalid memory
+> dereference and potentially crashing the host.
+> 
+> Could a pud_leaf() or kvm_pte_huge(pud_val(pud)) check be added before the
+> pmd_offset_lockless() call to prevent this crash when 1GB huge pages are
+> used?
+> 
+> >  	if (pmd_none(pmd) || !pmd_present(pmd))
+> >  		goto out;
 
-Sorry for typo. I'll change into CONFIG_X86_DIRECT_GBPAGES in next
-round.
+AFAIK, loongarch doesn't create the pud block mapping. so it seems
+ignoralbe.
 
 -- 
 Sincerely,
