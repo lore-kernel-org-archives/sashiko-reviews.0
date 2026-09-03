@@ -1,302 +1,182 @@
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B56D33A71A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788474698; cv=none; b=fldFq52DT9Ek5Ooo2S8mh6u+Q7IyKjNsRYF38ErLKmzgfh71UPgVPQgex+wYIC/dXXFl4OMA3IOWVGgKmQ7fAp/k9NXzAVY4g/B+ttih0izX7vaLwf2CliuwEL2kI/PpsJDVM4VXxprNiYsJ+xMKlR6V+FOvkBipHdeutIbRtVw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788474698; c=relaxed/simple;
-	bh=SC8msKd4liq5RgprKW2P+oARDa4OohOlzj9gKvTIG4M=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=QkTN2J8mZt+SqzzuY/3osDbz8lloFqAB0LWHC3GH9ydVTWTexKeZnTfqY1AB8/8vgWKiuj9vXAyqCntrwLasrlXoA9+nFjUCe8HcYkqjVFienbaTs8WaB/vJoLyi0Iw8RYFWVkQgYJZz6WuQzxfm8TqMx3E+6Y3rQxGmV5Zio3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=hhnkgw+A; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDC6395AE9
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788475449; cv=fail; b=VCgNSLw1W9fIBlxZqnBicYYNPQivnGB1DbCGHj2O2bqjUqATpOdJN0/xYIHML4HGsB4JVUJwmYTxVAxoKEmzHGFL+V3y3QC2iXncLMTAOhCaaTg9lS/BxrIUVu1emE+KsuAfXI77w/zzOKv40q2oe2uJ0na5EpIiX5P1B4vVEwY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788475449; c=relaxed/simple;
+	bh=Dn1wFpJZvkfkBnlTCKXySZFK4rKX9HCru9EZb1OTYDI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=dyzv/bkLJuQzy56rILOzBJGArQH6fns3oM/mrEFHNNLz1j88uHnyjHqrxTLzi6QLtDgbC+hu58pEpZ0NsKg3wLRbljEzjWXUUD65mRoeuXsG8mtk/CzV9e9yPtTsLXH9o3bsBRxzctKn+LkUMp1KxUr9/qPkrk3argLXjqXJOLQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j7p2hzDq; arc=fail smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="hhnkgw+A"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id EDA80240027
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 00:31:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1788474693;
-	bh=ufFEH71c3NEpjig5lV8qtBIYSld2UH9x73t3GqVwzzs=;
-	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP:From;
-	b=hhnkgw+A2fgW0DKG8CbItTSSqPzcX9eD2uhpsqYoL2jhqrvMUFwPpP1HEVPRfSCOP
-	 KWo5PdK7gj0B7sRfcCFz7MSOUGzZwkQcXCfk/s3GjK2VDmtY9h89qf1ZeuCY9UuibC
-	 CzyQeTqfiE1nJabV4CY69hzgU0LR6asgCvz1NOSV6mZ4gHiNdkz+m6vzpDH4573xIW
-	 AOWHQx6h9JlrhSofQ4t750Oy40mLuT+aqDxGkJzt4pNg5XM9oFYkc2dXnJyGlhWe5O
-	 oplFzOOFbqzNcsl3+7ph91rP9H0je6NyWbSl6PMQ9DOuJhdYydmrjavjAdbV5rrERt
-	 2qP5vhHd4zENg==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hbZ853Jd9z9rxD;
-	Fri,  4 Sep 2026 00:31:33 +0200 (CEST)
-Message-ID: <c284466700477e9c69cd433db90baf273bef764b.camel@posteo.de>
-Subject: Re: [PATCH] rust: serdev: Synchronize receive callback before
- calling unbind
-From: Markus Probst <markus.probst@posteo.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, linux-serial@vger.kernel.org
-Date: Thu, 03 Sep 2026 22:31:33 +0000
-In-Reply-To: <20260903222159.70A911F000E9@smtp.kernel.org>
-References: <20260904-rust_serdev_ref_mut-v1-1-245db7eb09af@posteo.de>
-	 <20260903222159.70A911F000E9@smtp.kernel.org>
-Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
- keydata=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
- jfGillcaQOqFZ3WwVqyzG1BUfTow==
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-D4watG/QRT1xefvUmWai"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j7p2hzDq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788475446; x=1820011446;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=Dn1wFpJZvkfkBnlTCKXySZFK4rKX9HCru9EZb1OTYDI=;
+  b=j7p2hzDqHcvg2jFXzHm4LALWwk68tUiQMfZNpo57N8Vsa9CPQAuICX9H
+   0/ge5YzBThAYc5/NZUdIrxEF3lZ97ipozGrbZHqFjv/hSmP4yvx5RF5Om
+   hm86F2VmZALX7xjxnGzFXa7O2cvCtSRuy75EoaZuB92b2U1yc11Ra7TE0
+   7j0wznp3rtexCFZvhoRfLskkyFwq5UAxqtUf2YBr4b6MLg4NZbQwAwK4L
+   JNIW9+l7eMgQ2dTS94EeuqgQrDtRnkXpEQUgxkAy7vjna56RBa0aN2R/v
+   BJalIcmzCuXqHOQDNprSABlGvYbDyvXk2xUwYBaG//Jx+nxmBq1xbZIb/
+   Q==;
+X-CSE-ConnectionGUID: cpykZTchQESgt/RoQchjSA==
+X-CSE-MsgGUID: H/3shz4gRKiozEakSIZR4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="89097322"
+X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
+   d="scan'208";a="89097322"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:44:06 -0700
+X-CSE-ConnectionGUID: 69SG6sUaTxCPa2+iQKeq+A==
+X-CSE-MsgGUID: 7lsklokaRaO0iu53okZjmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
+   d="scan'208";a="269849601"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:44:06 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 3 Sep 2026 15:44:05 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 15:44:05 -0700
+Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.17) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 3 Sep 2026 15:44:04 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BbgTE/CVhC4+sejEy5uRqYB65/SLA1fZa1/86n31nZ7X3LqyvsUOfbAStG2qED0QthIp97Hcb8qq3L8hessNaf4yPcgY9OX2w/rW6PMoEXFb159sYQLFGoSYuWCb/rDiOOXM5Q38EXCIhqyyA0m3aJ3c2nzvs7ofZNdWljkDwHQPid6HWWjA6PBz1f2sjo2jyhX+NA3ZsaLzQlN/3UqkmUTR+wwMRZ8M3g5IzvgSox5NLO+v7xNa+yrlJh8IXQXde7s9PecaU+f6hx5rL1DwcPXX6TUktiVZVNT9UmcCDShYSx1vpiCP7J9gytaZmheX2G38YTty55jrrircbmJTOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dn1wFpJZvkfkBnlTCKXySZFK4rKX9HCru9EZb1OTYDI=;
+ b=JKATHt0dsysOIEf2qTVpUbbZ/n9rljFjmEcbCsJZ+Bg224uMgLuh1uVlPzLwGM+r685u12jfcGHM96y4FkNzEhHRzQ6jgyQ/25hEkD3B1S04BEZFgPEnv8U486GoxWdLAtdenDct33qAWoKQwAkOg8VVlethqigLCHpDhCpPjtx/8HVDabzrEPhkPy5mYS0AAwVaEbHrpLuOo3A+lRjqYstJghwvZxKJJy/D+PO4VDi++fCqQvqeJpWupBG4i6Bf3VZ1wgc/GYc3xKuU/HlJFYc8zsaiVXlYbLLbhONE/K01/D7MujbMUkOdPSn/5ZXpU/6OpkhwSd0v6dykMBmeoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH7PR11MB6771.namprd11.prod.outlook.com (2603:10b6:510:1b5::20)
+ by SA3PR11MB8117.namprd11.prod.outlook.com (2603:10b6:806:2f0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
+ 2026 22:44:01 +0000
+Received: from PH7PR11MB6771.namprd11.prod.outlook.com
+ ([fe80::effa:162e:c9c9:a1b4]) by PH7PR11MB6771.namprd11.prod.outlook.com
+ ([fe80::effa:162e:c9c9:a1b4%4]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
+ 22:44:01 +0000
+From: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: Re: [PATCH v10 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping
+ private memory
+Thread-Topic: [PATCH v10 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping
+ private memory
+Thread-Index: AQHdO0a+fgMgkfTbu0W+emeJrdMYR7a8HTsAgAFXowA=
+Date: Thu, 3 Sep 2026 22:44:01 +0000
+Message-ID: <1bb966e4bccc2b0f0064073cd8dc1b98c42b2afe.camel@intel.com>
+References: <20260903015113.93343-1-rick.p.edgecombe@intel.com>
+	 <20260903015113.93343-9-rick.p.edgecombe@intel.com>
+	 <20260903021405.0DA101F000E9@smtp.kernel.org>
+In-Reply-To: <20260903021405.0DA101F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.44.4-0ubuntu2.1 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB6771:EE_|SA3PR11MB8117:EE_
+x-ms-office365-filtering-correlation-id: 0710f716-d58e-4ae3-da5b-08df0a0cd9ae
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|6133799003|18002099003|22082099003|11063799006|56012099006|38070700021|4143699003|10067099003;
+x-microsoft-antispam-message-info: 9GZpFeZzuypbvWWvJkIBWNiO1OInCcfiBrQmDR6K7qX6FArQ8vjnhnIuvMj3asdZAML/0Xy18foB2Xhw0R4I1HQlJrr+TM4Hn+zBZ5dMEYwXMJmGFdf8BJ3r/HrEnarqbITh74/qAR4ouJ/nwKIytsntwdLAdB4KhEYzJYGPS56vl0BAcQtoLEgOn7C/u6ldRux/9dLy4IHTNyM1tSgFVrFHDWPLcearv8PvUKZKo9arMfbr2KWdrO7fGRue0i8MBS7b2WmrbK7E/inYn9OlC/tC8zs9k/H8NZ7FWq7wc7uxVwb/xmkEBfMznmfafCnbECOhHzodUnRMYRI6DjDBYJ0MUjgys3Yox47GPKDzZ/JZOq9m/PUalwIsI+Q/OF6+UOQ37y/+xTBnWFRjoUTfuiaQuecnBFrcd1rmbPHo+AHCs328/VeiUS5+Yw7sy6uF6eueG2nq2ryCOVxtBvg3hse5sgZrB7T8ifEbMGoftWsXO6QmLz+oCI1jxC96r4Uj3VfJF2SPe4Ivk756dXTXzFrimuFD/i0Y5NqpMwR0t8D1n4BNsiptgiAeuDFkow9ho5osMKnIfIZupeVOC4kxNHAieDBXkkvS4J3mx64rc+70gkrpP0G5CKz5wMG988Et3EXklmsl+ojaMuVf3rgebmowJceQ0m9lgh6E3XY2ul+yX6Ggj+5MKM/K59FJvKY9GVnpgqSxKnEGY0tf36d3AjUHampIR/voe7qjOZugYX0=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6771.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(11063799006)(56012099006)(38070700021)(4143699003)(10067099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?QzUrTi9iTDRWUUQ2REpQTHVtbVNXaGVvclErU3NCa3BzUXYzWXhVK1VxL2pT?=
+ =?utf-8?B?d1lOWVpKbWxuWnM1VWZEQ3VEOFgyQmxTdEFGaGNkbG8xRUV6Q0FsSzgvWkw2?=
+ =?utf-8?B?RWFBMmkwbnQxYjRNQTFPRWZmeWdiS1U2SmJ1M3hxNmRhdlRIWW9MeHZxWTVL?=
+ =?utf-8?B?T0FNTGtERi9neWRZNThTRTh6d1N0L0hwUXY3OUszZUI1dkVreUN1N09ETGNP?=
+ =?utf-8?B?U0p5NTYvSEtTbU9ZRnpNMjl6UTlFR1ZZNktwaG1NOEtwZlV5andSazk4SFl2?=
+ =?utf-8?B?NHFwdUU0ZnJTeGVQdTMwOVBNTURVTmZob3NHZFI4TEpabEVPQ2VlM3pHbTNo?=
+ =?utf-8?B?WlRqdjlHMU9HQzVBNm80VWhBdEFBQUVEOWcvUWVDc0VGb0VhUHRsTGxzVDZB?=
+ =?utf-8?B?UlVyWU4wZGhScXV0Undpejl5YytzeWhucnBBNzkyL0JEQ1NEamY1ZmdFbjlB?=
+ =?utf-8?B?WHozWFdvNmozRVJ2Q1laTHVQSmN6bHZWa3Rac2VHNkhZK0NPRFl0ZmRaeWJj?=
+ =?utf-8?B?TjNiVUFzV3BTRU5UTE1qeEVwTTdKUEpMK2NVSllveVpzaG9NNmIzOUNKa09W?=
+ =?utf-8?B?dWRZN0ZMRHVaZkp1WG1uT2xHTXJ2L2QyQ1FjbG0vY3BGaTU1eE1XZ0pIYXlI?=
+ =?utf-8?B?MDlqQklLL0lZU0xwUE93WDZSc2NWZFg2eWFnMmRqQ0srWmp4eVpPT05mdmg1?=
+ =?utf-8?B?bzdZMnJabmcyV1JOY2hMWkVsbTJqV2xsZ0FsMTgwZ0E4UlVCWVExVU5lbTBE?=
+ =?utf-8?B?K3ZXb2hQR29NL3FKSEFUMVRzVlMwVlpVKzEwMWFwZ0F5bXZ3c2xFUkt5bXBB?=
+ =?utf-8?B?MmV4VVdWSVVNS1pkakxFc1J3RWJ6WG02MTBXcUUzdXRJdjN3NVVoamt6QVJB?=
+ =?utf-8?B?WUtDQXVuNWpyMHJxY25vcGRqb256ZGZhODFpYXJoSWJZSXRmbTFhUGVtU1FG?=
+ =?utf-8?B?aVNVWTUwcjE0R2JpREl0V0F4MzJkQnZKc0EwMmE1RW5BMkw1QmFFZ3RvU1gv?=
+ =?utf-8?B?RzY3THZWcmI0NzhaKzJmZFdHQmRGdEZSdEpjbE9UUW5QYzh0QTJrNXYxcmxE?=
+ =?utf-8?B?VU5mM280VUppNjlmb0FLMi91S2xpYWhjOG5zclRrcVF3UnVDWjNrd3Jxb21N?=
+ =?utf-8?B?dnFVa1FTbWhJbDZCUER1YVBXNkdaS1ZrSUYxTUtobW82dXZmYXoyeEp4MHkw?=
+ =?utf-8?B?WlRWNThvRUp6QzZFdjBvT09QSDVpcHkxUU5qZUcwZTFLbjNjK0crcGtMRjZl?=
+ =?utf-8?B?MVRkRFV6RWJZNmNIcWVQcFp4bldvSFNDby93UlRYNExoWitMY0tqTng2cW5E?=
+ =?utf-8?B?eCszK0xaNk5lU1RjWHg0K1hGZ002VXVTRElub1hZTTd5cUlXNkg1QXRFcWxj?=
+ =?utf-8?B?bEZQNkhCYkdSbWplc1FzeTFVd2k2RnFsK28wYzdMaVJDbUtVL0JaTjNoK3Fi?=
+ =?utf-8?B?b290K2NrWEpFanZuMXBZQWRUR1NxZ25ING1xdXRmVFVEUkV3cWhVY0dDbG1K?=
+ =?utf-8?B?djJ5ZXBzcnlqUThBUXd6djJ3SUFDS092eTdwaEs0T2k4dFdzdENqeElhNDl3?=
+ =?utf-8?B?TktNYmM0bkVKV2p0VGJzMTJvdzRmOGN6ZW1yVVpLSnl2alJRKzRRUVUvNW9y?=
+ =?utf-8?B?WWtLWVJScmpaT0JLbEV5TWF1M25Vdm40clQ2eTMvSUwvbDh1NzdxT3N0TWxl?=
+ =?utf-8?B?OTFCYmszcFh4RjRuUXpQUE04NUJ0UVZ0ZjkvQ2J2amJQTlo1TGtCa3JRcVAx?=
+ =?utf-8?B?OUxCYXVJS1pDRmhvNmlTUUU2Titpd1QzVnlaVzJXRWw0OWxWSlIxcGJlQ2RU?=
+ =?utf-8?B?Z2dBb3BpNGlUdUhVUGFiTEZneTZSdTM2K1VvZExPajdRUW1qdDNhczIwK3Rv?=
+ =?utf-8?B?dVhzeCtod2JYVnBoem5yOHpxZGdZSUdSU05va2dTTUtWSmd4RmI3ckVVV2Er?=
+ =?utf-8?B?b3dIMWZ2ZEkvL1dSQXZwMEh5b3QxVzFFZXAvTVdyQ3AyUU5oaSs2R2pVQ0xy?=
+ =?utf-8?B?d1hQVnV0VHlORFpOVkIrNk5HQXFKWGt3WUFrcFh2Vk5KdjdsbURRbWNwcGts?=
+ =?utf-8?B?Z3VkMG9Zc2JiLzNpeFBqckkzcW9Pd3liUmg4c3JLYlBIMUJhVlAveG1lbDZo?=
+ =?utf-8?B?RnVQRUdUNnh1WTdCRVR4TE52aXI4RW1jdGFOcjByNW5VclNidFNLbGVoRXh3?=
+ =?utf-8?B?K21sNzRSaWZmbitjZllTR0pIdUd2KzM1TzFVaUN3S0x0Qk1wd2dOa0U2ZEl0?=
+ =?utf-8?B?dXJJb0VmVGhBL0xVejNDZmN2TitoczZxT2Jhci9WeEJrTEVKOGlXSjhKd3hF?=
+ =?utf-8?B?cEIyRHJieHhrTmo4UHJidHZQaThpZE9yaXlVRzlQLzAvWXQwa2VUVEFqd1JX?=
+ =?utf-8?Q?3+/A1E486ShKZxlQ=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <AD3A501C09E550418EA2DEDEBAADE311@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+X-Exchange-RoutingPolicyChecked: W3ElmNqXGouOV2fBSk4fyl8mKB06Ww3t/cLxhDRIygEAL2HeZadIACvk21edVIBQOlhQxVXG2IQnJlR2rFQ+cokmQnNMCjtgFGPEGwR5JCnWkc4oGC5USkvzCp4Iivhmdv8im7hUMPjzns/R3WcG/yN/vlTYL4vImT6iHolFTb+BoqZm8ZZeFBKjNQ+BRbvmEYS+N1JOxYaKWzDA3ov7U5+L9AwtWasVFEeA2JheototAy19rrJt57BLVeiPcKwAbmb3LES1ZsRu9uxdFRl+nuZPFCGZS3hZw+yIxn/Vl8fVNPYFUF5y5KlJIlnoiU/Dj8HTKzX02wzIxKA9sUttOg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6771.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0710f716-d58e-4ae3-da5b-08df0a0cd9ae
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2026 22:44:01.7771
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vU427UOCkRv51LCq/7xfQjRtJ2uXJZohHnfTiqkMcpmNSvrZO6RbAY0OY+F+2U7D4HU9zvZFgzyQ5xHNILLkBZpHIyqMp5RvuzEAxYxP9v4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB8117
+X-OriginatorOrg: intel.com
 
-
---=-D4watG/QRT1xefvUmWai
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, 2026-09-03 at 22:21 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->=20
-> New issues:
-> - [High] Holding the `active` mutex during `T::unbind` causes an inescapa=
-ble deadlock for drivers that synchronously communicate with the device.
-> - [Low] Logically dead code inside the error-handling `ScopeGuard` in `pr=
-obe_callback`.
->=20
-> Pre-existing issues:
-> - [High] Race condition between drvdata_obtain and receive_buf_callback c=
-auses NULL pointer dereference or Use-After-Free.
-> --
->=20
-> commit 6f561db35778bb34c19e46b1a5df116263c0adbc
-> Author: Markus Probst <markus.probst@posteo.de>
-> Subject: rust: serdev: Synchronize receive callback before calling unbind
->=20
-> The commit changes the receive and unbind callbacks to provide exclusive
-> access to driver private data by handing out mutable references. It remov=
-es
-> the Sync requirement for Data and introduces locking for synchronization.
->=20
-> > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
-> > index 17ca504b7f8d6..44f029ed93fd1 100644
-> > --- a/rust/kernel/serdev.rs
-> > +++ b/rust/kernel/serdev.rs
->=20
-> [ ... ]
->=20
-> > @@ -127,16 +127,6 @@ pub struct PrivateData<'bound, T: Driver> {
-> >  #[pinned_drop]
-> >  impl<T: Driver> PinnedDrop for PrivateData<'_, T> {
-> >      fn drop(self: Pin<&mut Self>) {
-> > -        let mut active =3D self.active.lock();
-> > -        if *active {
-> > -            // SAFETY:
-> > -            // - We have exclusive access to `self.driver`.
-> > -            // - `self.driver` is guaranteed to be initialized.
-> > -            unsafe { (*self.driver.get()).assume_init_drop() };
-> > -            *active =3D false;
-> > -        }
-> > -        drop(active);
-> > -
-> >          // SAFETY: We have exclusive access to `self.open`.
-> >          if unsafe { *self.open.get() } {
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the timing of closing=
- the
-> device cause a use-after-free or NULL pointer dereference?
->=20
-> If probe fails after the device is opened, or when the driver is unbound,
-> drvdata_obtain() clears the underlying C driver_data pointer to NULL and
-> drops the data. However, bindings::serdev_device_close(self.sdev.as_raw()=
-)
-> is only called later inside PrivateData::drop().
->=20
-> Because the device is still open while the pointer is cleared, incoming
-> serial data can trigger receive_buf_callback() in the TTY workqueue.
->=20
-> receive_buf_callback() calls drvdata_borrow(), which reads the NULL point=
-er
-> and blindly dereferences it, or reads it right before it's cleared and
-> accesses freed memory.
->=20
-> Should the device be closed before clearing the drvdata pointer?
-This definitely needs to be addressed, yes.
->=20
-> [ ... ]
->=20
-> > @@ -176,7 +166,20 @@ extern "C" fn probe_callback(sdev: *mut bindings::=
-serdev_device) -> kernel::ffi:
-> >              let private_data =3D unsafe { sdev.as_ref().drvdata_borrow=
-::<PrivateData<'_, T>>() };
-> >              let private_data =3D ScopeGuard::new_with_data(private_dat=
-a, |_| {
-> >                  // SAFETY: We just set drvdata to `PrivateData<'_, T>`=
-.
-> > -                drop(unsafe { sdev.as_ref().drvdata_obtain::<PrivateDa=
-ta<'_, T>>() });
-> > +                let private_data =3D unsafe {
-> > +                    sdev.as_ref()
-> > +                        .drvdata_obtain::<PrivateData<'_, T>>()
-> > +                        .unwrap_unchecked()
-> > +                };
-> > +
-> > +                let mut active =3D private_data.active.lock();
-> > +                if *active {
->=20
-> [Severity: Low]
-> Is this block of code logically dead?
->=20
-> The ScopeGuard closure checks if *active is true to selectively call
-> assume_init_drop(). However, *active is only set to true if the driver
-> initialization succeeds.
->=20
-> Immediately after setting *active =3D true, private_data.dismiss() is cal=
-led,
-> which consumes the guard and prevents this closure from running.
->=20
-> Therefore, this closure only runs on the error path, where *active is
-> strictly false, meaning the assume_init_drop() block will never execute.
-True.
-
->=20
-> > +                    // SAFETY:
-> > +                    // - We have exclusive access to `private_data.dri=
-ver`.
-> > +                    // - `private_data.driver` is guaranteed to be ini=
-tialized.
-> > +                    unsafe { (*private_data.driver.get()).assume_init_=
-drop() };
-> > +                    *active =3D false;
-> > +                }
-> >              });
-> >              let mut active =3D private_data.active.lock();
->=20
-> [ ... ]
->=20
-> > @@ -222,15 +225,21 @@ extern "C" fn remove_callback(sdev: *mut bindings=
-::serdev_device) {
-> >          // and stored a `Pin<KBox<PrivateData<'_, T>>>`.
-> >          let private_data =3D unsafe { sdev.as_ref().drvdata_borrow::<P=
-rivateData<'_, T>>() };
-> > =20
-> > -        // SAFETY: No one has exclusive access to `private_data.driver=
-`.
-> > -        let data =3D unsafe { &*private_data.driver.get() };
-> > +        let mut active =3D private_data.active.lock();
-> > +
-> > +        // SAFETY: We have exclusive access to `private_data.driver`.
-> > +        let data =3D unsafe { &mut *private_data.driver.get() };
-> >          // SAFETY:
-> >          // - `private_data.driver` is pinned.
-> >          // - `remove_callback` is only ever called after a successful =
-call to `probe_callback`,
-> >          //   hence it's guaranteed that `private_data.driver` was init=
-ialized.
-> > -        let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_in=
-it_ref()) };
-> > +        let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_in=
-it_mut()) };
-> > =20
-> >          T::unbind(sdev, data_pinned);
->=20
-> [Severity: High]
-> Does holding the active mutex during T::unbind() cause a deadlock for
-> drivers that synchronously communicate with the device?
->=20
-> If the driver's unbind() callback sends a shutdown command to the device =
-and
-> synchronously waits for an acknowledgment, the incoming serial data for t=
-he
-> acknowledgment will be routed to receive_buf_callback().
->=20
-> receive_buf_callback() attempts to acquire this same active mutex to proc=
-ess
-> the response, completing the deadlock because remove_callback() is blocke=
-d
-> waiting for the acknowledgment.
-That would be a driver issue.
-
-And there shouldn't be a reason for a driver to wait for an
-acknowledgement.
-
->=20
-> > +
-> > +        // SAFETY: We already established that `data` is guaranteed to=
- be initialized.
-> > +        unsafe { data.assume_init_drop() };
-> > +        *active =3D false;
-> >      }
-
---=-D4watG/QRT1xefvUmWai
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmqZ9T8bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSxl0QAKNm7ejnfiPmNdldgH6P
-HQubJwFCJnmJsyEqNxNcMq1mLCEeF76Qo/4B9WWoFnFlpTwq+Gfdlp5e7GmmJWQS
-meBBbAp+NcKs8AhbeIMwhOiqJioxuqRfA1QL5x51xtWR6Wy6TV6O4tUrnvQTp2+a
-fIsUFPOuzgSgkMthHkwnGN/Fuym4XhGJRwYGrZohG1aBZI6PGmxWp6S1ysj4XXhR
-LcfoYSFIHxbrvoSuAMd/DaHX24tsRQknu1YfamGdahYYjWwx56x3y5QPCJ1VoYjS
-dcezJbR2hat71SJY6y3u/oklEuRv7jIavb6S7olVcmZIyFt5H1yWkSzAlL1eyFLc
-yq8c+wtI42QoPKZdZ0+MLVQnFRdf0yPsJyFAHcr8W4RlW5k0MGelANgt0t8KQPcA
-SOzLGtItPEVI6mPv7KY3wMxhbv5UU0EvShKocNjdLtiEZNxrUbGi6jKYvPQK8cKw
-B6mmsHeds8Iu+9qUyFT70MHBP3zPDGj12w8gCxPxk1E2g2cjm1ZJgwJ6xVgPv0sZ
-3ALsSoThU/Mr1XxivyaziCeF2qtjUY65NyznjGLt+mVvqzBldWAsIvq4Q0ukTKtM
-b6cs39xeXWtioQvYo+MIX1vppSPkttkX9gx2HWmrphNEwwQF4lqta+kEhSCjkZju
-T2/sWpxbVjUitxdda81sBNxI
-=ReEZ
------END PGP SIGNATURE-----
-
---=-D4watG/QRT1xefvUmWai--
+U2FtZSBpc3N1ZXMgYXMgYWx3YXlzIHJlcG9ydGVkLg0KT24gVGh1LCAyMDI2LTA5LTAzIGF0IDAy
+OjE0ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3JnIHdyb3RlOg0KPiBUaGFuayB5b3UgZm9y
+IHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAyIHBvdGVudGlhbCBp
+c3N1ZShzKSB0byBjb25zaWRlcjoNCj4gDQo+IE5ldyBpc3N1ZXM6DQo+IC0gW0hpZ2hdIFRoZSBy
+ZXRyeSBsb29wIGluIGt2bV90ZHBfbW11X21hcF9wcml2YXRlX3BmbigpIGZhaWxzIHRvIHRvcCB1
+cCBtZW1vcnkgY2FjaGVzLCBjYXVzaW5nIFBBTVQgY2FjaGUgZXhoYXVzdGlvbiBhbmQgYSBmYXRh
+bCBLVk1fQlVHX09OIHdoZW4gUy1FUFQgbWFwcGluZyBlbmNvdW50ZXJzIGNvbnRlbnRpb24uDQoN
+Ck5vdCBhIHJlYWwgZnVuY3Rpb25hbCBpc3N1ZSwgYnV0IFNlYW4gaXMgcHVzaGluZyBhIGNsZWFu
+dXAgZm9yIGl0Lg0KDQo+IA0KPiBQcmUtZXhpc3RpbmcgaXNzdWVzOg0KPiAtIFtIaWdoXSBjcHVz
+X3JlYWRfbG9jaygpIGlzIGFjcXVpcmVkIHdoaWxlIGt2bS0+bG9jayBpcyBhbHJlYWR5IGhlbGQg
+ZHVyaW5nIEtWTV9URFhfSU5JVF9WTSBpbml0aWFsaXphdGlvbiBhbmQgdGVhcmRvd24sIHZpb2xh
+dGluZyBsb2NrIGhpZXJhcmNoeS4NCj4gLS0NCg0KRGlzY3Vzc2VkIGhlcmU6DQpodHRwczovL2xv
+cmUua2VybmVsLm9yZy9rdm0vYWs1TDJjc0lUeWkxdEdwMEBnb29nbGUuY29tLw0K
