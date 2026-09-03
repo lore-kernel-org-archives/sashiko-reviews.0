@@ -1,203 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601BF4FECF2
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 18:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E57381B0A;
+	Thu,  3 Sep 2026 18:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788459311; cv=none; b=Z4Myehuq5aZv2stvZk679RLZMRbjInsQIiWRrlUkOQkMd+xl3YoTtR5bs+itBpCKlZFyz81QSbIqHolKAqqpzsC+OuF2kgsOLVHHdD7wQGO/0Jb56o5P+v/Z/25SW8o5pOcf4ecIOoFjFpHaxAfL+WhIHwFLyKLiySVeKHFPGIg=
+	t=1788461020; cv=none; b=N7b70Cjh9SOlnmtdVaGNLl2+eCad6IWYJfGdcaKisdfuoT809djmvZ7Mi7bwuwoUqHJn8pVxNanc8ku59Zx4Wkd9OSamXl5VDqWuWud44TXjFU5jsfDJBxzlGm6duYD6RPll+5FTrILGC9mrX7KDxnnv33vP4yFgyUnFtIQJ7JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788459311; c=relaxed/simple;
-	bh=zvAf15vIU0Me3R0xbvYwev95o9dToUwb+S3NiUxi8DU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C7RC/j/7sCtqNByn80pqPCoaGvxv6/A+6HoxMtJ7X54d/pMddu23tr4CdWVIXLqASfLXz2GmUnIn4NCgZaN3gLe/iWT1T+QKkJxNvgOzvIX7LamqiKWgjfJSVnVvJ0zwmuuUGss3g51d5s+slKMRcIKW0gnXWbAnZew2m2/Oh4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RvVLdY4D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788461020; c=relaxed/simple;
+	bh=VY9pyL00O9MfgC7Uz2zjys8pVKtfm83bsFaJSlzNPXY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RsSRrsN83e7vqUEmHdPg2W7ScBtNysnvCyMAtzCxNnN4jix5miqjbjO5CaklEfG2kMQpLjyX8eUJjBVjxEhaIkXsZICR7Cc1w1e2dzXI+JIm/ueB3521XyPCBtclRJQt4/vUvlAeRmv3Mr35XM8eUDLQpH8BQCxufzPbvdT1mDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=dtkkQXFL; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RvVLdY4D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3141F000E9
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 18:15:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788459310;
-	bh=HTivv1PPcN1iOkPucxMztByW+icmKQM9yk5kfuMSLR8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=RvVLdY4D7CG9r5HRjAH5BfnO3Ltbt0N8JElj/mg9k3uX5BmPWh/SB2VTz0kim0BBt
-	 vOStUZYY+TDJmud8LOIW+CzD20TpkzdpI+7KSeW6vRK2Sx+IePdRXem6pj20dndnHe
-	 qv9D1vjP31U9qQmk9PbIcyV1G2OTJqlmDLZL29SBYhsRrfIJcIn2xWHNYUY9k9ULqz
-	 DgjWNc8oq8mgm9aeKlmFZT8UDlIAmDaiy1S13EzqDLfnpSxQFP7LTU2tAPneT9erRi
-	 +rtWzyryqPajQJLITjF391hNG1dYentmqPWx2LE1PncJW2wpn/q9aMjMnWOXu7KjHy
-	 E9vGyRdtozzWw==
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3a1f628b0afso1993771fa.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 11:15:09 -0700 (PDT)
-X-Gm-Message-State: AFuF++kc3sky7VHDe2EWFnO2gphqxlLOFqs59LiVZxtDfEt/T1xjKCoG
-	BApJmSYsyLJBFdB2fH6yEAaWbwb/Z8g9GgVUy4dfjIWIiatdOcVdmua/Y5ukf6PWk/J2n1h72gL
-	Kx4BxyFaYrirlIFnOsoQqE066qk10dAY=
-X-Received: by 2002:a05:6512:3a8f:b0:5b6:4b2:c6da with SMTP id
- 2adb3069b0e04-5b6155b6986mr686211e87.33.1788459308293; Thu, 03 Sep 2026
- 11:15:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="dtkkQXFL"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 683G2Q7r3425605;
+	Thu, 3 Sep 2026 18:43:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=lNoCnKIKmJnAV/tEP3zbMoKZ1ehvE8
+	Ho++ZZ+eK9vhs=; b=dtkkQXFLVj4zN5WP4jAeW4d3EpGb8vdw6tg/xz6evmG564
+	b6KTgPCIu/bFjcKdhCPCTGhfTj91UJS13R8TsMlt+rN66U1OWyK1YWWWUAFMBKWL
+	Pq0O/I0ZPpE3f2dd9UCiyypYNwGb0ziXB+WOSKP1kZ9dohBYJ1bTIwJPStTIJkEu
+	CnuE4ReIlsQe5dz/VZBADuJCm7daYQouUi1O6xG/EZXIZOx+IHfeF9Kn1WuXPC33
+	Uhw2DkMAxjs+KGpZnC47378XW8mb8u+Xq+Aauvjm1OGa6+1lL6wRnuNg2jTIzq7O
+	IHGud3JfktcaG8y7QVADm3m7CqIK6ajajzVtHKyQ==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq556jf0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Sep 2026 18:43:38 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683IfXDx000412;
+	Thu, 3 Sep 2026 18:43:37 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjasd4a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Sep 2026 18:43:37 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 683IhaVd16908906
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 3 Sep 2026 18:43:36 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7A1595805D;
+	Thu,  3 Sep 2026 18:43:36 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 63B3658055;
+	Thu,  3 Sep 2026 18:43:36 +0000 (GMT)
+Received: from d (unknown [9.16.41.19])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu,  3 Sep 2026 18:43:36 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v7 6/8] scsi: ibmvfc: extend channel registration and
+ deregistration for async subq
+In-Reply-To: <20260831223431.2F4341F000E9@smtp.kernel.org>
+References: <20260831-ibmvfc-fpin-support-v7-0-77d0b9809080@linux.ibm.com>
+	<20260831-ibmvfc-fpin-support-v7-6-77d0b9809080@linux.ibm.com>
+	<20260831223431.2F4341F000E9@smtp.kernel.org>
+Date: Thu, 03 Sep 2026 13:43:36 -0500
+Message-ID: <8733vq5g6f.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <6044499.DvuYhMxLoT@rafael.j.wysocki> <2295263.irdbgypaU6@rafael.j.wysocki>
- <20260903172437.CB90B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260903172437.CB90B1F000E9@smtp.kernel.org>
-From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Date: Thu, 3 Sep 2026 20:14:09 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0i-Q_Gnz+2ti3sOHTCZF4dTZT+oUoNVSB-TMfz-SJH4Xw@mail.gmail.com>
-X-Gm-Features: AcwNN1WwKGCg7LIlC0QqCjVjGf1mtW5uVEzc1uK85_sNr07Us1QCFblw0AbTJcM
-Message-ID: <CAJZ5v0i-Q_Gnz+2ti3sOHTCZF4dTZT+oUoNVSB-TMfz-SJH4Xw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] ACPI: scan: Stop calling acpi_bus_init_power() early
-To: sashiko-reviews@lists.linux.dev
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE2MiBTYWx0ZWRfX2qP3PaEyX4Kd
+ tJ5492BHBpDhuwlYft5cEcaMVGDh5OLTIAzeZR+5HaQbhYqDTCmcIWr2Z1FOg/07RayUnrpQ0PT
+ ZKSbptU5xBa9x9s/SCuVbwwKB+eaMIPEvtWIPifVup6zoftDSV78DDefGEAWqIiXb41GK+HQhgy
+ YppNwK/wLChVboN32xzH84FYTF20N+FN1T+urHMQ0K3P+0FLK9qx3vJQvBwX8eRSLZOuBW7VS+K
+ q+KFRe0h+o0Fb2kE8kUmn64SmFF6HXm4bNtmsJ6BC9HpwzIcK7Y3GGHJr8uzi8jrn8dad23lYPt
+ tVggMZ//LGc8jNEDxfaY3VJpEDjUHdhB5dARsVRg2qeEHwnSaB5uEr0cWTm60PgI15hH9wjVNbS
+ h5YHBC4yx6sxXuQ3PgIrij5L2VdRea5OQgyBDgWBs3UGc7PXpcm8TQ8Xm1eGefXBWxpP9yEODMp
+ /EVssti3UgEx+9U975Q==
+X-Proofpoint-ORIG-GUID: nNdcDsrwh3BYkpSl0Me4-2RE9uEkTfSD
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a99bfda cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=cFIKowR6tQ2XqRsfE8cA:9
+X-Proofpoint-GUID: nNdcDsrwh3BYkpSl0Me4-2RE9uEkTfSD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE2MiBTYWx0ZWRfX/pkxUQ/dnUbf
+ y72es/9NxzRyJiv8z9jS2AofViI6CBpZdDPrbG27/faNyt0zRGWxirYpwf9Bx9olLpzLoMqZZ1r
+ nVI3TGMBAz3jPDEe6kjKQcMPt2Gmodk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030162
 
-On Thu, Sep 3, 2026 at 7:24=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Non-power-manageable devices are incorrectly left in `ACPI_STATE=
-_D0` instead of inheriting their parent's power state, breaking the non-rec=
-ursive power state hierarchy.
+sashiko-bot@kernel.org writes:
 
-I beg to differ.
-
-> --
->
-> commit 1b9c3462d28f35e1a6f47e065a29b14b3971db3a
-> Author: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> Subject: ACPI: scan: Stop calling acpi_bus_init_power() early
->
-> This commit stops calling acpi_bus_init_power() from
-> acpi_bus_get_power_flags() to prevent devices with missing dependencies
-> from being put into D0 prematurely. It introduces a separate invocation
-> during PCI device initialization and uses ACPI power state tracking to
-> decide when to initialize a device's power state.
->
-> Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref=
--fix-v2-1-29818173ea13@linux.spacemit.com/
->
-> > diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-> > index 4269735aadde5..76104f715efa1 100644
-> > --- a/drivers/acpi/device_pm.c
-> > +++ b/drivers/acpi/device_pm.c
-> [ ... ]
-> > @@ -340,9 +346,36 @@ int acpi_bus_init_power(struct acpi_device *device=
-)
-> >               state =3D ACPI_STATE_D0;
-> >       }
-> >       device->power.state =3D state;
-> > +
-> > +     acpi_handle_debug(device->handle, "Initial power state: %s\n",
-> > +                       acpi_power_state_string(state));
-> > +
-> >       return 0;
-> >  }
-> >
-> > +int acpi_bus_init_power(struct acpi_device *device)
-> > +{
-> > +     int result;
-> > +
-> > +     if (device->power.state !=3D ACPI_STATE_UNKNOWN)
-> > +             return 0;
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -4409,7 +4409,7 @@ static void ibmvfc_drain_async_subq(struct ibmvfc_queue *scrq)
+>>   * @scrq_instance: async subq
+>>   *
+>>   **/
+>> -static irqreturn_t __maybe_unused ibmvfc_interrupt_async_subq(int irq, void *scrq_instance)
+>> +static irqreturn_t ibmvfc_interrupt_async_subq(int irq, void *scrq_instance)
+>>  {
+>>  	struct ibmvfc_queue *scrq = (struct ibmvfc_queue *)scrq_instance;
+>>  
 >
 > [Severity: High]
-> Does this check prevent non-PM devices from ever executing
-> acpi_device_init_power()?
+> Now that the async sub-CRQ handler is enabled by this patch, can its
+> execution race with target teardown or host reset? 
 >
-> In acpi_add_single_object(), struct acpi_device is zero-initialized, whic=
-h
-> defaults device->power.state to 0 (ACPI_STATE_D0). If a non-PM device ski=
-ps
-> the ACPI_STATE_UNKNOWN assignment in acpi_bus_get_power_flags(), this ear=
-ly
-> return will silently freeze its state at D0 instead of letting it inherit
-> its parent's power state.
-
-First of all, it is not clear whether or not the power states of
-non-PM devices should matter.  If so, then transitioning a device into
-a new power state should cause the power states of all of its non-PM
-descendants to the same power state which doesn't happen.  The
-existing code doesn't do that even for the immediate children.
-
-Next, acpi_bus_get_power_flags() skips non-PM devices, so
-acpi_bus_init_power() is only called for them from acpi_bus_attach().
-
-Indeed, passing a non-PM device to acpi_bus_init_power() causes it to
-inherit the current power state of the parent, but this is just the
-power state of the parent at this specific time.  The power state of
-the child doesn't change after that point and if the parent is
-power-manageable, its state may change.  For instance, it may be in D0
-initially and then it may transition to D3cold, but the "power state"
-of the child will still be D0.  This is not different from the
-situation after the change.
-
-Suppose though that the parent is initially in, say, D3hot.  It will
-pass this power state to the child and if the child has power
-manageable children, they will never be allowed to transition into D0
-(if they were in D3hot initially).
-
-In the absence of full power state propagation from power-manageable
-devices to their non-PM descendants, leaving all of the non-PM devices
-in D0 is better IMV, which is what the patch does (although admittedly
-it may be good to mention that in the changelog).
-
-> > +
-> > +     /*
-> > +      * The ACPI device power state can be only initialized once.  If =
-this
-> > +      * fails, ACPI power management will not be used for the device g=
-oing
-> > +      * forward.
-> > +      */
-> > +     result =3D acpi_device_init_power(device);
+> In drivers/scsi/ibmvscsi/ibmvfc-core.c, the interrupt handler calls:
+> ibmvfc_interrupt_async_subq() -> ibmvfc_drain_async_subq() ->
+> ibmvfc_handle_async().
+>
+> The ibmvfc_handle_async() function expects to hold vhost->host->host_lock,
+> but this call chain only holds scrq->q_lock. Consequently, it iterates over
+> and modifies vhost->scsi_scrqs.targets without the proper lock. 
+>
+> Could this lockless list traversal cause a use-after-free or data corruption
+> when handling dynamic async events sent by the hypervisor?
+>
 > [ ... ]
-> > diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-> > index f48715ed827c7..f219a16e018a4 100644
-> > --- a/drivers/acpi/scan.c
-> > +++ b/drivers/acpi/scan.c
+
+This is fixed in the next revision of patch 5, where the host lock is
+acquired and released in ibmvfc_handle_async.
+
+>> @@ -6825,36 +6841,49 @@ static int ibmvfc_register_channel(struct ibmvfc_host *vhost,
 > [ ... ]
-> > @@ -1145,8 +1146,7 @@ static void acpi_bus_get_power_flags(struct acpi_=
-device *device)
-> >                       device->power.states[ACPI_STATE_D3_COLD].flags.va=
-lid =3D 1;
-> >       }
-> >
-> > -     if (acpi_bus_init_power(device))
-> > -             device->flags.power_manageable =3D 0;
-> > +     device->power.state =3D ACPI_STATE_UNKNOWN;
+>>  	rc = request_irq(scrq->irq, scrq->handler, 0, scrq->name, scrq);
+>>  
+>>  	if (rc) {
+>> -		dev_err(dev, "Couldn't register sub-crq[%d] irq\n", index);
+>> +		if (!is_async)
+>> +			dev_err(dev, "Couldn't register sub-crq[%d] irq\n", index);
+>> +		else
+>> +			dev_err(dev, "Couldn't register async sub-crq irq\n");
+>>  		irq_dispose_mapping(scrq->irq);
+>>  		goto irq_failed;
+>>  	}
 >
-> [Severity: High]
-> Will non-power-manageable devices be incorrectly left in ACPI_STATE_D0
-> because of this new assignment's placement?
+> [Severity: Medium]
+> This is a pre-existing issue, but does leaving scrq->irq populated with a
+> stale value after irq_dispose_mapping() cause a kernel warning during
+> teardown?
 >
-> Earlier in acpi_bus_get_power_flags(), the code returns early for non-PM
-> devices:
+> If request_irq() fails in ibmvfc_register_channel(), the error path calls
+> irq_dispose_mapping(scrq->irq) but does not clear the irq field to 0. Later,
+> when ibmvfc_deregister_channel() is unconditionally called for the async
+> sub-CRQ during teardown, it might call free_irq(scrq->irq, scrq) on this
+> stale mapping ID (or on 0 if it was never registered). 
 >
->         /* Presence of _PS0|_PR0 indicates 'power manageable' */
->         if (!acpi_has_method(device->handle, "_PS0") &&
->             !acpi_has_method(device->handle, "_PR0"))
->                 return;
->
-> Because this early return happens before the assignment to
-> ACPI_STATE_UNKNOWN, non-PM devices bypass it and retain their
-> zero-initialized D0 state.
->
-> Can this break the non-recursive ACPI power state hierarchy check?
+> Should scrq->irq be explicitly cleared to 0 in this error path to prevent
+> invalid IRQ descriptor warnings?
 
-Not really, and it may even help (see above).
+Agreed, this is a bug. I will add a separate patch to fix this issue.
 
-> If intermediate non-PM devices are left in D0, a PM-capable child device
-> might be incorrectly allowed to power up to D0 even if its grandparent is
-> physically powered off (D3_COLD). This could lead to bus errors or system
-> crashes when the child attempts to access powered-off hardware.
-
-This doesn't happen in practice though because the parent-child
-dependency tracking is done at the physical devices level, not at the
-ACPI device objects level.
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/6044499.DvuYhMxLo=
-T@rafael.j.wysocki?part=3D2
+-Dave
