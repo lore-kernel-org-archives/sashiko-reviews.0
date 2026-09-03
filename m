@@ -1,68 +1,338 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497854AEBED;
-	Thu,  3 Sep 2026 17:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B416B47F2D9
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 17:07:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788455181; cv=none; b=GeFUptqETGiqN16y8z7afvi5ktDfDbAinQWIQS9dvNM9o2vDf0DpuK9EZTy4nT/hxpe67CYB+qQC/VhgGVZrSUjtX7u6ErjhO17/SuU2kJk4+vENE5gJ276A/S8HLRCJr7gRuOpRxjMQzQBfYjU4S0Nr7qigU++FYV+nKsyoXFY=
+	t=1788455260; cv=none; b=b4iSKtGlWsNX0N96spNiiv84URwquu2vHxGu0yOWMdn5W4YsX3Rrbr4kEDVnawv2gvAc95c3uCx+6phxxLTPK1UEtOm6j78nsxoogji8QzEvhbfff6FVDqAyj+JMLjIslh2x/tfs7jC7DjEbFtSa3e1j081kUW5txlUzpw4NCxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788455181; c=relaxed/simple;
-	bh=pZW7l6Uj82ZftAI/UWdI/ODCB0qdO9saQ+8yXZn8/F4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vA0Kjj70geW8tATh4xGmS1GiMUWDAlL3y+qqejXB07Y65/Nhlfwuixd3JBIsn3UH6pUfJRAp4f1oSmHTY5phdd4rTswm1efO7i2MiAovi32ZNe7sKSyeKc+0Kovv3hHAyAxJ3sRDWJmA32dWxr2g67Xq+V6gvBB7imjOs124pCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqxAOIJZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788455260; c=relaxed/simple;
+	bh=W3/8W3/lNhkqiBlRITSzsVQkumsY+ppyl/x9JV/N/gg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=C1XvdOmRI26OL3cRQ7UJsa+fCu3rRIlgz2FuoLegZgAj4PNBYjbTimEYydrh+m/3BkD+nK1OLXdQ6scYYPbTGR63/lItl8dwaxBUm2opcLEzjU1oytvM/39lHQr/waqcJRfwDfgBv3mnyjFSe4sjEcXLXDwhUr7Qf+Id6QlvH/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IWPX4OSk; arc=none smtp.client-ip=209.85.214.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqxAOIJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51201F000E9;
-	Thu,  3 Sep 2026 17:06:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788455179;
-	bh=efqhbmv3xpMp4azc0GRp28vhADwOuPMinLyRDonoxxI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HqxAOIJZIPhPYOIBv16bt1HRpjDsu9iK6mObj29wckauJ8zLgeBMUbzDEvaHt7y0F
-	 V0Pq/12dmQZon/7e3MzhOvSfXek+3fM0zqpTnKStnIKuy6z+HRoEm09QKncCo4YgbH
-	 vCdHjDWiKMvFtqIAcwwAE4ORt2tceJXGlSgMKGz7IxEj0QTz/vjWAYZU6HOkwjxH8r
-	 bbiRLVzdc1WO2KOXT8Gmx7950altiivtwf+x55V/z5L4/JxeZqdw1CgAt9UxYNYBQ3
-	 OBAT3Pcla2Riw9g/anKkM2zgNQEPy/peMujpXuPq71jjXnJ4y/gvHF2Q0ObZA9LkZS
-	 f3UC9gKbnwi9w==
-Received: from johan by xi.lan with local (Exim 4.99.4)
-	(envelope-from <johan@kernel.org>)
-	id 1x2AtF-00000006Iey-2aYL;
-	Thu, 03 Sep 2026 19:06:17 +0200
-Date: Thu, 3 Sep 2026 19:06:17 +0200
-From: Johan Hovold <johan@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org
-Subject: Re: [PATCH] serial: fix ioctl hangup race
-Message-ID: <apmpCSDZWCsGMtP1@hovoldconsulting.com>
-References: <20260903163439.1499055-1-johan@kernel.org>
- <20260903164532.0B6FB1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IWPX4OSk"
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2d7151120d6so531945ad.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 10:07:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1788455258; x=1789060058; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3rOl6zOJPV7OvaUeFzHxeB6d7+tFr+OSRYoJny2JJjQ=;
+        b=IWPX4OSkOg2esc9QtrmC/aNtzKHAxeP+janwAshRunPp3GJdtUT6kQNWCA7+ar9yZ4
+         IQLXzsyWobZ6kOhYk5fDkFxsF4spW6wmaXjEeXzXeN0fJ78GnhvP0oa5idQQ+eQEoDer
+         ZtvWFMAaPAFajS0Wj7C9/gvs+fLyrFePN13Bp7TslqZ0dC2vrujTBUOh7qytGNqINR2V
+         NQu2Xd9YFYzd2R4CPr7ORItprRVPnMQTkgOheasxjMrA+OCw75dTCWBtuOq0H4H2OJba
+         ChdbgW+yV4udW+a394Q/uwy8tfpeoZRjMvAJqDATisWqds29fD2HToNM3GeZbm5sHDRY
+         Kb3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788455258; x=1789060058;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3rOl6zOJPV7OvaUeFzHxeB6d7+tFr+OSRYoJny2JJjQ=;
+        b=Krqz9AZLM+ZB7fCKmyesnLsgfEqvl80NeBNJeA4xNoJERXc/aXYvHesbyjA8x7zRf2
+         skEkwi/KHePTojqqKqi57laZsfgmzxiDY/BxnPaRiOlJcOzoD8b1Bj7jZxTDLFfSIw4g
+         sHWGF8/lnJzx5ExzsrWfF+seIBjxFiwkjNF9FXi0eaXQ9NJeZ7Q0wPGo47yNZAcicJ3k
+         U1IIiJsGCGFdX0bK1Vr95f7rLT2/gzEd3SbvrROUpaUvZEogS3vWumihJXTk0vk12ZQn
+         sF7MAw83IRyOFYISfpyvwladpap5rP3188w7vsMPNo9vpSqGEHWeMSofxY1L2zrbIZWx
+         bMwA==
+X-Gm-Message-State: AFuF++na/xbFbjNeOGDpe7D7Y3BgSeW6YKRd2m2gC9849bQ4C2pCGczP
+	ec0q5C2T8m1oIQ9yxVGIUdKMckLLkO8ECq8D5a3aKo3YwftX5xiaqlLJSDx3Ugu4OViVfUkm6ps
+	E161Ao4NjYu0h/BSvD1z5mGrH+CHlls3Re3qI6POpeRsq4xDYl4xuKHqRnjm3Eb62NMdO/vigOg
+	tJvr6sdHzRNDZaiFOuTgck3kIml/fRLkdtpiXEJZk6uTskUXW8
+X-Received: from plho15.prod.google.com ([2002:a17:903:23cf:b0:2cf:bf3e:41f0])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:fa6:b0:2d9:4358:73ab
+ with SMTP id d9443c01a7336-2db126326b2mr5500405ad.19.1788455257530; Thu, 03
+ Sep 2026 10:07:37 -0700 (PDT)
+Date: Thu, 3 Sep 2026 10:07:36 -0700
+In-Reply-To: <20260903084221.C3B871F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260903164532.0B6FB1F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260903-vfio-v2-1-ef4cd4190ae7@linux.ibm.com> <20260903084221.C3B871F000E9@smtp.kernel.org>
+Message-ID: <apmpWNSv6ahYr2Bl@google.com>
+Subject: Re: [PATCH v2] vfio: Use file-based reference counting for KVM
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Steffen Eiden <seiden@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, 
+	Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org, 
+	Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	Vasily Gorbik <gor@linux.ibm.com>
+Content-Type: text/plain; charset="us-ascii"
 
-On Thu, Sep 03, 2026 at 04:45:31PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Thu, Sep 03, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+> > index 940c0ff668bee..f160e1945fbce 100644
+> > --- a/drivers/s390/crypto/vfio_ap_ops.c
+> > +++ b/drivers/s390/crypto/vfio_ap_ops.c
 > 
-> New issues:
-> - [High] Using a `break` statement inside `scoped_guard()` incorrectly
-> exits the macro's internal loop instead of the intended outer `for
-> (;;)` loop, leading to an infinite wait or severe latency.
+> [ ... ]
+> 
+> > @@ -1822,17 +1822,27 @@ static const struct attribute_group *vfio_ap_mdev_attr_groups[] = {
+> >  
+> >  /**
+> >   * vfio_ap_mdev_set_kvm - sets all data for @matrix_mdev that are needed
+> > - * to manage AP resources for the guest whose state is represented by @kvm
+> > + * to manage AP resources for the guest whose state is represented by
+> > + * @kvm_file
+> >   *
+> >   * @matrix_mdev: a mediated matrix device
+> > - * @kvm: reference to KVM instance
+> > + * @kvm_file: the KVM VM file this vfio device is associated with
+> >   *
+> > - * Return: 0 if no other mediated matrix device has a reference to @kvm;
+> > + * Return: 0 if no other mediated matrix device has a reference to the VM;
+> >   * otherwise, returns an -EPERM.
+> >   */
+> >  static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
+> > -				struct kvm *kvm)
+> > +				struct file *kvm_file)
+> >  {
+> > +	struct kvm *kvm;
+> > +
+> > +	if (!kvm_file)
+> > +		return -ENOENT;
+> > +
+> > +	kvm = kvm_file->private_data;
+> > +	if (!kvm)
+> > +		return -ENOENT;
+> > +
+> >  	if (kvm->arch.crypto.crycbd) {
+> 
+> [Severity: Critical]
+> Does this code adequately verify that the file is an s390 KVM file before
+> casting its private_data in vfio_ap_mdev_set_kvm() inside
+> drivers/s390/crypto/vfio_ap_ops.c?
+> 
+> If a user instantiates a VM using a concurrent KVM-arm64 module and attaches
+> an s390-specific VFIO device to its KVM device, could this driver extract the
+> untyped private_data and mistakenly treat an arm64 struct kvm as an s390 one?
+> 
+> Because the memory layouts of struct kvm_arch differ across architectures,
+> would accessing s390-specific fields in the arch member (like
+> kvm->arch.crypto.pqap_hook) result in arbitrary memory corruption?
 
-Bah. Another reason to dislike guards.
+This is effectively the same concern I raised[1] in the s390+arm64 series:
 
-> Pre-existing issues:
-> - [High] The TIOCMIWAIT ioctl is still vulnerable to the hangup race
-> because `uart_wait_modem_status()` accesses hardware registers via
-> `uart_enable_ms()`, despite the commit message claiming otherwise.
+ : Side topic #2, this entire approach seems extremely brittle unless you make it
+ : all but impossible for non-KVM code to get at KVM structure definitions.  Outside
+ : of KVM, all compilation units will see the s390 version of KVM structures.  Which
+ : is "fine", but obviously dangerous and IMO asking for maintenance issues down the
+ : road.
 
-I missed that call. Will revisit.
+I don't think we need to go to the super extreme lengths I proposed[2] back when
+we were exploring multi-KVM on x86, but the direct dereference of ->private_data
+is a huge red flag.
 
-Johan
+Given that external usage of "struct kvm" should be *super* rare, and IMO is
+something we should actively discourage, I think we should make it opt-in.  Then
+at the same time, define the API so that it's arch-specific, e.g. to yield
+file_to_kvm_s390() so that drivers/s390/crypto/vfio_ap_ops.c can get exactly
+what it wants.
+
+Diff below, though it needs to be split into multiple patches (I'll respond with
+more to the full patch).
+
+[1] https://lore.kernel.org/all/aphLXQL1H2zYZgTi@google.com
+[2] https://lore.kernel.org/all/20230916003118.2540661-1-seanjc@google.com
+
+diff --git a/arch/s390/include/asm/kvm_host_s390.h b/arch/s390/include/asm/kvm_host_s390.h
+index cd692f8fb764..8a7eed5847e1 100644
+--- a/arch/s390/include/asm/kvm_host_s390.h
++++ b/arch/s390/include/asm/kvm_host_s390.h
+@@ -27,6 +27,8 @@
+ #include <asm/isc.h>
+ #include <asm/guarded_storage.h>
+ 
++#define kvm_file_to_kvm_arch s390
++
+ #define KVM_HAVE_MMU_RWLOCK
+ #define KVM_MAX_VCPUS 255
+ 
+diff --git a/arch/x86/include/asm/kvm_page_track.h b/arch/x86/include/asm/kvm_page_track.h
+index 046a25c8fe4f..acc301f5e265 100644
+--- a/arch/x86/include/asm/kvm_page_track.h
++++ b/arch/x86/include/asm/kvm_page_track.h
+@@ -5,6 +5,9 @@
+ #include <linux/kvm_types.h>
+ 
+ #ifdef CONFIG_KVM_EXTERNAL_WRITE_TRACKING
++
++#define kvm_file_to_kvm_arch x86
++
+ /*
+  * The notifier represented by @kvm_page_track_notifier_node is linked into
+  * the head which will be notified when guest is triggering the track event.
+diff --git a/arch/x86/kvm/Makefile b/arch/x86/kvm/Makefile
+index 96f89d6f7e6a..c6bf463f5032 100644
+--- a/arch/x86/kvm/Makefile
++++ b/arch/x86/kvm/Makefile
+@@ -60,7 +60,8 @@ exports_grep_trailer := --include='*.[ch]' -nrw $(srctree)/virt/kvm $(srctree)/a
+ 			grep -v -e kvm_page_track_register_notifier \
+ 				-e kvm_page_track_unregister_notifier \
+ 				-e kvm_write_track_add_gfn \
+-				-e kvm_write_track_remove_gfn
++				-e kvm_write_track_remove_gfn \
++				-e kvm_file_to_kvm_fn
+ 
+ # Force grep to emit a goofy group separator that can in turn be replaced with
+ # the above newline macro (newlines in Make are a nightmare).  Note, grep only
+diff --git a/arch/x86/kvm/mmu/page_track.c b/arch/x86/kvm/mmu/page_track.c
+index 98f133e4f0b3..ebf941b6378d 100644
+--- a/arch/x86/kvm/mmu/page_track.c
++++ b/arch/x86/kvm/mmu/page_track.c
+@@ -241,7 +241,7 @@ int kvm_page_track_register_notifier(struct file *file,
+ 				     struct kvm_page_track_notifier_node *n)
+ {
+ 	struct kvm_page_track_notifier_head *head;
+-	struct kvm *kvm = file_to_kvm(file);
++	struct kvm *kvm = file_to_kvm_x86(file);
+ 	int r;
+ 
+ 	if (!kvm || kvm->mm != current->mm)
+@@ -272,7 +272,7 @@ void kvm_page_track_unregister_notifier(struct file *file,
+ 					struct kvm_page_track_notifier_node *n)
+ {
+ 	struct kvm_page_track_notifier_head *head;
+-	struct kvm *kvm = file_to_kvm(file);
++	struct kvm *kvm = file_to_kvm_x86(file);
+ 
+ 	head = &kvm->arch.track_notifier_head;
+ 
+@@ -343,7 +343,7 @@ void kvm_page_track_delete_slot(struct kvm *kvm, struct kvm_memory_slot *slot)
+  */
+ int kvm_write_track_add_gfn(struct file *file, gfn_t gfn)
+ {
+-	struct kvm *kvm = file_to_kvm(file);
++	struct kvm *kvm = file_to_kvm_x86(file);
+ 	struct kvm_memory_slot *slot;
+ 	int idx;
+ 
+@@ -374,7 +374,7 @@ EXPORT_SYMBOL_GPL(kvm_write_track_add_gfn);
+  */
+ int kvm_write_track_remove_gfn(struct file *file, gfn_t gfn)
+ {
+-	struct kvm *kvm = file_to_kvm(file);
++	struct kvm *kvm = file_to_kvm_x86(file);
+ 	struct kvm_memory_slot *slot;
+ 	int idx;
+ 
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 5705723f1f41..6b0eacde4f06 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2145,10 +2145,10 @@ int sev_vm_move_enc_context_from(struct kvm *kvm, unsigned int source_fd)
+ 	if (fd_empty(f))
+ 		return -EBADF;
+ 
+-	if (!file_is_kvm(fd_file(f)))
++	source_kvm = file_to_kvm_x86(fd_file(f));
++	if (!source_kvm)
+ 		return -EBADF;
+ 
+-	source_kvm = fd_file(f)->private_data;
+ 	ret = sev_lock_two_vms(kvm, source_kvm);
+ 	if (ret)
+ 		return ret;
+@@ -2866,10 +2866,10 @@ int sev_vm_copy_enc_context_from(struct kvm *kvm, unsigned int source_fd)
+ 	if (fd_empty(f))
+ 		return -EBADF;
+ 
+-	if (!file_is_kvm(fd_file(f)))
++	source_kvm = file_to_kvm_x86(fd_file(f));
++	if (!source_kvm)
+ 		return -EBADF;
+ 
+-	source_kvm = fd_file(f)->private_data;
+ 	ret = sev_lock_two_vms(kvm, source_kvm);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+index f160e1945fbc..96bcc47b824f 100644
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -1834,12 +1834,8 @@ static const struct attribute_group *vfio_ap_mdev_attr_groups[] = {
+ static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
+ 				struct file *kvm_file)
+ {
+-	struct kvm *kvm;
++	struct kvm *kvm = file_to_kvm_s390(kvm_file);
+ 
+-	if (!kvm_file)
+-		return -ENOENT;
+-
+-	kvm = kvm_file->private_data;
+ 	if (!kvm)
+ 		return -ENOENT;
+ 
+diff --git a/drivers/vfio/pci/vfio_pci_zdev.c b/drivers/vfio/pci/vfio_pci_zdev.c
+index 045132e90bfe..332bc66db55b 100644
+--- a/drivers/vfio/pci/vfio_pci_zdev.c
++++ b/drivers/vfio/pci/vfio_pci_zdev.c
+@@ -196,7 +196,7 @@ int vfio_pci_zdev_open_device(struct vfio_pci_core_device *vdev)
+ 		return 0;
+ 
+ 	ret = -ENOENT;
+-	kvm = vdev->vdev.kvm->private_data;
++	kvm = file_to_kvm_s390(vdev->vdev.kvm);
+ 	if (!kvm)
+ 		goto recovery;
+ 
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index bfecce1b5955..09e327843e6c 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1088,8 +1088,11 @@ void kvm_exit(void);
+ void kvm_get_kvm(struct kvm *kvm);
+ bool kvm_get_kvm_safe(struct kvm *kvm);
+ void kvm_put_kvm(struct kvm *kvm);
+-bool file_is_kvm(struct file *file);
+-struct kvm *file_to_kvm(struct file *file);
++#ifdef kvm_file_to_kvm_arch
++#define kvm_file_to_kvm_fn CONCATENATE(file_to_kvm_, kvm_file_to_kvm_arch)
++struct kvm *kvm_file_to_kvm_fn(struct file *file);
++#endif
++
+ void kvm_put_kvm_no_destroy(struct kvm *kvm);
+ 
+ static inline struct kvm_memslots *__kvm_memslots(struct kvm *kvm, int as_id)
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 34b4c43908b3..9557026299d3 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -5492,20 +5492,16 @@ static struct file_operations kvm_vm_fops = {
+ 	KVM_COMPAT(kvm_vm_compat_ioctl),
+ };
+ 
+-bool file_is_kvm(struct file *file)
++#ifdef kvm_file_to_kvm_fn
++struct kvm *kvm_file_to_kvm_fn(struct file *file)
+ {
+-	return file && file->f_op == &kvm_vm_fops;
+-}
+-EXPORT_SYMBOL_FOR_KVM_INTERNAL(file_is_kvm);
+-
+-struct kvm *file_to_kvm(struct file *file)
+-{
+-	if (!file_is_kvm(file))
++	if (!file || file->f_op != &kvm_vm_fops)
+ 		return NULL;
+ 
+ 	return file->private_data;
+ }
+-EXPORT_SYMBOL_FOR_KVM_INTERNAL(file_to_kvm);
++EXPORT_SYMBOL_GPL(kvm_file_to_kvm_fn);
++#endif
+ 
+ static int kvm_dev_ioctl_create_vm(unsigned long type)
+ {
+
