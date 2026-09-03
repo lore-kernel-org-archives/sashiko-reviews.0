@@ -1,318 +1,302 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33C951474E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788473789; cv=fail; b=SfnDc+VD79dTLQ0od7F/Cj8JB61upJ9kbTDZ0qLuZSV/BGPon0nKL9zBbXv0lYTd40LLmk9FjXuhKmR1PL2UtFp1Dp2VgtUq4LAsuX197fY77RQWvJoW6CdY3MxcBWeQkrSHdf2ivKjvQAFcVJQCzEUzRuqG8q3oEnM5cd2gsX4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788473789; c=relaxed/simple;
-	bh=imBeQ8+uhymjH1Evdu7k+oOaczGv3MmKJ5MQc6jw3RQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=KDOuU700Q7lvXvqLPFB9YS72E3kQxAAhqZScXmVneq5zmvgNWFFmyOWnopUMU1QPlb6CRVHh0QC1WiVhIolWxbvDu/GPFe4A5MkR2wyoOzuMZSqr+ugOxwi6DV4qCoRSJIKuWSYyC1+Ddvxxs9Uqs3EmqIZtln4KZLlYlT3+bRw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mzw34+gq; arc=fail smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B56D33A71A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788474698; cv=none; b=fldFq52DT9Ek5Ooo2S8mh6u+Q7IyKjNsRYF38ErLKmzgfh71UPgVPQgex+wYIC/dXXFl4OMA3IOWVGgKmQ7fAp/k9NXzAVY4g/B+ttih0izX7vaLwf2CliuwEL2kI/PpsJDVM4VXxprNiYsJ+xMKlR6V+FOvkBipHdeutIbRtVw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788474698; c=relaxed/simple;
+	bh=SC8msKd4liq5RgprKW2P+oARDa4OohOlzj9gKvTIG4M=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=QkTN2J8mZt+SqzzuY/3osDbz8lloFqAB0LWHC3GH9ydVTWTexKeZnTfqY1AB8/8vgWKiuj9vXAyqCntrwLasrlXoA9+nFjUCe8HcYkqjVFienbaTs8WaB/vJoLyi0Iw8RYFWVkQgYJZz6WuQzxfm8TqMx3E+6Y3rQxGmV5Zio3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=hhnkgw+A; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mzw34+gq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788473787; x=1820009787;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=imBeQ8+uhymjH1Evdu7k+oOaczGv3MmKJ5MQc6jw3RQ=;
-  b=mzw34+gqEzTCJhCXfBctkFt1SQropQ5Xlgu3CldPC86ay9Z00/4M/WTd
-   wwJPOWeCqFpvmmqv7uvSvKVua/DijFIR7GNqjud11tTdhzimBQ5tbFBaD
-   y9yFMMhwNL2Wr3IA+dXCtgokmg4a/RHbQiGZvpm51OLifRjUbQOIhlgQq
-   G0WDxQG7jLHG1XDbvyAbQZiWOcSlH0LG3vdBMhjzV0uThc0euH+lP5Qki
-   czTfKbrjUJl/AYw2VaYRvq4TwIR/9+WMWK/JxRCFpYY9soNK700Zw4LX0
-   fqVAOse9xDxGYZohSxF9KVrj8tboRjTtyEDWBEvdh+8hlEvlqTAK2B9Tk
-   w==;
-X-CSE-ConnectionGUID: +PPaiC3yRF6g2P9nhKoy6A==
-X-CSE-MsgGUID: VjTx5WVjQxGuKlHLlSc0kw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="89094674"
-X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="89094674"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:16:26 -0700
-X-CSE-ConnectionGUID: CXlrJbmpStq5h2VuFoaeOQ==
-X-CSE-MsgGUID: THJKTsc6TpekUdEhigk7qA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="275130187"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:16:26 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 15:16:25 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 15:16:25 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.35) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 15:16:25 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OM+GEamAB7zkCeeTZvqKMUYZJtVC05REHUtDrjWLF3AyIa7R/5cNQ4O83ebH00IbLCZoV9waAKLyQTWi/BBh88wAWdQUGUukQY90ft9+oykJpgPYoCl5UmmMebATL+2135Buxg773mlIOOILvxrflrqzKBvxf8bfc1tIVtbxe6BqslYW2gT6K0ytbwVBzvLw2WfSO51ri0Sj42cMzbLnbqnx88/kN3LINZQXHr304/MSl9nCXqQSAs9xaP9lYbXaQSODDLCUHxjQvl3U8p4ckoxC8G3GUNs0cqj0WXbbVQCz+fxdCRevMbDZLAKN19CpGx0MBMdwJYh9YJurWbyzEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Mg3HvfIYau2EKnMAfTCtZTcULuarPCCRAr7EDTWdtY8=;
- b=L3TYsPilA/RAoKs2jpYTObrwfvJpqvzSbB6TlqGFkw4LRq6qAu8mf1O4SO4d73HmkGgUJN9ac9ouRyhKEFtcXuVgRKhu+zEledq5YLMt2xLQ4KrkYrsGZLe5cARtQM6+Rw2cxp6SHTyR/H/nZbjizIcZoMGDllT6o53Ai+kEDcBGPxt2Z4flOKLJ74W/lrHaRI8vARftVOK8TDa6zsfNDA4jv8gDnebRBvc41Qri53OoVnu3Z1lzZ1IB+DDQNhUKvNCVmbgzGc3VE2xN+EOgivcQc/Wvlu6RKinsxIel6P/N5tmbxZbn6NcJa3rqzmHnFuCkcvm+MP4KvOJhmTATCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM4PR11MB7256.namprd11.prod.outlook.com (2603:10b6:8:10c::8) by
- IA1PR11MB6540.namprd11.prod.outlook.com (2603:10b6:208:3a0::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.13; Thu, 3 Sep 2026 22:16:22 +0000
-Received: from DM4PR11MB7256.namprd11.prod.outlook.com
- ([fe80::86bc:2f46:443f:51dd]) by DM4PR11MB7256.namprd11.prod.outlook.com
- ([fe80::86bc:2f46:443f:51dd%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
- 22:16:22 +0000
-Date: Fri, 4 Sep 2026 00:16:15 +0200
-From: =?utf-8?Q?Micha=C5=82?= Grzelak <michal.grzelak@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>, <intel-gfx@lists.freedesktop.org>, "Jani
- Nikula" <jani.nikula@intel.com>, Suraj Kandpal <suraj.kandpal@intel.com>
-Subject: Re: [PATCH v11 7/8] drm/i915: override Combo's VS/PE when requested
-Message-ID: <tn4aptgci5wty3f5t56dr7xjfq4j33pzzl6scimokxhqy7ezts@6ioifmxxyjoj>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173,
- 80-298 Gdansk - KRS 101882 - NIP 957-07-52-316
-References: <20260813160918.918857-1-michal.grzelak@intel.com>
- <20260813160918.918857-8-michal.grzelak@intel.com>
- <20260813165017.4B5141F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813165017.4B5141F000E9@smtp.kernel.org>
-X-ClientProxiedBy: AS9PR05CA0250.eurprd05.prod.outlook.com
- (2603:10a6:20b:493::28) To DM4PR11MB7256.namprd11.prod.outlook.com
- (2603:10b6:8:10c::8)
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="hhnkgw+A"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id EDA80240027
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 00:31:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1788474693;
+	bh=ufFEH71c3NEpjig5lV8qtBIYSld2UH9x73t3GqVwzzs=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=hhnkgw+A2fgW0DKG8CbItTSSqPzcX9eD2uhpsqYoL2jhqrvMUFwPpP1HEVPRfSCOP
+	 KWo5PdK7gj0B7sRfcCFz7MSOUGzZwkQcXCfk/s3GjK2VDmtY9h89qf1ZeuCY9UuibC
+	 CzyQeTqfiE1nJabV4CY69hzgU0LR6asgCvz1NOSV6mZ4gHiNdkz+m6vzpDH4573xIW
+	 AOWHQx6h9JlrhSofQ4t750Oy40mLuT+aqDxGkJzt4pNg5XM9oFYkc2dXnJyGlhWe5O
+	 oplFzOOFbqzNcsl3+7ph91rP9H0je6NyWbSl6PMQ9DOuJhdYydmrjavjAdbV5rrERt
+	 2qP5vhHd4zENg==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4hbZ853Jd9z9rxD;
+	Fri,  4 Sep 2026 00:31:33 +0200 (CEST)
+Message-ID: <c284466700477e9c69cd433db90baf273bef764b.camel@posteo.de>
+Subject: Re: [PATCH] rust: serdev: Synchronize receive callback before
+ calling unbind
+From: Markus Probst <markus.probst@posteo.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org, linux-serial@vger.kernel.org
+Date: Thu, 03 Sep 2026 22:31:33 +0000
+In-Reply-To: <20260903222159.70A911F000E9@smtp.kernel.org>
+References: <20260904-rust_serdev_ref_mut-v1-1-245db7eb09af@posteo.de>
+	 <20260903222159.70A911F000E9@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-D4watG/QRT1xefvUmWai"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB7256:EE_|IA1PR11MB6540:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee7a2e4c-3755-4a7f-fbc4-08df0a08fac4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|4143699003|11063799006|10067099003|6133799003|22082099003|18002099003|3023799007|56012099006;
-X-Microsoft-Antispam-Message-Info: qnoBQIxW4dJGrW4uKoMSaxgLWTxYrVNBNzFzsZ3zanyicS+DSYQaQBVgcihbR6yW7bNP6dZvVUlfrlgw9/1giZdi/AePTuQ2XJ8aWeDs3YtwDY/nZRjUYgfH2Y0zsmg6XxQxTDZCNmVNCp1PdfnkIr51C9LVRK09Zm/4oOzNnZkrYupfySX6PmpCzqpId7nXQhKEsuBTxiE6HeciUHjk10//jXYzPtfGNMAD1nylIepOmB18OWGpNhFFDtvv1C5d85eU7F4H0n7nwYMoNwDlVsf8jjD6CSuJoxiSGeZeXbQmskIXX3YVAelINpXTC1y89Ny5VhAmBOazV2zOq67VQ2vYAi+/OoCKMbV2TeX+8y295SU82S7yAmBdnpyuFMBS0AOTpKB083JrB+IdaVqn7esHPL82xfKoHcVb290Kl8LMEDFb9H14n1aK3rDeHFb5z88vE4u0dqS8tNubsrNyZ80k7hY47MtzUGpNm+UqHT9awzkrS4tFQo1mjEkQ6EfoQ2MNnUJ+Y9wC9R40aSQCoJx2adTOAxex83kEZb7esEAEQXrKmBnvdac0k/w9IKaYGpckrmoyhawDCVklG1geWms8KV7PXtI37cX42G6An3o=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB7256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(4143699003)(11063799006)(10067099003)(6133799003)(22082099003)(18002099003)(3023799007)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WTZoNjAzZVprWUluckNMUkZTcDVmeG5mVk9hTlVFTGpaTVhVMm5BeXErZGxl?=
- =?utf-8?B?MkdUM0ladkxKeGVWRW0vRjM1cFExc1krMWxwZ2Jja0dYYU9scnFlSktFdU84?=
- =?utf-8?B?YUJONXIzWWwydThRT1BMSWQwWUNPOEFaL1ZKQ0ozK2NWZDJmN1Y4ZEYwMCty?=
- =?utf-8?B?MXZwM2xlNVNLcjBGOEpIWENWUUNWZFJYV0d0MWp4Wk9KcStGVWdBUHU2Ymtp?=
- =?utf-8?B?ZnhNUGR2a3o4MmpoRFBwbVVjZ2JpM05XZ2tFRERydzA2YnpwRTJpcWdVRGlL?=
- =?utf-8?B?cTI0dFowOGZxR1UycitsS1lsMjNSSWtPeThKbkJQQW5lb0lSdUtqYURJRG9h?=
- =?utf-8?B?ZVhqb2F5aS9NN2hDSlJ5OTJ6cmUvRXhaZm9NWnBGNDY4dXBKT1RvN2paMDRC?=
- =?utf-8?B?Si96ZklhVFN0OTRNVlNqcVE2U0dIZTR6QUhpYzFuME1iSlBjaTJnWEtIbW1s?=
- =?utf-8?B?QW9jM2s0QjlYRFZYRmJocXkxenFRTmRqUlJEblJxSlA2Sklzek1WUTZ3Mity?=
- =?utf-8?B?RCtZTmtVSTlqN2tXSnNjY1c5TXNHaHRMZ1RiaERKVFBYeXczWWRlLzErcnBX?=
- =?utf-8?B?Z2djeVoybHJhT2NsWEgvVlB6MUZ4T3BCTUgzODlzc28rZEg5Z0owNjArbHhS?=
- =?utf-8?B?bllCTXl3S2dqV0JSY3lRcjhzaHI4NXRkd1NWUG9YalRlZDJWeEE3N1FVZm1n?=
- =?utf-8?B?K1ZkNHk2YnJKb2lIQ2JEcEJxOWpJbE8wWXYvVWtlNVNkQ1lTK3R0eVNPa0V0?=
- =?utf-8?B?UlFzTFZEc0EvanFCQ0l1UUZQd1VGVEVWWlN1dkVuL1QxS0lxMFhKMEFiNVBQ?=
- =?utf-8?B?d1hISUwxa1phZEJONDRhdmlxTHVyQWhKRmVIMnRDR29LM2lET01kOVlZdWJW?=
- =?utf-8?B?OCtzcEhXMUt1U3ZOMFYrWXJRelQrKzVQNUI1bDdrWGdjS2NXVURoK0VwdnZQ?=
- =?utf-8?B?WjRXOUJRQmt5MlM4MUNkMG9rK3ZDNVE3RzNsUmJDVjQ4ektQWmlFSjk0QnlV?=
- =?utf-8?B?ckJmaHljWG8vc1o3OHZFY1pEdlhYRUlvYVZnNVQ4RnVsdUZ1L09vTGhuRGtk?=
- =?utf-8?B?L1hVRjhneWlJNzZYT2huQzIzUUJUZEtQR3Z2SWxhVlR5MDkrdDYxNzZsb0FU?=
- =?utf-8?B?VjI2UllUcUxjRmc3cGpBd1Ayaks5UndkQUowaGczYjVkWkhuWmJTZUFqaEFF?=
- =?utf-8?B?eEZxR0EwVFNobUpCQ21mOVdsaytXWTF2S3pJZXdVeHlWVW1oNjd1Y0dmZjlv?=
- =?utf-8?B?b0QvS3ZGazZNTUl1T1k3WjhTRmROL2NscHVndVQ2UWFBZWZTQjRWRmlZZVJs?=
- =?utf-8?B?TVF2L3B1RzFCdkVVQmt3a0dRM1Zvbk5Ec2k2bmc2ZWxYaEkzVjA3a3Zvejdj?=
- =?utf-8?B?ejlBUGlOOW85bmlLOWM0Q3dIUzA3WVg1STF4bE94emxyS2IvTVhXMDRWYmo2?=
- =?utf-8?B?aHI1RFhMRXByWWd3WVlPMFhhcmttTlNlc2w1bGg3bkNsUWs2Z0JBMDU3dlVq?=
- =?utf-8?B?UnJJT3gxdGZxdlFDREpZZEg0SVdoak5zajk4VHhDbzVTQk1jSXhxQWtoYVl4?=
- =?utf-8?B?UFpNRENYdndlbEJ2dVVTYVRDeGI0NFozVUx3OVJFcFY5Sm00RUswQXVOTjdz?=
- =?utf-8?B?QTdhRDdmYVJFb0xscWFoQmhGalFyelQwUDBFMDVLUEVZTWExKzY3Tys2R1F3?=
- =?utf-8?B?d3BkT2J0aGdiOVhQYm50YWYxWUtUc0xYeWlWQTZwZjA3bWVrMmdUVmZVcGlG?=
- =?utf-8?B?dmgxTnZ0RFowSkdxY20xNFNQdjMwWkczQ2hveG0yeGlOYk1FbHRhTGUvZFBX?=
- =?utf-8?B?OHNzaFVCTzk3ZlA2RnhVNjQrN1VQZUpTOW1LTXEvY3JLdHFpYlhyNHFNYW8v?=
- =?utf-8?B?ZTJIci9NbFBLNnBTdThBaHlzZ25ycTdrUnVCcDM2cVFidU85VjY1Vkh3QStI?=
- =?utf-8?B?Tzh6MGhEVEdaYm9Xc2hvbWdQRW4vUklTZGpkSlhaOW1MU3BtWUU3c2VKOTJr?=
- =?utf-8?B?QXEzZTFaZjVFOUQ1MU1pTXNWNS9TeVdxYThtZ1hvM3NyWjJEMWFISmhyS1Jt?=
- =?utf-8?B?S0prYmdoTHFkMEplNWoyZmlnSjRWWEVOQUo5Y0dnRjBpNTl1QlcyZG11UXVQ?=
- =?utf-8?B?MTF2N29sUjJ2SFVFWnNyaGhCRkQveExsay9wRktjclJwMWM2WVZWOVUvNmpK?=
- =?utf-8?B?YldHTVBqMjdsS2RmZXZ4Znl3NWcyUTBNcHJRSm04VkVZTGQySUJWUW1vK0tu?=
- =?utf-8?B?OVovL3J1WDFXOE1lRWpvWi9qSG9iWURGUDVWUXlPRHRsUW9zYmxWR0VTYXJO?=
- =?utf-8?B?ZFl2STBCdUpCM1hOa0JkU3FXcStxbmJzQ3BKMzE1UzVQbWRKY21DOGk5ZXpY?=
- =?utf-8?Q?h+aqq/BQ08+IcKmw=3D?=
-X-Exchange-RoutingPolicyChecked: dX3e6eTJi/WpgxAybbnD1HqOsGbJ9/GpUIx5i1uC5c5HmZ1Qc9ADbKtaFY7Zg31UFQ+J91gOoA+tkxFGBLm9OFhLIOZdcb0QDr6XiXhysK0qYveqUGBzZmaNLxFiVKQwd13C/LbPo9bL0M8WxDnymGW4TX2bsxO5cETI0UI64tZ7+RJ3W1ihAGMiNhKcmVofesMsmjeZm9I+v5PGAO08EWZ+QFumtpuPN4/zvUiXXQRhc8pN/q0aJ11IpuEXnCl0X41DN6ugQRM7d4Yp4rzMc/vfgxxmK4TbSRAHKGDLIHWew6IUhWQl1rgblbWfMjqTl68moDch84fq4bHn1nx1ag==
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee7a2e4c-3755-4a7f-fbc4-08df0a08fac4
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB7256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 22:16:21.9428
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Xy8hKuHI/EHwRLRMx2pQSE4ER7B0jSCaU85yko/s8D/zbouZg1Ikrk9UckznqbKh3NTWiuD19bXZXm4IhOTMOKxAfVgVamQKK8UmyMHWHL0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6540
-X-OriginatorOrg: intel.com
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
-On Thu, Aug 13, 2026 at 04:50:16PM GMT, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] EHL PHY override logic incorrectly applies 'low_vswing' settings to non-low_vswing eDP panels
-> - [Medium] Potential out-of-bounds read during VBT 'tables' parsing
-> - [Medium] JSL PHY override logic is reversed for HBR2 vs lower port clocks compared to intended behavior
-> - [Medium] Memory allocated for `devdata->entries` is leaked on early return in vspeo retrieval functions
+
+--=-D4watG/QRT1xefvUmWai
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, 2026-09-03 at 22:21 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>=20
+> New issues:
+> - [High] Holding the `active` mutex during `T::unbind` causes an inescapa=
+ble deadlock for drivers that synchronously communicate with the device.
+> - [Low] Logically dead code inside the error-handling `ScopeGuard` in `pr=
+obe_callback`.
+>=20
+> Pre-existing issues:
+> - [High] Race condition between drvdata_obtain and receive_buf_callback c=
+auses NULL pointer dereference or Use-After-Free.
 > --
-> 
-> --- Patch [7]: [PATCH v11 7/8] drm/i915: override Combo's VS/PE when requested ---
-> commit 3f316b5929dec8d0ea8bb76e4cb8983db3b9bf70
-> Author: Michał Grzelak <michal.grzelak@intel.com>
-> drm/i915: override Combo's VS/PE when requested
-> 
-> This commit adds accessor functions for the Combo PHY to read requested
-> VS/PE tables from the VBT. It parses the requested table and transforms
-> the data to override the port's buffer settings based on platform (EHL/JSL)
-> and port capabilities.
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_bios.c b/drivers/gpu/drm/i915/display/intel_bios.c
-> > --- a/drivers/gpu/drm/i915/display/intel_bios.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_bios.c
-> 
+>=20
+> commit 6f561db35778bb34c19e46b1a5df116263c0adbc
+> Author: Markus Probst <markus.probst@posteo.de>
+> Subject: rust: serdev: Synchronize receive callback before calling unbind
+>=20
+> The commit changes the receive and unbind callbacks to provide exclusive
+> access to driver private data by handing out mutable references. It remov=
+es
+> the Sync requirement for Data and introduces locking for synchronization.
+>=20
+> > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
+> > index 17ca504b7f8d6..44f029ed93fd1 100644
+> > --- a/rust/kernel/serdev.rs
+> > +++ b/rust/kernel/serdev.rs
+>=20
 > [ ... ]
-> 
-> > +const struct intel_ddi_buf_trans *
-> > +intel_bios_get_ehl_combo_vspeo(const struct intel_bios_encoder_data *devdata,
-> > +			       bool has_dp, int port_clock, bool has_edp)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	if (!validate_vspeo(devdata, has_dp))
-> > +		return NULL;
-> 
-> [Severity: Medium]
-> Does this early return (and the similar one in intel_bios_get_jsl_combo_vspeo)
-> cause a memory leak of the devdata->entries buffer?
-> 
-> During teardown in intel_bios_driver_remove(), the driver attempts to free
-> this memory using kfree(devdata->vspeo->entries). Since vspeo->entries is
-> assigned much later in this function, returning NULL here leaves
-> devdata->vspeo->entries uninitialized or NULL. This would cause the teardown
-> code to skip freeing the memory allocated to devdata->entries.
-> 
-
-Duplicate of memory leak from PATCH 4/8.
-
-> > +
-> > +	if (has_edp)
-> > +		idx = port_clock > 540000 ? 2 : 1;
-> > +	else
-> > +		idx = port_clock > 270000 ? 1 : 0;
-> 
+>=20
+> > @@ -127,16 +127,6 @@ pub struct PrivateData<'bound, T: Driver> {
+> >  #[pinned_drop]
+> >  impl<T: Driver> PinnedDrop for PrivateData<'_, T> {
+> >      fn drop(self: Pin<&mut Self>) {
+> > -        let mut active =3D self.active.lock();
+> > -        if *active {
+> > -            // SAFETY:
+> > -            // - We have exclusive access to `self.driver`.
+> > -            // - `self.driver` is guaranteed to be initialized.
+> > -            unsafe { (*self.driver.get()).assume_init_drop() };
+> > -            *active =3D false;
+> > -        }
+> > -        drop(active);
+> > -
+> >          // SAFETY: We have exclusive access to `self.open`.
+> >          if unsafe { *self.open.get() } {
+>=20
 > [Severity: High]
-> The commit message indicates that for EHL, eDP configurations using low
-> vswing should behave differently from eDP configurations not using low
-> vswing. However, does this logic unconditionally apply the same table index
-> logic to all eDP configurations?
-> 
-> It seems intel_bios_get_ehl_combo_vspeo() does not receive or check a
-> low_vswing parameter (like the JSL equivalent does), applying the same
-> fallback logic to all eDP panels.
-
-Yes, this will be fixed in next version.
-
-> 
-> > +
-> > +	offset += idx * num_rows * num_columns;
-> > +
-> > +	for (level = 0; level < num_rows; level++) {
-> > +		u32 dw2_swing_sel = tables[offset];
-> > +		u32 dw7_n_scalar = tables[offset + 1];
-> > +		u32 dw4_cursor_coeff = tables[offset + 2];
-> > +		u32 dw4_post_cursor_2 = tables[offset + 3];
-> > +		u32 dw4_post_cursor_1 = tables[offset + 4];
-> 
-> [Severity: Medium]
-> Can this loop read out of bounds if the VBT is malformed?
-> 
-> The parsing calculation offset = idx * num_rows * num_columns followed by
-> direct accesses up to tables[offset + 4] doesn't appear to validate that
-> num_columns is at least 5, or that the overall VBT tables buffer is
-> sized adequately to support the calculated offset and rows.
-> 
+> This isn't a bug introduced by this patch, but does the timing of closing=
+ the
+> device cause a use-after-free or NULL pointer dereference?
+>=20
+> If probe fails after the device is opened, or when the driver is unbound,
+> drvdata_obtain() clears the underlying C driver_data pointer to NULL and
+> drops the data. However, bindings::serdev_device_close(self.sdev.as_raw()=
+)
+> is only called later inside PrivateData::drop().
+>=20
+> Because the device is still open while the pointer is cleared, incoming
+> serial data can trigger receive_buf_callback() in the TTY workqueue.
+>=20
+> receive_buf_callback() calls drvdata_borrow(), which reads the NULL point=
+er
+> and blindly dereferences it, or reads it right before it's cleared and
+> accesses freed memory.
+>=20
+> Should the device be closed before clearing the drvdata pointer?
+This definitely needs to be addressed, yes.
+>=20
 > [ ... ]
-> 
-> > +const struct intel_ddi_buf_trans *
-> > +intel_bios_get_jsl_combo_vspeo(const struct intel_bios_encoder_data *devdata,
-> > +			       bool has_dp, int port_clock, bool low_vswing_edp)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	if (low_vswing_edp) {
-> > +		if (port_clock > 540000)
-> > +			idx = 0;
-> > +		else if (port_clock > 270000)
-> > +			idx = 1;
-> > +		else
-> > +			idx = 2;
-> > +	}
-> 
-> [Severity: Medium]
-> Is this table selection logic reversed compared to the commit message?
-> 
-> The commit message states: "When encoder supports HBR2 choose 3rd table.
-> When encoder supports modes lower than HBR2 choose 2nd table."
-> 
-> However, the code assigns idx = 1 (2nd table) for port_clock > 270000 (HBR2)
-> and idx = 2 (3rd table) for lower modes.
-
-Yes, this needs to be fixed as well.
-
-> 
-> [ ... ]
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_ddi_buf_trans.c b/drivers/gpu/drm/i915/display/intel_ddi_buf_trans.c
-> > --- a/drivers/gpu/drm/i915/display/intel_ddi_buf_trans.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_ddi_buf_trans.c
-> 
-> [ ... ]
-> 
-> > +static const struct intel_ddi_buf_trans *
-> > +ehl_get_combo_buf_trans_override(struct intel_encoder *encoder,
-> > +				 const struct intel_crtc_state *crtc_state,
-> > +				 int *n_entries)
-> > +{
-> > +	const struct intel_bios_encoder_data *devdata = encoder->devdata;
-> > +	bool has_edp, has_dp;
-> > +	int port_clock;
+>=20
+> > @@ -176,7 +166,20 @@ extern "C" fn probe_callback(sdev: *mut bindings::=
+serdev_device) -> kernel::ffi:
+> >              let private_data =3D unsafe { sdev.as_ref().drvdata_borrow=
+::<PrivateData<'_, T>>() };
+> >              let private_data =3D ScopeGuard::new_with_data(private_dat=
+a, |_| {
+> >                  // SAFETY: We just set drvdata to `PrivateData<'_, T>`=
+.
+> > -                drop(unsafe { sdev.as_ref().drvdata_obtain::<PrivateDa=
+ta<'_, T>>() });
+> > +                let private_data =3D unsafe {
+> > +                    sdev.as_ref()
+> > +                        .drvdata_obtain::<PrivateData<'_, T>>()
+> > +                        .unwrap_unchecked()
+> > +                };
 > > +
-> > +	has_edp = intel_crtc_has_type(crtc_state, INTEL_OUTPUT_EDP);
-> > +	has_dp = intel_crtc_has_dp_encoder(crtc_state);
-> > +	port_clock = crtc_state->port_clock;
+> > +                let mut active =3D private_data.active.lock();
+> > +                if *active {
+>=20
+> [Severity: Low]
+> Is this block of code logically dead?
+>=20
+> The ScopeGuard closure checks if *active is true to selectively call
+> assume_init_drop(). However, *active is only set to true if the driver
+> initialization succeeds.
+>=20
+> Immediately after setting *active =3D true, private_data.dismiss() is cal=
+led,
+> which consumes the guard and prevents this closure from running.
+>=20
+> Therefore, this closure only runs on the error path, where *active is
+> strictly false, meaning the assume_init_drop() block will never execute.
+True.
+
+>=20
+> > +                    // SAFETY:
+> > +                    // - We have exclusive access to `private_data.dri=
+ver`.
+> > +                    // - `private_data.driver` is guaranteed to be ini=
+tialized.
+> > +                    unsafe { (*private_data.driver.get()).assume_init_=
+drop() };
+> > +                    *active =3D false;
+> > +                }
+> >              });
+> >              let mut active =3D private_data.active.lock();
+>=20
+> [ ... ]
+>=20
+> > @@ -222,15 +225,21 @@ extern "C" fn remove_callback(sdev: *mut bindings=
+::serdev_device) {
+> >          // and stored a `Pin<KBox<PrivateData<'_, T>>>`.
+> >          let private_data =3D unsafe { sdev.as_ref().drvdata_borrow::<P=
+rivateData<'_, T>>() };
+> > =20
+> > -        // SAFETY: No one has exclusive access to `private_data.driver=
+`.
+> > -        let data =3D unsafe { &*private_data.driver.get() };
+> > +        let mut active =3D private_data.active.lock();
 > > +
-> > +	return intel_bios_get_ehl_combo_vspeo(devdata, has_dp, port_clock, has_edp);
-> > +}
-> 
+> > +        // SAFETY: We have exclusive access to `private_data.driver`.
+> > +        let data =3D unsafe { &mut *private_data.driver.get() };
+> >          // SAFETY:
+> >          // - `private_data.driver` is pinned.
+> >          // - `remove_callback` is only ever called after a successful =
+call to `probe_callback`,
+> >          //   hence it's guaranteed that `private_data.driver` was init=
+ialized.
+> > -        let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_in=
+it_ref()) };
+> > +        let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_in=
+it_mut()) };
+> > =20
+> >          T::unbind(sdev, data_pinned);
+>=20
 > [Severity: High]
-> Should this override function be checking use_edp_low_vswing(encoder)
-> similar to how it is checked in jsl_get_combo_buf_trans_override()?
-> 
-> The current implementation omits the low_vswing context entirely, passing
-> only has_edp down to intel_bios_get_ehl_combo_vspeo(), which prevents the
-> distinction between low vswing and normal eDP configurations from being made.
+> Does holding the active mutex during T::unbind() cause a deadlock for
+> drivers that synchronously communicate with the device?
+>=20
+> If the driver's unbind() callback sends a shutdown command to the device =
+and
+> synchronously waits for an acknowledgment, the incoming serial data for t=
+he
+> acknowledgment will be routed to receive_buf_callback().
+>=20
+> receive_buf_callback() attempts to acquire this same active mutex to proc=
+ess
+> the response, completing the deadlock because remove_callback() is blocke=
+d
+> waiting for the acknowledgment.
+That would be a driver issue.
 
-Yes, since it is related to earlier comment from this email.
+And there shouldn't be a reason for a driver to wait for an
+acknowledgement.
 
-BR,
-Michał
+>=20
+> > +
+> > +        // SAFETY: We already established that `data` is guaranteed to=
+ be initialized.
+> > +        unsafe { data.assume_init_drop() };
+> > +        *active =3D false;
+> >      }
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813160918.918857-1-michal.grzelak@intel.com?part=7
+--=-D4watG/QRT1xefvUmWai
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmqZ9T8bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSxl0QAKNm7ejnfiPmNdldgH6P
+HQubJwFCJnmJsyEqNxNcMq1mLCEeF76Qo/4B9WWoFnFlpTwq+Gfdlp5e7GmmJWQS
+meBBbAp+NcKs8AhbeIMwhOiqJioxuqRfA1QL5x51xtWR6Wy6TV6O4tUrnvQTp2+a
+fIsUFPOuzgSgkMthHkwnGN/Fuym4XhGJRwYGrZohG1aBZI6PGmxWp6S1ysj4XXhR
+LcfoYSFIHxbrvoSuAMd/DaHX24tsRQknu1YfamGdahYYjWwx56x3y5QPCJ1VoYjS
+dcezJbR2hat71SJY6y3u/oklEuRv7jIavb6S7olVcmZIyFt5H1yWkSzAlL1eyFLc
+yq8c+wtI42QoPKZdZ0+MLVQnFRdf0yPsJyFAHcr8W4RlW5k0MGelANgt0t8KQPcA
+SOzLGtItPEVI6mPv7KY3wMxhbv5UU0EvShKocNjdLtiEZNxrUbGi6jKYvPQK8cKw
+B6mmsHeds8Iu+9qUyFT70MHBP3zPDGj12w8gCxPxk1E2g2cjm1ZJgwJ6xVgPv0sZ
+3ALsSoThU/Mr1XxivyaziCeF2qtjUY65NyznjGLt+mVvqzBldWAsIvq4Q0ukTKtM
+b6cs39xeXWtioQvYo+MIX1vppSPkttkX9gx2HWmrphNEwwQF4lqta+kEhSCjkZju
+T2/sWpxbVjUitxdda81sBNxI
+=ReEZ
+-----END PGP SIGNATURE-----
+
+--=-D4watG/QRT1xefvUmWai--
