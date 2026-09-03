@@ -1,192 +1,164 @@
-Received: from mail-m15590.qiye.163.com (mail-m15590.qiye.163.com [101.71.155.90])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B7635E958
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 05:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.90
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788411756; cv=none; b=Ra4rQuCePJ55IyOvVykz88k3JHHmHhhPFHwFF/qivCXEb/m6a9QoiSYRvJ3BTn8IuYy97bCFRAEB/f2G2GOU++l/Zp28fOeeJD5FVYWFBjxCuXKffPPsmub83vMYH7kYf6JzuxBp8ORcWgzabOXSyQIGdRc6vSuTL/2FxtP9Xx4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788411756; c=relaxed/simple;
-	bh=Lv8UrQCBu76i7BUozl7qVybpJwIkDhOQ7VSQNiiDJKU=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CdPjtBVoX6X6NGjOAoAMbF1/lfXifYC6z3+LTA8c8jKAX5UTots7eNCEv+iWryPO9ClxL2oxp1Uu9RoFNr0xonCMaoc5CviLkTG0TbLcaV5NwQhRATKMXqcxB5L/g8ykpW/RMqBbT+vhi3NQ6qAypU1fOBD7TcoFsgQEiqjD/bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=QVdVsx8B; arc=none smtp.client-ip=101.71.155.90
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D18A38399C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 05:26:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788413170; cv=fail; b=f4yGfbFwoiYoMEJJCqX8ipZFQnr6szm9rjBR9KLhOiIYoPhBHa5/RTUY8mjycSGjzTOlJfPQoiV+TR7ODtPcCMjYsXX7Ti+AT2n+9RbFpgRypG8qJaIv4S2aUgbfFGSFwqDNzwTJ6WnvK25zPFvaOovoOHk0vAJCisZK7daOYFU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788413170; c=relaxed/simple;
+	bh=vKGtJWtYXOJwgeh2MjI5CMmXuTb2KRFzrWbjMj7wAIY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=FYGdIJjME8wrKZTuTir0cMZ/tDn1EtkhXbE8uB5lXcLT5R3k8T2kTV5grYehFb1ktt68iLO0kypStzNsz6fXn3qYfrW8h9l9diZTX25YEKUoToEqX43r5M/L7dG1mOYlN61Q1Uw3usoGz0DfX3J65R91IBGgUE1bmVvJn3vB25c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R9U7Qghv; arc=fail smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="QVdVsx8B"
-Received: from [172.16.12.48] (unknown [61.154.14.86])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4c5ae00d9;
-	Thu, 3 Sep 2026 11:46:50 +0800 (GMT+08:00)
-Message-ID: <4f3a7804-1b3b-4060-97c6-74b6259da42a@rock-chips.com>
-Date: Thu, 3 Sep 2026 11:46:49 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R9U7Qghv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788413168; x=1819949168;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=vKGtJWtYXOJwgeh2MjI5CMmXuTb2KRFzrWbjMj7wAIY=;
+  b=R9U7QghvZY4BOd9hexHBVmdKGS9CcnWWYe/Lw3yZoixr6H5BVFO5Qw3n
+   KlBXMgZBZkWuK7Rb6rNKJIw3Tr0/XAoDai/ryUnmQ/fez3tJD6Sdzn8g+
+   GeNSY2LBJkloYhU2sYzrhKk2kxQyKA2HRTz8EyCDly/z3GkpqlisLDrSo
+   7cPMd+yQ0+q7TEzyBMmk//yAgmSF1th0uSvrMkpReia7OGv3AQKjjW6Eg
+   w06nZ/ssBpHT3uNAp4ETDmI49/pQZrVMsV11Bx+sb2IGZaP+gTD9t+/xc
+   tcTg58dg/dLuPIHscH02Ypd3ax5fBpMaQyrxpnvMt9O24pYaGDIAkbaH8
+   A==;
+X-CSE-ConnectionGUID: ZvdPdhImRXmJ9s2N8HiGYA==
+X-CSE-MsgGUID: cu8Fsq8oSRus3nSG/oW5GQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11894"; a="88805770"
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="88805770"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 22:26:07 -0700
+X-CSE-ConnectionGUID: Wtw5xiNJQRmKMhVgLStq8Q==
+X-CSE-MsgGUID: SQHU5y70TQK4xI8weX5W/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="273370708"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 22:26:07 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 2 Sep 2026 22:26:06 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 22:26:06 -0700
+Received: from CY7PR03CU001.outbound.protection.outlook.com (40.93.198.41) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 2 Sep 2026 22:26:06 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qYLU4Hs+BEvizl4o8IDtyNOIjeQ+vzzBeXPbewUbpN9D7CUB8CTYWqphzUw5vtw9lqa6oD+SwCsv3o8u08qu4gB58M7nTrFb9usk3oUcKTClg69z480udqeuqmfJKqQScfKWmIAYhKcONMXn4ADTOj1Pd1JP1huiBXdmCQu9/8/nQHd5TbsoW0duLPWOTDj4mA3ACudswyKRwvfkOADvm9gmg/UQauyM6/EZa5pTlAJoR9EeJkf1h4+yI3P1j9Akcd0JdqBkIjUDyQsqTZ4Vtj8t7FNnsiptfqkBrlKYPl1yBqYoPU9Cla41WLymuY/xWabX6v8W1IiIAynKwmRz7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cwpln9YaAmqbDhQjboYOtayR3IzyYA5XBeXZrebxA/Q=;
+ b=VR+HwXzVevpWJ/vC2Fmzbrx8UTXIPcLACVv2MgivOyW9wtNIzOsaaHuFKDkQgehtR8KdsrWLiF1sHMEVC7JCwwDmJpjj0cWZ6hTLL5YlXAsIYL4coIKgcbDEWJma9PXwL7QxC4JOGmIxOdefLd1E7Hht8o+nxT+iZUO/l95v8R7k4HuRqqNqG2mYw9COLJp0DmLb22gVYY2qGgEAnmZUKEQmjabqIUpB7s3F9J1lPzHjlr1OrYZVtILBUhWlRwP9WnKYnQhw7VjoZgdIRGGYggEdHPz12BuwCN4eH3x8yc5lNtL22R/AnYDYdtmPRHFq2+3zqfiD0+d6449uIVAsYw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8) by PH7PR11MB6007.namprd11.prod.outlook.com
+ (2603:10b6:510:1e2::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
+ 2026 05:26:03 +0000
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd]) by CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
+ 05:26:03 +0000
+Date: Wed, 2 Sep 2026 22:25:58 -0700
+From: Peter Fang <peter.fang@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+Subject: Re: [PATCH v3 3/4] virt: tdx-guest: Use a variable to store the
+ Quote buffer size
+Message-ID: <apkE5rj8ns5UEzoh@intel.com>
+References: <20260729122939.1340412-1-peter.fang@intel.com>
+ <20260729122939.1340412-4-peter.fang@intel.com>
+ <20260729125829.52EA71F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260729125829.52EA71F00A3E@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR13CA0122.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c6::7) To CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: dw-rockchip: Do not recreate the INTx irq domain
- on root port reset
-To: sashiko-reviews@lists.linux.dev
-References: <1788403477-71491-1-git-send-email-shawn.lin@rock-chips.com>
- <1788403477-71491-3-git-send-email-shawn.lin@rock-chips.com>
- <20260903031310.5FA0F1F000E9@smtp.kernel.org>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20260903031310.5FA0F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa0656061aa03a4kunm0fa46cde6e633
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZTE9KVkhPGB5CGUlCSB1NSFYVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
-	9PT0hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=QVdVsx8BwvmNSWlA1Jgw59+PNtisqbo8ehFGvOGPx2KrU/TBgSz7VzkCFPZy4OvMfO5pNt9xdEiRsbBQY5MN1JYQhnnrZxbKb5xtoTpwDUx+5OgPIfbYMkm3htR5yf00Lvk/TdQDbl5SSxGIQ/7T/G+hkBXU/egwm+xo4iCeNe4=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=U15kSfCTzdbxYs1MBnMYhfo1LVk1PFMkYOz4UshbUa4=;
-	h=date:mime-version:subject:message-id:from;
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR11MB435924:EE_|PH7PR11MB6007:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76c18420-a2f8-4f80-3e53-08df097bd8ec
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|56012099006|10067099003|11063799006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: bovlw8IdiTTopSEQi5qxMyOIQWc5TakkYBrZOrZhh4/g+GlIB6+OfmUR8r4FgXhqYgnZ9A8UXt6T7Zc66AWrT7l8h9mKtHSB6nK1v3RS2wqq5L5ovJCoKoOaFKVRL6bo5sO54AT7lt47G2+d3Zv8EvZkcPor0faJeAV/ClBYqp15VMoVBNaApiTh/qPxxuex4UahLA8N06r7DidNWJuPc3MfMIe0A6XvVZgSPnFH28qrPE2crQk12JM/1q65PykkdWdZ+8vYInILXsPVwoZ89p6yxQueCj1uxkJhHBr7JgXVcjSZ8nf0TqfJ51+rNZPFmERKqhXiSaOHqm/Ch7Ai9TAvyaL8YNTJeSNKJD0bSU4igCo4UYM0nUJinDr1TOS3+sByKllvu4p1a91aqsQBOR3yF3TQNXir0lHc3NtZOcio0SMqHGOrJ8/0ExZNKW+hK81z4kKPAKM6rHtKWH/rn3rKacNbk12n9doYiVNCJVI+Ty9zPnTARTWHcAiKUvVTew9rL3eCLIWticAuN962GFQGx4yWF88GQ+8MD3uLSuPOe9mwNfs21Gf2ScfCNRS6qNmLZKme/o9OfxdRNJgvVu8ZGdSEDGMZNCZkXVIKrLTtgoWye74e5swnUppnaPhOTEsvEPg0ZDRWfKOE+XFW9x8CqF9hR9L5tq0zBfAVg1g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB435924.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(56012099006)(10067099003)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?+euPZKC0SsAMgh3YuvGu4+KEPl39Iy8OVzbL14wi6s1QlFbgeJd6NSsrS+xe?=
+ =?us-ascii?Q?XZF+X9YLG2EDDJtRvmL8vPe7dOAsMYbnDk/zvwofnlSlPbhB4mcU0XbihdJp?=
+ =?us-ascii?Q?8lZXaNRimwMTp07/EwC206EVjEXbKQxIoNFyocep+u04MUMMNXvqnspOrhKX?=
+ =?us-ascii?Q?mCVuWzpUlg6hE4Sk8CtZMx4//dH5nkyOmSAuPm7QIUiNeO0C2/TIst8YBz24?=
+ =?us-ascii?Q?UsOITX0roXuew4Zu6kKQVWQZlaKcbVqO21/S6D83+enmTDfWgimRlBk6swIG?=
+ =?us-ascii?Q?ioEF7qM5269vWjPb14c/slPBbXi1sVsv/WhweLlR5Wwc2bWMHq65QMe48auj?=
+ =?us-ascii?Q?DuOaUlWnTB92aVAQ6KMBMzXYr3JBNvTeid/YcY5abNxlfCEooQkzHX8hnabs?=
+ =?us-ascii?Q?ciQlmAEzW38zfpI5GUe5JLLuaKVgwLaHvJuxfJFA9jzl81sHRFLUTvehPMy6?=
+ =?us-ascii?Q?mThqU7zJGQdd3CJIPHCLxE80GUDrc2keHRHyzUT77R12LFWVuJD1FFI/V0/q?=
+ =?us-ascii?Q?CwT+aTB8wlFbG2mVWRhbgyPU4DRXVDUoWLlewMh8wOCQGt5k40gANixxAir7?=
+ =?us-ascii?Q?rvw13Rllp9C31AiB30jwhtM8iJG8TQt0QnTVB8P9OEJRNFiI/M7rkWaCxyOn?=
+ =?us-ascii?Q?Z0iZs8bD54K4T3SA3eeaO1OhXHDv/M9Jq2HOBvljHEkldnmyaWWn7MkGuqh+?=
+ =?us-ascii?Q?2ogFHL8Uc02ii/rckzOZ++8YCaUETXrs3H/mqOu6MSnCq8Q8QkNLPt1nM3eE?=
+ =?us-ascii?Q?yK2uhaXWeoctRuoubfXRtqa+EPzrC5kSNi48THuxTjZ/70h+pYLc8h13Jw0+?=
+ =?us-ascii?Q?ZsdtYi1X1UVM2qIZBT1BNrv69xv2/rixz1SUkjM7EKyM02rvRSnKxo6Km5v0?=
+ =?us-ascii?Q?ghgjRuWsFI5MicDGLXfS/LDdWMj10dQNd+p7xeRMSSbCzXkyPj7OYOZxgUaU?=
+ =?us-ascii?Q?KGYsapW1hxvTimATvadkwF176OOYnETQEXSIl54Wr79xggToGlpvrKbaL8Uc?=
+ =?us-ascii?Q?mtG4B5LGg/UlvIeSQBp9P643I8VqZWa9OAYJf1HTcvppRJPlh8h2axSmgPep?=
+ =?us-ascii?Q?P9s+oZqvd17yCt+f8GFVxhZ90XJB9v+EmMWc+uCLvHIaPbgI1GFKAaSNvQCi?=
+ =?us-ascii?Q?Oa2Z6Q+ig/0dcebgfElUa+Xvvhw3UvmGruquPDrM+bhNST7954nqF+EYE+c0?=
+ =?us-ascii?Q?2JdzUMnqg5U9eNr8PWPaxhXhDHdeKo5Bq/9HMif8/zwlYVijq88vrr8OWcoc?=
+ =?us-ascii?Q?oTzvingb8NC1IbHjBi8NNh28vPo7ffqDvZs+QQMmMeGAFb6Xt8IvPiHDuIap?=
+ =?us-ascii?Q?IrNeuzz6vDk+ArOqxgvB3XZJ5hPcnhpo7CYFILYV3cA+6+rciq9dOf1uWTx2?=
+ =?us-ascii?Q?oOXSdzVjinp1dWYMhnQzAwfwVgev54e4kEz+kCABmkzki9eBz4FhJsONp7tF?=
+ =?us-ascii?Q?wwD/4NUTpkXkWKLqq//KlKl3eFf8UEkc8r7fBH5oUmU1W0ooLCk1CtsHECKL?=
+ =?us-ascii?Q?Hn+nJf9wwPyLLcGjuWD+Iw0c/1YFCVN0kSTfHkyQK4okbJpchDo589a/jnP2?=
+ =?us-ascii?Q?g7n3g+0B/YOGysPHfxLEQcTUXEwH4SwkN2F408+8svMFLQeBrDFuKiTJUS0k?=
+ =?us-ascii?Q?5la4Ys22CDXwrtcL0WnfE6wguoFJoOdUJar/4DqcjsDx4kH2iSRGTA3qUGIo?=
+ =?us-ascii?Q?+ZcJHwmpHohgMlm+fwWXbuLfKLx0TFw6AKqwnI4YBFIJ7fzvli7ymC+OdBle?=
+ =?us-ascii?Q?Z/ASKTH+rw=3D=3D?=
+X-Exchange-RoutingPolicyChecked: mH+YHSxso5NHRQjKHPhmc2fSSOIn4e4mO1T07I38QtOA8mucwNdng+tkFCdKc6Zl8wSwpCV+VzVKjEyFjODwQEzg/7Wch0rbszR1+dKaQxeD+IuQUqK3AgOe6cA2rHlWC5pjZjL77PsgGljO2QPcR00aivfwlsZqGY+w/b/2InjFCnNCx/l+qbBB+rALMm5QjgJ0ZyIqFPWPD6thxCfS8JGeryR4uwpWrT1gmRyUXVV2cnQy3vCy41uYAOGnsEfRuv/FwWFr0hTsnSmAs2A/drGKfqkC9YqmlS1xru+yAkox7M8xcewZI1GkMGYlkFU/qwVShgZY/qJ7OTvx5JhphQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76c18420-a2f8-4f80-3e53-08df097bd8ec
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB435924.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 05:26:03.5669
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IVfveUwedz0YN23hPGzlp1S+d0VWcJXkk8kg/GRxJ6VEVLUquadmklH916Gj94oyhxRjRKOQ4FON+D6l1xm/aw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6007
+X-OriginatorOrg: intel.com
 
-
-在 2026/09/03 星期四 11:13, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+On Wed, Jul 29, 2026 at 12:58:28PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Probe error path and driver unload fail to clean up INTx irq domain and chained handler, leading to a potential use-after-free and memory leak.
-> - [High] Disabling clocks during root port reset without masking IRQs can cause a synchronous external abort.
-> - [High] Double PHY de-initialization permanently bricks the PCI controller on subsequent resets.
-> - [High] DBI registers are accessed before the controller is set to RC mode during root port reset.
+> - [High] `wait_for_quote_completion` timeout logic is inverted due to an off-by-one error in the loop condition.
 > --
-> 
-> commit 2778c4d5819445db0e096281981b7df261e7bc31
-> Author: Shawn Lin <shawn.lin@rock-chips.com>
-> 
-> PCI: dw-rockchip: Do not recreate the INTx irq domain on root port reset
-> 
-> This patch extracts the programming of Root Complex registers out of
-> the .init() callback into a separate rockchip_pcie_host_hw_init() function.
-> It then calls this new function from .reset_root_port() instead, ensuring
-> the INTx IRQ domain and chained handler are set up only once at probe time.
-> 
->> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
->> index 50824c8b1d83e..ff9239403cf22 100644
->> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
->> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> [ ... ]
->> @@ -440,13 +459,7 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
->>   	irq_set_chained_handler_and_data(irq, rockchip_pcie_intx_handler,
->>   					 rockchip);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is it possible for the INTx
-> irq domain and chained handler to be leaked on probe failure or driver
-> unload?
-> 
-> If rockchip_pcie_host_init() or a later step in probe fails, devres will free
-> the rockchip structure. However, it appears the irq domain is created in
-> rockchip_pcie_init_irq_domain() without devm management and is never removed.
-> Additionally, the chained handler is assigned with the rockchip structure as
-> data but is never cleared on the error path.
-> 
-> If the legacy IRQ fires after probe failure, could the chained handler
-> (rockchip_pcie_intx_handler) dereference the freed rockchip pointer and cause a
-> use-after-free panic? Also, since the driver lacks a .deinit callback, does
-> this permanently leak the domain on module removal?
-> 
-> [ ... ]
->> @@ -920,11 +933,7 @@ static int rockchip_pcie_rc_reset_root_port(struct pci_host_bridge *bridge,
->>   	if (ret)
->>   		goto deinit_phy;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this jump lead to a double PHY
-> de-initialization that permanently bricks the PCI controller?
-> 
-> If the reset fails (e.g., dw_pcie_start_link() fails later in this function),
-> the code jumps to the deinit_phy label and calls rockchip_pcie_phy_deinit().
-> However, rockchip_pcie_rc_reset_root_port() already unconditionally calls
-> rockchip_pcie_phy_deinit() near the top of the function.
-> 
-> If the PCI core attempts another reset later, the unconditional deinit at the
-> top will execute again. Does this erroneously drop the PHY's power_count and
-> init_count from 0 to -1, causing subsequent rockchip_pcie_phy_init() calls to
-> silently fail to power on the PHY?
 
-I don't think there is an unbalanced deinit here. The unconditional
-rockchip_pcie_phy_deinit() at the top of
-rockchip_pcie_rc_reset_root_port() pairs with the
-rockchip_pcie_phy_init() done at probe time, while the deinit_phy label
-pairs with the rockchip_pcie_phy_init() performed inside this same
-function. Every path keeps the pairs balanced: on success the PHY ends
-up initialized exactly as it was before the reset, and on the error
-paths the function unwinds precisely the initialization it performed
-in this invocation. The only way to skew the refcounts would be
-reset_control_assert() failing on two consecutive reset attempts, and
-after the first such failure the controller is already dead.
+This was already reported by Adrian Hunter and is on my todo list [1].
+
+[1] https://lore.kernel.org/all/20260614115016.GA3417767@pedri/
 
 > 
-> [Severity: High]
-> This is another pre-existing issue, but can disabling clocks during root port
-> reset cause a synchronous external abort (SError) if the chained IRQ is not
-> masked?
-> 
-> Earlier in rockchip_pcie_rc_reset_root_port(), the controller clocks are
-> disabled via clk_bulk_disable_unprepare() before resetting the hardware. If an
-> unhandled interrupt fires concurrently while the clocks are disabled, the CPU
-> will attempt to execute rockchip_pcie_intx_handler(), which directly reads
-> PCIE_CLIENT_INT_STATUS over the unclocked APB bus.
-> 
-> Should the chained IRQ be explicitly masked (or disable_irq() used) before
-> disabling the clocks to prevent accessing unclocked APB MMIO space?
-
-
-Ack, this is a real issue introduced by b376b3ff9cb0. Devices may keep
-their INTx line asserted while the controller clocks and PHY are gated
-during the root port reset, so the chained handler can run and read the
-unclocked APB bus.
-
-I will send a follow-up that masks the INTx IRQ before turning the
-clocks off and re-enables it once the clocks are running again. On the
-error paths the clocks stay gated, so the IRQ is deliberately left
-masked there.
-
-
-> 
->> -	ret = pp->ops->init(pp);
->> -	if (ret) {
->> -		dev_err(dev, "Host init failed: %d\n", ret);
->> -		goto deinit_clk;
->> -	}
->> +	rockchip_pcie_host_hw_init(pp);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does rockchip_pcie_host_hw_init() access DBI
-> registers before the controller is explicitly set to Root Complex mode?
-> 
-> During reset, rockchip_pcie_rc_reset_root_port() applies a hardware reset via
-> reset_control_assert(). It then calls rockchip_pcie_host_hw_init(), which writes
-> to DBI registers (like PCI_BASE_ADDRESS_0) and accesses PCIe capabilities.
-> 
-> Since the controller is instructed to act as a Root Complex
-> (PCIE_CLIENT_MODE_RC) only after rockchip_pcie_host_hw_init() returns, does
-> accessing the PCI configuration space prematurely violate hardware state
-> constraints and risk an SError on the AXI bus?
-
-
-This ordering is not introduced by this series: the original
-.reset_root_port() implementation (b376b3ff9cb0) also called
-pp->ops->init() — which performs the same DBI accesses — before writing 
-PCIE_CLIENT_MODE_RC, so the order is unchanged. Also, the DBI
-aperture is just memory-mapped configuration space behind the APB/AXI
-bus; it does not depend on the PCIE_CLIENT_xxx mode bits, which select
-the  link/LTSSM behaviour rather than gating config space access.
-
-> 
->>   
->>   	/* LTSSM enable control mode */
->>   	val = FIELD_PREP_WM16(PCIE_LTSSM_ENABLE_ENHANCE, 1);
-> 
-
