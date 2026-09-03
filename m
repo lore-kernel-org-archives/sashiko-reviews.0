@@ -1,133 +1,158 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146993DEFFB
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 06:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CADB3B0AC6;
+	Thu,  3 Sep 2026 06:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788416252; cv=none; b=lgG8FbhV4Zi7NlP2fpIHJOsBoM0XFNupgf6UKMaH43hKflHYYKTDlXlK/V8vvH/5TxhS1WhMKBev5JJP/jyH3gpzopO4a52sZ2wd+dI6pp98snC+Lu9yfomXvo5w3mfv+tlzuukzFFArYeXgnYwzIRhsRXx29S4ukSyKY+Hm1TI=
+	t=1788417790; cv=none; b=U6gnhneklEiJwNGpWYxXvqKUb4obZCGL+KqAX9ZkTd3eo6TUIEvtGyCJN3z1LstAcyHnCZYGH+oG5pPWYJiNxfxB3YusdVyhXov/m6VJV+QXfgqAQkzbFuNnThF4orA7IrPTiQOImaDcotCoOoq+nnOf3VV/V3BOPNhDXjokF/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788416252; c=relaxed/simple;
-	bh=5fEpVgp9E7FDiWUah58fsA7bdrIxanTxTOaQkc2H9Js=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 Content-Type:MIME-Version; b=dTsErNUkpv6fEgYugKqMqcqptFFEC9M+Q940lL5lMYBvmUxo3OfdchNPES6Tg+KQGOjypM5HExwj34nuKeu/1PT/8IoQGVP3fows+g6iDfOA8TZO5YDL/42xhs84yx+LQpwGfQBL86r8AwgfGM5OAsoraCo5xTbV8TYddOyma3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3WKqaD1; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788417790; c=relaxed/simple;
+	bh=zLDDEDOoPOZyiwGuhTcSuwpOsFNXAy79JRkPpolVxd4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=YBvInU/5JbwZvUDszNnTQRw0OacWXnqHmxS+kHDY3sXFafgkjWTdLfy899zae+VcSChphAep70OwK6eI24/Asc9UVKhYvwXkEUA1JCJhSoxJhhVvEEPByiJmOt2qG6bFi5ziOIpxDV5sTgkJd98pqygN5JoevuaicRe9oGCXREs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=Ex2T0fKj; arc=none smtp.client-ip=188.40.3.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3WKqaD1"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-853e2610bb4so473618b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 23:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788416249; x=1789021049; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=iBqEdXDuBCy8uZJKHbshNmmYy9yfjB6hUG6xMylUjFw=;
-        b=P3WKqaD1h09/uhwklWSZ4slIBWc93MCaDYbCOIAvF/nCoCgkcLELDD9iQuQ4MvQbf9
-         pExiEg3spWwTJDPtB3wm6NlyJSHEKS4YjrEeegSZze3BSEFNc2lmdohgMPwR/0zsmOvk
-         eSzkZ9sowfEXFRn0joavjJK/NWjDhZD1nc4PNK1Sj6VNBTm+6eH7xJmjENaarw6vMPtK
-         SxogUBnlJmAlUW2gIedc89asMj3GwMtfUi0aTsjjS6rwhOELG2JKVU83lAe7hqUGXwq6
-         B3l0xBELHKRYodgBUAumV4WwiWGMvpSV9rP6Qj/d1XPh3HJSUkQSrHQUze+ni7fLlVAw
-         MnpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788416249; x=1789021049;
-        h=mime-version:content-transfer-encoding:content-type:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iBqEdXDuBCy8uZJKHbshNmmYy9yfjB6hUG6xMylUjFw=;
-        b=qO/KHnqcXVUecxxpLGU+0pS+/D5FSkm5dRjLHCy0PfzUVWBfZNPL/v0bovemwPmBCY
-         ZwwfAKtfNTB611Q9c3ABYuLEg5sJxHJ9WxsXd1gn81/C+EKVw5bXazpg3v9FKkAuDRgG
-         v60UU3foEtYnM01wcLA58MwvF6JcQrXGCkL4C7ffkrft7OYvgCGyCU7hrfSw/vDI1Aaj
-         FjU78r9CkUOqztNakuGQAAmbhQjXS5rBL+v3TDurksqHOHqn5naTMfj+rfNh1EC3i5ZD
-         0v0E346+0U7HLJn6vSs4ccBb5y7AfQgO2soOfgcR863OyzpPJJ3yuMw1BkEuj6I0ktri
-         Nm9w==
-X-Gm-Message-State: AFuF++mMcVrYcqujkmiIAlGuWr0rNBJ69iaCtSVR22PdQzJAZK7AZzlB
-	zrk9v3yTG/xt9Flnz5i5EUWe84+3GwfN/TrLqiAR/D9YvCoQ5+GrZOKd2kSLluQ3l3w=
-X-Gm-Gg: AYBFou3Q6+543BAkz4VlXp0EvqNBmXriKnegJNVoCTe4SKlpKaAbDkx16DjZF+aCcoc
-	nFVbMx0kq8sYS8AL2mkt55/PaNS7zWubdxX41oXDEE3JQhrRwEN8JKf+NC5S0SV8VR2NXTdRxxu
-	xqjgSlZgxkqaAiAM0dP6o9Ht9fJSs4oFDwKqh3h05mzGzCSkngLzWif8GnpeoPLOGKsT8HQp3k+
-	ow4XwdxMz7O9tUP9YqjvUjy1zxQbLhXj67EvUhcpSts3z3CfLtauIo+9XTXOPAP6TNWY7Uz02Hk
-	JnW7268h1egRclrZTuRNYuFJXiZsOyvzvLZ5M9eJuRtjha7Cgnni4TTURY5wRtx7YuHiYHfUo22
-	y5OGllkbx4Y2S63KRnPx9nh1ye1xP7cfzZsZlmtmtSitpaM5xuagodlQzS/IgKStqLJuxuS0626
-	7S55fZAfVSaTU93pRRmmj5ovQ7Ofpk3H0OP8AwkbzJnzKKLnKl0zozKH9QlNSNprPCVM43OpqSD
-	amO5ROWyUCl00s=
-X-Received: by 2002:a05:6a21:7008:b0:3d1:66eb:511c with SMTP id adf61e73a8af0-3da215a7315mr3588262637.13.1788416248458;
-        Wed, 02 Sep 2026 23:17:28 -0700 (PDT)
-Received: from volcano9f6e-hostos.amd.com ([165.204.217.251])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14319976a4asm2874285c88.13.2026.09.02.23.17.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 23:17:27 -0700 (PDT)
-From: Hemanth Selam <hemanth.selam@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: seanjc@google.com, pbonzini@redhat.com, shuah@kernel.org,
- kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH 1/2] KVM: selftests: Actually compare sregs and events in
- sync_regs_test
-In-Reply-To: <20260902122209.865E61F00A3E@smtp.kernel.org>
-References: <20260902120235.18486-1-hemanth.selam@gmail.com>
- <20260902120235.18486-2-hemanth.selam@gmail.com>
- <20260902122209.865E61F00A3E@smtp.kernel.org>
-Date: Thu, 03 Sep 2026 11:47:23 +0530
-Message-ID: <178841624362.1403938.933078415206124828@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="Ex2T0fKj"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=ew.tq-group.com; s=default2602; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=h6xXnBIM//A962BwFEXD/J8go0ydGTpBGTmxqMZMF1c=; b=Ex2T0fKjQrVj6KSE7L3b3jqFAV
+	0jPQMx0XBp2mbfRSefriKvdT2pz9g4qEy15bcxB4eL6GUW4bn602jKAAUV/UFmv+MMEuMiggA8oaG
+	l+F7RKrTUMGtl+Ozq8ro5TIl4qadhy4XLGwFPTLy9ctjqzTorpngTPG8LrCd//nzUOhLh8+F1Xw+9
+	WS0gHzvICoCajQvauNZd6n9boeGdl9Oq5tWbFQc0b64TbVuesWS8CZcjZb3pUiLa0pIU/aiW3F0iZ
+	mPzf9CeLfiEKrqnS2QhcOjxhqygrue7vQ+DxkmeRnNMoXBO2EnM68tgS6a/LFAIXVImLbuesEmf3b
+	vVg6fi3w==;
+Received: from sslproxy02.your-server.de ([78.47.166.47])
+	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <nora.schiffer@ew.tq-group.com>)
+	id 1x219x-000Jzu-0F;
+	Thu, 03 Sep 2026 08:42:53 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy02.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <nora.schiffer@ew.tq-group.com>)
+	id 1x219w-0003Og-2C;
+	Thu, 03 Sep 2026 08:42:52 +0200
+Message-ID: <62bb7c8527dea0e8af4e23e59dddb49c56d12853.camel@ew.tq-group.com>
+Subject: Re: [PATCH 1/7] dt-bindings: leds: pca995x: describe reset-gpios
+ property
+From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: linux-leds@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org,  robh@kernel.org
+Date: Thu, 03 Sep 2026 08:42:51 +0200
+In-Reply-To: <20260902161653.GB2133376@google.com>
+References: 
+	<6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
+	 <20260902123759.DC6841F00A3A@smtp.kernel.org>
+	 <20260902161653.GB2133376@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28111/Wed Sep  2 08:24:01 2026)
 
-On Wed, Sep 02, 2026 at 12:22:09PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> This is a pre-existing issue, but does this new assertion trigger test
-> failures due to how __get_sregs() handles the interrupt_bitmap?
+On Wed, 2026-09-02 at 17:16 +0100, Lee Jones wrote:
+> On Wed, 02 Sep 2026, sashiko-bot@kernel.org wrote:
+>=20
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> >=20
+> > New issues:
+> > - [Low] The commit message description is not capitalized, violating th=
+e LED subsystem guidelines.
+>=20
+> Please review, explain or fix the Sashiko review(s).
 
-No.  Neither of the two tests that reach compare_sregs(),
-req_and_verify_all_valid and set_and_verify_various, ever injects an
-interrupt: the guest just loops on an IN from a port, and nothing in the
-test writes interrupt_bitmap.  KVM allocates the kvm_run page with
-__GFP_ZERO, so the sync region's copy starts out zero and stays zero,
-and the KVM_GET_SREGS side is filled from a kzalloc()'d buffer.  Both
-sides are all zeros at every point where the memcmp() runs, which I
-confirmed by printing them, and the series passes 10/10 on an AMD host.
+Hi Lee,
 
-> This function sets the bit corresponding to the currently injected interrupt
-> but never clears the prior contents of the array.
+please see my reply to the Sashiko review on PATCH 2/7, as that one require=
+s a
+decision how we want to model the output-gain in the Device Tree. All other
+Sashiko review comments look correct and will be addressed in v2.
 
-That part is right, and it is observable from userspace.  Planting a bit
-in the sync region and running the vCPU with KVM_SYNC_X86_SREGS in
-kvm_valid_regs but nothing in kvm_dirty_regs:
+Best,
+Nora
 
-  run->s.regs.sregs.interrupt_bitmap[0] = 1ULL << 0x30;
 
-leaves KVM_GET_SREGS reporting 0x0 while the sync region still reads
-0x1000000000000 after the exit.  KVM refreshed sregs there and left the
-caller's bit in place.
+>=20
+> If this is a set, this request includes the other patches too.
+>=20
+> > Pre-existing issues:
+> > - [High] This problem wasn't introduced by this patch, but the driver v=
+alidates the child `reg` property against `PCA995X_MAX_OUTPUTS` (24) instea=
+d of the chip-specific `num_leds`. This allows 16-channel variants to confi=
+gure out-of-bounds LEDs.
+> > --
+> >=20
+> > commit ead1262f70ad0044c0eca7c693a6d898fbcc4d44
+> > Author: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+> >=20
+> > dt-bindings: leds: pca995x: describe reset-gpios property
+> >=20
+> > This commit adds the reset-gpios property to the PCA995x device tree bi=
+nding.
+> > It allows the reset pin of the PCA995x to be described in the Device Tr=
+ee.
+> >=20
+> > > dt-bindings: leds: pca995x: describe reset-gpios property
+> >=20
+> > [Severity: Low]
+> > This isn't a bug, but does this commit message subject violate the LED
+> > subsystem capitalization rules? The description after the subsystem pre=
+fix
+> > should be capitalized.
+> >=20
+> > This is a pre-existing issue, but the driver validates the child reg
+> > property against PCA995X_MAX_OUTPUTS (24) instead of the chip-specific
+> > num_leds:
+> >=20
+> > drivers/leds/leds-pca995x.c:pca995x_probe() {
+> >     ...
+> > 	device_for_each_child_node_scoped(dev, child) {
+> > 		ret =3D fwnode_property_read_u32(child, "reg", &reg);
+> > 		if (ret)
+> > 			return ret;
+> >=20
+> > 		if (reg < 0 || reg >=3D PCA995X_MAX_OUTPUTS || led_fwnodes[reg])
+> > 			return -EINVAL;
+> >     ...
+> > }
+> >=20
+> > [Severity: High]
+> > Does this allow 16-channel variants to configure out-of-bounds LEDs?
+> >=20
+> > Changing the brightness of out-of-bounds LED channels (16-23) on 16-cha=
+nnel
+> > variants (e.g. PCA9955B) calculates a pwmout_addr that overlaps with th=
+e
+> > IREF registers (output current control) for channels 0-7.
+> >=20
+> > Could this cause silent hardware state corruption and potential physica=
+l
+> > damage to LEDs?
+> >=20
+> > --=20
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/6d3600f99c77c31=
+166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com?part=
+=3D1
+>=20
 
-> Could this lead to spurious interrupt injections or corrupted state during
-> live migration for any VMM using the KVM_SYNC_X86_SREGS API?
-
-Handing that same stale bit back with KVM_SYNC_X86_SREGS set in
-kvm_dirty_regs does inject it: __set_sregs()'s find_first_bit() picks up
-vector 0x30, kvm_queue_interrupt() queues it, and the guest dies on an
-unhandled 0x30.  So a VMM that read-modify-writes the sync region can
-resubmit a vector KVM itself put there on an earlier exit, since nothing
-clears the field once a bit is set.
-
-I could not demonstrate KVM planting the bit itself here, as selftest VMs
-have an in-kernel irqchip and KVM_INTERRUPT returns -ENXIO; that half
-rests on __get_sregs() only ever doing set_bit().
-
-Whether KVM should zero interrupt_bitmap before it ORs in the injected
-vector, or clear it in store_regs(), is an ABI question rather than
-something this test change should decide, and I am happy to send a patch
-if that is the direction.  I would keep the memcmp() either way: it is
-precisely the check that would catch a stale bit turning up in the sync
-region.
-
-Thanks,
-Hemanth
+--=20
+TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
+any
+Amtsgericht M=C3=BCnchen, HRB 105018
+Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
+neider
+https://www.tq-group.com/
