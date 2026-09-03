@@ -1,178 +1,141 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AA9443AB4
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 11:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263043EE1F8;
+	Thu,  3 Sep 2026 11:27:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788433886; cv=none; b=aY6mudGf6niK2Dasa7R9YbABEAY3TL45ycJaZEALg0W8vQq5NAZMePL5cfM8pBlPatk8PRtxb7K/er15njgK4/8Wm7R0RKjNLM6E63wLMWfMdXjLZguq2gCmpMft6jC0Hm5NHEw/uy0zd/tZMIQIT6hpM8QI8bMwXQb3sI9SxcU=
+	t=1788434855; cv=none; b=lJnRdZvgzWwqDIkXbv1RVnBjGJvLumAGhYOOLApB0LBUzpv5hx6EQK2RVANMD3b58gjFkZ7RITKWHeU1DnX6sTdC1gO7/evKO8QT3qZ/PwwOyTF3OHCL/7iLKsizOxAKb6IAIEOj4COX2/bzUcTB4nRUmRsOPYXPvO5Wqdcb5HE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788433886; c=relaxed/simple;
-	bh=pcM2PW3sEaySd35PnKO6K0MrOzG5iUGvi8JIi2M0RGQ=;
+	s=arc-20240116; t=1788434855; c=relaxed/simple;
+	bh=T/kkSGpMbWQtgjjaObTskTAonbeVIiJOLsWGw0kXrc4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n/6oRA8muIMMT/NbfGvwutqMn3ldbTe2MjhYG1G9IvGF+42WEMrpiMVA9vZk6Z0pnaXJP6s1OoJsUPv8wxO9NiO1IFyeXvpGkelLa6fJvQUryBW4aqS/FEmrQgh8B0GkZlpaab+iDyzzlnTrt6SLGPY6E5d514AJi7py35EaxQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se; spf=pass smtp.mailfrom=ragnatech.se; dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b=Qqh+KkE1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OHf4spSO; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ragnatech.se
+	 Content-Type:Content-Disposition:In-Reply-To; b=VOKSLtHIVZoVAEUPY1xAR4ECjPunW+ehRPlCoTHTXusFwaYiNMKx4i3kY7m7LEL/teBK5BmLhaCFopd+RK0c+wyOZTJlJBP5lxi6IHLme1dRJ0W6X3h89GLKrNLSLzYE7Uh3GDDxfGHEjL4JSd7YCqYvNLTmgKovcZrnZ5SAb/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c4jxYAOb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b="Qqh+KkE1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OHf4spSO"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BFA387A0038;
-	Thu,  3 Sep 2026 07:11:23 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 03 Sep 2026 07:11:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ragnatech.se; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788433883;
-	 x=1788520283; bh=KMu2Cz6fbNMKBj4yzwYFgm18OJUOPNan0SdRrspDzNw=; b=
-	Qqh+KkE1VM+NmEkoS6tYEoriatmpvEA8XbM5a8WQgobyXJW9sHo4Z1H+TaI4cnvh
-	dCiP1IaQZ0/IN+PsHAVWi4z5jS7DQIW4oQdAIgSuIgtTD5QgZT0uL/HY63lNwRQl
-	KMnLf9lynNadjbr3l7EHKvSgOLtxg2lDCn5JrmIBoK9l6vZWDBUTs8RWgzSC+MBg
-	HBJfr3DJAfgZz+y6xK6ajhIVtl/892UQQnEl3t+HXGptoVwtiO1HI/a9RsEFd70U
-	XLL7q0evHQ1OnvEp+PMIZUEqFHfzsEvOe+qTTd2IJXMzLyerk6L6aYK/JdNeNwbb
-	6hbzM3aQ3jXxzvK6e/ZA+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788433883; x=
-	1788520283; bh=KMu2Cz6fbNMKBj4yzwYFgm18OJUOPNan0SdRrspDzNw=; b=O
-	Hf4spSO8sJH4t1mktT6jAT12F6+ELcR9VtbpEsAwEAxexih4mp0JWVgs62E2ECUX
-	p8xyy3lbDyiO6YLKQRTVLyIoWh0clUmz4HR0mWByy2Whk69TzNYZaijcsHe7LLeC
-	m3kpOXFPb7LRMeJ8dlGlp/vlQBzlJUUom+0tfUMCuFlwhAEPzBcjNm8919tYM17G
-	q3qy2ARmXy3T/HdEDlYtBMXh/qR/O3rAoBLcJythWwt5S9A4G68fn1lN8lDDwLte
-	cAskz4dmHdsftSUswcyoGTYLvhwvJWbOWEKxYBQy4XOAzKmtGoDjSvCjl3xNY8Js
-	vxXd61CiPY7v+dope+MrQ==
-X-ME-Sender: <xms:21WZalSJCeYB9QSDNw-QpRNHGpwXGPca5m15K6fQjZowlvIGvE_bdA>
-    <xme:21WZar6t9im6hFw3Y3UYtdSqPPYidDDxAfqAhpik6fBc_bXojPCSLWAvtT4B6yYHA
-    DbH-73gwB0HXk8xAG5vwOaT-Kxf1h4GtcLDqHcVc_mgnA0ZSR2AI4wj>
-X-ME-Received: <xmr:21WZap0HRXHg-oPWQx3niZnEBzzOoK6OO7y3FGWSmoS0EI-3TGmFtci3x0_RwItDorzmRHhDkeQokadlunHcxC5pPV6ypjs>
-X-ME-Proxy-Cause: dmFkZTFk1Ml/d9L1Z48Pp2GKA5ywPjiyyAIu/++q52mC/HDhV9zC8pF9HEAwgxFDOlkJGz
-    Vs+WwzEiVLmk7mqgn60jwnVvxkvtzPzObEbX6GgerHb5ZoerTkL8ik9iMJQFErq0nUCPhE
-    tzr35xb8Q9HPcuwBUeVALlTd4o4cQOwRXyQzi1UrG8Tk5bCccsJYPGzuEPJG4mNHgA5DKp
-    a0MBYaX9p439biTTRmlGac6JFBHfAUptCuOwIHdj8n5JpNEBZ9uJrRhjehZlj1uqvBVFWR
-    RtBbBcxuzgsCCBV7vF5ZiahFEu3LTrlzVLFORgxYvVfQ9UBrZ33JoDgdvicwAGHM58w2gO
-    HxcnxPeWWHp8RgrA4UTmSptM8DRTLFSrwY1ZakfUY9GCPwNWQyVB6Vf8V9nhhtwFZl840M
-    FJF1tnzEqXEAluJ2mEdZqR3nhE/Ap4qju2gCoLbS7INjwzizTFZ7xsuZX2m6pxuBeNnHyb
-    sJgWJE1zYM4xGVW1UmeeyNqZNtpmQs11Ct8m9k5Sdjk4GWMm20FmlfYHUwlJs/q59IHNua
-    kGRqLduRExVYKoOf5YI6hCN88FgjzbMbnYkdouxC9/bNCdAz8gx0E4DQ+HsejIzv5J2Cz9
-    FYth2PrK8cR2HsHcdT4ptmLsifpboRVOLNPG5l0IJStnWkPJB6YJAtUP3mlw
-X-ME-Proxy: <xmx:21WZauCTMMCVsaisk1h7jffW-dp2Y_kd0IvedLl0du4B4IM4tHgj2g>
-    <xmx:21WZasN3ewM7VnVViKO4pkOW9IoVnN1aZeIuHwaL8ZSOca-PpNdsig>
-    <xmx:21WZaraKsjObUzzA3yRVnQBI2PsK8ZenZs9s_89pg2KEzVt4MwRvCA>
-    <xmx:21WZajsDWgNo15DVqqr0-LvPSx9SkKOm95uwjpGyaiIQTQNRkQOuGw>
-    <xmx:21WZaqdzY84JZj2j4xRKYsD38TWDtScvS5YKgQi7SxP5LwRBzaAUai0v>
-Feedback-ID: i80c9496c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 07:11:22 -0400 (EDT)
-Date: Thu, 3 Sep 2026 13:11:20 +0200
-From: Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c4jxYAOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2841F000E9;
+	Thu,  3 Sep 2026 11:27:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788434853;
+	bh=Hi1v2WtenzXBiQKe6jmV5A4pt0AJojwq3c+tuewSzaY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=c4jxYAObRQac4hzXYQhuCzAT+VTmPlgRZSRVbKfA27oTCeR3eqWP7wIN7FWUs0Z0I
+	 ZMcjwYvzkRRHhjqTaIZ3csewRmskE85YnAHqyohXe1s5H6qfcpFCR0R0Nzs172O9Rz
+	 VUEAB7QmJGoWv0sQA4i7wXP4njQH3LaYtTV95XthHAQxDx+/voRIrVaJhYNujIK9S+
+	 Euj1k32kkyMV0xjZLT/6d4a/8ySLpIWN8PGKOUq1qpmpBen0+rkYcJ13fahVRl3LKV
+	 /0bVL7E2A+fYncggVqZj8pNXXCKXojTSq3WTj0lOaMxjCQpBRGGhiIIQGiJtf5doBq
+	 UZl2JGm+V5ihg==
+Date: Thu, 3 Sep 2026 12:27:30 +0100
+From: Lee Jones <lee@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH net-next v3 01/10] net: ethernet: ravb: Remove gPTP
- control from WoL setup and restore
-Message-ID: <20260903111120.GE1116206@ragnatech.se>
-References: <20260902084703.3228504-1-niklas.soderlund+renesas@ragnatech.se>
- <20260902084703.3228504-2-niklas.soderlund+renesas@ragnatech.se>
- <20260903084755.F15D91F000E9@smtp.kernel.org>
+Cc: a0282524688@gmail.com, mfd@lists.linux.dev
+Subject: Re: [PATCH v7 07/10] mfd: nct6694: Validate the interrupt IN endpoint
+Message-ID: <20260903112730.GP2133376@google.com>
+References: <20260821033505.4017901-1-a0282524688@gmail.com>
+ <20260821033505.4017901-8-a0282524688@gmail.com>
+ <20260821034854.619B41F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260903084755.F15D91F000E9@smtp.kernel.org>
+In-Reply-To: <20260821034854.619B41F00A3A@smtp.kernel.org>
 
-On 2026-09-03 08:47:55 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch erroneously removes `ravb_ptp_stop()` from `ravb_wol_setup()`, leaving the gPTP hardware active during a WoL-enabled suspend.
+On Fri, 21 Aug 2026, sashiko-bot@kernel.org wrote:
 
-This is a non-issue as the module clock is the same, ignore.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Unchecked transfer lengths lead to stale data reads.
+> - [Medium] Mismatched endpoint address used for interrupt pipe creation.
+> - [Medium] Missing endpoint existence and type validation for required bulk endpoints.
+
+Since this is a new driver, these are all your issues too, right?
+
+I'm going to stop my review here until Sashiko is clean for this driver.
 
 > --
 > 
-> commit bbd624fcad5eb4869638d985be16666aae0f0ca2
-> Author: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+> --- Patch [7]: [PATCH v7 07/10] mfd: nct6694: Validate the interrupt IN endpoint ---
+> commit 403c0781b839695d774ed394e3d21842e56bd309
+> Author: Ming Yu <a0282524688@gmail.com>
 > 
-> net: ethernet: ravb: Remove gPTP control from WoL setup and restore
+> mfd: nct6694: Validate the interrupt IN endpoint
 > 
-> This commit removes explicit gPTP stop/init calls from the Wake-on-LAN setup
-> and restore paths. The commit message states this is redundant as the device
-> is always closed and re-opened during suspend and resume.
+> The probe reads endpoint[0] of the current altsetting without checking
+> that the interface actually describes any endpoint. A device reporting
+> zero endpoints makes the driver read past the endpoint array.
 > 
-> > net: ethernet: ravb: Remove gPTP control from WoL setup and restore
-> > 
-> > Since commit a6a85ba36fd0 ("net: ravb: Move PTP initialization in the
-> > driver's ndo_open API for ccc_gac platorms") the gPTP clock (if
-> > supported) is stopped and started by opening and closing the ndev.
-> > 
-> > This makes the special case to stop and start it when resuming from WoL
-> > redundant. As the ndev will always be closed and re-opened when
-> > suspending and resuming the system.
-> 
-> [Severity: High]
-> Is this description accurate when Wake-on-LAN is enabled?
-> 
-> Looking at ravb_suspend() in drivers/net/ethernet/renesas/ravb_main.c,
-> ravb_close() is explicitly bypassed when wol_enabled is true:
-> 
-> 	if (priv->wol_enabled) {
-> 		ret = ravb_wol_setup(ndev);
-> 		rtnl_unlock();
-> 		return ret;
-> 	}
-> 
-> 	ret = ravb_close(ndev);
-> 
-> > 
-> > Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-> > Reviewed-by: Sergey Shtylyov <sergei.shtylyov@gmail.com>
-> >
-> > diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-> > index ea1c7e536791e..36173a09e2fdb 100644
-> > --- a/drivers/net/ethernet/renesas/ravb_main.c
-> > +++ b/drivers/net/ethernet/renesas/ravb_main.c
-> > @@ -3182,9 +3182,6 @@ static int ravb_wol_setup(struct net_device *ndev)
-> >  	/* Enable MagicPacket */
-> >  	ravb_modify(ndev, ECMR, ECMR_MPDE, ECMR_MPDE);
+> > diff --git a/drivers/mfd/nct6694-usb.c b/drivers/mfd/nct6694-usb.c
+> > index 793ce54c02aad..c8667984df5eb 100644
+> > --- a/drivers/mfd/nct6694-usb.c
+> > +++ b/drivers/mfd/nct6694-usb.c
+> > @@ -305,13 +304,9 @@ static int nct6694_usb_probe(struct usb_interface *iface,
+> >  	if (ret)
+> >  		goto err_urb;
 > >  
-> > -	if (priv->info->ccc_gac)
-> > -		ravb_ptp_stop(ndev);
+> > -	interface = iface->cur_altsetting;
 > > -
-> >  	return enable_irq_wake(priv->emac_irq);
-> >  }
+> > -	int_endpoint = &interface->endpoint[0].desc;
+> > -	if (!usb_endpoint_is_int_in(int_endpoint)) {
+> > -		ret = -ENODEV;
+> > +	ret = usb_find_int_in_endpoint(iface->cur_altsetting, &int_endpoint);
+> > +	if (ret)
+> >  		goto err_urb;
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does this probe function also need to
+> validate the bulk endpoints?
+> 
+> It appears that nct6694_usb_read_msg() uses usb_bulk_msg() with a hardcoded
+> NCT6694_BULK_IN_EP. If a malformed device lacks these bulk endpoints or
+> configures them with the wrong type, could it trigger a 'BOGUS urb xfer'
+> warning in the USB core?
+> 
+> > -	}
+> >  
+> >  	usb_fill_int_urb(udata->int_in_urb, udev, usb_rcvintpipe(udev, NCT6694_INT_IN_EP),
+> >  			 udata->int_buffer, sizeof(*udata->int_buffer), nct6694_usb_int_callback,
+> >  			 nct6694, int_endpoint->bInterval);
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does this mismatch the found endpoint
+> address?
+> 
+> We dynamically find the interrupt endpoint above and use its bInterval here,
+> but we still hardcode NCT6694_INT_IN_EP for the pipe creation. If a malformed
+> device has its first interrupt IN endpoint at a different address, and 0x81 is
+> used for a different type, could this result in a type mismatch and a kernel
+> warning?
 > 
 > [Severity: High]
-> Since ravb_close() is not called during a WoL-enabled suspend, doesn't removing
-> ravb_ptp_stop() here leave the gPTP hardware active during suspend?
+> This isn't a bug introduced by this patch, but does the driver handle short or
+> zero-length packets correctly?
 > 
-> >  
-> > @@ -3204,9 +3201,6 @@ static int ravb_wol_restore(struct net_device *ndev)
-> >  	if (error)
-> >  		return error;
-> >  
-> > -	if (priv->info->ccc_gac)
-> > -		ravb_ptp_init(ndev, priv->pdev);
-> > -
-> >  	if (info->nc_queues)
-> >  		napi_enable(&priv->napi[RAVB_NC]);
-> >  	napi_enable(&priv->napi[RAVB_BE]);
+> Looking at nct6694_usb_int_callback(), it seems to read the transfer buffer
+> without checking urb->actual_length:
 > 
-> [Severity: High]
-> If the PTP clock remains active during suspend, won't it be abruptly torn down
-> by the ravb_close(ndev) call that occurs later in this ravb_wol_restore()
-> function?
+> drivers/mfd/nct6694-usb.c:nct6694_usb_int_callback() {
+>     ...
+> 	int_status = le32_to_cpu(*status_le);
+> 
+> 	while (int_status) {
+> 		int irq = __ffs(int_status);
+>     ...
+> }
+> 
+> Similarly, in nct6694_usb_read_msg(), it appears rx_len is not checked before
+> evaluating msg->response_header.sts. If a device returns short or zero-length
+> packets, could this cause the driver to read uninitialized memory and
+> potentially trigger spurious IRQs?
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260902084703.3228504-1-niklas.soderlund+renesas@ragnatech.se?part=1
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260821033505.4017901-1-a0282524688@gmail.com?part=7
 
 -- 
-Kind Regards,
-Niklas Söderlund
+Lee Jones
