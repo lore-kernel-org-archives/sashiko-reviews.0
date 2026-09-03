@@ -1,166 +1,359 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout11.his.huawei.com (canpmsgout11.his.huawei.com [113.46.200.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B704A5C4A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 12:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CF44A4986
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 12:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.226
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788439274; cv=none; b=BbPOslHSjMqX6qKL+Rm7VrF4IaPBW/PfamdEo/b+eAf5kX7qGmfC796FG1GdrXe8VY7iNgSDffvJaEBQZ2yufqD6LABYaJ2S2nQ0JffVKLHfPtxmqoup/S0l10OP6T8lQIJB31S/zGowl/DtMnOXeqQwKydq1Y249b3kc5CoWuo=
+	t=1788439925; cv=none; b=E6W5lcCcAkhhaFTfsQev5n0Yf94eXGpD1qO9Q+SR/rdGxGXtJDoPcCpJyDrFK1/BotZQ8mZpTaEBpCL72aJ/mqtbR60cPYwzqruRbPylYwSl/V3UJ0Oy8tcFjHqODJ7S+x4zDVdkga9OiOymFpFEIqr5Tg1AjhDfD8+Q5/2lm68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788439274; c=relaxed/simple;
-	bh=sOT52DbKgvkkHbkje73zUdH0VXn9AYdlxPV7LsvQoaI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iQtpy8AjI5YJKRqlgwPqxqPb0KM2FTm3tBAYcE21AdM9lxKH2y1+X50PIP4Daedcwlpj8GhxYTrD6EsXz1h1aLOs1NEHjEslsRZkKx9P7mxrTQabewpEpv5EGrCwKCIC7o1ZSd85NoUlqVTqV6Q0651WdiqEd0asNiM+WAE2Ac0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=kijQavFP; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1788439925; c=relaxed/simple;
+	bh=SkXbA5JmS7M7HwB/OQ2T0Vq7gskp5pSOskBkonnKX3M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WX8p8eL0gp9k7NmjwIX5/s79VEIt9fV0jbL0N++sUusH9SMquGwq7IBN0ZkX1N3BgYIypd8vlwGK4AVJjul4zEMuReqGuH9eGRQBiQaYIaI6HZsUe0vfCwb5lKiGoE6yMKjYLsdFF9V08HESDxgGStjD5GCWpY5EibSjhiiOlsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=ciZ5i2Nc; arc=none smtp.client-ip=113.46.200.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="kijQavFP"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49cd9add88aso14828735e9.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 05:41:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1788439271; x=1789044071; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+iNE6mGIoSx/OllUwsSZWUgexqjjfHjOUITVK9fxSRA=;
-        b=kijQavFPCkRHy9IVY6ngr5StUgHyzqaNyIdGmTFX26AmTiSAc7LVTWTTZ1tlSRft9g
-         8PAbFEatyT+yGA/TDjtwVgK5DkHzeden85xSK3JFwDum+mvg2Tly6mzsSLdiPL8F/BUE
-         6GHX7DalmmWUVuvx1G8unXXzydJcEQA3/rAp5hPxHG2ErEt3Wga0VMXR+/zMnBveeKyX
-         hMCD3vv1ACs7OSy/bwpjJ7/fTIZ6Xb+gSrdB33m/C6Ya9p/WPH2FKZsPE6V3OhYdBuzZ
-         36AQ1Nf3RmpHkUpElENZmY5o8oBrKO4kmYjaKoeoP0SV6i95Ibszg681TqOqMdj+bVNz
-         ATIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788439271; x=1789044071;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+iNE6mGIoSx/OllUwsSZWUgexqjjfHjOUITVK9fxSRA=;
-        b=Kw8fDUR36a7FEmWkBnnB40meVNOoj4sQIm7mn3DuYOjmC+f8x8LwO6elbpr+nsoD2u
-         C4eCo0pdHxS+41Rs1m66oFZKGarQbRNwK3OaZ+CCTZu/mGZMMajs0aMI0QBGcazaZDcO
-         5SsjCgrklZXNOJr2rGDm3Evk1AKWM/AuP8bSZ6AphEii1kZCEx6WblWPWiqI58/Dubh+
-         kGr3XeToAwlVD81sQy8EpZBDDSlG/BEdSoBhaIcB/nsDZ+gXQGXterWxSlmYAYObT4eh
-         mtAo65IPG4zqAEk/Acbg4AVPUashjHhD5/FW+V9gNVQ6b76pTLHGNYzONteac9Xxvpbi
-         Nz6A==
-X-Forwarded-Encrypted: i=1; AKwUvBzqPgbsX1Hf8QHvz9wHfh09JGri0Fsc8WjPHCN7jQ2rakRtWPiAbz9KB+zJLdyfi0UqWZiEy3IXJwNFAU2hvrw=@lists.linux.dev
-X-Gm-Message-State: AFuF++lIICd0JF15TN7xJGzskeGJ/imtUo9xuoXlNd8sj1Ju5CMDD6oc
-	0eGprOEpo9ujcJj8XGW/w9OSgUfkikpjSPGPW2YNmxl+cRb41m1GkaNtr5MChGIBsAg=
-X-Gm-Gg: AYBFou2IYmHngb5tLQeHgEGo/MtIn0Mq97WL9mas0Q8kY5X+X+NF+8D+Kmz+77u8diB
-	cHSdfA+Wxzfz2bZC2e2BN3O5PzvVGtNNt0gMLy2DP66cTuh5+bV7SUETlYjgecWpr2+809zEEdL
-	pc50XouWa30hVru2G05tzfXlcTKxAggp4LvJPEPMZVEuJXArWXSTMh/kc3EEYyULSkRREj6al/8
-	999HUFDGaPIpq6KJqi4XKiuZwsE3d6YwHOI/M+/XWR5Nn0CGMT87bNlbYTdeZXZ8LuYvD9I7SG9
-	UtCol35XDr+rS+f84CBuoSRbbMOE+2oKJzGUb8VXuM8UCHFbS9iWj6ggpRmNtMlo6aRcJLM0aUF
-	FsI3K+1gjbXA6VkyXfOyp7DE4ZPuoP0Q8xIm6p9/aSokt8DvZrmmcGHtdV7zleK3uWw0jT60ExG
-	RbyyGRLvv/kkkZMIei2/N8fLBr/u5XAkGMfl+9XdVDDz5zDSusFP1SBVlhLCf8BTpd7aq2K0Prf
-	eyV+lo=
-X-Received: by 2002:a7b:ca42:0:b0:49b:92df:87be with SMTP id 5b1f17b1804b1-49ce55fbdbemr151563565e9.4.1788439271011;
-        Thu, 03 Sep 2026 05:41:11 -0700 (PDT)
-Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448e80798sm12957979f8f.13.2026.09.03.05.41.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2026 05:41:10 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Lee Jones <lee@kernel.org>
-Cc: sashiko-bot@kernel.org, Mark Brown <broonie@kernel.org>,
- sashiko-reviews@lists.linux.dev, robh@kernel.org, mfd@lists.linux.dev,
- conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH RESEND v6 4/5] mfd: axp20x: Add support for AXP318W PMIC
-In-Reply-To: <20260903090328.GH2133376@google.com>
-References: <20260812-axp318-regulator-v6-0-d6b84b55c000@baylibre.com>
- <20260812-axp318-regulator-v6-4-d6b84b55c000@baylibre.com>
- <20260812214019.CDF921F000E9@smtp.kernel.org>
- <1jldaafmpd.fsf@starbuckisacylon.baylibre.com>
- <20260813095600.GA1072730@google.com>
- <1j33wg6cpk.fsf@starbuckisacylon.baylibre.com>
- <20260827134235.GN770273@google.com>
- <1jld9j8pfg.fsf@starbuckisacylon.baylibre.com>
- <20260903090328.GH2133376@google.com>
-Date: Thu, 03 Sep 2026 14:41:08 +0200
-Message-ID: <1jh5k68q3f.fsf@starbuckisacylon.baylibre.com>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="ciZ5i2Nc"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=YHnZhrvww+/2PP0gI/LLXYXbIGDpd1kbNSWgnZtJLz0=;
+	b=ciZ5i2NcZyclAn/Hb2IMQedebwuZnrlxIl2utGhS+AqSRu1PYvkehDK8kZQisJ8eS2WNDhI+i
+	E4J0qcxhgcegSQf0cTehZHdZbOyiOWezCXEmLTnSeddU+xUjiyMZRIeQeGXo2rYRyr8xYqumlCF
+	eexCOk2NKfb/ti9ml5kWGIk=
+Received: from mail.maildlp.com (unknown [172.19.163.15])
+	by canpmsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hbK2T71QxzKm5m;
+	Thu,  3 Sep 2026 20:40:49 +0800 (CST)
+Received: from kwepemk200005.china.huawei.com (unknown [7.202.194.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id 5DB0540578;
+	Thu,  3 Sep 2026 20:51:44 +0800 (CST)
+Received: from [10.159.167.44] (10.159.167.44) by
+ kwepemk200005.china.huawei.com (7.202.194.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Thu, 3 Sep 2026 20:51:43 +0800
+Message-ID: <8feb2036-689e-4cfa-b091-263d9048575c@huawei.com>
+Date: Thu, 3 Sep 2026 20:51:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for drm-misc-fixes v2 2/2] drm/hisilicon/hibmc: Add a flag
+ to indicate whether the OS-side driver has been loaded
+To: <sashiko-reviews@lists.linux.dev>, Thomas Zimmermann <tzimmermann@suse.de>
+CC: <dri-devel@lists.freedesktop.org>, "dmitry.baryshkov@oss.qualcomm.com"
+	<dmitry.baryshkov@oss.qualcomm.com>, "tiantao (H)" <tiantao6@hisilicon.com>,
+	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
+	"airlied@gmail.com" <airlied@gmail.com>, "daniel@ffwll.ch" <daniel@ffwll.ch>,
+	"kongxinwei (A)" <kong.kongxinwei@hisilicon.com>, <shiyongbang@huawei.com>,
+	"Liangjian(Jim,Kunpeng Solution Development Dept)" <liangjian010@huawei.com>,
+	Chenjianmin <chenjianmin@huawei.com>
+References: <20260721124324.1885856-1-shiyongbang@huawei.com>
+ <20260721124324.1885856-3-shiyongbang@huawei.com>
+ <20260721130613.16D821F000E9@smtp.kernel.org>
+From: Yongbang Shi <shiyongbang@huawei.com>
+In-Reply-To: <20260721130613.16D821F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ kwepemk200005.china.huawei.com (7.202.194.71)
 
-On jeu. 03 sept. 2026 at 10:03, Lee Jones <lee@kernel.org> wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Unlocked read-modify-write of the shared HIBMC_ENABLE_FLAG/GPIO_DATA_DIRECTION register causes a data race, leading to I2C corruption or state loss.
+> - [High] Improper hardware enable/disable sequencing exposes uninitialized hardware to userspace and causes atomic shutdown timeouts.
+> - [Medium] HIBMC_ENABLE_FLAG is not cleared during early hardware initialization, limiting the fix's effectiveness on kexec or warm reboots.
+> 
+> Pre-existing issues:
+> - [High] The DRM poll worker can access unmapped MMIO memory after device removal due to inverted devm/drmm lifetimes.
+> --
+> 
+> --- Patch [2]: [PATCH for drm-misc-fixes v2 2/2] drm/hisilicon/hibmc: Add a flag to indicate whether the OS-side driver has been loaded ---
+> commit 922d7ef6815cd065c3b6a7899d595e2a03634bf4
+> Author: Lin He <helin52@huawei.com>
+> 
+> drm/hisilicon/hibmc: Add a flag to indicate whether the OS-side driver has been loaded
+> 
+> This commit adds a hardware flag to indicate when the OS driver is loaded,
+> preventing the BMC from enabling DP prematurely. This aims to fix issues
+> with spurious unhandled interrupts during driver initialization.
+> 
+>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>> index e5cca7b63b787..53c02f8b88413 100644
+>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+> 
+> [ ... ]
+> 
+>> @@ -424,6 +424,24 @@ static int hibmc_load(struct drm_device *dev)
+>>   	return ret;
+>>   }
+>>   
+>> +static inline void hibmc_set_enable_flag(struct hibmc_drm_private *priv)
+>> +{
+>> +	u32 value;
+>> +
+>> +	value = readl(priv->mmio + HIBMC_ENABLE_FLAG);
+>> +	value |= HIBMC_ENABLE_STATE;
+>> +	writel(value, priv->mmio + HIBMC_ENABLE_FLAG);
+>> +}
+>> +
+>> +static inline void hibmc_set_disable_flag(struct hibmc_drm_private *priv)
+>> +{
+>> +	u32 value;
+>> +
+>> +	value = readl(priv->mmio + HIBMC_ENABLE_FLAG);
+>> +	value &= ~HIBMC_ENABLE_STATE;
+>> +	writel(value, priv->mmio + HIBMC_ENABLE_FLAG);
+>> +}
+> 
+> [Severity: High]
+> Could this read-modify-write sequence race with concurrent I2C operations?
+> 
+> The register HIBMC_ENABLE_FLAG (0x802A4) shares the exact same physical
+> address as GPIO_DATA_DIRECTION. The existing I2C bit-banging code also
+> performs unlocked RMWs on this register:
+> 
+> hibmc_drm_i2c.c:hibmc_set_i2c_signal() {
+>      u32 tmp_dir = readl(priv->mmio + GPIO_DATA_DIRECTION);
+>      ...
+>      tmp_dir &= ~mask;
+>      writel(tmp_dir, priv->mmio + GPIO_DATA_DIRECTION);
+> }
+> 
+> Since this flag is modified during probe while userspace might concurrently
+> issue ioctls that trigger I2C bit-banging operations, does this need a
+> spinlock to prevent data corruption of either the I2C direction bits or the
+> enable state?
+> 
 
-> On Wed, 02 Sep 2026, Jerome Brunet wrote:
->
->> On jeu. 27 ao=C3=BBt 2026 at 14:42, Lee Jones <lee@kernel.org> wrote:
->>=20
->> > On Fri, 14 Aug 2026, Jerome Brunet wrote:
->> >
->> >> On dim. 13 janv. 2008 at 11:56, Lee Jones <lee@kernel.org> wrote:
->> >>=20
->> >> > On Thu, 13 Aug 2026, Jerome Brunet wrote:
->> >> >
->> >> >> On sam. 12 janv. 2008 at 23:40, sashiko-bot@kernel.org wrote:
->> >> >>=20
->> >> >> > Thank you for your contribution! Sashiko AI review found 2 poten=
-tial issue(s) to consider:
->> >> >> > - [High] The corresponding regulator driver lacks support for
->> >> >> > `AXP318_ID`, causing the `axp20x-regulator` child device probe t=
-o fail.
->> >> >>=20
->> >> >> Funny sashiko did not pick up on this when v6 was first sent. This=
- is an
->> >> >> ordering problem. The regulator part should be applied before the =
-mfd
->> >> >> one.
->> >> >>=20
->> >> >> I could reorder here but there is not much point since the 2 chang=
-es will
->> >> >> land in different subsystems but it does bring a valid question:
->> >> >>=20
->> >> >> Lee, Mark, are you OK with picking the patches indended for your
->> >> >> subsystem or would you prefer that I split the series, regulator o=
-n one
->> >> >> side, mfd on the other (with a dep on the regulator one, of course=
-) ?
->> >> >
->> >> > Does this break existing devices or simply delay support for this n=
-ew one?
->> >>=20
->> >> Existing device are fine and untouched.
->> >>=20
->> >> I've just checked and if someone tried to run without PATCH 5 (regula=
-tors),
->> >> the main axp driver loads fine but the regulator part gives this
->> >>=20
->> >> axp20x-regulator axp20x-regulator.0: Unsupported AXP variant: 8
->> >
->> > Can you not enforce the deps with Kconfig?
->>=20
->> This is not a build problem so I do not think Kconfig will change
->> anything here. There is no specific config per chip.
->>=20
->> It is just a runtime ordering matter and not a problem. regulator and
->> mfd are split so at some point the support is incomplete.
->>=20
->> * MFD first, it is fine it just cant instantiate the regulator until it
->>   lands. it is (mostly) useless without it, which is fine.
->> * Regulator first. regulator will never be instanciate until MFD support
->>   lands, just as useless.
->
-> Okay, this is normal.  So there are no deps between them?
->
+You are right, this is a genuine race condition and needs to be fixed.
 
-I think it is normal yes.
+> [Severity: Medium]
+> Does this hardware flag need to be explicitly cleared during early hardware
+> initialization?
+> 
+> If the kernel panics or reboots via kexec without a cold hardware reset,
+> HIBMC_ENABLE_FLAG remains set from the previous boot. On the subsequent boot,
+> the BMC might incorrectly assume the OS driver is already loaded and fire DP
+> interrupts before the driver has initialized its interrupt handlers, causing
+> the exact "irq xx: nobody cared" bug this patch attempts to fix.
+> 
+> Would it be safer to clear it early in hibmc_hw_init()?
+> 
 
-There is a dependency as it stands. mfd change (PATCH 4) introduce a
-header it uses. The header is also used in the regulator change
-(PATCH 5).
+I understand the concern, but I believe clearing the flag in
+`hibmc_hw_init()` is unnecessary and would actually be harmful. Here
+are three independent reasons:
 
-I don't think the headers should be split in there own change
-but I can do it if you want.
+1. Flag purpose: HIBMC_ENABLE_STATE (BIT(2)) signals the BMC that the
+    OS DP driver has finished initialization. Clearing it would cause
+    the BMC to believe the OS is not loaded, triggering a host switch
+    that disrupts the current host's display in dual-host KVM scenarios.
 
-> --=20
-> Lee Jones
+2. BMC judgment conditions: The BMC does not rely solely on this flag —
+    it also checks host presence state. Even if the flag remains set,
+    the BMC would not send DP interrupts to a host whose driver has not
+    initialized. The risk scenario described in the review does not
+    exist.
 
---=20
-Jerome
+3. Register cleared on host reset: The register (0x802A4) is cleared by
+    hardware on host reset. Since kexec triggers a host reset, the flag
+    is already zeroed — the review's premise that "the flag persists
+    from the previous boot" is invalid on the kexec path.
+
+Additionally, `hibmc_dp_hw_init()` disables DP interrupts during init,
+and they are only re-enabled after the IRQ handler is registered.
+
+>> @@ -466,6 +484,8 @@ static int hibmc_pci_probe(struct pci_dev *pdev,
+>>   		goto err_unload;
+>>   	}
+>>   
+>> +	hibmc_set_enable_flag(priv);
+>> +
+>>   	drm_client_setup(dev, NULL);
+>>   
+>>   	return 0;
+> 
+> [Severity: High]
+> Is it safe to set this hardware enable flag after the DRM device is already
+> registered?
+> 
+> Because drm_dev_register() is called earlier in this function, the device is
+> already exposed to userspace. A user could interact with the device before
+> the BMC is instructed to enable DP.
+> 
+> Should hibmc_set_enable_flag() be called before drm_dev_register()?
+> 
+
+You are right, I will move `hibmc_set_enable_flag()` before `drm_dev_register()`
+in v3.
+
+>> @@ -480,6 +500,7 @@ static void hibmc_pci_remove(struct pci_dev *pdev)
+>>   {
+>>   	struct drm_device *dev = pci_get_drvdata(pdev);
+>>   
+>> +	hibmc_set_disable_flag(to_hibmc_drm_private(dev));
+>>   	drm_dev_unregister(dev);
+>>   	hibmc_unload(dev);
+>>   }
+> 
+> [Severity: High]
+> Could disabling the hardware flag here cause the subsequent atomic shutdown
+> to hang?
+> 
+> This calls hibmc_set_disable_flag() before drm_dev_unregister() and before
+> hibmc_unload() invokes drm_atomic_helper_shutdown(). If the hardware is
+> forcefully disabled while the DRM display pipeline is actively driving it,
+> can it lead to I2C/AUX timeouts or hanging commits during shutdown?
+> 
+
+I don't believe this change would cause a shutdown hang, for two
+reasons:
+
+1. HIBMC_ENABLE_FLAG does not control any hardware display pipeline —
+    it is only a software communication flag between the OS driver and
+    the BMC. Clearing it does not forcefully disable any hardware
+    block.
+
+2. drm_atomic_helper_shutdown() and all I2C/AUX operations work
+    directly through MMIO registers, independent of this flag's state.
+    Therefore, disabling the flag cannot cause I2C/AUX timeouts or
+    hanging commits.
+
+Additionally, moving the disable flag call after drm_dev_unregister()
+provides proper symmetry with the probe path (where we set the enable
+flag before drm_dev_register()).
+
+
+> [Severity: High]
+> This is a pre-existing issue, but can the DRM poll worker access unmapped
+> MMIO memory after device removal here?
+> 
+> The MMIO region priv->mmio is mapped using devm_ioremap(), which binds
+> its lifetime to the PCI device. However, the output poll worker is
+> initialized via drmm_kms_helper_poll_init(), binding its lifetime to
+> the drm_device refcount.
+> 
+> If a userspace process holds the DRM device file open during a device
+> unbind or hot-unplug, hibmc_pci_remove() will complete and devres will
+> unmap the MMIO region. Because the drm_device is still alive, the poll
+> worker remains active and its next execution will access the unmapped
+> memory.
+> 
+> Should the poll worker be explicitly stopped in hibmc_unload()?
+> 
+
+Hi Thomas,
+
+Sashiko AI raised a use-after-unmap concern on the poll worker in
+hibmc_pci_remove. Investigation found the issue has two aspects, both
+class-level (not hibmc-specific — ast and mgag200 share the same
+structure).
+
+The scoping question that determines severity and scope:
+
+   Should "userspace holds a DRM fd during device unbind / hot-unplug"
+   be a scenario bmc considers?
+
+This determines which aspect matters and how far the fix should go.
+
+   == Aspect 1: fd-held unbind (special trigger, ~certain UAF) ==
+
+   Trigger: PCI unbind via sysfs while userspace holds a DRM fd.
+   This is a special path (developer/abnormal operation), but once
+   triggered the UAF is basically guaranteed. devres unwinds in reverse
+   order: iounmap runs BEFORE drm_dev_put. With kref > 0, drm_dev_release
+   never triggers, so all drmm actions are skipped and the poll worker
+   keeps running after MMIO is unmapped:
+
+     pci_remove  (same timing for hibmc / ast / mgag200)
+     +-- drm_dev_unregister()       registered=false; unplugged NOT set
+     +-- unload / atomic_helper_shutdown   [no explicit poll_fini]
+     --- devres unwind (reverse order) ---
+     #2  iounmap(mmio)              <-- MMIO DEAD FROM HERE
+     #1  drm_dev_put()              kref > 0 (fd held)
+         |
+         X  drmm actions: NEVER run <-- poll_fini skipped (hibmc/ast)
+         |                          <-- i2c_del_adapter skipped (ast/mga)
+         |
+         +-- poll worker: detect -> I2C -> readl/writel(mmio)  [UAF]
+         |   (~10s, only if VGA connector polled; DP is POLL_HPD, skipped)
+         +-- ioctl on open fd: detect -> AUX/I2C -> readl/writel(mmio)
+         |   [UAF, IMMEDIATE — confirmed by oops]
+         |   Xorg holds fd -> GETCONNECTOR -> hibmc_dp_aux_xfer
+         |   -> readl(priv->mmio) -> page fault
+         +-- DP HPD ISR (hibmc only): drm_dev_enter -> unplugged? NO -> [UAF]
+
+   Manual poll_fini closes the poll worker path but NOT the ioctl path —
+   ioctl doesn't go through the poll worker. Closing ioctl requires:
+     (a1) drm_dev_unplug instead of drm_dev_unregister in pci_remove
+          -> sets dev->unplugged, blocks ioctl in drm_ioctl,
+          activates drm_dev_enter
+     (a2) drm_dev_enter/drm_dev_exit in detect and I2C/AUX callbacks
+     (a2) without (a1) is a no-op — this is why the existing DP HPD ISR
+     protection is currently ineffective.
+
+   So the scoping question becomes: if the fd-held scenario should be
+   handled, (a1)+(a2) are needed beyond poll_fini.
+
+   == Aspect 2: no-fd unbind (normal path, us-level window) ==
+
+   Trigger: rmmod (blocked by fd, so no fd when it runs) or normal
+   shutdown. This is the ordinary path.
+
+   I checked drm_atomic_helper_shutdown (drm_atomic_helper.c):
+   it only calls drm_atomic_helper_disable_all (disables all CRTC) and
+   does NOT stop the poll worker. So the poll worker is only stopped by
+   the drmm release action at kref=0, which runs AFTER iounmap:
+
+     pci_remove
+     +-- drm_dev_unregister()
+     +-- hibmc_unload
+     |   +-- drm_atomic_helper_shutdown()    [disables CRTC, NOT poll]
+     --- devres unwind ---
+     #2  iounmap(priv->mmio)            <-- MMIO DEAD (window starts)
+     #1  drm_dev_put -> kref=0 -> drmm poll_fini   [STOP, window ends]
+                                         ^^^ us-level gap ^^^
+
+   The window is us-level (devres unwind between iounmap and drm_dev_put),
+   poll period is 10s, so probability is ~10^-6. Combined with "BMC GPU
+   rmmod is rare in production", this likely explains why it hasn't
+   surfaced. But the window is structurally real.
+
+   Manual poll_fini in hibmc_unload closes this window — stops the poll
+   worker BEFORE iounmap. This is sufficient and curative for Aspect 2.
+   ast and mgag200 have the same window and should apply the same fix.
+
+     Proposed fix:
+
+     hibmc_pci_remove
+     +-- drm_dev_unregister()
+     +-- hibmc_unload
+     |   +-- drm_kms_helper_poll_fini()   <-- STOP POLL WORKER HERE
+     |   +-- drm_atomic_helper_shutdown()
+     --- devres unwind ---
+     #2  iounmap(priv->mmio)              <-- worker already stopped, safe
+     #1  drm_dev_put -> drmm poll_fini -> poll_enabled=false, early-return
+
+   The drmm release action checks poll_enabled and early-returns when
+   false, so the duplicate drmm call after a manual poll_fini is safe —
+   no double cancel, no warning. Error paths are also safe (poll_enabled
+   =false at init if drmm_kms_helper_poll_init hasn't run).
+
+   == Summary ==
+
+   poll_fini (Aspect 2 fix) should be done regardless — it closes a real
+   (if small) window in the normal path, and applies to all three BMC
+   GPU drivers. The scoping question is whether to also do (a1)+(a2)
+   for the fd-held scenario (Aspect 1). If yes, poll_fini is still
+   needed (drm_dev_unplug doesn't stop the poll worker); if no, poll_fini
+   alone is the original review suggestion and sufficient for Aspect 2.
+
+Thanks,
+Yongbang.
