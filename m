@@ -1,158 +1,199 @@
-Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CADB3B0AC6;
-	Thu,  3 Sep 2026 06:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7523D1CA8
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 06:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788417790; cv=none; b=U6gnhneklEiJwNGpWYxXvqKUb4obZCGL+KqAX9ZkTd3eo6TUIEvtGyCJN3z1LstAcyHnCZYGH+oG5pPWYJiNxfxB3YusdVyhXov/m6VJV+QXfgqAQkzbFuNnThF4orA7IrPTiQOImaDcotCoOoq+nnOf3VV/V3BOPNhDXjokF/c=
+	t=1788418586; cv=none; b=beIcC0arJJCmHuRkeUcgPB5jFSIMUJrg4h+D87FlewoFXYFUDTdIodZiSMxle1+EY4mNNwGndKOc98Tr7LvsrOx4wZ8nu9nEtOaLHOiluOsIgqI6/R73vz1sFPejwFF4lavfmP6Fst8r/JEt3pN2o50GqtfUfUp6IhY3tZwICs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788417790; c=relaxed/simple;
-	bh=zLDDEDOoPOZyiwGuhTcSuwpOsFNXAy79JRkPpolVxd4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YBvInU/5JbwZvUDszNnTQRw0OacWXnqHmxS+kHDY3sXFafgkjWTdLfy899zae+VcSChphAep70OwK6eI24/Asc9UVKhYvwXkEUA1JCJhSoxJhhVvEEPByiJmOt2qG6bFi5ziOIpxDV5sTgkJd98pqygN5JoevuaicRe9oGCXREs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=Ex2T0fKj; arc=none smtp.client-ip=188.40.3.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
+	s=arc-20240116; t=1788418586; c=relaxed/simple;
+	bh=QvVM54NpkoK3YnFwZ+xjzZxlVOYfW2Xw5XMmA0hckxM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gh1/ch8X0qpMaQsLnAIh6fy4H0U4QmoPEKNpnvtqmxEFNVP+azBtk/2X/PceW7RZA5zmrStn3XWebKhDNGvjOGJ2CsYRDP3bk3i+zVz42T80hbFWbNZQ0OUmqCYaxHreigNhxStYgOthKnwHDrYlHx3Cerx1IiXiUXqIAvPV/Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=aQpMkBkg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Jfbl4mRk; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RBzedHud; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=iWnwX9CL; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="Ex2T0fKj"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=ew.tq-group.com; s=default2602; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=h6xXnBIM//A962BwFEXD/J8go0ydGTpBGTmxqMZMF1c=; b=Ex2T0fKjQrVj6KSE7L3b3jqFAV
-	0jPQMx0XBp2mbfRSefriKvdT2pz9g4qEy15bcxB4eL6GUW4bn602jKAAUV/UFmv+MMEuMiggA8oaG
-	l+F7RKrTUMGtl+Ozq8ro5TIl4qadhy4XLGwFPTLy9ctjqzTorpngTPG8LrCd//nzUOhLh8+F1Xw+9
-	WS0gHzvICoCajQvauNZd6n9boeGdl9Oq5tWbFQc0b64TbVuesWS8CZcjZb3pUiLa0pIU/aiW3F0iZ
-	mPzf9CeLfiEKrqnS2QhcOjxhqygrue7vQ+DxkmeRnNMoXBO2EnM68tgS6a/LFAIXVImLbuesEmf3b
-	vVg6fi3w==;
-Received: from sslproxy02.your-server.de ([78.47.166.47])
-	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1x219x-000Jzu-0F;
-	Thu, 03 Sep 2026 08:42:53 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy02.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1x219w-0003Og-2C;
-	Thu, 03 Sep 2026 08:42:52 +0200
-Message-ID: <62bb7c8527dea0e8af4e23e59dddb49c56d12853.camel@ew.tq-group.com>
-Subject: Re: [PATCH 1/7] dt-bindings: leds: pca995x: describe reset-gpios
- property
-From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-leds@vger.kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org,  robh@kernel.org
-Date: Thu, 03 Sep 2026 08:42:51 +0200
-In-Reply-To: <20260902161653.GB2133376@google.com>
-References: 
-	<6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
-	 <20260902123759.DC6841F00A3A@smtp.kernel.org>
-	 <20260902161653.GB2133376@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="aQpMkBkg";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Jfbl4mRk";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RBzedHud";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="iWnwX9CL"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9AAD821E86;
+	Thu,  3 Sep 2026 06:56:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788418574; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iMe8QpXxJI9lslA9bVylRc6cUbYfr4iCuVypi9ek89s=;
+	b=aQpMkBkgkaae1HYwyzWJUjas5FgMISSIYdipHsR6hGYLEk8MwWIy2ijohwv/1B+SzUJdJ4
+	5GnY/gwcdlEfuOtobzTU0pc0oyeiWslFB3qYky1YSLH1cB7l6UbOMnLBRIZJSw/8DhkRgp
+	rK5hpWTlIDOodYxmyvlP9fglOzhjt9M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788418574;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iMe8QpXxJI9lslA9bVylRc6cUbYfr4iCuVypi9ek89s=;
+	b=Jfbl4mRkck7zPj0FyhOztoWwqddOdRCAlT5Ga/yAiTayxLMs8P5kvZ3ll566W658SQSwoE
+	bXdtXUVR+lzNOGCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1788418570; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iMe8QpXxJI9lslA9bVylRc6cUbYfr4iCuVypi9ek89s=;
+	b=RBzedHud7HZBZq3IZfo/n2x++XWKhaV9lR6zsxnBSQrM0xfHlqlFRqObBup1+LekpBLHlz
+	xFbWAyUPQUd/J4F/HVJL4KdBTK/cjD8V1bL3ZwMBXofgo4vSeUkaYDsZVdKVcRGMFJVj32
+	qY4S/XwJMd/4kXMFfOWWT72JoHdu+dI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1788418570;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iMe8QpXxJI9lslA9bVylRc6cUbYfr4iCuVypi9ek89s=;
+	b=iWnwX9CLeA1vNvOHhnQvZsGnnsNC2WqJxhMc3UwsXNtOnHbwdROFjfOHt6FwHWV7pixD2f
+	T+ZI0q7zxsjJwUBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4026F136E6;
+	Thu,  3 Sep 2026 06:56:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id TIPYDQoamWqWSgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 03 Sep 2026 06:56:10 +0000
+Message-ID: <6a86569b-176e-4959-8287-c15ae6c184dd@suse.de>
+Date: Thu, 3 Sep 2026 08:56:09 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28111/Wed Sep  2 08:24:01 2026)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/atomic: Set plane-state pixel_blend_mode to default
+To: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch, daniels@collabora.com, leandro.ribeiro@collabora.com,
+ pekka.paalanen@collabora.com, lowry.li@arm.com
+Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
+References: <20260901122731.83854-1-tzimmermann@suse.de>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260901122731.83854-1-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -4.30
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,collabora.com,arm.com];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,intel.com:email,suse.de:mid,suse.de:email,suse.com:url,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
 
-On Wed, 2026-09-02 at 17:16 +0100, Lee Jones wrote:
-> On Wed, 02 Sep 2026, sashiko-bot@kernel.org wrote:
->=20
-> > Thank you for your contribution! Sashiko AI review found 2 potential is=
-sue(s) to consider:
-> >=20
-> > New issues:
-> > - [Low] The commit message description is not capitalized, violating th=
-e LED subsystem guidelines.
->=20
-> Please review, explain or fix the Sashiko review(s).
-
-Hi Lee,
-
-please see my reply to the Sashiko review on PATCH 2/7, as that one require=
-s a
-decision how we want to model the output-gain in the Device Tree. All other
-Sashiko review comments look correct and will be addressed in v2.
-
-Best,
-Nora
 
 
->=20
-> If this is a set, this request includes the other patches too.
->=20
-> > Pre-existing issues:
-> > - [High] This problem wasn't introduced by this patch, but the driver v=
-alidates the child `reg` property against `PCA995X_MAX_OUTPUTS` (24) instea=
-d of the chip-specific `num_leds`. This allows 16-channel variants to confi=
-gure out-of-bounds LEDs.
-> > --
-> >=20
-> > commit ead1262f70ad0044c0eca7c693a6d898fbcc4d44
-> > Author: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-> >=20
-> > dt-bindings: leds: pca995x: describe reset-gpios property
-> >=20
-> > This commit adds the reset-gpios property to the PCA995x device tree bi=
-nding.
-> > It allows the reset pin of the PCA995x to be described in the Device Tr=
-ee.
-> >=20
-> > > dt-bindings: leds: pca995x: describe reset-gpios property
-> >=20
-> > [Severity: Low]
-> > This isn't a bug, but does this commit message subject violate the LED
-> > subsystem capitalization rules? The description after the subsystem pre=
-fix
-> > should be capitalized.
-> >=20
-> > This is a pre-existing issue, but the driver validates the child reg
-> > property against PCA995X_MAX_OUTPUTS (24) instead of the chip-specific
-> > num_leds:
-> >=20
-> > drivers/leds/leds-pca995x.c:pca995x_probe() {
-> >     ...
-> > 	device_for_each_child_node_scoped(dev, child) {
-> > 		ret =3D fwnode_property_read_u32(child, "reg", &reg);
-> > 		if (ret)
-> > 			return ret;
-> >=20
-> > 		if (reg < 0 || reg >=3D PCA995X_MAX_OUTPUTS || led_fwnodes[reg])
-> > 			return -EINVAL;
-> >     ...
-> > }
-> >=20
-> > [Severity: High]
-> > Does this allow 16-channel variants to configure out-of-bounds LEDs?
-> >=20
-> > Changing the brightness of out-of-bounds LED channels (16-23) on 16-cha=
-nnel
-> > variants (e.g. PCA9955B) calculates a pwmout_addr that overlaps with th=
-e
-> > IREF registers (output current control) for channels 0-7.
-> >=20
-> > Could this cause silent hardware state corruption and potential physica=
-l
-> > damage to LEDs?
-> >=20
-> > --=20
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/6d3600f99c77c31=
-166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com?part=
-=3D1
->=20
+Am 01.09.26 um 14:25 schrieb Thomas Zimmermann:
+> Initialize the plane state's pixel_blend_mode value to the plane
+> property's default value. Resolves an inconsistency on planes that
+> do not support PREMULTI.
 
---=20
-TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
-any
-Amtsgericht M=C3=BCnchen, HRB 105018
-Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
-neider
-https://www.tq-group.com/
+Never mind. It's a duplicate of
+
+https://lore.kernel.org/dri-devel/2026090341-appraisal-jot-6aec@gregkh/T/#m10bbb3677bbc65b9f358751f174a5fd3d2d319e7
+
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: 860e748bddcc ("drm: ensure blend mode supported if pixel format with alpha exposed")
+> Cc: Leandro Ribeiro <leandro.ribeiro@collabora.com>
+> Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
+> Cc: Daniel Stone <daniels@collabora.com>
+> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> Cc: Maxime Ripard <mripard@kernel.org>
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+> It's not clear what Fixes should point to, so I picked the commit that
+> introduced the stricter validation of the blend-mode property.
+> ---
+>   drivers/gpu/drm/drm_atomic_state_helper.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
+> index d90d1d7c9cf9..0325caee528a 100644
+> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
+> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
+> @@ -278,7 +278,13 @@ void __drm_atomic_helper_plane_state_init(struct drm_plane_state *plane_state,
+>   	plane_state->rotation = DRM_MODE_ROTATE_0;
+>   
+>   	plane_state->alpha = DRM_BLEND_ALPHA_OPAQUE;
+> -	plane_state->pixel_blend_mode = DRM_MODE_BLEND_PREMULTI;
+> +
+> +	if (plane->blend_mode_property) {
+> +		if (!drm_object_property_get_default_value(&plane->base,
+> +							   plane->blend_mode_property,
+> +							   &val))
+> +			plane_state->pixel_blend_mode = val;
+> +	}
+>   
+>   	if (plane->color_encoding_property) {
+>   		if (!drm_object_property_get_default_value(&plane->base,
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
+
