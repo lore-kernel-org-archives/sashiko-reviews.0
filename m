@@ -1,183 +1,150 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11021103.outbound.protection.outlook.com [52.101.65.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01104562B7;
-	Thu,  3 Sep 2026 15:08:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788448119; cv=none; b=RSFlO69PETb7kntKxnSBr2ylLk1/A5tUum8ndtQx6nMSTaC8SPkRQsUT1VEBVRlXmjumQidAVSjYBu8x1QHaEG18WpyPWVEhUpvYgHNGUVKX9cXiQVhp1TybxNopMq8T/ndevjA8furdRByPRDcPP8SKjho7gPzrqajKppK7EME=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788448119; c=relaxed/simple;
-	bh=RxIyO10FhKrxdxLqbT41yS1ViytjqWpdYbHXOhj34/0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iaSQEdtGkIoPe0R7yjuTPwjsIKJ0wmXSvNBCP4Oi911FRf6SZVa7I+923wHfJXpdOfOxSUmbiX1dfuN2QFTFkYCK0o3yoD437U+hMC5Km7YmO3eAkIsiuZTS8mLzts7xh+spbWB8SfQFWZ1Kg/kdp42+AF8FNK65G0i2zrC1B1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=GBTvSqdi; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544054DA541
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 15:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.103
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788449347; cv=fail; b=CQkohCEP7X2LfgKV1yZ6qJJvs5fyZyXWPhfGUjuqUGAWBVTB7PRpxn7ft1cIzDGfSDac+3zAyPyMc81rCUTJjKanzR+SwbJenUsO192diR4wN9izv3UF7V8t6UgXdYdzdekHjL5+ZC+/X13XeN0gr+Hy7l3grrb02QE0/wMPLxM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788449347; c=relaxed/simple;
+	bh=35GjeMFKgqfijokTyq3bPxSfGZvT1Onan3YiMXewUcM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=pYkMDKGFAq5PyRO977yLGiz0n5D0nwsTGcyrHZHrNkDXguOVyz6ajvQq2xNFQzLtGvAAi11OJmj4bykGIIMgscY0IU1omVkMl49AbHF7gIrdRo9dVerMSwCW2riSjbuYfjfrxaKNwQXBnqPNr8VE1M2UJTNkEJvVLUimyW6eRaM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=phytec.com; spf=pass smtp.mailfrom=phytec.com; dkim=pass (2048-bit key) header.d=phytec.com header.i=@phytec.com header.b=tZKLGomj; arc=fail smtp.client-ip=52.101.65.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=phytec.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phytec.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="GBTvSqdi"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 683DVY1H3109140;
-	Thu, 3 Sep 2026 15:08:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=b471W3X5ZgO3ksHmnnl3jf2jUTJs41
-	S2z4Jjq5ttgjI=; b=GBTvSqdif4FS8smQpsrtFZaol/seDeS8li3dZO+wldCUPt
-	RHx0IB5hZ2F2H/4WpxgBi1SbHtMA6UV4XLoHb9rLxi66AGVVE0N7uewe21idib7i
-	5k6vhNUSYYKHOw2sfuHXSYWtftGbEY0p2c3NOcM1CfwRfk2dFwEJpcfikYpVbpCd
-	sqGVQ28a8bL4NCmpyFUS3npiBXuP188jSQK9ZButCzo/f+xLNKoMBOoaShjgHUSr
-	I5d3kYIsjkIEF1s/uu/1EBvWZC9bhN5NT0U0X5Yh8rKreG43E1BcGQFAw4+laT1d
-	XPlyuCAChuJQZWkU8efOBok/XYdPGzW6B/gFxHrg==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5wgpp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Sep 2026 15:08:36 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683EuHrD007401;
-	Thu, 3 Sep 2026 15:08:35 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hr4mc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Sep 2026 15:08:35 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 683F8Yak34472634
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 3 Sep 2026 15:08:34 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C5D395805F;
-	Thu,  3 Sep 2026 15:08:34 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 91EF758053;
-	Thu,  3 Sep 2026 15:08:34 +0000 (GMT)
-Received: from d (unknown [9.16.41.19])
-	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu,  3 Sep 2026 15:08:34 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v7 2/8] scsi: ibmvfc: Add NOOP command support
-In-Reply-To: <20260831214057.3FA141F000E9@smtp.kernel.org>
-References: <20260831-ibmvfc-fpin-support-v7-0-77d0b9809080@linux.ibm.com>
-	<20260831-ibmvfc-fpin-support-v7-2-77d0b9809080@linux.ibm.com>
-	<20260831214057.3FA141F000E9@smtp.kernel.org>
-Date: Thu, 03 Sep 2026 10:08:33 -0500
-Message-ID: <87ld9i5q4u.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=phytec.com header.i=@phytec.com header.b="tZKLGomj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XvMA/xZmhH+xKjAczKU8I5QARURU6WHj88VMdNb4lrHhFAZ9ZNZ8oin4L8lHg3aEBRV4skFy/48Kmc7SkCsZuWS1KIXeH/L0Pinne13GjsZ7qnYCwgzmKsHxrEGgQTDyN8jO8qhAhDggyDLHV/86IPudSDJ3CpJgDuzZGcoGaP7udwW6nQoxeJJUue4gn0lq93Ajworm22cbCzXb5hOUjvGj1VgoUnLy8i0n0u45Ya/Bwm7n8a+OKdI1t9Kf+1QbHWuC0Zo6hbm3/8AekzgjRDFc1r8IszXD6r182RnBSH/VnH1ZxQVjJICmJt2bkAQ0ZK0T/AFUfc7eCOvhKE3shw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=35GjeMFKgqfijokTyq3bPxSfGZvT1Onan3YiMXewUcM=;
+ b=ZnkwZs6BoLCuxm809Xww3ngR84BT5OeYAZJ9US1yNCvmomRVit2PO/Uny2JX4YWFeKiadJnDV88DM76h4wNmOxyKb341r8xzv2JFuOnc6/utXLJclKW+IbLXXKvnZVENSa9vrkDZ+t09SNIu+brS2Raylx/ST8uBYN5fwqE+YZneHrUxESjwYYu3WwnkWqcVnjAkiEVnSIl0wV1yBDXxTBTI5nPtIFWRoUM37Jh7EN9rJRlgE6wkY+aLdpb5xqVXq9sTwu1kGjJkZhFnx9BMkPCe812Ag35BYr2qaLlYnfM1FkM/ckhuIOMztelV2VftE8niPJylYo7uFZWU3yTPlQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=phytec.com; dmarc=pass action=none header.from=phytec.com;
+ dkim=pass header.d=phytec.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phytec.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=35GjeMFKgqfijokTyq3bPxSfGZvT1Onan3YiMXewUcM=;
+ b=tZKLGomjsSmCu/MGQICZXZlMVZeiMVO6pKya33YMTBjBj9Fs5MeYtYQZPoaxxmY6Ythj9+DET102EWq+tWzdGigqPT4ODeNd9SICHrl5U4N1UjA4Nnez3a9MCW9Azp68HZ+dy9tcUKbv69byIkvUgWWKdwbwdmmIYmwU8tIu4iDEX/c6L6lvt3WARD0l8QsZ4SRrSgoXKunZxGdI+ERr5EjaXVPP2rbqv2KGwscLl4R9SDOIzJ54ZYDJt2oTtMZiCmXYplTPSM30AxNFHD11Bw3gKgN3PFFPIqz86kpFC+0L2QK89D8jX+M6fEMrZlgZToWcYWbd+zZkQMQyaQiiWQ==
+Received: from DU0P195MB1745.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:3b7::10)
+ by DB9P195MB1395.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:327::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
+ 2026 15:29:01 +0000
+Received: from DU0P195MB1745.EURP195.PROD.OUTLOOK.COM
+ ([fe80::48f:7e75:c707:d440]) by DU0P195MB1745.EURP195.PROD.OUTLOOK.COM
+ ([fe80::48f:7e75:c707:d440%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
+ 15:29:01 +0000
+From: Nathan Morrisson <nmorrisson@phytec.com>
+To: "nm@ti.com" <nm@ti.com>
+CC: "upstream@lists.phytec.de" <upstream@lists.phytec.de>, "afd@ti.com"
+	<afd@ti.com>, "kristo@kernel.org" <kristo@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "vigneshr@ti.com" <vigneshr@ti.com>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Re: [Upstream] [PATCH v4 1/2] dt-bindings: arm: ti: Add bindings for
+ PHYTEC AM67x based hardware
+Thread-Topic: [Upstream] [PATCH v4 1/2] dt-bindings: arm: ti: Add bindings for
+ PHYTEC AM67x based hardware
+Thread-Index: AQHdCLZYgQ7onOgaZkKfc6F+K/l22ba7/f8AgAFAfwCAACH3AA==
+Date: Thu, 3 Sep 2026 15:29:01 +0000
+Message-ID: <e7805ab3055241d5886f03407a71e87f3a6a42e4.camel@phytec.com>
+References: <20260630173131.3000303-1-nmorrisson@phytec.com>
+	 <648d3128d73c6b27c1fa9a3fb1ff5b39156810e6.camel@phytec.com>
+	 <20260903132726.us2vplb7fey77mqw@clarity>
+In-Reply-To: <20260903132726.us2vplb7fey77mqw@clarity>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=phytec.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU0P195MB1745:EE_|DB9P195MB1395:EE_
+x-ms-office365-filtering-correlation-id: aeeddd81-5335-49f9-214f-08df09d014ce
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|23010399003|1800799024|7416014|366016|38070700021|10067099003|4143699003|11063799006|56012099006|18002099003|22082099003;
+x-microsoft-antispam-message-info:
+ gHJnCfSJmvvRNSoFtiGYVtSkN5o6Vmrzhl3H3sXemwqohmnQFNkz0/ByHc8F2sPCdDC5GXqutao+s5E7iLcP1dLbd+rDI18PgjNoao/1tInV2t/IeGRAFy5fS0QFPTJGD7oA6cgamcZ+66e93CgBD3bCiAkOD9ev2l7vTqE/7TZqIqvnSiX3Yjufx16LuAVWmcWVu/bSbSRjhW8ru4DZ8B+hQ2BOzHFkCaQtiDUIOH4AKSjTk1I6FRqOJbjB/5Q+KH2+aBr8HtaqLvkvOnsmtrAwJoE4hKFKUkBf6m1/VT6gn7QQq5GmntZcY6K9yLzGLKek/7Wkh0Hh4qq6R+WgoyTMLPTPSanukRDLdRDvt4CvGeTTi+K13bZf0ZFkvOD8xBQ3VngzcaN84vtnkG43IPSyiQQ1jIjqWvS995j4vQFOBXrjYLhTxxOdf8T2Pymid7aiC6SbP1G4Xy5rs/ZSPiFCaY7yYosnmfiaKXFnyu2RhAfrQzad4ZQWQnjsAydlqpHNKpuzFO06Gyyp3Pf/dh8o5mz6DyEQrvE1z644a1oOUDU/ihOywvEzVVoN8GsZbJmAySiCDmw4PSmZcEXaQ89nv/ipy0w4iRvYfTK1JEpC6ciDQIe3pYoYIdACX7VzAMPa74QQXa68N9PaakJ+MYI7KKYwvp+wThq8GkNsFKR1EuQIfZAeWzaobJgg5ACZN/3iN6zZjNxWMexaaN0+WT8pX9lKifVCsivBvNFh2Qo=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0P195MB1745.EURP195.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(7416014)(366016)(38070700021)(10067099003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?MWRsdmthRGJaeUdRbjluRVYwVmw2d0xKUGlUcmFuQy9zcnVnS0s2MlFFY21v?=
+ =?utf-8?B?K0Y4KzlPSEUvYXc4NGwyekd2Mjl1UFNyUlFYZElna3BOazlQUG03MXFwdmFP?=
+ =?utf-8?B?Q21RcXdKUnNTS0tvZkhRaTZRR0NyVm05UGFuTWt0eXZWQmU3bUxWZEFzQndn?=
+ =?utf-8?B?OTcvdng0VTJoeUd6OXY3TjRRSCtTam82SENsK3MvRzlLSFVmcW1nZXV6Z1lF?=
+ =?utf-8?B?ZUgrS2lJVkFPYXhOa0lLZDFiRTkwY0Q2RE9KdDdMK1lIbU40RkF2dklIU1B0?=
+ =?utf-8?B?VEc1cUd3YTBLVmFTQWN6Ky8wV3JKVE5nSkJwQVFkZDd6cFlLdVhiNk9XSTNv?=
+ =?utf-8?B?MWtxNzZmQVV4NThSNzV5ZEpVZmxUNFpXUkpRTmpzVlBLL3JrOTVPWE16dDNk?=
+ =?utf-8?B?Wm14QjZzMTFvajdEeG5KUUduU3VkbUlqYmRpbS9NVUJHMlRDN3JkU1hrU0Zj?=
+ =?utf-8?B?THE4SzFrRU9EZEJTaHhiTHFrUk9aY2FxY1RuTmtaWFpBWEk3SGVVWC9zb2ox?=
+ =?utf-8?B?MHFLbEU0QkZvak9YQXVPQllSZmZmQWdzQlNNdHcwd1ZCSEY3QmZYOFVUek5J?=
+ =?utf-8?B?S1lKeVlMK213eFI1U3hRNGFnenZ3UlhWcnN5SUN2VHFQdnRLZ2ZGVGlzSWtk?=
+ =?utf-8?B?VWkzRDVXVXhxR0VSWHpuVU5oOHdMay9mZDFuQmpBOTMrTzk1SWM5cXNud3FO?=
+ =?utf-8?B?N3FOTkNuM3kvMEZibmZiYVdsMDNVK3l6UGpEWUk5dXJYWnVJc2JuL25WeWE1?=
+ =?utf-8?B?VDBhS2ZCM3lOb1VWWWlIQStNMEc3VmE2MTB5czd5MlVYSHBablpJZ2ltTkxp?=
+ =?utf-8?B?RnNDT3pidEg4MVJBNWMyOEFsa3Vsc2dCSk9zcEkxbE1SSDUvMFc2eld6TGtR?=
+ =?utf-8?B?VzZYWWpZTExzK1hnbWFpVWZNdmZHZExCZjltV2g3R3dwZFkrM1BhTzJGMWhP?=
+ =?utf-8?B?QnZJVURhQU1XNmN2R0srSXJnTHJtQTI1MVRYQlI1bXk5ajVmRE0zOVZqTFNa?=
+ =?utf-8?B?RVhrL0RXTkQ5dXlEb3Q3aEFRQXlzTWp6OVIxbFNTY01qM2xqeFNxV3BoTDlM?=
+ =?utf-8?B?eHpDek1ySkVLQzVMV2dTbFppNXgza1NFby94UzAyOHNXckpmK2xNWjVQZ0dO?=
+ =?utf-8?B?SmQ0eUExM2drSEltS1pkV2I5djBRMGFRUVM4M1Eyem9TSGkyMGdZamd4N0Jh?=
+ =?utf-8?B?aEltTDZnQlJtTFNxQ1JwdEJLMTJtVGd3K0cvOFR0NENCTzNQeXJvTFcvM2dt?=
+ =?utf-8?B?cUlkazJ5U1R0VFlCQzg0QVN1YmprOHh4RkNtYVdHTzJONUhuSk9XbkxZUVpy?=
+ =?utf-8?B?N0pVaVp5NmVPdWswQ1hadVBxMTBlVUFvcHJxTTg1bEtpTTZxT1RYeUZ4K1Ju?=
+ =?utf-8?B?SjBXRzRLSlBicGFJY3hWUE9iRXc1WmJwU1llZHRqSE81Y0RSdEhBMGp0bUU2?=
+ =?utf-8?B?SEowT0ZBb1k0NjVxZDRFcTRMeEVsQU9SVWZmOUZsMThwMXk2cUtlZ1U3NUh6?=
+ =?utf-8?B?NVlsdHIzS2tORGx2NURjOERTSlVQeDZFUGFpUHdNQXVFY204N0FoTEZka1J1?=
+ =?utf-8?B?b2lJZzFtRkRDbFRxdXVvWUtKbm5jaitsMnNiUkJJZDBER1pQUDFpWGtkR3Ix?=
+ =?utf-8?B?dS9XZCtZZmdPcmdXbGJsOHE0MERvZHMxcDZwTyt0Wmx1dCtLejdkaWx4MlJF?=
+ =?utf-8?B?RHZMQ1loVEt5UFhQSGUvckwvNXk0N1U3bHZpN015YXQ1eVZUWlRSYWh2NlhH?=
+ =?utf-8?B?OEpsRjJ3cTJZYzZKZEhYRzVsdlA3RVhnMUJRck9xdWVCWlo1Z3VVUjdsSDBL?=
+ =?utf-8?B?YmZ5MkxYVm9jVkpkaDlLbmlud0hPVU1PRkhiL1lJdlplQkZ0NUR1ajRMaEts?=
+ =?utf-8?B?bEV1RHFZd2ZDWjdmRmhKU1hzZUo5ejFGdWs2Ulozbi9wdFREUWxDMElTOU94?=
+ =?utf-8?B?TDlRd3E4QXgyOCtJTm5xeGo0ZmMyZW4xKzlXMi93YVkxeXFzS2RZalNydG5K?=
+ =?utf-8?B?VWdnb3YwWE1yRG1GeTZWSGQwaGlJNEovSVhvTjZDbTZ5TGYzcDI1NlNEa0xF?=
+ =?utf-8?B?c3ozdXlXanEraCt0V1VIQ1lKUkxITUF1eVI1U2xCM0xueUVGZ2VTckxQNDA3?=
+ =?utf-8?B?TFRNSjJzcGVkeTJlR05SbFpJK245RjBLRjRsYUdPZUNiYmNnNzBmeVZDVVZX?=
+ =?utf-8?B?NmIxbEE1L3BZRUxrK2h0Y3lQUitOSHV1QWllczJ5bnRGQnZ2NllpMzZhc0oz?=
+ =?utf-8?B?VWEvNUV2UXJJclVCTUxTM3RlMlN1SDlTWG83ellhdHdWYUd5SlJFRUZiNmxI?=
+ =?utf-8?B?SFdFNEw3eUFHZ20rK2FlM2IvaUx3NnZBY0FlaWc5em1NSUEvU3JYdz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <DA8A79A4A89C8B4F8FB293890420D535@EURP195.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a998d74 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=FbhALZS-eHYbuhQjA_cA:9
-X-Proofpoint-GUID: HwloBN0P9OE_ehifyw4svsl8OVaDqxd7
-X-Proofpoint-ORIG-GUID: HwloBN0P9OE_ehifyw4svsl8OVaDqxd7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDEzMSBTYWx0ZWRfXwZDw8iRq5Msm
- oO1XzE9pYR/1e+6y0WohcJSs6YQ0k7iqwB6qiHvrDMZ+0pHeOaswxUPTpIMQYcdQg7LWzMdMgSC
- VQKAB0zQgoc6EaeIxXp8ziLROmMxUCw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDEzMSBTYWx0ZWRfXx/zLlDXLwU9Y
- wGb21RiqBWw6VC3HgxWjJQodUebzTirQ0sGZP3Z+4CvAOQBd9F5t33obd8ZgWDh/03SBSDHR1kn
- tZ3gV4lzO/vYk3nqBVoi0FDHgX43537YVwY/XX7bmjSy/RTSoCYCkhk5QcmNveF00fv6xqTkdYL
- e7hFFKwO5xRwN4SgYM9oevM24pyzuDptoYpl6DXbSywZwbNZ1Xm2b2pBPiQfsRJ9ian7cnNoTT+
- o7oJ7ecRGcLibLflzrE3PnSYl1qKcKwAuiDnp1RqBRJVRqLe1h0plG1COjt6HEkDNse94H7XIBt
- W6YaFthgjho/rFz4+i7aXIQKRm2u+zmQm4kbvo1Wr0arpUeNbOwf4QNIM7mwq66+fG8ym4qJI2v
- f2IcvBSgZelLLz7T3oRiFPod5sszz/51y86v3NsBnKPiSBlvldLD1gxp1/acwgKxq+pxp1u1W6g
- 1v5S6wxIlVT+XeyEfcg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_04,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609030131
+X-OriginatorOrg: phytec.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU0P195MB1745.EURP195.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: aeeddd81-5335-49f9-214f-08df09d014ce
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2026 15:29:01.6768
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: e609157c-80e2-446d-9be3-9c99c2399d29
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: P7qrOkQr4bfhG3ccbWcUr4esd4Bi27F3t1FxBRQBNa7QhEr5td7BRk6NUQKjlfzV0ztWKGr9cuy6n2r7SRRzvw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9P195MB1395
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] The code suppresses logging of unexpected NOOP messages received before NPIV login completes, directly contradicting the commit message claim of logging early messages.
->
-> Pre-existing issues:
-> - [High] Dereferencing untrusted pointer `evt->queue` before validation in `ibmvfc_handle_scrq` can lead to a kernel panic or out-of-bounds read if the partner sends a malicious or corrupted non-NULL correlation token.
-> --
->
-> commit a2f1ce40ef9fb5e6c86a16b1ac92eb6c526f0a48
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
->
-> scsi: ibmvfc: Add NOOP command support
->
-> This commit adds support for VFC_NOOP messages from VIOS to enable keep-alive
-> functionality between the client and server. It defines the VFC_NOOP CRQ
-> format, adds handling in the CRQ handlers, and sets the NPIV login capability
-> bit.
->
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index 78be00d31a064..e972e4ec5be00 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
-> [ ... ]
->> @@ -3693,6 +3695,14 @@ static void ibmvfc_handle_crq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost,
->>  	if (crq->format == IBMVFC_ASYNC_EVENT)
->>  		return;
->>  
->> +	if (crq->format == IBMVFC_NOOP) {
->> +		if (vhost->state == IBMVFC_ACTIVE &&
->> +		    !ibmvfc_check_caps(vhost, IBMVFC_SUPPORT_NOOP_CMD))
->> +			dev_err_ratelimited(vhost->dev,
->> +					    "Received unexpected NOOP command from partner\n");
->> +		return;
->> +	}
->> +
->
-> [Severity: Medium]
-> The commit message states the intent is to "Log unexpected NOOP messages if
-> received before VIOS advertises support during NPIV login." Does this
-> condition match that intent?
-
-No, this does not match. I will rewrite the commit message to reflect reality.
-
-> In drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_handle_crq(), the code checks:
-> if (vhost->state == IBMVFC_ACTIVE && !ibmvfc_check_caps(...))
->
-> By requiring the host state to be IBMVFC_ACTIVE, this appears to suppress
-> logging of unexpected NOOP messages received during the IBMVFC_INITIALIZING
-> state, and only logs them after NPIV login has completed.
->
->>  	/* The only kind of payload CRQs we should get are responses to
->>  	 * things we send. Make sure this response is to something we
->>  	 * actually sent
-> [ ... ]
->> @@ -4223,7 +4233,15 @@ static void ibmvfc_handle_scrq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost
->>  	case IBMVFC_CRQ_XPORT_EVENT:
->>  		return;
->>  	default:
->> -		dev_err(vhost->dev, "Got and invalid message type 0x%02x\n", crq->valid);
->> +		dev_err(vhost->dev, "Got an invalid message type 0x%02x\n", crq->valid);
->> +		return;
->> +	}
->> +
->> +	if (crq->format == IBMVFC_NOOP)
->> +		return;
->> +
->> +	if (unlikely(!evt)) {
->> +		dev_err(vhost->dev, "Received null event\n");
->>  		return;
->>  	}
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can this lead to an
-> out-of-bounds read or kernel panic if the VIOS partner sends a corrupted or
-> malicious non-NULL correlation token?
-
-We trust the VIOS partner, so I will not update this.
-
--Dave
+T24gVGh1LCAyMDI2LTA5LTAzIGF0IDA4OjI3IC0wNTAwLCBOaXNoYW50aCBNZW5vbiB3cm90ZToN
+Cj4gT24gMTg6MjAtMjAyNjA5MDIsIE5hdGhhbiBNb3JyaXNzb24gd3JvdGU6DQo+ID4gSGVsbG8s
+DQo+ID4gSSBqdXN0IHdhbnRlZCB0byBjaGVjayBvbiB0aGUgc3RhdHVzIG9mIHRoZXNlIHBhdGNo
+ZXMgYW5kIHNlZSBpZg0KPiA+IHRoZXJlDQo+ID4gaXMgYW55IGZ1cnRoZXIgYWN0aW9uIHJlcXVp
+cmVkIGJ5IG1lLg0KPiANCj4gQ291bGQgeW91IHJlYmFzZSB0byA3LjMtcmMxID8gU29ycnkgdGhh
+dCB0aGlzIG1pc3NlZCB0aGUgd2luZG93IGZvcg0KPiB3aGF0DQo+IGV2ZXIgcmVhc29uLg0KDQpO
+byBwcm9ibGVtLCB3aWxsIGRvLg0KDQpSZWdhcmRzLA0KTmF0aGFuDQo+IA0KDQo=
