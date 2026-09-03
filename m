@@ -1,100 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2E2511191
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:11:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72839501F4C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 22:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788473494; cv=fail; b=B7Clxycyivrh+GUfQRaFEP9qVvY1ddqRAPnfRDtA44skTBMSpOYG1KsFTM+2DovCKR6Qi8ZwYgnwGmoXG9SrmeuEjULr8YatDZ5M90pLgFR5VYi6yj8T+QOTlSHwfvKDbMamlL6xYeXBqciE3WzjX7nzzoqmW/oQagKw7LwF4J8=
+	t=1788473693; cv=fail; b=XCEQyOkQfcl4RJfdKT07BBMD6WF6l5B1m/u8KYuk4NMKY9s7uk7uBJPjAwSm6qYfiaz/HTmE8bHuNLpOmhvevCrNdTa5zRxMOKF3jIy8mWYfA+IZ3D+p3Qz8e1WYWELOI93BsokO5QeSpDgU4sByrgUkTZ/QE1uhhnDKmBL1Lbk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788473494; c=relaxed/simple;
-	bh=T0tchj65dAbEot5guhkS8VNzcdUJOjc8cdIsj9ufZ2E=;
+	s=arc-20240116; t=1788473693; c=relaxed/simple;
+	bh=l/TRUoL87Taed/qtRQp7rlwzJ6TuNtXwdx0i/RvKirA=;
 	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=e06ORtArVORhMmp91HMdV2tKvbGcDYFGZRCzXXob4ckY39ptSS9kBPq7YGq4dL+S3jYQEZSL039cbfnmfHs0Q9GULubZh60LdUoEagD8d+3CJWUXC+Lc/YeM/pDe9YYSAYj/ewrPSPwW9rMkgxRhMFWqUe+R9lMZHEO7QyR9Ck8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MpYqgPmO; arc=fail smtp.client-ip=198.175.65.19
+	 Content-Disposition:In-Reply-To:MIME-Version; b=oHqY/YFA8xr4xTPcrvItEeiciwiVDbgXY2gnvwMseS37QFhS1hmZSLV2YqeEDtg0YXfNxAkP8I3B4bXgXCUTGY1a7hLDqnRFJ0s0tX0jcNUe40iLwgADkZnk8R/4ltH7gGJuj7P4PpZL/6I66W7xdHaS68Aom10mZ4+bl4bsu7M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CvmLHTW7; arc=fail smtp.client-ip=192.198.163.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MpYqgPmO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CvmLHTW7"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788473493; x=1820009493;
+  t=1788473692; x=1820009692;
   h=date:from:to:cc:subject:message-id:references:
    content-transfer-encoding:in-reply-to:mime-version;
-  bh=T0tchj65dAbEot5guhkS8VNzcdUJOjc8cdIsj9ufZ2E=;
-  b=MpYqgPmOpSYYGmCkE/Zd5Gb3V+y6jRwAXyB6hHlq72CWs3eFgoNhYDPg
-   mkdHPhGIYdnoCe5yxprqZaAmEzqTfQgvNlqi7iS+qB4BF1AwKisY1r+q3
-   +522wB1sWrQ6d0U4zKG3MPU69UQdDUgaLNRnts5iUb+cn3RQ4yI+bmT5D
-   KNfuDhzBiUy6AbUwZ/4AqeDZayiBVTxpknca2CfV4LKdmiwDsBvTo8uQT
-   IguKfHgXqNiUD6FrSuH6B4/lJprmtIuRJgfzMyaCBt7exj2ffaGgAUw7U
-   u5QO3PSMNKe7XX2xkAGyMopWlAOONcRGSEUNHk6mkon41przUyno/87BZ
+  bh=l/TRUoL87Taed/qtRQp7rlwzJ6TuNtXwdx0i/RvKirA=;
+  b=CvmLHTW7mh0MEX/vyG2dWAcG8e9YDt3HaFLjB8Vxtg2Zld+gW8r9zeS3
+   JpFU0CPXEeMTG4ZRHDvf5wRBSw4gGAH24BvgnjgcLntMhh1QIt5N75Gqf
+   f1u4Lnv7yaseMUpnkU3+puGNdmHB5VPeS/AmxuzBJnTtIZQg5IPrK59Mt
+   xfdMmqPtXqIKTK5MK7XeWOPbZT2O9E+PHN4DEbsm82Gq5nV1WRE5/E3rI
+   ajcejhd1bGX5VNbuflySAZFrA++qaykaPZaR02m7opYHKaGmec7tOIwGZ
+   fcwaBj/SBhbGgu+ZX6XDzAu5zmODdHiqwUnZBlvSrijH9quYDhrWqm7BR
    w==;
-X-CSE-ConnectionGUID: jBfjhliaS5OlWrSP7gL0lg==
-X-CSE-MsgGUID: 1e4TF/PUSWOXkAt4vLq6iQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="88897198"
+X-CSE-ConnectionGUID: u3qdhKIJSriAYFaRfDnWlA==
+X-CSE-MsgGUID: eej60ZKYRA6PQKMwRq549w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="89094494"
 X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="88897198"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:11:33 -0700
-X-CSE-ConnectionGUID: MfwezuHtQd++Cx44qsaBew==
-X-CSE-MsgGUID: UT5cGPwrSy+K3dvpcZd+iQ==
+   d="scan'208";a="89094494"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:14:51 -0700
+X-CSE-ConnectionGUID: MIT1UqcOSTiKyTqr37gpzw==
+X-CSE-MsgGUID: 5v7/x2yfRZ+MHe/TE3f6fw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="273383013"
+   d="scan'208";a="275129537"
 Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:11:32 -0700
+  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 15:14:50 -0700
 Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
  ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 15:11:31 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ 15.2.2562.46; Thu, 3 Sep 2026 15:14:50 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
  ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 15:11:31 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.9) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 15:14:50 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.49) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 15:11:30 -0700
+ 15.2.2562.46; Thu, 3 Sep 2026 15:14:50 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Kn3tLDgzgE3voqxG+9mLhnVEbCNfssAvjkJJI/5pFWmZvYH1QOVbQeWkveWx5vOqACSnWTgS5aY7+3SueVsF42pIMzb3/4bo+XGTzg4sbR4AlkPSmkKGUbYe07tuZR7aGKcz7eFcmwsCgSYNqUYHP/goYS3Nje1cVgdfkQVFbfED0lW6q4GDp9y0O3NKMlwF2purOjDunV1k4fa9M2pDG/i55fuNYqSdPJ+zulmQzPtqU9HPqsAUYp2p5Ap8j5ZMJxQOchz/9993Oi/dbgQ6MtW628hgu7iVjoOaaBmfxa2Uem9YeVNPLFjZtLlTLemaYyU9e7zydhETV5B5k/R4iA==
+ b=ltulXTjipjyxFIYkTZDQaYNBzF10sCe2+xzVu67zdwHNglLai2ICbIe99y6yzDAoRo7SRVkK589N0s5mrIjqRH81b++kA/g1qOa/PlwXyaUxF6yifHa3z5UzUHuuPp+DbWJSIOkSGxNCsgZZRAVo+X6SAEaUioGOJ3EY0+AwQmIz5qUMYg4Awo8S8WVpOyzXag/0bVvqqKEfyStYsqxfBXkFxv20oy1G93AxiN1lvCGVn9bDigXpxD5DzBAMUlXhY8Ylf2Umot74PztOuFgOU9QsUuduZ2W3Khjsfnbb9KEnUe84zl17HJZsloSKowMSVckf9wHcNw8Obdu+UfEYwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RWLmCgoJZsDoMxQzWYqB2QUBDPuQ5ftnWJWeTUBUIcM=;
- b=ZvHElcgeDWwu1C9H7t8EGObCEnB1ltyZWivnpWy+3OIGwWJ7wOLr8nQbwm1K3IJahvuJqATF4GAfv9fGCxhyx8AKZ55xAAAdsUrAfE5ecFaSh2eLKYMCzN37AikHb1XFkfGjgFVHO7mjeoaTnNWS6G6mK5LomJq1y4iL5ohH37S7oPXyNpQTeAFb/e+UW6PPTPInuNzbSqA58gksusDsrTSa51hvIQrU+wIbQeCoxheyFmAe40CA/CDmdc+tZgg+/VoSw8Y4QHvlkfV64lTZCPhwy0tZxk0SKtbfBcn3qrhJTuh0zeTSDOTbJRJZBRJsFQ5P2Fv42a/aedbxvxZZbA==
+ bh=R+/+vTTxf4otpQc4XFDp5Znfer4zaJ4vo5MOZW4LV5E=;
+ b=LoeaIS/HKI2xGfrXQfVnb6o+G8hlrYlBTa0jdfym6N5z/R7oZ4SmSjhbrOQTP64fLVD0U6V6Iabfj0oxPpkqRxEdEk9l8KJc98+bl/ny7jIaLnTFqjgim/q9C2ywEctAR26l69yOnywzwjFhL0nz5vi96kO4XN5YEeoMFddxiHmSdnm/9Vfba8mUS91YlfUTr3/0ryTQWI1Ax3UHT9OeZFC40yJCuazEvW/ODuM2wUC6NA9XRgwRaNp39+c+3y20rqOMbzHkIekUI2+ClWwIg1ZsSQfGTCxjYjR3oBiPamdB7Zyv1bNd3DR2BW1vXk3dEM8JjYyjywZGevYjPxAKFg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from DM4PR11MB7256.namprd11.prod.outlook.com (2603:10b6:8:10c::8) by
- DM3PPF67FA1A8F8.namprd11.prod.outlook.com (2603:10b6:f:fc00::f28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 22:11:27 +0000
+ IA1PR11MB6540.namprd11.prod.outlook.com (2603:10b6:208:3a0::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.13; Thu, 3 Sep 2026 22:14:46 +0000
 Received: from DM4PR11MB7256.namprd11.prod.outlook.com
  ([fe80::86bc:2f46:443f:51dd]) by DM4PR11MB7256.namprd11.prod.outlook.com
  ([fe80::86bc:2f46:443f:51dd%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
- 22:11:27 +0000
-Date: Fri, 4 Sep 2026 00:11:22 +0200
+ 22:14:46 +0000
+Date: Fri, 4 Sep 2026 00:14:42 +0200
 From: =?utf-8?Q?Micha=C5=82?= Grzelak <michal.grzelak@intel.com>
 To: <sashiko-reviews@lists.linux.dev>
 CC: <intel-xe@lists.freedesktop.org>, <intel-gfx@lists.freedesktop.org>, "Jani
  Nikula" <jani.nikula@intel.com>, Suraj Kandpal <suraj.kandpal@intel.com>
-Subject: Re: [PATCH v11 4/8] drm/i915/bios: de/allocate VS/PE-O buffers for
- each port
-Message-ID: <pweg5ctxqpqqiofncomhxdh5myiwvqgw5owdxala5csgnga6wf@f5yhe5xporyj>
+Subject: Re: [PATCH v11 6/8] drm/i915: override Snps's VS/PE when requested
+Message-ID: <2lwl6gzy5qsuay5r6qkgycerikxcgkz63uib7dhxdj2ht3a7jm@ksjpbzuaj2cw>
 Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173,
  80-298 Gdansk - KRS 101882 - NIP 957-07-52-316
 References: <20260813160918.918857-1-michal.grzelak@intel.com>
- <20260813160918.918857-5-michal.grzelak@intel.com>
- <20260813161746.A10EE1F000E9@smtp.kernel.org>
+ <20260813160918.918857-7-michal.grzelak@intel.com>
+ <20260813162911.AF5701F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813161746.A10EE1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: VIXP296CA0030.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:36e::9) To DM4PR11MB7256.namprd11.prod.outlook.com
+In-Reply-To: <20260813162911.AF5701F00A3A@smtp.kernel.org>
+X-ClientProxiedBy: VIUP296CA0102.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:351::14) To DM4PR11MB7256.namprd11.prod.outlook.com
  (2603:10b6:8:10c::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -103,153 +101,305 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB7256:EE_|DM3PPF67FA1A8F8:EE_
-X-MS-Office365-Filtering-Correlation-Id: 31aaf657-542c-4782-e3f8-08df0a084c60
+X-MS-TrafficTypeDiagnostic: DM4PR11MB7256:EE_|IA1PR11MB6540:EE_
+X-MS-Office365-Filtering-Correlation-Id: 89303033-b566-4751-dfdd-08df0a08c36d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|3023799007|6133799003|22082099003|18002099003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: tURuw1J1gBoTPPAWy2LGIAX+VI8KFWF5xtV68JG7XHr2nmkqtpexfwQz9be0Mc5jY50ZQmlNfMX+TSSWvyqgnpNNMcznqsNS6jtV6v98ypOZpRpfQWEGD5pWlGDuBHxYOH79joGizarKxCgR8aT3rWeO45wVf4S7Y9TAs3fy+74EROKn+gwERSH9sP/88bvyBZYc5fQipQYShNk+7c3mPWDprN9tImAWOMbWB5r+le8ncGKoxjfLpTzPA3KuD/qLk4xsREpwp7vO1vGPi1zaP1Zid3XiKAExOe6E1NUtT+gJLKbmdMEEbTbWg1Li9hjbYFmAQXNh05/uNWi7T5L9Z+R1UeFI55admvGSDM+Cf0QMnTZbmOmKbhxtaLe085WA4Bbff67j4RrH5hxRIM8/773yoj3ddiZ4oraACyFeZ/7UEXk5lMfpcBN820t7Bmj6wNsNAOzb7nV7M3pjiu1CkR+1xFsbCB4GWKK0Xz1Dbcuj7l800qMN7c97spc7IrLuoW3XeNvb+CnUij+aqnOaWi1mSH7ILPg0jEOoe2D6S0ga9QAR42nSLl3jnihWiPjUgVHvPo4b4ca6n5+FXoaff4KW3Z6CM1NrNTz2dU/lBqs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB7256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(3023799007)(6133799003)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|4143699003|11063799006|10067099003|5023799004|6133799003|22082099003|18002099003|3023799007|56012099006;
+X-Microsoft-Antispam-Message-Info: albsxqYDkaEZrMeLfcH5EcoMPxrsRq8rf/XDIsMh2IgbSEgXSxpKe5nbpxvecRh09s5Iw81jHOMXer0DwU+bzjcGcJO2byY34JAfu2VjokrXGrzTcjlvEVrOh+QrwZDs0UNsa/PrheauPTzUCp9W8yohboTClniPfWjytRvXc08938gRZ+kRCIeeLgJdAx9adzQzBU+pTtEHcazg03ShEUv19tW//ja9Bwhh7b4MNKdpQW3R0i1luBivP6/JSVbOOYoDHlK9Nm6+8BRVuQDsLMaRxllrkWXdvv3GzRGcCYtO6a14B88lrYRjHd5aRk4ytbl2K5QKKsqK2JT16D9rtq7wbIsrURBMYDwI47y0Rj3aQK3x4mspAverRONpk1T9+ptR1jMzlK0Is783ZOjBWbBYFiHpJGqs2EeNOFbKeLEzAt2aBOVguwWNf3Z5wwOjG5YxI0jtKVWJTc2wWI8q2LVlzL6hBx0UcwnAWNui2dl0mjw6bv3NfF7BhyvpJRkv+RVu+cGaf0o6JTNMf7vcFZzS3Msh78FmdZJBkB4qJ7aBcdEP06UOdDaeCKO/q4PrcusgL2vgNX8b6F0HKU022+/g9zSf7i2yRbrXxSfc+kA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB7256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(4143699003)(11063799006)(10067099003)(5023799004)(6133799003)(22082099003)(18002099003)(3023799007)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?djQwYTl2YXlhNkhxZEo1QU4ycFZEdWZxRWg2OW9PbWRGOWFGQUd2TnJsU29H?=
- =?utf-8?B?OUJUNXBaaytJODN3QmlXSG0wVnFEb1kybGsxVmpsTHh1d2N6V05Ob3FZYnJX?=
- =?utf-8?B?Sk1Vd05CRzEvcHhUNWYwSVZ6ZDhjSTM0NFZkS2dLQnUzYW1lRnlJQ1U0bUNU?=
- =?utf-8?B?N1RkdmVpZGRxQ21jQWR2QlZQa1NoYm5vQVRYK3l0alU1YTQ5YmdPSHVkbnVw?=
- =?utf-8?B?RHROdXN2bVVacTI2RytZZmxHZ041ZW55emp3UjZCaFk0RUE5VVRvWVBnbnNi?=
- =?utf-8?B?SVU4OGEzYmp1MENUR0tmREhBWVcrODl6bTdrT0pzL2FjT21sdk1wNXEwelRP?=
- =?utf-8?B?TDRsT0l0MUVHVzl2bkNSVWtSUU9QRElxYVpXRnpNNDI4YzQ3Q1ltKzFDcUtG?=
- =?utf-8?B?UUpiSERBczhlS09oa1ZOS1FjUUp6T01yODVSU1R5WWNIRlNRV1oyNkt2cHAw?=
- =?utf-8?B?TGtUMWYrdDBtVEJzeU1Fc2lML3NPNzg5ODhrYzJQK3hPWDE1Q2FJclczT3ZZ?=
- =?utf-8?B?V2lNc0o0YVkwdDJ2R0wzQzRZZytDcjZRN2ZVWTBEcVBMd2F5elNPYkt2MEJ5?=
- =?utf-8?B?OE5CWnFnUkpkVDdaRWRHOEtPM3I3eU1VWmRqRXl0SW81TUNmODdDc1h5dzV6?=
- =?utf-8?B?b1VDT3p2cWR6bVcrdm8wWEtLT0NNMk90Wk9kby92ekF0SG1FUEhQUVFBUHBL?=
- =?utf-8?B?UlpycDdTdDlhS3Y5TUxXZW43K1ZpYXJwRFpvQ0Q2M3lKVG45WVdOSEpyN0pX?=
- =?utf-8?B?b3I0cjNJRWtxa056ZytsMUZod0hJWllwS0s0eS83Y1p1QlJYdWE0ekFHanJz?=
- =?utf-8?B?L3gwTkdVMFM1cTNYZVJYbEVWeXg1RWJteHNPNWJFU2VGK2dWZTVmK0x0UGFt?=
- =?utf-8?B?K0QyMi9ZMEVGRktrQXA3TWlLamQwL0VMaGQyM2NBK1RhcVBpWWp3c3FDeE9J?=
- =?utf-8?B?ODZoem4rVmI1YmxGanlidE44QVVXdGd1YUpSMEJxcnpBMVNFelltbkJqSnow?=
- =?utf-8?B?YmVXdEkyQ2JHNlFJc0RaYXZ5MnlHNVVuQVhPTDZnU2ZMSllzQnBTK1dRT0h1?=
- =?utf-8?B?cDVWWXpCWEVSSnhHYzF3Wm01Z0RJc3BCMkRVRXV4Y2drQ3dhbzc2TmZWWjZS?=
- =?utf-8?B?YU5yQmpFdXkwRUtEWkNjdUEzbm5nbm5HNmNNWXJCOXFTUHUrVDBjRjhxWTlN?=
- =?utf-8?B?V0NNeGU2YXhTTmJzN29PUStWcXczMCt1NVBRdDNLNkxCbUFvNU5GRWNRVmJq?=
- =?utf-8?B?YTN3SWRKNFRzTE5Rcy96WGVPVFcrWGJkOTdwQ2hYS2QzaTRiRlBucWd4WUR6?=
- =?utf-8?B?SmVTdWMxUnBOWndoR0lucmw3dTdWQzZmTDRiYWpzL1JvS1pZdjkwV1kyR21M?=
- =?utf-8?B?OURaZDB3UFcvSkgxVk5nbGkrS1ArZlhTSWZSUzloZTNNdmhac2lManBwY3Er?=
- =?utf-8?B?Y01hMm1kdXZkb2QzMlcxYktUa0ZGV0dUWFVINzZiL0ZVTThtMGUvODRjUi9F?=
- =?utf-8?B?cEhqU2EweDE5ejdxWm9xMWY3QUhOaGVpR044U3l4VHVaWXNGUUpGa3pGU3Rv?=
- =?utf-8?B?Tm9MOWo4WEdkanZoUXhpY0NkUTI5V3BzWTMvQ25zNVowWCswWEJYUHl2bjQ1?=
- =?utf-8?B?UytZeFFvY205eHRLYzR0S0NOcGhnQjhKNnBBLzRSai9kS1ZGVWdiM3dVd1N4?=
- =?utf-8?B?ODZTN05FeFh3U0Nrc0ZsZ2VOckh2akl5U2QvUkMyelJncTNJU1JUa0lLZEox?=
- =?utf-8?B?bzFXUUIrb2RlV1lwWk9OTWloUmhOOExMTHo4b2NuUngzV2dOWjlDa3ZMZ1ZZ?=
- =?utf-8?B?MkgrZk9jZHZxcU9XU0M2S2wrc1RxMGtaUDArak5QVGt5aEwyL0lkSWprdUVk?=
- =?utf-8?B?NVZBOFJkQmJuaGpmTlIzNjNCYVFVK1FjWnBMc1plNVFuQTNtY05Gc2J6SDIw?=
- =?utf-8?B?S0Yrd3k3U0hyMkxMeUUyaWRzMVV6ak42M2E0dkxtMTZCbzVVVXZnMG9LZHY2?=
- =?utf-8?B?L0h4WldiWEVLSnZ5bEFTZ25sVGVmSUFNV09lMll3Yko2QnNsN2wvMmxHMXI0?=
- =?utf-8?B?VnVhYWhZV290eFdweHYvbE9uNjZvVWJYd25MS2JVcUlVeGpsREYyZGNMUjVX?=
- =?utf-8?B?cGlaNDBWdm9SVndtMWRtZTRuMStYZGR5aU1Td3h6QzZ5Zko3OXc0RzlNOUJW?=
- =?utf-8?B?YXVxZUZXaDUyQ2JqVXlOWnN6WXFPVHZVVkF6Vm9kSmJRVHJNK1R1SURtTzVP?=
- =?utf-8?B?RkpkL1JIQnRpT1RXZCtia1p3YWc2UGxZSWtod3RpZjhOYXRkeUFORzJ6VWQ2?=
- =?utf-8?B?c0o3eFdXNnJWR3F6dUdXTzh5b2JJU1VQVjFMRUNRRHdyRlZCY29mK2E0U0xF?=
- =?utf-8?Q?QdpWRV2Fq8a4gVy0=3D?=
-X-Exchange-RoutingPolicyChecked: uVI0zA5x6SuDZyDLpuNZzVLiKVuH/sYnEG9uhNaZSjVolutJRcrJlKFV263QbZzlNHswk0mSD2WrbfPaqdv4eSJqSZPvQPe3zyIRx6ZSyuAUyI0W7qj6I/+TyeA9fk4qQZ9uB6ervIYljydyQbrzQfQsQN88tvSCACkqgvLXZMNuNjYiN7D+gJBlGR9mgK8ow4Vctnra9KkKyEDY7dSau9F6N5XKwpHk6+0f9974oYXlk/VugjzIxBgwqMspjIh669m3H1yJsfAxENrybiKVAk6NnQxjX2xrm2XWYxMyxaZfFdPgS2WhgSMV6Z4rJ5yU2KvO/yDzDxnRgs1Y9x2TDg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31aaf657-542c-4782-e3f8-08df0a084c60
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aWVDemJBWkFVc0pERVVHUmF4V2lmT2d6VHlBMTZ0eitCdmNwcWE4aEM5QzB1?=
+ =?utf-8?B?OUF3YlhDMUhpbzNnYlY2UTZhL3hJYVRUSDhyN3pFOStwYkduQldNMXdkZitT?=
+ =?utf-8?B?UFZzbmRkT3hlamJlTC9IOTBzNnNtK3FBOG9mblh0TjZoVndGdUlZTWFtbmpQ?=
+ =?utf-8?B?RjJzcDg2WGNuTGg4VW84L2JQaFBSRVpFZTlhS1JFejZ3V00rcGc4US9oTm9o?=
+ =?utf-8?B?TEowanR1TDdpdkJ3REpUVTlGNzNHMit0QUczaEZrNldSUEZLZjFSMmprbUo3?=
+ =?utf-8?B?TUVwU3ZWMUtLby80L3V1dm5pT1hmTUNMVXYxaTdQdU9jV1F1eXAzT0R6TUdl?=
+ =?utf-8?B?dG52Z0tiaDdvSFh2R24wekVrWlFMTVJjNmxtTXZLdmQvekNsS0hFUVhvQVdi?=
+ =?utf-8?B?Yk1VaDBQdjhQRXdQWXQwazRUcjVtZXVqZ3hicllNdzhOWE5PVkorV2pYSFM4?=
+ =?utf-8?B?Y29ENU51YTFESWFDb0NXUHlaZjRselhtcHhnZzE1YzFlbEtZcm1hblpPRi9y?=
+ =?utf-8?B?K1UrV1ptRmZ1ZWV1dldOcjlrb1phKzlkRVhDcjV6NWU3ZXBpdjdIdlNxTjE5?=
+ =?utf-8?B?YjI3Y3dyWFNaSnBwV2EyR1pYN2dJcG5yempxWjhQV1BTSjFCVy91UTVkMWRC?=
+ =?utf-8?B?T2FVVk1aNndjcVZpcEJJNHJzUXdlNWhwclpZaXpGd1VTNXFUWXNzU3JhbFpL?=
+ =?utf-8?B?L3pFb1dOTUtUMUhqdHMxV2ZWUnJwQ1c1S2poK1QrK01QcDdoN3g2TmNOOXU5?=
+ =?utf-8?B?ODJHbmJpcXR0TVNycU9IelJWU3V2N2lxcGpQdU9sSkJKMkRodDdHUGhQYVk2?=
+ =?utf-8?B?enpjU2E5ZU03OENibERseDhQQStlU0VQMkk5VzdyVFdrdUJjV3FLaFlIWG96?=
+ =?utf-8?B?SFFIbDNodVBJQ1hHM05pM3BmdVY5cEI1bkFZS3dxYTB6bUIvNWZMaEcvVUNI?=
+ =?utf-8?B?c2tmZDFnakpWY3RXekJ5a3kwWUZFZXNOOFkrR0cxQVlrbDFFbnRjZ0Q4Q1JI?=
+ =?utf-8?B?Y0t4WWQrWXUzMi82S1gyZEx2cXlhYmNZNkM2Vk12RXNJSU9KQTdodWRuUHlE?=
+ =?utf-8?B?TFNKVEIwTzZFSEtCS3lBMGRNL2NhVjdPZWJDTVprQWRPdlNZNkdUUmZUcmYr?=
+ =?utf-8?B?dDY2TXYyRWlOTEZnQkR6WndOOHhxY1lPR3FYZDU1ZUl5bm9kQzVwN2tNeGJN?=
+ =?utf-8?B?VWJGN05SYnlndXIzZzg4b0x6djAxRXpZeFdpYUVhSk5RRFVBWW5aNHdnaEd5?=
+ =?utf-8?B?VmpZMjhYZEgyeENhOHQvODdXNkRQUVQxSUlGUUc0cklyVlE1MnFRbVZuNUU3?=
+ =?utf-8?B?VXUwTUdDU2JFb3JLYzUwUUkvc3l6WW8rbWRxM3pxTHl3QW1rV3lpTlgxbVpB?=
+ =?utf-8?B?K3NxaFFYOUpVUUdXamF1dWhxYWxwTXZVR0dUMDFjT2plVXF0MW4zS0JkYTh1?=
+ =?utf-8?B?RE5iWlZBbmRJcHI1S0hySlBDbFkwOE94YWtlVXdjeTQ2Smp5by9YSmg2NnF4?=
+ =?utf-8?B?Zkt1RXhQbGEzMVE1Yyt2NDZPK1pQMjhDeTVLOGpGRndpWEJnN1FDOEJXSFQz?=
+ =?utf-8?B?Vmc1Um1oTXJWclVPRGlzWDFaLzlqNGlpalE1TjRWWEpnZFFya29LSHptR05I?=
+ =?utf-8?B?Wlo2eHVVOTNTd2pCTU9SZStPcmFpOEc2dksvSWZ0b2ZzRWhRK0dXMU5ESzht?=
+ =?utf-8?B?enJ2aWhKYnR1dEUrZ1ZEdkNWdTBvd3hlRUZ6Q3EzU1FyZFc0QTVaQW1qOEty?=
+ =?utf-8?B?N1VKZnlKbFlubFdRdUdQSzJnVlVrR0FpZktJVjFMVEtqZGxFT1VuSWIxTFpX?=
+ =?utf-8?B?Ry8yNUxKL244WTVPTHhaRElnOGR5bTVNWU55eG1OTUxIL2ljU2ZOeTkwRThH?=
+ =?utf-8?B?SE5nQmRGWHpjczlvV0tOOG9yRUx1TWQ3RDhEcWpwbTJFRmVXb3lHYVdPYUpL?=
+ =?utf-8?B?Rzg3OTBTTDNjLy9MWHNKWEpmK2VIRk5lczRDdUNSc1RUN0VMT25yZlI3cGtT?=
+ =?utf-8?B?ay9xNmFsUlVwa1NWUDQvcVNtYjZJUlI3LzkxbCtXOFQxU0VwUzRTRFBPV0Iw?=
+ =?utf-8?B?YUxkZFpCMHo3Y0o1RlU1Ymk0K05LNFBuU0E2RWJYTG9HejhMeGhVWk5Ob2xF?=
+ =?utf-8?B?RXQ1M0V6L3ZYMXVyMHp1MUx5MzloMHhVME4yM2k3OUxoV0I5eWJtNjFENGRr?=
+ =?utf-8?B?NXk4dERSaERPNytEZnpSbC8zYXJKU05oampOcElackRraEVNT2x2bVdvR0x0?=
+ =?utf-8?B?Y0VleVltNzc1V0lUT0duZitPcXNIbFVyc05nWnZNVWY4MzZRYmUzRVhoUHpl?=
+ =?utf-8?B?V0YvZjZpYVQrNUJoNW40MythZ2JGcG16Q3hOeXVVQk1vTWllYkdveUUraEd2?=
+ =?utf-8?Q?pYWAXas6IdoXPfzU=3D?=
+X-Exchange-RoutingPolicyChecked: bTPsnRc8ZuR0zr5C2oY0S9TSdsZEGquOf2xOgkYWtsxDNxkZx/zoDH4cpz+PWqxSyelWVZb/OuZjC5HkNymL38Z8VrprqySzt+RhXZpCGggszfZBnwyDZoEMf6zD+EvCCssmrfSU2EZ39g1Z8AVO9HuDePyYDb0NbqKmKdLM7pPAiw64bzPNjyZ8F+5jPzja6dKYOaAMMWQQTOtevBOacIRccCMsL/Pkqu6frz2DJn5UyCTXAbaq7iIfOUxWoCgXb2eH7cTFd9YTdrEQIGUkJ8OmKh3ijYthGmCRTE9eNB/jdVujdyj4hIs/YJM8d8lN1JfAblFMAWoB72h7BPUEhw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 89303033-b566-4751-dfdd-08df0a08c36d
 X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB7256.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 22:11:27.0708
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 22:14:46.7155
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: D1e9XJwEJNnnTJNXJP9xVtl5J8QchhBBo9ZsAx97yg4m45m2SHmEsnJJ9+ethO94M6SMM+XuEmKSEgdEUy+4Ee/eEyMXb3nnIKAlYGTmaWc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF67FA1A8F8
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZGGLuJ3hC5xLPSUcsC89xnZocKyzTJXHRXu1/7qYpSh1B/y3sQJJkMrpB/m3SxcioiQ/mIEQWgKXEfokGWDvx1+A2LjnJlr1lBZslIOzpCI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6540
 X-OriginatorOrg: intel.com
 
-On Thu, Aug 13, 2026 at 04:17:45PM GMT, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Memory leak of devdata->entries during driver removal.
-> - [Low] Missing initialization of `num_entries` in `devdata->vspeo`.
+On Thu, Aug 13, 2026 at 04:29:11PM GMT, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Out-of-bounds Read in VBT VSPEO parsing
+> - [High] Data Race when writing to shared devdata->entries array
+> - [High] Missing VBT block causes ZERO_SIZE_PTR allocation and out-of-bounds read
+> - [Medium] Contradiction of Intent: VBT override bypass for non-DP outputs
+> - [Medium] Memory leak of devdata->entries
 > --
 > 
-> --- Patch [4]: [PATCH v11 4/8] drm/i915/bios: de/allocate VS/PE-O buffers for each port ---
-> commit f4e52d6386e66ed2695365f0776e18c426ae4237
+> --- Patch [6]: [PATCH v11 6/8] drm/i915: override Snps's VS/PE when requested ---
+> commit 70006d8778b43948ec0e561395199a65420366c2
 > Author: Michał Grzelak <michal.grzelak@intel.com>
+> Date:   Thu Aug 13 16:09:16 2026 +0000
 > 
-> drm/i915/bios: de/allocate VS/PE-O buffers for each port
+>     drm/i915: override Snps's VS/PE when requested
 >     
-> This patch allocates dedicated VS/PE-O buffers for each port if an
-> override is requested and supported. It adds intel_ddi_buf_trans and
-> entries fields to intel_bios_encoder_data and handles their allocation
-> and deallocation.
+>     This commit adds accessor functions to read requested VBT tables for
+>     Synopsys PHYs and transform the data for the port's buffer. It chooses
+>     the appropriate accessor based on display version and PHY type (C10/C20)
+>     and handles table indexing based on link rates.
+> 
+> > For C10, 1st table is used for external DP with modes below HBR2
+> > (exclusive). 1st table is also used as a fallback for non-DPs. 2nd
+> > table is used for external DP with modes higher than HBR2 (inclusive).
+> 
+> [Severity: Medium]
+> Is this description accurate?
+> 
+> The commit message states the 1st table is used as a fallback for non-DPs, but
+> looking at validate_vspeo() and intel_bios_get_c10_vspeo(), the code returns
+> false/NULL if has_dp is false. This completely aborts the VBT override path
+> for non-DP outputs rather than falling back to the 1st table.
+> 
+> Could the commit message be more precise, or should the code be adjusted to
+> allow this fallback?
+
+Yes, commit message is outdated.
+
 > 
 > > diff --git a/drivers/gpu/drm/i915/display/intel_bios.c b/drivers/gpu/drm/i915/display/intel_bios.c
-> > index 9610b794bc147..a491b85006117 100644
+> > index a491b85006117..56b4aacff7763 100644
 > > --- a/drivers/gpu/drm/i915/display/intel_bios.c
 > > +++ b/drivers/gpu/drm/i915/display/intel_bios.c
 > [ ... ]
-> > @@ -2648,6 +2651,29 @@ static void sanitize_device_type(struct intel_bios_encoder_data *devdata,
-> > +static void allocate_vswing_preemph_override(struct intel_bios_encoder_data *devdata)
+> > @@ -3881,6 +3881,99 @@ bool intel_bios_encoder_supports_tbt(const struct intel_bios_encoder_data *devda
+> >  	return devdata->display->vbt.version >= 209 && devdata->child.tbt;
+> >  }
+> >  
+> > +static bool
+> > +validate_vspeo(const struct intel_bios_encoder_data *devdata, bool has_dp)
 > > +{
-> > +	int num_rows = devdata->display->vbt.vspeo.num_rows;
-> > +	union intel_ddi_buf_trans_entry *entries;
 > > +	struct intel_ddi_buf_trans *vspeo;
 > > +
-> > +	if (!intel_bios_encoder_requests_vspeo(devdata))
-> > +		return;
-> > +
-> > +	vspeo = kzalloc_obj(*vspeo);
+> > +	vspeo = devdata->vspeo;
 > > +	if (!vspeo)
-> > +		return;
+> > +		return false;
 > > +
-> > +	entries = kzalloc_objs(*entries, num_rows);
-> > +	if (!entries) {
-> > +		kfree(vspeo);
-> > +		return;
+> > +	if (!has_dp)
+> > +		return false;
+> > +
+> > +	return true;
+> > +}
+> > +
+> > +const struct intel_ddi_buf_trans *
+> > +intel_bios_get_c20_vspeo(const struct intel_bios_encoder_data *devdata,
+> > +			 bool has_dp, bool is_uhbr)
+> > +{
+> > +	struct intel_display *display = devdata->display;
+> > +	union intel_ddi_buf_trans_entry *entries = devdata->entries;
+> > +	struct intel_ddi_buf_trans *vspeo = devdata->vspeo;
+> > +	const u32 *tables = display->vbt.vspeo.tables;
+> > +	int num_columns = display->vbt.vspeo.num_columns;
+> > +	int num_rows = display->vbt.vspeo.num_rows;
+> > +	int idx = is_uhbr ? 5 : 4;
+> > +	size_t offset = 0;
+> > +	int level;
+> > +
+> > +	if (!validate_vspeo(devdata, has_dp))
+> > +		return NULL;
+> > +
+> > +	offset += idx * num_rows * num_columns;
+> > +
+> > +	for (level = 0; level < num_rows; level++) {
+> > +		u32 vswing = tables[offset];
+> > +		u32 pre_cursor = tables[offset + 1];
+> > +		u32 post_cursor = tables[offset + 2];
+> 
+> [Severity: High]
+> Does this code adequately protect against out-of-bounds memory reads from the
+> VBT tables array?
+> 
+> There is no validation that the chosen idx (which can be up to 5) is less
+> than display->vbt.vspeo.num_tables, or that num_columns is at least 3. If a
+> malformed or older VBT provides fewer tables or columns, could the driver
+> read past the end of the VBT block here?
+> 
+> > +
+> > +		entries[level].snps.vswing = vswing;
+> > +		entries[level].snps.pre_cursor = pre_cursor;
+> > +		entries[level].snps.post_cursor = post_cursor;
+> 
+> [Severity: High]
+> Can writing to the shared devdata->entries array inside this getter function
+> cause a data race?
+> 
+> This getter is called during PHY programming and link training (e.g., from
+> commit_tail and intel_dp_link_check). If the asynchronous modeset worker and
+> hotplug link retraining worker run concurrently, wouldn't they race to
+> overwrite the exact same devdata->entries array without synchronization,
+> potentially leading to the hardware being programmed with corrupted values?
+> 
+> > +
+> > +		offset += num_columns;
 > > +	}
 > > +
-> > +	devdata->vspeo = vspeo;
-> > +	devdata->entries = entries;
-> 
-> [Severity: Low]
-> Is this code missing the initialization of devdata->vspeo->num_entries?
-> 
-> The commit message notes for v4->v5 say "- set devdata->vspeo->num_entries in
-> intel_bios.c", but this doesn't seem to be happening here. Leaving this at 0
-> would make the table appear empty.
-
-Changelog is missing this but devdata->vspeo->num_entries was again
-moved into per-PHY functions. Now I think it is a better idea to
-move it back here again.
-
-> 
-> > +}
-> [ ... ]
-> > @@ -3403,6 +3430,11 @@ void intel_bios_driver_remove(struct intel_display *display)
-> >  	list_for_each_entry_safe(devdata, nd, &display->vbt.display_devices,
-> >  				 node) {
-> >  		list_del(&devdata->node);
+> > +	vspeo->entries = entries;
+> > +	vspeo->num_entries = num_rows;
 > > +
-> > +		if (devdata->vspeo)
-> > +			kfree(devdata->vspeo->entries);
+> > +	return vspeo;
+> > +}
+> > +
+> > +const struct intel_ddi_buf_trans *
+> > +intel_bios_get_c10_vspeo(const struct intel_bios_encoder_data *devdata,
+> > +			 bool has_dp, int port_clock, bool has_edp)
+> > +{
+> > +	struct intel_display *display = devdata->display;
+> > +	union intel_ddi_buf_trans_entry *entries = devdata->entries;
+> > +	struct intel_ddi_buf_trans *vspeo = devdata->vspeo;
+> > +	const u32 *tables = display->vbt.vspeo.tables;
+> > +	int num_columns = display->vbt.vspeo.num_columns;
+> > +	int num_rows = display->vbt.vspeo.num_rows;
+> > +	size_t offset = 0;
+> > +	int level, idx;
+> > +
+> > +	if (!validate_vspeo(devdata, has_dp))
+> > +		return NULL;
+> > +
+> > +	if (has_edp)
+> > +		idx = port_clock > 540000 ? 3 : 2;
+> > +	else
+> > +		idx = port_clock > 270000 ? 1 : 0;
+> > +
+> > +	offset += idx * num_rows * num_columns;
+> > +
+> > +	for (level = 0; level < num_rows; level++) {
+> > +		u32 vswing = tables[offset];
+> > +		u32 pre_cursor = tables[offset + 1];
+> > +		u32 post_cursor = tables[offset + 2];
+> 
+> [Severity: High]
+> Is it possible to read past the end of the VBT block here?
+> 
+> Similar to the C20 function, there appears to be no validation that idx is
+> less than display->vbt.vspeo.num_tables or that num_columns is at least 3,
+> which might lead to out-of-bounds reads if the VBT is older or malformed.
+> 
+> > +
+> > +		entries[level].snps.vswing = vswing;
+> > +		entries[level].snps.pre_cursor = pre_cursor;
+> > +		entries[level].snps.post_cursor = post_cursor;
+> 
+> [Severity: High]
+> Does overwriting the shared devdata->entries array here introduce a race
+> condition when accessed concurrently?
+> 
+> If concurrent accesses occur, such as a hotplug event while a modeset is
+> active, they might race to write to this shared state without locking, leading
+> to corrupt PHY programming.
+> 
+> > +
+> > +		offset += num_columns;
+> > +	}
+> > +
+> > +	vspeo->entries = entries;
+> > +	vspeo->num_entries = num_rows;
+> > +
+> > +	return vspeo;
+> > +}
+> 
+> 
+> [Severity: High]
+> Could a missing VBT block lead to a ZERO_SIZE_PTR allocation and subsequent
+> out-of-bounds read?
+> 
+> If a system's VBT version is >= 218 and use_vbt_vswing is true, but VBT block
+> 57 is omitted, parse_vswing_preemph_override() returns early leaving num_rows
+> as 0.
+> 
+> This would lead to allocating with size 0:
+> 
+> allocate_vswing_preemph_override() {
+>     ...
+> 	entries = kzalloc_objs(*entries, num_rows);
+> 	if (!entries) {
+>     ...
+> }
+> 
+> Because kzalloc_objs returns ZERO_SIZE_PTR for size 0, the !entries check
+> passes. When intel_ddi_buf_trans_get() returns this table with num_entries = 0,
+> the bounds check in intel_ddi_level() behaves incorrectly:
+> 
+> intel_ddi_level() {
+>     ...
+> 	if (drm_WARN_ON_ONCE(display->drm, level >= n_entries))
+> 		level = n_entries - 1;
+>     ...
+> }
+> 
+> This sets level to -1, and the PHY code then reads from trans->entries[-1],
+> which is an invalid memory address (ZERO_SIZE_PTR - sizeof(entry)), potentially
+> causing a kernel panic.
+> 
 > 
 > [Severity: Medium]
-> Will this leak the entries buffer allocated in
-> allocate_vswing_preemph_override()?
+> Will this sequence leak the devdata->entries memory on driver removal?
 > 
-> Because devdata->vspeo->entries is never initialized in this patch, it remains
-> NULL, and kfree(NULL) is a no-op. Should this be kfree(devdata->entries)
-> instead?
+> In allocate_vswing_preemph_override(), memory is allocated and assigned to
+> devdata->entries, but devdata->vspeo->entries remains NULL until one of the
+> accessor functions (like intel_bios_get_c20_vspeo) is called.
+> 
+> If a port is never used and the accessor is never invoked, the teardown path
+> frees the wrong pointer:
+> 
+> intel_bios_driver_remove() {
+>     ...
+> 		if (devdata->vspeo)
+> 			kfree(devdata->vspeo->entries);
+>     ...
+> }
+> 
+> Because devdata->vspeo->entries is still NULL in the unused case, the
+> underlying devdata->entries allocation appears to be permanently leaked.
 
-Yes.
+Duplicate of memory leak from PATCH 4/8.
 
 BR,
 Michał
 
 > 
-> > +
-> > +		kfree(devdata->vspeo);
-> >  		kfree(devdata->dsc);
-> >  		kfree(devdata);
-> >  	}
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813160918.918857-1-michal.grzelak@intel.com?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260813160918.918857-1-michal.grzelak@intel.com?part=6
