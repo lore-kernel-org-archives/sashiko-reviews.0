@@ -1,236 +1,133 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3778037756F
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 06:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788415911; cv=fail; b=gAdcR33+816C6jhgo+Ea+jrUMe+vR/XnInI+uQbwgbXZeUJ11Yc5vJzquqoiUD07RDGkVOrCiuu6vIVneja5UXjdJ0AP15Qe/LnhrblrOfThr5pb5o+uJlt7b97ztzYX3EtLhwtNgN4EAx/cecYZ0dHNJQTtjEzRqR30a443SP4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788415911; c=relaxed/simple;
-	bh=oFBpgnott9UfdMPerZlSlNX2EGCvG3Ds5CGgQmJadYs=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=I3cMQ5QSKPuMg7sKTdlAlXCz7qrKaYkNdDb5DMPrQSFsSUVfX8f2f9/8+d/hWzwfBjQqjKoj9vBTNuyUPPPTQlAfVNV4HEYf/XATT00kw5OfejGXH2Pc4YcsJohOkbv+80muWTH/2dSfNhaiLDlErXv2D8M4GxoVjZQMrsn+49A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Xk5NkCLn; arc=fail smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146993DEFFB
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 06:17:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788416252; cv=none; b=lgG8FbhV4Zi7NlP2fpIHJOsBoM0XFNupgf6UKMaH43hKflHYYKTDlXlK/V8vvH/5TxhS1WhMKBev5JJP/jyH3gpzopO4a52sZ2wd+dI6pp98snC+Lu9yfomXvo5w3mfv+tlzuukzFFArYeXgnYwzIRhsRXx29S4ukSyKY+Hm1TI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788416252; c=relaxed/simple;
+	bh=5fEpVgp9E7FDiWUah58fsA7bdrIxanTxTOaQkc2H9Js=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 Content-Type:MIME-Version; b=dTsErNUkpv6fEgYugKqMqcqptFFEC9M+Q940lL5lMYBvmUxo3OfdchNPES6Tg+KQGOjypM5HExwj34nuKeu/1PT/8IoQGVP3fows+g6iDfOA8TZO5YDL/42xhs84yx+LQpwGfQBL86r8AwgfGM5OAsoraCo5xTbV8TYddOyma3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3WKqaD1; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Xk5NkCLn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788415910; x=1819951910;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=oFBpgnott9UfdMPerZlSlNX2EGCvG3Ds5CGgQmJadYs=;
-  b=Xk5NkCLnnmKWj+BQzfHAIyh/U1Xhh4lzZLu568FZsc9Px4nLwiigIuAu
-   xJQOKPZ77bncBoRYjpkmSMI2CcAFb4kqFBbmaIslVd+V21KN9jzPNoPBl
-   fj4bHSxdbKfOnLh7xOoEkKhYniTsk6sPPlChUkKpBq+TJj1iCyycL+WEy
-   9Lc7YJdp3XYH0aL264EEzdA07XmNREgOiAUO8PI3NkhLiU1zK0iSf/d21
-   FOWjolkAcnD3IauwBf/p/c9Up2+FJVxrsphnUUkEue5gQ2tNFde0Qa/28
-   JYYbwUiRGlx06dFJoUaLOjFZXzytwpa3MTqtIT9EXDtU+TTFL8nXaPHKW
-   w==;
-X-CSE-ConnectionGUID: 2GXAF9yWTOGKM4E/h8b0BA==
-X-CSE-MsgGUID: qGQXr0yGTGWN/qHKjqXlQA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11894"; a="88907945"
-X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
-   d="scan'208";a="88907945"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 23:11:50 -0700
-X-CSE-ConnectionGUID: iN6tB8GJS7SEOJhi64SC9g==
-X-CSE-MsgGUID: UC/2hefLRUCgD+6Y0Mwi2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
-   d="scan'208";a="307823052"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 23:11:50 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 23:11:49 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 23:11:49 -0700
-Received: from CY7PR03CU001.outbound.protection.outlook.com (40.93.198.50) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 23:11:48 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pI/C+Zl2d62dKzgPv/n4DTmfxslH69VW+kP7n0r+9KK1oeZyGZ5tYjEiFX1rfhKfZTP5dzgyM+qr6Q7ZpO2QTMqjLeRHDbO4SIC8uvABTd1NdNvNwzyU32Nr7nAVNsl/H5KiWiUmtTs+t8wTAgQMhvckzLsfM6tsHt93/5cxvKoPJUL+P/ULFJo1EBfcqAyjs9/P5xfUbwYWpk/oyzU5C+TZGY0DeJk5Ph01Eh59MNSNRij/IpF+gesC0WhY2CmTPlP0Oe6ih3Binwm2VQPpQl1J8RVBiByPCQqXFXSopdJNM2dWcv/mVdGISa3AMzMi6PA+BRauZNBRbUPyIIQYHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g+HapvchgM6qx1L0Hm8Jq4X5sUy/AbOs4sfDCxklbig=;
- b=pBwfyaZkxr/6ta2THGxb+c3m6ssy6UlYfYMVLangaxc+vjmoM6WOVG0STMn7V9MIBGhpdx5sjC1i2hhYucIZ6JPQaluyV/aPw+xB8nrkAioyPr9oZYHw6DM8g3Sc+yxvrImrfyl4KESUrWCQzIK7kmYGcVdy0MG9n4NoD4oKaOWeUyJD2naHRdHoO7ovCmaL7XDFQgxy58fSnBjuCZigNrRTP+V1tgn+PhHtxQ0sMowaBEpHpEww5mpUKDvwcPcH6JObWc8Nonoo8pXGwCrCIJYLpKwskk0yr4k9emzgLwPgDUESa+R4ow3CiU6k56BwDB/fgTcCHsBCfj2nhmsbLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH0PR11MB5249.namprd11.prod.outlook.com (2603:10b6:610:e0::17)
- by IA4PR11MB8990.namprd11.prod.outlook.com (2603:10b6:208:56b::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 06:11:47 +0000
-Received: from CH0PR11MB5249.namprd11.prod.outlook.com
- ([fe80::a665:5444:d558:23c3]) by CH0PR11MB5249.namprd11.prod.outlook.com
- ([fe80::a665:5444:d558:23c3%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
- 06:11:47 +0000
-Message-ID: <4321ffb7-e31a-4659-850b-27da377c30c3@intel.com>
-Date: Thu, 3 Sep 2026 11:41:40 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] drm/xe/hwmon: Disable memory controller and PCIe
- temperatures on CRI
-To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-References: <20260902175507.3910573-1-karthik.poosa@intel.com>
- <20260902175507.3910573-6-karthik.poosa@intel.com>
- <20260902180715.508DD1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Poosa, Karthik" <karthik.poosa@intel.com>
-In-Reply-To: <20260902180715.508DD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5P287CA0356.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:219::12) To CH0PR11MB5249.namprd11.prod.outlook.com
- (2603:10b6:610:e0::17)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3WKqaD1"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-853e2610bb4so473618b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 02 Sep 2026 23:17:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788416249; x=1789021049; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=iBqEdXDuBCy8uZJKHbshNmmYy9yfjB6hUG6xMylUjFw=;
+        b=P3WKqaD1h09/uhwklWSZ4slIBWc93MCaDYbCOIAvF/nCoCgkcLELDD9iQuQ4MvQbf9
+         pExiEg3spWwTJDPtB3wm6NlyJSHEKS4YjrEeegSZze3BSEFNc2lmdohgMPwR/0zsmOvk
+         eSzkZ9sowfEXFRn0joavjJK/NWjDhZD1nc4PNK1Sj6VNBTm+6eH7xJmjENaarw6vMPtK
+         SxogUBnlJmAlUW2gIedc89asMj3GwMtfUi0aTsjjS6rwhOELG2JKVU83lAe7hqUGXwq6
+         B3l0xBELHKRYodgBUAumV4WwiWGMvpSV9rP6Qj/d1XPh3HJSUkQSrHQUze+ni7fLlVAw
+         MnpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788416249; x=1789021049;
+        h=mime-version:content-transfer-encoding:content-type:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iBqEdXDuBCy8uZJKHbshNmmYy9yfjB6hUG6xMylUjFw=;
+        b=qO/KHnqcXVUecxxpLGU+0pS+/D5FSkm5dRjLHCy0PfzUVWBfZNPL/v0bovemwPmBCY
+         ZwwfAKtfNTB611Q9c3ABYuLEg5sJxHJ9WxsXd1gn81/C+EKVw5bXazpg3v9FKkAuDRgG
+         v60UU3foEtYnM01wcLA58MwvF6JcQrXGCkL4C7ffkrft7OYvgCGyCU7hrfSw/vDI1Aaj
+         FjU78r9CkUOqztNakuGQAAmbhQjXS5rBL+v3TDurksqHOHqn5naTMfj+rfNh1EC3i5ZD
+         0v0E346+0U7HLJn6vSs4ccBb5y7AfQgO2soOfgcR863OyzpPJJ3yuMw1BkEuj6I0ktri
+         Nm9w==
+X-Gm-Message-State: AFuF++mMcVrYcqujkmiIAlGuWr0rNBJ69iaCtSVR22PdQzJAZK7AZzlB
+	zrk9v3yTG/xt9Flnz5i5EUWe84+3GwfN/TrLqiAR/D9YvCoQ5+GrZOKd2kSLluQ3l3w=
+X-Gm-Gg: AYBFou3Q6+543BAkz4VlXp0EvqNBmXriKnegJNVoCTe4SKlpKaAbDkx16DjZF+aCcoc
+	nFVbMx0kq8sYS8AL2mkt55/PaNS7zWubdxX41oXDEE3JQhrRwEN8JKf+NC5S0SV8VR2NXTdRxxu
+	xqjgSlZgxkqaAiAM0dP6o9Ht9fJSs4oFDwKqh3h05mzGzCSkngLzWif8GnpeoPLOGKsT8HQp3k+
+	ow4XwdxMz7O9tUP9YqjvUjy1zxQbLhXj67EvUhcpSts3z3CfLtauIo+9XTXOPAP6TNWY7Uz02Hk
+	JnW7268h1egRclrZTuRNYuFJXiZsOyvzvLZ5M9eJuRtjha7Cgnni4TTURY5wRtx7YuHiYHfUo22
+	y5OGllkbx4Y2S63KRnPx9nh1ye1xP7cfzZsZlmtmtSitpaM5xuagodlQzS/IgKStqLJuxuS0626
+	7S55fZAfVSaTU93pRRmmj5ovQ7Ofpk3H0OP8AwkbzJnzKKLnKl0zozKH9QlNSNprPCVM43OpqSD
+	amO5ROWyUCl00s=
+X-Received: by 2002:a05:6a21:7008:b0:3d1:66eb:511c with SMTP id adf61e73a8af0-3da215a7315mr3588262637.13.1788416248458;
+        Wed, 02 Sep 2026 23:17:28 -0700 (PDT)
+Received: from volcano9f6e-hostos.amd.com ([165.204.217.251])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14319976a4asm2874285c88.13.2026.09.02.23.17.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 23:17:27 -0700 (PDT)
+From: Hemanth Selam <hemanth.selam@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: seanjc@google.com, pbonzini@redhat.com, shuah@kernel.org,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 1/2] KVM: selftests: Actually compare sregs and events in
+ sync_regs_test
+In-Reply-To: <20260902122209.865E61F00A3E@smtp.kernel.org>
+References: <20260902120235.18486-1-hemanth.selam@gmail.com>
+ <20260902120235.18486-2-hemanth.selam@gmail.com>
+ <20260902122209.865E61F00A3E@smtp.kernel.org>
+Date: Thu, 03 Sep 2026 11:47:23 +0530
+Message-ID: <178841624362.1403938.933078415206124828@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR11MB5249:EE_|IA4PR11MB8990:EE_
-X-MS-Office365-Filtering-Correlation-Id: bd0d576a-7962-4618-bd70-08df09823c0d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|4143699003|10067099003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: NFTVMllKSS5QuHSFnHbk4XiG+o7dF3DdGB9RPKTnCFxAU6nVLOhhSltGMOrKlhhHTP3yNhdzFH5h6v8RgTZIrapUez7pYyZBaCwGpLVDW/FjyQ4UZ3LlE9Kh/D3WPAZCK+MpdA+FUApwlNP5mAOGXDwDmtC+P5d9vvt+KBrn1IiW/9vz37+V8ptHGFwczv644O9H+zV3+ygaDavMOuh86TYP8MB6DM6U4HEqYJEBLMDmpRiEhlNEjVHBAFyVU7t9amFO2qWo02MqZvUadaZLWy203jDwsl2/wMoWiV+rbGCWjEDA490rHnoWfjx9TKJl8AHApQ+KQU8KrikpP3t3Gc5C6qYwB15TWGDYqJFb6D7jB9TiM7OH8gPo6cZAHwOCHdNDR8UpMa04EDzdvfdjcMuwwcHcFp/imNp4RFqDMklJE09yyYR4cGYSC1tKC1Bn5IaNMr2NQz+a9bE7+GddXgj6Bs/069NkIesRo+nVkRlNP+vATC/nimFQkhpXoW63Fl0rl6xS7qaOkiBGfY1sSScR3NyybnOv4w3XvGboMWh5s3iLXCljQ5kClo46I40rCEqv1VSBMz7PHVZjuSt8ZuW0ei8k8Kzz8ePSf0fL30Hm1u/Ib3oOkJaB4EXBNh06IAg8/eD5TcRacrIStf4wEGIjIJy52WOYwO8nGB5oBZg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR11MB5249.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(4143699003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YVQzcnJwKzMvY1pjYWVlaTQ1bkdOaWZyOHMwVHltanJraFpZQ3ArcVpyYlh0?=
- =?utf-8?B?S2VNV3RuM2xjMDVBSVF2NzNSTWVaWkFPNTBkaVljVnp2L0Uzc3ZkTzRpMmxC?=
- =?utf-8?B?cEtjcGx5eFc0LzVIcEpiRE5HQ0tWZForL3A2Y0xlektXK3BHRXpxdVlJYWY3?=
- =?utf-8?B?ZHJhYXRkS2J5QzArM0gxb3E4WXpnRjFuY0RJbjdFVmtHMUtQOW5BbUxndklu?=
- =?utf-8?B?bklQS216b3gwWHRxdUtlRm9ibnk2OTE4Y3pza0krWWcyMnZPcSs2cUR2NEM2?=
- =?utf-8?B?ZXZWVktXNk1GVVBpckNtRnZCV1pPQmhoMzlyeEYrQVZCTkdSUERtc2dqRlRw?=
- =?utf-8?B?S0RDVjEvY2IwZDF5bzZxeUZkQmtEMitIQ3FUODJqb1lrZ2gvS0dJdVFEN1ZV?=
- =?utf-8?B?ZGNLckhsUDNFby8xWkd6YnRuZG9nbVJVTzN0RGE1S3dIMkR6L2FicjdRM3o4?=
- =?utf-8?B?TlcxWk9PZHpPeUJDajZKUDlBUkltWU5nVU9hR0l1U2RkUVVBbmVIY2hCZjZF?=
- =?utf-8?B?TkxRUGM2d0dJcFdHQnBFT003RVI3cFZpaGlESER0VzI5V0NNMDNqZzBOSzBp?=
- =?utf-8?B?Qzg5YVhLRFRuNXU1K0NGS3AwWGc2VFVzK0hCY2RLQ2x6N1hTc1RRRGtOSHdx?=
- =?utf-8?B?UFlVamRJa21aWStCWlIvb3I2Q0haNkxRMmxHNlowMkJSZ1V4ekcvbWdFN2hy?=
- =?utf-8?B?S2Q4bkhLeXRlMkJSZyt6Q2JkczVaeEg2Qktha1k2SE10NnlCWURBbk9Ibm5u?=
- =?utf-8?B?MCtxRXd0RTIrM0FXTzVnY0pzTmhodk5vOFhSNnViQWpCa2hRbSs5eUM4amg2?=
- =?utf-8?B?M1BDalZpMG1IVUdYN2hGT2tuTmRsOFhHZnF1RTF1UUc2SmcrTTI4amUvclRT?=
- =?utf-8?B?aFhjdWZBbmcxZEZ4ZUxjRmpSVEs5cUIyQTl6dmliaGVsMGloeUJxZUZyM3FB?=
- =?utf-8?B?WTZiV1JySlpOdi9YZnRqcEhQcmowNVpBWEd4Q2hGQVRBZTNaU25EQ3dyNU5X?=
- =?utf-8?B?bFFiQ3Jvemd6d0o3L3R5c2dvMERtdnRuZ051a0JiSXNvcnFTa0E2bE5YTDRu?=
- =?utf-8?B?SWgybEIzMFJMNE96QlFBTEhpallyc045Yk1nM1B3eHllWDNyOVlCK3h5K1Fa?=
- =?utf-8?B?QWdxV1FvMGw2WmQwNFdjMDJadGFPamVJR3dHbllLMnMxYkoxT1FtOGlwMDA1?=
- =?utf-8?B?MURqTnBDNS84dGo1YVBNbjVjbUVFbjdZcHlESnpqU2tEaDYwM3h4czJwSHI5?=
- =?utf-8?B?aUh0dGMxS25nTXYxdEUyNnVYUWhROURoUGVhSERKUlc0Qm9qV3FLYlFCdklr?=
- =?utf-8?B?QkY3RndSLzZTV0l6ZTY3RDZRTWkxQUpBdUM3UDd6MlVNK3BjVGNNc2NGVmhD?=
- =?utf-8?B?bEdMVG5GRlpzMGxVYi8vRHFQNGVsMXJwMVVUNTdVNm14TGQrZmZmS3hBeldo?=
- =?utf-8?B?bmNKS2pTK1hYWEVPME9PWWYxV3hTeERib3lmYk5zbmFWaUhqNnhXbGdiRHZM?=
- =?utf-8?B?SXlxT2ZUN2hzdkZTblNHQzJjMnZ4UC9FWmxoTzFCdHhOTTlMSzduYkpFZzdo?=
- =?utf-8?B?M2RacDE1ZWRUbEpTODRISm5reDdmd3dzTWV2eFNnOCsxUUlGSnhFUUZuTlR1?=
- =?utf-8?B?TnE5RU94RFRVdnp2bVFCK2tQYklUMUw4Qk0vK2dDZzFIUnRJdXBWY1J1bUI0?=
- =?utf-8?B?V1VXTWtRTzNsM1Y0SnA5MlZuNkJWeFdGTkxpSUlNb01IMzdXYVk3S29IUGRQ?=
- =?utf-8?B?VE1KVzBCZENyUmpWd3lFeW8rdGVHb0dsS2J5ajdJc3dvOUdqTEhEcThVRXNw?=
- =?utf-8?B?cXFjbjhtQk94OE9ZbDFJRlpXNDl6WGptNUVubndrTzNrcnVYMXZrWDBQMENG?=
- =?utf-8?B?RkxrSmZ0Q2hvbXd1MDNWZ2tpcTRDNm9JVk1MMGRJcGJyNkVFUVhVOUZCNEVX?=
- =?utf-8?B?am9CVERCT05yWDUxMTJDdGYrSWljS29CS0VDc2M3YXJiWFYyZVRSaTBpLyt0?=
- =?utf-8?B?TFgzbmJMdm0wa1lPNjVqMU5FSlJjQ3FVWFdNajE5TUw4cTNhbHBxM041Tnhh?=
- =?utf-8?B?OXk1ZFR6U1FhbGZmVzVrV2FtYkU1WDV4V1BYTVdZQkh4Z1hKVEJIaC9ZVUNQ?=
- =?utf-8?B?UCs2MDVlQkpJQjIzWXlLZWppUFZPU21mamlvU2EzbFNYKzRRSDYxRnJ1UHd1?=
- =?utf-8?B?OVU0dC9Zbk80QkU0bENvY2pwT1hDR2tQZEVkbzA2Ym0rYUJBWWVWdi9ZaW95?=
- =?utf-8?B?MkFDSWkrZG1jZ3JEdUtGZDBVTE9DQkJHMUhxMFdCUWMwOFNHajRPdjZrZDNa?=
- =?utf-8?B?NkxLT2ZBVHVTdFhhSTJSWTVDYUhtYzNSUlI5Mml1K0ZBVHJIc1ZSQT09?=
-X-Exchange-RoutingPolicyChecked: k71j2j7sExO406XG1l4ZvUco1sQgH4h2ziXQo+/ZZDzDHGPDzioZT5sG6SZN5iM1qhU19yeXwrPIXH62CQGq4Ny8S1fp3y1WIBNFREWrZtsHf7rMN/Ibf6gb2LUD2X5zFqx+i+m6+gDXUminoqg+D6bMcUTqw4EjxtZ9e3t9mV2cFajhqlfb/Dilz86dxFw05//6aAm7/zSmThj/UMjDNGTUGNZMI4OKQR/HGNDunPLl4h4lNjynkflMXKJH/QbeehnGoigSmidxMN7srZzsC6xBppvK53J8RV/M5s3x646owYSYvfvg15Tv3fmBtkzHeLQO7oyg1tEjWORuQjLpxA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd0d576a-7962-4618-bd70-08df09823c0d
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR11MB5249.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 06:11:47.3109
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cGpGeUG5yVPBKSkTbIDRWcDgecBuwZlZxK5udqWQw1YMKo/rXIbQ0PpZ8uTtmqctHbuAphpkms3coJOFCuNNYw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB8990
-X-OriginatorOrg: intel.com
 
+On Wed, Sep 02, 2026 at 12:22:09PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> This is a pre-existing issue, but does this new assertion trigger test
+> failures due to how __get_sregs() handles the interrupt_bitmap?
 
-On 02-09-2026 23:37, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch uses an enum ordering check that inadvertently disables memory controller and PCIe temperatures on Nova Lake P, splitting the Novalake platform family.
-> --
->
-> commit 91ec5832293666790affd1f3a6202739f54f4e49
-> Author: Karthik Poosa <karthik.poosa@intel.com>
->
->      drm/xe/hwmon: Disable memory controller and PCIe temperatures on CRI
->
->      Temporarily disable memory controller and PCIe temperature reporting on
->      CRI platforms. The definitions and interpretation of these temperature
->      sources are not yet sufficiently clear, which may result in inaccurate
->      reporting.
->
->> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
->> index c2b8d4c79783a..5b2cef292ffcc 100644
->> --- a/drivers/gpu/drm/xe/xe_hwmon.c
->> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
->> @@ -1061,8 +1061,14 @@ static bool is_temp_available(struct xe_hwmon *hwmon, int channel)
->>   
->>   		return true;
->>   	case CHANNEL_MCTRL:
->> +		if (hwmon->xe->info.platform >= XE_CRESCENTISLAND)
->> +			return false;
->> +
->>   		return hwmon->temp.count && !get_mc_temp(hwmon, NULL);
->>   	case CHANNEL_PCIE:
->> +		if (hwmon->xe->info.platform >= XE_CRESCENTISLAND)
->> +			return false;
->> +
-> [Severity: Medium]
-> Does this check inadvertently affect Nova Lake P?
->
-> Looking at the enum definition in xe_platform_types.h, XE_NOVALAKE_P is
-> defined after XE_CRESCENTISLAND, while XE_NOVALAKE_S is defined before it:
->
-> 	XE_NOVALAKE_S,
-> 	XE_CRESCENTISLAND,
-> 	XE_NOVALAKE_P,
->
-> Using the >= operator will disable memory controller and PCIe temperatures on
-> Nova Lake P, while they remain enabled for Nova Lake S. This seems to
-> contradict the commit message which states this disables temperatures on CRI
-> platforms.
->
-> Should these checks use == XE_CRESCENTISLAND instead to avoid splitting the
-> Novalake family?
+No.  Neither of the two tests that reach compare_sregs(),
+req_and_verify_all_valid and set_and_verify_various, ever injects an
+interrupt: the guest just loops on an IN from a port, and nothing in the
+test writes interrupt_bitmap.  KVM allocates the kvm_run page with
+__GFP_ZERO, so the sync region's copy starts out zero and stays zero,
+and the KVM_GET_SREGS side is filled from a kzalloc()'d buffer.  Both
+sides are all zeros at every point where the memcmp() runs, which I
+confirmed by printing them, and the series passes 10/10 on an AMD host.
 
-HWMON is only supported on discrete GPUs. You can see here,
+> This function sets the bit corresponding to the currently injected interrupt
+> but never clears the prior contents of the array.
 
+That part is right, and it is observable from userspace.  Planting a bit
+in the sync region and running the vCPU with KVM_SYNC_X86_SREGS in
+kvm_valid_regs but nothing in kvm_dirty_regs:
 
-               int xe_hwmon_register(struct xe_device *xe)
-               {
-                         struct device *dev = xe->drm.dev;
-                         struct xe_hwmon *hwmon;
-                         int ret;
+  run->s.regs.sregs.interrupt_bitmap[0] = 1ULL << 0x30;
 
-                         /* hwmon is available only for dGfx */
-                         if (!IS_DGFX(xe))
-                         return 0;
+leaves KVM_GET_SREGS reporting 0x0 while the sync region still reads
+0x1000000000000 after the exit.  KVM refreshed sregs there and left the
+caller's bit in place.
 
-                         ....
+> Could this lead to spurious interrupt injections or corrupted state during
+> live migration for any VMM using the KVM_SYNC_X86_SREGS API?
 
-                 }
+Handing that same stale bit back with KVM_SYNC_X86_SREGS set in
+kvm_dirty_regs does inject it: __set_sregs()'s find_first_bit() picks up
+vector 0x30, kvm_queue_interrupt() queues it, and the guest dies on an
+unhandled 0x30.  So a VMM that read-modify-writes the sync region can
+resubmit a vector KVM itself put there on an earlier exit, since nothing
+clears the field once a bit is set.
 
-So for both Novalake platforms the function itself wont be called.
+I could not demonstrate KVM planting the bit itself here, as selftest VMs
+have an in-kernel irqchip and KVM_INTERRUPT returns -ENXIO; that half
+rests on __get_sregs() only ever doing set_bit().
 
->
->>   		return hwmon->temp.count && !get_pcie_temp(hwmon, NULL);
->>   	default:
->>   		return false;
+Whether KVM should zero interrupt_bitmap before it ORs in the injected
+vector, or clear it in store_regs(), is an ABI question rather than
+something this test change should decide, and I am happy to send a patch
+if that is the direction.  I would keep the memcmp() either way: it is
+precisely the check that would catch a stale bit turning up in the sync
+region.
+
+Thanks,
+Hemanth
