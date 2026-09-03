@@ -1,144 +1,166 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA79E45DF60
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 12:31:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B704A5C4A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 12:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788438696; cv=none; b=R8Cdkwhu0L5FutpPHcBV2C+oPwwcQ14jiC/DwJKXUETEB/Lfn+oiBJPOLPyasDU20lncWhN379dUNzgh9tWhkYiAQahUTLuMmBnASeudWEsnGmTmFVNAxGT/JCuR8xRsmaUe0cQgpY4X1XW9KOb+i9C0EgZ7EmOgbm0vPwJDpuc=
+	t=1788439274; cv=none; b=BbPOslHSjMqX6qKL+Rm7VrF4IaPBW/PfamdEo/b+eAf5kX7qGmfC796FG1GdrXe8VY7iNgSDffvJaEBQZ2yufqD6LABYaJ2S2nQ0JffVKLHfPtxmqoup/S0l10OP6T8lQIJB31S/zGowl/DtMnOXeqQwKydq1Y249b3kc5CoWuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788438696; c=relaxed/simple;
-	bh=mhHD0CPBpfs0DvkuTjmhLU3Yrtcut48RhRGVtfcbpS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=amfhJJijBsN5h+TnMMR3476dwg45iZ3Se2+1u6TUqiRX7JFrjdL775QCotzNZAjYq/5iG56zoyCod5sVvkULkOAplRnb5HVNISPql9ZgfwomCfv2a8RT1QTYmBqNsoG4tXOQqTAIMsJd3yMKxBKio2UmlzjwiyffGP0KZGOQep0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=hp+WsyBO; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	s=arc-20240116; t=1788439274; c=relaxed/simple;
+	bh=sOT52DbKgvkkHbkje73zUdH0VXn9AYdlxPV7LsvQoaI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iQtpy8AjI5YJKRqlgwPqxqPb0KM2FTm3tBAYcE21AdM9lxKH2y1+X50PIP4Daedcwlpj8GhxYTrD6EsXz1h1aLOs1NEHjEslsRZkKx9P7mxrTQabewpEpv5EGrCwKCIC7o1ZSd85NoUlqVTqV6Q0651WdiqEd0asNiM+WAE2Ac0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=kijQavFP; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="hp+WsyBO"
-Received: from mail01.layka.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id A1857881F7;
-	Thu, 03 Sep 2026 14:31:30 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id 408N1pBPQgA5; Thu,  3 Sep 2026 14:31:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1788438689; bh=mhHD0CPBpfs0DvkuTjmhLU3Yrtcut48RhRGVtfcbpS0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=hp+WsyBOEFCkGeDjHWZg/mSr0h1n1+Tbi8Osvx7/cUxo1ilVkY1KC5naydx5Zo7eb
-	 zWRcBbUQcj7eiz7rKQK1NsNaqMPjw8j2iCavclxun4SFoqO3+2kjUvZg66iWEcPvs9
-	 v3oVgoWGzoOgwI3T/uX8Y52emO+84Die2721UI9EU1yhvB16wiuK9sLm4L2NyazXVn
-	 zoIzjVOXRn9C4hOsnObT/lC4Uvy8CPVIUnNzRLZ1qaYeitSopmjxyvwXOESswK6uA6
-	 OuEiU3zT/KjRF0ipUp8xYeIPZ318z3DZX8/pCai7o3YaF2690Op96sZqc8OUVXBCBR
-	 kJo6W30HTBJ6g==
-Message-ID: <092ced27-06b8-4dad-b746-5c4585b61d13@disroot.org>
-Date: Thu, 3 Sep 2026 13:31:07 +0100
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="kijQavFP"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49cd9add88aso14828735e9.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 05:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1788439271; x=1789044071; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+iNE6mGIoSx/OllUwsSZWUgexqjjfHjOUITVK9fxSRA=;
+        b=kijQavFPCkRHy9IVY6ngr5StUgHyzqaNyIdGmTFX26AmTiSAc7LVTWTTZ1tlSRft9g
+         8PAbFEatyT+yGA/TDjtwVgK5DkHzeden85xSK3JFwDum+mvg2Tly6mzsSLdiPL8F/BUE
+         6GHX7DalmmWUVuvx1G8unXXzydJcEQA3/rAp5hPxHG2ErEt3Wga0VMXR+/zMnBveeKyX
+         hMCD3vv1ACs7OSy/bwpjJ7/fTIZ6Xb+gSrdB33m/C6Ya9p/WPH2FKZsPE6V3OhYdBuzZ
+         36AQ1Nf3RmpHkUpElENZmY5o8oBrKO4kmYjaKoeoP0SV6i95Ibszg681TqOqMdj+bVNz
+         ATIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788439271; x=1789044071;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+iNE6mGIoSx/OllUwsSZWUgexqjjfHjOUITVK9fxSRA=;
+        b=Kw8fDUR36a7FEmWkBnnB40meVNOoj4sQIm7mn3DuYOjmC+f8x8LwO6elbpr+nsoD2u
+         C4eCo0pdHxS+41Rs1m66oFZKGarQbRNwK3OaZ+CCTZu/mGZMMajs0aMI0QBGcazaZDcO
+         5SsjCgrklZXNOJr2rGDm3Evk1AKWM/AuP8bSZ6AphEii1kZCEx6WblWPWiqI58/Dubh+
+         kGr3XeToAwlVD81sQy8EpZBDDSlG/BEdSoBhaIcB/nsDZ+gXQGXterWxSlmYAYObT4eh
+         mtAo65IPG4zqAEk/Acbg4AVPUashjHhD5/FW+V9gNVQ6b76pTLHGNYzONteac9Xxvpbi
+         Nz6A==
+X-Forwarded-Encrypted: i=1; AKwUvBzqPgbsX1Hf8QHvz9wHfh09JGri0Fsc8WjPHCN7jQ2rakRtWPiAbz9KB+zJLdyfi0UqWZiEy3IXJwNFAU2hvrw=@lists.linux.dev
+X-Gm-Message-State: AFuF++lIICd0JF15TN7xJGzskeGJ/imtUo9xuoXlNd8sj1Ju5CMDD6oc
+	0eGprOEpo9ujcJj8XGW/w9OSgUfkikpjSPGPW2YNmxl+cRb41m1GkaNtr5MChGIBsAg=
+X-Gm-Gg: AYBFou2IYmHngb5tLQeHgEGo/MtIn0Mq97WL9mas0Q8kY5X+X+NF+8D+Kmz+77u8diB
+	cHSdfA+Wxzfz2bZC2e2BN3O5PzvVGtNNt0gMLy2DP66cTuh5+bV7SUETlYjgecWpr2+809zEEdL
+	pc50XouWa30hVru2G05tzfXlcTKxAggp4LvJPEPMZVEuJXArWXSTMh/kc3EEYyULSkRREj6al/8
+	999HUFDGaPIpq6KJqi4XKiuZwsE3d6YwHOI/M+/XWR5Nn0CGMT87bNlbYTdeZXZ8LuYvD9I7SG9
+	UtCol35XDr+rS+f84CBuoSRbbMOE+2oKJzGUb8VXuM8UCHFbS9iWj6ggpRmNtMlo6aRcJLM0aUF
+	FsI3K+1gjbXA6VkyXfOyp7DE4ZPuoP0Q8xIm6p9/aSokt8DvZrmmcGHtdV7zleK3uWw0jT60ExG
+	RbyyGRLvv/kkkZMIei2/N8fLBr/u5XAkGMfl+9XdVDDz5zDSusFP1SBVlhLCf8BTpd7aq2K0Prf
+	eyV+lo=
+X-Received: by 2002:a7b:ca42:0:b0:49b:92df:87be with SMTP id 5b1f17b1804b1-49ce55fbdbemr151563565e9.4.1788439271011;
+        Thu, 03 Sep 2026 05:41:11 -0700 (PDT)
+Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448e80798sm12957979f8f.13.2026.09.03.05.41.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2026 05:41:10 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Lee Jones <lee@kernel.org>
+Cc: sashiko-bot@kernel.org, Mark Brown <broonie@kernel.org>,
+ sashiko-reviews@lists.linux.dev, robh@kernel.org, mfd@lists.linux.dev,
+ conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH RESEND v6 4/5] mfd: axp20x: Add support for AXP318W PMIC
+In-Reply-To: <20260903090328.GH2133376@google.com>
+References: <20260812-axp318-regulator-v6-0-d6b84b55c000@baylibre.com>
+ <20260812-axp318-regulator-v6-4-d6b84b55c000@baylibre.com>
+ <20260812214019.CDF921F000E9@smtp.kernel.org>
+ <1jldaafmpd.fsf@starbuckisacylon.baylibre.com>
+ <20260813095600.GA1072730@google.com>
+ <1j33wg6cpk.fsf@starbuckisacylon.baylibre.com>
+ <20260827134235.GN770273@google.com>
+ <1jld9j8pfg.fsf@starbuckisacylon.baylibre.com>
+ <20260903090328.GH2133376@google.com>
+Date: Thu, 03 Sep 2026 14:41:08 +0200
+Message-ID: <1jh5k68q3f.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] bpf: Fix u32 overflow issue in map batch operations
-To: bpf@vger.kernel.org
-Cc: andrii@kernel.org, eddyz87@gmail.com, ast@kernel.org,
- daniel@iogearbox.net, memxor@gmail.com, martin.lau@linux.dev,
- song@kernel.org, yonghong.song@linux.dev, jolsa@kernel.org,
- emil@etsalapatis.com, ihor.solodrai@linux.dev, john.fastabend@gmail.com,
- brianvv@google.com, sashiko-reviews@lists.linux.dev, maghasi@disroot.org
-References: <20260902204439.287888-1-maghasi@disroot.org>
- <20260903082734.623904-1-maghasi@disroot.org>
- <20260903084533.E78781F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Masoud Aghasi <maghasi@disroot.org>
-In-Reply-To: <20260903084533.E78781F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 03/09/2026 09:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Missing size_t casts in queue_stack_maps.c cause pointer arithmetic to overflow u32, corrupting map data.
-> - [High] qs->size is typed as u32, which can silently overflow to 0 when max_entries is U32_MAX.
-> --
-> 
-> commit aa1d0d53f1c01402c01cb62c0b2ef581ca4869bd
-> Author: Masoud Aghasi <maghasi@disroot.org>
-> 
-> bpf: Fix u32 overflow issue in map batch operations
-> 
-> This patch fixes a u32 overflow in several map batch operations that can occur
-> when the map size exceeds 4GB. It adds size_t casts to prevent the offset and
-> size calculations from overflowing during memory operations.
-> 
->> diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
->> index 6874ba1424af0..731388ae00ad1 100644
->> --- a/kernel/bpf/syscall.c
->> +++ b/kernel/bpf/syscall.c
-> [ ... ]
->> @@ -2179,12 +2179,12 @@ int generic_map_lookup_batch(struct bpf_map *map,
->>  		if (err)
->>  			goto free_buf;
->>  
->> -		if (copy_to_user(keys + cp * map->key_size, key,
->> +		if (copy_to_user(keys + (size_t)cp * map->key_size, key,
->>  				 map->key_size)) {
->>  			err = -EFAULT;
->>  			goto free_buf;
->>  		}
->> -		if (copy_to_user(values + cp * value_size, value, value_size)) {
->> +		if (copy_to_user(values + (size_t)cp * value_size, value, value_size)) {
->>  			err = -EFAULT;
->>  			goto free_buf;
->>  		}
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but since this patch fixes u32 overflows for
-> map element offsets, could we also address similar overflows in
-> queue_stack_maps.c?
-> 
-> If a queue or stack map is created where the capacity (max_entries *
-> value_size) exceeds 4GB, do these calculations wrap the element offset when
-> head, tail, or index counters multiply with map.value_size?
-> 
-> kernel/bpf/queue_stack_maps.c:__queue_map_get() {
->     ...
->     ptr = &qs->elements[qs->tail * qs->map.value_size];
->     ...
-> }
-> 
-> kernel/bpf/queue_stack_maps.c:__stack_map_get() {
->     ...
->     ptr = &qs->elements[index * qs->map.value_size];
->     ...
-> }
-> 
-> kernel/bpf/queue_stack_maps.c:queue_stack_map_push_elem() {
->     ...
->     dst = &qs->elements[qs->head * qs->map.value_size];
->     ...
-> }
-> 
-> [Severity: High]
-> This is also a pre-existing issue, but I noticed a potential truncation 
-> when allocating these maps:
-> 
-> kernel/bpf/queue_stack_maps.c:queue_stack_map_alloc() {
->     ...
->     qs->size = size;
->     ...
-> }
-> 
-> If a user allocates a queue or stack map with max_entries set exactly to
-> U32_MAX, the required size calculation (u64)attr->max_entries + 1 evaluates
-> to 0x100000000. Because qs->size is typed as u32, does this assignment
-> silently truncate the size to 0, resulting in a map that behaves like it has
-> 0 capacity?
-> 
+On jeu. 03 sept. 2026 at 10:03, Lee Jones <lee@kernel.org> wrote:
 
-These issues are already fixed by commit:
-802a30c5db72 ("bpf: Fix queue/stack map u32 index overflow")
+> On Wed, 02 Sep 2026, Jerome Brunet wrote:
+>
+>> On jeu. 27 ao=C3=BBt 2026 at 14:42, Lee Jones <lee@kernel.org> wrote:
+>>=20
+>> > On Fri, 14 Aug 2026, Jerome Brunet wrote:
+>> >
+>> >> On dim. 13 janv. 2008 at 11:56, Lee Jones <lee@kernel.org> wrote:
+>> >>=20
+>> >> > On Thu, 13 Aug 2026, Jerome Brunet wrote:
+>> >> >
+>> >> >> On sam. 12 janv. 2008 at 23:40, sashiko-bot@kernel.org wrote:
+>> >> >>=20
+>> >> >> > Thank you for your contribution! Sashiko AI review found 2 poten=
+tial issue(s) to consider:
+>> >> >> > - [High] The corresponding regulator driver lacks support for
+>> >> >> > `AXP318_ID`, causing the `axp20x-regulator` child device probe t=
+o fail.
+>> >> >>=20
+>> >> >> Funny sashiko did not pick up on this when v6 was first sent. This=
+ is an
+>> >> >> ordering problem. The regulator part should be applied before the =
+mfd
+>> >> >> one.
+>> >> >>=20
+>> >> >> I could reorder here but there is not much point since the 2 chang=
+es will
+>> >> >> land in different subsystems but it does bring a valid question:
+>> >> >>=20
+>> >> >> Lee, Mark, are you OK with picking the patches indended for your
+>> >> >> subsystem or would you prefer that I split the series, regulator o=
+n one
+>> >> >> side, mfd on the other (with a dep on the regulator one, of course=
+) ?
+>> >> >
+>> >> > Does this break existing devices or simply delay support for this n=
+ew one?
+>> >>=20
+>> >> Existing device are fine and untouched.
+>> >>=20
+>> >> I've just checked and if someone tried to run without PATCH 5 (regula=
+tors),
+>> >> the main axp driver loads fine but the regulator part gives this
+>> >>=20
+>> >> axp20x-regulator axp20x-regulator.0: Unsupported AXP variant: 8
+>> >
+>> > Can you not enforce the deps with Kconfig?
+>>=20
+>> This is not a build problem so I do not think Kconfig will change
+>> anything here. There is no specific config per chip.
+>>=20
+>> It is just a runtime ordering matter and not a problem. regulator and
+>> mfd are split so at some point the support is incomplete.
+>>=20
+>> * MFD first, it is fine it just cant instantiate the regulator until it
+>>   lands. it is (mostly) useless without it, which is fine.
+>> * Regulator first. regulator will never be instanciate until MFD support
+>>   lands, just as useless.
+>
+> Okay, this is normal.  So there are no deps between them?
+>
 
+I think it is normal yes.
+
+There is a dependency as it stands. mfd change (PATCH 4) introduce a
+header it uses. The header is also used in the regulator change
+(PATCH 5).
+
+I don't think the headers should be split in there own change
+but I can do it if you want.
+
+> --=20
+> Lee Jones
+
+--=20
+Jerome
