@@ -1,225 +1,142 @@
-Received: from mail-ed2-f11.google.com (mail-ed2-f11.google.com [74.125.228.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B66447F2D0
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 10:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.75
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788430573; cv=pass; b=CoUAdobdo1rZGhVnwl0mplqCNzo5nJk0C1cEZblXLjCpuzgNYz94K3gO6P9rI1WMfJMpm4P5NND/9uwwUzVPYZxaIphAfB/j0GpxZXEtJRqJ6y9MDWuiX5BqJMmj8DWF8K3S1EzBQqX5jXaXOrYO6NoQK6pXm3MPMUeKz+/qKXw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788430573; c=relaxed/simple;
-	bh=WVlbokzFReA7Tc6/DcRmPk4toil5vu4Fw2X7RHf/oFg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W57tnjMVSn8smu0xyyH6KJoylps5foKunu1EoiG1iXpWgweRXDsB7QDZbih1QAnvErXQUClv2L4f17dGezGT6o3g98jtZht9AI3bZsCuZ10Elul3LJ09yXQSR95yfepm5+vEyqHjAQPwR9HsaA0SOHKbWnxKPW2TeJpXJCwaNPo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FAK7Hnhr; arc=pass smtp.client-ip=74.125.228.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2879C412294
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 11:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788433384; cv=none; b=MJdrwLshQxeTmcZ29iXyxp1d65cLjN9b13mht4CNV3pF46roe4ocYEil+Y3fKV7I8xg9A1G9NcBJ4DG/sw02RyKFebtmHleVbF/KVmft2BTiScIKRAaXjcYlXxyLS1yzpdxQptoUP/bViKwdNnBT6Le6ORuHdIDVjNyd5BxXU7o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788433384; c=relaxed/simple;
+	bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=de5y4VWJI3yv79T1sBdhit5RnvY7XoRKuPn+5K+GUeyWZfIkGDuhqvf7l9JQ85uTjLzlmdThmTZibKXU1NrTO+9EscfjWipqY2Oe+V+teNZ1EHNFvgAfbkVrfuXvPewSMXBoWM7xgQsfDUa6+6un5VyM1V2jey1RE53IDUl5G38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aGOhIpdz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XQGAmdT5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FAK7Hnhr"
-Received: by mail-ed2-f11.google.com with SMTP id 4fb4d7f45d1cf-6a5f56eae1cso1171299a12.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 03:16:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788430562; cv=none;
-        d=google.com; s=arc-20260327;
-        b=lgeWTJNPTBz/yQ9Se+vLpuHWG+pwxsZnOvmhpTVhfSIAVh9VAujBVeSQT6/gUC8A2C
-         fSapeGm3SJybGUgTD4S0mKhfsX9tU0M7YvN2Mb2Y/ottVH+jTuWuC65BFFBEPJ5MF5NR
-         EnIpIGXvZ0FXcoLqWvVu7GYC/gJ/iwvddH6V38iMGvGS+NKk+DYPZh4l2ZPnMDz78mQS
-         ZScK/dfC0QTurOtMBa5RbguQquDZiOPkH4loEnDsBsbwbY7O4qsYP9tYk7hgjuuva4Dm
-         lhkfnCdny8xVZcZd2Vu40S+wNowVEgc2IVNzamfvrYwgt2lf1gj4DAXP1bBlBwNQG7hu
-         laww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=XZZc60YapILALMj+sMrNLxAzX0DBFLxvwfnKJeCXNro=;
-        fh=Oq+z9tkhjCUfPEA2djWjK/YPBTt/ZpFl4+Jvr9GY9M0=;
-        b=I/NVROVnPwBY95cKxBNsYLab6nLEAKGvJ9VapPw4/PFiEcQXkhAa0Gdiqdi1OE8CBx
-         cm/8qvwDuNO03I4XWw3VjVeASdV/qqKNOzTlc2zp1TUhjb3ew1rlUG0qDKUml9T8vFzf
-         mqeS+4pSaxW9O50c43ybLOlo7vTq7DFy3z80HMRE5v3SFLLVdwIkjqLzcF04h9caQNjD
-         DNIgzeEG3bmgdYf7avOv8z2b8mGo4au2nI0fZ6bRXYO8cbnw+lC9ZwhcCfxFlZ1iF9iV
-         tNttgzQa8s1fzmuJ5NJF1HMG2kNACDS3FG34nx1BLt8qZOfw6I+e+9iW6ebkY5zZADr2
-         bGcA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aGOhIpdz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XQGAmdT5"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 683AHMRD055453
+	for <sashiko-reviews@lists.linux.dev>; Thu, 3 Sep 2026 11:03:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=; b=aGOhIpdzvRQAqchU
+	uG9DfyXvtVH98FaRuHRzZWhEO1VCYLDh563aE6VeoMTiMJSvWFyMvYKS8MLNngnW
+	OlokO+amiETSFus8MJ6UtAYU9ljWwHg3SGUqTICF0Dx2jE9hJySSCApA1zfYT7aA
+	CwHS/qIJ5X6gaDBiQ7ONxHwOaJaShf1wiSwHl+yn9nq+MHP1f5YhoLc1Xkj0/nK1
+	RMPvixn5WIY+282rMOm7E7+FWprt9+0rWOGIdJ/IeVTyXvGW/eLzjhqsEHiBDLJU
+	tMZHNZL0W97lfKZCX9Qw5huVToQA2sS6XzlPP9tCoIOz0q1366izrhK1n/K3e8tx
+	jMTq9A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4genrdvk5h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 11:03:01 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-938153538caso434587285a.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 04:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788430562; x=1789035362; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XZZc60YapILALMj+sMrNLxAzX0DBFLxvwfnKJeCXNro=;
-        b=FAK7HnhrCCpa0/fH9UTDW9oPeswaNX+kUbkaElDSQ9n6yINeyZ7BuCIIofrSGxBKdQ
-         aaOUEbllnKm29EgM0u1vs5i4tx8cqHr0hVJ3PL2/HqBKaUdRL5VHFWOdRFQGEfYDFTFa
-         xPsXXtZSUDl9hllMA1L/dbP3Hx7Oogv8B0vItn7ZwmQq7Sk1tXEhqJn1z1H8rMbbGoMz
-         7lJQW9bTfInltZgYF3r+b0CVndsOmViJ0kg4dUGZrEOhXuf0CgLTERo4gBQ1U6ucQfCQ
-         CySo0LYt3mOS3QKvpfHbMZv7XyRXwQYi09qdxfB4R7Rzp09x8x52TqJVmZzuJkAitkoZ
-         vcHg==
+        d=oss.qualcomm.com; s=google; t=1788433381; x=1789038181; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
+        b=XQGAmdT52nKugyzWmChVO3LN4Axnfe4nivxi+6GbRufs7DSHv05uQjtqlt3tHS87vd
+         5jpH6UZzuIgrAiLnHcGKf/aNKKQMMyy7IbeXtqt/p/eaQZmL4uNz0lI2JQYfGM9si9Kg
+         bpv3spgeG+UA1rCiX+wAHjmyOfSCM3XtW9pgjbEP/6fiClyM4ms4M59qjg/7mzyYDb/Z
+         Qj2+228menGcsnjoB2IrqiCyTA5O34HQqIIvqMGAo7d1O5v/tvDrpiZ5N4yvEFrud8S3
+         /9cQXKm5oJi0IPyAuZbrKfuhDZKKfUJDVBNCUEcQE81KoBM+zL6zVqs3yhHW9Lx21T4V
+         z3OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788430562; x=1789035362;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XZZc60YapILALMj+sMrNLxAzX0DBFLxvwfnKJeCXNro=;
-        b=OCa0PTOtRiha6QDFrsDjvrkxw5iiTouO7O0aszAFNs9v23eRmyaq1nMKM45z0iabjS
-         ijYwKVUsZY5f78i1x7feDYqjdv6JCNtmXRo25DOq7zgjtf9i21ymvgVnaE4txwvyBVDU
-         96RogYIVvs6ZYdQu9rMVxGKsCCdvyjbcL8HsVMF2Fn2jhk4MvHunxzdFfI/LjE+M6OzZ
-         jdEM0jx4rYIiQg8JpUcIQc9/nZA8lInR5Y/EJfXhnyWBXmjAeP8w+REOl373xWYxzbnH
-         sqyu0R1b4ZFdm8hZgrCsuAfqn6pwRY3SeW12Wz3lgOyJypLE5GV2mTm5hkuILFodegsA
-         KbGg==
-X-Gm-Message-State: AFuF++nM8Oo0fSwqx9hCRTc5Odwt3ax2fpLNSOSONbYMHuPAARSaiVZD
-	0dW2FQExJc1aGCbn/9Wg+XUIfcMSKY3V7sHSZ9ZkkRFxFTSDViAClpeLBz/f0Gs7WV5qrQlLvZI
-	PMQxGZfKuvlwWqSPPii1mSmbCBMAZs7CFzKxf4BiJUHPI
-X-Gm-Gg: AYBFou0fM3K+Cmi9/Cotr0cayFbNhdXzAc7XLu39nmAif5BClerSKjbwLmYYN32AjXA
-	Hls8XVZQ5+F9Na4J3Cw55NTSLOWFSylQ5Url6VUmyiEi1L+rT//27OC6pGxoN3Z6pEG6RtOObsE
-	3e3iXFN+Y1R/AZfgSWSStiIP6EefMIHTTw1KbtNi29hjbZr49HB3t3FIGaC/Yt0Q3muLa2NLpT4
-	pe3Ni87v5VMnFQc2cKObzlGq9wRj+zP7BsYjr5EMBH4twTkZNHL1H62Gac9H5yHaVfEDM3h3bXK
-	EtLFMUnV03gcUQKEOglPxN+97J1Hgezda54dY9hRr9rgcEG5AphGst6B32o=
-X-Received: by 2002:a17:907:7203:b0:c25:254:292e with SMTP id
- a640c23a62f3a-c25d4c9f1a7mr635886866b.0.1788430561260; Thu, 03 Sep 2026
- 03:16:01 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1788433381; x=1789038181;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
+        b=Su9kbNeyqSt2+FpjchZC8cA+M4zfecs8/b3RFwYhY39bittCiGrQtAJtnPNU1Xge/F
+         PCcgpwBJU/Fy6vbv0ZIxNHU0IBjwj4FWQLo4t06OLdHrXVlePknrh2i/p/tXAq8gFoxg
+         JTrylDjnNSpssqnBr5xGD9nK2v7vmFlH7cAvyhurmb92LE+FtEX2w0dzBsXqob69pKbk
+         711KUcg2Fy44555C3Gb8EiMJrVfK6XM/wx9S7YHSQYqQwIkzxYrkmaWLbkpxWdClJzNl
+         jY0OeNkP9OiKmie1ESh6zWW7LE0EDtKne6tGTCGnySLQd9t/F8Yoj0NIf0ROx0lET9wk
+         tTkA==
+X-Gm-Message-State: AFuF++kFDuiFOPMKzQZaSrs56SPrtREc96gmkamIiOySHOhB/UaggUh6
+	Ux5aN9903bsj8/DbC//cPVkEZcO4Z5utuoSMvvQlgTFU6VKg9kNZ1A6TUQt58MqgmHAYq1XdRf2
+	1DNVHREzVV4sVQ2DDFrcEAn8HJ7KYUyymO27QbvslGMRsufcTWxbDGBt8ChH17K6DdDSHVsg4G6
+	wofEs=
+X-Gm-Gg: AYBFou1YRUrrh6JyuNoNfzDNq3DVnlKUUH7GQKlcJM5YV5TGSvZDO9YkvsWmNXsCWVL
+	KX5/hkTlaHctINqYBgktId63y9aaPyD5UGhitHQu1DgdndZAK2yg5P7h9dwarKdr648vkf/52oO
+	+ReOpQ1p0nrerf6Pzp8aVTakfiUP30mgUPCKmWxJjVeFh7Zuo8rz56dEhAjCwra8j0AP/iUbo0C
+	3zQsNpJ2PMZnHFKEo5ymjtXttM6k2S/wkR7/ZCQ6Pke4FFBzZuh+JwH9oH9oOsf7nM6vtldNDuY
+	01gwCkAhY8dknf3EjVAgG2Y3dAiJ0GFH7tzYX0mJEW4weq2L7AMRTiP6zVEE05I2+h/i9N0HA2e
+	Vk9Krw1+JlWJ0rVqzprIyNGm43oMQ
+X-Received: by 2002:a05:620a:ec4:b0:939:6df9:6547 with SMTP id af79cd13be357-9396df968e6mr417343885a.51.1788433380878;
+        Thu, 03 Sep 2026 04:03:00 -0700 (PDT)
+X-Received: by 2002:a05:620a:ec4:b0:939:6df9:6547 with SMTP id af79cd13be357-9396df968e6mr417336785a.51.1788433380378;
+        Thu, 03 Sep 2026 04:03:00 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.219.214])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448ed38cfsm12046355f8f.19.2026.09.03.04.02.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Sep 2026 04:02:59 -0700 (PDT)
+Message-ID: <de3e9d23-c55f-497c-9d82-caca692d2f66@oss.qualcomm.com>
+Date: Thu, 3 Sep 2026 13:02:57 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260901150111.141037-1-coiaprant@gmail.com> <20260901150111.141037-8-coiaprant@gmail.com>
- <20260902150440.78D631F00A3D@smtp.kernel.org>
-In-Reply-To: <20260902150440.78D631F00A3D@smtp.kernel.org>
-From: Coia Prant <coiaprant@gmail.com>
-Date: Thu, 3 Sep 2026 18:15:50 +0800
-X-Gm-Features: AcwNN1WY1KXAlYP6ywO7GSbIWh5cdAyLJ9V8yYe_I0JGYIyWb1Ll7tKOm3JNX8k
-Message-ID: <CALj3r0jnyqvPgwURmggRBZiCqDiQ4f03=tn13BFez0=W8LH00Q@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 07/10] net: pcs: xpcs: add Rockchip RK3568
- platform glue driver
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/dsi: Fix setting completely bogus rate for byte
+ clock
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-phy@lists.infradead.org, 
-	olteanv@gmail.com, vkoul@kernel.org, devicetree@vger.kernel.org, 
-	robh@kernel.org, conor+dt@kernel.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: dri-devel@lists.freedesktop.org
+References: <20260903104732.145353-2-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260903105241.41C2A1F000E9@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260903105241.41C2A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=H4/rBeYi c=1 sm=1 tr=0 ts=6a9953e5 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=rgpvN1PqdaeCXe83_U4A:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: S0wHIdl-3SZsEaFcMeJkthf0o3VSKeRK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5NiBTYWx0ZWRfX9vGrnKyHFkr3
+ jh2j3ZQ8lcXJr57fjDoAI/5eA65HtANtAF5CsYkysy0HEW6gJJU+S4f+ZDJ+cXrLwu92QwUGThy
+ s+WSP22NjFoNZkszBSyvKW8DKlnnqVv+5mwf076QMAtMeLPyBJW/IZoLGAOZCTXXSRUCjH2xeym
+ S3Ne/U3yQUpgcpUkDncFT7afAFY05e3Ot9pVkiZ0y9j2Z2bamSo5eVsvSusgpn5MVPJtgZYBcca
+ SJDi4g7b3KZqHWMgTW9uF5lMhuNMa2jdEgSdRAt634zCo9EIA4wory5j1lNUdyuUNCrBqnNvr3A
+ NBLQskY7Hit/rQg8YqOiCd1aa4RS5T+DoFqi9I4JSLAn+kIsiqlGQPD+tGqTY0c4kJO77rHA+Ih
+ C8JHrQrslPb+rbhtUg7/fBAh3d7VQKjww9BCg5Ub/UpxlU2BYnPfxM6SbRa642dxbH1Wnc+NO04
+ GIRRg87uLwbiJ3QL7lg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5NiBTYWx0ZWRfXyAYM7ue8ppBv
+ LPgsD9oXFMeUdj7rsc6GtdEBIepTGoQvQfYUU1senuSxlNN2VbUSlaSrTY4uq/Xx/ZkILrlhShS
+ cTJAZXTDpcQjovCaVy/MZoWRlJVVUBA=
+X-Proofpoint-ORIG-GUID: S0wHIdl-3SZsEaFcMeJkthf0o3VSKeRK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030096
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=882=E6=97=A5=E5=91=
-=A8=E4=B8=89 23:04=E5=86=99=E9=81=93=EF=BC=9A
-> > diff --git a/drivers/net/pcs/Kconfig b/drivers/net/pcs/Kconfig
-> > --- a/drivers/net/pcs/Kconfig
-> > +++ b/drivers/net/pcs/Kconfig
-> > @@ -12,6 +12,29 @@ config PCS_XPCS
-> [ ... ]
-> > +config PCS_XPCS_ROCKCHIP
-> > +     tristate "Rockchip XPCS controller support"
-> > +     default ARCH_ROCKCHIP
-> > +     depends on OF && (ARCH_ROCKCHIP || COMPILE_TEST)
->
-> [Severity: High]
-> Is this missing a PM dependency?
->
-> If the kernel is built with CONFIG_PM disabled, pm_runtime_resume_and_get=
-()
-> returns 0 without enabling the hardware clock. This could lead to a
-> synchronous external abort (SError) when the unclocked APB registers are
-> subsequently accessed in xpcs_rk_read_reg().
+On 03/09/2026 12:52, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Reverting commit 6cd33b6f4155 directly reintroduces a panel scanout glitch on MSM8916 and similar older platforms during runtime DCS commands.
 
-ARCH_ROCKCHIP already selects CONFIG_PM.
+Obviously. The problem should be fixed other way, not by introducing
+incorrect clock rate rounding breaking other platforms.
 
-> > diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
-> > --- a/drivers/net/pcs/Makefile
-> > +++ b/drivers/net/pcs/Makefile
-> > @@ -1,10 +1,9 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> >  # Makefile for Linux PCS drivers
-> >
-> > -pcs_xpcs-$(CONFIG_PCS_XPCS)  :=3D pcs-xpcs.o pcs-xpcs-plat.o \
-> > -                                pcs-xpcs-nxp.o pcs-xpcs-wx.o
-> > -
-> > -obj-$(CONFIG_PCS_XPCS)               +=3D pcs_xpcs.o
-> > +obj-$(CONFIG_PCS_XPCS) +=3D pcs-xpcs.o pcs-xpcs-nxp.o pcs-xpcs-wx.o
->
-> [Severity: Low]
-> Does this syntax create separate modules instead of a composite module?
->
-> Because pcs-xpcs.c references functions like nxp_sja1105_sgmii_pma_config
-> defined in pcs-xpcs-nxp.c without EXPORT_SYMBOL being present, creating
-> separate modules will break symbol resolution and cause modpost linkage
-> failures when CONFIG_PCS_XPCS=3Dm.
+That commit introduced regression so it gets reverted till authors come
+with proper solution, for example.
 
-Sure, I will revert it in next version.
 
-> > diff --git a/drivers/net/pcs/pcs-xpcs-rk.c b/drivers/net/pcs/pcs-xpcs-r=
-k.c
-> > --- /dev/null
-> > +++ b/drivers/net/pcs/pcs-xpcs-rk.c
-> [ ... ]
-> > +static int xpcs_rk_init_clk(struct dw_xpcs_rk *pxpcs)
-> > +{
-> [ ... ]
-> > +     pm_runtime_set_suspended(dev);
-> > +     ret =3D devm_pm_runtime_enable(dev);
->
-> [Severity: High]
-> This devm action schedules pm_runtime_disable() to run during devres
-> cleanup on device removal.
-
-Yes, I will fix it in next version.
-
-> [ ... ]
-> > +static void xpcs_rk_remove(struct platform_device *pdev)
-> > +{
-> [ ... ]
-> > +     pm_runtime_force_suspend(&pdev->dev);
-> > +}
->
-> [Severity: High]
-> Will calling pm_runtime_force_suspend() here cause an unbalanced disable
-> depth?
->
-> Since pm_runtime_force_suspend() internally calls pm_runtime_disable(), t=
-he
-> disable depth is incremented twice during removal (once here, and once
-> during the devres cleanup). When the driver is rebound, it will only be
-> decremented once, leaving the depth at 1 and permanently breaking runtime
-> PM hardware access.
-
-Yes, I will fix it in next version.
-
-> [Severity: High]
-> Can a concurrent sysfs MDIO access race with xpcs_rk_remove() and crash t=
-he
-> system?
->
-> Because the MDIO bus is registered with devm_mdiobus_register(), it remai=
-ns
-> active and accessible until devres cleanup runs after xpcs_rk_remove()
-> returns. Calling pm_runtime_force_suspend() gates the hardware clock whil=
-e
-> the MDIO bus is still exposed to userspace. A concurrent sysfs read could
-> increment the usage counter, call into xpcs_rk_read_reg(), and execute
-> readl() on unclocked hardware, triggering an SError panic.
-
-Yes, I will fix it in next version.
-
-> [ ... ]
-> > +struct dw_xpcs *xpcs_rk_create(struct device *dev, struct device_node =
-*np)
-> > +{
-> [ ... ]
-> > +     xpcs =3D xpcs_create_mdiodev(pxpcs->bus, (int)port);
-> > +     device_unlock(&pdev->dev);
-> > +     if (IS_ERR(xpcs)) {
-> > +             put_device(&pdev->dev);
-> > +             return xpcs;
-> > +     }
-> > +
-> > +     if (!device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_CONSUMER=
-)) {
->
-> [Severity: High]
-> Is there a race window between device_unlock() and device_link_add()?
->
-> If a concurrent unbind of the supplier proceeds after the lock is dropped
-> but before device_link_add() creates the dependency, the devm-managed
-> pxpcs->bus could be torn down and freed. This would allow the MAC driver
-> to continue probing with a freed MDIO bus, leading to a use-after-free.
-
-of_find_device_by_node() increments the reference count of pdev->dev,
-so the supplier cannot be unbound between the lock release and
-device_link_add(). The put_device() is only called after device_link_add()
-completes.
+Best regards,
+Krzysztof
