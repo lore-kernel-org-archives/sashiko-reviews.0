@@ -1,74 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDB343553D;
-	Thu,  3 Sep 2026 08:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E69442B2E;
+	Thu,  3 Sep 2026 08:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788424499; cv=none; b=axmIvNP0cnnDCC89LS8uIAcWAVnIGPcQ4CRoDl5KX8pw29oIeoFkJ3YcFVpXK69xxKlSRVqChA8ALc9x8xvf+S4J1vntaDINCKJLjdyBZgX0zK47WiQH2bBjVol1Vevk760JiQ4mOcbYZYR/uGGMkSoSBZl7dar13OCT2G3m/zc=
+	t=1788424799; cv=none; b=YbNY/miD8nK/wFfVuepTqvZsaD8sARGygLbbZMR2uWUiiZweniHbZ3Z2mEKIGmwy+h4bVLdY0wQX1GzNWCW0n/6jkC89ImhkqSRAonf4QNMReOB9ZnlSa5ijDxa6cRMvIXCjYVkLtEDO1OpESKkaJkOvHed0sTp9yVIilvFFhJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788424499; c=relaxed/simple;
-	bh=IS0qM7SRLYGmpAXx9rsOdk39Qp7s4xjKONJApQFx/iw=;
+	s=arc-20240116; t=1788424799; c=relaxed/simple;
+	bh=0ara5kDWj9hWNdDhWaidn9fbQnuv77s70mCAisE4XsE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IpziRaeyTa55g6x97dJhXiH4Qe3ynP+KgzJdWCOhelWn3cCVnxCZFk54ehcdsKSkuoS3P0UlRAFHO6FjFWJfk8TuShzdZR9XVMVydUMEYrQbafckk/EMRCl1xEg9yBo6E4fQHmEGwcTtTaff2rrBdjTnKmQVVq43uCG23w2gFKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NCZvOKZt; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=RcMXseEWCGsXNlXUxI7Mt+bchCO4seClmRMKLoSZTFotNx5gaZmLy7qsi3WQOJxs2rISsxsuEc/PnEpD/P3T9oiR5xyUwTxmos0Zz0tgaouXyreFiWR9ANNxDvYXC+argHHM/AWdifaidRhCaCcqozy+f26f1WG1kTXZQvYreYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgY3krhu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NCZvOKZt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74EB1F000E9;
-	Thu,  3 Sep 2026 08:34:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgY3krhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AF41F000E9;
+	Thu,  3 Sep 2026 08:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788424498;
-	bh=FduSwPEq84FSvyKlNcI/Nau7FfT3CQG/m1qnHpNK+BQ=;
+	s=k20260515; t=1788424797;
+	bh=K1QDG/nvmF1UzRMpL95OuJsuTlpBW4aVBG+/KgNfMJY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NCZvOKZtfhWhYkGXSKE/kD78wSsAb+CH9ybxDnoCDmb5RD7FUE+3LSGtVAXeXU1rG
-	 iyZRdwqXck2C6s5G+jWGOo5iaH7eUQmS65Y4K/uR9ktBHTNXZmJ3PAhlrZU46imwW3
-	 O+zPSQNN58hsiTLQfKRv+MvtMhU/L6QgzLpMcV80b8ohznVozfGjvUU2PH7dWQyNad
-	 Wi6A4st4YQCJHGzHi7FFm1F+T8jeuwWy7o1tJYnWDj/npe/QQZGDVkOeKRjZ3wiy7i
-	 /xKKzJYranloZj269oilLcjl1iwtSMG9a+hoA5rwuhBOCWMalKvO1ydtwLgHbItySD
-	 VFbVdJuGWiW3w==
-Date: Thu, 3 Sep 2026 09:34:53 +0100
+	b=HgY3krhukhz/jsQz/txmK6A6V0O58Du7ug2yft3bLKKaW/c4UMxNF30b9bOFmmcbf
+	 CCxY7F9ZUxe3CHJtTpcFbRwaR0frUVzJaKeotPv9cJ/Hc6L/K6nzVZCZitFh68UsMw
+	 Jmw0/ThpbToTDyBQ0xiEo7V+xUnf1lxluv9PYBjodx3WIQTlDAw5RAbMtkSWpLV6V/
+	 03CsNCnD947WQH2qDvL/7g3S3WSr53iCUCF87s4hbow8NC/WpM8K8XnmaTJxPWFe8w
+	 cQNIEb0Ci+3xW/s5d+BihB54zoqK+hGFqhM8mnK31xgl3h0L6VhSna5feVylo9O0mG
+	 dSmOamLsF9lvQ==
+Date: Thu, 3 Sep 2026 09:39:53 +0100
 From: Lee Jones <lee@kernel.org>
-To: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH 2/7] dt-bindings: leds: pca995x: describe output-gain
- property
-Message-ID: <20260903083453.GD2133376@google.com>
-References: <6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
- <7f61e7e8781292450f920c49ef8853b802d76ecc.1788350618.git.nora.schiffer@ew.tq-group.com>
- <20260902123105.11B171F000E9@smtp.kernel.org>
- <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: James Hilliard <james.hilliard1@gmail.com>, linux-sunxi@lists.linux.dev,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	mfd@lists.linux.dev, robh@kernel.org
+Subject: Re: [PATCH v8 2/2] mfd: ac200: Add X-Powers AC200 support
+Message-ID: <20260903083953.GF2133376@google.com>
+References: <20260902-submit-ac200-mfd-v8-0-2aa06720b8ac@gmail.com>
+ <20260902-submit-ac200-mfd-v8-2-2aa06720b8ac@gmail.com>
+ <20260902194008.8FF2A1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260902194008.8FF2A1F00A3A@smtp.kernel.org>
 
-DT folks,
+On Wed, 02 Sep 2026, sashiko-bot@kernel.org wrote:
 
-> On Wed, 2026-09-02 at 12:31 +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > - [Low] The custom, device-specific property `output-gain` lacks a mandatory vendor prefix.
-> 
-> Probably makes sense to add the vendor prefix, will do in v2.
-> 
-> > - [Low] The `output-gain` property incorrectly exposes a raw hardware register value directly to the Device Tree instead of describing physical units.
-> 
-> According to the datasheet, the LED current is calculated as follows:
-> 
->     Iled = output_gain * 900mV / Rext / 4
-> 
-> If we want to fully describe the output gain using physical units, something
-> like output-current-microamps and external-resistor-ohms would work. There
-> wouldn't be a meaningful default for these properties to describe in the binding
-> docs however, which is possible for "output-gain" (as the driver just sets that
-> to 127.)
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unconditional global chip reset in shutdown/remove breaks RTC wake, Wake-on-LAN, and live PHY state.
 
-This is a question for the Device Tree side.
+Is that true?  Needs a response from you.
+
+> --
+> 
+> commit d8592c963caa9b21487926208ea5815e059be1be
+> Author: James Hilliard <james.hilliard1@gmail.com>
+> 
+> mfd: ac200: Add X-Powers AC200 support
+>     
+> This commit adds support for the X-Powers AC200 mixed-signal companion IC.
+> It enables the shared input clock, initializes the paged regmap, and asserts
+> a chip reset during probe, driver removal, and system shutdown.
+> 
+> > diff --git a/drivers/mfd/ac200.c b/drivers/mfd/ac200.c
+> > new file mode 100644
+> > index 0000000000000..8445a460ef6c2
+> > --- /dev/null
+> > +++ b/drivers/mfd/ac200.c
+> 
+> [ ... ]
+> 
+> > +static void ac200_disable(struct regmap *regmap)
+> > +{
+> > +	regmap_write(regmap, AC200_SYS_CONTROL_REG, 0);
+> > +}
+> 
+> [Severity: High]
+> Does asserting a global chip reset here wipe the hardware state of all
+> co-packaged functions, including the RTC and Fast Ethernet PHY?
+> 
+> Since ac200_disable() is unconditionally called by ac200_shutdown() and
+> ac200_remove(), could this kill the PHY and clear the RTC during system
+> shutdown, breaking Wake-on-LAN and Wake-on-RTC from power-off states?
+> 
+> Furthermore, because the PHY is enumerated separately on the MDIO bus and
+> only references this MFD via a phandle, will unbinding the AC200 driver at
+> runtime (via ac200_remove) forcefully reset the PHY hardware out from under
+> the active MDIO PHY driver and lead to unpredictable network failures?
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260902-submit-ac200-mfd-v8-0-2aa06720b8ac@gmail.com?part=2
 
 -- 
 Lee Jones
