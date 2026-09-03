@@ -1,142 +1,178 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2879C412294
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 11:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AA9443AB4
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 11:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788433384; cv=none; b=MJdrwLshQxeTmcZ29iXyxp1d65cLjN9b13mht4CNV3pF46roe4ocYEil+Y3fKV7I8xg9A1G9NcBJ4DG/sw02RyKFebtmHleVbF/KVmft2BTiScIKRAaXjcYlXxyLS1yzpdxQptoUP/bViKwdNnBT6Le6ORuHdIDVjNyd5BxXU7o=
+	t=1788433886; cv=none; b=aY6mudGf6niK2Dasa7R9YbABEAY3TL45ycJaZEALg0W8vQq5NAZMePL5cfM8pBlPatk8PRtxb7K/er15njgK4/8Wm7R0RKjNLM6E63wLMWfMdXjLZguq2gCmpMft6jC0Hm5NHEw/uy0zd/tZMIQIT6hpM8QI8bMwXQb3sI9SxcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788433384; c=relaxed/simple;
-	bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=de5y4VWJI3yv79T1sBdhit5RnvY7XoRKuPn+5K+GUeyWZfIkGDuhqvf7l9JQ85uTjLzlmdThmTZibKXU1NrTO+9EscfjWipqY2Oe+V+teNZ1EHNFvgAfbkVrfuXvPewSMXBoWM7xgQsfDUa6+6un5VyM1V2jey1RE53IDUl5G38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aGOhIpdz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XQGAmdT5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1788433886; c=relaxed/simple;
+	bh=pcM2PW3sEaySd35PnKO6K0MrOzG5iUGvi8JIi2M0RGQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n/6oRA8muIMMT/NbfGvwutqMn3ldbTe2MjhYG1G9IvGF+42WEMrpiMVA9vZk6Z0pnaXJP6s1OoJsUPv8wxO9NiO1IFyeXvpGkelLa6fJvQUryBW4aqS/FEmrQgh8B0GkZlpaab+iDyzzlnTrt6SLGPY6E5d514AJi7py35EaxQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se; spf=pass smtp.mailfrom=ragnatech.se; dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b=Qqh+KkE1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OHf4spSO; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ragnatech.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aGOhIpdz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XQGAmdT5"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 683AHMRD055453
-	for <sashiko-reviews@lists.linux.dev>; Thu, 3 Sep 2026 11:03:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=; b=aGOhIpdzvRQAqchU
-	uG9DfyXvtVH98FaRuHRzZWhEO1VCYLDh563aE6VeoMTiMJSvWFyMvYKS8MLNngnW
-	OlokO+amiETSFus8MJ6UtAYU9ljWwHg3SGUqTICF0Dx2jE9hJySSCApA1zfYT7aA
-	CwHS/qIJ5X6gaDBiQ7ONxHwOaJaShf1wiSwHl+yn9nq+MHP1f5YhoLc1Xkj0/nK1
-	RMPvixn5WIY+282rMOm7E7+FWprt9+0rWOGIdJ/IeVTyXvGW/eLzjhqsEHiBDLJU
-	tMZHNZL0W97lfKZCX9Qw5huVToQA2sS6XzlPP9tCoIOz0q1366izrhK1n/K3e8tx
-	jMTq9A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4genrdvk5h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 11:03:01 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-938153538caso434587285a.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 04:03:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788433381; x=1789038181; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
-        b=XQGAmdT52nKugyzWmChVO3LN4Axnfe4nivxi+6GbRufs7DSHv05uQjtqlt3tHS87vd
-         5jpH6UZzuIgrAiLnHcGKf/aNKKQMMyy7IbeXtqt/p/eaQZmL4uNz0lI2JQYfGM9si9Kg
-         bpv3spgeG+UA1rCiX+wAHjmyOfSCM3XtW9pgjbEP/6fiClyM4ms4M59qjg/7mzyYDb/Z
-         Qj2+228menGcsnjoB2IrqiCyTA5O34HQqIIvqMGAo7d1O5v/tvDrpiZ5N4yvEFrud8S3
-         /9cQXKm5oJi0IPyAuZbrKfuhDZKKfUJDVBNCUEcQE81KoBM+zL6zVqs3yhHW9Lx21T4V
-         z3OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788433381; x=1789038181;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CrS7dfh8VoX5AtGoISGosKA0+Y3IZxb5P0ICAJUvtHs=;
-        b=Su9kbNeyqSt2+FpjchZC8cA+M4zfecs8/b3RFwYhY39bittCiGrQtAJtnPNU1Xge/F
-         PCcgpwBJU/Fy6vbv0ZIxNHU0IBjwj4FWQLo4t06OLdHrXVlePknrh2i/p/tXAq8gFoxg
-         JTrylDjnNSpssqnBr5xGD9nK2v7vmFlH7cAvyhurmb92LE+FtEX2w0dzBsXqob69pKbk
-         711KUcg2Fy44555C3Gb8EiMJrVfK6XM/wx9S7YHSQYqQwIkzxYrkmaWLbkpxWdClJzNl
-         jY0OeNkP9OiKmie1ESh6zWW7LE0EDtKne6tGTCGnySLQd9t/F8Yoj0NIf0ROx0lET9wk
-         tTkA==
-X-Gm-Message-State: AFuF++kFDuiFOPMKzQZaSrs56SPrtREc96gmkamIiOySHOhB/UaggUh6
-	Ux5aN9903bsj8/DbC//cPVkEZcO4Z5utuoSMvvQlgTFU6VKg9kNZ1A6TUQt58MqgmHAYq1XdRf2
-	1DNVHREzVV4sVQ2DDFrcEAn8HJ7KYUyymO27QbvslGMRsufcTWxbDGBt8ChH17K6DdDSHVsg4G6
-	wofEs=
-X-Gm-Gg: AYBFou1YRUrrh6JyuNoNfzDNq3DVnlKUUH7GQKlcJM5YV5TGSvZDO9YkvsWmNXsCWVL
-	KX5/hkTlaHctINqYBgktId63y9aaPyD5UGhitHQu1DgdndZAK2yg5P7h9dwarKdr648vkf/52oO
-	+ReOpQ1p0nrerf6Pzp8aVTakfiUP30mgUPCKmWxJjVeFh7Zuo8rz56dEhAjCwra8j0AP/iUbo0C
-	3zQsNpJ2PMZnHFKEo5ymjtXttM6k2S/wkR7/ZCQ6Pke4FFBzZuh+JwH9oH9oOsf7nM6vtldNDuY
-	01gwCkAhY8dknf3EjVAgG2Y3dAiJ0GFH7tzYX0mJEW4weq2L7AMRTiP6zVEE05I2+h/i9N0HA2e
-	Vk9Krw1+JlWJ0rVqzprIyNGm43oMQ
-X-Received: by 2002:a05:620a:ec4:b0:939:6df9:6547 with SMTP id af79cd13be357-9396df968e6mr417343885a.51.1788433380878;
-        Thu, 03 Sep 2026 04:03:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:ec4:b0:939:6df9:6547 with SMTP id af79cd13be357-9396df968e6mr417336785a.51.1788433380378;
-        Thu, 03 Sep 2026 04:03:00 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.219.214])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448ed38cfsm12046355f8f.19.2026.09.03.04.02.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2026 04:02:59 -0700 (PDT)
-Message-ID: <de3e9d23-c55f-497c-9d82-caca692d2f66@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 13:02:57 +0200
+	dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b="Qqh+KkE1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OHf4spSO"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BFA387A0038;
+	Thu,  3 Sep 2026 07:11:23 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Thu, 03 Sep 2026 07:11:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ragnatech.se; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788433883;
+	 x=1788520283; bh=KMu2Cz6fbNMKBj4yzwYFgm18OJUOPNan0SdRrspDzNw=; b=
+	Qqh+KkE1VM+NmEkoS6tYEoriatmpvEA8XbM5a8WQgobyXJW9sHo4Z1H+TaI4cnvh
+	dCiP1IaQZ0/IN+PsHAVWi4z5jS7DQIW4oQdAIgSuIgtTD5QgZT0uL/HY63lNwRQl
+	KMnLf9lynNadjbr3l7EHKvSgOLtxg2lDCn5JrmIBoK9l6vZWDBUTs8RWgzSC+MBg
+	HBJfr3DJAfgZz+y6xK6ajhIVtl/892UQQnEl3t+HXGptoVwtiO1HI/a9RsEFd70U
+	XLL7q0evHQ1OnvEp+PMIZUEqFHfzsEvOe+qTTd2IJXMzLyerk6L6aYK/JdNeNwbb
+	6hbzM3aQ3jXxzvK6e/ZA+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788433883; x=
+	1788520283; bh=KMu2Cz6fbNMKBj4yzwYFgm18OJUOPNan0SdRrspDzNw=; b=O
+	Hf4spSO8sJH4t1mktT6jAT12F6+ELcR9VtbpEsAwEAxexih4mp0JWVgs62E2ECUX
+	p8xyy3lbDyiO6YLKQRTVLyIoWh0clUmz4HR0mWByy2Whk69TzNYZaijcsHe7LLeC
+	m3kpOXFPb7LRMeJ8dlGlp/vlQBzlJUUom+0tfUMCuFlwhAEPzBcjNm8919tYM17G
+	q3qy2ARmXy3T/HdEDlYtBMXh/qR/O3rAoBLcJythWwt5S9A4G68fn1lN8lDDwLte
+	cAskz4dmHdsftSUswcyoGTYLvhwvJWbOWEKxYBQy4XOAzKmtGoDjSvCjl3xNY8Js
+	vxXd61CiPY7v+dope+MrQ==
+X-ME-Sender: <xms:21WZalSJCeYB9QSDNw-QpRNHGpwXGPca5m15K6fQjZowlvIGvE_bdA>
+    <xme:21WZar6t9im6hFw3Y3UYtdSqPPYidDDxAfqAhpik6fBc_bXojPCSLWAvtT4B6yYHA
+    DbH-73gwB0HXk8xAG5vwOaT-Kxf1h4GtcLDqHcVc_mgnA0ZSR2AI4wj>
+X-ME-Received: <xmr:21WZap0HRXHg-oPWQx3niZnEBzzOoK6OO7y3FGWSmoS0EI-3TGmFtci3x0_RwItDorzmRHhDkeQokadlunHcxC5pPV6ypjs>
+X-ME-Proxy-Cause: dmFkZTFk1Ml/d9L1Z48Pp2GKA5ywPjiyyAIu/++q52mC/HDhV9zC8pF9HEAwgxFDOlkJGz
+    Vs+WwzEiVLmk7mqgn60jwnVvxkvtzPzObEbX6GgerHb5ZoerTkL8ik9iMJQFErq0nUCPhE
+    tzr35xb8Q9HPcuwBUeVALlTd4o4cQOwRXyQzi1UrG8Tk5bCccsJYPGzuEPJG4mNHgA5DKp
+    a0MBYaX9p439biTTRmlGac6JFBHfAUptCuOwIHdj8n5JpNEBZ9uJrRhjehZlj1uqvBVFWR
+    RtBbBcxuzgsCCBV7vF5ZiahFEu3LTrlzVLFORgxYvVfQ9UBrZ33JoDgdvicwAGHM58w2gO
+    HxcnxPeWWHp8RgrA4UTmSptM8DRTLFSrwY1ZakfUY9GCPwNWQyVB6Vf8V9nhhtwFZl840M
+    FJF1tnzEqXEAluJ2mEdZqR3nhE/Ap4qju2gCoLbS7INjwzizTFZ7xsuZX2m6pxuBeNnHyb
+    sJgWJE1zYM4xGVW1UmeeyNqZNtpmQs11Ct8m9k5Sdjk4GWMm20FmlfYHUwlJs/q59IHNua
+    kGRqLduRExVYKoOf5YI6hCN88FgjzbMbnYkdouxC9/bNCdAz8gx0E4DQ+HsejIzv5J2Cz9
+    FYth2PrK8cR2HsHcdT4ptmLsifpboRVOLNPG5l0IJStnWkPJB6YJAtUP3mlw
+X-ME-Proxy: <xmx:21WZauCTMMCVsaisk1h7jffW-dp2Y_kd0IvedLl0du4B4IM4tHgj2g>
+    <xmx:21WZasN3ewM7VnVViKO4pkOW9IoVnN1aZeIuHwaL8ZSOca-PpNdsig>
+    <xmx:21WZaraKsjObUzzA3yRVnQBI2PsK8ZenZs9s_89pg2KEzVt4MwRvCA>
+    <xmx:21WZajsDWgNo15DVqqr0-LvPSx9SkKOm95uwjpGyaiIQTQNRkQOuGw>
+    <xmx:21WZaqdzY84JZj2j4xRKYsD38TWDtScvS5YKgQi7SxP5LwRBzaAUai0v>
+Feedback-ID: i80c9496c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Sep 2026 07:11:22 -0400 (EDT)
+Date: Thu, 3 Sep 2026 13:11:20 +0200
+From: Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH net-next v3 01/10] net: ethernet: ravb: Remove gPTP
+ control from WoL setup and restore
+Message-ID: <20260903111120.GE1116206@ragnatech.se>
+References: <20260902084703.3228504-1-niklas.soderlund+renesas@ragnatech.se>
+ <20260902084703.3228504-2-niklas.soderlund+renesas@ragnatech.se>
+ <20260903084755.F15D91F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dsi: Fix setting completely bogus rate for byte
- clock
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260903104732.145353-2-krzysztof.kozlowski@oss.qualcomm.com>
- <20260903105241.41C2A1F000E9@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260903105241.41C2A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=H4/rBeYi c=1 sm=1 tr=0 ts=6a9953e5 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=rgpvN1PqdaeCXe83_U4A:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: S0wHIdl-3SZsEaFcMeJkthf0o3VSKeRK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5NiBTYWx0ZWRfX9vGrnKyHFkr3
- jh2j3ZQ8lcXJr57fjDoAI/5eA65HtANtAF5CsYkysy0HEW6gJJU+S4f+ZDJ+cXrLwu92QwUGThy
- s+WSP22NjFoNZkszBSyvKW8DKlnnqVv+5mwf076QMAtMeLPyBJW/IZoLGAOZCTXXSRUCjH2xeym
- S3Ne/U3yQUpgcpUkDncFT7afAFY05e3Ot9pVkiZ0y9j2Z2bamSo5eVsvSusgpn5MVPJtgZYBcca
- SJDi4g7b3KZqHWMgTW9uF5lMhuNMa2jdEgSdRAt634zCo9EIA4wory5j1lNUdyuUNCrBqnNvr3A
- NBLQskY7Hit/rQg8YqOiCd1aa4RS5T+DoFqi9I4JSLAn+kIsiqlGQPD+tGqTY0c4kJO77rHA+Ih
- C8JHrQrslPb+rbhtUg7/fBAh3d7VQKjww9BCg5Ub/UpxlU2BYnPfxM6SbRa642dxbH1Wnc+NO04
- GIRRg87uLwbiJ3QL7lg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5NiBTYWx0ZWRfXyAYM7ue8ppBv
- LPgsD9oXFMeUdj7rsc6GtdEBIepTGoQvQfYUU1senuSxlNN2VbUSlaSrTY4uq/Xx/ZkILrlhShS
- cTJAZXTDpcQjovCaVy/MZoWRlJVVUBA=
-X-Proofpoint-ORIG-GUID: S0wHIdl-3SZsEaFcMeJkthf0o3VSKeRK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030096
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260903084755.F15D91F000E9@smtp.kernel.org>
 
-On 03/09/2026 12:52, sashiko-bot@kernel.org wrote:
+On 2026-09-03 08:47:55 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Reverting commit 6cd33b6f4155 directly reintroduces a panel scanout glitch on MSM8916 and similar older platforms during runtime DCS commands.
+> - [High] The patch erroneously removes `ravb_ptp_stop()` from `ravb_wol_setup()`, leaving the gPTP hardware active during a WoL-enabled suspend.
 
-Obviously. The problem should be fixed other way, not by introducing
-incorrect clock rate rounding breaking other platforms.
+This is a non-issue as the module clock is the same, ignore.
 
-That commit introduced regression so it gets reverted till authors come
-with proper solution, for example.
+> --
+> 
+> commit bbd624fcad5eb4869638d985be16666aae0f0ca2
+> Author: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+> 
+> net: ethernet: ravb: Remove gPTP control from WoL setup and restore
+> 
+> This commit removes explicit gPTP stop/init calls from the Wake-on-LAN setup
+> and restore paths. The commit message states this is redundant as the device
+> is always closed and re-opened during suspend and resume.
+> 
+> > net: ethernet: ravb: Remove gPTP control from WoL setup and restore
+> > 
+> > Since commit a6a85ba36fd0 ("net: ravb: Move PTP initialization in the
+> > driver's ndo_open API for ccc_gac platorms") the gPTP clock (if
+> > supported) is stopped and started by opening and closing the ndev.
+> > 
+> > This makes the special case to stop and start it when resuming from WoL
+> > redundant. As the ndev will always be closed and re-opened when
+> > suspending and resuming the system.
+> 
+> [Severity: High]
+> Is this description accurate when Wake-on-LAN is enabled?
+> 
+> Looking at ravb_suspend() in drivers/net/ethernet/renesas/ravb_main.c,
+> ravb_close() is explicitly bypassed when wol_enabled is true:
+> 
+> 	if (priv->wol_enabled) {
+> 		ret = ravb_wol_setup(ndev);
+> 		rtnl_unlock();
+> 		return ret;
+> 	}
+> 
+> 	ret = ravb_close(ndev);
+> 
+> > 
+> > Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+> > Reviewed-by: Sergey Shtylyov <sergei.shtylyov@gmail.com>
+> >
+> > diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+> > index ea1c7e536791e..36173a09e2fdb 100644
+> > --- a/drivers/net/ethernet/renesas/ravb_main.c
+> > +++ b/drivers/net/ethernet/renesas/ravb_main.c
+> > @@ -3182,9 +3182,6 @@ static int ravb_wol_setup(struct net_device *ndev)
+> >  	/* Enable MagicPacket */
+> >  	ravb_modify(ndev, ECMR, ECMR_MPDE, ECMR_MPDE);
+> >  
+> > -	if (priv->info->ccc_gac)
+> > -		ravb_ptp_stop(ndev);
+> > -
+> >  	return enable_irq_wake(priv->emac_irq);
+> >  }
+> 
+> [Severity: High]
+> Since ravb_close() is not called during a WoL-enabled suspend, doesn't removing
+> ravb_ptp_stop() here leave the gPTP hardware active during suspend?
+> 
+> >  
+> > @@ -3204,9 +3201,6 @@ static int ravb_wol_restore(struct net_device *ndev)
+> >  	if (error)
+> >  		return error;
+> >  
+> > -	if (priv->info->ccc_gac)
+> > -		ravb_ptp_init(ndev, priv->pdev);
+> > -
+> >  	if (info->nc_queues)
+> >  		napi_enable(&priv->napi[RAVB_NC]);
+> >  	napi_enable(&priv->napi[RAVB_BE]);
+> 
+> [Severity: High]
+> If the PTP clock remains active during suspend, won't it be abruptly torn down
+> by the ravb_close(ndev) call that occurs later in this ravb_wol_restore()
+> function?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260902084703.3228504-1-niklas.soderlund+renesas@ragnatech.se?part=1
 
-
-Best regards,
-Krzysztof
+-- 
+Kind Regards,
+Niklas Söderlund
