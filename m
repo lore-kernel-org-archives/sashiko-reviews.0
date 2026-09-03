@@ -1,274 +1,172 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3782236E46F
-	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 06:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924B23FE37C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  3 Sep 2026 07:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788418658; cv=pass; b=P7WjLU4vxWK3Cxc/UxMDcowWYb6gZDE+Swkjz70Ik5+ugvHysj7JqWxuyTJLvN+JQqBVwzqngJxvsuVNuIgee8euz46ZVT0yvbjmgf0T+VNLRSBzz2qEVKV4gvfP0tsVxldUybu5uqgSj2vhAOHTPBcFuZtKh17Lm6yysyJlFZI=
+	t=1788419110; cv=fail; b=PlHyi+XCNVNnHbt9BSytaP5ohVXapRkBIIKLFC2lEi+nOJeArSFcggRW8XCVd1mqzpYIIl1jrZL6KwTDiJ7rcklFNxzIb1ekIxzYw+c8div4INFmmZ0EqhjyRQgsi397Y1c2rfLFKLLw40sou4zQr1CMl2nFIP96kIlVKCUYAx4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788418658; c=relaxed/simple;
-	bh=38mqkt7Uk4r+oULWCtMHnreEf1WtOkAN6VkH/1Z4vaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X/Gzh7li9nCecN7sfLVYWYPxzoPQ+Xcc7tsHzLnO2FbCEnXTaUBn0cGFtIT2hf2iTVqEgMy2GhB4MbAVEUQAbjNb1f0CUkA98MxSWpFNIbkUin0tzUH905Yof0DA9vPkZfJNKWaPRSPSEe0zctf4RdhrXRjNEd+2UF/UwQNy99w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=Wya8n5dm; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=OFWe5zck; arc=pass smtp.client-ip=81.169.146.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	s=arc-20240116; t=1788419110; c=relaxed/simple;
+	bh=oQhlzxswRQ70DVYYv50xHttkYMor2XH75szKd7AXYnk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Ev8WzVfGPBZAsvKRaBIraHak+mLpDu/Ozb/dKZhOcm5I5iBeuxpvHkS7ux4V/Ogyxvglk0rRI1kzo5DBFPq1oy5Qo2iD1nPUykgm7ZvM8iP1enIbXbmAxd7nzPj23Q2+X2cdO4uBTTMWUIHYYNo461OUS746TtP2FtTG49sVUnw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a0VeunZd; arc=fail smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Wya8n5dm";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="OFWe5zck"
-ARC-Seal: i=1; a=rsa-sha256; t=1788418632; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=pKTnZtgUeH9wxyD33cQqbecXSFykXkYJj3u6pvMUdWpC8NXz94Ud+qs9KQEweqhGrO
-    fTL6HYnJvAhlC3ww9ls0pBU1vOqHtlwWrt+VV78BOeiMI4+LOhYLxDMuMZ754YU48e0r
-    mxWvFAY3LeVSlGmjebjvOpEWD9+lyc5qr8I4JNjVhKAXGG0nGOaD4OFawjtTUKy6XpW9
-    dWtQYv0LxmMaxcAlwgVP7LB8iXlxeljFa8NU8pwFa/cAPrVw+CUKNII9XGr2cQUSNy7J
-    LCTwpxyD7gww1EEREIUcyJg//vBAXv2d+2s0ZKanJ3oSlZ57WLR/s+K9Gmdev4P7e7rb
-    IBhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1788418632;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=EsmFDdWafBcBCr977Uyj6+pbJO9akfXELAWfBXzYkS0=;
-    b=fJIYC7O9CGVN0H02b000R9eGuh33uV59gpCA5gGagmLxjjUi+GvWCCN8lXD5W09s/a
-    OhcsUVDrxXX95zdey3bGdKykgRbUrKp24hpFrbmovEJeYyQ164iqKYE+qLUPBfbFlS0D
-    PnVGrwJsYGkJzmyg15bYPlv4K1wslc3ESThJ+ItBwn195Ob3Iu5E/EKTR/K2oIh4N1Vo
-    8+4ik3EcAbhEc2rkqu+KeQ3oDCAU7cgXXCqP1aki/KwUO617pwCyM4r2yAqNJHLlg+7P
-    l+rmVRMXRa9uoU/p+76jWrOKBOba8OCJbIf5bHYIpc33yabxr1lwt4eh5VM+0du8DAgQ
-    +Aeg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1788418632;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=EsmFDdWafBcBCr977Uyj6+pbJO9akfXELAWfBXzYkS0=;
-    b=Wya8n5dm/V5dcOYtb+RTh2wX3eL1Pt7n5la1FRHahq007R41Ez7kV4BDxS8+bvUapz
-    44s5KEgO1PErSTvJKTzbcvI4n8tTV6cq5i6AzikRI97SZYkvvD3mQ8ZZKbee5EqSiegb
-    YeFYU/quUEvkTQdHnrb0yuTC3J1WpiLUsH8scfAfg5vK8uIH/cbovqbMyaWTQg6E038d
-    ND/AKbhkHROWa160oGwCKfIJGg8/pKT4bdBwdeZH2YUosGZOmcWvkgi4eNylU4H/VwM5
-    oYOcPFBXL82sft5gNp8Y47+rgj9XXXJMENEUEdp8Y+7371dZC17kGIm4dZjcUMoPo0cL
-    m+hg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1788418632;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=EsmFDdWafBcBCr977Uyj6+pbJO9akfXELAWfBXzYkS0=;
-    b=OFWe5zckWIc6Ey5PZaBwT7AaTZ/aMR5BtgVhG5zrzP2huiuL80cei5V0xo6/4VN5Pa
-    ngkhncv1gGWk7DhFRGDw==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.2 AUTH)
-    with ESMTPSA id K171b72836vCA1M
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Thu, 3 Sep 2026 08:57:12 +0200 (CEST)
-Message-ID: <b66c5a16-9b5b-429b-acba-d816f82fcc37@hartkopp.net>
-Date: Thu, 3 Sep 2026 08:57:06 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a0VeunZd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788419107; x=1819955107;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=oQhlzxswRQ70DVYYv50xHttkYMor2XH75szKd7AXYnk=;
+  b=a0VeunZd3uo7ioeQRJOyTpvcqcQJzqBXg+JJ6ioJ3eIIrluIlWp+cw+X
+   iUb1tyltW0EFwpPXEzLnC/ywgKJDzbGlO7sYHTUB7oVyKG8TJ3E2x2L3U
+   H1ITmXrabkn0BfjOhLIa9UoFtm4h162j79rkEFEZC5thrO59ef3GcFn4f
+   jnPVKqzaj+nI+NwUITMkgEz5PIEx6k8EA6DcLN04C3YnfEPCCu7pb4Db+
+   E9WK2xo1uWIjl/+afRe5xkCIDUXK7rBte2z86zMLuEq7LvGwhEBpbAnu3
+   3uDj146LYfmr0hmG73FK4VloxN/7Z47ii7+0fhLk2uLhGVqfQNULyFYJs
+   Q==;
+X-CSE-ConnectionGUID: N3gM3vqMTlOXwPx0zo4iGw==
+X-CSE-MsgGUID: bxyadrgsTqmOBbw/n59OVA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11894"; a="106256053"
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="106256053"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 00:05:02 -0700
+X-CSE-ConnectionGUID: g1Wy6/14QYunWUhKuIOkcw==
+X-CSE-MsgGUID: +Su92CdqTs694G89dSb0jw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
+   d="scan'208";a="273131891"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 00:05:01 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 3 Sep 2026 00:05:01 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 00:05:01 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.39) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 3 Sep 2026 00:05:00 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WYvGswrKB9DTb03vRLvt5BUPXYSXWLQFG/w/6HGL7FyybgZidssVNR39vz92+xbjrOpqY4XaLIiHl5UYwFVa90vJ/X0wgw3vmbWsp0gnI+uP/v+nm3ovO6wy0aV8PToyIR4wG674bVwgR/E50u+h1dK1Hco+OX5Obw1T8uC0rjCt38zwJtb5Dl9yNvC7bdkrrhXAU26RyfogGsgireiQsbMwmCmNmo6OcQRoXWhz0dmwuvf4dh7QLdRBeRZkZBZQtAiMrCQdkWiMgOk4N9qCZus98jP1o0vZZhJUtvxMAr6tcBD+/vUS8SheApGnlGYe8zWlmfQYdWDJ5mWJL+yyWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BVwSW+BU+fVuemAMU53FGGq5C+RTG+MHyLcbS86IIOc=;
+ b=c7p/Ts2aEXnOK+Ma56umFR+JiMH3E6OWh861l3jhIZE527OS6LAAgf3vRkhGgnd6ioe923nWO17BzuNHio2R5T4pqG6qalAAWpTBGi4VQxCDOksj/BNj4b2o/hCkPYxOloun+DLsofI451+yBZ6w7o/iJIRbdg4E7AJeQMbsjEyw4lkATsaAcpM+RgCIX1Y8uKg2mM+Ku4258wElgCgm7WgDea4i7M6v6SKyq/LBnChVZDmzEzNuOL48CXM0zasKf2IXXQgCH7DeF6oNL76ws8jLiHq0GhtVrR1DsNqAMnPdS71A6sXPmTTInpv5B8ZHaj4OKPWVvZwvxi6ml9kz7A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8) by DSVPR11MB9960.namprd11.prod.outlook.com
+ (2603:10b6:8:3bc::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
+ 2026 07:04:59 +0000
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd]) by CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
+ 07:04:58 +0000
+Date: Thu, 3 Sep 2026 00:04:53 -0700
+From: Peter Fang <peter.fang@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+Subject: Re: [PATCH v3 4/4] virt: tdx-guest: Allocate Quote buffer dynamically
+Message-ID: <apkcFclEw1LNd96h@intel.com>
+References: <20260729122939.1340412-1-peter.fang@intel.com>
+ <20260729122939.1340412-5-peter.fang@intel.com>
+ <20260729125524.48FD91F00AC4@smtp.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260729125524.48FD91F00AC4@smtp.kernel.org>
+X-ClientProxiedBy: BY3PR04CA0003.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::8) To CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] can: remove CAN filters independent from namespace
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20260902182915.19486-1-socketcan@hartkopp.net>
- <20260902185254.877981F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260902185254.877981F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR11MB435924:EE_|DSVPR11MB9960:EE_
+X-MS-Office365-Filtering-Correlation-Id: fa084895-d1e2-4863-7f7b-08df0989aa8b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|4143699003|10067099003|11063799006|6133799003|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: ev0nRNDq2wOyuxGz1oms2eiU35w5phVkKuORoqyhz+oCfsj6wEceENGeZImBPEkEhMe32XWhmDHDbpd5s1PRZKV7wFga+WVnWoXgrhai80Ir/mcqSzxkpBvRionJ+aul7NPvw2G3wR2iemy+tui5d1lM4LOaTl4GEzBzDCLdlujXsKV9JHZw+N5RfgZActdn2NkFfgVmWFBobjWEGfXKRQuHDd38rk5guHG1+DFPkYd3lYzt90QN78XinMhpEP4jCgaL4lXHKNdttRQqAJRQ6NM6cYHwyQbNxJOzi3d2Ajn8MN+MESRC9dENg8bq/9BdGK/qGJaTl5ZJCJLoeFUApJVi7YZkcgjlPC8UGudX5S+zF9ckZE1SicRLY1Pk8RaG+VHKd8wN9Te0l2LhZ+8Asok/MUymfIgylAZkT7JBN0V0KPHlFiUz0dX5kwf7FOcaRz3EjneLXgSYDASX84joL23Nv7/ISLvSelCxzzYegPy68/sVEzeQ+IpFGP5HhkdoUriXqGks1HUFdpTTQJMyF7/RWnwPTPhCVsdtCZ0uXmaCzor5EGKBGAF7xu+lkHjls9iO/S7VBrL+BEh05spvsDAFxLsuScQhxf5FS020ci4MubcHgbGoxiNeCaOVhVHTsp5Z8gD/wQLz9KkwK/ulBc4Um6oOoKfjENiR2++1Jnw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB435924.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(4143699003)(10067099003)(11063799006)(6133799003)(22082099003)(18002099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?+gumhISSu2dNl0tTkLwqgKnphuq06CJqQpnrbjFyLhSDaauH07nWibwJXwiG?=
+ =?us-ascii?Q?6DiSW97IMHzjAZs56cBzLgOEXIHfXCBbHANAn06m+zwIffWLOZUiugE31+ZW?=
+ =?us-ascii?Q?/vutR5Y6XanTO4q3qmB5722LcW6sBigeja20iP/3eDz7XWh7BmJ/eAAivJ34?=
+ =?us-ascii?Q?IyXRNa9Vx94P4crlpdKLqasTtP/UbEdXfTml5oS3d5Jft1Qb6REZ9VOOV+7T?=
+ =?us-ascii?Q?bkhGGXqTSqZJ1A1LlqYIpErJunh5BdgHZCBUfUrtUJRg7XhQTSM+JaWPlrpM?=
+ =?us-ascii?Q?gE0CI72BPUBB+QEH4/JemvurVzntUfW1q3w6UDUImgT1BlpzXOVmNg4sMohD?=
+ =?us-ascii?Q?U9s1joV7eflxHT/XaqC26nlviL+xpKmEwFKgtXoE3Ddx1B8F3L5ofW4v5kHw?=
+ =?us-ascii?Q?HRcpiYh9593jGk51AWdEPMacjiG/9Py2FCmE75baI++2L2iAErnwUxB2+iqB?=
+ =?us-ascii?Q?AKUOx/0XQdyFqIuCuQ/kVvlRpdx9mOjOvEWdDebLpFdm818zlrOtEJ/KpIk0?=
+ =?us-ascii?Q?9n8yGBnamIKj+hs1/FAkzYeBb4KuDxsTnj+BN6N2xXne+wcgdovDCljMe96s?=
+ =?us-ascii?Q?Yu7hj2CjuG9ZMkHsPl4mdo0SN2pufckf8jTZryLYNWEhkUopFhBo3VRBQVY8?=
+ =?us-ascii?Q?ssgVi7ztGHM5Cvb8o5/3zlT1atS9UpyXuEMxfUe/p4nHn+N1CKMDIgtXAAGl?=
+ =?us-ascii?Q?qS9Z7JzKLCYkENPLJG6IG6L6BfS94j0Tlm3Xfg6q75W7Vk1dMVpahg5p5Y26?=
+ =?us-ascii?Q?vraa5xmQ2sh+4PH6mRj0rMp1dGDUS7jsVwWw4+7A0iv4Epkaxp3o5iMIwjjM?=
+ =?us-ascii?Q?3GqxcsFNiWnpsJFgHJ4KJfOOuwhO2kNLKiFSLXoYnf4X4lgF6CY5PlxnCKKh?=
+ =?us-ascii?Q?psrD8SSX+vWFPM+ddc5qb6LemCE2fCDj1LVdSosaiqTkx+XaoTWL/KAzGUmB?=
+ =?us-ascii?Q?rQzcrPEslCLy2JkZiTQ2PtPnZ+Vrvpkh0IDoCPuWwSJ+EocjN7LKmaYEVnxH?=
+ =?us-ascii?Q?R7j/rjuEZrlAfUcB/ycMZb+8O2EL4VUDhpjKbuLMAdnKhlgsWninqXyQVxsb?=
+ =?us-ascii?Q?pnIpEJW44CDKLFoNGO9d4WkcLPuqIZUeFTgLD2M1WuZHXL8NiCAdHtGrCLBp?=
+ =?us-ascii?Q?EauMnCz7jN4kVjC38HaU6xJlxL5DaANpBR9F7Ti3DUxuZWA6f8WxsWgJ+PL9?=
+ =?us-ascii?Q?kulSQMuelKoz7HQ3e7m+Xu3hzY3YE2u9QZJjqA3jL8KWuZUYMooBoXs9/KF7?=
+ =?us-ascii?Q?ZaQ6SFnX1HoXY+Vysff5t+DITirg1VQZEYlMvdoFkMaNj3yvYexksADH2NpO?=
+ =?us-ascii?Q?kjEt1w0Y4dBEPcEXXHi04i0EtPnjzBtmK7iSlUV0wVkb1fX9A4UGkqX4Jq0l?=
+ =?us-ascii?Q?8eJBqAnPBAipOg98GUWLsIQddKZc8M79j3ywkxDGZQcCUvhVRdEb+tXfVyB8?=
+ =?us-ascii?Q?dgNYSdDhCYOsayTkctoSM/Kubw7A1zEz3qrwSJ/kRqtsSlnwubhwbFrhKCBJ?=
+ =?us-ascii?Q?YiMKVztuw0ktG0XslMK0nXx/C0is6NrihfozRaT7a3vqVK6zd1LvLXGAZfLP?=
+ =?us-ascii?Q?Ek9xsIPKAUKphxqYuL2qKNIfT3PMEmxO0TE7/6LF2RSoQ9rjov1jK1OEuf1m?=
+ =?us-ascii?Q?9hrMnBfzIU2czz7/qZBpbbdYUMz7bf+ljDDTFALkA3IWDRku7RtkxUbMfOb6?=
+ =?us-ascii?Q?cGjZENOlXU6GG90a8qoFtYNJjbhHprxZHQZvMn6KsOAN2GgX/CGN/pV4rTyx?=
+ =?us-ascii?Q?VzVkhmCbAg=3D=3D?=
+X-Exchange-RoutingPolicyChecked: DnO9BfVTwGWWTMLdlkSB+rEBbFxz/zR5h8ZaxaNYy44lKH8fmGbK9s7OB1jtpJrTKSZVpFu8EZyEllfjaDSvz2mAyrK9DC0DIWmn+s7iqS3U1ZLrfPLA6rWlgX0LtCUF8Qd2x3yvHF0Wh5Zjt8dFqrG2HOZyiLrIlLCUoBo3WvZ/BzjcIlbkfwjjSDE5EZXbVhb2AK9Pk1E1hHVXuIiCfJv7X2CKn5rpuarYRQwgUb6rxZe90tUimr72jlOjVd3iKJR0d7CU8BtcwuoLminpJowxZMh4PwCknTRbtgLRaLV1ejgK8TPdBmNd9LKKLZZ6juiGiIDxZmuZ3/vm9Sp22w==
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa084895-d1e2-4863-7f7b-08df0989aa8b
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB435924.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 07:04:58.7915
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yiBpfJNvxZYwIlgJd6BiiP6xyBSRb3dx0P828XIUB6OaVEWpVX2rO5jGUQaO3addQN6gYKRE8IoYi5kxkgCPJg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSVPR11MB9960
+X-OriginatorOrg: intel.com
 
+On Wed, Jul 29, 2026 at 12:55:23PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Untrusted VMM input `TDCS_QUOTE_MAX_SIZE` is passed directly to the page allocator without bounding and without `__GFP_NOWARN`, which can trigger a kernel warning (`WARN_ON_ONCE`) and panic the guest if `panic_on_warn` is set.
+> 
 
+This was discussed in v2 [1][2]. __GFP_NOWARN doesn't make sense here.
 
-On 02.09.26 20:52, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Permanent struct net_device reference leak on error path in bcm_connect().
-> - [Medium] Cross-namespace data corruption in BCM ANYDEV receive operations.
-> - [Medium] Timer cancellation regression leading to leaked BCM TX timers.
-> - [Medium] Per-namespace CAN receive list statistics leak in isotp_release().
+[1] https://lore.kernel.org/all/741eb8b8b83dd10d39f304133a7625f4232ab793.camel@intel.com/
+[2] https://lore.kernel.org/all/amCv00f5Q6QlztyY@thinkstation/
+
+> Pre-existing issues:
+> - [High] Pre-existing UAF/Use-After-Unload race condition if module initialization fails after registering the misc device.
 > --
-> 
-> commit 510b2a0288244edb9bcc3905c8c1576ae80db01f
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
-> 
-> can: remove CAN filters independent from namespace
-> 
-> This patch removes the namespace equality check in the netdev notifiers for
-> BCM, ISOTP and RAW sockets to ensure CAN filters are removed even when the
-> device's namespace changes. It also introduces tracked netdevice pointers
-> for BCM and converts isotp.c to use the device's namespace during
-> unregistration.
-> 
-> Link: https://lore.kernel.org/linux-can/CEA6A38A-2646-4ADA-95B4-CBAE2F301A8E@doyensec.com/
-> 
->> diff --git a/net/can/bcm.c b/net/can/bcm.c
->> index 3d637a1e0ac1a..42851d37cc9ae 100644
->> --- a/net/can/bcm.c
->> +++ b/net/can/bcm.c
-> [ ... ]
->> @@ -1223,6 +1246,12 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
->>   		op->sk = sk;
->>   		sock_hold(sk);
->>   		op->ifindex = ifindex;
->> +		tx_dev = dev_get_by_index(sock_net(sk), ifindex);
->> +		if (tx_dev) {
->> +			op->tx_dev = tx_dev;
->> +			netdev_hold(tx_dev, &op->tx_dev_tracker, GFP_KERNEL);
->> +			dev_put(tx_dev);
->> +		}
->>   
->>   		/* initialize uninitialized (kzalloc) structure */
->>   		hrtimer_setup(&op->timer, bcm_tx_timeout_handler, CLOCK_MONOTONIC,
-> 
-> [Severity: Medium]
-> If dev_get_by_index() returns NULL here because the interface does not exist
-> yet, op->tx_dev remains NULL but the timer is still armed below.
-> 
-> If the device is created later, bcm_can_tx() dynamically resolves it and
-> succeeds. However, if the device is then unregistered, bcm_notify() skips
-> cancelling the timer because it strictly checks op->tx_dev == dev:
-> 
->      list_for_each_entry(op, &bo->tx_ops, list)
->          if (op->tx_dev == dev) {
->              hrtimer_cancel(&op->timer);
->              ...
->          }
-> 
-> Will this leave the hrtimer permanently leaked and firing indefinitely,
-> repeatedly failing device lookups?
-> 
-> [ ... ]
 
-Yes. v2 adds an error handling for dev_get_by_index() calls for tx_dev 
-in bcm_tx_setup()
+Sashiko reported this in v2 [3]. Added to my todo list.
 
->> @@ -1794,9 +1823,6 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
->>   	struct bcm_op *op;
->>   	int notify_enodev = 0;
->>   
->> -	if (!net_eq(dev_net(dev), sock_net(sk)))
->> -		return;
->> -
->>   	switch (msg) {
->>   
->>   	case NETDEV_UNREGISTER:
-> 
-> [Severity: Medium]
-> Since this namespace check was removed, bcm_notify() now processes events
-> across all network namespaces.
-> 
-> For ANYDEV sockets, the code later in this function handles NETDEV_UNREGISTER
-> like this:
-> 
->      if (!op->ifindex) {
->          spin_lock_bh(&op->bcm_rx_update_lock);
->          if (op->if_detected == dev->ifindex)
->              op->if_detected = 0;
->          spin_unlock_bh(&op->bcm_rx_update_lock);
->      }
-> 
-> Because ifindexes are only unique per-namespace, deleting a CAN interface
-> in one namespace triggers this globally.
-> 
-> Can this cause an ifindex collision that spuriously clears the if_detected
-> state of an ANYDEV socket operating in a completely different namespace,
-> causing it to drop active frame assembly or mismanage timers?
-> 
-> [ ... ]
+[3] https://lore.kernel.org/all/20260727101350.GB482062@pedri/
 
-Yes. v2 re-introduces the net_eq() check for ANYDEV case handling of 
-op->ifdetected
-
->> @@ -2031,11 +2066,14 @@ static int bcm_connect(struct socket *sock, struct sockaddr_unsized *uaddr, int
->>   		}
->>   
->>   		bo->ifindex = dev->ifindex;
->> +		bo->dev = dev;
->> +		netdev_hold(dev, &bo->dev_tracker, GFP_KERNEL);
->>   		dev_put(dev);
->>   
->>   	} else {
->>   		/* no interface reference for ifindex = 0 ('any' CAN device) */
->>   		bo->ifindex = 0;
->> +		bo->dev = NULL;
->>   	}
 > 
-> [Severity: High]
-> Does this error path leak the acquired net_device reference?
-> 
-> If the subsequent proc_create_net_single() allocation fails, the function
-> jumps to the fail label and returns without calling netdev_put():
-> 
->      if (!bo->bcm_proc_read) {
->          ret = -ENOMEM;
->          goto fail;
->      }
-> 
-> The cleanup also skips setting WRITE_ONCE(bo->bound, 1). When the socket
-> is later closed, bcm_release() skips the release because bo->bound is 0:
-> 
->      if (bo->bound) {
->          WRITE_ONCE(bo->bound, 0);
->          bo->ifindex = 0;
->          if (bo->dev) {
->              netdev_put(bo->dev, &bo->dev_tracker);
->              bo->dev = NULL;
->          }
->      }
-> 
-> Could this permanently leak the net_device and tracker, preventing the
-> interface from ever being cleanly unregistered?
-> 
-
-Yes. v2 drops bo->dev reference tracking when procfs initialization fails
-
->> diff --git a/net/can/isotp.c b/net/can/isotp.c
->> index 155530aedce2e..0835a4758a72f 100644
->> --- a/net/can/isotp.c
->> +++ b/net/can/isotp.c
->> @@ -1492,11 +1492,11 @@ static int isotp_release(struct socket *sock)
->>   	 */
->>   	if (so->bound && so->dev) {
->>   		if (isotp_register_rxid(so))
->> -			can_rx_unregister(net, so->dev, so->rxid,
->> +			can_rx_unregister(dev_net(so->dev), so->dev, so->rxid,
->>   					  SINGLE_MASK(so->rxid),
->>   					  isotp_rcv, sk);
->>   
->> -		can_rx_unregister(net, so->dev, so->txid,
->> +		can_rx_unregister(dev_net(so->dev), so->dev, so->txid,
->>   				  SINGLE_MASK(so->txid),
->>   				  isotp_rcv_echo, sk);
->>   		netdev_put(so->dev, &so->dev_tracker);
-> 
-> [Severity: Medium]
-> Does this leak the per-namespace receive list statistics in the socket's
-> original namespace?
-> 
-> If the device was moved to a different network namespace, this now passes
-> the new namespace (dev_net(so->dev)) to can_rx_unregister().
-> 
-> When can_rx_unregister() runs, it decrements the statistic in the
-> provided namespace:
-> 
->      if (rcv_lists_stats->rcv_entries > 0)
->          rcv_lists_stats->rcv_entries--;
-> 
-> Because can_rx_register() incremented the counter in the socket's original
-> namespace (sock_net(sk)), does decrementing it in the new namespace permanently
-> leak the count in the old one, while inappropriately decrementing the new one?
-> 
-
-Yes. A cosmetic problem that can be fixed in a follow-up af_can.c patch. 
-Not relevant for this stable fix.
-
-Oliver
