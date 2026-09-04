@@ -1,131 +1,67 @@
-Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
+Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7F14E13FF
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 17:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0563EA97B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 17:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788541841; cv=none; b=ZJWOGGMF/08CWHjRbKlFw/hHNLfhMoHz663eMdcOdcAK/5qSqe6ScKHzBPpOhNh5v9jePwkuDqR1xvlrehJr5YXra8EGiO3dj4KtVb9y+Q/Kj5XEsSaJ4jjDnRceYgfzHNtXm0AVm5oHa2PdAroPV0tvisa0/urcRvIeHcAY5+w=
+	t=1788541871; cv=none; b=mxScTqsuUSKoTNwehYnCDoEQwP5RXyqAejjmM2YjCaYbEUpbC9xhllFdeuGxZlVd4F8L5AiU2x6kS2b4Zx69iyq53Tz5B01SZzDiEIkfZSm7LvbGN+/GmiqonTuskoRCGcgMbUbaotuOrw/UmwFbVIbUd/5IPOcKs5W+qPMkLNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788541841; c=relaxed/simple;
-	bh=v2ZIuLadojQCv2clElEuvBzhemHUy2TffLhXfxezxhw=;
-	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
-	 References:In-Reply-To; b=eeMTUu/R3eOPyLwjpdGD+O8dGQUoBLq68WBmc6OIE9LijOs7eqQ2JH+RU87qFbTAHC4c+OOxZRPN2b7g5TzYfAtqimPFQMX7NKCZk8GE5lDQg5soWJG1Y82HD5153HHmmn/YQ+erZ8yBxqmhbPqXvOQUL4RJla2QtgZWti3BcQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=XfDHScH5; arc=none smtp.client-ip=162.62.58.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1788541871; c=relaxed/simple;
+	bh=h7KESD+MUwYdSRnvoHo8LsXENEpEGhm0QVjHFrqZ9/k=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=X8gFqDfhZ/e7x/uptuorWSTeGigyLrjAReWpc4o3nD7UpF5DaKojdRHqvJUS29NeBCXewG8x2xjyaMXRC2MUB1QV2L0+or1KIGTWVbSEg0lJNgquevuOdILDjPkwKd1w1jgB4zUKNVf5K5grJEAnJn4HKAveO4uAOiEPAF05PN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=OXPcQPs8; arc=none smtp.client-ip=216.40.44.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="XfDHScH5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1788541831; bh=v2ZIuLadojQCv2clElEuvBzhemHUy2TffLhXfxezxhw=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=XfDHScH5hejGHE0tSQGBXJOBzRRgbfaAeAUFG5xkjkvJTuS4Q2WKFotmWnRGA0CIZ
-	 6FwoP9HbOy540zltEWaOKjfA0hc1cQ0MvnGHSLnvhyv/AHehmpo8ry9SaSqP7hmGg/
-	 uieY2c2LCzkiRuTW1J5MbzaOdFDxSGCBLiZppUKc=
-X-QQ-XMRINFO: OWPUhxQsoeAVg+DC8hsPr6eMCGu/53YFsg==
-X-QQ-XMAILINFO: Nc4sSaQs5Lhj3BN28SyFqWgiPRPxiRgFl7Vjl6rBR4cXklNgHO8c8tPoXkF3aC
-	 jb1V+1NFGwB2Hfjav2ZsGxHhQng0b7TtdcdqhwWSZtzpDdec0aoA7sJpvT19E/4aEJREGHpLHMUJs
-	 ekODkf7dqGNCC8AbECGcRjg3JfCYWf3Lv2UWvHfUDo2wGY52/+vqKR/OquhtSbsoFRC1OJ7/K33YI
-	 u150JpBHAsx7HvC8Gvmj0s4fROtM6nnYweHe6eImPOrbNRFmdLA7l8lCgJDqmo5vSlJKe4uoVbDCW
-	 XUFohUkWothc0QrtPSo9iOWYzd6uilYZSyRcoeaAoL0NLdbPknhEqpzNvh8RQFVJX5k4MZlfARLXo
-	 oca2pdt5bJV9Nw2VZO+GGladIuv4mYLrgYM/WIYJq2Nf85RXxqsLBkEM4NDGR1AZbilpVP+uKnPV+
-	 uYD6RUkzmvI8S/LF0xpK2yzlW6LPlToH6w7jbFfupMeXkarrD/Ihn1F0fDchlutDbbpT4V4ZSybcP
-	 2KtyvJIEK+Guz1Ae36Iu/7IIwOwMH5IEQJVBl/Ltt4bzLf0QwhX2ky8A/nwKtMwuQyvmUzJvVNNLz
-	 hbFiO2wYZhOsnCxfQSvyq9s5w+pHCTj4jioHurcYpoM/nLdtrJO0Gi+D89iHD0kfiwXHrUXJEtII8
-	 8UAZNUFBFOpb4PChcsIgTPil3loetycKmQAKpskelecZ5IARcjXwq9Y5SNFWv53QQiS+qTMH597WF
-	 r0/vqw0bRmqDr/HjDL5/gSb5jqcW4l/mEwaj1PWNfhGqDIlO25gb03xcwn1wiHUym/WMZsixFyRIm
-	 TVp46TZv8eAISBu6BQ5rFF4EwLS6tiUUoeWXISQDLLX+2Oc5NSEEsToQM1wJ56ph1wO2MaQ76udFJ
-	 4BAZaV/cT6XLcnTwBM00Ti8CuOrabjG3ySbtRHnFfekov9yN64/IMW38GWzn1jRi8w53AwE1AwGJj
-	 +kHZzVBSotD1g25EL6SJJJE41VGDBeRQO4deQZu2c37etyioHAx/gYmKG31SRH7IDEv5gUdNFXhBy
-	 VD6kPyJeO7/m+EjGUwiIXfMf0M5pzUvATuWaFcuuOkRfCfZmZlwd42l2KyFO/NqVG9sc3CoJlvt4x
-	 qAQLMiR/OJAntuqwYrrwbJsa
-From: "=?utf-8?B?emh1bGluZzA4MDU=?=" <zhuling0805@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>
-Subject: Re: [PATCH net] can: netlink: fix IFLA_CAN_BITRATE_MAX attribute sizing
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="OXPcQPs8"
+Received: from omf09.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id 196A540176;
+	Fri,  4 Sep 2026 17:11:08 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf09.hostedemail.com (Postfix) with ESMTPA id 4F76920028;
+	Fri,  4 Sep 2026 17:11:06 +0000 (UTC)
+Date: Fri, 4 Sep 2026 13:12:05 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Vincent Donnefort"
+ <vdonnefort@google.com>, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 1/4] ring-buffer: Allow splice reads on static
+ buffers
+Message-ID: <20260904131149.7f3bdc14@gandalf.local.home>
+In-Reply-To: <20260904170107.812081F00A3D@smtp.kernel.org>
+References: <20260904164450.1345852-1-vdonnefort@google.com>
+	<20260904164450.1345852-2-vdonnefort@google.com>
+	<20260904170107.812081F00A3D@smtp.kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Sat, 5 Sep 2026 01:10:30 +0800
-X-Priority: 3
-Message-ID: <tencent_61A98BB9B7350D49538D9925C70CA9C89007@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <tencent_D1C873B86B0E92011A264B0E196B911D5308@qq.com>
-	<20260904162848.5831E1F00A3D@smtp.kernel.org>
-In-Reply-To: <20260904162848.5831E1F00A3D@smtp.kernel.org>
-X-QQ-mid: xmsezb58-0t1788541830t0ssvhqe3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: 1kj64dtw898eun3mpnr7deh1uxbnwhci
+X-Rspamd-Server: rspamout04
+X-Rspamd-Queue-Id: 4F76920028
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+Q2PEniydE/30cTomjBJ+KkSgvc3FBMZI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=5oWjO0AVVicfZbofKTWU25t3/Qyq1vNz9y5syBN9cJ8=; b=OXPcQPs8ysPXC0/Pel9gW9NyWVzk8KxERMdX5XmRAhamudN+TrYod6rsWPDOyRAg69VqlnMy7mqkqoBUhbUKfEdgqio3JQnn4EqmJOPZ00yQrHgKmBM9tp1zGE4cw9ImwDyT4rK9p8j+xuTetFYTnJYhwejwrGKxCQoBe2I87FU=
+X-HE-Tag: 1788541866-532009
+X-HE-Meta: U2FsdGVkX19XNqIrRVZCtgdFal86QMTqHYpstR7JRISHqAoStryUXQeRPmcMON+VpR7g8DUVbeCdsJsFwj1vmfMm9/4VS4zRL4s8OePyfICvI0fXVm9Ulu+h7RA/dnfQ/gXwsela74o4aM49DirbXFWNRRkmzthBNO/OxE8KmpUr3cJn184vFdDtJA15hCvbLe17utUTwT4LragGxwNExV4UxLOpntUTUkbEsJsLXA+xKGRoEhgpcpnNSjXNikJAyJFjCAm72wVhdZsNurzoHWvKmvn4K7Y4uw+Kq/2BZZPSMSZAGCNlRZT8gdiKEyaZzYWoyCZfE6OW6AjgagAzQbppd4R6vUwX
 
-VGhhbmtzIGZvciB0aGUgcmV2aWV3LgoKWWVzLCB0aGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlz
-c3VlIGluZGVwZW5kZW50IG9mIHRoZQpJRkxBX0NBTl9CSVRSQVRFX01BWCBzaXppbmcgZml4
-LiBJdCBoYXMgYWxyZWFkeSBiZWVuIGFkZHJlc3NlZCBpbiB0aGUKc2VwYXJhdGUgcGF0Y2g6
-CgpbUEFUQ0ggbmV0XSBjYW46IG5ldGxpbms6IGZpeCBDQU4gWEwgUFdNIGF0dHJpYnV0ZSBz
-aXppbmcKCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC90ZW5jZW50XzlBNTI1RTA2NTZB
-NEY3RDRDQTlDRkExQUIxQTRCRkM2RDcwNkBxcS5jb20vCgpObyBjaGFuZ2VzIGFyZSBuZWVk
-ZWQgZm9yIHRoaXMgcGF0Y2guCgpSZWdhcmRzLApaaHUKCgoK5Y6f5aeL6YKu5Lu2CuWPkeS7
-tuS6uu+8mnNhc2hpa28tYm90IDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPgrlj5Hku7bml7bp
-l7TvvJoyMDI25bm0OeaciDXml6UgMDA6MjgK5pS25Lu25Lq677yaWmh1IExpbmcgPHpodWxp
-bmcwODA1QHFxLmNvbT4K5oqE6YCB77yaT2xpdmVyIEhhcnRrb3BwIDxzb2NrZXRjYW5AaGFy
-dGtvcHAubmV0PiwgVmluY2VudCBNYWlsaG9sIDxtYWlsaG9sQGtlcm5lbC5vcmc+LCBNYXJj
-IEtsZWluZS1CdWRkZSA8bWtsQHBlbmd1dHJvbml4LmRlPiwgbGludXgtY2FuIDxsaW51eC1j
-YW5Admdlci5rZXJuZWwub3JnPiwgT2xla3NpaiBSZW1wZWwgPG8ucmVtcGVsQHBlbmd1dHJv
-bml4LmRlPgrkuLvpopjvvJpSZTogW1BBVENIIG5ldF0gY2FuOiBuZXRsaW5rOiBmaXggSUZM
-QV9DQU5fQklUUkFURV9NQVggYXR0cmlidXRlIHNpemluZwoKClRoYW5rwqB5b3XCoGZvcsKg
-eW91csKgY29udHJpYnV0aW9uIcKgU2FzaGlrb8KgQUnCoHJldmlld8KgZm91bmTCoDHCoHBv
-dGVudGlhbMKgaXNzdWUocynCoHRvwqBjb25zaWRlcjoKClByZS1leGlzdGluZ8KgaXNzdWVz
-OgotwqBbSGlnaF3CoFByZS1leGlzdGluZ8KgbmV0bGlua8KgcGF5bG9hZMKgc2l6ZcKgdW5k
-ZXJlc3RpbWF0aW9uwqBpbsKgYGNhbl9wd21fZ2V0X3NpemUoKWDCoHdoZW7CoFBXTcKgY2Fw
-YWJpbGl0aWVzwqBleGlzdMKgYnV0wqBgQ0FOX0NUUkxNT0RFX1hMX1RNU2DCoGlzwqBkaXNh
-YmxlZCzCoGxlYWRpbmfCoHRvwqBgLUVNU0dTSVpFYMKgd2hlbsKgZmlsbGluZ8KgdGhlwqBy
-ZXNwb25zZS4KLS0KCmNvbW1pdMKgOWEzY2Y3ZjY2ZDZlYTdhOWQ0YWJhNDhmZjdjNTM3NmQ3
-MmRiN2ZlMwpBdXRob3I6wqBaaHXCoExpbmfCoDx6aHVsaW5nMDgwNUBxcS5jb20+CgpjYW46
-wqBuZXRsaW5rOsKgZml4wqBJRkxBX0NBTl9CSVRSQVRFX01BWMKgYXR0cmlidXRlwqBzaXpp
-bmcKClRoaXPCoGNvbW1pdMKgZml4ZXPCoGFuwqBpc3N1ZcKgaW7CoGNhbl9nZXRfc2l6ZSgp
-wqB3aGVyZcKgdGhlwqBzaXplwqBmb3IKSUZMQV9DQU5fQklUUkFURV9NQVjCoHdhc8KgbWlz
-c2luZ8KgdGhlwqBuZXRsaW5rwqBhdHRyaWJ1dGXCoGhlYWRlcsKgb3ZlcmhlYWQuwqBCeQp1
-c2luZ8KgbmxhX3RvdGFsX3NpemUoKSzCoGl0wqBwcmV2ZW50c8KgLUVNU0dTSVpFwqBlcnJv
-cnPCoHdoZW7CoHRoZcKgc2tiwqBoYXPCoG5vwqBzbGFjawpsZWZ0LgoKPsKgZGlmZsKgLS1n
-aXTCoGEvZHJpdmVycy9uZXQvY2FuL2Rldi9uZXRsaW5rLmPCoGIvZHJpdmVycy9uZXQvY2Fu
-L2Rldi9uZXRsaW5rLmMKPsKgaW5kZXjCoDc2NmQ0NTU5NTBmNTUuLmJhMjZjNjFhODJjMmbC
-oDEwMDY0NAo+wqAtLS3CoGEvZHJpdmVycy9uZXQvY2FuL2Rldi9uZXRsaW5rLmMKPsKgKysr
-wqBiL2RyaXZlcnMvbmV0L2Nhbi9kZXYvbmV0bGluay5jCj7CoEBAwqAtODIyLDfCoCs4MjIs
-N8KgQEDCoHN0YXRpY8Kgc2l6ZV90wqBjYW5fZ2V0X3NpemUoY29uc3TCoHN0cnVjdMKgbmV0
-X2RldmljZcKgKmRldikKPsKgwqAgaWbCoChwcml2LT5iaXRyYXRlX2NvbnN0KSAvKsKgSUZM
-QV9DQU5fQklUUkFURV9DT05TVMKgKi8KPsKgwqAgc2l6ZcKgKz3CoG5sYV90b3RhbF9zaXpl
-KHNpemVvZigqcHJpdi0+Yml0cmF0ZV9jb25zdCnCoCoKPsKgwqAgwqDCoMKgwqDCoMKgwqBw
-cml2LT5iaXRyYXRlX2NvbnN0X2NudCk7Cj7CoC0gc2l6ZcKgKz3CoHNpemVvZihwcml2LT5i
-aXRyYXRlX21heCk7IC8qwqBJRkxBX0NBTl9CSVRSQVRFX01BWMKgKi8KPsKgKyBzaXplwqAr
-PcKgbmxhX3RvdGFsX3NpemUoc2l6ZW9mKHByaXYtPmJpdHJhdGVfbWF4KSk7IC8qwqBJRkxB
-X0NBTl9CSVRSQVRFX01BWMKgKi8KPsKgwqAgc2l6ZcKgKz3CoGNhbl9jdHJsbW9kZV9leHRf
-Z2V0X3NpemUoKTsgLyrCoElGTEFfQ0FOX0NUUkxNT0RFX0VYVMKgKi8KPsKgwqAKPsKgwqAg
-c2l6ZcKgKz3CoGNhbl9kYXRhX2JpdHRpbWluZ19nZXRfc2l6ZSgmcHJpdi0+ZmQsCgpbU2V2
-ZXJpdHk6wqBIaWdoXQpUaGlzwqBpc24ndMKgYcKgYnVnwqBpbnRyb2R1Y2VkwqBiecKgdGhp
-c8KgcGF0Y2gswqBidXTCoHdoaWxlwqBsb29raW5nwqBhdApjYW5fZ2V0X3NpemUoKSzCoEnC
-oG5vdGljZWTCoGFub3RoZXLCoHBvdGVudGlhbMKgc2l6ZcKgdW5kZXJlc3RpbWF0aW9uwqBq
-dXN0wqBiZWxvdwp0aGlzwqBkaWZmwqBpbsKgY2FuX3B3bV9nZXRfc2l6ZSgpOgoKZHJpdmVy
-cy9uZXQvY2FuL2Rldi9uZXRsaW5rLmM6Y2FuX3B3bV9nZXRfc2l6ZSgpwqB7CmlmwqAoIXB3
-bV9jb25zdMKgfHzCoCFwd21fb24pCnJldHVybsKgMDsKLi4uCn0KCklmwqBhwqBDQU7CoGlu
-dGVyZmFjZcKgaGFzwqBoYXJkd2FyZcKgUFdNwqBzdXBwb3J0wqAocHdtX2NvbnN0wqBpc8Kg
-bm9uLU5VTEwpwqBidXTCoFBXTcKgaXMKY3VycmVudGx5wqBkaXNhYmxlZMKgKHB3bV9vbsKg
-aXPCoGZhbHNlKSzCoGNhbl9wd21fZ2V0X3NpemUoKcKgcmV0dXJuc8KgMC4KCkhvd2V2ZXIs
-wqBjYW5fcHdtX2ZpbGxfaW5mbygpwqBvbmx5wqBjaGVja3PCoHB3bV9jb25zdDoKCmRyaXZl
-cnMvbmV0L2Nhbi9kZXYvbmV0bGluay5jOmNhbl9wd21fZmlsbF9pbmZvKCnCoHsKaWbCoCgh
-cHdtX2NvbnN0KQpyZXR1cm7CoDA7CgpuZXN0wqA9wqBubGFfbmVzdF9zdGFydChza2IswqBJ
-RkxBX0NBTl9YTF9QV00pOwouLi4KfQoKQ291bGTCoHRoaXPCoG1pc21hdGNowqBjYXVzZcKg
-Y2FuX3B3bV9maWxsX2luZm8oKcKgdG/CoHdyaXRlwqA1MsKgYnl0ZXPCoHRoYXTCoHdlcmXC
-oG5vdAphY2NvdW50ZWTCoGZvcsKgYnnCoGNhbl9nZXRfc2l6ZSgpwqB3aGVuwqBDQU5fQ1RS
-TE1PREVfWExfVE1TwqBpc8KgZGlzYWJsZWQ/CgpJZsKgc28swqBjb3VsZMKgdGhpc8KgYWxz
-b8Kgb3ZlcmZsb3fCoHRoZcKgc2tiwqBhbmTCoGNhdXNlwqBubGFfcHV0KCnCoHRvwqBmYWls
-wqB3aXRoCi1FTVNHU0laRSzCoGJyZWFraW5nwqBpbnRlcmZhY2XCoG5vdGlmaWNhdGlvbnPC
-oGFuZMKgcXVlcmllc8KgbGlrZcKgJ2lwwqBsaW5rwqBzaG93Jwpmb3LCoHN1Y2jCoGRldmlj
-ZXM/CgotLcKgClNhc2hpa2/CoEFJwqByZXZpZXfCoMK3wqBodHRwczovL3Nhc2hpa28uZGV2
-LyMvcGF0Y2hzZXQvdGVuY2VudF9EMUM4NzNCODZCMEU5MjAxMUEyNjRCMEUxOTZCOTExRDUz
-MDhAcXEuY29tP3BhcnQ9MQoK
+On Fri, 04 Sep 2026 17:01:07 +0000
+sashiko-bot@kernel.org wrote:
 
+> If a malicious remote writer (such as an untrusted guest VM) modifies the
+> length fields in shared memory between the initial check and the memcpy(),
+> can event_size become arbitrarily large?
+> 
+> Could this bypass the bounds check and cause an out-of-bounds read from
+> rpage->data and a massive out-of-bounds write to dpage->data?
+
+I don't think Sashiko knows that a remote writer isn't a guest. Well that's
+not the normal case. But the trusted hypervisor that we control.
+
+-- Steve
