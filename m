@@ -1,122 +1,192 @@
-Received: from mta1.migadu.com (out-82.mta1.migadu.com [95.215.58.82])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4126B4457B7
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 09:33:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.82
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788514394; cv=none; b=ZX9X5jGdUy9LzfkdHETQjSfbMUiuZEn+q4OAR9XnVVIvb/Mz7jAHJLxHpI6DLG4xu6mMW+HGV4npIk8jBysNGs04aqPUWKxnY2yNXTK/lTc0vIYKqW7m6SpPOqvbfbJ8vUKWFs5G3sji2ujM2X6LSEOWjy2hKGGr10fqicBVKEs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788514394; c=relaxed/simple;
-	bh=9ZvD/FschNKJZxanPexYeygKVAqpXY2hL4PqGsRH00A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FWlm9qWk0dtMmTbOrz7u3X2h+uQ3gHQwMVDqGbNcayimIMzOr4vuQvy1iuxuRWrx5SouhuYVCb+7LHNVa0iQmBSzfLehFHngcqRkRT+Efpv4ckvqGkwPr4jrFsX6XuZy61Jc5zEJtIhpRorRnDtI1kIuiKt/INVzeb8KLp0Dtvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nhqX9dgU; arc=none smtp.client-ip=95.215.58.82
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD7244CAFB
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 09:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788514594; cv=pass; b=iVFNfSGdv/+CZEKN5Dn1wHPoAZZqcK/btrDkcLIEYfR9qUvr9PAUjcYgqOyke2Gkfr1OR2kR8J4L0Ylcrwa1XsLbtBzC2dJrHaOin+fWkGtoGQ02IXdyBXDqgZHFZnu7aGVJNN4QIuhLEeUyKmDXDYC+w6P+OiokX1Y/Ng5cmn0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788514594; c=relaxed/simple;
+	bh=p64fzSUlfym1iQyNdY45ANhgP8w9MUHklALvtWS2kbM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iy18gnDG1zk2sYzpaoFagvRZZ2VRmRQTODzr+jo4jGOoV9sgJKA6YZSa2BrgR0bUjEbm0XLo+l6/YZmmXhFabhbeFxAYnrICVk4qivp51lBeeQK7/7Ve97CxDVXmHQcRGdN5HmGiASWmdn67sE5BS12cxULw1KmDkvARdCR/8HI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai; spf=pass smtp.mailfrom=nebusec.ai; dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b=o5bZJQ5D; arc=pass smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nebusec.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nhqX9dgU"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=9ZvD/FschNKJZxanPexYeygKVAqpXY2hL4PqGsRH00A=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788514390; v=1; x=1789119190;
- b=nhqX9dgUIVKin3UnbjXg0VreHnSDgadq7uQ/cxBdKS7A3MQs1UBFfGNm5tykczeL9oGYYalB
- udyhXGOz7K5IWLeHPewe+zNo1sKasmhRFSIrcaDeQudpc9gxKeytyHrgfMClGAGtN94MRTgY7Wm
- GegSJOKGwifiErvatkr88cdc=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 843e076f61d57e67;
-	Fri, 04 Sep 2026 09:33:10 +0000
-X-Mizu-Trace-ID: 843e076f61d57e67
-X-Migadu-Flow: FLOW_OUT
-Date: Fri, 4 Sep 2026 17:33:03 +0800
-From: Hangbin Liu <hangbin.liu@linux.dev>
-To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-Subject: Re: [PATCH mptcp-next v3 2/2] selftests: mptcp: convert iptables to
- nftables for mptcp_join.sh
-Message-ID: <apqQT8TAR4gRvl1F@fedora>
-References: <20260904-mptcp_nft-v3-0-4abedaf00bf9@kylinos.cn>
- <20260904-mptcp_nft-v3-2-4abedaf00bf9@kylinos.cn>
- <20260904074206.C41951F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b="o5bZJQ5D"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc1cf287ef8so875885a12.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 02:36:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788514592; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KhKcAGuYoYIXIdSfDgpWEkYDbzVUJCyGXTEGC4bdj3UMXx1MEGTyBxwoPicwY1HIZJ
+         O0jLBmJH4r1eOdJ3Qjs9PerFylPvDDEfijW2ETarMH3G/rjfiuJg0IKhKDDywJeZfhvs
+         nH40ZuikPCgCk4SdTPyAGz6rMGzdDSo5cIbpPbf3FH0ffKsryMAClalaRivEya3RaET0
+         LlNtxc2sPVDQuT2Ote60wgSJ6NfZ8lcKxastLTGdLilZWZm2SSQb+1Dku6TaA7kOATJN
+         bOWNcyeK91BgsEt/GBDaY9og47QaQouJqaqkKl+gGucP/3heMjIKEPhwdUiPmQ80mH4D
+         BNdg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
+        fh=CB5UpkY+O88awVVzOZ6u9gwGodJr4E7oL8gDALqWdIs=;
+        b=c+ltdXXSsFHpL3PV8yXd7z7EDqkAzje5joyyiNZAV48yrfa5fy+zqNFuIQ1hL2WW89
+         IhXnm2SuQn5wmiHNu8+Hb1qpLJO6y5+EYTT9ojTSK/tMUkKwpdNXPDalI4BUykVsn2iP
+         zlligm+F/hBddpKtnKdKOVmDC8v/h4YtyiZABA1grKFDHrYahtq7BgGVwMwBdZJx4ul1
+         zbU4st3seA+C4f+OldrK2F2rIsTvv2R+iLVZ4LuW53ghw3xBwrNV8MVwg0t0b575BbYe
+         kNdt54NOQcvU2u20Lb9h/gY4pUudHGrPNlrvw5sa1gn9HXfL0f4pZsl0gbZj4z4mMd+P
+         1XBg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nebusec.ai; s=google; t=1788514592; x=1789119392; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
+        b=o5bZJQ5DDl9bJt17BqGa1a8QYOQAX78fidOJdQQ+o+IY/mwCQuTRGkczFqlewsk8vq
+         PmJkd4e51H1SO69Ru2u78uiMEQ+hh+rEcfkCLGXVaUOhw3nZU5OOrZCf5xLFGAlmPh+J
+         NpPzrd8sl3qa5tz+1IjMlwSgUolDWCvvotdsW5O/BxTm6IGtFL04+Ub1G++QVkeS/psX
+         Y73g3Moe77P4Q4g/DGzTTRiR3hWEcw84UST0wyBqIYYE/2af5ONIl6U2NrRKHV8Q8WWe
+         8iDQRmgPCZa7tZbwSNa5eMw4hVMXPd34VLlpjhwsQrWad/c2fKqwa2XCN8H1sr5fVeBT
+         adeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788514592; x=1789119392;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
+        b=lLv9qZyz3vY6jr9iYpJfe1lmWOyO/RroSDPxmiWrT6yXivg1FZTRxyb2A2z8S33mIf
+         N02fm40W3TuTiYQOjYKoIUyFz4muZTs/PHVh3uVGaTocdWEbyIl/DEPPqJmw1VzgloCJ
+         tCAVTPI1RL8ttnsfGAC0HFjBwZLQ9o4/cpuJCfsanRmRJ0a5TxxEOWf26MkF4O2b4k9J
+         q0GjRsvRspUFyC3VadZiIXduwyv0qm8qFOVlrg/nD/AujkQpjTaLCGZrr4LaoSUaTEK7
+         g8A8itIBs3FaIpuPaScxb/FW5ZV+yrwrbEzIC8w55aaztX9c8cVfKrrTf6SUcKwWxAkW
+         vpOQ==
+X-Gm-Message-State: AFuF++mslKCx/2vVH0Nz3lUIFM9S6YEBxBVnSkqS0yQPgPYSzNlCoBJS
+	Qn3ecLUY9paXqXYNEd2HU313J2m+hmh12rjj+EBxQtK+SiJT6AcUHyK2LXQsM9ypCd2cV8150I8
+	pgt27rJM2EVK45K77elKELH47h1qLFAhIyQ5DNLOLUPj2GYJofAP4SOm+g4w=
+X-Gm-Gg: AYBFou3ENV6auNiZz62FtuefCceWcGoNQCziuqq/jp9hSJbXy7+T8Izuuj5270ecXjP
+	pXsXJIh94vso8/TtlAMbZ0Sup0IQbAKpQKlE+/sSv+cwjh+FeV5Zpsxv2uFtLOPKy652LVk0cJI
+	YavbwAOpOOe4sxsKbA2BLn3y+uYYaqM90zKUIoXWW0MQdl9ccYcRU5krVuObL6MEFIK3zlCvIl5
+	j4dyBfPf2aQclKqoIs/XxgnZc8z5p3riqpflmGwcKEW6cXmd2qhB7At0jg8HGdtVwkSQfabBD+o
+	tDRQQ4t6KyFBIqADNmd1zEYq4WnxW8mY/qEbRj2bN8Lb
+X-Received: by 2002:a05:6a20:1441:b0:3c3:9070:96b3 with SMTP id
+ adf61e73a8af0-3da39cffff0mr7836205637.3.1788514591664; Fri, 04 Sep 2026
+ 02:36:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904074206.C41951F00A3D@smtp.kernel.org>
+References: <cover.1788202924.git.caoruide123@gmail.com> <93dafd2c918b42d635b03e7d3d83f6f2cff49697.1788202924.git.caoruide123@gmail.com>
+ <20260902103402.9C9AE1F000E9@smtp.kernel.org>
+In-Reply-To: <20260902103402.9C9AE1F000E9@smtp.kernel.org>
+From: Wei Ren <weir@nebusec.ai>
+Date: Fri, 4 Sep 2026 17:36:18 +0800
+X-Gm-Features: AcwNN1UEJHE5kxwtQIpvfaZR87xRhOqCc4ys3tc5g9vbMyYcRxOzksYYxTo17aA
+Message-ID: <CADfOeh7YKUaZY8UVxtrw_YsASmuxJ3JuSq3nk_X702fAidW01Q@mail.gmail.com>
+Subject: Re: [PATCH net v5 2/2] mptcp: fix MP_CAPABLE token migration when
+ cloning reqsk
+To: sashiko-reviews@lists.linux.dev
+Cc: mptcp@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 04, 2026 at 07:42:06AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing 'add' keyword in nftables configuration script causes syntax error, silently skipping tests.
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=882=E6=97=A5=E5=91=
+=A8=E4=B8=89 18:34=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Ignoring the return value of mptcp_init_sched() in mptcp_sk_=
+clone_init() causes a module refcount underflow.
 > --
-> 
-> commit 45eaf6e2e654e036380de79d25fbc989c2055da7
-> Author: Hangbin Liu <liuhangbin@kylinos.cn>
-> 
-> selftests: mptcp: convert iptables to nftables for mptcp_join.sh
-> 
-> This commit replaces the iptables/ip6tables setup with nftables in the
-> mptcp_join.sh selftest. It introduces a new init_nftables function to setup
-> the nft tables using a heredoc rather than configuring them inline.
-> 
-> > diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-> > index 18ce7136a2b0e..835cb92cab1a4 100755
-> > --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-> > +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-> 
+>
+> commit 18a63fbca98d3e69ad5d14656be7de91ee0af91e
+> Author: Ruide Cao <caoruide123@gmail.com>
+>
+> mptcp: fix MP_CAPABLE token migration when cloning reqsk
+>
+> The patch fixes MP_CAPABLE token migration during TCP request migration b=
+y
+> moving token request ownership from the original request to the clone
+> under the token bucket lock. It also safely destroys the provisional MPTC=
+P
+> socket if a passive MP_CAPABLE socket cannot claim the token.
+>
+> Closes: https://sashiko.dev/#/patchset/86e2514b533bf4d55d4aa2fdbf1404022e=
+8c9430.1776149210.git.caoruide123%40gmail.com
+>
+> > diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+> > index e1f08f71cdb16..30067f2a7ca8f 100644
+> > --- a/net/mptcp/protocol.c
+> > +++ b/net/mptcp/protocol.c
+>
 > [ ... ]
-> 
-> > @@ -184,6 +147,28 @@ init_shapers()
-> >  	done
-> >  }
-> >  
-> > +init_nftables()
-> > +{
-> > +	nft_handle=""
+>
+> > @@ -3764,6 +3777,14 @@ struct sock *mptcp_sk_clone_init(const struct so=
+ck *sk,
+> >       mptcp_rcv_space_init(msk, ssk);
+> >       msk->rcvq_space.time =3D mptcp_stamp();
+> >
+> > +     if (!mptcp_token_accept(subflow_req, msk)) {
+> > +             list_del_init(&subflow->node);
+> > +             WRITE_ONCE(msk->first, NULL);
+> > +             sock_put(ssk);
+> > +             mptcp_sk_clone_destroy(nsk);
+>
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but could this error path expo=
+se a
+> module refcount underflow?
+>
+> Earlier in mptcp_sk_clone_init(), the code calls mptcp_init_sched() witho=
+ut
+> checking its return value:
+>
+>         msk->setsockopt_seq =3D mptcp_sk(sk)->setsockopt_seq;
+>         mptcp_init_sched(msk, mptcp_sk(sk)->sched);
+>
+> Because sk_clone_lock() byte-copies the parent's msk->sched pointer, if t=
+he
+> BPF scheduler module is concurrently unloading, bpf_try_module_get() can =
+fail
+> and return -EBUSY. This leaves a stale pointer in msk->sched.
+>
+> When mptcp_sk_clone_destroy() is called here, it triggers
+> mptcp_release_sched(). Will this cause a use-after-free and refcount
+> underflow by unconditionally calling sched->release() and
+> bpf_module_put() on that stale scheduler pointer?
+>
+> > +             return NULL;
+> > +     }
 > > +
-> > +	local netns table
-> > +	for netns in "$ns1" "$ns2"; do
-> > +		for table in ip ip6; do
-> > +			ip netns exec "$netns" nft -f - <<-EOF
-> > +				add table $table filter
-> > +				add chain $table filter INPUT \
-> > +					{ type filter hook input priority filter; policy accept; }
-> > +				add chain $table filter OUTPUT \
-> > +					{ type filter hook output priority filter; policy accept; }
-> > +
-> > +				table $table mangle
-> > +				chain $table mangle OUTPUT \
->                                 ^^^^
-> 
-> [Severity: Medium]
-> Are these table and chain declarations missing the "add" keyword?
-> 
+> >       if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
+> >               __mptcp_subflow_fully_established(msk, subflow, mp_opt);
+> >       bh_unlock_sock(nsk);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1788202924.=
+git.caoruide123@gmail.com?part=3D2
 
-Ah, copy‑and‑paste error. But the test passed when I run it.
+  Thanks for checking.  I don't think this failure is reachable in the
+  current tree.
 
-After investigating, I found the interesting usage for nft. Both
+  CONFIG_MPTCP is bool, and the only registered scheduler is the static
+  mptcp_sched_default.  There is no BPF struct_ops implementation for
+  mptcp_sched_ops, and mptcp_register_scheduler() is not exported.
 
-nft -f - <<-EOF
-add table ...
-add chain ..
-EOF
+  mptcp_sched_default.owner is THIS_MODULE, which is NULL for built-in
+  MPTCP.  Therefore bpf_try_module_get() reduces to try_module_get(NULL)
+  and cannot fail.  The default scheduler has no release callback, and
+  bpf_module_put() reduces to module_put(NULL).
 
-and
-
-nft -f - <<-EOF
-table ...
-chain ..
-EOF
-
-Works!
-
-Anyway, I will sync the writing in next version (if have) to not miss-leading
-others.
-
-Thanks
-Hangbin
+  Consequently mptcp_init_sched() cannot return -EBUSY on this path, and
+  mptcp_sk_clone_destroy() cannot release an unacquired scheduler
+  reference.  The unchecked return would need to be revisited if
+  unloadable or BPF MPTCP schedulers are added in the future, but I don't
+  think this series needs a change.
