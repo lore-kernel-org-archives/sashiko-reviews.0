@@ -1,108 +1,133 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38C2E3F1AB7;
-	Fri,  4 Sep 2026 14:09:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950C04A2073;
+	Fri,  4 Sep 2026 14:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788530983; cv=none; b=hAbPi9FAtedG0CKf37JQdH0b9ErCmuXZYADSunGMsOCKsr8wGmBvSYi+t9CaAuIVH6tGh+xrrmPRdbTMjRbwDVUxG7tZ+L8Gh5G8u6AgsSzm1GP8iAwrKnLmwEAWx2yukYfA3j4gFKxNeaJUR2JTIR8LuVFv1ivbLjshL9c/3FY=
+	t=1788531650; cv=none; b=T65IJLTsLFTGqbE9Bcqul86rlgcUygKf0iucb6g7SnxVuvfZJ/Nab3qMW5gV31uMMsVMCwDIhJ/nKg+uQr8ibZrQT2fdCacTNcmMQNIGpufI+/djvQz+Nhrpgeor4AACf/Td5k1qP0ZghT3JY3zoW+6vMJELx7fs+HJaotVQb18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788530983; c=relaxed/simple;
-	bh=xL4I0S3mL/X6beKCto/ctHnwnQCOKF64QzQVs0JG5Dw=;
+	s=arc-20240116; t=1788531650; c=relaxed/simple;
+	bh=AuTmEzxxURAuJP0bku/Sueex2DK8EZqzKt4IBcwT27Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EkFvOxxspiYS0NDppV1F+XgCnypRwxzAl7j6Nj9YpBxz36J3JQNTzY6SxKpFFOFDNY6xK4zS5OCZDv7HVERGW6r32kWN9JSHuydCxbbXH7MRs3AW/sXzNKWyUezVWgsDmnJXB/TocsgKLIkBx2NfVvPFFfl3t0DfXpHKIkJOR0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=pKjysfkh; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=SaPZI6tmmcdLIe+Hx5R6JK7Vfervxu1J7pPDdkmTgHBD+PkTa7/EtMBbrduulSzjQG4DdLwC4GBT4u8oyjUFFV3D3nCeOn/13iKFGWlZ45NolgjDKzCP1gzN+X13c3wxFmnCfmmugBTG/7Xxlx2644ful2nutDIDSXCyl1jdPqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+2grNfo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="pKjysfkh"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E4F0F152B;
-	Fri,  4 Sep 2026 07:09:37 -0700 (PDT)
-Received: from e140010.arm.com (unknown [10.57.70.12])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8E69A3F673;
-	Fri,  4 Sep 2026 07:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788530981; bh=xL4I0S3mL/X6beKCto/ctHnwnQCOKF64QzQVs0JG5Dw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pKjysfkhC6ANFjeYEGxYb3oG44S+dSlQumnNkOPGPMiZbv7xozn4rPFO79g4g+rp7
-	 P6uSQKp9hXpR7cG31M2Z8zbBnZy6BwtNzVbhKpzh59olOu0HWnSlPATHjboO9wtpwU
-	 e7WsoH0Uqbnnx1Z6izVseG/h2HVNHVn6tbiaZ6go=
-Date: Fri, 4 Sep 2026 15:09:28 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+2grNfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F418E1F00A3D;
+	Fri,  4 Sep 2026 14:20:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788531647;
+	bh=NzZFOd7YeRa3ZlfRWDGxttIq9XTYP4RaNmU6dAcsR8Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=H+2grNfoAJ+Q0nZWA9tERZt/Rz33eLr7OmlkqimygFiZZ6mgUX0Se71wwz+oT7Sqh
+	 aqi+flnsf8MWiMG7jjovoPD9QpCU73enIiNkWjJMavZIXlKxrvYQeGztzQ3Uy33xGI
+	 Kk2u6JJ94o8xX0gZgGaJf1P6cq2TqSEpsdzXxPC9SMrHZlf+iJpZ+SVOlOqVNE0IfW
+	 LYzwiU3lWuRc1GBO0cPRErUWhsmSbWtTLdT5g+fzdfGyM0z1ps9bhWqpsRlRx8xoxO
+	 f8dQZ0/COrQIGViA1TNyPLJ3qSMT0KVHwPlN8hmbe50+Yr7nTrQHCiP7840zQOh1w3
+	 gY4pLKZmeWhvQ==
+Date: Fri, 4 Sep 2026 16:20:44 +0200
+From: Benjamin Tissoires <bentiss@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>, linux-perf-users@vger.kernel.org
-Subject: Re: [RFC PATCH v7 28/28] KVM: arm64: Allow the creation of a SPE
- enabled VM
-Message-ID: <aprRGLAtoDpAXWCk@e140010.arm.com>
-References: <20260903160623.315525-1-alexandru.elisei@arm.com>
- <20260903160623.315525-29-alexandru.elisei@arm.com>
- <20260903165930.234811F00A3D@smtp.kernel.org>
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Subject: Re: [PATCH 3/3] selftests/hid: add unnumbered variant to the hid_bpf
+ tests
+Message-ID: <aprTPp1eY2VqONyV@beelink>
+References: <20260904-wip-bpf-check_report-v1-0-efe9a2a1ed28@kernel.org>
+ <20260904-wip-bpf-check_report-v1-3-efe9a2a1ed28@kernel.org>
+ <20260904131250.D84C31F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260903165930.234811F00A3D@smtp.kernel.org>
+In-Reply-To: <20260904131250.D84C31F00A3D@smtp.kernel.org>
 
-Hi Sashiko,
-
-On Thu, Sep 03, 2026 at 04:59:29PM +0000, sashiko-bot@kernel.org wrote:
+On Sep 04 2026, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The Kconfig dependency for `KVM_ARM_SPE` restricts it to 'n' when the `ARM_SPE_PMU` driver is built as a module, preventing users from enabling SPE virtualization.
+> - [Medium] The newly added unnumbered test variant runs against unadapted tests, leading to test suite regressions and false passes.
 > --
 > 
-> commit 9bb804f4572dd230ad3b5db909bd2001b3ee3186
-> Author: Alexandru Elisei <alexandru.elisei@arm.com>
+> commit 25b4cfc0df88875655d4c7a83e9318718c0ae97f
+> Author: Benjamin Tissoires <bentiss@kernel.org>
 > 
-> KVM: arm64: Allow the creation of a SPE enabled VM
+> selftests/hid: add unnumbered variant to the hid_bpf tests
 > 
-> This commit introduces the Kconfig option KVM_ARM_SPE to allow userspace
-> to enable the Statistical Profiling Extension (SPE) for virtual machines.
+> A bug appeared in hid_bpf_dispatch.c where it wasn't properly handling
+> unnumbered reports. Add a device variant without report IDs so we can
+> also test them.
 > 
-> [ ... ]
-> 
-> > diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-> > --- a/arch/arm64/kvm/Kconfig
-> > +++ b/arch/arm64/kvm/Kconfig
-> > @@ -106,9 +106,9 @@ endif # NVHE_EL2_DEBUG
+> > diff --git a/tools/testing/selftests/hid/hid_bpf.c b/tools/testing/selftests/hid/hid_bpf.c
+> > index e865ee55b4f1d..d1bd07caf9919 100644
+> > --- a/tools/testing/selftests/hid/hid_bpf.c
+> > +++ b/tools/testing/selftests/hid/hid_bpf.c
+> > @@ -54,11 +54,27 @@ FIXTURE_TEARDOWN(hid_bpf) {
+> >  	hid_bpf_teardown(_metadata, self, variant); \
+> >  } while (0)
 > >  
-> >  
-> >  config KVM_ARM_SPE
-> > -	bool
-> > +	bool "Support SPE in guest"
-> >  	depends on KVM && ARM_SPE_PMU
+> > +FIXTURE_VARIANT(hid_bpf) {
+> > +	__u8 *rdesc;
+> > +	size_t rdesc_size;
+> > +};
+> > +
+> > +FIXTURE_VARIANT_ADD(hid_bpf, numbered) {
+> > +	.rdesc = rdesc,
+> > +	.rdesc_size = sizeof(rdesc),
+> > +};
+> > +
+> > +FIXTURE_VARIANT_ADD(hid_bpf, unnumbered) {
+> > +	.rdesc = fido2_rdesc,
+> > +	.rdesc_size = sizeof(fido2_rdesc),
+> > +};
+> > +
 > 
 > [Severity: Medium]
-> Does this Kconfig dependency unintentionally disable KVM_ARM_SPE when the
-> host driver ARM_SPE_PMU is built as a module?
+> Will unadapted tests such as raw_event() and
+> test_hid_filter_raw_request_call() fail when run against this new unnumbered
+> variant?
 
-That contradicts my experience. Setting CONFIG_ARM_SPE_PMU=m makes
-CONFIG_KVM_ARM_SPE selectable, and building Linux with CONFIG_ARM_SPE_PMU=m and
-CONFIG_KVM_ARM_SPE=y enables the SPE KVM capability when the SPE module is
-loaded, and disables the capability when the module is removed.
-
-Thanks,
-Alex
+If they would have failed, I wouldn't have sent the series :)
 
 > 
-> Because KVM_ARM_SPE is a boolean, if ARM_SPE_PMU is configured as a
-> loadable module (=m), the Kconfig dependency evaluates to m. For a boolean
-> config, this restricts its maximum value to n, effectively disabling the
-> feature in the build configuration.
+> Since FIXTURE_VARIANT_ADD registers this variant for all tests in the hid_bpf
+> fixture, tests that weren't adapted might now fail because they still hardcode
+> assumptions about the 6-byte numbered report. For instance, raw_event()
+> expects exactly 6 bytes:
 > 
-> Since the implementation in arch/arm64/kvm/spe.c supports being built
-> against a modular driver (using try_module_get()), should this dependency
-> be relaxed or handled differently so the feature can still be selected?
+> 	err = read(self->hidraw_fd, buf, sizeof(buf));
+> 	ASSERT_EQ(err, 6) TH_LOG("read_hidraw");
 > 
-> > -	default n
-> > +	default y
-> >  	help
-> >  	  Adds support for Statistical Profiling Extension (SPE) in virtual
-> >  	  machines.
+> test_hid_user_raw_request_call() hardcodes a report ID of 1:
+> 
+> 	args.hid = self->hid.hid_id;
+> 	args.data[0] = 1; /* report ID */
+
+report ID is a convention, but if there is no report ID, then it's just
+the first byte.
+
+> 
+> And test_hid_filter_raw_request_call() injects a 6-byte event:
+> 
+> 	buf[0] = 1;
+> 	buf[1] = 42;
+> 	uhid_send_event(_metadata, &self->hid, buf, 6);
+> 
+> Do these other tests need similar if/else logic for variant->rdesc, or
+> should they explicitly call SKIP() for the unnumbered variant like
+> test_rdesc_fixup() does?
+
+It works, because uhid is lazy enough to not check against the report
+descriptor and just forwards what goes in. So we are just checking the
+kernel is not tampering with the data.
+
+Cheers,
+Benjamin
+
 > 
 > -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260903160623.315525-1-alexandru.elisei@arm.com?part=28
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260904-wip-bpf-check_report-v1-0-efe9a2a1ed28@kernel.org?part=3
+> 
