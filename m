@@ -1,188 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1506471264;
-	Fri,  4 Sep 2026 11:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B30347F768;
+	Fri,  4 Sep 2026 11:35:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788520302; cv=none; b=TsIz9A+2v7s1sOSfT+oAD+iG0h9F7kB08GGFnOab9QOOlqCvgqkoiAo2xulJuixRDAZgyFbyxvsYBIoU6978iTUefCxghjcqng/Jrhu0wmdkr1KRnduJi31212lOG5RxsZcCj36gRrBl728GLtJkw+uAFlX/j0vaxbjd0jIC0lw=
+	t=1788521758; cv=none; b=EEszDyjvXuJ/PXBF+VayBgrZrDWBMi3BmT/JPPLxIT6aPuSyFzN08qgOsRq9cx+OG164aVjO2r9R3iNawEQ4n5ubdOgYw2T6GeArIF7/0rw3x9Hn0WUPIbYx0UgAsEj7FRvB3cKvYmM7ng+qmGIP2bMXiTejJrVOUillebmj3n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788520302; c=relaxed/simple;
-	bh=6HawBg+Yv/dBZMv6UHdactmnftEmFed+/lH/pO/h1/8=;
+	s=arc-20240116; t=1788521758; c=relaxed/simple;
+	bh=pVVX7wCHPnyKDDskx5BAkF5R6YRcS3QCTY4q1fSXlXw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JDj0Ue2YB7CzSMkYEheR/7pc8nsM/7mt9NjdOAbVsti/awpBk1PVTXyDut/sP5HYE6QAScBe1hF5hsYs3uAEXm4vnmo8RqLQgXfTLKxBTHA85zCZNBN9EO/4nw6BRPpOWZWAt3brueeLQm1eyMT1iXkIEobaj5MGDz05jdpe28Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n7qBPj/P; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=D41kP4oOuAfOrUd602F6DynU8A+7qmx+uv3FPXBn61UrJZcFcnh7g3mgsxTRsi1rxAGJQuHP3Y57gZaFeiAoskHEQyUVtKH8Nm7BC9vOkF9jvKzvNwPhy8HGkHMN/xqVgET/rGQY/9mE6Dldc4vTzKtFPa/Zu9HaQkvRORTyCRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=uYbJrDyu; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n7qBPj/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9631F00A3D;
-	Fri,  4 Sep 2026 11:11:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788520300;
-	bh=eu+GJiNFWoJ8K1vcQwq6yxeFVrpznJV32qpZcD0QCgg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=n7qBPj/PRriRLBqEwuIfaPHrEVnabJjuoqE6tFNOeaYmzVTiTy6xPa+CG1ncAOVGa
-	 GbR6A7y8WRfv5jTRY/IhRIjZZ1jSovMvtmfdvih3pZvzJX9cDIhOFf+5rOmFbmubKK
-	 2+c9aEJC297dhiGVp48DvEKlhEgbxFLabUgbdtiWORxc3EmL4hUilwwelCbOR5A3jA
-	 od4znCwa4FRBunCJl3k+8lQ8fpV7GP2FQ/mc3+XLWuCH0PDEIYOmUvsk3m4XecDmB0
-	 t7eo0bpdnPb8tWTGR6z2cspWRKbEA2FwMMEJpOpjxXpipvWLhm6v3cQohb4SAORdZh
-	 sAAw6WjZ9x5Uw==
-Date: Fri, 4 Sep 2026 13:11:36 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH] of/irq: Fix device node refcount leak in
- of_check_msi_parent()
-Message-ID: <apqnaNmeuUjfC8Ng@red-moon>
-References: <20260904073424.3855365-1-fuad.tabba@linux.dev>
- <20260904074800.875391F00A3F@smtp.kernel.org>
- <CA+EHjTx6ZC90qHoccTE6CLvGvxrXBe3Ph0bFKcgBvfRpCCAVuA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="uYbJrDyu"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BCA76153B;
+	Fri,  4 Sep 2026 04:35:51 -0700 (PDT)
+Received: from e140010.arm.com (e140010.arm.com [10.2.213.25])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B09AF3F7D8;
+	Fri,  4 Sep 2026 04:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788521755; bh=pVVX7wCHPnyKDDskx5BAkF5R6YRcS3QCTY4q1fSXlXw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uYbJrDyuwqOsKENN9Bm4C94iVXgcC8ngtvbR64LRX+QpjdpjJhunnc4GdgdMBmnC8
+	 XlkP5MXGomILIgChkihCUrYruYXcveBjAcAMb0t+1CCgjA1U+aFSX3/Q69Io9WtdE4
+	 fZDy63pQadBhALJjsveBt+fVD2fDFXHhNdEJR4hI=
+Date: Fri, 4 Sep 2026 12:35:52 +0100
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+	linux-perf-users@vger.kernel.org, Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH v7 19/28] KVM: arm64: VHE: Context switch SPE state
+Message-ID: <apqtGD4IArjJHFk8@e140010.arm.com>
+References: <20260903160623.315525-1-alexandru.elisei@arm.com>
+ <20260903160623.315525-20-alexandru.elisei@arm.com>
+ <20260903164313.9716A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+EHjTx6ZC90qHoccTE6CLvGvxrXBe3Ph0bFKcgBvfRpCCAVuA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260903164313.9716A1F000E9@smtp.kernel.org>
 
-On Fri, Sep 04, 2026 at 10:25:24AM +0100, Fuad Tabba wrote:
-> On Fri, 4 Sept 2026 at 08:48, <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] of_msi_xlate() fails to traverse the device hierarchy when msi_np is NULL, completely breaking MSI ID mapping for callers such as the fsl-mc subsystem.
-> > - [High] msi_node reference is leaked on error path in its_v5_pci_msi_prepare()
-> > - [High] of_msi_xlate() incorrectly handles 'msi-parent' by continuing tree traversal when it mismatches.
-> > --
-> >
-> > commit b8991c82a3994d7ebf04943226ad5d1d9490a8d4
-> > Author: Fuad Tabba <fuad.tabba@linux.dev>
-> >
-> > of/irq: Fix device node refcount leak in of_check_msi_parent()
-> >
-> > The patch fixes a device node refcount leak in of_check_msi_parent(). It
-> > ensures that if the node was not matched in a 1:1 mapping, the reference is
-> > released correctly before returning.
-> >
-> > Link: https://lore.kernel.org/all/20260826113604.010C01F000E9@smtp.kernel.org/
-> >
-> > > diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-> > > index ec035367c9500..109c54f346479 100644
-> > > --- a/drivers/of/irq.c
-> > > +++ b/drivers/of/irq.c
-> > > @@ -785,7 +785,7 @@ static int of_check_msi_parent(struct device_node *dev_node, struct device_node
-> > >       if ((*msi_node && *msi_node != msi_spec.np) || msi_spec.args_count != 0)
-> > >               ret = -EINVAL;
-> > >
-> > > -     if (!ret) {
-> > > +     if (!ret && !*msi_node) {
-> > >               /* Return with a node reference held */
-> > >               *msi_node = msi_spec.np;
-> > >               return 0;
-> >
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but of_msi_xlate() seems to
-> > incorrectly handle msi-parent mismatches.
-> >
-> > If a device specifies an msi-parent that does not match the msi_np filter,
-> > of_check_msi_parent() returns -EINVAL.
-> >
-> > drivers/of/irq.c:of_msi_xlate() {
-> >                 /* -ENODEV: msi-map absent -> check for msi-parent */
-> >                 if (msi_np && !of_check_msi_parent(parent_dev->of_node, msi_np))
-> >                         break;
-> > }
-> >
-> > The condition !of_check_msi_parent() evaluates to false, skipping the break
-> > statement and allowing traversal to continue. Will this erroneously allow
-> > traversal up the tree, potentially inheriting an incorrect msi-map from a
-> > parent bus?
-> 
-> It does continue. -EINVAL also covers #msi-cells != 0, so
-> of_msi_xlate() cannot tell a phandle mismatch from an msi-parent that
-> is not a 1:1 mapping, and breaking on it would stop the walk for both.
-> 
-> Lorenzo, Rob, should the walk stop at the first node declaring an msi-parent?
+Hi Sashiko,
 
-First off, thank you for fixing this.
+On Thu, Sep 03, 2026 at 04:43:13PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Writing to PMBSR_EL1 after enabling the SPE profiling buffer via PMBLIMITR_EL1 is CONSTRAINED UNPREDICTABLE and can corrupt hardware events.
+> - [High] Host SPE sampling control registers (e.g., PMSNEVFR_EL1, PMSDSFR_EL1) can be permanently corrupted by a malicious guest.
+> --
+> 
+> commit 32125a6226fde42baaf9001e75434e4177067f24
+> Author: Alexandru Elisei <alexandru.elisei@arm.com>
+> 
+> KVM: arm64: VHE: Context switch SPE state
+> 
+> Save and restore the SPE register state when a VCPU is run. The SPE
+> resources are shared between the guest and the host (the resources are not
+> partitioned) so KVM has to save the host state, change the owning
+> translation regime, and then restore the guest state before entering a
+> guest.
+> 
+> > diff --git a/arch/arm64/kvm/hyp/vhe/spe-sr.c b/arch/arm64/kvm/hyp/vhe/spe-sr.c
+> > new file mode 100644
+> > index 0000000000000..978620ad99fa5
+> > --- /dev/null
+> > +++ b/arch/arm64/kvm/hyp/vhe/spe-sr.c
+> > @@ -0,0 +1,209 @@
+> [ ... ]
+> > +static void __kvm_spe_save_sampling_regs(struct kvm *kvm, struct kvm_cpu_context *ctxt)
+> > +{
+> > +	/*
+> > +	 * This is dependent on the VM features, and not the hardware features,
+> > +	 * even for the host, because (a) guest accesses to PMSNEVFR_EL1 and
+> > +	 * PMSDSFR_EL1 result in an undefined exception in the guest and (b)
+> > +	 * they don't affect the guest unless the guest explicitly enables them,
+> > +	 * and a well-behaved guest shouldn't enable them when the corresponding
+> > +	 * feature is not advertised.
+> > +	 */
+> > +	if (kvm_spe_has_feat_spe_fne(kvm))
+> > +		ctxt_sys_reg(ctxt, PMSNEVFR_EL1) = read_sysreg_s(SYS_PMSNEVFR_EL1);
+> 
+> [Severity: High]
+> Does this check of the guest's advertised features (kvm_spe_has_feat_spe_fne)
+> leave the host's sampling control registers vulnerable to corruption?
+> 
+> If the host physically supports FEAT_SPE_FNE but the KVM VM does not
+> advertise it, KVM will skip saving and restoring the host's PMSNEVFR_EL1
+> register. Because MDCR_EL2.TPMS = 0 is cleared on guest entry, these
+> registers will not trap to EL2.
+> 
+> A malicious guest could execute an msr instruction to PMSNEVFR_EL1 directly,
+> overwriting the hardware register. When the guest exits, KVM skips restoring
+> the host's value in __kvm_spe_restore_sampling_regs(), allowing the guest's
+> malicious configuration to persist in the host execution context.
+> 
+> Could this be checking the host's physical capabilities instead of the VM's
+> advertised features when saving and restoring host state?
 
-I think we must stop at the first msi-parent and apply the same (convoluted)
-logic that of_msi_xlate() executes upon of_map_msi_id()'s return to make
-sure ref counts are kosher (we already have an msi_spec scratch variable,
-we can pass that to of_check_msi_parent() - that is, always drop the
-msi_spec.np reference if !NULL and get one if !*msi_np to initialize it).
+Yeah, that's a good point, this is a leftover from the previous iteration where
+SPE support in KVM was dependant on FEAT_FGT, which would trap accesses to those
+registers if FEAT_SPE_FnE and/or FEAT_SPE_FDS were not exposed to the VM.
+
+If FEAT_FGT is implemented, nothing changes. But if that's not present, I see
+two way to handle it:
+
+1. Save/restore the registers on each VM entry/exit and let the guest access
+them as it wishes. This would go against the architecture, which says that
+accesses are undefined if the corresponding feature is not implemented. In
+practice, this might not be a problem if all hardware that implements
+FEAT_SPE_FnE and FEAT_SPE_FDS also implements FEAT_FGT.
+
+2. Trap *all* buffer control registers with MDCR_EL2.TPMS and inject an undefined
+instruction exception.
+
+Thoughts?
 
 > 
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but does of_msi_xlate() fail to traverse the
-> > device hierarchy when msi_np is NULL?
-> >
-> > When of_map_msi_id() (which calls of_map_id()) processes an absent map
-> > property while filter_np is NULL, it returns 0 instead of an error:
-> >
-> > drivers/of/base.c:of_map_id() {
-> >         ...
-> >         map = of_get_property(np, map_name, &map_bytes);
-> >         if (!map) {
-> >                 if (filter_np)
-> >                         return -ENODEV;
-> >                 /* Otherwise, no map implies no translation */
-> >                 arg->args[0] = id;
-> >                 arg->args_count = 1;
-> >                 return 0;
-> >         }
-> >         ...
-> > }
-> >
-> > In of_msi_xlate(), this return value of 0 triggers a break:
-> >
-> > drivers/of/irq.c:of_msi_xlate() {
-> >                 if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &msi_spec)) {
-> >                         ...
-> >                         /* msi-map present but no match -> stop walking */
-> >                         break;
-> >                 }
-> > }
-> >
-> > Because of_map_id() returns 0 when the map is absent, wouldn't this early
-> > break erroneously abort the parent traversal loop on the first iteration,
-> > breaking MSI ID mapping for callers passing a NULL msi_np?
+> [ ... ]
+> > +void __kvm_spe_restore_guest_state_vhe(struct kvm_vcpu *vcpu, struct kvm_cpu_context *guest_ctxt)
+> > +{
+> > +	u64 pmblimitr, pmbsr;
+> > +
+> > +	pmbsr = ctxt_sys_reg(guest_ctxt, PMBSR_EL1);
+> > +	pmblimitr = ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1);
+> > +	if (__kvm_spe_profiling_buffer_enabled(pmblimitr, pmbsr)) {
+> > +		write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBPTR_EL1), SYS_PMBPTR_EL1);
+> > +		isb();
+> > +		write_sysreg_s(pmblimitr, SYS_PMBLIMITR_EL1);
+> > +		isb();
+> > +		/* A buffer management event preserves fields in PMBSR_EL1 */
+> > +		write_sysreg_s(pmbsr, SYS_PMBSR_EL1);
 > 
-> It does break early there, but not for fsl-mc, the only NULL caller:
-> AFAICT, an fsl_mc_device never gets an of_node, so the walk carries on
-> up to the fsl-mc platform device, which is where fsl,qoriq-mc puts
-> msi-map.
-> 
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but is there a fwnode reference
-> > leak on the error path in its_v5_pci_msi_prepare()?
-> >
-> > drivers/irqchip/irq-gic-its-msi-parent.c:its_v5_pci_msi_prepare() {
-> >         rid = pci_msi_map_rid_ctlr_node(domain->parent, pdev, &msi_node);
-> >         if (!msi_node)
-> >                 return -ENODEV;
-> >
-> >         ret = its_translate_frame_address(msi_node, &pa);
-> >         if (ret)
-> >                 return -ENODEV;
-> >
-> >         fwnode_handle_put(msi_node);
-> >         ...
-> > }
-> >
-> > If its_translate_frame_address() fails, it returns -ENODEV without dropping
-> > the acquired msi_node reference. Can this leak the fwnode_handle if the
-> > frame address translation fails repeatedly during driver bind or unbind?
-> 
-> Yes, every failed translation leaks one. I have a patch written,
-> moving the put above the error check. It goes with the irqchip fixes
-> rather than here.
+> [Severity: High]
+> Is it safe to write to PMBSR_EL1 after enabling the SPE profiling buffer via
+> PMBLIMITR_EL1?
 
-Yep.
+I haven't found any evidence to the contrary.
+
+> 
+> According to the ARM Architecture Reference Manual, when the profiling buffer
+> is enabled, a direct write to PMBSR_EL1 is constrained unpredictable. This
+> can corrupt hardware events or lead to unknown exceptions.
+
+I haven't found anything in the Arm ARM saying that, and I don't see why writing
+to PMBSR_EL1 would be a problem at all after the correct sequence for disabling
+the buffer has been followed in __kvm_spe_save_host_state_vhe().
+
+This is also how the SPE driver programs the buffer in the interrupt handler, if
+there is indeed an issue the SPE driver would also have to be fixed.
 
 Thanks,
-Lorenzo
+Alex
+
+> 
+> In __kvm_spe_restore_host_state_vhe(), the PMBSR_EL1 register is correctly
+> restored before PMBLIMITR_EL1. Should the guest restoration follow the same
+> sequence to avoid unpredictable behavior?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260903160623.315525-1-alexandru.elisei@arm.com?part=19
