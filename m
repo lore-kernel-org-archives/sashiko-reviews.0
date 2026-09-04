@@ -1,169 +1,290 @@
-Received: from mail-wm2-f10.google.com (mail-wm2-f10.google.com [74.125.225.138])
+Received: from mta0.migadu.com (out-54.mta0.migadu.com [91.218.175.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F6947CA6B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 11:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7803955EC
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 12:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788522070; cv=none; b=Du5ZKFyJoP1uUtJfXaCeH5Q91hUCZtRjEtIgCoW8nG62i61b/B/hur6iluM4GrBlJWlI1Lax3hKwydv9+CkObUVk1jZLi92ylPkWA24JXVPZF+YOig8pujT/3CPJVq/Jgt5JY9AvmF7swA/vM5TJFUy+rEekMgYSGZTajMMxfiA=
+	t=1788523565; cv=none; b=CGSsN58Ts8b+DUMkmaWXtzw6wemOWAlHEDQ1WPT8u2kK5aknF53FfEUvWs60Tm+b7Y0YMmzEzO4QIXAH64c1I8jS0v1XC488bKdX499ic6hyZP4AT1ZJO/HAEHEfGz0ov86pTAv/895ANvkTAU9zv3mZEcz8IlfE4ke82f1n5JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788522070; c=relaxed/simple;
-	bh=Q8HU4Dj/jZbI8IsVvRVh0PhoSicULEYOCiGQmKItAgU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=Wufe3YIIqJRxYooHodrnPCGYslf5n7Gy7rtYYjAgZ0Yluh+VL/wdo96cI4n3RvONNRxlXvbZkh5pVV8x2UfmbcgPkAwvFnPuZowZKoyo3S4163BwzBZ6M6KoTPsoxfR4qts8bzwwjG4WF0LkGFO/PaBcsQZYoDGVBjtxR0e8J+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=prFqTiks; arc=none smtp.client-ip=74.125.225.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788523565; c=relaxed/simple;
+	bh=hIO1NsaBhYS/1pRYN673ZQYYz7ahk2y92ZqW93xWR74=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vBmlFKCRX7Z10mC91uyaK5TWUFGKugSBAOnhObbFe2You5zz9jWe2vmOf4joAYWT3qtUcRh6gAt3ZiQCmN3Q3YMRxfLA1/2YMET4NNYxE96KOU5FZjh1vnpG/2BwAjChaEW/ry38JwW2doru/mV+d30Jt0KQ1XFjacXoe98NEdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rXgOdjOo; arc=none smtp.client-ip=91.218.175.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="prFqTiks"
-Received: by mail-wm2-f10.google.com with SMTP id 5b1f17b1804b1-49b92ccb8e0so2765305e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 04:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788522066; x=1789126866; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ZsQlt8wlSmLLCcmfC4UkszaLNl9vEWULZiFqjg7Do5U=;
-        b=prFqTikslMmkCjWgxi5WwP7hrk0oPCNWnB/qQwwCHMuR+eCnXNtkVYYrkqDwfHU6Ux
-         IGDS52FuZ3NuJG45gxCx7BTkJeZDifh+ne8KbjvBeJMkvdFy5Ms7NFTEZicNyXfbgNCG
-         Pig2pqwtuMtwijBMI6Hz3oRwIet7uFpUdPYXx+wZVQLw27tTQg0iraiVOQPY1WxCTlma
-         qo9Djxt6G0lllj1s5ghlYoZ1gSCXj2iR50FjBOimOwVZ14q9Bqv06lMALekPoSrdBFPD
-         jOYKde9/Qm2NIcnFektNWB+H4aIzJPAhXwBZydV0MDCa5EU64onxmHXbeZLP8oIzgajk
-         2pIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788522066; x=1789126866;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZsQlt8wlSmLLCcmfC4UkszaLNl9vEWULZiFqjg7Do5U=;
-        b=OAgNTRHSkiU9TmelWZWOqYqKUUubXiiJ/i2kOFbix11Cn+UceE4XAFCQVnqE04Ko51
-         jKBCSZMwqsXrG074rKN+Zxuo19PyBux9U1pfhjuM+TUb1VoIzTEBXN/ms2xTJeoP/ejc
-         vCsXMRv4SLxkQZn7wLvsSfuFz83lFJSEEBu3YDIQJu8xPjI0A1N27hIWgLmSjrF2qGy2
-         5w3FwvLQfJFvvFH/IUgKoIbgePjEQZSz3iZCMEKgD2URfKxUriqgcsV0Xqq5Cd6vNJRy
-         QzbhhT08g5xargAbFeSCPDYQB7b5c4We3lr6tsUgm6tBdc9MWg4lAo2Y/4asqTeO6aSR
-         xqKQ==
-X-Gm-Message-State: AFuF++lnZCuuwBmEpVP0RrpdsTc6Qa9dss1Tl3/B/+GdlP2oA3QZR7Av
-	F3+rlrYd/IT/oY4EFYtoEZB7LMvbOOaAHYTgFBNarAxfMTmUVtzmKB7ruwawMGri
-X-Gm-Gg: AYBFou2qGd3iV4IEdyyiKhBDYoUtCBkHZhnCwELLB/MkeBK3vmGkmuPIqq18xWh/zgS
-	1IhuhjS2ffJOhDzQa/mfm8V0c+4bfPuU2rrhzorkdhYMesm4BWeLC5dfyyUaJSTlgLAdS34TLXg
-	2WcR+DXyDFk6eTOEcROHhWDXNJNveppJ5SQZ1xTk5D3IZ/Lm7txOMqbFfOuYabK8+x+n1toy/wP
-	cImODY59c+s7Izn0mi4V0uLg+gIa90x+QtJp00Bp+rSNCQ5GHVMy4+o9NmBWITYHMjV8oJrSC1z
-	2Nd7tgyeRF/ak20giD5tCs9+eoLZOzlB5PI6sUDVWvNCbgPxzxC291RYi0fZD6hnQXxNsOoN3k/
-	HfonglaD5zjCeY0vcec2nyI7lgKfmQ1B3JuG+YTfw0b0zHYOI3NfzOGVrEh+cpRkRYkiCcN6qn/
-	atdTkyQO6IOyBGCJZ3PcufLok8dgjpUpdOYFaq3d0bXUko9h4vfs7hhEOlp5I2XM+BzhB7ejbqQ
-	OMKWaRbhRgXc1lsMNQ5shRuAyU7e+S+nEDiM/NOOB1xbcbY8P/xXADejKLanTguVz3JD4+AZOIB
-	Y9emJzWcyk8RjVc8dAA6tRBdUYQ=
-X-Received: by 2002:a05:600c:a05:b0:49c:fc6e:a3dc with SMTP id 5b1f17b1804b1-49cfc6ea772mr26999985e9.27.1788522066073;
-        Fri, 04 Sep 2026 04:41:06 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cfbe5b252sm35649685e9.3.2026.09.04.04.41.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 04:41:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rXgOdjOo"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=hIO1NsaBhYS/1pRYN673ZQYYz7ahk2y92ZqW93xWR74=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788523559; v=1; x=1789128359;
+ b=rXgOdjOorO4oL67Xv1KbA08jL6UdCBiVqoF0aLdpP6YxMnb4mDKIu90jq3dD4MmltlFpxbAg
+ P7T3bfZocA4n4PcMCYqd/CS1eVejj5SIrVks5VY/YZ5eUCPPUY+UTRmleha1Dcqy3vGPP4sVfqw
+ +B3Mf+dkWZRroMhCsqhutFIA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta11.migadu.com with ESMTPS id 690ac3f9b1370a38;
+	Fri, 04 Sep 2026 12:05:58 +0000
+X-Mizu-Trace-ID: 690ac3f9b1370a38
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b49af456-2c7c-4ab6-a142-c17015362a5b@linux.dev>
+Date: Fri, 4 Sep 2026 13:05:58 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 04 Sep 2026 13:41:05 +0200
-Message-Id: <DL6I5PYM23L1.MZTSPKRDHLOI@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf v1 3/8] bpf: Cancel special fields when recycling
- rhtab elements
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260904104203.345917-1-memxor@gmail.com>
- <20260904104203.345917-4-memxor@gmail.com>
- <20260904113744.BE0BB1F00A3D@smtp.kernel.org>
-In-Reply-To: <20260904113744.BE0BB1F00A3D@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 24/27] scsi: sd: support multipath disk
+To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260901104526.3850621-1-john.g.garry@oracle.com>
+ <20260901104526.3850621-25-john.g.garry@oracle.com>
+ <20260901111904.288951F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: John Garry <john.garry@linux.dev>
+In-Reply-To: <20260901111904.288951F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri Sep 4, 2026 at 1:37 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Replacing bpf_obj_free_fields() with bpf_obj_cancel_fields() dur=
-ing map updates and deletions violates BTF-001 and causes cross-key resourc=
-e leakage.
+On 9/1/26 12:19, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Unprotected overwrite of mpath_head->parent before validation causes Use-After-Free during concurrent I/O when probe fails.
+> - [High] Queue limits are explicitly overwritten before stacking, breaking multipath limits aggregation.
+> - [Medium] Circular reference between sd_mpath_disk and its child multipath gendisk prevents both structures from ever being freed.
+> - [Medium] Missing put_device() in sd_probe() error path leaks the scsi_disk structure and device references.
+> - [Medium] TOCTOU race in disk removal paths allows a concurrent probe to fail with a duplicate sysfs name error.
 > --
->
-> commit 87b60bb947c49832ff2d2552730fd3c5124e6130
-> Author: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
->
-> bpf: Cancel special fields when recycling rhtab elements
->
-> This commit modifies rhtab map operations to use bpf_obj_cancel_fields()
-> instead of bpf_obj_free_fields() when replacing or deleting elements. Thi=
-s is
-> done to avoid releasing referenced kptrs and other complex fields in NMI
-> context, aligning with array and hash map behavior.
->
->> diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
->> index 527cc5716ee8c..cc60e99ffbe92 100644
->> --- a/kernel/bpf/hashtab.c
->> +++ b/kernel/bpf/hashtab.c
->
+> 
+> commit 7a8d9795d762973e091f3a0357c1112c3afc4c60
+> Author: John Garry <john.garry@linux.dev>
+> Subject: scsi: sd: support multipath disk
+> 
+> Add support to attach a multipath disk, allocating gendisks per path but
+> marking them as hidden, and maintaining a global list of multipath disks
+> for scsi_device matching.
+> 
+>> diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+>> index 60e071d23ddd0..28304a497d8c6 100644
+>> --- a/drivers/scsi/sd.c
+>> +++ b/drivers/scsi/sd.c
 > [ ... ]
->
->> @@ -2967,8 +2957,8 @@ static int rhtab_delete_elem(struct bpf_rhtab *rht=
-ab, struct rhtab_elem *elem, v
->>  		rhtab_read_elem_value(&rhtab->map, copy, elem, flags);
->>  		check_and_init_map_value(&rhtab->map, copy);
->>  	}
->> -	/* Release internal structs: kptr, bpf_timer, task_work, wq */
->> -	rhtab_check_and_free_fields(rhtab, elem);
->> +	bpf_obj_cancel_fields(&rhtab->map,
->> +			      rhtab_elem_value(elem, rhtab->map.key_size));
->>  	bpf_mem_cache_free_rcu(&rhtab->ma, elem);
->
-> [Severity: High]
-> Does changing this to bpf_obj_cancel_fields() leave stale special fields =
-in
-> the memory cache?
->
-> Since bpf_obj_cancel_fields() does not drop kptrs or list heads, these
-> references appear to remain in the element when it is freed to the cache.
-> When a new element is later allocated from the cache in
-> rhtab_map_update_elem():
->
->     elem =3D bpf_mem_cache_alloc(&rhtab->ma);
->     if (!elem)
->         return -ENOMEM;
->     memcpy(elem->data, key, map->key_size);
->     copy_map_value(map, rhtab_elem_value(elem, map->key_size), value);
->
-> Because bpf_mem_cache_alloc() does not zero memory and copy_map_value()
-> skips special fields, will this cause the new key to inherit the old key'=
-s
-> populated list head or kptr?
->
->>  	return 0;
->>  }
->
+>> @@ -115,12 +115,30 @@ static mempool_t *sd_large_page_pool;
+>>   static atomic_t sd_large_page_pool_users = ATOMIC_INIT(0);
+>>   static struct lock_class_key sd_bio_compl_lkclass;
+>>   #ifdef CONFIG_SCSI_MULTIPATH
+>> +static LIST_HEAD(sd_mpath_disks_list);
+>> +static DEFINE_MUTEX(sd_mpath_disks_lock);
+>> +
+>>   struct sd_mpath_disk {
+>> +	struct device			dev;
+>> +	int				disk_index;
+>> +	int				disk_count;
+>> +	struct list_head		entry;
+>>   	struct scsi_mpath_head		*scsi_mpath_head;
+>>   };
+>>   
+>>   static void sd_mpath_disk_release(struct device *dev)
+>>   {
+>> +	struct sd_mpath_disk *sd_mpath_disk =
+>> +		container_of(dev, struct sd_mpath_disk, dev);
+>> +	struct scsi_mpath_head *scsi_mpath_head =
+>> +		sd_mpath_disk->scsi_mpath_head;
+>> +	struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
+>> +
+>> +	mpath_put_disk(mpath_head);
+> 
+> [Severity: Medium]
+> In sd_mpath_probe(), the child multipath gendisk takes a reference on this
+> device via mpath_head->parent = &sd_mpath_disk->dev. Since the child holds
+> a strong reference to the parent, the parent's refcount cannot reach zero
+> while the child exists.
+> 
+> Does dropping the child reference here in the parent's release function create
+> an unbreakable circular dependency that leaks both structures during removal?
+
+No, I think that mpath_remove_disk() -> del_gendisk() drops that dependency
+
+> 
+>> +	ida_free(&sd_index_ida, sd_mpath_disk->disk_index);
+>> +	scsi_mpath_put_head(scsi_mpath_head);
+>> +
+>> +	kfree(sd_mpath_disk);
+>>   }
 > [ ... ]
->
->> @@ -3029,7 +3018,7 @@ static long rhtab_map_update_existing(struct bpf_m=
-ap *map, struct rhtab_elem *el
->>  	 * kptrs/etc. still sit in the slot. Cancel them after the copy
->>  	 * to match arraymap's update semantics.
->>  	 */
->> -	rhtab_check_and_free_fields(rhtab, elem);
->> +	bpf_obj_cancel_fields(map, old_val);
->
+>> @@ -4019,6 +4038,90 @@ static int sd_format_disk_name(char *prefix, int index, char *buf, int buflen)
+>>   	return 0;
+>>   }
+>>   
+>> +#ifdef CONFIG_SCSI_MULTIPATH
+>> +static int sd_mpath_revalidate_head(struct scsi_disk *sdkp)
+>> +{
+>> +	struct sd_mpath_disk *sd_mpath_disk = sdkp->sd_mpath_disk;
+>> +	struct scsi_mpath_head *scsi_mpath_head = sd_mpath_disk->scsi_mpath_head;
+>> +	struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
+>> +	struct gendisk *disk = mpath_head->disk;
+>> +	struct queue_limits *sdkp_lim = &sdkp->disk->queue->limits;
+>> +	struct queue_limits lim;
+>> +	unsigned int memflags;
+>> +	int ret;
+>> +
+>> +	lim = queue_limits_start_update(disk->queue);
+>> +	memflags = blk_mq_freeze_queue(disk->queue);
+>> +
+>> +	lim.logical_block_size = sdkp_lim->logical_block_size;
+>> +	lim.physical_block_size = sdkp_lim->physical_block_size;
+>> +	lim.io_min = sdkp_lim->io_min;
+>> +	lim.io_opt = sdkp_lim->io_opt;
+>> +
+>> +	queue_limits_stack_bdev(&lim, sdkp->disk->part0, 0,
+>> +					disk->disk_name);
+> 
 > [Severity: High]
-> Does replacing the free operation with bpf_obj_cancel_fields() here viola=
-te
-> the requirement to clean up special BTF fields during map updates?
->
-> When overwriting an existing map value in-place, failing to free existing
-> kptrs or list heads seems like it causes them to outlive the update. Will
-> this leave stale resources bound to the key indefinitely?
->
+> Does overwriting the multipath limits with sdkp_lim before calling
+> queue_limits_stack_bdev() erase the previously stacked limits?
+> 
+> If an older path required stricter limits (e.g. larger block size or
+> alignment), would this downgrade the multipath limits to match only the newly
+> probed path, potentially causing I/O errors on the older paths?
 
-Both are deliberate changes.
+We work on the principle that things like logical block size should not 
+change
 
->>  	return 0;
->>  }
+> 
+>> +
+>> +	/* TODO: setup integrity and zoned limits */
+> [ ... ]
+>> +static int sd_mpath_probe(struct scsi_disk *sdkp)
+>> +{
+> [ ... ]
+>> +	sd_mpath_disk = kzalloc(sizeof(*sd_mpath_disk), GFP_KERNEL);
+>> +	if (!sd_mpath_disk) {
+>> +		error = -ENOMEM;
+>> +		goto out_unlock;
+>> +	}
+>> +
+>> +	sd_mpath_disk->scsi_mpath_head = scsi_mpath_head;
+>> +
+>> +	blk_set_stacking_limits(&lim);
+>> +	lim.dma_alignment = 3;
+>> +	lim.features |= BLK_FEAT_IO_STAT | BLK_FEAT_NOWAIT |
+>> +		BLK_FEAT_POLL | BLK_FEAT_ATOMIC_WRITES;
+>> +
+>> +	mpath_head->parent = &sd_mpath_disk->dev;
+>> +	mpath_head->drv_module = THIS_MODULE;
+>> +	mpath_head->disk_groups = sd_mpath_disk_attr_groups;
+>> +	error = mpath_alloc_head_disk(mpath_head, &lim,
+>> +				dev_to_node(dma_dev));
+>> +	if (error)
+>> +		goto out_free_disk;
+> 
+> [Severity: High]
+> If mpath_alloc_head_disk() fails here, the error path jumps to out_free_disk
+> and calls kfree(sd_mpath_disk). However, mpath_head->parent was
+> unconditionally set to &sd_mpath_disk->dev just before the call.
+> 
+> If the multipath disk is still active from a prior failed removal, 
+
+I don't understand what this means.
+
+> will it
+> dereference the freed parent pointer during subsequent I/O or workqueue
+> processing?
+
+See below.
+
+> 
+>> +	disk = mpath_head->disk;
+> [ ... ]
+>> +static void sd_mpath_remove_head(struct scsi_mpath_head *scsi_mpath_head)
+>> +{
+>> +	struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
+>> +	struct sd_mpath_disk *sd_mpath_disk;
+>> +	struct device *dev = &scsi_mpath_head->dev;
+>> +
+>> +	mutex_lock(&sd_mpath_disks_lock);
+>> +	sd_mpath_disk = sd_mpath_find_disk(scsi_mpath_head);
+>> +	if (!sd_mpath_disk) {
+>> +		dev_warn(dev, "could not find mpath disk\n");
+>> +		mutex_unlock(&sd_mpath_disks_lock);
+>> +		return;
+>> +	}
+>> +
+>> +	if (sd_mpath_disk->disk_count) {
+>> +		dev_dbg(dev, "non-zero multipath disk count in removal\n");
+>> +		sd_mpath_put_disk(sd_mpath_disk);
+>> +		mutex_unlock(&sd_mpath_disks_lock);
+>> +		return;
+>> +	}
+>> +
+>> +	list_del_init(&sd_mpath_disk->entry);
+>> +	mutex_unlock(&sd_mpath_disks_lock);
+>> +
+>> +	device_del(&sd_mpath_disk->dev);
+> 
+> [Severity: Medium]
+> Could a time-of-check to time-of-use race happen here during device removal?
+> The disk is removed from sd_mpath_disks_list inside the lock, but device_del()
+> is called after dropping the lock.
+> 
+> Would a concurrent sd_mpath_probe() acquire the lock, fail to find the disk,
+> allocate a new one with the same index, and call device_add() before this
+> device_del() completes, causing a sysfs naming collision and -EEXIST failure?
+
+We only set mpath_head->disk = NULL in sd_mpath_disk_release() -> 
+mpath_put_disk(), so earlier calls to mpath_alloc_head_disk() would fail 
+in the mpath_head->disk check.
+
+But we do still leave mpath_head->parent = &sd_mpath_disk->dev set (for 
+sd_mpath_disk, which will be free'd), so this needs to be fixed.
+> 
+>> +	mpath_remove_disk(mpath_head);
+>> +	sd_mpath_put_disk(sd_mpath_disk);
+>> +}
+> [ ... ]
+>> @@ -4192,6 +4556,7 @@ static int sd_probe(struct scsi_device *sdp)
+>>   
+>>   	error = device_add_disk(dev, gd, NULL);
+>>   	if (error) {
+>> +		sd_mpath_fail_probe(sdkp);
+>>   		device_unregister(&sdkp->disk_dev);
+>>   		put_disk(gd);
+>>   		if (sdp->sector_size > PAGE_SIZE)
+>> @@ -4199,6 +4564,19 @@ static int sd_probe(struct scsi_device *sdp)
+>>   		goto out;
+>>   	}
+>>   
+>> +	if (sdp->scsi_mpath_dev) {
+>> +		error = sd_mpath_add_disk(sdkp);
+>> +		if (error) {
+>> +			sd_mpath_fail_probe(sdkp);
+>> +			device_del(&sdkp->disk_dev);
+>> +			del_gendisk(sdkp->disk);
+>> +
+>> +			put_disk(sdkp->disk);
+>> +			if (sdp->sector_size > PAGE_SIZE)
+>> +				sd_large_pool_destroy();
+>> +			goto out;
+> 
+> [Severity: Medium]
+> Does this error path leak the scsi_disk structure and its device reference?
+> 
+> device_del() removes the device from the system, but since sdkp->disk_dev was
+> initialized with device_initialize() (giving it a refcount of 1), shouldn't
+> there be a matching put_device(&sdkp->disk_dev) to drop the base reference and
+> eventually call scsi_disk_release()?
+
+Current code is ok. The put_disk() releases the reference on 
+&sdkp->disk_dev.
+
+> 
+>> +		}
+>> +	}
+>>   	if (sdkp->security) {
+>>   		sdkp->opal_dev = init_opal_dev(sdkp, &sd_sec_submit);
+>>   		if (sdkp->opal_dev)
+> 
 
