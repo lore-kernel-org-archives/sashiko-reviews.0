@@ -1,206 +1,138 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A48F3B961B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 16:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C4E3A3E88
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 17:08:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788539937; cv=none; b=Mis/TTkvoiGzWcnDjUoeH3vk16OFZPPHAffQwWnCAyOF8G3Wm6iiciad6ynWry74qNkAdreCVFdR3YWTF11JnPnVb9OUMTLl12oBcgL4lWrEsvwGvr28Gv1PmjihKqMHXro1pgB1fRN7/6ulQ0y/ANXpXVWIof+6juglLr0BIko=
+	t=1788541688; cv=none; b=YXUmzdLxx2JtuOGFEj4xkVQQtG3NU44FGxGMLnJ8uUTDTx91F18TNyZjKCjs8HZJ2C7q4/+vySjh6FrzILC5Jb1hQj5dFjdofI6l+IJxueHDCNbwcsMdyJOZLzSqgtZq9q0ZeLO9RR5Lfq6ZtmkG+lSGf5UQn6u8K7l60/J+p08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788539937; c=relaxed/simple;
-	bh=l5p0foO0joFsdooF4jDHYxnUobNi9JE+S8To9zyPeI0=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eTq1Qcl6XD/HSc8TuvrMBWYHsD/Z9GzrSvIkiQ7AgRs2/UiZ2tcPjjtUGjpGsZDgF/D1ncwNBNCoPMV4bhKd+L2MXZF6NXf8pY0+PhdvHPyQSLZ/kyyj4aO4795uNYknmjwZ0GIULL6qYLYpjQBjDvwoXP57tRDJ88p38RWkx5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=a3Zzlauu; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1788541688; c=relaxed/simple;
+	bh=Y3F2BY8tywWp+xEJCyblMsva6BBMmuyetlg60qfX6uE=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
+	 References:In-Reply-To; b=Ew8M2AU5HMVTcRU9JPK4iSHCm2p1HjEZP8cpM8mM47zQ7uaNERMpAnAU4GaBIaA/Obn76bFBogJhuUekuaOnJMedQe7m6RQezRu295v9SpJwRhy+aOkl68LKLft672Wu6Z4abHf27DkuFQI5XKCpU64I37PH3KcMT6YL/FlAfxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=ojnIyqfS; arc=none smtp.client-ip=162.62.58.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="a3Zzlauu"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-49b8f86c6deso8295865e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 09:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1788539933; x=1789144733; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+KFYUAqa0PvanI3jMMnXFbsfpe1VgmcYuOXHAvwEfXk=;
-        b=a3ZzlauuITAHjvZ/JiESGy6Tpk18bpRSzlcVmo60watALbaqIzyg/yHuAoIecFK5oK
-         d2E0daJZzewObCY70NRYsU0e7pZkBYOVCGOGrW2ErAt6l2E6Ghf+obbtC30W2Hu1UAIn
-         OaDRjYJTIBQTIYJdGPfBj4wLYVs5jp2lYLlhoUXz6/k322RrXP8UpMDlxj6P56yjqU6d
-         tT40493yJkDnv74O/TsTOsVXrrfhoa8NVlQ/PEn3ST/hd2aEGl0grh6k/lc/BE9UIncN
-         9Lkas3L0CeUhoqiwVN1dAKc6ghv+cssGhr+VztifnGiiHMcZwMLDGPHN3eOPnr5y6Utg
-         8GDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788539933; x=1789144733;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+KFYUAqa0PvanI3jMMnXFbsfpe1VgmcYuOXHAvwEfXk=;
-        b=pxyFDwemMTQN4Wc1oCFSbfLRLRYjf73b+99a75WhZPwvZMdQofO08y5VRNlEgryD4Q
-         TWqEFL8Tcp9iY2v29wWoyt94bNAY9QhOSYc1hlhDKFWyIfWUpcVmlegBpFFPtHGj2XNn
-         Cg+FbJe3H9pNamyCeNu9FwwzUHFUg+WhCfONwezqw3L6g+GhXqGqx/yapq1zfa1DtVTl
-         xbwqKlPqMwIq6vXXjwVS4noTeRvzmX3fxdO3HUjL0FtzrzMmJ272E44lytQ3ED/kfK97
-         iJ4/9s0HwF4UM6pLVTXepdI76bs0W8LMN5g4X5tEkdXXTTOisJzIn+w7tYd6gvDqgMFu
-         /e5g==
-X-Forwarded-Encrypted: i=1; AKwUvBweB6Z69OzM+Z4/FZYA3f7J3JCmbriORZsVziDnkk8pXYeXKVU2RgytoUi/Dk5D6gW7oGU9aFb5UC2Kix5KRuw=@lists.linux.dev
-X-Gm-Message-State: AFuF++kERaJo/rA20wGMAOMVyM8sSbM8/od2UuSOWCkueHmWI3G5UQPt
-	Eapbj0KolBsPvvUZSkcN6arT3W9Dh7GzdNZcjsubt1UL24rwJvYuHjf/H5zGx98GFoU=
-X-Gm-Gg: AYBFou3WpQVgv1SSujGVDIQMoeZ+erqeGG86k81BBr000AUhyaj4H304br5NhUdsIwx
-	4qD+fnL8B6LGp343S1xUgXbjiGjxiRMlH0Mq3SyRZzZ/6DDFpdUuYZDsFSlww8VNHbn1OEJcsVs
-	Q4Wkmx1V2hW+g+IqzccaANmujFWfxN9wYBRa8o1CUEzYUtRMiA+c5h6sIV/H4Kv1a1urvmp2SHo
-	6usjavCN0BZRqa4PZU5WVPuwGDYOKv9/szmH+Bx5lIwWiMxMZG+V1VZ/OOVOBCWw32T3JLnLed7
-	v1DVtVebqqJFO5uSbKfexH3qx2R2psrRn6iX9t6M7yoso7BhLdDpiE6z3NOx/I98YuekovJuHDZ
-	XJZyY18pD7pCsaJHWk14AzW2R3pW1afie4S7zo84ahqkwmerLg2O2a6H7wLsdOTVHTBrskkLnRY
-	jreZAj3GzZ1PmhckvSMYqELypFPns0BYgpk778/hjZGXoB4y2s4yevE7CXWQ==
-X-Received: by 2002:a05:600d:6451:10b0:49c:fa21:1c8c with SMTP id 5b1f17b1804b1-49cfa211d1amr40178055e9.33.1788539933403;
-        Fri, 04 Sep 2026 09:38:53 -0700 (PDT)
-Received: from localhost ([82.145.119.95])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cff8195ffsm21499955e9.14.2026.09.04.09.38.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 09:38:52 -0700 (PDT)
-From: Andrea della Porta <andrea.porta@suse.com>
-X-Google-Original-From: Andrea della Porta <aporta@suse.de>
-Date: Fri, 4 Sep 2026 18:42:32 +0200
-To: Gary Guo <gary@garyguo.net>
-Cc: Andrea della Porta <andrea.porta@suse.com>,
-	sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	conor+dt@kernel.org, robh@kernel.org, ukleinek@kernel.org
-Subject: Re: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver
-Message-ID: <apr0-PHk2S2ny988@apocalypse>
-References: <cover.1784539788.git.andrea.porta@suse.com>
- <a83d65b2d91865eb722337c547c94dce175e6086.1784539788.git.andrea.porta@suse.com>
- <20260720100212.BEF1D1F000E9@smtp.kernel.org>
- <amN-5B5POX3rNb29@apocalypse>
- <DKY8USKYJJVM.17HQ78YIYZMFV@garyguo.net>
- <aprNTF0278NuH55k@apocalypse>
- <DL6L8B6QAU01.1VCZAOPAUH4LP@garyguo.net>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="ojnIyqfS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1788541680; bh=Y3F2BY8tywWp+xEJCyblMsva6BBMmuyetlg60qfX6uE=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=ojnIyqfSSKn0jEvXUGfgiCf2IvOwAZMZcHqnvbdKT2t96wnSFdleFqHNydJ3Ie3C1
+	 p+Je/6ikge/KmInbOHk/V59ykp+Zm12xd2n3WNv0uQlCN2JisGT9LA07G7Nyng9HQV
+	 SbcOgb6lbNBVhSQyXuIbDK+YKcmedPhITvHYwb0k=
+X-QQ-XMRINFO: NS+P29fieYNwZYHNm0AtW8rJSr/CvvEk4Q==
+X-QQ-XMAILINFO: OMwX7W5oJqOBeGxI75QpWKqbhXdskQehOewM0byXgzvjSCGCuB877t7eG1Nnnp
+	 NVf/rvbAoRJrkVJjnh3fGRGKFWDAD5Q9DEDy0YngFzMJXK2p7gLploVVm42NQxW53kKsRiYw+NiXA
+	 k6Hbqu/1MXuu9Zt0+g3hGYSyelvBVe+SdHlt9eIssAc6pXmut35x9N9fUQ+nxbyYMx3vxGjkv9VXf
+	 pTV7vMKzqsQ5ki5iuxex76d63qv9Ly54My88osMVLlSU8x3/MBdckeoGOhuX0Z6E5KV2gLdLIZWAQ
+	 dl/LRiYoSjePjZfa8tV11HyvAdjdRhE95a1judck8V5QSqSoTEGu/Prw15HlgQp7eF2x5uOVXYc+K
+	 BcCuLLbWBbuCsIGVijY0ME5AxwzgXca7Dqfu7VjoSiKytmKxYrrbGtbbf8CGvfHvdyTZpuZ7Y1d0B
+	 xDn7Q/83RohqO2VBVbsefM0g8qVdypcEgiONcIloKwx2IobwjjtkOsL9mCaQNUdipe3KhKOvXWKi/
+	 qZkUEykK2tp5kkcoUJAM2FY2lj9nDBt42wzJMqHF8HnYtWxoq9GrJX5z9+7j79ZoGJQhqBgTTJQf/
+	 sQro7+L36krNaw0MoxGvYWQe35o/ImcfF2NuTjmMnytW8bch8E1JYJl6OsKKhk6OFWx2p6SvKuTSG
+	 n0i5Bc8XhrGHa4doL/PA2TMFM5UEmKHVgrGsFsbxRl+FMkkpT4pdnzz6qeWn71viVTkoJwq2vytG7
+	 DW5khaXnPhiMMm9gO2IAKyYNZqGP1J3pnWHYRGt8kqFSa1xNcT/rndfgHtJPnMRL5mU8my75TTdFm
+	 zw03nh/+oTk8OawEIjVacsQVGivxOfnfRzLaqgAivJhXKWPXDd7gP7n1QMh/V3nNtGUpkWBVecplc
+	 Rjywb2YdxlZpjKuB/HQHjUXurU/o2RRbGDL50xMi4lZS5uTPMblbKYBjXzsCSfAP3LbeHULAXSBsZ
+	 yN/GgrsPG8oFJ1dr9C+JkUoNWwUO8cTpp9VCVzPaL6po2ZQxjJpRiXvs5Z0UiA1X4wv7MIyq0Dl2a
+	 gK7lxQDnziRk98AVUNMF2tgow9VckeijpDlypJfZjknp2EXltOEXG9mvjxAGVJwyl6wi/fWAx5oyY
+	 E8ckJV7Xpcu4LY0lJqD5xe3R
+From: "=?utf-8?B?emh1bGluZzA4MDU=?=" <zhuling0805@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>
+Subject: Re: [PATCH net] can: netlink: fix static FD-NON-ISO mode validation
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DL6L8B6QAU01.1VCZAOPAUH4LP@garyguo.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Sat, 5 Sep 2026 01:07:59 +0800
+X-Priority: 3
+Message-ID: <tencent_4339953572497F8D81A5B18CB1C8A229D407@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <tencent_B5154AEA68C02E81646C47664F2DCCB5AD0A@qq.com>
+	<20260904154238.32DF71F00A3D@smtp.kernel.org>
+In-Reply-To: <20260904154238.32DF71F00A3D@smtp.kernel.org>
+X-QQ-mid: xmsezb58-0t1788541679t00hh2l9h
 
-Hi Gary,
+VGhhbmtzIGZvciBjYXRjaGluZyB0aGlzLiBZb3UgYXJlIHJpZ2h0LgoKU3RhdGljIGNvbnRy
+b2wgbW9kZXMgYXJlIGRlcml2ZWQgZnJvbSBwcml2LT5jdHJsbW9kZSwgc28gdGhlIHYxIGNo
+YW5nZQpjb3VsZCBhbGxvdyBDQU5fQ1RSTE1PREVfRkRfTk9OX0lTTyB0byBiZSBjbGVhcmVk
+IHBlcm1hbmVudGx5LgoKSSBoYXZlIGFkZHJlc3NlZCB0aGlzIGJ5IHByZXNlcnZpbmcgdGhl
+IG9yaWdpbmFsIHN0YXRpYyBtb2RlIG1hc2sgd2hlbgphcHBseWluZyB0aGUgdXNlcnNwYWNl
+IHJlcXVlc3QuIFRoZSBmaXggaGFzIGJlZW4gcG9zdGVkIGFzOgoKW1BBVENIIG5ldCB2Ml0g
+Y2FuOiBuZXRsaW5rOiBmaXggc3RhdGljIEZELU5PTi1JU08gbW9kZSB2YWxpZGF0aW9uCgpS
+ZWdhcmRzLApaaHUKCgoK5Y6f5aeL6YKu5Lu2CuWPkeS7tuS6uu+8mnNhc2hpa28tYm90IDxz
+YXNoaWtvLWJvdEBrZXJuZWwub3JnPgrlj5Hku7bml7bpl7TvvJoyMDI25bm0OeaciDTml6Ug
+MjM6NDIK5pS25Lu25Lq677yaWmh1IExpbmcgPHpodWxpbmcwODA1QHFxLmNvbT4K5oqE6YCB
+77yaT2xpdmVyIEhhcnRrb3BwIDxzb2NrZXRjYW5AaGFydGtvcHAubmV0PiwgVmluY2VudCBN
+YWlsaG9sIDxtYWlsaG9sQGtlcm5lbC5vcmc+LCBPbGVrc2lqIFJlbXBlbCA8by5yZW1wZWxA
+cGVuZ3V0cm9uaXguZGU+LCBNYXJjIEtsZWluZS1CdWRkZSA8bWtsQHBlbmd1dHJvbml4LmRl
+PiwgbGludXgtY2FuIDxsaW51eC1jYW5Admdlci5rZXJuZWwub3JnPgrkuLvpopjvvJpSZTog
+W1BBVENIIG5ldF0gY2FuOiBuZXRsaW5rOiBmaXggc3RhdGljIEZELU5PTi1JU08gbW9kZSB2
+YWxpZGF0aW9uCgoKVGhhbmvCoHlvdcKgZm9ywqB5b3VywqBjb250cmlidXRpb24hwqBTYXNo
+aWtvwqBBScKgcmV2aWV3wqBmb3VuZMKgMcKgcG90ZW50aWFswqBpc3N1ZShzKcKgdG/CoGNv
+bnNpZGVyOgoKUHJlLWV4aXN0aW5nwqBpc3N1ZXM6Ci3CoFtIaWdoXcKgUmVzdG9yaW5nwqB0
+aGXCoG9sZMKgYGN0cmxzdGF0aWNfbWlzc2luZ2DCoGV2YWx1YXRpb27CoG9yZGVywqByZS1p
+bnRyb2R1Y2VzwqBhwqBsb29waG9sZcKgdGhhdMKgYWxsb3dzwqB1c2Vyc3BhY2XCoHRvwqBw
+ZXJtYW5lbnRsecKgd2lwZcKgdGhlwqBzdGF0aWPCoGBDQU5fQ1RSTE1PREVfRkRfTk9OX0lT
+T2DCoGNhcGFiaWxpdHnCoGZyb23CoHRoZcKgZGV2aWNlLgotLQoKY29tbWl0wqA3MTAyNTA3
+YTgyOTc5MTRkOWJiNzA3ZTgzZjAzMGJmZDdmODgyNzgyCkF1dGhvcjrCoFpodcKgTGluZ8Kg
+PHpodWxpbmcwODA1QHFxLmNvbT4KCmNhbjrCoG5ldGxpbms6wqBmaXjCoHN0YXRpY8KgRkQt
+Tk9OLUlTT8KgbW9kZcKgdmFsaWRhdGlvbgoKVGhpc8KgY29tbWl0wqBhZGp1c3RzwqB0aGXC
+oGNhbGN1bGF0aW9uwqBvZsKgY3RybHN0YXRpY19taXNzaW5nwqBpbgpjYW5fY3RybG1vZGVf
+Y2hhbmdlbGluaygpLsKgSXTCoGV2YWx1YXRlc8KgdGhlwqB2YXJpYWJsZcKgYWZ0ZXLCoHJl
+bW92aW5nCkNBTl9DVFJMTU9ERV9GRF9OT05fSVNPwqBmcm9twqB0aGXCoHN0YXRpY8KgY29u
+dHJvbMKgbW9kZXPCoHdoZW7CoENBTsKgRkTCoGlzCmRpc2FibGVkLMKgd2hpY2jCoHJlc3Rv
+cmVzwqB0aGXCoGJlaGF2aW9ywqBmcm9twqBiZWZvcmXCoHRoZcKgb2ZmZW5kaW5nwqBjb21t
+aXQuCgo+wqBkaWZmwqAtLWdpdMKgYS9kcml2ZXJzL25ldC9jYW4vZGV2L25ldGxpbmsuY8Kg
+Yi9kcml2ZXJzL25ldC9jYW4vZGV2L25ldGxpbmsuYwo+wqBpbmRleMKgNzY2ZDQ1NTk1MGY1
+NS4uMjY5ODNmMWI0MDc3OcKgMTAwNjQ0Cj7CoC0tLcKgYS9kcml2ZXJzL25ldC9jYW4vZGV2
+L25ldGxpbmsuYwo+wqArKyvCoGIvZHJpdmVycy9uZXQvY2FuL2Rldi9uZXRsaW5rLmMKPsKg
+QEDCoC0zMjEsN8KgKzMyMSw2wqBAQMKgc3RhdGljwqBpbnTCoGNhbl9jdHJsbW9kZV9jaGFu
+Z2VsaW5rKHN0cnVjdMKgbmV0X2RldmljZcKgKmRldiwKPsKgwqAgbWFza2VkZmxhZ3PCoD3C
+oGNtLT5mbGFnc8KgJsKgY20tPm1hc2s7Cj7CoMKgIGRlYWN0aXZhdGVkwqA9wqB+Y20tPmZs
+YWdzwqAmwqBjbS0+bWFzazsKPsKgwqAgbm90c3VwcMKgPcKgbWFza2VkZmxhZ3PCoCbCoH4o
+cHJpdi0+Y3RybG1vZGVfc3VwcG9ydGVkwqB8wqBjdHJsc3RhdGljKTsKPsKgLSBjdHJsc3Rh
+dGljX21pc3NpbmfCoD3CoChtYXNrZWRmbGFnc8KgJsKgY3RybHN0YXRpYynCoF7CoGN0cmxz
+dGF0aWM7Cj7CoMKgCj7CoMKgIGlmwqAobm90c3VwcCnCoHsKPsKgwqAgTkxfU0VUX0VSUl9N
+U0dfRk1UKGV4dGFjaywKPsKgQEDCoC0zMzQsNsKgKzMzMyw3wqBAQMKgc3RhdGljwqBpbnTC
+oGNhbl9jdHJsbW9kZV9jaGFuZ2VsaW5rKHN0cnVjdMKgbmV0X2RldmljZcKgKmRldiwKPsKg
+wqAgaWbCoCghKG1hc2tlZGZsYWdzwqAmwqBDQU5fQ1RSTE1PREVfRkQpKQo+wqDCoCBjdHJs
+c3RhdGljwqAmPcKgfkNBTl9DVFJMTU9ERV9GRF9OT05fSVNPOwo+wqDCoAo+wqArIGN0cmxz
+dGF0aWNfbWlzc2luZ8KgPcKgKG1hc2tlZGZsYWdzwqAmwqBjdHJsc3RhdGljKcKgXsKgY3Ry
+bHN0YXRpYzsKPsKgwqAgaWbCoChjdHJsc3RhdGljX21pc3NpbmcpwqB7CgpbU2V2ZXJpdHk6
+wqBIaWdoXQpUaGlzwqBpc24ndMKgYcKgYnVnwqBpbnRyb2R1Y2VkwqBiecKgdGhpc8KgcGF0
+Y2gswqBidXTCoHJlc3RvcmluZ8KgdGhlwqBvbGTCoGV2YWx1YXRpb24Kb3JkZXLCoGhlcmXC
+oHJlLWludHJvZHVjZXPCoGHCoGxvb3Bob2xlwqB0aGF0wqBhbGxvd3PCoHVzZXJzcGFjZcKg
+dG/CoHBlcm1hbmVudGx5wqB3aXBlCnRoZcKgc3RhdGljwqBDQU5fQ1RSTE1PREVfRkRfTk9O
+X0lTT8KgY2FwYWJpbGl0ecKgZnJvbcKgdGhlwqBkZXZpY2UuCgpJZsKgYcKgdXNlcsKgd2l0
+aMKgQ0FQX05FVF9BRE1JTsKgaW7CoHRoZcKgbmV0d29ya8KgbmFtZXNwYWNlwqBzZW5kc8Kg
+YcKgTmV0bGlua8KgbWVzc2FnZQp0b8KgbW9kaWZ5wqBJRkxBX0NBTl9DVFJMTU9ERcKgd2l0
+aMKgY20tPm1hc2vCoD3CoENBTl9DVFJMTU9ERV9GRMKgfApDQU5fQ1RSTE1PREVfRkRfTk9O
+X0lTT8KgYW5kwqBjbS0+ZmxhZ3PCoD3CoDA6CgotwqAhKG1hc2tlZGZsYWdzwqAmwqBDQU5f
+Q1RSTE1PREVfRkQpwqBldmFsdWF0ZXPCoHRvwqB0cnVlLgotwqBjdHJsc3RhdGljwqBpc8Kg
+dGhlbsKgbWFza2VkwqB0b8KgY2xlYXLCoENBTl9DVFJMTU9ERV9GRF9OT05fSVNPLgotwqBU
+aGXCoG5ld8KgY3RybHN0YXRpY19taXNzaW5nwqBjaGVja8KgZXZhbHVhdGVzwqB0b8KgMMKg
+XsKgMMKgPcKgMCzCoHdoaWNowqBieXBhc3NlcwrCoMKgdGhlwqBwcm90ZWN0aW9uLgotwqBM
+YXRlcsKgaW7CoGNhbl9jdHJsbW9kZV9jaGFuZ2VsaW5rKCkswqBwcml2LT5jdHJsbW9kZcKg
+Jj3CoH5jbS0+bWFza8KgcGVybWFuZW50bHkKwqDCoGNsZWFyc8KgQ0FOX0NUUkxNT0RFX0ZE
+X05PTl9JU0/CoGZyb23CoHRoZcKgZGV2aWNlJ3PCoGludGVybmFswqBzdGF0ZS4KCldoZW7C
+oENBTl9DVFJMTU9ERV9GRMKgaXPCoHN1YnNlcXVlbnRsecKgcmUtZW5hYmxlZCzCoHRoZcKg
+Y29udHJvbGxlcsKgd2lsbMKgYmUKY29uZmlndXJlZMKgaW7CoElTT8KgbW9kZcKgZGVzcGl0
+ZcKgcGh5c2ljYWxsecKgcmVxdWlyaW5nwqBOT04tSVNPwqBtb2RlwqBzdGF0aWNhbGx5LgpD
+b3VsZMKgdGhpc8KgbGVhZMKgdG/CoENBTsKgYnVzwqBtaXNjb25maWd1cmF0aW9uwqBhbmTC
+oHRyYWZmaWPCoGZhaWx1cmU/Cgo+wqDCoCBOTF9TRVRfRVJSX01TR19GTVQoZXh0YWNrLAo+
+wqDCoCDCoMKgwqAibWlzc2luZ8KgcmVxdWlyZWTCoCVzwqBzdGF0aWPCoGNvbnRyb2zCoG1v
+ZGUiLAoKLS3CoApTYXNoaWtvwqBBScKgcmV2aWV3wqDCt8KgaHR0cHM6Ly9zYXNoaWtvLmRl
+di8jL3BhdGNoc2V0L3RlbmNlbnRfQjUxNTRBRUE2OEMwMkU4MTY0NkM0NzY2NEYyRENDQjVB
+RDBBQHFxLmNvbT9wYXJ0PTEKCg==
 
-On 15:05 Fri 04 Sep     , Gary Guo wrote:
-> On Fri Sep 4, 2026 at 2:53 PM BST, Andrea della Porta wrote:
-> > Hi Gary,
-> >
-> > On 19:42 Tue 25 Aug     , Gary Guo wrote:
-> >> On Fri Jul 24, 2026 at 4:04 PM BST, Andrea della Porta wrote:
-> >> > Hi,
-> >> >
-> >> > On 10:02 Mon 20 Jul     , sashiko-bot@kernel.org wrote:
-> >> >> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >> >> - [High] Missing `.remove` callback leads to Use-After-Free in the PWM and Syscon cores and leaks clock resources on driver unbind.
-> >> >> - [High] Register context loss on suspend/resume silently breaks PWM output.
-> >> >> - [High] Unclamped hardware duty ticks lead to integer underflow in the PWM core for normal polarity.
-> >> >> --
-> >> >> 
-> >> >> --- Patch [2]: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver ---
-> >> >> commit 0c98703d857577902e57d25b42a3d46dfbde5795
-> >> >> Author: Naushir Patuck <naush@raspberrypi.com>
-> >> >> 
-> >> >> pwm: rp1: Add RP1 PWM controller driver
-> >> >> 
-> >> >> The Raspberry Pi RP1 southbridge features an embedded PWM controller with
-> >> >> 4 output channels, alongside an RPM interface to read the fan speed on the
-> >> >> Raspberry Pi 5. Add the supporting driver.
-> >> > 
-> >> >> > +static struct platform_driver rp1_pwm_driver = {
-> >> >> > +	.probe = rp1_pwm_probe,
-> >> >> > +	/*
-> >> >> > +	 * .remove is not needed because this driver cannot be removed/unbound
-> >> >> > +	 * cause it relies on syscon which cannot be removed
-> >> >> > +	 */
-> >> >> > +	.driver = {
-> >> >> > +		.name = "rp1-pwm",
-> >> >> 
-> >> >> [Severity: High]
-> >> >> Is it safe to omit the remove callback here?
-> >> >> 
-> >> >> Even with suppress_bind_attrs set on the driver, if the parent RP1 PCIe
-> >> >> device is removed, reset, or unbound via sysfs, it will forcibly unbind all
-> >> >> child devices.
-> >> >> 
-> >> >> Without a remove callback to run cleanup, pwmchip_remove() is never called
-> >> >> and the clock is left enabled. Because the backing memory is devm-managed,
-> >> >> the devres subsystem will eventually free the pwm_chip and regmap memory.
-> >> >> This can leave dangling pointers in the core pwm_chips IDR and the global
-> >> >> syscon_list, which could result in a use-after-free.
-> >> >
-> >> > This is true. Uwe, I guess I should reintroduce the .remove callback,
-> >> > what do you think?
-> >> >
-> >> 
-> >> How is remove going to work with syscon? The previous version seems to just
-> >> ignore it completely.
-> >
-> > True, unfortunately we have not much choice with syscon because it does not
-> > contemplate a corresponding remove function. The best well-behaved code could
-> > just deal with clocks and resources that can be released, while syscon is
-> > unfortunately not among them.
-> >
-> > On the other hand, I'd like to emphasize the following:
-> >
-> > - the driver could not be unbinded nor unloaded (directly) by the user, and...
-> > - ...PWM driver removal as a consequence of the pci bus device being forcibly
-> >   removed will almost surely leave the system unusable.
-> >
-> > As a matter of fact, even though it's not impossible for the remove callback
-> > to be called, it seems highly unlikely. So maybe it's not that big deal.
-> >
-> >> 
-> >> Also, do you actually need syscon here? Given that the pwm fan device is going
-> >> to depend on the PWM fan device anyway,
-> 
-> Oops, it should have been "PWM fan device depend on PWM device". But you got it.
-> 
-> >> you could just EXPORT_SYMBOL_NS an API
-> >> from the rp1 driver that returns the tachometer reading when supplied with a rp1
-> >> pwm device pointer?
-> >
-> > I'm not devoted to syscon so if everyone agrees on the EXPORT_SYMBOL_NS solution
-> > I'm perfectly fine. It seems to be used throughout several drivers and as long as
-> > it's not considered to couple the consumer and the PWM producer too much, I think
-> > it's an easy alternative. Uwe, are you fine with that?
-> 
-> I think that's pretty typical for platform devices, provided that the consumer
-> and the producer are closely related.
-> 
-> I checked the RPi vendor kernel code and it looks like they're modifying the PWM
-> fan driver code directly -- in which case the coupling would definitely be
-> problematic. But I think that modification is problematic itself and not
-> upstreamable. I suppose you'll add a separate, dedicated RP1 fan driver?
-
-You nailed it. I've changed downstream driver approach because it was too invasive
-to the pwm-fan driver and, as you mentioned, not upstreamable.
-A separate RP1-custom fan driver was in plan from teh beginning.
-
-> 
-> In which case I don't see the coupling being an issue.
-
-Perfect!
-
-Many thanks,
-Andrea
-
-> 
-> Best,
-> Gary
-> 
-> >
-> > Many thanks,
-> > Andrea
-> >
-> >> 
-> >> Best,
-> >> Gary
-> >> 
-> 
-> 
