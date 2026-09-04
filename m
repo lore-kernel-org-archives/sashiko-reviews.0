@@ -1,246 +1,206 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1841951A751;
-	Fri,  4 Sep 2026 18:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20C0503BE0
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 18:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788546629; cv=none; b=tpKRpk6NFlMrKC167G2Zvnai7grYt0Gt/NGyGf+/d4j+f2Qvb8MF8D2xhmtHsrBoqiHg2CTE9ARgM6azoAs+ChemaoKxRji1NuIswcrdbuxYVjX9aAlnDAwRCFQPZvJMHzRyiRn//682i4mr3Nt0bwHIOZJGqZhnrUrPpCHCZD4=
+	t=1788546776; cv=none; b=obQzEdgp7q/ROMwZ8IrtMwKeNIhaTwCdFmf9AlKiPUNSPFh8AhHtXDY7ZZvn60si+t8LQil8vAydHTB6LCsNO9Dpzbd55YIQ4w1nJ4hwWwUGttS7NUVvnCQFx9DUHUypc67ADYBDqjHBmxd74pUNEzg1g2gd5mqOxJ9Ldr6Wr/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788546629; c=relaxed/simple;
-	bh=M2vlvbqRWV+Xw+3jTt9UAjlcZl7+IruDbCiA5qjhmKc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GtY3tg+nptbdnYpPnNuYnip147ptac90RS8CBxUm/0ERKsUnioEs8WWodmqYF9aR3bRKe49K/A5AMOc2tYSdBKRwFADrptzeFExWdiizs3kP97pG4GfshaGIOa2ciOKZy+5ljBXhIy3IYlTbfubV3wkCyUEsJ8qf2asisREpD7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=bvATyraG; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1788546776; c=relaxed/simple;
+	bh=j+1ZOes4kWP7FAkpcojmQmiuJSCqnncwy86K3mTRxl4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S7/9sBUVEcMh8hLPLTFfWsiuq7B1w0rsIEqJ/3gdoJV0OBoBYcCKAkNfWi4VsB5jbhB129v+6G3yHQ4CK4Zt0IngUb7M2ftv/nEIN/+b+9drk4sZ8wzlmgyDYWCDmibFT+6f7PyQnXsE1jTw84x6x8J2wZzJxfsbF1ZhUGakYbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ULmMrf4r; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V2DgREiH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="bvATyraG"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 684HWEVA1236999;
-	Fri, 4 Sep 2026 18:30:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Cuu3MZ
-	daGvzuxmWskN/PqNsPVmmgkPsY77OJwg3BoiI=; b=bvATyraGfJj4p5w1iT7dbW
-	vsYCUL1y9tP9SHmO8ydRSStirU10l+naDNDmSE02Q0sqYN9AFnJGPAQ+0rhCZXlJ
-	ybZ7/1TG/qb8GBNN9+gnM/1vC/dgsuittmPXAfPwGLf6HrEYHwbKfpyY5H/19DuT
-	s+VkaNRiqT+aWazOapfdSHmU/jxhTpfQNSX5rSbWskmWlf5BoewdKvlGFRohUp+i
-	O2sGkKeDn1EjhUBt4/qy0qDmQVp0Kp0XMVyePncwxVfo9MsM83MJ+ULK/35JPXh8
-	WjqiZ0tgRMrrRp2FtuLeA7eSJQlD6Rk3kq12gw9iqHGmTRYL5cL7yedkR9our6aQ
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnuec1ph-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Sep 2026 18:30:25 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 684IQGwc014499;
-	Fri, 4 Sep 2026 18:30:23 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarkpmd6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Sep 2026 18:30:23 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 684IUML432178796
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 4 Sep 2026 18:30:22 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7623458056;
-	Fri,  4 Sep 2026 18:30:22 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E192758062;
-	Fri,  4 Sep 2026 18:30:21 +0000 (GMT)
-Received: from [9.61.80.215] (unknown [9.61.80.215])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Fri,  4 Sep 2026 18:30:21 +0000 (GMT)
-Message-ID: <386bc4c0-6693-4612-8103-11f919fed342@linux.ibm.com>
-Date: Fri, 4 Sep 2026 14:30:21 -0400
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ULmMrf4r";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V2DgREiH"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 684HRvRh3684083
+	for <sashiko-reviews@lists.linux.dev>; Fri, 4 Sep 2026 18:32:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Bvne7HECiZvG5t61nBxUCDlI
+	c5mqbwFgVydcIZZ6aPE=; b=ULmMrf4rdQk4fHXC5NzSRck1gg0RthPnycO4EyKl
+	6cQm7QUB5bvsd5eNmLl8cI9W38NnaDu0UB+qwVUEQsuDhE99yzOTl+WJfXLAPqao
+	eWlZAxj6sLg1EghOi/+SJQYSYCt66uRnYrorFcW7qBl+in5m4DkMuLXAdvoEDCeZ
+	FG/qLHDW1NM0zSqXpdjyx3EotyD7vqsH2H4mTdzyf1Z4wPnYFroiIHLe+LkAVLXC
+	8xFCL/JSdtz1W+TL2z8pEcw31DNHdpZz+WB+p+cFgFSfvo7d1apP/69ZvvIX6q7a
+	Kfd5NVDbOtR+mRqubut8q0m7LiOq5b5guRFl6Xg4DAAw5w==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gg00y93qf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 18:32:54 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-785b66a7017so332719137.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 11:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1788546773; x=1789151573; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Bvne7HECiZvG5t61nBxUCDlIc5mqbwFgVydcIZZ6aPE=;
+        b=V2DgREiHVGRSdYb89MX9lGsS/zcROrmAkiwYHDn29LbcmHdMmd57iFWZAjJrRnhpck
+         MPPehnMdXttu8nDhvL8clDnCvGderdsuACO3gMxAQCZtnwwIZdit6TKgVTpvb71npbHQ
+         5b8JjAMUaK1MTBb3PzSJmdWwvVqCaYBJAESv4B5dN+pFyIKvL0xNcUQderssUfCIKQQC
+         Tg5jXXGte62rU0b4zgoBLCH6irR9htNIC2kcem695T0LITLZCqMFKjDgVJqRmpXlTPBD
+         8vwqsxwyAUCfXshCDqYU/8VNsTVIWB/kdm4y3N8r6Iof34iYi8Tc3SHmfRObYoBRTxah
+         GAgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788546773; x=1789151573;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Bvne7HECiZvG5t61nBxUCDlIc5mqbwFgVydcIZZ6aPE=;
+        b=ec2wTVwbxgN9k3gb8fr6J2VLwr6bmIjF3wJV0G7lRCTkgEpvTLNVluRawU1yuZma2B
+         7jg3j7sCvHCCc64/J5o9wdiayfDKI39uoeOZ9a15TUDPG2CE+1zgvPmuK+QJG980EFrY
+         0Wuka9I1J14RUkilKyeXncg71A5w2WZDPQdyZ+HmTFgoynI1AokHqForg0oOsPfJ3im5
+         xp3xWRa9uHy4lHAux9z7hzsyC5YyTYKxR5DVmUUO0TmMefcI892UeIpm2SPV932rreLs
+         ckOGbalUvS4ZzE0ClPmxCXqeAT4g6e9U/OQoBil4RpaLJQVj57erC+WFjVjgskwuz/zd
+         /wjA==
+X-Gm-Message-State: AFuF++mXlfdBUBrOz+vBM/qQ1/zcyGGUpsHulQZi5rMwpEelcEgtIMNZ
+	K9vrKWtvWZQYH6KYPOd080PP+mPuBpn5cYgq+HbswE5qimSGa/meU36nkj42wPAKJU6quykwXfb
+	0bCZSOAVuRseo88eJNBhkI82lDygJmDt8XduFIocBGUsG1DrxTHyhAwNvdJX3xvLNkk+ALRvXit
+	0Jpv4=
+X-Gm-Gg: AYBFou3ISGFHPWgL7kE6bUXzbzc71unWbxmQCzS/coz5Jx0vBr4GkPWPEXM0CY6hmYA
+	ylXiVjzvEDnnwn4VzVUg4hvrIrrEKqoYt1Em5walOme1pmO0563Rh6eKCw3yb4THCXsmI0znlEa
+	KXbB2k79QbJL92o6PKjahN5QhIdOmZUZN8PsZXWjD2rO+WVhbWQnn+En5vqQSL2DkJemkYf0d1+
+	Yj4Z3zuyZp/AoshP2GX0KuD7FwM3lpB7W7qdi11f8wNQoECOTJRlaXAlcJ2xMLwDgebhO1WenkB
+	eo9hHSb8jqGycAujtiZElVzS+F8OG63+BaVadLYau/AQM8TBxTC/dXUf3z3xPShVkrJz07lpcfV
+	RG16syGPWq2BxdA==
+X-Received: by 2002:a05:6102:2907:b0:778:9033:e337 with SMTP id ada2fe7eead31-78a4a7186d7mr2482594137.7.1788546773006;
+        Fri, 04 Sep 2026 11:32:53 -0700 (PDT)
+X-Received: by 2002:a05:6102:2907:b0:778:9033:e337 with SMTP id ada2fe7eead31-78a4a7186d7mr2482567137.7.1788546772398;
+        Fri, 04 Sep 2026 11:32:52 -0700 (PDT)
+Received: from localhost ([188.216.77.92])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ce5533ffbsm168209295e9.3.2026.09.04.11.32.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Sep 2026 11:32:50 -0700 (PDT)
+Date: Fri, 4 Sep 2026 20:32:49 +0200
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, linux-pci@vger.kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: PCI: toshiba,tc9563: Document
+ embedded GPIO controller
+Message-ID: <apsO0dPYIiCujiM5@lore-desk>
+References: <20260904-pci-tc9563-aux-v3-0-5b1449d62ba2@oss.qualcomm.com>
+ <20260904-pci-tc9563-aux-v3-1-5b1449d62ba2@oss.qualcomm.com>
+ <20260904172114.2CF8F1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/5] s390/vfio-ap: Fix unbounded loop in
- apq_reset_check()
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, kvm@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev
- <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org
-References: <20260904093435.1161402-1-akrowiak@linux.ibm.com>
- <20260904093435.1161402-4-akrowiak@linux.ibm.com>
- <20260904094839.1E72F1F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260904094839.1E72F1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: -WFZ2K9iVmQYT9WoxtusHiwsKpvPAMwS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDE2NCBTYWx0ZWRfX3FCg3gvLoG8B
- 1N65VbvmneLwlFZNHH9LK4AbpAFD4l5r+V8GmjQv6bICf57r3wzzptp8JijKcg7vTY718/b6/A9
- J6vgibXowTG2S1xz2J1ijNYGl65fTmJMUkLhTy7YoEsFLpHOjB5jqmHC5F5qJFlu+cdwZFcEYFf
- hz7L5xhsRVjXpKBgeIgpneeW5Bx39e/vyf9AS5PYWL+IkpE4k3L5uuxXQzInR9BlmWXnrJJMjBd
- YvuXBOvD0Huhf2qpgHyP8KtN2SOt1/ccJgrn7b71tqTu9al9sDMHtR58K2ewFWDwmFwyhfI3hTI
- D9hBKjEci0Ih+NfjATbI1tLmTjDoFOi9xM8yPg7+pNBoBl+2vZPoFngMjq3hgQopP6iBysdX07L
- r3vaAkaTO+nwYbY5NRFfuhccEumGzIGTSAkNnxKhgjfHKArygFlvHApwy8a9WLZb49tXKHXmsNc
- uafFfT+2raluioj/yIw==
-X-Proofpoint-ORIG-GUID: -WFZ2K9iVmQYT9WoxtusHiwsKpvPAMwS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDE2NCBTYWx0ZWRfX6ODom1UYE6Rm
- ss8UKx3eJjrvkmaRV8FCOkJNU0PR1wDuq0CwEk4d0OD7PlAdMC3lcbAY3jOQtEzjY9vucbbKai5
- R3DddPHrB/x06sR65uiH2DZZDQuhmcI=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a9b0e41 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=l8z-qHihChIYEk0EtGUA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ewcNLQpfoQlfLSzs"
+Content-Disposition: inline
+In-Reply-To: <20260904172114.2CF8F1F00A3D@smtp.kernel.org>
+X-Proofpoint-ORIG-GUID: 0j7Lkvyd8sJo05aar7W3cd0SjJfLMweE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDE2OSBTYWx0ZWRfXwmmSe/2xD+t4
+ O/kDeXGXfRDZh34FLhFuQI0f13PuQIXm2NsBDaUWTqMq0LkmJ2jhdI/RfdeLNrNZ6+07kmRcsXh
+ etJKB2X58mcku/ak8XOV9LSAxWurjdXrKLxynHpn5cXezIaskMiZ2Nal2CTl8vMNhZ2ZDbxS8aw
+ Tub2jXZMX1tqWJoUf9BI+HapWSJ54yoMHUwOrSomI/JOrh/0jrlq2cs1zZhqLWlNLRlET04bQ/V
+ He6jzgdHpz0Pghi1M2IPR5DXB6aiQUhLU6hJQF5oxmCHBytqCiUPDClAOp9qRdwuzkobvAn9TgQ
+ jaNwkwoJtJHS2BtlL+G44f/EIUhl93s++EAmdJUJ6T1NMPmC9GqLT8tENZk7q9lpFjAxX/KUDHB
+ LAGB38gB13UpUTe+OeVOaH5Z+djekQEow911Gr+qy65vnfHWoLiTBw8v9eijga3uyllU3kIU0hA
+ Gz5qqxslB5WjyTdh3Vw==
+X-Authority-Analysis: v=2.4 cv=TsPWQjXh c=1 sm=1 tr=0 ts=6a9b0ed6 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=WpTaRW6qxYHRGzLzQsVYzg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=86Be0pIABdjnZPeXsFYA:9 a=wPNLvfGTeEIA:10
+ a=kRZTEHTrMTxrHKFV5dYA:9 a=-aSRE8QhW-JAV6biHavz:22 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDE2OSBTYWx0ZWRfX8AtuS+1rNoM7
+ 11cNu2xp51/jvxfOLCD3yYd241aLB9X6yk2jK3JQaddd8g6dbElL2QPhl/bCl57DIof2KHHopkn
+ TsOKoQ6vWXAskTbWFT9GjDILpeQjF9U=
+X-Proofpoint-GUID: 0j7Lkvyd8sJo05aar7W3cd0SjJfLMweE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-04_05,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ impostorscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609040164
+ definitions=main-2609040169
 
+--ewcNLQpfoQlfLSzs
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-
-On 9/4/26 5:48 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Dangling AQIC resources after a reset timeout cause arbitrary IOVA unpinning in a subsequent guest's VFIO container.
->
-> Pre-existing issues:
-> - [High] Early return on an unknown hardware response code (-EIO) silently leaks AQIC resources and fails to update the queue's reset status.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The 'gpio-controller' and '#gpio-cells' properties were added =
+to the binding to document GPIO provider capabilities, but were not added t=
+o the 'required' list.
 > --
->
-> commit fec86a42ae1833abad22bf816bcbaaa29965a88e
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> s390/vfio-ap: Fix unbounded loop in apq_reset_check()
->
-> This commit fixes an unbounded loop in the queue reset worker by introducing a
-> maximum wait time of 2000ms. It also adds logic to verify the asynchronous
-> completion of queue zeroization and intentionally leaks AQIC resources on
-> timeout to avoid a potential host crash from wild DMA writes.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index ea0625f10c7e8..32b80d91a6431 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->
->> @@ -2050,6 +2113,54 @@ static void apq_reset_check(struct work_struct *reset_work)
->>   		ret = apq_status_check(q->apqn, &status);
->>   		if (ret == -EIO)
->>   			return;
-> [Severity: High]
-> This is a pre-existing issue, but does this early return on an unknown
-> hardware response code (-EIO) silently leak AQIC resources?
+>=20
+> commit 167159eda5a6932cbffa6730117f8dd7e23b2970
+> Author: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+>=20
+> dt-bindings: PCI: toshiba,tc9563: Document embedded GPIO controller
+>=20
+> This commit documents the embedded GPIO controller within the TC9563 PCIe
+> switch. It adds gpio-controller and #gpio-cells properties to the device
+> tree binding, along with the reset-gpios property for the downstream port.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml =
+b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > index f084830c6d0cb..c4cd162cb084b 100644
+> > --- a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > @@ -31,6 +31,11 @@ properties:
+> >      description:
+> >        GPIO controlling the RESX# pin.
+> > =20
+> > +  gpio-controller: true
+> > +
+> > +  '#gpio-cells':
+> > +    const: 2
+> > +
+>=20
+> [Severity: Medium]
+> Should gpio-controller and #gpio-cells be added to the required list?
+>=20
+> Looking at the required list in
+> Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml around line 108,
+> these newly added GPIO provider capabilities are missing:
+>=20
+> required:
+>   - resx-gpios
+>   - vdd18-supply
+>   - vdd09-supply
+>   - vddc-supply
+>=20
+> Without being added to the required list, device trees with incomplete
+> configurations (missing the newly added GPIO controller properties) will
+> silently pass schema validation when running dt_binding_check or dtbs_che=
+ck.
 
-This will be fixed in patch 1 of the next (v6) of the patch series.
+ack, I will fix it in v4.
 
->
-> By returning immediately, this path bypasses the resource cleanup in
-> vfio_ap_free_aqic_resources(). This leaves q->saved_iova dangling and fails
-> to update q->reset_status.response_code.
->
-> Since the status remains 0 (AP_RESPONSE_NORMAL), callers might incorrectly
-> believe the queue is securely zeroed. If the queue is then reassigned to a
-> new guest, could the next successful reset unpin the old IOVA from the new
-> guest's IOMMU domain and corrupt memory?
->
->> +		if (elapsed >= AP_RESET_MAX_WAIT) {
->> +			/*
->> +			 * Zeroization confirmed (ret == 0): the TAPQ status bits
->> +			 * indicate the async portion of the ZAPQ completed
->> +			 * successfully. Free AQIC resources and return.
->> +			 *
->> +			 * Queue non-operational (ret == -ENODEV): the queue is
->> +			 * deconfigured or checkstopped; interrupts are not
->> +			 * possible so AQIC resources can be safely freed.
->> +			 * Zeroization cannot be confirmed in this state, but the
->> +			 * queue cannot generate interrupts, so the NIB page is
->> +			 * no longer a DMA target and it is safe to free it.
->> +			 */
->> +			if (!ret || ret == -ENODEV)
->> +				goto done;
->> +			/*
->> +			 * Timed out without being able to verify zapq completed.
->> +			 *
->> +			 * The AQIC resources associated with this queue - the pinned
->> +			 * page containing the NIB and the registered guest ISC -
->> +			 * cannot be freed here. The NIB is the active DMA target
->> +			 * for AP interrupt delivery until the reset completes;
->> +			 * freeing the pinned page while the hardware may still
->> +			 * write to it would result in a wild DMA write that could
->> +			 * corrupt host memory.
->> +			 *
->> +			 * If the reset eventually completes, interrupts will be
->> +			 * terminated and the pinned NIB page and ISC registration
->> +			 * will be leaked. This is preferable to either a wild DMA
->> +			 * write or waiting indefinitely: flush_work() callers hold
->> +			 * the matrix_dev->mdevs_lock mutex which serializes access
->> +			 * to all mdev objects system-wide, so blocking here would
->> +			 * hang all guests to which those mdevs are attached.
->> +			 */
->> +			report_aqic_resource_leak(q);
->> +			/*
->> +			 * Report the actual non-zero hardware response code, or
->> +			 * synthesize AP_RESPONSE_RESET_IN_PROGRESS if TAPQ
->> +			 * completed normally but the status bits failed to
->> +			 * transition to their post-reset states.
->> +			 */
->> +			if (status.response_code == AP_RESPONSE_NORMAL)
->> +				q->reset_status.response_code = AP_RESPONSE_RESET_IN_PROGRESS;
->> +			else
->> +				q->reset_status.response_code = status.response_code;
->> +
->> +			return;
->> +		}
-> [Severity: High]
-> Does this early return on timeout leave dangling AQIC resources that could
-> cause arbitrary IOVA unpinning in a subsequent guest's VFIO container?
->
-> When the worker exits on timeout without clearing the dangling q->saved_iova
-> field, and the adapter is unassigned from the current guest and hot-plugged
-> into a new guest, q->matrix_mdev is updated to the new guest.
->
-> When the new guest successfully resets the queue, vfio_ap_free_aqic_resources()
-> will be called. Because q->matrix_mdev is now the new guest's mdev and
-> q->saved_iova is still the old guest's IOVA, it seems this would erroneously
-> unpin an arbitrary IOVA from the new guest's VFIO container:
+Regards,
+Lorenzo
 
-The scenario described cannot occur. When the adapter is
-unassigned from the mdev, unassign_adapter_store() calls
-vfio_ap_mdev_hot_unplug_adapter() which calls
-vfio_ap_mdev_hot_unplug_adapters(). That function calls
-vfio_ap_mdev_unlink_adapter(), which removes the queue from
-the mdev's hash table, but q->matrix_mdev is not set to NULL
-until vfio_ap_unlink_mdev_fr_queue() is called later. Before
-that, vfio_ap_mdev_reset_qlist() is called, which issues a
-fresh ZAPQ for the queue while q->matrix_mdev is still valid.
-If that ZAPQ completes successfully, vfio_ap_free_aqic_resources()
-will correctly unpin the old NIB page and unregister the ISC
-using the still-valid q->matrix_mdev. So while the reviewer
-is correct that the AQIC resources are leaked by the timeout
-path, they will be cleaned up by the ZAPQ issued during the
-unassign, provided the reset succeeds at that point.
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260904-pci-tc9563-=
+aux-v3-0-5b1449d62ba2@oss.qualcomm.com?part=3D1
 
->
-> vfio_ap_free_aqic_resources() {
->      ...
->      if (q->saved_iova && !WARN_ON(!q->matrix_mdev)) {
->          vfio_unpin_pages(&q->matrix_mdev->vdev, q->saved_iova, 1);
->          q->saved_iova = 0;
->      }
-> }
->
-> [ ... ]
->
+--ewcNLQpfoQlfLSzs
+Content-Type: application/pgp-signature; name=signature.asc
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCapsO0QAKCRA6cBh0uS2t
+rAIPAP9ldnovE+inPbu1tazRg/kLnB87xWlHIQ/I9Tf1dz1JlgEAo4dME/cIbVWt
+XSEfFwuOSDseGq//+7sOhx6dxC3CvQc=
+=7vvW
+-----END PGP SIGNATURE-----
+
+--ewcNLQpfoQlfLSzs--
