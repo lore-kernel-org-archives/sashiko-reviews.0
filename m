@@ -1,169 +1,197 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CC249DB89
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 13:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7647D4A3859
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 13:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788529782; cv=none; b=aRi/kxjP029DzwiTY4Nl2LZTAz8BdQVNcVSY5fmq6PxSIib378DuqBstP/ywt4FLRYB/yKZ8pYeWzanFgW73zbpBB8M5MylcqcC3TTCFd6DMLXSYjvHrgU0MMjsT64Z/uNGFLVKXQMLoEunXk6eS3kOfMNfLPfpk+bHGVxb5084=
+	t=1788529861; cv=none; b=gU9Cf76zYNnaJN8lk+Qvmdov2ictWa5VNLPIuB8/BPsoK6GABAFRIac+foWmRcWN+oW1bDTXiqVYmfvKfUIrHvkM1/IPnqkMqHgqzxrneHVseeWHdL5UhHJ4h0lBlK1K4zpBD4IwKOSkFAo5EBdUe0iNcv8ACR/rPGFFqGijOLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788529782; c=relaxed/simple;
-	bh=aosYpUbqKZOBqzNixgi27z8JCDcxlJLDNLiZEDNN040=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qYalu0Ga7KZYDooh4myBBSVE4T/aDOqVNBksnkII3C1log25cxashitBkiJs9IcdXJx8J/CIINPMh9orGVcBA5rFu7fLaO2r1A0UFBxK9ObklDtID/RJ34eqmsbm+sODJZiI/ed6L/vpDwVeL+BkB8Y6JUBlWjS3/sc8j4RaivI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=D1/BStQH; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1788529861; c=relaxed/simple;
+	bh=8p9pX3f/Jni4/804dN03aY2QgzvCn8h0nT7REjf25z4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=l7F3/4TxfxdKhf57RU2pEiFCKsH15lRw/aGmLaUDHHB9jMelfR63vvO23YYiO7dTn/AQgIobd1ttKOOa3vlkHV5nzmT6gReLa9fRgALZHoaO6Kmbz0awHCHIFRx0o5k4BMWw1C0P3cGNtv2E0wcI5Gw0xn2x0KUfcwj5cdGRxrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=i23B4pSA; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="D1/BStQH"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48586861639so723533f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 06:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1788529778; x=1789134578; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=wP3l+1LPFkAU6/L5AN9IB6fzLBnDEDQsr0kTH2ur/CI=;
-        b=D1/BStQHkW81pvcCFS2dmqWVH4DmWtlBPej4DWVI9OKZ9qVM0rXuVCQvEe/0253jaE
-         pcsI4CdiUTssDfp/SJ24rCfE5GhmGHGFZ/CXaNd1YMq5e4ivoFd0p237gGS+rWeAVA1K
-         ddq21BPXqhCWNLiQPsKxPLvAIoeuJ0eFX0C8xu9m3AqPy5Y83MeLlWGM9UhyVFQXXwVV
-         YbHDbeZ/XYSi35YV9FRhpj1F/yJyKFt8cbH1Wt2AwBUeMIdE2j+baXu9afVllni+3WhH
-         PkbfhMW4Dcxlp3ubktsMKp2QC+OTK1QFcJzTGqRZgOG4gyDjK1E4IMNWT0erFcsalp4I
-         5DJA==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="i23B4pSA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1788529858;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OMGOFQALV7U5ZmaS0qjL9QRN5TZgiLFu8RShunh6mL4=;
+	b=i23B4pSANkT6Pd1oMD5GHPCMDc8qCDhbcXmqm5kkkQiKBqbdRRrWC2CGIr/dsj2YxeoAhQ
+	7w/Zqe6AUVpckTG6ukYLrYDvRVxR5Eg0efboDk+HwPfBShA2KfAK1kmvKXNMDohs+e4adS
+	dWj6lVZqN8yG51NyxN1f1q+5OptJs/s=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-10-HJvLzFk2OLadWgTQb3OIVg-1; Fri, 04 Sep 2026 09:50:57 -0400
+X-MC-Unique: HJvLzFk2OLadWgTQb3OIVg-1
+X-Mimecast-MFC-AGG-ID: HJvLzFk2OLadWgTQb3OIVg_1788529856
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-49953abe51fso7608615e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 06:50:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788529778; x=1789134578;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wP3l+1LPFkAU6/L5AN9IB6fzLBnDEDQsr0kTH2ur/CI=;
-        b=P/7mOW+VYR26utCVD5krsBrpyLbOtczPR0sys7HIFYgr7GoflNas0RP03SUmQVBBNz
-         KsVMG+WeuTJ/pVyJtYQe6nGG1+Fp08/d5fguVYjBldDxzI3xo2sujJ5zMZlNf9lxJ6zp
-         uRuZnN50tv/vfnoF/tXzdy7rZ9SSvoDK+Z694cGePxjb5KYcDoabRoa+4cgn7Qy7nD8y
-         fLw6Jed9/awxbwCWqenNcKTB3cDEmxktlEyF5HvwxBnELH78w/jwpjnGna6FuD9x9BZ0
-         FbHN0lnQnNKhl4lhKzsfYpsj8f2dAM+1dRqoAHKfEDv3I6RDsdTkrZvb+dwbmFTzMr+w
-         ne2Q==
-X-Forwarded-Encrypted: i=1; AKwUvBwUmdlDnN1WHV/J40LzRl1SSfVNm8LfnNi0L5YMjZ8DYoPfhQvfe/s5DXKdSfx/La9Si4TW1oUSZu7i8KXQwE0=@lists.linux.dev
-X-Gm-Message-State: AFuF++kTKdlr5GWUuyxWyjmCM4FVpoR1CJjpbsrtKI8SqYJRo9jk2++L
-	TVCj6LDpAPZIschAfuUYI6jHb0dsP3qrgHhuVx01teUtNS8hRBGtjDZ/dl3FpuMrJPE=
-X-Gm-Gg: AYBFou3QS5gdL/jgwFaunoxgNyOdy0pLWw4pPFNwj/6TJYZMgN+b0pZCqW6cG0nMqGf
-	OWtL9c539pnA9Ql/QEa6UYziHsl/fvZgxqkod2LbHCCmjIsEFa4yc7PUBIxBMvr5tYJSjj+UwBY
-	KJS/9I3S0j5Bp2TVpC9ojGWDBO81hb3vNZrduplzqGdLEf4iuzzebNcpN2hsdBcsbuc2FnJenuo
-	msBxdB9rEZb+3dtg0d153l2yRc0CKqkOLV/h6yYqvjDmk43NawWMURI677dyABQdEABTteyYdl1
-	906Qb7QLL9R8ZLnywTDUKCPeb4Q/RhTpZHx29IzFLrarBpic5C0grS0zcm8VqO+uRXYbZals13U
-	xCSiSel/5OfLjyw6+SXVYY96Cf3JczUhtSH9Ehs0szM7+YEUud2mai/nY5tSCzJ5P17NOhYPmEn
-	wtQ2OW6NyGlsmVQgFaxXT178eILxgU23yYVe7UXCtOVhk=
-X-Received: by 2002:a05:6000:2613:b0:485:8224:1a41 with SMTP id ffacd0b85a97d-48589228c23mr5316855f8f.18.1788529778351;
-        Fri, 04 Sep 2026 06:49:38 -0700 (PDT)
-Received: from localhost ([82.145.119.95])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883a9b49sm5656179f8f.17.2026.09.04.06.49.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 06:49:37 -0700 (PDT)
-From: Andrea della Porta <andrea.porta@suse.com>
-X-Google-Original-From: Andrea della Porta <aporta@suse.de>
-Date: Fri, 4 Sep 2026 15:53:16 +0200
-To: Gary Guo <gary@garyguo.net>
-Cc: Andrea della Porta <andrea.porta@suse.com>,
-	sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	conor+dt@kernel.org, robh@kernel.org, ukleinek@kernel.org
-Subject: Re: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver
-Message-ID: <aprNTF0278NuH55k@apocalypse>
-References: <cover.1784539788.git.andrea.porta@suse.com>
- <a83d65b2d91865eb722337c547c94dce175e6086.1784539788.git.andrea.porta@suse.com>
- <20260720100212.BEF1D1F000E9@smtp.kernel.org>
- <amN-5B5POX3rNb29@apocalypse>
- <DKY8USKYJJVM.17HQ78YIYZMFV@garyguo.net>
+        d=1e100.net; s=20251104; t=1788529856; x=1789134656;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=OMGOFQALV7U5ZmaS0qjL9QRN5TZgiLFu8RShunh6mL4=;
+        b=kQgExXd0+B0T4kxQ+egEBedgMNFwRa3t+rOwPJuMxhOA+3H9PLAtK0HCAewRq9GHCE
+         WxMn+bi+AbXgRDDMd/AFfiCsksL+itclhKI9xSgWo6whxHxc37L/uES5yKpKxscJnB/z
+         38OqXF5xGyFpGqRRoy5SvogTmNzDX2zpWADJo59Gy7MqwrxR7E25ujDX7L/3YFnjJTyC
+         vbQ6h9lrkRUJg87mXKf8Xjs2xKxFdf/C0WSk9PasCn3Db8Py3QLT1nHZAV+/CGQQCt1F
+         mEZpdQpmgaIqMS7tJLyPFA0EeufJAZ9ApabwlB4vgwhjIGjm4pky/dAJFFiAgfMdvz4d
+         isDg==
+X-Gm-Message-State: AFuF++n4GoEs88jix00riV1YJXwW9h76H79YEElMW0tFyrD8IVTXKwuY
+	ZNDIUOqmdbJ+wldudiPv9+jU9DyT9pZQ3d2GanYv8w+aQEIa82BUHYPqV8scyNR6brC4FWJN0Qf
+	nQdB7uO0Utp+jX6994oL+m3s6QsgsN4ujWlqGZGG9J2bIq4Dzg4/PejAIh8mK8HtHiFrfIPVM/c
+	MPpyAShUqiHINtHYK+OMObkxsyb9CW6SBRGTTBOBVPKKY80aSCbPe4D0dc
+X-Gm-Gg: AYBFou2Mzznf8HjOFLf5O4tuZTnHqatrPkMz1SBXcavjb4V43iHVyXwcmmP1a5gbjId
+	paQ/o1RyP5djgYpEArZ0XdHcYf3PtXTwvNXkrsBIFRT43HB8yU75JPLVJqPcTitXq1jUbsSIT1R
+	9A4VugMGQr2HKmy0+tUljqBN9G6dknP7QJdrGAWgV303FYXRjiPW/WoUrKR+sb8FCISncS8ItyD
+	ltCj/Irvc3RE/dTD4yKfMPi68FtAiZIwmr0xbf6GzAsV3dgNgXf7pQV0Uuj922am6NU2g3u0x8R
+	SHG1KbDTI6ODNlXCqtGpnsIUQd35ko7HUZUPR9VSRhXfQikTueXm2ItjEisrsPGW2JmSnqaE4Z7
+	ptChHMJLkfKqQerLo5mrlwPqHtkccLtMAdQ==
+X-Received: by 2002:a05:600c:c1d7:20b0:49c:ffe3:2b3f with SMTP id 5b1f17b1804b1-49cffe32f58mr2114165e9.3.1788529855762;
+        Fri, 04 Sep 2026 06:50:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:c1d7:20b0:49c:ffe3:2b3f with SMTP id 5b1f17b1804b1-49cffe32f58mr2113475e9.3.1788529855165;
+        Fri, 04 Sep 2026 06:50:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874? ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee5d476esm172660985e9.1.2026.09.04.06.50.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Sep 2026 06:50:52 -0700 (PDT)
+Message-ID: <75c62e73-0c71-4143-84ff-a1707ff822ab@redhat.com>
+Date: Fri, 4 Sep 2026 15:50:51 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DKY8USKYJJVM.17HQ78YIYZMFV@garyguo.net>
+User-Agent: Mozilla Thunderbird
+Reply-To: eric.auger@redhat.com
+Subject: Re: [PATCH v3] vfio/platform: prevent read-only region mappings from
+ becoming writable
+To: sashiko-reviews@lists.linux.dev, Abdifatah Suruur <suruurism@gmail.com>
+Cc: kvm@vger.kernel.org
+References: <20260903092907.419-1-suruurism@gmail.com>
+ <20260903094814.EC02F1F000E9@smtp.kernel.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260903094814.EC02F1F000E9@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: JHj-bZxlSQEKXvw0n9yskYcJkbEpjbanThpXgzZqTWA_1788529856
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Gary,
+Hi,
 
-On 19:42 Tue 25 Aug     , Gary Guo wrote:
-> On Fri Jul 24, 2026 at 4:04 PM BST, Andrea della Porta wrote:
-> > Hi,
-> >
-> > On 10:02 Mon 20 Jul     , sashiko-bot@kernel.org wrote:
-> >> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >> - [High] Missing `.remove` callback leads to Use-After-Free in the PWM and Syscon cores and leaks clock resources on driver unbind.
-> >> - [High] Register context loss on suspend/resume silently breaks PWM output.
-> >> - [High] Unclamped hardware duty ticks lead to integer underflow in the PWM core for normal polarity.
-> >> --
-> >> 
-> >> --- Patch [2]: [PATCH v7 2/3] pwm: rp1: Add RP1 PWM controller driver ---
-> >> commit 0c98703d857577902e57d25b42a3d46dfbde5795
-> >> Author: Naushir Patuck <naush@raspberrypi.com>
-> >> 
-> >> pwm: rp1: Add RP1 PWM controller driver
-> >> 
-> >> The Raspberry Pi RP1 southbridge features an embedded PWM controller with
-> >> 4 output channels, alongside an RPM interface to read the fan speed on the
-> >> Raspberry Pi 5. Add the supporting driver.
-> > 
-> >> > +static struct platform_driver rp1_pwm_driver = {
-> >> > +	.probe = rp1_pwm_probe,
-> >> > +	/*
-> >> > +	 * .remove is not needed because this driver cannot be removed/unbound
-> >> > +	 * cause it relies on syscon which cannot be removed
-> >> > +	 */
-> >> > +	.driver = {
-> >> > +		.name = "rp1-pwm",
-> >> 
-> >> [Severity: High]
-> >> Is it safe to omit the remove callback here?
-> >> 
-> >> Even with suppress_bind_attrs set on the driver, if the parent RP1 PCIe
-> >> device is removed, reset, or unbound via sysfs, it will forcibly unbind all
-> >> child devices.
-> >> 
-> >> Without a remove callback to run cleanup, pwmchip_remove() is never called
-> >> and the clock is left enabled. Because the backing memory is devm-managed,
-> >> the devres subsystem will eventually free the pwm_chip and regmap memory.
-> >> This can leave dangling pointers in the core pwm_chips IDR and the global
-> >> syscon_list, which could result in a use-after-free.
-> >
-> > This is true. Uwe, I guess I should reintroduce the .remove callback,
-> > what do you think?
-> >
-> 
-> How is remove going to work with syscon? The previous version seems to just
-> ignore it completely.
+On 9/3/26 11:48 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> New issues:
+> - [Medium] Modifying VMA flags post-merge inside the .mmap() callback silently breaks future VMA merges, leading to fragmentation.
+>
+> Pre-existing issues:
+> - [High] Incomplete mprotect() hardening allows unauthorized read access to write-only hardware regions.
+> - [High] Assigning a raw physical frame number (PFN) to `vma->vm_pgoff` for a file-backed VMA corrupts the VMA interval tree.
+> --
+>
+> commit 6c3ce3b68057fa0dfd3b9b92fc8493eaac414153
+> Author: Abdifatah Suruur <suruurism@gmail.com>
+> Subject: vfio/platform: prevent read-only region mappings from becoming writable
+>
+> vfio_platform_mmap() rejects writable mappings of regions without the
+> WRITE flag, but leaves VM_MAYWRITE set. Userspace can map such a region
+> read-only and then upgrade the mapping to writable with mprotect(). This
+> commit clears VM_MAYWRITE for regions without the WRITE flag.
+>
+>> diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
+>> index c72db5a99ebda..20d87c244ca28 100644
+>> --- a/drivers/vfio/platform/vfio_platform_common.c
+>> +++ b/drivers/vfio/platform/vfio_platform_common.c
+>> @@ -595,6 +595,10 @@ int vfio_platform_mmap(struct vfio_device *core_vdev, struct vm_area_struct *vma
+>>  			&& (vma->vm_flags & VM_WRITE))
+>>  		return -EINVAL;
+>>  
+>> +	/* Prevent read-only region mappings from being upgraded with mprotect() */
+>> +	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE))
+>> +		vm_flags_clear(vma, VM_MAYWRITE);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while this hardens the WRITE
+> path against mprotect upgrades, does it overlook hardening the READ path via
+> vm_flags_clear(vma, VM_MAYREAD)?
+every MMIO region in vfio-platform is marked as
+VFIO_REGION_INFO_FLAG_READ so write-only regions do not exist. I don't
+think there is such symetrical need here.
+>
+> If a user maps a write-only region with PROT_NONE (or PROT_WRITE), they
+> bypass the initial vma->vm_flags & VM_READ check. Since the region lacks
+> the READ flag, the user should not be able to read it. However, because
+> VM_MAYREAD is not cleared, couldn't the user successfully call
+> mprotect(..., PROT_READ) to upgrade the VMA and read the memory?
+>
+> Can this allow an attacker to gain unauthorized read access to write-only
+> hardware registers, which might corrupt hardware state machines, cause CPU
+> stalls, or trigger fatal bus errors (e.g., SError on ARM)?
+>
+> [Severity: Medium]
+> Will modifying VMA flags post-merge inside the driver's mmap callback
+> silently break future VMA merges and lead to fragmentation?
+>
+> When userspace mmaps a subsequent adjacent segment of the same region,
+> mmap_region() attempts to merge it using the proposed VMA flags, which
+> still contain VM_MAYWRITE by default. Because the existing adjacent VMA
+> had VM_MAYWRITE cleared by the driver's .mmap callback during its
+> creation, and VM_MAYWRITE is not in VMA_IGNORE_MERGE_FLAGS, the flags
+> will mismatch.
+>
+> Won't is_mergeable_vma() reject the merge, causing VMA fragmentation for
+> adjacent mappings of the same read-only region?
+Isn't it pretty unlikely that the region gets mmapped in several
+adjacent chunks? At least for devices officially/publicly integrated, I
+don't think this happened.
+>
+>>  
+>>  	vma->vm_private_data = vdev;
+>>  
+>>  	if (vdev->regions[index].type & VFIO_PLATFORM_REGION_TYPE_MMIO)
+>>  		return vfio_platform_mmap_mmio(vdev->regions[index], vma);
+> [Severity: High]
+> This is a pre-existing issue, but does assigning a raw physical frame
+> number (PFN) to vma->vm_pgoff for a file-backed VMA corrupt the VMA
+> interval tree?
+>
+> vfio_platform_mmap_mmio() explicitly overwrites vma->vm_pgoff with the PFN
+> before calling remap_pfn_range():
+>
+> drivers/vfio/platform/vfio_platform_common.c:vfio_platform_mmap_mmio() {
+> 	...
+> 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+> 	vma->vm_pgoff = (region.addr >> PAGE_SHIFT) + pgoff;
+>
+> 	return remap_pfn_range(vma, vma->vm_start, vma->vm_pgoff,
+> 			       req_len, vma->vm_page_prot);
+> }
+>
+> The VMA is inserted into the file's mapping->i_mmap interval tree using
+> the raw PFN as the index instead of the file offset. Won't any core kernel
+> mechanism (such as unmap_mapping_range) that searches the interval tree by
+> file offset fail to find the VMA?
+>
+> While remap_pfn_range() expects the PFN as an argument, it does not
+> require overwriting vma->vm_pgoff for non-COW shared mappings.
+the same pattern also exists in cdx/main.c, fsl-mc/vfio_fsl_mc.c
 
-True, unfortunately we have not much choice with syscon because it does not
-contemplate a corresponding remove function. The best well-behaved code could
-just deal with clocks and resources that can be released, while syscon is
-unfortunately not among them.
+Thanks
 
-On the other hand, I'd like to emphasize the following:
+Eric
+>
 
-- the driver could not be unbinded nor unloaded (directly) by the user, and...
-- ...PWM driver removal as a consequence of the pci bus device being forcibly
-  removed will almost surely leave the system unusable.
-
-As a matter of fact, even though it's not impossible for the remove callback
-to be called, it seems highly unlikely. So maybe it's not that big deal.
-
-> 
-> Also, do you actually need syscon here? Given that the pwm fan device is going
-> to depend on the PWM fan device anyway, you could just EXPORT_SYMBOL_NS an API
-> from the rp1 driver that returns the tachometer reading when supplied with a rp1
-> pwm device pointer?
-
-I'm not devoted to syscon so if everyone agrees on the EXPORT_SYMBOL_NS solution
-I'm perfectly fine. It seems to be used throughout several drivers and as long as
-it's not considered to couple the consumer and the PWM producer too much, I think
-it's an easy alternative. Uwe, are you fine with that?
-
-Many thanks,
-Andrea
-
-> 
-> Best,
-> Gary
-> 
