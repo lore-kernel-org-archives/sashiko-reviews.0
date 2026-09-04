@@ -1,188 +1,108 @@
-Received: from LO2P265CU024.outbound.protection.outlook.com (mail-uksouthazon11021103.outbound.protection.outlook.com [52.101.95.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8614F30E3
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 15:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.95.103
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788534806; cv=fail; b=SgpRBohv/cmLLtKK0PFbSZtgIogzo/ZzBzi/M3Djqdx/dj7ikpOb1OjAG0rFLzwxzi+FfTlTu/G8x/N3sruo0RBtLE5T/do/zMlHN3jHsVxODrwnsYiB6Gufgtq9bkEznieVdQovmmNqM4PNTAjlubwiPZ2fEwgKpEhnYjKiunw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788534806; c=relaxed/simple;
-	bh=CqNjuiA8IIA7ta5Qx6hGC8IvoVcz3j63UWLQCflKfso=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Uf9MFT5w/oEufJpAxF+rZzCyds8dZGR7qmXkiGJmeeRJMBr7RTDRFgW0pu8b7ruC1ZqgUf7SOoNOOMsu0thuDjkAxKu8E8GEg0C+Xp0GQeQMAXWcQrFDXhmlu9R+nudwgxqqhwbJQKhEpBFWo3HJ1udqxgU65zec0HHwqwRv42I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.95.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JsDv6D5GKQBh/ZEFuFvEDpSvkxAudmlQyN0ydFa93e/RB6zTYgL3LTKHxcs30mfUNjqRP4diEj0TcNt4Q3T1CE9McxnHpF4+roSBKLstJeuhkwuYNxaFRxrvJLyLzm8UZ+M3lfkHniSXqFXOFpDu16yL3dPN5RyKfkmtlEIVNsw9iepnXbi4WFTxiAvLU5/GIKNEmjBGz1ngdgdJ8u+Pblu3c/POzGR0WcRW/jY20w6efUoqJvc0QKxDX/sd1uj99Tzsz4wghEofDjxkK1m27jMB0oPMOE1cyR1ebDpo/FJVjo1aPCTpRXw6bFCd3UeYyeqVcjkov6gt3/1mde8xgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=jfs9NUkTG51XrSDKPqUGfclA/SnvzxH67XuOGYm4LBw=;
- b=xHg4Jn/ebhCim8cJLlDrMVnlkT/hyUTG0Qn2R8IFHRywuh+lY+Zspw0CQaRwxQQPXkdVh7DZkS3sQu3PfDjODeUcA0m81G67ih3JUpNoIGecL3lAQDdAQd5sqjjH9N3bmvJmfzKuIhTKzHbKtTRG8NZ0Zad1jLvJbjSj9FY06SYzt61IaHsQHD7SGbFymtRk2yQpur9cZW1HMatUukqACFBjAX/0DkdobOcdgDq6H7gEpIFpG3igr/MDOFPBrSBnB0IwJ5LydT2QV/8b69kxsUGGz73SHf4ynA9nbeOiWgQjerh/5v7fR39oIsmpkyDHpJC18bfNFTBGSnHCXOiwog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LOVP123MB8526.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:48b::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Fri, 4 Sep
- 2026 15:13:21 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 15:13:20 +0000
-Date: Fri, 4 Sep 2026 11:13:17 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, petr.pavlu@suse.com
-Cc: ojeda@kernel.org, linux-modules@vger.kernel.org
-Subject: Re: [PATCH v10 2/2] module: Rename module_blacklist to
- module_denylist
-Message-ID: <b6vcua7y6t7gytrcmh7lspkkmhzqkmfhvgqf5mdrjxrlkxobgq@t47as2qufspe>
-References: <20260903185557.183224-1-atomlin@atomlin.com>
- <20260903185557.183224-3-atomlin@atomlin.com>
- <20260903190735.82B051F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260903190735.82B051F000E9@smtp.kernel.org>
-X-ClientProxiedBy: BN0PR07CA0021.namprd07.prod.outlook.com
- (2603:10b6:408:141::16) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E6D4EE87B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 15:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788535838; cv=none; b=Q/K72DkpazSEG5Mq45dX58mqyD3kX1dX9naCL9AOGeXLnczJhLQYDFsh19tuoKoTVspKOjeVKzMinqVUPdzz30c3XIqw6wtiDW4AIQEh1cJ4arrVMdj+65OpyBsC2gCb1Irfcgfivrfw5SOkD4bC6wzLyeSpL9vIJo2rf4Z0NPc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788535838; c=relaxed/simple;
+	bh=enrMTCqbcwGpANG0acoNtI2xdi6tb37KrmYRVbYAknM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YuRlWXLeOqO8scBUn4neC9MJwxcA3TRJQC00Z1a+rodx/i6MO3wNWIQQ6KaqE9uSViinO0g1tAItropOQ/qCpSw+WgYCNXIjKCWTFZbA+EXQohkA64O6Fkq4Kk7Hv6HopZBIMxJIkJPAt9F4bFtOr4YBLs0poRd/QapCKRwP/TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ns4mg9Da; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ns4mg9Da"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so13216935e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 08:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788535835; x=1789140635; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EckKFK1Ub9PvsMWglTbO4VcDJbOw095C6Au9K6oB4qQ=;
+        b=Ns4mg9DaY1n/3R0ZxboJOf8/aYdKGbOF2IYN4ZrUUJYjRul7Y0AvWbuxC/x1LdXtvu
+         LO/qc2fyuPYXzT4ecsf5CNvu8vTazb3fz138L+246ia1nNCizJ7fInOKBI6/oyLcSExX
+         OqfN1gB1CrWjnWNZeLY7OMFNmXLG+6O7on2+wIkifuWAIcigsGLXVWLa0gW5fhetT/4C
+         4DQODrWzdh/jKs1tf/iV5FFVCVsUhOGcr75uA+TDAy3yFkKCfMfMaRdG2M8FrD8s1g69
+         oFhR1NXUGxA47cTMPjZoMOV8GcLTTNG623SMWbgXMlh6XLGNKRgQFTQ/4POR++68WIBU
+         dPeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788535835; x=1789140635;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EckKFK1Ub9PvsMWglTbO4VcDJbOw095C6Au9K6oB4qQ=;
+        b=Vmuq+E9+uAXjxY68gGYq7DE0IOnyq9zUQshkCSEM7rfBvBkXVy1XBABMMMeAAYKftq
+         c480I6tzOaXCzwngjnzaeoFmQcrsIU8ZMcFkebW0qzKqSYKjZqj6GckD4dmh4ndLvPvJ
+         OmGhSWX5Aj0Ycbhi8fl+m+BSIfmNOHl4ZmTycL63c066Yj/8ZoJoGVsT6BmwLh/GIGp0
+         hujTdz4con6znbNyq+Ab2HcJ9+sjVhBzXw6rCDHo3AVtsSXRdYMM7z9N/pJl1VrYAeaE
+         INDZ5g3FZW09yIGoXD0VlYaZz74bC5Cyb48rq6zT6cF4PnB/nW7ziIGdGcqj0sbRJGkf
+         dx2w==
+X-Forwarded-Encrypted: i=1; AKwUvBwYYQHLH2MKAjw9e+/Hov+4fJGYnfwdALFd/BdOKnKpUkPI2Jf0YlixTADebGAj1idZEzwMVOtw+yHJKbes7aM=@lists.linux.dev
+X-Gm-Message-State: AFuF++nKbMTFkVtz9Bvia1CBgryNyOqdD54hdos5OdSUe2MbUyA/Ruun
+	EETNL2XNg70ATbBjjYa22qeobZda/LC+kRMvJbnQ2eG7ZY8PJPSt/r2i
+X-Gm-Gg: AYBFou3G731Qh9W8+S7ZGA7t9dEkqS9adQgEhjlB+2fj+AoPsfdal+HTejwdKwjHSJh
+	ph2WAvAyqb0zAQlbha1oJ2l/FoJWVMGeR4kMUl2dfLcUzrtUhBnz3gpO5vrdDq+GnZh9Z4EOz6o
+	sars9khCKtisnRj+/tB5pTotVBsmEJmmcryhAqgZnA1qy9IzMfiwzVyAW7xggDCwE1NkQRK04yy
+	hpSvlTRfa7d20mEFk6Uh5x7qbAEtIbzQIkqOLSzrmlQdP4aAgrUDmGWtC/sClctlE+AvRftcxk9
+	5cJjHYAox65mKO5HvY0m+vlt5bvqi1/lreYBgll58QvmxME9VCIw2zVuvuLjUMr4jWvkPyz1HoV
+	BXx/opisuiHvkerCyGrCTDP7tyQfJnCnAZxrQvPgyh4dgU5b/9nEtZ2pR3Vg3jPJFm+BX3xKVjC
+	VXBZBOiFgAuYIxOonR/ByZZDpa1ExPL6oOjYEX76zPLuqXqHEUkKqAdI86Qa0190qdv6XziNbh+
+	Q==
+X-Received: by 2002:a05:600c:a4b:b0:499:4e47:eaf2 with SMTP id 5b1f17b1804b1-49cf824020amr63299485e9.6.1788535834752;
+        Fri, 04 Sep 2026 08:30:34 -0700 (PDT)
+Received: from dell-desktop ([2a02:587:4b5f:900:ef25:2f4:1792:4e6f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee60bae6sm194191315e9.9.2026.09.04.08.30.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Sep 2026 08:30:34 -0700 (PDT)
+From: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: bpf@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	tasos.papagiannnis@gmail.com
+Subject: Re: [PATCH bpf-next v4 2/7] exec: Clear bprm->mm before dropping its reference
+Date: Fri,  4 Sep 2026 18:30:06 +0300
+Message-ID: <20260904153006.42450-1-tasos.papagiannnis@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260904152018.0B7B11F00A3D@smtp.kernel.org>
+References: <20260904152018.0B7B11F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LOVP123MB8526:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3f0e4351-10f8-421e-e6f5-08df0a970e49
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|10067099003|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	EvxxAseLiXRPp/ozF/5RiIW1MGZVuOCicL4/2wEgj/YxJ96Vz+9No6HgMF8WGwzcLei85evQ9Yzv5I/o1EkvaHi9Rn72Rw7xC460363Upj2QqT86oLL6PTkKkyRhnXVWZDEKuKq/8dIO50NR7WivMHTasW82F7fwCAq93fVkGFn5g51xflN2Q3aLjTWlFNq19/OCoP1JcwkoyT15yqmnCbXy8GPQiQ02P6kA8lZmE7bXDarscl49P5o+2Qu8cq8ml2K7DyzcExd6cYqnk5EF5eEnI1FdV/28KUDAtw7fJZ43GNbdclRL9cyFybJq/NmmDmUf1xSmDb++5gb9F0oub/PpqRPKckKw2nQD47WREeEoTDEgIuO33c3iWWKXVdl99D9uPGNWSWt0fd1I+3utiLqWPeDEZ6WSvQKdaNH6hb807SkqjTPW77pih0Bu1VsbWFb3AwNGZ6Ysv1rJ4q7icP2rRGTPz6aQ6hZWGjQhG5imng3+6I2+gcWDtDQVtGWgL3X+UxMx9ZZHALsV7eZ4i7v2/1b4wdw4xGQ0O+XOUxm7FSwxSm/aXpgBpCjx8HmA1Q0JRT7W+Aoe1BB9HSmdary8oeV2/a8C+WZtK9qT6s6mLXpUsq9DsKCFrvhZNWO/AubVFK62MeTx8nQVf2x74roRoAh6EEFNUpASEIkAiIA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cDdpa0VRc2NOUkpFVnhEOXN1My9TaHBBeFM3anMwdmlTdzFOcEtyRVBHc3oz?=
- =?utf-8?B?YnhDKy9uK2taMHNGaGxtT3JPOXR3VkR4WWZ1QU45bzk2RndsYkt0OGZxSkNK?=
- =?utf-8?B?Q0FHRW1FY2NNaUp4Ym5QbVNSK0pKaFVFWGNlMUIwU3VUalhpR2ZsUko5K2w2?=
- =?utf-8?B?N0l2ckZvQjMzQTFKeGxrWTltWHRBTU5IL3R1UkdrRFdCNHk3UkF3WnRhZU95?=
- =?utf-8?B?MUpUdk81aGpzdmdGbmJvTjdsNCtjejZUV2Z0eDYwV1JmNGhZZDhnYm9TcWYx?=
- =?utf-8?B?WkR4UUVUNDdycndlYjJJSlNHUDZ3MUZhZzNoVFMvTmx0SitHOTdCOWJDY09Y?=
- =?utf-8?B?bmliRUMzVjlHTVVkUG1uUm14T01SaEpQcDNBWXpLU0xuMkViWVFQdi9EVHBk?=
- =?utf-8?B?b3N4QVNhcWdvdnZkaHdsMmt6WGV0SGx6ZmRNSkJWSis1S3ljRGxBclMvZFdP?=
- =?utf-8?B?SktnWk1rK1VLVmhUd0pJb0gyeCtPNXFJVFpjcGRtM0JCK0ZraDF4dHFZSFR6?=
- =?utf-8?B?YnBRa0Ftb21BMzV6QlJxZWswZVNzbmVSelJucGNKU0ZhUEhXUXhuY3lrSEZw?=
- =?utf-8?B?LzdGSW5jcEtsMkdiUE1ETC9oRHZMMzFEYWc2NnFCcmNTMktPbW5sdndpVlJs?=
- =?utf-8?B?TDFBMkZzYjVYV2pTaW04cVgwd1YrajlsanRBU3RQUkIrcktxYVJXa05UT09r?=
- =?utf-8?B?QzRyK2xsdGMyeWxmVVhJUEo3Q1hJQ0lrVURaRmpFY0ZkZnRsMmswT1Jya1Js?=
- =?utf-8?B?YmlXR3R6RjlleFNCMHlSVldsUWlicEc4Tnp2TWZwakkzWldCY1NrdUN6MWlv?=
- =?utf-8?B?RFEySm9aYm1IMmJ4ZW5Ub2wxdWZjT2VWRDJyNzhJM1p4RnB6Vkt2TUFEYTM5?=
- =?utf-8?B?akVWMXNpQVJHak95Qjk2RHlmbFNqcEV3L0xyUmZIdUpmbnhVeHdQRlYzeXBE?=
- =?utf-8?B?aXdscU5jOGRyU0xMcStlVkNsaHo3UzA1UW9CZWtqMk1VdG9LZTNheFBkYndn?=
- =?utf-8?B?SzZFaE1PVFNCODFnM3JuRVcwRmt2bWNVMThTNjRFTStXeXEwaVd6YUc1TkRL?=
- =?utf-8?B?S0xYd2JRUFdIeGgvNzV2QjFka2h6UUUrVVdEVm4yL1Q4TDVYZjJOTUU1YWN5?=
- =?utf-8?B?dm9oVlVtcXFIbFJQVTVNWExGWGJhU0RFOXBIRC81V2tNNGhyRmQvUjhScmM0?=
- =?utf-8?B?cGhtOHpyTys5elZBNGVwTTVUM0RubGc0alpZakwvc25mc3RudzJwZHpqQlJI?=
- =?utf-8?B?NnoyTFBpSUc3ckhya1VOTGpCZ2tNMHdNckQ3MGJJS28wRFFPdVhINFlDNEZB?=
- =?utf-8?B?KzlVd2tPZENYSmRkVEtuK3daMVZxU3ZHUVl0NjViUlR0eHlXY2JIeXpyL1Fr?=
- =?utf-8?B?UFRXcDhSbmFDNUk3dHRtdUtvWUlSOWtUZThub245OC9ONk9sNTFhTVJkK1Vp?=
- =?utf-8?B?M0ZSOU1xMU9CdytwaXFpVG5RUGVuZVdyWmJRVEl3YzZaVGtqNXpjb2wyVFNN?=
- =?utf-8?B?MWRROWZZZmJMTGw4a0J4dmZRajFGSTZRZ2t0aHRUWHE2NVZ6cGpaQlZYSzJG?=
- =?utf-8?B?blNBS01Na0c4bEJoaDNtQUFmcUl1YkN4cFpLNGRwNjh1Z01UaUs3YmxwZXJ0?=
- =?utf-8?B?V0tyQnJxZUN1aDRGQUROaDZ0L3h2ZVd3b212a1B0RTltNHlzZ0xVTWd4Qm5S?=
- =?utf-8?B?Zlh5WlZJbzMxcFN6UmtVZXRRb096Skg1ZVlhSENsRGUvazRLN2hWVzNhOUVo?=
- =?utf-8?B?T2k2dk1SMHJwWjByNnI2eU9FMTJadGYvREV0M0tyV2o1MWpJLzYvbjRuUXJ4?=
- =?utf-8?B?ejBsVnVlQVNhem5MdkhMZ3VhZy9EWDV4WHVNbzMwazlGU254anI3L2FONkVR?=
- =?utf-8?B?VTYrVlN3cEt0U0dPd1lCWElCamxJQjN0VjZheFZTZ0NDMHE0cEVUR1owc1Bm?=
- =?utf-8?B?MTR1YTBOS1ptcEpad0lRaVQ1eXZJQjgraHBjdnFZVHlVdVJEQkltV3EvK3BW?=
- =?utf-8?B?S1Z4UzNKQTVCMmZvSWRvTldUcnYvTjBaeGsxa01VYkgzRHBSbDc0d3ljT2ty?=
- =?utf-8?B?eGdSWldlV2Q4TnBjTVQ5RzBzUlpBSVVLeFdjRE0vTkFmWjcyZ2trZDlTTWJL?=
- =?utf-8?B?cms2WUZ3ZUtLOFM1OGh4VVZpZ1ZFcWdWamN1NWxRV3NvcWRVelBiSktTd1BE?=
- =?utf-8?B?TXlFOWRGWXR6RlBKVmVOMGExRTM3QXVQbXJub1JRbnpoRXpEdDdOSFM2UkZU?=
- =?utf-8?B?aTdaRkU2OE1tNnhCR2xJaGFWejVVTlBGSU1YckhTY0FaWmJhZTJ2QzRzcDRM?=
- =?utf-8?B?Qi8zWnJnMUQ5U3orKzIwK0k4Y0tjY0srWkh3KzFuQW5kaGw2V3Nxdz09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f0e4351-10f8-421e-e6f5-08df0a970e49
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:13:20.7497
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VCKXisM6ATk1I1hPylbr99eNVOyuQWw9cJG6OcgyYDJKCf/yx7ppZx/ChOWFaPF1z+hGw253A2WkKAQLYubw8A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOVP123MB8526
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 03, 2026 at 07:07:35PM +0000, sashiko-bot@kernel.org wrote:
-> commit 2df01653b8cde06423a15fc161d3df5e8eddbdba
-> Author: Aaron Tomlin <atomlin@atomlin.com>
-> 
-> module: Rename module_blacklist to module_denylist
-> 
-> This patch renames the module_blacklist boot parameter and internal
-> variables to module_denylist, keeping the old parameter as a deprecated
-> legacy alias. Internal symbols and log messages are also updated to
-> reflect the new nomenclature.
-> 
-> > diff --git a/init/main.c b/init/main.c
-> > --- a/init/main.c
-> > +++ b/init/main.c
-> > @@ -1347,17 +1347,17 @@ static inline void do_trace_initcall_level(const char *level)
-> [ ... ]
-> > -bool __init_or_module module_is_blacklisted(const char *module_name)
-> > +bool __init_or_module module_is_denylisted(const char *module_name)
-> >  {
-> >  	const char *p;
-> >  	size_t len;
-> >  
-> > -	if (!module_blacklist)
-> > +	if (!module_denylist)
-> >  		return false;
-> >  
-> > -	for (p = module_blacklist; *p; p += len) {
-> > +	for (p = module_denylist; *p; p += len) {
-> >  		len = strcspn(p, ",");
-> >  		if (strlen(module_name) == len && !memcmp(module_name, p, len))
-> >  			return true;
-> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but it appears the renamed
-> module_is_denylisted() function retains a pre-existing logic issue.
-> 
-> Does the exact memory comparison here break denylisting for module names
-> containing hyphens?
-> 
-> Since the kernel build system converts module names to use underscores
-> internally (e.g. "my_module"), if an administrator passes a module name
-> with a hyphen on the command line (like "module_denylist=my-module"),
-> the strict memcmp() will fail to match the hyphen to the underscore.
-> 
-> This would allow an explicitly denylisted module to load, which could
-> defeat the administrative mitigation for buggy or malicious modules.
-> Is there a string comparison utility we should use here instead to treat
-> hyphens and underscores interchangeably?
+> This isn't a bug introduced by this patch, but since this commit prevents a
+> use-after-free for bprm->mm, should we also clear bprm->file?
 
-Since the build system converts module names to underscores internally,
-passing hyphenated names on the command line
-(e.g., "module_blacklist=my-module") currently fails to match due to the
-strict memcmp(), allowing the module to load.
+> Looking slightly further down in free_bprm(), the reference to bprm->file is
+> dropped, but the pointer is not set to NULL:
 
-The kernel already provides parameqn() in <linux/moduleparam.h>, which
-treats '-' and '_' interchangeably. Using parameqn(module_name, p, len)
-resolves this directly.
+> 	do_close_execat(bprm->file);
+> 	/* An unconsumed PT_INTERP substitute from a binfmt_misc loader entry. */
+> 	bprm_drop_loader(bprm);
 
-Since this issue dates back to commit be7de5f91fdc ("modules: Add kernel
-parameter to blacklist modules") in Linux 4.8, I will split this out into a
-separate prerequisite patch with a Fixes: tag and CC stable, placing it as
-patch 1/3 in the series.
+> Immediately after, the global function bprm_drop_loader() is called. If a
+> BPF fentry program is attached to bprm_drop_loader(), it will receive the
+> bprm argument.
 
-Kind regards,
--- 
-Aaron Tomlin
+> Because the BPF verifier explicitly annotates bprm->file as a trusted
+> pointer in kernel/bpf/verifier.c:
+
+> BTF_TYPE_SAFE_TRUSTED(struct linux_binprm) {
+> 	struct file *file;
+> };
+
+> Could this allow the BPF program to read the dangling bprm->file pointer as
+> a PTR_TRUSTED pointer and pass it to kfuncs requiring trusted arguments,
+> resulting in a use-after-free?
+
+This is already fixed by:
+https://lore.kernel.org/bpf/20260903-normung-opfer-matten-d29bbd55cf46@brauner/.
