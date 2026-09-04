@@ -1,104 +1,101 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712AC3E8323
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 16:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C894F30D4;
+	Fri,  4 Sep 2026 16:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788538469; cv=none; b=FXk0mF+e4+q9gl2avoJ6jHeQSUMI7n6qinydlkF6BqzDuVBk+XF2Dud1+uQitnL7Ok4dJOus1kSS93KnmoL8Zu7EPjkPWurOQn2rNt4jddRd2LV41fR41++Pcns1fLuAy603//++WwxZuoMnBb56aLeHvxdb3QUOFpIO7BpEACM=
+	t=1788539397; cv=none; b=jsMVzvpy3reDTBYw7lugvqyG2r2H0Edd2ZsQz+lvGDHn93VMIOj4km+xEc37+H010MvXVvkKksIhg+dqVR/b0b4uvTjVpU18O3KpldF/RU482tcdHX4a72rij/3X/Hyu/zJS4m1JvjYbbj8BIAMvJcBlfx7Ee2syWBxtccJEaGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788538469; c=relaxed/simple;
-	bh=XUtnp+JADse6tbTIpqBlX90KrkWPNgb62TRGVh/J61E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQrXNmqG78L2FcOHcGjUjInxHaeGrDwzY5VEhoq/MhNdnuuga/0oEUsu3v1RiaKGZ12WtukRrWDF9XNXGXnZG1ewICFqxIwQlp5fFS8aRydv+N1XudC4i1HysrIDHG0vHqcurmb4gDAtB8NT3wJ5iHjCc1sqobsHpb0Bgi/RXLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVHssKRC; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788539397; c=relaxed/simple;
+	bh=k1B8UXAgapvTDV8T0WvOO0lL1nTqcNGnnZZjN7Xe1mA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rj0wZgowcLU8m4Q3pL5jxaZc0qZk8q8ZsyzyUvuJlI369c9V7dQRddTO+Ozy91EWbqe3oKIIIvl2Qt9rG5tjcgRdUNbL7J4iGfvceLGsG2a+PXZ5tgsMG33J2YHVtcieep943T8WhXA1z0JDsk5mhpJ1kKA/IEFXN3X6qA8uxiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V4MI10pG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVHssKRC"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6b1b3d7f10eso891944eaf.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 09:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788538466; x=1789143266; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XUtnp+JADse6tbTIpqBlX90KrkWPNgb62TRGVh/J61E=;
-        b=QVHssKRCwzm2pXmofoSmi9604pZZzbF6+CTscqSIBw9HHD2/5AE5RC+2sZHRsjchCt
-         nDaxC+PTh6cRxc+ZGmFxzGJaWrNOyUWO9+84Si7NLJugz3Xwlexrgh8hmYCLvx4X2jc5
-         cJ8gvRE1KcRw4rH3pbGjCutdesEuIrrh4SYn9Blolzr84ANQ5kJNOj06a3YOgg/0+HbN
-         l5smJgva+adyrIMxgURqFCoAMZJXVzQicGn3xdnynPy9Xd5HkRPl9XdShEWczZKFk9hO
-         kcz05kL9qOBq/iO6eZWfF5SiBI0SPNVRrGjg83Hjmk9n0azbOjefH+C0GJhWIb/XqHe5
-         TC5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788538466; x=1789143266;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XUtnp+JADse6tbTIpqBlX90KrkWPNgb62TRGVh/J61E=;
-        b=fhxhT0DkQEd/PFMaZLAPIDeizh9mU7ib4QqbACOuk99Hjrb5vbt8I0tux2f5Jmi1By
-         7ZlRDjxQnhUi45VAvlUKpEn3WOR7bc/654+2fPmd+eJNuIcYmQuRfBIRU6yh1uauqVqv
-         7hykeSU1sHnjguqrWk+45SMMRZG8XPsb+9pdQv7s+g3qH7DqOIAZIa3/mGtY++rCGpGO
-         RILw7uJmTEG49CkZde9i+OU6f3paLVoz5Q6fMTFsaG43KI4OICwvGdGVhRTIxuofIC+X
-         e6OpD5ZfRNEfSARv3Tsywqk/xmkrQS6g1mqHVmHsLIIpuvjeyLZdUNDkONR9k7q87d0A
-         aGag==
-X-Forwarded-Encrypted: i=1; AKwUvBweJ5Vj7odVD5hMcYKit4Rso22sFUK2V40qY+jwuO+xr7B23tB1WgvMRmaTbZgl1VE9e9rqJjq3sZjrDDa6ZG0=@lists.linux.dev
-X-Gm-Message-State: AFuF++l3BlhS841iXFYZAMdB9LF+v+/03/T77jCH2pa+AI10ra8/Xpmv
-	3NwQv8i+vDT8ZWWy4MLI+77g4Sys9+y+Tr+VukYY45rNu5g93pm7qULh
-X-Gm-Gg: AYBFou2Ud7iQOTbw5ZqTUcbRuNXWodwULirU6U1YcTYMpTWsCxKPPbxbrTa3LO/0Myo
-	auxdw0XH66UY8WiWI8SKgvyBB2SFwCrdKh39aS/QenFIKZ4ut+fHJJIJ9P62mcicnzpJBHCqAoU
-	EG2qMlPBmcHA94UK17F6ARlA2cDqzPh99ElIAErYtlkhRudpMR6Mp9mi12LKvoBemxuQeNKqGA9
-	0uOXShCaSGjVykzMVX6d/03lmmB1ohOgVvYrCnUqQv8TMzPP63FusjBK3htJA8AIEJ5cFI4RtJ/
-	CxNMOjEExriI8blvrFlFPbom0sMZGW6v9/LluUMqBABPmk3ld0jq7GmR3X5U+ajSYmpXny5VS6u
-	lJUyJ2C9KYLrw3IHSI50ClMoMLi0LcpyZAm5kNsHrD2S4z3LDuWzRGpWaXyAy23R5Mb6HqmslMb
-	GpE52+HBCgMC6EKEKB8LK0E07T1wniOvCM2q1lXqIfmc1RQfcXNmsPFckADSM8gM/pgjcI+ng4u
-	zjmMBV+oOKbPw89jda7XEykCWPf2qo=
-X-Received: by 2002:a05:6820:a281:10b0:6b7:8415:d798 with SMTP id 006d021491bc7-6b78415d8b0mr2054381eaf.67.1788538466305;
-        Fri, 04 Sep 2026 09:14:26 -0700 (PDT)
-Received: from archlinux.lan ([136.34.156.120])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b6dd07214bsm3597912eaf.10.2026.09.04.09.14.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 09:14:25 -0700 (PDT)
-From: Danish Khateeb <danishkhateeb03@gmail.com>
-To: Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Cc: linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>
-Subject: Re: [PATCH] HID: corsair: cancel worker after unregistering LED, not before
-Date: Fri,  4 Sep 2026 11:13:54 -0500
-Message-ID: <20260904161354.159922-1-danishkhateeb03@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260904145330.BD9E41F00A3D@smtp.kernel.org>
-References: <20260904143610.119808-1-danishkhateeb03@gmail.com> <20260904145330.BD9E41F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V4MI10pG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9127F1F00A3D;
+	Fri,  4 Sep 2026 16:29:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788539395;
+	bh=OxSCp00AQ506yhifJn1FGJ6okthNEQZcVFpBsKtw3XU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=V4MI10pGuBuNAXbnIfV6XIzEXSq9xXM+66tCBO9W2TWoZs9nvLsuTyzszuTQDewxM
+	 SoM9VjRD/V2M2LpMJUmrOReVFOsWh3dMS4zvkAzNTvGxcEQ8Y1vWTRBtyuPTEN3sfl
+	 aXB4FdMPViUy9Z4UNtA8L2QAZU/0IpZrYxJ1bOLrvfASYfR7hZwhwKDyq106/juycx
+	 PbZq9vGrn+AjJ5yLfxwrKEWSzTEw3JhaNP2fXu6v8zotFSwpL5n5rEqQHqxyYNeNC0
+	 lWKtSDhg/+5JOqZcG432kzzxeRHL6DD77R5Ru95G/YEU16OizhyR0wTpwrGsvxES5R
+	 vWQjcvZ82/mwQ==
+Date: Fri, 4 Sep 2026 18:29:52 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Pei Xiao <xiaopei01@kylinos.cn>, linux-ide@vger.kernel.org,
+	dlemoal@kernel.org
+Subject: Re: [PATCH 1/2] ata: pata_parport: pin the protocol module before
+ device_register()
+Message-ID: <apryADzYkvYwj358@ryzen>
+References: <cover.1788349317.git.xiaopei01@kylinos.cn>
+ <eae63a4231a9d669f3dc140f34c7b90c860cad72.1788349317.git.xiaopei01@kylinos.cn>
+ <20260902120609.635581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260902120609.635581F000E9@smtp.kernel.org>
 
-> - [High] Reordering `led_classdev_unregister()` before
-> `cancel_work_sync()` reintroduces a Time-of-Check to Time-of-Use
-> (TOCTOU) Use-After-Free race condition on `led->cdev.dev` inside the
-> worker threads.
+On Wed, Sep 02, 2026 at 12:06:08PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Unused label `out_unreg_dev` causes compiler warning.
+> --
+> 
+> commit 99f7607699410f6446da6e37e3bed84251a51bd8
+> Author: Pei Xiao <xiaopei01@kylinos.cn>
+> 
+> ata: pata_parport: pin the protocol module before device_register()
+> 
+> Take the module reference before registering the device to prevent a race
+> condition where the device is visible but the protocol module is not yet
+> pinned. Also ensure the reference is dropped on the device_register()
+> failure path.
+> 
+> > diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
+> > index cf81a6128f552..7462f9b1acc57 100644
+> > --- a/drivers/ata/pata_parport/pata_parport.c
+> > +++ b/drivers/ata/pata_parport/pata_parport.c
+> 
+> [ ... ]
+> 
+> > @@ -517,15 +525,12 @@ static struct pi_adapter *pi_init_one(struct parport *parport,
+> >  	pi->dev.id = id;
+> >  	dev_set_name(&pi->dev, "pata_parport.%u", pi->dev.id);
+> >  	if (device_register(&pi->dev)) {
+> > +		module_put(pi->proto->owner);
+> >  		put_device(&pi->dev);
+> >  		/* pata_parport_dev_release will do ida_free(dev->id) and kfree(pi) */
+> >  		return NULL;
+> >  	}
+> >  
+> > -	pi->proto = pr;
+> > -
+> > -	if (!try_module_get(pi->proto->owner))
+> > -		goto out_unreg_dev;
+> 
+> [Severity: Low]
+> Does removing this goto leave the out_unreg_dev label unused at the bottom
+> of pi_init_one()?
+> 
+> If the label is no longer referenced, compiling the kernel will emit a
+> -Wunused-label warning. This can cause build failures in configurations
+> that enforce -Werror.
 
-You are right. Please drop v1.
+We don't want to introduce any new build warnings.
 
-There are two races here and each ordering fixes only one. Cancelling
-first leaves led_classdev_unregister() free to re-arm the worker via
-led_set_brightness(LED_OFF), so the structure is freed while still
-linked into the worklist. Cancelling last leaves a worker that has
-already tested led->removed free to dereference led->cdev.dev after
-device_unregister() has freed it -- the race eb51c9f8cb4f fixed. v1 was
-in effect a revert of it, which I should have caught: that race is
-spelled out in the changelog of the commit in my own Fixes: tag.
+W=1 builds are important too, even if not default.
 
-v2 uses disable_work_sync(), which waits for a running worker and makes
-the later schedule_work() fail rather than queue, closing both. It also
-converts the fail_sysfs error path, which still had the second race.
 
-My reproducer only covered the re-arm race; the other is a few
-instructions wide and I could not trigger it. v2 says so.
+Kind regards,
+Niklas
