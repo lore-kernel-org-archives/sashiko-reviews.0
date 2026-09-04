@@ -1,133 +1,118 @@
-Received: from mta1.migadu.com (out-132.mta1.migadu.com [95.215.58.132])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362E63BED30
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 10:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.132
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788518567; cv=none; b=AxgHAtO3BMqgDhzpaLNoefWlTpghb7crQ5I253DgWilLAb8iUZ+Tw8lX0IdNOWntlhPR79ni5fSDznaNYhUPr5BRNcbh6jspIcX96JEEx0Cb5d3sNSGkxl3FPgWx1yzCEfzFIv6auwPg3j9gHqWi1yDGpO3e+mPX+7CLKxfB+lI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788518567; c=relaxed/simple;
-	bh=3eGbGpaiJkSJDxpx9xc+XjxObIRpjfGF5zwgJme+sxU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uds2acIrLzlJmef7ov8rEyPGOyvGfP+OMpynYUvxPKrDf1N6PWxPXGwS/4SCTQ/vKE0mtKyiwigjIqd2aPdSrziOO3d94oXt4pyKAxplaOHjOHMTRd7nG96w4SfcSEpcojiViU9HOqMoTXZE2gMUxFTFpDCYaZf+k40bTKmQuyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lVotfOSu; arc=none smtp.client-ip=95.215.58.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C443A80B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 10:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788518609; cv=pass; b=l+uBapNETC7ZHZozPmlIEBs1bmlhvTbxRMCBqIL8cJuJm+sowfi7uXiV9owjvlZPGuH/DFrbALTiHGgSKS8IKArkUR6iOD9OuMX//BQLZfHYuYS68oqgAKm1mDTTVPak+dyLMHkYYgEWaeSXlav3oX6QmShGqMFp7gGarOBHFmM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788518609; c=relaxed/simple;
+	bh=PCYwr2gWfc4hWkCYVlTo0c7o6YHLBz9ipjTep95eWgQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aG3f8Boa3VtHv63zMJxKCKoAHImY8LmjKte+BkjiETzoLRahNO65SO9ijIVJHjwKDdOynPbwkxWf+ZToyNIFTyLI3F8T4rj9/Hc5GHE5O3sKpexD8uQrYug0ysNG7A1dToHAIE/xCjl3L7Acpzsr+A7oDwydBdOVrX5P6waP/ls=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OySJTVem; arc=pass smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lVotfOSu"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=3eGbGpaiJkSJDxpx9xc+XjxObIRpjfGF5zwgJme+sxU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788518561; v=1; x=1789123361;
- b=lVotfOSuPAAQ5r4FctJWCZc7+NFrxpHzZFXaK8fTwz/7XHM2+e5zE7AS/bjDnWKG2q1juFX0
- /zJCqHPjvCmYTyPSFDcDpMtvmgNHIDeKW3AtQ4L3hhOatR6/AE54PepWJ5jh5E699u9gvIM2tYg
- 4RQ8ImiuE7vlLW9NpwYzE7qc=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id d9c98f6a4a4bc61c;
-	Fri, 04 Sep 2026 10:42:41 +0000
-X-Mizu-Trace-ID: d9c98f6a4a4bc61c
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <f46c8465-e61e-4e79-adad-d7578b4f358b@linux.dev>
-Date: Fri, 4 Sep 2026 11:42:40 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OySJTVem"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c96c92c0980so563446a12.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 03:43:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788518607; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MkcSJhgtRcyWGq1oFNX0nG2DIlkI6DRRTz9VdHflwphSSOHCfsNibVbHSfXfaDIETR
+         jgfS75U5WjpPe3gibzywPnh0dPQugblXNMV5dee8PfztrepNbnrePmXacRdykLZOdxIw
+         Zhe9foBvmRa+bI4WwA7eraBFIR3PIA73F2wixb8dYkuOw9FToXIyDMxzTJHuzh8c4WM2
+         piruPdq2ffLGz7W+BZYcgf+1rrWAaeeXTgjkf7jiptJJ28eiz3j5GG0qzEnSCBDKGu/D
+         i7eaX3bXxfshEenuyS60YAsAE+dru3Srj6pzy1Novl+9tl7IykuapiPDmKOVzymJ17/f
+         nZ8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=PCYwr2gWfc4hWkCYVlTo0c7o6YHLBz9ipjTep95eWgQ=;
+        fh=LcgpHvf8Q9R5NlBSSEW9eNy+WcF5IoW3LDiZImP2iwU=;
+        b=cM4ImRZxgKs1lwXWuBR093KJqYpmIZ6KmsHROn52hPAZpp6mnNzIT8753OlMXqWA9i
+         0T5Aaio8rkzVrBuhQpnKhMwQ+A9cl6pWhld8KdGivLAPeCkx+b2H6M6htOoHyBtJkoGt
+         NtJmH29xOXWR6ShlJuSwi5O2bDqGIZTZC+ymYKlL9A+9dGiYLQNJ7XLxojSEo6NARIuC
+         7p0Ai0biLcRR3IsO75CbwAiG4Yoe+rMIWFOiXYO3E6EBpNFw30q2GmTmxUlGenUEnhDw
+         bioysn7kQzpYA1ZBJiX/Yebo3PfDwNhbZ0gPUweYL2DuMBQemZl8PENRbjCKofWOf8q7
+         zZIw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788518607; x=1789123407; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PCYwr2gWfc4hWkCYVlTo0c7o6YHLBz9ipjTep95eWgQ=;
+        b=OySJTVemLB3l4k943i2VX2jMVYzD0nRgaii91BwUmui03U8BTX6I6PU/cjcrBztAnv
+         nY9KKrn5l3z/DanvIK9jqNMWUOb25XGEJxYfO3cMqqQ+GOOZvgfHQ9vkOqAgVtNTyHg+
+         lytf6BarrlnvTxyF9SS23c0gOmpawa47zSRsdX090nv2uhuDU+MWKpUKqMSY8fHaKgvg
+         zq+5nEonV3gMn6MNUWAGiM/SDJO5eg2dtB4pASdklhYm8RlXKUJQbNdj4Ccqy9zAHMYk
+         qSs9750pjs6hxzjM7GiUfb0HKwiIAiVhgLsE+bF/XSnYT1w9S5DttItrER0aV04pAKPH
+         JI7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788518607; x=1789123407;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=PCYwr2gWfc4hWkCYVlTo0c7o6YHLBz9ipjTep95eWgQ=;
+        b=EyvgLwQ6l9Ijg5wLsBryclwQaw5tj/kaspnYDwE/U2f4EoVqH9bwKSLmSu9anEL+qc
+         YbDTLF6R2z2G+PRuLftL7uKBalybtaVLbl8LSKbNfn6wtKazJjpBVBYRP5eX8Dbf0LrA
+         W0YdZiQT7kFyHxE4F0dp9bTTFjGj+ni0WP475UmPx345NZ+6SHDcNsdhwob09aidIOEG
+         MPJ7ExtQxUQZmurjMTCwugpK9nFjJkUXEyXJfIPtns9kKbj4ZJt2XGpRKS3DZunPMJYf
+         EU5gq898f7SwSNYhXGLqFN9+V890UMmr0YTS3ok7HEiHsADruLDYpf5NVvBUUfhtRKdN
+         p2BQ==
+X-Gm-Message-State: AFuF++kdowClZA8FuWyl/bECMub26OYT4NtbD3b3/k+c+FEX+wVP0CkI
+	UJBmh+Wf78hz6Ea6sDIQ8IcCn3vmF/yYBwSL2yVu9SttneB/vG1417f+EDbziURVs2fea6JmKXB
+	WLqocDjR7SaPV2UhJP9vsQsZhsfL5X+zMmeGj
+X-Gm-Gg: AYBFou00BvhytUalCnqS9EQRDPrRRmLWOQ+cOhQPE3VPImODAN/Y8HNKw4JZdVRAmbr
+	UGmoq7I/nEM5W2OKscKZAxc89de6C91gjigMvHVp2S8gXhmT2a9UiH1KpWhsjU3h/hMZt+gO3CN
+	n1wbghJV42MBkNu9UakodV8TNX2ij/KZ6NGMAUFtX86zRQFn82afYm+U9ZXn+EaNjZW2tFuKrYN
+	0Ua6VMwZNB/RZ0viaO2ebNvJgCSmSZ0fzz7kmKmdEvXTGXNB5PnT0/cs2SA2edfqzzkh5+s+dex
+	DlnZs9f9unguLrKAAXgN/+5Z30BUCF0BNM6D8QaCO4g/g2tUcol5BCjyAjJI0oM5b+5CoxcNeDo
+	Gdpdyi6J+6uHXkWU8xlQF0gASg0/OOI8x6BeLqKZRHVkf1Vj8N3DYDX5N
+X-Received: by 2002:a05:6300:2284:b0:3c2:dcdd:a85a with SMTP id
+ adf61e73a8af0-3da39ffc3efmr7989426637.13.1788518606861; Fri, 04 Sep 2026
+ 03:43:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 18/27] scsi-multipath: failover handling
-To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260901104526.3850621-1-john.g.garry@oracle.com>
- <20260901104526.3850621-19-john.g.garry@oracle.com>
- <20260901110950.8159E1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260901110950.8159E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260903092430.354186-1-phucduc.bui@gmail.com> <20260904092519.2644A1F00A3D@smtp.kernel.org>
+In-Reply-To: <20260904092519.2644A1F00A3D@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Fri, 4 Sep 2026 17:43:15 +0700
+X-Gm-Features: AcwNN1Vg58vqQL0AXMopCTNtBCRqKjwITxIHs6VBlLuWtJsCtUDT9b71c8c_Wiw
+Message-ID: <CAABR9nEkci1OFoHx2qmJWvKabUN=JSu5AcPynQ-tH02wxHEmOA@mail.gmail.com>
+Subject: Re: [PATCH net-next v2] net: fec: Propagate PTP initialization errors
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 9/1/26 12:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Path failover is prematurely aborted if the underlying path device is removed, and dropping its reference causes a sleep-in-atomic bug.
+>
+> Pre-existing issues:
+> - [High] The device interrupt handlers are exposed to a use-after-free window on probe error paths because devm_request_irq() is used alongside manual free_netdev().
+
+This series fixes the error path when devm_request_irq() fails by
+propagating the error to the probe function.
+The reported race between the PPS interrupt handler and device
+teardown is a pre-existing issue and is unrelated to
+the error propagation changes in this series.
+I would like to leave this issue out of the current series.
+
+However, if we do want to address that race, I think a potential fix would be
+switching from devm_request_irq() to manual request_irq() and
+explicitly calling free_irq() during teardown before cleaning up the
+associated resources.
+
+
+> - [High] Use-after-free on perout_timer due to incorrect teardown ordering in fec_ptp_stop().
 > --
-> 
-> commit 657b83f2533d51dce7950c14bb5248625186e04d
-> Author: John Garry <john.garry@linux.dev>
-> Subject: scsi-multipath: failover handling
-> 
-> This commit implements failover handling for scsi_cmnd by requeuing the
-> master bio of each bio attached to a failed request. Failover is detected
-> in scsi_mpath_clone_end_io() when blk_path_error() occurs.
-> 
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
-> 
-> [ ... ]
-> 
->>   static void scsi_mpath_clone_end_io(struct bio *clone)
->>   {
->>   	struct bio *master_bio = clone->bi_private;
->>   
->> +	if (clone->bi_status && blk_path_error(clone->bi_status)) {
->> +		struct block_device *bi_bdev = clone->bi_bdev;
->> +		struct request_queue *q = bi_bdev->bd_queue;
->> +		struct scsi_device *sdev = scsi_device_from_queue(q);
->> +		struct scsi_mpath_device *scsi_mpath_dev;
->> +		struct mpath_device *mpath_device;
->> +		struct mpath_head *mpath_head;
->> +		unsigned long flags;
->> +
->> +		if (!sdev)
->> +			goto end_bio;
-> 
-> [Severity: High]
-> If the underlying device is being removed and scsi_device_from_queue()
-> returns NULL, does this prematurely abort the failover?
-> 
-> Bailing out here directly propagates the path error to the master bio,
-> which seems to break the multipath failover guarantee.
-We need the sdev to lookup the mpath_head. However I can also get the 
-mpath_head from master_bio->bi_bdev->bd_disk->private_data, so I can do 
-away with any sdev usage altogether.
+>
 
-> 
->> +
->> +		scsi_mpath_dev = sdev->scsi_mpath_dev;
->> +		mpath_device = &scsi_mpath_dev->mpath_device;
->> +		mpath_head = mpath_device->mpath_head;
->> +
->> +		spin_lock_irqsave(&mpath_head->requeue_lock, flags);
->> +		bio_list_add_clone(&mpath_head->requeue_list, clone);
->> +		spin_unlock_irqrestore(&mpath_head->requeue_lock, flags);
->> +
->> +		mpath_schedule_requeue_work(mpath_head);
->> +		put_device(&sdev->sdev_gendev);
-> 
-> [Severity: High]
-> Can this put_device() call trigger a sleep-in-atomic panic?
+This issue may already have been addressed by this patch:
 
-See above
-
-> 
-> Since scsi_mpath_clone_end_io() executes in the softirq context of a bio
-> end_io handler, dropping the last reference here can call
-> scsi_device_dev_release(), which explicitly enforces might_sleep().
-> 
-> Could mpath_head be safely derived directly from
-> master_bio->bi_bdev->bd_disk->private_data instead of indirectly through
-> the underlying path device?
-> 
->> +		return;
->> +	}
->> +
->> +end_bio:
->>   	master_bio->bi_status = clone->bi_status;
->>   	bio_put(clone);
->>   	bio_endio(master_bio);
-> 
-
+https://lore.kernel.org/all/E1uydLH-000000061DM-2gcV@rmk-PC.armlinux.org.uk/
