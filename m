@@ -1,192 +1,227 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD7244CAFB
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 09:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788514594; cv=pass; b=iVFNfSGdv/+CZEKN5Dn1wHPoAZZqcK/btrDkcLIEYfR9qUvr9PAUjcYgqOyke2Gkfr1OR2kR8J4L0Ylcrwa1XsLbtBzC2dJrHaOin+fWkGtoGQ02IXdyBXDqgZHFZnu7aGVJNN4QIuhLEeUyKmDXDYC+w6P+OiokX1Y/Ng5cmn0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788514594; c=relaxed/simple;
-	bh=p64fzSUlfym1iQyNdY45ANhgP8w9MUHklALvtWS2kbM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iy18gnDG1zk2sYzpaoFagvRZZ2VRmRQTODzr+jo4jGOoV9sgJKA6YZSa2BrgR0bUjEbm0XLo+l6/YZmmXhFabhbeFxAYnrICVk4qivp51lBeeQK7/7Ve97CxDVXmHQcRGdN5HmGiASWmdn67sE5BS12cxULw1KmDkvARdCR/8HI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai; spf=pass smtp.mailfrom=nebusec.ai; dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b=o5bZJQ5D; arc=pass smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nebusec.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5644C3EC826
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 09:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788514885; cv=none; b=u1+tGPMU63TIKg/9oxgv/IMBp/CdjghsATcviu4Wu2VYg3sWWCBFuMr1QyDGowunapdLm0DViF+QOekFNjwvfnPQvF27aHnw/psO3JGvypnBP7G0C8gWuVYnfaqZ9JPflmd+//iw9jb6fAIeq9idjwqrO4n0JI4CDZegFNCuldE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788514885; c=relaxed/simple;
+	bh=ZAsXYph+3UL5QbS4apKrLnhh+iWZ6jvjIOFOd0lsZS0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ht2fhRYwLXT0X0ligSYWTbf8T4Pof2Fw9DCNdkdr/vWhonJaH+CmEMuj3KtmZiInf1htzbTrQvwOtCxJSmMoiyJAMi7z+AFh8qyxK49IvSvsaIVcEOngSV9RZi5KQvb4dgHNpWg3/6w48/2AjaNciLSu8wq7LMxRDAM30SJ38gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ltn7tyEZ; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nebusec.ai header.i=@nebusec.ai header.b="o5bZJQ5D"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc1cf287ef8so875885a12.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 02:36:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788514592; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KhKcAGuYoYIXIdSfDgpWEkYDbzVUJCyGXTEGC4bdj3UMXx1MEGTyBxwoPicwY1HIZJ
-         O0jLBmJH4r1eOdJ3Qjs9PerFylPvDDEfijW2ETarMH3G/rjfiuJg0IKhKDDywJeZfhvs
-         nH40ZuikPCgCk4SdTPyAGz6rMGzdDSo5cIbpPbf3FH0ffKsryMAClalaRivEya3RaET0
-         LlNtxc2sPVDQuT2Ote60wgSJ6NfZ8lcKxastLTGdLilZWZm2SSQb+1Dku6TaA7kOATJN
-         bOWNcyeK91BgsEt/GBDaY9og47QaQouJqaqkKl+gGucP/3heMjIKEPhwdUiPmQ80mH4D
-         BNdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
-        fh=CB5UpkY+O88awVVzOZ6u9gwGodJr4E7oL8gDALqWdIs=;
-        b=c+ltdXXSsFHpL3PV8yXd7z7EDqkAzje5joyyiNZAV48yrfa5fy+zqNFuIQ1hL2WW89
-         IhXnm2SuQn5wmiHNu8+Hb1qpLJO6y5+EYTT9ojTSK/tMUkKwpdNXPDalI4BUykVsn2iP
-         zlligm+F/hBddpKtnKdKOVmDC8v/h4YtyiZABA1grKFDHrYahtq7BgGVwMwBdZJx4ul1
-         zbU4st3seA+C4f+OldrK2F2rIsTvv2R+iLVZ4LuW53ghw3xBwrNV8MVwg0t0b575BbYe
-         kNdt54NOQcvU2u20Lb9h/gY4pUudHGrPNlrvw5sa1gn9HXfL0f4pZsl0gbZj4z4mMd+P
-         1XBg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nebusec.ai; s=google; t=1788514592; x=1789119392; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
-        b=o5bZJQ5DDl9bJt17BqGa1a8QYOQAX78fidOJdQQ+o+IY/mwCQuTRGkczFqlewsk8vq
-         PmJkd4e51H1SO69Ru2u78uiMEQ+hh+rEcfkCLGXVaUOhw3nZU5OOrZCf5xLFGAlmPh+J
-         NpPzrd8sl3qa5tz+1IjMlwSgUolDWCvvotdsW5O/BxTm6IGtFL04+Ub1G++QVkeS/psX
-         Y73g3Moe77P4Q4g/DGzTTRiR3hWEcw84UST0wyBqIYYE/2af5ONIl6U2NrRKHV8Q8WWe
-         8iDQRmgPCZa7tZbwSNa5eMw4hVMXPd34VLlpjhwsQrWad/c2fKqwa2XCN8H1sr5fVeBT
-         adeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788514592; x=1789119392;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=YLFw34p5JVbfZtkd6Sw161TPVYuYb1zUP76oeIZ+TNc=;
-        b=lLv9qZyz3vY6jr9iYpJfe1lmWOyO/RroSDPxmiWrT6yXivg1FZTRxyb2A2z8S33mIf
-         N02fm40W3TuTiYQOjYKoIUyFz4muZTs/PHVh3uVGaTocdWEbyIl/DEPPqJmw1VzgloCJ
-         tCAVTPI1RL8ttnsfGAC0HFjBwZLQ9o4/cpuJCfsanRmRJ0a5TxxEOWf26MkF4O2b4k9J
-         q0GjRsvRspUFyC3VadZiIXduwyv0qm8qFOVlrg/nD/AujkQpjTaLCGZrr4LaoSUaTEK7
-         g8A8itIBs3FaIpuPaScxb/FW5ZV+yrwrbEzIC8w55aaztX9c8cVfKrrTf6SUcKwWxAkW
-         vpOQ==
-X-Gm-Message-State: AFuF++mslKCx/2vVH0Nz3lUIFM9S6YEBxBVnSkqS0yQPgPYSzNlCoBJS
-	Qn3ecLUY9paXqXYNEd2HU313J2m+hmh12rjj+EBxQtK+SiJT6AcUHyK2LXQsM9ypCd2cV8150I8
-	pgt27rJM2EVK45K77elKELH47h1qLFAhIyQ5DNLOLUPj2GYJofAP4SOm+g4w=
-X-Gm-Gg: AYBFou3ENV6auNiZz62FtuefCceWcGoNQCziuqq/jp9hSJbXy7+T8Izuuj5270ecXjP
-	pXsXJIh94vso8/TtlAMbZ0Sup0IQbAKpQKlE+/sSv+cwjh+FeV5Zpsxv2uFtLOPKy652LVk0cJI
-	YavbwAOpOOe4sxsKbA2BLn3y+uYYaqM90zKUIoXWW0MQdl9ccYcRU5krVuObL6MEFIK3zlCvIl5
-	j4dyBfPf2aQclKqoIs/XxgnZc8z5p3riqpflmGwcKEW6cXmd2qhB7At0jg8HGdtVwkSQfabBD+o
-	tDRQQ4t6KyFBIqADNmd1zEYq4WnxW8mY/qEbRj2bN8Lb
-X-Received: by 2002:a05:6a20:1441:b0:3c3:9070:96b3 with SMTP id
- adf61e73a8af0-3da39cffff0mr7836205637.3.1788514591664; Fri, 04 Sep 2026
- 02:36:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ltn7tyEZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788514883; x=1820050883;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=ZAsXYph+3UL5QbS4apKrLnhh+iWZ6jvjIOFOd0lsZS0=;
+  b=Ltn7tyEZukOnVEJFKg9McRiZQ5BxUf8ZKQda0NUqUgeJjuba4X0eAjPW
+   vnvCDayD8bKOSDuuzx87ITw/OT/3j92yBfCFS5y+i5Sg9P8pPfxbkPpEd
+   f96Z1zCDY7BJjGKF2Q8QSkLy6VbVtCznmlHnUVR7RDXevPMfSQ7QXJDZq
+   pFU2hOH/nd53zYX7yZWU4VMx4gvr1z+E5hbWaVh2uPlgUxP7lIK6gxps1
+   pveHP/tzNL6GiL1OQzRnGuZu9hBaZIqeXHPTIrxepOqcqom3pvYdhX/WD
+   jSyEXfHCT5hTwrvnJFVyZuuBbbUhIpEc8Iq/uGYKHgyvCgDYxc4VBZxD4
+   w==;
+X-CSE-ConnectionGUID: vi+npFw/T/Wb95fCpIRBLg==
+X-CSE-MsgGUID: L/qCJAg0Sqq7/nqqEpziHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="88861118"
+X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
+   d="scan'208";a="88861118"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 02:41:23 -0700
+X-CSE-ConnectionGUID: mNDvgPXDSJOj7O8+SpJEhg==
+X-CSE-MsgGUID: l7wCaX8OS0+uyxOZqWyrXQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
+   d="scan'208";a="268679512"
+Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.245.29])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 02:41:19 -0700
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
+ ardb@kernel.org, ilias.apalodimas@linaro.org,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
+ airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH v4 3/3] drm/sysfb: Use preferred panel size for panel
+ orientation quirks
+In-Reply-To: <20260904090850.43060-4-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20260904090850.43060-1-tzimmermann@suse.de>
+ <20260904090850.43060-4-tzimmermann@suse.de>
+Date: Fri, 04 Sep 2026 12:41:16 +0300
+Message-ID: <e5622c247ffac253ef61cf66ffeeba2f8e36d68d@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1788202924.git.caoruide123@gmail.com> <93dafd2c918b42d635b03e7d3d83f6f2cff49697.1788202924.git.caoruide123@gmail.com>
- <20260902103402.9C9AE1F000E9@smtp.kernel.org>
-In-Reply-To: <20260902103402.9C9AE1F000E9@smtp.kernel.org>
-From: Wei Ren <weir@nebusec.ai>
-Date: Fri, 4 Sep 2026 17:36:18 +0800
-X-Gm-Features: AcwNN1UEJHE5kxwtQIpvfaZR87xRhOqCc4ys3tc5g9vbMyYcRxOzksYYxTo17aA
-Message-ID: <CADfOeh7YKUaZY8UVxtrw_YsASmuxJ3JuSq3nk_X702fAidW01Q@mail.gmail.com>
-Subject: Re: [PATCH net v5 2/2] mptcp: fix MP_CAPABLE token migration when
- cloning reqsk
-To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=882=E6=97=A5=E5=91=
-=A8=E4=B8=89 18:34=E5=86=99=E9=81=93=EF=BC=9A
+On Fri, 04 Sep 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> Sysfb drivers currently use the given display mode for looking up the
+> panel orientation. But the look-up table stores the native geometry of
+> the panels, so the lookup fails if the current mode sizes differs.
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+> Get the panel's native geometry with drm_edid_detect_panel_size() from
+> the EDID and use it for looking up the panel orientation.
 >
-> Pre-existing issues:
-> - [Critical] Ignoring the return value of mptcp_init_sched() in mptcp_sk_=
-clone_init() causes a module refcount underflow.
-> --
+> v2:
+> - ofdrm: validate EDID header before using it (Sashiko)
 >
-> commit 18a63fbca98d3e69ad5d14656be7de91ee0af91e
-> Author: Ruide Cao <caoruide123@gmail.com>
->
-> mptcp: fix MP_CAPABLE token migration when cloning reqsk
->
-> The patch fixes MP_CAPABLE token migration during TCP request migration b=
-y
-> moving token request ownership from the original request to the clone
-> under the token bucket lock. It also safely destroys the provisional MPTC=
-P
-> socket if a passive MP_CAPABLE socket cannot claim the token.
->
-> Closes: https://sashiko.dev/#/patchset/86e2514b533bf4d55d4aa2fdbf1404022e=
-8c9430.1776149210.git.caoruide123%40gmail.com
->
-> > diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-> > index e1f08f71cdb16..30067f2a7ca8f 100644
-> > --- a/net/mptcp/protocol.c
-> > +++ b/net/mptcp/protocol.c
->
-> [ ... ]
->
-> > @@ -3764,6 +3777,14 @@ struct sock *mptcp_sk_clone_init(const struct so=
-ck *sk,
-> >       mptcp_rcv_space_init(msk, ssk);
-> >       msk->rcvq_space.time =3D mptcp_stamp();
-> >
-> > +     if (!mptcp_token_accept(subflow_req, msk)) {
-> > +             list_del_init(&subflow->node);
-> > +             WRITE_ONCE(msk->first, NULL);
-> > +             sock_put(ssk);
-> > +             mptcp_sk_clone_destroy(nsk);
->
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but could this error path expo=
-se a
-> module refcount underflow?
->
-> Earlier in mptcp_sk_clone_init(), the code calls mptcp_init_sched() witho=
-ut
-> checking its return value:
->
->         msk->setsockopt_seq =3D mptcp_sk(sk)->setsockopt_seq;
->         mptcp_init_sched(msk, mptcp_sk(sk)->sched);
->
-> Because sk_clone_lock() byte-copies the parent's msk->sched pointer, if t=
-he
-> BPF scheduler module is concurrently unloading, bpf_try_module_get() can =
-fail
-> and return -EBUSY. This leaves a stale pointer in msk->sched.
->
-> When mptcp_sk_clone_destroy() is called here, it triggers
-> mptcp_release_sched(). Will this cause a use-after-free and refcount
-> underflow by unconditionally calling sched->release() and
-> bpf_module_put() on that stale scheduler pointer?
->
-> > +             return NULL;
-> > +     }
-> > +
-> >       if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
-> >               __mptcp_subflow_fully_established(msk, subflow, mp_opt);
-> >       bh_unlock_sock(nsk);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1788202924.=
-git.caoruide123@gmail.com?part=3D2
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Acked-by: Ard Biesheuvel <ardb@kernel.org>
 
-  Thanks for checking.  I don't think this failure is reachable in the
-  current tree.
+Acked-by: Jani Nikula <jani.nikula@intel.com>
 
-  CONFIG_MPTCP is bool, and the only registered scheduler is the static
-  mptcp_sched_default.  There is no BPF struct_ops implementation for
-  mptcp_sched_ops, and mptcp_register_scheduler() is not exported.
+> ---
+>  drivers/gpu/drm/sysfb/efidrm.c  | 17 ++++++++++++++++-
+>  drivers/gpu/drm/sysfb/ofdrm.c   | 18 ++++++++++++++++--
+>  drivers/gpu/drm/sysfb/vesadrm.c | 17 ++++++++++++++++-
+>  3 files changed, 48 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
+> index 3f9cd5d03efb..8b19f437308e 100644
+> --- a/drivers/gpu/drm/sysfb/efidrm.c
+> +++ b/drivers/gpu/drm/sysfb/efidrm.c
+> @@ -152,6 +152,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>  	const struct screen_info *si;
+>  	const struct drm_format_info *format;
+>  	int width, height, stride;
+> +	unsigned int panel_width, panel_height;
+>  	s64 vsize;
+>  	u64 mem_flags;
+>  	struct resource resbuf;
+> @@ -217,6 +218,20 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>  	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>  		sysfb->edid = dpy->edid.dummy;
+>  #endif
+> +
+> +	panel_width = width;
+> +	panel_height = height;
+> +
+> +	if (sysfb->edid) {
+> +		const struct drm_edid *drm_edid;
+> +
+> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+> +		if (drm_edid) {
+> +			drm_edid_detect_panel_size(drm_edid, &panel_width, &panel_height);
+> +			drm_edid_free(drm_edid);
+> +		}
+> +	}
+> +
+>  	sysfb->fb_mode = drm_sysfb_mode(width, height, 0, 0);
+>  	sysfb->fb_format = format;
+>  	sysfb->fb_pitch = stride;
+> @@ -340,7 +355,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+>  	drm_connector_helper_add(connector, &efidrm_connector_helper_funcs);
+>  	drm_connector_set_panel_orientation_with_quirk(connector,
+>  						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+> -						       width, height);
+> +						       panel_width, panel_height);
+>  	if (sysfb->edid)
+>  		drm_connector_attach_edid_property(connector);
+>  
+> diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdrm.c
+> index 9d60db45139c..c41255569854 100644
+> --- a/drivers/gpu/drm/sysfb/ofdrm.c
+> +++ b/drivers/gpu/drm/sysfb/ofdrm.c
+> @@ -229,7 +229,7 @@ static const u8 *display_get_edid_of(struct drm_device *dev, struct device_node
+>  {
+>  	int ret = of_property_read_u8_array(of_node, "EDID", buf, EDID_LENGTH);
+>  
+> -	if (ret)
+> +	if (ret || drm_edid_header_is_valid(buf) != 8)
+>  		return NULL;
+>  	return buf;
+>  }
+> @@ -828,6 +828,7 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>  	enum ofdrm_model model;
+>  	bool big_endian;
+>  	int width, height, depth, linebytes;
+> +	unsigned int panel_width, panel_height;
+>  	const struct drm_format_info *format;
+>  	u64 address;
+>  	const u8 *edid;
+> @@ -998,6 +999,19 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>  		sysfb->fb_gamma_lut_size = OFDRM_GAMMA_LUT_SIZE;
+>  	sysfb->edid = edid;
+>  
+> +	panel_width = width;
+> +	panel_height = height;
+> +
+> +	if (sysfb->edid) {
+> +		const struct drm_edid *drm_edid;
+> +
+> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+> +		if (drm_edid) {
+> +			drm_edid_detect_panel_size(drm_edid, &panel_width, &panel_height);
+> +			drm_edid_free(drm_edid);
+> +		}
+> +	}
+> +
+>  	drm_dbg(dev, "display mode={" DRM_MODE_FMT "}\n", DRM_MODE_ARG(&sysfb->fb_mode));
+>  	drm_dbg(dev, "framebuffer format=%p4cc, size=%dx%d, linebytes=%d byte\n",
+>  		&format->format, width, height, linebytes);
+> @@ -1069,7 +1083,7 @@ static struct ofdrm_device *ofdrm_device_create(struct drm_driver *drv,
+>  	drm_connector_helper_add(connector, &ofdrm_connector_helper_funcs);
+>  	drm_connector_set_panel_orientation_with_quirk(connector,
+>  						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+> -						       width, height);
+> +						       panel_width, panel_height);
+>  	if (edid)
+>  		drm_connector_attach_edid_property(connector);
+>  
+> diff --git a/drivers/gpu/drm/sysfb/vesadrm.c b/drivers/gpu/drm/sysfb/vesadrm.c
+> index 6a67b2d2e451..f6358a0a68bd 100644
+> --- a/drivers/gpu/drm/sysfb/vesadrm.c
+> +++ b/drivers/gpu/drm/sysfb/vesadrm.c
+> @@ -402,6 +402,7 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>  	const struct screen_info *si;
+>  	const struct drm_format_info *format;
+>  	int width, height, stride;
+> +	unsigned int panel_width, panel_height;
+>  	s64 vsize;
+>  	struct resource resbuf;
+>  	struct resource *res;
+> @@ -484,6 +485,20 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>  	if (drm_edid_header_is_valid(dpy->edid.dummy) == 8)
+>  		sysfb->edid = dpy->edid.dummy;
+>  #endif
+> +
+> +	panel_width = width;
+> +	panel_height = height;
+> +
+> +	if (sysfb->edid) {
+> +		const struct drm_edid *drm_edid;
+> +
+> +		drm_edid = drm_edid_alloc(sysfb->edid, EDID_LENGTH);
+> +		if (drm_edid) {
+> +			drm_edid_detect_panel_size(drm_edid, &panel_width, &panel_height);
+> +			drm_edid_free(drm_edid);
+> +		}
+> +	}
+> +
+>  	sysfb->fb_mode = drm_sysfb_mode(width, height, 0, 0);
+>  	sysfb->fb_format = format;
+>  	sysfb->fb_pitch = stride;
+> @@ -585,7 +600,7 @@ static struct vesadrm_device *vesadrm_device_create(struct drm_driver *drv,
+>  	drm_connector_helper_add(connector, &vesadrm_connector_helper_funcs);
+>  	drm_connector_set_panel_orientation_with_quirk(connector,
+>  						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
+> -						       width, height);
+> +						       panel_width, panel_height);
+>  	if (sysfb->edid)
+>  		drm_connector_attach_edid_property(connector);
 
-  mptcp_sched_default.owner is THIS_MODULE, which is NULL for built-in
-  MPTCP.  Therefore bpf_try_module_get() reduces to try_module_get(NULL)
-  and cannot fail.  The default scheduler has no release callback, and
-  bpf_module_put() reduces to module_put(NULL).
-
-  Consequently mptcp_init_sched() cannot return -EBUSY on this path, and
-  mptcp_sk_clone_destroy() cannot release an unacquired scheduler
-  reference.  The unchecked return would need to be revisited if
-  unloadable or BPF MPTCP schedulers are added in the future, but I don't
-  think this series needs a change.
+-- 
+Jani Nikula, Intel
