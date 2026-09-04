@@ -1,110 +1,144 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mta0.migadu.com (out-231.mta0.migadu.com [91.218.175.231])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0722381EA1
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 02:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788489683; cv=pass; b=amD8j7cjyhyZfX2jSPXeVRTlklN+RsNvENKsKCwTpwDXLvSC6T5Uw2Av8ICH92Ak+WbUnxdbLc9MDS2geAlMYX+4uBVTuLwsXUAe7el6AzjzqJr5b8os9pyqS3kiYVPjcsjBkmzs8ejyndQsHUfUblqHCyw+805vX1MtCXNnaEc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788489683; c=relaxed/simple;
-	bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=scaUyHO58acRXUrNIUCioZm7TsI5CmuJE3aCyayCtayzfnd34ex49j+CHZy3XLQ4RmCNaPqkeuaf+DyKdvWirra+i8wipN+vbyaijuhyv7HIaM7iaj2AbiXhrWo3X9T//3QsOKJQDjTP48X9D0q/0/se8EGNwKRZHY/Pm8Fdbpw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arimil.com; spf=pass smtp.mailfrom=arimil.com; dkim=pass (2048-bit key) header.d=arimil.com header.i=@arimil.com header.b=FUEhXRFH; arc=pass smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arimil.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arimil.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0D3B892D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 03:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.231
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788492606; cv=none; b=o5zwe9xBGoVdNfuaYkBYBzBivnnqrdCLesHTs/aeLh74y0n0/S9ebs4agHmYzjhGVTGg19Izp9+D388gmlYMwZo+Kj0FF4+H9pLCKDqQN3ZDq20iUvrLcB5r2Ayj05ArD1wlqexAJpZh4H14SR4GmcAmV1shJdAj85mBNM4u02I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788492606; c=relaxed/simple;
+	bh=lZmF6FSfA1n6pdWrXCfyfsF9NyL9Pw+BjcH4o2a8BLY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=OzEzVVdhC4YXc1xiBKcqAk/IqSutEv+mvWIvPrRkOn4hQg0rRLUWv7f0aEkU2Cteozko9fqeMxaHHW+W7gCE8Vrb2JKS6/UpObkNzKj2Boq964YAamEIiI2d1McsIs0sLTbeWb0J9TygCe9PvlJPaBBx+MEjMdQ7JFPyLyt9ST4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lzP9Aftu; arc=none smtp.client-ip=91.218.175.231
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arimil.com header.i=@arimil.com header.b="FUEhXRFH"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c255acff671so75031866b.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 19:41:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788489680; cv=none;
-        d=google.com; s=arc-20260327;
-        b=X90p6DFd2DZGtjAjiE0WZxahs3ZzeDU5VnXtbAWf7pgQYuNf9iMPbS2nKlxNjC0t+s
-         d5AnOAdTy7hAIo614IHDxqtRWC7JGxxcZhA6uKohJXa/S5lNno9ZJl69jX6bQmAff9cZ
-         FYzgZtghtsiWdhUcTMCl2Xemd+wgSI0jHGC/+7gykhCKDDg+UnFWsrsmOW1EjDV/ksd6
-         KMUkL/HeMVSaPKAuLf2XBkkMD34LzwYCXia468X1FqUqVXideIU+Aq6kBSk5jcPR83Pd
-         0LP0GmuQrZHRfJiHBcqNbBP38oUmxp94EPnm08iH2g8xhdWvMxLI3mvQhwUFApWJVI82
-         y1Kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
-        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
-        b=f3+0cbqmTz3tK1ZuENTFZ2HLBECbBJjHGNTP/DfWcI5SOiQcS/d+4BcVMvGpdVA/00
-         eTP5j4S/7rmzfPf6NzmaBww0HLziPAZN4Hz6sSVVpr/4rIQhxx8h6Z3r3Ecy0h9zfRZ0
-         YLKua7nNvracnjuKpbuwMo9SQ2nWP2noR1ZV+0K5dAa4g39sAQk1wwcP5T9KZzovhIcb
-         6nbHsnZm34scjUP3Jx9eP1lTW73PoU5gA2LYxOHQ/xc0pjGTB7rwuHxybdU9tuaacGAa
-         XiDIVpSvijY3buAetOA3gSeQ5RqHkQ3jvVY0AGHPG3iGJlQVSQ50fNPNNeQg73IfDAyH
-         QBVw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arimil.com; s=google; t=1788489680; x=1789094480; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
-        b=FUEhXRFHBoGa75LXuNi3IA8caid18HuCe674t1TI+BrQwsr68zTyj4lYeagitF7I2b
-         qvb7EcUgpNKNJo8DmGE2vRMwV/ERTfzGcw4VTJHHdFhu0u9giN1sn/819r1jzYc8IV6/
-         5+T4FNml07Iiy5typno2tIcSgymv/2riW+bI8FuSdjM1hx3YLP7DPD9HekiDCH9o2wmf
-         gAixm3CbhU2fMmAVc9qM3dpJTQCkKyfxmruvAgc+upVlXChPR1rOUAV7XKmrKcgERkUZ
-         fNU7cPKgBxoC36+Lzw0i4burRzmJVFiqNh4u7IXQzs7bE7yMAz3WlG5UUTuHDlOmFGvC
-         znGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788489680; x=1789094480;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
-        b=MOd4H32rgbymN38MlhghhJNVfJL16Yw+Dd7YWavUI1yUnb7dL+SzmFj8phC372vjPb
-         +8n0Fe+SpEP0I1AHvKUv2AGNEEeGAdweSIESofwYEK+RDMfB3i4OPJOIONR2m6eGlaCz
-         URLN53+LPEmwKhGn4YKzHOem/ULP6QKLeB6/3o3Gt4uhNxzJHmw6keQhk8oswHq3biND
-         SvjZfKLjdAxk6DpYEcFYynHR1zn5UQ2LCaWLFoLKce5P5DnCSbzm8z2w6MhCvlk1Xs89
-         3clVxiA5NFBf+23Z82LCSfZh3WptFp/f9XzWuzitJMPZqhp8IdfDQ1I7QNzMRljt8VdU
-         94SA==
-X-Gm-Message-State: AFuF++mRsNtU/q/9NwDETDnLu3vevWaHHXTxoCUYpctOTtHsv5wVa+Ta
-	Vk8fqjfrVaj7LNQTx6hXhzCqGqFToVaA/fHMwx/4B/s2/oL6zfXFGiMqHr9AtQQwf8SDFtXBvHr
-	MGwJpcHD3eS7u3Ibt0pU9+rxhb/fy9j/QUph2BKhpEqWB5k108BmvBgpOSe91
-X-Gm-Gg: AYBFou2D2rmMmeWnmm/ajXbwU0/kXmZdBjK9Nv5snonQ9xbzVtDvvgA/3GVU6OyDtsw
-	s+e/V8Ho77ewaS+b3+YdVAHZ00v2rOV3Me3d0hjVi7IYAU7G4OHvtSKb6AH+ojgjyFcscboEkFr
-	tsuNClbGXkbYtH87Na/r+GTLfev42mkCsLcioG6J40knRmj5WkGlwLhGAQYPPaS/tVnfQRrIGy6
-	8bznwgBGHVCnB9zUk3KuOy9cbgEcrXKf34qPBIgTPqoCbFeL+2C50CIvF2j+lrIuL3ZOMUzVv7T
-	fgBpnVZkGuHq1Z2Xv8GTUfV2uu3bq6O/+yGtk66PgzySDA==
-X-Received: by 2002:a17:907:c1f:b0:c20:d90b:2cb1 with SMTP id
- a640c23a62f3a-c260c48eb7fmr151929166b.0.1788489679824; Thu, 03 Sep 2026
- 19:41:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lzP9Aftu"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=lZmF6FSfA1n6pdWrXCfyfsF9NyL9Pw+BjcH4o2a8BLY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788492602; v=1; x=1789097402;
+ b=lzP9AfturZOYlo2xaz05c445cnrjFr5JbSlk0QNCYb1N5oaW0qJleVdW6CQI2Ydua3NMjeSE
+ UM59U0DLpOcxRmdf95cLdWfQczMUUgJYHb2yYeOE552+YzJhAQu1adQ9Y+ISkjFEcIs79Hk+8i8
+ Vsduzkg8Je3/Nqht5Nrnm3C4=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 28152c226d8c5285;
+	Fri, 04 Sep 2026 03:30:02 +0000
+X-Mizu-Trace-ID: 28152c226d8c5285
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b51d5356-ecc4-4b17-a01e-bf4077d02751@linux.dev>
+Date: Fri, 4 Sep 2026 09:00:00 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260904022129.97896-1-renari@arimil.com> <20260904022129.97896-3-renari@arimil.com>
- <20260904023424.B3E601F000E9@smtp.kernel.org>
-In-Reply-To: <20260904023424.B3E601F000E9@smtp.kernel.org>
-From: Arimil <renari@arimil.com>
-Date: Thu, 3 Sep 2026 22:41:08 -0400
-X-Gm-Features: AcwNN1WjASArX-YhmXTGtQG-Eun6uq676mwBPhxrZKuoGIxqwl0m9gJaLnPlvvs
-Message-ID: <CADBHdQ2g0uX3rrjdE8+BiO_2n5Ld2FOesgeowTzKunuAZhaLaA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hwmon: (asus_rog_ryujin) Synchronize HID command and
- report handling
+User-Agent: Mozilla Thunderbird
+From: Vineet Gupta <vineet.gupta@linux.dev>
+Subject: Re: [RFC bpf-next 2/6] bpf: move the linked-scalar flags into
+ bpf_reg_state->flags [NFC]
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260814231945.3884596-1-vineet.gupta@linux.dev>
+ <20260814231945.3884596-3-vineet.gupta@linux.dev>
+ <20260814233412.57FF61F000E9@smtp.kernel.org>
+Content-Language: en-US
+In-Reply-To: <20260814233412.57FF61F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 3, 2026 at 10:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] The driver starts the hardware and registers hidraw before initi=
-alizing the driver's spinlock and completions, leading to a potential NULL =
-pointer dereference panic if a report arrives early.
+On 8/15/26 5:04 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Missing BPF_FLAG_ADD_CONST check in the explore_alu_limits verification path allows incorrect pruning of incompatible linked scalars.
+> - [Medium] Narrowing spills of scalar registers fail to clear BPF_FLAG_ADD_CONST linkage flags, leading to stale flags on unlinked registers and subsequent pruning failures in regsafe().
 > --
+>
+> --- Patch [2]: [RFC bpf-next 2/6] bpf: move the linked-scalar flags into bpf_reg_state->flags [NFC] ---
+> commit 19636caada7b86a42b8056f18241af3d2e662845
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+> Subject: bpf: move the linked-scalar flags into bpf_reg_state->flags [NFC]
+>
+> This patch moves the linked-scalar flags from the bpf_reg_state->id field
+> into a dedicated bpf_reg_state->flags field. It also updates the verification
+> logic to explicitly check these new flags using the link_flags_match helper
+> where appropriate.
+>
+>> diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+>> index f7a0314fa1064..d3105b9a9965f 100644
+>> --- a/kernel/bpf/states.c
+>> +++ b/kernel/bpf/states.c
+>> @@ -488,11 +480,32 @@ static int clean_verifier_state(struct bpf_verifier_env *env,
+> [ ... ]
+>
+>> +static bool link_flags_match(const struct bpf_reg_state *rold,
+>> +			     const struct bpf_reg_state *rcur)
+>> +{
+>> +	if (!rold->id)
+>> +		return true;
+>> +
+>> +	return (rold->flags & BPF_FLAG_ADD_CONST) == (rcur->flags & BPF_FLAG_ADD_CONST);
+>> +}
+>> +
+>>   static bool regs_exact(const struct bpf_reg_state *rold,
+>>   		       const struct bpf_reg_state *rcur,
+>>   		       struct bpf_idmap *idmap)
+>>   {
+>>   	return memcmp(rold, rcur, offsetof(struct bpf_reg_state, id)) == 0 &&
+>> +	       link_flags_match(rold, rcur) &&
+>>   	       check_ids(rold->id, rcur->id, idmap) &&
+>>   	       check_ids(rold->parent_id, rcur->parent_id, idmap);
+>>   }
+> [Severity: High]
+> Does the explore_alu_limits verification path also need a similar update?
+>
+> In regsafe(), when env->explore_alu_limits is true, the verifier uses a
+> strict comparison:
+>
+> regsafe() {
+>          if (env->explore_alu_limits) {
+>                  return memcmp(rold, rcur, offsetof(struct bpf_reg_state, id)) == 0 &&
+>                         check_scalar_ids(rold->id, rcur->id, idmap);
+>          }
+> }
+>
+> Since memcmp() stops at the id field, it misses the newly added flags
+> field. Without calling link_flags_match(), states with the same base
+> scalar IDs but different linkage flags (such as BPF_FLAG_ADD_CONST32 vs
+> BPF_FLAG_ADD_CONST64) might be incorrectly deemed equivalent, bypassing
+> the strict bounds checking intended by this mode.
 
-This is a false positive, this driver does not call
-hid_device_io_start() so there will be no early reports.
+Agree.
+
+> [Severity: Medium]
+> Can narrowing spills leave stale flags on unlinked registers?
+>
+> When a linked scalar register is spilled with a smaller size,
+> check_stack_write_fixed_off() copies the register and manually breaks
+> the relation by setting the id to 0:
+>
+> check_stack_write_fixed_off() {
+>          save_register_state(env, state, spi, reg, size);
+>          if (!reg_value_fits)
+>                  state->stack[spi].spilled_ptr.id = 0;
+> }
+>
+> Since the linkage flags were moved out of the id field, setting id to 0
+> no longer clears the BPF_FLAG_ADD_CONST bits.
+>
+> If this state is later compared in regsafe(), link_flags_match() will see
+> rold->id != 0, but rcur->id == 0 with a stale BPF_FLAG_ADD_CONST flag.
+> Because the rold->id check does not short-circuit for rcur, the helper
+> will evaluate to false, incorrectly rejecting a state that is safe to
+> prune.
+>
+> Would it be safer to use clear_scalar_id() or otherwise clear the flags
+> when breaking the relation?
+
+Agree.
+
+Thx,
+-Vineet
