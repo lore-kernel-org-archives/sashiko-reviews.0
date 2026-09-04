@@ -1,121 +1,208 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F481650
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 13:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5CD30EF86;
+	Fri,  4 Sep 2026 13:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788529520; cv=none; b=GhWc1cFkvtkBYFAuhKZG51HOhYEYCZthl+PW1pDSzcdbxM96Loyed/+lm+p9RqHExJaTTJXyHgeCv+gI71wwP4EAGWtJGZvoLjmTnRNq+fhuPcmkiXsYc+ErEjpouSB1Ge4UJ0YMKuLqnYrIV9dN+HyTLwErKhG5q7jLcMJOv6g=
+	t=1788529559; cv=none; b=B8xpDELvKYunSgyGNIXf9jjGNsSMbdgf4/07+g2kXhfMIs3NfiJZTxX4Ya0vUh9xv+H3VStZXkqkM9appI9424dofIInOlB05Ur8eyegwo8McC2KcgG2f34yytbGB1vY4kbaL3rSxl6xP3kzZKX5f5NBQQ1d6Ze7cDpOgt2oaHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788529520; c=relaxed/simple;
-	bh=AwKvfY0C3A+YddLSh+lZO9CKA3+wQcEcUbOlJU3gnz4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GbyaU3ByDZVZ1S8eDoBi3dZRfI69b5zgv5kyWZoggFrrK5X5YhWseSYQTr21gSehEIbfmkDTWEYi7Dsu2prZBTfFx0reiHLbNmE0ouSZhigY/3uQFpSRgqy+kswPW5sXQ8KJbRWZkRRCZxZd9klBGOk2MX+xfY0om8mDVndRbuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=RjlrXsbh; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1788529559; c=relaxed/simple;
+	bh=uBILfIAE4wAXjKxPSimgi2IVaLLcdAzi0ERSqo59Sy4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u/GyDHItvC2rj8xa3O4tctVXT2UuzhUqLl2JyYa/DcARkWgvHEy33i2/A1L6Z8bKbXcDcrczUAicZwtZGEXkvag5mO5woSuZLomZy2Km71NNkftIB/7CntzA8S8UUHta6RJ7W6jkIdFKUOR9kfjutM9cvt327VUmlxPwTUKP52Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=mSHPHHSf; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="RjlrXsbh"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-530420edf1bso17392391cf.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 06:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1788529518; x=1789134318; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=u+308zQ7FQ1vvQnZ8ir3t08GSlPc01nU8aftORTt4WI=;
-        b=RjlrXsbh1HgdbbM3kdRVnVshnBS9sDhQelstr1EWgMxTIgdIkP/nKe0ml5kSJwQY4U
-         WoR4A7+xIPPZxLN6Dk7Lwofc8ZVkZxIDobrF4KPm0bqhrhw2F0qBpE5C5wCujWKQ5UwP
-         EDGDuKkMvdBSwxVngVygBsEUrCMB91BG3/K8+8d0sHFmtkrYX/6xTxeWvWLbUSo8XZWI
-         vR1mX9lqY4QR1biWTeWR/iOWAXOMCmLGHLb+aG4HSOiEC/aqjPzv5zt1cqxkIX0WuJHz
-         pw4IPQjUWWmGFcvGUKml11jIqM6CBq2wkBF9b63hiZLIGitjFN3Gj7QZoD49lf7AwnZL
-         VZfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788529518; x=1789134318;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=u+308zQ7FQ1vvQnZ8ir3t08GSlPc01nU8aftORTt4WI=;
-        b=HAFzvYmhvmgppmyavdZLldb+rVnBbLj8uGwuoMYw2BGG9equL3CplO2pQ/eDvh1lAi
-         dIT/PzY6zoY7uY1VHBD+FB6kmFdKXto2ZO9rFbcwVdByr2SB54/ezi7rMOalhqOS1oQq
-         xCsG7EH+jKKbt3OSb6zHGFgRbpnjo4qHK9mdlYtqbphmGlsYY01ZIp6cmOOVY+gZLhcK
-         4OzxWDcUPGRPZUcoQ/sWdNNJb8Pl0Xsc+D284SAHVMkrR/QIKtBF+HyIbI/HguI58d+4
-         fJ/Rz74jupmhygoQ8tw3TQl+aCWEeSv8oocEBXfUMFmcvA4pvLyzw07V7GKPdFpoTCcf
-         duhA==
-X-Gm-Message-State: AFuF++ldGCEVsrOt75lGONKIfuimKyjH3N8mazTQce0760radTgL44OL
-	26/r4RFReRXgAysdGASLVDRZVMZwSq22G9Jl6Ix6mtFneao8ggA06D+HsZN3CaczWGk=
-X-Gm-Gg: AYBFou2Mypljx9EkhXhMQ2K06JEVXtclRLMFe2u2aGcJM4hqXAOv05cyAlCPCHB3oZt
-	Ak2IRmq2UC4rmQqUiiKvGaYaWOc3HuSWDvUxzQBikzqcCXBDtgDPa9wDpPdmKWZ4926/3ZD1JmW
-	0JO8GSIZtJeWwpZD6YnDhoPGgKIPN9vQK9It5lYkt6w8OCDoKouCeeecZlBt2Tpb1yyo4JVyRJF
-	zG/uJwIcYvnQWOuxaMINuNH4v4RGJSVW6h8DBnSGfDAobN3dbhQQuHMS47iqYOTk0PyMg8yfcRL
-	JCseu2e4ttHwZNj5LtuDnxG60Pqlq+tPlLEU29IuvybOLEgFk9MvZ2jIy6r4yJUgd7HGS22m3Xx
-	1D4qZiOBJs3XQDc1kJECYwom5xx+FDvYQ6NTEcrx8V67AF6LEVqVGR/H6zHRz93O2wR7o67VrRp
-	gCe+BFggOI1EV3trrcw/UDhZFnOBJXk3TucUgUvw+Y03N9WJUyO1OUI3l5mYMK
-X-Received: by 2002:a05:622a:102:b0:530:42e4:f001 with SMTP id d75a77b69052e-530549b8baemr59653771cf.46.1788529517504;
-        Fri, 04 Sep 2026 06:45:17 -0700 (PDT)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-53054116c54sm20866381cf.5.2026.09.04.06.45.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 06:45:17 -0700 (PDT)
-Message-ID: <453211e7-7ca4-424b-b1a4-745f0f8624dc@riscstar.com>
-Date: Fri, 4 Sep 2026 08:45:16 -0500
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="mSHPHHSf"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79556152B;
+	Fri,  4 Sep 2026 06:45:51 -0700 (PDT)
+Received: from e140010.arm.com (unknown [10.57.70.12])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 78D3B3F7D8;
+	Fri,  4 Sep 2026 06:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788529555; bh=uBILfIAE4wAXjKxPSimgi2IVaLLcdAzi0ERSqo59Sy4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mSHPHHSfAXofkS3WNmrj1OpVV/ph9/XvcUR9HtIwLk6cThoT0KQLRDbLYIsLQVDEZ
+	 fJPYKbd1sMNvwVJzLTu6lmvYT7jWwKma0XfkjK3V3/cjR1nMNPt3rLZFOCn9//k+VF
+	 uRmSh02XndknZBpr6voZ4hz9N3qJIUVXQ8kz7wxc=
+Date: Fri, 4 Sep 2026 14:45:49 +0100
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+	linux-perf-users@vger.kernel.org, Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH v7 20/28] KVM: arm64: Allow guest SPE physical
+ timestamps only if kernel allows it
+Message-ID: <aprLjUt5i4FD4GHz@e140010.arm.com>
+References: <20260903160623.315525-1-alexandru.elisei@arm.com>
+ <20260903160623.315525-21-alexandru.elisei@arm.com>
+ <20260903164858.E55DC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] PCI: of: introduce of_pci_verify_node()
-From: Alex Elder <elder@riscstar.com>
-To: Rob Herring <robh@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
- conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260901011338.1323243-1-elder@riscstar.com>
- <20260901011338.1323243-4-elder@riscstar.com>
- <20260901012128.2AC6E1F000E9@smtp.kernel.org>
- <cde3da8f-933a-41ef-b7b8-f78317ca2d67@riscstar.com>
- <20260901173239.GD1244140-robh@kernel.org>
- <58452803-d22b-4e9a-8716-db46798d6403@riscstar.com>
-Content-Language: en-US
-In-Reply-To: <58452803-d22b-4e9a-8716-db46798d6403@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260903164858.E55DC1F000E9@smtp.kernel.org>
 
-On 9/2/26 7:54 AM, Alex Elder wrote:
->>> I would love to get some pointers from others on how to
->>> do this correctly, but in any case I'll do a little more
->>> research on this before I post version 4.
->>
->> I'm willing to wait and see if anyone cares about cardbus. I doubt it.
->> Maybe there's some old PowerBooks with cardbus?
+Hi Sashiko,
+
+On Thu, Sep 03, 2026 at 04:48:58PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Inverted logic for `perf_allow_kernel()` grants physical timestamps to unprivileged users and denies them to privileged users.
+> - [High] Capability check `perf_allow_kernel()` is evaluated at `KVM_RUN` time (TOCTOU) instead of VM/VCPU configuration time.
+> - [Medium] Silently-on guest-visible feature (SPE physical timestamps) breaks live migration and violates subsystem guidelines.
+> - [Medium] Concurrent first `KVM_RUN` invocations on multiple vCPUs cause a data race on the VM-wide `kvm_spe->guest_pmscr_el2`.
+> --
 > 
-> I'll give it another few days before posting v4.
+> commit 8640bfaf0b943972e8c97350b961b39b15830f1b
+> Author: Alexandru Elisei <alexandru.elisei@arm.com>
 > 
->> "pciex" should probably be handled.
+> KVM: arm64: Allow guest SPE physical timestamps only if kernel allows it
 > 
-> I'll add that.  I'll also try to find what the range
-> of "compliant" device types is; I presume it's in the
-> devicetree spec.
+> The SPE driver allows userspace to use physical timestamps for records only
+> if the kernel allows it, do the same for a virtual machine.
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/arm64/kvm/hyp/vhe/spe-sr.c b/arch/arm64/kvm/hyp/vhe/spe-sr.c
+> > index 978620ad99fa5..3c32a1338cc8d 100644
+> > --- a/arch/arm64/kvm/hyp/vhe/spe-sr.c
+> > +++ b/arch/arm64/kvm/hyp/vhe/spe-sr.c
+> 
+> [ ... ]
+> 
+> > @@ -120,10 +121,10 @@ void __kvm_spe_restore_guest_state_vhe(struct kvm_vcpu *vcpu, struct kvm_cpu_con
+> >  		write_sysreg_s(pmbsr, SYS_PMBSR_EL1);
+> >  	}
+> >  
+> > -	__kvm_spe_restore_sampling_regs(vcpu->kvm, guest_ctxt);
+> > +	__kvm_spe_restore_sampling_regs(kvm, guest_ctxt);
+> >  
+> >  	write_sysreg_el1(ctxt_sys_reg(guest_ctxt, PMSCR_EL1), SYS_PMSCR);
+> > -	write_sysreg_el2(0, SYS_PMSCR);
+> > +	write_sysreg_el2(kvm->arch.kvm_spe.guest_pmscr_el2, SYS_PMSCR);
+> 
+> [Severity: Medium]
+> Can this read of kvm->arch.kvm_spe.guest_pmscr_el2 race with a concurrent
+> write from another vCPU?
 
-I'm about to send v4 of this series.  Here is some information on
-this suggestion:
-- "cardbus" is referenced in two places (two very similar functions,
-   one for PowerPC and one for SPARC.
-     of_create_pci_dev() in "arch/powerpc/kernel/pci_of_scan.c"
-     of_create_pci_dev() in "arch/sparc/kernel/pci.c"
-   Based on the tone of your earlier comment, I'll ignore "cardbus".
-- "pciex" is checked in 6 places, one of which is generic (the other
-   five are related to the above two architectures).  The generic
-   one is in of_bus_pci_match(), mentioned earlier.
+Yes, it can.
 
-Sashiko's suggestion only mentioned those two device_type values.
-I'll just add a test for "pciex" as you suggested.
+> 
+> If multiple vCPUs are starting their first KVM_RUN, one vCPU might complete
+> kvm_arch_vcpu_run_pid_change(), proceed to enter the guest, and execute
+> __kvm_spe_restore_guest_state_vhe(), reading guest_pmscr_el2.
+> 
+> Because kvm_spe_vcpu_first_run_init() performs unlocked writes to this
+> shared VM-wide variable, another vCPU could be modifying it at the same
+> time. Should this use READ_ONCE() and WRITE_ONCE() to prevent LKMM
+> violations and KCSAN data race splats?
 
-Herve, I will retain your "reviewed-by" tag; if you disagree with
-this minor change say so and I'll remove it in v5.
+See below.
 
-					-Alex
+> 
+> >  }
+> >  NOKPROBE_SYMBOL(__kvm_spe_restore_guest_state_vhe);
+> >  
+> > diff --git a/arch/arm64/kvm/spe.c b/arch/arm64/kvm/spe.c
+> > index af1e19cb8e9ae..68b751bdb384b 100644
+> > --- a/arch/arm64/kvm/spe.c
+> > +++ b/arch/arm64/kvm/spe.c
+> 
+> [ ... ]
+> 
+> > @@ -97,6 +99,12 @@ int kvm_spe_vcpu_first_run_init(struct kvm_vcpu *vcpu)
+> >  	if (!kvm_spe->pmblimitr_el1_res0_mask)
+> >  		kvm_spe_compute_pmblimitr_el1_res0_mask(kvm);
+> >  
+> > +	if (kvm_vm_has_ran_once(kvm))
+> > +		return 0;
+> > +
+> > +	if (perf_allow_kernel())
+> > +		kvm_spe->guest_pmscr_el2 = PMSCR_EL2_PCT_PHYS;
+> 
+> [Severity: High]
+> Does this logic invert the intended permission check?
+> 
+> The perf_allow_kernel() function returns 0 on success (access granted) and
+> a negative error code (like -EACCES) on failure. By evaluating to true when
+> access is denied, it seems we might be granting physical timestamps to
+> unprivileged users and incorrectly denying them to privileged users.
 
+That's correct, I assumed from the name that perf_allow_kernel() simply performs
+a permission check and returns true if perf is allowed to profile the kernel.
 
+I'll be changing it to:
+
+	if (!perf_allow_kernel())
+		kvm_spe->guest_pmscr_el2 = PMSCR_EL2_PCT_PHYS;
+
+(I remember fixing it locally, I guess I got confused about the name a second
+time).
+
+> 
+> [Severity: High]
+> Is kvm_spe_vcpu_first_run_init() the right place to check these
+> capabilities?
+> 
+> Checking perf_allow_kernel() here means it is evaluated during the KVM_RUN
+> ioctl, rather than during VM configuration. VMMs typically configure VMs
+> with full privileges but drop privileges before executing KVM_RUN for
+> sandboxing. Checking at KVM_RUN time will incorrectly deny physical
+> timestamps to properly sandboxed VMMs.
+> 
+> Furthermore, an unprivileged process could configure a VM and pass the vCPU
+> file descriptor to a privileged process, improperly gaining access to
+> physical timestamps using the privileged thread's capabilities.
+
+Sure, I can set the VM-wide PMSCR_EL2 value the first time the SPE PMU instance
+is assigned. Or maybe when KVM_ARM_VCPU_INIT is first called. I'll think about
+what is the best approach.
+
+> 
+> [Severity: Medium]
+> Could silently enabling SPE physical timestamps based on the host kernel
+> break live migration?
+> 
+> If a VM is migrated from a host where perf_allow_kernel() grants access to
+> one where it denies it, the guest would silently downgrade to virtual
+> timestamps, causing data corruption in the profiling trace.
+> 
+> The KVM guidelines require that new behavior the guest can observe must be
+> off by default and explicitly enabled through standard capability
+> negotiation (like a KVM_CAP_* or ID register flag). Should this require an
+> explicit opt-in from userspace instead?
+
+I think a better approach would be to update the documentation to let the
+system administrator know that the VM configuration depends on perf being
+allowed to profile the kernel, and it should be the same on the source and
+destination in the case of migration.
+
+> 
+> [Severity: Medium]
+> Can this write to kvm_spe->guest_pmscr_el2 happen concurrently across
+> multiple vCPUs?
+
+It can, should be fixed with the above approach.
+
+Thanks,
+Alex
+
+> 
+> The kvm_vm_has_ran_once(kvm) flag is not set until the end of
+> kvm_arch_vcpu_run_pid_change(), which happens after
+> kvm_spe_vcpu_first_run_init() completes. If multiple vCPUs start their
+> first KVM_RUN concurrently, they will all see kvm_vm_has_ran_once(kvm) as
+> false and write to this shared variable without synchronization.
+> 
+> > +
+> >  	return 0;
+> >  }
+> >
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260903160623.315525-1-alexandru.elisei@arm.com?part=20
