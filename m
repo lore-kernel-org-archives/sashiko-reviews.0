@@ -1,218 +1,155 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C67511195
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 17:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788542024; cv=fail; b=BTA/gIYG1eNgeTHS2Tt5SHttK9FjfPrdr18RpFX8BkASJjVumoaZH+13NU9+q8yrOhu4ZkYb8yBuk+lG5HL0q1q7T9Y17ybXAvm3iW34sGBVf/Mli3TtUdmryHEhU31gof/IuVslxLpCqNZ2IIaJ4ioOe/GMQi4uVlWSB2v67OU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788542024; c=relaxed/simple;
-	bh=02lIpV4HtMJGx2gOaH0NXDExqkxVt0Ane7nPC+lzvTE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QNwUCdRR+WYRINJfPRW3Ziu8dZyQD8ijDHJDR76hNMfvfOKHICYEWo2FczKRvLHtVspSHMcygjATiYCDsUJwI/h/3RRpkryaEz6Xywe43NVg418MNvytOM7gXGcMmW/bXSw85rK8sKDfwdn1Y+qqPktOzoIqfrQ/V+Pu42IkH/k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HYF9lota; arc=fail smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DA8511221
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 17:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788543229; cv=none; b=ROogFZJXA60YO9svhXrl9QwU4E4T90bsAokKL6ygtDi9/Wn4Tfm/dydNCCB8DuNQIY9Gcw4MmhIilY0oXPPFLLRffS4A20uWrTBfYWqbeGvwHh3x57Pznpjv4FjAj+MJsNrK8T2aUxlJEiM/61Mch2hEjaOeXXCb4sERmKukHPs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788543229; c=relaxed/simple;
+	bh=0ZP+HRnzu9z6DgT/BXO+5YVGLrMTir6BRcJGXtbrHM4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OcSaaO2zCsAA3n0r3Tu9pNjAryEOrkFmUxaXdmBaQHowp8tUnQGfBEG4jdZ+k5ArOlNJo817GljBmMg1+5JVPc5qmmsIGyhh5UMLPazuyqIquERyWutLJRXSHnjw5Z6VHjrvdv5p8A1lfcuBcHxL04q0Yw2ERtV6bu5580WC4ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dKOSLYnH; arc=none smtp.client-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HYF9lota"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788542023; x=1820078023;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=02lIpV4HtMJGx2gOaH0NXDExqkxVt0Ane7nPC+lzvTE=;
-  b=HYF9lotanjA2nEExZaeSLkjf42vQRKlpACVdVJ6KbSuscbswt0s85AqH
-   WYajEay0h7TPmBldEG7dBg7CLNrzxKGBw2eO4a6NRvD+id6JA5GwezEIN
-   d33EwIFHc9rcnargTpVCc65FCMUNXZYjn3BNCdyu0t4T3yck3HPk0DppA
-   4MBrMhMVHq9LHRaDmN4zmMcMBeEFRFFVSgoq6ivljsHLnkUbxvCVsgaTb
-   sxRxQdJDKE0cBLIDfw9OYbCY3W6u81MLFqRV1ZIGIX4cekgx8eL2ABkEy
-   iwYrnA5WxAW4DrTjnbebY9VvEkEUMuXCHW6AakT9PWr1qUNZnATp/ZKpD
-   A==;
-X-CSE-ConnectionGUID: /hPHk0VuQfyEpr111ii0nw==
-X-CSE-MsgGUID: qId9JFrESrGsmHfnWvzf/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11896"; a="92919539"
-X-IronPort-AV: E=Sophos;i="6.25,262,1779174000"; 
-   d="scan'208";a="92919539"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 10:13:43 -0700
-X-CSE-ConnectionGUID: WAO6DiI0SsWvhO+MdLjwQg==
-X-CSE-MsgGUID: waqd4Y8gRqKNMITB1xiRKw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,262,1779174000"; 
-   d="scan'208";a="274245933"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 10:13:42 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Fri, 4 Sep 2026 10:13:41 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Fri, 4 Sep 2026 10:13:41 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.56) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Fri, 4 Sep 2026 10:13:39 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=do+uoUF+w01YMuf692KVg8DnTmFf5eFskqn7Ux635wG7sHwJt9rJWszunfCAqczYHxbDWCDvZEYWWy24K+5NC8aY5JyOivSqesPqKdfWhZOdReJlAfa2waeAJ3ypOkDKja5qkBrYBWCaqQ0AonjL7pRjtcRSctlZmmKrXXMPFMAnaj9VJjGteo3hBjOnyjcJ9w0BmJ7XzjkGbBTVZejXvNYz8MP2l5/mRDiMjmWYQMpDPSO/M7vCJ1w4V4tzmtxjWXnlEeKhKDxQi84tCzeW0TMxjpVlYZ42q8B2Uv1dgASYhnji7evUNkSYDRRB2edJxKsoK8O3eZGbgKje8r70Mw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/SxiJ6ov2eH/qC7FH5m/V8brlYxgDdNMFMMJeBE4fzo=;
- b=ie+oeqIa9M+qwot5xeRYDyBApG0GqifA0qWDXL/LckVvpYFgN1NqqppmKZPw4ytb0pNKhdyOQLlubvDGfvUtRLKWB4i+IaC6/INTPUfff4TX5jUPYWLTXVcTyuBTMBkUKcT54hZc9BRF3xGKA0ttCNU1tDYdTWJfqOptHlB59aiwOpk2Ven5KnjuShptV+TljcXSoz0rK8h87/3G7iem53pkKybwU7olBuRj6gqju3nhJKCd3zAYEPjQFmG9KDYbQ6O55odv5yp80gwWrNJdV/lj/V1nC02tAOuqdOSIEMSL2J8NriHmNSGb7GYjunPJK8xQZnfyWOniWO+F6f/SWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH7PR11MB6522.namprd11.prod.outlook.com (2603:10b6:510:212::12)
- by PH0PR11MB5095.namprd11.prod.outlook.com (2603:10b6:510:3b::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 17:13:33 +0000
-Received: from PH7PR11MB6522.namprd11.prod.outlook.com
- ([fe80::e0c5:6cd8:6e67:dc0c]) by PH7PR11MB6522.namprd11.prod.outlook.com
- ([fe80::e0c5:6cd8:6e67:dc0c%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 17:13:32 +0000
-Date: Fri, 4 Sep 2026 10:13:30 -0700
-From: Matthew Brost <matthew.brost@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: Honglei Huang <honghuan@amd.com>, <dri-devel@lists.freedesktop.org>,
-	<intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v3 5/6] drm/gpusvm: keep a single DMA mapping inline for
- THP
-Message-ID: <apr8Ok1NeYrUCcbC@gsse-cloud1.jf.intel.com>
-References: <20260904163956.3433293-1-honghuan@amd.com>
- <20260904163956.3433293-6-honghuan@amd.com>
- <20260904165805.13BF21F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904165805.13BF21F00A3D@smtp.kernel.org>
-X-ClientProxiedBy: MW4PR03CA0102.namprd03.prod.outlook.com
- (2603:10b6:303:b7::17) To PH7PR11MB6522.namprd11.prod.outlook.com
- (2603:10b6:510:212::12)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dKOSLYnH"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6b12ada8befso818543eaf.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 10:33:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788543223; x=1789148023; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=TNzIgR372J08ntlK40uw/Lpu5PtLTk6ngTClcXiLgnM=;
+        b=dKOSLYnHQ6+WDrEuG3sCYQB1SyDLVidU1/I7rPqcBCSluHFDLOnMhCkiRagQewSilc
+         Tx/0vYE6Q/rwHHP132Hz6hl+oQa4hEAhJtmqD7HTYvJJGTGdE/Pr/XLtuUm/372HNr60
+         cKvUCNiDH+xNn+3Ko3qz4YJ2MAG7d1q0+LG3P4FV+D9bMk1tm8SeNS0e7DPgzKs/K+j8
+         agGorSrcNOoyV5U7cyUfJc8lZg7gK4RtqUIZumX9aKrDs226tGV9CI+nnTDwbD8qh6en
+         dvExzID09wHpyvKCS7IQAFsvmMmZXbNqGuINm2Sua08n9S4YSCXS0B7ufFBUctizGRWm
+         KfRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788543223; x=1789148023;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TNzIgR372J08ntlK40uw/Lpu5PtLTk6ngTClcXiLgnM=;
+        b=rKdXAEzlCV9rE9lyyg3shVM/RPqD1ZM7bq3M72Gj5LFhGQ/zfgb+izfKg05go3o2qy
+         ynQ5ocOPONwjnkmrrNFy4FWHqOec+NNtA2x8f+DXYU8Kf257awyGijYBUalrfEVNQ58J
+         82kmZAoOjtG+5QqvUuM8Yaj+uaEII+zpar8kxmLOL1WVqdiR569jEyzr1HujM2gpR2XA
+         1j4W5d2Vsjw5Bkatbgycwduw9fT6/GrIczUxptg39jUlNFajQIjUibEDca46SyIJhPPY
+         +GYPe/9uEDD5Sf4MoUcCOyfgJB2QvMytCbvD/dP/hEhEu1XAxSFUE1gn6xLFu+1C/tGm
+         7TSw==
+X-Gm-Message-State: AFuF++keNZtysne6sGWgtf6Hwr5CbaLhdaiSPPcZ4k8J7uDghI71De0j
+	+S8GrjzpzsGNiji6RDUTucO74jcAd+ch8p+kMBwKkLYpajGybX/JghY5GRIwiA==
+X-Gm-Gg: AYBFou34XrjpNcE40AtzxqYgBC1bRSxFpu2/woil2+mNyyux+zT/e/V25W2b1mvrRTO
+	+ti3EOr+cOVBNUGUxyvTUB96V7oNzNP4dEr+Q8Xeniyuxf9glE+mW29/VsLbDa0kNQ1plLMz8Ri
+	fJjKRbhJb4B9NLpDRS5bL+WXLldiZblg4M+t4JrC6JHDEEF5uNfv5Muq/ZiBiG4ZxsMZbUyOu82
+	MSqle909Afuv18cVC451TPt5RcU3P4fKWSIN6/dpCe5+NKl7e678lnpX+gAVqTOEc+uo1ysTLyY
+	BAxERfW3T8Rs89yn7K2GXz8bemYBAX3Xg8k3lNVT4cJWmimO/VMfSimtojSLOtSuG58kN4O5djW
+	JemTEW8HykpbxKfISmF49I1w8JebKab4l3eOB3QkCxVlVghhAYc9EvAzfL79J1LaWYeBC/oO2Ye
+	SkXa9m9HqFRrIpxwGhVTViOoFKzbLKp663ddd1jhDws9GMuLW6LOaAQzOChSgadDqTjJaJ1UHxV
+	o36dt7Wzw==
+X-Received: by 2002:a05:6820:81c5:b0:6b1:6462:7e4a with SMTP id 006d021491bc7-6b6fc7d69eamr7174889eaf.13.1788543223122;
+        Fri, 04 Sep 2026 10:33:43 -0700 (PDT)
+Received: from devvm29614.prn0.facebook.com ([2a03:2880:ff:53::])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b6dcb85657sm3425792eaf.7.2026.09.04.10.33.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Sep 2026 10:33:42 -0700 (PDT)
+Date: Fri, 4 Sep 2026 10:33:39 -0700
+From: Bobby Eshleman <bobbyeshleman@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH net-next 6/6] selftests/vsock: test the assign ioctl
+ privilege checks
+Message-ID: <apsA808VUA8CrbCd@devvm29614.prn0.facebook.com>
+References: <20260902-vsock-guest-ns-v1-0-9995383e9a8b@meta.com>
+ <20260902-vsock-guest-ns-v1-6-9995383e9a8b@meta.com>
+ <20260903230147.63ACA1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR11MB6522:EE_|PH0PR11MB5095:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5c4e41c7-126d-47dc-83f8-08df0aa7d905
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|18002099003|22082099003|3023799007|56012099006|5023799004|10067099003|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info: vNcCj2ApkIfTRP/m1XfHt9HDXv2ULUJQaCrKEIJjGgUq1eFKU5STqmKrDSVwd4co4RgeLh4ERlkXTqkLs5+N/6t3jY5bKFROwDEtZFdPsGhnQiJdzVYVplu5RcQkPqdxEibqqtiAXMY1moS39+/qR5O7RDXZPakbF2Cxy3MX4tcrgpCAWPAAIBWFTMLNZsQGJkzOnU4yWLHD59a41USRsJyno5xWXeyAOt4xTJMsxBAKvMOl+NovX3273ZGjP0lo1E5eD/8N2nd9wDUVW7h43gpap4cWPZK+/Ct0j8hgHUsbptxzftzHqbjk3v1Rj5yd0H6kZHbN5XHbFmDZ1z+++vYff2rN0Ag94i4dr/7/jPSYNxRveT7od3rAg1y5mjzBSA/at5gM7wiwLENYp2Y8ACuNGsm85Xc1mmEWk90ty2bIreOIC7qoD0K8IzaMuzHPQh6I1+iGjFSLE6r1p8RLIaneudJ1sdnmXrSV/mrwLsVH8W8ghnKmc3VHnzcFs8hZz/kFLMyVJTYgUIGAzOh8fUIBVqoWd+rIOV3zEp7z8YevlpOHNu4WHCaQJg9s+NjI/hSAw0SVeD8tmuyMbVlBQLdPxyevLz6B7vXJiD6A2NE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(18002099003)(22082099003)(3023799007)(56012099006)(5023799004)(10067099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?mGSFAczT+Kk4MgZSvsM59cZPdI8bIOCk/wmtONskATe23QeMLjf8gdmj2e?=
- =?iso-8859-1?Q?1eJH/GlVOPbJPaJJ56zBkQsFblL/uGQ5A1YtfO2DhNljIyNKD8mWnDDL/Z?=
- =?iso-8859-1?Q?oESHIkcbNi9bDuvWj170WISWK+d9IznfK/UL9CZgHxnXtij2S9f/lzrv8L?=
- =?iso-8859-1?Q?xTjFYH11ACvGWSuCgcMQs5hdNIA5tZHkzJDBVi/GIXOUfS0wNtuhMSeqd/?=
- =?iso-8859-1?Q?swI7D8Ot42HlF+qwCmiTzBIFxSQMoK7+FkwEonD3mmlNiFvtCmdWriuPN5?=
- =?iso-8859-1?Q?whA8YiRx5k0aefRtCqqu+WN978wbQHwlQgixnnuPsK9du7nOTMv7Lpj4ue?=
- =?iso-8859-1?Q?ceZ+kgkySR76lzOOynnp6OnmGsNyau/i2OLPBsFACX89aYbDtAwEvhNfrU?=
- =?iso-8859-1?Q?F74l4bge979il2MYu/GiX0NUnAyAdFuU+F92GTMRzLlWWJhZKTdkgMrWAi?=
- =?iso-8859-1?Q?q1B3TeCZ9lyFrZCLRY3a94MthazcSqnO3iMss8NQkqC4k3+HoO0XKVoJ8q?=
- =?iso-8859-1?Q?8dNMXPnNp2B4wPgeiM0fzszMHjrxGkZT440DECAkiKP06vMR2RDGpaboVJ?=
- =?iso-8859-1?Q?BmNPZ68p8l2Rq6XhzBfoOkxUEjgZWUkWRMYi0wKRN7dIXUWN2RT2LE42OU?=
- =?iso-8859-1?Q?KanHp58RBN3NRX+ynvftyxuxEisAmd3ACRL0h87GLSHihgQZcKxo1Wda8B?=
- =?iso-8859-1?Q?QPG0ZtYTUz/xPt142dONKjU2acW7inKMPUxJFfoWOGjqIed0UVEq/yCHVT?=
- =?iso-8859-1?Q?v8FvKfZu/cIHWlDOmSd76VgCHLyA/PFvjy+dWuUjQBdpKykdwLsUXcw5/5?=
- =?iso-8859-1?Q?bkex8BilMpnOzukmavgUGyyA/SHW41ifFG1gmwycDY/yy4wbKERhg/aPiA?=
- =?iso-8859-1?Q?j4Ev8pPR9yX7sNaVNYhPGJJeyCskAQM9V79L+I5dcgqjhk+y/3ulvh9ZLb?=
- =?iso-8859-1?Q?jBXM+tMP5T3+gwdbb1RgCUUzy+oCspzSheDYV4UgiZVF1OJTUspLcqEy9w?=
- =?iso-8859-1?Q?G9EqDP2RMmgrb2lHwyEekAEV6zuRedPmcDg9Y/wL/G5DsPX16qPS98YJDq?=
- =?iso-8859-1?Q?EwQ2vgcvlwXfBwmG2mlz0qt+FL75OUVQCeqsoZAgnzVp5HxPhXSjs1InUQ?=
- =?iso-8859-1?Q?aIKj6ODCXzgLkyffWO8aRiC5Kv+Xn++ONiBLUS5ts/caVw7grUi3FGmR3Z?=
- =?iso-8859-1?Q?Lq7RYOBCu7e3FkVQLkNZCpIHK6wphdCg22o8/OnP+cVo1/Hq11LRM0G2xo?=
- =?iso-8859-1?Q?+y2IrQWv06dbwKX/mG4vmWYQlxTU9o5RpL1hqDzlK+PXsOt3FlHYlUf2e6?=
- =?iso-8859-1?Q?5mQFB3kZvyBE4OnlQufbyQYfHecWMiyQHcEU3qOljarAKnjLcCmlv4dMJd?=
- =?iso-8859-1?Q?V97YYFGsSTaX22ZcOp4nP+mMMFxcWZGkq8S5SOIxIafdSkDdqn/OomtVwH?=
- =?iso-8859-1?Q?BKe9sVDQnD4avvvMQVh3ncXf6k4oqzcIW7tNHhHrJMoHsHr5B3CDum6Pdd?=
- =?iso-8859-1?Q?bFtQk2mGMEjZ6kRYcNi3EG8wE6GNTmnCayD0UdFZTiGVNgwlXdSiYtbmdB?=
- =?iso-8859-1?Q?8c21+KJwGeVu6+kYoVtZDNP6858w6QCrUA26QyUfpxzua91cbZp/5YWgai?=
- =?iso-8859-1?Q?adSS/GZPiVMsVbWLMNS/T8Zr6BRfkVZlPnmSSJppYkelc9GUvGhARLq0oX?=
- =?iso-8859-1?Q?VLxyy0jsKFTVoKwrYxPTgCrvknYMxHZzJYO7zjUR3Db3GEtbZBzhcHOCmn?=
- =?iso-8859-1?Q?IWhzpXSF9sUhlQdf8OsVFlmyQiDB7MtH/yxwEeCDioJL/BcknohtwvlCp9?=
- =?iso-8859-1?Q?x9RlIPtfKiDYHR39PQzuWqlz1jV1B/U=3D?=
-X-Exchange-RoutingPolicyChecked: jIYUMS+Sa2yygaMtLe495JlGsQnrhTMpaTBjcVqmU0DJvl1v61LWXVlmuFpy+Sx1LM0H4MhGBbCVBVK/xLdz14EeJgnkxq87uFoGaWWylJwIVlUfUypHpQ81X/IhXAOJUHj0HiNjaggWSzFkh1JgFXG+7uRckT+Cdoozg8QDEXJ+7vD2Ev78qjIv/yCI0xgq6BhR2OvOUEjVhhnbX1bEvjPvjUywALvzyI7d9T8hQR/3JktcqE8PYk0ytclRO1NUbevgqkoFczNRRhy+4zzNUImergg+QLLSNobrY/zv0etAcrVkZZhmjQXnlVGD06X3k4rJ0EDT1ARSACRzNaeRhQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c4e41c7-126d-47dc-83f8-08df0aa7d905
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6522.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 17:13:32.8524
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R69hLseBKtaEWJu+ACno+ZiC5vg2dfdJiPyVLg+8YBjAYCuTYFhnuayDgGJByNMHxIJfTCRiqsS2P94jhOgCXg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5095
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260903230147.63ACA1F00A3D@smtp.kernel.org>
 
-On Fri, Sep 04, 2026 at 04:58:04PM +0000, sashiko-bot@kernel.org wrote:
+On Thu, Sep 03, 2026 at 11:01:47PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Incompatible pointer type in `xe_pt_stage_bind` when `CONFIG_DRM_XE_GPUSVM` is disabled, leading to a build failure.
+> - [Medium] The unprivileged user namespace test spuriously fails because the unprivileged user lacks DAC permissions to open `/dev/vsock`.
 > --
 > 
-> commit ba41c31a99e11c5fd960b8101a85807f5290cd76
-> Author: Honglei Huang <honghuan@amd.com>
+> commit 4c5b8557bb5663f827061639a80256407bfe6c8c
+> Author: Bobby Eshleman <bobbyeshleman@meta.com>
 > 
-> drm/gpusvm: keep a single DMA mapping inline for THP
+> selftests/vsock: test the assign ioctl privilege checks
 > 
-> This commit optimizes drm_gpusvm_get_pages() by inlining a single DMA
-> mapping entry for Transparent Huge Pages (THP), reducing memory overhead.
-> It updates the accessors, including xe_pt_stage_bind() paths, to safely
-> handle the new union containing the inline address.
+> This commit adds two tests to verify that CAP_NET_ADMIN is required to use
+> the IOCTL_VM_SOCKETS_ASSIGN_G2H_NETNS ioctl, and that an unprivileged user
+> namespace alone is insufficient.
 > 
-> > diff --git a/drivers/gpu/drm/xe/xe_pt.c b/drivers/gpu/drm/xe/xe_pt.c
-> > index 5d990c1c3740a..96ea9735f34ce 100644
-> > --- a/drivers/gpu/drm/xe/xe_pt.c
-> > +++ b/drivers/gpu/drm/xe/xe_pt.c
-> > @@ -831,7 +831,7 @@ xe_pt_stage_bind(struct xe_tile *tile, struct xe_vma *vma,
-> >  			return -EAGAIN;
-> >  		}
-> >  		if (xe_svm_range_has_dma_mapping(range)) {
-> > -			xe_res_first_dma(range->pages.dma_addr, 0,
-> > +			xe_res_first_dma(drm_gpusvm_pages_first_dma(&range->pages), 0,
-> 
-> [Severity: Low]
-> Will this cause a build failure when compiling the driver with
-> CONFIG_DRM_XE_GPUSVM disabled?
-> 
-> When CONFIG_DRM_XE_GPUSVM is disabled, struct xe_svm_range uses an anonymous
-> struct for its pages field instead of struct drm_gpusvm_pages. Since
-> drm_gpusvm_pages_first_dma() expects a const struct drm_gpusvm_pages *,
-> passing &range->pages here appears to result in a compiler type mismatch
-> error.
-> 
-
-Yep. This is related to failure in Intel's CI - kunit builds without
-CONFIG_DRM_XE_GPUSVM [1].
-
-I believe Xe side we'd some more inline wrapper:
-
-xe_svm_range_first_dma(struct xe_svm *range)
-
-Then use ifdef around CONFIG_DRM_XE_GPUSVM to either call
-drm_gpusvm_pages_first_dma or return NULL. xe_svm.h is structured with
-this ifdef in mind. 
-
-If you ask AI how build and run Xe's kunit, it should give you
-instructions and should work without any Intel hardware.
-
-Matt
-
-[1] https://patchwork.freedesktop.org/series/173405/
-
-> >  					 xe_svm_range_size(range),
-> >  					 &curs);
-> >  			xe_svm_range_debug(range, "BIND PREPARE - MIXED");
-> 
+> > diff --git a/tools/testing/selftests/vsock/vmtest.sh b/tools/testing/selftests/vsock/vmtest.sh
+> > index 53591fa07f1a8..efb94d17d9976 100755
+> > --- a/tools/testing/selftests/vsock/vmtest.sh
+> > +++ b/tools/testing/selftests/vsock/vmtest.sh
 > [ ... ]
+> > @@ -1805,6 +1817,51 @@ test_ns_guest_assign_g2h_netns_reset_on_ns_delete_ok() {
+> [ ... ]
+> > +test_ns_guest_assign_g2h_netns_unpriv_user_ns_fails() {
+> > +	local helper=/tmp/vsock_assign_g2h_netns
+> > +	local unpriv_uid=65534
+> > +	local unpriv
+> > +	local rc
+> > +
+> > +	unpriv="setpriv --reuid=${unpriv_uid} --regid=${unpriv_uid}"
+> > +	unpriv="${unpriv} --clear-groups"
+> > +
+> > +	if ! vm_ssh "init_ns" -- "${unpriv} unshare -U true"; then
+> > +		log_host "unprivileged user namespaces unavailable, skipping"
+> > +		return "${KSFT_SKIP}"
+> > +	fi
+> > +
+> > +	# The home shared with the guest is root-only, so place the helper where
+> > +	# an unprivileged user can execute it.
+> > +	vm_ssh "init_ns" -- \
+> > +		"cp ./vsock_assign_g2h_netns ${helper} && chmod 755 ${helper}"
+> > +
+> > +	vm_ssh "init_ns" -- "${unpriv} unshare -Urn ${helper}" &>/dev/null
+> > +	rc=$?
+> > +
+> > +	if [[ "${rc}" -ne "${EPERM}" ]]; then
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260904163956.3433293-1-honghuan@amd.com?part=5
+> [Severity: Medium]
+> Will this test spuriously fail in minimal environments like virtme-ng?
+> 
+> The test helper vsock_assign_g2h_netns is executed as an unprivileged user
+> (UID 65534). In minimal environments without systemd-udevd to modify default
+> device node permissions, devtmpfs creates /dev/vsock with default 0600
+> (root:root) permissions since vsock_device in the kernel does not explicitly
+> specify a mode.
+> 
+> When the unprivileged user tries to open /dev/vsock:
+> 
+> tools/testing/selftests/vsock/vsock_assign_g2h_netns.c:main() {
+>     ...
+> 	fd = open("/dev/vsock", O_RDONLY);
+> 	if (fd < 0) {
+> 		fprintf(stderr, "open /dev/vsock: %s\n", strerror(errno));
+> 		return -1;
+> 	}
+>     ...
+> }
+> 
+> It gets EACCES, causing the C helper to return -1 (exit code 255).
+> 
+> Since the script expects EPERM (exit code 1) from the ioctl failure, does it
+> misinterpret the 255 exit code as a test failure?
+> 
+
+I don't know about systemd-udevd, but seems like we can generalize this
+to non-zero exits just to be cautious.
