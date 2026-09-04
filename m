@@ -1,115 +1,133 @@
-Received: from mta1.migadu.com (out-234.mta1.migadu.com [95.215.58.234])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF1644B690
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 10:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.234
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50B4A449B0C;
+	Fri,  4 Sep 2026 10:28:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788517714; cv=none; b=eVKlcAjhpUzWXmljMxF2d1vQBTy3hZ/CHTstStk0BBauxH9PAxsgSTmiCIg4tG5+6cKz6UsmfkXbFttXTSoAFBxa/LAPY1t+ilcmaYmssJSziwJktLWm/GQrT5qq3sZjBdwBLo1nvl+ZzzfpGaRSbzo7hnvQAT77GnnnIZKgAp4=
+	t=1788517729; cv=none; b=qJkTj+pFE+1pNOPLpWvHNyfe5GdORjEPQclWUInw6yPodhM9qHAVvHYGv+Rbgpbkd0iIWKl5t8x40iXgUEyuqReZlAVX9ekwMjuCC8Dpm4F05iATIJQVc0aTZ1lzgsTb5Zt7Ix4dLrzAwVlHFeRoJbgtfFFBPc0Se3alvZPwGx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788517714; c=relaxed/simple;
-	bh=z4R36ZA/T7Ab+zK4BLS9IjXROG1y96L29XGD9o8l6MU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bFr8BGQhXyiICF25lXLTgZ0B8UNW+y5K1hjk3vh0UgwpesjVVR9MpBs/vK7PgT645nsRHDgeNieCPjvZfJgDvfDCrWBiPYOxt4J/nXqRsehAao4+XTVOVY5DeyiBY36CuIp0+QJXAXzjQ11zWEHazaJKk4c+iAs+1p93IzZg1pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=XCTCvs1X; arc=none smtp.client-ip=95.215.58.234
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788517729; c=relaxed/simple;
+	bh=yWTFTbyCD2ZbTDtZtPVjYhpiVB5RoJTV6RTzQNDXhn4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NVVhe+pbXmcMpGxjgEd0+U7kQVHXD79A0W/pd7vZmsJu03YJ8gZ/V097tutcbQb+nOLpglG5gUOuXXl8aE9hB8ieI7vlQXAu6wLO9zGXkXiYcRiGcbZQIdOVmm5orG4Xy/AkOQmqdcm2BSaKMwXIOGthy+ebE2WG5S2ida+3hO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=KpIzOkyQ; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="XCTCvs1X"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=z4R36ZA/T7Ab+zK4BLS9IjXROG1y96L29XGD9o8l6MU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788517710; v=1; x=1789122510;
- b=XCTCvs1XU0n8bt3v0YwVmhRmUQEPC1SSjDdnN8u7/jVeosUppuYew4oXUTmwHNLFVNVhrlQt
- qR7ksOExJCOSNFksiBDgtD7YzL9TOwHnFBl4TDSM/kS3FjOTz1pfA5XMaAxJgc9FyB4tUerv3/s
- 8p/YZCZVMpjtN7CyZW+i36/M=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 2a8bbbdeaa5ab8bb;
-	Fri, 04 Sep 2026 10:28:30 +0000
-X-Mizu-Trace-ID: 2a8bbbdeaa5ab8bb
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <434526d4-4996-4de3-a3b6-29860bc178b8@linux.dev>
-Date: Fri, 4 Sep 2026 11:28:29 +0100
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="KpIzOkyQ"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 082A0153B;
+	Fri,  4 Sep 2026 03:28:43 -0700 (PDT)
+Received: from e140010.arm.com (unknown [10.1.34.66])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC5143F673;
+	Fri,  4 Sep 2026 03:28:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788517726; bh=yWTFTbyCD2ZbTDtZtPVjYhpiVB5RoJTV6RTzQNDXhn4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KpIzOkyQ+QnufWQpGim6KXXRX2l/4Az3H/34r5LLUJ4DIhaB4PM5+293HJQWL4Z6r
+	 3vmKplbwl+ywuVA7E0B4oQmK99EQIs+QFmVEFatAhLptOHGUVUFkSld8TJ9rsnXv6Q
+	 v580Ry3OeQsWod3Jvm1Moark6NIYtyD3De8+Qeoo=
+Date: Fri, 4 Sep 2026 11:28:41 +0100
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>, linux-perf-users@vger.kernel.org
+Subject: Re: [RFC PATCH v7 16/28] KVM: arm64: Add SPE system registers to
+ VCPU context
+Message-ID: <apqdWR9Eyry6bBU7@e140010.arm.com>
+References: <20260903160623.315525-1-alexandru.elisei@arm.com>
+ <20260903160623.315525-17-alexandru.elisei@arm.com>
+ <20260903163250.3F3531F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 17/27] scsi-multipath: revalidate paths upon device
- unblock
-To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260901104526.3850621-1-john.g.garry@oracle.com>
- <20260901104526.3850621-18-john.g.garry@oracle.com>
- <20260901111258.4F9381F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260901111258.4F9381F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260903163250.3F3531F00A3D@smtp.kernel.org>
 
-On 9/1/26 12:12, sashiko-bot@kernel.org wrote:
+Hi Sashiko,
+
+On Thu, Sep 03, 2026 at 04:32:49PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unsynchronized access to `sdev->scsi_mpath_dev` in `scsi_internal_device_unblock()` races with device initialization, leading to a NULL pointer dereference or Use-After-Free.
+> - [Low] WARN_ON_ONCE is incorrectly called with a string literal instead of a boolean condition.
 > --
 > 
-> commit 9827c5b37e1215c845ce584c07c0fadae92e797b
-> Author: John Garry <john.garry@linux.dev>
+> commit aa1092f112d707ae630c6edfaa06e1cf58da7524
+> Author: Alexandru Elisei <alexandru.elisei@arm.com>
 > 
-> scsi-multipath: revalidate paths upon device unblock
+> KVM: arm64: Add SPE system registers to VCPU context
 > 
-> This commit revalidates paths when a scsi_device is unblocked. It clears
-> any paths and requeues queued bios as part of the revalidation process.
-> 
->> diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
->> index f02b3a50e20cd..189263ce56624 100644
->> --- a/drivers/scsi/scsi_lib.c
->> +++ b/drivers/scsi/scsi_lib.c
->> @@ -3093,6 +3093,8 @@ static int scsi_internal_device_unblock(struct scsi_device *sdev,
->>   	mutex_lock(&sdev->state_mutex);
->>   	ret = scsi_internal_device_unblock_nowait(sdev, new_state);
->>   	mutex_unlock(&sdev->state_mutex);
->> +	if ((ret == 0) && sdev->scsi_mpath_dev)
->> +		scsi_mpath_revalidate_paths(sdev->scsi_mpath_dev);
-> 
-> [Severity: High]
-> Does this lockless access to sdev->scsi_mpath_dev race with device
-> initialization?
-> 
-> If a transport unblock event occurs concurrently with hardware discovery,
-> scsi_internal_device_unblock() might read sdev->scsi_mpath_dev while it is
-> being initialized.
-
-That should not happen - sdev->scsi_mpath_dev setup is done before that 
-sdev is even added and transport would be calling unblock on it.
-
-> 
-> For instance, scsi_multipath_sdev_init() publishes the pointer before
-> initialization is fully complete:
-> 
-> drivers/scsi/scsi_multipath.c:scsi_multipath_sdev_init() {
->      ...
->      scsi_mpath_dev->sdev = sdev;
->      sdev->scsi_mpath_dev = scsi_mpath_dev;
->      ...
-> }
-> 
-> Could calling scsi_mpath_revalidate_paths() here lead to a NULL pointer
-> dereference when it attempts to access an uninitialized scsi_mpath_head?
-> 
-> Additionally, if initialization fails and the structure is freed in the error
-> path, could this result in a use-after-free?
-
-Again, the same as above.
-
-> 
->>   
->>   	return ret;
->>   }
+> This commit adds SPE registers to the VCPU context. It only traps the buffer
+> registers, allowing KVM to track the buffer enabled state for dirty page
+> logging and to sanitise writes to PMBLIMITR_EL1 based on exposed VM features.
 > 
 > [ ... ]
 > 
+> > diff --git a/arch/arm64/kvm/spe.c b/arch/arm64/kvm/spe.c
+> > index 4426d614a9e0b..6a00a44c73edf 100644
+> > --- a/arch/arm64/kvm/spe.c
+> > +++ b/arch/arm64/kvm/spe.c
+> 
+> [ ... ]
+> 
+> > @@ -82,6 +83,34 @@ void kvm_spe_destroy_vm(struct kvm *kvm)
+> >  	module_put(spe_pmu->pmu.module);
+> >  }
+> >  
+> > +bool kvm_spe_write_sysreg(struct kvm_vcpu *vcpu, int reg, u64 val)
+> > +{
+> > +	switch (reg) {
+> > +	case PMBLIMITR_EL1:
+> > +	case PMBSR_EL1:
+> > +	case PMBPTR_EL1:
+> > +		__vcpu_assign_sys_reg(vcpu, reg, val);
+> > +		break;
+> > +	default:
+> > +		WARN_ON_ONCE("unexpected trap");
+> 
+> [Severity: Low]
+> Does this macro call miss a boolean condition? The WARN_ON_ONCE macro
+> expects a boolean expression, but it is being passed a string literal here.
+> While this functionally evaluates to true because the string decays into a
+> non-null pointer, could this be considered an API misuse? Perhaps this
+> should use WARN_ONCE(1, "unexpected trap") or WARN_ON_ONCE(1) instead when
+> an unexpected trapped SPE register access falls through to the default case
+> in kvm_spe_write_sysreg().
+> 
+> > +	}
+> > +
+> > +	return true;
+> > +}
+> > +
+> > +u64 kvm_spe_read_sysreg(struct kvm_vcpu *vcpu, int reg)
+> > +{
+> > +	switch (reg) {
+> > +	case PMBLIMITR_EL1:
+> > +	case PMBSR_EL1:
+> > +	case PMBPTR_EL1:
+> > +		return __vcpu_sys_reg(vcpu, reg);
+> > +	default:
+> > +		WARN_ON_ONCE("unexpected trap");
+> 
+> [Severity: Low]
+> Similarly, should this use WARN_ONCE(1, "unexpected trap") instead of
+> passing a string literal directly into WARN_ON_ONCE when an unexpected
+> trapped read falls through to the default case in kvm_spe_read_sysreg()?
 
+Yeah, that's right, I'll fix both instances of the misuse of the macro.
+
+Thanks,
+Alex
+
+> 
+> > +		return 0;
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260903160623.315525-1-alexandru.elisei@arm.com?part=16
