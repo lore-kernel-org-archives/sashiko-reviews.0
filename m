@@ -1,36 +1,65 @@
-Received: from mta0.migadu.com (out-76.mta0.migadu.com [91.218.175.76])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D286248867
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 13:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F481650
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 13:45:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788529326; cv=none; b=D6Vs+D7eK5kNUIQm3tDluU6714N06Dhpym69MGxYgvpsijN6j/3LiXIndXfasCUKk9dT7PZAAhe2SRsrL15NM6VzZ+voRTRJb0GbW3Z/i48TqCiGGwJH/3aTJsIg0Lu6iUeVrJVrbKpd3GcHBQBMncgTOnNlstP+PUMkoFjXG40=
+	t=1788529520; cv=none; b=GhWc1cFkvtkBYFAuhKZG51HOhYEYCZthl+PW1pDSzcdbxM96Loyed/+lm+p9RqHExJaTTJXyHgeCv+gI71wwP4EAGWtJGZvoLjmTnRNq+fhuPcmkiXsYc+ErEjpouSB1Ge4UJ0YMKuLqnYrIV9dN+HyTLwErKhG5q7jLcMJOv6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788529326; c=relaxed/simple;
-	bh=gWIIqAYa7JwgMqe3ng6cFBLQxMyS39YunS7cWQHkFq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OZVbuCkdrh1ajRphQTc5tKsaDySXO7/bfKk9KT44vLgETKsO5WHYH94rCJinsmXSx4/Z8Lwx5crFgPCHiRzLzcHrq8ZCQ1TF6CSXZa4bb32YG50O9s89fZGdEzpgdAtCzhncwj2lsN+va7iykUwkmhrKFPXJ5XeU398D35/ahfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mC8oCDCQ; arc=none smtp.client-ip=91.218.175.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788529520; c=relaxed/simple;
+	bh=AwKvfY0C3A+YddLSh+lZO9CKA3+wQcEcUbOlJU3gnz4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GbyaU3ByDZVZ1S8eDoBi3dZRfI69b5zgv5kyWZoggFrrK5X5YhWseSYQTr21gSehEIbfmkDTWEYi7Dsu2prZBTfFx0reiHLbNmE0ouSZhigY/3uQFpSRgqy+kswPW5sXQ8KJbRWZkRRCZxZd9klBGOk2MX+xfY0om8mDVndRbuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=RjlrXsbh; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mC8oCDCQ"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=gWIIqAYa7JwgMqe3ng6cFBLQxMyS39YunS7cWQHkFq4=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788529320; v=1; x=1789134120;
- b=mC8oCDCQcPWxQ7hNzp7g5/seLUPqdhrrTMtaR4m5n65FoRKSTL4bMgPkXKLBhs3R7bhKIowo
- tuqz5SX7yaCGlC/DndshyRvOphsskH+Z/CXnBiICTviXG5T25+C4hAjXAeRf+U0cl0SFdThKADS
- y+pc79QvSekl6g93CLAcecEw=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id ae4793192e6b9aed;
-	Fri, 04 Sep 2026 13:42:00 +0000
-X-Mizu-Trace-ID: ae4793192e6b9aed
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <117e96e3-f1c6-4a84-94b0-8c164cab209b@linux.dev>
-Date: Fri, 4 Sep 2026 14:41:55 +0100
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="RjlrXsbh"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-530420edf1bso17392391cf.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 06:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1788529518; x=1789134318; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=u+308zQ7FQ1vvQnZ8ir3t08GSlPc01nU8aftORTt4WI=;
+        b=RjlrXsbh1HgdbbM3kdRVnVshnBS9sDhQelstr1EWgMxTIgdIkP/nKe0ml5kSJwQY4U
+         WoR4A7+xIPPZxLN6Dk7Lwofc8ZVkZxIDobrF4KPm0bqhrhw2F0qBpE5C5wCujWKQ5UwP
+         EDGDuKkMvdBSwxVngVygBsEUrCMB91BG3/K8+8d0sHFmtkrYX/6xTxeWvWLbUSo8XZWI
+         vR1mX9lqY4QR1biWTeWR/iOWAXOMCmLGHLb+aG4HSOiEC/aqjPzv5zt1cqxkIX0WuJHz
+         pw4IPQjUWWmGFcvGUKml11jIqM6CBq2wkBF9b63hiZLIGitjFN3Gj7QZoD49lf7AwnZL
+         VZfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788529518; x=1789134318;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=u+308zQ7FQ1vvQnZ8ir3t08GSlPc01nU8aftORTt4WI=;
+        b=HAFzvYmhvmgppmyavdZLldb+rVnBbLj8uGwuoMYw2BGG9equL3CplO2pQ/eDvh1lAi
+         dIT/PzY6zoY7uY1VHBD+FB6kmFdKXto2ZO9rFbcwVdByr2SB54/ezi7rMOalhqOS1oQq
+         xCsG7EH+jKKbt3OSb6zHGFgRbpnjo4qHK9mdlYtqbphmGlsYY01ZIp6cmOOVY+gZLhcK
+         4OzxWDcUPGRPZUcoQ/sWdNNJb8Pl0Xsc+D284SAHVMkrR/QIKtBF+HyIbI/HguI58d+4
+         fJ/Rz74jupmhygoQ8tw3TQl+aCWEeSv8oocEBXfUMFmcvA4pvLyzw07V7GKPdFpoTCcf
+         duhA==
+X-Gm-Message-State: AFuF++ldGCEVsrOt75lGONKIfuimKyjH3N8mazTQce0760radTgL44OL
+	26/r4RFReRXgAysdGASLVDRZVMZwSq22G9Jl6Ix6mtFneao8ggA06D+HsZN3CaczWGk=
+X-Gm-Gg: AYBFou2Mypljx9EkhXhMQ2K06JEVXtclRLMFe2u2aGcJM4hqXAOv05cyAlCPCHB3oZt
+	Ak2IRmq2UC4rmQqUiiKvGaYaWOc3HuSWDvUxzQBikzqcCXBDtgDPa9wDpPdmKWZ4926/3ZD1JmW
+	0JO8GSIZtJeWwpZD6YnDhoPGgKIPN9vQK9It5lYkt6w8OCDoKouCeeecZlBt2Tpb1yyo4JVyRJF
+	zG/uJwIcYvnQWOuxaMINuNH4v4RGJSVW6h8DBnSGfDAobN3dbhQQuHMS47iqYOTk0PyMg8yfcRL
+	JCseu2e4ttHwZNj5LtuDnxG60Pqlq+tPlLEU29IuvybOLEgFk9MvZ2jIy6r4yJUgd7HGS22m3Xx
+	1D4qZiOBJs3XQDc1kJECYwom5xx+FDvYQ6NTEcrx8V67AF6LEVqVGR/H6zHRz93O2wR7o67VrRp
+	gCe+BFggOI1EV3trrcw/UDhZFnOBJXk3TucUgUvw+Y03N9WJUyO1OUI3l5mYMK
+X-Received: by 2002:a05:622a:102:b0:530:42e4:f001 with SMTP id d75a77b69052e-530549b8baemr59653771cf.46.1788529517504;
+        Fri, 04 Sep 2026 06:45:17 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-53054116c54sm20866381cf.5.2026.09.04.06.45.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Sep 2026 06:45:17 -0700 (PDT)
+Message-ID: <453211e7-7ca4-424b-b1a4-745f0f8624dc@riscstar.com>
+Date: Fri, 4 Sep 2026 08:45:16 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,113 +67,55 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 16/27] scsi-multipath: clear path when device is
- blocked
-To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260901104526.3850621-1-john.g.garry@oracle.com>
- <20260901104526.3850621-17-john.g.garry@oracle.com>
- <20260901110210.2409C1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v3 3/4] PCI: of: introduce of_pci_verify_node()
+From: Alex Elder <elder@riscstar.com>
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260901011338.1323243-1-elder@riscstar.com>
+ <20260901011338.1323243-4-elder@riscstar.com>
+ <20260901012128.2AC6E1F000E9@smtp.kernel.org>
+ <cde3da8f-933a-41ef-b7b8-f78317ca2d67@riscstar.com>
+ <20260901173239.GD1244140-robh@kernel.org>
+ <58452803-d22b-4e9a-8716-db46798d6403@riscstar.com>
 Content-Language: en-US
-From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260901110210.2409C1F000E9@smtp.kernel.org>
+In-Reply-To: <58452803-d22b-4e9a-8716-db46798d6403@riscstar.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/1/26 12:02, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Calling synchronize_srcu() inside an iteration loop defeats bulk quiesce optimizations and stalls transport error recovery.
-> - [High] Path clearing is missing for devices blocked natively by low-level drivers.
-> - [High] TOCTOU race in `scsi_device_block` accessing `sdev->scsi_mpath_dev` without locking causes NULL pointer dereferences and Use-After-Free during device initialization or removal.
-> --
+On 9/2/26 7:54 AM, Alex Elder wrote:
+>>> I would love to get some pointers from others on how to
+>>> do this correctly, but in any case I'll do a little more
+>>> research on this before I post version 4.
+>>
+>> I'm willing to wait and see if anyone cares about cardbus. I doubt it.
+>> Maybe there's some old PowerBooks with cardbus?
 > 
-> commit a4233dac056f9047f69ee519256fc76b917ab456
-> Author: John Garry <john.garry@linux.dev>
+> I'll give it another few days before posting v4.
 > 
-> scsi-multipath: clear path when device is blocked
->      
-> This commit adds scsi_mpath_dev_clear_path() and invokes it from
-> scsi_device_block() to clear a device path when it becomes blocked.
+>> "pciex" should probably be handled.
 > 
->> diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
->> index af27fd3df8d46..f02b3a50e20cd 100644
->> --- a/drivers/scsi/scsi_lib.c
->> +++ b/drivers/scsi/scsi_lib.c
-> [ ... ]
->> @@ -3009,6 +3010,8 @@ static void scsi_device_block(struct scsi_device *sdev, void *data)
->>   		scsi_stop_queue(sdev);
->>   
->>   	mutex_unlock(&sdev->state_mutex);
->> +	if ((err == 0) && sdev->scsi_mpath_dev)
->> +		scsi_mpath_dev_clear_path(sdev->scsi_mpath_dev);
-> 
-> [Severity: High]
-> Is there a TOCTOU race when accessing sdev->scsi_mpath_dev after releasing
-> the state_mutex?
-> 
-> If __scsi_remove_device() runs concurrently on another CPU, it can acquire
-> the state_mutex, change the state to SDEV_DEL, release the lock, and invoke
-> scsi_mpath_remove_device(), which sets scsi_mpath_head to NULL.
-> 
-> Since err was cached as 0, this execution path could proceed to safely
-> evaluate the if-statement, then call scsi_mpath_dev_clear_path(), resulting
-> in a NULL pointer dereference on scsi_mpath_head.
+> I'll add that.  I'll also try to find what the range
+> of "compliant" device types is; I presume it's in the
+> devicetree spec.
 
-That will not happen unless the sdev disappears, which should not happen 
-when scsi_device_block() is being called.
+I'm about to send v4 of this series.  Here is some information on
+this suggestion:
+- "cardbus" is referenced in two places (two very similar functions,
+   one for PowerPC and one for SPARC.
+     of_create_pci_dev() in "arch/powerpc/kernel/pci_of_scan.c"
+     of_create_pci_dev() in "arch/sparc/kernel/pci.c"
+   Based on the tone of your earlier comment, I'll ignore "cardbus".
+- "pciex" is checked in 6 places, one of which is generic (the other
+   five are related to the above two architectures).  The generic
+   one is in of_bus_pci_match(), mentioned earlier.
 
-> 
-> 
-> [Severity: High]
-> Are low-level driver initiated blocks missing this path clearing logic?
-> 
-> When low-level drivers natively block devices due to hardware errors, they
-> call scsi_internal_device_block_nowait(). This bypasses scsi_device_block()
-> entirely and directly calls scsi_stop_queue(sdev), meaning multipath
-> failover won't be triggered.
-> 
-> Should path clearing be added for native blocks as well?
+Sashiko's suggestion only mentioned those two device_type values.
+I'll just add a test for "pciex" as you suggested.
 
-No, as mpath_clear_current_path() -> mpath_synchronize() may block. Not 
-clearing paths is not critical, as we should not use the path if it is 
-disabled anyway.
+Herve, I will retain your "reviewed-by" tag; if you disagree with
+this minor change say so and I'll remove it in v5.
 
-> 
->>   
->>   	WARN_ONCE(err, "%s: failed to block %s in state %d\n",
->>   		  __func__, dev_name(&sdev->sdev_gendev), state);
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index 68fe50f62158c..b16fe6a55fa73 100644
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
-> [ ... ]
->> @@ -238,6 +238,16 @@ static int scsi_multipath_sdev_init(struct scsi_device *sdev)
->>   	return 0;
->>   }
->>   
->> +void scsi_mpath_dev_clear_path(struct scsi_mpath_device *scsi_mpath_dev)
->> +{
->> +       struct mpath_device *mpath_device = &scsi_mpath_dev->mpath_device;
->> +       struct scsi_mpath_head *scsi_mpath_head = scsi_mpath_dev->scsi_mpath_head;
->> +       struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
->> +
->> +       if (mpath_clear_current_path(mpath_device))
->> +               mpath_synchronize(mpath_head);
-> 
-> [Severity: High]
-> Does this code stall bulk quiesce operations during error recovery?
-> 
-> This function is called by scsi_device_block(), which is executed in a loop
-> for all targets and LUNs during error recovery:
-> 
-> scsi_block_targets()
->    device_for_each_child() -> target_block()
->      starget_for_each_device() -> scsi_device_block()
-> 
-> Since mpath_synchronize() is a wrapper for synchronize_srcu(), waiting
-> synchronously on an SRCU grace period here inside the loop could result in
-> multi-second stalls, potentially cascading into command timeouts and
-> unrecoverable host resets.
-> 
+					-Alex
 
-We can address it if it becomes a real problem.
+
