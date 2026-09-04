@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-25.mta1.migadu.com [95.215.58.25])
+Received: from mta1.migadu.com (out-85.mta1.migadu.com [95.215.58.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2C2365A14
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 10:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9213A44D01D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 10:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.85
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788518796; cv=none; b=ZePKpXKPxKyTwOISMMqbVYstzbvQzmF2iOZ1/qbzTsQJEWGcoe6ncgRQ6cQs/ZUdBBB/1fj78Y4QDjZU/jmf6TulqUw+PESmGM23XiC7PpUvV3Sg/KViE60yYyjtaWqxXkL6FBvFqyqSsNcoTzlKS81I+9V36GFtBxNe0wipUa0=
+	t=1788518903; cv=none; b=mOyqLfG3vtxSz+g6FxPgCP/LoOmSrH3xNmaS88ELHwVXkqMFRaT4G61zpxPRQZgxs+1v3uJN8EMybrkMc0fSGpUPLxQmvAES7p/jTSf3RQ0ESTiYt6iuoemknEY2Qbh9e+xZUw/jeFu39pi711b64LGF70hK/jjnbPogzySLY5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788518796; c=relaxed/simple;
-	bh=SWLNDM3X58Oi951rjmtN8VDdEwnQ812gsu954cQ4Gzc=;
+	s=arc-20240116; t=1788518903; c=relaxed/simple;
+	bh=8QktsvnxWs3d45vAajo7gNZrNpg+i6MJb7/5u+nTQ5E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y/6EOaxUkelAm69V42QFCd4EwmFBG8qZ8Anks+WuE3mqWntkB/nGWHHxLdsurRnsET2nsfEcj/Q1XLz48MrLmROpdUWWHX7XJyzq/JmrDNPp150TaodiYOJROXLrSrMM6DScQG67NhFxltJnAy9R9shlsqWjSWiv5oYtJxbvi0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CB/ia8qR; arc=none smtp.client-ip=95.215.58.25
+	 In-Reply-To:Content-Type; b=m+0ii6Hsyv//umaeZAwIZQby08FzQJRNscfCiTvm2P3MlMH5cQaOLQVh1tps1z7fJWzYBuQx4bjvoF84R0+8VhfRx6h3ebP3jGHKzzbVmQQvmkB4QHWm4uRVSuleqXYLWgv+RzZZZ0dYqjBRnXee51sHSYuhMkGMdeSTQDE6L5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tgKz/pQD; arc=none smtp.client-ip=95.215.58.85
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CB/ia8qR"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tgKz/pQD"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=SWLNDM3X58Oi951rjmtN8VDdEwnQ812gsu954cQ4Gzc=;
+DKIM-Signature: a=rsa-sha256; bh=8QktsvnxWs3d45vAajo7gNZrNpg+i6MJb7/5u+nTQ5E=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788518791; v=1; x=1789123591;
- b=CB/ia8qRm5aT0bckbLlBpkwe21ZtNPXxS/AptttCDMMqcHoDahAo2ZfSRYXJK1GbH34+OhZ2
- +UDpJZ8yj7rScsyYC4mxeZJ/vnO5R8AoTwAtdSO51fnC9nZqAaeUvi/RCcsGzaRjGORveKBSbjI
- o3EVKqUGI7mpibuXjA6G71FQ=
+ t=1788518899; v=1; x=1789123699;
+ b=tgKz/pQDNXmnpnSnKwCyuErDpGkHW47PHAXCaPHXCc7kijO/5rfzsSAlfY46xT/2dKfe38i+
+ 1VjSsxr3WtjpY21+1zLwbg2v86YMJ/6Zkw61bc3eJkU6yrF6Huq7JTVbikloSTSHQnt+omZEwUK
+ xb65n8nSIINHvJpv5eA49ahw=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 61d7ee7e5d4c238e;
-	Fri, 04 Sep 2026 10:46:31 +0000
-X-Mizu-Trace-ID: 61d7ee7e5d4c238e
+Received: by smtp.migadu.com with ESMTPS id eb4fad5add43f10a;
+	Fri, 04 Sep 2026 10:48:19 +0000
+X-Mizu-Trace-ID: eb4fad5add43f10a
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <f17d5e16-cc0e-4dd1-90c4-c7583cdf5ee9@linux.dev>
-Date: Fri, 4 Sep 2026 11:46:30 +0100
+Message-ID: <52a79ba8-2bb6-4e3e-a21f-a185ab48a6a6@linux.dev>
+Date: Fri, 4 Sep 2026 18:48:09 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,92 +38,126 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 20/27] scsi-multipath: add
- scsi_mpath_{start,end}_request()
-To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260901104526.3850621-1-john.g.garry@oracle.com>
- <20260901104526.3850621-21-john.g.garry@oracle.com>
- <20260901112533.2BC161F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260901112533.2BC161F000E9@smtp.kernel.org>
+Subject: Re: [PATCH bpf v2 1/2] bpf: Fix out-of-bounds read of sk_protocol in
+ bpf_sock_destroy()
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260904094954.63447-1-jiayuan.chen@linux.dev>
+ <20260904101958.2BE741F00A3D@smtp.kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260904101958.2BE741F00A3D@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/1/26 12:25, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Bypassing `scsi_end_request()` on hard errors in `scsi_queue_rq()` permanently leaks multipath active counters and corrupts state for recycled blk-mq tags.
+
+on 9/4/26 6:19 PM, sashiko-bot@kernel.org write:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] bpf_sock_destroy bypasses socket locking for iterators that do not pre-lock the socket, leading to data corruption and kernel panics.
+
+
+Hallucination
+
+
+> - [High] Calling cond_resched() while holding rcu_read_lock() via bpf_sock_destroy() on TCP_LISTEN sockets.
+
+
+It's True
+
+
 > --
-> 
-> commit d6985f792a0819a7b56a04e827a71ff5a8dd2172
-> Author: John Garry <john.garry@linux.dev>
-> 
-> scsi-multipath: add scsi_mpath_{start,end}_request()
-> 
-> This commit adds scsi_mpath_start_request() and scsi_mpath_end_request() to
-> handle private multipath request data. It also introduces mpath_nr_active
-> per SCSI host to track active requests for queue depth io-policies.
-> 
->> diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
->> index 189263ce56624..5916dead5422e 100644
->> --- a/drivers/scsi/scsi_lib.c
->> +++ b/drivers/scsi/scsi_lib.c
+[...]
 > [ ... ]
->> @@ -1918,6 +1921,9 @@ static blk_status_t scsi_queue_rq(struct blk_mq_hw_ctx *hctx,
->>   	memset(cmd->sense_buffer, 0, SCSI_SENSE_BUFFERSIZE);
->>   	cmd->submitter = SUBMITTED_BY_BLOCK_LAYER;
->>   
->> +	if (sdev->scsi_mpath_dev && is_mpath_request(req))
->> +		scsi_mpath_start_request(req);
+>> @@ -12925,8 +12926,12 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
+>>   	 * Supporting protocols will need to acquire sock lock in the BPF context
+>>   	 * prior to invoking this kfunc.
+>>   	 */
+>> -	if (!sk->sk_prot->diag_destroy || (sk->sk_protocol != IPPROTO_TCP &&
+>> -					   sk->sk_protocol != IPPROTO_UDP))
+>> +	if (!sk->sk_prot->diag_destroy)
+>> +		return -EOPNOTSUPP;
 >> +
->>   	blk_mq_start_request(req);
->>   	if (blk_mq_is_reserved_rq(req)) {
->>   		reason = shost->hostt->queue_reserved_command(shost, cmd);
-> 
-> [ ... ]
-> 
->> diff --git a/include/scsi/scsi_cmnd.h b/include/scsi/scsi_cmnd.h
->> index 8ecfb94049db5..52227e2cd9749 100644
->> --- a/include/scsi/scsi_cmnd.h
->> +++ b/include/scsi/scsi_cmnd.h
-> [ ... ]
->> @@ -58,8 +58,11 @@ struct scsi_pointer {
->>    */
->>   #define SCMD_FORCE_EH_SUCCESS	(1 << 3)
->>   #define SCMD_FAIL_IF_RECOVERING	(1 << 4)
->> +#define SCMD_MPATH_IO_STATS	(1 << 5)
->> +#define SCMD_MPATH_CNT_ACTIVE	(1 << 6)
->>   /* flags preserved across unprep / reprep */
->> -#define SCMD_PRESERVED_FLAGS	(SCMD_INITIALIZED | SCMD_FAIL_IF_RECOVERING)
->> +#define SCMD_PRESERVED_FLAGS	(SCMD_INITIALIZED | SCMD_FAIL_IF_RECOVERING | \
->> +				SCMD_MPATH_IO_STATS | SCMD_MPATH_CNT_ACTIVE)
-> 
+>> +	if (sk_fullsock(sk) &&
+>> +	    sk->sk_protocol != IPPROTO_TCP &&
+>> +	    sk->sk_protocol != IPPROTO_UDP)
+>>   		return -EOPNOTSUPP;
+>>   
+>>   	return sk->sk_prot->diag_destroy(sk, ECONNABORTED);
 > [Severity: High]
-> Does preserving these multipath flags across requeue operations cause a leak
-> of the mpath_nr_active counter and stale state for recycled tags?
-> 
-> If a multipath request is dispatched, it calls scsi_mpath_start_request()
-> which increments the host's mpath_nr_active counter and sets these flags.
-> 
-> If this request is requeued (for example, if the host is busy) and then
-> re-dispatched while the device is offline or entering recovery,
-> scsi_device_state_check() in scsi_queue_rq() will fail early. This causes
-> scsi_queue_rq() to return a hard error directly to the block layer.
-> 
-> Because the block layer completes the request natively on hard dispatch
-> errors, it bypasses scsi_end_request(), leaving scsi_mpath_end_request()
-> uncalled. The mpath_nr_active counter is leaked.
+> This is a pre-existing issue, but does this invoke the protocol's destroy
+> handler without proper locking?
+>
+> The bpf_sock_destroy() kfunc can be called from iterators. It calls the
+> protocol's diag_destroy() handler:
+>
+> net/core/filter.c:bpf_sock_destroy() {
+>      ...
+>      return sk->sk_prot->diag_destroy(sk, ECONNABORTED);
+> }
+>
+> For TCP sockets, this resolves to tcp_abort(), which skips acquiring the
+> socket lock because has_current_bpf_ctx() is always true inside a BPF
+> program:
+>
+> net/ipv4/tcp.c:tcp_abort() {
+>      ...
+>      if (!has_current_bpf_ctx())
+>          lock_sock(sk);
+>      ...
+> }
+>
+> While some iterators pre-lock the socket, others (like sockmap iterators) do
+> not. Does this result in tcp_abort() running lockless and potentially
+> corrupting socket state?
 
-This seems like something which needs to be fixed in scsi midlayer
+No.
 
-> 
-> Furthermore, since SCMD_MPATH_IO_STATS and SCMD_MPATH_CNT_ACTIVE are
-> preserved in SCMD_PRESERVED_FLAGS, any new request reusing this tag might
-> inherit the stale flags, bypassing initialization in
-> scsi_mpath_start_request().
-> 
-> Could there be a mechanism to clear these flags and decrement the counter
-> when a requeued request encounters a hard failure during re-dispatch?
-> 
+
+I try load "SEC("iter/sockmap")" but verifier rejected it.
+
+Only the tcp/udp iters mark sk as PTR_TRUSTED and bpf_sock_destroy() 
+needs a trusted arg.
+
+
+> Additionally, if a raw socket with IPPROTO_TCP is passed, raw_abort() is
+> invoked instead, which unconditionally calls lock_sock():
+>
+> net/ipv4/raw.c:raw_abort() {
+>      ...
+>      lock_sock(sk);
+>      ...
+> }
+>
+> Since iterators run under rcu_read_lock(), will this sleep in an atomic
+> context and trigger a BUG?
+>
+> [Severity: High]
+> This is also a pre-existing issue, but can this call cond_resched() while
+> holding an RCU read lock?
+>
+> When bpf_sock_destroy() processes a TCP socket in the TCP_LISTEN state,
+> it calls tcp_abort(), which then calls inet_csk_listen_stop():
+>
+> net/ipv4/tcp.c:tcp_abort() {
+>      ...
+>      inet_csk_listen_stop(sk);
+>      ...
+> }
+>
+> Inside inet_csk_listen_stop(), there is a loop that explicitly yields:
+>
+> net/ipv4/inet_connection_sock.c:inet_csk_listen_stop() {
+>      ...
+>      cond_resched();
+>      ...
+> }
+> Since bpf_iter_run_prog() runs iterators under rcu_read_lock_dont_migrate(),
+> will calling cond_resched() from this atomic context trigger a "sleeping
+> function called from invalid context" BUG?
+
+
+Yes, reproduced with a listener that still has an unaccepted child.
+
+Let me think how to fix it...
 
