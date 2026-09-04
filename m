@@ -1,91 +1,110 @@
-Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8208A36EAAE
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 02:07:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788487646; cv=none; b=EkYC3yUvhM8FPCYwBPSl2EaWTY4GMJSv30Xst/N/ftEntZDGDa0IHUk3cpLV0WoQWM4R8c39dEXPyiTRV8PaOPQdiUQLNoG5TxQ/gE6Vi2EkQ8I9yJkzLP7kEIR/Pvn03XeW6oYuFUY8u3ihj90SwGqBknLr79VUTiZaN5OsboI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788487646; c=relaxed/simple;
-	bh=/usv0M9ON4gEcbPXu04wspLUvbZ9ED7JzEdRTpfgqMY=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O/mGlwYrGmGYAhdKX1aoLcZe4roSllyC9ZRbd78sKIDWpnRNhDfiRCP8Ng9LpDezqVaRbljMyQoVaMHTt/uk7kt6usSjKv1OVRmfmtME58vTPQwhK4u3CgQwUoMwr7gDtmEiRdIos0T/BafWM9LCAPWe7gVwSCCYdyr7Y5QNDH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=qsL9SInf; arc=none smtp.client-ip=162.62.57.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0722381EA1
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 02:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788489683; cv=pass; b=amD8j7cjyhyZfX2jSPXeVRTlklN+RsNvENKsKCwTpwDXLvSC6T5Uw2Av8ICH92Ak+WbUnxdbLc9MDS2geAlMYX+4uBVTuLwsXUAe7el6AzjzqJr5b8os9pyqS3kiYVPjcsjBkmzs8ejyndQsHUfUblqHCyw+805vX1MtCXNnaEc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788489683; c=relaxed/simple;
+	bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=scaUyHO58acRXUrNIUCioZm7TsI5CmuJE3aCyayCtayzfnd34ex49j+CHZy3XLQ4RmCNaPqkeuaf+DyKdvWirra+i8wipN+vbyaijuhyv7HIaM7iaj2AbiXhrWo3X9T//3QsOKJQDjTP48X9D0q/0/se8EGNwKRZHY/Pm8Fdbpw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arimil.com; spf=pass smtp.mailfrom=arimil.com; dkim=pass (2048-bit key) header.d=arimil.com header.i=@arimil.com header.b=FUEhXRFH; arc=pass smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arimil.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arimil.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="qsL9SInf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1788487633; bh=C8ycuz886UciVQ1/7YL6A1EfAASJCUtMC9jmmAELh5c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=qsL9SInfTxazViFXnyOwMyvXLFwnud1q2Yy25WFV3cz/kG4/cPFEVqYg9lEwdYP3/
-	 pYVyOAzSDQEj9FZPMPTD1fCPM3uk2DPbJzME6llTRIdMDMomJZi/GYa7Cxtw6UrfRP
-	 u0y6kE/7KJdLgVS20bQxqiIUWzkv32PNaDPuk9EQ=
-Received: from DESKTOP-AT5F202.localdomain ([183.242.132.32])
-	by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
-	id 1821DA6F; Fri, 04 Sep 2026 10:06:02 +0800
-X-QQ-mid: xmsmtpt1788487562ta5e8irxs
-Message-ID: <tencent_C4778C64AB2025042F0F8DACE17843752108@qq.com>
-X-QQ-XMAILINFO: NCkMfDbncK88D5FX62okEeIHIvOEXCqeMP4mg7GUuiX6gtWZyKQxhpP22St5z9
-	 qjG0CgWaWVyjvj67DJnZSyzDBM8Y6Xd52+yW8ZZMxCPiA3nnDM3bHk7p+fi8uog+L5Ir+9oTyCPU
-	 +n2zDLnJiPauVE3YrbJ9iLWmmNwC1MZPgNMRjMKYAXqqvZpsPovpIa256/+yEfs9uG6Rvdnc9RNA
-	 7srPSRv3hN42Tntw8mGtWogDH4J79+zwW6aK/tPVEaLPmaVcgFEr6rzb2n6dl7dFElTQUA/336xf
-	 pkVrXJglMVHvRTOfN1ItGFF6QExi4QW6fYYe2gWQgBWxP7pkSRHtBffhMnJNEySrVX+giJ7LZtDy
-	 E+dUr51JdGUMZVayvP3o7SzHbfrHRNtDCao4e+8PS6Kpe5j+RkUuGUGQhi0OV6nU6r41zsCYVdGw
-	 eWQz3l07xaQRtXva/u8YayS9wmyPpY+dcRKMbkEB2ogk65mZfyEPJi+gVwM1m3ZycWkcaoHIPUdg
-	 B8LrPJzenDd+n7cU84OhvCVsxwkdSM3fkAyzFdBdu41uqMDyN9AzaPy0j8XDetnhp3ixWyYWXBdF
-	 mJB+0oSM8GUqHMR9j0CXAYQf+v6uizqSJ+GlHjUAQku6o0/J5UAEUJNBizhgKftWrG8sryt2W/Zt
-	 QG0HEgLc/9/U3kDS/yh6hK/9GxFMUnVcWrnEoR/h8qCR3zfXTrC6Q+GM9xhTKj9eEbnYX3kXhy56
-	 FMMW7CRNtjQqoEmi1JEj4xttkrh+RISDMQSFirSbKYoJ3mJpzY2KzduaQATZD9LNQ+3XFS8NC3+F
-	 l5///qT+maXXglJ/3Tv/anFyeyz9fhDf0rWwI88AMUv84qZCMOnB6lWg4TWsX/1O6tc2v+wN2qhK
-	 UTyDD8jDc1bkIkxTu6uhvsI8ExhDMOium5jz0UQvqVE30+GZQXaVzRe4SWvV507L72velxbQERld
-	 FbXNKBlwp48cCWvU3m0jCC/UGCTt//78KtXLTykaCfz9vgFrKmqnmWmfMOt28lrp+pTYGaYkHEDf
-	 ywOCY99m1EjolBggn5kCl3feA6c/CuYpd9Psm3TkRhRhcAXiZE
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-Date: Fri, 4 Sep 2026 10:06:01 +0800
-From: shuo chen <1289151713@qq.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-Subject: Re: [PATCH v6] ext4: rewrite ext4_convert_inline_data_nolock to make
- it safer
-X-OQ-MSGID: <aponieVkWaPYQ8GZ@DESKTOP-AT5F202.localdomain>
-References: <tencent_93CC3232AC6A9418BCE4372286770F91850A@qq.com>
- <tencent_3656CB4AA45EA01A8DC2B9865242BA18A709@qq.com>
- <20260904014637.BBEE01F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=arimil.com header.i=@arimil.com header.b="FUEhXRFH"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c255acff671so75031866b.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 03 Sep 2026 19:41:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788489680; cv=none;
+        d=google.com; s=arc-20260327;
+        b=X90p6DFd2DZGtjAjiE0WZxahs3ZzeDU5VnXtbAWf7pgQYuNf9iMPbS2nKlxNjC0t+s
+         d5AnOAdTy7hAIo614IHDxqtRWC7JGxxcZhA6uKohJXa/S5lNno9ZJl69jX6bQmAff9cZ
+         FYzgZtghtsiWdhUcTMCl2Xemd+wgSI0jHGC/+7gykhCKDDg+UnFWsrsmOW1EjDV/ksd6
+         KMUkL/HeMVSaPKAuLf2XBkkMD34LzwYCXia468X1FqUqVXideIU+Aq6kBSk5jcPR83Pd
+         0LP0GmuQrZHRfJiHBcqNbBP38oUmxp94EPnm08iH2g8xhdWvMxLI3mvQhwUFApWJVI82
+         y1Kg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
+        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
+        b=f3+0cbqmTz3tK1ZuENTFZ2HLBECbBJjHGNTP/DfWcI5SOiQcS/d+4BcVMvGpdVA/00
+         eTP5j4S/7rmzfPf6NzmaBww0HLziPAZN4Hz6sSVVpr/4rIQhxx8h6Z3r3Ecy0h9zfRZ0
+         YLKua7nNvracnjuKpbuwMo9SQ2nWP2noR1ZV+0K5dAa4g39sAQk1wwcP5T9KZzovhIcb
+         6nbHsnZm34scjUP3Jx9eP1lTW73PoU5gA2LYxOHQ/xc0pjGTB7rwuHxybdU9tuaacGAa
+         XiDIVpSvijY3buAetOA3gSeQ5RqHkQ3jvVY0AGHPG3iGJlQVSQ50fNPNNeQg73IfDAyH
+         QBVw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arimil.com; s=google; t=1788489680; x=1789094480; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
+        b=FUEhXRFHBoGa75LXuNi3IA8caid18HuCe674t1TI+BrQwsr68zTyj4lYeagitF7I2b
+         qvb7EcUgpNKNJo8DmGE2vRMwV/ERTfzGcw4VTJHHdFhu0u9giN1sn/819r1jzYc8IV6/
+         5+T4FNml07Iiy5typno2tIcSgymv/2riW+bI8FuSdjM1hx3YLP7DPD9HekiDCH9o2wmf
+         gAixm3CbhU2fMmAVc9qM3dpJTQCkKyfxmruvAgc+upVlXChPR1rOUAV7XKmrKcgERkUZ
+         fNU7cPKgBxoC36+Lzw0i4burRzmJVFiqNh4u7IXQzs7bE7yMAz3WlG5UUTuHDlOmFGvC
+         znGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788489680; x=1789094480;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=haeN8BwgCyC9B0Qb8uV/x9/S4ZiukBNTmmqvdkO4bN0=;
+        b=MOd4H32rgbymN38MlhghhJNVfJL16Yw+Dd7YWavUI1yUnb7dL+SzmFj8phC372vjPb
+         +8n0Fe+SpEP0I1AHvKUv2AGNEEeGAdweSIESofwYEK+RDMfB3i4OPJOIONR2m6eGlaCz
+         URLN53+LPEmwKhGn4YKzHOem/ULP6QKLeB6/3o3Gt4uhNxzJHmw6keQhk8oswHq3biND
+         SvjZfKLjdAxk6DpYEcFYynHR1zn5UQ2LCaWLFoLKce5P5DnCSbzm8z2w6MhCvlk1Xs89
+         3clVxiA5NFBf+23Z82LCSfZh3WptFp/f9XzWuzitJMPZqhp8IdfDQ1I7QNzMRljt8VdU
+         94SA==
+X-Gm-Message-State: AFuF++mRsNtU/q/9NwDETDnLu3vevWaHHXTxoCUYpctOTtHsv5wVa+Ta
+	Vk8fqjfrVaj7LNQTx6hXhzCqGqFToVaA/fHMwx/4B/s2/oL6zfXFGiMqHr9AtQQwf8SDFtXBvHr
+	MGwJpcHD3eS7u3Ibt0pU9+rxhb/fy9j/QUph2BKhpEqWB5k108BmvBgpOSe91
+X-Gm-Gg: AYBFou2D2rmMmeWnmm/ajXbwU0/kXmZdBjK9Nv5snonQ9xbzVtDvvgA/3GVU6OyDtsw
+	s+e/V8Ho77ewaS+b3+YdVAHZ00v2rOV3Me3d0hjVi7IYAU7G4OHvtSKb6AH+ojgjyFcscboEkFr
+	tsuNClbGXkbYtH87Na/r+GTLfev42mkCsLcioG6J40knRmj5WkGlwLhGAQYPPaS/tVnfQRrIGy6
+	8bznwgBGHVCnB9zUk3KuOy9cbgEcrXKf34qPBIgTPqoCbFeL+2C50CIvF2j+lrIuL3ZOMUzVv7T
+	fgBpnVZkGuHq1Z2Xv8GTUfV2uu3bq6O/+yGtk66PgzySDA==
+X-Received: by 2002:a17:907:c1f:b0:c20:d90b:2cb1 with SMTP id
+ a640c23a62f3a-c260c48eb7fmr151929166b.0.1788489679824; Thu, 03 Sep 2026
+ 19:41:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260904014637.BBEE01F000E9@smtp.kernel.org>
+References: <20260904022129.97896-1-renari@arimil.com> <20260904022129.97896-3-renari@arimil.com>
+ <20260904023424.B3E601F000E9@smtp.kernel.org>
+In-Reply-To: <20260904023424.B3E601F000E9@smtp.kernel.org>
+From: Arimil <renari@arimil.com>
+Date: Thu, 3 Sep 2026 22:41:08 -0400
+X-Gm-Features: AcwNN1WjASArX-YhmXTGtQG-Eun6uq676mwBPhxrZKuoGIxqwl0m9gJaLnPlvvs
+Message-ID: <CADBHdQ2g0uX3rrjdE8+BiO_2n5Ld2FOesgeowTzKunuAZhaLaA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hwmon: (asus_rog_ryujin) Synchronize HID command and
+ report handling
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> [Severity: High]
-> Does this hardcode the extent length to 1 block, potentially leaking blocks if 
-> ext4_mb_new_blocks() allocates a larger contiguous extent?
-> 
-> In ext4_convert_inline_data_nolock(), the actual allocation size is captured
-> as allocated_block = EXT4_C2B(sbi, ar.len). If the allocation request returns
-> multiple blocks (for example, on a bigalloc filesystem), only the first block
-> is added to the extent tree here. The remaining blocks appear to be neither
-> mapped nor freed, which would leave them orphaned in the block bitmap.
-This is a false positive. The remaining blocks are stored in i_prealloc_node, 
-so they will not be leaked.
-> 
-> [Severity: High]
-> Can this error path result in a permanent data block leak?
-> 
-> If ext4_ext_insert_extent() fails with an error like -ENOMEM or -EIO, the
-> code jumps directly to the no_free label. This deliberately bypasses the
-> ext4_free_blocks() call just above it. Because the calling function relies
-> on ext4_set_inline_data_block() to free the newly allocated block on error,
-> bypassing the free operation here appears to leave the blocks permanently
-> marked as used in the filesystem.
-If the error is neither EDQUOT nor ENOSPC,freeing blocks here could 
-lead to a more severe error.See the patch 
-"avoid infinite loops caused by residual data"
+On Thu, Sep 3, 2026 at 10:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The driver starts the hardware and registers hidraw before initi=
+alizing the driver's spinlock and completions, leading to a potential NULL =
+pointer dereference panic if a report arrives early.
+> --
 
-
+This is a false positive, this driver does not call
+hid_device_io_start() so there will be no early reports.
