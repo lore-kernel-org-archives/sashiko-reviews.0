@@ -1,298 +1,288 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7961D4B1293;
-	Fri,  4 Sep 2026 14:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788532896; cv=none; b=oS3XyHQ2Zk1q6ukYmJZ2BDWGPQfRW48ZRxGgg0kI7R5/CaX+5unExHWWdES7cg/3Rba+gBAx7SxMaMCo/vRm2zJ4axcqxr4VXT0WFIKjnyppF8fO4A02imqp1TvDvltUQ9mXp6QvqtdQwx7BWwD9HjJ1zEFs5UyaHeSTcEct70o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788532896; c=relaxed/simple;
-	bh=0k52Y1vM+IgwMS98+VcRwHGCRVVRYfyijHlxJur9Vjk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YGTwJ8rdT8/6JGR4Bn5cDXVrMeMtUEdAHHIbWU7IpmbLpXknj/H5DbmLLw5Yqfd5HqSPcCXO6d49IM5ddu+jpXOJIK9IlzNpAKQUtFIopBlgMCes0uR8hChYORWTOd3GWS2A7xy21z2IPDU4sW+Ri2RrrogMGxaE7SapcIBjJOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Ju6VTxbD; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011010.outbound.protection.outlook.com [52.101.70.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB554DF4D4;
+	Fri,  4 Sep 2026 14:59:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788533999; cv=fail; b=U0jAVO52psqNVKiBq+cTIiBM+bpkSGJ49LceDtvTshE1URdai3tuH7aJ9S2uuDCW6mZUI0N1AJAJPd2JpK+lVGpShOQ1hJu3qvbfcDpM2lBOgbWk5iJDlwwqhrDBRfiCcpqPRhPeqtZrqkdP0y+175bkJlQi86dCsfd3/VG8xKE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788533999; c=relaxed/simple;
+	bh=/PbOM+ik6Q+Idyl2THZkxvydXnkVy1HWg/gGP17HaLU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=KePH2EroYjONs1OKu0kEdxnrR6Da20klCEF7uns2oS+suv2Ge+QeFk/PGWBG4+yby2Klf0wOkIS/u2N7R67jSsgqSZqXA8ESaga9Ii0MT7gwDFhFE9wUN2O9BzVfk3KUXx2ZYhuWN9pqJ2AYL2mI7KlRbLe+7bsWkmUmS7QjaoI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=RP+ou995 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Ju6VTxbD"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 084A5152B;
-	Fri,  4 Sep 2026 07:41:29 -0700 (PDT)
-Received: from e140010.arm.com (unknown [10.57.70.12])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ED32C3F673;
-	Fri,  4 Sep 2026 07:41:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788532892; bh=0k52Y1vM+IgwMS98+VcRwHGCRVVRYfyijHlxJur9Vjk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ju6VTxbDF12jd9rRNJe7axjute/06tk2hIszChv4gimtWp3iQ3COZJJmv1lCWEuce
-	 GZuC9KibJ9npzB1qySVCzhNVO9khOXS3s6PTVFJ1cwki1UO6ygNAqUzmhPVtGn4cRx
-	 ZOYDOMUxV5cGMiozxV4rHRUNrdWLy6w2XZKfrhQs=
-Date: Fri, 4 Sep 2026 15:41:00 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="RP+ou995"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ngcPymXwt1iPmsSBCc+9gORaF+kvX0j7M/SW/Y4mS/ITYa2w6Rulvrh64TYPK6V+JlxsuI8vsDohGwpHzxtiEoEGOho0AfFzb7f0aS+GmSIhi9fBioZh5AGH+wvT6Vlb0RnuJBYM9NFPeOexkWMz9EnKSv0If8z64m2lqDBYMYWi+peG3vnW9MHXs7h+cfisnvS3yEpPrJ3FgR1XEZnrGTmf6qHmPCxIMpmyLZM5cJT5ihlCzRMg/vSdkMT71BRKO/9aariGluLxtNcll9C1yNv7gUA5ZORbUDESW0W73MTZPWDaNMJkX5wrpepIfYMtenBEQwb1oCkXEeqAAzTI5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VvRfMHG5u0jtOqDR7u0zQuevLu3RooRAhK62uRY7x7c=;
+ b=ye2rMBcSMaVf6+Cv5yn9yqnkDcBpxF6xy1inCfP7ZulKQlkcU8mUliH3CzJwQps6r2smyNwla39h8qU62eQ0QT0wPVV1kVi4iO/+BOiOCocFRTUsh+ffaVstoe/y/CFrdZ/PW4fGY7HDHS9vXkZH53b/popD7YfSQ+nev5oSW7+SZ2+FM1TKTZzs9xNrDmLHbEUwkP44L9wI4KfjQbsWTVwRBnHosqK4ZiqBleBnY0yuHpi8v9nGSDLn1FKjxYbfbEjw8L8mTrm/tuGi3K7N3Ry1W2RaQ9lDflHIP8qMfLdcTlhp0wRgiA96GKtBX7A7DJccZn76zMmoKKyWWSAryA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VvRfMHG5u0jtOqDR7u0zQuevLu3RooRAhK62uRY7x7c=;
+ b=RP+ou995DWMsuYEcKBebxvindkj+tRnVGqvc2TGzqq6scYfwMtU8YXGWm+uvrQuo6EikUVNTahsftA3qGRKQgkxPAg/HlT6rD/FhjvK1UFcqrwNuZG7pTR2otYnUqroM40i5ZU3mX2cSRPiiAbmmuuP9k4WtpPpPGVZeSO6VHEUMcY6kAGYanbfME6N8I9lmNdnfu9SXxVo4rBfL+zQaBnP50YHzWSy3nl0/1XUFMGEani/Ai7pEYaCVn05ye0f6o/rVlfwl9IM/jgQ3EangplSoKd4DysThUkS7lLNC/2R/TosRLyB3LnV4lAjzjPuf3fKnJzzrQoEGy52oSSaXKg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by MIWPR04MB533468.eurprd04.prod.outlook.com (2603:10a6:290:ea::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
+ 2026 14:59:53 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
+ 14:59:53 +0000
+Date: Fri, 4 Sep 2026 09:59:44 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
-	linux-perf-users@vger.kernel.org, Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH v7 27/28] KVM: arm64: Handle dirty page logging when
- SPE feature is set
-Message-ID: <aprYfLsndfR5SbLh@e140010.arm.com>
-References: <20260903160623.315525-1-alexandru.elisei@arm.com>
- <20260903160623.315525-28-alexandru.elisei@arm.com>
- <20260903170613.671FC1F000E9@smtp.kernel.org>
+Cc: pankaj.gupta@oss.nxp.com, devicetree@vger.kernel.org,
+	conor+dt@kernel.org, robh@kernel.org, imx@lists.linux.dev,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v48 5/7] firmware: imx: adds miscdev
+Message-ID: <aprc4CCjSfGhP9Z0@SMW015318>
+References: <20260904-imx-se-if-v48-0-dad90eec7eaf@nxp.com>
+ <20260904-imx-se-if-v48-5-dad90eec7eaf@nxp.com>
+ <20260904093956.1F5401F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260904093956.1F5401F00A3D@smtp.kernel.org>
+X-ClientProxiedBy: CY5PR15CA0235.namprd15.prod.outlook.com
+ (2603:10b6:930:66::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260903170613.671FC1F000E9@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MIWPR04MB533468:EE_
+X-MS-Office365-Filtering-Correlation-Id: 92f950e7-1d03-4ac1-c866-08df0a952cb2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|19092799006|366016|1800799024|23010399003|10067099003|11063799006|6133799003|18002099003|22082099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	YLbOKFHGvCCc0hmjBK7lcgiH3fEx/wrcx8+M7NUJo4qeqv93glxYcbeaEeF2NTqbgSnGHOhuYyjNz7MvsCaEHKbPplRV+7kza4ptVRvF1spr/7t6oKnUhtCUluptg3L2H0aMuXcjQj3DoWzyG/B1r9B+/HCwyu/Pg8siespq3ckIlX/fQ+eW6UQXODOwRz4VOE58lFA/FRpPTs988/BQVlXKcW9k0OWXWZQPpq3lynd/p7uN0TPX3wvciPdtJ3qeaUCktFDbLPS2shwhhWQmn+mJiR3Lm/V+hFA6fQsdqdUwZ+T93hMuYjrNHEiARsX/2acSUbvcBi+cihMDJwS/0FgcdhP3I3gYPWQexDn8WDUB3aUrVSNwRYXoUGa31KD2VraKTBfyHHDX/Uu6+gLGK7SdnhKRzKZWjJxwz9OhAtt6NV/pn3fvf88RAnj2nlw5i0ITI5qKMmcnuHFiJ6nVLAs0oOQ41Od3H7g7zVcqzgoxqjh6/JBLyjyyvK2UDRIcrB8VD7ljdiUb9B68e3UhX+vNa2F+E9U83kxeTJCGaEOZeMoTRtszTp25TBkMNf1a7XdicCe34/Yj2iCqy17o9UyMupN+P4x71XjDJIu6RPI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(366016)(1800799024)(23010399003)(10067099003)(11063799006)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?Nqo7aEn7mrv/fAhHEcdS/lDrcRMs1GXA63PS2jrrD1G4n0oEN41CquIGtm?=
+ =?iso-8859-1?Q?7DKDl0IeIIsNr+tiSlw62AlYQ79wxiJRKCj0puaq1q3WDQu2AGIf/s1oTo?=
+ =?iso-8859-1?Q?SK9eIXCsl2e7tcfADav7V4I3n+U/b3+tzb3ayzFiTY+isrWT7ayUDnxvkt?=
+ =?iso-8859-1?Q?PcwXHSlSMZ7lW+WgthinCZJyjztdXbsXmKtNRvc5DDs8v79Bp1Fjbqf7+F?=
+ =?iso-8859-1?Q?s0CqUOG0dcsVcyzvbpmA6873sMSwIK3wNO3aBMuJ2IBeNkoc/FPW31HNt3?=
+ =?iso-8859-1?Q?Cq1lqEurHc97hH6/quUYRMxIK/55EqdedpqjsciT+apdtgnBYgrOckU/nW?=
+ =?iso-8859-1?Q?OlaY6AIWa3iKTtP0N12HOqGnIr/gFDhxp4lgN4jz25U1UKjHh1NDPS5IBW?=
+ =?iso-8859-1?Q?j3JQLMnFV4n/QcLKSx8+g2l2pRzyhVnRiYZzkD5ylWuORRxfcozsgrp5NS?=
+ =?iso-8859-1?Q?PhQErWp6NXSG69jQ6LRa+dOHEfjPmI9J334RceUZ4R9oLY5YoUDZRtNXNy?=
+ =?iso-8859-1?Q?6Ccms6+6HsN6HRn4muIa/ELBSI9HnZi9IqCMN7sQw77rvR72f9lvuXrfe5?=
+ =?iso-8859-1?Q?s8MTO11AQilAFrQcArwc6t1MWzKwvZ+VSxDcQWRnBKOp4uYOrM/jQQ7S0N?=
+ =?iso-8859-1?Q?6YvdyB2O8HGhZX+YHRcjbpIoIYL4j7G5397EFlLYe8N6JlNH/3F0QvTR2K?=
+ =?iso-8859-1?Q?/IXP3eGrGZiuiL6x5hysESHeK/UBAcpqnXzeYqK9LSU/BMTeOwaGWywfqL?=
+ =?iso-8859-1?Q?oARbu9ScxlF5nbXslxU8+rffML/xrDO6exdRJPukcf8dl2oEedZNjDSSge?=
+ =?iso-8859-1?Q?X9nirFopOJkrfTg18iKuiNIAgrP72zLSWfwfZExDIU0Th7APinpoXcvnlg?=
+ =?iso-8859-1?Q?m4rTvuKddeDO5PGnDpKJmqJJiOvtwd1zokCGu8alR6mE+L5z1xVM34Sdt+?=
+ =?iso-8859-1?Q?XVlXU+s2THUb71va0YwfNZyEJFgBDjC+TuHzffbompA1lRhz14gIDlOSD7?=
+ =?iso-8859-1?Q?NNXfP6a6PKe3nDep3wLzOTb5shx9hN07IaBAP9VPcK14kI5st6k/AwYvLy?=
+ =?iso-8859-1?Q?OXAxPcYceCoEsiXZWOGwgDR3xo1lV1q28Az/ESTgNFFJ0XS7EbkhLAVRXl?=
+ =?iso-8859-1?Q?/IYcZHaXBhx6KHnx4g6fG+1nksvevOijV1WPW/uf+CCrBLtjwDPX6Y3hx/?=
+ =?iso-8859-1?Q?sSAGFmvISLqnMd8qJE5d53LQFvdHmj0gI9ohOPfjENyJcKI/omkWCvAcpq?=
+ =?iso-8859-1?Q?nTS1Fq76pS+YZ47zyLMJjKBHIS3t2TrCtl/VAJV4k5w71aQUoZfeTsa1ra?=
+ =?iso-8859-1?Q?yFjjI+l7QLMEyf+cj5jHvEMWSFXWwVPZDPC/qzv5SL1KPUXIjd5g63+yn6?=
+ =?iso-8859-1?Q?wLMbBvQNqDcYREej5P0T+Kh9n1SGOtL1ItXBXkDdKIrsM5Fl0HwpI6lL0R?=
+ =?iso-8859-1?Q?b3zRknaj3DZrCU1SOeiDtsCYmfi85kR65urVxoqkC+4G1blwi03LrLX4j/?=
+ =?iso-8859-1?Q?5xfgsUMXsCoeULiiw4/AAXJeTb/A6CB5no8dW1wb4LLySjDy7mtCQyyb5s?=
+ =?iso-8859-1?Q?7MNP1f3CDXqQAeCO0A8R9LicLB4vAxMuG22YQgCdC6VK4RRuuZeue97nMG?=
+ =?iso-8859-1?Q?645yP4z8z2kNJGkfTK66hSXILzJiDkyg3zLb5KyWgzXTKUMN5BkZzsrbNR?=
+ =?iso-8859-1?Q?FLhOiQRT3QwFaj8JjxQ7TvteglccGPjVQUTp5tu6J8JLpoPTqyAk6OylEd?=
+ =?iso-8859-1?Q?95thyUY4EhyI0JAB2X2bvY06ZmWo8rsSjZXFo2GErmjzWuR22md4g384KF?=
+ =?iso-8859-1?Q?Fa91AHqdic5y4Sb9Ms149ahLYLb5Abaf2JRS/cBX0Rhtz0PhyZ58?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92f950e7-1d03-4ac1-c866-08df0a952cb2
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 14:59:52.9338
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hR22GbP/K8lNtrwAzX1EypzoK/3Q4ZdUvR5YR/eXdlgbiioJOb/SPCmsE7S7Pr9bDvs2NJk8gkRDD2Vlqx9a9+m2DM5Rt9/GwIX2nAzwszQJVo0YHFlDVIHIigJsUUwy
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR04MB533468
 
-Hi Sashiko,
-
-On Thu, Sep 03, 2026 at 05:06:12PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Memory Protection Bypass / Privilege Escalation via Unconditional Stage-2 Write-Enable
-> - [High] Logic Error and EL2 Hypercall Argument Corruption due to flawed `nr_pages` calculation
-> - [High] Logical Inconsistency / State Desynchronization causing missed VCPU kicks and unexpected guest exits
-> - [Medium] Kernel preemption bug via `smp_processor_id()` in a preemptible context
+On Fri, Sep 04, 2026 at 09:39:55AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Permanent destruction of priv_dev_ctx's shared DMA buffer on late firmware response.
+> - [High] Leaked firmware session handles due to killable wait in `close()` aborting instantly on fatal signals.
+> - [High] Deadlock risk during PM suspend due to GFP_KERNEL allocation inside a required GFP_NOIO context.
 > --
-> 
-> commit 45c89e608abbd3e8f9c8b944b7e7d74478d5db12
-> Author: Alexandru Elisei <alexandru.elisei@arm.com>
-> Subject: KVM: arm64: Handle dirty page logging when SPE feature is set
-> 
-> This commit aims to avoid profiling blackout windows by preventing VCPU
-> execution when the SPE buffer is enabled and dirty page logging is active.
-> It introduces dirty logging synchronization constraints and automatic guest
-> exits for the KVM/ARM64 SPE implementation.
-> 
-> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > index 7c7d0616db53a..73f321b3ed2dc 100644
-> > --- a/arch/arm64/kvm/arm.c
-> > +++ b/arch/arm64/kvm/arm.c
-> > @@ -1172,6 +1172,15 @@ static int kvm_vcpu_suspend(struct kvm_vcpu *vcpu)
-> >  	return 1;
-> >  }
-> >  
-> > +static void kvm_vcpu_prepare_exit_fail_entry(struct kvm_vcpu *vcpu, u64 reason)
-> > +{
-> > +	struct kvm_run *run = vcpu->run;
-> > +
-> > +	run->exit_reason = KVM_EXIT_FAIL_ENTRY;
-> > +	run->fail_entry.hardware_entry_failure_reason = reason;
-> > +	run->fail_entry.cpu = smp_processor_id();
-> 
-> [Severity: Medium]
-> Is it safe to use smp_processor_id() here? This function is newly invoked by
-> check_vcpu_requests() when handling KVM_REQ_SPE_EXIT_DIRTY_LOGGING. Because
-> check_vcpu_requests() executes in the KVM run loop before preempt_disable()
-> is called, the context remains preemptible. This will trigger a kernel
-> warning if CONFIG_DEBUG_PREEMPT is enabled, and records an unreliable CPU ID
-> since the thread can migrate immediately afterward.
-
-That's true. For the SPE case, it doesn't matter, because the failure reason is
-dirty page logging being enabled for a memslot. For the unsupported CPU case it
-might matter, but in that case it's called with preemption disabled so the cpu
-ID is stable. I can call smp_processor_id() with preemption disabled, or have
-the caller supply a cpu id and an argument.
-
-I'll also update my testing configuration, to include CONFIG_DEBUG_PREEMPT. I
-think at some point I disabled the debug options because it was making Linux too
-slow and forgot to re-enable all of them.
-
-> 
+>
+> commit 8a8db094cff29d90b76f6889f2022ca7253f3ec8
+> Author: Pankaj Gupta <pankaj.gupta@nxp.com>
+>
+> firmware: imx: adds miscdev
+>
+> Adds the driver for communication interface to NXP secure-enclave hardware
+> via a character driver. Handles ABI, initialization, shared memory, and
+> restricted command forwarding.
+>
+> > diff --git a/drivers/firmware/imx/ele_base_msg.c b/drivers/firmware/imx/ele_base_msg.c
+> > --- a/drivers/firmware/imx/ele_base_msg.c
+> > +++ b/drivers/firmware/imx/ele_base_msg.c
 > [ ... ]
-> > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> > index b74dd5ce1efd3..07e43f607eae7 100644
-> > --- a/arch/arm64/kvm/hyp/pgtable.c
-> > +++ b/arch/arm64/kvm/hyp/pgtable.c
-> > @@ -1293,6 +1293,14 @@ int kvm_pgtable_stage2_wrprotect(struct kvm_pgtable *pgt, u64 addr, u64 size)
-> >  					KVM_PGTABLE_WALK_IGNORE_EAGAIN);
-> >  }
-> >  
-> > +int kvm_pgtable_stage2_write_enable(struct kvm_pgtable *pgt, u64 addr, u64 size)
-> > +{
-> > +	return stage2_update_leaf_attrs(pgt, addr, size,
-> > +					KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W, 0,
-> > +					NULL, NULL,
-> > +					KVM_PGTABLE_WALK_IGNORE_EAGAIN);
-> > +}
-> 
+> > @@ -121,9 +121,9 @@ int ele_get_info(struct se_if_priv *priv, struct ele_dev_info *s_info)
+> >  	get_info_len = ELE_GET_INFO_BUFF_SZ;
+> >  	if (priv->mem_pool) {
+> >  		ret = se_get_mem_pool_buf(priv->priv_dev_ctx, &get_info_data,
+> >  					  &get_info_addr, get_info_len);
+>
 > [Severity: High]
-> Can this lead to a memory protection bypass? By unconditionally adding the
-> KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W bit to all valid leaf PTEs, this doesn't
-> appear to validate if the underlying host memory mapping actually permits
-> writes. If a guest reads unallocated shared memory while dirty logging is on,
-> KVM maps the host's zero page as read-only at stage 2. Once dirty logging is
-> disabled, this blindly grants write access to it.
-
-This is called from kvm_arch_commit_memory_region() ->
-kvm_spe_remove_dirty_logging() only if the memslot is backed by guest_memfd and
-the memslot is not read-only. guest_memfd is a memory provider independent of
-the host mapping, and guest_memfd backed memory is always mapped as writable at
-stage 2.
-
-Also worth point out the check that kvm_remove_dirty_logging() performs:
-
-        if (!kvm_slot_has_gmem(slot) || (slot->flags & KVM_MEM_READONLY))
-                return;
-
-The read-only check is done for consistency with gmem_abort(), because KVM
-rejects the KVM_MEM_READONLY | KVM_MEM_GUEST_MEMFD combination of flags for a
-memslot.
-
-> 
+> Could this cause a system deadlock during PM suspend?
+>
+> The caller ele_get_info allocates its message buffers using GFP_NOIO
+> specifically to prevent direct reclaim from triggering I/O to a suspended
+> storage device. However, it relies on se_get_mem_pool_buf here, which
+> does a standard kernel allocation.
+>
 > [ ... ]
-> > diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
-> > index 8e4c6e4bec123..5ba2fa8010cc9 100644
-> > --- a/arch/arm64/kvm/pkvm.c
-> > +++ b/arch/arm64/kvm/pkvm.c
-> > @@ -488,6 +488,33 @@ int pkvm_pgtable_stage2_unmap(struct kvm_pgtable *pgt, u64 addr, u64 size)
-> >  	return __pkvm_pgtable_stage2_unshare(pgt, addr, addr + size);
-> >  }
-> >  
-> > +int pkvm_pgtable_stage2_write_enable(struct kvm_pgtable *pgt, u64 addr, u64 size)
-> > +{
+> > diff --git a/drivers/firmware/imx/ele_common.c b/drivers/firmware/imx/ele_common.c
+> > --- a/drivers/firmware/imx/ele_common.c
+> > +++ b/drivers/firmware/imx/ele_common.c
 > [ ... ]
-> > +	lockdep_assert_held(&kvm->mmu_lock);
-> > +	for_each_mapping_in_range_safe(pgt, addr, addr + size, mapping) {
-> > +		gfn = max(addr >> PAGE_SHIFT, mapping->gfn);
-> > +		nr_pages = min_t(u64, end_gfn - gfn, mapping->nr_pages);
-> 
+> > @@ -342,6 +342,7 @@ int ele_msg_rcv(struct se_if_device_ctx *dev_ctx, struct se_clbk_handle *se_clbk
+> >  				if (se_clbk_hdl->rx_msg) {
+> >  					/*
+> >  					 * The enclave may still DMA into this
+> >  					 * buffer (either a normal timeout or
+> >  					 * a teardown complete_all() wakeup).
+> >  					 * Quarantine the buffer and arm the
+> >  					 * circuit breaker unconditionally.
+> >  					 */
+> >  					se_clbk_hdl->rx_msg = NULL;
+> >  					se_mark_fw_busy(dev_ctx);
+> >  				}
+> >  				spin_unlock_irqrestore(&se_clbk_hdl->clbk_rx_lock, flags);
+> >  			}
+> >  			break;
+>
 > [Severity: High]
-> Does this calculation span past the end of the mapping? If the requested
-> address starts in the middle of an existing mapping, gfn is offset from
-> mapping->gfn. Because the offset isn't subtracted from mapping->nr_pages,
-> the EL1 host passes an out-of-bounds nr_pages to the EL2 hypervisor. This
-> could cause the hypercall to fail or inadvertently write-enable pages beyond
-> the intended mapping.
-
-Did I get the math wrong? Yes, I did.
-
-> 
-> > +		ret = kvm_call_hyp_nvhe(__pkvm_host_write_enable_guest, handle, gfn,
-> > +					nr_pages);
-> > +		if (WARN_ON(ret))
-> > +			break;
-> > +	}
-> > +
-> > +	return ret;
-> > +}
-> 
+> Does this instantly abort the wait and arm the circuit breaker if a fatal
+> signal like SIGKILL is pending?
+>
+> By breaking out early, it immediately marks the firmware as busy.
+>
 > [ ... ]
-> > diff --git a/arch/arm64/kvm/spe.c b/arch/arm64/kvm/spe.c
-> > index e5f3d0dea7c54..f3310465f40eb 100644
-> > --- a/arch/arm64/kvm/spe.c
-> > +++ b/arch/arm64/kvm/spe.c
+> > diff --git a/drivers/firmware/imx/se_ctrl.c b/drivers/firmware/imx/se_ctrl.c
+> > --- a/drivers/firmware/imx/se_ctrl.c
+> > +++ b/drivers/firmware/imx/se_ctrl.c
 > [ ... ]
-> > +void kvm_spe_add_dirty_logging(struct kvm *kvm, const struct kvm_memory_slot *slot)
-> > +{
-> > +	struct kvm_vcpu *vcpu;
-> > +	unsigned long i;
-> > +
-> > +	lockdep_assert_held(&kvm->slots_lock);
-> > +
-> > +	/*
-> > +	 * No point in handling a regular memslot, because they cannot guarantee
-> > +	 * that memory remains mapped at stage 2.
-> > +	 *
-> > +	 * Memory described by a read-only memslot is always read-only, so SPE
-> > +	 * cannot write to it anyway.
-> > +	 */
-> > +	if (!kvm_slot_has_gmem(slot) || (slot->flags & KVM_MEM_READONLY))
-> > +		return;
-> 
+> > @@ -406,6 +406,12 @@ static void cleanup_se_shared_mem(struct se_if_device_ctx *dev_ctx, bool recla
+> >  	if (free_dma_buf) {
+> >  		dma_free_coherent(priv->dev, MAX_DATA_SIZE_PER_USER,
+> >  				  se_shared_mem_mgmt->non_secure_mem.ptr,
+> >  				  se_shared_mem_mgmt->non_secure_mem.dma_addr);
+> >  	}
+> >
+> >  	/*
+> >  	 * Drop the host-side tracking unconditionally. On the reclaim path the
+> >  	 * buffer has been freed. On the deliberate-leak path the buffer is
+> >  	 * abandoned on purpose, so clearing the pointer here guarantees a later
+> >  	 * cleanup pass (e.g. se_if_priv_release()) cannot double-free it.
+> >  	 */
+> >  	se_shared_mem_mgmt->non_secure_mem.ptr = NULL;
+> >  	se_shared_mem_mgmt->non_secure_mem.dma_addr = 0;
+> >  	se_shared_mem_mgmt->non_secure_mem.size = 0;
+>
 > [Severity: High]
-> Does this cause unexpected guest exits and missed VCPU kicks for regular
-> memslots? Here in kvm_spe_add_dirty_logging(), regular memslots are skipped,
-> so running VCPUs aren't kicked when dirty logging starts.
-
-The comment says it all.
-
-> 
-> > +
-> > +	kvm_for_each_vcpu(i, vcpu, kvm) {
-> > +		if (!vcpu_has_spe(vcpu))
-> > +			continue;
-> > +		kvm_make_request(KVM_REQ_SPE_HANDLE_DIRTY_LOGGING, vcpu);
-> > +		if (vcpu_has_run_once(vcpu))
-> > +			__kvm_vcpu_kick(vcpu, true);
-> > +	}
-> > +}
-> > +
-> > +void kvm_spe_remove_dirty_logging(struct kvm *kvm, const struct kvm_memory_slot *slot)
-> > +{
-> > +	phys_addr_t start, end;
-> > +	struct kvm_vcpu *vcpu;
-> > +	unsigned long i;
-> > +
-> > +	lockdep_assert_held(&kvm->slots_lock);
-> > +
-> > +	if (!kvm_slot_has_gmem(slot) || (slot->flags & KVM_MEM_READONLY))
-> > +		return;
-> > +
-> > +	kvm_for_each_vcpu(i, vcpu, kvm) {
-> > +		/*
-> > +		 * Write-enabling an entire memslot can be expensive, do it only
-> > +		 * if the VM has SPE.
-> > +		 */
-> > +		if (vcpu_has_spe(vcpu)) {
-> > +			start = slot->base_gfn << PAGE_SHIFT;
-> > +			end = (slot->base_gfn + slot->npages) << PAGE_SHIFT;
-> > +
-> > +			write_lock(&kvm->mmu_lock);
-> > +			kvm_stage2_write_enable_range(&kvm->arch.mmu, start, end);
-> 
+> Are we unconditionally destroying the DMA buffer state here?
+>
+> Even when reclaim is false, the size and pointers are zeroed out.
+> If this is called for priv_dev_ctx (which has no open/close cycle to
+> reallocate it), the persistent DMA buffer becomes permanently unusable.
+>
+> [ ... ]
+> > @@ -1149,6 +1149,7 @@ static void se_clear_fw_busy(struct se_if_priv *priv)
+> >  			/*
+> >  			 * Late response arrived after going_away is clear.
+> >  			 * fw_busy has already been cleared atomically above;
+> >  			 * reclaim the shared-memory slot now. For priv_dev_ctx
+> >  			 * this is the only reclaim site (no close() path). For
+> >  			 * userspace contexts cleanup_se_shared_mem() is a
+> >  			 * safe no-op if the close() path already reset pos.
+> >  			 */
+> >  			cleanup_se_shared_mem(dev_ctx, true);
+>
 > [Severity: High]
-> Does this blindly write-enable the entire shared stage-2 memslot? Combined
-> with the unconditional KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W addition in
-> kvm_pgtable_stage2_write_enable(), this allows a malicious guest to gain write
-> access to read-only host memory (like the global shared zero page) if it
-> was previously mapped as read-only.
-
-See above.
-
-> 
-> > +			write_unlock(&kvm->mmu_lock);
-> > +			kvm_flush_remote_tlbs_memslot(kvm, slot);
-> > +			return;
-> > +		}
-> > +	}
-> > +}
-> > +
-> > +static bool kvm_spe_should_exit_dirty_logging(struct kvm_vcpu *vcpu)
-> > +{
-> > +	struct kvm *kvm = vcpu->kvm;
-> > +	u64 pmblimitr, pmbsr;
-> > +
-> > +	if (!atomic_read(&kvm->nr_memslots_dirty_logging))
-> > +		return false;
-> 
+> Can this permanently break internal firmware communications for priv_dev_ctx?
+>
+> If an internal command times out, priv_dev_ctx is set as the busy context.
+> When a late response arrives, se_clear_fw_busy runs and calls
+> cleanup_se_shared_mem with reclaim=true.
+>
+> Because cleanup_se_shared_mem zeros out the DMA pointer and size, the
+> permanent DMA buffer used by priv_dev_ctx is destroyed, breaking subsequent
+> operations like system suspend or firmware loading.
+>
+> [ ... ]
+> > @@ -1331,6 +1331,10 @@ static void cleanup_dev_ctx(struct se_if_device_ctx *dev_ctx, bool is_fclose)
+> >  				struct se_if_device_ctx *tx_ctx = is_fclose ? dev_ctx :
+> >  							dev_ctx->priv->priv_dev_ctx;
+> >
+> >  				if (dev_ctx->strg_hdl && se_close_storage(tx_ctx,
+> >  									  dev_ctx->strg_hdl))
+> >  					dev_err(dev_ctx->priv->dev, "failed to close storage.\n");
+> >  				if (dev_ctx->sess_hdl && se_close_session(tx_ctx,
+> >  									  dev_ctx->sess_hdl))
+> >  					dev_err(dev_ctx->priv->dev, "failed to close session.\n");
+>
 > [Severity: High]
-> Because regular memslots were skipped in kvm_spe_add_dirty_logging(), they
-> weren't protected. However, this check relies on the global
-> nr_memslots_dirty_logging counter, which increments for all memslots.
-> Could this mismatch cause unexpected guest exits when a VM enables standard
-> dirty logging (e.g., VGA framebuffers) while utilizing SPE?
+> Will this skip sending the session close command and leak the firmware session
+> handle if the killable wait aborted instantly above?
+>
+> Because ele_msg_send_rcv returns -EBUSY immediately if the circuit breaker
+> was armed by a SIGKILL interrupt, se_close_storage fails instantly. The
+> subsequent call to se_close_session is then also skipped due to the busy
+> firmware path.
+>
+> An unprivileged user could trigger this leak by opening a session and
+> sending SIGKILL to their own process, permanently exhausting hardware enclave
+> resources.
+>
+> [ ... ]
+> > @@ -2145,6 +2145,8 @@ int se_get_mem_pool_buf(struct se_if_device_ctx *dev_ctx, void **buf,
+> >  	if (se_is_fw_busy_ctx(dev_ctx))
+> >  		return -EBUSY;
+> >
+> >  	b_desc = kzalloc_obj(*b_desc);
+> >  	if (!b_desc)
+> >  		return -ENOMEM;
+>
+> [Severity: High]
+> Does this kzalloc_obj allocation violate the GFP_NOIO context required by
+> ele_get_info during suspend?
+>
+> The kzalloc_obj macro implicitly uses GFP_KERNEL, which can trigger direct
+> memory reclaim. Since the storage device may already be suspended, flushing
+> dirty pages to it will lead to an unrecoverable system deadlock.
 
-Yes, it can. On the other hand, why would anyone enable dirty page logging for a
-memslot if they are not planning to do migration, which requires all memslots to
-have dirty page logging enabled?
+In suspend function, call pair.
 
-I would rather know first if dirty page logging for SPE enabled VMs is actually
-worth enabling before thinking of such edge cases.
+memalloc_noio_save() / memalloc_noio_restore() can fix this problem
 
-Thanks,
-Alex
+Frank
 
-> 
-> > +
-> > +	pmblimitr = __vcpu_sys_reg(vcpu, PMBLIMITR_EL1);
-> > +	pmbsr = __vcpu_sys_reg(vcpu, PMBSR_EL1);
-> > +
-> > +	return FIELD_GET(PMBLIMITR_EL1_E, pmblimitr) && !FIELD_GET(PMBSR_EL1_S, pmbsr);
-> > +}
-> 
-> -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260903160623.315525-1-alexandru.elisei@arm.com?part=27
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260904-imx-se-if-v48-0-dad90eec7eaf@nxp.com?part=5
