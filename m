@@ -1,114 +1,151 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18B647F77E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 12:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1EE33688F;
+	Fri,  4 Sep 2026 13:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788526682; cv=none; b=a2T6/C1kBGjXQf0aRy9CYZT8/Bhu6g7auWGEFUVQFxl9r7q03uGlckLjeDKklek+o+SiQh3Zs+tcgc0ZRbCHA700I/YEyXFKj+zufLPvEJX4jWtsZK29VL3kaIW2BqCB51+3uyErW9mQS5dvE9lnFYeCbOh6Km6wwUiXieZI6tc=
+	t=1788527433; cv=none; b=rY8c2LD3UY+69OHO4lwyA1p1uv1WQwvLMfFdT9D1UPcXiu1s1M8bZtCSgxr6XBpHp78pWfOuXN7m/0lVltNz/AiD5kqxJnrqp3HMTcpmKXSvl0XaTRFA6BAnzOiT8h9xwerTyn+7YORvZBcHH4yiXhzSLOiaGiG2MxNal9eTr7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788526682; c=relaxed/simple;
-	bh=/u7yvYvbT44iz4P3NSPmATvikZpCTdXLDwh+z6TVtbo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ZyHAHWeiZe4YvP+IG1+xnClb4CHAtqRmB86vbbpYohannieB+3tcKOciWrmjB7WknxIA7eLVKiZPP6vd5NISz/3h7lMCU28EzCRrGKX5iJRVnPs4UWrFNhhyJwUi0gLYzCRg+Tn3+Z2Xh+wQQEgd3mJEFEnZ5W6Ee4aMgz2Q6dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nA/+fYo+; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788527433; c=relaxed/simple;
+	bh=nTlrgklH3mOCPm7MrDgW4DDeHFvc7uvuyCOMTWxTzcY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TM5a4+yB7FwnLCUwn8QRgY4OgG6ry3+FTVS+8mjH2PlgZGcwi40eGrTAFCHH9aKjhQ2N+1SSGz5dyWR/vpXXQSirrPTzJZF3EUrYy+NsWt4oVLEZ1a/6QCZ1Qln/tCDIggo5EoMwOUZtO76T3EOehVPATqJSjThw6pP555wNjf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IHelGb+P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nA/+fYo+"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so1000976a91.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 05:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788526680; x=1789131480; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=a8cAPX0qoNPrh55TaKC4p5HikxGn38nOetRwDMVXORs=;
-        b=nA/+fYo+1XB2t55cvQaqHBCTY4ElTLYPIQXMQrUIjEudDwk0tWMYaY2Oc7bz4NDNGY
-         11qeI++l6gxgfwKLytvKeCdspz+MdmB0/lrmSPqc2ckpOrDx8dj/U8Vpmnr5Tkvlk9vr
-         4rdIFGvUtcSI584aFrls+m1ss/78c2anYZMnl6i5DFHaMiPglIedRXfGGCeVeZp7gXlN
-         NkV5ej34lH56tOQMVu5xCKd1wEDruHoYP+QI2R5TLFWjOJ3X4flxpUHMWkA1QkcOdKTl
-         007P6GZ9m6OLff47QSVZj8pr5hSIMGLGwTD9wqQUcmtKucwOlh+009XvppONLkZW73EE
-         WX/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788526680; x=1789131480;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=a8cAPX0qoNPrh55TaKC4p5HikxGn38nOetRwDMVXORs=;
-        b=PT+kOY4vQufZ9SWcWfWaJzpb1bLy2fv1MqIh6PP+cyLMN6yffaDVRyJbWcKCnUdpjH
-         uKt/92xbqgtAHUwEioKQATZvKmHJAfTx/hcPsLTmt8JA7kzyg9nbkxwmiqHKFKqMk/2q
-         /vUWM4VuSCJWhAkvCRenqE/u98yoN4/LUXtJRJ/q9MGJz3Sap/tmSS/LicRY+oFe0zru
-         wlGfYvIk/UiSONv3D98D4er4407au0We0weu29TxKfOOwoZ/cqM1robU9Byxiyb+v+Mv
-         CA/lSAtJtqToIENS/a56D7hEOyzN/mMl7lHsws8DNdZzhK8jlOIf19vhQqW59GEn/Dqf
-         zF0Q==
-X-Forwarded-Encrypted: i=1; AKwUvBxJvrBqO1JOTsJ2evucbCkfKp/TnFlCQQ73EF4O6DKiWWYP2GTonug0FtCai5k+7ZDPvpFpOYHiBMJc7IZHuu4=@lists.linux.dev
-X-Gm-Message-State: AFuF++mflNhp4Bp1UTj7NCfNQDUZcGHFU7EIpFmWMTVQrcEInPm1e/dp
-	9GAf1N9MAQ3AcTNNVekpOVLJjBNBGCpFkqi6f+qxpwcEzlw3+wl+bdHw
-X-Gm-Gg: AYBFou1A3x6lowS1ta+YlFfwjNXdzEJNsK7DpzQvAg2/TKKzJpRHW2yxoExie/DIq4h
-	y5NnM+0+E9POE/P2T6xQXSN0H4rujsANelW8UVoA06XhqAm1ReiPLjCRuMNaVQsmsQHreKDsUs6
-	Z1qmJh0jEl2cFgCxKjMQ7ezVcYH4iYbQahlbs5sBmh6cmqbMQmWHDse4tKfE28h883J91pg6FVz
-	tGUYml4ZOnLUDGLUPpGe/TlUyeGWbK7ik80/RGrIfG+PzniJ8CjoaPKoInQ7wpQZ4ww7Q59nJwr
-	WTx70MBHJi6FvALndV5K9FVyMJIsYQ4rdncRe/XEG+HkX2Si0nhG7xCY8cVe6lJYQcjzgM3QmsB
-	b7CiOZiRNubcihgNSn16q9t18yXT5RcerT+NixwmZUES46MZh5sw04lvSmTAM4FxsZn6fQfgjRs
-	RnuWNHlnKEe+FDz2B1d5SBCZ+5ZMaAzfoX78lKwKvQsmgUzbzkwXXFF+V73c46+aLmbQ==
-X-Received: by 2002:a17:90b:5866:b0:398:e73e:5a13 with SMTP id 98e67ed59e1d1-39b2613272amr8567041a91.9.1788526680063;
-        Fri, 04 Sep 2026 05:58:00 -0700 (PDT)
-Received: from [192.168.71.146] ([240e:b8f:91e2:d400:ec2a:b15e:fef8:70a])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08c39451sm10720102a91.7.2026.09.04.05.57.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 05:57:59 -0700 (PDT)
-From: Liang Haowen <nbg2974@gmail.com>
-To: Lee Jones <lee@kernel.org>
-Cc: linux-leds@vger.kernel.org, linux-scsi@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH RFC v2 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
- driver for ROG NVMe enclosures
-Date: Fri, 04 Sep 2026 20:45:00 +0800
-Message-ID: <202609042045.ReplyLee.lhw@gmail.com>
-In-Reply-To: <20260903161357.GX2133376@google.com>
-References: <202609012200.RFC0.lhw@gmail.com>
- <202609012200.RFC1.lhw@gmail.com> <202609032000.RFCv2-0.lhw@gmail.com>
- <202609032000.RFCv2-1.lhw@gmail.com>
- <20260901145204.2BF551F000E9@smtp.kernel.org>
- <20260903161357.GX2133376@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IHelGb+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D8D1F00A3E;
+	Fri,  4 Sep 2026 13:10:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788527429;
+	bh=BQGLMLQqG3+zMRdgVBKK1hPMCfuJAweCf+DWNkXjcWQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IHelGb+PESLuWcft276tpaqlLrn4YTYOEs5B4e6UgD/cKdFDbOGMYNhf70xSH5Qqt
+	 Y0gBjRjj+T1d5t++D2UOmHuflB5cx5Vx9ylw1MLTMVrIx/hc0Ru1JgKcKpVRzWz71I
+	 uiPwjLbgkSqQrRX0BvBHuT2LNBJrEZoEHYMfW8ATQ9mUX2SaYRKd8sbB8DEj6KJ8/5
+	 IkYxSyMljDc47Q/ZX+/Gv24c5rFlVCBgyVcCfvFka9r2IicvyIDCQplvZfLMfFe4SE
+	 UY+g5dac68A5NRmHFu7Sfh7bn8InAp1Pfio7rqpL6eS5DShJ5F6v9Kg4FJbYsvZSpc
+	 qI9/ViXZoWA4g==
+Date: Fri, 4 Sep 2026 15:10:25 +0200
+From: Benjamin Tissoires <bentiss@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Subject: Re: [PATCH 2/3] HID: bpf: fix __hid_bpf_hw_check_params report length
+Message-ID: <aprC2jF63o7xADjX@beelink>
+References: <20260904-wip-bpf-check_report-v1-0-efe9a2a1ed28@kernel.org>
+ <20260904-wip-bpf-check_report-v1-2-efe9a2a1ed28@kernel.org>
+ <20260904130354.A79471F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260904130354.A79471F00A3D@smtp.kernel.org>
 
-On Thu, 3 Sep 2026, Lee Jones wrote:
-> Please review, explain or fix the Sashiko review(s).
+On Sep 04 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] The logic to reserve an extra byte for the report ID incorrectly checks `report_enum->numbered == 0` instead of `report->id == 0`, leading to buffer truncation for unnumbered reports on devices that also declare numbered reports.
+> 
+> Pre-existing issues:
+> - [High] An integer sign mismatch in `hid_bpf_hw_request` causes negative error codes returned by the transport driver to be cast to `size_t` and evaluated as large positive values, incorrectly converting hardware errors into a 'success' return value.
+> --
+> 
+> commit 2abe2f741986f5f3130a3dadda6bf82df9cbea21
+> Author: Benjamin Tissoires <bentiss@kernel.org>
+> 
+> HID: bpf: fix __hid_bpf_hw_check_params report length
+>     
+> This patch modifies __hid_bpf_hw_check_params to reserve an extra byte for
+> the report ID during hardware requests on unnumbered reports. This ensures
+> transport drivers do not strip the first byte of the payload and reject the
+> request due to insufficient buffer size.
+> 
+> > diff --git a/drivers/hid/bpf/hid_bpf_dispatch.c b/drivers/hid/bpf/hid_bpf_dispatch.c
+> > index 536f6d01fd14c..b1de1dd0f21d0 100644
+> > --- a/drivers/hid/bpf/hid_bpf_dispatch.c
+> > +++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+> [ ... ]
+> > @@ -388,6 +388,10 @@ __hid_bpf_hw_check_params(struct hid_bpf_ctx *ctx, __u8 *buf, size_t *buf__sz,
+> >  
+> >  	report_len = hid_report_len(report);
+> >  
+> > +	/* unnumbered reports need to have a report ID reserved in the first byte */
+> > +	if (hw_request && report_enum->numbered == 0)
+> > +		report_len += 1;
+> > +
+> 
+> [Severity: Medium]
+> Does this correctly handle devices that declare both unnumbered and numbered
+> reports?
+> 
+> If a non-compliant HID device declares an unnumbered report where the report
+> ID is 0, but also declares other numbered reports, report_enum->numbered
+> will be set to 1.
 
-Fixed, fixed, fixed, false positive, false positive:
+Sashiko is wrong here. If a HID device declares a device with a report
+ID of 0, the report will be tagged as numbered. The report *will* have
+space for the report ID, and so there won't be any issues.
 
-- [High] empty work run writing flash: real. The work now snapshots
-  the dirty mask up front and returns before issuing any SCSI command
-  when nothing is pending.
+> 
+> When a BPF program attempts a hardware request for the unnumbered report on
+> such a device, the report_enum->numbered == 0 check will evaluate to false
+> and skip the +1 padding. The BPF-provided buffer size is then clamped, but
+> the transport driver will still strip the first byte before transmission,
+> leading to buffer truncation.
+> 
+> Would it be safer to check if report->id == 0 instead?
+> 
+> >  	if (*buf__sz > report_len)
+> >  		*buf__sz = report_len;
+> >  
+> [ ... ]
+> > @@ -420,7 +424,7 @@ hid_bpf_hw_request(struct hid_bpf_ctx *ctx, __u8 *buf, size_t buf__sz,
+> >  		return -EDEADLOCK;
+> >  
+> >  	/* check arguments */
+> > -	ret = __hid_bpf_hw_check_params(ctx, buf, &size, rtype);
+> > +	ret = __hid_bpf_hw_check_params(ctx, buf, &size, rtype, true);
+> >  	if (ret)
+> >  		return ret;
+> >  
+> 
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential integer sign mismatch
+> in hid_bpf_hw_request involving the size variable passed here.
+> 
+> In hid_bpf_hw_request, size is defined as a size_t, while ret is an int.
+> Later in the function, after hid_hw_raw_request returns its status into ret,
+> the code checks:
+> 
+>     if (ret > size)
+>         ret = size;
+>     if (ret > 0)
+>         memcpy(buf, dma_data, ret);
+> 
+> If a transport driver encounters a hardware error and returns a negative
+> error code such as -EPIPE, ret is implicitly promoted to size_t when compared
+> against size. This causes the negative error code to evaluate as a large
+> positive number, making the (ret > size) condition true.
+> 
+> This silently converts the hardware error into a success return value and
+> copies the unmodified buffer back, which could leave BPF programs operating
+> on uninitialized or stale data.
+> 
+> Can this be addressed by casting size to an ssize_t during the comparison, or
+> by handling negative values in ret before the comparison?
 
-- [Medium] name collision between enclosures: real. With the static
-  name the LED core would register a second enclosure's LEDs under
-  renamed nodes (led0_1) rather than fail, which is still the wrong
-  device identity. Names now include the sdev's H:C:T:L, which is
-  unique per enclosure.
+Damn, this one seems correct.
 
-- [Medium] colour write vs dirty bit ordering: real on weakly ordered
-  architectures. A per-zone spinlock now covers the colour cache and
-  the mask on both sides.
+Cheers,
+Benjamin
 
-- [Low] blk_rq_map_kern() argument count: false positive. The current
-  signature is (rq, buf, len, gfp); drivers/scsi/scsi_lib.c calls it
-  exactly this way from scsi_execute_cmd().
-
-- [Low] kzalloc_obj(): false positive. It is in include/linux/slab.h
-  since v7.0.
-
-v3 with the three fixes follows. One question in its cover letter:
-whether deferring the Kconfig/Makefile/MAINTAINERS wiring to the
-agreed SCSI split is acceptable for the RFC stage.
-
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260904-wip-bpf-check_report-v1-0-efe9a2a1ed28@kernel.org?part=2
+> 
