@@ -1,67 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51993361944
-	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 01:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC1C131E49
+	for <sashiko-reviews@lists.linux.dev>; Fri,  4 Sep 2026 01:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788485756; cv=fail; b=qqmkhj8YiK9kfrQPCuV/BqTQ63FrkVZPktP7l88xa9IlQAUJ0TqZp8m+RmXA1rT0d0wXv8acOOsPyy+Xp7/lqgPiYx7O/NqkXQia0Tlk1YIPgt0IQAoGF0/J1JcUnsWAW2LRSe1Z6DSzV4ovaKaUdzdKwnJtrBlEi94Wx9iIZ0w=
+	t=1788486111; cv=fail; b=Ssb0jqUGblJOy5GRcN553HYT+egT0ZN1WZERwdAqxlKyjepfA9DFoRg+9eNHuik4qHXmQUmwHzsvTz5NVSjDgQBtCKoghI+JPUxdbX0X2PFT4aR+Iq6hFzzMSBLS3650NT8k3tIlm3zi5azspW8U2hY2bBIIeeewqn4lPKslJpo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788485756; c=relaxed/simple;
-	bh=jn3LqFBcCtfe0BZHPvoWxsfaUzZB4oIcFmo6u8v7bDY=;
+	s=arc-20240116; t=1788486111; c=relaxed/simple;
+	bh=txJQx2XiWNYa81BDBJCSJ0dJjiCn+Gz8ipMzeoBE1s0=;
 	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Qd2GEhnf7QoDoK4ibHRBqap5Tnr4MuwWumY6ODRdNBYy+ERo59K7gbQ3RR1BNbjfJSxoFTgcB+qaHWDnjHdsiQZLp5rFU0JiZrIL73WI+UoVP4V7wqaTm+eeYzEBbg6ejKW98yex1oqTkgA/hgzy6RaPPT0oldnJpQgeEK8+cf0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kmILtJS7; arc=fail smtp.client-ip=192.198.163.11
+	 Content-Disposition:In-Reply-To:MIME-Version; b=nGdxbNqE7pQI2TFvbEXr9c2y1fitGLjePPq20aMAiuAXE1k1gcCVTKyOZk8KOxDCkC0RvozHIWkWXlH3LxCm1c8800DBIbzVzmcxwT5hk2x6LUQ4fxLZpJjFrB0gVHKJ/1I8hVOtkXlYSqzDhVHKaE+AiGtpXnex+2iekYTWJJc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LHKW1feG; arc=fail smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kmILtJS7"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LHKW1feG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788485755; x=1820021755;
+  t=1788486109; x=1820022109;
   h=date:from:to:cc:subject:message-id:references:
    content-transfer-encoding:in-reply-to:mime-version;
-  bh=jn3LqFBcCtfe0BZHPvoWxsfaUzZB4oIcFmo6u8v7bDY=;
-  b=kmILtJS7nM6NvZGiC6SgC92Pt4LC80OR7PKvDP3/ym+81ZEJS5+4jqJ3
-   LPli6zFedRZiDReEAXGv4YT0X7hgvQj+u0dBCFxNuR7IKzromOmfywxM7
-   eeSHVb1yQXfhVqP8i4duHH21hYs/j+VwsjO5hX3vM/4B5eNDrP5/M9PMO
-   LGtLiIXavTagvJSEqXBMm/VLZO5hp82oPQZ/PVC2iaL1NAGoDNJMxF+5g
-   SbuCS0YCbxLUvqhTu/MEbH5wV6HXhDD+sND7Tg03SJTserPqOdTgiRsJt
-   MEm1wKPxtkOAtQ1j5pvBgxze+ymF6UiXF+5sIIKa8z0qr55AsGOXM0FNX
-   g==;
-X-CSE-ConnectionGUID: oTkd/HpSTUGb/QhD9IA1dQ==
-X-CSE-MsgGUID: UjX3+8aRS0CdzM+gQJCsfA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="99579978"
+  bh=txJQx2XiWNYa81BDBJCSJ0dJjiCn+Gz8ipMzeoBE1s0=;
+  b=LHKW1feGH6yPaJP1tSpJ3uSwi3qj3s9XDAkIqUhLEX4yZzQP9MkxIYAh
+   32T+gNEgoKj6qPVPIOYOKC2Qs8Ls969KUkEy2n2L/wNF9Ypw7+Z+hzi5R
+   kc0+fhwnMVcn4k6lWzCYLxKZtXsXRdv3FVIBTW4ZRBWiDA+B3yJqsTYEl
+   dOdl+75ZkkQTitS/wdNET0EpbU5na+4ESIeyNt3mTADZK3pQdX0UwPOO2
+   8V33sB42EVV8S4Ezu9v74io0OkGa0nXNWjb6my1UtPr1gjjKNoudOj/Hn
+   Ug0LzzedFn17FWpFCCkLrJEgKF2/JTEfGCcIFrg4uwiApojB+lE5fPvT3
+   Q==;
+X-CSE-ConnectionGUID: +FsVSOIDR/qftz8AR6SqJA==
+X-CSE-MsgGUID: CyeJ6CCTRDmd49LOi8KJpw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="89018334"
 X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="99579978"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 18:35:54 -0700
-X-CSE-ConnectionGUID: G7047E5lSE+Bc1AXr7+6cg==
-X-CSE-MsgGUID: P37t+1UaRbuUp1AgwEKR+w==
+   d="scan'208";a="89018334"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 18:41:48 -0700
+X-CSE-ConnectionGUID: kTpvfmIORHO34gZsjR3gug==
+X-CSE-MsgGUID: 3IUvJuCiSgGx7ais3VM74A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,260,1779174000"; 
-   d="scan'208";a="266650013"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 18:35:54 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+   d="scan'208";a="263703718"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2026 18:41:48 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 18:35:54 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ 15.2.2562.46; Thu, 3 Sep 2026 18:41:48 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 18:35:54 -0700
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.55) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ 15.2.2562.46 via Frontend Transport; Thu, 3 Sep 2026 18:41:48 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.27) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 3 Sep 2026 18:35:53 -0700
+ 15.2.2562.46; Thu, 3 Sep 2026 18:41:48 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vCAKAUCaxzUJXh7O3zDyt0gSwTkbX3OFKpaCp5GI5Q2nhIOJaul+2kJawPyqqHa2qLPshL9fjqbL+LUBgscDawqwXplBalaDXZET67Qs0YhbJK3wg7N0N0h5g/OJ9nRcBScZ1UyhjnwZfddf8GfnXR21/F/Tn3UOQMqc+EkkG3mCQ8AbbRmgjSaCLfOj24QJi4FUh64Od5GPN3IibmcUjq4+7Artw7nA5N1X+4nCPH9wRFTOoRuwzvo1e2PzyFf3lzCk/l2U71JlSPLS5/gi03/V3i+/WtQXIsrtNj272BbLk35fywYuKaMajye30WqaP3mKhccKvv7X918GdhOdwA==
+ b=tk4sAwXwf4UZfeqI2WbCh+N7EJQlJuEPP3imuYnEktr/hTOA/YeMESgUJ05ilFmRIC2iHJfVyeA/lzTaQgYZHUhttonXqjkzw5fytEGF2Wkl5u2/iFoOQ4AVKc6YMdaUTGrzVaTbn9AP1Sz1A1vyEKukNGUKw0W1i71O77IHEjS1qdSDWlfzsi5rbsZ90hKJ4CW3hFjo4j6lRKj33yZQkLI9J1cHdUqX/z00hUTUsI4YHLBOiqwV4u1iYHwScZpDHTyliUp8U7136D/GVSXFjKRwRuMsj7laIX7+Mt6gFWyLt2MZN/whIaHwV5cbmzgpHwbEqM/X2JOQgzKNUP7TZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wahli05s8D9DF8nfUTK2NgXlrwE2YJaju2m2GIGxeOE=;
- b=nWi9hfi3KXq4+JcIEBCJV95cju8pS8kMAnHZByIo3S3KU4F56k8fcQpTu5vZ6tC7XPYw7B73VyZwxKDBYu5OO9VJ0i0CHD44qnZ3P9kP182NIP1gTlc+gceAH4z4t2FcbTJU3i4oLdwzpyF7A/+3wIR9xlJFPTblUV3pasPBuJGu9egCS0734cFxm/ZQp4HOAiItPDYOfRs0JWlyfmNsvoxIBEmFPFh2/64eEA8r1PkQG4FixQlfzUJixcr7Ar2vpYKPVfauNnzv0/jiMeelRbuw4OzNtHHbUYryI2SvBTfvGgQ08HB+JrXFt5jggnMmXaDk/CwJXlCS60WBCXt0Yg==
+ bh=wPJIXBHcCcZm/1X7YiU1UBcew2ST423BzLXEEClcyqQ=;
+ b=E1nBBPqlxSvce4AyQOqRTWFghrAsqJD8ZNqhk/e+Cct73DLGQ7zW7I74/G0YUE1XbeRUjx4CJ0gYlfbEeMiCHBJ+XVPSi2h33GUOMGCiJLFIIMPJuZKaA6ZjEfLuNdUpG+pZKri4lDoEmCUjR4e7q23s4Hk6HBg1/SJLSlJQAm6M2MF50U9NTD8mQ2daWUJtKKh+T0Riys+jUUwszg+Zz24T/Az/n/DV1o1i2rBl+BHu26rUr/iVrzzYQ7Sbv8piAb+TUhCo5q8rxpMo6DyOav+VKgXW3qUmc8ai54/5+KLDGfnNR2GvgtAsM+CiWIji10mlqe3SexsUVOlgZazP4w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -71,27 +71,27 @@ Received: from PH7PR11MB6522.namprd11.prod.outlook.com (2603:10b6:510:212::12)
  by IA4PR11MB8942.namprd11.prod.outlook.com (2603:10b6:208:56b::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 01:35:47 +0000
+ 2026 01:41:45 +0000
 Received: from PH7PR11MB6522.namprd11.prod.outlook.com
  ([fe80::e0c5:6cd8:6e67:dc0c]) by PH7PR11MB6522.namprd11.prod.outlook.com
  ([fe80::e0c5:6cd8:6e67:dc0c%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 01:35:40 +0000
-Date: Thu, 3 Sep 2026 18:35:38 -0700
+ 01:41:45 +0000
+Date: Thu, 3 Sep 2026 18:41:42 -0700
 From: Matthew Brost <matthew.brost@intel.com>
 To: <sashiko-reviews@lists.linux.dev>
 CC: <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v4 20/25] drm/xe: Add ULLS migration job support to
- migration layer
-Message-ID: <apogar9I32DNeIU8@gsse-cloud1.jf.intel.com>
+Subject: Re: [PATCH v4 22/25] drm/xe: Add ULLS migration job support to GuC
+ submission
+Message-ID: <apoh1jwRR1jd5395@gsse-cloud1.jf.intel.com>
 References: <20260903235842.3401722-1-matthew.brost@intel.com>
- <20260903235842.3401722-21-matthew.brost@intel.com>
- <20260904002720.958281F00A3D@smtp.kernel.org>
+ <20260903235842.3401722-23-matthew.brost@intel.com>
+ <20260904003837.BD1D71F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904002720.958281F00A3D@smtp.kernel.org>
-X-ClientProxiedBy: MW4PR03CA0108.namprd03.prod.outlook.com
- (2603:10b6:303:b7::23) To PH7PR11MB6522.namprd11.prod.outlook.com
+In-Reply-To: <20260904003837.BD1D71F000E9@smtp.kernel.org>
+X-ClientProxiedBy: MW4PR04CA0374.namprd04.prod.outlook.com
+ (2603:10b6:303:81::19) To PH7PR11MB6522.namprd11.prod.outlook.com
  (2603:10b6:510:212::12)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -101,157 +101,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH7PR11MB6522:EE_|IA4PR11MB8942:EE_
-X-MS-Office365-Filtering-Correlation-Id: a8ffa78e-d543-4894-8efc-08df0a24d3fb
+X-MS-Office365-Filtering-Correlation-Id: 5faf5440-d7ad-4570-2232-08df0a25ad73
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|10067099003|6133799003|18002099003|56012099006|11063799006|4143699003|22082099003;
-X-Microsoft-Antispam-Message-Info: 5WKxKqFsPq88T/lImnsx1kkDrrStY4zpFLwDEVXOTukL+i5WAv5u5ieG1BTSqYAMvCowrXbKG9204kOmcqQPSOpqswp7lmcjUIvwhcsMOMOLGOtWGEMkPcXJwoPcI48CQ+G7v16fiSXtdlwcaXhfWYpWOOy/3mBnf2HLO9wB2Ei+8MSr2rfUp5LLckjZVz7nPAsoiO1cGPukJdcu5s/gSIVQha1P2/gQ4maRNK4zUSF2vt0jk6TN6xxKOvk7QpH0Y6VFR8MMXcEdnj/PixJOoWMSqOOHHY6khTTnuN5Hx+y6jO59i1TkD+7+b+ucNIEt7UOtXPXyzP4StqpzXv+9+4XROGhygqeFbsG+jeQOQ5QXiHUeEiLEVNNK5Z4p03aPpFvW+xewv0HI+vIT5fuVcR4aOxnV2ZyUX8G+MGgPD7ogsp8f3ZyvpMJzYBwf0VfCSpgBHsGvUKxFTbXVk6DFvQM9udHLAz72wsKFWxMAOJvEk08koTh6jeBptRovN69imZbHcVAdiMr559eo7uNDR4NKApAkNnwJlhTxYDHRShYmtNHY7pkpUhYpTRW5G/zlEAy/lQ/+X/iEjJoe7UAY062v4tLIXHkqBd+lKOjvc+U=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(10067099003)(6133799003)(18002099003)(56012099006)(11063799006)(4143699003)(22082099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|10067099003|18002099003|56012099006|11063799006|4143699003|22082099003;
+X-Microsoft-Antispam-Message-Info: okAbZ/cFlvLQ/81wTznex02wqNEdRF+2ATx6qu6z8LxxXNfg2xA9BjfuNAFvGfvEJ6A05zXGr2kzNuGavj1wvxOkOhX5SQrG4zmYwLqbIRD+bHtLKOIrcUL8z0mCKYGAiFKD5B+BlTIIGM3KNEyYxtzskdcG9jqlW5QCnZZye4i3Fo7IGETKeE0LMn8C/7TfpxbiNIlZZghs+05s02mBNkYTCHoJAVfedvxxA8PZPGIo1/U14V1azkkGjK49oKhdk//BSgeG6ALGwKq8peCS3b9wKb9zHGqKM9YMbaT45FSj3a/pa7FAdwBBR3R2ztNg2OX39cVlc9wJXBSi1pTpX2UmLBF1cFMvxhJIyQd9fuh99ngXmkn1SGwxYs6qjh4o7N8V7nYi6Dvl46UGvafHsjJYqKSpcQQ6nihaNWqyv1J6uiSO63NOJrSBBy2PAOp+/r4WJ0shNANIGdVs6Tipi1/RYs7l/VH97bkFiSe77z6BYstX0MpM/kW0WFjQ7qOCdNYlijKs3UWFaMnPQn09QdaZGQS4mJE9lY1eAiVQMLLsjZAXBUzvAqO1yTMLow3nrNw3wAnQY5j1qevnCPOhl40WC9BOz42ji3QOZUrRd34=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(10067099003)(18002099003)(56012099006)(11063799006)(4143699003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?tAd4n2sT64+MCaXzHIz36WOdme/GT3Hb44OM8vierFaE65wKDTtgWsdZ0v?=
- =?iso-8859-1?Q?m5Kb/oPWi+hhC7Vb8H80JESNOzxrL/lW3evB0BBDaOgr2Ggw4I3UHu0zxk?=
- =?iso-8859-1?Q?y20jf8Q9uhfy5hlLOVOpRB/ll4kFVgF4w/88CfZ6fyEAFNZmkyYKxa/mzj?=
- =?iso-8859-1?Q?GtYQlAGTd1+SfEnrE8Lwxsr8ek56a7oEL812Ceubsv/8uVqVYmF8v4FVMk?=
- =?iso-8859-1?Q?blFgIb8nyWx9IXvd7Ebvf0ryl3k6nCK3TYlAqKBij4JJgJeeSvTx8PeuOE?=
- =?iso-8859-1?Q?0zYmIlRzqRZGbyzoZ0T8iK5xXgGR1BtDlKI0O8mQs8iXPsk7y1HVyD61Tv?=
- =?iso-8859-1?Q?W717D0E3ejj5Gracx9/meXuFgcK4Ud3e0q0FDeyyUq5Tjl/rhMxubv1j0R?=
- =?iso-8859-1?Q?AIwEjeVSXqOsZgdTsbMrbi+++csQstUP3R6Sv+OGquHSuXap6c0fap91Ki?=
- =?iso-8859-1?Q?0xGTAFceSFPIdIyEm/TwFiBYgFNXlTySDMlTTXWFdMDFmDsVO+Ou4soOZf?=
- =?iso-8859-1?Q?HQeF5lLAuiwvgJByrTEsun0i4w+3JFzsmAlrkruG2PAwuNUwOpmutJ6duz?=
- =?iso-8859-1?Q?uD/wCHJTa9pECZIJ0Wp1WaTtRYiX0PS+GO2qqoXCC1c6OPMTxGs745oTpz?=
- =?iso-8859-1?Q?RycqY3LZKvBfF8EgZ0AR66VLdEakWmOUc9YqlWul8KZNJEEtIkPsyBLeJI?=
- =?iso-8859-1?Q?sz7NN3GtUy5zkCSiCX6R+LcIIIlZkeqEjRl/1uXaQDW6Uv/5cfvvH5dwxJ?=
- =?iso-8859-1?Q?ZsDfJzswLfppDqgiJNO8ZbJvZFum1kXisoxx7GeUfX8LflHs/YDAiM0Pg8?=
- =?iso-8859-1?Q?vWahkpH2dvVBiiGuDS3cd/dS7w3hgcg3fpnR/T2guDWECNk6lNYRhq+Fed?=
- =?iso-8859-1?Q?6G41CMN/Mv9RsL3nb+8aF+23aZ+ntIuWDVwJ2M4X9O/Nv2VCTpQx6kGg7i?=
- =?iso-8859-1?Q?UYdlEfwAtBIb5hpKefhv2bC8hhokCUUQOXAqXVnMW9yBEHJUsceQ3ZZ94A?=
- =?iso-8859-1?Q?yKSjExeDTkA1MfEmZyY5hAS9XzDdSY8+AmBUNUxoZ1cHm/+UOOP9VwyU+T?=
- =?iso-8859-1?Q?Pzy/vNOWJz+MqSNE1uhyS5hkc7zsY/xD7ElQS1zBl5N8L63r4Mxu1vRakV?=
- =?iso-8859-1?Q?scN2juufFHTV8XCaCEjIdRrdbeRoOUHLqIUPIFtr4EjiQ0MPoTrKufoeKB?=
- =?iso-8859-1?Q?co8QM5w/EHC/H7e63WystudidKPO0HlL5wio3c39z/Fv38qVfho9IXuAdm?=
- =?iso-8859-1?Q?cAxpGVLO7zjCljTu4LmolG06ccCsftYDVfyvnolQvQ9QPelNpCLsFeJedy?=
- =?iso-8859-1?Q?wapBYisq2Z8TG4onB4Ao5X25BAK5Es+OZmLAzEh4r9lW+neXRDPnt2mg85?=
- =?iso-8859-1?Q?zOZOrgR6uW1JlZKJB0nIDlpZkYi+ORzuDJhF8+g+XwH09lKRb2zrMchlJw?=
- =?iso-8859-1?Q?L+k+3iSlp1pe2wnPRFlO7HVjUORjny1loygO47rUfU0AMUYtrRNdBcnEhW?=
- =?iso-8859-1?Q?J/8S9JeNvciTTIOsr4D+igywIfaRJNgRrYW/OoFzuwZVklhxSpKCTAIClA?=
- =?iso-8859-1?Q?148iNvyjW/H528fh46fh7x2taqAkDLkgH6qfw1Tocblb+gdJmTCyz+pmkb?=
- =?iso-8859-1?Q?OZYWh1sSJ7CE1cTlv7dPDBPfxxpHf4BHJ0OXq0glbU+ksWBhQCdHqoz5kP?=
- =?iso-8859-1?Q?WEyOcDQXNLUB2O96PM1wKJ7UuZ3igTFUy/eGxvLvLQNyPcLwd0eTT2/LPz?=
- =?iso-8859-1?Q?xAXOjZxtsLbL87csnWV8vlVK2sisSOKzv8Yf6dJ0DPNS/sF+ygZ+UXrpFR?=
- =?iso-8859-1?Q?2zfGAhKKpFxpQx6bqGJ9icqf13LBoXU=3D?=
-X-Exchange-RoutingPolicyChecked: UYM02JzkO4VyysQvqNZx/qOPg3TAoAVTNqSFvfJ+umLweSuB+kc20DbcIz/9BSN/RcIqIvAodSizXkPe1OxhFJmGJn4J4f98qzwHqp0W/niJvTWc8CtYRS8nRzMHnKbkY609noTpelecc75fiIzThAzzrZpRHCr758yKl1aBx3wsZP+ptSxDZwZXAnOGkTIcCnrMA72w86CAbZLk1zfMripdnktKsBC2iyffdQqluxxSJuAZ0GJTkdk0knx1JzFptCvRTg87vVu5A/PzeBnVciBjbfuJDXMRDQU0UiCa3CYwJTrUZuprLJtiijQMxl12RkgTuNqhvOMYoIjM7v6FzA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: a8ffa78e-d543-4894-8efc-08df0a24d3fb
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?wIMVpI54sB991O3l3hdoKysMH8oCzAKkJG5VYHqqbEJYUzTHF8BIN/hKW3?=
+ =?iso-8859-1?Q?5o8aLo4DBhruvxJgWW6+QZ7a7UT4UcKu593EbE1iBKGf2Wcl/48j5GhK+v?=
+ =?iso-8859-1?Q?wI6bC7rEwzfFAUJKsPWPK0QP3vSVgqeKct4TL2aPJiWiH+7+tUXBPFB0ic?=
+ =?iso-8859-1?Q?JA0FDaMRLqr2y6xBQ4gKnTIC/mKL48He3bf9dPO0LDe2tX5rTywdop7nqb?=
+ =?iso-8859-1?Q?fGINwRZ21DtUNm2sVp5WFjOzom1K4nafo78dUmXE2FAs9tBNlOufGG9Ck8?=
+ =?iso-8859-1?Q?zJT1yvXZYF9FrMjPkK30d7314juMKVvbvIS4ri6wNsBjKJgDOs9ghedVl7?=
+ =?iso-8859-1?Q?tAXpGwVgXOnEsztOc91VZrMWFCJ+XswxXbkvqhwZRio6tlpyB11TM/72zh?=
+ =?iso-8859-1?Q?UtC/gudsG0yYDpgcYSOicsep18GQT51z5/jWkIQrOlmmA6MpyT/hPvFCU5?=
+ =?iso-8859-1?Q?eZ3My6djJ5DyqM83eO1QQ/o7Dyyo1BfiguUnAlv7eeTcrMcst9KlPzlq56?=
+ =?iso-8859-1?Q?sOdP7p7B1dkRhegpoW057BuT+o7qxjc9U05m/TgMt8GQS26mOmMLTVGuzw?=
+ =?iso-8859-1?Q?aRgUtjM1T4SUTINTgGXnpPxjPFNrXu8Llb48NInMbidqpZuh6UO07wnMB1?=
+ =?iso-8859-1?Q?0CVk5ZS/Hukr3yqjCHEgmrF2SpEZMSnVz5Y2MSrQO51Kn7xJYrkxh4TNFO?=
+ =?iso-8859-1?Q?drc+W5i9zoJFiPH6oGjF2LKFsMxJr8R0+YnQLDmAJ31wiRPXfiqkqJSvaU?=
+ =?iso-8859-1?Q?kv0lH545zKJVpxlT0l9Zq98xfj0vJkOH71xgsmsSCA0cPGlwfb7QaZTz1r?=
+ =?iso-8859-1?Q?UjjH8PhCpHQw72ETpw8fLkJluR2mR/pbSahb3PY3Q+4NaoRam7kvE8u3fQ?=
+ =?iso-8859-1?Q?NzzflChcVQJmRKUtzNpZP8VWsekXhc0q7zPoGPA5mEOHOTcM/oZjUjCoVj?=
+ =?iso-8859-1?Q?1p8/OJ6YM8HQPdh3s4tbilo+WM8V7qDVF9w27a/uPvjEeGEDNjO0irIt56?=
+ =?iso-8859-1?Q?W85TihFrFZmYTGQrDkAOYpAV91rI3iR/n8eCsv8IvnuBs9/GxXVdMFbIhK?=
+ =?iso-8859-1?Q?m6EH/Tqh6/rjME5vHoG0s4i/TqioKIlPcEGnLhhAEyLUGug7CJYgi+cQmZ?=
+ =?iso-8859-1?Q?6uf/x+NDbg2VmaIbERuyX1abR950sahCZ2TwjGXRtP8Qj6gN3LhNlIGYpu?=
+ =?iso-8859-1?Q?ov1Z/FRWZlgXbaICO0ONIaySPKdW9yMCO0A8eWjNjDpxz65y7Id9Z2oaar?=
+ =?iso-8859-1?Q?Jp7f6fUXKQn+VM1LnKq8pU3x+qistN8TnG5cE0HFbA4MCS9+giobJFHlJ5?=
+ =?iso-8859-1?Q?zc1WmXHnT1AQKXrBTR5XHqr+X2JhMN2qkFrPUGDZa9ez/Bq3lK3TY7H7kL?=
+ =?iso-8859-1?Q?kFxeQhGRktDK6+HPOUUxgBgu2BNj5kjL66UiaJFZahAQluOZW7855FHk0Z?=
+ =?iso-8859-1?Q?12k5+IB5tmVp+YDuobBl60TLssaM7syufnZ9NVsSEZ1L7p+pdXFvAQBROm?=
+ =?iso-8859-1?Q?UXQwlCY+BZ2Vmkfu64q7pghbO408GxF97Ft4axO7kRCxyxSLiy4y7k/5YL?=
+ =?iso-8859-1?Q?wmymgoTfrOya5CDeV/OvkXHQVFGspqivPbIZiTqkR5FKFOpQrV1Pm2ASnX?=
+ =?iso-8859-1?Q?kQxAoiww8KtPRDOgrYwhCXp5/LR9HfRfc34p62lDKW//VbyuqrCOixMwXW?=
+ =?iso-8859-1?Q?PMkBbnxdOrF5szJ74dX89lf5F6/C5HHe69lOO12fG8CYKN9TyRtTlPakvt?=
+ =?iso-8859-1?Q?+ABIdWxEorFjMpS3cS4rXMJg+HFZncGwrrlx4Sz31EqTbqyLlfkHQNBS9k?=
+ =?iso-8859-1?Q?A0aLFvEyRyRavsp3uyp26d+XvInFizg=3D?=
+X-Exchange-RoutingPolicyChecked: gZnR8CIQZudPsBlBxmKxp9bO5izi8balNKTiArH1Nwx7M07S2GGbg/Nhq2D9SerNORRDDXOLikxzt2cibbFXRxoWJF+uz/pDr5CeMDKpH8Bx4Q46BUcak3/B2QMpH6L9VO4vC6kHUtjtxfaY96F/jtmvqIqTQnJR8qo0Dk4gvCxqtMRKKVBiwxxB+1dSNe8kVwzSOs9gBZ/hFeUY/qCj9MiGHg64vOpcrH3xWAsnqypAR4C1/WL70BR6DLRUQdFirAx00TRRyzDJ2OdWYolNgnoc2EDubQyUyKUGgM4JMge+EG35rQ+RasvUoFQ644j79kIZ0cJopx7ojnkw5pGXSA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5faf5440-d7ad-4570-2232-08df0a25ad73
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6522.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 01:35:40.2822
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 01:41:45.1392
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZFTxyyaeBKgcxGs0HctzOEsHmmYxpkgkB3PkT121HatrYZwvo1Polomfx9F5yavtVpp59BcrxKsaTlR18nKqTQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: CxT8AAV6iNHRNz4geu1OkpYwibFBbRksglFdUkROGC2xlLbneCV5B4ZKvpwPQzEdLnqbTJ3gayxIZ55MhEybEA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB8942
 X-OriginatorOrg: intel.com
 
-On Fri, Sep 04, 2026 at 12:27:20AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Waiting on a dma_fence while holding a reclaim-tainted mutex causes deadlocks and lockdep splats.
-> - [Medium] ULLS mode exit delay is implemented as 20ms instead of the intended 5us.
+On Fri, Sep 04, 2026 at 12:38:37AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Direct MMIO write to the physical engine's RING_TAIL for GuC-scheduled ULLS jobs causes hardware state corruption if the context is preempted or evicted.
 > --
 > 
-> commit 68ec8c46273b3023414fee593faab1cdb6c24eca
+> commit f60d4c34d363517fe528679e6ff3d059b7861099
 > Author: Matthew Brost <matthew.brost@intel.com>
 > 
-> drm/xe: Add ULLS migration job support to migration layer
+> drm/xe: Add ULLS migration job support to GuC submission
 > 
-> This commit adds a function to enter ULLS mode for migration jobs and a
-> delayed worker to exit it for power savings. The ULLS mode exit delay is
-> intended to be 5us. It also updates migration job flags so the submission
-> backend properly submits in ULLS mode.
+> This commit adds ULLS migration job support to the GuC submission backend.
+> It modifies the migration queue job limits and introduces direct hardware
+> engine tail writes for subsequent ULLS jobs.
 > 
-> Link: https://patch.msgid.link/20260228013501.106680-21-matthew.brost@intel.com
+> Link: https://patch.msgid.link/20260228013501.106680-24-matthew.brost@intel.com
 > 
-> > diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
-> > --- a/drivers/gpu/drm/xe/xe_migrate.c
-> > +++ b/drivers/gpu/drm/xe/xe_migrate.c
-> > @@ -77,6 +80,14 @@ struct xe_migrate {
-> >  	struct dma_fence *fence;
-> >  	/** @min_chunk_size: For dgfx, Minimum chunk size */
-> >  	u64 min_chunk_size;
-> > +	/** @ulls: ULLS support */
-> > +	struct {
-> > +		/** @ulls.enabled: ULLS is enabled */
-> > +		bool enabled;
-> > +#define ULLS_EXIT_JIFFIES	(HZ / 50)
+> > diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+> > index dcb4b8a4f3b78..1578d80b01b82 100644
+> > --- a/drivers/gpu/drm/xe/xe_guc_submit.c
+> > +++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+> > @@ -1207,6 +1207,11 @@ static void submit_exec_queue(struct xe_exec_queue *q, struct xe_sched_job *job)
+> >  	if (exec_queue_suspended(q))
+> >  		return;
+> >  
+> > +	if (job->is_ulls && !job->is_ulls_first) {
+> > +		xe_hw_engine_write_ring_tail(q->hwe, lrc->ring.tail);
 > 
-> [Severity: Medium]
-> The commit message states "ULLS mode exit delay is currently set to 5us", but
-> does this macro actually result in 5us? 
-> 
-> Using (HZ / 50) yields 20 milliseconds on a 1000Hz kernel, and 20 milliseconds
-> on a 100Hz kernel (since 100/50 is 2 jiffies). Both evaluate to 20,000us
-> instead of 5us.
-> 
-> Additionally, delayed_work uses jiffy-resolution timers which cannot achieve
-> microsecond precision. Will this cause the engine to remain awake and consume
-> power for 4000x longer than intended?
+> [Severity: Critical]
+> Can this direct MMIO write to the engine's RING_TAIL cause hardware state
+> corruption if the ULLS context is preempted or evicted?
 > 
 
-Code and commit message are wrong, intent is 5ms. Will fix both.
+The GuC context can't ever be evicted or preempted as the migrate queue
+completely owns the engine state which is way this is safe.
 
-> > +		/** @ulls.exit_work: ULLS exit worker */
-> > +		struct delayed_work exit_work;
-> > +	} ulls;
-> >  };
-> 
-> [ ... ]
-> 
-> > +static void xe_migrate_ulls_exit(struct work_struct *work)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	mutex_lock(&m->job_mutex);
-> > +
-> > +	if (!xe_exec_queue_is_idle(m->q, 1))
-> > +		goto unlock_exit;
-> > +
-> > +	xe_sched_job_get(job);
-> > +	xe_sched_job_arm(job);
-> > +	job->is_ulls = true;
-> > +	job->is_ulls_last = true;
-> > +	fence = dma_fence_get(&job->drm.s_fence->finished);
-> > +	xe_sched_job_push(job);
-> > +
-> > +	/* Serialize force wake put */
-> > +	dma_fence_wait(fence, false);
-> 
-> [Severity: High]
-> Can calling dma_fence_wait() here while holding m->job_mutex cause a deadlock?
-> 
-> The job_mutex is initialized with fs_reclaim_acquire(), which marks it as
-> participating in memory reclaim paths. Waiting on a dma_fence while holding
-> a reclaim-tainted lock is generally unsafe because fence signaling paths
-> cannot safely allocate memory without risking a forward-progress dependency
-> inversion.
-> 
-> If a page fault blocks on job_mutex (e.g. via xe_migrate_ulls_enter) while
-> a GPU reset that requires memory reclaim is pending, could this deadlock the
-> system and trigger a lockdep splat?
-> 
+It is questionable if we should wait on the first ULLS job signaling so
+we know the queue is on the hardware but I've yet to see any failures in
+my testing. This is something to watch out for though - if we get a
+random kernel queue hang, we should adjust to wait until first ULLS job
+signals.
 
-No correct. A fence always signals without allocating more memory so no
-deadlock risk.
+It we ever use multiple queues on the paging engine, we will also have
+to use fences + ordering to ensure either all ULLS jobs are complete or
+all non-ULLS jobs are complete before before jobs reach run_job().
 
 Matt
 
-> > +	dma_fence_put(fence);
+> The driver bypasses the GuC submission interface (H2G) for ULLS jobs and
+> directly writes to the engine's MMIO RING_TAIL register. If the ULLS
+> migration context is not actively resident on the hardware engine at the exact
+> moment of the write, the write will advance the ring tail of whichever context
+> is currently resident on that engine (e.g., VM bind contexts sharing the same
+> USM engine).
+> 
+> Since the GuC scheduler fundamentally owns engine context switching, it can
+> preempt or evict the ULLS context for internal tasks or schedule other queues
+> that explicitly share the USM engine. If the CPU submits a ULLS job while the
+> ULLS context is swapped out, would the direct MMIO tail write hit the
+> currently running context instead?
+> 
+> > +		xe_lrc_set_ulls_semaphore(lrc, xe_sched_job_lrc_seqno(job));
+> > +	}
 > > +
-> > +	m->ulls.enabled = false;
-> > +unlock_exit:
-> > +	if (job)
-> > +		xe_sched_job_put(job);
+> >  	if (!exec_queue_enabled(q)) {
+> >  		action[len++] = XE_GUC_ACTION_SCHED_CONTEXT_MODE_SET;
+> >  		action[len++] = q->guc->id;
 > 
 > [ ... ]
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260903235842.3401722-1-matthew.brost@intel.com?part=20
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260903235842.3401722-1-matthew.brost@intel.com?part=22
