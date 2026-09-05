@@ -1,118 +1,119 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543603F1079
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 09:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AC719AD90
+	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 09:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788601579; cv=none; b=lKrSGMq+XgxLReeD3e/odFoF5PjEN/DkzAVwm2O7S2M8PP9pRXEk4znjfX7h7mhkvDesS5HPsk79wfaTwpMQZZsAahY4fDvoGXRIj5Nj5vvWLT2H1pk0Ef0VldrkSepCgO5dmJjQVPu6g9rfASzvcNo7Gus/zqXlrOD3jWHi1u8=
+	t=1788601851; cv=none; b=FFtRTCzVOawlZnJCZ92jDJtVQRK19S4LFi0YZkOOR14jer/5k3JCpEfRsrzt41UhraKuMKgNPl/e5HYiZoLm/moXJNAnxESwIQUb3+JIBkTcRR+1nFJVubVrrHScLgv9mCD3RaoDxHPMYJG+3GLzL46wY5ttCUSL6xlLi4iFbuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788601579; c=relaxed/simple;
-	bh=MXQ7rl3JHAQwFwoh2PrhfX9nnBGmvCND2HTbyba7Gyo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=COjIGgMjBKJNUXYfZBqAVUdVpeVMdGiL/ww2pj/5QcEuMXiXBDJ5Z5l17UjU++g0QOZBcXLJ896XlNwjqh6B0pgRv8DBCfHL56eCMt9gs5GNO+3oudk0Aha4Zhvl/TbKukthpKSzmHNF0wz75kS+LFsANLIoGnRbVs+SgskDH9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hcT2y47zLzKHMdh
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 17:45:14 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 519BB4056B
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 17:46:11 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXgpDi5JtqK2NcAw--.803S2;
-	Sat, 05 Sep 2026 17:46:11 +0800 (CST)
-Message-ID: <261a042d-6f52-4a55-83cb-bebacc3c786f@huaweicloud.com>
-Date: Sat, 5 Sep 2026 17:46:10 +0800
+	s=arc-20240116; t=1788601851; c=relaxed/simple;
+	bh=csuWdTnqyG/n0TASGMBG6lV29omdaIVg/Sg908D/84U=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=bSZMXJTU5BcBUYlpQa5MNtvUe/u/D/6CqbRHqzAdU2yYwhUIIeTXwKIwWzXQQZ4lI1ygaNlkXeELDHGmdoC28xjc2YpZZcR04kQAiKJrGMxWOS4fDDpakYb0lzht3XG+edSksyXkLhdY2tCSxK+bEQuaSmwXdETHXDSNH86xQ9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=q+rIHq8X; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=3uTWI21l; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="q+rIHq8X";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="3uTWI21l"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1788601847; bh=DXsPp7YG0e/E7Kouf5j2j/L
+	x2mVjE0RU8AnubTjpMOs=; b=q+rIHq8XQCfKmwjfeDA1jW3/SRDSHOZCmKNsXHradZXhWCpGnD
+	RTkSXv+m6YXkWsf/7VfbXHZX6UDuNruXzodLd7ESRRSy1i4lXGwS4L6LTaY4OHmikyz+X5iGQ9P
+	A5RSelAg4DWOwKQIKz6mFH8IQGhXYGF4X+cvNdNDise3DFQRJNoi4Qsgpl6Vj6ofZJDv9K2o+QQ
+	/pTyEPqiZTsoXPCUUq4SriFtALUI7tr3JrATRh7q4LYFXHTss5+7lNEGZMd4SbjcxQfrTas7KRD
+	P/owtFijvMnyrltjDq+FMY27UAi+8MBfvGOi1rSiE7tSguh3RFs3p9URVL5ECcyDknw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1788601847; bh=DXsPp7YG0e/E7Kouf5j2j/L
+	x2mVjE0RU8AnubTjpMOs=; b=3uTWI21lNh0aErUnz7Ajw6K4wjEISTsRchvOCDgcgVfNhZcD09
+	opiXHxfDKFQwlrmqiTzcYv1obJ2qYERqRRAw==;
+Date: Sat, 05 Sep 2026 10:50:46 +0100
+From: Bradley Morgan <brads@mainlining.org>
+To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+CC: media-ci@linuxtv.org, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] kthread: remove worker->task self assignment
+In-Reply-To: <20260905094039.3490D1F00A3E@smtp.kernel.org>
+References: <cover.1788513591.git.brads@mainlining.org> <c925e99c73bea9e0cdab656ba09453df7e81dcb2.1788513591.git.brads@mainlining.org> <20260905094039.3490D1F00A3E@smtp.kernel.org>
+Message-ID: <3D57F7A3-3ABC-4396-ACB1-3D5F1DE97588@mainlining.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v5 3/3] selftests/bpf: Enable stack argument
- tests for RV64
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260905085857.14143-1-pulehui@huaweicloud.com>
- <20260905085857.14143-4-pulehui@huaweicloud.com>
- <20260905090320.8AA9E1F00A3D@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260905090320.8AA9E1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDXgpDi5JtqK2NcAw--.803S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW8Jr1DCrWfuFW7tw47Jwb_yoW8trW7pa
-	ykua43KryfKF42qF17JrWjqr4rGr4kAr45CFs2qry7Z3Zrtry8JF1fKFZ8tas8WrZYv398
-	Z3Z2qwnxZw48A3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+On 5 September 2026 10:40:38 BST, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential
+>issue(s) to consider:
+>- [Medium] Removing the self-assignment `worker->task = current;` breaks out-of-tree (OOT) users of the old `kthread_run(kthread_worker_fn, ...)` API, causing them to permanently deadlock due to missed wakeups.
 
 
-On 2026/9/5 17:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Missing architecture guard update for stack arguments in `tools/testing/selftests/bpf/progs/exceptions.c`.
-> --
-> 
-> commit 7ea892ecb0a3b4c34ad8033c7d6de54aaa01a98d
-> Author: Feng Jiang <jiangfeng@kylinos.cn>
-> 
-> selftests/bpf: Enable stack argument tests for RV64
-> 
-> Enable the stack argument selftests for RV64. The riscv guard is
-> restricted to __riscv_xlen == 64 since stack arguments are only
-> supported by the RV64 JIT. Keep the __BPF_FEATURE_STACK_ARGUMENT
-> gate, defined by clang with BPF stack argument support [1].
-> 
-> [1] https://github.com/llvm/llvm-project/pull/189060
-> 
->> diff --git a/tools/testing/selftests/bpf/progs/stack_arg.c b/tools/testing/selftests/bpf/progs/stack_arg.c
->> index 944e3bb603e7e..3e9ed37c57bb9 100644
->> --- a/tools/testing/selftests/bpf/progs/stack_arg.c
->> +++ b/tools/testing/selftests/bpf/progs/stack_arg.c
->> @@ -21,7 +21,8 @@ struct {
->>   
->>   int timer_result;
->>   
->> -#if (defined(__TARGET_ARCH_x86) || defined(__TARGET_ARCH_arm64)) && \
->> +#if (defined(__TARGET_ARCH_x86) || defined(__TARGET_ARCH_arm64) || \
->> +	(defined(__TARGET_ARCH_riscv) && __riscv_xlen == 64)) && \
->>   	defined(__BPF_FEATURE_STACK_ARGUMENT)
->>   
->>   const volatile bool has_stack_arg = true;
-> 
-> [Severity: Low]
-> Does tools/testing/selftests/bpf/progs/exceptions.c also need this architecture
-> guard update?
-> 
-> The has_stack_arg macro in exceptions.c enables stack-argument-specific
-> exception tests. The RV64 architecture check seems to be omitted from that file
-> during this refactoring:
-> 
-> tools/testing/selftests/bpf/progs/exceptions.c:
-> #if (defined(__TARGET_ARCH_x86) || defined(__TARGET_ARCH_arm64)) \
-> 	&& defined(__BPF_FEATURE_STACK_ARGUMENT)
-> 
-> const volatile bool has_stack_arg = true;
-> 
-> When exception support is eventually added for the RV64 JIT, the stack argument
-> portions of the exceptions selftest will silently fail to enable, reducing test
-> coverage.
-> 
+Deliberate!!! They deserve whatever crap they get if after all this they
+haven't converted their caller.
 
-bpf exception not support for rv64 yet.
+>--
+>
+>commit 4e8323d40e4fe5053d4171cbca8193f9bd6080b8
+>Author: Bradley Morgan <brads@mainlining.org>
+>
+>kthread: remove worker->task self assignment
+>
+>All kthread worker users now create their workers with
+>kthread_create_worker*(),
+>which sets worker->task before the worker starts. The self assignment in
+>kthread_worker_fn() is removed, leaving a warning check for out-of-tree
+>users.
+>
+>> diff --git a/kernel/kthread.c b/kernel/kthread.c
+>> index 63beb59b7a3d1..643407647e79d 100644
+>> --- a/kernel/kthread.c
+>> +++ b/kernel/kthread.c
+>> @@ -987,12 +987,10 @@ int kthread_worker_fn(void *worker_ptr)
+>>  	struct kthread_worker *worker = worker_ptr;
+>>  	struct kthread_work *work;
+>>  
+>> -	/*
+>> -	 * FIXME: Update the check and remove the assignment when all kthread
+>> -	 * worker users are created using kthread_create_worker*() functions.
+>> +	/* All workers are created with worker->task set. If this fires,
+>> +	 * the caller is broken.
+>>  	 */
+>> -	WARN_ON(worker->task && worker->task != current);
+>> -	worker->task = current;
+>> +	WARN_ON(worker->task != current);
+>
+>[Severity: Medium]
+>Does removing this assignment cause out-of-tree users of the old
+>kthread_run() API to hang permanently?
+>
+>Because the self-assignment is removed, worker->task will remain NULL for
+>any
+>callers still using the old API. When new work is inserted, the wakeup
+>will be
+>silently skipped in kthread_insert_work():
+>
+>kernel/kthread.c:kthread_insert_work() {
+>	...
+>	if (!worker->current_work && likely(worker->task))
+>		wake_up_process(worker->task);
+>	...
+>}
+>
+>This means the warning intended as a sanity check turns into a silent,
+>fatal
+>breakage where the worker hangs in TASK_INTERRUPTIBLE and queued work is
+>never
+>processed.
+>
+>>  
+>>  	if (worker->flags & KTW_FREEZABLE)
+>>  		set_freezable();
+>
+>
 
+--- Thanks!
+https://lore.kernel.org/all/EE579805-42F2-4C58-B752-F28779EEB717@grrlz.net/
