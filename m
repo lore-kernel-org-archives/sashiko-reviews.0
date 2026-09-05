@@ -1,212 +1,162 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-wm2-f9.google.com (mail-wm2-f9.google.com [74.125.225.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79EB36C0C8
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 03:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788578803; cv=pass; b=CfNymlPf4h/HpJQdU3YmxEbcu4TekV3OHj4pwSH/KEvDXVZ8M/Upke960aX43QDrONiAgkNV4cuAE3w44t/DQ74V14xe2XdzCDegcNkZFAULWIufY4hpvlNKqY8STCM3BVKUX/wAUd5BYsIQ1j1g+hxxCoozHiwF6LXx6QmZGzo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788578803; c=relaxed/simple;
-	bh=Ro5WQFnUyuX6c8ZMaP/vKnPsUVwk4Al6XZOewowjF5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L1OiLqr+09XPY68/l/DGz+u4qXVkZGIjFzXqkm9Sbxu2sQQwA2/7WsxV2BTr6pLyN+b8wu1g5sKPf5t7o+Zc27lZgr+arjALxBRH1xa/dC9ozkaa50LP2++31ICB6nhesBoyxiw0MQiofNFptxP0cOin0yd1Q3S0NcEqWV1GwIM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=LbCfMHIa; arc=pass smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09A8212542
+	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 05:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.137
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788586829; cv=none; b=bjhVcMz2VudVoLBU8MfWQ3xvWLnSruRGlttvwpOtWADlZlMwWDKBs/xzjp45T27Df03H/ivSKRd+ZtAn1LKSDIOrGPCCq0UJ3k7B751KVdZCR/sG0LQ4HSILwwz5ri2Zgs4QITfSNBatjL6YkUjP0lkx2YBol+uKkQZV78FSaSs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788586829; c=relaxed/simple;
+	bh=9El7wg6ZSMznEsNj+n/3mNmQc0Bv6NuSQNospm5QSvQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=kQhdmBQ05nrdwZn+SmdegCIiC8PA/kEFrLj5eF1QCWqa6KPc/4dlH6bY1ETQT1uBp+ihRFBAq8OPYT5oi/2H5YV0li7fcXzp4gDhW2yodNeNhEE/iGZZLpPxCLgt1I4owrxA9uA3Wf/6mCw1yxC7hCNldFFZo1bhKHFT0jazvEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cm7dQ0u/; arc=none smtp.client-ip=74.125.225.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="LbCfMHIa"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8565d77c277so23669627b3.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 20:26:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788578801; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KVw07qaDFMeLIZimnsZs20TlcsAobiMvRnUXzo4tqKxfkzRQwKdjM9WvfGkA8jV41w
-         Xj879FJZMHF3Pc2CIFrAKfXM7Am0W+3JWktqu4BOKppV1kpZHevU0z1YaIbhOnS1G/86
-         0d4QmPRM1VEhHTAfpQ+dYM+Tc8Uqx5YNAoVYjyFO3Qp3UF8faiTIwTEIlrvCV/2Frprc
-         fxXiW3lOIOM+vuZpYXoy69Dz7a82PecLp3Wxjl64Y78Dw1jT0x5COCJtrjrL+fop7Axt
-         20E6rAoqjIptjLU+o23WDkspRtq7dk+F3nNse1FvnyPjmd/NsZSCTkmji1Ps6uHzQ+9D
-         cPzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/nulUh8YNeX+n+nn9HvwdNzcBQLH+YBQeOJSncThU38=;
-        fh=+EqZIQ/Z0eTPY3bjRaHymGh5YecU+3rv2c1KGcdjJQw=;
-        b=d19gL2MPP7iwG0FZlBptLBNyuYezaMcsr/9MK0lOVwII1tHtDS4xwsFk6Luh++9Xpv
-         A55PH6KS/gZYVNtzECEvKkSh7E47MVYH38xFTMdtIPvQRHLKMzv61naMKDAPdyVYTd/5
-         MiNQCNzqriOjNJkt1MKdCQNdo7Ss8Q1soCS2zNQVbYvtJ0Gv12js3BgAmVo1dhab6QLw
-         TYcsub5BcEbUQOXrCqNlf6Cc2y4OcBVWnztqHTQ4C7uAp43QnU2sH9nJbBTwNTxXGjup
-         deoUfHJxnqp0VBtW0xKYAyOvGlagzjZAT+bNlIianBvNbZ/W5iQanSm4ajMQN0kL3aiR
-         nx2A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cm7dQ0u/"
+Received: by mail-wm2-f9.google.com with SMTP id 5b1f17b1804b1-49556ce3549so10729355e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 22:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1788578801; x=1789183601; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/nulUh8YNeX+n+nn9HvwdNzcBQLH+YBQeOJSncThU38=;
-        b=LbCfMHIaZXigUvsaViLQhbwGGrxgXbOE3DgpyPyaB7FJwzA8q/FdZph5elM1YMFp1a
-         SstwbPqVWXNThuXlnbbShWxU4BhNAIbKm/lQw3OgS1ymNTtjQEZWmbzBinWj1EvzzxHm
-         Kr3K0Uxm0HWPo00zK9x62HMcYJYnkdmvUfBhohFGj+GSyuh+yXGOdQLtZak/g3adeYBB
-         QU82iLVTjBeZoJzlS2+Bj0DE4bRiML0SZFyxAswIIAMA05BttYtXQDe4p8aOvsVzwWKa
-         2ajsNm5saqCce8ZTtapk80z69cI71tLL2CCimChXmsANj4W5ccNnZjay515bpH0RKjBy
-         4pIw==
+        d=gmail.com; s=20251104; t=1788586826; x=1789191626; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=pUcTum96Lc5QOUMZUXnpZvdog3vwS0ETpO6yRdQHjd0=;
+        b=cm7dQ0u/4UzvT3jJOmLcbWZ/xMfbycOA3Gg/vlim9ZkNN2jHylXIjNAoSIQc/k916s
+         Dxjugdvjvi4R81mV0vtOA+XmqBJ8+PXE/AoPO0oIKYjgoR9t8INsFTpX7FvdctAYtEyE
+         rm+MwDIEEmGBO+YGlAGNx3+yOL2fs22MbjB896x+IuCn3flwE/GqzsF7cQMQ0jhx9H4u
+         vE2kdOaIAFfl/LCRZDYnLAEU8/O+PuEkaE6AKp/NvlKhTTMs2pURkjbR78lv5UDg86uT
+         UCocoI6CLEpo97R4xBJ19GnwTTzAjeLHB5Rqp9d2eUsVAsxXYLhmBogaeefD5X1ugJPG
+         a8+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788578801; x=1789183601;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1788586826; x=1789191626;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/nulUh8YNeX+n+nn9HvwdNzcBQLH+YBQeOJSncThU38=;
-        b=mdQonBcH3WEQP3kvO5/7l9h7LjOIkl3RH19gFlmKayFUjDshaFGp3U+tXP3rsirPbm
-         qDG9Z7RH4TAICf2ynyYnkHSqxcygqpDLB6HjHM+LwArL839xvfmixKwTcq17SEu7hF5w
-         P1973EuPzeAHD1JystsXH0O/L7idn2T3xE9DZpvO5cUUvSVxhtTg2EZKXcqcjGfMuL6I
-         Fwj0oQqdyGNlLvslpaxfaA1/4vjsdJc4K6Wn0WvNssb59+ZtNG1+QHsXDPm23JGKfWyi
-         QQYUkicrFirBhc+6GpcSBHU5hznhh6LvaCXHjcKszO42drNs3xreC0L3fW1wc4RMZ8fx
-         XF6g==
-X-Gm-Message-State: AFuF++ljen0DObFkVtw54YLY8V7xlaP/a5xHTwH7bBZbv+jMpitimtRi
-	ICuVbTuVGNOsJMYxQinhsy9bChjYB8GKnpJmusjNCwCmNONYUhfdQb3WO7vGJWSVAR2kVD44laF
-	Xf5/y+rL7V4BCXxuxKW3UXItI+75eMV0CX8f7KNXLJ3enBXzLKY1cJ3h08w==
-X-Gm-Gg: AYBFou1P8UiC4CaoqnVoxmUgxGy5TOF1UAtrxwRLta67hGqhxewrcnumMfCbcGnozST
-	DRGy9cKn7Zp238RSM/ZeVOY+GImqNITVbXLw0D6GE8hQI2cMpIYgqu1P42AeXJoHthuvCAtJW1T
-	5VAnfV2gHT49XyrGARZXSmKKoZxluhs2QwqtPA2x4vwIxXoliLIfUeapB05c3cCIXluJ9Z1cvz2
-	zhh58Qt2x8i59qEq1+8IU0VKon6Db/UAH/SnjboESxfx6FqGqPyTxIZL7644nTRBZkWKHxghOoH
-	5UOWpqkgblRXVQYQLheCsxZ28kguKMIB7AeiYS/FZE9oAhQ=
-X-Received: by 2002:a05:690c:9c0e:b0:85e:6840:4ea5 with SMTP id
- 00721157ae682-87126e97f78mr50237547b3.26.1788578800363; Fri, 04 Sep 2026
- 20:26:40 -0700 (PDT)
+        bh=pUcTum96Lc5QOUMZUXnpZvdog3vwS0ETpO6yRdQHjd0=;
+        b=Asa8tTaxsPC6qBwaBwHHkoEGZBkT8SEGyRzzJvcHKRb8pB3FhqHpLhMgWA1izgvUpg
+         uCerv7FipFdKpbpKOMJPEaQGtbyyole837loMfYi1g6rtHRtBxsoEuAz3t2oTwA25hlC
+         TMBZi0QbH/WqnXu5S8X+WzLUt4Ytei6HXKK51lag2h4+SOSlbM9uKN/8fhDSZWMq1gMO
+         FfPluoMK7TmyzanBdTOxWteinH6iZgDT0iZo8y1hWJ7acZHQzgVlPqis3igW8j6CY72V
+         AihlTtfD4owc2NxZDj4rlZXCYjcgwLFnpZcUfZvOb7nNQU+S4thY8gY+N87BaTSGTVEr
+         Ky2w==
+X-Gm-Message-State: AFuF++kb3ZBSdScJLl8g3ks49Aqm3nGniM9GqINWvjINxMQ/oxY9qhgd
+	zW/KQbFLXRjLCcS2buXdI0eL+Sn+REFXf4ZlI8QJCJXhbVH30ekJhawjj1iz/Dq2
+X-Gm-Gg: AYBFou2w12kwo7all6KAULjWcIvBuJkXJ4fQjiPwYbuDk9zYBy+7XOfJ/E6wN3vGWNv
+	Rhqae06y78S9HN4DKWvQNYnlAdoc+4mx2LHE6WICDvr/D9Mj79zmTvstzCBh6btRvJMK6LmDTFh
+	ILXPYTsZa87DTsOvNf31UOZOiMTDG2dpQ8yv8DmbLJEnfT+OMbnwt4LLM0n/XRnkH1sElOr+lEB
+	56SrhOgZmJTAVYfNyZlRoLfKMqpdE9s+Aid/jDxpY08o3IPMf/HuDeFoTFVm1B5OoMsPU/Vemu+
+	c5Td4MUoEdpm9mdkGyspTG2DUg7esCMOnUOsx0EN+HZRMppCnRSyqv90JGMWmFYj+6ZH7PtdTgU
+	O9YKP3WhETEJUSIu/4bb6f5Ovzb1iEJ8fJ2fP2sEo1nyGBC6qjjpf6kB9tf0NX1Fg1eGiFFizmn
+	ajawEuQllWqNEoeVT5GR2GYgJX6Po0MTDLKSJmePhuufJ3KFzUR9IzLH5BkRZ6uV6ZjZ6Tl1iIf
+	kES2bo+KmbRduFm/KrMmIcVhuFbVKwYpo0WiAU0iHJByAPiiEjkGzx7k6JauWZ1/8/OqULo0VNR
+	342UiayHw2m8nYx8u5/XJAWqnto=
+X-Received: by 2002:a05:6000:40cc:b0:485:8393:215a with SMTP id ffacd0b85a97d-4858703f4bamr12185937f8f.5.1788586825891;
+        Fri, 04 Sep 2026 22:40:25 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48588394fa1sm11195211f8f.8.2026.09.04.22.40.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Sep 2026 22:40:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260903122128.12264-1-songmuchun@bytedance.com>
- <20260903122128.12264-5-songmuchun@bytedance.com> <20260903125312.16B761F000E9@smtp.kernel.org>
-In-Reply-To: <20260903125312.16B761F000E9@smtp.kernel.org>
-From: Muchun Song <songmuchun@bytedance.com>
-Date: Sat, 5 Sep 2026 11:26:04 +0800
-X-Gm-Features: AcwNN1UeHEvk3zYctxqOtU6UT64a-Esa9ORnfEzCr_q1R1rkedrEbgma7jX-zEo
-Message-ID: <CAMZfGtVhb8MMTJGPgsfo7a2VFEGS84VP--_dA5ffY_KykEV53A@mail.gmail.com>
-Subject: Re: Re: [PATCH 4/4] fsdax: materialize pmem vmemmap metadata on faults
-To: sashiko-reviews@lists.linux.dev
-Cc: Linux NVDIMM <nvdimm@lists.linux.dev>, linux-cxl@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 05 Sep 2026 07:40:25 +0200
+Message-Id: <DL75449ZEZAS.1S6DO4MNH0ITV@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v2 1/2] bpf: Verify global subprogs in each
+ sleepability context
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0
+References: <20260905051224.2325381-1-memxor@gmail.com>
+ <20260905051224.2325381-2-memxor@gmail.com>
+ <20260905053206.87C6E1F00A3D@smtp.kernel.org>
+In-Reply-To: <20260905053206.87C6E1F00A3D@smtp.kernel.org>
 
-On Thu, Sep 3, 2026 at 8:53=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+On Sat Sep 5, 2026 at 7:32 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Global TLB flush broadcast inside global page table lock causing=
- severe lock contention.
-> - [High] PMD fault materialization failure incorrectly returns VM_FAULT_O=
-OM instead of falling back to PTE.
-> - [High] __vmemmap_materialize_page dereferences a potentially NULL PTE p=
-ointer if the DAX device is concurrently hot-unplugged.
+>
+> Pre-existing issues:
+> - [High] Global subprograms can bypass caller lock and reference balancin=
+g by using bpf_tail_call(), leading to permanent resource leaks.
 > --
 >
-> commit 9e2a623911317e382af87ef795b2fc34f1686554
-> Author: Muchun Song <muchun.song@linux.dev>
+> commit abbef478df8567a76eb64989bbf7f08c717afd13
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 >
-> fsdax: materialize pmem vmemmap metadata on faults
+> bpf: Verify global subprogs in each sleepability context
 >
-> This patch opts pmem FS-DAX into the shared read-only vmemmap mode and
-> materializes private metadata before inserting a PFN into a userspace
-> mapping. It shifts private vmemmap allocation from device registration
-> to the first DAX fault for each metadata page.
+> This commit updates global subprogram verification to independently verif=
+y
+> each context (sleepable and non-sleepable) that calls it. This prevents
+> non-sleepable callbacks from incorrectly treating the context as sleepabl=
+e
+> and allowing RCU-protected pointer misuse.
 >
-> [ ... ]
->
-> > diff --git a/fs/dax.c b/fs/dax.c
-> > index 1fbba0d21c13d..89377301d51b0 100644
-> > --- a/fs/dax.c
-> > +++ b/fs/dax.c
->
-> [ ... ]
->
-> > @@ -1877,6 +1878,10 @@ static vm_fault_t dax_fault_iter(struct vm_fault=
- *vmf,
-> >       if (err)
-> >               return pmd ? VM_FAULT_FALLBACK : dax_fault_return(err);
-> >
-> > +     err =3D vmemmap_materialize_page(pfn_to_page(pfn), pmd ? PMD_ORDE=
-R : 0);
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 5b51e7ee1a3f9..f759a020c8a5a 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+>> @@ -9988,11 +9989,10 @@ static int check_func_call(struct bpf_verifier_e=
+nv *env, struct bpf_insn *insn,
+>>  		if (env->log.level & BPF_LOG_LEVEL)
+>>  			verbose(env, "Func#%d ('%s') is global and assumed valid.\n",
+>>  				subprog, sub_name);
+>> +		sub_aux->called[in_sleepable_context(env)] =3D true;
 >
 > [Severity: High]
-> Is there a risk of severe lock contention and RCU stalls here?
+> This is a pre-existing issue, but while reviewing the global subprogram
+> execution context changes here, I noticed a potential resource leak
+> related to tail calls.
 >
-> When a PMD fault triggers vmemmap_materialize_page(), it loops 512 times.
-
-No. It loops 8 times not 512.
-
-> Inside that loop, __vmemmap_materialize_page() acquires the global
-> init_mm.page_table_lock and performs a synchronous TLB flush:
+> When a global subprogram is verified independently with a fresh verifier
+> root in do_check_common():
 >
-> mm/sparse-vmemmap.c:__vmemmap_materialize_page() {
->     ...
->     set_pte_at(&init_mm, addr, pte, mk_pte(candidate, PAGE_KERNEL));
->     flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
->     put_page(template);
-> out:
->     spin_unlock(&init_mm.page_table_lock);
+> kernel/bpf/verifier.c:do_check_common() {
+>         ...
+>         state =3D kzalloc_obj(struct bpf_verifier_state, GFP_KERNEL_ACCOU=
+NT);
+>         ...
 > }
 >
-> Could this cause the system to become unusable under load due to sequenti=
-al
-> global IPI broadcasts while holding the global kernel page table lock?
+> The new state starts with zero locks and references. If the global
+> subprogram executes a bpf_tail_call(), check_resource_leak() inside the
+> subprogram's verification will succeed.
 >
+> However, back in the caller's context in check_func_call(), the verifier
+> seems to evaluate the call assuming it will return normally:
 >
-> [Severity: High]
-> Is there a race condition with DAX device hot-unplug here?
+> kernel/bpf/verifier.c:check_func_call() {
+>         if (bpf_subprog_is_global(env, subprog)) {
+>                 ...
+>                 if (env->subprog_info[subprog].might_throw) {
+>                         branch =3D push_stack(...);
+>                         return process_bpf_exit_full(env, NULL, true);
+>                 }
+>                 /* continue with next insn after call */
+>                 return 0;
+>         }
+> }
 >
+> The caller check correctly handles divergence for might_throw, but
+> appears to silently ignore has_tail_call for global subprograms. If a
+> user program acquires a resource (e.g. bpf_rcu_read_lock) and then
+> calls a global subprogram that performs a tail call, does this bypass
+> the caller's resource cleanup and validations, permanently leaking the
+> resource?
 
-No. The FS-DAX fault path is not relying on that SRCU lock to protect
-later struct page accesses. Before dax_fault_iter() is reached,
-grab_mapping_entry() has already installed
-and locked a DAX entry in mapping->i_pages. DAX invalidation/removal
-paths synchronize
-through that entry and wait for locked entries before deleting them.
-
-> The prior call to dax_iomap_direct_access() acquires and then releases th=
+I don't think this report is valid. Even if a tail call happens in a global
+subprog, it should still appear to return like a normal global subprog, and
+the existing checks should ensure resource leak safety. More specifically,
+the tail call will replace the global subprog frame, but not the one for th=
 e
-> DAX SRCU read lock. By the time we call vmemmap_materialize_page(), there
-> is no lock preventing the DAX device from being hot-unplugged, which tear=
-s
-> down the vmemmap page tables.
->
-> If that happens concurrently, __vmemmap_materialize_page() will find
-> pmd_none(*pmd) is true in virt_to_kpte(), resulting in a NULL pte pointer=
-.
-> Will the subsequent ptep_get(pte) dereference this NULL pointer and panic
-> the kernel?
->
-> > +     if (err)
-> > +             return dax_fault_return(err);
->
-> [Severity: High]
-> Does returning dax_fault_return(err) on a -ENOMEM error incorrectly trigg=
-er
-> an OOM kill for PMD faults?
-
-There is no reason to fallback since no memory could be allocated.
-
->
-> dax_fault_return(err) translates -ENOMEM to VM_FAULT_OOM. If this
-> allocation fails during a PMD fault, shouldn't it return VM_FAULT_FALLBAC=
-K
-> instead, allowing the kernel to gracefully split the huge page and retry =
-at
-> the PTE level (similar to how dax_iomap_direct_access() handles PMD fallb=
-ack
-> just above this)?
->
-> > +
-> >       *entry =3D dax_insert_entry(xas, vmf, iter, *entry, pfn, entry_fl=
-ags);
->
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903122128.12=
-264-1-songmuchun@bytedance.com?part=3D4
+caller, so it should be fine. Throwing exceptions is different.
