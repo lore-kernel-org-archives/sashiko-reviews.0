@@ -1,106 +1,162 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-wm2-f6.google.com (mail-wm2-f6.google.com [74.125.225.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0650C212542
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 05:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E038B14C
+	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 05:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788586942; cv=none; b=fl+fFlYeGrcGQiDczUX7l5cJ9D4+76yXnMRGUis8GaQ1F1sLeze8r6gUXMO0Gizb6xstS8FSLRUNI8yth77ZoS829nK6DNzwYscXynYftpK+NJc+2Y9Tr6awwFXUB2lrMdC3HEA6ojBncnfUI5AZcXml1b8OWti0RirZ6JvW6cQ=
+	t=1788587784; cv=none; b=rwqDDDUduCODrmw2w03jJszjMNxu00B2xb9NO0Ad6r6gGhW9qNKgvKHu8RsSg1GSn4WLrtT5yDrkDtQyD26X4dzs7I5j7qlz8Q3O7nrWGCZl4WNZ0bHuwiec5nWSpkxCA+IvNOmO+tWYcvu+G3HJpEzJfiSkDVGAVqMjrcquy54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788586942; c=relaxed/simple;
-	bh=1IF3g+wX2qSaik6PWcrYjKLpudWITvu5kEq+Evvga4U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gI5Pk52imjuT42epOyqDNzP8vYZLNlJcH16LCy/CE5kZsUJq7RheL4nZM3/KFV8gD44sZZBdbTvsD2S/oVH9ddPrYUdDRjoxvLa3dBqeuzbLXo1fCNs3eG/FenUW9lDEctOmtGU2bpUa4bOo4mqSrLuF53TOWH95tR5dgYbfpKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HlaV4iyV; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1788587784; c=relaxed/simple;
+	bh=5J0/tLoJ0hPoJDtGlDy225FbMONZPc+PxaNejPvpmgc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=c0z2576LsYz2ZD/viBLJigsuXTFczIvQrvVBBMBeQ39pMAvqQEBbBPhHboFrZXy5CYtGBWnkCXbEAv9yVkWHwmWYhFzOnt4bmpXVzYsDRkhdf2Z4yd62J/nPHA2eoHIAYiGcpVhtwWYEyRbc/tcfA8OgbeK7j7GOhdbtZz6AHvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LjkA8SIq; arc=none smtp.client-ip=74.125.225.134
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HlaV4iyV"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d9201076b3so20946745ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 22:42:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LjkA8SIq"
+Received: by mail-wm2-f6.google.com with SMTP id 5b1f17b1804b1-499aaf0a723so6019485e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 04 Sep 2026 22:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788586940; x=1789191740; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1IF3g+wX2qSaik6PWcrYjKLpudWITvu5kEq+Evvga4U=;
-        b=HlaV4iyVJ2fikWX4ULLw/BgiZ5dSMOzT6hps+pCYOqjDXQ0sW3mbdDG8ZOqfgFt7e1
-         aBisSfoX9/YTYYjowyt0Wc12jvw+JLtDhgBEEKMUlM3CKhHMNlhHE0PVvgN5SuCdOXM7
-         TatWGdgHQe4m2VZDZZ7rlb21xjMyS01XsRoo4+++RyRCSZFUgVILkNPGkcIXhaDfQ9mf
-         0KQMUtMqq0Tt8eKy3oHvbzOxzAdm0sBIgbrnKguK2hBCm2/JuokaARNDmxDxDX0IxwYK
-         A6vJOhz/XpHPOdBpE7JY27Wnz2Yrrh9gyfnMXbIQTjGcAJeiScSDwcPmvDwOjaU2AjhC
-         RKVQ==
+        d=gmail.com; s=20251104; t=1788587781; x=1789192581; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=DErHoq9A+qfWlaDw5ATm8uO9TlTcQmGS0EfdQCaIaZs=;
+        b=LjkA8SIqgi+B3ZCbU+NWl7JXH6k1nPEAfutPdcCx+d0Re4MkUJ/mPz0AbOmzxOqnJz
+         1evI+4pKFfPxRc6CbJk8/TeS0aKPEx73/EJ5AxLb5Wunk9kPRXBZa6+oR7PF/CaVAyO4
+         ssMLTOovUqBoYzD7jx2Mzl2nwcobkwXiBCwJ94gZNvZsXw6QA9/OZPr0fKkFYtIbxpBy
+         9a1acS1XV2u/rmHEl42gNvx7yJHgd6hFNfDeFCXDjPrzsxszlf2FKTeBZ8ArIaSHXaDS
+         UyZdnadfS0C0IE767LGgdUiingEUB2jwRwXmCmLYcSoxce/p6XjcBbzr528ljQmUOb4j
+         0kdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788586940; x=1789191740;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1IF3g+wX2qSaik6PWcrYjKLpudWITvu5kEq+Evvga4U=;
-        b=oEqAV6SJiFLGlU8qoYiRzIHXHNcLTJhaNdZ9d8HDC7jNmfORzhzrrQeLXZV7d/mhct
-         lHmHLyvMbbY0bxsJMID/dLGs15416caiEW+hANeTT1El4PY/Vm2zG/cWZA+xXRzJIL4C
-         3N+NVO1oatRJ5BSTUOb5ekYCoyrvHdtMnZdbkJO5v8asWQ7X3pNdf2TT52Eg896yZIG4
-         eOmPcAgbuS0ihm/wn2qmZH+xBc7HiK9osAwV4trfF0Tebr9/BI7QAPPdCoHG0+eOawOZ
-         ots8+q1EmDciFOzm8mfWdLlfjS0f6LfXLW9F5BAscwqr7bf/LERoK3MKmXWzWvqV1+/z
-         0u3w==
-X-Gm-Message-State: AFuF++mvryM5b5rinkZFz6OlSlTCvDKf0UqDsrEOcAbI+Ip0HCgGZ2x6
-	43eSmR33twhjWwfJjiFmRrhrJl06i4+HVr861y+CGMLcHHRiZdxF0OI9hzXItEe0nw==
-X-Gm-Gg: AYBFou0hypYf+HTRDtizWEKusuOBmSU0lib5T+iI75FJK3DLWr9FOCNCWqrFZ+QWaix
-	exucSdXKWqH3BgTtSIbf3IPcVBc1FloSzEDcu6r2AgdgSBAW10qRSgGHpVSMtYIF+22JMO71Dnb
-	QJl4Cvu/25kXtWnGRs/iqxFiu+XfycOKJaUj4wgtYoWTJfPyQ5Gzj8p0nyGmEokC/oxujXjOTSk
-	Qb6I+LHowvNa5ITfTCIM+Ajl6b+v+nDLE4RQGnL3CBqrQk7d6XdeHoeRt3i04XRBla5Rcge8Dfu
-	/aWeU9M0H8Rj3XMl5TzztVDjY6K+m3Bilqma6EEUvx0OTlPanH5CEwc6Y12u4MsARSoE9AFKFjb
-	CFmOAMD1CjVcL8CwE8tvGRpuzSt8X9vekzemP4zygI96NSIeWmvSmHYACp7aDHIujUzXrT3gL8s
-	0IeNNjr85iv2eB1WghukWeJnoxvhtipWbOH6YWnOEFLNoFzS4uYUMyFJo8AjLVEwE6zfh0g/qwm
-	qGuMpccDyV1Qg==
-X-Received: by 2002:a17:903:200e:b0:2d9:43f6:59f0 with SMTP id d9443c01a7336-2db1267bc27mr108781345ad.22.1788586940159;
-        Fri, 04 Sep 2026 22:42:20 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([211.230.25.193])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2db149cb5f0sm18020405ad.67.2026.09.04.22.42.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 22:42:19 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org,
-	imx@lists.linux.dev,
-	donggeunyoo.kernel@gmail.com
-Subject: Re: [PATCH] regulator: pf1550: fix which regulator is notified
-Date: Sat,  5 Sep 2026 14:42:16 +0900
-Message-ID: <20260905054216.16986-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260904111039.705FA1F00A3D@smtp.kernel.org>
-References: <20260904105624.48577-1-donggeunyoo.kernel@gmail.com> <20260904111039.705FA1F00A3D@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1788587781; x=1789192581;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DErHoq9A+qfWlaDw5ATm8uO9TlTcQmGS0EfdQCaIaZs=;
+        b=DO1nwi1oDBVlZi4vmTzSQcmC8+S1YleiQi8CskUDMTpyDfrvbZ41+86gqpdkMQ67uN
+         vTBeS35B9OYCC5Bmp4PJlMIpMdVR+89GSfNMygQFtECQKaZqn81sl8QBjZQkrvQp4wvi
+         DlYCIkte/xHoWVtOG61OJWa3tXe8NN42LUKSTiDEOB84ynZZl1iMJy2v7PCwur5QbWxM
+         Neg/xuSX6XFx89E2wexYL4hVfmUUwTa9a9rvgew7uYVTPaTRJgww22W3svlk9anvRlFh
+         r6KGzc/ZizpKttKOeeyvAWjFg1AuxjisjKs7vI6R/s1+paNGTWfm12MnyHNvkiDdsAEC
+         od4g==
+X-Gm-Message-State: AFuF++kQHD0vFP7F7x0jw0qwsSsqYnCNBkQDDpEcGHd+7fEgiIUcBTA4
+	FxDJ6KQb/KW750GWqHlsFpPc1XGinDTIdipI/A/0mckLu6V6IYdhEGgLDGJtbEkw
+X-Gm-Gg: AYBFou0mqvfcdyz4tECYFlZD4OgpxK/kyxxEorJ/mVosdI0b6DwLbVW+PZBt1+jCfkv
+	KxFLxvuQlG31hPZZoHGVsrASP1wPRwUxVUTE18ICswqwKRSIf1vPYH/stx0BCrs1RVzBzBcwx7M
+	mOUUZbQt9tdUo55+wXNczyghbBPpxHGh54kW0i7Ng01+vrGJh4BIzPJpmLb0Rb07vQT4Qyrc4bL
+	yUuz+apFCTF+WCiiWhaiwKHbyBVDNj/Sk2V4bLd63eg8MTP/HyZyq7C4jzJPblxAg5TAgu9OpeE
+	sjiukM9vhc/yEsr7cmQO7ul1pEaEjfgnpmPqxLjm0awm/udXIrZQlrjj+zPKauL7/ehbMPFjXhQ
+	zz6aSPaWMe9nx6ZgTo69//FZ+Rg5Dqf3IZe/RE9mNBGM5JG4atRC23jyy2Jwr3CqdGJqH/5ZICB
+	ASFSGyM7PwLXhe+NAFZe71p74NJWIWjqTQxSce9vcYVocEwUJ0UbKUSZRDqOjj16eCOv9nmjWP0
+	aI++A+A+KATJlIQXHX4e549vZ6D3xLMly5XdWKShBBjitOFXv7ANEXkZjb1myHc+oC4T7kVK5WZ
+	GHTT3tyYa8kxVYtKPb7K0t8rQc0=
+X-Received: by 2002:a05:600c:8b09:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-49cf823f57fmr202579595e9.10.1788587780908;
+        Fri, 04 Sep 2026 22:56:20 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee5d476esm227465215e9.1.2026.09.04.22.56.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Sep 2026 22:56:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 05 Sep 2026 07:56:20 +0200
+Message-Id: <DL75GB02N34V.3IAIUPZPJO4YW@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf v1 1/2] bpf: Reject non-scalar bpf_loop iteration
+ counts
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0
+References: <20260905014735.1452988-1-memxor@gmail.com>
+ <20260905014735.1452988-2-memxor@gmail.com>
+ <20260905015702.5ED241F00A3D@smtp.kernel.org>
+In-Reply-To: <20260905015702.5ED241F00A3D@smtp.kernel.org>
 
-On Fri, Sep 04, 2026 at 11:10:38AM +0000, sashiko-bot@kernel.org wrote:
-> This is a pre-existing issue, but returning IRQ_HANDLED when the driver
-> completely fails to recognize the interrupt defeats the kernel's spurious
-> interrupt detection.
+On Sat Sep 5, 2026 at 3:57 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
 >
-> If the PMIC continuously asserts an unhandled fault, could the parent
-> regmap-irq thread loop endlessly resulting in an interrupt storm and CPU
-> lockup? Should this return IRQ_NONE instead?
+> Pre-existing issues:
+> - [High] Missing negative bounds checks for enum array indices in memcg B=
+PF kfuncs (bpf_mem_cgroup_memory_events and bpf_mem_cgroup_vm_events).
+> --
+>
+> commit 3f8d69cede626ae022617ccb30f54b8f41f90edd
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+>
+> bpf: Reject non-scalar bpf_loop iteration counts
+>
+> This commit fixes a verifier warning and subsequent panic triggered when
+> pointer values are passed to the bpf_loop() nr_loops argument. It
+> introduces ARG_SCALAR to ensure generic helper argument validation
+> rejects pointers before loop inlining and precision processing.
+>
+> Link: https://lore.kernel.org/bpf/6a9ad24c.b5d4176b.238c3e.0001.GAE@googl=
+e.com/
+>
+>> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+>> index 3a7eb2185c354..591dfab3e706c 100644
+>> --- a/include/linux/bpf.h
+>> +++ b/include/linux/bpf.h
+>> @@ -894,6 +894,7 @@ enum bpf_arg_type {
+>>
+>>  	ARG_PTR_TO_CTX,		/* pointer to context */
+>>  	ARG_ANYTHING,		/* any (initialized) argument is ok */
+>> +	ARG_SCALAR,		/* scalar argument */
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while reviewing the additi=
+on
+> of ARG_SCALAR and how the verifier handles scalar arguments, a pre-existi=
+ng
+> missing bounds check was noticed in the memory cgroup kfuncs.
+>
+> Could negative enum values passed by untrusted BPF programs cause an
+> out-of-bounds read in the memcg BPF kfuncs?
+>
+> Looking at mm/bpf_memcontrol.c:bpf_mem_cgroup_memory_events():
+>
+> 	if (unlikely(event >=3D MEMCG_NR_MEMORY_EVENTS))
+> 		return (unsigned long)-1;
+>
+> 	return atomic_long_read(&memcg->memory_events[event]);
+>
+> And similarly in mm/bpf_memcontrol.c:bpf_mem_cgroup_vm_events(), which
+> exposes validation logic from mm/memcontrol.c:memcg_vm_event_item_valid()=
+:
+>
+> 	if (idx >=3D NR_VM_EVENT_ITEMS)
+> 		return false;
+>
+> 	return !BAD_STAT_IDX(memcg_events_index(idx));
+>
+> Because the BPF verifier enforces scalar types but does not validate enum
+> ranges, a BPF program can pass a negative integer as the event parameter.
+> The bounds checks use signed comparisons without a lower bound (< 0) chec=
+k,
+> so negative values will bypass the validation (e.g., -1 >=3D 4 evaluates =
+to
+> false).
+>
 
-The branch is not reachable.
+My understanding is that since enum values are non-neggative, the enum type=
+ is
+treated unsigned by default. But I think it might make sense to just cast
+explicitly since Sashiko keeps repeating this concern and it is probably cl=
+earer
+for a reader (I forgot enum values would be unsigned when all enum constant=
+s are
+non-negative myself).
 
-probe() requests the handler for the eleven interrupts returned by
-platform_get_irq(pdev, 0..PF1550_REGULATOR_IRQ_NR-1), without IRQF_SHARED,
-and the lookup loop rebuilds that list with the same calls. The cell has no
-.of_compatible, so platform_get_irq() returns the number mfd_add_device()
-stored in the resource once, through irq_create_mapping(). Both loops see
-the same numbers, so irq_type is always in range.
+> Can this lead to an out-of-bounds array access on kernel memory when the
+> negative value is used as an index into memcg->memory_events?
 
-An interrupt the driver has no entry for cannot reach the handler either.
-regmap_irq_thread() dispatches only the bits registered in the irq chip, so
-there is nothing for the described storm to come from.
-
-The point about handle_nested_irq() feeding note_interrupt() is right in
-general, it just does not apply here.
-
-Thanks,
-Donggeun
