@@ -1,161 +1,130 @@
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDF63F482C
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 09:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4089466B79
+	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 10:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788602092; cv=none; b=fZSW14cJgJzK1/ftVhspehQnGx2Vqf7kPQjnT2VHwAlcBLTF1PgLj7mMy3Cg/BD4PrC5ONO+HgU1LcjSUNsPEHuvSf1qD5IAnQBYOgh/xyXuePrDwMZnMG7iq5na0YLjpaJXuW/Bq6sxnqsqKUXLrWfrzR5HZSrD3qpPzdBUwYk=
+	t=1788605230; cv=none; b=odTMHK0MLvHmRD4RSnqfXhKs5q/Ptdx3zPEinPsnruMi9BJZVI5TB3EML0L2/zeM5/fbzpPeuISXa2k2mGZ8mhd5HcvY1NQkBCHTXn3BeQxDWaQJ1sA7pXgIPPXlnUn/9mk8TTEYxkWGY2ULOIr+DjPzylKytBP4NGUeYJi4IBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788602092; c=relaxed/simple;
-	bh=1AjkQ6BXaSozPVxmK/qZMxj1lGPRevnEvvOL6EtOXLo=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=pjuQgGD0gkd9M5JnxsDRCJI+moPxUvjiBO93ihoOdRq99qBdT3v4cKA/EfUeQAcM48x3FKaddR1x7pKpZWS9ZlChOMJEM/beUXZFEGNtUqo8EuvfjNmPVxrUZ6R05kl/JrF7C4kDju/nSJiu2ZpKQ5vFbHcNUe4qkeNTjxHb+KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=esw+sgqx; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=3lSbPgOU; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+	s=arc-20240116; t=1788605230; c=relaxed/simple;
+	bh=FURAT1JGHLGpZcx/dCsf46KlQtuSykeO5xA3pIekbEI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vD+ZgUJaJGV1isCsbMltSAslY+KHWgYcxrqfhYy8x92cIxAUIQKTHdpHxX6cCnTH5sSZr455iZVO3EfRlYDv1MVOkLIfqid3KFMkUr9yAmj7iF4arxEhEjOXS6seqhQTl/94pSTTJRx5rpBqS2TK+aKFKfd4JasQop3okJQjl7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=KXRj1Ek1; arc=none smtp.client-ip=212.227.126.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="esw+sgqx";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="3lSbPgOU"
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1788602088; bh=+5EY1/ecw6qH8xH7rYe8een
-	zuL4OTvImzSj7U5T51WY=; b=esw+sgqx6DMXwP3W7O7YgCaGSmhTuhDLoyDsxUmix3OZ+xP6eE
-	O0tWpD18X9oTNYMB1J/WVdEFAci9kaSGRqbQr5XvssuKkBTAhmNJjVo1rXha/xvronfAxG6/5ay
-	7XhSQ7/+Cq574LajdWUiM0E9ZC8xPiYYVkiwE9+FDnc78lD9tPF6TyxnDnrAkfL3TtdQBzf6YDQ
-	qZ93njxNmgQMi+N3V3xJzrtARiq19DzDIaH4IRGJ0OF6i7g7rzLCLf1ofktGCOJPV+Q4Lp0P2bm
-	0GZ77/hHJegV/B5PUabazz1GfNHJFFJkOAn7/sOTD+zsJVIrQ/TVRcN0maxsKBkuiSg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1788602088; bh=+5EY1/ecw6qH8xH7rYe8een
-	zuL4OTvImzSj7U5T51WY=; b=3lSbPgOU9quhdZVfptE9YcZqLTd2yQUUA2eQgj3Al4EYejBvJ9
-	L9mEdoLEoUF8ycN3Qu89bpoiHJuW8phrOqCQ==;
-Date: Sat, 05 Sep 2026 10:54:48 +0100
-From: Bradley Morgan <brads@mainlining.org>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-CC: linux-serial@vger.kernel.org, media-ci@linuxtv.org
-Subject: Re: [PATCH v2 2/5] net: encx24j600: convert to kthread_run_worker
-In-Reply-To: <20260905094038.759EB1F00A3D@smtp.kernel.org>
-References: <cover.1788513591.git.brads@mainlining.org> <ab6035a1d48109ba93fdb36d15d3306c46ab94b3.1788513591.git.brads@mainlining.org> <20260905094038.759EB1F00A3D@smtp.kernel.org>
-Message-ID: <2A074C41-E499-4B41-9BB5-680089A6757A@mainlining.org>
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="KXRj1Ek1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1788605199; x=1789209999;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=arIaNXDw17FhzBN3sfpYfx0owHPFunTxf476/t+MRiI=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=KXRj1Ek1skOOoOv0/DoqHJfpaQ5eY/iQJhv9A3mJyFSzELpZlAi0HmFySa8+H/lF
+	 G4pqoMKS3NclGFg3uXSkO24fdEEMryO1/TqynCs3j3wHOgV2G6ZibLH/lCACL6kzT
+	 DoF7ecXQi0PN3T3ZoFt19Nk4zDMdxfpmeNASe6jbkx7KbdXibd6ibfm/mqc2Ux6ie
+	 3tdllFmy0DLb7usCz0mG8xw6azLeoSp1bmci6jLBWBLQ6MQSiQTIa+zGOaA4NUXQl
+	 G6Ub8mjOjtWdAZR7wklV2hfMHsVpsn21xoZ5UAHlsVoQuBdDiF3EXj0hzK81uaHKT
+	 FzL+9/UXJyKaSWriTw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 1MCbVD-1xAk0q1EjD-001FCP; Sat, 05
+ Sep 2026 12:46:39 +0200
+Message-ID: <8631fd93-36d0-418b-bad7-fdb8919c791a@oldschoolsolutions.biz>
+Date: Sat, 5 Sep 2026 12:46:38 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] arm64: dts: qcom: Add Purwa IdeaCentre Mini 01Q8X10
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz>
+ <20260905-x1-ideacentre-mini-prettify-v1-3-9a87882973bb@oldschoolsolutions.biz>
+ <20260905094245.0320B1F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <20260905094245.0320B1F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:cWKpyw05iz+U2E1ZIG5b0mfUKPEE0WZf7VEyWKEgVTe2WTOLsLA
+ dVEppAFXTGmmHdMnn74LvoqMdT2Fe+9kitBsAUe2HnLOQaAqH3IqP8UpfNCZHMJI8T2hdOD
+ 4alENmSQUi18qpr77/nAnUaTl5DslpPi9SvcOkqHZMn6AJI8nTOtVLySYAx1rtvt8RH/4qB
+ cWW+5FEASBpoXOfKcHnnQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Z84DrGtxv1A=;GbpXBenpIgzIEmGU7ZgoX0kib/H
+ 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
 
-On 5 September 2026 10:40:38 BST, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 2 potential
->issue(s) to consider:
->
->Pre-existing issues:
->- [High] Missing state cleanup for `priv->tx_skb` in TX timeout, interface stop, and device removal paths leads to memory leaks, data races, and potential BUG() panics.
->- [High] Hardware memory structures read over SPI are not converted from little-endian to CPU endianness.
+Hi Sashiko-bot,
 
+On 05.09.26 11:42, sashiko-bot@kernel.org wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qc=
+om/Makefile
+>> index 6c2ac11133ca7..e6105e5790954 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -167,7 +167,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+=3D msm8998-sony-xperia-yo=
+shino-poplar.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+=3D msm8998-xiaomi-sagit.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+=3D purwa-iot-evk.dtb
+>>  =20
+>> -purwa-iot-evk-el2-dtbs	:=3D purwa-iot-evk.dtb x1-el2.dtbo
+>> +purwa-lenovo-ideacentre-mini-01q8x10-el2-dtbs :=3D purwa-lenovo-ideace=
+ntre-mini-01q8x10.dtb x1-el2.dtbo
+> [Severity: Low]
+> Does this unintentionally remove the composite rule for the existing
+> purwa-iot-evk-el2 board?
+>
+> Kbuild will fail with a 'No rule to make target' error when building bec=
+ause
+> dtb-$(CONFIG_ARCH_QCOM) +=3D purwa-iot-evk-el2.dtb remains slightly furt=
+her down
+> in this Makefile, but its underlying composite dtbs definition has been
+> overwritten here instead of being preserved.
+>
+Oops, that was not intended. Will be fixed in v2.
 
-Meh. No thanks.
+with best regards,
 
->--
->
->commit d2a821de33aec8b828ff820d968fcd13ce493790
->Author: Bradley Morgan <brads@mainlining.org>
->
->net: encx24j600: convert to kthread_run_worker
->    
->Convert encx24j600 to use kthread_run_worker() instead of the
->deprecated kthread_run(kthread_worker_fn) pattern. The new API sets
->worker->task before the worker starts.
->
->> diff --git a/drivers/net/ethernet/microchip/encx24j600.c
->b/drivers/net/ethernet/microchip/encx24j600.c
->> --- a/drivers/net/ethernet/microchip/encx24j600.c
->> +++ b/drivers/net/ethernet/microchip/encx24j600.c
->> @@ -884,7 +883,7 @@ static netdev_tx_t encx24j600_tx(struct sk_buff
->*skb, struct net_device *dev)
->>  	/* Remember the skb for deferred processing */
->>  	priv->tx_skb = skb;
->>  
->> -	kthread_queue_work(&priv->kworker, &priv->tx_work);
->> +	kthread_queue_work(priv->kworker, &priv->tx_work);
->
->[Severity: High]
->This is a pre-existing issue, but is there a missing state cleanup for
->priv->tx_skb in the TX timeout path?
->
->If a TX timeout occurs, encx24j600_tx_timeout() wakes the queue without
->cleaning up priv->tx_skb or clearing pending TX state. The next TX here
->unconditionally overwrites priv->tx_skb, leaking the previous packet.
->
->Furthermore, a delayed hardware interrupt for the previous packet can
->arrive
->and trigger encx24j600_tx_complete(), which frees the new priv->tx_skb and
->sets it to NULL. When encx24j600_tx_complete() subsequently fires for the
->new packet, it sees priv->tx_skb is NULL and calls BUG():
->
->drivers/net/ethernet/microchip/encx24j600.c:encx24j600_tx_complete() {
->    if (!priv->tx_skb) {
->        BUG();
->        return;
->    }
->...
->
->Alternatively, encx24j600_hw_tx() may run concurrently with the delayed
->interrupt, reading priv->tx_skb->len when it has been set to NULL, causing
->a NULL pointer dereference.
->
->[ ... ]
->
->> @@ -1100,7 +1096,7 @@ static void encx24j600_spi_remove(struct
->spi_device *spi)
->>  	struct encx24j600_priv *priv = dev_get_drvdata(&spi->dev);
->>  
->>  	unregister_netdev(priv->ndev);
->> -	kthread_stop(priv->kworker_task);
->> +	kthread_destroy_worker(priv->kworker);
->>  
->>  	free_netdev(priv->ndev);
->>  }
->
->[Severity: High]
->This is also a pre-existing issue, but does device removal strand the
->un-freed priv->tx_skb?
->
->During driver removal in encx24j600_spi_remove(), the kworker is
->destroyed,
->and then the driver private data is freed without cleaning up
->priv->tx_skb,
->which results in a memory leak.
->
->[Severity: High]
->This is another pre-existing issue, but are the hardware memory structures
->read over SPI properly converted from little-endian to CPU endianness?
->
->The 8-byte Receive Status Vector is read directly from the SPI interface
->into a struct rsv using encx24j600_raw_read() in encx24j600_rx_packets():
->
->encx24j600_raw_read(priv, RRXDATA, (u8 *)&rsv, sizeof(rsv));
->
->However, struct rsv in drivers/net/ethernet/microchip/encx24j600_hw.h uses
->native CPU types without using explicit __le16 and __le32 types:
->
->struct rsv {
->    u16 next_packet;
->    u16 len;
->    u32 rxstat;
->};
->
->On a big-endian system, won't the raw bytes be misinterpreted? For
->example,
->a packet length of 60 (0x003C) would be read as 0x3C00 (15360), which
->exceeds
->MAX_FRAMELEN and causes the packet to be dropped. The corrupted
->next_packet
->pointer would then be written back to the device's ERXTAIL register,
->destroying the receive ring buffer state.
->
->
+Jens
 
---- Thanks!
-https://lore.kernel.org/all/EE579805-42F2-4C58-B752-F28779EEB717@grrlz.net/
