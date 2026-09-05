@@ -1,272 +1,145 @@
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784263876A9
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 13:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B12C3859C3
+	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 14:14:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788616660; cv=none; b=jZ9Jakh8b3nry+cpu6QZjSYLZUUuGcVr6T1fbSyYIpj37rUK7quzLQYXWlUx78+xtzP5ajevyXSFWdlZuy43ajd6iuZuAcIUWKIm3dKMgU56XDlscrrgGXmcP20u1B+9NNKbQqM2rbd/Cyj1fnkK2uAFBCLvpquQAMNcUNoDVoc=
+	t=1788617653; cv=none; b=Dbrno+mzNWlMgL/+nlV52mMUVH3gINtq1JIU1b+6r3JwBc0TodD7CfpZO7RB7oTEvJqyfx1LVs3GBBECeKvRl9I/442stvo0xklIvd8Fz8D0WeX892LNrnyjjACuqfdH0EiAOCPLoQUQU+pVd7BIAALqYq6/akhM98JtjZzyluM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788616660; c=relaxed/simple;
-	bh=vXnU61UFpyt+DMM9G6XiZekl2auouMTqJgWDMTP697g=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=JkHMqAc48eddciGHMNkZSPVPOCEVGJQ1bTpRwyd7A7MwQtq9u7IYD7+du0Y2P6WsNcMcpgPGD67Bg6b8Eg9ot+nwaTMzWaCbh+25wAw1l5buRKqdUZxNmeBCtBsZrgU/TZrwYNGlBcrfg16SB94SLj1h38M3jzsVasnq+7ZCT5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=g8vjD7rq; arc=none smtp.client-ip=185.67.36.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	s=arc-20240116; t=1788617653; c=relaxed/simple;
+	bh=KXg1EAoM0/RMl7c/jKhO4NdJWpFjacna5aRKB0RlsSg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ti0s4b8DwS6vip/swzULtp6p42X5Xfp3iHuenVI3tWMX8XRtG9IP7rKIm4qYEDs6yOMfRS08Yrw+ZZUTVgUTGV+6elpdFB/VGsrCVMFkwXYKbCeMspWC5G/nCIHS4/DDBZQDytPpkPOaVQvYX+U/wKKqT8lewjKXvxVk4paaEbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sdZ0Vyj5; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="g8vjD7rq"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 7BCE5240101
-	for <sashiko-reviews@lists.linux.dev>; Sat,  5 Sep 2026 15:57:35 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1788616655;
-	bh=++lbWBbv/uaZwhIT+nh+7IAZo638rIqWLB59ftFSgf0=;
-	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP:From;
-	b=g8vjD7rq5/xiaEnzmlogu2jQxAj8G0r8g7wJxVXjOoegciHd4UCXznqxAFW9FxOR+
-	 1A2Hf/tl5Go1pdrb7amOljiC5HtSnOcff9FhRi0Vt7a3NzQrTL2btSVHxJ26QYOEBx
-	 RLZxphJVj9ew8UJ4sZ7Y3mgd9YdHopWiZ2CjZjv3n/5RlZp9Td568yW+CrEHR+NGUy
-	 mbjVq7ohPw3Xwlv9NJv8Vl+voCkCRg9vr9n/l3fm8BCG7t5dc455vOGBF3NZT1IbiK
-	 nJtxqufskdPaEviDw3NL8cV/8NxvMXXxKKco5zXxnVMMgwjfDmlfsAe1CKmDrWdN/m
-	 B8jJ6tVGeiEFQ==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hcZf708jkz9rxL;
-	Sat,  5 Sep 2026 15:57:34 +0200 (CEST)
-Message-ID: <f040f319f077f1fe21991c3546d76430c799034b.camel@posteo.de>
-Subject: Re: [PATCH v2 2/2] rust: serdev: Fix race condition on driver probe
-From: Markus Probst <markus.probst@posteo.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, linux-serial@vger.kernel.org
-Date: Sat, 05 Sep 2026 13:57:35 +0000
-In-Reply-To: <20260905134936.7C8FD1F00A3D@smtp.kernel.org>
-References: <20260905-rust_serdev_fix-v2-0-35dfcd06ef2e@posteo.de>
-	 <20260905-rust_serdev_fix-v2-2-35dfcd06ef2e@posteo.de>
-	 <20260905134936.7C8FD1F00A3D@smtp.kernel.org>
-Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
- keydata=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
- jfGillcaQOqFZ3WwVqyzG1BUfTow==
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-rH98I0mo4wPN1oB5PLYf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sdZ0Vyj5"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c9e7391839cso2019749a12.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 05 Sep 2026 07:14:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788617646; x=1789222446; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nUSMR9Rv7P0bE66sYv7P+jDtBU38A8MZQ8qP3Q7v8aA=;
+        b=sdZ0Vyj5eMBVw41R+ZAMGhs94BETvh2z+PMrA3DoZ+pamvh758YP9J77PY4VsS+1xg
+         8TPOv1sZoTz5d+CWjyNjp5u7Iv1kwY4nDGYhhHk1NZd4vVHOD9fdQ1vq7CblUANJsYFl
+         wgsljyBX4UisPxr49/hbn8CHH8WfnSvK92KQwAHUBdc9MSIFLHl/iFYwPn8ZJPjSJ9/V
+         kGv3rY9qhteMe8P5ZBd4GH+RUZ+SILYxtUK7gw6xTrr5Zk+oMtMai12bCtFW0AEPiSH1
+         9eNxsg1LEr29DeFvF7+gPIKYkBITQmdQnaJIZ5L/IzqpjeebrhQSNJxlHkjec/i8baD8
+         y5iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788617646; x=1789222446;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nUSMR9Rv7P0bE66sYv7P+jDtBU38A8MZQ8qP3Q7v8aA=;
+        b=M8kSJQ8ErkGTvb5WMbP+jSBTFmSKRdPXhA+frqqFHgl4ORHHwQeotlg2CBuQDlN5fU
+         SvkkW0EI6pHYoGvRk2gQmuxC2F3AudJ469uFkh0LDjyNzyQw+2iWuroe0aokEPDvwQ5X
+         ex0TjlFTtN85ijjnmDjn/6yHggZMXQbCFeTIcqZEx+MwBX6/IjfGhg89Ixu9qsnjW+QY
+         r0MkVvKt9QrSUk6ieaJO7ApOwmfPqvk7k9Bvl6QJzFPutyv63njvSW6BcuvrXfdq6obE
+         KXul8VK3Zr6WXVlwlYVs06hglYCQ5wOzfiRRkBIM90Nnoo0BZKjOKpI+35cXqWxc0FNb
+         EOZQ==
+X-Forwarded-Encrypted: i=1; AKwUvByAiqw4VADBX/hJ+tOhWnwxgqg1jDrepaISd2IayGfW4fV3bkk6ANNj92u9YUMkByqEWn4ATaxFqG67C5zs82s=@lists.linux.dev
+X-Gm-Message-State: AFuF++ljeRdNNSqaZvrn4S4Hm8inAtSFeARgFEdwd+d1rZ97MsaHADSs
+	5ba0c+OL+a4G3r8Dll3481VN23UcbLEPIqvL9LHY4e2N6bcSwiqCdJCi
+X-Gm-Gg: AYBFou1FRCpYq2B3onbnl3ShbWzMXHNj/F0BWBat2GYLJMUSTa8NJ0tPoVRznm6uCP/
+	+8gjo2koWwjwRGonXqkuEIF93bnpp77VpINSWEY5QDpmFSb+YVmJOmCQaZsGvLX/oJbIJ7ntMgP
+	4l8kEaSDvN6HqSY+X6J6hCBDeT9EylB4V7hhEu7sDuATHXT+chS6Sajx0nGYDvXJHQ+yqri3yz/
+	83lzmr75nrdhEqQfL0m5ArheqgfpVzH3keuAoO08hW++NevO4Z3mnot9OaEdCncLmq7fXJ8rhs+
+	yi2A5wGKT60pl+MrtGL0TAv/ERlFnQjGqGAiW7m2JAQcW59tcy0orh3FNzue2RfyDHK3t+9lw8J
+	+wONxYgIyX4imdVlYr3rAg89Xk65RS7mJyQKL0QXkCf5v//hCKuwsnqiyZhmcuBYSublMaNibb8
+	iyWb/TbXmbId2a/r7OEeLgM9+Y667Z8N4ps2b9Y3igZnvGD8i5mVQxx86gotn+HPxp//s=
+X-Received: by 2002:a05:6a20:a11f:b0:3c3:b57b:6285 with SMTP id adf61e73a8af0-3da3a0af18emr17785724637.13.1788617646498;
+        Sat, 05 Sep 2026 07:14:06 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([115.164.90.14])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc46b4cd51esm653669a12.2.2026.09.05.07.14.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Sep 2026 07:14:06 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: aethernet65535@gmail.com,
+	damon@lists.linux.dev,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v3] mm/damon/core: allow esz to be set to zero
+Date: Sat,  5 Sep 2026 22:14:09 +0800
+Message-ID: <20260905141416.4347-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260905125825.BD5D51F00A3D@smtp.kernel.org>
+References: <20260905125825.BD5D51F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Sat, 05 Sep 2026 12:58:25 +0000 sashiko-bot@kernel.org wrote:
 
---=-rH98I0mo4wPN1oB5PLYf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, 2026-09-05 at 13:49 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->=20
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [Critical] Use-After-Free and Mutable Aliasing in `drvdata_drop` becaus=
-e memory is freed before clearing the driver data pointer.
-> - [High] `T::receive()` can run concurrently with `T::unbind()`, leading =
-to a Use-After-Unbind race condition.
-> - [High] Circular deadlock between `probe_callback` and `receive_buf_call=
-back`.
+> - [High] 32-bit integer overflows in time quota and throughput calculations lead to severe miscalculations on 32-bit architectures.
 > --
->=20
-> commit 67f5ed19e07ddf9c3ef694dbb2c1e962df051525
-> Author: Markus Probst <markus.probst@posteo.de>
->=20
-> rust: serdev: Fix race condition on driver probe
->=20
-> This commit fixes a race condition on driver probe failures by using
-> drvdata_drop() instead of drvdata_obtain(), ensuring the serdev device
-> is closed before the pointer to the driver data is set to null.
->=20
-> Closes: https://lore.kernel.org/linux-serial/20260903222159.70A911F000E9@=
-smtp.kernel.org/
->=20
-> > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
-> > index 17ca504b7f8d6..a12b1dea12aa1 100644
-> > --- a/rust/kernel/serdev.rs
-> > +++ b/rust/kernel/serdev.rs
-> > @@ -176,7 +176,7 @@ extern "C" fn probe_callback(sdev: *mut bindings::s=
-erdev_device) -> kernel::ffi:
-> >              let private_data =3D unsafe { sdev.as_ref().drvdata_borrow=
-::<PrivateData<'_, T>>() };
-> >              let private_data =3D ScopeGuard::new_with_data(private_dat=
-a, |_| {
-> >                  // SAFETY: We just set drvdata to `PrivateData<'_, T>`=
-.
-> > -                drop(unsafe { sdev.as_ref().drvdata_obtain::<PrivateDa=
-ta<'_, T>>() });
-> > +                unsafe { sdev.as_ref().drvdata_drop::<PrivateData<'_, =
-T>>() };
->=20
-> [Severity: Critical]
-> This is a pre-existing issue, but does calling drvdata_drop() here introd=
-uce
-> a use-after-free and mutable aliasing vulnerability?
->=20
-> Since drvdata_drop() executes drop() on the driver's private data and
-> deallocates the memory before calling dev_set_drvdata(..., null), the glo=
-bal
-> device pointer still references the freed memory.
->=20
-> If receive_buf_callback() is invoked concurrently by incoming serial data=
-:
->=20
-> rust/kernel/serdev.rs:receive_buf_callback() {
->     ...
->     let private_data =3D unsafe { sdev.as_ref().drvdata_borrow::<PrivateD=
-ata<'_, T>>() };
->     ...
-> }
->=20
-> It can fetch the still-non-null dangling pointer before it is cleared, an=
-d
-> block on the active mutex. Once drop() completes, receive_buf_callback()
-> would wake up and operate on freed memory.
->=20
-> >              });
-> >              let mut active =3D private_data.active.lock();
-False positive.
-
-The PinnedDrop implementation closes the serdev device and therefore
-synchronizes this callback before the data is freed.
-
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can holding this active mu=
-tex
-> across the T::probe() call result in a circular deadlock?
->=20
-> In probe_callback(), the active mutex is locked before invoking T::probe(=
-).
-> If a driver writes a command to the device and synchronously waits for a
-> response during probe, the incoming response would trigger
-> receive_buf_callback():
->=20
-> rust/kernel/serdev.rs:receive_buf_callback() {
->     ...
->     let active =3D private_data.active.lock();
->     ...
-> }
->=20
-> Since probe_callback() holds the lock and waits for the response, and
-> receive_buf_callback() receives the response but blocks indefinitely wait=
-ing
-> for the lock, does this structurally guarantee a deadlock for synchronous
-> probes?
-False positive.
-
-On failure, the drop order guarantees that the lock in probe will be
-unlocked first. It is still possible for receive_buf_callback or
-PinnedDrop to acquire the mutex then. In any case, there is no
-deadlock.
-
->=20
+> 
+> commit dc1c35769ce920ee1796367097f9876b2f24a643
+> Author: Liew Rui Yan <aethernet65535@gmail.com>
+> 
+> mm/damon/core: allow esz to be set to zero
+> 
+> This commit modifies damos_set_effective_quota() to allow the effective
+> size to be set to zero when the goal has been achieved. It changes the
+> order of max and min calculations when quota->ms is set to ensure
+> that a zero esz_bp results in a minimal effective size instead of being
+> clamped to min_region_sz.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index ce8c6f99106ed..3e9c9b6385d4e 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
 > [ ... ]
->=20
+> 
+> > @@ -3259,8 +3260,8 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
+> >  					1000000, quota->total_charged_ns);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can T::receive() run concurrently with
-> T::unbind(), leading to a use-after-unbind race condition?
->=20
-> During device removal, remove_callback() calls T::unbind():
->=20
-> rust/kernel/serdev.rs:remove_callback() {
->     ...
->     T::unbind(sdev, data_pinned);
-> }
->=20
-> It does not lock the active mutex, set it to false, or close the serdev
-> device prior to unbinding.
->=20
-> Consequently, incoming serial data can trigger receive_buf_callback(), wh=
-ich
-> evaluates the active check as true (since active is not cleared during
-> unbind):
->=20
-> rust/kernel/serdev.rs:receive_buf_callback() {
->     ...
->     if !*active {
->         return length;
->     }
->     ...
->     T::receive(sdev, data_pinned, buf)
-> }
->=20
-> This forwards the data to T::receive(), which can execute concurrently wi=
-th
-> or after T::unbind(), accessing driver resources that are actively being
-> destroyed.
-It can for now, but this shouldn't be an issue (as the driver should be
-aware of that). But this will change anyway through:
-https://lore.kernel.org/linux-serial/fe6a21fa8604bb35e32971b80cd75efb8ee3d2=
-02.camel@posteo.de/T/#t
+> This is a pre-existing issue, but does mult_frac() silently overflow on
+> 32-bit architectures here in damos_set_effective_quota()?
+> 
+> Since quota->total_charged_ns is represented as an unsigned long, it natively
+> overflows after 4.29 seconds on 32-bit systems. Furthermore, when
+> calculating throughput via mult_frac(), the remainder calculation
+> (sz % ns) * 1000000 can silently overflow a 32-bit unsigned long, which
+> causes throughput estimation to be completely incorrect and often near zero.
+> 
+> >  		else
+> >  			throughput = PAGE_SIZE * 1024;
+> > -		esz = min(throughput * quota->ms, esz);
+> > -		esz = max(ctx->min_region_sz, esz);
+> > +		esz_time = max(throughput * quota->ms, ctx->min_region_sz);
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but can throughput * quota->ms overflow 32
+> bits for quotas over a few seconds here in damos_set_effective_quota()?
+> 
+> If this wraps around on 32-bit architectures, it improperly clamps the
+> effective size to ctx->min_region_sz, nullifying the time quota feature.
+> 
+> > +		esz = min(esz_time, esz);
+> >  	}
+> >  
+> >  	if (quota->sz && quota->sz < esz)
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260905124706.3398-1-aethernet65535@gmail.com?part=1
 
+Thank you for pointing those out!  I will fix those separately.
 
---=-rH98I0mo4wPN1oB5PLYf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmqcH84bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSZGgP/0qRNsYq/cJDE6B63cAT
-hDNqIJFmTFt8VmPCEAKLiZhFBe6tkb/yVUtPJU3lKSJz9Yti+EcB4EWcWs887Amx
-dpA0MMcSOmbegVmsW35LwpRjO680E7AOP0BzDlS4fVX//KAHvMk/BQrNWIzyEInX
-NGRkAi9t1hPcKjGihek2LeXWL2+HnhbaskufkDhbgJBWQdbdJ9aW3uS3o1u9WA3j
-JY1oSSp+qdPK9stka2onUGP9mBBw1wO9O5IfDpbWDI4tZHPEdhRXexsmyW/sBTQX
-9bWsrg5Rso76GKytmGsLFQ5v5VIYqXvRZ2p4/8zQbbkbVpM+8P08VDsCCgkOyC8/
-SOzz6RLfeUaYBjTl1IgZEBisp5erG6iYKhaIQii0LFi9lb83VFYnOG4VI7Fp8f3L
-Lbi4hOjQYzH3XFRso+gudlUPlFo7CvnVYNOY1mZTyUzq7nh2cAKM07Y5iO4Sshx/
-QuQ1DpPu3ijLBICMRFShD2QqX04U/oWa0CuWgN2rWIjmLcJ++a/reHClFb4BN6ip
-T8PCodmU3nohtFfizWnTgWs7kyVVDjRlrtkEkRICpSPzXnkGowLyBxrsXywaAc6c
-s8CzQUXLuwnG668u+X2mGsqVMSpjKAT8mjiEyX6sRmiKMzEwEf4LP9A2GUG3qsxb
-1svX/ThlUYjAJTEYkeadlbVq
-=+lew
------END PGP SIGNATURE-----
-
---=-rH98I0mo4wPN1oB5PLYf--
+Best regards,
+Rui Yan
