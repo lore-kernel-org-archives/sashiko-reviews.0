@@ -1,63 +1,63 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012051.outbound.protection.outlook.com [52.101.48.51])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013029.outbound.protection.outlook.com [40.93.201.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308842C3757
-	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 19:26:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A55379EEF
+	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 19:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.29
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788722768; cv=fail; b=OFz3gIrSs32FLOgL7g/7hjOxf/wNqFdgm5ttvDdUdebZnCwlFqolGrgb7KZqIpK19q5+hk0zISz/o8lMCeQj+ezm4qokwXaKSP67OXPHxjDqFflCcJuv2iYxkNDb9/BM0ht6VD+xS250tBNq4OAWQwTnOjC1Y/gJN3yEIlzQMi8=
+	t=1788723719; cv=fail; b=EROJhP2oZUupB8ARwgtiT25EeOLn2m0sdZWRZkKFuvnARckkBAZIcdBwSZMWRB3aemNXTpuaBmD1NmIUjsZme80v5az1dpTsebfBzDhWM6ta4ByXfYQkL9bam+qlHgdUKyqSvMszAlauqlWYCDj1n1FrKQXMX5Aut4ER2syUiJQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788722768; c=relaxed/simple;
-	bh=b2aOj6IMJF9e0mRHuwiCRX22JJTUzFuGlHKtkAH+j7E=;
+	s=arc-20240116; t=1788723719; c=relaxed/simple;
+	bh=VIxDJ5uLDsJyVbCpa0Dwqb5UAGmC4kJe3gInfQw5Np8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=PbXS4tArYFoFMC+HiFH+8rGU+SgpPh5xQev0S9qDlTRGYc8CCzd3tLE8VTF8xcWlKIJkv89J0reAdAgt/katyKoAwXgzR8nSDmSvZIw+AjfXeska2s4gdxbsGb1vphfxymL7ED5t6TlCgz5iKAqj0L3rldf0qTysUEOOmxv3Ewc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=5YECHike; arc=fail smtp.client-ip=52.101.48.51
+	 Content-Type:MIME-Version; b=IsTAQPJTAPgvprtN092ME9Ij1AwPbc1KjoWhoQ9FvFZpKVTdHFaB4+Y9eRFkYV0O+C9PVFtTh/tXDr7frAm+aoCunLHtBIu2UOy5WimI2fjsq5rUUmKXgQQxK4nv6wzjVPZ2+4twD+QjRv8uhnaEta4Mg2lL3+5r4qzRxn/Wf4s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=A0r6f5SG; arc=fail smtp.client-ip=40.93.201.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5YECHike"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="A0r6f5SG"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ddmq7woK9UOVl7LPfThQxwqZdGE8+GRmUMruvg1YlTY0ou6bGRxEv8DjG62J5X5xfImuWED8G1Sn4qu4F7UXvLXsgLAE3xylFhdPqbwh7pppPeIo3js3ekRoInbJOxRiMK/lQxLtm+5et3UqFVwOtujNeh7zX3qsIR6w9alcQyRwvpydBOz2I6pV/JYMyeMmnAnjqH0amHQ3NW9nfETcBcFLfArudFwRJ8/rhoKjdCSCBEroiZALl9NKHUz1qum8bydFXC6VR+Qy7ov0XTfMEsjpHjSUrFnKIEN7mtBoMl5SZvFiG79uIP1/gItavGg3yRDQYBXSfNVkx2WnqXfi8Q==
+ b=DKwaemzlEQTl4HszT3YKiI+2gRlgH4RuEXULysRz09nay52s2s1w371odF5eyZs+IZxyAicBMaKl14awa3PpE92ZJcxCOKSzDVmRI+dHpiqMoM1jm2iECDxowmwk585XD+cCjG/vpW4gyARtwWOV+Ok2iESlW94aGL+3+lCQkI0F9snwHkd2tcU9/VEsrb9XtE8D3IAEv2OvjcO2LoaqUxZnkFCk9/Alx/SCRtcnKVzEYvDOLpQoxEm3QQdSOycrCVi6H7TOJCZ/4FcBurlmDPesvcWN6OFqh5zJMbPngSYozFklkgKqcqQFpMA7TR4VqZuDpY+ahVxuse/EpS+UJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m9PCPhzbQm9AgQrNodvrpdSpQZOfgR/cE1yGc6BqbKE=;
- b=SCxYvYceXISKySIcCNohFmlCO7n1xOd/BVtbSmopZ+gdvNKzwLPgtcPMkVLaYnNSUvU2LyP4MzwTXGBxBPUoTleoKDn2Y0QxrZ+fsRE126RgoULBiz9tlpVpiqCZ3ksgDapiXomHvBdKcMkQn5rBbHMNrAkklqprwdIH3JUYIn8gn31yXXNlsJevV7fs5fF805+7tP+lqrV1C5SfkwTwuG16ucUxDcx3Ge6pOKCCMuYUwJYrF9zPHceNBbYpIYosw61NMbej0J7j+kpyEGBnGHY1juj2goAJMk3d4SrfNB/VUrddkV+48Y+A/yHLbUQgFjTl3v/OfPfoEff/J0iXpQ==
+ bh=3CW3NZGLcCHWl/gOnbPl/idww+oPTYOlKknXY+VKsg8=;
+ b=j75nk3WUEWtSSWt2QBUaneH+7EX7qUQJKzE07LHXm9oA7Cqe6TLetzRJvovjmXdFB38uxUU8zEJES7rAuEAIr2ZzImUfLPoRtX24LcoKYRUZpi+ZakTEWCXddMMLUyxQmQuq2xq7UlLZt/3o0ehlQxezBuKRO9l7pMNXNX1tnMEJk1KofzhkyjRgkfJPo+oOAfsqzrL5HqwoB4OBzy10JnRbyh08pMfVJkobPxdxIhqQFZ+a7S2nDIvU2LBBCeSjSOVPBGRMWIPSWHsp8uxz3z8DWXtw2pvKZNnInJNATMtBauWinRdxvvfuwowaQPrBzVM2FAbfeq3f5hh2v6v62A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m9PCPhzbQm9AgQrNodvrpdSpQZOfgR/cE1yGc6BqbKE=;
- b=5YECHikeqiDUe+bFuilxjoeTiCpnFNjp2hyd/qvLMcQlmpOcPm+IYVRMen2K5KcSEGmwrPRfGLtjhaE56OMbwXaVFDe2toS/7ogaClRylZFNLP0X6x4SY3kmxW8Yj41YedWKKHogaY1OpMybHz8OWHHzSArx3GqrM6MvmITV+go=
+ bh=3CW3NZGLcCHWl/gOnbPl/idww+oPTYOlKknXY+VKsg8=;
+ b=A0r6f5SGFgimVy1x+7apN2ID8nd9HrnwoFEvQ1UcvgqyonfJIEPxbIZwCmLofGUbdgqErIhq8vukZBrk39uygc6IyakwloaI4KYFgw1wycD6XxgULX7HNAUpxTrOwXS2zJZx1pwH1+K3fOjnUR24/4JMuNcbsTT6kQifEaze8kA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SA1PR12MB6798.namprd12.prod.outlook.com (2603:10b6:806:25a::22)
- by SN7PR12MB7372.namprd12.prod.outlook.com (2603:10b6:806:29b::15) with
+ by IA1PR12MB9524.namprd12.prod.outlook.com (2603:10b6:208:596::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Sun, 6 Sep
- 2026 19:26:04 +0000
+ 2026 19:41:54 +0000
 Received: from SA1PR12MB6798.namprd12.prod.outlook.com
  ([fe80::e317:e4a3:6ae9:8c54]) by SA1PR12MB6798.namprd12.prod.outlook.com
  ([fe80::e317:e4a3:6ae9:8c54%5]) with mapi id 15.21.0382.014; Sun, 6 Sep 2026
- 19:26:04 +0000
-Message-ID: <330a7083-7280-4430-9fdf-0dcf7349cc26@amd.com>
-Date: Mon, 7 Sep 2026 00:55:58 +0530
+ 19:41:54 +0000
+Message-ID: <6841b0e9-00d9-4ad4-bdaf-ed40aa696dad@amd.com>
+Date: Mon, 7 Sep 2026 01:11:48 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 5/6] net: xilinx: axienet: Dispatch statistics
- through axienet_config ops
+Subject: Re: [PATCH net-next v3 3/6] net: xilinx: axienet: Add 10G/25G (XXV)
+ ethernet support
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 References: <20260831150816.1020883-1-suraj.gupta2@amd.com>
- <20260831150816.1020883-6-suraj.gupta2@amd.com>
- <20260901150909.9EE531F00A3D@smtp.kernel.org>
+ <20260831150816.1020883-4-suraj.gupta2@amd.com>
+ <20260901150908.D57951F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Gupta, Suraj" <suraj.gupta2@amd.com>
-In-Reply-To: <20260901150909.9EE531F00A3D@smtp.kernel.org>
+In-Reply-To: <20260901150908.D57951F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN0PR01CA0008.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:4f::13) To SA1PR12MB6798.namprd12.prod.outlook.com
+X-ClientProxiedBy: PN4P287CA0004.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:26a::15) To SA1PR12MB6798.namprd12.prod.outlook.com
  (2603:10b6:806:25a::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -66,192 +66,187 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR12MB6798:EE_|SN7PR12MB7372:EE_
-X-MS-Office365-Filtering-Correlation-Id: 801f0f2d-803e-4b78-403e-08df0c4cb14c
+X-MS-TrafficTypeDiagnostic: SA1PR12MB6798:EE_|IA1PR12MB9524:EE_
+X-MS-Office365-Filtering-Correlation-Id: 11b7e49a-5f1d-4b99-95fa-08df0c4ee7a8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|10067099003|6133799003|56012099006|11063799006|4143699003|5023799004|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|6133799003|4143699003|56012099006|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	tIwMNyZXCRxEOnjUZBCqUMA2VW/HQjbYbHKJbiKbd5gkcSm8fyMYWDLWYLmTwfqqjYZPs5jg88saxNqBGC2VqFp/TLf2KxuUGzbJKoe7ZNmJVuDfuyRfC0OlNYubIqwth+aoQ+pdk7OvcTsBtOP8UacHYwzXuh27RtwZ70gMN+nggwLK3PpVT1/bjy7i/DLv1WTK19nOvI16tAaacADGK9lCrUtiA3WTrXvU3EZi/GlzkCrdzOPRkdf7M6WXO2mam6OqbNAbdI3LomPqnBjbW+GsFsgXP/THaf5St49MImjuyT3dWZDMu/54or/rA2wGVAEz5Ls7gQV7mGjn4UFlMg1CvHV00U656Ml6gzUkGylAeQJGrtmgo5JE3yBLhJoKe3GFLj/EPDzkTrbGHv9oQJLf8IW05ywxUHhvHxwrzBDgR2iGeYEQsz2rsma2YfgxvqIbPShMZZX0WB0k69J//HB1qkC24xJfOxTsMagvABfSf3ngUhTCZvu3gn3cpHYTy2WXwUPPRxy9BeFzpHRJ6+wzBnkHSJ2++sDVJ6jlDnrts28f2W8z7egJKT6mnWNrZmSvWe6BQCHe2/1LsM3QwEfNJAavem8qkkcuRI0Ni+SwFnQtIc4cAm26kT/15nPxfj8OFBPLsNLAZVx/C9CCLNugC1iMr9ZvrEYDEeupdoY=
+	5My5n0+5cH8+CfuSqBgb+xXjCVfQoZ44MWBBUix8ct+RScXS8g+IGP6svicuolXknRGR8fN+EQAQpC2ZlH9NxtOc/zsvPfYTLGQc9yQyYrPSC9G/Z9BSq0rbMk1618jdpcZOwxUYMD1CYJl/2svfPDMYHA/heW5opCLue7TR4HexEyPZ8lNwAj3Jy0oiC9a2lGB3sygWKAmJ1BwUx04hQGPl1A3CbUi403AvtlIKbNHDcbkFeYow0nidaT0AGEJWX5hVdIduis9XVKeUBsN+FosdEEIA+CYImLvO38IDUuRgsZ+zQ67MfKZ3DODLdgRd/9YHsCslFWMAr6LYkaKFFLVTrheqLYIU7Tu/kPgne+lJpxaasZlefBh+IXITg3pG+dL0jROuDQeNOePLqeBEK2aeJYbjTWtGuaY3PzS19aAFfGf+Et8Q2bgSRkUQmZyKGrjfbM6C05W8pkpANxJUoTjLOYDaeC9m3x7ONcvG/zApj0sDfxmgTqDNaPaTJ8W2k8hUT4BAnEkQGtfGg+G5/wLs3GMGwvGa5BuNSpMqy0Uo0LHlgDL7Ty9CHpAovGOtF2+HnsJ44DV+e1pGwVfQ1lycP9u+oYX3xaoxPcNQdJqEliCQ9VZcosads2tNj104eYSVmnPOeV257zp20Xkr5wrovp4IYP+CAU6AkA0IqmI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB6798.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(10067099003)(6133799003)(56012099006)(11063799006)(4143699003)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB6798.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(6133799003)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RC9EbTNmTFJnSEJFSEZ3NWNkYmx5eGNId2VoWURKeFJRNFZ6LzRudVZuQ0V6?=
- =?utf-8?B?TldjZktURXh3RmVlWWI1a1BHWk9UT09jM2ZndzRKd0d3b0t3RzFOUmpSdGRv?=
- =?utf-8?B?NjZDcUo5T2g1OU5rajh4aVhDSVdqSDAzSWNOTVV5OWl0aGRNNFZ2TFdHblhI?=
- =?utf-8?B?MWZTVjVVL2JGTEhVOTlXV0ZTQUtNaWdSZmJWeUloYWcxRHNZcE1COGlNVVhM?=
- =?utf-8?B?QURJUFNkd3paOVd2UkxHclFCMVhwRFJXMjl0NHk5VmFZR1U4VmsvOVZSaU9S?=
- =?utf-8?B?cDZXa3hTL09qZW9JUVJkTWdYZmpBa2hxYzdJZ282NVhxbzBDb3cyRTVVTnVz?=
- =?utf-8?B?cG10MXY2WWNUaUlZN0Uzek1iVVg3c2hBYUtiY2NvT25nR21WVlFYQlpCWklT?=
- =?utf-8?B?V1BwNzJsdzR0Z2ZsNE96N1dnSm5QMTVZUENvbXZOMEJjYjJpMzcyVk5sUFdv?=
- =?utf-8?B?SE0zOTFQc25USDFBUHVieitYbW9Ud3NZRFlXdXN2aUJaNTRnZno4NU9NSmhD?=
- =?utf-8?B?WGhyR29taFI5ZHlCQUc5MFFVcDdLbkRSRnRWTDlpV1cvQ2JuOWRmNkFOZUVH?=
- =?utf-8?B?SE9aT0ZFQjUvSmJVQlRuTjBnUEFWTGdKM0JKbHVVcnVMT29QemdwaWVJT2l0?=
- =?utf-8?B?SlJRejN4dm85RzlOcjVqVUJjbWpReDB0cDhTQnJReWJUL2JzVjRjUVFOeFRW?=
- =?utf-8?B?MXVNYk4yN24yQXlkbVAydFZjbzhDUnNUOG5zZGpTczZhWWJaa0tYZkdoY0l1?=
- =?utf-8?B?SnNNamlZNzRoTHRGYU5JVlcrelkrNjFKZGN3WWUvR2dCMkYxVmpGMWlxQWlh?=
- =?utf-8?B?STUxdDRIWkVEa0p1a3pnbUVsbTBQTGhqVnJ0QnRKQ2ZTMzBReFdzRXU5VVBN?=
- =?utf-8?B?c2xlSnVJR0pRczBVSTJ3bFcrTW02UDIxMHFBeEN3bWZMOTBvUHBTTzlNNGFM?=
- =?utf-8?B?MTNuK2EvYjhibDMzZ2VCTnE0TE9YcjRMU3hGV1lHVzl2ejlNd2VRVHUzLzBw?=
- =?utf-8?B?ZWRnNE5HOTlzLzZudkc5TlR0L2dldC95cXkySmZUakRUYUtna2JzRUlrdVA0?=
- =?utf-8?B?amlycG16dERLMEF3OTQwa2RmalVwUDJaOU5vdjBmR1Fxb25TVGNnRzZ0NDE4?=
- =?utf-8?B?TTAyY3hoWDZncnU3amhjY2hNWlVGaFNKT01wOGFkS2hXdkZPK2NVc2I3ZjN0?=
- =?utf-8?B?QVFQZDRJRGd1TGN5VWtEOXh3YmtkeEZ2S3ZnTHJjYzhGeWhTVmFVQ1NoU25D?=
- =?utf-8?B?YXZ4UEl5aW5YcWRiR3MyRjFOQTJZZll2STh0NkQ5TG9xbG5JbVR2RG1LbHNV?=
- =?utf-8?B?bFZBSFFQelVPMmsvaThkL05UWE1JdFFuRTB1NWhnajVPSlhPUXd0dGpMbHdI?=
- =?utf-8?B?YWh3WWpSV0RlWDBGcmJCUnFJOW1NS2VaNkU4YXNrQzR1ZDBuRkppaSs2SWZD?=
- =?utf-8?B?R3VaYi9ZZVJPMVpxSk1OV0ZYT051ai85Z3U4Vm1WbVZwNjZoV3NCWDRCaFh4?=
- =?utf-8?B?Y2VmeVpaYkpVYitXNVRlYWZPOTYwWTNvNUdSK05pbndzazNEWGxYTTkvbkpV?=
- =?utf-8?B?cEp5VkIyY0I0amdEN3R0T2IwZWFuNUFhM2lzWGREY24yWUdVVHlsNHBpNS9u?=
- =?utf-8?B?MVRnU3BLRFUzblJPKzBwK2FTRDRnaGVWTnBNSTZ3VG1tSFJxK1hNMHFVNVVO?=
- =?utf-8?B?RFpaNW9PdURjTnFmRXFEVHF0U2gzbU9SdXl1N2h2SExuaXQzR2JLTENTZThy?=
- =?utf-8?B?bDVkQUZ0U3JneXAxa3p2bTh3a3h4ZmhPbmE4aGhwNnhsY2tqWFR3cUV1RTJ0?=
- =?utf-8?B?OGlmSXhXaEVLRzRlWmxteEpFQjNQSzAyK25RQXIyUC9LSVAxY1JhbGJsR0sy?=
- =?utf-8?B?RFVBRWJxb25jN1NvL05ydExOcnNIUDkrODhRMnU2dEdXQ3Riamw1VjN1NGN2?=
- =?utf-8?B?aFNnc2ZNc1BBVkFjREIvSWd4YUROMzRxMmplaWQ1S3pzRml5RDhJalBXSXZk?=
- =?utf-8?B?UW95QXBpbFBSVDJQY2NJSnJya01mdkZUeFJ1dkYrRkprOGpwbU83eldHeEhY?=
- =?utf-8?B?Mk1LSkwyTXYxbndRSUM1V2dWelRON2VRTjZ0endjcDJyQjRwSWdERG9SWkx1?=
- =?utf-8?B?T0JPM2dNL1dRZzFoUC9CQ054RWtZZTBPRkhRQ0RyVTJjbnU1Qi81UjY2U1py?=
- =?utf-8?B?cGFnOWp5OGYrekRFa0ZIUDFoVGN0cFVBcGs5VEVGZjlnZFFkaHVuemZTRnow?=
- =?utf-8?B?Z0QxdE1IQmMrSWg5bHViWnZuN290VVpCTDU4N2FORzE5dHhOaUVTNEh6VnFh?=
- =?utf-8?B?ekhQMVpkWXBIS09IazVMRGJBT3RmdHZickJXSEFQU0tkc0MyWFh1dz09?=
+	=?utf-8?B?LzZzaDRSZWRrUmxPZWszMEVGL3NPNDlWQ0poT1pqN3JBeWlMTzdUN2QrN3Ba?=
+ =?utf-8?B?aTZuNi8vc1NQUS9YYzl0VUUrUkNaSVhHeW5EZHZwRkFhNzdjVWhzSHVYVnBJ?=
+ =?utf-8?B?RkpCNTVCMmRvbFVOK25HOE9Kd1NCQnlZSWVvQVBPVi9XOVM0UGo2VmFBR2pa?=
+ =?utf-8?B?clArL3dPTElMT2lyakI0MjkrcDM5alZEbjB6cld0RCtEOGhtbUp2N3NYc1Zh?=
+ =?utf-8?B?cnkvZFBUMUYzbFdNb3JvVEJsQ3dFbCt0UWkvQ1cxVjRUdWcwb01sRS9jOS82?=
+ =?utf-8?B?bnRnaTV6QlhHQXhobzNDZjJCRWc3Q3pRT2E3UjNQYkV3VEJzQkxheGk3dWY2?=
+ =?utf-8?B?M2JidCt3bmZpNU9kK08xclZ2clUwRUJ3T21uREVJMHRHOHV3ajNyek5XOE9v?=
+ =?utf-8?B?VkcyMFBQZWFaNURzRzgxYWNmZ3JIZmJmTmd5eThkOE16MXNsYjl0RllGd2t6?=
+ =?utf-8?B?Wnk5dmZienJjemorNDh4T2t5dVdQUEtSMldKSU14a3VnZzg2ck05cXNtWGpE?=
+ =?utf-8?B?RFRTUHZrSHhkNldoOWRRYmc0K1EyYlUweld4OEZWU1dCL2craUVtR2M1R09B?=
+ =?utf-8?B?NlNKQkdOL2NQaFhWS2EzbHVpQ2tBU1FZT2JFRkUybjBjMTBLbHVEc2I2OGxh?=
+ =?utf-8?B?WnMwa0tNdzVVMkg0eDk5VENXaHFDVkJia1JsWmhlN1pLVlpuZXdpLytnV2dM?=
+ =?utf-8?B?TUllR0NTd2lBOElIbjNCYmVaK00vdyttUHF0REtXcktlWGF1MkJqVTNIMnhk?=
+ =?utf-8?B?UWswQVNHWHY3ZGwzRjhJdlV2RFZoYUhkMUZEUlNobXVCVXV4RXJleVQ1d0x6?=
+ =?utf-8?B?NjFPaUsrSmcvcDdOMjlBOEFaTjA2bDJDS3c0NTJ1VUJZT3ZmRVFzQVFVQkph?=
+ =?utf-8?B?dmVBQkJ0T0FpQWJNNTlUaUhHYjRkcHpBRFB4ZjUzUnl1S1VzYTFVWjhRVkZ3?=
+ =?utf-8?B?eTE0cUVkaE1Ta0xBUGUzVjN4TlpNVWhNZFFiaTZPbmZQZHY1NjNUVE8vZ0NS?=
+ =?utf-8?B?WUN6MGNyblNmS1p0VUo5QXJaOEVoZVJWM3puVTNQakIwbnVyZW5nSHhXSjNx?=
+ =?utf-8?B?bWdxaUkzUE01cmhsc3NoQU9sNmIwZGlUOU4ycFZLSzhjTm9zVlhoU2N0cE82?=
+ =?utf-8?B?YjRCaHdNQUpxUjQvNDZuZ0o2TXA5MXhMd21LV3pYT09jRmVXMDQxRDBPb2FJ?=
+ =?utf-8?B?ZmdxUUx4UVdNSEIvV1I3Qm45NUFvVjhmbjJ0SU4vWGVIRlQyNnRQc3plc2Jq?=
+ =?utf-8?B?NVlrKzVkSUhjUlFYQXBERzJFNm8wVVNrUjlXT0VESmpPL2x6N28rczFxaUxk?=
+ =?utf-8?B?ZzcxRDB5Z2huQy9IN3VkUGN4QlA5OFUyNGl5QkdHMjJtQ0xRQlkrbkVHYXR2?=
+ =?utf-8?B?MjYrK2xGb0JFZytxL3RVK0hFZlRDY0RGYjg1a2ljNWVCeXRtY3NvejR1ZDda?=
+ =?utf-8?B?Si9QWTVKSmsrME13MElIVXJ6YWI5NFR2aVNQUlFqb1E4NXJXc0NtaXBRUVBh?=
+ =?utf-8?B?NWtubnJkY3J2UGQxdlpTT2VWeVlyQlZTSk9jRXRGQ1gveXJHWkx2dk1sZ3Fa?=
+ =?utf-8?B?Q2dOL2NMeCszTXN1YUwrNG5RcmVuZUQ2c0JDTXVqRnhvbUhmdDBYU2ZCeWx6?=
+ =?utf-8?B?NDhBYXVpVDdqZWNpTnI0VktEU3NkMmxjaEU5WVFWUDNvZ2NtRHkvQVNQbVk3?=
+ =?utf-8?B?aGhBWnV5K3ZteVk4TER0dnN0bE5KM0VldVkwOUJJVU1jRG1vWFl3aDcxMGwx?=
+ =?utf-8?B?S1lTdGNrZ09UVE5jNW1vZ1BXY2lWREsvNXpzZmxONkZ3QWZabDNqL0VOM1k1?=
+ =?utf-8?B?c1J3QTFySlovNnRST3B0Q2w1cmZ3ZEVQY2lzNWFPbUV3NXg5dnZ1MUczRzVo?=
+ =?utf-8?B?YzRmR1F5NVB1bmpzTE9LOWxqS2hMdFJ0R1NzV0RtazBOMko5OGVwSFlDSm9E?=
+ =?utf-8?B?eVluR0M4Y1N6eElmR2llQk5XUkdaR3VFRnNHcjBSRWpCQXlqUHA3QmtYZmZV?=
+ =?utf-8?B?TlRKR3MzTkNwamZnL0xCeG1SL0c4ZVJ3K08vVFZ3Ym1XbjJGVk1Eck0xZ3o1?=
+ =?utf-8?B?REtWbm0rV09MVzJkaDFqTHkrYWUvUG5mOG9FT1BkRW82ZGp2cXFZVGRxcFdj?=
+ =?utf-8?B?Q25VWmNMV2s0SWVJbTZSTStlWHh5MDNFN3FSTHZYT2FaRE0vaHpLd0FqRmJ4?=
+ =?utf-8?B?Z1REczhnMUZSQVR6cll0ZTJscDkwMi90OVVXbXQxVWU4VEJiU0FpRFZ3Nmdo?=
+ =?utf-8?B?d1Zlazc1UkkwK2d6bWRMbmlwRmhBLzh2ME1aM0FRRkZTNG04Y2puWndnQjZz?=
+ =?utf-8?B?TFhCMXRoSkh1ZjJISlVQd1YwbGFlRGl5d2pJMUxEbzF5RW5MTUdvUT09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 801f0f2d-803e-4b78-403e-08df0c4cb14c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11b7e49a-5f1d-4b99-95fa-08df0c4ee7a8
 X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB6798.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2026 19:26:04.4613
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2026 19:41:54.4325
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: y8Knl29B3HFi9Lry2hAicSGPEwf0COICas6tE9yBUWv1TR7rH74bEG5XCYdlFS2Su4vC4wjKd0C5DKzlqFso+A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7372
+X-MS-Exchange-CrossTenant-UserPrincipalName: X7eobmQDFl887dCNGX0leJlukthABQWBwu+8kGFgMO5+3uIu+YsTqS+rF9ug2UDFXxl6wLSy0wM9uh9v+j0VUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB9524
 
 
 
 On 9/1/2026 8:39 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Out-of-bounds array write in `axienet_1g_get_ethtool_stats()` due to mismatched statistics array indices.
-> - [High] Reading a `seqcount_mutex_t` from interrupt context can cause a deadlock if the writer is preempted.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Missing mac_link_up callback for XXV MAC causes runtime-switchable speeds and flow control to never be programmed.
+> - [High] Legacy DMA descriptors and SKBs are leaked if mac_init() fails in axienet_device_reset().
+> - [High] Failure of axienet_xxv_mac_init() is ignored in the DMA error handler, proceeding with uninitialized hardware state.
 > --
 > 
+> commit 0e020a3d14a024a203937c2f29cbb4fde9c6c31b
+> Author: Suraj Gupta <suraj.gupta2@amd.com>
+> 
+> net: xilinx: axienet: Add 10G/25G (XXV) ethernet support
+> 
+> This commit adds support for the Xilinx XXV Ethernet IP, introducing a new
+> axienet_10g25g_config structure and associated callbacks. It also propagates
+> axienet_device_reset() failures in axienet_open().
+> 
+>> diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+>> index a4963da53b306..222c82a1de914 100644
+>> --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+>> +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+> [ ... ]
+>> @@ -2818,6 +2819,9 @@ static void axienet_dma_err_handler(struct work_struct *work)
+>>   
+>>   	axienet_dma_start(lp);
+>>   
+>> +	/* This error handler runs only for the legacy embedded-DMA (1G) path,
+>> +	 * whose mac_init() cannot fail, so its return value is not checked.
+>> +	 */
+>>   	lp->axienet_config->mac_init(ndev);
+> 
+> [Severity: High]
+> If the XXV MAC falls back to legacy DMA due to a missing device tree property,
+> couldn't this error handler run for the XXV MAC as well?
+> 
+> If axienet_xxv_mac_init() fails here (e.g., from a timeout), does the driver
+> proceed to configure hardware options and re-enable packet reception on an
+> uninitialized or failed MAC?
+> 
 
 
-Both are pre-existing issues, I'll address them as part of separate series.
+
+We don't support legacy DMA for XXV ethernet & fail probe if dmaengine 
+properties are missing. So this is a false issue.
+> [ ... ]
+>> diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_xxv.c b/drivers/net/ethernet/xilinx/xilinx_axienet_xxv.c
+>> new file mode 100644
+>> index 0000000000000..46b48a773c15a
+>> --- /dev/null
+>> +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_xxv.c
+> [ ... ]
+>> +static int axienet_xxv_mac_init(struct net_device *ndev)
+>> +{
+>> +	struct axienet_local *lp = netdev_priv(ndev);
+>> +	int ret;
+>> +
+>> +	ret = axienet_xxv_poll_link_ready(ndev);
+>> +	if (ret)
+>> +		return ret;
+> 
+> [Severity: High]
+> If this function returns an error, are the legacy DMA descriptors leaked?
+> 
+> Looking at axienet_device_reset(), which calls this function when using
+> legacy DMA:
+> 
+> axienet_device_reset()
+>      ...
+>      if (!lp->use_dmaengine) {
+>          ret = axienet_dma_bd_init(ndev);
+>          if (ret)
+>              return ret;
+>      }
+>      ...
+>      ret = lp->axienet_config->mac_init(ndev);
+>      if (ret)
+>          return ret;
+> 
+> When mac_init() fails, it returns early without calling
+> axienet_dma_bd_release(ndev). Can this cause a memory leak of the TX/RX
+> rings and their associated SKBs?
+> 
+
+
+Same here, XXV ethernet driver supports dmaengine flow only. Probe will 
+fail if dmanegine properties are missing in XXV DT. So this condition 
+won't occur and is false positive issue.
+
+> [ ... ]
+>> +const struct axienet_config axienet_10g25g_config = {
+>> +	.sw_padding = true,
+>> +	.internal_pcs = true,
+>> +	.regs_n = XXV_REGS_N,
+>> +	.clk_init = axienet_10g25g_clk_init,
+>> +	.setoptions = axienet_xxv_setoptions,
+>> +	.probe_init = axienet_xxv_probe_init,
+>> +	.gt_reset = axienet_xxv_gt_reset,
+>> +	.mac_init = axienet_xxv_mac_init,
+>> +	.get_regs = axienet_xxv_get_regs,
+>> +	.phylink_set_caps = axienet_xxv_phylink_set_capabilities,
+>> +	.pcs_ops = &axienet_xxv_pcs_ops,
+>> +};
+> 
+> [Severity: High]
+> Since axienet_xxv_phylink_set_capabilities() advertises runtime-switchable
+> speeds (10G and 25G), shouldn't there be a mac_link_up callback here to
+> program the negotiated speed and pause settings to the hardware?
+> 
+> Without a mac_link_up callback, when phylink resolves to a non-default speed
+> or enables pause frames, will the hardware remain unconfigured, potentially
+> causing the datapath to silently fail?
+> 
+
+
+As mentioned in cover-letter, due to phylink limitations, we aren't able 
+to advertise both 10G and 25G base-r interfaces and are open to 
+suggestions to handle it.
 
 Regards,
 Suraj
-
-> commit a22a50757854e007ab76536560cb1108e8d22fd4
-> Author: Suraj Gupta <suraj.gupta2@amd.com>
-> 
-> net: xilinx: axienet: Dispatch statistics through axienet_config ops
-> 
-> This commit refactors the AXI Ethernet driver's statistics reporting by
-> dispatching stats reads through operation pointers in struct axienet_config.
-> This prepares the driver to support different MAC types without inline
-> branches in the statistics callbacks.
-> 
->> diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
->> index 212816613aa86..8100cc53cd643 100644
->> --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
->> +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
->> @@ -1878,29 +1878,11 @@ static int axienet_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
->>   	return phylink_mii_ioctl(lp->phylink, rq, cmd);
->>   }
->>   
->> -static void
->> -axienet_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
->> +static void axienet_1g_get_stats64(struct axienet_local *lp,
->> +				   struct rtnl_link_stats64 *stats)
->>   {
->> -	struct axienet_local *lp = netdev_priv(dev);
->>   	unsigned int start;
->>   
->> -	netdev_stats_to_stats64(stats, &dev->stats);
->> -
->> -	do {
->> -		start = u64_stats_fetch_begin(&lp->rx_stat_sync);
->> -		stats->rx_packets = u64_stats_read(&lp->rx_packets);
->> -		stats->rx_bytes = u64_stats_read(&lp->rx_bytes);
->> -	} while (u64_stats_fetch_retry(&lp->rx_stat_sync, start));
->> -
->> -	do {
->> -		start = u64_stats_fetch_begin(&lp->tx_stat_sync);
->> -		stats->tx_packets = u64_stats_read(&lp->tx_packets);
->> -		stats->tx_bytes = u64_stats_read(&lp->tx_bytes);
->> -	} while (u64_stats_fetch_retry(&lp->tx_stat_sync, start));
->> -
->> -	if (!(lp->features & XAE_FEATURE_STATS))
->> -		return;
->> -
->>   	do {
->>   		start = read_seqcount_begin(&lp->hw_stats_seqcount);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is it safe to read this seqcount_mutex_t
-> from this context?
-> 
-> The hw_stats_seqcount writer runs in process context (a delayed work) holding
-> a mutex, meaning it can be preempted by softirqs. The reader here in
-> axienet_1g_get_stats64() is called via ndo_get_stats64, which can be invoked
-> from atomic or softirq context (such as via dev_get_stats() in the Open
-> vSwitch datapath).
-> 
-> If a softirq fires on the same CPU while the writer is inside the seqcount
-> write section, won't the reader spin infinitely in read_seqcount_begin()
-> waiting for the odd sequence number to become even, resulting in a hard
-> deadlock?
-> 
-> [ ... ]
->> -static void axienet_ethtools_get_ethtool_stats(struct net_device *dev,
->> -					       struct ethtool_stats *stats,
->> -					       u64 *data)
->> +static void axienet_1g_get_ethtool_stats(struct axienet_local *lp, u64 *data)
->>   {
->> -	struct axienet_local *lp = netdev_priv(dev);
->>   	unsigned int start;
->>   
->>   	do {
->> @@ -2381,6 +2387,17 @@ static void axienet_ethtools_get_ethtool_stats(struct net_device *dev,
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this function overflow the
-> data array allocated by the ethtool core?
-> 
-> When a user invokes ethtool -S, the core allocates a buffer for 9 elements
-> based on the return value of axienet_1g_get_sset_count(). However, inside
-> the seqcount loop in axienet_1g_get_ethtool_stats(), the code writes beyond
-> these bounds:
-> 
-> 		data[8] = axienet_stat(lp, STAT_USER_DEFINED0);
-> 		data[9] = axienet_stat(lp, STAT_USER_DEFINED1);
-> 		data[10] = axienet_stat(lp, STAT_USER_DEFINED2);
-> 
-> Can this overrun the 72-byte allocated buffer by 16 bytes and cause memory
-> corruption?
-> 
-> [ ... ]
->>   static const char axienet_ethtool_stats_strings[][ETH_GSTRING_LEN] = {
->>   	"Received bytes",
->>   	"Transmitted bytes",
->> @@ -2393,12 +2410,26 @@ static const char axienet_ethtool_stats_strings[][ETH_GSTRING_LEN] = {
->>   	"User Defined Counter 2",
->>   };
->>   
->> +static void axienet_1g_get_strings(u8 *data)
->> +{
->> +	memcpy(data, axienet_ethtool_stats_strings,
->> +	       sizeof(axienet_ethtool_stats_strings));
->> +}
->> +
->> +static int axienet_1g_get_sset_count(void)
->> +{
->> +	return ARRAY_SIZE(axienet_ethtool_stats_strings);
->> +}
-> 
-
