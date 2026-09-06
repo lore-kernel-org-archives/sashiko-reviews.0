@@ -1,180 +1,344 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7A0246778
-	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 01:47:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788659225; cv=pass; b=rTbI4T9ez3cejV7te/Lu6/jV7ulbeXm7+S9dpA+UeSMK9lcdBwsJcSohUiMUjdnB+4Mwjea/E+W4RLx1A99rJk4yXK0UHCoMqezVqyQSl7Y5M5KtC4qaxerkNGGI+XwsC3eRdjmJ6nh042Jfk8DztWR0MBqN4vTzuwCl6Hh785U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788659225; c=relaxed/simple;
-	bh=8p128yWcOOgvfc5rvLcd5R3DTRB7J1JcVPGCpi4fpqA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e45ZjdnibCEphPfEUGpoDX2KAcCL4IhwYLf3+urr1zELkzkwig93gCQQ3Q+fwUJChERlSrLCrrZE9mEaJBo2WykK4VokVmnis/InwaXksPpKHgRQP9u5adpeZW8vpFO7J+KGiZoklEhXB4k0UbT38s9+IceLQ3v5Pw+E5/mgFEg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AVpXa5bm; arc=pass smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAFE274670;
+	Sun,  6 Sep 2026 02:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788661514; cv=none; b=r19GWSI1ffuGfPzFaEuls9OsJ3KAHKsBKvRWKL9rLM2T6dg0g5NLCC3L2CDUMWjdTJY98irW/w727wlyJr5G7Tc06zMHKAT5LeETLAyv+F6ZzaIdIFYAHcDVRjnV+Cl5shuAhTvMlwLSN4J6yoZH1SgTUcUFVaG2uL0OlI0fh1w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788661514; c=relaxed/simple;
+	bh=XNFUTg+F6BlOgy01nFlTdDiQ8Svks7lggXl/P8UNOQU=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=l0Bt6mK0fEUz/BQhCnjfZA58S8CYZ75XtDjnl9fPPPKAyyAgWmJ14WQtq0AOBRB8l0VZPsSOm8uxofKeYiuHf5kNm0k32VePLOJvc6oBptOekceOFik79hKQlVK8IQ8pHl2Kbloo6gILNDl/Jxzjl84+CmhY8GwDIb5VlMeX2kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P6xNwBA/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVpXa5bm"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-9399258e5f8so143337485a.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 05 Sep 2026 18:47:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788659222; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NwPA9N2VQY0j7ZuAVBQtsePqQYOSug6u845EUfJw2KI4uUc3PTxiFmQCENwqEe/G4c
-         kBrstQTb2Oo6p7DtHPahPM26p37nDxbOo+AruJSNnEf07Kj2WiLUwFHsMC8YejIOmGzp
-         8yWgIK3IAO9pkCw0w3t6sFNlaKPLs3/gtytPsrq7+NNppNEVHMXddfGRfVRE+HB3nX+w
-         qhaVh1WTL7idxd3oMzII6LJY/zVIdjNU+HSKjTGAM0b92I5M5Xb9iyY+ElJ2DtW6kVin
-         xXw/Tpw6EYZStKxJk7BqQPR3xNuCMz1vpaVsm8fIaNGcbzQ8ArVoGV5iJ/T7Y6B+//vN
-         OyMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QxmMh7HdE3ykc1Lqfns8Sc2JU4iSRDsi8vOQrQ4w9vE=;
-        fh=fItrUtV5UsY1KSNx1ZNnzv3miYMbODbRRQWQ18AP5Zc=;
-        b=NowlMcCtQdrx5alo6RitKlnN3vBQwD8aOcyVQG8dUgaBe/WzkbWVdgR2DGtCOVUt64
-         8/WYquLiTTX4+UKTeVkNMsn9V1x0GvvNMRKnl8A9dMleeb52iwNRB7YUbfBSr7buY8ML
-         kmQo7KfzV0EqBjkjdc0ELZrDFkf4MmO2wRhpCPvjJtnMrlUl0dlii6/ZmZu6bIjmQNaD
-         IVg+SZNMtxd33aink1EGWkns9G+7ZeD+0lhfRE9dY7uFeT4I20ygC3SuTDUulm5ovBFt
-         tn/u4QkP4VADT3TbkTZDM2vVFQ8uu9rYxCd/JoNJwFdErhra2wv0Utv8nQb1UbspBKlo
-         aCAg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788659222; x=1789264022; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=QxmMh7HdE3ykc1Lqfns8Sc2JU4iSRDsi8vOQrQ4w9vE=;
-        b=AVpXa5bmk0ubF4harOlNpECEcq27+7k/ras2f80ROHOlXvktft4/Yw0eZ5S++oa9/n
-         I8mxrYPzb8YqKRmRZJ/xK4OcnlsuVDPAIGAw2svUrZHsEbmRJOQB5uMqII/fwrU8miay
-         J8dPT51H0ym1tnXVRv7FAeTi/KgxRhJjHjgXt9vSmiSS4cd3KEOB+6tBgqTeBHv5Aw9Y
-         93Z9PKrx5qaldtGUdhguW4EsJnL1QCXQbjiPbxthd0wEGfnoQOgvAYfj9nwoL/BmEs+R
-         7Af12zgQdWs6f87ycgWvjcqHs/snnpWe7PP+Od1tDsewdT/90jPC/NFibz1NqjG+ySSk
-         pFEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788659222; x=1789264022;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QxmMh7HdE3ykc1Lqfns8Sc2JU4iSRDsi8vOQrQ4w9vE=;
-        b=bsz0nNEPpMMPtcO/fTnDZlY5DXiAe+Cb6t7q8EvsAOHlLKqQmI63gxLla2w8D8QAoi
-         k9M9KchElCLNViwo2vlZIXwiW4ZdtLwYTaPc5p9x8U8211aYIYd9Run0U3YnZGgxmp1b
-         38cPhBFHyKvaLneF+gq9k82U7t3iFfmzVzsSDW8wxiQ+i2xdLkbevcEp+XutEYtoMMCV
-         ZN07ZI9HlUFbPH2dD5UjFFcw6J3ShjcPGc5Z8J5U/ADt0nxQg+90yl14jg2mxXMI3/PZ
-         6LEnabQeXnkeypo+RhezxZYIod5F3UqbtyLennQirAP0OkjdyheMsOtSbMCITQPLLpAc
-         4P5w==
-X-Gm-Message-State: AFuF++nW5U8m+JUHGf0TAOIWMKX2rr/ebTL26PcqTtiN0TnIkiOS51lV
-	cp8/wEGadxfXLHxlLk7lw3wI+LoND1Y6Yz9tByNpXPsuqZ7kpd21BbJnntvkD4zIU8eXHz1S6Za
-	pu6XK2iVJ7r5I2F1ZE6jB8bBrxIk6v+hDxCsh
-X-Gm-Gg: AYBFou2/btd6EziddLZjVGfEPmS31VI4spy7lCfql848lo+OsJFW4dbLz1ZLmW6569s
-	z/RJjEa6MoWtrqNAHXXp3lGJ2bEmVK6ADhmAzxJw2siB/7K1wBeXcfuWWdwAqAP2F2XSlAP56a4
-	RVu7LilWBtq6quh15je68YnkLAdb7S9UtPPtk5U/ESGCv40MkIgZ9/qP2kbQJWxOLw8AUlsPb7a
-	K+PNck8mMuvtVJmsxQ1IpApRV2yv6LJTpjnGRmcUUJB9Ll+3nEUUvjs3snBdEdNaERchbGAShkw
-	wjx6FvM48ZR/KGhRVQ3zHn8paeImeViVC4iU8oqw/ZGQAjItfAWpaUiU
-X-Received: by 2002:a05:620a:25d4:b0:939:6df9:1996 with SMTP id
- af79cd13be357-9398077453bmr1491078385a.50.1788659222531; Sat, 05 Sep 2026
- 18:47:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P6xNwBA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742921F00A3A;
+	Sun,  6 Sep 2026 02:25:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788661512;
+	bh=8rw9FA+u/7iuctnN0TV1UFU1IECUzyEEaBgVbPgV7TE=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=P6xNwBA/5MzpXYEm8cbywGMKDhVByCFzGwmx9IkLjeaVSGeU/fxtXvsXkI+EFHGlh
+	 mGlNbeNpLG57kInd/NISCWakCMlVpNoi+MAgy7zuxkqwR2eGSv+pwLNv4VBEG5oz2n
+	 lRE0arFwyQzhEE3lmoqWsY16QsBm/XvVeKUcPigSLQBQrsmDYP8zVQQqrpAvG9cVKW
+	 1hN9de8pVtjlGshh+sYDQKFRQu4CIhEyBFwNalmZQe4+9SMhXylDi1G3lVL35hYqYU
+	 l5PhKpHqmvCTSsQIq/IryTyUN5Z3Z/v+DvOp4PU1BzKjp6sdV/rrPn8bJVXsiXuVda
+	 Q3OWJkRcx1YVQ==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260904005240.502787-1-physicalmtea@gmail.com> <20260905005352.1E5B01F00A3D@smtp.kernel.org>
-In-Reply-To: <20260905005352.1E5B01F00A3D@smtp.kernel.org>
-From: Jia Jia <physicalmtea@gmail.com>
-Date: Sun, 6 Sep 2026 09:46:26 +0800
-X-Gm-Features: AcwNN1Uz8wr-epjfsaLBUzBnMwbbmAIBLIa_l8bHM3MEHqc2afAijKPJ2Jb8XE4
-Message-ID: <CAJwVaMJsTVYPKhB4-a++=hapn7teFRuf3o-0aHkp-BjvwU8Jrg@mail.gmail.com>
-Subject: Re: [PATCH] vhost-scsi: fix event queue iov out-of-bounds
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v6 05/17] iio: adc: Add AD7768 and AD7768-4 core
+ support
+From: Jonathan Cameron <jic23@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Janani Sunil <janani.sunil@analog.com>, conor+dt@kernel.org, 
+ robh@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20260904143153.9AF1A1F00A3E@smtp.kernel.org>
+References: <20260904-ad7768-driver-v6-0-e4378f946bfb@analog.com>
+ <20260904-ad7768-driver-v6-5-e4378f946bfb@analog.com>
+ <20260904143153.9AF1A1F00A3E@smtp.kernel.org>
+Date: Sun, 06 Sep 2026 03:24:54 +0100
+Message-Id: <178866149408.3402141.12120124355772738970.b4-reply@b4>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9689;
+ i=jonathan.cameron@oss.qualcomm.com; h=from:subject:message-id;
+ bh=XNFUTg+F6BlOgy01nFlTdDiQ8Svks7lggXl/P8UNOQU=;
+ b=owEBfwKA/ZANAwAKAVSFNJnE9BaIAcsmYgBqnM73ZJx87z1GrIZ8tZQ0x58u7rOdyz5erdcIP
+ MvkG1UdE4GJAkUEAAEKAC8WIQRuKWazh4QGUpEmgbFUhTSZxPQWiAUCapzO9xEcamljMjNAa2Vy
+ bmVsLm9yZwAKCRBUhTSZxPQWiGCRD/41v2nDbncpKcMmsGB7orqKAugrDe28tJmBB1EamA7eQsT
+ 8sSGpMXR4W7FuqY7dkmd5pbjBAxFnNLTt2GQx2n6OXp5KA93iv+NdTke/woPlAthuEtsPVTxe0t
+ W2YgF7ekymU0XAWb1lEy1uyCsIov0/P2t3IU0N0HtrGGQ7LYBUjsQGl2xket0owcnnQgHYi5WWK
+ XwlMwL4gJtywhVP01q/A7wxGDS0OLVbq+4Z9PJYBFS34brUwAuWQjuDmfBYv9exmm8uQZDFVNST
+ vVBiGlShwjK6NUUDdURPJ/Cq4d/36nWLCi7IJQDYdiTAuKk7vuR0ljUQj3j/TzNstpuhIEn3SHE
+ 4/jsEY4MNV6PfHt3yV65Nf8DZZtO5cfBwtIlUk7hVB7+Ni8tPy5gvTtPqJWFwZhk5obBJ/XsObg
+ jFp2Htx+QPD/FBmmUxbh6luVKoNWvlaU+gHK0UtuWKEz4h4skenGK/W8h7bz9K/+UYtZ9ydfRlS
+ y7r1/H6+z3Aw8Neb3Q9LMyYMxKOotlKxDOJb4T/e0rDDI95Ilc60XvBxRTuG+MMVVN5dPPT5Ia2
+ YTGdsanhrjJj7MBO8YfpPh/ktnJeVjRsfNwcKonTWrtOnGZidPi7QJc8Q0j+IBSkwclcNsyWbEC
+ hYjpSs0sbp8x90zG0lkEJ6f4+VmPDWfVdXURiKQ==
+X-Developer-Key: i=jonathan.cameron@oss.qualcomm.com; a=openpgp;
+ fpr=6E2966B387840652912681B154853499C4F41688
 
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Self-deadlock (AA deadlock) in vhost_scsi_send_evt when vhost_vq=
-_work_queue fails.
-> --
->
-> commit c17fff972ec26b541af9ec7b514db052328d64e6
-> Author: Jia Jia <physicalmtea@gmail.com>
->
-> vhost-scsi: fix event queue iov out-of-bounds
->
-> This commit fixes an array-index-out-of-bounds issue in vhost_scsi_do_evt=
-_work()
-> by ensuring there is at least one input descriptor before indexing the io=
-v array.
-> It treats pure-output chains as missed events to prevent reading past the=
- end
-> of the array.
->
-> > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-> > index 7a1f39a327da6..5a0863d560a07 100644
-> > --- a/drivers/vhost/scsi.c
-> > +++ b/drivers/vhost/scsi.c
-> > @@ -608,9 +608,10 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, stru=
-ct vhost_scsi_evt *evt)
-> >               return;
-> >       }
-> >
-> > -     if ((vq->iov[out].iov_len !=3D sizeof(struct virtio_scsi_event)))=
- {
-> > +     if (!in ||
-> > +         vq->iov[out].iov_len !=3D sizeof(struct virtio_scsi_event)) {
->
+> 
+> commit cad3d6d13491f167da3c31d541a31ac850d8d3b5
+> Author: Janani Sunil <janani.sunil@analog.com>
+> 
+> iio: adc: Add AD7768 and AD7768-4 core support
+>     
+> Add core support for the AD7768 and AD7768-4 simultaneous sampling ADCs.
+> Configure supplies, clock and reset, use a custom regmap bus for the SPI
+> protocol, and parse the enabled channels and input buffer settings from
+> devicetree.
+
+There was quite a bit of sashiko feedback on this one. I took a look
+as getting close to merging the series. Please check my logic.
+
+> 
+> > diff --git a/drivers/iio/adc/ad7768.c b/drivers/iio/adc/ad7768.c
+> > new file mode 100644
+> > index 0000000000000..c80056a9edd8c
+> > --- /dev/null
+> > +++ b/drivers/iio/adc/ad7768.c
+> > @@ -0,0 +1,1000 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> 
+> [ ... ]
+> 
+> > +#define AD7768_REG_PRECHARGE_BUF1			0x11
+> > +#define AD7768_REG_PRECHARGE_BUF2			0x12
+> > +#define   AD7768_PREBUF_POS_EN(ch)			BIT((ch) * 2)
+> > +#define   AD7768_PREBUF_NEG_EN(ch)			BIT(((ch) * 2) + 1)
+> 
+> [Severity: Medium]
+> Are these bit assignments for the precharge buffers swapped? According to the
+> AD7768 datasheet, the positive (POS) precharge buffers are assigned to odd bits,
+> and the negative (NEG) precharge buffers are assigned to even bits.
+
+No they aren't. I think sashiko didn't realize table starts at bit 7
+and works down to bit 0.
+
+> 
+> > +
+> > +#define AD7768_REG_REFP_BUF				0x13
+> > +#define AD7768_REG_REFN_BUF				0x14
+> 
+> [ ... ]
+> 
+> > +static u8 ad7768_all_standby_mask(const struct ad7768_state *st)
+> > +{
+> > +	return GENMASK(st->chip_info->num_channels - 1, 0);
+> > +}
+> 
 > [Severity: High]
-> This is a pre-existing issue, but while reviewing this event handling cod=
-e, I
-> noticed a potential self-deadlock scenario.
->
-> If vhost_scsi_send_evt() is called from a path that already holds vq->mut=
-ex,
-> like vhost_scsi_evt_handle_kick():
->
-> vhost_scsi_evt_handle_kick()
->     mutex_lock(&vq->mutex);
->     ...
->     if (vs->vs_events_missed)
->         vhost_scsi_send_evt(...)
->
-> And vhost_scsi_send_evt() falls back to vhost_scsi_complete_events() beca=
-use
-> vhost_vq_work_queue() returns false (for instance, if vq->worker is NULL)=
-:
->
-> vhost_scsi_send_evt()
->     if (!vhost_vq_work_queue(vq, &vs->vs_event_work))
->         vhost_scsi_complete_events(vs, true);
->
-> vhost_scsi_complete_events() then attempts to take the exact same mutex:
->
-> vhost_scsi_complete_events()
->     mutex_lock(&vq->mutex);
->
-> Could this sequence cause a self-deadlock where the kernel thread hangs
-> indefinitely waiting on the non-recursive vq->mutex, potentially leading =
-to a
-> denial of service?
->
-> >               vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n"=
-,
-> > -                             vq->iov[out].iov_len);
-> > +                    in ? vq->iov[out].iov_len : 0);
-> >               vs->vs_events_missed =3D true;
-> >               return;
-> >       }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260904005240.50=
-2787-1-physicalmtea@gmail.com?part=3D1
+> Does this generate the correct physical mask for the AD7768-4? The AD7768-4
+> maps its 4 logical channels to physical channels 0, 1, 4, and 5. This returns
+> GENMASK(3, 0) which is 0x0F, writing 0 to physical bits 4, 5, 6, and 7,
+> leaving them fully active.
+> 
+> [ ... ]
 
-This is a false positive. The current patch does not introduce this
-issue, but I will try to reproduce it to verify whether it is a real
-issue.
+This one looks plausible.  There is handling of the bits written to
+deal with the mapping but not the mask I think. Please take a look.
+
+> 
+> > +static int ad7768_regmap_read(void *context, const void *reg_buf,
+> > +			      size_t reg_size, void *val_buf, size_t val_size)
+> > +{
+> > +	struct ad7768_state *st = spi_get_drvdata(context);
+> > +	struct spi_device *spi = context;
+> > +	struct spi_transfer t[] = {
+> > +		{
+> > +			.tx_buf = &st->d16,
+> > +			.len = sizeof(st->d16),
+> > +			.cs_change = 1,
+> > +		}, {
+> > +			/*
+> > +			 * Register responses are delayed by one CS frame. While
+> > +			 * receiving the response to this read, the device also
+> > +			 * decodes another command on SDI. Repeat the read
+> > +			 * command to avoid sending an unspecified dummy
+> > +			 * command.
+> > +			 */
+> > +			.tx_buf = &st->d16,
+> > +			.rx_buf = &st->d16,
+> > +			.len = sizeof(st->d16),
+> > +		},
+> > +	};
+> 
+> [Severity: High]
+> Can this violate the DMA API? Both transfers use the same memory address
+> (&st->d16) for their buffers. When the SPI subsystem maps all transfers for
+> DMA concurrently, attempting to map the same memory region twice concurrently
+> (DMA_TO_DEVICE and DMA_BIDIRECTIONAL) can cause cache coherency issues on
+> non-coherent architectures.
+
+So this one I'm fairly sure on, but feel free to check.
+
+There is nothing stopping SPI using one buffer for both directions. If it's a
+problem for a particular setup I think they have to bounce it.
+
+> 
+> [ ... ]
+> 
+> > +static int ad7768_update_scan_mode(struct iio_dev *indio_dev,
+> > +				   const unsigned long *scan_mask)
+> > +{
+> > +	struct ad7768_state *st = iio_priv(indio_dev);
+> > +	unsigned long channel_mask;
+> > +	unsigned long standby_mask;
+> > +	int ret;
+> > +
+> > +	channel_mask = ad7768_all_standby_mask(st);
+> > +	standby_mask = channel_mask & ~*scan_mask;
+> > +
+> > +	/*
+> > +	 * Crystal excitation requires channel 4 on AD7768 or channel 2 on
+> > +	 * AD7768-4 to remain active.
+> > +	 */
+> > +	if (st->clock_source == AD7768_CLOCK_SOURCE_XTAL)
+> > +		__clear_bit(st->chip_info->num_channels / 2, &standby_mask);
+> > +
+> > +	ret = regmap_update_bits(st->regmap, AD7768_REG_CH_STANDBY,
+> > +				 channel_mask, standby_mask);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	for (unsigned int c = 0; c < st->chip_info->num_channels; c++) {
+> > +		if (test_bit(c, scan_mask))
+> > +			ret = iio_backend_chan_enable(st->back, c);
+> > +		else
+> > +			ret = iio_backend_chan_disable(st->back, c);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> 
+> [Severity: Medium]
+> Will this leave the backend hardware out of sync if an error occurs? If one
+> operation fails, it returns the error immediately without unwinding the
+> previously modified channels.
+
+This is one of those error cases where unwinding may just be impractical.
+Real question is whether there is anything that means trying again won't
+end up in a sane state or that anything particularly bad will happen
+as a result of the bad state in the meantime. I think this is fine
+but please check.
+
+> 
+> > +
+> > +	return 0;
+> > +}
+> 
+> [ ... ]
+> 
+> > +static int ad7768_buffer_postdisable(struct iio_dev *indio_dev)
+> > +{
+> > +	struct ad7768_state *st = iio_priv(indio_dev);
+> > +
+> > +	pm_runtime_put_autosuspend(regmap_get_device(st->regmap));
+> > +	return 0;
+> > +}
+> 
+> [Severity: Medium]
+> Could this leave the hardware powered on after device removal?
+> 
+> If the driver is unbound while the IIO buffer is active,
+> devm_iio_device_register unwinds first, calling iio_device_unregister(),
+> which disables the buffer and triggers ad7768_buffer_postdisable().
+> 
+> Immediately after, devm_pm_runtime_set_active_enabled unwinds, calling
+> pm_runtime_disable() which cancels the pending autosuspend work. The
+> driver should ensure synchronous suspend if the buffer is active during
+> removal.
+
+Ah.  Interesting corner case.  There are probably lots of other
+paths to the power happening to be on at shut down but I can see
+maybe we ultimately want a flag to say we are going down in that
+buffer disable path.  Anyhow, you should be careful to ensure it
+doesn't matter what state we are in wrt to runtime pm, after we've
+turned that off we should make sure we turn off the device by hand.
+Afterall maybe runtime pm was never enabled in the first place
+(or even built!)
+
+> 
+> [ ... ]
+> 
+> > +static int ad7768_configure_precharge_buffers(struct iio_dev *indio_dev,
+> > +					      struct ad7768_precharge_config *precharge_cfg)
+> > +{
+> > +	struct ad7768_state *st = iio_priv(indio_dev);
+> > +	u8 prebuf1_val, prebuf2_val;
+> > +	u16 prebuf_mask = 0;
+> > +	u8 refbufp_val = 0;
+> > +	u8 refbufn_val = 0;
+> > +	int ret;
+> > +
+> > +	for (unsigned int ch = 0; ch < indio_dev->num_channels; ch++) {
+> > +		u8 channel = indio_dev->channels[ch].channel;
+> > +
+> > +		if (precharge_cfg[channel].prebufp_en)
+> > +			prebuf_mask |= AD7768_PREBUF_POS_EN(channel);
+> > +
+> > +		if (precharge_cfg[channel].prebufn_en)
+> > +			prebuf_mask |= AD7768_PREBUF_NEG_EN(channel);
+> > +
+> > +		if (precharge_cfg[channel].refbufp)
+> > +			refbufp_val |= ad7768_channel_mask(st, channel);
+> > +
+> > +		if (precharge_cfg[channel].refbufn)
+> > +			refbufn_val |= ad7768_channel_mask(st, channel);
+> > +	}
+> 
+> [Severity: Medium]
+> Does this apply the incorrect polarity for the reference buffer configuration?
+> When adi,refbuf-pos-enable or adi,refbuf-neg-enable are provided in the device
+> tree, the driver sets the corresponding bit to 1. According to the AD7768
+> datasheet, setting a bit to 1 in the REFP_BUF and REFN_BUF registers powers down
+> the buffer.
+
+I'm not sure what datasheet sashiko has.  Mine says 1 is power up.
+I'm going to guess it's assuming layout of values that aren't true.
+
+> 
+> [ ... ]
+> 
+> > +	device_for_each_named_child_node_scoped(dev, child, "channel") {
+> > +		u32 channel;
+> > +
+> > +		ret = fwnode_property_read_u32(child, "reg", &channel);
+> > +		if (ret)
+> > +			return dev_err_probe(dev, ret,
+> > +					     "Failed to parse reg of %pfwP\n",
+> > +					     child);
+> > +
+> > +		if (channel >= st->chip_info->num_channels)
+> > +			return dev_err_probe(dev, -ECHRNG,
+> > +					     "Invalid channel %u in firmware\n",
+> > +					     channel);
+> > +
+> > +		ret = regmap_clear_bits(st->regmap, AD7768_REG_CH_STANDBY,
+> > +					BIT(channel));
+> 
+> [Severity: High]
+> Does this use logical indices instead of physical bits for the AD7768-4? The
+> AD7768-4 uses physical channels 0, 1, 4, and 5. Using BIT(channel) will update
+> physical bits 0-3 instead of the mapped hardware bits.
+
+This seems plausible. Please check.
+
+> 
+> > +		if (ret)
+> > +			return ret;
+> > +
+> 
+> [ ... ]
+> 
+> > +	pm_runtime_set_autosuspend_delay(dev, 2000);
+> > +	pm_runtime_use_autosuspend(dev);
+> > +	ret = devm_pm_runtime_set_active_enabled(dev);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	return devm_iio_device_register(dev, indio_dev);
+> > +}
+> 
+> [Severity: Medium]
+> Does this leave the device permanently active? This configures autosuspend and
+> enables runtime PM, which transitions the device to RPM_ACTIVE with a usage
+> count of 0, but fails to call pm_request_idle(dev). As a result, the autosuspend
+> timer is never triggered, leaving the device fully powered indefinitely until
+> a user explicitly accesses it.
+Nope.  This is usual thing of sashiko failing to notice the stuff
+in base/dd.c that always checks if the reference count is 0 and hence
+it can put it to sleep. This happens just after probe.
+
+So a definite mixed bag for sashiko on this one.
+
+Jonathan
+
+
