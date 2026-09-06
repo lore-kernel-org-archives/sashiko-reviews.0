@@ -1,94 +1,253 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from LO2P265CU024.outbound.protection.outlook.com (mail-uksouthazon11021108.outbound.protection.outlook.com [52.101.95.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE82C2F6577
-	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 13:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788702672; cv=none; b=mH4tPksge1fAiX+LNvQU89LFAY2lxt0hxbkqpW3R8sJM5c/tO675g7mHENl8QhbFKAjcbosaQOmhKb8w0NL+Ct90AylkXJVzKvX0AcDLz63gx3MZ8QgMYQcQIsCtmBmDt+NrHy8jz1XJ9zO0Of8zVb4cextjpBgE/QOQsbDY34M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788702672; c=relaxed/simple;
-	bh=PzTfAdS+9fLuo1P9YI++Z3/Jco+RwdrcI6zo3wwgXPY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnEZjRmILlB4OeEqufT6Es5lDHe7oQhV+Xb8l+dmIBnRs/rlqCIsbhNEBexHytf1yiVVU8aAh/4VpHY7OJ8c31DQXsMbbecTuInahFdWNZv4KsQdRNwVe7Gt8TfpKwdXpN6lVhziqq7S9jy+bOQ6yhBAIj4YV7MoI/dNKZ5dIsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tm4F7V82; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tm4F7V82"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-85377c8bc96so2373982b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 06 Sep 2026 06:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788702670; x=1789307470; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=y6UtiMUQWTUlQHIqJjKIo+v5d4gNNZT+BR9XA7w+Syc=;
-        b=Tm4F7V82U9HTTYVvMt41L+evZ5vBdaVamzgDgb7+qV+cMwUQXUFAbU8thTC+t5Lsyg
-         InnedVzjavWkwu8BXPBr5OSz35s4ZGXGwqinXiVno00jb5isSMU9Y8eHHNpHspT3Jtx2
-         bF8WiYDgUDju0izghWMhcW+J5LqXq2i6cl7e+x+++S/PLAfSoLfJyx0JPEvEXkJnzsHd
-         SdhESYrmqHGdDV09hej9iwAfidvSM4IE672pvgVkQHvqB8Qmc354f+MgsysyF4+RPyte
-         SpeFTSbNqZURbmMXsjbYgaFIOJUMTCKBMtb4yU/lpp8UtvHdAvHhsKb+1TwT+Ekg2uJK
-         LZgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788702670; x=1789307470;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=y6UtiMUQWTUlQHIqJjKIo+v5d4gNNZT+BR9XA7w+Syc=;
-        b=XN1PzXaMvPiKwmF4WVcTIwGjm9hURDYmrNwKBC49Mb/YPIK9+s8Lft9ApA/BivFphI
-         hxzkGB541p25LHLR7SeICvqTqHOvkT3xLaFYQzV5cc6IWxQSH7tjC4DWyXWilU5/IHU3
-         hOU/iyDG67GjuZCj6u6Gx+k4R5ka4ImFAigFc7TTXvHlIr08SyyJRCNYiJUytEE9XWaF
-         C3p7CKrrdNhk+vBhyAfGD+X2oARi9XptNH/POfXk7uHLJTplNR0hmgeTglCCe1vbpLjw
-         J141TIsA4g8foBy71UTTzO9p0ABLNWNmWK7bhnhUBNIGGou4xMiHlARW3gRz8CWkq252
-         Yy5Q==
-X-Gm-Message-State: AFuF++nVXu41WEOpNU5xYEyUGWbHTBvAcCgyLRjAQlFjLZ9+8rEDjNeN
-	fxK/84SGSxnWgdotmI7Zcq8JXas5vnpeU7DdZSfwtm2V0PWy54Am9+pOBAbzLwLK2A==
-X-Gm-Gg: AYBFou1OtZeJY+4Ycxz5nPj13XZNetrj0UTP4nBwqDF9S4YI9vSsYZ5M1vO7JlRRbxX
-	cjuQ6M0KIb1fLTfEW8Dmcr9cUCrJtEJVeAgleXWT1ebG5aNIvWKcg5RZb01mMShv4Pv1BwV++XZ
-	f04N1dYgbxS6NEshbPNWiJFdlz9m/JSrg+Brk7eFDJsgqZSdpcvJBHd0VlbVL0rQfgVqc8EGwyq
-	AabU73zaVCZjMlV9n4ZjJDFvNSH3rDrwJ9h/t2dV2SqRXPWiVUypiVmLgCWi3mMNph7VG+UnnDX
-	C5bMMz3JeIvexdSrs+2KlyScGsOQ25ak7o5vw6gba4gQ4kbuFZxA/Z6wfZhib81tn5UMeA2Z1IS
-	EelvNcSkrs891MyWcjAv/ABCgtARUhoazO7zq3cG0oh+BqVY6CDrxzpJ8jHveIdUdiJ7reYeuxF
-	pUu+elSLsihCOTRc57GmbPNMv0lt3HUYKBejj+WoKHzAeFVbNXHvioFOQeQ5NhMHYDxk/zHcbeo
-	c93doKOkpFRM6C/
-X-Received: by 2002:a05:6a00:2309:b0:84a:29a7:f650 with SMTP id d2e1a72fcca58-861630c5ce5mr22606108b3a.0.1788702670118;
-        Sun, 06 Sep 2026 06:51:10 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:6467:d689:2b14:fe4a:ab17:f236])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86154048bddsm3271018b3a.60.2026.09.06.06.51.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Sep 2026 06:51:09 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	donggeunyoo.kernel@gmail.com
-Subject: Re: [PATCH] tracing: hist: free the var ref when its initialization fails
-Date: Sun,  6 Sep 2026 22:51:05 +0900
-Message-ID: <20260906135105.4092962-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260906134553.71E331F00A3A@smtp.kernel.org>
-References: <20260906133352.3815019-1-donggeunyoo.kernel@gmail.com> <20260906134553.71E331F00A3A@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8B11EFFA1
+	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 15:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.95.108
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788707231; cv=fail; b=QZn9l6HWMjJVlsa7W/oRCofxw8DZ/h9eDxxq7fYtm267cEgGWOTHGWhrOTRuN67wgAoRkQAkkI0z+2PQyT5cY5J6SdJrw6A1h0/InbwI931Pl1nrf1FDIcoDDD0pMY0GZLC2xWkaxxyMVbsjN+1LLytclo74AmXaehgdZUhPR4c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788707231; c=relaxed/simple;
+	bh=yjYAwvN5tZNmCUpV+8JED4p5glGpFHzsFa3rIP0kPPg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jAx41259TBbNNFZx+XXPT82BauKKGX3GAMrPbwY0iKtK9p0mkzDcCnXZY2ylGcS6a2YVlXtpdDaj7Ad03Awo2ETqi8xhn62OYiKszC1I3EumWXuCy0NmISvN1l8iNNsgfFhRU3GqwcCovuJDR2HOrPDwMiyIqMpkgr3sBq+mV+A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.95.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Qvx9dCb/NnitUgze/0sqnRYhubklrGElss+hv06BPPio8d0J3U9RW6PfR+NyGtgbVAXjI7W02M3cPMjKoq9a2YzwpsV5KmnohYRRriPVY4K8jbl7mLCgNWWr48DPA9uS2b+Ii5VoUpBFLwsHZXIgUteEzQcfKyUGjSsOvL99iuhwVF2TiHd72390bxHwyO6CW6fHRS3sPEwLz/N+jQoEkW/n1S8UfcrgVRPODNN5svOzozuv5ef7JUfpZo7EetozNZ4m8D7RLTSGyctCAsbyNLumJ7QKD8x2Di19UF8/DQCMz93NQ1SYQcCqqKcJpIV77aFYHclPiTa7x7V/TMem6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=KQGHB8/+EWMiKWWDmnFqyr3w/nwwv960ieHARgM1CPs=;
+ b=jyQhfhT7f6KuC5QTbuiwhJ+2V8gpHGk2Ot/DPjIioxWfrOH4FgIMb4GzO6Krnszgproz7VZUF9WIB0LsVdjjPa8MVtUlP2bcH/ReNxB75DmgfFGOIacCFeK3H3jV3gUDFboQL7WnTqqjG9bjg1GlK1XmBPmlVeOqiFqVjiS7dudqNLx4iPRqy+151Wei59qcg8VnhFnF1Jj+JIlAiQkFTjWC2SRh+blsT7iyDUfaOR3khcP5N4+x5WWvzvJ1LOZj3AG8ULc8uuIyR9SDKNfAm7xrp+0UCO1X9GEZ++2FU8Lqc4fnJU6cuq34rRGua5V5dFBqD3/z22KdPuKdl/81Dw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
+ by LO4P123MB6726.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:2e4::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Sun, 6 Sep
+ 2026 15:07:05 +0000
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0382.014; Sun, 6 Sep 2026
+ 15:07:04 +0000
+Date: Sun, 6 Sep 2026 11:07:00 -0400
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: Gary Guo <gary@garyguo.net>
+Cc: sashiko-reviews@lists.linux.dev, petr.pavlu@suse.com, ojeda@kernel.org, 
+	linux-modules@vger.kernel.org
+Subject: Re: [PATCH v10 1/2] module: Extend module_blacklist parameter to
+ built-in modules
+Message-ID: <u5fmo2l7tyaz37goqu3rek7m5iha7kmuq4rme3lgriq7zycycl@ix6o54np4fqx>
+References: <20260903185557.183224-1-atomlin@atomlin.com>
+ <20260903185557.183224-2-atomlin@atomlin.com>
+ <20260903191303.5A14B1F000E9@smtp.kernel.org>
+ <xuj6okhlofl4cboopwjzqe3jyfmaxgvdpf5a3ek7bubew4vcbk@nkfqgoe53533>
+ <DL89X93TI07G.18X8GZUFIIM6@garyguo.net>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DL89X93TI07G.18X8GZUFIIM6@garyguo.net>
+X-ClientProxiedBy: BN9PR03CA0802.namprd03.prod.outlook.com
+ (2603:10b6:408:13f::27) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:400:183::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO4P123MB6726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a46088f-90e6-45b7-d0f7-08df0c2882c3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|6133799003|3023799007|10067099003|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	vuDjQJIZiOLOB+YFs71DWXS8AddGw6AtbtO1Iudaw7kknCp3xA1MGi/4Qh4+IyfhY119XPfqvhVs5sY23jWsjwkKq/BtAqhDadZyQmdAs9HtDbw0JqFJlb1BpQ/6/yHrOu6L/c+av3tHaZ4zF6fwY/73CgpgnAkcjIi2w8cOEp6yI8sQlfxKWrfha+QwS3GXLMoHXDNH6Z0ZCWpbc5wcQdFAGKYevTIgWkYDpiNdcfwyL5JAJNFUmWVUUFKeGvdyn+2+NUk1lPNSxdxwqpjdLimkroSKUlDhAPBzzVx/iQ93z+auji2+nvVMW6yNyPsrxJr8dnPULSe7DNJPvn2b2ogvqaSmmw9Jc/nanU9tYrXpZJNAMfo3W7X9HAurtW1vR/SXAjtGTPzJnbE6xTGLBqKoe0kmpaWlYgjYmSbfnmPTA6JFfvv2DZrS2XFRTX6eE8pdfLvZYUiZx9kDcCofwDE7QF3A/sKcGf5VqK3qqwJ6os2gD6Vru1zqdfmiK66gGMflDeBBynNNRhBAA/0IwrbAuEVMKBYDapiu+fpNuCAWIAFF6HSWuY6FztzfzqTq8L7RsLDvKnAqRXevMvqWs7zgSVfAKT+BXlcufdA4JeUNdZLN6fAXppi8eQ/EXVfxJ3b32w64EcclBGFFEcrYDDcqwuwzsKOWXIqy0e+4GYw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(6133799003)(3023799007)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SjZNckxZaHFZRG03cC9jVmhQS2lxOUVMbllIcVNyY0I5QjhpM2NpTEJCVUt1?=
+ =?utf-8?B?NjN3Z1ZqL2JudzlJQXN1RE5WVnkrK2ljNFdhS2U1c3NyekM5Tmt0QjBFSml5?=
+ =?utf-8?B?ZnllQ2pMNjVKMmlKTUJQNlpIVHNSSDFqQ2tmeXY4R3g2cCtLSjdaSlZRQkRy?=
+ =?utf-8?B?SDlMNDFEUXhrdVpsR2RoZDZtR1FTelBIZHo5ODhQWVpjWW1KcVN2OWNCMis3?=
+ =?utf-8?B?cU9aYWdmVmhVZDZsVGRQN3V0VGppck5aQkxVeHhLSmtqKzQyV0M5TWpoRytp?=
+ =?utf-8?B?VkJjQ2N3M3RxeGhTSVBBL3o3SzBtQytmVVF2UXZHcHRJeGEyRCtQelZzUzB2?=
+ =?utf-8?B?VGFoWWVwN3Y5eE40OUM5d1cybE9JeDJ5em5wR1dybjdoM0JEUDBScTFJMnhY?=
+ =?utf-8?B?TUhtQWxPQUJON2NwZDVTU2NwUDcrTDV3NmhLbEJoOVNyYVcxUlQ4UU1CeUdT?=
+ =?utf-8?B?WEtjdmlpTXlwbzdUMW40K1JScVNiNUZ6V240RnliK2EwMFJ0RmY5Ui9TMG1n?=
+ =?utf-8?B?QmE2YkI3cW9JekJneGl6NXVmRVNqNFNla3M5RVAwaFQzTndIQ3dUUmlBdEhP?=
+ =?utf-8?B?QWlLVktGekh0MXR4b3FWZTZYQ0lpeXVsZTVUS08rbHN1SEx2Wm5iTmhTSjY5?=
+ =?utf-8?B?SlhEekF0VUFSVm1sTmVaTER3UW45UU04Q2V1OWM0RGNxckpzbEFyY1FQSGh0?=
+ =?utf-8?B?bVJpaUVyOENtdFpEeS82djJFaFZyYWVucW1nUExZSnJOa2NiWWdyM0lsZUhM?=
+ =?utf-8?B?MHQ4WXp5OURuQ2R1dUdidmFYZUNsOElnUVQvVW0yTERyb2lkYThXT2JzNVF6?=
+ =?utf-8?B?VXM2Umh4QlR5b2owS2h1VHZrUGk3RVVkcXJUQ0ZuVTI2N1U5TWJvNyt4dVNa?=
+ =?utf-8?B?U25FNTVzWUtVakdjb3ZYWG1kMlRndlArQk9hVndHVnIwdERxZGd1czBTMjJa?=
+ =?utf-8?B?SkYrVGVPVmcyTW9GcTdkSVZrbDNOZnU2VnE5b1hPZk9yUjQwaThZL3NxTitK?=
+ =?utf-8?B?Y254d25oQlFvUGVPa0dPYXcxVmRScGl5akFZaDlvZHJGSURWVi9oU290Nmlh?=
+ =?utf-8?B?ZEJJR2lsYkRWOElqR3VKa2F0RzgwMzVFREdESVJCTGNvR3JIZ1lvOE5kZkc1?=
+ =?utf-8?B?S0VKTHNCbGdudzZkTmtPamdlbnpGb2w0R2I0R0RYa1Njd0Z4Zkc4bWJaQ3Bp?=
+ =?utf-8?B?SHBPTG5qM0Joa3hYQUxHL0ZScFFXVGdhQy9pczhBclcxM2tVRUJOSTk3Yk5R?=
+ =?utf-8?B?eU1BaW50QVdBeHFRdllyMGtORXRTb0FwL3pEc2x3anplU3dLVUlaTk9yTWRh?=
+ =?utf-8?B?UEZEalZrV0NIVi80NkE0cmd5YzhSOENWUkZIcGVHdWFPUEhrYmRlOEd6cWNH?=
+ =?utf-8?B?OTRrY2NnM01QcVA0MHhOVFJwTFdyaXJTTGNLdEZHbFNXYU83NUxMeDNxeE9w?=
+ =?utf-8?B?RGN0aHo0MDNpdU9SRk9OS2lYMWZubWtNaTNqOWhtNFh4S0djaFFoSTZHRk41?=
+ =?utf-8?B?emN3SHhGV2I1RkdHbkEwZEtEK3JFY2Era0FDNWFaMzBsZlhQSTdNUXdDRzQ5?=
+ =?utf-8?B?cm1IRDRZV3F0dnJOQnlzLzZEVEsrSFpzc1JhaXRZQkZQUHBPTEdLem5ONGFZ?=
+ =?utf-8?B?SDY4MHpla0gwcFY5Zlp4N3M4RnBERjhta3I4bVk1UmdaYTJ1cGFCTVJwdFB2?=
+ =?utf-8?B?Vm55WXV2RCtBdzRZNE9aU0dkR1FEN1FaMjJ0RUduSFlDTnN0TnV4cjhrZ0hP?=
+ =?utf-8?B?aTRESjhONVBqZXdyck00SDdrWEtFTUZkSEpJT2cycFB0S1BYVzZ5QVFvQ05o?=
+ =?utf-8?B?aFRkaFlDdVh2N0tWbkFKejMvT1NPYUFCS1NxdEh6RU1vYjlhR21RV0pWQjJI?=
+ =?utf-8?B?dE56Ym81UTJEYTJKS1NhcFNnOWxHNnZlY3cwdmFsblh0L0xPN2xMRWRDMnBH?=
+ =?utf-8?B?dVAwV296dGh1WHpFZnAwL0pXZ3YxYzRHU2l1WVBwSzgxbmZVT0h3VHVWLzRH?=
+ =?utf-8?B?RjltbWd6UDRjeDczOHFwc0daRVp1OFFCRHlFaTV5SGxhWTEyd2I1YmpEcUV6?=
+ =?utf-8?B?a2IwRjc4Tkh3VkNEYnpZRy9GRUNKMHNvVzBVZUQ0eGlvT0kwczZDZHJRaUd1?=
+ =?utf-8?B?a2FySm5rZWs0OE5ZMlcyYnVOeE5vcmRQUnV5R2FyckpzcGVsT2pYMXUvbEUv?=
+ =?utf-8?B?Sk5lK3hTMEhWdkp0MFZOS0JaMm5sSEcxK2g5M1lkdHZTaFl0NGxnT1VmNUtK?=
+ =?utf-8?B?dW90cDFvRVZHOU9JUjVnbHpaT0Fha2c3N0grdGluK290TS93NERWdVduM1Fv?=
+ =?utf-8?B?REk2TzZqeTg4dTNUY3hsMlB4V3VBZlk1bThlZkVXN2JZdFNIK3YwQT09?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a46088f-90e6-45b7-d0f7-08df0c2882c3
+X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2026 15:07:04.7647
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uD/cio5o4Byxv120td8YQr7+uyL5s8iPVtSO+qk+F++clLz5pfe8rT83y95tR3thb0PyRTDh6Oc3NR4tj93g2A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P123MB6726
 
-Sashiko wrote:
-> - [High] Pre-existing memory leak in `__destroy_hist_field()` for variable
-> references (`VAR_REF` fields) reused three or more times within a histogram
-> trigger.
+On Sun, Sep 06, 2026 at 02:39:12PM +0100, Gary Guo wrote:
+> On Fri Sep 4, 2026 at 3:34 PM BST, Aaron Tomlin wrote:
+> > On Thu, Sep 03, 2026 at 07:13:02PM +0000, sashiko-bot@kernel.org wrote:
+> >> commit 828a4fa4f29a0a3c5aba9065f4ba35eb845dddef
+> >> Author: Aaron Tomlin <atomlin@atomlin.com>
+> >> 
+> >> module: Extend module_blacklist parameter to built-in modules
+> >> 
+> >> This commit extends the module_blacklist command-line parameter to apply to
+> >> built-in modules. It achieves this by creating a new .initcall.modnames
+> >> section to map initcalls to module names, intercepting blacklisted builtin
+> >> initcalls during early boot.
+> >> 
+> >> > diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+> >> > index b2988aa12f664..7490278b7a2df 100644
+> >> > --- a/include/asm-generic/vmlinux.lds.h
+> >> > +++ b/include/asm-generic/vmlinux.lds.h
+> >> > @@ -734,7 +734,8 @@
+> >> >  	EARLYCON_TABLE()						\
+> >> >  	LSM_TABLE()							\
+> >> >  	EARLY_LSM_TABLE()						\
+> >> > -	KUNIT_INIT_TABLE()
+> >> > +	KUNIT_INIT_TABLE()						\
+> >> > +	BOUNDED_SECTION_BY(.initcall.modnames, _initcall_modnames)
+> >> 
+> >> [Severity: High]
+> >> Does this section declaration need an alignment constraint? Without a preceding
+> >> . = ALIGN(8); or similar, the __start_initcall_modnames label might capture
+> >> the unaligned location counter before padding is inserted by the linker.
+> >> 
+> >> When iterating over this section during early boot in do_initcall_level(),
+> >> could the kernel read padding bytes as garbage pointers, breaking the
+> >> builtin module blacklist feature or causing an unaligned memory access panic?
+> >
+> > Hi Petr,
+> >
+> > I forgot to restore ". = ALIGN(8)" in this iteration.
+> >
+> > The following ensures the location counter . within .init.data is aligned
+> > to an 8-byte boundary before __start_initcall_modnames = . is captured,
+> > preventing any linker padding from preceding the first element of the
+> > table.
+> 
+> Have you observed cases where this as an actual problem?
+> 
+> I suppose this could be fixed in the BOUNDED_SECTION_BY instead by doing
+> 
+>     . = ALIGN(ALIGNOF(NEXT_SECTION));
 
-That is the bug fixed by the patch linked in this one's notes:
+Hi Gary,
 
-  https://lore.kernel.org/linux-trace-kernel/20260906124025.3550596-1-donggeunyoo.kernel@gmail.com/
+To answer your question, no. I have not observed it causing a real failure
+in our current x86_64 build. This is because KUNIT_INIT_TABLE() happens to
+precede it in INIT_DATA, and KUNIT_INIT_TABLE() explicitly sets '. = ALIGN(8);'
+and contains 8-byte pointers, so the location counter coincidentally
+arrived at an 8-byte aligned address.
 
-It removes the reference count so __destroy_hist_field() frees
-unconditionally, and the three-reference case no longer leaks. The two
-patches are independent and apply in either order.
+However, relying on whichever section happens to precede it to maintain
+8-byte alignment across all architectures and config combinations feels
+fragile.
+
+Regarding using ALIGNOF(sec): in GNU ld, ALIGNOF() only works on output
+sections. Because .initcall.modnames is an input section within the
+.init.data output section, GNU ld rejects it with: undefined section
+.initcall.modnames referenced in expression
+
+Placing '. = ALIGN(8);' directly before the section matches how other
+8-byte aligned tables in vmlinux.lds.h (such as LSM_TABLE, EARLY_LSM_TABLE,
+and KUNIT_INIT_TABLE) ensure their start labels are properly aligned.
+
+
+> > Are you okay with the following?
+> >
+> >     --- a/include/asm-generic/vmlinux.lds.h
+> >     +++ b/include/asm-generic/vmlinux.lds.h
+> >     @@ -735,6 +735,7 @@
+> >          LSM_TABLE()                            \
+> >          EARLY_LSM_TABLE()                        \
+> >          KUNIT_INIT_TABLE()                        \
+> >     +    . = ALIGN(8);                            \
+> >          BOUNDED_SECTION_BY(.initcall.modnames, _initcall_modnames)
+> >
+> >      #define INIT_TEXT                            \
+> >
+> >
+> >> > diff --git a/rust/macros/module.rs b/rust/macros/module.rs
+> >> > index bc7027f8dbb2c..a96157598197f 100644
+> >> > --- a/rust/macros/module.rs
+> >> > +++ b/rust/macros/module.rs
+> >> [ ... ]
+> >> > @@ -591,6 +594,20 @@ pub extern "C" fn cleanup_module() {
+> >> >                  #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
+> >> >                  ::core::arch::global_asm!(#global_asm);
+> >> >  
+> >> > +                #[cfg(not(MODULE))]
+> >> > +                #[used(compiler)]
+> >> > +                #[link_section = ".init.rodata"]
+> >> > +                static #ident_modname_str: [u8; #name_len] = *#name_cstr.to_bytes_with_nul();
+> >> 
+> >> [Severity: Low]
+> >> Will this cause a compilation failure for built-in Rust modules?
+> >> 
+> >> It attempts to initialize a fixed-size array by dereferencing a dynamically
+> >> sized slice returned by to_bytes_with_nul(). This could break the build when
+> >> CONFIG_MODULES=n or when a Rust module is configured as built-in.
+> >
+> > Hi Gary,
+> >
+> > Calling .to_bytes_with_nul() on &CStr returns a slice reference (&[u8]), so
+> > dereferencing it yields an unsized slice ([u8]).
+> >
+> > To resolve this, we can follow the pattern already used in
+> > rust/macros/module.rs for emitting '.modinfo' entries construct a byte
+> > string literal at macro-expansion time using Literal::byte_string(). In
+> > Rust, a byte string literal (b"...\0") has type &'static [u8; N], which can
+> > be cleanly dereferenced with '*' into a fixed-size array [u8; N].
+> >
+> > Would the following be appropriate?
+> 
+> Looks reasonable.
+
+
+Thank you Gary!
+
+
+Kind regards,
+-- 
+Aaron Tomlin
