@@ -1,253 +1,244 @@
-Received: from LO2P265CU024.outbound.protection.outlook.com (mail-uksouthazon11021108.outbound.protection.outlook.com [52.101.95.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8B11EFFA1
-	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 15:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.95.108
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788707231; cv=fail; b=QZn9l6HWMjJVlsa7W/oRCofxw8DZ/h9eDxxq7fYtm267cEgGWOTHGWhrOTRuN67wgAoRkQAkkI0z+2PQyT5cY5J6SdJrw6A1h0/InbwI931Pl1nrf1FDIcoDDD0pMY0GZLC2xWkaxxyMVbsjN+1LLytclo74AmXaehgdZUhPR4c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788707231; c=relaxed/simple;
-	bh=yjYAwvN5tZNmCUpV+8JED4p5glGpFHzsFa3rIP0kPPg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=jAx41259TBbNNFZx+XXPT82BauKKGX3GAMrPbwY0iKtK9p0mkzDcCnXZY2ylGcS6a2YVlXtpdDaj7Ad03Awo2ETqi8xhn62OYiKszC1I3EumWXuCy0NmISvN1l8iNNsgfFhRU3GqwcCovuJDR2HOrPDwMiyIqMpkgr3sBq+mV+A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.95.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Qvx9dCb/NnitUgze/0sqnRYhubklrGElss+hv06BPPio8d0J3U9RW6PfR+NyGtgbVAXjI7W02M3cPMjKoq9a2YzwpsV5KmnohYRRriPVY4K8jbl7mLCgNWWr48DPA9uS2b+Ii5VoUpBFLwsHZXIgUteEzQcfKyUGjSsOvL99iuhwVF2TiHd72390bxHwyO6CW6fHRS3sPEwLz/N+jQoEkW/n1S8UfcrgVRPODNN5svOzozuv5ef7JUfpZo7EetozNZ4m8D7RLTSGyctCAsbyNLumJ7QKD8x2Di19UF8/DQCMz93NQ1SYQcCqqKcJpIV77aFYHclPiTa7x7V/TMem6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=KQGHB8/+EWMiKWWDmnFqyr3w/nwwv960ieHARgM1CPs=;
- b=jyQhfhT7f6KuC5QTbuiwhJ+2V8gpHGk2Ot/DPjIioxWfrOH4FgIMb4GzO6Krnszgproz7VZUF9WIB0LsVdjjPa8MVtUlP2bcH/ReNxB75DmgfFGOIacCFeK3H3jV3gUDFboQL7WnTqqjG9bjg1GlK1XmBPmlVeOqiFqVjiS7dudqNLx4iPRqy+151Wei59qcg8VnhFnF1Jj+JIlAiQkFTjWC2SRh+blsT7iyDUfaOR3khcP5N4+x5WWvzvJ1LOZj3AG8ULc8uuIyR9SDKNfAm7xrp+0UCO1X9GEZ++2FU8Lqc4fnJU6cuq34rRGua5V5dFBqD3/z22KdPuKdl/81Dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LO4P123MB6726.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:2e4::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Sun, 6 Sep
- 2026 15:07:05 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0382.014; Sun, 6 Sep 2026
- 15:07:04 +0000
-Date: Sun, 6 Sep 2026 11:07:00 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: Gary Guo <gary@garyguo.net>
-Cc: sashiko-reviews@lists.linux.dev, petr.pavlu@suse.com, ojeda@kernel.org, 
-	linux-modules@vger.kernel.org
-Subject: Re: [PATCH v10 1/2] module: Extend module_blacklist parameter to
- built-in modules
-Message-ID: <u5fmo2l7tyaz37goqu3rek7m5iha7kmuq4rme3lgriq7zycycl@ix6o54np4fqx>
-References: <20260903185557.183224-1-atomlin@atomlin.com>
- <20260903185557.183224-2-atomlin@atomlin.com>
- <20260903191303.5A14B1F000E9@smtp.kernel.org>
- <xuj6okhlofl4cboopwjzqe3jyfmaxgvdpf5a3ek7bubew4vcbk@nkfqgoe53533>
- <DL89X93TI07G.18X8GZUFIIM6@garyguo.net>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DL89X93TI07G.18X8GZUFIIM6@garyguo.net>
-X-ClientProxiedBy: BN9PR03CA0802.namprd03.prod.outlook.com
- (2603:10b6:408:13f::27) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1853361950;
+	Sun,  6 Sep 2026 15:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788708486; cv=none; b=VZZTPXnYrhfeBczDEwUSXR/Uacgip2gnO3Ivku0i6SGt/tiNBPM+WxGgSb29bbvLrOuiq9yLcy+9XBShqhqqEQATm6qvqTRfQd+Gks0TAB9s6cWSrzLaNWDg84BUyw1k/hcFc8Iopalkbw3Og1Rek0yrVO0Bo/CM7tJM8IZFKLQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788708486; c=relaxed/simple;
+	bh=EldEYWNRQbovvWpWdAkcKN7nPrrysstXIDhwWhHPkoo=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=HCFPmp4Y5vW2jSlwIC6UjCM6l5wZAF1+q30IAF4FSPqtxfFN2TPgOh6+5S66/edMPSDi/dAdoQUdByPMGgDTQlx/xM50LzI+6KfpYu1+6O7eux3Ju2Oi5n9f/ifJEPtF1qpWR1klwVLgIr1lUrw4GhQlkefAt9Gm96a59crNFw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JCVdQu1V; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JCVdQu1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D7B1F00A3A;
+	Sun,  6 Sep 2026 15:28:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788708484;
+	bh=Cepp1dP3j33Zql5xWt35duiNbPFrWRgNfLpZvo7wB9Q=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=JCVdQu1VJsyb4iAbgr099bFeDuD7NM1d5ysUqm4R6qkyzu4842kl8gqCNfu8pkN/G
+	 u8ntHBwAOdpqUpI08IOYugM8oxxjDrozE71GWL1cTpiFK9KBBkryzWP9fDozGMyN2p
+	 rItXLLaUAnXO2VEV6EUeDNbCRkHXulHIxsdW0Kyjnh7jYhgTkP1p4vTq0TLUCVBqtt
+	 OdG6pjkAWzfG/1F4YWZ1dM9i4HjZD6RsDYHGn0JKgJCKI1xsTAkTEYHAItwsbleNSU
+	 Bsls3OeKW6DjGP/I6RDLG7efww5QUfiuYp3Z0eYsNhpgjraL7csXNWHW3/26zN6u0m
+	 U+zK5MILgQX/w==
+Date: Mon, 7 Sep 2026 00:28:00 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v14 04/14] x86/hw_breakpoints: Make DR7 updates NMI safe
+Message-Id: <20260907002800.8c66e05d98ad708740ade229@kernel.org>
+In-Reply-To: <20260830144520.081FF1F000E9@smtp.kernel.org>
+References: <178810001186.64882.2161016469449127450.stgit@devnote2>
+	<178810005476.64882.15902865504188093281.stgit@devnote2>
+	<20260830144520.081FF1F000E9@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO4P123MB6726:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9a46088f-90e6-45b7-d0f7-08df0c2882c3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|6133799003|3023799007|10067099003|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	vuDjQJIZiOLOB+YFs71DWXS8AddGw6AtbtO1Iudaw7kknCp3xA1MGi/4Qh4+IyfhY119XPfqvhVs5sY23jWsjwkKq/BtAqhDadZyQmdAs9HtDbw0JqFJlb1BpQ/6/yHrOu6L/c+av3tHaZ4zF6fwY/73CgpgnAkcjIi2w8cOEp6yI8sQlfxKWrfha+QwS3GXLMoHXDNH6Z0ZCWpbc5wcQdFAGKYevTIgWkYDpiNdcfwyL5JAJNFUmWVUUFKeGvdyn+2+NUk1lPNSxdxwqpjdLimkroSKUlDhAPBzzVx/iQ93z+auji2+nvVMW6yNyPsrxJr8dnPULSe7DNJPvn2b2ogvqaSmmw9Jc/nanU9tYrXpZJNAMfo3W7X9HAurtW1vR/SXAjtGTPzJnbE6xTGLBqKoe0kmpaWlYgjYmSbfnmPTA6JFfvv2DZrS2XFRTX6eE8pdfLvZYUiZx9kDcCofwDE7QF3A/sKcGf5VqK3qqwJ6os2gD6Vru1zqdfmiK66gGMflDeBBynNNRhBAA/0IwrbAuEVMKBYDapiu+fpNuCAWIAFF6HSWuY6FztzfzqTq8L7RsLDvKnAqRXevMvqWs7zgSVfAKT+BXlcufdA4JeUNdZLN6fAXppi8eQ/EXVfxJ3b32w64EcclBGFFEcrYDDcqwuwzsKOWXIqy0e+4GYw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(6133799003)(3023799007)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SjZNckxZaHFZRG03cC9jVmhQS2lxOUVMbllIcVNyY0I5QjhpM2NpTEJCVUt1?=
- =?utf-8?B?NjN3Z1ZqL2JudzlJQXN1RE5WVnkrK2ljNFdhS2U1c3NyekM5Tmt0QjBFSml5?=
- =?utf-8?B?ZnllQ2pMNjVKMmlKTUJQNlpIVHNSSDFqQ2tmeXY4R3g2cCtLSjdaSlZRQkRy?=
- =?utf-8?B?SDlMNDFEUXhrdVpsR2RoZDZtR1FTelBIZHo5ODhQWVpjWW1KcVN2OWNCMis3?=
- =?utf-8?B?cU9aYWdmVmhVZDZsVGRQN3V0VGppck5aQkxVeHhLSmtqKzQyV0M5TWpoRytp?=
- =?utf-8?B?VkJjQ2N3M3RxeGhTSVBBL3o3SzBtQytmVVF2UXZHcHRJeGEyRCtQelZzUzB2?=
- =?utf-8?B?VGFoWWVwN3Y5eE40OUM5d1cybE9JeDJ5em5wR1dybjdoM0JEUDBScTFJMnhY?=
- =?utf-8?B?TUhtQWxPQUJON2NwZDVTU2NwUDcrTDV3NmhLbEJoOVNyYVcxUlQ4UU1CeUdT?=
- =?utf-8?B?WEtjdmlpTXlwbzdUMW40K1JScVNiNUZ6V240RnliK2EwMFJ0RmY5Ui9TMG1n?=
- =?utf-8?B?QmE2YkI3cW9JekJneGl6NXVmRVNqNFNla3M5RVAwaFQzTndIQ3dUUmlBdEhP?=
- =?utf-8?B?QWlLVktGekh0MXR4b3FWZTZYQ0lpeXVsZTVUS08rbHN1SEx2Wm5iTmhTSjY5?=
- =?utf-8?B?SlhEekF0VUFSVm1sTmVaTER3UW45UU04Q2V1OWM0RGNxckpzbEFyY1FQSGh0?=
- =?utf-8?B?bVJpaUVyOENtdFpEeS82djJFaFZyYWVucW1nUExZSnJOa2NiWWdyM0lsZUhM?=
- =?utf-8?B?MHQ4WXp5OURuQ2R1dUdidmFYZUNsOElnUVQvVW0yTERyb2lkYThXT2JzNVF6?=
- =?utf-8?B?VXM2Umh4QlR5b2owS2h1VHZrUGk3RVVkcXJUQ0ZuVTI2N1U5TWJvNyt4dVNa?=
- =?utf-8?B?U25FNTVzWUtVakdjb3ZYWG1kMlRndlArQk9hVndHVnIwdERxZGd1czBTMjJa?=
- =?utf-8?B?SkYrVGVPVmcyTW9GcTdkSVZrbDNOZnU2VnE5b1hPZk9yUjQwaThZL3NxTitK?=
- =?utf-8?B?Y254d25oQlFvUGVPa0dPYXcxVmRScGl5akFZaDlvZHJGSURWVi9oU290Nmlh?=
- =?utf-8?B?ZEJJR2lsYkRWOElqR3VKa2F0RzgwMzVFREdESVJCTGNvR3JIZ1lvOE5kZkc1?=
- =?utf-8?B?S0VKTHNCbGdudzZkTmtPamdlbnpGb2w0R2I0R0RYa1Njd0Z4Zkc4bWJaQ3Bp?=
- =?utf-8?B?SHBPTG5qM0Joa3hYQUxHL0ZScFFXVGdhQy9pczhBclcxM2tVRUJOSTk3Yk5R?=
- =?utf-8?B?eU1BaW50QVdBeHFRdllyMGtORXRTb0FwL3pEc2x3anplU3dLVUlaTk9yTWRh?=
- =?utf-8?B?UEZEalZrV0NIVi80NkE0cmd5YzhSOENWUkZIcGVHdWFPUEhrYmRlOEd6cWNH?=
- =?utf-8?B?OTRrY2NnM01QcVA0MHhOVFJwTFdyaXJTTGNLdEZHbFNXYU83NUxMeDNxeE9w?=
- =?utf-8?B?RGN0aHo0MDNpdU9SRk9OS2lYMWZubWtNaTNqOWhtNFh4S0djaFFoSTZHRk41?=
- =?utf-8?B?emN3SHhGV2I1RkdHbkEwZEtEK3JFY2Era0FDNWFaMzBsZlhQSTdNUXdDRzQ5?=
- =?utf-8?B?cm1IRDRZV3F0dnJOQnlzLzZEVEsrSFpzc1JhaXRZQkZQUHBPTEdLem5ONGFZ?=
- =?utf-8?B?SDY4MHpla0gwcFY5Zlp4N3M4RnBERjhta3I4bVk1UmdaYTJ1cGFCTVJwdFB2?=
- =?utf-8?B?Vm55WXV2RCtBdzRZNE9aU0dkR1FEN1FaMjJ0RUduSFlDTnN0TnV4cjhrZ0hP?=
- =?utf-8?B?aTRESjhONVBqZXdyck00SDdrWEtFTUZkSEpJT2cycFB0S1BYVzZ5QVFvQ05o?=
- =?utf-8?B?aFRkaFlDdVh2N0tWbkFKejMvT1NPYUFCS1NxdEh6RU1vYjlhR21RV0pWQjJI?=
- =?utf-8?B?dE56Ym81UTJEYTJKS1NhcFNnOWxHNnZlY3cwdmFsblh0L0xPN2xMRWRDMnBH?=
- =?utf-8?B?dVAwV296dGh1WHpFZnAwL0pXZ3YxYzRHU2l1WVBwSzgxbmZVT0h3VHVWLzRH?=
- =?utf-8?B?RjltbWd6UDRjeDczOHFwc0daRVp1OFFCRHlFaTV5SGxhWTEyd2I1YmpEcUV6?=
- =?utf-8?B?a2IwRjc4Tkh3VkNEYnpZRy9GRUNKMHNvVzBVZUQ0eGlvT0kwczZDZHJRaUd1?=
- =?utf-8?B?a2FySm5rZWs0OE5ZMlcyYnVOeE5vcmRQUnV5R2FyckpzcGVsT2pYMXUvbEUv?=
- =?utf-8?B?Sk5lK3hTMEhWdkp0MFZOS0JaMm5sSEcxK2g5M1lkdHZTaFl0NGxnT1VmNUtK?=
- =?utf-8?B?dW90cDFvRVZHOU9JUjVnbHpaT0Fha2c3N0grdGluK290TS93NERWdVduM1Fv?=
- =?utf-8?B?REk2TzZqeTg4dTNUY3hsMlB4V3VBZlk1bThlZkVXN2JZdFNIK3YwQT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9a46088f-90e6-45b7-d0f7-08df0c2882c3
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2026 15:07:04.7647
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uD/cio5o4Byxv120td8YQr7+uyL5s8iPVtSO+qk+F++clLz5pfe8rT83y95tR3thb0PyRTDh6Oc3NR4tj93g2A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P123MB6726
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 06, 2026 at 02:39:12PM +0100, Gary Guo wrote:
-> On Fri Sep 4, 2026 at 3:34 PM BST, Aaron Tomlin wrote:
-> > On Thu, Sep 03, 2026 at 07:13:02PM +0000, sashiko-bot@kernel.org wrote:
-> >> commit 828a4fa4f29a0a3c5aba9065f4ba35eb845dddef
-> >> Author: Aaron Tomlin <atomlin@atomlin.com>
-> >> 
-> >> module: Extend module_blacklist parameter to built-in modules
-> >> 
-> >> This commit extends the module_blacklist command-line parameter to apply to
-> >> built-in modules. It achieves this by creating a new .initcall.modnames
-> >> section to map initcalls to module names, intercepting blacklisted builtin
-> >> initcalls during early boot.
-> >> 
-> >> > diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-> >> > index b2988aa12f664..7490278b7a2df 100644
-> >> > --- a/include/asm-generic/vmlinux.lds.h
-> >> > +++ b/include/asm-generic/vmlinux.lds.h
-> >> > @@ -734,7 +734,8 @@
-> >> >  	EARLYCON_TABLE()						\
-> >> >  	LSM_TABLE()							\
-> >> >  	EARLY_LSM_TABLE()						\
-> >> > -	KUNIT_INIT_TABLE()
-> >> > +	KUNIT_INIT_TABLE()						\
-> >> > +	BOUNDED_SECTION_BY(.initcall.modnames, _initcall_modnames)
-> >> 
-> >> [Severity: High]
-> >> Does this section declaration need an alignment constraint? Without a preceding
-> >> . = ALIGN(8); or similar, the __start_initcall_modnames label might capture
-> >> the unaligned location counter before padding is inserted by the linker.
-> >> 
-> >> When iterating over this section during early boot in do_initcall_level(),
-> >> could the kernel read padding bytes as garbage pointers, breaking the
-> >> builtin module blacklist feature or causing an unaligned memory access panic?
-> >
-> > Hi Petr,
-> >
-> > I forgot to restore ". = ALIGN(8)" in this iteration.
-> >
-> > The following ensures the location counter . within .init.data is aligned
-> > to an 8-byte boundary before __start_initcall_modnames = . is captured,
-> > preventing any linker padding from preceding the first element of the
-> > table.
+On Sun, 30 Aug 2026 14:45:19 +0000
+sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> Have you observed cases where this as an actual problem?
+> Pre-existing issues:
+> - [Critical] Preexisting race condition in `local_db_save()` leads to recursive exceptions. The function reads DR7, then checks if it was non-zero before disabling hardware breakpoints. If an NMI (e.g., KGDB) installs a breakpoint after DR7 is read but before the check, `local_db_save()` will falsely believe no breakpoints are active and skip disabling them. The exception handler (e.g., `#DB` or `#MC`) will then run with hardware breakpoints enabled, risking a recursive exception.
+> - [High] The patch adds `if (!dr7) return;` in `local_db_restore()` to ostensibly prevent an NMI from overwriting an intentionally cleared hardware DR7 state (such as during KVM guest entry). However, if an NMI (e.g., from KGDB) installs a hardware breakpoint, `arch_install_hw_breakpoint()` directly overwrites the hardware DR7 register with `cpu_dr7`. By returning immediately when `dr7 == 0`, `local_db_restore()` fails to restore the hardware DR7 back to its cleared state (0x400). Consequently, KVM resumes the guest with the host's newly installed hardware breakpoint active.
+> --
 > 
-> I suppose this could be fixed in the BOUNDED_SECTION_BY instead by doing
+> commit e145a86b764e63c7282dc5c5fb7c745db147953a
+> Author: Jinchao Wang <wangjinchao600@gmail.com>
 > 
->     . = ALIGN(ALIGNOF(NEXT_SECTION));
-
-Hi Gary,
-
-To answer your question, no. I have not observed it causing a real failure
-in our current x86_64 build. This is because KUNIT_INIT_TABLE() happens to
-precede it in INIT_DATA, and KUNIT_INIT_TABLE() explicitly sets '. = ALIGN(8);'
-and contains 8-byte pointers, so the location counter coincidentally
-arrived at an 8-byte aligned address.
-
-However, relying on whichever section happens to precede it to maintain
-8-byte alignment across all architectures and config combinations feels
-fragile.
-
-Regarding using ALIGNOF(sec): in GNU ld, ALIGNOF() only works on output
-sections. Because .initcall.modnames is an input section within the
-.init.data output section, GNU ld rejects it with: undefined section
-.initcall.modnames referenced in expression
-
-Placing '. = ALIGN(8);' directly before the section matches how other
-8-byte aligned tables in vmlinux.lds.h (such as LSM_TABLE, EARLY_LSM_TABLE,
-and KUNIT_INIT_TABLE) ensure their start labels are properly aligned.
-
-
-> > Are you okay with the following?
-> >
-> >     --- a/include/asm-generic/vmlinux.lds.h
-> >     +++ b/include/asm-generic/vmlinux.lds.h
-> >     @@ -735,6 +735,7 @@
-> >          LSM_TABLE()                            \
-> >          EARLY_LSM_TABLE()                        \
-> >          KUNIT_INIT_TABLE()                        \
-> >     +    . = ALIGN(8);                            \
-> >          BOUNDED_SECTION_BY(.initcall.modnames, _initcall_modnames)
-> >
-> >      #define INIT_TEXT                            \
-> >
-> >
-> >> > diff --git a/rust/macros/module.rs b/rust/macros/module.rs
-> >> > index bc7027f8dbb2c..a96157598197f 100644
-> >> > --- a/rust/macros/module.rs
-> >> > +++ b/rust/macros/module.rs
-> >> [ ... ]
-> >> > @@ -591,6 +594,20 @@ pub extern "C" fn cleanup_module() {
-> >> >                  #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
-> >> >                  ::core::arch::global_asm!(#global_asm);
-> >> >  
-> >> > +                #[cfg(not(MODULE))]
-> >> > +                #[used(compiler)]
-> >> > +                #[link_section = ".init.rodata"]
-> >> > +                static #ident_modname_str: [u8; #name_len] = *#name_cstr.to_bytes_with_nul();
-> >> 
-> >> [Severity: Low]
-> >> Will this cause a compilation failure for built-in Rust modules?
-> >> 
-> >> It attempts to initialize a fixed-size array by dereferencing a dynamically
-> >> sized slice returned by to_bytes_with_nul(). This could break the build when
-> >> CONFIG_MODULES=n or when a Rust module is configured as built-in.
-> >
-> > Hi Gary,
-> >
-> > Calling .to_bytes_with_nul() on &CStr returns a slice reference (&[u8]), so
-> > dereferencing it yields an unsized slice ([u8]).
-> >
-> > To resolve this, we can follow the pattern already used in
-> > rust/macros/module.rs for emitting '.modinfo' entries construct a byte
-> > string literal at macro-expansion time using Literal::byte_string(). In
-> > Rust, a byte string literal (b"...\0") has type &'static [u8; N], which can
-> > be cleanly dereferenced with '*' into a fixed-size array [u8; N].
-> >
-> > Would the following be appropriate?
+> x86/hw_breakpoints: Make DR7 updates NMI safe
 > 
-> Looks reasonable.
+> Hardware breakpoint installation and removal run with IRQs disabled, but
+> an NMI can still enter the same code through KGDB. This patch uses cmpxchg
+> and a per-CPU sequence number to make DR7 updates safe from NMI interruptions.
+> 
+> Link: https://lore.kernel.org/all/4ee0a2efc9e8387af83286b8495b7d490247e165.1785067572.git.wangjinchao600@gmail.com/
+> 
+> > diff --git a/arch/x86/include/asm/debugreg.h b/arch/x86/include/asm/debugreg.h
+> > index a2c1f2d24b645..65e80cd62193f 100644
+> > --- a/arch/x86/include/asm/debugreg.h
+> > +++ b/arch/x86/include/asm/debugreg.h
+> 
+> [ ... ]
+> 
+> > @@ -125,18 +126,20 @@ static __always_inline bool hw_breakpoint_active(void)
+> >  
+> >  extern void hw_breakpoint_restore(void);
+> >  
+> > -static __always_inline unsigned long local_db_save(void)
+> > +static __always_inline void local_db_save(unsigned long *dr7,
+> > +					  unsigned int *dr7_seq)
+> >  {
+> > -	unsigned long dr7;
+> > +	*dr7 = 0;
+> > +	*dr7_seq = this_cpu_read(cpu_dr7_seq);
+> >  
+> >  	if (static_cpu_has(X86_FEATURE_HYPERVISOR) && !hw_breakpoint_active())
+> > -		return 0;
+> > +		return;
+> >  
+> > -	get_debugreg(dr7, 7);
+> > +	get_debugreg(*dr7, 7);
+> >  
+> >  	/* Architecturally set bit */
+> > -	dr7 &= ~DR7_FIXED_1;
+> > -	if (dr7)
+> > +	*dr7 &= ~DR7_FIXED_1;
+> > +	if (*dr7)
+> >  		set_debugreg(DR7_FIXED_1, 7);
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this conditional check rely on a stale
+> read of DR7?
+> 
+> If an NMI (e.g. KGDB) installs a breakpoint after DR7 is read via
+> get_debugreg() but before this check, local_db_save() will evaluate the old 0
+> and skip disabling DR7. Can this cause the exception handler (such as #DB or
+> #MC) to run with hardware breakpoints still enabled, risking a recursive
+> exception?
+
+Ah, good catch. It also need to check cpu_dr7_seq is not bumped too.
 
 
-Thank you Gary!
+> 
+> >  
+> >  	/*
+> > @@ -145,20 +148,34 @@ static __always_inline unsigned long local_db_save(void)
+> >  	 * be good.
+> >  	 */
+> >  	barrier();
+> > -
+> > -	return dr7;
+> >  }
+> >  
+> > -static __always_inline void local_db_restore(unsigned long dr7)
+> > +static __always_inline void local_db_restore(unsigned long dr7,
+> > +					     unsigned int dr7_seq)
+> >  {
+> > +	unsigned int seq;
+> > +
+> >  	/*
+> >  	 * Ensure the compiler doesn't raise this statement into
+> >  	 * the critical section; enabling breakpoints early would
+> >  	 * not be good.
+> >  	 */
+> >  	barrier();
+> > -	if (dr7)
+> > +
+> > +	if (!dr7)
+> > +		return;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but if an NMI interrupts a
+> cleared DR7 state (such as during KVM guest entry), and the NMI installs
+> a hardware breakpoint, doesn't this early return fail to restore the hardware
+> DR7 back to its cleared state (0x400)?
+
+Hmm, this was intended to avoid restoring cpu_dr7 over KVM's cleared state.
+But if the NMI already overwrote hardware DR7 here, returning early leaves
+the host breakpoint active when entering the guest.
+
+OK, instead of an unconditional early return on "!dr7", local_db_restore()
+should check if cpu_dr7_seq changed too...
+
+Let me fix it.
+
+> 
+> Consequently, it looks like KVM would resume the guest with the host's
+> newly installed hardware breakpoint active.
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/x86/kernel/hw_breakpoint.c b/arch/x86/kernel/hw_breakpoint.c
+> > index f846c15f21ca1..3204e75dc4546 100644
+> > --- a/arch/x86/kernel/hw_breakpoint.c
+> > +++ b/arch/x86/kernel/hw_breakpoint.c
+> 
+> [ ... ]
+> 
+> > @@ -97,38 +100,31 @@ int decode_dr7(unsigned long dr7, int bpnum, unsigned *len, unsigned *type)
+> >  int arch_install_hw_breakpoint(struct perf_event *bp)
+> >  {
+> >  	struct arch_hw_breakpoint *info = counter_arch_bp(bp);
+> > -	unsigned long *dr7;
+> > +	unsigned int seq;
+> >  	int i;
+> >  
+> >  	lockdep_assert_irqs_disabled();
+> >  
+> >  	for (i = 0; i < HBP_NUM; i++) {
+> > -		struct perf_event **slot = this_cpu_ptr(&bp_per_reg[i]);
+> > -
+> > -		if (!*slot) {
+> > -			*slot = bp;
+> > +		if (!this_cpu_cmpxchg(bp_per_reg[i], NULL, bp))
+> >  			break;
+> > -		}
+> >  	}
+> >  
+> >  	if (WARN_ONCE(i == HBP_NUM, "Can't find any breakpoint slot"))
+> >  		return -EBUSY;
+> >  
+> > -	set_debugreg(info->address, i);
+> > -	__this_cpu_write(cpu_debugreg[i], info->address);
+> > -
+> > -	dr7 = this_cpu_ptr(&cpu_dr7);
+> > -	*dr7 |= encode_dr7(i, info->len, info->type);
+> > -
+> > -	/*
+> > -	 * Ensure we first write cpu_dr7 before we set the DR7 register.
+> > -	 * This ensures an NMI never see cpu_dr7 0 when DR7 is not.
+> > -	 */
+> > -	barrier();
+> > -
+> > -	set_debugreg(*dr7, 7);
+> > -	if (info->mask)
+> > -		amd_set_dr_addr_mask(info->mask, i);
+> > +	do {
+> > +		seq = this_cpu_inc_return(cpu_dr7_seq);
+> > +		this_cpu_write(cpu_debugreg[i], info->address);
+> > +		barrier();
+> > +		set_debugreg(info->address, i);
+> > +		if (info->mask)
+> > +			amd_set_dr_addr_mask(info->mask, i);
+> > +		this_cpu_or(cpu_dr7, encode_dr7(i, info->len, info->type));
+> > +		barrier();
+> > +		set_debugreg(this_cpu_read(cpu_dr7), 7);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but since arch_install_hw_breakpoint()
+> unconditionally overwrites the hardware DR7 register inside the NMI,
+> does this mean the KVM cleared state is already lost here before
+> local_db_restore() is even called?
+
+Yes, so checking the cpu_dr7_seq will avoid this issue too.
+
+Thanks,
+
+> 
+> > +		barrier();
+> > +	} while (seq != this_cpu_read(cpu_dr7_seq));
+> >  
+> >  	return 0;
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/178810001186.64882.2161016469449127450.stgit@devnote2?part=4
 
 
-Kind regards,
 -- 
-Aaron Tomlin
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
