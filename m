@@ -1,192 +1,228 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44F2355819
-	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 20:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788725820; cv=none; b=Rm430MyK7yzDgf3xkO5QSNWwhrf6bLh/S4Sd6wWMtMBL86baSVX4g7URD9+tlXOyecZYdIMPgukjxNqV/8j4wMCGk+8p3qCc5jd825H6U6tvq9f+rCJOs2H9eJ+Hya/CVsoCGytAXBWte5xvmkpdUhKPHE0Z5EU3ZM6VcWR+slc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788725820; c=relaxed/simple;
-	bh=EgiEc88wDMuwQI8RaErS8IZLrV1n34S1ystE/a9qaK0=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:Mime-Version:
-	 References:In-Reply-To; b=Rz+U7ZcRY23GcM4gJMRki066i1wxucVute3bXVyZ+bUIbbYoQzpnoFqCS35QwAJFWnX2LMxbyuNgzmyFxTTJ4ySxHpxw9zjn+hZcLSZ6Gk1b2s1QqeosJCUWXLTKnZTIzueq+M6K9QnFtLQFYhpcOm8E1AY7r8bOGGfs7JRJREo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JDIC3icv; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8509B3BE62B
+	for <sashiko-reviews@lists.linux.dev>; Sun,  6 Sep 2026 20:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788727948; cv=pass; b=nR0hR1uzLI83fV/FhFGm3KJq3scujMrWn3C3QsVI9H7N34lJfYp2bqICRr8CDolZpb+NkJ14+MNrzhzeWzCickHa+rXnCoALk7M7ylkX6pawOO+fI1uVFaUxy4loGHRmLqssWbJ3LlnK925V82onugKtGsF8nF7nLeMgg0LR0Vc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788727948; c=relaxed/simple;
+	bh=SXkkL1leCpadgAIXFmuk9vFBMaL9VMcynsn8nNsQidE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zagpzyn0IXEBmLn8wxMex3MoszJz8DZ50H34B950nHTp1D0B1ag5HLXALRPNRXTb5SBagZc+L2BNQzkH0aNYtgKBFPOifuJMN4FFvW4JiFMTfDLi3U3vrWL028m7Z41bTnO8HbxH0v5cKno4iSwPv8UcWkFpzpiLKNAwJGsz3ek=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jj/547Up; arc=pass smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDIC3icv"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-5c681c2a6a7so1104043e0c.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 06 Sep 2026 13:16:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj/547Up"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3a2e9851ed7so26941521fa.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 06 Sep 2026 13:52:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788727943; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EBBzcO50BFQQM4toZoFUzHqxfXYzu5cFyUD6TrQdJqj4iNNVGx6/tnAAgj8IAX31L8
+         XKJa+1LCbjmobR4cmKD7zQ+xAICJPaWenzH0NfacT+k5yalZWwjeqDvWJxT96Z2mwiQ6
+         FayL4+H/9TOvMBfbWgh7woSuRHvqcHEZZlh6QocfNySA9TYJKr+c6NGSSABW2MEERQ3j
+         ssc8KqDpUejFpCsCNZrx7D1Wgkk70TIu2daPj1duGnUXZVRbFnYIbnr36OGckWrHNAyp
+         EgS1x7U4C2/Bl7Zu7ddWmb8Xz60mRJa1JA0Da7UkdG3ukdLen2l6O9COqQ2r3u7czQ4O
+         sWCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tLEUcwxYVbj+5BS/ostM1lAmEHO6bgKhQj06vkhAg0Y=;
+        fh=fAUcOLMJrL6/gSlJAi6JxZuXRW8JDI9oXae6bn18h+k=;
+        b=Qj18z/j+htcHAM/WDXZjXEX5+OScghyi4fPDaWhpyBarnRsbC0ISXmXCuxbB6BrUzp
+         nIVNKFK0kL42s9jv7HKHdw6FdGenpvWIWlmAsPrrpMmKLK4IbqDVNDq1ts65nucx3FL1
+         UD3QxUjLMIgi0ERMdz2o5cuBwUkuBORqhtvkZC66slv3hmLTmO+cwzQ5Gy3VsDFCe53X
+         eh06CKKMi4gAbXjibHvvGPWtI5oLhJyD/P6eFaTdSPdvF5hqZx4ScYJNWlWeLxP0bk6r
+         79cSTACTdu2xKK3k91GgCgjrq0devM9AHCKdAVOcvsuq0M3XWBcUC8u/w/X1+yeNsIKI
+         eQJQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788725817; x=1789330617; darn=lists.linux.dev;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:content-type:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1788727943; x=1789332743; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=peVlo5midIsHLppkaegcNy/jZCMNrNbiCq0SLwEov68=;
-        b=JDIC3icvckMCiFi425n/UZvzzl0YQd1a0E40MCg/lJVUkW0DcLNwgwNpYwZDUeFiXV
-         VDtv54JbfsBjolnpNFo4OjSF7XTrypffXoTfqeOxM3F8l6M3VndkEKRWh3IMrGyO2DTF
-         TSQhASY4DUtV3klq6Kv2u8jDg5LMUn3yiJT72jLTKCUdAThiQs1yQAkFv18OBwUYBYxw
-         2yROkAR1UK5EHIUbutg5VfxuCQxlX1u+sBy5+LoWIimizHvQ2eFntdHeB9smO74SSea+
-         HOVDmH6kv7Lo4vw2TbW2aexlWPOFqO+UBkjdSrndhbiJj6O+ge0YuI1uWX6JiKu0Cedj
-         CYGQ==
+        bh=tLEUcwxYVbj+5BS/ostM1lAmEHO6bgKhQj06vkhAg0Y=;
+        b=jj/547Upol8z/b9uwNtr9oUKG2aSw6qJCTqNve6lKPlthpsLirrAk3wVgbU0lLiPjU
+         gRVvTdh/y2b8Wn5m636SLo6MQ549hkRS8fM2fajRbh1o9/TzqzqphUsBQ5cBvuWn8N1I
+         vaajL6/yU6wVgcJ3Wpn6NUXRt5CxdYHFYb3NyIf++49iKPMJDNBBM2JmSYsalVn2BCkA
+         x2QOtrWtK1R+EiDmpstL31NVvwFvqwi7gPlEvK6UlZZ4/wApba25gJ5NuQupngPAgRkc
+         tgoc/udA9/yicAlqwh6VUI+6V2I6j9OXy9+b4425ux//0G2FZdG+qsOufJEoCiXmK1Fs
+         xuIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788725817; x=1789330617;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:content-type:x-gm-gg
+        d=1e100.net; s=20251104; t=1788727943; x=1789332743;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=peVlo5midIsHLppkaegcNy/jZCMNrNbiCq0SLwEov68=;
-        b=ElTevpoj5LC2fwO2+6gbUxvRwFTGoXYbu/nsAQN7us7qEBSlng0WIxMK1rmBgof6Wm
-         6fMCYk3UMNjLVlDbQXmS4MjS28pY4UEvuzjEiOt/hsIA515Qs2ONdBQO66GkIc5rQShN
-         bdls3dX5KCXvTBm01frlhRI1TkluWIqEJJBN/L2e46+aBoxJQ4/aeXkIuNHicwrGJhno
-         kipl+Xz6jqKKRhvjy2WrCZd5hMFyo0ORimKo+Eda/w7yb73+6Bw3g7FLnUdwhRyYnHlW
-         IbUb+ZLmpTkRpZyDPG4KWdhMo668uM/gUTLT7+0pKCxyC9VxThAOgdHuja33Mi4gKqZK
-         A+TA==
-X-Forwarded-Encrypted: i=1; AKwUvBxGvCLtRCKf6Ltiu1x2yAezmhaDbQhKUtCPysViwKlYC0BJkJLk5Mhtxatw9v9mC2TUFrxl0oRmzmC4Wha1BjI=@lists.linux.dev
-X-Gm-Message-State: AFuF++l+SZ1jhXrcO0FKC0SuDTo+S0sVt3NjL9B+RQp6xEbGB9oVAyCT
-	2bhBpX0uYQtpeh7g4XGBzFImd26xUOuuwo7U9hJSBfb/fzt5GXkFt/lN
-X-Gm-Gg: AYBFou21kG4JA+m3er4I1cdjocvce9GJWxHJaa6JiNJUtqJ0IvauGtRvwNOrJ0VQ+3w
-	kaXdjDzkgzbwvga2uILCepaWBTRE8VfBMCYgNFyF7cMW1zClyVqIWemvDDkWsqcIuoBiZm51TcU
-	HRXrZKEIumkV/eolONoyEK7s62ifcvimRC9UqGrL++OqUDOdfiATl0Kd2z4tVq7lcYGHuO52pH0
-	X0vfEIT0ANo3dfBrr8QTkYaDN9OwWq/5HPnkdZZgViuxNFbYhIw4ITg9M40+O/yBNZuaKzyQwEI
-	BI2abrSOLeqjvad3b1PFBUpd6Jf920uxjSxozUXFPT8Io0SZkliu3zjeyqHEeaWLDQcO60Nqf1o
-	UVwnAhZPyiHBS/Aa0j9EJ6IDkkF/iQLZ1PZkB9mOtLbUkIdCgmxnANZ/wu6UyqfgHjJ1BQucgTG
-	yGcD9P0pkGk9ugJ1Du2u0kHFq+GsR8qgx+RxFL3AmGkahqSguRcw==
-X-Received: by 2002:a05:6122:1785:b0:5bd:c27a:dafd with SMTP id 71dfb90a1353d-5c7ed3b1b2cmr7897263e0c.3.1788725817587;
-        Sun, 06 Sep 2026 13:16:57 -0700 (PDT)
-Received: from localhost ([2800:40:44:f1f5:f400:4c49:91c1:9905])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5c7ec1097f4sm6699138e0c.1.2026.09.06.13.16.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Sep 2026 13:16:57 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 06 Sep 2026 17:16:54 -0300
-Message-Id: <DL8IDQUWAFJL.5RNMP0YKWW9@gmail.com>
-Cc: "Kurt Borja" <kuurtb@gmail.com>, <conor+dt@kernel.org>,
- <robh@kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v4 03/10] iio: adc: add the ti-ads1262 driver
-From: "Kurt Borja" <kuurtb@gmail.com>
-To: "Jonathan Cameron" <jic23@kernel.org>, <sashiko-reviews@lists.linux.dev>
+        bh=tLEUcwxYVbj+5BS/ostM1lAmEHO6bgKhQj06vkhAg0Y=;
+        b=aQ2BhI6V3/BXVnnbARLUFRjB9gpKl637cqcCv6yWDhwMKiqFv21G+ekJD2sBEjoKl5
+         9aABWtcj41nkKyw5ON46HoWISY9u51v5N/rvxlJDRMeQNrGcxB32h9yJNJ4FifgRw+lV
+         MizjNa9HicFUufYEyngt7WCLqdXSepiPOnA1kkTdsN5PF93Rf3soXMQ+Uab8gPyYbBhg
+         YwuUrmPZaT5g6sqBx5V2MrSd0MWKpoKTE0P0s79t+I0nkYdqVIkanmLNJdYk+X6X42MK
+         T1bKB8p3c2YtJcTR23CnS1zrMukswXyIwz60myEf7Wc62ETmslb0tGh2ZFtSDdXZvNc5
+         T0rQ==
+X-Gm-Message-State: AFuF++n2f2+VaDwdfpndnzAODKHQnk4ENJNyu9acNPBrcTjyOLiA6oVE
+	d21zB6qhX9JUgeBC3B4fRSDmvmjhV9pW/EtMcPdLlHjRoRbrabQmOmbSrLploppH7vUlZ5Zpbfy
+	81hIJesSVkGR4iUSUdxS5UBd7GQXG5NcEQimdEdw=
+X-Gm-Gg: AYBFou3R/zvRXQEYpYFH7QEbY7lZwjogDeVG4kspWX19B1TawlvDXs6wLBay2g8vof+
+	vgxW8SDjSL/Y5jeW3c73FzfBmlSWjjOmciZenHEaBjwLkiz3c0ZI3CkXwI0tABm4FKoJe7EF10a
+	pXbUK5J7vRtNlt9xx+bK/qBNOrxmww6/u/I7MFcQmRKXSoK/+KW4QIvDOVPmZV5FmHV8IAahI9v
+	kFmLFbpXijMbeiwsYx0Gt7Kn7hhDUPHGJw7qegn1VHKwNY3FcheAW+7DK1ex596Z3nyzIXzgq4d
+	gmCHqtZCuFVsv18iBdYq1w51M9jU/RnGeTlObHnpID/7zlMr/m6DTtGVrUS4v+8H2Vbp/0jFTrd
+	ovK4Tj3TTSwnq/Fg=
+X-Received: by 2002:a05:651c:a38f:10b0:3a3:7681:6d5d with SMTP id
+ 38308e7fff4ca-3a37681748cmr11742711fa.21.1788727942625; Sun, 06 Sep 2026
+ 13:52:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260906-perf-gtk2-v7-0-1ece839fbca0@gmail.com>
+ <20260906-perf-gtk2-v7-1-1ece839fbca0@gmail.com> <20260906202542.E548D1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260906202542.E548D1F00A3A@smtp.kernel.org>
+From: Matt Turner <mattst88@gmail.com>
+Date: Sun, 6 Sep 2026 16:52:10 -0400
+X-Gm-Features: AcwNN1UluC9sCF1AfaoB_QDn5rUqNCsIttJ4OM-0bXZJ5LOVybQjVpfERdAc7tU
+Message-ID: <CAEdQ38EqhLXyZiR5P-gXtQrrEjceamN8FEVXcYvrbVvqJmduZA@mail.gmail.com>
+Subject: Re: [PATCH v7 1/3] tools: port perf ui from GTK 2 to GTK 4
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260828-ads126x-v4-0-1dc27e9c0260@gmail.com>
- <20260828-ads126x-v4-3-1dc27e9c0260@gmail.com>
- <20260828065211.C05B11F00A3F@smtp.kernel.org>
- <178805537532.2788519.12150005140246669583.b4-reply@b4>
-In-Reply-To: <178805537532.2788519.12150005140246669583.b4-reply@b4>
 
-On Sat Aug 29, 2026 at 11:02 PM -03, Jonathan Cameron wrote:
->> commit 6093db1ff45e9e897720bc6b278550ffbef67e85
->> Author: Kurt Borja <kuurtb@gmail.com>
->>=20
->> iio: adc: add the ti-ads1262 driver
->>=20
->> Add the ti-ads1262 driver with initial support for the primary ADC (ADC1=
-).
->> Various features such as accurate timeout delays, per-channel reference
->> sources, scale, offset, and diagnostics are intentionally left out for
->> future support.
+On Sun, Sep 6, 2026 at 4:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> One particularly interesting point from sashiko about regmap debugfs.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Connecting to the removed 'destroy' signal in GTK4 causes main=
+ loop hangs and use-after-free/double-free bugs.
+> --
 >
->>=20
->> > diff --git a/drivers/iio/adc/ti-ads1262.c b/drivers/iio/adc/ti-ads1262=
-.c
->> > new file mode 100644
->> > --- /dev/null
->> > +++ b/drivers/iio/adc/ti-ads1262.c
->>=20
+> commit fc78f437c6f22aa072d608cee2f291c6178f6853
+> Author: Matt Turner <mattst88@gmail.com>
 >
->> > +static int ads1262_channel_read(struct iio_dev *indio_dev,
->> > +				const struct iio_chan_spec *spec, __be32 *val)
->> > +{
->> > +	struct ads1262 *st =3D iio_priv(indio_dev);
->> > +	int ret;
->> > +
->> > +	IIO_DEV_ACQUIRE_DIRECT_MODE(indio_dev, claim);
->> > +	if (IIO_DEV_ACQUIRE_FAILED(claim))
->> > +		return -EBUSY;
->> > +
->> > +	ret =3D ads1262_set_runmode(st, ADS1262_RUNMODE_PULSE);
->> > +	if (ret)
->> > +		return ret;
->> > +
->> > +	ret =3D ads1262_channel_enable(st, spec);
->> > +	if (ret)
->> > +		return ret;
->> > +
->> > +	reinit_completion(&st->drdy);
->> > +
->> > +	ret =3D ads1262_dev_start_one(st);
->> > +	if (ret)
->> > +		return ret;
->> > +
->> > +	ret =3D ads1262_wait_for_conversion(st);
->> > +	if (ret)
->> > +		return ret;
->>=20
->> [Severity: Medium]
->> Does this error path leave the hardware running if the wait is interrupt=
-ed?
->>=20
->> If ads1262_wait_for_conversion() returns an error (like -ERESTARTSYS fro=
-m
->> a signal), the driver exits immediately without stopping the hardware. I=
-f a
->> subsequent read calls reinit_completion(&st->drdy), but the abandoned
->> hardware conversion finishes and asserts the DRDY interrupt right after,
->> could the new read prematurely fetch stale data from the old conversion?
->>=20
->> Should this path ensure the hardware is stopped and synchronized with th=
+>     tools: port perf ui from GTK 2 to GTK 4
+>
+>     Port straight to GTK 4 rather than GTK 3, since GTK 4 is where new
+>     development happens and GTK 3 is old itself now.
+>
+> > diff --git a/tools/perf/ui/gtk/progress.c b/tools/perf/ui/gtk/progress.=
+c
+> > index eea6fcde518a8..770f9251b54b7 100644
+> > --- a/tools/perf/ui/gtk/progress.c
+> > +++ b/tools/perf/ui/gtk/progress.c
+> > @@ -1,49 +1,65 @@
+> >  // SPDX-License-Identifier: GPL-2.0
+> >  #include <inttypes.h>
+> > +#include <stdio.h>
+>
+> [ ... ]
+>
+> > +static void gtk_ui_progress__destroyed(GtkWidget *widget __maybe_unuse=
+d,
+> > +                                     gpointer data __maybe_unused)
+> > +{
+> > +     dialog =3D NULL;
+> > +     progress =3D NULL;
+> > +}
+> > +
+> >  static void gtk_ui_progress__update(struct ui_progress *p)
+> >  {
+> >       double fraction =3D p->total ? 1.0 * p->curr / p->total : 0.0;
+> >       char buf[1024];
+> >
+> >       if (dialog =3D=3D NULL) {
+> > -             GtkWidget *vbox =3D gtk_vbox_new(TRUE, 5);
+> > +             GtkWidget *vbox =3D gtk_box_new(GTK_ORIENTATION_VERTICAL,=
+ 5);
+> >               GtkWidget *label =3D gtk_label_new(p->title);
+> >
+> > -             dialog =3D gtk_window_new(GTK_WINDOW_TOPLEVEL);
+> > +             dialog =3D gtk_window_new();
+> >               progress =3D gtk_progress_bar_new();
+> >
+> > -             gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, FALSE, 3);
+> > -             gtk_box_pack_start(GTK_BOX(vbox), progress, TRUE, TRUE, 3=
+);
+> > +             gtk_widget_set_vexpand(label, TRUE);
+> > +             gtk_box_append(GTK_BOX(vbox), label);
+> > +             gtk_widget_set_vexpand(progress, TRUE);
+> > +             gtk_box_append(GTK_BOX(vbox), progress);
+> > +
+> > +             gtk_window_set_child(GTK_WINDOW(dialog), vbox);
+> >
+> > -             gtk_container_add(GTK_CONTAINER(dialog), vbox);
+> > +             g_signal_connect(dialog, "destroy",
+> > +                              G_CALLBACK(gtk_ui_progress__destroyed), =
+NULL);
+>
+> [Severity: Medium]
+> In gtk_ui_progress__update(), will this signal connection fail at runtime=
+?
+> The destroy signal was removed from GtkWidget in GTK 4. If it fails silen=
+tly,
+> gtk_ui_progress__destroyed() would not be called to nullify the pointer w=
+hen
+> the user manually closes the progress window. This could result in a
+> use-after-free or double-free crash when gtk_ui_progress__finish() is
+> subsequently called on the already-freed pointer.
+
+Incorrect. GTK4 did not remove the destroy signal from GtkWidget, only
+the gtk_widget_destroy() function was removed. The signal is still
+registered in gtk/gtkwidget.c (g_signal_new(I_("destroy"), ...)) and
+emitted from gtk_widget_dispose(). Verified against upstream GTK
+source, and confirmed live via GObject.signal_list_names(Gtk.Widget)
+on GTK 4.20.4: destroy is present. g_signal_connect(dialog, "destroy",
+...) connects fine and fires. No change needed.
+
+> [ ... ]
+>
+> > diff --git a/tools/perf/ui/gtk/util.c b/tools/perf/ui/gtk/util.c
+> > index c47f5c387838c..5823ff0d7c2a7 100644
+> > --- a/tools/perf/ui/gtk/util.c
+> > +++ b/tools/perf/ui/gtk/util.c
+> > @@ -28,86 +30,103 @@ int perf_gtk__deactivate_context(struct perf_gtk_c=
+ontext **ctx)
+>
+> [ ... ]
+>
+> > +     /*
+> > +      * "response" only fires when a button is clicked; DESTROY_WITH_P=
+ARENT
+> > +      * destroys the dialog directly without it. Quit from "destroy"
+> > +      * instead, which fires either way, so the nested loop below can'=
+t
+> > +      * outlive the dialog and hang.
+> > +      */
+> > +     loop =3D g_main_loop_new(NULL, FALSE);
+> > +     perf_gtk__error_loops =3D g_slist_prepend(perf_gtk__error_loops, =
+loop);
+> > +     g_signal_connect(dialog, "response",
+> > +                      G_CALLBACK(perf_gtk__dialog_response), NULL);
+> > +     g_signal_connect_swapped(dialog, "destroy",
+> > +                              G_CALLBACK(g_main_loop_quit), loop);
+>
+> [Severity: Medium]
+> In perf_gtk__error(), since the destroy signal no longer exists in GTK 4,
+> could this leave the nested main loop running indefinitely and hanging th=
 e
->> interrupt handler on timeout or interrupt?
->
-> For me this is obscure enough I'm not sure we care about stale data.
+> application? Because the destroy signal is not emitted when the dialog is
+> closed (even via the confirmation button), g_main_loop_quit() will never =
+be
+> called.
 
-Interesting issue... Hmmm, yeah I say we leave it like that too. Stale
-data would not be the end of the world here.
-
->> > +static int ads1262_regmap_read(void *context, const void *reg_buf,
->> > +			       size_t reg_size, void *val_buf, size_t val_size)
->> > +{
->> > +	struct ads1262 *st =3D context;
->> > +	u8 tx[2];
->> > +
->> > +	lockdep_assert_held(&st->xfer_lock);
->>=20
->> [Severity: Medium]
->> Will this lockdep assertion fail if the register is read via debugfs?
->>=20
->> Because ads1262_regmap_config does not set disable_locking =3D true and =
-does
->> not provide custom lock/unlock callbacks, regmap uses its own internal
->> mutex. When regmap's debugfs interface is read, the regmap core acquires
->> its internal mutex and calls the driver's ads1262_regmap_read() callback
->> without holding st->xfer_lock.
->>=20
->> Could this bypass the xfer_lock, triggering the lockdep splat and allowi=
-ng
->> debugfs SPI operations to interleave with driver-initiated SPI transacti=
-ons?
->
-> This is a corner I'd not thought about in adding lockdep markings to thes=
-e
-> functions.  Up to you how you want to fix it.
-
-The way to fix this would be to either bring the xfer_lock back into the
-regmap callbacks or allocate the regmap_config dynamically and give it
-the xfer_lock so the core can deal with it.
-
-For me I'd prefer to do the first but David raised a concern about the
-xfer_lock being in the callback. Maybe David can give us his opinion
-here?
-
---=20
-Thanks,
- ~ Kurt
+Also incorrect, same misunderstanding of the destroy signal. When the
+user closes the dialog via the window controls, gtk_window_close()
+calls gtk_window_emit_close_request(). The default close_request
+handler returns FALSE (no hide_on_close set), so control falls through
+to gtk_window_destroy(), which drops GTK's internal toplevel ref and
+finalizes the widget, emitting destroy. That is exactly the signal
+perf_gtk__error() connects to stop the nested loop. Confirmed by
+reading gtk_window_close() and gtk_window_destroy() in gtkwindow.c,
+and gtk_widget_dispose() in gtkwidget.c, in current GTK upstream. No
+hang. No change needed.
