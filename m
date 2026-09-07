@@ -1,112 +1,147 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59694BAA15;
-	Mon,  7 Sep 2026 12:42:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA09847798E
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788784927; cv=none; b=tsGh+zjWCPx+FQjxCKGwvgReysIcfUVAqLAtfAzhxPeoq+auJzQB63eq0H4ypxeiQrOBqVCPA2qJIeZ061Ni2y6mD0/fNgHne+nBuqhfq65lLZYXunH9czf5k2VDxwtzRsXo3rsIR5L4AZLiFBn3et7wk7WtpD9r+AF/tqGnSaU=
+	t=1788785099; cv=none; b=dLB4SCKnZ4zl3lMHTtm5Hr/HGCwqSglMF79edIHytsUUJLP0q+C8SW51VHPXAGXOGBCwMXivXBcUTG5+0czedq/Wvdccf79kMzCDQrvzwVs66C7v72laX/uFoMYllilyiZdbZK22xsAifPi8K+Veuuxv/FLCSNHo3htcktF2bu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788784927; c=relaxed/simple;
-	bh=m4VD+kZQ3UTdknOoWEEhUFYlOYY9U+SOYKhCEnqeun0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QyRmr0TfXDe2zE2xcEvotgF79+glZ5Gby2g5zAZGnYGDq6XbE2E2QTcqqHPORfy/OUPfrSqib6VEibmPncKpzd7Boj8y/MmVxOFC26O5Dy+zAXxM2x8CaqYcoUTMnoVgORIQBq9HhZwH200cAp9c4BPjOLx5J0tQrhqYukrLROg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=SUuhM0LX; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1788785099; c=relaxed/simple;
+	bh=B+iiOiHkAB3SjnD4jE/kaBzO11YGeGn0DnIBjQ/9GYE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tlbAEwr3XmepmVEMiklfs0QhulQh3/kLDVfsaRb8zH+HIQrOj4cGmwPxOM3uJwhSHPShJ6ynbES1yGPdTtI/SVkOLn0+v/dE+Bh/iV+GmwqJjTxTSPYEndPrMMdgsDyKPnszDqtUGutn7n+0v7W/dLE/A8Q/tErOAuAJKlJWF0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kfQIg2bs; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="SUuhM0LX"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=KLhtHvb1s/9tH7HpqReOcJSjDSF0xJJWIHODkvRmQSs=; b=SUuhM0LXxdDaTZV5y2KFco13v7
-	GcGpqg1dyoLAJOOAkbISZyUK/xQVbEpAHR8TCCqilfA5kYKvZI6fT0JDPuWuXGafDjZByyewaa0g8
-	ha8Mr9qQpeAaRj5+gqVG+3xSSSSGGaqcTf3ZQP2+4l/xC1Be8FXc7j3YuEaRiW239P41jkG05TIQJ
-	zoQqlmm9YHo1ld2WDO2JZCnmFyHJu7phE6VL7rqv+W6ExW5PxBktN6K7xnedptf8w5zNASseNF2BE
-	T5masTDLmoQ3SiVFjH/l9o66/IGpfJRfW1MGHnTweQWVwvF21nNIZlHJUBf//oge+WFANcwy0/RQE
-	pFwCT9aw==;
-Received: from sslproxy08.your-server.de ([78.47.166.52])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1x3Yfg-00042g-0F;
-	Mon, 07 Sep 2026 14:42:00 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1x3Yff-000Iux-2n;
-	Mon, 07 Sep 2026 14:41:59 +0200
-Message-ID: <e78da738-2788-45b1-b76f-5fc82794ee4e@iogearbox.net>
-Date: Mon, 7 Sep 2026 14:41:59 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfQIg2bs"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38759bcd877so3519694a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 05:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788785097; x=1789389897; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pgRcHlGojddIrdA4thflhygGudJUQQ+TeRB5rtetsFg=;
+        b=kfQIg2bs/QIKhhXQBRwMMFiYh2y9zDcWM98cDmzsBKWWADTe1b9oMcroWVaWcI7bX1
+         M7keohCtg4nKZj/kc3t1wQIvIcB6SkXiPKOW5BVD/ujlhi7V5T5F/toDjUX81KoeMxCt
+         ciZpFDvHWmSjve+g/7I36LzfUyHbySkacKwb+uzSPsWaYsbvYdSFAPnoJLy78p0JhwTf
+         4FJRWpTE5lyrllXidARltT2iOZQ433YsQ3IAkRkwW/V7Q/7yQtTD58FyXRnY5edm5/Qa
+         WZTBGyBTDHa0v9Ydf3Mdy/tqJFs33PrlHJB434ruoD+avIq5Wm6zRWKrSGCSM/ZA39AL
+         zB/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788785097; x=1789389897;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=pgRcHlGojddIrdA4thflhygGudJUQQ+TeRB5rtetsFg=;
+        b=YAg8IGeV9UsS3lZwUCCfTjiipXhh/Nt4PPzO2svPG5a3+lZpJ+kiSO698k9unXOFdu
+         ZTaxKBZsYEh3XgAmWmlF54rEP0bHbhAFuM4fZGkRP24bUKEAZD0SSxVV3YUv/veRyjV9
+         ehkLGi/fxGiaU2wUNUMH0AgA0bQpWqxOOtRlrOxSaIIIaZxZzd4CS8XK/hPcxmnVFmNo
+         bymM0rYeNr2e2Qy5dP1UpDk9bKuBImH9sv70J9Pk2kZZZUyX8GKGaFpvDkJ4s+WWlD40
+         dCuHnQ3FhSFgshZvFxUpFiwjb6qpxCFq9lSJ9+MIiV3qNeehI3YyQS4T1bCpWwe/w/Yv
+         rgAQ==
+X-Gm-Message-State: AFuF++nUJSYAai4qF63bj4NL2Yo/+mZV13KXHRFfh2O2fw5ai8/hzqfg
+	keEs07UAOqtVodF4IsOdWbYngw+5H80Zm0JNnY5M/gUoJjSEs6v4jeDgHXqnplY=
+X-Gm-Gg: AYBFou1i/xwRaWKRwXdzg3PGbiiqnifDcs7gzl+uxUhGS1+WykK757mVVesZQrnWIXn
+	GZK1iYTN0HRSfS12Mj2PRTX4PHYz7jv0fvB5at29Fkc+U084vfYvsRdDBFvtOjBGigWNo/9BQ7J
+	+UMmZSsqHinYycwy38qyAMdjC4iTUA/9vqyBsuKixTQRvUiCcGrOK5JJCwW/LijBKd2lyqK0OwH
+	aR1/MxBJDTkco5n54MzEjFjhadyC5xantPqMgzJ/spEKqYuEM1nRCmEDNPI8YXzYiW+j45V7oE9
+	GXsBPLXYn9dUWCVyIIwFsDWhJMja6HlkdAc2Zj8464gGYlp9tfdCwx9ORA3vEBcSKWOYjgboC/L
+	vqGcYo6tkNE87e/GgmeAigffinrxNfikbNwxC2lF0EcSuyw9gzW65vJcQ67bEdgr1dtw8i4fIhe
+	p6+x4CF+FPKF964cQ6O66BLB96c9on83uXxzhszvAJMnqLXEj90hri1DCxpi1nCN98h7QW8/kNU
+	t0BNGLwF5C1i9Vy
+X-Received: by 2002:a17:90b:5844:b0:398:dc16:3c29 with SMTP id 98e67ed59e1d1-39b26101530mr34967440a91.7.1788785096980;
+        Mon, 07 Sep 2026 05:44:56 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:6467:d689:c773:5f09:906c:a72b])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b083e4fafsm26491178a91.1.2026.09.07.05.44.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Sep 2026 05:44:56 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	linux-trace-kernel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	donggeunyoo.kernel@gmail.com
+Subject: Re: [PATCH] tracing: hist: set the trace clock before registering the trigger
+Date: Mon,  7 Sep 2026 21:44:51 +0900
+Message-ID: <20260907124451.607209-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260907092944.3950E1F00A3D@smtp.kernel.org>
+References: <20260907091415.554535-1-donggeunyoo.kernel@gmail.com> <20260907092944.3950E1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH bpf 1/2] bpf: Fix bpf_skb_change_tail wrt csum partial
- skbs
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260907121025.1923656-1-daniel@iogearbox.net>
- <20260907122414.95F7F1F00ACF@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260907122414.95F7F1F00ACF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28116/Mon Sep  7 08:24:32 2026)
+Content-Transfer-Encoding: 8bit
 
-On 9/7/26 2:24 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The checksum field space check in `bpf_skb_trim_rcsum()` assumes a 2-byte checksum (`sizeof(__sum16)`), but SCTP checksum offloads (`skb->csum_not_inet == 1`) require a 4-byte CRC32c. This allows BPF programs to trim SCTP packets such that only the first 2 bytes of the checksum field remain. The hardware will then attempt to process a 4-byte checksum, causing an out-of-bounds access.
-yeap, unrelated, and I'm not sure anyone has used it in combo with sctp
+On Mon, Sep 07, 2026 at 09:29:43AM +0000, sashiko-bot@kernel.org wrote:
+> This isn't a bug introduced by this patch, but does this error path leave
+> the new trigger on the global named_triggers list?
+>
+> If event_hist_trigger_init() fails, the trigger is never removed from the
+> list before the function returns the error. The caller then propagates
+> this error, eventually calling trigger_data_free() which frees the
+> structure. Can this lead to a Use-After-Free list corruption when the
+> global named_triggers list is accessed later?
+
+Yes, and so does the second one. Both end in the same read this patch is
+about, and neither is fixed by it.
+
+event_hist_trigger_named_init() publishes the trigger before the only step
+that can fail:
+
+	data->ref++;
+
+	save_named_trigger(data->named_data->name, data);
+
+	ret = event_hist_trigger_init(data->named_data);
+
+event_hist_trigger_init() can only fail on alloc_hist_pad() returning
+-ENOMEM. Forcing that, with this patch applied:
+
+  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+  Read of size 8 at addr ffff888009346860 by task init/1
+   find_named_trigger+0xac/0xc0
+   hist_register_trigger+0xc1/0xa00
+   event_hist_trigger_parse+0x3146/0x6af0
+   event_trigger_write+0xce/0x160
+  Freed by task 67:
+   kfree+0x154/0x420
+   trigger_kthread_fn+0xfd/0x160
+
+> If hist_trigger_enable() fails, it drops the trigger from the local file
+> list but then we jump to out_unreg. Because the trigger is no longer in
+> file->triggers, event_trigger_unregister() won't find it and skips calling
+> cmd_ops->free() (which would normally call del_named_trigger()).
+>
+> The code then falls through to trigger_data_free(). Does this manually
+> free the memory without ever calling del_named_trigger(), leaving a freed
+> node on the global named_triggers list?
+
+Yes. hist_trigger_enable() removes the trigger from file->triggers before
+returning the error, so the list walk in hist_unregister_trigger() matches
+nothing, test stays NULL, cmd_ops->free() is not called and
+del_named_trigger() never runs. Forcing trace_event_enable_disable() to
+fail for a named trigger:
+
+  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+  Read of size 8 at addr ffff8880091d3160 by task init/1
+   find_named_trigger+0xac/0xc0
+   hist_register_trigger+0xc1/0xa00
+   event_hist_trigger_parse+0x3146/0x6af0
+   event_trigger_write+0xce/0x160
+  Freed by task 69:
+   kfree+0x154/0x420
+   trigger_kthread_fn+0xfd/0x160
+
+A control run with no injected failure is clean on both.
+
+Both fixed here:
+
+  https://lore.kernel.org/linux-trace-kernel/20260907124420.607097-1-donggeunyoo.kernel@gmail.com/
