@@ -1,189 +1,137 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.25])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC54024679C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 20:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788814241; cv=pass; b=hybDp1nsadvflU4QpqNN7RBsEIkddTM5yWj7ncS4JozRvCdG+JaU3SNrmEXZRoGC9E9y02GwhJJsTGIn7BjGQzel7g32y/H1P5JVz/2JTjwBfJnFpiCIY3atNPF7OeegfG0YAvlUww8YTPrsSGSAA1atsSdZdJ7yuPnYyOAbcvM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788814241; c=relaxed/simple;
-	bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qjv6/3pU9iNQ6ZUoKsroeK+YbfMSpwpWXbcN1gLMj9K07esAJYxm2NE0lGRQh5O+QRYDzHXKdCXibrTji4/mNCEKTIqxSOxZ+CMO8Nx7FOtbcYMdJP01Mune6EC2qAYYZP4vqPkiWikCTCjPAUUQQSKRWMzFiIFejXwOtZ8DAuQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de; spf=none smtp.mailfrom=iokpp.de; dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=nDcx8v2r; dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=Ysj3Vlxs; arc=pass smtp.client-ip=85.215.255.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=iokpp.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A4C41F7EE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 21:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788814869; cv=none; b=fWQWNdB8THqFpSKBUi8KnZWxP/ZWmsjEwhdP31FLH4Sh7xT0qkgA4HdX4HKCrECpaT0+cWiER1uSxldxyPbpwZzb7RYEpLoc1JYDYY6krMVn3uxzrsSj2YRGTScZfOxCRSVN2TTbrzMGWduhxhOqS91qdJb+MPAYFxGU0TMYnfU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788814869; c=relaxed/simple;
+	bh=Pfp4fHaGp3DYNoQNsq++Hih2POFfdEHNA9k/g4/DYlk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pTAeVoyxXGWgyCPj4g14XVl7QPFWSgOFbucHIMDtLj48j4whUvybexVvbSxPAN8ZICxan7HNzsdGQWnXw7NuRS141yIjKwjUnXe8ZiNlgut/rGex9/wcPeVvBP0aKdhpdpG1xWjMXVv1EcxG1RnzJscU/QGHAGmFeB7OwAkwEss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LgI1rcg1; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="nDcx8v2r";
-	dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="Ysj3Vlxs"
-ARC-Seal: i=1; a=rsa-sha256; t=1788814229; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=iUS4C8ouwLvgk/q3JnsZFrKg4XFLY8Ko8FC6u6Dzsb4EfQ/TUHa3VJJSMGdKwzA1FD
-    DXRoN2/sB/RI8cgj62YZDTIIisnWODq7K6KFo7zn75Phn7Dc8avgRPMf4jFllsz81ZRd
-    nkA+wNmV0rZSMEMhF5Sa1XDSsOY1p7SWte3Ht5JmPvS5AjqhIEHK+AQpbQmXHj1lSrhu
-    UB8NIWqTjTVEFx8P3/eE9Y1/AG/XiGcGp0f7tkbQia4ANvhdhnXO3loKL0dNxcooEBYo
-    6jvhDzigFTv0xx4mQ85K+0QZTfAYZEAl0fo/edBpVHd+z2NatXKE31WVSmNYxJyO9oWi
-    O9iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1788814229;
-    s=strato-dkim-0002; d=strato.com;
-    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
-    b=f+2bRREgqOtLnrcaGLpczaalfpgbTNJ813UFj4/iVj+gFC7NjrIoE/iFFHPAv9fSwR
-    FnPJlz/vxJxRubXqgwXIcFs9I+ormFepP8CRG96LNLzorsOWSrm64VVAqm9ExmpOkCY5
-    6zVQQgI3nnG5JQfm0/cn5EorO7pJ6xXQ29lTtf6eYKyOWfTsr+SXb5DMV8qWK3uPo2uz
-    KyHar/KClE/N/mDp2mRLChXK0TwBsgu7O0j4P2M2pQVCQY7cp6q0I0RMMEcLLZLgigUU
-    IsY7KXKQnKPFqG+Rj/bQTkeN2rT/ntaPmG/H2p0BlfqK2qiCxxLvAnR3l4xiDzKwQdVe
-    /0TA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1788814229;
-    s=strato-dkim-0002; d=iokpp.de;
-    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
-    b=nDcx8v2r2aUiozDWrsiVF0DwW3UK4SPt5LVJztE3hXKrV7iA5Fr+Nn7AhmslUA0TCP
-    drjUl1rl94Zt5J8Tna3p+1IiAHAUyP1ZOqn2s6fT8iCy6d1k76sjViu0Xc9ZpzhDKFMv
-    W3o8AJBFGLriWDI1C/Eu20oh+wEp3PUX3kQOYw6nK1igf3YtpZ41KT2OmZBT+8+vavcw
-    OJsCdcNwT5YDPk2mliDLlkHU62h+n3/4k1BMCIJnXm9KOZZKedj7NNrp/EemiGS0OTeE
-    JpEqHiUOSQDQUr/nONUM8TTZgQEejOU30SKGzuJIsswxYCi908QRifqrx+zPePN9nkyJ
-    580A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1788814229;
-    s=strato-dkim-0003; d=iokpp.de;
-    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
-    b=Ysj3VlxsXVwv/kGE33yyOLFitWDnKbugupvPs5pHYErddQVq/tE9ApTfU796eejYxS
-    PABzyS1OAVxVlmBymgDA==
-X-RZG-AUTH: ":LmkFe0i9dN8c2t4QQyGBB/NDXvjDB6pBSe9tgBDSDt0V2DZ1j3VzZR8ZYnVF9Wg="
-Received: from [192.168.65.16]
-    by smtp.strato.de (RZmta 55.6.2 AUTH)
-    with ESMTPSA id ze37e1287KoTD1Y
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Mon, 7 Sep 2026 22:50:29 +0200 (CEST)
-Message-ID: <9e46b8e788fe6f935db18e7968e73c63cc0786bd.camel@iokpp.de>
-Subject: Re: [PATCH v2 3/4] scsi: ufs: core: Record the frequency the
- controller starts at
-From: Bean Huo <beanhuo@iokpp.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Date: Mon, 07 Sep 2026 22:50:27 +0200
-In-Reply-To: <20260907194106.BBF131F00A3A@smtp.kernel.org>
-References: <20260907192140.2701755-1-beanhuo@iokpp.de>
-	 <20260907192140.2701755-4-beanhuo@iokpp.de>
-	 <20260907194106.BBF131F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2.1 
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LgI1rcg1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1788814866;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=km54XNA3pesnlH9MUSOEbKUzj91GMmwN/4bvXZLN1Qw=;
+	b=LgI1rcg1cbsuNW1oWevjWdKuRypXCfEXJFDufDhqSoD/ozQUByaVtEOx26PO0heKbPIxwF
+	HFJ3/8hrTelO+HrnpL2F+oQaHcbQx9MopFoM/lAdBrnukfvSL7/zKM6ri0diot2OXkaRqP
+	JtvMBjIKQZiVIwvztxq2gu4R/AII3Fw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-xMQuxvO8OrCpNT80bQtMZw-1; Mon, 07 Sep 2026 17:01:02 -0400
+X-MC-Unique: xMQuxvO8OrCpNT80bQtMZw-1
+X-Mimecast-MFC-AGG-ID: xMQuxvO8OrCpNT80bQtMZw_1788814862
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4957287363bso31423265e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 14:01:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788814862; x=1789419662;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=km54XNA3pesnlH9MUSOEbKUzj91GMmwN/4bvXZLN1Qw=;
+        b=nFyL3jyY0a0ssuZWxAI/cg9vWcqZdnNrF/1kJgpc4BasSy79CkVCIYzc0K1RMObbs/
+         CM5Ycom+sGVZAZDC757Y4yjuLeAcAIxc+5ZJDR4x1ewi/VCiNOvK8hIr5QHRbectpSWt
+         Ck8HQcl9mn2yKIyLnpniyPyaaX4qArl9aBaWgf4b3agrYxntRGcHFypFxvMIPMAC9Jmm
+         klrDpquU11qOyUVPrbbcizL75u14pyp51PB2CT/WDmQekmsaMlXAgVOVXFnJZL+dI2X1
+         2+lrcrrx29snf11jjqVBNDDdZGLplOhGbDMQXzl5mreNKXFEDsZ/7JcIwk492VkJZS7x
+         iL3g==
+X-Forwarded-Encrypted: i=1; AKwUvBxbozbCHzworNCuM1i8MrXk8m8GCGx2Kxs9xPU6Il4EENWPd3gNSmMavQRTvDtrncFfiM1+0f2moIXKZq2L98A=@lists.linux.dev
+X-Gm-Message-State: AFuF++nJSE3kVz/ukJJNw/OU9whUnWKTXYhFOfIsQXUKOC0R99vWPgTu
+	xXbdC8v3QB5paCCHyxNRiLEt/kIJSccjX5IO3sDMdngou6krY1Sy9a3ezakY8mDHDhNNRsBU6D8
+	BkPJHlTMXJ6tpsszKiD4Q5+3z6s0muGXCK8rhTF/i/VygPo8ECxiiGUhhtgoAVj+9cjz6dg==
+X-Gm-Gg: AYBFou0CC4j+3KZKq0/0pww/ZVvSVuTuEBVaLrJ4WeGpQmhJTKSCvnrCzI/AusTFoFv
+	WvXkoLj+Bgd4lTTiiVBptPBwrrFcUpD2+pGZxDT9d18++ivFm2BIo0XMgrq+TC94i60uQlejajB
+	jZk7RyI+7UzIxbBuiDsXC+7uIDN3ZKNNAWW2FymZC2XbNGgEJMs4gau4uTeEftFQEqqqDcwETo1
+	mwAxC9/La6WYKmFA1/29TZMZk4yEXpdhC7O7mOiDSce91QwBrxvKiJN2F4zQCoigE+MUIjYuw8y
+	z3/t/aB+yhe7/iX4QaBR+zMeZcdfFgBkVy4BGkj1WW5oODGLv/wAoYmTxPk7xRqEmBvpe6sRHwY
+	VI33wtGptHQf67UbbG0d+05/KU6+xcN8Kw5yepqtdwOt1ofk8
+X-Received: by 2002:a05:600d:8649:10b0:49c:fa20:cc0a with SMTP id 5b1f17b1804b1-49cfa20cd58mr167275145e9.33.1788814861725;
+        Mon, 07 Sep 2026 14:01:01 -0700 (PDT)
+X-Received: by 2002:a05:600d:8649:10b0:49c:fa20:cc0a with SMTP id 5b1f17b1804b1-49cfa20cd58mr167274945e9.33.1788814861409;
+        Mon, 07 Sep 2026 14:01:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:11aa:87f0:ea69:b2b0:2dae:5ef9? ([2a01:e0a:11aa:87f0:ea69:b2b0:2dae:5ef9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf7703cefsm458086515e9.5.2026.09.07.14.00.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Sep 2026 14:01:00 -0700 (PDT)
+Message-ID: <b34807ad-6390-4804-ba29-43a407b3d9fb@redhat.com>
+Date: Mon, 7 Sep 2026 23:00:54 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/14] drm/panic: Do not use un-escaped URL as format
+ string
+To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
+ airlied@gmail.com, simona@ffwll.ch, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, geert@linux-m68k.org, rdunlap@infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, rust-for-linux@vger.kernel.org,
+ linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, nouveau@lists.freedesktop.org,
+ linux-renesas-soc@vger.kernel.org, virtualization@lists.linux.dev,
+ sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
+References: <20260902121930.597222-1-tzimmermann@suse.de>
+ <20260902121930.597222-2-tzimmermann@suse.de>
+From: Jocelyn Falempe <jfalempe@redhat.com>
+In-Reply-To: <20260902121930.597222-2-tzimmermann@suse.de>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: sKDzXGU0-gAlmDmTbN-eX0pFgIvn_TF9QU42xjn5_jU_1788814862
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US, fr
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 2026-09-07 at 19:41 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s)
-> to consider:
-> - [Medium] Unprotected concurrent modification of the globally shared
-> `ufs_hba_vps` structure during asynchronous probe.
-> --
->=20
-> commit d1d1b66402811c53b2fbc0d56ed07cd4f77540ee
-> Author: Bean Huo <beanhuo@micron.com>
->=20
-> scsi: ufs: core: Record the frequency the controller starts at
->=20
-> This commit records the maximum frequency during ufshcd_devfreq_init(),
-> preventing devfreq from reporting an initial 0 Hz frequency. It avoids
-> an unnecessary governor scale that resets the same frequency and gear.
-> It addresses the issue for both modes with and without OPPs.
->=20
-> > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> > index 2ba244cf40ac7..351c76094b9ff 100644
-> > --- a/drivers/ufs/core/ufshcd.c
-> > +++ b/drivers/ufs/core/ufshcd.c
->=20
-> [ ... ]
->=20
-> > @@ -1727,12 +1722,21 @@ static int ufshcd_devfreq_init(struct ufs_hba *=
-hba)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (list_empty(clk_list=
-))
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0return 0;
-> > =C2=A0
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0clki =3D list_first_entry(cl=
-k_list, struct ufs_clk_info, list);
-> > +
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (!hba->use_pm_opp) {
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0clki =3D list_first_entry(clk_list, struct ufs_clk_inf=
-o,
-> > list);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_pm_opp_add(hba->dev, clki->min_freq, 0);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_pm_opp_add(hba->dev, clki->max_freq, 0);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
-> > =C2=A0
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * ufshcd_init_clocks() has =
-already set the clocks to the highest
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * frequency, and nothing ha=
-s changed them since. Save that
-> > frequency,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * so that devfreq and the c=
-lock scaling code know where we start.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0hba->clk_scaling.target_freq=
- =3D clki->max_freq;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0hba->vps->devfreq_profile.in=
-itial_freq =3D clki->max_freq;
->=20
-> [Severity: Medium]
-> Could this introduce a data race during asynchronous probe?
->=20
-> Because ufs_hba_vps is a globally shared static structure assigned to all=
- UFS
-> host controllers by default (hba->vps =3D &ufs_hba_vps), writing directly=
- to
-> hba->vps->devfreq_profile.initial_freq mutates this shared state.
->=20
-> If multiple controllers probe concurrently during system initialization
-> (e.g. via ufshcd_async_scan), they will race to overwrite this field.
-> If the controllers have different maximum frequencies, they might overwri=
-te
-> each other's initial devfreq settings, causing devfreq to start with an
-> incorrect frequency on one or more controllers.
+On 9/2/26 14:13, Thomas Zimmermann wrote:
+> Replace the direct use of DRM_PANIC_SCREEN_QR_CODE_URL in snprintf()
+> with a %s conversion specifier. Avoids a possible vulnerabilty from
+> a crafted URL string.
+> 
+> As the attacker needs to control the kernel at the Kconfig level, the
+> potential for an exploit is likely low.
 
-hba->vps points at one global structure shared by every controller, but thi=
-s is
-not new in this patch, The same issue exists in wb_flush_threshold, which i=
-s
-even writable from sysfs, so a write on one controller changes the other on=
-e,
-for the system with multiple UFS controllers, it is better to seperate
-ufs_hba_vps by using devm_kmemdup.
+Thanks, it looks good to me.
 
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
 
-
-
-
->=20
-> > +
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_vops_config_scal=
-ing_param(hba, &hba->vps->devfreq_profile,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 &hba->vps->ondemand_data);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0devfreq =3D devfreq_add=
-_device(hba->dev,
->=20
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+> Cc: Javier Martinez Canillas <javierm@redhat.com>
+> Cc: Jocelyn Falempe <jfalempe@redhat.com>
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: <stable@vger.kernel.org> # v6.12+
+> ---
+>   drivers/gpu/drm/drm_panic.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+> index e576c4791861..ba21df4be338 100644
+> --- a/drivers/gpu/drm/drm_panic.c
+> +++ b/drivers/gpu/drm/drm_panic.c
+> @@ -658,7 +658,8 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
+>   	char *kmsg;
+>   	int max_qr_data_size, url_len;
+>   
+> -	url_len = snprintf(url, sizeof(url), CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL "?a=%s&v=%s&z=",
+> +	url_len = snprintf(url, sizeof(url), "%s?a=%s&v=%s&z=",
+> +			   CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
+>   			   utsname()->machine, utsname()->release);
+>   
+>   	max_qr_data_size = drm_panic_qr_max_data_size(panic_qr_version, url_len);
 
