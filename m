@@ -1,105 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-17.mta1.migadu.com [95.215.58.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F394646D548;
-	Mon,  7 Sep 2026 11:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961BC45D188
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780361; cv=none; b=C4P/BwRPRECSE3dOmaLQvN4RyrNgI3wRCciymccZDY+P9ZVLe5mhTBmrjGoP90j3q/YnfSbhHIAkbtc+Z5F4HVB+ctwiT61LTiotXJuuKMEydWXOOfuAJ2NadIBdjz2fRgoVmF50O6xDGTGQ0ebiGbncfmZjOa+U/+8fGv8O00E=
+	t=1788782426; cv=none; b=cKINhNt9azMeM03qrn7jwzjVZkZ8DCUu+lpu5TKDb5iCKpfiT1cgFPOLqJ0B3X3SuMem4dEwtWcnukFG8bY3qRlVniqstOpzni9PnjvZXYAfauzqEBouPwdXh0FG7JRDWa+wkODVU1TkRfq2aVEw244vCTCp2+uigAuYMAgqIU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780361; c=relaxed/simple;
-	bh=ZEMTfsctivsx9BHRCYbwUHlg/kjfE3N0XMnAg1ydWd8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OaTM2yxP7IK7F0j64Nj8e8OC9zo1oaOBN4zuuF0rnhJV5TE1X0ilJs+20Tj07M0I7sKBnPr5m6qsdMwXoth63YjZ1hEKdjGJfccoHBME1uCKCPPVU7KSkTjWCWXPWH2pAwwh9H8ukcpiDynBaFonAkvajfYyDXT+kRSeh+ZkjKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JONHbwGz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788782426; c=relaxed/simple;
+	bh=ngQPkjIQhnImDOuM3WuuixU0yFgu3iX8vqPspgh9oKI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qd7j0/eYjR7HHvOuBQQSl8vwFUdcRDveyLPjeq7b5Z9n06GceTbBZlLg/iEH1XM1qGnRPO7WYgT8G0Ze0bV1u0a4bkU/C+XX8xvvK+iRscZySk9oKj6tA1O89/5nb0KLnkndA4bqe+zypxQsgQ1ipM2AbfYp+j274LyB2VIpKjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=e/zUtqPe; arc=none smtp.client-ip=95.215.58.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JONHbwGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E701F00A3A;
-	Mon,  7 Sep 2026 11:25:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788780359;
-	bh=ZEMTfsctivsx9BHRCYbwUHlg/kjfE3N0XMnAg1ydWd8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=JONHbwGzEgBO2d9t1tO0hOs5IgjRNPjfL33DruxCD9W8uZikJtZnR7p4kQP/5WccE
-	 lKFfU419a9phXjfEW/63+8ae8SkjXdSZau0NOnUnIW4HcnaYYCuPvMlu85BwP85baU
-	 xMJO5oP0dZomWEh4HpwLkj9b07haWDYl1I0i6XYqjBIOHhe1Fdfqlf4wqebyHdaQWv
-	 PjXWOPXDoBbdDMKd6/x8DyDQSv7Qtut8X2H18n8wiuxJGWLSX93j1+KNh5YD69ByEq
-	 8DyHULbM1585VQL4QDN9pTcAqsCqxBU0X3WiIUHWeMSuLRQaSa4PMTrA6jeGrRVj2B
-	 PdzQWMz1T3Wlw==
-Message-ID: <22ef726e-d89b-4f02-91d9-6d42f9cf2bbc@kernel.org>
-Date: Mon, 7 Sep 2026 13:25:55 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="e/zUtqPe"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=ngQPkjIQhnImDOuM3WuuixU0yFgu3iX8vqPspgh9oKI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788782422; v=1; x=1789387222;
+ b=e/zUtqPe4szF/wIjS2WlbzohqapC/g9FdG+wHKLIHeBzPyjnpRW+YYAZWGRN34CA2kF0zbRC
+ 9KD+zU6+gb6n8/trj4o7UzGEcV1r2zIG/7xS6rmmK0NGK8shk8AEWdeV/u0rrbhqMT2+ndtlfkc
+ c7XyZ20GSQcD45LNsq+ASf9c=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id c48a5cc37f9abba0;
+	Mon, 07 Sep 2026 12:00:15 +0000
+X-Mizu-Trace-ID: c48a5cc37f9abba0
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17359so8637e87.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 05:00:10 -0700 (PDT)
+X-Gm-Message-State: AFuF++kIINX6Zs2W1JKYAsctPfLv2Byq27gn2hLH4WUH0GLZPd9/t3tH
+	brOleJL8X9BC2KVvKFcXCv6rMMRhh/jAlAP3FhI1Zs+llBN4ZQCqfyr3ZyD7vEQddsGP0IF1ueY
+	5rioPXFq39SgNdTMxeXU0T9eYsndUp6xGMNem6dxp
+X-Received: by 2002:a05:6512:1d1:b0:5b1:4fd9:ac with SMTP id
+ 2adb3069b0e04-5b75074fa17mr49498e87.3.1788782409953; Mon, 07 Sep 2026
+ 05:00:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: How is sashiko bot deciding whom to Cc?
-Content-Language: fr
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- virtualization@lists.linux-foundation.org, ksummit@lists.linux.dev
-References: <20260907055646-mutt-send-email-mst@kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260907055646-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260907112944.313618-1-fuad.tabba@linux.dev> <20260907112944.313618-2-fuad.tabba@linux.dev>
+ <20260907114514.44DB81F00A3A@smtp.kernel.org>
+In-Reply-To: <20260907114514.44DB81F00A3A@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 7 Sep 2026 12:59:33 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzc1cOh5Qe+0svp6nOOgzeULVwxDmDOZr49xJtLFiaRhQ@mail.gmail.com>
+X-Gm-Features: AcwNN1Vt-aJ3tzj_QZnkbvQgo6kaZ5kSdh2tbtZ0uO353EJiAohmQi6mASJ03L8
+Message-ID: <CA+EHjTzc1cOh5Qe+0svp6nOOgzeULVwxDmDOZr49xJtLFiaRhQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] of/irq: Fix device node refcount leak in of_check_msi_parent()
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Mon, 7 Sept 2026 at 12:45, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] of_msi_xlate() prematurely aborts device tree hierarchy traversa=
+l when msi_np is NULL.
 
-On 07/09/2026 12:03, Michael S. Tsirkin wrote:
-> There doesn't seem to be a Sashiko list, so I added ksummit as the most
-> likely one to catch attention.
-
-Just in case, there is a Sashiko ML: sashiko@lists.linux.dev
-
-https://subspace.kernel.org/lists.linux.dev.html
+Already covered in my reply to v1 [1]. No in-tree caller hits it:
+fsl_mc_get_msi_id() is the only one passing NULL, and an fsl_mc_device
+has no of_node, so the walk doesn't abort there.
 
 Cheers,
-Matt
+/fuad
+
+[1] https://lore.kernel.org/all/CA+EHjTx6ZC90qHoccTE6CLvGvxrXBe3Ph0bFKcgBvf=
+RpCCAVuA@mail.gmail.com/
+
+> --
+>
+> commit d227a3bc08eef0cbb22a6f227edca082ac29a9b8
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> of/irq: Fix device node refcount leak in of_check_msi_parent()
+>
+> This patch prevents a device node reference count leak in
+> of_check_msi_parent(). It ensures that the msi_node reference is
+> only kept when the incoming node pointer is NULL.
+>
+> Link: https://lore.kernel.org/all/20260826113604.010C01F000E9@smtp.kernel=
+.org/
+>
+> > diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+> > index ec035367c9500..109c54f346479 100644
+> > --- a/drivers/of/irq.c
+> > +++ b/drivers/of/irq.c
+> > @@ -785,7 +785,7 @@ static int of_check_msi_parent(struct device_node *=
+dev_node, struct device_node
+> >       if ((*msi_node && *msi_node !=3D msi_spec.np) || msi_spec.args_co=
+unt !=3D 0)
+> >               ret =3D -EINVAL;
+> >
+> > -     if (!ret) {
+> > +     if (!ret && !*msi_node) {
+> >               /* Return with a node reference held */
+> >               *msi_node =3D msi_spec.np;
+> >               return 0;
+>
+> [Severity: High]
+> This isn't a regression introduced by this patch, but could the traversal
+> loop in of_msi_xlate() prematurely abort when msi_np is NULL?
+>
+> If a driver calls of_msi_xlate(dev, NULL, id) and the direct parent lacks=
+ an
+> msi-map property, of_map_msi_id() passes the NULL msi_np to of_map_id()
+> as filter_np:
+>
+> drivers/of/base.c:of_map_id() {
+>         ...
+>         map =3D of_get_property(np, map_name, &map_bytes);
+>         if (!map) {
+>                 if (filter_np)
+>                         return -ENODEV;
+>                 /* Otherwise, no map implies no translation */
+>                 arg->args[0] =3D id;
+>                 arg->args_count =3D 1;
+>                 return 0;
+>         }
+>         ...
+> }
+>
+> Because filter_np is NULL, it returns 0 instead of -ENODEV.
+>
+> This translates to !of_map_msi_id(...) evaluating to true in the loop in
+> of_msi_xlate(), hitting the break statement:
+>
+> drivers/of/irq.c:of_msi_xlate() {
+>         ...
+>         for (parent_dev =3D dev; parent_dev; parent_dev =3D parent_dev->p=
+arent) {
+>                 struct of_phandle_args msi_spec =3D {};
+>
+>                 if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &m=
+si_spec)) {
+>                         if (msi_spec.np) {
+>                                 ...
+>                         }
+>                         /* msi-map present but no match =E2=86=92 stop wa=
+lking */
+>                         break;
+>                 }
+>                 ...
+>         }
+>         ...
+> }
+>
+> Will this cause the function to incorrectly terminate the loop on the ver=
+y
+> first node, conflating an absent msi-map with a present but unmatched
+> msi-map, and failing to find the MSI mapping in ancestor nodes?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260907112944.31=
+3618-1-fuad.tabba@linux.dev?part=3D1
