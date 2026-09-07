@@ -1,21 +1,36 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-72.mta1.migadu.com [95.215.58.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3544A64C7;
-	Mon,  7 Sep 2026 12:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFBB4A4852
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788784385; cv=none; b=SD//JMPNlwiPgjD4A9pN/ilyyHdNCxitVRZOK6of0WfMJr69ut3n5NQAYr3hbSbbEGBptO2Mup2GQOKRrkR3pZ1l4qfbpHYmhDmlXqQH9ZIGWtmCJq3HPu0k1DGJUFm/AgB+RfCKms9x7LjnKuTxbSw2yPi+R2whxUsNkdSpvig=
+	t=1788784501; cv=none; b=Ucn1RzHqJlML1uxwK81MsiuIbEK0n7t6Dn3Tf9xl6t3TL+/29zlivnRd9OhWemJiAJPVh+VxaFXhkC5LC7DZgFNU4zQP1/QwrpnoI08jx8EV8JzUNP9OVD3zRtDdDO8gUCHiqaaxZgOK5vFG/b19FCqm8RhoaMAsQiQftMvxUSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788784385; c=relaxed/simple;
-	bh=778mZAkzDkmSQ/nnB01qv9KJ9eF/HBCrupCGXPJi5w4=;
+	s=arc-20240116; t=1788784501; c=relaxed/simple;
+	bh=mu4BcnOWhmf2pfWXNByRLhFYDYLzBAz7cyEC2jz/pdE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k/zvfRdGQvrtTyW5aFBjvGlqL4SYHJ2at1up90a8w+4EBzmGbvIGJn1DqRjkgvuQidlw0nLaEKGOKgTShPWoVG1dOKXvra1Ic8AumhvkMinNZ59Z+wELhrfHjN2bIDZwJajZt1zouz+P3rrBGmzlrkAzwWVJDaZ5XSAdPeOV520=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AAA1F00A3D;
-	Mon,  7 Sep 2026 12:33:01 +0000 (UTC)
-Message-ID: <1319f97a-1649-4f48-acd7-513897298639@tuxon.dev>
-Date: Mon, 7 Sep 2026 15:32:59 +0300
+	 In-Reply-To:Content-Type; b=I4TZjl35XahclBA5PYWmWpk+0FNMCcH0+c0+SXbHsc37mzM8/i8dH/nNcT4N/NWYknV1Re6EOG+MqwxeWx/2d/Hxq88zwVhzP+0I7vbs0cC5IGpKXyh3Q0QPlrtXdDDxKgUV752mhEtBp1Lh9o9H64Dd8rYaLOVEks8Ohs4cftI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=QaWACtbr; arc=none smtp.client-ip=95.215.58.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="QaWACtbr"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=mu4BcnOWhmf2pfWXNByRLhFYDYLzBAz7cyEC2jz/pdE=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788784496; v=1; x=1789389296;
+ b=QaWACtbraMQRDIc2aPO4LGhpa+E91DncHweTpdj8QESXLdgici55rPOtJdZLU25Y4jpX0+i5
+ RyXIAEAvhHDi9DvksxHoMJlvwvW1DA4T+4YwXQ7RJvJTq0ladMf5vVtMbmDMQxonb4XNNUpNg/8
+ 0H+anVpB4d1xtmjOmAQL1bGk=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id 33cf694317f22d84;
+	Mon, 07 Sep 2026 12:34:56 +0000
+X-Mizu-Trace-ID: 33cf694317f22d84
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <a7be8330-1678-44e2-8c1b-eb48cb205eeb@linux.dev>
+Date: Mon, 7 Sep 2026 13:34:51 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -23,146 +38,156 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] can: rcar_canfd: Add support for Renesas RZ/G3S
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, Oliver Hartkopp <socketcan@hartkopp.net>,
- conor+dt@kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
- devicetree@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- linux-can@vger.kernel.org, Vincent Mailhol <mailhol@kernel.org>,
- wsa+renesas@sang-engineering.com
-References: <20260902141544.565763-1-claudiu.beznea+renesas@tuxon.dev>
- <20260902141544.565763-6-claudiu.beznea+renesas@tuxon.dev>
- <20260902143013.D70171F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v8 24/27] scsi: sd: support multipath disk
+To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260907105021.1763236-1-john.g.garry@oracle.com>
+ <20260907105021.1763236-25-john.g.garry@oracle.com>
+ <20260907122525.940BF1F00A3A@smtp.kernel.org>
 Content-Language: en-US
-From: Claudiu Beznea <claudiu.beznea+renesas@tuxon.dev>
-In-Reply-To: <20260902143013.D70171F00A3A@smtp.kernel.org>
+From: John Garry <john.garry@linux.dev>
+In-Reply-To: <20260907122525.940BF1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 9/2/26 17:30, sashiko-bot@kernel.org wrote:
+On 9/7/26 13:25, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > New issues:
-> - [High] Lack of validation for Classical CAN mode on CAN FD-only hardware.
+> - [High] Pending delayed removal work is not cancelled when `sd_mpath_fail_probe()` tears down a multipath disk, leading to use-after-free of `mpath_head`.
 > 
 > Pre-existing issues:
-> - [High] Dangling pointer in global array leads to double free when register_candev fails.
+> - [Critical] Preexisting double put of `sdkp->disk_dev` when `sd_large_pool_create()` or `device_add_disk()` fails.
 > --
 > 
-> commit 1c2240055c546ef67856ad4716f6c425dbce01c6
-> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+> commit 9972be7d4ae335cb741d2858144500af92bf6dc3
+> Author: John Garry <john.garry@linux.dev>
 > 
-> can: rcar_canfd: Add support for Renesas RZ/G3S
+> scsi: sd: support multipath disk
 > 
-> This commit adds support for the Renesas RZ/G3S CAN-FD controller.
-> The RZ/G3S controller supports two channels, 16 AFL pages, and operates
-> exclusively in CAN-FD mode.
+> This commit adds support to attach a multipath disk by allocating a hidden
+> gendisk per path. A global list of multipath disks is kept for matching
+> SCSI devices, and the multipath gendisk mimics a standard SCSI disk.
 > 
->> diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
->> index bed7cde1aa01b..48e0573a73a44 100644
->> --- a/drivers/net/can/rcar/rcar_canfd.c
->> +++ b/drivers/net/can/rcar/rcar_canfd.c
+>> diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+>> index 60e071d23ddd0..27230ecc2337e 100644
+>> --- a/drivers/scsi/sd.c
+>> +++ b/drivers/scsi/sd.c
 > [ ... ]
->> @@ -661,6 +661,26 @@ static const struct rcar_canfd_hw_info rzg2l_hw_info = {
->>   	.fixed_canfd = 0,
->>   };
->>   
->> +static const struct rcar_canfd_hw_info r9a08g045_hw_info = {
->> +	.nom_bittiming = &rcar_canfd_gen4_nom_bittiming_const,
->> +	.data_bittiming = &rcar_canfd_gen4_data_bittiming_const,
->> +	.tdc_const = &rcar_canfd_gen4_tdc_const,
->> +	.regs = &rcar_gen4_regs,
->> +	.sh = &rcar_gen4_shift_data,
->> +	.rnc_field_width = 16,
->> +	.max_aflpn = 15,
->> +	.max_cftml = 31,
->> +	.max_channels = 2,
->> +	.postdiv = 2,
->> +	.shared_global_irqs = 0,
->> +	.multi_channel_irqs = 1,
->> +	.ch_interface_mode = 1,
->> +	.shared_can_regs = 1,
->> +	.external_clk = 1,
->> +	.fcan_pclk = 1,
->> +	.fixed_canfd = 1,
-> 
-> [Severity: High]
-> If the device tree specifies the "renesas,no-can-fd" property, could this
-> lead to a silent mismatch between the software network stack configuration
-> and the hardware state?
-
-The DT schema was updated to forbid renesas,no-can-fd for RZ/G3S. AFAIK, we 
-shouldn't validate the device tree in kernel. That's should be done by the 
-dtbs_check.
-
-> 
-> In drivers/net/can/rcar/rcar_canfd.c:rcar_canfd_probe(), if the property is
-> present, the driver will set fdmode = false:
-> 
-> 	if (of_property_read_bool(dev->of_node, "renesas,no-can-fd"))
-> 		fdmode = false;
-> 
-> However, when rcar_canfd_configure_controller() runs, it skips the
-> controller mode update because fixed_canfd is true:
-> 
-> 	if (gpriv->info->fixed_canfd)
-> 		continue;
-> 
-> This effectively leaves the hardware locked in CAN FD mode, while the rest of
-> the driver initializes the software stack for Classical CAN. For example,
-> rcar_canfd_channel_probe() initializes a max MTU of 16 bytes, and
-> rcar_canfd_configure_rx() restricts the physical hardware Rx FIFO payload
-> size to 8 bytes.
-> 
-> If the hardware receives a 64-byte CAN FD frame, will it attempt to write
-> 64 bytes into an Rx FIFO configured for 8 bytes, causing a buffer overflow?
-> 
->> +};
+>> @@ -4048,13 +4151,260 @@ static const struct attribute_group sd_mpath_disk_attr_group = {
+> [ ... ]
+>> +static void sd_mpath_fail_probe(struct scsi_disk *sdkp)
+>> +{
+>> +	struct sd_mpath_disk *sd_mpath_disk = sdkp->sd_mpath_disk;
+>> +	struct scsi_mpath_device *scsi_mpath_dev;
+>> +	struct mpath_device *mpath_device;
+>> +	struct scsi_device *sdp = sdkp->device;
+>> +	struct scsi_mpath_head *scsi_mpath_head;
+>> +	struct mpath_head *mpath_head;
+>> +	bool remove = false;
 >> +
-> [ ... ]
->> @@ -2383,6 +2403,7 @@ static DEFINE_SIMPLE_DEV_PM_OPS(rcar_canfd_pm_ops, rcar_canfd_suspend,
->>   
->>   static const __maybe_unused struct of_device_id rcar_canfd_of_table[] = {
->>   	{ .compatible = "renesas,r8a779a0-canfd", .data = &rcar_gen4_hw_info },
->> +	{ .compatible = "renesas,r9a08g045-canfd", .data = &r9a08g045_hw_info },
+>> +	if (!sd_mpath_disk)
+>> +		return;
+>> +
+>> +	scsi_mpath_dev = sdp->scsi_mpath_dev;
+>> +	mpath_device = &scsi_mpath_dev->mpath_device;
+>> +	scsi_mpath_head = sd_mpath_disk->scsi_mpath_head;
+>> +	mpath_head = &scsi_mpath_head->mpath_head;
+>> +
+>> +	mutex_lock(&sd_mpath_disks_lock);
+>> +	sd_mpath_disk->disk_count--;
+>> +	if (!sd_mpath_disk->disk_count) {
+>> +		list_del_init(&sd_mpath_disk->entry);
+>> +		remove = true;
+>> +	}
+>> +	mutex_unlock(&sd_mpath_disks_lock);
+>> +	mpath_device->disk = NULL;
+>> +
+>> +	if (remove) {
+>> +		device_del(&sd_mpath_disk->dev);
+>> +		mpath_remove_disk(mpath_head);
+>> +	}
+>> +	sd_mpath_put_disk(sd_mpath_disk);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does probe failure on this newly added
-> hardware expose a potential double-free?
+> Can this sequence leave pending delayed removal work uncancelled when tearing
+> down a multipath disk?
 > 
-> In drivers/net/can/rcar/rcar_canfd.c:rcar_canfd_channel_probe(), the global
-> array is populated before device registration:
+> If a multipath disk has its last path removed, it can enter delayed removal
+> where disk_count drops to 0 and remove_work is scheduled via
+> mpath_can_remove_head().
 > 
-> 	gpriv->ch[priv->channel] = priv;
-> 	...
-> 	err = register_candev(ndev);
-> 	if (err) {
-> 		...
-> 		goto fail_candev;
-> 	}
+> If a path is then re-probed, disk_count becomes 1.
+
+The re-probe should fail early as mpath_head->disk is still set
+
+> If that probe subsequently
+> fails and sd_mpath_fail_probe() is called, the disk_count drops back to 0,
+> which triggers the device deletion and frees the head.
 > 
-> If register_candev() fails, the error path calls free_candev(ndev), which
-> also frees the embedded priv structure, but leaves the dangling pointer in
-> gpriv->ch[priv->channel].
+> However, since this path bypasses mpath_can_remove_head(), could the pending
+> remove_work scheduled earlier go uncancelled, potentially leading to a
+> use-after-free of mpath_head when the delayed work timer expires?
 > 
-> When the failure propagates back to rcar_canfd_probe(), the cleanup block
-> iterates over all configured channels and calls rcar_canfd_channel_remove()
-> for each, including the one that just failed:
+>> +}
+> [ ... ]
+>> @@ -4171,6 +4529,7 @@ static int sd_probe(struct scsi_device *sdp)
+>>   	sd_revalidate_disk(gd);
+>>   	if (sdp->sector_size > PAGE_SIZE) {
+>>   		if (sd_large_pool_create()) {
+>> +			sd_mpath_fail_probe(sdkp);
+>>   			error = -ENOMEM;
+>>   			device_unregister(&sdkp->disk_dev);
+>>   			put_disk(gd);
 > 
-> drivers/net/can/rcar/rcar_canfd.c:rcar_canfd_channel_remove() {
-> 	...
-> 	unregister_candev(priv->ndev);
-> 	...
-> 	free_candev(priv->ndev);
-> }
+> [Severity: Critical]
+> This is a pre-existing issue, but could this error path result in a
+> double-free of sdkp->disk_dev?
 > 
-> Could this lead to memory corruption when it attempts to unregister and free
-> the already freed dangling pointer?
+> When sd_large_pool_create() fails, device_unregister() is called on
+> sdkp->disk_dev, which drops the refcount to 0 and frees sdkp.
 > 
->>   	{ .compatible = "renesas,r9a09g047-canfd", .data = &r9a09g047_hw_info },
->>   	{ .compatible = "renesas,r9a09g077-canfd", .data = &r9a09g077_hw_info },
->>   	{ .compatible = "renesas,rcar-gen3-canfd", .data = &rcar_gen3_hw_info },
+> Immediately following this, put_disk(gd) is called. Because gd->fops is
+> already set to &sd_fops, dropping the gendisk refcount invokes
+> scsi_disk_free_disk(), which reads the already freed sdkp and attempts a
+> second put_device() on sdkp->disk_dev.
+
+I'll check it, but I doubt that there is a problem
+
+> 
+>>   			goto out;
+>>   		}
+>>   	}
+>>   
+>> +	if (sdp->scsi_mpath_dev) {
+>> +		error = sd_mpath_revalidate_head(sdkp);
+>> +		if (error)
+>> +			sdev_printk(KERN_WARNING, sdp, "could not revalidate multipath limits\n");
+>> +	}
+>> +
+>>   	if (sdp->removable) {
+>>   		gd->flags |= GENHD_FL_REMOVABLE;
+>>   		gd->events |= DISK_EVENT_MEDIA_CHANGE;
+>> @@ -4192,6 +4557,7 @@ static int sd_probe(struct scsi_device *sdp)
+>>   
+>>   	error = device_add_disk(dev, gd, NULL);
+>>   	if (error) {
+>> +		sd_mpath_fail_probe(sdkp);
+>>   		device_unregister(&sdkp->disk_dev);
+>>   		put_disk(gd);
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but might this error path also suffer from the
+> same double-free of sdkp->disk_dev?
+> 
+> Just like the memory allocation failure path above, if device_add_disk()
+> fails, device_unregister() frees sdkp, and the subsequent put_disk(gd)
+> accesses the freed sdkp and performs a second put_device() on
+> sdkp->disk_dev.
+
+As with v7, this is fine
+
+> 
+>>   		if (sdp->sector_size > PAGE_SIZE)
 > 
 
