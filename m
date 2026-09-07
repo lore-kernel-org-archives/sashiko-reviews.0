@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-155.mta1.migadu.com [95.215.58.155])
+Received: from mta0.migadu.com (out-46.mta0.migadu.com [91.218.175.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A587B48424F
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE6949502E
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788782936; cv=none; b=SZOYjV52vTtBAn/qwaQhqL97TIJF5xE0Ci1Y1zYwtgXas9KHbm0s9w6m0sWf0OTMHvuKML1qb7Z4FWz2jnD3EnYRa7dD0Xj7pgoXDjKoAFylcEnX3jYltdCi2jWIGQoPe/CS50yG0AdGE2xQU+U+M3I9oCmlrvH3iXD+JMaszRA=
+	t=1788783034; cv=none; b=PWdrjz9VcFISHcu0Eum6spI9WWwt17DWNs9bTvw8YSqN6bwszhfexq5GX4Nlqea0OI1CsfxxDGLNQggS5f7dnpxTdnOPngivGItfPk2ca1gM7rVzZR9i5QZ/3LN5AA6xEzBqRiYUs+D0Jx4u8oNKArNNg8OL/+MBfBLwIQsyfiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788782936; c=relaxed/simple;
-	bh=kfFnSU/7zFllPOudkJHsIOLgV2JEJ2uAalpmf2UYtco=;
+	s=arc-20240116; t=1788783034; c=relaxed/simple;
+	bh=5QMaGMhloJZ8X7unOM4uVeF7Ycv2Zye+o487DoK3d/Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I04WhHcABxLt00V13tAlO1KsUGlNF+iMrwPxklXZdAyFBqBbhrec6w7jnMIpxneHL3m8errzNF5oJDN5Z+l64HdSrp9lNOvKjgpzERbELZEg1670kO04bRiCgHS4nGiEcXz05IpCU3q1s1yERv4YWe/A/Y7ddqZ5rnj1CxtD/KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CCTQjzIt; arc=none smtp.client-ip=95.215.58.155
+	 In-Reply-To:Content-Type; b=A1DeRKAHOHKeNK2+Xd4s9I1MChFXyC345ygY0aUw2hf+TZpjRnMRQQQro6k/6Rh2M3FI9bN8sCs3ORWZTVnHEqGeZ5DyN9YkZb2aZQDiAoCvMGk3QLav5Qun5h6/0Fn/p9fcSsG4FQBJqK6I2/KFJzB+ZaF0Hy7b6mLj2AnYKOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DR/NDW6K; arc=none smtp.client-ip=91.218.175.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CCTQjzIt"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DR/NDW6K"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=kfFnSU/7zFllPOudkJHsIOLgV2JEJ2uAalpmf2UYtco=;
+DKIM-Signature: a=rsa-sha256; bh=5QMaGMhloJZ8X7unOM4uVeF7Ycv2Zye+o487DoK3d/Y=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788782932; v=1; x=1789387732;
- b=CCTQjzItLWu18Bx0Fra85IPwA6w2mwnzE6iTlV0dm8CayUXKCQTLImAiDU3dKSTud+uww+bo
- Iac8JUAD33a+bpYvEddDh+cD1RduOrEaweiz7x9xV+PwTK5klQ9lwCAtGNL1hIal5JXpdySOKE5
- u8CXkPil8/MuWQGkoGbQkIag=
+ t=1788783029; v=1; x=1789387829;
+ b=DR/NDW6KV8RSYNWoJJEbR0TZAbVvN66SZ9F8UO78qfc2FmkyprY3qqi41l89bD5MrWx47Ikb
+ 6Eqp7fdPilHnAcO66m6UkJ1nLNgg4zEeEEfDcH25d+r5Dr3H2MvAlVwthB3BXrnbMKjBcy/tpYp
+ XVXTS3D4u78amqts41+Kmx98=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 98d6343c45b2d21c;
-	Mon, 07 Sep 2026 12:08:52 +0000
-X-Mizu-Trace-ID: 98d6343c45b2d21c
+Received: by mta10.migadu.com with ESMTPS id dcd267842b1cde3d;
+	Mon, 07 Sep 2026 12:10:29 +0000
+X-Mizu-Trace-ID: dcd267842b1cde3d
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <27c27730-5184-4290-9a85-6cc983caeede@linux.dev>
-Date: Mon, 7 Sep 2026 13:08:51 +0100
+Message-ID: <02d55880-ac40-4cbc-82fe-d175c81bbd19@linux.dev>
+Date: Mon, 7 Sep 2026 13:10:28 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,88 +38,87 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 16/27] scsi-multipath: clear path when device is
- blocked
+Subject: Re: [PATCH v8 17/27] scsi-multipath: revalidate paths upon device
+ unblock
 To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
 Cc: linux-scsi@vger.kernel.org
 References: <20260907105021.1763236-1-john.g.garry@oracle.com>
- <20260907105021.1763236-17-john.g.garry@oracle.com>
- <20260907114906.3EC7C1F00A3A@smtp.kernel.org>
+ <20260907105021.1763236-18-john.g.garry@oracle.com>
+ <20260907115604.63C811F00A3A@smtp.kernel.org>
 Content-Language: en-US
 From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260907114906.3EC7C1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260907115604.63C811F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/7/26 12:49, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Lockless and unrefcounted access to `sdev->scsi_mpath_dev` in `scsi_device_block()` leads to Use-After-Free and Null Pointer Dereferences during concurrent device initialization or removal.
+On 9/7/26 12:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Concurrent invocation of device block/unblock during initialization dereferences a NULL scsi_mpath_head.
+> - [High] TOCTOU race in scsi_device_block and scsi_internal_device_unblock accessing multipath state outside state_mutex, causing a NULL pointer dereference during device teardown.
 > --
 > 
-> commit 352c419b223cf3635501b6ef6ac4632a3b017a6d
+> commit d9e004c51ebcdd24da98702a7fb3f90971c90665
 > Author: John Garry <john.garry@linux.dev>
 > 
-> scsi-multipath: clear path when device is blocked
+>      scsi-multipath: revalidate paths upon device unblock
 > 
-> This commit adds scsi_mpath_dev_clear_path() and calls it from
-> scsi_device_block() when a device path becomes blocked.
+> This patch adds a revalidation step for multipath devices when a scsi_device
+> is unblocked, clearing paths and requeuing any queued bios.
 > 
 >> diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
->> index 48aab0df30b76..56200a7f5c748 100644
+>> index 56200a7f5c748..1a6f5e1fd80cb 100644
 >> --- a/drivers/scsi/scsi_lib.c
 >> +++ b/drivers/scsi/scsi_lib.c
-> [ ... ]
->> @@ -3009,6 +3010,8 @@ static void scsi_device_block(struct scsi_device *sdev, void *data)
->>   		scsi_stop_queue(sdev);
->>   
+>> @@ -3093,6 +3093,8 @@ static int scsi_internal_device_unblock(struct scsi_device *sdev,
+>>   	mutex_lock(&sdev->state_mutex);
+>>   	ret = scsi_internal_device_unblock_nowait(sdev, new_state);
 >>   	mutex_unlock(&sdev->state_mutex);
->> +	if ((err == 0) && sdev->scsi_mpath_dev)
->> +		scsi_mpath_dev_clear_path(sdev->scsi_mpath_dev);
+>> +	if ((ret == 0) && sdev->scsi_mpath_dev)
+>> +		scsi_mpath_revalidate_paths(sdev->scsi_mpath_dev);
 > 
+
+See response for v7
+
 > [Severity: High]
-> Can this lockless access to sdev->scsi_mpath_dev lead to a use-after-free
-> during concurrent device removal?
+> Are there race conditions involving multipath state modification outside of
+> the sdev->state_mutex?
 > 
-> If __scsi_remove_device() drops the reference and clears scsi_mpath_head,
-> and scsi_device_block() races with it, it drops state_mutex and then reads
-> sdev->scsi_mpath_dev locklessly. Could it proceed to call
-> scsi_mpath_dev_clear_path() and dereference freed pointers?
+> It appears a concurrent __scsi_remove_device() could acquire state_mutex,
+> transition the device to SDEV_CANCEL or SDEV_DEL, and call
+> scsi_mpath_remove_device(). This sets scsi_mpath_dev->scsi_mpath_head to
+> NULL. When scsi_internal_device_unblock() resumes, it could call
+> scsi_mpath_revalidate_paths() which then attempts to use the NULL pointer.
 > 
->>   
->>   	WARN_ONCE(err, "%s: failed to block %s in state %d\n",
->>   		  __func__, dev_name(&sdev->sdev_gendev), state);
+> Is it also possible for this code to execute on a partially initialized
+> multipath device?
+> 
+> During device discovery, scsi_mpath_dev_alloc() assigns sdev->scsi_mpath_dev
+> but initially leaves scsi_mpath_dev->scsi_mpath_head as NULL while
+> performing a blocking INQUIRY. If a transport event (like a link flap)
+> concurrently triggers scsi_target_block() and scsi_target_unblock(),
+> scsi_internal_device_unblock() could be called and operate on the still-NULL
+> scsi_mpath_head.
+> 
+> The same unprotected call pattern appears to exist in scsi_device_block(),
+> which was introduced in a prior patch in this series.
+> 
+> [ ... ]
 >> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index 68fe50f62158c..b16fe6a55fa73 100644
+>> index b16fe6a55fa73..456351fee4b98 100644
 >> --- a/drivers/scsi/scsi_multipath.c
 >> +++ b/drivers/scsi/scsi_multipath.c
-> [ ... ]
->> @@ -238,6 +238,16 @@ static int scsi_multipath_sdev_init(struct scsi_device *sdev)
+>> @@ -238,6 +238,14 @@ static int scsi_multipath_sdev_init(struct scsi_device *sdev)
 >>   	return 0;
 >>   }
 >>   
->> +void scsi_mpath_dev_clear_path(struct scsi_mpath_device *scsi_mpath_dev)
+>> +void scsi_mpath_revalidate_paths(struct scsi_mpath_device *scsi_mpath_dev)
 >> +{
->> +       struct mpath_device *mpath_device = &scsi_mpath_dev->mpath_device;
 >> +       struct scsi_mpath_head *scsi_mpath_head = scsi_mpath_dev->scsi_mpath_head;
 >> +       struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
 > 
 > [Severity: High]
-> Are these pointers safe to dereference during concurrent device
-> initialization?
-> 
-> When scsi_mpath_dev_alloc() calls scsi_multipath_sdev_init(), it assigns
-> sdev->scsi_mpath_dev early, before fully initializing the pointers.
-
-Same response as v7
-
-> 
-> If a concurrent scsi_target_block() transitions the device to SDEV_BLOCK,
-> could it call scsi_mpath_dev_clear_path() and dereference an uninitialized
-> or null scsi_mpath_head here, resulting in a crash?
-> 
->> +
->> +       if (mpath_clear_current_path(mpath_device))
->> +               mpath_synchronize(mpath_head);
->> +}
+> If scsi_mpath_head is NULL due to the races mentioned above during unblock
+> or block operations, will this unconditionally dereference the NULL pointer
+> when calculating the offset for mpath_head?
 > 
 
