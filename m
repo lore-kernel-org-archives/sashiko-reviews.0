@@ -1,81 +1,81 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.221])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3349392811
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 20:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC54024679C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 20:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.25
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788813008; cv=pass; b=rBCgi9TtpawyZrUdLCOT0+JzoBtMxO+1N9PEHO/aXuXarmDmnbu44w8+ufv4edGseanLGJYDzHMHCwc9EaRLGaOIPbfhoqF5nMTSU+YRDvugOsKZnhd26AX9eLDUNt1moefR+xqBClX7svTW1IvpXAvrvTxETXC4SvxFwMTs5DM=
+	t=1788814241; cv=pass; b=hybDp1nsadvflU4QpqNN7RBsEIkddTM5yWj7ncS4JozRvCdG+JaU3SNrmEXZRoGC9E9y02GwhJJsTGIn7BjGQzel7g32y/H1P5JVz/2JTjwBfJnFpiCIY3atNPF7OeegfG0YAvlUww8YTPrsSGSAA1atsSdZdJ7yuPnYyOAbcvM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788813008; c=relaxed/simple;
-	bh=mTBFg+ZMh6Oga0I8G8NQ6omhDoRyCGFpY895ehxdIvs=;
+	s=arc-20240116; t=1788814241; c=relaxed/simple;
+	bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=RSI4nAdAOy8v+PsVvqnwTQJTylSrr1wE7KUcW9vyqpunnQsM0QcWQrAeIFd5fDwDCb/So8KW6+m0eBdrotjJ4OIQOjGZ/GNZIPUDzgEtCJiGyHzan/whMd01V6oCouDGMXFZFA+1BTK4HkgNRKfW8WZPAaJq9iw2fZRWTwxMNVc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de; spf=none smtp.mailfrom=iokpp.de; dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=S3Fx34mi; dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=foyPSoX0; arc=pass smtp.client-ip=81.169.146.221
+	 Content-Type:MIME-Version; b=qjv6/3pU9iNQ6ZUoKsroeK+YbfMSpwpWXbcN1gLMj9K07esAJYxm2NE0lGRQh5O+QRYDzHXKdCXibrTji4/mNCEKTIqxSOxZ+CMO8Nx7FOtbcYMdJP01Mune6EC2qAYYZP4vqPkiWikCTCjPAUUQQSKRWMzFiIFejXwOtZ8DAuQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de; spf=none smtp.mailfrom=iokpp.de; dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=nDcx8v2r; dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=Ysj3Vlxs; arc=pass smtp.client-ip=85.215.255.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=iokpp.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="S3Fx34mi";
-	dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="foyPSoX0"
-ARC-Seal: i=1; a=rsa-sha256; t=1788812999; cv=none;
+	dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="nDcx8v2r";
+	dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="Ysj3Vlxs"
+ARC-Seal: i=1; a=rsa-sha256; t=1788814229; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=LBLbh7AjNrnqoybDwuUsbF4Jc6cvTjimw9WRH+88iSBCt+7AxEUSXVKlq9QvgIzVjX
-    oTnzm3Lox8AQsUtX0IG9e5ftL2dSwPsg8D9BEqGrtpMWcwS7682RHyevHJJ4QS9+/wO+
-    j9itZyQHOaWGlpUHDeLW+sDOpF29ysnuxIec1d+TsDS7hIaPVSaFov9oYDn5vScNO6Hf
-    V+OcIe52NCuJ35eDg7nKXrMnLi48CDuIljsxrqxTUFrbfCjO7VA4xLeufnlML8SH4ZRB
-    Yvhgm7jlbXlijphbOxqcOtzSWXKm2oMwr3n7v276I9siL7oeW+NL3ikI8EAN/3J/kj1w
-    OMPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1788812999;
+    b=iUS4C8ouwLvgk/q3JnsZFrKg4XFLY8Ko8FC6u6Dzsb4EfQ/TUHa3VJJSMGdKwzA1FD
+    DXRoN2/sB/RI8cgj62YZDTIIisnWODq7K6KFo7zn75Phn7Dc8avgRPMf4jFllsz81ZRd
+    nkA+wNmV0rZSMEMhF5Sa1XDSsOY1p7SWte3Ht5JmPvS5AjqhIEHK+AQpbQmXHj1lSrhu
+    UB8NIWqTjTVEFx8P3/eE9Y1/AG/XiGcGp0f7tkbQia4ANvhdhnXO3loKL0dNxcooEBYo
+    6jvhDzigFTv0xx4mQ85K+0QZTfAYZEAl0fo/edBpVHd+z2NatXKE31WVSmNYxJyO9oWi
+    O9iA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1788814229;
     s=strato-dkim-0002; d=strato.com;
     h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mTBFg+ZMh6Oga0I8G8NQ6omhDoRyCGFpY895ehxdIvs=;
-    b=r9LrzWw2KDzKiGq86xScPJMD2H08kTiUjIaUfE3OSWzZopwh6KzojRanGHjeSg6uBd
-    twVeszoD1dtF3SwbvX0lGiTe6QFHjGOwgPJvyN9B+cB8tJp8LyTdQtrydVr8HePztD/+
-    mOWelUYbwDm8eFRXvWAhl93YiGIgSwhYggZebGZ3KcrwXh3yIyumWq/3F7N5WUVwHreR
-    BAoWqakIONr6P/C0mm2hQpEiBflsIYH08cdgG5uJicGIEnb/pDK9arGA1+P8JOFN4S4b
-    nzMmud3UyzzAWHgPDniXjvXdB3igeScbmmqwHqbuVVwGi5i5YXEj/VDTSVLEVoEEiJCH
-    MICg==
+    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
+    b=f+2bRREgqOtLnrcaGLpczaalfpgbTNJ813UFj4/iVj+gFC7NjrIoE/iFFHPAv9fSwR
+    FnPJlz/vxJxRubXqgwXIcFs9I+ormFepP8CRG96LNLzorsOWSrm64VVAqm9ExmpOkCY5
+    6zVQQgI3nnG5JQfm0/cn5EorO7pJ6xXQ29lTtf6eYKyOWfTsr+SXb5DMV8qWK3uPo2uz
+    KyHar/KClE/N/mDp2mRLChXK0TwBsgu7O0j4P2M2pQVCQY7cp6q0I0RMMEcLLZLgigUU
+    IsY7KXKQnKPFqG+Rj/bQTkeN2rT/ntaPmG/H2p0BlfqK2qiCxxLvAnR3l4xiDzKwQdVe
+    /0TA==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1788812999;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1788814229;
     s=strato-dkim-0002; d=iokpp.de;
     h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mTBFg+ZMh6Oga0I8G8NQ6omhDoRyCGFpY895ehxdIvs=;
-    b=S3Fx34miY6bioL9BcTDeSA55D/4hj9epzxHD1fJ9pa1s3l4jlGRepYiGT43c2Sv2G8
-    8ZvwugkgOXOtUBAhGCp0t1YlExBj19ckBD8308lyB7jY07NZx2ymMlWh3inRBkxnAqV+
-    wPnJxr0cBu2YTsP7ngiAvp+aS8D+u7I+APqXpF5CW7zQmE+t1xojOBoZ0vzXqsB1clO/
-    U1zxT48n5oJFVSZKgkYA1xn8hNEnH0O2Ms54nDWSAcTkkUqcrvlyvTEQkLL/zR8Er5SX
-    0tA0SqQHZWnzzaOXoegd8lR4RhdwOCyGl4CA3BX+N33t+OcupwLB+TjeQin1hYL2g9D3
-    vfwg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1788812999;
+    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
+    b=nDcx8v2r2aUiozDWrsiVF0DwW3UK4SPt5LVJztE3hXKrV7iA5Fr+Nn7AhmslUA0TCP
+    drjUl1rl94Zt5J8Tna3p+1IiAHAUyP1ZOqn2s6fT8iCy6d1k76sjViu0Xc9ZpzhDKFMv
+    W3o8AJBFGLriWDI1C/Eu20oh+wEp3PUX3kQOYw6nK1igf3YtpZ41KT2OmZBT+8+vavcw
+    OJsCdcNwT5YDPk2mliDLlkHU62h+n3/4k1BMCIJnXm9KOZZKedj7NNrp/EemiGS0OTeE
+    JpEqHiUOSQDQUr/nONUM8TTZgQEejOU30SKGzuJIsswxYCi908QRifqrx+zPePN9nkyJ
+    580A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1788814229;
     s=strato-dkim-0003; d=iokpp.de;
     h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mTBFg+ZMh6Oga0I8G8NQ6omhDoRyCGFpY895ehxdIvs=;
-    b=foyPSoX0z/DcFVpw5Rh0yDFpExY9kr57WUp+Dfb8aZOE7ajYL8W8oGSDouj1jhLz+1
-    hNze4YP5WyuPqJcrgWBQ==
+    bh=oADjS74yaCkWe9821RWCLnkuNy1GBgTXgo9PkAO7+T8=;
+    b=Ysj3VlxsXVwv/kGE33yyOLFitWDnKbugupvPs5pHYErddQVq/tE9ApTfU796eejYxS
+    PABzyS1OAVxVlmBymgDA==
 X-RZG-AUTH: ":LmkFe0i9dN8c2t4QQyGBB/NDXvjDB6pBSe9tgBDSDt0V2DZ1j3VzZR8ZYnVF9Wg="
 Received: from [192.168.65.16]
     by smtp.strato.de (RZmta 55.6.2 AUTH)
-    with ESMTPSA id ze37e1287KTvCzN
+    with ESMTPSA id ze37e1287KoTD1Y
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
 	(Client did not present a certificate);
-    Mon, 7 Sep 2026 22:29:57 +0200 (CEST)
-Message-ID: <e37a178b48d23abdfa4fcc9e5efa060e5b5ca76d.camel@iokpp.de>
-Subject: Re: [PATCH v2 1/4] PM / devfreq: Fall back to previous_freq when
- get_cur_freq() fails
+    Mon, 7 Sep 2026 22:50:29 +0200 (CEST)
+Message-ID: <9e46b8e788fe6f935db18e7968e73c63cc0786bd.camel@iokpp.de>
+Subject: Re: [PATCH v2 3/4] scsi: ufs: core: Record the frequency the
+ controller starts at
 From: Bean Huo <beanhuo@iokpp.de>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-scsi@vger.kernel.org
-Date: Mon, 07 Sep 2026 22:29:53 +0200
-In-Reply-To: <20260907193342.841D91F00A3A@smtp.kernel.org>
+Date: Mon, 07 Sep 2026 22:50:27 +0200
+In-Reply-To: <20260907194106.BBF131F00A3A@smtp.kernel.org>
 References: <20260907192140.2701755-1-beanhuo@iokpp.de>
-	 <20260907192140.2701755-2-beanhuo@iokpp.de>
-	 <20260907193342.841D91F00A3A@smtp.kernel.org>
+	 <20260907192140.2701755-4-beanhuo@iokpp.de>
+	 <20260907194106.BBF131F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.44.4-0ubuntu2.1 
@@ -86,64 +86,104 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
-On Mon, 2026-09-07 at 19:33 +0000, sashiko-bot@kernel.org wrote:
-> Pre-existing issues:
-> - [Medium] devfreq->resume_freq is incorrectly overwritten with devfreq-
-> >suspend_freq during system suspend, causing devices to resume to their
-> suspend frequency rather than their active frequency.
+On Mon, 2026-09-07 at 19:41 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s)
+> to consider:
+> - [Medium] Unprotected concurrent modification of the globally shared
+> `ufs_hba_vps` structure during asynchronous probe.
 > --
 >=20
-> commit 252cf4045ad4d642d45961b4d6845aa317e8ee57
+> commit d1d1b66402811c53b2fbc0d56ed07cd4f77540ee
 > Author: Bean Huo <beanhuo@micron.com>
 >=20
-> PM / devfreq: Fall back to previous_freq when get_cur_freq() fails
+> scsi: ufs: core: Record the frequency the controller starts at
 >=20
-> This commit updates devfreq_set_target() to fall back to the previous
-> frequency when get_cur_freq() returns an error. This prevents uninitializ=
-ed
-> stack values from being passed to notifiers during frequency changes.
+> This commit records the maximum frequency during ufshcd_devfreq_init(),
+> preventing devfreq from reporting an initial 0 Hz frequency. It avoids
+> an unnecessary governor scale that resets the same frequency and gear.
+> It addresses the issue for both modes with and without OPPs.
 >=20
-> > diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-> > index f08fc6966eaee..f20d9a6607791 100644
-> > --- a/drivers/devfreq/devfreq.c
-> > +++ b/drivers/devfreq/devfreq.c
-> > @@ -348,9 +348,8 @@ static int devfreq_set_target(struct devfreq *devfr=
-eq,
-> > unsigned long new_freq,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0unsigned long cur_freq;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int err =3D 0;
-> > =C2=A0=20
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (devfreq->profile->get_cu=
-r_freq)
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0devfreq->profile->get_cur_freq(devfreq->dev.parent,
-> > &cur_freq);
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0else
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (!devfreq->profile->get_c=
-ur_freq ||
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 devfreq->=
-profile->get_cur_freq(devfreq->dev.parent, &cur_freq))
+> > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> > index 2ba244cf40ac7..351c76094b9ff 100644
+> > --- a/drivers/ufs/core/ufshcd.c
+> > +++ b/drivers/ufs/core/ufshcd.c
+>=20
+> [ ... ]
+>=20
+> > @@ -1727,12 +1722,21 @@ static int ufshcd_devfreq_init(struct ufs_hba *=
+hba)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (list_empty(clk_list=
+))
 > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0cur_freq =3D devfreq->previous_freq;
-> > =C2=A0=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0freqs.old =3D cur_freq;
+=A0=C2=A0=C2=A0=C2=A0=C2=A0return 0;
+> > =C2=A0
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0clki =3D list_first_entry(cl=
+k_list, struct ufs_clk_info, list);
+> > +
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (!hba->use_pm_opp) {
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0clki =3D list_first_entry(clk_list, struct ufs_clk_inf=
+o,
+> > list);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_pm_opp_add(hba->dev, clki->min_freq, 0);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_pm_opp_add(hba->dev, clki->max_freq, 0);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
+> > =C2=A0
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * ufshcd_init_clocks() has =
+already set the clocks to the highest
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * frequency, and nothing ha=
+s changed them since. Save that
+> > frequency,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * so that devfreq and the c=
+lock scaling code know where we start.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0hba->clk_scaling.target_freq=
+ =3D clki->max_freq;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0hba->vps->devfreq_profile.in=
+itial_freq =3D clki->max_freq;
 >=20
 > [Severity: Medium]
-> This is a pre-existing issue, but since we are modifying devfreq_set_targ=
-et(),
-> I noticed a potential issue with how resume frequencies are stored.
+> Could this introduce a data race during asynchronous probe?
 >=20
-> Further down in devfreq_set_target(), there is this unconditional assignm=
-ent:
+> Because ufs_hba_vps is a globally shared static structure assigned to all=
+ UFS
+> host controllers by default (hba->vps =3D &ufs_hba_vps), writing directly=
+ to
+> hba->vps->devfreq_profile.initial_freq mutates this shared state.
 >=20
-> drivers/devfreq/devfreq.c:devfreq_set_target() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =C2=A0=C2=A0=C2=A0 if (devfreq->suspend_freq)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 devfreq->resume_freq =3D new_f=
-req;
->=20
-> =C2=A0=C2=A0=C2=A0 return err;
-> }
+> If multiple controllers probe concurrently during system initialization
+> (e.g. via ufshcd_async_scan), they will race to overwrite this field.
+> If the controllers have different maximum frequencies, they might overwri=
+te
+> each other's initial devfreq settings, causing devfreq to start with an
+> incorrect frequency on one or more controllers.
 
-this should be a seperated fix patch, not for this patch.
+hba->vps points at one global structure shared by every controller, but thi=
+s is
+not new in this patch, The same issue exists in wb_flush_threshold, which i=
+s
+even writable from sysfs, so a write on one controller changes the other on=
+e,
+for the system with multiple UFS controllers, it is better to seperate
+ufs_hba_vps by using devm_kmemdup.
+
+
+
+
+
+>=20
+> > +
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_vops_config_scal=
+ing_param(hba, &hba->vps->devfreq_profile,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 &hba->vps->ondemand_data);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0devfreq =3D devfreq_add=
+_device(hba->dev,
+>=20
 
