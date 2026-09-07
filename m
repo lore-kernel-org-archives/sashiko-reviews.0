@@ -1,90 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A584A8FCE;
-	Mon,  7 Sep 2026 12:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59694BAA15;
+	Mon,  7 Sep 2026 12:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788784642; cv=none; b=G2H61eNrFEzPi/JjDf6vExEJ/GvT1wJDWxDZ+hj4wpIzlpWy0Er+O+Ouk1eg2ljGzh0ZIAtCeg3R+rzXlP/6s9TowYSDDDN0hx5BAYVoRDXr2ylTRYwrjD183hsdkCL4yqmmkOCHXXm4NAzhax2n8VS15jpzPT/NGaTpnh57j7w=
+	t=1788784927; cv=none; b=tsGh+zjWCPx+FQjxCKGwvgReysIcfUVAqLAtfAzhxPeoq+auJzQB63eq0H4ypxeiQrOBqVCPA2qJIeZ061Ni2y6mD0/fNgHne+nBuqhfq65lLZYXunH9czf5k2VDxwtzRsXo3rsIR5L4AZLiFBn3et7wk7WtpD9r+AF/tqGnSaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788784642; c=relaxed/simple;
-	bh=5NMRuVSjJthwtEjHOgcQtgnqigYjdXxeIsLMTayi5b4=;
+	s=arc-20240116; t=1788784927; c=relaxed/simple;
+	bh=m4VD+kZQ3UTdknOoWEEhUFYlOYY9U+SOYKhCEnqeun0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=REuQtMC0RafiOajbSp3sRZmnTIP3SMAYN+GJ51lDHGBOPt4TUGSuafCyA7nPZ7E7YJADmI9Q6ZKJLLASG9FlV2RPordCsmNq9iaxsNF6rljcekvmWvmyMN48hdfgUM25u3Cz1Rt9R/8kwD+TIbQ1aCHjxWDQ8cKFWQLrhVyBBSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04601F00A3A;
-	Mon,  7 Sep 2026 12:37:18 +0000 (UTC)
-Message-ID: <4d329d53-eb85-4377-9315-aba0a3183258@tuxon.dev>
-Date: Mon, 7 Sep 2026 15:37:17 +0300
+	 In-Reply-To:Content-Type; b=QyRmr0TfXDe2zE2xcEvotgF79+glZ5Gby2g5zAZGnYGDq6XbE2E2QTcqqHPORfy/OUPfrSqib6VEibmPncKpzd7Boj8y/MmVxOFC26O5Dy+zAXxM2x8CaqYcoUTMnoVgORIQBq9HhZwH200cAp9c4BPjOLx5J0tQrhqYukrLROg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=SUuhM0LX; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="SUuhM0LX"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=KLhtHvb1s/9tH7HpqReOcJSjDSF0xJJWIHODkvRmQSs=; b=SUuhM0LXxdDaTZV5y2KFco13v7
+	GcGpqg1dyoLAJOOAkbISZyUK/xQVbEpAHR8TCCqilfA5kYKvZI6fT0JDPuWuXGafDjZByyewaa0g8
+	ha8Mr9qQpeAaRj5+gqVG+3xSSSSGGaqcTf3ZQP2+4l/xC1Be8FXc7j3YuEaRiW239P41jkG05TIQJ
+	zoQqlmm9YHo1ld2WDO2JZCnmFyHJu7phE6VL7rqv+W6ExW5PxBktN6K7xnedptf8w5zNASseNF2BE
+	T5masTDLmoQ3SiVFjH/l9o66/IGpfJRfW1MGHnTweQWVwvF21nNIZlHJUBf//oge+WFANcwy0/RQE
+	pFwCT9aw==;
+Received: from sslproxy08.your-server.de ([78.47.166.52])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1x3Yfg-00042g-0F;
+	Mon, 07 Sep 2026 14:42:00 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1x3Yff-000Iux-2n;
+	Mon, 07 Sep 2026 14:41:59 +0200
+Message-ID: <e78da738-2788-45b1-b76f-5fc82794ee4e@iogearbox.net>
+Date: Mon, 7 Sep 2026 14:41:59 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] can: rcar_canfd: Do not set registers selecting
- the CAN mode
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH bpf 1/2] bpf: Fix bpf_skb_change_tail wrt csum partial
+ skbs
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org,
- Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
- Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol
- <mailhol@kernel.org>, wsa+renesas@sang-engineering.com,
- devicetree@vger.kernel.org, Oliver Hartkopp <socketcan@hartkopp.net>
-References: <20260902141544.565763-1-claudiu.beznea+renesas@tuxon.dev>
- <20260902141544.565763-5-claudiu.beznea+renesas@tuxon.dev>
- <20260902142912.97F9A1F000E9@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260907121025.1923656-1-daniel@iogearbox.net>
+ <20260907122414.95F7F1F00ACF@smtp.kernel.org>
 Content-Language: en-US
-From: Claudiu Beznea <claudiu.beznea+renesas@tuxon.dev>
-In-Reply-To: <20260902142912.97F9A1F000E9@smtp.kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260907122414.95F7F1F00ACF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28116/Mon Sep  7 08:24:32 2026)
 
-
-
-On 9/2/26 17:29, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Software state diverges from fixed hardware capabilities due to unvalidated device tree overrides, causing silent data corruption and CAN protocol violations.
+On 9/7/26 2:24 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Race condition on write-0-to-clear status register causes lost TX completion interrupts and permanently frozen TX queues.
-> --
-> 
-> commit f5c5dd93cfcd4bdec86a8b0c4bc20cba21d7f4dc
-> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> 
-> can: rcar_canfd: Do not set registers selecting the CAN mode
-> 
-> This commit adds a fixed_canfd flag to struct rcar_canfd_hw_info to handle
-> hardware like the Renesas RZ/G3S SoC that only supports CAN-FD mode. It skips
-> writing to unavailable CAN mode configuration bits during the reset controller
-> sequence.
-> 
-> Link: https://lore.kernel.org/all/1d9719e3-10ff-4cd8-b729-55fea93c37ce@wanadoo.fr
-> 
->> diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
->> index 2e84dc5dfa34d..bed7cde1aa01b 100644
->> --- a/drivers/net/can/rcar/rcar_canfd.c
->> +++ b/drivers/net/can/rcar/rcar_canfd.c
-> 
-> [ ... ]
-> 
->> @@ -846,6 +852,9 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
->>   		}
->>   
->>   		/* Set the controller into appropriate mode */
->> +		if (gpriv->info->fixed_canfd)
->> +			continue;
->> +
-> 
-> [Severity: High]
-> Does bypassing the hardware mode setup here create a state mismatch if
-> the software interface is forced into Classical CAN mode?
-> 
-> If the device tree contains the "renesas,no-can-fd" property, the probe
-> function sets fdmode = false in rcar_canfd_probe():
-
-It is the same thing here. The "renesas-no-can-fd" was forbidden for RZ/G3S.
-
+> - [High] The checksum field space check in `bpf_skb_trim_rcsum()` assumes a 2-byte checksum (`sizeof(__sum16)`), but SCTP checksum offloads (`skb->csum_not_inet == 1`) require a 4-byte CRC32c. This allows BPF programs to trim SCTP packets such that only the first 2 bytes of the checksum field remain. The hardware will then attempt to process a 4-byte checksum, causing an out-of-bounds access.
+yeap, unrelated, and I'm not sure anyone has used it in combo with sctp
