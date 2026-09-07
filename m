@@ -1,245 +1,105 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038DB43BDB4
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 10:23:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534E04477FA
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 10:25:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788776598; cv=none; b=nJQ/YYqWZ+nvKGDo0gSsVODyTZzWmSKSJSvvwurkDZNY6g3vNLLUh9em4liziG2dsTXeAZJcbSvo8xiK+aiUq/12koM4wEyeMREyHCJhSJZKMTdbQdUF8VIBVPJXLrAer6Vh2Nk0I/KoZRU1Ca3sIDE3FB/MoKkr3G8mxZo17do=
+	t=1788776753; cv=none; b=Lc2HJpfeyo9Rqx8LdB9S5XrojzgdQXrF3GblYeyLJkCY/8APiWd2AP08Euxwk9ZEk2JjPF+/Cy8q97OyDPKrITuoNxYUFsOc3R2jE/ejI6rZhJbPCXabKsl4dRWaBS/QoKJtncLZk3E9D38F3bXc3vgQbRmhWDsHJLIfRLI33wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788776598; c=relaxed/simple;
-	bh=GjElOHGjjEP0wkXBEKPTrjP4jR20YlkR3af8X11tn4A=;
+	s=arc-20240116; t=1788776753; c=relaxed/simple;
+	bh=odSsB/u5yBK0p7NUXbxRT6g1aXnxRYVHZujTKirCCxo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YweHPT/titH1OwoYN5EGuUYbk4FYjgyVDEkSxt/tsqTAOZg4C4kwdQwEa7o6+f2LW5qkIPnLvcN5eu/u0HJ9tmUXc57+coo+e1nzBZax7sONBFF8WdO2LDxdlS1pA7Yn+vbrfXq4echog0ugnhb31qgtzsnfAhb4CeRpvFNAAGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=doHqbRv4; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 In-Reply-To:Content-Type:Content-Disposition; b=m4AqODFGe3it8P40RgAPSA3Ipd9FF8DPSZGfOOh3c5Iz0IxKsNW7HX2xv5xcXfKA3GHGwjsTCdsCZiMCpCOTmDE59QO7CsDDTUI15NB37nkRCx/7EVnpNzo7xTJFHBUGtOnstSnBuGc82fur+lUXqhQMJ+3USXTgfbLwebTnM6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=K7XKJepA; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="doHqbRv4"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c2637dd37c1so191242366b.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 03:23:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788776595; x=1789381395; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bS1Xhtw50wNcRogCfMLw1Iql2rPD2ohrSvtL4dTfgo8=;
-        b=doHqbRv4zhlslzAuoCnPFDA7r2SX1ffK1SwUsxNXpWXtMQSA80dpwcuCfriSqhgwUf
-         LwkSAz69CxAlFBLUkoVM2rsnr8QbsNQyptjCcImQvm0OUOOSiDvINQYDwRmflUTbGOTA
-         2FII/JKh5oYTahrfSClXVrf6y0RrQj/DWuEO71ByzWWiR0TZwyxHlKksFFgT1km1Z5Eb
-         tofO1yuI9Bf16pKhmL8ud67vPhpUhe1AJQweqArCkB72bqFyVeJakUzdYu457uyI+2tw
-         1ZtyYIPU84dHpHbEj1a97ecS6leHd6D+GJ6loXBPTsLNgxcD4pbJMDthGTEbgi95LBYy
-         TJEg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="K7XKJepA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1788776751;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RojMlcyBo8KXKoX/Gtly8ZtzkjtceoUdIGXGbeR2hGw=;
+	b=K7XKJepACoVAIu1jiUMiWOd4cdtC1eGk1hcQnrLwiFU/ThC3sq5jGIhai1t61WjqdOYEm1
+	13yCUtVD0Gs1676LeDJ3Vi04j/uzodt/cnlL4OaCTL7tOlSYcusvHGpJLP5Xr4VtA48/35
+	3Tksllc/3uJxSeQ0d0cgFBGMRDccGFU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-ybGxq_8fN1mJ52xWlqGK4A-1; Mon, 07 Sep 2026 06:25:50 -0400
+X-MC-Unique: ybGxq_8fN1mJ52xWlqGK4A-1
+X-Mimecast-MFC-AGG-ID: ybGxq_8fN1mJ52xWlqGK4A_1788776749
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-495529a93f9so33060835e9.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 03:25:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788776595; x=1789381395;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=bS1Xhtw50wNcRogCfMLw1Iql2rPD2ohrSvtL4dTfgo8=;
-        b=k1KDa0FS1wQ58+L9XknscpYAskOoSsuwuXj95DWCz07k97MFJRmNPbw4h4k6j3aHci
-         5m3sOUkQDVLpljKop/ndwI+GOoZTA7IiVsMsItdDAlVnD4jKz25QWgCaWxJGnWvIhX9i
-         qW/dVH+GJO0NDLhpFsFBmofy2Bc9GcviG+U2+cVSE4HtnqE7V7jZ1LqG3nG3MqOkV+2r
-         mAZe8KZgujJ6g8EpKthUqR4P27AXymrFj1T+GgPLIgAE+Gyv4gshfksTNqNqOkq3impv
-         CA7BfHYy7we+6kyh8cudiclU+N9gIXckq0WebUJzmzzZVv/QTR0oKa3yIFDR/aM1cgaS
-         bM6g==
-X-Gm-Message-State: AFuF++ntOYhWra3ANNQjF09j2klA9QlDkOgER6gyRZuOPK2WehinrYFL
-	5vx94tT/vBB4EYZWwk0ySLdM4yOnr8RPyKlkAh9aRA9MFxgnL6OWn+Lo7rG+R3aLjk7QEuZhiXA
-	4J14Caw==
-X-Gm-Gg: AYBFou2ADDo3fBmKDdVHjtp09IPa1yQdOwx5ocXV6i/hRpKGeHs9kt0AnFaMmdY45te
-	UJu7yq+LxiNKsW+7/4+kaxud3eAJegkBbBQ5vErBh1fnqx6jlI13LUvObmggZRnszXHv4MD+hw0
-	pNA+zYTP+wv5GjKxv5bxCnP88n3kC4FS+cqFhvbRQeC/GlsPfolAb27yRFN3OkRjHGjlj/txaEk
-	Gfuj3xria4ZXl/uyMHnLKfyuYnrD2YWaTGUSnuPmKtGh+guzUDVPFaJWu4NR0MZ9prCFQHWaSCl
-	Thrb7vuceIFB5825WBlQa37mrsMwqvlQheq78g6g+PS0kV1qjppNQKZcld5DZ42XBcyoQoWJLji
-	vNyKvHb+7tWuCLw7DfCdAqyplThkDg0RAFxQh+TeLws+G5P/0h0LZrknbTfkw+vRN+soPa2psug
-	kQwvXPALEn3n5E5sTY5Bk7lDxIMSpyUVXAreb2GnPotO1mwywz9bbt5s4ymY0vwOC6Hd79NB0sZ
-	0Odrh8ZBLwSMsYNN0cp2QDePQvGLJbZ
-X-Received: by 2002:a17:907:d18:b0:c25:4cff:5d01 with SMTP id a640c23a62f3a-c260c9f4a3bmr789619966b.18.1788776594247;
-        Mon, 07 Sep 2026 03:23:14 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c260d036440sm449932666b.5.2026.09.07.03.23.13
+        d=1e100.net; s=20251104; t=1788776749; x=1789381549;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RojMlcyBo8KXKoX/Gtly8ZtzkjtceoUdIGXGbeR2hGw=;
+        b=YTDPz5Qxpy+eAZZ0TCtmGq6Jcrnd9S8LIPFCr4Y30MzYq/yxjsvbE7znzC83fxek59
+         WogNIyqM251K51XoU9s/U1L5me/+RYANuCJYj8vC882z7fX3dyCrbxfc63Dha8wdVHIk
+         70/0uU5548SvNN46/y5KKXOPnvMHMU0aXi43sWOlITjf9J1y1+2JNa/8lUyvxUxIE38L
+         GKLLfL5psVTMlaiQ+nE5VeRIt1560gR4PuH9twkwmCfeX+6LwZjYRbC7XnrMpxg6RH+C
+         z7eSwC73dGksBl90TvglNIlc7EM0JfEtquPBKFWg6FTaNNFeJF1e9H/VVeHp1mItIy5X
+         vt2g==
+X-Gm-Message-State: AFuF++kWzzl8gkn3PuCP5HhIU4eyMYVzDtcqFlc47PiFQQzI7gqlP2CM
+	KYqlbDZbsx4nnWzNnN77JVOEipvWxnI5qkSGaLuvnv2+pMd+bWsc1GwhqrACc+z5NveW0pwb4uw
+	ZBHft1v4obXYbfWUvkvAXtonp6XhGRFkCHnKkb/u/rqKv/W1hwHaY9xXUlXKvVRL61weGaw==
+X-Gm-Gg: AYBFou3h7qMq9KiCCab4Hy9ZOH31npAQUhw6pevr8TEsoDOiSW8TnKT1cgGVQg8iMbX
+	4JRswM952KKJKWYEQbLXSAfEZ9s6tgz1Yj4Wt7ppQkvo3B2tAdkuSJ3Y2xYCmsbaG6zwpU3usrR
+	WrOsqv89i6o+CyvyeHn26aRqaeyJjyOjqwoOdXJyUq9PXyw4QhEjej0XTRsP3SFPNjbeA65VR6b
+	9drWj2J4YkD+WsiYpS/nHl8glXwM15ZF47GMY866nPTSxTiVsXlIJ1Gl/pDZe8Z3nbel0Vtq1Ae
+	48mttnZfbBJqqlyqTBS0fixPcchk4F47W24PwLJPkwoIhsZFbGFQle6bZVs3hIiStkAhfb7suqR
+	sHLxvbWBobaI9uSWXdAxerFI=
+X-Received: by 2002:a05:600c:4e49:b0:49c:fa20:cc05 with SMTP id 5b1f17b1804b1-49cfa20ccd2mr198545445e9.28.1788776748835;
+        Mon, 07 Sep 2026 03:25:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e49:b0:49c:fa20:cc05 with SMTP id 5b1f17b1804b1-49cfa20ccd2mr198544945e9.28.1788776748301;
+        Mon, 07 Sep 2026 03:25:48 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf7703cefsm407611205e9.5.2026.09.07.03.25.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Sep 2026 03:23:13 -0700 (PDT)
-Date: Mon, 7 Sep 2026 11:23:10 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 18/20] KVM: arm64: Add PKVM_HYP_REQ_SPLIT
-Message-ID: <ap6QjjJxysWVYCVM@google.com>
-References: <20260803100904.3563942-1-vdonnefort@google.com>
- <20260803100904.3563942-19-vdonnefort@google.com>
- <20260803105411.B6ACE1F000E9@smtp.kernel.org>
+        Mon, 07 Sep 2026 03:25:47 -0700 (PDT)
+Date: Mon, 7 Sep 2026 06:25:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	virtualization@lists.linux-foundation.org, ksummit@lists.linux.dev
+Subject: Re: How is sashiko bot deciding whom to Cc?
+Message-ID: <20260907062516-mutt-send-email-mst@kernel.org>
+References: <20260907055646-mutt-send-email-mst@kernel.org>
+ <ap6Nwf94aq2dk3WD@ninjato>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+In-Reply-To: <ap6Nwf94aq2dk3WD@ninjato>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Qu9e-Oi-6hKi2Oca6vo5bNhXqcgP5FRYWIw9374k2uM_1788776749
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260803105411.B6ACE1F000E9@smtp.kernel.org>
 
-On Mon, Aug 03, 2026 at 10:54:11AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [Critical] Time-of-Check to Time-of-Use (TOCTOU) race in `__pkvm_pgtable_stage2_split` due to missing MMU notifier retry protocol.
-> - [Critical] Using `pin_user_pages()` introduces a `FOLL_PIN` counting bias that causes massive memory leaks during KVM teardown.
-> - [High] Memory cgroup accounting bypass when allocating spare `pkvm_mapping` structures.
-> - [Medium] Splitting read-only guest mappings is incorrectly forbidden by requiring write access.
-> - [Low] `__pkvm_pgtable_stage2_split()` mixes `goto`-based error handling with scope-based `__free(kfree)` cleanup.
-> --
+On Mon, Sep 07, 2026 at 12:11:17PM +0200, Wolfram Sang wrote:
 > 
-> --- Patch [18]: [PATCH 18/20] KVM: arm64: Add PKVM_HYP_REQ_SPLIT ---
-> commit eb20478193ba08806cd19923ba4b65163db37c40
-> Author: Vincent Donnefort <vdonnefort@google.com>
+> > So it picked some mailing lists but not others, and some specific people.
+> > 
+> > Is that opt-in somehow? I'll be happy to get Cc'd on the auto-review email.
 > 
-> KVM: arm64: Add PKVM_HYP_REQ_SPLIT
+> To get me CCed with Renesas specific topics I sent a PR to modify this
+> file:
 > 
-> This commit introduces a new pKVM hypervisor request, PKVM_HYP_REQ_SPLIT,
-> enabling the hypervisor to request the host to split stage-2 huge mappings.
-> This ensures synchronous splitting of both the guest stage-2 page tables
-> and the host's pkvm_mappings red-black tree, preventing concurrent
-> teardowns from observing inconsistent page sizes.
+> https://github.com/sashiko-dev/sashiko/blob/main/sashiko.dev/email_policy.toml
 > 
-> > diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
-> > index 379bdc2b258a6..089b77cf2f6a9 100644
-> > --- a/arch/arm64/kvm/pkvm.c
-> > +++ b/arch/arm64/kvm/pkvm.c
-> 
-> [ ... ]
-> 
-> > +static int pkvm_mapping_alloc_spares(struct list_head *head, u64 nr_spares)
-> > +{
-> > +	struct pkvm_mapping *m;
-> > +
-> > +	while (nr_spares--) {
-> > +		m = kzalloc_obj(*m);
-> 
-> [Severity: High]
-> Does this bypass memory cgroup limits?
-> 
-> This allocation uses kzalloc_obj() which defaults to GFP_KERNEL without
-> the __GFP_ACCOUNT flag.
-> 
-> Because each PMD split allocates 511 structures, a guest could repeatedly
-> trigger splits across its memory footprint.
-> 
-> Can this allow the guest to consume large amounts of uncharged host memory,
-> potentially leading to host memory exhaustion?
-> 
-> > +		if (!m) {
-> > +			pkvm_mapping_free_spares(head);
-> > +			return -ENOMEM;
-> > +		}
-> > +
-> > +		list_add(&m->list, head);
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> 
-> [ ... ]
-> 
-> > +static int __pkvm_pgtable_stage2_split(struct kvm_vcpu *vcpu, phys_addr_t ipa, u64 size)
-> > +{
-> > +	struct kvm_hyp_memcache *mc = &vcpu->arch.pkvm_memcache;
-> > +	struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> > +	struct page **pages __free(kfree) = NULL;
-> 
-> [Severity: Low]
-> Is it safe to mix scope-based cleanup with goto error handling in this
-> function?
-> 
-> The pages array is declared with __free(kfree), but the function uses goto
-> labels like goto unlock_srcu and goto unlock_mmu for unwinding locks and
-> freeing the spares list.
-> 
-> The kernel cleanup guidelines note that functions should use either
-> scope-based cleanup for all resources or goto labels for all resources,
-> but not mix them, as it creates confusing ownership semantics.
-> 
-> > +	struct mm_struct *mm = current->mm;
-> > +	struct kvm_memory_slot *memslot;
-> 
-> [ ... ]
-> 
-> > +	idx = srcu_read_lock(&kvm->srcu);
-> > +	memslot = gfn_to_memslot(kvm, gfn);
-> > +	hva = gfn_to_hva_memslot_prot(memslot, gfn, &writable);
-> > +	if (kvm_is_error_hva(hva) || !writable) {
-> 
-> [Severity: Medium]
-> Should read-only mappings be allowed to split?
-> 
-> This explicitly checks that the memslot is writable and fails with -EFAULT
-> otherwise. It also passes FOLL_WRITE to pin_user_pages() later on.
-> 
-> However, splitting a huge page block into smaller PTEs changes the mapping
-> granularity without modifying the underlying memory contents.
-> 
-> Does requiring write access prevent the hypervisor from splitting read-only
-> stage-2 block mappings, such as guest ROMs?
-> 
-> > +		ret = -EFAULT;
-> > +		goto unlock_srcu;
-> > +	}
-> > +
-> > +	mmap_read_lock(mm);
-> > +	ret = pin_user_pages(hva, nr_pages, FOLL_HWPOISON | FOLL_LONGTERM | FOLL_WRITE, pages);
-> 
-> [Severity: Critical]
-> Does using pin_user_pages() here cause a permanent memory leak during KVM
-> teardown?
-> 
-> Calling pin_user_pages() adds a GUP_PIN_COUNTING_BIAS to the page refcount.
-> However, normal KVM stage-2 teardown drops references using standard
-> put_page() semantics which only subtracts one from the refcount.
-> 
-> When the VM is destroyed, will these tail pages retain phantom references
-> and be permanently leaked?
-> 
-> > +	mmap_read_unlock(mm);
-> > +	if (ret != nr_pages) {
-> > +		if (ret > 0)
-> > +			unpin_user_pages(pages, ret);
-> > +		ret = -EFAULT;
-> > +		goto unlock_srcu;
-> > +	}
-> > +
-> > +	write_lock(&kvm->mmu_lock);
-> > +	mapping = pkvm_mapping_iter_first(&pgt->pkvm_mappings, ipa, ipa + size - 1);
-> 
-> [Severity: Critical]
-> Is there a Time-of-Check to Time-of-Use race here since the MMU
-> notifier retry protocol is missing?
-> 
-> The resolution of the HVA to PFNs via pin_user_pages() happens outside
-> kvm->mmu_lock. A concurrent host MMU invalidation could unmap the region
-> and remove the pkvm_mapping, and a subsequent guest fault could establish
-> a new huge page mapping at the same IPA.
 
-This is called on the back of a hypervisor request. This is only for
-protected-VM and we do have an existing pin on the huge-page, preventing
-any unmap. 
-
-We do not use MMU notifier for protected VMs.
+Got it, thanks! Sent a PR.
 
 -- 
-Vincent
+MST
 
-> 
-> When this thread acquires kvm->mmu_lock, it finds the new mapping in the
-> tree and proceeds to split it using the PFNs derived from the old mapping.
-> 
-> Without capturing kvm->mmu_invalidate_seq before GUP and checking
-> mmu_invalidate_retry() under the lock, can this lead to a refcount
-> underflow on the new huge page and a permanent leak of the old pages?
-> 
-> > +	if (!pkvm_mapping_can_split(mapping)) {
-> > +		ret = -EINVAL;
-> > +		goto unlock_mmu;
-> > +	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260803100904.3563942-1-vdonnefort@google.com?part=18
