@@ -1,45 +1,45 @@
-Received: from mail-43171.protonmail.ch (mail-43171.protonmail.ch [185.70.43.171])
+Received: from mail-244106.protonmail.ch (mail-244106.protonmail.ch [109.224.244.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280AB5013AA
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 15:07:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FA74F797B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 15:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788793645; cv=none; b=KBhQQtH7gsZPZsHw7cLfyGRsGRceWODbkZ8aX/JAqkpGmDpxo4CdWN303UglfGf3LipwQq0AH8F47/fV/6b1do7HIN2CpM3rmjZGbXW5aszw/twFDSTguHXVZLCtgHf84FZ9ZT574lRJEyB3J/hVYKpl/5Fv2Q15KBTFZ8FWNZ8=
+	t=1788793729; cv=none; b=qELPchKmkxc8E/W70vvQPanSu21SFZZDZ40iyY1PR5gFPqx9uj4yW7yRUDDovI/sobO6ur/RclhI90Rwk+1yMaepCuIpyRDtVlqk2lTTSB5fUcL4kk+Y/hDESi4g/J84OC9LkzcTBgW6/ON6uI+/K7WvIdFdk52zNUm9vsRcfSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788793645; c=relaxed/simple;
-	bh=fKiADCW3e5NsQfk6SSogw7jdf8+Ro6dsTVQG9yWo4sk=;
+	s=arc-20240116; t=1788793729; c=relaxed/simple;
+	bh=5ADR4z8UwjRbvLyKpJ1+r1liZ/NBIpSDg++0136zqcM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F/OE7Cfibfn5TVMQzRTKb/nft2zUqF7oNtcXCPuRbazhJuYYZ8dBmX16Ss4yJaKVN8tWg7GT5TiKKWDeX3OESdeAe3oq/aP4gr35aJWWbk7YFNNauwhazs787lUopTvADpg9BglUwFr/+zy4swiKuZVsr6Oa9f6vSQDejwpH3ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=e8UcM+kH; arc=none smtp.client-ip=185.70.43.171
+	 MIME-Version:Content-Type; b=nZtgP7aRlBnvx94nZhcMx4qZC4YZJ0058bYbRqXd5iHmV577rzzmeVrAo+Q2+qBPnjYy633DfFtwDnQwqXPOMWg6Ui6drE78q6xHQpmexNQRRlmCzu8DEuxMR76esXC8eChljm4znK5PN/YXsXNs2ouL77XhsNXFvVPkAVFyB3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=aVV6pgEC; arc=none smtp.client-ip=109.224.244.106
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="e8UcM+kH"
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="aVV6pgEC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1788793642; x=1789052842;
-	bh=fKiADCW3e5NsQfk6SSogw7jdf8+Ro6dsTVQG9yWo4sk=;
+	s=protonmail; t=1788793725; x=1789052925;
+	bh=5ADR4z8UwjRbvLyKpJ1+r1liZ/NBIpSDg++0136zqcM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
 	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=e8UcM+kHLAH7ZV+8XckPjDdHGW15iEqjUQ0NPjPdhw6nkXAtxgnTDVtRl9mntYfme
-	 llMZtPJSCoaQdQzaN8qPGl/+EIKiDBP/MmEF5YluAzFrsptM4V5OSFGnv3ccIZIQT1
-	 aHReCnzG3w6/Z42GWpbWM0eFa3pbITjIoMyLe0e04lpITT5FRrJo3h+bDzJ0dkk+s+
-	 WQ38sSOtlJq+Fp6OEMskS7akiQOmx/B9dGq3YH113UnwSh87k4NVTfB6U3dEfXgMjs
-	 1E43bAh3meB5+Ga6rODx7PVIzI0bH0LeCIkJc2p54VXXgEr5lCvj4Qd782enWifSNo
-	 usGZpSLyq1LVg==
-X-Pm-Submission-Id: 4hdr5h3NSNz2Sd4k
+	b=aVV6pgEC3tE39N4OErX5+krKGG9589Nzay83pK2ptJYpfq0b5VWoap2MDeF0nLP/E
+	 ZK0W0piJKk3/7h0Oda/H2bwbwRGvYrM82KVDMkA9KEfIsYE4XmOPPEVP/PJTKNMXds
+	 Bm9djdSCAAY8xuuAntkZM2vQ6DORxadnIVFfJmqEbWII/hC22jWG0aUARG98XBqfvE
+	 x/W+YW3NmHapbBSzgnGK8ovMAdrJ76TNaRN8fECH8CvFS7cmLMB5zw0+2g+gN6Q3Uk
+	 fDuNLuQ/9RhMJnEZ3sIuJVXYZBSoR7arabSRT7s9+2c6BZWE7fvWgHTJ1l5O2CbcD9
+	 E9v66dbUYm5dg==
+X-Pm-Submission-Id: 4hdr7H5V5qz1DFSL
 From: Esben Haabendal <esben@geanix.com>
 To: <sashiko-reviews@lists.linux.dev>
-Cc: <robh@kernel.org>,  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v8 6/9] iio: accel: mma8452: Add comment block for
- struct mma8452_data
-In-Reply-To: <20260907145807.4E6121F00A3A@smtp.kernel.org>
+Cc: <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>,  <robh@kernel.org>
+Subject: Re: [PATCH v8 2/9] iio: accel: mma8452: Fix use-after-free bug in
+ error error path
+In-Reply-To: <20260907150439.CCE271F00ACA@smtp.kernel.org>
 References: <20260907-mma8452-open-drain-v8-0-c17407e22118@geanix.com>
-	<20260907-mma8452-open-drain-v8-6-c17407e22118@geanix.com>
-	<SatYW3t5UItEjpuLWqt40OiPSkRC0JpBAcEBiiywzDmeTj1I0uUglPi7uVWyJmlLxCznDom94fKG0c7sd1ZyaQ==@protonmail.internalid>
-	<20260907145807.4E6121F00A3A@smtp.kernel.org>
-Date: Mon, 07 Sep 2026 17:07:19 +0200
-Message-ID: <874ig19k2g.fsf@geanix.com>
+	<20260907-mma8452-open-drain-v8-2-c17407e22118@geanix.com>
+	<-EVoZXXwgVeWsL7YKJVpWG-I7MBt1Rb-T2FKbt9_Z57kVHlgFqMZjeW-eAaiwqE-JX-euCRDHFW_HK-As_hzXA==@protonmail.internalid>
+	<20260907150439.CCE271F00ACA@smtp.kernel.org>
+Date: Mon, 07 Sep 2026 17:08:43 +0200
+Message-ID: <87wlsx85fo.fsf@geanix.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -51,14 +51,17 @@ Content-Type: text/plain
 
 <sashiko-bot@kernel.org> writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The newly added kernel-doc block for `struct mma8452_data` documents
-> non-existent fields (`@vdd_reg` and `@vddio_reg`) and omits the existing field
-> `regs`, leading to kernel-doc validation warnings.
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Missing runtime PM synchronization in mma8452_remove() leads to unbalanced regulator disables and I2C access on unpowered hardware.
+> - [High] AB-BA deadlock between data->lock and PM runtime suspend
+> - [High] PM runtime usage count leak on I2C read/write error paths.
+> - [Medium] Missing device standby transition in the probe error path leads to a power leak.
+> - [Medium] Unsafe hardware access during probe due to lack of runtime PM reference.
+> - [Low] The driver unconditionally assigns its dev_pm_ops structure to the driver.pm pointer without using the pm_ptr() macro.
 
-Argh, I missed that when rebasing from v7.3-rc1 to the togreg branch.
-
-I will fix it for next version. So much for hoping this was the version
-that actually got merged.
+I believe all of this should be addressed in the next series I will send
+with changes to this driver. I will not be adding them to this series.
 
 /Esben
