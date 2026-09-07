@@ -1,92 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4499146AF10;
-	Mon,  7 Sep 2026 10:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F394646D548;
+	Mon,  7 Sep 2026 11:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788778789; cv=none; b=Nv2cierpT8XNY2t4QVlHkfchHLrvajltxfOMEz0oCbIdCgu0yTs/Uahwn1jDyZM3qnO+MoNjcPr/JGkk2DTpfHvKc/IXQF8+CvOOOMv/HENUNu6FV9FY2IYlgn4YtYPdLBzTRyxCsRdsqUwHunXHH5GoaAzCSTODe7/N+d1rxj0=
+	t=1788780361; cv=none; b=C4P/BwRPRECSE3dOmaLQvN4RyrNgI3wRCciymccZDY+P9ZVLe5mhTBmrjGoP90j3q/YnfSbhHIAkbtc+Z5F4HVB+ctwiT61LTiotXJuuKMEydWXOOfuAJ2NadIBdjz2fRgoVmF50O6xDGTGQ0ebiGbncfmZjOa+U/+8fGv8O00E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788778789; c=relaxed/simple;
-	bh=BL0AoMpVklCIRt59TB9o8/bj+tQ2HL6ifIgvPUbeaQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=inXoibrFhvuKx4aruOQUuF4RRiiGI3A2wbnPXZHFJpL8RpTlPlHfvWgZzY8jUWohj1JM35UWJeGnYJdQjB/E72/hurap2NxwKl1lZj6J7OW7hZCPNtWzznbNhzLaiVn2KF9PbkdTwSKKVWdCvnXgTE4h3OG7nSrsMYJEC77YZxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bQLPF7Ac; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788780361; c=relaxed/simple;
+	bh=ZEMTfsctivsx9BHRCYbwUHlg/kjfE3N0XMnAg1ydWd8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OaTM2yxP7IK7F0j64Nj8e8OC9zo1oaOBN4zuuF0rnhJV5TE1X0ilJs+20Tj07M0I7sKBnPr5m6qsdMwXoth63YjZ1hEKdjGJfccoHBME1uCKCPPVU7KSkTjWCWXPWH2pAwwh9H8ukcpiDynBaFonAkvajfYyDXT+kRSeh+ZkjKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JONHbwGz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQLPF7Ac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D121A1F00A3A;
-	Mon,  7 Sep 2026 10:59:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JONHbwGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E701F00A3A;
+	Mon,  7 Sep 2026 11:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788778787;
-	bh=q+doeYPqSHwTV6GWhVKw0/CQpUhwLuuwacGXzuEjLCE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bQLPF7AcDemfWBqPoPCRAE99PgrjkUWkwXaNvg/04tZqnwjKw5f3Wm+GA8boCFWjE
-	 uttV8eDDpZpALucM8dnWE9vk7T75QMe9+TPjYqoAfa5GLoX7Cn2UCe2QveWxn0D8X4
-	 vUcGqG0ORG3tAtphU7U7j7gN8daGb9PnqYUUETeXZMw9eOkcW20j+avg5iBW6y9XV2
-	 2G9G4Y6G1FDWzjYgcM4TdeeexmUL/xaN9gC9Kh6sD0bBqZjAi5MCxImE/phTWSV7ds
-	 NPydyjaIifX6Q+z7vyX0X5FzKnV/SIceSw99im+sdZvja5aKB4TXpEpuKF7PL0Pi+e
-	 kQd7w/haK/FTg==
-Date: Mon, 7 Sep 2026 13:59:42 +0300
-From: Mike Rapoport <rppt@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	linux-s390@vger.kernel.org
-Subject: Re: [PATCH 06/13] s390/cmf: Use kmalloc() for the CMB area
-Message-ID: <ap6ZHlAPE_txA0ou@kernel.org>
-References: <20260907-s390-cio-ready-v1-0-ca7f39806234@kernel.org>
- <20260907-s390-cio-ready-v1-6-ca7f39806234@kernel.org>
- <20260907103540.250761F00A3A@smtp.kernel.org>
+	s=k20260515; t=1788780359;
+	bh=ZEMTfsctivsx9BHRCYbwUHlg/kjfE3N0XMnAg1ydWd8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=JONHbwGzEgBO2d9t1tO0hOs5IgjRNPjfL33DruxCD9W8uZikJtZnR7p4kQP/5WccE
+	 lKFfU419a9phXjfEW/63+8ae8SkjXdSZau0NOnUnIW4HcnaYYCuPvMlu85BwP85baU
+	 xMJO5oP0dZomWEh4HpwLkj9b07haWDYl1I0i6XYqjBIOHhe1Fdfqlf4wqebyHdaQWv
+	 PjXWOPXDoBbdDMKd6/x8DyDQSv7Qtut8X2H18n8wiuxJGWLSX93j1+KNh5YD69ByEq
+	 8DyHULbM1585VQL4QDN9pTcAqsCqxBU0X3WiIUHWeMSuLRQaSa4PMTrA6jeGrRVj2B
+	 PdzQWMz1T3Wlw==
+Message-ID: <22ef726e-d89b-4f02-91d9-6d42f9cf2bbc@kernel.org>
+Date: Mon, 7 Sep 2026 13:25:55 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260907103540.250761F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: How is sashiko bot deciding whom to Cc?
+Content-Language: fr
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ virtualization@lists.linux-foundation.org, ksummit@lists.linux.dev
+References: <20260907055646-mutt-send-email-mst@kernel.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260907055646-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 07, 2026 at 10:35:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Integer overflow to zero-size allocation causing lowcore memory corruption.
-> --
-> 
-> commit 2913241109f97628467377f13982dfc657e8d846
-> Author: Mike Rapoport (Microsoft) <rppt@kernel.org>
-> 
-> s390/cmf: Use kmalloc() for the CMB area
-> 
-> This commit replaces __get_free_pages() with kmalloc() for allocating
-> the channel measurement block area, and updates the free path to use
-> kfree().
-> 
-> Link: https://lore.kernel.org/all/635405e4-9423-4a25-a6e7-e03c8ea0bcbe@redhat.com
-> 
-> > diff --git a/drivers/s390/cio/cmf.c b/drivers/s390/cio/cmf.c
-> > index 92ab3d546fe47..6c46b0d0b3da4 100644
-> > --- a/drivers/s390/cio/cmf.c
-> > +++ b/drivers/s390/cio/cmf.c
-> > @@ -501,12 +501,12 @@ static int alloc_cmb(struct ccw_device *cdev)
-> >  		WARN_ON(!list_empty(&cmb_area.list));
-> >  
-> >  		spin_unlock(&cmb_area.lock);
-> > -		mem = (void *)__get_free_pages(GFP_KERNEL, get_order(size));
-> > +		mem = kmalloc(PAGE_SIZE << get_order(size), GFP_KERNEL);
-> 
-> [Severity: Critical]
-> If size evaluates to 0 (for example, if the maxchannels module parameter
-> is configured to 0 by the user), get_order(0) underflows and returns 52 on
-> 64-bit s390x.
+Hello,
 
-I missed that one while reviewing automated conversion. It should be
+On 07/09/2026 12:03, Michael S. Tsirkin wrote:
+> There doesn't seem to be a Sashiko list, so I added ksummit as the most
+> likely one to catch attention.
 
-	mem = kmalloc(PAGE_ALIGN(size), GFP_KERNEL);
- 
-> The allocation size expression PAGE_SIZE << 52 evaluates to
-> (1UL << 12) << 52, which wraps around modulo 64 and evaluates to exactly 0.
+Just in case, there is a Sashiko ML: sashiko@lists.linux.dev
 
--- 
-Sincerely yours,
-Mike.
+https://subspace.kernel.org/lists.linux.dev.html
+
+Cheers,
+Matt
