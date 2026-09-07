@@ -1,236 +1,412 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11020129.outbound.protection.outlook.com [52.101.85.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09A52D592D
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 19:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BE9509F14
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 19:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.129
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788809452; cv=fail; b=HdSv7aATZyOd4r6YAKhyjXTWdPLlcxirIy8e71q+MxY9SccOpWqGPLCJNE+U6kUUonG9+z7aYykBU55NXX/+YVlOhsQDx24tyMKU8mHTHgdHFO9zBi697rIIhcQ+9VVgH9bJbJ0dluFJXslrpkFjJ2c0C3hef401xYnydl7u3ts=
+	t=1788809627; cv=fail; b=EloPCzvkj3KXtL9II8sUR2MznQAfAEyPmBTyDqkIypzT+rzKJXxYAC8NhK9sjTHPntaWVJ6kVNfSLctYTbAWe1dNuv3dkruX7cyesP7xzhtG03It8pHUx4YfW9raCj7+7300EkheA7TM1BFA7+Doj+hJVQphWTLP1h7Nv2iSiu8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788809452; c=relaxed/simple;
-	bh=eLmGpvnVegcMz1uO5flaOZtTqC7pb3ymVdxy+8e303s=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=KdwxyUr6z5WGfSc2/rNEqCW8+pHsCxjZh4kU6XCdIMMqku2MsBvfMHSMO1zKmtrwtmfQScHArQM6XKdNSYYe/1Nbmtc2GvHv5RBAUTj3FWHKYPk6cXQk9Q219b9oHxN5+Ft+1LZY1giFfaF5tKWNUNXliK9IAx5oqyFtBIXAFA0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=D5xcXSTH; arc=fail smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1788809627; c=relaxed/simple;
+	bh=91cHSu6zakWq/GgJunzzWhWbv9zYIOtUStQUDOSDk28=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=GLk32yRHFYRxFU7O1tDn1CTB2YauC8tTRnVHwMMtvI7p3JN7Fi766CeIIj1XR4Yi755D2jM+LD2LhRUFj1wPwCSw7opZQTvGMWJrnJSV485ZUnoKoT9NvmgW7/19xN3G9+xCVUV5W4/GIrmDJt5SbvCCXzmxDOcQbopnXLnzRNM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=hBr6+KVt; arc=fail smtp.client-ip=52.101.85.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="D5xcXSTH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788809451; x=1820345451;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=eLmGpvnVegcMz1uO5flaOZtTqC7pb3ymVdxy+8e303s=;
-  b=D5xcXSTHrC8+8kh9/fq3PizGofIZ4NvM37GvVuWFtG0Sn6ZskNYBmTlh
-   8JKhrmRnibtjUbdpFTL8l8gWIlr+xVSpOiVDpPbBsQ+yqGsKGe7nmBJEJ
-   Haoy4SutX80+YFtDySxrVDOGFCfWmOa8uhTQi7MosO3xgg+KWmV6QkWqg
-   ve4+SeJu7O4undBnvLFZ30D/u38bwL51RtE2Xnn9xQyaDsdRLO+Jg8SEK
-   mYQZFsi6Xes+MdTxmGKdRkZJfue9QEaaC7nLEuozfpisdk9ISIYOoVJ5x
-   9Cz7f0MUf2MSclGWpbAfgFwFKsiYwCA++0YQZVj/LBf8vXyuO936DZmzW
-   g==;
-X-CSE-ConnectionGUID: qtIxYXS0SNOqKBIM4wxMgw==
-X-CSE-MsgGUID: 5HSOI8J7TASfAJbjIEN5Ew==
-X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="106580775"
-X-IronPort-AV: E=Sophos;i="6.25,267,1779174000"; 
-   d="scan'208";a="106580775"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2026 12:30:50 -0700
-X-CSE-ConnectionGUID: zQGgESWJQJmP1bMzqISJ6g==
-X-CSE-MsgGUID: uZMBItv6Ty2be0KAbk2pAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,267,1779174000"; 
-   d="scan'208";a="274578495"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2026 12:30:50 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Mon, 7 Sep 2026 12:30:49 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Mon, 7 Sep 2026 12:30:49 -0700
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.14) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Mon, 7 Sep 2026 12:30:48 -0700
+	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="hBr6+KVt"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y4zN76++VU/YITmYfZCrepr0yMqEIqsTzr1QJHEgEZMdHyygr+SEHijbIvhINtnIPsSie9xrBf9a3KAtbHmaEhsZd7hLWukkoXB7jsuhA7njAYWGL7X/V8l4gNkwyyPnY/xBw707HHe0nklQXNJDCPNuOigKvmOSelQDI21f39b2G2bx9nGSkqGx6xL9ByP5IAHj1QC718v253Fj3RyMYlSMQwpFYdxmupRyHb8zUeno5olMP+C+xpJY5MaxCjb3adJU40iEGwZfYsG4mMOXkB+/hwzEFnDzxIQPb8njI63BFesgHVQH7Zje3n5dZIXK5nZcpIGs+pLZLaULUysJhA==
+ b=t6WQLIxSM4KWy1F0McgAWP9RChxYlUQ7i2NKhVA5PUYKPzsrT4Wt8GNigo3sYfWr9aqEBLaOp/USXEbKTWVURy54MoChmpLsgLSStF4nYkJysWJa4QfDlFqIwRKjAF/tmF0I9Mp6S8pPw0DVGUEnPxiMLxiGdAbkJS8PiwfGtI5A4lShTtry++T7Yvw9yza/ubK+ms3wB3EbUcVsKPJqke2kldhFXa154BHgdmaANngkTxud7Ft4R5hIr57DRKxcB5FguyG+JMij0EnkNry6WMq7Y2xwiyszYVeZO7NF65pGrflyj0AK0jIpatUB9PRiu2dPduwecaMiottXhmf7dQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e99gyT3IfnlSEawBljAuG7rlTbfb9Z6ClTbFvLAcS5w=;
- b=p5ZvkxtzZBaRzOWpPdlLkVpwgipR2r305El+kaBfHWhMSp3p5Y8hJXeBbainmaPQWBYACCPi6fINGbEyvYFNIyr7AJrhMPVtr60LpcnoyMkYJeaGADcbdsUGPzQBmRwVCAl+2GAyQ7wvNncsLs/CTnilbDzKKLWwV70Bd3u8FJJhfIsu49YidJJUIgdibmBKsA4OrGC9O1D5+NYViqPIF4fMwbhOb7yOkTzYnKEp3h00CLhKjQU3pVDZlw0mJsairsSwT29knVhqJhIQZOxWdpctuXJzGL2g/lYB2tPSBo6tC9Hdg6f/H2wGBMgaXnkqjl6ZASHGcIofmn9xx2DwyA==
+ bh=Ht+4gm2dvAFK/vqHWVRmy7HxqsFt3fYYIW0O9jmU+MU=;
+ b=OzGKlPpz91Bbhl3W1kFGF2jvB5wUzHl0nlRZ1jMA4m4DgCvYXR29q0k5S1jjU6smt9wrx7cnuQrZhPgx/4bmlLaSh036eFtWEm9CaGzJPKWp1RDXFo44PD2gafgl5SXofTXnhSGj0okoDAyqgENWy0fQVjh3fwSaNrKZJfmbNcoPuTk79/NOPouScfDKZfuU0JC2sFotaLX35pWh4t3kBYiZl+lzfZ11sk8QNVek60/czgRTvItTVAEg/OZUTS3ivKZWAOS3dhQM6DrIvDHcxPVeKhIeIJ8RR1fKa5733S5VaPGZzm3yUgbSXNRv4sevxZxB1mduZuVFEBuvYDEi3w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH7PR11MB7551.namprd11.prod.outlook.com (2603:10b6:510:27c::12)
- by CO1PR11MB4945.namprd11.prod.outlook.com (2603:10b6:303:9c::8) with
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ht+4gm2dvAFK/vqHWVRmy7HxqsFt3fYYIW0O9jmU+MU=;
+ b=hBr6+KVtrcS5fE8m+N3MwZ8zC3/RWQEunl4h8iqmanqkFt35rub1Difw1OpzqtO68pO3TRd+3p8uhyNqx2SMaG8PudAgJwxU46++xdT9sQMFJxH4c8rmuSlf612bh4j6tZJ+SJK/lro3AHSBRq7ct2n0HiGCPhRvb8TrM+0ixho=
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com (2603:10b6:806:4a4::6)
+ by SA1PR21MB6754.namprd21.prod.outlook.com (2603:10b6:806:4af::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 19:30:46 +0000
-Received: from PH7PR11MB7551.namprd11.prod.outlook.com
- ([fe80::5cbf:6b33:5f0c:88a0]) by PH7PR11MB7551.namprd11.prod.outlook.com
- ([fe80::5cbf:6b33:5f0c:88a0%4]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
- 19:30:39 +0000
-Message-ID: <546154dd-66e2-4c7e-9a0d-59c56f07b85c@intel.com>
-Date: Mon, 7 Sep 2026 21:30:35 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] drm/xe: Keep reference to device descriptor
-To: Gustavo Sousa <gustavo.sousa@intel.com>, <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-References: <20260904170531.516-1-michal.wajdeczko@intel.com>
- <20260904170531.516-3-michal.wajdeczko@intel.com>
- <20260904171419.E21DF1F00A3D@smtp.kernel.org> <874ig3956l.fsf@intel.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.0; Mon, 7 Sep 2026
+ 19:33:42 +0000
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::8bad:6294:8a07:fe18]) by SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::8bad:6294:8a07:fe18%6]) with mapi id 15.21.0315.008; Mon, 7 Sep 2026
+ 19:33:42 +0000
+From: Long Li <longli@microsoft.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
+Subject: RE: [EXTERNAL] Re: [PATCH net] net: mana: do not discard an
+ ethtool-configured RSS table on a queue rebuild
+Thread-Topic: [EXTERNAL] Re: [PATCH net] net: mana: do not discard an
+ ethtool-configured RSS table on a queue rebuild
+Thread-Index: AQHdPM/AFo/mFPjv3kSEyv8Y/PH4f7bAuDQAgALKFkA=
+Date: Mon, 7 Sep 2026 19:33:41 +0000
+Message-ID:
+ <SA1PR21MB66836B14742F73D2DB9A4E5ACEB22@SA1PR21MB6683.namprd21.prod.outlook.com>
+References: <20260905004401.3937066-1-longli@microsoft.com>
+ <20260906004447.3B1DB1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260906004447.3B1DB1F00A3A@smtp.kernel.org>
+Accept-Language: en-US
 Content-Language: en-US
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
-In-Reply-To: <874ig3956l.fsf@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1PR07CA0289.eurprd07.prod.outlook.com
- (2603:10a6:800:130::17) To PH7PR11MB7551.namprd11.prod.outlook.com
- (2603:10b6:510:27c::12)
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=f4b6e854-4831-4a71-8c94-db410cf106d4;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-09-07T19:20:34Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR21MB6683:EE_|SA1PR21MB6754:EE_
+x-ms-office365-filtering-correlation-id: 6f0ff430-3af5-41f4-534b-08df0d16ec85
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|3023799007|4133799003|38070700021|10067099003|56012099006|7146999003|11063799006|4143699003;
+x-microsoft-antispam-message-info:
+ SCRXDNqRsBRaJ39wdWD3C09il8hbUyTqNPieJbtkxu19elTAWc8siNHXcx7dHL4j20EX15v23LvG1UgffQSGzJSyEWbASRedMYPOIpceSXt7sbLbaXRWoZ9zObfOWkpDgybLaDjQj+ksEKnMFaGAIM0gVY6g9cqopzp7txC9/uLmjduKtd0GixUW3J12hC0CrAIjdumUx3bma1J2u2JUyZMnr+E4maBNjYWfrj2U9oEKtKP9am/ko8LmoU0Bo9AWZcEXAkt3zh4x7nhJkCzrtcE7StCndMj7tI2C/R5vrTudtF4Q6H70IY7Med2luuTPBj0elv5CgEPKChN0fL23b2dHXD2NIacX9vl7hGnjeuR6FuRQGHtsUFOMUb6RfjhQ28ABgGkj32FUbCFBZeeDZvW9Fmxu/XNapYDNK6GfsGxWHC9Fxql41aSHm+gi1tuR1Kv4qnXHYBod5m+DAZWa8jEojzMb541PToag8Nu5xAtdPruD5i6E+SCRrxm4E4bu4MLZckPO82AI+s+2OgzFNa97OCRD52Szj9CERau5+J7FgPGQhm6Vi/pIWKoPXfCyqr61ILBD4jrvHe0bjJQ7FGNh66wrdeOC3k4uLvV/PmG9eRfP+rL5VlqQpWP1pZCNSnICT2MYb4mQILmMrsdGiWajudAPS9+lHkWSz9gVa6g=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB6683.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(3023799007)(4133799003)(38070700021)(10067099003)(56012099006)(7146999003)(11063799006)(4143699003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?/1IJ3OEoGMhWS7OyBFxdiaUcbArPjPO3OE0SXs4EpvzngUYqanRGudCUjZU2?=
+ =?us-ascii?Q?vccr1e0GQpK8vvsW9V9D00//5A58ek6s6A3SXyqja6Jjh/jaM1d3583H5ADi?=
+ =?us-ascii?Q?7MIja/9XS5SmDdlakQxnTvsbuvjqSjt7lprjTGkhEK+eN7dWPZIpP4rorv6M?=
+ =?us-ascii?Q?LVGLy7sEObx3C1n14uKkqzZjFFEsTtM5r00djZh042dZDu4br2pd7NCpzNGc?=
+ =?us-ascii?Q?NMX7LXn692Y0vbZHzXeJW3Fqg02tqPqqQvF8BxJSibpa/NRP4efINzkFTsaE?=
+ =?us-ascii?Q?RAPmZWW4EmgqOf2VppwwEQVRFa9qJWIJydsUiyHZBhJaQObJcUB5GWUAIec6?=
+ =?us-ascii?Q?wfdmiL6DZmtuVjp56/wikmM7eINEGWGuW2P+vTfIRkrx95C+wm+Z1p1MQuE0?=
+ =?us-ascii?Q?LM78CxPYn08Nv7z+/t9IcAEsRDXnQ3pwyVV2qocl2l8qhRPS/9iBrM7Jzkta?=
+ =?us-ascii?Q?ZY1i7pxUvknDMlD4/12dHS5O0zs2jgthFIkdCp8qPr7ye/VsIQuPmgKHJHuC?=
+ =?us-ascii?Q?dgeFeoUplz3LTvzFx2CJ4WxYoxH9L4Y+rZ0HYe8mRsTM7pczt6RxO/L2ICJq?=
+ =?us-ascii?Q?k3gS/a/mboaUwcJgXqh/trxyrXM9JqUfpKdxfiR3HYwfBWwMmrG8+fXXug7n?=
+ =?us-ascii?Q?JxM3XJkyMcZDhihjEwvWSfZwDZLOnO90QrEReyM7VXciixnLLX2uNXFD28rI?=
+ =?us-ascii?Q?Qajc6kDWI4gfqCe+QZUfYDRhn627Haim85+Hio+j+MEjug+g4otItZpgd70r?=
+ =?us-ascii?Q?fYx/0W+4dNCXTjEpU1t9BudkzG70zwa8zWdj5Jt3jRRc7e1r3HymFJ6d2Z+w?=
+ =?us-ascii?Q?xXiXLiEiyaCLeLY7Su+7IAubu/OPrfXDIw07gUAoz+L96owHyL3AYKjJ/7sx?=
+ =?us-ascii?Q?JufpzXBfi3v0NEQ5m327PVoRx5x7tBaUtrLWavIfwwQsLUBa3Nz5XgFzrEhT?=
+ =?us-ascii?Q?l8LprTaG1GyP2nDjZOY+t6sI1K0pFH8Kh5ShMPn9IgJ4p7TCRaCQm9kCZpVf?=
+ =?us-ascii?Q?dga6aVJbNS/YCyGqe/iYk0KiJ6U3V2UPmRW9z+XMd3rbjwv3PMsVtZ2iCxnB?=
+ =?us-ascii?Q?cj/uREI4IoSTzSDc+Tp4IkSttXDz/miFXzcvIzK7ULuwlHDgRsVisTdAxwAM?=
+ =?us-ascii?Q?dLflZFd1xa3tIynt/B3wjTimW1uOfpSQOQuItanh5NYTHRE+9A7CmSU7s7X0?=
+ =?us-ascii?Q?L1UlZlFEog7Dlt5LC2OpdFYMxnFRq2zezUeTxCgEXSGn7I3ZKkFoI96/qXod?=
+ =?us-ascii?Q?JtqdzjZaX0G6JM/ZdVCNSa4flcNPoCLMq4dW0aWSRgPsOBuvlhsHCspStJ1d?=
+ =?us-ascii?Q?QLlWskJ2SH8rZB/AhP12cWr1vVaFPuq2jiqhMOY3SrrqnbNtIlmDeiuV3OZ1?=
+ =?us-ascii?Q?1mTI4m8sJGmdaL9GPeiFoYts1g4wQbZAJeUKvAf4uc7yMdyZiRJVPqbVfZSb?=
+ =?us-ascii?Q?FdBm3VKYIwXGAeNBE9kgFXVpmWSeFfg/0CqJ4/Uv5z4xIPHFaLyeaf6j1cTE?=
+ =?us-ascii?Q?QjGt72/+BdBF8Ngp8o2EKiBSKtorkzLT6Cfrrp1UR/kUb3/WR7aUdfFMUOUb?=
+ =?us-ascii?Q?ppa+Wtcv7IgXNvScSAYYyhBghWaAEY62srLXtc4ovctv2GmOQMs0iOxvTdUK?=
+ =?us-ascii?Q?zeIqHrUiAZcOTR3yOxntXDMGrP1I7EWqxbVVE6IIA7ZE8+94M/L+LzNGaksg?=
+ =?us-ascii?Q?SyC96YoaxKEg0oMVjGqt8Mtff4DJ1Sb/4j308Ly5iGSXrGg+?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR11MB7551:EE_|CO1PR11MB4945:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9209e25-ba76-470f-9af5-08df0d167fb7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|6133799003|3023799007|11063799006|56012099006|22082099003|18002099003|4143699003;
-X-Microsoft-Antispam-Message-Info: 5EvVK0ebj4GQ6yRISNbzRiTcRuQm+ZHMJ4zp/heVG/her/zO4gikGa3JLCRpLtii+F54sA+Iaq+Q5bXUraTwN2iE4C2IMQ7/XIwzL1dQ3E4rkODT+IyEFkWxjv08n8+SE8WayikquUN6V4fqmQD8zy0LMea10rpFQCBUsIAVc2cEJVcmGh0pqsl9W2snAxJrc3xrVZcJnzyZzcTT6eN7IrAIojtW+Y5GO0nfWEqGrPEgs4/uACYwbiwope+hkNuayHOFVsD/pVv8dOPGc+cs1h6irU5qW5MsuVZThfJXho3hR5ztE6gALliUQDo2vrtVsiHKNmtGz1cgeGCrezLL1VQThqOxuTxKJlMTqgeO7L7AAsSwzQU6jbO1F70VYgJ2a6as+4F41Vut8obvRH98TjaU0yXk4R8HEHUO6+kULHT0994eSsjLXs+A51V1ne3MN4uq3fm76xv87o+jJ8Mk+CIto25RAdJWKQo+x6pNPs+52Z0S9p4yNqcwYVl/4r4VNfJf0/yppEML/O8RfP6wzSt9kQ3Wo5aulr5Wl4i3zEKbcRoIbTKMvxkNcyaXgc1oqUFoGtTVMcdLU+UuTTr4hqJyJvG4pYYjH3gjAZfLeaY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB7551.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(6133799003)(3023799007)(11063799006)(56012099006)(22082099003)(18002099003)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?enRlMVRDa2JpSXg2VFhReWszMWlnZVZrYTBlMkIzUVVlNEF3cWl4M0J3S1JE?=
- =?utf-8?B?aDN5VFRSMERXVlFvOEpldkIzeHkvSzUyYzVzMHlsQkQvYnY4bWNHVEFkNTYy?=
- =?utf-8?B?ZGFYYkRmaU9EcTJpRVplUUc0VUZ6YlFtKzgxZ1NYcXl3d1NTM2dkZ1BDNWts?=
- =?utf-8?B?dDFBVnh3WTh2enJ5bWJWTEdJWmk4dFJISnZzbzE2UUE3L2lqa3ZWWGs1cXBl?=
- =?utf-8?B?Tm83aW5ld0FCNWJ0MWRkUy9kcjBzMjV0b0Q2OGxaRkpBOXdLeU5JU2doR2R0?=
- =?utf-8?B?b3dyTkxMVnRLVmhocEMwMGRIa3lOSjZxdHhpcFFHZHkxak1PQm0reEVodmVV?=
- =?utf-8?B?eXZyZzVBclduZzJZQktBNGhFak5KYTU0TzZpTVc1NXFjbmlSM050V3ZETnNN?=
- =?utf-8?B?TS93RHlZNFpQYTRQNVV2NGlxWU9SZTZoRTVLRzVRWU5uM3BwR2FHU0NERjJQ?=
- =?utf-8?B?aGNtZ2JnS1ZvL1JQc0pLMzJzQkw2TnJvaGJnSHRiZEtKZUkreWs3dnJVWjRL?=
- =?utf-8?B?R0RFeDNVRVlzTTJUMGxteWk4cVh4NnBTeENZcXdjYnpjU2o5OFIrMk1wS0p3?=
- =?utf-8?B?clh2alJUd1FGa1lsV255UkxwSnp4Vi8vTlJqZ0NlVzZWOHUyczZ6Sld1Rnd1?=
- =?utf-8?B?aVhGQWdxVkQ3dzhCNnpsckY0b2NPT1VIQjF5Q3VuTmU0Mk9pdmptNXgwOEVK?=
- =?utf-8?B?RjUvTzJCR0h3YjVFT3pVcTNlUno1WFZGbUhRTHkrSW5xMU05MjdqWkFGemNM?=
- =?utf-8?B?VE1sdGFZc1p4U01UYWY0Mi9zblM1WWp4ZHluOFVnSUhNdytaSytvbDdyOTY2?=
- =?utf-8?B?b25MeHNJZjlxRkhpd3RZY0tQLzFvZUl0VVp2am1GOG9aWWlxMG91ZzdHWEI0?=
- =?utf-8?B?VzByR3N2NXNZTC9HRkpIRkxLaWR0SEpBWktVYnlSSTF1M0laMFBNVVFPYjhz?=
- =?utf-8?B?NkJVOVJ2dThRbzJWU1Mxekt1R1hoNFg5RzhVcWg4NkU4NnFDdnlzTGwyMVpG?=
- =?utf-8?B?Szk2bXRVN2c0UjhxWXorOGJKT3h2S2JKakI5UGlLQ1BtdmJVTGd5YjByQWx2?=
- =?utf-8?B?cXJ3Tm5tdUhrdnAzZnh1eWtrQmZXckRQUytJRWFQelpGaVdsLy9MaEl2Y3kw?=
- =?utf-8?B?eXZhZzJvNStZY3Z1WUxpd3ArQkk2c2xPSXdURVlOWDZ1OFI5bGVUUHBFdjhH?=
- =?utf-8?B?QlpYVXNlV2MySmxZUVVQeG5mWklLVjVCU0xsZ2VKVDRjcWY5MXNSV2RZQmli?=
- =?utf-8?B?MjRRbFIvc25TU3dMa01xaERBY0o1VzJkc3o3cnBuczgzL20waGRpcXpjNUZx?=
- =?utf-8?B?aDRlKzBMU0tob3FqVkkvalJGcTEvUTU2aHphUnU1Vy9GUXh1ckx0YUFFd2Y0?=
- =?utf-8?B?MStPR0JNLzBjdkdDejVWeG8vNGdEb1M3bGNwTVBtRFZ5dnptczBPTHBvU3B6?=
- =?utf-8?B?eXlieGFydFNRVlprNklLSGZVRm9IQVVmQmRBbFZ1eFNUNjNZMjB0b3VOL2Vu?=
- =?utf-8?B?Rzd0N0RpN3pWT3RKVTFLcXAzcnVIYkJSUnA2Sy9kcFgzKzNEelIwRVNoOWM5?=
- =?utf-8?B?UGF5MlNrTU1LY3F4TnBUQlloYjlwVlhvZDRpWDhFeFZvWHFMN0dhRTNjYjE1?=
- =?utf-8?B?b3BVdk5BTENWRjJ3WDlSV29aeEFGbGloaUs4RlBqdVV0NC9zMVpRWXlkeSsx?=
- =?utf-8?B?b2o0WklKbHp5Rm5NUHM4Rit4cGFjMUtHQUtTSzZ0aFVHVnB2eDF6VmJWa0N4?=
- =?utf-8?B?dmp0eko2OUtOQldGcCtLS2lGNHFveXZKdGdCVk5iN2loS05yNHRGNXprbVR4?=
- =?utf-8?B?b0RwbStBb3YzR3BGM2dhanNWZHBPZE5zUnMrUTdwSWtOTUcybVNNTERGUkk2?=
- =?utf-8?B?U3BQTE5jcEtBUVpCa3lVL1N4amxqSHpUem4yUGdMVFpWL0Z1UjdoVUVvWnZM?=
- =?utf-8?B?WDJSSFNra3NnbUp5Mk9XQ3hyRnZLRWJ3STNBK3R4WVZTbGh3YlJRdDc5Nm1n?=
- =?utf-8?B?V2luZ3ljd2xNMVRCTGRxQWxycXJwUVlFbk00VjVGK0xPaEFRZTI2empjcGRD?=
- =?utf-8?B?dkRiL09vUnZGYXlRdzRKUVNIdFdUemNiVTdERkV6VzQ0a0xLRDdFOXB0WVBn?=
- =?utf-8?B?YkJtUjlDa3hPNitKTThHYkl6T2lXZDh5YWtVSzdNODNtUWo1L09MTzlETk9a?=
- =?utf-8?B?MmJDWi9LczV2S3VGL1c4MHJNNURQU01BRC82bWc5UnZqdDJXUVh6TnBZNnAy?=
- =?utf-8?B?N1BBSTg2Qmo3bXJzVHo0dFVpSHZ1czgvSlJNV3k3RlAycHgrdXlLdEg4ZEl6?=
- =?utf-8?B?T2dYSEs3U0tUdldYT2RwWENhcHJZTlczcHU2dTl6enNseWE2ajA5TWxPL2V1?=
- =?utf-8?Q?stVV5EkN5DqVN3+c=3D?=
-X-Exchange-RoutingPolicyChecked: 3Fx5Dm4kqFATUaPYVBDZ4U3OLR2ty/V3llGJpWSHxjM/TJI7/6hY4N8yI72wl6ADdFb3PzajylsMSKzLbbo/yiucfJczfR1ptljIdBkWHS8fSEMyHzDsQBLfSSYrvfa5VJwNLFOyc+Azw37QZ1Pf5wqLVeFDpN1HYZ1iGDalLII/86rEFq0cPNDY/j0Fu8L3PGbdTUqgC3SyB0tDeKrLHTTUACbUR8Jg0U/LlkCU5S6y5+kOPck2Lyvt6xzPDy1ZP9n0NZfJj4jG1ubo2ojXEOok9Da62Z/WeA2w/RDHpGyHZHEmCLBhUbEijdp2aeQNp/orH62qvctITSazakllxA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9209e25-ba76-470f-9af5-08df0d167fb7
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB7551.namprd11.prod.outlook.com
+X-OriginatorOrg: microsoft.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 19:30:39.7195
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB6683.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f0ff430-3af5-41f4-534b-08df0d16ec85
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2026 19:33:41.7884
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: oR96JfhVnqR1C1x1xHV+djzuyXoV4/hmuKSNdHEp/kxZqU0M1M6x5DhXgx8D9wQgMooffFN7OVI+avbidcv7S6z20enVPEzBxK5w9zv9eGg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4945
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Zgl1P0BbdkQaeJQuo3iTKOeT56PiOWw/9CQh7cuPVMyY3grzq4iF24Oesfu7eM7bjZU2YOi2YXMW4nIxGoLtrw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR21MB6754
 
 
 
-On 9/5/2026 3:52 PM, Gustavo Sousa wrote:
-> sashiko-bot@kernel.org writes:
-> 
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] In test initialization, `xe->subplatform_desc` is incorrectly assigned a pointer to a sentinel element instead of `NULL` when no subplatform is matched.
->> --
->>
->> commit 2fbc7ea3deaa915eef829a4c64ec08fac1f4a8a9
->> Author: Michal Wajdeczko <michal.wajdeczko@intel.com>
->>
->> drm/xe: Keep reference to device descriptor
->>
->> This patch stores a reference to the whole device descriptor and the
->> matched subplatform descriptor within the xe_device structure. This
->> change enables access to additional non-mutable device parameters.
->>
->>> diff --git a/drivers/gpu/drm/xe/tests/xe_pci.c b/drivers/gpu/drm/xe/tests/xe_pci.c
->>> index 4965a01f6ba52..48d5ee478fe69 100644
->>> --- a/drivers/gpu/drm/xe/tests/xe_pci.c
->>> +++ b/drivers/gpu/drm/xe/tests/xe_pci.c
->>> @@ -374,6 +374,8 @@ int xe_pci_fake_device_init(struct xe_device *xe)
->>>  		return -ENODEV;
->>>  
->>>  done:
->>> +	xe->desc = desc;
->>> +	xe->subplatform_desc = subplatform_desc;
->>
->> [Severity: Medium]
->> Will this assign a pointer to a sentinel element instead of NULL when no
->> subplatform is matched?
->>
->> In xe_pci_fake_device_init(), the search loop terminates when it reaches the
->> sentinel element:
->>
->> 	for (subplatform_desc = desc->subplatforms;
->> 	     subplatform_desc && subplatform_desc->subplatform;
->> 	     subplatform_desc++)
->> 		if (subplatform_desc->subplatform == data->subplatform)
->> 			break;
->>
->> If data->subplatform is XE_SUBPLATFORM_NONE, the loop exits with
->> subplatform_desc pointing to the sentinel element of desc->subplatforms, not
->> NULL. The subsequent check (!subplatform_desc) evaluates to false.
->>
->> By directly assigning this value to xe->subplatform_desc, the test mock
->> environment now gets a non-NULL pointer (the sentinel) for devices without a
->> subplatform. Could this create a state inconsistency with production code,
->> causing tests checking if (xe->subplatform_desc) to falsely evaluate to
->> true?
-> 
-> Sashiko seems to be right here. I think we could initialize
-> subplatform_desc to NULL and assign the one from the loop if we find a
-> match.
-
-for the record: IMO this should be tagged as a pre-existing issue, as even
-without storing a xe->subplatform_desc, tests code already could pass sentinel
-instead of NULL to the xe_info_init_early() which could in the future make
-some decisions based on non-null descriptor
-
-anyway, fix is done in separate series [2], which shall be merged before this
-
-[2] https://patchwork.freedesktop.org/series/173450/ 
-
-> 
+> -----Original Message-----
+> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+> Sent: Saturday, September 5, 2026 5:45 PM
+> To: Long Li <longli@microsoft.com>
+> Cc: linux-hyperv@vger.kernel.org
+> Subject: [EXTERNAL] Re: [PATCH net] net: mana: do not discard an ethtool-
+> configured RSS table on a queue rebuild
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s)
+> to consider:
+>=20
+> New issues:
+> - [High] State desynchronization causes newly added queues to be left
+> unutilized after a sequence of channel count changes.
+>=20
+> Pre-existing issues:
+> - [Critical] Pre-existing Use-After-Free in stats collection due to ad-ho=
+c
+> synchronization flag.
 > --
-> Gustavo Sousa
-> 
->>
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260904170531.516-1-michal.wajdeczko@intel.com?part=2
+>=20
+> commit dc8331f7b2434de9035275921f9768699946cdcb
+> Author: Long Li <longli@microsoft.com>
+>=20
+> net: mana: do not discard an ethtool-configured RSS table on a queue
+> rebuild
+>=20
+> mana_alloc_queues() regenerates the RSS indirection table from the driver
+> default every time the queues are built, so a table installed with "ethto=
+ol -X"
+> is silently replaced by any operation that rebuilds them.
+>=20
+> > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > index 7a1ac853e3abc..97386e17b9421 100644
+> > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > @@ -3306,6 +3306,28 @@ static void mana_rss_table_init(struct
+> mana_port_context *apc)
+> >  			ethtool_rxfh_indir_default(i, apc->num_queues);  }
+> >
+> > +/* Whether the current indirection table can be kept for
+> > +apc->num_queues,
+> > + * rather than rebuilt from the driver default.
+> > + *
+> > + * Only a user table ("ethtool -X") is worth keeping; a
+> > +driver-generated one
+> > + * is rebuilt so that it spreads over every queue. An entry pointing
+> > +past the
+> > + * last queue cannot be kept: mana_config_rss() uses these entries to
+> > +index
+> > + * apc->rxqs[], which holds apc->num_queues pointers.
+> > + */
+> > +static bool mana_rss_table_keep(struct mana_port_context *apc) {
+> > +	u32 i;
+> > +
+> > +	if (!netif_is_rxfh_configured(apc->ndev))
+> > +		return false;
+> > +
+> > +	for (i =3D 0; i < apc->indir_table_sz; i++)
+> > +		if (apc->indir_table[i] >=3D apc->num_queues)
+> > +			return false;
+> > +
+> > +	return true;
+> > +}
+>=20
+> [Severity: High]
+> Does this check wrongly trust netif_is_rxfh_configured() without validati=
+ng if
+> the table was previously replaced by a driver fallback?
+>=20
+> If a user sets a custom RSS table via ethtool -X and then reduces the cha=
+nnel
+> count, mana_alloc_queues() detects the user table indices are out of boun=
+ds
+> and generates a narrow driver-default table, but intentionally avoids not=
+ifying
+> the core via ethtool_rxfh_indir_lost(). The core's
+> netif_is_rxfh_configured() remains true.
+>=20
+> When the user subsequently increases the channel count, could this functi=
+on
+> incorrectly believe the narrow driver-generated fallback table is still a=
+ user-
+> configured table? Since its bounds fit the new queue count, it seems this
+> might permanently freeze the table at the smaller size.
 
+The two steps are mutually exclusive, so the sequence cannot occur.
+
+The premise is that a channel reduction can strand a user table. It cannot:
+both ethtool entry points call ethtool_check_max_channel() (channels.c and
+ioctl.c), which refuses the request. On this hardware:
+
+  # ethtool -X ens1 equal 16
+  # ethtool -L ens1 combined 4
+  netlink error: requested channel counts are too low for existing
+  indirection table (15)
+
+Note ethtool_get_max_rxfh_channel() derives that bound by calling
+ops->get_rxfh(), i.e. the table the driver currently reports, so the guard
+follows whatever mana last installed rather than a remembered user table.
+mana_set_rxfh() also rejects any entry >=3D apc->num_queues, so a user tabl=
+e
+is never out of range when it is installed.
+
+That leaves exactly one way for mana_rss_table_keep() to return false: the
+clamp in mana_init_port(), where the device reports fewer queues after a
+reset or resume. But that clamp is
+
+        if (apc->num_queues > apc->max_queues)
+                apc->num_queues =3D apc->max_queues;
+
+so num_queues ends up equal to max_queues, and max_queues only ever shrinks=
+ -
+both assignments in mana_init_port() are guarded by "if (apc->max_queues >
+...)", and the only initialisation is in mana_probe_port(), which does not =
+run
+on resume. A subsequent increase would need new_count > max_combined =3D=3D
+apc->max_queues, which the core rejects with "requested channel count excee=
+ds
+maximum".
+
+So the fallback and the later increase cannot both happen to one port.
+
+On the wider point of not calling ethtool_rxfh_indir_lost(): 16 drivers tes=
+t
+netif_is_rxfh_configured(), and two call ethtool_rxfh_indir_lost() - bnxt
+(__bnxt_reserve_rings(), when firmware grants fewer rings than asked) and
+mlx5e (mlx5e_attach_netdev(), when max_nch drops). The other fourteen, amon=
+g
+them ice, idpf, hns3, fbnic, gve and nfp, keep a user table when one is set=
+,
+regenerate the default otherwise, and do not notify the core. This patch
+follows that majority.
+
+mana cannot follow bnxt or mlx5e here even if it wanted to. All three drive=
+rs
+require the netdev instance lock for the notification, since it sends
+ETHTOOL_MSG_RSS_NTF; mlx5e says so at the rtnl_lock()/netdev_lock() pair in
+mlx5e_attach_netdev(). The difference is the call sites, not the capability=
+.
+bnxt reaches its call only with dev->lock held, and mlx5e keys off
+reg_state =3D=3D NETREG_REGISTERED. mana_alloc_queues() is reached from ndo=
+_open
+with dev->lock held and from mana_attach() on the reset and resume paths
+without it, and the netdev is registered in both cases, so neither taking t=
+he
+lock nor testing reg_state works. Making mana notify would mean holding
+netdev_lock across mana_attach() in the TX-timeout handler and the resume
+loop, which is not something I would put in a fix for net.
+
+
+>=20
+> > +
+> >  int mana_disable_vport_rx(struct mana_port_context *apc)  {
+> >  	return mana_cfg_vport_steering(apc, TRI_STATE_FALSE, false, false,
+> > @@ -3621,7 +3643,20 @@ int mana_alloc_queues(struct net_device
+> *ndev)
+> >  		goto destroy_rxq;
+> >  	}
+> >
+> > -	mana_rss_table_init(apc);
+> > +	/* Keep a user-configured table across the rebuild: its entries are
+> > +	 * queue indices and stay meaningful while they are all still in rang=
+e.
+> > +	 * Only a driver-generated table is regenerated here.
+> > +	 *
+> > +	 * A table that cannot be kept is replaced by the default without
+> > +	 * telling the core, which keeps reporting the table as user
+> > +	 * configured. That is what this function did for every table before,
+> > +	 * and reporting it here is not an option: ethtool_rxfh_indir_lost()
+> > +	 * sends ETHTOOL_MSG_RSS_NTF, which requires the netdev instance
+> lock,
+> > +	 * and this runs both with that lock held (ndo_open) and without it
+> > +	 * (mana_attach() from the reset and resume paths).
+> > +	 */
+> > +	if (!mana_rss_table_keep(apc))
+> > +		mana_rss_table_init(apc);
+>=20
+> [Severity: High]
+> If mana_rss_table_keep() incorrectly returns true due to the
+> desynchronization described above, does it skip the table regeneration an=
+d
+> leave newly added queues unutilized?
+
+Yes, that consequence would follow - it is the same branch. But the
+antecedent cannot hold, for the reasons in my reply to the first half: the
+fallback and a later increase cannot both happen to one port.
+
+Worth separating the two cases, though, because the symptom you describe is
+also the intended behaviour here. When a real user table is carried across =
+an
+increase, the added queues do stay unsteered:
+
+  # ethtool -X ens1 equal 2
+  # ethtool -L ens1 combined 16      /* queues 2..15 get no traffic */
+
+That is deliberate. The alternative is to silently discard a table the user
+asked for, which is what this patch exists to stop, and it is what ice
+(ice_set_channels()), idpf, hns3, fbnic and the rest do as well. The user
+recovers with another ethtool -X, and "ethtool -x" always shows the table
+actually in use.
+
+So unsteered queues after a grow are not a bug signature by themselves. The
+bug would be reaching that state with a table the user never asked for, and
+that needs the desync, which cannot occur.
+
+In summary, this patch behavior is consistent with other drivers on this sc=
+enario.
+
+
+>=20
+> [ ... ]
+>=20
+> [Severity: Critical]
+> This is a pre-existing issue, but is there a Use-After-Free in the stats =
+collection
+> due to the ad-hoc port_is_up synchronization flag?
+>=20
+> Looking at mana_get_stats64(), the reader path relies on the ad-hoc
+> port_is_up flag and dereferences the queue structure, but can be preempte=
+d
+> before accessing it:
+>=20
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_get_stats64() {
+> 	if (!apc->port_is_up)
+> 		return;
+> ...
+> 	for (q =3D 0; q < num_queues; q++) {
+> 		rx_stats =3D &apc->rxqs[q]->stats;
+> ...
+> }
+>=20
+> Concurrently, a teardown path clears the flag and proceeds to free the
+> underlying memory structures without waiting for concurrent readers:
+>=20
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_detach() {
+> 	apc->port_st_save =3D apc->port_is_up;
+> 	apc->port_is_up =3D false;
+>=20
+> 	/* Ensure port state updated before txq state */
+> 	smp_wmb();
+>=20
+> 	netif_tx_disable(ndev);
+>=20
+> 	if (apc->port_st_save) {
+> 		err =3D mana_dealloc_queues(ndev);
+> ...
+> }
+>=20
+> The memory is then synchronously freed, guaranteeing a Use-After-Free if =
+a
+> reader is mid-execution:
+>=20
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_destroy_txq() { ...
+> 		mana_deinit_txq(apc, &apc->tx_qp[i]->txq);
+>=20
+> 		kvfree(apc->tx_qp[i]);
+> ...
+> }
+>=20
+> Could a preempted reader accessing the freed memory lead to memory
+> corruption?
+
+This is a pre-existing issue and out of scope from this patch.
+
+I needed, I suggest submitting another patch to fix this.
+
+
+
+>=20
+> --
+> Sashiko AI
+> review * https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
+F%
+> 2Fsashiko.dev%2F%23%2Fpatchset%2F20260905004401.3937066-1-
+> longli%40microsoft.com%3Fpart%3D1&data=3D05%7C02%7Clongli%40microsoft.
+> com%7C18ce764cb5f6435395b608df0bb00dee%7C72f988bf86f141af91ab2d7c
+> d011db47%7C1%7C0%7C639242522911822221%7CUnknown%7CTWFpbGZsb
+> 3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkF
+> OIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DIML49OomMP48q
+> RaUNNmX7zbI%2BIQ31FQZH5OhErqzovQ%3D&reserved=3D0
