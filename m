@@ -1,174 +1,175 @@
-Received: from mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C758468C31
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 10:44:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8215C46C84D;
+	Mon,  7 Sep 2026 10:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788777870; cv=none; b=uCim6jXpV9YKcD03LIXhlsYJKKR21bdMLbWx2VK7z7eJuLB7p9feYm5/S7Bil20RuQ5nXReZEvJNTMozjTPFJYHNiMLl7mnA2v4SzJGSPFigMg69MB6AJLTVYe+0HFuSTC3dQF8tqGKDy53EOGEkw63ACFhBp/uoO45QzPva6oQ=
+	t=1788778589; cv=none; b=lIVplb98yqea5P/hTwexoevxOsHB16jBrCiFxEg0fKha3tefyelz9cNSiGPriO7K25Iu9cuopMI6OD49k88YVHz3NtwcwjH/HBQsfrCJwZWoEGyS3nedcLvpL3T38hK7niauJzu9nD/iJ6eVXYhAbldsH2Y3yCOjw8tQak1XmmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788777870; c=relaxed/simple;
-	bh=6VhZ9+8aL846w8ojD8eezKxyPan82L/O7oRZZU+/bw8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PpN/pWyUuk3AN2e926vSXLN/OdrzmDdcQYlWGfCKFgUMoTozjT5LqU6axWcYvPvnGRjB9OQqxD6w3Ixv22DTWJOJlqLaRw4nZ36M7Qc8RSOEtdRkhTvoJN+mASeiyR11B8HqLc9AbPIBgUD3cDAeY/C57vmu56jAg1cZS8c3RQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CV23AHCh; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788778589; c=relaxed/simple;
+	bh=usdN3jSlya+ao+46gyu45NdqkSBJybrHEaayUPgYpqQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=InKfZLsToNylfqbrvzUqqsfywL9LROrw+T0rQZIkjmCRKV4d+V8cdAHMPJnQuUABkqKWH8bR+quqZq1dyEHNr6MQ+SD0AR68JBRBlimYg13uU31wzhbNNZ2kICa9pQe8L3Im2yfa5MwkSPjgZdL+IMBoh81RAkvknALzzuWDCwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VGQCqLX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CV23AHCh"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=6VhZ9+8aL846w8ojD8eezKxyPan82L/O7oRZZU+/bw8=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788777865; v=1; x=1789382665;
- b=CV23AHCheOC6eofzcrW/QpSwtQCm9ZR1OdUb8LzVU09yOFfGfWU3nO70poUbfWZyY1iEbfxi
- eMfeKFK8VNTX5K66OYozJbtwZ0u+Ux3dRGrTfMmE60RieppOZy6DL22kyPBe5YWpNV/37tl6XPS
- 0NGEdgCSDzg/e6kTjmOSuLtk=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 83840ab8abbe2bc3;
-	Mon, 07 Sep 2026 10:44:15 +0000
-X-Mizu-Trace-ID: 83840ab8abbe2bc3
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17358so5884e87.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 03:44:11 -0700 (PDT)
-X-Gm-Message-State: AFuF++lT26jWyCK36wf0Ind+FcCpn2npqbPiL9lHPNpkZ+MT1rAgYzBK
-	KRzRgF/aZPp7ElRL++IsPf7mBNQxvAoqdOSuay8tNA3sv3Zyga2dsYtjaXO0L8WlaDn3fZY1+sy
-	p3/S+Ad/+/D1UdUd1/wfPN9XFPp9uHklL/R+krBtt
-X-Received: by 2002:a05:6512:3185:b0:5b6:19c6:a91b with SMTP id
- 2adb3069b0e04-5b74d1e0c5bmr188929e87.14.1788777850442; Mon, 07 Sep 2026
- 03:44:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VGQCqLX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12BF1F00A3A;
+	Mon,  7 Sep 2026 10:56:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788778588;
+	bh=wFz7vOmGpVcX33druo+Q++r087HQ4nztgPfOzj0kMlw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VGQCqLX1BlJgGYByoIGn1J8kuP7nOTWDBYUJGiCYh14XarHfou+lvHeHyFeippO4o
+	 pSgUOAxceLuF6VP2eJaQaAf34tEiFGTOu2tEz4F34MYOtzGSegI80WgjQIX2GjDBFE
+	 0X7I1DxTDrhc0qfycFriXNk387Px/eI7/Pg8Qs1kvAfo1cvZkQ6R70yEekTjX76Pox
+	 9ax//JVtcWOMuVw3IyvuQSv+vLETd3eSR6QUjtkDrMgyA6/2ERTnZxb5pNXTGE5/AZ
+	 5yLN+I5hcXhTDm5uw/VZP0AlCUYOxiYyM7omHv7E7n64YI7pNU4zhu8Xip92hPgH0t
+	 Ew5CkM2ADfFQQ==
+Date: Mon, 7 Sep 2026 13:56:22 +0300
+From: Mike Rapoport <rppt@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH 01/13] s390/chsc: Use kzalloc() for CUBs
+Message-ID: <ap6YVscl-NxisYnj@kernel.org>
+References: <20260907-s390-cio-ready-v1-0-ca7f39806234@kernel.org>
+ <20260907-s390-cio-ready-v1-1-ca7f39806234@kernel.org>
+ <20260907103719.32D671F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260904073424.3855365-1-fuad.tabba@linux.dev>
- <20260904074800.875391F00A3F@smtp.kernel.org> <CA+EHjTx6ZC90qHoccTE6CLvGvxrXBe3Ph0bFKcgBvfRpCCAVuA@mail.gmail.com>
- <apqnaNmeuUjfC8Ng@red-moon> <CA+EHjTy0sL8our+KNigZbc7-+uu2-OX=L3g_49-c_C7UY_quDg@mail.gmail.com>
- <ap6K1H_5EI3g1D3n@red-moon>
-In-Reply-To: <ap6K1H_5EI3g1D3n@red-moon>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 7 Sep 2026 11:43:34 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTw5V+ujG=d5FLvULxK9wb550gqGONXA2bC01cHAqz2jSw@mail.gmail.com>
-X-Gm-Features: AcwNN1UbsOeOJoFZnSMs3VAyEzxfeag7BSvXgh24D-uMFrbyg04MM6dPO8KMMUY
-Message-ID: <CA+EHjTw5V+ujG=d5FLvULxK9wb550gqGONXA2bC01cHAqz2jSw@mail.gmail.com>
-Subject: Re: [PATCH] of/irq: Fix device node refcount leak in of_check_msi_parent()
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260907103719.32D671F00A3A@smtp.kernel.org>
 
-Hi Lorenzo,
+On Mon, Sep 07, 2026 at 10:37:18AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] Hardware Alignment Violation
+> 
+> Pre-existing issues:
+> - [High] DMA Use-After-Free
+> --
+> 
+> commit c0b30acb33e9033572c3388a78f4e8cd3bf3f838
+> Author: Mike Rapoport (Microsoft) <rppt@kernel.org>
+> 
+> s390/chsc: Use kzalloc() for CUBs
+> 
+> cub_alloc() allocates the channel measurement unit blocks and their
+> extended counterparts.
+> 
+> This memory can be allocated with kmalloc() as there's nothing special
+> about it to go directly to the page allocator.
+> 
+> Link: https://lore.kernel.org/all/635405e4-9423-4a25-a6e7-e03c8ea0bcbe@redhat.com
+> 
+> > diff --git a/drivers/s390/cio/chsc.c b/drivers/s390/cio/chsc.c
+> > index 9689f722c863c..60a4a7e6086ce 100644
+> > --- a/drivers/s390/cio/chsc.c
+> > +++ b/drivers/s390/cio/chsc.c
+> > @@ -931,12 +931,12 @@ static int cub_alloc(struct channel_subsystem *css)
+> >  	int i;
+> >  
+> >  	for (i = 0; i < CSS_NUM_CUB_PAGES; i++) {
+> > -		css->cub[i] = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+> > +		css->cub[i] = kzalloc(PAGE_SIZE, GFP_KERNEL | GFP_DMA);
+> 
+> [Severity: Critical]
+> Does replacing get_zeroed_page() with kzalloc() break hardware alignment
+> requirements?
 
-On Mon, 7 Sept 2026 at 10:58, Lorenzo Pieralisi <lpieralisi@kernel.org> wrote:
->
-> On Fri, Sep 04, 2026 at 01:48:11PM +0100, Fuad Tabba wrote:
-> > On Fri, 4 Sept 2026 at 12:11, Lorenzo Pieralisi <lpieralisi@kernel.org> wrote:
-> > ...
-> > > > It does continue. -EINVAL also covers #msi-cells != 0, so
-> > > > of_msi_xlate() cannot tell a phandle mismatch from an msi-parent that
-> > > > is not a 1:1 mapping, and breaking on it would stop the walk for both.
-> > > >
-> > > > Lorenzo, Rob, should the walk stop at the first node declaring an msi-parent?
-> > >
-> > > First off, thank you for fixing this.
-> > >
-> > > I think we must stop at the first msi-parent and apply the same (convoluted)
-> > > logic that of_msi_xlate() executes upon of_map_msi_id()'s return to make
-> > > sure ref counts are kosher (we already have an msi_spec scratch variable,
-> > > we can pass that to of_check_msi_parent() - that is, always drop the
-> > > msi_spec.np reference if !NULL and get one if !*msi_np to initialize it).
-> >
-> > Thanks for the clarification.
->
-> I can send a patch myself - I understand this is a nuisance for you - I think
-> though that since you are in the process of fixing it I don't want to get
-> in the way either.
->
-> Let me know.
+No, kmalloc guarantees PAGE_SIZE alignment for PAGE_SIZE allocations.
 
-I practically have it ready. Will send it soon.
+I really need Chris to merge this :)
+https://github.com/masoncl/review-prompts/pull/97
+ 
+> The original get_zeroed_page() allocated directly from the page allocator,
+> which strictly guarantees 4KB page alignment. kzalloc(PAGE_SIZE) allocates
+> from the generic slab allocator, which does not guarantee page alignment
+> when slab debugging (SLUB_DEBUG) or KASAN is enabled due to redzones and
+> padding.
+> 
+> When these pointers are passed to the hardware:
+> 
+> drivers/s390/cio/chsc.c:__chsc_do_secm() {
+>     ...
+>     for (i = 0; i < CSS_NUM_CUB_PAGES; i++)
+>         secm_area->cub[i] = (__force dma64_t)virt_to_dma32(css->cub[i]);
+>     ...
+> }
+> 
+> The s390 Store Extended Channel Measurement (SECM) hardware expects the
+> measurement unit blocks to be strictly aligned to a 4KB boundary. If the
+> pointer from kzalloc() is not aligned, the hardware will either reject the
+> instruction or mask off the lower 12 bits, writing DMA data to the start
+> of the slab page instead of the object offset. This can silently overwrite
+> redzones or preceding objects in the slab.
+> 
+> Can we continue to use a page-aligned allocator for these DMA blocks?
+> 
+> >  		if (!css->cub[i])
+> >  			return -ENOMEM;
+> >  	}
+> [ ... ]
+> > @@ -949,11 +949,11 @@ static void cub_free(struct channel_subsystem *css)
+> >  	int i;
+> >  
+> >  	for (i = 0; i < CSS_NUM_CUB_PAGES; i++) {
+> > -		free_page((unsigned long)css->cub[i]);
+> > +		kfree(css->cub[i]);
+> >  		css->cub[i] = NULL;
+> >  	}
+> >  	for (i = 0; i < CSS_NUM_ECUB_PAGES; i++) {
+> > -		free_page((unsigned long)css->ecub[i]);
+> > +		kfree(css->ecub[i]);
+> >  		css->ecub[i] = NULL;
+> >  	}
+> >  }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can this error path lead to a
+> DMA use-after-free?
+> 
+> In the rollback path of chsc_secm() which eventually calls cub_free():
+> 
+> drivers/s390/cio/chsc.c:chsc_secm() {
+>     ...
+>     if (!ret) {
+>         css->cm_enabled = enable;
+>         if (css->cm_enabled) {
+>             ret = chsc_add_cmg_attr(css);
+>             if (ret) {
+>                 __chsc_do_secm(css, 0);
+>                 css->cm_enabled = 0;
+>             }
+>     ...
+> out:
+>     if (!css->cm_enabled)
+>         cub_free(css);
+> 
+> If __chsc_do_secm(css, 0) fails (for example, returning -EBUSY because the
+> channel subsystem is busy), the hardware ignores the stop command and
+> continues performing DMA writes to the allocated memory blocks.
+> 
+> However, the code ignores the return value, unconditionally clears
+> css->cm_enabled, and frees the DMA memory via cub_free(). The hardware will
+> then continue to update the measurement blocks in the freed memory.
+> 
+> Should this path handle the failure of __chsc_do_secm() before freeing the
+> memory?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260907-s390-cio-ready-v1-0-ca7f39806234@kernel.org?part=1
 
-Thanks for the offer.
-/fuad
-
->
-> Thanks,
-> Lorenzo
->
-> >
-> > Cheers,
-> > /fuad
-> >
-> > > >
-> > > > >
-> > > > > [Severity: High]
-> > > > > This is a pre-existing issue, but does of_msi_xlate() fail to traverse the
-> > > > > device hierarchy when msi_np is NULL?
-> > > > >
-> > > > > When of_map_msi_id() (which calls of_map_id()) processes an absent map
-> > > > > property while filter_np is NULL, it returns 0 instead of an error:
-> > > > >
-> > > > > drivers/of/base.c:of_map_id() {
-> > > > >         ...
-> > > > >         map = of_get_property(np, map_name, &map_bytes);
-> > > > >         if (!map) {
-> > > > >                 if (filter_np)
-> > > > >                         return -ENODEV;
-> > > > >                 /* Otherwise, no map implies no translation */
-> > > > >                 arg->args[0] = id;
-> > > > >                 arg->args_count = 1;
-> > > > >                 return 0;
-> > > > >         }
-> > > > >         ...
-> > > > > }
-> > > > >
-> > > > > In of_msi_xlate(), this return value of 0 triggers a break:
-> > > > >
-> > > > > drivers/of/irq.c:of_msi_xlate() {
-> > > > >                 if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &msi_spec)) {
-> > > > >                         ...
-> > > > >                         /* msi-map present but no match -> stop walking */
-> > > > >                         break;
-> > > > >                 }
-> > > > > }
-> > > > >
-> > > > > Because of_map_id() returns 0 when the map is absent, wouldn't this early
-> > > > > break erroneously abort the parent traversal loop on the first iteration,
-> > > > > breaking MSI ID mapping for callers passing a NULL msi_np?
-> > > >
-> > > > It does break early there, but not for fsl-mc, the only NULL caller:
-> > > > AFAICT, an fsl_mc_device never gets an of_node, so the walk carries on
-> > > > up to the fsl-mc platform device, which is where fsl,qoriq-mc puts
-> > > > msi-map.
-> > > >
-> > > > > [Severity: High]
-> > > > > This isn't a bug introduced by this patch, but is there a fwnode reference
-> > > > > leak on the error path in its_v5_pci_msi_prepare()?
-> > > > >
-> > > > > drivers/irqchip/irq-gic-its-msi-parent.c:its_v5_pci_msi_prepare() {
-> > > > >         rid = pci_msi_map_rid_ctlr_node(domain->parent, pdev, &msi_node);
-> > > > >         if (!msi_node)
-> > > > >                 return -ENODEV;
-> > > > >
-> > > > >         ret = its_translate_frame_address(msi_node, &pa);
-> > > > >         if (ret)
-> > > > >                 return -ENODEV;
-> > > > >
-> > > > >         fwnode_handle_put(msi_node);
-> > > > >         ...
-> > > > > }
-> > > > >
-> > > > > If its_translate_frame_address() fails, it returns -ENODEV without dropping
-> > > > > the acquired msi_node reference. Can this leak the fwnode_handle if the
-> > > > > frame address translation fails repeatedly during driver bind or unbind?
-> > > >
-> > > > Yes, every failed translation leaks one. I have a patch written,
-> > > > moving the put above the error check. It goes with the irqchip fixes
-> > > > rather than here.
-> > >
-> > > Yep.
-> > >
-> > > Thanks,
-> > > Lorenzo
+-- 
+Sincerely yours,
+Mike.
