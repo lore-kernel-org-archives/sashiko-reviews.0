@@ -1,94 +1,61 @@
-Received: from va-2-44.ptr.blmpb.com (va-2-44.ptr.blmpb.com [209.127.231.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F773FE344
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 06:35:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C174F3A8723;
+	Mon,  7 Sep 2026 07:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788762946; cv=none; b=EgQxlFXzoPG5o4WkxNOg/PSDcVfRML5QX+tmKLO/Vnr+sr9fUvx9UprjP7nLHijMzhs/AkoRxAZwNlRmaIW92kVdFu2bGnuzsuqzYDXbdF2+E8asb/fmq/ryqFzlLBFnDaD8vHwyqSrjY3/uo/9rD3gNMkLl4N59IiTcu52qGho=
+	t=1788765251; cv=none; b=eHUGgXzU6OPFiFy136jyCVm0mitlD5yWPrcJUZYmZofDSG5pq/trWrgIqg6TY44XQBIAlLVnytsL4ROS/FxDGGW8ztf2++/aGZu/jc/mupdWHVbWfv0Cj94Ry/ckK6vXAupuHQ0Z9qn0r0nO13oyo8fa176Cmww8Be0r3oiFN6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788762946; c=relaxed/simple;
-	bh=erausLEaZYfQyVhT+1fhvRlt/PyADFF1K69ceUD3C7c=;
-	h=Date:Content-Type:To:Subject:Mime-Version:In-Reply-To:From:
-	 References:Cc:Message-Id; b=DhgpUu+3zShDVXb8j9ozNoovNmwJWeg/A54c93XKoqqa1ojnnvyrAzvhvXtx99ZBHj2nMw5R5Z0IRQwZivOEaE7j41UHaVD3RnXiGKNqhKFfNp+5lsWMSPNOnaKa3fNHM0CXMVrjVtQLyn1ZsohKcTQlTJmmo0dwkIVoirMO3Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=NdaveWod; arc=none smtp.client-ip=209.127.231.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	s=arc-20240116; t=1788765251; c=relaxed/simple;
+	bh=s3t7UZvKcoE0q40AayfQdCfI+5jOSJwDSBcjRpD3Bac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d1AB3phvuwDtVzaoMhF+5huVrQZn99NGw6YgrQM3HI2cEpte1BJrOjLXm92iM+6nHQcq5hXpta+MJ6pU5lGI5w4Py6gbHIxG+4EqlOmi2lAXw0c+v13hqkKkxIN4QjBnXLEGn/2TV/Ipgty2H11cqjOJpOszRPLyOvfv9WUDKEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TXutvjL2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="NdaveWod"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1788762939;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=ALIfe2KFmHm/GZ+77nw/pKD7pycaH98L8Iit1Jfgxek=;
- b=NdaveWodGDkZfyzSrlP9UXsCPfFqEuH/rePHeeEy18sdfwb0SGJlBETSz4M2vqijHcGoBH
- ZfvE2Q8/0BObhGrUUUNzJ6vHBHYqxcslKe9y5hek9dKgkEUQ14vj/z7zLCwYewryZYVjX5
- Pey8w4TLx6FsmhdOVtWGDdfZj0gY2SPhMdaouMYCLxI4r41XkZU37fE0jt17oWkBfGj/Gz
- dpwVrgupEYJ6LC+trm+SFTm/s192ftNae80HfmxBtTsj1bmVMbKHu+wmuHkz9RPnBr3/uC
- HB7POCcDa9lThgbDRqXKV35PfAmv8mJwyDHQnloLPzyOPCDwr80a9ZORUb5GjA==
-Date: Mon, 7 Sep 2026 14:35:33 +0800
-Received: from [192.168.1.104] ([39.182.0.161]) by smtp.larksuite.com with ESMTPS; Mon, 07 Sep 2026 06:35:37 +0000
-Content-Type: text/plain; charset=UTF-8
-To: <sashiko-reviews@lists.linux.dev>, "Chen Cheng" <chencheng@fnnas.com>, 
-	"yu kuai" <yukuai@fygo.io>
-Subject: Re: [PATCH v2] md/raid5: reject raid4/5 arrays with too few disks
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TXutvjL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25C71F00A3A;
+	Mon,  7 Sep 2026 07:14:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788765245;
+	bh=H/ltupeo3vFABejAEzGfcZ9c1QR+1Il7Lyb+kDlfwko=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=TXutvjL2oMBeX6HI1/m0zPrzRTrFIEj7oy4AsoRhKuAfbu5jvApQuIMN+e4g+01/y
+	 YakSA5KtFECGpalMBlghdSz5Aeyhnb5t8WgdbY51DtcDsVk5dhLTZCneHB9GRxpB0I
+	 UQyh2p9areeieAxWU650N5iBXIQBkx76qydGeDdUsZkzgt+0mIL7lA3gX6OYKN+rjj
+	 u+GMuELtuGGz/V82HVxUGYdti2dmCRX+I3sfm5NvXi9xWUep6Y+rHdKsHOPEp7MaMY
+	 dvN9WWTyi6dgwt9+2Znh4ZhvOac9FbwBPVhrhJJaX9iRpBYdtxMREUTbvD9ZFamdqa
+	 EzUjpqV7rR2+w==
+Received: from johan by xi.lan with local (Exim 4.99.4)
+	(envelope-from <johan@kernel.org>)
+	id 1x3TYJ-00000000QhL-1uNR;
+	Mon, 07 Sep 2026 09:14:03 +0200
+Date: Mon, 7 Sep 2026 09:14:03 +0200
+From: Johan Hovold <johan@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-serial@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] serial: fix ioctl hangup race
+Message-ID: <ap5kO8Q_aLy2a1fe@hovoldconsulting.com>
+References: <20260907064418.92953-1-johan@kernel.org>
+ <20260907064418.92953-3-johan@kernel.org>
+ <20260907070034.DF3B01F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-X-Original-From: yu kuai <yukuai@fygo.io>
-In-Reply-To: <20260905110026.5C0571F00A3D@smtp.kernel.org>
-Reply-To: yukuai@fygo.io
-From: "yu kuai" <yukuai@fygo.io>
-References: <20260905104323.2202902-1-chencheng@fnnas.com> <20260905110026.5C0571F00A3D@smtp.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-X-Lms-Return-Path: <lba+26a9e5b3a+b6a457+lists.linux.dev+yukuai@fygo.io>
-Cc: <linux-raid@vger.kernel.org>
-Message-Id: <35ada20d-3d39-4db5-802e-f478d052cf3f@fygo.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907070034.DF3B01F00A3A@smtp.kernel.org>
 
-Hi,
+On Mon, Sep 07, 2026 at 07:00:34AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] uart_set_ldisc misses the tty_io_error(tty) check while holding port->mutex, allowing hardware access after the port has been shut down.
 
-=E5=9C=A8 2026/9/5 19:00, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
->> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
->> index b91545ce090de..4d8bb0cf26055 100644
->> --- a/drivers/md/raid5.c
->> +++ b/drivers/md/raid5.c
->> @@ -7657,9 +7657,12 @@ static struct r5conf *setup_conf(struct mddev *md=
-dev)
->>   			mdname(mddev), mddev->new_layout);
->>   		return ERR_PTR(-EIO);
->>   	}
->> -	if (mddev->new_level =3D=3D 6 && mddev->raid_disks < 4) {
->> -		pr_warn("md/raid:%s: not enough configured devices (%d, minimum 4)\n"=
-,
->> -			mdname(mddev), mddev->raid_disks);
->> +	if ((mddev->new_level =3D=3D 4 && mddev->raid_disks < 2) ||
->> +	    (mddev->new_level =3D=3D 5 && mddev->raid_disks < 3) ||
-> [Severity: High]
-> Does this unintentionally break 2-disk RAID5 arrays?
->
-> The md driver supports and intentionally creates 2-disk RAID5 arrays duri=
-ng a
-> RAID1-to-RAID5 reshape. For example, in drivers/md/raid5.c
-> raid5_takeover_raid1() creates a 2-disk RAID5:
->
->      mddev->new_level =3D 5;
->      mddev->new_layout =3D ALGORITHM_LEFT_SYMMETRIC;
->      mddev->new_chunk_sectors =3D chunksect;
->
->      ret =3D setup_conf(mddev);
->
-> By unconditionally rejecting mddev->new_level =3D=3D 5 && mddev->raid_dis=
-ks < 3
-> here, doesn't this cause valid reshape operations and assembly of legitim=
-ate
-> 2-disk RAID5 arrays to fail with -EINVAL?
+This looks valid so I'll include uart_set_ldisc() in a v4 in a couple of
+days.
 
-This make sense, 2 disks raid1 reshape to raid5 should not be broken.
-
---=20
-Thanks,
-Kuai
+Johan
