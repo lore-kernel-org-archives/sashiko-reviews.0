@@ -1,36 +1,33 @@
-Received: from mta1.migadu.com (out-230.mta1.migadu.com [95.215.58.230])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2873B5DE9
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.230
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E451442B1D;
+	Mon,  7 Sep 2026 12:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788783289; cv=none; b=keNx1snejAbFR+CpWF02376suZS0QrdaCNnlLslmCK1XOaEm+Au3MiClH8fHjomm1mf1lo95M7Ap74VLygs79ggo/yrvBGaNk33LO114GeO3L80Q35CNMtJcQTSYdavvc4SPlv7YvR2LfT6xD79woR185Cc1x4Ut3GrzVI72esk=
+	t=1788783653; cv=none; b=BeJkQdzByLEGonrjo4b6MTSqD5K9oslx+Fbp69+WV2y0sVacurFJC7NuhBQibaGoCaI+4B0nm/iLTXa24nROkmzZKp91Yt6Qf31FVI3PxEpBYv8v9vw5LmA6dNQpmNEjfAbTisSEhUbZ78OqZbuxZjvMXwdYPY2Der/eVu30Kt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788783289; c=relaxed/simple;
-	bh=ak/cFN/g44zT2VeKUlPdzjtHjNC1T2zdhoIgW7H/oPw=;
+	s=arc-20240116; t=1788783653; c=relaxed/simple;
+	bh=YRMJtNQQqjkRAyFPmB5mHo2sxevdzxb5TBdmjNJe4XU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iy5uQPGC4V4cY6XxlYpDzBy4ArlGoYQ7aMOjNdlA3/ccSMkElG1KgAWBd9wbbIIMPMzUXt09oDEc4LFlyxnYpm4NGF1+GBFQWm+85Rx2fx8+HBzokxA/S3e1hcdUm5f0uFo6B0SAQzkCRECf+xYukWw6hH8d3sBO8tTL+UQYcX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FUuP+MrL; arc=none smtp.client-ip=95.215.58.230
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=PHudK0jsH5VH5HnRBAJKHgLMfLuyiag2ko60KtdnUNWTeOtUaJEwcSWLpffi7rdwIeA4g6JIpnfzDIhs9qnquFwg7iKNd7l5Fw7gfKSYjtSIxNdL2wzGyiWVXAugWxp+bfibvNjOMFud0BWl6yvN6qUe/YfPbh5ogsVl6531zbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IRd/Fwnc; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FUuP+MrL"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ak/cFN/g44zT2VeKUlPdzjtHjNC1T2zdhoIgW7H/oPw=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788783285; v=1; x=1789388085;
- b=FUuP+MrL44Hwh22mnV56ekngCSMPAJpzQAesaziWKsQWipZs+KIg0n12PxMuy0c579J1YyKG
- nBWJBuaEe2T0Gu9XYaf58IN3OhsogJ3vvoWRmRGseBFqoZrG06FF4AHz7BJQU/jGS0FlrtuiUL2
- V2vfUFXk7VHeADLDop6xrDPM=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id c657c2c61bbabbb8;
-	Mon, 07 Sep 2026 12:14:45 +0000
-X-Mizu-Trace-ID: c657c2c61bbabbb8
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <ae4ef478-31ac-4454-baaa-1bdd2c9db0d5@linux.dev>
-Date: Mon, 7 Sep 2026 13:14:40 +0100
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IRd/Fwnc"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 43FFD1476;
+	Mon,  7 Sep 2026 05:20:46 -0700 (PDT)
+Received: from [10.57.49.168] (unknown [10.57.49.168])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3C9BB3F7D8;
+	Mon,  7 Sep 2026 05:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788783650; bh=YRMJtNQQqjkRAyFPmB5mHo2sxevdzxb5TBdmjNJe4XU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IRd/FwncUQaDNv6AQd9Gp4p+ICxvyy6e5lnDjWt/Br0iwGSEZ/VGid22p+7dljYHc
+	 ATs14CUj0HTXEPiPopbopOd1Z5FA4UrHp2oMj+ZhcJSipBBU0Joy1sO//A8Da6B4vu
+	 eQj2pYQOftjWVsr6zKfnyIbk3OWvv1dK0+VheVVs=
+Message-ID: <8ac9a39f-d54a-4a97-b44d-aeaad944f374@arm.com>
+Date: Mon, 7 Sep 2026 13:20:47 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,68 +35,135 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 19/27] scsi-multipath: provide callbacks for path state
-To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260907105021.1763236-1-john.g.garry@oracle.com>
- <20260907105021.1763236-20-john.g.garry@oracle.com>
- <20260907120319.678721F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.garry@linux.dev>
-In-Reply-To: <20260907120319.678721F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v17 7/7] firmware: arm_rmm: Add wrappers for Realm related
+ RMI commands
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+References: <20260907095942.1140734-1-suzuki.poulose@arm.com>
+ <20260907095942.1140734-8-suzuki.poulose@arm.com>
+ <20260907101022.DDDFD1F00A3A@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20260907101022.DDDFD1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/7/26 13:03, sashiko-bot@kernel.org wrote:
+On 07/09/2026 11:10, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] scsi_mpath_available_path() erroneously returns true for ALUA unavailable/offline states, leading to infinite I/O requeuing.
+> - [High] RMI wrapper functions silently discard output registers on SMC call errors, preventing error recovery and leaking memory.
 > --
 > 
-> commit 4cf5187795e3a1d7ac00b1645759bf9140204feb
-> Author: John Garry <john.garry@linux.dev>
+> commit a6c85c25d264d328a0bb8014d88418e614ccef39
+> Author: Steven Price <steven.price@arm.com>
 > 
-> scsi-multipath: provide callbacks for path state
+> firmware: arm_rmm: Add wrappers for Realm related RMI commands
 > 
-> This patch provides callbacks for .is_disabled, .is_optimized, and
-> .available_path. These use scsi_device.sdev_state and access_state, which
-> will be driven by ALUA.
+> Introduce wrappers for the RMI functions needed for creating and managing
+> realm guests. This will be used by the KVM to manage the Realms.
 > 
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index 12200664ed676..4055b86c83a03 100644
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
->> @@ -306,7 +306,56 @@ static struct bio *scsi_mpath_clone_bio(struct bio *bio)
+>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi-cmds.h
+>> --- a/include/linux/arm-rmi-cmds.h
+>> +++ b/include/linux/arm-rmi-cmds.h
+> 
 > [ ... ]
->> +static bool scsi_mpath_available_path(struct mpath_device *mpath_device)
+> 
+>> +static inline long rmi_rtt_data_map(unsigned long rd,
+> [ ... ]
 >> +{
->> +	struct scsi_mpath_device *scsi_mpath_dev =
->> +				to_scsi_mpath_device(mpath_device);
->> +	struct scsi_device *sdev = scsi_mpath_dev->sdev;
->> +	enum scsi_device_state sdev_state = READ_ONCE(sdev->sdev_state);
+> [ ... ]
+>> +	ret = rmi_sro_execute(&regs);
 >> +
->> +	if (sdev_state == SDEV_RUNNING || sdev_state == SDEV_QUIESCE ||
->> +	    sdev_state == SDEV_BLOCK || sdev_state == SDEV_CREATED_BLOCK)
->> +		return true;
->> +
->> +	return false;
->> +}
+>> +	if (ret == RMI_SUCCESS && out_top)
+>> +		*out_top = regs.a1;
 > 
 > [Severity: High]
-> Does this logic bypass queue_if_no_path limits when devices are in ALUA
-> offline or unavailable states?
+> If the RMM returns an error like RMI_ERROR_RTT partway through, does this
+> discard the intermediate progress in regs.a1 by gating it on RMI_SUCCESS?
 > 
-> Since this only checks sdev_state, if all paths transition to an ALUA
-> offline or unavailable state but remain physically connected (SDEV_RUNNING),
-> would this function still return true?
+> If out_top is lost, it seems KVM wouldn't know where the operation stopped,
+> making proper error recovery or partial mapping cleanup impossible.
+> 
+> [ ... ]
+> 
+>> +static inline long rmi_rtt_data_unmap(unsigned long rd,
+> [ ... ]
+>> +{
+> [ ... ]
+>> +	ret = rmi_sro_execute(&regs);
+>> +
+>> +	if (ret == RMI_SUCCESS) {
+>> +		if (out_top)
+>> +			*out_top = regs.a1;
+>> +		if (out_range)
+>> +			*out_range = regs.a2;
+>> +		if (out_count)
+>> +			*out_count = regs.a3;
+>> +	}
+> 
+> [Severity: High]
+> Can this lead to a leak of physical pages?
+> 
+> When an error occurs (e.g., RMI_ERROR_RTT due to state conflicts), the RMM
+> populates the output registers with the number of successfully unmapped
+> pages. Because this is gated behind RMI_SUCCESS, losing out_count means KVM
+> loses track of how many physical pages were written to the output address
+> list.
+> 
 
-ALUA support will be properly added next
+The output parameters are only valid when the result is RMI_SUCCESS as
+described by the success conditions.
+
+
+> [ ... ]
+> 
+>> +static inline long rmi_rtt_destroy(unsigned long rd,
+> [ ... ]
+>> +{
+> [ ... ]
+>> +	long ret = rmi_sro_execute(&regs);
+>> +
+>> +	if (ret == RMI_SUCCESS) {
+>> +		if (out_rtt)
+>> +			*out_rtt = regs.a1;
+>> +		if (out_top)
+>> +			*out_top = regs.a2;
+>> +	}
+> 
+> [Severity: High]
+> Does discarding these outputs on error prevent diagnosing the destruction
+> failure?
+> 
+> If an RMI_ERROR_RTT occurs, the live IPA location is returned in the output
+> registers, but it looks like it gets dropped here since the return code is
+> not RMI_SUCCESS.
+
+No, the RMM only returns the out_top when the error is RMI_SUCCESS.
 
 > 
-> If it returns true for ALUA offline paths, could mpath_bdev_submit_bio()
-> indefinitely queue I/O in the requeue_list, ignoring the user's
-> configuration for timeout and failure?
+> [ ... ]
 > 
-> Should this function also check sdev->access_state to prevent treating
-> paths as available when they are in ALUA states that can never serve I/O?
+>> +static inline long rmi_rtt_unprot_unmap(unsigned long rd,
+> [ ... ]
+>> +{
+> [ ... ]
+>> +	long ret = rmi_sro_execute(&regs);
+>> +
+>> +	if (ret == RMI_SUCCESS) {
+>> +		if (out_top)
+>> +			*out_top = regs.a1;
+>> +		if (out_range)
+>> +			*out_range = regs.a2;
+>> +		if (out_count)
+>> +			*out_count = regs.a3;
+>> +	}
+> 
+> [Severity: High]
+> Similar to the data unmap wrapper above, does dropping out_count on a
+> non-success return code leak physical pages for unprotected memory?
 > 
 
+
+Same here.
+
+Suzuki
