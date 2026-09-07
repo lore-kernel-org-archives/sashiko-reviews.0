@@ -1,132 +1,142 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AD03C279D;
-	Mon,  7 Sep 2026 17:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7D548B38F;
+	Mon,  7 Sep 2026 17:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788801301; cv=none; b=iq+jXN77ewvVAlUVBZ2RfroyQyiLzp5BKWDin8oUkHeGXd6dhoBSzQXd7y9anS0MWyf+AsytE2jdDpD7GGHPLcovGZtQW3yj0bBPO64MG7N03og6h54iCRk4FUEMzenWAwlpeqTa3p5C6qSgkTmlNzAzd3pyoZVV5RWOS0YfH44=
+	t=1788801934; cv=none; b=DlEnK1QVQZofs1t9I+R7qat9KbLq+64t5Igv4X4/uGvffYplqnesBzzQ3Ce+LuIJI3bClNyoyjtTQksAp4rlh9oM1Njw9Qdj/0hH/Ayx2o47z+pasvOqnkrPlUErh2hggDTysZ8p7wMt/87EH/nBpSz8DrgHTMOdkFCK9g/UDnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788801301; c=relaxed/simple;
-	bh=GOUeUzYZmKCSbi7qH+BOLTMfPFhWvFfknY3xS/iBpmw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V+/QNCSyHAc0Ly28BBQpj3Zzp3kU3e9RRpcpjfkUeJIdvBAY9i3pgjUGbx7aDdJM7hGBTO8sUqHzFNA4uCTYbvpq9QtU+CwjJUN8lCUcnsrdRNgj/z381mLMyoW6l1V1MuNOqLa3VoM8oOsj4fYSRQ8M/UmWZtWQQEY/XSegZkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-X-PTX-Original-Recipient: sashiko-reviews@lists.linux.dev
-X-PTX-Original-Recipient: linux-sunxi@lists.linux.dev
-X-PTX-Original-Recipient: kernel@pengutronix.de
-X-PTX-Original-Recipient: mkl@pengutronix.de
-Received: from [0.0.0.0] (ptz.office.stw.pengutronix.de [IPv6:2a0a:edc0:0:900:1d::77])
-	(Authenticated sender: jre@pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 9859F200883;
-	Mon, 07 Sep 2026 19:14:51 +0200 (CEST)
-Message-ID: <982d45ed-607c-4ce4-99de-27948f11cd12@pengutronix.de>
-Date: Mon, 7 Sep 2026 19:14:51 +0200
+	s=arc-20240116; t=1788801934; c=relaxed/simple;
+	bh=/TLJKIItMlTjALtLWIEg9pF6gOn+Sc3rV4Hz+/eULl4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mbUqv9BYYASxNQulyhLqMfyLu5lXqKyRPGOQ4qS0+aQ5lQDVRqeBpzTQ5tunfvMybVhxC/fS0+CTBdUUPYhnySV030XCUpiskTk4HieHvLlTmMvNH4ggf8omSQwCcWtGAtMRUeKlNYAAN5yJPzi3UEAN7KSoxpnJVfmv57seZLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=OFKkVi2d; arc=none smtp.client-ip=212.27.42.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="OFKkVi2d"
+Received: from L30177.local (unknown [213.36.7.12])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id C9259780504;
+	Mon,  7 Sep 2026 19:25:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1788801929;
+	bh=/TLJKIItMlTjALtLWIEg9pF6gOn+Sc3rV4Hz+/eULl4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OFKkVi2dZ82FfEB1KdofrdON2/mwosPY+qmA2JmgkLLiWETiLQYtlXrJBHzD7iD8Z
+	 +6ABlaC6twJp5KS2CZhX35VmXENeFf5xsZKomvOkxdxo5NTg4FRXp57x0SR70skbQ6
+	 wRbAy7BtUqSUv6kgOKoaw7Y0DrxWqETMYS2AvYQ+avQaLlNcC6hOiSxpiXSRbDnfwU
+	 RSky9uDJ9uldHUZ/LNi3JX2Q3h/QJZpbDh3p5o9d8fc+N9U+zQj5WemLZQlL5+NEQa
+	 Yc0XTvXerkIiVjOlwwel5SWi1BZix3v5Ec8tCIhn+oWbivUSxhwCgb+O2oBlvyPtt9
+	 dNlJnUJpkRXBg==
+Date: Mon, 7 Sep 2026 19:25:22 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: freescale: add Nodebox v3 CPU Module
+Message-ID: <ap7zgs0MlbIod15q@L30177.local>
+References: <20260907-for-upstream-nbxv3-dts-v1-0-f43fd0028b78@free.fr>
+ <20260907-for-upstream-nbxv3-dts-v1-3-f43fd0028b78@free.fr>
+ <20260907144050.C20251F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] spi: spi-sun4i: sun4i_spi_handler(): fix race
- condition between transfer completion and RX FIFO interrupt
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sunxi@lists.linux.dev, "kernel@pengutronix.de"
- <kernel@pengutronix.de>, Marc Kleine-Budde <mkl@pengutronix.de>
-References: <20260907-spi-sun4i-fixes-v2-0-7e805662b9bd@pengutronix.de>
- <20260907-spi-sun4i-fixes-v2-4-7e805662b9bd@pengutronix.de>
- <20260907154447.0A5161F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Jonas Rebmann <jre@pengutronix.de>
-In-Reply-To: <20260907154447.0A5161F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907144050.C20251F00A3A@smtp.kernel.org>
 
-Dear humans,
+Hi M. Bot,
 
-On 2026-09-07 17:44, sashiko-bot@kernel.org wrote:
-> spi: spi-sun4i: sun4i_spi_handler(): fix race condition between transfer completion and RX FIFO interrupt
-> 
-> This commit moves RX-FIFO draining back to sun4i_spi_transfer_one() and
-> disables all interrupts in the IRQ handler when processing the transfer
-> complete interrupt to close a race window.
-> 
->> diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
->> index 8a9dcd3b6b8f4..ea8be0170fbfd 100644
->> --- a/drivers/spi/spi-sun4i.c
->> +++ b/drivers/spi/spi-sun4i.c
-> 
-> [ ... ]
-> 
->> @@ -357,8 +359,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
->>   
->>   	/* Transfer complete */
->>   	if (status & SUN4I_INT_CTL_TC) {
->> -		sun4i_spi_write(sspi, SUN4I_INT_STA_REG, SUN4I_INT_CTL_TC);
->> -		sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
->> +		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
-> 
-> [Severity: High]
-> Does this change leave the Transfer Complete (TC) bit active in the status
-> register?
+Thanks for the review. Addressed in v2:
+  https://lore.kernel.org/all/20260907-for-upstream-nbxv3-dts-v2-0-6b4afd36180b@free.fr/
 
-Temporarily.
+> > +DTC_FLAGS_fsl-lx2160a-nbxv3 := -Wno-interrupt_map
+> > +dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-lx2160a-nbxv3.dtb
+> >  DTC_FLAGS_fsl-lx2162a-clearfog := -Wno-interrupt_map
+>
+> [Severity: Low]
+> Does this break the alphabetical ordering of the dtbs? It looks like
+> fsl-lx2160a-nbxv3.dtb is being inserted after fsl-lx2160a-rdb.dtb instead of
+> before fsl-lx2160a-qds.dtb.
 
-> It looks like replacing the write to SUN4I_INT_STA_REG with a write to
-> SUN4I_INT_CTL_REG masks the interrupt, but fails to acknowledge and clear
-> the pending status bit.
-> 
-> If a spurious interrupt fires during the setup of a new transfer, could this
-> cause the new transfer to complete prematurely? For example, in
-> sun4i_spi_transfer_one(), there is a window between reinitializing the
-> completion and clearing the status register:
-> 
-> 	reinit_completion(&sspi->done);
-> 	sspi->tx_buf = tfr->tx_buf;
-> 	sspi->rx_buf = tfr->rx_buf;
-> 	sspi->len = tfr->len;
-> 
-> 	/* Clear pending interrupts */
-> 	sun4i_spi_write(sspi, SUN4I_INT_STA_REG, ~0);
-> 
-> If a spurious interrupt arrives just before SUN4I_INT_STA_REG is cleared,
-> the handler will read the stale TC bit and call complete(&sspi->done). The
-> wait_for_completion_timeout() would then return immediately, potentially
-> leading to use-after-free of DMA buffers or silent data corruption since the
-> hardware might still be active.
+Yes. Fixed in v2: fsl-lx2160a-nbxv3.dtb before fsl-lx2160a-qds.dtb.
 
-Zeroing INT_CTL_REG disables all interrupts.
+> > +/ {
+> > +    model = "Free Mobile Nodebox v3 CPU Module (LX2160A)";
+> > +    compatible = "freemobile,nbxv3", "fsl,lx2160a";
+> > +};
+>
+> [Severity: Low]
+> Is the "freemobile,nbxv3" compatible string documented in the device tree
+> bindings? Missing documentation here might trigger warnings during a
+> make dtbs_check run.
 
-reinit_completion() does *not* enable interrupts early in
-sun4i_spi_transfer_one():
+It is.
 
-	static inline void reinit_completion(struct completion *x)
-	{
-		x->done = 0;
-	}
+patch 2 of this series, "dt-bindings: arm: fsl: add freemobile,nbxv3 board", 
+and patch 1 adds the vendor prefix.
 
-TC in SUN4I_INT_STA_REG is then write-1-cleared:
+Both precede the DTS, so dtbs_check should be ok.
 
-	sun4i_spi_write(sspi, SUN4I_INT_STA_REG, ~0);
+> > +&fspi {
+> > +    pinctrl-names = "default";
+> > +    pinctrl-0 = <&fspi_dqs_sck_cs10_pins>, <&fspi_data30_pins>,
+> > +            <&gpio1_31_28_pins>;
+> > +};
+>
+> [Severity: Medium]
+> Does assigning the pinctrl group for GPIOs 28-31 to the fspi device create
+> a conflict with the gpio-hogs defined in the gpio1 controller?
+>
+> If the pinmux controller enforces strict muxing, the gpio-hog nodes for
+> the ethernet switch and flash resets will fail to claim the pins because
+> they have already been claimed by fspi's pinctrl here. Furthermore, tying
+> unrelated system resets to the fspi peripheral's pinctrl lifecycle means
+> that if the fspi driver fails to probe, or is unbound, these components
+> will lose their configuration.
 
-Only after that, later in sun4i_spi_transfer_one(), interrupts are
-enabled in sun4i_spi_transfer_one():
+In v2 the group is applied by &gpio1 itself:
+the controller that owns those lines and their hogs, and fspi's pinctrl-0
+lists only its own pins.
 
-	/* Enable the interrupts */
-	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
-					 SUN4I_INT_CTL_RF_F34);
+> > +    /* Ethernet switch reset, released: electrical high */
+> > +    ethsw-reset-hog {
+> > +        gpio-hog;
+> > +        gpios = <31 GPIO_ACTIVE_HIGH>;
+> > +        output-high;
+> > +        line-name = "ethsw-reset#";
+> > +    };
+> > +};
+>
+> [Severity: Low]
+> Is this active-low hardware reset signal defined with the correct semantic
+> polarity? Defining an active-low reset as GPIO_ACTIVE_HIGH and manually
+> forcing the electrical state with output-high bypasses the device tree
+> coding standards, which expect the hardware's active state to be accurately
+> reflected in the bindings.
 
-Hence, the omission of clearing the TC bit register in
-sun4i_spi_handler() poses no risk of the described issue.
+Agreed. done with v2
 
-Regards,
-Jonas
+> > +    /* Low enables the carrier-side EMDIO2 level translator */
+> > +    ethsw-mdio-en-hog {
+> > +        gpio-hog;
+> > +        gpios = <25 GPIO_ACTIVE_HIGH>;
+> > +        output-low;
+> > +        line-name = "ethsw-mdio-en";
+> > +    };
+> > +};
+>
+> [Severity: Low]
+> Similarly, this active-low enable signal is defined as GPIO_ACTIVE_HIGH
+> while using output-low to force the electrical low. Should this be defined
+> as GPIO_ACTIVE_LOW instead to reflect its true semantic polarity?
 
--- 
-Pengutronix e.K.                           | Jonas Rebmann               |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9    |
+Agreed, see v2.
+
+Thanks,
+  Vincent
