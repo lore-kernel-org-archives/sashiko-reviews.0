@@ -1,163 +1,218 @@
-Received: from mta1.migadu.com (out-28.mta1.migadu.com [95.215.58.28])
+Received: from mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E0C35B136
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 09:18:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED620448B89
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 09:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788772709; cv=none; b=J5EZJ9uTmLASGSStwxBM/iIKdPwHqZ4Y4PrufHnmTQHd8LmEZoO6uH6GPvxIYHo2sH1nz557ViQBJ/ehwW0M5enCHS21zEE0DW+btEegOsJMr64xxHYF8bnsv76PNuK6IGQ2pSFHEjFrsOlngvkqBUjAgwrPmzBsC1S5O9VIeN8=
+	t=1788773225; cv=none; b=bkkJcdwsgCm6YqM6N0X6gAsBozwqmxzAAX7d51KWwClH4WeWwLG7mChfXjmUPPET7MinndxfE25c8c0qopeiFz8quLOtjPN+ckTW54U9GkAJ9VV+hh4tqgtHDZXzHCOXO8pC0RAtzX/2bxnUVHkkVNHndXLx+VR90cj71quDIk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788772709; c=relaxed/simple;
-	bh=NMmnruQcSvMUYtst/pdiGCEhTm1knA3CnbwlW6NUIR4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cr6oQCFMFtIGKtU13xF/CEr7aBLlf350YkXJsR0A7RcDRvPTOZIBYfnH6wK8Go1qTR0e+9mm43oAPaDJr/43oAigOGFoUYit6bRT0dqbR1zaOtEQVMS4EY4YFGi+DtLTNIUGS5qmuL9hkgjs5NcvD+6/TURHU82UY716kdoizRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TeOdeY4v; arc=none smtp.client-ip=95.215.58.28
+	s=arc-20240116; t=1788773225; c=relaxed/simple;
+	bh=kEupld+SgHbnNxdb3tq/awQ0PP5s3GL6aSkheElec1k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uvJ4PXKFwiOY9hF4J1V/QFBJ31UyzGTg+2SS9pyOQyk2ys+CKRfo2OYdFXwJb36Gf5sguXFg7RtwpEV1xJjV5ugiExIokg+sfbD2wQlJgJxxMK/1O4QuH/SUrngvZltyMMPCCtMAqGuVVKXfxeu9byFEv5pWL2Gottjqi9PYCTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=UDUPNglY; arc=none smtp.client-ip=95.215.58.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TeOdeY4v"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="UDUPNglY"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=NMmnruQcSvMUYtst/pdiGCEhTm1knA3CnbwlW6NUIR4=;
+DKIM-Signature: a=rsa-sha256; bh=kEupld+SgHbnNxdb3tq/awQ0PP5s3GL6aSkheElec1k=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788772704; v=1; x=1789377504;
- b=TeOdeY4vMeeHKr8mVzKHtkPAYFJgmhd4ymOhClDCa27sHHNqa3a1AcFC9aDYA+/g87D1ad7J
- qkStZLz9gdxmrPcVGctdLVNQQ5O8BcmYHVFFuvDnR5IxwlaxQpcDjB8Zw9I1JQevajkYXfqUyFb
- QEiMMvT3sH69Z4F9QX0zc+Nw=
+ t=1788773216; v=1; x=1789378016;
+ b=UDUPNglYv5yGvS9h/XcwO3uYJHGs6GTW1JUb/ylV7CNBfrg8zjiz2bn+96RPYpSGEgM7aMvf
+ oi18Klm+q+06fY2B5q+E7FTsi0c1YRDectTW0Z5ClYjn5EcMXkx+Jhf0I/XXefQ7DqKe+SrcDhP
+ UzqLF952kCNqLxE9/ibIK728=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 37a3ca8bc53c3319;
-	Mon, 07 Sep 2026 09:18:24 +0000
-X-Mizu-Trace-ID: 37a3ca8bc53c3319
+Received: by smtp.migadu.com with ESMTPS id 4443323dd04fce52;
+	Mon, 07 Sep 2026 09:26:46 +0000
+X-Mizu-Trace-ID: 4443323dd04fce52
 X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17359so7355e87.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 02:18:20 -0700 (PDT)
-X-Gm-Message-State: AFuF++lMht2oQMFJP/PzjlfVwKCJoOireEfut2XZHuqEt7umQOTw/mq4
-	MBJ5IBHK/fHdpO1fLdI6XvW7tISmCS/vLLsIT7DLwQfuQPZXN1GCqDtm7JOtjLyeRDGdAAWrDgq
-	RbsSCjYALXCGdXSsM0+Br5eQ+kj2E3jwIXwkZuWA6
-X-Received: by 2002:a05:6512:61a1:b0:5ae:b726:5f1f with SMTP id
- 2adb3069b0e04-5b74d1c3ec3mr131418e87.8.1788772699408; Mon, 07 Sep 2026
- 02:18:19 -0700 (PDT)
+Message-ID: <6cb23255-cf0f-41af-a097-d969e659e2f8@linux.dev>
+Date: Mon, 7 Sep 2026 17:27:39 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260907070002.3333525-1-fuad.tabba@linux.dev>
- <20260907070002.3333525-16-fuad.tabba@linux.dev> <20260907072924.EA5AE1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260907072924.EA5AE1F00A3A@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 7 Sep 2026 10:17:42 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzhCQ0HnqDp4_4QRTSQy65RTEWRt1R6qztkMFS8TVEPvQ@mail.gmail.com>
-X-Gm-Features: AcwNN1XT2kmW6rd0sv52k70Qp3A_rDasEaISxdCdpQZOVJZor45JsdmZKGbvCVg
-Message-ID: <CA+EHjTzhCQ0HnqDp4_4QRTSQy65RTEWRt1R6qztkMFS8TVEPvQ@mail.gmail.com>
-Subject: Re: [PATCH v2 15/17] KVM: arm64: Reject host power-on of a vCPU that
- EL2 holds powered off
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/4] alloc_tag: release the reservation when populate
+ fails
+To: Suren Baghdasaryan <surenb@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Petr Pavlu <petr.pavlu@suse.com>
+Cc: linux-modules@vger.kernel.org, sashiko-reviews@lists.linux.dev
+References: <20260907062414.106873-1-hao.ge@linux.dev>
+ <20260907062414.106873-5-hao.ge@linux.dev>
+ <20260907064336.E33BE1F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Hao Ge <hao.ge@linux.dev>
+In-Reply-To: <20260907064336.E33BE1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 7 Sept 2026 at 08:29, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
+
+
+On 2026/9/7 14:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] The patch introduces a kernel crash by freeing the maple tree entry without rolling back module_tags.size on failure.
+> 
 > Pre-existing issues:
-> - [High] Race condition between EL2 and Host PSCI handling leads to state=
- desynchronization and guest failure (INTERNAL_FAILURE)
-
-Good one, but not preexisting and not high...
-
+> - [High] vmap_pages_range() failure in vm_module_tags_populate() leaves physical pages mapped while freeing them, leading to Use-After-Free.
+> - [High] AB-BA Deadlock between procfs read and module loading via shutdown_mem_profiling().
+> - [Medium] Memory leak of percpu counters when module falls back to standard section allocation.
 > --
->
-> commit 80fb3e3ea2b949c35be53322315a43ff86b0f3ea
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Reject host power-on of a vCPU that EL2 holds powered off
->
-> A protected vCPU's power state belongs to EL2, which changes it only
-> on the guest's own PSCI calls. KVM_SET_MP_STATE(RUNNABLE) on a vCPU
-> EL2 holds powered off changes the host's copy alone, and the guest's
-> next CPU_ON of that vCPU then fails: mp_state is no longer STOPPED, so
-> the host returns ALREADY_ON, which EL2 turns into INTERNAL_FAILURE.
-> SUSPENDED has the same effect.
->
-> [ ... ]
->
-> > diff --git a/arch/arm64/kvm/psci.c b/arch/arm64/kvm/psci.c
-> > index e3db84400d1f8..208289a08099f 100644
-> > --- a/arch/arm64/kvm/psci.c
-> > +++ b/arch/arm64/kvm/psci.c
-> > @@ -94,6 +94,9 @@ static unsigned long kvm_psci_vcpu_on(struct kvm_vcpu=
- *source_vcpu)
-> >        */
-> >       smp_wmb();
-> >
->
+> 
+> commit 09d0b9820f6ab861e4c9680b44a685c8658fb571
+> Author: Hao Ge <hao.ge@linux.dev>
+> 
+> alloc_tag: release the reservation when populate fails
+> 
+> vm_module_tags_populate() can fail after a reservation is stored in the
+> maple tree. The error return previously leaked the entry because a failed
+> load never unloads the module. This patch calls release_module_tags()
+> on failure to free the reservation.
+> 
+>> diff --git a/mm/alloc_tag.c b/mm/alloc_tag.c
+>> index 112a014d4b890..c11813cd9e153 100644
+>> --- a/mm/alloc_tag.c
+>> +++ b/mm/alloc_tag.c
+>> @@ -963,6 +963,7 @@ static void *reserve_module_tags(struct module *mod, unsigned long size,
+>>  			shutdown_mem_profiling(true);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can a concurrent CPU_OFF and CPU_ON cau=
-se
-> state desynchronization between EL2 and the host?
->
-> In kvm_psci_vcpu_on(), there is an early return path before this hunk:
->
->         spin_lock(&vcpu->arch.mp_state_lock);
->         if (!kvm_arm_vcpu_stopped(vcpu)) {
->                 if (kvm_psci_version(source_vcpu) !=3D KVM_ARM_PSCI_0_1)
->                         ret =3D PSCI_RET_ALREADY_ON;
->                 else
->                         ret =3D PSCI_RET_INVALID_PARAMS;
->
->                 goto out_unlock;
->         }
->
-> If vCPU 0 executes CPU_OFF, EL2 transitions it to OFF and exits to the ho=
-st.
-> Concurrently, if vCPU 1 executes CPU_ON targeting vCPU 0, EL2 transitions=
- it
-> to ON_PENDING and exits to the host.
->
-> If the host thread for vCPU 1 acquires mp_state_lock before the host thre=
-ad
-> for vCPU 0, the host sees mp_state as RUNNABLE, rejects the CPU_ON, and
-> returns ALREADY_ON. EL2 then turns this into an INTERNAL_FAILURE, which l=
-eads
-> to the permanent loss of a vCPU.
->
-> Taking this early return path also skips the newly introduced
-> pkvm_powered_off =3D false update, compromising the accuracy of the track=
-ing.
->
-> Could this early return condition in kvm_psci_vcpu_on() be updated to pro=
-perly
-> account for pending EL2 state transitions?
+> This isn't a bug introduced by this patch, but could calling
+> shutdown_mem_profiling(true) here risk an AB-BA deadlock?
+> 
+> A read to /proc/allocinfo enters proc_reg_read_iter(), taking an 'in_use'
+> reference on the proc entry, then calls allocinfo_start() which waits for
+> down_read(&alloc_tag_cttype->mod_lock).
+> 
+> Concurrently, module loading calls codetag_alloc_module_section(), holding
+> down_write(&alloc_tag_cttype->mod_lock).
+> 
+> If reserve_module_tags() encounters an error, it calls
+> shutdown_mem_profiling(true), which invokes remove_proc_entry().
+> 
+> Since remove_proc_entry() blocks waiting for the 'in_use' reference count
+> to drop to zero, and the procfs reader blocks on the mod_lock held by the
+> writer, doesn't this create a system hang during a module load failure?
+> 
+>>  			pr_err("Failed to allocate memory for allocation tags in the module %s. Memory allocation profiling is disabled!\n",
+>>  			       mod->name);
+>> +			release_module_tags(mod, false);
+> 
+> [Severity: Critical]
+> Will this new call to release_module_tags() cause a kernel crash on a
+> subsequent module load?
+> 
+> In reserve_module_tags(), module_tags.size is optimistically updated
+> (module_tags.size = offset + size;) before attempting to allocate physical
+> memory via vm_module_tags_populate().
+> 
+> If population fails, this patch frees the maple tree entry, but
+> module_tags.size is left artificially inflated.
+> 
+> A subsequent module load will search the maple tree and reuse this freed gap.
+> Because module_tags.size is already inflated, the allocation check bypasses
+> vm_module_tags_populate(), returning an unmapped virtual address. Can copying
+> section data into this address then trigger a fatal page fault?
+> 
 
-On the base a protected guest's PSCI is handled at the host, where
-AFFINITY_INFO and CPU_ON read the same mp_state. At EL2, AFFINITY_INFO
-already reports the target OFF, so a guest doing CPU hotplug can issue
-its CPU_ON before the target's host thread has handled the CPU_OFF
-exit.
+I see.
 
-The result is one failed CPU_ON, not a lost vCPU or a stale
-pkvm_powered_off: the rollback returns EL2 to OFF, the target's thread
-then sets STOPPED and the flag, and the next CPU_ON succeeds.
+No, not for a subsequent load. The failure path shuts profiling
+down before returning:
 
-v3 will report AFFINITY_INFO from the host, as the base does, so a
-guest that polls it before CPU_ON, as Linux does, can't hit the
-window.
+grow_res = vm_module_tags_populate();
+if (grow_res) {
+	shutdown_mem_profiling(true); /* mem_profiling_support = false */
+	...
+	release_module_tags(mod, false);
+	 return ERR_PTR(grow_res);
+}
 
-/fuad
+and any later load bails out in needs_section_mem() long before it
+reaches reserve_module_tags():
+	if (!mem_profiling_support)
+		return false;          
 
->
-> > +     /* EL2 has committed the protected vCPU to ON_PENDING to get here=
-. */
-> > +     vcpu->arch.pkvm_powered_off =3D false;
-> > +
-> >       WRITE_ONCE(vcpu->arch.mp_state.mp_state, KVM_MP_STATE_RUNNABLE);
-> >       kvm_vcpu_wake_up(vcpu);
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260907070002.33=
-33525-1-fuad.tabba@linux.dev?part=3D15
+so no new reservation is made and the unmapped address is never
+handed out.
+
+But this reminds me of another race condition:
+
+CPU0: failing load                 	CPU1: concurrent load                                                                           
+----------------------             	---------------------------
+needs_section_mem(): true         	needs_section_mem(): true
+reserve_module_tags(): reserve the gap,
+	module_tags.size = end
+	populate() fails, gap released
+                                  	reserve_module_tags(): reuse the gap,
+                                  	end <= size -> skip populate
+                                  	memcpy() -> page fault
+
+I have a fix for this, but I'd like to wait for Petr and Suren to review the
+remaining parts before sending it out.
+
+Thanks
+Best Regards
+Hao
+
+> [Severity: Medium]
+> This is a pre-existing issue, but might the use of release_module_tags()
+> when falling back to a standard section allocation leak percpu counters?
+> 
+> If tags are not addressable, reserve_module_tags() calls
+> release_module_tags(mod, false) to remove the module from the maple tree
+> and returns -EAGAIN.
+> 
+> The module loader catches -EAGAIN and falls back to a normal section
+> allocation. Later, load_module() successfully allocates percpu counters for
+> the tags.
+> 
+> On unload, release_module_tags(mod, true) is called to free the counters.
+> However, because the module is no longer in the maple tree, the search fails
+> and exits early:
+> 
+> mm/alloc_tag.c:release_module_tags() {
+>     ...
+>     if (!val) /* module not found */
+>         goto out;
+>     ...
+> }
+> 
+> Are the percpu counters allocated during load_module() permanently leaked
+> in this scenario?
+> 
+>>  			return ERR_PTR(grow_res);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is there a risk that the failure path of
+> vm_module_tags_populate() leaves dangling PTEs causing a Use-After-Free?
+> 
+> In vm_module_tags_populate(), vmap_pages_range() maps allocated pages into
+> the kernel virtual address space.
+> 
+> If it fails, it returns an error but may leave successfully mapped PTEs
+> active in the page tables. The error path calls release_pages() to free the
+> physical pages back to the allocator, but fails to call vunmap_range():
+> 
+> mm/alloc_tag.c:vm_module_tags_populate() {
+>     ...
+>     if (nr < more_pages || vmap_pages_range(...) < 0) {
+>         release_pages(arg, nr);
+>         return -ENOMEM;
+>     }
+>     ...
+> }
+> 
+> Could this leave dangling PTEs with PAGE_KERNEL permissions pointing to
+> freed pages, risking data corruption when the pages are reallocated?
+> 
+>>  		}
+>>  	}
+> 
