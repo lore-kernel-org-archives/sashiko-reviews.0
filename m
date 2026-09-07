@@ -1,163 +1,246 @@
-Received: from mta1.migadu.com (out-17.mta1.migadu.com [95.215.58.17])
+Received: from mta1.migadu.com (out-24.mta1.migadu.com [95.215.58.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961BC45D188
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F9846983C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 12:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788782426; cv=none; b=cKINhNt9azMeM03qrn7jwzjVZkZ8DCUu+lpu5TKDb5iCKpfiT1cgFPOLqJ0B3X3SuMem4dEwtWcnukFG8bY3qRlVniqstOpzni9PnjvZXYAfauzqEBouPwdXh0FG7JRDWa+wkODVU1TkRfq2aVEw244vCTCp2+uigAuYMAgqIU4=
+	t=1788782436; cv=none; b=l2Vx6unqf9Vef67EIyUYxIL6gsn8qirFaaPf3JZ1/ZU1VnpDBLmc2e0hYlMSpnR+c9cIzDtIY8nvQJ/rFLpXK4cVGsvAeMHsyS8So69yckzyj6vx2v8wbl7pUnR1dyB+r1PXXomKPb3tTG5YhW2yFXqr/yGzPmE7iuR1xoxjAcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788782426; c=relaxed/simple;
-	bh=ngQPkjIQhnImDOuM3WuuixU0yFgu3iX8vqPspgh9oKI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qd7j0/eYjR7HHvOuBQQSl8vwFUdcRDveyLPjeq7b5Z9n06GceTbBZlLg/iEH1XM1qGnRPO7WYgT8G0Ze0bV1u0a4bkU/C+XX8xvvK+iRscZySk9oKj6tA1O89/5nb0KLnkndA4bqe+zypxQsgQ1ipM2AbfYp+j274LyB2VIpKjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=e/zUtqPe; arc=none smtp.client-ip=95.215.58.17
+	s=arc-20240116; t=1788782436; c=relaxed/simple;
+	bh=rTsYp2NGw5bcO20fwMn5il/lu32/vuPJF65Qflx9zbk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DD9wNzK2ON6uJSJ3Xq3SIZ0KRBrub6vS0r5pXJfPGmJSkQIjSViQBEypMaCzDObjTH83aMTN8q2c/uIAPjPUqADtfeQMA8aWt/VoUW5z1a3m7vo1FTAPiWCzKOmptHzVDKqI1JXCNzhGU+dj16yq4U4+EV8NKmZMNHqG1vWaJ3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=t/UMq3iP; arc=none smtp.client-ip=95.215.58.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="e/zUtqPe"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="t/UMq3iP"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ngQPkjIQhnImDOuM3WuuixU0yFgu3iX8vqPspgh9oKI=;
+DKIM-Signature: a=rsa-sha256; bh=rTsYp2NGw5bcO20fwMn5il/lu32/vuPJF65Qflx9zbk=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788782422; v=1; x=1789387222;
- b=e/zUtqPe4szF/wIjS2WlbzohqapC/g9FdG+wHKLIHeBzPyjnpRW+YYAZWGRN34CA2kF0zbRC
- 9KD+zU6+gb6n8/trj4o7UzGEcV1r2zIG/7xS6rmmK0NGK8shk8AEWdeV/u0rrbhqMT2+ndtlfkc
- c7XyZ20GSQcD45LNsq+ASf9c=
+ t=1788782432; v=1; x=1789387232;
+ b=t/UMq3iPZv5HdseUj4DhZt7Yxpkp3r5her8akxDibnL7dRU57H05t+szkYhmaw3ATFmIpn0u
+ ARPv3eY8XFdUxUpFrjaZ3ucCph08j17z14a1x3kaqxd4A6gwe224qlDPQYqBPds3SQlG2IIjWjq
+ e8YmpRO2u3tRWSHjR9xwBCOg=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id c48a5cc37f9abba0;
-	Mon, 07 Sep 2026 12:00:15 +0000
-X-Mizu-Trace-ID: c48a5cc37f9abba0
+Received: by mta10.migadu.com with ESMTPS id 2c071b0a3a216c58;
+	Mon, 07 Sep 2026 12:00:18 +0000
+X-Mizu-Trace-ID: 2c071b0a3a216c58
 X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17359so8637e87.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 05:00:10 -0700 (PDT)
-X-Gm-Message-State: AFuF++kIINX6Zs2W1JKYAsctPfLv2Byq27gn2hLH4WUH0GLZPd9/t3tH
-	brOleJL8X9BC2KVvKFcXCv6rMMRhh/jAlAP3FhI1Zs+llBN4ZQCqfyr3ZyD7vEQddsGP0IF1ueY
-	5rioPXFq39SgNdTMxeXU0T9eYsndUp6xGMNem6dxp
-X-Received: by 2002:a05:6512:1d1:b0:5b1:4fd9:ac with SMTP id
- 2adb3069b0e04-5b75074fa17mr49498e87.3.1788782409953; Mon, 07 Sep 2026
- 05:00:09 -0700 (PDT)
+Message-ID: <a710c011-e85d-40f3-a6c5-d8344d608430@linux.dev>
+Date: Mon, 7 Sep 2026 13:00:13 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260907112944.313618-1-fuad.tabba@linux.dev> <20260907112944.313618-2-fuad.tabba@linux.dev>
- <20260907114514.44DB81F00A3A@smtp.kernel.org>
-In-Reply-To: <20260907114514.44DB81F00A3A@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 7 Sep 2026 12:59:33 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzc1cOh5Qe+0svp6nOOgzeULVwxDmDOZr49xJtLFiaRhQ@mail.gmail.com>
-X-Gm-Features: AcwNN1Vt-aJ3tzj_QZnkbvQgo6kaZ5kSdh2tbtZ0uO353EJiAohmQi6mASJ03L8
-Message-ID: <CA+EHjTzc1cOh5Qe+0svp6nOOgzeULVwxDmDOZr49xJtLFiaRhQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] of/irq: Fix device node refcount leak in of_check_msi_parent()
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 03/27] libmultipath: Add path selection support
+To: sashiko-reviews@lists.linux.dev, John Garry <john.g.garry@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260907105021.1763236-1-john.g.garry@oracle.com>
+ <20260907105021.1763236-4-john.g.garry@oracle.com>
+ <20260907110926.ED4271F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: John Garry <john.garry@linux.dev>
+In-Reply-To: <20260907110926.ED4271F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 7 Sept 2026 at 12:45, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
+On 9/7/26 12:09, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Infinite loop in `mpath_round_robin_path()` if the current round-robin path is concurrently removed from the device list, causing an SRCU deadlock.
+> - [High] `mpath_round_robin_path` fast-path incorrectly returns an unlinked path, breaking failover.
+> - [Medium] Calling `list_is_singular()` on an RCU-protected list without holding the update lock causes a data race on `head->prev`.
+> - [Medium] Path selection functions bypass the `.is_optimized` callback, violating the API contract and causing inconsistent path evaluation.
+> - [Low] Missing bounds check on iopolicy index in `mpath_get_iopolicy`.
+> 
 > Pre-existing issues:
-> - [High] of_msi_xlate() prematurely aborts device tree hierarchy traversa=
-l when msi_np is NULL.
-
-Already covered in my reply to v1 [1]. No in-tree caller hits it:
-fsl_mc_get_msi_id() is the only one passing NULL, and an fsl_mc_device
-has no of_node, so the walk doesn't abort there.
-
-Cheers,
-/fuad
-
-[1] https://lore.kernel.org/all/CA+EHjTx6ZC90qHoccTE6CLvGvxrXBe3Ph0bFKcgBvf=
-RpCCAVuA@mail.gmail.com/
-
+> - [Medium] `mpath_device_set_live()` silently swallows setup failures, leaving the driver unaware of the aborted initialization.
 > --
->
-> commit d227a3bc08eef0cbb22a6f227edca082ac29a9b8
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> of/irq: Fix device node refcount leak in of_check_msi_parent()
->
-> This patch prevents a device node reference count leak in
-> of_check_msi_parent(). It ensures that the msi_node reference is
-> only kept when the incoming node pointer is NULL.
->
-> Link: https://lore.kernel.org/all/20260826113604.010C01F000E9@smtp.kernel=
-.org/
->
-> > diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-> > index ec035367c9500..109c54f346479 100644
-> > --- a/drivers/of/irq.c
-> > +++ b/drivers/of/irq.c
-> > @@ -785,7 +785,7 @@ static int of_check_msi_parent(struct device_node *=
-dev_node, struct device_node
-> >       if ((*msi_node && *msi_node !=3D msi_spec.np) || msi_spec.args_co=
-unt !=3D 0)
-> >               ret =3D -EINVAL;
-> >
-> > -     if (!ret) {
-> > +     if (!ret && !*msi_node) {
-> >               /* Return with a node reference held */
-> >               *msi_node =3D msi_spec.np;
-> >               return 0;
->
+> 
+> commit 59f56cbf3b60a1ec3a1336f453b4cd772a005e7b
+> Author: John Garry <john.garry@linux.dev>
+> 
+> libmultipath: Add path selection support
+> 
+> This commit adds path selection support to libmultipath, providing
+> round-robin, NUMA, and queue-depth selection modes similar to NVMe. It also
+> abstracts NVMe ANA into enum mpath_access_state to allow SCSI ALUA usage
+> and introduces iopolicy management functions.
+> 
+>> diff --git a/lib/multipath.c b/lib/multipath.c
+>> index 574868ce53381..3541357d07f8d 100644
+>> --- a/lib/multipath.c
+>> +++ b/lib/multipath.c
+>> @@ -7,8 +7,245 @@
+> 
+> [ ... ]
+> 
+>> +int mpath_get_iopolicy(char *buf, int iopolicy)
+>> +{
+>> +	return sprintf(buf, "%s\n", mpath_iopolicy_names[iopolicy]);
+>> +}
+> 
+> [Severity: Low]
+> Does this code overflow mpath_iopolicy_names[] if a caller provides an
+> uninitialized or out-of-bounds iopolicy value?
+
+The caller should sanitize iopolicy
+
+> 
+> [ ... ]
+> 
+>> +static struct mpath_device *__mpath_find_path(struct mpath_head *mpath_head,
+>> +					int node)
+>> +{
+>> +	int found_distance = INT_MAX, fallback_distance = INT_MAX, distance;
+>> +	struct mpath_device *found = NULL, *fallback = NULL, *mpath_device;
+>> +
+>> +	list_for_each_entry_srcu(mpath_device, &mpath_head->dev_list, siblings,
+>> +		srcu_read_lock_held(&mpath_head->srcu)) {
+>> +		if (mpath_path_is_disabled(mpath_head, mpath_device))
+>> +			continue;
+> 
+> [ ... ]
+> 
+>> +		switch(mpath_device->access_state) {
+>> +		case MPATH_STATE_OPTIMIZED:
+> 
+> [Severity: Medium]
+> Does this code bypass the driver's dynamic state evaluation by accessing
+> access_state directly instead of invoking the provided
+> mpath_path_is_optimized() callback wrapper?
+> 
+> If a driver like SCSI ALUA dynamically changes state, this will read
+> stale data.
+
+ALUA support will be added later
+
+> 
+>> +		    if (distance < found_distance) {
+>> +			    found_distance = distance;
+>> +			    found = mpath_device;
+>> +		    }
+>> +		    break;
+> 
+> [ ... ]
+> 
+>> +static struct mpath_device *mpath_round_robin_path(
+>> +				struct mpath_head *mpath_head)
+>> +{
+>> +	struct mpath_device *mpath_device, *found = NULL;
+>> +	int node = numa_node_id();
+>> +	enum mpath_access_state access_state_old;
+>> +	struct mpath_device *old =
+>> +			srcu_dereference(mpath_head->current_path[node],
+>> +				&mpath_head->srcu);
+>> +
+>> +	if (unlikely(!old))
+>> +		return __mpath_find_path(mpath_head, node);
+>> +
+>> +	if (list_is_singular(&mpath_head->dev_list)) {
+> 
+> [Severity: Medium]
+> Calling list_is_singular() on an RCU-protected list without holding the
+> update lock causes a data race on head->prev. In RCU-protected lists,
+> only next pointers are safely updated for lockless readers.
+
+locking will be added later
+
+> 
 > [Severity: High]
-> This isn't a regression introduced by this patch, but could the traversal
-> loop in of_msi_xlate() prematurely abort when msi_np is NULL?
->
-> If a driver calls of_msi_xlate(dev, NULL, id) and the direct parent lacks=
- an
-> msi-map property, of_map_msi_id() passes the NULL msi_np to of_map_id()
-> as filter_np:
->
-> drivers/of/base.c:of_map_id() {
->         ...
->         map =3D of_get_property(np, map_name, &map_bytes);
->         if (!map) {
->                 if (filter_np)
->                         return -ENODEV;
->                 /* Otherwise, no map implies no translation */
->                 arg->args[0] =3D id;
->                 arg->args_count =3D 1;
->                 return 0;
->         }
->         ...
-> }
->
-> Because filter_np is NULL, it returns 0 instead of -ENODEV.
->
-> This translates to !of_map_msi_id(...) evaluating to true in the loop in
-> of_msi_xlate(), hitting the break statement:
->
-> drivers/of/irq.c:of_msi_xlate() {
->         ...
->         for (parent_dev =3D dev; parent_dev; parent_dev =3D parent_dev->p=
-arent) {
->                 struct of_phandle_args msi_spec =3D {};
->
->                 if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &m=
-si_spec)) {
->                         if (msi_spec.np) {
->                                 ...
->                         }
->                         /* msi-map present but no match =E2=86=92 stop wa=
-lking */
->                         break;
->                 }
->                 ...
->         }
->         ...
-> }
->
-> Will this cause the function to incorrectly terminate the loop on the ver=
-y
-> first node, conflating an absent msi-map with a present but unmatched
-> msi-map, and failing to find the MSI mapping in ancestor nodes?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260907112944.31=
-3618-1-fuad.tabba@linux.dev?part=3D1
+> Does this fast-path blindly return old without verifying if it is actually
+> the element present in the singular list?
+
+as above
+
+> 
+> If the previously cached old path was concurrently removed from dev_list
+> and exactly one valid path remains, list_is_singular() evaluates to true,
+> causing the function to incorrectly return the unlinked path instead of
+> the remaining valid path.
+> 
+>> +		if (mpath_path_is_disabled(mpath_head, old))
+>> +			return NULL;
+>> +		return old;
+>> +	}
+>> +
+>> +	for (mpath_device = mpath_next_dev(mpath_head, old);
+>> +	    mpath_device && mpath_device != old;
+>> +	    mpath_device = mpath_next_dev(mpath_head, mpath_device)) {
+> 
+> [Severity: High]
+> Can this loop spin infinitely if old is concurrently removed from the
+> RCU-protected list?
+
+as above
+
+> 
+> The loop relies on reaching old again to terminate. If a concurrent writer
+> unlinks old using list_del_rcu(), it is removed from the circular list but
+> its next pointer remains intact. mpath_next_dev() follows old->next into
+> the remaining list elements, wrapping around and circling the remaining
+> elements indefinitely without ever evaluating mpath_device == old.
+> 
+> If all remaining paths are non-optimized or disabled, the loop never hits
+> the break condition, spinning forever under the SRCU read lock and stalling
+> any writer.
+> 
+>> +
+>> +		if (mpath_path_is_disabled(mpath_head, mpath_device))
+>> +			continue;
+>> +		if (mpath_device->access_state == MPATH_STATE_OPTIMIZED) {
+> 
+> [Severity: Medium]
+> Similar to __mpath_find_path(), does this bypass the driver's dynamic state
+> evaluation by accessing access_state directly rather than calling the
+> mpath_path_is_optimized() callback wrapper?
+> 
+>> +			found = mpath_device;
+>> +			goto out;
+>> +		}
+>> +		if (mpath_device->access_state == MPATH_STATE_NONOPTIMIZED)
+>> +			found = mpath_device;
+>> +	}
+> 
+> [ ... ]
+> 
+>> @@ -133,6 +371,19 @@ void mpath_device_set_live(struct mpath_device *mpath_device)
+>>   		}
+>>   		queue_work(mpath_wq, &mpath_head->partition_scan_work);
+>>   	}
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does mpath_device_set_live() silently
+> swallow setup failures earlier in this function?
+
+Yes, this just minics what NVMe does
+
+> 
+> If device_add_disk() fails, for example due to memory exhaustion, the
+> function clears the MPATH_HEAD_DISK_LIVE flag and returns early, masking
+> the failure from the caller and leaving the driver unaware of the aborted
+> initialization.
+> 
+>> +
+>> +	mutex_lock(&mpath_head->lock);
+>> +	if (mpath_path_is_optimized(mpath_head, mpath_device)) {
+>> +		int node, srcu_idx;
+>> +
+>> +		srcu_idx = srcu_read_lock(&mpath_head->srcu);
+>> +		for_each_online_node(node)
+>> +			__mpath_find_path(mpath_head, node);
+>> +		srcu_read_unlock(&mpath_head->srcu, srcu_idx);
+>> +	}
+>> +	mutex_unlock(&mpath_head->lock);
+>> +
+>> +	mpath_synchronize(mpath_head);
+>>   }
+> 
+
