@@ -1,42 +1,42 @@
-Received: from mta0.migadu.com (out-235.mta0.migadu.com [91.218.175.235])
+Received: from mta0.migadu.com (out-241.mta0.migadu.com [91.218.175.241])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C08448393
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 09:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A39448BAF
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 09:12:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.241
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788772351; cv=none; b=ukxk4Z2ECAzstPXS+EiL3pULDoHOjwccIFZzmF2vql/57ZO3nJ++BuWL1MpcpLl1ahNGT6cBjVoudkkv28S7VFXsVcJSTN2ZB3io9KQfrfubPl6vuh1nhdyB1igYmHtSrz5bL1OEBqhT1F84baWkuXhuJhcaF6sDbLEqvwl+2P0=
+	t=1788772371; cv=none; b=gM2iH7SZ0Hd1gh8BfGSZVr6OadR7ys0VkPLtsX74ZXySwfOqaMZFoSQCpPqNwakqxaPCtErVl+2FvFbfSgboBiAEoPrdTQEQmDXSkCFp8LCjLcLQJGjQ7PyfArsHjt7CLAOI4jgnSMOubf3J5jaSfRtqQ87eMTGlrUdgAPGjZkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788772351; c=relaxed/simple;
-	bh=m5upJ1SWSf4KAgqhBc2GKFg4B6UurZsIgZcCshsGSfk=;
+	s=arc-20240116; t=1788772371; c=relaxed/simple;
+	bh=b5mlbXk6fTQVCjjSD+1qABe2aGImP9DMon8rowjjymw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OR9htcIAxxaPruLZ8MrT5C8PI6Db2KmLz2FfUeudjMzX2eGHoaTyaBadISWMLoanuL3ZYHbLUgWnTdMyozqwvRoutESyWULnPe8rv6L0jvJ0/eV4VWOOROL+2qEWp/fLohHBF0okY0ervN6pcSnTKkVifl6QkHwpHn5C2aWKEOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=au9iQ6dI; arc=none smtp.client-ip=91.218.175.235
+	 To:Cc:Content-Type; b=FBujPFzik6dM91D9XQWR67c4Fg1ADJW+9i2FUjxOAq8zsZk3GZsX5fLXL9gdXmHpxS0/rNQ5Kc5BT7ieJe7MJVkES3i9IsCav5PmHPU0NjFW7Y7bnBwWGOq/IdablSYuEPyyAsLHojsl/6iXSo+vIuO90Hr5NdOKeIiIOe0oINU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nL1F9MnP; arc=none smtp.client-ip=91.218.175.241
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="au9iQ6dI"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nL1F9MnP"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=m5upJ1SWSf4KAgqhBc2GKFg4B6UurZsIgZcCshsGSfk=;
+DKIM-Signature: a=rsa-sha256; bh=b5mlbXk6fTQVCjjSD+1qABe2aGImP9DMon8rowjjymw=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788772347; v=1; x=1789377147;
- b=au9iQ6dIvutuhESWLAKHQARCYuKIX6cBb6P5Ic4i8FZhlEIF8Waigsp+SelPbxsV3YBbZDnt
- Lxa/lCJgiZAb1pQh15jtTBmzVmNk8KgTHTz62Pi95trimlmoO8Xz/c4peoxwc/XUtrwmKtENqFg
- XrsTGyOOBkZ22/1yCiUiTLRQ=
+ t=1788772365; v=1; x=1789377165;
+ b=nL1F9MnP/nvDGrt65GRm2JG0PhRlMYIprqvnnaN//c9FGNJv3Q8T7lMdyKxbLjHi+iWE5CuP
+ aDv4Zb28aBvxRGRG0VSgb9I/nj+L2JDcsrtmOKfFopIm+kkjoRfndu0ZnjaKe36ASJdPBK3wW6z
+ MSLzx2FTUhgbYtxOBhEfLKOs=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id c92ecf8b1e99aa66;
-	Mon, 07 Sep 2026 09:12:27 +0000
-X-Mizu-Trace-ID: c92ecf8b1e99aa66
+Received: by smtp.migadu.com with ESMTPS id 74a5de67122f8085;
+	Mon, 07 Sep 2026 09:12:45 +0000
+X-Mizu-Trace-ID: 74a5de67122f8085
 X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b384c4so6888e87.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 02:12:23 -0700 (PDT)
-X-Gm-Message-State: AFuF++n9HKghCEvQCncNER5nzrPsb8YmPISj70yGiop4qDZLdztyMGHf
-	cY9k5MxC0/eKducaMmdNjWAzF6enzgP+SUfrvP0ePWiZI7Z8oUjLfFIRILCbkbsM83SnmUQquMo
-	e3w4txSiTBgwYWQLv0K0MnIMmiJuXH+nvBvO+nmY6
-X-Received: by 2002:a05:6512:3d24:b0:5b5:e890:1953 with SMTP id
- 2adb3069b0e04-5b74d3f2031mr126511e87.12.1788772342236; Mon, 07 Sep 2026
- 02:12:22 -0700 (PDT)
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17358so5387e87.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 02:12:41 -0700 (PDT)
+X-Gm-Message-State: AFuF++lOCkzJYOh0qeNWMMowIRYk8LeFsXk/b3b2/AjQlrNVeJYLDf12
+	V/6/DJVX6OnySBqov36f18IoM+4LGB7wS/lsboI9MygVp7ypTa93+QxvhappNkQGmhWwmcPnR9f
+	BCedxCVruhMJ6CBpCA7lNKA1jBDvqvHV0egElRAVg
+X-Received: by 2002:a05:6512:33ca:b0:5ae:b0ee:f737 with SMTP id
+ 2adb3069b0e04-5b74d2f95d7mr138507e87.9.1788772360628; Mon, 07 Sep 2026
+ 02:12:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,107 +44,102 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260907070002.3333525-1-fuad.tabba@linux.dev>
- <20260907070002.3333525-5-fuad.tabba@linux.dev> <20260907072331.A66021F00A3A@smtp.kernel.org>
-In-Reply-To: <20260907072331.A66021F00A3A@smtp.kernel.org>
+ <20260907070002.3333525-7-fuad.tabba@linux.dev> <20260907071617.2BB6D1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260907071617.2BB6D1F00A3A@smtp.kernel.org>
 From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 7 Sep 2026 10:11:45 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTxvZXgAcdteJGBKN8mTMm0fu+Z8J5DZzN5KGzBfve_25w@mail.gmail.com>
-X-Gm-Features: AcwNN1Wnh4tM_Q8WLCYpMkifhYqafgk5esWxc5PS649ZvzFiMI6o4z-L6LN_zog
-Message-ID: <CA+EHjTxvZXgAcdteJGBKN8mTMm0fu+Z8J5DZzN5KGzBfve_25w@mail.gmail.com>
-Subject: Re: [PATCH v2 04/17] KVM: arm64: Skip fixed-feature state flush for
- protected vCPUs
+Date: Mon, 7 Sep 2026 10:12:04 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTy65qJ3XJt755JsUGgSMekqkd6t3Jd3hvY3iN1xsJucqg@mail.gmail.com>
+X-Gm-Features: AcwNN1WaNCUb5rkXGyfhe_y7Hsn2qMzl61r6PtrL0PEg_-AyW6g7mNs0iZLRpYw
+Message-ID: <CA+EHjTy65qJ3XJt755JsUGgSMekqkd6t3Jd3hvY3iN1xsJucqg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/17] KVM: arm64: Add system register reset framework
+ for protected VMs
 To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
 	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 7 Sept 2026 at 08:23, <sashiko-bot@kernel.org> wrote:
+On Mon, 7 Sept 2026 at 08:16, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] State Leak and Host Integrity Bypass via Unswitched Debug Regist=
-ers for Protected vCPUs
+> - [Medium] Missing EL1 system registers from the pKVM reset array `pvm_sy=
+s_reg_reset_vals`.
+> - [Medium] Invalid numeric comparison (>=3D) over sparse `enum vcpu_sysre=
+g` values to enforce fragile array sorting.
 
-Not this one, Sashiko.
+Nope...
 
-...
-
-> [Severity: High]
-> Does this early return in flush_debug_state() in
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c bypass the debug register context swit=
-ch
-> for protected guests?
+> --
 >
-> By returning early here, hyp_vcpu->vcpu.arch.debug_owner is never updated
-> from the host and remains at its default VCPU_DEBUG_FREE. During the worl=
-d
-> switch, __debug_switch_to_guest_common() and
-> __debug_switch_to_host_common() return early if debug_owner =3D=3D FREE.
-> Consequently, KVM bypasses saving the host's live hardware debug register=
-s and
-> loading the guest's debug registers. The guest enters execution with the =
-host's
-> actual hardware breakpoint registers still active in the pipeline.
->
-> Normally, this is mitigated because KVM sets MDCR_EL2.TDA to trap debug
-> accesses if the guest doesn't own the registers. However, for protected V=
-Ms,
-> pvm_init_traps_mdcr() only sets TDA if DebugVer is unimplemented. With
-> TDA unset, the protected guest can freely read the host's debug registers
-> (leaking host state) and overwrite them when it explicitly reads or write=
+> commit 7a5dc29475a7c4550659db2df410ae56a785635e
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> Subject: KVM: arm64: Add system register reset framework for protected VM=
 s
-> DBGBVRn_EL1, DBGBCRn_EL1, or MDSCR_EL1.
-
-Self-hosted debug for protected VMs is still to come, as the cover
-says. Until then DebugVer is NI, so pvm_init_traps_mdcr() sets TDA and
-TDRA and the guest's debug register accesses trap, RAZ/WI or UNDEF.
-
 >
-> >       hyp_vcpu->vcpu.arch.debug_owner =3D host_vcpu->arch.debug_owner;
-> >
-> >       if (kvm_guest_owns_debug_regs(&hyp_vcpu->vcpu)) {
+> This patch introduces the system register reset framework for protected V=
+Ms,
+> adding kvm_reset_pvm_sys_regs() and its driving array pvm_sys_reg_reset_v=
+als.
+> It populates reset values for sysregs that need to be reset to UNKNOWN or
+> explicit values for pKVM guests.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nv=
+he/sys_regs.c
+> > index 8758c68017765..03d2c2447e0fd 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
 >
 > [ ... ]
 >
-> > @@ -218,6 +221,9 @@ static void sync_debug_state(struct pkvm_hyp_vcpu *=
-hyp_vcpu)
-> >  {
-> >       struct kvm_vcpu *host_vcpu =3D hyp_vcpu->host_vcpu;
-> >
-> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu))
-> > +             return;
-> > +
+> > +/* Sorted ascending by reg; kvm_check_pvm_sysreg_table() enforces it. =
+*/
+> > +static const struct sys_reg_desc_reset pvm_sys_reg_reset_vals[] =3D {
+> > +     RESET_FUNC(MPIDR_EL1, reset_mpidr),
+> > +     RESET_UNKNOWN(TPIDR_EL0),
+> > +     RESET_UNKNOWN(TPIDRRO_EL0),
+> > +     RESET_UNKNOWN(TPIDR_EL1),
 >
-> [Severity: High]
-> Does this early return in sync_debug_state() in
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c skip restoring the host's debug regist=
-ers
-> upon guest exit?
+> [Severity: Medium]
+> Are we missing several EL1 system registers from this array? The commit
+> message mentions this table is supposed to hold the registers that
+> sys_regs.c resets to UNKNOWN. However, it seems to omit several newer
+> architectural registers (like PIR_EL1, PIRE0_EL1, POR_EL1, POR_EL0,
+> TFSR_EL1, TFSRE0_EL1) which __sysreg_restore_state_nvhe() explicitly rest=
+ores
+> for a protected vCPU.
 
-Same answer: the guest can't write them.
+It doesn't restore any of them for a protected vCPU. PIR_EL1,
+PIRE0_EL1 and POR_EL[01] are loaded only when the VM has S1PIE or
+S1POE, which pvm_calc_id_reg() never sets (it returns 0 for
+ID_AA64MMFR3_EL1), and TFSR_EL1 and TFSRE0_EL1 only with MTE, which
+kvm_pkvm_ext_allowed() doesn't allow. The table holds what the switch
+loads, as the message says.
 
-Thanks,
+
+...
+> [Severity: Medium]
+> Is it safe to use a numeric comparison (>=3D) over the .reg field here?
+> Since pvm_sys_reg_reset_vals[].reg contains enum vcpu_sysreg values,
+> and these are indexed by their VNCR-page byte offset rather than in
+> declaration order, a layout change or new enum value could reorder their
+> integer values.
+>
+> If that happens, the static array's manually sorted order would break,
+> triggering a fatal BUG_ON() at boot during hypervisor initialization.
+> Should this enforce an explicit allowlist or a different sorting mechanis=
+m
+> instead of a numeric range check?
+
+Nothing searches the reset table: kvm_reset_pvm_sys_regs() walks it
+linearly, only pvm_sys_reg_descs[] is searched. The check on it buys
+nothing, and I'll drop it in v3.
+
 /fuad
 
 
-
 /fuad
->
-> Because the context switch back to the host returns early due to the bypa=
-ssed
-> flush, any guest modifications to the hardware debug registers persist in=
-to the
-> host execution context. When the guest exits, the corrupted debug registe=
-rs
-> remain active when the host resumes execution, allowing an untrusted prot=
-ected
-> guest to mount an attack against the host kernel.
->
-> >       if (kvm_guest_owns_debug_regs(&hyp_vcpu->vcpu))
-> >               host_vcpu->arch.vcpu_debug_state =3D hyp_vcpu->vcpu.arch.=
-vcpu_debug_state;
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260907070002.33=
-33525-1-fuad.tabba@linux.dev?part=3D4
+33525-1-fuad.tabba@linux.dev?part=3D6
