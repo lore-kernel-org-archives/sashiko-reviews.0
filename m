@@ -1,243 +1,202 @@
-Received: from mail-106113.protonmail.ch (mail-106113.protonmail.ch [79.135.106.113])
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010012.outbound.protection.outlook.com [52.101.61.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012C63EAC80
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 15:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.113
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788796703; cv=none; b=pGdSLx0ltedr1XiWIiQ3YMGwkfLKao4x3Cp5bSg33GshdmKgTG5cCOggrKgY/hBnWoUFODcyuI0WnPojW8wHRJ3QDLd/NIR7SIDYb6VmOKsgJJGJw6bMXGK/zM4Bqo+94YtBJ4WhiQ8FQoxiF0zSvbPYEKty2tSxbboi5oOA14I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788796703; c=relaxed/simple;
-	bh=Fce+3jUwgsWvi5koq8PRKbZIYAtq/+j6ybY0Te+yHWY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a2kgbFK7a9Q2O2uhdWo0ykfdtXxJ78aStmz1bLkKaw3X5QR+wAC1Piq9DKy87DpiHOJdFzE32LECI6rjnk1/JMlhsLI5+O5ORVJV9M8cKT2kTLB989h42LLbPydzCLOXnZxsYXh8GbUciR6Bend4aBWYDOjIr5cLCrgHzm6Zg54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=BL51uCcI; arc=none smtp.client-ip=79.135.106.113
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A50308F32
+	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 15:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788796791; cv=fail; b=cbE4aql/EO9bI03LO3wZiHaWyUPcPuRftpZftQHLrJvsjk3P7I0hzYi+y4t+qp4t00msIuiwmiQ7acaxExxh0eZu5svdmz26bl1x0TyA+mSFRgev2aV+2MoZlrGwglcA9/AcM68p//NEjVMGAkdmQvq0WozwTfcgQuVXC2qgaeg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788796791; c=relaxed/simple;
+	bh=8RvbmimFpgCp+Awf0vRsymWT0K8SxszMn0Z/I9mcv4g=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=o7cRmW/Zr7bubClq2pcMLU9cQ0m5y3Qt5zFMqleeeMTOSj/UyVc1d+AvAXv9VqNDUjkTfuVnEQXGEblTJBIE4evUKtGUQwK144leYBSg4yL66qNb+INN/OC0yxgEA+FRQU5t2JP/yS3gXVqOswjXj7xaUAIzKVanYkADP3DaQL4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=5WXUQBXZ; arc=fail smtp.client-ip=52.101.61.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="BL51uCcI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1788796695; x=1789055895;
-	bh=D2+5AFS3jqYsqprxeNeNiyO+DoPvgRblbpH4ixduHyI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=BL51uCcIjLA3DidCZ4iDlUUHjAz2JEMRmpVnRA8Ay+dlfXLnSKkxTTUcQdSirwL4l
-	 DRtwTfiSkymcTJBLUsMYXa2BPESjN6VybQdJwt0qXzStj4q7rqKL+P0VgCaG6cXFXh
-	 n1urOk/iEObHVUYHBaN6O4QVv+FuP5863XDey2ElSSSDTXETnSrtmNMC+HMKEvboGt
-	 yxQfci9Tw8UL16evHB7k8lgn4nEJ8nXfxVwq/X8ndxmsJwuoepgYz3RGPZLsFhTITI
-	 nwRxch7Rpbtnl03ZJ9ETXuol5naAhdC7dYexrI4XoFqCFRI6uosP4a7BYtBlJ5qdWM
-	 eoFhNc8e0oaqw==
-X-Pm-Submission-Id: 4hdsDP4C0gz2Scsk
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <devicetree@vger.kernel.org>,  <robh@kernel.org>,  <conor+dt@kernel.org>
-Subject: Re: [PATCH v8 9/9] iio: accel: mma8452: Support interrupt sharing
-In-Reply-To: <20260907150846.8BC741F00A3A@smtp.kernel.org>
-References: <20260907-mma8452-open-drain-v8-0-c17407e22118@geanix.com>
-	<20260907-mma8452-open-drain-v8-9-c17407e22118@geanix.com>
-	<lgSgGIif93eJ1usOlpNZhgkh3YsQ-210nNAm7LCuSB_7RdMgA45onz0txTfZJrprGgkQjQDLLq8kAlNsIPMv6A==@protonmail.internalid>
-	<20260907150846.8BC741F00A3A@smtp.kernel.org>
-Date: Mon, 07 Sep 2026 17:58:12 +0200
-Message-ID: <87mrtt8357.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5WXUQBXZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=k2qJrCf/MlpfOwz2ok/lr+pt3Ypg/vJf+ZNLS0ji9bToPwngSjGTTjo3eM3YpEc2Hobus+pYH66Wz2UClDiSEiHFv7AARsQe9h2fROKrsX8bzM1VBTNNsR0+jlqcsC3vgAnzuO9PmUHGyxQaiq3k01eQSb9TKxBIDLG3i/0OwRFcZKi5wVYQM7xpAN6HPFpWc4waWBIdNfuUTS/GCIRWc6Fm6QVlt3mUCMIPvq+GfRxxTR0ycmjuflM9zZ21LdOuDPbd/02GcikdV00RdnRT2C6eKkFIrxQrEDnT2jV5qcmg0WycO2/1iIY3OJ63W1BBT1kZIcoKtBGgaLjHR0a4YQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2c0QyidH/Y+KNIIrB+qCQM/NxhFBmkDEPY3lQM0LE+E=;
+ b=jDD0os/VUMTvhY4088DVvR80a0xBGqwXKKs5vUCOCyC3IV+0FWn8esQvc9SQkYz41p43W9W2rO+TXTk/DIdWqtnV1mkyCnbPhNn9i7/uiR+ZgRGQxF0JxYNa4wTGIfzKTEWP0ye56zVH3EgPGJWe22CWZs8qYunhfmwxiQrtZ0wKmb8xTjJnvnMMVDA+6warE3MR2CHNqSGLw+HNEg2TLiDVr8PYkS3B7JVRbeuVZiQSCY1tMBQD4wvkJQjHl+G0Dl9TGvUceIBa49HjDvZFukRLf9Mv+2K5EBOLoZ/tpEDFBwSadQCSltEIpA5Sz1iAGn8r8gRC5ufLumFZyxsc1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2c0QyidH/Y+KNIIrB+qCQM/NxhFBmkDEPY3lQM0LE+E=;
+ b=5WXUQBXZqW4UYXU3cCGXEjW8sAnKBB6DsIgE+WKDS9dbzmV9gyJenAGzIRfbCdO4XQs8lJc8WS9VOjRPns3kBz6TrzCIrCjG4JYTDDxFErs5CaXUNiNfCSph2fVHf/094gjOJsVA86a8yjAwXZV0iC8qFI6/SvCh0r/qJPJfoCc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB7571.namprd12.prod.outlook.com (2603:10b6:610:147::9)
+ by CY5PR12MB6346.namprd12.prod.outlook.com (2603:10b6:930:21::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
+ 2026 15:59:41 +0000
+Received: from CH3PR12MB7571.namprd12.prod.outlook.com
+ ([fe80::7a06:d977:dd3:6176]) by CH3PR12MB7571.namprd12.prod.outlook.com
+ ([fe80::7a06:d977:dd3:6176%5]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
+ 15:59:40 +0000
+Message-ID: <d22d089d-7539-4555-be84-29bcd519c224@amd.com>
+Date: Mon, 7 Sep 2026 17:59:37 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: Accept AtomicOps already enabled by the hypervisor
+To: sashiko-reviews@lists.linux.dev, Nikola Prica <nikprica@amd.com>
+Cc: linux-pci@vger.kernel.org
+References: <20260903121218.4955-1-nikprica@amd.com>
+ <20260903121217.23F751F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Prica, Nikola" <nikola.prica@amd.com>
+In-Reply-To: <20260903121217.23F751F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR4P281CA0449.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:c6::9) To CH3PR12MB7571.namprd12.prod.outlook.com
+ (2603:10b6:610:147::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB7571:EE_|CY5PR12MB6346:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f2ca32b-a2a3-4078-3a74-08df0cf90656
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|10067099003|56012099006|11063799006|4143699003|5023799004|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	zrtaTlZ0/p9RPHwmysezANuOByHoKRmlaScmsxo1rllc3R0L74248uOz4sxWFo09qCPmS2mmcuX1jwxbpnBjzYMrUdMgOk9uo0Ckmzki8+NUsKDcHmjb0WVGk3Rs+nDgZnThbAYVITy2gDyyDtzyCQzw2qT33eBlr/mrghkDq+suLtldLHRAqs7hYKXmjo1REwpmSM0fTgJ9ATaqXebsFEXXG0Pt3A0yiCecBAWEx6lc5V77pwGv/SqX8NREaHjnoY95LqG1pnQcSMc0P3ve2eOoy5DpZHM/XXV+V3QlCd7LPr3mp951yzDxESvkH9Gsp0WtZn7hhFPcaNB3Foyg3Sp4hu7lAbD60GVBMfk2ftAELZA1HTUqafBfSl9H8nHfD3IBMxY6qkXrE4xOYwjFywKilt8SC49ymVMRvP7oVyw7nGsBrfKKRNpaUUwxk5P+whYKEYtWZ+5V8wg4yHnF/2e+4vOPA9jlQVWHRIzwpLaqn8/5x7yIHHyXhdxyscE7aIeATY+e4uA0IL02boKtYZ/Fx//ByuDQHU5ScCSIDlLxSDk3Eadch4uy0KocNfbqvcgRKJMAu3HaZOBjjqVoN+48SUj5FSIvy2pUu5ypzVk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7571.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(10067099003)(56012099006)(11063799006)(4143699003)(5023799004)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SmdwK3Izek93Wmg1Q1F6WStDNWlmWmVERmtTWGJya2ZpUzR1cFJ3ejROTGJz?=
+ =?utf-8?B?dWxhcXZHb3NYYVZCaGM5SER3dnlacldQdzVWQlJxeFpLeEdLczR2QUpyZlEv?=
+ =?utf-8?B?eERXZ2xhK29obDkycCtha0xPZDZhUHlXcFRVRkdHWXBFd0VINE1mbGU0K1A4?=
+ =?utf-8?B?a2ZXUDN2Q3MwaVRycndXZTVvTEFMc1RtUWJnQjgzNk5qVjE0VUxTMU5vL0Zr?=
+ =?utf-8?B?eDZmaXA1TWRjOWdVNW1LR3d6OFFHdVNvNlNaT09VRkFLZHVwbm9DNWtScXl2?=
+ =?utf-8?B?a1lEcjNzcE1rUjV0UENmejg5b1Y5NzlQWkF0S1NiS1ZvaWpkdzkxOU8vdXYr?=
+ =?utf-8?B?MVhRWjZlQm9WM1phR2dXMXZVWWZta0RrNks4dXBTSm4xVjFjK3owZXdVM3FR?=
+ =?utf-8?B?UUFPZmZFS2gxS0UzVm9QU2ZqaVJGdVhrUDJmWHBUSmZ6dUx0dWtBeDM1ZVhQ?=
+ =?utf-8?B?RDk1MWV0cDVZd2dFR0hzeGdvUTRuUjRqWkZ1UmI2Kzl6aXBoS3B0S3JVWGxo?=
+ =?utf-8?B?OUxpR0lDR3Fpc0RsK0VneWlkcWQrTi9qNy9nL1JwZzdlcW1XMFRlOFNBdnpQ?=
+ =?utf-8?B?NllWTXNBWk5xbWdXWDUzWjM5ampGRzBBL1IySjIzbHdWcE50c0NNdUY0SFhW?=
+ =?utf-8?B?ZGJuQkN2U0NDTnA1NjZ3VlVodVBrL2IraUgzTXhQODhkM0hFVkFmM2tXOHJF?=
+ =?utf-8?B?TnQwTENuRTFBV01nNDdINWJQazUyditxalRhMGtHQVF1UzhCK1J6djRlUzBl?=
+ =?utf-8?B?WEpEWnBOZ2FTcThHUm94REFOVEgrMUc2bUJFVGNCay9ISldZblJSK3c2R2JL?=
+ =?utf-8?B?Q2ZmdmNJdmo5Tk1HNGhaMVI0ZmNrMFJmV2RjY0JJSXZsTnlaaXFVdklPV2Z6?=
+ =?utf-8?B?blgvNjc3WWFnNDZXUlJLeGJCMnJ2cURMTTNkRGpRdm13WW90Mkk0NTJYdy9K?=
+ =?utf-8?B?cFMzcnQ4ZzRGU3pOYndDZVpHbXpUc0pDV2M4Yzh4QXkyeXZ5YUwzaHlHRTVp?=
+ =?utf-8?B?dTc4ekhFRk5PZW8xWXdPb3RYYkk5VGFUS3ZsWlhReks1UlpVam9xbndRRmRP?=
+ =?utf-8?B?ektITGR6MGh0WWFWZHp2MWc2WFU4OU1yUmlNbzdBdWFFU1VVSm40cDYxOTE0?=
+ =?utf-8?B?RE9XY2pJWDVtYkJJRHRaM3pUcVJNZDVsa1VMN2NCb1ZCaWhiWUZHcmlQdmgw?=
+ =?utf-8?B?dy9FOEJnaXVEcGFSSzFBbXNXUnpQVWw0b251VUpNZmhzeGdMWEcrNGZLZFhN?=
+ =?utf-8?B?Zm1xdW9hZ2pFSFNoMHI1czdRRjJJQWRGOEpBYURieWNneml2cXlxZEl6bnMv?=
+ =?utf-8?B?bnBvUmNTTWozcDkwa1FhcHNFYzhwdDBURWlpMEE0TmRDdVg3bndlTjdMZ3dJ?=
+ =?utf-8?B?QWl2b2t3aE9ETzJGaDV5YjdZMUtOMzNRSVBnTEhDcHhHQ005VnhQRkhYNTFF?=
+ =?utf-8?B?c0pnVlczeHQwWE5LWUtvQTVrMXBKNlRCQUVRV1pMYmd0OGFNZngwUDN5TUZp?=
+ =?utf-8?B?TUkzTVdSd0ZnQ2s0aWRweUpjdDNUbWdkYnFhUEZycFFVQkpOQ1NaZ2MwQ3lG?=
+ =?utf-8?B?NlNCdVZxK2VtRkpzM1NnT1hDVkJZR2EzY2JvcXN5RHN5VWVuZXIzck00ZFpG?=
+ =?utf-8?B?Q0NrbnZHU2UyZWVZUi9vTnN3cDRmalBRaURFZHpsMnZXY2FQbDQ4LzJzamMr?=
+ =?utf-8?B?dHVTUXBoWDQ4TlpXVTY1alNwMVgzR29JbDNrSjJybE9HbURZa2JQOE5CdjRQ?=
+ =?utf-8?B?RG9IVUpBN1hENTJJcUtyaWdUb09HWUFQM0d3bmJqTHFoMUoveWxEeW1pOVVI?=
+ =?utf-8?B?bHM0d1RBRVZsOUhQeTNEYmYxeG5YN0hocXFCQjg1aktTcmdNdlUzMUswdElt?=
+ =?utf-8?B?aE5FVzlnYUJxdXZ2b25jRjhVYXhxOGNzS0Q2T3BBTXRKeEtsdEFpQjNLUlNm?=
+ =?utf-8?B?Ykh4UHBYN0NoYndCSGhHWHQ4MVZrbWJDTHZsNjY1VFl4Ui8yRjRUWHR0MFZQ?=
+ =?utf-8?B?VTZubUNPcGdlOUxTNWlQYm9RbEF3Mi82YkhVVWNYMVVtUnlxZExkMTdycXdV?=
+ =?utf-8?B?K01lZURwOFBZcVZ4Q2dLaWFRRlRWWnlXTWRFVy94TERHRTZjalFRSk92cUVt?=
+ =?utf-8?B?d1N2NHhuQWg1bWdDaEJic2RWaDJzallTQ3gyK3ljS1lUU2hXbURhRmx6QkZD?=
+ =?utf-8?B?bFFKNmcrRUZaR3lwNS9qRUVaTG5lVDlyR0lwb2FPcXV0N0lzWFYzMm1XRVhs?=
+ =?utf-8?B?bGVaOUlrbUx4OFpqSUExRWluYWlBM2x5UU9VWGdOajVOSmF5Mi91b3R0Z2xQ?=
+ =?utf-8?Q?AUXvsdzKNlxbN7qU6P?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f2ca32b-a2a3-4078-3a74-08df0cf90656
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7571.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 15:59:40.4502
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MQ3k9QbQbOx11d2cSx3B97clloyVbe7CUvC6YK/hQ14q+LENDfOQBpZ55omiCDQ5FOoaMX3l+Dj7k7KVRauzVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6346
 
-<sashiko-bot@kernel.org> writes:
+Ok. That makes sense. I'll address it in v2 and incorporate Christians comment too.
 
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->
-> New issues:
-> - [Critical] Writing to MMA8452_CTRL_REG4 to disable interrupt sources fails because the device is still in ACTIVE mode.
-> - [High] The IRQ handler incorrectly checks `pm_status == 0` instead of `pm_status <= 0`, allowing invalid hardware access when PM is disabled.
-> - [Low] Mixing goto-based error handling with guard() cleanup in the same function.
->
-> Pre-existing issues:
-> - [High] Hardware access occurs after dropping the runtime PM reference in mma8452_write_event_config.
-> - [High] AB-BA deadlock between the driver's data->lock and the PM core's runtime suspend wait.
+On 9/3/2026 2:12 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unconditionally returning success when ATOMIC_REQ is already set bypasses root port and bridge capability validation.
 > --
->
-> commit 3d8bf763b3ae36284346684babbd11058f68e68a
-> Author: Esben Haabendal <esben@geanix.com>
-> Date:   Mon Sep 7 14:51:04 2026 +0000
->
->     iio: accel: mma8452: Support interrupt sharing
->
->     Adding support for sharing interrupt line with other device requires the
->     interrupt handler to handle runtime PM suspension properly, ignoring the
->     irq if the device is suspended (maybe even off). And while at it, we use
->     the PM reference to ensure we do not get suspended while processing an irq.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index fda29df5d1097..e521dca37f768 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
-> [ ... ]
->> @@ -1083,15 +1085,21 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
->>  {
->>  	struct iio_dev *indio_dev = p;
->>  	struct mma8452_data *data = iio_priv(indio_dev);
->> +	struct device *dev = &data->client->dev;
->>  	irqreturn_t ret = IRQ_NONE;
->> +	int pm_status;
->>  	int src;
+> 
+> commit 174dddecfad7749ccba344bb23492b342569e86c
+> Author: Nikola Prica <nikola.prica@amd.com>
+> 
+> PCI: Accept AtomicOps already enabled by the hypervisor
+> 
+> This commit modifies pci_enable_atomic_ops_to_root() to check if the
+> PCI_EXP_DEVCTL2_ATOMIC_REQ bit is already set by a hypervisor. If it is, the
+> function returns success early to avoid failing in passthrough topologies
+> without a visible Root Port.
+> 
+>> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+>> index b2879a6be5f80..7c62c7f317572 100644
+>> --- a/drivers/pci/pci.c
+>> +++ b/drivers/pci/pci.c
+>> @@ -3768,6 +3768,14 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+>>                return -EINVAL;
+>>        }
 >>
->> +	pm_status = pm_runtime_get_if_active(dev);
->> +	if (pm_status == 0)
->> +		return IRQ_NONE; /* device is powered down */
->> +
->
+>> +     /*
+>> +      * Some hypervisors already set AtomicOp Requester Enable.  If it
+>> +      * is already set, there is nothing more to do.
+>> +      */
+>> +     pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
+>> +     if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
+>> +             return 0;
+> 
 > [Severity: High]
-> Does this check fail to catch negative error codes, allowing the handler to
-> proceed and access unpowered hardware?
->
-> When runtime PM is disabled, pm_runtime_get_if_active() returns -EINVAL. This
-> can happen during driver unbind or removal, as pm_runtime_disable() is called
-> before free_irq():
->
-> drivers/iio/accel/mma8452.c:mma8452_remove() {
-> 	...
-> 	pm_runtime_disable(dev);
-> 	pm_runtime_set_suspended(dev);
->
-> free_irq:
-> 	if (client->irq)
-> 		free_irq(client->irq, indio_dev);
-> 	...
+> Will this unconditional early return bypass the capability validation for newly
+> requested atomic sizes?
+> 
+> When drivers or subsystems sequentially check for atomic support, they call
+> pci_enable_atomic_ops_to_root() for different sizes. For example, in
+> drivers/vfio/pci/vfio_pci_core.c:vfio_pci_info_atomic_cap() (around line
+> 1059), the code sequentially checks for 32-bit and 64-bit atomic support:
+> 
+> vfio_pci_core.c:vfio_pci_info_atomic_cap() {
+>      ...
+>      if ((devcap2 & PCI_EXP_DEVCAP2_ATOMIC_COMP64) &&
+>          !pci_enable_atomic_ops_to_root(pdev, PCI_EXP_DEVCAP2_ATOMIC_COMP64))
+>          cap.flags |= VFIO_PCI_ATOMIC_COMP64;
+>      ...
 > }
->
-> If a shared IRQ fires concurrently after PM is disabled, this check allows
-> the handler to proceed, leading to I2C bus timeouts or system hangs.
+> 
+> A similar sequential check occurs in
+> drivers/infiniband/hw/bnxt_re/qplib_res.c:bnxt_qplib_determine_atomics()
+> (around line 1001).
+> 
+> The first successful call (e.g., for COMP32) validates the topology and sets
+> the ATOMIC_REQ bit on the endpoint. If a subsequent call is made for a larger
+> size (like COMP64), this new logic sees the ATOMIC_REQ bit is already set and
+> instantly returns success.
+> 
+> By returning early, doesn't this bypass the cap_mask checks on the root port
+> and bridges for the larger atomic size?
+> 
+> Could this cause the kernel to incorrectly advertise 64-bit or 128-bit atomic
+> support to VMs or drivers when the root port only supports 32-bit? If a driver
+> or VM attempts to use these unsupported sizes, the root port would treat them
+> as an Unsupported Request (UR), potentially triggering a fatal AER error and
+> crashing the system or terminating the VM.
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260903121218.4955-1-nikprica@amd.com?part=1
 
-This is on purpose. If runtime PM is disabled, the assumption is that
-the device is active. Otherwise, the driver would be useless when
-CONFIG_PM was not enabled.
-
->>  	src = i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
-> [ ... ]
->> @@ -1784,29 +1796,62 @@ static void mma8452_remove(struct i2c_client *client)
->>  #ifdef CONFIG_PM
->>  static int mma8452_runtime_suspend(struct device *dev)
->>  {
->> -	struct iio_dev *indio_dev = i2c_get_clientdata(to_i2c_client(dev));
->> +	struct i2c_client *client = to_i2c_client(dev);
->> +	struct iio_dev *indio_dev = i2c_get_clientdata(client);
->>  	struct mma8452_data *data = iio_priv(indio_dev);
->>  	int ret;
->>
->> -	scoped_guard(mutex, &data->lock)
->> -		ret = mma8452_standby(data);
->> +	guard(mutex)(&data->lock);
->> +
->> +	ret = i2c_smbus_read_byte_data(client, MMA8452_CTRL_REG4);
->>  	if (ret < 0) {
->> -		dev_err(dev, "powering off device failed\n");
->> +		dev_warn(dev, "backing up CTRL_REG4 failed\n");
->>  		return -EAGAIN;
->> +	} else
->> +		data->ctrl_reg4 = ret;
->> +
->> +	ret = i2c_smbus_write_byte_data(client, MMA8452_CTRL_REG4, 0);
->> +	if (ret) {
->> +		dev_warn(dev, "disabling interrupt sources (CTRL_REG4) failed\n");
->> +		return -EAGAIN;
->> +	}
->
-> [Severity: Critical]
-> Does writing to MMA8452_CTRL_REG4 fail here because the device is still in
-> ACTIVE mode?
-
-Ouch, Yes. That is actually true according to the datasheet.
-
-I will swap the order so that we switch to standby before modifying CTR_REG4.
-
-> Since the write happens before mma8452_standby(), the hardware ignores it
-> (as modifying configs requires STANDBY mode). This leaves interrupt sources
-> enabled. If a shared IRQ fires, the handler will return IRQ_NONE due to the
-> pm_status check, leaving the interrupt asserted and causing a level-triggered
-> interrupt storm.
->
->> +
->> +	ret = mma8452_standby(data);
->> +	if (ret < 0) {
->> +		dev_err(dev, "transition to STANDBY mode failed\n");
->> +		ret = -EAGAIN;
->> +		goto out_restore_ctrl_reg4;
->>  	}
->
-> [Severity: Low]
-> Does this mix goto-based error handling with guard() cleanup in the same
-> function?
->
-> The cleanup subsystem guidelines state that mixing goto and scope-based cleanup
-> creates confusing ownership semantics.
->
-> [ ... ]
-
-I will try to convert to scope-based cleanup to avoid this, and see if I
-can create something nice with that approach.
-
-> As a side note, there are a couple of pre-existing issues in this file that
-> are not introduced by this patch, but are worth mentioning:
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a use-after-put in
-> mma8452_write_event_config() when disabling an event?
->
-> drivers/iio/accel/mma8452.c:mma8452_write_event_config() {
-> 	...
-> 	ret = mma8452_set_runtime_pm_state(data->client, state);
-> 	if (ret)
-> 		return ret;
->
-> 	switch (dir) {
-> 	case IIO_EV_DIR_FALLING:
-> 		return mma8452_set_freefall_mode(data, state);
-> 	case IIO_EV_DIR_RISING:
-> 		val = i2c_smbus_read_byte_data(data->client, ev_regs->ev_cfg);
-> 	...
-> }
->
-> When state is false, mma8452_set_runtime_pm_state() calls
-> pm_runtime_put_autosuspend(), dropping the PM reference early. The subsequent
-> i2c_smbus_read_byte_data() accesses hardware while the device could be
-> concurrently suspended, potentially causing I2C transaction failures.
-
-I will address this in another series.
-
-> [Severity: High]
-> This is a pre-existing issue, but does mma8452_read_raw() create an AB-BA
-> deadlock with PM suspend?
->
-> drivers/iio/accel/mma8452.c:mma8452_read_raw() {
-> 	...
-> 		guard(mutex)(&data->lock);
->
-> 		ret = mma8452_read(data, buffer);
-> 	...
-> }
->
-> mma8452_read() calls mma8452_set_runtime_pm_state(..., true), triggering a
-> synchronous PM resume. If a concurrent PM suspend is initiated by the PM
-> core, it sets the status to RPM_SUSPENDING and calls
-> mma8452_runtime_suspend():
->
-> drivers/iio/accel/mma8452.c:mma8452_runtime_suspend() {
-> 	...
-> 	guard(mutex)(&data->lock);
-> 	...
-> }
->
-> The suspend callback will block waiting for data->lock, while
-> mma8452_read_raw() blocks waiting for the RPM_SUSPENDING state to clear,
-> resulting in a deadlock.
-
-I will try to look out for this in the next series, where I am trying to
-improve all the runtime PM handling in this driver.
-
-/Esben
