@@ -1,143 +1,180 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70C46DFF7
-	for <sashiko-reviews@lists.linux.dev>; Mon,  7 Sep 2026 13:21:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8DB4F797E;
+	Mon,  7 Sep 2026 13:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788787279; cv=none; b=iuN2QLTWC0WRirStpGFiMU10MjUWdcx11hTWKbx5ZjwfWIivvvdUR14rco/cdpaNN1nP/gi7xIg79/hX1dN/V2LBTvNyjXtlYHvXw+edaJui8bUGLvzGEBynsqeXMFuQTWVhQMGjFmHHrPpK2E2EPtAcmfgTtqqGgzjud9+c/4Q=
+	t=1788787451; cv=none; b=OcR7kTuuBU1TKqCOXHFjAz50ogLRp+2yrK8BUx2qYrAoaB7qB5uVsFPqC5yuc+qncQO5ngNdeg7rLuIeJ1qiX/q+a63qNtDmcNTyq0Fw/9YMj+UUOr+pjeuS2MBKNfqIZgh5f5xFNs1dmxVfW9SrnkOqhtvF3kjnB+VtQBHRGD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788787279; c=relaxed/simple;
-	bh=/XIZqFfdVQkuDvteTMW0O5cPAjeEEx9jLqyoOitZWbY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AzhIf4V9nqEekG3iQpQelcpWqbI0sG9ST7wVArYGPWjCQHDzCHbg7OBG6rBLXoBvGCz2l4R7rUZVSzsEy7d3qzxgFWR+3XsA1h8BrCjQPPg9ynhnmDXqrq0svobtrAYT1h174/ARQ/W2FO1QId/YXaBn8iPNm6Hvn5DPMeZjgnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jh5M1pc4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Lz9TRC3E; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1788787451; c=relaxed/simple;
+	bh=VOlppPcAZaihuaybY3MbXojKeN0i17vEAfbdDCdlvuw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZC3m58wZyN2HkvpQjbUQ0MsZLSQEBzeviX3hh5Uo96Vg2iDDZ6emosaoY1tIM/L4SrWmFB8ALa3eaAbqEdxlYXIQAb2+USxHaFYql186uyUdkBT/EiZ4RmpfaDRtpW6vUSg94J3+ztGY3sb6pRBr7xdae4whJ7SmhK/Rpvg2Z9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Sz0fUd9E; arc=none smtp.client-ip=185.70.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Jh5M1pc4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Lz9TRC3E"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 687AmvUZ3349045
-	for <sashiko-reviews@lists.linux.dev>; Mon, 7 Sep 2026 13:21:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xudgVfXyg3OdcNE0RyNDSehp05AOljIo3nyACCtorEM=; b=Jh5M1pc4+HLHenES
-	w+6+ZuFEQ3QKeFO927PD26azciMaTIo3shePfsaNN7OKFI7xRis2bqprMxvfqWga
-	weRLB4EjBLeqBo8sXC71m0h/B3xk5eXzcaiXmAODd2ekwrppATljpbVHBS3YH0vZ
-	0VkJ1WjShTx7y6tNICNpHxMeG1JWt32y2QJ+3G6I3wvqDGHj8DCH2yJVjqCAmFf0
-	UkEZNEYgTJKTaYHbWaWnTZRVnZLC0MpCQeZgDwcalYsK7+F1AYFu8bTX9wtpmXZt
-	9ZcDtaFWtUFAjM6V9f3D5zTzIFQtzXWRQP3SYTd3l7z4byCJp3TtJzKI7cDDv8iQ
-	DAiRsA==
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com [209.85.222.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghtfx0xb6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 13:21:14 +0000 (GMT)
-Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-97cb0a317c4so384847241.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 06:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788787273; x=1789392073; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xudgVfXyg3OdcNE0RyNDSehp05AOljIo3nyACCtorEM=;
-        b=Lz9TRC3ETNjrbkTLJ9hNJTqr8yx5IAmXlPS++pVLeuaSKtU68hOFqYjaBnbKlmqHSs
-         D83HaR8lxwbUSOO99qx5C/SfUbbZh4HW0CXxlcqDqHR1r0bQ1LXHa8xcs5sHhA4aB9aL
-         CDHjSqo/ubDI+nqs0oJ0zFobmOoUHZyEQ0+phWggO+1S5UqYWwaL6bxqVnM5xIX+kaft
-         L0DyWgFVcVFr27IB6QB05kkHFSsHC4TBv6xg2jt3jAL5zW+gIojYSea4U6x23P5OOXRF
-         gHvkSJfoG0lLtwxil98GJ78qZracRh90iIgX/B90f/69cXstiCgARbXF3dQBuHWjWOdz
-         bZDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788787273; x=1789392073;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xudgVfXyg3OdcNE0RyNDSehp05AOljIo3nyACCtorEM=;
-        b=bNG9NyzMS9EnJktpWo2/OwXtbGrfYQW/x58WACwuah9czeI1uLQQ0k0P84Sz/7uT/5
-         4fxVtn0ImNHzs2gR8cZzBdIKJrEfbu3h8qEnBbd1rdZWOkg4jt5mpEfjzKnmN6fRgS5w
-         8SgnF2FwbJkuhKA9Luiyqahcti/+/lEZ23GvYO+2bTDz06iMyeBQdppxtXEY5Ub+Bjbi
-         Xs1LL2G0loWSZzTYHoNOY3o+3JSbg2saq/OmbgxbyVaPqMNbBXxTOaaTYEKz3iEFDUbG
-         6HsXYzC/whzpIrTzN5++MI7CIpP7yEpUufghTNCCtxMiqBHOSTrXkd0tHdinMi17jeAV
-         n2eg==
-X-Gm-Message-State: AFuF++mtH859UpEp52eU5AUw0sGu3W1XitCr7PkBcHHQYX2JFctpSnPb
-	gfSQe9c7NIRQkyI5Q5Eab5exnn8Jw9CXPaJOVQNycW3JphV2pcqGN5n3gLRnXjaf50Lyc5x+rJW
-	EiM1EOI8WROPJDycBnfeMyFDoT2+E+hKofQwqFAcGlB8kwoonyAetsYMrQYNQUrf0jK/O94X0sV
-	44QJw=
-X-Gm-Gg: AYBFou1TM4h+kCnjyej0MoKaVMgokbckUSWuYKqj3AWLggtFn/bKqr7kQu0p6wKR9bX
-	tpVkV8yl7Xt5FVgFWHjcCFIv2zPTvDRJPSQIL3MDBjfaZoh8lw/kWFSmIGzQmCn59x5WRrf+Hje
-	O/4bOpCfk5eGEnn3rt9xJNcqDiMqvAOkzOMfs3Iy/lo9bepwb+gEqaQQFHLCoX1D28bxAeNWSo3
-	oJwqMY68iI0aoPMvx78ESbjQ9nbJvblJ2p3hmA49UQBc9/p+w/gcD9BO72xrXZOaf70bSyF9ulR
-	i/LXCEoiIaMYc30m5IH3nApHnjRY7w1V3KJQ1LQN4bBi2RqQHr6K6I4TSghWcR8IZZdtsDAKXwl
-	kkGa/8o8F6ZYZ1KwmZVjx+3/dWreJ
-X-Received: by 2002:a05:6102:a19c:20b0:78d:31e7:e02 with SMTP id ada2fe7eead31-78d31e73347mr920597137.4.1788787273305;
-        Mon, 07 Sep 2026 06:21:13 -0700 (PDT)
-X-Received: by 2002:a05:6102:a19c:20b0:78d:31e7:e02 with SMTP id ada2fe7eead31-78d31e73347mr920584137.4.1788787272846;
-        Mon, 07 Sep 2026 06:21:12 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.219.214])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4858bcefd59sm23951535f8f.19.2026.09.07.06.21.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Sep 2026 06:21:12 -0700 (PDT)
-Message-ID: <9d03c776-b05e-4037-b7c4-6ed817882edb@oss.qualcomm.com>
-Date: Mon, 7 Sep 2026 15:21:10 +0200
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Sz0fUd9E"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1788787429; x=1789046629;
+	bh=hnfY5g75qigvrd0jz2ODhHdnwo4ylq3b80QtLQG7WnI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Sz0fUd9EhJMPyRuALvCe32NE28SFMKTj1sfqywMEzai31yJm4m1AWa4X56Okp73Uz
+	 Q44gP/t8L1nKLltB5e7+RPDWWq63vWgaqJtw4XVfIY5ihUOoAX10BBLz0g9o1vY0Kz
+	 3M+FwMAeAbGgIxbVJrAsrB9m+VkNZtU+pcuJZ6y/ubwx7Xud7IL9H3EDR5RjGNZDzP
+	 yJZFsLBFXO8MDbfufMDQWdpC5w25X+tVkXP9QHl9FBpz/VXjkc4vvW2nBzjnxZuBxv
+	 W8XlFUUs4zEG9miFoFToBNbRuUnmv60yA+C6JGCBcf+jeU8JougGjQ6BagpJjfXDhu
+	 1vou9WEUlN3ng==
+Date: Mon, 07 Sep 2026 13:23:44 +0000
+To: sashiko-reviews@lists.linux.dev
+From: quanyeyang <quanyeyang@proton.me>
+Cc: mptcp@lists.linux.dev
+Subject: Re: [PATCH mptcp-net v3 3/3] tcp: fix data-race in do_recvmmsg / mptcp_recvmsg
+Message-ID: <BRjPl-qSRxy3Fx7z3OYPbh_uVGAO2xAiTOEhENKwfmLBuZLMw6Gdmlc2zip02u5tK-JJY197mUzv4YjtBk_lTq6Agc80Kj48b6owoUA2_yI=@proton.me>
+In-Reply-To: <20260907102447.4C55E1F00A3A@smtp.kernel.org>
+References: <20260907-mptcp-snd-una-race-v3-0-65ba0d5f0221@proton.me> <20260907-mptcp-snd-una-race-v3-3-65ba0d5f0221@proton.me> <20260907102447.4C55E1F00A3A@smtp.kernel.org>
+Feedback-ID: 206494642:user:proton
+X-Pm-Message-ID: c523e9205894885af1a3a5eff0a6b5ae23752976
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] drm/msm/hdmi_bridge: Correct poweroff/audio
- cleanup order in post_disable
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-References: <20260907-drm-msm-hdmi-fixes-before-eliza-v2-0-b097cf1eac77@oss.qualcomm.com>
- <20260907-drm-msm-hdmi-fixes-before-eliza-v2-3-b097cf1eac77@oss.qualcomm.com>
- <20260907131153.34AD21F00A3A@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260907131153.34AD21F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Weg8rUhX c=1 sm=1 tr=0 ts=6a9eba4a cx=c_pps
- a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=zC86WEiMApjGDmIPK9MA:9 a=QEXdDO2ut3YA:10
- a=TD8TdBvy0hsOASGTdmB-:22
-X-Proofpoint-GUID: Q-oi56QLQffn76cAATMh3THYl34kLpSZ
-X-Proofpoint-ORIG-GUID: Q-oi56QLQffn76cAATMh3THYl34kLpSZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDE0NiBTYWx0ZWRfX9r7d55mlD7FB
- /IT7uec1/nCfxghIeMEDgLwNtsoT2M7UfK8uiavCnnh/rEsN1814ZUBnOo/KAr3/8jXVSmS1vsP
- EZLmC5or9lRh6JBE0oW3IsUs3MVtVB8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDE0NiBTYWx0ZWRfX0B6MIbLwNYRC
- qKJcMeQtSOdmGBPUOUcJuSaHF8r8g4BDcycn7WvUQzmrgmiTPcSEPSjFWWQK7PbgbJMI+UrWoJ2
- FGJ84GVINrc7hsXhbLYh4ppzzvSYLZwWWKIMqnYBzplKTONnlahbvmq6x1ypXwuMRzrxWXfHpeu
- gtfBSPpI5Ki9XQCGo6w6UH9r+bpoPbOSKu8LVrEQz5A6N3pIZGZiaDCHP2tW1j3XR1EBLqTKBRz
- VTTVnbZJW/2O/N6i1haJ2SgsS+C6jezv6M/JLv0uxKiHML/Cv0Ax2YBih/+XeQtq+GHALJlKd3n
- J47s0adq3IrBRyPhS4ydI7ZNZWIJNv0abO+0qScwurSfpvEetTh4gqJkTeH+R74c+0/uQ01wYx8
- EEMrkPbsBp8hM6QkVNSUd3/RtBkwPHD0qD4h7lb3DyQasRGxPMYcd7QQ12eDS+n3qOmDMMNU/Hl
- v0KGSVwtpvbY8o6EBOg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-07_03,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 phishscore=0
- bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609070146
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 07/09/2026 15:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Moving `hdmi->power_on = false` to after `msm_hdmi_audio_update()` breaks the audio hardware disablement logic, leaving the audio engine active before its power is cut.
+On Monday, September 7th, 2026 at AM 3:24, sashiko-bot@kernel.org <sashiko-=
+bot@kernel.org> wrote:
 
-Ack
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>=20
+> Pre-existing issues:
+> - [High] Incomplete fix for `sk->sk_err` data race leading to false EOFs.=
+ The patch fixes a lockless data race in `tcp_recv_should_stop()` by adding=
+ `READ_ONCE()`, but overlooks identical plain reads followed by `sock_error=
+()` in `tcp_recvmsg_locked()`, `tcp_splice_read()`, `mptcp_recvmsg()`, and =
+`tcp_bpf_sendmsg()`. If `sk->sk_err` is checked and evaluates to true, but =
+is concurrently cleared to 0 by another thread calling `sock_error()` (e.g.=
+ via `do_recvmmsg` or `getsockopt(SO_ERROR)`), the subsequent assignment `c=
+opied =3D sock_error(sk)` will evaluate to 0. For receive and splice functi=
+ons, this results in returning 0, which falsely signals a graceful connecti=
+on closure (EOF) to the application rather than an error.
+> --
+>=20
+> commit 0f561938f67b19245ef8889cb9ecc077fb82d7d0
+> Author: Quanye Yang <quanyeyang@proton.me>
+>=20
+> tcp: fix data-race in do_recvmmsg / mptcp_recvmsg
+>=20
+> This commit fixes a lockless data race in tcp_recv_should_stop() by using
+> READ_ONCE() for reading sk->sk_err. This prevents issues when sock_error(=
+)
+> atomically clears the error using xchg() without holding the socket lock.
+>=20
+> > diff --git a/include/net/tcp.h b/include/net/tcp.h
+> > index 436495ff2271d..c61d8678eafd3 100644
+> > --- a/include/net/tcp.h
+> > +++ b/include/net/tcp.h
+> > @@ -3082,7 +3082,8 @@ enum skb_drop_reason tcp_inbound_hash(struct sock=
+ *sk,
+> >
+> >  static inline int tcp_recv_should_stop(struct sock *sk)
+> >  {
+> > -=09return sk->sk_err ||
+> > +=09/* sk_err can be cleared locklessly by sock_error(). */
+> > +=09return READ_ONCE(sk->sk_err) ||
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but does this fix also need to be applied t=
+o
+> other locations that read sk->sk_err locklessly?
+>=20
+> If sk->sk_err is evaluated as non-zero, but the error is concurrently cle=
+ared
+> by another thread calling sock_error() (for example, via concurrent recvm=
+msg
+> or getsockopt calls), a subsequent call to sock_error(sk) will return 0. =
+This
+> masks the socket error and falsely signals a graceful connection closure =
+(EOF)
+> or 0 bytes sent.
+>=20
+> This pattern appears to be present in several other functions:
+>=20
+> net/ipv4/tcp.c:tcp_recvmsg_locked() {
+> ...
+>     if (sk->sk_err) {
+>         copied =3D sock_error(sk);
+>         break;
+>     }
+> ...
+> }
+>=20
+> net/ipv4/tcp.c:tcp_splice_read() {
+> ...
+>     if (sk->sk_err) {
+>         ret =3D sock_error(sk);
+>         break;
+>     }
+> ...
+> }
+>=20
+> net/mptcp/protocol.c:mptcp_recvmsg() {
+> ...
+>     if (sk->sk_err) {
+>         copied =3D sock_error(sk);
+>         break;
+>     }
+> ...
+> }
+>=20
+> net/ipv4/tcp_bpf.c:tcp_bpf_sendmsg() {
+> ...
+>     if (sk->sk_err) {
+>         err =3D -sk->sk_err;
+>         goto out_err;
+>     }
+> ...
+> }
+>=20
+> Would it be appropriate to update these instances as well to prevent
+> Time-Of-Check to Time-Of-Use races?
+>=20
+> >  =09       sk->sk_state =3D=3D TCP_CLOSE ||
+> >  =09       (sk->sk_shutdown & RCV_SHUTDOWN) ||
+> >  =09       signal_pending(current);
+>=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260907-mptcp-sn=
+d-una-race-v3-0-65ba0d5f0221@proton.me?part=3D3
+>=20
 
+Thanks for the review.
 
+The TOCTOU issue is valid, but it is separate from the reported KCSAN
+race fixed by this patch. tcp_recv_should_stop() only peeks at sk_err
+after data has already been copied, so READ_ONCE() is appropriate there
+and the error must not be consumed.
 
-Best regards,
-Krzysztof
+For the no-data paths, the correct approach is to call sock_error()
+once and only stop when it returns a non-zero error. This avoids
+returning a false EOF if another thread consumes the error between the
+check and sock_error().
+
+The BPF function is tcp_bpf_recvmsg_parser(), not tcp_bpf_sendmsg().
+There are also additional instances, including mptcp_splice_read() and
+the LLC receive path, so updating only the locations listed above would
+still be incomplete.
+
+I will audit these check-then-sock_error() patterns and handle the
+pre-existing TOCTOU issue separately, unless the maintainers prefer it
+to be included as an additional patch in v4.
+
+Thanks,
+Quanye
+
