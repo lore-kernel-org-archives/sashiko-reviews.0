@@ -1,145 +1,161 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FA8479871;
-	Tue,  8 Sep 2026 18:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5D59C970
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 18:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788891726; cv=none; b=ToGIKQxDoonUXrOJxIpBlSbYSEh7OLH6h9tqgFym/n/EEoN6bNiBjw28FIXwFgRjjPOFIMlE0M26PtXPkrUcvH1f25wS0Yv1DpWQwkU+Q8PM+HA0F1DlBbBhqlJxzQRiWwER/h/4jxN8Wsl2Oeh3g67mVTrkexQKQxU09NuZ468=
+	t=1788893830; cv=none; b=nO2cAQmMl6WhZeLoZPGLlovw0gxq4WvsHRr5OI7P/J8ez88FBTPmMpPoFCvfqcJFueEvHqGaPoDATv3V2axf/DzRlUidRTpTJmLYnYgzpClT/qQHCLy8Qajx43ysHBvlHC7A6dcjAnW+rE+P6XwRvpKWzJDpeJQKpdNd/T8QyYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788891726; c=relaxed/simple;
-	bh=pZUGW3mxkjzlt6qWdkhwhkzsYVZmmQwBD7ygtdVa8ck=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AEBTaqlWQ8h11lY1vO1AVYRdP+Y14U1BrtDLx1eg/DQ0uaMzxDV/lTQhtMajFENzWkeFlHdbt2xOh+zU3Cz3nGzvQYKyM0inZvG8pSGlWvIuW+U5jbrl4/dLlfU153Po6G3LhIfi1NFh4jTBGzCLj8NQ6sU8CFZb/lgFzEKDH+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hf49itJu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788893830; c=relaxed/simple;
+	bh=soEfeC9qUxvkfN6UEt9aQdcQ/wR4lPrN68Y2ziKQ2M4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=btC7SPFNXb96zoKlyx8HWAfUhUIjOU9FL8KLLW+keduV1P6jl9nU3ymPon6R8GPVaaG79OFEl1qqU9isbebkkrJnMXNEYbvVf2ug2XYapARySDVPBqWq4NgKc6H8Xfx6ljHxckauIUTn052YXGZCF5AtlLHCX9Zow/B6aQ5sUgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiJI5I7P; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hf49itJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F11F00A3D;
-	Tue,  8 Sep 2026 18:22:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788891724;
-	bh=KOkqH9+KsQ/pfEOXoQXs/QBpMjFn4xAHhMmlbJfXtIs=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=hf49itJuKZZrVDgFz/OBI02KhpJ0w85fKm5+GcHhZZO9DUUMkUtM0OL5cPa0qunOV
-	 j3D+g0J8HacUPC2VbeSltqqF9GTW4YwMGy1Q++steJYUBFf9dOlMFi89D0BWos/on8
-	 GBjv0u1OQPeyr/u1kFiTKyrZh/mwDkKCaAXhVq6i/NOJoy0JMD+U9rlFOnpMFK8BQM
-	 wAUMYQwcYK2d44gcVBdVpxKuBtxlt2hiKn0nBAXP7gAk0PY3cidGkCPT7BXP6fx+Ax
-	 WOmZ7vdKj2YCU4ciLpxFotS8jS+CmE26U7L9+hlDzDE+nscpMfatkhiZlVvEnHDCUq
-	 CYl+giRfxEbNQ==
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id 62F16198003A;
-	Tue,  8 Sep 2026 14:22:02 -0400 (EDT)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Tue, 08 Sep 2026 14:22:02 -0400
-X-ME-Sender: <xms:R1KganhWojexTaEkcE9JNG2cPj7XgDgOFoXrGK4XmayHCNKPiO9VaQ>
-    <xme:R1Kgau10_SvGPB3yfP4vC7fFqFw7CFxNWNHyAOuKkR1D3WdEFe3_l1bs_81OVeuT-
-    TvpIP0I9YyFC9FtFqLdEAVy259vPupVkwojcM3tDj-Ur1n7W8HVZA>
-X-ME-Proxy-Cause: dmFkZTF3Xbdz07cy4boaCVQHFkenJCqc2sn4pb294JKVq2iAU/ryEnJrbS5rHRz/45kLdP
-    XWVPpmR29IIAjw31EDFDOoChR5dpk7oDeztrPOMK6Ck6rUZyoBVx+gU/Dj+v2ezibRn/3Z
-    6copKQyaHQTnzkXFaRPpL+YsGtqzZF8KdZn0FKgRlMOihu7MmoU83A9qIw5BuKzEDvlTFC
-    hkYrh2QdS2qnv5wk8D0+zIgWAi+fdBqzJoR6DSey3OStD8Far5kE1hHrAv5MW+cSE92604
-    C0JRxb+rlMAsR5nZZHdab1pbHPOU2NsD1PcNS9z4aUCnOnSHzZzNZWET46rcpd7ZG3n6Zp
-    23NB5BYR9Bd2vlT99ZOgkZynr7E8I3RD8qiC3VJf7Vwao2PfWxTnJpoGsqCAkB7VUl2RiA
-    iFQniTW0DmVYGD4YR/R1+UC0pImIplV9uP1J5d8ZROiVKPwGAQyS2/iK42Fmxof1ON/y7c
-    8HYLyRpBRPmYiSuAw8UZ7v+MaAJjjPcBzs4AGz7ScKQdHquEMdlRoBfggT0viLHZSI7dey
-    6sGEL6e5OCUhAEgk0wFO/27J+MEfYUkM3vdmBLb5bFJgJ2CA3jtJ7Yeo5xke8uESS3zrAl
-    /pg3sPxHGz8QeYtfQ6nR+fsf9bPOlUF4X3Z7E/Zv5bzYrIY2S3/tLiBS4wOw
-X-ME-Proxy: <xmx:SlKgakKMyflVPzT2IaiVNPoit3F_v_SjIGgTR7F9CFExNsQVJHhdWg>
-    <xmx:SlKgasG6ovtp0PxJslZBsEexayDxOMD1Ftz_o4s2LvqKcOfBVP1pMA>
-    <xmx:SlKgar7zpPWvSZN0h6Z3E1JiiiuQfAWt1u4bCGJuv8NIIDx0iClvNw>
-    <xmx:SlKgan3ZQ1aVDog9cCn7AS2QRAKeDXuh--6GdSSWbM_NUMzrG7ow7A>
-    <xmx:SlKgang6dUc9NvIN_N5Ch2nIpi01dqxYKTTh1R4UYO_yWH9JD0MboRxU>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 8F55A32A0078; Tue,  8 Sep 2026 14:21:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiJI5I7P"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3a472ff39d4so24331281fa.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 11:57:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788893827; x=1789498627; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dPAv9/DNHgYvkBswgfcYE+/SWcKiJRn1AWqpJM/JUGk=;
+        b=SiJI5I7PX9bRtVr6hR7NUifRKo/lHeRcGeRBuNN704UMH5scce+WmyJca/KAjNdBWv
+         knGJx/HfLF3jJ13QC8Eye6r9XL0HUDSE5hFg8OGdcDGLZIq8TaTpDHtR6SqnYkGkcrnE
+         pg4W0c1dQduX4pyO3fQWYhtvEIhCdytUXpo+FZAQ9ImgM9BybuNlltSqLGQHvuZrZgJc
+         bX9AvFyCyJXSmfWHn6PfRaF6Tc41td9owZk5HWCbo7fH9+sXe5Qn9diHW3JuEK8EX9Cr
+         XYE69YTbwL77gBgeFZ6dynkk7E5H/vAEY/1B/0ZL+rIbr8N4trHQ3i+YCdisjJWBj1gA
+         v03w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788893827; x=1789498627;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=dPAv9/DNHgYvkBswgfcYE+/SWcKiJRn1AWqpJM/JUGk=;
+        b=d/cuRXPy7Bqeu/Ba8KAfcgJmgyOwNASklLAL+Ypmus4KFKoJMnCSbCL2omn3iCkjXv
+         QVERHMjnsAgSES5LEvv0yF8e1zSK/i9VlJgwLQJB35vzFGqEcfGNrPkREXYJTyOlmSus
+         ZI6kmWH0jB9ydPevRvEvLYN/4xNGSCyFfHdxdnHp8IXCV+eX4dOXNJ7YuQmSBsE11bFT
+         EaM1MJ4ST8SlVVnizCpgNnaY6J0SFl9AgsnifrE5CY0b9csxhZTZxdU+U163jylqmGjP
+         k2q0gcD3yiY/x1kEv0t5NSg1Ek6MxJP2bL04TrH6q4BIT7P3zv858mEfKCvkn9pfnXm9
+         Wr/g==
+X-Gm-Message-State: AFuF++mhIgyHtO1cYXe0lPfER6BKMhtaSHH3/T3iaBBHhPLVvbwV5kWt
+	uf46PtzRQ80pYyoNd7x4/H0saFaEmNo5fJrNZzqFFPPjChu1YrX5hE46YVmTOnHN
+X-Gm-Gg: AYBFou0Ji+c31TM8Buc0PQddAOzlUaELLgOWOpLRO5xH1grSh5PxwA3sjeJcxgn1sWw
+	9AIolirqWJlTDeOGp2DzJUUfF/RKj2f0Opk+SZ2jgDaGqWkYCwkyyjqwZC2rEErT+bQqX6BMUDR
+	f4UzQS1aNRUJeGFO0JjJ9K+7HI06wMZH7mSi4p+k13lX2LBvY/rsG+scbCedELahAfWAVhXdBgP
+	5xUtDgf9fK8sSJGVr0/8e0uJsfsciX2vxPSdpvxXljP9AeolVYKxwVt53ikQ7gc3nkBr62yxVLE
+	e2Q0nHCQxqbsC/AZ4wG5XYRW/nagImVpbl1/ABcbY3BQWDknN7cCE7N/glKLIABj5EFJ1iJwqD1
+	Ef2hF3zVj2O9H6ZbAVuiSX4DisxTejWI882AxBbvY/Xd4HCVTiWL6Gcng3P58yNHAUvcaNDXlz5
+	tMjhJxg4KtNukEEQEmvp7o55aP10vEl8qvC2upht64E3itQWTeVD2AOLXR0KITkFLnvaWcVicNS
+	8/fD9l7/Mtrqg==
+X-Received: by 2002:a05:6512:ac2:b0:5b6:4b2:de82 with SMTP id 2adb3069b0e04-5b6170596d8mr4800979e87.32.1788893826465;
+        Tue, 08 Sep 2026 11:57:06 -0700 (PDT)
+Received: from localhost (soda.int.kasm.eu. [2001:678:a5c:1202:7b92:9ac1:b9ef:5287])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b6166fe6d9sm3239335e87.56.2026.09.08.11.57.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 11:57:06 -0700 (PDT)
+Date: Tue, 8 Sep 2026 20:57:05 +0200
+From: Klara Modin <klarasmodin@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, ojeda@kernel.org, 
+	rust-for-linux@vger.kernel.org, amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] rust/drm/gem: initialize callbacks with
+ ..pin_init::zeroed()
+Message-ID: <aqBX1siwtKuBTXBE@soda.int.kasm.eu>
+References: <20260908175427.47207-1-klarasmodin@gmail.com>
+ <20260908180555.0830E1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ANqE0jO8KCPJ
-Date: Tue, 08 Sep 2026 20:21:39 +0200
-From: "Arnd Bergmann" <arnd@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- "Damien Le Moal" <dlemoal@kernel.org>, linux-rtc@vger.kernel.org,
- "Neil Armstrong" <neil.armstrong@linaro.org>,
- "Vinod Koul" <vkoul@kernel.org>,
- "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
- "Vladimir Oltean" <olteanv@gmail.com>, "Frank Li" <Frank.Li@kernel.org>,
- linux-pci@vger.kernel.org, "Rob Herring" <robh@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, imx@lists.linux.dev,
- "Niklas Cassel" <cassel@kernel.org>, linux-ide@vger.kernel.org,
- linux-watchdog@vger.kernel.org
-Message-Id: <71266564-7be5-4621-ab03-29cf9ec49287@app.fastmail.com>
-In-Reply-To: <20260908161125.E4A331F00A3A@smtp.kernel.org>
-References: <20260908152808.3928630-1-arnd@kernel.org>
- <20260908152808.3928630-6-arnd@kernel.org>
- <20260908161125.E4A331F00A3A@smtp.kernel.org>
-Subject: Re: [PATCH 05/13] ARM: orion/dove/mv78xx0: remove all board files
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260908180555.0830E1F00A3A@smtp.kernel.org>
 
-On Tue, Sep 8, 2026, at 18:11, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Since all the board files like arch/arm/mach-orion5x/ts78xx-setup.c are
-> removed in this patch, should the MAINTAINERS entry for the TS-78xx platform
-> further down in this file also be removed?
->
-> The pattern F: arch/arm/mach-orion5x/ts78xx-* now points to deleted files,
-> which leaves an orphaned entry for Alexander Clouter.
+On 2026-09-08 18:05:54 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Incomplete fix: missing `handle_free` field in conditionally compiled `shmem.rs`.
+> --
+> 
+> commit b5b83bb373847c99ca6d286c268d2e0ffab299f0
+> Author: Klara Modin <klarasmodin@gmail.com>
+> 
+> rust/drm/gem: initialize callbacks with ..pin_init::zeroed()
+> 
+> This commit updates the drm_gem_object_funcs struct initialization in the DRM
+> GEM module to use pin_init::zeroed() instead of explicitly assigning None to
+> unused callbacks. This fixes a build failure caused by a newly added callback
+> field in the C structure.
+> 
+> Closes: https://lore.kernel.org/all/aaef18cd-ab55-4fb8-8563-ca3a5ea9cbc6@leemhuis.info
+> 
+> > diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
+> > index e1ebad77ebe2a..c63b0fe5a15e1 100644
+> > --- a/rust/kernel/drm/gem/mod.rs
+> > +++ b/rust/kernel/drm/gem/mod.rs
+> > @@ -266,18 +266,8 @@ impl<T: DriverObject, Ctx: DeviceContext> Object<T, Ctx> {
+> >          free: Some(Self::free_callback),
+> >          open: Some(open_callback::<T>),
+> >          close: Some(close_callback::<T>),
+> > -        print_info: None,
+> > -        export: None,
+> > -        pin: None,
+> > -        unpin: None,
+> > -        get_sg_table: None,
+> > -        vmap: None,
+> > -        vunmap: None,
+> > -        mmap: None,
+> > -        status: None,
+> >          vm_ops: core::ptr::null_mut(),
+> > -        evict: None,
+> > -        rss: None,
+> > +        ..pin_init::zeroed()
+> >      };
+> 
+> [Severity: Medium]-
+> Does this commit miss a similar update in rust/kernel/drm/gem/shmem.rs?
+> 
+> The VTABLE initialization in shmem.rs explicitly lists fields without
+> using pin_init::zeroed(), similar to what was fixed here. When compiling
+> with CONFIG_RUST_DRM_GEM_SHMEM_HELPER=y, won't this cause a missing
+> field error for the newly added handle_free callback?
 
-I fixed this instance now. I tried to automate this with a script
-but could not figure out how to deal with wildcard matches and
-only did the ones that have an exact file match.
+Sure, but it should probably be a different patch in that case. The
+current patch fixes an issue to a currently existing build failure,
+while the issue mentioned here has not manifested yet.
 
-If anyone has suggestions for doing this better, please let me know,
-or run your script on 
-https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git/log/?h=board-remove-7.3
-and send me the results.
+Regards,
+Klara Modin
 
-> [ ... ]
->
->> diff --git a/arch/arm/mach-orion5x/Makefile b/arch/arm/mach-orion5x/Makefile
->> index 6f54d7fef27a7..7e9634e043185 100644
->> --- a/arch/arm/mach-orion5x/Makefile
->> +++ b/arch/arm/mach-orion5x/Makefile
->> @@ -2,15 +2,6 @@
->>  ccflags-y := -I$(srctree)/arch/arm/plat-orion/include
->>  
->>  obj-y				+= common.o pci.o irq.o mpp.o
->> -obj-$(CONFIG_MACH_KUROBOX_PRO)	+= kurobox_pro-setup.o
->> -obj-$(CONFIG_MACH_TERASTATION_PRO2)	+= terastation_pro2-setup.o
->
-> [Severity: Low]
-> Are irq.o and mpp.o now completely unreachable code?
->
-> Since all the board files that called into these APIs have been removed,
-> it appears these objects are now unnecessarily compiled into the kernel
-> image. Should they be removed from obj-y here?
-
-Added this to the patch, removing the two files and recursively
-seven more that become orphaned afterwards:
-
- arch/arm/mach-orion5x/Makefile                |   2 +-
- arch/arm/mach-orion5x/irq.c                   |  51 ---
- arch/arm/mach-orion5x/irqs.h                  |   9 -
- arch/arm/mach-orion5x/mpp.c                   |  41 --
- arch/arm/mach-orion5x/mpp.h                   | 130 ------
- arch/arm/plat-orion/Makefile                  |   4 +-
- arch/arm/plat-orion/gpio.c                    | 616 --------------------------
- arch/arm/plat-orion/include/plat/irq.h        |  15 -
- arch/arm/plat-orion/include/plat/mpp.h        |  34 --
- arch/arm/plat-orion/include/plat/orion-gpio.h |  38 --
- arch/arm/plat-orion/irq.c                     |  39 --
- arch/arm/plat-orion/mpp.c                     |  82 ----
- 13 files changed, 2 insertions(+), 1066 deletions(-)
-
-This leaves only pcie.{c,h} in arch/arm/plat-orion/, which
-should be folded into arch/arm/mach-orion5x/pci.c, along
-with parts of arch/arm/kernel/bios32.c that nothing else
-uses any more. I don't have a patch for that yet.
-
-      Arnd
+> 
+> rust/kernel/drm/gem/shmem.rs:
+>     const VTABLE: bindings::drm_gem_object_funcs = bindings::drm_gem_object_funcs {
+>         free: Some(Self::free_callback),
+>         open: Some(super::open_callback::<T>),
+>         close: Some(super::close_callback::<T>),
+>         print_info: Some(bindings::drm_gem_shmem_object_print_info),
+>         export: None,
+>         pin: Some(bindings::drm_gem_shmem_object_pin),
+>         unpin: Some(bindings::drm_gem_shmem_object_unpin),
+>         get_sg_table: Some(bindings::drm_gem_shmem_object_get_sg_table),
+>         vmap: Some(bindings::drm_gem_shmem_object_vmap),
+>         vunmap: Some(bindings::drm_gem_shmem_object_vunmap),
+>         mmap: Some(bindings::drm_gem_shmem_object_mmap),
+>         status: None,
+>         rss: None,
+>         #[allow(unused_unsafe, reason = "Safe since Rust 1.82.0")]
+>         // SAFETY: drm_gem_shmem_vm_ops is a valid, static const on the C side.
+>         vm_ops: unsafe { &raw const bindings::drm_gem_shmem_vm_ops },
+>         evict: None,
+>     };
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260908175427.47207-1-klarasmodin@gmail.com?part=1
