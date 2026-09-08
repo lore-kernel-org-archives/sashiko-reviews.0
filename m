@@ -1,99 +1,239 @@
-Received: from mx0a-0016f401.pphosted.com (mx0a-0016f401.pphosted.com [67.231.148.174])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267FD37A494;
-	Tue,  8 Sep 2026 06:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.148.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958D2372B3C;
+	Tue,  8 Sep 2026 07:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788848519; cv=none; b=AHVkuNFt9p+pax+duKRqXfc7wjEdWBuPw90yR2TgSS9T1FkCD1TZmJjPljbbt4lRCLccAf7LBvZolHzQubomLFmUBP1OCLv1c6llILd7imPPi3okZDOsCO9SuBCnM5DbVx6My8Uy8ulAkodWsRPKxMJGlhLGhHEKM0otTrqkroo=
+	t=1788851410; cv=none; b=IfNb+Kq3flCg+z+g4OSXh/fnC4A9R8IOjKLIhZuMfIWB6NUt18I90yM2OnGx5x0+qAAYdC5RlE0zlAw6dMqoQSH1F0BfBgkOASXZFzNzan69Gb1EVRoo4J7UZntH7FBwuhaM5FBAOGXqvTzwAMTJJWkr1ufb8l8RUTWlXA88Lww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788848519; c=relaxed/simple;
-	bh=3VycUhpdwHbxfQRDQyilst+mNIkr6plBOkBxjMIVv1s=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qlxy1XKnNGn26zkwZgv44lDN5/xI7wscJXaH9R8P/P1emLxDpNk4Lr8nBjfNRtYwP19gOIkuGbn9LDAGw71zRHzsnjgkIu4uZGDhV99u9cA0HwJsjwbr89EH/E+6cdYP0b+k8goNBv7xcodT/71RL/VKWVkH/5v9ANo6H9NTuRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=marvell.com; spf=pass smtp.mailfrom=marvell.com; dkim=pass (2048-bit key) header.d=marvell.com header.i=@marvell.com header.b=LsPUb1n+; arc=none smtp.client-ip=67.231.148.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=marvell.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marvell.com
+	s=arc-20240116; t=1788851410; c=relaxed/simple;
+	bh=9I/F2D/VeTFND7TmCx4VAvkT0VihmIR6iZEsj1zartE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MDZtom3MF5592kzDezrNTb+Y2PhsnnDAsO4sIHCM3oK3R1nXH+mv61VpWjq3zUUuoPnopat+k5qUyA5O3cgsOqzRppe7zIgzD8UrWQ0yCfTk04T9hVobRpLIJzgexcy+dqIsAnpaebQLfi0ED2sDFX3fuUINJBZijtnlSRrHOhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AELUli2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marvell.com header.i=@marvell.com header.b="LsPUb1n+"
-Received: from pps.filterd (m0431384.ppops.net [127.0.0.1])
-	by mx0a-0016f401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 687Nqf3w2879773;
-	Mon, 7 Sep 2026 23:21:51 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marvell.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pfpt0220; bh=3VycUhpdwHbxfQRDQyilst+mN
-	Ikr6plBOkBxjMIVv1s=; b=LsPUb1n+4bBIqGXqSyfPeWlAmGHQjca+PrCOzFHJN
-	v/puX5k8iQ/ltDtF1EPR1rA4F8S30y7hOmg/Vo0P+cq2H2W7q4ku/UXcvKK/3val
-	z1idhX9vmYSreo+WV4o68czbJxTZazLc3kLXNmuT5Rc6hKgZdfdjMHMIJm2EnbQy
-	qsMDdTZ7svlIJUfiwKOPyXSgr3gr/NUgMvx3oPG+skYb1oMcnHKnXcz74Mi6TFpy
-	A++25c5pLN8B03XZpcIFnOLi7KZrssir1hEkmU+b7ANLnkw2Xl5LtHlIgVoCOuUv
-	Y96lkMwzP34ldlmtkJYUccSuUAssQJ/JHksmy2gM5PhUQ==
-Received: from dc5-exch05.marvell.com ([199.233.59.128])
-	by mx0a-0016f401.pphosted.com (PPS) with ESMTPS id 4gh7b94xua-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Sep 2026 23:21:51 -0700 (PDT)
-Received: from DC5-EXCH05.marvell.com (10.69.176.209) by
- DC5-EXCH05.marvell.com (10.69.176.209) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 7 Sep 2026 23:21:49 -0700
-Received: from maili.marvell.com (10.69.176.80) by DC5-EXCH05.marvell.com
- (10.69.176.209) with Microsoft SMTP Server id 15.2.1544.25 via Frontend
- Transport; Mon, 7 Sep 2026 23:21:49 -0700
-Received: from rkannoth-OptiPlex-7090 (unknown [10.28.36.165])
-	by maili.marvell.com (Postfix) with SMTP id 8CCEF3F7077;
-	Mon,  7 Sep 2026 23:21:48 -0700 (PDT)
-Date: Tue, 8 Sep 2026 11:51:42 +0530
-From: Ratheesh Kannoth <rkannoth@marvell.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <bpf@vger.kernel.org>
-Subject: Re: [PATCH v13 net-next] octeontx2-pf: add mqprio bandwidth offload
- for NIX TX schedulers
-Message-ID: <ap-pdktpQJ8y3LYx@rkannoth-OptiPlex-7090>
-References: <20260904031553.3196916-1-rkannoth@marvell.com>
- <20260905031641.F3C191F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AELUli2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6641F00A3A;
+	Tue,  8 Sep 2026 07:10:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788851408;
+	bh=tASNgWLVTewlPxH9GFItCaaNFjGZpPtTNZ4AsX2lYbA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AELUli2++W+6IC7Q2pnh/aDqU3jAPlJxSfmPEX4tN32DDcO7NeRqXvkBvmzy1ICVF
+	 rSaE9HpWuapopCKjHYTuvhTUOutqD0cEqeiVH0w64k9scZm58F70dwyQNtmGUOCFSd
+	 Ve5U43ctxIDIy6pBGZyc7p0dT/VLiEM2LdAuP0g7dMNTCZXna3nCypNz2ujAO6wrUM
+	 e2RVY2tRmhufR7h0Wtn2yRONVAbESnQF3cTqFk6MXM+JHp98hMF7z2691L5ghz06W7
+	 +FyZz/Ya2cgeP6oXZWHfspQinwlh9IQL7b5fBJwi0j6TZQ5go4lG13CtAc/XRKTdZb
+	 vtdumZ7ZScHsQ==
+Date: Tue, 8 Sep 2026 07:10:04 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, linux-scsi@vger.kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: k3: Add UFS support
+Message-ID: <20260908071004-GKB2346@kernel.org>
+References: <20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org>
+ <20260806-08-k3-ufs-support-v3-3-037fb322acdb@kernel.org>
+ <20260806031259.01EF91F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260905031641.F3C191F00A3D@smtp.kernel.org>
-X-Authority-Analysis: v=2.4 cv=J/SaKgnS c=1 sm=1 tr=0 ts=6a9fa97f cx=c_pps
- a=rEv8fa4AjpPjGxpoe8rlIQ==:117 a=rEv8fa4AjpPjGxpoe8rlIQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=l0iWHRpgs5sLHlkKQ1IR:22 a=TtqV-g6YmW1Jfm2GSLaY:22 a=VwQbUJbxAAAA:8
- a=jB5l-w-mdJaMWxz8i1YA:9 a=CjuIK1q_8ugA:10 a=ZXulRonScM0A:10
- a=lhd_8Stf4_Oa5sg58ivl:22
-X-Proofpoint-GUID: xgjMiF3j1-hNBJKI02l-IL0MmANao2cu
-X-Proofpoint-ORIG-GUID: xgjMiF3j1-hNBJKI02l-IL0MmANao2cu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA2NyBTYWx0ZWRfX15aOg9I9SZkG
- cwQNW1Ge3oH10my4dUqXfWTq/It54w/4yiGVkhSMv3dcyEwXL4lyQ8rFCtDZoAd7TM/n96a5Wx+
- FT9tukqQz19jHDU+tta7eozIUxT7WHUlb/TFNiAixpjMr26ThTwA4rmf05QHpHYyS+K2f1G3oLS
- aVCN6dWhb3h6UScKwDjLZvQ5IO1eRxJWDttEJS+2jDL+KPkwtEoGfdOR0okGVDiCUdHMmcRS5u4
- 6mMfuFJYUJn8YMrT4LpfGTDcbkinmN1cQ6M/MWujPCSzHPznh1BnL3kZQDq8+fgKydkwgGaQ2ns
- prNKT6xuRCPuxuF7E3e9uyv3nvTOGsBw4t/LAndWYMBE7muiToHQxr8OgB9wHUYrZfm7gyjwskQ
- vXbSdj/ffMa/X8XLA1A2jDR2wQLi0dyr3z5PuLGmzSFw3RXsRJv9CjxFl3WkDNtR2Ox4izUT3xa
- fWng+tz10YuntUG/C3Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA2NyBTYWx0ZWRfXzPvlLylI1fyW
- CFyhOwM60yBPrgA/qCSbW7uvB0oeBtZkZ+BldOgJcMauaNuMqwZOCxhij3RtHqmjQNifRwlJxOJ
- u66d8GrRGZoG0m+u+4UDoSxi23rU+pc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-07_07,2026-09-07_01,2025-10-01_01
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260806031259.01EF91F000E9@smtp.kernel.org>
 
-On 2026-09-05 at 08:46:41, sashiko-bot@kernel.org (sashiko-bot@kernel.org) wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] Use-After-Free of transmit queue structure (qset.sq) due to direct ndo_stop() call without disabling TX
-> - [High] Non-atomic read-modify-write of `pfvf->flags` causes a lost update of `OTX2_FLAG_INTF_DOWN`, leading to a double free of queue memory and IRQs.
->
-> Pre-existing issues:
-> - [High] Hardware QoS queues are not re-allocated after an interface bounce, causing configuration of invalid/unallocated TX schedulers.
+Hi All,
+
+On 03:12 Thu 06 Aug     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Failure to enter HIBERN8 state is ignored before forcibly powering down the M-PHY.
+> - [High] Missing DME attributes configuration for TX lane 1 and inconsistent MIB selector usage.
+> - [Medium] The retrieved connected TX lanes value is silently discarded.
+> - [Low] Redundant and ineffective call to `ufshcd_vops_phy_initialization`.
+> - [Low] The device tree references an undefined clock macro `CLK_APMU_UFS_REFCLK`, which causes a Device Tree compilation failure.
 > --
+> 
+> --- Patch [3]: [PATCH v3 3/3] riscv: dts: spacemit: k3: Add UFS support ---
+> commit 7b2ecae3ba0ff920d65fce0475cce3fc5045f08d
+> Author: Yixun Lan <dlan@kernel.org>
+> Subject: riscv: dts: spacemit: k3: Add UFS support
+> 
+> Add UFS Host Controller support for SpacemiT K3 SoC, and enable
+> it both on Pico-ITX and CoM260-IFX boards.
+> 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > index 19fc9b49668ed..cee1569608ea2 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > @@ -469,6 +469,28 @@ usb2_phy: phy@c0a20000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		ufshc: ufshc@c0e00000 {
+> > +			compatible = "spacemit,k3-ufshc";
+> > +			reg = <0x0 0xc0e00000 0x0 0x40000>;
+> > +			clocks = <&syscon_apmu CLK_APMU_UFS_ACLK>,
+> > +				 <&syscon_apmu CLK_APMU_UFS_REFCLK>;
+> 
+> [Severity: Low]
+> Does this reference an undefined clock macro?
+> 
+> The device tree references CLK_APMU_UFS_REFCLK, but this macro appears to be
+> undefined. Will this cause a compilation failure when building the device tree?
+> 
+this should be solved in v7.3-rc1, which ufs clock driver has been merged
 
-Will address in v14
+> [ ... ]
+> 
+> > diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
+> > new file mode 100644
+> > index 0000000000000..94942ea27fb7d
+> > --- /dev/null
+> > +++ b/drivers/ufs/host/ufs-spacemit.c
+> > @@ -0,0 +1,687 @@
+> 
+> [ ... ]
+> 
+> > +static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
+> > +{
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> 
+> [ ... ]
+> 
+> > +		/* TX HB8_TIME CAP */
+> > +		{ UIC_ARG_MIB_SEL(0x000F, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x64 },
+> > +		{ UIC_ARG_MIB_SEL(0x000F, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1)), 0x64 },
+> > +		/* RX HB8_TIME CAP */
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x64 },
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x64 },
+> > +		/* TX EQ 3DB */
+> > +		{ UIC_ARG_MIB_SEL(0x00CD, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),  0x5 },
+> 
+> [Severity: High]
+> Are we missing the TX EQ 3DB configuration for lane 1 here?
+> 
+> The device tree specifies lanes-per-direction = <2>, but this DME attribute
+> is only configured for TX lane 0. Could this leave lane 1 with undefined or
+> default parameters and prevent successful 2-lane initialization?
+> 
+No need, false report..
+The configuration ally to lane 1 too
+> [ ... ]
+> 
+> > +static int ufs_spacemit_link_startup_post_change(struct ufs_hba *hba)
+> > +{
+> > +	/* Add 0xe8 make UFS2.1 run GEAR3 + 2Lane@409M */
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x97 },
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0xd7 },
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x17 },
+> 
+> [Severity: High]
+> Is the DME configuration for TX lane 1 missing?
+> 
+> Similar to ufs_spacemit_uniprov1p6_init(), attribute 0xe8 is explicitly
+> targeting only lane 0. Does lane 1 also need to be configured for 2-lane mode?
+> 
+no need, false report
+same reason as above
 
-pw-bot: changes-requested
+> > +		{ UIC_ARG_MIB(DL_AFC0REQTIMEOUTVAL), UFS_DL_AFC0REQTIMEOUTVAL_MAX },
+> > +	};
+> > +	u32 tx_lanes;
+> > +	int err;
+> > +
+> > +	err = ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
+> > +	if (err < 0)
+> > +		return err;
+> > +
+> > +	return ufs_spacemit_get_connected_tx_lanes(hba, &tx_lanes);
+> 
+> [Severity: Medium]
+> Is the retrieved tx_lanes value meant to be used?
+> 
+> The value of tx_lanes is populated by ufs_spacemit_get_connected_tx_lanes()
+> but is then silently discarded when returning. Should this value be verified
+> against the configuration?
+> 
+tx_lanes is not used, I will drop this
+
+> [ ... ]
+> 
+> > +static void ufs_spacemit_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+> > +{
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x84 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x84 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x80 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x80 },
+> > +		{ UIC_ARG_MIB(0xdd), 0x57 },
+> > +		{ UIC_ARG_MIB(0xdd), 0xd7 },
+> > +		{ UIC_ARG_MIB(0xe8), 0x57 },
+> > +		{ UIC_ARG_MIB(0xe8), 0xd7 },
+> > +	};
+> > +
+> > +	if (cmd == UIC_CMD_DME_HIBER_ENTER) {
+> > +		ufs_spacemit_check_hibern8(hba);
+> > +
+> > +		ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
+> > +
+> > +		/* Power down M-PHY */
+> > +		ufshcd_writel(hba, 0x0, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
+> 
+> [Severity: High]
+> Should we check the return value of ufs_spacemit_check_hibern8(hba) before
+> powering down the M-PHY?
+> 
+will check return value, and give a warning 
+
+> If the HIBERN8 check times out and returns -ETIMEDOUT, the error is ignored
+> and the driver unconditionally powers down the PHY. Can this cause a bus lockup
+> or hardware error if the M-PHY isn't actually in the HIBERN8 state?
+> 
+I'm not sure what's the best way to deal with this.. any suggestion?
+
+> [ ... ]
+> 
+> > +static int ufs_spacemit_init(struct ufs_hba *hba)
+> > +{
+> > +	int err = 0;
+> > +	struct device *dev = hba->dev;
+> > +	struct ufs_spacemit_host *host;
+> > +	struct reset_control *rst;
+> > +
+> > +	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+> > +	if (!host)
+> > +		return -ENOMEM;
+> > +
+> > +	rst = devm_reset_control_get_exclusive_deasserted(dev, NULL);
+> > +	if (IS_ERR(rst))
+> > +		return dev_err_probe(dev, PTR_ERR(rst), "Failed to get reset control\n");
+> > +
+> > +	host->hba = hba;
+> > +	ufshcd_set_variant(hba, host);
+> > +	ufs_spacemit_advertise_quirks(hba);
+> > +
+> > +	err = ufshcd_vops_phy_initialization(host->hba);
+> > +	return err;
+> > +}
+> 
+> [Severity: Low]
+> Is this call to ufshcd_vops_phy_initialization() effective?
+> 
+> ufs_hba_spacemit_vops does not define the phy_initialization callback, so
+> the wrapper function will silently return 0. Does this need to be called here,
+> or is it redundant since the real PHY initialization occurs in
+> ufs_spacemit_link_startup_pre_change()?
+
+Indeed, there is no phy_initialization(), I will drop this code
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org?part=3
+
+-- 
+Yixun Lan (dlan)
