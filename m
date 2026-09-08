@@ -1,132 +1,183 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EFE51E42E
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 09:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B14370D5E;
+	Tue,  8 Sep 2026 09:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788860144; cv=none; b=kQQ8JkSZzGit8/ITfTuCJrXVTmIZIgUmUdJ+HRhdrHPVXzdUVgsyPB0/CU/SRtNRqTdEH07SNlcifUy6FF4JVwvb70TzOLgO+CpwDldFYsWrb7MHmTnqLCWutqFGpiWRfAXAIuzXzcIpJazxzS+qZdCwi9LDwVf1Emso3oQIG+Q=
+	t=1788861335; cv=none; b=UmdE2NpUXPkcPVDTOscN41iho0nz9tJkhnOgBLkVlWjNbeff4Fuaa/xR2S0AkXuzbpYM1IsXxc8u/DMDxkECRwNpMqkqVvviWYjqnw8miqfXiYESVdheX5r57sH05yWEgjCi2VTsMRvd0cM5Tr0NTvC43b9XB11cbQ6g1JGOKtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788860144; c=relaxed/simple;
-	bh=un38TU5iL/8xw2SNYVpohqlgfR9Mr+SbV4IeIeITIAk=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=F+Hf/Y0uSkgAwXxZq0DZzEut4mLZvKE2gdRpETPaQnaettLL3F8l9v+a4SRhEPb1hL6qKLEjdFiwUL5AhEX1WG8H211iD5RNzUKshMNG8REnd7DDY3ChrHMMBpuCJ4CAJuczcct5V63EmFay/ENyzOeJbCnOolUwZksEVrBbgNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kTED3/vn; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1788861335; c=relaxed/simple;
+	bh=PpKCHQoXKpSSVOUpixxLPFIyLKOS3EYHDjdmed8wkgk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OWaXjgm1DjKLoTKPCZPKlw3obltEY+jhvFcQbHWNlVB7I+fx31cL7CFJJ9f46S/2gFvekr5DraFhgsNIWjxePquJLmlPcKPTAHXmTs2+skZdCyPNYHfvtl6l2TFtlfR7bI46+31vRBCVaYd26y1wX7fqtsVKdWM0X5N4ZKfO7Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=BDErKtEz; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kTED3/vn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788860142; x=1820396142;
-  h=mime-version:content-transfer-encoding:in-reply-to:
-   references:subject:from:cc:to:date:message-id;
-  bh=un38TU5iL/8xw2SNYVpohqlgfR9Mr+SbV4IeIeITIAk=;
-  b=kTED3/vng0DR8yh+7X58ypucHHhCTN1QQ4fdBJ9sloQPBdV72zIQSdtU
-   pfpAMJ6R/oOhE6mufLZtyG9LeQ+SKbRyd78cXk+SKTA3XydV1hbwo49ij
-   1OmYDLmsub+fybRdq1+DjrDL/cYp/3GgAxXrCVc6BXsANFUQZ9pB8I3HO
-   oWpTeAx9g96aLXoGjRMriswNRhXh2tway1dVRWi5RE6KPcD/enIcRfLky
-   Nce9Cd3T1KNKhsVmiOoUzlogHtZJJzsHMviDQmHHB/omIbg5uQwoPcozw
-   vPX/GcAiGHOwlblq94y8k2awMETF3/ZIIuC5ED/54i2/EneWNmyySH0UU
-   Q==;
-X-CSE-ConnectionGUID: 7C75IDBjRKulVxJ/Se2aKA==
-X-CSE-MsgGUID: Tq6WSL0sTiqUcrvY8bKcqA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="93076554"
-X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
-   d="scan'208";a="93076554"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 02:35:41 -0700
-X-CSE-ConnectionGUID: jP9OETxiReufgnyk3/G7hw==
-X-CSE-MsgGUID: Fdfuh+8pRZSB3O0a8FT52A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
-   d="scan'208";a="264745324"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.124])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 02:35:39 -0700
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="BDErKtEz"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6886VdWq3106959;
+	Tue, 8 Sep 2026 09:55:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=baT/JA
+	p1qxMUqvmGzbKbvZXunkw9x6D7ifyB1Xiaoj4=; b=BDErKtEzRh0k3jHI0bcBJ1
+	aIf3CxvclbKP0MWwm7eMFyxJc9fmk9FvKg8WotGPPXhbabN1KVispXMFEitjZ6aO
+	nRuc7yvfCTE7sFEOngNhs6exlo7b0RxN3HgSIQGsG4/MBzvlV49GiQPMoRnwmReM
+	0lQOx15Rb6PEkL4cS7JFRzgnyrX1T4Y1iUVng3e4uUt3yxiGksnkdXHFwpJnh0/c
+	0Y4FFIbcFvFhWUgNOCLeZI2FwVtFOvEX+jEihSIt6+9ph0567/CXrZKyWu/Z2HmV
+	cOtdGKuiyXKauEpWsA4CEBrrqGMCRy1JH9blzgbWUHPuFYvA/mPaya5lM75rZdzg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbjrnt3e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Sep 2026 09:55:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6889fGcX009706;
+	Tue, 8 Sep 2026 09:55:31 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggxdju271-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Sep 2026 09:55:31 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6889tR7J52036034
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 8 Sep 2026 09:55:27 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A40B220049;
+	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6BACC20040;
+	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
+Received: from [9.111.137.185] (unknown [9.111.137.185])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
+Message-ID: <490a5c66-c415-42c6-883e-1927d9517322@linux.ibm.com>
+Date: Tue, 8 Sep 2026 11:55:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260903154646.687761F000E9@smtp.kernel.org>
-References: <20260903145952.848051-1-mika.kuoppala@linux.intel.com> <20260903145952.848051-28-mika.kuoppala@linux.intel.com> <20260903154646.687761F000E9@smtp.kernel.org>
-Subject: Re: [PATCH v10 27/27] drm/xe/eudebug: Enable EU pagefault handling
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: intel-xe@lists.freedesktop.org
-To: Mika Kuoppala <mika.kuoppala@linux.intel.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
-Date: Tue, 08 Sep 2026 12:35:36 +0300
-Message-ID: <178886013688.31673.13515073284471668217@jlahtine-mobl>
-User-Agent: alot/0.13.dev2+g40c57d620
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next] dibs: Avoid inconsistent lockstate warning in
+ dibs_lo_move_data()
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20260904094446.1342654-1-wintera@linux.ibm.com>
+ <20260905094515.D65911F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Alexandra Winter <wintera@linux.ibm.com>
+In-Reply-To: <20260905094515.D65911F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E7T9Y6dl c=1 sm=1 tr=0 ts=6a9fdb94 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=2redr1V9L8-sxEALg8QA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDEwMCBTYWx0ZWRfX57JHqg8KiJkB
+ wsY0ZbumEaKLudN8V2/gWIMkWHG81fINvHqTcmNvT1YXBG1mWzMiqYZoyN5Ps6C19rf4WUzDY4X
+ 22WVCDeMmBT23aLDaIc9kd4PhjPihOk=
+X-Proofpoint-ORIG-GUID: NhOc5yEyrGyUcU_j9nSM_6d52_3XYdA1
+X-Proofpoint-GUID: NhOc5yEyrGyUcU_j9nSM_6d52_3XYdA1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDEwMCBTYWx0ZWRfX403J6N2YHWTz
+ puhEAwJ3RKAYvcsKTH7BmSnrausFzYDvYkF65N5P14oVsd54Y0PVgF7xUW5kS4KBA6zO6297uYQ
+ kjFoYLWCzdptpekeqdJo7gDjLe/4Cx/FJYvweRAopLWB8D6TQSpCvHZGvNkPBRV+ZnlcHYuaeEe
+ L0CQZd8j+Yvw0fBs77sZ1vhXTHAxZA3KbJrvISj5cr08kZN4ZsZb6TEUcUud/Xsq5D55FLW8m4X
+ 5JvCwzn37Idz3osvnFR7iH6/NpXX1+/cHCQLxP6mwAhtQXQFH5+AAq+uCEz4lvNpQokjUmBWlx2
+ 5p4PmQYDbiiHh7IpJFW6RZRjwOfjSiRRjnJVE/nhqufsN2Qr4jbfFTpCKUrKP5giDOWWAH36fF6
+ QR5ctVeeoaZPRwr/Owq3CBWTzF4qLoZccD0MOWA3eFD8Al38CmmsGAI+2b0RQLdTPYRFiqyQYsb
+ pEFsX9OAMo+Nxw7418A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080100
 
-Quoting sashiko-bot@kernel.org (2026-09-03 18:46:45)
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
-> - [High] Temporary NULL VMAs for subsequent eudebug pagefaults are destro=
-yed immediately after ACKing the fault, creating a race condition that lead=
-s to livelock.
-> - [High] Successful SVM pagefaults bypass private tagging, which permanen=
-tly stalls the finalization of the active eudebug session.
-> - [High] Pagefault cache hits bypass eudebug tagging, permanently hanging=
- the debugger session.
-> - [High] `xe_vm_svm_vma_subtract()` is called with unaligned address boun=
-daries, corrupting the VM layout.
+
+
+On 05.09.26 11:45, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Unsafe error path calling kfree() on memory allocated via folio_alloc().
 > --
->=20
-> commit bd171058301961cced31067feb0527d9f0b38c87
-> Author: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
->=20
-> drm/xe/eudebug: Enable EU pagefault handling
->=20
-> This commit enables EU pagefault handling for XE2/PVC hardware, allowing
-> the driver to unhalt pagefaulted EU threads via SIP mode and a temporary
-> null page.
->=20
-> > diff --git a/drivers/gpu/drm/xe/xe_guc_pagefault.c b/drivers/gpu/drm/xe=
-/xe_guc_pagefault.c
-> > --- a/drivers/gpu/drm/xe/xe_guc_pagefault.c
-> > +++ b/drivers/gpu/drm/xe/xe_guc_pagefault.c
-> > @@ -59,13 +60,14 @@ static void guc_ack_fault(struct xe_pagefault *pf, =
-int err)
-> >                             write_only);
-> >  }
-> > =20
-> > -static void guc_ack_fault_end(void *private)
-> > +static void guc_ack_fault_end(void *private, int err)
-> >  {
-> > -     struct xe_guc *guc =3D private;
-> > +     struct xe_guc *guc =3D xe_eudebug_pagefault_get_private(private);
-> > =20
-> >       if ((guc->pagefault_ack_counter & (XE_GUC_PAGEFAULT_FLUSH_PERIOD =
-- 1)) !=3D 1)
-> >               xe_guc_ct_send_flush(&guc->ct);
-> >       xe_guc_ct_unlock(&guc->ct);
-> > +     xe_eudebug_pagefault_end(private, err);
->=20
+> 
+> commit 71f881ca9b5f87a2235598ada197106f8482dccb
+> Author: Alexandra Winter <wintera@linux.ibm.com>
+> 
+>     dibs: Avoid inconsistent lockstate warning in dibs_lo_move_data()
+>     
+>     dibs->lock is acquired in process context and interrupt context
+>     (ism_handle_irq()). So always use spin_lock_irqsave() in process context.
+>     
+>     Note that this is not a real deadlock, as dibs_lo devices don't have
+>     any interrupt context.
+> 
+> [ ... ]
+> 
+>> diff --git a/drivers/dibs/dibs_loopback.c b/drivers/dibs/dibs_loopback.c
+>> index 649e4e375be33..44a2e74c2efcb 100644
+>> --- a/drivers/dibs/dibs_loopback.c
+>> +++ b/drivers/dibs/dibs_loopback.c
+> 
+> [ ... ]
+> 
+> While reviewing this commit, I noticed a pre-existing issue in the related
+> ism_alloc_dmb() function:
+> 
+> drivers/s390/net/ism_drv.c:ism_alloc_dmb() {
+> [ ... ]
+> 	folio = folio_alloc(GFP_KERNEL | __GFP_NOWARN | __GFP_NOMEMALLOC |
+> 			    __GFP_NORETRY, get_order(dmb->dmb_len));
+> 
+> 	if (!folio) {
+> 		rc = -ENOMEM;
+> 		goto out_bit;
+> 	}
+> 
+> 	dmb->cpu_addr = folio_address(folio);
+> 	dmb->dma_addr = dma_map_page(&ism->pdev->dev,
+> 				     virt_to_page(dmb->cpu_addr), 0,
+> 				     dmb->dmb_len, DMA_FROM_DEVICE);
+> 	if (dma_mapping_error(&ism->pdev->dev, dmb->dma_addr)) {
+> 		rc = -ENOMEM;
+> 		goto out_free;
+> 	}
+> 
+> 	return 0;
+> 
+> out_free:
+> 	kfree(dmb->cpu_addr);
+> [ ... ]
+> }
+> 
 > [Severity: High]
-> Does this create a race condition that leads to a livelock?=20
->=20
-> When this calls xe_eudebug_pagefault_end(), temporary null VMAs for
-> subsequent pagefaults are destroyed immediately (destroy_pf =3D 1) after
-> ACKing the fault and signaling the hardware to resume.=20
->=20
-> Since there is no synchronization to guarantee the EU thread has re-execu=
-ted=20
-> the faulting instruction before the KMD unbinds the VMA, if the VMA is
-> unbound before the EU thread accesses the address, won't the thread
-> pagefault again on the same instruction and loop infinitely?
+> This is a pre-existing issue, but does calling kfree() on memory directly
+> allocated by folio_alloc() cause a kernel panic due to invalid slab metadata?
+> 
+> When dma_map_page() fails, the execution jumps to the out_free label, which
+> incorrectly calls kfree(dmb->cpu_addr) instead of using folio_put() as seen
+> in ism_free_dmb().
+> 
+> If a user exhausts DMA mapping space (e.g., filling up the IOMMU or exhausting
+> bounce buffers), could this error path be triggered resulting in a denial of
+> service?
+> 
 
-There's no re-execute of the faulting instruction. The thread is blocked
-waiting for the PF to resolve. We resolve it by mapping a NULL page
-(which will discard writes and read zeroes), once that PF reply is sent,
-the blocked thread steps to next instruction. Due to also setting the HW
-to interrupt on next instruction for all threads before resolving the PF,
-the non-impacted threads will have entered the system routine before
-resolving the PF and only the PF impacted threads will be blocked by HW
-due to the PF and then ultimately enter the system routine on IP+1 after
-we resolve the PF. So there is no re-execute of command on IP, and no
-infinite loop.
+Fix for this is is already in netdev:
+ https://git.kernel.org/netdev/net/c/907a56ab3eb8
 
-Regards, Joonas
+
+
+
