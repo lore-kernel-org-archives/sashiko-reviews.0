@@ -1,178 +1,156 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5E3B2FCE
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 08:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC2341D635
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 08:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788855275; cv=none; b=lmrl09NGysx/HxIZZ0mnT3pkyQMug8RCWYpYuFBj1uNl1TNBPjhMyf3gYN5P56oWkRL4xLWVuvFpUf1tQ1TAAoLwilYYnvpq95+XcCKM5DBqozYH71UawoRUbwCwY5VaDBlo5QVO53oDikaWX0or83xJrmIA0zoHJ17+1qrFrTI=
+	t=1788856165; cv=none; b=uNm8qMdIxc/Ys/zIjYGcKmjGNRKCuwDdG9sJ9ry2rFut3gN3TQCcbdcWgS10onlEeCx0a7QnxZxhih3in93oYLiqTCVhmTKPaWMaCyYIJO0waOeSStjTqji84Q+duX1V6fgckNVHJ1NqRToDrQcc+OmhGCvZYW6i+lOoKnaFWK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788855275; c=relaxed/simple;
-	bh=p0hrqdChiW+STst7BxkT07ROO3GuAhUQ7F3vjs7ZfoY=;
+	s=arc-20240116; t=1788856165; c=relaxed/simple;
+	bh=OAqA2ZfxFpy+f7fjYz+CZbojCY21kndBBA2Hxt2ih8M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=AhG5Kgxk3lq8C8Q91iqKSj6FyzJa8BCTa+MUNP8IGK75zLjLL4UN7stdZ9N3aFWEG13mvHIr7gi+WsCrdEbTpRIa3/kmC7lX/vYxsChBwf+ic57E07ZyMnfPyIiMKuFK38AydHhhBvnZEnRf3Pd1Quq8wm7Yb6u3ObI4CTVvy/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Fh4JeYz+; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=D0bXwhLh5PBAXzR25OK7Zdp60qfAqTbInfGPmcNq++DfphRAxe/4shMB13ErV9AI4XcbFfrlAG3z28/DJHnJGZO4OmNp5zCIT9THK68/D1I9FDdI7l3vSoB1TRaVnR2zV86o3Ur/Sspd9WT2algKC4eNZcJ2VJHYwE13PrdIhPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jLNqk7Ci; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Fh4JeYz+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1788855273;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACV6/WKaVrWxyqCJOW8h61Ofi+NiZkidjU4efmY89RE=;
-	b=Fh4JeYz+a9gmfL13iNsC4bUmzOEki3ipzE4sKCx42UW0q2coZJqFU2DstdQ8RAhY3ABIwF
-	8vZdRjxOHI1aIEk+l+281Z7Rkzzd1k3PVMjYAR5AWkxaCYXq3QFDtMlay4j6M82nMRLIWT
-	d2ufYrK4FZE1G//xBl9/PS+nE4N04AQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-8Uip3oQNPCWw4jTMpRf4cg-1; Tue, 08 Sep 2026 04:14:29 -0400
-X-MC-Unique: 8Uip3oQNPCWw4jTMpRf4cg-1
-X-Mimecast-MFC-AGG-ID: 8Uip3oQNPCWw4jTMpRf4cg_1788855269
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-4843e59c32dso2786592f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 01:14:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788855268; x=1789460068;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ACV6/WKaVrWxyqCJOW8h61Ofi+NiZkidjU4efmY89RE=;
-        b=Ba5bUN1o9pHQzSJzoBEOUffuibU6oRhw0yzGW0ySM0qOtG2fs1v6LPufDJpSj0obSy
-         V1OKPsvfeNTa7AzezFP+4wE+Ba9x64Vqea/37RW/Pb/m3sBqlxr5+S59eUKXQ5rcN5NC
-         zeR2fuhux3e4npzQMfE70fFnLPLxakIBc+t70P915aimS3pOM03ekSbf7e8uB1J6/wre
-         J9cUy7P+kVwjh2kqFyAcnHucu/BGl9irxcby+q7CDjtcahleGgliOVIIwIJ7J+UiYVlH
-         yQiCcR/hEkEGFC1IHs3UnGt2wukSEN3pY3UmzmcoWVdTx0X3pOwwmEFEXx05HtO1wbj2
-         V3Mg==
-X-Gm-Message-State: AFuF++keQRGGhGGHot0zqTM4JYUGTCi+QWDMlA4voM4PuavewymMFikk
-	YuLskdAPCe1k/obPkFSnAUX0mh990zDcbH8Z5jzzVcYhg4YE67oGny7kK7fbaoq0chxV/bba8kM
-	FDInEwskQ47vXQ7Bl/6jF2HZhnFS8ym16W+WDLK/edB+DnSi4dxTcKSuXn14hvwUH/vrqQwYbAu
-	SEOu7TaI4MkI5lTA8t5rzXHKRfkEUSU57rHzr9yuY6Nw7pluo=
-X-Gm-Gg: AYBFou1ccEd8DezsosDQ4pcJnXY0jy+t+uvRETb6taU7zwWwboLVGQQFEQJRbRTxaKY
-	d0nfXi4oiAhxM/VoISwRJxMnnWFErs1idCqFlZs6EgbmGMS77rB+CQOEQ1YuDVont6SmLY0TkUd
-	rsUCqFjZUFjrHRzywR8B5RJDS9gZNLHvC7NI+OOqpDtC2m+1FRvBA6tmo0B2AjtfqldhKkEXRUN
-	14zVz0HtQr0fmnjGYR9wtNeP9iUFpqPGnAAQN9kzOzH2D+dKZU8bZr0vcWvwN0/s01xu5Uzp4HK
-	cXGqoLJGv/AY/inFn1YRxvAYloEovivQ8M4xZKgJ4dmu5PncxxFl4USD5xqiaCUJEf1s7+otqmF
-	FShSmLpkZDqjGXGeXDW6OIu0=
-X-Received: by 2002:a05:6000:1e4b:b0:485:85ed:4911 with SMTP id ffacd0b85a97d-48587291427mr22863844f8f.25.1788855268431;
-        Tue, 08 Sep 2026 01:14:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:1e4b:b0:485:85ed:4911 with SMTP id ffacd0b85a97d-48587291427mr22863786f8f.25.1788855267857;
-        Tue, 08 Sep 2026 01:14:27 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883a9234sm34253540f8f.14.2026.09.08.01.14.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 01:14:27 -0700 (PDT)
-Date: Tue, 8 Sep 2026 04:14:24 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jLNqk7Ci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA6B1F00A3A;
+	Tue,  8 Sep 2026 08:29:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788856163;
+	bh=0j6ObYypUO/cR69iFYBpiMBhA6lfX7kpt/5HoJAG4+k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jLNqk7CirKu4YpcLM0chWa/1I6uoS4+ZK+f9R2b9jwwJTysDSes6cYPd9WNkrTr+E
+	 8b5wrDvu1IldxIj5iVf8yCu5lJhbO+2kQj7+dxHOkE1geQuLbSdwuWOlnfkvXvwA0d
+	 w7/FlJZTMMBdus3tLUZA3a4l9DbE0Yk744DZgMwOntKJPRlYAXhSMS4BMmUCQaRW6N
+	 Z4VwcMtwh20jK44AvIyCtr9lMBf7k3w/XUh5n+GEXn1mvwvXVtqrbpefwMp7aVvoWL
+	 vEhl5f/o9y8ccHMfP0SHZFmou+bJtEqMOLLPyNWgMm/aLvmaI6x4UVjb1DHEpMHR7o
+	 Srxy6Ih1pqgUg==
+Date: Tue, 8 Sep 2026 10:29:17 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Karl Mehltretter <kmehltretter@gmail.com>, dmitry.torokhov@gmail.com,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	kvm@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH v3 2/6] virtio_ccw: always take irq_lock in the classic
- interrupt handler
-Message-ID: <20260908041323-mutt-send-email-mst@kernel.org>
-References: <20260908053817.26065-1-kmehltretter@gmail.com>
- <20260908053817.26065-3-kmehltretter@gmail.com>
- <20260908055148.B600D1F00A3F@smtp.kernel.org>
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>, linux-phy@lists.infradead.org, 
+	olteanv@gmail.com, vkoul@kernel.org, neil.armstrong@linaro.org
+Subject: Re: [PATCH] phy: ti: twl4030-usb: unwind late probe failures
+Message-ID: <ibju7oaxrobqgk77inpnj6nymok7mhdixr2du5iqsfuqiuwubq@6zzojhupkcbh>
+References: <20260615070211.59144-1-pengpeng@iscas.ac.cn>
+ <20260615071330.279C21F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260908055148.B600D1F00A3F@smtp.kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: H9DvKFTh7bel-ya4gVdAzEJCpNHDZ-8uz8moRESyl0A_1788855269
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260615071330.279C21F000E9@smtp.kernel.org>
 
-On Tue, Sep 08, 2026 at 05:51:48AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Mon, Jun 15, 2026 at 07:13:29AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The newly added `err_runtime` cleanup path uses `pm_runtime_put_noidle()` before `pm_runtime_disable()`, violating PM guidelines and leaving hardware regulators permanently enabled.
 > 
 > Pre-existing issues:
-> - [High] The virtio interrupt handlers pass retrieved virtqueue pointers directly to `vring_interrupt()` without a NULL check. A malicious or buggy host can trigger a kernel panic by providing an invalid indicator or interrupt vector.
-
-Buggy host crashing guest is not something we worry about.
-Host denying guest service at will is exactly how cloud providers get paid.
-
-> - [High] Lost configuration change notifications due to clearing the indicator bit after processing.
+> - [High] The delayed work `id_workaround_work` is not cancelled in the probe error path, leading to a potential use-after-free if the work executes after the driver state is freed.
+> - [High] Re-initializing the PHY notifier head after the PHY has been published to the system drops concurrent registrations and corrupts the notifier list.
+> - [High] Registering the USB PHY early in probe exposes it to concurrent lookups, leading to a use-after-free if probe subsequently fails.
+> - [High] The PHY lookup created by `phy_create_lookup()` is never removed during driver unbind, leading to a memory leak and a dangling pointer in the global PHY list.
 > --
 > 
-> commit 40545ed73d4381a07a7934fddf3ac60ecd1f90d7
-> Author: Karl Mehltretter <kmehltretter@gmail.com>
-> Subject: virtio_ccw: always take irq_lock in the classic interrupt handler
+> commit 6c9da7a5a1fe8af7dbe4915303ad564e9cf8b693
+> Author: Pengpeng Hou <pengpeng@iscas.ac.cn>
 > 
-> This commit unconditionally takes the read lock on vcdev->irq_lock in 
-> virtio_ccw_int_handler() so the write side can properly synchronize with
-> the callbacks even when notification hardening is disabled.
+> phy: ti: twl4030-usb: unwind late probe failures
 > 
-> > diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
-> > index b90299205698b..552d779980129 100644
-> > --- a/drivers/s390/virtio/virtio_ccw.c
-> > +++ b/drivers/s390/virtio/virtio_ccw.c
-> > @@ -1204,13 +1204,11 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
+> This commit addresses missing unwinding in the late probe failure paths of
+> the twl4030-usb driver. It remembers if the vbus sysfs file was created and
+> adds an error path to properly undo PM, sysfs, and PHY registrations.
+> 
+> > --- a/drivers/phy/ti/phy-twl4030-usb.c
+> > +++ b/drivers/phy/ti/phy-twl4030-usb.c
+> [ ... ]
+> > @@ -746,11 +747,15 @@ static int twl4030_usb_probe(struct platform_device *pdev)
+> >  		dev_err(&pdev->dev, "ldo init failed\n");
+> >  		return err;
+> >  	}
+> > -	usb_add_phy_dev(&twl->phy);
+> > +	err = usb_add_phy_dev(&twl->phy);
+> > +	if (err)
+> > +		return err;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does registering the USB PHY this early in
+> probe expose it to concurrent lookups?
+> 
+> If a later probe step fails, we call usb_remove_phy() and free the twl
+> structure via devres. If a concurrent thread called usb_get_phy() during the
+> race window, could it lead to a use-after-free?
+> 
+> >  	platform_set_drvdata(pdev, twl);
+> >  	if (device_create_file(&pdev->dev, &dev_attr_vbus))
+> >  		dev_warn(&pdev->dev, "could not create sysfs file\n");
+> > +	else
+> > +		twl->vbus_file = true;
+> >  
+> >  	ATOMIC_INIT_NOTIFIER_HEAD(&twl->phy.notifier);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does re-initializing the notifier head
+> after usb_add_phy_dev() corrupt the notifier list?
+> 
+> Since usb_add_phy_dev() internally initializes this exact notifier head and
+> exposes the PHY globally, could this drop concurrent registrations made by
+> consumer drivers?
 > 
 > [ ... ]
-> 
-> >  	for_each_set_bit(i, indicators(vcdev),
-> >  			 sizeof(*indicators(vcdev)) * BITS_PER_BYTE) {
-> >  		/* The bit clear must happen before the vring kick. */
-> > @@ -1219,9 +1217,7 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
-> >  		vq = virtio_ccw_vq_by_ind(vcdev, i);
-> >  		vring_interrupt(0, vq);
+> > @@ -773,18 +778,29 @@ static int twl4030_usb_probe(struct platform_device *pdev)
+> >  	if (status < 0) {
+> >  		dev_dbg(&pdev->dev, "can't get IRQ %d, err %d\n",
+> >  			twl->irq, status);
+> > -		return status;
+> > +		err = status;
+> > +		goto err_runtime;
+> >  	}
+> >  
+> >  	if (pdata)
+> >  		err = phy_create_lookup(phy, "usb", "musb-hdrc.0");
+> >  	if (err)
+> > -		return err;
+> > +		goto err_runtime;
+> >  
+> >  	pm_runtime_mark_last_busy(&pdev->dev);
+> >  	pm_runtime_put_autosuspend(twl->dev);
+> >  
+> >  	return 0;
+> > +
+> > +err_runtime:
+> > +	pm_runtime_dont_use_autosuspend(&pdev->dev);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but is it possible for virtio_ccw_vq_by_ind()
-> to return a NULL virtqueue pointer if a malicious or buggy host provides an
-> invalid indicator?
+> This is a pre-existing issue, but is it possible for the scheduled delayed
+> work twl->id_workaround_work to run after the driver state is freed?
 > 
-> Passing an unvalidated NULL pointer directly to vring_interrupt() can cause a
-> kernel panic when it is dereferenced inside more_used():
+> Since devm_request_threaded_irq() can schedule the work before we jump to
+> err_runtime, shouldn't we call cancel_delayed_work_sync() here to prevent a
+> potential use-after-free?
 > 
-> drivers/virtio/virtio_ring.c:vring_interrupt() {
->     ...
->     if (!more_used(vq)) {
->         pr_debug("virtqueue interrupt with no work for %p\n", vq);
->     ...
-> }
-> 
-> Similarly, in virtio_airq_handler(), airq_iv_get_ptr() can return NULL which
-> is unconditionally passed to vring_interrupt().
-> 
-> Could we add a NULL check before calling the interrupt handler?
-> 
-> >  	}
-> > -#ifdef CONFIG_VIRTIO_HARDEN_NOTIFICATION
-> >  	read_unlock(&vcdev->irq_lock);
-> > -#endif
-> >  	if (test_bit(0, indicators2(vcdev))) {
-> >  		virtio_config_changed(&vcdev->vdev);
-> >  		clear_bit(0, indicators2(vcdev));
-> >  	}
+> > +	pm_runtime_put_noidle(twl->dev);
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but could this sequence lead to
-> lost configuration change notifications?
+> Does using pm_runtime_put_noidle() here bypass the suspend cycle?
 > 
-> Because indicators2 is shared DMA memory updated by the host, if the host
-> triggers another configuration change in the window between test_bit() and
-> clear_bit(), it sets the bit in memory and raises a new interrupt.
+> Since pm_runtime_get_sync() resumed the device and enabled the regulators
+> earlier, and pm_runtime_disable() prevents future state transitions, it seems
+> the device will remain in RPM_ACTIVE. Should this use pm_runtime_put_sync()
+> to ensure the hardware is properly suspended and regulators disabled?
 > 
-> However, the guest will then blindly execute clear_bit() and wipe out the
-> newly set notification flag. When the newly queued interrupt handler runs,
-> it will find the bit cleared and do nothing, permanently losing the event.
-> 
-> Would using test_and_clear_bit() before calling virtio_config_changed()
-> close this race window?
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260908053817.26065-1-kmehltretter@gmail.com?part=2
 
+This is a valid point. pm_runtime_put_noidle() will not invoke runtime_suspend()
+callback and hence the PHY will be in active state.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
