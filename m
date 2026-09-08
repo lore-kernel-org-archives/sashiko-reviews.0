@@ -1,304 +1,178 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4112425392A;
-	Tue,  8 Sep 2026 07:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5E3B2FCE
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 08:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788851608; cv=none; b=n0M73Au8myQVgNiZW/UigL/u7gz0ZdvmFzvcHmCAYwGIzLn3GhFscoudillSOE5KZs3ZiGZdEIGZumViHwKNsuMuhLcyZRljEZSbmcan+HS5PlIcZQGAj7jMIQmUrHH/8TUmIzTwkTUN1q0XQdq+F7JtocFRK3zCSpszy4xCGAs=
+	t=1788855275; cv=none; b=lmrl09NGysx/HxIZZ0mnT3pkyQMug8RCWYpYuFBj1uNl1TNBPjhMyf3gYN5P56oWkRL4xLWVuvFpUf1tQ1TAAoLwilYYnvpq95+XcCKM5DBqozYH71UawoRUbwCwY5VaDBlo5QVO53oDikaWX0or83xJrmIA0zoHJ17+1qrFrTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788851608; c=relaxed/simple;
-	bh=KRXtATEgrFmLeBNK9LkneRsouu2pp1ENxC6Q8+UuXVE=;
+	s=arc-20240116; t=1788855275; c=relaxed/simple;
+	bh=p0hrqdChiW+STst7BxkT07ROO3GuAhUQ7F3vjs7ZfoY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ngn78eJAPJPlT+WgDQKfsYi02PUxEmnbRpkjkea91bVAJAo4k/4QA1i+vPLawsivC52gn2BRML2XVhlXl4uW8zLeAxv96WVlOwr9rhUpcbYCKA2UIQMZuC28CIvWoUFpwm15alSKKOKhTyubodxHrR3K+MU9rEXAyHADrA9TORQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJ9YEedW; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type:Content-Disposition; b=AhG5Kgxk3lq8C8Q91iqKSj6FyzJa8BCTa+MUNP8IGK75zLjLL4UN7stdZ9N3aFWEG13mvHIr7gi+WsCrdEbTpRIa3/kmC7lX/vYxsChBwf+ic57E07ZyMnfPyIiMKuFK38AydHhhBvnZEnRf3Pd1Quq8wm7Yb6u3ObI4CTVvy/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Fh4JeYz+; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJ9YEedW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DA11F00A3A;
-	Tue,  8 Sep 2026 07:13:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788851607;
-	bh=sfr6qJVBCy8FPvYCADUyVgs6ZgXF3C++eLzbjQmhwGc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OJ9YEedWHovbxto92C/83HC8gJzoZRDH2hOwYo8Qv77woDEkgRvEYXKaWcVxpvi7x
-	 r0ssBFdhTO4JfHQHHP2s7xJvbO31c/VyaIRkfSUqgaqelG8Vr6LckkZAlhXGx78nEY
-	 sEva6UsBbBxi19Wdg9DDCfOUzPMOf3mYhxMCRBwhvr7PHDFM81b4Af0vvGyWekqVYa
-	 8r7mnSjoBipUybmJDNAwg1dKfgU1C/4HBZ6LMZZip79jipJ82PQVy7eM1iZiq5nZJp
-	 Grnkng+sp2vhrYlS5OAjfE2QE9Pra7BV4GHLxRYiU3Z2th1q7Ukex3IpKFHmB/ZlX9
-	 283g9AvblXDSw==
-Date: Tue, 8 Sep 2026 07:13:24 +0000
-From: Yixun Lan <dlan@kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Fh4JeYz+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1788855273;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ACV6/WKaVrWxyqCJOW8h61Ofi+NiZkidjU4efmY89RE=;
+	b=Fh4JeYz+a9gmfL13iNsC4bUmzOEki3ipzE4sKCx42UW0q2coZJqFU2DstdQ8RAhY3ABIwF
+	8vZdRjxOHI1aIEk+l+281Z7Rkzzd1k3PVMjYAR5AWkxaCYXq3QFDtMlay4j6M82nMRLIWT
+	d2ufYrK4FZE1G//xBl9/PS+nE4N04AQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-8Uip3oQNPCWw4jTMpRf4cg-1; Tue, 08 Sep 2026 04:14:29 -0400
+X-MC-Unique: 8Uip3oQNPCWw4jTMpRf4cg-1
+X-Mimecast-MFC-AGG-ID: 8Uip3oQNPCWw4jTMpRf4cg_1788855269
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-4843e59c32dso2786592f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 01:14:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788855268; x=1789460068;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ACV6/WKaVrWxyqCJOW8h61Ofi+NiZkidjU4efmY89RE=;
+        b=Ba5bUN1o9pHQzSJzoBEOUffuibU6oRhw0yzGW0ySM0qOtG2fs1v6LPufDJpSj0obSy
+         V1OKPsvfeNTa7AzezFP+4wE+Ba9x64Vqea/37RW/Pb/m3sBqlxr5+S59eUKXQ5rcN5NC
+         zeR2fuhux3e4npzQMfE70fFnLPLxakIBc+t70P915aimS3pOM03ekSbf7e8uB1J6/wre
+         J9cUy7P+kVwjh2kqFyAcnHucu/BGl9irxcby+q7CDjtcahleGgliOVIIwIJ7J+UiYVlH
+         yQiCcR/hEkEGFC1IHs3UnGt2wukSEN3pY3UmzmcoWVdTx0X3pOwwmEFEXx05HtO1wbj2
+         V3Mg==
+X-Gm-Message-State: AFuF++keQRGGhGGHot0zqTM4JYUGTCi+QWDMlA4voM4PuavewymMFikk
+	YuLskdAPCe1k/obPkFSnAUX0mh990zDcbH8Z5jzzVcYhg4YE67oGny7kK7fbaoq0chxV/bba8kM
+	FDInEwskQ47vXQ7Bl/6jF2HZhnFS8ym16W+WDLK/edB+DnSi4dxTcKSuXn14hvwUH/vrqQwYbAu
+	SEOu7TaI4MkI5lTA8t5rzXHKRfkEUSU57rHzr9yuY6Nw7pluo=
+X-Gm-Gg: AYBFou1ccEd8DezsosDQ4pcJnXY0jy+t+uvRETb6taU7zwWwboLVGQQFEQJRbRTxaKY
+	d0nfXi4oiAhxM/VoISwRJxMnnWFErs1idCqFlZs6EgbmGMS77rB+CQOEQ1YuDVont6SmLY0TkUd
+	rsUCqFjZUFjrHRzywR8B5RJDS9gZNLHvC7NI+OOqpDtC2m+1FRvBA6tmo0B2AjtfqldhKkEXRUN
+	14zVz0HtQr0fmnjGYR9wtNeP9iUFpqPGnAAQN9kzOzH2D+dKZU8bZr0vcWvwN0/s01xu5Uzp4HK
+	cXGqoLJGv/AY/inFn1YRxvAYloEovivQ8M4xZKgJ4dmu5PncxxFl4USD5xqiaCUJEf1s7+otqmF
+	FShSmLpkZDqjGXGeXDW6OIu0=
+X-Received: by 2002:a05:6000:1e4b:b0:485:85ed:4911 with SMTP id ffacd0b85a97d-48587291427mr22863844f8f.25.1788855268431;
+        Tue, 08 Sep 2026 01:14:28 -0700 (PDT)
+X-Received: by 2002:a05:6000:1e4b:b0:485:85ed:4911 with SMTP id ffacd0b85a97d-48587291427mr22863786f8f.25.1788855267857;
+        Tue, 08 Sep 2026 01:14:27 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883a9234sm34253540f8f.14.2026.09.08.01.14.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 01:14:27 -0700 (PDT)
+Date: Tue, 8 Sep 2026 04:14:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v3 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
- driver
-Message-ID: <20260908071324-GKE2330@kernel.org>
-References: <20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org>
- <20260806-08-k3-ufs-support-v3-2-037fb322acdb@kernel.org>
- <20260806031021.75DDF1F000E9@smtp.kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>, dmitry.torokhov@gmail.com,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	kvm@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH v3 2/6] virtio_ccw: always take irq_lock in the classic
+ interrupt handler
+Message-ID: <20260908041323-mutt-send-email-mst@kernel.org>
+References: <20260908053817.26065-1-kmehltretter@gmail.com>
+ <20260908053817.26065-3-kmehltretter@gmail.com>
+ <20260908055148.B600D1F00A3F@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20260908055148.B600D1F00A3F@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: H9DvKFTh7bel-ya4gVdAzEJCpNHDZ-8uz8moRESyl0A_1788855269
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260806031021.75DDF1F000E9@smtp.kernel.org>
 
-Hi All,
+On Tue, Sep 08, 2026 at 05:51:48AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The virtio interrupt handlers pass retrieved virtqueue pointers directly to `vring_interrupt()` without a NULL check. A malicious or buggy host can trigger a kernel panic by providing an invalid indicator or interrupt vector.
 
-On 03:10 Thu 06 Aug     , sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] Vendor M-PHY TX attributes are only configured for TX Lane 0, neglecting Lane 1 in a 2-lane setup.
-> - [High] Hardcoded dual-lane check in `ufs_spacemit_check_hibern8` will fail and timeout on 1-lane UFS devices.
-> - [High] The UFS hardware reset pulse width is too short, violating the JEDEC UFS specification.
-> - [Medium] Misleading macro names and comments for device reset contradict hardware behavior.
-> - [Medium] Silently ignoring DME configuration errors.
-> - [Low] Usage of `of_match_ptr` causes build warnings when `CONFIG_OF` is disabled.
+Buggy host crashing guest is not something we worry about.
+Host denying guest service at will is exactly how cloud providers get paid.
+
+> - [High] Lost configuration change notifications due to clearing the indicator bit after processing.
 > --
 > 
-> --- Patch [2]: [PATCH v3 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller driver ---
-> commit a6bb8f511d306cddb9d21e41123fafdbcd63a6c9
-> Author: Yixun Lan <dlan@kernel.org>
-> Subject: scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+> commit 40545ed73d4381a07a7934fddf3ac60ecd1f90d7
+> Author: Karl Mehltretter <kmehltretter@gmail.com>
+> Subject: virtio_ccw: always take irq_lock in the classic interrupt handler
 > 
-> SpacemiT K3 SoC consist of UFS (Universal Flash Storage) Host Controller
-> which has features compatible with JEDEC UFS 2.2, MIPI UniPro v1.61 and
-> M-PHY v3.0 standard.
+> This commit unconditionally takes the read lock on vcdev->irq_lock in 
+> virtio_ccw_int_handler() so the write side can properly synchronize with
+> the callbacks even when notification hardening is disabled.
 > 
-> > diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
-> > new file mode 100644
-> > index 0000000000000..94942ea27fb7d
-> > --- /dev/null
-> > +++ b/drivers/ufs/host/ufs-spacemit.c
+> > diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
+> > index b90299205698b..552d779980129 100644
+> > --- a/drivers/s390/virtio/virtio_ccw.c
+> > +++ b/drivers/s390/virtio/virtio_ccw.c
+> > @@ -1204,13 +1204,11 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
 > 
 > [ ... ]
 > 
-> > +/* PHY register magic values */
-> > +#define MPHY_PU_ALL			0x87f
-> > +#define MPHY_PU_WITH_HB8_RESET		0xb7f
-> > +#define MPHY_DEVICE_RESET_DEASSERT	0x101
-> > +#define MPHY_DEVICE_RESET_ASSERT	0x001
-> 
-> [Severity: Medium]
-> Is this macro name misleading? Looking at ufs_spacemit_device_reset(), it
-> uses 0x000 to assert the reset and 0x101 to de-assert it. This means 0x001
-> actually disables the reference clock while keeping the reset de-asserted.
-> 
-Yes, will separate the definition of clock and reset, which something like below, 
-and will adjust code accordingly
-
-#define MPHY_DEVICE_REFCLK_OE          BIT(8)
-#define MPHY_DEVICE_HW_RESET           BIT(0)
-
-
-> [ ... ]
-> 
-> > +static int ufs_spacemit_check_hibern8(struct ufs_hba *hba)
-> > +{
-> > +	u32 tx_fsm_val_0 = 0;
-> > +	u32 tx_fsm_val_1 = 0;
-> > +	int retries = DIV_ROUND_UP(HBRN8_POLL_TOUT_MS * 1000, 100);
-> > +	int err = 0;
-> > +
-> > +	do {
-> > +		err = ufshcd_dme_get(hba,
-> > +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
-> > +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),
-> > +				     &tx_fsm_val_0);
-> > +		if (err)
-> > +			break;
-> > +
-> > +		err = ufshcd_dme_get(hba,
-> > +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
-> > +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1)),
-> > +				     &tx_fsm_val_1);
-> > +		if (err || (tx_fsm_val_0 == TX_FSM_HIBERN8 &&
-> > +			    tx_fsm_val_1 == TX_FSM_HIBERN8))
-> > +			break;
+> >  	for_each_set_bit(i, indicators(vcdev),
+> >  			 sizeof(*indicators(vcdev)) * BITS_PER_BYTE) {
+> >  		/* The bit clear must happen before the vring kick. */
+> > @@ -1219,9 +1217,7 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
+> >  		vq = virtio_ccw_vq_by_ind(vcdev, i);
+> >  		vring_interrupt(0, vq);
 > 
 > [Severity: High]
-> Will this hardcoded dual-lane check timeout on single-lane UFS devices?
+> This is a pre-existing issue, but is it possible for virtio_ccw_vq_by_ind()
+> to return a NULL virtqueue pointer if a malicious or buggy host provides an
+> invalid indicator?
 > 
-it seems valid, we shouldn't check lane 1 if single-lane device connected..
-
-> If a 1-lane memory chip is connected, Lane 1 is inactive. Querying its state
-> will either return a DME error or read a non-Hibern8 state, causing the loop
-> to timeout after 100ms and break power management.
+> Passing an unvalidated NULL pointer directly to vring_interrupt() can cause a
+> kernel panic when it is dereferenced inside more_used():
 > 
-..
-> Could this check be updated to use the dynamically negotiated lane count from
-> dev_req_params to know how many lanes to poll?
+> drivers/virtio/virtio_ring.c:vring_interrupt() {
+>     ...
+>     if (!more_used(vq)) {
+>         pr_debug("virtqueue interrupt with no work for %p\n", vq);
+>     ...
+> }
 > 
-but, I need some suggestion from maintainer to see if I really need to go this
-way, currently there is no real single-lane device on K3 platform to test.
-I probably will leave this code unchanged for now..
-
-> [ ... ]
+> Similarly, in virtio_airq_handler(), airq_iv_get_ptr() can return NULL which
+> is unconditionally passed to vring_interrupt().
 > 
-> > +static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
-> > +{
-> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
-> > +		{ UIC_ARG_MIB(0x1552), 0x4f }, /* PA_TXHSG1SYNCLENGTH */
-> [ ... ]
-> > +		/* RX HB8_TIME CAP */
-> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x64 },
-> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x64 },
-> > +		/* TX EQ 3DB */
-> > +		{ UIC_ARG_MIB_SEL(0x00CD, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),  0x5 },
+> Could we add a NULL check before calling the interrupt handler?
 > 
-> [Severity: High]
-> Should this TX equalization be applied to Lane 1 as well?
-> 
-Not needed
-
-> The host controller is configured for 2 lanes, but this setup attribute only
-> targets UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0). Omitting tuning parameters for the
-> second lane could cause asymmetric lane configurations or link instability.
-> 
-The vendor confirm the configuration will apply to both lanes
-
-> [ ... ]
-> 
-> > +static int ufs_spacemit_link_startup_post_change(struct ufs_hba *hba)
-> > +{
-> > +	/* Add 0xe8 make UFS2.1 run GEAR3 + 2Lane@409M */
-> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
-> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x97 },
-> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0xd7 },
-> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x17 },
+> >  	}
+> > -#ifdef CONFIG_VIRTIO_HARDEN_NOTIFICATION
+> >  	read_unlock(&vcdev->irq_lock);
+> > -#endif
+> >  	if (test_bit(0, indicators2(vcdev))) {
+> >  		virtio_config_changed(&vcdev->vdev);
+> >  		clear_bit(0, indicators2(vcdev));
+> >  	}
 > 
 > [Severity: High]
-> Does attribute 0xe8 need to be programmed for both lanes?
+> This isn't a bug introduced by this patch, but could this sequence lead to
+> lost configuration change notifications?
 > 
-No
-> Similar to the TX equalization setup, this only programs Lane 0 despite the
-> driver specifying dual-lane support.
+> Because indicators2 is shared DMA memory updated by the host, if the host
+> triggers another configuration change in the window between test_bit() and
+> clear_bit(), it sets the bit in memory and raises a new interrupt.
 > 
-Similar reason, the settings will apply to 2 lanes, so no need to change
-
-> [ ... ]
+> However, the guest will then blindly execute clear_bit() and wipe out the
+> newly set notification flag. When the newly queued interrupt handler runs,
+> it will find the bit cleared and do nothing, permanently losing the event.
 > 
-> > +static int ufs_spacemit_apply_dev_quirks(struct ufs_hba *hba)
-> > +{
-> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
-> [ ... ]
-> > +	};
-> > +
-> > +	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
-> > +		ufs_spacemit_quirk_host_pa_saveconfigtime(hba);
-> > +
-> > +	if (hba->dev_info.wmanufacturerid == UFS_VENDOR_WDC)
-> > +		hba->dev_quirks |= UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE;
-> > +
-> > +	ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
+> Would using test_and_clear_bit() before calling virtio_config_changed()
+> close this race window?
 > 
-> [Severity: Medium]
-> Is it safe to ignore the return values of these DME configuration functions?
-> 
-> If ufs_spacemit_quirk_host_pa_saveconfigtime() or ufs_spacemit_dme_set()
-> fail, the errors are not propagated. Could this allow initialization to proceed
-> with an incorrectly configured M-PHY?
-> 
-ok, will fix this and propagate error code
-
-> [ ... ]
-> 
-> > +static int ufs_spacemit_device_reset(struct ufs_hba *hba)
-> > +{
-> > +	/* Stop device ref_clk & asserted ufs device reset */
-> > +	ufshcd_writel(hba, 0x000, UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> > +	usleep_range(10, 15);
-> 
-> [Severity: High]
-> Is this reset pulse width long enough?
-> 
-yes
-
-> The JEDEC UFS specification mandates that the host must maintain the RST_n
-> signal low for a minimum of 1 ms. A 10 to 15 microsecond delay might cause
-> the memory chip to fail to reset properly.
-> 
-this is false report, minimum delay is 1us, give 10 to 15us is sufficient
-
-> [ ... ]
-> 
-> > +static void ufs_spacemit_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
-> > +{
-> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
-> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x84 },
-> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x84 },
-> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x80 },
-> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x80 },
-> > +		{ UIC_ARG_MIB(0xdd), 0x57 },
-> > +		{ UIC_ARG_MIB(0xdd), 0xd7 },
-> > +		{ UIC_ARG_MIB(0xe8), 0x57 },
-> > +		{ UIC_ARG_MIB(0xe8), 0xd7 },
-> 
-> [Severity: High]
-> Are these attributes defaulting to Lane 0?
-> 
-No, will apply to 2 lanes
-
-> Using UIC_ARG_MIB() defaults to Lane 0. If these need to be applied to Lane 1
-> as well during post-Hibern8 configuration, they are currently missing.
-> 
-It will apply to Lane 1 too, so the code here is correct
-
-> [ ... ]
-> 
-> > +	if (cmd == UIC_CMD_DME_HIBER_ENTER) {
-> > +		ufs_spacemit_check_hibern8(hba);
-> > +
-> > +		ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
-> > +
-> > +		/* Power down M-PHY */
-> > +		ufshcd_writel(hba, 0x0, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> > +
-> > +		/* Keep reference clock enabled, assert device reset */
-> > +		ufshcd_writel(hba, MPHY_DEVICE_RESET_ASSERT,
-> > +			      UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> 
-> [Severity: Medium]
-> Does this operation contradict its comment?
-> 
-> The code writes MPHY_DEVICE_RESET_ASSERT (0x001), which disables the reference
-> clock but keeps the reset de-asserted. The comment says "Keep reference clock
-> enabled, assert device reset", which is the exact opposite.
-> 
-> While keeping reset de-asserted is the correct action for Hibern8 (asserting
-> reset would destroy the device's state), the comment and macro name suggest
-> incorrect hardware behavior.
-> 
-will fix this
-
-> [ ... ]
-> 
-> > +static struct platform_driver ufs_spacemit_pltform = {
-> > +	.probe	= ufs_spacemit_probe,
-> > +	.remove	= ufs_spacemit_remove,
-> > +	.driver	= {
-> > +		.name	= "ufshcd-spacemit",
-> > +		.of_match_table = of_match_ptr(ufs_spacemit_of_match),
-> > +	},
-> > +};
-> 
-> [Severity: Low]
-> Does the use of of_match_ptr() here cause a compiler warning?
-> 
-yes
-
-> Because ufs_spacemit_of_match is defined unconditionally, building with
-> CONFIG_OF disabled will evaluate of_match_ptr() to NULL, leaving the array
-> unused and triggering a -Wunused-variable warning.
-> 
-will fix it, will add a __maybe_unused annotate
-
 > -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260908053817.26065-1-kmehltretter@gmail.com?part=2
 
--- 
-Yixun Lan (dlan)
