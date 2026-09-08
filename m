@@ -1,87 +1,65 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010061.outbound.protection.outlook.com [52.101.193.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCCF315D32
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 03:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788838112; cv=none; b=JhjKaXyVtFTZbma78rNhjj0ftdvIQqoIz/466kEKpTwRYZ183yOFztOaDcWvzfpGdVxdjTbVMjtEf7zkN+3G3KmwXsb8/ZoZUxgTYcybqBi8eYqSZudlf0MWcjokzoPXRQ/G6bueT8hbsDz1GLTh/6z7E6kBCuOLZtPTztf1az8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788838112; c=relaxed/simple;
-	bh=SyhZKiR68CZ04tzIfEj/DtTdEFdN4/+8mi8sTjIBL/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SixWVUqdXV/FJKBz7hY80wkKkQ0ng/qXfizLUlMv914ABKsh1E6P4c3PQC9MTwRseOcrQAFM9HGCNOzmh9JbDOkAsPlJkbYiCtuQRhM+1WV4F9ho4HHSr6n0XDHVHnuK6SfUbLWWG8brRIqeTBaGBlLsGjLIoNXqi6r25MAxiZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VSZM+V4D; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VqjPAvpU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8B42F5A36
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 04:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788840525; cv=fail; b=cFDOMj5xtdvBa4jqKOBz6mgoKLCn/3JNgiBdEnGNKHc3wWdyKDo8EZDnkoyxv+vCTWtTQK5OGgH+94bHOI9aJUBvS8sAamGQlD07RUPhWoFHx2SEYiJYLJk43HgycC2TadQfeUnhlDFtgv9+EstGvU05vff2sWNw7cfZAqTxknI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788840525; c=relaxed/simple;
+	bh=YvyGNI0d513iz+g0EidjWac0SYXcsNtS9ThUh6k/qW8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aZdAwf+CVl6CUj3coenp/08o+ccCT3mfU5PnOVHNfJijRPLIYZPpIHv4Kgfs6ElrHCV+NTAQK6Vbvn30LDnWbrB6LY4YyIq2n/dn1pYddsZZUC57a4XQwfn+nxxLTm3kgomi3RgIrJH3s3lG91FFKhjnKESSkt5msptdo+Jp9qE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=qXYXn6Er; arc=fail smtp.client-ip=52.101.193.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VSZM+V4D";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VqjPAvpU"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 687NlLmq107470
-	for <sashiko-reviews@lists.linux.dev>; Tue, 8 Sep 2026 03:28:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jOFICu+/TxYyTegVJ+ic4nC3wN/lY3Z7pXeHMMmZOvA=; b=VSZM+V4Do+jdXhlN
-	2d8azx9IAXqGN+B+Jdai8z71xYN2/OXILt/DaCSL3p0P199h+aw4VxYB5NCbFmaR
-	0R7cBAYLyNtkJmoSteNTq//yf7tc14L1wqQfbGLuV0D9PgbrEpgNOF1oTsUqt+3J
-	0UHb0n7nb29dA7CKDTmdBu2TLbn5K3e/vVnCndA7OARl/cTzykP9wWAk16dh7tcB
-	2sXcKqIzEkOAwuzU6mB+7lwElhWKYSKfpCb2L3shTFMRHrI0Vzs9v3nitoNWpzld
-	/xyihy9TvDT8c41fTh2bgupuavgd1II4cvRXGoBJVUcuaN/5fq2ZtRu1N/AXuAxr
-	ezbpLQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghtty336j-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 03:28:29 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3968dfff779so5682915a91.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 07 Sep 2026 20:28:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788838109; x=1789442909; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jOFICu+/TxYyTegVJ+ic4nC3wN/lY3Z7pXeHMMmZOvA=;
-        b=VqjPAvpUR19/Dg0r+j8FdBffip35KtFJ9APXw0HnZPKn9cbbu0N7kns8JRUaw7Kr2U
-         7aM6gMVoMWu2z+p1kdpXUDnVrM/QUWHDXS4qBCytnwIdaDA8aqQdvJYuYPGPEdPN+uzP
-         yaFs2eFkNDMsHUEOdia5uKgTe4JAcRY54C49O8ChgogTJWLkKsPkSVhArBToQWVv1P6e
-         fNMS+S5T+PvIFD3I1heZzGJaJ2lXrSn3/0f+VE970tE8LXL+KxmsbSzzKLkwGeNxLbSL
-         tBUTOnLzt9tExzU70719KduGalAk1SLwWBPjAbMIwirTJ2Fxh0AFKxOE1KsIUyEv7SOS
-         he6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788838109; x=1789442909;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jOFICu+/TxYyTegVJ+ic4nC3wN/lY3Z7pXeHMMmZOvA=;
-        b=QzbjGEaHHBWDI9u2raF9xRpuqeHnWutHskit6gllqdesWXwUZmsQ7GgGQOvIpkGLMh
-         b4OKBqvI4beWD8gK+lzJYBIC3DvibTn+R3SREU+z/1QFXTTFXG51ToC9KpLHw3fzt7HM
-         Dh4wIqAcudD41zUGOLxpanzEs3f3mE4rxToZVdXDyYBulFJzTNo+y99G+xgysRmzLDAp
-         tjqqtzEM5isYYzazngcNy9Wz0fbNkPLkKLFSNRDOUkIKOfaEQ/nidaCiKDDg7P5AIG5L
-         OqSLw0ee9E8+bEH/FAaXFgYvPY8gU8MWiAv0JO7vNB3c4GmlcTI0Q3V+T5wbmtshldFp
-         h9Qg==
-X-Gm-Message-State: AFuF++nCXt0yhx7yci0KrjnYllmf2qfGvML1y+KqrjDJ7/bLnyqSeL5d
-	4gYOnS+XYD3sOAMFYdkEvNBbQXVyeesSqLb/nSSbelmRj+gJxA1wjxuT2AhutP5kIuf4nh5V52D
-	QJgUeHBqiqHf5ZfNzqvRUKSsz8UxdnC/Y+Vi87eZm/+XAMqSpsBmG4sdHqeqFleLr45qVVRVKXC
-	ZQE7I=
-X-Gm-Gg: AYBFou3xDOwQhl7K4K+xXL1KDwbJBVk/LqQlZpOJ+D+k1gWaltMblTJLgaF+UCYYVuJ
-	jmvpb0O7SxjwzEVwbs8OdUIr3HTzE7Gt6CA1NGHnEzdf67wxBPr2Iytip7mQ+WWLuqptLXFm9vt
-	UAxChwIl2Bu1+9zGTri1yqfDklDLDALnQH0krrsV7v0me83z1F69JaIusH2WZUqtJEXv1h0o98h
-	XB7/QeIDN0yMFXWyLIXh9A94SwP2n3Pe7sHRHMfAVSBa0ze/WQ//P2vIy+7e2x1ZDrSWQu7+ect
-	vs4fXdAMg63k38ZrQsv/o3ftc1G5mj1gBviNgzrZQwziIJORLIDWwWm2TQ6jwVUeZzCMgLTxHoT
-	MB4RYTTKhWTf7bAOh4jTAZy9VBmcUp1OHNqyY0Nw835GF+NgE9CIG7FaQo5iSlRr/
-X-Received: by 2002:a17:90b:4c10:b0:398:9bd3:d6d1 with SMTP id 98e67ed59e1d1-39b8bec869amr3836552a91.11.1788838109311;
-        Mon, 07 Sep 2026 20:28:29 -0700 (PDT)
-X-Received: by 2002:a17:90b:4c10:b0:398:9bd3:d6d1 with SMTP id 98e67ed59e1d1-39b8bec869amr3836536a91.11.1788838108871;
-        Mon, 07 Sep 2026 20:28:28 -0700 (PDT)
-Received: from [10.133.33.39] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08bcc090sm29612468a91.4.2026.09.07.20.28.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Sep 2026 20:28:28 -0700 (PDT)
-Message-ID: <43a9f5ec-c8c2-4e3c-bc78-b980ead0ed5a@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 11:28:25 +0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="qXYXn6Er"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EYv/6nrlQ2PNyxYKCbP8wf6IoNndYuIVM4ol839lA6J9YzIEmvhXr27wNZu1uRYTsYT6vJ97U59bSkNN9mfg99bcmKdmlecsi9+OWl+jGrMlyo4fPPPELct3T5qhhLJAEa2zcD6sz1uAKMm8vEjzbWC9AZaXRk4oVXqSD1tB9uAJ5kwl9S3nrt8HsGkIJVh1QGCbjKb7iy1itj2Wl2aqPSmFENjHWJy4+XrWQsruEaBN/me7dcKxyGJJOwFaz8cMo+cTnkBuKwoD9EsU1PIQ0F3phY3YqSsKLqjD2Fl+NAvEv+CIPbUZ6oSz4ylbKNZIYeKNhYMUEtdWa/AbKC0N5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GKcTYoko7LilK9OSnESLCr1zbwNR98VHR74gR+HVchQ=;
+ b=pvky1DX0fIYGizXf+18Qr3K0ulp8z3vQEVhJUIRWMe9HnLSJGo0l973wWjChlWZhC+TfiDoJXpJx+euaaTeBF96k7nlxzpOiUXUTX7a3rPQer0HSYZvNFFEaQTuei4g4AerID9tXP1XbRyzwT45MBqZp8N1OsOjOjcYPE4GT/ZIp6D5KJkPfg3sT2uQ6QWvEXvXN05a52J4p1d1gZ9wKxspQ9gaDNsDAY60/SYDEZExuBr4M8dPkXaXQpVDf0VvVuBAFzaIgUlG8Lr4uXuTtYFdrNTsXyZqsyPeNGpIeZAibnwSaGcWmyqJvQdyVpTMV6ejt2NzvhyohS5jtW6Y4CQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GKcTYoko7LilK9OSnESLCr1zbwNR98VHR74gR+HVchQ=;
+ b=qXYXn6Eryiqt8MNRsqS7e7A7OSkOfje84LJXZOrJncBshzEs28w9p9eCqtOLCdtHfKWFmAMREjgGzuupLUlx1FAM2eKfcsUyyMcdoADEEBcjqojnB3H4KB2kDyFeq59cSKBhhr+alKil8jkKmP/Pe5heZw/oi98wCliOYE6j5bk=
+Received: from BY1P220CA0025.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::12)
+ by DS4PR12MB9683.namprd12.prod.outlook.com (2603:10b6:8:280::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
+ 2026 04:08:39 +0000
+Received: from MWH0EPF000A6731.namprd04.prod.outlook.com
+ (2603:10b6:a03:5c3:cafe::21) by BY1P220CA0025.outlook.office365.com
+ (2603:10b6:a03:5c3::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.6 via Frontend Transport; Tue, 8
+ Sep 2026 04:08:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MWH0EPF000A6731.mail.protection.outlook.com (10.167.249.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Tue, 8 Sep 2026 04:08:39 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 7 Sep
+ 2026 23:08:38 -0500
+Received: from [10.136.37.6] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.46 via Frontend
+ Transport; Mon, 7 Sep 2026 23:08:37 -0500
+Message-ID: <9a5552de-0f36-41c6-8bb6-16cbba5425b6@amd.com>
+Date: Tue, 8 Sep 2026 09:38:36 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,115 +67,155 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/12] clk: qcom: ipq-cmn-pll: Add PON reference clock
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org,
-        conor+dt@kernel.org
-References: <20260906-qcom_ipq5210_cmnpll-v4-0-aec5ed642f4f@oss.qualcomm.com>
- <20260906-qcom_ipq5210_cmnpll-v4-7-aec5ed642f4f@oss.qualcomm.com>
- <20260906142559.17FE91F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v8 8/8] KVM: SVM: Add Page modification logging support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+References: <20260907063906.1964557-1-nikunj@amd.com>
+ <20260907063906.1964557-9-nikunj@amd.com>
+ <20260907070024.4A7E11F00A3D@smtp.kernel.org>
 Content-Language: en-US
-From: Jie Luo <jie.luo@oss.qualcomm.com>
-In-Reply-To: <20260906142559.17FE91F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: "Nikunj A. Dadhania" <nikunj@amd.com>
+In-Reply-To: <20260907070024.4A7E11F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=QNBYgALL c=1 sm=1 tr=0 ts=6a9f80dd cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KbbPYYVOdocP4CsVI9sA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-ORIG-GUID: gRqx7yIDnnu9E_SWQ_ORnpHhxrgo-bis
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDAzNCBTYWx0ZWRfXz4ZrgKoutmch
- TY1ANVCYLJNOtwIDlU9eJL6OLmVAET44HQzZFkn+TbnZsZqseOoKyWNXvLd4vsjNz5w+yTtv4bm
- eE4+YVMuV8b5tr/sGOkSJ/1y9F013eE=
-X-Proofpoint-GUID: gRqx7yIDnnu9E_SWQ_ORnpHhxrgo-bis
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDAzNCBTYWx0ZWRfX0azuvH+W51s6
- uL0w46DAoDsVDlFOizSJv+BsjQ+crXm4gTK5ittuvkWnHZ8+S+B4tnrMz+t0qsbLwtbqdXKZpnQ
- tzjF8T72iZ9Mi8ZZHM58lSz4r7ydv2Z76S4row1t/QvvKeETSOia7XxbeJIxdSTai7V68Vb4MXl
- NXxo3MVUGXI+wfTVFSvEEh7gG6FAgM/Uqx/WnsLdzCmGJRxFZkuacIa3YpPp6JVboy5l1h8RG1R
- 9yHshe+v/9Ebk6LnA6Qu2Ae/Q+DTh5BsU1zc/nm/om9284weQy2sfE8gjFeB3UpcUscQYaio22/
- W0H+RQQn5zAyMz91o2SuIFGWeyeELfecyxocz/+673bXIrW5WT7ZnhKtK1D9PfUmH/1e7TI7i4/
- 2P565xEugQF+Gc8L0ubaN88Qp6yBoB2BWxbJsCHRR7vYeHmk1wMf/6MYn1x05DsW9Jrd9tEiYgg
- WspFoGYPhoRO0+mwugw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-07_07,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080034
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6731:EE_|DS4PR12MB9683:EE_
+X-MS-Office365-Filtering-Correlation-Id: cd01001c-c1bd-42a9-1a58-08df0d5edcce
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|1800799024|36860700016|376014|23010399003|6133799003|10067099003|4143699003|11063799006|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	Y0WMxa+WQ7feJA6np4dGPjXG5Ay67Wn/2VMxg+a+Woo8sYe3EyW0wV4q/tF8OtwBl/pcUhYNvPYT0ORDhnPnnFrn8r8W+5jlwGBagsEZmxyFVK78cJema4XJ1fUw+z2wT9dnqhSsfazUZlnfIQc8CAFIY3xEHvqdSPiFpFw4l+T26vd2HN1e0wHxGqmYpjOkykvgcSwSdTfB+u9/I+CL9OUYmSaRcY8K6Sd3g8t0O4w+PRuGvVaaQrUOVBqtU7bqJQQNc8oh+i/ar4a/IohDXY+f9VHqlVKowo7o7Fbp48ln7iJ3AtKDIdzJ990zRqNTB1rPOHdlmeB6lbLhzA+I+84rl4GKKMXPorpTvx7o4U0u5bZl29P9kyMt1aQDmNFqrTYCwe0wzvujLCqihovh9ANJf8M2I2bK08W0A2yVczO43nsKqvjJ9zsJz7gkbhRMhVE5UQ9TYsW3Y+JW/ijhPiXmlQp0LZLHbA/NVuE0w9k5TUFucDuOyeiY4KCnIlHssZ8RCdpYt0M9OP7x55Ze/PCqT7la3K1464yIsX6EHlrRVp3ZzqVPH8x/3jde797E8czL9vDTIzTBXJ6t7D8yf10VpPGSFH7r2dR8uxqN7Eh5YHvhxWHicb4GgfjXdvNeHmJz/tpSktsz1DdA7F0xpWfRFJl3GCxFVohg6AqxiWnUPhzOJTMzgYRLmXcR+nyaZsq3SXQsNHVHKG0ivdBbLQ==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(36860700016)(376014)(23010399003)(6133799003)(10067099003)(4143699003)(11063799006)(5023799004)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	IMHEhhc5f7si5vYFo3PpmlWAkuhJ2VIttNKtwEJEAR7ugNMcH9BmONjJHKkv3TVjfR2BREWElTB4LjZeYKR93qgVP6y8km7NZ9/gVi3obuTPSuj2wu3V477IubThvSE3aOtzHX1mUuYPgYDIFCM2DSVODx7+dAbrxPKhbAqhb0yeMY7YSBDIMfUf1KVaPGjM0JTnAnWpUZszjDSao1CZOvG/Rala4+EQUrgU0W47nWPrrOGuPQYpl0Hjoj0x1KyYXYvrtozdvKFYTNnAm10h5HSe2Sje9sSJ7/kTR9DDvFLPML5GAfc2fN/pfQtITpvW3G2In83ziE5CFPhu8e1X+5P+HSAAVwT773fLfUS+3jgLCPpVrn6dioCyunJtlQb40QR/N/cKcw6dzLwnE5QuT4HWCZBZdCLT/Svl/3miFST3cDJc+SN705aryTyabU1+
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 04:08:39.1049
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd01001c-c1bd-42a9-1a58-08df0d5edcce
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MWH0EPF000A6731.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9683
 
 
 
-On 9/6/2026 10:25 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] clk_pon_clk_determine_rate() incorrectly fails valid rate requests due to rounding at bound edges.
-> --
+On 9/7/2026 12:30 PM, sashiko-bot@kernel.org wrote:
+
+>> diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+>> index 73f37b050d0a0..da417c4c59154 100644
+>> --- a/arch/x86/kvm/svm/nested.c
+>> +++ b/arch/x86/kvm/svm/nested.c
+>> @@ -901,6 +901,13 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
+>>       vmcb02->control.msrpm_base_pa = vmcb01->control.msrpm_base_pa;
+>>       vmcb_mark_dirty(vmcb02, VMCB_PERM_MAP);
+>>
+>> +     /*
+>> +      * PML is never enabled in hardware for L2.  Make sure that an
+>> +      * unexpected PML write would trigger a PML_FULL VM-Exit.
+>> +      */
+>> +     if (pml)
+>> +             vmcb02->control.pml_index = -1;
 > 
-> commit 9a9a4823a8ebca7e3c30590799eb2ac41ada876e
-> Author: Luo Jie <jie.luo@oss.qualcomm.com>
+> [Severity: Critical]
+> By intentionally leaving hardware PML disabled for nested L2 guests in
+> nested_vmcb02_prepare_control without informing the KVM MMU, doesn't this
+> cause all memory dirtied by L2 to be silently lost?
+
+No, kvm_mmu_page_ad_need_write_protect() returns true when
+cpu_dirty_log_size is set and the shadow page is in guest_mode,
+which forces write-protection on L2 SPTEs instead of relying on
+hardware PML. L2 dirty pages are tracked via write faults, not PML.
+This is the same approach VMX uses for nested guests.
+
 > 
-> clk: qcom: ipq-cmn-pll: Add PON reference clock support
+> When an L2 guest writes to memory and the host KVM has PML enabled, the KVM
+> MMU creates L2 shadow NPT SPTEs as writable but clears the D-bit. If hardware
+> PML is disabled for L2, the hardware will set the D-bit but will not log the
+> GPA, potentially leading to silent memory corruption upon live migration.
 > 
-> This commit adds support for the PON reference clock to the IPQ CMN PLL driver.
-> It configures the clock to operate in either UNIPHY mode with a fixed 31.25 MHz
-> rate, or PON mode using an 8-bit divider derived from the parent rate.
-> 
->> diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
->> index 44d035870a89b..f12352a707f7a 100644
->> --- a/drivers/clk/qcom/ipq-cmn-pll.c
->> +++ b/drivers/clk/qcom/ipq-cmn-pll.c
 > [ ... ]
->> +static int clk_pon_clk_determine_rate(struct clk_hw *hw,
->> +				      struct clk_rate_request *req)
+> 
+>> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+>> index 7d59d301e1e54..950c250a77b51 100644
+>> --- a/arch/x86/kvm/svm/svm.c
+>> +++ b/arch/x86/kvm/svm/svm.c
+> [ ... ]
+>> @@ -3344,6 +3376,45 @@ static int vmmcall_interception(struct kvm_vcpu *vcpu)
+>>       return kvm_emulate_hypercall(vcpu);
+>>  }
+>>
+>> +static void svm_update_cpu_dirty_logging(struct kvm_vcpu *vcpu, bool enable)
 >> +{
->> +	unsigned long div, pon_rate, uniphy_rate = 31250000UL;
->> +	bool uniphy_rate_valid, pon_rate_valid;
+>> +     struct vcpu_svm *svm = to_svm(vcpu);
+>> +     struct vmcb *vmcb01 = svm->vmcb01.ptr;
 >> +
->> +	if (!req->rate || !req->best_parent_rate)
->> +		return -EINVAL;
+>> +     if (enable)
+>> +             vmcb01->control.misc_ctl |= SVM_MISC_ENABLE_PML;
+>> +     else
+>> +             vmcb01->control.misc_ctl &= ~SVM_MISC_ENABLE_PML;
 >> +
->> +	div = DIV64_U64_ROUND_CLOSEST((u64)req->best_parent_rate, req->rate);
+>> +     vmcb_mark_dirty(vmcb01, VMCB_NPT);
+>> +}
 >> +
->> +	/* Clamp to valid range (1-255) */
->> +	div = clamp_t(unsigned long, div, 1, 255);
+>> +static void svm_flush_pml_buffer(struct kvm_vcpu *vcpu)
+>> +{
+>> +     struct vcpu_svm *svm = to_svm(vcpu);
+>> +     struct vmcb_control_area *control = &svm->vmcb->control;
 >> +
->> +	pon_rate = DIV_ROUND_CLOSEST_ULL((u64)req->best_parent_rate, div);
+>> +     /* Do nothing if PML buffer is empty */
+>> +     if (control->pml_index == PML_HEAD_INDEX)
+>> +             return;
 >> +
->> +	uniphy_rate_valid = uniphy_rate >= req->min_rate &&
->> +			    uniphy_rate <= req->max_rate;
->> +	pon_rate_valid = pon_rate >= req->min_rate &&
->> +			 pon_rate <= req->max_rate;
+>> +     kvm_flush_pml_buffer(vcpu, control->pml_index);
 >> +
->> +	if (!uniphy_rate_valid && !pon_rate_valid)
->> +		return -EINVAL;
+>> +     /* Reset the PML index */
+>> +     control->pml_index = PML_HEAD_INDEX;
+>> +}
 > 
 > [Severity: High]
-> Will this logic incorrectly reject valid rate requests when the closest
-> divider falls slightly outside the boundaries due to rounding?
-> 
-> If a client restricts the bounds (e.g., via clk_set_min_rate), the requested
-> rate is clamped to the bounds. If calculating the closest divider for that
-> rate yields a frequency that barely misses the min_rate or max_rate bound, 
-> pon_rate_valid becomes false and this returns -EINVAL.
-> 
-> Should this code check adjacent dividers (such as div - 1 or div + 1) to see
-> if they yield a rate strictly within the requested bounds before giving up?
-> 
+> Since the PML index is reset here without marking the VMCB_NPT field dirty via
+> vmcb_mark_dirty(svm->vmcb, VMCB_NPT), will the CPU hardware ignore the reset
+> and use a stale cached value?
 
-It doesn't hold up for this driver, a PON reference clock feeds the
-UNIPHY/PON that needs one exact standard frequency (e.g. the 31.25 MHz
-UNIPHY rate, or whatever exact PON-mode rate the line rate dictates),
-not "anything within a window." A real consumer would call
-clk_set_rate(clk, exact_rate) and expect either that exact rate back or
--EINVAL, never clk_set_rate_range().
+No clean bits are defined for the PML_ADDR and PML_INDEX fields, so on a
+VMRUN, hardware always loads them from the VMCB if the feature is enabled.
 
->> +
->> +	/* Pick whichever mode gets closer to the requested rate */
->> +	if (uniphy_rate_valid && pon_rate_valid) {
+> 
+> This could lead to a situation where the processor continuously generates a
+> PML_FULL VMEXIT on every subsequent write because the cached index remains at
+> zero, causing guest livelock and a performance collapse.
+> 
 > [ ... ]
+>> @@ -5429,6 +5525,8 @@ struct kvm_x86_ops svm_x86_ops __initdata = {
+>>       .check_intercept = svm_check_intercept,
+>>       .handle_exit_irqoff = svm_handle_exit_irqoff,
+>>
+>> +     .update_cpu_dirty_logging = svm_update_cpu_dirty_logging,
+>> +
+>>       .deliver_interrupt = svm_deliver_interrupt,
+>>       .pi_update_irte = avic_pi_update_irte,
+>>       .setup_mce = svm_setup_mce,
 > 
+> [Severity: Medium]
+> Is there a missing implementation of .flush_pml_buffer in svm_x86_ops?
 
+No. flush_pml_buffer is not a kvm_x86_ops operation. SVM calls
+svm_flush_pml_buffer() directly from svm_handle_exit() on every
+VM exit, including SVM_EXIT_PML_FULL.
+ 
+> Without .flush_pml_buffer exported to the generic KVM x86 ops,
+> kvm_vcpu_flush_pml() might silently do nothing. This would result in
+> KVM_GET_DIRTY_LOG returning incomplete data, potentially delaying live
+> migration convergence or confusing userspace tools expecting an accurate
+> snapshot.
+
+Regards,
+Nikunj
