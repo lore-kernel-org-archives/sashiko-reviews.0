@@ -1,100 +1,170 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-163.mta1.migadu.com [95.215.58.163])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374252D2D5;
-	Tue,  8 Sep 2026 11:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC3A52ED2C
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 11:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788866443; cv=none; b=buQhKuWG6HBIV6ZYTUPIXy1zPoLXkaC3Ru/jA/n1FBSw8DOjOXz5QV1i2zIMUFn7R3gQ6ZRCj+0jQLhrYa6lOzWuSuV6DEA+Vb7D8TOD4riUSnEh3YIFW8Ro1vW9tom/XM4EZVAHFSf//YpO+q84bdBdF7a6WztJS5y4EOQkIeM=
+	t=1788866907; cv=none; b=IBCa6DQS4mWREVW0zUWd8apKcQfu52M/0JByuUdborEUSzoXhDIFvxqG2r34f0yJzXawwx4D+mq20x8LsQanpP9AoyXQM37sY35B6yOgK/osrmdjFk/cSk/y42EepWkuZt84je+uroYA4AUkbx8PTKwlyXrM2VxN0YKZAW1qNNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788866443; c=relaxed/simple;
-	bh=FkoG8P8hgCUaeFjzF7cWY9R2Q9TIdToOfyFsgfbthng=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnDDSqwCksTOap985seGm6oPhIGHkV/vnNEq57qNM2DzUXO7Bqx+Xs8QV+7vbyhT8fPapoEY95OQoA6cCvlIe0NTKiGpplnuj8Vf+Pg/ZxjsJ6+oynU2hrrsB+NqDlbotZwPcEECr4EKd+fjnm4N3H4YGlYV3S50QXyl464sFEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjilL1e3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788866907; c=relaxed/simple;
+	bh=fAhkWbsPjSJ37MAF4sRRX1jqmnl1njf/zk439tgUIco=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=DS4yn+CpEyZaHHCRYyMhn1gEu5iFvgS7r/7GOXy+4EFZdwH8VarHyt4Mph1AvLXSEvQlVw9to1ByFAdubveZE/GJvswqHziLGaEEijnk5MGyj5RjwaecEMp51AbPbLgMIxTyNPyxsYiNLMDasSy+DDY4CGXt4XUCqvBVsZd9FLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IyNMS0fe; arc=none smtp.client-ip=95.215.58.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjilL1e3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57D91F00A3A;
-	Tue,  8 Sep 2026 11:20:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788866432;
-	bh=UYbQS95NtpTDJ0XIYcQUCeFZJDNj7K/I95/G1Xz9DBc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LjilL1e3iICHu+khhy4e+RTewIrtr1TwvZhdc2BfyoWSCUT7GGRDl7kZmxVxA0s/S
-	 Qxk8WBLC57pfhnbhQTvzKvVDhudZFntx19wfWghw0Dv35U4o3V3S+AGGVpiwnAmaQH
-	 ban6W61/3EEDHVOv1Gsq0FeEpV6KIsWNANF3souAF77Cs3SYgHRvzZGuvlfX53qLUp
-	 QR+xVNMBjcTAs0/REfl87kGkUlZraEq7vwgnNRTZTEXSpHYTj+eX2Mhh6Vy5q9T9An
-	 fFiY/AQIEUkeTe5X6KxvISqJa7QIERD7SzBf/DgwAccAlQ/QCaE3NbcooXQ34JZA8j
-	 N2EFe+6eL5qRw==
-Date: Tue, 8 Sep 2026 12:20:29 +0100
-From: Simon Horman <horms@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Fan Wu <fanwu01@zju.edu.cn>, linux-hyperv@vger.kernel.org
-Subject: Re: [PATCH net v2] net: mana: fix reset work race with device removal
-Message-ID: <20260908112029.GT40544@horms.kernel.org>
-References: <20260905023602.425827-1-fanwu01@zju.edu.cn>
- <20260906023851.AC7981F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IyNMS0fe"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=fAhkWbsPjSJ37MAF4sRRX1jqmnl1njf/zk439tgUIco=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788866894; v=1; x=1789471694;
+ b=IyNMS0fefNhlwxJoyRKbqB5Pj1q5EmWVK+7NR1OIthKmwU3PXhbNmgHzeIlo071UBNT4A6wH
+ YPnLTVONOsGi9ZIZ/HPpmMPqeNJ75p7XG0zif8KJAHo4J/daYT4lrOnIhZCaLAhVA2iHu1p//X3
+ /nqwtCJtmxwWapamReoUfv8k=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id cf2611976bfe62d2;
+	Tue, 08 Sep 2026 11:28:14 +0000
+X-Mizu-Trace-ID: cf2611976bfe62d2
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <77c43306-ae89-4919-b7cf-9188165bfbb7@linux.dev>
+Date: Tue, 8 Sep 2026 19:28:06 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260906023851.AC7981F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
+Subject: Re: [PATCH 1/4] blk-iocost: charge flushes as pageless random writes
+To: sashiko-reviews@lists.linux.dev
+References: <20260908022135.1429281-1-cui.tao@linux.dev>
+ <20260908022135.1429281-2-cui.tao@linux.dev>
+ <20260908023455.786E01F00A3A@smtp.kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260908023455.786E01F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 06, 2026 at 02:38:51AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+
+
+在 2026/9/8 10:34, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Charging dataless flushes disrupts the cgroup's sequential IO detection by erroneously updating the IO stream cursor.
 > 
 > Pre-existing issues:
-> - [High] Module text unmap race condition on worker thread exit due to unsafe module_put(THIS_MODULE).
+> - [High] Unthrottled REQ_OP_DISCARD and REQ_OP_WRITE_ZEROES operations allow cgroups to bypass iocost limits and monopolize the block device.
 > --
 > 
-> commit 690e7316a6c3698f99d06b66663e08bbcdb43123
-> Author: Fan Wu <fanwu01@zju.edu.cn>
+> commit f7f33b205abe22d686461a97d252f89e87ee7d72
+> Author: Tao Cui <cuitao@kylinos.cn>
 > 
-> net: mana: fix reset work race with device removal
+>     blk-iocost: charge flushes as pageless random writes
+>     
+>     Standalone flushes issued by blkdev_issue_flush() are represented as
+>     dataless REQ_OP_WRITE | REQ_PREFLUSH bios, which
+>     calc_vtime_cost_builtin() prices at zero.  The flush component of
+>     flush-heavy workloads such as database commits, journal flushes, and
+>     metadata sync is thus neither charged nor throttled: a cgroup at 1% weight
+>     can issue ~510k flushes per 12s, monopolizing the device while iocost
+>     reports zero usage.
 > 
-> This commit embeds the reset service work in the gdma_context and implements
-> admission gates using GC_REMOVING. This correctly synchronizes the service
-> work with device removal and probe unwinding to prevent use-after-free races
-> on the gdma_context.
-> 
-> Cc: stable@vger.kernel.org
-> 
-> > diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-> > --- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-> > +++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-> > @@ -796,48 +841,49 @@ static void mana_recovery_delayed_func(struct work_struct *w)
-> [ ... ]
-> >  static void mana_serv_func(struct work_struct *w)
-> >  {
-> [ ... ]
-> > +	/* The rescan exits of mana_do_service() remove the device, which
-> > +	 * frees gc before returning.  Only touch the pdev and the module
-> > +	 * reference from here on; both are held until this point drops them.
-> > +	 */
-> >  	pci_dev_put(pdev);
-> > -	kfree(mns_wk);
-> >  	module_put(THIS_MODULE);
+>> diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+>> index 2745bffcd5eef..abc512532ed95 100644
+>> --- a/block/blk-iocost.c
+>> +++ b/block/blk-iocost.c
+>> @@ -2533,8 +2533,8 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
+>>  	u64 seek_pages = 0;
+>>  	u64 cost = 0;
+>>  
+>> -	/* Can't calculate cost for empty bio */
+>> -	if (!bio->bi_iter.bi_size)
+>> +	/* Dataless WRITE|REQ_PREFLUSH (standalone flush) is priced below */
+>> +	if (!bio->bi_iter.bi_size && !(bio->bi_opf & REQ_PREFLUSH))
+>>  		goto out;
+>>  
+>>  	switch (bio_op(bio)) {
+>> @@ -2544,6 +2544,15 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
+>>  		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
+>>  		break;
+>>  	case REQ_OP_WRITE:
+>> +		if (!bio->bi_iter.bi_size) {
+>> +			/*
+>> +			 * dataless WRITE|REQ_PREFLUSH: standalone flush;
+>> +			 * at least one page so fast profiles still charge
+>> +			 */
+>> +			cost = max(ioc->params.lcoefs[LCOEF_WRANDIO],
+>> +				   ioc->params.lcoefs[LCOEF_WPAGE]);
+>> +			goto out;
+>> +		}
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but is it safe to call
-> module_put(THIS_MODULE) directly at the end of a work item executing
-> inside the module's text segment?
+> Does charging dataless flushes disrupt the cgroup's sequential IO detection?
 > 
-> If a user unloads the module concurrently with mana_serv_func() executing,
-> the module unload process (rmmod) will wait until the refcount reaches 0.
-> When this worker thread executes module_put(THIS_MODULE), the refcount
-> drops to 0.
+> Because this patch changes the flush's cost from zero to non-zero,
+> ioc_rqos_throttle() will no longer early return for dataless flushes:
 > 
-> If the worker thread is preempted right after this call and before returning
-> to the workqueue core, the module unload can complete and free the module
-> text memory.
+> block/blk-iocost.c:ioc_rqos_throttle() {
+>     ...
+> 	abs_cost = calc_vtime_cost(bio, iocg, false);
+> 	if (!abs_cost)
+> 		return;
+>     ...
+> 	iocg->cursor = bio_end_sector(bio);
+>     ...
+> }
 > 
-> When the worker thread resumes and attempts to return, it will fetch
-> instructions from unmapped memory, resulting in a use-after-free panic.
+> The cursor is erroneously updated with the dataless flush's sector.
+> Depending on the flush's sector (often 0, or a metadata sector), subsequent
+> IOs could be misclassified as sequential (undercharging them) or random
+> (overcharging and unfairly throttling them), breaking detection for workloads
+> that interleave flushes and data.
+> 
 
-It seems to me that this pre-existing problem should not block progress of
-this patch.
+Right, this is a real problem. With this change standalone flushes
+pass the !abs_cost check in ioc_rqos_throttle() and update
+iocg->cursor with the flush's sector (usually 0). That breaks the
+sequential/random detection for the following IOs, and cursor == 0
+also defeats the !iocg->cursor sentinel in calc_vtime_cost_builtin().
+
+The cost calculation itself is fine (the dataless branch exits before
+the seek computation), so the fix is simply:
+
+-	iocg->cursor = bio_end_sector(bio);
++	if (bio->bi_iter.bi_size)
++		iocg->cursor = bio_end_sector(bio);
+
+Will fix in v2.
+
+> 
+> [Severity: High]
+> This is a pre-existing issue, but do unthrottled REQ_OP_DISCARD and
+> REQ_OP_WRITE_ZEROES operations allow cgroups to bypass iocost limits?
+> 
+> Unrecognized operations like DISCARD and WRITE_ZEROES fall through to the
+> default case in calc_vtime_cost_builtin():
+> 
+> block/blk-iocost.c:calc_vtime_cost_builtin() {
+>     ...
+> 	default:
+> 		goto out;
+> 	}
+>     ...
+> out:
+> 	*costp = cost;
+> }
+> 
+> These operations are assigned a cost of 0, bypassing cgroup IO throttling.
+> A cgroup could issue massive amounts of discards or zero-writes, monopolizing
+> the device and causing a Denial of Service for other cgroups.
+> 
+>>  		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
+>>  		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
+>>  		coef_page	= ioc->params.lcoefs[LCOEF_WPAGE];
+> 
+
