@@ -1,60 +1,33 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B14370D5E;
-	Tue,  8 Sep 2026 09:55:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B6B318ECD;
+	Tue,  8 Sep 2026 09:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788861335; cv=none; b=UmdE2NpUXPkcPVDTOscN41iho0nz9tJkhnOgBLkVlWjNbeff4Fuaa/xR2S0AkXuzbpYM1IsXxc8u/DMDxkECRwNpMqkqVvviWYjqnw8miqfXiYESVdheX5r57sH05yWEgjCi2VTsMRvd0cM5Tr0NTvC43b9XB11cbQ6g1JGOKtI=
+	t=1788861534; cv=none; b=n7sEi4MuR/Gjlx93J816F84xV1wg7/BJcN6LfQ8EskRuXA/AzJUTlppBEIrgbzNO2xm36+cKgoXE0lMOPeljjLFh85J3a1Ql5yClCLq+5OZ4c3DRW3ri0PDB0KtfeK87PElH8wqaPsmvnBnD0Kdr5Dr47qDCqxBz6sIqmq99GfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788861335; c=relaxed/simple;
-	bh=PpKCHQoXKpSSVOUpixxLPFIyLKOS3EYHDjdmed8wkgk=;
+	s=arc-20240116; t=1788861534; c=relaxed/simple;
+	bh=jdnp6yNqPjuDCTZ+RGAlpGfNOV6nfvpIMc/1hdBGUQw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OWaXjgm1DjKLoTKPCZPKlw3obltEY+jhvFcQbHWNlVB7I+fx31cL7CFJJ9f46S/2gFvekr5DraFhgsNIWjxePquJLmlPcKPTAHXmTs2+skZdCyPNYHfvtl6l2TFtlfR7bI46+31vRBCVaYd26y1wX7fqtsVKdWM0X5N4ZKfO7Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=BDErKtEz; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=lVTUkrTjmVIYGD6qaaE9PnXMc9l/NXnovGjUTfNmE7QHmDvjyU8VE6niPMu3db4Zp2iv5nTKYpUImFtVEusoTsC4b8Seaqj46Jm25F8B/aQtmutClrYo2X8Dn274Tg4NMloaA4+noW1p6ZxEBXrRaqUalDOdgtAkXN2S+DZV6r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=DDvRzddx; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="BDErKtEz"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6886VdWq3106959;
-	Tue, 8 Sep 2026 09:55:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=baT/JA
-	p1qxMUqvmGzbKbvZXunkw9x6D7ifyB1Xiaoj4=; b=BDErKtEzRh0k3jHI0bcBJ1
-	aIf3CxvclbKP0MWwm7eMFyxJc9fmk9FvKg8WotGPPXhbabN1KVispXMFEitjZ6aO
-	nRuc7yvfCTE7sFEOngNhs6exlo7b0RxN3HgSIQGsG4/MBzvlV49GiQPMoRnwmReM
-	0lQOx15Rb6PEkL4cS7JFRzgnyrX1T4Y1iUVng3e4uUt3yxiGksnkdXHFwpJnh0/c
-	0Y4FFIbcFvFhWUgNOCLeZI2FwVtFOvEX+jEihSIt6+9ph0567/CXrZKyWu/Z2HmV
-	cOtdGKuiyXKauEpWsA4CEBrrqGMCRy1JH9blzgbWUHPuFYvA/mPaya5lM75rZdzg
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbjrnt3e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Sep 2026 09:55:32 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6889fGcX009706;
-	Tue, 8 Sep 2026 09:55:31 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggxdju271-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Sep 2026 09:55:31 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6889tR7J52036034
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 8 Sep 2026 09:55:27 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A40B220049;
-	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6BACC20040;
-	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
-Received: from [9.111.137.185] (unknown [9.111.137.185])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  8 Sep 2026 09:55:27 +0000 (GMT)
-Message-ID: <490a5c66-c415-42c6-883e-1927d9517322@linux.ibm.com>
-Date: Tue, 8 Sep 2026 11:55:27 +0200
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="DDvRzddx"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F18351476;
+	Tue,  8 Sep 2026 02:58:47 -0700 (PDT)
+Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B196C3F7B4;
+	Tue,  8 Sep 2026 02:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788861531; bh=jdnp6yNqPjuDCTZ+RGAlpGfNOV6nfvpIMc/1hdBGUQw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DDvRzddxJnPw2f0IFLFoxSgXh24ClydmrJHFPyrh/cBNVdqciUx47xj3duG8dJxC1
+	 FpeYXa6tw4fPaI6VUwJHlg6I2xijFxXC1vsj0zRlXgQ0Hpqa386Y6cLO3vE/lXgyOh
+	 ycmYEUsOILGyM3onZ+KubYqEHq2d9AyTKTPmEEPg=
+Message-ID: <958eee79-c776-4c63-92c5-743d9aa5ea52@arm.com>
+Date: Tue, 8 Sep 2026 10:58:48 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,122 +35,177 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] dibs: Avoid inconsistent lockstate warning in
- dibs_lo_move_data()
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20260904094446.1342654-1-wintera@linux.ibm.com>
- <20260905094515.D65911F00A3D@smtp.kernel.org>
+Subject: Re: [PATCH v17 3/7] firmware: arm_rmm: Configure the RMM with the
+ host's page size
+To: Gavin Shan <gshan@redhat.com>, sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+ kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>
+References: <20260907095942.1140734-1-suzuki.poulose@arm.com>
+ <20260907095942.1140734-4-suzuki.poulose@arm.com>
+ <20260907101446.1DA321F00A3A@smtp.kernel.org>
+ <bade4920-2db1-4a8a-99d1-ca2694647ec8@arm.com>
+ <64533fd0-5fe7-4839-8302-c5b6674bcb5a@redhat.com>
 Content-Language: en-US
-From: Alexandra Winter <wintera@linux.ibm.com>
-In-Reply-To: <20260905094515.D65911F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=E7T9Y6dl c=1 sm=1 tr=0 ts=6a9fdb94 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=2redr1V9L8-sxEALg8QA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDEwMCBTYWx0ZWRfX57JHqg8KiJkB
- wsY0ZbumEaKLudN8V2/gWIMkWHG81fINvHqTcmNvT1YXBG1mWzMiqYZoyN5Ps6C19rf4WUzDY4X
- 22WVCDeMmBT23aLDaIc9kd4PhjPihOk=
-X-Proofpoint-ORIG-GUID: NhOc5yEyrGyUcU_j9nSM_6d52_3XYdA1
-X-Proofpoint-GUID: NhOc5yEyrGyUcU_j9nSM_6d52_3XYdA1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDEwMCBTYWx0ZWRfX403J6N2YHWTz
- puhEAwJ3RKAYvcsKTH7BmSnrausFzYDvYkF65N5P14oVsd54Y0PVgF7xUW5kS4KBA6zO6297uYQ
- kjFoYLWCzdptpekeqdJo7gDjLe/4Cx/FJYvweRAopLWB8D6TQSpCvHZGvNkPBRV+ZnlcHYuaeEe
- L0CQZd8j+Yvw0fBs77sZ1vhXTHAxZA3KbJrvISj5cr08kZN4ZsZb6TEUcUud/Xsq5D55FLW8m4X
- 5JvCwzn37Idz3osvnFR7iH6/NpXX1+/cHCQLxP6mwAhtQXQFH5+AAq+uCEz4lvNpQokjUmBWlx2
- 5p4PmQYDbiiHh7IpJFW6RZRjwOfjSiRRjnJVE/nhqufsN2Qr4jbfFTpCKUrKP5giDOWWAH36fF6
- QR5ctVeeoaZPRwr/Owq3CBWTzF4qLoZccD0MOWA3eFD8Al38CmmsGAI+2b0RQLdTPYRFiqyQYsb
- pEFsX9OAMo+Nxw7418A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080100
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <64533fd0-5fe7-4839-8302-c5b6674bcb5a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+On 07/09/2026 23:40, Gavin Shan wrote:
+> Hi Suzuki,
+> 
+> On 9/7/26 10:02 PM, Suzuki K Poulose wrote:
+>> On 07/09/2026 11:14, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 2 potential 
+>>> issue(s) to consider:
+>>> - [High] The SMC call leaves parameters X2-X7 uninitialized, 
+>>> violating the RMM's RES0 requirement.
+>>> - [High] The `struct rmm_config` fields are populated using native 
+>>> endianness, which breaks on Big Endian kernels.
+>>> -- 
+>>>
+>>> commit 1741e17729c2ff5e23bc8bfb00cc50a61f38ebb7
+>>> Author: Steven Price <steven.price@arm.com>
+>>> firmware: arm_rmm: Configure the RMM with the host's page size
+>>>
+>>> This commit adds support to configure the RMM's granule size to match 
+>>> the
+>>> host's page size during kernel initialization. It reads the feature
+>>> registers to ensure the requested page size is supported and sends the
+>>> configuration to the RMM via an SMC call.
+>>>
+>>>> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/ 
+>>>> arm_rmm/rmi.c
+>>>> index 008a783407b4e..76f91c145e1fd 100644
+>>>> --- a/drivers/firmware/arm_rmm/rmi.c
+>>>> +++ b/drivers/firmware/arm_rmm/rmi.c
+>>>> @@ -77,6 +77,60 @@ static int rmi_read_features(void)
+>>>>       return 0;
+>>>>   }
+>>>> +static int rmi_configure(void)
+>>>> +{
+>>>> +    unsigned long granule_feature;
+>>>> +    unsigned long granule_size;
+>>>> +    int ret = 0;
+>>>> +    struct rmm_config *config;
+>>>> +
+>>>> +    switch (PAGE_SIZE) {
+>>> [ ... ]
+>>>> +
+>>>> +    config = (struct rmm_config *)get_zeroed_page(GFP_KERNEL);
+>>>> +    if (!config)
+>>>> +        return -ENOMEM;
+>>>> +
+>>>> +    config->rmi_granule_size = granule_size;
+>>>> +
+>>>> +    /*
+>>>> +     * For now we set the tracking_region_size to 0 which is the 
+>>>> only option
+>>>> +     * for 4KB PAGE_SIZE (1GB for 4KB PAGE_SIZE, 32MB/512MB for 
+>>>> 16KB/64KB).
+>>>> +     * TODO: Support other tracking sizes via Kconfig option for other
+>>>> +     * PAGE_SIZES
+>>>> +     */
+>>>> +    config->tracking_region_size = 0;
+>>>
+>>> [Severity: High]
+>>> Does this code handle endianness correctly?
+>>>
+>>> The struct rmm_config fields are populated using native u64 assignments.
+>>> On an ARM64 kernel compiled with CONFIG_CPU_BIG_ENDIAN=y, this writes
+>>> big-endian bytes into the shared memory. The RMM, which runs in 
+>>> little-endian
+>>> at EL2, will misinterpret these fields.
+>>>
+>>> Will this cause the RMM firmware to read invalid configuration values 
+>>> (like a
+>>> byte-swapped granule size) and fail to configure, breaking RMI 
+>>> support on Big
+>>> Endian systems?
+>>>
+>>
+>> We don't plan to support RMM for Big Endian Linux. I have now made the 
+>> ARCH_SUPPORTS_RMM to depend on !CPU_BIG_ENDIAN
+>>
+> 
+> You probably need to avoid referring to CPU_BIG_ENDIAN as it's being 
+> dropped
+> by PATCH[v2 13/14] in Will's series to removed unused big-endian support on
+> arm64 [1].
+> 
+> [1] [PATCH v2 00/14] arm64: Remove unused big-endian support
+>      (https://lore.kernel.org/linux-arm-kernel/20260907163726.17104-14- 
+> will@kernel.org/)
+
+Thanks for the heads up, I will just ignore this one from Sashiko.
+
+Cheers
+Suzuki
 
 
-
-On 05.09.26 11:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> Pre-existing issues:
-> - [High] Unsafe error path calling kfree() on memory allocated via folio_alloc().
-> --
+> Thanks,
+> Gavin
 > 
-> commit 71f881ca9b5f87a2235598ada197106f8482dccb
-> Author: Alexandra Winter <wintera@linux.ibm.com>
+>>>> +
+>>>> +    ret = rmi_rmm_config_set(virt_to_phys(config));
+>>>> +    if (ret) {
+>>>> +        pr_err("RMM config set failed\n");
+>>>> +        ret = -EINVAL;
+>>>> +    }
+>>>> +
+>>>> +    free_page((unsigned long)config);
+>>>> +    return ret;
+>>>> +}
+>>> [ ... ]
+>>>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi- 
+>>>> cmds.h
+>>>> index 2fb1f7f86d71e..9aa27697e2377 100644
+>>>> --- a/include/linux/arm-rmi-cmds.h
+>>>> +++ b/include/linux/arm-rmi-cmds.h
+>>>> @@ -12,6 +12,23 @@
+>>>>   unsigned long rmi_feat_reg(unsigned long id);
+>>>> +/**
+>>>> + * rmi_rmm_config_set() - Configure the RMM
+>>>> + * @cfg_ptr: PA of a struct rmm_config
+>>>> + *
+>>>> + * Sets configuration options on the RMM.
+>>>> + *
+>>>> + * Return: RMI return code
+>>>> + */
+>>>> +static inline int rmi_rmm_config_set(unsigned long cfg_ptr)
+>>>> +{
+>>>> +    struct arm_smccc_res res;
+>>>> +
+>>>> +    arm_smccc_1_1_invoke(SMC_RMI_RMM_CONFIG_SET, cfg_ptr, &res);
+>>>
+>>> [Severity: High]
+>>> Does this SMC call leave parameters x2 through x7 uninitialized?
+>>>
+>>> The arm_smccc_1_1_invoke macro only generates inline assembly 
+>>> constraints
+>>> for the explicitly provided arguments. It does not zero-pad omitted 
+>>> arguments,
+>>> leaving registers x2 through x7 with whatever was previously in them.
+>>>
+>>> Since the RMM firmware expects unused SMC parameters to be zero (RES0),
+>>> could passing uninitialized values cause the RMM to reject the command
+>>> with an INVALID_PARAMETER error and sporadically break RMM 
+>>> initialization?
+>>
+>> Correct, I have now moved all RMI calls to smccc_1_2, making sure that
+>> all the undefined arguments are initialised to 0.
+>>
+>> Cheers
+>> Suzuki
+>>
+>>
+>>>
+>>>> +
+>>>> +    return res.a0;
+>>>> +}
+>>>
+>>
+>>
 > 
->     dibs: Avoid inconsistent lockstate warning in dibs_lo_move_data()
->     
->     dibs->lock is acquired in process context and interrupt context
->     (ism_handle_irq()). So always use spin_lock_irqsave() in process context.
->     
->     Note that this is not a real deadlock, as dibs_lo devices don't have
->     any interrupt context.
-> 
-> [ ... ]
-> 
->> diff --git a/drivers/dibs/dibs_loopback.c b/drivers/dibs/dibs_loopback.c
->> index 649e4e375be33..44a2e74c2efcb 100644
->> --- a/drivers/dibs/dibs_loopback.c
->> +++ b/drivers/dibs/dibs_loopback.c
-> 
-> [ ... ]
-> 
-> While reviewing this commit, I noticed a pre-existing issue in the related
-> ism_alloc_dmb() function:
-> 
-> drivers/s390/net/ism_drv.c:ism_alloc_dmb() {
-> [ ... ]
-> 	folio = folio_alloc(GFP_KERNEL | __GFP_NOWARN | __GFP_NOMEMALLOC |
-> 			    __GFP_NORETRY, get_order(dmb->dmb_len));
-> 
-> 	if (!folio) {
-> 		rc = -ENOMEM;
-> 		goto out_bit;
-> 	}
-> 
-> 	dmb->cpu_addr = folio_address(folio);
-> 	dmb->dma_addr = dma_map_page(&ism->pdev->dev,
-> 				     virt_to_page(dmb->cpu_addr), 0,
-> 				     dmb->dmb_len, DMA_FROM_DEVICE);
-> 	if (dma_mapping_error(&ism->pdev->dev, dmb->dma_addr)) {
-> 		rc = -ENOMEM;
-> 		goto out_free;
-> 	}
-> 
-> 	return 0;
-> 
-> out_free:
-> 	kfree(dmb->cpu_addr);
-> [ ... ]
-> }
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does calling kfree() on memory directly
-> allocated by folio_alloc() cause a kernel panic due to invalid slab metadata?
-> 
-> When dma_map_page() fails, the execution jumps to the out_free label, which
-> incorrectly calls kfree(dmb->cpu_addr) instead of using folio_put() as seen
-> in ism_free_dmb().
-> 
-> If a user exhausts DMA mapping space (e.g., filling up the IOMMU or exhausting
-> bounce buffers), could this error path be triggered resulting in a denial of
-> service?
-> 
-
-Fix for this is is already in netdev:
- https://git.kernel.org/netdev/net/c/907a56ab3eb8
-
-
-
 
