@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-90.mta0.migadu.com [91.218.175.90])
+Received: from mta0.migadu.com (out-50.mta0.migadu.com [91.218.175.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86E91A3AB0
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 04:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.90
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA6529B228
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 04:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788841660; cv=none; b=OznEiBqU9iXOHKtdWASt+vpGrd9gjns4njJVt+9ceh7P2A92+TT9fB8HSFyi0GkSkazq6LAkMpaWo2W4OleM1K+cHMFUfMQGbYFZs6q8XU4pP2vg+BBIzUzLmPwb8IKppj/ZuXu6EbPx8COoye7D1xqloBuElYyFMG56HabPars=
+	t=1788842005; cv=none; b=plUoEPKm0q1hSVtc4iE1v2zSl1bO1/eCoeiLXu9SZO7opUu4fUOPCpZ93xthAAMXp/Ei+RxOtM9Vq8n03yH2WkAx6m/MAPRy25/gyTYng8fdOCzrc0LTwqwKxSj2yyF0tiv1xTJSLkCO8nPAK+nz1SWnrDiomzHhoyLew6M9T3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788841660; c=relaxed/simple;
-	bh=m6V2RF6ABpdBUXt/JwI0k+c2c46Fz5EHr4ua9/GihMY=;
+	s=arc-20240116; t=1788842005; c=relaxed/simple;
+	bh=Emup6ePJmDo+IEuYo0wR0gEMTGf+zRxl86iC80rq66U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TOkHHRQE10uxmpwIH/CDMYCL8tk6ad7T7hdOZcOVRoXZWMvAK+M0aG+SN4YtzGQcQQG7vwxVxx234ttwjZd0hkHeRcY/3JFsLMforU6THlspE25ZcA9oNnxqnQ7Pa+hAdPZjPhMLOQDCzU4foSWejcF7xRc36kVLhXFMPsQxMMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qwRGGt42; arc=none smtp.client-ip=91.218.175.90
+	 In-Reply-To:Content-Type; b=uOownQDtDWd+hmenYguJ5eOuuop0fjfXcsHpvhAYcQMj7OfuMe1R8Pqfaa+d/MO4yr2mtMWgVRTx6dtCVOgu2pijs1qDi+R97n+dHIKlJTObmwUprtkIbTL0L0D8tR56JfTNs3/UWUMtnbqV0TGdIfItNqrlfLXS/cvSRNz9CZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=NNxPQI/2; arc=none smtp.client-ip=91.218.175.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qwRGGt42"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NNxPQI/2"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=m6V2RF6ABpdBUXt/JwI0k+c2c46Fz5EHr4ua9/GihMY=;
+DKIM-Signature: a=rsa-sha256; bh=Emup6ePJmDo+IEuYo0wR0gEMTGf+zRxl86iC80rq66U=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788841656; v=1; x=1789446456;
- b=qwRGGt42YKfY0uRqd5jQUC7BJt5HsownzDvmtNmq+KvPwlIthALtKc872LF+UWYn53HzqiAs
- FVWo85DMAr+p1dzKYGDaaXDHU2E6EctzyuLpsbLDD57PWalHpw8Drb3zKWXsefoiqn7Of/9c085
- N6mOTSM6aZu/zSdBUeqjWHjk=
+ t=1788842001; v=1; x=1789446801;
+ b=NNxPQI/2xoG1J3nUcvhtyWTtpXOe6DOiWUz7G2oaqYQSFcpSp/EFA5bMBrEZ6/xe12YDWu9+
+ DJIpHfEiY5pmlBjjKXrE5afx7IJSVMWBhgSVwOsyRPSfb+5urIMKPf3+HPEiTlh4fzXdx+jGnbC
+ jc/V4T27ImYZpWD36VJycB2Y=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e2deb18ee98ccc6d;
-	Tue, 08 Sep 2026 04:27:36 +0000
-X-Mizu-Trace-ID: e2deb18ee98ccc6d
+Received: by smtp.migadu.com with ESMTPS id dafc58c5039ae507;
+	Tue, 08 Sep 2026 04:33:21 +0000
+X-Mizu-Trace-ID: dafc58c5039ae507
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <cd3251c3-b2f9-4254-8e33-42b80b4a9f49@linux.dev>
-Date: Mon, 7 Sep 2026 21:27:34 -0700
+Message-ID: <0113dee7-6e88-4aa8-a719-143d017512c6@linux.dev>
+Date: Mon, 7 Sep 2026 21:33:19 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,86 +38,104 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 07/12] bpf, x86: Place kfunc arguments per the
- SysV calling convention
+Subject: Re: [PATCH bpf-next 10/12] selftests/bpf: Add C tests for by-value
+ arguments up to 16 bytes
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260904050957.3976119-1-yonghong.song@linux.dev>
- <20260904051033.3979978-1-yonghong.song@linux.dev>
- <20260904053658.335DE1F00A3F@smtp.kernel.org>
+ <20260904051049.3982644-1-yonghong.song@linux.dev>
+ <20260904051931.EDD761F00A3E@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260904053658.335DE1F00A3F@smtp.kernel.org>
+In-Reply-To: <20260904051931.EDD761F00A3E@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
-On 9/3/26 10:36 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] emit_kfunc_args() and bpf_jit_kfunc_stack_slots() silently ignore kfunc_arg_layout() errors for kfuncs requiring more than 12 argument eightbytes, leading to miscompiled BPF programs with incorrect argument placements.
+On 9/3/26 10:19 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] `take_with_ptr_global` and its test are missing the `#if defined(__clang__)` guard used for other global functions taking structs by value, which will cause the test to fail when built with GCC.
+> - [Medium] `take_two_pairs_global` lacks the surrounding `int` arguments explicitly promised in the commit message to catch slot counting bugs.
 > --
 >
-> commit f5201014b232baff8f1ba36c0b74d2c3e1e5ccf9
+> commit a3823ad45ae612d86e218eeec89944cc894c7843
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf, x86: Place kfunc arguments per the SysV calling convention
+> selftests/bpf: Add C tests for by-value arguments up to 16 bytes
 >
-> This commit updates the BPF JIT on x86 to conform to the SysV calling
-> convention when placing kfunc arguments. It adjusts argument placements
-> before a kfunc call to account for differing rules between BPF and SysV
-> regarding stack and register usage. The outgoing argument area is sized
-> to support both conventions.
+> This commit extends the by-value argument tests with aggregate cases written
+> in C. It relies on the compiler to lower arguments into register pairs instead
+> of using hand-written register layouts.
 >
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
+>> diff --git a/tools/testing/selftests/bpf/progs/verifier_int128_arg.c b/tools/testing/selftests/bpf/progs/verifier_int128_arg.c
+>> index 044fc4a800554..b10fb4aeb4056 100644
+>> --- a/tools/testing/selftests/bpf/progs/verifier_int128_arg.c
+>> +++ b/tools/testing/selftests/bpf/progs/verifier_int128_arg.c
 > [ ... ]
->> +static int emit_kfunc_args(const struct btf_func_model *fm, u8 **pprog,
->> +			   s32 stack_base)
+>> +__noinline __u64 take_two_pairs_global(struct pair p, struct pair q)
 >> +{
->> +	u8 *prog = *pprog, *start = prog;
->> +	bool done[MAX_BPF_FUNC_ARGS] = {};
->> +	u8 pos[MAX_BPF_FUNC_ARGS];
->> +	int i, j, n, todo = 0, parked = -1;
+>> +	return p.lo + p.hi + q.lo + q.hi;
+>> +}
 >> +
->> +	n = kfunc_arg_layout(fm, pos, ARRAY_SIZE(pos));
->> +	if (n < 0)
->> +		return 0;
+>> +SEC("tc")
+>> +__success __retval(0)
+>> +int aggregate_arg_two_structs_c_test(struct __sk_buff *skb)
+>> +{
+>> +	__u64 a = skb->len ^ MIX_A;
+>> +	__u64 b = skb->len ^ MIX_B;
+>> +	struct pair p = { .lo = a, .hi = b };
+>> +	struct pair q = { .lo = b, .hi = a };
+>> +
+>> +	if (take_two_pairs_global(p, q) != 2 * (a + b))
+>> +		return 1;
+>> +
+>> +	return 0;
+>> +}
 > [Severity: Medium]
-> Will this silently ignore errors if a kfunc requires more than 12 argument
-> eightbytes?
+> Does this function signature and test implementation match the strategy
+> described in the commit message?
 >
-> While the verifier limits the argument count to 12 (MAX_BPF_FUNC_ARGS),
-> arguments can take up to 2 slots, so the total slots could reach 24.
-> If a BPF program calls a registered kfunc that requires more than 12
-> eightbyte slots (such as 7 struct arguments of 16 bytes each),
-> kfunc_arg_layout() will return -EINVAL because max is hardcoded to 12 here.
+> The commit message explicitly states a defensive testing strategy of having
+> "two struct arguments in a row, each with an int argument on either side so
+> that a wrong slot count shows up as a wrong value in the parameters around
+> it".
 >
-> Since emit_kfunc_args() returns 0 instead of propagating the error code,
-> could this cause the BPF program to compile successfully but execute with
-> missing argument shuffle instructions? It seems the kfunc might read garbage
-> from the 6th slot onwards, potentially causing panics or data corruption.
->
-> This same pattern of silently ignoring layout errors appears in
-> bpf_jit_kfunc_stack_slots():
->
-> kernel/bpf/core.c:bpf_jit_kfunc_stack_slots() {
-> 	...
-> 		n = layout(fm, pos, ARRAY_SIZE(pos));
-> 		if (n < 0)
-> 			continue;
-> 	...
-> }
->
-> Does this also leave stack calculations undersized?
->
-> Though the stack corruption is mathematically averted because BPF's calling
-> convention stack requirements always equal or exceed SysV's (making
-> outgoing_rsp naturally sufficient), the silent argument corruption remains.
-> As there are currently no mainline kfuncs that take more than 12 slots,
-> this appears to be a latent regression.
+> However, take_two_pairs_global completely omits these surrounding int
+> arguments. Can these be added to properly validate register slot counting?
 
-This patch will be removed. I will simplify the jit.
+I will change commit message. With previous kernel support, it won't have wrong
+slot count.
 
+>
+> [ ... ]
+>> +__noinline __u64 take_with_ptr_global(struct with_ptr s)
+>> +{
+>> +	return s.x;
+>> +}
+>> +
+>> +SEC("tc")
+>> +__failure __msg("type STRUCT in take_with_ptr_global() is not composed of scalars")
+>> +int aggregate_arg_ptr_member_fail(struct __sk_buff *skb)
+>> +{
+>> +	struct with_ptr s = { .p = skb, .x = skb->len };
+>> +
+>> +	return take_with_ptr_global(s);
+>> +}
+> [Severity: Medium]
+> Should take_with_ptr_global and its test aggregate_arg_ptr_member_fail
+> be enclosed within the #if defined(__clang__) guard?
+>
+> Other global functions taking structs by value in this file are guarded.
+> Since GCC passes aggregates by invisible reference, it will produce a
+> different BTF signature (a pointer instead of a struct).
+>
+> Will this cause the test to fail when compiled with GCC, as the verifier
+> might not emit the specific "type STRUCT ... is not composed of scalars"
+> failure message?
+
+There is no need to guard with __clang__. This is a negative test
+where both gcc and clang will fail.
+
+>
 
