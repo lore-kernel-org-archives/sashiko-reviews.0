@@ -1,86 +1,50 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F9D3F1061
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 08:37:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F339280D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 08:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788856671; cv=none; b=JajEPi+/nIP7aJudG4v+B/YR1e5XKBE1/epG0c4pbwcEimYbYKzM9m4KE4WyKAZ2TkiqXimSaLAC1UUSGwElx776IU4wC9GJGsFLtD5WsCA2R9HDVMYi3CGfzyAr8jOYq/AdmSsH4+QXvT616TDAup+0AWtBXHFs+dQaVEb/9oY=
+	t=1788857252; cv=none; b=hqWXTjBP8fCzTiuUIrNOVWxwVmi3KIwZvIjR/uCCc2rXXkFRwk1/8SxqpRn5nkNh18lkD5bg6t1ENPjvxM4bpQakmaTZKZ9fHb5x1lDIeO8YJ3vsR8352JoiofIOqknc+raRYe3HaAvu0cy4FwtuSmCn/UI9zReg+Hd7lJ900PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788856671; c=relaxed/simple;
-	bh=/Dk+CYpqa1NtS3R5uXh2wNhUk2AZ77m70NoR3pO2zZU=;
+	s=arc-20240116; t=1788857252; c=relaxed/simple;
+	bh=1JSxNXEGXt1lmkdbK4pCt66pK7X1v1X7t2RxjMk7iY4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=amVQUzTt9+sXFrnz/Nh+ImXUlyExEc3wGJU25yOnlxTBIZeGtAIG9DDcGMqgcdtx7bzbOxK1NXay22w2B6jh4zJKgDaZD+FAsRRtxzzPTm5Sw72obKZ8/hIXbINNLHgSyYiNd1X75EFXt4QzqwYTM5GrG9gf/PT8gHzE962C2Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MaO2e8Eu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=c8EumnEf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=Ias7xT02qjvA6Q46i8QpCgnrMAd1WAgBwmqrMEvZ+AzewBNFkoCzKDMrGu+0T9fKnQGXnTt4knm6ALCth3Sr25sXN46rkSLZxC0aGvvIUg2aVQwEWVql+kiow6K0s5kJ9V2oo2L7StN+qogPa+yvqp0c/+qEj/u7nPdjrNvDtK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cUXbUuCh; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MaO2e8Eu";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="c8EumnEf"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6886LrdM2154211
-	for <sashiko-reviews@lists.linux.dev>; Tue, 8 Sep 2026 08:37:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xZTaGxO48p7y5EHqLgyxjGdy5PCz3+Tijey3+jZj03E=; b=MaO2e8Euaz4HQABZ
-	XziflilKhZc4V7K/gf1k3DWHnRL0CBpuu3X0xhzr1d4+5Sw5cNvq5jNeuJkLPXc+
-	xKI6MWA9yo7ETUl7aUhw9N2pNH1+GHhRBZvtLpSi4uFhzvJj2Ju///ehtNWYtNAy
-	A7FFAU59d3lklwK0juKifK/1043S5ggHydiLv2LwRVIeHhsaA3fhKkmIyAHDNpAq
-	z5pyensd1StF01VROFMJYF54DLwYYszIaRhOqJ50JnS7icwpa1EyUxIn95QUt8Qw
-	p7TdtCMFnTvgwf/XRPMRd5vZxVvffJ85d3/88PZH8cQj7uOxGbknFHJIrObzrRcB
-	eNvzww==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gj1rwjgxm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 08:37:49 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-92ec3146553so1041662785a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 01:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788856669; x=1789461469; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xZTaGxO48p7y5EHqLgyxjGdy5PCz3+Tijey3+jZj03E=;
-        b=c8EumnEfhdpf20PIh4KgseNDHSjhiVji/6WK5wIDx5u6SUN1xuiGg5Mp7LgKLvPHED
-         Du4zCA//TJV/jozFJ+seeCZyyGn2nNznm18Ctrx3z4gfVH0S9qVpq/4aLxlHoKATOir6
-         OGC7doFLriTsgzeNXRpycRVELyk2WgwNYvXP8HGFhUFHIxMOUcHSBKWtAOiUR0wxRooH
-         qd6jCNK904Sq1MSDb52IDf6hofXe4cGitN/+LMhkleXZ2DpEclAAQR+XmXYTtBAGbLIc
-         HGILEUpQDtDmsBcR80VizjQDokpG62tMjDFZ5uUaOWnYyBmGVZkD4Xltqp1bF9ZW69/8
-         68zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788856669; x=1789461469;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xZTaGxO48p7y5EHqLgyxjGdy5PCz3+Tijey3+jZj03E=;
-        b=M/L8RfeIH41K8y7jE1pIA4xpqrrgPsuIvay1b4t9exJFUQ/oq9/YsQdRG7cDoinLL2
-         Xpx40PU3w39kBPh9OU5uwtus2ZbkIL4SckGHFy6D+vsmKYwTP/xiMMNvAsyfC0RTxJ4S
-         i8mXbZWRPYeupSCjqnDMoAfJtR5sbBQ19+LfMxmSgMzAHhfdszgYSgGNiQMJFZB/UGRd
-         ZjLx0pbwtmZpeeTEp4+VL5z0zNiB7duFX7P/NlVgnXapyVtN9ZQSbfz3R/0/K8gO9PNA
-         pY262TA3bZjvOrrnU+FUMSAYne6dlQZR6cvHdoujF9hkUcuavXG6d+V0+BN0Y4UatxG1
-         9Hyg==
-X-Gm-Message-State: AFuF++lR0BFPb8ZEU7B6LUA3rJMm4A90IYpD95zsKbOxJEI3/jWR9zSk
-	vOYQKJg8Py7DA/meING13+OjINahGPhR5CVZsJmY/OzpR0RBJNmWusJAg0FAlz1iTYtl6XY4/GC
-	tPgG9LpS3h/1Z4r+pQru1TYCwhCBRS+Fplmfskgd3gnc5qXIysKVwCjLYcyhWoYyUO6tVtSObZB
-	tRGV0=
-X-Gm-Gg: AYBFou1yfrsB/1DxE/L67HhOLThqsyFUlHLJWDmJab0Xp7Adj8hWiA+SwgCsXxCBLlQ
-	tStU1U4KhFIrMc4Y/QXwXyPIAsI4SrPThxDovHXSIaSp1r1IjVOLEMFCyNjPnKor4GLf9UNffl1
-	Pt/oQTj1zEHbxvzZtkTrGDAFHl5Tx2615/tnWvHf15Zmc7WAplnIDpfuY4bdboJPlMSix3kZCgj
-	3D+3+xbU5kj0Y+Pdp891E/nKqpITJdxFy+Q8cSZxlSQ+Vgy1uYg6rvNhDI8lpPm3WF/wgZwt4fg
-	RPcBA6K1mlM1qG9l30cEb2WVtid6I0GwgtNFjALMbt6wL+0XMbH0jnvX45Y6ku5xm/A5MO6Zd2Y
-	CU+X742ZMQ1oTSqzrroHqEmD2JIuN
-X-Received: by 2002:a05:620a:25d4:b0:939:6df9:1996 with SMTP id af79cd13be357-9398077453bmr2891048385a.50.1788856668712;
-        Tue, 08 Sep 2026 01:37:48 -0700 (PDT)
-X-Received: by 2002:a05:620a:25d4:b0:939:6df9:1996 with SMTP id af79cd13be357-9398077453bmr2891046685a.50.1788856668327;
-        Tue, 08 Sep 2026 01:37:48 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.219.214])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c260d53c37csm563974466b.32.2026.09.08.01.37.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Sep 2026 01:37:47 -0700 (PDT)
-Message-ID: <c7d1d6f2-4c47-4259-abf8-fdec33a27f95@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 10:37:45 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cUXbUuCh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788857251; x=1820393251;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=1JSxNXEGXt1lmkdbK4pCt66pK7X1v1X7t2RxjMk7iY4=;
+  b=cUXbUuChzPrQDFl68f9uoIZHnXsMOAFCSLVcGVNiVbTrutnccvffZ4Wx
+   VlBE5O2e5HLAzmgDAgHmjAQGijsRVIxTbOs8Ji20L4adSMX1ORzKGCSIk
+   gq2wVH1y9Y/JMckgFYYX5xnjg7IhdnFUZbHBmX/9kYE3WL/QCy0FX46pN
+   esaJoK/eXzMI16YiB01Rzz3Ev03zyEq9F+8myWhYrJbfQq9MtXe8XUkhr
+   /FF1FAnaRvP05ijQG1uF+W3knwBS2otqutgJEx4D8aSqU0EXPKeg45xZc
+   0d0Xg3AwIBwg32TREsNe/XmJmwZ1XGOPHh9jYN8hXkbhj+dsr2liOZksh
+   Q==;
+X-CSE-ConnectionGUID: EDTrywKZSQ+U+aGWiz0eyQ==
+X-CSE-MsgGUID: wLYZqXZJTcGjX96cQUoG0w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="114792465"
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="114792465"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 01:47:30 -0700
+X-CSE-ConnectionGUID: GlPXsIsFQ7e2PhgF684lHg==
+X-CSE-MsgGUID: jpEjmzgDQRupJyk7JqO6bQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="268359945"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 01:47:29 -0700
+Message-ID: <b6e12162-afca-454d-aeab-840d531f47d8@linux.intel.com>
+Date: Tue, 8 Sep 2026 16:47:27 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -88,59 +52,141 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] drm/msm/hdmi: Handle msm_hdmi_power_on() errors
- during .atomic_pre_enable()
+Subject: Re: [PATCH 2/2] perf/x86: Disable precise sampling for
+ PERF_SAMPLE_STACK_USER
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-References: <20260908-drm-msm-hdmi-fixes-before-eliza-v3-0-dcf8956878ca@oss.qualcomm.com>
- <20260908-drm-msm-hdmi-fixes-before-eliza-v3-2-dcf8956878ca@oss.qualcomm.com>
- <20260908072546.645FF1F00A3A@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260908075102.540715-1-dapeng1.mi@linux.intel.com>
+ <20260908075102.540715-2-dapeng1.mi@linux.intel.com>
+ <20260908081501.8428A1F00A3A@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260908072546.645FF1F00A3A@smtp.kernel.org>
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260908081501.8428A1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Ga8nWwXL c=1 sm=1 tr=0 ts=6a9fc95d cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=dYODrq4-AUaYJTIoUJAA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA5MCBTYWx0ZWRfXy/pIamiySvtB
- R4SFDdW0uIKUoszheit+OYVp14M0xO9KtR9RM2YDqIJb8z+GKlVtWApnq+GnjwE7g6oo3PXAfzO
- /48fW3qpxOQUB9AsY2gqQ6MSLrv1FdPAfdorGi7DWVL5EsXRmaghqC+k8A2q86g23maVKLZAYMZ
- RkVe3IVKdcYfVrXZ9Fz5q6aakRPsN0G5OrEdjyDSR39Uv8Fa534nwvIq8zEeM89GV1kE+CyxAOe
- WQHCTGOZptH8JYt/c0DpmaDs0jPGB3oPRCviU6UZtTMvZ92iZ6z7sAT0EvxArguYKpOJ8qZIV5r
- z2jyfCpsArTNG3LAhLnu5tPrH2XTjv5zCZQv6q/JPC8jeuD1Y/eChwrhhc/GczG0mpYXGajFP7O
- SQy9hPPWCmqE4IajtohyCR1O4YzRP5WG86r25JBo/AzcbJI09VhfSCRe/qxKv/f5luE/0CXnxmd
- TVg8H8DPORRlmS8u5Eg==
-X-Proofpoint-ORIG-GUID: 95x9ou1ntRTIWj9tvxpJMTPpfrafiKxt
-X-Proofpoint-GUID: 95x9ou1ntRTIWj9tvxpJMTPpfrafiKxt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA5MCBTYWx0ZWRfX7VYRZ6yS9oMI
- 1CXhfCxZMWj/RdYPett87N8ustrAx713LkUJMk+CiBecqaZG9TPgjZeFOkln6jimHxD0JRb1B5j
- ZPcTtPc+VYc7SklGvp+p21LSCYLWz/w=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080090
-
-On 08/09/2026 09:25, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Aborting `atomic_pre_enable()` on power-on failure guarantees an imprecise abort (system crash) in `atomic_post_disable()` due to unconditional accesses to unpowered PHY and HDMI controller registers.
-
-Pre existing issue really.
+Content-Transfer-Encoding: 8bit
 
 
-> 
-> Pre-existing issues:
-> - [High] Unclocked MMIO access in `msm_hdmi_set_timings()` before the HDMI PM runtime is resumed.
+On 9/8/2026 4:15 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] ABI Breakage / Overly Broad Restriction on Precise Sampling with User Stacks
 > --
-Best regards,
-Krzysztof
+>
+> commit 4f30379fa3ce88165bf1e61c1c825c26d5810b23
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf/x86: Disable precise sampling for PERF_SAMPLE_STACK_USER
+>
+> This commit disables precise sampling (PEBS/IBS) when PERF_SAMPLE_STACK_USER
+> is requested. It attempts to prevent DWARF unwinding failures caused by skid
+> between the PEBS/IBS register snapshot and the user stack at PMI return.
+>
+> Closes: https://lore.kernel.org/all/CAPu-DQqF0aF6=GS8Z6KKWeeX_V5LiXeKU_rJQZC+uGg8zuTPNw@mail.gmail.com/
+> Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
+>
+>> diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+>> index 3531f9c23b8c9..c67b659d64e2a 100644
+>> --- a/arch/x86/events/amd/ibs.c
+>> +++ b/arch/x86/events/amd/ibs.c
+>> @@ -327,6 +327,9 @@ static int perf_ibs_init(struct perf_event *event)
+>>  	if (has_branch_stack(event))
+>>  		return -EOPNOTSUPP;
+>>  
+>> +	if (!x86_pmu_allow_sample_user_stack(event, true))
+>> +		return -EINVAL;
+> [Severity: High]
+> Does this change unconditionally reject AMD IBS events when user stacks are
+> requested, since the second parameter is hardcoded to true?
+>
+> Returning -EINVAL to sys_perf_event_open for configurations that were
+> previously valid breaks backward compatibility. Userspace applications
+> relying on AMD IBS with PERF_SAMPLE_STACK_USER might now fail unexpectedly.
+
+I'm not an IBS expert, but it looks there are two ways to trigger IBS
+sampling, one is to set the precise_ip to 1, just like PEBS, the other is
+directly to create IBS events. Both of these 2 cases should be disabled to
+sample user stack, otherwise returned user stack and IP would be
+inconsistent and break DWARF unwinding. So only PMI-based user stack
+sampling is allowed.
+
+
+>
+>> +
+>>  	/* handle exclude_{user,kernel} in the IRQ handler */
+>>  	if (event->attr.exclude_host || event->attr.exclude_guest ||
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index d1af33d96d0a3..a26ea8baea731 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+>> @@ -596,6 +596,9 @@ int x86_pmu_hw_config(struct perf_event *event)
+>>  		/* There's no sense in having PEBS for non sampling events: */
+>>  		if (!is_sampling_event(event))
+>>  			return -EINVAL;
+>> +
+>> +		if (!x86_pmu_allow_sample_user_stack(event, false))
+>> +			return -EINVAL;
+> [Severity: High]
+> Can this break existing perf setups for Intel PEBS events?
+>
+> Tools issuing commands like perf record -e cycles:pp --call-graph dwarf
+> rely on precise_ip and PERF_SAMPLE_STACK_USER. Rejecting this setup with
+> -EINVAL prevents previously accepted workflows from functioning.
+
+Yes, but it seems there is no better way to fix this issue. An alternative
+way to fix this issue is still to return the PMI context register state
+rather than the PEBS precise registers for user stack sampling, but this
+actually falls back the imprecise PMI-based sampling. This even make the
+thing worse, user requires to get precise samplings, but perf silently
+returns imprecise records, this would mislead user. 
+
+
+>
+>>  	}
+>>  	/*
+>> diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
+>> index eae24bb35dc14..ca52597cc39a1 100644
+>> --- a/arch/x86/events/perf_event.h
+>> +++ b/arch/x86/events/perf_event.h
+> [ ... ]
+>
+>> @@ -1273,6 +1273,25 @@ static inline bool is_counter_pair(struct hw_perf_event *hwc)
+>>  	return hwc->flags & PERF_X86_EVENT_PAIR;
+>>  }
+>>  
+>> +static inline bool
+>> +x86_pmu_allow_sample_user_stack(struct perf_event *event, bool ibs)
+>> +{
+>> +	if (!(event->attr.sample_type & PERF_SAMPLE_STACK_USER))
+>> +		return true;
+>> +
+>> +	/*
+>> +	 * PERF_SAMPLE_STACK_USER needs to return the user stack and
+>> +	 * user registers to user space when the PMI exits. Since the skid
+>> +	 * from the PEBS/IBS sample and PMI delivery, the PEBS/IBS register
+>> +	 * snapshot (especially IP/SP/BP) can diverge from the user stack
+>> +	 * at PMI return. That mismatch breaks DWARF unwinding.
+>> +	 *
+>> +	 * Therefore, disable precise sampling for PERF_SAMPLE_STACK_USER
+>> +	 * and permit only PMI-based sampling for this case.
+>> +	 */
+>> +	return !(event->attr.precise_ip || ibs);
+> [Severity: High]
+> Is the assumption about skid accurate for kernel-space profiling?
+
+No, the skid happens on from the PEBS/IBS record generation between PMI
+delivery. The skid is inevitable and would lead to inconsistency between
+PEBS/IBS register snapshot and user stack.
+
+Thanks.
+
+
+>
+> When profiling a syscall or with exclude_user=1, the user-space stack and
+> registers are frozen upon kernel entry, meaning there is zero skid between
+> them. 
+>
+> By unconditionally banning precise sampling with user stacks, does this
+> unintentionally prevent the valid use-case of precisely profiling kernel
+> events while still capturing accurate user callgraphs?
+>
+>> +}
+>> +
