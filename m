@@ -1,36 +1,30 @@
-Received: from mta1.migadu.com (out-163.mta1.migadu.com [95.215.58.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC3A52ED2C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 11:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3FD4CA793
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 11:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788866907; cv=none; b=IBCa6DQS4mWREVW0zUWd8apKcQfu52M/0JByuUdborEUSzoXhDIFvxqG2r34f0yJzXawwx4D+mq20x8LsQanpP9AoyXQM37sY35B6yOgK/osrmdjFk/cSk/y42EepWkuZt84je+uroYA4AUkbx8PTKwlyXrM2VxN0YKZAW1qNNI=
+	t=1788867133; cv=none; b=bLnvygyk3PlABiD3m8vt0ZdDhJB2cnHL4+uTriJ3qZf1Xnz0S5Dk5EDfU6gf/VCW9L4kJE6O0ozGveO/x17HpIkh8rUqp9fpEK2/QlNRGF3K/yHWbmjAab7zGFnic0MhTqjk/HFyl3OLmz8PAbkqySxYtLyQjw6qt4y8BSSaXZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788866907; c=relaxed/simple;
-	bh=fAhkWbsPjSJ37MAF4sRRX1jqmnl1njf/zk439tgUIco=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DS4yn+CpEyZaHHCRYyMhn1gEu5iFvgS7r/7GOXy+4EFZdwH8VarHyt4Mph1AvLXSEvQlVw9to1ByFAdubveZE/GJvswqHziLGaEEijnk5MGyj5RjwaecEMp51AbPbLgMIxTyNPyxsYiNLMDasSy+DDY4CGXt4XUCqvBVsZd9FLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IyNMS0fe; arc=none smtp.client-ip=95.215.58.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IyNMS0fe"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=fAhkWbsPjSJ37MAF4sRRX1jqmnl1njf/zk439tgUIco=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788866894; v=1; x=1789471694;
- b=IyNMS0fefNhlwxJoyRKbqB5Pj1q5EmWVK+7NR1OIthKmwU3PXhbNmgHzeIlo071UBNT4A6wH
- YPnLTVONOsGi9ZIZ/HPpmMPqeNJ75p7XG0zif8KJAHo4J/daYT4lrOnIhZCaLAhVA2iHu1p//X3
- /nqwtCJtmxwWapamReoUfv8k=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id cf2611976bfe62d2;
-	Tue, 08 Sep 2026 11:28:14 +0000
-X-Mizu-Trace-ID: cf2611976bfe62d2
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <77c43306-ae89-4919-b7cf-9188165bfbb7@linux.dev>
-Date: Tue, 8 Sep 2026 19:28:06 +0800
+	s=arc-20240116; t=1788867133; c=relaxed/simple;
+	bh=BXh1jfGOwSSYqVSb/qoSkujtFkL+BLzfJuZyEeMqsnY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UqUzcxZ87+/vksiaxY1Qyb6u7ZLAHjfFtgNO1+H09rL6Psdcd+svXsz5+yrMLcoBdxHoUAb/z+xBmOQ5tx50QAt4IPmszHgOGDDIU/FnNa3VNZHVi/XYuGCMLOq1oSCfCiZFSDeZtOfcDo3GKZ46deTAwZW/Eg4a5XzHMPJnsWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hfMGY5Tp8zKHMc8
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 19:31:49 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 0556640561
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 19:31:51 +0800 (CST)
+Received: from [10.174.178.253] (unknown [10.174.178.253])
+	by APP1 (Coremail) with UTF8SMTPSA id cCh0CgDnzwol8p9qcvfQBA--.59919S3;
+	Tue, 08 Sep 2026 19:31:50 +0800 (CST)
+Message-ID: <0ba6970a-6203-45db-8837-17bb54b2fb8b@huaweicloud.com>
+Date: Tue, 8 Sep 2026 19:31:49 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,133 +32,117 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
-Subject: Re: [PATCH 1/4] blk-iocost: charge flushes as pageless random writes
+Subject: Re: [PATCH v6 03/31] ext4: skip ordered I/O wait when zeroing beyond
+ i_disksize block
 To: sashiko-reviews@lists.linux.dev
-References: <20260908022135.1429281-1-cui.tao@linux.dev>
- <20260908022135.1429281-2-cui.tao@linux.dev>
- <20260908023455.786E01F00A3A@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260908023455.786E01F00A3A@smtp.kernel.org>
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org,
+ Ojaswin Mujoo <ojaswin@linux.ibm.com>
+References: <20260903123543.2302999-1-yi.zhang@huaweicloud.com>
+ <20260903123543.2302999-4-yi.zhang@huaweicloud.com>
+ <20260903131452.4F8131F00ACA@smtp.kernel.org>
+Content-Language: en-US
+From: Zhang Yi <yi.zhang@huaweicloud.com>
+In-Reply-To: <20260903131452.4F8131F00ACA@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:cCh0CgDnzwol8p9qcvfQBA--.59919S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykuFy8ZFW7tw45Kr45ZFb_yoWrJFW7p3
+	yUGFyDAF4kJ34F9rn2g340qF1j9ws5Ga13Ga4qgr4qvrW5u3W0kFn7tFyavFWjkrs5J3Wj
+	qF4qvrZ7Aa4qk3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2
+	j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7x
+	kEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+	JVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
+	kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
+	6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+	vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2Kfnx
+	nUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: d1lo6xhdqjqx5xdzvxpfor3voofrz/
 
-
-
-在 2026/9/8 10:34, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Charging dataless flushes disrupts the cgroup's sequential IO detection by erroneously updating the IO stream cursor.
-> 
-> Pre-existing issues:
-> - [High] Unthrottled REQ_OP_DISCARD and REQ_OP_WRITE_ZEROES operations allow cgroups to bypass iocost limits and monopolize the block device.
+On 9/3/2026 9:14 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Skipping ordered I/O wait based on an unstabilized `i_disksize` allows stale data exposure due to a race with concurrent writeback and mmap.
 > --
 > 
-> commit f7f33b205abe22d686461a97d252f89e87ee7d72
-> Author: Tao Cui <cuitao@kylinos.cn>
+> commit 9f1f97ff9aa74fccfe7305cebcde6a641f847ab5
+> Author: Zhang Yi <yi.zhang@huawei.com>
 > 
->     blk-iocost: charge flushes as pageless random writes
->     
->     Standalone flushes issued by blkdev_issue_flush() are represented as
->     dataless REQ_OP_WRITE | REQ_PREFLUSH bios, which
->     calc_vtime_cost_builtin() prices at zero.  The flush component of
->     flush-heavy workloads such as database commits, journal flushes, and
->     metadata sync is thus neither charged nor throttled: a cgroup at 1% weight
->     can issue ~510k flushes per 12s, monopolizing the device while iocost
->     reports zero usage.
+> ext4: skip ordered I/O wait when zeroing beyond i_disksize block
 > 
->> diff --git a/block/blk-iocost.c b/block/blk-iocost.c
->> index 2745bffcd5eef..abc512532ed95 100644
->> --- a/block/blk-iocost.c
->> +++ b/block/blk-iocost.c
->> @@ -2533,8 +2533,8 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
->>  	u64 seek_pages = 0;
->>  	u64 cost = 0;
->>  
->> -	/* Can't calculate cost for empty bio */
->> -	if (!bio->bi_iter.bi_size)
->> +	/* Dataless WRITE|REQ_PREFLUSH (standalone flush) is priced below */
->> +	if (!bio->bi_iter.bi_size && !(bio->bi_opf & REQ_PREFLUSH))
->>  		goto out;
->>  
->>  	switch (bio_op(bio)) {
->> @@ -2544,6 +2544,15 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
->>  		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
->>  		break;
->>  	case REQ_OP_WRITE:
->> +		if (!bio->bi_iter.bi_size) {
->> +			/*
->> +			 * dataless WRITE|REQ_PREFLUSH: standalone flush;
->> +			 * at least one page so fast profiles still charge
->> +			 */
->> +			cost = max(ioc->params.lcoefs[LCOEF_WRANDIO],
->> +				   ioc->params.lcoefs[LCOEF_WPAGE]);
->> +			goto out;
->> +		}
+> ext4_block_zero_eof() zeros the tail of a partial block beyond EOF.
+> After zeroing, it waits for ordered I/O completion to prevent stale
+> data exposure from concurrent post-EOF mmap writes during folio
+> writeback.
+> 
+> However, if the zeroed range lies entirely beyond the block containing
+> i_disksize, no stale data can be exposed because the zeroed region is
+> beyond existing on-disk data. The zeroed pages will be written out
+> before i_disksize is later extended past i_size, so the ordered I/O
+> wait is unnecessary. Add a condition to skip it.
+> 
+>> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+>> index d0ccafa554f8d..339ebd553959b 100644
+>> --- a/fs/ext4/inode.c
+>> +++ b/fs/ext4/inode.c
+>> @@ -4241,9 +4241,22 @@ int ext4_block_zero_eof(struct inode *inode, loff_t from, loff_t end)
+> 
+> [ ... ]
+> 
+>> +	 * Note that it's safe to read i_disksize without holding i_data_sem
+>> +	 * here. Since we already hold i_rwsem, the only possible race is with
+>> +	 * concurrent writeback that updates i_disksize. And if such a race
+>> +	 * occurs, it means the previous unaligned EOF block has already been
+>> +	 * zeroed (if needed) and persisted to disk.
+>>  	 */
+>>  	if (ext4_should_order_data(inode) &&
+>> -	    did_zero && zero_written && !IS_DAX(inode)) {
+>> +	    did_zero && zero_written && !IS_DAX(inode) &&
+>> +	    from < round_up(READ_ONCE(EXT4_I(inode)->i_disksize), blocksize)) {
 > 
 > [Severity: High]
-> Does charging dataless flushes disrupt the cgroup's sequential IO detection?
+> Does this condition rely on an unstabilized i_disksize to skip the ordered
+> I/O wait, creating a window where in-flight writeback IO can leak stale data
+> upon a crash?
 > 
-> Because this patch changes the flush's cost from zero to non-zero,
-> ioc_rqos_throttle() will no longer early return for dataless flushes:
+> If a file has a delayed allocated block at the end, its on-disk size
+> (i_disksize) could be lagging (e.g., 0). If the user mmaps the file and
+> writes data past EOF into the page cache, delayed allocation writeback can
+> begin, allocating the block and formatting a BIO with the user's stale
+> post-EOF data.
 > 
-> block/blk-iocost.c:ioc_rqos_throttle() {
->     ...
-> 	abs_cost = calc_vtime_cost(bio, iocg, false);
-> 	if (!abs_cost)
-> 		return;
->     ...
-> 	iocg->cursor = bio_end_sector(bio);
->     ...
-> }
+> Concurrently, if a truncate operation extends the file (truncate up), it
+> calls ext4_block_zero_eof(), which zeroes the page cache tail and marks it
+> dirty. However, because READ_ONCE(EXT4_I(inode)->i_disksize) is 0, the
+> check evaluates to false.
 > 
-> The cursor is erroneously updated with the dataless flush's sector.
-> Depending on the flush's sector (often 0, or a metadata sector), subsequent
-> IOs could be misclassified as sequential (undercharging them) or random
-> (overcharging and unfairly throttling them), breaking detection for workloads
-> that interleave flushes and data.
+> This incorrectly skips ext4_jbd2_inode_add_write(), failing to add the
+> newly zeroed data to the ordered data list. The truncate operation then
+> sets i_disksize to the new size and commits the transaction, waiting only
+> for the first BIO (containing the stale data), not the zeroes.
 > 
+> If a crash occurs, upon recovery, the on-disk block would contain the stale
+> data because the transaction committed the new i_disksize without waiting
+> for the zeroed page cache to be written.
+> 
+> Note that this issue does not appear to be resolved by follow-up patches in
+> the series. While commit "ext4: set DISKSIZE_GROW_PENDING after zeroing
+> unaligned EOF block" introduces ext4_iomap_mark_disksize_pending() which
+> safely waits for writeback, it is placed inside the exact same flawed
+> condition branch, meaning the wait is still bypassed.
 
-Right, this is a real problem. With this change standalone flushes
-pass the !abs_cost check in ioc_rqos_throttle() and update
-iocg->cursor with the flush's sector (usually 0). That breaks the
-sequential/random detection for the following IOs, and cursor == 0
-also defeats the !iocg->cursor sentinel in calc_vtime_cost_builtin().
+I think the concurrency scenario that Sashiko mentioned does exist, so it
+looks like we'll have to abandon this optimization.
 
-The cost calculation itself is fine (the dataless branch exits before
-the seek computation), so the fix is simply:
-
--	iocg->cursor = bio_end_sector(bio);
-+	if (bio->bi_iter.bi_size)
-+		iocg->cursor = bio_end_sector(bio);
-
-Will fix in v2.
+Thanks,
+Yi.
 
 > 
-> [Severity: High]
-> This is a pre-existing issue, but do unthrottled REQ_OP_DISCARD and
-> REQ_OP_WRITE_ZEROES operations allow cgroups to bypass iocost limits?
-> 
-> Unrecognized operations like DISCARD and WRITE_ZEROES fall through to the
-> default case in calc_vtime_cost_builtin():
-> 
-> block/blk-iocost.c:calc_vtime_cost_builtin() {
->     ...
-> 	default:
-> 		goto out;
-> 	}
->     ...
-> out:
-> 	*costp = cost;
-> }
-> 
-> These operations are assigned a cost of 0, bypassing cgroup IO throttling.
-> A cgroup could issue massive amounts of discards or zero-writes, monopolizing
-> the device and causing a Denial of Service for other cgroups.
-> 
->>  		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
->>  		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
->>  		coef_page	= ioc->params.lcoefs[LCOEF_WPAGE];
+>>  		handle_t *handle;
+>>  
+>>  		handle = ext4_journal_start(inode, EXT4_HT_MISC, 1);
 > 
 
