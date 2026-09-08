@@ -1,143 +1,132 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26DF28B4FD
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 09:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EFE51E42E
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 09:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788859375; cv=none; b=CNZBJ+tYsbBzqy1NQIF8AVzBhWNx/6yNaJ88SXB3SGaAzPDSzCYG7zRA6Ng4sc7UN1N/PiHnL4+fqf8WyQDo9zjGUk1QaDalpz0UjecYWfVbiVvRZQP6IjdnMkv3mQWbNLFcqVmb0a8v/IaxQbuFrGgE4/fJpS8ZXN13ZJRHjnw=
+	t=1788860144; cv=none; b=kQQ8JkSZzGit8/ITfTuCJrXVTmIZIgUmUdJ+HRhdrHPVXzdUVgsyPB0/CU/SRtNRqTdEH07SNlcifUy6FF4JVwvb70TzOLgO+CpwDldFYsWrb7MHmTnqLCWutqFGpiWRfAXAIuzXzcIpJazxzS+qZdCwi9LDwVf1Emso3oQIG+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788859375; c=relaxed/simple;
-	bh=1apIKh8Ks9mrzDwtPNNRfhQUZwp3S8I3WC3jqSS1hnk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g+lJlY1mEEThRqRhd2eDtdXgmygrJWCsZul0ygNgQev9boblDwShf9cWDTMhpqzooLGwW8oCTl4qTjm2a2g4jyhu5lTSFACx4G0BSdRn3UNqfBAK/tFUosGbC+Aw7orLqVmd+ohsUmcvljUikdSmk+Bbbwgf9htqZg12ldP3N54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=fybd3Zbt; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1788860144; c=relaxed/simple;
+	bh=un38TU5iL/8xw2SNYVpohqlgfR9Mr+SbV4IeIeITIAk=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=F+Hf/Y0uSkgAwXxZq0DZzEut4mLZvKE2gdRpETPaQnaettLL3F8l9v+a4SRhEPb1hL6qKLEjdFiwUL5AhEX1WG8H211iD5RNzUKshMNG8REnd7DDY3ChrHMMBpuCJ4CAJuczcct5V63EmFay/ENyzOeJbCnOolUwZksEVrBbgNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kTED3/vn; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="fybd3Zbt"
-Received: by dvalin.narfation.org (Postfix) id 9A1AF1FDF9;
-	Tue, 08 Sep 2026 09:22:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1788859361;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MJfe2botLpNXpBQV/iLJ4svwvnbdximPHO4ZhVfimo4=;
-	b=fybd3ZbtboEUCgmUh9isseRK1wFdyz7fTox7Vx2ItzdxeKqI8lcbYHDDrGo6RGKexlEWLN
-	7lLUB4eciscLJFxGfg7fQrNOI5m/5WiFuRNOhZmQLtcEN3DMwPhJqKMubNW/zb6et7LA3Q
-	iAGrkYyOJVJuH+P66RbSgqnbpo9NmT8=
-From: Sven Eckelmann <sven@narfation.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sw@simonwunderlich.de, antonio@mandelbit.com, marek.lindner@mailbox.org,
- netdev@vger.kernel.org
-Subject:
- Re: [PATCH net-next 08/15] batman-adv: tt: replace add_orig_entry goto in
- batadv_tt_global_add()
-Date: Tue, 08 Sep 2026 11:22:33 +0200
-Message-ID: <2363912.iZASKD2KPV@ripper>
-In-Reply-To: <20260908082701.B6CCD1F00A3A@smtp.kernel.org>
-References:
- <20260907081824.2474040-1-sw@simonwunderlich.de>
- <20260907081824.2474040-9-sw@simonwunderlich.de>
- <20260908082701.B6CCD1F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kTED3/vn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788860142; x=1820396142;
+  h=mime-version:content-transfer-encoding:in-reply-to:
+   references:subject:from:cc:to:date:message-id;
+  bh=un38TU5iL/8xw2SNYVpohqlgfR9Mr+SbV4IeIeITIAk=;
+  b=kTED3/vng0DR8yh+7X58ypucHHhCTN1QQ4fdBJ9sloQPBdV72zIQSdtU
+   pfpAMJ6R/oOhE6mufLZtyG9LeQ+SKbRyd78cXk+SKTA3XydV1hbwo49ij
+   1OmYDLmsub+fybRdq1+DjrDL/cYp/3GgAxXrCVc6BXsANFUQZ9pB8I3HO
+   oWpTeAx9g96aLXoGjRMriswNRhXh2tway1dVRWi5RE6KPcD/enIcRfLky
+   Nce9Cd3T1KNKhsVmiOoUzlogHtZJJzsHMviDQmHHB/omIbg5uQwoPcozw
+   vPX/GcAiGHOwlblq94y8k2awMETF3/ZIIuC5ED/54i2/EneWNmyySH0UU
+   Q==;
+X-CSE-ConnectionGUID: 7C75IDBjRKulVxJ/Se2aKA==
+X-CSE-MsgGUID: Tq6WSL0sTiqUcrvY8bKcqA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="93076554"
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="93076554"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 02:35:41 -0700
+X-CSE-ConnectionGUID: jP9OETxiReufgnyk3/G7hw==
+X-CSE-MsgGUID: Fdfuh+8pRZSB3O0a8FT52A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="264745324"
+Received: from kniemiec-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.124])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 02:35:39 -0700
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart2050689.PYKUYFuaPT";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260903154646.687761F000E9@smtp.kernel.org>
+References: <20260903145952.848051-1-mika.kuoppala@linux.intel.com> <20260903145952.848051-28-mika.kuoppala@linux.intel.com> <20260903154646.687761F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v10 27/27] drm/xe/eudebug: Enable EU pagefault handling
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: intel-xe@lists.freedesktop.org
+To: Mika Kuoppala <mika.kuoppala@linux.intel.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
+Date: Tue, 08 Sep 2026 12:35:36 +0300
+Message-ID: <178886013688.31673.13515073284471668217@jlahtine-mobl>
+User-Agent: alot/0.13.dev2+g40c57d620
 
---nextPart2050689.PYKUYFuaPT
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
-To: sashiko-reviews@lists.linux.dev
-Date: Tue, 08 Sep 2026 11:22:33 +0200
-Message-ID: <2363912.iZASKD2KPV@ripper>
-In-Reply-To: <20260908082701.B6CCD1F00A3A@smtp.kernel.org>
-MIME-Version: 1.0
-
-On Tuesday, 8 September 2026 10:27:01 CEST sashiko-bot@kernel.org wrote:
-[...]
-> This commit refactors batadv_tt_global_add() by removing the add_orig_entry
-> label and turning the flag merging and list purging logic into a more
-> direct if/else structure.
-> 
-> > diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-> > index 67e4ade5ae997..760acc7be973e 100644
-> > --- a/net/batman-adv/translation-table.c
-> > +++ b/net/batman-adv/translation-table.c
-> > @@ -2021,15 +2021,16 @@ static bool batadv_tt_global_add(struct batadv_priv *bat_priv,
-> >  			if (batadv_tt_global_entry_has_orig(tt_global_entry,
-> >  							    orig_node, NULL))
-> >  				goto out_remove;
-> > -			batadv_tt_global_del_orig_list(tt_global_entry);
-> > -			goto add_orig_entry;
-> > +
-> > +			delete = true;
-> > +		} else {
-> > +			delete = batadv_tt_global_merge_flags(tt_global_entry, flags);
-> >  		}
-> >  
-> > -		delete = batadv_tt_global_merge_flags(tt_global_entry, flags);
-> >  		if (delete)
-> >  			batadv_tt_global_del_orig_list(tt_global_entry);
-> 
+Quoting sashiko-bot@kernel.org (2026-09-03 18:46:45)
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [High] Temporary NULL VMAs for subsequent eudebug pagefaults are destro=
+yed immediately after ACKing the fault, creating a race condition that lead=
+s to livelock.
+> - [High] Successful SVM pagefaults bypass private tagging, which permanen=
+tly stalls the finalization of the active eudebug session.
+> - [High] Pagefault cache hits bypass eudebug tagging, permanently hanging=
+ the debugger session.
+> - [High] `xe_vm_svm_vma_subtract()` is called with unaligned address boun=
+daries, corrupting the VM layout.
+> --
+>=20
+> commit bd171058301961cced31067feb0527d9f0b38c87
+> Author: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+>=20
+> drm/xe/eudebug: Enable EU pagefault handling
+>=20
+> This commit enables EU pagefault handling for XE2/PVC hardware, allowing
+> the driver to unhalt pagefaulted EU threads via SIP mode and a temporary
+> null page.
+>=20
+> > diff --git a/drivers/gpu/drm/xe/xe_guc_pagefault.c b/drivers/gpu/drm/xe=
+/xe_guc_pagefault.c
+> > --- a/drivers/gpu/drm/xe/xe_guc_pagefault.c
+> > +++ b/drivers/gpu/drm/xe/xe_guc_pagefault.c
+> > @@ -59,13 +60,14 @@ static void guc_ack_fault(struct xe_pagefault *pf, =
+int err)
+> >                             write_only);
+> >  }
+> > =20
+> > -static void guc_ack_fault_end(void *private)
+> > +static void guc_ack_fault_end(void *private, int err)
+> >  {
+> > -     struct xe_guc *guc =3D private;
+> > +     struct xe_guc *guc =3D xe_eudebug_pagefault_get_private(private);
+> > =20
+> >       if ((guc->pagefault_ack_counter & (XE_GUC_PAGEFAULT_FLUSH_PERIOD =
+- 1)) !=3D 1)
+> >               xe_guc_ct_send_flush(&guc->ct);
+> >       xe_guc_ct_unlock(&guc->ct);
+> > +     xe_eudebug_pagefault_end(private, err);
+>=20
 > [Severity: High]
-> This is a pre-existing issue, but this patch preserves and refactors the
-> vulnerable code structure without resolving an underlying race condition.
-> 
-> Could this lead to a Time-of-Check to Time-of-Use race that permanently
-> drops a valid originator from the global translation table? 
-> 
-> For example, if two CPUs concurrently execute batadv_tt_global_add() for the
-> same translation table entry:
-> 
-> CPU 0 (adding a temporary client):
-> Evaluates global_flags without locking and sets delete = true.
-> 
-> CPU 1 (adding a non-temporary client):
-> Merges its non-temporary flags, clears the TEMP flag, purges the list, and
-> adds its non-temporary originator.
-> 
-> CPU 0 (resuming based on its stale delete snapshot):
-> Incorrectly purges CPU 1's newly added non-temporary originator and adds
-> its own temporary one.
-> 
-> Because the TEMP flag was cleared by CPU 1, the entry might never timeout or
-> update correctly, potentially causing a permanent routing blackhole for the
-> affected client.
-> 
-> A similar race appears to exist between two non-temporary additions. If CPU 1
-> is preempted after batadv_tt_global_merge_flags() returns true, CPU 2 might
-> return false from the merge and add its originator. When CPU 1 resumes, it
-> would purge CPU 2's originator based on the stale delete boolean.
-> 
-> Is additional synchronization needed around the delete decision and the list
-> purging to prevent these concurrent additions from stepping on each other?
+> Does this create a race condition that leads to a livelock?=20
+>=20
+> When this calls xe_eudebug_pagefault_end(), temporary null VMAs for
+> subsequent pagefaults are destroyed immediately (destroy_pf =3D 1) after
+> ACKing the fault and signaling the hardware to resume.=20
+>=20
+> Since there is no synchronization to guarantee the EU thread has re-execu=
+ted=20
+> the faulting instruction before the KMD unbinds the VMA, if the VMA is
+> unbound before the EU thread accesses the address, won't the thread
+> pagefault again on the same instruction and loop infinitely?
 
-Same as last time: https://www.open-mesh.org/issues/474
+There's no re-execute of the faulting instruction. The thread is blocked
+waiting for the PF to resolve. We resolve it by mapping a NULL page
+(which will discard writes and read zeroes), once that PF reply is sent,
+the blocked thread steps to next instruction. Due to also setting the HW
+to interrupt on next instruction for all threads before resolving the PF,
+the non-impacted threads will have entered the system routine before
+resolving the PF and only the PF impacted threads will be blocked by HW
+due to the PF and then ultimately enter the system routine on IP+1 after
+we resolve the PF. So there is no re-execute of command on IP, and no
+infinite loop.
 
-Regards,
-	Sven
-
---nextPart2050689.PYKUYFuaPT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCap/T2QAKCRBND3cr0xT1
-y6MKAQCWzFsvFCpWrH4kYzOiaVsSkxqGmALtWAjME+/t7TWbOAD9FVZT0nWLfOfi
-6ntXynFlwQgz2Xj+UZgdLgWaTNdrPgg=
-=wakH
------END PGP SIGNATURE-----
-
---nextPart2050689.PYKUYFuaPT--
-
-
-
+Regards, Joonas
