@@ -1,161 +1,153 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5D59C970
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 18:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43282598C01;
+	Tue,  8 Sep 2026 18:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788893830; cv=none; b=nO2cAQmMl6WhZeLoZPGLlovw0gxq4WvsHRr5OI7P/J8ez88FBTPmMpPoFCvfqcJFueEvHqGaPoDATv3V2axf/DzRlUidRTpTJmLYnYgzpClT/qQHCLy8Qajx43ysHBvlHC7A6dcjAnW+rE+P6XwRvpKWzJDpeJQKpdNd/T8QyYo=
+	t=1788893912; cv=none; b=Guh84iw0yEaVbFRrHtVEoCI7rKy+n0/2HMEVe+2FNwTqJIUXdxTbb9gkS1jZN8mO6kyqow/5FIU687r3wufwer+Ugf89kqAHSTsDlpM6BpC3hR1t4fS+niBQ0Y47m3K9JW39sB/iMjp2E2TcfTVHO/dCTwhJIMOs51fsCTC/aCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788893830; c=relaxed/simple;
-	bh=soEfeC9qUxvkfN6UEt9aQdcQ/wR4lPrN68Y2ziKQ2M4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=btC7SPFNXb96zoKlyx8HWAfUhUIjOU9FL8KLLW+keduV1P6jl9nU3ymPon6R8GPVaaG79OFEl1qqU9isbebkkrJnMXNEYbvVf2ug2XYapARySDVPBqWq4NgKc6H8Xfx6ljHxckauIUTn052YXGZCF5AtlLHCX9Zow/B6aQ5sUgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiJI5I7P; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788893912; c=relaxed/simple;
+	bh=y2y7T3KAoKP/KyE/uDm2tpyR/IuJRDUtV20f/glc+I0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YLisqI6Nh03CvqL+4htDpWS+tNAxBrZgq4PYBFOojCBcyixlH4cF4+AHkXiRpppomYear+W1guMcEzqvpbuZ7HMAYgHWL9iJtUIiO1NmEANOrywle5u+dvNnp61Le9RZATvmWtIn6lC8E1Vq5nWfyfHkuOPpuEgxEQCN3RRYnPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=ju0/yovn; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiJI5I7P"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3a472ff39d4so24331281fa.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 11:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788893827; x=1789498627; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dPAv9/DNHgYvkBswgfcYE+/SWcKiJRn1AWqpJM/JUGk=;
-        b=SiJI5I7PX9bRtVr6hR7NUifRKo/lHeRcGeRBuNN704UMH5scce+WmyJca/KAjNdBWv
-         knGJx/HfLF3jJ13QC8Eye6r9XL0HUDSE5hFg8OGdcDGLZIq8TaTpDHtR6SqnYkGkcrnE
-         pg4W0c1dQduX4pyO3fQWYhtvEIhCdytUXpo+FZAQ9ImgM9BybuNlltSqLGQHvuZrZgJc
-         bX9AvFyCyJXSmfWHn6PfRaF6Tc41td9owZk5HWCbo7fH9+sXe5Qn9diHW3JuEK8EX9Cr
-         XYE69YTbwL77gBgeFZ6dynkk7E5H/vAEY/1B/0ZL+rIbr8N4trHQ3i+YCdisjJWBj1gA
-         v03w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788893827; x=1789498627;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=dPAv9/DNHgYvkBswgfcYE+/SWcKiJRn1AWqpJM/JUGk=;
-        b=d/cuRXPy7Bqeu/Ba8KAfcgJmgyOwNASklLAL+Ypmus4KFKoJMnCSbCL2omn3iCkjXv
-         QVERHMjnsAgSES5LEvv0yF8e1zSK/i9VlJgwLQJB35vzFGqEcfGNrPkREXYJTyOlmSus
-         ZI6kmWH0jB9ydPevRvEvLYN/4xNGSCyFfHdxdnHp8IXCV+eX4dOXNJ7YuQmSBsE11bFT
-         EaM1MJ4ST8SlVVnizCpgNnaY6J0SFl9AgsnifrE5CY0b9csxhZTZxdU+U163jylqmGjP
-         k2q0gcD3yiY/x1kEv0t5NSg1Ek6MxJP2bL04TrH6q4BIT7P3zv858mEfKCvkn9pfnXm9
-         Wr/g==
-X-Gm-Message-State: AFuF++mhIgyHtO1cYXe0lPfER6BKMhtaSHH3/T3iaBBHhPLVvbwV5kWt
-	uf46PtzRQ80pYyoNd7x4/H0saFaEmNo5fJrNZzqFFPPjChu1YrX5hE46YVmTOnHN
-X-Gm-Gg: AYBFou0Ji+c31TM8Buc0PQddAOzlUaELLgOWOpLRO5xH1grSh5PxwA3sjeJcxgn1sWw
-	9AIolirqWJlTDeOGp2DzJUUfF/RKj2f0Opk+SZ2jgDaGqWkYCwkyyjqwZC2rEErT+bQqX6BMUDR
-	f4UzQS1aNRUJeGFO0JjJ9K+7HI06wMZH7mSi4p+k13lX2LBvY/rsG+scbCedELahAfWAVhXdBgP
-	5xUtDgf9fK8sSJGVr0/8e0uJsfsciX2vxPSdpvxXljP9AeolVYKxwVt53ikQ7gc3nkBr62yxVLE
-	e2Q0nHCQxqbsC/AZ4wG5XYRW/nagImVpbl1/ABcbY3BQWDknN7cCE7N/glKLIABj5EFJ1iJwqD1
-	Ef2hF3zVj2O9H6ZbAVuiSX4DisxTejWI882AxBbvY/Xd4HCVTiWL6Gcng3P58yNHAUvcaNDXlz5
-	tMjhJxg4KtNukEEQEmvp7o55aP10vEl8qvC2upht64E3itQWTeVD2AOLXR0KITkFLnvaWcVicNS
-	8/fD9l7/Mtrqg==
-X-Received: by 2002:a05:6512:ac2:b0:5b6:4b2:de82 with SMTP id 2adb3069b0e04-5b6170596d8mr4800979e87.32.1788893826465;
-        Tue, 08 Sep 2026 11:57:06 -0700 (PDT)
-Received: from localhost (soda.int.kasm.eu. [2001:678:a5c:1202:7b92:9ac1:b9ef:5287])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b6166fe6d9sm3239335e87.56.2026.09.08.11.57.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 11:57:06 -0700 (PDT)
-Date: Tue, 8 Sep 2026 20:57:05 +0200
-From: Klara Modin <klarasmodin@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, ojeda@kernel.org, 
-	rust-for-linux@vger.kernel.org, amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] rust/drm/gem: initialize callbacks with
- ..pin_init::zeroed()
-Message-ID: <aqBX1siwtKuBTXBE@soda.int.kasm.eu>
-References: <20260908175427.47207-1-klarasmodin@gmail.com>
- <20260908180555.0830E1F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="ju0/yovn"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BEF7F1476;
+	Tue,  8 Sep 2026 11:58:24 -0700 (PDT)
+Received: from [10.57.49.201] (unknown [10.57.49.201])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B10353F528;
+	Tue,  8 Sep 2026 11:58:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788893908; bh=y2y7T3KAoKP/KyE/uDm2tpyR/IuJRDUtV20f/glc+I0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ju0/yovnlJCOYeq4SXLgmLOwzg4nf4S7aWebIHFJWp8+ngmDbqkoNtSAqLuIwicnS
+	 E1/g/tstnhlTxhCYpqRnrNtsH6gPbcc+Mag4k6LM7wP5waZrl7rBnB0G2Vc0i/1P46
+	 AhVfQceVon7sB2t75xRqT9oUlVPpI0NQTc5LxtbU=
+Message-ID: <f523ceb8-faa7-412d-9227-aca139e2bc1e@arm.com>
+Date: Tue, 8 Sep 2026 19:58:18 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260908180555.0830E1F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 12/20] KVM: arm64: CCA: Support timers in realm RECs
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, Marc Zyngier
+ <maz@kernel.org>, Oliver Upton <oupton@kernel.org>
+References: <20260908162223.1683432-1-suzuki.poulose@arm.com>
+ <20260908162223.1683432-13-suzuki.poulose@arm.com>
+ <20260908165643.50C501F00A3A@smtp.kernel.org>
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20260908165643.50C501F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2026-09-08 18:05:54 +0000, sashiko-bot@kernel.org wrote:
+On 08/09/2026 17:56, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete fix: missing `handle_free` field in conditionally compiled `shmem.rs`.
+> - [High] Realm VM timers are blackholed on GICv5 hosts due to unconditional physical interrupt masking combined with disabled direct injection.
 > --
 > 
-> commit b5b83bb373847c99ca6d286c268d2e0ffab299f0
-> Author: Klara Modin <klarasmodin@gmail.com>
+> commit 759ada4556cf9518a1b30ec3610b7b7833129bd9
+> Author: Steven Price <steven.price@arm.com>
 > 
-> rust/drm/gem: initialize callbacks with ..pin_init::zeroed()
+> KVM: arm64: CCA: Support timers in realm RECs
 > 
-> This commit updates the drm_gem_object_funcs struct initialization in the DRM
-> GEM module to use pin_init::zeroed() instead of explicitly assigning None to
-> unused callbacks. This fixes a build failure caused by a newly added callback
-> field in the C structure.
+> This commit adds support for handling timers when exiting a realm REC to the
+> normal world. It implements realm_timer_irq_ops which relies on the existing
+> software resampling mechanism for Realm timer interrupts.
 > 
-> Closes: https://lore.kernel.org/all/aaef18cd-ab55-4fb8-8563-ca3a5ea9cbc6@leemhuis.info
+>> diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+>> index eba84cab95d01..3eddf44f7b1dd 100644
+>> --- a/arch/arm64/kvm/arch_timer.c
+>> +++ b/arch/arm64/kvm/arch_timer.c
+> [ ... ]
+>> @@ -1609,8 +1623,12 @@ int kvm_timer_enable(struct kvm_vcpu *vcpu)
+>>   
+>>   	get_timer_map(vcpu, &map);
+>>   
+>> -	ops = vgic_is_v5(vcpu->kvm) ? &arch_timer_irq_ops_vgic_v5 :
+>> -				      &arch_timer_irq_ops;
+>> +	if (vcpu_is_rec(vcpu))
+>> +		ops = &realm_timer_irq_ops;
+>> +	else if (vgic_is_v5(vcpu->kvm))
+>> +		ops = &arch_timer_irq_ops_vgic_v5;
+>> +	else
+>> +		ops = &arch_timer_irq_ops;
+>>   
+>>   	for (int i = 0; i < nr_timers(vcpu); i++)
+>>   		kvm_vgic_set_irq_ops(vcpu, timer_irq(vcpu_get_timer(vcpu, i)), ops);
 > 
-> > diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
-> > index e1ebad77ebe2a..c63b0fe5a15e1 100644
-> > --- a/rust/kernel/drm/gem/mod.rs
-> > +++ b/rust/kernel/drm/gem/mod.rs
-> > @@ -266,18 +266,8 @@ impl<T: DriverObject, Ctx: DeviceContext> Object<T, Ctx> {
-> >          free: Some(Self::free_callback),
-> >          open: Some(open_callback::<T>),
-> >          close: Some(close_callback::<T>),
-> > -        print_info: None,
-> > -        export: None,
-> > -        pin: None,
-> > -        unpin: None,
-> > -        get_sg_table: None,
-> > -        vmap: None,
-> > -        vunmap: None,
-> > -        mmap: None,
-> > -        status: None,
-> >          vm_ops: core::ptr::null_mut(),
-> > -        evict: None,
-> > -        rss: None,
-> > +        ..pin_init::zeroed()
-> >      };
+> [Severity: High]
+> Will this cause Realm VM timers to be lost on a GICv5 host?
 > 
-> [Severity: Medium]-
-> Does this commit miss a similar update in rust/kernel/drm/gem/shmem.rs?
+> When a Realm VM is created on a GICv5 host, vcpu_is_rec(vcpu) takes precedence,
+> assigning realm_timer_irq_ops. However, this struct lacks the
+> .set_direct_injection callback used for hardware direct injection.
 > 
-> The VTABLE initialization in shmem.rs explicitly lists fields without
-> using pin_init::zeroed(), similar to what was fixed here. When compiling
-> with CONFIG_RUST_DRM_GEM_SHMEM_HELPER=y, won't this cause a missing
-> field error for the newly added handle_free callback?
+> At the same time, because vgic_is_v5(vcpu->kvm) is still true for the host,
+> other timer paths will unconditionally assume direct injection is active. For
+> example, kvm_timer_update_irq() skips software injection:
+> 
+> kvm_timer_update_irq() {
+>          ...
+>          /* Skip injecting on GICv5 for directly injected (DVI'd) timers */
+>          if (vgic_is_v5(vcpu->kvm)) {
+>                  ...
+>                  if (map.direct_ptimer == timer_ctx ||
+>                      map.direct_vtimer == timer_ctx)
+>                          return;
+>          }
+> }
+> 
+> Additionally, kvm_timer_vcpu_load_gic() unconditionally masks the physical
+> timer interrupt for GICv5 setups:
+> 
+> kvm_timer_vcpu_load_gic() {
+>          ...
+>          phys_active |= pending;
+>          phys_active |= vgic_is_v5(vcpu->kvm);
+> 
+>          set_timer_irq_phys_active(ctx, phys_active);
+> }
+> 
+> Since hardware injection is not configured by the Realm ops and software
+> injection is bypassed due to the GICv5 checks, does this completely blackhole
+> timer interrupts for Realm VMs on GICv5 hardware?
+> 
 
-Sure, but it should probably be a different patch in that case. The
-current patch fixes an issue to a currently existing build failure,
-while the issue mentioned here has not manifested yet.
+CCA doesn't support VGIC_V5. We only support VGIC_V3. I have added the 
+following patch to make sure this is mandated:
 
-Regards,
-Klara Modin
 
-> 
-> rust/kernel/drm/gem/shmem.rs:
->     const VTABLE: bindings::drm_gem_object_funcs = bindings::drm_gem_object_funcs {
->         free: Some(Self::free_callback),
->         open: Some(super::open_callback::<T>),
->         close: Some(super::close_callback::<T>),
->         print_info: Some(bindings::drm_gem_shmem_object_print_info),
->         export: None,
->         pin: Some(bindings::drm_gem_shmem_object_pin),
->         unpin: Some(bindings::drm_gem_shmem_object_unpin),
->         get_sg_table: Some(bindings::drm_gem_shmem_object_get_sg_table),
->         vmap: Some(bindings::drm_gem_shmem_object_vmap),
->         vunmap: Some(bindings::drm_gem_shmem_object_vunmap),
->         mmap: Some(bindings::drm_gem_shmem_object_mmap),
->         status: None,
->         rss: None,
->         #[allow(unused_unsafe, reason = "Safe since Rust 1.82.0")]
->         // SAFETY: drm_gem_shmem_vm_ops is a valid, static const on the C side.
->         vm_ops: unsafe { &raw const bindings::drm_gem_shmem_vm_ops },
->         evict: None,
->     };
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908175427.47207-1-klarasmodin@gmail.com?part=1
+
+---8>---
+
+KVM: arm64: CCA: Mandate VGIC_V3 for Realms
+
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+
+diff --git a/arch/arm64/kvm/vgic/vgic-init.c 
+b/arch/arm64/kvm/vgic/vgic-init.c
+index 4012df6002ea6..452c085073f3e 100644
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -84,6 +84,9 @@ int kvm_vgic_create(struct kvm *kvm, u32 type)
+                 !kvm_vgic_global_state.can_emulate_gicv2)
+                 return -ENODEV;
+
++       /* Realms only support VGIC_V3 */
++       if (kvm_vm_is_realm(kvm) && type != KVM_DEV_TYPE_ARM_VGIC_V3)
++               return -ENODEV;
+         /*
+          * Ensure mutual exclusion with vCPU creation and any vCPU 
+ioctls by:
+
+Suzuki
+
+
