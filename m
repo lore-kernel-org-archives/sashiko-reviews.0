@@ -1,57 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BBA2C026C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 16:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B380658124F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 16:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788883925; cv=none; b=dgShRcXnUFqpf0XgIQECmIGP4xbSbfxXN8uSCsAshgPX4UeBkkBC0KHJkxKHP1fuFrY0LtizpUSLi8Z7LDPwBhhBJ8G6mTUJEWqRlPibQBMBzHwvmb/GZ8daPluenURW8NQJeyPBRdf4ggXM+GBXyU6HImjKbMylvb6rF0bBgk8=
+	t=1788885685; cv=none; b=bfFqdF98UTPRf/UFzU+HPTH5buqHKgBKJTqTzrbevZoXk/nBqcjWOMot6lS5PEavOyylTbSiAP5YOj3VRh3iHeImC+T0ZRZnT30OPZjZAIAy+0hpOXnSJF2VasCtz1RiyU7aURUo+Re8uG267nNQt5BVpmoEVZXI67c2fMLZ1/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788883925; c=relaxed/simple;
-	bh=do2UA+kUJ1TbXgXRbSmd0EaMt9CkyGUghFC1xnXimn8=;
+	s=arc-20240116; t=1788885685; c=relaxed/simple;
+	bh=imXzlO5bq0RM+PwWkkFq8vD3Gd7NK/6QDTFvY5ab1JM=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ElXMeLMJslymLQz3i2wLB/GohfMCrewefFOwFVe/MfSpdoa3kfp9X/VlDt+iOMWdnETgrYxh5w8iriLfoe+mbpo/WFwYqYf1EWseQ+d74DkgG41W0D6KTkUPQR3eYslndxa4zV0xZ7ilx/QKY0y04xndHfo3olhVY/Cpsj13IJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIGbpUZr; arc=none smtp.client-ip=100.103.45.18
+	 Subject:Content-Type; b=k3agbajPDo6TwNMjIqFB8ZZ66igTkw7BFA3fpnna6aW5zy7w4a/n0JSXDdeYqlaAMJy8RoC6TSWwXstiXb/aysf0CGOKTGuUOy/nGqcJmJXTQJHkP0uhS32PWBF7OcRuanFsYRy4h/rRYCFUMz/mTWhHPBVSDxuAJ1b4mzzOhPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iFf0j0VI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIGbpUZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3971F00A3E;
-	Tue,  8 Sep 2026 16:12:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iFf0j0VI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120DE1F00A3E
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 16:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788883923;
-	bh=3bbGkobDpQdGYniX9EG7+4iZ/BE90dQ8CT8XcVZKJEY=;
+	s=k20260515; t=1788885683;
+	bh=ZyPWpmzPstexQ1dmRuOQsA23+Fy3xgJk2feDmpCd/g8=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=WIGbpUZrib61q8vONJ5FxSNakSuqaKCAsWJ+5gdMnCnFUkEPBkJwty8nxVVkN0Mv1
-	 w9t0XZ7baGlhJo6FAfmbzQHeT6V1vAUfLWN4apw16QVaQoaDbWzrsztdNDktT/3N0X
-	 iigUWVKzKZ4xSPjrUlzdr8zP6wW0E2DfPWCLVHHV/G8G3n7KOVbVsEwV0MVjf3kr7e
-	 bwwkO3x7f2V+zWtZ0deWW2D5+s5mUpPxp+iIHyNV8byIQganVhI0jnbxR+VlciGb7C
-	 dr69/ho0yadENGN25j4/oy5Stqto58/hMhZMDO7KOPS2seR908Ic/8L1QueLpqt231
-	 UbD43Bz747fcQ==
+	b=iFf0j0VIK/R4FnHyPNS1JwQ8bo/alKmW0GfhibxKScb2zSkmWt4gCdr9qTbGY2wB4
+	 eS2Pef269GbbLfdxYmyLYrlLjY+5tosw4tbpX0FlIfbuX8C8Nn0cegQJeDUbB0q1pV
+	 GnZYtdeJB3TGc+fkUEfU+SkwPzEJX+8jgb0/AWT1AeVt9byc0hWN2EldaK/sfilJE7
+	 X5rijFbo2Nr5bwDJZ+SBA2z2gAo48exBBJyrndDW9rclCisIVLDAarPpxsp4EIdvnX
+	 /QJ9FWTp202GzPvt/pDj5UWrRK/SMXNzA1PPhNFju0X3vEJypJCwcE9F1yxzsF/iGc
+	 RqMODbylBrCvA==
 Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id ACE13198003A;
-	Tue,  8 Sep 2026 12:12:01 -0400 (EDT)
+	by mailfauth.ams.internal (Postfix) with ESMTP id 4D7C5198003A;
+	Tue,  8 Sep 2026 12:41:21 -0400 (EDT)
 Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Tue, 08 Sep 2026 12:12:01 -0400
-X-ME-Sender: <xms:0DOgapxIuztF-xAq1Xu0-G1BF1NYaz6JIZlSC3D-dq3Fz6DWKbpWFg>
-    <xme:0DOgakHmWMXsSA9O0-u_SlgufJhLfNf5hx5mRaEauyB0lcnspeq1oDMuGNavoa1ut
-    50ZNN52M0vBDTGGdKeGtBDtZKuXvmfocVfBKTB9QPGRwSEIu2bRPRA>
-X-ME-Proxy-Cause: dmFkZTFCMZbKka0PySpBSN0mOueOshb+uEL6ESVsVEH+1U1ATE4YvAKZeFRO257abuQ+ng
-    4PZCmsJnRkV/CoaJ+mDv3YqAto2q5SqEOFwbw6IsHq7VZajVGrnhWI0oYBHvFuJO97HxDG
-    pqfqxCPhTLzTprK3ntJZb0z9cfKzZw9S77ZLaTVZxLK7qnySfdKurKPqugdGDQMkjRCrqw
-    AIrcDceS4WrKbdxeHBH9945l6oxC8GA3mo+q4fJylrSLhZGVKNcwvFuJMdyOUfqVFIRFQC
-    NaLmAW7/Z+ubTtxnGKLueCuD7XLm/D3q6FipdVaMXj+xv+3IUzuF+mc2FDlpeEbdTinHad
-    iTw2WIz06Xf0RdlLqA3VXTMZ43u3wfgRb9mF0Vqd0QgcFmBDd0d1wp6zCTX7oWlwgWq26y
-    I+Og11aGh9ylDkTsSRZ7u/DLN7gYuRMYfqbK74bqmlce000gCwFqxe9BLdxFWsOL731qMT
-    sjH8DirrK5v3MIywZvSKmTrtuysA/pVKnQKGR5NHHFRhn6pY6u/y0fIrdHzdOQfOOlUWEY
-    7oEzUnt83MODHGRusAjEYJpctGSP6JuuIO0hg98JeaOn70wh9I4bN/io+rXokPnWu1dwXD
-    xhymirxxSTjmLZvHZSk8Rp6mtd1KxfakPRkBMJqP06MsSwUt3rxVa9utsROA
-X-ME-Proxy: <xmx:0TOgaoHVWd8BKffCEnm-xJwvT7eTaPZ3mte3HodUiQo0uSLW8oxbYg>
-    <xmx:0TOgarXr5vRy8XaIdHcFcpHvMcxRaRlVZ1IOVs9Ws-lqna-6r2Bm5A>
-    <xmx:0TOgaoyIMSeJ1juWayio0oZ0pDbHTGbiokBMtxKqKkQ3x90X-JNCZg>
-    <xmx:0TOgaoTpjFqgNobdu2LnBZxU30xTI0rppen-HQRWsWcorfxeB4WWOg>
-    <xmx:0TOgashVP2icbUUysxENXiCXVHDUiIBNO3Vldk61mtjQjpID9MMbC-Lx>
+  by ams-compute-02.internal (MEProxy); Tue, 08 Sep 2026 12:41:21 -0400
+X-ME-Sender: <xms:rzqgalOn3JFLDu-k1VeMxaA6QwM7ww4VoLf7L3fCTm9L7_xpxxEB1A>
+    <xme:rzqgaiykWm9C_xXjA9mRoChAJkbR36L9Z7Gd2idN6JtjPI7tqq2YfLumBRzsCRl9y
+    Le5WvlyX5JEp_zK9evoP24c2ewE3qtvw0HAxASK9V1tQRLUD7r5L0I>
+X-ME-Proxy-Cause: dmFkZTFHCt55lUKzQHggVLdX4ZIreF/N0oIQzznAd2sSVLkmO/pGBLuy/9Kx+aWfzW4gDP
+    tgiVCbGrXt3MLU2wFZyBmdeftFOi61k/m/epowP2+3kthvTdRhiCr9ndrbfiHlENPYCMD9
+    6iHazJJBD4LPMds0sjMYWPyL60kBfXG5tejLU1ipD0lwUMjvb0B+6+3n7gFcEntIbM3o5s
+    fc+3pQ6uKYXyG1j/lGe1M13rcOVafhB7paNY5w4e4BJYu9IOZc4QIL99AgNA+H2vsREi0C
+    kzVHCPmDA6XpBFNmvEH+4SVLFkZXVuxH1nIa8TY91VGH4Uku17hKf8Oj4JYAadLPU9Ftf7
+    cyoZNfdBKTWL2iaF1HrgZ4cd71YAlhy87wvB2gx5peZsGjQRMgH2Z/9tuB9D7D5OFV/mvS
+    5nilACR4DZQFWgS7k/ZrwD4YrKzgCPY78Kk3v3Xc5aSnp3gvtYRw3D5MkwIiO0ZxzMY8B2
+    N3YMv6axz+93WAiKZSusaFwmc1uibtmVUlCqfo2tFAfqw+fGRdPnyTS7wEgWMG42O+wFug
+    yeRw37K/fjADK6AUTganPNr9PSe6cNAqNgE/r/AYfv6r8ZZrYj+pO6YsHuucbbvJjL9P6b
+    f5b3Icc18a3ODtatmy3Mspngnavp5VcdK0eXKBlTSq0JCFpC72Oh5+WBmOTA
+X-ME-Proxy: <xmx:sTqgaux0xjEj8IHcf-PTW6k-BLjy4LJyAYxjTaAG21creCr6rfoifw>
+    <xmx:sTqgasjU6e7ucKPyuGOsZ-bxZvYmVdAoKjiMYs75nkNSxIEPdzMMQQ>
+    <xmx:sTqgaiklX1IMYFZOtAk3G006QRD6qyQw9RjoGIwwsLJTtXyGH-drYw>
+    <xmx:sTqgaqgWYezbxn8vM6NLUZjCGbezgRNN7eY1lQPbrl0F3E8HMnIAPw>
+    <xmx:sTqgau1pRrokThHgXiKUuqj012Gogl37MmhukhC9cp0wZP_bSfe980sH>
 Feedback-ID: i36794607:Fastmail
 Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 3E8B032A007B; Tue,  8 Sep 2026 12:12:00 -0400 (EDT)
+	id 2031E32A0078; Tue,  8 Sep 2026 12:41:19 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -59,100 +59,29 @@ List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AGTXWeH1PU47
-Date: Tue, 08 Sep 2026 18:10:47 +0200
+X-ThreadId: Ab0V4S-ixU_F
+Date: Tue, 08 Sep 2026 18:40:58 +0200
 From: "Arnd Bergmann" <arnd@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, "Rob Herring" <robh@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, linux-serial@vger.kernel.org,
- "Frank Li" <Frank.Li@kernel.org>, imx@lists.linux.dev
-Message-Id: <cfce9a0e-a7b7-409d-b9a4-abb9013469a9@app.fastmail.com>
-In-Reply-To: <20260908155212.810C61F00A3A@smtp.kernel.org>
+Cc: "Rob Herring" <robh@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Frank Li" <Frank.Li@kernel.org>, devicetree@vger.kernel.org,
+ imx@lists.linux.dev
+Message-Id: <f03314d1-3276-46a3-8c09-61422fab7d3a@app.fastmail.com>
+In-Reply-To: <20260908155505.7992F1F00A3A@smtp.kernel.org>
 References: <20260908152808.3928630-1-arnd@kernel.org>
- <20260908152808.3928630-4-arnd@kernel.org>
- <20260908155212.810C61F00A3A@smtp.kernel.org>
-Subject: Re: [PATCH 03/13] ARM: remove riscpc
+ <20260908152808.3928630-13-arnd@kernel.org>
+ <20260908155505.7992F1F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH 12/13] ARM: at91: remove samv7 support
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 8, 2026, at 17:52, sashiko-bot@kernel.org wrote:
->
-> The Acorn Risc PC platform and its associated drivers, configurations,
-> and board files are being removed as the required gcc-8 compiler and
-> -march=armv3 option are no longer supported.
->
->>     The main limitation here is the CPU bus that does not allow 16-bit
->>     wide data transfers and hence requires the kernel to be built with the
->>     -march=armv3 compiler option that was discontinued in gcc-9.
->
+On Tue, Sep 8, 2026, at 17:55, sashiko-bot@kernel.org wrote:
 > [Severity: Low]
-> Since this compiler option is the explicitly stated reason for removal in the
-> commit message, should we also delete the compiler flag from the tree?
->
-> arch/arm/Makefile:
->     arch-$(CONFIG_CPU_32v3)         :=-march=armv3m
->
-> Additionally, the config symbol for this architecture version is now
-> dead code because its only selector (ARCH_RPC) was removed:
->
-> arch/arm/mm/Kconfig:config CPU_32v3
->     config CPU_32v3
->         bool
+> Since this removes the usages of SAME70Q21_CIDR_MATCH and the other SAMV7/SAME7
+> macros from the socs[] array, should the corresponding macro definitions also be
+> removed from drivers/soc/atmel/soc.h? They appear to be dead code after this
+> change.
 
-I decided to remove these two as part of the later StrongARM
-removal patch that depends on this one.
-
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 81872f61b4317..fdd75b73bf293 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
-> [ ... ]
->> -ARM MFM AND FLOPPY DRIVERS
->> -M:	Ian Molton <spyro@f2s.com>
->> -S:	Maintained
->> -F:	arch/arm/include/asm/floppy.h
->> -F:	arch/arm/mach-rpc/floppydma.S
->> -
->
-> [Severity: Low]
-> Does this leave the floppy header as dead code in the tree? It is removed
-> from MAINTAINERS here, but the file itself was left in the tree:
->
-> arch/arm/include/asm/floppy.h:
->     #ifndef __ASM_ARM_FLOPPY_H
->     #define __ASM_ARM_FLOPPY_H
-
-This is removed along with ISA bus support later, which also
-drops ARCH_MAY_HAVE_PC_FDC, ISA_DMA_API and GENERIC_ISA_DMA.
-
-I could have split up the MAINTAINERS file change, but
-it seemed better to do it in one place. Maybe the other
-patch would have been better, but then I'd have another
-dangling reference to mach-rpc here.
-
-> The Makefile still references it:
->
-> arch/arm/Makefile:
->     machine-$(CONFIG_ARCH_RPC)              += rpc
-
-Fixed now, this ended up in the StrongARM patch by
-accident.
-
-> The machine type registry still contains it:
->
-> arch/arm/tools/mach-types:
->     riscpc                  ARCH_RPC                RISCPC                  1
-
-This is intentional.
-
-> And the CPU selection still evaluates it:
->
-> arch/arm/mm/Kconfig:config CPU_SA110
->     select CPU_32v3 if ARCH_RPC
->     select CPU_32v4 if !ARCH_RPC
-
-Again, this is part of the StrongARM removal. I had considered
-removing these two lines first, but then I'd have to split up
-the CPU_32v3 removal out from that.
+I removed this as well now.
 
      Arnd
