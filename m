@@ -1,154 +1,145 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CE959C97C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 18:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FA8479871;
+	Tue,  8 Sep 2026 18:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788891567; cv=none; b=DjoprmkeRNkv0l2ekeC1VI+ejsu8HjCJwLCSvbOyuWqZzYrwi9QMtLlYOohJV4bkecgzTrrD28S7x4mc9iPLgTbBSRmsumasY6NWCTzIYqHuYjW4q7AWn+xKUlBXI5t39ltLIYYQ6ZDGS4hgDYdVlzr0eBPZR2twkhc2T1gFWl0=
+	t=1788891726; cv=none; b=ToGIKQxDoonUXrOJxIpBlSbYSEh7OLH6h9tqgFym/n/EEoN6bNiBjw28FIXwFgRjjPOFIMlE0M26PtXPkrUcvH1f25wS0Yv1DpWQwkU+Q8PM+HA0F1DlBbBhqlJxzQRiWwER/h/4jxN8Wsl2Oeh3g67mVTrkexQKQxU09NuZ468=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788891567; c=relaxed/simple;
-	bh=8AIIo5BF6f71UMl4Yiei2wFPXM8xiGDQCRZjF2KYnKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=V4kqdTgjUwa549ASe46GcrHP+xIQwGrXDbWLj7Cbc3b+pTQH7JbxoXwVBSzv/WyhqtoJFDFfmhmCH3Oy/zU28RYVh0iqSYqXjDhmA0X++bGX6zGYi7l+kqyt5R3vK0M+DHvgyHssQfeY9jGty3RRgLrutog77TAZcrbQntM1Doc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=S4cQuPS5; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1788891726; c=relaxed/simple;
+	bh=pZUGW3mxkjzlt6qWdkhwhkzsYVZmmQwBD7ygtdVa8ck=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=AEBTaqlWQ8h11lY1vO1AVYRdP+Y14U1BrtDLx1eg/DQ0uaMzxDV/lTQhtMajFENzWkeFlHdbt2xOh+zU3Cz3nGzvQYKyM0inZvG8pSGlWvIuW+U5jbrl4/dLlfU153Po6G3LhIfi1NFh4jTBGzCLj8NQ6sU8CFZb/lgFzEKDH+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hf49itJu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="S4cQuPS5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1788891565;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2Q5G5cxGRzsImEzZzW/QdJtB63ZsfwIeX55psBcS1K4=;
-	b=S4cQuPS5c292O8069TX4O84YeUIYn4hu3lyIocXcY/RAKaaylwqPwv/LFyDp+3VNViFc0n
-	50YOF8484W1AnQtE+e+U7IgYIklilavuczllVC9WkxW1OF2mP42cTgrg5HGRrOAzXQ/gmj
-	h3/x0JAltto3F7qprHAeBrBzOBIc6do=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-HVE3lHPpNA-DR1pBTD7-EQ-1; Tue, 08 Sep 2026 14:19:21 -0400
-X-MC-Unique: HVE3lHPpNA-DR1pBTD7-EQ-1
-X-Mimecast-MFC-AGG-ID: HVE3lHPpNA-DR1pBTD7-EQ_1788891561
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-90ce8ad8002so92603996d6.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 11:19:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788891561; x=1789496361;
-        h=user-agent:in-reply-to:content-disposition:content-type
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2Q5G5cxGRzsImEzZzW/QdJtB63ZsfwIeX55psBcS1K4=;
-        b=LiduXb/vuF5Ot8kp7O6rQsXLYr2WgN0ZHHjs7ojEF+NB+9A7TxpzcAkGs8O7bozWzz
-         igb79RW3DIKdgxD92B+FZQ/ly4VHG9w2oiLK289MF99mcvz4elEolQhGH+CQkIN0E/ws
-         q3TAsqApnZWi7LbuF3bQN2wFSkashMMz5DhZictHuzza9zciUcD6oWpvqbxx71flPOyN
-         mmlo9xJyXIHvoTINvacSqY1k63PVVyPDgaMve7r07U511XvLtnp75Ssn4qHAe+nmDRjp
-         /V1VKxAeC4EhA0iXEZSP8Aw951y1DT9zdmbmDv0aqEknm/TE4eXYQ3d3+v2ndCS6eJk1
-         QeWA==
-X-Gm-Message-State: AFuF++l3uQWJB3JN9rgZ5HfpGh7eIh+isAIrdi2uabvbyKnE88UmwTap
-	pqbaNcztG1BR4bPKTQBgsBpBv5iKxmWjQlgJr5qdKd+gVBhYewEzRxiIOjId+b+pquvq6S0vcEK
-	0XOz3AGxO7aG1D9JRbc0s+5CZMvTbwbLO7sJ/yxIRW/brKJAkr29/VfF0gexptIHyRI3kDxsLan
-	+udnn+X92q/B5iHkBvYsd9q14je/sEXbjYumO7kzyIBm9SCuCEXkth
-X-Gm-Gg: AYBFou0Y08/E7lBAu5ug61y5avw1ef+ET+c8OWc61Hjb0QmklPwIRt1cT3hoHFskhP4
-	SAJCJtc6v+N+3+cEGYvmJ5UGmyt0Ce93T6ylPd0G3S9oxBUQ1AART3htbUVXIMv5EBjzmgx4/Ul
-	3MKoEsMpD+YrwRhMaw+xp7F6oJ2kGWwCvE7K2kDqdDje+IK4e3LQt7v0cG6ssOxOwdK2vBrOnff
-	BSersv9DUpDLWdcKIpLkkO/Zs0jvcogKL5V02eZ5FeEBsfesDNq1Vlz0Was7GZpGymmYQJS83Wb
-	Rw1BK+fL4gjwYXkmj1JEFq0wd34AjIINyUxQfEy559FU58Eq/djhcerLbCUVJwse72+wpktKohy
-	eSGovzgfAF+tXZZv6M3zolxc7Xchgwty58jo=
-X-Received: by 2002:a05:6214:dcb:b0:90c:e3bd:dfe4 with SMTP id 6a1803df08f44-9103ef88b76mr371340786d6.21.1788891561091;
-        Tue, 08 Sep 2026 11:19:21 -0700 (PDT)
-X-Received: by 2002:a05:6214:dcb:b0:90c:e3bd:dfe4 with SMTP id 6a1803df08f44-9103ef88b76mr371340136d6.21.1788891560377;
-        Tue, 08 Sep 2026 11:19:20 -0700 (PDT)
-Received: from redhat.com (c-73-183-53-213.hsd1.pa.comcast.net. [73.183.53.213])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9104059559dsm123327336d6.1.2026.09.08.11.19.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 11:19:19 -0700 (PDT)
-Date: Tue, 8 Sep 2026 14:19:18 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: wsa+renesas@sang-engineering.com, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 1/4] driver: core: add subsys_driver() macro
-Message-ID: <aqBRpviTCjwo3weo@redhat.com>
-References: <20260908-subsys_initcall-v1-0-cbccf4cd4288@redhat.com>
- <20260908-subsys_initcall-v1-1-cbccf4cd4288@redhat.com>
- <20260908175845.A6A4D1F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hf49itJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F11F00A3D;
+	Tue,  8 Sep 2026 18:22:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788891724;
+	bh=KOkqH9+KsQ/pfEOXoQXs/QBpMjFn4xAHhMmlbJfXtIs=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=hf49itJuKZZrVDgFz/OBI02KhpJ0w85fKm5+GcHhZZO9DUUMkUtM0OL5cPa0qunOV
+	 j3D+g0J8HacUPC2VbeSltqqF9GTW4YwMGy1Q++steJYUBFf9dOlMFi89D0BWos/on8
+	 GBjv0u1OQPeyr/u1kFiTKyrZh/mwDkKCaAXhVq6i/NOJoy0JMD+U9rlFOnpMFK8BQM
+	 wAUMYQwcYK2d44gcVBdVpxKuBtxlt2hiKn0nBAXP7gAk0PY3cidGkCPT7BXP6fx+Ax
+	 WOmZ7vdKj2YCU4ciLpxFotS8jS+CmE26U7L9+hlDzDE+nscpMfatkhiZlVvEnHDCUq
+	 CYl+giRfxEbNQ==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 62F16198003A;
+	Tue,  8 Sep 2026 14:22:02 -0400 (EDT)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Tue, 08 Sep 2026 14:22:02 -0400
+X-ME-Sender: <xms:R1KganhWojexTaEkcE9JNG2cPj7XgDgOFoXrGK4XmayHCNKPiO9VaQ>
+    <xme:R1Kgau10_SvGPB3yfP4vC7fFqFw7CFxNWNHyAOuKkR1D3WdEFe3_l1bs_81OVeuT-
+    TvpIP0I9YyFC9FtFqLdEAVy259vPupVkwojcM3tDj-Ur1n7W8HVZA>
+X-ME-Proxy-Cause: dmFkZTF3Xbdz07cy4boaCVQHFkenJCqc2sn4pb294JKVq2iAU/ryEnJrbS5rHRz/45kLdP
+    XWVPpmR29IIAjw31EDFDOoChR5dpk7oDeztrPOMK6Ck6rUZyoBVx+gU/Dj+v2ezibRn/3Z
+    6copKQyaHQTnzkXFaRPpL+YsGtqzZF8KdZn0FKgRlMOihu7MmoU83A9qIw5BuKzEDvlTFC
+    hkYrh2QdS2qnv5wk8D0+zIgWAi+fdBqzJoR6DSey3OStD8Far5kE1hHrAv5MW+cSE92604
+    C0JRxb+rlMAsR5nZZHdab1pbHPOU2NsD1PcNS9z4aUCnOnSHzZzNZWET46rcpd7ZG3n6Zp
+    23NB5BYR9Bd2vlT99ZOgkZynr7E8I3RD8qiC3VJf7Vwao2PfWxTnJpoGsqCAkB7VUl2RiA
+    iFQniTW0DmVYGD4YR/R1+UC0pImIplV9uP1J5d8ZROiVKPwGAQyS2/iK42Fmxof1ON/y7c
+    8HYLyRpBRPmYiSuAw8UZ7v+MaAJjjPcBzs4AGz7ScKQdHquEMdlRoBfggT0viLHZSI7dey
+    6sGEL6e5OCUhAEgk0wFO/27J+MEfYUkM3vdmBLb5bFJgJ2CA3jtJ7Yeo5xke8uESS3zrAl
+    /pg3sPxHGz8QeYtfQ6nR+fsf9bPOlUF4X3Z7E/Zv5bzYrIY2S3/tLiBS4wOw
+X-ME-Proxy: <xmx:SlKgakKMyflVPzT2IaiVNPoit3F_v_SjIGgTR7F9CFExNsQVJHhdWg>
+    <xmx:SlKgasG6ovtp0PxJslZBsEexayDxOMD1Ftz_o4s2LvqKcOfBVP1pMA>
+    <xmx:SlKgar7zpPWvSZN0h6Z3E1JiiiuQfAWt1u4bCGJuv8NIIDx0iClvNw>
+    <xmx:SlKgan3ZQ1aVDog9cCn7AS2QRAKeDXuh--6GdSSWbM_NUMzrG7ow7A>
+    <xmx:SlKgang6dUc9NvIN_N5Ch2nIpi01dqxYKTTh1R4UYO_yWH9JD0MboRxU>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 8F55A32A0078; Tue,  8 Sep 2026 14:21:59 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260908175845.A6A4D1F00A3A@smtp.kernel.org>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 07m6dJGl_QN3cI-InBIi_9W3sJCVwxH3olvF2naeu-o_1788891561
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-ThreadId: ANqE0jO8KCPJ
+Date: Tue, 08 Sep 2026 20:21:39 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ "Damien Le Moal" <dlemoal@kernel.org>, linux-rtc@vger.kernel.org,
+ "Neil Armstrong" <neil.armstrong@linaro.org>,
+ "Vinod Koul" <vkoul@kernel.org>,
+ "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
+ "Vladimir Oltean" <olteanv@gmail.com>, "Frank Li" <Frank.Li@kernel.org>,
+ linux-pci@vger.kernel.org, "Rob Herring" <robh@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, imx@lists.linux.dev,
+ "Niklas Cassel" <cassel@kernel.org>, linux-ide@vger.kernel.org,
+ linux-watchdog@vger.kernel.org
+Message-Id: <71266564-7be5-4621-ab03-29cf9ec49287@app.fastmail.com>
+In-Reply-To: <20260908161125.E4A331F00A3A@smtp.kernel.org>
+References: <20260908152808.3928630-1-arnd@kernel.org>
+ <20260908152808.3928630-6-arnd@kernel.org>
+ <20260908161125.E4A331F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH 05/13] ARM: orion/dove/mv78xx0: remove all board files
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 08, 2026 at 05:58:45PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Missing semicolons after macro invocations in `subsys_driver`.
-> --
-> 
-> commit cdf3179a9f2205efd1b552f70b7522e1db5ee888
-> Author: Brian Masney <bmasney@redhat.com>
-> 
-> driver: core: add subsys_driver() macro
-> 
-> Add a new macro subsys_driver() to eliminate some boilerplate code in
-> drivers that need to register earlier in the boot at the subsys_initcall
-> level.
-> 
-> > diff --git a/include/linux/device/driver.h b/include/linux/device/driver.h
-> > index 768a1334c0a1d..29fbc01ef06fc 100644
-> > --- a/include/linux/device/driver.h
-> > +++ b/include/linux/device/driver.h
-> > @@ -297,4 +297,35 @@ static int __init __driver##_init(void) \
-> >  } \
-> >  device_initcall(__driver##_init);
-> >  
-> > +/**
-> > + * subsys_driver() - Helper macro for drivers that don't do anything special
-> 
+On Tue, Sep 8, 2026, at 18:11, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Since all the board files like arch/arm/mach-orion5x/ts78xx-setup.c are
+> removed in this patch, should the MAINTAINERS entry for the TS-78xx platform
+> further down in this file also be removed?
+>
+> The pattern F: arch/arm/mach-orion5x/ts78xx-* now points to deleted files,
+> which leaves an orphaned entry for Alexander Clouter.
+
+I fixed this instance now. I tried to automate this with a script
+but could not figure out how to deal with wildcard matches and
+only did the ones that have an exact file match.
+
+If anyone has suggestions for doing this better, please let me know,
+or run your script on 
+https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git/log/?h=board-remove-7.3
+and send me the results.
+
 > [ ... ]
-> 
-> > + */
-> > +#define subsys_driver(__driver, __register, __unregister, ...) \
-> > +static int __init __driver##_init(void) \
-> > +{ \
-> > +	return __register(&(__driver), ##__VA_ARGS__); \
-> > +} \
-> > +subsys_initcall(__driver##_init) \
-> 
+>
+>> diff --git a/arch/arm/mach-orion5x/Makefile b/arch/arm/mach-orion5x/Makefile
+>> index 6f54d7fef27a7..7e9634e043185 100644
+>> --- a/arch/arm/mach-orion5x/Makefile
+>> +++ b/arch/arm/mach-orion5x/Makefile
+>> @@ -2,15 +2,6 @@
+>>  ccflags-y := -I$(srctree)/arch/arm/plat-orion/include
+>>  
+>>  obj-y				+= common.o pci.o irq.o mpp.o
+>> -obj-$(CONFIG_MACH_KUROBOX_PRO)	+= kurobox_pro-setup.o
+>> -obj-$(CONFIG_MACH_TERASTATION_PRO2)	+= terastation_pro2-setup.o
+>
 > [Severity: Low]
-> Are we missing a semicolon at the end of this line? This relies on underlying
-> macros providing a trailing semicolon in their expansions. While it compiles
-> today, it makes the macro brittle. If the initcall infrastructure is ever
-> refactored to not include an internal trailing semicolon, drivers using
-> subsys_driver could fail to compile.
+> Are irq.o and mpp.o now completely unreachable code?
+>
+> Since all the board files that called into these APIs have been removed,
+> it appears these objects are now unnecessarily compiled into the kernel
+> image. Should they be removed from obj-y here?
 
-The other code in this file (like module_driver + friends) has a semicolon
-however checkpatch.pl complains if the semicolon is there. I didn't know
-if the semicolon was legacy. I ended up going with the approach to
-satisfy checkpatch.pl.
+Added this to the patch, removing the two files and recursively
+seven more that become orphaned afterwards:
 
-I have no opinion either way about this.
+ arch/arm/mach-orion5x/Makefile                |   2 +-
+ arch/arm/mach-orion5x/irq.c                   |  51 ---
+ arch/arm/mach-orion5x/irqs.h                  |   9 -
+ arch/arm/mach-orion5x/mpp.c                   |  41 --
+ arch/arm/mach-orion5x/mpp.h                   | 130 ------
+ arch/arm/plat-orion/Makefile                  |   4 +-
+ arch/arm/plat-orion/gpio.c                    | 616 --------------------------
+ arch/arm/plat-orion/include/plat/irq.h        |  15 -
+ arch/arm/plat-orion/include/plat/mpp.h        |  34 --
+ arch/arm/plat-orion/include/plat/orion-gpio.h |  38 --
+ arch/arm/plat-orion/irq.c                     |  39 --
+ arch/arm/plat-orion/mpp.c                     |  82 ----
+ 13 files changed, 2 insertions(+), 1066 deletions(-)
 
-> 
-> > +static void __exit __driver##_exit(void) \
-> > +{ \
-> > +	__unregister(&(__driver), ##__VA_ARGS__); \
-> > +} \
-> > +module_exit(__driver##_exit)
-> 
-> [Severity: Low]
-> Could we also add a semicolon at the end of the macro definition? Omitting it
-> is inconsistent with similar kernel macros like module_driver and relies entirely
-> on how the user invokes the macro.
+This leaves only pcie.{c,h} in arch/arm/plat-orion/, which
+should be folded into arch/arm/mach-orion5x/pci.c, along
+with parts of arch/arm/kernel/bios32.c that nothing else
+uses any more. I don't have a patch for that yet.
 
-Same comment as above applies here as well.
-
-Brian
-
+      Arnd
