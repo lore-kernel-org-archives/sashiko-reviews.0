@@ -1,43 +1,39 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108E751356F;
-	Tue,  8 Sep 2026 10:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374252D2D5;
+	Tue,  8 Sep 2026 11:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788863729; cv=none; b=s3yTT+KJZBqCIE5Z7ve64IVvYWKJe0SqzTKVhX/FubRwVhoSutSB5ErQa2KZ+zvsqaSC25/9UN1fzs9/mDDaRAJ8pBfRKkAktVNbCPQ/g9iwipTndXrTqqWBzRnLUIuix7fK/xqLDkA+h7msKga9YcBjJ/waJGWVMJjpB930enI=
+	t=1788866443; cv=none; b=buQhKuWG6HBIV6ZYTUPIXy1zPoLXkaC3Ru/jA/n1FBSw8DOjOXz5QV1i2zIMUFn7R3gQ6ZRCj+0jQLhrYa6lOzWuSuV6DEA+Vb7D8TOD4riUSnEh3YIFW8Ro1vW9tom/XM4EZVAHFSf//YpO+q84bdBdF7a6WztJS5y4EOQkIeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788863729; c=relaxed/simple;
-	bh=sxGzBQXSWU9yVu1UL94N88BtQ3fxazG6iyy/h1vW5a4=;
+	s=arc-20240116; t=1788866443; c=relaxed/simple;
+	bh=FkoG8P8hgCUaeFjzF7cWY9R2Q9TIdToOfyFsgfbthng=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b9Dpp1U1qKbK3NWUxg8BgDT/mZ577GlXLFLg8hTgBcs7VULm43HbBnTsMcVoj5ygNjKFqBxczAW9b8mE7RMAwwAWqAWHKijfwzwt1KNYj2Ispi3UBmIO/acLjFTVdkHDgfq60Qef4ejunawsh2n5ohRkumtmuI8TKQ8WIxlljL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=S7HTKT6P; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=qnDDSqwCksTOap985seGm6oPhIGHkV/vnNEq57qNM2DzUXO7Bqx+Xs8QV+7vbyhT8fPapoEY95OQoA6cCvlIe0NTKiGpplnuj8Vf+Pg/ZxjsJ6+oynU2hrrsB+NqDlbotZwPcEECr4EKd+fjnm4N3H4YGlYV3S50QXyl464sFEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjilL1e3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="S7HTKT6P"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AF4491476;
-	Tue,  8 Sep 2026 03:35:22 -0700 (PDT)
-Received: from thinkpad-e142931.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D75C53F528;
-	Tue,  8 Sep 2026 03:35:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788863726; bh=sxGzBQXSWU9yVu1UL94N88BtQ3fxazG6iyy/h1vW5a4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S7HTKT6PFTD0ZOzaES9LR4h7RRq5sfH2j0TVuEpavv/X0U7fjxXPdcmZUfkYfukES
-	 U6zU3Hkw7f+yVtbTwmh9V07VhxoZzltYVR/tBzmjkIHPbaUPIxRRQmFwvWPrmhFldh
-	 j3PlaeQiPG9TbttT6HLpe2p5KZTUn1PVR/fd3oRo=
-Date: Tue, 8 Sep 2026 11:35:02 +0100
-From: Wei-Lin Chang <weilin.chang@arm.com>
-To: Vincent Donnefort <vdonnefort@google.com>, 
-	sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 18/20] KVM: arm64: Add PKVM_HYP_REQ_SPLIT
-Message-ID: <yt6esgk3mzstm6m7diwmspvcomqqrwo4b5hwn4lrgg63yk2nwf@i3rsml4swpls>
-References: <20260803100904.3563942-1-vdonnefort@google.com>
- <20260803100904.3563942-19-vdonnefort@google.com>
- <20260803105411.B6ACE1F000E9@smtp.kernel.org>
- <ap6QjjJxysWVYCVM@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjilL1e3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57D91F00A3A;
+	Tue,  8 Sep 2026 11:20:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788866432;
+	bh=UYbQS95NtpTDJ0XIYcQUCeFZJDNj7K/I95/G1Xz9DBc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=LjilL1e3iICHu+khhy4e+RTewIrtr1TwvZhdc2BfyoWSCUT7GGRDl7kZmxVxA0s/S
+	 Qxk8WBLC57pfhnbhQTvzKvVDhudZFntx19wfWghw0Dv35U4o3V3S+AGGVpiwnAmaQH
+	 ban6W61/3EEDHVOv1Gsq0FeEpV6KIsWNANF3souAF77Cs3SYgHRvzZGuvlfX53qLUp
+	 QR+xVNMBjcTAs0/REfl87kGkUlZraEq7vwgnNRTZTEXSpHYTj+eX2Mhh6Vy5q9T9An
+	 fFiY/AQIEUkeTe5X6KxvISqJa7QIERD7SzBf/DgwAccAlQ/QCaE3NbcooXQ34JZA8j
+	 N2EFe+6eL5qRw==
+Date: Tue, 8 Sep 2026 12:20:29 +0100
+From: Simon Horman <horms@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Fan Wu <fanwu01@zju.edu.cn>, linux-hyperv@vger.kernel.org
+Subject: Re: [PATCH net v2] net: mana: fix reset work race with device removal
+Message-ID: <20260908112029.GT40544@horms.kernel.org>
+References: <20260905023602.425827-1-fanwu01@zju.edu.cn>
+ <20260906023851.AC7981F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,77 +42,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ap6QjjJxysWVYCVM@google.com>
+In-Reply-To: <20260906023851.AC7981F00A3A@smtp.kernel.org>
 
-On Mon, Sep 07, 2026 at 11:23:10AM +0100, Vincent Donnefort wrote:
-
-[...]
-
-> > 
-> > > +	struct mm_struct *mm = current->mm;
-> > > +	struct kvm_memory_slot *memslot;
-> > 
-> > [ ... ]
-> > 
-> > > +	idx = srcu_read_lock(&kvm->srcu);
-> > > +	memslot = gfn_to_memslot(kvm, gfn);
-> > > +	hva = gfn_to_hva_memslot_prot(memslot, gfn, &writable);
-> > > +	if (kvm_is_error_hva(hva) || !writable) {
-
-[...]
-
-> > > +		ret = -EFAULT;
-> > > +		goto unlock_srcu;
-> > > +	}
-> > > +
-> > > +	mmap_read_lock(mm);
-> > > +	ret = pin_user_pages(hva, nr_pages, FOLL_HWPOISON | FOLL_LONGTERM | FOLL_WRITE, pages);
-
-[...]
-
-> > > +	mmap_read_unlock(mm);
-> > > +	if (ret != nr_pages) {
-> > > +		if (ret > 0)
-> > > +			unpin_user_pages(pages, ret);
-> > > +		ret = -EFAULT;
-> > > +		goto unlock_srcu;
-> > > +	}
-> > > +
-> > > +	write_lock(&kvm->mmu_lock);
-> > > +	mapping = pkvm_mapping_iter_first(&pgt->pkvm_mappings, ipa, ipa + size - 1);
-> > 
-> > [Severity: Critical]
-> > Is there a Time-of-Check to Time-of-Use race here since the MMU
-> > notifier retry protocol is missing?
-> > 
-> > The resolution of the HVA to PFNs via pin_user_pages() happens outside
-> > kvm->mmu_lock. A concurrent host MMU invalidation could unmap the region
-> > and remove the pkvm_mapping, and a subsequent guest fault could establish
-> > a new huge page mapping at the same IPA.
+On Sun, Sep 06, 2026 at 02:38:51AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> This is called on the back of a hypervisor request. This is only for
-> protected-VM and we do have an existing pin on the huge-page, preventing
-> any unmap. 
+> Pre-existing issues:
+> - [High] Module text unmap race condition on worker thread exit due to unsafe module_put(THIS_MODULE).
+> --
 > 
-> We do not use MMU notifier for protected VMs.
-
-If I am not mistaken, pKVM gives up MMU notifiers, and uses pins to keep
-the allocated folios around. A userspace unmap/remap can still happen,
-just that the folio will survive.
-
-This means hva->page/folio/pfn lookups could fail or resolve to a
-different folio from the one returned from the initial pin.
-
-This is also an issue when using transparent_hugepage_adjust() in patch
-20. It walks the userspace page table to look at the mapping level,
-which could have changed after the first pin_user_pages().
-
-Thanks,
-Wei-Lin Chang
-
+> commit 690e7316a6c3698f99d06b66663e08bbcdb43123
+> Author: Fan Wu <fanwu01@zju.edu.cn>
 > 
-> -- 
-> Vincent
+> net: mana: fix reset work race with device removal
 > 
+> This commit embeds the reset service work in the gdma_context and implements
+> admission gates using GC_REMOVING. This correctly synchronizes the service
+> work with device removal and probe unwinding to prevent use-after-free races
+> on the gdma_context.
+> 
+> Cc: stable@vger.kernel.org
+> 
+> > diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+> > --- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
+> > +++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+> > @@ -796,48 +841,49 @@ static void mana_recovery_delayed_func(struct work_struct *w)
+> [ ... ]
+> >  static void mana_serv_func(struct work_struct *w)
+> >  {
+> [ ... ]
+> > +	/* The rescan exits of mana_do_service() remove the device, which
+> > +	 * frees gc before returning.  Only touch the pdev and the module
+> > +	 * reference from here on; both are held until this point drops them.
+> > +	 */
+> >  	pci_dev_put(pdev);
+> > -	kfree(mns_wk);
+> >  	module_put(THIS_MODULE);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it safe to call
+> module_put(THIS_MODULE) directly at the end of a work item executing
+> inside the module's text segment?
+> 
+> If a user unloads the module concurrently with mana_serv_func() executing,
+> the module unload process (rmmod) will wait until the refcount reaches 0.
+> When this worker thread executes module_put(THIS_MODULE), the refcount
+> drops to 0.
+> 
+> If the worker thread is preempted right after this call and before returning
+> to the workqueue core, the module unload can complete and free the module
+> text memory.
+> 
+> When the worker thread resumes and attempts to return, it will fetch
+> instructions from unmapped memory, resulting in a use-after-free panic.
 
-[...]
+It seems to me that this pre-existing problem should not block progress of
+this patch.
