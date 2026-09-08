@@ -1,229 +1,158 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3059D33C198
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 16:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788883780; cv=pass; b=CNVDKGP4Zu/lQobVvt1yShzlNxkkJB6vHPmsTT2ETOkG5kulxiAex40eu+TkaOGeXlfBDzUR4fWOFrr/Ccd66Vrco14/ojvmcdV/z45u6hO9AMzVXN1iYXe9NkTmEnd8HjvtqNUXcKr7x+VHRxtJYGv2nclQRfUMxGZNDBtQXVU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788883780; c=relaxed/simple;
-	bh=WztWhHVc0H7CPyJLwxnwx6YXYXsrq7l98ZyMQp+1Ck4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DFKJ6rOb5GqXk8JCNFuDhXLo3UraSHixJCjy8Eb9cCTjK3fxIx+9EYOikkrPzcD9+srMBji0ZMroX2+pv8xBZyVLh3oS2wcS42R0CVsmPywoOQVTE45Cm+OEqYnTTO09Jbnihb1IjNuxRhsZo+bW+wd530VpGvHCLMqjt1sg62A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZPljulmf; arc=pass smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BBA2C026C
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 16:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788883925; cv=none; b=dgShRcXnUFqpf0XgIQECmIGP4xbSbfxXN8uSCsAshgPX4UeBkkBC0KHJkxKHP1fuFrY0LtizpUSLi8Z7LDPwBhhBJ8G6mTUJEWqRlPibQBMBzHwvmb/GZ8daPluenURW8NQJeyPBRdf4ggXM+GBXyU6HImjKbMylvb6rF0bBgk8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788883925; c=relaxed/simple;
+	bh=do2UA+kUJ1TbXgXRbSmd0EaMt9CkyGUghFC1xnXimn8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ElXMeLMJslymLQz3i2wLB/GohfMCrewefFOwFVe/MfSpdoa3kfp9X/VlDt+iOMWdnETgrYxh5w8iriLfoe+mbpo/WFwYqYf1EWseQ+d74DkgG41W0D6KTkUPQR3eYslndxa4zV0xZ7ilx/QKY0y04xndHfo3olhVY/Cpsj13IJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIGbpUZr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPljulmf"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4858be8b509so2152269f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 09:09:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788883776; cv=none;
-        d=google.com; s=arc-20260327;
-        b=B0fYB1QA3vlNNNzcHBQx9HXzrsCo7EO0njLyTN8oC1yf+5yQu2NI8T/ddBT7llFATY
-         pHNpQMmxMfw7b3XpuiRQsmfrNXf9TGXFuQndOgcZPqo35gjU7z68GitkprGbfoQCr+95
-         YgtZHYSSHW0ssh/Zzmmti19AtcEAaW0Iy/7r0hX/FpEKDO0i7fLjVx+EkGbSz/z+HLo7
-         f5E8mHijKFlS1sJDYAIvQ3yUKuDi24m2lMxjSHzSk64XWKFVzWueCkAxgpxd/1eRula5
-         qf/5EjPGBmwTLBQRCX0wWmxFrELSJPbkeiMPgmwUcNbVjJDiVxOyJcFvYM2Sa5rsrYks
-         TUIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=XTcRxNE+0QKPGmkvcXmGoBSJ3Svx4jopmL9a4dde9Bo=;
-        fh=IJltLsJnZ8n5Xxf5+IO7e1o82sMq7gsEey8L9nD4Ydk=;
-        b=fgJPRXKapTHz4fgknQCaIyn9ORRHJATIokBWfVeoe5ArBT1L5PtBCGltzGz+wrcBZw
-         hsoFaPm7rY+pCSo1ySD+Oy7XLDR9fmigkknDI43C62zLQf+Z4lInoK8TZoPaOKYVonAr
-         gDQGNUVH3QKPs2Ges7+Of6BSRrTt8heNQvZk+U34tu0nE4tuZ5oMFgHnekWGwuUjjo6J
-         DprOyr8YX/smPjzKW1fQbzCgivm3ttRB5Qq2EFUyYbK0ThiiHhzXRVvtJnrW8G5V10Cg
-         p95NoN8wNa4r9PB4xcbzdnVImifndW1o08SYQ17RpG/kGlXTc7F7cG8YA529bxvGBmQK
-         OxdQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788883776; x=1789488576; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XTcRxNE+0QKPGmkvcXmGoBSJ3Svx4jopmL9a4dde9Bo=;
-        b=ZPljulmfFibI/jzUJF+4+aLkiui/54Wp7MSnSG/FuM53wnRMLGdfIf61KFn6ph+z7Y
-         gMbCYTlbOp9MygKOJlFk5/WIO9i2plI/jtnY/N4X/gtH5T757IJSDFA0G+t6BwUAzUGg
-         xkjOz/o58wbtJ5tJY3OmVuMSWg9syw7IcV3yf2diUPQBAy33SVB42vg6ydNP5nNIvt8Z
-         K+dkrQ43FpJ/Gx2KFIzH8eBljHHgqvMmr2x0WK/cL2jcJnS2cSYGrHyjSOm35ObGEliX
-         PBqvxB5jPIzhn9U2pcTyr40vHtCh31qZvrM0sXfvBOm4ZaWHx7SXFK/y+1a8YMmYy1Zr
-         o1bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788883776; x=1789488576;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XTcRxNE+0QKPGmkvcXmGoBSJ3Svx4jopmL9a4dde9Bo=;
-        b=HQI+nCC30g5fisnsudlWAxaG+Q2xXwh+buNmMtaXmIsT+A7MRd1e86STTfUHJfVWtW
-         gzE9zsYF+1HELB8wAfUYi8kCmxSSHN7JHPGOU9wdv/mWADMPIYyj7IuKoc24LLNPvuBw
-         musvKDrfmc08lH2oO4xLHhwNHTTTf/2NZGpQ/ykI7sj9HYl/Kr4gjJiwjAuabppsnpRh
-         xQ52YYdiVGE2BxNnjpzplZzIoJniCt512+MsT3t4wPztlJvDm+0o05D3o6gzjkS4GMzL
-         nSvQTzogiYnDpSxav0vFfUrFCiFSws7GhsZ/5vR3MLn4M6u7vn/laHBuR8GaX58edhMY
-         an6g==
-X-Forwarded-Encrypted: i=1; AKwUvBz9NQ0E0yT6VGac7epFR+YtsMQQA0HnxHnA5BJwsls11cOI80i3wC5gu59+edj9pPl2VGg0OnuOzkF8pbJCUo0=@lists.linux.dev
-X-Gm-Message-State: AFuF++l14NsqzK7lbJPZsv2c3Gn0Fngf5PdI4DoR6VXEGbIanRgcia7h
-	vRKLJBFkrquQMmXm08PUg/9xXvxjkqkHhinVgHKgKlWpZj0GzDH5KZ+hlbgv45SqSsyt1DBxdrr
-	8EiajGYNYqQIsw1/1IaGHGJPp6E3cUpk=
-X-Gm-Gg: AYBFou0p9+k3K2UJ3NcJmFP0lMEXgfD/KCogoKaWzgLSH/hZfb6nZ9k31yirJhem60w
-	89OSsxAt3rr5FWHdgU5fql0/UqC6zd9A1XXQ6WsHKz43dRqd9QsUbY12O4VbgUFMarbwmyVQIu4
-	WI33Dza0DFPLlQ8/HmrHD1lqcWA0DzMR5nmfjTP5ty+XJ8JFadCxgNm1OEzqqcVGtH2Hr0z0EYA
-	mjEp05JI4FtQZINzshxgbPqaj2Ju0v8ZqBCu17diw4WrpetKCAqd9sbO98oNV6RawQDHX7VDOpa
-	EsnSQQexvgO8D2z2Jv15fdLfvA3uPMhKxm3dca5a5CMiBoxYIcVCfSVG+rDrS42BhMgUGe/xR1q
-	zypfXS3yyWtcnIzx0zyJuB6V4prajrA==
-X-Received: by 2002:a05:6000:4694:b0:47f:9266:9bde with SMTP id
- ffacd0b85a97d-4858703f92dmr25465606f8f.4.1788883775867; Tue, 08 Sep 2026
- 09:09:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIGbpUZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3971F00A3E;
+	Tue,  8 Sep 2026 16:12:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788883923;
+	bh=3bbGkobDpQdGYniX9EG7+4iZ/BE90dQ8CT8XcVZKJEY=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=WIGbpUZrib61q8vONJ5FxSNakSuqaKCAsWJ+5gdMnCnFUkEPBkJwty8nxVVkN0Mv1
+	 w9t0XZ7baGlhJo6FAfmbzQHeT6V1vAUfLWN4apw16QVaQoaDbWzrsztdNDktT/3N0X
+	 iigUWVKzKZ4xSPjrUlzdr8zP6wW0E2DfPWCLVHHV/G8G3n7KOVbVsEwV0MVjf3kr7e
+	 bwwkO3x7f2V+zWtZ0deWW2D5+s5mUpPxp+iIHyNV8byIQganVhI0jnbxR+VlciGb7C
+	 dr69/ho0yadENGN25j4/oy5Stqto58/hMhZMDO7KOPS2seR908Ic/8L1QueLpqt231
+	 UbD43Bz747fcQ==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id ACE13198003A;
+	Tue,  8 Sep 2026 12:12:01 -0400 (EDT)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Tue, 08 Sep 2026 12:12:01 -0400
+X-ME-Sender: <xms:0DOgapxIuztF-xAq1Xu0-G1BF1NYaz6JIZlSC3D-dq3Fz6DWKbpWFg>
+    <xme:0DOgakHmWMXsSA9O0-u_SlgufJhLfNf5hx5mRaEauyB0lcnspeq1oDMuGNavoa1ut
+    50ZNN52M0vBDTGGdKeGtBDtZKuXvmfocVfBKTB9QPGRwSEIu2bRPRA>
+X-ME-Proxy-Cause: dmFkZTFCMZbKka0PySpBSN0mOueOshb+uEL6ESVsVEH+1U1ATE4YvAKZeFRO257abuQ+ng
+    4PZCmsJnRkV/CoaJ+mDv3YqAto2q5SqEOFwbw6IsHq7VZajVGrnhWI0oYBHvFuJO97HxDG
+    pqfqxCPhTLzTprK3ntJZb0z9cfKzZw9S77ZLaTVZxLK7qnySfdKurKPqugdGDQMkjRCrqw
+    AIrcDceS4WrKbdxeHBH9945l6oxC8GA3mo+q4fJylrSLhZGVKNcwvFuJMdyOUfqVFIRFQC
+    NaLmAW7/Z+ubTtxnGKLueCuD7XLm/D3q6FipdVaMXj+xv+3IUzuF+mc2FDlpeEbdTinHad
+    iTw2WIz06Xf0RdlLqA3VXTMZ43u3wfgRb9mF0Vqd0QgcFmBDd0d1wp6zCTX7oWlwgWq26y
+    I+Og11aGh9ylDkTsSRZ7u/DLN7gYuRMYfqbK74bqmlce000gCwFqxe9BLdxFWsOL731qMT
+    sjH8DirrK5v3MIywZvSKmTrtuysA/pVKnQKGR5NHHFRhn6pY6u/y0fIrdHzdOQfOOlUWEY
+    7oEzUnt83MODHGRusAjEYJpctGSP6JuuIO0hg98JeaOn70wh9I4bN/io+rXokPnWu1dwXD
+    xhymirxxSTjmLZvHZSk8Rp6mtd1KxfakPRkBMJqP06MsSwUt3rxVa9utsROA
+X-ME-Proxy: <xmx:0TOgaoHVWd8BKffCEnm-xJwvT7eTaPZ3mte3HodUiQo0uSLW8oxbYg>
+    <xmx:0TOgarXr5vRy8XaIdHcFcpHvMcxRaRlVZ1IOVs9Ws-lqna-6r2Bm5A>
+    <xmx:0TOgaoyIMSeJ1juWayio0oZ0pDbHTGbiokBMtxKqKkQ3x90X-JNCZg>
+    <xmx:0TOgaoTpjFqgNobdu2LnBZxU30xTI0rppen-HQRWsWcorfxeB4WWOg>
+    <xmx:0TOgashVP2icbUUysxENXiCXVHDUiIBNO3Vldk61mtjQjpID9MMbC-Lx>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 3E8B032A007B; Tue,  8 Sep 2026 12:12:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260814191415.2110732-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260814191415.2110732-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260814192623.2A9251F000E9@smtp.kernel.org> <CA+V-a8sFKaoYe-5ETcoktTibaHZeJDQN+BGzsD2xFnVZRXxm0A@mail.gmail.com>
-In-Reply-To: <CA+V-a8sFKaoYe-5ETcoktTibaHZeJDQN+BGzsD2xFnVZRXxm0A@mail.gmail.com>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Tue, 8 Sep 2026 17:09:09 +0100
-X-Gm-Features: AcwNN1UPrT-OBd75FMnOYw6-VBnoCdw_d03tw_YLhHOMh0wIOw46Gu0F0_TY1sM
-Message-ID: <CA+V-a8uDW1M6z2R_KBhKLn4Njp+3mVSTPDWYrjs+Xy2TPuoaCA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] watchdog: rzv2h: Convert WDTDCR handling to regmap
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>, sashiko-reviews@lists.linux.dev, 
-	linux-watchdog@vger.kernel.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AGTXWeH1PU47
+Date: Tue, 08 Sep 2026 18:10:47 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, "Rob Herring" <robh@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, linux-serial@vger.kernel.org,
+ "Frank Li" <Frank.Li@kernel.org>, imx@lists.linux.dev
+Message-Id: <cfce9a0e-a7b7-409d-b9a4-abb9013469a9@app.fastmail.com>
+In-Reply-To: <20260908155212.810C61F00A3A@smtp.kernel.org>
+References: <20260908152808.3928630-1-arnd@kernel.org>
+ <20260908152808.3928630-4-arnd@kernel.org>
+ <20260908155212.810C61F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH 03/13] ARM: remove riscpc
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hi Guenter,
+On Tue, Sep 8, 2026, at 17:52, sashiko-bot@kernel.org wrote:
+>
+> The Acorn Risc PC platform and its associated drivers, configurations,
+> and board files are being removed as the required gcc-8 compiler and
+> -march=armv3 option are no longer supported.
+>
+>>     The main limitation here is the CPU bus that does not allow 16-bit
+>>     wide data transfers and hence requires the kernel to be built with the
+>>     -march=armv3 compiler option that was discontinued in gcc-9.
+>
+> [Severity: Low]
+> Since this compiler option is the explicitly stated reason for removal in the
+> commit message, should we also delete the compiler flag from the tree?
+>
+> arch/arm/Makefile:
+>     arch-$(CONFIG_CPU_32v3)         :=-march=armv3m
+>
+> Additionally, the config symbol for this architecture version is now
+> dead code because its only selector (ARCH_RPC) was removed:
+>
+> arch/arm/mm/Kconfig:config CPU_32v3
+>     config CPU_32v3
+>         bool
 
-On Tue, Sep 8, 2026 at 5:02=E2=80=AFPM Lad, Prabhakar
-<prabhakar.csengg@gmail.com> wrote:
->
-> Hi sashiko,
->
-> On Fri, Aug 14, 2026 at 8:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 3 potential is=
-sue(s) to consider:
-> >
-> > New issues:
-> > - [High] Using a regmap configured with `use_raw_spinlock =3D true` in =
-the watchdog restart handler introduces a deadlock if a panic occurs while =
-another CPU holds the regmap lock.
-> > - [High] The watchdog restart handler inappropriately aborts on regmap =
-errors, silently preventing system reboot.
-> >
-> > Pre-existing issues:
-> > - [High] Calling `clk_enable()` from `rzv2h_wdt_restart()` can cause de=
-adlocks if another CPU holds the corresponding framework spinlocks during a=
- panic.
-> > --
-> >
-> > --- Patch [2]: [PATCH v3 2/3] watchdog: rzv2h: Convert WDTDCR handling =
-to regmap ---
-> > commit 81d528488e87b317129eaa95c0076e2e770f3265
-> > Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> > Subject: watchdog: rzv2h: Convert WDTDCR handling to regmap
-> >
-> > This commit converts the WDTDCR register access from raw readl/writel
-> > variants over to the regmap framework using devm_regmap_init_mmio(). Th=
-is
-> > refactoring allows the driver to subsequently support syscon-based syst=
-em
-> > controllers natively.
-> >
-> > > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wd=
-t.c
-> > > index b770226f785ea..cf28caef31e8e 100644
-> > > --- a/drivers/watchdog/rzv2h_wdt.c
-> > > +++ b/drivers/watchdog/rzv2h_wdt.c
-> > [ ... ]
-> > > @@ -91,20 +92,12 @@ static int rzv2h_wdt_ping(struct watchdog_device =
-*wdev)
-> > >
-> > >  static int rzt2h_wdt_wdtdcr_count_stop(struct rzv2h_wdt_priv *priv)
-> > >  {
-> > > -     u32 reg =3D readl(priv->wdtdcr + WDTDCR);
-> > > -
-> > > -     writel(reg | WDTDCR_WDTSTOPCTRL, priv->wdtdcr + WDTDCR);
-> > > -
-> > > -     return 0;
-> > > +     return regmap_set_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WDTS=
-TOPCTRL);
-> > >  }
-> > >
-> > >  static int rzt2h_wdt_wdtdcr_count_start(struct rzv2h_wdt_priv *priv)
-> > >  {
-> > > -     u32 reg =3D readl(priv->wdtdcr + WDTDCR);
-> > > -
-> > > -     writel(reg & ~WDTDCR_WDTSTOPCTRL, priv->wdtdcr + WDTDCR);
-> > > -
-> > > -     return 0;
-> > > +     return regmap_clear_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WD=
-TSTOPCTRL);
-> > >  }
-> >
-> > [Severity: High]
-> > Since rzt2h_wdt_wdtdcr_count_start() is called by rzv2h_wdt_restart() d=
-uring
-> > a system panic, returning regmap_clear_bits() here means the restart ha=
-ndler
-> > can now fail if the regmap access fails.
-> >
-> > If rzt2h_wdt_wdtdcr_count_start() returns an error, the restart handler=
- aborts
-> > early:
-> >
-> >     rzv2h_wdt_restart()
-> >         if (priv->of_data->wdtdcr) {
-> >             ret =3D rzt2h_wdt_wdtdcr_count_start(priv);
-> >             if (ret) {
-> >                 ...
-> >                 return ret;
-> >             }
-> >         }
-> >         rzv2h_wdt_ping(wdev);
-> >
-> > Does this silently prevent the watchdog ping and hang the system indefi=
-nitely
-> > during a panic instead of rebooting? Should the restart handler ignore =
-the
-> > error to ensure the watchdog ping always occurs?
-> >
-> If the regmap clear/set fails, it means something really bad has
-> happened, and we cannot reboot the system. It's better to return an
-> error instead, as the reboot won't happen anyway if regmap read/writes
-> are failing.
->
-> > [Severity: High]
-> > This is a pre-existing issue, but I noticed the restart handler calls
-> > clk_enable() when the watchdog is not active:
-> >
-> >     rzv2h_wdt_restart()
-> >         if (!active) {
-> >             ret =3D clk_enable(priv->pclk);
-> >             if (ret)
-> >                 return ret;
-> >         }
-> >
-> > Since rzv2h_wdt_restart() is called in an atomic panic context where ot=
-her CPUs
-> > are halted via smp_send_stop(), can this cause a deadlock? If another C=
-PU is
-> > halted while holding the clock framework's global enable_lock spinlock,=
- the
-> > panicking CPU will spin indefinitely waiting for it.
-> >
-> There are no APIs available to enable clocks in an atomic panic
-> context. The other alternative would be to have the clocks ON all the
-> time in the probe.
->
-Please let me know if you want me to enable the clocks in the probe so
-that we dont have any locking issues.
+I decided to remove these two as part of the later StrongARM
+removal patch that depends on this one.
 
-Cheers,
-Prabhakar
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 81872f61b4317..fdd75b73bf293 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+> [ ... ]
+>> -ARM MFM AND FLOPPY DRIVERS
+>> -M:	Ian Molton <spyro@f2s.com>
+>> -S:	Maintained
+>> -F:	arch/arm/include/asm/floppy.h
+>> -F:	arch/arm/mach-rpc/floppydma.S
+>> -
+>
+> [Severity: Low]
+> Does this leave the floppy header as dead code in the tree? It is removed
+> from MAINTAINERS here, but the file itself was left in the tree:
+>
+> arch/arm/include/asm/floppy.h:
+>     #ifndef __ASM_ARM_FLOPPY_H
+>     #define __ASM_ARM_FLOPPY_H
+
+This is removed along with ISA bus support later, which also
+drops ARCH_MAY_HAVE_PC_FDC, ISA_DMA_API and GENERIC_ISA_DMA.
+
+I could have split up the MAINTAINERS file change, but
+it seemed better to do it in one place. Maybe the other
+patch would have been better, but then I'd have another
+dangling reference to mach-rpc here.
+
+> The Makefile still references it:
+>
+> arch/arm/Makefile:
+>     machine-$(CONFIG_ARCH_RPC)              += rpc
+
+Fixed now, this ended up in the StrongARM patch by
+accident.
+
+> The machine type registry still contains it:
+>
+> arch/arm/tools/mach-types:
+>     riscpc                  ARCH_RPC                RISCPC                  1
+
+This is intentional.
+
+> And the CPU selection still evaluates it:
+>
+> arch/arm/mm/Kconfig:config CPU_SA110
+>     select CPU_32v3 if ARCH_RPC
+>     select CPU_32v4 if !ARCH_RPC
+
+Again, this is part of the StrongARM removal. I had considered
+removing these two lines first, but then I'd have to split up
+the CPU_32v3 removal out from that.
+
+     Arnd
