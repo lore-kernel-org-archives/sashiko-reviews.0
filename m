@@ -1,175 +1,246 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339AB43E484
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 12:22:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1E62E7623
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 12:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788870178; cv=pass; b=AwcClwPpGUH9Jo4eU/CFceANInAUMIlPOs1enykZ+Z0PFwJ1XJb2J6wNtEXU2fR+nmrhaOD7j1qjjuA1DJGNy6dsO445MvSNfhEP2o01OIw+6b1PJGPd5VLXS64VskEbwEmDxmaiGTCt26sajTX7mySUWlwLZDC7EId9ZBYf6Bw=
+	t=1788870201; cv=pass; b=A+BAUKK5Ok9AF21yufaNXbLOs4joSNuHeUN8BDcgx8D9ENWOXk4aJkkU/DCQX6H4++A2vaEUsUhu39stw/awslecBW8gmfgFMbib4akZZfseYTepu4nUqjlo9pZTEUKM3skdxX5VnfrzpJqfukKm7ZJSNg7BdZuEDfY/hCWpIuQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788870178; c=relaxed/simple;
-	bh=jNKMxx0MOdU8RjRdPogMBdpEV9wM37Jz7FMCb1o4W3I=;
+	s=arc-20240116; t=1788870201; c=relaxed/simple;
+	bh=7B//ywSPA31oLbLkiJWEnOV8UhYI9nR5ExoskFX6af8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sBDoi6lewz0kUq1HoIwnlRR7aLzqxLjOsQhLKQZZow/pmfDAg3U5GgIb5swfw4CWsPxeb9x1PlW2hJkC4a21rtA6fExYz/DXuJqt50typpQgTNYZ1DFA23BQT8+VfFT2JzVePZ9Z/qxfuQGCVdAHRIY2F5mAabxb5HX9sqg5LLg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nRzpEQ7j; arc=pass smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=q/a/Z5Vob8unrsZPYgB+JpAKVoCjPMdqjHUKZxERIggvRtVPHXRHaptNBlOZIphrBAL/M6yaHBUmbcisYpnawadiFOTHfRcC//r7XFYjolCUyZ6M9bW1RDb+qC0EvL1oVyPzWg+BxWtlatu349FQ1vN6Q+sTdMR9GVdZY+HoLpw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ByFuSJ/M; arc=pass smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRzpEQ7j"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c25420fe973so792140166b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 05:22:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788870175; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByFuSJ/M"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-69f7fa1c548so7613126a12.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 05:23:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788870198; cv=none;
         d=google.com; s=arc-20260327;
-        b=BcNXkz9xPQ5ISgTPcr6L4YXOk0jvV7VVu9QxFL5EVk9QaoqOPPoPIiVYFMh0KKHLdB
-         +8omrN9JctHFazRnpfMjJtkZrWfm4T74fxtJ4cCqHOXtHdUG5pcRa2q7bMOkrPDhSyUf
-         rdqRGCmMJ7dn1IjNBvEM6vO2boAwB0v13WiYR7DqZXwRchWy3IPEtoEu5CkUgwYCVwDe
-         dSpeVtCHtIlkJv7uY9eh/dBTMmIRgpItnDIILKJCt3dN3XXVETp+6qVb1YeRnKp2TWMk
-         4ny/MOTYxgosYoHltVyyxh1LcZQ/LXOlqtwV6hAjh9jvxU0tKS7a2k5JI/CC3srSmBLC
-         RO8A==
+        b=RlABv9vSz/rltnp+zGgNo9cpOxJVa31TnkKF72K9yP26C/D/hU+8m76ju/DjJScZ7j
+         nZ4NN25A6d6k/+aGf8L2G7y6O1wsAmAh4+xzfPzpS2VqB7cy+pAcBnEgKHGJRPCcGEnW
+         P+FcIdK3HyJ15+W5AK8iKhJLSnMxxA6zIrdXss6olWN7sCZvS59M2RSMErF5mf+BL2sS
+         ArUvWGCeuJ+xGoGFZK1h7tLP9TgkE8sjgiBOrJu813NIoOZO1C4hGIjOlMYBxITgF6FU
+         /NPKgUQskx4qqbwi6S+s6ZF0LqCi/vrKUx/26N6xI3LyjP1DMBMTuZXHseusgZxyqsYf
+         eCaw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=SOTX3LhGaqV8k/2U8+BV0Xzd4XXbDTqUOYRoKAoVoyM=;
-        fh=MwAi/5DKc2ZglTguM9FLI4ELM6x9cS67TGfSCdkhRFI=;
-        b=U0pCIZyEQNr0i9WN7EUYY6bNmV02YqR+CkghkiMgPI87sZEcD5TvMnfavHttTJizla
-         SkegoA92n6ZFkP4EdfGIaLCePG9iARP/rPDeoEJ8276I3iNKC1o+0MxG4bQb/mY8ycuk
-         spCJydm5KkRJN8qwUUarUqxTb1M4BrXuhKZDeuFVp5dAFDakRk/EZ3UEifhwsdzTFj/x
-         gZLzVXNW0/tAV53uWU0pvjZTCBCevkoPO65sACkAevc8um+p0uXgV0B9LmoS6IOcozu4
-         PHc7vP5VbCUCRo5XDQhN1sYZREg1gQk6UlH9BR7zxTvHP91/+KrZ3Aw2QinI6ENgTh6U
-         MWJA==;
+        bh=kMTwhNu5pCcwPamJHqUSc+QqQ3bw/cfakmLflS8d1lI=;
+        fh=orp1a3sw37+koAzHJzM3c7ZyU2UhSdEZSlOETZqrIxM=;
+        b=O2jf6QqUf/UC1AsE/mHltMzdNqs3vr5evaLo7JjIGoXhuMJWw+jCHK3t2+GsZOgwZo
+         zc48yzvyu3shj3YsCnswgx3if5GYOWZtVg31j7oy+idp6BBul1dm4BcoKgvUWimN/19n
+         VzZE0aOAT67J+JCJos8W1GsW0JU+w56SPBHDmB5nna+p34Rf0qdH8o+mWP571z3QDYCH
+         pLhxgpHSwoiZOo3Ai1LdfsZuJnZ/o+ypATA7l5xxD3DwxCSsWxP+4ncpEzfqoLH0NeSF
+         niwLVB7S2YqIdijUrGliI5dhUeqid1x6kSC+SGwTMTB3uQRfHlokmWCOYpICj/cmbX0I
+         n+Pw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788870175; x=1789474975; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1788870198; x=1789474998; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=SOTX3LhGaqV8k/2U8+BV0Xzd4XXbDTqUOYRoKAoVoyM=;
-        b=nRzpEQ7j/vKDG2ErB62+CeyeeD7/X2fuYWYvZzNnaILSdTS5F6O0BhfQaTAFdQjI99
-         RZA98+QeyR3Poz8bgFunsdMLIrtDj19/aa20J3JOn+6lgWApJ4G1n/gn+8MOi58ummmz
-         6iYTEbE9IFUIoZNkEdq0Dn/fly7KZgN0s0uHiNJGc+NOXPh1BEHHUIahVFwldtWFrns0
-         Ui4v6JnLoh/rLPD5LCavAMbCkV0jrkq2B+kIESN0LrD3LLNfUpS9Q9SYBh4KZCm0NCuP
-         jZvNWuBwP48rXt4OCtwCpU1nWIvUGCaAG1pbHXdXTjgasz/Qx9WtewyKOXHNWfOMM1P6
-         ordQ==
+        bh=kMTwhNu5pCcwPamJHqUSc+QqQ3bw/cfakmLflS8d1lI=;
+        b=ByFuSJ/Ma7pgQE0b9EgU+6vxV5IokmHqY1ErHSaI7cE2CeAL3uYuNCSFRiUjXhdDXg
+         LVdobEU9G/M9C0GG0E4ZnMyIjvGsV+p1YWlZorfbB7di+uyPfp+N4mA0AfNsdCbma+05
+         oF1pBCbi9qQ31VibRBe5i2WAV8oo/Z0ADhIqUtGKqcCBkzXFWlljFW/sfr/3zwK2qmCG
+         3cGxu6Z2NPDvL99AAanEBpyz7sxbq4K1qX+cgEQVJvxcI4UdjRcc6z6ev1MJixcGulNQ
+         /DODGZ5lmyhodcXEXczpU1sYCuH1TXBrzxDl5hrUkEjYMyIDUNwll7JPZr5bAgVRM7Bq
+         YgWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788870175; x=1789474975;
+        d=1e100.net; s=20251104; t=1788870198; x=1789474998;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SOTX3LhGaqV8k/2U8+BV0Xzd4XXbDTqUOYRoKAoVoyM=;
-        b=XWXGnRCbwJjflX6PRala299p55FE6sxm3aOguf5+aQOZTFRPEk5batrNHWPc1ZiC7a
-         DQTXdtGWLfGBQvc9wtsTwIZx96MAlmt14B7cWB0SxvIh5UVIa0Ct3VridbhuIK9C8reB
-         Ce7s4aiQUd7XN84LnasxDca2FBTZnwD28q/Dz50RwwX/PdTa6ZmNbvLybrhM9nnT7tRd
-         3U92O53xS9h8QmFX7JoVmXr7ZKV3KQ79oYg0//xuGyQoBrs440fMnys2znobUP2USRJ4
-         +Ac8/zwccCvfNsrQ7HkjMaYTPYUysCzK6NAQHlAhs/vjbdfBXarGyGQl1K4C8h6fwt0D
-         oldw==
-X-Gm-Message-State: AFuF++kTsYk3AaCYkLBK/Z7FPaY/jozSMtEj1FWpWtG06bCp6OPITL1i
-	74VpDTHpOqIAfNDdvRYs3ckAi0lATJUvNEAIUfpIw3dMUnDmRW43t/lujoUmlToKzJl5SulTS1+
-	ANEwf82bQlO5o4shbCgF1dIauvxGqFuw=
-X-Gm-Gg: AYBFou3G0QuJ5ANGOzSsaZqQ7ODcKO93FJKX/m5YFqwTX2E/obdokw9Z9w+6G1hJFFO
-	VApmTiBBX+kZf8dLp//F743uD0yZr61yVU452kC4kcuGCSwpLQL7Jlaweb/UaEwB+PZ+c1iLWzR
-	CLGDcjDkOe3JcOXw8IkFxyCgRpty9FVjfrSxfDfHQN0Gq+Li3b91Br5AgoytegAPHdh1/xPRc+4
-	K2e/QrIRzvjo3cWtD4sTaOLic4S/vGG3uS2w2IpPvAoDGMtHSqw/ockA5hiM5G0WoMq/rKidl6L
-	aAghfGLet3E92IX/6T9/OUsJu2n4QknIC9QnLWfdC5tZGLTo669x/GjENEVk
-X-Received: by 2002:a17:907:d01:b0:c26:19de:913a with SMTP id
- a640c23a62f3a-c2619dea224mr932569166b.45.1788870175001; Tue, 08 Sep 2026
- 05:22:55 -0700 (PDT)
+        bh=kMTwhNu5pCcwPamJHqUSc+QqQ3bw/cfakmLflS8d1lI=;
+        b=i7ChJ2bSCtiodzYgAEgm6xLT8jG/yHurUfcaaKnatl1LtRiQ4Y9Rxp7mPHvhB2VStK
+         37+3esXWIVQBJRamecU3KrbfSRHdC09bj+Ym2Goo5IZCpwwOWhuk/bgH4ErQblFXXMyX
+         Loo+1TEX/EbF/WN8ATctzawUoRrHtVDvtCokOgdRpDwB3bPXcm6fzGewjyLICfd2R2AT
+         ltWBbP0uEBhk1W0xORCbrvQBcIf14klXIw25ePGnNxq/dm8IXPnM0uJlDguaub+Ov92L
+         xVM7XpsZBOYZEiLlIU8yZ3qtIU+aPOakkJYyr6O6RPNAYE7I1b2ZtRm2ZS9XQZJf8TEw
+         3H4Q==
+X-Gm-Message-State: AFuF++lwgzEFU8o7G6Oj7eXDpdYYbzJrfVsrErowPgVVGSZ7KF8d2Dlk
+	ksYzvZnkLd6Txwu5rccbUXGKFyNayrp/iitO1ewgT3dUvyrqe96QqynePwEdCQ/pT/H2PrzQu3M
+	EyGtedFHSdO8nQetvW+ITl4YG0CypuNz5fYPqbIg=
+X-Gm-Gg: AYBFou0SGG4FuNYXrF1o6K34ztfH3PsaF3ewtAZK85T7SsE0sCNhZ1I2xfImnt4F3iC
+	rNx+OT3z7ia/S0uctD2I0DH95CqDs+Sv0fpE/Gt9DqGy+Q0PhlXzVbzQCJfEF+gv11+XwoPsKKE
+	QLEdjRjUR695NzVgFlSiDQ2PkzyVGppF48ayGNNAOLbfbrty6Kzbar/Q8qz91TBKqIlsi9ZnM7/
+	6dV7VGzGQWoLY9IFpBP2+poyAeeTEDFFH2UJys3C0vNUOfsh1e+eGs3Mw2TE1eNBgf33l0wKlhI
+	85Hmp31Qt1kX3VgRadeb4oFtU9eXvYGrxznHr/duch7U7F4gXTw15RwZPFA7jVA1WNNzstM/BTq
+	lUZOa91eXEwEIh0xwTXCBvAPCaG0GlQ==
+X-Received: by 2002:a05:6402:3814:b0:6a3:87b7:b516 with SMTP id
+ 4fb4d7f45d1cf-6a7e8d67669mr9906512a12.6.1788870197348; Tue, 08 Sep 2026
+ 05:23:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260907134552.1772405-1-puranjay@kernel.org> <20260907134552.1772405-2-puranjay@kernel.org>
- <20260907140642.B02581F00A3A@smtp.kernel.org> <CANk7y0j33fmyQyTvL37Tx6Ua_bGfT5n_=Smw44u_H7G6rMcr_Q@mail.gmail.com>
- <CAADnVQLeCzCAF1Ku2Ri=PUfespAKPMEO_qQLJ1XEhAtLERgeBA@mail.gmail.com>
-In-Reply-To: <CAADnVQLeCzCAF1Ku2Ri=PUfespAKPMEO_qQLJ1XEhAtLERgeBA@mail.gmail.com>
-From: Puranjay Mohan <puranjay12@gmail.com>
-Date: Tue, 8 Sep 2026 13:22:40 +0100
-X-Gm-Features: AcwNN1VRXI7Dc37t9BPlMRYUgwE1HIP92RRwvyEJXlseQFtzU6l3-Rs3wMRGzow
-Message-ID: <CANk7y0gizeJe9tx12a+8VzBAAgzAh1G3N+Ru9mJ+4GJwW1CW+w@mail.gmail.com>
-Subject: Re: [PATCH bpf-next 1/4] bpf: Add bpf_call_rcu() kfunc
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf <bpf@vger.kernel.org>
+References: <20260814191415.2110732-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260814191415.2110732-2-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260814192638.EA99A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260814192638.EA99A1F000E9@smtp.kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Tue, 8 Sep 2026 13:22:48 +0100
+X-Gm-Features: AcwNN1Wx4etsK429Q3Q8c3-LvEEz0E7ckOfxtJenny8EdfSwTa4Tjef1JG7X6dI
+Message-ID: <CA+V-a8u4_gziwgevLUWwPkhkm2TbQXJhwFMa9ug8MAss+aZcug@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] watchdog: rzv2h_wdt: Propagate WDTDCR access errors
+To: sashiko-reviews@lists.linux.dev, Guenter Roeck <linux@roeck-us.net>
+Cc: wsa+renesas@sang-engineering.com, linux-watchdog@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 8, 2026 at 1:19=E2=80=AFAM Alexei Starovoitov
-<alexei.starovoitov@gmail.com> wrote:
+Hi Sashiko,
+
+On Fri, Aug 14, 2026 at 8:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> On Mon, Sep 7, 2026 at 7:39=E2=80=AFAM Puranjay Mohan <puranjay12@gmail.c=
-om> wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [High] Error path unwinding in `rzv2h_wdt_stop()` leaves the watchdog h=
+ardware unconfigured, causing an unintended immediate system reboot.
+> - [High] Aborting the `restart` handler upon register access failure prev=
+ents system reboot and hangs the system.
+> - [Medium] Using asynchronous `pm_runtime_put()` on the probe error path =
+leaves the device permanently powered on.
+> --
+>
+> --- Patch [1]: [PATCH v3 1/3] watchdog: rzv2h_wdt: Propagate WDTDCR acces=
+s errors ---
+> commit ffabc27a1b8e9074dcd4cdaba7bc802a6d661fcc
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> watchdog: rzv2h_wdt: Propagate WDTDCR access errors
+>
+> The WDTDCR helpers currently access the register directly using readl()/w=
+ritel()
+> and therefore cannot report failures to their callers. Make the helpers r=
+eturn
+> an error so their callers can propagate failures.
+>
+> > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.=
+c
+> > index 3b6abb66a1da0..b770226f785ea 100644
+> > --- a/drivers/watchdog/rzv2h_wdt.c
+> > +++ b/drivers/watchdog/rzv2h_wdt.c
+>
+> [ ... ]
+>
+> > @@ -171,8 +181,13 @@ static int rzv2h_wdt_stop(struct watchdog_device *=
+wdev)
+> >       if (ret)
+> >               return ret;
 > >
-> > On Mon, Sep 7, 2026 at 3:06=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> > >
-> > > Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> > > - [High] Calling `bpf_call_rcu` from NMI context causes a raw spinloc=
-k deadlock because `call_rcu()` is not NMI-safe.
-> > > --
-> > >
-> > > commit 3385037afe11a72dffbb6db99b4174626596c231
-> > > Author: Puranjay Mohan <puranjay@kernel.org>
-> > >
-> > > bpf: Add bpf_call_rcu() kfunc
-> > >
-> > > This commit adds a new bpf_call_rcu kfunc that allows BPF programs to=
- defer
-> > > operations using RCU grace periods.
-> > >
-> > > > diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-> > > > --- a/kernel/bpf/helpers.c
-> > > > +++ b/kernel/bpf/helpers.c
-> > > [ ... ]
-> > > > +__bpf_kfunc int bpf_call_rcu(struct bpf_rcu_head *rh, void *map__c=
-onst_map,
-> > > > +                          bpf_rcu_callback_t callback, struct bpf_=
-prog_aux *aux)
-> > > > +{
-> > > [ ... ]
-> > > > +     rhk->callback_fn =3D (bpf_callback_t)(void *)callback;
-> > > > +     rhk->map =3D map;
-> > > > +     rhk->prog =3D prog;
-> > > > +     call_rcu(&rhk->rcu, bpf_rcu_run_callback);
-> > >
-> > > [Severity: High]
-> > > Does this code risk a raw spinlock deadlock if called from an NMI con=
-text?
-> > >
-> > > Because bpf_call_rcu is exposed to tracing programs, it can be invoke=
-d from
-> > > NMI contexts, such as when a tracing program is attached to a perf ev=
-ent.
-> > > However, call_rcu acquires rcu_node raw spinlocks and is not NMI-safe=
-. If
-> > > the NMI interrupts a path that already holds the same rcu_node lock, =
+> > -     if (priv->of_data->wdtdcr)
+> > -             rzt2h_wdt_wdtdcr_count_stop(priv);
+> > +     if (priv->of_data->wdtdcr) {
+> > +             ret =3D rzt2h_wdt_wdtdcr_count_stop(priv);
+> > +             if (ret) {
+> > +                     reset_control_deassert(priv->rstc);
+> > +                     return ret;
+> > +             }
+> > +     }
+> >
+> >       pm_runtime_put(wdev->parent);
+>
+> [Severity: High]
+> If rzt2h_wdt_wdtdcr_count_stop() fails, this unwinding leaves the hardwar=
+e
+> out of reset but unconfigured.
+>
+> If the stop operation returns an error, the watchdog core assumes the
+> hardware is still running and immediately issues a fallback ping. Will th=
+is
+> ping against zeroed, unconfigured registers start a zero-length timeout a=
+nd
+> cause an unintended immediate system reboot?
+>
+Agreed, I will drop deasserting the reset and add a pr_warn() message.
+
+> [ ... ]
+>
+> > @@ -234,8 +250,19 @@ static int rzv2h_wdt_restart(struct watchdog_devic=
+e *wdev,
+> >       rzv2h_wdt_setup(wdev, priv->of_data->cks_min | WDTCR_RPSS_25 |
+> >                       WDTCR_RPES_75 | WDTCR_TOPS_1024);
+> >
+> > -     if (priv->of_data->wdtdcr)
+> > -             rzt2h_wdt_wdtdcr_count_start(priv);
+> > +     if (priv->of_data->wdtdcr) {
+> > +             ret =3D rzt2h_wdt_wdtdcr_count_start(priv);
+> > +             if (ret) {
+> > +                     if (!active) {
+> > +                             reset_control_assert(priv->rstc);
+> > +                             clk_disable(priv->oscclk);
+> > +                             clk_disable(priv->pclk);
+> > +                     } else {
+> > +                             reset_control_reset(priv->rstc);
+> > +                     }
+> > +                     return ret;
+> > +             }
+> > +     }
+> >
+> >       rzv2h_wdt_ping(wdev);
+>
+> [Severity: High]
+> Does returning an error here prevent the system from resetting?
+>
+> The watchdog core's restart notifier wrapper translates an error return i=
+nto
+> NOTIFY_BAD. Since NOTIFY_BAD includes the NOTIFY_STOP_MASK bit, this abor=
+ts
+> the restart notifier chain entirely, skipping any fallback handlers and
+> causing the system to hang indefinitely.
+>
+> Should this restart handler make a best-effort attempt (perhaps ignoring =
 the
-> > > system will attempt to re-acquire the lock, resulting in a deadlock.
-> > >
-> > > Should the verifier restrict this kfunc from being called in NMI cont=
-exts,
-> > > similar to how it uses btf_record_has_nmi_unsafe_fields for bpf_obj_d=
-rop?
+> WDTDCR start failure) instead of returning an error?
+>
+Since the register writes aren't succeeding, it implies a serious
+failure with no recovery path, so returning an error makes sense.
+
+> [ ... ]
+>
+> > @@ -266,11 +293,11 @@ static int rzt2h_wdt_wdtdcr_init(struct platform_=
+device *pdev,
+> >       if (ret)
+> >               return ret;
 > >
-> > This set is supposed to land after the rcu changes that allow call_rcu
-> > to work from NMI have landed. Please see the cover letter for the link
-> > to that patchset.
+> > -     rzt2h_wdt_wdtdcr_count_stop(priv);
+> > +     ret =3D rzt2h_wdt_wdtdcr_count_stop(priv);
+> >
+> >       pm_runtime_put(&pdev->dev);
+> >
+> > -     return 0;
+> > +     return ret;
+> >  }
 >
-> The patch would need to be updated as s/call_rcu/call_rcu_nolock/ ?
-> or more will be required?
-> If the former then we can land it now.
-
-There will be no call_rcu_nolock(), we decided to make the standard
-call_rcu() be safe to be called from anywhere, so no change is
-required to this set. But it needs to land after call_rcu() changes
-land, or maybe rcu and bpf tree can co-ordinate somehow?
-
+> [Severity: Medium]
+> When rzt2h_wdt_wdtdcr_count_stop() fails, this returns an error that fail=
+s
+> the probe function.
 >
-> Also notice how your LLM doesn't know about your earlier work ;)
-> + rcu_read_lock();
-> + migrate_disable();
+> Does using the asynchronous pm_runtime_put() here leave the device powere=
+d
+> on?
 >
-> that should have been ...
+> Since probe failed, devres immediately calls pm_runtime_disable(), which
+> cancels any pending asynchronous power-management work. Should this be
+> pm_runtime_put_sync() instead, to ensure the device powers down before th=
+e
+> disable occurs?
+>
+I'll create a patch for this.
 
-You mean rcu_read_lock_dont_migrate(); right ? Will change in v2.
+Cheers,
+Prabhakar
+
+
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814191415.21=
+10732-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D1
