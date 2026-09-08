@@ -1,211 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7C83D75C6;
-	Tue,  8 Sep 2026 21:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788902611; cv=none; b=hAKawwpxSL1Lnf4odpbtxtFpH4HHcJ4vZE4rPJls62MIThIm6cYN+54Pxq4uqacDk8OLcSZze7LJeWHhBkuVXlZBsM+6J1X9MbFBK2f0J+KNPhwlgoOcvFxVR/p4YNQAcSDYr+xUyqih2CQbT6GvwUGGV13pgm73d7Gva7Gah9Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788902611; c=relaxed/simple;
-	bh=UAcc8ExoQDZsPlGLCBkcKaTpgkwV9H/9l7rcUkYGRFc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dLu6J+IIfRCIXVSyMcAad6brlKA29/M53nXY3trbbRTjT2OL2t9+sdqeSQpIaR1gwJzoCcHO9QJAMOhXxgCp4VOcpYY8jRGJKhAcODx/nblMjnes61oZmYm3N+xQear7KsUaAUHegp0HmFm30nkJn98NNicsbAQ4BFvO12Dxtak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPqDhlf6; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A74949AA28
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 21:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788903587; cv=pass; b=c3ADYaRWygsa71YDwZXgwiYqu0kkZHAQ0yJ9f2rJAidsMXgonudiMpyaE22s4VU2VFFlL5gWPGiFbx6AI0vjDW+V8soIFGiODLdEGN5J6jclwQuhlmpKlWWuwiPAnzyLi4izDvAFfWBJ+z4tNq2b48J93LMz/Qmf+vO2mkMCYEM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788903587; c=relaxed/simple;
+	bh=bakvJblngIKuiCrhnaMIFW00XhXuXru4tKuCyr9fT7c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sh8Fh2GS5rsIVvKpQqxq4FgFinjcO27t0/o9z5pSNFoRfHZGXlA22uJcCBcCvRsxHsT7fKEbkCySAaiIJpS7wAbh2Xu1aVN2jSeUVTd3GY0N0/RMsJD9sGt66yfTd/Kb0CsYNEwVaqRCnc5ACIBYePBfia7sRBMmi/YwXaQ5AUU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp1vyc4c; arc=pass smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPqDhlf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54CC1F00A3A;
-	Tue,  8 Sep 2026 21:23:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788902609;
-	bh=bAA502wOQhNS9EpM6KceQ6+GTs1bH9ItrTJFkCxKJP8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gPqDhlf6crHZDsNtegodZDFeWIUPElOFpc0O5HZrVTk1aecY5226NrlyUx2Hjz+KA
-	 82pkVmzRTTuXUKZtINiNakcmnUqJBQcXGV3MJoOBIcxKxbDznm1kNYN8CA4Ai+CWwT
-	 vztLc8cWJM58KfB1CttHQUPes1aHilZnbTXD10orK6fSvjGc+/sWBKSGFNaxL5wC7n
-	 Mj5ZUkLz0G25DOnIjhCJks536kktjICkNo70nwqI1uaS5xPrbWB7FUpg7C/rda42WE
-	 0zi76QoZXqzFIo5CaD09fjyWyEKERfrjauQ/nfZMjTRpIvIw3arG2rxHeRp7jLuqE8
-	 GiQWcKOCdG9Bg==
-Date: Tue, 8 Sep 2026 18:23:26 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: Tudor-Stefan Magirescu <tudor.magirescu@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Subject: Re: [RFC PATCH v2 1/1] perf scripts flamegraph: Add --asm option
-Message-ID: <aqB8ztUiT72ywmz_@x2>
-References: <20260821090555.1B6DC1F000E9@smtp.kernel.org>
- <20260827152354.1513813-1-tudor.magirescu@gmail.com>
- <20260827152354.1513813-2-tudor.magirescu@gmail.com>
- <20260827153734.ADB001F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp1vyc4c"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396672b2566so953552a91.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 14:39:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788903585; cv=none;
+        d=google.com; s=arc-20260327;
+        b=L/Y5sW7IMNI5Nco/gOeV2rPWyLvsdj0bS2WUQrDi8DQI6dD2RqtGgL8M8wKxAK1JPp
+         qJoXJajFnWcc+Megz7KUN/7Ogaz0278YfxeW+KlAlPprFtyYSsPYdTCCwzxCMFPu/GJ9
+         YPIVhazhKgtuzrrwi2BOK9kVJC9D6Ag9QDyTHy3ufIb+nAq27mecqvaVjo1/+CJId2BA
+         wn/GW6izASG3U63IgKg/9rojXEy5QpAlbtLkIGE0jlfGCn//Yalq9QxMPLVnP8kiqxdg
+         F3jkMEDjmnUZcD9Y1k7W//8gARlCCx1QTYwxgvxBWIhyFOB7OyrbHkZ4lv228LW/qMMI
+         oGjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=pfd3T0qT87+D34AEThHxdn2D1F0SWsx0LtE8mR8K1j8=;
+        fh=Rr2qG6gO8cR9EWpoHYmR/F3m17v6q3f1UU7ndA+9ZmU=;
+        b=hIU42cPEgGg0EmMLFIT96xrxiD/HTBiwikV3B2w+Z9fxf104cJHgwf9XpNYrnDHNnl
+         GYkFdi0TNlcPryB5EBJwe/B7V83PBBihB4b3/U2zdpknPOkkb+7z4/eXb+Y/cMkDmLAW
+         J9wOhjP9ftXFwrPojSrOnnXdMci1jOHvu89mytnDZzHDagw6/aIRFNUl/p3SxrURJo4u
+         wkH0iuxaaHWMVhobIMAjOeUG3jXX5sLrMFGYREiNmqUqn4iglGrv1znSMi4lEC/anDZE
+         FBxgGZb3chATqBun9yW/Eo6w5bNKZFI2iRYSr1sqD5sRtfI7UA/5NozYyPxkEAp/tfRW
+         iDjA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788903585; x=1789508385; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=pfd3T0qT87+D34AEThHxdn2D1F0SWsx0LtE8mR8K1j8=;
+        b=Bp1vyc4cTXq66Cmrza5PoXCqgxPXT6teDivbAentauaMcf7ok15UDtpYqpzymVgSR6
+         rUuwo5vbWNje4wPTu2AE2E0OsgEDO81raeCmlW4Xiyinc4+AEpTKizDNlfVzkcrn7bcH
+         fkJqcRIQl0aiVq4dkY5afi7TIGWAOeIO8QKXzPIYUgAKYC6vRDbCtmKWJ/8vPI8EtOBR
+         dXeTck+yb+ZwsY0ayQxxVct+tNavDniFvMBxtNuGafV8qQbtG16RYhjtgAGUQ99YOc10
+         cPmzN8K+1d3cKqzH8GZkHpQvohxMnm53kb+9Dea7g0sJK/TLXAlSmeI3Ys1La77L6nDV
+         Y+7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788903585; x=1789508385;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pfd3T0qT87+D34AEThHxdn2D1F0SWsx0LtE8mR8K1j8=;
+        b=IVA4kgzCjGwALKYQnzyJJuSgPVLyIfchRa7pqeZRw4AIWiFnKMfyGoNmL0OnXI2Cbc
+         0qbP6QWP621h1m5wz2SmRzRPJW506ABgA+HcdUggm/cNi+FcP6nDk4U7kXBjfrxtQXJi
+         s8Hu+H0DKhTeKmnZbcAdA/L5gSilTXMa1H6sYp3Q2NvhcGeUnbf7hC3PjEgsGeIFhLaa
+         rec06L1bDcpSmeZUH0JtSch++8iDAsOK+CuG5DvQoV2okSTzpMX1qXXMjmJLJBOkKOmJ
+         u49hDf4LX22dy5WtwE7J1kktpEPBm4QiuUDCt+PVl6viuSeDYjy+93vT79/2MT8HRKGj
+         WWMQ==
+X-Gm-Message-State: AFuF++nwmdV06B8M2EsVNfkczgrR92vF7SokbMhAd8oBHAxjRTQLhDCH
+	1awba/HCufGlP6vrDcNub0X5cMhbhYTIQBaxGMLIzyWGC2iLLpI5iqJbw3OwBFRhKUeliQOH3f/
+	o8mRWXKziZs/r4NgGbO3hkZlK55IElm6L2g==
+X-Gm-Gg: AYBFou2hUm2C60TB6Xvqw3QsVNURNJm0ftvkbfDbUZObNYdQtYCdOaZ5oZ7NXTTdXf8
+	nicJJbgwHUBPoxgUu68BxNlbB7pwoPyyEH6HcjkR1ZOQ5bfGH0d6m5h0CFPxGrEUXPOo8iC0n7z
+	i1Y0InrOpMz6d0GMqqv5hcCqC2pwDB2/Ogyi8Y1lKdcwwjW4zdT+Ca5rywNm5Us6keX28LYInA6
+	DSDoYpYxn1+BVIa7e4fCRC+CtLhPHO2+txeoEh0+m9pNL2XeeM6p4EkUExmQnkry/jZPeLkqfG5
+	x7LvFm9MxCMdGwhc3D+Tow6TYsFEKa/zaReGNKvyGzupdn02d3n/tSEqREwTxLwYnbsmD3IoMeB
+	Lgy/ShBnVHfUs9JBOu+lBZgwvLXFRzqY=
+X-Received: by 2002:a17:90b:4c03:b0:398:bac7:72d0 with SMTP id
+ 98e67ed59e1d1-39b3d86acf2mr22472586a91.5.1788903585475; Tue, 08 Sep 2026
+ 14:39:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260827153734.ADB001F000E9@smtp.kernel.org>
+References: <20260908-amdgpu_debugfs-v1-1-3b659e744691@igalia.com> <20260908201504.5C9411F00A3D@smtp.kernel.org>
+In-Reply-To: <20260908201504.5C9411F00A3D@smtp.kernel.org>
+From: Alex Deucher <alexdeucher@gmail.com>
+Date: Tue, 8 Sep 2026 17:39:33 -0400
+X-Gm-Features: AcwNN1XiQcxZYZn6Y_zxh-cC1A3b-Ks9xObBstzBva-di-BAV7A8YC7qh__1sb8
+Message-ID: <CADnq5_NkuyG_dmVeTzSe41F_8CHjiy4Nh0WH6DjDYx78jpjYLg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "drm/amdgpu: debugfs: avoid extra EOLs in amdgpu_gem_info"
+To: sashiko-reviews@lists.linux.dev
+Cc: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 27, 2026 at 03:37:34PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Failure to handle arguments in the `annotate.objdump` configuration.
-> - [Medium] The DSO cache relies solely on the DSO path string, ignoring the build ID (`dso_bid`). This causes cache collisions and incorrect instruction resolution for different binaries that share the same path.
+Applied.  Thanks!
 
-Can you take a look at this?
-
-Thanks,
-
-- Arnaldo
- 
+On Tue, Sep 8, 2026 at 4:20=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
 > Pre-existing issues:
-> - [High] Inline JSON injection in HTML output allows Cross-Site Scripting (XSS).
+> - [High] NULL pointer dereference when printing imported BOs in debugfs.
 > --
-> 
-> commit a1b6c61e23ce511b72ebb5b70907e6c0f8aea1bb
-> Author: Tudor-Stefan Magirescu <tudor.magirescu@gmail.com>
-> 
-> perf scripts flamegraph: Add --asm option
-> 
-> This commit adds an `--asm` option to the perf flamegraph script to generate
-> more fine-grained flame graphs. When enabled, instruction-level information
-> appears as leaves in the call stacks by disassembling the sampled addresses.
-> 
-> > diff --git a/tools/perf/scripts/python/flamegraph.py b/tools/perf/scripts/python/flamegraph.py
-> > index ad735990c5bec..60ace98e73add 100755
-> > --- a/tools/perf/scripts/python/flamegraph.py
-> > +++ b/tools/perf/scripts/python/flamegraph.py
-> [ ... ]
-> > @@ -67,10 +71,146 @@ class Node:
-> >          }
-> >  
-> >  
-> > +@dataclass
-> > +class Symbol:
-> > +    start: int
-> > +    size: int
-> [ ... ]
-> > +    @staticmethod
-> > +    def default_objdump() -> Optional[str]:
-> > +        config = perf_config_get("annotate.objdump")
-> > +        cmd = config if config else "objdump"
-> > +        try:
-> > +            subprocess.run([cmd, "--version"], capture_output=True, check=False)
-> 
-> [Severity: Medium]
-> In default_objdump(), will this fail if the `annotate.objdump` configuration
-> contains arguments?
-> 
-> If `cmd` contains spaces (e.g. `objdump -M intel`), passing it as a single
-> string to `subprocess.run()` treats the entire string as the executable name.
-> This will result in a `FileNotFoundError`, crashing the script and disabling the
-> `--asm` annotation entirely.
-> 
-> > +        except FileNotFoundError as err:
-> > +            print(f"Error running objdump: {err}; "
-> > +                  "instruction annotations will be skipped", file=sys.stderr)
-> > +            return None
-> > +        return cmd
-> > +
-> > +    def load_symbols(self, resolved_dso: str) -> dict[str, Symbol]:
-> > +        result = subprocess.run(
-> > +            [self.objdump, "--demangle", "-t", resolved_dso],
-> 
-> In load_symbols(), if `self.objdump` contained spaces and bypassed the version
-> check, this direct invocation without tokenizing arguments would also fail.
-> 
-> > +            capture_output=True, text=True, check=False
-> > +        )
-> [ ... ]
-> > +    def lookup_instruction(self, dso: str, dso_bid: str, func: str,
-> > +                           off: int) -> Optional[tuple[int, Optional[str]]]:
-> > +        if self.objdump is None:
-> > +            return None
-> > +
-> > +        if dso not in self.resolved_dsos:
-> > +            self.resolved_dsos[dso] = ResolvedDso(
-> > +                symtab_file=self.resolve_dso(dso_bid, ('debug', 'elf')),
-> > +                code_file=self.resolve_dso(dso_bid, ('elf', 'debug')),
-> > +            )
-> 
-> [Severity: Medium]
-> In lookup_instruction(), does this cache logic handle different binaries with
-> the same path correctly?
-> 
-> The cache key uses only `dso` (the path string) to store and retrieve binary
-> paths, ignoring the `dso_bid` (build ID) on subsequent lookups. If a `perf.data`
-> file contains events from distinct binaries that share the same path (e.g.,
-> different containers with `/lib/x86_64-linux-gnu/libc.so.6`), won't this cause
-> cache collisions and resolve instructions from the wrong binary?
-> 
-> > +
-> > +        resolved_dso = self.resolved_dsos[dso]
-> > +        if resolved_dso.symtab_file is None or resolved_dso.code_file is None:
-> > +            return None
-> > +
-> > +        if (dso, func) in self.instructions:
-> 
-> Similarly, the instruction cache omits `dso_bid` from its compound key, which
-> could retrieve cached instructions from the wrong binary on collisions.
-> 
-> > +            addr = self.symbols[dso][func].start + off
-> > +            return (addr, self.instructions[(dso, func)].get(addr))
-> > +
-> > +        if dso not in self.symbols:
-> > +            self.symbols[dso] = self.load_symbols(resolved_dso.symtab_file)
-> 
-> This symbol cache also uses only `dso` as the key, loading symbols from the wrong
-> file if collisions occur.
-> 
-> > +
-> > +        sym = self.symbols[dso].get(func)
-> > +        if sym is None:
-> > +            return None
-> > +
-> > +        self.instructions[(dso, func)] = self.load_instructions(resolved_dso.code_file, sym)
-> > +        addr = sym.start + off
-> > +        return (addr, self.instructions[(dso, func)].get(addr))
-> [ ... ]
-> > @@ -119,6 +259,23 @@ class FlameGraphCLI:
-> >              name = event.get("symbol", "[unknown]")
-> >              libtype = self.get_libtype_from_dso(event.get("dso"))
-> >              node = self.find_or_create_node(node, name, libtype)
-> > +
-> > +        if self.args.asm:
-> > +            # use the sample IP directly rather than callchain[0], since with
-> > +            # precise event recording (i.e. :pp) the top callchain entry may
-> > +            # point to the next instruction rather than the sampled IP
-> > +            sym_name = event.get("symbol")
-> > +            sym_off  = event.get("symoff")
-> > +            dso      = event.get("dso")
-> > +            dso_bid  = event.get("dso_bid")
-> > +
-> > +            if sym_name and sym_off is not None and dso and dso_bid:
-> > +                found = self.instructions.lookup_instruction(dso, dso_bid, sym_name, sym_off)
-> > +                if found is not None:
-> > +                    addr, instruction = found
-> > +                    name = f"{instruction} [0x{addr:x}]" if instruction else f"[0x{addr:x}]"
-> 
+>
+> commit be759dc89504ad9041bef159ec02b120e04cf61b
+> Author: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+>
+> Revert "drm/amdgpu: debugfs: avoid extra EOLs in amdgpu_gem_info"
+>
+> This commit reverts an earlier change that removed newlines when no fence=
+s
+> were attached to a dma_resv struct. The original change caused multiple B=
+Os
+> to be printed on the same line, reducing debugfs readability.
+>
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/d=
+rm/amd/amdgpu/amdgpu_object.c
+> > index 5d9d137209b6f..1b6c32a177fb6 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+> > @@ -1701,9 +1701,8 @@ u64 amdgpu_bo_print_info(int id, struct amdgpu_bo=
+ *bo, struct seq_file *m)
+>
 > [Severity: High]
-> This is a pre-existing issue, but does assigning untrusted strings to the node
-> name in process_event() create a Cross-Site Scripting (XSS) vulnerability?
-> 
-> Untrusted strings originating from binary disassembly (and previously, symbol
-> names) are assigned here as the node's name. Later in `trace_end()`, the JSON
-> structure is serialized via `json.dumps()` without escaping HTML control
-> characters.
-> 
-> The unescaped JSON string is then written directly into an HTML `<script>` block
-> in tools/perf/scripts/python/flamegraph.py. If an attacker provides a crafted
-> `perf.data` trace containing `</script>` in the instruction output or symbol
-> name, they could break out and execute arbitrary JavaScript when the user opens
-> the resulting HTML report.
-> 
-> > +                    libtype = self.get_libtype_from_dso(dso)
-> > +                    node = self.find_or_create_node(node, name, libtype)
-> >          node.value += 1
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260827152354.1513813-2-tudor.magirescu@gmail.com?part=1
+> This is a pre-existing issue, but can the access to dma_buf->file cause a
+> NULL pointer dereference?
+>
+> In amdgpu_bo_print_info(), earlier in this function:
+>
+>         dma_buf =3D READ_ONCE(bo->tbo.base.dma_buf);
+>         attachment =3D READ_ONCE(bo->tbo.base.import_attach);
+>
+>         if (attachment)
+>                 seq_printf(m, " imported from ino:%llu", file_inode(dma_b=
+uf->file)->i_ino);
+>
+> If attachment is non-NULL, dma_buf is dereferenced via
+> file_inode(dma_buf->file)->i_ino.  However, bo->tbo.base.dma_buf can be N=
+ULL
+> for imported BOs in several scenarios:
+>
+> - BOs imported via amdgpu_gem_prime_import() allocate a fresh GEM object
+>   via amdgpu_dma_buf_create_obj(), which does not populate obj->dma_buf
+>   and relies entirely on obj->import_attach.
+>
+> - When userspace closes the GEM handle of a BO,
+>   drm_gem_object_handle_put_unlocked() calls
+>   drm_gem_object_exported_dma_buf_free(), explicitly setting
+>   obj->dma_buf =3D NULL, even though the BO itself may still be kept aliv=
+e
+>   if it is mapped.
+>
+> When debugfs iterates over these BOs, reading dma_buf->file dereferences =
+a
+> NULL pointer.  Since this can be triggered by reading debugfs files like
+> amdgpu_vm_info, could this deterministically oops the system?
+>
+> >       if (dma_resv_trylock(bo->tbo.base.resv)) {
+> >               dma_resv_describe(bo->tbo.base.resv, m);
+> >               dma_resv_unlock(bo->tbo.base.resv);
+> > -     } else {
+> > -             seq_puts(m, "\n");
+> >       }
+> > +     seq_puts(m, "\n");
+> >
+> >       return size;
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908-amdgpu_d=
+ebugfs-v1-1-3b659e744691@igalia.com?part=3D1
