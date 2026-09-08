@@ -1,211 +1,203 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B6B318ECD;
-	Tue,  8 Sep 2026 09:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788861534; cv=none; b=n7sEi4MuR/Gjlx93J816F84xV1wg7/BJcN6LfQ8EskRuXA/AzJUTlppBEIrgbzNO2xm36+cKgoXE0lMOPeljjLFh85J3a1Ql5yClCLq+5OZ4c3DRW3ri0PDB0KtfeK87PElH8wqaPsmvnBnD0Kdr5Dr47qDCqxBz6sIqmq99GfM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788861534; c=relaxed/simple;
-	bh=jdnp6yNqPjuDCTZ+RGAlpGfNOV6nfvpIMc/1hdBGUQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lVTUkrTjmVIYGD6qaaE9PnXMc9l/NXnovGjUTfNmE7QHmDvjyU8VE6niPMu3db4Zp2iv5nTKYpUImFtVEusoTsC4b8Seaqj46Jm25F8B/aQtmutClrYo2X8Dn274Tg4NMloaA4+noW1p6ZxEBXrRaqUalDOdgtAkXN2S+DZV6r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=DDvRzddx; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012020.outbound.protection.outlook.com [52.101.43.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FF44DBD9B;
+	Tue,  8 Sep 2026 10:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788862121; cv=fail; b=OoZA1DK0K8ugjcN5M21m35QRv3A6XcAUquMV7ddLvc9hbuJpShxnqGPiIEwqSRSFDoFcJqDTLkbqzvReHGt4p6ItrbqZJPt3ikO4A3vSLw4pS+yFtGL9YDJ7Jrlr7OV2PwlYOYcR+9P72DNcbuZnHWc3P4EKlUHZ2+DtSxUCLyQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788862121; c=relaxed/simple;
+	bh=RJyo/dkaCpqe9pt9Tb8mTruPWwkxUW4pr9wiAHZfNDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=hjvF2e01K7hVkuMHrOuMc5QtrD/bA6oUtIYsefAJOdkOR7GsrvM8+HzMnJ8qk+9G+uv0/qHW2njWgB6Bg0rQhv3WGSOFW/Xih/asBQ42R0CCXEhP0qOSjsEruQ0As4By++oG28ajGaShpaCzR3hO6Ubx91a1Ej45co2IGEsO70g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L4LF6ttt; arc=fail smtp.client-ip=52.101.43.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="DDvRzddx"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F18351476;
-	Tue,  8 Sep 2026 02:58:47 -0700 (PDT)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B196C3F7B4;
-	Tue,  8 Sep 2026 02:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788861531; bh=jdnp6yNqPjuDCTZ+RGAlpGfNOV6nfvpIMc/1hdBGUQw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DDvRzddxJnPw2f0IFLFoxSgXh24ClydmrJHFPyrh/cBNVdqciUx47xj3duG8dJxC1
-	 FpeYXa6tw4fPaI6VUwJHlg6I2xijFxXC1vsj0zRlXgQ0Hpqa386Y6cLO3vE/lXgyOh
-	 ycmYEUsOILGyM3onZ+KubYqEHq2d9AyTKTPmEEPg=
-Message-ID: <958eee79-c776-4c63-92c5-743d9aa5ea52@arm.com>
-Date: Tue, 8 Sep 2026 10:58:48 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L4LF6ttt"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jubeR6/jPf1o9CF6eilmOVuLvoM2Qz1/kIH3oV7lzX+O/Om9+PgvPA5g05F9UWJGQnEkCRMu69ZMKOvl9oKOkh2u13NRi7KmEJH3JVlXFrRoEiwxZ9JZKVSF9h1HZoEpJS5/AHtJafbfMgRYhtgp+vdEyPh7C2Q6CwyfeaQ7fvy98rYL6LOoadUYNBO8Zwj66hNz3GunNNU8YrzM7UC6ci29ORpf0p9NeEK0hgVknphzudpaW8VbCsPEdS30zPyt2xk3uJ7UJ/gXwPqkqEHnWYL/m+cUI6tjeDNrdzdJKD698EhDqCLNlD6WKQkm0wEmljwPkSuoqaIJVnM4QjOTeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9+rSzqNW3oknEPjauvAMLWmAGKERNF5GasqiE7IEkL4=;
+ b=kGXmIwJEl1qL8Tzn/rgChPbYpxhWDYOvVr7nTaoBMC6FEQW3ZwLJhwKabp2pXXk++CwXCl/5D84sXPW7of00hL0ohARCfkhwnp01yJqWBJTJcShcjFi4R59OO+cMU1HDg92yc0s9oxq7MeFq6tF4GW62luWywtZFwmjsyEXetS2Usmk/m4SEPr4Hwib1Wq5VLsP0xG9qkeg9X+mSTucG7G8Z+HJ/736bgSXqA6DazEg08deYrGSYdrBWSa61xZPOn3twzeVkr9u34GNB9/IYegs4eVp7bn7shiTzZ5nvRT7kBiEkI8k88PMuJYpHrxqDlmnHQ7yHNSvmh4jE6+BF9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9+rSzqNW3oknEPjauvAMLWmAGKERNF5GasqiE7IEkL4=;
+ b=L4LF6tttVzEsj4TqLvtOIKU0ASLggzOCU0mUldBFGRQqOnl+hH7/ap0RVgHO9KAA1uyGrqddE2mBzPUCk9Kr0LUl6roxlj0w3506Yjt3UuSrgCotRaKcILEY0tdIfdB4JUjeftMkSH6jqmW37tLB1M+GYeLilK0uiNw15lX9g9k5Exl7KNZKAubGu7cW9d2FcRalw334DZEgEJ8FEbz3069fOvmdKr8rnP250cdb23a46+btIkbu5LTGP/eKo9uRUOs5nZSg8NDnqdojJm1XMUWbCsH8AjrODZpRwLuidJKeURX55Eo4SJT5VVc09pUuFY2HDwd/4NkZwwU441p5dw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by DS0PR12MB8198.namprd12.prod.outlook.com (2603:10b6:8:f2::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
+ 10:08:35 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
+ 10:08:35 +0000
+Date: Tue, 8 Sep 2026 12:08:24 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 15/18] sched_ext: Delegate proxy donor admission to BPF
+ schedulers
+Message-ID: <ap_emBJuNQiSOFXg@gpd4>
+References: <20260831134338.1531664-1-arighi@nvidia.com>
+ <20260831134338.1531664-16-arighi@nvidia.com>
+ <20260831180837.947171F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260831180837.947171F000E9@smtp.kernel.org>
+X-ClientProxiedBy: ZR0P278CA0169.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:45::16) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 3/7] firmware: arm_rmm: Configure the RMM with the
- host's page size
-To: Gavin Shan <gshan@redhat.com>, sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
- kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>
-References: <20260907095942.1140734-1-suzuki.poulose@arm.com>
- <20260907095942.1140734-4-suzuki.poulose@arm.com>
- <20260907101446.1DA321F00A3A@smtp.kernel.org>
- <bade4920-2db1-4a8a-99d1-ca2694647ec8@arm.com>
- <64533fd0-5fe7-4839-8302-c5b6674bcb5a@redhat.com>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <64533fd0-5fe7-4839-8302-c5b6674bcb5a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS0PR12MB8198:EE_
+X-MS-Office365-Filtering-Correlation-Id: 264846c7-5d11-436a-8fe0-08df0d912497
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|4143699003|10067099003|6133799003|11063799006|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	/4OpAmr9wv/BR/J5eXSh4Dg7NNmQ3HxN4s1x06vmgFg4dOs4s9DA0NqHV276eMgp3kbwPBfuYqv+ET3QWb5rC5IDm7BfCH/+dYmpNFg2h1PEZEYYJFxJc3KsMVbMCgY7w4Z9ymaoH4dQWe6JZvJfm3mirzvW2tbCy3ut06SJ1tC/hCuvOYJn/tUim1XEf1+72qDQa5JGI3id3m0C0Jt9/yGF/TSC9WiN6g816nZesCsh6nSHI/RS4x1jy3HhYwcSHMJjtAdaxv3ifxCverthcplP+hVVb9Hgydo6krz7hJXsurTxjkyjLfG54IXf0kJlRfzchC8iIM3As0QQFliLPzyU6GtHGoieFynZ1mvbHrHGt59cE+n4Z1VHw/OgOZJkbIRdx/D+MXfPqVVqwmMG/ExfYmeCbe3dCwDVtlobANU1cHsKVutub1PUC6hY4gAOyXwdc9LRlKpquIB3W2cX6Gi65ceSxGWf8ZojSQW9COWKZHldLRc1i79hWpmf0kpjee22yuSFep86ph8y6GkRYsZDf+1CkVNYLhlcWF89atp4G5FSL2Jw1ciDS0FcHevcG2GDAYXPXotckbG55zOpuFOIaHiBrWqE1CChqL3YllPVpZUeP8boRiKRnERiUiy8Wa5GshySTRo/UNaNvNLG7H6JZV7YbX0lWsigmqdrPRI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(4143699003)(10067099003)(6133799003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?KMwrQIEi+GkKimJAgtSUasS4KJ3g6Sa8P87b6N9EH+5aB75FZol68UOt7wLM?=
+ =?us-ascii?Q?+KdUBt+jAhPaehbAEMnjR9Zndn0+KPO2TBiBKNQ8634rdnfRT3+Snbr7vLVD?=
+ =?us-ascii?Q?CcMkBLoodio4svCwfSHtXvYmKWNQ6HNGw3AmGtvCMzCeAQOR0ercd3sWckA5?=
+ =?us-ascii?Q?N0HZ661V+NldsfQzOpWXk0uTSi3csValfByTLO5sYGKH1vYXzRKecTXE97GC?=
+ =?us-ascii?Q?mZJlS+GpHQGUAmw7+/JG/2EnwjGqnLjBf/DZo13Z7jy8nuCjlD4Fzw0m2Pnj?=
+ =?us-ascii?Q?6ATijirwsx3aPk0E+6/AZ5VxlnTplwWbgrNnP9Nn7rfJDFtvhbSNl33qqxSO?=
+ =?us-ascii?Q?dXH6DaYtW1SOVmbX9ONlo7jnFMRs1EugD/7YIw6LD8FgX5SHY8x9YKNKpz1c?=
+ =?us-ascii?Q?BSrxJMen52PwWJ53NPmeaC1O3oYqbU4ffiWtTxhaRVNiUGyzGKDBkjbrIK+Y?=
+ =?us-ascii?Q?KSBh2E7ZrXcAHL1SC+dpLyKDOD+jE3HEipnvux44Y4fJ0KBz4t0pm7ldDaph?=
+ =?us-ascii?Q?TLtSmgEs4kONaJUTVhynHicBSn4NBfqAnyN5+zDadyY6K7BM+3v8ucigMw35?=
+ =?us-ascii?Q?6KSuzKo5/jFhOOdVOooG7c6+kAQ6wFUlYoG72To/RRPz9BwxLk7KTmGTroHL?=
+ =?us-ascii?Q?oaF9CJEJUfHlG9ZtRJxYy9m8N/p020U4f0RpcIP1Y3NCVJJ11dLiN9A4bS6i?=
+ =?us-ascii?Q?GYzdxY70aSb/NwjbhGYGrx30tfgYOXxo4KbvVSltHWT1cEunqgLE8YavAKJd?=
+ =?us-ascii?Q?Af4skz6NSq9wl02n14IKHdNOaoi76SrAOEcYdHPmC4desgrfFILzbK2LjW9E?=
+ =?us-ascii?Q?0cpcpRPNaJU8qCmYFuLkCTJIz1+BXfs5vUkdHNRBmc55QpugL3XUFQm4TO7g?=
+ =?us-ascii?Q?AN25+7l4siwgJtxHuFQ2qoH+IXQSeLi/UWLeUqMiUmxbmeuJ4ipRex6h3ik4?=
+ =?us-ascii?Q?KbMZ7zKYD4f2RGVkF9nwpbiq2oMbfKYhy9m4cBi+fIOOMo2I2UwFGeAKJbpP?=
+ =?us-ascii?Q?Dkt877KIcRMcI4NkTL0f8qgeM/Thf+FY+2q9eO4a4lBQKUun+9yC7CpcqkJy?=
+ =?us-ascii?Q?O6Tk3aYnXHRb9fOrDphCZvIt6p6uYCABlrYax5hKJUinQOfFT51VWWK7vvTp?=
+ =?us-ascii?Q?JLYj0ZMqLZgvQYdJNno3rEdDs6EmAscQs0ta/8a4rm/ml1u7Kj6wDbLtiwX4?=
+ =?us-ascii?Q?CZIn/Iz+CINfEMb11Wf46ogvgqRZVynQ7guTzdcPWR4v0QMZUvvhoOSk/bb2?=
+ =?us-ascii?Q?YRYKCrtP3cX5B4cSHl69GjDcG0YIqs0q3ecarrF+1aDVZ0RSgEbW59dMpOrE?=
+ =?us-ascii?Q?BRseUnVNBkHHckfRGsq9AD/XlyEy9zJAnZ+KMIjP4F3Dkaeih5DZbJsrWDnm?=
+ =?us-ascii?Q?Nzl6MLuQ6RAZHng0ToLf5npIy0GrCu6W/opNZt9Knmsj5tgOiQMA/8pIm/5g?=
+ =?us-ascii?Q?kA3zDvyryQYFXca/3FrtPUcb3CrGkDO69Ckvq46H0xojDtFsvM3UafaFVsz6?=
+ =?us-ascii?Q?40ON9jOozRdeUax/MhRSIUr7Rq9wwYlcVA9aOcCe0gNzI37TVONYiJsm+LOt?=
+ =?us-ascii?Q?vwqpzNlk4W2m6qH/puRJrj5KoqOJKtKZm50E/p3aPx/jIV2+wYFGXZGVWbuS?=
+ =?us-ascii?Q?kQYaFt/FDNIHyGRrMpJlwOeRRM/FUJcOJC4b1ZIhbLghFDEigRiFupjSMKr9?=
+ =?us-ascii?Q?3Ztvu62XaGkogZBLfzSwp9byDYU1E5ZJNdJsrO/xZx381/DJTOFYn2yLjFCu?=
+ =?us-ascii?Q?rfr4pE/eAQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 264846c7-5d11-436a-8fe0-08df0d912497
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:08:35.2008
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: e0LeIKxVm4Je8jVno6CUgZ7OOl37dp5WcIr4pwC4PFY8HJpbj1Q8WB6Gg0l1pJIALRNf82dgxjXpbkX+GdTg2Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8198
 
-On 07/09/2026 23:40, Gavin Shan wrote:
-> Hi Suzuki,
+On Mon, Aug 31, 2026 at 06:08:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The new BPF scheduler receives `ops.dequeue` before `ops.enable` or `ops.enqueue` for retained proxy donors during root scheduler enablement, violating the BPF lifecycle contract.
+> --
 > 
-> On 9/7/26 10:02 PM, Suzuki K Poulose wrote:
->> On 07/09/2026 11:14, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 2 potential 
->>> issue(s) to consider:
->>> - [High] The SMC call leaves parameters X2-X7 uninitialized, 
->>> violating the RMM's RES0 requirement.
->>> - [High] The `struct rmm_config` fields are populated using native 
->>> endianness, which breaks on Big Endian kernels.
->>> -- 
->>>
->>> commit 1741e17729c2ff5e23bc8bfb00cc50a61f38ebb7
->>> Author: Steven Price <steven.price@arm.com>
->>> firmware: arm_rmm: Configure the RMM with the host's page size
->>>
->>> This commit adds support to configure the RMM's granule size to match 
->>> the
->>> host's page size during kernel initialization. It reads the feature
->>> registers to ensure the requested page size is supported and sends the
->>> configuration to the RMM via an SMC call.
->>>
->>>> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/ 
->>>> arm_rmm/rmi.c
->>>> index 008a783407b4e..76f91c145e1fd 100644
->>>> --- a/drivers/firmware/arm_rmm/rmi.c
->>>> +++ b/drivers/firmware/arm_rmm/rmi.c
->>>> @@ -77,6 +77,60 @@ static int rmi_read_features(void)
->>>>       return 0;
->>>>   }
->>>> +static int rmi_configure(void)
->>>> +{
->>>> +    unsigned long granule_feature;
->>>> +    unsigned long granule_size;
->>>> +    int ret = 0;
->>>> +    struct rmm_config *config;
->>>> +
->>>> +    switch (PAGE_SIZE) {
->>> [ ... ]
->>>> +
->>>> +    config = (struct rmm_config *)get_zeroed_page(GFP_KERNEL);
->>>> +    if (!config)
->>>> +        return -ENOMEM;
->>>> +
->>>> +    config->rmi_granule_size = granule_size;
->>>> +
->>>> +    /*
->>>> +     * For now we set the tracking_region_size to 0 which is the 
->>>> only option
->>>> +     * for 4KB PAGE_SIZE (1GB for 4KB PAGE_SIZE, 32MB/512MB for 
->>>> 16KB/64KB).
->>>> +     * TODO: Support other tracking sizes via Kconfig option for other
->>>> +     * PAGE_SIZES
->>>> +     */
->>>> +    config->tracking_region_size = 0;
->>>
->>> [Severity: High]
->>> Does this code handle endianness correctly?
->>>
->>> The struct rmm_config fields are populated using native u64 assignments.
->>> On an ARM64 kernel compiled with CONFIG_CPU_BIG_ENDIAN=y, this writes
->>> big-endian bytes into the shared memory. The RMM, which runs in 
->>> little-endian
->>> at EL2, will misinterpret these fields.
->>>
->>> Will this cause the RMM firmware to read invalid configuration values 
->>> (like a
->>> byte-swapped granule size) and fail to configure, breaking RMI 
->>> support on Big
->>> Endian systems?
->>>
->>
->> We don't plan to support RMM for Big Endian Linux. I have now made the 
->> ARCH_SUPPORTS_RMM to depend on !CPU_BIG_ENDIAN
->>
+> commit 2446f36cb7fab90783875259131bf6b0d4fa2d3d
+> Author: Andrea Righi <arighi@nvidia.com>
 > 
-> You probably need to avoid referring to CPU_BIG_ENDIAN as it's being 
-> dropped
-> by PATCH[v2 13/14] in Will's series to removed unused big-endian support on
-> arm64 [1].
+>     sched_ext: Delegate proxy donor admission to BPF schedulers
 > 
-> [1] [PATCH v2 00/14] arm64: Remove unused big-endian support
->      (https://lore.kernel.org/linux-arm-kernel/20260907163726.17104-14- 
-> will@kernel.org/)
+>     Proxy execution keeps a mutex-blocked donor runnable so that its
+>     scheduling context can execute the mutex owner. This patch introduces
+>     SCX_OPS_ENQ_BLOCKED to allow schedulers to continue owning blocked donors.
+>     A proxy-migrated donor returns through the full wakeup activation path
+>     when the mutex is released.
+> 
+> > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> > index f23e9f1ee2f3c..06067fe504a24 100644
+> > --- a/kernel/sched/ext/ext.c
+> > +++ b/kernel/sched/ext/ext.c
+> 
+> [ ... ]
+> 
+> > @@ -8027,6 +8108,14 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+> >  
+> >  		if (old_class != new_class)
+> >  			queue_flags |= DEQUEUE_CLASS;
+> > +		if (old_class == new_class && new_class == &ext_sched_class) {
+> > +			/*
+> > +			 * This is an EXT-to-EXT scheduler ownership change, so
+> > +			 * sched_change_begin() won't end retained proxy execution.
+> > +			 */
+> > +			scx_prepare_task_sched_change(p);
+> > +			queue_flags |= DEQUEUE_NOCLOCK;
+> > +		}
+>                  ^
+> 
+> [Severity: High]
+> Does this code call ops.dequeue() on the new BPF scheduler before ops.enable()
+> has been called?
+> 
+> Looking at scx_root_enable_workfn() in kernel/sched/ext/ext.c, the task's
+> p->scx.sched is updated to the new scheduler in a previous loop. 
+> 
+> When scx_prepare_task_sched_change(p) is called during an EXT-to-EXT
+> scheduler ownership change, it triggers the following sequence:
+> 
+> scx_prepare_task_sched_change()
+>   sched_proxy_block_task()
+>     dequeue_task_scx()
+>       ops.dequeue()
+> 
+> Because dequeue_task_scx() sees the SCX_TASK_IN_CUSTODY flag left over from
+> the old scheduler, it executes ops.dequeue() on the new scheduler.
+> 
+> Since DEQUEUE_CLASS is omitted from queue_flags for EXT-to-EXT transitions,
+> the switching_to hook is skipped and scx_enable_task() is never called to
+> initialize the per-task state for the new scheduler.
+> 
+> Can this lead to the BPF program experiencing out-of-bounds map accesses or
+> NULL pointer dereferences, as it relies on ops.enable() to initialize state
+> before ops.dequeue() is called?
 
-Thanks for the heads up, I will just ignore this one from Sashiko.
+I think the described sequence can't occur during root scheduler enable:
+sched_ext is globally disabled while tasks are initialized, so tasks always
+enter this path from SCX_TASK_NONE without custody from previous BPF scheduler.
 
-Cheers
-Suzuki
+And I think the EXT-to-EXT scenario is unreachable. Here's why: after
+__scx_enabled is set, a concurrent transition to EXT goes through
+switching_to_scx(), which calls scx_enable_task() and changes the task from
+SCX_TASK_READY to SCX_TASK_ENABLED. The second loop consequently skips that
+task. Otherwise, a task being moved to EXT still has its old non-EXT class, so
+DEQUEUE_CLASS handles the retained proxy state before switching_to_scx() enables
+it.
 
+Therefore a SCX_TASK_READY task can't legitimately reach the
+old_class == new_class == &ext_sched_class case with SCX_TASK_IN_CUSTODY and
+ops.dequeue() can't be called on the new scheduler before ops.enable().
 
-> 
-> Thanks,
-> Gavin
-> 
->>>> +
->>>> +    ret = rmi_rmm_config_set(virt_to_phys(config));
->>>> +    if (ret) {
->>>> +        pr_err("RMM config set failed\n");
->>>> +        ret = -EINVAL;
->>>> +    }
->>>> +
->>>> +    free_page((unsigned long)config);
->>>> +    return ret;
->>>> +}
->>> [ ... ]
->>>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi- 
->>>> cmds.h
->>>> index 2fb1f7f86d71e..9aa27697e2377 100644
->>>> --- a/include/linux/arm-rmi-cmds.h
->>>> +++ b/include/linux/arm-rmi-cmds.h
->>>> @@ -12,6 +12,23 @@
->>>>   unsigned long rmi_feat_reg(unsigned long id);
->>>> +/**
->>>> + * rmi_rmm_config_set() - Configure the RMM
->>>> + * @cfg_ptr: PA of a struct rmm_config
->>>> + *
->>>> + * Sets configuration options on the RMM.
->>>> + *
->>>> + * Return: RMI return code
->>>> + */
->>>> +static inline int rmi_rmm_config_set(unsigned long cfg_ptr)
->>>> +{
->>>> +    struct arm_smccc_res res;
->>>> +
->>>> +    arm_smccc_1_1_invoke(SMC_RMI_RMM_CONFIG_SET, cfg_ptr, &res);
->>>
->>> [Severity: High]
->>> Does this SMC call leave parameters x2 through x7 uninitialized?
->>>
->>> The arm_smccc_1_1_invoke macro only generates inline assembly 
->>> constraints
->>> for the explicitly provided arguments. It does not zero-pad omitted 
->>> arguments,
->>> leaving registers x2 through x7 with whatever was previously in them.
->>>
->>> Since the RMM firmware expects unused SMC parameters to be zero (RES0),
->>> could passing uninitialized values cause the RMM to reject the command
->>> with an INVALID_PARAMETER error and sporadically break RMM 
->>> initialization?
->>
->> Correct, I have now moved all RMI calls to smccc_1_2, making sure that
->> all the undefined arguments are initialised to 0.
->>
->> Cheers
->> Suzuki
->>
->>
->>>
->>>> +
->>>> +    return res.a0;
->>>> +}
->>>
->>
->>
-> 
+So the EXT-to-EXT special case in the root-enable loop can be removed.
 
+-Andrea
