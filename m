@@ -1,216 +1,205 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45D1491590
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 19:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788895877; cv=fail; b=VepQjW28UPECLSa/DSpb49+ZRGWclA9nwuB4g5Bv31Tnv/0RJFT4ebVKckuHKht9VP98f6SZT127mNKN9vpYkYbzotV7sxWtMgwhV6BUV5C8yWERHzCfCbrqdHJHdgiIWoDUJmBzVsr0J3wKunpzy/iVkO0zB2YfsA6Upb10EsU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788895877; c=relaxed/simple;
-	bh=eryyGHuTxNaEVPEwnatnFcIbuVNII7DjI+FAhM2Mfyc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=XQuqEfkJSsP77B2eHdFuoNBSNFT1oTL4orN5rLsfPIa29SWzd3BzyGlKyv1yKWALPVEOCn2WOSN0nvtJTeE/tZrY/NVwWw5NsMUGo5y3yCGd8751kOJ3sgnFrmR2w7PszUnBzG7PKBtYCTo6M/g2BMNg6eOITlS/ERWlD7iYqGU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TFFd6pcj; arc=fail smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E9C4CC29F;
+	Tue,  8 Sep 2026 19:52:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788897130; cv=none; b=DEe7OkTEQcnja7RgkDjUzNc4lZBBjq2xH4QLnmiKQZ0L8M/7BPZWJjjZDXYqJW0/lH2NGLAjXa+hD0LKT/NQuvctJYVJ+32/Srd8OjOHzLp3fcniw8HO3VAJPOr/K5b5CfQTjAA4y5eNcDoMfpS/J5SNF9HLpDFMZwcGxkqmqUg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788897130; c=relaxed/simple;
+	bh=buk9Et0pjaGB+CwfO6slRUsttAZBlgTAJDwxrRYxNeI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FvCjuXqzggEu8yooQv8MUJ3q6gW7K0T2oHridGbxejCraHTnvyETkhjyu95xEXmlfmn3WNpTVj9gWdqUZcYZtefs7Y78VA/8FkRmq7ucBhwtjuwudlaU/p7X8CpYvZMD+8xueuuxD4PYeJ+ToeaG3nKaLO5CxC1A6e/qa3E6ZLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=f16UjN7W; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TFFd6pcj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788895876; x=1820431876;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=eryyGHuTxNaEVPEwnatnFcIbuVNII7DjI+FAhM2Mfyc=;
-  b=TFFd6pcjXX9x3krtIENnfKWJcAENUL6hm0vGAcBntVkcI0+MjZpYeq5S
-   G0yJWeOOGwFzkA8ErI39widJmF3qEFtAoQw4ugJsRTeiE8P4EeNhphjn3
-   GsJwqaH17cykuE3pdBNmlao0Cs5V3zvj0IoRY7pIYoFRwakhet6AnOtRf
-   gIEmJP9FtH5WNeHMIhNMg7IsZjS5n9UNy+ZxNbnov16LV5KofBEvgz2N6
-   Qp0OjUeZYH819r4FJcgndBtDUMJuqRFJZKQYob3h7T59hZhcPNN1LyrJ/
-   ufLo63H2AsGDq8Je8VWDEn8KRSuZE7rsUPkNjsWbi/L31I9I5wJ1PqJfH
-   A==;
-X-CSE-ConnectionGUID: K/2tEIfkQheDrD2MmzRCQA==
-X-CSE-MsgGUID: yJkXjXDsS6SVRQQ6y1Ap8Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106827230"
-X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
-   d="scan'208";a="106827230"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 12:31:15 -0700
-X-CSE-ConnectionGUID: vgW852VpTtSyuifp6U4Gsw==
-X-CSE-MsgGUID: ackIv4+6TBuXHXgeswCrKA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
-   d="scan'208";a="294604197"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 12:31:15 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 8 Sep 2026 12:31:14 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Tue, 8 Sep 2026 12:31:14 -0700
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.39) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 8 Sep 2026 12:31:14 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aB4abT93veH7PuQpy+K2tWKKQ50mCoM5ruIpogso8ntSw0PwebgpGgvnpFR9CGWuZCDIK2/XDsInH+m3WcEFhX/L67scVMJe8r3Ik1qyXjiadgh8lp3Rafv3e1pLCSWGvSA51/zO8BU0sUGpWKWzL457KlEe0UrTY9J6wNC5v569rb1dhmmxZm/bHJ+UfPAOVQ2EDq+iiD+rVxb4IiMAzV/TU73U+oAScLd5gTkv11vi/SkBRz4VJmN6vhPtmMq+466Ahl5srwLXEksg6KxbUdVv8dsyxLW0I2QiQxsGYW/QE26bKDXydiBV4iFB6kRAopmsRQu6K7SdqF3SLc1Wsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pWtOeBt1n03pMbZ3gb9uALHXNVIkKkmwmMmiMQplknw=;
- b=IIXOs9M1f4rQaZMr90Y7aP2qjRqcyY+wtQ+TfKwJPQMWOU25vz97FVY1hF4X0xE/mqV1WLwG+xOoNsM5jYwA6BDUZCbUpdql5BnvqjapYchisqeuGP/oAoPFu4Ku/jGYvXHf+sQj3KILJtVYdhZjyMgAAtL/Mm2xaeSEb71bmINR0JhuaG0LUIICgsf4OK7cgaxnFC2JXYXHMijYhmSGQLaWxTfNHJUD4BHul1cIoioMiRaDWPqbWWqD/0YIk8qOfCjLpDb0X+mmWiV2Mp3aVL0Q1F+3Oyn7OJlcgp+7Ipg6rxLhYm5AG+341trBXLh3urC6jzd2xkFPW1TeFfI3Ig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
- by DS6PR11MB180335.namprd11.prod.outlook.com (2603:10b6:8:521::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
- 19:31:13 +0000
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd%3]) with mapi id 15.21.0406.005; Tue, 8 Sep 2026
- 19:31:13 +0000
-Date: Tue, 8 Sep 2026 12:31:11 -0700
-From: Matthew Brost <matthew.brost@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH] drm/xe: Keep walking on SVM eviction failure
-Message-ID: <aqBif1V2aY92MxRG@gsse-cloud1.jf.intel.com>
-References: <20260908184346.92332-1-matthew.brost@intel.com>
- <20260908185523.6EC501F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260908185523.6EC501F00AC4@smtp.kernel.org>
-X-ClientProxiedBy: MW4PR03CA0041.namprd03.prod.outlook.com
- (2603:10b6:303:8e::16) To CO1PR11MB4787.namprd11.prod.outlook.com
- (2603:10b6:303:95::23)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="f16UjN7W"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 688F1erX3545271;
+	Tue, 8 Sep 2026 19:52:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=LaFi3VQSmIrrxSVX9mzYsclfDACrlD
+	xb3sAl4dFz0FM=; b=f16UjN7W88ma6pbCjlCEicxcH8TH0oykSPRMDyM11PFq40
+	7QOCRdaU47VJqnXqUUdNQGlor4pqDECGje9SJaRPHR8GmYqesVUugUOU+GC2Mt5r
+	TvKg69WlhBSrWnDBc/ROCFMZxrlWKB/K1FsRRE2ENB2HGUslt/w8+ZvDzdg7Mzfb
+	eAnS8IRmCON7nbygxXYaIdaJeZsfZKMDPTLOIRTWyOL91XIiOT9/qoukYL7fHsqG
+	gbJ6qyvRPG1rDBerPf6gjKgNrm6r2bEmjp4Oqp3R29zCPYkkmn+deGUj92GXmmLq
+	4a+URpW57nqaJ30mTY8U/3alLuc6HWj+MtIovOJg==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbqk1gcr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Sep 2026 19:52:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688JfFYu008135;
+	Tue, 8 Sep 2026 19:52:06 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gh03yduc5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Sep 2026 19:52:06 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 688Jq52D17695240
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 8 Sep 2026 19:52:05 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CC4BD5805F;
+	Tue,  8 Sep 2026 19:52:05 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9B5515805A;
+	Tue,  8 Sep 2026 19:52:05 +0000 (GMT)
+Received: from d (unknown [9.16.41.19])
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue,  8 Sep 2026 19:52:05 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v7 7/8] scsi: ibmvfc: register and use asynchronous sub
+ CRQ for events
+In-Reply-To: <20260831224601.C23911F000E9@smtp.kernel.org>
+References: <20260831-ibmvfc-fpin-support-v7-0-77d0b9809080@linux.ibm.com>
+	<20260831-ibmvfc-fpin-support-v7-7-77d0b9809080@linux.ibm.com>
+	<20260831224601.C23911F000E9@smtp.kernel.org>
+Date: Tue, 08 Sep 2026 14:52:05 -0500
+Message-ID: <8733vj34ii.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|DS6PR11MB180335:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1f9fcfb4-ab63-440a-49a9-08df0ddfbe3e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|6133799003|10067099003|11063799006|56012099006|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 4uzoIDcG7flQLzPJS5Qv5+EY+/qSMYokjEpgbdhHvweKx1Izs8/H0l1nleocCLz4cPfvIQUMTcOXQ7XgrumNsFyUB3yco4p6GZnXglbEm37Pv9sByhjsLdcVzWG5vyKUjKL3xjd8ffsrYzoI5sFc/5mjlFxCVuxrhdzte7aO5HA5H4ViCeY8sQiJ58IcnRzVjYMkYxfC3aksxQ8Dqg7h+2wtlznRAIhCbEUqoWKeBofRuh79qhdvu3yai16mb1wKcImlLAvTmDQP1bg6x08JloQk9/iJZk+it2/AUpvG/XGfofntwXTZ3S/LioCxJCQmtovxgq4XwhY8FRpXyUCxBxPKf+lDc11uHyLLaOXS6bxLkOxnFUAygFkEOUpJd2YLlehkUfqienNMkfLqCp0iA600im14XfbToelvWlieVi0WmOvZNikpj1Mbz93ZwqzWhVk3hJcJrzOX0zSzbsRQQwChYr7hcoKqq0XvtQPhmbDSHGhdlrJtPK9mbgYyjpIJ40CpP45mpOjfFlPmDpgKS89TntJNG9uETWgEH/IeGAEPR0J8AlbpeiSmLQhljSI2+/v1bLTYKzcyzUlh1VXkttEVrPPDhogdTRTMj0PvKdE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(10067099003)(11063799006)(56012099006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?FITzr5URtFAYCWm/t0fEiDKEUcPRtC75hPwxcKtKcJ0ESLNMgJ9F77bJmz?=
- =?iso-8859-1?Q?qOL/cgmm7dcVbyNLlVXkw2eEVahtjTrGMAd1VPeEvvkNIVDi6+11SiFbzF?=
- =?iso-8859-1?Q?4P4WzSPVmzRrA0uT2mZIRA9GBst3Bm0D/ECBbB2H1mkB86oeKY2J/4pGYV?=
- =?iso-8859-1?Q?PIQnNFdOCh1X6ALcdsQ4YKiP1kORyWV+jNhNBhDgUFUqNJr/FU/KNLgOqe?=
- =?iso-8859-1?Q?vYput/v9raVAJqi6pBjMAWujGIVcEVh0XSqD2mIpW3nDiAZLk9/9ZxJwYy?=
- =?iso-8859-1?Q?/gqs0HVHwfnNJSh47C8iveyOOmSOxTvtrlpTep4l2eRPyrDKgnLn8MG9VQ?=
- =?iso-8859-1?Q?2mLU322OAPT4GnZY+nvsUbjF3BBKUChRfGdwAK1iearOP5bE4838vbotZ6?=
- =?iso-8859-1?Q?fG+QfeaX6vTE3FdQ89++/t4lSkrolFYIXTuoJAhkhLBsbolt85RYed85Si?=
- =?iso-8859-1?Q?I+6/mXbywXTDrjAV0fK6gHu9SXAmbViy2O0MpTbFdl1IPGHtSzrNOVBRT3?=
- =?iso-8859-1?Q?5DM2mhgN/xXbmvQxddUqMShzrgVceSpyDcSImW7ciVQae4pbXyy/olWrdy?=
- =?iso-8859-1?Q?XfDmoUxlLiY3whp6GFBWUcCYRZJRPdxHEK4jIhLP2kc0tEqtN/AmeF6U01?=
- =?iso-8859-1?Q?8Tm+E4eAi3F+R/Z7OPPwt4obgz9/F7dym6+0i3s27biyvBjtv4S5aGO62i?=
- =?iso-8859-1?Q?vJFNJK1488A/jDp+borvlmtZzJp50EaKYiW0eZT7RcPmHi8w39HP1FcD9L?=
- =?iso-8859-1?Q?WDOuL8GZ/aFLjo9MC3nRj5UhqDwnVHzLJtx46gR01/s/7hqvRwLMOnTFcF?=
- =?iso-8859-1?Q?VPE1NSclQsY4giKrpqnrZgursaxcn6vD0RTwAFmBaX36niKMYmfL07AbAz?=
- =?iso-8859-1?Q?LKAATSnc5+Fru3JK7eBoTmpbCUzKzW2KaNulReZRpr9/7hxJi2voBzI+Ld?=
- =?iso-8859-1?Q?eWzFwbk+kTh0rQZ9OV1JniBj0mxtljUdnZM9AgUbIdEQf+EPgdIJ5odrGo?=
- =?iso-8859-1?Q?g9KMJnrPETG3UO5Bn5yacsA156h6gQh9M/kbnYA13YQXXIAyFaa8qnwg94?=
- =?iso-8859-1?Q?VUuQAGSM6kBXZnsRFZj596+LVtiBTuCo1AaoBWmGzGAVpSYhIb4B8OFbOM?=
- =?iso-8859-1?Q?I7DJfuxLR5zypYEKPvzSX6MthgF29H0BD2XRYjPw/6ADz1Yg5Xxm5mfCtx?=
- =?iso-8859-1?Q?0l0cU5ruPOUOEvhSvM2+buB6Hc/OuaHjIxsHEXVyHUpcA2vsxWtvVzrKdr?=
- =?iso-8859-1?Q?QkUNH9GUgd7QBHM9rH4pWJbN0OJTJZS1zzFsaPoWecG6pjK+jDzcSE/hEC?=
- =?iso-8859-1?Q?53WyeaBKluKiPPA3y9UY3PpzMhDl+z5PQLmFu5xtcKhtF3EweRYU//98a/?=
- =?iso-8859-1?Q?fnnzWaAucvAKAblTtiwCUF5fAX/dx0oBt05RPenLkRi+OGXfjPNctPupkg?=
- =?iso-8859-1?Q?oHDTOtaDtOJCbAAugMpC9P7UhkAc8w5K11gqdAbgh4oY78nhn6P6hfffNO?=
- =?iso-8859-1?Q?SnB9Ax7kayWxcY027NVwg5WHDytEZmLlKwxAk3Rv4Uy5ikrTDVBMs+u9Tz?=
- =?iso-8859-1?Q?uKF/uQ4hTt7RCjDqj84UAIqQX5WZljR9ThAzatQEiIY6hbXkEa9XiDgQfc?=
- =?iso-8859-1?Q?A09+cBwGq8NUb0yp6BwFOmSIbO5ibOht2ZuictCAfF4G03ncD5RSetz2yV?=
- =?iso-8859-1?Q?HsDeyblvnyemutEG2FPC1VBV5P3AoPy9mmAXyn8gwznonVsRGBTHtXSO5c?=
- =?iso-8859-1?Q?DmvS9xm0blw5f0+++3W2WAh6Yy1Ouq+aE7ybkHwrpEZYDoOvWfAPpny+7/?=
- =?iso-8859-1?Q?FoNDwwY3oSxxJpR5zDOGiJtWaEOxZX8=3D?=
-X-Exchange-RoutingPolicyChecked: NFaYnfhXEGXVkHI8Or9iH2rZT1xEfPkY2WVyVo9+LfaE/IiuojN2CpdyYRU5NdV+mq+ZwhQKhc/NRNZ/mbKwjWxL3bmkS7uerde5ryo40W/9W4cXzlQCFCkzmUfyT2nrEBFn9O1FjaL9xgAPCfH7x9Zoego7Zwd68TOdZqN8qpPog8BYXqFNeBFNZg7gdc4ixMzvb/kiP4KbmQX8X9A8lfykCbtkjc+FkBk3FrT7mp70xtP/m6Denu+MK/aqbwRLiJ6B0Hf5PiU3Ybp7LYK60AwOzlGoJwR3CUuzrdO96U+BltS3F/W9pXw4+p9P7UtID0bETsqXA91aEkDmzWxlNg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1f9fcfb4-ab63-440a-49a9-08df0ddfbe3e
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 19:31:13.2226
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TKIC419dB1/oos/SKaOV/DfDPjwaDezmloS3KZGv3dGAx+6O9FriKoG74OdyJ/klEmKzbY4MJGoKcPmQT8G0yQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR11MB180335
-X-OriginatorOrg: intel.com
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zBazI-BFkGTMQD4OsPuOdYUnnyfN64MP
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIxMyBTYWx0ZWRfX151scRjXS33R
+ qu2eLDl4RHGhhywIFAbdqBat6Hn8oUrjFOS8I/Q/r1a/uYWW1A9Wc68mpMTd44HzqFkVqMv1iyH
+ Aua5cOq2vq1zjSXuWIRhYEPtgLEWdrY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIxMyBTYWx0ZWRfX+yDRCQz+lV3m
+ fffFEytKg1vopCK8QDZo+YgLLW993fPppKTQLAbRtgRT4FdVWOlujRM2nqzM3Y2GcmcEX5Sgk53
+ M3YqJp8/Vt6dPo3OnrjYg9YpUSdkXBp2B0L4qZllwSuRESFN9oFdvQyXyH8y7gIeHPhD04tvLK7
+ sUlHdYELUKT5vbllACtHQsjb2mMz8eMAixwTwCO7OxE2iWru6jySNI8i8PYmcDXJVwq7IH+pKWa
+ 7RNBiUej5PBl4hGxEnaW2MaWX+i6xtpagz6glurx0pHxFvW1SsUFRleD0RRE4gghs+XMipu6tnn
+ Ml9L6kI5DPj3kYn2ftOOocX54CHe5v7I4b/qomF+Davw4W3cvnO1secGUMsUmQkJFcj49NjMy6N
+ o72eOFUyS7uM1idq2EaEVrpUGrz7TniXt6jPJuP2w2VE6/PXEWjTV97svoeqQsHtB0YJoXegG4u
+ MvcG4eYheDH1OXvrNBA==
+X-Authority-Analysis: v=2.4 cv=JaKMa0KV c=1 sm=1 tr=0 ts=6aa06767 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=BbhNMpo0M7q8ANbAelkA:9
+X-Proofpoint-GUID: zBazI-BFkGTMQD4OsPuOdYUnnyfN64MP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080213
 
-On Tue, Sep 08, 2026 at 06:55:22PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unconditionally masking `xe_svm_bo_evict()` errors as `-ENOSPC` hides fatal errors and triggers TTM error log spam.
-> --
-> 
-> commit 8fcbc00a7aa0e3b2119f7df96129747882247423
-> Author: Matthew Brost <matthew.brost@intel.com>
-> 
-> drm/xe: Keep walking on SVM eviction failure
-> 
-> This commit adjusts the error handling in xe_bo_move() for SVM eviction
-> failures. It overwrites the return code from xe_svm_bo_evict() with -ENOSPC
-> to force TTM to continue walking the LRU list for eviction candidates.
-> 
-> > diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
-> > --- a/drivers/gpu/drm/xe/xe_bo.c
-> > +++ b/drivers/gpu/drm/xe/xe_bo.c
-> > @@ -1043,6 +1043,11 @@ static int xe_bo_move(struct ttm_buffer_object *ttm_bo, bool evict,
-> >  		} else {
-> >  			drm_dbg(&xe->drm, "Evict system allocator BO failed=%pe\n",
-> >  				ERR_PTR(ret));
-> > +			/*
-> > +			 * The semantic we want upon SVM eviction failure is
-> > +			 * keep walking for eviction, which is -ENOSPC.
-> > +			 */
-> > +			ret = -ENOSPC;
-> 
-> [Severity: Medium]
-> Does unconditionally overwriting the error with -ENOSPC hide fatal errors like
-> -ENOMEM?
-> 
-> When system memory is exhausted, xe_svm_bo_evict() can return -ENOMEM. By
-> masking this as -ENOSPC, it seems we might break proper error propagation to
-> higher layers, preventing expected OOM handling.
-> 
+sashiko-bot@kernel.org writes:
 
-Yea.. Perhaps -ENOMEM should actually be returned to the upper layers as
-this indicates we are out of system memory and attemping more evictions
-is unlikely to help.
-
-Second opinion from the Xe team on this one?
-
-> Furthermore, could this trigger a TTM error log spam loop? When returned to
-> TTM, -ENOSPC causes ttm_bo_evict() to log an unconditional
-> pr_err("Buffer eviction failed\n"). Since -ENOSPC is converted to -EBUSY in
-> ttm_bo_evict_cb(), it signals the LRU walker (ttm_lru_walk_for_evict()) to
-> skip the BO and continue walking. 
-> 
-> During genuine resource exhaustion, this might cause a fruitless iteration over
-> the entire LRU list, logging a pr_err() for every single buffer object. Even
-> benign SVM races might spam the kernel log with errors.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
+> New issues:
+> - [High] Unconditional deregistration of the uninitialized async sub-CRQ causes a NULL pointer dereference.
+>
+> Pre-existing issues:
+> - [High] Buffer overflow due to out-of-bounds array writes and reads when processing unvalidated queue counts from the VIOS.
+> --
+>
+> commit 908a7af2b04b0b17f4fc0a40814f0dacec88332a
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+> scsi: ibmvfc: register and use asynchronous sub CRQ for events
+>
+> This commit wires the asynchronous sub-CRQ into the sub-CRQ lifecycle so it is
+> allocated, registered, and freed alongside the SCSI channel queues. It modifies
+> multi-queue initialization and teardown paths to accommodate the new queue and
+> advertises relevant capabilities to the VIOS.
+>
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index cc1ef82580608..adc730af67d2b 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>
+> [ ... ]
+>
+>> @@ -5800,6 +5808,7 @@ static void ibmvfc_channel_setup_done(struct ibmvfc_event *evt)
+>>  		for (i = 0; i < nvme->active_queues; i++)
+>>  			nvme->scrqs[i].vios_cookie =
+>>  				be64_to_cpu(setup->channel_handles[scsi->active_queues + i]);
+>> +		vhost->async_sub_crq.vios_cookie = be64_to_cpu(setup->async_sub_crq_handle);
+>>  
+>>  		ibmvfc_dbg(vhost, "Using %u SCSI channels\n",
+>
+> [Severity: High]
+> This is a pre-existing issue, but can this out-of-bounds write occur if the
+> VIOS returns untrusted queue counts?
+>
+> In ibmvfc_channel_setup_done(), the driver reads num_scsi_subq_channels and
+> num_nvme_subq_channels from the VIOS response into active_queues without
+> validating them against the dynamically allocated max_queues array size:
+>
+> ibmvfc_channel_setup_done() {
+>     scsi->active_queues = be32_to_cpu(setup->num_scsi_subq_channels);
+>     nvme->active_queues = be32_to_cpu(setup->num_nvme_subq_channels);
+>     ...
+> }
+>
+> The loop just above this patch hunk then directly uses this unvalidated value
+> to write to the scrqs array:
+>
+> ibmvfc_channel_setup_done() {
+>     ...
+>     for (i = 0; i < scsi->active_queues; i++)
+>         scsi->scrqs[i].vios_cookie =
+>             be64_to_cpu(setup->channel_handles[i]);
+>     ...
+> }
+>
+> Could a compromised or malfunctioning VIOS provide values that exceed the
+> locally allocated array size and cause a buffer overflow here?
 
-The spam is probably seperate issue in TTM. -ENOSPC likely shouldn't
-emit a pr_err as it continues walking.
+We've always assumed the VIOS acts sanely. This issue will not be fixed
+at this time.
 
-Matt
+> [ ... ]
+>
+>> @@ -7055,6 +7087,9 @@ static void ibmvfc_release_channels(struct ibmvfc_host *vhost,
+>>  static void ibmvfc_release_sub_crqs(struct ibmvfc_host *vhost)
+>>  {
+>>  	ENTER;
+>> +	ibmvfc_deregister_channel(vhost, &vhost->scsi_scrqs, -1);
+>> +	ibmvfc_free_queue(vhost, &vhost->async_sub_crq);
+>> +
+>>  	if (!vhost->scsi_scrqs.scrqs)
+>>  		return;
+>
+> [Severity: High]
+> Does this unconditional teardown cause a NULL pointer dereference when
+> multi-queue is disabled?
+>
+> During module unload or reset, if multi-queue was disabled (mq_enabled=0) or
+> initialization failed, vhost->async_sub_crq is left zero-initialized.
+>
+> Unconditionally calling ibmvfc_deregister_channel() routes to a cleanup path
+> that behaves as follows:
+>
+> ibmvfc_deregister_channel() {
+>     ...
+>     /* Clean out the queue */
+>     memset(scrq->msgs.crq, 0, PAGE_SIZE);
+>     ...
+> }
+>
+> Since msgs.crq aliases the unallocated msgs.handle (which is NULL), will this
+> memset() write 4KB of zeroes to a NULL pointer and cause a deterministic
+> kernel panic?
 
-> >  		}
-> >  
-> >  		goto out;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908184346.92332-1-matthew.brost@intel.com?part=1
+A new check against scrq->msgs.handle will be added to
+ibmvfc_deregister_channel() in the next revision of this patch,
+preventing memset() against a NULL pointer.
+
+-Dave
