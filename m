@@ -1,175 +1,94 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+Received: from o1.ptr9745.em.honeycomb.io (o1.ptr9745.em.honeycomb.io [149.72.141.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1876A566C6D
-	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 22:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788907060; cv=pass; b=eAQlatzmGrvurYHV/nIo+Z6kaSVlAhU2VnjsMjpvfCSN8Wh4OEb1hElZErJkrOqslhvDm6cD4dHhN7XHAd/rQipiZKpgF8YiE6qzmXkvt/DsEX5OwlzJJqq67r3UkJEizdEOSiabtIhLa0YK4DuIIVAfctcgNycmMaouD+UrYxs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788907060; c=relaxed/simple;
-	bh=avfAmNq50TjCdzdERK1ZxzNqg1PNH53ghjGpjf87958=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MAvapsArNJ7HjPjpOXzzf2dcB23weO2Y20Qyej1Y/3JCqlKDxFyHkGeZsf/7Fw1PeM7kbw6AvZV95XgSPj2OkTp7pXdSW17JGEz3DpHU9mwb2OfYO/rwxTLWLeVh8KW+AqLr0F3wA4AmCUhGVxreqhWYbgsY393wh9GaTkcoE74=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZGwhtFPv; arc=pass smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A6A5908D8
+	for <sashiko-reviews@lists.linux.dev>; Tue,  8 Sep 2026 23:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.72.141.136
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788909940; cv=none; b=muaEM5A/qplNLUSCVtXUrdzExSNYy09NGIq/B09P01g2d+UYB5OR9CPFdA1m/kGB9Kr73XIYL7EAvPt5ACPZrwvp0Ccz9MAE7RtrzImTljx0wvO/Mg6HiaxOmejQbXZSf9F8jVKMzOeeMPp2oUuoZ2NLcDancug8U3WJ0PkQnY0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788909940; c=relaxed/simple;
+	bh=IpRRbmraEQdRvYU+gOwK0kySHffEqkNVDWp175KjZQU=;
+	h=From:Subject:Date:Message-ID:In-Reply-To:References:MIME-Version:
+	 To:Cc:Content-Type; b=lfkZM/7gu3vv20RbsaCLfqQqJooPze32p3QWv3WzScpoePdUSTQ2EY0vCGg+5HRjyZ4Uphz2d3bDyRdNgAVcamK0s6reJQJV+NMazguqgUg0Ed5TcVFiPizkjE87ZuMTJ2+oYUFjE+TEKE54XMpopx3VqqQpAdQW22RdoZMPQew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=honeycomb.io; spf=pass smtp.mailfrom=em.honeycomb.io; dkim=pass (2048-bit key) header.d=honeycomb.io header.i=@honeycomb.io header.b=aL8NPyt9; arc=none smtp.client-ip=149.72.141.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=honeycomb.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=em.honeycomb.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZGwhtFPv"
-Received: by mail-qk2-f12.google.com with SMTP id d75a77b69052e-53012819c04so28511cf.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 15:37:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788907053; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PtDhh7JQHh9HMaPG7WpkqrDLhntSNwBERSn1aRJiKPmjm+lSluM49ZjqpWjsxCLnzb
-         maXWN7JshUsXMwJVjjksp1n5LPDNLyGGA0zsAqCqgE4CSzWM3pSDFrkNyDdzG+tuD553
-         r+6/XD20m9XaHQWmSP7THjwrNOfBstKYYT24Tlv2zKao4FBsS/UHwGtkg9HBwIr3xP+b
-         u8gCgPGI5HzgnUoLDkP/aCYpIADStuIzEGWxb5TIhSsDW4gvP1zn09ac1V1o1XcYAB6Q
-         rL1s++7nJj6t2cD7ltg25oIk9ajf57R7OTM7he4J6i8uJ6awROgF6maSIsKGFG1TJH8d
-         TZRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=6GlBVIXnHx2dtgSFGVRz0lOWrV/ts1nALJe741lEtcc=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=bjeAdqEusAU/99cYqbHZFc3e8vayrtw878O15+2lh1LD6QdRVWkzfnKlzhQu2aupDk
-         kH/Oyoq0TOBYztEiqo3MOLg264ZaJhzAoBzeO4UGsI397QhUwSHqQJah/uOmyjvUAzrY
-         3loHBQARq/21kCP+McWSpp+H9VJdlmRCNOiUMdvkdIeGTDIXyNrGbX081YjDXQBjLLYH
-         1TBKnjyjey7W6OXoWr8oREaUIBsmrBsa3aO4Vm56iBE9/BukVwBrlyr9mEEec1ZaaD5I
-         CBxVzqJVIgCyaG0uIkY3MHGdvvWvp/Vh+7yqFJIpG9GXiAZceVFQwqd5UHp8pfO9wzsj
-         O1aA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788907053; x=1789511853; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6GlBVIXnHx2dtgSFGVRz0lOWrV/ts1nALJe741lEtcc=;
-        b=ZGwhtFPvkCQnQN4bH7UFIPE4QXNzbQKzEv7F9GB6Mn3Gi/t0A1ZfCmLxURMsP5Ew76
-         rdSVyuKZfP/CcsDqaz33RzPTpefn2wdFA7/hJYBcA92gWonB7AMf9dFOcAmr7FBzKSGC
-         b4QmxEGC4Ex6o2HGPzKeqCR1wWjs9eDqOWwBUNuFqjKyj1kwT+tKA0eRYAR67ZMMaogw
-         v3IzI6KZDuWadc/ZcTkLMIcn2gSZ9MFWHUTqUoX2gIZyeBGQqU7A7YXoR9S/0iYQtbYX
-         JAPKXXCrQ4pMolWn/vdo3g/aVbpE4zKJ1Jb1rDXwl321IXbJn7GVegDHOj1nBBjphj/A
-         kfLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788907053; x=1789511853;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6GlBVIXnHx2dtgSFGVRz0lOWrV/ts1nALJe741lEtcc=;
-        b=Jd/6JuDSqDFeKLgu6NERIwCCU63DefcS8eATUZxrwO3wz9+H2wCvhfIiNsT6xyUcc1
-         euryUdJYTWfHQl1zNK2GoKbbMP1a5aNA6odU+AWEY9m0xCt79QdIC4TL78S75pY44o+k
-         vmrL9tiHMtbWYQ+uw2OB9F8ezCwWorvsg+XHeYc6R+jvGgW3xZH80/uYX9FTUgTSAvj4
-         ncOGaK2nvfeqmzspzRSUWmfrlfKZvsOsD7N/9Cfk2Yce60K7keixs4SkUjq7aVWIZawX
-         i8obJTegOXalt9RpjoPkAeroefjDr1vU2mZous2OZPf9lAldr8qsqij7IHt9XJw3NNME
-         pnIQ==
-X-Gm-Message-State: AFuF++l1+Cui+jE/Ayn+SkTjfiaBjvZv//dwdMC20dTBhG1OrOHhmQpg
-	UqH1SEaqSdlba6aMM1GBTqd/LqJ6CAIgubHNtOKkoGhSBRFDoc71xdMJ8T7Aa1/GEYZ/2kzX0/u
-	Z9/qvBekyaJp2JEnW+IeYAQcEpz3M80FV3l2vyC3mHLgxutd6FMhypA4PZio=
-X-Gm-Gg: AYBFou2oyRb43NM3rW+lsQsqRPax0IgHu98yqXJNOsbc3+a3WccOekBQBJ8m3xy5QKM
-	ATYVIz8fCmmsBouPEhe7QxSoETLUwwefLgerUX33IOehBjWOjz5rbnOjtQcudiRhbyAZWMGyPk/
-	MxVpOn7zlwp8Cd4OSftoSORA1Mp8p0Ap2eDdosnwmRfSSDRgMMKvmStJamjjkF5nVOZ10XrTVyB
-	qVCQozWWM5g+zBHiq+n0TvOKi0uvyNh4d48FLEN6g/uAyfzFwKj9rcyRZWl+6czgg7sOQr/Uzbu
-	Qi0PK1+ofbDffQR1kE3koxFz4zarYHoO1S1Nw000L/qV3rc05RfqpT3EiifW7wsDH5Gjyt2icJ0
-	z0RKxnjq2YQs=
-X-Received: by 2002:ac8:5904:0:b0:517:5e32:2d14 with SMTP id
- d75a77b69052e-530a498e209mr3106141cf.10.1788907052860; Tue, 08 Sep 2026
- 15:37:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=honeycomb.io header.i=@honeycomb.io header.b="aL8NPyt9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=honeycomb.io;
+	h=from:subject:date:in-reply-to:references:mime-version:to:cc:
+	content-transfer-encoding:content-type:cc:content-type:date:from:subject:to;
+	s=s1; t=1788909938;
+	bh=+cqP2z/XRk+D/XjM5uu7L4wIVdn+LO6xQ4ZwBaRcgNQ=;
+	b=aL8NPyt9nOYEzQuV2WnCkoOszajRz6gsRuNTpo850LYcPnYYitNnzFITVIX5vNGQQtZb
+	HnyvYRmPteSZ+GhUeANWllHZzi6CmYvlUFkNEz1jR6YWGjRD4kngsMCKH6BVdDhbg+utpF
+	hPM5ZlwyiEtx+Tf8H1uZPaz2nSMAkoLY26OctoJCQd4V78NXx0TDQHK7AY17sHWLRWQc3U
+	olPQHRx8grAhGcxNDpZRzXvUk2alul0m4VUEkgzbLXjT0SkzvhFT4CQKXJMG+m7JsUW8yR
+	zW1irbH9BAt271Mcg2dk2Lvx8DF3KO07jwaiEGsr6S2xRVNZgWjzZ00wQhHGBb5A==
+Received: by recvd-5c6d7fbdd5-l2fc6 with SMTP id recvd-5c6d7fbdd5-l2fc6-1-6AA09972-3C
+	2026-09-08 23:25:38.34628099 +0000 UTC m=+511381.869181742
+Received: from daisy.dens.ffj.family (unknown)
+	by geopod-ismtpd-16 (SG)
+	with ESMTP
+	id -M_K5BBjQs23qTbHcrNBTQ
+	Tue, 08 Sep 2026 23:25:38.281 +0000 (UTC)
+From: Liz Fong-Jones <lizf@honeycomb.io>
+Subject: Re: [PATCH v5] PCI: Fix BAR resize for devices on a root bus
+Date: Tue, 08 Sep 2026 23:25:38 +0000 (UTC)
+Message-ID: <20260908232537.64461-1-lizf@honeycomb.io>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260908231349.682101F00A3A@smtp.kernel.org>
+References: <20260908231349.682101F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260908220720.564614-1-irogers@google.com> <20260908222333.DC4B51F00A3A@smtp.kernel.org>
-In-Reply-To: <20260908222333.DC4B51F00A3A@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Tue, 8 Sep 2026 15:37:21 -0700
-X-Gm-Features: AcwNN1XV-UR6xHf26kqDMbQzIvJ6pQfNsD06hMzMYv-UCUokbLpKwr3viBl5McY
-Message-ID: <CAP-5=fWQzkhwWpeXYUr+1VfgryBoVB+1NOuJn5j6guCkyYvykA@mail.gmail.com>
-Subject: Re: [PATCH v1] perf stat: Avoid uninitialized memory read on error
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ECuH7N2XAoeMR1zrzr=2F6NZrhli2vbKPOHff5fJuZuba6ZIE8QPyIf9mn4Y?=
+ =?us-ascii?Q?ezqeFFjUkh=2FeROy4LtnO7KN9jZmeSexUlkeuf81?=
+ =?us-ascii?Q?gWnfLpBOWbKd5gENM0vuDG1ojsEgaQqWFUTyYLE?=
+ =?us-ascii?Q?dJf8oZJuNjmdWXsRO0cfRh+gdK7Ffn5rTg6GKsJ?=
+ =?us-ascii?Q?h6b44NqNwriD4ICkJASEOF09JnJ3Ltk9PYaDx6p?=
+ =?us-ascii?Q?INFG8al+sUP0VeEl+v4tE7HPSOIL5a44VpcMh0o?= =?us-ascii?Q?edKr?=
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: sashiko-bot@kernel.org, linux-pci@vger.kernel.org, lizf@honeycomb.io
+X-Entity-ID: u001.GRlkmHQ+Ka/CKxmoC/CxTw==
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 
-On Tue, Sep 8, 2026 at 3:23=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sashiko (Gemini 3.1 pro preview) wrote:
+> Finding 1: Optional Resource Assignment Failure
+> Severity: High
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+> Location: drivers/pci/setup-bus.c, lines 2429-2433
 >
-> Pre-existing issues:
-> - [High] Atomic Conclusion: Unchecked ERR_PTR from hashmap__new() causes =
-predictable application crashes. The return value is incorrectly checked ag=
-ainst NULL instead of IS_ERR().
+> Issue: The stricter validation incorrectly treats optional resources
+> (ROM BARs) as required. If pci_bus_assign_resources() succeeds for
+> the target BAR but leaves an optional resource unassigned, the
+> function aborts with -ENOSPC, breaking valid BAR resizes.
 
-Yep, libbpf's hashmap is a thorn in the side of correctness and
-ERR_PTRs are the devil's work. The hashmap code also intentionally has
-undefined behavior. I sent this series:
-https://lore.kernel.org/linux-perf-users/20260322005823.981079-1-irogers@go=
-ogle.com/
-to address this. Since the BPF folks are happy with the current state,
-I think we should fork the code to avoid issues in perf - we'll still
-suffer with the hashmaps in libbpf. I was investigating whether we can
-add some form of generics to hashmaps too. Anyway, the issues reported
-here are correct and genuine bugs, but they aren't relevant to this
-patch.
+This is a known, deliberate tradeoff, not an oversight -- it's
+disclosed directly in the v5 commit message:
 
-Thanks,
-Ian
+  "Unlike the bridged path, this treats failure to place any released
+  resource -- including optional ones, e.g. an unclaimed expansion
+  ROM -- as fatal, rather than checking only required resources.
+  That's the more conservative choice: on a root bus everything
+  released here tends to share one window, and failing loudly seemed
+  better than leaving something silently unassigned."
 
-> --
->
-> commit 525c560536a62c39331ec585b1ce897decf7179c
-> Author: Ian Rogers <irogers@google.com>
->
-> perf stat: Avoid uninitialized memory read on error
->
-> If has_supported_counters fails then msg was passed to ui__error
-> regardless of whether an error was written into msg leading to reading
-> uninitialized memory. Avoid this by always terminating msg at
-> initialization.
->
-> > diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-> > index c50cf230f16ed..37752d6bfef45 100644
-> > --- a/tools/perf/builtin-stat.c
-> > +++ b/tools/perf/builtin-stat.c
->
-> [ ... ]
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but I noticed that the return
-> value of hashmap__new() is incorrectly checked against NULL instead of
-> IS_ERR().
->
-> Since hashmap__new() returns an ERR_PTR on failure, this will
-> cause predictable crashes under memory pressure instead of graceful error
-> handling.
->
-> For example, in tools/perf/util/pmu.c:perf_pmu__init():
->
->         pmu->aliases =3D hashmap__new(aliases__hash, aliases__equal, /*ct=
-x=3D*/ NULL);
->         if (!pmu->aliases)
->                 return -ENOMEM;
->
-> And similarly in tools/perf/util/pmu.c:perf_pmu__create_placeholder_core_=
-pmu():
->
->         pmu->aliases =3D hashmap__new(aliases__hash, aliases__equal, /*ct=
-x=3D*/ NULL);
->         INIT_LIST_HEAD(&pmu->caps);
->
-> Also in tools/perf/util/fncache.c:fncache__init():
->
->         fncache =3D hashmap__new(fncache__hash, fncache__equal, /*ctx=3D*=
-/NULL);
->
-> Should these locations be updated to use IS_ERR() when validating the res=
-ult
-> of hashmap__new()?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908220720.56=
-4614-1-irogers@google.com?part=3D1
+Concretely, for the bug this patch fixes it doesn't apply at all: the
+device's ROM shares a different resource window than the released
+BARs (confirmed against the actual hardware log -- only BAR0 and BAR2
+are ever released, no ROM), so it's never in the "saved" list this
+check walks. The scenario in the finding is theoretical for other
+root-bus devices whose optional resources do share the same window
+as the target BAR, not something this bug's hardware or reported
+failure exercises.
+
+Marking this a false positive rather than a code defect. Finding 2
+("Preexisting") is correctly scoped and not disputed.
+
