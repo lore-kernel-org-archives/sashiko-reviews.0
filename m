@@ -1,113 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D24A52B1C3;
-	Wed,  9 Sep 2026 10:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10A3530E1D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 10:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788950893; cv=none; b=FgaSlmIAudy+awsrUXIzoFBQnZNJmkX7J+IgAKP3VE7MKfjaMq6xusnYShAxVXKFUFDeHo0r2gxffMSwadPiv9rm82zt4YaI+ysmv5NGqLJBIWp4t8vqV6NnmogkZQNjkmd6LB68/9feD1E7Nqn7xDHO+LOUk6Nqk0fyTBkfJcU=
+	t=1788951087; cv=none; b=nNfYvDq81yLA+S/njAgANQalFyWzYSaIDw6brxtaHV2xK9E2RagCr2/u6RLhR0Ypktc/FCBYJxLCAFnLAR2rQv3KvMucnmfMMzWJg/51UiEX2caU9QNtvbw/Vf1+DhIp0yRcv9eCZQuLInc1KU7Xs/l7ehcCSr8YlR0CoctLAoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788950893; c=relaxed/simple;
-	bh=QtouZiOUKb0ozFu4BDZF1soCO71y36i2mcwtTBzs2dQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FfOav0EJ/e+MGmGj83idnWiG01AsawK0sYCNpzxCq17eJRxSis5iSkfl7OgPl/Zw9gcawmZRLHK609yHK7tMRAjarxKh8RJ28wNrxNP7s4Tp7dZj3ECQ1zy/AZmw4i9y7gKLzyZENPeTdi2VwQlH4biXao7nq1jodQbn+G03D1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SVqmQPPy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788951087; c=relaxed/simple;
+	bh=ggVeGyHoHOLO3BPYW9Kqa83ZqzWEp+eSywDeGUiCBqs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FxBz5URE/WvY/6vVdQJMIycvBVY5gLAYNU5ua1MQmNRNKFMyENZHAOX/Cp4FBcAcvZhud+W3x01CBNa0kNc9OG9EmAY2GY6UsuhGGx+OPj6x93nZXfsx7LLRHUnxkRMikBgqaDF6VLBwmxAMyYQCLxvFtKubH4aWNg90mtoSLwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1qTvONF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SVqmQPPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB141F00A3A;
-	Wed,  9 Sep 2026 10:48:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1qTvONF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CAC1F00A3D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 10:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788950891;
-	bh=Iy6dP5b8+Bh9G6nbIp9+iLnn1c9NBsAK7MYaEpGt9oE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SVqmQPPygM6EnWGa/TrORFMJ6dGwl4h0blpzcxL/ueSj9uaDLWEFmlFSBEU79cdAJ
-	 xJNYr3h88RK8YwK3NCgFvvs0nQU6zsotvD3JKfdm1X8DSUngoc4d76urXCQR1qnK/v
-	 EyfO+w145mwPhRrOZRQsZSt/YjGVkOsCGD1+Kiska96sAnSnabGkhJwMGoGvUNFTcj
-	 uwLPCXrTQ556hkf0UY6c/7OnWMw+NLCJo1/sjF6KuTucfbFCoPDp+IO6e4dT2c+9UY
-	 rpfezvCGAMkvYmYpcOsBvS2dHCeSMvuINlRjeXqQGs5JJHOoLvu0dQjwRlf8pOeApN
-	 Fc+cKz+zn2KFw==
-Date: Wed, 9 Sep 2026 12:48:07 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Pei Xiao <xiaopei01@kylinos.cn>, linux-ide@vger.kernel.org,
-	dlemoal@kernel.org, Ondrej Zary <linux@zary.sk>
-Subject: Re: [PATCH v2 2/2] ata: pata_parport: unregister devices on protocol
- unregister
-Message-ID: <aqE5Z00G5h4XmtHA@ryzen>
-References: <cover.1788867690.git.xiaopei01@kylinos.cn>
- <cec58ea83362df88f516ba7a5b895cf07edd7728.1788867690.git.xiaopei01@kylinos.cn>
- <20260908120855.9F34F1F00A3A@smtp.kernel.org>
+	s=k20260515; t=1788951086;
+	bh=ggVeGyHoHOLO3BPYW9Kqa83ZqzWEp+eSywDeGUiCBqs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=Y1qTvONFpGt5+9JfJucpSMMYEZyV4/dWQg0Y8fUb/vEOLE/Hmp94MNftPtBS5XLD5
+	 dStu4npC6JAxjAxJiStIdRaH0tWag2cMch6is8FIPLkGfaUIrNsuVa+JotxXdvuqJy
+	 YAwzysCJ4sRQ95jp18Gjgszw5hv+UAfKdJBI6K3SlwFs25GMLueeaymxrGaq9mEJMK
+	 SGXAgB1rrLxHLvlzPBTKxngthjI8sAQC8G906mPf/2lhr3cq66+spR7hPHrdTFSUEX
+	 P+AJlzeZBgs4aBhK5Sb/ORANRt88a8oluVra2Kz+7KDc04N6P8bqtIO8+c47MONszg
+	 xkGJTv9T0YIhw==
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b899413537so30258e87.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 03:51:26 -0700 (PDT)
+X-Gm-Message-State: AFuF++kqaQJSGlW1Kkd8ooaauFJjiWtMxBSfNb2IMllldw/3DfTemFlR
+	rt/t4o7be5mlqytkPwtWZmDW0+3TnouVFPlQCcZvJGiH5YDwXsEMK1idtKCa3jhzLLcPEZOYheJ
+	rb77qOTEKDMN7SUOP+wR9Malo0NpMVwU=
+X-Received: by 2002:a05:6512:2c98:b0:5b6:183b:d1fc with SMTP id
+ 2adb3069b0e04-5b898108197mr91864e87.35.1788951085037; Wed, 09 Sep 2026
+ 03:51:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260908120855.9F34F1F00A3A@smtp.kernel.org>
+References: <20260908-ks8995-to-ksz8-v10-0-7379239eb65f@kernel.org>
+ <20260908-ks8995-to-ksz8-v10-3-7379239eb65f@kernel.org> <20260909093927.591C51F00ADB@smtp.kernel.org>
+In-Reply-To: <20260909093927.591C51F00ADB@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Wed, 9 Sep 2026 12:51:13 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnLH_3fNgisCnVL+rXHTh=C6TE7_Yo1dwSNHvHa22puTA@mail.gmail.com>
+X-Gm-Features: AcwNN1UCtDQiSV4B9_iXpmNe1TOSKYKpBOhwF1piLI_4f-QKlLOLQ80rFyfA7kA
+Message-ID: <CAD++jLnLH_3fNgisCnVL+rXHTh=C6TE7_Yo1dwSNHvHa22puTA@mail.gmail.com>
+Subject: Re: [PATCH net-next v10 3/4] net: dsa: microchip: Support Microchip
+ KSZ8995XA / KS8995XA
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 08, 2026 at 12:08:55PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] pata_parport_attach fails for all parports except port 0
-> --
-> 
-> commit b043c5b13721ce815e34642853318549a000ffd3
-> Author: Pei Xiao <xiaopei01@kylinos.cn>
-> 
-> ata: pata_parport: unregister devices on protocol unregister
-> 
-> When a protocol module registers multiple protocols and a later
-> registration fails, the rollback path unregisters the protocol but leaves
-> dynamically created devices untouched. Later removal of these dangling
-> devices dereferences freed module memory, crashing the kernel. This commit
-> tears down all pi_adapters using the protocol before unregistering the
-> driver.
-> 
-> > diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
-> > index 046ab7e3adbcf..712209882ab75 100644
-> > --- a/drivers/ata/pata_parport/pata_parport.c
-> > +++ b/drivers/ata/pata_parport/pata_parport.c
-> [ ... ]
-> 
-> While reviewing this, I noticed a pre-existing issue in pata_parport_attach():
-> 
-> drivers/ata/pata_parport/pata_parport.c:pata_parport_attach() {
->     ...
-> 	mutex_lock(&pi_mutex);
-> 	id = idr_alloc(&parport_list, port, port->number, port->number,
-> 		       GFP_KERNEL);
-> 	if (id < 0) {
->     ...
-> }
+On Wed, Sep 9, 2026 at 11:39=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this idr_alloc() call fail for all
-> parports except port 0?
-> 
-> Since the end parameter of idr_alloc() is exclusive, when port->number > 0,
-> it computes max = end - 1. Because start is equal to port->number, the
-> condition start > max evaluates to true, causing it to return -ENOSPC.
-> 
-> Would this cause attaching any parport with a number greater than 0 to
-> silently fail and completely break functionality for those ports?
+> [Severity: Medium]
+> Could this polling loop timeout and abort the switch probe when checking =
+the
+> CPU port?
 
-Looking at idr_alloc(), this looks like a legit pre-existing issue.
+No, this is a non-issue. The code has been tested on real hardware.
 
-There is another call to idr_alloc() i pata_parport_register_driver(),
-but it does:
-error = idr_alloc(&protocols, pr, 0, 0, GFP_KERNEL);
-
-0,0 is start,end
-
-if @end is <= 0, it is treated as one larger than %INT_MAX
-
-So this is only a problem in pata_parport_attach().
-
-
-
-Kind regards,
-Niklas
+Yours,
+Linus Walleij
