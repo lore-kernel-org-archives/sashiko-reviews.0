@@ -1,77 +1,41 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB4357F754;
-	Wed,  9 Sep 2026 14:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C0A312819;
+	Wed,  9 Sep 2026 14:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964636; cv=none; b=dB1ufdFcDIa780D8AMzdMpHlLqJ5XdbrqCzmsKUtyf5FmqmIsLEXt11NWxJrivavCizdAYpzId7H3wvpGZkuvFR3sCGNuVvKpJK8lOcB2rDZAr7hPIJjORTfHA0hcBdUC4mUQqJxpi53ziVCuImDeVc/1wYDt0Je5j84Jpmetoc=
+	t=1788965348; cv=none; b=bMrlBecKoQMKmdKXtPFYPPEZMxO+gqvRX51dSlICsd6Lbt/o5h0Qdxg/LUgekV52fHyeuxPGVH9yYdGy2zyIdnQmvbJ45r2erg1SN12K1mRP7z3votHpchCaAuKDmBFmoGqPQ0i409jq5bRCVJRKv/e7TdVHAtEWmLDJ7sd2yEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964636; c=relaxed/simple;
-	bh=xtOgUh/L6MF+jrJ24X7oWpToR3DU/vTdqDq2fc1Wg/4=;
+	s=arc-20240116; t=1788965348; c=relaxed/simple;
+	bh=54PdNHjZmvC+ydENa3G1J+G4G1FJGs39VSzshVYd64w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s7aAqA/YZqQcw7N46g/30JJh52a5mhU7uinhil1KFScKspZ3XfO/Ck3x1IGyBZ65vniy5n8RP6pYsokjBc/6B5TGgU8I/ABoYPk/LbbOGrXXfyDyuygSxM4BnVW2UGESUoJ1KzbYgae7XDBSkDCm4x3wgfDPVIfE47fRE5SQV3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=mIBmGpy/; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ER7mJp9tLUGZg8BI+eYpAQxjTuSsTpNVq+aMroQEcfz4AHt1VNDPyEGYqvOiwrweZYphB7O3ZvZqQVTC/ij47E1lGzQe1dm4dVMZF9YmWogljGoH+9tYVRGf2+Vf0uI6/kizpzdGI0ucG6CQ8of1HnA4K13prgRvV5MYtNhjOb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFu0w4bM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="mIBmGpy/"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689B1VIZ1930746;
-	Wed, 9 Sep 2026 14:37:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=W+d4d3
-	u/fs0bAXS2dXFOYLho/6FprKhrDIX5pnpwBcs=; b=mIBmGpy/SoaLW3G7Y0QJl6
-	9dtRoIBbD/zkuiYSC1NMd4HusDq/Zh8aQh9v1Ph9y8kW0ryJZISnoH1/jRMxyWya
-	5vIqFY3X2Ni21LugmtwfV3wAQTr9+rjId4XeNhh19hqj3qICCG6EklBigwCNaCDm
-	NENeJHrBojkAoyylz37RssfkuS0upklYRTUrlGQzbWvAWck1PhMY1gtIopW1olSD
-	jM0PLfC5p59r1yha7/P4NCrHkE14GoDFH/jri8UbsHlzzHAuIse0KUnozQJbcWAJ
-	N4miVz5JlLqRLR/JrZoreBo+/ABEYbJW2KK6OP9D+fnnBOy8OctCnx06OE3RaQwA
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbqk6edb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Sep 2026 14:37:14 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 689EQI4R014921;
-	Wed, 9 Sep 2026 14:37:13 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggwswavvj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Sep 2026 14:37:12 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 689Eb8sg45285660
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 9 Sep 2026 14:37:08 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C04102004B;
-	Wed,  9 Sep 2026 14:37:08 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 406CA20043;
-	Wed,  9 Sep 2026 14:37:08 +0000 (GMT)
-Received: from osiris (unknown [9.111.58.37])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed,  9 Sep 2026 14:37:08 +0000 (GMT)
-Date: Wed, 9 Sep 2026 16:37:06 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Nihar Ranjan Panda <niharp@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Eric Farman <farman@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Benjamin Block <bblock@linux.ibm.com>,
-        Nagamani PV <nagamani@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>
-Subject: Re: [PATCH v4] s390/qdio: Ensure QDIO_IRQ_STATE_ACTIVE is set only
- after firmware activates.
-Message-ID: <20260909143706.13132A22-hca@linux.ibm.com>
-References: <20260907051016.1296884-1-niharp@linux.ibm.com>
- <20260907052157.AC6D51F00A3A@smtp.kernel.org>
- <34a27ebe-e9fb-4300-9d5c-beac88744bd4@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFu0w4bM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646F61F00A3A;
+	Wed,  9 Sep 2026 14:49:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788965346;
+	bh=+NZaXpk+a7B276g1IyxQfYtoysLHIBQonmOQeX7VOK0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nFu0w4bMRqRIEgNxIdOTrqA+ZjSQmkgpnAcFtV2WbjoaJyRn6nKRQyP2OprCt2nZZ
+	 uYlyPrcT9CzOLcID/Ku8Wlg2eHB/vlnHkgPdKK82Rx7JOT/9FDFXbg9Y9zf+Dj1P27
+	 qUG19a81Cs5d9ji95iKcIgZUHwM5BmQSwTtiqMy9zrz+E+dpqpGRAoGlvJuYPy3/+z
+	 IsyGPYWIhkZ+xxYT0JTXVHVxjlCSonvzwz0ajoQanLAdqZeruj6Ly3G66Aufhl4To7
+	 EYON7QdNI8il6aYDkGzWLuYpCvttTU1yz25bCYVmqJqBggmpTnuAUMf4YcXkdExWe+
+	 mUcpitTaBgmgg==
+Date: Wed, 9 Sep 2026 10:49:04 -0400
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Tengda Wu <wutengda@huaweicloud.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v5 01/26] perf capstone: Symbolize address operands to
+ match objdump on arm64
+Message-ID: <aqFx4Fia3SWTrVZu@google.com>
+References: <cover.1788872630.git.wutengda@huaweicloud.com>
+ <eb2510f336aace385e4b4ffa99281d61c89c1ad2.1788872630.git.wutengda@huaweicloud.com>
+ <20260908131804.76F941F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -81,223 +45,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <34a27ebe-e9fb-4300-9d5c-beac88744bd4@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DodnH2NDUEsdE77KiwO9Ksd1XfHHsnqg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE2MiBTYWx0ZWRfX+PQnSSCNlmUt
- 6yMQlB4ljKsfpzGufaVojfKedubPu32XKPXTW/5cHcPssBwnKMDXghk5E5kPO7k9ZJJH7Rr6qUy
- 9OiLIme9bsTRvUv7n8rmDvcR0NmhLv0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE2MiBTYWx0ZWRfX/cjJNbB9moBK
- bxlomn79aAsCT3ffhD/u8HOYzXAz/jDGfzUAT/TDWj8Fhb5uZvMSjjQB5ika1Tf+sxGwq8MjiVA
- sFTWpAV/sG3wOy84C1XxfRGKULrG6yqhv+D076o8b+GC8beOw4VIHwif31EfcT1F1ou7Wt6QBoh
- 26j+Z9jLrD3TF+hKpCYrckecOkDhOOCh3UzglkPbB59koNAL5ZKoXJW24wUw11/+Sy8QpiwS8nk
- NPzzmmTXfkOri3XG4zNJ+pGlteWluUm1CgBDkiveElvTqRwLgBYKvg2dT2oI8WTr3uEuUO9bGKx
- 51VgH9Gk8sw1hADUK37qWbHm+9IbJZwNI6DcokP/eoblRB43oDTrZQqtl6Llyd3Fn7Hg6Y0U5g2
- RB3uUchcztmnZf04ysJegPg1g8Qf9tAHuOlgEpnKml1xlZncbLHMTkURmi7FfgrHTUCJclF4K3s
- C6oJQ5auaJuNpkvKDaw==
-X-Authority-Analysis: v=2.4 cv=JaKMa0KV c=1 sm=1 tr=0 ts=6aa16f1a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=-iIxx6m34nZCUG48ZDYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: DodnH2NDUEsdE77KiwO9Ksd1XfHHsnqg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090162
+In-Reply-To: <20260908131804.76F941F00A3A@smtp.kernel.org>
 
-[full quote below since additional people are added to cc]
+Hello,
 
-On Wed, Sep 09, 2026 at 11:27:25AM +0530, Nihar Ranjan Panda wrote:
-> On 07/09/26 10:51 am, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [High] Lockless execution of cio_update_schib() causes a data race on the shared sch->schib structure.
-> > - [High] The timeout polling loop is vulnerable to a preemption bug resulting in a spurious -ETIMEDOUT failure.
-> > - [High] Missing I/O cancellation on timeout leaves a dangling channel program.
-> > 
-> > Pre-existing issues:
-> > - [High] qdio_set_state() is called locklessly, potentially overwriting a STOPPED/ERR state.
-> > --
-> > 
-> The above reported issues have been reviewed and determined to be invalid. 
-> Please find the clarification for each item detailed below.
-
-I do disagree for at least two points (the other ones are up to other folks).
- 
-> > commit f5d84619d7d33842d3cc7f120e8e2f08b030d3f4
-> > Author: Nihar Panda <niharp@linux.ibm.com>
-> > 
-> > s390/qdio: Ensure QDIO_IRQ_STATE_ACTIVE is set only after firmware activates.
-> >     
-> > This commit modifies the activation sequence for QDIO queues to poll the
-> > Subchannel Status Word (SCSW) instead of relying on an intermediate interrupt.
-> > It checks for both SCSW_ACTL_SCHACT and qact to become set within a loop before
-> > transitioning the state to QDIO_IRQ_STATE_ACTIVE.
-> > 
-> >> diff --git a/drivers/s390/cio/qdio_main.c b/drivers/s390/cio/qdio_main.c
-> >> index c1e09fa34e774..821d501efdccf 100644
-> >> --- a/drivers/s390/cio/qdio_main.c
-> >> +++ b/drivers/s390/cio/qdio_main.c
-> > 
-> > [ ... ]
-> > 
-> >> @@ -1178,23 +1197,32 @@ int qdio_activate(struct ccw_device *cdev)
-> >>  			      0, DOIO_DENY_PREFETCH);
-> >>  	spin_unlock_irq(get_ccwdev_lock(cdev));
-> >>  	if (rc) {
-> >> -		DBF_ERROR("%4x act IO ERR", irq_ptr->schid.sch_no);
-> >> -		DBF_ERROR("rc:%4x", rc);
-> >> +		DBF_ERROR("%4x act IE:%d", irq_ptr->schid.sch_no, rc);
-> >>  		goto out;
-> >>  	}
-> >>  
-> >> -	/* wait for subchannel to become active */
-> >> -	msleep(5);
-> >> +	rc = -ETIMEDOUT;
-> >> +	timeout = jiffies + HZ;
-> >>  
-> >> -	switch (irq_ptr->state) {
-> >> -	case QDIO_IRQ_STATE_STOPPED:
-> >> -	case QDIO_IRQ_STATE_ERR:
-> >> -		rc = -EIO;
-> >> -		break;
-> >> -	default:
-> >> -		qdio_set_state(irq_ptr, QDIO_IRQ_STATE_ACTIVE);
-> >> -		rc = 0;
-> >> +	while (time_before(jiffies, timeout)) {
-> > 
-> > [Severity: High]
-> > Does this loop risk spurious timeouts under preemption or high CPU load?
-> > 
-> > By checking the timeout condition before evaluating the hardware state, if
-> > preemption occurs right after the timeout is set and lasts longer than HZ,
-> > the loop will terminate immediately.
-> > 
-> > This causes a spurious -ETIMEDOUT failure without ever checking the hardware
-> > status.
-> > 
-> NO, the loop is safe because msleep + time_before(jiffies,…) is immune to preemption delay; 
-> jiffies advances independently
-
-This is not correct. It the task that is doing
-
-	rc = -ETIMEDOUT;
-	timeout = jiffies + HZ;
-
-is preempted right after assigning the above to timeout, and is scheduled back
-in _after_ timeout then
-
-	while (time_before(jiffies, timeout)) {
-
-evaluates to false. Which means that -ETIMEDOUT is returned, even though state
-has not been checked even once. This is a regression to before and needs to be
-fixed. Similar things can happen if the loop itself is preempted. It might
-have waited only 1, 2, 3, or 4ms, and might then be preempted - without
-checking again. Before it was a minimum of 5ms and a guaranteed check
-afterwards.
-
-The 5ms might have been a random number, but it is a change and potential
-regression as well.
-
-> >> +		msleep(1);
-> >> +		if (irq_ptr->state != QDIO_IRQ_STATE_ESTABLISHED) {
-> >> +			rc = -EIO;
-> >> +			DBF_ERROR("%4x act WS:%d", irq_ptr->schid.sch_no, irq_ptr->state);
-> >> +			break;
-> >> +		}
-> >> +		/* Query hardware */
-> >> +		if (cio_update_schib(sch) == 0) {
-> > 
-> > [Severity: High]
-> > Is it safe to call cio_update_schib() without holding the subchannel lock here?
-> > 
-> > The lock get_ccwdev_lock(cdev) was released earlier, and cio_update_schib()
-> > performs a lockless memcpy():
-> > 
-> > drivers/s390/cio/cio.c:cio_update_schib() {
-> >     ...
-> > 	if (stsch(sch->schid, &schib))
-> > 		return -ENODEV;
-> > 
-> > 	memcpy(&sch->schib, &schib, sizeof(schib));
-> >     ...
-> > }
-> > 
-> > This results in a data race with concurrent interrupt handlers that might be
-> > updating sch->schib, potentially causing torn writes and state corruption.
-> >
-> Yes, it is safe to call cio_update_schib() without holding the subchannel lock. 
-> The implementation is secure for the following reasons:
+On Tue, Sep 08, 2026 at 01:18:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Premature `map__put()` of `found_map` before the caller consumes `sym_name` creates a Use-After-Free vulnerability.
+> --
 > 
-> Subsystem Consistency: The lockless call is consistent with all other invocations of 
-> cio_update_schib() across the driver subsystem.
+> commit ff403b9f1717375044e9b6fbb3f09210431e386b
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> perf capstone: Symbolize address operands to match objdump on arm64
+> 
+> This commit extends Capstone disassembly support on arm64 to resolve target
+> addresses to symbols. It detects instructions with address operands, maps
+> them to symbols, and formats the output to match objdump's style.
+> 
+> > diff --git a/tools/perf/util/capstone.c b/tools/perf/util/capstone.c
+> > index 74213daf87862..7f82c33e3464a 100644
+> > --- a/tools/perf/util/capstone.c
+> > +++ b/tools/perf/util/capstone.c
+> [ ... ]
+> > @@ -292,16 +303,44 @@ ssize_t capstone__fprintf_insn_asm(struct machine *machine, struct thread *threa
+> >  	return printed;
+> >  }
+> >  
+> > +static int resolve_symbol_from_addr(struct map *map, u64 addr,
+> > +				    const char **sym_name, u64 *sym_offset)
+> > +{
+> > +	struct map *found_map = NULL;
+> > +	struct symbol *sym;
+> > +	u64 al_addr;
+> > +	u64 ip = map__objdump_2mem(map, addr);
+> > +
+> > +	if (dso__kernel(map__dso(map))) {
+> > +		/*
+> > +		 * The kernel maps can be split into sections, let's
+> > +		 * find the map first and then search the symbol.
+> > +		 */
+> > +		found_map = maps__find(map__kmaps(map), ip);
+> > +		if (found_map == NULL)
+> > +			return -1;
+> > +		map = found_map;
+> > +	}
+> > +
+> > +	/* convert it to map-relative address for search */
+> > +	al_addr = map__map_ip(map, ip);
+> > +
+> > +	sym = map__find_symbol(map, al_addr);
+> > +	map__put(found_map);
+> > +
+> > +	if (sym == NULL)
+> > +		return -1;
+> > +
+> > +	*sym_name = sym->name;
+> > +	*sym_offset = al_addr - sym->start;
+> > +	return 0;
+> > +}
+> 
+> [Severity: Medium]
+> Is map__put(found_map) called prematurely here? If the map is concurrently
+> removed and the refcount drops to zero, the map and its symbols could be
+> freed. Does this leave sym->name pointing to freed memory when it is assigned
+> to *sym_name and returned to the caller?
 
-This is not true. All other places (except one) call cio_update_schib() with
-sch->lock being held.
+Right, probably better to return a pointer to symbol instead and make
+the found_map as an out parameter.
 
-The only other "offender" seems to be vfio_ccw_schib_region_read(), which
-looks like a bug.
+Thanks,
+Namhyung
 
-I leave the rest below to other folks who have been on cc on your original
-email (+ adding Eric and Matthew for vfio).
-
-> Authoritative Data: Both concurrent writers are applying identical, hardware-authoritative state, 
-> eliminating the risk of conflicting data.
-> Writer A — the interrupt path (do_cio_interrupt()): memcpy(&sch->schib.scsw, &irb->scsw, …);
-> Writer B — the poll path (cio_update_schib()):memcpy(&sch->schib, &schib, …);
 > 
-> Fault-Tolerant Design: The polling loop naturally tolerates a missed read and will simply retry, 
-> preventing state corruption.
+> > +
+> >  static void print_capstone_detail(struct cs_insn *insn, char *buf, size_t len,
+> >  				  struct annotate_args *args, u64 addr)
+> >  {
+> [ ... ]
+> > @@ -320,40 +360,114 @@ static void print_capstone_detail(struct cs_insn *insn, char *buf, size_t len,
+> >  
+> >  		/* get the target address */
+> >  		orig_addr = addr + insn->size + op->mem.disp;
+> > -		addr = map__objdump_2mem(map, orig_addr);
+> > -
+> > -		if (dso__kernel(map__dso(map))) {
+> > -			/*
+> > -			 * The kernel maps can be split into sections, let's
+> > -			 * find the map first and then search the symbol.
+> > -			 */
+> > -			found_map = maps__find(map__kmaps(map), addr);
+> > -			if (found_map == NULL)
+> > -				continue;
+> > -			map = found_map;
+> > -		}
+> > -
+> > -		/* convert it to map-relative address for search */
+> > -		addr = map__map_ip(map, addr);
+> > -
+> > -		sym = map__find_symbol(map, addr);
+> > -		if (sym == NULL) {
+> > -			map__put(found_map);
+> > +		if (resolve_symbol_from_addr(map, orig_addr, &sym_name, &sym_offset))
+> >  			continue;
+> > -		}
+> >  
+> > -		if (addr == sym->start) {
+> > +		if (sym_offset == 0) {
+> >  			scnprintf(buf, len, "\t# %"PRIx64" <%s>",
+> > -				  orig_addr, sym->name);
+> > +				  orig_addr, sym_name);
 > 
-> >> +			if ((sch->schib.scsw.cmd.actl & SCSW_ACTL_SCHACT)
-> >> +					&& sch->schib.scsw.cmd.qact) {
-> >> +				qdio_set_state(irq_ptr, QDIO_IRQ_STATE_ACTIVE);
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but is it safe for qdio_set_state() to assign
-> > the state locklessly?
-> > 
-> > By directly assigning irq_ptr->state without serialization, it can overwrite a
-> > QDIO_IRQ_STATE_STOPPED or QDIO_IRQ_STATE_ERR state set concurrently by an
-> > interrupt handler.
-> > 
-> > This could mask concurrent hardware errors and leave the device in a
-> > false-active state.
-> >
+> [Severity: Medium]
+> Can this result in a Use-After-Free? If resolve_symbol_from_addr() drops the
+> map reference too early, sym_name might point to freed memory by the time it
+> is dereferenced here in scnprintf().
 > 
-> Yes overwrite can happen between do_cio_interrupt()  and cio_update_schib().
-> The mb() inside qdio_set_state() ensures the write is ordered and visible, not exclusive.
-> The race is not new and is not worsened by the change.
-> The race window is smaller, the guard is tighter, and the hardware confirmation adds a second condition. 
+> >  		} else {
+> >  			scnprintf(buf, len, "\t# %"PRIx64" <%s+%#"PRIx64">",
+> > -				  orig_addr, sym->name, addr - sym->start);
+> > +				  orig_addr, sym_name, sym_offset);
+> >  		}
+> [ ... ]
+> > +static void format_capstone_insn_arm64(struct cs_insn *insn, char *buf,
+> > +				       size_t len, struct annotate_args *args)
+> > +{
+> > +	struct map *map = args->ms->map;
+> > +	char *last_imm, *endptr;
+> > +	u64 addr;
+> > +
+> > +	print_default_format(insn, buf, len);
+> > +	/*
+> > +	 * Adjust instructions to keep the existing behavior with objdump.
+> > +	 *
+> > +	 * Example conversion:
+> > +	 * From: b #0xffff8000800114c8
+> > +	 * To:   b ffff8000800114c8 <el0t_64_sync+0x108>
+> > +	 */
+> > +	if (needs_symbolic_address(insn)) {
+> > +		const char *sym_name = NULL;
+> > +		u64 sym_offset;
+> > +
+> > +		/* Extract last immediate value as address */
+> > +		last_imm = strrchr(buf, '#');
+> > +		if (!last_imm)
+> > +			return;
+> > +
+> > +		addr = strtoull(last_imm + 1, &endptr, 16);
+> > +		if (endptr == last_imm + 1)
+> > +			return;
+> > +
+> > +		if (resolve_symbol_from_addr(map, addr, &sym_name, &sym_offset))
+> > +			return;
+> > +
+> > +		/* Symbolize the resolved address */
+> > +		len = len - (last_imm - buf);
+> > +		if (sym_offset == 0) {
+> > +			scnprintf(last_imm, len, "%"PRIx64" <%s>",
+> > +				  addr, sym_name);
 > 
+> [Severity: Medium]
+> Does this also dereference the potentially dangling sym_name pointer if the
+> underlying map was freed in resolve_symbol_from_addr()?
 > 
-> >> +				rc = 0;
-> >> +				break;
-> >> +			}
-> >> +		}
-> >>  	}
-> >> +	if (rc == -ETIMEDOUT)
-> >> +		DBF_ERROR("%4x act TIMEOUT", irq_ptr->schid.sch_no);
-> >>  out:
-> >>  	mutex_unlock(&irq_ptr->setup_mutex);
-> >>  	return rc;
-> > 
-> > [Severity: High]
-> > If this returns -ETIMEDOUT, is the pending asynchronous I/O left uncancelled?
-> > 
-> > When the timeout expires, the function returns the error while the channel
-> > program started by ccw_device_start() may still be active in hardware.
-> > 
-> > This could lead to use-after-free and memory corruption if the uncancelled CCW
-> > eventually completes and performs DMA writes to memory that has since been
-> > freed or repurposed.
-> > 
-> No, as qdio_shutdown() → qdio_cancel_ccw() → ccw_device_halt/clear() is the 
-> mandatory error path all callers must invoke, so the channel program will be closed.
+> > +		} else {
+> > +			scnprintf(last_imm, len, "%"PRIx64" <%s+%#"PRIx64">",
+> > +				  addr, sym_name, sym_offset);
+> > +		}
+> > +	}
+> > +}
 > 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1788872630.git.wutengda@huaweicloud.com?part=1
