@@ -1,152 +1,112 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011025.outbound.protection.outlook.com [52.101.52.25])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BD3345EAE
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 03:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788922845; cv=fail; b=C42ueM6fjmYqTY3eoePD8xwDIAMG4uU5+oA3YCk/jsVixfBzdswHG8tHgR98PaNt1pLuLEZ8gtKYrU5L4ha7+DCnxhl1ZBDCGM0NT04Ru5fAPXIUG+HN+pZ+Dd9AqoPz8vS125+Szbm36lCYYo2WzFVPYXmKBDCdBkua5tgQtpo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788922845; c=relaxed/simple;
-	bh=cVLkAUHzzD6vqbj2HaEc24FStbbRCfPju8WJ9IKopNs=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ili7nudQcxzVISYW+VBDnCiRCRpu63Lm4e73BFEcDLAyWOLH3wxQblwbCQvqe6RZkERalBcw4uooj1i2MFCvuAgod4oN08WB9KOaAvStnYJnCjCYB2eXAPEyqTTmtw5h/1j+1MeoPpDqpyxlAl6r4OcPeq4LMRbyoFt4NZ9HA3I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=RuhVco8m; arc=fail smtp.client-ip=52.101.52.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379233557D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 03:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788925358; cv=none; b=U4RghkYYjfvVJZWIdF8lQd3QaQ0w++MWd5zltVh8w2Z/r3NjPXTbowAIPEy/NCWN8NE5aLtwHK5OHP+PSwLgq6uF/GoGa1kEsCBMkiObY/wwyg8sNyjMup+rWXsXfVbfZyoRff+wEldTsElXyRsal0SLyp2Ebp7sf0NrNbFwuTU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788925358; c=relaxed/simple;
+	bh=DPG9za4oXsJpy7tSykLd06q0WG1pcqzSVZJNeYro8wg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E2bpJUih8RsglMo6tWFGW9PezujBzoR/seQ5vFXWQcmRxK5djXm++HYLDToup6AhovRtcumqZu9IKPROrHsdqXRZKV5rWXRuZdyr8Ux1+WR7KjCxTtZdClmC0vuOmVNs9G23hfRtF07tjdDPvN0GKu/970Y0189qmo7rKqdaZsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; dkim=pass (1024-bit key) header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.b=eDojvma5; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="RuhVco8m"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aKakYGbzAwFMcmc/JLMYcKyf0f4nEFwqtr3IqQaaX1rg9r+IxewikPnn8+QNoMGQ+5lCBqU72mELBnD/PzULRMcOSckT7qMKhDJ7L9mQtXGouSqdm3MO3+VAJlZrJti4WHp1f/Ff5BdXKtRcUuQLBEEN8EX2ORkWhFqU5aJqHINH6HfNBkZ/eahtw9FAs5h2ld8Y+KeH6dqb8dmUkMFr1OJN270yAjCP8zoDHEy6h0GEzYwawtfXQEqaAH77b/waIrOALyz6zKkoBiAv1vgAJwEaOIqNuY6Kf2NNV3VfWfX97mNXmOLkgCuoqpSgxVKb7Q+Go00/UBZgZ9UNWI+LZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cVLkAUHzzD6vqbj2HaEc24FStbbRCfPju8WJ9IKopNs=;
- b=czTWb0/40imvifhu80qc/EsqCUL+FOTz8X9DDoSHWLUEeaDp+KGEnB32QYm17f5ZtF0f256OewxCkfW87e+tuSf+yZNVZ1C0ywsmzSPoyAGxIp1ktQKJMDKUZuSeVbUeb878ZpRFxz1sr6bQvHC74iFNnCbrPajmqz9AGldVnoruz6+3aH048rBfYqQ6rdP9V/DsfqRY4BnXQvcV0Y7JejzM76egFDs23djEFviE6tKyxok00dpm4U8HPFluYftw5qvpDXYFneddnFU6Fgqv7sz1nSIvmahe/LgbowVN/HVvCfWqUbf+sEu8kPugirCNUe/WPXZKrUy8rWR6xh98xw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cVLkAUHzzD6vqbj2HaEc24FStbbRCfPju8WJ9IKopNs=;
- b=RuhVco8mbloF65IGifBblufrvS+lRE4BM6K62aCdFhkmWnGicaLYa3YPTH2M5FBgcmq/J8fEaWfID3YOF1cBqJ9VXaQoKP5qRbKAk3S0ZZqbTJdlbKFUllOO4/ITCwwisogrniyTLZRBJeZPrQUaaF3fEGSoR5XP7jfhH82Ii+s=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS0PR12MB8199.namprd12.prod.outlook.com (2603:10b6:8:de::20) by
- SA3PR12MB9089.namprd12.prod.outlook.com (2603:10b6:806:39f::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.7; Wed, 9 Sep 2026 03:00:39 +0000
-Received: from DS0PR12MB8199.namprd12.prod.outlook.com
- ([fe80::fdd3:ff85:ce0b:7c27]) by DS0PR12MB8199.namprd12.prod.outlook.com
- ([fe80::fdd3:ff85:ce0b:7c27%6]) with mapi id 15.21.0406.005; Wed, 9 Sep 2026
- 03:00:39 +0000
-Message-ID: <a7ad31f9-262a-4d85-b4d0-051b722147a8@amd.com>
-Date: Wed, 9 Sep 2026 08:30:33 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/3] drm: Add drm_work_fence helper
-To: Matthew Brost <matthew.brost@intel.com>, sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-References: <20260908084627.352535-1-srinivasan.shanmugam@amd.com>
- <20260908084627.352535-2-srinivasan.shanmugam@amd.com>
- <20260908085840.57CFB1F00A3D@smtp.kernel.org>
- <aqBtFDnjT4HwM+12@gsse-cloud1.jf.intel.com>
-Content-Language: en-US
-From: SRINIVASAN SHANMUGAM <srinivasan.shanmugam@amd.com>
-In-Reply-To: <aqBtFDnjT4HwM+12@gsse-cloud1.jf.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5P287CA0148.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1d7::18) To DS0PR12MB8199.namprd12.prod.outlook.com
- (2603:10b6:8:de::20)
+	dkim=pass (1024-bit key) header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.b="eDojvma5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smail.nju.edu.cn;
+	s=iohv2404; t=1788925334;
+	bh=S3S48v9NyNCygvo9ANS4o5ZQWKXiieL6rO7xfL97yBU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=eDojvma5PJOHwvlA/LgzO5UmoFaiDJaJ+589eBlp4AhGEfb7tWeQI07A2f1XXvFjp
+	 r7FE2mXlY4f5TqDnf/O3W5UkKh9RkAzQhJnIKnB2JwiGoKzmAHCo3Pp6mvW3IKTfAj
+	 qmLtv5Gm8wdvI8F0xZxpKyyfaaA/tIeQG6IozPyQ=
+X-QQ-mid: esmtpsz18t1788925330tbaeb4760
+X-QQ-Originating-IP: mQAzD3pkNlHdp5jpzSQImebKhWrNlUia+t09hwY2gow=
+Received: from [127.0.0.1] ( [124.70.231.75])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 09 Sep 2026 11:42:09 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12620112044545498370
+Message-ID: <1FD435BC6A08027E+0a49ab9c-e991-4af0-b484-b57ee65cf79a@smail.nju.edu.cn>
+Date: Wed, 9 Sep 2026 11:42:08 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR12MB8199:EE_|SA3PR12MB9089:EE_
-X-MS-Office365-Filtering-Correlation-Id: eed1fbfb-1fdb-48b2-9f45-08df0e1e86f6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	rVm6So90ZlLeEmeNqHwzMgEnH1wVMLaHJysgLBThSsSs0Q9ZP0PJ63yPLgN8qRRvmIjTluSMScDsxICh3TJf/UtsL1DKWDIO0mdez5v/IRJqIb7YsblOCfY9YpgiizgccTwvG26UnlukeU6xDz5sDbFhq2XDQNqREdHIjonolYwwrr1k4KC2Z3Ac2NWrn5lRJ91DRB1rmDSO4NFBidodev5d9DZRlEmYHFPnJaC2sU+1nlRH5MGTrOo7fJN8BaO97RNgWlbAhnVJfKAWjP8AgKmAXj/8iCB+9PKRbV/hI2MK39vBSd26MqL0Ue5rrc6jYlUG+Y2gE4Eel1GN3vQKPCqRqVMLiTBfaYiWimcGZxzoFNxWzfNyDYtn29hyoJm8ZC+UjTjH9Jen+FGgbP+ewspWmOC+YiOXGRTtpQv21ug9T+0/LqCbc/MxzW9YfKrL6RU0n+KwS3i4lC10OEFfzpS9PBYvqX3bKxw1UeGNpw1poFTOv722noyZvhg5oJhW50AXXjOKZl+Y+1WiLbx1E8PyobY1I9eSWLg0Mv4ssED2y9ISIcYwGPt4Z5qSK52sWkTIYIZrpNLxaa8VAt2GZUsv1cwl8AldpzhzBUNypgGl85g9P8qZx4VqLvgEbmVx2FRDBMVgb6W/2y+S3GeLYx/ZDrmvbGk6f6ZWkBCLxLg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB8199.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cE1DVGphTCtFcHBoQkRlUCt6c2pDb3VTYXFkTWcxQWxQNk8reGp4eDQzRHd2?=
- =?utf-8?B?bit4R2hGNG9DL1pkcXNJTGFXV3lMZjJ3WUFFbys5T1FPODdoQmg4N244R21z?=
- =?utf-8?B?ODV6NHFDb2ZLOGtiRjFvTU5ENmVIV21BN2NhTmduTFQ1d0hhWkJmM3dQQit4?=
- =?utf-8?B?bi9JUDlkTE1hWkpQdzhIVEMrUW9MQlllS0NxRCtSVjE3dWdGRjMrL3dnRjJk?=
- =?utf-8?B?ODBnRjRuYUFuREp1MEVNRUxZaWNLcytuVmhoZ1R3WTM3SE1sVTU5a3NDekJu?=
- =?utf-8?B?VVgvSEozaXNTZ2RyLzljUkRZQkV5eGNUTW1ZWVg2MU5tSjFPajlnZkdmL0xt?=
- =?utf-8?B?b2dXbnhSMXVnU0VaQzFFOURLUVVXK2lSNFgrUytOWXZZVTJ1Z2ZIcjV5MTRT?=
- =?utf-8?B?cDhhVVQwa2JkY054YWFCWnc2TFNvUG1uU0Znc3ZJUWYzMHgveEUwWktMZmJw?=
- =?utf-8?B?RjRFNUVBNnJaUnNuVVU4cGJzTUxMZHdRNitOa1E2UVAwd2RxZXFnVkJTQ01V?=
- =?utf-8?B?eXhOUnI0dTh1d1gyZmNXbjBnTHRiQURtb2pLNnRxdkFzOVFLVFhhbXRlL3FL?=
- =?utf-8?B?TmF1aEdsa3MzODVKdnpVQlFySWNoUzdmVzZJT2Z1bVJ3TUlYczRpTVdkUVVv?=
- =?utf-8?B?Zjl2MS9Ka3hQTmM2c3ExNmV4anpTNWYrTXB3eHh4WWtQeks4R2lnd1p2QzBq?=
- =?utf-8?B?Zm43YVBpdHBYZ3puN2F2YUlxZG10a0pxNDBpdkJDNitKNFl2TEozSTFNYUZK?=
- =?utf-8?B?bi9KQ3VueTVUVEExbVQzUXRtN0QzOXFnMk9FcDB5NVhWRmhKaURPSmZGYS8v?=
- =?utf-8?B?ZzhvN0p3aWhnS3JlZ1JCSnZWcWQxY0c2a0JuR1VRcFB4N0htcmtXMkNtWEEw?=
- =?utf-8?B?V05MZnFFNnpUQTM3eDA3K1E4WkFNaGk0TWdKMVlFWXhsN2xjZFlDWk9OcjFN?=
- =?utf-8?B?Tk5sTnUyM3AxS0ZNRGpjNGFhYk1aU0tvWkFzM0QyTW00c2NQV3Iva0hyZTQv?=
- =?utf-8?B?MWdOTUFlTVpodVJ5ekYvcmRraFpIN1QzaTJQY3R3a3FmbXlQZUZpcy9Lc1Fx?=
- =?utf-8?B?RDlGVHFKRDRVdkVUVEZzVVl6S1dWS0NmNlk5eDcyVGx2Zk9COHVvRUVwYXJQ?=
- =?utf-8?B?K2h2Z1dFT2FOcGtGdkJPUWUzSExRUjRjZFRuSWlEdUNJT0pLOVpiMlozeG01?=
- =?utf-8?B?VkRZUHV4KzJkTjJlWFprejZMYTVWNG1yZXZ1cExISmg5dG0xK1BEeTIxYXNk?=
- =?utf-8?B?eTNrNldleGdMcGxGMDJTV3ZPMFNyOFpRZGpaR1V4ZnZFb05ucUVpcnUrK2w5?=
- =?utf-8?B?OWdPbWlhQ3EvSUpQZ2h3WDMxRVdhdmZ6Z3Z4SzJYdVFsNWlnNXFJSjNaQ3Yw?=
- =?utf-8?B?bnZMWU1KSTViZ002Rll5amsza2V2NmVMLzVCT0ZzajdiVldnaEM0UVJhdith?=
- =?utf-8?B?WmFnMUpPQXdVZ0M0KytQdUNGdUZHdGtQRzIyUzdqTUR0MlV3WXVUenFuYjFS?=
- =?utf-8?B?Um50NzVZY1NEZWNoVURBR0JyV2xZdjhEVW04aXNabWxMclJCeHppUVJVdDhk?=
- =?utf-8?B?Z0Vid0tJZGJ6RndlTzVDaEdTbll0RGUxeFFwWG5UNUFMbzFJL0JLb1VxdXBv?=
- =?utf-8?B?S3F5QUhoV2RsYzZCMU1jMVk1UWY0SjV4TmJWMkk0Qkl5cVA0aFROSFJ1MzlW?=
- =?utf-8?B?WW0yNkYrMWJlZFVxQm90WTRGRlpaaEIxTExXTFdHMHVSY1lrMEkwNnJCL2dK?=
- =?utf-8?B?REFRaWtGYks2c0hnM0NiaG9ONFVyNmNlNTF2ckk2WHBPWDBuS3MyNG10dHp2?=
- =?utf-8?B?dTNPT1ZIOVV2WVlCZDJIVkxERDZjUFZ5RlV3OXg5NlhSODBGaUx3MExjWUVU?=
- =?utf-8?B?WUZmcC9rdWhzZUFPczBuYkVKWHkwcHR0L3AvbWpnVE9mc3c5SGQyOEpYdFdB?=
- =?utf-8?B?c1djT2k4Sm1YTHRkRTNkU1BIdjhVcTRhMmJDVjZQWE4vd0dEc0hRTnVZRnJa?=
- =?utf-8?B?emlzRmJzdjd1Rlkwa0ZXejliOFRBZWhkYWtycWU3a1FCYUdZSGRhZnE3cS9J?=
- =?utf-8?B?c01jelZmb0N1UVdWVVBnOENmT3RjaXh4MkRwaTZScnBWN1Fkc2JtcS81Qi9s?=
- =?utf-8?B?UHZRMVFOYzRoRHVTTmdFMmZtaXdPQjBXQTduL2hxM3d5alhwQnlSL0pLRTBQ?=
- =?utf-8?B?TXJNVUp2dHEraEJadWVBWVMyU2xlSzVEbmhVZXhoQ25jZFhpdVNid3BXd0ZU?=
- =?utf-8?B?Uzd5UXBlckVxR1RsYytvQ0ZCek8yMHZ3enVzN0c1anJhYTJmT3pRSmVQL2Jj?=
- =?utf-8?Q?cwtkgRiTDN1C9sRY2m?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eed1fbfb-1fdb-48b2-9f45-08df0e1e86f6
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8199.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 03:00:39.1377
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: q5G7Pv+pXhu6DFruFuLVKnpxPkogV5Au6A5T+kCvvq45oC15gmJFR4QWWSMW03Go4Mbmci0NvTrQeG+6iZNW4w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9089
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/virtio: fix memory leak of fence event on execbuffer
+ failure
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <D320EAB5680C1411+20260908121323.2405044-1-peiyang_he@smail.nju.edu.cn>
+ <20260908123440.84D501F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+In-Reply-To: <20260908123440.84D501F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: M3ZkD08p3wd5I0LmwxsEQLQRT2YADXbaboooCybJYRBELheiyV+syXNJ
+	m480R/FBeoV4V+WxLW87vJX9c7qPfKe0RQzjOcNLKaH/wZsa07Agqth3DiKuZMF39xgjZBI
+	aa4Koudnk/jMGlzyA5bQpxrqyAxhx54/hI/Y6dpVEIOF7xiDwta4ft9/UT+cdNvi3rhjDEK
+	rA0FQkpSVgYnpkCR3ZNfF831o7Ip9XBOUK4SatM4ziD+wo5oJE6huJDxU557XAq/6gc8scM
+	5DN7MpUOg+3Tct0k335m7+Z4dII750WWmpp3DL7wpELCrQdv8eVxGVv5WXGPjhks4ECBm4y
+	c/jYHRJGIjLInYR6RqqNTdh3dKt1qZST8GYNPvYCFAvDEdIuYMUmM8juAVimHNCzPh1idEO
+	INb9DopyMMHhQA9F3E4IODDvoUD6kMP0gbs3hygsIxctIEz6tIWl6F/sYyNnaQhHiwVjSjS
+	MbZv/EuIfxBGLLgdMI5XZN3guUtXCpzY4Ym/eSH6Q/9WqQu1Sp1qdEWzd5+YQ4sqofkkSuj
+	xHYtZwTvZXG51rdIN9nqlI/vYiiXaCiSplcG/3q/vIfhhwA3jQlmtfu4ecPLRGjCvtbDlaH
+	xvlTbAQWZWIU4ol4eGFBdcsNGhKDZBr5ntQHiRu4lppaUDSnujNht75rDcvZn4OpZo9btsR
+	r6+hRKNg7XpU1LelBIUTqO5iZBn22S8YZNPVZqud+kFbI2IdsL2Z9baUILT8mYNguEUpl1Z
+	qsDmIVSfkraxC0Tg3n+ysrNdMaL0FOcYgJEXBFVRolwHWlvo1ljIY2ipZg686Rkvu9ZtA2I
+	olSszA6v3Mpk30n1kvTRsjgr6nHroq0yacX79qk/VREevG7WA/JETKIP04ae2Mq+L632cRK
+	5HWQ4uXTB3nTgQ/ONzkNAe6PCljIVW0BSRTLjw/q2wNZMi+iJ9Bf+O3EIYMp4k6Epj5z3lc
+	hqHeczDhRawDskQ5ArQZgP3m1i87ba8q963F+MKb5zDOqj5MlcwqdeUyp6b9OnVsV6pgVIw
+	POwYwdn6ugdalUd8F3
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
+On 2026/9/8 20:34, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> This is another pre-existing issue, but is it possible for
+> virtio_gpu_fence_alloc() to fail and cause a NULL pointer dereference
+> earlier in the submission path?
+> 
+> Looking at virtio_gpu_init_submit() called earlier in this ioctl, it does
+> not check the return value of virtio_gpu_fence_alloc():
+> 
+> drivers/gpu/drm/virtio/virtgpu_submit.c:virtio_gpu_init_submit() {
+>     ...
+>         out_fence = virtio_gpu_fence_alloc(vgdev, fence_ctx, ring_idx);
+>     else
+>         out_fence = NULL;
+> 
+>     if (drm_fence_event) {
+>         err = virtio_gpu_fence_event_create(dev, file, out_fence, ring_idx);
+>     ...
+> }
+> 
+> And in virtio_gpu_fence_event_create():
+> 
+> drivers/gpu/drm/virtio/virtgpu_submit.c:virtio_gpu_fence_event_create() {
+>     ...
+>     fence->e = e;
+>     ...
+> }
+> 
+> If kzalloc_obj() inside virtio_gpu_fence_alloc() fails due to memory pressure,
+> it returns NULL, which is then unconditionally dereferenced.
+> 
+> Can unprivileged userspace trigger this by invoking the execbuffer ioctl
+> under constrained memory conditions?
+> 
 
-On 9/9/2026 1:46 AM, Matthew Brost wrote:
-> On Tue, Sep 08, 2026 at 08:58:39AM +0000, sashiko-bot@kernel.org wrote:
->
-> All of this looks right. So I believe the solution is:
->
-> - s/cancel_work_/disable_work_
-> - In drm_work_fence_queue if queue_work returns false, call drm_work_fence_put()
->
-> Matt
-
-Agreed — the race is real. Will fix in Patch 1
-
-    as you suggested:
-    - In drm_work_fence_queue: drop ref if queue_work returns false
-
-    - In drm_work_fence_cancel_sync: switch to disable_work_sync()
-
-Srini
-
-
+Our fuzzing results confirm this NULL pointer deref path is valid.
+Will send a patch soon.
 
