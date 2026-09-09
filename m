@@ -1,140 +1,165 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53107498925
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 09:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4C03A874F;
+	Wed,  9 Sep 2026 10:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788947830; cv=none; b=EJOfvLNcpSuzB+jUhjHclzYNtQW0cpbFsjfRptq26BgaXu/akdGJT/BoN3Qkmco+vr4Exi5mT3HCn+t7XK1wsr/KNf8UglLG6d/ypVJfyOtGQfLro6SansHPkYBYs+Hx8Lau/EmZ/w8YvTLDVZ1LlhftY57BZTCkViBHRdIotNg=
+	t=1788948028; cv=none; b=gX3/wlbGpjdtDNRqLzdIhbr63KumbXlLYM5yIa+sFTN8bN0hbMXXt0Fb10rW7Sg+Xijdd+pb4U1tZt28/ciBPYEdazwWwVLgIKRudG0Jj5g/h8lGnbi6xTCXnR4lTok25fbbdmrL/MJWtUFa8JJYFGzsaGQzP0Fkla0i5xErcbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788947830; c=relaxed/simple;
-	bh=bCRdocgWpRy1emNSVrGITTD8CnI0KMsb/yc1qbFz+nc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BVULuA8IYigGV5oSZJSEMyGbeoAPCfM3SCdo5KB0mShdMWkrHPdG5UBpL+b1c3+e5OV0WYFiQ4wSOB/4KI9nNs5NeNv5lfKSkwTpJOpSjBVdbt8OF4Bx38tHui3i6lwlov78BDeEDuQHRs/IIYsXXZQ+SJDG2Ed/lRdQiMgkFms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nNnOUtFH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EXHBoV+o; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1788948028; c=relaxed/simple;
+	bh=eNGgSSjrjGwGa7MyUDUhNbv97kA+7jiJHOtpwZPzqqI=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=mpd7IsLZqIg0i8wOghg0ShtzimeGpxbWxnI8Y8Q/TXc4z9r1JWIfPtqhQhPAagThUZDziO1FmycIvaxw2fokhcgUwM0pkrlC8lL3Cwjy1FyOXfcoX8wZfrIHZdJ2vP6yhqFVCxCsDEL0PoWUdY49Pv5S3VhFQhDVHSxLya+jBL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ld8YTZJw; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nNnOUtFH";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EXHBoV+o"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6896Y9u1045456
-	for <sashiko-reviews@lists.linux.dev>; Wed, 9 Sep 2026 09:57:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bCRdocgWpRy1emNSVrGITTD8CnI0KMsb/yc1qbFz+nc=; b=nNnOUtFHsQiEhRzg
-	HNmno50vtje/cdLK19xO/5ypU6XWEyFrvnDVrgL59km+2dKlWnGpa8BRoW0PoyVq
-	FuBRN2RwBzxEud8OL4KszNO2wBbp3H/lXL5n8fO56CGY19/j1w78bBVOha2Tt1J/
-	bw5AsVywQDlNGaCSvVRF4JslUL6zeOHeJlJL1FKaYuBf2efWuLdvfkyPAhDZ6MbH
-	AMd7ip7/OBzPZhFsiQNT8MxWisg06UCRgfpDelQfSGQkKWI9LSJ4GcbjbnL9pvrm
-	wh6WFwaRh4/HGdxivH/xOVK8iAhuMcZq+lB7B/Yh9VNjOLvKLn+/hfakb9PGSPRi
-	KOfjVg==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjqewkbtn-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 09:57:08 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-90cc934fe9eso96115326d6.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 02:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788947827; x=1789552627; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bCRdocgWpRy1emNSVrGITTD8CnI0KMsb/yc1qbFz+nc=;
-        b=EXHBoV+o2ghBPReiy++iL3a1rVV/Bhm2G7+KmyFlZSbCl4BrEC9CQOQ5d6tMBmpg6C
-         HE9PdSHeR+8qQI6wvokfRpAn8fZOuiFmwm9inkLsr2UG+BA56Z+VlxVReeXjVaYPQUwF
-         X7CAFgWYKa5D3a9F1EE82L8Y0s6Tz6EIeZNc3JZSvysv7Ro9x2/QSAmUrC1nr9KgkEzs
-         O51X/e6pJGSTCciFlftfP8m0kgu5nJZ9wTHNipNlCGgwVoY1ZApGdb3kbKTAGdkNw0+C
-         4FCamol2ci3vqO42eXaTy3ShroiK0eoTZDhRQQtiibzCyDx/qw+D3nxgP4nuTvLiSZg1
-         yCLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788947827; x=1789552627;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bCRdocgWpRy1emNSVrGITTD8CnI0KMsb/yc1qbFz+nc=;
-        b=jAjEFIRFrlWSph7aejEOr9xvlb/BWtPoirno4PYg3iyM3fa5GAujOvuC75tQQG52XJ
-         wMpM4SJ/Zp2Rcfbxs4fx9cTv1MXT8Q8u6s5p8tCue3+VYVSyCFqkqeKvXiOHQGBzIMW9
-         ZgZOqfFpqU/J1KKiQZzqFw0CinyXvEh5Lt7s303R1jT8dpjQw+6TKKHn1lPuYdVBLtyX
-         /ZLjNeTdDctHKLuKh4CQci1egrRe8r6oLXskdBw9Y/MEIX2rzInip2WAAgHYuWGAvamh
-         YfMcdHfjlBvE+aWinXeT8Nx+oWceeH4u2QUTUDyVXMeluU3viTq/wOaWPnnWFy80G5Nb
-         SrUw==
-X-Gm-Message-State: AFuF++lywFsDnkWh7S4cKaNf7ow/YsrcutWWdCDnzYvMnqengJuleVMh
-	rF+qclXqHmsagAwrnewX5ezxlamwUkGCwRdgjdu7jVO0CSl3LdW41xOt7dVRCHmf+MBIwzSd3MD
-	O1qszS9Nn1Ir41pE/LvvPy+MX9rw2mfaLJBY8p19Lu5VU5W1MIHeg6unuPKYx4KC+RLgNRwg8O+
-	N4iMs=
-X-Gm-Gg: AYBFou090Fm0OBOA731nbcUkZfuxRkOowoLcay/qMYvTwe5c+VKrDmtj4bE7pTF8x+A
-	Qf4pXQvN/9rmjbkZc/gFiMZZEMi0qSZMP97Wpa6sPcT3Irb0h8lOAFHIaLu0go5LY70mw8xzvni
-	Ce+Xyx+jvkB9EaS1v1kHWclZBxldWwt+IWOYv17uK2y+ZJhqXa7lM+Y0mhaLvFZchuYN7e7bClR
-	oWbP4Hcu7+pCOxlO7QwEUohI8mleJYA0y4G8y32bVqbN8Gcrsaseywl91ftcGYLVqJoQ+bPq2+q
-	rpH9NW2iotPu1lqGmgSSkqhKA0GcwTXPTnHRaqlMUMmGOyGqQrU44PjT8M0xfgBJxQJKhNmynND
-	o4u/ydHd+SMuaLI24/R5KM08b78Pd
-X-Received: by 2002:a05:620a:f0f:b0:937:19d3:3fda with SMTP id af79cd13be357-9398042d815mr3819780585a.28.1788947827500;
-        Wed, 09 Sep 2026 02:57:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:f0f:b0:937:19d3:3fda with SMTP id af79cd13be357-9398042d815mr3819778385a.28.1788947827089;
-        Wed, 09 Sep 2026 02:57:07 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.219.214])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf7740d44sm1004938725e9.15.2026.09.09.02.57.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 02:57:06 -0700 (PDT)
-Message-ID: <1e486a39-1327-4199-b493-25f73740dbdb@oss.qualcomm.com>
-Date: Wed, 9 Sep 2026 11:57:05 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ld8YTZJw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788948025; x=1820484025;
+  h=mime-version:content-transfer-encoding:in-reply-to:
+   references:subject:from:cc:to:date:message-id;
+  bh=eNGgSSjrjGwGa7MyUDUhNbv97kA+7jiJHOtpwZPzqqI=;
+  b=Ld8YTZJwhk5hfj22Uz/8tr4WqLqEWhINAjO8qSEHtWGpj5OCwpUsJ2Jq
+   6Zy97XYCedCOSD8Jz+6mI4UF2gSOuiYdBgcfpy5yho/blj2zsm2Fb2QMe
+   Q0KhJDJgoafsLMnH+42tpI8Jah4z/lel427EPKOZpPrIJ7ppdnlBhGwfW
+   CJy8MjctWx6UbU8y/x1wNhLEzwRQc5XWwHoE4ygWdEZB/V/IGvVkvr8Yb
+   lVP6Bz+Det6qdmtd54iAItnA7ZQZEQS1JBAuGbM9FtJCMZcb9P9S/1Nn2
+   2f+iULWvnm+/ihUKNUoQI8u+xTWONdCvViolvIRnrvOqFUl5uNXpQ/iFn
+   Q==;
+X-CSE-ConnectionGUID: TDo5nw2yQbydn+VK8C5pjw==
+X-CSE-MsgGUID: LsFNXLz3RW+/i2gntcxG8g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="112144521"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="112144521"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:00:24 -0700
+X-CSE-ConnectionGUID: 8kL4oKFrTO6EoWZIuU2syw==
+X-CSE-MsgGUID: kQPjiEa8SV+/VRiuMWp26Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="301145261"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.37])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:00:20 -0700
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] dtc: dt-check-style: Unduplicate checks in
- check_mixed_indent_chars()
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260909-b4-dts-style-checker-continued-lines-v2-0-c5cb4c9d9b66@oss.qualcomm.com>
- <20260909-b4-dts-style-checker-continued-lines-v2-4-c5cb4c9d9b66@oss.qualcomm.com>
- <20260909084654.B69C81F00A3A@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260909084654.B69C81F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=cpirVV4i c=1 sm=1 tr=0 ts=6aa12d74 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=9ZkQsALANqwWZhioCQMA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-GUID: DM0MWMn_kPhXdnrzG3ECtTAjKDs5yTNi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDExMCBTYWx0ZWRfX6DSGwI97/tp8
- +vh3Q202PJSOcl1nyHAw4XKwicGC2m7TAXH4tBrzn3CgJldcqj0lt5EipXdNA5aASoHX+4HcBmF
- p/z64eG1Ba3kyclE8JpnQFopu8HAcFlkNUTldVoI9lCrHx5MIo4VL+DqiQVOlPxayu5+vTYQ9O7
- rBBAlzc1UjiGPPov+4tYfX4RTt2bWcUZvCsxJAnwMV6TcYKaml7+xC/eIh35uGa9BkQhJy1dlwD
- J//r6ziKCJGCY+e570dc+TrTAOWgD0w7Iep2BlkTmWQLXPogq4dTDhqwD52hEg8Jjg4R1gMBUB4
- zF6G6gDs4cwH7Oukc1acN2L90NO6ZePIdMI6NgBGOmrLIMGZsoPGDswslDTyB8f1cFyGWGyHeI8
- nBudysG1lRqVhm/8JkbQT4v44R94Weh7NY3iJGjx7erA88cNRtvc3Ohrb8raYapf/Ef3JcmTrIt
- SU0CR7ITHblpoA7IK0Q==
-X-Proofpoint-ORIG-GUID: DM0MWMn_kPhXdnrzG3ECtTAjKDs5yTNi
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDExMCBTYWx0ZWRfX+sMTC2ufTAY9
- GObc5RfrB7LCz2OOgm0yHw6JjwBFfUXHUu/r5YZxd3Kuln9l2ZV8kPb+qPmy4g+0aexbVjFdLi8
- ndba2uAyMI9g1R0ZTeI6odWNe0BbyW8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-08_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- phishscore=0 clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090110
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <178878748003.179185.16833574173741290547@jlahtine-mobl>
+References: <20260903145952.848051-1-mika.kuoppala@linux.intel.com> <20260903145952.848051-5-mika.kuoppala@linux.intel.com> <20260903152224.AD48C1F00A3F@smtp.kernel.org> <178878748003.179185.16833574173741290547@jlahtine-mobl>
+Subject: FUSE deadlocks vs. copy_from_user() and locks (Was: Re: [PATCH v10 04/27] drm/xe/eudebug: Introduce discovery for resources)
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: intel-xe@lists.freedesktop.org, fuse-devel@lists.linux.dev, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>, Christian =?utf-8?q?K=C3=B6nig?= <christian.koenig@amd.com>, Alex Deucher <alexander.deucher@amd.com>, Matthew Brost <matthew.brost@intel.com>, Thomas =?utf-8?q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, dri-devel@lists.freedesktop.org, Mika Kuoppala <mika.kuoppala@linux.intel.com>
+To: Miklos Szeredi <miklos@szeredi.hu>, Bernd Schubert <bernd@bsbernd.com>, Joanne Koong <joannelkoong@gmail.com>, Amir Goldstein <amir73il@gmail.com>
+Date: Wed, 09 Sep 2026 13:00:16 +0300
+Message-ID: <178894801687.37859.4186888279082797860@jlahtine-mobl>
+User-Agent: alot/0.13.dev2+g40c57d620
 
-On 09/09/2026 10:46, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Undocumented behavioral change in loop refactoring expands indentation checks to continuation lines of unindented properties.
+(Adding bunch of FUSE folks and DRM folks in the hopes of coming to a
+resolution here.)
 
-Ack, that's desired, but commit msg should be explicit about this.
+Quoting Joonas Lahtinen (2026-09-07 16:24:40)
+> Quoting sashiko-bot@kernel.org (2026-09-03 18:22:23)
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> > - [High] Global ordered workqueue stall via copy_from_user block while =
+holding ioctl_lock.
+> > - [Medium] Event sequence numbers (seqno) can be queued out-of-order in=
+ the event stream due to a race between seqno generation and event queuing.
+> > --
+> >=20
+> > commit e2061e72d8e954a17bde35e9c970ee41bc2db0ad
+> > Author: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+> >=20
+> >     drm/xe/eudebug: Introduce discovery for resources
+> >=20
+> > This commit introduces a resource discovery mechanism for debugger conn=
+ections.
+> > When a debugger connects, all existing resources for the target client =
+are
+> > relayed as events via an ordered workqueue, and DRM ioctls are blocked =
+using
+> > an rw_semaphore until discovery is complete.
+> >=20
+> > > diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_d=
+evice.c
+> > > index 032a7ec5fbc8d..f10959b898297 100644
+> > > --- a/drivers/gpu/drm/xe/xe_device.c
+> > > +++ b/drivers/gpu/drm/xe/xe_device.c
+> > [ ... ]
+> > > @@ -238,8 +239,12 @@ static long xe_drm_ioctl(struct file *file, unsi=
+gned int cmd, unsigned long arg)
+> > > =20
+> > >       ACQUIRE(xe_pm_runtime_ioctl, pm)(xe);
+> > >       ret =3D ACQUIRE_ERR(xe_pm_runtime_ioctl, &pm);
+> > > -     if (ret >=3D 0)
+> > > +     if (ret >=3D 0) {
+> > > +             bool lock =3D xe_eudebug_discovery_lock(file, cmd);
+> > >               ret =3D drm_ioctl(file, cmd, arg);
+> >=20
+> > [Severity: High]
+> > Does holding the discovery lock across drm_ioctl() create a vector for a
+> > workqueue stall?=20
+> >=20
+> > If an unprivileged user maps the ioctl argument pointer to a blocking F=
+USE
+> > or userfaultfd region, drm_ioctl() can be stalled indefinitely during
+> > copy_from_user() while holding xef->eudebug.ioctl_lock for read.
+>=20
+> Don't think this is a very realistic vector to address, as it would
+> also extend to every other copy_from_user() and also to userptr across
+> all drivers.
+>=20
+> Having a malfunctioning FUSE driver and getting a malfunctioning system
+> as a result is probably somewhat expected.
+
+Based on further chatting on this with Sima, I was volunteered to pull
+together the discussion here.
+
+We seem to have Sashiko picking up on patterns about accessing userspace
+memory with locks held and potential for copy_from_user() (or userptr) to
+then take indefinitely long to resolve. And that spreads to deadlocks
+everywhere situation very fast.
+
+Based on reading of [1] and [2], it seems pretty much expected FUSE
+drivers can trivially deadlock and ultimately in worst case the situation
+can only be solved by manually aborting those connections by sysadmin.
+
+It also seems (from the Sashiko comments) that by design, there's no
+upper bound for how long an operation can take, so a bad FUSE driver
+may stall for however long it sees fit to serve page-fault or in the
+case of [3] it may decide to not actually populate the PTEs (or maybe
+invalidate them immediately).
+
+Should we really be refactoring the whole kernel for the sake of
+knowingly allowing potentially malicious userspace driver to idefinitely
+stall or incorrectly resolve page faults? That'll be quite a lot of
+complexity added to all the other drivers.
+
+Or should there be more protections on FUSE / uffd to ensure such
+idefinitive stall can't happen? Or maybe this is just an academic
+problem and we amend review-prompts not to bring it up?
+
+Or maybe I missed some part of the FUSE docs and this isn't a real
+problem?
+
+Regards, Joonas
+
+PS. There is a related patch in [3] which tries to address the problem,
+but we'll quickly run into live-locks and other issues even if we
+refactored things into: pre-fault, take locks, do _nofault() access, and
+retry if that fails.
 
 
-
-Best regards,
-Krzysztof
+[1] https://www.kernel.org/doc/html/next/filesystems/fuse.html#kernel-users=
+pace-interface
+[2] https://www.kernel.org/doc/html/next/filesystems/fuse.html#aborting-a-f=
+ilesystem-connection
+[3] https://sashiko.dev/#/patchset/20260827062142.4038272-1-srinivasan.shan=
+mugam%40amd.com
