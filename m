@@ -1,165 +1,149 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4C03A874F;
-	Wed,  9 Sep 2026 10:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B3149C4CB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 10:06:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788948028; cv=none; b=gX3/wlbGpjdtDNRqLzdIhbr63KumbXlLYM5yIa+sFTN8bN0hbMXXt0Fb10rW7Sg+Xijdd+pb4U1tZt28/ciBPYEdazwWwVLgIKRudG0Jj5g/h8lGnbi6xTCXnR4lTok25fbbdmrL/MJWtUFa8JJYFGzsaGQzP0Fkla0i5xErcbU=
+	t=1788948386; cv=none; b=VFuSi0e8HaqZtidlNvJaP7hp8hcwcSvmSDTXaGdbWIFjHYcmTdaO0R49cnzXW8vPoS6tmDWF0rHifnFidYMb6ge2FZ3dgTLefnRBwFOJWuiDhMzETIB/TV9ZaxmH5KCx4FIIlbYNpsWJI6i5ojiR+/KuyzqalcyKmIN8183fTwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788948028; c=relaxed/simple;
-	bh=eNGgSSjrjGwGa7MyUDUhNbv97kA+7jiJHOtpwZPzqqI=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=mpd7IsLZqIg0i8wOghg0ShtzimeGpxbWxnI8Y8Q/TXc4z9r1JWIfPtqhQhPAagThUZDziO1FmycIvaxw2fokhcgUwM0pkrlC8lL3Cwjy1FyOXfcoX8wZfrIHZdJ2vP6yhqFVCxCsDEL0PoWUdY49Pv5S3VhFQhDVHSxLya+jBL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ld8YTZJw; arc=none smtp.client-ip=198.175.65.9
+	s=arc-20240116; t=1788948386; c=relaxed/simple;
+	bh=bwe8ueFgkRUK7cPbsVZZk79yrlXrgNNapKy5WVmgg00=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=maFKwO94/MMRbzs0tKkjIFkRORwFv2Qy3Q3ekW/qpx/gusK9sRnvncHf3UVmhKcdpMavrDs20ANERWT2MGtzWlEClHnukAAiMZq8/vqeXfI9AR8gOO0xRcE9xGs/ZrqSYDsL5ruWK7aaAIvfP3I2EOgDMG/MMtlQLdGAjs3PRNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EidrLEHV; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ld8YTZJw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EidrLEHV"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788948025; x=1820484025;
-  h=mime-version:content-transfer-encoding:in-reply-to:
-   references:subject:from:cc:to:date:message-id;
-  bh=eNGgSSjrjGwGa7MyUDUhNbv97kA+7jiJHOtpwZPzqqI=;
-  b=Ld8YTZJwhk5hfj22Uz/8tr4WqLqEWhINAjO8qSEHtWGpj5OCwpUsJ2Jq
-   6Zy97XYCedCOSD8Jz+6mI4UF2gSOuiYdBgcfpy5yho/blj2zsm2Fb2QMe
-   Q0KhJDJgoafsLMnH+42tpI8Jah4z/lel427EPKOZpPrIJ7ppdnlBhGwfW
-   CJy8MjctWx6UbU8y/x1wNhLEzwRQc5XWwHoE4ygWdEZB/V/IGvVkvr8Yb
-   lVP6Bz+Det6qdmtd54iAItnA7ZQZEQS1JBAuGbM9FtJCMZcb9P9S/1Nn2
-   2f+iULWvnm+/ihUKNUoQI8u+xTWONdCvViolvIRnrvOqFUl5uNXpQ/iFn
+  t=1788948385; x=1820484385;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bwe8ueFgkRUK7cPbsVZZk79yrlXrgNNapKy5WVmgg00=;
+  b=EidrLEHVYTCxOpcIsDW1PMnarC1CikY+ES0WNd0j5VQ/GfVsMSmlW+dm
+   ERLFLxLDdVFg+sU7StVJZ7FmPHpINVGpTAIGBaG20bkPkxoEN3XnqWXbU
+   RhVRdLEKp+9RxPm3rySq+xyHcRbF7kwhE6QQ6uYxj22TY+BiYm4j9siOw
+   9ZcH3e7W69WC7Y+DdGVGvIW/0c/YKGrvnh7jx0pyH8RqxCMIah/zWids+
+   r3KbpxRnh8NCAOM9kYrauCct6Cg1MHhdo+LQNzl1FS6UYQMkbOFQg/SOQ
+   5Mx9Dlixga7OIambpF87Vqnqo44miPzzXCOIa+izU34QckCLvgP3NXJ2F
    Q==;
-X-CSE-ConnectionGUID: TDo5nw2yQbydn+VK8C5pjw==
-X-CSE-MsgGUID: LsFNXLz3RW+/i2gntcxG8g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="112144521"
+X-CSE-ConnectionGUID: 9kCdBhnRTfGOygld5IVQ7g==
+X-CSE-MsgGUID: X0B7syJWSlOah3vgpM9SbQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="99697461"
 X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="112144521"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:00:24 -0700
-X-CSE-ConnectionGUID: 8kL4oKFrTO6EoWZIuU2syw==
-X-CSE-MsgGUID: kQPjiEa8SV+/VRiuMWp26Q==
+   d="scan'208";a="99697461"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:06:25 -0700
+X-CSE-ConnectionGUID: HC5neVHUQJWRFKY2Yx7yPQ==
+X-CSE-MsgGUID: kXYKXkXES2CGygqarjhkZQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="301145261"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.37])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:00:20 -0700
-Content-Type: text/plain; charset="utf-8"
+   d="scan'208";a="265065592"
+Received: from soc-5cg43972ff.clients.intel.com (HELO [10.102.88.163]) ([10.102.88.163])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 03:06:23 -0700
+Message-ID: <a38fed2b-ad33-447b-84f7-b6020c9b4072@linux.intel.com>
+Date: Wed, 9 Sep 2026 12:06:07 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <178878748003.179185.16833574173741290547@jlahtine-mobl>
-References: <20260903145952.848051-1-mika.kuoppala@linux.intel.com> <20260903145952.848051-5-mika.kuoppala@linux.intel.com> <20260903152224.AD48C1F00A3F@smtp.kernel.org> <178878748003.179185.16833574173741290547@jlahtine-mobl>
-Subject: FUSE deadlocks vs. copy_from_user() and locks (Was: Re: [PATCH v10 04/27] drm/xe/eudebug: Introduce discovery for resources)
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: intel-xe@lists.freedesktop.org, fuse-devel@lists.linux.dev, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>, Christian =?utf-8?q?K=C3=B6nig?= <christian.koenig@amd.com>, Alex Deucher <alexander.deucher@amd.com>, Matthew Brost <matthew.brost@intel.com>, Thomas =?utf-8?q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, dri-devel@lists.freedesktop.org, Mika Kuoppala <mika.kuoppala@linux.intel.com>
-To: Miklos Szeredi <miklos@szeredi.hu>, Bernd Schubert <bernd@bsbernd.com>, Joanne Koong <joannelkoong@gmail.com>, Amir Goldstein <amir73il@gmail.com>
-Date: Wed, 09 Sep 2026 13:00:16 +0300
-Message-ID: <178894801687.37859.4186888279082797860@jlahtine-mobl>
-User-Agent: alot/0.13.dev2+g40c57d620
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/ivpu: Add support for getting and setting command
+ queue priority
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260831121617.395523-1-andrzej.kacprowski@linux.intel.com>
+ <20260831123327.110C91F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+In-Reply-To: <20260831123327.110C91F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-(Adding bunch of FUSE folks and DRM folks in the hopes of coming to a
-resolution here.)
+On 31-Aug-26 2:33 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Missing CAP_SYS_NICE or DRM_MASTER check for elevated job priorities (REALTIME / FOCUS), allowing unprivileged users to monopolize the NPU.
+> --
+> 
+> commit 57cf0d7005a7761ad6193ea568802164b7fac6db
+> Author: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+> 
+> accel/ivpu: Add support for getting and setting command queue priority
+> 
+> This commit adds a new DRM_IVPU_PARAM_CMDQ_PRIORITY parameter to query and
+> update the scheduling priority of an existing command queue. The priority
+> can be changed on a queue that already has pending jobs, propagating the
+> change to firmware in hardware scheduling mode.
+> 
+>> diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
+>> index ebb2c865b09a0..b3de5dd29d1e8 100644
+>> --- a/drivers/accel/ivpu/ivpu_job.c
+>> +++ b/drivers/accel/ivpu/ivpu_job.c
+> 
+> [ ... ]
+> 
+>> @@ -1127,6 +1132,86 @@ int ivpu_cmdq_destroy_ioctl(struct drm_device *dev, void *data, struct drm_file
+>>   	return ret;
+>>   }
+>>   
+>> +static int ivpu_cmdq_priority_args_check(struct ivpu_device *vdev, u32 cmdq_id, u64 priority)
+>> +{
+>> +	if (!ivpu_is_capable(vdev, DRM_IVPU_CAP_CMDQ_SET_PRIORITY)) {
+>> +		ivpu_dbg(vdev, IOCTL, "Command queue priority not supported\n");
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	if (cmdq_id < IVPU_CMDQ_MIN_ID || cmdq_id > IVPU_CMDQ_MAX_ID) {
+>> +		ivpu_dbg(vdev, IOCTL, "Invalid command queue ID %u\n", cmdq_id);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (priority > DRM_IVPU_JOB_PRIORITY_REALTIME)
+>> +		return -EINVAL;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is there a missing capability check for
+> elevated priorities here?
+> 
+> An unprivileged user who opens the NPU device can call the IVPU_SET_PARAM
+> ioctl with DRM_IVPU_PARAM_CMDQ_PRIORITY and set the priority to
+> DRM_IVPU_JOB_PRIORITY_REALTIME. Without a CAP_SYS_NICE or DRM_MASTER check,
+> could a malicious or buggy application elevate its command queue priority to
+> monopolize the hardware and starve other processes?
+> 
+> I notice this same behavior appears to be pre-existing in
+> ivpu_cmdq_create_ioctl() as well, where queues can be created with realtime
+> priority by any user. Should these priority levels be restricted?
+> 
 
-Quoting Joonas Lahtinen (2026-09-07 16:24:40)
-> Quoting sashiko-bot@kernel.org (2026-09-03 18:22:23)
-> > Thank you for your contribution! Sashiko AI review found 2 potential is=
-sue(s) to consider:
-> > - [High] Global ordered workqueue stall via copy_from_user block while =
-holding ioctl_lock.
-> > - [Medium] Event sequence numbers (seqno) can be queued out-of-order in=
- the event stream due to a race between seqno generation and event queuing.
-> > --
-> >=20
-> > commit e2061e72d8e954a17bde35e9c970ee41bc2db0ad
-> > Author: Mika Kuoppala <mika.kuoppala@linux.intel.com>
-> >=20
-> >     drm/xe/eudebug: Introduce discovery for resources
-> >=20
-> > This commit introduces a resource discovery mechanism for debugger conn=
-ections.
-> > When a debugger connects, all existing resources for the target client =
-are
-> > relayed as events via an ordered workqueue, and DRM ioctls are blocked =
-using
-> > an rw_semaphore until discovery is complete.
-> >=20
-> > > diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_d=
-evice.c
-> > > index 032a7ec5fbc8d..f10959b898297 100644
-> > > --- a/drivers/gpu/drm/xe/xe_device.c
-> > > +++ b/drivers/gpu/drm/xe/xe_device.c
-> > [ ... ]
-> > > @@ -238,8 +239,12 @@ static long xe_drm_ioctl(struct file *file, unsi=
-gned int cmd, unsigned long arg)
-> > > =20
-> > >       ACQUIRE(xe_pm_runtime_ioctl, pm)(xe);
-> > >       ret =3D ACQUIRE_ERR(xe_pm_runtime_ioctl, &pm);
-> > > -     if (ret >=3D 0)
-> > > +     if (ret >=3D 0) {
-> > > +             bool lock =3D xe_eudebug_discovery_lock(file, cmd);
-> > >               ret =3D drm_ioctl(file, cmd, arg);
-> >=20
-> > [Severity: High]
-> > Does holding the discovery lock across drm_ioctl() create a vector for a
-> > workqueue stall?=20
-> >=20
-> > If an unprivileged user maps the ioctl argument pointer to a blocking F=
-USE
-> > or userfaultfd region, drm_ioctl() can be stalled indefinitely during
-> > copy_from_user() while holding xef->eudebug.ioctl_lock for read.
->=20
-> Don't think this is a very realistic vector to address, as it would
-> also extend to every other copy_from_user() and also to userptr across
-> all drivers.
->=20
-> Having a malfunctioning FUSE driver and getting a malfunctioning system
-> as a result is probably somewhat expected.
+The Intel NPU is not a display/graphics device and has no notion of 
+DRM_MASTER which is typically the display server process.
 
-Based on further chatting on this with Sima, I was volunteered to pull
-together the discussion here.
+Using CAP_SYS_NICE has a bit more merit however:
+- strict CAP_SYS_NICE check in KMD will break existing use cases
+- no other accel drivers use CAP_SYS_NICE
 
-We seem to have Sashiko picking up on patterns about accessing userspace
-memory with locks held and potential for copy_from_user() (or userptr) to
-then take indefinitely long to resolve. And that spreads to deadlocks
-everywhere situation very fast.
+Current strategy is to allow OS level AI runtime to control NPU workload 
+priority - dynamic priority change was added to
+support that use case.
 
-Based on reading of [1] and [2], it seems pretty much expected FUSE
-drivers can trivially deadlock and ultimately in worst case the situation
-can only be solved by manually aborting those connections by sysadmin.
+I will take it into consideration for future driver updates, but it
+cannot be immediately solved in this patch.
 
-It also seems (from the Sashiko comments) that by design, there's no
-upper bound for how long an operation can take, so a bad FUSE driver
-may stall for however long it sees fit to serve page-fault or in the
-case of [3] it may decide to not actually populate the PTEs (or maybe
-invalidate them immediately).
+- Andrzej
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +int ivpu_cmdq_get_priority(struct ivpu_file_priv *file_priv, u32 cmdq_id, u64 *priority)
+>> +{
+> 
+> [ ... ]
+> 
 
-Should we really be refactoring the whole kernel for the sake of
-knowingly allowing potentially malicious userspace driver to idefinitely
-stall or incorrectly resolve page faults? That'll be quite a lot of
-complexity added to all the other drivers.
-
-Or should there be more protections on FUSE / uffd to ensure such
-idefinitive stall can't happen? Or maybe this is just an academic
-problem and we amend review-prompts not to bring it up?
-
-Or maybe I missed some part of the FUSE docs and this isn't a real
-problem?
-
-Regards, Joonas
-
-PS. There is a related patch in [3] which tries to address the problem,
-but we'll quickly run into live-locks and other issues even if we
-refactored things into: pre-fault, take locks, do _nofault() access, and
-retry if that fails.
-
-
-[1] https://www.kernel.org/doc/html/next/filesystems/fuse.html#kernel-users=
-pace-interface
-[2] https://www.kernel.org/doc/html/next/filesystems/fuse.html#aborting-a-f=
-ilesystem-connection
-[3] https://sashiko.dev/#/patchset/20260827062142.4038272-1-srinivasan.shan=
-mugam%40amd.com
