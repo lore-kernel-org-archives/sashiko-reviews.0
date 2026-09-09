@@ -1,110 +1,273 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9690A343897;
-	Wed,  9 Sep 2026 20:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788987258; cv=none; b=DXRUeqe8zdG/yqdjbZBKdNWXstgq6jm3q/xmqQny9kkI1lNsFJW9yh4rrkQbvJPjHskLyLWOsPHdG3nsImze9qHcDaWoLKkegWpRGDa+cRYyOdxmRAyhmXjBLkKnZ7Js9UKqJxkwGvZDdBMKyfyvyrhRr0LBC39aWLnIk9oWEto=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788987258; c=relaxed/simple;
-	bh=yzL3v1513rz6WHiWVe+wJzFLNLB1yY30ElfWbd1HSfs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KcxWXLryozw0lPM9KvsqpeyV4bePIyajCMeJZr6RIXzWR0glI8oqZhUF7QMY8P6FCKUfVH1YuqQh/gse7/PqhtxzRcSE4xaI0vaJl1iPXwRCnb5rf2ZEfN7AYSvX1DqdrtloIdq1yHkgsiTuAKWKA85kl+D93hpL1R2/UpnxczI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iMExEk3E; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7EA3C1D7A
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 20:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788987397; cv=pass; b=pMxbl+dkLfA8+lFdA9PXEYAGaBwtfP+09vr5RRbK99yjNmJBfwtTtUu7MUq1z2kjQaYzr9Ue2GCM+po8Kv8xsOqtePlnK5SAZNrZiVFnjUisOYfCIPO8KnD6zjO3HSpZItKxkIB1aZE9YTPDYHRoeq7J0rrD0IfjRfMpOkCLags=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788987397; c=relaxed/simple;
+	bh=mSXDf5L3akGYZpZ85/ToGKuGbVhQAqImwbuSO42wJoU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RxUXJPEnfdBU5OONYdeGSe48M+BCPuRyABVryJQ+9jwtzrUXkXgg71uxEMxAO1dnVcCoyBEouJMQnTmXYLfLHnomDgge0sqUbo4f/7TL/22JuPoDnnV2EYlvtbhKq1vAPIvA4qyahgc4jqW9jEQX77IV0xZBJZDKBH3af9IDZq0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bw9Wg3Cq; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iMExEk3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F97A1F00893;
-	Wed,  9 Sep 2026 20:54:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788987244;
-	bh=tfXQTmImp135HQJ1XNVWEd7kOlyLsNALM8g5dX8a/g0=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=iMExEk3Ei7gwV3uRKH32jcRKpw/LnTBq8PIzWYgVht9v63lEh2z+O+7oWfvZi/gjt
-	 OLWEsClEcLFJ3aqclhqlIyRWvMPPNmBXcXRUB/pZks03uSF8WyF0hgK3fghJo5dTn8
-	 1VlzICoGiLoUFu60UAdDwF7zaoQ6/CahoJNBJnnt+RHmV7puTgQoD5V/DJJPw3569P
-	 oyNZi2AxNdAD2PwS3qNQu/7t8WByKs9YCvOfMZNWwZqJ870WT8rieB9oG4kZxDjGDD
-	 wP0EZkzYA+Q/kaWmMeCSsh4xMF8y2Lfv0w1hiT2SJh98Q0pE/ZgYGJHRZXn/5S/36x
-	 R/gkmxWAw6qHA==
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id C3C57198003A;
-	Wed,  9 Sep 2026 16:54:01 -0400 (EDT)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Wed, 09 Sep 2026 16:54:01 -0400
-X-ME-Sender: <xms:Z8ehalx-9CwrvJLxOGnwC3Jz8MobiJ-AanvBR8tMKTcULe9GK0Y41A>
-    <xme:Z8ehagFJ_-3HFIoW6kRx8oluTOpYEakz6C_ri6RhW3EsvCo5NqtZyvCQmxt8fTaer
-    daRvxYe0uIhRZe87LjxxdkU37xXQzhKDdM_7IvmfFrehsBqgIJN-QSn>
-X-ME-Proxy-Cause: dmFkZTGd0gYElPLkZTGmydE4FJ0If9jioCyIM+W8sjFCuuKJ7B87MfdRRXaGX1CUdrmjmk
-    uNeecr4CTC00G2zkUjjvOr13Od+s/xO80x78gjiY+3LwzTo0x5+RpRR3CQpY3azaV3JPzi
-    Aulh4ILQkWxyCno+9QxFk1l8Sa0Uhxm1FMe87851yQP4/IgFosqjygQs/sO+fceZIZhRG4
-    ZZDOvJOERjnqcjsQhgeR8WjceRchUiy2W1cgk1fBahgEaz87BvdSW7/mR2IUldwmBQiriD
-    vg8YX7EjzwzkCJ69GC/uhWPrul+29zbp2vkTZ21y12C1TMexYpFXrEmx1Ch9Hx6jXmdMTu
-    PCFfT7anXonwKOSlM9tyKGMvYx393qCqkYvXAjgENLr4nYevlJROHeeU6TjXwvXrAFvVNv
-    UygasiMaBqp4OmwU+2UnP4jLzXsXBLXD04um6YphAoG2yxmYMg8smeVLteJFOKCBAizNTs
-    gjmfBYj3Y+e9pzIOgfZpRatzcH010WD1Zd48nxtHuLPvwLqy9wfx5syxFOjRSl+4pO/L0L
-    a5vHEh9FdtP1yDhGyQYkZg2uZRnOvqiEkUQRD7ObTzOnX85+7C7Ds7Afw8AenHR0YyJf0x
-    u0DErY1UIzTTPBbnB/tZbhAThI+oclt+d4nCxgXHYWi7kQeFQtMLLkMVU+Pw
-X-ME-Proxy: <xmx:acehamwmy0i8cFCjL9LnMMZb7GKpwvAwatiILAPw1vy8fqsRJjP3ow>
-    <xmx:acehauktFkQXN4yiY5ANIb_Fr2IYCHPSUd3PoJLYmBjnDJdHxnf2lw>
-    <xmx:acehap-EcgV8WhhvfbVqGB0xco2cVD4P5kEO2rvYKO0UI-dzjM8Q1Q>
-    <xmx:acehapoQwqJ5MRfkBygnhtTZsvZieIX7cvO36Tp5lVY6orRSPs92HA>
-    <xmx:acehatIJZUTtWArdFQxtDdLEHwjOMn6ozASv2NU2GMonszqpqigCT54J>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 6981132A007B; Wed,  9 Sep 2026 16:53:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bw9Wg3Cq"
+Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66e4ab201ebso905415d50.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 13:56:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788987391; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Th/syplqstr+mK1UNx7Mc5XnPbY8l9cEPLeQG6oRTyOoJU3zjT7elASilqJGLUdbQF
+         ecUkHTAPKQ/SM+2Q14yp+VZWalUfOsUDu1QxZ/jC+jQ7iO7EYGow3QwGUQF9ERLWxFYR
+         ay3dxv+5P1HuyXzC0WjqM96zjsVxkmVrtUpGjFmA8tRnkFlVejhA3CprLc3lwAEaRiCF
+         13jlOywygVlOrxUEkxH9A8t+bNxyRhnfL/U4SyKP66/Ntur760767CzxFp+Ab70uoGHP
+         A6tcosxaOKvw2FeKNP3DAwOvyG/MpxuD5xnOp4tAwDTFKFolj1mI5yvnKfsre8575p6Y
+         QoOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aHx4F49Zpu+pEmstw6hBfMqlyRg9LrY6GEInd1anRvI=;
+        fh=kAGRFKDN7aRGd6VO33HQbsOy3CoTfL4nr4GTMsDqfhg=;
+        b=bmpFXLFk7RhudMe74Ipnv/iAPa8R0iBwEfdq1WPas0lb6jmakL8vC2Q1jXNrrQElU2
+         75OUsoYyKiIR25wqAYR7sE+TLusb7zRBzVyxO8FWY7xPfHqpO4hDB6YqrxrOcWTFElvf
+         HJnsLWa08x3RTMBltTWMXxvxjzOcOIuqdFYJ1IfSskMJz3Sh9q9nHMD/tBxpM6eMGqEe
+         KADqOdpfgeB2Gwn4T11CIzMKN8Pb0peqYQH4HE0QlGh7owR8SODafSLOvmj9LRBrfN69
+         Z2txi32OdpclBi7Un/Da5DLfInCKi+01ygqWciY54V1WXpD7HOUVhsHC7/GaPWVU/qMR
+         98nQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788987391; x=1789592191; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aHx4F49Zpu+pEmstw6hBfMqlyRg9LrY6GEInd1anRvI=;
+        b=bw9Wg3CqnwKeA+RMmcdaYnbo/DLaoyssbyxtR59TSirRXU3HAT4GHknRJBf/Xipm35
+         32wNjZp/yp2uGS5temnTmTYAV3RTacvASfsf2VvxEvdXXroG7Ts1vWSvNC/aXzqC+9DH
+         xFCNHbmKyCz2pmqvqje4L8Dxe2cM/kD9l+E4Fh/PRPrTAJf99wNKluUMjn/OSW6qenss
+         htUZkV75Dd9wHIuz1i2MIN0bYAuxIye34jrMvg2BG0PySZoHNMhCKTOrH8/raVTmLccp
+         4KGJXkg2zR4WmoNmz78iPtHRp2pbm2qCkm/q6H0eVRlGF0jLnKHEgcREB0WfpQa/wMRW
+         HAHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788987391; x=1789592191;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aHx4F49Zpu+pEmstw6hBfMqlyRg9LrY6GEInd1anRvI=;
+        b=rnJAUGnSm6MBC2G/MZWH4atFtVlyRlvJX6tPgzDtiSE01yAUOjGiISqoocfY+VSFus
+         0gQkWrioK/2y0fnSiJPaICe+tuOM1Tg4iEuJ65NLz/Z2OScRg4dSTMzvllPTdWaCLF2y
+         l1NQrN8y9SaWGp8pQ7Mx+nUmB22jbR+njH7ZAFVwqRAVxPI9uEzHcBXqz3EwSraxiCEv
+         QmYMiSjcsGXKvjnHFTr/n1aIOzWY5Nled7qmou9Sit/KmgHcGqwswZgtGEqR2IsS4XAa
+         Y7tWt3F1mopqJSdGkwOurwaXXtJjwLhvg1u2MO40GnSIGytxqZ5Y36sjZsyvX2eM4XRS
+         rZYA==
+X-Gm-Message-State: AFuF++nqm9PpYhto3yNUBeU3LPfbdBn+lxwYkxj8yYo9FySrM3AxAw+J
+	iXHzst9NYtrn923ZbDJ0Rsay3+/I9q8PwtjofCxQIYrdtSBsiKtaqBi4IYdQVeaVSb6V6Y1cmoH
+	tthYUZbwvCFhm9Qi4KA4vdVCm9UfTg3S3htXRqNs=
+X-Gm-Gg: AYBFou3Tck1SkfFBaQeXRgb45OIX3Pg5wl7+1aMRADmN6v1J3nXSMl+mSLytPc6ZEua
+	PFEQqu+azxB6rPsgGoDqC0vpGhZcioxfXrCX1mjUdWRXU5N4IHV6++WODApKqF0j0Nvz0nh51Pu
+	4nj6D3Tp5Jhj0KEp1o7exC0COtExsoxX4grmmkfEIkCY49Ob9DHXM4WwTUKRMa7729jcSgbtDJO
+	hFP6NqoNtU/shqauKYWDxAtt4DwXAENFaAJJZKyroJbThaKq4hvZuEcNzYcCdbY6bIjsMoQM9vk
+	7eNjq/e/xnjJ8SeiSs/og2QFXaIcab2kWEf81ZD13x45dt4SyHMzz74ZYl/diY2FCvA3X/eZ7tf
+	aGZSwr95KWcmA2Jtz6LZkTU2/RzrqDk5jsg==
+X-Received: by 2002:a05:690e:43cf:b0:66f:c67f:1a6a with SMTP id
+ 956f58d0204a3-6710ff14f4fmr1492851d50.44.1788987388660; Wed, 09 Sep 2026
+ 13:56:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AGc9YchnkBDN
-Date: Wed, 09 Sep 2026 22:53:38 +0200
-From: "Arnd Bergmann" <arnd@kernel.org>
+References: <20260908-dd-cmap-part2-clean-v9-0-3a3f621f4a10@gmail.com>
+ <20260908-dd-cmap-part2-clean-v9-24-3a3f621f4a10@gmail.com> <20260909011309.543B91F00A3A@smtp.kernel.org>
+In-Reply-To: <20260909011309.543B91F00A3A@smtp.kernel.org>
+From: jim.cromie@gmail.com
+Date: Wed, 9 Sep 2026 14:56:00 -0600
+X-Gm-Features: AcwNN1V549rxj8x0UclZdPYhK2I8FxFFFwB6mo2fxWYjnCTaNEuPXTVR7O_ixeA
+Message-ID: <CAJfuBxy9gvQ3kBRy=9_ik6oUaBdczoC76XwHR71zc4Lxkp-wSw@mail.gmail.com>
+Subject: Re: [PATCH v9 24/39] dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, "Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
- "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
- linux-hwmon@vger.kernel.org, "Lee Jones" <lee@kernel.org>,
- "Rob Herring" <robh@kernel.org>, dri-devel@lists.freedesktop.org,
- mfd@lists.linux.dev, linux-watchdog@vger.kernel.org,
- "Conor Dooley" <conor+dt@kernel.org>, linux-rtc@vger.kernel.org,
- media-ci@linuxtv.org, linux-leds@vger.kernel.org, linux-input@vger.kernel.org
-Message-Id: <8618e335-4e89-4175-a9a5-17aa72f9e682@app.fastmail.com>
-In-Reply-To: <20260909134823.AA3201F00A3D@smtp.kernel.org>
-References: <20260909132153.1596191-1-arnd@kernel.org>
- <20260909132153.1596191-13-arnd@kernel.org>
- <20260909134823.AA3201F00A3D@smtp.kernel.org>
-Subject: Re: [PATCH 12/14] mfd: remove unused mcp-sa11x0/ucb1x00 driver
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Cc: dri-devel@lists.freedesktop.org, linux-modules@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 9, 2026, at 15:48, sashiko-bot@kernel.org wrote:
->>
->> The sa1100 platform has been removed, so these drivers are no longer
->> used anywhere.
+On Tue, Sep 8, 2026 at 7:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> [Severity: High]
-> Is the sa1100 platform fully removed in this series? Looking at the tree,
-> arch/arm/mach-sa1100/assabet.c and arch/arm/mach-sa1100/collie.c still
-> exist and unconditionally include the headers deleted by this patch.
-
-As explained in the cover letter, the platform is only removed in another
-series I posted.
-
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Medium] Newly loaded classmap user modules fail to sync disabled class=
+es due to a hardcoded `0UL` state assumption.
+> - [Medium] TOCTOU race in `ddebug_apply_class_users` when a class paramet=
+er is modified via sysfs concurrently with module load.
+> - [Low] struct ddebug_class_user defines mod_name as non-const char*, whi=
+ch discards qualifiers from string literals.
+> --
+>
+> commit ed72477b68f823658c20da0da2c5754d60e12c69
+> Author: Jim Cromie <jim.cromie@gmail.com>
+>
+> dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
+>
+> DECLARE_DYNDBG_CLASSMAP had a flaw: multiple invocations across both
+> core and driver modules broke the K&R "define once, refer afterwards"
+> principle, causing boot-time parameter propagation failures.
+>
+> Replace it with an explicit client-server model:
+> [ ... ]
+>
+> > diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debu=
+g.h
+> > index 144a2a947abcb..6517e0169a803 100644
+> > --- a/include/linux/dynamic_debug.h
+> > +++ b/include/linux/dynamic_debug.h
+> [ ... ]
+> > +struct ddebug_class_user {
+> > +     char *mod_name;
+>
+> [Severity: Low]
+> Does this code discard qualifiers from string literals?
+>
+> Using the DYNAMIC_DEBUG_CLASSMAP_USE_ macro assigns the string literal
+> DDEBUG_MODNAME to this field, which can trigger compiler warnings and
+> compromises type safety. Should this be declared as const char *mod_name
+> instead, similar to how it is defined in struct ddebug_class_map?
+>
+> > +     struct ddebug_class_map *map;
+> > +     const int offset;       /* offset from map->base */
+> > +} __aligned(8);
+>
+> [ ... ]
+> > diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+> > index 2065bfd1687e0..0e25b4d53942b 100644
+> > --- a/lib/dynamic_debug.c
+> > +++ b/lib/dynamic_debug.c
+> [ ... ]
+> > +/* called for class-users only, parse_one does this for definer module=
+s */
+> > +static void ddebug_sync_classbits(const struct kernel_param *kp, const=
+ char *modname)
+> > +{
+> > +     const struct ddebug_class_param *dcp =3D kp->arg;
+> > +     u32 val, new_bits;
+> > +
+> > +     if (!dcp || !dcp->map)
+> > +             return;
+> > +
+> > +     switch (dcp->map->map_type) {
+> > +     case DD_CLASS_TYPE_DISJOINT_BITS:
+> > +             val =3D READ_ONCE(*dcp->bits);
+> > +             ddebug_class_param_clamp_input(&val, kp);
+> > +             new_bits =3D val;
+> > +             v2pr_info("  %s: classbits: 0x%x\n", KP_NAME(kp), new_bit=
+s);
+> > +             ddebug_apply_class_bitmap(dcp, &new_bits, 0UL, modname);
+>
 > [Severity: Medium]
-> Does removing the MCP_UCB1200 config symbol leave the collie_battery
-> driver as orphaned dead code?
+> Will this fail to sync disabled classes for newly loaded modules?
 >
-> Looking at drivers/power/supply/Kconfig, BATTERY_COLLIE depends on
-> SA1100_COLLIE && MCP_UCB1200. Furthermore,
-> drivers/power/supply/collie_battery.c still includes the now-deleted
-> include/linux/mfd/ucb1x00.h header.
+> By hardcoding 0UL as the old_bits argument, ddebug_apply_class_bitmap()
+> assumes the module starts with all debug classes disabled. This means it
+> will skip generating disable commands for any cleared bits.
 >
-> If this Kconfig symbol is removed without cleaning up the power supply
-> subsystem, it causes an unmet dependency warning and leaves the battery
-> driver unselectable.
+> If a module is compiled with -DDEBUG, its callsites are enabled by defaul=
+t
+> and won't be correctly disabled to match the system-wide classmap paramet=
+er
 
-I have separate patches for this.
 
-       Arnd
+ack.  handled with a macro that yields a classbits full of 1s on DEBUG.
+
+> state.
+>
+> > +             break;
+> > +     case DD_CLASS_TYPE_LEVEL_NUM:
+> > +             val =3D READ_ONCE(*dcp->lvl);
+> > +             ddebug_class_param_clamp_input(&val, kp);
+> > +             new_bits =3D CLASSMAP_BITMASK(val);
+> > +             v2pr_info("  %s: lvl:%d bits:0x%x\n", KP_NAME(kp), val, n=
+ew_bits);
+> > +             ddebug_apply_class_bitmap(dcp, &new_bits, 0UL, modname);
+> > +             break;
+> > +     default:
+> > +             pr_err("bad map type %d\n", dcp->map->map_type);
+> > +             return;
+> > +     }
+> > +}
+> [ ... ]
+> > @@ -1238,12 +1404,17 @@ static int ddebug_add_module(struct _ddebug_inf=
+o *di)
+> >        */
+> >       dt->info =3D *di;
+> >       dd_set_module_subrange(i, cm, &dt->info, maps);
+> > +     dd_set_module_subrange(i, cli, &dt->info, users);
+> >
+> >       mutex_lock(&ddebug_lock);
+> >       list_add_tail(&dt->link, &ddebug_tables);
+> >       mutex_unlock(&ddebug_lock);
+> >
+> > -     vpr_info("%3u debug prints in module %s\n", di->descs.len, di->mo=
+d_name);
+> > +     if (dt->info.users.len)
+> > +             ddebug_apply_class_users(&dt->info);
+>
+> [Severity: Medium]
+> Can this introduce a TOCTOU race with concurrent sysfs updates?
+>
+> Here, the new module is added to ddebug_tables and the ddebug_lock is
+> dropped before the module's initial settings are applied by
+> ddebug_apply_class_users().
+>
+> If a concurrent sysfs write to the dyndbg class parameter occurs in this
+> lockless window, the sysfs thread will acquire ddebug_lock, apply its new
+> parameter value to all modules (including this newly added one), and upda=
+te
+> the parameter value.
+>
+> When this load thread then calls ddebug_apply_class_users(), it will read=
+ the
+> parameter unprotected. If it read the old parameter value before the sysf=
+s
+> thread overwrote it, it will subsequently acquire the lock deep inside
+> ddebug_change() and apply the stale old value, overwriting the sysfs thre=
+ad's
+> newer changes. This would leave the module permanently out of sync.
+>
+
+
+    There is no race here:
+
+    0. Separate definer vs user modules:
+       The locking in ddebug_add_module() adds the module to ddebug_tables =
+so
+       it is reachable by params and >control queries.
+       Classmap definer modules (e.g. drm) EXPORT their classmap records;
+       class_user modules (e.g. amdgpu, drm_kms_helper) depend upon them.
+       The kernel module loader guarantees strict serialization: the define=
+r
+       is fully live before any user module can begin loading.
+
+    1. Builtin ordering:
+       For builtins, the linker orders drm ahead of dependent drivers and
+       helpers in vmlinux, strictly ordering ddebug_add_module() calls duri=
+ng
+       early_initcall.
+
+    2. Deadlock avoidance:
+       ddebug_lock must be dropped before calling ddebug_apply_class_users(=
+)
+       because the sync path calls ddebug_change(), which acquires ddebug_l=
+ock.
+       Holding the lock across ddebug_apply_class_users() would self-deadlo=
+ck.
+
+    3. Init bits handling:
+       Calculate init_bits based on (_DPRINTK_FLAGS_DEFAULT &
+       _DPRINTK_FLAGS_ACTIVE) (CLASSMAP_BITMASK(map->length) if DEBUG is
+       defined, else 0UL). Pass init_bits as old_bits to
+       ddebug_apply_class_bitmap() in ddebug_sync_classbits(), ensuring
+       disabled classbits correctly generate "-p" queries for modules built
+       with -DDEBUG.
