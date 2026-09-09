@@ -1,129 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBB03C465;
-	Wed,  9 Sep 2026 00:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2253C33F594
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 02:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788914182; cv=none; b=h81y4TzLV25PhnIjrOqFggsI/vmwDWfAX6knU8inVm3wyy08qgtj9rbwifGXZFCvxRMYyGpUUTM7DqRYVmSu/R8/iBun8Drdm2REpmh1n9thqN03Ypvc62wLsQ8Zxyo1MuwO4b8cQEuJB8HjKch50sQbvYKwu8o3RKG0i3khB1k=
+	t=1788922507; cv=none; b=B2g55Z8yZMnLxV3qUE4paLbu854MlNjjRWpZzqeKoS1tCdgvNJfWz6G3v4f9/L0ITT83Pcn1MStNAmbQDiCOQ+vQpmLoDPLOvYhXusCQYrrvMMHSO4tthJWs71L+vo3dMS4PrAV4aqWL77PJqelhNsh+UV4+v5MoXUF0GNCw33I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788914182; c=relaxed/simple;
-	bh=7wkmoXyRy7w+oxwuVE1sWBi73BwaC7QBYD868rpUAGg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F+z7pr/YODtthlnvbRBINK/8ecTYnMzFz2NcyJS/tfLLQHQJN8VxHZVSRPDSlparjiyZw/p565ixZUDosKkn5qz5OBo+6loIWRr+bsXBiqLKg0TE0KMOzMwZPIIVOGOnhV1+iWz7ufGexAac/9LhhLZ/aYAMOYV3cFwiLY9bSq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eQp3hthE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788922507; c=relaxed/simple;
+	bh=ILlGEZWS4zWhWLicBHsWUrwrSlTUZxVI5xN7x10oX4g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nSN0GpBDIyHPjEix4dKHrxdidOhZiSLgD+v4Xdefj51iUx/x1VL8o+2B57Hmx8LHZ+xjoEt85501Q9RLwPSD7027/C49XMsqMlX/FEZ8OZzGe49Kz8Qg/oXP9EqQBjM2ytcQHet0VVJWyvwFYF5udrdbKqAbqOxsQybJP0pq+rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eXMEf3La; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eQp3hthE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675761F00A3A;
-	Wed,  9 Sep 2026 00:36:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788914180;
-	bh=kHxVevvDuQ0pQtzGFb8Vsde6OZxErbsVBfZEdqemaes=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=eQp3hthEZC/C9zUUTfRS9L9VQN7296QlufrHkMzkv2FK6jQg+2atlo+wTmCLZt2iK
-	 LT/dLQjvp+y0LNUE+pYDvK4yjrMBAPF8uao6w9OOiGXcB7RqNcsqEmiA1Zu0rZCYBl
-	 GZBb2tGZ3zKiUSKXTU5/N0oC4G7obfsEEeyJRGDQPT5FOpJTEzMlysbcNxyiDYbrfw
-	 eL1zwwL7btYb8xoCv6E/vbZjln9WCfa6YrGubWfvX4OqlTwHFPWcVxFunuAF/vEhra
-	 hOjixsJbMq3Nl5Ad29Th2mVZv4NABBRjaXGSgYHJ9W2d6PRSMZVshzJsBeFaZQAIH6
-	 DFF1vu6rA4cOg==
-Date: Wed, 9 Sep 2026 01:36:16 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, alistair23@gmail.com,
- linux-pci@vger.kernel.org, ojeda@kernel.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v3 17/21] lib: rspdm: Support SPDM get_digests
-Message-ID: <20260909013616.13993627@jic23-huawei>
-In-Reply-To: <20260901012040.554EE1F000E9@smtp.kernel.org>
-References: <20260901010347.2614656-1-alistair.francis@wdc.com>
-	<20260901010347.2614656-18-alistair.francis@wdc.com>
-	<20260901012040.554EE1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eXMEf3La"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788922503; x=1820458503;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=ILlGEZWS4zWhWLicBHsWUrwrSlTUZxVI5xN7x10oX4g=;
+  b=eXMEf3Lak3RNO7YQu6/JGVEDeHduXa2PlQWfKxEy8Hkzzg1H9NsomDPU
+   soGpaNI0aiVjb02RJjK4i1LJoJGLLRdswNsktEKgsmN9tBFBCGqqRfZ/A
+   Cg1WwJ0I2PpxkCTLTzfYSiUxDDuFUujUDzz1h27anKtvMcXcZ/KZVgglD
+   FhxwB+54Nzy/y5EVha+frkZHFWKsnZfYagg1Sj7Q1UXi6O0LQFt36y58M
+   nhKdUAClHO7r1SxVeY3zirTy3vD7l4g8kdTlx24eatUi641yYzR62bVLa
+   u4mU2s4kBPYV27tO5b88ulQcVYt+iX24+HAhtVqfoT9apc7dWUkClRZv4
+   A==;
+X-CSE-ConnectionGUID: HPS8ptC3QNiiUVWNA1lZBQ==
+X-CSE-MsgGUID: MXQxmVqCQfioeNawOY9Aow==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89369052"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="89369052"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 19:55:01 -0700
+X-CSE-ConnectionGUID: EgQXaGZrTJaDYzGs48x3cQ==
+X-CSE-MsgGUID: cVocuo3RTqCSeKui2fER+g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="275317418"
+Received: from linux-pnp-gnr-1.sh.intel.com ([10.239.83.186])
+  by orviesa005.jf.intel.com with ESMTP; 08 Sep 2026 19:54:59 -0700
+From: Jiebin Sun <jiebin.sun@intel.com>
+To: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Jiebin Sun <jiebin.sun@intel.com>,
+	sashiko-reviews@lists.linux.dev,
+	linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 4/4] perf tests c2c: Add function view stdio coverage
+Date: Wed,  9 Sep 2026 11:01:52 +0800
+Message-ID: <20260909030156.1771188-1-jiebin.sun@intel.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <aqB8eNXwAvKoiMMR@x2>
+References: <cover.1787283281.git.jiebin.sun@intel.com> <9bd7a313c9c1d71058e857c320c6d5c30cf4cbfa.1787283281.git.jiebin.sun@intel.com> <20260821055803.74B191F00A3A@smtp.kernel.org> <aqB8eNXwAvKoiMMR@x2>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Tue, 01 Sep 2026 01:20:39 +0000
-sashiko-bot@kernel.org wrote:
+Hi Arnaldo,
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Buffer under-allocation for SPDM 1.3+ GET_DIGESTS responses leading to transport failure, transcript truncation, and EIO crashes.
-> - [Medium] The GET_DIGESTS implementation validates the payload length but completely discards the returned certificate digests.
-> - [Low] An undersized/truncated GET_DIGESTS response incorrectly logs an 'Overflow' error.
-> --
-> 
-> commit 7b16689f564246befd0f0c43fa0d4515876746e6
-> Author: Alistair Francis <alistair@alistair23.me>
-> 
-> lib: rspdm: Support SPDM get_digests
-> 
-> This commit adds support for the GET_DIGESTS SPDM command.
-> 
-> > diff --git a/lib/rspdm/state.rs b/lib/rspdm/state.rs
-> > index b78086c753702..131c22319b262 100644
-> > --- a/lib/rspdm/state.rs
-> > +++ b/lib/rspdm/state.rs  
-> [ ... ]
-> > @@ -612,4 +630,64 @@ pub(crate) fn negotiate_algs(&mut self) -> Result<(), Error> {
-> >  
-> >          Ok(())
-> >      }
-> > +
-> > +    pub(crate) fn get_digests(&mut self) -> Result<(), Error> {
-> > +        let mut request = GetDigestsReq::default();
-> > +        request.version = self.version;
-> > +
-> > +        let req_sz = core::mem::size_of::<GetDigestsReq>();
-> > +        let rsp_sz = core::mem::size_of::<GetDigestsRsp>() + SPDM_SLOTS * self.hash_len;  
-> 
-> [Severity: High]
-> Does this calculation fail to account for SPDM 1.3+ fields like KeyPairID,
-> CertificateInfo, and KeyUsageMask?
-> 
-> For SPDM 1.3+ compliant responders, up to 32 bytes of additional fields
-> can be returned. Because param2 is a bitmask of provisioned slots rather
-> than a count, any device using slots >= 4 will produce a response size far
-> larger than the allocated buffer, which could trigger an EIO crash.
-> 
-> Even for lower slots, this calculation omits the 1.3 fields from the
-> transcript, which could cause a permanent signature verification failure
-> in challenge authentication due to transcript desynchronization.
+Thanks for checking this.
 
-Nope. Feature turned off by requester not asking for it (yet!)
+Patch 2/4 covers this case:
 
-> 
-> > +
-> > +        // SAFETY: `request` is repr(C) and packed, so we can convert it to a slice
-> > +        let request_buf = unsafe { from_raw_parts_mut(&mut request as *mut _ as *mut u8, req_sz) };
-> > +
-> > +        let mut response_vec: KVec<u8> = KVec::from_elem(0u8, rsp_sz, GFP_KERNEL)?;
-> > +
-> > +        let len = self.spdm_exchange(request_buf, response_vec.as_mut_slice())? as usize;
-> > +
-> > +        // The transport must report a length within the buffer we provided.
-> > +        if len > response_vec.len() {
-> > +            pr_err!("Overflowed digests response\n");
-> > +            return Err(EIO);
-> > +        }
-> > +        response_vec.truncate(len);
-> > +
-> > +        let response: &GetDigestsRsp = Untrusted::new(response_vec.as_slice()).validate()?;  
-> 
-> [Severity: Medium]
-> Does this completely discard the returned certificate digests?
-> 
-> The SPDM specification mandates that requesters compare the hash of the
-> certificate chain with the digest returned in get_digests. There doesn't
-> seem to be any storage for these digests in SpdmState, meaning this
-> cryptographic binding between the get_digests response and the certificate
-> chain downloaded in get_certificate might never be verified.
+  perf tests c2c: Report skip when the workload fails
 
-This one is curious. I can't find a reference to the spec requiring that.
-Digests are a short cut, I think you can always ignore them and just use the certs
-themselves.  I couldn't find any text requiring the certs if we ignore the digests
-but maybe it is hiding in there somewhere.
+It sets err=2 before returning when the workload fails, while patch 4 calls
+test_c2c_function_report() only when err remains 0.
 
+I also verified this by forcing the workload command to fail. The script
+printed the skip message, did not run the function test, and exited with
+status 2, which the perf test harness treats as a skip.
+
+So I don't think any change is needed here.
+
+Thanks,
+Jiebin
