@@ -1,108 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C913E5577;
-	Wed,  9 Sep 2026 09:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C64D3F3293
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 09:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788946119; cv=none; b=FDSzmQVPo40ezCr1Tf/dVBQ9glCXekb7z1H5sjsFl11rtXVroUNsegiVs5HPiMoC+jlqUgs5ybqBBSzhiS5oUfn3jZWXud736XpeRAujH5XzrujoKAi0bBL1LguXbrR6XYENKbRx5t+Yh2459jPmeSpZ4bKpgGCTrIDMYgSpxUs=
+	t=1788946295; cv=none; b=l8zqC4vkz9MgD/p/NDGTnDL8R9uQFdxS2kJO7DXFxGKgANqIh+os1BOh9pXPTJVnR9QdoaVGtxt7VTifIdipCyqzQJ/UuiSPow2ffc+Ow26FT84zr3SN0igZ41e0svbiAM7+YsQ/tux+bzchoJv05Z3oiCT30V9fx8s6HY6n1N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788946119; c=relaxed/simple;
-	bh=KqNZYPbdf5x1Mm9caBbJQVfZkniP3S3+b8Gomqetn54=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sun/Dnm0DHF8jNtJSibbT0AQt5xovVEis8NbRpP4aPqvqINxab8NPpGwFem4TvqIszzOyNcOPuM0Vwezg4oWb1cqt0xeEoV5Skl99g3gYiKbOEYu5aCRg/E21qKMrjD8hipoEkksW/h7wjrMfqwJQg3LeksQbK1n6A7y94Ll9SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=disssKa3; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="disssKa3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E725C1F00AC4;
-	Wed,  9 Sep 2026 09:28:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788946105;
-	bh=uV+Kt1HMhAxsfK2lvTLAT0FGPZRjTMyHG0IkV4w1m5s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=disssKa3d4rHXRZWqzXSdZxhWPx8NUtgRADSQ2zAdscD0T/SjDyrrEeUjDBfJZxJJ
-	 tZE0U2c/b2aGaYP6Ad2rGwJkj9F1K/dAuf8suoZR3eZJPV+7qZbcc5OuLLkKBLa44W
-	 Ox2hc4adkmejkgsC4Qk1IfRE/svNcAo82dQFkYEsfTM8AOPia98b9rNYDakZPHrXRc
-	 sWpDwJz9tXqAbzA0NzquZl3bpKCEyUK0rWYiyChC02qEUHtllhJzorPiqf2CUk4XjP
-	 bwP90k8g0YOYlreyYl02fE07mntl4B0sUcO6SKHNfadyQmYF1E24eFgK930bUUWGUV
-	 QlB4jDbDANlsQ==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+	s=arc-20240116; t=1788946295; c=relaxed/simple;
+	bh=fuoAB2W9w/LNlrG/Jj51Au8lymZ1Gmb1S0kRWD6QVYY=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=dtIiXLAk8NwVkcTLGH3DF0tokKne/Co/8trRv5wLC3S5JhphIuRTwI7aS6JcjPTeP5Rt1h/gzaBmxOJww7Bu648c6LC7lp6RNCgjONpmpvQdW03SY7gxZKFZAzvyA/LHYw7Gd5xvgAT7GoABt6ktkKIx9i4HpHg3XqQG2ldMAq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.62])
+	by gateway (Coremail) with SMTP id _____8AxS_BpJ6FqAyEKAA--.29409S3;
+	Wed, 09 Sep 2026 17:31:22 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+	by front1 (Coremail) with SMTP id qMiowJAxmM1lJ6FqDtwdAA--.63355S2;
+	Wed, 09 Sep 2026 17:31:17 +0800 (CST)
+Subject: Re: [PATCH] LoongArch: KVM: Add hypercall crash support
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: Re: [PATCH v3 3/4] dma: swiotlb: Centralize memory-encryption pool
- sizing
-In-Reply-To: <20260904103644.CD15E1F00A3D@smtp.kernel.org>
-References: <20260904101810.1193505-1-aneesh.kumar@kernel.org>
- <20260904101810.1193505-4-aneesh.kumar@kernel.org>
- <20260904103644.CD15E1F00A3D@smtp.kernel.org>
-Date: Wed, 09 Sep 2026 14:58:18 +0530
-Message-ID: <yq5awlsuai4t.fsf@kernel.org>
+Cc: kvm@vger.kernel.org
+References: <20260909085350.2046788-1-maobibo@loongson.cn>
+ <20260909091354.7FBC71F00A3A@smtp.kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <1c3461bb-f99b-12c8-9cee-5b50b27b1487@loongson.cn>
+Date: Wed, 9 Sep 2026 17:30:59 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20260909091354.7FBC71F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJAxmM1lJ6FqDtwdAA--.63355S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxurWUXw4DKrWfCr45uF1rAFc_yoWrXFW5pF
+	1xAF4kGrWfGr1xCan5J39F9w4UZFn7Cr1FgFyjkrWfAF4Y9FyrAr1Fyr4DCF90qw18Wa40
+	vFnYk39Iv3Z8twbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+	1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
+	05UUUUU==
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Skipping SWIOTLB_POOL_CC_GUEST when a restricted DMA pool is present can result in SWIOTLB_POOL_NONE or SWIOTLB_POOL_MINIMAL being selected, breaking DMA for all other devices.
+
+On 2026/9/9 下午5:13, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The KVM_LOONGARCH_VM_FEAT_CRASH capability cannot be discovered by userspace due to a missing case in kvm_vm_feature_has_attr().
+> - [High] The KVM_FEATURE_CRASH capability is silently enabled by default, violating KVM cross-architecture rules and breaking live migration with older VMMs.
 > --
->
-> commit d8ab20a637a8736036e923dfa3f89a8da55215c3
-> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
->
-> dma: swiotlb: Centralize memory-encryption pool sizing
->
-> This patch centralizes SWIOTLB memory-encryption pool sizing for guests into
-> the SWIOTLB core. It sizes the confidential guest pool to 6% of guest memory
-> by default and records the presence of restricted DMA pools to avoid selecting
-> the confidential-guest policy solely based on guest memory encryption.
->
->> diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
->> index 90e0bfd0715cf..c4611b2c45403 100644
->> --- a/kernel/dma/swiotlb.c
->> +++ b/kernel/dma/swiotlb.c
->
-> [ ... ]
->
->> @@ -509,7 +553,8 @@ swiotlb_select_pool_policy(unsigned int flags)
->>  	if (swiotlb_force_disable)
->>  		return SWIOTLB_POOL_NONE;
->>  
->> -	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
->> +	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT) &&
->> +	    !restricted_dma_pool_present)
->>  		return SWIOTLB_POOL_CC_GUEST;
->
+> 
+> commit db8910e8d85912033e28dc04e11026a25b4bdbb8
+> Author: Bibo Mao <maobibo@loongson.cn>
+> 
+> LoongArch: KVM: Add hypercall crash support
+>      
+> This commit adds a generic pvpanic-like hypercall for LoongArch KVM to
+> notify the VMM about VM crashes. It provides a direct, low-level crash
+> method that is useful when the CPU hardware context or kernel stack is
+> corrupted.
+> 
+>> diff --git a/arch/loongarch/include/uapi/asm/kvm.h b/arch/loongarch/include/uapi/asm/kvm.h
+>> index cd0b5c11ca9c2..b222bfc480427 100644
+>> --- a/arch/loongarch/include/uapi/asm/kvm.h
+>> +++ b/arch/loongarch/include/uapi/asm/kvm.h
+>> @@ -106,6 +106,7 @@ struct kvm_fpu {
+>>   #define  KVM_LOONGARCH_VM_FEAT_PTW		8
+>>   #define  KVM_LOONGARCH_VM_FEAT_MSGINT		9
+>>   #define  KVM_LOONGARCH_VM_FEAT_PV_PREEMPT	10
+>> +#define  KVM_LOONGARCH_VM_FEAT_CRASH		11
+> 
 > [Severity: High]
-> Does skipping SWIOTLB_POOL_CC_GUEST here leave the system without a proper
-> fallback for non-restricted devices?
->
-> Looking at swiotlb_select_pool_policy() in kernel/dma/swiotlb.c, if a
-> confidential guest boots with a restricted DMA pool present in the Device
-> Tree, and system RAM is small enough that SWIOTLB_INIT_ADDRESSING_LIMIT is
-> not set (e.g., <= 4GB), this check will skip SWIOTLB_POOL_CC_GUEST. 
->
-> The function then falls through all the way to SWIOTLB_POOL_MINIMAL (a tiny
-> 1MB/GB pool) or SWIOTLB_POOL_NONE. If it returns SWIOTLB_POOL_NONE,
-> swiotlb_init_remap() will exit without allocating a default SWIOTLB pool.
-> As a result, unassigned devices that still rely on the default pool for
-> bounce buffers will fail to map DMA memory, potentially leading to I/O
-> errors or boot panics.
->
-> Should this path safely fall back to SWIOTLB_POOL_DEFAULT when a restricted
-> DMA pool is present, to ensure a standard default pool is still allocated?
->
+> Does this omission prevent userspace from discovering the capability?
+> 
+> This feature is defined here, but it appears to be missing from the
+> switch statement in kvm_vm_feature_has_attr() in arch/loongarch/kvm/vm.c.
+> If a VMM queries this via KVM_HAS_DEVICE_ATTR, won't it hit the default
+> branch and return -ENXIO, falsely indicating the feature is unavailable?
+yes, one line patch is missing in kvm_vm_feature_has_attr(), such as
+diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
+index e5d10ceb5e67..9bf4b3bb8f25 100644
+--- a/arch/loongarch/kvm/vm.c
++++ b/arch/loongarch/kvm/vm.c
+@@ -164,6 +164,7 @@ static int kvm_vm_feature_has_attr(struct kvm *kvm, 
+struct kvm_device_attr *attr
+         case KVM_LOONGARCH_VM_FEAT_PV_IPI:
+         case KVM_LOONGARCH_VM_FEAT_PV_PREEMPT:
+         case KVM_LOONGARCH_VM_FEAT_PV_STEALTIME:
++       case KVM_LOONGARCH_VM_FEAT_CRASH:
+                 if (kvm_vm_support(&kvm->arch, attr->attr))
+                         return 0;
+                 return -ENXIO;
 
-That is intentional. In a confidential guest, the presence of a
-restricted-dma-pool is used as a hint not to set up an unencrypted
-default swiotlb pool.
+> 
+> [ ... ]
+> 
+>> diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
+>> index 6dabb227a7321..e5d10ceb5e67f 100644
+>> --- a/arch/loongarch/kvm/vm.c
+>> +++ b/arch/loongarch/kvm/vm.c
+>> @@ -49,8 +49,9 @@ static void kvm_vm_init_features(struct kvm *kvm)
+>>   		kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PMU);
+>>   
+>>   	/* Enable all PV features by default */
+>> -	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI);
+>> +	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI) | BIT(KVM_FEATURE_CRASH);
+>>   	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PV_IPI);
+>> +	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_CRASH);
+> 
+> [Severity: High]
+> Could this regression break live migration with older VMMs?
+> 
+> Currently, KVM_FEATURE_CRASH is unconditionally enabled for all new VMs.
+> If an older VMM that does not support the crash hypercall runs on this
+> kernel, and the guest executes KVM_HCALL_CRASH, the VMM will receive an
+pv_features is enabled by default, VMM can detect kernel capability and 
+set pv_features before booting VM.
 
--aneesh
+Regards
+Bibo Mao
+> unrecognized KVM_EXIT_SYSTEM_EVENT of type KVM_SYSTEM_EVENT_CRASH.
+> 
+> This usually causes an older VMM to ungracefully abort the VM. KVM
+> cross-architecture rules require new guest-visible features and exit
+> reasons to be off by default, relying on explicit VMM opt-in during
+> capability negotiation.
+> 
+>>   	if (kvm_pvtime_supported()) {
+>>   		kvm->arch.pv_features |= BIT(KVM_FEATURE_PREEMPT);
+>>   		kvm->arch.pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
+> 
+
