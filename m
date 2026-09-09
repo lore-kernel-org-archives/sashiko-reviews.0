@@ -1,94 +1,94 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9053ED15
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 15:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D79577E4F
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 15:42:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788968308; cv=none; b=pGNb+wmSILIFJrmsYH5YRSWqaCOBJPEQ9jiG5j0x/bHOhi4OA1ARmNLMYi3Nk10ZddTi1mBtyaq7yMbjgosyL1saenXv6oLQs4ykGaO/mYHuX5nTg9X0+HFDOHuquCkT9rIU0rOyKojvAwvjDyvtHtbKCBwyzsVQ2zorw4IWNT8=
+	t=1788968542; cv=none; b=XsV7YH2yQiC4MHPaHi7pyXu9bHRWVlgJ1MRRqgG83ojxOjSY0lRJ1N9yyL24g5PcjBBrDuP/eWj2bwVOofmfLeFBTOx7Yt0u/RMXUkyT86V05oQXXFpnLIsfSAmuATOBGRZhAr+Ysg9jfv9GwoGrT2iB1tBlKrciwPKpAV7rR7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788968308; c=relaxed/simple;
-	bh=rTjQD0AWXvJKBlAO6G8aQGljW+/ivZFhpjJrPWqIlqM=;
+	s=arc-20240116; t=1788968542; c=relaxed/simple;
+	bh=a64GDqnqJM5Gcxb2TXIlPcd98cEhnNLarprMbWo/s1o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SO3FMBD8aUlUippOpqUQjoumRTw1f83AB+4wBGYAKeCMmHzl/4p5iWKQ5ithpPkis5E6GlNEDwDLrXW0yScDYw1t+HZbY/4Khx8vESj9opLirv7sjFKRU7JoUud9NtkXNKRuTtQu8YsxSlmwcl1XcJbWuOBLnFWU+VYA9nILDPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jQRvUREd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DXZ0e42k; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=htdLz1BXeoBuwksYw9MjV/PcsjtHjGdFf9L7kcvapZpVdK2/vSjBbD7VFLT3vUAe6Oo/iSHoe3lt3PQBUTIQenDlw7cTSIkXNBPusses+JN4T3/lUs8tsJ9U/d2SbBymjzz+5ldr2S36POVrCnAJlG0RcLDVwtHvQJdcBpkboHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j+9hzrD6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IgYy7Bnr; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jQRvUREd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DXZ0e42k"
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689BUISA2171994
-	for <sashiko-reviews@lists.linux.dev>; Wed, 9 Sep 2026 15:38:25 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="j+9hzrD6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IgYy7Bnr"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689CCjkp1400923
+	for <sashiko-reviews@lists.linux.dev>; Wed, 9 Sep 2026 15:42:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=AIrVvX335LUhs5A+Yn7aX2BB
-	Y+6j0On/IVOblwEFVk4=; b=jQRvUREdk1xS2Lx4iYJfUiiZn/b0gjtXmFZErRNs
-	4TwmeHc58s67Q7do9hwxyDMvcuSNiprHsf556ELDPnKSqHPQzheHWV2UXrlMCMkd
-	7CGva87UV5fPGO+64vSFrBeeVwK9aN6sVD1IKOo4xyA1ZyFpo7G/j06S2X+nL9Cu
-	EFcJfuiRVBtmxjwdZm/eJha4k7RIZwY8e5eT7j96oiSt4R601+iUaXjkrQeQrQ02
-	UI8MvvE5joFfMyIvmakT7LHoHWu09Lnu7xIQonf5V7Il8n5j+dBnnSu6TkX0oX2I
-	Au1GoU25EYBTxOWtoBYYMHx4SIcR0+5XGinX4Yyy3Nwspg==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gk5rgh8xc-1
+	:references:subject:to; s=qcppdkim1; bh=6xzuTsxy6Ya0ZQsG74zmxLXv
+	e+omDninFQp6NvwxOLM=; b=j+9hzrD6omM2dcqkJYGS/06kGJdbLNA7gIF03v65
+	NJ0Ybgr2c2XeVK6+ahLFI8aKvPcTgKEd4V+uzxUeDDZhIrgcAq/lMuuzBs8Xj/14
+	OYppU/shGuPV8l4mYCGdyLl3DcGScFDLbkSWOHK9SrCGnjZV5JMPmaIeMNorp/ue
+	hvchFKECrB83rUiLVsHTJ7sMsMSwv46MKHPki5PrCRb8XfjrL1ck3IMgnUkKukuR
+	6It1xIHlMQ5uABYr5Pr+f41+gdOkEjrzgOzYFJ6ZdHC6z9RqKDOUtkDoSdG57+Lx
+	lEnszGkss+LOkGcwhTUs4tIjzsc+8Ky3BYOMpcDFDDkYig==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gk78x0y4r-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 15:38:25 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-7909e307799so169409137.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 08:38:25 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 15:42:20 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-98087b0c5deso3866352241.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 08:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788968305; x=1789573105; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1788968539; x=1789573339; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=AIrVvX335LUhs5A+Yn7aX2BBY+6j0On/IVOblwEFVk4=;
-        b=DXZ0e42k8IM1EqvrGXAavB9znYkqAtHGG43ifW2zB7G6Dpd4dzDJZi2kQtb0KpVbgv
-         edAnvHOOMtJ+oBv0qTIC3T+z0lDi7tiKh4q70bVj6zsUv48PZHN1X5kxoMwsELDutUzG
-         M5pKE+ZAMTu4/+U28aD4TiZmzCuWSF9u2JwCJ2bWGgmeeyM9ihZ9eAVoqDpcWTJfN7W/
-         bpDFwW6uBKokhfZNEZtshmSmguL5FtUSKP78dpdUiUHxM4M5ZPwLrcrunbLXnGRoqCLx
-         tty9p2oV0UaitrjcaF2qVykksiXn+iSvQMVYSYi3qnIeROiKnjGVJMmP3NuyGj86jwAG
-         TEhQ==
+        bh=6xzuTsxy6Ya0ZQsG74zmxLXve+omDninFQp6NvwxOLM=;
+        b=IgYy7BnrgKTw1vLilEMwTiebgtG2XuHeOjcYC9xZXObv2bgh6kobIqb/cv7i7Mk3s9
+         xyUVb34rmmnCrfx1XhWNaSCSCCa4gTc3PNJHVVqM5CXLwdZEfDK16vHByFV5T69+FG/j
+         DiHM7E0Lhse2NFgPtBOR/x5G60YCx6TA7RP5sUymTKtDlQKMSfLPk3DQFdIqkgMVsGSE
+         ahh99Oz7XShV2hyJofHp6dDNbYm2OL35RFzW/LToIenMyd4QcN7fxa+uQlFP0NdCJMyQ
+         DFrcd9RM1qpf8WRxnBfln4AzVLBQdYL2tRPn/CSc8OhEfIH6u2dYWsdzf5xt0GiZjO6W
+         bGEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788968305; x=1789573105;
+        d=1e100.net; s=20251104; t=1788968539; x=1789573339;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=AIrVvX335LUhs5A+Yn7aX2BBY+6j0On/IVOblwEFVk4=;
-        b=gPLhXP/KMfsoeEx6fKMjtvclUMVBRqh3yCWHkO/i6V9dM4Rc2XPMJFz7hxVLF4ySdz
-         b264bdm67/XD2xbuCNZWc8RcYcbSk1RdrZvHtS8XoU7ON/BbnMCuBKKn5QT879+G2pKM
-         EeicVtJndEZR6MNDWUHlkTk03x9q6rQxtvc8A0ifmv5MsUeeXlq3OM5/9g2t4lLEO+LG
-         VYihDWtYaBCAZxl3h9KKwiDG3C3qWg9Z9e5Qi6CdS7nvTqdatx8/V/zPoxwY6ViVjVv6
-         1IQ/riZ30wXGzxSykHvwMxTVJjOV7JxAvsR7hKEm/5Q6+BYPkwVmaIWF/EqLatvIJOfg
-         Qwwg==
-X-Gm-Message-State: AFuF++kVRK2HGnq6IDizg/h2cEcaz1X9D+c4GBZWQqvHSlfBP3Q38CMs
-	Zaq7PCUw96VOMvG6vwr28Wa7FMIg81MqLt3ipdg80fEt0cUrOTFXGAn0stOwyLhkuC9ZgeOnsil
-	bIvNF/Aukbcy8ZA8fWgc31C4t5UdBUYE3biht07Zzx0bt+e5eF6x3fd9eDjEATLVyEQGuStBSAr
-	3NKiU=
-X-Gm-Gg: AYBFou2yO6n7RN1Z4VG48uDE+UIaoYxpk601CEXHg1ikO9LVOkqWNGZNMmgboVRFoxR
-	kBms/eUMNmnVakcniQAtKgLG0x6dZSbq3NucQgNITfqXdLXwFH2F4HpNiwonxv2D6RcoklMuWr6
-	hixT5cBtili6yse6Iyb/c/vq4NlkWWMscDp1zfvKWKRk4I6CMVHABLf+dTtX4FyQHKU26FIYLme
-	UML/lgyBGMXud4YGZwZR6WYs90LpL3EWUQUHsD7xkimu7nMETCfJ86F0p3wzbZdEssIPJMTyvRg
-	aQ3Qy5USIlNKJFbFuplcaL1OlQpRquFVqA6ZGdHUPR9tXQs+z2QA+Ewar+QY1YjARQJsUY6mnNd
-	rK4TUdbF+MAnjJA==
-X-Received: by 2002:a05:6102:80a3:b0:77d:9fe9:1716 with SMTP id ada2fe7eead31-78a4a6e83e9mr21279496137.2.1788968304774;
-        Wed, 09 Sep 2026 08:38:24 -0700 (PDT)
-X-Received: by 2002:a05:6102:80a3:b0:77d:9fe9:1716 with SMTP id ada2fe7eead31-78a4a6e83e9mr21279354137.2.1788968301950;
-        Wed, 09 Sep 2026 08:38:21 -0700 (PDT)
+        bh=6xzuTsxy6Ya0ZQsG74zmxLXve+omDninFQp6NvwxOLM=;
+        b=SYZtW9LY6Kns1tHh9E0NFegTmBfN34P99FPRwDkIJCMiHlVOJlcX4C0Qs2Wbkzs0y6
+         T9cYX/zPLVbC8zYneQh+RRhkXRr9HRSuqFaGjT+ZIVlypmQbQHq9A3kfrRAkZEmzoex2
+         uhA2+Lyp3yAwiRQ0bDEfWja6WRict1bDC5fl4Zbwlc/nK+qgHAGDTUvM8lsr0e65vAfy
+         /IVu0TeE5pP47It8xrM4VaISc8S8fyrl2rzN13V+9WiPuWJNKK9VdXsXdPrAuuCqgPqy
+         Xb9TS3lUfoVUF9GQ0vaXjaYCyWyXnOSCGA4b6JxezTHq9O8Gylt7937so8glonahI+hr
+         RgKw==
+X-Gm-Message-State: AFuF++mBgS/0HTW49geNzBLBQEYYgwVAa8Dy8Zw9i3yzxgLnj+rMqkXF
+	kFqUUkZww8VAUGF4V3vpNmeBYdfEpxxxPyKu/lN4wYw5htYtEFJ9ULhYfgLObpQElpqhY/GFemZ
+	s/x1MMQtd2K4kyEQVmCKilKiDrgmhWv+GHKA7lOCL5Gh1RUib4h+DXljgSpi3ch4vWQ43OslgGX
+	aS0Bc=
+X-Gm-Gg: AYBFou0n8wkONMw/LCKy9ZhgIGyhUtsT+Xmfw67Cca7JC3eHoFsRQG1gW2cXfgiPM3p
+	k3BFJYQJNtFkFnwnREdMGYm4xUJ5dWPT1H0lQTWy6PugVxdZVM8yK2fvt0FEsID6TFVAzscbMDU
+	c676m90F9a43/CmS6HcgdzzckPgA7SpP/tNvOgB6033Kv1mmurPhpXRgvkUFqgMYrW9X33kFyFL
+	hxB8ii5mNpg40Kt+SZPwpUagTUUjBrqn7zu1vZOSbu9pdRxETmYwPY6sC2ma4DvGCV3x3FKErRG
+	GSk8ZY6XHNlO4cICeS0dr1jJBif4ws1C+7MD1vco6WKBnPpl2eO8oq14Uj7ILF9Dw5Y9lHF0f7w
+	WuoYVTdF/+djZjQ==
+X-Received: by 2002:a05:6102:5487:b0:738:1ef6:51b9 with SMTP id ada2fe7eead31-78a4a96d8c3mr16962557137.5.1788968538601;
+        Wed, 09 Sep 2026 08:42:18 -0700 (PDT)
+X-Received: by 2002:a05:6102:5487:b0:738:1ef6:51b9 with SMTP id ada2fe7eead31-78a4a96d8c3mr16962525137.5.1788968538064;
+        Wed, 09 Sep 2026 08:42:18 -0700 (PDT)
 Received: from localhost ([188.216.77.92])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d1fd532dcsm61690985e9.1.2026.09.09.08.38.20
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883c074asm43767403f8f.23.2026.09.09.08.42.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 08:38:21 -0700 (PDT)
-Date: Wed, 9 Sep 2026 17:38:20 +0200
+        Wed, 09 Sep 2026 08:42:17 -0700 (PDT)
+Date: Wed, 9 Sep 2026 17:42:16 +0200
 From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-pci@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
         conor+dt@kernel.org
-Subject: Re: [PATCH v5 1/5] dt-bindings: PCI: toshiba,tc9563: Document
- embedded GPIO controller
-Message-ID: <aqF9bHTBBMmRhmn9@lore-desk>
+Subject: Re: [PATCH v5 3/5] PCI/pwrctrl: tc9563: Add GPIO auxiliary device
+ support
+Message-ID: <aqF-WDtoSEbsstzW@lore-desk>
 References: <20260909-pci-tc9563-aux-v5-0-c9b33f56c8d3@oss.qualcomm.com>
- <20260909-pci-tc9563-aux-v5-1-c9b33f56c8d3@oss.qualcomm.com>
- <20260909150403.A5C511F00A3A@smtp.kernel.org>
+ <20260909-pci-tc9563-aux-v5-3-c9b33f56c8d3@oss.qualcomm.com>
+ <20260909151551.2DA281F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -96,125 +96,131 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ekoMoU4jMT3u/jKP"
+	protocol="application/pgp-signature"; boundary="JIEZH1p0DJS2V+dF"
 Content-Disposition: inline
-In-Reply-To: <20260909150403.A5C511F00A3A@smtp.kernel.org>
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE3NCBTYWx0ZWRfX9GwoBFIzlk7q
- SkOS5WkM3gnhPa6JzmOLOL6C9zIL4a1T/cG+5FLD3a0xLVti7NbHwOf+pkII3Hwb24NG6IFr46g
- yHnSH+qIwk1rsa1DX1rZv2M3mhpXSQI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE3NCBTYWx0ZWRfX9dTVGM6x7VJf
- 439uuxNrp/rsfw2pJJA0Wn/1CGO4YQD6CaGm03MECtfYEnwg0vLfoA6BrO8PNejGVJOiCLjHgE3
- vQwuAjiBDmctKca8d8NZkvfO8TBHRnLGzj339md9bIyKTqkOeT/MFDwnURvqQ3t4FuTL88hk+Yr
- dmTwac7qerwr7tlVP8YTn1O2SQEPPtHdVt6iG3PwZbW4ADcodWK6yJN8CMI72iuI+gRye79MB70
- PNuw9SZ1abICXOW+d8cbJto0X7rqHHSw5yTRhNFCWOX4o5D/SEg54ed74TQfnTcmt4jJKdhTBqM
- zqliI/x0OadY5hhxNsAB2dDy4MpCce9wcJtxsF/4+fzxtf4sC8khyEiItXN4Xlih8CNQixKsmG2
- HHZObyC3F+dLS67k4eTGe0mrwCHTiPQry3aoa7BC17ouzcvyE3j3rkA8MBfA8CI8I/Gf68BR0Rt
- uaqrZ74WaPosXM0MBVw==
-X-Authority-Analysis: v=2.4 cv=B6qJFutM c=1 sm=1 tr=0 ts=6aa17d71 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=WpTaRW6qxYHRGzLzQsVYzg==:17
+In-Reply-To: <20260909151551.2DA281F00A3A@smtp.kernel.org>
+X-Proofpoint-ORIG-GUID: ty_jCVQv-Mwz6V2ssX-BsWwWDp8un_n_
+X-Proofpoint-GUID: ty_jCVQv-Mwz6V2ssX-BsWwWDp8un_n_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE3NSBTYWx0ZWRfX3g1mHK464Sli
+ VE5SUYNguyeaCn2jVtGpCVyIg87eN7DM5ZzulIjANErtoVAnYZeawH5sg+mX6OfmfcKlJ1mkP3x
+ DH5g+CGupGIiz5SLwHMg2c5s8gcX5fM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE3NSBTYWx0ZWRfXxC2ngqcOHZXn
+ /CktAKRYWfl7QZCyw5yVeEVS8gHOe/Lk1lE/T7vXy1WY275N8qWpJJixmFKIGovMTpnBL2yNNyO
+ Mf7SUPZSGVBZ1xPPv8b37gjf99tlFso4MlY+DBlzwuSbv8+2rZk95kjfAmLyf9Ik57B3Gg7C4g5
+ gi8afLoC0VazrFaNHQGwY7nc5+vdiuOy73o0YnNAwxfRGFRSYM1FfpWo8yUBA+xYteS12TMmqkw
+ uvcZ07QA47F3S48JOqh7UArx6nH4DqjRSf/sbAP2fLtniRHVRu5qJqxBuwXOD6F4waR/dOBZh7I
+ /SJttDFasFmkM30+cHfiMCqajMfywA9mJqk4jhuwVAYhx0n4b9J5v7Z9dGStyb6mSrBCj819xFO
+ PeIoacDnrdVoKXnYl2AnZAPhaZJpMIOx7df5RRUM6uTUBRU5gonK7VKOWkpsV22G6skTOnbniFA
+ ZGBa3z/r8kUk8VbndEA==
+X-Authority-Analysis: v=2.4 cv=SvWgLvO0 c=1 sm=1 tr=0 ts=6aa17e5c cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=WpTaRW6qxYHRGzLzQsVYzg==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=c92rfblmAAAA:8
- a=EUspDBNiAAAA:8 a=UfEYJwnE5WuK08dpBrEA:9 a=wPNLvfGTeEIA:10
- a=6NAFynQPVF88eBM1lewA:9 a=-aSRE8QhW-JAV6biHavz:22 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: hGZ56F1gLLVzjBbc5EQhC0rMkrKqCkv6
-X-Proofpoint-ORIG-GUID: hGZ56F1gLLVzjBbc5EQhC0rMkrKqCkv6
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=W8DIBEWQemVwItpymzoA:9 a=wPNLvfGTeEIA:10
+ a=bTiFXxHaIdIL6kvNrrEA:9 a=o1xkdb1NAhiiM49bd1HK:22 a=GvGzcOZaWPEFPQC_NcjD:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 spamscore=0 adultscore=0 malwarescore=0
- bulkscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090174
+ clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609090175
 
---ekoMoU4jMT3u/jKP
+--JIEZH1p0DJS2V+dF
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Missing Required Properties for new GPIO provider capabilities
+> - [High] Auxiliary device teardown via devres races with manual power off=
+ in remove(), allowing I/O to powered-down hardware.
+> - [Low] Missing explicit `select AUXILIARY_BUS` in Kconfig for PCI_PWRCTR=
+L_TC9563.
 > --
 >=20
-> commit 384b355928f0212bcff0ab6c4447b15d28dc4109
+> commit 6f8a88de67f080d18050c0ce0599dc8854f71eab
 > Author: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 >=20
-> dt-bindings: PCI: toshiba,tc9563: Document embedded GPIO controller
+> PCI/pwrctrl: tc9563: Add GPIO auxiliary device support
+>    =20
+> This commit adds an auxiliary device to represent the GPIO controller
+> embedded in the TC9563. It passes the regmap via platform data to enable
+> the gpio-tc9563 driver to register the GPIO chip.
 >=20
-> This commit documents the embedded GPIO controller within the TC9563 PCIe
-> switch. It exposes the controller by adding the gpio-controller and
-> #gpio-cells properties to the switch node, and updates the example to
-> demonstrate downstream ports utilizing these lines.
+> > diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
+> > --- a/drivers/pci/pwrctrl/Kconfig
+> > +++ b/drivers/pci/pwrctrl/Kconfig
+> > @@ -29,6 +29,7 @@ config PCI_PWRCTRL_TC9563
+> >  	select PCI_PWRCTRL
+> >  	default m if ARCH_QCOM
+> >  	depends on I2C
+> > +	depends on GPIO_TC9563
+> >  	select REGMAP_I2C
 >=20
-> > diff --git a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml =
-b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
-> > index f084830c6d0cb..c4ebb99f50c37 100644
-> > --- a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
-> > @@ -31,6 +31,11 @@ properties:
-> >      description:
-> >        GPIO controlling the RESX# pin.
-> > =20
-> > +  gpio-controller: true
-> > +
-> > +  '#gpio-cells':
-> > +    const: 2
-> > +
-> >    vdd18-supply: true
-> > =20
-> >    vdd09-supply: true
->=20
-> [Severity: Medium]
-> Does this binding need to include the newly added GPIO provider capabilit=
-ies
-> in the required properties list?
+> [Severity: Low]
+> Since the driver now directly calls auxiliary bus symbols, should this co=
+nfig
+> explicitly select AUXILIARY_BUS to prevent potential build failures if
+> transitive dependencies change?
 
-In order to introduce any ABI change, we decided to not define 'gpio-contro=
-ller'
-and '#gpio-cells' properties as required.
+AUXILIARY_BUS is selected by GPIO_TC9563
+
+>=20
+> > diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c b/drivers/pci/pwr=
+ctrl/pci-pwrctrl-tc9563.c
+> > --- a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+> > +++ b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+> [ ... ]
+> > +static int tc9563_pwrctrl_adev_add(struct device *dev, const char *nam=
+e,
+> > +				   struct device_node *of_node,
+> > +				   void *priv_data)
+> > +{
+> [ ... ]
+> > +	ret =3D auxiliary_device_add(adev);
+> > +	if (ret) {
+> > +		auxiliary_device_uninit(adev);
+> > +		return ret;
+> > +	}
+> > +
+> > +	return devm_add_action_or_reset(dev, tc9563_pwrctrl_adev_remove, adev=
+);
+> > +}
+>=20
+> [Severity: High]
+> Because the auxiliary device is queued for removal via devres, won't it be
+> destroyed after the driver's manual remove function executes?
+>=20
+> If the hardware is shut down and the adapter reference is dropped in the=
+=20
+> driver's manual remove path before the devres callbacks run, couldn't this
+> allow I/O to powered-down hardware if another process accesses the GPIO
+> sysfs interface during this teardown window?
+
+During driver teardown phase, the aux device is destroyed first and then tc=
+9563
+device is released.
 
 Regards,
 Lorenzo
 
 >=20
-> When hardware gains new provider capabilities, the subsystem guidelines
-> stipulate that the corresponding standard properties (gpio-controller and
-> #gpio-cells) must be added to the required properties list.
->=20
-> Looking at the required properties block further down in this file:
->=20
-> Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml:
-> required:
->   - resx-gpios
->   - vdd18-supply
->   - vdd09-supply
->   - vddc-supply
->   - vddio1-supply
->   - vddio2-supply
->   - vddio18-supply
->   - i2c-parent
->=20
-> If gpio-controller and #gpio-cells are omitted from this list, device tre=
-es
-> created with the pci1179,0623 compatible string but lacking these propert=
-ies
-> could silently pass dt_binding_check validation but fail at runtime when
-> dependent subsystems attempt to use the GPIO functionality.
->=20
 > --=20
 > Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260909-pci-tc9563-=
-aux-v5-0-c9b33f56c8d3@oss.qualcomm.com?part=3D1
+aux-v5-0-c9b33f56c8d3@oss.qualcomm.com?part=3D3
 
---ekoMoU4jMT3u/jKP
+--JIEZH1p0DJS2V+dF
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaqF9bAAKCRA6cBh0uS2t
-rAobAQCReUFtc/l5ysciS8O9zot3R4eXhbP7ioeZnrBFv/9JbAEApyvA9fzzEwQ4
-qK2BvU7gi3eJOwKs6zm0MmTSKXF2eAg=
-=OpeS
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaqF+WAAKCRA6cBh0uS2t
+rD1LAP9wbNdf1zUKYUrlR+yjRDTb9C3QrQZjvlyjjMPSUa49NwEAmE9UamdiPov1
+1gWNEXt0HAz/GYW+07qobLMLmRHQrgQ=
+=nasC
 -----END PGP SIGNATURE-----
 
---ekoMoU4jMT3u/jKP--
+--JIEZH1p0DJS2V+dF--
