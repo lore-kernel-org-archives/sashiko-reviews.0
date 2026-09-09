@@ -1,83 +1,136 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2253C33F594
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 02:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2049331EBE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 02:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788922507; cv=none; b=B2g55Z8yZMnLxV3qUE4paLbu854MlNjjRWpZzqeKoS1tCdgvNJfWz6G3v4f9/L0ITT83Pcn1MStNAmbQDiCOQ+vQpmLoDPLOvYhXusCQYrrvMMHSO4tthJWs71L+vo3dMS4PrAV4aqWL77PJqelhNsh+UV4+v5MoXUF0GNCw33I=
+	t=1788922637; cv=none; b=CzblEF81K1O9P2/yj/u4PU9uzdBfh4x38PTrbr3z8Tm6uUqhkU3GNu/PnBYFgHOnfSKj47MzPmGG8h3/Wb4oW69Q7O6O/AJJVE7unI7CevXGoQiVbGB0fyINvNnK9SV9TmTRJ73gVwrO2Rkq0TrNdk2eMCt3LOYfrvTNnZDDhZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788922507; c=relaxed/simple;
-	bh=ILlGEZWS4zWhWLicBHsWUrwrSlTUZxVI5xN7x10oX4g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSN0GpBDIyHPjEix4dKHrxdidOhZiSLgD+v4Xdefj51iUx/x1VL8o+2B57Hmx8LHZ+xjoEt85501Q9RLwPSD7027/C49XMsqMlX/FEZ8OZzGe49Kz8Qg/oXP9EqQBjM2ytcQHet0VVJWyvwFYF5udrdbKqAbqOxsQybJP0pq+rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eXMEf3La; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1788922637; c=relaxed/simple;
+	bh=SDIsZtWXAlpFzILuh4rrvFEddSS0AaxR+df4jaCKOdk=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fcoA7u+HY0lz9K6YxXs8GuaynHicUdHPLX/3lowwAW8ojkYLBNMGN6opo/i2cdThxZZBWBkUnzKyHM7Iv5YF+FSNc/wvKmuksRqaVl2sxA37B576IqYwNn3UPiNpzrLcmBloau+/8kOHPffWYwqDHlcwmDNWbFVQMn8xtdjg1zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=vvTWOtbG; arc=none smtp.client-ip=162.62.57.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eXMEf3La"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788922503; x=1820458503;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=ILlGEZWS4zWhWLicBHsWUrwrSlTUZxVI5xN7x10oX4g=;
-  b=eXMEf3Lak3RNO7YQu6/JGVEDeHduXa2PlQWfKxEy8Hkzzg1H9NsomDPU
-   soGpaNI0aiVjb02RJjK4i1LJoJGLLRdswNsktEKgsmN9tBFBCGqqRfZ/A
-   Cg1WwJ0I2PpxkCTLTzfYSiUxDDuFUujUDzz1h27anKtvMcXcZ/KZVgglD
-   FhxwB+54Nzy/y5EVha+frkZHFWKsnZfYagg1Sj7Q1UXi6O0LQFt36y58M
-   nhKdUAClHO7r1SxVeY3zirTy3vD7l4g8kdTlx24eatUi641yYzR62bVLa
-   u4mU2s4kBPYV27tO5b88ulQcVYt+iX24+HAhtVqfoT9apc7dWUkClRZv4
-   A==;
-X-CSE-ConnectionGUID: HPS8ptC3QNiiUVWNA1lZBQ==
-X-CSE-MsgGUID: MXQxmVqCQfioeNawOY9Aow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89369052"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="89369052"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 19:55:01 -0700
-X-CSE-ConnectionGUID: EgQXaGZrTJaDYzGs48x3cQ==
-X-CSE-MsgGUID: cVocuo3RTqCSeKui2fER+g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="275317418"
-Received: from linux-pnp-gnr-1.sh.intel.com ([10.239.83.186])
-  by orviesa005.jf.intel.com with ESMTP; 08 Sep 2026 19:54:59 -0700
-From: Jiebin Sun <jiebin.sun@intel.com>
-To: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiebin Sun <jiebin.sun@intel.com>,
-	sashiko-reviews@lists.linux.dev,
-	linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 4/4] perf tests c2c: Add function view stdio coverage
-Date: Wed,  9 Sep 2026 11:01:52 +0800
-Message-ID: <20260909030156.1771188-1-jiebin.sun@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <aqB8eNXwAvKoiMMR@x2>
-References: <cover.1787283281.git.jiebin.sun@intel.com> <9bd7a313c9c1d71058e857c320c6d5c30cf4cbfa.1787283281.git.jiebin.sun@intel.com> <20260821055803.74B191F00A3A@smtp.kernel.org> <aqB8eNXwAvKoiMMR@x2>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="vvTWOtbG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1788922621; bh=SK7Zy5Qw4XjZBwFeGJmEvTkajeIHlycVZ7XHhHgKjkc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=vvTWOtbGW/fW+KLXmE0LjWqvD9ayDJXQmt8kbvM2o8O7CE6sIlIDbj80VGtHDExln
+	 qp1/bfLRlgNj3sbemBRDyf0XM8h/IiL28q6wlj1c9OCJ9pGwQhXWv0JVxyBpmiW2s0
+	 Ivg7gVsjh9P6DwGtN87Z5WCIlPLrZ1id9KwqYrH0=
+Received: from DESKTOP-AT5F202.localdomain ([183.242.132.32])
+	by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+	id E3A2C828; Wed, 09 Sep 2026 10:56:58 +0800
+X-QQ-mid: xmsmtpt1788922618teyvk177w
+Message-ID: <tencent_6DA35D78D35066882AE3C8AA6949D04B5606@qq.com>
+X-QQ-XMAILINFO: Mp62enUr7azuBx5JDR3/T7eP5y2rnbrQUHhVzvBJGKvkeaILWzRGgBwVPWaDiB
+	 ClAwTcKI1QJvtuZRag91Seo73QWsdQ2ejFg2zpvrq5msrVUwlEimoMdtMlyc3B3+5kitsvb5VBMF
+	 efgJ7PSq5M4+693Qz4g6n/Tl/udj5m0aM8atVtm6xqHS/necDq4uiAeTgDiK0GZgPXBTpAr0RsNg
+	 0pUBDxRh91ee/TMUzRQhtiNfM54WN/nx78excxik3WT/qdu3djIvkvvyKxAhsQBBjgazRK7/Rrcl
+	 5CESox7C79yprGpql7IBhz3GWj1/M9wKWH571/8xk+L7KYJFlBmFujV4L3mOS8WQJ1yoNbbCQGOi
+	 JWZ0bsUcELIs4Csn7huxHojcyx9WWoGF4J3A/8PPYMPydtknSlxpBEQpj0+2ced6rL9R16JT1Jl/
+	 UmA5/1utb4hfcBq/lJmIuGlF8cch0kbTTLJjNcjmBPHhNlSLgIJzkTnXHEcraLZr6O772udemyfc
+	 gC8ICqQZAgfI3B7VmMhdPb80ofSJOajkfGjZAnez4kENqbR8RfjzgN7sTqN0a/BylvAxnxAYNt4F
+	 3VetPalwNgm6eNt63XF+24HpH2NFuDJ1F+79x+gXiux1Njc5Bjc2z8xiJz19D8oX9ZUQiG2HQVMk
+	 2EAMW8ISQByJYFlvBvKmH42IfzdAIImLGUMQ5Vj6epVc/VM7raK/PQnPvrezLuKMJybqvBL9OTR1
+	 KfWEoJ0fHriOfCqfa1Uo4TQQl3oj2CYp3mjyW6ir+CoGEK2Q4hsCYO2N0uGZC/Kusr5zr0W8UsVj
+	 kNJEUzok1Md8cNiC89eVAFCfOv9Vb3dWQUUAuLaY3EhF3yIhIugdGPFKjSIroNt0A5CnOIXY4bqj
+	 5uj7jY/7VUMNaMpwXw22AVhKcr5VaEccQr6rGzljxjz4eR6FNxwRsIwGWJG8luousQcEOCrf512M
+	 xv/wUT5IfuR8YOKCGKGMDlcwivZDKUGKQvb31ti6BRxhpctlyrY7GAKBIr/MLstnN+VApF+RxAdm
+	 OkXR/34kbvFBypCZdc05DceyCOvJvSh2Gi//bRiWFTTp/f98V7OfzX3bm1Pw3Q11lnmoDPwA==
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+Date: Wed, 9 Sep 2026 10:56:57 +0800
+From: shuo chen <1289151713@qq.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
+Subject: Re: [PATCH] ext4:Fix the initial value of not_found in
+ ext4_destroy_inline_data_nolock
+X-OQ-MSGID: <aqDK-T5tyQOQ77kL@DESKTOP-AT5F202.localdomain>
+References: <tencent_CD1AF9C3A7875C42F2187B57D74A1C5EE609@qq.com>
+ <20260909012443.0E7A01F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260909012443.0E7A01F00A3A@smtp.kernel.org>
 
-Hi Arnaldo,
+On Wed, Sep 09, 2026 at 01:24:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] The patch initializes `is.s.not_found` to `-ENODATA` but fails to check this value before unconditionally deleting the inline data xattr, leading to a catastrophic size_t underflow and KASAN out-of-bounds write (kernel panic).
+> --
+> 
+> commit af434a75deba4ee29e45b41767340323974fc530
+> Author: shuo chen <1289151713@qq.com>
+> 
+> ext4:Fix the initial value of not_found in ext4_destroy_inline_data_nolock
+> 
+> If a file has EXT4_INODE_INLINE_DATA set but lacks the EXT4_STATE_XATTR
+> flag, ext4_xattr_ibody_find() will exit early without modifying
+> is.s.not_found. This may cause ext4_xattr_ibody_set() to behave
+> incorrectly.
+> 
+> > diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+> > index caa51473207d7..4f02e7e9f5a30 100644
+> > --- a/fs/ext4/inline.c
+> > +++ b/fs/ext4/inline.c
+> > @@ -405,7 +405,7 @@ static int ext4_destroy_inline_data_nolock(handle_t *handle,
+> >  {
+> >  	struct ext4_inode_info *ei = EXT4_I(inode);
+> >  	struct ext4_xattr_ibody_find is = {
+> > -		.s = { .not_found = 0, },
+> > +		.s = { .not_found = -ENODATA, },
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this patch fully resolve the problem?
+> 
+> While is.s.not_found is now correctly initialized to -ENODATA,
+> ext4_destroy_inline_data_nolock() still unconditionally calls
+> ext4_xattr_ibody_inline_set() without checking if is.s.not_found indicates
+> the attribute is missing.
+> 
+> When ext4_xattr_ibody_find() returns 0 and leaves not_found as -ENODATA,
+> this leads to a deletion operation (i.value == NULL) in
+> ext4_xattr_set_entry() on a non-existent entry.
+> 
+> Because the deletion path in ext4_xattr_set_entry() ignores s->not_found:
+> 
+> fs/ext4/xattr.c:ext4_xattr_set_entry() {
+> 	...
+> 	if (!i->value) {
+> 		/* Remove old name. */
+> 		size_t size = EXT4_XATTR_LEN(name_len);
+> 
+> 		last = ENTRY((void *)last - size);
+> 		memmove(here, (void *)here + size,
+> 			(void *)last - (void *)here + sizeof(__u32));
+> 		memset(last, 0, size);
+> 	}
+> 	...
+> }
+> 
+> Executing this when the entry doesn't exist causes an integer underflow in the
+> memmove() length parameter, which leads to an out-of-bounds write and kernel
+> panic.
+> 
+> Should ext4_destroy_inline_data_nolock() explicitly check is.s.not_found
+> and skip ext4_xattr_ibody_inline_set() when it is -ENODATA?
+Got it. I will add checks and  send v2.
+> 
+> >  	};
+> >  	struct ext4_xattr_info i = {
+> >  		.name_index = EXT4_XATTR_INDEX_SYSTEM,
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/tencent_CD1AF9C3A7875C42F2187B57D74A1C5EE609@qq.com?part=1
 
-Thanks for checking this.
-
-Patch 2/4 covers this case:
-
-  perf tests c2c: Report skip when the workload fails
-
-It sets err=2 before returning when the workload fails, while patch 4 calls
-test_c2c_function_report() only when err remains 0.
-
-I also verified this by forcing the workload command to fail. The script
-printed the skip message, did not run the function test, and exited with
-status 2, which the perf test harness treats as a skip.
-
-So I don't think any change is needed here.
-
-Thanks,
-Jiebin
