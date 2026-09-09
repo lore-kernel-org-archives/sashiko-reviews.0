@@ -1,152 +1,106 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E941B42086A
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 20:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA913C5DA6;
+	Wed,  9 Sep 2026 20:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788985220; cv=none; b=vB85SyZWcpKOvpKgrda1b0CYS159sbLHwemVgvH+YPuXGdkBxaDcdHqp0vKZa0q7We6EAvn7ePkj6fLPoaRZSilzVfI9FmAhbXY/5EIsGwbDYfkywkk+lqXsKV0rWT5FdYVbpRw6vZtlZP83KXMNXnRks6wUzmp4FKG7RBzgFrk=
+	t=1788985336; cv=none; b=US7Yb9MHwPTC796EEQ6OdUAA3Sn6W2qnxqKODRmDcF+kS9tndQ0uc48HmRgmv3mdPMheuoQ9BtXKrEh9flhFlmIdLD+s7KfjSioAxYZS63DPEU7vjTbBH13xYSgFHc522VeE1fe4RxtEVdZWY33Pmqi2WPgqjvtFRtu+NCPx4kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788985220; c=relaxed/simple;
-	bh=9jw50TickrTaZQXgt5lOY+a4WpEkiifrBIEHCEFDnmM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EFzDK2Tw9VbBxpO3f8uPSW6DrNSNG7czMtm87FSBwHmu/e4nDvDVIcXny9+uwxA+lxzX0+yD/My9iUqCw/5xGwNfSfrHOyEzRc0g/eqeuj+5FXBNCjDIDYpHlhegCfxMz1tumoamXf5l9A7eCSAE3LAxR61jBTnBAYYq2le7cRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QkSZ2wyK; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788985336; c=relaxed/simple;
+	bh=5MFsnNsghcZNkKF6FTeNb1hgCDrTiB1FUTpRFYAZwno=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Kcnw0ETxB/1dLlSISYnGEIHav2EKC/dVJlYrWqpRUA2Kcd7RIQyHLkbk7JIDTY6NlWA1mK5PuBpBSp1NFp5UAa10MXU0Y07u7M4cIYMXHUi6xJUuc8PKiqsaAJj8cxnMiQVnm7SeiZbK7V1ug36PbVH3KlJT+QoSeb+frsN4C0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6yQDY07; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QkSZ2wyK"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-866e57f63a3so74641387b3.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 13:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788985213; x=1789590013; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=N8UCfmj+BAmm+9KzmB0PX4qemdmhN7ZLk+S/oBX8ZU0=;
-        b=QkSZ2wyKM/de54yhk4IDI76QZ+yAWf5Haje/qqlWeiVHYW2DAvODcmVtV6k5upNOM6
-         1IOw48GXASqdy1LpQiZnUI/sSg0/jEqBVwzhqA2Vmma7O6Zfppp+BP3Oh4FqEG356qb1
-         tbl5eWNfUdESp5Qsci3mtQGqv3FQrgu27MNCoYw9a6rZS78rBuyeOnfRPH22fd89vU3L
-         2AeQ+HXxRcEDPCjF1gRoiJHlcLhyx8Bf4vPy/9I7yspb9gB6ZRbZfNLrZMtfrCuEU8rK
-         dtygf1oWyDBu/pIWQMs0xDGYekebHUNFTnW9UWAweqtXzc7ASZ9KS9ysumNqPzmV0SGM
-         pq6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788985213; x=1789590013;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=N8UCfmj+BAmm+9KzmB0PX4qemdmhN7ZLk+S/oBX8ZU0=;
-        b=NIol+fBIS+wBxJQ1bX+KpAqBUxb1l06xQ/4S4zbau35GYFQye1RWy2n4QgjvkvKnwf
-         rlvgz42OrjiPmcHpLt7jEr9/0ECAYHXFS+HLTFo88cUcM+2yP7vAlhidtpfjuy90pwtx
-         7jxtsUEnW9DQ0n8CboBQ904mxGgiDmD79PuO7NgG+BQsjiF1ox5IMhpr/zg19n5iz50l
-         lYU5b3p61fxqbVP99BlKMjELO6DvPe4xXVZyJLI6WabOFo+bKZ0tam0N2apu/vXaKwp4
-         LDxzcVDYxnpNL+uHREgA7Kf/iuuQZpAomyp7UTIiGPTfuSke9wwBs9XDmP6iIg8XPYDA
-         vM4Q==
-X-Gm-Message-State: AFuF++lfNulTaOwlpjbSMP0uf+sfBAwviQb5aaGkFHttFMvtEWNp2K1d
-	xGv1Z0bLvb2zIX/2Ef7pUbkVfVTuQrJd84l83XoEetL6zwJX00b9r0S+RIpxvPRd
-X-Gm-Gg: AYBFou26Uy9dYxhWx9arWrHoTjSSFbR/+P58Uf05RqvniO6eBYCOAwGbi0/KuxTh4Rz
-	doV9H7r2rRA+AnQSYEmFftafF/JBxjtpIy6sQ+/Y2VCv+3dRGcxKZBhypR9XvuwqDMdEZAlRPrv
-	h//AOLl1ecPGIZVztPeifmMJsSxfi/0JzBV1eGBsmjrE9hZOssYC5Em2ob1uipLhlTVBhiAKYV7
-	1io0qTiVN7db2hSO4AwAD0CVQL/gY5O38tl6v6Nhul3ObvPoJd8VyaIyL1Y640UqO4CEFLQTbIP
-	Xn2ptoHnIWh7Rb7GpNn8Sg2qJBQ+L2ksa9T5Q0s6qEZxN+dWQZiwGETvjlvFQzPcQlE/5/3rx9L
-	ArrQ6xfwU2UzSLGC/9b7kMM/0YtljieLP5u1D3chAMgQnmBj8Dy5y3xTIlvjpYCwPl4KaOHbwxt
-	UcguVOEOxJDlu8jkS9QJToi05hQzEzlsLzVGPLsdyj5MZl5a0QeVQNWTWljjqtwduqoS+2aPxK6
-	XhKvJnzPCORc/Wwta7feoyvvzFpf9O5
-X-Received: by 2002:a05:690c:e1e:b0:873:5ddf:d87a with SMTP id 00721157ae682-8735ddfdbd2mr117164447b3.69.1788985213338;
-        Wed, 09 Sep 2026 13:20:13 -0700 (PDT)
-Received: from zenbox ([2600:1700:18fb:6011:bae:bfc2:7e96:e5c8])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8821dd9932csm2117017b3.4.2026.09.09.13.20.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 13:20:13 -0700 (PDT)
-Date: Wed, 9 Sep 2026 16:20:12 -0400
-From: Justin Suess <utilityemal77@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-security-module@vger.kernel.org
-Subject: Re: [PATCH bpf-next v3 07/15] lsm: Add the bpf_lsm_policy_apply_bprm
- kfunc
-Message-ID: <aqG7XUBqmUftjyyD@zenbox>
-References: <20260909193719.518517-1-utilityemal77@gmail.com>
- <20260909193719.518517-8-utilityemal77@gmail.com>
- <20260909195500.DA3E31F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6yQDY07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABC71F00893;
+	Wed,  9 Sep 2026 20:22:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788985328;
+	bh=f/vJPlc8T6fJJB4nW5dL7YWbom6WiGDZ7/U7PJNU6os=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=Z6yQDY07n9vEwnxKgqEkA9aaWxrEXnMW6mowwzxEtFO5nukDdKwGHmLUT93jWvuTk
+	 qp6kvaMWMHznazv9n9Ze/UAX6rMEMsCxXtliQ+BfM/J7hZGFAQjyMmAhWqaoYxYxaR
+	 6VgViAzgzuQo9lI8giFGHudbmm5LmXbbnzEJzUKfVKvM2F8FpPr+iN13t4220OYn6i
+	 nbtLjIxcCd3zreHP8jFc5IWmEFm0JeIPxAm+AhVCCNyIEA2qABDwhOkUP6jxkzDMr0
+	 7pcrFj7lefn6OO42HY7DlHtQEOMKM4YAOBOyyIcSEQqC7oCqGsclodGWGQM+FBL2GP
+	 kBS+PrqYhlaYA==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 1B2F1198003A;
+	Wed,  9 Sep 2026 16:22:05 -0400 (EDT)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Wed, 09 Sep 2026 16:22:05 -0400
+X-ME-Sender: <xms:6r-handXz_o_C5DukWnEOfr4NLQn7c61KNre1FdUV0-TlZfBGhG9lg>
+    <xme:6r-haoD7H8K6PlEE6wyLuwHbjFmQRgdO0R46IZOUCp-UUXMp3R6i54OrAxl_lriYU
+    nbdfiLWg8PbYTmaQkiy9miT2q5r227w8ICANPKka4bFXNziY8boCOU>
+X-ME-Proxy-Cause: dmFkZTGOPtYz0YGef1KbspNp4wTPdGdk1T/H9qyyC2M/T06oJAVCV4BqA2OF/poQX871Yt
+    rk5p+hkaLTG4dMeFglwUkLNSxt+mUz9o0Ng0nlkD8CaDrF03PFrN572A1KJi6IpaQ3K5Cc
+    kJ0QAMtHkUz73asFAT0vYmeWZI2AMRi+55uTCOzPNIbdUShXXNPe4zAwxvl2Hiw7KHTC7u
+    vtBXDEs+zLHFPqZcnLz5Poo7kKx8eGHXSq0NkOHrzIbr6S4NbNMRIReJL5e4gCF9DM8OMC
+    CuTPI4Kc8oiHl9F/Aklk2oddw6LJOSIz0J5VUwKZSs97CZQi/t5ENn2m6o/PCUdSEHvxtz
+    b7KyWErK9fVop7OSL4coHmMjTr74TaqnqmYzGPdYEFfxDsZUbp/IR3O2OG3Y8+sXufCn3y
+    qfxMEZOLhvcmGBegrfv7nuTItkaVdX66Knrypo7JQMGtRu52GQqSeRlfpV94wEKTBY3KNd
+    xMeHtPdnwe58UkfH08GxhAlK6wo3jcPQlYGROQ0tRIx8KS7yLfeI9jOT6zeUUSK2D3Tysb
+    ujIyyY5iJjmRIBU+G0/rqFUmu2bg/gBZG0QwYkQQHaPKxB4RllUroB6kWU+MMdInTGIRbN
+    DLpdo2cCfbeQNA1vDTWyYRuKEtShuQ+Xt16kOmEyxXfDdv/0zAARwxXguaFw
+X-ME-Proxy: <xmx:7b-hao98DweUafzIKUW1PqUMQJbMtYex6kRnS13CmfzvX6-bBx0wuQ>
+    <xmx:7b-hatBM1m69H0ALdWWObIttuSMLllpPTiPC18GS4B8qhD_QamccWw>
+    <xmx:7b-havo296ND2cVaHy9kOISLZieXsWZW_5kNv1o9iRXIT_Dtt9hx_g>
+    <xmx:7b-halnDY6-h-CEgypR5Y3zZ6iS1CZqy2MQRzxMVsJFkLs6rvQsLKA>
+    <xmx:7b-haiW_6VXvtdc_Xg46AkkjNR10hmYi6kiNEVBYFEmgGPZsy8vCJQ0R>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 7CDA632A007B; Wed,  9 Sep 2026 16:22:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260909195500.DA3E31F000FF@smtp.kernel.org>
+X-ThreadId: AmJ_Nx877FLk
+Date: Wed, 09 Sep 2026 22:21:19 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, linux-hwmon@vger.kernel.org, media-ci@linuxtv.org,
+ "Rob Herring" <robh@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ linux-leds@vger.kernel.org,
+ "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
+ devicetree@vger.kernel.org, "Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
+ dri-devel@lists.freedesktop.org, linux-watchdog@vger.kernel.org,
+ linux-rtc@vger.kernel.org, linux-input@vger.kernel.org,
+ "Lee Jones" <lee@kernel.org>
+Message-Id: <ef6f3053-3455-449e-9e25-f35ebef63598@app.fastmail.com>
+In-Reply-To: <20260909133709.139231F00A3A@smtp.kernel.org>
+References: <20260909132153.1596191-1-arnd@kernel.org>
+ <20260909132153.1596191-6-arnd@kernel.org>
+ <20260909133709.139231F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH 05/14] mfd: remove unused adp5520 driver
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 09, 2026 at 07:55:00PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The attach-point authorization boundary for `bpf_lsm_policy_apply_bprm` can be bypassed using BPF tail calls.
-> --
-> 
-> commit 7b53e20161b20c35fb85beb1fba538fe85514074
-> Author: Justin Suess <utilityemal77@gmail.com>
-> Date:   Wed Sep 9 19:37:10 2026 +0000
-> 
->     lsm: Add the bpf_lsm_policy_apply_bprm kfunc
->     
-> This commit introduces the bpf_lsm_policy_apply_bprm kfunc, allowing sleepable
-> LSM BPF programs to restrict credentials prepared in a linux_binprm. It
-> restricts this kfunc to specific execution hooks (bprm_creds_for_exec and
-> bprm_creds_from_file) to prevent policies from being applied at unsafe points.
-> 
-> > diff --git a/security/bpf_lsm_kfuncs.c b/security/bpf_lsm_kfuncs.c
-> > index 43a4bf57fd31e..857e9a316d1cc 100644
-> > --- a/security/bpf_lsm_kfuncs.c
-> > +++ b/security/bpf_lsm_kfuncs.c
-> 
-> [ ... ]
-> 
-> > @@ -141,11 +202,18 @@ static int bpf_lsm_policy_kfunc_filter(const struct bpf_prog *prog,
-> >  
-> >  	switch (prog->type) {
-> >  	case BPF_PROG_TYPE_SYSCALL:
-> > +		if (kfunc_id == bpf_lsm_policy_apply_bprm_ids[0])
-> > +			return -EACCES;
-> >  		return 0;
-> >  	case BPF_PROG_TYPE_LSM:
-> >  		if (kfunc_id == bpf_lsm_policy_from_fd_ids[0])
-> >  			return -EACCES;
-> >  
-> > +		if (kfunc_id == bpf_lsm_policy_apply_bprm_ids[0] &&
-> > +		    !btf_id_set_contains(&bpf_lsm_policy_bprm_hooks,
-> > +					 prog->aux->attach_btf_id))
-> > +			return -EACCES;
-> 
-> [Severity: High]
-> Can the attach-point authorization boundary be bypassed using BPF tail calls?
-> 
-> This verification-time check inspects the initial program's attach point,
-> but does it account for runtime context switches via tail calls?
-> 
-> For example, if a privileged user loads Program A attached to
-> bprm_creds_for_exec that calls bpf_lsm_policy_apply_bprm(), it passes this
-> filter and can be inserted into a PROG_ARRAY map.
-> 
-> If they then load Program B attached to bprm_check_security and perform a
-> bpf_tail_call() into Program A, the tail call is permitted because both
-> hooks share identical BTF function prototypes (int (struct linux_binprm *)).
-> 
-> Does this allow bpf_lsm_policy_apply_bprm() to be executed at
-> bprm_check_security, creating a TOCTOU vulnerability since the execution
-> can still be rewritten by an interpreter?
+On Wed, Sep 9, 2026, at 15:37, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Should the corresponding block for the _dim attributes also be removed?
 >
-Yes you can do this, but no it's not a vulnerability. No incorrect state
-would be created here (in bprm_check_security, creds are still
-uncommitted), so there's no issue in actually just letting a user apply
-their policy there...
+> Further down in this file, under the documentation for the _dim attributes,
+> there is another block describing the sysfs nodes for the ADP5520 driver:
+>
+> 		For ADP5520 and ADP5501, <ambient light zone> can be:
+>
+> 		===========  ================================================
+> 		Ambient      sysfs entry
+> 		light zone
+> 		===========  ================================================
+> 		daylight     /sys/class/backlight/<backlight>/daylight_dim
+> 		office       /sys/class/backlight/<backlight>/office_dim
+> 		dark         /sys/class/backlight/<backlight>/dark_dim
+> 		===========  ================================================
+>
+> Leaving this block behind orphans the documentation for hardware that is no
+> longer supported.
 
-I'll probably just add bprm_check_security to the allowed hook list.
-> > +
-> >  		return 0;
-> >  	default:
-> >  		return -EACCES;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260909193719.518517-1-utilityemal77@gmail.com?part=7
+Fixed now.
+
+       Arnd
