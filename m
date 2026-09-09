@@ -1,60 +1,36 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-244.mta0.migadu.com [91.218.175.244])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2285F207A32;
-	Wed,  9 Sep 2026 16:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512E85650EE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 16:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788972567; cv=none; b=ZSKqf4n2OFN9URX5514FOVYWZD9EOpAtVYvmpSplee9RFt9reRgkQ8N+vXFcWlwYuzwRRY4X8x2tv1gdDMIViqOPZXMVI8MZ+YCI+f3dAxkh8fAQpEtUsn8uRLlv1q0VcTHyuNbEKAXCQeKgELflFzYRLQzFTDz2Jerh9RCBl/k=
+	t=1788972664; cv=none; b=sGF6wIfd44d3prYjxm9mY675KOMDnMeL3advACV4zc3F0l1KAzbog6dPfzEkG7gskg1G+XJ+1MOgfzTu3/Iwgbim+llisTlD+o587ebQw+Uube508YKcJ3HHypdYkGBBBfmM31AfrGs208c0pR2CwDQttaHbHn+zjgw5iF31qKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788972567; c=relaxed/simple;
-	bh=wHS+DG2q0m0gDSc/jjOXNji8R2RTctlJvzIPABeCid0=;
+	s=arc-20240116; t=1788972664; c=relaxed/simple;
+	bh=xvg6jrua7YcjYhIBB+96DhfCUDRF5hIYwrUoSW1oPhU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pieYf3PvYYGC53FAowwfrSmEUAcHslOnpeBItsZWIPx8UVur2A1+kSXX8g++g18ECvUgL3JwQJ6QozahSdzCTJ8yYMvpnGfUMzid52RnW6J/x0G+5JRmnM57qDDzW09L703M3LhfoeJF0BvB+8lw+GSsYP8I52vOMjIoS2ilT74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qfY4o1I2; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=cGzGtEqL7MuHMhlRg7v1UuE5lyG6FlzXHheYh2wxxyf23iyp0vxFvzpkE4+8sUaFEYAGWD71Q9csYVO63BFWiMYocAO+5f7ZbLjrY0kReLJZddTZ3qjHV58fJ4jNNOh0knOnUttAdgm/e6dAHODW/lRcxuVo667B5N/QrTwnxII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=h53qANUs; arc=none smtp.client-ip=91.218.175.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qfY4o1I2"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689B1krs1931243;
-	Wed, 9 Sep 2026 16:49:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=t+lBvG
-	3w1dnU5gTGvWUdH/EvDR2+eYWX1cNOOC2zw58=; b=qfY4o1I22G4gxO8kMO1BRy
-	5HgDIE01yhaQtSiWl748tf3pCPGT06/oEkE5WAoBDKcMQ1s3Ekcgxhu81emaAPZr
-	ONsLnjXsHSJWp03QII5hjVKUkqD4DE8NvGycLVO988ake+ObkhIyrKIY2relBG4a
-	lD/R22S3CxLlkB9q1eJkeqdNcwazF6AhRCBbOn3LSWqS7+I5G/MMeBB3tQvFowXx
-	RcMiHpEO5buDyFboxd4azPGd4x9d83XoLUlJ80mHAnaNuSdUvXiTxiKhYd7p/Hj0
-	kLQiLVyzLt0aAyh2DImTBKtxUWVXNf1U/q+OiSw4bsfwptdrxOaXZipu//q2pvCw
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbqk762c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Sep 2026 16:49:25 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 689GfEdR009087;
-	Wed, 9 Sep 2026 16:49:24 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggxdk3djc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Sep 2026 16:49:23 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 689GnLV428639502
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 9 Sep 2026 16:49:21 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 024862004B;
-	Wed,  9 Sep 2026 16:49:21 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CBC4320040;
-	Wed,  9 Sep 2026 16:49:19 +0000 (GMT)
-Received: from [9.124.210.73] (unknown [9.124.210.73])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  9 Sep 2026 16:49:19 +0000 (GMT)
-Message-ID: <dcf010e4-c4f1-4d49-9c31-bea6baba1c41@linux.ibm.com>
-Date: Wed, 9 Sep 2026 22:19:18 +0530
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="h53qANUs"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=xvg6jrua7YcjYhIBB+96DhfCUDRF5hIYwrUoSW1oPhU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788972658; v=1; x=1789577458;
+ b=h53qANUsV1oweNrHwc1zS18jnVKo4i1R9dpbhZKpuU9goQYlT1F2MnX4lqxkKcyxTJcrVa17
+ Z9DseHEoZS0CVNjr6qP4bg1+DPe/u1fR7aS4A2SJg83QfUjFe1odoyfrTLL7Y8Vut/3Bda3WCq7
+ x3ly0OcMIqr2/KCq5dGiYod0=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b25dfbf4724f5286;
+	Wed, 09 Sep 2026 16:50:58 +0000
+X-Mizu-Trace-ID: b25dfbf4724f5286
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b905f76e-471a-4626-93bb-c3bbdae86849@linux.dev>
+Date: Wed, 9 Sep 2026 22:20:53 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,117 +38,100 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 06/13] sched/core: Try to use a preferred CPU in
- is_cpu_allowed
+Subject: Re: [RFC bpf-next 6/6] selftests/bpf: cover 32-bit sign-extension
+ low-32 links
 To: sashiko-reviews@lists.linux.dev
-Cc: virtualization@lists.linux.dev, Eugenio Perez <eperezma@redhat.com>,
-        "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260909135617.871006-1-sshegde@linux.ibm.com>
- <20260909135617.871006-7-sshegde@linux.ibm.com>
- <20260909141814.BAF841F00A3E@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260814231945.3884596-1-vineet.gupta@linux.dev>
+ <20260814231945.3884596-7-vineet.gupta@linux.dev>
+ <20260814232719.064EC1F000E9@smtp.kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
 Content-Language: en-US
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
-In-Reply-To: <20260909141814.BAF841F00A3E@smtp.kernel.org>
+In-Reply-To: <20260814232719.064EC1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: qsB5BoRrAB9TSdCh_ptB7bN9WUc-KmIU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE4NCBTYWx0ZWRfX5QscqTwqhaGj
- 6scmtetK/4fPzbLZ8DouiuGALJBljMzyrzrNBE83oU92HajxfikyrEelB6NE0mMONxHiBmRXBK+
- ubZeXLkP89blmMSk0frALRuh3ownRkw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE4NCBTYWx0ZWRfX+XhMESDX6ItI
- TDXs2dWTkY4p3CGRBy9gRuJdK/bCuBzbBExYM8i7/G0TEbL1+jH2Jv/8/EQpCBCsO3RRl3yctUg
- ifZEQ8SNdnbhtK8nLIzTxfiJkMMXYe6t04vcTKGHSRQlQHPa2yOqUpjX7f5Y1uXi4YrLCXjI1Bu
- euTRlYWk5JilBiXsLHS4QLg3uWKqcSccJ1ZszZStYRHlFygXG0xpLOBzN7Qo26lqq7hNFrvnlTY
- doOMzJsZM3BI2KN+wzwWYFWL4dqhjyb8rFyIo6+crOXHErw2AWGdnmHHpuJaRHSFAIqO+d6FJOZ
- T9m6K0IlfRgiM7z4GH01s3qNohUSjpqae50FsAdl3zn9WmLrtyZi1+lG945SYR5bcrcckP4e7LB
- DyGMdZmstFa2yFJowgl+5cwKSFOrCKVRK6fnxVvp6NqEwJ76BwpjMonbiqje1qECVg8znQvU7Io
- IuehhAfdD7FbowjHjeA==
-X-Authority-Analysis: v=2.4 cv=JaKMa0KV c=1 sm=1 tr=0 ts=6aa18e15 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=aB60JJqhC16U7aw51h8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: qsB5BoRrAB9TSdCh_ptB7bN9WUc-KmIU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090184
 
 
 
-On 9/9/26 7:48 PM, sashiko-bot@kernel.org wrote:
+On 8/15/26 4:57 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Wakeup path funneling to lowest-ID preferred CPU bypassing CFS load balancing
+> - [Medium] The failure tests `sext_dest_driven_does_not_narrow_base` and `zext_dest_driven_does_not_narrow_base` contain backwards branch conditions, making them unconditionally pass regardless of whether the verifier bug is present.
 > --
-> 
-> commit 2b5645419bf5356450334e7129102cfed3b5f5bf
-> Author: Shrikanth Hegde <sshegde@linux.ibm.com>
-> 
-> sched/core: Try to use a preferred CPU in is_cpu_allowed
-> 
-> When possible, try to choose a preferred CPU to maintain user affinities
-> when preferred CPUs change. Update is_cpu_allowed() to ensure wakeups
-> happen on preferred CPUs.
-> 
->> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
->> index a689a0cea4ebe..b4ef2e92d786b 100644
->> --- a/kernel/sched/core.c
->> +++ b/kernel/sched/core.c
+>
+> --- Patch [6]: [RFC bpf-next 6/6] selftests/bpf: cover 32-bit sign-extension low-32 links ---
+> commit f8b3195655d59866de20fa031cd9d9e1bbfbde94
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+> Subject: selftests/bpf: cover 32-bit sign-extension low-32 links
+>
+> This commit adds selftests for the BPF_FLAG_SUBREG_SEXT link in the BPF
+> verifier. The tests verify various sign-extension behaviors, including
+> deduction through links, zero-extension interaction, and in-loop behavior.
+>
+>> diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> index 2cc6f9e45aff3..ff71e168d4cc4 100644
+>> --- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> +++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
 > [ ... ]
->> @@ -2519,8 +2536,12 @@ static inline bool is_cpu_allowed(struct task_struct *p, int cpu)
->>   		return cpu_online(cpu);
+>
+>> @@ -826,4 +826,416 @@ l_out_%=:							\
+>>   	: __clobber_all);
+>>   }
 >>   
->>   	/* Non kernel threads are not allowed during either online or offline. */
->> -	if (!(p->flags & PF_KTHREAD))
->> +	if (!(p->flags & PF_KTHREAD)) {
->> +		/* Try to use preferred CPU if task's affinity allows */
->> +		if (task_can_sched_on_preferred(cpu, p))
->> +			return false;
-> 
-> [Severity: High]
-> Does returning false here for non-preferred CPUs cause FAIR wakeups to funnel
-> into a single CPU and bypass CFS load balancing?
-> 
-> When a FAIR task wakes up, select_task_rq_fair() and select_idle_sibling()
-> search for an idle CPU. Because select_idle_sibling() remains unaware of
-> cpu_preferred_mask, it can actively select an idle non-preferred CPU.
-> 
-> When this selected CPU is checked after the scheduler class's placement
-> decision, is_cpu_allowed() will now hard-reject it. This forces
-> select_task_rq() into the slow path:
-> 
->      cpu = p->sched_class->select_task_rq(p, task_cpu(p), wake_flags);
->      if (unlikely(!is_cpu_allowed(p, cpu)))
->          cpu = select_fallback_rq(task_cpu(p), p);
-> 
-> Because select_fallback_rq() sequentially searches the mask:
-> 
->      for_each_cpu(dest_cpu, nodemask) {
->          if (is_cpu_allowed(p, dest_cpu))
->              return dest_cpu;
->      }
-> 
-> Will this cause waking tasks to be dumped repeatedly onto the lowest-ID
-> preferred CPU, creating massive runqueue hotspots?
-> 
+> [ ... ]
+>
+>> +SEC("socket")
+>> +__failure __msg("div by zero")
+>> +__flag(BPF_F_TEST_STATE_FREQ)
+>> +__naked void sext_dest_driven_does_not_narrow_base(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;		/* r6 low = unknown u32 */	\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;		/* r6 = full 64-bit unknown (base) */ \
+>> +	r7 = (s32)r6;		/* low-32 SEXT link */		\
+>> +	if r7 != 0 goto l_out_%=;/* r7 == 0: low 32 bits are 0 */ \
+>> +	if r6 != 0 goto l_out_%=;/* r6 may still have high bits set */ \
+>> +	r0 /= 0;		/* must stay reachable */	\
+>> +l_out_%=:							\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+> [Severity: Medium]
+> Are these branch conditions backward for a __failure test that expects a
+> "div by zero" rejection?
+>
+> Since the test expects the division to be reachable for rejection, if the
+> buggy verifier deduces r6 == 0, "if r6 != 0 goto l_out_%=" will evaluate as
+> false and fall through to the division by zero, causing a rejection and
+> making the test pass.
+>
+> If the verifier is correct, the fall-through is also reachable, causing a
+> rejection and passing the test.
+>
+> Does this mean the test passes unconditionally regardless of whether the
+> verifier bug is present, causing a regression in test coverage?
 
-This is expected by design and existing load balancer will spread the task out
-post the wakeup among preferred CPUs.
+You are right, it seems to be the case.
 
-Since effectively workload has lesser CPUs compared to original, preferred CPUs
-can be overloaded with more than one task per rq. That's also expected by design.
+> Should this check instead be "if r6 == 0 goto l_out_%="? This way, if the
+> verifier makes the buggy deduction that r6 == 0, it takes the branch and
+> the div becomes unreachable, allowing the verifier to accept the program and
+> fail the test as intended.
+>
+> It looks like the identical condition also exists in the pre-existing
+> zext_dest_driven_does_not_narrow_base() test just above this:
+>
+> 	w7 = w6;		/* low-32 ZEXT link */		\
+> 	if r7 != 0 goto l_out_%=;/* r7 == 0: low 32 bits are 0 */ \
+> 	if r6 != 0 goto l_out_%=;/* r6 may still have high bits set */ \
+> 	r0 /= 0;		/* must stay reachable */	\
 
-I don't see it as major concern.
+Yes the 2 tests are rewritten with a guard that is only taken in buggy path.
 
->>   		return cpu_active(cpu);
->> +	}
->>   
->>   	/* KTHREAD_IS_PER_CPU is always allowed. */
->>   	if (kthread_is_per_cpu(p))
-> 
-
+Thx,
+-Vineet
