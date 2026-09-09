@@ -1,181 +1,140 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8493876A1
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 17:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788975550; cv=pass; b=Rn2/8/je1LlbPTkr79SzP9vYIlSwqtk5R7Ff7F2GtvN/ZT13oXFMSN71wPRqbqBHzZn1CHVxD2iENfW/fEu7J9MPDqu5sAR8hmz5Uf9xRrFHwrBDhXWgLqkH7RcJBsBMfvpaNrlWyf9ZHqCUl9fV+ky8RAV3QHB9gzpxtMHjy3M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788975550; c=relaxed/simple;
-	bh=A+l2uOZiE885Clf82D9m4D6h5QCktWdZ0NdknyEO3+0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=MRxUz0fzsP0q6ixpfbqo36hoUx6EaWr3yCO4E7LwLdS2HvjVlV5cmvJMvkUHtRXONtu4z1xUxFri3zTDqOYpgPYd4QqX9hLMD+2iyJ90qPeLyOK99hyTvutW8NEj+7XAAplp1FthFIQWvSbqAlgSgwesJYpj2ZkGr4Ei+rvIvzw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qkhzlQzp; arc=pass smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B8037DABC
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 17:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788975863; cv=none; b=s/H1UG4+T+MKico2kbPKxrIBqt8gSreI1WYLTEXL/6kAUOFn4Oq+orBbvnYxjLUJBa17489Q47Uz7smFzX0oJrPjaoaV5KGwlv3a2pivJqgJBQO5sIbMk+ERQ5WIbIX7lx4uNNrR62a7AGzMCIEC9waT75PBvXEyRH+WKA2rWJA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788975863; c=relaxed/simple;
+	bh=BBPSyJ7/hKXWiuHVdl/yyotbkQPjOBm7iSx2qGqswU4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=JXHv+f+l2cZ2Yrx4i5ZSuGiSUpSLuuyHuuXifj22ebZHIEei87f8DB9rGMPuMNl9NGUdvbmYvisWjZxABB0WyvzmRwPAnckCAmcq9cwTBvkRqxVaeaamnmpchjZ7/OQUP98FH9U+UVGuhX3+TuHlykjYqug5lwo8EhIC3vaHzAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UduXZFYS; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qkhzlQzp"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2db425c9050so173355ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 10:39:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788975548; cv=none;
-        d=google.com; s=arc-20260327;
-        b=nLft+2vNS0Q5YHL/k9opkLvRP9Xr6dq3/a7vm7sNQvpMB246bsRbE9M0GbzsOkF6pr
-         ZLmoCtttpPviygrftKcli2qh6WcWsQgL9dFWMv9MEReTMJ0U45OxN5VBx/JWlNNFw3xK
-         GeJZLCpW7A2/P0ljfF2lQeylBzr0vL+svd2HavBpY5QjA2l49Rzw+J1X7vK1O//58ZEP
-         LNo4eFbdKBVYMKCzE4TmDvrPeor1G76Pfvf4xo2zQ+nJfHp3a8rG+/SCqcX4THuVjfyY
-         cZot3wCE+gWfipuyFRicSrB/wroNRSbwRRmJJ/AKn0FXzAmve9gCWaAjUcSlG7l8xb5H
-         Q/Kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xqefN0TJHS4Mu2A0Sq3q9XaWe1ustzTMoTSehI/18YQ=;
-        fh=P1Wteq84dTttNuKjmsOBuSleXWFl3xfz2JiEH5ZaCxk=;
-        b=GGq1NyRbQ8qRSkxia7tTVFKm0zgZk3kwMIk1Kudb7D28nqSD/O07VQmFvX2owfgnMh
-         JYoDHWbK8He+bXIEwQzicNgfZuRKNb+HtX8WGAz96K1ibdhcfnlNr+mP/i1MEoWxv++a
-         5y++lbROy7tw2xBufPN8/A1n5gQcfLc0jS6ozj8iAPdspx+tHg1sINLFg9Ab9UZAUG3y
-         ytaEcKATUdJyrUlsT8hjmWVtiyt3sx7uAJ/Jhr96U6uk+QckfbsW+T1H83HmEnEqNfWW
-         uJmRkAYPIZMf68TEVfYOdsVgZQk9PWeDuBUyKz0sMmSs7DJyxq5Pc1Mr16H/TIgjRDP5
-         rhig==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UduXZFYS"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-49ccfbe062eso60447165e9.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 10:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788975548; x=1789580348; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xqefN0TJHS4Mu2A0Sq3q9XaWe1ustzTMoTSehI/18YQ=;
-        b=qkhzlQzpf+ecnbTTGJSng7UlZQlfIc2Mk/dt/gsTnxDm/Bn033Zbx16OyUeG4BF1Ak
-         goOI1uEFrsHx+sKkwqfs/4OFDlfb/gCIHfSQjlqmf42E7H7/RbsZHX76a2W7MwUuTLhC
-         agSQ7O1l0cBjtr8N4eWJx2C7zGaAnvZyeYb8zHwx0/8K885zfs2fJn7VnKg2FoESBOeb
-         UGZHLhOW6MJUzoTauNljvJs+IdtomLbW12hjO5CyHkzr7QmWW4zAmmDeawXRr/lhzfVe
-         7aP1P/o0rZtOrys9BzEaGL2k3ZXNYKQbw8e2JWdkXR95ywznxVeB2FTmQLVN7xTqsg5l
-         cBSw==
+        d=gmail.com; s=20251104; t=1788975860; x=1789580660; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=eIx/jY7x22dvjb/1ZwlMJ+Vl85YQ/K+5ndS2MKjSdMc=;
+        b=UduXZFYSmUahhseO1TdKOHHXKiFgRhi67VOcZrgyjU3WGYzKfY2IOAbVr3VIeY/xm/
+         7S2Yzmehwh3rXK+3V8AajqovKAD/sCD6lQh3OKrPKTI+wV+aobS1YsqW0tMOKkfuwSeB
+         TUfx805FZE3/xctFV2+3heGO8hXsVu9l8dDyjoWnYIHb2t+SjAXREsQfGuqhK4PXKQV3
+         txNHcnCeyciMCHyiolRWfiOQmhxk3u6MrN0tl647Jv4qTCQGOK8jriTNRPGhH4Mo+vJr
+         F+xmFEHEWKvSGngPof81DmwNlLqeE5+yH2x8mz7tX6bAfR5UT4r6Vea7ioFwEWcT6vAK
+         CMiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788975548; x=1789580348;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xqefN0TJHS4Mu2A0Sq3q9XaWe1ustzTMoTSehI/18YQ=;
-        b=VqzImjRfu3Ww273dteSdxmi9D1MK3bRJKyy4OadO61r8/KvQU2whZF6z5Z98pl7OvM
-         ClkOuv7Z4rJoCk1OCeVj0hbwnIRoSBQO82xuZlwMTivhsmt/X4/2nQQD76E/MXMthcTj
-         5MsWEYQOv0KVYSeH/+4xmB+t6MRZqmxFRrfblEZLiTjnB6bcS9hm081ikh2o9I7193X+
-         motBEYh2D13Q2i+y3NNsPkmduKdN4opQ1QCHrTGAb8mcz3tmv0GoJ15f1JBYtVfewK/Q
-         ey7qdihdxnD2j8uSGRlw0xjGEXqFnLUxseiJiXFWZv9lBLtERZULxYm4+uJMHmU+N3BO
-         By3Q==
-X-Gm-Message-State: AFuF++lHw3deeyip3eW0nrJcDwxN+5mB6wnKCjG3o1U51QnbeE8baIvt
-	KpQ1xPbH9OKLZheX0teHn16VMXVyRKty2/IoSYExlCqBW7njVJQe+ngtFmKb/VXmWoFpIVbHM/b
-	Gp+N4d7bOULoz/Coqca1fA/pOG2ZlsjFeFUXGejqxwWwavlwrrKnBXiY1dYY=
-X-Gm-Gg: AYBFou3Dp3f03zi8OWVYIeILRIIrsk7D+/0mB1GJwHA99VjPfVIvcAVyjcjIVefkzOh
-	en7/7dsmsUOxPHPElE94tqva/XZquXlhHgxAyYq5o5Ck+9kLlPRNpD30QRNIddwR4i/0Go/6/c1
-	W/hmKISZljZMpX4v1zVMGJ5rIe2a7+ZHWuc5PtycbdwzokpMtGV9lksNgXqLTz6DvuQx75D7OoW
-	rqZxaHNpnzBa6TmswFymsbdQEYeWrp/Pnrj+zh7Ofso87MSwaP0Qk1rUW85waJOpaFuqG/66Rkr
-	BJeKD6jQIOwcLZJmEJhxpq9vXcIuHFE0kAhU3CLMPQCRkW/sc8pBDAjqyf5lvXQcjY5bcVqp+H1
-	D/dmusc4sGA==
-X-Received: by 2002:a17:903:1b70:b0:2c6:99be:9dd with SMTP id
- d9443c01a7336-2dbddbd688amr10170995ad.12.1788975547398; Wed, 09 Sep 2026
- 10:39:07 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1788975860; x=1789580660;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=eIx/jY7x22dvjb/1ZwlMJ+Vl85YQ/K+5ndS2MKjSdMc=;
+        b=Y8O3aqM1NJvt0BvcPGXN7SsThPwFC2RhIdpsMmZFe9tZ1VWeAl+tnrjs0rRsidL4wy
+         WX81Fv+g9wlyqbBN39k+SUxvzdNyHw0OC6T/TCTRrD7lqO6Y5QjPfK3EOhcBhzLCkz4u
+         +P6j+9z4v/HtwAmM9DRwcnfqvnCYhFR90k5XW2dantUaBrDWkF9LnlcqwwN8qZr/voTK
+         L5esHxYbANhE5j8f9tu8zBDOhFPZhbW4VnGT1Ukpl5Jbs+k6uyPtCTpLdFRiZltJUjEe
+         6fppLTuQv6dF4BVOgZFLDkvQr3d/wzryeRVlpcoxL5oFmYz970QTh9T9jfP/FJ9MHyFc
+         kMnQ==
+X-Gm-Message-State: AFuF++nhOmTBqApTP+WMadtwz2VJqecsoEr5+EJyO9PLNjbLquRhPI1O
+	AIzWplACghasjnTlgnWSK3SJHc7kwGW74rCxfvpUc5gac0l5TEoVo6YPEmt17lSi
+X-Gm-Gg: AYBFou33WvUGIu1JCRtXK86qkiFFfsN4ZDvQNOid9e71JcschTrKzDLrWn9VguPfRRA
+	sw1hiEtZJV7QiOQoMpxehMMK37vXfeM1Wxsjk3fpTyFQdlzXLMXAlzWIH/xD2mQ0p8yhtYQ1sL7
+	kh45RQ/Px4SebPC9WeVUwKGYOvHKITUPhOVQ1lfKI0xgv1zFHMLc78pUoRx8+vCnVmqFsHA4VXo
+	nUTD0KzSIIOkIgdbJkG0Bk+WcjpuzFVBdr1n1MpoBAs0nFg4S9ZG3IgmDel1gWPmCRYf5hu6vVJ
+	HbrtK+F2Nhi2evB2TCd3k5VottlsDZ537s10w3M4nlVighxIv6E7+ULO9r6rMnygjjIIhUzbW+9
+	a2JCVIRjttrd0mM9czzFiS2QMAxdY41mctt2M6ksmERrjH419Ob02RfPVWcTJenmT42olz5GTU2
+	CgelKRbWyoCNAKhmXB6w+ZYadDaVEQtWROXV7AN4Oj9QhQhO2zZC+D3PDKpanWxPCBCW65cAI1/
+	TGFFUToY3MMR0SwvFZbUk6BpKQshO6HjlsxJHDSrLlsVpV19KR7KEa1cA==
+X-Received: by 2002:a05:600c:4e8f:b0:49c:fa20:cbfc with SMTP id 5b1f17b1804b1-49cfa20cd1fmr333869075e9.19.1788975859551;
+        Wed, 09 Sep 2026 10:44:19 -0700 (PDT)
+Received: from localhost (89-74-4-99.dynamic.play.pl. [89.74.4.99])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26be649asm6608365e9.5.2026.09.09.10.44.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Sep 2026 10:44:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260903045603.3611902-1-irogers@google.com> <20260909161041.1745638-1-irogers@google.com>
- <20260909162119.3C3B51F000FF@smtp.kernel.org>
-In-Reply-To: <20260909162119.3C3B51F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Wed, 9 Sep 2026 10:38:54 -0700
-X-Gm-Features: AcwNN1VtpUq2iwGbfwZhfTfb7fEQ3-fUN2GBSLGLAPrq-5DAFa1B67Ny4mHwpMU
-Message-ID: <CAP-5=fXUU266PHEhYJDXRJZv_XkGiRvGTR94fR+QEzFVKs=neg@mail.gmail.com>
-Subject: Re: [PATCH v3] perf tests: Improvements to build-test performance
-To: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 09 Sep 2026 19:44:18 +0200
+Message-Id: <DLAZ0JNOMKUB.3CMZBD3WTR5NG@gmail.com>
+Cc: <conor+dt@kernel.org>, <devicetree@vger.kernel.org>, <robh@kernel.org>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: sm8350-sony-xperia-sagami: enable
+ UFS
+From: "Jan Paszkowski" <jan.m.paszkowski@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Jan Paszkowski"
+ <jan.m.paszkowski@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260909172421.33593-1-jan.m.paszkowski@gmail.com>
+ <20260909172421.33593-2-jan.m.paszkowski@gmail.com>
+ <20260909173032.240941F000FF@smtp.kernel.org>
+In-Reply-To: <20260909173032.240941F000FF@smtp.kernel.org>
 
-On Wed, Sep 9, 2026 at 9:21=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
+On Wed Sep 9, 2026 at 7:30 PM CEST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The parallelization of the `out` target causes destructive rac=
-es between `FEATURES_DUMP_FILE` and `FEATURES_DUMP_FILE_STATIC` within the =
-shared source tree.
+> - [High] Duplicate Device Tree property `vcc-max-microamp` overwrites the=
+ intended value and leaves `vccq-max-microamp` unconfigured.
 > --
 >
-> commit 8a5611d5732e412e746570eca199bea2894c319b
-> Author: Ian Rogers <irogers@google.com>
+> commit c3bcdc386d74df860f7d4d12d1aed983ad46ea5d
+> Author: Jan Paszkowski <jan.m.paszkowski@gmail.com>
 >
-> perf tests: Improvements to build-test performance
+> arm64: dts: qcom: sm8350-sony-xperia-sagami: enable UFS
 >
-> This patch replaces hardcoded 'make' calls with '$(MAKE)' in the perf tes=
-ts
-> Makefile to ensure proper GNU Make jobserver file descriptor inheritance.=
- It
-> also removes 'unexport MAKEFLAGS' in favor of native GNU Make conditional=
-s
-> for parallelism. Finally, it optimizes the 'out' target by wrapping the t=
-arget
-> list in a parallel sub-make call.
+> This commit enables UFS on the sm8350-sony-xperia-sagami device, noting
+> that previous device-killing bugs seem to be resolved.
 >
-> > diff --git a/tools/perf/tests/make b/tools/perf/tests/make
-> > index d2c2f526e1db0..4a865e58f2bea 100644
-> > --- a/tools/perf/tests/make
-> > +++ b/tools/perf/tests/make
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/a=
+rch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> index 4b62ee50da7be..969c8cb31df9f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> @@ -893,9 +893,20 @@ sdc2_card_det_sleep: sd-card-det-sleep-state {
+>
 > [ ... ]
-> > @@ -383,20 +391,22 @@ all: $(run) $(run_O) tarpkg make_kernelsrc make_k=
-ernelsrc_tools
-> >       @echo OK
-> >       @rm -f $(FEATURES_DUMP_FILE) $(FEATURES_DUMP_FILE_STATIC)
-> >
-> > -out: $(run_O)
-> > +out:
-> > +     $(call clean)
-> > +     @$(MAKE) -f tests/make $(run_O) PARALLEL_OPT=3D O_CLEAN=3D0 $(if =
-$(findstring jobserver,$(MAKEFLAGS))$(findstring -j,$(MAKEFLAGS)),,$(if $(c=
-ores),-j$(cores)))
 >
-> [Severity: Medium]
-> When the out target invokes this parallel sub-make for all run_O targets,=
- does
-> this expose the feature dump dependencies to concurrent evaluation?
+>> -/* BIG WARNING! DO NOT TOUCH UFS, YOUR DEVICE WILL DIE! */
+>> -&ufs_mem_hc { status =3D "disabled"; };
+>> -&ufs_mem_phy { status =3D "disabled"; };
+>> +&ufs_mem_hc {
+>> +	status =3D "okay";
+>> +	reset-gpios =3D <&tlmm 203 GPIO_ACTIVE_LOW>;
+>> +	vcc-supply =3D <&pm8350_l7>;
+>> +	vcc-max-microamp =3D <800000>;
+>> +	vccq-supply =3D <&pm8350_l9>;
+>> +	vcc-max-microamp =3D <900000>;
 >
-> >       @echo OK
-> >       @rm -f $(FEATURES_DUMP_FILE) $(FEATURES_DUMP_FILE_STATIC)
-> >
-> >  ifeq ($(REUSE_FEATURES_DUMP),1)
-> >  $(FEATURES_DUMP_FILE):
-> >       $(call clean)
-> > -     @cmd=3D"cd $(PERF) && make FEATURE_DUMP_COPY=3D$@ $(O_OPT) featur=
-e-dump"; \
-> > +     @cmd=3D"cd $(PERF) && $(MAKE) FEATURE_DUMP_COPY=3D$@ $(O_OPT) fea=
-ture-dump"; \
-> >       echo "- $@: $$cmd" && echo $$cmd && \
-> >       ( eval $$cmd ) > /dev/null 2>&1
-> >
-> >  $(FEATURES_DUMP_FILE_STATIC):
-> >       $(call clean)
-> > -     @cmd=3D"cd $(PERF) && make FEATURE_DUMP_COPY=3D$@ $(O_OPT) LDFLAG=
-S=3D'-static' feature-dump"; \
-> > +     @cmd=3D"cd $(PERF) && $(MAKE) FEATURE_DUMP_COPY=3D$@ $(O_OPT) LDF=
-LAGS=3D'-static' feature-dump"; \
+> [Severity: High]
+> Does this mistakenly define vcc-max-microamp twice instead of configuring
+> vccq-max-microamp for the pm8350_l9 supply?
 >
-> [Severity: Medium]
-> Will these feature dump recipes race destructively?
+> Because the property name is duplicated, the device tree compiler will
+> overwrite the initial 800,000 uA value with 900,000 uA, leaving the vccq
+> regulator without its intended maximum microamp constraint.=20
 >
-> Since some run_O targets like make_static_O depend on
-> FEATURES_DUMP_FILE_STATIC while others depend on FEATURES_DUMP_FILE,
-> evaluating them concurrently means both unconditionally invoke make clean=
- and
-> make feature-dump inside the shared source tree.
+> Given the history of UFS hardware issues mentioned in the commit message,
+> could this unconfigured vccq regulator lead to system instability, boot
+> failures, or hardware damage?
 >
-> Could this cause them to wipe out each other's intermediate artifacts dur=
-ing
-> make build-test out-of-tree builds?
+Yes, this is a typo in the sent patch. The patch I tested had
+vccq-max-microamp here. Sorry for that.
+>> +};
+>> +
+>> +&ufs_mem_phy {
+>> +	status =3D "okay";
+>> +	vdda-phy-supply =3D <&pm8350_l5>;
+>> +	vdda-pll-supply =3D <&pm8350_l6>;
+>> +};
 
-As make_static isn't part of the "run" variable set of tests it won't
-be part of run_O created by the foreach loop. make_static is only ever
-run sequentially and so there can't be concurrent evaluation of
-FEATURES_DUMP_FILE_STATIC.
-
-Thanks,
-Ian
