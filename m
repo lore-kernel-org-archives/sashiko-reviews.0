@@ -1,115 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9019569F16;
-	Wed,  9 Sep 2026 15:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9053ED15
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 15:38:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788966194; cv=none; b=E4tt3BWSR8m3+pMGtPUiCXjKXE5wfL2TwelS75V/iqrAwkCOcg0ZdOwnMCZvlwo7oeLrSWCXcW38Nhk7psWIOQ2WQ9UasZ+qPqvzRx8bMtQlbyFr0yYsk5syJzLtJrdK57Bo12pawgMryjtCwY953SmeV2dBtkX3sJO2OUbi5mY=
+	t=1788968308; cv=none; b=pGNb+wmSILIFJrmsYH5YRSWqaCOBJPEQ9jiG5j0x/bHOhi4OA1ARmNLMYi3Nk10ZddTi1mBtyaq7yMbjgosyL1saenXv6oLQs4ykGaO/mYHuX5nTg9X0+HFDOHuquCkT9rIU0rOyKojvAwvjDyvtHtbKCBwyzsVQ2zorw4IWNT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788966194; c=relaxed/simple;
-	bh=NMutSb+iwDJQDQRxg5cP+VTbUgw3SkTxILY+H17fnK8=;
+	s=arc-20240116; t=1788968308; c=relaxed/simple;
+	bh=rTjQD0AWXvJKBlAO6G8aQGljW+/ivZFhpjJrPWqIlqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G9VFfbIfvthes1qzu7rPGNunMImegKMeGcWHOuNbFIMQi0TlRBOGEbwYEHJdFNZMlJ5/U5wtyr5d2WwMXLU5hm5y2N37bn+rAjQOsqgZgHkwHw8+XHMiEDOV59u/3nEsclFtD40j9rvW87zAcBgk+bxvui9xfgQL0F5t1MiYKpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXPScXqU; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=SO3FMBD8aUlUippOpqUQjoumRTw1f83AB+4wBGYAKeCMmHzl/4p5iWKQ5ithpPkis5E6GlNEDwDLrXW0yScDYw1t+HZbY/4Khx8vESj9opLirv7sjFKRU7JoUud9NtkXNKRuTtQu8YsxSlmwcl1XcJbWuOBLnFWU+VYA9nILDPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jQRvUREd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DXZ0e42k; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXPScXqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596311F00A3D;
-	Wed,  9 Sep 2026 15:03:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788966193;
-	bh=ktgcUm+rCSbnlLVJ1OjKCjvpcn2qgXbLO5ZNOO8wOts=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RXPScXqUxbTvQGmbvANMhPXNKqKEHHR2NuQD1qazMUE0tBmA+9mNG7o05mfoAEVIJ
-	 GJwrrhjozIY2fbq9VHaAOArCai96wWNI6GENkBjYvexKprOaef739pnpewyt81nMjM
-	 IppFyw1bUX0i7Q1Fa0H+KKC4GXtDTb4s9uVnyK07dRwsqws47xlHD7My1Oc4/eAxO9
-	 4v6VwGokhbXoPvo2qOONlhUwx9f6RYCdGpxWgDnxHsKd7xB1R1oSgagcCDz0snBuNO
-	 nvK3C5ma/6ufSgL2A42yPF44i1Ba16KNgN8VeFHXyBuuBT6UqOXUExiAD1L1iJmA8/
-	 RHCvOOQl2qISw==
-Date: Wed, 9 Sep 2026 11:03:11 -0400
-From: Namhyung Kim <namhyung@kernel.org>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jQRvUREd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DXZ0e42k"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689BUISA2171994
+	for <sashiko-reviews@lists.linux.dev>; Wed, 9 Sep 2026 15:38:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=AIrVvX335LUhs5A+Yn7aX2BB
+	Y+6j0On/IVOblwEFVk4=; b=jQRvUREdk1xS2Lx4iYJfUiiZn/b0gjtXmFZErRNs
+	4TwmeHc58s67Q7do9hwxyDMvcuSNiprHsf556ELDPnKSqHPQzheHWV2UXrlMCMkd
+	7CGva87UV5fPGO+64vSFrBeeVwK9aN6sVD1IKOo4xyA1ZyFpo7G/j06S2X+nL9Cu
+	EFcJfuiRVBtmxjwdZm/eJha4k7RIZwY8e5eT7j96oiSt4R601+iUaXjkrQeQrQ02
+	UI8MvvE5joFfMyIvmakT7LHoHWu09Lnu7xIQonf5V7Il8n5j+dBnnSu6TkX0oX2I
+	Au1GoU25EYBTxOWtoBYYMHx4SIcR0+5XGinX4Yyy3Nwspg==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gk5rgh8xc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 15:38:25 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-7909e307799so169409137.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 08:38:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1788968305; x=1789573105; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=AIrVvX335LUhs5A+Yn7aX2BBY+6j0On/IVOblwEFVk4=;
+        b=DXZ0e42k8IM1EqvrGXAavB9znYkqAtHGG43ifW2zB7G6Dpd4dzDJZi2kQtb0KpVbgv
+         edAnvHOOMtJ+oBv0qTIC3T+z0lDi7tiKh4q70bVj6zsUv48PZHN1X5kxoMwsELDutUzG
+         M5pKE+ZAMTu4/+U28aD4TiZmzCuWSF9u2JwCJ2bWGgmeeyM9ihZ9eAVoqDpcWTJfN7W/
+         bpDFwW6uBKokhfZNEZtshmSmguL5FtUSKP78dpdUiUHxM4M5ZPwLrcrunbLXnGRoqCLx
+         tty9p2oV0UaitrjcaF2qVykksiXn+iSvQMVYSYi3qnIeROiKnjGVJMmP3NuyGj86jwAG
+         TEhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788968305; x=1789573105;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AIrVvX335LUhs5A+Yn7aX2BBY+6j0On/IVOblwEFVk4=;
+        b=gPLhXP/KMfsoeEx6fKMjtvclUMVBRqh3yCWHkO/i6V9dM4Rc2XPMJFz7hxVLF4ySdz
+         b264bdm67/XD2xbuCNZWc8RcYcbSk1RdrZvHtS8XoU7ON/BbnMCuBKKn5QT879+G2pKM
+         EeicVtJndEZR6MNDWUHlkTk03x9q6rQxtvc8A0ifmv5MsUeeXlq3OM5/9g2t4lLEO+LG
+         VYihDWtYaBCAZxl3h9KKwiDG3C3qWg9Z9e5Qi6CdS7nvTqdatx8/V/zPoxwY6ViVjVv6
+         1IQ/riZ30wXGzxSykHvwMxTVJjOV7JxAvsR7hKEm/5Q6+BYPkwVmaIWF/EqLatvIJOfg
+         Qwwg==
+X-Gm-Message-State: AFuF++kVRK2HGnq6IDizg/h2cEcaz1X9D+c4GBZWQqvHSlfBP3Q38CMs
+	Zaq7PCUw96VOMvG6vwr28Wa7FMIg81MqLt3ipdg80fEt0cUrOTFXGAn0stOwyLhkuC9ZgeOnsil
+	bIvNF/Aukbcy8ZA8fWgc31C4t5UdBUYE3biht07Zzx0bt+e5eF6x3fd9eDjEATLVyEQGuStBSAr
+	3NKiU=
+X-Gm-Gg: AYBFou2yO6n7RN1Z4VG48uDE+UIaoYxpk601CEXHg1ikO9LVOkqWNGZNMmgboVRFoxR
+	kBms/eUMNmnVakcniQAtKgLG0x6dZSbq3NucQgNITfqXdLXwFH2F4HpNiwonxv2D6RcoklMuWr6
+	hixT5cBtili6yse6Iyb/c/vq4NlkWWMscDp1zfvKWKRk4I6CMVHABLf+dTtX4FyQHKU26FIYLme
+	UML/lgyBGMXud4YGZwZR6WYs90LpL3EWUQUHsD7xkimu7nMETCfJ86F0p3wzbZdEssIPJMTyvRg
+	aQ3Qy5USIlNKJFbFuplcaL1OlQpRquFVqA6ZGdHUPR9tXQs+z2QA+Ewar+QY1YjARQJsUY6mnNd
+	rK4TUdbF+MAnjJA==
+X-Received: by 2002:a05:6102:80a3:b0:77d:9fe9:1716 with SMTP id ada2fe7eead31-78a4a6e83e9mr21279496137.2.1788968304774;
+        Wed, 09 Sep 2026 08:38:24 -0700 (PDT)
+X-Received: by 2002:a05:6102:80a3:b0:77d:9fe9:1716 with SMTP id ada2fe7eead31-78a4a6e83e9mr21279354137.2.1788968301950;
+        Wed, 09 Sep 2026 08:38:21 -0700 (PDT)
+Received: from localhost ([188.216.77.92])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d1fd532dcsm61690985e9.1.2026.09.09.08.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2026 08:38:21 -0700 (PDT)
+Date: Wed, 9 Sep 2026 17:38:20 +0200
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Tengda Wu <wutengda@huaweicloud.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v5 07/26] perf dwarf-regs: Adapt get_dwarf_regnum() for
- arm64
-Message-ID: <aqF1L7CC5nMMPGZu@google.com>
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <61714d93cd55cd461d5c37146713ddb9e1d04743.1788872630.git.wutengda@huaweicloud.com>
- <20260908132152.08A131F00AC4@smtp.kernel.org>
+Cc: linux-pci@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+        conor+dt@kernel.org
+Subject: Re: [PATCH v5 1/5] dt-bindings: PCI: toshiba,tc9563: Document
+ embedded GPIO controller
+Message-ID: <aqF9bHTBBMmRhmn9@lore-desk>
+References: <20260909-pci-tc9563-aux-v5-0-c9b33f56c8d3@oss.qualcomm.com>
+ <20260909-pci-tc9563-aux-v5-1-c9b33f56c8d3@oss.qualcomm.com>
+ <20260909150403.A5C511F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ekoMoU4jMT3u/jKP"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260908132152.08A131F00AC4@smtp.kernel.org>
+In-Reply-To: <20260909150403.A5C511F00A3A@smtp.kernel.org>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE3NCBTYWx0ZWRfX9GwoBFIzlk7q
+ SkOS5WkM3gnhPa6JzmOLOL6C9zIL4a1T/cG+5FLD3a0xLVti7NbHwOf+pkII3Hwb24NG6IFr46g
+ yHnSH+qIwk1rsa1DX1rZv2M3mhpXSQI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE3NCBTYWx0ZWRfX9dTVGM6x7VJf
+ 439uuxNrp/rsfw2pJJA0Wn/1CGO4YQD6CaGm03MECtfYEnwg0vLfoA6BrO8PNejGVJOiCLjHgE3
+ vQwuAjiBDmctKca8d8NZkvfO8TBHRnLGzj339md9bIyKTqkOeT/MFDwnURvqQ3t4FuTL88hk+Yr
+ dmTwac7qerwr7tlVP8YTn1O2SQEPPtHdVt6iG3PwZbW4ADcodWK6yJN8CMI72iuI+gRye79MB70
+ PNuw9SZ1abICXOW+d8cbJto0X7rqHHSw5yTRhNFCWOX4o5D/SEg54ed74TQfnTcmt4jJKdhTBqM
+ zqliI/x0OadY5hhxNsAB2dDy4MpCce9wcJtxsF/4+fzxtf4sC8khyEiItXN4Xlih8CNQixKsmG2
+ HHZObyC3F+dLS67k4eTGe0mrwCHTiPQry3aoa7BC17ouzcvyE3j3rkA8MBfA8CI8I/Gf68BR0Rt
+ uaqrZ74WaPosXM0MBVw==
+X-Authority-Analysis: v=2.4 cv=B6qJFutM c=1 sm=1 tr=0 ts=6aa17d71 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=WpTaRW6qxYHRGzLzQsVYzg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=UfEYJwnE5WuK08dpBrEA:9 a=wPNLvfGTeEIA:10
+ a=6NAFynQPVF88eBM1lewA:9 a=-aSRE8QhW-JAV6biHavz:22 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: hGZ56F1gLLVzjBbc5EQhC0rMkrKqCkv6
+X-Proofpoint-ORIG-GUID: hGZ56F1gLLVzjBbc5EQhC0rMkrKqCkv6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090174
 
-On Tue, Sep 08, 2026 at 01:21:51PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing 'lr' (link register) support in arm64 DWARF register programmatic lookup.
+--ekoMoU4jMT3u/jKP
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Missing Required Properties for new GPIO provider capabilities
 > --
-> 
-> commit 5d023c42589d9bd9061d9468194dc470f5cdc273
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf dwarf-regs: Adapt get_dwarf_regnum() for arm64
-> 
-> This commit replaces the static table lookup for arm64 DWARF registers with a
-> programmatic parser in __get_dwarf_regnum_arm64(). This allows resolving
-> arm64 register names directly into their corresponding DWARF register numbers
-> for perf annotate.
-> 
-> > diff --git a/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c b/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
-> > index 593ca7d4fccca..720c863d18696 100644
-> > --- a/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
-> > +++ b/tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c
-> 
-> [ ... ]
-> 
-> > @@ -10,3 +13,22 @@ int __get_dwarf_regnum_for_perf_regnum_arm64(int perf_regnum)
-> >  
-> >  	return perf_regnum;
-> >  }
+>=20
+> commit 384b355928f0212bcff0ab6c4447b15d28dc4109
+> Author: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+>=20
+> dt-bindings: PCI: toshiba,tc9563: Document embedded GPIO controller
+>=20
+> This commit documents the embedded GPIO controller within the TC9563 PCIe
+> switch. It exposes the controller by adding the gpio-controller and
+> #gpio-cells properties to the switch node, and updates the example to
+> demonstrate downstream ports utilizing these lines.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml =
+b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > index f084830c6d0cb..c4ebb99f50c37 100644
+> > --- a/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> > @@ -31,6 +31,11 @@ properties:
+> >      description:
+> >        GPIO controlling the RESX# pin.
+> > =20
+> > +  gpio-controller: true
 > > +
-> > +int __get_dwarf_regnum_arm64(const char *name)
-> > +{
-> > +	int reg;
+> > +  '#gpio-cells':
+> > +    const: 2
 > > +
-> > +	if (!strcmp(name, "sp"))
-> > +		return 31;
-> > +
-> > +	if (*name != 'x' && *name != 'w')
-> > +		return -ENOENT;
-> 
+> >    vdd18-supply: true
+> > =20
+> >    vdd09-supply: true
+>=20
 > [Severity: Medium]
-> Does this code inadvertently drop support for the link register ('lr')?
-> 
-> If perf annotate processes an instruction containing 'lr' (e.g.,
-> stp x29, lr, [sp, #-16]!), arch__dwarf_regnum() extracts "lr" and calls
-> this programmatic logic. Since "lr" does not start with 'x' or 'w' and is not
-> "sp", it will return -ENOENT. This seems like it will prevent data type
-> tracking for the link register, which was previously supported when mapping
-> to DWARF register 30.
+> Does this binding need to include the newly added GPIO provider capabilit=
+ies
+> in the required properties list?
 
-I think we agreed to ignore 'lr' for now.
+In order to introduce any ABI change, we decided to not define 'gpio-contro=
+ller'
+and '#gpio-cells' properties as required.
 
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Regards,
+Lorenzo
 
-Thanks,
-Namhyung
-> 
-> > +
-> > +	name++;
-> > +	if (!isdigit(*name))
-> > +		return -ENOENT;
-> > +
-> > +	reg = strtol(name, NULL, 10);
-> > +
-> > +	return reg >= 0 && reg <= 30 ? reg : -ENOENT;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1788872630.git.wutengda@huaweicloud.com?part=7
+>=20
+> When hardware gains new provider capabilities, the subsystem guidelines
+> stipulate that the corresponding standard properties (gpio-controller and
+> #gpio-cells) must be added to the required properties list.
+>=20
+> Looking at the required properties block further down in this file:
+>=20
+> Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml:
+> required:
+>   - resx-gpios
+>   - vdd18-supply
+>   - vdd09-supply
+>   - vddc-supply
+>   - vddio1-supply
+>   - vddio2-supply
+>   - vddio18-supply
+>   - i2c-parent
+>=20
+> If gpio-controller and #gpio-cells are omitted from this list, device tre=
+es
+> created with the pci1179,0623 compatible string but lacking these propert=
+ies
+> could silently pass dt_binding_check validation but fail at runtime when
+> dependent subsystems attempt to use the GPIO functionality.
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260909-pci-tc9563-=
+aux-v5-0-c9b33f56c8d3@oss.qualcomm.com?part=3D1
+
+--ekoMoU4jMT3u/jKP
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaqF9bAAKCRA6cBh0uS2t
+rAobAQCReUFtc/l5ysciS8O9zot3R4eXhbP7ioeZnrBFv/9JbAEApyvA9fzzEwQ4
+qK2BvU7gi3eJOwKs6zm0MmTSKXF2eAg=
+=OpeS
+-----END PGP SIGNATURE-----
+
+--ekoMoU4jMT3u/jKP--
