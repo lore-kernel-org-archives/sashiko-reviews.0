@@ -1,206 +1,113 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A65E3939BD
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 18:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92193BCD20
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 19:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788977105; cv=none; b=JNETO+EZ3OZBvMzgSMtg95Iq1rhuRaAmyWv5kpil546uQnoN1TEStHSjKlMzP93Xh3qinyz77A+bW7JU3LcJ96Os7yFB6USqz6p/+fwLT2Y02rQWAfO0IaPoEJTXUhp/a7gM8zWbzr3/MkIQwG8yemuM1NcaD5c1puO+qbYs2dQ=
+	t=1788983703; cv=none; b=ajnKWQLJS/onwUbY1mBL3XyXnh4OHfXU9v+BAOiOBBB1xRBcFxTgCxrR/1H3jhrYYALpc0rs2A3b8iQjohTRwG7PSWV6vfWOuDl72Vn5BPccphF3EPPqrlKCm5LfgwrdyC2Ry5AflEkJBjSBVUmvCg35W/YVHfripO3+t2pd1H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788977105; c=relaxed/simple;
-	bh=QG0AT3+mb6FrbZ9x9E6LCK3X/iginCERwfdb3AFxZtc=;
+	s=arc-20240116; t=1788983703; c=relaxed/simple;
+	bh=ZK33/yHp48iM7lECpAU+csFsVZ+moToWUoalJM0ECnA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f5p5QyxmUVWPWpcoBaBfaWSB1OXGcEUf95nNNc96VJJe2zkgLFVJmhAQjHHP/2qncNHXX4paFX/NSDUMyPCIXvaf70GPmqIgACbt/nxwMbZQcLITq1kuRWze/g70P1lVm44FtV/3w3EQLB1SB+qSnSl4P/Ammg644zA/F1NOXgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DSXbv79O; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=WNsk9hN5b0vYPdMX8FMXHBbNvMBR28SD55X3LDeJHRrZ80Z5kszNv2ZXtVFFHZjUHA2PetEppYLgu8EjprugYq64BIO0z3czZ9I2nNN+K/b/KMVZUqT2r2w4YH/WnkpPTYyTQo7lA6SH+0MGrYApAYW4c/qq9GpJVqdDtvhSxns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=CklZEBUY; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DSXbv79O"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so72160305e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 11:05:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788977102; x=1789581902; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/gxRIKfR1A0u5wLZR5CYHmnf41/Q9xKi2b6NUWXwby4=;
-        b=DSXbv79OoUJxTeRgYddw4CoMVUOXQF6KZ0l+jKzO5pNqDK9L5zLUAG1PKlxzOdPdEJ
-         v/SDaWA7v9Pu1zrE7nZvdzDwebx4fxP6gyXcsTtvbMnebKpVHy6ZhMAR2k3lhCF7lLso
-         Nt7xUAPnm2X1g432SFwUXqwdlDyBDBpDPG3FlFbAxQojietBxnMa8KaeHrEX8BumcLIU
-         +VqN+9KXoSmNV+EvZtyn00FxsWudty/3Ei0HAZROC+QR5bxYO5a/2aE0LWItpIQguyZ2
-         JW9t8tBlLUTDDa9no6Q8NmVg1/wyVuozz37v6v9bbbpS0wec27p+1FXuD9FtiKPuoMNe
-         oOQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788977102; x=1789581902;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=/gxRIKfR1A0u5wLZR5CYHmnf41/Q9xKi2b6NUWXwby4=;
-        b=U9h+XY1Oqq0cGhzH0KC5dwfHarzt1X+7ZpNrkcLX9iMAL2Fdyn6JQcOI2lmyisqttM
-         w6eFrrF8LmNrpq4/lR1WRPGEhBbqeUbAmtzLzXzzN5MyatxYUpAy7bEpZmrbCADOAkhB
-         nyWDgnJb+GmoPxqpYmVDDkD+55f9/rUGWQB4tkmlMU/MSDScjvfUwUO4od8nU7GGKgWY
-         UubBnUqXeQRQLO0NeYyLbdyDNxq6gqIx76KcKtfPILO8b8GOZ0ctnFQ9bL+RjF4qn2RX
-         UpLivNvRuiUW2RMfFtnc49xZRw4z1V92Nn5G7VPsuJPntcNyJTXvQH+X0LH7s7nfCcS1
-         tfuQ==
-X-Gm-Message-State: AFuF++nbNKMM7mhxZKtlRRiE2iuIRQ5EG/Rixn5WW2DCEaSVzIdP9rkK
-	TbX1Q9qpx1PbA2kNB7uXEktRQZ/Fn9gsipnkg10sAjhJZ0xe82hrrG9hlQfxLA==
-X-Gm-Gg: AYBFou3qTsiwpHPZbbjovf0rdBoV7ES/2clEF5oLunjuUo6aPLevm7Ro7zQLDHSH9po
-	BGS1czuk0UiHnWmRrApzWs5HJufv/yUbNgEUpOT1iW1B4/LHe+R3OCsE8H37NKABESVleCCCTCl
-	SWVw0EZqlRvd7NhymTrXV7ODW+nUcZVG4Gy2zzuwT7tiThYsLEKH7lvEcTztaMIpRbJlgPjno8c
-	p29gQeyTWTbXsJ2C1GdPSQDNEzmqHkACwHn6U5uspTZ+bX2TazfhG2+K+GQxtRmTWQVlLyKHHq8
-	/FoKlEjB+VXXSmEr84Gz87M+Mb/ITD8VK7cDAFnc5bJJ4xo/obLHOqDzkZRAWiKwhHK1BiX/NJp
-	BfIvhtMywFese9KW4DuLk7UvPAz/CLbd1AqRRU99DBy5gDPc3/jCEkMNdxg7Pgv8tsve2z4Oms6
-	vzxiSG9BrhO/pjvA/YDgbSj/vhR5Tg0FwtXuBKBvqWi0aZUJ4fGZ5VjSGjqpaDx2LnxiHFSQpd
-X-Received: by 2002:a05:600c:c173:b0:49c:cedc:3c36 with SMTP id 5b1f17b1804b1-49cf82a514cmr387988585e9.16.1788977102076;
-        Wed, 09 Sep 2026 11:05:02 -0700 (PDT)
-Received: from antoniarch ([37.163.183.38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26bc08edsm4882485e9.3.2026.09.09.11.05.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 11:05:01 -0700 (PDT)
-Date: Wed, 9 Sep 2026 20:03:14 +0200
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="CklZEBUY"
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4hgBNV6x4zzKv7l;
+	Wed, 09 Sep 2026 21:54:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1788983690;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cz5n9xm56pH+3MTfUinQ0zgEJd5ZV0cUn1UlSRbrZ5s=;
+	b=CklZEBUYHSHT7TF58KUoIt4EoZr7H7gpDXk/OqOZ8q2WIXpo8r+iI73AS4zALcf6g8mxD8
+	j0hG4l3m02nZAVgTsymeaSdPcKVXbazHP+Nc6SPxTNu1/RbYXDyjdtTkJdBNHV3/FjJpkz
+	aRZzAN+ce1nGONM7E92fTKmRv5NICAxkOtp4VwDjXhy+sKz/RAW70phX4SLyC0igedzaDk
+	zUxECqt+oVZG3MeCqHtNItEhQWI2sbQBzpGqzRDq1i1zptaMEJDgCgoCInhbs6DnX6Rwz1
+	OoNYyplRlsaqds5TsTKXtmtd+MDupHbLO1MFAgJPs2uhsJXosYVql5s15PZxdQ==
+Date: Wed, 9 Sep 2026 21:54:48 +0200
+From: Zakariya Hadrami <zkh@mailbox.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rtc@vger.kernel.org, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v6 7/9] rtc: abx80x: replace read-modify-write pattern
- with regmap helpers
-Message-ID: <aqGfFsFxy6LtKMjH@antoniarch>
-References: <20260907203216.53192-1-apokusinski01@gmail.com>
- <20260907203216.53192-8-apokusinski01@gmail.com>
- <20260907204635.27AB71F00A3D@smtp.kernel.org>
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] ARM: dts: mediatek: Add basic support for Amazon
+ ford board
+Message-ID: <aqGlQGRGgh-7Neo3Wl8J3d-zkh@mailbox.org>
+References: <20260908-mt8127-amazon-ford-basic-v3-0-fc46bf1b6cb2@mailbox.org>
+ <20260908-mt8127-amazon-ford-basic-v3-4-fc46bf1b6cb2@mailbox.org>
+ <20260908220731.0CF1E1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260907204635.27AB71F00A3D@smtp.kernel.org>
+In-Reply-To: <20260908220731.0CF1E1F00A3A@smtp.kernel.org>
+X-MBO-RS-ID: 094c5c28f34bfe6cbde
+X-MBO-RS-META: jkdhggqdx6tuda9dcd1rf9hururgwzk1
 
-On Mon, Sep 07, 2026 at 08:46:34PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Sep 08, 2026 at 10:07:30PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Refactoring to `regmap_write_bits()` and `regmap_update_bits()` breaks the hardware register unlock sequence by inserting an implicit I2C read transaction.
+> - [Low] Device Tree Compiler (DTC) warnings due to using a unit address without a 'reg' property in the simple-framebuffer node.
 > --
 > 
-> commit 46c86d8ff37edcfaf17e15de29d0c3426614da35
-> Author: Antoni Pokusinski <apokusinski01@gmail.com>
-> Date:   Mon Sep 7 20:32:14 2026 +0000
+> commit 03486b0d7f26e5bd328d2d2b8f2a803bdf72c6b4
+> Author: Zakariya Hadrami <zkh@mailbox.org>
 > 
->     rtc: abx80x: replace read-modify-write pattern with regmap helpers
->     
->     Before introducing the regmap usage in the driver, updating specific
->     bits of a register was performed using the read-modify-write pattern.
->     Now, the functions regmap_update_bits() and regmap_write_bits() can
->     be used to simplify the code.
+> ARM: dts: mediatek: Add basic support for Amazon ford board
 > 
-> > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-> > index 7b8e6546ccffc..b1d8d5a5ddcf0 100644
-> > --- a/drivers/rtc/rtc-abx80x.c
-> > +++ b/drivers/rtc/rtc-abx80x.c
+> This tablet uses a MediaTek MT8127 system-on-chip with 1GB of RAM.
+> It can currently boot into initramfs with a working UART and
+> Simple Framebuffer using already initialized panel by the bootloader.
+> 
+> > diff --git a/arch/arm/boot/dts/mediatek/mt8127-amazon-ford.dts b/arch/arm/boot/dts/mediatek/mt8127-amazon-ford.dts
+> > new file mode 100644
+> > index 0000000000000..21bdab0e43f88
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/mediatek/mt8127-amazon-ford.dts
+> 
 > [ ... ]
-> > @@ -405,13 +390,15 @@ static int abx80x_rtc_set_autocalibration(struct device *dev,
-> >  		flags |= (ABX8XX_OSC_ACAL_1024 | ABX8XX_OSC_ACAL_512);
-> >  	}
-> >  
-> > +	guard(mutex)(&priv->lock);
+> 
+> > +	chosen {
+> > +		stdout-path = "serial0:921600n8";
 > > +
-> >  	/* Unlock write access to Oscillator Control Register */
-> >  	if (abx80x_write_config_key(dev, ABX8XX_CFG_KEY_OSC) < 0)
-> >  		return -EIO;
-> >  
-> > -	retval = regmap_write(priv->regmap, ABX8XX_REG_OSC, flags);
-> > -
-> > -	return retval;
-> > +	return regmap_write_bits(priv->regmap, ABX8XX_REG_OSC,
-> > +				 ABX8XX_OSC_ACAL_1024 | ABX8XX_OSC_ACAL_512,
-> > +				 flags);
-> >  }
+> > +		framebuffer0: framebuffer@b7a00000 {
 > 
-> [Severity: High]
-> Does this implicit read within regmap_write_bits() reset the hardware unlock
-> key?
->
-No, because reads do not cause configuration key reset.
-Same thing for all the comments below. 
-> Because the driver does not use a regmap cache (REGCACHE_NONE), calling
-> regmap_write_bits() or regmap_update_bits() will perform an implicit I2C
-> read before the write. 
+> [Severity: Low]
+> Will this node name cause Device Tree Compiler warnings during make dtbs?
 > 
-> In abx80x_rtc_set_autocalibration(), any I2C transaction occurring after the
-> unlock key is written might reset the hardware protection state machine, causing
-> the subsequent write to fail.
+> Since the node is named with a unit address (@b7a00000) but only uses a
+> memory-region property without a corresponding reg property, it seems this
+> would trigger a unit_address_vs_reg warning.
 > 
-> [ ... ]
-> > @@ -488,24 +474,14 @@ static ssize_t oscillator_store(struct device *dev,
-> >  
-> >  	guard(mutex)(&priv->lock);
-> >  
-> >  	/* Unlock write access on Oscillator Control register */
-> >  	if (abx80x_write_config_key(dev->parent, ABX8XX_CFG_KEY_OSC) < 0)
-> >  		return -EIO;
-> >  
-> > -	retval = regmap_write(priv->regmap, ABX8XX_REG_OSC, flags);
-> > -	if (retval < 0) {
-> > +	retval = regmap_write_bits(priv->regmap, ABX8XX_REG_OSC, ABX8XX_OSC_OSEL,
-> > +				   rc_mode == 0 ? 0 : (ABX8XX_OSC_OSEL));
-> > +	if (retval < 0)
-> >  		dev_err(dev, "Failed to write Oscillator Control register\n");
-> >  
-> >  	return retval ? retval : count;
+> Additionally, it might trigger an avoid_default_addr_size warning because
+> its parent (chosen) lacks #address-cells and #size-cells.
 > 
-> [Severity: High]
-> Does this have the same issue with the implicit read voiding the unlock
-> sequence? 
+> Would it be better to omit the unit address here?
 > 
-> The sysfs update to ABX8XX_REG_OSC might silently fail here.
-> 
-> [ ... ]
-> > @@ -948,8 +891,14 @@ static int abx80x_probe(struct i2c_client *client)
-> >  		if (abx80x_write_config_key(&client->dev, ABX8XX_CFG_KEY_MISC) < 0)
-> >  			return -EIO;
-> >  
-> > -		err = regmap_write(regmap, ABX8XX_REG_OUT_CTRL,
-> > -				   data | ABX8XX_OUT_CTRL_EXDS);
-> > +		/*
-> > +		 * Avoid extra power leakage. The RV1805 uses smaller
-> > +		 * 10pin package and the EXTI input is not present.
-> > +		 * Disable it to avoid leakage.
-> > +		 */
-> > +		err = regmap_write_bits(regmap, ABX8XX_REG_OUT_CTRL,
-> > +					ABX8XX_OUT_CTRL_EXDS,
-> > +					ABX8XX_OUT_CTRL_EXDS);
-> >  		if (err < 0) {
-> >  			dev_err(&client->dev,
-> >  				"Unable to write output control register\n");
-> 
-> [Severity: High]
-> Can the RV1805 specific output control configuration fail here?
-> 
-> Similar to the oscillator register, writing to ABX8XX_REG_OUT_CTRL requires an
-> unlock key sequence that could be broken by the implicit I2C read.
-> 
-> [ ... ]
-> > @@ -1026,11 +961,10 @@ static int abx80x_probe(struct i2c_client *client)
-> >  	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-> >  		return -EIO;
-> >  
-> > -	err = regmap_write(regmap, ABX8XX_REG_OSC,
-> > -			   data & ~(ABX8XX_OSC_ACIE |
-> > -				    ABX8XX_OSC_OFIE));
-> > +	err = regmap_write_bits(regmap, ABX8XX_REG_OSC,
-> > +				ABX8XX_OSC_ACIE | ABX8XX_OSC_OFIE, 0);
-> >  	if (err < 0) {
-> > -		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-> > +		dev_err(&client->dev, "Unable to update Oscillator Control register\n");
-> >  		return -EIO;
-> >  	}
-> 
-> [Severity: High]
-> Will oscillator control initialization at probe time fail due to the injected
-> read?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260907203216.53192-1-apokusinski01@gmail.com?part=7
+
+unit_address_vs_reg warning is in fact reported by dtc and DTSpec
+explicitly says to use unique node-name without unit-address where no
+reg specified. Meanwhile,
+Documentation/devicetree/bindings/display/simple-framebuffer.yaml
+requires nodes to be named framebuffer@<address>. So I'm a bit confused
+and therefore I will keep this unchanged until further reviews on v4.
+
+Missing #address-cells and #size-cells were added in v4.
+
+Thank you!
+
+Link to v4: https://patch.msgid.link/20260909-mt8127-amazon-ford-basic-v4-0-e9af5c420ab1@mailbox.org
+
+> > +			compatible = "simple-framebuffer";
+> > +			memory-region = <&framebuffer_reserved>;
