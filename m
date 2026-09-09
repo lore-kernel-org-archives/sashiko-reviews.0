@@ -1,205 +1,145 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBF735B633
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 17:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323F83939BD
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 18:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788975979; cv=none; b=oaDp9cB1h3z54lTUBfB3FBPBw3NAPm58SUaHhcTY2wIHOFUuZMoe8O/nuNNfsdMtJNZOM5oHRqeu91kwU+Nc0ONrlg3RoC5rAj0j9ftDugpjHJlBNqjM7MaOKBK+rleEcDYXKZ1wR9oSKsyuumKlGHYnDZ1PJ0tUDYW+L62uZuA=
+	t=1788977008; cv=none; b=hBh93jMxmz+f45jFj3nm9/b9c1y+zjQ2/lnTQkFlgm1Zw4f8kg0jLoEkBJHQEP4ih0wOZnH46rjxwIcpLnqN0hcaDmqtaMu71JEk/BkhjViL8Zbuh4xg6dJx6F2YlH6r/O6dsnl1kUlYbfMIKHGQ8YsPm22Q2a7Uz1NIrZW+HD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788975979; c=relaxed/simple;
-	bh=Q6zSZ4oHZtJ1jCV/pynGgKcauImWL7dzD6jMkKxqQeo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UmIbSiKTgiMokKt6gQpUuApTb0uxRy+jb9DLjZNKZpxQWrth29cGUuvuSg1Kj4RKEYoim3vSdFDlQ1m5ekzaPrPj1apW5VvjsGE0svdm4fiWx59UVeFNGWiHNqt5SiJa5QlPh7pBjEJArqL7wae2zY/YNpSulSWYv5D8NCWMeOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HHk2wA10; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1788977008; c=relaxed/simple;
+	bh=h0+O/uLPWOX80ES9M0XKdB5md+a2oSQUnkWr/gWIyaY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j/N/Z4+moUwCACh44SsAtyVPnMZAHV4uy2bB6ywPQbYdbCzS2M/HwITxMFWpvFI7uInxRuvynnX0Oa4PAh7dQcURJc+gr9MKelygzXJo41BCHDxufrjN0I0Z1EANvWPWMQbM0AM1KvnR0vANVBCw01cy9+XlMhDut6zs57g3dZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VwmZrb8B; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HHk2wA10"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788975977; x=1820511977;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Q6zSZ4oHZtJ1jCV/pynGgKcauImWL7dzD6jMkKxqQeo=;
-  b=HHk2wA1061JB06P+7NV9Ph8VnIH1rssauLIAG0UxopwWOxPqSXbn3zEg
-   8mdhKUeTzKoo9X9VyeLcxpvDdMCX7Ueen54Bm/4GLz3iFt6Qp8DQ49dXK
-   mLTyMqR01a2RhveHomKInghTRb9ivC15jEW2ZhGa7/YIb5CW52iI4g5Cg
-   Bg5lZaUC2WAYhQXqtuzufxvzsTPjrjlU9gQ2Wzu1z4EDPTXGVahocxn5n
-   LtcUs4HK3k0GxGNm21fQy1UKU7QD2Y/UnkvrmQOh2CpZ426bZL9fGsUwn
-   oz7OLMins2CrTMZQEV4J63dYTTFEE/ce8c39ytPyryb9nQqqiWcwDpR4c
-   g==;
-X-CSE-ConnectionGUID: vGkNletSQICR/+MVgoeCTw==
-X-CSE-MsgGUID: dSHc0mmZQxK1wOFag1WpSA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89539073"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="89539073"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 10:46:16 -0700
-X-CSE-ConnectionGUID: PFs5XvNeTzCKTp5Ekkv91Q==
-X-CSE-MsgGUID: kftJiiGHTq6dgU3ug3SfMg==
-X-ExtLoop1: 1
-Received: from aschende-mobl.amr.corp.intel.com (HELO [10.125.111.155]) ([10.125.111.155])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 10:46:16 -0700
-Message-ID: <47071897-9715-4153-8c1e-0c23c0e364ad@intel.com>
-Date: Wed, 9 Sep 2026 10:46:15 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VwmZrb8B"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49cc9f581c4so9136885e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 11:03:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788977004; x=1789581804; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bjvBiyvh/g8+fag4d0kfWnymDoayXnCGlAJvwIriZP8=;
+        b=VwmZrb8BLC7pWlxMbTCqy/NRVwOMkdKjsXIMAOwYdOvF106fk8B26oYDkjr+m6iQZ6
+         m/zWAu0DepOYyzQ2N8PCGy2vqTGz6jZx4D8VyBmh5OKlqC25kHOjczajC/kpT4GmuZi5
+         HnnJLG1GJOn3rWZwawNXY3rInHvQmrKJtOVcHigedbtdT9Mgcvm7UQU1YK37qEWM7KY/
+         znsNjvCO3NYZcFI+s7qonsua+4V0QaaPBouaWL9oxwxrdbGbJ9dAAO4wFxibHMVbAves
+         Lh25miOwAYVgbyryxshmvMyJ3V+OtcQj0i4b1kL9dWbjJBqVPCCQN0ut/YkTi+LXNYH+
+         rsWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788977004; x=1789581804;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bjvBiyvh/g8+fag4d0kfWnymDoayXnCGlAJvwIriZP8=;
+        b=C2RgMXsNds3XB1lK/hxS/NgAOMNc4nzxycM4QyM7zVk0PZUb7zoetL6uN5eW3J7gX8
+         2A2uhxPxnuLHU1w72+rthNZmWlCxOaLRrkM8PQrC9mVZKM59LV/RV8zse1cU+W8nhrW3
+         TB8maNOTBODiqyMNMETaVPVOa3cWT7KV1RHiUb3KHNEuCJLio3/qSxa70yYaaXIrxnN5
+         RJIn6dF3AdIrBmAOYjDA2ltZsVBV5eTFiAqsYCGXvt94c8GNiWxH49KKL9CeD8oJ2boI
+         W8ZK4jIBRX04fpBLolXejlwaZiqnNL/Vchc8CboMvj3FACdHxxle+Ie4tm9vKGRmrWhx
+         oOOQ==
+X-Gm-Message-State: AFuF++lfmn2OOvKEeqJ0p/28NBV2Qi79uclCGJsmQlyRSOd2tArHH1Ph
+	qAc5Adz9/nSfc7OhnfqiWVk8zAGZGefY0xhk2Kx89NdS1QanX3/Ode6F2ViPlw==
+X-Gm-Gg: AYBFou1j0arDb3zUzHlxlHOXxomkknqqV+I4clQpD+JC4RCr70SKnEzSivm7l+hMao7
+	ceOE0niPKL6NbAv8K+A3JfKghhFIFU/QOl5Zhr4UTJrkmiSPPODTW6oIiTA6ph9sXjcFHSDUxoL
+	oMQnmbdrSDFz9E5ZuSXtp8Gg+CnbsLeN+9euggpYgFd20bwKh1LBeCQ0IkosQFe14C9OZh9/Y7f
+	WZkr4BoYzbmx50WxxMoKHGLVilIwsCDxO7WY8143G0EiRB2hobd/vBJx40xFxqaqT4qcSSEZ4m9
+	UkTcBH7mIhIJr4a7vAfyTVDvn6ndkUqHF3xnfVqpWnZKGtfLQ4YQxowHU5QYzfkqrQZs/fvqlpF
+	AJWMKN53ytUhdzub2+Xt3SCn/nnJz7/hQXUxToOzfz284yKKU9ca6AlQzCAYWpikqN5CbYEhCGE
+	LGpgMjAuTSxgS0X788Aov3GvKqYTCGALWBOyyB5fgn7+2KgUFx2udnCgYo6DZ9nUKZZnh4Ud+A
+X-Received: by 2002:a05:600d:8647:10b0:499:59fd:dbfc with SMTP id 5b1f17b1804b1-49d26d863famr4558255e9.1.1788977004041;
+        Wed, 09 Sep 2026 11:03:24 -0700 (PDT)
+Received: from antoniarch ([37.163.183.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d20db6e76sm76460505e9.3.2026.09.09.11.03.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2026 11:03:23 -0700 (PDT)
+Date: Wed, 9 Sep 2026 20:01:39 +0200
+From: Antoni Pokusinski <apokusinski01@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rtc@vger.kernel.org, robh@kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 3/9] rtc: abx80x: add mutex protection for register
+ writes
+Message-ID: <aqGeyGaUriVsueZ2@antoniarch>
+References: <20260907203216.53192-1-apokusinski01@gmail.com>
+ <20260907203216.53192-4-apokusinski01@gmail.com>
+ <20260907204634.2A7C11F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] PCI/AER: Map a raw AER Capability image field by field
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org
-References: <20260909163140.2723395-1-dave.jiang@intel.com>
- <20260909164539.CE6F41F000FF@smtp.kernel.org>
-From: Dave Jiang <dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20260909164539.CE6F41F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260907204634.2A7C11F00A3A@smtp.kernel.org>
 
-
-
-On 9/9/26 9:45 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] aer_cap_regs_unpack() causes data corruption and mis-parsing of AER registers on big-endian architectures due to mixed endianness inputs and improper byte-offset access.
-
-Will fix in v3.
-
-DJ
-
+On Mon, Sep 07, 2026 at 08:46:33PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Memory allocated for `aer_info` from `ghes_estatus_pool` is permanently leaked when `aer_recover_queue()` fails to enqueue the error due to ring buffer overflow.
+> - [High] Incomplete mutex protection allows concurrent I2C reads to break configuration key sequences.
 > --
 > 
-> commit 5fdf5d4c5bbdafcab0279ec4f99b6ca67a1876af
-> Author: Dave Jiang <dave.jiang@intel.com>
+> commit c33d071aef97a2d9a731cf3e557a1cf0fbf7c50c
+> Author: Antoni Pokusinski <apokusinski01@gmail.com>
 > 
-> PCI/AER: Map a raw AER Capability image field by field
+> rtc: abx80x: add mutex protection for register writes
 > 
-> This commit introduces aer_cap_regs_unpack() to map raw AER capability
-> registers field-by-field into the kernel's struct aer_capability_regs layout.
-> It updates ACPI GHES, ACPI extlog, and CXL RCH error handling to use this
-> unpacking routine instead of flat memory copies.
+> The ABX80X RTC driver performs multi-step register operations such as
+> NVMEM transfers or register writes preceded by a configuration key
+> write. Add a mutex to serialize all the register writes to protect
+> these sequences against race conditions.
 > 
-> Link: https://lore.kernel.org/linux-cxl/CAJZ5v0hDv11cPuztPZsaDd7uwD_49KznJy=tzuRO+dZc=CnAEQ@mail.gmail.com/
-> Link: https://sashiko.dev/#/patchset/20260904172337.1409775-1-dave.jiang@intel.com?part=5
-> 
->> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
->> index 08c985e729d6c..ade1cc8c9f8d1 100644
->> --- a/drivers/acpi/apei/ghes.c
->> +++ b/drivers/acpi/apei/ghes.c
+> > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+> > index e4fd7b5d4b110..44de234efecf7 100644
+> > --- a/drivers/rtc/rtc-abx80x.c
+> > +++ b/drivers/rtc/rtc-abx80x.c
 > [ ... ]
->> @@ -668,20 +668,7 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
->>  		if (!aer_info)
->>  			return;
->>  
-> [ ... ]
->> +		aer_cap_regs_unpack(aer_info, pcie_err->aer_info, sizeof(pcie_err->aer_info));
+> > @@ -445,6 +458,7 @@ static ssize_t oscillator_store(struct device *dev,
+> >  				const char *buf, size_t count)
+> >  {
+> >  	struct i2c_client *client = to_i2c_client(dev->parent);
+> > +	struct abx80x_priv *priv = i2c_get_clientdata(client);
+> >  	int retval, flags, rc_mode = 0;
+> >  
+> >  	if (strncmp(buf, "rc", 2) == 0) {
+> > @@ -456,6 +470,8 @@ static ssize_t oscillator_store(struct device *dev,
+> >  		return -EINVAL;
+> >  	}
+> >  
+> > +	guard(mutex)(&priv->lock);
+> > +
 > 
 > [Severity: High]
-> Will this corrupt the AER registers on big-endian architectures?
+> This isn't a bug introduced by this patch, but since this commit aims to
+> protect configuration key sequences from race conditions, does this leave a
+> similar race open for concurrent I2C reads?
+>
+> If Thread A executes a protected write sequence (like oscillator_store), and
+> Thread B executes an RTC read operation, can Thread B's I2C read interleave
+> and reset the configuration key?
+>
+No, becasue reads do not cause configuration key reset
+> For example, abx80x_rtc_read_time() does not take priv->lock while reading
+> the ABX8XX_REG_HTH registers.
 > 
-> The pcie_err->aer_info buffer contains a strictly little-endian CPER payload.
-> However, aer_cap_regs_unpack() receives this raw byte stream and populates
-> native u32 fields with it, which can lead to mis-parsing.
+> Similarly, abx80x_is_rc_mode() (called from sysfs and read_time) performs an
+> unlocked read of the ABX8XX_REG_OSS register.
 > 
->>  
->>  		aer_recover_queue(pcie_err->device_id.segment,
->>  				  pcie_err->device_id.bus,
+> The ABX8XX chip specification dictates that any intervening I2C read resets
+> the configuration key. This would leave the register locked, causing Thread
+> A's subsequent protected register write to silently fail without returning
+> an error to userspace.
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does aer_recover_queue() permanently leak
-> the aer_info allocation if the ring buffer overflows?
+> Should priv->lock be taken during these read paths as well to fully prevent
+> I2C interleaving from aborting configuration key writes?
 > 
-> The aer_info is allocated from the fixed-size ghes_estatus_pool via
-> gen_pool_alloc() earlier in this function. When passed to
-> aer_recover_queue(), memory ownership is dropped without freeing it if
-> the queue operation fails:
-> 
-> drivers/pci/pcie/aer.c:aer_recover_queue() {
->     if (kfifo_in_spinlocked(&aer_recover_ring, &entry, 1,
->                             &aer_recover_ring_lock))
->         schedule_work(&aer_recover_work);
->     else
->         pr_err("buffer overflow in recovery...");
->         /* aer_regs pointer dropped here */
-> }
-> 
-> Since this pool is small and fixed-size, could an error storm that overflows
-> the queue permanently deplete the pool and disable further ACPI GHES error
-> reporting?
-> 
->> diff --git a/drivers/cxl/core/ras_rch.c b/drivers/cxl/core/ras_rch.c
->> index e0e01aa5eba6c..4005344dda55f 100644
->> --- a/drivers/cxl/core/ras_rch.c
->> +++ b/drivers/cxl/core/ras_rch.c
-> [ ... ]
->> @@ -58,31 +58,17 @@ void cxl_disable_rch_root_ints(struct cxl_dport *dport)
->>  static bool cxl_rch_get_aer_info(void __iomem *aer_base,
->>  				 struct aer_capability_regs *aer_regs)
->>  {
-> [ ... ]
->> -	/* Use readl() to guarantee 32-bit accesses */
->> -	for (n = 0; n < read_cnt; n++)
->> -		aer_regs_buf[n] = readl(aer_base + n * sizeof(u32));
->> +	for (int n = 0; n < ARRAY_SIZE(raw); n++)
->> +		raw[n] = readl(aer_base + n * sizeof(u32));
->> +
->> +	aer_cap_regs_unpack(aer_regs, raw, sizeof(raw));
-> 
-> [Severity: High]
-> Could populating the raw array using readl() cause data corruption on
-> big-endian systems?
-> 
-> By using readl(), the raw array is filled with host-endian values. When
-> aer_cap_regs_unpack() later extracts byte-offsets via memcpy(), this will
-> read from the wrong half of the u32 on big-endian architectures, swapping
-> fields like the correctable and uncorrectable error sources.
-> 
->> diff --git a/drivers/pci/pcie/tlp.c b/drivers/pci/pcie/tlp.c
->> index 71f8fc9ea2edc..bba80c3803587 100644
->> --- a/drivers/pci/pcie/tlp.c
->> +++ b/drivers/pci/pcie/tlp.c
-> [ ... ]
->> +void aer_cap_regs_unpack(struct aer_capability_regs *regs, const void *raw,
->> +			 size_t raw_len)
->> +{
-> [ ... ]
->> +	if (raw_len < PCI_ERR_HEADER_LOG)
->> +		return;
->> +	memcpy(regs, raw, PCI_ERR_HEADER_LOG);
->> +
->> +	flit = FIELD_GET(PCI_ERR_CAP_TLP_LOG_FLIT, regs->cap_control);
-> 
-> [Severity: High]
-> Will this extract the wrong bits on big-endian systems when processing
-> little-endian CPER streams?
-> 
-> If raw comes from ACPI GHES (where it is little-endian), the memcpy() just
-> above populates regs->cap_control with little-endian bytes. On a big-endian
-> system, this results in a byte-swapped integer, causing FIELD_GET() to read
-> incorrect bits for the FLIT status and TLP log size.
-> 
-> [ ... ]
->> +	if (raw_len >= PCI_ERR_ROOT_ERR_SRC + sizeof(regs->cor_err_source) +
->> +		       sizeof(regs->uncor_err_source)) {
->> +		memcpy(&regs->cor_err_source, raw + PCI_ERR_ROOT_ERR_SRC,
->> +		       sizeof(regs->cor_err_source));
-> 
-> [Severity: High]
-> Does this byte-level copy extract the wrong half of the register on
-> big-endian systems?
-> 
-> When raw is populated as a host-endian u32 array (as is done in
-> cxl_rch_get_aer_info), copying 2 bytes from the PCI_ERR_ROOT_ERR_SRC offset
-> will extract the upper 16 bits instead of the lower 16 bits on big-endian
-> machines. This swaps the correctable and uncorrectable error source fields.
-> 
-
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260907203216.53192-1-apokusinski01@gmail.com?part=3
