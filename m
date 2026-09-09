@@ -1,163 +1,60 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7845E455624
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 07:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AA437AA70;
+	Wed,  9 Sep 2026 07:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788940561; cv=none; b=E21ewD4M7o75RbUpu8mv2m9oAFY7lNiwGCmnYlMrAYRqQF7lEpZA2JY+hNn430+iOVhR+e7m9S72jDWtZyoPfemYzRRUYk8QAWz8vh7DY31JJ7y/aQ4qKYcimgXEKkYivtt7ZDp35cjeHzCg4MHqvVP85wZmXgy44rYszhLQeUE=
+	t=1788940756; cv=none; b=j2xhWe5tCSrJx39QaxLMAff1QllSuyxZ+lXCglYf7mLVERwWCKLt4/gRTGEqD9b2wlwkeJYHcYsldMnOonSy6ykinhGBxeWHBTQUDYhVlWcJ+nC7UktM6x8t8gRajnIg0Yn8N+ex3tggFDFcC+2vztHvSvdFdw35nSqNtp06M1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788940561; c=relaxed/simple;
-	bh=ffv+Nd5MMWmMfOwKMlWYjnmg2Q7ja6HmGcTmgKa+xpY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tkJ3Aq3Xbq50dzOHDX4xyfqxkz7C9RNFk4jeUYkyxy7s1anCOY/hYeu/DYIS8WVCuxclThrDaP96HbSF8YK9RUqFjbTezuK0pxzhrgBGPM5+4znhQvg6FGGqo6yVw/vvgyagQQ0Maz7rSzbNRFThPNJuvYcmBgA0ik79YeQkUiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dxmzDgge; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1788940756; c=relaxed/simple;
+	bh=d0OS/gcSBtD79FghC5lEAvRzvjbPjZjrHfHbaN6oSYo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ngrwnd+BxBNKO48jbrNvoLGuQHQ/zyraFAN5yx9+ugy3h4m+XtIMb+/L/x1Aqj72JjW3hbhtVn3V5kJd2zQWd+JqYE4CVurt1TbwDWSFcd8FBriggdTP3fjm1iexdjTU91H0Q86FLUnURGQeajgpZSTVEYVtx/0gEHfbX9+OlwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLB3Cu9j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dxmzDgge"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788940558; x=1820476558;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=ffv+Nd5MMWmMfOwKMlWYjnmg2Q7ja6HmGcTmgKa+xpY=;
-  b=dxmzDggeTZV1ci2fYDvxEuQNId4BwQetgKuPk8iPjklnRnJLQ/GVlT1g
-   FdWopReVDOg4uJoZE4gcQnpPNIu0mcIT8t8+8EEtmpbM4CfwAfYtt+7dN
-   jVN3flXRb/wGVLwyn4gCSPblACBNeP9fLhq6I3Fi97AJkZ+2jw4CMQhGX
-   IFIl0Tc8IoyW0VikcwjjdWNOnvulwLib8TelsOLZMMgUUAnWpvFOAyyZI
-   Bn8ZGdQp2oihzEZ4A7xgaPynZQ9GmMcr4GdJd37uIixup1OdeN0IewCy9
-   dtaD6xuhlE6Ld7Ckf6rSqKzVpF8YHttp5C7bGCuFEjlZ2Mdpi16yGJLAk
-   Q==;
-X-CSE-ConnectionGUID: OOFTcpJHStuVvDStOc5EOw==
-X-CSE-MsgGUID: 69KDQteVRAaOKoIkL7VELQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="76916342"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="76916342"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 00:55:56 -0700
-X-CSE-ConnectionGUID: nVaN9HZtQqycSnUSJ2ObfA==
-X-CSE-MsgGUID: 8FoxFFR2TBKV8z0SRL1XLw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="265037002"
-Received: from ncintean-mobl1.ger.corp.intel.com (HELO [10.245.245.60]) ([10.245.245.60])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 00:55:54 -0700
-Message-ID: <a17944e24497617abc5ea17f991347c82de09448.camel@linux.intel.com>
-Subject: Re: [PATCH] drm/xe: Keep walking on SVM eviction failure
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: Matthew Brost <matthew.brost@intel.com>, sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-Date: Wed, 09 Sep 2026 09:55:52 +0200
-In-Reply-To: <aqBif1V2aY92MxRG@gsse-cloud1.jf.intel.com>
-References: <20260908184346.92332-1-matthew.brost@intel.com>
-	 <20260908185523.6EC501F00AC4@smtp.kernel.org>
-	 <aqBif1V2aY92MxRG@gsse-cloud1.jf.intel.com>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLB3Cu9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA8F1F00A3A;
+	Wed,  9 Sep 2026 07:59:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788940754;
+	bh=d0OS/gcSBtD79FghC5lEAvRzvjbPjZjrHfHbaN6oSYo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BLB3Cu9jiypADXMohR9yF4WKqcNfE0uoAs4QsbA/fMSw/L41C1S2RwXHxjlH/2626
+	 ExJGnCqCNxICg4ERWY5a6vMdQTdj+LMrqaga2XhCNG+Xwcw66CJQ8z4RImqKF8VRtP
+	 EYCb0hMEVZ2ql/iYm7ATpp8gfqxqcg+NgxO7HM5CgZ0mFoH6keV0OpuCeAYIkW3Wu/
+	 BaaZbb4zXU12XFkYrjfN68N5opkDa0f24TtADvyG9b6t9F/CaDBYFwhWeXOplneLHq
+	 QU8D3RE2oCJUq8n2YO390sgv7V3z6B2QAD5ch/WqWWISxeNTsV6PipwS6+z9IwWk9F
+	 ttDV7a2hoyrwg==
+Date: Wed, 9 Sep 2026 09:59:10 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 2/3] dtc: dt-check-style: Properly detect comments in
+ multi-line properties
+Message-ID: <20260909-juicy-handsome-wallaby-0cad87@quoll>
+References: <20260906180437.166760-4-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260906180437.166760-5-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260906181533.203811F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260906181533.203811F00A3A@smtp.kernel.org>
 
-On Tue, 2026-09-08 at 12:31 -0700, Matthew Brost wrote:
-> On Tue, Sep 08, 2026 at 06:55:22PM +0000,
-> sashiko-bot@kernel.org=C2=A0wrote:
-> > Thank you for your contribution! Sashiko AI review found 1
-> > potential issue(s) to consider:
-> > - [Medium] Unconditionally masking `xe_svm_bo_evict()` errors as `-
-> > ENOSPC` hides fatal errors and triggers TTM error log spam.
-> > --
-> >=20
-> > commit 8fcbc00a7aa0e3b2119f7df96129747882247423
-> > Author: Matthew Brost <matthew.brost@intel.com>
-> >=20
-> > drm/xe: Keep walking on SVM eviction failure
-> >=20
-> > This commit adjusts the error handling in xe_bo_move() for SVM
-> > eviction
-> > failures. It overwrites the return code from xe_svm_bo_evict() with
-> > -ENOSPC
-> > to force TTM to continue walking the LRU list for eviction
-> > candidates.
-> >=20
-> > > diff --git a/drivers/gpu/drm/xe/xe_bo.c
-> > > b/drivers/gpu/drm/xe/xe_bo.c
-> > > --- a/drivers/gpu/drm/xe/xe_bo.c
-> > > +++ b/drivers/gpu/drm/xe/xe_bo.c
-> > > @@ -1043,6 +1043,11 @@ static int xe_bo_move(struct
-> > > ttm_buffer_object *ttm_bo, bool evict,
-> > > =C2=A0		} else {
-> > > =C2=A0			drm_dbg(&xe->drm, "Evict system
-> > > allocator BO failed=3D%pe\n",
-> > > =C2=A0				ERR_PTR(ret));
-> > > +			/*
-> > > +			 * The semantic we want upon SVM
-> > > eviction failure is
-> > > +			 * keep walking for eviction, which is -
-> > > ENOSPC.
-> > > +			 */
-> > > +			ret =3D -ENOSPC;
-> >=20
-> > [Severity: Medium]
-> > Does unconditionally overwriting the error with -ENOSPC hide fatal
-> > errors like
-> > -ENOMEM?
-> >=20
-> > When system memory is exhausted, xe_svm_bo_evict() can return -
-> > ENOMEM. By
-> > masking this as -ENOSPC, it seems we might break proper error
-> > propagation to
-> > higher layers, preventing expected OOM handling.
-> >=20
->=20
-> Yea.. Perhaps -ENOMEM should actually be returned to the upper layers
-> as
-> this indicates we are out of system memory and attemping more
-> evictions
-> is unlikely to help.
->=20
-> Second opinion from the Xe team on this one?
+On Sun, Sep 06, 2026 at 06:15:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Reclassifying pure comment lines inside multi-line properties as `LineType.CONTINUATION` causes them to bypass multiple style checks (line length, trailing whitespace, hex casing).
 
-IMO we should just convert specific errors (or exclude specific errors)
-and add a motivation in the commit message for future reference.
+Partially looks correct, the logic in rules (check_xxx()) should handle
+continuations as well. But OTOH, mentioned above rules do not matter for
+comments.
 
-Thanks,
-Thomas
+Best regards,
+Krzysztof
 
-
-
->=20
-> > Furthermore, could this trigger a TTM error log spam loop? When
-> > returned to
-> > TTM, -ENOSPC causes ttm_bo_evict() to log an unconditional
-> > pr_err("Buffer eviction failed\n"). Since -ENOSPC is converted to -
-> > EBUSY in
-> > ttm_bo_evict_cb(), it signals the LRU walker
-> > (ttm_lru_walk_for_evict()) to
-> > skip the BO and continue walking.=20
-> >=20
-> > During genuine resource exhaustion, this might cause a fruitless
-> > iteration over
-> > the entire LRU list, logging a pr_err() for every single buffer
-> > object. Even
-> > benign SVM races might spam the kernel log with errors.
-> >=20
->=20
-> The spam is probably seperate issue in TTM. -ENOSPC likely shouldn't
-> emit a pr_err as it continues walking.
->=20
-> Matt
->=20
-> > > =C2=A0		}
-> > > =C2=A0
-> > > =C2=A0		goto out;
-> >=20
-> > --=20
-> > Sashiko AI review =C2=B7
-> > https://sashiko.dev/#/patchset/20260908184346.92332-1-matthew.brost@int=
-el.com?part=3D1
