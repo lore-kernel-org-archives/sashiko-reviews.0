@@ -1,167 +1,68 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E174915A3
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 09:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5053DDAF9;
+	Wed,  9 Sep 2026 09:27:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788944791; cv=none; b=TDajUW2BNhPUvjjNaUNiw7Mx36aBJMiEJi0ges1JbkNFLDZ5fkOdWBXPI+tuMRIkVAnIcAja9oL0kXeJUZVqK0b6DdChhuse97RZ1sCoz3lLoHZ7BK2ct21k9Ai7yZ6gwt43BVyIk5ng3uPD7JmUphcLZaW+JoQr4cvVusUSMMg=
+	t=1788946060; cv=none; b=aMvpkxWg2WTxxeo72mYBI0+FiIFObpF1RP61iv6EX5j4pjDwSB/qDSqwH3cDUtMv8+p3GqzDKAy4rrcC02xWP/I0vpoY2Hd0C7SbQy5A2xX1ySgkyo9l8svBpepj3FLV8Dc/gbsx0BcOO7F4F4BxAEqX9Qq9TftWRHJJfdrvfOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788944791; c=relaxed/simple;
-	bh=RsOWaow4xyNlxb9t6QDZxsEQgmNVortCcZlQT/kSFj0=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uhRJ6GmiG2HxU14WSk2aXIH7rKBKdvuLCfT+EGgASgoKPPHVvzN0/bkgon14gertN+q0mIsiwCQEa+IloCV1JbIFtd4JNSU8e72LbxIBi8/BwAc1RGK8zpb2H1V6H8fb2mJ/OvoXuYAiDSprRa7337rbhxUJBtDhsnSedzLivU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=wqRBnZ4m; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1788946060; c=relaxed/simple;
+	bh=cMtY+OlZvXnCmWMc74UhI/h6ytHWZ75p+IOydXYRyEk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=To6c03b4tCn+UpY9Pa0MFubZGMwiOC4I1L+Dz0QwAh5mVQIHP1CRoBSgj2XRrDhxKb72vAYwTpAbvYDrQWmwwe3+DA+nvHxCwsMISrbEvMtKkEu5goUMo++d6z/U8Xa0logfF7x1trdidYwSwWuT6uKMkY0p/c/ZwlXdjMELWSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doqP2yZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="wqRBnZ4m"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id E3A891A1A78;
-	Wed,  9 Sep 2026 09:06:26 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id B086360448;
-	Wed,  9 Sep 2026 09:06:26 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id BC93811C7AF78;
-	Wed,  9 Sep 2026 11:06:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1788944786; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=IgFCdDS5B2dqwxNnNpEegsmxei6KgD7xlNl1LOYi9Vw=;
-	b=wqRBnZ4mXP4WxLqyY5K+wOz4VrHlag6Kovw2eHJVqR13eAdMwvCWcxjErWWIptY9w5Nqhg
-	ifCwW8m/jWTmEvWMndQjLyyqQHkmeG6A/YJ/gVk9NTxyjF4RZWRTKAwFnRLU2fpDlSjK7+
-	Wk6V51Q9pME60PvF76BO4J9DjPrF9U50mCRt5iKBXEyeFkYlBaPNN7tFYE+6ys5jSeSCAq
-	hfawKVtMdqRHtAW3z0UclDDah+olc3m4M8fVqcnqRSRr8fx+dIdp4b6IvT/gT8qhcm4G3E
-	Biyn0xQ7aKf62wCfv8FrZT5sRf0qPTRRkuBeVkSSApvmuKEeuWlrybm5e8ZjMA==
-Date: Wed, 9 Sep 2026 11:06:23 +0200
-From: Herve Codina <herve.codina@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
- linux-pci@vger.kernel.org
-Subject: Re: [PATCH v11 10/10] PCI: of: Avoid np->data usage for the node
- changeset
-Message-ID: <20260909110623.2e6bbc89@bootlin.com>
-In-Reply-To: <20260909081755.444E91F00A3A@smtp.kernel.org>
-References: <20260909080114.591938-1-herve.codina@bootlin.com>
-	<20260909080114.591938-11-herve.codina@bootlin.com>
-	<20260909081755.444E91F00A3A@smtp.kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doqP2yZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013CE1F00A3E;
+	Wed,  9 Sep 2026 09:27:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788946051;
+	bh=o0951nSG+rxS5NfdN16h+hq0RtUDQKHbZiM+0cviWtg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=doqP2yZowAoVYjhp3ZmJ6eCm363/sejxhrWbJriBOJruRb3GEMb63p21RBb34l3YV
+	 7/h9fzt2QelAt+TWqlvSvD+zLEKo9ZNSF+Icbuj86Y4P20GaYY6jCvJ9ADeyI9t+mD
+	 aLmbez/GgP1m2oRi89nL63lnGpoR/UVvEAdRy92pfrarIhBYqz68Z6DOyoZB+QBS7d
+	 nB0iJtFGpxmE5MBlaCKQt4PHla57kz+Ni+4aUfNSX1jyHBNkkvpmT5KrsGkCRT9w6o
+	 9Di6EZ17x2mJUPzUeAkXvcJibAixJhXWmj5yYtv0qgvZDoXdVl3J8Wjg/IOvli7ifu
+	 06AW9AjSCF4mQ==
+Date: Wed, 9 Sep 2026 11:27:27 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Nikolay Borisov <nik.borisov@suse.com>
+Cc: sashiko-reviews@lists.linux.dev, dlemoal@kernel.org,
+	linux-ide@vger.kernel.org
+Subject: Re: [PATCH] ata: sata_dwc_460ex: Don't enable interrupt if libATA
+ core registration fails
+Message-ID: <aqEmf-68Dvw-zj_6@ryzen>
+References: <20260908141538.731237-1-nik.borisov@suse.com>
+ <20260908143042.964151F00A3D@smtp.kernel.org>
+ <8e426afc-b534-454f-9880-2b25764f370a@suse.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+In-Reply-To: <8e426afc-b534-454f-9880-2b25764f370a@suse.com>
 
-On Wed, 09 Sep 2026 08:17:54 +0000
-sashiko-bot@kernel.org wrote:
+On Tue, Sep 08, 2026 at 05:34:51PM +0300, Nikolay Borisov wrote:
+> 
+> 
+> On 8.09.26 г. 17:30 ч., sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> > 
+> > New issues:
+> > - [Low] The patch introduces a `goto err;` statement in `sata_dwc_probe()`, but there is no label named `err:` defined in the function, resulting in a compilation error.
+> 
+> Fair point, however I'd like to hear from an expert whether enabling the
+> interrupt without properly registering with libata core is fine or not? I.e
+> whether this particular fix makes sense?
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Missing NULL check on `np` in `of_pci_remove_node` and `of_pci_remove_host_bridge_node` leading to kernel panic.
-> - [High] Dangling pointer in `pdev->cset` and `bridge->cset` after freeing, leading to potential use-after-free or double-free.
-> --
-> 
-> commit 506858ef76ab83f59a005bd51f3fde0f4d73a6a2
-> Author: Herve Codina <herve.codina@bootlin.com>
-> 
-> PCI: of: Avoid np->data usage for the node changeset
-> 
-> This patch modifies how OF changeset references are stored during PCI node
-> creation. Instead of using np->data, which can be altered by platform code,
-> it stores the changeset in pdev->cset or bridge->cset. This ensures the
-> correct changeset is reverted and destroyed during node removal.
-> 
-> > diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-> > index 0a5797652e183..cd87128c71ddc 100644
-> > --- a/drivers/pci/of.c
-> > +++ b/drivers/pci/of.c
-> > @@ -732,15 +732,16 @@ void of_pci_remove_node(struct pci_dev *pdev)
-> >  {
-> >  	struct device_node *np;
-> >  
-> > -	np = pci_device_to_OF_node(pdev);
-> > -	if (!np || !of_node_check_flag(np, OF_DYNAMIC))
-> > +	if (!pdev->cset)
-> >  		return;
-> >  
-> > +	np = pci_device_to_OF_node(pdev);
-> >  	fw_devlink_set_device(&np->fwnode, NULL);  
-> 
-> [Severity: High]
-> Will this result in an invalid pointer dereference if np is NULL?
-> 
-> The previous implementation had a NULL check for np, but the new code computes
-> &np->fwnode unconditionally. If pdev->dev.of_node is cleared prior to removal,
-> pci_device_to_OF_node() will return NULL, causing fw_devlink_set_device() to
-> dereference an offset address.
+Your fix makes sense.
 
-How np could be NULL with pdev->cset non-NULL ?
 
-I don't think this can happen.
-
-> 
-> >  	device_remove_of_node(&pdev->dev);
-> > -	of_changeset_revert(np->data);
-> > -	of_changeset_destroy(np->data);
-> > +	of_changeset_revert(pdev->cset);
-> > +	of_changeset_destroy(pdev->cset);
-> >  	of_node_put(np);
-> > +	kfree(pdev->cset);  
-> 
-> [Severity: High]
-> Is it possible for of_pci_remove_node() to be called twice for the same device?
-> 
-> If so, leaving pdev->cset as a dangling pointer could lead to a double-free.
-> Should pdev->cset be set to NULL after kfree() so that the earlier
-> if (!pdev->cset) check can prevent a second execution?
-
-I don't think that of_pci_remove_node() can be called twice.
-
-> 
-> [ ... ]
-> 
-> > @@ -828,16 +828,17 @@ void of_pci_remove_host_bridge_node(struct pci_host_bridge *bridge)
-> >  {
-> >  	struct device_node *np;
-> >  
-> > -	np = pci_bus_to_OF_node(bridge->bus);
-> > -	if (!np || !of_node_check_flag(np, OF_DYNAMIC))
-> > +	if (!bridge->cset)
-> >  		return;
-> >  
-> > +	np = pci_bus_to_OF_node(bridge->bus);
-> >  	fw_devlink_set_device(&np->fwnode, NULL);  
-> 
-> [Severity: High]
-> Can np evaluate to NULL here?
-> 
-> Similar to the issue in of_pci_remove_node(), if pci_bus_to_OF_node() returns
-> NULL, the missing NULL check will cause a crash during the &np->fwnode pointer
-> arithmetic.
-
-bridge->cset protects agains a NULL np.
-
-> 
-> >  	device_remove_of_node(&bridge->bus->dev);
-> >  	device_remove_of_node(&bridge->dev);
-> > -	of_changeset_revert(np->data);
-> > -	of_changeset_destroy(np->data);
-> > +	of_changeset_revert(bridge->cset);
-> > +	of_changeset_destroy(bridge->cset);
-> >  	of_node_put(np);
-> > +	kfree(bridge->cset);  
-> 
-> [Severity: High]
-> Could this lead to a use-after-free or double-free on bridge->cset?
-> 
-> If a removal API like pci_stop_root_bus() is invoked multiple times, the
-> dangling pointer bypasses the if (!bridge->cset) check at the start of the
-> function, resulting in a double-free on the changeset.
-> 
-
-I don't think that pci_stop_root_bus() can be called twice.
-
+Kind regards,
+Niklas
