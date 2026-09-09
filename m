@@ -1,170 +1,108 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1993E1CFD
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 09:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C913E5577;
+	Wed,  9 Sep 2026 09:28:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788946078; cv=none; b=Zoh2xTOLaoSNR/AnWXU+UsVHKiqVEIGOvngeYAC/wD5UUL9Kb1XLZbt4w7siWUMMLxw1mN0KoPo5yzFIt6VW7TyKY12uuWJdFkWTqH3Xz4mvRuzd2yp43wqi7kVoyGZ0/CrDlRFNOku/4Z16BM5C8GfG1Qr8B6KD7i/ms2p0ZJA=
+	t=1788946119; cv=none; b=FDSzmQVPo40ezCr1Tf/dVBQ9glCXekb7z1H5sjsFl11rtXVroUNsegiVs5HPiMoC+jlqUgs5ybqBBSzhiS5oUfn3jZWXud736XpeRAujH5XzrujoKAi0bBL1LguXbrR6XYENKbRx5t+Yh2459jPmeSpZ4bKpgGCTrIDMYgSpxUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788946078; c=relaxed/simple;
-	bh=AYJGsZ8o7WlZaiF91/EzqEc+cyr0BaFZD9Xmzk9seYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l3ibREONkCoPWH+xGANKi2gtw65HufQpWcBWQR9SVjaUBL26yW1hnRsiJ9NCxRbYYDPXX8Fegjpe6q8ieqM4pxUOMKyhdYGi8brSMzfBZQnkz4p2onjPqvt3nSb0ZG1h11RD3+DDJ9AwOc/QXdFpI0DJ5GKjFRkdl5VIstRkN9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M39gCSoo; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788946119; c=relaxed/simple;
+	bh=KqNZYPbdf5x1Mm9caBbJQVfZkniP3S3+b8Gomqetn54=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sun/Dnm0DHF8jNtJSibbT0AQt5xovVEis8NbRpP4aPqvqINxab8NPpGwFem4TvqIszzOyNcOPuM0Vwezg4oWb1cqt0xeEoV5Skl99g3gYiKbOEYu5aCRg/E21qKMrjD8hipoEkksW/h7wjrMfqwJQg3LeksQbK1n6A7y94Ll9SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=disssKa3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M39gCSoo"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-86927f9ba4dso166812b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 02:27:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788946070; x=1789550870; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PgNAyP9Im00dlDthcLYZPnLpvWkQDHZkuU3va3Gh0tM=;
-        b=M39gCSoonZjTmAsTOA+kxADBGe/r4DEdnbl0Gp4AMiv219mhUyrwV5PuI9E+MtjEzq
-         al7oT4LlDE+RbZm14tDRULGgCDljPUMBESskg/6dkCNQR+PQBT0ei9C/+NHmD4KZT399
-         buwdU38jvTbHlsWH+jneGI15fgAl2JNIxr+tmKO5fA6NItQsUNhdK/r41aPoJ/UhE+p3
-         5M0196onxLXKMQTi01YvhhzoC9cUeUPl/RmkSIooXLtmgOK0wMp+AORXtigcGtO9GgLk
-         Goz3+zL1T+QjhzW3Esvz+i8lrg1T2nu+FkT7limI7AA9ncvXIuDRkfVPwUHgVMXEDK/f
-         6YTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788946070; x=1789550870;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=PgNAyP9Im00dlDthcLYZPnLpvWkQDHZkuU3va3Gh0tM=;
-        b=foJ5LdZESQCYTZCgR4SwwJp3uQXRnBZvhTI/6OdphMIRDQXsCzkyF2KEUjzS5YvhkZ
-         9XA6NKuNvsaz4opkVZAZjETgBdZ+9Mt1AmavQVQGL0WBu2bf2MAPK1HcSURxKtW7J60t
-         4Hr4XmGMafreHdB/1w+0vogRgNlr6dn9WJZasNmMcRRg5c2x/ISYZdxLRtt3Dx4d/rkh
-         6OG6zQ2CMNHWyVIgnq1Jn3S81/mBY19Mr25c+AggdDNPmAt+/0x0ricXSK7aQeSe/eK/
-         LSrgnJM/ol+Xyv0oTcLQG2I0CTyP1vPOJVAkAucMlqQMVknJG9RYDpFjqN+RmOq2xFEX
-         61EA==
-X-Gm-Message-State: AFuF++laVVZj7wHX2sPt8j+aPXAtqTh+uRbEnlN0ooNBO12cLpzfG6RZ
-	VpJELEWe0SJpmmHWe0nvpkv7ss1gSKIccNSpzRcc5BwKDVXrZfc5pI4etQ6+IsTnzuo=
-X-Gm-Gg: AYBFou2X8nyiH9S4jAVj3d4pKgudzKmHKUHv42Ytfx5vr10ElSx3/8vzQtVcIkqfCJa
-	5rN1nKbsjMhllr8OH5umQ8nFoJIs32pcEZ8OZgBf19ge64vHV/TtqC0LpqLrkPL42dWfIUgWHUD
-	dQ5Uu9sRQ4vKAN0fRpYElA0iIH9TbstmhbTQMMJQFsuqg3uyDZB4QbNUEfEm6exh1SFFd73zEdw
-	lBVbJUx5YSTcuZnOTuMLA6QH0Ulu3/HXsmyR5WTi9flmmb1Swz0IcF/JWKKuIj8L6jlCh/RGQHD
-	EM4Z4J3jBG8npuwl3OHaWb9LLJ65ENv42g8CN0Ry9vZT9WPvVIy8eGty/IzR1UcerwC3RExT4CU
-	wtAToi472of979pDQ2x2Zz0ABCMqBaRn3riZBcRPHYiPZ7QQCo4MhcVKllbmjed+UJM2DXF+SuL
-	rwrz5QDVQCrMZ3Ez3JzS/lt2ZQUHb5ogQBSEBVNMb6j/LUcNmVHt1B4RXQl/lEmvm/TgHATmoNV
-	KnW4HEx2Sifa+insBsHFX7AAIQAdA==
-X-Received: by 2002:a05:6a21:497:b0:3d3:ae0f:526a with SMTP id adf61e73a8af0-3da3a152bbamr55331470637.22.1788946070066;
-        Wed, 09 Sep 2026 02:27:50 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc455488faesm6683552a12.27.2026.09.09.02.27.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 02:27:49 -0700 (PDT)
-Message-ID: <a1a84ad5-d58a-4d15-a3ca-e78c5922f4ce@gmail.com>
-Date: Wed, 9 Sep 2026 17:27:27 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="disssKa3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E725C1F00AC4;
+	Wed,  9 Sep 2026 09:28:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788946105;
+	bh=uV+Kt1HMhAxsfK2lvTLAT0FGPZRjTMyHG0IkV4w1m5s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=disssKa3d4rHXRZWqzXSdZxhWPx8NUtgRADSQ2zAdscD0T/SjDyrrEeUjDBfJZxJJ
+	 tZE0U2c/b2aGaYP6Ad2rGwJkj9F1K/dAuf8suoZR3eZJPV+7qZbcc5OuLLkKBLa44W
+	 Ox2hc4adkmejkgsC4Qk1IfRE/svNcAo82dQFkYEsfTM8AOPia98b9rNYDakZPHrXRc
+	 sWpDwJz9tXqAbzA0NzquZl3bpKCEyUK0rWYiyChC02qEUHtllhJzorPiqf2CUk4XjP
+	 bwP90k8g0YOYlreyYl02fE07mntl4B0sUcO6SKHNfadyQmYF1E24eFgK930bUUWGUV
+	 QlB4jDbDANlsQ==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: Re: [PATCH v3 3/4] dma: swiotlb: Centralize memory-encryption pool
+ sizing
+In-Reply-To: <20260904103644.CD15E1F00A3D@smtp.kernel.org>
+References: <20260904101810.1193505-1-aneesh.kumar@kernel.org>
+ <20260904101810.1193505-4-aneesh.kumar@kernel.org>
+ <20260904103644.CD15E1F00A3D@smtp.kernel.org>
+Date: Wed, 09 Sep 2026 14:58:18 +0530
+Message-ID: <yq5awlsuai4t.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/31] ext4: recheck extent status tree before block
- allocation
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu,
- Zhang Yi <yi.zhang@huaweicloud.com>
-References: <20260903123543.2302999-1-yi.zhang@huaweicloud.com>
- <20260903123543.2302999-6-yi.zhang@huaweicloud.com>
- <20260903130218.DA3BC1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260903130218.DA3BC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 9/3/2026 9:02 PM, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unbounded retry loop in `ext4_map_blocks` can lead to livelock.
+> - [High] Skipping SWIOTLB_POOL_CC_GUEST when a restricted DMA pool is present can result in SWIOTLB_POOL_NONE or SWIOTLB_POOL_MINIMAL being selected, breaking DMA for all other devices.
 > --
-> 
-> commit 084efaf4a2100728f08798dc518e2664e9b89954
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> 
-> ext4: recheck extent status tree before block allocation
-> 
-> This commit adds a sequence number recheck of the extent status tree
-> before block allocation in ext4_map_blocks(). The goal is to ensure a
-> racing truncate does not trim the extent between lookup and write lock
-> acquisition, which could lead to quota leaks. If the sequence number
-> has changed, the lookup is retried.
-> 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> index d703e95a6f62d..fb4834608fd89 100644
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
->> @@ -734,6 +734,7 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
->>   	else
->>   		ext4_check_map_extents_env(inode);
->>   
->> +create_retry:
->>   	/* Lookup extent status tree firstly */
->>   	if (ext4_es_lookup_extent(inode, map->m_lblk, NULL, &es, &map->m_seq)) {
->>   		if (ext4_es_is_written(&es) || ext4_es_is_unwritten(&es)) {
-> 
+>
+> commit d8ab20a637a8736036e923dfa3f89a8da55215c3
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> dma: swiotlb: Centralize memory-encryption pool sizing
+>
+> This patch centralizes SWIOTLB memory-encryption pool sizing for guests into
+> the SWIOTLB core. It sizes the confidential guest pool to 6% of guest memory
+> by default and records the presence of restricted DMA pools to avoid selecting
+> the confidential-guest policy solely based on guest memory encryption.
+>
+>> diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+>> index 90e0bfd0715cf..c4611b2c45403 100644
+>> --- a/kernel/dma/swiotlb.c
+>> +++ b/kernel/dma/swiotlb.c
+>
 > [ ... ]
-> 
->> @@ -820,6 +823,19 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
->>   	 * with create == 1 flag.
->>   	 */
->>   	down_write(&EXT4_I(inode)->i_data_sem);
->> +
->> +	/*
->> +	 * Check the validity of the mapping found via the extent status
->> +	 * tree or the disk query. A racing truncate may have changed the
->> +	 * extent, since writeback does not hold i_rwsem or the folio locks
->> +	 * covering the full extent.
->> +	 */
->> +	if (map->m_seq != READ_ONCE(EXT4_I(inode)->i_es_seq)) {
->> +		up_write(&EXT4_I(inode)->i_data_sem);
->> +		map->m_flags = 0;
->> +		map->m_len = orig_mlen;
->> +		goto create_retry;
-> 
+>
+>> @@ -509,7 +553,8 @@ swiotlb_select_pool_policy(unsigned int flags)
+>>  	if (swiotlb_force_disable)
+>>  		return SWIOTLB_POOL_NONE;
+>>  
+>> -	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
+>> +	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT) &&
+>> +	    !restricted_dma_pool_present)
+>>  		return SWIOTLB_POOL_CC_GUEST;
+>
 > [Severity: High]
-> Could this goto statement in ext4_map_blocks() lead to an unbounded retry
-> loop causing a livelock?
-> 
-> If an unprivileged user triggers a file writeback concurrently with a
-> tight loop of operations modifying the extent tree (such as truncate
-> or fallocate), the i_es_seq sequence number will continuously update.
-> 
-> Since there is no retry counter or a pessimistic locking fallback
-> (like performing the lookup entirely under the write lock after some
-> attempts), it appears the writeback thread could be starved indefinitely
-> here in fs/ext4/inode.c, spinning at 100% CPU.
-> 
-> Does this need an upper bound on retries or a fallback mechanism to
-> prevent system stalls?
+> Does skipping SWIOTLB_POOL_CC_GUEST here leave the system without a proper
+> fallback for non-restricted devices?
+>
+> Looking at swiotlb_select_pool_policy() in kernel/dma/swiotlb.c, if a
+> confidential guest boots with a restricted DMA pool present in the Device
+> Tree, and system RAM is small enough that SWIOTLB_INIT_ADDRESSING_LIMIT is
+> not set (e.g., <= 4GB), this check will skip SWIOTLB_POOL_CC_GUEST. 
+>
+> The function then falls through all the way to SWIOTLB_POOL_MINIMAL (a tiny
+> 1MB/GB pool) or SWIOTLB_POOL_NONE. If it returns SWIOTLB_POOL_NONE,
+> swiotlb_init_remap() will exit without allocating a default SWIOTLB pool.
+> As a result, unassigned devices that still rely on the default pool for
+> bounce buffers will fail to map DMA memory, potentially leading to I/O
+> errors or boot panics.
+>
+> Should this path safely fall back to SWIOTLB_POOL_DEFAULT when a restricted
+> DMA pool is present, to ensure a standard default pool is still allocated?
+>
 
-The retry here mirrors the existing write_ops->iomap_valid() +
-IOMAP_F_STALE mechanism in iomap, which also rechecks the sequence
-number and retries without any upper bound, and has not shown livelock
-problems in practice.
+That is intentional. In a confidential guest, the presence of a
+restricted-dma-pool is used as a hint not to set up an unencrypted
+default swiotlb pool.
 
-A retry only happens when i_es_seq has actually changed, which requires
-another thread to hold i_data_sem in write mode, so each retry implies
-real lock contention, and the writer yields on the rwsem slowpath rather
-than spinning.
-
-So I don't think an explicit retry bound is needed here.
-
-Thanks,
-Yi.
-
-> 
->> +	}
->>   	retval = ext4_map_create_blocks(handle, inode, map, flags);
->>   	up_write((&EXT4_I(inode)->i_data_sem));
-> 
-
+-aneesh
