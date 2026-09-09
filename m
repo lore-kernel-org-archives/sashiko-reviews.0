@@ -1,112 +1,120 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379233557D
-	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 03:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788925358; cv=none; b=U4RghkYYjfvVJZWIdF8lQd3QaQ0w++MWd5zltVh8w2Z/r3NjPXTbowAIPEy/NCWN8NE5aLtwHK5OHP+PSwLgq6uF/GoGa1kEsCBMkiObY/wwyg8sNyjMup+rWXsXfVbfZyoRff+wEldTsElXyRsal0SLyp2Ebp7sf0NrNbFwuTU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788925358; c=relaxed/simple;
-	bh=DPG9za4oXsJpy7tSykLd06q0WG1pcqzSVZJNeYro8wg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E2bpJUih8RsglMo6tWFGW9PezujBzoR/seQ5vFXWQcmRxK5djXm++HYLDToup6AhovRtcumqZu9IKPROrHsdqXRZKV5rWXRuZdyr8Ux1+WR7KjCxTtZdClmC0vuOmVNs9G23hfRtF07tjdDPvN0GKu/970Y0189qmo7rKqdaZsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; dkim=pass (1024-bit key) header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.b=eDojvma5; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E47492E34
+	for <sashiko-reviews@lists.linux.dev>; Wed,  9 Sep 2026 03:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788925535; cv=pass; b=rl9/j7TDJ78L/XKUYQiDDkJAXU+4h2E0i2SyF3rtPcyMn6pP9WRC2gH10gcWTXFJRnOHkmZGy7kp7B5dLJuo2oreAJSYgnapbjAqns0JGUxCO9YAC+GD0wDWWoAr5/zMfHwFa/3gq2tC0Am2V2EretwuWnv3aPqz9MvVh2P+92I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788925535; c=relaxed/simple;
+	bh=IXNmuepENNR4tE9HqqYaDhxsSc1n6zibwfYbLVTCyO4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iqROGNneEgy5PZoTQfb98md/FGHgClQS+/R85aNLL2vtK5qG0DazGk6HByHBdTUHdk2ycvw2dIgrraZ1UKuwZTwjM6jYXkI+Rv+xtWHpku0elxLo7/E/BaN3qBWEG3dzDWweZQuauF8v+mbcmuLTc4TXSZG552dLUJKljmz5XIo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egV41rFc; arc=pass smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.b="eDojvma5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smail.nju.edu.cn;
-	s=iohv2404; t=1788925334;
-	bh=S3S48v9NyNCygvo9ANS4o5ZQWKXiieL6rO7xfL97yBU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=eDojvma5PJOHwvlA/LgzO5UmoFaiDJaJ+589eBlp4AhGEfb7tWeQI07A2f1XXvFjp
-	 r7FE2mXlY4f5TqDnf/O3W5UkKh9RkAzQhJnIKnB2JwiGoKzmAHCo3Pp6mvW3IKTfAj
-	 qmLtv5Gm8wdvI8F0xZxpKyyfaaA/tIeQG6IozPyQ=
-X-QQ-mid: esmtpsz18t1788925330tbaeb4760
-X-QQ-Originating-IP: mQAzD3pkNlHdp5jpzSQImebKhWrNlUia+t09hwY2gow=
-Received: from [127.0.0.1] ( [124.70.231.75])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 09 Sep 2026 11:42:09 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12620112044545498370
-Message-ID: <1FD435BC6A08027E+0a49ab9c-e991-4af0-b484-b57ee65cf79a@smail.nju.edu.cn>
-Date: Wed, 9 Sep 2026 11:42:08 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egV41rFc"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-87f4e914a45so9408837b3.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 08 Sep 2026 20:45:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788925533; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NXfSmN4d0KvkZwblQf6dY8PkAvaPm8RN+ST5b2IcfmuWqbMSZFpvkQO9JuE9yYzmKF
+         VBxskIOUM0SX5KtD+RcyD86RNv5RRg0QAvshnn9vLhBAKgXDuXDMLqcEGtBeg8DQBbwj
+         8iioaw0dP96nSd4K3Ua660BIdDiYyndDx38/E9j7wvGObb2s6zvCL5o6CXDHq4KAhsGQ
+         iJ7iQnZKcjUxaBNGKUu3zlHwtENgJ4NWveU1InWqEr+GYsyO56EOgXXyqRJXhuJKig28
+         /BQbVOqNLsRY2EFh1hKBy+aRGAkkIO8UD8CBUUi+plhDbDTt/kDnj5djVuVntzO1QJ2/
+         nvmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hZn/g/PqABJQU3OOPezBemcwd84aUSRVAJ6HUBRncq0=;
+        fh=seZiLxWw5Duxn/nVZ1Pqv1j01Oj/QaPPA8dbLB2Kz6I=;
+        b=KV+0e6TaJbKmS4o8UCuGvM5v3NNTw09kTBc2V+mWrkd2sloouxZbs5ADgJQ2rQrnkD
+         Hf2xZdi9DEbtVgh5rX4X4g2so/O/BxgStVfhvNzfylClr2tPLISnOBw4oVD/zGKGUEIC
+         N6T8u7in/GpWp63VHWPbaZcMH34dajUVM9JhR3yjaT55HRPmcM3sv6SrV93R72tggBGm
+         QrLqXHlCX1pS9G41labgY2v1VYPhGXVs3tcUllzKm/5MY8UWW4HUX2sFm+yqV6PcaChP
+         qmQsGm+cQapHt51b3Qy47fUE3KRNUR6c/euRM6l7ABcKPQRcXoB4/Z3ZxNZowMfjtmIP
+         OacA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788925533; x=1789530333; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hZn/g/PqABJQU3OOPezBemcwd84aUSRVAJ6HUBRncq0=;
+        b=egV41rFc1KmNQ+oZ6eMTWkyqTA+HcNFJ/mEiw/o4bL4VA5l0if9uKaJ93oDc3xKTaB
+         Gq+Z+GEWNdoxitFOjqXA6LAZkvjqZV5L/Ghu9dOlZhHXNZhkN9z6TPrQtTjneBM0W9gT
+         HLeb2NO/79kCJXTzCs3Kanfl5cm1UTZZni1Z6nQzIJkx4X0uEd4XSdT5ao2jev68Jn45
+         ncB2i3sunbooiMC9QyC1abaIk7wNT7Td2m4nV6ChPjG0N8RNf9KOTsqKfPtNtPTL4fJj
+         RJvftfBZxpMJ6snKXr/LLpBkkMJ4gadoSht/AP0Ern5U9YzBYXmqaDgcw95c/R8W+eS0
+         ekXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788925533; x=1789530333;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hZn/g/PqABJQU3OOPezBemcwd84aUSRVAJ6HUBRncq0=;
+        b=NMrT1N3gXvxWQPbXaFZNy1ARM2LE9/TCT6Qeu3CBQGbZqfMwOMaspvc/iYLE+WOaDa
+         UTeTygfEEl0sM2SJWkoj7kBL9fC6u75vrOBNkreeaYBzmAGBy2LD4aGqRY6WQD/HZYrX
+         9ZUhUYiAgdeeve0EEBToJl98YsrHYxgrsxhcfwM7K1N1D/EY6GBVTVKEZXdJgvSrJt7t
+         h+P5XuxmBfwMs/Og+S8ROYieJXzumVRmeEOuEzapwuTBJktNgb03m9QI7KRbbrnZlfD7
+         t1gxHxlrPzsHC7hSV7JTLDNQi7mOpWHuKKHQhOudIck8FfjbKMROC9H8E3Mu9qeVQBG4
+         d5Ug==
+X-Gm-Message-State: AFuF++nNNC66DpFxOeyRu/cw5SNNBYdEw+fY1PNsmjanQGy3gRYM6+H1
+	1rgsolChb2uXoc/5NRmOJHagsUPf4uMBeFl2Qp2NI+7HViTVWHWxFBIGOS0Uh6124Goc9xCGOED
+	CX7yXCLCXTZj4z6WXIeWmh5GCPTkL7zMw0k7+fv3Tbg==
+X-Gm-Gg: AYBFou2MIblOeHyCHs/EG6L0uTlzo7RVCOXu24LuxcdIw/gdKpUfH482/wTSUoNoxDl
+	vh2UuJ7pUgGuFgzQDxgtJNKyGEtPBnjVD0KaLS7yqm1uR0uRbafFZcvOwvvkNfrAMf88sbvL2QM
+	Af//VTQjGc3pxDrV7fiBUcfUvqZuavyC8m9+9NMo8/cuUa5xQK9H5k38CjYviIEEjbVKkz+9CpF
+	w/6bWB+hgIwJWPfUhVIfZDxIPnH6kn+0/w1jUFqCzletcMCLMzBdi5DeM6o8MH4wgQeDQ/eS5Et
+	RXmDBSVqK+EvOtvFuoX6eJbfCf6fYJUO530Ds2Q8YT8drSC9CcOi3I9sGlnK8BRRbYda7K1tq/D
+	XhULbczz0V+9+
+X-Received: by 2002:a05:690c:a1ce:b0:873:5ddf:d879 with SMTP id
+ 00721157ae682-8735ddfda51mr71341387b3.68.1788925533074; Tue, 08 Sep 2026
+ 20:45:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/virtio: fix memory leak of fence event on execbuffer
- failure
+References: <20260909024324.16002-1-laoar.shao@gmail.com> <20260909024324.16002-5-laoar.shao@gmail.com>
+ <20260909025625.110F31F00A3A@smtp.kernel.org>
+In-Reply-To: <20260909025625.110F31F00A3A@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Wed, 9 Sep 2026 11:44:55 +0800
+X-Gm-Features: AcwNN1VwiwpG2WQP02MARWQxkcNbYWqZelwY3kpV9fIJSd5ESRPFeD9J7Iz66Yk
+Message-ID: <CALOAHbCOFvcDy9kVVKRBAECnDi-vRcwh=dQQSC0ENeVxLYB_GQ@mail.gmail.com>
+Subject: Re: [PATCH v8 4/9] livepatch: Call klp_init_patch_early() earlier
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <D320EAB5680C1411+20260908121323.2405044-1-peiyang_he@smail.nju.edu.cn>
- <20260908123440.84D501F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
-In-Reply-To: <20260908123440.84D501F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: M3ZkD08p3wd5I0LmwxsEQLQRT2YADXbaboooCybJYRBELheiyV+syXNJ
-	m480R/FBeoV4V+WxLW87vJX9c7qPfKe0RQzjOcNLKaH/wZsa07Agqth3DiKuZMF39xgjZBI
-	aa4Koudnk/jMGlzyA5bQpxrqyAxhx54/hI/Y6dpVEIOF7xiDwta4ft9/UT+cdNvi3rhjDEK
-	rA0FQkpSVgYnpkCR3ZNfF831o7Ip9XBOUK4SatM4ziD+wo5oJE6huJDxU557XAq/6gc8scM
-	5DN7MpUOg+3Tct0k335m7+Z4dII750WWmpp3DL7wpELCrQdv8eVxGVv5WXGPjhks4ECBm4y
-	c/jYHRJGIjLInYR6RqqNTdh3dKt1qZST8GYNPvYCFAvDEdIuYMUmM8juAVimHNCzPh1idEO
-	INb9DopyMMHhQA9F3E4IODDvoUD6kMP0gbs3hygsIxctIEz6tIWl6F/sYyNnaQhHiwVjSjS
-	MbZv/EuIfxBGLLgdMI5XZN3guUtXCpzY4Ym/eSH6Q/9WqQu1Sp1qdEWzd5+YQ4sqofkkSuj
-	xHYtZwTvZXG51rdIN9nqlI/vYiiXaCiSplcG/3q/vIfhhwA3jQlmtfu4ecPLRGjCvtbDlaH
-	xvlTbAQWZWIU4ol4eGFBdcsNGhKDZBr5ntQHiRu4lppaUDSnujNht75rDcvZn4OpZo9btsR
-	r6+hRKNg7XpU1LelBIUTqO5iZBn22S8YZNPVZqud+kFbI2IdsL2Z9baUILT8mYNguEUpl1Z
-	qsDmIVSfkraxC0Tg3n+ysrNdMaL0FOcYgJEXBFVRolwHWlvo1ljIY2ipZg686Rkvu9ZtA2I
-	olSszA6v3Mpk30n1kvTRsjgr6nHroq0yacX79qk/VREevG7WA/JETKIP04ae2Mq+L632cRK
-	5HWQ4uXTB3nTgQ/ONzkNAe6PCljIVW0BSRTLjw/q2wNZMi+iJ9Bf+O3EIYMp4k6Epj5z3lc
-	hqHeczDhRawDskQ5ArQZgP3m1i87ba8q963F+MKb5zDOqj5MlcwqdeUyp6b9OnVsV6pgVIw
-	POwYwdn6ugdalUd8F3
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+Cc: jikos@kernel.org, joe.lawrence@redhat.com, song@kernel.org, mbenes@suse.cz, 
+	jpoimboe@kernel.org, pmladek@suse.com, live-patching@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026/9/8 20:34, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> This is another pre-existing issue, but is it possible for
-> virtio_gpu_fence_alloc() to fail and cause a NULL pointer dereference
-> earlier in the submission path?
-> 
-> Looking at virtio_gpu_init_submit() called earlier in this ioctl, it does
-> not check the return value of virtio_gpu_fence_alloc():
-> 
-> drivers/gpu/drm/virtio/virtgpu_submit.c:virtio_gpu_init_submit() {
->     ...
->         out_fence = virtio_gpu_fence_alloc(vgdev, fence_ctx, ring_idx);
->     else
->         out_fence = NULL;
-> 
->     if (drm_fence_event) {
->         err = virtio_gpu_fence_event_create(dev, file, out_fence, ring_idx);
->     ...
-> }
-> 
-> And in virtio_gpu_fence_event_create():
-> 
-> drivers/gpu/drm/virtio/virtgpu_submit.c:virtio_gpu_fence_event_create() {
->     ...
->     fence->e = e;
->     ...
-> }
-> 
-> If kzalloc_obj() inside virtio_gpu_fence_alloc() fails due to memory pressure,
-> it returns NULL, which is then unconditionally dereferenced.
-> 
-> Can unprivileged userspace trigger this by invoking the execbuffer ioctl
-> under constrained memory conditions?
-> 
+On Wed, Sep 9, 2026 at 10:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Fatal UAF / Kernel Panic on module unload due to unparented kobj=
+ects triggering delayed work in freed memory.
 
-Our fuzzing results confirm this NULL pointer deref path is valid.
-Will send a patch soon.
+This has already been fixed by commit 7f4ca0d0b40a ("livepatch: Fix
+UAF of unregistered patch kobjects"), which is in the livepatching
+for-next branch:
 
+  https://git.kernel.org/pub/scm/linux/kernel/git/livepatching/livepatching=
+.git/commit/?id=3D7f4ca0d0b40ac1ccd82ebaf1514c2d26c3db71c4
+
+It seems sashiko-bot's review was not generated against the
+livepatching for-next branch.
+
+--=20
+Regards
+Yafang
