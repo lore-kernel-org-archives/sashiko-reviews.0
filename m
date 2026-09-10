@@ -1,138 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6056A267B89;
-	Thu, 10 Sep 2026 01:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68DA33B975
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 01:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789002215; cv=none; b=HhN9HE/2fawZHn7peJbvGb9321JX+sAfcuMkYh7d3T4vUFTQG5tsJRDiGUa/tpLl/HoEfWr8GWFIfJCay1cWrx9uHYpU+JiWMkAKRG3Ul6q/ogfA+52RFnXfOCipmJzLg4yf5/FGKELSYgqO28+DXU51qZ9Ojt1ZXn8HY7V/gS8=
+	t=1789002616; cv=none; b=u4CT7mWVHharHwUNYp+mtpkNUAeTSrNz5EpBm8qCAM2Yhyb+vpR4ZlXR+EqP3JYzLhAa4c9ebhWe3LRfm6/rxnJVl8d/2ogVlKkjcdvJcKqRh/AfeecqQY6BTbE0SuA3s7MwMW2AaX0L7EAI4kMdlRNP53vIG6zN+M5Y7SABMK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789002215; c=relaxed/simple;
-	bh=ADJhxUtLRDyWlgEf0CeEegaEyhOB4J5XHSA9MvQ0tKg=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=ABVSJgd8cDwdJU3yfZ09MDsjtZctXbmIiw1Agz4Y4S7biKHjeG1CsHg76LeqZuHXCvhc7x3kcaOSU5bfTvkJAbcVFSwp1yqjAzVo6JojiKhSR1it+WA4FuCaR2F/ysK3uZVD4DjGPyu12KFRNE4z1f/Pu72hqmzJaxScZbbz9sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJrKOsUR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789002616; c=relaxed/simple;
+	bh=or0xzMswmj9Tj7ceDBe8I/7LXee47Ypd8r/+wEXzH2Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=brFCKirFW5SJ/QORnMSQp0UFkdeWCcPj+1P1TsPXSjdqqM4abIsoV6lecXeawDiyuBUTZo+OcwcX/U/xXDWUK8Vot9bauGg6zFpZ5/lHF/DGg+6eIFTWNV6BHXcbjDVv7xskEzq1i4inVw+tiQbAgtL69BIS2w9iWgVXJv4X/84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mjT1yY5h; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJrKOsUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B3C1F000FF;
-	Thu, 10 Sep 2026 01:03:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789002214;
-	bh=E8+04fuszkT0UeBchr03/C/oM1JRnPox0VjsrG+dofw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=jJrKOsURWE6lYbAn2ZVeXuQd+FHLTNNvecORqcfffBcG2t5A3pbSjJTH9669EPdLs
-	 0LRumXc1PcXA7IDhjBRu6Y9V4MBm8QsMRB0qkaV9NtcvFx9Jh7yCLe/AHdrzg2rFWv
-	 6caFhZBkzda1z6gv3JBYxRn73W16bZFLcZYm6lGBVRWGw4DG3SNb/cAWf7uEXLhEXj
-	 OPbZdmUyJKsShzz9C4UZCiHtI2hPMWs1/OuaYABSFaDKC50KO73iruXxqxfjEy6O4J
-	 XA7blVtLciZ/Qs7ZbDADKYiXjvka+0lDM2O/MAYEDnFePNafzFFZC+yoAQ6lulnD0h
-	 vhFMUNjv5JplA==
-Date: Thu, 10 Sep 2026 10:03:31 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] tools/bootconfig: Fix integer overflow in size check
-Message-Id: <20260910100331.c2d39516cead6c1e1fd00f78@kernel.org>
-In-Reply-To: <20260910004056.6FE9A1F000FF@smtp.kernel.org>
-References: <178900024679.183840.10345859264677533824.stgit@devnote2>
-	<20260910004056.6FE9A1F000FF@smtp.kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mjT1yY5h"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-39675172593so5498008a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 18:10:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789002609; x=1789607409; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=or0xzMswmj9Tj7ceDBe8I/7LXee47Ypd8r/+wEXzH2Y=;
+        b=mjT1yY5h/qRXPs4DN2RxA0lwFxzx6n3yCOomKv8RBTYRPYHapn2utDuvL/mE5eANsC
+         BKbfztcsRdaTMt1fmKhmiDXxeL90CFAH/hx7a479rXQwYgKae+H74HOrPb076S8x/mXq
+         zAtiGakbHLz53SwUx9LwuL6Km0hnToTeq4ingCFu+fBzHrHwVa/8P2EdjMiqVeC4SwZ9
+         upqQca4pR1Eek3D/TaxdZACKloybZD1usKb/j7w1+SF0w1s6ZEeoqqcqa3LGk39/FL8l
+         tAX6UCyRbWGu2gWCZaTgi4smdbnOFbewxlEoAIaLSmhlF74bNQHjxpiIphifX70vtmq/
+         Z+dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789002609; x=1789607409;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=or0xzMswmj9Tj7ceDBe8I/7LXee47Ypd8r/+wEXzH2Y=;
+        b=MqtwjrAlyhZbKfJd8y9Qye5lbKOZUlihLVXjZt8rWDfOMwvXwyMiPmEE0e/8KpngNQ
+         2KrthukfFx2ZuiqocTrVM2QwvIj47+AAogwlLjpBlQf0VIfQPAVjmL8smsLxCdsVbprG
+         CvZF3ryJl7SMiwqG+eDioa5xer+SCOWlCqslr09XeINbiidLyeNRQpTxN+f784Rp4bhN
+         sBAHsC587q7YDHHRxGGDP/HnDuAllhCIpTMlNyldkFn+UlwsCTVaCK6USxpXRdSPXUZB
+         VtQ+d2c3IFZnXXsr6Y6SKBiGQi1Lygvf8Gb85Z/Mvf63FOs0jGhhHBdJFvXXgNfmUaST
+         Zqbw==
+X-Forwarded-Encrypted: i=1; AKwUvBxyI/A1CUJtUywQ1ZkcgTo9VRYtxcpMbHnVOeJEKA5Hh5sLcRmXCZ2SYNRLIWoQk0KmR5SQNIHDLVKt8PBgqOM=@lists.linux.dev
+X-Gm-Message-State: AFuF++k8ChpTSBS/GDuSVyPG1iM89wI9yJZhVjibbGsHWHHKb8xhtXav
+	TaAyjlm28gl/eTa+ezgZhO9bGThq50OpAgCRscrSDodnoseg5MO8LlE=
+X-Gm-Gg: AYBFou0tWCN9XKtcv0n9tCpFgdxA9hrzX2QIDirdsjZScmDSSzaU8P9wbg5UjrxHV2y
+	EafnL4sF/7YghQzts9z4SDzA6cpyYKjBQpX3dS14UDF9Pm3mr5bhn0DSU0UBLE1rHtAM6f0yF4d
+	v4MRVe+DCD+Kqrhn1IUOcrM0bO2fC8Dgw1SQFDgEYbAt93irsWYnbF6mfjpgbLdnB5q2zAb8CYi
+	2idjJ+jocVnB2qLwxv5xwF7q+wdtFlZ73BPqzd7LJKPKlFTwAYHmOd0x+gcP/7YrElz4oilUHOi
+	uFrbbTgWe10q4DtYo/1TZGP0D+NTf0+cb4vy7ftYhzt0/BJFkIz5pNzmwJYnTSJILVdILGO5AqB
+	w1bYmcSSgWaa4+AGOFR4lWaqbhvBlFx4dUMEIUYNL9EJT+sC8GvKVM91y2ggi7x7yksaYOErHte
+	06e0uUTsS1iiDZ/P+sY3Kun/TthAaGHq1bbYaT1JdJ2T36jldfir2RRFESNSK7osX+cSpDnBM/0
+	IUKuXS4+mfrQFBPc53uos/5Hg==
+X-Received: by 2002:a17:90a:2c9:b0:39b:2b5a:8dc5 with SMTP id 98e67ed59e1d1-39b2b5a9b24mr36753936a91.6.1789002609041;
+        Wed, 09 Sep 2026 18:10:09 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f04:fd2a:f01d:1dc7:1e5:47d8])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d7e7f4369sm863377a91.8.2026.09.09.18.10.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2026 18:10:08 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>
+Cc: linux-trace-kernel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	donggeunyoo.kernel@gmail.com
+Subject: Re: [PATCH] tracing: hist: free the var ref when its initialization fails
+Date: Thu, 10 Sep 2026 10:10:03 +0900
+Message-ID: <20260910011003.532262-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260906133352.3815019-1-donggeunyoo.kernel@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu, 10 Sep 2026 00:40:55 +0000
-sashiko-bot@kernel.org wrote:
+The Sashiko AI reviewer reported this bug before I sent the fix, in its
+review of "tracing: hist: free var refs regardless of how often they are
+referenced". The patch should carry:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Incomplete Fix / Integer Truncation Leading to Heap Overflow
-> --
-> 
-> commit 2d027c4ee8625f17122dea0afb65c1e4b21ae531
-> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> 
->     tools/bootconfig: Fix integer overflow in size check
->     
->     This commit modifies the size check in load_xbc_from_initrd() to prevent
->     an integer overflow on 32-bit systems. It changes the condition to
->     subtract BOOTCONFIG_FOOTER_SIZE from stat.st_size instead of adding it
->     to the bootconfig size.
-> 
->     Closes: https://lore.kernel.org/all/20260909161113.16C691F00A3A@smtp.kernel.org/
-> 
-> > diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
-> > index 7dc9fff9b6370..b380ad6777faa 100644
-> > --- a/tools/bootconfig/main.c
-> > +++ b/tools/bootconfig/main.c
-> > @@ -218,7 +218,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
-> >  	csum = le32toh(csum);
-> >  
-> >  	/* Wrong size error  */
-> > -	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
-> > +	if (size > stat.st_size - BOOTCONFIG_FOOTER_SIZE) {
-> 
-> [Severity: High]
-> This is a pre-existing issue, but the fix doesn't seem to completely resolve
-> the integer truncation and heap overflow vulnerabilities.
-> 
-> Can this size check still be bypassed for large files? Since stat.st_size is a
-> 64-bit off_t, if the file size is larger than 4.29 GB, stat.st_size -
-> BOOTCONFIG_FOOTER_SIZE can exceed UINT32_MAX. A corrupted uint32_t size of
-> 0xFFFFFFFF would bypass this check because it is always smaller than the
-> right side.
-> 
-> If bypassed, does passing 0xFFFFFFFF to load_xbc_fd() cause an integer
-> truncation and heap overflow?
-> 
-> tools/bootconfig/main.c:load_xbc_fd() {
->     ...
->     static int load_xbc_fd(int fd, char **buf, int size)
->     ...
->         *buf = malloc(size + 1);
->         if (!*buf)
->             return -ENOMEM;
->     
->         ret = read(fd, *buf, size);
->     ...
->         (*buf)[size] = '\0';
->     ...
-> }
-> 
-> Because size is an int, 0xFFFFFFFF is truncated to -1. This results in
-> malloc(0) which returns a valid heap chunk. The read() call then receives -1
-> which gets cast to SIZE_MAX, overflowing the heap chunk. Finally, a null byte
-> is written to a negative array index (-1), causing an out-of-bounds write.
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260906125025.711111F00A3A@smtp.kernel.org/
 
-This part should be fixed in v2. But below is another problem.
+No change to the patch itself.
 
-> 
-> Does this same vulnerability also affect load_xbc_file() when processing
-> standalone files >= 2GB?
-> 
-> tools/bootconfig/main.c:load_xbc_file() {
->     ...
->     ret = fstat(fd, &stat);
->     ...
->     ret = load_xbc_fd(fd, buf, stat.st_size);
->     ...
-> }
-> 
-> This implicitly truncates the 64-bit off_t stat.st_size into the 32-bit int
-> size parameter of load_xbc_fd().
-> 
-> >  		pr_err("bootconfig size is too big\n");
-> >  		return -E2BIG;
-> >  	}
-
-OK, let me update the patch.
-
-Thank you,
-
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Thanks,
+Donggeun
