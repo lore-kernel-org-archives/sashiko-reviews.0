@@ -1,209 +1,181 @@
-Received: from mta1.migadu.com (out-59.mta1.migadu.com [95.215.58.59])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C1446E01E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 11:14:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0A46C835;
+	Thu, 10 Sep 2026 11:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789038857; cv=none; b=fSzR46lBxsAFh51liVnMUQxwZ89NFpL4yFVKuyKQveTOW/6PLKNNx8sYyFMsXqdfhM9AV5N81iwEMsQemEdhT5AiHHb/Ize1e1Bh+UNG2t/n70zHvitNNpa4FGmBKjG/aiY+5BsjABOd/ATILUacz7/X0910jkavDml+1cnSpig=
+	t=1789038956; cv=none; b=X8+BPJaGS5UdWqlGdhBrBjK/lmd9S0N5n0xIEgWF2wuoW0k9vTFcWPW5Pk2MMBZz6wQfXSxrb+RxCZHsbiZEL414sdpE46mtpKsIiYigH1UutQkEkYVckv1q3bUUxeQQBaFvmjmkgKEW7Ned/QnVzt1uIR2PJzOFbp3kWRFe67c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789038857; c=relaxed/simple;
-	bh=3ghV1QzLVKod8PaAxIsdrr7VJd/DfOUFqmFJanO1DjE=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=GNMfL/7ueYleMQ5xuorMIisOoRkGeaamplTiAZwzPSyCLD9FOMcRioCdHzGzVBQZTCLpZky/aQZT99zCwzlLiFOuCPpFpp7jAhe75+rbeW11ch811bP2b6GmtRUQEPvOjhwjhgjNQNkSqIKTTx64bHP/nr5Ut6kbWMHAi3AFxrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DhWNvFNM; arc=none smtp.client-ip=95.215.58.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789038956; c=relaxed/simple;
+	bh=1YTVDq/mdUrpccGJkEkKc5xC+w/1lymnfmABkq7CdkQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qczVaFcH1ATt3nv6To0g2iQKHIebTNTYpuTsZlDY+5n0sJRg2rD+juGOaCuOApzasMc1/ySxi6jbgW096F/aZdWyniHeS0rme/0K3FY+jzLu0xjU0mxBX4zwW/3k5u4NP6F4iBJrrrQgg6QZ1gPwXvqYofRIcs5J7WLVNC+uVVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=HkOwKv1S; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DhWNvFNM"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=3ghV1QzLVKod8PaAxIsdrr7VJd/DfOUFqmFJanO1DjE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789038850; v=1; x=1789643650;
- b=DhWNvFNM7wuAxItTdOnMCja+AM8JUSXvV0p7MASEyeKH+oGkxJK+zqpC/IHCusgUzvGZFBMs
- YWQFoYVMSCBjRClk8BETJ7q9Vqk7diSh+2hNWph04p5TwDwRN9/lDmbIFJLhNKKLgggJUrMLEew
- CxWE70T74N/BTsa0z2vmWvtA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 4c76a4a0dd0f5423;
-	Thu, 10 Sep 2026 11:14:10 +0000
-X-Mizu-Trace-ID: 4c76a4a0dd0f5423
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="HkOwKv1S"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=Q/dVO1hurmYsv9r6dtuBASl/RqXWuN50sq2e8VQMJTc=; b=HkOwKv1S2RBm4S3e3i98Oc6fEV
+	glCqvZUEotlt5YhykoTUCTIXgjjMJLDH8KoAVgx45/bsbmJT7sbwkva2jPAqEztNMZz5YEweT3g6b
+	ZdMb9j7FezrJQmHAA408f15Yo2vFYUqUk2Dj+HSYJuoZFgYTjxxix4reiebBRfogATfBaUW/SMdLA
+	mOjfCktjod1f69rRgjnb1ToEmylDqkAFg40SSPOFzi16ApkKafWKh9W5h8Rf0dKQEjjT24KrI/cPO
+	+huoqzRHhP+094HWEYPEcaoQF6PcNnzFlnFmA3L1OG5EHwAmmpIIa3cJ/qbyYB/zayPxzwtCAXmX0
+	aSAnxjHw==;
+Received: from sslproxy06.your-server.de ([78.46.172.3])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1x4ckw-000Pdw-2e;
+	Thu, 10 Sep 2026 13:15:50 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1x4ckw-000KXD-1m;
+	Thu, 10 Sep 2026 13:15:50 +0200
+Message-ID: <67538d7b-90df-4f77-9791-291968afa742@iogearbox.net>
+Date: Thu, 10 Sep 2026 13:15:50 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 10 Sep 2026 11:14:10 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: gang.yan@linux.dev
-Message-ID: <e9c7ab0d87da824a59f3fcc3bf44c71278d10c16@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH mptcp-next v6 6/6] Squash to previous one
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf 2/6] bpf: Bound the number of indirect jump edges in a
+ program
 To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-In-Reply-To: <20260904095144.5B2D41F00A3D@smtp.kernel.org>
-References: <20260904093531.20023-1-gang.yan@linux.dev>
- <20260904093531.20023-7-gang.yan@linux.dev>
- <20260904095144.5B2D41F00A3D@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260909204035.24289-1-daniel@iogearbox.net>
+ <20260909204035.24289-2-daniel@iogearbox.net>
+ <20260909205701.9C76C1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260909205701.9C76C1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28119/Thu Sep 10 08:24:09 2026)
 
-September 4, 2026 at 5:51 PM, sashiko-bot@kernel.org mailto:sashiko-bot@k=
-ernel.org  wrote:
+On 9/9/26 10:57 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] Integer overflow in jump table size calculation leads to massive out-of-bounds memory access.
+
+false positive
+
+> commit 4185a35dbc8e33f3114fd8855cb5ca01b0ecf5a9
+> Author: Daniel Borkmann <daniel@iogearbox.net>
+> 
+> bpf: Bound the number of indirect jump edges in a program
+> 
+> Bounds the total number of gotox edges across the program at
+> BPF_COMPLEXITY_LIMIT_INSNS to prevent excessive memory and CPU usage
+> during program loading.
+> 
+> Reported-by: STAR Labs SG <info@starlabs.sg>
+> 
+> [ ... ]
+> 
+>> diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
+>> index 081f7003eae66..e9910228da587 100644
+>> --- a/kernel/bpf/cfg.c
+>> +++ b/kernel/bpf/cfg.c
+>> @@ -388,6 +390,19 @@ static int visit_gotox_insn(int t, struct bpf_verifier_env *env)
+>>   			return PTR_ERR(jt);
+>>   
+>>   		env->insn_aux_data[t].jt = jt;
+>> +
+>> +		if (check_add_overflow(env->cfg.gotox_edges, jt->cnt,
+>> +				       &env->cfg.gotox_edges) ||
+>> +		    env->cfg.gotox_edges > BPF_MAX_GOTOX_EDGES) {
+>> +			verbose(env, "number of indirect jump edges in the program exceeds %u\n",
+>> +				BPF_MAX_GOTOX_EDGES);
+>> +			bpf_diag_program_structure(
+>> +				env, t, "too many indirect jump edges",
+>> +				"Reduce the number of indirect jumps, or the number of distinct targets they can reach.",
+>> +				"The program has more than %u indirect jump edges in total, counted over every gotox instruction.",
+>> +				BPF_MAX_GOTOX_EDGES);
+>> +			return -E2BIG;
+>> +		}
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but it is a pre-existing issue
+> in the CFG discovery logic that remains unfixed in this patch series.
+> 
+> Can jt_from_subprog() in kernel/bpf/cfg.c overflow the shift operation
+> when calculating the size for memcpy()?
+> 
+> If a user with CAP_BPF creates an INSN_ARRAY map with a very large
+> max_entries (e.g., 0x20000000) and populates it, jt_cur->cnt can be up to
+> map->max_entries.
+> 
+> In kernel/bpf/cfg.c:jt_from_subprog():
+> 
+>      memcpy(jt->items + old_cnt, jt_cur->items, jt_cur->cnt << 2);
+> 
+> If jt_cur->cnt reaches 0x20000000, the expression jt_cur->cnt << 2
+> evaluates as a signed 32-bit integer, resulting in -2147483648.
+
+Anything above max entries of 0x1FFFFFFF gets rejected, so this should not
+be possible. I tried to reproduce the above and can confirm this is the
+case.
+
+> When passed to memcpy(), which expects a size_t, this negative value is
+> sign-extended to 0xFFFFFFFF80000000 on 64-bit systems. memcpy() attempts
+> to copy over 18 exabytes of data, causing a catastrophic page fault.
+> 
+> Additionally, if max_entries is 0x40000000, the shift results in 0,
+> leaving jt->items uninitialized before it is passed to
+> sort_insn_array_uniq().
 
 
->=20
->=20Thank you for your contribution! Sashiko AI review found 3 potential =
-issue(s) to consider:
->=20
->=20New issues:
-> - [High] Bypassing RCU grace period in mptcp_pm_ops_init() when the PM =
-remains unchanged causes Use-After-Free and data races.
-> - [High] Publishing new PM ops before initializing its per-socket state=
- exposes uninitialized memory to RCU readers.
->=20
->=20Pre-existing issues:
-> - [High] Module reference count underflow when falling back to the defa=
-ult path manager.
-> --
->=20
->=20commit 261318f67b36cf52f532df8226134e77ddd65cd0
-> Author: Gang Yan <yangang@kylinos.cn>
->=20
->=20Squash to previous one
->=20
->=20This patch updates the MPTCP path manager operations to use RCU for c=
-oncurrent
-> reads. It modifies mptcp_pm_ops_init() and mptcp_pm_ops_release() to sa=
-fely
-> handle the assignment and release of the ops pointer, and adds RCU read=
- locks
-> in the subflow paths.
->=20
->=20>=20
->=20> diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
-> >  index 64244a1a01bca..d581d11b350f2 100644
-> >  --- a/net/mptcp/pm.c
-> >  +++ b/net/mptcp/pm.c
-> >=20
->=20[ ... ]
->=20
->=20>=20
->=20> @@ -1158,23 +1166,44 @@ void mptcp_pm_worker(struct mptcp_sock *msk=
-)
-> >  static void mptcp_pm_ops_init(struct mptcp_sock *msk,
-> >  struct mptcp_pm_ops *pm_ops)
-> >  {
-> >  - if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
-> >  - pr_warn_once("pm %s fails, fallback to default pm", pm_ops->name);
-> >  - pm_ops =3D &mptcp_pm_kernel;
-> >  + struct mptcp_pm_ops *old;
-> >  + bool need_sync =3D false;
-> >  +
-> >  + spin_lock_bh(&msk->pm.lock);
-> >  + old =3D rcu_dereference_protected(msk->pm.ops,
-> >  + lockdep_is_held(&msk->pm.lock));
-> >  + if (old =3D=3D pm_ops) {
-> >  + need_sync =3D false;
-> >  + } else {
-> >  + rcu_assign_pointer(msk->pm.ops, pm_ops);
-> >=20
->=20[Severity: High]
-> Does this code publish the new PM operations pointer to readers before =
-its
-> per-socket state is initialized?
->=20
->=20If msk->pm.ops is updated via rcu_assign_pointer() here, existing RCU=
- readers
-> like subflow_token_join_request() could dereference the new pm_ops and =
-execute
-> its methods before pm_ops->init(msk) has run below. For example, if a r=
-eader
-> calls mptcp_pm_get_local_id() and then mptcp_pm_is_backup() in the same=
- RCU
-> section, it might see the new uninitialized pm_ops for the second call.
->=20
->=20>=20
->=20> + need_sync =3D !!old;
-> >  }
-> >  + spin_unlock_bh(&msk->pm.lock);
-> >=20=20
->=20>  - msk->pm.ops =3D pm_ops;
-> >  - if (msk->pm.ops->init)
-> >  - msk->pm.ops->init(msk);
-> >  + if (need_sync)
-> >  + synchronize_rcu();
-> >  + if (old) {
-> >  + if (old->release)
-> >  + old->release(msk);
-> >=20
->=20[Severity: High]
-> Could this bypass the required RCU grace period and cause a use-after-f=
-ree?
->=20
->=20If old =3D=3D pm_ops, need_sync is set to false, skipping synchronize=
-_rcu().
-> However, the code still calls old->release(msk) immediately here. If
-> concurrent lockless RCU readers (e.g., in subflow_token_join_request())
-> are actively executing path manager methods on the socket, old->release=
-(msk)
-> can free the per-socket state while they are using it.
->=20
->=20>=20
->=20> + bpf_module_put(old, old->owner);
-> >  + }
-> >  +
-> >  + if (pm_ops->init)
-> >  + pm_ops->init(msk);
-> >=20=20
->=20>  pr_debug("pm %s initialized\n", pm_ops->name);
-> >  }
-> >=20
->=20[ ... ]
->=20
->=20>=20
->=20> @@ -1211,8 +1239,15 @@ void mptcp_pm_data_reset(struct mptcp_sock *=
-msk)
-> >  WRITE_ONCE(pm->pm_type, pm_type);
-> >=20=20
->=20>  rcu_read_lock();
-> >  - mptcp_pm_ops_init(msk, mptcp_get_path_manager(net));
-> >  + pm_ops =3D mptcp_get_path_manager(net);
-> >  + if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
-> >  + pr_warn_once("pm %s fails, fallback to default pm",
-> >  + pm_ops ? pm_ops->name : NULL);
-> >  + pm_ops =3D &mptcp_pm_kernel;
-> >=20
->=20[Severity: High]
-> This is a pre-existing issue, but could this fallback cause a module re=
-ference
-> count underflow?
->=20
->=20If bpf_try_module_get() fails or the requested PM is NULL, pm_ops is =
-set to
-> &mptcp_pm_kernel without incrementing its module reference count.
->=20
->=20Later, mptcp_pm_ops_release() unconditionally calls
-> bpf_module_put(pm_ops, pm_ops->owner). Since the reference was never ac=
-quired,
-> this causes an underflow of the MPTCP module's reference count. If MPTC=
-P is
-> built as a module, this could allow the module to be unloaded while soc=
-kets
-> are still alive.
->=20
->=20>=20
->=20> + }
-> >  rcu_read_unlock();
-> >  +
-> >  + mptcp_pm_ops_init(msk, pm_ops);
-> >  }
-
-Will be handled in the next version.
-
-> >=20
->=20--=20
->=20Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026090409353=
-1.20023-1-gang.yan@linux.dev?part=3D6
->
