@@ -1,30 +1,80 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D031B3CCA12
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 07:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB6395ACB
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 07:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789025957; cv=none; b=I/2+Oy3u6h8PmKys+vdbtObdJXABzc8MvoIvouFTqrp9kHynsvjoCao6mOplrEDrkJxgW1YqvzpbE88Qzmryxn9LcTGTMDVXE7D1xz78H/kZP9AC1JSe1smmKpHz3Z0LgSRWoQrv4q6iEIGxMXvAyFeyQRlrJ163X1OM9rf7+h0=
+	t=1789026401; cv=none; b=uqv+RKJCi1hOenEQ9UZqd4X0tfD4o1M5SqPSZJ7H0mCQMZLfXqNoTLV5IlyK0EjPwNtRjbSGz5TEWL30KxKUIlrPK+DFB6FQd4CM3zIc58tY44EgrHwKrdh65UZY4rZlm2zQej934V536CRpehozYVYTb9HDSnplUho/zVbOIk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789025957; c=relaxed/simple;
-	bh=F9TeOrhs8zWU7OJL4SKWNgk761BL2GNbIUspakKg6dY=;
+	s=arc-20240116; t=1789026401; c=relaxed/simple;
+	bh=lzL0fPUpb/BGMqLu4QcJnm0yVfsoZQ/YWqxshKCHljA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gBsaLGb1iBb/4/tH6AEJmKFnBIzKkSDYEMU5H5VMGs5G4db5NRmysLYUEFugiGbL5T1MEPnmxikAlK6JwC1XXl7VaqYHRTtRMtab5JzqJPm91adMwhVYD/bJfN3sKmqz47XUKIdDIp3IqbYwK9+oZZaiHOtQMvR+6DoDOQbbUnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgTzs2SyCzYQvTp
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 15:38:01 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id E18B540561
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 15:38:55 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgBnlgGOXqJqlvu2BQ--.35459S2;
-	Thu, 10 Sep 2026 15:38:55 +0800 (CST)
-Message-ID: <b9c5348d-6935-426d-a680-702092a1d0d6@huaweicloud.com>
-Date: Thu, 10 Sep 2026 15:38:54 +0800
+	 In-Reply-To:Content-Type; b=sIRvRCJEponzJqXSTVMMInTA9YZwv1GxzD1toi0m02xIqU4GJ2p2RkBc9xxa75sXUQ4B0L8FPXHu2dhjNzFjpNcI2R750jTVVVxpx3h+5A+FcB5NtfPqZOTRnwpbM7D951dUYvHu3iH2KfmzD601FCby5ACTuY7ZUr9QU3Htcso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ZXMDQmkX; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wWHKx78m; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MP8miy3L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+zs98xmk; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ZXMDQmkX";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wWHKx78m";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MP8miy3L";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+zs98xmk"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id B041F21B42;
+	Thu, 10 Sep 2026 07:46:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1789026392; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W/1nFyWEaqVKCugUxEfivy+nSvc0epaMKTnk4PJqaXY=;
+	b=ZXMDQmkXqRZJDk+kfWs5lyxmI+auqMm45QcptQvkua2wmtYuCQLT+WxF0rsrYmMj0l0Zpm
+	vJpneFRhPEnuTDcnnYhx/bd/RuCrZ085KYWEjvw7U2HTz1El0IbpH3ucK33mrqaD0zxObL
+	cTOq7c+4dze3YGXnuWtcJKInl6OTPxs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1789026392;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W/1nFyWEaqVKCugUxEfivy+nSvc0epaMKTnk4PJqaXY=;
+	b=wWHKx78mhiJ5A+EQrV4UcqQzs26Wl/VbNEvXm6BbSvDPGY35+mcdE6DKnBnz9r96+UmwME
+	kt/8h/dBMh+QL8Dw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1789026388; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W/1nFyWEaqVKCugUxEfivy+nSvc0epaMKTnk4PJqaXY=;
+	b=MP8miy3LvktgsHoL/t4w3LczrSIlHvFOX7v9EnfXJIH8UxaxalYiNH8Oxz2j+tBSJEy2bu
+	oXx9b3ZxILlzvJZpWukRC2B4Y+jBqXhNS6Pq5g4+6jGbj9rxW+57o0880ugvQJTOmuEAE8
+	XMV6VVV83ZB8E7D/Ng8hypgDg6mWym0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1789026388;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W/1nFyWEaqVKCugUxEfivy+nSvc0epaMKTnk4PJqaXY=;
+	b=+zs98xmkipgPxB8PpNveVGDtQUHmghJCNZ2UJQReJfwK/xPDmbxO6olpZmyw5bpTwa9NU2
+	mJoNFV6zEZVs6/Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4B6C5137FD;
+	Thu, 10 Sep 2026 07:46:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id zZVTCVRgomqdKgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 10 Sep 2026 07:46:28 +0000
+Message-ID: <92d94fa9-1e82-4f82-a2a1-345f5ef3abe8@suse.de>
+Date: Thu, 10 Sep 2026 09:46:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,220 +82,143 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/26] perf capstone: Symbolize address operands to
- match objdump on arm64
-To: Namhyung Kim <namhyung@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <eb2510f336aace385e4b4ffa99281d61c89c1ad2.1788872630.git.wutengda@huaweicloud.com>
- <20260908131804.76F941F00A3A@smtp.kernel.org> <aqFx4Fia3SWTrVZu@google.com>
+Subject: Re: [PATCH v4 1/3] firmware/sysfb: Remove rotation quirk for Lenovo
+ D330
+To: Javier Martinez Canillas <javierm@redhat.com>, ardb@kernel.org,
+ ilias.apalodimas@linaro.org, jani.nikula@linux.intel.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
+ airlied@gmail.com
+Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20260904090850.43060-1-tzimmermann@suse.de>
+ <20260904090850.43060-2-tzimmermann@suse.de>
+ <871pb1efi3.fsf@ocarina.mail-host-address-is-not-set>
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <aqFx4Fia3SWTrVZu@google.com>
-Content-Type: text/plain; charset=UTF-8
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <871pb1efi3.fsf@ocarina.mail-host-address-is-not-set>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:cCh0CgBnlgGOXqJqlvu2BQ--.35459S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxKF4fAr1xAw1xCFy8Jw15twb_yoW7KFWUp3
-	97Ca15GF4kXr17Kw1kXa1YqrySgwn3WF4aqryDGa4Fkr9agrn7GFWxCFyjka45Ar48Gr40
-	yF45Cr43ur9xtrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
-	Ja73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+X-Spam-Level: 
+X-Spam-Score: -4.30
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[redhat.com,kernel.org,linaro.org,linux.intel.com,ffwll.ch,gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MIME_TRACE(0.00)[0:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid]
+
+Hi
+
+Am 10.09.26 um 09:23 schrieb Javier Martinez Canillas:
+> Thomas Zimmermann <tzimmermann@suse.de> writes:
+>
+> Hello Thomas,
+>
+>> The Lenovo D330 is a notebook with detachable display. The display
+>> is installed in landscape orientation, but the display mode is in
+>> portrait orientation. By default, the display output is rotated to
+>> the left by 90°.
+>>
+>> The sysfb quirk breaks the display by swapping display width and
+>> height; and thus mixing up the display geometry. Fix this by keeping
+>> the display as-is. The sysfb DRM drivers, usually efidrm, will pick
+>> the correct panel orientation for the display.
+>>
+>> The exact behavior might depend on the version of the BIOS release,
+>> but the exact version numbers of broken and good releases are unknown.
+>> Users are advised to update to the latest firmware.
+>>
+>> Tested on a Lenovo D330-10IGM IdeaPad with firmware 8NCN43WW.
+>>
+>> v3:
+>> - mention possible dependency on BIOS release in commit description
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+>> ---
+>>   drivers/firmware/efi/sysfb_efi.c | 9 ---------
+>>   1 file changed, 9 deletions(-)
+>>
+>> diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
+>> index 685283bb7327..2338de73c62c 100644
+>> --- a/drivers/firmware/efi/sysfb_efi.c
+>> +++ b/drivers/firmware/efi/sysfb_efi.c
+>> @@ -301,15 +301,6 @@ static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
+>>   		},
+>>   		.callback = efifb_swap_width_height,
+>>   	},
+>> -	{
+>> -		/* Lenovo D330 with 800x1280 or 1200x1920 portrait screen */
+>> -		.matches = {
+>> -			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+>> -			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION,
+>> -					"Lenovo ideapad D330-10IGM"),
+>> -		},
+>> -		.callback = efifb_swap_width_height,
+>> -	},
+> Agreed that is better to rely on the information provided by the
+> firmware, instead of having this quirk. Specially given that it
+> breaks when the firmware provides the correct display geometry.
+
+The plan is to tell users to upgrade to the latest firmware if we hear 
+about regressions. The update is available on Lenovo's homepage. If an 
+update really isn't possible for a user, we should at least know which 
+firmware revision is broken. Then we can add back the quirk only for 
+that specific release.
+
+Best regards
+Thomas
 
 
+>
+> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+>
 
-On 2026/9/9 22:49, Namhyung Kim wrote:
-> Hello,
-> 
-> On Tue, Sep 08, 2026 at 01:18:03PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] Premature `map__put()` of `found_map` before the caller consumes `sym_name` creates a Use-After-Free vulnerability.
->> --
->>
->> commit ff403b9f1717375044e9b6fbb3f09210431e386b
->> Author: Tengda Wu <wutengda@huaweicloud.com>
->> perf capstone: Symbolize address operands to match objdump on arm64
->>
->> This commit extends Capstone disassembly support on arm64 to resolve target
->> addresses to symbols. It detects instructions with address operands, maps
->> them to symbols, and formats the output to match objdump's style.
->>
->>> diff --git a/tools/perf/util/capstone.c b/tools/perf/util/capstone.c
->>> index 74213daf87862..7f82c33e3464a 100644
->>> --- a/tools/perf/util/capstone.c
->>> +++ b/tools/perf/util/capstone.c
->> [ ... ]
->>> @@ -292,16 +303,44 @@ ssize_t capstone__fprintf_insn_asm(struct machine *machine, struct thread *threa
->>>  	return printed;
->>>  }
->>>  
->>> +static int resolve_symbol_from_addr(struct map *map, u64 addr,
->>> +				    const char **sym_name, u64 *sym_offset)
->>> +{
->>> +	struct map *found_map = NULL;
->>> +	struct symbol *sym;
->>> +	u64 al_addr;
->>> +	u64 ip = map__objdump_2mem(map, addr);
->>> +
->>> +	if (dso__kernel(map__dso(map))) {
->>> +		/*
->>> +		 * The kernel maps can be split into sections, let's
->>> +		 * find the map first and then search the symbol.
->>> +		 */
->>> +		found_map = maps__find(map__kmaps(map), ip);
->>> +		if (found_map == NULL)
->>> +			return -1;
->>> +		map = found_map;
->>> +	}
->>> +
->>> +	/* convert it to map-relative address for search */
->>> +	al_addr = map__map_ip(map, ip);
->>> +
->>> +	sym = map__find_symbol(map, al_addr);
->>> +	map__put(found_map);
->>> +
->>> +	if (sym == NULL)
->>> +		return -1;
->>> +
->>> +	*sym_name = sym->name;
->>> +	*sym_offset = al_addr - sym->start;
->>> +	return 0;
->>> +}
->>
->> [Severity: Medium]
->> Is map__put(found_map) called prematurely here? If the map is concurrently
->> removed and the refcount drops to zero, the map and its symbols could be
->> freed. Does this leave sym->name pointing to freed memory when it is assigned
->> to *sym_name and returned to the caller?
-> 
-> Right, probably better to return a pointer to symbol instead and make
-> the found_map as an out parameter.
-> 
-> Thanks,
-> Namhyung
-> 
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
 
-Agreed. We probably also need to make sym_offset an out parameter, because
-struct symbol does not contain offset information, and when printing we need
-to use sym_offset to determine whether to append the '+offset' suffix. So
-the function signature might be changed to something like this:
-
-static struct symbol *find_symbol_from_addr(struct map *map, u64 addr,
-					    struct map **found_map, u64 *sym_offset)
-
-Is it okay to change it this way?
-
-Thanks,
-Tengda
-
->>
->>> +
->>>  static void print_capstone_detail(struct cs_insn *insn, char *buf, size_t len,
->>>  				  struct annotate_args *args, u64 addr)
->>>  {
->> [ ... ]
->>> @@ -320,40 +360,114 @@ static void print_capstone_detail(struct cs_insn *insn, char *buf, size_t len,
->>>  
->>>  		/* get the target address */
->>>  		orig_addr = addr + insn->size + op->mem.disp;
->>> -		addr = map__objdump_2mem(map, orig_addr);
->>> -
->>> -		if (dso__kernel(map__dso(map))) {
->>> -			/*
->>> -			 * The kernel maps can be split into sections, let's
->>> -			 * find the map first and then search the symbol.
->>> -			 */
->>> -			found_map = maps__find(map__kmaps(map), addr);
->>> -			if (found_map == NULL)
->>> -				continue;
->>> -			map = found_map;
->>> -		}
->>> -
->>> -		/* convert it to map-relative address for search */
->>> -		addr = map__map_ip(map, addr);
->>> -
->>> -		sym = map__find_symbol(map, addr);
->>> -		if (sym == NULL) {
->>> -			map__put(found_map);
->>> +		if (resolve_symbol_from_addr(map, orig_addr, &sym_name, &sym_offset))
->>>  			continue;
->>> -		}
->>>  
->>> -		if (addr == sym->start) {
->>> +		if (sym_offset == 0) {
->>>  			scnprintf(buf, len, "\t# %"PRIx64" <%s>",
->>> -				  orig_addr, sym->name);
->>> +				  orig_addr, sym_name);
->>
->> [Severity: Medium]
->> Can this result in a Use-After-Free? If resolve_symbol_from_addr() drops the
->> map reference too early, sym_name might point to freed memory by the time it
->> is dereferenced here in scnprintf().
->>
->>>  		} else {
->>>  			scnprintf(buf, len, "\t# %"PRIx64" <%s+%#"PRIx64">",
->>> -				  orig_addr, sym->name, addr - sym->start);
->>> +				  orig_addr, sym_name, sym_offset);
->>>  		}
->> [ ... ]
->>> +static void format_capstone_insn_arm64(struct cs_insn *insn, char *buf,
->>> +				       size_t len, struct annotate_args *args)
->>> +{
->>> +	struct map *map = args->ms->map;
->>> +	char *last_imm, *endptr;
->>> +	u64 addr;
->>> +
->>> +	print_default_format(insn, buf, len);
->>> +	/*
->>> +	 * Adjust instructions to keep the existing behavior with objdump.
->>> +	 *
->>> +	 * Example conversion:
->>> +	 * From: b #0xffff8000800114c8
->>> +	 * To:   b ffff8000800114c8 <el0t_64_sync+0x108>
->>> +	 */
->>> +	if (needs_symbolic_address(insn)) {
->>> +		const char *sym_name = NULL;
->>> +		u64 sym_offset;
->>> +
->>> +		/* Extract last immediate value as address */
->>> +		last_imm = strrchr(buf, '#');
->>> +		if (!last_imm)
->>> +			return;
->>> +
->>> +		addr = strtoull(last_imm + 1, &endptr, 16);
->>> +		if (endptr == last_imm + 1)
->>> +			return;
->>> +
->>> +		if (resolve_symbol_from_addr(map, addr, &sym_name, &sym_offset))
->>> +			return;
->>> +
->>> +		/* Symbolize the resolved address */
->>> +		len = len - (last_imm - buf);
->>> +		if (sym_offset == 0) {
->>> +			scnprintf(last_imm, len, "%"PRIx64" <%s>",
->>> +				  addr, sym_name);
->>
->> [Severity: Medium]
->> Does this also dereference the potentially dangling sym_name pointer if the
->> underlying map was freed in resolve_symbol_from_addr()?
->>
->>> +		} else {
->>> +			scnprintf(last_imm, len, "%"PRIx64" <%s+%#"PRIx64">",
->>> +				  addr, sym_name, sym_offset);
->>> +		}
->>> +	}
->>> +}
->>
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1788872630.git.wutengda@huaweicloud.com?part=1
 
