@@ -1,107 +1,153 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B6C490C0D;
-	Thu, 10 Sep 2026 14:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB7837475B;
+	Thu, 10 Sep 2026 14:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789049795; cv=none; b=ZhaT64saHSRGOw25IgElx68eResKOtjS+uwTPcRav5Eda0CUuqtQLRuL7PDWVALTAB/Kkq0rUzLfZH8IzThhP9dHrhoBNUFLy/ORC2vbRZM19ph0Ba5+Rk2ADshEc96cGhXrYkLrE/Vmu38O0ILJDieHLHWd8lUkyf2zgP2MMBg=
+	t=1789050771; cv=none; b=LxlK8GZ3K5Ve01Cwq28YTgGcYIHIovJFx+Zhnuc91iAtU/c6GcKyNoGwEU+0bHkecCuyickfQpdVkUC+qgfi1+H2m2N+WjeYC1x3Rref4elUVxZ6IK4T7yeaCtTsjY4Pt40i2Qbgr9m2rEvWN2nzbwTzOsf4bn+8W4lsH7AWIQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789049795; c=relaxed/simple;
-	bh=3Y/m3Qkf6cKV7OHiIFv4YAVb+X/pEuLBsNCBEVxnM3E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TM038LYmU4392NOaueQ9Os8OU1AbraJsLzkK1YU3mobvJ9Rzap8XVOGj1PvvbPTjiBkWjtyRg1fcJt1u2T8kT+xO+mO3y20wHzZGVx0hLOu8othZpRhjciSa5kCaDo/1kNAyux0W3M8T7tB4EqCypGmKPYquyt/NVYQOnCooCxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2yD8kF+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789050771; c=relaxed/simple;
+	bh=rOx8eV9OuL83QEvT5j9vhIhsiErUhRCiznN3invJ8d0=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=CsjayvtaTQY3i2i2a+VCOpStvv11qEJ2lCTu5Ln1Yfvn7ohRRZdhYKVS3vARmwOO7J8SSfTsqAWGi00CDIoGiuJFFFPFKDQEOjmIa4taUA57IPyfR32H0YZshor8CXXQZAgxZgmxYYMC5q834Q4OBSVEX+dxDKmpDZAbhjfSy24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9qTJ2+/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2yD8kF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2465A1F000FF;
-	Thu, 10 Sep 2026 14:16:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9qTJ2+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEAB1F000FF;
+	Thu, 10 Sep 2026 14:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789049794;
-	bh=jlbkzOzLCW57AMblPScYBFvVgRLjuwLIep83xkYzrQ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=F2yD8kF+q9OYuYS0oX4fpiCDyPTHf34wqe/xEFgKzjT861IRj3xpatOHJjYoUXohx
-	 SA/4rUPFoBcEWZKsLFcexsa1oqvAcuaNng49+jZBwaHDjPHrsW1pDbls7N96fHHYk5
-	 06QlQI8DjrNbBl0GjnH11/5TEjdO9HmceN7KGU5Ag9Bzy3X5Mu8++5JliknWwea62R
-	 2/lWRQX8zabsmGBe7g2hCZ0XVM1siSQ2QRLR8LV66xKxPP+an4xum1x+y/H+6sZd3l
-	 voLv0fGJPaxVF7UP0u8w/HIbLUAqQqYpEEHlSNP0w0fHWW+25bH+Eyy+be0xfK9khz
-	 8VybuPBina8Yw==
-Date: Thu, 10 Sep 2026 15:16:29 +0100
-From: Lee Jones <lee@kernel.org>
+	s=k20260515; t=1789050769;
+	bh=fegjRSkc9C+qKzqCJvJ2d7s7VIC+fu2qJYVP0KhxvSk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=O9qTJ2+/M6LjrIJS6LgFdy5QThbvtHtN0Rdxg8zTDIfimNndVJO/3UgyLx03j3rOP
+	 vg0p5EA9ZhFrQDUWnyLJQxJaeeUz5iQC/FGTuNCDBT4OMJM28RHeF7QUnqNRqnm6rV
+	 Ix939EETXM3mn3boGPj6TtKJtWlxPYEI0rkWzOrRYJomXoyNhOuYGcy29Hxlo+tk3M
+	 lF2Y+7IgDvM2mueV6tmUHaPVsio/BwreqsBf9QRSo+IBMe1lbcDf4qYK9keazupX31
+	 KNUaTER7QhY65mXPa9DYPfSSRyTHbpwAHMxiiBwU6x6glz2n2MRwthal6HoUsVDTD1
+	 NwlEhTEF586tg==
+Date: Thu, 10 Sep 2026 23:32:46 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Ronald Claveau <linux-kernel-dev@aliel.fr>, neil.armstrong@linaro.org,
-	linux-amlogic@lists.infradead.org, devicetree@vger.kernel.org,
-	mfd@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v11 1/6] mfd: khadas-mcu: Add per-variant configuration
- infrastructure and VIM4 support
-Message-ID: <20260910141629.GE1051768@google.com>
-References: <20260902-add-mcu-fan-khadas-vim4-v11-0-5f1610d83bf0@aliel.fr>
- <20260902-add-mcu-fan-khadas-vim4-v11-1-5f1610d83bf0@aliel.fr>
- <20260902130216.55BC21F00A3A@smtp.kernel.org>
+Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] bootconfig: Fix integer overflow in initrd size
+ check
+Message-Id: <20260910233246.5b9d279ceb72e821ac58d921@kernel.org>
+In-Reply-To: <20260910020902.193961F000FF@smtp.kernel.org>
+References: <178900555453.200943.4719889510443114485.stgit@devnote2>
+	<178900557529.200943.11099215789605267709.stgit@devnote2>
+	<20260910020902.193961F000FF@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260902130216.55BC21F00A3A@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 02 Sep 2026, sashiko-bot@kernel.org wrote:
+On Thu, 10 Sep 2026 02:09:01 +0000
+sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Parent MFD driver introduces child-specific private resources (fan configuration) via a platform data struct in a global MFD header, violating MFD separation and coupling principles.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Mismatched boundary checks for XBC_DATA_MAX cause inconsistent fallback behavior for embedded bootconfigs.
+> - [Low] Misleading error message when bootconfig size exceeds XBC_DATA_MAX.
 > --
 > 
-> commit 85d716a1f91fa9e8e2f48479df8c7b07e0cf0279
-> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+> commit a24325c6fe0374f1cfc3fc8cbe63efbad0f22f32
+> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 > 
-> mfd: khadas-mcu: Add per-variant configuration infrastructure and VIM4 support
+> bootconfig: Fix integer overflow in initrd size check
 > 
-> This commit introduces per-variant configuration structures for the KHADAS MCU
-> driver, adding support for VIM4 specific registers. It also introduces an enum
-> for variant matching and a fan platform data struct to pass fan configuration
-> to a sub-driver.
+> This commit fixes an integer overflow where a crafted initrd with a huge
+> bootconfig size can cause pointer arithmetic wrap-around. It ensures the
+> initrd bounds are respected and verifies the size does not exceed max limits.
 > 
-> > diff --git a/include/linux/mfd/khadas-mcu.h b/include/linux/mfd/khadas-mcu.h
-> > index a99ba2ed0e4e0..7a9980ea63e7e 100644
-> > --- a/include/linux/mfd/khadas-mcu.h
-> > +++ b/include/linux/mfd/khadas-mcu.h
+> Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+> 
+> > diff --git a/init/main.c b/init/main.c
+> > index a9362b2cc258a..de24c41ce815e 100644
+> > --- a/init/main.c
+> > +++ b/init/main.c
 > 
 > [ ... ]
 > 
-> > @@ -88,4 +95,21 @@ struct khadas_mcu {
-> >  	struct regmap *regmap;
-> >  };
+> > @@ -294,16 +295,21 @@ static void * __init get_boot_config_from_initrd(size_t *_size)
 > >  
-> > +/**
-> > + * struct khadas_mcu_fan_pdata - fan sub-driver configuration
-> > + * @fan_reg: register address to write the fan level
-> > + * @levels: table mapping logical cooling-device states to raw fan levels
-> > + * @nlevels: number of entries in @levels
-> > + */
-> > +struct khadas_mcu_fan_pdata {
-> > +	unsigned int fan_reg;
-> > +	const unsigned int *levels;
-> > +	unsigned int nlevels;
-> > +};
+> >  found:
+> >  	hdr = (u8 *)(data - 8);
+> > +	if ((unsigned long)hdr < initrd_start)
+> > +		return NULL;
+> > +
+> >  	size = get_unaligned_le32(hdr);
+> >  	csum = get_unaligned_le32(hdr + 4);
+> >  
+> > -	data = ((void *)hdr) - size;
+> > -	if ((unsigned long)data < initrd_start) {
+> > -		pr_err("bootconfig size %d is greater than initrd size %ld\n",
+> > +	if (size > XBC_DATA_MAX ||
+> 
+> [Severity: Medium]
+> If the size is exactly equal to XBC_DATA_MAX, this check passes and the
+> function returns a valid data pointer. This prevents the caller from falling
+> back to the embedded bootconfig:
+> 
+> init/main.c:setup_boot_config() {
+> 	...
+> 	data = get_boot_config_from_initrd(&size);
+> 	if (!data) {
+> 		data = xbc_get_embedded_bootconfig(&size);
+> 		...
+> 	}
+> 	...
+> }
+> 
+> However, setup_boot_config() uses inclusive inequality for XBC_DATA_MAX:
+> 
+> init/main.c:setup_boot_config() {
+> 	...
+> 	if (size >= XBC_DATA_MAX) {
+> 		pr_err("bootconfig size %ld greater than max size %d\n", ...);
+> 		return;
+> 	}
+> 	...
+> }
+
+Hmm, this is wrong. Since XBC_DATA_MAX is including maximum size, 
+setup_boot_config() should change this condition.
+
+> 
+> Because the limits don't match, an exact size of XBC_DATA_MAX causes
+> setup_boot_config() to reject the payload and abort without attempting
+> the fallback. Should this check use size >= XBC_DATA_MAX to match?
+> 
+> > +	    size > ((unsigned long)hdr - initrd_start)) {
+> > +		pr_err("bootconfig size %u is greater than initrd size %lu\n",
+> > +			size, initrd_end - initrd_start);
 > 
 > [Severity: Low]
-> Does this struct introduce child-specific private configuration into the core
-> MFD driver?
-> 
-> By defining khadas_mcu_fan_pdata to pass thermal cooling state levels, it
-> appears the parent MFD driver will be forced to handle configurations specific
-> to a single sub-driver. The MFD subsystem principles indicate that the core
-> driver should only handle shared core resources, while child drivers should
-> manage their own private configurations.
-> 
-> Could this approach create tight coupling where any new fan variant requires
-> changes to the core MFD driver, rather than keeping those details contained
-> within the thermal driver?
+> If this error path is taken specifically because size > XBC_DATA_MAX, the
+> error message claims the bootconfig size is greater than the initrd size.
+> Can this message be updated to accurately reflect which limit was exceeded?
 
-Agreed.  Why can this not live in the fan driver?
+Ah, good catch :)
+
+Thanks,
+
+> 
+> >  		return NULL;
+> >  	}
+> >  
+> > +	data = ((void *)hdr) - size;
+> > +
+> >  	if (xbc_calc_checksum(data, size) != csum) {
+> >  		pr_err("bootconfig checksum failed\n");
+> >  		return NULL;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/178900555453.200943.4719889510443114485.stgit@devnote2?part=2
+
 
 -- 
-Lee Jones
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
