@@ -1,95 +1,111 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F4F23507B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 01:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6543376466
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 02:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789002626; cv=none; b=EIOz1zf7JQXpuOyO/Pblk5wp7XR+S/CsZ3QBeFWy3YHtwO8BZUx1TptqNnh89vyV9NZouf7aKk/29qQ9DzcvU8lAaPSYe9wQJwIpLabYZAje+kXyHESyqTkbKZ2WUk76+Fjd1pmdn1uPpJmXpQitbLf1DsE5x2wqqD/7nEJ3yhc=
+	t=1789006402; cv=none; b=m1VzZP6DoYC4nL4wuz+2fTAc5aXFre20HMsplx3InyMoRPDXDHJARkRELw55Sme1PuTeLM0YG9Aw5dSiRSEOC5EWAE8XhzOrNL6fWAajCIirorblpCHv5bZE4pRTnqWiem8V9h8sTQ9ie00mVijxtsBRdZ1z8fFZvV7sHrlVXsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789002626; c=relaxed/simple;
-	bh=6a2ZbMEkIiw904HUxdkFsA++lslFLkj9V9JCozTDMBY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNOFJZrg9eNPZ9DQQrQKrYY8tGXdoOyDrg7oondb93LTNbWLvSHYMsa9Z3mb7gLEN9kq4Hn31bWYG4hQqFJedvFJ1FGwrC/WQHGBlxa89eMWiqzUld1A0UXMduF6eY39+yGGHe3RjwTsFW5GORpfvFEkvA0bGa1mcy3AUVWE/4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMC1OoMn; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789006402; c=relaxed/simple;
+	bh=WrJHIFWpxpN8ses6ut4xZ9sUWjWpyRjQEA/aIKGpGDs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=aSH7JVFWhSvluGCXGl2FdDeuBu55zRXWDfsLqcURLaqLIOh0KQSqaq6LqugPSRXMIoVfFqAASbSMkYY5eTqs4vLP+EYG5tWHRI43//HtQsV9VM7T57POux5Wy6wML3mpY15R5SRaXqqUeN/lpCQXTspgW0FWRI3WK6Esxzg40yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--stanleyjhu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tPSSVQgg; arc=none smtp.client-ip=209.85.215.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--stanleyjhu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMC1OoMn"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d8fb334ddcso8451815ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 18:10:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tPSSVQgg"
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cc1eb205d31so5088868a12.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 09 Sep 2026 19:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789002624; x=1789607424; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6a2ZbMEkIiw904HUxdkFsA++lslFLkj9V9JCozTDMBY=;
-        b=jMC1OoMnWtfCr+2OsVISiToch+qvQ7I/Zx36d2eDK8ExxZeYEbCiPkOWBMs6HU1sc7
-         q7dnrC29eoQXuQCWu00ZpZ1bKpdMoxhJAVqY64rWVLpjgUm23a1dzKDQ7MF4+YLbjuJQ
-         Bi2uTkp3xKg81F2kL9paTvjZefC9POWT8YZ2lyDqxjs0ctri5DORmcQy+NakarejBRtL
-         9ATNm/uVBuwFzHYguG6sLdwOC0oQUMnaIPoYQ05ZOjuT98RyjWlnt8lUJ76/Uqoj8V/1
-         uufJK3sO94IEvX70ruytlDfErKRwgtZqNAsQ0YqMSKm0kTfi7DFZOmYIjLeF1/0ZRVPb
-         l68g==
+        d=google.com; s=20251104; t=1789006400; x=1789611200; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FdNMd2NH5nC5ElhtsJsby8lwVRF/Fgx773JqNLZyz7s=;
+        b=tPSSVQggkfFj3RG+ZgoiAFamiujFMmmTaRExlobIsaEiucCY5Ipe65MDjoyYzF4J2d
+         YiMe79voVw+h9hGkN6dEhasj6ISJE4dEgq53ziicS3eCSiq0MsON1DrgBwJhSJYmSXF7
+         0ITop14ocRGkrf/VjOKaurt+bqcPaH/w1sOe39EkMUPEICO2KdJZVh87GCo0hTplYwLx
+         ygmqqPpDCGHTtRg+T9cyIS1p3XN0emUp4ATXc+RZbVm5mrgcLDwKzb4t7lO04ktXbIGz
+         CYwRrs5Qj4nZ7XQWtdQ/EbNZO00YWRrqJP1aTbfR3yJrul2/GIJQf1PPQqXTQQ0j0gXZ
+         UryQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789002624; x=1789607424;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6a2ZbMEkIiw904HUxdkFsA++lslFLkj9V9JCozTDMBY=;
-        b=Q2wAoZDS6Ni15AWJRXu/71zUWqeqOC5XXT1dhRa7RL93D5lzSBnkjj8w7At2Og0Jsv
-         34QWVj5wIReN2IQloHLWSj/vep+HPMWDmeLrNkAZyaXYfBiLAmn7RUZnKmkyy/YSKKxr
-         Rbo/ZYtlDb/9TKYxLsOAlX7qh4VrL9f/QOLr35O+xYB2ew5wPDh/KuzpmN7XZ+DIQ0vE
-         VqxE77aPrfNUPEkaILZhvtcL5GSyjIeqr15PqutIdCEYYu/17mWlchl5NXU6WdLUaoaq
-         L73W35B0MIifmwKc1/alE5gBXh+Ebg+0cXl0rP9mawqZ8fO/hW2ZS0aay7zbX9JBMbEc
-         JY4Q==
-X-Forwarded-Encrypted: i=1; AKwUvBzQVT/33TVTaDww8K3LGO5BaMcoQqNSFja1sPkkg6g1H1FlQM0N4/hoCdMIhyGRGYL5T63hp44aWeeYBysa8RU=@lists.linux.dev
-X-Gm-Message-State: AFuF++lSOau1E4hUWEpCAo2KIQN6ETWHxpo25/LLeot3qnbZzshrdrHf
-	rcV8Ff83khuHspC8/4XKZ5JT4gb9J3XmaUTqhJf5FAj1FjQ2z5hCl6o=
-X-Gm-Gg: AYBFou3gX9Ug6AT8PF70LCYQo01s2FLdQEo3oGck5Z2TZMzZyMthuBAyGZAT97gcpDB
-	872F+htHPy6KWUVxnmINzEBjc8474M1K8JDPYXUzF29f40kqG4ptAhvmUiCEVjsXmRDHy+oHyiF
-	UgT14n5lBXDH5EDETlAwR+izyFXsxlkO+KUpPVfLK2Vpm1+rpvRbjkQUbDwx/K00W3+eWTjfi0p
-	sMRWl+IWL4rgzuPp5Wmwk5oUmRYqIl1P9smEqRBrO1rCvG53A/ZFKZf7YiBI3YkZIjPI+EAo9zb
-	uvahugNy8dECJKBa+ccFMGtEoNMApw1Wa2h8SlOu4DpOxwiGGImMBxeif03kFX74iSzYYM5lTtu
-	s8yn8y0UVY1Z3bx51TvHUj2mTCZRW/V0m/HZjZOyBQmQlpE1606oApQTcIGDRMQWf9WitIHpVo1
-	tgENCiPMSugPpwTNzLMRdMKk4LSCc7BBp8H52nG18UgbqUp2EMjzIgnQGndotMuZ/+0+piEb8uW
-	qYlmFRXsr9pITDbY7FYV5J/MA==
-X-Received: by 2002:a17:90b:3b91:b0:398:9bd4:d13 with SMTP id 98e67ed59e1d1-39d70b1c48bmr5704657a91.18.1789002623824;
-        Wed, 09 Sep 2026 18:10:23 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f04:fd2a:f01d:1dc7:1e5:47d8])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d77608fb4sm2251431a91.15.2026.09.09.18.10.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 18:10:23 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	linux-trace-kernel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	donggeunyoo.kernel@gmail.com
-Subject: Re: [PATCH 0/2] tracing: hist: two named trigger error paths that free a published trigger
-Date: Thu, 10 Sep 2026 10:10:18 +0900
-Message-ID: <20260910011018.532378-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260907124420.607097-1-donggeunyoo.kernel@gmail.com>
-References: <20260907124420.607097-1-donggeunyoo.kernel@gmail.com>
+        d=1e100.net; s=20251104; t=1789006400; x=1789611200;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FdNMd2NH5nC5ElhtsJsby8lwVRF/Fgx773JqNLZyz7s=;
+        b=JkLaqVnbBN9wuDbAPCgGIfbs0GjU8rOx17o/h9FSjphN0e1uCgCRyl9T1wO2MO/HA5
+         z3akUICbt9wf+tlVmocrxymgBmewdnJVhxfDcWyCHWHznglnBs9ZfQouc0MRVtm/40PK
+         cCEQL7qeA7UtYUx3cmAQ7js4UaDxcGN/sAwaZ4x5UUJ8I+gPGREU44kZIxpWJRyi42f9
+         SlFn1Np/zpF5trmpd31+DObTQf/IaKSCjihZEbCNl2j6bumlBUXt837hQFsQ7955zB+W
+         hguGjAlo7CCGmWf1gzEUBvj0PJU8AervG/+b3Lb6Yt7wclEhVOu9nlY8utx3quaMoWq0
+         Q9tw==
+X-Forwarded-Encrypted: i=1; AKwUvBzQ0dA3OXtiyGImSXuamHn59Ur/j1m/K7w+WtXjgWtytYXeRDtt1ADJvAcpS25l5hQzbZXXVEw6tCq84Y6Sekw=@lists.linux.dev
+X-Gm-Message-State: AFuF++lMHP6cpG1QQfiwrz6guZ7C9k7SlcisvXBp5kFttOcsb/08AvCC
+	UW2UoBTOc3bn/Yf4bVGl6SDoCMDeCwxAOubd7xlVuYvqGufCB8eILXrro8FIgRF+ZR/l0R6nO9U
+	blN6q92KbqV+p3eSwyVK6Dw==
+X-Received: from pgzz2.prod.google.com ([2002:a05:6a02:6822:b0:cc4:3e92:96dc])
+ (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a21:6016:b0:3d3:ae0f:526c with SMTP id adf61e73a8af0-3da3a15cf74mr64297192637.24.1789006399943;
+ Wed, 09 Sep 2026 19:13:19 -0700 (PDT)
+Date: Thu, 10 Sep 2026 10:13:18 +0800
+In-Reply-To: <20260910020917.C22961F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260910020917.C22961F000FF@smtp.kernel.org>
+X-Mailer: git-send-email 2.55.0.1007.g17ff1f9808-goog
+Message-ID: <20260910021318.2030765-1-stanleyjhu@google.com>
+Subject: Re: [PATCH v3 2/2] scsi: ufs: rpmb: Decouple device lifecycle from
+ devres to avoid UAF
+From: Stanley Jhu <stanleyjhu@google.com>
+To: sashiko-bot@kernel.org
+Cc: linux-scsi@vger.kernel.org, sashiko-reviews@lists.linux.dev, 
+	"Martin K . Petersen" <mkp@kernel.org>, Brian Kao <powenkao@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The Sashiko AI reviewer reported these bugs before I sent the patches, in
-its review of "tracing: hist: set the trace clock before registering the
-trigger". Both patches should carry:
+On Thu, 10 Sep 2026, sashiko-bot@kernel.org wrote:
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does this sequence still
+> leave a use-after-free window during device removal?
+> 
+> When rpmb_dev_unregister() is called, it internally calls device_del() on
+> the child device, which immediately drops the reference to its parent device
+> (ufs_rpmb->dev).
+> 
+> If a consumer is actively holding a reference to the child device via
+> rpmb_dev_get(), the child device itself remains allocated. However, the
+> subsequent call to device_unregister() here drops the final reference to
+> the parent ufs_rpmb structure, causing it to be freed.
+> 
+> If the consumer then concurrently executes a request, the framework will
+> pass the now-dangling parent pointer to the route_frames callback:
+> 
+> drivers/ufs/core/ufs-rpmb.c:ufs_rpmb_route_frames() {
+>     struct ufs_rpmb_dev *ufs_rpmb = dev_get_drvdata(dev);
+>     ...
+> }
+> 
+> Could this dev_get_drvdata(dev) dereference the freed parent memory,
+> resulting in a use-after-free despite the new lifecycle management?
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-trace-kernel/20260907092944.3950E1F00A3D@smtp.kernel.org/
+This specific teardown race is guarded by the companion patch in the
+generic RPMB core:
+"[PATCH v3] rpmb: core: Guard frame requests and teardown with mutex"
+https://lore.kernel.org/r/20260910015515.1991789-1-stanleyjhu@google.com
 
-No change to the patches themselves.
+In rpmb_dev_unregister(), rdev->lock is acquired to drain in-flight
+requests and mark rdev->dead = true before device_del() is invoked.
+Any concurrent or subsequent call to rpmb_route_frames() is rejected
+with -ENODEV under rdev->lock before dereferencing rdev->dev.parent.
+
+Therefore, the dangling parent pointer is never dereferenced once
+rpmb_dev_unregister() returns.
 
 Thanks,
-Donggeun
+Stanley
