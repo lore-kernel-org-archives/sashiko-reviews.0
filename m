@@ -1,188 +1,102 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89648C406
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 13:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920B9481FB0
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 13:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789046405; cv=none; b=WyQtf6N8s4+C3k3536Qql3sdE2blJmY26ptlQC+gLEjSMofIl0HiHS6qG/m1KI5ZNCMAO3EAUAPpkK5Sf4zoV3H7Zmv6O28dy/3UTinj59VA59/fpU38/ZwgW+upnNGea1PMakvHwzuDlQT29j0/6eR5JLGf+VqIQh6Fc/dnd5c=
+	t=1789046741; cv=none; b=cm8kJGPKH+LYR8pxxj3e97AuHg81hz6hji4ouERTG37Efq59HjYNqNjTd5vQ8yaHeH+Nzyu3opuvEGg5KoeosLUf+XnAE5dvuW4E4K2lQlF4JI9ZnJDAt8zFf9tDU1ZGeF0LjW5rQDNugygG/EKjDRdQzwr7+46g1QUVKsU1OWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789046405; c=relaxed/simple;
-	bh=77gnxKwz5I5zeC5JQQSJW3M6o/EvVLmsqw12CIkM2V0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g64wsu/VK3G4ZrAI4qAVgebflYtRF3yCQxyJjwCrdxbY6uNhlbgr3E+vAwinz+vjE3c3X28wF8TbjjxpoBQU/1xJLtWFAWW/SoFS31rKJ0Ug01Xbmb5AA2UZmTuoCyo+/5mVWNK+1MnunqH0n/ndkcbvMY+dcSb0o2aR6CagmQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgdYK4XN7zYQvYZ
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 21:19:01 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 9A1D240573
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 21:19:56 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgC3crB7rqJqfqXQBQ--.17854S2;
-	Thu, 10 Sep 2026 21:19:56 +0800 (CST)
-Message-ID: <9b4cc536-fafa-4d3c-811c-4f443da321a9@huaweicloud.com>
-Date: Thu, 10 Sep 2026 21:19:55 +0800
+	s=arc-20240116; t=1789046741; c=relaxed/simple;
+	bh=s6E47y2/NMhJk/PEw6g1iy2HPZkHb07neF1uVgmdqxc=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MIg2JwZSw6OIS+JdFlOWaC8ZMSV2WlI9o06mpBC5hFWCEczvSaeRxvMQHGV+NQfknbwPEY2WVbkWPlyjhkKriKf32rtnUeYSKXYJWuMUkQf9sL3gvp+2MXTxodhjR/kxS9+ksfTb34Hl4rjvz54y0m4EekmHOzGhNJd9xVHZOMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=giKVt0+J; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="giKVt0+J"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-39b2ad862bdso7889232a91.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 06:25:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789046739; x=1789651539; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=s6E47y2/NMhJk/PEw6g1iy2HPZkHb07neF1uVgmdqxc=;
+        b=giKVt0+J4uff9voj+bXmvZlm0OWFexhYwTx+YtCU65lU2Ibieci6qLiPbqI5zwBmyV
+         UtdJ5tKBEtLPcmuAg2wiiKz4LdVTSFjxqC877hzxoLFd7D2FPO81PqnSy5eVwH+4zbS1
+         C/+uiNmXSgXNs4pnF68RYnoWRuxg05ZGdbvEAeIbeO8VLXT/do8DBrz9XBdN7jDsLSfn
+         9dbpbkTuxF+UVnyOmghBwgM9jwBbRstDZgwlTdnNrDyFJreuEdw+fmCNh1fCrllqL8EQ
+         nnSQOLWQhX9lr9STSfw7OnvDuqq60XMtLHFqZtMay9Hc6l7+nFERRMml2TbRBK43PMLT
+         0whQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789046739; x=1789651539;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=s6E47y2/NMhJk/PEw6g1iy2HPZkHb07neF1uVgmdqxc=;
+        b=kPNnrqy29qqy5Et1Q54Xiup9ynz7tUlaB0Mh1KfkcZZPnIExr49O71usjXbDKTd8jc
+         eQ52ZSvq7/q9BUWDSGteiq39GI3kFzVwwhqLiikCuYQ7SnAYhZnNKeZ56z8Y8AGxWWwX
+         P1Qb5ft1jYO4AvWQSsieIHzrB4Q8OhpADsvd1MIl++ZUoCyeRf6fYJjlXjBd0zEppnpW
+         EzZcEoD9/UdP1GnPXCqjl/QtvRZaT2lZZ6pMSG+QEHBismloNR2ckTA3oA92o2dxj+JT
+         mdokrv6VIgf4AgquRe63tTUf/603we1cDt+2gCSnYx9DUZO9rL3tPZVRqmPFEAvgzSnM
+         sE7Q==
+X-Gm-Message-State: AFuF++mxlcTEMde1vDmRzPRnWK8cLY65l28udz2HLl9H81um7OIDA5Yy
+	8J3kW1KLF8sbcwOLqGEuMx0RQVUJInQ8nrU6q4YAD5Gz7F1xmtHeztuiEqSvQDs=
+X-Gm-Gg: AYBFou0X684OB5ErHxnYncR/sLnLErGyhGbrgRzv+yzvrSHc+/YflDNJgnhjIj4Ka1y
+	JkljVSmW/wow0AbErWOLxTpPwbfmEhOH+mTjOXd7HP/C7m3aHcA1UBjp+cd4Ai5zFNqniHeLlxN
+	L7OD5fKsbn1LoIxcXSJ0O/f8cTUPZANKfICQYxLsv9PLxsn+nDAoITZDIK+yKAelLrnlC/DxTmb
+	aseaOcU68B31aP/QfMTs1bfXSeVZf/HwBiHkY0RUdhwf3ebpk/YMB55YoByboeIJVgN9/p8kxTE
+	aMHhgdoSYjg/alvB0NKHbXLffZ9yV6AKSEvqR0QUZtT4TyqWUggMKZk9MGQ+Il1AcZh35pcl6Ai
+	uDbDe4xOx5JFWXSKrDnAfVHaFk1Tr3iOKuUhbqaf248/mWC63cmhnI1jhOkK0rcQB5cCKGe0iYs
+	PKS+vbSct1xX44M8d5SYzTAc1SF4UFRiHagDoshz1wuR6BaqqaVrk9lzDY5K9kk9SQufh4Nckie
+	Hh8i/lkYxAlCDZjGGKs1Ivz+A==
+X-Received: by 2002:a17:90b:538b:b0:392:e5b1:d833 with SMTP id 98e67ed59e1d1-39b261d5148mr60978301a91.13.1789046738671;
+        Thu, 10 Sep 2026 06:25:38 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f04:fd2a:f01d:1dc7:1e5:47d8])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39bae6d6bb0sm3488371a91.0.2026.09.10.06.25.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 06:25:38 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: sashiko-reviews@lists.linux.dev,
+	Matthew Brost <matthew.brost@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: Re: [PATCH] drm/sched: Free the run queues at the end of drm_sched_fini()
+Date: Thu, 10 Sep 2026 22:25:32 +0900
+Message-ID: <20260910132532.820610-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910123736.6EB8D1F000FF@smtp.kernel.org>
+References: <20260910121601.805032-1-donggeunyoo.kernel@gmail.com> <20260910123736.6EB8D1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/26] perf annotate-arm64: Support load instruction
- tracking
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <a30c739f6462865d2ce4f8a780a12ec28bac707d.1788872630.git.wutengda@huaweicloud.com>
- <20260908132348.079CC1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260908132348.079CC1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgC3crB7rqJqfqXQBQ--.17854S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAFyrXw4xCw4DWrWUAFyUGFg_yoWrAF4xpF
-	ZxCay5GFWUXrWagrnFqF45uF909w1xGa45ury5AFn3tFnFvrnYka93tayagayUGrZYyw4U
-	Zw1jvrnrZ3y8AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
-	Ja73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Transfer-Encoding: 8bit
 
+On 9/10/26 21:37, sashiko-bot@kernel.org wrote:
+> [Critical] Potential Use-After-Free of `sched` and `sched->sched_rq` if
+> `drm_sched_fini()` is called with pending jobs and `own_submit_wq` is false.
 
+Thanks for the report - I went through it, and the reasoning holds up.
+drm_sched_start() ends in drm_sched_wqueue_start(), which queues
+work_run_job unconditionally, while drm_sched_fini() stops the submission
+work only once, above the cancel_delayed_work_sync() that waits for the
+timeout handler. Panthor and PVR both restart from timedout_job(), and both
+pass their own submit_wq, so nothing drains it afterwards.
 
-On 2026/9/8 21:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Unintended rollback of valid type state for the first destination register in a multi-register load (e.g., ldp) if the second register's type cannot be resolved.
-> - [Medium] Missing support for `TSR_KIND_POINTER` in `propagate_load_reg_state` causes type tracking to silently fail for variables whose addresses are held in registers.
-> --
-> 
-> commit 6913b761b417f151400c62773b3dd0ee4dcddbf2
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support load instruction tracking
-> 
-> Extend update_insn_state_arm64() to handle load instructions, tracking
-> register state changes when data is loaded from memory to registers. Introduces
-> propagate_load_reg_state() and update_load_insn_state() to handle standard
-> loads and load pairs.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 9a32265265223..c239ad9473dcc 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> 
-> [ ... ]
-> 
->> @@ -455,11 +455,206 @@ static bool is_readonly_branch_or_cmp(const char *name)
-> 
-> [ ... ]
-> 
->> +static int propagate_load_reg_state(struct type_state *state,
->> +				    struct data_loc_info *dloc,
->> +				    struct disasm_line *dl, int dreg,
->> +				    struct annotated_op_loc *src,
->> +				    struct type_state_reg **src_states,
->> +				    int mem_offset)
->> +{
-> 
-> [ ... ]
-> 
->> +	if (!src_tsr || !src_tsr->ok)
->> +		return -1;
->> +
->> +	/* Dereference the pointer if it has one */
->> +	if (src_tsr->kind == TSR_KIND_TYPE &&
->> +	    die_deref_ptr_type(&src_tsr->type,
->> +			       src_tsr->offset + reg_offset, &type_die)) {
-> 
-> [Severity: Medium]
-> Will this silently fail to propagate types for pointers since it restricts
-> dereferencing strictly to TSR_KIND_TYPE?
-> 
-> If the source register state is TSR_KIND_POINTER (e.g., from an earlier address
-> calculation), it appears the pointer dereference will fail type propagation
-> here, reducing data type profiling coverage.
-> 
+It is a separate problem from the one this patch addresses, and a more
+involved one. This patch only moves the run queue frees within
+drm_sched_fini(); closing that window means changing how the work items are
+stopped, and whether that belongs in the scheduler or in the drivers
+depends on what drm_sched_fini() is entitled to assume about its callers.
+That is a call for the maintainers rather than something I should decide in
+a patch of my own.
 
-Agreed. It is necessary to add a check for TSR_KIND_POINTER similar to what x86 does.
+So this patch deliberately leaves it alone.
 
->> +		tsr->type = type_die;
->> +		tsr->kind = TSR_KIND_TYPE;
->> +		tsr->offset = 0;
->> +		tsr->ok = true;
-> 
-> [ ... ]
-> 
->> +static void update_load_insn_state(struct type_state *state,
->> +				   struct data_loc_info *dloc,
->> +				   struct disasm_line *dl,
->> +				   struct annotated_op_loc *src,
->> +				   struct annotated_op_loc *dst)
->> +{
-> 
-> [ ... ]
-> 
->> +	/* Handle the first destination register */
->> +	if (propagate_load_reg_state(state, dloc, dl, dst->reg1,
->> +				     src, src_states, /*mem_offset=*/0))
->> +		goto out_err_adjust;
->> +
->> +	/* Handle the second destination register (if any) */
->> +	if (dst->multi_regs) {
->> +		int mem_offset;
->> +
->> +		/*
->> +		 * ldpsw loads two 32-bit signed words into 64-bit registers.
->> +		 * Memory spacing between elements is 4 bytes, not the register size.
->> +		 */
->> +		if (!strcmp(dl->ins.name, "ldpsw"))
->> +			mem_offset = 4;
->> +		else
->> +			mem_offset = arm64__reg_size(dl->ops.target.raw);
->> +
->> +		if (mem_offset < 0 ||
->> +		    propagate_load_reg_state(state, dloc, dl, dst->reg2,
->> +					     src, src_states, mem_offset))
->> +			goto out_err_adjust;
->> +	}
->> +
->> +out_adjust:
->> +	adjust_reg_index_state(state, dloc, dl, src);
->> +	return;
->> +
->> +out_err_adjust:
->> +	if (has_reg_type(state, dst->reg1))
->> +		invalidate_reg_state(&state->regs[dst->reg1]);
->> +	if (dst->multi_regs && has_reg_type(state, dst->reg2))
->> +		invalidate_reg_state(&state->regs[dst->reg2]);
->> +	goto out_adjust;
->> +}
-> 
-> [Severity: Medium]
-> Does this unintentionally discard valid type state for the first destination
-> register if the second destination register's type cannot be resolved?
-> 
-> If an arm64 ldp instruction is analyzed where the first member is trackable,
-> but the second member cannot be resolved, this error path seems to
-> unconditionally invalidate the successfully resolved state of dst->reg1.
-> 
-
-Agreed.
-
-Thanks,
-Tengda
-
+Regards,
+Donggeun
