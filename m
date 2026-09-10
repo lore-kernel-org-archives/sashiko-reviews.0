@@ -1,156 +1,113 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A03D0934
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 09:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620373D5652;
+	Thu, 10 Sep 2026 09:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789032021; cv=none; b=nYsU5Ai7DZzwIA/OPZTFADyH0Q/uwQ4iJ+tzyJPQWDPlFpIo/HN9rnFO5RT70DOqVSo1ssK8YLX4lIq0HCeiOigrgbntkUDJM+nJQhGBvyxZwWr1XQKU5LM6S/3cHeE5HuBOH0rUhHJSBgnIgQgIKldz+t5qcZbDDJwVHcOF10A=
+	t=1789032307; cv=none; b=j3wx12kgyOuXxcQKrZ04c3T4c95P0b49EBRd2TdXZ4CB/pmfshNzHAoRqoxs3nYCOBp86KZ5wjeqY2nfXtTiHqLRI+QdlmssxkQegGj/cmyEqcsQ/8AVCD8N8uSMita85IvMANo7eaXNFsqGATyLYussaxtbpPfZ0qeQ8gn9SMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789032021; c=relaxed/simple;
-	bh=4SCZc+ws4E3aN280uV+2yBeaWm4QOP9aLcyCPUU+MxM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zko05gXUPIjDxAUcZDtO/X1KvSjluRJUvmfmPjhYPRRf16U4KqYTSA1swWmCpVYh2yZxGEK/15yaKptLfdOwmWvssTAcUVFde5dBv33mBOjSoC9EbGWEcTfXEbr7YUdgiCZkKSaV8lc9UN8cvulGpwoTpDNQtm+I3d1t/6XpwVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgXDg4XJkzYQv64
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 17:19:15 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 5308040573
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 17:20:10 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCnGbdJdqJqtP+7BQ--.2389S2;
-	Thu, 10 Sep 2026 17:20:10 +0800 (CST)
-Message-ID: <75561a39-3335-48bc-baed-21b8f64308c4@huaweicloud.com>
-Date: Thu, 10 Sep 2026 17:20:09 +0800
+	s=arc-20240116; t=1789032307; c=relaxed/simple;
+	bh=O/tLdp24MIsZrhWxLmvWdUZJi6UicPZhmWtW5M/h6QY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TOCKN335ipcZF1sv4oxIoCX3YbkaJZBRwu8+84LMEK/SCiO2MAf2Zolwddr9FRLzjhHhYDEHR+nNqZ+ClDDblrLWy6d7ju9DQykSpFKLQh1SPdPfHbZqt8nP/O+Lmx9/KpljNRGqshM3gJUmsbGpTIzB0UzOkf7TA2BKjhMHT6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VnI8XXMl; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VnI8XXMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE491F000FF;
+	Thu, 10 Sep 2026 09:24:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789032294;
+	bh=ZsZOkfdDhjGLuusYIFSvV1cCRSLFc8W912c9x/veDEw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VnI8XXMlA0nzsAqh6FmY8dqfwZm5Kq8a99iq+flWJBk2Ij3sfXtmg+tLoJjczuI75
+	 5RXfdFMA36h933G0tAFMRLjLxJ5ju3gIPhzBPPg20ieUTq6JOBvk5YPZjJehNX0BnV
+	 tvsx4efbrP3/ueQsRvc2EasdfXPCKB0PqjhoyZij3vSkmyUszKRI0pKS6huOR7bWYs
+	 myvnk5Ag7Ayl6NAgFK4SrcY8UeYP4FNl9xHAdOiy7L8TGx6Thz6DGiwOWsKpyYScKU
+	 fYmA7YkzLI0I2eHyKZvQHOhSx+Urdo0DnbkDAFQcu8830CXlQ0jHaTIVQtYh/rtrqp
+	 LEveqVT2QhKJw==
+Date: Thu, 10 Sep 2026 10:24:50 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: "hpp.iscas" <hppiscas@163.com>, mfd@lists.linux.dev
+Subject: Re: [PATCH] mfd: max77620: publish I2C and OF module aliases
+Message-ID: <20260910092450.GL2133376@google.com>
+References: <20260905134051.66545-1-hppiscas@163.com>
+ <20260905135123.4E8811F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/26] perf annotate-arm64: Enable instruction tracking
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <8ff5cfde0aad3d585b34f177fd87e8ec57ba4fa1.1788872630.git.wutengda@huaweicloud.com>
- <20260908131825.2DD131F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260908131825.2DD131F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgCnGbdJdqJqtP+7BQ--.2389S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDtr4xAr1fCF1DZr4UCFg_yoWrXFWDpa
-	y7u3y3JF1UJr4jywnxXa18XFySgr13Xay3Crs8tr1SyFs29r93tF4DKFWYqay7Ar1kCw4U
-	Zw4qqFWDAws7C3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVj
-	vjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260905135123.4E8811F00A3D@smtp.kernel.org>
 
+On Sat, 05 Sep 2026, sashiko-bot@kernel.org wrote:
 
-
-On 2026/9/8 21:18, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete initialization of ARM64 caller-saved registers in init_type_state() misses x30 (Link Register) and x18. According to the ARM64 AAPCS64 ABI, x30 is intrinsically caller-saved (it is clobbered by function calls to store the return address), and x18 is also a temporary/caller-saved register (unless strictly reserved by a platform ABI). Because these registers are omitted during initialization, their `caller_saved` flags remain `false`. Consequently, their data type states are not invalidated across function calls, allowing stale type info to erroneously propagate.
+> - [High] Adding an `of_match_table` without migrating device matching logic causes a NULL pointer dereference when binding via OF fallback compatibles.
+
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
 > --
 > 
-> commit 7f29650747bf4bd656328dd491ef0f827ab60d8c
-> Author: Tengda Wu <wutengda@huaweicloud.com>
+> commit d8b3d136289436a8115d93de5fbb49572114282f
+> Author: hpp.iscas <hppiscas@163.com>
 > 
-> perf annotate-arm64: Enable instruction tracking support
+> mfd: max77620: publish I2C and OF module aliases
 > 
-> Enable basic instruction tracking for arm64 by implementing three
-> essential functions in the find_data_type_block() call path. This
-> allows arm64 to support basic variable type inference during
-> instruction tracking.
+> This commit publishes the I2C module alias and adds an OF match table to
+> support device enumeration. The patch intentionally leaves the existing
+> i2c_client_get_device_id() call as the source of chip data.
 > 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index d8a5904359b1a..8fda4d4d68887 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> [ ... ]
->> @@ -442,6 +446,77 @@ static void extract_op_location_arm64(const struct arch *arch,
-> [ ... ]
->> +	if (ins__is_call(&dl->ins)) {
->> +		struct symbol *func = dl->ops.target.sym;
->> +		const char *call_name;
->> +		u64 call_addr;
->> +
->> +		call_name = func ? func->name : dl->ops.target.name;
->> +		pr_debug_dtp("call [%x] %s\n", insn_offset, call_name ?: "<unknown>");
->> +
->> +		/* Invalidate caller-saved registers after call */
->> +		call_addr = map__rip_2objdump(dloc->ms->map,
->> +					      dloc->ms->sym->start + dl->al.offset);
->> +		for (unsigned int i = 0; i < ARRAY_SIZE(state->regs); i++) {
->> +			struct type_state_reg *reg = &state->regs[i];
->> +
->> +			if (!reg->caller_saved)
->> +				continue;
+> > diff --git a/drivers/mfd/max77620.c b/drivers/mfd/max77620.c
+> > index c4f89a9681f34..6a624e691fe83 100644
+> > --- a/drivers/mfd/max77620.c
+> > +++ b/drivers/mfd/max77620.c
+> > @@ -699,6 +699,15 @@ static const struct i2c_device_id max77620_id[] = {
+> >  	{"max77663", MAX77663},
+> >  	{},
+> >  };
+> > +MODULE_DEVICE_TABLE(i2c, max77620_id);
+> > +
+> > +static const struct of_device_id max77620_of_match[] = {
+> > +	{ .compatible = "maxim,max77620" },
+> > +	{ .compatible = "maxim,max20024" },
+> > +	{ .compatible = "maxim,max77663" },
+> > +	{ }
+> > +};
 > 
-> [Severity: Medium]
-> Because x30 and x18 are omitted from being marked as caller-saved during type
-> state initialization, their caller_saved flags will be false.
+> [Severity: High]
+> Does adding this OF match table without populating the .data fields and
+> migrating the matching logic to i2c_get_match_data() introduce a NULL pointer
+> dereference during probe?
 > 
-> Are these registers unintentionally skipped here, preventing them from being
-> invalidated across function calls?
+> If a device tree uses a fallback compatible string not present in the I2C ID
+> table (e.g., compatible = "maxim,future-chip", "maxim,max77620";), the
+> device will bind successfully due to this new OF match table. However, the I2C
+> core sets client->name to the first string ("future-chip").
 > 
->> +			/* Keep register valid within DWARF location lifetime */
->> +			if (reg->lifetime_active && call_addr < reg->lifetime_end)
->> +				continue;
->> +			invalidate_reg_state(reg);
->> +		}
->> +		return;
->> +	}
-> [ ... ]
->> diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
->> index 104b80d471f1b..c51b20a7af9b6 100644
->> --- a/tools/perf/util/annotate-data.c
->> +++ b/tools/perf/util/annotate-data.c
-> [ ... ]
->> @@ -178,6 +179,13 @@ static void init_type_state(struct type_state *state, const struct arch *arch)
->>  		state->regs[11].caller_saved = true;
->>  		state->ret_reg = 0;
->>  		state->stack_reg = X86_REG_SP;
->> +	} else if (arch__is_arm64(arch)) {
->> +		int i;
->> +
->> +		for (i = 0; i < 18; i++)
->> +			state->regs[i].caller_saved = true;
+> Because max77620_probe() still relies on i2c_client_get_device_id() to obtain
+> chip data:
 > 
-> [Severity: Medium]
-> According to the ARM64 AAPCS64 ABI, x30 (Link Register) is intrinsically
-> caller-saved since it is clobbered by function calls to store the return
-> address.
+> drivers/mfd/max77620.c:max77620_probe() {
+>     ...
+>     const struct i2c_device_id *id = i2c_client_get_device_id(client);
+>     ...
+>     chip->chip_id = (enum max77620_chip_id)id->driver_data;
+>     ...
+> }
 > 
-> x18 is also typically a temporary/caller-saved register unless strictly reserved
-> by a platform ABI.
+> Will i2c_client_get_device_id() return NULL since the fallback name isn't in
+> the I2C table, leading to a kernel panic when dereferencing id->driver_data?
 > 
-> This loop halts at 17, failing to set the caller_saved flag for x18 and x30.
-> 
-> Could this omission allow stale data type information for these registers to
-> erroneously propagate across function calls?
-> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260905134051.66545-1-hppiscas@163.com?part=1
 
-x18 does need to be set as caller-saved, but x30 is not really necessary, because
-it generally serves as LR and is not used to carry data type information.
-So I'm going to add only x18.
-
-Thanks,
-Tengda
-
+-- 
+Lee Jones
