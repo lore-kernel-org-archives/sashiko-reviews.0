@@ -1,44 +1,43 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFA7563FCB;
-	Thu, 10 Sep 2026 17:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 456E5549382;
+	Thu, 10 Sep 2026 18:03:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789062009; cv=none; b=cRvY68QqCqsrctRfk9rQlrAm9rkQtCOnPoyL9mYVcHVXLt4f3unErVpkEexT+wYizeKM4NqBWOME7dJSkhEOqMI9F90CXMO4JG8l24b/tN6FQ0oN7siI2Y4ig7dRBaY5/pDGte+xDecEigwViLQYp9RrxElnHXXBoKUApmHyFSk=
+	t=1789063398; cv=none; b=EaRqAALhts8MCjmzDVWnSYAqpNiZf7FCHqxgaqkBTHFuGeuRUxe7qdiWStyC9us0nZGAfgxvMx1mLCR7jbgKDhPn/L4BzyFFPZJCCjbQio4twE4KxeKWKcLonjmLiBDAJzf4hawIfvRb0DsO0mo9HUx58NQ1vimsURHpTLV29xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789062009; c=relaxed/simple;
-	bh=Re1nNjc88tMIq7kazi9QqOCRYyikuB7Slre5d7DUpYE=;
+	s=arc-20240116; t=1789063398; c=relaxed/simple;
+	bh=Yz46h4KIY1XXQzuFH2WkQ6074Bz96Y2doBe+4TrWxwY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HB1lXxZk7f/gyHBxfyQxgvKdPsH0qfvZthIvNZQeloShGwehXCiCb6ghOMcNUmvLLt78t6Qh+LEpFRjBHiK5iGo04mg8wv9lF81QLfDLPz5Bl2oGr+tqqeirZzSMkV+wi26t/lC/RsNkmQI2zCzFouivA5So1rkSpyWVswiIVtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MANb+xxt; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=hkEk9vivsnnk1ZK8Y2bCXkxnUdpQncTfOnMwNGZKUdsb6kIHoGMvO7ttWaoXnZEEXzIe7EPZLpoaF/4xtmzcA9PyLh98esVkMjk+kpXSxN9r6IIX3DE7xtjZe91pegr/cpmYA+ihEQ9ZvZJqSK1gcdJ4oPROoH5JQSYR1fHkxbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=QJFed0LK; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MANb+xxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D5F1F000FF;
-	Thu, 10 Sep 2026 17:39:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789061999;
-	bh=T8CoS2l+O0z0tAlSAm+Zvv1ub23ICl3ib0aFRyAwxsQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MANb+xxt56K5ryM97uUDpad5A0EkZdBRuKRjmiPUGaO2NxE7F/Ik6FglUTp1lvDyt
-	 VnoxqJ1VOtZk6jzaMbI903ZztLG/IHU52TjnPATCtHCEFcg+pZ9rwzcthFbiyt5wxk
-	 KcUZhB9F1H6sBvGuoIuouTmiLmJ21i5UqkNOGOw8Dgu2Yt+IGtbwPjLXaM1ZJVZl/e
-	 rz6aPwGf4k5DJ5BwVgZwOmhwpkL6J6bXgCz0qOhUTdoIShJLrk/bLaoKWurO8u4faS
-	 xHFv9K21QrFvgAxwFYdUYREaFR7/cTHyWAkom5drSJPC051ybzNMWLabeBq1TF60f4
-	 +eP7yzFHvnhpA==
-Date: Thu, 10 Sep 2026 19:39:55 +0200
-From: Niklas Cassel <cassel@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="QJFed0LK"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BA3D2237B;
+	Thu, 10 Sep 2026 11:03:12 -0700 (PDT)
+Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A903C3F7B4;
+	Thu, 10 Sep 2026 11:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789063396; bh=Yz46h4KIY1XXQzuFH2WkQ6074Bz96Y2doBe+4TrWxwY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QJFed0LKzVe7TTm2ktMn2PJU5aRkmECa/AWldoOjJ4es1g6QJ0MLtLnMiU6RJor6V
+	 7sPbPvlrxcGvfm6XsgwWxYifner2fz7ywA0KDx7G/W734l20xwrUegy9GsRwBw17C0
+	 oS2xqmZhJHkLX3ToduLQPjDKkT5lfQa+RjbqqyTQ=
+Date: Thu, 10 Sep 2026 19:03:12 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: dlemoal@kernel.org, linux-ide@vger.kernel.org,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@st.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, Lee Jones <lee@kernel.org>
-Subject: Re: [PATCH v4 1/5] ata: ahci_st: Assert the power down reset in the
- probe() error path
-Message-ID: <aqLra9zRifL_26LJ@ryzen>
-References: <20260910171406.131211-7-cassel@kernel.org>
- <20260910171406.131211-8-cassel@kernel.org>
- <20260910172904.397C41F000FF@smtp.kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v17 1/1] arm64: mm: Handle Granule Protection Faults
+ (GPFs)
+Message-ID: <aqLw4EsUG5CUFxUR@arm.com>
+References: <20260907162204.1479401-1-suzuki.poulose@arm.com>
+ <20260907162204.1479401-2-suzuki.poulose@arm.com>
+ <20260907163213.018E31F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,18 +46,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260910172904.397C41F000FF@smtp.kernel.org>
+In-Reply-To: <20260907163213.018E31F00A3A@smtp.kernel.org>
 
-On Thu, Sep 10, 2026 at 05:29:03PM +0000, sashiko-bot@kernel.org wrote:
+On Mon, Sep 07, 2026 at 04:32:12PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Missing untagged_addr() in do_gpf_ptw() causes show_pte() to fail for tagged user addresses.
+> --
 > 
-> Pre-existing issues:
-> - [High] st_ahci_probe_resets() blindly masks all errors from devm_reset_control_get(), breaking probe deferral and leading to kernel panics.
+> commit 33ff4ae42e692cd124830f34b7d3c5368fce252f
+> Author: Steven Price <steven.price@arm.com>
+> 
+> arm64: mm: Handle Granule Protection Faults (GPFs)
+> 
+> This commit introduces handlers for Granule Protection Faults (GPFs) which
+> occur when accessing memory delegated to a realm. It issues a kernel oops
+> for GPFs on page walks via do_gpf_ptw(), and sends a SIGBUS for non-page
+> walk faults. It also handles fixups for spurious kernel GPFs.
+> 
+> > diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+> > --- a/arch/arm64/mm/fault.c
+> > +++ b/arch/arm64/mm/fault.c
+> > @@ -910,6 +910,22 @@ static int do_tag_check_fault(unsigned long far, unsigned long esr,
+> >  	return 0;
+> >  }
+> >  
+> > +static int do_gpf_ptw(unsigned long far, unsigned long esr, struct pt_regs *regs)
+> > +{
+> > +	const struct fault_info *inf = esr_to_fault_info(esr);
+> > +
+> > +	die_kernel_fault(inf->name, far, esr, regs);
+> 
+> [Severity: Medium]
+> Does this code miss untagging the address before passing it to the oops
+> handler?
 
-I do not intend to fix this pre-existing issue.
+I think that's a valid point, we should use untagged_addr(far) here.
 
-Would be happy to pick up a patch for it though.
-
-
-Kind regards,
-Niklas
+-- 
+Catalin
