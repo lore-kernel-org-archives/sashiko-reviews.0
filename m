@@ -1,68 +1,68 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F62418A39
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 08:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC523A7F54
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 08:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789027811; cv=none; b=YOPWXHvPXByyfAeXfLsxZXR2TLnK5Ei+XPP9VrldjPPZWovGsmHU76ZSZBU6WcGrvHIOKKzM7SumaDK54cl11Coeje884PZ59YOcS33FxqyqKEzLPIrzT83Oobrtt+wuL0aO7SVv6o3jVVBh77hDMkfZwvUpL6zzbkYycn11yTI=
+	t=1789027877; cv=none; b=G1SXVJ8Nu5k/j6wNEeIYWFEEkml52H4NRV8TRRuCCkTKA/ZmDdiJXsUzi+iT3lsnMDK9YKNIir8hrS1qxBtwBxMGTJyfwx91czjlzobQgKEEEK5AUcmGCbpdZ9Btvhm53rfld7QEhLy4KyPDJDqO6xZyxBZ+rP3GmChu2U/sVx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789027811; c=relaxed/simple;
-	bh=WkSg7LSexZkUOQ8zOAAVGML9vwe/7hyS7QXw6ngueQo=;
+	s=arc-20240116; t=1789027877; c=relaxed/simple;
+	bh=vgTt1CKugXmTVCyKAK1V5bcR84Bpza5H6R9rp5ITitg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=REXBWZplLG6aw29ofqmI97UEJWS8O1C4y6qsg4UXGHCxQGzMZ5YpHkytRhU3EFpab1NTEkLd1EpfD3RnThZYn4R6fX4MlZSipvGyytQS8lx+iUof5GgC8JAqUXL/dt1Z15bws0D5lljoRQJ75rUkq+JmtesaeSwQ1zecAnDLXE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b8/ia5ID; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version:Content-Type; b=mtPrvTRuenhEB5S0F5GeTb6v7Lw3yjNxOemJjEP44hgPo8awrZK7I5AUluCZ/WhRlr6ixN1W6oZizSVX094vKt4NiFLw6lMpLjb2RV4pjNQE/qMTICbpuZX+tQ0Nnnu2rlep/kzxfJLbyTDPGoAHU8lm2M6LEGqcLmfyDVlwu30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IG8/mI3j; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b8/ia5ID"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IG8/mI3j"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789027808;
+	s=mimecast20190719; t=1789027874;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ww5DLB2Q6HbTXqc3AvcjNL7DcG0OH+QY3n8HRzmcc6A=;
-	b=b8/ia5IDNKCKEF+GkH/YkMBVXtrNeJExGNcQuNM0BcfBmc7Pj+zyE1U46EjnQ201gP0eYW
-	DsJ2On/yzVhsKEX/jSPCr4IjjJRaXArBSC+6keXVzhd87jdbHDtnCUtjrVlJ7l2qLixD5I
-	IsIUd59lZyq90yO/G680u2cFdcTQiRw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=DHVsvo6RwXVpI3O0qorfwMCGL9oJM3VblhLkUEiQrLE=;
+	b=IG8/mI3jUmKq59CE+EOS0OknKjl7nvZ1X+aMoYbZKqCMBsFl+7fiPhO4tQaA0Izz6ryM3i
+	luZkrNUHSacSEtd8AlICBo/k9qKS4Q922HsjURROHgwWTvkrZ9D2AX1BuqXHGQxpcy/rn1
+	vxz7uC/RMydmqkQ1MfjolDwO0BBOvhM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-7jvnu9gSMR2Kb46-_cr88g-1; Thu, 10 Sep 2026 04:10:07 -0400
-X-MC-Unique: 7jvnu9gSMR2Kb46-_cr88g-1
-X-Mimecast-MFC-AGG-ID: 7jvnu9gSMR2Kb46-_cr88g_1789027806
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49cc954a3edso52522525e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 01:10:07 -0700 (PDT)
+ us-mta-686-YEy8alVfOdWJN4pFFxBQFg-1; Thu, 10 Sep 2026 04:11:13 -0400
+X-MC-Unique: YEy8alVfOdWJN4pFFxBQFg-1
+X-Mimecast-MFC-AGG-ID: YEy8alVfOdWJN4pFFxBQFg_1789027872
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-485b0c83a89so1231296f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 01:11:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789027806; x=1789632606;
+        d=1e100.net; s=20251104; t=1789027872; x=1789632672;
         h=content-type:mime-version:message-id:date:references:in-reply-to
          :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ww5DLB2Q6HbTXqc3AvcjNL7DcG0OH+QY3n8HRzmcc6A=;
-        b=qnJS/YghLD0wogtlwr532EhSXb3A/SMbgGyEzXkwTWnHSJ2ttrUuYNI4XcnFD6y8fz
-         SejGKYAA5gnDxvnjv+Zf+y+Gbo1CITor87rUYP3wS+zbkg+FTsMGMmkG36BnQb8kAqms
-         yLouvWzkZI0IgRJvgaY3goMbjTXHyE3itsIvQVnkeOjs6et1IgVV17RgzUfnd32uhGr+
-         u9hWIodaLSWz+5IwApmWQjypLfuVCJBTcn9haJ6I2bx4TcbVSEdwv3fGpiX2AQW0zH21
-         /CbEj2jXlP3uRKsj2D/0RWXQ/pc0z025cktJe+ABnJZ1vE1fUhmA7+bjo6PC6C2iI0Q7
-         XPog==
-X-Forwarded-Encrypted: i=1; AKwUvByz9gTnpWatGr5AZMke/XBOz6tU9FegRyCZBd8g/kCRfRPSRO/Hexr+34HazEP4xmkeYCap7q7+OOGB1K0VlDs=@lists.linux.dev
-X-Gm-Message-State: AFuF++kWAdMTwevAw4gI+29hXfSPLw7tYaZR+z5rTNPHVxFxm4zvFpu7
-	Yv3IgAR3QvR4bRjTU0N4VaTojXpVU34vU3UQ68CxBE4qQA05ZZAvkpb/1LVQ23Rru12N5Oz3CZo
-	LVM2eskXYfNDg7c3k9HA7seymw+1+Rf9wU1HXb2+rmaPhUp4CT921k2ImxdxV9sK9Wyl6ag==
-X-Gm-Gg: AYBFou3WaNHq4ylS8oAy9zpi3Q4GzE4oerTKDTclZr4Ny3PNBN+/yk2PiaPhKj4Jwbl
-	P5pxj9jPyq1v/vGWeCTJ1Z6dDhLtMO45QjX7J+o5X8CzkqcxeCdPcMz0wThSbu2tY5O1UkfHv4B
-	OSxm0cIM3MZPvTeahUcEqE7LOYcA33QFS6SjkkifNDqVIV6CxgUhboilBeWfsA6xaXFSXaLBDke
-	4JIX+6BZpKCcuANF4oypWIAP3rVVGmxbPrJG+zjprpcdi8CSJFSlfxqY3UUijiwqBatVsAAwC5p
-	ahGLmA/YlE4RuxfD/i7ni0z1Z5fcQoJs0r+BVA45zcgqjgVJ7GDdkfFiM8h/REk18iZ/NTmWPEe
-	Bj2WL0ovHKoSGIFR2Dp5oT8TbU6pQKdfa5rk4dZOVRentojLFpC/CJfqIpQ==
-X-Received: by 2002:a05:600c:8715:b0:49c:fa20:cc06 with SMTP id 5b1f17b1804b1-49cfe7a30demr323256295e9.29.1789027805760;
-        Thu, 10 Sep 2026 01:10:05 -0700 (PDT)
-X-Received: by 2002:a05:600c:8715:b0:49c:fa20:cc06 with SMTP id 5b1f17b1804b1-49cfe7a30demr323255955e9.29.1789027805326;
-        Thu, 10 Sep 2026 01:10:05 -0700 (PDT)
+        bh=DHVsvo6RwXVpI3O0qorfwMCGL9oJM3VblhLkUEiQrLE=;
+        b=HXtxLsQWHVBwxPByyBWb2GkTdpu8P8X1lbKLEaukUX1HfOBjPHmmx4M3/nShWkqYyx
+         P6u0MpboMLehIrK63kH9h85lCFAIsh0Znz1mKP3A/JNpqlY1v7/FlhCG8zubrGKQTaji
+         KwTg5SyfthF7znhSnqFj1SnfY1t6YJyo9gby7g23ACvKE/RGbASsE1jd3vDwej2Qzgjr
+         1ZAujfzarBMMhX7tXgGrKsJevu7ih5/A2JjlXAgSOYpsHSPO2z8a5wPyQPn5gk2YhwNX
+         vmPYhJ72YnYThkW+sjwZQQE0PfoimUvZDkN8IefzxizCLXfqhC5SUGw2YThMYZW/wzCR
+         vMZg==
+X-Forwarded-Encrypted: i=1; AKwUvBy86OIus8PxOPb7vkbijfgYChZnvjuRiMc2ZE7bUBhH/jtvTOQy5RLiX9iTA82SRFtUt0Z2AXu71eIsagPK8h8=@lists.linux.dev
+X-Gm-Message-State: AFuF++lSrKXJ+dxlH3UrfJSX/ZLSxeYTBjcyaFjE79liHUJkozVxgrY+
+	QKsVYJEMFIUolIbXi9Drb0Bp+lyUmTPzXU0oFCPLwIm1/0MQL7mJ5lCQGFJ3jNKD5aYKnsJuh1h
+	qY41TL0frZmLLPLFQt7aYFplQtyQXVbDjVJEkyQBtpM9zsDc3kIAXKkONb5pOSR6DcyvYJw==
+X-Gm-Gg: AYBFou36VOiNVOffcy1ctOuImojODsVoWqhSt1XgM/YOqs9Sq9dZI4R0YiTeSp2rycV
+	0yyMjxkUDV3Pea/QjQBxEg4h0nCMpJ2y73XJJuFi80tpGi9sAvqeNZuMkCzRDL7jCBxjKc+wh8j
+	rv13pfHev78LeXBU6jopr7Cl7q2AbHue+UTf8eqx7op5js0kxlAWIzEviJsW38y1VN4HWPPmpsz
+	P16TGBFLTLWeXKdEGvczFqPOHa+Xb8JbO5nHmLV3oMlIxKKXKTlPhQQLExysFJqxxB52re9VX1b
+	6AbyUFJq9xbi6qE5RlRVa1rLRpXg86A4ZJXpieIrwcj3D/fOMzPNucOYNPgsnVNVgou87EaDB20
+	j8vOJBO6OTQECioRHYQHRYOPQVKvgAjLw/usOQl4OVKO4s/7AeqA7H4NLKA==
+X-Received: by 2002:a05:6000:4694:b0:482:fb97:2ae0 with SMTP id ffacd0b85a97d-485872ade60mr34287611f8f.14.1789027872246;
+        Thu, 10 Sep 2026 01:11:12 -0700 (PDT)
+X-Received: by 2002:a05:6000:4694:b0:482:fb97:2ae0 with SMTP id ffacd0b85a97d-485872ade60mr34287569f8f.14.1789027871872;
+        Thu, 10 Sep 2026 01:11:11 -0700 (PDT)
 Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883953cfsm41228794f8f.13.2026.09.10.01.10.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883c5bc5sm52649193f8f.24.2026.09.10.01.11.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 01:10:04 -0700 (PDT)
+        Thu, 10 Sep 2026 01:11:11 -0700 (PDT)
 From: Javier Martinez Canillas <javierm@redhat.com>
 To: Thomas Zimmermann <tzimmermann@suse.de>, ardb@kernel.org,
  ilias.apalodimas@linaro.org, jani.nikula@linux.intel.com,
@@ -70,12 +70,13 @@ To: Thomas Zimmermann <tzimmermann@suse.de>, ardb@kernel.org,
  airlied@gmail.com
 Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
  sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v4 2/3] drm/edid: Add drm_edid_detect_panel_size()
-In-Reply-To: <20260904090850.43060-3-tzimmermann@suse.de>
+Subject: Re: [PATCH v4 3/3] drm/sysfb: Use preferred panel size for panel
+ orientation quirks
+In-Reply-To: <20260904090850.43060-4-tzimmermann@suse.de>
 References: <20260904090850.43060-1-tzimmermann@suse.de>
- <20260904090850.43060-3-tzimmermann@suse.de>
-Date: Thu, 10 Sep 2026 10:10:03 +0200
-Message-ID: <87y0d9cysk.fsf@ocarina.mail-host-address-is-not-set>
+ <20260904090850.43060-4-tzimmermann@suse.de>
+Date: Thu, 10 Sep 2026 10:11:10 +0200
+Message-ID: <87v78dcyqp.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,81 +84,25 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: QJMHfYUMwbNPV3cicM9-o7jfXrHAAcUdxcJzyv0xRtU_1789027806
+X-Mimecast-MFC-PROC-ID: fwo_dd5lqCloybdYmerLYA6YL7bNvNLYS030X3gA9WA_1789027872
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
 Thomas Zimmermann <tzimmermann@suse.de> writes:
 
-> Add drm_edid_detect_panel_size() to extract the panel's preferred
-> display resolution from a given EDID. Required for setting up DRM's
-> panel orientation quirks in sysfb drivers.
+> Sysfb drivers currently use the given display mode for looking up the
+> panel orientation. But the look-up table stores the native geometry of
+> the panels, so the lookup fails if the current mode sizes differs.
 >
-> v4:
-> - fix test for EDID PTD (Jani)
-> v3:
-> - mention use case in documentation (Jani)
-> - use is_detailed_timing_descriptor() (Jani)
-> - rename helper to drm_edid_detect_panel_size()
+> Get the panel's native geometry with drm_edid_detect_panel_size() from
+> the EDID and use it for looking up the panel orientation.
+>
 > v2:
-> - handle EDID without pixel timing descriptor (Sashiko)
-> - fix checks for width and height pointers
+> - ofdrm: validate EDID header before using it (Sashiko)
 >
 > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > Acked-by: Ard Biesheuvel <ardb@kernel.org>
 > ---
->  drivers/gpu/drm/drm_edid.c | 47 ++++++++++++++++++++++++++++++++++++++
->  include/drm/drm_edid.h     |  2 ++
->  2 files changed, 49 insertions(+)
->
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index 9990a836d0b6..1331efb4876c 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -7852,3 +7852,50 @@ bool drm_edid_is_digital(const struct drm_edid *drm_edid)
->  		drm_edid->edid->input & DRM_EDID_INPUT_DIGITAL;
->  }
->  EXPORT_SYMBOL(drm_edid_is_digital);
-> +
-> +/**
-> + * drm_edid_detect_panel_size - Get a panel's size from EDID
-> + * @drm_edid: EDID of the panel.
-> + * @width: Returns the panel's width in pixels per scanline, if given
-> + * @height: Returns the panel's height in scanlines, if given
-> + *
-> + * This function detects the preferred size of a panel from the given
-> + * EDID. There is no such information stored in the EDID block directly,
-> + * but the preferred mode often corresponds to the panel's native geometry.
-> + *
-> + * This helper should only be used during initialization before the
-> + * connector is available. For regular use, retrieve the available display
-> + * modes with the connector functions.
-> + *
-> + * Return: Zero on success, or a negative errno code otherwise.
-> + */
-> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
-> +			       unsigned int *width, unsigned int *height)
-> +{
-> +	const struct edid *edid = drm_edid->edid;
-> +	const struct detailed_timing *dt;
-> +	const struct detailed_pixel_timing *pt;
-> +
-> +	/*
-> +	 * Use display mode from the Preferred Timing Descriptor. For old
-> +	 * and obscure displays, we might need better heuristics.
-> +	 */
-> +
-> +	if (edid->revision < 4 || !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
-> +		return -EINVAL; /* no Preferred Timing Descriptor */
-> +
-
-I saw that Jani and you discussed this logic in v3. I originally thought that
-your v3 was correct and this one was wrong, but I noticed now that this flag
-changed its semantic between 1.3 and 1.4.
-
-So I think that this latest version is correct indeed, 1.3 didn't include the
-native pixel format and 1.4 does not either if DRM_EDID_FEATURE_PREFERRED_TIMING
-flag is not set.
 
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
