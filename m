@@ -1,120 +1,152 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535EC419318;
-	Thu, 10 Sep 2026 10:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mta0.migadu.com (out-164.mta0.migadu.com [91.218.175.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7772F3DC4D9
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 11:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789037899; cv=none; b=dMr3+7vOdckF48vrUJ/6wGRAPeyn/Km/fRp7qzw52atrjecZ1A5D7Qf3aedJglp1J8NN/iPP4furlJrUcRrVGwqRtI599qq9I3L4rIIvalA6vq728sCyTZ2b/eNXblhvCz04sYlx2BFUVk6yKK4iS5W39vvF2VffMR8wDhiErSc=
+	t=1789038754; cv=none; b=qBFZG5ujaYdZA/l90T60MtFHD9jq29WRUAEkfL+nTPQI7GIMd6lXyRG0NlMGWs8zsSS65nKISbT79S/TvtlbNf9zWpxxUmDPaUcZpdm5TDs4hRSJkXNnzQVWAk+i8ob2zq/12j0qzxZtXvFXpUbOhdGiL9bquH7NPtX3NZlmZMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789037899; c=relaxed/simple;
-	bh=91rDR9zsO+SuOgJBwk89aAsDm4E6GmQ4MSXkzU+1u9c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X5QQLmIPSqc7dfYLpJK2RuuGnQQJjds3gZHuiuSIrKQfaGlLhMZox78RfFMlmchjl5QfHaXP9BL1aKaka0GkiW7PnETSAUVRg0jvKnopO8LAu33eUQkJT03Wdx9IZEroMyjjF5wiAkFLQgSiXQNZIR2toedPKmE66AashkhCBfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=s3xof/3l; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1789038754; c=relaxed/simple;
+	bh=jq/RS/dk3naU1gOXB97hhEYsKi0JENiPVr47YfqgDH0=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:
+	 In-Reply-To:References; b=JaSi944MAStWOkS42vz2fi6kTlfM5kWckOGaIQfweZNBlA8GB5szK+kJ+iosrDM+w+ctNxoM4cZhjv93s+1YLbUGr9vYX3tywIhdAyys24m485/KMQa/V1XmTAJ5mvjFIr6N/h97BH5z7JJv7jckJBjA5Xiouo3zETTUG4DJAtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ERDwXJpk; arc=none smtp.client-ip=91.218.175.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="s3xof/3l"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EE88E1570;
-	Thu, 10 Sep 2026 03:58:12 -0700 (PDT)
-Received: from thinkpad-e142931.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 05E0A3F7B4;
-	Thu, 10 Sep 2026 03:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789037896; bh=91rDR9zsO+SuOgJBwk89aAsDm4E6GmQ4MSXkzU+1u9c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s3xof/3lO0clFlEtwO/+KTIdaO/9WRnLtjeBbF9b7k5vqNhccMM0kkRxJ7SkoyjCf
-	 5YCQLTNyhIcLcdhIJ8xhowitXkCY3YVczcZ9Awd1iMenEEvVdu4RxlAhIGj2fQtsws
-	 3BBttAdf/dJWz4600XOlSIrbWPGMHZ0T+R4Uf7rc=
-Date: Thu, 10 Sep 2026 11:58:07 +0100
-From: Wei-Lin Chang <weilin.chang@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, 
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v1 2/3] arm64: sysreg: Add TCR_EL2 to sysreg
- infrastructure
-Message-ID: <qzold5p6qgyawt4manlare7cuewlqik4i3vc5lrdidtzc6ac4v@ejf67iqd3nrj>
-References: <20260909222015.3046432-1-weilin.chang@arm.com>
- <20260909222015.3046432-3-weilin.chang@arm.com>
- <20260909223811.386071F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ERDwXJpk"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=jq/RS/dk3naU1gOXB97hhEYsKi0JENiPVr47YfqgDH0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789038748; v=1; x=1789643548;
+ b=ERDwXJpkr6zcqtEHD9XlFdwne7GnNCborcRNc663TE1yvGgF6MQESQ17/9R/YWPgTS9HqPhS
+ aAnAhBEabhyav7yrenZTJicwbphwGlzUF6NyXQdCPqDFn+CnHUxTWaYdWGbMV4d0lufDaXyyTNl
+ KOHZ5c2HuUcXTogrOSTouC/c=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 06e0ba7dfd8ba99a;
+	Thu, 10 Sep 2026 11:12:28 +0000
+X-Mizu-Trace-ID: 06e0ba7dfd8ba99a
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260909223811.386071F00893@smtp.kernel.org>
+Date: Thu, 10 Sep 2026 11:12:28 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: gang.yan@linux.dev
+Message-ID: <4f0546488ae4245a08c7c7d4a1ff1c66dfaf4872@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH mptcp-next v6 5/6] Squash-to "mptcp: pm: init and release
+ mptcp_pm_ops"
+To: sashiko-reviews@lists.linux.dev
+In-Reply-To: <20260904095005.34CA31F00A3D@smtp.kernel.org>
+References: <20260904093531.20023-1-gang.yan@linux.dev>
+ <20260904093531.20023-6-gang.yan@linux.dev>
+ <20260904095005.34CA31F00A3D@smtp.kernel.org>
 
-On Wed, Sep 09, 2026 at 10:38:10PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Declarative update to TCR_EL2 regenerates the TCR_EL2_RES1 aggregate mask which is consumed by C initialization, requiring confirmation of robustness to future value changes.
+September 4, 2026 at 5:50 PM, sashiko-bot@kernel.org mailto:sashiko-bot@k=
+ernel.org  wrote:
+
+
+>=20
+>=20Thank you for your contribution! Sashiko AI review found 1 potential =
+issue(s) to consider:
+> - [Medium] Contradictory claim in the commit message regarding module u=
+nloading.
 > --
-> 
-> commit 522a184d95be9c0f88cc6fb418668546ef83e3e4
-> Author: Wei-Lin Chang <weilin.chang@arm.com>
-> 
->     arm64: sysreg: Add TCR_EL2 to sysreg infrastructure
->     
->     Convert TCR_EL2 to the sysreg infrastructure with data extracted from
->     Registers.json of the BSD licenced AARCHMRS
->     (AARCHMRS_OPENSOURCE_A_profile_FAT-2026-06).
-> 
-> > diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-> > index 94bf065c8ac71..8d89f34580bac 100644
-> > --- a/arch/arm64/tools/sysreg
-> > +++ b/arch/arm64/tools/sysreg
-> [ ... ]
-> > +Sysreg	TCR_EL2		3	4	2	0	2
-> [ ... ]
-> > +Field	33	MTX
-> > +Field	32	DS
-> > +Res1	31
-> > +Field	30	TCMA
-> > +Field	29	TBID
-> > +Field	28	HWU62
-> > +Field	27	HWU61
-> > +Field	26	HWU60
-> > +Field	25	HWU59
-> > +Field	24	HPD
-> > +Res1	23
-> > +Field	22	HD
-> 
-> [Severity: Medium]
-> This isn't a bug, but this declarative update regenerates the TCR_EL2_RES1
-> aggregate mask. Are the C initialization consumers of this mask robust to its
-> value silently changing if a future .sysreg patch adds or removes a Res1 bit?
-> 
-> For example, the generated mask is OR'd into the initial EL2 register value:
-> 
-> arch/arm64/kvm/arm.c:cpu_prepare_hyp_mode() {
->     ...
->     tcr |= TCR_EL2_RES1 | FIELD_PREP(TCR_EL2_PS_MASK, ips);
->     ...
-> }
-> 
-> It is also used to initialize the guest emulation reset state in:
-> 
-> arch/arm64/kvm/sys_regs.c:sys_reg_descs[] = {
->     ...
->     EL2_REG(TCR_EL2, access_rw, reset_val, TCR_EL2_RES1),
->     ...
-> }
-> 
-> Because the generator's contract is to reflect global architectural truth, a
-> future edit that reclassifies a bit as Res1 will silently change the value of
-> TCR_EL2_RES1 without triggering a compiler or CI warning. Could you confirm
-> that these consumers do not rely on the previous static semantic value of the
-> mask?
+>=20
+>=20commit 954ec9b5378fa18a4b6badb35d44bfbe2edbd12a
+> Author: Gang Yan <yangang@kylinos.cn>
+>=20
+>=20Squash-to "mptcp: pm: init and release mptcp_pm_ops"
+>=20
+>=20This commit introduces mptcp_pm_ops lifetime handling on sockets and =
+per-net
+> path managers. It modifies path manager initialization and cleanup rout=
+ines
+> to use operations structs directly and take module references.
+>=20
+>=20>=20
+>=20> This commit introduces the mptcp_pm_ops lifetime handling on socket=
+s
+> >  (mptcp_pm_ops_init/release taking a module reference), and would the=
+n
+> >  be the first one whose per-net path managers can be unloaded while a
+> >  pernet still stores them.
+> >=20
+>=20[ ... ]
+>=20
+>=20>=20
+>=20> diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
+> >  index 87491b961bf27..6379a9f481ac6 100644
+> >  --- a/net/mptcp/ctrl.c
+> >  +++ b/net/mptcp/ctrl.c
+> >=20
+>=20[ ... ]
+>=20
+>=20>=20
+>=20> @@ -224,15 +222,22 @@ static int proc_blackhole_detect_timeout(cons=
+t struct ctl_table *table,
+> >=20=20
+>=20>  static int mptcp_set_path_manager(struct mptcp_pernet *pernet, con=
+st char *name)
+> >  {
+> >  - struct mptcp_pm_ops *pm_ops;
+> >  + struct mptcp_pm_ops *pm_ops, *prev;
+> >  int ret =3D 0;
+> >=20=20
+>=20>  rcu_read_lock();
+> >  pm_ops =3D mptcp_pm_find(name);
+> >  - if (pm_ops)
+> >  - xchg(&pernet->path_manager, pm_ops);
+> >  - else
+> >  + if (pm_ops) {
+> >  + if (bpf_try_module_get(pm_ops, pm_ops->owner)) {
+> >  + prev =3D xchg(&pernet->path_manager, pm_ops);
+> >=20
+>=20[Severity: Medium]
+> Does this code contradict the commit message regarding module unloading=
+?
+>=20
+>=20The commit message claims that per-net path managers "can be unloaded=
+ while a
+> pernet still stores them." However, here in mptcp_set_path_manager() (a=
+s well
+> as in mptcp_pernet_set_defaults()), bpf_try_module_get() is explicitly =
+called
+> before storing the pm_ops pointer in the per-net structure.
+>=20
+>=20This increments the module's reference count, which fundamentally pre=
+vents the
+> module from being unloaded (e.g., via rmmod) as long as the netns uses =
+it.
+>=20
+>=20Could the commit message or the implementation be clarified to resolv=
+e this
+> mismatch?
 
-I don't fully understand but doesn't this mean the architecture
-introduced a change that breaks existing software?
+This seems an error in commit message, will fix in next version.
 
-Thanks,
-Wei-Lin Chang
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260909222015.3046432-1-weilin.chang@arm.com?part=2
+>=20
+>=20>=20
+>=20> + if (prev)
+> >  + bpf_module_put(prev, prev->owner);
+> >  + } else {
+> >  + ret =3D -EBUSY;
+> >  + }
+> >  + } else {
+> >  ret =3D -ENOENT;
+> >  + }
+> >  rcu_read_unlock();
+> >=20=20
+>=20>  return ret;
+> >=20
+>=20--=20
+>=20Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026090409353=
+1.20023-1-gang.yan@linux.dev?part=3D5
+>
