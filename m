@@ -1,95 +1,128 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-19.mta1.migadu.com [95.215.58.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973DC471D0B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 11:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B223EB11C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 11:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789039387; cv=none; b=hIUiNZZAV3jDXdHbQdj0anFsUKvdh1PgkawxKLJQ411L2gZhnV+hRzF/Bi5mGMdv0n4pEdWuWnhUHLNh/hYRJoZzhdy2RAR275B8vb+BKGrKTxSUisML3mO8HdSVdmxBqDgyV7APrgP2lV9yuSmFOLVL/oQYB+gWfNruzgVsyWU=
+	t=1789041074; cv=none; b=YdB8T4y0ksks//kG/DvH+MqI8w+LE6pmIkgLefXKCgunYJbg+JwphbnW3fdSRw92fXgQGKjahQ+HXqsv85oQoX2UBTbswA1hDK5upRx7VkrFLSA0BXatpQwcJW7fPfq1QNFwR9VaBKuMKpxVuI6Q61U6nT95aPLAB3weDhcrdRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789039387; c=relaxed/simple;
-	bh=Z9C/2srLh2sis/MGhlglEihl0ntMVdSE592nlKcBNss=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxh2/ge1o00gbJYdnATrkprGoMtz2x6P4I0KvtStCE5Il3K7csN64T6asWx/rKkpg+K4jDgwRzWJAjRBBCtFj3mW/+gptD6ajAYs6nkBwvR0rIi1R8rvwAi4nr57xT4y0xVaEdx7cz0r447VJaFLWP8wvBt8mZk3D7lwSNwrhgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=He7cVbDE; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789041074; c=relaxed/simple;
+	bh=UrdEZ9AJIbVBw5+rxtLVeDF1XfzC2ga5F/RnCm+PPbg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UzSCfS/Dz9vx/amYjCTjy9NNgYXXt+g9zbhfgXHZWNOIUNYsJ2SYwQPtZ2FLsUkAK9eMLN6lWySlvityvwg/JuvzQaNQ0K2twcE9MHcwv9/JOKvs5W+JhpT9aDLmPkM1hWdzZf86xOVo5EMQFdt+kANbiJzH1VwFBuaUE6H8boc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FlTWFVid; arc=none smtp.client-ip=95.215.58.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="He7cVbDE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789039385; x=1820575385;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=Z9C/2srLh2sis/MGhlglEihl0ntMVdSE592nlKcBNss=;
-  b=He7cVbDEGNafPPmJzD6XGzSpIVx2i7/aPKXBjI8uczW7zMT4Fg0TUsnm
-   R/2joo0epWuqrxTaAG2YchrHoj7ypUgg1zjRugrgrzwt2yAi6HtR9OdQZ
-   8953Li54FddXY34FDUoTgL7q/Eygmzqy4FUHstKHqqo28bISSa2b7J4DY
-   O34FJgrS/bd6FfFboy8UpbDcBklpCa51pTmlKqh7CvDw8olyBiXOFWTD6
-   ionQfAEj34P7GtmgHjZMRH7jwtEHiOIBc8nkphSbjUAvy7jEMI5u5Brdr
-   WBJZr40dZgItWMfeF9pJpy0ZHszcZrz2mK/Avtnau5CilBoesImdu1zB4
-   A==;
-X-CSE-ConnectionGUID: CwsuepnsR+GsXIaj41SmSw==
-X-CSE-MsgGUID: r6LBL5kgSu+YemgRn9iaig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89697760"
-X-IronPort-AV: E=Sophos;i="6.27,95,1787036400"; 
-   d="scan'208";a="89697760"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2026 04:23:05 -0700
-X-CSE-ConnectionGUID: yewCGyUhQKq8/W926Befpg==
-X-CSE-MsgGUID: rKewsaTXSvm0HoJXv9MrUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,95,1787036400"; 
-   d="scan'208";a="309850667"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.238])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2026 04:23:03 -0700
-Date: Thu, 10 Sep 2026 14:23:01 +0300
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
-Subject: Re: [PATCH v2 12/13] drm/i915/dsb: Add tracepoints for DSB commit
-Message-ID: <aqKTFanaLavoU0DN@intel.com>
-References: <20260909161730.12969-1-ville.syrjala@linux.intel.com>
- <20260909161730.12969-13-ville.syrjala@linux.intel.com>
- <20260909163450.000EE1F00898@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FlTWFVid"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=UrdEZ9AJIbVBw5+rxtLVeDF1XfzC2ga5F/RnCm+PPbg=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789041070; v=1; x=1789645870;
+ b=FlTWFVid/OvAlnWuZWM+A2ZGB8GeFLtCwaaAu4yByDjbt3THKSGQtAql8k9ZwJ/wb8WqK1n6
+ jlQIvtqyzysEYU2amoOc1cWEh44JoHC0Pjo7XV0FydORmVLR1o3xFhcRg6nZZqGakmTceBkPhOB
+ omvzfw+jJhm+0JtUjo5lGDxY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id bf38fb4ee310e6c3;
+	Thu, 10 Sep 2026 11:51:00 +0000
+X-Mizu-Trace-ID: bf38fb4ee310e6c3
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <c9a9b25c-e8b3-42d5-8042-10401905e0f8@linux.dev>
+Date: Thu, 10 Sep 2026 19:50:54 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260909163450.000EE1F00898@smtp.kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf v3 2/3] tcp: Skip cond_resched() in
+ inet_csk_listen_stop() under BPF context
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260910112107.148770-1-jiayuan.chen@linux.dev>
+ <20260910112736.153710-1-jiayuan.chen@linux.dev>
+ <20260910114428.7CFDF1F000FF@smtp.kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260910114428.7CFDF1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 09, 2026 at 04:34:49PM +0000, sashiko-bot@kernel.org wrote:
-> > diff --git a/drivers/gpu/drm/i915/display/intel_dsb.c b/drivers/gpu/drm/i915/display/intel_dsb.c
-> > index 8e01e1eed291e..299d778520a22 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_dsb.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_dsb.c
+
+On 9/10/26 7:44 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] bpf_sock_destroy() incorrectly relies on has_current_bpf_ctx() to bypass lock_sock(), leading to lockless socket state mutations and data corruption.
+> --
+>
+> commit 5e3e5dd8730687f6f2e1d9b86f565fa03b6e3366
+> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
+>
+> tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
+>
+> This commit skips cond_resched() in inet_csk_listen_stop() when running
+> under a BPF context. It prevents a "sleeping function called from invalid
+> context" BUG when bpf_sock_destroy() triggers tcp_abort() from a BPF
+> iterator.
+>
+>> diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+>> index 6257459bcee24..6a30f11384547 100644
+>> --- a/net/ipv4/inet_connection_sock.c
+>> +++ b/net/ipv4/inet_connection_sock.c
 > [ ... ]
-> > @@ -1124,6 +1127,8 @@ void intel_dsb_irq_handler(struct intel_display *display,
-> >  		spin_lock(&display->drm->event_lock);
-> >  
-> >  		if (crtc->dsb_event) {
-> > +			trace_intel_dsb_done(crtc, dsb_id);
-> > +
-> 
-> [Severity: Medium]
-> Will this lead to unbalanced commit/done trace events for background updates?
-> 
-> The trace_intel_dsb_done() tracepoint is conditionally called only when a
-> userspace vblank event is present. If a commit completes in hardware
-> without an associated vblank event, the irq handler will skip emitting the
-> completion tracepoint.
+>> @@ -1520,7 +1520,8 @@ void inet_csk_listen_stop(struct sock *sk)
+>>   		local_bh_enable();
+>>   		sock_put(child);
+>>   
+>> -		cond_resched();
+>> +		if (!has_current_bpf_ctx())
+>> +			cond_resched();
+> [Severity: High]
+> This is a pre-existing issue, but propagating the use of
+> has_current_bpf_ctx() highlights a deeper locking bug in
+> bpf_sock_destroy().
+>
+> Does relying on has_current_bpf_ctx() in tcp_abort() and udp_abort()
+> lead to lockless socket state mutations and data corruption?
+>
+> When a BPF program of type BPF_TRACE_ITER obtains a socket pointer via a
+> lookup helper like bpf_sk_lookup_tcp(), or operates in an iterator like
+> iter/task_file that doesn't inherently lock the target socket, passing
+> this socket to bpf_sock_destroy() calls tcp_abort() or udp_abort().
+>
+> In those functions, the socket lock is currently bypassed:
+>
+> net/ipv4/tcp.c:tcp_abort() {
+>      ...
+>      /* BPF context ensures sock locking. */
+>      if (!has_current_bpf_ctx())
+>          /* Don't race with userspace socket closes such as tcp_close. */
+>          lock_sock(sk);
+>      ...
+> }
+>
+> Because has_current_bpf_ctx() returns true in BPF context, lock_sock(sk)
+> is bypassed. Modifying socket state (like accept queues, timers, and
+> flags) locklessly can lead to use-after-free and list/RB-tree corruption.
+>
+> Since the underlying bug stems from the commit that added
+> bpf_sock_destroy(), should the lock acquisition be addressed structurally
+> for those code paths instead of relying on has_current_bpf_ctx()?
 
-There is never a commit without an associated vblank event. See
-drm_atomic_helper_setup_commit().
 
--- 
-Ville Syrjälä
-Intel
+
+Those paths don't exist...
+
+Iter progs have no sk_lookup helpers, and sock_from_file() returns an
+
+untrusted pointer, so the only socks that can reach bpf_sock_destroy() are
+
+the tcp/udp iter ctx args, which are already locked by the iterator.
+
+The verifier rejects anything else with "R1 must be referenced or 
+trusted", see the note on patch 1.
+
+
