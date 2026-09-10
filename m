@@ -1,36 +1,30 @@
-Received: from mta1.migadu.com (out-19.mta1.migadu.com [95.215.58.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B223EB11C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 11:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCED4825CB
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 12:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789041074; cv=none; b=YdB8T4y0ksks//kG/DvH+MqI8w+LE6pmIkgLefXKCgunYJbg+JwphbnW3fdSRw92fXgQGKjahQ+HXqsv85oQoX2UBTbswA1hDK5upRx7VkrFLSA0BXatpQwcJW7fPfq1QNFwR9VaBKuMKpxVuI6Q61U6nT95aPLAB3weDhcrdRo=
+	t=1789042437; cv=none; b=lw252zlJdCIydWsTL0ktduBRN6NsKVPvRwg0ekqAqz3mum4U0Pe9TYR6y+bVNKQK1qFbDRnLjXKId9S3voWjvnjSqoxtzW5CrCILZQe1nRtcHKnjczypCXRqh4mFbSA3mNyZkk6WzUa5lrhzQUpani+zsF6P98Em7NwZHMxdNbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789041074; c=relaxed/simple;
-	bh=UrdEZ9AJIbVBw5+rxtLVeDF1XfzC2ga5F/RnCm+PPbg=;
+	s=arc-20240116; t=1789042437; c=relaxed/simple;
+	bh=S+RMQ2P/WFYm+Ioqqnx5D19p+rKsjBJ+FaK5hrvZpMw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UzSCfS/Dz9vx/amYjCTjy9NNgYXXt+g9zbhfgXHZWNOIUNYsJ2SYwQPtZ2FLsUkAK9eMLN6lWySlvityvwg/JuvzQaNQ0K2twcE9MHcwv9/JOKvs5W+JhpT9aDLmPkM1hWdzZf86xOVo5EMQFdt+kANbiJzH1VwFBuaUE6H8boc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FlTWFVid; arc=none smtp.client-ip=95.215.58.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FlTWFVid"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=UrdEZ9AJIbVBw5+rxtLVeDF1XfzC2ga5F/RnCm+PPbg=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789041070; v=1; x=1789645870;
- b=FlTWFVid/OvAlnWuZWM+A2ZGB8GeFLtCwaaAu4yByDjbt3THKSGQtAql8k9ZwJ/wb8WqK1n6
- jlQIvtqyzysEYU2amoOc1cWEh44JoHC0Pjo7XV0FydORmVLR1o3xFhcRg6nZZqGakmTceBkPhOB
- omvzfw+jJhm+0JtUjo5lGDxY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id bf38fb4ee310e6c3;
-	Thu, 10 Sep 2026 11:51:00 +0000
-X-Mizu-Trace-ID: bf38fb4ee310e6c3
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <c9a9b25c-e8b3-42d5-8042-10401905e0f8@linux.dev>
-Date: Thu, 10 Sep 2026 19:50:54 +0800
+	 In-Reply-To:Content-Type; b=UZaG4DHPETfvnEY/UnURgzs0WtxRt/4mMEcR/jqKlWaVepKDnZrZcbvBGLMvwlsxhVdYeCXeVBuppzUt2bk9sMj5hhsQB1RxRTMO4QjH9YNMhOPda+Jx4RrVdI5LajTPECbDFHgCUzm21AHc1+4Ruqk3IRFTXrbzn68iwnjlfng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hgc605PJGzKHMyJ
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 20:13:44 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 4E2F14057D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 20:13:49 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgBnJLL8nqJqH_PKBQ--.11031S2;
+	Thu, 10 Sep 2026 20:13:49 +0800 (CST)
+Message-ID: <b1686928-84e7-4b67-89ce-4166acd77491@huaweicloud.com>
+Date: Thu, 10 Sep 2026 20:13:48 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,91 +32,131 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v3 2/3] tcp: Skip cond_resched() in
- inet_csk_listen_stop() under BPF context
+Subject: Re: [PATCH v5 14/26] perf annotate-data: Add arch_get_reg_offset
+ helper
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260910112107.148770-1-jiayuan.chen@linux.dev>
- <20260910112736.153710-1-jiayuan.chen@linux.dev>
- <20260910114428.7CFDF1F000FF@smtp.kernel.org>
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260910114428.7CFDF1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1788872630.git.wutengda@huaweicloud.com>
+ <e2d2dc36b2d8f600b339cf66880b10e611dbf9ab.1788872630.git.wutengda@huaweicloud.com>
+ <20260908132222.90D9F1F00A3F@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260908132222.90D9F1F00A3F@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_Ch0CgBnJLL8nqJqH_PKBQ--.11031S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDKw47Xw4DJryxCw45Wrg_yoW5trykpr
+	Wku3W3JFyfXrsaqws2qa1DXFy8Ww4kGF4rGrZ5Ka47AryavFn3Ja1vyryYg3Z7Xr9rZw17
+	JFn8trsrX3ZrCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVj
+	vjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
-On 9/10/26 7:44 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] bpf_sock_destroy() incorrectly relies on has_current_bpf_ctx() to bypass lock_sock(), leading to lockless socket state mutations and data corruption.
+
+On 2026/9/8 21:22, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The newly computed effective `offset` from `arch_get_reg_offset` is not propagated to `dloc->type_offset` before querying stack variables, breaking stack type tracking for indexed addressing modes on ARM64.
+> - [Low] The debug logging variable `offset_sign` is not reset across loop iterations, causing positive offsets to be printed as negative.
 > --
->
-> commit 5e3e5dd8730687f6f2e1d9b86f565fa03b6e3366
-> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
->
-> tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
->
-> This commit skips cond_resched() in inet_csk_listen_stop() when running
-> under a BPF context. It prevents a "sleeping function called from invalid
-> context" BUG when bpf_sock_destroy() triggers tcp_abort() from a BPF
-> iterator.
->
->> diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
->> index 6257459bcee24..6a30f11384547 100644
->> --- a/net/ipv4/inet_connection_sock.c
->> +++ b/net/ipv4/inet_connection_sock.c
+> 
+> commit 090fc5d342fd0b37d2080a84b8472453f678a2e5
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-data: Add arch_get_reg_offset helper
+> 
+> Adds a helper to compute the effective offset from a base register
+> for instruction operands. Currently handles arm64 addressing modes
+> and falls back to the instruction's raw offset for other architectures.
+> 
+>> diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
+>> index c51b20a7af9b6..754c0efe2077e 100644
+>> --- a/tools/perf/util/annotate-data.c
+>> +++ b/tools/perf/util/annotate-data.c
 > [ ... ]
->> @@ -1520,7 +1520,8 @@ void inet_csk_listen_stop(struct sock *sk)
->>   		local_bh_enable();
->>   		sock_put(child);
->>   
->> -		cond_resched();
->> +		if (!has_current_bpf_ctx())
->> +			cond_resched();
-> [Severity: High]
-> This is a pre-existing issue, but propagating the use of
-> has_current_bpf_ctx() highlights a deeper locking bug in
-> bpf_sock_destroy().
->
-> Does relying on has_current_bpf_ctx() in tcp_abort() and udp_abort()
-> lead to lockless socket state mutations and data corruption?
->
-> When a BPF program of type BPF_TRACE_ITER obtains a socket pointer via a
-> lookup helper like bpf_sk_lookup_tcp(), or operates in an iterator like
-> iter/task_file that doesn't inherently lock the target socket, passing
-> this socket to bpf_sock_destroy() calls tcp_abort() or udp_abort().
->
-> In those functions, the socket lock is currently bypassed:
->
-> net/ipv4/tcp.c:tcp_abort() {
->      ...
->      /* BPF context ensures sock locking. */
->      if (!has_current_bpf_ctx())
->          /* Don't race with userspace socket closes such as tcp_close. */
->          lock_sock(sk);
->      ...
+>> @@ -1132,18 +1200,26 @@ static enum type_match_result check_matching_type(struct type_state *state,
+>>  	Dwarf_Word size;
+>>  	u32 insn_offset = dl->al.offset;
+>>  	int reg = dloc->op->reg1;
+>> -	int offset = dloc->op->offset;
+>> +	int offset;
+>>  	const char *offset_sign = "";
+>>  	bool retry = true;
+>>  
+>> -	if (offset < 0) {
+>> -		offset = -offset;
+>> -		offset_sign = "-";
+>> +again:
+>> +	if (arch_get_reg_offset(dloc->arch, dloc->op, reg, state, false, &offset)) {
+>> +		/*
+>> +		 * Fall back to the instruction's offset. This prevents the
+>> +		 * register type of the instruction from being completely lost.
+>> +		 * Compared to dropping this type inference entirely, providing
+>> +		 * a rough type hint is likely more useful.
+>> +		 */
+>> +		offset = dloc->op->offset;
+>>  	}
+>>  
+>> -again:
+>> +	if (offset < 0)
+>> +		offset_sign = "-";
+> 
+> [Severity: Low]
+> Does this code leave offset_sign set to "-" across loop iterations?
+> 
+> If check_matching_type() triggers a retry (goto again) after processing a
+> negative offset, and the new offset for the retry is positive, offset_sign
+> will still point to "-" instead of being cleared.
+> 
+
+Yes, it should be changed to:
+
+  offset_sign = offset < 0 ? "-" : "";
+
+> [Severity: Medium]
+> Since this code now dynamically computes offset using arch_get_reg_offset(),
+> is it necessary to update dloc->type_offset with this newly computed value?
+> 
+> Later in this function, during stack variable lookups, the code relies on
+> dloc->type_offset:
+> 
+> tools/perf/util/annotate-data.c:check_matching_type() {
+>     ...
+>     check_non_register:
+>         if (reg == dloc->fbreg || reg == state->stack_reg) {
+>             ...
+>             stack = find_stack_state(state, dloc->type_offset);
+>     ...
 > }
->
-> Because has_current_bpf_ctx() returns true in BPF context, lock_sock(sk)
-> is bypassed. Modifying socket state (like accept queues, timers, and
-> flags) locklessly can lead to use-after-free and list/RB-tree corruption.
->
-> Since the underlying bug stems from the commit that added
-> bpf_sock_destroy(), should the lock acquisition be addressed structurally
-> for those code paths instead of relying on has_current_bpf_ctx()?
+> 
+> And similarly for CFA stack lookups:
+> 
+> tools/perf/util/annotate-data.c:check_matching_type() {
+>     ...
+>         stack = find_stack_state(state, dloc->type_offset - fboff);
+>     ...
+> }
+> 
+> If dloc->type_offset isn't updated to reflect the true effective offset
+> calculated by arch_get_reg_offset(), will find_stack_state() end up
+> using a stale or incorrect offset (e.g. 0 instead of the index offset) for
+> stack-based array accesses on ARM64?
+> 
 
+Yes, dloc->type_offset should be replaced with the currently computed
+offset when calling find_stack_state.
 
-
-Those paths don't exist...
-
-Iter progs have no sk_lookup helpers, and sock_from_file() returns an
-
-untrusted pointer, so the only socks that can reach bpf_sock_destroy() are
-
-the tcp/udp iter ctx args, which are already locked by the iterator.
-
-The verifier rejects anything else with "R1 must be referenced or 
-trusted", see the note on patch 1.
+Thanks,
+Tengda
 
 
