@@ -1,242 +1,165 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B15146D5A;
-	Thu, 10 Sep 2026 02:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F225387346
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 03:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789009020; cv=none; b=Z9UBlBNlVXnlnZ7eUgGLpMDg4AzTf+sJggertfAd8iDdKgVzLINtxG09zp9MatIJGU/hgy4Ywyu/JMfOpWMWvIqYNhVOLGfgd0M/PXV+eYRTRNxQyyTjysiX7T9nk/jiKFh7Kx45i4IFxxP2LIS0SV9a2CNHMo4zbW2CxHsBJ+U=
+	t=1789010641; cv=none; b=CXlgFyi6hbbgOiZQtBnFzvCFPZLHNN8a1d6fGXqTyihbDTimTGW/eVrR3NUq7V57e2Hjz6SaHfx/bWcI1JI3n2IwMgVeOPJ2tw7lBjyNKL1iW9iFl6/PBJhUnX4eJNelMuy17lg0l9rrn6ZIAOrOfBm8mRtCHioNmqjYRHQsEvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789009020; c=relaxed/simple;
-	bh=vcvKEalG+2tQtjM6udCNDsnuUt2KvEjEd+uzMQX50UQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uYpMjwd9dCs3HsEfsKyB1tTE3omMklpZBBjmkqyNdFO8ejusV7ZybVP0RMlfdMBy739Bt+N491AaMSnw99juIpcEJ0P3AizqBVyDSIrN/rTT2Yg9wquN40yRgQbTTZCsLyMr+8Qx1C+VHXTXMYCvGz961Y3KIOMZfWXQsOmDimo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZwX/VL1+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789010641; c=relaxed/simple;
+	bh=vDfkLDJaOeZizfvAQxeCbGfASUqiL1kp5bzBm13U9kg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=e3A3bBozqpOWiYQWwkmZx+cXKbiKhc9gzol5ox2/JlAgLtqXQlHqgGtLkT6552HE+ykEH9IXE4v8oah7ODtfFutmibSlRZ+KOf0L2O9U9ryBhUL53hROD0VCd9NftzmTHEp3oB5K2UdWntY3jW+feHrZiUAIIrrxA4u3OJWiM1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TII0fZFd; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZwX/VL1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139491F000FF;
-	Thu, 10 Sep 2026 02:56:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789009019;
-	bh=QmV7q2RmaJxfTJ+mV+lc341aMBTJpVDcoTAnIAr47ak=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=ZwX/VL1+ike6G2QlaCWQ1bp/IFj0U0/wQ2295CxgEfRnmuQjZwFNAPIbAXvK3Mjpf
-	 nre6KLdPTyMwlY334RawBzzZ4xhuprWjrHBI07Re3QH3FiIFbUlOVhZkJQBwmdbKZi
-	 7cfXmHrwqKddQ+fJ/yq1teBXdlazExFuVSDvxD0fRdvhSGChEPihe1eMb1/j6q4I/z
-	 kcZ+BI2ACEZqWk3kkq7UyWZSMKx5i9+JFLYYzcIFD7d0g2w+lkRwTRkkRKMv37ANES
-	 kiKqFV5kSMg1Yn2I7OJOwSqxI9lISNgtdk48BJ3DzFxoF/TG2fj72Iu8QQNf8tAZeY
-	 eCJzRFyLF1L3A==
-Date: Thu, 10 Sep 2026 03:56:53 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <linux-iio@vger.kernel.org>
-Subject: Re: [PATCH v8 4/4] iio: light: veml6031x00: add support for events
- and trigger
-Message-ID: <20260910035653.6b133652@jic23-hlaptop>
-In-Reply-To: <DL992E7Q18ZM.2PAM4UQKPJ1BQ@gmail.com>
-References: <20260901-veml6031x00-v8-0-532cb4f2168a@gmail.com>
-	<20260901-veml6031x00-v8-4-532cb4f2168a@gmail.com>
-	<20260901132208.EE64C1F000E9@smtp.kernel.org>
-	<DL49BADYC1U8.2N2F6YW5ZR5S2@gmail.com>
-	<DL4X3IXEI8WK.OOFNRSU7FGRW@gmail.com>
-	<20260907025826.414c570a@jic23-huawei>
-	<DL992E7Q18ZM.2PAM4UQKPJ1BQ@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TII0fZFd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1789010624;
+	bh=JkKpYWlGjsNb0KvXkISJQTVrsGZtNUVjybFylagCGLU=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=TII0fZFdbPQkK8V2wIA41tVL0g/OX66wqizAt6iP5si7K2e+z5MWcNDaj8XYN2hcw
+	 TkOlKA/K+rRHcdHFHH4ABeKOFVEIR7dpL0/1RdkskOOn+3wA0y9YawEKgYwNctSSdJ
+	 Ps2FqhV2ra3XXXmJE7tX87ssnRH0t/7naiI0T7yM=
+X-QQ-mid: esmtpsz21t1789010622ta65d0c4a
+X-QQ-Originating-IP: gN3PKgpqe5LUr3Xxvr5mtfTLUbno8h8E0IUkA9CNkHM=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 10 Sep 2026 11:23:41 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2512009657120881219
+EX-QQ-RecipientCnt: 3
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=b27a31aff78db9385a11b35bd47a7dbc4cfa53b1ddfa541804de3f1bc0c9;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 10 Sep 2026 11:23:38 +0800
+Message-Id: <DLBBC49OENDA.3SP65LNWNEYJY@linux.spacemit.com>
+Cc: <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH 3/5] clk: spacemit: describe CPU clock dividers and
+ shared PLL muxes
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: <sashiko-reviews@lists.linux.dev>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com> <20260909-spacemit-pll-init-v1-3-b3065ad5a4ac@linux.spacemit.com> <20260909142152.612951F00A3D@smtp.kernel.org>
+In-Reply-To: <20260909142152.612951F00A3D@smtp.kernel.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NRN3UPsLzYKVc7sBO2hn1IIxHol3lanmW4AqEFZJ6tfPhEpLHS/biaMi
+	VedkzLfFBGXcwDRCBaJSF9+tjBBs+PK4OG0LMY2QSH2uPMy1caKooh2d8WpE0sEm7Z3movL
+	cgxs9FRKgG+XShCWxzZy5uQGBGrOebIMwyGMWRBioJ3WLKhnE2vDV/Z4rYlZOx4CejhAmrN
+	oJz3q55Vd2Q6ZsqR+Dyx2hf4uYO51cmfL9Zb72n3N5pKs5A830quP2zYN4iiqMnzTm2N3IZ
+	CF2Dhf4ryybljysh37Qw7eGzQidpWZLve7KHnApLVVIUmqkS3vkPdnjD0XZIvRrWKiO9NZ5
+	329CQiWRmS9DvguEM+Hg9M9s36YMatbiopYE55qIDM12XKFRoC/8Jdyma5ajqxKviDPP15J
+	NYv469l7OFzFmGaHdGDNsjBvlm25PA0MtKEUSK0+jIxX5XGu7jZHFBiTMlnoC8+pgcNo8Pc
+	Iu4cVE99/F8WbvOyBqAT9PNGLkkKBMZd/MotVV1Y/Tuov9w9ibfzXG4bqqRV5WEWPSkIoKJ
+	8g2g4CFRQC0jWbduSrTfEE0vDVfF7mAaa1uUvsibGmOCCaH2wPoAJ6JQNxa6+I0uS9nVZ54
+	9uL2QuA4VkCd0POUor+UxMGaVulSAx+KMfk45Pw9M2FI+WxO3dz8WX/h2yuEEHBbIlF+d43
+	zYAla0oabL8N/6Eij5ItI5J77lVTSetCuTTsPuFk5T+VXnCMSakY5y66oSKgMOvEK8j6CvD
+	NLSfnNjkBGfo4LkdqLMJEPrhBjoAtQAUr52TvmWY/98Ayw09kUd+wnWDYJQPYUONY2Uh79a
+	pxTAwRcm5HC2YecwmQUNPS5KGDEbmzNv6mCvutWqLCk6CPmoW7cOBLQ2ucwasJ0OBiz8435
+	ygZIpzMi4b1MhkvukfTF3rE2DtLdcovyj03ZzOFlZkvhIrbk8rXov5EBhtYYIHwPOh1nE6q
+	KKkCAKM08s1o5VfI8agB5MAteVAbSCMwd6CRXjmnenR8V61Hw+7UnCyO406BV+e6azJuHQA
+	UZbqKSVgGSQTDgSdf99fneCSkENvnoxWJYdBRltju8BUGvZnaoqTWebiPTwaRhU86VKd9oV
+	kxHk/U2cYvS
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On Mon, 07 Sep 2026 19:11:34 +0200
-"Javier Carrasco" <javier.carrasco.cruz@gmail.com> wrote:
+--b27a31aff78db9385a11b35bd47a7dbc4cfa53b1ddfa541804de3f1bc0c9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-> On Mon Sep 7, 2026 at 3:58 AM CEST, Jonathan Cameron wrote:
-> > On Wed, 02 Sep 2026 16:58:09 +0200
-> > "Javier Carrasco" <javier.carrasco.cruz@gmail.com> wrote:
-> >  
-> >> On Tue Sep 1, 2026 at 10:19 PM CEST, Javier Carrasco wrote:  
-> >> > On Tue Sep 1, 2026 at 3:22 PM CEST, sashiko-bot wrote:  
-> >> >> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >> >> - [High] Use-After-Free of iio->pollfunc in IRQ handler during device unbind or probe failure.
-> >> >> - [Medium] Unintended I2C read of configuration register when pushing timestamp to buffer
-> >> >> - [Medium] The interrupt_users counter can permanently underflow during error recovery, breaking hardware interrupt control.
-> >> >> --
-> >> >>
-> >> >> commit c87f3d48e1ee614fc184995b816c8f8679a6b774
-> >> >> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-> >> >>
-> >> >> iio: light: veml6031x00: add support for events and trigger
-> >> >>
-> >> >> The device provides a shared interrupt line to notify events and data ready.
-> >> >> Add support for configurations with and without an interrupt line, providing
-> >> >> events and trigger support when an interrupt line is available.
-> >> >>  
-> >> >>> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml6031x00.c
-> >> >>> index 3d5a27a0baaed..7bd7975eb1a76 100644
-> >> >>> --- a/drivers/iio/light/veml6031x00.c
-> >> >>> +++ b/drivers/iio/light/veml6031x00.c  
-> >> >> [ ... ]  
-> >> >>> +static int __veml6031x00_set_trigger_state(struct veml6031x00_data *data, bool state)
-> >> >>> +	__must_hold(&data->irq_lock)
-> >> >>> +{  
-> >> >> [ ... ]  
-> >> >>> +	data->trig_en = state;
-> >> >>> +
-> >> >>> +	return 0;
-> >> >>> +
-> >> >>> +clear_interrupt:
-> >> >>> +	veml6031x00_set_interrupt(data, !state);
-> >> >>> +
-> >> >>> +	return ret;
-> >> >>> +}  
-> >> >>
-> >> >> [Severity: Medium]
-> >> >> Can data->interrupt_users permanently underflow here during error recovery?
-> >> >>
-> >> >> If an I2C error occurs in __veml6031x00_set_trigger_state() while disabling
-> >> >> the trigger, this error recovery path calls veml6031x00_set_interrupt() to
-> >> >> revert the counter, but fails to update the software state (data->trig_en).
-> >> >>
-> >> >> If a subsequent successful disable happens later, the counter will be
-> >> >> decremented again, potentially underflowing to UINT_MAX and silently skipping
-> >> >> all future hardware writes.
-> >> >>
-> >> >> [ ... ]  
-> >> >
-> >> > That is not true because the error path will *increment* the counter to
-> >> > re-enable the IRQ and keept it consistent with data->trig_en. If an I2C
-> >> > operation fails, the trigger will stay enabled in the device registers,
-> >> > and therefore data-trig_en should stay enabled.
-> >> >
-> >> > I tested it by adding some hacks to force that situation, and what may
-> >> > actually happen is that if *on top* of that failure, the I2C operation
-> >> > in veml6031x00_set_interrupt() also fails, interrupt_users will be
-> >> > decremented (as it should, because the interrupt could not be
-> >> > re-enabled), and *then* a second call to disable the trigger will set
-> >> > interrupt_users to UINT_MAX.
-> >> >
-> >> > Although this is very unlikely, the fix seems to be trivial:
-> >> >
-> >> >  if (state) {
-> >> >  	data->interrupt_users++;
-> >> >  	if (data->interrupt_users > 1)
-> >> >  		return 0;
-> >> >  } else {
-> >> >  	+	if (!data->interrupt_users)
-> >> >  	+		return 0;
-> >> >
-> >> >  	data->interrupt_users--;
-> >> >  	if (data->interrupt_users > 0)
-> >> >  		return 0;
-> >> >  }
-> >> >
-> >> > Note that this fix is not a hack to just get rid of reaching UINT_MAX, it
-> >> > reflects the fact that the previous failed operations lead to a disabled
-> >> > interrupt and an enabled trigger in the hardware, and there is no need
-> >> > to act on the interrupt again when trying to disable the trigger a
-> >> > second time.
-> >> >
-> >> > I will add it for V9 after testing it with some hacks to force that
-> >> > scenario.
-> >> >  
-> >>
-> >> I am trying to reproduce that scenario with forced errors, and even if
-> >> those two errors happen during the first attempt to disable the trigger,
-> >> it's not really possible to reach interrupt_users = UINT_MAX.
-> >> The 'buffer/enable' attribute is set to 0 by the core even if
-> >> set_trigger_state() returns an error code, and the next time
-> >> 'buffer/enable' is set to 0, nothing really happens because
-> >> set_trigger_state() is not even called.  
-> >
-> > I can't remember why we do that. Oh well. Seems it is useful here.
-> >  
-> 
-> I instrumented some more code, including iio_trigger_attach/detach_poll_func()
-> and current_trigger_store(). When set_trigger_state(false) fails
-> (which I forced), iio_trigger_detach_poll_func() returns without releasing
-> the pollfunc IRQ from the trigger pool, but iio_disable_buffers()
-> continues disabling the buffer.
-> 
-> The next buffer enable adds another consumer to the pool without calling
-> set_trigger_state(true), since the trigger is already in use. The following
-> buffer disable removes that new consumer without calling set_trigger_state(false),
-> since there is still one consumer left in the pool.
+On Wed Sep 9, 2026 at 10:21 PM +08, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Missing `.set_rate_and_parent` implementation causes non-atomic =
+updates of clock mux and divider, risking severe CPU over-clocking and cras=
+hes during frequency scaling.
+> --
+>
+> commit caf894b03e44c8fc393822573e3c7ad1a85fe9f1
+> Author: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>
+> clk: spacemit: describe CPU clock dividers and shared PLL muxes
+>
+> This commit models the K1 and K3 CPU clock dividers and bypass conditions=
+.
+> It registers sharing muxes as internal clocks and excludes K3 selector 4
+> from the modeled parents to match BSP policy.
+>
+>> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1=
+.c
+>> index dee14d25f75d4..40cc96c4ee876 100644
+>> --- a/drivers/clk/spacemit/ccu-k1.c
+>> +++ b/drivers/clk/spacemit/ccu-k1.c
+>> @@ -391,8 +391,8 @@ static const struct clk_parent_data cpu_c0_clk_paren=
+ts[] =3D {
+>>  	CCU_PARENT_HW(pll2_d3),
+>>  	CCU_PARENT_HW(cpu_c0_hi_clk),
+>>  };
+>> -CCU_MUX_FC_DEFINE(cpu_c0_core_clk, cpu_c0_clk_parents, APMU_CPU_C0_CLK_=
+CTRL, BIT(12), 0, 3,
+>> -		  CLK_IS_CRITICAL);
+>> +CCU_MUX_DIV_FC_DEFINE(cpu_c0_core_clk, cpu_c0_clk_parents, APMU_CPU_C0_=
+CLK_CTRL,
+>> +		      3, 3, BIT(12), 0, 3, CLK_IS_CRITICAL);
+>
+> [Severity: High]
+> Does introducing the divider model to K1's CPU clock here risk severe CPU
+> over-clocking and crashes during frequency scaling?
+>
+> The operations struct spacemit_ccu_mux_div_ops in
+> drivers/clk/spacemit/ccu_mix.c appears to lack .set_rate_and_parent,
+> which is required by the Common Clock Framework (CCF) to atomically updat=
+e
+> both mux and divider.
+>
+> When cpufreq scales down frequency (e.g., from 614.4 MHz to 409.6 MHz), i=
+t
+> decreases the frequency before lowering the voltage. In K1,
+> ccu_mix_calc_best_rate() iterates parents and stops at the first exact ma=
+tch,
+> for example index 1 (pll1_d3_819p2, 819.2 MHz) with div=3D2.
+>
+> Because spacemit_ccu_mux_div_ops lacks .set_rate_and_parent, CCF's
+> clk_change_rate() executes updates sequentially, calling .set_parent
+> before .set_rate. .set_parent changes the hardware mux to 819.2 MHz
+> while the divider remains at its previous value (div=3D1). The CPU tempor=
+arily
+> runs at 819.2 MHz at a voltage only sufficient for 614.4 MHz, causing an
+> immediate undervoltage crash.
+>
+> Could spacemit_ccu_mux_div_ops be updated to include a
+> .set_rate_and_parent implementation to ensure the mux and divider are
+> updated atomically?
 
-So do you get two hits on each trigger? Definitely bad as they can be in threads
-running at the same time and we assume that doesn't happen in most drivers.
-
-> 
-> So after the first failed disable, subsequent buffer enable/disable cycles do
-> not call set_trigger_state() and the original consumer remains in the pool.
-> That leaves the buffer/enable attribute in a meaningless state: it gets
-> updated from the userspace perspective, but nothing really happens behind
-> the scenes.
-> 
-> Is that intended? Maybe there are historical reasons for it, or maybe there
-> was no cleaner way to operate after an error in set_trigger_state(), or
-> maybe this should not work like that.
-
-I'd go with "probably not the intended result" as if it were I 'think'
-I'd have left a comment.
-
-That's not to say I have an immediate answer to how to resolve it.
-If you still have your test set up, can you try just carrying on and
-not returning after the set_trigger_state(trig, false) fails - making
-sure that your injected failure leaves the trigger actually enabled
-and still firing.  That might leave us in a recoverable state as
-next set_triggers_state(trig, true) should work as normal. In meantime
-we will have a bunch of irqs firing but resulting in nothing happening.
-
-Not great and may well leave some drivers stuck because they are
-tightly couple trigger / data readback and need that to happen to
-not get wedged.  Those should have the validate callbacks set but
-will still be stuck.  In theory we could make all triggers that
-have this property do a clear in the reenable but that is a bit
-nasty as we would probably want it conditional so each driver would
-need a 'have I already cleared this' flag set in their buffer
-read and cleared in the reenable.
-
-Thanks for digging into this btw!
-
-Jonathan
+The intermediate 819.2 MHz state is possible with this callback ordering.
+I will add .set_rate_and_parent() in the next revision to update the mux
+and divider fields together, followed by a single FC handshake.
 
 
+--=20
+Troy Mitchell
 
 
-> 
-> This is what it looks like after I instrumented the code:
-> 
-> # All good, the trigger was disabled, and now it gets enabled:
-> echo 1 > buffer/enable
-> [   50.590395] IIO trigger veml6031x00-drdy0: attach: before: pool users=0
-> [   50.596562] IIO trigger veml6031x00-drdy0: attach: pf->irq=188
-> [   50.602537] IIO trigger veml6031x00-drdy0: attach: after get_irq: pool users=1
-> [   50.622654] IIO trigger veml6031x00-drdy0: attach: set_trigger_state(1) returned 0
-> 
-> # Forced failure in veml6031x00_set_trigger_state(false):
-> echo 0 > buffer/enable
-> [   64.608971] IIO trigger veml6031x00-drdy0: detach: before: pool users=1
-> [   64.615267] IIO trigger veml6031x00-drdy0: detach: pf->irq=188
-> [   64.657138] IIO trigger veml6031x00-drdy0: detach: set_trigger_state(0) returned -13
-> [   64.664968] IIO trigger veml6031x00-drdy0: detach: callback failed: pool users=1
-> 
-> # From now on, set_trigger_state() will not be called:
-> echo 1 > buffer/enable
-> [  104.047282] IIO trigger veml6031x00-drdy0: attach: before: pool users=1
-> [  104.053494] IIO trigger veml6031x00-drdy0: attach: pf->irq=189
-> [  104.059502] IIO trigger veml6031x00-drdy0: attach: after get_irq: pool users=2
-> [  104.067023] IIO trigger veml6031x00-drdy0: attach: NOT calling set_trigger_state(1), notinuse=0
-> 
-> echo 0 > buffer/enable
-> [  117.354867] IIO trigger veml6031x00-drdy0: detach: before: pool users=2
-> [  117.361070] IIO trigger veml6031x00-drdy0: detach: pf->irq=189
-> [  117.366975] IIO trigger veml6031x00-drdy0: detach: NOT calling set_trigger_state(0), no_other_users=0
-> [  117.376297] IIO trigger veml6031x00-drdy0: detach: after put_irq: pool users=1
-> 
-> Best regards,
-> Javier
+--b27a31aff78db9385a11b35bd47a7dbc4cfa53b1ddfa541804de3f1bc0c9
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqIiug0caUB0cm95LXku
+b3JnAAoJEJgJ74D5MzQv3UoBAM401bqRuFybbAA5KpnB4a0eoo5hZiw9zvRB1E72
+WCa4AQCmBwqd9lcdFScEl6IRweN4365vrpk3b6wd72XhYcoGCA==
+=Vh8m
+-----END PGP SIGNATURE-----
+
+--b27a31aff78db9385a11b35bd47a7dbc4cfa53b1ddfa541804de3f1bc0c9--
