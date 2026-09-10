@@ -1,48 +1,30 @@
-Received: from out16-54.antispamcloud.com (out16-54.antispamcloud.com [185.201.18.54])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B894766A8
-	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 12:57:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.201.18.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89648C406
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 13:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789045079; cv=none; b=roAjSsa/tbI+3QnSTlRf+h1UaIp5I17g4EZ82+0sgpWtUNAKjTBfQvduocdnq+jtmqHxVpkTjmdxZQ3i8dlWGpJBEs1d4d2UjiSzkpaNLE1CBx+TiqAzrW/LzoxIqPHD4BteB5jKybUIAg3H29GZ34P0MTLnEem8RdRG93Mg4bU=
+	t=1789046405; cv=none; b=WyQtf6N8s4+C3k3536Qql3sdE2blJmY26ptlQC+gLEjSMofIl0HiHS6qG/m1KI5ZNCMAO3EAUAPpkK5Sf4zoV3H7Zmv6O28dy/3UTinj59VA59/fpU38/ZwgW+upnNGea1PMakvHwzuDlQT29j0/6eR5JLGf+VqIQh6Fc/dnd5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789045079; c=relaxed/simple;
-	bh=Co2pFJ8m1lNnf5dvc8PPznnDcez9AJ7PSr4dpP8ZAXI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=K5EOSzEX4UCt5IxJEBU+GWgnMGXKTZQ3pKOJw36fU0QFApOpCdpWwdrWrtu5L0QBPpVHezMeRSb5QhoEyHtdFHHic78vlr4oB9d/JxPiN4X7DU+IKFwKeKHmnInjLvyiAoIoAH6pCI/Qc6hd2uqwBYxNZzjyOmwKP0z3XeGNBvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=reactivated.net; spf=pass smtp.mailfrom=reactivated.net; dkim=pass (2048-bit key) header.d=reactivated.net header.i=@reactivated.net header.b=YXENqctc; arc=none smtp.client-ip=185.201.18.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=reactivated.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=reactivated.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=reactivated.net header.i=@reactivated.net header.b="YXENqctc"
-Received: from s1041.use1.mysecurecloudhost.com ([192.250.231.249])
-	by mx321.antispamcloud.com with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <dan@reactivated.net>)
-	id 1x4eLY-005wFD-VS
-	for sashiko-reviews@lists.linux.dev; Thu, 10 Sep 2026 14:57:46 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=reactivated.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:
-	Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=56lNZfifOtJI5u87dw3jF6HY3etb36gLy6H3sTn74zk=; b=YXENqctcLSglwMmsIadD+3Fwxp
-	E87MeNBzNMUT4V67qegUSmm31tAUCQcYv2GE8tS9CcSm9IXSXmkGzuSM3cfWqprvW+/jcE468ysxL
-	lNQeoCgMKjyq6hJVgleO7T/+DMWZ7I0utUtUSxhIYIkr1ybkU7Q8VagnmiQCvi4t98Q7xzPl4BZ4v
-	znBA507YnnzHOLDomeKhQVDZe2cJqD1EQFPacFu5GM+CCpub3Sc1iwnvedpPepjb97A2b6aFAeDSE
-	wej5J01pp0IKIs9dhyry/RR17PtqzNLngPQYmUAzzqqjl03yn6IGQ5yBlYbu+75Zlhiw7YZxTF33Z
-	huLXs0Mw==;
-Received: from [188.251.249.2] (port=55326 helo=[192.168.1.123])
-	by s1041.use1.mysecurecloudhost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.99.5)
-	(envelope-from <dan@reactivated.net>)
-	id 1x4eLa-0000000GIhv-1U6I
-	for sashiko-reviews@lists.linux.dev;
-	Thu, 10 Sep 2026 12:57:43 +0000
-Message-ID: <2300515d-78df-4575-8a3a-54599bc891c1@reactivated.net>
-Date: Thu, 10 Sep 2026 13:57:41 +0100
+	s=arc-20240116; t=1789046405; c=relaxed/simple;
+	bh=77gnxKwz5I5zeC5JQQSJW3M6o/EvVLmsqw12CIkM2V0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g64wsu/VK3G4ZrAI4qAVgebflYtRF3yCQxyJjwCrdxbY6uNhlbgr3E+vAwinz+vjE3c3X28wF8TbjjxpoBQU/1xJLtWFAWW/SoFS31rKJ0Ug01Xbmb5AA2UZmTuoCyo+/5mVWNK+1MnunqH0n/ndkcbvMY+dcSb0o2aR6CagmQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgdYK4XN7zYQvYZ
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 21:19:01 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 9A1D240573
+	for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 21:19:56 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgC3crB7rqJqfqXQBQ--.17854S2;
+	Thu, 10 Sep 2026 21:19:56 +0800 (CST)
+Message-ID: <9b4cc536-fafa-4d3c-811c-4f443da321a9@huaweicloud.com>
+Date: Thu, 10 Sep 2026 21:19:55 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -50,88 +32,157 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] iommu: Add Broadcom BCM2712 IOMMU driver
+Subject: Re: [PATCH v5 16/26] perf annotate-arm64: Support load instruction
+ tracking
 To: sashiko-reviews@lists.linux.dev
-References: <20260909-bcm2712-iommu-submit-v5-0-2539c52b249e@reactivated.net>
- <20260909-bcm2712-iommu-submit-v5-4-2539c52b249e@reactivated.net>
- <20260909213936.B2A451F000FF@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1788872630.git.wutengda@huaweicloud.com>
+ <a30c739f6462865d2ce4f8a780a12ec28bac707d.1788872630.git.wutengda@huaweicloud.com>
+ <20260908132348.079CC1F00A3A@smtp.kernel.org>
 Content-Language: en-US
-From: Daniel Drake <dan@reactivated.net>
-In-Reply-To: <20260909213936.B2A451F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260908132348.079CC1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Get-Message-Sender-Via: s1041.use1.mysecurecloudhost.com: authenticated_id: dan@reactivated.net
-X-Authenticated-Sender: s1041.use1.mysecurecloudhost.com: dan@reactivated.net
-X-Spampanel-Domain: s1041.use1.mysecurecloudhost.com
-X-Spampanel-Username: 192.250.231.249
-Authentication-Results: antispamcloud.com; auth=pass smtp.auth=192.250.231.249@s1041.use1.mysecurecloudhost.com
-X-Spampanel-Outgoing-Class: ham
-X-Spampanel-Outgoing-Evidence: Combined (0.07)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuW6z3P8N9BQFKhSRHPmQFJJ8stUCgE1UMnw
- Pyfvc6WM/yu2SmbhJN1U9FKs8X3+Nt06bFpPrNOlRAlE9AVLwR4uGVjKNnzF3nQoDoQtBifM84JL
- M0i5ZAms0EHrvcCaVIMWK8ViGU8Nq0FD7vIeib4cGnT3EFAinyrilm9zau/FuzkQt9Nb4Ml7QXdk
- EetczWBp35AJbRNknLgMOj3O/cqXeB7itP8hgjDRserKv4bhb7ubyJcscJCC/8jhyq4eIIJWBb39
- uS1TjWG2Inx+Ts2QrtVmombMJ4e2pn5C0yBMHZ0fE47nEjvubMSTLAkKCKclZzoe+TZdeH39wA4E
- grA4pE2PuLHIFQdBY9qb1rRWgyz0f29FZkQs6Ir87R/YNAuyiWgke4vlU/UJGLBguufR7lnoHQcR
- eJIvYWqeXkPxBWr/eRFKwBSfuIMWwqEQXpWwz5OPtxDVeqPJhEmoz3N9JomUzvBM22AC4k/oTG1g
- jLARRpHhlGd76cI3fB2QEz3dpXCm3V3dWjyhCX8mbAT/24m9iTCwGhFbCqjVyo5bg7pXMX44D2sc
- lZz9QH7f/hmsZUuvgdrOZrw79MAW965faIfVaCHpEB6cFH6WJxE4ZlMpb6W12g3GZpJRdpQ/DtrB
- BWBSQBghGigon0RHJoVZoJm9Ernpyx9sLW7CXtZKFwvGpMflipu3Bk6qao1eLVDj5X6GsI/bDWTs
- V3eVBjhwkvmjeXbB6W1F+p4U3gGntosEMysPur9wmiDBurOy6iTyL6UT+hUW4mK3MFN7nHYMikKY
- GfM1Wxpi+aM7bRAnIILUAj1reKtuJ/PKbNBhf48ZqRZsvzFdn5ebLjeMHi82//vMJyWNpMX2qxGd
- p/6VWFx45afvelx++juvdD5/lDsVVH74myu747LjvVgt4ikt9R/2gMGq0KWAzmMf+ibVDvXBoE27
- LT5eRxAkVALkwYDwY1278R9pzC31fkjBqL4nTj9+FRkaOS/DNjANmb8tO61SbYdYAwdpaVzHW7wH
- O7YhEWyJzIkwSFAW0Pw8uiKeubcolFl/rX+2ReQklqJDAWNDiNfvuBXXgYKXI4vmnOrwY1278R9p
- zC31fkjBqL4n3DVcIoCdt7LsSikJereEVg==
-X-Report-Abuse-To: spam@quarantine16.antispamcloud.com
-X-Complaints-To: abuse@master.antispamcloud.com
-
-Thanks Sashiko for finding some real problems during the review process.
-
-At this point, all of the unaddressed points from previous reviews, and 
-all of the points in this most recent review, are false positives.
+X-CM-TRANSID:_Ch0CgC3crB7rqJqfqXQBQ--.17854S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxAFyrXw4xCw4DWrWUAFyUGFg_yoWrAF4xpF
+	ZxCay5GFWUXrWagrnFqF45uF909w1xGa45ury5AFn3tFnFvrnYka93tayagayUGrZYyw4U
+	Zw1jvrnrZ3y8AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
-On 09/09/2026 22:39, sashiko-bot@kernel.org wrote:
+
+On 2026/9/8 21:23, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Unintended rollback of valid type state for the first destination register in a multi-register load (e.g., ldp) if the second register's type cannot be resolved.
+> - [Medium] Missing support for `TSR_KIND_POINTER` in `propagate_load_reg_state` causes type tracking to silently fail for variables whose addresses are held in registers.
+> --
+> 
+> commit 6913b761b417f151400c62773b3dd0ee4dcddbf2
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-arm64: Support load instruction tracking
+> 
+> Extend update_insn_state_arm64() to handle load instructions, tracking
+> register state changes when data is loaded from memory to registers. Introduces
+> propagate_load_reg_state() and update_load_insn_state() to handle standard
+> loads and load pairs.
+> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index 9a32265265223..c239ad9473dcc 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> 
+> [ ... ]
+> 
+>> @@ -455,11 +455,206 @@ static bool is_readonly_branch_or_cmp(const char *name)
+> 
+> [ ... ]
+> 
+>> +static int propagate_load_reg_state(struct type_state *state,
+>> +				    struct data_loc_info *dloc,
+>> +				    struct disasm_line *dl, int dreg,
+>> +				    struct annotated_op_loc *src,
+>> +				    struct type_state_reg **src_states,
+>> +				    int mem_offset)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	if (!src_tsr || !src_tsr->ok)
+>> +		return -1;
 >> +
->> +		/* Configure translation aperture */
->> +		bcm2712_iommu_writel(mmu, MMMU_ADDR_CAP_OFFSET,
->> +				     MMMU_ADDR_CAP_ENABLE |
->> +					     (domain->geometry.aperture_end >>
->> +					      ADDR_CAP_SHIFT));
+>> +	/* Dereference the pointer if it has one */
+>> +	if (src_tsr->kind == TSR_KIND_TYPE &&
+>> +	    die_deref_ptr_type(&src_tsr->type,
+>> +			       src_tsr->offset + reg_offset, &type_die)) {
 > 
-> [Severity: High]
-> Is domain->geometry.aperture_end left uninitialized here?
+> [Severity: Medium]
+> Will this silently fail to propagate types for pointers since it restricts
+> dereferencing strictly to TSR_KIND_TYPE?
 > 
-> In bcm2712_iommu_domain_alloc(), domain is allocated with kzalloc_obj(), which
-> zeroes the structure, but geometry.aperture_end is never explicitly initialized.
+> If the source register state is TSR_KIND_POINTER (e.g., from an earlier address
+> calculation), it appears the pointer dereference will fail type propagation
+> here, reducing data type profiling coverage.
 > 
-> Would this configure a 0-sized translation aperture when writing to the
-> hardware register?
 
+Agreed. It is necessary to add a check for TSR_KIND_POINTER similar to what x86 does.
 
-It is not uninitialized; geometry is handled by generic_pt during domain 
-allocation.
-
-> [Severity: High]
-> Can this violate IOMMU isolation and corrupt DMA?
+>> +		tsr->type = type_die;
+>> +		tsr->kind = TSR_KIND_TYPE;
+>> +		tsr->offset = 0;
+>> +		tsr->ok = true;
 > 
-> The hardware seems to share a single translation table across all connected
-> devices, as noted in the commit message. However, the driver configures
-> .device_group = generic_single_device_group, allowing the IOMMU framework to
-> assign a unique group and potentially a different domain to each device.
-
-
-Sashiko is confusing generic_device_group with generic_single_device_group.
-
-
-> [Severity: High]
-> Does this leave a dangling pointer if the cache device is unbound?
+> [ ... ]
 > 
-> The reference to cache_pdev is automatically put when leaving this function
-> due to __free(platform_device_put), and no device link is established.
+>> +static void update_load_insn_state(struct type_state *state,
+>> +				   struct data_loc_info *dloc,
+>> +				   struct disasm_line *dl,
+>> +				   struct annotated_op_loc *src,
+>> +				   struct annotated_op_loc *dst)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	/* Handle the first destination register */
+>> +	if (propagate_load_reg_state(state, dloc, dl, dst->reg1,
+>> +				     src, src_states, /*mem_offset=*/0))
+>> +		goto out_err_adjust;
+>> +
+>> +	/* Handle the second destination register (if any) */
+>> +	if (dst->multi_regs) {
+>> +		int mem_offset;
+>> +
+>> +		/*
+>> +		 * ldpsw loads two 32-bit signed words into 64-bit registers.
+>> +		 * Memory spacing between elements is 4 bytes, not the register size.
+>> +		 */
+>> +		if (!strcmp(dl->ins.name, "ldpsw"))
+>> +			mem_offset = 4;
+>> +		else
+>> +			mem_offset = arm64__reg_size(dl->ops.target.raw);
+>> +
+>> +		if (mem_offset < 0 ||
+>> +		    propagate_load_reg_state(state, dloc, dl, dst->reg2,
+>> +					     src, src_states, mem_offset))
+>> +			goto out_err_adjust;
+>> +	}
+>> +
+>> +out_adjust:
+>> +	adjust_reg_index_state(state, dloc, dl, src);
+>> +	return;
+>> +
+>> +out_err_adjust:
+>> +	if (has_reg_type(state, dst->reg1))
+>> +		invalidate_reg_state(&state->regs[dst->reg1]);
+>> +	if (dst->multi_regs && has_reg_type(state, dst->reg2))
+>> +		invalidate_reg_state(&state->regs[dst->reg2]);
+>> +	goto out_adjust;
+>> +}
+> 
+> [Severity: Medium]
+> Does this unintentionally discard valid type state for the first destination
+> register if the second destination register's type cannot be resolved?
+> 
+> If an arm64 ldp instruction is analyzed where the first member is trackable,
+> but the second member cannot be resolved, this error path seems to
+> unconditionally invalidate the successfully resolved state of dst->reg1.
+> 
 
+Agreed.
 
-Like most iommu drivers, the iommu driver (and the cache driver) can't 
-be unbound (suppress_bind_attrs).
+Thanks,
+Tengda
+
