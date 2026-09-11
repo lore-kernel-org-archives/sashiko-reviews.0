@@ -1,67 +1,30 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB873D6CD3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D7C37E317
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789092927; cv=none; b=GMA0RBGYtEUIoKu12ccowknqXzXsgMtq5gZ9/hOf3SYmh/ip9rESnSzM7nQFz6AyFWI9crRy97Oq/Y7bGUVJioWDPDXRhW3xiF+amfg6J0LS0J4d28CfbIZC5j7evq9UwtiTOWNxBHeeCc7yW4irq9OBCye12qEIc9jwVYnolyU=
+	t=1789093357; cv=none; b=CTlxpq5z82eKcnhmlf2d4y8jgH7jnHg7Sen0RSX7YmZK9W3zVah5w58gxFbJHBHy1xNIIWa3i02HFHA/+SPZbS/3W8y3ITVDEDw9GU9XouCyCkx0KN3DA4wXretb/8cZfU6GeMyf4oVbMSGT18ziVMNspkdApe92h3/HdgzQiD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789092927; c=relaxed/simple;
-	bh=c5/c/iuk1PLNOXDE+ezMovGNa06OcIGGAi7k0LM2HDs=;
+	s=arc-20240116; t=1789093357; c=relaxed/simple;
+	bh=ym+/uOVfiIXlVv2yUGhT8bcMrrxsC1nH7WHzaFgd+DA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U6sjaoJm+/5BVHySzAW+I3dkTujYETIRwQBbavXiIrOKuVwJSywn4fDtPCr7HVqNL/ejN6VLt+btHgmNAYoW1uSUogvKxOqZZPNcE2P1HEzksed+RWX5oqYCOKDEtrNThRDJaWbMsRprz8q3OWRzm7X7hOyw33Sox0ILGanZZKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9D5LLb0; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9D5LLb0"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-853c07a76adso433794b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 19:15:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789092925; x=1789697725; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bx9ZpFS+OPzNWA2YRAzKII3GvhLYAanR46+NuPP9i20=;
-        b=E9D5LLb00OOu9DESay9UZEf9QFryNsamwWOego/x1NbFQjFN21R7s61EWN1C+SMppG
-         i8ABxJPPcg483UA8CHFOIo+TGorn+mL/12HVIahtPAZqHmbm32rWv5BLJWSkbQ+aIoDK
-         ncBx+aS4BSw3HYVDZv2jfGgpItpjlM/9Yg7nRbkrzJdrXSAR+WvaFH3kzYpxryFfgLQ/
-         gIBrBAIzXiM/uAhQMYPLWkq0CniY9rs6iERLrG8ogzaic/4D1O1M3eBH5tWSOWJpbHLa
-         Py2ST1ZbSpCLURRisDhQ7lo82VzQItbBbFxaJI85mS7i79+slD2OLMLrUA22i75635ik
-         IL1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789092925; x=1789697725;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bx9ZpFS+OPzNWA2YRAzKII3GvhLYAanR46+NuPP9i20=;
-        b=RH446Ffab2nM4jSZ5YmPkcpeHbmjfBqu3flYihzXJS41xnbckcYkaeNG17OsnWVvDu
-         bftHBxYHB07L1w97dRN4dCi3drYdyLZXIBWRbiLpcrOTamPaE9Uq+gb6vDnD2pePYdFW
-         ZYWDgm4Ge1tqTeRnoe5rCYgdqJuhZeyOWSnyuW7D+JuyuGNEx3SCuGgTocfrp89o3IiK
-         mmy6p6ZNU6Nm6BpVcU9DHUcX4DegpXRYSGqpLfoKhAOeaNdOVRnYPPKuT/NPFYhVdc5V
-         lc0VWrfmyc9Y9O1OH0o41NhEo8XYmuY//NWAyQ1rn6l0IsiFidaJDuqrUuPwM9rs4xc0
-         Xs1Q==
-X-Gm-Message-State: AFuF++mxSOSxe8iZNvaCsB3OjQ2AbWkLPvaeOTWChx3FqM7Yml8S0w9b
-	UYrJBGlzvfIhVb2UG5LlbpF18VPKHBQUSjGgE6MdQu8tGldep+7irnbKhv24tQ==
-X-Gm-Gg: AYBFou3kUV2FIWcFzf9gr9hgLTnXJdAb4An7MJsQlFlBuv6gsdUmndt0RUH6qca4HWA
-	WnQR9B90whQ+aoL9DfkKg7tsTOhg4Y0M3yd4lOBbf2hiBUmzYh5QvNxMnehT0dC3QCuAgJ0Z+N4
-	6OJKwNruujYvY4BX9YKJ/1zt8ZlsJHKgFp548QIypb6euJWewvIuzb81v6P+n66Javezh0lLpLH
-	vxDKqE/JFPBNnhOMTMpRh30h74L2UH6sp7suQwkTtVAsat8Etn20Q1bQxVQL+weNgf55mjQzoKh
-	0T5a1alvnZvHuX5lyKZPlyYortODhrxHr6ow8g7muiXGeNoExQjNAvTIAF20IHlyM2BZu8rahSA
-	K8D0Ik+7pccnEyEvCgWdeKtj0lOO8Vq4dvAOu5I9DC/fV2cVBCw5l8A+d3MTvXNtdoVy53iDftO
-	SyFv7L0OvAjDvumGTXRVuZAI26LfrXRAuXZFYq6rUrS0bMVwsNinOeD8DSN9T9SusGzs+dNv9r/
-	FH3Xa3sD8bC6R/L7zITNn0fecTP2zvzjukej3EX41X1mIvRhOL5NrkAKb7XnWVbjX8=
-X-Received: by 2002:a05:6a21:600c:b0:3c4:1c9f:d7e with SMTP id adf61e73a8af0-3daed14cf94mr3362546637.6.1789092924990;
-        Thu, 10 Sep 2026 19:15:24 -0700 (PDT)
-Received: from [172.19.1.47] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc4c652aa8dsm385498a12.7.2026.09.10.19.15.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Sep 2026 19:15:24 -0700 (PDT)
-Message-ID: <853110ab-1bd8-41cc-9b82-cc28002c0bed@gmail.com>
-Date: Fri, 11 Sep 2026 10:15:21 +0800
+	 In-Reply-To:Content-Type; b=hnjJcZwEevZpN2S8RsEh9dCXXks4xmca5xVLmKd/6eajPyiqS7EWFjhto/mYscwPj1kdGC8v9LJldQp0D5V/WKkAwldJJ3lY9Okpxx2jxhYrUZqJ1SxuuySu/X+psFbZqlLzrs2UN5pFxnEKJ8COFKm6OF3W+OitHuZkN5Bi8DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgywD25CYzYQtJD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:21:32 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 32E1A40573
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:22:28 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP1 (Coremail) with UTF8SMTPA id cCh0CgD3KwfiZaNqedIXBg--.6188S2;
+	Fri, 11 Sep 2026 10:22:28 +0800 (CST)
+Message-ID: <d4b23be7-1ad2-4be1-b789-053501908c4d@huaweicloud.com>
+Date: Fri, 11 Sep 2026 10:22:26 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,61 +32,133 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: nuvoton: ma35d1: add CAN nodes
-To: sashiko-reviews@lists.linux.dev, Zi-Yu Chen <zychennvt@gmail.com>
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260908014526.413399-1-zychennvt@gmail.com>
- <20260908015435.7DE071F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v5 22/26] perf annotate-arm64: Support 'mov' instruction
+ tracking
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1788872630.git.wutengda@huaweicloud.com>
+ <6516a18b5618a169c2e180c296632e12c7f6697a.1788872630.git.wutengda@huaweicloud.com>
+ <20260908132707.00E341F00A3A@smtp.kernel.org>
 Content-Language: en-US
-From: Jacky Huang <ychuang570808@gmail.com>
-In-Reply-To: <20260908015435.7DE071F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-> [ ... ]
->> @@ -244,6 +244,58 @@ gpion: gpio@340 {
->>                        };
->>                };
->>
->> +             can0: can@403c0000 {
->> +                     compatible = "bosch,m_can";
->> +                     reg = <0x0 0x403c0000 0x0 0x200>, <0x0 0x403c0200 0x0 0x2000>;
->> +                     reg-names = "m_can", "message_ram";
->> +                     interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
->> +                                  <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
->> +                     interrupt-names = "int0", "int1";
->> +                     clocks = <&clk HCLK3>, <&clk CAN0_GATE>;
->> +                     clock-names = "hclk", "cclk";
->> +                     bosch,mram-cfg = <0x0 4 4 32 32 32 8 8>;
->> +                     status = "disabled";
->> +             };
-> [Severity: Medium]
-> Should this node include the hardware resets property (e.g.,
-> resets = <&sys MA35D1_RESET_CANFD0>;)?
->
-> Without the hardware reset line, the bosch,m_can driver cannot perform a
-> hardware reset of the CAN controllers during probe or interface toggles.
-> It must rely solely on software initialization, which can fail to fully
-> recover the controller if the bootloader or a prior crashed state left
-> the hardware in an unpredictable state.
->
-> This omission pattern is identically repeated across the newly added can1,
-> can2, and can3 nodes below.
-
-The reset property is optional for the MA35D1 CAN nodes.
-
-The bosch,m_can binding does not require a reset property, and the
-m_can driver obtains the reset control through
-devm_reset_control_get_optional_shared().
-
-The MA35D1 CAN controllers also operate correctly without explicit
-CAN reset properties in the existing platform DTS. Therefore, no
-change is required for this patch.
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260908132707.00E341F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:cCh0CgD3KwfiZaNqedIXBg--.6188S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDWw48GFy7CF4xKrWfXwb_yoWrJFWrpa
+	n5Cw1rJr4jqr4kWFsxZr4UXF9a9r1fKFs8urn8ta9IvF4akrn5KFZrtFWYvF45Jrn3Cr1j
+	qw1vga15Za1UCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
-> [ ... ]
->
+
+On 2026/9/8 21:27, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Destination register's DWARF lifetime state is improperly preserved during register-to-register 'mov' instruction tracking.
 > --
-> Sashiko AI review · https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fsashiko.dev%2F%23%2Fpatchset%2F20260908014526.413399-1-zychennvt%40gmail.com%3Fpart%3D1&data=05%7C02%7Cychuang3%40nuvoton.com%7C0f6b077d07ea424b0be208df0d4c30cd%7Ca3f24931d4034b4a94f17d83ac638e07%7C0%7C0%7C639244293026922482%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mOpnaGY2o1KYf6Z5OXNovFUJbA6M5WauNCVif8Ihfn4%3D&reserved=0
->
+> 
+> commit e7b1d4e72b07c94aacdc6e7221ef41f56b7b017c
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-arm64: Support 'mov' instruction tracking
+> 
+> Extend update_insn_state_arm64() to support register-to-register and
+> immediate-to-register 'mov' instructions. For register-to-register 'mov',
+> it propagates data type information from the source to the destination.
+> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index d520975c59363..2f8bedf583c1a 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> 
+> [ ... ]
+> 
+>> @@ -810,6 +812,58 @@ static void update_store_insn_state(struct type_state *state,
+>>  	adjust_reg_index_state(state, dloc, dl, dst);
+>>  }
+>>  
+>> +static void update_mov_insn_state(struct type_state *state,
+>> +				  struct disasm_line *dl,
+>> +				  struct annotated_op_loc *src,
+>> +				  struct annotated_op_loc *dst)
+>> +{
+>> +	struct type_state_reg *tsr;
+>> +	u32 insn_offset = dl->al.offset;
+>> +	int sreg = src->reg1;
+>> +	int dreg = dst->reg1;
+>> +
+>> +	if (!has_reg_type(state, dreg))
+>> +		return;
+>> +
+>> +	tsr = &state->regs[dreg];
+>> +	tsr->copied_from = -1;
+> 
+> [ ... ]
+> 
+>> +	tsr->type = state->regs[sreg].type;
+>> +	tsr->kind = state->regs[sreg].kind;
+>> +	tsr->imm_value = state->regs[sreg].imm_value;
+>> +	tsr->offset = state->regs[sreg].offset;
+>> +	tsr->ok = state->regs[sreg].ok;
+>> +	/*
+>> +	 * lifetime_active and lifetime_end represent DWARF variable lifetime
+>> +	 * ranges tied to the source register. Copying them risks incorrectly
+>> +	 * invalidating the destination register after a call instruction,
+>> +	 * so intentionally omit them.
+>> +	 */
+> 
+> [Severity: Medium]
+> While avoiding copying the source's lifetime, does this leave the
+> destination register's existing lifetime values stale?
+> 
+> If the destination register (dreg) previously had an active DWARF lifetime
+> tracking state (lifetime_active = true), those fields are not cleared
+> here since invalidate_reg_state() isn't called for this valid register
+> transfer path.
+> 
+> Should lifetime_active be set to false and lifetime_end set to 0?
+> 
+> Otherwise, the destination register might falsely survive caller-saved
+> register invalidations during subsequent call instructions and corrupt
+> downstream type inference.
+> 
+
+It seems that the scenario I was originally worried about in my comment, where
+dreg is incorrectly invalidated, does not exist.
+
+Consider the following three consecutive instructions:
+
+  mov dreg, x0
+  call xxxx             // x0 lifetime end
+  ldr x1, [dreg, #16]
+
+1. If dreg is a callee-saved register, such as x20, then it is not affected
+   by the call instruction, and setting its lifetime to any value will not matter.
+2. If dreg is a caller-saved register, such as x1, then it is affected by
+   the call instruction, and its lifetime needs to be cleared.
+
+In practice, case 2 is very rare and looks more like undefined behavior, so
+only case 1 needs to be considered. In that case, staying consistent with x86
+may be the better choice:
+
+  tsr->lifetime_active = state->regs[src->reg1].lifetime_active;
+  tsr->lifetime_end = state->regs[src->reg1].lifetime_end;
+
+Given the above, I think we can safely copy the lifetime fields and drop the
+original concern.
+
+Thanks,
+Tengda
 
