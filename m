@@ -1,30 +1,36 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-60.mta0.migadu.com [91.218.175.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F4223C368
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365D83E4508
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.60
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789093757; cv=none; b=QWMB4zIymqjR3jNWDbbucoFKFApjMrRRHsW03hHtALf+QG9vMqffpWUZCb9CYWlBa6fpEfcOMA93QbxQ8qAhWeeHVgtrnRO10kxakUYT+8d47M3TKbJxm8N3Qlpm98pkieIuHTGO4nJuJMZ1uNi7jnq5Ns3PyeVYpIBUb60kfMg=
+	t=1789094058; cv=none; b=AWhy9z2C/E/EAT61zvHHOvyfXzPaJ24l7iw0W4bnJb/+6t+9xPje7YoTbxaLNneRcqoqRrjwSkaSi9wX5xQU/I12khq7i9Xg4cxuuwrh2b/aEr6eC9C++D1EPig/NYyDjO4tUGcDa3ym4muMpznrS5I7eO/1XqJSnYKoWaH2r3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789093757; c=relaxed/simple;
-	bh=aNIN9qF8cmNuKXuFpJU95B5VsidYrpe+jlE2SkXjrj4=;
+	s=arc-20240116; t=1789094058; c=relaxed/simple;
+	bh=bQVC/dxr39L1TyurNV6KfAQz91z/xi/2KrjGLit0ipo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GyeOWpM+v7sHo9WXIMVCZm2aQ1jSLd4bZMxxSAnsHk04yfNoSFHWuzPJVoN30armQ6sxWSnOYi/8Z/3Vw74nILPD/q+hoM6Lu73r/gEGE8qirGaseb6SgVbkZqJLnawZse6iy0Pj1SjBO068VZ+rUanA3e8df3OlCzK2i7gv5fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hgz4w1ls1zKHM08
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:29:04 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id BE75340561
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:29:09 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgBHLwp1Z6NqXmcYBg--.47527S2;
-	Fri, 11 Sep 2026 10:29:09 +0800 (CST)
-Message-ID: <331033ad-6648-40e8-8b79-8e892b8af37b@huaweicloud.com>
-Date: Fri, 11 Sep 2026 10:29:09 +0800
+	 In-Reply-To:Content-Type; b=E+AzfTHU8idaywtc0a7IeN08krQc2+SkRm3ehIPZndORwmvlMRlIh01VdUXSc0dyhoAVQTTE1ezg219CD3JpAx6J3jPQ2H/tJQi4LfFxcF0D8tyFL0Mrm/s6nn9kSSJ9gZUQt4AUXNG4j3xGWfaFB3kRoDOAtDhtxZINJwdj1XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qGR3folb; arc=none smtp.client-ip=91.218.175.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qGR3folb"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=bQVC/dxr39L1TyurNV6KfAQz91z/xi/2KrjGLit0ipo=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789094052; v=1; x=1789698852;
+ b=qGR3folbSkuXwker3bErcdEXTSn63ZRudyp7q/6juI7HwVhYIFx3AmiQD4QtvkiVTs0B1MAO
+ QHNdv18xCKiJtn8GWXdTSTtbsQ5dJPPApyEhxuiP+WUt0s60w+nz5PRKUWDoWAaaJPN5Y56Ts1t
+ 6U0aCyEFj3QR8pXOEvL+10No=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 4741dbb634418cca;
+	Fri, 11 Sep 2026 02:34:12 +0000
+X-Mizu-Trace-ID: 4741dbb634418cca
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <cb485c57-ca44-4657-a97c-d003e60ce222@linux.dev>
+Date: Fri, 11 Sep 2026 10:34:04 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,95 +38,99 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 23/26] perf annotate-arm64: Support 'add' instruction
- tracking
+Subject: Re: [PATCH v4 5/7] cgroup/cpuset: Fix isolation accounting on
+ propagated invalidation
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <f562a5e0bf612867a6ddcde891f1582b4fcf61eb.1788872630.git.wutengda@huaweicloud.com>
- <20260908132810.4DFEE1F00A3A@smtp.kernel.org>
+Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
+References: <20260910094546.5852-1-guopeng.zhang@linux.dev>
+ <20260910094546.5852-6-guopeng.zhang@linux.dev>
+ <20260910100131.DED241F00893@smtp.kernel.org>
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260908132810.4DFEE1F00A3A@smtp.kernel.org>
+From: Guopeng Zhang <guopeng.zhang@linux.dev>
+In-Reply-To: <20260910100131.DED241F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgBHLwp1Z6NqXmcYBg--.47527S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5AFy5Cr1fAFW8Zr4DCFg_yoW8tF1fpF
-	4DC34rGw47Jrs7Krs3Zr4xX34Sgw4xGF15urn0qa1SvF1akrn5Kas7KF429FWrGrn3Cw4j
-	vw1v9F4DZw40ka7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x07UWHqcUUUUU=
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Transfer-Encoding: 8bit
 
 
 
-On 2026/9/8 21:27, sashiko-bot@kernel.org wrote:
+在 2026/9/10 18:01, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Failure to clear `lifetime_active` and `lifetime_end` in `update_add_insn_state` for the destination register.
+> 
+> Pre-existing issues:
+> - [High] This problem wasn't introduced by this patch, but a pre-existing logical flaw in update_cpumasks_hier() prevents a child partition from being invalidated when its parent becomes invalid, provided the child's computed mask becomes empty. This leaves a valid partition with an invalid parent and bypasses the new isolation accounting fix introduced in this patch.
 > --
 > 
-> commit 1ca68e83139c25b5687ab59598c804f32ea92afb
-> Author: Tengda Wu <wutengda@huaweicloud.com>
+> commit 29bf1f183d4a958f4b19a0031b32733cfb1e93a5
+> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
 > 
-> perf annotate-arm64: Support 'add' instruction tracking
+> cgroup/cpuset: Fix isolation accounting on propagated invalidation
 > 
-> This commit extends update_insn_state_arm64() to track 'add'
-> instructions for structure member address calculation. It enables the
-> data type tracker to follow member address calculations and propagate
-> types correctly instead of dropping type info on 'add'.
+> update_cpumasks_hier() invalidates a local partition when its parent
+> becomes a member or an invalid partition. This patch fixes an issue where
+> isolated_cpus still reflects the old partition type by updating
+> isolated_cpus before resetting a local partition whose state changes from
+> valid to invalid below an invalid parent.
 > 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 2f8bedf583c1a..e237b91426849 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
->> @@ -864,6 +864,72 @@ static void update_mov_insn_state(struct type_state *state,
->>  	pr_debug_type_name(&tsr->type, tsr->kind);
->>  }
->>  
->> +static void update_add_insn_state(struct type_state *state,
->> +				  struct data_loc_info *dloc,
->> +				  struct disasm_line *dl,
->> +				  struct annotated_op_loc *src,
->> +				  struct annotated_op_loc *dst)
->> +{
->> +	struct type_state_reg *tsr;
->> +	struct type_state_reg src_tsr;
->> +	u32 insn_offset = dl->al.offset;
->> +	int sreg = src->reg1;
->> +	int dreg = dst->reg1;
->> +	int reg_offset;
->> +
->> +	if (!has_reg_type(state, dreg))
->> +		return;
->> +
->> +	tsr = &state->regs[dreg];
->> +	tsr->copied_from = -1;
-> 
-> [Severity: Medium]
-> Does this code need to clear lifetime_active and lifetime_end on the
-> destination register?
-> 
-> When the add instruction overwrites a destination register that previously
-> tracked a variable with an active DWARF lifetime, it looks like the stale
-> DWARF lifetime bounds are incorrectly retained on the destination register.
-> Could this cause caller-saved registers to incorrectly survive function call
-> invalidation and corrupt data type tracking during profiling?
-> 
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index 4004a3e580df1..df91cb3777667 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
 > [ ... ]
+>> @@ -2379,7 +2382,18 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+>>  			new_prs = cp->partition_root_state;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but a pre-existing logical flaw in
+> update_cpumasks_hier() prevents a child partition from being invalidated when
+> its parent becomes invalid, provided the child's computed mask becomes empty.
+> 
+> When a valid child partition's mask becomes empty, the code sets
+> update_parent = true and calculates new_prs to a negative value:
+> 
+> 	if (is_partition_valid(cp))
+> 		new_prs = -cp->partition_root_state;
+> 
+> However, because update_parent is true, it calls
+> update_parent_effective_cpumask(), which has an early return when the parent
+> is invalid:
+> 
+> 	if (!is_partition_valid(parent)) {
+> 		return is_partition_invalid(parent)
+> 		       ? PERR_INVPARENT : PERR_NOTPART;
+> 	}
+> 
+> Because of this early return, cp->partition_root_state is never updated to a
+> negative value. Consequently, when new_prs is captured here, it overwrites
+> the correctly calculated negative new_prs with the old positive state.
+> 
+> Does this bypass the new isolation accounting check below (new_prs < 0),
+> leaving the local partition valid with an invalid parent and leaking isolated
+> CPU state?
 > 
 
-Agreed.
+Yes, this analysis is correct. I have reproduced the issue. I will address
+this relatively narrow edge case once the review of the full series is
+complete.
 
 Thanks,
-Tengda
+Guopeng
+
+>>  		}
+>>  
+>> +		/*
+>> +		 * With no valid parent partition left, this partition's CPUs
+>> +		 * return to the nearest valid partition ancestor.
+>> +		 */
+>> +		if (!was_remote && old_prs > 0 && new_prs < 0 &&
+>> +		    !is_partition_valid(parent))
+>> +			owner_prs = partition_owner(cp)->partition_root_state;
+>> +
+>>  		spin_lock_irq(&callback_lock);
+>> +		if (old_prs != owner_prs)
+>> +			isolated_cpus_update(old_prs, owner_prs,
+>> +					     cp->effective_xcpus);
+>>  		cpumask_copy(cp->effective_cpus, tmp->new_cpus);
+>>  		cp->partition_root_state = new_prs;
+>>  		/*
+> 
 
