@@ -1,209 +1,95 @@
-Received: from mta0.migadu.com (out-84.mta0.migadu.com [91.218.175.84])
+Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D914430566A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:05:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7823A8756
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789103136; cv=none; b=KzRqXceLxJ8NgsjBH6dEr1NH+23csDBGxYAAZkrJhlLeQ+W5Te3NZ+mFhA/vNVk59Q2vcNDOi7n6Gg8wXFPFxLRBRdneSHlN1djZeMk6+aLZBtjYNs/sNzCA+NqG8sbYq5NMySgl03HCLrKOq0qAhF+mCfvIRuFkqtHmmGJJGJs=
+	t=1789103581; cv=none; b=DrVdrF9xGw5dGs6rcJcecm4JaqNJtuWnzfzqfCCB2T2T0ekGOOQ6BWKZoL9i20w9s/TU4bgOctKBMiV87XVVOGXZu12ZAGVZyUaGl6a0PZJeUasKJsNyiDf2N3oRwhByPKA5qB7zvw0+Cj1OPv5urmbIp93LsjxzQPOtbDKEzAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789103136; c=relaxed/simple;
-	bh=2Gkj5VJt7SRjzEW/QyXw+AWkCyZdehrXf3Pt3IETZ+g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zpts9bpyF4QlV9qysxgv2bTAQBfzcZYb2Z71eaPcn0IX4zDGY9LOeFlMxP4H58j5IQuhJ0TmUKydX0Kh38NRGSiim1almr7PwDBLg0njx6v4+kuM0K7xGiYbo3l8rnZUckDXU35QcjrlKuub6lp+oNfh2cbHQgGUXf8mi8OXEFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AahJXzc5; arc=none smtp.client-ip=91.218.175.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789103581; c=relaxed/simple;
+	bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BlJxJiw09eQoHYy1C5hf+iU5uDfMi0rCI+Ferao8MOFWI0BCy0yKMKG9/pKzd8kV9u5/9KgqJniqp0F0RwJe8bAssX6mL2ynlgeK6ODhiP/KJSfmOi24SXU42ncb99FYMvUZ8Kqt0ekxCo69WBfSjG7iQEqJcdRTNt44A9zahgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s3S7jU4l; arc=none smtp.client-ip=74.125.227.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AahJXzc5"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=2Gkj5VJt7SRjzEW/QyXw+AWkCyZdehrXf3Pt3IETZ+g=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789103131; v=1; x=1789707931;
- b=AahJXzc54rXOjWYdGmfajl24IDdfKTMtVCPBBb/B7ivJgcjQUKto1uWnDc49zTdmzqx7HUIR
- qEs+oez6+8v9E5168Hse8GMhByUyQj/eo/ESVGjdSIer6WMEflyPUkekgscy2uQdu0eDcQK5hNE
- Cu8ZZMDlGkY9BRWQj4hYrnYA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 66dadd09ed6c7452;
-	Fri, 11 Sep 2026 05:05:28 +0000
-X-Mizu-Trace-ID: 66dadd09ed6c7452
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <8d5905b3-ab49-46c9-96c0-4709646f12b3@linux.dev>
-Date: Thu, 10 Sep 2026 22:05:26 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s3S7jU4l"
+Received: by mail-pj2-f1.google.com with SMTP id 98e67ed59e1d1-398e10200a6so272841a91.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 22:12:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789103579; x=1789708379; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
+        b=s3S7jU4lv3Aa0YoXuPMYSl7llMCD4/vq2DuMuNkha1yQP3Ef3EHN2QQ0sF9y1UqD9C
+         +0WeaEiVyGBVk/nk8B7ARLKQHqlYrQyNPoqMkMJwePT5nz7rtcM1eRgngBhmIU12YNuc
+         EBdv9D3UbovGR6WsF+3z5HjapXfsziSihKPXCfrwnQrel4iX81Lxfv7Dmgb71S0Wbg2h
+         erkCwDudrHtUVdWDrNYBYOhYYjY1Zlt4oHLIF49u/hQOxQZR15uNXwShzXkOyTA1BMbd
+         dm3rFS89k9JfTvr2vBcKFI1v1+c9fjowpD2+2g9/sLriJqzacsstQtUQtai6apD4H+4N
+         wD8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789103579; x=1789708379;
+        h=content-transfer-encoding:mime-version:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
+        b=CzU4HkzTRghgDi6UqAFnFMECNE8XynM4NW8hT1sMNL2nBq54zgN59TFxMN4PSJ3seM
+         MeF3trArC9kb7GygXZRGG5Z1WIDERDGWLZFLyfngH8vzpFOM8dIEFEZDfjrUBu+ILNFJ
+         /QWYdltTJJ5VKYvNBpUwfKJBtYOGpE2JO3rikRuXhJ/JdI2l6ig1TtoSryH9o7ckp6L+
+         jKGBRFTwLPm/NzK+f17DxDO5P2szmIcKgMErEena4dGwP4hluCg9Pf9S74+GLDdzPvNh
+         y6FTHcSuockCvDBb+isEaf//TxsOUiJHHUFO5EDKVKTxd1OR2DBVWAPv+0pLvkSzOAQG
+         x6XA==
+X-Gm-Message-State: AFuF++m8vZW0I4OG8skwU0mmjqMVmuRJtIwSS/Febjpj4sPWUEZRk7lz
+	YJov2PaBecFD5u57bBB0DjomxupWDfvr/d8DSvTD3h9eIMBk1k/ESbejYDX7ZorH7Y0=
+X-Gm-Gg: AYBFou0UudsFz0dVTe4JT3xdMqTTFZVvwbhdFsVGV4iGQ4fZ90UM1bMlNwAzGgZg/SK
+	Rnl76Z0d7l3pPED3FKaM1Iz4+Zt/atXgXK5YgFZjTJVhhJPVa1f3M0crXpFCt3h7E5mVfkyITJM
+	YRnTwG2o+lDdzdpSMivncGRgWEOO976ItxrOk+R9SEjaIhVecFsD54GYRLCop0nltbL39jUf1X0
+	m+hdsALf/Z1ZBDDZ6uTMI3ufibMX72eqAqR6e9eBCUknaDwMCiMHN3ZYgCwv3eRDrhtBaBxmuW7
+	6WnKGZfxGnFivN4bRZ8/DVF/36ipD/ELveZE+0LDv083Rq8v7+IXI3k3kJA/F/HRm2nGnprsqEH
+	CjLVGecbof0P9ssR8pwzU5KyStZu/UMF8HxZDwlh8yRyx20mxigC94V4m6dPp0RGCaHhZGeUJT4
+	QW40JAnnQOOdOSPOYH63XO5zFVEBn0jS7hcfTTF7FB
+X-Received: by 2002:a17:90b:35d0:b0:398:c724:1bb1 with SMTP id 98e67ed59e1d1-39d9bd91016mr4090723a91.8.1789103578599;
+        Thu, 10 Sep 2026 22:12:58 -0700 (PDT)
+Received: from fedora ([2602:f921:f20:17::a])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33ba4cf015csm3274601eec.4.2026.09.10.22.12.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 22:12:58 -0700 (PDT)
+From: Tianyi Chen <diannaaav@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next v5 2/2] selftests/bpf: Cover recursive bpftool map dumps
+Date: Fri, 11 Sep 2026 13:12:42 +0800
+Message-ID: <20260911051242.284102-1-diannaaav@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260911035503.891321F000FF@smtp.kernel.org>
+References: <20260911034715.219552-1-diannaaav@gmail.com> <20260911034715.219552-3-diannaaav@gmail.com> <20260911035503.891321F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 07/12] bpf: Prepare kfunc arguments for the
- JIT from an ABI description
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260909062522.4001896-1-yonghong.song@linux.dev>
- <20260909062559.4007404-1-yonghong.song@linux.dev>
- <20260909064649.55C691F00A3A@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260909064649.55C691F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+The bounds check is useful, and v6 now checks for a negative snprintf()
+return and truncation before advancing len.
 
+I have not established the reported overflow in the v5 fixture. The
+loop has exactly four iterations. Even three maximal elements strings
+and their JSON wrappers fit in the 32768-byte expected buffer. Only
+the fourth append could truncate, and there is no following append
+using that accumulated offset. The actual fixed maps are much smaller.
 
-On 9/8/26 11:46 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Stack buffer overflow in `bpf_jit_plan_arg_moves` and `kfunc_abi_slots` due to undersized arrays based on maximum arguments rather than maximum slots.
-> --
->
-> commit 180655f49c406c35435ba5ebc05f2900a3c56656
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Prepare kfunc arguments for the JIT from an ABI description
->      
-> The previous patch refuses a kfunc argument of more than one eightbyte.
-> This patch allows up to 16 byte kfunc arguments.
->
->> diff --git a/include/linux/filter.h b/include/linux/filter.h
->> index 00ad8b63aa477..01b52d0259d18 100644
->> --- a/include/linux/filter.h
->> +++ b/include/linux/filter.h
-> [ ... ]
->> @@ -1248,6 +1248,38 @@ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena);
->> +
->> +/* The JIT's scratch register, in place of an argument slot. */
->> +#define BPF_JIT_ARG_TMP		0xff
->> +
->> +/* Every argument slot moves at most once, and the scratch goes out and back. */
->> +#define BPF_JIT_MAX_ARG_MOVES	(MAX_BPF_FUNC_ARGS + 2)
-> [Severity: Medium]
-> Since arguments can now take up to 2 slots (for 16-byte arguments), could the
-> maximum number of slot moves actually be up to 26 (24 slots + 2) instead of 14?
+The explicit guard makes this safe to extend and reports truncation
+directly as a test failure. All 12 recursive-dump subtests passed,
+including the multiple-root case.
 
-In jit, for x86_64, we have
+v6: https://lore.kernel.org/r/20260911051053.283421-1-diannaaav@gmail.com
 
-         /* x86-64 supports up to MAX_BPF_FUNC_ARGS arguments. 1-6
-          * are passed through regs, the remains are through stack.
-          */
-         if (nr_regs > MAX_BPF_FUNC_ARGS)
-                 return -ENOTSUPP;
-
-So the maximum number of regs is 12, so we are okay for x86_64.
-
-But arm64 is different. It has
-
-static int calc_arg_aux(const struct btf_func_model *m,
-                          struct arg_aux *a)
-{
-         int stack_slots, nregs, slots, i;
-
-         /* verifier ensures m->nr_args <= MAX_BPF_FUNC_ARGS */
-         for (i = 0, nregs = 0; i < m->nr_args; i++) {
-                 slots = (m->arg_size[i] + 7) / 8;
-                 if (nregs + slots <= 8) /* passed through register ? */
-                         nregs += slots;
-                 else
-                         break;
-         }
-
-	...
-}
-
-So the maximum number of reg arguments can be 24. I think I will
-add a patch similar to x86_64 above.
-
->
->> +
->> +struct bpf_jit_arg_move {
->> +	u8 dst;
->> +	u8 src;
->> +};
-> [ ... ]
->> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
->> index c673b02d55a65..d4bd2ba9aadee 100644
->> --- a/kernel/bpf/core.c
->> +++ b/kernel/bpf/core.c
-> [ ... ]
->> @@ -3287,6 +3287,100 @@ bool __weak bpf_jit_supports_kfunc_ret_reg_pair(void)
->> +
->> +u32 bpf_jit_place_args(const struct bpf_jit_arg_abi *abi,
->> +		       const struct btf_func_model *fm, u8 *pos_of_slot)
->> +{
->> +	u32 i, k, nslots, slot = 0, nregs_used = 0, stack_off = 0;
->> +	bool on_stack = false;
->> +
->> +	for (i = 0; i < fm->nr_args; i++) {
->> +		bool align16 = fm->arg_flags[i] & BTF_FMODEL_ALIGN16_ARG;
->> +		u32 pos;
->> +
->> +		nslots = btf_func_model_arg_slots(fm, i);
-> [ ... ]
->> +		for (k = 0; k < nslots; k++)
->> +			pos_of_slot[slot + k] = pos + k;
-> [Severity: Medium]
-> Will this overflow the pos_of_slot array if an architecture adopts this API
-> for BPF trampolines?
->
-> The callers currently size the array based on MAX_BPF_FUNC_ARGS (12), but
-> slot + k can reach up to 23 because some arguments can require multiple slots.
-
-I will add a check to ensure maximum reg arguments is 12.
-
->
->> +		slot += nslots;
->> +	}
->> +
->> +	return slot;
->> +}
->> +
->> +u32 bpf_jit_plan_arg_moves(const struct bpf_jit_arg_abi *abi,
->> +			   const struct btf_func_model *fm,
->> +			   struct bpf_jit_arg_move *moves)
->> +{
->> +	u8 pos_of_slot[MAX_BPF_FUNC_ARGS];
-> [Severity: Medium]
-> Does this stack array need to be sized for the maximum number of slots
-> (e.g., MAX_BPF_FUNC_ARGS * 2) instead of the maximum number of arguments?
-
-This is for kfunc. I will check whether we need to do
-   MAX_BPF_FUNC_ARGS * 2
-or not.
-
->
->> +	u32 nslots, n = 0, s, back;
->> +
->> +	nslots = bpf_jit_place_args(abi, fm, pos_of_slot);
-> [ ... ]
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 94c359351bb69..2b8df8c7f098c 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->> @@ -12172,6 +12172,58 @@ static u32 kfunc_proto_slots(const struct btf *btf, const struct btf_type *func_
->>   	return slots_used;
->>   }
->>   
->> +static u32 kfunc_abi_slots(const struct btf_func_model *fm)
->> +{
->> +	const struct bpf_jit_arg_abi *abi = bpf_jit_arg_abi();
->> +	u8 pos_of_slot[MAX_BPF_FUNC_ARGS];
-> [Severity: Medium]
-> Similarly, does this stack array also need to be sized to accommodate up to
-> 24 slots rather than 12 arguments to prevent an out-of-bounds write in
-> bpf_jit_place_args()?
-
-Yes, I will check whether we need to have 24 slots or not.
-
->
->> +	u32 i, nslots, slots = 0;
->> +
->> +	for (i = 0; i < fm->nr_args; i++)
->> +		slots += btf_func_model_arg_slots(fm, i);
->> +
->> +	if (!abi)
->> +		return slots;
->> +
->> +	nslots = bpf_jit_place_args(abi, fm, pos_of_slot);
-
+Thanks,
+Tianyi
