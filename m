@@ -1,177 +1,102 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ED824B1462
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D4A4AA03B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789150757; cv=none; b=Mq8u3Wbjy8YM0PJHjFvpRqJNdGvxYWNcz0zZnwK4zKVVQo2T+oxlakQysokV0aUnZA/eo73b7cRGM+rMHkyJz3xJKIrB+O75pA7LmxZMACyyWYgkCBy7Hsn1Kch0MLayjFaXQW3b+pn9Fi7Tt8VZN4YkXdlM4HQ319CD2hC0cf4=
+	t=1789151027; cv=none; b=W+MQqdFrSc5TQnu6T+3KYeG46Iklggjtww4QefvszlbgR9Lf0Mr6gHEfo0EwNeRfPAUYbUoFp6sMcyt5A2tcaxMvCdP7uEBnsx4st7/WgXFLUewkdl7AIX5az1jFjEQ7m7MEgrKxfDRwM7+01PqjZVyXG05tBvDqhhOng2PmlqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789150757; c=relaxed/simple;
-	bh=qwTfp3jd7ytFD9SocdNVwN01warOuILP9XtdpPcabtE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mIJmrm4M5W/xAgYeLg5W5TAMuOxlVwytRMNJT2D7AzfY1DqjlsxTJTiBWp+lBuhHEFl2ECr0ZmlVTOr/HHuq6WsZnnZVQ60TUR0pt2jeTaIoBkcaJ8jI+hKpczin1Dy05RRsrC+Ntco2gvMPq6dka3k1+TBVyCfJW5jKvjjp6sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=MpZ8855u; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1789151027; c=relaxed/simple;
+	bh=t9sKMRRjDqxGoI/aJaM3grAkope3a5qNAlhaMqbaCjs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n+baCtMP99YvE+gEcUgTi1JqmywMpmPf559j3Adi5+UEyf06erW69Ww25xEe5C1gTn6BVkmBKljFPqHuIMGpssI3Lua6fu36iFLL/IX1q/957qL86oGVI7kRhhEfDB8TQ64bjc54SOKxqOawgo10W+8IcsIK7mH0cP0dyA3e1uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=QOIDenjU; arc=none smtp.client-ip=217.70.178.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="MpZ8855u"
-Received: from [100.64.96.235] (unknown [40.65.108.177])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 4B6B620B716A;
-	Fri, 11 Sep 2026 11:18:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4B6B620B716A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1789150709;
-	bh=x7zl/xb3yO3wlHvQRT0aPOPUd0h/k8si8L1O/hsq2OI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MpZ8855usAsTi2EFU38AiQWDzq/egocVt3rnnlgIj5CKrAk0b41xQYjaSNzjyKIje
-	 QEdMpEg7xmebIx0dS4W/tf52Jp9zrksrj+bezw6fRww7inaoiE2caMX3SGngBBzkpg
-	 QOBzzAwe9tSVe6Q+cAEX3/y6KWr0pgY+yyA9IEtk=
-Message-ID: <598411fa-364c-49d1-aa67-cdfe5ce8c775@linux.microsoft.com>
-Date: Fri, 11 Sep 2026 11:19:09 -0700
+	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="QOIDenjU"
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::227])
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 58BC758061C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 15:40:13 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 9D26D3ED02;
+	Fri, 11 Sep 2026 15:40:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
+	s=gm1; t=1789141205; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:in-reply-to:in-reply-to:  references:references;
+	bh=9MpJxesw2FKMypBfu37DOMeS/Iu3EQNryRDxRYkkcQk=;
+	b=QOIDenjUzJ+6sMiD6PXCvUP4AVs9m+p9tjM9ZRmd1LCzAkaLGhA0VFKfRRTsykdzuBuuZy
+	yf96AffXQG2xxyQp0tMciAXQMz/kpx5heU2HXgHiBRKnGKaxRJ4MqZ1urYmRpsGEHZv37h
+	ByjkxYgCHv+Ig1FgjsOeWHGglKwUQiNhyU5H+BnhQr7z3/jauX9RgF1D214T+kZNb2TB98
+	sq64bSKbym9Lc9AkL6jAwlGztXp6v0Xsh/XlZoL79MsDslbP2VXd7BLZw25SL5Fq7/uS6d
+	7KjgJfw1TP3E+9fwvfeKfsfOEi7PYnpM40RvbM6vLrOi7jfc7YBqFILPI/VaeQ==
+Date: Fri, 11 Sep 2026 17:40:02 +0200
+From: Arthur Crepin Leblond <arthur@marmottus.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Subject: Re: [PATCH net-next v7 3/3] w5100: detect carrier state using link
+ status bit and optional interrupt
+Message-ID: <20260911154002.GC9585@marmottus.net>
+Reply-To: arthur@marmottus.net
+References: <20260904-wiznet-link-gpio-v7-0-69f01b70c96f@marmottus.net>
+ <20260904-wiznet-link-gpio-v7-3-69f01b70c96f@marmottus.net>
+ <20260905123629.8D1171F00A3E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mshv_vtl: Check per-CPU register page before mmap
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-References: <20260911175146.1370148-1-hargar@linux.microsoft.com>
- <20260911180509.8A5981F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Hardik Garg <hargar@linux.microsoft.com>
-In-Reply-To: <20260911180509.8A5981F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260905123629.8D1171F00A3E@smtp.kernel.org>
+X-GND-Sasl: arthur@marmottus.net
+X-GND-Score: 0
+X-GND-Cause: dmFkZTEOq5nabONhUnnntLvjpRJhr7ZEkEWti6S7JHIwV7/gHHq0qksJJCxOtfP0riAUt6e2ggh1H4vOgldPOcOyPJ288x4Kr2ZcjWgLNgpLEMjbpa//lruoGGS4Uj6riO01xqf35zK80CMffHd8LlbOFp8lMxrh1H3/rUv96HJasW2INHxcH8n5ZZsit51qPOui3jrzn1yD+a4t3xiBfthmp/YAHCqvI5HJqAxwuHqAoUG0X16iTuFha6zZmcXAD7UgIn4NE31tFNGnn3McJRUpVy9yLPU4ZLOSJz1iEVAVBFF9PFh8YM2llwIIamP3zW55EHGDGx6vpaAKLzxnyaIYnWOxSo1mX+Yzj8IzbK5S2EsYJ3IzKU3ZEYxkrMKU9X+BAjAnGrP1gx5Bhvmz7Rl+ERSNp4XYCtEIPs9FKL+mTrYq9pL/LRe6D8wkaU5dn92Y3Y4BcvvlIe8lFErXGdX9gZh9N3xmc7CUeKJc4npQ1zkruZ0i5R8kpGpx/0ovQjp5Oy3zD1ZPBTZBvGFL9h4pZU8hqU5mFajAgeH7p/PLUq8FmFEuZfz7c48ZAdi4YFNeo48NaNaQ2xX+hfuC/RlJlDJCU12RL3cCZoFRAxfkIAIu+5391/HlixajXnHp4tgQUMfyyCKKO2qG5O/YychTsLGns68zGylOXulNZtdTviWP1g
+X-GND-State: clean
 
-
-On 9/11/2026 11:05 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Returning VM_FAULT_NOPAGE for invalid memory offsets without installing a PTE causes an unkillable infinite page fault loop.
-> - [High] Per-CPU memory allocated for `run` and `reg_page` is leaked on driver module unload and upon CPU hotplug setup failures.
-> - [High] Premature character device registration allows userspace to trigger page faults and ioctls before per-CPU data is initialized, bypassing the newly added `if (!page)` check and causing kernel panics or UAF.
-> --
-
-All the reported issues are pre-existing and not related to this patch.
-I will review the issues and fix them in a separate patch.
-
-> commit 33a60782bd60657bd70b537be47acdb4ffe78f38
-> Author: Hardik Garg <hargar@linux.microsoft.com>
->
-> mshv_vtl: Check per-CPU register page before mmap
->
-> Register-page setup is optional for each CPU. If allocation or
-> registration fails, mshv_vtl_configure_reg_page() warns and leaves that
-> CPU's reg_page NULL, but initial context setup continues successfully.
-> Meanwhile, successful setup on another CPU sets the global
-> mshv_has_reg_page flag.
->
-> mshv_vtl_fault() checks this global flag before selecting the requested
-> CPU's register page. With mixed setup results across online CPUs, the
-> check passes even for a CPU with no register page, reaching
-> get_page(NULL) when userspace faults in that mapping.
->
-> Check the selected per-CPU register page before taking its reference and
-> return VM_FAULT_SIGBUS if it is absent.
->
-> Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
-> Cc: stable@vger.kernel.org
->
->> diff --git a/drivers/hv/mshv_vtl_main.c b/drivers/hv/mshv_vtl_main.c
->> index 6e3c11c681717..d8225242c73f8 100644
->> --- a/drivers/hv/mshv_vtl_main.c
->> +++ b/drivers/hv/mshv_vtl_main.c
->> @@ -819,6 +819,9 @@ static vm_fault_t mshv_vtl_fault(struct vm_fault *vmf)
->>  		return VM_FAULT_NOPAGE;
->>  	}
-> [Severity: High]
-> This isn't a bug introduced by this patch, but returning VM_FAULT_NOPAGE
-> for an invalid memory offset without installing a PTE causes an unkillable
-> infinite page fault loop.
->
-> If a userspace process maps the /dev/mshv device and accesses an invalid page
-> offset (neither MSHV_RUN_PAGE_OFFSET nor MSHV_REG_PAGE_OFFSET), this else
-> branch is taken. Returning VM_FAULT_NOPAGE signals to the core MM subsystem
-> that the fault handler successfully installed the page table entry, so the
-> kernel returns to userspace without doing anything. Since no PTE was actually
-> installed, the CPU will immediately re-fault on the same instruction, creating
-> a 100% CPU hung task.
->
-> Could we return VM_FAULT_SIGBUS here instead?
->
->>  
->> +	if (!page)
->> +		return VM_FAULT_SIGBUS;
-> [Severity: High]
-> This is a pre-existing issue, but premature character device registration
-> allows userspace to bypass this newly added check.
->
-> In mshv_vtl_init(), the character device is exposed to userspace early:
->
-> mshv_vtl_init() {
->     ...
->     ret = misc_register(&mshv_dev);
->     ...
-> }
->
-> If a userspace process races the module initialization by opening /dev/mshv
-> and mapping it before hv_vtl_setup_synic() allocates the per-CPU run page,
-> mshv_vtl_cpu_run(cpu) will return NULL.
->
-> When this happens, virt_to_page(NULL) is called:
->
-> mshv_vtl_fault() {
->     ...
->     if (real_off == MSHV_RUN_PAGE_OFFSET) {
->         page = virt_to_page(mshv_vtl_cpu_run(cpu));
->     ...
-> }
->
-> This produces a garbage non-NULL pointer, causing the new if (!page) check
-> to pass, and the subsequent get_page() will dereference the garbage pointer
-> and panic.
->
-> If initialization subsequently fails, the module load aborts and .text is
-> freed while the racing userspace process retains an open file descriptor,
-> leading to a use-after-free.
->
-> Could the device registration be deferred until after the per-CPU data is
-> initialized?
->
+On Sat, Sep 05, 2026 at 12:36:29PM +0000, sashiko-bot@kernel.org wrote:
+>> @@ -659,6 +711,15 @@ static int w5100_open(struct net_device *ndev)
+>>  	w5100_hw_start(priv);
+>>  	napi_enable(&priv->napi);
+>>  	netif_start_queue(ndev);
 >> +
->>  	get_page(page);
->>  	vmf->page = page;
->>  
-> [Severity: High]
-> This is a pre-existing issue, but does this code leak the per-CPU pages
-> allocated for run and reg_page on driver module unload and upon CPU hotplug
-> setup failures?
+>> +	if (priv->link_irq >= 0)
+>> +		enable_irq(priv->link_irq);
+>> +
+>> +	if (w5100_get_link(ndev))
+>> +		netif_carrier_on(ndev);
 >
-> When setting up the hotplug state, the teardown callback is set to NULL:
+>[Severity: Medium]
+>Could this introduce a race condition where a stale link state overwrites
+>a newer one? If the physical link state changes exactly after
+>w5100_get_link() reads the hardware register but before this thread
+>evaluates the result, the newly unmasked edge-triggered interrupt handler
+>might run first. The handler would read the new state and update the carrier,
+>but then the main thread would resume and apply its stale read, overwriting
+>the correct state. Since the interrupt is edge-triggered, no further
+>interrupts would correct this until the link changes again.
+
+Yes, I'll bring a mutex/lock to the next patch.
+
 >
-> hv_vtl_setup_synic() {
->     ...
->     ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "hyperv/vtl:online",
->                             mshv_vtl_alloc_context, NULL);
->     ...
-> }
+>> +	else
+>> +		netif_carrier_off(ndev);
 >
-> When the module unloads, cpuhp_remove_state() is called, but without a
-> teardown callback, the memory permanently allocated via __get_free_page()
-> in mshv_vtl_alloc_context() is leaked:
->
-> mshv_vtl_alloc_context() {
->     ...
->     per_cpu->run = (struct mshv_vtl_run *)
->         __get_free_page(GFP_KERNEL | __GFP_ZERO);
->     ...
-> }
->
-> Additionally, if the hotplug state setup fails midway, the successfully
-> processed CPUs will not be cleaned up.
->
-> Could a teardown callback be provided to free these pages?
->
+>[Severity: High]
+>Does this leave the interface permanently stuck without carrier if the
+>link_irq is not provided? If the interface is brought up while the cable is
+>disconnected, this explicitly calls netif_carrier_off(). Without the optional
+>interrupt (which is the case for most legacy device trees), there appears
+>to be no polling mechanism to ever turn the carrier back on when a cable is
+>subsequently plugged in.
+
+I think the best here imho would be to just keep the original behavior
+if there is no link irq set and to not touch netif_carrier_on/off at
+all.
+
+w5100/w5200 -> no .get_link, no netif_carrier
+w5500 -> .get_link but netif_carrier only if link irq is set
+
+Arthur
