@@ -1,180 +1,120 @@
-Received: from mta0.migadu.com (out-235.mta0.migadu.com [91.218.175.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509FE418A33
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 11:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.235
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40A624582F6;
+	Fri, 11 Sep 2026 11:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789126034; cv=none; b=PvZ8gid4hD0KKFyvqhUxlItm+E4vFnVBBZeJU+D7OC/uH0Mt76j9ZdYTzjQWuezMivq+72xZ1KU/bUrGKevsSccCN3iuqwCBaDFqnt7wX3/z+qXPS3r4EGJ4z1oixx9Gv5HUGGplBPfAy2DTI+5l0EgNtEICU63hA0Y5OCjBodE=
+	t=1789126129; cv=none; b=ChRFctigHpWjI2RFvJqRNxeTdDsUJF0F7zmLLa2oJbbPeN+WPE4A+3LTv3GtiXg7bpyvJhbH83f1cbpqWjBEpUZsnVrSuNgiR8ntWPfzCRBIKXc8QfPGm8nIeNIuVBix9GysHusTpnN182hkiEjKrLidCUFxDyYy0hskJixBH2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789126034; c=relaxed/simple;
-	bh=vpyKjLRGOj2W4xkPI8SZ0I4va0+wufP6r6XYtBNdJWk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bp4WTDh+szzW17ZcAGufNfPDn04eedGVsk2T7rkYC0ev6Mw/MhrR/ieplrs/5PqVhSZvdRd+XLZPr2dvcP++KI+6B/k+BX7jOYfgIIdkmtGkWCJyD8D64NojVGYfREc1FbgtEftSFm2ZbbyVyZVQzEXmZ3UDi2eFcYnGL1FLVcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qualztIc; arc=none smtp.client-ip=91.218.175.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789126129; c=relaxed/simple;
+	bh=Rwn2F3+2n6p6ln3MMbialu17uc2W2Q7eFYsx0lbrY58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pJOEYMb9R+XIrRMM/Uq6E+15PyP9qJ31oiA0rHK+uOOdwJJzNarc9z66J+HtAX3kvIywTR7DoTEBr3PjTVcAMm+kCfAKf3jsQyvC2HgX7KZiSAqfTcdOGrzT+KNzvJBLstiM9S6bY9jkhwwbwDIZnTukqPav/J25vWoF3g9Vd9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=g029RRFJ; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qualztIc"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=vpyKjLRGOj2W4xkPI8SZ0I4va0+wufP6r6XYtBNdJWk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789126022; v=1; x=1789730822;
- b=qualztIc/BGuQ3dhlrUd8r5df9hf5i56RMZcdUWYblYrG/3+pYPJCz57ghwXXlrI99QvOCzo
- EAHhYfLy7d28Nd7LKxhQrIyLzpk+dbYqdRv4jyZjBkmsDeIxQlYm6k+02UJqrlswfvt7xJ8axxf
- 24QSGXOxfa4icmejKgJLgeIQ=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id c75f6e336e203099;
-	Fri, 11 Sep 2026 11:27:02 +0000
-X-Mizu-Trace-ID: c75f6e336e203099
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b17359so4232e87.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:27:02 -0700 (PDT)
-X-Gm-Message-State: AFuF++lCJ+SPNSULshjbk2KcoUspQJYQwoeiYkLXFrMnifMJEMqDGdmk
-	fxCcedR+TgVcLpOL9ht7QdUcIJEs3iB6JwLXQ6+qPyaOMbcbavyT98g7bf/H2i27Oe5F7mFC+z0
-	vk5pDF5gsdUTK4VYIT4YXmELtGQ0yimGeydtWOqg5
-X-Received: by 2002:a05:6512:405a:b0:5b8:9e63:dfb9 with SMTP id
- 2adb3069b0e04-5b8a053c7f3mr116427e87.0.1789126021546; Fri, 11 Sep 2026
- 04:27:01 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="g029RRFJ"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A7F72143D;
+	Fri, 11 Sep 2026 04:28:35 -0700 (PDT)
+Received: from e129823.arm.com (unknown [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5F1B63F86C;
+	Fri, 11 Sep 2026 04:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789126119; bh=Rwn2F3+2n6p6ln3MMbialu17uc2W2Q7eFYsx0lbrY58=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=g029RRFJBw0PXPlQjUVNaZ6Pi/G/HChtZR8JLI24Aat1as11wyw1BrAh36AYo7sN1
+	 7K8wD1gCvAq0sO6rsoexYnqtPhTOrNxjb5E8n0DSIK9MLL+X8DbhXd4pThMZSLlnVk
+	 YVnnCzW+6EHCiFt3MYjmKBYUKJ2VqfkqFHtobj48=
+Date: Fri, 11 Sep 2026 12:28:35 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 2/8] coresight: etm3x: fix inconsistencies with sysfs
+ configuration
+Message-ID: <aqPl47W4bk4lsXMw@e129823.arm.com>
+References: <20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com>
+ <20260911-separate_etm_cfg_v2-v10-2-1b715d95927a@arm.com>
+ <20260911110729.EBCCD1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260911104715.307500-1-fuad.tabba@linux.dev> <20260911110152.D086C1F000FF@smtp.kernel.org>
-In-Reply-To: <20260911110152.D086C1F000FF@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Fri, 11 Sep 2026 12:26:25 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTz_1kDi156qfVA__U7tKoRcHFN6nqxToGoHTgo+iCXnMg@mail.gmail.com>
-X-Gm-Features: AcwNN1XK5NZmQtmA_G87LkzjfrWgk16FdSVJre-x2uudy8mjxi7_qgOu0YA8lNk
-Message-ID: <CA+EHjTz_1kDi156qfVA__U7tKoRcHFN6nqxToGoHTgo+iCXnMg@mail.gmail.com>
-Subject: Re: [PATCH v3] KVM: arm64: Trap guest MPAM accesses whenever MPAM is implemented
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260911110729.EBCCD1F000FF@smtp.kernel.org>
 
-On Fri, 11 Sept 2026 at 12:02, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] KVM fails to trap guest MPAM accesses if the host boots with the=
- `arm64.nompam` kernel parameter on MPAM-capable hardware, potentially allo=
-wing the guest to bypass virtualization isolation.
-
-Right, and it's documented rather than fixed: [1].
-
-Cheers,
-/fuad
-
-[1] https://lore.kernel.org/all/20260908145622.2828319-1-fuad.tabba@linux.d=
-ev/
-
+On Fri, Sep 11, 2026 at 11:07:29AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Sysfs interface for post-trace hardware state returns stale data due to active_config separation (ABI Breakage).
 > --
->
-> commit b4685c49d4f8e9f9eb2e612a24ecf71fcf533869
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Trap guest MPAM accesses whenever MPAM is implemented
->
-> This commit changes how KVM determines whether to trap guest MPAM accesse=
-s.
-> It relies on a per-CPU flag set based on the ID registers rather than usi=
-ng
-> the system-wide system_supports_mpam() check.
->
-> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > index 8b080804bc90b..fde75a63cf045 100644
-> > --- a/arch/arm64/kvm/arm.c
-> > +++ b/arch/arm64/kvm/arm.c
-> > @@ -2281,9 +2281,16 @@ static void cpu_set_hyp_vector(void)
-> >
-> >  static void cpu_hyp_init_context(void)
-> >  {
-> > +     u64 pfr0 =3D __read_sysreg_by_encoding(SYS_ID_AA64PFR0_EL1);
-> > +     u64 pfr1 =3D __read_sysreg_by_encoding(SYS_ID_AA64PFR1_EL1);
-> > +
->
-> [Severity: High]
-> This is a pre-existing issue, but does reading the software-overridden ID
-> register value here in cpu_hyp_init_context() allow the arm64.nompam kern=
-el
-> parameter to falsely report no MPAM hardware to the KVM trap initializati=
-on
-> logic?
->
-> By using __read_sysreg_by_encoding(), the software override for arm64.nom=
-pam
-> forces the MPAM fields to 0. This causes the HAS_MPAM flag to evaluate to
-> false even when physical MPAM hardware is present.
->
-> >       kvm_init_host_cpu_context(host_data_ptr(host_ctxt));
-> >       kvm_init_host_debug_data();
-> >
-> > +     /* The traps take effect without MPAMEN, which ARM64_MPAM require=
-s. */
-> > +     if (id_aa64pfr0_mpam(pfr0) || id_aa64pfr1_mpamfrac(pfr1))
-> > +             host_data_set_flag(HAS_MPAM);
-> >
-> >       if (!is_kernel_in_hyp_mode())
-> >               cpu_init_hyp_mode();
->
+> 
+> commit 729c4f4f776d1cbadf2571ee6a6363ece19f7a91
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm3x: fix inconsistencies with sysfs configuration
+> 
+> This commit resolves sysfs configuration inconsistencies by separating the
+> configuration state into an active_config (for the current session) and config
+> (the configuration set via sysfs).
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> > --- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> 
 > [ ... ]
->
-> > diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/h=
-yp/include/hyp/switch.h
-> > index 1ce7130e25490..2cb611e2bd69b 100644
-> > --- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-> > +++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-> > @@ -298,14 +298,17 @@ static inline void  __activate_traps_mpam(struct =
-kvm_vcpu *vcpu)
-> >       u64 clr =3D MPAM2_EL2_EnMPAMSM;
-> >       u64 set =3D MPAM2_EL2_TRAPMPAM0EL1 | MPAM2_EL2_TRAPMPAM1EL1;
-> >
-> > -     if (!system_supports_mpam())
-> > +     if (!host_data_test_flag(HAS_MPAM))
-> >               return;
->
+> 
+> > @@ -565,7 +569,7 @@ static int etm_enable(struct coresight_device *csdev, struct perf_event *event,
+> >  static void etm_disable_hw(struct etm_drvdata *drvdata)
+> >  {
+> >  	int i;
+> > -	struct etm_config *config = &drvdata->config;
+> > +	struct etm_config *config = &drvdata->active_config;
+> >  	struct coresight_device *csdev = drvdata->csdev;
+> >  
+> >  	CS_UNLOCK(drvdata->csa.base);
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does skipping the guest MP=
-AM
-> trap activation in __activate_traps_mpam() based on the overridden HAS_MP=
-AM
-> flag leave the hardware trap state at its UNKNOWN reset value?
->
-> When the host boots with the arm64.nompam parameter, HAS_MPAM is false. T=
-his
-> causes KVM to skip setting the MPAM2_EL2 trap bits (TRAPMPAM0EL1 and
-> TRAPMPAM1EL1) during guest entry. Additionally, the EL2 initialization in
-> finalise_el2_state() also skips initializing MPAM2_EL2 when the ID regist=
-ers
-> are overridden.
->
-> Because MPAM2_EL2 is never initialized by the host, it retains its
-> architecturally UNKNOWN reset value. If its trap bits happen to reset to =
-0,
-> a guest can execute MPAM instructions without trapping to KVM. This would
-> allow the guest to bypass virtualization isolation and directly manipulat=
-e
-> memory bandwidth and cache partitioning across the system, potentially
-> causing resource starvation or side-channel information leaks.
->
-> Does this patch codify and reinforce gating the trap initialization on th=
-e
-> overridden software ID registers rather than the physical hardware
-> capabilities?
->
-> >
-> >       /* trap guest access to MPAMIDR_EL1 */
-> > -     if (system_supports_mpam_hcr()) {
-> > +     if (read_sysreg_s(SYS_MPAMIDR_EL1) & MPAMIDR_EL1_HAS_HCR) {
-> >               write_sysreg_s(MPAMHCR_EL2_TRAP_MPAMIDR_EL1, SYS_MPAMHCR_=
-EL2);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911104715.30=
-7500-1-fuad.tabba@linux.dev?part=3D1
+> Does this introduce a regression in the sysfs interface for post-trace
+> hardware state analysis?
+> 
+> By switching to active_config here, the post-trace sequencer and counter
+> states are saved into drvdata->active_config during etm_disable_hw():
+> 
+> drivers/hwtracing/coresight/coresight-etm3x-core.c:etm_disable_hw() {
+> 	...
+> 	/* Read back sequencer and counters for post trace analysis */
+> 	config->seq_curr_state = (etm_readl(drvdata, ETMSQR) & ETM_SQR_MASK);
+> 
+> 	for (i = 0; i < caps->nr_cntr; i++)
+> 		config->cntr_val[i] = etm_readl(drvdata, ETMCNTVRn(i));
+> 	...
+> }
+> 
+> However, when tracing is disabled, userspace reads from the sysfs interface
+> which still returns data from the stale drvdata->config:
+> 
+> drivers/hwtracing/coresight/coresight-etm3x-sysfs.c:seq_curr_state_show() {
+> 	...
+> 	val = config->seq_curr_state;
+> 	...
+> }
+> 
+> Will this cause sysfs reads for seq_curr_state and cntr_val to return
+> stale or zeroed data instead of the actual hardware state?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com?part=2
+
+This seems valid review and I think the cntr_val and seq_current_state
+shouldn't be modified via sysfs while the mode is taken by sysfs.
+
+I'll fix this in later version for etm4 and etm3.
+
+-- 
+Sincerely,
+Yeoreum Yun
