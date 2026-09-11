@@ -1,60 +1,68 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CEC367B9F;
-	Fri, 11 Sep 2026 14:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F6D3542F8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 14:52:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789138230; cv=none; b=fty8NAQoHs3zsWn3Jt9uCqC+Ui8eKBTKGBti3f27Twn+4j1EUEKGw9XZ24ME6whi8WWrISgm0jKMo1xnOu3XwO5f0n+PvokKbUi+Y3yQr235/i3tad7YloI/m0PtHRsAzWhkn1Hp9a1Ex9EqjE8FMOGAas69pe2qeO4jvwJSxU4=
+	t=1789138380; cv=none; b=JdkVlXctXaBRzhqOqQUh/PzWpyNexh+WJE9cmMk55V5HdimK56YyZ8tTCRzMMHBzXZjMLZcGIjMfTaAXPtq1sgGSlHcEuTJQAp3Gm+Hgb0/dF29h+QpqNz69W+dsb9onpHy/ffEBAGalTbJDsOMNXsHpp84KeJI12Jdy1bp21og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789138230; c=relaxed/simple;
-	bh=V/r51ocWbzTF/bLY4JO9l8zJaW5k8+nQBG7BKtvNPgI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lwf+Zw4gy67mniUYMKtJQ2Ttcl7/N8nDU/aMCE0/9EsivCIAA4lx/1FN14ZSUtPzkVqhi4j3o+QSWbbUApEKpdUlZhd/6tYZMSOiiBwulHUmZUJGNH19gjTxdAiDrteptmsWRo0gTCzvcXJ3GQtzOWiWvSBDBlxeNMeG5eMqiPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=DYzmKuSo; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1789138380; c=relaxed/simple;
+	bh=fpmxr0cgb7peufCFX/fraHzTpsYDsX16E32Gu2HRJUc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BSMoFjmAMUmy8Fj9Oi1D+JLJ4VKMXsE7o8uf74tbie8c5ITr462gUXzCRd1z9a+VQxZTxtp8TEUg8f1vpc7emG9vLEJYatnxQ5qwfLBlCSmpY2EaZEemDsj/bjBr9RZ+cFBVsPAeUl798wbhMR+CvXW2nYRuGIPv+qd8PjanC3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O2SVZKqC; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="DYzmKuSo"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68BD1hmI1714166;
-	Fri, 11 Sep 2026 14:50:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=/MwQov
-	V48sdX1TRkq1h+r5FhZLNwmnQqYmgKyLwZRsQ=; b=DYzmKuSowMr3hDG0KuO2Yu
-	zSVi9tGSBj6A7sHA1k6BxdNaqdl6ZQsOgDnK2XWk/6I39JPloOI1yuQkdQDCc5y0
-	wwpjAvZREocUewpEwXGbMhwF8cRUkugizGIWWhBWFeXJBfGFInovxpHOEW3I/dN/
-	Z6/7XUCrgMHVRzDLgWhIf/vDikN7Lpd2heW0XX73nB+kJN2ETfhfRBQKLZEIhPJU
-	3RVi3Ifmn3n7fOPocZo6Ak/G+QxjtmW5ovtJM0sBF5G2p1E/57ltScOLJk2T8GFE
-	ttNlSdvUsm2mjCn1wmgF6VKNkDTUvD8RdTs6b7OiJ8IfygQGunj7jBb2s1s4XOZA
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8sc32e-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 14:50:23 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68BEo7GY1802497;
-	Fri, 11 Sep 2026 14:50:22 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvtfewu1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 14:50:22 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68BEoI4c42205538
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 11 Sep 2026 14:50:18 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8679E2005A;
-	Fri, 11 Sep 2026 14:50:18 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BFF6D2004D;
-	Fri, 11 Sep 2026 14:50:17 +0000 (GMT)
-Received: from [9.111.140.161] (unknown [9.111.140.161])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 11 Sep 2026 14:50:17 +0000 (GMT)
-Message-ID: <fb8371eb-a869-462c-98ef-67a9f0c66836@linux.ibm.com>
-Date: Fri, 11 Sep 2026 16:50:17 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O2SVZKqC"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2d942c7cc2fso9331045ad.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 07:52:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789138378; x=1789743178; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LdoXE+ewf5jb6LQYyxh8lGBqTy0FzOqpYpBgqMKD8BI=;
+        b=O2SVZKqC2x5YmnUDwha8Yi2ogNEyiBsapFYwh6KdLjiYa8Fgy7TRWXUs0LposQMfCs
+         v3H2IBhuKnVEABWRGEnXLOhxkmxp5PFao2ptGaVH1PBkSZFAOGixho+2X5jBqRKSUPrD
+         WFNG1YobtKbsCnqasH8Rr26hTE/aL+CgVWoDWhGR4CcZlBo5kLDnNo7MYgKss027IVqZ
+         OV/zjs5UCGTNHUbgZH+iwM8Nv79kpb59Q1dLt8HSQx/HvVzzfc2pnIV8JikwgIrH4pfN
+         5WphAGvXJXh0XcT/9rPccZfmUyuAIYIdUdt1neD1n60gc1Z9lrgnnpGbDppBfiTVTqqr
+         uHoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789138378; x=1789743178;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=LdoXE+ewf5jb6LQYyxh8lGBqTy0FzOqpYpBgqMKD8BI=;
+        b=N5XQzOX1C0rnnYGkHb8nvZVTC2ppdSCZnMdJkiuhZVifkp756CxPCs7DmhH23UTVTM
+         SWAIBMUzY2USGVq3cCx4f1sj25y8/aCaQCIpxOkj9NNB9UtRAgeMyIcuCsN7uryz4L9q
+         Dx//7CnDQ+sJzNqqA9tpFO7+rz4RGpZaHDrgG56atcJ/poMGm7+Ptyt2ezqbvNL9S3WW
+         0omqZO5xhQmZR6flAX13LTs9ER6Ugso8Q6mr+xu7eTwGekyHtNK/FoWEP6taNAPJLklD
+         5xgXztHXFAtIAt0zUmc3G8UmkMNNQvExotLKHfaK1OPvQoc92UxjUKV7uXHESNqpej7c
+         HL9w==
+X-Gm-Message-State: AFuF++nlVw+oSnBXnXz08XVPQfyJ6ziYfNO9A0qsDyh9s0mODFbH4HrL
+	a+dX0FTYrlV3vtS4tHymAA7+ZV0g1BXiEAet3JpUPi9/gIy7ZKD3U8JmlU+87Ptf
+X-Gm-Gg: AYBFou0ME+hbiKcd5Bz7NNAp75pyAjrUElA5ZNeypRLEzOcv60XRQueE3tny995rTQa
+	WQMR2UgVxozB+/3YXTBfm8IJvHe7w1r41UBJ1b/zm7YcFHj+QBoWURGnZq90/zOfOGOtYPyVqdh
+	vmU8c+DQHQOiv0axjK45tx3FNVz7pFh0VM05Mh382d3sioKvbW/fwfqHAKWqd3W32TTmoadcsRE
+	QlN201fed864MscB5yH9GmSsj7Rbzy1nIN+J7in9j7M3MVxrP1yuCfeIdNhZ2NiF04Gf15Vy5zE
+	w/7dtGAvGn+t+Ni4JLyj0ul+XuaMnt1e9FW+hXpZt5gEMrA8GUCFjeIg+cHVPAxDTgs1dIjjLVQ
+	ayA7a2Zb+gVF96woEbffT6cadXMtJgvrhsBJlE6Yzhh+TLGgSWZtg64ae9He+R7NR/4Uphxen3D
+	kTB2oaispRtLPcCZ2LZIChVHSW8RfBUxFBgV/9Vtnqn0lHLkI8d/XijEnPRPnWN4qAQQ465t+60
+	qmj/HhWejPYTU+EPibbKSwbV8oIEa8ceBMlneWBp4XkLrNA
+X-Received: by 2002:a17:903:1b4f:b0:2dd:40cb:a054 with SMTP id d9443c01a7336-2dd40cba32bmr20018355ad.19.1789138377973;
+        Fri, 11 Sep 2026 07:52:57 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ccaceafsm12899705ad.9.2026.09.11.07.52.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Sep 2026 07:52:57 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <518aea33-277a-4d8f-8bf7-7469879f6f56@roeck-us.net>
+Date: Fri, 11 Sep 2026 07:52:56 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,274 +70,121 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Jens Remus <jremus@linux.ibm.com>
-Subject: Re: [RFC PATCH v2 07/24] unwind_user/eh_frame: Add support for
- reading .eh_frame_hdr section
-To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>,
-        Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        linux-trace-kernel@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>
-References: <20260821195259.2688377-1-jremus@linux.ibm.com>
- <20260821195259.2688377-8-jremus@linux.ibm.com>
- <20260821200615.85E461F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 2/2] hwmon: add Axiado AX3000 and AX3005 PWM fan
+ controller driver
+To: sashiko-reviews@lists.linux.dev, Petar Stepanovic <pstepanovic@axiado.com>
+Cc: devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20260903-axiado-ax3000-pwm-fan-v2-0-ef43df46163e@axiado.com>
+ <20260903-axiado-ax3000-pwm-fan-v2-2-ef43df46163e@axiado.com>
+ <20260903084844.D1CC11F000E9@smtp.kernel.org>
 Content-Language: en-US
-Organization: IBM Deutschland Research & Development GmbH
-In-Reply-To: <20260821200615.85E461F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: olRMpQ-yZwKAQZpbD1fMOQwBa_AEnfbs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDIwMyBTYWx0ZWRfX4DHPfYfzNEXi
- GsUoKQhYXtMcDJJ2Gvq2hHnUrMNTeemoyEQCw4wUKSkWk/YVJlCfoKlA50xuOZVh6VpKuEN788L
- MVuVOGuS9J5MrlACGwxW7xwmMqz0PRKOsowbKSui24ILd2Lc9uPCyVoq2P1jZdG+9W/dR0MNUX9
- W1SOLBAVTeQ1twQd1Nr8Dv2msr7dRKWBI3XuwnYa81HtGnwNYquXCvSspBM7NxRp+K13KLCbiL+
- C1iXd8usIgwMYgowu6vKVBVESSsjKcf6V73q76jG0jyErDrAIVlR9xeILRVkmL9Q5nbzCHmAM76
- OXdHZ81BLwGa7Id49oraQXIu6HQ38RRkFf+U+V+sB2Iyi+NfZTrYO/FHR57vFoLvqR+dowTCkDC
- iPu80KTCnOUEMFrA/BJycswbJwog6cdXmbBpjcTBsVGtTeyypyD3SBfuIyhL3XTuElvBp+KD3Bt
- J+jr8TNOSFItEGHL5fA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDIwMyBTYWx0ZWRfX3AYrBAz6CAR1
- tMG9jJXgr/KD1scZac+N3o0MeFRMDBVPW4egNrxnida066hlBemLyOiT5W4CLMNnXs69kVFYf/Q
- ZoiJGQep5WSkKuirY+lS2EIDXdGHRCA=
-X-Authority-Analysis: v=2.4 cv=MpXHeGae c=1 sm=1 tr=0 ts=6aa4152f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=VwQbUJbxAAAA:8 a=TB3WesdFtXAa7tQdJNQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: olRMpQ-yZwKAQZpbD1fMOQwBa_AEnfbs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-11_04,2026-09-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110203
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260903084844.D1CC11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 8/21/2026 10:06 PM, sashiko-bot@kernel.org wrote:
+Petar,
 
-> In preparation for unwinding user space stacks with .eh_frame, add
-> basic unwind user eh_frame infrastructure and support for reading the
-> .eh_frame_hdr section.
-
->> diff --git a/kernel/unwind/eh_frame.c b/kernel/unwind/eh_frame.c
-
-#include <linux/sched/task_stack.h>
-#include <linux/unwind_user.h>
-
->> @@ -0,0 +1,366 @@
+On 9/3/26 01:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The interrupt handler incorrectly returns IRQ_HANDLED for unhandled device interrupts, potentially causing an IRQ storm.
+> --
 > 
+> commit ac0edffb2c72d464c05c340c5df147fdcf10b0f4
+> Author: Petar Stepanovic <pstepanovic@axiado.com>
+> 
+> hwmon: add Axiado AX3000 and AX3005 PWM fan controller driver
+> 
+> This commit adds support for the PWM fan controller found on the Axiado AX3000
+> and AX3005 SoCs. It measures fan speed via a hardware tachometer interrupt and
+> controls the fan via an external PWM signal.
+> 
+>> diff --git a/drivers/hwmon/axiado-pwm-fan.c b/drivers/hwmon/axiado-pwm-fan.c
+>> new file mode 100644
+>> index 0000000000000..ac153afded47a
+>> --- /dev/null
+>> +++ b/drivers/hwmon/axiado-pwm-fan.c
 > [ ... ]
-> 
->> +static __always_inline int encoded_pointer_size(u8 encoding)
+>> +static irqreturn_t axiado_tach_irq_handler(int irq, void *dev)
 >> +{
->> +	u8 format = DW_EH_PE_format(encoding);
+>> +	struct axiado_pwm_fan_ctx *ctx = dev;
+>> +	u32 status;
 >> +
->> +	switch (format) {
->> +	case DW_EH_PE_absptr:
-
-		if (IS_ENABLED(CONFIG_COMPAT))
-			return unwind_user_word_size(task_pt_regs(current));
-
->> +		return sizeof(unsigned long);
+>> +	status = ioread32(ctx->tach_base + AX_TACH_INT_STATUS_REG);
+>> +
+>> +	if (!status)
+>> +		return IRQ_NONE;
 > 
 > [Severity: High]
-> Does hardcoding sizeof(unsigned long) here cause issues for 32-bit compat
-> tasks?
-
-The word size from struct unwind_user_state field word_size cannot be used
-because it needs to be known at .eh_frame[_hdr] section registration time:
-
-eh_frame_add_section() -> eh_frame_read_header() -> read_encoded_pointer()
-
-Would it be ok to determine the word size each time the special case
-DW_EH_PE_absptr is handled in encoded_pointer_size() and
-read_encoded_pointer()?  See also below.
-
-Also I need to do some testing whether those actually occur in .eh_frame.
-If not it would be preferable to drop DW_EH_PE_absptr support.
-
+> Will this handler cause an IRQ storm if the hardware asserts an interrupt
+> where the status is non-zero but AX_TACH_INT_PENDING is not set?
 > 
-> If a 64-bit kernel is profiling a 32-bit application, DW_EH_PE_absptr is
-> expected to match the application's native 4-byte pointer size. Using
-> sizeof(unsigned long) means the kernel will read 8 bytes, which could
-> consume too much data and misalign the current pointer for the remainder
-> of the unwinding process.
+> Since the condition only checks if status is zero, an unexpected bit could
+> bypass the IRQ_NONE return path. The handler would then proceed to clear only
+> the AX_TACH_INT_PENDING bit and return IRQ_HANDLED, leaving the actual
+> hardware interrupt active and bypassing the kernel's spurious IRQ protection.
 > 
->> +	case DW_EH_PE_udata2:
->> +	case DW_EH_PE_sdata2:
->> +		return 2;
+> Should this explicitly check if the AX_TACH_INT_PENDING bit is set before
+> processing the interrupt?
 > 
-> [ ... ]
-> 
->> +static __always_inline int read_encoded_pointer(struct eh_frame_section *sec,
->> +						unsigned long *addr,
->> +						unsigned long end,
->> +						u8 encoding,
->> +						unsigned long *value)
->> +{
-> 
-> [ ... ]
-> 
->> +	/* Read value based on format */
->> +	switch (format) {
->> +	case DW_EH_PE_absptr: {
->> +		unsigned long tmp;
->> +		UNSAFE_GET_USER_INC(tmp, cur, end, Efault);
->> +		result += tmp;
 
-Replace above with:
+Please address this problem, or explain why it does not apply.
 
-		if (IS_ENABLED(CONFIG_COMPAT) &&
-		    unwind_user_word_size(task_pt_regs(current)) == sizeof(int)) {
-			unsigned int tmp32;
-			UNSAFE_GET_USER_INC(tmp32, cur, end, Efault);
-			result += tmp32;
-		} else {
-			unsigned long tmp;
-			UNSAFE_GET_USER_INC(tmp, cur, end, Efault);
-			result += tmp;
-		}
+Thanks,
+Guenter
 
->> +		break;
+>> +
+>> +	scoped_guard(spinlock_irqsave, &ctx->tach_lock) {
+>> +		ctx->tach.count = ioread32(ctx->tach_base + AX_TACH_COUNT_REG);
 >> +	}
-> 
-> [Severity: High]
-> Will this also read 8 bytes instead of 4 for a 32-bit task?
-> 
-> Similar to encoded_pointer_size(), this reads a full unsigned long for an
-> absolute pointer. If this is a 64-bit kernel unwinding a 32-bit compat
-> application, it seems this might read past the intended data boundaries
-> and corrupt the address parsing.
-> 
->> +	case DW_EH_PE_uleb128: {
->> +		unsigned long tmp;
-> 
-> [ ... ]
-> 
->> +static int eh_frame_read_header(struct eh_frame_section *sec)
->> +{
->> +	struct mm_struct *mm = current->mm;
->> +	void __user *eh_frame_hdr = (void __user *)sec->eh_frame_hdr_start;
-
-	size_t size = sec->eh_frame_hdr_end - sec->eh_frame_hdr_start;
-
->> +	unsigned long cur = sec->eh_frame_hdr_start, end = sec->eh_frame_hdr_end;
-
-Move cur and end into scoped user access block below.
-
-> 
-> [ ... ]
-> 
->> +	scoped_user_read_access_size(eh_frame_hdr, end - sec->eh_frame_hdr_start,
->> +				     Efault) {
-
-	scoped_user_read_access_size(eh_frame_hdr, size, Efault) {
-		unsigned long cur = (unsigned long)eh_frame_hdr;
-		unsigned long end = (unsigned long)eh_frame_hdr + size;
-
->> +		/* Read version */
->> +		UNSAFE_GET_USER_INC(version, cur, end, Efault);
-
-Then whenever cur or end are expected to be unmasked pointers they need
-to be converted back:
-
--		table_start = cur;
-+		table_start = sec->eh_frame_hdr_start + (cur - (unsigned long)eh_frame_hdr);
-
-...
-
--		if (fde_count > (end - table_start) / entry_size)
-+		if (fde_count > (sec->eh_frame_hdr_end - table_start) / entry_size)
-			return -EINVAL;
-
-> 
-> [Severity: High]
-> Does this bypass the speculative execution pointer masking provided by
-> scoped_user_read_access_size()?
-
-True.  I was not aware of that.  While above seems to resolve this at a
-first glance there are some implications in read_encoded_pointer():
-
-DW_EH_PE_datarel (relative to .eh_frame_hdr) and DW_EH_PE_textrel
-(relative to .text) return an unmasked pointer, which is ok, as the
-callers expect it to be an unmasked value.
-
-DW_EH_PE_pcrel (relative to the field itself) also returns an unmasked
-pointer and now requires the unmasked cursor pointer to be provided as
-input as well.
-
-> 
-> The block masks the eh_frame_hdr pointer, but inside the block,
-> UNSAFE_GET_USER_INC() reads from the unmasked unsigned long cur variable:
-> 
-> #define UNSAFE_GET_USER_INC(to, from, end, label)
-> ...
-> 	unsafe_get_user(__to, (typeof(to) __user *)from, label);
-> 
-> Since cur is passed to unsafe_get_user() without being masked, it appears
-> this defeats the Spectre V1 mitigation for architectures relying on
-> can_do_masked_user_access().
-> 
->> +		if (version != 1)
->> +			return -EINVAL;
-
->> +int eh_frame_add_section(unsigned long eh_frame_hdr_start,
->> +			 unsigned long eh_frame_hdr_end,
->> +			 unsigned long text_start,
->> +			 unsigned long text_end)
->> +{
->> +	struct mm_struct *mm = current->mm;
->> +	struct eh_frame_section *sec;
->> +	int ret;
-> 
-> [ ... ]
-> 
->> +	scoped_guard(mmap_read_lock, mm) {
->> +		struct vm_area_struct *eh_frame_hdr_vma, *text_vma;
 >> +
->> +		eh_frame_hdr_vma = vma_lookup(mm, eh_frame_hdr_start);
-> 
-> [ ... ]
-> 
->> +	ret = eh_frame_read_header(sec);
->> +	if (ret)
->> +		goto err_free;
+>> +	iowrite32(AX_TACH_INT_PENDING, ctx->tach_base + AX_TACH_INT_STATUS_REG);
 >> +
->> +	/* TODO nowhere to store it yet - just free it and return an error */
->> +	ret = -ENOSYS;
->> +
->> +err_free:
->> +	free_section(sec);
->> +	return ret;
+>> +	return IRQ_HANDLED;
 >> +}
 > 
-> [Severity: Low]
-> This isn't a bug, but should this function avoid mixing scoped_guard() and
-> goto-based error handling?
-> 
-> The kernel cleanup guidelines recommend either fully converting to
-> scope-based cleanup (for example, using __free() for the sec allocation)
-> or strictly using goto-based cleanups without scoped_guard(). Mixing them
-> in the same function can create confusing ownership semantics.
-
-Other than converting the code to use mmap_read_lock(mm) and
-mmap_read_unlock(mm) I don't see how the section cleanup logic
-could be converted to scope-based cleanup, as it must not be
-freed if it gets inserted into the mm->eh_frame_mt (in a
-subsequent patch).  Sashiko probably misses this as in this
-incomplete state it looks as if it could be converted, as the
-section is always freed.
-
-Thanks and regards,
-Jens
--- 
-Jens Remus
-Linux on Z Development (D3303)
-jremus@de.ibm.com / jremus@linux.ibm.com
-
-IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
-IBM Data Privacy Statement: https://www.ibm.com/privacy/
 
