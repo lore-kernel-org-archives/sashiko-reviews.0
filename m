@@ -1,181 +1,154 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E08143B3F9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789128617; cv=pass; b=QPwHF6fBlwLZXFogJZkwm0pMa4HjGGN5kRUzckozRFBAMBC+nYP/vbTp78fMwCsXeFyt62WPJdYqSsVx7Iu6T9Q5lO0lji9n1qasRdUzH3BY/is2JrVTyfK1nhDZDYT1V7QULs1RwzRJJknqQ0CDWmjE1FaxB5meq2GWyB2ne9E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789128617; c=relaxed/simple;
-	bh=s2doigL40MavgJYYi+6feoNcgx2hlI7yC6v15ZMkMkU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T+zir7+MXVnA30rdvXckyN+VblS0+FrYTL+LSyYv29UKgo0Cet17YdkMVdJfSQF735VHcXtZa4+ZaUzDKCPWo7GwsoavUFoiDi0iaCKULsuWUSS9j/hpSp0yslfReOty+SID989TPRiqJpdeh4fuou196CMCaSFF1u21fSKmJF0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BqGao8aE; arc=pass smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B5144F579
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789128672; cv=none; b=AE/+NndrHxOgDLBCOPgLP/x0/Kj+s3UGlM7d7uKku3fPKE0lTswWcfZteyB19MEHArJGWsJHZDJ4uK1uMyRolGvuQjHGbpsOUq3Fokh8/2Ecef2HURCPl86qNlJzcJLWwFxbI2w6qw9zMQgVzDaEcKLTjOo9bNGEEVHzvcxbzAA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789128672; c=relaxed/simple;
+	bh=HuYm4W3vzsxucXJ37lx6SX/wJgtWGWCIdeQ6dqbocQ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uInYa33IadDUI8ZJ/bYRvN0Psw1vxOQYk8WPE220NxsJQOnZ72eARpq8+tr1O3o690EO5dVFFFe6gmUeyLEEsi1vhk7G1duoRKyMcDGVzcC7XRLzboCLELEEQDiA6oa5ZaZKdtV9ECZKHytT0Jz+Z4Va7xr02FMyvQulOWoFk5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=C1B/e7g4; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqGao8aE"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-49b392ccaacso12813245e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:10:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789128614; cv=none;
-        d=google.com; s=arc-20260327;
-        b=lX7qnviC8nsuMpQzm/l5PtpNTee+BqxQx/1Avfds5Yblu1LzUYF7F/PC19oZ1dgnqJ
-         +GzeUY3IVG+pP633IVvg6tIpLc9L75h0KSVPkn7J85RvMJPebdrUm55OgqXFjAwf73vp
-         PvozgIIF8iKYYu6f17LZO1JV5kUEYRiHjEvaw2NAC5LBRRFROyZHcnVuyuzQO9VryB6W
-         GnL/VLfIGMKOeHH6bYhQwxpKN8n5mgOBLDuzH5QJzSnDIHVKimhUEGpun7nr60MSDTuW
-         IpCHH46JxLIGVleb891tjcQKUIbhxzH/fec5LncP0cwRt8HSgS4/CULReLaHFD/6fVNF
-         lKlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=s3J8UlCAdANDfuXwyK75WO7Z8Tmd6ahY31LeseAlh3w=;
-        fh=R5gzGYIrOYxTvCid8gviBay9KVHyvPxqmmWWwroQZw4=;
-        b=R+VGXxh7UurFwf0/P+29UinrUShDL7gE8gri/MANKBO/y4XBqAbLS+Arc477vuJTkZ
-         uvvoOyULQfe2Vv1BYDCpBFYYNDAT/Y9GT/HrxPlZyNPRESZacINEFMRXxan4dxPWGXfO
-         ackyP2JqGMXsFzlr0x8iHP0ob5RNC5JX4bJjFGi1W5eoBKwyjH/K7GWyzkOdhfxKepaV
-         6XcRbcKOldzv9nP0da+IVUiiJOGzZSDOuWCQrqLGNy2di/2RTU+q58qbqdcm+zwAi/bz
-         5bu7RpTEegF9LUJXxCGGTRPjxe7FEk/1dKFT3QnBWE/OELHqXpi+zV5lyfzygXXcMcvC
-         i8yw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789128614; x=1789733414; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=s3J8UlCAdANDfuXwyK75WO7Z8Tmd6ahY31LeseAlh3w=;
-        b=BqGao8aEZGqGUmV8ah0/KgXJMPMQsU7PB1Y0W0q+6/l3m+/ZzAFSyw3+XyTazXuPka
-         WjIz+YgPilMPg3dOJiCCSOtgYKqqyT/ECSk4ysLdK9AylOmO66hziwy0Rc7/mClsoHYx
-         gWUH0qoHWxIt8u7zgzN6AG3PV6f4JQUSHYUjRojhvGj8z2x+YpqNLldgYn9aplkHkuSI
-         hbZm9tha9sY94LbQVu4rd3/EAOxraXQRlROwBv9/GSLpqG1xSOimX/L/03+Fh7FA4DoN
-         9e9Mfvkb/cFj+d9kbgaDqzMRhwhOhxDMys0Kahsk47s+DRYWltnzbKTAoiwYdHz5ZGYQ
-         /JSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789128614; x=1789733414;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=s3J8UlCAdANDfuXwyK75WO7Z8Tmd6ahY31LeseAlh3w=;
-        b=JcVIilI4aLy1q9qo4xhxfW5siVC1zxvwouwC/EjA6yh7JhcFPX8ukioh1UBQO7YUqW
-         wYop02ZEfVF9AzkrsprsUAibZ87UCdq5C2+L2aJKfVv8YjCS7+CJiVTYtX9fV0+lQ3IU
-         SGwK50ujDgnzG+3KmviiVfi2qeY2Gvn/7PnoRIcCpbk1H8LvKMjlgiI0Fybrry+wraWz
-         quJVr7tRZ+qOQtHpY44sDKi6sCsL1jloJjJ+oTNqK91eJan3KNi0D2i0DGLz+uZaFPWN
-         MPPisL5aLMJxt3HW5yl1dEZ74XTxSVX3apRl0foGoh72v+XuvyRRM77dVxpXGaZlORHS
-         XW6w==
-X-Gm-Message-State: AFuF++n5pDZYpuB9vh+zfEDo35HLfQaBVOqoFaTYfDdyyX2M6ZRiLtC+
-	s/XNEm2nWnU+d69lxnvNc1PZ7ygQe0pbHf6DpA/jIuBmSaAmbrhZjcWEcSEBtK6CQockTB9aNeE
-	YXJDOv2MJBzike4Mcp9eEJa/8NjjsM30EX/QtfeRRDA==
-X-Gm-Gg: AYBFou1xFuTNdVvPfx8wFQFqtXo7qwuy+jZin8fIuvhp9bW1FXJNToc8ZeJVmymA3Pf
-	2Hp5Wtansrrk4G9yYbHQ/NeXilztmBU6W5Eq7P3vYe6kMSUmoED2KndECfQyTEUhgXCdCo6q/cA
-	6sLz3Mo3hAuCl3sdB9BcrSAsvB6x+h0iR//je/Y3EkVHTx3lhb+shY675dX5NIpRsikN7pMSvBC
-	PEyZvlCm0sRyrFuhjuaaqVEDh2F8Ub7WoAZ/Bn7UEXlhp00MwtldsL+BRJpScCvX55U8k/gfEzi
-	fX9XarjL/AsovF4TEgo6R3x2tJS9m+XCAT9OMd4hEsPS1rKJXAMxmM9rQ+EAK4dy9mcmHKrrhou
-	54KR30cBUuhiDrQWs0kD/I0RYkQKWVZlHhAi0rGkx8854D08tNqtCbV6YIcVWNV7AuchjPL5vgQ
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="C1B/e7g4"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68BB1ge4457187;
+	Fri, 11 Sep 2026 12:11:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=hitssf
+	Jh+BAoSSPoO9RPsMKDioeLjqiXO+CBQgdlOYA=; b=C1B/e7g4EVY379J29VlQmF
+	R+9CqNo7ajN21t5RzTUEFDBL87/mb8GZHCFVoO5sO1nYygpZoSG6aHjr12PWvyDk
+	K4hxZ5awnPmc49kkvqNw7gTDHslU7idYIyu0O/ZN1O/e1d++xW6Zh0t5sI8lD4gk
+	qXiKB9f2fyDRW1uNGPd5LQrfwH6h03q5o5yItnr2UOF7TtYsxQT6c0OPslhzu4DI
+	OFgkCD/XvNsnnb7ncoivN7rRQE28RZYxKOUPBYpuLy8LIb0DLaKinaoHywxR4n7M
+	3MTZdXEEJIfDK33JASXciNQL4gy2JVIrSb9+hpNnCUQ9aADfaEtX6ZCeOK0R2/IA
 	==
-X-Received: by 2002:a05:600c:3ba2:b0:49d:99:1d98 with SMTP id
- 5b1f17b1804b1-49e619881e3mr56892275e9.9.1789128614171; Fri, 11 Sep 2026
- 05:10:14 -0700 (PDT)
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8qb8ha-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 11 Sep 2026 12:11:06 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68BAo4vb1499347;
+	Fri, 11 Sep 2026 12:11:06 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvwk664s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Sep 2026 12:11:06 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68BCB5xQ27656814
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 11 Sep 2026 12:11:05 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2C16E5805A;
+	Fri, 11 Sep 2026 12:11:05 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C08C65803F;
+	Fri, 11 Sep 2026 12:11:01 +0000 (GMT)
+Received: from [9.124.211.27] (unknown [9.124.211.27])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 11 Sep 2026 12:11:01 +0000 (GMT)
+Message-ID: <765ef2c2-124c-4214-abdf-06b06d3ef631@linux.ibm.com>
+Date: Fri, 11 Sep 2026 17:40:59 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260911111731.3404308-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260911111731.3404308-9-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260911113322.F03531F000FF@smtp.kernel.org>
-In-Reply-To: <20260911113322.F03531F000FF@smtp.kernel.org>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Fri, 11 Sep 2026 13:09:47 +0100
-X-Gm-Features: AcwNN1X3EMrEnABSXEIebhNF9fcbF1O099DZU69vOon2jNzLHf0JqRb5x3-yA24
-Message-ID: <CA+V-a8uJLn1N5+ThxH4c67gO76ksuJeMFroDf-WHM_4QLuqt-A@mail.gmail.com>
-Subject: Re: [PATCH v5 8/8] arm64: dts: renesas: r9a09g087: Use CPG/MSSR
- syscon for WDTDCR access
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, conor+dt@kernel.org, 
-	wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net v2] net/smc: fix abort_work termination in
+ smc_conn_free()
+To: Paolo Abeni <pabeni@redhat.com>, sashiko-reviews@lists.linux.dev
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev
+ <agordeev@linux.ibm.com>,
+        linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>
+References: <20260907114721.1303498-1-hidayath@linux.ibm.com>
+ <20260908114743.481841F00A3A@smtp.kernel.org>
+ <3991782b-7a63-4bc9-94c2-02b3f9173586@linux.ibm.com>
+ <ebded824-c858-4187-948c-b5444f4bf82c@redhat.com>
+Content-Language: en-GB
+From: Hidayath Khan <hidayath@linux.ibm.com>
+In-Reply-To: <ebded824-c858-4187-948c-b5444f4bf82c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: SrHgsE58s3t8gBSWPUcIOQy7UnNlwvXT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDE2OSBTYWx0ZWRfX8eFxag7UDNSU
+ 8WDpc6JMveNuTB/7pyOsNFXX/nYcSawIt/xetjbijvRhLvbysGNP2VBSVwwE6LPysVoS+uk1CgM
+ 40T9i0D5/wydo0PKlC8oaHgXjD3urzA=
+X-Authority-Analysis: v=2.4 cv=E/dYNqdl c=1 sm=1 tr=0 ts=6aa3efda cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=UtPUOyP3EEdAFgR30jEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDE2OSBTYWx0ZWRfXx82TxEo5jpr8
+ 0o7Q1oVxpFkhBlQ3WKzWDIN4RS+bEdo97znFGHXThqPpe/RaHwfOPxKBE6uvNe/ITMMBiiSXq/P
+ r/7QghzGu+P3BO5dcMhdL0uv9sd0dbZiWTHTteaHnFNcs/6UKzwFSGwcr+yTDEq6doEzBQcpHqD
+ hGtRJRziS9aaoMEt0GanJ5339d2yQCActUtN0df1Wph40fFa3ttSsnHl4NOz9ESOIQq4BIr1EVl
+ AraPoNIALbW5TY/1dDWV0kdaGGZZAgma5tKyD8waS0ryBp2CC/Ibk0MClS43JVsLWLC7NQv8kXd
+ QdSW1yJWnMCsm47Mk+LiW23SQVf1zeUPsLre0blfiiBAe8HagrhKXSsFWdZ92ahDLaKRZNJGlLh
+ wlra5gEIdRyXYuoY7khawIht14/AzR4mXpHgysniq5ViefDQDd/UgCh67Y7ZF7qO0PFWe6BUrsy
+ 7d5m0ESOMsjVV92lLDA==
+X-Proofpoint-GUID: SrHgsE58s3t8gBSWPUcIOQy7UnNlwvXT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-11_04,2026-09-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110169
 
-Hi Sashiko,
 
-On Fri, Sep 11, 2026 at 12:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On 10/09/26 4:20 pm, Paolo Abeni wrote:
+> On 9/9/26 8:48 AM, Hidayath Khan wrote:
+>> On 08/09/26 5:17 pm, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>
+>>> Pre-existing issues:
+>>> - [Critical] Late-queued `tx_work` can execute on a freed socket because it does not hold a socket reference, causing a use-after-free.
+>>> --
+>> Thanks for the Sashiko AI review. The finding is correct.
+>>
+>> tx_work is the only one of the three connection work items with no socket
+>> reference:
+>>
+>>     close_work   sock_hold smc_cdc.c:420   sock_put smc_close.c:444
+>>     abort_work   sock_hold smc_cdc.c:324   sock_put smc_core.c:1754
+>>     tx_work        none                                  none
+>>
+>> The link group holds a reference while the connection is registered, which
+>> is what hides this. smc_conn_free() drops it in smc_lgr_unregister_conn()
+>> and never cancels tx_work - it only cancels abort_work - and the link
+>> group usually outlives the socket, so lgr->tx_wq is still there to run an
+>> item that was queued late.
+>>
+>> Worth noting the fix in this patch does not transfer. conn->freed works
+>> for abort_work because abort_work holds a reference, so the socket is
+>> alive and the flag is safe to read. tx_work holds nothing, so by the time
+>> it runs there may be no conn to test. It needs the missing reference
+>> rather than a guard: sock_hold() at the three queue sites, sock_put() in
+>> smc_tx_work(), and the reference returned at the cancel sites that report
+>> they removed a pending item.
+>>
+>> I will send that separately, since it is a different work item and a
+>> different fix. This patch is unchanged.
+> Could you please have a look at clashiko report, too? that looks
+> correct, too and more strictly tied to the issue addressed here.
+Yes, the findings are correct. I will look into the report.
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Watchdog probe failure due to missing syscon compatible string i=
-n CPG/MSSR node and invalid physical memory bounds for the disjoint second =
-register region.
-> --
+> Also note that netdev-wise the most relevant sashiko instance is
+> the nipa/clashiko one, as it includes reports/reviews/findings
+> from the public clashiko instance.
+Noted, thanks!
 >
-> commit 026369134b14659a11e1791a537a1142aec5c877
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
->
-> arm64: dts: renesas: r9a09g087: Use CPG/MSSR syscon for WDTDCR access
->
-> This commit replaces the direct mapping of WDTDCR registers for watchdogs=
- with
-> a renesas,sysc phandle to the CPG/MSSR node. It updates wdt0-wdt5 to remo=
-ve
-> the second register region and use the syscon interface instead.
->
-> > diff --git a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi b/arch/arm64/bo=
-ot/dts/renesas/r9a09g087.dtsi
-> > index e8d4f76949ccb..40ffe56a40353 100644
-> > --- a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-> > +++ b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-> > @@ -327,61 +327,61 @@ channel1 {
-> >
-> >               wdt0: watchdog@80082000 {
-> >                       compatible =3D "renesas,r9a09g087-wdt", "renesas,=
-r9a09g077-wdt";
-> > -                     reg =3D <0 0x80082000 0 0x400>,
-> > -                           <0 0x81295100 0 0x04>;
-> > +                     reg =3D <0 0x80082000 0 0x400>;
->
-> [Severity: High]
-> Does this change cause a silent mismatch with the actual hardware topolog=
-y?
->
-> Generic syscons map only the first contiguous reg block. The driver compu=
-tes
-> the WDTDCR offset as 0x15100. Since the first CPG block mapped is typical=
-ly
-> 0x80280000 with size 0x10000, accessing 0x15100 either fails the regmap b=
-ounds
-> check or mistakenly accesses 0x80295100 instead of the previously configu=
-red
-> 0x81295100 located in the second CPG block.
->
-The syscon is registered in the CPG driver and the reported issue is a
-false positive.
-
-> >                       clocks =3D <&cpg CPG_CORE R9A09G087_CLK_PCLKL>;
-> >                       clock-names =3D "pclk";
-> >                       power-domains =3D <&cpg>;
-> > +                     renesas,sysc =3D <&cpg 0>;
->
-> [Severity: High]
-> Will the watchdog driver probe fail indefinitely here?
->
-> When the rzv2h_wdt driver uses syscon_regmap_lookup_by_phandle_args() to =
-parse
-> this renesas,sysc phandle, it evaluates syscon_node_to_regmap() on the cp=
-g
-> node.
->
-> Because the cpg node in r9a09g087.dtsi lacks the syscon compatible string=
-,
-> and the renesas-cpg-mssr driver doesn't register a custom regmap (e.g., v=
-ia
-> of_syscon_register_regmap()), the lookup fails and returns
-> ERR_PTR(-EPROBE_DEFER). This prevents the watchdog hardware from function=
-ing.
->
-The syscon is registered in the CPG driver and the issue reported is a
-false positive.
-
-Cheers,
-Prabhakar
+> /P
