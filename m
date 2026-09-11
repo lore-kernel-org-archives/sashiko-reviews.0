@@ -1,113 +1,225 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BED3221FD4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 00:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789085955; cv=pass; b=JTUhbZDPPBszH5Yz/hn5ABkuDDMsaP8whWN4fJc/hA9CqMCrvnXQ4TiLIBUmzEkJlmw1X6RSgJmwYno8z/6/1qYshbD6LjGU4vi7cZ8iuKSF8j4Zw9hHARnrzxC9kABaeHtLzxrqoBKwD/dpd9Bi/O5l1hMHxWdnK/lFFrInQz8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789085955; c=relaxed/simple;
-	bh=6AJasxW3GodlVjAlTMJ767WLjIvMw4WJZ6v8qOvBjjg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dmHcit2URBFBDRX3+xhrYHxT9ZigQwnlF88wsabArNaMy5fF3h7LQUM98HiSlPSiDJCOTmtYyk2hEsHaJjn2tg1J/aMCoqPraLewJ429cozWUtdj8UEURlh/BNYhliVZb1CZvTvDyIE6ZEzJk8+7Xn75hO7PiWbUKV+ZupiPvr0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lor427Vo; arc=pass smtp.client-ip=74.125.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CB449E12E;
+	Fri, 11 Sep 2026 00:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789087592; cv=none; b=SBT+KQB4lOjGot+N4f3U5iKCriXZNVoGlGSAiqnWvoM4iucku9zqpTDQ1tHLzhODZ9xaoimIBfatFOpU0zuO+XszaFD5tPUpPPsu9sMAnTuFLe9FWIGfgOJoEvudSh5F4e3uH65rEY+ObuFyvAf/nBj8eiBrBXnZzBBcFg0DonU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789087592; c=relaxed/simple;
+	bh=Wn49dzqiPhq2tHgc+bHw8nR0+C6KvQqRtDQF9AgFZxo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d57EMcTQl7mtiYHryXn2iYSuyOI3QzOAEVH1ED3X51aL7WRlq+aYBm14T9B4BiujZN/e7z0CcG1q3uNA/CRrsCtTRG8BsWuvBn1HrOS60QKY81S0hQQuYztwv5X6sGAHpt4Yn0rIyuMyQW1AzpcVtOX9SgMdeuK7syIaxm3AUwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZyGIhGor; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lor427Vo"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-6711f05fb14so375124d50.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 17:19:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789085953; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dHQBURoXG0xn7wtb39u0xE+j/UMNIho16sqIOfVNjz2gAxbWJzwWBFBGHkfMN6tCDD
-         Re3ar3PQbooI82of/4PHs4xtJdu9yDIMPr3uIuZRn0Po7fHCbaBqMy3DQ8x3pjHP7QSk
-         VxX0ygaEniw0T/7B13+1hKfTAYuXW7jtIGb9h/TRnKBDLb54UlXWJbi469tEoIAValfq
-         nq3fEOj+41zLVhH0tJXK0wGpZ6h6Bb2TtDH6Hi9DyqXB1gwrmyF55YuyXR71UsNraTRG
-         YB21q0cb/jeF9q5DGmFR1Ok7HolhOOiuXqSa5TVyuPclGkBcvcsMvQvaMerasJL++0nm
-         RsFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=6AJasxW3GodlVjAlTMJ767WLjIvMw4WJZ6v8qOvBjjg=;
-        fh=U9m9r8NToeZlKg7bD9W/Rg6D5ZgF7Et3TXCJs9YvnbQ=;
-        b=NSw+7CKxb8LXZyJpPmUmWNxIsjW44kReVB0QrXL93l/L0d5m7L+vvU24dnkkbFDFWT
-         ZA9gRY3R7bs7PfEQvpqR7IBcmzzfFKaihO8+yLt/DMyYseqn6ehqGCqpDyTHLEsXQwcJ
-         Cv8dYHoC8WyxW1REVKo7YwjAHK/uyPyJTlbovvJpbmdO00R79kx95EDvlb09wqm/5ze9
-         gAOdg1YOCiH3uz4ISq5pELdEtFt5Xl2eW1fqPIrMRhqVnZP1fqezUXpIP5P/c6RA1RmN
-         Lum4BQTPZJLRcRvJn3BBMUN4ncHwEsmNV5SRQWw77YeJdAOqnZzOCYMShvORXeMRZM04
-         945w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789085953; x=1789690753; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6AJasxW3GodlVjAlTMJ767WLjIvMw4WJZ6v8qOvBjjg=;
-        b=Lor427Vo7KRB4YOa8/ZxtpAhY3q+1A8h7goga4JvsOkESgyURlBkpmHV0EiZqRJmE4
-         2ApNMwLRebrrh9b7pR2WsDYPOd6U0R0pqg1xguOh699RuX78zNq0DBxmh00jIQ6YTO5V
-         0qeRZTwrLghOlPCDf5hqIcG0+5PP3IHhCOEkNpkj2sMusMf809I6MzsBYX43ukgF20xp
-         0KoMxBmzZwdgiYyXcc7VsxyU0Vmqt8pIh7FAcjSBaJNXqTtDkFnIpayegfEpET/ZPs1K
-         OkUpwLbwc813+IKiHwB3g6DgIZ3hhchYDeVa7SJ6uaQ67mm4yiI7SBE0LKzd3s7wrdSw
-         ej8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789085953; x=1789690753;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6AJasxW3GodlVjAlTMJ767WLjIvMw4WJZ6v8qOvBjjg=;
-        b=q9ud9LSdOMNnr8skKla4pXUpPZYb1xWm4D+Edi/o64hW/bKKlhLDIVyTAswu8bP0eO
-         99Yu/5id7znHszgedJ5Z9nVEn6QOJMKxE3We6sNP2SO6pxm20BSCAmzEDWbgoPgJu91F
-         oXSv40YW3aY5px/l31DpR4XS5IaZmanM4HJ/FOocsMN8+NDPyMdsyg6WUTCewXxUNx7M
-         YUsVVl13htcTg/kfV6yNaXDaMwpYtxT1HHFoAwvGhazUi8OSQZtR9fKlA6oh/Jn/dp4i
-         maN6K96vZ9YRkQI4sHJB3Y43fY3qSgtgzCSvpdjjwoU/cpMvw/G0bmTFS+bjEoZr93mE
-         ss5w==
-X-Gm-Message-State: AFuF++kaE9RdQ2YDZf9c6N5khbnNA6iBtbVZVEvbnxHgIPtTNNm9wTTw
-	2xJDdiAceyDhlT5+AG3Al4NPouaGJ82/uUU9kjSkCUShqcRpDRZ3D51dr+Gf+s9Heb+OsovB7EB
-	p54KF09nLbTUtkGOj31f39ksr6wgK0pdExaNJ+EA=
-X-Gm-Gg: AYBFou05d/m5354ap32SciGTLAPAmuYClh1CalPoscmZXF5hakz1SVkCgdgVuwzPWY7
-	vb9inpcgDlYCvmoMiRI8CzGkIWRraOqdj9d3PZoignbHCjckNWz5IMN3L0hGC0Ncn5lECiekx0l
-	lSW78x1LyA1VhzHNHL8av8MdaLKA8yMR2Vj46MJw0rLcbhgrQx5bcBCVyZYIxAC8ds/cPSzwDNF
-	hZWY4Wdyht9S0rpqIv9ysWOnV1nRhzdT631gAue3+aaZ3JLHPhphCTh0v4tH2ysq6TMa/uGZHEA
-	yde8N0kb8Gn6JcnfsUwOhUr6fzGRd2Hrfyy7fWMDJMio5ea9I38stDYQXmdAteKmWX3l5IbNoz7
-	GwjmYiI0viLU=
-X-Received: by 2002:a53:c787:0:b0:66f:c1bc:4031 with SMTP id
- 956f58d0204a3-67124725896mr622106d50.94.1789085953300; Thu, 10 Sep 2026
- 17:19:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZyGIhGor"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68ALVYMK4107093;
+	Fri, 11 Sep 2026 00:46:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=hNgini
+	MbT8YWyUzF7euU1xLlBvGDL6S11xecgkHQ8Hk=; b=ZyGIhGorSJ+qdTT32uDJh8
+	JLO2BK4YOlBAhrQgEFTvbqQIrLn4v59Fjlwfr2Lie26lE92o6amrMzGEEL9Qbsy/
+	e6OfC9PavkpMmwaOR9umrGq2KgKmhtUF475RD1h7p7jQ9Okf8IMY4GLAB0t1bblA
+	/tP0wYcVsSKEReJdj2iuBqQ8U3Aa/HlLk21u/d9cTEx5F5bx7ACFSgDwUVfcuiPN
+	CtQeOc36nPEyCFChINzuvYaONP+AI9QYjpxTMm7DqyyRyCaRwCTJmyVYokboqxmm
+	chpgy9V81XCr++jOBbmD04Dx1I3rckQeaDoJiRMevdfDr7BvYAXP+gQU4ofDsVcA
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8t0cuc-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 11 Sep 2026 00:46:27 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68ALYw1e661933;
+	Fri, 11 Sep 2026 00:46:27 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gkvnrkhwn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Sep 2026 00:46:27 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68B0kQW89175682
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 11 Sep 2026 00:46:26 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 295B758063;
+	Fri, 11 Sep 2026 00:46:26 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D7BA95803F;
+	Fri, 11 Sep 2026 00:46:25 +0000 (GMT)
+Received: from [9.61.103.123] (unknown [9.61.103.123])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 11 Sep 2026 00:46:25 +0000 (GMT)
+Message-ID: <73526f68-6487-4f08-ae68-9321642c6b5e@linux.ibm.com>
+Date: Thu, 10 Sep 2026 17:46:25 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260910185030.870-1-frazinjonathan@gmail.com>
- <20260910185030.870-3-frazinjonathan@gmail.com> <20260910190542.BE6AE1F000FF@smtp.kernel.org>
-In-Reply-To: <20260910190542.BE6AE1F000FF@smtp.kernel.org>
-From: Jonathan Frazin <frazinjonathan@gmail.com>
-Date: Thu, 10 Sep 2026 19:19:02 -0500
-X-Gm-Features: AcwNN1Xw_ZV3zJF9oPd7-FCfkmdUBDHBhWTNPa2DLIGGrFtpH901py50U9hSvEQ
-Message-ID: <CANW_FuNBVteTL52+iEnM3pUerrVnRRLES2SbrDt1FUtLgPi3Jw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] drm/tiny: allow a framebuffer larger than the
- panel on MIPI DBI drivers
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Maxime Ripard <mripard@kernel.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>, Alex Lanzano <lanzano.alex@gmail.com>, 
-	Dave Stevenson <dave.stevenson@raspberrypi.com>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/9] scsi: ibmvfc: add basic FPIN support
+To: sashiko-reviews@lists.linux.dev, Dave Marquardt <davemarq@linux.ibm.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260909-ibmvfc-fpin-support-v8-0-b27183b055af@linux.ibm.com>
+ <20260909-ibmvfc-fpin-support-v8-1-b27183b055af@linux.ibm.com>
+ <20260909192921.842681F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
+In-Reply-To: <20260909192921.842681F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDAwNiBTYWx0ZWRfX2SVejNLh3yl4
+ IYFJU4zMpn3OnfPFUmlxawuTZSs8dvN9w1sZue+PdxgKpRCfUTL9RSpPm/iZkmnQL0KRWAu9LX8
+ wAM8cQpmvdl3K+bek4jUj+C3B4Ppalg=
+X-Proofpoint-ORIG-GUID: YxMyU3xUrjrwJaBQFDlIt62d1zjVWaBw
+X-Proofpoint-GUID: YxMyU3xUrjrwJaBQFDlIt62d1zjVWaBw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDAwNiBTYWx0ZWRfXwOAyudgZpLP2
+ W2eOdDCbhqThY78rTP9/LGqSX6+62Qpke8jT+6/rgFmBv1y5AaEzQRw4V+UPHrbs9l01JVJfupl
+ 7c3bwS+AAu6TB+Ni7xRcmLB+JYp0fFUyNXo1aazEwlIztzIoIikt+Un44AIAhgYaNqji2NG8qri
+ UjRPNZYWOJL6U9xe9mxloNCg8f6Qt+v+ybs/AT9UKICpAEvLHHpkb3yenx+FU5gEQPA5+XvGB/N
+ CNqYs3MZBdoE7vlCjkMM4Ly0wnzjedyPLxebtu/N8+WY3+hJXBNfibc3v3j5e9dbsNJUB8Zaanz
+ jfFwRTZPGqqrUuek5lw10kvCcahu1zeN4Mmr0K8wuzOUuPPXBMHQohsogvqittBahLvsid++6UC
+ YU4oDPGFS7bDBTf9OrDayvp2ASKZN++Gjjz9Lbvwmy366c+a+wpg5x1oj86gBYdYvJzH/i7pWCO
+ /0ImsiFpbI5mQ3AkZXg==
+X-Authority-Analysis: v=2.4 cv=PIGaavqC c=1 sm=1 tr=0 ts=6aa34f63 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=fjlTSyrWkZEg5QtQpkIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-10_07,2026-09-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110006
 
-On Thu, Sep 10, 2026 at 2:05=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> Since tx_buf was strictly allocated during drm_mipi_dbi_dev_init() to hol=
-d
-> exactly the panel size, copying based on this inflated width and height w=
-ill
-> overflow tx_buf on the heap.
+On 9/9/26 12:29 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Reordering `scsi_remove_host()` to execute after `ibmvfc_release_crq_queue()` causes a reliable deadlock and an infinite command requeue loop during module removal.
+> - [Medium] NVMe over FC targets will not process FPIN events because they are incorrectly filtered out by `ibmvfc_find_target`.
+> - [Medium] Missing `put_device()` and `scsi_host_put()` in the KUnit test `ibmvfc_async_fpin_test` causes resource leaks.
+> --
+> 
+> commit bba4f1f01d900a3f01556bca91e5e90f72a7c959
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+> Subject: scsi: ibmvfc: add basic FPIN support
+> 
+> This commit implements support for a basic level of Fabric Performance
+> Impact Notifications (FPIN) in the ibmvfc driver. It adds an async event
+> handler for IBMVFC_AE_FPIN events that offloads processing to a dedicated
+> workqueue, along with FPIN conversion routines and a KUnit test module.
+> 
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index b3bc3ce872d6d..0dde8dcf43de3 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+> 
+> [ ... ]
+> 
+>> @@ -3261,16 +3266,259 @@ static const char *ibmvfc_get_link_state(enum ibmvfc_ae_link_state state)
+>> +static struct ibmvfc_target *ibmvfc_find_target(struct list_head *target_list,
+>> +						__be64 scsi_id, __be64 wwpn,
+>> +						__be64 node_name)
+>> +{
+>> +	struct ibmvfc_target *tgt;
+>> +
+>> +	list_for_each_entry(tgt, target_list, queue) {
+>> +		if (scsi_id && cpu_to_be64(tgt->scsi_id) != scsi_id)
+>> +			continue;
+>> +		if (wwpn && cpu_to_be64(tgt->ids.port_name) != wwpn)
+>> +			continue;
+>> +		if (node_name && cpu_to_be64(tgt->ids.node_name) != node_name)
+>> +			continue;
+>> +		if (!tgt->rport)
+>> +			continue;
 
-Confirmed. On a fractional plane SRC_X/SRC_Y the damage iterator rounds
-the merged rect out by up to a pixel per axis, so it can exceed the
-panel and overflow the mode-sized tx_buf. v2 will clamp the rect back to
-the panel in mipi_dbi_fb_dirty().
+This should be (!tgt->rport || !tgt->nvme_remote_port)>
+> [Severity: Medium]
+> Does this check unintentionally filter out NVMe over FC targets?
+> 
+> Since NVMe targets populate tgt->nvme_remote_port instead of tgt->rport,
+> this check forces ibmvfc_find_target() to always skip them.
+> 
+>> +		return tgt;
+>> +	}
+>> +
+>> +	return NULL;
+>> +}
+>> +
+>> +/**
+>> + * ibmvfc_process_async_work - Process IBMVFC_AE_FPIN async CRQ from work queue
+>> + * @work: pointer to work_struct
+>> + */
+>> +static void ibmvfc_process_async_work(struct work_struct *work)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	spin_lock_irqsave(vhost->host->host_lock, flags);
+>> +	tgt = ibmvfc_find_target(&vhost->scsi_scrqs.targets, crq->scsi_id,
+>> +				 crq->wwpn, crq->node_name);
+>> +	if (!tgt) {
+>> +		/* Target not found in scsi_scrqs, search nvme_scrqs */
+>> +		tgt = ibmvfc_find_target(&vhost->nvme_scrqs.targets,
+>> +					 crq->scsi_id, crq->wwpn,
+>> +					 crq->node_name);
+>> +	}
+> 
+> [Severity: Medium]
+> Because of the rport check in ibmvfc_find_target() mentioned above, won't
+> this fallback search for NVMe targets always return NULL?
+> 
+> This appears to be dead code that will cause Fabric Performance Impact
+> Notifications for NVMe over FC targets to be silently dropped.
+
+See the change above.
+> 
+> [ ... ]
+> 
+>> @@ -6952,8 +7221,6 @@ static void ibmvfc_remove(struct vio_dev *vdev)
+>>  	ibmvfc_wait_while_resetting(vhost);
+>>  	kthread_stop(vhost->work_thread);
+>>  	flush_work(&vhost->rport_add_work_q);
+>> -	fc_remove_host(vhost->host);
+>> -	scsi_remove_host(vhost->host);
+>>  
+>>  	spin_lock_irqsave(vhost->host->host_lock, flags);
+>>  	ibmvfc_purge_requests(vhost, DID_ERROR);
+>> @@ -6962,6 +7229,10 @@ static void ibmvfc_remove(struct vio_dev *vdev)
+>>  	ibmvfc_complete_purge(&purge);
+>>  	ibmvfc_release_sub_crqs(vhost);
+>>  	ibmvfc_release_crq_queue(vhost);
+>> +	destroy_workqueue(vhost->fpin_workq);
+>> +	vhost->fpin_workq = NULL;
+>> +	fc_remove_host(vhost->host);
+>> +	scsi_remove_host(vhost->host);
+> 
+> [Severity: High]
+> Can this reordering of scsi_remove_host() cause an infinite stall during
+> module removal?
+> 
+> By the time scsi_remove_host() is called here, ibmvfc_release_crq_queue()
+> has already run, overwriting the host state to IBMVFC_NO_CRQ. When the
+> SCSI midlayer attempts to flush devices during removal,
+> ibmvfc_host_chkready() will return DID_REQUEUE. The midlayer will retry
+> the command repeatedly, leading to a deadlock since the hardware
+> communication queues are already gone.
+> 
+
+Yeah, this is wrong. There is a reason that xxx_remove_host() calls were ahead
+of the rest of the driver cleanup. The destroy_workqueue() call should have just
+been moved ahead of those calls.
+
+Seeing as Dave is now on vacation and I've already Acked the rest of the series
+I'll send a v9 for this particular patch seeing as the rest of the series
+depends on it.
+
+-Tyrel
