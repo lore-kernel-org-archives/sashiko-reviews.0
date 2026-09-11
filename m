@@ -1,95 +1,198 @@
-Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
+Received: from mta0.migadu.com (out-142.mta0.migadu.com [91.218.175.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7823A8756
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1764837189C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789103581; cv=none; b=DrVdrF9xGw5dGs6rcJcecm4JaqNJtuWnzfzqfCCB2T2T0ekGOOQ6BWKZoL9i20w9s/TU4bgOctKBMiV87XVVOGXZu12ZAGVZyUaGl6a0PZJeUasKJsNyiDf2N3oRwhByPKA5qB7zvw0+Cj1OPv5urmbIp93LsjxzQPOtbDKEzAc=
+	t=1789104875; cv=none; b=qiLkvEHYgj7WL03Koj+MTJEzYP96Dec9TcIJutaXZp3q9NoaKY48jYFrHFo3L6g3mAbxIDm24odZ0SuJEgfg7ceItUuK8Z+MRTlT59NPljT5wQTzZT8QXiRDNz2TmUHhFaHBVlphcwIl7cheX79l5G6Qjc6x7rkhLmVdMofcYOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789103581; c=relaxed/simple;
-	bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=BlJxJiw09eQoHYy1C5hf+iU5uDfMi0rCI+Ferao8MOFWI0BCy0yKMKG9/pKzd8kV9u5/9KgqJniqp0F0RwJe8bAssX6mL2ynlgeK6ODhiP/KJSfmOi24SXU42ncb99FYMvUZ8Kqt0ekxCo69WBfSjG7iQEqJcdRTNt44A9zahgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s3S7jU4l; arc=none smtp.client-ip=74.125.227.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789104875; c=relaxed/simple;
+	bh=sVEV/XK5D/oco1XqkmpUo65zt1a8V9JerTrhuFHJw6g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KMWr+1Wgpz2HyHcF/LLCDJfs8O0osdjJWL3IItH9CVbHjyz46SUtGi792aSnWaVt/MupefgOVwwJUh1DoH8TqRrkNDI+op65q0h1TxF1kWt/JUyq9dSZvbcFznKfeiuoL+hRcOySg57kRERNP4q1PWa7HyqKVWsZumWocMG30/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=G4zKQY9q; arc=none smtp.client-ip=91.218.175.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s3S7jU4l"
-Received: by mail-pj2-f1.google.com with SMTP id 98e67ed59e1d1-398e10200a6so272841a91.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 22:12:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789103579; x=1789708379; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:content-type:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
-        b=s3S7jU4lv3Aa0YoXuPMYSl7llMCD4/vq2DuMuNkha1yQP3Ef3EHN2QQ0sF9y1UqD9C
-         +0WeaEiVyGBVk/nk8B7ARLKQHqlYrQyNPoqMkMJwePT5nz7rtcM1eRgngBhmIU12YNuc
-         EBdv9D3UbovGR6WsF+3z5HjapXfsziSihKPXCfrwnQrel4iX81Lxfv7Dmgb71S0Wbg2h
-         erkCwDudrHtUVdWDrNYBYOhYYjY1Zlt4oHLIF49u/hQOxQZR15uNXwShzXkOyTA1BMbd
-         dm3rFS89k9JfTvr2vBcKFI1v1+c9fjowpD2+2g9/sLriJqzacsstQtUQtai6apD4H+4N
-         wD8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789103579; x=1789708379;
-        h=content-transfer-encoding:mime-version:content-type:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=m3lPXZNnA996zszd8DuLG8P9OW5dv8BQxG5hl7wsYrI=;
-        b=CzU4HkzTRghgDi6UqAFnFMECNE8XynM4NW8hT1sMNL2nBq54zgN59TFxMN4PSJ3seM
-         MeF3trArC9kb7GygXZRGG5Z1WIDERDGWLZFLyfngH8vzpFOM8dIEFEZDfjrUBu+ILNFJ
-         /QWYdltTJJ5VKYvNBpUwfKJBtYOGpE2JO3rikRuXhJ/JdI2l6ig1TtoSryH9o7ckp6L+
-         jKGBRFTwLPm/NzK+f17DxDO5P2szmIcKgMErEena4dGwP4hluCg9Pf9S74+GLDdzPvNh
-         y6FTHcSuockCvDBb+isEaf//TxsOUiJHHUFO5EDKVKTxd1OR2DBVWAPv+0pLvkSzOAQG
-         x6XA==
-X-Gm-Message-State: AFuF++m8vZW0I4OG8skwU0mmjqMVmuRJtIwSS/Febjpj4sPWUEZRk7lz
-	YJov2PaBecFD5u57bBB0DjomxupWDfvr/d8DSvTD3h9eIMBk1k/ESbejYDX7ZorH7Y0=
-X-Gm-Gg: AYBFou0UudsFz0dVTe4JT3xdMqTTFZVvwbhdFsVGV4iGQ4fZ90UM1bMlNwAzGgZg/SK
-	Rnl76Z0d7l3pPED3FKaM1Iz4+Zt/atXgXK5YgFZjTJVhhJPVa1f3M0crXpFCt3h7E5mVfkyITJM
-	YRnTwG2o+lDdzdpSMivncGRgWEOO976ItxrOk+R9SEjaIhVecFsD54GYRLCop0nltbL39jUf1X0
-	m+hdsALf/Z1ZBDDZ6uTMI3ufibMX72eqAqR6e9eBCUknaDwMCiMHN3ZYgCwv3eRDrhtBaBxmuW7
-	6WnKGZfxGnFivN4bRZ8/DVF/36ipD/ELveZE+0LDv083Rq8v7+IXI3k3kJA/F/HRm2nGnprsqEH
-	CjLVGecbof0P9ssR8pwzU5KyStZu/UMF8HxZDwlh8yRyx20mxigC94V4m6dPp0RGCaHhZGeUJT4
-	QW40JAnnQOOdOSPOYH63XO5zFVEBn0jS7hcfTTF7FB
-X-Received: by 2002:a17:90b:35d0:b0:398:c724:1bb1 with SMTP id 98e67ed59e1d1-39d9bd91016mr4090723a91.8.1789103578599;
-        Thu, 10 Sep 2026 22:12:58 -0700 (PDT)
-Received: from fedora ([2602:f921:f20:17::a])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33ba4cf015csm3274601eec.4.2026.09.10.22.12.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 22:12:58 -0700 (PDT)
-From: Tianyi Chen <diannaaav@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v5 2/2] selftests/bpf: Cover recursive bpftool map dumps
-Date: Fri, 11 Sep 2026 13:12:42 +0800
-Message-ID: <20260911051242.284102-1-diannaaav@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260911035503.891321F000FF@smtp.kernel.org>
-References: <20260911034715.219552-1-diannaaav@gmail.com> <20260911034715.219552-3-diannaaav@gmail.com> <20260911035503.891321F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="G4zKQY9q"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=sVEV/XK5D/oco1XqkmpUo65zt1a8V9JerTrhuFHJw6g=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789104872; v=1; x=1789709672;
+ b=G4zKQY9qaI3yjlu50QdOouUiJYgJ5lk6JSnQIk4tOXnUS6dKNKKKVn4f9YRvtokiJxGsLx71
+ ahuJqvsKAK/65Lx6UMs9G7Qbe2tpJhujr5Eh9xlYz2HFUmZp5Yxj/Y4nJjuxR6ndrxQ2UWCDhdM
+ AWaAsipVogXR8GsXwYcNN6wg=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 7b98c62012699b19;
+	Fri, 11 Sep 2026 05:34:32 +0000
+X-Mizu-Trace-ID: 7b98c62012699b19
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <4ef9a3d4-7a79-4144-baff-e236f8eb7c5e@linux.dev>
+Date: Fri, 11 Sep 2026 11:04:29 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 10/13] selftests/bpf: cover the low-32 link
+ for narrowing stack fills
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260910164635.459558-1-vineet.gupta@linux.dev>
+ <20260910164635.459558-11-vineet.gupta@linux.dev>
+ <20260910170020.04A4E1F000FF@smtp.kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
+Content-Language: en-US
+In-Reply-To: <20260910170020.04A4E1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The bounds check is useful, and v6 now checks for a negative snprintf()
-return and truncation before advancing len.
+On 9/10/26 10:30 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The newly added tests for narrow stack fills hardcode memory offsets (e.g., `(r10 - 8)`) which are only correct on little-endian architectures. On big-endian architectures like s390x, these offsets do not point to the lower bits, causing the BPF verifier to reject the programs and resulting in test failures.
+> --
+>
+> commit a42f9a6d4d49f17385f014eede55d6e82094a838
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+>
+> selftests/bpf: cover the low-32 link for narrowing stack fills
+>
+> This commit adds five new BPF programs to test the verifier's handling of
+> narrowing stack fills, specifically targeting low-32 links and sign-extension
+> behavior.
+>
+>> diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> --- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> +++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+> [ ... ]
+>
+>> +SEC("socket")
+>> +__success
+>> +__naked void zext_fill_narrow_from_wide_spill(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
+>> +	*(u64 *)(r10 - 8) = r6;	/* slot linked to r6 */		\
+>> +	r2 = *(u32 *)(r10 - 8);	/* narrowing fill, forms the link */ \
+> [Severity: Medium]
+> On big-endian architectures like s390x, won't reading 32 bits from offset -8
+> target the upper 32 bits instead of the lower 32 bits?
+>
+> The bpf_stack_narrow_access_ok() check in the verifier expects to read the
+> least significant bytes of the spill slot, which on big-endian are located
+> at offset -4 for a 32-bit read. Could this hardcoded offset cause the verifier
+> to reject the program and break the test on big-endian systems?
 
-I have not established the reported overflow in the v5 fixture. The
-loop has exactly four iterations. Even three maximal elements strings
-and their JSON wrappers fit in the 32768-byte expected buffer. Only
-the fourth append could truncate, and there is no following append
-using that accumulated offset. The actual fixed maps are much smaller.
+Goot catch. Fixed for BE and LE.
 
-The explicit guard makes this safe to extend and reports truncation
-directly as a test failure. All 12 recursive-dump subtests passed,
-including the multiple-root case.
+>> +	if w6 != 0 goto 1f;	/* narrows r6, propagates to r2 */ \
+>> +	if r2 == 0 goto 1f;					\
+>> +	r0 /= 0;						\
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+> [ ... ]
+>
+>> +SEC("socket")
+>> +__failure __msg("div by zero")
+>> +__naked void zext_fill_byte_forms_no_link(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;						\
+>> +	*(u64 *)(r10 - 8) = r6;					\
+>> +	r2 = *(u8 *)(r10 - 8);	/* 1-byte fill: no link */	\
+> [Severity: Medium]
+> Does this hardcoded 8-bit read from offset -8 target the most significant byte
+> rather than the least significant byte on big-endian architectures?
 
-v6: https://lore.kernel.org/r/20260911051053.283421-1-diannaaav@gmail.com
+Fixed.
 
-Thanks,
-Tianyi
+>> +	if w6 != 0 goto 1f;					\
+>> +	if r2 == 0 goto 1f;	/* not deduced */		\
+>> +	r0 /= 0;						\
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+> [ ... ]
+>
+>> +SEC("socket")
+>> +__success
+>> +__naked void sext_fill_narrow_from_wide_spill(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
+>> +	*(u64 *)(r10 - 8) = r6;	/* slot linked to r6 */		\
+>> +	r2 = *(s32 *)(r10 - 8);	/* narrowing sx fill */		\
+> [Severity: Medium]
+> Similar to the previous cases, will this 32-bit read from offset -8 read the
+> upper 32 bits on big-endian systems and cause verifier bounds tracking to fail?
+
+Fixed.
+
+>> +	if w6 != -1 goto 1f;	/* narrows r6, propagates to r2 */ \
+>> +	if r2 == -1 goto 1f;	/* sign-extended, not 0xffffffff */ \
+>> +	r0 /= 0;						\
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+> [ ... ]
+>
+>> +SEC("socket")
+>> +__failure __msg("div by zero")
+>> +__flag(BPF_F_TEST_STATE_FREQ)
+>> +__naked void fill_kinds_reach_different_values(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	r6 &= 1;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r8 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r8 |= r0;						\
+>> +	*(u64 *)(r10 - 8) = r8;					\
+>> +	if r6 >= 1 goto 2f;					\
+>> +	r2 = *(s32 *)(r10 - 8);	/* sign-extending fill */	\
+> [Severity: Medium]
+> Will these narrow fills also fail verifier checks on big-endian machines due
+> to the fixed -8 offset pointing to the wrong 32-bit half?
+
+Fixed.
+
+>
+>> +	goto 1f;						\
+>> +2:								\
+>> +	r2 = *(u32 *)(r10 - 8);	/* zero-extending fill */	\
+>> +1:								\
+>> +	if w8 != -1 goto 3f;					\
+>> +	if r2 == -1 goto 3f;	/* only the sign-extending path */ \
+
