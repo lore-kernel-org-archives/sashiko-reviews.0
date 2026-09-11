@@ -1,230 +1,183 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD9247C0EA;
-	Fri, 11 Sep 2026 12:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789131179; cv=none; b=aaICZZ3Ejmp/kcrcWcsLgVlwAV0qzL+sxHxxOAQ8LcvME83Tm+ygOzw9+keKcS+Y1uTjcNQDgCNexRqfcDeGaAELxL48ONmB1NsoxyvnSaRLf6gHOT3xBT6Jjdya37BTlsf5KW/gzuIk9j2r9Ep2WJGnF8atqJwFOLO8PYPeXAc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789131179; c=relaxed/simple;
-	bh=Pw10lXRPwvD+YiMgaxy5ISWfwtaiUerIr4kthFOyt6U=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=MB0Ol47G8f6GKfUVYPmvneQG9kWzfkH/X7M+N1nwbNYPpFjc0XJ5JbnPV4tWIsdCg/YE9OzaH5MsiwW/lnwiDxJ1Zv3n92L1MKtGr7nqwUB8NsZwF3aOMd4uAFiD9yUb+tupz9zG2OfLRmUSCOk5HSYul1BcViPJFaShpLy6ff8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=TWK79QH9; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BE141CB39
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789131362; cv=pass; b=tRnSkbRKo8ZtKHouWQuacrAjvs2QkV4wn/I17/WTTNKcgOVNv1B58wlxmUCVDAi0DAcYPkQlkExQcQT0dm5+xq9IEMXl2L96F79ylMdclxdKynIG1gztWvu5JOcvF9V9OkY7CqsH56iBXHtEzl4GQN1O8Hq6afZ7kJhr8rfJeoo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789131362; c=relaxed/simple;
+	bh=odsNZOByGAhBQJH1KIxkWd2NONdWppsE2/guP4cVzAA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=nOPc14eevN1KCZSFzsXm929YR8hZ1t2G/BMZCSPQtd4bUM323FyRZby6DeOju1JfFlVWrJGXK/vmXBTgFfiwIY8B8iN3nHy25NWl4cqIARn21A3GUtfTwssvIjs2XulabhdLxqAYHYxxaPPidrMXygMAayb5oWcDg+IZWu9KMLg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyxfmS5N; arc=pass smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="TWK79QH9"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68BB1rP41460618;
-	Fri, 11 Sep 2026 12:52:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=pp1;
-	 bh=toepEvovBlBVyIQ4Qc5eVaH2geLLqDWJiAenLWnfPwU=; b=TWK79QH9FfxX
-	YUMej21a3LgwRMwDgaTcg/QBcQbV6GfbzYL/AkfklPMDKRICLj4xxJ480TuXz2B8
-	gGXK5kS9WediaV9viDIrfJUzzN7edB9KjNZpOOhiuN1Akhy1QpEZEMWzPB1ubLld
-	bA6ZanNeamFZYKVlll7U1KXizIVYakoLxdCVBJFxOkzMQVb+lZ5PlsVBmjRdiDCO
-	VuRuWlE8GSlW58Yd0+0IJ9zQpIZ9FqksNzxC+lylIikIg6RXH9ohE0HdaCIEQG0x
-	m06QXxnKMhsAVpo+qO6swVJ7kWAaxrhjBO1tv17ny1JNbwum1sBHoTDC7CA3cfTd
-	hrSvOJByIQ==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8sbe9m-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 12:52:56 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68BCo41O1676551;
-	Fri, 11 Sep 2026 12:52:55 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gkvmhpd8a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 12:52:55 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68BCqs8W26542614
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 11 Sep 2026 12:52:55 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CF44F5805E;
-	Fri, 11 Sep 2026 12:52:54 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7D75358051;
-	Fri, 11 Sep 2026 12:52:54 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 11 Sep 2026 12:52:54 +0000 (GMT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyxfmS5N"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-478c01da5cbso304847fac.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:55:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789131356; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HV+cV2YYHM3ScaiHBhxzWbPsPU7j9EqCSN4IzH5mtp3kvF0h/avchYTZa5VTyJN6xP
+         SKkxOW61NyxEBVa3cajLN4gGhJ+r4rwGjgsEeVF7s37ZyEbk2bcOTphLRw8GnBKuAGN1
+         yKSnjOFviOrMhgDSqRgsAuWvFnpfSEYVYPxjiikinQC6Lm8P6La2/exBJnifjoweC+Te
+         AmuznmKp5SOcnWY49D3+xs30joYCUKyJOqcT+SnTT5YcfVodMhMgee12Drost3rlJHeq
+         wswcSRlz+K54JjVG6epiq80ItosEdalp4ZtjiIQuXn9Nr4EyjFB74YdmFESGpC8+cTno
+         M17A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
+        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
+        b=M6c+3/TiOvKEgiYfzO6qCftRq6A1R+rWS3bSZaxLb3xzx7OIHVgrRw40HYGVanNVbk
+         oYG32f3NfdLRC7kl4O4cYLW40tEaxrc48GxRe+XCD+7SIXvPSWCN7fNUHf+rzDYb/ARF
+         wcYHXJOG/5nOIUJeSlRMrGORo41JMZY5yU1OmsMOzsEwUizzNfUprrCEvQ8chgSmZjtT
+         Lec4NlRtD0CtjgkvsNDGZcokEVxG41Is33jMiUkNqccBaMt09Tc/Thj1e8W49e2WBAeJ
+         R7zbc2bD/E0hG6e7Z1/Ak3oa/y8+D7enfK30SzgxDP9FhsiHp80geKZr8nAkSQ5qSu12
+         Bj6g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789131356; x=1789736156; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
+        b=PyxfmS5NyGp2b3s/kfFiCl86EKrCNkENppBysgF1srWc9iKIlVdJu1M+4W8O9xtMpg
+         /fWrOZOa6KVPHMUb62Wun77V1gIp8S1lwRMHQsfGfy/wKa1xl99l8tb6/c84af7d0KQN
+         /SOUy16KvsMnXnnoyEr6mt1Lf0vOKdVlMidYS2PvPx3WqZHzqxGGGTsUlegiTFjn8Qs7
+         PJ5gwo0CweGvqFl7G+Zo9wWEmx3vhnRH73wpAMViwcYC3NKkb7VM4KW0m4CcgvvRl5o8
+         GqQ0wEjFlUwySw5nXLPhg2KrwvTVs7WROfyZLozVCFHVCzeGTC/R/VYplEsm9Mn/m/S0
+         g/0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789131356; x=1789736156;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
+        b=YlbJn82iPZQUysXNjH5LmzeQ9uTElq0HGMXrt/w9lJrxpUifFcSqd3xR5sj0uXjMQ9
+         HOG1cVhVQxMty8AFP0QurFC/wcaPpZtkTnBhU9oWqImW5ujtmL/Os5nIXDQP2TGZ7uBv
+         /QrOXReG+TlIfQlmxfwHbnjeMWH9cCQWN60th6T+A1GoK/dQbSyLhGvbQP3T1J0M/3sh
+         7nWxbUw0G50Fg5yjCd1UM964f7bvJTCucpoT/qSx4KoNlehpy0TclulRVdjQQpc7ZLhb
+         xgAoSKx1YdSSGgHwIwMOxjnACXeu9WmkB3ggE3g91lXrE9QL0b8geI19DVeo7QGGN9LB
+         NVkA==
+X-Gm-Message-State: AFuF++khwg6WLddAWZf7SwddtYeRuTjnKlNvAlCCxnHyJBU5drz2WFuF
+	/ios/BbKmRbU/W5da0XB+krcC90+kpQdZxP1fZA6cH1v93gTPjDOQtROoZd7K0tLbHF3W4wxPBh
+	JeK+yE7qc4hBSewdOAVhdn8jWA2y6rDtlddOH
+X-Gm-Gg: AYBFou1ozaMrPq+GrRId/BulyAYnURX9IZit6eNa8Kf3slwu/bsUABLtaTRZmcf+Dbo
+	+AttNP3kaLBq45ceE5fUxHE3xRb/gcTBFvfcECPn9DJbeQx4qj4yG+UNsv7jBBJ6VJtG1CtEIF1
+	2OYFIwxn1kc4OYUoxT0hOvDOZRQCT9ZVWuJzj0AKqVNB0EsPSk3dLQ1Hs6j4aF+TemVcpSu/lZh
+	09HxG+R0OSC7KWMwGX4aPnIECviELR+Q7F0qCHNLzXpVSKB12wQ9nntZXltimj/GZvCbNxJaJGG
+	1KO+e1FB5NLj3ttE/piNCbOfOk4mavIR2ZLbwbs1vsdhqdOtiTPEG5D1Yk/7TIywF81mHCOKyja
+	Vya6juEc1hsOL
+X-Received: by 2002:a05:6870:4507:b0:475:e0a7:9f2e with SMTP id
+ 586e51a60fabf-47de95f774fmr2773257fac.28.1789131355668; Fri, 11 Sep 2026
+ 05:55:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Fri, 11 Sep 2026 14:52:54 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
+References: <20260911115346.17133-1-meven@kde.org> <20260911120208.21698-1-meven@kde.org>
+ <20260911121058.3B7DE1F000FF@smtp.kernel.org>
+In-Reply-To: <20260911121058.3B7DE1F000FF@smtp.kernel.org>
+From: =?UTF-8?B?TcOpdmVu?= <meven29@gmail.com>
+Date: Fri, 11 Sep 2026 14:55:44 +0200
+X-Gm-Features: AcwNN1VJ67TRs-StbN0V8jxCtrszebpBCkw0ihM3AxZMa_H9Vt-oTec7jKLV18E
+Message-ID: <CAOvFf8NnQwouiKmccNotLMY-XRsW0ufMAXfuK_tqKp3Bjpdmxg@mail.gmail.com>
+Subject: Re: [PATCH v2] HID: logitech-headset: add a battery driver for the
+ PRO X 2
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        Vasily
- Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: Re: [PATCH v3 1/1] s390/zcrypt: Fix and improve zcrypt reply message
- verification checks
-Reply-To: freude@linux.ibm.com
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <20260910163532.CD2F61F000FF@smtp.kernel.org>
-References: <20260910161906.36251-1-freude@linux.ibm.com>
- <20260910161906.36251-2-freude@linux.ibm.com>
- <20260910163532.CD2F61F000FF@smtp.kernel.org>
-Message-ID: <1afaaa7339badac67456109db7d79b18@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rJIZE7HPIJcERRe7sjCSj9CETYZzlAGh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDE3NiBTYWx0ZWRfX7xQY89cKs7uM
- MtWaK/dfRpCAAx1z0sOUOQyrPATAr27PrZxPugKHkdXFUDjBLnL0jTHh9MAG4xYc1wB8gtP8wz/
- s3UD5FfTCXtamOXNbpD9uGnzfNi12v7hkhHIRr1veUBNzA021tF5gC1W4mSanLrmEuCUHj3bns3
- BsPb8wVFAFN0XoDzjj9d2ciwFdpBR5C9DPqB7Tc9zeIvRycEBD1Xu8NDPb351qYZVHsvAR4aEoi
- G+9GC9KFqjoAk0l8wVeStT0J3xGl3DjLQl9YzVROto/WVpEKS4JUeh8fHG+PGYm0a4sfO4PyLn7
- Hd+ZSV0U2OrNiELpaZbZgTj/0Hq9LKSNZ2J+j3DHBjzS+KE13mEdHQ7tsY4ccR2IIhEOeDAfgPw
- sapBchT4oOolwNaHxQTqONAP4DHL3f8ZUw0J2USWJ3cHyH+qoXEMEhk8J3se++Ax2Pf1euSxe4I
- tlDXs5D/9oRraLjA3uA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDE3NiBTYWx0ZWRfX9bKQbf+9JQc7
- yQINfLtKrgnsjLSlTzsRf1VBRDb2LMCJZsdZLdjrS17cnjiH0gRgLZCVvQ7sCTRLNv32ruuLHud
- ndrQdAueqFZ2uvNUWNnHH0TX4XHHq1g=
-X-Authority-Analysis: v=2.4 cv=MpXHeGae c=1 sm=1 tr=0 ts=6aa3f9a8 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=dOyH9hSqfUK5H4-rlsIA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: rJIZE7HPIJcERRe7sjCSj9CETYZzlAGh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-11_04,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110176
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-09-10 18:35, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [High] Legitimate XCRB and RNG responses will be spuriously rejected
-> due to enforcing an incorrect minimum length of sizeof(struct
-> type86x_reply).
+> The HID subsystem guidelines specify that hid_hw_stop must be called befo=
+re
+> cancelling asynchronous workers.
+
+Stopping first is the unsafe order here. logi_headset_poll() ends in
+hid_hw_output_report(), so a work item still running would send on a
+transport hid_hw_stop() has already torn down.
+
+drivers/hid mostly cancels first: steelseries, steam, kysona, asus,
+nvidia-shield. corsair-void stops first, but its battery_work only calls
+power_supply_unregister() and power_supply_changed() and never touches the
+device.
+
+cancel_work_sync() handles a work that re-arms itself. The only
+schedule_delayed_work() calls here are in probe() and at the end of the wor=
+k,
+raw_event() never schedules.
+
+Which guideline do you mean? I see nothing on this in Documentation/hid/.
+
+
+Le ven. 11 sept. 2026 =C3=A0 14:10, <sashiko-bot@kernel.org> a =C3=A9crit :
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The driver cancels its delayed workqueue before calling hid_hw_s=
+top(), which violates the mandatory HID subsystem cleanup order.
 > --
-> 
-> commit 991141a9c29feb41fbfdd37e1610a682977e72b6
-> Author: Harald Freudenberger <freude@linux.ibm.com>
-> 
-> s390/zcrypt: Fix and improve zcrypt reply message verification checks
-> 
-> This commit adds and improves checks related to buffer sizes and reply 
-> sizes
-> for CCA, EP11, and ICA messages in the zcrypt driver. It adds length
-> validation before accessing reply message structures to prevent 
-> out-of-bounds
-> reads. It also reworks payload evaluation functions.
-> 
->> diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c 
->> b/drivers/s390/crypto/zcrypt_msgtype6.c
->> index 3df1d676de5d8..a7d392272cfa2 100644
->> --- a/drivers/s390/crypto/zcrypt_msgtype6.c
->> +++ b/drivers/s390/crypto/zcrypt_msgtype6.c
+>
+> commit bd334ae3e07d607cf268d197e4923d3fe7f27cad
+> Author: M=C3=A9ven Car <meven29@gmail.com>
+>
+> HID: logitech-headset: add a battery driver for the PRO X 2
+>
+> This commit introduces a battery driver for the Logitech PRO X 2 LIGHTSPE=
+ED
+> headset. The device reports its battery status over a vendor collection
+> rather than HID++, so a custom driver is implemented to poll and parse th=
+ese
+> reports.
+>
+> > diff --git a/drivers/hid/hid-logitech-headset.c b/drivers/hid/hid-logit=
+ech-headset.c
+> > new file mode 100644
+> > index 0000000000000..9081ddf5f42f2
+> > --- /dev/null
+> > +++ b/drivers/hid/hid-logitech-headset.c
 > [ ... ]
->> @@ -820,6 +833,8 @@ static int convert_response_xcrb(bool userspace, 
->> struct zcrypt_queue *zq,
->>  {
->>  	struct type86x_reply *msg = reply->msg;
->> 
->> +	/* reply->len is always >= sizeof(struct error_hdr) here */
->> +
->>  	switch (msg->hdr.type) {
->>  	case TYPE82_RSP_CODE:
->>  	case TYPE88_RSP_CODE:
->> @@ -827,9 +842,14 @@ static int convert_response_xcrb(bool userspace, 
->> struct zcrypt_queue *zq,
->>  		return convert_error(zq, reply);
->>  	case TYPE86_RSP_CODE:
->>  		if (msg->hdr.reply_code) {
->> -			xcrb->status = msg->fmt2.apfs;
->> +			if (reply->len < sizeof(struct type86_fmt2_msg))
->> +				xcrb->status = 0x0008044DL;
->> +			else
->> +				xcrb->status = msg->fmt2.apfs;
->>  			return convert_error(zq, reply);
->>  		}
->> +		if (reply->len < sizeof(struct type86x_reply))
->> +			return -EINVAL;
-> 
+> > +static void logi_headset_remove(struct hid_device *hdev)
+> > +{
+> > +     struct logi_headset *headset =3D hid_get_drvdata(hdev);
+> > +
+> > +     cancel_delayed_work_sync(&headset->poll);
+> > +     hid_hw_close(hdev);
+> > +     hid_hw_stop(hdev);
+>
 > [Severity: High]
-> Does this code incorrectly reject legitimate XCRB responses?
-> 
-> It appears that this check assumes XCRB replies use the large 
-> ICA-specific
-> type86x_reply struct. If a userspace application sends a valid XCRB 
-> request
-> without a data payload, the hardware replies successfully without 
-> padding.
-> 
-> While zcrypt_msgtype6_receive() correctly computes len as offset1 + 
-> count1
-> and verifies it exactly matches the hardware reply length, this check 
-> evaluates
-> reply->len < sizeof(struct type86x_reply). Since type86x_reply includes 
-> 6
-> additional bytes (pad[4] and length) intended only for ICA responses, 
-> its size
-> is larger than an empty-payload XCRB response.
-> 
-> Could this result in valid XCRB responses being rejected with -EINVAL,
-> causing a regression for userspace applications using the ICAXCRB 
-> ioctl?
-> 
+> Could this teardown sequence in logi_headset_remove() lead to a
+> use-after-free?
+>
+> In drivers/hid/hid-logitech-headset.c:logi_headset_remove(), the delayed =
+work
+> is cancelled before hid_hw_stop() is called. When a device is unplugged o=
+r
+> unbound, cancelling workers before stopping the hardware (which unregiste=
+rs
+> the device interfaces) means that hardware events or userspace interactio=
+ns
+> could theoretically queue new work after the cancellation.
+>
+> Since devres automatically frees the driver's private data after remove()
+> returns, any lingering work executing subsequently would access freed mem=
+ory.
+> Calling hid_hw_stop() before cancelling the work would ensure no new work=
+ can
+> be queued.
+>
+> > +}
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911120208.21=
+698-1-meven@kde.org?part=3D1
 
-Will fix this in the next version.
 
->>  		if (msg->cprbx.cprb_ver_id == 0x02)
->>  			return convert_type86_xcrb(userspace, zq, reply, xcrb);
->>  		fallthrough;	/* wrong cprb version is an unknown response */
-> [ ... ]
->> @@ -885,6 +909,8 @@ static int convert_response_rng(struct 
->> zcrypt_queue *zq,
->>  {
->>  	struct type86x_reply *msg = reply->msg;
->> 
->> +	/* reply->len is always >= sizeof(struct error_hdr) here */
->> +
->>  	switch (msg->hdr.type) {
->>  	case TYPE82_RSP_CODE:
->>  	case TYPE88_RSP_CODE:
->> @@ -892,6 +918,8 @@ static int convert_response_rng(struct 
->> zcrypt_queue *zq,
->>  	case TYPE86_RSP_CODE:
->>  		if (msg->hdr.reply_code)
->>  			return -EINVAL;
->> +		if (reply->len < sizeof(struct type86x_reply))
->> +			return -EINVAL;
-> 
-> [Severity: High]
-> Does this check similarly apply a logically flawed minimum-size limit 
-> to RNG
-> hardware responses?
-> 
-> It seems this could fail if the hardware RNG response buffer size
-> configuration ever drops below the 6-byte delta caused by the 
-> ICA-specific
-> padding in type86x_reply.
-> 
 
-Does not apply. A valid RNG reply always need to be >= sizeof(struct 
-type86x_reply)
-and even more. However to access the fields cprbx.ccp_rtcode and 
-cprbx.ccp_rscode in
-function convert_type86_rng() this check is a precondition.
-
->>  		if (msg->cprbx.cprb_ver_id == 0x02)
->>  			return convert_type86_rng(zq, reply, data);
->>  		fallthrough;	/* wrong cprb version is an unknown response */
+--=20
+M=C3=A9ven
