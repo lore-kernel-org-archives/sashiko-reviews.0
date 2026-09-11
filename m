@@ -1,183 +1,179 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47EF446C00
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 08:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC2247124D;
+	Fri, 11 Sep 2026 08:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789116102; cv=none; b=h3r/KYx2nHS7RshMToVFCDyPZeV6PF9Xm6ERaTQ1gcKenuyL8rFBG9DXEo3zMPHb1HaecyFSyv6j9qB7167WlvMfGFiigKKxMlsN+ecn/V8UGYAshLF97fEqAjqz8MuXhHbrkOYP006CrDwbBsXOOIHYZAfqGsAlQ32Jbc68evE=
+	t=1789116338; cv=none; b=YuD5hvJ+5MO4LAymDLnAlBY+Su2QLPXeuM/4R9GAJzVDfgya1NGfVRJmcgemeZl3P+HHk5DyE5yzdFOjY1M6JdqmnfLNvWLX/UUKOCMWzrsD/dsXYmOrsRRAfkDCyUFpwm+lE4Fa3beOSM4wJdV8dEOFXdmyvvFo94j8weF5c3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789116102; c=relaxed/simple;
-	bh=bAKGZZAtcB22YjUyN0E0BXvuhEg3lH7+KTKSkhyH6nI=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sniOtoU59xdaEI1pmF35vt6MDELUEyulkI9D1YHHcJ1Dm4BzctYL3Mx8wh/65J9uOTFcXLA2tjisbBnwFKezxjQBkYPmKkOTrII7411dSYPgKp1p4tQQFbsPxvZlXKmfhR73fUdHmnPSv8ERYSOFe1xSKv0kG09tFd5CEFF/vZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=koY82NPa; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789116338; c=relaxed/simple;
+	bh=lAxjbinap1XjY/ldeZoqjwR6pdq+Zcex91oPLLGkok0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=G+vjNUPIvgfG1O94AjgURqC1a9Q3/GMgSiXtYtt7AOp2QkTp4/uDtndmOUNMi06e0/VwBL4MzzYJlMtkEXdqnyFIJ6x0xj+PE6ebcOS7TUvvPM/M7FrzGfMTQ98k2ds5RrN1ICsOW3ZERdH4iy/0y8y6xrSdpECxT+4nGlTnoUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwYwYz5l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koY82NPa"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49d0b98d6d0so8209265e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 01:41:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789116099; x=1789720899; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zFqh0Z3ymXsNZ8CzwCshHZWIQRM7kqFalTjbGJDgPe8=;
-        b=koY82NPa9bp0ZzpQiW/KBTJRlJthc5qNFNfjERb4l7llM4IUB2dibFQNAMMkyrYhXH
-         srFhsNba0l324okf1ONlllCwpf4OQTtoVNP0tqyUPy+zjn/Rw7tYB4FZu20yDHvG2JV2
-         e9GuYe5oEyvYqzCWMZv/CbgkTpsK/GUaFngsFJne4hcE+Kfmc5rPHWEVLcNtFMgrCRS5
-         IIRjDtkDhAjXh9/KA3F47BSXEZP6HyUoTJftifJkZpMZyEEPojwS2oowfRwASmQWJfnG
-         lD198oR9PdsBr6iLltZpFFzNsh+Q4qM9kkUoewWK2pGk+tt+sDImYi5TRpeoWWPI4FQ0
-         FCag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789116099; x=1789720899;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zFqh0Z3ymXsNZ8CzwCshHZWIQRM7kqFalTjbGJDgPe8=;
-        b=awFcXUgPhtzd/FzDm4zQYQ+qnehfPEdfujr4pkoivQ+u3E5uVbwPFGiqeGmihe0E+o
-         y9Eeabe9xb35Zo//G8/5FMr0uls5Ushwdj04fBvXg1B3C5n2oW6zya/HUTM0PW5oH4L1
-         5eZTmyUuv7mGUmsu/IVp4+vtzjL0oApc+I69awMoXWBQE6ZgBU5YJ1tH1SQWENvSXFfP
-         zMBKQiSmBIZyzwxEBSSmvg1vQR0Tq+MlrRHaLY7O8NiCJ2vMl8muoKLbkeUtl7xFHbij
-         fOgfovVfD7kZK6mv5ExYQ/mSfU2+9HdwHIi1EIbNKAKNqE0d6IAEuKjKsdObg/dvWOAg
-         Y34A==
-X-Gm-Message-State: AFuF++lnr4aRLHMhpiZW4HC7yiqGTFKYa787fHCURE04STzy8CXBmxb0
-	17tX8vCsnogDlSaVD1XIntBGf+6tnuiupFsrPuZuB+Ofbf9ld3ywq2RLBY0gXTWO
-X-Gm-Gg: AYBFou3RA4cKYB27daUeAITgwk6w5RGSXJila6WqltxQvxUDe1jCMrhWoGcObxyb4iN
-	za3vB4nnpfRtEwN1GUJCDyHBQCaC07bQ5SearEn7oP7PMGvatt08qc+ilaT2NWQ+sJ1Z44rXWto
-	m5mdznpMdWIqIU/1YsLc0NHkpHPvvpAjSpWBWPfqNasWrMrXXld1U6ayKesCTMzqvODIVpFMcFS
-	uh2GW+oi6pmgNrL3tzzLRYe7Uy701hgjg/bIUHnBGHdGHpXf3kjKsb1mP3DhAuCdRIiUIX0Qqfp
-	59yQpR1/eB17haavX/zyR8fPi13FsDasbImotH0IU3X2l5a0qH/dhOlnnsS616WLox6lrmgUm2+
-	hjeOP57u1n46nQ7jiGbvmrGFSrAigTh8Kr7mg+IzO0C5HTPCcKjTJwIb37v54MXmZpfVRBIJulG
-	dwRtUL3c9D4q8P7c6CB1EuBBLUZ5XTZ03nKMpOTQ+iVTMUPzPMehkbNf5mww==
-X-Received: by 2002:a05:600c:3f0d:b0:49c:fa21:1c86 with SMTP id 5b1f17b1804b1-49e619cee90mr30192355e9.27.1789116098711;
-        Fri, 11 Sep 2026 01:41:38 -0700 (PDT)
-Received: from krava ([176.74.159.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb32e8d1sm4307067f8f.11.2026.09.11.01.41.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 01:41:38 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Fri, 11 Sep 2026 10:41:36 +0200
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 bpf-next] bpf, x86: Use global buffer for trampoline
- size generation
-Message-ID: <aqO-wNLX-fjdW5pM@krava>
-References: <20260910094353.1256316-1-jolsa@kernel.org>
- <20260910095556.706F11F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwYwYz5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826F41F000FF;
+	Fri, 11 Sep 2026 08:45:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789116333;
+	bh=6lmWq/6m5ggzERPQqqVSu3VLp/0FSG5x+a0xHxsrOas=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=dwYwYz5ljp9tG3t5pKzvZsLEOy5+gSnkTSMX8qH8cAVp3J4uAaT3bmdmwQxGr2Ja3
+	 dXum5KsGHaFzCLWm1HgvDML1we5awsTE54pMdz8iXZpS+wZYqwx8XVfdFWqDbnwxZG
+	 /Jk63UDOHsqB0FgK67TJ9gQaGrOjeJy2cTErTOO9hdguJHQNqK3ojxtsgef5LGnKBg
+	 L/KG3agkLXRXafPftZi4WRY5/7wTG9xx28w65EEO05V5wYfiSx3jbAJo6hnPgBy/ye
+	 yrp+D91+pkeByi+YY6EBVvJQ4MQCBuUjJV3dl/N5MChGgTexLK6p9kmYDzP/QSyWSI
+	 Ue3ZiiiuKm2IQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1x4wt1-00000007euX-11qC;
+	Fri, 11 Sep 2026 08:45:31 +0000
+Date: Fri, 11 Sep 2026 09:45:30 +0100
+Message-ID: <86pkyk6us5.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Wei-Lin Chang <weilin.chang@arm.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v1 2/3] arm64: sysreg: Add TCR_EL2 to sysreg infrastructure
+In-Reply-To: <qzold5p6qgyawt4manlare7cuewlqik4i3vc5lrdidtzc6ac4v@ejf67iqd3nrj>
+References: <20260909222015.3046432-1-weilin.chang@arm.com>
+	<20260909222015.3046432-3-weilin.chang@arm.com>
+	<20260909223811.386071F00893@smtp.kernel.org>
+	<qzold5p6qgyawt4manlare7cuewlqik4i3vc5lrdidtzc6ac4v@ejf67iqd3nrj>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260910095556.706F11F000FF@smtp.kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: weilin.chang@arm.com, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Sep 10, 2026 at 09:55:56AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Concurrent calls to arch_bpf_trampoline_size() write to the globally shared, unsynchronized `trampoline_size_image` buffer, resulting in a data race (Undefined Behavior) and cache-line contention.
-> --
+On Thu, 10 Sep 2026 11:58:07 +0100,
+Wei-Lin Chang <weilin.chang@arm.com> wrote:
 > 
-> commit 4c6aeb9264cf2877d767fb9a021802485dd9d3a7
-> Author: Jiri Olsa <jolsa@kernel.org>
-> 
-> bpf, x86: Use global buffer for trampoline size generation
-> 
-> This commit changes the BPF trampoline size calculation to use a single,
-> globally allocated executable memory buffer instead of allocating a temporary
-> one per invocation. This change aims to improve attachment time during tracing
-> by eliminating the overhead of repeated memory allocations and frees.
-> 
-> Link: https://lore.kernel.org/bpf/20260907160538.922450-1-jolsa@kernel.org/
-> 
-> > diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-> > index bba351944202c..9f9b1456dab0d 100644
-> > --- a/arch/x86/net/bpf_jit_comp.c
-> > +++ b/arch/x86/net/bpf_jit_comp.c
-> [ ... ]
-> > @@ -35,6 +36,21 @@ void __asan_store8(void *p);
-> >  
-> >  static bool all_callee_regs_used[4] = {true, true, true, true};
-> >  
-> > +static void *trampoline_size_image;
-> > +
-> > +static int __init init_trampoline_size_image(void)
-> > +{
-> > +	/*
-> > +	 * The generated trampoline contains calls and jumps with 32bit relative
-> > +	 * offsets, so the scratch image must be in the execmem range.
-> > +	 * On x86, module data and executable memory share the same address range,
-> > +	 * so using EXECMEM_MODULE_DATA to get writable memory.
-> > +	 */
-> > +	trampoline_size_image = execmem_alloc(EXECMEM_MODULE_DATA, PAGE_SIZE);
-> 
-> [Severity: Medium]
-> Is this global allocation safe against concurrent access? Multiple threads
-> could compute trampoline sizes concurrently, for example when attaching BPF
-> programs to kernel functions that hash to different buckets in
-> trampoline_locks, or when concurrently updating different struct_ops maps.
+> On Wed, Sep 09, 2026 at 10:38:10PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Declarative update to TCR_EL2 regenerates the TCR_EL2_RES1 aggregate mask which is consumed by C initialization, requiring confirmation of robustness to future value changes.
+> > --
+> > 
+> > commit 522a184d95be9c0f88cc6fb418668546ef83e3e4
+> > Author: Wei-Lin Chang <weilin.chang@arm.com>
+> > 
+> >     arm64: sysreg: Add TCR_EL2 to sysreg infrastructure
+> >     
+> >     Convert TCR_EL2 to the sysreg infrastructure with data extracted from
+> >     Registers.json of the BSD licenced AARCHMRS
+> >     (AARCHMRS_OPENSOURCE_A_profile_FAT-2026-06).
+> > 
+> > > diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+> > > index 94bf065c8ac71..8d89f34580bac 100644
+> > > --- a/arch/arm64/tools/sysreg
+> > > +++ b/arch/arm64/tools/sysreg
+> > [ ... ]
+> > > +Sysreg	TCR_EL2		3	4	2	0	2
+> > [ ... ]
+> > > +Field	33	MTX
+> > > +Field	32	DS
+> > > +Res1	31
+> > > +Field	30	TCMA
+> > > +Field	29	TBID
+> > > +Field	28	HWU62
+> > > +Field	27	HWU61
+> > > +Field	26	HWU60
+> > > +Field	25	HWU59
+> > > +Field	24	HPD
+> > > +Res1	23
+> > > +Field	22	HD
+> > 
+> > [Severity: Medium]
+> > This isn't a bug, but this declarative update regenerates the TCR_EL2_RES1
+> > aggregate mask. Are the C initialization consumers of this mask robust to its
+> > value silently changing if a future .sysreg patch adds or removes a Res1 bit?
+> > 
+> > For example, the generated mask is OR'd into the initial EL2 register value:
+> > 
+> > arch/arm64/kvm/arm.c:cpu_prepare_hyp_mode() {
+> >     ...
+> >     tcr |= TCR_EL2_RES1 | FIELD_PREP(TCR_EL2_PS_MASK, ips);
+> >     ...
+> > }
 
-we can have multiple instances running without the lock, the trampoline
-does not depend on already generated code and we do not use the image
-we need just the size
+Nonsense. In this case, we run nVHE, and we use the !VHE
+definition. The hVHE path correctly derives the setting from TCR_EL1,
+which has the same format.
 
-> 
-> > +	return trampoline_size_image ? 0 : -ENOMEM;
-> > +}
-> > +late_initcall(init_trampoline_size_image);
-> [ ... ]
-> > @@ -4000,24 +4016,14 @@ int arch_bpf_trampoline_size(const struct btf_func_model *m, u32 flags,
-> >  			     struct bpf_tramp_nodes *tnodes, void *func_addr)
-> >  {
-> >  	struct bpf_tramp_image im;
-> > -	void *image;
-> > -	int ret;
-> >  
-> > -	/* Allocate a temporary buffer for __arch_prepare_bpf_trampoline().
-> > -	 *
-> > -	 * We cannot use kvmalloc here, because we need image to be in
-> > -	 * module memory range.
-> > -	 * Since it must be writable use execmem_alloc(EXECMEM_MODULE_DATA)
-> > -	 * that returns writable memory in the module address space.
-> > -	 */
-> > -	image = execmem_alloc(EXECMEM_MODULE_DATA, PAGE_SIZE);
-> > -	if (!image)
-> > +	if (!trampoline_size_image)
-> >  		return -ENOMEM;
-> >  
-> > -	ret = __arch_prepare_bpf_trampoline(&im, image, image + PAGE_SIZE, image,
-> > -					    m, flags, tnodes, func_addr);
-> > -	execmem_free(image);
-> > -	return ret;
-> > +	return __arch_prepare_bpf_trampoline(&im, trampoline_size_image,
-> > +					     trampoline_size_image + PAGE_SIZE,
-> > +					     trampoline_size_image, m, flags,
-> > +					     tnodes, func_addr);
-> >  }
-> 
-> [Severity: Medium]
-> When __arch_prepare_bpf_trampoline() writes to trampoline_size_image, could
-> this lead to a data race if called concurrently?
-> 
-> Since trampoline_size_image is globally shared and no lock protects it here,
-> writers in emit_code() might overwrite each other's data:
-> 
-> arch_bpf_trampoline_size()
->   __arch_prepare_bpf_trampoline()
->     emit_code()
->       *(u32 *)ptr = bytes;
-> 
-> While the memory contents aren't executed, concurrent writes will cause
-> undefined behavior and cache-line ping-ponging, which could trigger KCSAN
-> warnings and crash systems with panic_on_warn enabled. Should this use a
-> per-CPU buffer or have explicit synchronization?
+> > 
+> > It is also used to initialize the guest emulation reset state in:
+> > 
+> > arch/arm64/kvm/sys_regs.c:sys_reg_descs[] = {
+> >     ...
+> >     EL2_REG(TCR_EL2, access_rw, reset_val, TCR_EL2_RES1),
+> >     ...
+> > }
 
-the image for arch_bpf_trampoline_size is just a scratch pad that's
-never used/executed, we take just the size, so no problem here
+This one is a potential bug, but not in the current revision of the
+architecture. Bits 23 and 31 are RES1 when E2H==0, but reset as
+UNKNOWN when E2H==1, so nothing breaks. This is just ugly.
 
-jirka
+> > 
+> > Because the generator's contract is to reflect global architectural truth, a
+> > future edit that reclassifies a bit as Res1 will silently change the value of
+> > TCR_EL2_RES1 without triggering a compiler or CI warning. Could you confirm
+> > that these consumers do not rely on the previous static semantic value of the
+> > mask?
+> 
+> I don't fully understand but doesn't this mean the architecture
+> introduced a change that breaks existing software?
+
+That's exactly what VHE (and by extension HCR_EL2.E2H being RES1) did.
+Which is why I can't wait for FEAT_E2H0 to be eradicated (it is
+already forbidden in 9.6 as FEAT_SRMASK is mandatory).
+
+I think this is simply a case of providing a specific reset function
+for TCR_EL2 (untested).
+
+	M.
+
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 2c90e185c6e8e..964ecbfde9bb6 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -3275,6 +3275,14 @@ static u64 reset_mdcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
+ 	return vcpu->kvm->arch.nr_pmu_counters;
+ }
+ 
++static u64 reset_tcr_el2(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
++{
++	__vcpu_assign_sys_reg(vcpu, r->reg,
++			      vcpu_has_feature(vcpu, KVM_ARM_VCPU_HAS_EL2_E2H0) ?
++			      TCR_EL2_RES1 : VHE_TCR_EL2_RES1);
++	return __vcpu_sys_reg(vcpu, r->reg);
++}
++
+ /*
+  * Architected system registers.
+  * Important: Must be sorted ascending by Op0, Op1, CRn, CRm, Op2
+@@ -3853,7 +3861,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 
+ 	EL2_REG(TTBR0_EL2, access_rw, reset_val, 0),
+ 	EL2_REG(TTBR1_EL2, access_rw, reset_val, 0),
+-	EL2_REG(TCR_EL2, access_rw, reset_val, TCR_EL2_RES1),
++	EL2_REG(TCR_EL2, access_rw, reset_tcr_el2, 0),
+ 	EL2_REG_FILTERED(TCR2_EL2, access_rw, reset_val, TCR2_EL2_RES1,
+ 			 tcr2_el2_visibility),
+ 	EL2_REG_VNCR(VTTBR_EL2, reset_val, 0),
+
+-- 
+Without deviation from the norm, progress is not possible.
