@@ -1,139 +1,87 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F2129BD91
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 08:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E3534AB00
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 08:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789115261; cv=none; b=Z/HOhGOfglq8HbkfS97LNTHDYhdsd9wj5tbQ8qT1jnyVq0CbdX1DnVtUOB3DG3pNP2HSNT2LrGAYkB4okiJYimVpzfAedmMyJ03FD3oBFB1Oh9VDr39bzMnShlcWPKOYDeabztLyoZBu0C8ix51qWZH2cXqnIiiieFeT3jtvyCo=
+	t=1789115795; cv=none; b=GvqSK/o3l/e64JPwQLFxS9Jc7ULXOcg0wBGpR/rhCYRPYHUJso50ImokJDVry+pYFD4d1y7HCfNVsFEgb4pYswfOy9TX+uzeBcubOxaQK9Uw0riv5roNVEkdfpStXxNcQtenpcQlqJT2iOiHfanWxgj3D6H2bB1dEfOeaocVhmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789115261; c=relaxed/simple;
-	bh=ZiLEUyTUk1N3CKNtzjm8jTBPQyHlJ2Cm5nKgeQ+TGHo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h/4WtGyLqbwsA43AuG0KSDFSRcodyepZzaP7ORvmya8oBdSLHDsi4RQe5+ro7ZkdJ6vH++vxeXbv1bqYzSXk1N8K5T05BMPy4vaF73KVoTB0DhML2Mj7a/ZFyeftCHwKFL7gUj2ZUJYLYwlkUZroVxjryyHTyU8w8pNn3E/a9ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-X-PTX-Original-Recipient: ychuang570808@gmail.com
-X-PTX-Original-Recipient: zychennvt@gmail.com
-X-PTX-Original-Recipient: conor+dt@kernel.org
-X-PTX-Original-Recipient: robh@kernel.org
-X-PTX-Original-Recipient: sashiko-reviews@lists.linux.dev
-X-PTX-Original-Recipient: devicetree@vger.kernel.org
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 3C2CD20100D;
-	Fri, 11 Sep 2026 10:27:36 +0200 (CEST)
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1x4wbg-000OGG-0K;
-	Fri, 11 Sep 2026 10:27:36 +0200
-Received: from pengutronix.de (unknown [185.104.138.144])
+	s=arc-20240116; t=1789115795; c=relaxed/simple;
+	bh=WMgo+qlFgtpRDnP/sYc+kSbsgLJq+odkWr0Tg5mDrog=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Gy7vu9OJ5oeZwpO8zgyOExAOVmuC7Pe6roLuHwbLVaQFX7mLAfqouapU0dN3iE/dNYoo3I6DYMxSIsg3mXDCsuymZAN11a25LIomvSYt15YoQ3adHgOJLLvC7TkcNDhGN7/TRjW4WdvLiotE0+C6Aa5mTsgjCJNSfLQ4Ue7WvWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=I4g3aFzb; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="I4g3aFzb"
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id EE8F9599FEE;
-	Fri, 11 Sep 2026 05:56:34 +0000 (UTC)
-Date: Fri, 11 Sep 2026 07:56:29 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Jacky Huang <ychuang570808@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, Zi-Yu Chen <zychennvt@gmail.com>, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH v3] arm64: dts: nuvoton: ma35d1: add CAN nodes
-Message-ID: <20260911-frisky-imperial-elephant-3336e4-mkl@pengutronix.de>
-References: <20260908014526.413399-1-zychennvt@gmail.com>
- <20260908015435.7DE071F00A3A@smtp.kernel.org>
- <853110ab-1bd8-41cc-9b82-cc28002c0bed@gmail.com>
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4hh7Ds5yfdzKnS4;
+	Fri, 11 Sep 2026 10:36:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1789115789; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WMgo+qlFgtpRDnP/sYc+kSbsgLJq+odkWr0Tg5mDrog=;
+	b=I4g3aFzbzk1wEJA+WKi4GZEWRvw1OUT4AD6g2enzyLyDwI6qtDdPtf++Q1LX76zSRmoV0i
+	hy6/yYb83A815aMlKYzdGelDW4oQScEBOau09ZTgEW+y7BXshDy5Jt9NoIRbudNqJV3cMF
+	ntWNMhldQa+a4BCeDX2/hVOVnMiLcDy8aJEevAtaocPUZiqbeHJ5iPutvukt2++ggIpK4N
+	QZiVTnl+Vg3kiQNCPwksqzEmDlEM821ug9/LODYF5D37O27K+Nl7WzwPLPXYiqRvdoMlw7
+	1GKYGUU7j5uTahFc1ArwAeE3xxXz++aaHOMhRFTuzdNQ7daGXNX0m9Jwjgtrjw==
+Message-ID: <0228eabf667d4af40869bb479ac3cd73fa121229.camel@mailbox.org>
+Subject: Re: [PATCH] drm/sched: Free the run queues at the end of
+ drm_sched_fini()
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: phasta@kernel.org, Donggeun Yoo <donggeunyoo.kernel@gmail.com>, 
+	sashiko-reviews@lists.linux.dev, Matthew Brost <matthew.brost@intel.com>, 
+ Danilo Krummrich
+	 <dakr@kernel.org>
+Date: Fri, 11 Sep 2026 10:36:27 +0200
+In-Reply-To: <f0118a45f01a5c1f774fd77e745f5f2dae493ba0.camel@mailbox.org>
+References: <20260910121601.805032-1-donggeunyoo.kernel@gmail.com>
+		 <20260910123736.6EB8D1F000FF@smtp.kernel.org>
+		 <20260910132532.820610-1-donggeunyoo.kernel@gmail.com>
+	 <f0118a45f01a5c1f774fd77e745f5f2dae493ba0.camel@mailbox.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wbjm735kz2knxz3e"
-Content-Disposition: inline
-In-Reply-To: <853110ab-1bd8-41cc-9b82-cc28002c0bed@gmail.com>
+X-MBO-RS-META: zs9j1918a7r8hww9xpczmxoue8h9t1q9
+X-MBO-RS-ID: df5520c08b4e23abc16
+
+On Fri, 2026-09-11 at 10:03 +0200, Philipp Stanner wrote:
+> On Thu, 2026-09-10 at 22:25 +0900, Donggeun Yoo wrote:
+> > On 9/10/26 21:37, sashiko-bot@kernel.org=C2=A0wrote:
+> > > [Critical] Potential Use-After-Free of `sched` and `sched->sched_rq` =
+if
+> > > `drm_sched_fini()` is called with pending jobs and `own_submit_wq` is=
+ false.
+> >=20
+> > Thanks for the report
+>=20
+> Sashiko is a bot.
+>=20
+> The reported issue sounds correct to me. Would then indeed be a bug
+> (race condition) that someone(tm) might want to fix.
 
 
---wbjm735kz2knxz3e
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3] arm64: dts: nuvoton: ma35d1: add CAN nodes
-MIME-Version: 1.0
+No. Wait. It isn't?
 
-On 11.09.2026 10:15:21, Jacky Huang wrote:
-> > [ ... ]
-> > > @@ -244,6 +244,58 @@ gpion: gpio@340 {
-> > >                        };
-> > >                };
-> > >
-> > > +             can0: can@403c0000 {
-> > > +                     compatible =3D "bosch,m_can";
-> > > +                     reg =3D <0x0 0x403c0000 0x0 0x200>, <0x0 0x403c=
-0200 0x0 0x2000>;
-> > > +                     reg-names =3D "m_can", "message_ram";
-> > > +                     interrupts =3D <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
-> > > +                                  <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                     interrupt-names =3D "int0", "int1";
-> > > +                     clocks =3D <&clk HCLK3>, <&clk CAN0_GATE>;
-> > > +                     clock-names =3D "hclk", "cclk";
-> > > +                     bosch,mram-cfg =3D <0x0 4 4 32 32 32 8 8>;
-> > > +                     status =3D "disabled";
-> > > +             };
-> > [Severity: Medium]
-> > Should this node include the hardware resets property (e.g.,
-> > resets =3D <&sys MA35D1_RESET_CANFD0>;)?
-> >
-> > Without the hardware reset line, the bosch,m_can driver cannot perform a
-> > hardware reset of the CAN controllers during probe or interface toggles.
-> > It must rely solely on software initialization, which can fail to fully
-> > recover the controller if the bootloader or a prior crashed state left
-> > the hardware in an unpredictable state.
-> >
-> > This omission pattern is identically repeated across the newly added ca=
-n1,
-> > can2, and can3 nodes below.
->
-> The reset property is optional for the MA35D1 CAN nodes.
+The same argument applies: when drm_sched_fini() is called all fences
+are signaled. Thus, no timeout will occur.
 
-yes, but....
+Nevertheless, one could change the teardown for more robustness in this
+regard.
 
-> The bosch,m_can binding does not require a reset property, and the
-> m_can driver obtains the reset control through
-> devm_reset_control_get_optional_shared().
->
-> The MA35D1 CAN controllers also operate correctly without explicit
-> CAN reset properties in the existing platform DTS. Therefore, no
-> change is required for this patch.
-
-=2E..we've observed that the SW reset doesn't clear the CAN state and
-error counters, see commit 9271d0ea07c2 ("can: m_can: add support for
-optional reset") for details. As your SoC has a reset line connected to
-the M_CAN IP core, please add it to the dtsi.
-
-regards,
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---wbjm735kz2knxz3e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCaqOX9wAKCRDMOmT6rpmt
-0m5sAQDe8rpJRlj59JnXeh7uUHfFHP/ofivVRJiOXEAdam4QsQEA2wqvKefFKh7t
-gb/iyr+i/u/xI4v+NxR8FxerA6Vh0gU=
-=Kk71
------END PGP SIGNATURE-----
-
---wbjm735kz2knxz3e--
+P.
