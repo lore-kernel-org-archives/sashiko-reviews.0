@@ -1,179 +1,196 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC2247124D;
-	Fri, 11 Sep 2026 08:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74B39DBD0
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 09:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789116338; cv=none; b=YuD5hvJ+5MO4LAymDLnAlBY+Su2QLPXeuM/4R9GAJzVDfgya1NGfVRJmcgemeZl3P+HHk5DyE5yzdFOjY1M6JdqmnfLNvWLX/UUKOCMWzrsD/dsXYmOrsRRAfkDCyUFpwm+lE4Fa3beOSM4wJdV8dEOFXdmyvvFo94j8weF5c3I=
+	t=1789119932; cv=none; b=UCfG3fmYsfzEGsyF9d/BmifGl4cI5JOZvTFVGKxzDdxZLmuMwTb3P4mecV8kdQuxBZ9DjyrBQvAvB909yzxBi30vfb7Ng/vrPOA8oJ2TZ6NPHMr1l1j02oCqT1zPYPfORUSLtK+cdNKfLs9MzRJH61BKroTGPo5IUiR8MaVSmsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789116338; c=relaxed/simple;
-	bh=lAxjbinap1XjY/ldeZoqjwR6pdq+Zcex91oPLLGkok0=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G+vjNUPIvgfG1O94AjgURqC1a9Q3/GMgSiXtYtt7AOp2QkTp4/uDtndmOUNMi06e0/VwBL4MzzYJlMtkEXdqnyFIJ6x0xj+PE6ebcOS7TUvvPM/M7FrzGfMTQ98k2ds5RrN1ICsOW3ZERdH4iy/0y8y6xrSdpECxT+4nGlTnoUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwYwYz5l; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789119932; c=relaxed/simple;
+	bh=4YkqMAKNK5V62YcY3AB9bibeBwrPu9ylYgq1rBqDGCk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ovRb9RX+NlsKhhfQBRwqXAvccTcXsXYvl/BUfiwhCzaXNQrmRc0+p99eUDdsXvy44vmPwUgmFtAQ2NHdxCNFmJ5ZHITJtuygYAjcVmqovnK7jHHucK3bhKVkvQYd/zx13GbAWNxXu6OotEyokr/VLc994Ni7Niqf7Tda40bERrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=V/A+Lw5u; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=09n1WuRv; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwYwYz5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826F41F000FF;
-	Fri, 11 Sep 2026 08:45:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789116333;
-	bh=6lmWq/6m5ggzERPQqqVSu3VLp/0FSG5x+a0xHxsrOas=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=dwYwYz5ljp9tG3t5pKzvZsLEOy5+gSnkTSMX8qH8cAVp3J4uAaT3bmdmwQxGr2Ja3
-	 dXum5KsGHaFzCLWm1HgvDML1we5awsTE54pMdz8iXZpS+wZYqwx8XVfdFWqDbnwxZG
-	 /Jk63UDOHsqB0FgK67TJ9gQaGrOjeJy2cTErTOO9hdguJHQNqK3ojxtsgef5LGnKBg
-	 L/KG3agkLXRXafPftZi4WRY5/7wTG9xx28w65EEO05V5wYfiSx3jbAJo6hnPgBy/ye
-	 yrp+D91+pkeByi+YY6EBVvJQ4MQCBuUjJV3dl/N5MChGgTexLK6p9kmYDzP/QSyWSI
-	 Ue3ZiiiuKm2IQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1x4wt1-00000007euX-11qC;
-	Fri, 11 Sep 2026 08:45:31 +0000
-Date: Fri, 11 Sep 2026 09:45:30 +0100
-Message-ID: <86pkyk6us5.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Wei-Lin Chang <weilin.chang@arm.com>
-Cc: sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v1 2/3] arm64: sysreg: Add TCR_EL2 to sysreg infrastructure
-In-Reply-To: <qzold5p6qgyawt4manlare7cuewlqik4i3vc5lrdidtzc6ac4v@ejf67iqd3nrj>
-References: <20260909222015.3046432-1-weilin.chang@arm.com>
-	<20260909222015.3046432-3-weilin.chang@arm.com>
-	<20260909223811.386071F00893@smtp.kernel.org>
-	<qzold5p6qgyawt4manlare7cuewlqik4i3vc5lrdidtzc6ac4v@ejf67iqd3nrj>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="V/A+Lw5u";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="09n1WuRv"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id CE2191FF22;
+	Fri, 11 Sep 2026 09:45:24 +0000 (UTC)
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1789119924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z4PHXPBpIJvXQSo3h4iaInbMFWtFG1t8JHS7+nZkGzM=;
+	b=V/A+Lw5uRCKJJJLsm0gdC3aU9JGD0kFc3whd0D0hqjY10MEgS8075KEt41VvSzIdW+xU4I
+	hdlOrJrigqWBnivy6CdGdeJpva6A0HLh29cS1V7Ib9GOSSH1rTbjxiVvVKfhn1NeZWTOUI
+	8hA+Yod3aXZIJ8RujrUhLYtt3SyxEQY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1789119924;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z4PHXPBpIJvXQSo3h4iaInbMFWtFG1t8JHS7+nZkGzM=;
+	b=09n1WuRv28LuvnqoW9lSIqZsWh53IqaC/3tlp2slcQ38JN7nYap8w9mwr/c7VtGuArQJQH
+	ipLvAmcY89d3qBAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 43555137CA;
+	Fri, 11 Sep 2026 09:45:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id OAoED7TNo2oFVgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 11 Sep 2026 09:45:24 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: deller@gmx.de,
+	gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	simona@ffwll.ch
+Cc: linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-serial@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 4/5] lib/fonts: Add font_glyph_cursor() helper
+Date: Fri, 11 Sep 2026 11:25:22 +0200
+Message-ID: <20260911094518.78093-5-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260911094518.78093-1-tzimmermann@suse.de>
+References: <20260911094518.78093-1-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: weilin.chang@arm.com, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: CE2191FF22
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -4.00
+X-Spam-Level: 
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	REPLY(-4.00)[]
 
-On Thu, 10 Sep 2026 11:58:07 +0100,
-Wei-Lin Chang <weilin.chang@arm.com> wrote:
-> 
-> On Wed, Sep 09, 2026 at 10:38:10PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] Declarative update to TCR_EL2 regenerates the TCR_EL2_RES1 aggregate mask which is consumed by C initialization, requiring confirmation of robustness to future value changes.
-> > --
-> > 
-> > commit 522a184d95be9c0f88cc6fb418668546ef83e3e4
-> > Author: Wei-Lin Chang <weilin.chang@arm.com>
-> > 
-> >     arm64: sysreg: Add TCR_EL2 to sysreg infrastructure
-> >     
-> >     Convert TCR_EL2 to the sysreg infrastructure with data extracted from
-> >     Registers.json of the BSD licenced AARCHMRS
-> >     (AARCHMRS_OPENSOURCE_A_profile_FAT-2026-06).
-> > 
-> > > diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-> > > index 94bf065c8ac71..8d89f34580bac 100644
-> > > --- a/arch/arm64/tools/sysreg
-> > > +++ b/arch/arm64/tools/sysreg
-> > [ ... ]
-> > > +Sysreg	TCR_EL2		3	4	2	0	2
-> > [ ... ]
-> > > +Field	33	MTX
-> > > +Field	32	DS
-> > > +Res1	31
-> > > +Field	30	TCMA
-> > > +Field	29	TBID
-> > > +Field	28	HWU62
-> > > +Field	27	HWU61
-> > > +Field	26	HWU60
-> > > +Field	25	HWU59
-> > > +Field	24	HPD
-> > > +Res1	23
-> > > +Field	22	HD
-> > 
-> > [Severity: Medium]
-> > This isn't a bug, but this declarative update regenerates the TCR_EL2_RES1
-> > aggregate mask. Are the C initialization consumers of this mask robust to its
-> > value silently changing if a future .sysreg patch adds or removes a Res1 bit?
-> > 
-> > For example, the generated mask is OR'd into the initial EL2 register value:
-> > 
-> > arch/arm64/kvm/arm.c:cpu_prepare_hyp_mode() {
-> >     ...
-> >     tcr |= TCR_EL2_RES1 | FIELD_PREP(TCR_EL2_PS_MASK, ips);
-> >     ...
-> > }
+The new helper font_glyph_cursor() fills a glyph with a cursor pattern.
+As with the font_glyph_rotate_*() helpers, the caller has to provide the
+output memory.
 
-Nonsense. In this case, we run nVHE, and we use the !VHE
-definition. The hVHE path correctly derives the setting from TCR_EL1,
-which has the same format.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ include/linux/font.h    |  4 +++
+ lib/fonts/Makefile      |  3 ++-
+ lib/fonts/font_cursor.c | 56 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 62 insertions(+), 1 deletion(-)
+ create mode 100644 lib/fonts/font_cursor.c
 
-> > 
-> > It is also used to initialize the guest emulation reset state in:
-> > 
-> > arch/arm64/kvm/sys_regs.c:sys_reg_descs[] = {
-> >     ...
-> >     EL2_REG(TCR_EL2, access_rw, reset_val, TCR_EL2_RES1),
-> >     ...
-> > }
-
-This one is a potential bug, but not in the current revision of the
-architecture. Bits 23 and 31 are RES1 when E2H==0, but reset as
-UNKNOWN when E2H==1, so nothing breaks. This is just ugly.
-
-> > 
-> > Because the generator's contract is to reflect global architectural truth, a
-> > future edit that reclassifies a bit as Res1 will silently change the value of
-> > TCR_EL2_RES1 without triggering a compiler or CI warning. Could you confirm
-> > that these consumers do not rely on the previous static semantic value of the
-> > mask?
-> 
-> I don't fully understand but doesn't this mean the architecture
-> introduced a change that breaks existing software?
-
-That's exactly what VHE (and by extension HCR_EL2.E2H being RES1) did.
-Which is why I can't wait for FEAT_E2H0 to be eradicated (it is
-already forbidden in 9.6 as FEAT_SRMASK is mandatory).
-
-I think this is simply a case of providing a specific reset function
-for TCR_EL2 (untested).
-
-	M.
-
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 2c90e185c6e8e..964ecbfde9bb6 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -3275,6 +3275,14 @@ static u64 reset_mdcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
- 	return vcpu->kvm->arch.nr_pmu_counters;
- }
+diff --git a/include/linux/font.h b/include/linux/font.h
+index 5e1cf9830084..be1a26ff8ae9 100644
+--- a/include/linux/font.h
++++ b/include/linux/font.h
+@@ -109,6 +109,10 @@ const unsigned char *font_data_glyph_buf(font_data_t *fd,
+ bool font_data_is_equal(font_data_t *lhs, font_data_t *rhs);
+ int font_data_export(font_data_t *fd, struct console_font *font, unsigned int vpitch);
  
-+static u64 reset_tcr_el2(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
-+{
-+	__vcpu_assign_sys_reg(vcpu, r->reg,
-+			      vcpu_has_feature(vcpu, KVM_ARM_VCPU_HAS_EL2_E2H0) ?
-+			      TCR_EL2_RES1 : VHE_TCR_EL2_RES1);
-+	return __vcpu_sys_reg(vcpu, r->reg);
-+}
++/* font_cursor.c */
++void font_glyph_cursor(unsigned int width, unsigned int height,
++		       unsigned int from, unsigned int to, unsigned char *out);
 +
- /*
-  * Architected system registers.
-  * Important: Must be sorted ascending by Op0, Op1, CRn, CRm, Op2
-@@ -3853,7 +3861,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ /* font_rotate.c */
+ void font_glyph_rotate_90(const unsigned char *glyph, unsigned int width, unsigned int height,
+ 			  unsigned char *out);
+diff --git a/lib/fonts/Makefile b/lib/fonts/Makefile
+index 7202a70a56ef..bc08bf8ea3f8 100644
+--- a/lib/fonts/Makefile
++++ b/lib/fonts/Makefile
+@@ -1,7 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ # Font handling
  
- 	EL2_REG(TTBR0_EL2, access_rw, reset_val, 0),
- 	EL2_REG(TTBR1_EL2, access_rw, reset_val, 0),
--	EL2_REG(TCR_EL2, access_rw, reset_val, TCR_EL2_RES1),
-+	EL2_REG(TCR_EL2, access_rw, reset_tcr_el2, 0),
- 	EL2_REG_FILTERED(TCR2_EL2, access_rw, reset_val, TCR2_EL2_RES1,
- 			 tcr2_el2_visibility),
- 	EL2_REG_VNCR(VTTBR_EL2, reset_val, 0),
-
+-font-y := fonts.o
++font-y := fonts.o \
++	  font_cursor.o
+ font-$(CONFIG_FRAMEBUFFER_CONSOLE_ROTATION) += font_rotate.o
+ 
+ # Built-in fonts; sorted by Family-Size in ascending order
+diff --git a/lib/fonts/font_cursor.c b/lib/fonts/font_cursor.c
+new file mode 100644
+index 000000000000..7f4d587669aa
+--- /dev/null
++++ b/lib/fonts/font_cursor.c
+@@ -0,0 +1,56 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/bug.h>
++#include <linux/export.h>
++#include <linux/string.h>
++
++#include "font.h"
++
++/**
++ * font_glyph_cursor - Create a cursor glyph
++ * @width: The glyph width in bits per scanline
++ * @height: The number of scanlines in the glyph
++ * @start: The first scanline of the cursor block
++ * @end: The first scanline after the cursor block
++ * @out: The cursor-glyph bitmap
++ *
++ * The parameters @width and @height refer to the glyph size. The caller
++ * has to provide the output buffer @out of sufficient size to hold the
++ * cursor glyph. The arguments in @start and @end describe the number of
++ * scanlines occupied by the cursor block; counting from the top of the
++ * glyph. The helper fills these scanlines with a pattern and clears the
++ * remaining scanlines.
++ */
++void font_glyph_cursor(unsigned int width, unsigned int height,
++		       unsigned int start, unsigned int end, unsigned char *out)
++{
++	unsigned int pitch = font_glyph_pitch(width);
++	const unsigned char *out_end = out + height * pitch;
++	unsigned int size;
++
++	if (WARN_ON_ONCE(start > height))
++		start = height;
++	if (WARN_ON_ONCE(end > height))
++		end = height;
++
++	if (end < start)
++		end = start;
++
++	/* clear scanlines before cursor block */
++	size = start * pitch;
++	memset(out, 0x00, size);
++	out += size;
++
++	/* set cursor block */
++	size = (end - start) * pitch;
++	memset(out, 0xff, size);
++	out += size;
++
++	/* clear scanlines below cursor block */
++	size = (height - end) * pitch;
++	memset(out, 0x00, size);
++	out += size;
++
++	WARN_ON_ONCE(out != out_end);
++}
++EXPORT_SYMBOL_GPL(font_glyph_cursor);
 -- 
-Without deviation from the norm, progress is not possible.
+2.55.0
+
