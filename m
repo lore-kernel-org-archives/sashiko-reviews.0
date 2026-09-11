@@ -1,154 +1,209 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mta0.migadu.com (out-84.mta0.migadu.com [91.218.175.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2338C29CB52
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D914430566A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789102542; cv=none; b=uqd4MDlTsePbmpRYVlVIzA4xHddlHrm7FZqvKNwKikrZjrW6lJzvjeZO7567hi5MISSk7RrxKn9e8BWXtJ/SncZYDoDS0AzUWQsm490ga6NHEQ1I1yjFSuLtKE/3NLxTB0vvq/DIipwOKabvsv+iz4IZv98BckzcOWrPUsjqf9Q=
+	t=1789103136; cv=none; b=KzRqXceLxJ8NgsjBH6dEr1NH+23csDBGxYAAZkrJhlLeQ+W5Te3NZ+mFhA/vNVk59Q2vcNDOi7n6Gg8wXFPFxLRBRdneSHlN1djZeMk6+aLZBtjYNs/sNzCA+NqG8sbYq5NMySgl03HCLrKOq0qAhF+mCfvIRuFkqtHmmGJJGJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789102542; c=relaxed/simple;
-	bh=gRax98XBnTeXsB4U3frQSfMdpqRTS/1n+vv0snGdib8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ob0yKeh3vh74mOctMdklfmHrxbjUvD0vwCST80vg8vfqOiH7WLjMy62Ug7iCDYV798ydmDO9YejGtz8W7l92PLhfHBLtntEg8xc2sEO6mSm+Xl0CS4o3kDa+gbQf+eEpq2Cx8Fc5mE8kGBddi70XdlxM9WMt5Wwqd7MYEnK/BV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jcEkOOvf; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789103136; c=relaxed/simple;
+	bh=2Gkj5VJt7SRjzEW/QyXw+AWkCyZdehrXf3Pt3IETZ+g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Zpts9bpyF4QlV9qysxgv2bTAQBfzcZYb2Z71eaPcn0IX4zDGY9LOeFlMxP4H58j5IQuhJ0TmUKydX0Kh38NRGSiim1almr7PwDBLg0njx6v4+kuM0K7xGiYbo3l8rnZUckDXU35QcjrlKuub6lp+oNfh2cbHQgGUXf8mi8OXEFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AahJXzc5; arc=none smtp.client-ip=91.218.175.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jcEkOOvf"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7f18c0e03e3so324629a34.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 21:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789102540; x=1789707340; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=jdcjf1BPsFMtJuMfKKBIV37SM+mo5KWOGPxwINTYozQ=;
-        b=jcEkOOvfngPz/0Jw6Rx89VWcSezcF+GrSUv+YLoAOQvwfbJ6bFCaNUXS90aka7kHBl
-         Nfg3RCy6ZySE8U44aez1GSSli787KuV00clMXWub62dPk6RHfXF43gfv9iNyLVBlZqow
-         8RoM23NUUVntG+WwMArdmQtAm7iM8s6h8N3aY/I50MeCNb14gLDobzvW1u6oQ6y5y9+v
-         zVy7SCBVPDw2JH1Z69FudeC4rMZ270k3pplbuwL8tUOIGcOX8r67oxfPehJ4epZbiyb9
-         O+d19FZ+tcp6X5+2wnN7tpFQ4oErJJKaOJaptFDypcFjPYQ3uZGaED/VrGH2GqszyM4B
-         MZog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789102540; x=1789707340;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jdcjf1BPsFMtJuMfKKBIV37SM+mo5KWOGPxwINTYozQ=;
-        b=TvceQ+9JDumIe1jniVm5UapevgaqBbm2uDgnHipSwjFPd8p+fDkkVGuwBizCV/A4Qm
-         dM42xP43MsKYI1cn15hr8lvOA/RsLrbjUe7kw9D5Z1QYTU7o8glzI36JIfh0eiVH8baX
-         e1aiIEPNanDvg4Gh/7Efb2uGugCr1gbshPY4waDFXLr0QCZ2v/JdvcFTpw5eRgc4z7Nf
-         vfARIQrHd5reR9NzqxXWGxlD+MbQpkLLlL3HD9GrZR8ZOLefyAae+aZ0ga/Iv1JS6Yxp
-         eGhORA6hReB7kuyLUe561dDPGWPPP0XGFysNn4MeE6k9rzZVpP+bRNwxeK5G6lYkDhG/
-         Etqw==
-X-Gm-Message-State: AFuF++lTsyiskwVM9GY5GTwcylr6yM3alwlsmBpktH3UkhNTcsKyCeL9
-	voglj4MG4cR3T7Wj4KINZExyZDgxKD7OjvelRo8uubdMHbKPUNFKb8ar
-X-Gm-Gg: AYBFou3rHw7UxMxb4AZrcr2GIDqoe6AjW06ze8T9ArSSHLoSD8cUXYMeR0zgO+L3mOc
-	xTic+G2b/3NaW8a3GNqJNRfRDFSuHFGESCcAmr4qlbvB/gUZTvIzwhuMADp4ngJUbalUiAG21Tf
-	YJ5XB+egPEEwVWcv3vu39zONkyOoToT8myuz5ht3zTgBJz2SxKh+4gB3rdVzfOQm7lM8kFTHOTc
-	fOy2o6Ycn78kJWu2EEpNBuOmSIoZYB5Z63LGL8GvlJ8vJSCwfTMaFn8f8rLJFPQep2TX8iq1q6b
-	W0GfCjrs6c/qrDC5GfzJp9Y0LKa6jjEWSY4iTOulQdM8MtNUU3ydgNcLdxsZFtLAgIhA4XHeurz
-	m6Gx+0guIJ3Qoj0n0Rh0ehRDFiV8gC+v+Ie1bgZZqndp3+mLsvMrQaWWzCMt2Fc3AlZlBWcR4M2
-	yMYUAYDRuc9JiDJRpo+nikwCGHPp2TO7yiS6GtKfjrmwJb9smyQ4WrezV+uxssu8ukAG8TBrxcc
-	4oFFCmFhWM83OEPmyrQx14BeSe5Qk8=
-X-Received: by 2002:a05:6830:348e:b0:7e9:eb13:d042 with SMTP id 46e09a7af769-803ffb978a0mr1569459a34.8.1789102539986;
-        Thu, 10 Sep 2026 21:55:39 -0700 (PDT)
-Received: from dhoja (S01067483c248479d.wp.shawcable.net. [50.72.244.202])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-803f6d1875csm1484100a34.22.2026.09.10.21.55.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 21:55:39 -0700 (PDT)
-Date: Thu, 10 Sep 2026 23:55:37 -0500
-From: Curtis Vogt <curtis.vogt@gmail.com>
-To: Mario Limonciello <mario.limonciello@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-input@vger.kernel.org,
-	dmitry.torokhov@gmail.com
-Subject: Re: [PATCH 2/3] HID: valve-index: Reboot headset on system power
- transitions
-Message-ID: <aqOJycOWtHP5DvLz@dhoja>
-References: <20260910170254.833871-1-mario.limonciello@amd.com>
- <20260910170254.833871-3-mario.limonciello@amd.com>
- <20260910171756.57EEF1F00893@smtp.kernel.org>
- <0407d630-e1b1-4a20-8e05-b0d0946585ce@amd.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AahJXzc5"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=2Gkj5VJt7SRjzEW/QyXw+AWkCyZdehrXf3Pt3IETZ+g=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789103131; v=1; x=1789707931;
+ b=AahJXzc54rXOjWYdGmfajl24IDdfKTMtVCPBBb/B7ivJgcjQUKto1uWnDc49zTdmzqx7HUIR
+ qEs+oez6+8v9E5168Hse8GMhByUyQj/eo/ESVGjdSIer6WMEflyPUkekgscy2uQdu0eDcQK5hNE
+ Cu8ZZMDlGkY9BRWQj4hYrnYA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 66dadd09ed6c7452;
+	Fri, 11 Sep 2026 05:05:28 +0000
+X-Mizu-Trace-ID: 66dadd09ed6c7452
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <8d5905b3-ab49-46c9-96c0-4709646f12b3@linux.dev>
+Date: Thu, 10 Sep 2026 22:05:26 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0407d630-e1b1-4a20-8e05-b0d0946585ce@amd.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 07/12] bpf: Prepare kfunc arguments for the
+ JIT from an ABI description
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260909062522.4001896-1-yonghong.song@linux.dev>
+ <20260909062559.4007404-1-yonghong.song@linux.dev>
+ <20260909064649.55C691F00A3A@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260909064649.55C691F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 10, 2026 at 12:21:15PM -0500, Mario Limonciello wrote:
-> 
-> 
-> On 9/10/26 12:17, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] Incorrect buffer formatting and report ID targeting in `hid_hw_raw_request` fallback for an unnumbered HID report.
-> > --
-> > 
-> > commit 4526fbce2701e5a40089fba6ae186ded76bc0864
-> > Author: Mario Limonciello <mario.limonciello@amd.com>
-> > Subject: HID: valve-index: Reboot headset on system power transitions
-> > 
-> > This commit introduces a new HID driver for the Valve Index headset to
-> > reboot it on system power transitions. It sends a specific 64-byte report
-> > to recover the EDID service after a DisplayPort link shutdown.
-> > 
-> > Link: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/939
-> > 
-> > > diff --git a/drivers/hid/hid-valve-index.c b/drivers/hid/hid-valve-index.c
-> > > new file mode 100644
-> > > --- /dev/null
-> > > +++ b/drivers/hid/hid-valve-index.c
-> > [ ... ]
-> > > +static void valve_index_reboot(struct hid_device *hdev, bool wake)
-> > > +{
-> > > +	u8 *report;
-> > > +	int ret;
-> > > +
-> > > +	if (!valve_index_has_reboot_report(hdev))
-> > > +		return;
-> > > +
-> > > +	/* USB transfer buffers must be DMA-able, so not on the stack. */
-> > > +	report = kzalloc(VALVE_INDEX_REPORT_SIZE, GFP_KERNEL);
-> > > +	if (!report)
-> > > +		return;
-> > > +	report[0] = VALVE_INDEX_REBOOT_REPORT_ID;
-> > 
-> > [Severity: Medium]
-> > Is the report buffer sized correctly for an unnumbered report fallback?
-> > 
-> > The HID core and usbhid transport expect unnumbered report buffers to be
-> > prefixed with a dummy 0x00 byte (so payload size + 1) for control transfers.
-> > Allocating exactly 64 bytes and placing the payload command at index 0 might
-> > break control transfer formatting in usbhid_set_raw_report if the fallback
-> > path below is taken.
-> > 
-> > [ ... ]
-> > > +	/* Use the same interrupt-out then SET_REPORT fallback as hidraw. */
-> > > +	ret = hid_hw_output_report(hdev, report, VALVE_INDEX_REPORT_SIZE);
-> > > +	if (ret == -ENOSYS)
-> > > +		ret = hid_hw_raw_request(hdev, report[0], report,
-> > > +					 VALVE_INDEX_REPORT_SIZE,
-> > > +					 HID_OUTPUT_REPORT, HID_REQ_SET_REPORT);
-> > 
-> > [Severity: Medium]
-> > Does this properly target the unnumbered report during the fallback?
-> > 
-> > By passing report[0] (which contains 0x16) as the reportnum argument, the
-> > fallback control transfer will target Output Report ID 0x16 instead of the
-> > required unnumbered report (ID 0). If hid_hw_output_report returns -ENOSYS
-> > and this fallback is taken, the headset might reject the transfer, causing
-> > the reboot command to fail.
-> > 
-> > > +	if (ret < 0)
-> > > +		hid_warn(hdev, "failed to reboot headset: %d\n", ret);
-> > [ ... ]
-> > 
-> 
-> Curtis - can you check how the headset handles those cases?
 
-I'll dig into this
+
+On 9/8/26 11:46 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Stack buffer overflow in `bpf_jit_plan_arg_moves` and `kfunc_abi_slots` due to undersized arrays based on maximum arguments rather than maximum slots.
+> --
+>
+> commit 180655f49c406c35435ba5ebc05f2900a3c56656
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Prepare kfunc arguments for the JIT from an ABI description
+>      
+> The previous patch refuses a kfunc argument of more than one eightbyte.
+> This patch allows up to 16 byte kfunc arguments.
+>
+>> diff --git a/include/linux/filter.h b/include/linux/filter.h
+>> index 00ad8b63aa477..01b52d0259d18 100644
+>> --- a/include/linux/filter.h
+>> +++ b/include/linux/filter.h
+> [ ... ]
+>> @@ -1248,6 +1248,38 @@ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena);
+>> +
+>> +/* The JIT's scratch register, in place of an argument slot. */
+>> +#define BPF_JIT_ARG_TMP		0xff
+>> +
+>> +/* Every argument slot moves at most once, and the scratch goes out and back. */
+>> +#define BPF_JIT_MAX_ARG_MOVES	(MAX_BPF_FUNC_ARGS + 2)
+> [Severity: Medium]
+> Since arguments can now take up to 2 slots (for 16-byte arguments), could the
+> maximum number of slot moves actually be up to 26 (24 slots + 2) instead of 14?
+
+In jit, for x86_64, we have
+
+         /* x86-64 supports up to MAX_BPF_FUNC_ARGS arguments. 1-6
+          * are passed through regs, the remains are through stack.
+          */
+         if (nr_regs > MAX_BPF_FUNC_ARGS)
+                 return -ENOTSUPP;
+
+So the maximum number of regs is 12, so we are okay for x86_64.
+
+But arm64 is different. It has
+
+static int calc_arg_aux(const struct btf_func_model *m,
+                          struct arg_aux *a)
+{
+         int stack_slots, nregs, slots, i;
+
+         /* verifier ensures m->nr_args <= MAX_BPF_FUNC_ARGS */
+         for (i = 0, nregs = 0; i < m->nr_args; i++) {
+                 slots = (m->arg_size[i] + 7) / 8;
+                 if (nregs + slots <= 8) /* passed through register ? */
+                         nregs += slots;
+                 else
+                         break;
+         }
+
+	...
+}
+
+So the maximum number of reg arguments can be 24. I think I will
+add a patch similar to x86_64 above.
+
+>
+>> +
+>> +struct bpf_jit_arg_move {
+>> +	u8 dst;
+>> +	u8 src;
+>> +};
+> [ ... ]
+>> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+>> index c673b02d55a65..d4bd2ba9aadee 100644
+>> --- a/kernel/bpf/core.c
+>> +++ b/kernel/bpf/core.c
+> [ ... ]
+>> @@ -3287,6 +3287,100 @@ bool __weak bpf_jit_supports_kfunc_ret_reg_pair(void)
+>> +
+>> +u32 bpf_jit_place_args(const struct bpf_jit_arg_abi *abi,
+>> +		       const struct btf_func_model *fm, u8 *pos_of_slot)
+>> +{
+>> +	u32 i, k, nslots, slot = 0, nregs_used = 0, stack_off = 0;
+>> +	bool on_stack = false;
+>> +
+>> +	for (i = 0; i < fm->nr_args; i++) {
+>> +		bool align16 = fm->arg_flags[i] & BTF_FMODEL_ALIGN16_ARG;
+>> +		u32 pos;
+>> +
+>> +		nslots = btf_func_model_arg_slots(fm, i);
+> [ ... ]
+>> +		for (k = 0; k < nslots; k++)
+>> +			pos_of_slot[slot + k] = pos + k;
+> [Severity: Medium]
+> Will this overflow the pos_of_slot array if an architecture adopts this API
+> for BPF trampolines?
+>
+> The callers currently size the array based on MAX_BPF_FUNC_ARGS (12), but
+> slot + k can reach up to 23 because some arguments can require multiple slots.
+
+I will add a check to ensure maximum reg arguments is 12.
+
+>
+>> +		slot += nslots;
+>> +	}
+>> +
+>> +	return slot;
+>> +}
+>> +
+>> +u32 bpf_jit_plan_arg_moves(const struct bpf_jit_arg_abi *abi,
+>> +			   const struct btf_func_model *fm,
+>> +			   struct bpf_jit_arg_move *moves)
+>> +{
+>> +	u8 pos_of_slot[MAX_BPF_FUNC_ARGS];
+> [Severity: Medium]
+> Does this stack array need to be sized for the maximum number of slots
+> (e.g., MAX_BPF_FUNC_ARGS * 2) instead of the maximum number of arguments?
+
+This is for kfunc. I will check whether we need to do
+   MAX_BPF_FUNC_ARGS * 2
+or not.
+
+>
+>> +	u32 nslots, n = 0, s, back;
+>> +
+>> +	nslots = bpf_jit_place_args(abi, fm, pos_of_slot);
+> [ ... ]
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 94c359351bb69..2b8df8c7f098c 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>> @@ -12172,6 +12172,58 @@ static u32 kfunc_proto_slots(const struct btf *btf, const struct btf_type *func_
+>>   	return slots_used;
+>>   }
+>>   
+>> +static u32 kfunc_abi_slots(const struct btf_func_model *fm)
+>> +{
+>> +	const struct bpf_jit_arg_abi *abi = bpf_jit_arg_abi();
+>> +	u8 pos_of_slot[MAX_BPF_FUNC_ARGS];
+> [Severity: Medium]
+> Similarly, does this stack array also need to be sized to accommodate up to
+> 24 slots rather than 12 arguments to prevent an out-of-bounds write in
+> bpf_jit_place_args()?
+
+Yes, I will check whether we need to have 24 slots or not.
+
+>
+>> +	u32 i, nslots, slots = 0;
+>> +
+>> +	for (i = 0; i < fm->nr_args; i++)
+>> +		slots += btf_func_model_arg_slots(fm, i);
+>> +
+>> +	if (!abi)
+>> +		return slots;
+>> +
+>> +	nslots = bpf_jit_place_args(abi, fm, pos_of_slot);
+
