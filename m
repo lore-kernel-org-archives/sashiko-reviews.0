@@ -1,171 +1,148 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0773298CAF
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 11:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789126261; cv=pass; b=D9adbEAyw8hgKDgJn83Nh3mZauMcOUdft4L7Wz7pqEpgAyqIOjMyXYub+1gavyHIk0rXRzRmRjnYJEG/UvEGoh00cPtsCu46yZv6r+y0Gc7MlA2r2oRsG1QzOhXzi8UK9KBB2HldBI/NVz4oGt47bHXIPPKwxueXKAiy2d8Ks+Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789126261; c=relaxed/simple;
-	bh=8oBNrn73qh+O/Q5uT6gV+BncjX+bawSkeldQVubHZBU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Sbz1VB68eqQljnA2WlQNpDgKQSLhDS9GDZ63cOm+ALFycPghwpT7OUiV2fwbEFohd0nw840kRFGpTCm0lnIbESQokPJCyqePOrowlQlc/vkFHQO6kOQ0gu1boCy9jpS0LRcOtjIjWe2g6N3CqDkYkEezEBTk+DhhFO/XC8rQBts=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DRvdELUJ; arc=pass smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00D1298CAF;
+	Fri, 11 Sep 2026 11:31:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789126342; cv=none; b=NL/vKqh4CQdiV8SkI8pdamraq+Zru6ryJ36d+0yXKciyj/nyeolYiEUvYrvfvNf0rNyRIb3ysTjB0cUY0U10kkBZZuoN1Z8deAAXaIO7zNPVIeGFX4IN/c94CkfNmYEbpJTQY3mk7YxTNDzHHueOKzpGXbDhSnLr7dCjbBVhXI4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789126342; c=relaxed/simple;
+	bh=s/ODydIxsCcvKM3SXUbVkIRCg0OzptzpI7rs77XtcrE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YGByfOUklh56aZbYaAfF8RoqZGjoxk65DvVhGhCxvyKJbCQ6AQbJ5vuEVYjkRZVdBSLF8lRFl51zC1oGFJicp6mlxEz5tkn/X+zeINppsHnFAOXZMVN/RtcyO7DQ3aY3BPIBubegCNzfdg1NKUq53WcJDlE/aeGwTy15wbC06ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Y92TFKNZ; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRvdELUJ"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-486e934b0c9so244331f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:30:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789126250; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oL6X8ii56C6hSY38Xq4hpBSSa7ylTP35weM8GtwrHLGedir+8DOKH37MSwY8KGm7iC
-         9w94QwSR3HLAqn8PZ/E4ey1wIhBV20aa1fGYB7WbBBS+4EloOZ1yHuZ8YQ7NOttsMnZu
-         cmRllm2wOAGSU5deRXwV+MQ26dp1M/d2LdRUJTvGYERX/+ddoRZHZzYGqq5sPz80yz7B
-         nSE0CtK9xwzs+n/cJ8CThYzG6XKNkgXPvoFQ2u2/lHLRxEvutXpQksF7zpfbkfSCPm3p
-         blVnlBGsxneekB0wDgsnKjLhsCzsPaMAoQ78jijpeSOvUYJ2bGZ2ErY0n8ac2nY56Mea
-         PAOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
-        fh=+F14bOWQxS5MgDtf7mpFT6gjA360FyLL7QkzK9DDYsQ=;
-        b=rR9qXfDXMG8dBt/AHwtB+t+xpblKP2czD0zW8rO8+9KOPznhHjcjl5O33pFh8l8cuY
-         uMHztTHN77LP/Dcb3IphA8UL8iTfM77uj5MFfxJfQ2a1J8UE4qZVr5lsq1/z1ZFvVhEx
-         Aw/Bx7F+0LZOHyWyoDphj0CA9wLrSW1GYPtSFOtlEzumj2HtvAmBEa8OeGC4QpsJ6EHp
-         FmeoS9/X5kdBei7kDZyIHskp8+FXBBfDgDlwz10y7FTaZjrCoEdKgfgIOpqEiFF+lWko
-         Fwn2cySZRJyJxRgTYGJ/GfnEJobvg8vbK0J3YktMFhyadhnHkbZeH5m3/71N+GmCjG/K
-         wuhw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789126250; x=1789731050; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
-        b=DRvdELUJ2z1d3x773kOBPkS9Va/1Kc1ODZDyikbuFppADElhWDHcndplsMJ974Geds
-         nXNKvCjr07WXz+vFPGXQmJaKZRibhp1lYMG7Xb7UvfRa0p0GfJs1ausCW17nQbIjRyN6
-         zzrdSbg/Qi/uvogexH1WZDFaUL2RTV1n2IEZbRO+rX14thN22/CJzW6NV5d+NkBjkXfe
-         ch5Jxt2/aKCbKk3D+cocQeVRoqTx4iabnfzQ8l8T6mwFrLXNkcu6UP8zRHCLXwVYxjX2
-         /lfRjMDIvyznu6J7jHg/Acgspz0k5B+eof2ed8ygVWoDSwSq39e3EvabG/moLQYBVbNB
-         nwLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789126250; x=1789731050;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
-        b=X1XO0dUQeOaEQtqw4gfh2nUYFS07MwI3kT7WJtyJj23KsW2H4QpPlM5rsKTHzlVZ76
-         WALmpTj0Ekva7odUMTV1zmuCPRHVzG1UhQwqe1i/BEp0/yF8IuNFpwkifCZda224a1aR
-         LM1ZGoRW1QoKfkdAA9w2GwVj4wS9IWyMs2kNGVCVL/6hQ+0gnHq5q7Yx46VNHOKMsplL
-         YGVNkfc83CZLT2023044hsvF/ZngGVIbr0u+S1WFwFXX+TN6kZaAcS/E58SAxWu/DZ1Q
-         qIJktoGOiyqLDlPklCjEUZA/EpxgHyWzTntG+UtwcKRpfZQDZRvjShuCqheWcmCAuIh8
-         vNoA==
-X-Gm-Message-State: AFuF++nYtyIhznDE8Phx0EMX6D9an+0WwpkPvOOt9p+amvs2BhRyMCOP
-	32KpHOT+9NV0fDC+KN/E0mHftl5Wun3NB2B7rLWe/MXXg6yOG/Yyyvftcdo0sLMTRXpcFlXdWh3
-	Ugd3UImU1Vvql7jovepJrefqcYq1yRfokEdHs9hzWiQ==
-X-Gm-Gg: AYBFou2U2hias0pAXhd2NiJCL74o3lF7rYcFEjxCbT6WyxUsZYsv5AyfhjOpyCKv7/r
-	oJ53SwkfpcU6cs/jp6VFPiyAkYwtb0gZ2yiyK7/cpDw4ZyR47Sq85HRNuUOFaH3lLmsRCHk3+YI
-	xkzT5zMQsjtItylvXJkXjjrS4qtUeu2FoYbIZEFxwStxLYWWu/qqpHiRzsefqKWBtnvjohMWOlp
-	gAAYnwk5UxvULkD71DTL4RwF3WeHHl0xcSEDhhThyFZ9m92l8qH213amwf0D22aPRn/aZ3PKdJb
-	AAEBUHvTrO5XcYabLdmSvsHJW9RGgAP8SuxH8e/UWgACUFWUretFtng0A99XjNkhAuN9zIX4meF
-	7crw6kD1tnya+8aYys5wbHyBhBiDXE/1eSIP4bhUIt/Y6KwXRuj/8/w7GV2bs5gMgeSnOXzFgHQ
-	==
-X-Received: by 2002:a5d:494e:0:b0:486:e73f:586a with SMTP id
- ffacd0b85a97d-486eb3046cemr2794052f8f.37.1789126249695; Fri, 11 Sep 2026
- 04:30:49 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Y92TFKNZ"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D05216F2;
+	Fri, 11 Sep 2026 04:31:49 -0700 (PDT)
+Received: from e129823.arm.com (unknown [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 682373F59E;
+	Fri, 11 Sep 2026 04:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789126313; bh=s/ODydIxsCcvKM3SXUbVkIRCg0OzptzpI7rs77XtcrE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y92TFKNZvfTwl+6EOT3Q+GXm7iz/4IKg439KIr0LLt9U0UArtOzJrRXGuIrYarK5b
+	 ZrEhX9NcAczEWXWKhymUFV/Ion39MzjQwNV4C41dh74r+NMFbjpa5Lax5PyGdNuVod
+	 1h25MyOm4HFPuendHZz6mVb1HwF9frFJ+z4NF7A0=
+Date: Fri, 11 Sep 2026 12:31:50 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 5/8] coresight: etm4x: introduce struct etm4_caps
+Message-ID: <aqPmpuIxWosNsfFd@e129823.arm.com>
+References: <20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com>
+ <20260911-separate_etm_cfg_v2-v10-5-1b715d95927a@arm.com>
+ <20260911112023.31F161F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260911111731.3404308-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260911111731.3404308-4-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260911112607.3239E1F00893@smtp.kernel.org>
-In-Reply-To: <20260911112607.3239E1F00893@smtp.kernel.org>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Fri, 11 Sep 2026 12:30:22 +0100
-X-Gm-Features: AcwNN1WtZyh7B-ne7h4Obd9ZeApvbyPgvZ7Ss5X-8P5TGBqm7FWkrnhW56vuKck
-Message-ID: <CA+V-a8vt0Y_9Qi7-KY2_206Be_H9GwG1g57aHwnVgx++A7_bEQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/8] watchdog: rzv2h: Propagate WDTDCR access errors
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org, 
-	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260911112023.31F161F000FF@smtp.kernel.org>
 
-Hi Sashiko,
-
-On Fri, Sep 11, 2026 at 12:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The error path in rzv2h_wdt_stop() leaves the watchdog unconfigu=
-red and missing a required delay after reset deassertion.
+On Fri, Sep 11, 2026 at 11:20:22AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] Hardware-reported capability counts are used as loop limits without being checked against static array capacities, leading to heap buffer overflows.
 > --
->
-> commit 3f7bad2568920b818b4bdb62349364febc443827
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
->
-> watchdog: rzv2h: Propagate WDTDCR access errors
->
-> The WDTDCR helpers currently access the register directly, but this will
-> change to use regmap, which can fail. This commit propagates errors from
-> rzt2h_wdt_wdtdcr_count_start() and rzt2h_wdt_wdtdcr_count_stop() and unwi=
-nds
-> the resources if an error occurs.
->
-> > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.=
-c
-> > index 7c6a4855bd8ad..cbf414e0c9a3c 100644
-> > --- a/drivers/watchdog/rzv2h_wdt.c
-> > +++ b/drivers/watchdog/rzv2h_wdt.c
+> 
+> commit 1fb7a47435872f1b7f11824178d098d0258effdc
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm4x: introduce struct etm4_caps
+> 
+> This commit introduces struct etmv4_caps to encapsulate ETMv4 capabilities 
+> and migrates the relevant capability information out of struct etmv4_drvdata 
+> into it.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
 > [ ... ]
-> > @@ -169,8 +179,13 @@ static int rzv2h_wdt_stop(struct watchdog_device *=
-wdev)
-> >       if (ret)
-> >               return ret;
-> >
-> > -     if (priv->of_data->wdtdcr)
-> > -             rzt2h_wdt_wdtdcr_count_stop(priv);
-> > +     if (priv->of_data->wdtdcr) {
-> > +             ret =3D rzt2h_wdt_wdtdcr_count_stop(priv);
-> > +             if (ret) {
-> > +                     reset_control_deassert(priv->rstc);
-> > +                     return ret;
-> > +             }
-> > +     }
-> >
-> >       pm_runtime_put(wdev->parent);
->
-> [Severity: High]
-> Does this error path leave the hardware in an uninitialized state?
->
-> When rzt2h_wdt_wdtdcr_count_stop() fails in rzv2h_wdt_stop(), the code ca=
-lls
-> reset_control_deassert() to bring the hardware out of reset. However, it
-> does not include the mandatory udelay(3) wait for clock stabilization or
-> restore the watchdog register configuration via rzv2h_wdt_setup().
->
-The udelay(3)is not required as we are not reprogramming the WDT in
-the rzv2h_wdt_stop().
+> > @@ -1491,43 +1501,43 @@ static void etm4_init_arch_data(void *info)
+> [ ... ]
+> > -	drvdata->nr_ss_cmp = FIELD_GET(TRCIDR4_NUMSSCC_MASK, etmidr4);
+> > -	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
+> > +	caps->nr_ss_cmp = FIELD_GET(TRCIDR4_NUMSSCC_MASK, etmidr4);
+> > +	for (i = 0; i < caps->nr_ss_cmp; i++) {
+> >  		drvdata->config.ss_status[i] =
+> >  			etm4x_relaxed_read32(csa, TRCSSCSRn(i));
+> >  	}
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this code overflow the ss_status[] 
+> array if the hardware reports a capability count greater than the static array 
+> capacity?
+> 
+> In etm4_init_arch_data(), caps->nr_ss_cmp is read directly from the TRCIDR4 
+> hardware register. The architecture allows this field to be up to 15, but the 
+> arrays like ss_status are fixed in size to ETM_MAX_SS_CMP. Using the 
+> unvalidated hardware capability as a loop limit can lead to a heap buffer 
+> overflow.
+> 
+> [ ... ]
+> > @@ -1892,57 +1903,56 @@ static int etm4_cpu_save(struct coresight_device *csdev)
+> [ ... ]
+> > -	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
+> > +	for (i = 0; i < caps->nr_ss_cmp; i++) {
+> >  		state->trcssccr[i] = etm4x_read32(csa, TRCSSCCRn(i));
+> >  		state->trcsscsr[i] = etm4x_read32(csa, TRCSSCSRn(i));
+> >  		if (etm4x_sspcicrn_present(drvdata, i))
+> >  			state->trcsspcicr[i] = etm4x_read32(csa, TRCSSPCICRn(i));
+> >  	}
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does this loop risk corrupting
+> the dynamically allocated etmv4_save_state structure? 
+> 
+> Similar to the initialization path, etm4_cpu_save() relies on the unvalidated 
+> caps->nr_ss_cmp bound to write into state->trcssccr[] and state->trcsscsr[]. 
+> If the hypervisor or hardware provides a larger count, this will overflow the 
+> save state buffers on suspend and resume paths.
+> 
+> [ ... ]
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> [ ... ]
+> > @@ -2059,7 +2090,7 @@ static ssize_t ctxid_masks_store(struct device *dev,
+> [ ... ]
+> >  	mask = config->ctxid_mask0;
+> > -	for (i = 0; i < drvdata->numcidc; i++) {
+> > +	for (i = 0; i < caps->numcidc; i++) {
+> >  		/* mask value of corresponding ctxid comparator */
+> >  		maskbyte = mask & ETMv4_EVENT_MASK;
+> >  		/*
+> >  		 * each bit corresponds to a byte of respective ctxid comparator
+> >  		 * value register
+> >  		 */
+> >  		for (j = 0; j < 8; j++) {
+> >  			if (maskbyte & 1)
+> >  				config->ctxid_pid[i] &= ~(0xFFUL << (j * 8));
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but could this sysfs-triggered write also 
+> overflow the ctxid_pid[] array?
+> 
+> In ctxid_masks_store(), caps->numcidc is used as the loop bound for updating 
+> config->ctxid_pid[i], which is dimensioned by ETMv4_MAX_CTXID_CMP. Without 
+> clamping the hardware-reported capability, writing to this sysfs node could 
+> result in out-of-bounds memory accesses.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com?part=5
 
-> This leaves the hardware out of reset but unconfigured, which might trigg=
-er an
-> immediate spurious reboot if default timeouts are active, or fail to rebo=
-ot
-> the system during a hang if the watchdog remains dormant.
->
-> Could this error handling be updated to fully restore the previous watchd=
-og
-> state?
->
-Yes it does, if the rzt2h_wdt_wdtdcr_count_stop() fails in
-rzv2h_wdt_stop() we revert back things so that further pings from the
-WDT core continue without any issues.
+Nacked. All of above is false positive. array size is staticlly set as
+MAXIMUM size in coresight-etm4x.h.
 
-Cheers,
-Prabhakar
+-- 
+Sincerely,
+Yeoreum Yun
