@@ -1,30 +1,36 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-197.mta0.migadu.com [91.218.175.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11BA3793D2
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 01:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9503033E3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 01:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789090887; cv=none; b=c5Kjpq+PHcv6SK/pByOMJ60JB+zsDRFcNiOg++XOPfRlMzP5nnWeLMVoMEqzKBeVzgFMPfFr66qqTbSy8BSMxYWni3J5PHL8jL08bnVt4eaFWPfs+98yZIC7bEaYl/xSZjOo8MQEJqtAvd3cBoJfpP1XI2h1UwSVhdqBFexzaIw=
+	t=1789091909; cv=none; b=KP9zT/EPFzVdq9ctUjTA0Iv+oUF2sbFt48dpjKZNBkWsKDqTSEKYYnM9zbfhSUpZHTia46AkqRBiEnFNbsMSVBw1MzTEwJ6+zNJ0GgYdgfFJJTKIY/dvR6920NBMKsEYl0nReZ+GurAHNtzXVCFa0b9TKZ2Y9rfxOLZIrXHwnXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789090887; c=relaxed/simple;
-	bh=3J/d6P85kTIhEeifbnE/N524lRDfjIyBwMPaPH08xA4=;
+	s=arc-20240116; t=1789091909; c=relaxed/simple;
+	bh=Su7/he/rLAfnoMYt2HCIPpgklMpzjuXx3YY78IqHwEQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZWqOxR6OHcEK3YYdyTbtJo5ZOIEbHu+k5iWRuJpgmN19Jgj5X5/U1ZSsHKdMFGAJxa//PV1iVQdpDc78IgtJLGYAoSySNDwVhgDWOTctcUdY7Vb+aXKWRb88dkE1uKV7doRCsrHWATKQN/glqHiMy/0ORiJ6iAFTkF6DWQJQDmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hgy0l4tmSzYQtht
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 09:40:23 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 8830C40574
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 09:41:19 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXOpg+XKNqxK8jBg--.35142S2;
-	Fri, 11 Sep 2026 09:41:19 +0800 (CST)
-Message-ID: <42b259e3-7e58-4164-bd2d-83bf7e9699dd@huaweicloud.com>
-Date: Fri, 11 Sep 2026 09:41:18 +0800
+	 In-Reply-To:Content-Type; b=mwBxKe1AEY43u2KPi3hKzmQ8xwyJ0CrO0pI89w5l6r7xtwP0ymWucJBVDGF8DYTE/kzGcFUIUtk+qJEGBTDDADgAA5EKxZzY2cUJw3LbMJ96HNTDxukRIplrFOz8TRoDGWoA/gRH/8m5DIyDLQ/2weNtiEYXsoArCmAREYf8bxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r9GdKAqz; arc=none smtp.client-ip=91.218.175.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r9GdKAqz"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Su7/he/rLAfnoMYt2HCIPpgklMpzjuXx3YY78IqHwEQ=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789091903; v=1; x=1789696703;
+ b=r9GdKAqzRrFF64eDiYGauUiLrnhvckdhGA+2IkEN3ABilV1LaisSJDzNm+SNB2wgpsRw46Nt
+ k7UFX6/FW7vFjQ24ftqcCgmd7zSX72rHWIfKaEkjaC9S2D7tcmbAbmlUaPQ9/XA16HQlUiF+Fjh
+ xstIIdWhZJbItxb93f+Mb/8M=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 763b54b3587cf8a0;
+	Fri, 11 Sep 2026 01:58:23 +0000
+X-Mizu-Trace-ID: 763b54b3587cf8a0
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <430b860f-13c5-45f4-9fb9-ef5235c5a5a6@linux.dev>
+Date: Fri, 11 Sep 2026 09:58:20 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,115 +38,150 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/26] perf annotate-arm64: Support stack variable
- tracking
+Subject: Re: [PATCH v4 2/7] cgroup/cpuset: Account for child CPU ownership in
+ partition changes
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <ddc32af9368f031ed716cf86b50a8bce79e87796.1788872630.git.wutengda@huaweicloud.com>
- <20260908133633.666091F00A3A@smtp.kernel.org>
+Cc: tj@kernel.org, mkoutny@suse.com, hannes@cmpxchg.org
+References: <20260910094546.5852-1-guopeng.zhang@linux.dev>
+ <20260910094546.5852-3-guopeng.zhang@linux.dev>
+ <20260910100101.171B11F000FF@smtp.kernel.org>
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260908133633.666091F00A3A@smtp.kernel.org>
+From: Guopeng Zhang <guopeng.zhang@linux.dev>
+In-Reply-To: <20260910100101.171B11F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDXOpg+XKNqxK8jBg--.35142S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurykZF1UCrykWF4UJw15CFg_yoW5Xr48pr
-	srGay3GF4rGr4rtws3XrW8Xr9Ygwn7GF4Y9wn8JF1Fyr1S9FnakFZxtFy3Kay7Xr93uw40
-	vw1q9rnrXws7ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Transfer-Encoding: 8bit
 
 
 
-On 2026/9/8 21:36, sashiko-bot@kernel.org wrote:
+在 2026/9/10 18:01, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Invalid register comparison causes unparsed operands to be falsely treated as stack variables.
+> 
+> Pre-existing issues:
+> - [High] Shrinking a root partition under an isolated parent permanently leaks CPUs and violates the housekeeping constraint.
 > --
 > 
-> commit 7ef0e34126bb69c05756eba7378c5775c6ea2fd3
-> Author: Tengda Wu <wutengda@huaweicloud.com>
+> commit 3a1165f79081dc8176afcf8e5f8289444f4e3b63
+> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
 > 
-> perf annotate-arm64: Support stack variable tracking
+> cgroup/cpuset: Account for child CPU ownership in partition changes
+>     
+> effective_xcpus includes CPUs granted to valid child partitions. A change
+> to the parent must not apply its isolation state or housekeeping checks to
+> CPUs which remain owned by those children.
 > 
-> This commit extends update_insn_state_arm64 to track data types stored on the
-> stack. It handles stack loads and stores, introducing
-> propagate_store_reg_state to follow data types between registers and memory.
+> Link: https://sashiko.dev/#/patchset/20260820124202.517160-1-guopeng.zhang%40linux.dev?part=6
+> Link: https://sashiko.dev/#/patchset/20260828095643.13395-1-guopeng.zhang@linux.dev?part=1
+> Link: https://sashiko.dev/#/patchset/20260902102615.79189-1-guopeng.zhang@linux.dev?part=2
 > 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 9d43e2c2041cd..d520975c59363 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
->> @@ -542,12 +544,57 @@ static int propagate_load_reg_state(struct type_state *state,
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index cc643715d4802..95e82bd18450d 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
 > 
 > [ ... ]
 > 
->> +	if (dloc->fb_cfa) {
->> +		u64 ip = dloc->ms->sym->start + dl->al.offset;
->> +		u64 pc = map__rip_2objdump(dloc->ms->map, ip);
->> +
->> +		if (die_get_cfa(dloc->di->dbg, pc, &fbreg, &fboff) < 0)
->> +			fbreg = -1;
->> +	}
->> +
->>  retry:
->>  	if (arch_get_reg_offset(dloc->arch, src, sreg, state, false, &reg_offset))
->>  		return -1;
+>> @@ -2951,6 +2997,49 @@ int cpuset_update_flag(cpuset_flagbits_t bit, struct cpuset *cs,
+>>  	return err;
+>>  }
 >>  
->>  	reg_offset += mem_offset;
->>  
->> +	/* Check stack variables with offset */
->> +	if (sreg == fbreg || sreg == state->stack_reg) {
-> 
-> [Severity: Medium]
-> When an unparsed or unsupported base register leaves sreg as -1, and fbreg is
-> also -1, does this condition evaluate to true? Could this cause unparsed
-> source operands to be incorrectly treated as stack loads?
-> 
-
-Agreed.
-
-> [ ... ]
-> 
->> +static void propagate_store_reg_state(struct type_state *state,
->> +				      struct data_loc_info *dloc,
->> +				      struct disasm_line *dl, int sreg,
->> +				      struct annotated_op_loc *dst,
->> +				      int mem_offset)
+>> +/*
+>> + * Invalidate the highest isolated partition that contains @cs.
+>> + *
+>> + * A root partition returning CPUs to an isolated parent can consume the last
+>> + * housekeeping CPU. Invalidating the highest isolated ancestor lets the
+>> + * subsequent hierarchy update propagate invalidation down the chain and
+>> + * return the CPUs to a root partition.
+>> + */
+>> +static struct cpuset *invalidate_isolated_ancestor(struct cpuset *cs,
+>> +						   struct tmpmasks *tmp)
 >> +{
-> 
-> [ ... ]
-> 
->> +	if (dloc->fb_cfa) {
->> +		u64 ip = dloc->ms->sym->start + dl->al.offset;
->> +		u64 pc = map__rip_2objdump(dloc->ms->map, ip);
+>> +	struct cpuset *ancestor = parent_cs(cs);
+>> +	struct cpuset *parent;
+>> +	int err;
 >> +
->> +		if (die_get_cfa(dloc->di->dbg, pc, &fbreg, &fboff) < 0)
->> +			fbreg = -1;
+>> +	lockdep_assert_held(&cpuset_mutex);
+>> +	if (WARN_ON_ONCE(!ancestor))
+>> +		return NULL;
+>> +
+>> +	while ((ancestor != &top_cpuset) &&
+>> +	       !is_remote_partition(ancestor)) {
+>> +		parent = parent_cs(ancestor);
+>> +		if (!parent ||
+>> +		    parent->partition_root_state != PRS_ISOLATED)
+>> +			break;
+>> +		ancestor = parent;
 >> +	}
 >> +
->> +	/* Check stack variables with offset */
->> +	if (dreg == fbreg || dreg == state->stack_reg) {
+>> +	if (WARN_ON_ONCE(ancestor == &top_cpuset))
+>> +		return NULL;
+>> +
+>> +	WRITE_ONCE(ancestor->prs_err, PERR_HKEEPING);
+>> +	if (is_remote_partition(ancestor)) {
+>> +		remote_partition_disable(ancestor, tmp);
+>> +	} else {
+>> +		err = update_parent_effective_cpumask(ancestor,
+>> +						      partcmd_invalidate, NULL, tmp);
+>> +		WARN_ON_ONCE(err);
 > 
-> [Severity: Medium]
-> Similarly to the load case, if the base register extraction leaves dreg as -1
-> and fbreg is also -1, does this check evaluate to true? Will this erroneously
-> treat unparsed target operands as stack stores, potentially corrupting the
-> stack type state tracking?
+> [Severity: High]
+> This isn't a regression introduced by this patch, but while evaluating changes
+> here, does update_parent_effective_cpumask() still leak CPUs and violate the
+> housekeeping constraint when shrinking a root partition under an isolated
+> parent?
 > 
 
-Agreed. It would be best to add a guard for when dreg is not -1.
+Yes, this is a known pre-existing issue, as noted by the existing TBD
+comment:
 
-Tengda
+/*
+ * TBD: Invalidate a currently valid child root partition may
+ * still break isolated_cpus_can_update() rule if parent is an
+ * isolated partition.
+ */
+
+> If shrinking fails the housekeeping check (!isolated_cpus_can_update), the
+> partition is marked invalid but fails to recalculate the 'adding' mask to
+> return all of its CPUs:
+> 
+> kernel/cgroup/cpuset.c:update_parent_effective_cpumask() {
+>     ...
+>     if (is_partition_valid(cs) && (old_prs != parent_prs)) {
+>         ...
+>         if ((parent_prs == PRS_ISOLATED) &&
+>             /* Adding to parent means adding isolated CPUs */
+>             !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
+>             part_error = PERR_HKEEPING;
+>     }
+>     ...
+>     if (part_error)
+>         new_prs = -old_prs;
+>     ...
+>     if (adding)
+>         partition_xcpus_del(old_prs, parent, tmp->addmask);
+>     ...
+> }
+> 
+> Because 'adding' is not adjusted to include all of the invalidated partition's
+> CPUs, only the originally shrunk portion is processed. This incorrectly
+> isolates the shrunk CPUs, violating the housekeeping constraint that triggered
+> the error, and permanently leaks the remaining CPUs from the parent's
+> effective_cpus.
+> 
+> Can this be addressed, perhaps by adjusting the 'adding' mask similarly to how
+> PERR_NOCPUS is handled?
+> 
+
+Adjusting tmp->addmask as for PERR_NOCPUS would avoid leaking the remaining
+CPUs, but it is not sufficient. Returning all of them to a still-valid
+isolated parent could still consume the last housekeeping CPU. The isolated
+ancestor needs to be invalidated as well. I will address this separately.
+
+Thanks,
+Guopeng
+
+>> +	}
+>> +
+>> +	return ancestor;
+>> +}
+> 
 
