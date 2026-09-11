@@ -1,178 +1,122 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7748A2C3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 13:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789134512; cv=none; b=aVGLGDdmS9Z7hc61+Cf7APAajibVDWM9S39/qRedzp94+N2quzz31bmjdHvuhtb44NSP3LEDOSyRcB/NDBpnisJ0yee7inmUeUZNatiY5JH7EBrCCPPtpMJv5F22tBNH5kajgDC8JE3AwP4B2iQA4YMTChpYAbARyEQ4cr5sUFw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789134512; c=relaxed/simple;
-	bh=9apFp5UnuDXB3ohJr9fcXLx8hbtak23J3iGAHP8ZFeA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V7AYY0z4IYwJH4nQS/4tdvfsSwiwvpzL4nrKoVS4Q8W7bMvmHHxIyWCHNyacXunI/5SNEc4qe6PD3oeLcsO5tXFGEjn3yfpLDOIfdCbpLjgB+uefIiynS+qiWBqZq/GqQAob5AXAlJP2sf83dWH2mJMkXyrBQyuMC25am1YQVRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=FUfCq0Cu; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE69742CAE0
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 13:53:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789134836; cv=pass; b=RPU1pE+FWtp7gw2hqjsASvvJgCLCEOwjaPdfZQDgNO7ioPYGjq2DDEGlyL6kcd7Ne1Bebl+X7tToj/Vh9ldCU6yfoR4HI/lScsjw53cvNkiaueE/criiXkwubYJnO8BuEBJTKEo+KLKhLGLTzT4J7qwuYEulUle/ZGolPqGGNlM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789134836; c=relaxed/simple;
+	bh=lC+SLgB1AHFRxizEBCGTdbwr3jxvVqS6t6ieXv54AIA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c0yIqpRQouK9jE9aZMERz6QM8KGTY4jWUzlCLaFwPtw7xhAH+MrEL0p+r2CgVBsVA/5P5XcsWuaIO/KV0mtDx8b0JG9ViA3dhxpeAINgefPYuZsowJup++4MH2RGAX8+q3s+/Dp3mQTC5ItigOli95poo9BSnp1RMovkQkLAtC0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pAYcmPlj; arc=pass smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="FUfCq0Cu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=zsdqYu79SdDj0gicUYOLPKVlZ/Oun8ugKeMddZdiBng=;
-	b=FUfCq0Cu2gKEeCD74R2bFW4nf+9fGbuprY3qvjN3rwdMfw9qCojAJGIy8Vfanv
-	DjHLlXjMQvUo+rSyVm2qxYu52Aw/u1JXhannF5Ep0vzhMcCkOE8ngDjErkFgrRY3
-	vO3pbsmRE5qsAAHrjzvquSO7LKVeLROExuYtdMbFhTCVE=
-Received: from [IPV6:240e:b8f:91b3:d000:8f8f:b76e:3756:1454] (unknown [])
-	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wD3J+WQBqRqWFdKAA--.50611S2;
-	Fri, 11 Sep 2026 21:48:01 +0800 (CST)
-Message-ID: <e6600201-9743-44a4-aa1c-f03fc11c09de@163.com>
-Date: Fri, 11 Sep 2026 21:48:00 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pAYcmPlj"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5b81a2d33f7so1020593e87.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 06:53:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789134833; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ky7ZBr1OWTT8rOxk5lDz2cuSWQXqlEo0i5Z4wDzSIfiJw09Zg03eZw2HsIfC+TLJGk
+         zlssmNeXSlPdbVeMnho1wtMQZ+kLXXOsCsleYoaKUD22GSGLn6RqO+ZYzfKkmjH4L41+
+         5D8H6uxVLHPr7ESTToNxEbWusVN5nrFzbQe+njZzuaRhV/S6BF12V4wTVRFlzQtEdo8g
+         wS19Uwl4AqfCqIA2VuNmETPELcXyNF+ay+/tbew/8wvCHatf6sz4u10cNPW9/WjIes6+
+         qCnRCfyicHtebt4G3So6pAN9A5HJa/1M+xd1+dX9TBAV6/dHXxEnMCZvfQn5oELZpUWu
+         28Rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=lC+SLgB1AHFRxizEBCGTdbwr3jxvVqS6t6ieXv54AIA=;
+        fh=2xfOhBJyN5MrDXDnqEqgkqZlEOPXo6XBQo6m99gnAL4=;
+        b=GwVuhnkhB45jnpY9ySqV7tcv/39BA+vN6pIHURuZArJBkh7cA1IvfzzettCcdyF1E9
+         JnZUJWvV5TstbcYNVUx0vpgSp0Gd5LYVyhTv+zER68QTOHplpIg8bPk5UPzw8vazVshp
+         JGlrxvwka0o/lMZy9vE5pm2EKoplhzc79g8qg0FcVbowZFKnKlOZz9d2+4kItsjvVX/q
+         JJNI7N30aGaTT7WXTRLgDMlT1OsvPJfHYE60KExqLk1fTtFxOZi0LcJwSBkvcAAmsl07
+         ofE8sxyjUjxTFbNvAQA6OtNeuQ6TyMAIYV06rPcKPM4UnH+49mlaKt/CtoxeRAk8pjMO
+         9eBA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789134833; x=1789739633; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=lC+SLgB1AHFRxizEBCGTdbwr3jxvVqS6t6ieXv54AIA=;
+        b=pAYcmPljttxyAsiOryg4MFJ/7xvcgVhflNYzXNOa63z/91hgD47KcYqNZGgDKvTg7K
+         Q3kFICbFRj26FbNQVW8dEjt1UtMAHV991LrHwa+WUvEuoz3IiNzEL2dfD2ZoG+7i+ONR
+         uBNYVISbJnF/PzukdAYPnq+6KcQJuGUSuyTQWE6zOtVcuHPKfJyd7Wm+PuHxUkb4xp93
+         x5giZ8gfcaO8OfN2VMw+F3j7TCTbtD2ej5APHvBLYVkGoB73qsc4dbi558ZApoa26icJ
+         8kGGA1e0mDfAajpdDPJSg4HCiMQpbjSOkk94LiXBXvbxM2TQPVYUu/Z9LlRzc4EoGNrA
+         icyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789134833; x=1789739633;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lC+SLgB1AHFRxizEBCGTdbwr3jxvVqS6t6ieXv54AIA=;
+        b=iL33hevMGBFAyMlnyrGYq8dzPyUhzB+Bknbpdf2AGoeWEG+Is78PwAApAFqE3GioCZ
+         tIUa3bsMPAoXeHW4xn471h05c01Qw45sOPnQ0x0hV6P2GaEOfrsNHTG2uURys0T4R0qE
+         gM+yimEBo2nPdG11CLGqRRtPFuuDf+Iws0DeylbvOJspdFBJs5yvbDEAMw3coYTRulwM
+         SP5P26e5GZOQbGQoeflNvQdr9djExtoIAPtMXUpKZgEm3lB41aO6TgKhLojcmd0vbUuw
+         uEPc1tjmwPCaRPb381iOJIhwoi3/tBdv6V451qkdFQPD+mjTduHABSTAKe8s9GIYb2RO
+         FQxA==
+X-Gm-Message-State: AFuF++kzLmeDjEbRQrFctCyagPlqFV9275TED9/AJr7vV4s5TKCDauJA
+	0WNmaqm+Y+f7A8sAb4SugocnA9cn79m88tjwR0l4pxRrk1Yyup6xb3iI+T9sijDwPqdbjLp9q9z
+	dhb37dHhrOy4ZSgRJO6Utrfi+bLgjoIGO7/4i
+X-Gm-Gg: AYBFou00ODD+lwxSO74swyb7n8eTi32UY70Asgo671SCJngaVUMGvzuosMhcksvJK+B
+	U5yQpQw9WJAjgsONwJm0H8MVOtDW8KIfiIkZaR77a2KmsMfPTymuzqJQLda68Hta6yha4w/6CKh
+	xfCgVdQGYrOgjmh0ExbBjf9tGsITnuLgm45GWwZ6fKh7p/ed+6y2JYISLtwJz4yaivZBABs6k8v
+	xYnrlYbDpkgIg2v2o+tmOanctrYQPLADpeCLt3MqCIIqIxCt383QRgzhHU7BKqUJWWyZoigDrSX
+	8xWbbgM7uc0kCvC14YMNBhSIXaUR5HL8G7TFS8KJUrobJGxllg5qPaSEa85c6NsxaOrjKDdx7ze
+	ClPAZP5uOFWcHSg==
+X-Received: by 2002:a05:6512:1329:b0:5b6:1a7c:59e7 with SMTP id
+ 2adb3069b0e04-5b8a03182a5mr956226e87.65.1789134832601; Fri, 11 Sep 2026
+ 06:53:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/2] PCI: dwc: Remove redundant MPS configuration
+References: <20260911115346.17133-1-meven@kde.org> <20260911120208.21698-1-meven@kde.org>
+ <20260911121058.3B7DE1F000FF@smtp.kernel.org>
+In-Reply-To: <20260911121058.3B7DE1F000FF@smtp.kernel.org>
+From: =?UTF-8?B?TcOpdmVu?= <meven29@gmail.com>
+Date: Fri, 11 Sep 2026 15:53:40 +0200
+X-Gm-Features: AcwNN1V4lcleQzKLHYvViyVGqvNHJTcWxO6dU8SGMBM654mbATGAY0hn6jvi84o
+Message-ID: <CAOvFf8P_grCiKhqdgbJccKiyuQsv6nK6_NftA=7mcbMszVrpCA@mail.gmail.com>
+Subject: Re: [PATCH v2] HID: logitech-headset: add a battery driver for the
+ PRO X 2
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
- linux-pci@vger.kernel.org
-References: <20260911132145.211380-1-18255117159@163.com>
- <20260911132145.211380-3-18255117159@163.com>
- <20260911133411.3B4521F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <20260911133411.3B4521F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD3J+WQBqRqWFdKAA--.50611S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxurWUWw4fuw43Zry5Kw1Dtrb_yoWrCw4DpF
-	W5XF45CF45Jr45Wr1qkan5CFWxta93CF13JFnxG3ySvasIyFnrXa42yay5CayxXr4DK3Wv
-	vrWDKryFv3WYyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziWlkfUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6xFpDWqkBpH40wAA3s
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+> The HID subsystem guidelines specify that hid_hw_stop must be called befo=
+re
+> cancelling asynchronous workers.
 
+Stopping first is the unsafe order here. logi_headset_poll() ends in
+hid_hw_output_report(), so a work item still running would send on a
+transport hid_hw_stop() has already torn down.
 
-On 9/11/26 21:34, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Low] Unused macros PCIE_CAP_MAX_PAYLOAD_SIZE and MAX_PAYLOAD_SIZE left behind after removing the MPS configuration function.
-> - [Low] Misleading function name and warning message for MRRS calculation after removing MPS configuration.
-> 
-> Pre-existing issues:
-> - [High] 32-bit read-modify-write of PCI_EXP_DEVCTL inadvertently clears W1C error bits in PCI_EXP_DEVSTA.
-> --
-> 
-> commit 3ff79063d97cb0f265efaab65bab69ff2c512a3d
-> Author: Hans Zhang <18255117159@163.com>
-> 
-> PCI: dwc: Remove redundant MPS configuration
-> 
-> The Meson PCIe controller driver manually configures maximum payload
-> size (MPS) through meson_set_max_payload, duplicating functionality now
-> centralized in the PCI core.  Deprecating redundant code simplifies the
-> driver and aligns it with the consolidated MPS management strategy,
-> improving long-term maintainability.
-> 
->> diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
->> index 8559d132dcde8..8c176f78953e9 100644
->> --- a/drivers/pci/controller/dwc/pci-meson.c
->> +++ b/drivers/pci/controller/dwc/pci-meson.c
->> @@ -273,22 +273,6 @@ static int meson_size_to_payload(struct meson_pcie *mp, int size)
->>   	return fls(size) - 8;
->>   }
-> 
-> [Severity: Low]
-> With the removal of the payload configuration function, this helper is now
-> exclusively called by meson_set_max_rd_req_size() to calculate the Max Read
-> Request Size (MRRS).
+drivers/hid mostly cancels first: steelseries, steam, kysona, asus,
+nvidia-shield. corsair-void stops first, but its battery_work only calls
+power_supply_unregister() and power_supply_changed() and never touches the
+device.
 
-Hi,
+cancel_work_sync() handles a work that re-arms itself. The only
+schedule_delayed_work() calls here are in probe() and at the end of the wor=
+k,
+raw_event() never schedules.
 
-Will add 0003 patch to rename function name.
-s/meson_size_to_payload/meson_size_to_mrrs/
+Which guideline do you mean? I find nothing on this anywhere in
+Documentation/, and the kerneldoc of hid_hw_stop() does not mention workers=
+.
 
-> 
-> Does this function name and its internal log message:
-> 
-> 	dev_warn(dev, "payload size %d, set to default 256\n", size);
-> 
-> need to be updated to reflect that it is calculating MRRS? Leaving it as-is
-> might cause confusion for future maintainers.
-> 
->>   
->> -static void meson_set_max_payload(struct meson_pcie *mp, int size)
->> -{
->> -	struct dw_pcie *pci = &mp->pci;
->> -	u32 val;
->> -	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->> -	int max_payload_size = meson_size_to_payload(mp, size);
->> -
->> -	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
->> -	val &= ~PCI_EXP_DEVCTL_PAYLOAD;
->> -	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
->> -
->> -	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
->> -	val |= PCIE_CAP_MAX_PAYLOAD_SIZE(max_payload_size);
-> 
-> [Severity: Low]
-> Should the definition of PCIE_CAP_MAX_PAYLOAD_SIZE be removed as well? Since
-> it is no longer used after removing this function, it appears to be dead
-> code now.
-
-The next version will remove:
-
-#define PCIE_CAP_MAX_PAYLOAD_SIZE(x)	((x) << 5)
-#define MAX_PAYLOAD_SIZE		256
-
-
-Best regards,
-Hans
-
-> 
->> -	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
->> -}
->> -
->>   static void meson_set_max_rd_req_size(struct meson_pcie *mp, int size)
->>   {
->>   	struct dw_pcie *pci = &mp->pci;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does meson_set_max_rd_req_size()
-> inadvertently clear W1C error bits in PCI_EXP_DEVSTA?
-> 
-> This function performs a 32-bit read-modify-write on PCI_EXP_DEVCTL:
-> 
-> 	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
-> 	val &= ~PCI_EXP_DEVCTL_READRQ;
-> 	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
-> 
-> Because this 32-bit access covers both the 16-bit PCI_EXP_DEVCTL and the
-> adjacent 16-bit PCI_EXP_DEVSTA, it fetches both. PCI_EXP_DEVSTA contains
-> multiple Write-1-to-Clear (W1C) error flags. Writing the entire 32-bit value
-> back means any W1C bit in DEVSTA read as '1' is written as '1', inadvertently
-> clearing the error status and masking hardware faults.
-> 
-> Should this be updated to use dw_pcie_readw_dbi() and dw_pcie_writew_dbi()
-> instead?
-> 
-> [ ... ]
-> 
->> @@ -363,7 +347,6 @@ static int meson_pcie_host_init(struct dw_pcie_rp *pp)
->>   
->>   	pp->bridge->ops = &meson_pci_ops;
->>   
->> -	meson_set_max_payload(mp, MAX_PAYLOAD_SIZE);
-> 
-> [Severity: Low]
-> Should the MAX_PAYLOAD_SIZE macro be removed as well? Since its usage is
-> removed here, leaving the macro behind leaves dead code.
-> 
->>   	meson_set_max_rd_req_size(mp, MAX_READ_REQ_SIZE);
->>   
->>   	return 0;
-> 
-
+--=20
+M=C3=A9ven
