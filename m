@@ -1,60 +1,36 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-79.mta0.migadu.com [91.218.175.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B015C3876D5;
-	Fri, 11 Sep 2026 03:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FDF30568B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.79
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789098823; cv=none; b=MdHmWj3NqAQ3+v9w5MlL/o8k6B+SNvII53jorwTFulprBwEMcJRYt36pFz3Z8fOXtrJm9xkFZk8umDqWIr7xFcRpf+roL8brwmtWNPySIzXKpKMm73kxnC5zutqHkMNSh2aUKdMS6K5BdgxQZFKHTdZnAKvw+ArGtmAEWCRZ4l8=
+	t=1789101099; cv=none; b=se0Wbwh1beXyB4n3ZPG5LsODq9otVVts0M50n8P97zKbUqKWMDe/olZe9zMByN8vkDlBkv/9qP2NmoP9apKQFt0Kqa7V2X2dtxTyZcNcAzNjnmbN/kfIFyPKJ/CB5HyPlBlynVRN2gEZxaWfXq3Je4Nu0EeF9UH7eKqEvokp9cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789098823; c=relaxed/simple;
-	bh=1S0infcIJCSHpPOmP/AhiyT/XsJf4lehWJdk01Q3zMc=;
+	s=arc-20240116; t=1789101099; c=relaxed/simple;
+	bh=49+fXp8HAJ/oeMWxjcITITOpfTZZUcA5bozm756fYyk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lx8h5W3p9CexwFGWZrfSclCT803wp19Vhv6ktPlRdYgK6lQphMIXiie8Q4Jg1crlxhTT78G6tteyMlxnwqL7idJRNvX+f+nvKgutD4Ifh3xNVSQPL0qOB71g9Qciv26wZwGtt3dbBrncGFjVnILjqD0Py/WD2T99oFLGSdEClJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AxtZHwIz; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=mwRXXGGL8Ne10gjigWI3tEkrO7pIkTUHYQv8FgrGO4TRfagrnnCZ4k+4LHRJNVuYL7aQKP2C0Usek5ps+AW4R1N/GnkHVmNAlEtEs0lTRBr1KFd6zRaHWkGze/qM54x2ZebwjWakvoszSwVacjc/yHdXizFZijii0P/AnFYZ49k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=na27CaW3; arc=none smtp.client-ip=91.218.175.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AxtZHwIz"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68B12JK72632217;
-	Fri, 11 Sep 2026 03:53:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=PEhpIH
-	FRWlvPF+yjVIMIHkPbfyd5purfG0FTWg5ZZ1g=; b=AxtZHwIzQyHtvXOx5RZBQy
-	ATFS23SQGL0YV/w82fq/+ktivNVEZVfau61OgydXuvIYs6uRaOILLmjl67W1VJkz
-	r79IvNv7+/EPr+fL6mm5f0RP4hJl28cgRayyHtTpgYLAq5fDR8u9iZgTuua9oKzL
-	IQRwUIPK0KrVjtFefIDofiALW+JcO4P7t/bhIFXyk2E90ll8SolBr8QyvfOghGMr
-	LJVs9IoPFfG78pWpgUKt6aXHwr/RVbS+gLia2ndgDxwHPlHiwjB40zye62w/frsN
-	qC0W+19BCUNbFU34iiO3390LxogTAn3qGFYWS9rWPvqJxjfX8dHO8WcY1Bu1s0lg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8n948y-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 03:53:40 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68B158PB872147;
-	Fri, 11 Sep 2026 03:53:39 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvwk459k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Sep 2026 03:53:39 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68B3rdZj25035358
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 11 Sep 2026 03:53:39 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1E29E58058;
-	Fri, 11 Sep 2026 03:53:39 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DA6E058057;
-	Fri, 11 Sep 2026 03:53:38 +0000 (GMT)
-Received: from [9.61.103.123] (unknown [9.61.103.123])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 11 Sep 2026 03:53:38 +0000 (GMT)
-Message-ID: <6db82d74-2251-416b-8a29-7caa9301c2c5@linux.ibm.com>
-Date: Thu, 10 Sep 2026 20:53:38 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="na27CaW3"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=49+fXp8HAJ/oeMWxjcITITOpfTZZUcA5bozm756fYyk=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789101092; v=1; x=1789705892;
+ b=na27CaW3DUJoakpEEyRnveDZP9B9CJSaaZNQUSTxObp4hpZ9qpFGaX2NHJqw2ZzgR+ASiTRD
+ ZrFPmZG8tIsgtXrVW3QKWcL3q+LLF6w/6i725Eq0B8vy1VCBbzmSY3uTsTpDw3QjUKX+JVxXLWz
+ xYGWpiGUm627TT4ORBzRcTcs=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b6697cd5c2ae9746;
+	Fri, 11 Sep 2026 04:31:32 +0000
+X-Mizu-Trace-ID: b6697cd5c2ae9746
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <1720a0f5-5eaf-45e0-9cf1-6cdd3995ce66@linux.dev>
+Date: Thu, 10 Sep 2026 21:31:30 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,111 +38,106 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/9] scsi: ibmvfc: add interrupt routine for
- asynchronous sub CRQ
+Subject: Re: [PATCH bpf-next v2 06/12] bpf: Recognize by-value struct and
+ __int128 kfunc arguments
+Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-References: <20260911021910.1038128-1-tyreld@linux.ibm.com>
- <20260911021910.1038128-6-tyreld@linux.ibm.com>
- <20260911024419.047191F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tyrel Datwyler <tyreld@linux.ibm.com>
-In-Reply-To: <20260911024419.047191F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc: bpf@vger.kernel.org
+References: <20260909062522.4001896-1-yonghong.song@linux.dev>
+ <20260909062554.4007131-1-yonghong.song@linux.dev>
+ <20260909064638.AA26D1F00A3A@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260909064638.AA26D1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=NMVAaE6g c=1 sm=1 tr=0 ts=6aa37b44 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=teEPZJ_9TZz4PRgMrrAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: uu-qWeONm0HTpkVK3I6hDLfIUpBFj7_y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDA0NSBTYWx0ZWRfXyisOqxM2j71y
- mfZ5tvhYFqj3/LHp3hO6LUtcNZNSPyrPK8DaLO2w3Qn8NFqi3qpGVt9QwFymyW1yiiRBM7rpNTA
- cWCfTZeiKL9hoS9IFOvA7g26E35aINmfVSFV/yjg1JbSTHyorsBmrW12suURA7QK2cx/0c1hkrV
- xt1DHcRH09EM3sMnmkda9QkQTjDY/OxgaeYiVMHkMMKieWynigVTSyxmX9V2pZ5l1u4CLV+VZte
- +xnvyOMDu3iu1JM46AfstwW5zhN1o2I0XeB/c+qTe/+tLHllVYAAv3j6sH8b31Ru06R7mH/d4+c
- agcdsFdkyLTyI4JwyfazvAkCxVKQKvlMSRuplgmZ26NYmRqfIq0dTAb1LYZ60HSJwI1HPxu72Mn
- dO5LfJjuZ9fqUDH4OkyKrpiG4/xVACWPEvhBaCE1yaeozmkrgjkrpXoUxlq8SNMbs4eVHFNWr+b
- uC49tvxBBQS8RyrDb+w==
-X-Proofpoint-ORIG-GUID: uu-qWeONm0HTpkVK3I6hDLfIUpBFj7_y
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDA0NSBTYWx0ZWRfX6wXUARvgF7/b
- hA6JBnfcWyfsBBxqo+fIkqgRdx6UIo+M7OJMGnGHRaVhPZG/+6idgcOON981Dam5juJkIh888+w
- xR1MvxG+ZXmO4XRuoaMsMGhoH8QkaGc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-11_01,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110045
 
-On 9/10/26 7:44 PM, sashiko-bot@kernel.org wrote:
+
+
+On 9/8/26 11:46 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Missing address-of operator (`&`) when referencing `Scsi_Host`'s `host_lock`, causing a fatal compilation error.
+>
+> Pre-existing issues:
+> - [High] bpf_kfunc_stack_access_bytes incorrectly maps stack slots to BPF_REG_6 through BPF_REG_9 (or higher), causing an out-of-bounds read and bypassing uninitialized memory checks.
 > --
-> 
-> commit af3cb177b633d7c7bd704888c846393f549edaef
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
-> Date:   Fri Sep 11 02:19:05 2026 +0000
-> 
->     scsi: ibmvfc: add interrupt routine for asynchronous sub CRQ
-> 
-> This commit adds an interrupt routine and a draining function for asynchronous
-> sub-CRQ events. It handles disabling and enabling IRQs to process entries
-> while holding the queue and host locks.
-> 
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index daec81f48857d..553fca31cb3aa 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
-> 
+>
+> commit 7f4b25d0dad6ba6fed374b3111fcc89d67434d87
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Recognize by-value struct and __int128 kfunc arguments
+>
+> This commit modifies the BPF verifier to support kfuncs taking structs or
+> int128 by value. It updates argument tracking to walk slots rather than just
+> registers, rejecting multi-slot arguments until JIT support is fully added.
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index cf526f28f3e5b..94c359351bb69 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
 > [ ... ]
-> 
->> @@ -4376,6 +4376,60 @@ static struct ibmvfc_crq *ibmvfc_next_scrq(struct ibmvfc_queue *scrq)
->>  	return crq;
->>  }
->>  
->> +static void ibmvfc_drain_async_subq(struct ibmvfc_queue *scrq)
->> +{
->> +	struct ibmvfc_host *vhost = scrq->vhost;
->> +	unsigned long flags;
->> +	struct ibmvfc_crq *crq;
->> +	int done = 0;
+>
+>> @@ -13765,23 +13850,32 @@ s64 bpf_kfunc_stack_access_bytes(struct bpf_verifier_env *env, struct bpf_insn *
+>>   	btf = meta.btf;
+>>   	args = btf_params(meta.func_proto);
+>>   	nargs = btf_type_vlen(meta.func_proto);
+>> -	if (arg >= nargs)
 >> +
->> +	spin_lock_irqsave(vhost->host->host_lock, flags);
-> 
-> [Severity: Low]
-> Does this code need an address-of operator for host_lock?
-> 
-> Since kernel 5.14, the Scsi_Host's host_lock field is an embedded spinlock_t
-> struct, so passing it directly to spin_lock_irqsave causes it to be passed
-> by value. This regression will result in a compilation error because the
-> lock function expects a pointer to a spinlock_t.
-> 
-> Would it make sense to also update ibmvfc_process_async_work, as well as
-> ibmvfc_async_fpin_test and ibmvfc_full_fpin_test in the KUnit tests, which
-> appear to have this same pattern introduced earlier in the series?
-> 
->> +	spin_lock(scrq->q_lock);
->> +	while (!done) {
-> 
-> [ ... ]
-> 
->> +		} else
->> +			done = 1;
->> +	}
->> +	spin_unlock(scrq->q_lock);
->> +	spin_unlock_irqrestore(vhost->host->host_lock, flags);
-> 
-> [Severity: Low]
-> Similar to the lock acquisition above, does spin_unlock_irqrestore also
-> need an address-of operator to pass a pointer to host_lock?
-> 
->> +}
-> 
+>> +	/*
+>> +	 * @arg is an argument slot and a 16-byte parameter takes two of them,
+>> +	 * so walk the parameters to find the one that starts at this slot. A
+>> +	 * slot holding the upper eightbyte of such a parameter belongs to no
+>> +	 * pointer, and neither does a slot past the last parameter.
+>> +	 */
+>> +	for (i = 0, slot = 0; i < nargs && slot < arg; i++)
+>> +		slot += kfunc_arg_slots(btf_type_skip_modifiers(btf, args[i].type, NULL));
+>> +	if (i >= nargs || slot != arg)
+>>   		return 0;
+>>   
+>> -	t = btf_type_skip_modifiers(btf, args[arg].type, NULL);
+>> +	t = btf_type_skip_modifiers(btf, args[i].type, NULL);
+>>   	if (!btf_type_is_ptr(t))
+>>   		return 0;
+>>   
+>>   	/* dynptr: fixed 16-byte on-stack representation */
+>> -	if (is_kfunc_arg_dynptr(btf, &args[arg])) {
+>> +	if (is_kfunc_arg_dynptr(btf, &args[i])) {
+>>   		size = BPF_DYNPTR_SIZE;
+>>   		goto out;
+>>   	}
+>>   
+>>   	/* ptr + __sz/__szk pair: size is in the next register */
+>> -	if (arg + 1 < nargs &&
+>> -	    (btf_param_match_suffix(btf, &args[arg + 1], "__sz") ||
+>> -	     btf_param_match_suffix(btf, &args[arg + 1], "__szk"))) {
+>> +	if (i + 1 < nargs &&
+>> +	    (btf_param_match_suffix(btf, &args[i + 1], "__sz") ||
+>> +	     btf_param_match_suffix(btf, &args[i + 1], "__szk"))) {
+>>   		int size_reg = BPF_REG_1 + arg + 1;
+>>   
+>>   		if (aux->const_reg_mask & BIT(size_reg)) {
+>>   			size = (s64)aux->const_reg_vals[size_reg];
+> [Severity: High]
+> This is a pre-existing issue, but does this code lead to an out-of-bounds
+> read or bypass uninitialized memory checks when the pointer argument is
+> passed on the stack?
+>
+> The size_reg calculation inherently assumes the size argument is always passed
+> in a register. If the pointer argument slot is 4 or higher (which might be
+> more common now that large by-value structs consume multiple slots), the size
+> argument lands on the stack.
+>
+> In that scenario, size_reg maps to BPF_REG_6 or higher, which are
+> callee-saved registers. A BPF program could place a fake constant in one of
+> these registers to trick the verifier into thinking 0 bytes are read, while
+> the runtime stack argument is non-zero. This could bypass stack
+> initialization checks and potentially leak uninitialized kernel memory.
+>
+> Furthermore, if the pointer argument slot is 8 or higher, size_reg becomes
+> greater than or equal to 10. Checking BIT(size_reg) and reading from
+> aux->const_reg_vals[size_reg] would result in an out-of-bounds array read,
+> since const_reg_vals is sized for 10 registers. Should this logic be updated
+> to correctly query the BPF stack when the size argument is passed there?
 
-Again, as noted in patch 1 this breaks the build. Will fix in v10.
+You are right. Will fix.
 
--Tyrel
+>
+
