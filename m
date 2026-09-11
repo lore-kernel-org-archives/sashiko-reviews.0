@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-142.mta0.migadu.com [91.218.175.142])
+Received: from mta0.migadu.com (out-56.mta0.migadu.com [91.218.175.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1764837189C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29473E8338
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 06:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789104875; cv=none; b=qiLkvEHYgj7WL03Koj+MTJEzYP96Dec9TcIJutaXZp3q9NoaKY48jYFrHFo3L6g3mAbxIDm24odZ0SuJEgfg7ceItUuK8Z+MRTlT59NPljT5wQTzZT8QXiRDNz2TmUHhFaHBVlphcwIl7cheX79l5G6Qjc6x7rkhLmVdMofcYOg=
+	t=1789106881; cv=none; b=hjHeQ/XyXcMb49hrvj/eNKqmzN9vsXyUQasGpbu8KFLM6NMhrxAAkgt+bf4+YuEjSCeNXbIeZ2MXFegda2cYmNMFdrEtOVlhIDmsqiE8hsyrX1VbJLG0POGe496Hek+w1NOiY0bmkrLiiTxewgdBxXkCRmLacnw4+p4bi+x0enk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789104875; c=relaxed/simple;
-	bh=sVEV/XK5D/oco1XqkmpUo65zt1a8V9JerTrhuFHJw6g=;
+	s=arc-20240116; t=1789106881; c=relaxed/simple;
+	bh=h8GPIkniRK73ShW81tfgfiofelIBlcP5lDIZ39GiHJ8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KMWr+1Wgpz2HyHcF/LLCDJfs8O0osdjJWL3IItH9CVbHjyz46SUtGi792aSnWaVt/MupefgOVwwJUh1DoH8TqRrkNDI+op65q0h1TxF1kWt/JUyq9dSZvbcFznKfeiuoL+hRcOySg57kRERNP4q1PWa7HyqKVWsZumWocMG30/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=G4zKQY9q; arc=none smtp.client-ip=91.218.175.142
+	 In-Reply-To:Content-Type; b=KkYRNd+LhKYDBYXnJy6WFjvLW+jKH1w0ov9kfbBCUyj6r8ASXNdVtlPipuIDjpDUwdy1D+bQcVWr4FSHSn/hIQ5BGfYtvxi4f0etG6dPXVOkbaAD0gUx1E/I8O38Gm5MDuFwtyAXHoyDC/KRfY9tit5l9chs29FX/x17FcsW2DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ev4lC9LE; arc=none smtp.client-ip=91.218.175.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="G4zKQY9q"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ev4lC9LE"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=sVEV/XK5D/oco1XqkmpUo65zt1a8V9JerTrhuFHJw6g=;
+DKIM-Signature: a=rsa-sha256; bh=h8GPIkniRK73ShW81tfgfiofelIBlcP5lDIZ39GiHJ8=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789104872; v=1; x=1789709672;
- b=G4zKQY9qaI3yjlu50QdOouUiJYgJ5lk6JSnQIk4tOXnUS6dKNKKKVn4f9YRvtokiJxGsLx71
- ahuJqvsKAK/65Lx6UMs9G7Qbe2tpJhujr5Eh9xlYz2HFUmZp5Yxj/Y4nJjuxR6ndrxQ2UWCDhdM
- AWaAsipVogXR8GsXwYcNN6wg=
+ t=1789106876; v=1; x=1789711676;
+ b=ev4lC9LErNn4ru5bOwEWWqRpmAamJAiJd8Ny+zgmMyccPEJLnTMgRJCdkRXwUDQN/E6cM2RB
+ 2Cl//2KLNxQsveW8jzH8RpwhVR1fGArYsCB88zpIcmJ0SmZizS7btmfWCsy3+u+insJ8MmVVnY2
+ C5QRJpjM7kCBfp1FCEhycLe0=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 7b98c62012699b19;
-	Fri, 11 Sep 2026 05:34:32 +0000
-X-Mizu-Trace-ID: 7b98c62012699b19
+Received: by smtp.migadu.com with ESMTPS id af4da63a47fc018e;
+	Fri, 11 Sep 2026 06:07:56 +0000
+X-Mizu-Trace-ID: af4da63a47fc018e
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <4ef9a3d4-7a79-4144-baff-e236f8eb7c5e@linux.dev>
-Date: Fri, 11 Sep 2026 11:04:29 +0530
+Message-ID: <3f3e5658-4393-4530-8b3b-987fe20ddc95@linux.dev>
+Date: Fri, 11 Sep 2026 11:37:52 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,161 +38,139 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 10/13] selftests/bpf: cover the low-32 link
- for narrowing stack fills
+Subject: Re: [PATCH bpf-next v2 09/13] bpf: track low-32 scalar equality
+ across narrowing stack fills
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260910164635.459558-1-vineet.gupta@linux.dev>
- <20260910164635.459558-11-vineet.gupta@linux.dev>
- <20260910170020.04A4E1F000FF@smtp.kernel.org>
+ <20260910164635.459558-10-vineet.gupta@linux.dev>
+ <20260910170419.4C8601F000FF@smtp.kernel.org>
 From: Vineet Gupta <vineet.gupta@linux.dev>
 Content-Language: en-US
-In-Reply-To: <20260910170020.04A4E1F000FF@smtp.kernel.org>
+In-Reply-To: <20260910170419.4C8601F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/10/26 10:30 PM, sashiko-bot@kernel.org wrote:
+On 9/10/26 10:34 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added tests for narrow stack fills hardcode memory offsets (e.g., `(r10 - 8)`) which are only correct on little-endian architectures. On big-endian architectures like s390x, these offsets do not point to the lower bits, causing the BPF verifier to reject the programs and resulting in test failures.
+> - [Critical] Sign-extending loads incorrectly preserve conflicting SUBREG_ZEXT metadata.
 > --
 >
-> commit a42f9a6d4d49f17385f014eede55d6e82094a838
+> commit f939550a777ae3d2a7392dec744bffdc9fabcdda
 > Author: Vineet Gupta <vineet.gupta@linux.dev>
 >
-> selftests/bpf: cover the low-32 link for narrowing stack fills
+> bpf: track low-32 scalar equality across narrowing stack fills
 >
-> This commit adds five new BPF programs to test the verifier's handling of
-> narrowing stack fills, specifically targeting low-32 links and sign-extension
-> behavior.
+> This commit records a low-32 link for stack fills narrower than the wider
+> source, allowing the verifier to deduce relations between 32-bit narrows
+> and their wider origins. It also adjusts check_mem_access() to not clear
+> the id of a ->subreg register on a sign-extending load.
 >
->> diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
->> --- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
->> +++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 308ff53232f06..89be1240c99ae 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
 > [ ... ]
 >
->> +SEC("socket")
->> +__success
->> +__naked void zext_fill_narrow_from_wide_spill(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
->> +	*(u64 *)(r10 - 8) = r6;	/* slot linked to r6 */		\
->> +	r2 = *(u32 *)(r10 - 8);	/* narrowing fill, forms the link */ \
-> [Severity: Medium]
-> On big-endian architectures like s390x, won't reading 32 bits from offset -8
-> target the upper 32 bits instead of the lower 32 bits?
+>> @@ -3968,18 +3969,34 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+>>   
+>>   			if (size <= spill_size &&
+>>   			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
+>> -				if (env->bpf_capable && size == 4 && spill_size == 4 &&
+>> -				    get_reg_width(reg) <= 32)
+>> +				bool narrowing = get_reg_width(reg) > size * BITS_PER_BYTE;
+>> +				/*
+>> +				 * A narrowing fill keeps only the slot's low 32 bits,
+>> +				 * so record a low-32 link rather than dropping the
+>> +				 * relation, as a 32-bit mov from a wide source does.
+>> +				 * Which kind depends on how the load fills the high
+>> +				 * half, hence is_ldsx.
+>> +				 */
+>> +				bool subreg_link = narrowing && size == 4;
+>> +
+>> +				if (env->bpf_capable && size == 4 &&
+>> +				    (subreg_link || (spill_size == 4 && !narrowing)))
+>>   					/* Ensure stack slot has an ID to build a relation
+>>   					 * with the destination register on fill.
+>>   					 */
+>>   					assign_scalar_id_before_mov(env, reg);
+>>   				state->regs[dst_regno] = *reg;
+>>   
+>> -				/* Break the relation on a narrowing fill.
+>> -				 * coerce_reg_to_size will adjust the boundaries.
+>> -				 */
+>> -				if (get_reg_width(reg) > size * BITS_PER_BYTE)
+>> +				if (subreg_link && reg->id)
+>> +					state->regs[dst_regno].subreg =
+>> +						is_ldsx ? SUBREG_SEXT : SUBREG_ZEXT;
+>> +				else if (narrowing)
+>> +					/*
+>> +					 * Nothing to relate: either the slot has
+>> +					 * no id to share, or the fill is narrower
+>> +					 * than the 32 bits a link can describe.
+>> +					 * coerce_reg_to_size adjusts the bounds.
+>> +					 */
+>>   					clear_scalar_id(&state->regs[dst_regno]);
+> [Severity: Critical]
+> When narrowing is false, does this preserve a stale SUBREG_ZEXT property for
+> a sign-extending load?
 >
-> The bpf_stack_narrow_access_ok() check in the verifier expects to read the
-> least significant bytes of the spill slot, which on big-endian are located
-> at offset -4 for a 32-bit read. Could this hardcoded offset cause the verifier
-> to reject the program and break the test on big-endian systems?
-
-Goot catch. Fixed for BE and LE.
-
->> +	if w6 != 0 goto 1f;	/* narrows r6, propagates to r2 */ \
->> +	if r2 == 0 goto 1f;					\
->> +	r0 /= 0;						\
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
+> If a register with SUBREG_ZEXT is spilled to the stack and then read back
+> via a 4-byte sign-extending load, narrowing evaluates to false. This allows
+> the destination register to inherit the SUBREG_ZEXT property directly from
+> the stack slot, even though it is being sign-extended.
+>
 > [ ... ]
+
+Indeed if narrowing is false, wrong metadata can potentially be 
+introduced, a comment to that effect is added here.
+
+    /*
+      * A fill that is not narrowing copies the slot's
+      * kind verbatim, which a sign-extending load can
+      * contradict. check_mem_access() runs after this
+      * and drops any kind but SUBREG_SEXT once it knows
+      * the extension was not a no-op.
+      */
+
+
+See the second site below for actual fix...
+
+>> @@ -6736,13 +6753,15 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, struct b
+>>   			 * Sign-extension can change the register value relative
+>>   			 * to a scalar it is linked with by id (e.g. a zero-
+>>   			 * extending fill of the same spilled stack slot), thus
+>> -			 * drop the shared id in that case.
+>> +			 * drop the shared id in that case. A ->subreg link is
+>> +			 * the exception: it already records that only the low
+>> +			 * 32 bits are shared, and how the high half follows.
+>>   			 */
+>>   			bool no_sext = reg_umax(&regs[value_regno]) <
+>>   					(1ULL << (size * BITS_PER_BYTE - 1));
+>>   
+>>   			coerce_reg_to_size_sx(&regs[value_regno], size);
+>> -			if (!no_sext)
+>> +			if (!no_sext && !regs[value_regno].subreg)
+>>   				clear_scalar_id(&regs[value_regno]);
+> [Severity: Critical]
+> Does this check wrongly preserve the ID for SUBREG_ZEXT registers that
+> have just been sign-extended?
 >
->> +SEC("socket")
->> +__failure __msg("div by zero")
->> +__naked void zext_fill_byte_forms_no_link(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;						\
->> +	*(u64 *)(r10 - 8) = r6;					\
->> +	r2 = *(u8 *)(r10 - 8);	/* 1-byte fill: no link */	\
-> [Severity: Medium]
-> Does this hardcoded 8-bit read from offset -8 target the most significant byte
-> rather than the least significant byte on big-endian architectures?
-
-Fixed.
-
->> +	if w6 != 0 goto 1f;					\
->> +	if r2 == 0 goto 1f;	/* not deduced */		\
->> +	r0 /= 0;						\
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
-> [ ... ]
+> Because SUBREG_ZEXT is non-zero, !regs[value_regno].subreg evaluates to
+> false, skipping the clear_scalar_id() call for a register that might hold
+> a sign-extended negative value.
 >
->> +SEC("socket")
->> +__success
->> +__naked void sext_fill_narrow_from_wide_spill(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
->> +	*(u64 *)(r10 - 8) = r6;	/* slot linked to r6 */		\
->> +	r2 = *(s32 *)(r10 - 8);	/* narrowing sx fill */		\
-> [Severity: Medium]
-> Similar to the previous cases, will this 32-bit read from offset -8 read the
-> upper 32 bits on big-endian systems and cause verifier bounds tracking to fail?
-
-Fixed.
-
->> +	if w6 != -1 goto 1f;	/* narrows r6, propagates to r2 */ \
->> +	if r2 == -1 goto 1f;	/* sign-extended, not 0xffffffff */ \
->> +	r0 /= 0;						\
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
-> [ ... ]
+> Later, if a conditional branch triggers sync_linked_regs(), it will see
+> SUBREG_ZEXT and invoke reconstruct_zext32(). This would forcefully set the
+> bounds to a zero-extended positive value.
 >
->> +SEC("socket")
->> +__failure __msg("div by zero")
->> +__flag(BPF_F_TEST_STATE_FREQ)
->> +__naked void fill_kinds_reach_different_values(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	r6 &= 1;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r8 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r8 |= r0;						\
->> +	*(u64 *)(r10 - 8) = r8;					\
->> +	if r6 >= 1 goto 2f;					\
->> +	r2 = *(s32 *)(r10 - 8);	/* sign-extending fill */	\
-> [Severity: Medium]
-> Will these narrow fills also fail verifier checks on big-endian machines due
-> to the fixed -8 offset pointing to the wrong 32-bit half?
-
-Fixed.
-
+> At runtime, the discrepancy between the verifier's zero-extended positive
+> bounds and the actual sign-extended negative value could bypass bounds checks,
+> potentially leading to out-of-bounds memory reads or writes.
 >
->> +	goto 1f;						\
->> +2:								\
->> +	r2 = *(u32 *)(r10 - 8);	/* zero-extending fill */	\
->> +1:								\
->> +	if w8 != -1 goto 3f;					\
->> +	if r2 == -1 goto 3f;	/* only the sign-extending path */ \
+> Should this explicitly check for SUBREG_SEXT rather than just allowing any
+> non-zero ->subreg value?
+Exactly that. And the first path leads here so the comment above suffices.
 
+Thx,
+-Vineet
