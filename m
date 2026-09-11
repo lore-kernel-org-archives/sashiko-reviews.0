@@ -1,36 +1,67 @@
-Received: from mta0.migadu.com (out-197.mta0.migadu.com [91.218.175.197])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9503033E3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 01:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB873D6CD3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789091909; cv=none; b=KP9zT/EPFzVdq9ctUjTA0Iv+oUF2sbFt48dpjKZNBkWsKDqTSEKYYnM9zbfhSUpZHTia46AkqRBiEnFNbsMSVBw1MzTEwJ6+zNJ0GgYdgfFJJTKIY/dvR6920NBMKsEYl0nReZ+GurAHNtzXVCFa0b9TKZ2Y9rfxOLZIrXHwnXI=
+	t=1789092927; cv=none; b=GMA0RBGYtEUIoKu12ccowknqXzXsgMtq5gZ9/hOf3SYmh/ip9rESnSzM7nQFz6AyFWI9crRy97Oq/Y7bGUVJioWDPDXRhW3xiF+amfg6J0LS0J4d28CfbIZC5j7evq9UwtiTOWNxBHeeCc7yW4irq9OBCye12qEIc9jwVYnolyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789091909; c=relaxed/simple;
-	bh=Su7/he/rLAfnoMYt2HCIPpgklMpzjuXx3YY78IqHwEQ=;
+	s=arc-20240116; t=1789092927; c=relaxed/simple;
+	bh=c5/c/iuk1PLNOXDE+ezMovGNa06OcIGGAi7k0LM2HDs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mwBxKe1AEY43u2KPi3hKzmQ8xwyJ0CrO0pI89w5l6r7xtwP0ymWucJBVDGF8DYTE/kzGcFUIUtk+qJEGBTDDADgAA5EKxZzY2cUJw3LbMJ96HNTDxukRIplrFOz8TRoDGWoA/gRH/8m5DIyDLQ/2weNtiEYXsoArCmAREYf8bxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r9GdKAqz; arc=none smtp.client-ip=91.218.175.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=U6sjaoJm+/5BVHySzAW+I3dkTujYETIRwQBbavXiIrOKuVwJSywn4fDtPCr7HVqNL/ejN6VLt+btHgmNAYoW1uSUogvKxOqZZPNcE2P1HEzksed+RWX5oqYCOKDEtrNThRDJaWbMsRprz8q3OWRzm7X7hOyw33Sox0ILGanZZKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9D5LLb0; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r9GdKAqz"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Su7/he/rLAfnoMYt2HCIPpgklMpzjuXx3YY78IqHwEQ=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789091903; v=1; x=1789696703;
- b=r9GdKAqzRrFF64eDiYGauUiLrnhvckdhGA+2IkEN3ABilV1LaisSJDzNm+SNB2wgpsRw46Nt
- k7UFX6/FW7vFjQ24ftqcCgmd7zSX72rHWIfKaEkjaC9S2D7tcmbAbmlUaPQ9/XA16HQlUiF+Fjh
- xstIIdWhZJbItxb93f+Mb/8M=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 763b54b3587cf8a0;
-	Fri, 11 Sep 2026 01:58:23 +0000
-X-Mizu-Trace-ID: 763b54b3587cf8a0
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <430b860f-13c5-45f4-9fb9-ef5235c5a5a6@linux.dev>
-Date: Fri, 11 Sep 2026 09:58:20 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9D5LLb0"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-853c07a76adso433794b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 19:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789092925; x=1789697725; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bx9ZpFS+OPzNWA2YRAzKII3GvhLYAanR46+NuPP9i20=;
+        b=E9D5LLb00OOu9DESay9UZEf9QFryNsamwWOego/x1NbFQjFN21R7s61EWN1C+SMppG
+         i8ABxJPPcg483UA8CHFOIo+TGorn+mL/12HVIahtPAZqHmbm32rWv5BLJWSkbQ+aIoDK
+         ncBx+aS4BSw3HYVDZv2jfGgpItpjlM/9Yg7nRbkrzJdrXSAR+WvaFH3kzYpxryFfgLQ/
+         gIBrBAIzXiM/uAhQMYPLWkq0CniY9rs6iERLrG8ogzaic/4D1O1M3eBH5tWSOWJpbHLa
+         Py2ST1ZbSpCLURRisDhQ7lo82VzQItbBbFxaJI85mS7i79+slD2OLMLrUA22i75635ik
+         IL1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789092925; x=1789697725;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=bx9ZpFS+OPzNWA2YRAzKII3GvhLYAanR46+NuPP9i20=;
+        b=RH446Ffab2nM4jSZ5YmPkcpeHbmjfBqu3flYihzXJS41xnbckcYkaeNG17OsnWVvDu
+         bftHBxYHB07L1w97dRN4dCi3drYdyLZXIBWRbiLpcrOTamPaE9Uq+gb6vDnD2pePYdFW
+         ZYWDgm4Ge1tqTeRnoe5rCYgdqJuhZeyOWSnyuW7D+JuyuGNEx3SCuGgTocfrp89o3IiK
+         mmy6p6ZNU6Nm6BpVcU9DHUcX4DegpXRYSGqpLfoKhAOeaNdOVRnYPPKuT/NPFYhVdc5V
+         lc0VWrfmyc9Y9O1OH0o41NhEo8XYmuY//NWAyQ1rn6l0IsiFidaJDuqrUuPwM9rs4xc0
+         Xs1Q==
+X-Gm-Message-State: AFuF++mxSOSxe8iZNvaCsB3OjQ2AbWkLPvaeOTWChx3FqM7Yml8S0w9b
+	UYrJBGlzvfIhVb2UG5LlbpF18VPKHBQUSjGgE6MdQu8tGldep+7irnbKhv24tQ==
+X-Gm-Gg: AYBFou3kUV2FIWcFzf9gr9hgLTnXJdAb4An7MJsQlFlBuv6gsdUmndt0RUH6qca4HWA
+	WnQR9B90whQ+aoL9DfkKg7tsTOhg4Y0M3yd4lOBbf2hiBUmzYh5QvNxMnehT0dC3QCuAgJ0Z+N4
+	6OJKwNruujYvY4BX9YKJ/1zt8ZlsJHKgFp548QIypb6euJWewvIuzb81v6P+n66Javezh0lLpLH
+	vxDKqE/JFPBNnhOMTMpRh30h74L2UH6sp7suQwkTtVAsat8Etn20Q1bQxVQL+weNgf55mjQzoKh
+	0T5a1alvnZvHuX5lyKZPlyYortODhrxHr6ow8g7muiXGeNoExQjNAvTIAF20IHlyM2BZu8rahSA
+	K8D0Ik+7pccnEyEvCgWdeKtj0lOO8Vq4dvAOu5I9DC/fV2cVBCw5l8A+d3MTvXNtdoVy53iDftO
+	SyFv7L0OvAjDvumGTXRVuZAI26LfrXRAuXZFYq6rUrS0bMVwsNinOeD8DSN9T9SusGzs+dNv9r/
+	FH3Xa3sD8bC6R/L7zITNn0fecTP2zvzjukej3EX41X1mIvRhOL5NrkAKb7XnWVbjX8=
+X-Received: by 2002:a05:6a21:600c:b0:3c4:1c9f:d7e with SMTP id adf61e73a8af0-3daed14cf94mr3362546637.6.1789092924990;
+        Thu, 10 Sep 2026 19:15:24 -0700 (PDT)
+Received: from [172.19.1.47] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc4c652aa8dsm385498a12.7.2026.09.10.19.15.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Sep 2026 19:15:24 -0700 (PDT)
+Message-ID: <853110ab-1bd8-41cc-9b82-cc28002c0bed@gmail.com>
+Date: Fri, 11 Sep 2026 10:15:21 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,150 +69,61 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/7] cgroup/cpuset: Account for child CPU ownership in
- partition changes
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, mkoutny@suse.com, hannes@cmpxchg.org
-References: <20260910094546.5852-1-guopeng.zhang@linux.dev>
- <20260910094546.5852-3-guopeng.zhang@linux.dev>
- <20260910100101.171B11F000FF@smtp.kernel.org>
+Subject: Re: [PATCH v3] arm64: dts: nuvoton: ma35d1: add CAN nodes
+To: sashiko-reviews@lists.linux.dev, Zi-Yu Chen <zychennvt@gmail.com>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260908014526.413399-1-zychennvt@gmail.com>
+ <20260908015435.7DE071F00A3A@smtp.kernel.org>
 Content-Language: en-US
-From: Guopeng Zhang <guopeng.zhang@linux.dev>
-In-Reply-To: <20260910100101.171B11F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Jacky Huang <ychuang570808@gmail.com>
+In-Reply-To: <20260908015435.7DE071F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-
-
-在 2026/9/10 18:01, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Shrinking a root partition under an isolated parent permanently leaks CPUs and violates the housekeeping constraint.
-> --
-> 
-> commit 3a1165f79081dc8176afcf8e5f8289444f4e3b63
-> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
-> 
-> cgroup/cpuset: Account for child CPU ownership in partition changes
->     
-> effective_xcpus includes CPUs granted to valid child partitions. A change
-> to the parent must not apply its isolation state or housekeeping checks to
-> CPUs which remain owned by those children.
-> 
-> Link: https://sashiko.dev/#/patchset/20260820124202.517160-1-guopeng.zhang%40linux.dev?part=6
-> Link: https://sashiko.dev/#/patchset/20260828095643.13395-1-guopeng.zhang@linux.dev?part=1
-> Link: https://sashiko.dev/#/patchset/20260902102615.79189-1-guopeng.zhang@linux.dev?part=2
-> 
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index cc643715d4802..95e82bd18450d 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
-> 
 > [ ... ]
-> 
->> @@ -2951,6 +2997,49 @@ int cpuset_update_flag(cpuset_flagbits_t bit, struct cpuset *cs,
->>  	return err;
->>  }
->>  
->> +/*
->> + * Invalidate the highest isolated partition that contains @cs.
->> + *
->> + * A root partition returning CPUs to an isolated parent can consume the last
->> + * housekeeping CPU. Invalidating the highest isolated ancestor lets the
->> + * subsequent hierarchy update propagate invalidation down the chain and
->> + * return the CPUs to a root partition.
->> + */
->> +static struct cpuset *invalidate_isolated_ancestor(struct cpuset *cs,
->> +						   struct tmpmasks *tmp)
->> +{
->> +	struct cpuset *ancestor = parent_cs(cs);
->> +	struct cpuset *parent;
->> +	int err;
->> +
->> +	lockdep_assert_held(&cpuset_mutex);
->> +	if (WARN_ON_ONCE(!ancestor))
->> +		return NULL;
->> +
->> +	while ((ancestor != &top_cpuset) &&
->> +	       !is_remote_partition(ancestor)) {
->> +		parent = parent_cs(ancestor);
->> +		if (!parent ||
->> +		    parent->partition_root_state != PRS_ISOLATED)
->> +			break;
->> +		ancestor = parent;
->> +	}
->> +
->> +	if (WARN_ON_ONCE(ancestor == &top_cpuset))
->> +		return NULL;
->> +
->> +	WRITE_ONCE(ancestor->prs_err, PERR_HKEEPING);
->> +	if (is_remote_partition(ancestor)) {
->> +		remote_partition_disable(ancestor, tmp);
->> +	} else {
->> +		err = update_parent_effective_cpumask(ancestor,
->> +						      partcmd_invalidate, NULL, tmp);
->> +		WARN_ON_ONCE(err);
-> 
-> [Severity: High]
-> This isn't a regression introduced by this patch, but while evaluating changes
-> here, does update_parent_effective_cpumask() still leak CPUs and violate the
-> housekeeping constraint when shrinking a root partition under an isolated
-> parent?
-> 
+>> @@ -244,6 +244,58 @@ gpion: gpio@340 {
+>>                        };
+>>                };
+>>
+>> +             can0: can@403c0000 {
+>> +                     compatible = "bosch,m_can";
+>> +                     reg = <0x0 0x403c0000 0x0 0x200>, <0x0 0x403c0200 0x0 0x2000>;
+>> +                     reg-names = "m_can", "message_ram";
+>> +                     interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
+>> +                                  <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
+>> +                     interrupt-names = "int0", "int1";
+>> +                     clocks = <&clk HCLK3>, <&clk CAN0_GATE>;
+>> +                     clock-names = "hclk", "cclk";
+>> +                     bosch,mram-cfg = <0x0 4 4 32 32 32 8 8>;
+>> +                     status = "disabled";
+>> +             };
+> [Severity: Medium]
+> Should this node include the hardware resets property (e.g.,
+> resets = <&sys MA35D1_RESET_CANFD0>;)?
+>
+> Without the hardware reset line, the bosch,m_can driver cannot perform a
+> hardware reset of the CAN controllers during probe or interface toggles.
+> It must rely solely on software initialization, which can fail to fully
+> recover the controller if the bootloader or a prior crashed state left
+> the hardware in an unpredictable state.
+>
+> This omission pattern is identically repeated across the newly added can1,
+> can2, and can3 nodes below.
 
-Yes, this is a known pre-existing issue, as noted by the existing TBD
-comment:
+The reset property is optional for the MA35D1 CAN nodes.
 
-/*
- * TBD: Invalidate a currently valid child root partition may
- * still break isolated_cpus_can_update() rule if parent is an
- * isolated partition.
- */
+The bosch,m_can binding does not require a reset property, and the
+m_can driver obtains the reset control through
+devm_reset_control_get_optional_shared().
 
-> If shrinking fails the housekeeping check (!isolated_cpus_can_update), the
-> partition is marked invalid but fails to recalculate the 'adding' mask to
-> return all of its CPUs:
-> 
-> kernel/cgroup/cpuset.c:update_parent_effective_cpumask() {
->     ...
->     if (is_partition_valid(cs) && (old_prs != parent_prs)) {
->         ...
->         if ((parent_prs == PRS_ISOLATED) &&
->             /* Adding to parent means adding isolated CPUs */
->             !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
->             part_error = PERR_HKEEPING;
->     }
->     ...
->     if (part_error)
->         new_prs = -old_prs;
->     ...
->     if (adding)
->         partition_xcpus_del(old_prs, parent, tmp->addmask);
->     ...
-> }
-> 
-> Because 'adding' is not adjusted to include all of the invalidated partition's
-> CPUs, only the originally shrunk portion is processed. This incorrectly
-> isolates the shrunk CPUs, violating the housekeeping constraint that triggered
-> the error, and permanently leaks the remaining CPUs from the parent's
-> effective_cpus.
-> 
-> Can this be addressed, perhaps by adjusting the 'adding' mask similarly to how
-> PERR_NOCPUS is handled?
-> 
+The MA35D1 CAN controllers also operate correctly without explicit
+CAN reset properties in the existing platform DTS. Therefore, no
+change is required for this patch.
 
-Adjusting tmp->addmask as for PERR_NOCPUS would avoid leaking the remaining
-CPUs, but it is not sufficient. Returning all of them to a still-valid
-isolated parent could still consume the last housekeeping CPU. The isolated
-ancestor needs to be invalidated as well. I will address this separately.
 
-Thanks,
-Guopeng
-
->> +	}
->> +
->> +	return ancestor;
->> +}
-> 
+> [ ... ]
+>
+> --
+> Sashiko AI review · https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fsashiko.dev%2F%23%2Fpatchset%2F20260908014526.413399-1-zychennvt%40gmail.com%3Fpart%3D1&data=05%7C02%7Cychuang3%40nuvoton.com%7C0f6b077d07ea424b0be208df0d4c30cd%7Ca3f24931d4034b4a94f17d83ac638e07%7C0%7C0%7C639244293026922482%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mOpnaGY2o1KYf6Z5OXNovFUJbA6M5WauNCVif8Ihfn4%3D&reserved=0
+>
 
