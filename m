@@ -1,144 +1,192 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011052.outbound.protection.outlook.com [52.101.62.52])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98844AD4B4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:37:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789151838; cv=fail; b=TTF/zhewoZDZvD3k5T0QFaNphUQNuOUjcuNnR+I872suBHooA2nyd197wdvOHkDmBQbFNKUKpQt0v2yY6KuOP1MVnrGWuyDd+SntffosCYaiVaaZslWEfEa2wBnB5E9hzONG66CYNjYrRb4F/T6E0cbY3eC183iilSGRUwlHGk4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789151838; c=relaxed/simple;
-	bh=02JrbgqYBOwxI/g50S9BYYQPwWbeKD7kWGby63JM4XQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hy/i+1p4xZ9sXNIM/HILj/HuCA0h8NorNe5qCg9LPwEkj+uGlgXIRQxcPZL7dt0Avdfp+h882qy6aQ9l65e12LDXy6LJtlmEnmngXi09q2V4Tiqnc6iBqLZZA/iaPgKt5nZoHPibal4sFz965LT1O5B875OBORyB7MQLZ8XNYZA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NmJck1KS; arc=fail smtp.client-ip=52.101.62.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE4A38E8A8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 19:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789155546; cv=none; b=ICHpGNTL+bq0x24pcoH81TupQAax7bH2zJZidWuCTeRvpPKaw6A5CGNQ+uOdq7phZc54cJZfUj2abg4ZaxOZIVsEAYNDjVNokCXiACYrkxZqg1dpioK4tsvJXmg1yJtnLzOVoQ9A/e1NSF8O4yrxn4JOPqKABkM8ffAM7gjB7Uk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789155546; c=relaxed/simple;
+	bh=wV1C5Bm1FWWQaO3HlT+8zYZjeIdvR2E5WEysqi+CSVQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=Ld/wh6dRuIQkzCQ4N2hxJIpPDTEWqpM5RZUwbg5yYgR3SZd18X2AJAvC6okvYGP41ZDp/INHdgXpdhcErK4cvMdn/Z4z8JQTT0bu0r7E329cVTCCkgJJOLQjK7+f7rAE8wVvRPQm5xbaxhCOq+XoH4hzzx/Mo8qXPnfk4yXA0ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ChWhkDIA; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NmJck1KS"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sokZFVE5ENZl7c0EOKywJJr6rjpoOoUk+LRmRfVzjR8iAPQ4inOJTPODhpc/Ce5KOESCHFuYsb3PqYMBGV9Kx3f5uMdLDNS89mQ7Dc9ui8eAbR+/0g5g0Ku517vo4ADuM0PTcUaWx2XJCyNx7BMVfup+F4N8C8XokhWiTa7bXYl6jtySAq4TAY0rA1uODoq+teYbVlx2GeO6FvOInDTNaMKdyNz0mrOKUwIkh1XhTKneqYXewbXwDkrJiox8OrBQ2z7k6VzT/Rk/rtEZS9iPFzZHfGha3PbSVfoGBFnMoeStzQ7nCe6nkWaPf0PhMEKh3+qebybI3hZZEoV2Obxjyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c++UqhlxuyFJ2zbr0GadNQoPo9l6Nsqgw5wxAf6DDCM=;
- b=xXiaN7VzbA3M+zM6LIcHwgLrhS0/YJgjKJme1dos5NvCH5NMUrPtCuIo8kMgYCcpFQdqoFKIMTynt/D23eZnp4zFwUK1pNBpe+mSGuFNA00ulwfHSVe3tYl+S0pP2R9NPYgrp611Mv7Iom+kOZxCsxowJxfxgGNaWIXimkEqwEsvWHMnodlesKJG7dumAoi0z7ITw6KBnPHWS/MCZKRf0aLN9KIIOyQQHXONP/6pvCBUiQMvFANZkHYCoSX5h6vKu303XpTaaLIXJMyzWcrvw+bAJm69xoPRoLXyPyR0Krby4wTj3ArU+RAwM43512Sa58ipOLrdyKGz+jEa/gkaNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c++UqhlxuyFJ2zbr0GadNQoPo9l6Nsqgw5wxAf6DDCM=;
- b=NmJck1KSNlhCwzn7Oay7ruL6IDYi6ISqefzto3Eqc8t7ga9iCSogl9I5jOpo+51d9xRSwrYGGQjE6DX8ETsfAIpz7G00ku32S7fuoIiUbFCuJzUamOtRy3ZYjWmcI+PBjetKj/chCJKxQO/Z2KmccnsEpqifypicUPaOeA+bvIbq9EKq3dtq3Q0Vmnf3VkXe92ZIkQXvwwZONCl2OGMrqgNcL8lgb6CZ7znP6Swf8EyCX1blGY0/F7JAaDfUakbWM9oDQidks4KvzGzdZ+DO/2AyhbgYuI3gWtb3wpwsI3l+K14P6uchPLmKUhOlfaIMidEnhinO23cPyFtBLGc5kw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by CY8PR12MB7539.namprd12.prod.outlook.com
- (2603:10b6:930:96::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.10; Fri, 11 Sep
- 2026 18:37:04 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
- 18:37:04 +0000
-Date: Fri, 11 Sep 2026 15:37:03 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ChWhkDIA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1789155529;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bnhidkRyqiU1KNU2WPOXr40xiYcOCBtt1tPY8m9570M=;
+	b=ChWhkDIA7Z4rzsvrf87xqHNL/Qfthm8ZB6D6K5bT7Bd4POCSPKilPIaHkT7rwD/6BH+Wo8
+	UofHfbYeGvf+D4kLV9jC0r402ZocOH5Hn4bXopkXgS1xm3GaA1ZlTLLiTzh4S0L/wXIdK2
+	sRPP9WQNbVtMgiA8wOu9IdvJgO4vwCo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-NHZ1axNfOHSUiZdH5yMGbQ-1; Fri, 11 Sep 2026 15:38:46 -0400
+X-MC-Unique: NHZ1axNfOHSUiZdH5yMGbQ-1
+X-Mimecast-MFC-AGG-ID: NHZ1axNfOHSUiZdH5yMGbQ_1789155525
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-49d0ae342b9so9542655e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:38:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789155525; x=1789760325;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bnhidkRyqiU1KNU2WPOXr40xiYcOCBtt1tPY8m9570M=;
+        b=VpGBCk05CpoIhqkcoR85KkOB6gqbQheoqFDaJcJycd7oWz1afwwDheRIifbsw+5TX6
+         s1Hyr/6Hic58KQhuSGBGblk3Q8H+DJbZPGHC/iT4/Ys+geU6FdiVeuij2aXdh1R30Lak
+         qp2f3NY0lGW622B5XL08+y+40Ia6gUyx/9fbsr2yD6cDfG4JBgj3PDK8afl0W8xPeCPp
+         Y9KvgvRxfFH2JijuYEx68OOruFcZArgHRrDC8fIwESnwpTWcfRHF8Qp8t+DsZ92jZ1iD
+         sDaVOmYqn6UI8dfb4UHNBQcuyc0WyG6n7jWp1FXWilvwEkGGqBFljMtCAjFU7Ca0Bpwp
+         ptvA==
+X-Gm-Message-State: AFuF++kqi+8UJmeCdnB9VZaFBYiO+6TgyczF2JNXADnZbjPw8ly5URTb
+	Gcg4AYE2e6soAS4za1TDXncIbvnUHnMtdKzMI3dw1q4txjnJ3OAPYBcaiYkJJeOduuhpEOBs+SA
+	8TIldCWZOOVugPKpr6ax9F/x/NEWj7L/8cQLwqsq4Acz7GdBHppIchwhHBv+G4ZgjiUlGb4Fjea
+	qQJoKGt79wldZ9cbrX7tZ8YaPIvEQ+TV3iGJsa6U7Zbq7ulUY=
+X-Gm-Gg: AYBFou1ONR2Dx03pG41rm/2lkmvJHyhyA1pjo+kZWl+8KZ/U+xmXAyZQ9zjppMStXVZ
+	4FOQv9LJIx0DaS/6tHB/z8ufjVGkOaZHrSnZrOAAU2iNex456shwIzZXUODygG57pKjvY8ipAbN
+	HCpMJALcvjeYmfMgvENZDbnEk3oyTFmrozcS4/Hlffi+acOvX5BYe7CBoRArdRWt8ia8R5158AE
+	dXM0e9OjYUokWrf0AQfeshSrfFmP59OvwgAvXPxqQQRP0zRJo9KUyKGaV6Zaa1b0WZgx2PCyKRo
+	r2rknv85sPv8fBtZaF7Wza3Bg933zTi2m3F78zLSOQJ9ORlgP6CjtumD12zG9ripXvw=
+X-Received: by 2002:a05:600c:3b27:b0:49c:fc6e:a3d8 with SMTP id 5b1f17b1804b1-49e619cc2aemr71854535e9.23.1789155524954;
+        Fri, 11 Sep 2026 12:38:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b27:b0:49c:fc6e:a3d8 with SMTP id 5b1f17b1804b1-49e619cc2aemr71854275e9.23.1789155524389;
+        Fri, 11 Sep 2026 12:38:44 -0700 (PDT)
+Received: from redhat.com ([147.235.223.59])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26c300e2sm194467235e9.8.2026.09.11.12.38.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2026 12:38:43 -0700 (PDT)
+Date: Fri, 11 Sep 2026 15:38:41 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v5 08/10] vfio: selftests: Add mlx5 driver - HW init and
- command interface
-Message-ID: <20260911183703.GA1350659@nvidia.com>
-References: <8-v5-4cacb99249f6+1b4-mlx5st_jgg@nvidia.com>
- <20260910235832.4B4E51F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260910235832.4B4E51F000FF@smtp.kernel.org>
-X-ClientProxiedBy: YT4PR01CA0278.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:109::19) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+Cc: virtualization@lists.linux.dev, Eugenio Perez <eperezma@redhat.com>
+Subject: Re: [PATCH 2/2] virtio_pci: drop extra callback sync
+Message-ID: <20260911101425-mutt-send-email-mst@kernel.org>
+References: <8f71425918a148dcad1be993ccabd39582d246ee.1789130213.git.mst@redhat.com>
+ <082fd9b2bad1db0088caa38a8d738aa848bf36b2.1789130213.git.mst@redhat.com>
+ <20260911125745.E0A2F1F00899@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|CY8PR12MB7539:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3acfe91-161d-48bd-d2d5-08df1033ad18
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|10067099003|6133799003|18002099003|22082099003|56012099006|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	OxoZsrP4Dw9p3HTgq1jHYNdodPBx2s8FPt/lMMdSJDHJ9mywOq/pAdYZchocM2OTjvXo3ECcohMU+Max+QxVDREnOEZ08OmotTelZYbEUYJziFawiVNnxL6AZvQbb9YgLwGBCW126DFC0tPSehqvFxKyJiJM2EDbqnVAhzN8K8tkcPrp6PrExtNWEowZQIH6qbrHox1Z9omlXvoALi4fDw4RqtmO6mYxwhtETcFwjZ1XZKt5DSAr8R0uXR0Not/a4pQ0iTFRPhiE1VqEk98DT9jTgBUQ/iIoaAyR+mJl4TqEcd9Q1ney/5Sgm6mve7ZlydWp64aG9l4WgyvB/XRXZ6do3G0L59Nn7ggikY7ufyJVnmBlOgbwARIXEalWw9Ktsb1S5o42FrOhrDWR6TlptXVi81fjU6m/JZ+Z/bVv0Hr16FwTOwUOaitWotI6zdcbmac5knO3dMFUGsyqp2o5kUwPPPXuoDSuNwz0ZTX4aMj2XITgFIjuwE0222lfHNAPlcFfJBmy1Sc3eSSSml7RmvT2iRdtKq3HDtyoVXV80RvLrpKEjkUB+6RenLAtxsXFHTGcj0xDssGqLjc2QZmzs6lTiORuXBpNQpJRwFNeGOWcuSinKphAyg1srITPK6hBNljOPZRfxIBr0lwNYwyaOopg3v6Cbc0QehwF57lj+Bg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?tkX5QuN2YNxxzOoqoIDdV9BjxHA5jMq6f0VwrmLwa3Ysk0nXmFpuAwwt8zIm?=
- =?us-ascii?Q?MHgfxhjajeiTE7ng7Gn1qmunBEWz3+aaFL27qnncJQTzBiHP4vKQJt9lbRCa?=
- =?us-ascii?Q?jx4de+CxSI+8WoAznorW1qj9bQMFWwAFy0fmEwSxgPlPYEVqHnT1mZLJnl8c?=
- =?us-ascii?Q?ptQhIkb5GN78Yxy6bRpMI7n516tzuEw+xS/tjwu966gRJ2XeAb2oVRQnmmG9?=
- =?us-ascii?Q?2cenWKPl0Qg9Dagowb1kHMkze++nt8A6ows2C2puJ27G+j96huDRVI7YFYdI?=
- =?us-ascii?Q?2nhLTHGRFjTcgC5EGiIcZaHfdtawVaJLdDMMIFe8plAEU+Wo4ozladFv2f3F?=
- =?us-ascii?Q?pvpkGbkiI4C+i+qpPbZYynueY4rmc+tv3gA7XFHXAHSOG0mfQWy4B2uL3dPU?=
- =?us-ascii?Q?HGvlSA7icjKDHWpM1P9oSG8EreWPBM8TIQTD66aUm92AgnDMlw3DX+Mv7uyz?=
- =?us-ascii?Q?nYgHaqBydidRjCjNXIoOgWU6VHulWeFjPJ8e+wA5jtGHasljAXnadohMHGtU?=
- =?us-ascii?Q?W4BEmUeM4nApRx+ijQDXj47uZtS4KZQopFuxH15DMWh2k6fLBRYbkIm6NaFJ?=
- =?us-ascii?Q?ixdaVl4tVLtny2Aa4ZXWqCHjBl01t4uEktk224F+IOl5lGwluwIqwd9lRlny?=
- =?us-ascii?Q?Hpd+G2qlLeqSr+rCWzkku/6Q5mGcwqwAuAb4RYiwWTcmIwSaGBFJ2ofe3OPx?=
- =?us-ascii?Q?Z5pONNXUMXY+DNAsMM98NHfLt9jbAcZ4KOzmRJ4xmxZnjBxG8QPlGaPFVh1X?=
- =?us-ascii?Q?8eeGbb8FZ0qgpz/wBkuM2BwPvSI3YH2y4LORLz7tRDsJrDOOwzV/WNv1kGn2?=
- =?us-ascii?Q?2ZE40ZjPaM7LPpO558Y3p/fT+IrJfi/ZXHngMTScIPFOpeQr6RIwE3YrynQ0?=
- =?us-ascii?Q?Lb1k6HW/TNxtUextDajHJJqSbbCehZD2foafDsRKQ3Kd4V+PDVNhUXRwD3DH?=
- =?us-ascii?Q?jrZwRHG/2FnpZ6HGjbJHqqEit4E6FYZBOJBlXYnG2dUHR9ZfJrAqHaFfcS/j?=
- =?us-ascii?Q?acM7Ex/RarZtBag4Py1/gMGm/ehDRCIPZsIS+wLvdZI90rpJPlOaLzjjEJTB?=
- =?us-ascii?Q?S6U4lJ/mg7kkIL7RLVCnZMmdHG081T80ZPjZdwjY4MjciXeKc/8Qg3ECRdXn?=
- =?us-ascii?Q?95+tjm2yHpiyrI2O5uxny+Mpt2YvGomCHFYqvZYFXKJQSDrVuObPG+zxAeMl?=
- =?us-ascii?Q?kl9lE3aXoe4ZYU5f64gZJz3cbeV1OaU78WoevSi1PhgXrfM2+4bnVbA41yS8?=
- =?us-ascii?Q?Mb2/w5d1xdO0xliqee+/2Yr/qwIhlEqlxne4YdPQC3i4cDgLSwMk+DYr1qa3?=
- =?us-ascii?Q?aB8hnMqcBH6IH/XDNUvxFrpH5IY8rT7bubo4NA7ALTnAg1plb0igiiR1kq/4?=
- =?us-ascii?Q?f8Fs+hUKa81sfhFZqySlJTg/lTVu4LdeYVofxdnRqR1+NUOicJ6z/CPLsLTu?=
- =?us-ascii?Q?QjLf0YhohYBKSts344TNKUbT31Iv9hIO3SmJzAOFqo1BlYiCoIaMtisZwtnz?=
- =?us-ascii?Q?IKHVGvAHZFTSoldO3/9E2hteBSjkUqUsLw2cv4t6PEefShuPRhnnMBJ5SckW?=
- =?us-ascii?Q?QIvcfrgeBFyr8Li+LSaWLweP6bmINwPsCkoxrwSvX/9GX5lFuhdgIrmujcxl?=
- =?us-ascii?Q?7lcOGBzkWBY8yFk6F6uzT2kTDzDeZrP2PUr6ZhMGnWdEbue3aWhe+JXuNlfC?=
- =?us-ascii?Q?SsSPG/ojmYIqdy1C1glQsfA7R/IdQa6l2gB8VH1nFDjKR54u?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3acfe91-161d-48bd-d2d5-08df1033ad18
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 18:37:04.4197
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: J3ndzEkfs0X3UDoTeqbXuuM133WBulHjy/i9+sf+kSpZPoxSABTLwSX8WU7qldbC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7539
+In-Reply-To: <20260911125745.E0A2F1F00899@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: hvyMIgSHCJ-O-IgQtckoP3tCP4Lv1lIlirG9uaISFUM_1789155525
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 10, 2026 at 11:58:31PM +0000, sashiko-bot@kernel.org wrote:
-> > +static void mlx5st_query_fl_caps(struct mlx5st_device *dev)
-> > +{
-> > +	u32 out[MLX5_ST_SZ_DW(query_hca_cap_out)] = {};
-> > +	u32 in[MLX5_ST_SZ_DW(query_hca_cap_in)] = {};
-> > +	bool fl_roce_en, fl_roce_dis;
-> > +
-> > +	/* Query RoCE capabilities */
-> > +	MLX5_SET(query_hca_cap_in, in, opcode, MLX5_CMD_OP_QUERY_HCA_CAP);
-> > +	MLX5_SET(query_hca_cap_in, in, op_mod,
-> > +		 MLX5_SET_HCA_CAP_OP_MOD_ROCE | HCA_CAP_OPMOD_GET_CUR);
+On Fri, Sep 11, 2026 at 12:57:45PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> [Severity: Medium]
-> Does the MLX5_SET_HCA_CAP_OP_MOD_ROCE constant need to be shifted left by 1?
+> New issues:
+> - [High] Removing `vp_synchronize_vectors()` from `vp_reset()` exposes a race condition in `virtio_device_shutdown()`, allowing in-flight configuration change interrupts to execute concurrently with or after system shutdown.
 > 
-> If the constant is defined as 0x4, passing it unshifted results in an op_mod
-> of 5. This causes the hardware to interpret bits 15:1 as capability type 2
-> (MLX5_CAP_ODP) instead of RoCE, causing the driver to query the wrong
-> capabilities.
+> Pre-existing issues:
+> - [High] Pre-existing data race in `vp_modern_avq_cleanup()` due to missing `admin_vq` lock, leading to potential virtqueue corruption.
+> --
+> 
+> commit 0b14e711d0c9fc7c440dbf71513420ceb19b4bd3
+> Author: Michael S. Tsirkin <mst@redhat.com>
+> virtio_pci: drop extra callback sync
+> 
+> This patch drops the synchronization of callbacks on reset within virtio pci,
+> relying instead on the virtio core to synchronize callbacks when needed.
+> 
+> > --- a/drivers/virtio/virtio_pci_legacy.c
+> > +++ b/drivers/virtio/virtio_pci_legacy.c
+> [ ... ]
+> > @@ -98,8 +98,6 @@ static void vp_reset(struct virtio_device *vdev)
+> >  	/* Flush out the status write, and flush in device writes,
+> >  	 * including MSi-X interrupts, if any. */
+> >  	vp_legacy_get_status(&vp_dev->ldev);
+> > -	/* Flush pending VQ/configuration callbacks. */
+> > -	vp_synchronize_vectors(vdev);
+> 
+> [Severity: High]
+> Does removing this synchronization leave a race condition in the shutdown
+> path?
+> 
+> While the core virtio_reset_device() function was updated to synchronize
+> after the reset returns, virtio_device_shutdown() appears to lack this
+> synchronization:
+> 
+> drivers/virtio/virtio.c:virtio_device_shutdown() {
+>     ...
+>     dev->config->reset(dev);
+>     // No trailing virtio_synchronize_cbs() call
+> }
+> 
+> Because vp_reset() writes to the status register and flushes in-flight
+> interrupts, returning without synchronization means virtio_device_shutdown()
+> can finish while a flushed vp_config_changed interrupt is still executing
+> concurrently. 
+> 
+> Could this lead to unintended access to device structures or DMA memory
+> during system teardown or kexec paths?
 
-This looks correct, I will fix it and repost
+shutdown does not free memory so I do not see what is the issue
+and why we need to prevent cbs from running.
 
-For the others, the driver does not validate fw information (aka hardening)
 
-Jason
+> >  }
+> >  
+> >  static u16 vp_config_vector(struct virtio_pci_device *vp_dev, u16 vector)
+> > diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
+> > --- a/drivers/virtio/virtio_pci_modern.c
+> > +++ b/drivers/virtio/virtio_pci_modern.c
+> [ ... ]
+> > @@ -559,9 +559,6 @@ static void vp_reset(struct virtio_device *vdev)
+> >  		msleep(1);
+> >  
+> >  	vp_modern_avq_cleanup(vdev);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is there a potential data race here with
+> concurrent interrupt handlers?
+> 
+> vp_modern_avq_cleanup() calls virtqueue_detach_unused_buf() without
+> acquiring the admin_vq->lock. If CONFIG_VIRTIO_HARDEN_NOTIFICATION is
+> disabled (leaving vq->broken as false), an in-flight admin vq interrupt
+> flushed during reset might execute concurrently on another CPU:
+> 
+> drivers/virtio/virtio_pci_modern.c:vp_modern_avq_done() {
+>     spin_lock_irqsave(&admin_vq->lock, flags);
+>     do {
+>         virtqueue_disable_cb(vq);
+>         while ((cmd = virtqueue_get_buf(vq, &len))) {
+>     ...
+> }
+> 
+> Could concurrent modification of the virtqueue's internal vring state cause
+> memory corruption or a double complete() execution if the interrupt handler
+> and cleanup routine run simultaneously?
+
+
+This is indeed an issue I think: an obvious fix is for now is to move a
+sync before vp_modern_avq_cleanup instead of removing it. The
+implication is that core irq sync is not really needed for pci, but hey,
+it's inexpensive.
+
+
+> > -
+> > -	/* Flush pending VQ/configuration callbacks. */
+> > -	vp_synchronize_vectors(vdev);
+> >  }
+> >  
+> >  static int vp_active_vq(struct virtqueue *vq, u16 msix_vec)
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/8f71425918a148dcad1be993ccabd39582d246ee.1789130213.git.mst@redhat.com?part=2
+
