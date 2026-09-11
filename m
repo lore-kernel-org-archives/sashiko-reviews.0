@@ -1,183 +1,231 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BE141CB39
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789131362; cv=pass; b=tRnSkbRKo8ZtKHouWQuacrAjvs2QkV4wn/I17/WTTNKcgOVNv1B58wlxmUCVDAi0DAcYPkQlkExQcQT0dm5+xq9IEMXl2L96F79ylMdclxdKynIG1gztWvu5JOcvF9V9OkY7CqsH56iBXHtEzl4GQN1O8Hq6afZ7kJhr8rfJeoo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789131362; c=relaxed/simple;
-	bh=odsNZOByGAhBQJH1KIxkWd2NONdWppsE2/guP4cVzAA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=nOPc14eevN1KCZSFzsXm929YR8hZ1t2G/BMZCSPQtd4bUM323FyRZby6DeOju1JfFlVWrJGXK/vmXBTgFfiwIY8B8iN3nHy25NWl4cqIARn21A3GUtfTwssvIjs2XulabhdLxqAYHYxxaPPidrMXygMAayb5oWcDg+IZWu9KMLg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyxfmS5N; arc=pass smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyxfmS5N"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-478c01da5cbso304847fac.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 05:55:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789131356; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HV+cV2YYHM3ScaiHBhxzWbPsPU7j9EqCSN4IzH5mtp3kvF0h/avchYTZa5VTyJN6xP
-         SKkxOW61NyxEBVa3cajLN4gGhJ+r4rwGjgsEeVF7s37ZyEbk2bcOTphLRw8GnBKuAGN1
-         yKSnjOFviOrMhgDSqRgsAuWvFnpfSEYVYPxjiikinQC6Lm8P6La2/exBJnifjoweC+Te
-         AmuznmKp5SOcnWY49D3+xs30joYCUKyJOqcT+SnTT5YcfVodMhMgee12Drost3rlJHeq
-         wswcSRlz+K54JjVG6epiq80ItosEdalp4ZtjiIQuXn9Nr4EyjFB74YdmFESGpC8+cTno
-         M17A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
-        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
-        b=M6c+3/TiOvKEgiYfzO6qCftRq6A1R+rWS3bSZaxLb3xzx7OIHVgrRw40HYGVanNVbk
-         oYG32f3NfdLRC7kl4O4cYLW40tEaxrc48GxRe+XCD+7SIXvPSWCN7fNUHf+rzDYb/ARF
-         wcYHXJOG/5nOIUJeSlRMrGORo41JMZY5yU1OmsMOzsEwUizzNfUprrCEvQ8chgSmZjtT
-         Lec4NlRtD0CtjgkvsNDGZcokEVxG41Is33jMiUkNqccBaMt09Tc/Thj1e8W49e2WBAeJ
-         R7zbc2bD/E0hG6e7Z1/Ak3oa/y8+D7enfK30SzgxDP9FhsiHp80geKZr8nAkSQ5qSu12
-         Bj6g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789131356; x=1789736156; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
-        b=PyxfmS5NyGp2b3s/kfFiCl86EKrCNkENppBysgF1srWc9iKIlVdJu1M+4W8O9xtMpg
-         /fWrOZOa6KVPHMUb62Wun77V1gIp8S1lwRMHQsfGfy/wKa1xl99l8tb6/c84af7d0KQN
-         /SOUy16KvsMnXnnoyEr6mt1Lf0vOKdVlMidYS2PvPx3WqZHzqxGGGTsUlegiTFjn8Qs7
-         PJ5gwo0CweGvqFl7G+Zo9wWEmx3vhnRH73wpAMViwcYC3NKkb7VM4KW0m4CcgvvRl5o8
-         GqQ0wEjFlUwySw5nXLPhg2KrwvTVs7WROfyZLozVCFHVCzeGTC/R/VYplEsm9Mn/m/S0
-         g/0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789131356; x=1789736156;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vVuLeD2rlV7Xte3VvdFwcStaIxYq1A+x+2gsUgDN1QY=;
-        b=YlbJn82iPZQUysXNjH5LmzeQ9uTElq0HGMXrt/w9lJrxpUifFcSqd3xR5sj0uXjMQ9
-         HOG1cVhVQxMty8AFP0QurFC/wcaPpZtkTnBhU9oWqImW5ujtmL/Os5nIXDQP2TGZ7uBv
-         /QrOXReG+TlIfQlmxfwHbnjeMWH9cCQWN60th6T+A1GoK/dQbSyLhGvbQP3T1J0M/3sh
-         7nWxbUw0G50Fg5yjCd1UM964f7bvJTCucpoT/qSx4KoNlehpy0TclulRVdjQQpc7ZLhb
-         xgAoSKx1YdSSGgHwIwMOxjnACXeu9WmkB3ggE3g91lXrE9QL0b8geI19DVeo7QGGN9LB
-         NVkA==
-X-Gm-Message-State: AFuF++khwg6WLddAWZf7SwddtYeRuTjnKlNvAlCCxnHyJBU5drz2WFuF
-	/ios/BbKmRbU/W5da0XB+krcC90+kpQdZxP1fZA6cH1v93gTPjDOQtROoZd7K0tLbHF3W4wxPBh
-	JeK+yE7qc4hBSewdOAVhdn8jWA2y6rDtlddOH
-X-Gm-Gg: AYBFou1ozaMrPq+GrRId/BulyAYnURX9IZit6eNa8Kf3slwu/bsUABLtaTRZmcf+Dbo
-	+AttNP3kaLBq45ceE5fUxHE3xRb/gcTBFvfcECPn9DJbeQx4qj4yG+UNsv7jBBJ6VJtG1CtEIF1
-	2OYFIwxn1kc4OYUoxT0hOvDOZRQCT9ZVWuJzj0AKqVNB0EsPSk3dLQ1Hs6j4aF+TemVcpSu/lZh
-	09HxG+R0OSC7KWMwGX4aPnIECviELR+Q7F0qCHNLzXpVSKB12wQ9nntZXltimj/GZvCbNxJaJGG
-	1KO+e1FB5NLj3ttE/piNCbOfOk4mavIR2ZLbwbs1vsdhqdOtiTPEG5D1Yk/7TIywF81mHCOKyja
-	Vya6juEc1hsOL
-X-Received: by 2002:a05:6870:4507:b0:475:e0a7:9f2e with SMTP id
- 586e51a60fabf-47de95f774fmr2773257fac.28.1789131355668; Fri, 11 Sep 2026
- 05:55:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6454825C1;
+	Fri, 11 Sep 2026 13:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789132175; cv=none; b=lCza7Yj6Xaf/rm8l59ZfA2NZmN2oH3JFAF6tuBfLWpS9vhIWJnTe3ncsfb4O3VyQP3itVN1BlklooOkWqYBX5LnGkpO1OltltEd+O4Qi/ZCe7oCoyzbCCtqsnRLLQDQ+zuyv8c1zWeaXpHAv+HIxTUC6G/yXUl/uRf/JrV93AHE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789132175; c=relaxed/simple;
+	bh=05VaFWmH1fvVu9ssYCkMXTeWwF9HLZII2itZOKyMR6w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B8Od9fwXq0C9J9P1PPRcgF7Z7ENTuaKQgnJH1uPDF3iH0jn8WG7FldniuzZ6+ysweXZfK4z1BhU6x0IKrtqHH2/AxkKuKLgesxdVObqKk6yJeEwhvctP3tvypzLooNCpwOQendkFkAqrZcSdVse4Td7c2c1BjP3QEWjR3XCy99k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33D01F000FF;
+	Fri, 11 Sep 2026 13:09:31 +0000 (UTC)
+Message-ID: <194f8bf1-2412-4d77-975d-c32fbdeb4874@linux-m68k.org>
+Date: Fri, 11 Sep 2026 23:09:29 +1000
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260911115346.17133-1-meven@kde.org> <20260911120208.21698-1-meven@kde.org>
- <20260911121058.3B7DE1F000FF@smtp.kernel.org>
-In-Reply-To: <20260911121058.3B7DE1F000FF@smtp.kernel.org>
-From: =?UTF-8?B?TcOpdmVu?= <meven29@gmail.com>
-Date: Fri, 11 Sep 2026 14:55:44 +0200
-X-Gm-Features: AcwNN1VJ67TRs-StbN0V8jxCtrszebpBCkw0ihM3AxZMa_H9Vt-oTec7jKLV18E
-Message-ID: <CAOvFf8NnQwouiKmccNotLMY-XRsW0ufMAXfuK_tqKp3Bjpdmxg@mail.gmail.com>
-Subject: Re: [PATCH v2] HID: logitech-headset: add a battery driver for the
- PRO X 2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCHv3 1/3] net: fec: do not use readl()/writel() for ColdFire
 To: sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-> The HID subsystem guidelines specify that hid_hw_stop must be called befo=
-re
-> cancelling asynchronous workers.
-
-Stopping first is the unsafe order here. logi_headset_poll() ends in
-hid_hw_output_report(), so a work item still running would send on a
-transport hid_hw_stop() has already torn down.
-
-drivers/hid mostly cancels first: steelseries, steam, kysona, asus,
-nvidia-shield. corsair-void stops first, but its battery_work only calls
-power_supply_unregister() and power_supply_changed() and never touches the
-device.
-
-cancel_work_sync() handles a work that re-arms itself. The only
-schedule_delayed_work() calls here are in probe() and at the end of the wor=
-k,
-raw_event() never schedules.
-
-Which guideline do you mean? I see nothing on this in Documentation/hid/.
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>, Frank.Li@kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>, imx@lists.linux.dev,
+ linux-can@vger.kernel.org, Oliver Hartkopp <socketcan@hartkopp.net>,
+ Marc Kleine-Budde <mkl@pengutronix.de>
+References: <20260907134037.1855408-1-gerg@linux-m68k.org>
+ <20260907134037.1855408-2-gerg@linux-m68k.org>
+ <20260908134312.00C441F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Greg Ungerer <gerg@linux-m68k.org>
+In-Reply-To: <20260908134312.00C441F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
-Le ven. 11 sept. 2026 =C3=A0 14:10, <sashiko-bot@kernel.org> a =C3=A9crit :
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The driver cancels its delayed workqueue before calling hid_hw_s=
-top(), which violates the mandatory HID subsystem cleanup order.
-> --
->
-> commit bd334ae3e07d607cf268d197e4923d3fe7f27cad
-> Author: M=C3=A9ven Car <meven29@gmail.com>
->
-> HID: logitech-headset: add a battery driver for the PRO X 2
->
-> This commit introduces a battery driver for the Logitech PRO X 2 LIGHTSPE=
-ED
-> headset. The device reports its battery status over a vendor collection
-> rather than HID++, so a custom driver is implemented to poll and parse th=
-ese
-> reports.
->
-> > diff --git a/drivers/hid/hid-logitech-headset.c b/drivers/hid/hid-logit=
-ech-headset.c
-> > new file mode 100644
-> > index 0000000000000..9081ddf5f42f2
-> > --- /dev/null
-> > +++ b/drivers/hid/hid-logitech-headset.c
+On 8/9/26 23:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] Heap buffer overflow in TX bounce buffer due to unvalidated packet and fragment lengths.
+> - [High] The hardware PPS interrupt handler accesses and modifies shared PTP state without acquiring the required lock, racing with configuration paths on other CPUs.
+> - [High] Unbounded hardware polling loops can cause a hard lockup if the hardware enters an error state.
+> - [High] Integer underflow in RX packet length calculation leads to out-of-bounds memory access.
+> - [High] Out-of-bounds read and write in `fec_enet_clear_csum` due to missing `pskb_may_pull`.
+> - [High] Missing dma_rmb() after reading descriptor status in RX paths.
+
+Given these are pre-existing issues and not in any way related to what
+this patch is doing I am not going to make any changes to it based on this.
+
+Certainly a heads up for the drievr maintainers that there is some issues
+worth looking into though.
+
+Regards
+Greg
+
+
+
+> 
+> commit b19b9a07ca8eff68179fb339b69d5c4690fdf442
+> Author: Greg Ungerer <gerg@linux-m68k.org>
+> net: fec: do not use readl()/writel() for ColdFire
+> 
+> This patch modifies the FEC driver to use local fec_readl() and fec_writel() 
+> methods instead of direct hardware register accesses. This avoids incorrect
+> byte swapping on big-endian architectures like ColdFire.
+> 
+>> diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+>> --- a/drivers/net/ethernet/freescale/fec_main.c
+>> +++ b/drivers/net/ethernet/freescale/fec_main.c
 > [ ... ]
-> > +static void logi_headset_remove(struct hid_device *hdev)
-> > +{
-> > +     struct logi_headset *headset =3D hid_get_drvdata(hdev);
-> > +
-> > +     cancel_delayed_work_sync(&headset->poll);
-> > +     hid_hw_close(hdev);
-> > +     hid_hw_stop(hdev);
->
+>> @@ -1923,7 +1924,7 @@ static int fec_enet_rx_queue(struct fec_enet_private *fep,
+>>  			break;
+>>  		pkt_received++;
+>>  
+>> -		writel(FEC_ENET_RXF_GET(queue), fep->hwp + FEC_IEVENT);
+>> +		fec_writel(FEC_ENET_RXF_GET(queue), fep->hwp + FEC_IEVENT);
+> 
 > [Severity: High]
-> Could this teardown sequence in logi_headset_remove() lead to a
-> use-after-free?
->
-> In drivers/hid/hid-logitech-headset.c:logi_headset_remove(), the delayed =
-work
-> is cancelled before hid_hw_stop() is called. When a device is unplugged o=
-r
-> unbound, cancelling workers before stopping the hardware (which unregiste=
-rs
-> the device interfaces) means that hardware events or userspace interactio=
-ns
-> could theoretically queue new work after the cancellation.
->
-> Since devres automatically frees the driver's private data after remove()
-> returns, any lingering work executing subsequently would access freed mem=
-ory.
-> Calling hid_hw_stop() before cancelling the work would ensure no new work=
- can
-> be queued.
->
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911120208.21=
-698-1-meven@kde.org?part=3D1
+> This is a pre-existing issue, but is a memory barrier missing in the RX
+> loop?
+> 
+> The loop checks the status to confirm ownership in the while condition, but
+> without a dma_rmb() immediately after, couldn't speculative execution on
+> architectures with weak memory ordering cause the subsequent read of
+> cbd_datlen to happen before the DMA transfer is completely visible?
+> 
+>>  
+>>  		/* Check for errors. */
+>>  		status ^= BD_ENET_RX_LAST;
+> 
+> [ ... ]
+> 
+>> diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+>> --- a/drivers/net/ethernet/freescale/fec_ptp.c
+>> +++ b/drivers/net/ethernet/freescale/fec_ptp.c
+> [ ... ]
+>> @@ -142,17 +142,17 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
+>>  	if (enable) {
+>>  		/* clear capture or output compare interrupt status if have.
+>>  		 */
+>> -		writel(FEC_T_TF_MASK, fep->hwp + FEC_TCSR(fep->pps_channel));
+>> +		fec_writel(FEC_T_TF_MASK, fep->hwp + FEC_TCSR(fep->pps_channel));
+>>  
+>>  		/* It is recommended to double check the TMODE field in the
+>>  		 * TCSR register to be cleared before the first compare counter
+>>  		 * is written into TCCR register. Just add a double check.
+>>  		 */
+>> -		val = readl(fep->hwp + FEC_TCSR(fep->pps_channel));
+>> +		val = fec_readl(fep->hwp + FEC_TCSR(fep->pps_channel));
+>>  		do {
+>>  			val &= ~(FEC_T_TMODE_MASK);
+>> -			writel(val, fep->hwp + FEC_TCSR(fep->pps_channel));
+>> -			val = readl(fep->hwp + FEC_TCSR(fep->pps_channel));
+>> +			fec_writel(val, fep->hwp + FEC_TCSR(fep->pps_channel));
+>> +			val = fec_readl(fep->hwp + FEC_TCSR(fep->pps_channel));
+>>  		} while (val & FEC_T_TMODE_MASK);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it safe to have an unbounded polling
+> loop here while IRQs are disabled?
+> 
+> If the hardware transitions into a faulty state and perpetually returns a
+> value with FEC_T_TMODE_MASK set, could this loop cause a hard lockup or
+> kernel panic?
+> 
+>>  
+>>  		/* Dummy read counter to update the counter */
+> [ ... ]
+>> @@ -194,31 +194,31 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
+>>  		 * is bigger than fep->cc.mask would be a error.
+>>  		 */
+>>  		val &= fep->cc.mask;
+>> -		writel(val, fep->hwp + FEC_TCCR(fep->pps_channel));
+>> +		fec_writel(val, fep->hwp + FEC_TCCR(fep->pps_channel));
+>>  
+>>  		/* Calculate the second the compare event timestamp */
+>>  		fep->next_counter = (val + fep->reload_period) & fep->cc.mask;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential data race between
+> this configuration path and the interrupt handler.
+> 
+> Here, fep->next_counter is updated while holding fep->tmreg_lock. However,
+> the interrupt handler fec_pps_interrupt() modifies fep->next_counter
+> locklessly. Could this cause the PTP timer to miss events or corrupt the
+> hardware state if this is triggered concurrently from userspace?
+> 
+>>  
+>>  		/* * Enable compare event when overflow */
+>> -		val = readl(fep->hwp + FEC_ATIME_CTRL);
+> [ ... ]
+>> @@ -701,15 +701,15 @@ static irqreturn_t fec_pps_interrupt(int irq, void *dev_id)
+>>  	u8 channel = fep->pps_channel;
+>>  	struct ptp_clock_event event;
+>>  
+>> -	val = readl(fep->hwp + FEC_TCSR(channel));
+>> +	val = fec_readl(fep->hwp + FEC_TCSR(channel));
+>>  	if (val & FEC_T_TF_MASK) {
+>>  		/* Write the next next compare(not the next according the spec)
+>>  		 * value to the register
+>>  		 */
+>> -		writel(fep->next_counter, fep->hwp + FEC_TCCR(channel));
+>> +		fec_writel(fep->next_counter, fep->hwp + FEC_TCCR(channel));
+>>  		do {
+>> -			writel(val, fep->hwp + FEC_TCSR(channel));
+>> -		} while (readl(fep->hwp + FEC_TCSR(channel)) & FEC_T_TF_MASK);
+>> +			fec_writel(val, fep->hwp + FEC_TCSR(channel));
+>> +		} while (fec_readl(fep->hwp + FEC_TCSR(channel)) & FEC_T_TF_MASK);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but similar to the loop in
+> fec_ptp_enable_pps(), does this unbounded loop risk a hard lockup?
+> 
+> Since this runs in hardirq context, a faulty hardware state that fails to
+> clear FEC_T_TF_MASK would keep the CPU spinning indefinitely.
+> 
+> [ ... ]
+> 
+> I also noticed a few other pre-existing issues in this driver that fall
+> outside the immediate diff context of this patch:
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does fec_enet_txq_submit_frag_skb()
+> overflow the TX bounce buffer?
+> 
+> index = fec_enet_get_bd_index(bdp, &txq->bd);
+> if (((unsigned long) bufaddr) & fep->tx_align ||
+>     fep->quirks & FEC_QUIRK_SWAP_FRAME) {
+>     memcpy(txq->tx_bounce[index], bufaddr, frag_len);
+>     bufaddr = txq->tx_bounce[index];
+> 
+> Since fragments can be up to PAGE_SIZE (4KB or 64KB), but the tx_bounce
+> buffers are statically sized to 2048 bytes, couldn't a large unaligned
+> packet or jumbo frame cause an out-of-bounds heap write?
+> 
+> [Severity: High]
+> This is a pre-existing issue, but I have a question about the packet length
+> calculation in fec_enet_rx_queue_xdp() and fec_enet_rx_queue():
+> 
+> pkt_len = fec16_to_cpu(bdp->cbd_datlen);
+> ...
+> pkt_len -= sub_len;
+> xdp_prepare_buff(&xdp, page_address(page), data_start, pkt_len, false);
+> 
+> If a corrupted or maliciously crafted DMA descriptor reports a pkt_len less
+> than sub_len, pkt_len will underflow. Won't this pass a very large length
+> to xdp_prepare_buff() (or skb_put() in fec_build_skb()), potentially
+> allowing a BPF program to read/write out of bounds or causing an
+> skb_over_panic()?
+> 
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential out-of-bounds
+> access on non-linear SKBs in fec_enet_clear_csum():
+> 
+> static bool is_ipv4_pkt(struct sk_buff *skb)
+> {
+>     return skb->protocol == htons(ETH_P_IP) && ip_hdr(skb)->version == 4;
+> }
+> 
+> If an AF_PACKET socket transmits a packet where the IP header is in a
+> non-linear fragment, wouldn't ip_hdr(skb)->version and the subsequent
+> ip_hdr(skb)->check = 0 assignment read and write past the linear buffer
+> into unallocated memory, since pskb_may_pull() hasn't been called?
+> 
 
-
-
---=20
-M=C3=A9ven
