@@ -1,154 +1,137 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from canpmsgout11.his.huawei.com (canpmsgout11.his.huawei.com [113.46.200.226])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AFD439F62
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 07:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3133D3CA487
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 08:02:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.226
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789112130; cv=none; b=RJw8DNyXeDKJLbTCeKZRGyZmwiqwKY8dCIkFpdQQPzCHoKOEtw4QJngoe5RwsKSzdS5YMjzCKJ99izd8GQ1dSQtyN3jjuxDUf9zRwJYt9dhC1NlQcARiCaSAAcqs2m9s5LaMCcRA6H5Ic6qg6gNRzz3gO1Z7Y0g0ZhaqA+OVTK8=
+	t=1789113752; cv=none; b=jAzjf0/5ta6D+xSk7GiCTn36hcoPxPx8WIVGJyQ4aCz9gsawI6pcTaZOscuEX580VEd1F+9WQN60lRgFR4piugUPpJs7PpmZFgEytWQMJINl0Ww7tH3dxagGFCt+SyuuJKnZAukFm6ONJMOSP9usIlQ6bgvgW/epsMefpmlRCdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789112130; c=relaxed/simple;
-	bh=J5z51FjHLASY/boVTzhW8lFB+N063Y8l4YjtmCuX5Ss=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DQuoidA6kbHQlcttjXSNkZ2xGR5sR8BxXVD0Criu9Vtex+AjuvJnRpVFl5ENos+Hn8QKaKerCrA477U3FtIiW+gxTj4cQVvcGdTBxrdmcDYbAsSu/PHWYCsp9TUOdxvyRg/X/lb8Ho6XRM8bgvYZIZu/bwYGH9uCpWsjYKKdYf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iFSQp0IR; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789113752; c=relaxed/simple;
+	bh=kWye7oczxb+xHn8UZoHsc7rHqnfcjPMoegPUUkruFfI=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=IbiUFgkzhXEMQbG/BYl2RQ35n+JmeShdBUbKqSBLfrtWzxGXSD+8V8FPiZJWmijSwQpc21t+itwZHr1O/aPz6ZbSHvFGC08CbI+NqF7H4TxPKuhwdWHwnh1/jc3FElgKVzw0L0A2ro0BN2aXuxnPUlqn0r6lIoBnCrMFU0iviuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=HA4oEFiC; arc=none smtp.client-ip=113.46.200.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iFSQp0IR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789112128; x=1820648128;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=J5z51FjHLASY/boVTzhW8lFB+N063Y8l4YjtmCuX5Ss=;
-  b=iFSQp0IR5UFNwAUBgnKKHNtrPXyic1KIK+WAsAkO5xw/A4cNUf9P3wO3
-   HM4TVLGaKipKmUPmgi4HmF9mbKHs0xZAEzwNZj1IqEEfMcxoWRX/zPDSz
-   mYAc1KBFKzttAkt2Sdy1UO/44Yi7pKKGodFBcWsP0DByER+Q96sFBMVDM
-   DFyro+Xuc19Yz+3OcLNC/oT3SQJZXQE1qlgoteqK8WK04ya4z0rNPXKmJ
-   oLouzQwBoY/xLQ05aGRehHzIsF36MBIPdZUEmCk76mYoW4NG7n/oN4XoZ
-   EzviT5MpuMTfDR440UmX5AAoS3hs4gUarALCjavSVBP1VWqK3ARjpLDX7
-   A==;
-X-CSE-ConnectionGUID: 0/9+vFSTRLm6baDmcuS+RA==
-X-CSE-MsgGUID: WOlgjuiaS5q9rNfWuC2bwg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11901"; a="100235866"
-X-IronPort-AV: E=Sophos;i="6.27,96,1787036400"; 
-   d="scan'208";a="100235866"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2026 00:35:27 -0700
-X-CSE-ConnectionGUID: gzBaBml6QnGcfHpFIT4MEw==
-X-CSE-MsgGUID: RxWIuRAtQQ+WKoQWUTbPyA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,96,1787036400"; 
-   d="scan'208";a="301746254"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.127])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2026 00:35:24 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Javier Martinez Canillas <javierm@redhat.com>, Thomas Zimmermann
- <tzimmermann@suse.de>, ardb@kernel.org, ilias.apalodimas@linaro.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, simona@ffwll.ch,
- airlied@gmail.com
-Cc: dri-devel@lists.freedesktop.org, linux-efi@vger.kernel.org,
- sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v4 2/3] drm/edid: Add drm_edid_detect_panel_size()
-In-Reply-To: <87y0d9cysk.fsf@ocarina.mail-host-address-is-not-set>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20260904090850.43060-1-tzimmermann@suse.de>
- <20260904090850.43060-3-tzimmermann@suse.de>
- <87y0d9cysk.fsf@ocarina.mail-host-address-is-not-set>
-Date: Fri, 11 Sep 2026 10:35:20 +0300
-Message-ID: <e34932b2f44659ab8c0843e85b78a60336f9c7ce@intel.com>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="HA4oEFiC"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=dyuY+e6KhIRbp1sqltg9xR+i0CBP0mQMEq4WQEvfMac=;
+	b=HA4oEFiC8znxJydKC3KAHAtUr7/aOhg7dKOBOA38HUyUBAgNDM5MK37C36x9RASME3GTY/Ex0
+	TSzzqLHkiX2XCmrB+L7aBzH1PHkHexlpd1DWCYdJYHf0OrFZGYdWKWYiaLPFrfRlqXNv6oeY8p7
+	7KAih2VuU4lbY5T1XYp+b3o=
+Received: from mail.maildlp.com (unknown [172.19.163.163])
+	by canpmsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hh6Dh2L4czKm5t;
+	Fri, 11 Sep 2026 15:51:16 +0800 (CST)
+Received: from whupemk100014.china.huawei.com (unknown [7.152.184.20])
+	by mail.maildlp.com (Postfix) with ESMTPS id 80B1B4057A;
+	Fri, 11 Sep 2026 16:02:15 +0800 (CST)
+Received: from [10.67.121.110] (10.67.121.110) by
+ whupemk100014.china.huawei.com (7.152.184.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 11 Sep 2026 16:02:14 +0800
+Subject: Re: [PATCH v3 3/3] hisi_acc_vfio_pci: reject live migration on 64KB
+ page with QM_HW_V3 hardware
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+References: <20260831090951.844569-1-liulongfang@huawei.com>
+ <20260831090951.844569-4-liulongfang@huawei.com>
+ <20260831100023.0155B1F000E9@smtp.kernel.org>
+From: liulongfang <liulongfang@huawei.com>
+Message-ID: <7e77dab0-ede4-527c-e5ec-9056f48ecd73@huawei.com>
+Date: Fri, 11 Sep 2026 16:02:14 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20260831100023.0155B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ whupemk100014.china.huawei.com (7.152.184.20)
 
-On Thu, 10 Sep 2026, Javier Martinez Canillas <javierm@redhat.com> wrote:
-> Thomas Zimmermann <tzimmermann@suse.de> writes:
->
->> Add drm_edid_detect_panel_size() to extract the panel's preferred
->> display resolution from a given EDID. Required for setting up DRM's
->> panel orientation quirks in sysfb drivers.
->>
->> v4:
->> - fix test for EDID PTD (Jani)
->> v3:
->> - mention use case in documentation (Jani)
->> - use is_detailed_timing_descriptor() (Jani)
->> - rename helper to drm_edid_detect_panel_size()
->> v2:
->> - handle EDID without pixel timing descriptor (Sashiko)
->> - fix checks for width and height pointers
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Acked-by: Ard Biesheuvel <ardb@kernel.org>
->> ---
->>  drivers/gpu/drm/drm_edid.c | 47 ++++++++++++++++++++++++++++++++++++++
->>  include/drm/drm_edid.h     |  2 ++
->>  2 files changed, 49 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
->> index 9990a836d0b6..1331efb4876c 100644
->> --- a/drivers/gpu/drm/drm_edid.c
->> +++ b/drivers/gpu/drm/drm_edid.c
->> @@ -7852,3 +7852,50 @@ bool drm_edid_is_digital(const struct drm_edid *drm_edid)
->>  		drm_edid->edid->input & DRM_EDID_INPUT_DIGITAL;
->>  }
->>  EXPORT_SYMBOL(drm_edid_is_digital);
->> +
->> +/**
->> + * drm_edid_detect_panel_size - Get a panel's size from EDID
->> + * @drm_edid: EDID of the panel.
->> + * @width: Returns the panel's width in pixels per scanline, if given
->> + * @height: Returns the panel's height in scanlines, if given
->> + *
->> + * This function detects the preferred size of a panel from the given
->> + * EDID. There is no such information stored in the EDID block directly,
->> + * but the preferred mode often corresponds to the panel's native geometry.
->> + *
->> + * This helper should only be used during initialization before the
->> + * connector is available. For regular use, retrieve the available display
->> + * modes with the connector functions.
->> + *
->> + * Return: Zero on success, or a negative errno code otherwise.
->> + */
->> +int drm_edid_detect_panel_size(const struct drm_edid *drm_edid,
->> +			       unsigned int *width, unsigned int *height)
->> +{
->> +	const struct edid *edid = drm_edid->edid;
->> +	const struct detailed_timing *dt;
->> +	const struct detailed_pixel_timing *pt;
->> +
+On 2026/8/31 18:00, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch completely breaks VFIO passthrough for this device on 64KB page hosts instead of gracefully falling back to generic operations.
+> --
+> 
+> commit e0bfdb6998df9e209e0b7358693ec17f21c25bfe
+> Author: Longfang Liu <liulongfang@huawei.com>
+> 
+> hisi_acc_vfio_pci: reject live migration on 64KB page with QM_HW_V3 hardware
+> 
+> This commit aims to prevent security vulnerabilities and guest exceptions when
+> combining QM_HW_V3 hardware with 64KB pages by disabling live migration. It
+> returns -EINVAL during device initialization if the host page size exceeds
+> 32KB.
+> 
+>> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>> index 4abed2e49986f..4f12cab96545e 100644
+>> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>> @@ -1210,6 +1210,23 @@ static int hisi_acc_vf_qm_init(struct hisi_acc_vf_core_device *hisi_acc_vdev)
+>>  	else
+>>  		hisi_acc_vdev->drv_mode = HW_ACC_MIG_VF_CTRL;
+>>  
 >> +	/*
->> +	 * Use display mode from the Preferred Timing Descriptor. For old
->> +	 * and obscure displays, we might need better heuristics.
+>> +	 * On VF_CTRL hardware, BAR2 holds 32KB functional + 32KB
+>> +	 * migration registers. When the host page exceeds 32KB, the
+>> +	 * two share one physical page and cannot be isolated by mmap.
+>> +	 * Reject the open so QEMU fails cleanly at startup.
 >> +	 */
+>> +	if (hisi_acc_vdev->drv_mode == HW_ACC_MIG_VF_CTRL) {
+>> +		resource_size_t func_len =
+>> +			pci_resource_len(vf_dev, VFIO_PCI_BAR2_REGION_INDEX) >> 1;
 >> +
->> +	if (edid->revision < 4 || !(edid->features & DRM_EDID_FEATURE_PREFERRED_TIMING))
->> +		return -EINVAL; /* no Preferred Timing Descriptor */
+>> +		if (func_len < PAGE_SIZE) {
+>> +			dev_err(&vf_dev->dev,
+>> +				"migration not supported on 64KB pages with QM_HW_V3\n");
+>> +			return -EINVAL;
+> 
+> [Severity: High]
+> Does returning an error here completely break VFIO passthrough for this device
+> on 64KB page hosts?
+> 
+> Since hisi_acc_vf_qm_init() is called during device open, returning an error
+> causes the entire operation to fail. This results in users completely losing
+> passthrough functionality for QM_HW_V3 devices on 64KB page hosts, rather
+> than just having migration gracefully disabled.
+> 
+> Could this be handled earlier in hisi_acc_vfio_pci_probe() instead?
+> 
+> The driver currently assigns migration operations unconditionally:
+> 
+> drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c:hisi_acc_vfio_pci_probe() {
+>     ...
+>     if (pf_qm && pf_qm->ver >= QM_HW_V3) {
+>         if (pdev->is_virtfn)
+>             ops = &hisi_acc_vfio_pci_migrn_ops;
+>     ...
+> }
+> 
+> If the 64KB page limitation was checked during probe and fell back to the
+> generic ops instead, normal passthrough would continue to work correctly.
+> The generic VFIO implementation safely maps the entire BAR2 region without
+> KVM trap-and-emulate issues.
+>
+
+Our goal is precisely to disable live migration for passthrough on 64KB page systems.
+
+Thanks
+Longfang
+
+
+>> +		}
+>> +	}
 >> +
->
-> I saw that Jani and you discussed this logic in v3. I originally thought that
-> your v3 was correct and this one was wrong, but I noticed now that this flag
-> changed its semantic between 1.3 and 1.4.
->
-> So I think that this latest version is correct indeed, 1.3 didn't include the
-> native pixel format and 1.4 does not either if DRM_EDID_FEATURE_PREFERRED_TIMING
-> flag is not set.
-
-Yeah, and "pixel format" makes me think RGB, YCbCr, 4:4:4, 4:2:2, etc,
-*not* the resolution! Had to separately find the section that says pixel
-format means resolution here.
-
-BR,
-Jani.
-
->
-> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
--- 
-Jani Nikula, Intel
+>>  	if (hisi_acc_vdev->drv_mode == HW_ACC_MIG_PF_CTRL) {
+>>  		/*
+>>  		 * On hardware platforms greater than QM_HW_V3, the migration function
+> 
