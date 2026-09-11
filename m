@@ -1,131 +1,177 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5078A4A206A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 17:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ED824B1462
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:19:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789147669; cv=none; b=Cgmu5PVHZOd8RP4WBjZZiSS+MYSIIQi9JQwlNhloRZMhC1boH7h7i/JHcezlQE0DRPgHb9FlyElVR0WFTxrfPOogrwmoaDzFPOho+ie5BV8qpmRTW5fxx+Y6N4dmqeY97I2jNcl/utxBQYhBWkGkVHu2D6+FeQq2Zv1o3TNgp+w=
+	t=1789150757; cv=none; b=Mq8u3Wbjy8YM0PJHjFvpRqJNdGvxYWNcz0zZnwK4zKVVQo2T+oxlakQysokV0aUnZA/eo73b7cRGM+rMHkyJz3xJKIrB+O75pA7LmxZMACyyWYgkCBy7Hsn1Kch0MLayjFaXQW3b+pn9Fi7Tt8VZN4YkXdlM4HQ319CD2hC0cf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789147669; c=relaxed/simple;
-	bh=rnZThFAGnmGU0UQlPMjaym4BCAvWP6M7XNsFuKOmtjA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N+UWproX9bym2U7akq895fNW7LVSXOsAe69nesMGedQjXUUam2hsAFF5XrdvTevaTXjBw0nHp2It15DGWd99sklgAiYclNZFzUwA+jtir6Wz5sBck87XjcphwwWeXedzpDJE0YRG9WQf0IVUj0E1kQBERhnZb74pwoDiyqm3jKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toxicpanda.com; spf=pass smtp.mailfrom=toxicpanda.com; dkim=pass (2048-bit key) header.d=toxicpanda.com header.i=@toxicpanda.com header.b=fZ43cCHW; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toxicpanda.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toxicpanda.com
+	s=arc-20240116; t=1789150757; c=relaxed/simple;
+	bh=qwTfp3jd7ytFD9SocdNVwN01warOuILP9XtdpPcabtE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mIJmrm4M5W/xAgYeLg5W5TAMuOxlVwytRMNJT2D7AzfY1DqjlsxTJTiBWp+lBuhHEFl2ECr0ZmlVTOr/HHuq6WsZnnZVQ60TUR0pt2jeTaIoBkcaJ8jI+hKpczin1Dy05RRsrC+Ntco2gvMPq6dka3k1+TBVyCfJW5jKvjjp6sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=MpZ8855u; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toxicpanda.com header.i=@toxicpanda.com header.b="fZ43cCHW"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-517dc520840so14491571cf.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=toxicpanda.com; s=google; t=1789147667; x=1789752467; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=wpUPEQIS9yTOB1sr1PlCn6Mv7jz37PgyvzgihSoDlVQ=;
-        b=fZ43cCHWtl/kEGsWhvPfUf78obsndINr7Ar9RCX3SfzbqA9KOHELnNwG6e25E+3zOu
-         hObuax9qXkXPAP4sDsVxfIga4oxnsTJMhF6IZe4w6GMV3P248jnegSU38ZV7kMXZ0sBo
-         GzzP1uYPsPMw1UOFIkYHKsH3r2OnFtrKl7snueeAFOu6F1qFfNQy19XwekHLBccIIo2/
-         hwnmKZy6FpTBCAndPWloNYIsUnaDPVOvoi/2OfC08liN/RvCsuyN/JWHbU8/iz6MdtIC
-         2GflZNLLBubfWZJX+56zkfWRZ2DlVogaJaa4xqzU5A0vpD6kIGK6lqD8twNIxG930OvZ
-         Zbsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789147667; x=1789752467;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wpUPEQIS9yTOB1sr1PlCn6Mv7jz37PgyvzgihSoDlVQ=;
-        b=jZXO+jqXBx4GyZUr+pnS9bSvRlakozs8Cdk+h5cMlXUbxp7qFfeDNPaqkdVX3vRUHq
-         qj5dXbD5YK9Wwrdpl4tvrhnEUGTbvuRItkh74tE5TKS2QZV2c3iPkYYB1nyZFey2zQ2p
-         P7GQXozySH/e8FaHZrocGejV+lMKPlWZr5IjUvfco7hfUK+1IOScGOAtLR725lMAdSiq
-         vlUb34GyMvZSkKZXtZibCf7T992hUe2KowR57O+e8rHr4UI1WYaIvn9iWEXNmZVX7pwU
-         qD/57kjI0MOi8L5HaYA7E5oq6jmXqxOjUgQBoOQACc+WTN4kiJgPyceHsJBAKWati69Y
-         dsqA==
-X-Gm-Message-State: AFuF++nBlbiqPupgP7k/8KTYMRN3yLVCOpFwS9v7+uFw/IVsEmE1J5F0
-	R/+0VAFzp4u69E7iKOT35beaIeUkaf4nbyj/EM+T9cA4HzksAbWjiYYg3iLsR2FGYx6GjdY00vM
-	SJdh0
-X-Gm-Gg: AYBFou3bli/RBduIO2sJ9wSSmHvdbrkbmeeCV0viBTSwdPgqIzNZddD1P9h/Jmwi+SL
-	mG08YR03jHikw6V8O4hmRFRNn0AWuuZ4GPNy/BF8n+/RumDb4Ep7OnJO+ooau4f7r8YxCgQAXFy
-	xx2AnXxh3Dvxn1ANVSYwkR1buFIiQjAJQf2fYaZiCkbdDPVvZowIziDmtx8EcPkLDULxR22DW3m
-	tFwnwIUBiAsqeV5lhm+GRRkAVtSGO5K4I/sPJ1DgQZXkER9S4fqRrh+fVfqjSZvXPZ8BQBwRJ2J
-	FVBJ+5U1h1p1bLwBbqDIcczefQNbIlkP+64Nv92enTcoCi9aIe8hqc13Ei/dlao+1FxsDx5oC+r
-	gguKveKqSf3j6XPaOguQ6PPi8lqxiezjOPXYF8mrQmTiwNHFw/QMQCUjg7Gry+AI4PBqCd8ihST
-	n32dkTA54z32FeuTz8RkwzP88IrD7T7Q7zQyGhV4hhuPBq0c0jBPrcIzzF/bsW+EkMk9JrusoZu
-	g/L2YTpPAR1d6Zhoezliag9QAnJoqStJS2KylhsobwKFyojg6XDz23i
-X-Received: by 2002:a05:622a:1309:b0:530:42e4:effc with SMTP id d75a77b69052e-530c87566f0mr75877761cf.41.1789147666875;
-        Fri, 11 Sep 2026 10:27:46 -0700 (PDT)
-Received: from toxicpanda.com (ec2-34-228-114-98.compute-1.amazonaws.com. [34.228.114.98])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530ca30855csm24883061cf.1.2026.09.11.10.27.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 10:27:42 -0700 (PDT)
-Date: Fri, 11 Sep 2026 17:27:24 +0000
-Message-ID: <59aed05db0d993f69088fba21576792d.josef@toxicpanda.com>
-From: Josef Bacik <josef@toxicpanda.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH RFC v2 04/15] kprobes: Let Tasks RCU recognise tasks preempted in an optprobe jump window
-In-Reply-To: <20260911142626.ACAED1F000FF@smtp.kernel.org>
-References: <20260911-b4-rcu-tasks-preempt-qs-v2-0-eaaa61ed2da4@toxicpanda.com> <20260911-b4-rcu-tasks-preempt-qs-v2-4-eaaa61ed2da4@toxicpanda.com> <20260911142626.ACAED1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="MpZ8855u"
+Received: from [100.64.96.235] (unknown [40.65.108.177])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 4B6B620B716A;
+	Fri, 11 Sep 2026 11:18:29 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4B6B620B716A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1789150709;
+	bh=x7zl/xb3yO3wlHvQRT0aPOPUd0h/k8si8L1O/hsq2OI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MpZ8855usAsTi2EFU38AiQWDzq/egocVt3rnnlgIj5CKrAk0b41xQYjaSNzjyKIje
+	 QEdMpEg7xmebIx0dS4W/tf52Jp9zrksrj+bezw6fRww7inaoiE2caMX3SGngBBzkpg
+	 QOBzzAwe9tSVe6Q+cAEX3/y6KWr0pgY+yyA9IEtk=
+Message-ID: <598411fa-364c-49d1-aa67-cdfe5ce8c775@linux.microsoft.com>
+Date: Fri, 11 Sep 2026 11:19:09 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mshv_vtl: Check per-CPU register page before mmap
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+References: <20260911175146.1370148-1-hargar@linux.microsoft.com>
+ <20260911180509.8A5981F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Hardik Garg <hargar@linux.microsoft.com>
+In-Reply-To: <20260911180509.8A5981F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On Fri, 11 Sep 2026 14:26:26 +0000, sashiko-bot@kernel.org wrote:
-> > +	for (i = 1; i < MAX_OPTIMIZED_LENGTH / sizeof(kprobe_opcode_t); i++)
-> > +		if (get_kprobe((kprobe_opcode_t *)addr - i))
+
+On 9/11/2026 11:05 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 >
-> [Severity: Medium]
-> When kprobe_in_optimized_region() calls get_kprobe(), neither rcu_read_lock()
-> nor kprobe_mutex is held (for example, when called from the Tasks RCU GP
-> kthread).
+> Pre-existing issues:
+> - [High] Returning VM_FAULT_NOPAGE for invalid memory offsets without installing a PTE causes an unkillable infinite page fault loop.
+> - [High] Per-CPU memory allocated for `run` and `reg_page` is leaked on driver module unload and upon CPU hotplug setup failures.
+> - [High] Premature character device registration allows userspace to trigger page faults and ioctls before per-CPU data is initialized, bypassing the newly added `if (!page)` check and causing kernel panics or UAF.
+> --
+
+All the reported issues are pre-existing and not related to this patch.
+I will review the issues and fix them in a separate patch.
+
+> commit 33a60782bd60657bd70b537be47acdb4ffe78f38
+> Author: Hardik Garg <hargar@linux.microsoft.com>
 >
-> get_kprobe() iterates the hash list using:
+> mshv_vtl: Check per-CPU register page before mmap
 >
->     hlist_for_each_entry_rcu(p, head, hlist,
->                              lockdep_is_held(&kprobe_mutex)) {
+> Register-page setup is optional for each CPU. If allocation or
+> registration fails, mshv_vtl_configure_reg_page() warns and leaves that
+> CPU's reg_page NULL, but initial context setup continues successfully.
+> Meanwhile, successful setup on another CPU sets the global
+> mshv_has_reg_page flag.
 >
-> Without explicitly acquiring rcu_read_lock() around get_kprobe(), lockdep
-> will complain about suspicious RCU usage, because preempt_disable() (or
-> running from a kthread) does not satisfy rcu_read_lock_held() on
-> CONFIG_PREEMPT_RCU.
-
-This is not right. The list iterator's check is not rcu_read_lock_held(),
-it is
-
-	RCU_LOCKDEP_WARN(!(cond) && !rcu_read_lock_any_held(), ...)
-
-and rcu_read_lock_any_held() ends in "return !preemptible();", so any
-caller with preemption or interrupts disabled satisfies it regardless of
-PREEMPT_RCU. That is also the actual RCU guarantee since the flavor
-consolidation: synchronize_rcu() waits for preempt/irq-disabled regions
-on PREEMPT_RCU kernels too, which is what the kprobe free paths rely on
-here.
-
-Every caller is in such a region. rcu_tasks_preempt_is_qs() runs from
-rcu_note_context_switch() inside __schedule() after local_irq_disable();
-the grace-period kthread only evaluates it from the task_call_func()
-callback in 14/15, which runs under p->pi_lock taken with irqsave; and
-the preempt == false callers (cond_resched_tasks_rcu_qs(),
-rcu_softirq_qs()) short-circuit before rcu_tasks_preempt_is_qs() is
-evaluated at all. Nothing calls this bare from kthread context.
-
-I also checked it the boring way: PREEMPT_DYNAMIC=y (so PREEMPT_RCU=y),
-PROVE_RCU, PROVE_LOCKING, booted preempt=lazy, registering and
-unregistering optimized kprobes in a loop while a kthread spins and gets
-irq-preempted, which is exactly the path that reaches get_kprobe() with
-kprobe_optimizer_waiting set. No lockdep output.
-
-For the tool: when flagging hlist_for_each_entry_rcu() callers, check
-against rcu_read_lock_any_held() (the condition __list_check_rcu()
-actually uses), not rcu_read_lock_held().
-
-Thanks,
-
-Josef
+> mshv_vtl_fault() checks this global flag before selecting the requested
+> CPU's register page. With mixed setup results across online CPUs, the
+> check passes even for a CPU with no register page, reaching
+> get_page(NULL) when userspace faults in that mapping.
+>
+> Check the selected per-CPU register page before taking its reference and
+> return VM_FAULT_SIGBUS if it is absent.
+>
+> Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
+> Cc: stable@vger.kernel.org
+>
+>> diff --git a/drivers/hv/mshv_vtl_main.c b/drivers/hv/mshv_vtl_main.c
+>> index 6e3c11c681717..d8225242c73f8 100644
+>> --- a/drivers/hv/mshv_vtl_main.c
+>> +++ b/drivers/hv/mshv_vtl_main.c
+>> @@ -819,6 +819,9 @@ static vm_fault_t mshv_vtl_fault(struct vm_fault *vmf)
+>>  		return VM_FAULT_NOPAGE;
+>>  	}
+> [Severity: High]
+> This isn't a bug introduced by this patch, but returning VM_FAULT_NOPAGE
+> for an invalid memory offset without installing a PTE causes an unkillable
+> infinite page fault loop.
+>
+> If a userspace process maps the /dev/mshv device and accesses an invalid page
+> offset (neither MSHV_RUN_PAGE_OFFSET nor MSHV_REG_PAGE_OFFSET), this else
+> branch is taken. Returning VM_FAULT_NOPAGE signals to the core MM subsystem
+> that the fault handler successfully installed the page table entry, so the
+> kernel returns to userspace without doing anything. Since no PTE was actually
+> installed, the CPU will immediately re-fault on the same instruction, creating
+> a 100% CPU hung task.
+>
+> Could we return VM_FAULT_SIGBUS here instead?
+>
+>>  
+>> +	if (!page)
+>> +		return VM_FAULT_SIGBUS;
+> [Severity: High]
+> This is a pre-existing issue, but premature character device registration
+> allows userspace to bypass this newly added check.
+>
+> In mshv_vtl_init(), the character device is exposed to userspace early:
+>
+> mshv_vtl_init() {
+>     ...
+>     ret = misc_register(&mshv_dev);
+>     ...
+> }
+>
+> If a userspace process races the module initialization by opening /dev/mshv
+> and mapping it before hv_vtl_setup_synic() allocates the per-CPU run page,
+> mshv_vtl_cpu_run(cpu) will return NULL.
+>
+> When this happens, virt_to_page(NULL) is called:
+>
+> mshv_vtl_fault() {
+>     ...
+>     if (real_off == MSHV_RUN_PAGE_OFFSET) {
+>         page = virt_to_page(mshv_vtl_cpu_run(cpu));
+>     ...
+> }
+>
+> This produces a garbage non-NULL pointer, causing the new if (!page) check
+> to pass, and the subsequent get_page() will dereference the garbage pointer
+> and panic.
+>
+> If initialization subsequently fails, the module load aborts and .text is
+> freed while the racing userspace process retains an open file descriptor,
+> leading to a use-after-free.
+>
+> Could the device registration be deferred until after the per-CPU data is
+> initialized?
+>
+>> +
+>>  	get_page(page);
+>>  	vmf->page = page;
+>>  
+> [Severity: High]
+> This is a pre-existing issue, but does this code leak the per-CPU pages
+> allocated for run and reg_page on driver module unload and upon CPU hotplug
+> setup failures?
+>
+> When setting up the hotplug state, the teardown callback is set to NULL:
+>
+> hv_vtl_setup_synic() {
+>     ...
+>     ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "hyperv/vtl:online",
+>                             mshv_vtl_alloc_context, NULL);
+>     ...
+> }
+>
+> When the module unloads, cpuhp_remove_state() is called, but without a
+> teardown callback, the memory permanently allocated via __get_free_page()
+> in mshv_vtl_alloc_context() is leaked:
+>
+> mshv_vtl_alloc_context() {
+>     ...
+>     per_cpu->run = (struct mshv_vtl_run *)
+>         __get_free_page(GFP_KERNEL | __GFP_ZERO);
+>     ...
+> }
+>
+> Additionally, if the hotplug state setup fails midway, the successfully
+> processed CPUs will not be cleaned up.
+>
+> Could a teardown callback be provided to free these pages?
+>
