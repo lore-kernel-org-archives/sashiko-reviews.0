@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-237.mta0.migadu.com [91.218.175.237])
+Received: from mta0.migadu.com (out-126.mta0.migadu.com [91.218.175.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD3843BDA7
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 06:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.237
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1451D40E8CD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 06:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789109039; cv=none; b=gIRcDV5f25ow6Rv29D6sBFhvGqLHw10iwDyDUwdr/LcLbB8dLHXswqEIj+hyjchXsOhqeb3+2I5YI+TcKc2vN35NnBO/ll1wOGR+YyiarFS9Ck5pEJUBY0B6OfYxTPLVH/vHA6kv5AI5D3qMNtCb0T0NnVWvgxrXRMH9/l03qiI=
+	t=1789109816; cv=none; b=a7s7NF7AunWN8yAqXVMvf/4JcpgRTPZBYFg5NsSOXduRn57icUnjcgGJzrU8yBbprcbm8xZzrBBr/8oPc/KO/eLMGdVYqzWSoYnL9k8wkcVw/DQO1Z7kd6953n3GE5hG+8P1GMxoyj8FI7V8OXZuRLQPv/rhJl+GEWRVNUrzl6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789109039; c=relaxed/simple;
-	bh=TmZY6BcQ0xEisxRZNCEF4PqxPS0KlLd6mp1NcqPQr7k=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Ml89gjepwyPM8+EFU7jOl/+MpYV7RGL3AjYmIdGby6fiDTPKYRkcf+/el6wyJHfIOd6WX9aCBAUXlA1nPB7fnpREosXcGqcg7aSU7R2PcZF9aNrfl4jndCPTOGQ3crP78X6Oe7io27r758dXcatBMW0+eBqo7cIRwL7DyADsYCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RJkrEqJk; arc=none smtp.client-ip=91.218.175.237
+	s=arc-20240116; t=1789109816; c=relaxed/simple;
+	bh=6q7xhltJVHuVK0l5YFqev8/dZwx/prHRRWYUGv6SSwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=deRZicTxT2hyEc8XrPHv04ToOO5d7O+RzMF/gNkzb65M9IpvBtgDGu0nkPDPUmSQ5BXOzbzxEP7NBh5134GSPChec+bn4DDidd/z3qpIYuRMY5etCyV10y0FN7mKL9N7veuLexpgqK1rfKin7Ogj1ZYuPvfiGxggLQr77nwrd4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qw50Qb75; arc=none smtp.client-ip=91.218.175.126
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RJkrEqJk"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qw50Qb75"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=TmZY6BcQ0xEisxRZNCEF4PqxPS0KlLd6mp1NcqPQr7k=;
+DKIM-Signature: a=rsa-sha256; bh=6q7xhltJVHuVK0l5YFqev8/dZwx/prHRRWYUGv6SSwQ=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789109019; v=1; x=1789713819;
- b=RJkrEqJkYhpR1SDaLjsRsbhUNV/WgAlg6o0F5pPk9JDztPuUQSVvyWr4cJIMskcP4iUz+7Os
- 47XkwG1XtPn+g9ZjJK+ZiAJl5R3JORHAIaoZ2WYPmKdjd9pUpH37zlDis2YQ7WWa2cBidTpPydO
- SaLSAbgG+5VPuKYrAtTGbKmQ=
+ t=1789109803; v=1; x=1789714603;
+ b=qw50Qb75QOHEtrwrBgEwgBMkJGQUIECXkpNQ6LKBr78RSf145jnxeinpJrVnIPuNMDE6O21C
+ xRUBnILR4JoYPGMCkzg2XxCDvSpYToh8b/FuyrvB/5J7EWgwW7DImiZQAsxJ1XZX1U7J6QHUbRR
+ q/zW2r2m1QDXhRNZM7GcXi7U=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9fa0cc3ea997953c;
-	Fri, 11 Sep 2026 06:43:39 +0000
-X-Mizu-Trace-ID: 9fa0cc3ea997953c
+Received: by smtp.migadu.com with ESMTPS id 6991f43a9b2606fa;
+	Fri, 11 Sep 2026 06:56:43 +0000
+X-Mizu-Trace-ID: 6991f43a9b2606fa
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <1a84bd17-f673-4230-811b-e417ca58d62e@linux.dev>
-Date: Fri, 11 Sep 2026 12:13:33 +0530
+Message-ID: <6d7d2969-34a2-4c6e-b8f2-3b85cfad549f@linux.dev>
+Date: Fri, 11 Sep 2026 12:26:37 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,143 +38,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 09/13] bpf: track low-32 scalar equality
- across narrowing stack fills
-From: Vineet Gupta <vineet.gupta@linux.dev>
+Subject: Re: [PATCH bpf-next v2 01/13] bpf: move linked-scalar flags out of
+ bpf_reg_state->id [NFC]
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260910164635.459558-1-vineet.gupta@linux.dev>
- <20260910164635.459558-10-vineet.gupta@linux.dev>
- <20260910170419.4C8601F000FF@smtp.kernel.org>
- <3f3e5658-4393-4530-8b3b-987fe20ddc95@linux.dev>
+ <20260910164635.459558-2-vineet.gupta@linux.dev>
+ <20260910170056.87B091F0089B@smtp.kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
 Content-Language: en-US
-In-Reply-To: <3f3e5658-4393-4530-8b3b-987fe20ddc95@linux.dev>
+In-Reply-To: <20260910170056.87B091F0089B@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 9/11/26 11:37 AM, Vineet Gupta wrote:
-> On 9/10/26 10:34 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Critical] Sign-extending loads incorrectly preserve conflicting SUBREG_ZEXT metadata.
->> --
->>
->> commit f939550a777ae3d2a7392dec744bffdc9fabcdda
->> Author: Vineet Gupta <vineet.gupta@linux.dev>
->>
->> bpf: track low-32 scalar equality across narrowing stack fills
->>
->> This commit records a low-32 link for stack fills narrower than the wider
->> source, allowing the verifier to deduce relations between 32-bit narrows
->> and their wider origins. It also adjusts check_mem_access() to not clear
->> the id of a ->subreg register on a sign-extending load.
->>
->>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->>> index 308ff53232f06..89be1240c99ae 100644
->>> --- a/kernel/bpf/verifier.c
->>> +++ b/kernel/bpf/verifier.c
->> [ ... ]
->>
->>> @@ -3968,18 +3969,34 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
->>>    
->>>    			if (size <= spill_size &&
->>>    			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
->>> -				if (env->bpf_capable && size == 4 && spill_size == 4 &&
->>> -				    get_reg_width(reg) <= 32)
->>> +				bool narrowing = get_reg_width(reg) > size * BITS_PER_BYTE;
->>> +				/*
->>> +				 * A narrowing fill keeps only the slot's low 32 bits,
->>> +				 * so record a low-32 link rather than dropping the
->>> +				 * relation, as a 32-bit mov from a wide source does.
->>> +				 * Which kind depends on how the load fills the high
->>> +				 * half, hence is_ldsx.
->>> +				 */
->>> +				bool subreg_link = narrowing && size == 4;
->>> +
->>> +				if (env->bpf_capable && size == 4 &&
->>> +				    (subreg_link || (spill_size == 4 && !narrowing)))
->>>    					/* Ensure stack slot has an ID to build a relation
->>>    					 * with the destination register on fill.
->>>    					 */
->>>    					assign_scalar_id_before_mov(env, reg);
->>>    				state->regs[dst_regno] = *reg;
->>>    
->>> -				/* Break the relation on a narrowing fill.
->>> -				 * coerce_reg_to_size will adjust the boundaries.
->>> -				 */
->>> -				if (get_reg_width(reg) > size * BITS_PER_BYTE)
->>> +				if (subreg_link && reg->id)
->>> +					state->regs[dst_regno].subreg =
->>> +						is_ldsx ? SUBREG_SEXT : SUBREG_ZEXT;
->>> +				else if (narrowing)
->>> +					/*
->>> +					 * Nothing to relate: either the slot has
->>> +					 * no id to share, or the fill is narrower
->>> +					 * than the 32 bits a link can describe.
->>> +					 * coerce_reg_to_size adjusts the bounds.
->>> +					 */
->>>    					clear_scalar_id(&state->regs[dst_regno]);
->> [Severity: Critical]
->> When narrowing is false, does this preserve a stale SUBREG_ZEXT property for
->> a sign-extending load?
->>
->> If a register with SUBREG_ZEXT is spilled to the stack and then read back
->> via a 4-byte sign-extending load, narrowing evaluates to false. This allows
->> the destination register to inherit the SUBREG_ZEXT property directly from
->> the stack slot, even though it is being sign-extended.
->>
->> [ ... ]
-> Indeed if narrowing is false, wrong metadata can potentially be
-> introduced, a comment to that effect is added here.
->
->      /*
->        * A fill that is not narrowing copies the slot's
->        * kind verbatim, which a sign-extending load can
->        * contradict. check_mem_access() runs after this
->        * and drops any kind but SUBREG_SEXT once it knows
->        * the extension was not a no-op.
->        */
->
->
-> See the second site below for actual fix...
->
->>> @@ -6736,13 +6753,15 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, struct b
->>>    			 * Sign-extension can change the register value relative
->>>    			 * to a scalar it is linked with by id (e.g. a zero-
->>>    			 * extending fill of the same spilled stack slot), thus
->>> -			 * drop the shared id in that case.
->>> +			 * drop the shared id in that case. A ->subreg link is
->>> +			 * the exception: it already records that only the low
->>> +			 * 32 bits are shared, and how the high half follows.
->>>    			 */
->>>    			bool no_sext = reg_umax(&regs[value_regno]) <
->>>    					(1ULL << (size * BITS_PER_BYTE - 1));
->>>    
->>>    			coerce_reg_to_size_sx(&regs[value_regno], size);
->>> -			if (!no_sext)
->>> +			if (!no_sext && !regs[value_regno].subreg)
->>>    				clear_scalar_id(&regs[value_regno]);
->> [Severity: Critical]
->> Does this check wrongly preserve the ID for SUBREG_ZEXT registers that
->> have just been sign-extended?
->>
->> Because SUBREG_ZEXT is non-zero, !regs[value_regno].subreg evaluates to
->> false, skipping the clear_scalar_id() call for a register that might hold
->> a sign-extended negative value.
->>
->> Later, if a conditional branch triggers sync_linked_regs(), it will see
->> SUBREG_ZEXT and invoke reconstruct_zext32(). This would forcefully set the
->> bounds to a zero-extended positive value.
->>
->> At runtime, the discrepancy between the verifier's zero-extended positive
->> bounds and the actual sign-extended negative value could bypass bounds checks,
->> potentially leading to out-of-bounds memory reads or writes.
->>
->> Should this explicitly check for SUBREG_SEXT rather than just allowing any
->> non-zero ->subreg value?
-> Exactly that. And the first path leads here so the comment above suffices.
 
-What I meant was first site has comment, and this site has the exact fix 
-which sashiko identified.
-They are both part of the same bug.
 
-Thx
+On 9/10/26 10:30 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Unintentional stricter pruning in explore_alu_limits mode causing state explosion.
+> --
+>
+> commit aa1d987a87f62f32dd84baa98f047ffd7635c40e
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+>
+> bpf: move linked-scalar flags out of bpf_reg_state->id [NFC]
+>
+> This commit moves the linked-scalar flags (ADD_CONST32 and ADD_CONST64) out of
+> the bpf_reg_state->id field and into a separate add_const bitfield. This
+> simplifies ID tracking by removing the need to mask the ID during checks.
+>
+>> diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+>> index 66fb11b6c6a76..d974baad37ee2 100644
+>> --- a/kernel/bpf/states.c
+>> +++ b/kernel/bpf/states.c
+> [ ... ]
+>
+>> @@ -542,8 +527,7 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+>>   			/* explore_alu_limits disables tnum_in() and range_within()
+>>   			 * logic and requires everything to be strict
+>>   			 */
+>> -			return memcmp(rold, rcur, offsetof(struct bpf_reg_state, id)) == 0 &&
+>> -			       check_scalar_ids(rold->id, rcur->id, idmap);
+>> +			return regs_exact(rold, rcur, idmap);
+>>   		}
+> [Severity: Medium]
+> Does this unintentionally introduce a stricter pruning check when
+> explore_alu_limits is active?
+>
+> The commit message notes that using regs_exact() amounts to the same as the
+> open-coded memcmp plus check_scalar_ids() pair. However, check_scalar_ids()
+> allows old_id to be 0 by returning true immediately (ignoring cur_id):
+>
+> 	if (!old_id)
+> 		return true;
+>
+> On the other hand, regs_exact() calls check_ids(), which strictly enforces
+> that both IDs are either zero or non-zero, and fails if they differ:
+>
+> 	/* either both IDs should be set or both should be zero */
+> 	if (!!old_id != !!cur_id)
+> 		return false;
+>
+> When env->explore_alu_limits is true, comparing two equivalent scalar
+> registers where one is unlinked (ID == 0) and the other is linked (ID != 0)
+> would pass previously but fails now, potentially causing state explosion.
+
+The regs_exact() replacement was suggested in RFC review. And it is true 
+it can be tighter.
+Since the rest of series changes behavior anyways, I'm inclined towards 
+dropping the NFC and document the change. And if we go down this part, 
+perhaps patch 2 can also be folded into this one as that was the sole 
+reason for breaking it out.
+
+Thx,
+-Vineet
