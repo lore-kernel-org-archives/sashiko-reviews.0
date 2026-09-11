@@ -1,136 +1,97 @@
-Received: from mta0.migadu.com (out-60.mta0.migadu.com [91.218.175.60])
+Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365D83E4508
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 02:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.60
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4035119067C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 03:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789094058; cv=none; b=AWhy9z2C/E/EAT61zvHHOvyfXzPaJ24l7iw0W4bnJb/+6t+9xPje7YoTbxaLNneRcqoqRrjwSkaSi9wX5xQU/I12khq7i9Xg4cxuuwrh2b/aEr6eC9C++D1EPig/NYyDjO4tUGcDa3ym4muMpznrS5I7eO/1XqJSnYKoWaH2r3w=
+	t=1789095801; cv=none; b=NAtSiRKSzC1wzjE43cae07R41FrjcM+z1BT+7dQ6cC0BTaCJ6Pl8eRV7xkxiMjXEYgWmypUVYVch1u0/+Bqu5TPqohUm+Cx29dQefBSw4AezbEFZht7QSXgxX8sI5JcKVSH51sZPLYmKSljwqpb5TV42HF8pCoinBGhOf/6ny+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789094058; c=relaxed/simple;
-	bh=bQVC/dxr39L1TyurNV6KfAQz91z/xi/2KrjGLit0ipo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E+AzfTHU8idaywtc0a7IeN08krQc2+SkRm3ehIPZndORwmvlMRlIh01VdUXSc0dyhoAVQTTE1ezg219CD3JpAx6J3jPQ2H/tJQi4LfFxcF0D8tyFL0Mrm/s6nn9kSSJ9gZUQt4AUXNG4j3xGWfaFB3kRoDOAtDhtxZINJwdj1XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qGR3folb; arc=none smtp.client-ip=91.218.175.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789095801; c=relaxed/simple;
+	bh=/old4jKRCWsiFjlSdpH+uXgOHrvpMJuQq5EDgBf/RQc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=vD3+zL2U8clSlbguTfYryBlRbhC2y2FUDx/vZlZRV9IdKSJrZALH3TVFMfsMwUOvAH7buzuVN1vmz1MCjLP17TsJAVHi58mjP4ZyAxeav5MSHBCU7M1OCCMH6Vz3nILabQKGPv8doR3jWWiqPzFMD7DzSgbw2PuIK8MhtrUGak8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IArgHiLm; arc=none smtp.client-ip=74.125.227.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qGR3folb"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=bQVC/dxr39L1TyurNV6KfAQz91z/xi/2KrjGLit0ipo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789094052; v=1; x=1789698852;
- b=qGR3folbSkuXwker3bErcdEXTSn63ZRudyp7q/6juI7HwVhYIFx3AmiQD4QtvkiVTs0B1MAO
- QHNdv18xCKiJtn8GWXdTSTtbsQ5dJPPApyEhxuiP+WUt0s60w+nz5PRKUWDoWAaaJPN5Y56Ts1t
- 6U0aCyEFj3QR8pXOEvL+10No=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 4741dbb634418cca;
-	Fri, 11 Sep 2026 02:34:12 +0000
-X-Mizu-Trace-ID: 4741dbb634418cca
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <cb485c57-ca44-4657-a97c-d003e60ce222@linux.dev>
-Date: Fri, 11 Sep 2026 10:34:04 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IArgHiLm"
+Received: by mail-pj2-f8.google.com with SMTP id d9443c01a7336-2d313798bf8so1730125ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 10 Sep 2026 20:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789095799; x=1789700599; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/old4jKRCWsiFjlSdpH+uXgOHrvpMJuQq5EDgBf/RQc=;
+        b=IArgHiLm4/ENAZD2vETfX7onjSUd9mGvYZfgm6dLi9/At2flLU9T8Xz1MMcJ1ywCPv
+         JyPrkbM+ffwZjMHWOu9Rf58WAxW/Rz+QIZmXf3emFuf1s3aQWgqXn88sVeJNngX2yC9D
+         5kObJpPlSC8P7Mi//R5P/TOV6+NXL9XwQwzZTGKMKmma8o9I8TaTwNCX6H6KP2nhkPRq
+         De/fIPoIaXthxXafMCf+Y5kJJsAM9ypRtkzl3RskUYskb7/OpN6uZvT+vqNXthrIIIlp
+         0dbM27PvhVMOFnl3JOQ9aIipsLm2z4r9rNaXMEKSu4hhYTGcjFqvtCnHQ5JgEyyuqnga
+         LxvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789095799; x=1789700599;
+        h=content-transfer-encoding:mime-version:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/old4jKRCWsiFjlSdpH+uXgOHrvpMJuQq5EDgBf/RQc=;
+        b=lRdKbqSjmn4rPYVgz0T6Dcu9GZhRdFuI+h0gCbk58HyXDtSbqFPmfLbwjMOIgC2vqZ
+         CsFrZ8Kbr9VMpLyF5OvwFVQjA+ZFsNydJ2LP4z/sBX38gibMoeLUjSrANFzr+f2J7UE9
+         8QoL3FUdhK8ANjl6+mufwG4YhWb5Y+e6/izrHXxCmN67MtlXBe2ZVNFUGIy6GevARa8e
+         gbB3bTdMcRKOcCGah7TPlRS5oGFs1qMgqIL+CIGdrdWnhAgz1VKfbSuJOCsuPT2T+VrR
+         0OdyNOlXcQoKfMi0loujQeumAg0KuLRsOJBChv7U3W5h30Wsgrii+A2YqwkxqS5iWtde
+         djcA==
+X-Gm-Message-State: AFuF++kodj0nbLX5cyEt8Gm//n31YOh420JLi4p0qo1jXfVF0L66Dfh2
+	CGAJ1FPFf0bnrzvHlUNBax3uVXc5yU2rD1SEI5oRIm+8ct+glbfwSO5aPmjM2Z5Q8J3Wpw==
+X-Gm-Gg: AYBFou0dtvExSYhvdWAXiGU8RFNhKhuVUz4Dz5kdp3szPXwCuJ3lA95QIy2q3LIZcz8
+	wTeAYx2JArTZkU0l6hyPzDrGi3JSqwRk4tNPcCIxtVG7PC6zrwj6Hzbu84yQt1F7PwKtXgerXJC
+	CvZb0FdB9+MwDTXr5Xh6QV+13BzR5G4Vq8vtqWqh876ith4Y/7QKqs6JrCxtEqe3BqwAn1rl57I
+	IauLvJVAMce587YY+CcMTxLTKh24QXSvsgfh6ekA8pPcuxSEoSTTMKjrWSvhPbu9w5+7EeCltU1
+	kmRxXofCnwyILQ34aQfaiUgia13rwv88nc6LBTwlHRYkvWeZQjrWXdNEVzpFWWX6PvXtOiExtN6
+	aUmGtiRCqhWyA0tB97rIuDhBdLLSDGGzVj729ftNSF/7aS9AvCElPABo5+HOzCabBsKzqpsvA/H
+	Dg1/Z3kcdIZkuhHkOU832bRl4m4vFwIp767onZ/tj/hxdfATM/qi1k1SzpouY/xhCm
+X-Received: by 2002:a17:902:f64b:b0:2d8:d4ce:7e40 with SMTP id d9443c01a7336-2dd2a462479mr49122175ad.21.1789095799260;
+        Thu, 10 Sep 2026 20:03:19 -0700 (PDT)
+Received: from 192.168.5.7 ([69.5.53.41])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ceb73cdsm3979725ad.38.2026.09.10.20.03.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 20:03:18 -0700 (PDT)
+From: Tianyi Chen <diannaaav@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf v3] selftests/bpf: Check returned keys in map batch validators
+Date: Fri, 11 Sep 2026 11:03:14 +0800
+Message-ID: <20260911030314.195110-1-diannaaav@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260911025713.AB5891F000FF@smtp.kernel.org>
+References: <20260911025036.190487-1-diannaaav@gmail.com> <20260911025713.AB5891F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] cgroup/cpuset: Fix isolation accounting on
- propagated invalidation
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
-References: <20260910094546.5852-1-guopeng.zhang@linux.dev>
- <20260910094546.5852-6-guopeng.zhang@linux.dev>
- <20260910100131.DED241F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Guopeng Zhang <guopeng.zhang@linux.dev>
-In-Reply-To: <20260910100131.DED241F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+These files run under test_maps, not test_progs. They include test_maps.h,
+whose CHECK() reports the failure and calls exit(-1). That header does
+not provide ASSERT_*(). The suggested ASSERT_GE/LT/LE helpers are defined
+in test_progs.h and depend on that runner's failure reporting.
 
+The distinction matters for these range checks: execution must stop
+before indexing visited with an invalid returned key. ASSERT_*() returns
+a boolean and does not itself stop the caller, so a mechanical replacement
+would not preserve that behavior, even after resolving the runner/header
+dependencies.
 
-在 2026/9/10 18:01, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but a pre-existing logical flaw in update_cpumasks_hier() prevents a child partition from being invalidated when its parent becomes invalid, provided the child's computed mask becomes empty. This leaves a valid partition with an invalid parent and bypasses the new isolation accounting fix introduced in this patch.
-> --
-> 
-> commit 29bf1f183d4a958f4b19a0031b32733cfb1e93a5
-> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
-> 
-> cgroup/cpuset: Fix isolation accounting on propagated invalidation
-> 
-> update_cpumasks_hier() invalidates a local partition when its parent
-> becomes a member or an invalid partition. This patch fixes an issue where
-> isolated_cpus still reflects the old partition type by updating
-> isolated_cpus before resetting a local partition whose state changes from
-> valid to invalid below an invalid parent.
-> 
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index 4004a3e580df1..df91cb3777667 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
-> [ ... ]
->> @@ -2379,7 +2382,18 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
->>  			new_prs = cp->partition_root_state;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but a pre-existing logical flaw in
-> update_cpumasks_hier() prevents a child partition from being invalidated when
-> its parent becomes invalid, provided the child's computed mask becomes empty.
-> 
-> When a valid child partition's mask becomes empty, the code sets
-> update_parent = true and calculates new_prs to a negative value:
-> 
-> 	if (is_partition_valid(cp))
-> 		new_prs = -cp->partition_root_state;
-> 
-> However, because update_parent is true, it calls
-> update_parent_effective_cpumask(), which has an early return when the parent
-> is invalid:
-> 
-> 	if (!is_partition_valid(parent)) {
-> 		return is_partition_invalid(parent)
-> 		       ? PERR_INVPARENT : PERR_NOTPART;
-> 	}
-> 
-> Because of this early return, cp->partition_root_state is never updated to a
-> negative value. Consequently, when new_prs is captured here, it overwrites
-> the correctly calculated negative new_prs with the old positive state.
-> 
-> Does this bypass the new isolation accounting check below (new_prs < 0),
-> leaving the local partition valid with an invalid parent and leaking isolated
-> CPU state?
-> 
-
-Yes, this analysis is correct. I have reproduced the issue. I will address
-this relatively narrow edge case once the review of the full series is
-complete.
+I am retaining CHECK() for this targeted test_maps correctness fix.
+Migrating these tests to the test_progs assertion framework would be a
+separate change requiring compatible failure reporting and control flow.
+The current v3 passed test_maps with no skips on the rebuilt bpf/master
+kernel (7.3.0-rc2).
 
 Thanks,
-Guopeng
-
->>  		}
->>  
->> +		/*
->> +		 * With no valid parent partition left, this partition's CPUs
->> +		 * return to the nearest valid partition ancestor.
->> +		 */
->> +		if (!was_remote && old_prs > 0 && new_prs < 0 &&
->> +		    !is_partition_valid(parent))
->> +			owner_prs = partition_owner(cp)->partition_root_state;
->> +
->>  		spin_lock_irq(&callback_lock);
->> +		if (old_prs != owner_prs)
->> +			isolated_cpus_update(old_prs, owner_prs,
->> +					     cp->effective_xcpus);
->>  		cpumask_copy(cp->effective_cpus, tmp->new_cpus);
->>  		cp->partition_root_state = new_prs;
->>  		/*
-> 
-
+Tianyi
