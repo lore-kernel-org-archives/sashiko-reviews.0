@@ -1,98 +1,139 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FEA4779A1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD834477992;
+	Fri, 11 Sep 2026 12:45:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789130738; cv=none; b=BT/6OXWvjRBN+sAvqHpKdL5b725lIN1UiwUXF5AHHg+pp3B1V1Wy8hov7qlYH0nVeYmXNqXqTYhxLiTu3RX9ii7CKzXD/xuUChpiw9DFKNwhC5b9iizowLw9+HajTORPvOCbCJcNsAuYFgAlsDmomDWGfGYG03vLO8TM+QBc2qU=
+	t=1789130757; cv=none; b=Aqz3I4y4DbwJoeUDZxTdkCeePTbneXHlKneiCznq+OzENktCILegQvcXNIirAfI/DgB52ww2lAIBmM+lJFmphHZw0pEGVSwBx5KhVWjgxonnKTAqLGLS1kHj+UrVY+4+JUe9kYFSHqpHNen1l6ZkjND5bjo3tzq/IBDl9GxuGLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789130738; c=relaxed/simple;
-	bh=QmKZIN4Z92+zljhew/dIODvISIyogRhyBnYCq41Nsv4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BpSS09tK+86p69kHC1219V3CuMX3cqMOjkLFBPZ9poGZ6GD2rTEMvWs0g9BJClsRVEjAXOiFYgBQIbE4UMxRvBVXpOEqJvKGiRP/pFeldvNzYp1C9wfvp2ibcSvPsEiumWS4dTiEdbpMf+OTxQIZxr+5tVmlm17hFtCP4YVUhhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=JWnIE9R2; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1789130757; c=relaxed/simple;
+	bh=R9L/eTaXmKcO3hBnU98W/9G77TNfUeBGNOLDd6WiCkE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=F5y/wOqemQ+QBPRDY32L4v5KonXiqFrNIQRN41LT6ZhCC5v9zXM3NBhbJMdDkfUskUU/geFgCLw6PwknlZAhaTZCX0rv6WrF/QPTl465035nnN6Ozei8JHljNF6eoZt9o7KJyQZZwhg/IqwJyRMLP6XHuq+tQkxdsT37OVVIFZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0YT2oS46; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=5noCCjOB; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="JWnIE9R2"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id D9AA94E401EF;
-	Fri, 11 Sep 2026 12:45:32 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 9DF20601DE;
-	Fri, 11 Sep 2026 12:45:32 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3C7F211C7AF8E;
-	Fri, 11 Sep 2026 14:45:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1789130731; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=KjBGGwR20vQiI0jIm/6+LCpumwMENqAyvKhaULfuQBM=;
-	b=JWnIE9R2695Os1cP34Ko1AFn6UyQ7adbR0kCQmuqHK99TUwEHndhQoniIsuTsCQeoY3Dtk
-	NZxAOZLcJofMGXQA+bH0EiLOOhYRkREe5Y1gCeuG8XCxtgzDhi7XWsMtcB9pg8lyFsTqSX
-	hKfVDZGvXIyp+7mcOBDSEY5EqFy/plyJvN34ZxCs+0z/xyPm3fqzlp/m942xkrUw73xFk7
-	7yBh1Qn9QNJ4gzOYPCYM+BkxR5ocyNozj4uQFf+spHEO2mMp4rJVkDtcHdpvnYnMD8vmQz
-	WdUR5OZM069m6/6nP1mLEwbvDQgCqdU295YqcCaF5hJhe8ywD6awR3ErwU4DHw==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Vignesh Raghavendra" <vigneshr@ti.com>,  "Pratyush Yadav"
- <pratyush@kernel.org>,  "Michael Walle" <mwalle@kernel.org>,  "Takahiro
- Kuwano" <takahiro.kuwano@infineon.com>,  "Richard Weinberger"
- <richard@nod.at>,  sashiko-reviews@lists.linux.dev,  "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>,  linux-kernel@vger.kernel.org,  "Steam
- Lin" <STLin2@winbond.com>,  linux-mtd@lists.infradead.org,  "Jon Hunter"
- <jonathanh@nvidia.com>
-Subject: Re: [PATCH v2] mtd: spi-nor: Fix quad-enable for flashes with QER
- bit in SR1
-In-Reply-To: <20260911105245.408171F00893@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Fri, 11 Sep 2026 10:52:44
-	+0000")
-References: <20260911-perso-fix-spi-nor-qe-mxic-v2-1-70c324e9f30e@bootlin.com>
-	<20260911105245.408171F00893@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Fri, 11 Sep 2026 14:45:19 +0200
-Message-ID: <877bksq7mo.fsf@bootlin.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0YT2oS46";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="5noCCjOB"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 9908D1F79D;
+	Fri, 11 Sep 2026 12:45:46 +0000 (UTC)
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1789130746; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tzsC2VzdToDvjyu2bKo4kXLJkrMvANfsE4sUyvOrhy8=;
+	b=0YT2oS467GDz5Jb+FNn42kMHKgOv8Os+MTeed95wwhwmprlCL0grm5Ze4oi4tGk3S5YutP
+	99+RwGo3JJq50EzEBXFD/XWuMrT6bHQU17q3r0LzJS9aHxDqP2mCQ01vts9po0Xb+WSYx7
+	SjLLTtgANg5BUx+Iwb/4nLveg2RZJLw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1789130746;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tzsC2VzdToDvjyu2bKo4kXLJkrMvANfsE4sUyvOrhy8=;
+	b=5noCCjOByuvOQLxXAMnWcFFwzL91l8msT3tuk55VUOqYc6+kVx9JFbAeIOK+xjspayPRMR
+	bjuHvzX9/Pq6q0Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8A6C136ED;
+	Fri, 11 Sep 2026 12:45:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 0F1yN/n3o2r8EQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 11 Sep 2026 12:45:45 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: jfalempe@redhat.com,
+	javierm@redhat.com,
+	airlied@gmail.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	geert@linux-m68k.org,
+	rdunlap@infradead.org
+Cc: dri-devel@lists.freedesktop.org,
+	linux-doc@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
+	rust-for-linux@vger.kernel.org,
+	linux-hyperv@vger.kernel.org,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	nouveau@lists.freedesktop.org,
+	linux-renesas-soc@vger.kernel.org,
+	virtualization@lists.linux.dev,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	stable@vger.kernel.org
+Subject: [PATCH v5 01/14] drm/panic: Do not use un-escaped URL as format string
+Date: Fri, 11 Sep 2026 14:43:54 +0200
+Message-ID: <20260911124540.279841-2-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260911124540.279841-1-tzimmermann@suse.de>
+References: <20260911124540.279841-1-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 9908D1F79D
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -4.00
+X-Spam-Level: 
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	REPLY(-4.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLo585esf9b7txaosbn5shab9z)]
 
-Hello Michael,
+Replace the direct use of DRM_PANIC_SCREEN_QR_CODE_URL in snprintf()
+with a %s conversion specifier. Avoids a possible vulnerabilty from
+a crafted URL string.
 
-On 11/09/2026 at 10:52:44 GMT, sashiko-bot@kernel.org wrote:
+As the attacker needs to control the kernel at the Kconfig level, the
+potential for an exploit is likely low.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] spi_nor_read_sr1_and_sr2() leaves sr[1] uninitialized when
-> read_sr2 is unsupported, leading to uninitialized stack memory use in
-> callers and spurious -EIO errors.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.12+
+---
+ drivers/gpu/drm/drm_panic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-The annoyingly right Sashiko robot is correct :-)
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index e576c4791861..ba21df4be338 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -658,7 +658,8 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
+ 	char *kmsg;
+ 	int max_qr_data_size, url_len;
+ 
+-	url_len = snprintf(url, sizeof(url), CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL "?a=%s&v=%s&z=",
++	url_len = snprintf(url, sizeof(url), "%s?a=%s&v=%s&z=",
++			   CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
+ 			   utsname()->machine, utsname()->release);
+ 
+ 	max_qr_data_size = drm_panic_qr_max_data_size(panic_qr_version, url_len);
+-- 
+2.55.0
 
-The best way I see to make sure this does not appear, is to just add
-this fallback to make sure when we read both registers we just get zero
-instead of random data in the buffer. Again, the idea is to make sure
-callers do not need to be "QER aware".
-
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -867,6 +867,8 @@ int spi_nor_read_sr1_and_sr2(struct spi_nor *nor, u8 *s=
-r)
-=20
-        if (nor->params->opcodes.read_sr2)
-                ret =3D spi_nor_read_sr2(nor, &sr[1]);
-+       else
-+               sr[1] =3D 0;
-=20
-        return ret;
- }
-
-What do you think?
-
-Thanks,
-Miqu=C3=A8l
