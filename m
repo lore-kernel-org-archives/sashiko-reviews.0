@@ -1,192 +1,204 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE4A38E8A8
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 19:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789155546; cv=none; b=ICHpGNTL+bq0x24pcoH81TupQAax7bH2zJZidWuCTeRvpPKaw6A5CGNQ+uOdq7phZc54cJZfUj2abg4ZaxOZIVsEAYNDjVNokCXiACYrkxZqg1dpioK4tsvJXmg1yJtnLzOVoQ9A/e1NSF8O4yrxn4JOPqKABkM8ffAM7gjB7Uk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789155546; c=relaxed/simple;
-	bh=wV1C5Bm1FWWQaO3HlT+8zYZjeIdvR2E5WEysqi+CSVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=Ld/wh6dRuIQkzCQ4N2hxJIpPDTEWqpM5RZUwbg5yYgR3SZd18X2AJAvC6okvYGP41ZDp/INHdgXpdhcErK4cvMdn/Z4z8JQTT0bu0r7E329cVTCCkgJJOLQjK7+f7rAE8wVvRPQm5xbaxhCOq+XoH4hzzx/Mo8qXPnfk4yXA0ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ChWhkDIA; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541AE552958
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 19:53:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789156429; cv=fail; b=SZ6KZeQGYpELyNW/YdszWGZdgjD5dI/ypGWZ6qntb78GhnjAr8BD4kbiee9JM2KMZLqkamACjrNikFqvWWXDg8zUesUYPb0YryTDmrqhBbQ3m/1AlTn3w4GCxA11+a2gDy9OWgAp7Fd1SNx1xDxOr2AXP3ywwboZG44fisweyso=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789156429; c=relaxed/simple;
+	bh=ioh2kAtPGOAn/yb7CH4OGH4UzfLSmVAmfVU7sGiCWTQ=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IPbusYK2RDpFLziDgEUvMFJ7/QoyKHcEiDEfCe08x2KkI0P2dj3oG8CSK1U54NaWdITGikife9mzvLMu9mbu2QcQoLMbUcdaxfYJz9rJ89EffKD9baD/kbaYpwv11et31iIk8CEyq26ieF/CAnpa7k2jLkAxnG+xieX4sytfVFs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=oFNS2MtO; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=GZs3p+u1; arc=fail smtp.client-ip=148.163.154.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ChWhkDIA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789155529;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bnhidkRyqiU1KNU2WPOXr40xiYcOCBtt1tPY8m9570M=;
-	b=ChWhkDIA7Z4rzsvrf87xqHNL/Qfthm8ZB6D6K5bT7Bd4POCSPKilPIaHkT7rwD/6BH+Wo8
-	UofHfbYeGvf+D4kLV9jC0r402ZocOH5Hn4bXopkXgS1xm3GaA1ZlTLLiTzh4S0L/wXIdK2
-	sRPP9WQNbVtMgiA8wOu9IdvJgO4vwCo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-NHZ1axNfOHSUiZdH5yMGbQ-1; Fri, 11 Sep 2026 15:38:46 -0400
-X-MC-Unique: NHZ1axNfOHSUiZdH5yMGbQ-1
-X-Mimecast-MFC-AGG-ID: NHZ1axNfOHSUiZdH5yMGbQ_1789155525
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-49d0ae342b9so9542655e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 12:38:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789155525; x=1789760325;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=bnhidkRyqiU1KNU2WPOXr40xiYcOCBtt1tPY8m9570M=;
-        b=VpGBCk05CpoIhqkcoR85KkOB6gqbQheoqFDaJcJycd7oWz1afwwDheRIifbsw+5TX6
-         s1Hyr/6Hic58KQhuSGBGblk3Q8H+DJbZPGHC/iT4/Ys+geU6FdiVeuij2aXdh1R30Lak
-         qp2f3NY0lGW622B5XL08+y+40Ia6gUyx/9fbsr2yD6cDfG4JBgj3PDK8afl0W8xPeCPp
-         Y9KvgvRxfFH2JijuYEx68OOruFcZArgHRrDC8fIwESnwpTWcfRHF8Qp8t+DsZ92jZ1iD
-         sDaVOmYqn6UI8dfb4UHNBQcuyc0WyG6n7jWp1FXWilvwEkGGqBFljMtCAjFU7Ca0Bpwp
-         ptvA==
-X-Gm-Message-State: AFuF++kqi+8UJmeCdnB9VZaFBYiO+6TgyczF2JNXADnZbjPw8ly5URTb
-	Gcg4AYE2e6soAS4za1TDXncIbvnUHnMtdKzMI3dw1q4txjnJ3OAPYBcaiYkJJeOduuhpEOBs+SA
-	8TIldCWZOOVugPKpr6ax9F/x/NEWj7L/8cQLwqsq4Acz7GdBHppIchwhHBv+G4ZgjiUlGb4Fjea
-	qQJoKGt79wldZ9cbrX7tZ8YaPIvEQ+TV3iGJsa6U7Zbq7ulUY=
-X-Gm-Gg: AYBFou1ONR2Dx03pG41rm/2lkmvJHyhyA1pjo+kZWl+8KZ/U+xmXAyZQ9zjppMStXVZ
-	4FOQv9LJIx0DaS/6tHB/z8ufjVGkOaZHrSnZrOAAU2iNex456shwIzZXUODygG57pKjvY8ipAbN
-	HCpMJALcvjeYmfMgvENZDbnEk3oyTFmrozcS4/Hlffi+acOvX5BYe7CBoRArdRWt8ia8R5158AE
-	dXM0e9OjYUokWrf0AQfeshSrfFmP59OvwgAvXPxqQQRP0zRJo9KUyKGaV6Zaa1b0WZgx2PCyKRo
-	r2rknv85sPv8fBtZaF7Wza3Bg933zTi2m3F78zLSOQJ9ORlgP6CjtumD12zG9ripXvw=
-X-Received: by 2002:a05:600c:3b27:b0:49c:fc6e:a3d8 with SMTP id 5b1f17b1804b1-49e619cc2aemr71854535e9.23.1789155524954;
-        Fri, 11 Sep 2026 12:38:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b27:b0:49c:fc6e:a3d8 with SMTP id 5b1f17b1804b1-49e619cc2aemr71854275e9.23.1789155524389;
-        Fri, 11 Sep 2026 12:38:44 -0700 (PDT)
-Received: from redhat.com ([147.235.223.59])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26c300e2sm194467235e9.8.2026.09.11.12.38.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 12:38:43 -0700 (PDT)
-Date: Fri, 11 Sep 2026 15:38:41 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: virtualization@lists.linux.dev, Eugenio Perez <eperezma@redhat.com>
-Subject: Re: [PATCH 2/2] virtio_pci: drop extra callback sync
-Message-ID: <20260911101425-mutt-send-email-mst@kernel.org>
-References: <8f71425918a148dcad1be993ccabd39582d246ee.1789130213.git.mst@redhat.com>
- <082fd9b2bad1db0088caa38a8d738aa848bf36b2.1789130213.git.mst@redhat.com>
- <20260911125745.E0A2F1F00899@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="oFNS2MtO";
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="GZs3p+u1"
+Received: from pps.filterd (m0374956.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68BJ4O152451778;
+	Fri, 11 Sep 2026 14:53:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=1e9Yln52GpApMK5351WwUGH7x8Pgdp3wkvFiAJeRF
+	i8=; b=oFNS2MtOQPSpLY+FA85t+lFC+9ebz91zgDTbLyTcBVFvgbacmFIaO4uOx
+	T3iYVT7LuN1Qi2MHJPdvy2f7VMSqVAuO0Hp6WD60lk5Cr0pIE8nMiB+772BL4rBV
+	YnEGFebWj+YB5+Qau9Z7TiNL9/zNIU93oWczg1v4TtIAml4MrUe1p9Ad3CILYNI8
+	TIk/E/mfIM1utwI+SV8oepHwGqGYxtAu6ODvffVk/WW/HKZqHLq4sr6zM7Fs4xWw
+	70PPH9TW2yHO/+D6kAJSaA+7pMzQmJAEQNQyROZVEMh8gxxel6Z7CBh7WQxN+76/
+	2HNlQSysSXksTMGs097lOHYfLCm5w==
+Received: from ch5pr02cu005.outbound.protection.outlook.com (mail-northcentralusazon11012049.outbound.protection.outlook.com [40.107.200.49])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4gmqfwg7ah-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 11 Sep 2026 14:53:31 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DvDlRw/UYu8oK2iBzJUW2l5oy5qOFI+BDfCnEd223HQEgwnIKOojb/F4S5EhDLlVjTfY0riSQ0+AT/+QulleYAua8foYnzUYGplOknl7+VC8Zurg6mOarlw0CW4JUos8qF76rzV19+t+zG8MpRz3Mza4zqzJjUgUPyNTR1Rt0TwTeMf/gvjJizVblpv7GFfATFhuvGvt3popSfnwnOeOr9I39n86Y7r2LHBOxsxFySjkwxSreSCXgOtc2/AMdx9twnebq08S5RiTFjh3eBo9QE7SVY88Wv47m6x4kDfwn79dH+TQck3151dvzO1wPnccAc9U6dJp7Kwq7bOfixflHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1e9Yln52GpApMK5351WwUGH7x8Pgdp3wkvFiAJeRFi8=;
+ b=bkSaTTaONsW88xiqdSn56dM++CwxaHr7UaykAeqlF+XX7IdSd2kEfp2O24p3dQ0qKQnx233QEasiHoGHfhiNEh7N8hjomgJX8zqK2wv8TRPjiGXfwOHvT/Z/0xlsOsRhgDiwpEjVlh0ASUxytIYSCx7A00KF0BE9paRttQt7lkMXz5Hl4w6oRNKFgQfLcmxo6NC4cC0Geq0y49cvmuG3uhiteC+6PzjBO28yuXI5m8kN1wGd/Suj9aMuPGq/O0DKPKZbM7iG8rTYPOxAEmi1Llj7BCSqrpIk+/v63f2K379zTjeiAorfIHe8ZrVHfKcWHtmHHl/SqGtBvcWQNyfTuA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.195) smtp.rcpttodomain=phytec.de smtp.mailfrom=ti.com; dmarc=pass
+ (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
+ (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1e9Yln52GpApMK5351WwUGH7x8Pgdp3wkvFiAJeRFi8=;
+ b=GZs3p+u181JQdFV5e1O6yIc2yShGLUMmZWtyos/6efcmS96FUBAbk6HCKNlbfz/0N94gDNGAb7kC+6Yui/8uOz+AbXEE0YuOgu4r6TX4SXE3M4bYVWJQSuLMWDW4JB6CtZsqKvRy7AcDp5ZG3xSxtWhG0/hNHtU1H8mhzg5ZIqU=
+Received: from MW4P221CA0002.NAMP221.PROD.OUTLOOK.COM (2603:10b6:303:8b::7) by
+ SAWPR10MB997815.namprd10.prod.outlook.com (2603:10b6:806:4e3::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Fri, 11 Sep
+ 2026 19:53:28 +0000
+Received: from SJ5PEPF000001F0.namprd05.prod.outlook.com
+ (2603:10b6:303:8b:cafe::35) by MW4P221CA0002.outlook.office365.com
+ (2603:10b6:303:8b::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.10 via Frontend Transport; Fri,
+ 11 Sep 2026 19:53:28 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.195)
+ smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
+ action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
+Received: from lewvzet201.ext.ti.com (198.47.23.195) by
+ SJ5PEPF000001F0.mail.protection.outlook.com (10.167.242.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 19:53:28 +0000
+Received: from DLEE211.ent.ti.com (157.170.170.113) by lewvzet201.ext.ti.com
+ (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 11 Sep
+ 2026 14:53:08 -0500
+Received: from DLEE209.ent.ti.com (157.170.170.98) by DLEE211.ent.ti.com
+ (157.170.170.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 11 Sep
+ 2026 14:53:08 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE209.ent.ti.com
+ (157.170.170.98) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Fri, 11 Sep 2026 14:53:08 -0500
+Received: from localhost (uda0133052.dhcp.ti.com [128.247.81.232] (may be forged))
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 68BJr8AK715656;
+	Fri, 11 Sep 2026 14:53:08 -0500
+From: Nishanth Menon <nm@ti.com>
+To: <vigneshr@ti.com>, <kristo@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        Nathan Morrisson
+	<nmorrisson@phytec.com>
+CC: Nishanth Menon <nm@ti.com>, <afd@ti.com>,
+        <sashiko-reviews@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <upstream@lists.phytec.de>,
+        <w.egorov@phytec.de>
+Subject: Re: [PATCH v5 1/2] dt-bindings: arm: ti: Add bindings for PHYTEC AM67x based hardware
+Date: Fri, 11 Sep 2026 14:53:06 -0500
+Message-ID: <178915637194.2344413.2430020020216783881.b4-ty@b4>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20260903153304.2823245-1-nmorrisson@phytec.com>
+References: <20260903153304.2823245-1-nmorrisson@phytec.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260911125745.E0A2F1F00899@smtp.kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: hvyMIgSHCJ-O-IgQtckoP3tCP4Lv1lIlirG9uaISFUM_1789155525
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F0:EE_|SAWPR10MB997815:EE_
+X-MS-Office365-Filtering-Correlation-Id: b696e4e4-1149-4586-b8fa-08df103e5946
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|36860700016|82310400026|23010399003|1800799024|10067099003|18002099003|22082099003|56012099006|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	lSmoymi7esonlWAoHASxhWxk8IN9cKSdErPo/Ne9h5egmrbRSW6hIbji4YRcZTvb05G39ALAyDQkQdVJclHhwbricdlTJk6LI57CssL5PhpJVt6ZacLVe8qO3t68UlFJDE7ngfUOOtter/d4bNAQXShril3b9/2pGL9ObTDmPia89LHyES+4l2o/S95M8rxWUquMwASuMeeTrMphxjHkrk5lUtSWouhSY9ziMdaD3LeHgzLSI58w0nvAjeFrHQx2LgJoez1ELBO42g7o6Qvn78YCqm/n9ccg01MrIE6gxssVUbkAjrO/uDvPG0sTPQ8OK7wHSn+O6UE1gU5AqQn5n+5se0xhLy1gGsDzWRBh2+ukTFdJijTehxwbpfkMItpZiSNcJPRIW/8H5VfOkJaVbScUrxjJ39vldwOa8IUY4HR/NFoqyUunx31WcGMB/dgxE0RPZlEWQeXW19oLMywFX/3SYMQTijR7ljDNaI6YKsyRsEojQfooiA8jKgW7+VB0dmfaDbFRiD5gVKzx4gxFl0Sbzz7N/OCZyPs0LBeBKlBGTy42XK6Y1cSWrlPBHxXuepUfKGQRHAYAQvTKEgd46k0OKodtWC4KhcpNvgAYvfykKC/NnBdkqH3ucbfFSTbC/KQk8MHJ7tP/PX6E6NhOUe7EoIJed4q5ijRwMCboTkreim/C9bn6oHqJoj3kmuYayhhzHdpEMqIN9yx6scTUiA==
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(36860700016)(82310400026)(23010399003)(1800799024)(10067099003)(18002099003)(22082099003)(56012099006)(13003099007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	5rPw2bUgSyK9gkB4WRf/mYOROUQjG2HpGRcnKnrn1LtvbWMhYfo3Z1Zp37ISD18iV2+wOpPV2JRIf5nU6rK684wZ1DWtXTSonyFa6+3vDHKKmc/y3zWAlx/BO6Go+u8gaP8MT7uwOEwm4PtAIZCIO3k86mktNv7ENb9y7lK7kQOA9vFYJ6BIGQo0q8rPP/KAdWL2iVEmjlisil+14GPNTyotqLWk1150QtVibHSSiD3TN5SahDnZlUQFrR/WcbtQIm70BgrIK/GqUFFdwewNq2iquS7e137YLstbOtzXvlFd/g3/snkDxKEE5tDhegtcVMzwZP55lJB8uHn8zJAu1ThewCsy+mbvX6mei7ELQQRbOC+MgbOg0EpmzSI2IIsWhjv/Px/6joJ8l0uQrvBqUpmRPy44IKRrXzcmsbIlJQfOhUIgU/ZhlbZxrE/knnAd
+X-Exchange-RoutingPolicyChecked:
+	n8Tu8q4SKK7PJgYWSga7zV8eNw0Dhibhe/AG8eO8AmA1l35IxmvGMmCPe6Q2RpgQplJ4c0kmDEPz/YiEgrNa1JhjjnUslr21mcBYtfiGNOpYz4vJOqCkkkPAAID9Ix6uZg8WqG7Z9rtnUcGsQ7+yAeELIHr9ydpnwB1V0nxNmLGmS/OppTn3eIWoWpFO8pKSBhv0awC8u9Tz1LVAiyECGGo62q+mXSopCcRiQj8LJzFPU86ht+k7SS3W7Neu/16EVWETI89m32hqVEsEwJD40CWVel7U6EPI8XtU6iSHv/CWjJMYrFqAUywzQK/d9zROsm88ua59OHQlZTGIex8rMw==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 19:53:28.0200
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b696e4e4-1149-4586-b8fa-08df103e5946
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001F0.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR10MB997815
+X-Authority-Analysis: v=2.4 cv=GsjXaU1C c=1 sm=1 tr=0 ts=6aa45c3b cx=c_pps
+ a=cexuP6Tr12ZHfMaaS00NHg==:117 a=f+v6EHfkeJbVwR46tk4DMg==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s63m1ICgrNkA:10 a=V5UXEbMT0ywA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Z8NIEmU8O1QQgoT56wFK:22 a=jwouBfj2j3NM8CExmVVE:22 a=VwQbUJbxAAAA:8
+ a=sozttTNsAAAA:8 a=o1kACPpZKAZCWsj7fAYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: u2TE63JmrZLbeExRvdXzVBdCnlhSNNTw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDI3OSBTYWx0ZWRfX6AgRbyDJL+i7
+ +unvrZl+6K+emOheFh6RQVwlrggRraR0Ajskfh4ADWT9eDym3IVW3zaI+0YA39t0mrnF6bauF6N
+ jV0p6AHzlxASdX1gf6UUxn8GQOVPN36QU1g5EoVnFM8PbSCTn9QpZorRwg0yVHJ3z9iFbFZUlyT
+ Z+XBmBG3QVAwcWGD1XVhlfwCbSptN3b/JbnpYpFFp5G/ws/bHM/rEsjElppXVSTL3yyuwRZMt9j
+ I8vzH0gbt235loEfYGeEdjMpIE0kz47nHTpy70E0eEcE33QH+MDpZ1Lslx9nqYkIskTVbPl5v1q
+ Un5fEF41vxg3velA1cxqpZd7IvPJHXDSNwbSqZvJDmRDtDu8w6oSwgcfAjgqFXkx65L3tQRG01F
+ 1NLY+D16A9FgRhjIi4XRW+29VhLUc306B2SLEAdTSYY7jOxIpuquNyFfboeqNUL2SEsgMo224vn
+ Ht4TovZAdCTs3bgMhaQ==
+X-Proofpoint-ORIG-GUID: u2TE63JmrZLbeExRvdXzVBdCnlhSNNTw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDI3OSBTYWx0ZWRfX7wUXiwSecYtb
+ uASBQMnjHnkjLtDa2nglIwkAixNIH+YBtHIse5P8YekDfuMDgtPtOeUVLq4wPEpRNNlgSU3S6um
+ 6MA1w/WKUhHfInrVW2AfRRheuSMgVoQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-11_06,2026-09-11_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 adultscore=0 clxscore=1015 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609110279
 
-On Fri, Sep 11, 2026 at 12:57:45PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Removing `vp_synchronize_vectors()` from `vp_reset()` exposes a race condition in `virtio_device_shutdown()`, allowing in-flight configuration change interrupts to execute concurrently with or after system shutdown.
-> 
-> Pre-existing issues:
-> - [High] Pre-existing data race in `vp_modern_avq_cleanup()` due to missing `admin_vq` lock, leading to potential virtqueue corruption.
-> --
-> 
-> commit 0b14e711d0c9fc7c440dbf71513420ceb19b4bd3
-> Author: Michael S. Tsirkin <mst@redhat.com>
-> virtio_pci: drop extra callback sync
-> 
-> This patch drops the synchronization of callbacks on reset within virtio pci,
-> relying instead on the virtio core to synchronize callbacks when needed.
-> 
-> > --- a/drivers/virtio/virtio_pci_legacy.c
-> > +++ b/drivers/virtio/virtio_pci_legacy.c
-> [ ... ]
-> > @@ -98,8 +98,6 @@ static void vp_reset(struct virtio_device *vdev)
-> >  	/* Flush out the status write, and flush in device writes,
-> >  	 * including MSi-X interrupts, if any. */
-> >  	vp_legacy_get_status(&vp_dev->ldev);
-> > -	/* Flush pending VQ/configuration callbacks. */
-> > -	vp_synchronize_vectors(vdev);
-> 
-> [Severity: High]
-> Does removing this synchronization leave a race condition in the shutdown
-> path?
-> 
-> While the core virtio_reset_device() function was updated to synchronize
-> after the reset returns, virtio_device_shutdown() appears to lack this
-> synchronization:
-> 
-> drivers/virtio/virtio.c:virtio_device_shutdown() {
->     ...
->     dev->config->reset(dev);
->     // No trailing virtio_synchronize_cbs() call
-> }
-> 
-> Because vp_reset() writes to the status register and flushes in-flight
-> interrupts, returning without synchronization means virtio_device_shutdown()
-> can finish while a flushed vp_config_changed interrupt is still executing
-> concurrently. 
-> 
-> Could this lead to unintended access to device structures or DMA memory
-> during system teardown or kexec paths?
+Hi Nathan Morrisson,
 
-shutdown does not free memory so I do not see what is the issue
-and why we need to prevent cbs from running.
+On Thu, 03 Sep 2026 08:33:03 -0700, Nathan Morrisson wrote:
+> Add device tree bindings for the AM67x based phyCORE-AM67x SoM and
+> phyBOARD-Rigel.
 
+I have applied the following to branch ti-k3-dts-next on [1].
+Thank you!
 
-> >  }
-> >  
-> >  static u16 vp_config_vector(struct virtio_pci_device *vp_dev, u16 vector)
-> > diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
-> > --- a/drivers/virtio/virtio_pci_modern.c
-> > +++ b/drivers/virtio/virtio_pci_modern.c
-> [ ... ]
-> > @@ -559,9 +559,6 @@ static void vp_reset(struct virtio_device *vdev)
-> >  		msleep(1);
-> >  
-> >  	vp_modern_avq_cleanup(vdev);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is there a potential data race here with
-> concurrent interrupt handlers?
-> 
-> vp_modern_avq_cleanup() calls virtqueue_detach_unused_buf() without
-> acquiring the admin_vq->lock. If CONFIG_VIRTIO_HARDEN_NOTIFICATION is
-> disabled (leaving vq->broken as false), an in-flight admin vq interrupt
-> flushed during reset might execute concurrently on another CPU:
-> 
-> drivers/virtio/virtio_pci_modern.c:vp_modern_avq_done() {
->     spin_lock_irqsave(&admin_vq->lock, flags);
->     do {
->         virtqueue_disable_cb(vq);
->         while ((cmd = virtqueue_get_buf(vq, &len))) {
->     ...
-> }
-> 
-> Could concurrent modification of the virtqueue's internal vring state cause
-> memory corruption or a double complete() execution if the interrupt handler
-> and cleanup routine run simultaneously?
+[1/2] dt-bindings: arm: ti: Add bindings for PHYTEC AM67x based hardware
+      commit: 2ac05f627c9976e311dfb1bedd32d67c54764715
+[2/2] arm64: dts: ti: Add support for the phyCORE-AM67x
+      commit: 02b57c8a48ecbf5e1c11a62da840b4ae7e6332a6
 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent up the chain during
+the next merge window (or sooner if it is a relevant bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-This is indeed an issue I think: an obvious fix is for now is to move a
-sync before vp_modern_avq_cleanup instead of removing it. The
-implication is that core irq sync is not really needed for pci, but hey,
-it's inexpensive.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-> > -
-> > -	/* Flush pending VQ/configuration callbacks. */
-> > -	vp_synchronize_vectors(vdev);
-> >  }
-> >  
-> >  static int vp_active_vq(struct virtqueue *vq, u16 msix_vec)
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/8f71425918a148dcad1be993ccabd39582d246ee.1789130213.git.mst@redhat.com?part=2
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/ti/linux.git
+-- 
+Regards,
+Nishanth Menon
+Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
+https://ti.com/opensource
 
