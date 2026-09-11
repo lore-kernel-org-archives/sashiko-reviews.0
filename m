@@ -1,117 +1,171 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CCB944160D;
-	Fri, 11 Sep 2026 11:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789126171; cv=none; b=f02/89hpQJVxlQtwYvKjTjY1enjZx4qP8vj9x0XmHhFR0wu7z9/iXCqPycs5lPi/OSr9SoHrrwBlAJf0Q6LW34Kp4LE6Qf8K7gx0RElb72/R2++ljQtJ/WoVkmFYof19SKuDxwhcarv3zRmYZYQGvc3SaBTRPI4IuPM35NvSNEU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789126171; c=relaxed/simple;
-	bh=dylT5QwD+5iw6+xBMDDSZWueFSXPCVlmrXhdgxIr6b4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bqzmBRsuqGQKZn8hXx4UWE0dzMtAnqv5yNhjLpuq0okKuptzUWjAhzSwSwmaCAFQK7g40ybAT/sHxbBNc61IKZB1u/ITHSTJPjQgwtxCBieKo/LZ200vJn60/vs2Cq10DYJR8Yadzc19AbDEP00D8QsvEVVA3vQkD4j8QreOULU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=NXaoff/c; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0773298CAF
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 11:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789126261; cv=pass; b=D9adbEAyw8hgKDgJn83Nh3mZauMcOUdft4L7Wz7pqEpgAyqIOjMyXYub+1gavyHIk0rXRzRmRjnYJEG/UvEGoh00cPtsCu46yZv6r+y0Gc7MlA2r2oRsG1QzOhXzi8UK9KBB2HldBI/NVz4oGt47bHXIPPKwxueXKAiy2d8Ks+Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789126261; c=relaxed/simple;
+	bh=8oBNrn73qh+O/Q5uT6gV+BncjX+bawSkeldQVubHZBU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Sbz1VB68eqQljnA2WlQNpDgKQSLhDS9GDZ63cOm+ALFycPghwpT7OUiV2fwbEFohd0nw840kRFGpTCm0lnIbESQokPJCyqePOrowlQlc/vkFHQO6kOQ0gu1boCy9jpS0LRcOtjIjWe2g6N3CqDkYkEezEBTk+DhhFO/XC8rQBts=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DRvdELUJ; arc=pass smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="NXaoff/c"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4527516F2;
-	Fri, 11 Sep 2026 04:29:20 -0700 (PDT)
-Received: from e129823.arm.com (unknown [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1DDA13F86C;
-	Fri, 11 Sep 2026 04:29:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789126163; bh=dylT5QwD+5iw6+xBMDDSZWueFSXPCVlmrXhdgxIr6b4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NXaoff/cPBT+KcaxMNnp6ng/KdjGDZ8NwVG4kDz1agyAR6lLAZ7S0WZN1BolhOVOo
-	 pxd4aCI7G3O5nJ37ny4mKcYdRlvPuUFPXCixpv+FBKRHCnH3G9NmbimgsRe9JKTUXK
-	 +qzkv/rYynzV7dg0/vgkCNJwdAX9AGs4GSc95QDo=
-Date: Fri, 11 Sep 2026 12:29:20 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-kernel@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: Re: [PATCH v10 1/8] coresight: etm4x: fix inconsistencies with sysfs
- configuration
-Message-ID: <aqPmEPRDUFE1hNXM@e129823.arm.com>
-References: <20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com>
- <20260911-separate_etm_cfg_v2-v10-1-1b715d95927a@arm.com>
- <20260911112144.8EC3F1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRvdELUJ"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-486e934b0c9so244331f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:30:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789126250; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oL6X8ii56C6hSY38Xq4hpBSSa7ylTP35weM8GtwrHLGedir+8DOKH37MSwY8KGm7iC
+         9w94QwSR3HLAqn8PZ/E4ey1wIhBV20aa1fGYB7WbBBS+4EloOZ1yHuZ8YQ7NOttsMnZu
+         cmRllm2wOAGSU5deRXwV+MQ26dp1M/d2LdRUJTvGYERX/+ddoRZHZzYGqq5sPz80yz7B
+         nSE0CtK9xwzs+n/cJ8CThYzG6XKNkgXPvoFQ2u2/lHLRxEvutXpQksF7zpfbkfSCPm3p
+         blVnlBGsxneekB0wDgsnKjLhsCzsPaMAoQ78jijpeSOvUYJ2bGZ2ErY0n8ac2nY56Mea
+         PAOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
+        fh=+F14bOWQxS5MgDtf7mpFT6gjA360FyLL7QkzK9DDYsQ=;
+        b=rR9qXfDXMG8dBt/AHwtB+t+xpblKP2czD0zW8rO8+9KOPznhHjcjl5O33pFh8l8cuY
+         uMHztTHN77LP/Dcb3IphA8UL8iTfM77uj5MFfxJfQ2a1J8UE4qZVr5lsq1/z1ZFvVhEx
+         Aw/Bx7F+0LZOHyWyoDphj0CA9wLrSW1GYPtSFOtlEzumj2HtvAmBEa8OeGC4QpsJ6EHp
+         FmeoS9/X5kdBei7kDZyIHskp8+FXBBfDgDlwz10y7FTaZjrCoEdKgfgIOpqEiFF+lWko
+         Fwn2cySZRJyJxRgTYGJ/GfnEJobvg8vbK0J3YktMFhyadhnHkbZeH5m3/71N+GmCjG/K
+         wuhw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789126250; x=1789731050; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
+        b=DRvdELUJ2z1d3x773kOBPkS9Va/1Kc1ODZDyikbuFppADElhWDHcndplsMJ974Geds
+         nXNKvCjr07WXz+vFPGXQmJaKZRibhp1lYMG7Xb7UvfRa0p0GfJs1ausCW17nQbIjRyN6
+         zzrdSbg/Qi/uvogexH1WZDFaUL2RTV1n2IEZbRO+rX14thN22/CJzW6NV5d+NkBjkXfe
+         ch5Jxt2/aKCbKk3D+cocQeVRoqTx4iabnfzQ8l8T6mwFrLXNkcu6UP8zRHCLXwVYxjX2
+         /lfRjMDIvyznu6J7jHg/Acgspz0k5B+eof2ed8ygVWoDSwSq39e3EvabG/moLQYBVbNB
+         nwLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789126250; x=1789731050;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EeNgemAb7lsaMF3mg8j+vPdtgIOxXFzORulJF8ZPymc=;
+        b=X1XO0dUQeOaEQtqw4gfh2nUYFS07MwI3kT7WJtyJj23KsW2H4QpPlM5rsKTHzlVZ76
+         WALmpTj0Ekva7odUMTV1zmuCPRHVzG1UhQwqe1i/BEp0/yF8IuNFpwkifCZda224a1aR
+         LM1ZGoRW1QoKfkdAA9w2GwVj4wS9IWyMs2kNGVCVL/6hQ+0gnHq5q7Yx46VNHOKMsplL
+         YGVNkfc83CZLT2023044hsvF/ZngGVIbr0u+S1WFwFXX+TN6kZaAcS/E58SAxWu/DZ1Q
+         qIJktoGOiyqLDlPklCjEUZA/EpxgHyWzTntG+UtwcKRpfZQDZRvjShuCqheWcmCAuIh8
+         vNoA==
+X-Gm-Message-State: AFuF++nYtyIhznDE8Phx0EMX6D9an+0WwpkPvOOt9p+amvs2BhRyMCOP
+	32KpHOT+9NV0fDC+KN/E0mHftl5Wun3NB2B7rLWe/MXXg6yOG/Yyyvftcdo0sLMTRXpcFlXdWh3
+	Ugd3UImU1Vvql7jovepJrefqcYq1yRfokEdHs9hzWiQ==
+X-Gm-Gg: AYBFou2U2hias0pAXhd2NiJCL74o3lF7rYcFEjxCbT6WyxUsZYsv5AyfhjOpyCKv7/r
+	oJ53SwkfpcU6cs/jp6VFPiyAkYwtb0gZ2yiyK7/cpDw4ZyR47Sq85HRNuUOFaH3lLmsRCHk3+YI
+	xkzT5zMQsjtItylvXJkXjjrS4qtUeu2FoYbIZEFxwStxLYWWu/qqpHiRzsefqKWBtnvjohMWOlp
+	gAAYnwk5UxvULkD71DTL4RwF3WeHHl0xcSEDhhThyFZ9m92l8qH213amwf0D22aPRn/aZ3PKdJb
+	AAEBUHvTrO5XcYabLdmSvsHJW9RGgAP8SuxH8e/UWgACUFWUretFtng0A99XjNkhAuN9zIX4meF
+	7crw6kD1tnya+8aYys5wbHyBhBiDXE/1eSIP4bhUIt/Y6KwXRuj/8/w7GV2bs5gMgeSnOXzFgHQ
+	==
+X-Received: by 2002:a5d:494e:0:b0:486:e73f:586a with SMTP id
+ ffacd0b85a97d-486eb3046cemr2794052f8f.37.1789126249695; Fri, 11 Sep 2026
+ 04:30:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911112144.8EC3F1F000FF@smtp.kernel.org>
+References: <20260911111731.3404308-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260911111731.3404308-4-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260911112607.3239E1F00893@smtp.kernel.org>
+In-Reply-To: <20260911112607.3239E1F00893@smtp.kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Fri, 11 Sep 2026 12:30:22 +0100
+X-Gm-Features: AcwNN1WtZyh7B-ne7h4Obd9ZeApvbyPgvZ7Ss5X-8P5TGBqm7FWkrnhW56vuKck
+Message-ID: <CA+V-a8vt0Y_9Qi7-KY2_206Be_H9GwG1g57aHwnVgx++A7_bEQ@mail.gmail.com>
+Subject: Re: [PATCH v5 3/8] watchdog: rzv2h: Propagate WDTDCR access errors
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, linux-watchdog@vger.kernel.org, 
+	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 11, 2026 at 11:21:44AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Hardware counter values (`cntr_val`) read back during trace disable are saved to the temporary runtime `active_config` instead of the sysfs-visible `config` structure, permanently losing the post-session hardware state.
+Hi Sashiko,
+
+On Fri, Sep 11, 2026 at 12:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The error path in rzv2h_wdt_stop() leaves the watchdog unconfigu=
+red and missing a required delay after reset deassertion.
 > --
-> 
-> commit 293039b149bb540c924b83cd181604cbff99de4c
-> Author: Yeoreum Yun <yeoreum.yun@arm.com>
-> 
-> coresight: etm4x: fix inconsistencies with sysfs configuration
-> 
-> This commit addresses inconsistencies in ETM4x sysfs configuration by
-> separating the configuration into an active_config for the current session
-> and a config for sysfs. It updates the enable/disable paths to use the
-> active session configuration to prevent corruption from concurrent access.
-> 
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> 
+>
+> commit 3f7bad2568920b818b4bdb62349364febc443827
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> watchdog: rzv2h: Propagate WDTDCR access errors
+>
+> The WDTDCR helpers currently access the register directly, but this will
+> change to use regmap, which can fail. This commit propagates errors from
+> rzt2h_wdt_wdtdcr_count_start() and rzt2h_wdt_wdtdcr_count_stop() and unwi=
+nds
+> the resources if an error occurs.
+>
+> > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.=
+c
+> > index 7c6a4855bd8ad..cbf414e0c9a3c 100644
+> > --- a/drivers/watchdog/rzv2h_wdt.c
+> > +++ b/drivers/watchdog/rzv2h_wdt.c
 > [ ... ]
-> 
-> > @@ -1044,7 +1054,7 @@ static void etm4_disable_trace_unit(struct etmv4_drvdata *drvdata)
-> >  static void etm4_disable_hw(struct etmv4_drvdata *drvdata)
-> >  {
-> >  	u32 control;
-> > -	struct etmv4_config *config = &drvdata->config;
-> > +	struct etmv4_config *config = &drvdata->active_config;
-> >  	struct coresight_device *csdev = drvdata->csdev;
-> >  	struct csdev_access *csa = &csdev->access;
-> >  	int i;
-> 
+> > @@ -169,8 +179,13 @@ static int rzv2h_wdt_stop(struct watchdog_device *=
+wdev)
+> >       if (ret)
+> >               return ret;
+> >
+> > -     if (priv->of_data->wdtdcr)
+> > -             rzt2h_wdt_wdtdcr_count_stop(priv);
+> > +     if (priv->of_data->wdtdcr) {
+> > +             ret =3D rzt2h_wdt_wdtdcr_count_stop(priv);
+> > +             if (ret) {
+> > +                     reset_control_deassert(priv->rstc);
+> > +                     return ret;
+> > +             }
+> > +     }
+> >
+> >       pm_runtime_put(wdev->parent);
+>
 > [Severity: High]
-> Does this change cause the post-session hardware counter values to be lost?
-> 
-> Later in etm4_disable_hw(), the hardware counter values are read back from
-> the device:
-> 
-> 	/* read back the current counter values */
-> 	for (i = 0; i < caps->nr_cntr; i++) {
-> 		config->cntr_val[i] =
-> 			etm4x_relaxed_read32(csa, TRCCNTVRn(i));
-> 	}
-> 
-> Because config now points to drvdata->active_config, the updated counter
-> values are saved to the temporary active session configuration instead of
-> the primary sysfs configuration.
-> 
-> When a user subsequently reads the counter value via the sysfs interface
-> in cntr_val_show():
-> 
-> 	struct etmv4_config *config = &drvdata->config;
-> 	...
-> 	val = config->cntr_val[idx];
-> 
-> they will read from the static drvdata->config, which never receives these
-> read-back values and will instead return the initial configuration value.
-> Should the read-back hardware state be synchronized back to drvdata->config
-> when the trace is disabled?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com?part=1
+> Does this error path leave the hardware in an uninitialized state?
+>
+> When rzt2h_wdt_wdtdcr_count_stop() fails in rzv2h_wdt_stop(), the code ca=
+lls
+> reset_control_deassert() to bring the hardware out of reset. However, it
+> does not include the mandatory udelay(3) wait for clock stabilization or
+> restore the watchdog register configuration via rzv2h_wdt_setup().
+>
+The udelay(3)is not required as we are not reprogramming the WDT in
+the rzv2h_wdt_stop().
 
-The same for etm3. I'll fix it in next round.
+> This leaves the hardware out of reset but unconfigured, which might trigg=
+er an
+> immediate spurious reboot if default timeouts are active, or fail to rebo=
+ot
+> the system during a hang if the watchdog remains dormant.
+>
+> Could this error handling be updated to fully restore the previous watchd=
+og
+> state?
+>
+Yes it does, if the rzt2h_wdt_wdtdcr_count_stop() fails in
+rzv2h_wdt_stop() we revert back things so that further pings from the
+WDT core continue without any issues.
 
--- 
-Sincerely,
-Yeoreum Yun
+Cheers,
+Prabhakar
