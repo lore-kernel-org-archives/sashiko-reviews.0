@@ -1,119 +1,178 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAB6488224
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 13:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7748A2C3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 13:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789133853; cv=none; b=VKmMgRfXlhGhBVEbz+272BlcuQzKvHzEIr6UjUMTV5Q0pg0fkojNrcOHZ/AG+8Shj9OpWAsGJm6gnVhNkmJacI9IUXA2YcI55y94l3xpzQhdCm3SnOGVigMG62xavDNu7b2KGJUBDFkAGVubv3DeKXPzEhhxJQYLOfyDUuP7/sU=
+	t=1789134512; cv=none; b=aVGLGDdmS9Z7hc61+Cf7APAajibVDWM9S39/qRedzp94+N2quzz31bmjdHvuhtb44NSP3LEDOSyRcB/NDBpnisJ0yee7inmUeUZNatiY5JH7EBrCCPPtpMJv5F22tBNH5kajgDC8JE3AwP4B2iQA4YMTChpYAbARyEQ4cr5sUFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789133853; c=relaxed/simple;
-	bh=FY54qFzWabow6Ld9yIZh2rM1BNSpICgSxf4QYFjEnFM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CXF1HmMTVRqLXkTFIKSHeGJTXAUQ0C5OSAFZ6xtAiSm5q2PMlFLxjAA479eYqA934Y7ZXbw41FVZU1gK8tySStDR6WLOXgRxYJHe2ehOzyh6UBSo/dpvz/Pk/8FA8tMrHrIB/wUZ9fzXg/NoZ4lKSE9wLyTqA7B90485/cggkCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=zrMx+kWI; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1789134512; c=relaxed/simple;
+	bh=9apFp5UnuDXB3ohJr9fcXLx8hbtak23J3iGAHP8ZFeA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=V7AYY0z4IYwJH4nQS/4tdvfsSwiwvpzL4nrKoVS4Q8W7bMvmHHxIyWCHNyacXunI/5SNEc4qe6PD3oeLcsO5tXFGEjn3yfpLDOIfdCbpLjgB+uefIiynS+qiWBqZq/GqQAob5AXAlJP2sf83dWH2mJMkXyrBQyuMC25am1YQVRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=FUfCq0Cu; arc=none smtp.client-ip=220.197.31.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="zrMx+kWI"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 837511A01F2
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 13:37:29 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 4EC1A601DE;
-	Fri, 11 Sep 2026 13:37:29 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 6506811C7AFAD;
-	Fri, 11 Sep 2026 15:37:21 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1789133844; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=39LJVNDGDY2GufpAI5tRNgImbkoEA9MqZ1Ju0GrUn+s=;
-	b=zrMx+kWIGNWLQT18699SbweQ9yWbozy1MyJTwdqs+c6ybOekjGP3/0aqPi9MFgjxQbuo1g
-	gLnF/B2VPC+T3qNmM194Dz+Jin86ooPyCTGo4kRxV+G6BuX+M6kfRMpBsoHhIufQBPC3bn
-	Gmyfl2X75Qdi66QcPbwp7TfC7Sqwmr8vIOn/HopAqqiNmTOal6qowo9j+KqNDop97g2hf9
-	b+vejFtYdxF/P+N9sFFL6oFWCXI4LEGXrYQieEIKfbkS4jTkD2PT9KdGvdL7l9XlYbM5vv
-	6CQ4KTuPLl6MWpge+d4IcC0nCH1piTsclxaKNgz0NgAhIqRsq81vpk4WUTEwYA==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: "Michael Walle" <mwalle@kernel.org>
-Cc: <sashiko-bot@kernel.org>,  "Vignesh Raghavendra" <vigneshr@ti.com>,
-  "Pratyush Yadav" <pratyush@kernel.org>,  "Takahiro Kuwano"
- <takahiro.kuwano@infineon.com>,  "Richard Weinberger" <richard@nod.at>,
-  <sashiko-reviews@lists.linux.dev>,  "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>,  <linux-kernel@vger.kernel.org>,  "Steam
- Lin" <STLin2@winbond.com>,  <linux-mtd@lists.infradead.org>,  "Jon Hunter"
- <jonathanh@nvidia.com>
-Subject: Re: [PATCH v2] mtd: spi-nor: Fix quad-enable for flashes with QER
- bit in SR1
-In-Reply-To: <DLCIM0AHZ1B0.3ECV7Z6MDHQXH@kernel.org> (Michael Walle's message
-	of "Fri, 11 Sep 2026 15:18:21 +0200")
-References: <20260911-perso-fix-spi-nor-qe-mxic-v2-1-70c324e9f30e@bootlin.com>
-	<20260911105245.408171F00893@smtp.kernel.org>
-	<877bksq7mo.fsf@bootlin.com> <DLCIM0AHZ1B0.3ECV7Z6MDHQXH@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Fri, 11 Sep 2026 15:37:20 +0200
-Message-ID: <871pazrjsf.fsf@bootlin.com>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="FUfCq0Cu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=zsdqYu79SdDj0gicUYOLPKVlZ/Oun8ugKeMddZdiBng=;
+	b=FUfCq0Cu2gKEeCD74R2bFW4nf+9fGbuprY3qvjN3rwdMfw9qCojAJGIy8Vfanv
+	DjHLlXjMQvUo+rSyVm2qxYu52Aw/u1JXhannF5Ep0vzhMcCkOE8ngDjErkFgrRY3
+	vO3pbsmRE5qsAAHrjzvquSO7LKVeLROExuYtdMbFhTCVE=
+Received: from [IPV6:240e:b8f:91b3:d000:8f8f:b76e:3756:1454] (unknown [])
+	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wD3J+WQBqRqWFdKAA--.50611S2;
+	Fri, 11 Sep 2026 21:48:01 +0800 (CST)
+Message-ID: <e6600201-9743-44a4-aa1c-f03fc11c09de@163.com>
+Date: Fri, 11 Sep 2026 21:48:00 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 2/2] PCI: dwc: Remove redundant MPS configuration
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
+ linux-pci@vger.kernel.org
+References: <20260911132145.211380-1-18255117159@163.com>
+ <20260911132145.211380-3-18255117159@163.com>
+ <20260911133411.3B4521F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Hans Zhang <18255117159@163.com>
+In-Reply-To: <20260911133411.3B4521F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_____wD3J+WQBqRqWFdKAA--.50611S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxurWUWw4fuw43Zry5Kw1Dtrb_yoWrCw4DpF
+	W5XF45CF45Jr45Wr1qkan5CFWxta93CF13JFnxG3ySvasIyFnrXa42yay5CayxXr4DK3Wv
+	vrWDKryFv3WYyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziWlkfUUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6xFpDWqkBpH40wAA3s
 
-On 11/09/2026 at 15:18:21 +02, "Michael Walle" <mwalle@kernel.org> wrote:
 
-> On Fri Sep 11, 2026 at 2:45 PM CEST, Miquel Raynal wrote:
->> Hello Michael,
->>
->> On 11/09/2026 at 10:52:44 GMT, sashiko-bot@kernel.org wrote:
->>
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [High] spi_nor_read_sr1_and_sr2() leaves sr[1] uninitialized when
->>> read_sr2 is unsupported, leading to uninitialized stack memory use in
->>> callers and spurious -EIO errors.
->>
->> The annoyingly right Sashiko robot is correct :-)
->
-> I actually had the same feedback, but then discarded it, because of
-> your comment in the function doc.
->
-> Here's what I wrote:
->
->   But now we are lying to the user of spi_nor_read_sr1_and_sr2()
->   because we might actually not read sr2 at all and just return 0 -
->   or even worse any garbage the sr[1] was initialized with. And the
->   user cannot even know if sr2 was actually read or not.
->
-> But can this actually happen somewhere? Except for the WIP bit,
-> otp.c and swp.c I don't see where we actually check for a bit in
-> the SRs. Everything else is for RMW and that shouldn't be writing
-> garbage as the expectation is that there is no flash with !read_sr2
-> && write_sr2. 
-> I agree, that it might be uninitialized, but if that uninitialized
-> value is actually used somewhere, we'd have a bigger problem, as
-> that new value is now just made up by us.
 
-It's just annoying for the comparisons we make in the _and_check()
-helpers.
+On 9/11/26 21:34, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [Low] Unused macros PCIE_CAP_MAX_PAYLOAD_SIZE and MAX_PAYLOAD_SIZE left behind after removing the MPS configuration function.
+> - [Low] Misleading function name and warning message for MRRS calculation after removing MPS configuration.
+> 
+> Pre-existing issues:
+> - [High] 32-bit read-modify-write of PCI_EXP_DEVCTL inadvertently clears W1C error bits in PCI_EXP_DEVSTA.
+> --
+> 
+> commit 3ff79063d97cb0f265efaab65bab69ff2c512a3d
+> Author: Hans Zhang <18255117159@163.com>
+> 
+> PCI: dwc: Remove redundant MPS configuration
+> 
+> The Meson PCIe controller driver manually configures maximum payload
+> size (MPS) through meson_set_max_payload, duplicating functionality now
+> centralized in the PCI core.  Deprecating redundant code simplifies the
+> driver and aligns it with the consolidated MPS management strategy,
+> improving long-term maintainability.
+> 
+>> diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
+>> index 8559d132dcde8..8c176f78953e9 100644
+>> --- a/drivers/pci/controller/dwc/pci-meson.c
+>> +++ b/drivers/pci/controller/dwc/pci-meson.c
+>> @@ -273,22 +273,6 @@ static int meson_size_to_payload(struct meson_pcie *mp, int size)
+>>   	return fls(size) - 8;
+>>   }
+> 
+> [Severity: Low]
+> With the removal of the payload configuration function, this helper is now
+> exclusively called by meson_set_max_rd_req_size() to calculate the Max Read
+> Request Size (MRRS).
 
->> The best way I see to make sure this does not appear, is to just add
->> this fallback to make sure when we read both registers we just get zero
->> instead of random data in the buffer. Again, the idea is to make sure
->> callers do not need to be "QER aware".
->>
->> --- a/drivers/mtd/spi-nor/core.c
->> +++ b/drivers/mtd/spi-nor/core.c
->> @@ -867,6 +867,8 @@ int spi_nor_read_sr1_and_sr2(struct spi_nor *nor, u8 *sr)
->>  
->>         if (nor->params->opcodes.read_sr2)
->>                 ret = spi_nor_read_sr2(nor, &sr[1]);
->> +       else
->> +               sr[1] = 0;
->
-> Almost back to the original one :) At this point, I'm fine with
-> either.
+Hi,
 
-This is in addition to this patch. Just to make sure the "_and_check"
-comparisons are not broken because of stale stack variables.
+Will add 0003 patch to rename function name.
+s/meson_size_to_payload/meson_size_to_mrrs/
 
-The rest should be good.
+> 
+> Does this function name and its internal log message:
+> 
+> 	dev_warn(dev, "payload size %d, set to default 256\n", size);
+> 
+> need to be updated to reflect that it is calculating MRRS? Leaving it as-is
+> might cause confusion for future maintainers.
+> 
+>>   
+>> -static void meson_set_max_payload(struct meson_pcie *mp, int size)
+>> -{
+>> -	struct dw_pcie *pci = &mp->pci;
+>> -	u32 val;
+>> -	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>> -	int max_payload_size = meson_size_to_payload(mp, size);
+>> -
+>> -	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
+>> -	val &= ~PCI_EXP_DEVCTL_PAYLOAD;
+>> -	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
+>> -
+>> -	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
+>> -	val |= PCIE_CAP_MAX_PAYLOAD_SIZE(max_payload_size);
+> 
+> [Severity: Low]
+> Should the definition of PCIE_CAP_MAX_PAYLOAD_SIZE be removed as well? Since
+> it is no longer used after removing this function, it appears to be dead
+> code now.
+
+The next version will remove:
+
+#define PCIE_CAP_MAX_PAYLOAD_SIZE(x)	((x) << 5)
+#define MAX_PAYLOAD_SIZE		256
+
+
+Best regards,
+Hans
+
+> 
+>> -	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
+>> -}
+>> -
+>>   static void meson_set_max_rd_req_size(struct meson_pcie *mp, int size)
+>>   {
+>>   	struct dw_pcie *pci = &mp->pci;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does meson_set_max_rd_req_size()
+> inadvertently clear W1C error bits in PCI_EXP_DEVSTA?
+> 
+> This function performs a 32-bit read-modify-write on PCI_EXP_DEVCTL:
+> 
+> 	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_DEVCTL);
+> 	val &= ~PCI_EXP_DEVCTL_READRQ;
+> 	dw_pcie_writel_dbi(pci, offset + PCI_EXP_DEVCTL, val);
+> 
+> Because this 32-bit access covers both the 16-bit PCI_EXP_DEVCTL and the
+> adjacent 16-bit PCI_EXP_DEVSTA, it fetches both. PCI_EXP_DEVSTA contains
+> multiple Write-1-to-Clear (W1C) error flags. Writing the entire 32-bit value
+> back means any W1C bit in DEVSTA read as '1' is written as '1', inadvertently
+> clearing the error status and masking hardware faults.
+> 
+> Should this be updated to use dw_pcie_readw_dbi() and dw_pcie_writew_dbi()
+> instead?
+> 
+> [ ... ]
+> 
+>> @@ -363,7 +347,6 @@ static int meson_pcie_host_init(struct dw_pcie_rp *pp)
+>>   
+>>   	pp->bridge->ops = &meson_pci_ops;
+>>   
+>> -	meson_set_max_payload(mp, MAX_PAYLOAD_SIZE);
+> 
+> [Severity: Low]
+> Should the MAX_PAYLOAD_SIZE macro be removed as well? Since its usage is
+> removed here, leaving the macro behind leaves dead code.
+> 
+>>   	meson_set_max_rd_req_size(mp, MAX_READ_REQ_SIZE);
+>>   
+>>   	return 0;
+> 
+
