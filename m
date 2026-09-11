@@ -1,148 +1,183 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00D1298CAF;
-	Fri, 11 Sep 2026 11:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789126342; cv=none; b=NL/vKqh4CQdiV8SkI8pdamraq+Zru6ryJ36d+0yXKciyj/nyeolYiEUvYrvfvNf0rNyRIb3ysTjB0cUY0U10kkBZZuoN1Z8deAAXaIO7zNPVIeGFX4IN/c94CkfNmYEbpJTQY3mk7YxTNDzHHueOKzpGXbDhSnLr7dCjbBVhXI4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789126342; c=relaxed/simple;
-	bh=s/ODydIxsCcvKM3SXUbVkIRCg0OzptzpI7rs77XtcrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YGByfOUklh56aZbYaAfF8RoqZGjoxk65DvVhGhCxvyKJbCQ6AQbJ5vuEVYjkRZVdBSLF8lRFl51zC1oGFJicp6mlxEz5tkn/X+zeINppsHnFAOXZMVN/RtcyO7DQ3aY3BPIBubegCNzfdg1NKUq53WcJDlE/aeGwTy15wbC06ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Y92TFKNZ; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700933C1F5B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 11:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789126620; cv=pass; b=NvhVmoUH5JIMFdamPQDjcGQmM+61O9il7qLnB8iujJ+Toj0iJwyC4PtMI3NHTpFRH2PKngqKE3O4wuQwpJq0ZyYOODqcaW53ayQ8S9J0ttE7WvI+AVpg3euVr4v8TpEwQElNpbvkc+Y2llaD5rc7Mscy6y1O+CScmwe3Z96AaGY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789126620; c=relaxed/simple;
+	bh=VP4BlcnfUZVr3/+zomIB7ojpIUneSSNJHRIVnHGfdr8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gc15fgy3LuYyw7VveGtOxxW1crmM5eafCr5gricND4PDE/9SdVzIks06RLaXT1//RR6ZkzdZdlDKYhGAE/kWPjejhubnLLIEJ7cBzfV+awQn+W0f8GxuMv38QE0I9UF3dVwaN307qkVl8EsMdXDXcN4uD0D43BXSZYA3JPHOIZc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l10L8IHR; arc=pass smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Y92TFKNZ"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D05216F2;
-	Fri, 11 Sep 2026 04:31:49 -0700 (PDT)
-Received: from e129823.arm.com (unknown [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 682373F59E;
-	Fri, 11 Sep 2026 04:31:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789126313; bh=s/ODydIxsCcvKM3SXUbVkIRCg0OzptzpI7rs77XtcrE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y92TFKNZvfTwl+6EOT3Q+GXm7iz/4IKg439KIr0LLt9U0UArtOzJrRXGuIrYarK5b
-	 ZrEhX9NcAczEWXWKhymUFV/Ion39MzjQwNV4C41dh74r+NMFbjpa5Lax5PyGdNuVod
-	 1h25MyOm4HFPuendHZz6mVb1HwF9frFJ+z4NF7A0=
-Date: Fri, 11 Sep 2026 12:31:50 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 5/8] coresight: etm4x: introduce struct etm4_caps
-Message-ID: <aqPmpuIxWosNsfFd@e129823.arm.com>
-References: <20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com>
- <20260911-separate_etm_cfg_v2-v10-5-1b715d95927a@arm.com>
- <20260911112023.31F161F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l10L8IHR"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-485aca32ab7so154191f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 04:36:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789126616; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VsYyLvM1nvACl3jciYX/w1gDAAAcHsDbsqfZjXX8V6A8R5+52pnFekDPIWfEzpCT/s
+         nTMXvnw0PweNLMhCAwKJ8GV94+PrGaTzhbl5GAYemV9WsDzuUcM8h8R3ML5C3zT9Ex7Z
+         aG6gU1KZ9LgW/JyMEjH28c/KYfzJRpunRdeqemk202Jk9gZSz3m6zfl2/v70/YjxOEG/
+         FK7wrLXDKpyOmLPGAtB2C20dQsWWr5aLsAlEzIucTbyIrGPEWmmzMefyOs48r6mC2NMw
+         bNXxgrjBs6weinJOcRuALD8skC0BDPqG6YhdfwgdhVM1oWDFDL3poBTXhLSKlA2NeV5l
+         2YHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LIgt75iQmZv2IR1V0VMxqaMEjC44FA+M0gjq3T1j3yE=;
+        fh=13L9lns6+9DWzS/kdkWn/v6gGpgaXxlhOFZ5Z8k63ls=;
+        b=r22rlBEdT3hOqIIa3K9QaprjVJhP//WXwTeEQiiwqxPNBGcWm4AtL/gXqzeQnCZMnI
+         b7moRzRssjoLW22da9i7doQdUaEwA4qL+eI5kBRqS0DJ6qlZTYBphYrFXP8ARaBLiGft
+         7LSLjJe3dPdV+5X0MasVFFDW26rmIIxSwA4ubc/OSFwgpW008VAE2TwvQN5z6sHz6OmJ
+         vehrpJL/BhrockS96VrO7jG2umLWI4itdiD3GK7CcZkP71/vpQaMumHnXO99YpwIpoEr
+         PTyVVcp5H7SUJyD84hRYj1SwEGabhWzDc0rZhJGtKbfO/IM3MNk577yr3qJjQf0huryx
+         4Nbw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789126616; x=1789731416; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LIgt75iQmZv2IR1V0VMxqaMEjC44FA+M0gjq3T1j3yE=;
+        b=l10L8IHR5HgrZJWG7A8Wp2Zcvkm1VrmgsuD91V4YC8ZxQ+nfJcqZXF2quTDIDKVsRh
+         rJ1yVdzdYLpYE1WUQGeAgHFp9WB4R8bsTT/xHuRgFsT/vqUh9MoFo6ktS7RfF7IIq7tn
+         0ADUYailbVXFZmiaNapD56vRmULhozqOKQyhUP3lb4qHdECRzNmA0TsXjlsrvFprpMWn
+         ue460szE+aE+3LSMGYRqfNp1X0hl/CrlFNrycOOJLU67lehEjRmvLEE7WvDnYeciTGFy
+         WCtiEsKhtgx8U0CUURE8JzorsjUpZd0v9PvFJfTAXlmEQGVfQSKoxWv+wQMBFiGXYk/3
+         k86g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789126616; x=1789731416;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LIgt75iQmZv2IR1V0VMxqaMEjC44FA+M0gjq3T1j3yE=;
+        b=CpLeNl90eweB0xT3MYtjoWiZcD1C5iXFlb8yJKbQqq3GcPB/E0WTgzkkydYVIVfzhU
+         tQ1Mv0i+xyJ3Z0fkIGJYHAWh/y3zFyiesCBRKJrfReYHwN3ZH/Hu6xJcHp694sL7bWv1
+         jNpNCTH2Ey0zHFJj5LXSLqdwZs4eGJQvt8Yt7V23Ky/WImb9dXZlJOkTgDplZzDb67MQ
+         gJQz74iAfGRD/6SYOpnwY5duWo5ddXWrITrU0xJrNwoA0H6Dq28PpQwIf6vf4e1j4UTR
+         4NcsntIJZKaLieGUVlgvG4f5dwMGC/09MDe5xr5YjqnSloNZSQ1J0laQSebGca2bQ5gL
+         mrCg==
+X-Gm-Message-State: AFuF++lmeP4inidT57KD5wZyNsDyiWJrOA2XBn1ZC72gBDnO4TR41H7C
+	QAqDY5ZaCdfeo0QopSr7CKcjLVVr1Q5IyKecqs1Dfab8UXUBiRSSxOmCUBVXocBqNWW831YRReG
+	yEKfa8YzS604vWA6ODRvFGXezNgYSCMTLfU4hnF6jTw==
+X-Gm-Gg: AYBFou3FXjoDEXSUSaiOYmQFxBh8txuIjHW+/cQs9XOIUbsS9vJubRfo50g9orqqrTf
+	kT1bSQH4ICHwFLpzb71L0zMChBtJrFJf8Iy6pkGaI4BYwxnPGASXu8CANwzGsZqMmJDHnFwKPMU
+	uK72CccuYqN+eDt72KCeGLB52hOW84Gqz2NsDbcU+z5+rLJs3daTYP+BEXkjiEqnKHnrfI+/+eh
+	vEmg+AQeWl2fCra4xq7wERWotg20I3gJOi1n5GaZHWFzFKm2royHN9F2CS+7sBOcejsuZZ22CaX
+	Gom5/+NjI5Iwmm5axJ7d9W7dUyYvZIkbg4eysm7CNHkd6Qn3g3zusviXvoetIK2hJLa+S1t8ci5
+	AEWSq+xO+QTJLmKnW9LeKYWo7PkD4PYoWMusW8rzQ9QdjwgUaun5wvVig6o5SNs6JGH9AfKoLSQ
+	==
+X-Received: by 2002:a05:6000:2311:b0:485:8c16:5ef5 with SMTP id
+ ffacd0b85a97d-486eb30a9ffmr4061062f8f.47.1789126616471; Fri, 11 Sep 2026
+ 04:36:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911112023.31F161F000FF@smtp.kernel.org>
+References: <20260911111731.3404308-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260911111731.3404308-2-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260911113217.0178F1F00899@smtp.kernel.org>
+In-Reply-To: <20260911113217.0178F1F00899@smtp.kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Fri, 11 Sep 2026 12:36:29 +0100
+X-Gm-Features: AcwNN1WsWnutDhTfem_mFFkR3R6OacHy1RxvsrgccYae_oUqrtA6rSmNdVdNO54
+Message-ID: <CA+V-a8vCd7n1BBzoxL6XB6iiB8fyakT-bDgu6cX5GjnpoREzbg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/8] watchdog: rzv2h: Drop enabling clocks in the
+ restart handler
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org, 
+	wsa+renesas@sang-engineering.com, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 11, 2026 at 11:20:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+Hi sashiko,
+
+On Fri, Sep 11, 2026 at 12:32=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
 > Pre-existing issues:
-> - [Critical] Hardware-reported capability counts are used as loop limits without being checked against static array capacities, leading to heap buffer overflows.
+> - [High] Unchecked division by zero during probe if the optional 'oscclk'=
+ is missing from the device tree.
 > --
-> 
-> commit 1fb7a47435872f1b7f11824178d098d0258effdc
-> Author: Yeoreum Yun <yeoreum.yun@arm.com>
-> 
-> coresight: etm4x: introduce struct etm4_caps
-> 
-> This commit introduces struct etmv4_caps to encapsulate ETMv4 capabilities 
-> and migrates the relevant capability information out of struct etmv4_drvdata 
-> into it.
-> 
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>
+> commit e61522c3f4f781e0b8cf17bd6e22135a7d714358
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> watchdog: rzv2h: Drop enabling clocks in the restart handler
+>
+> The watchdog restart handler runs from do_kernel_restart() with
+> interrupts disabled and after smp_send_stop() has halted the other CPUs.
+> Calling clk_enable() from the !watchdog_active() path takes the clock
+> framework's global enable_lock, which can cause a spin if another CPU hol=
+ds it.
+> This commit keeps pclk and oscclk enabled for the lifetime of the watchdo=
+g
+> device by using devm_clk_get_enabled() and devm_clk_get_optional_enabled(=
+).
+>
+> > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.=
+c
+> > index 3b6abb66a1da0..bd86da71b0eb8 100644
+> > --- a/drivers/watchdog/rzv2h_wdt.c
+> > +++ b/drivers/watchdog/rzv2h_wdt.c
+>
 > [ ... ]
-> > @@ -1491,43 +1501,43 @@ static void etm4_init_arch_data(void *info)
-> [ ... ]
-> > -	drvdata->nr_ss_cmp = FIELD_GET(TRCIDR4_NUMSSCC_MASK, etmidr4);
-> > -	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
-> > +	caps->nr_ss_cmp = FIELD_GET(TRCIDR4_NUMSSCC_MASK, etmidr4);
-> > +	for (i = 0; i < caps->nr_ss_cmp; i++) {
-> >  		drvdata->config.ss_status[i] =
-> >  			etm4x_relaxed_read32(csa, TRCSSCSRn(i));
-> >  	}
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this code overflow the ss_status[] 
-> array if the hardware reports a capability count greater than the static array 
-> capacity?
-> 
-> In etm4_init_arch_data(), caps->nr_ss_cmp is read directly from the TRCIDR4 
-> hardware register. The architecture allows this field to be up to 15, but the 
-> arrays like ss_status are fixed in size to ETM_MAX_SS_CMP. Using the 
-> unvalidated hardware capability as a loop limit can lead to a heap buffer 
-> overflow.
-> 
-> [ ... ]
-> > @@ -1892,57 +1903,56 @@ static int etm4_cpu_save(struct coresight_device *csdev)
-> [ ... ]
-> > -	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
-> > +	for (i = 0; i < caps->nr_ss_cmp; i++) {
-> >  		state->trcssccr[i] = etm4x_read32(csa, TRCSSCCRn(i));
-> >  		state->trcsscsr[i] = etm4x_read32(csa, TRCSSCSRn(i));
-> >  		if (etm4x_sspcicrn_present(drvdata, i))
-> >  			state->trcsspcicr[i] = etm4x_read32(csa, TRCSSPCICRn(i));
-> >  	}
-> 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but does this loop risk corrupting
-> the dynamically allocated etmv4_save_state structure? 
-> 
-> Similar to the initialization path, etm4_cpu_save() relies on the unvalidated 
-> caps->nr_ss_cmp bound to write into state->trcssccr[] and state->trcsscsr[]. 
-> If the hypervisor or hardware provides a larger count, this will overflow the 
-> save state buffers on suspend and resume paths.
-> 
-> [ ... ]
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> [ ... ]
-> > @@ -2059,7 +2090,7 @@ static ssize_t ctxid_masks_store(struct device *dev,
-> [ ... ]
-> >  	mask = config->ctxid_mask0;
-> > -	for (i = 0; i < drvdata->numcidc; i++) {
-> > +	for (i = 0; i < caps->numcidc; i++) {
-> >  		/* mask value of corresponding ctxid comparator */
-> >  		maskbyte = mask & ETMv4_EVENT_MASK;
-> >  		/*
-> >  		 * each bit corresponds to a byte of respective ctxid comparator
-> >  		 * value register
-> >  		 */
-> >  		for (j = 0; j < 8; j++) {
-> >  			if (maskbyte & 1)
-> >  				config->ctxid_pid[i] &= ~(0xFFUL << (j * 8));
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but could this sysfs-triggered write also 
-> overflow the ctxid_pid[] array?
-> 
-> In ctxid_masks_store(), caps->numcidc is used as the loop bound for updating 
-> config->ctxid_pid[i], which is dimensioned by ETMv4_MAX_CTXID_CMP. Without 
-> clamping the hardware-reported capability, writing to this sysfs node could 
-> result in out-of-bounds memory accesses.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-separate_etm_cfg_v2-v10-0-1b715d95927a@arm.com?part=5
+>
+> > @@ -290,11 +277,11 @@ static int rzv2h_wdt_probe(struct platform_device=
+ *pdev)
+> >       if (IS_ERR(priv->base))
+> >               return PTR_ERR(priv->base);
+> >
+> > -     priv->pclk =3D devm_clk_get_prepared(dev, "pclk");
+> > +     priv->pclk =3D devm_clk_get_enabled(dev, "pclk");
+> >       if (IS_ERR(priv->pclk))
+> >               return dev_err_probe(dev, PTR_ERR(priv->pclk), "Failed to=
+ get pclk\n");
+> >
+> > -     priv->oscclk =3D devm_clk_get_optional_prepared(dev, "oscclk");
+> > +     priv->oscclk =3D devm_clk_get_optional_enabled(dev, "oscclk");
+>
+> [Severity: High]
+> This is a pre-existing issue, but can this optional clock fetch result in=
+ a
+> divide by zero oops?
+>
+> If the optional "oscclk" is legitimately omitted from the device tree (or=
+ the
+> device tree is malformed), priv->oscclk will be successfully returned as =
+NULL.
+>
+> Later in rzv2h_wdt_probe(), if the chip variant uses COUNT_SOURCE_LOCO, t=
+his
+> NULL pointer is assigned to count_clk and evaluated:
+>
+>         switch (priv->of_data->count_source) {
+>         case COUNT_SOURCE_LOCO:
+>                 count_clk =3D priv->oscclk;
+>                 break;
+>         ...
+>
+>         priv->wdev.max_hw_heartbeat_ms =3D (MILLI * priv->of_data->timeou=
+t_cycles *
+>                                           priv->of_data->cks_div) / clk_g=
+et_rate(count_clk);
+>
+> Because clk_get_rate(NULL) safely returns 0, the unchecked division will
+> cause a divide error exception during device probe. Should this verify
+> count_clk or its rate before the division?
+>
+oscclk is optional for T2H SoCs and is handled in the DT binding, to
+be fully proof, I'll add a check for this case.
 
-Nacked. All of above is false positive. array size is staticlly set as
-MAXIMUM size in coresight-etm4x.h.
-
--- 
-Sincerely,
-Yeoreum Yun
+Cheers,
+Prabhakar
