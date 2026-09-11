@@ -1,172 +1,228 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FC0418342
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896E443DEC6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789121738; cv=none; b=JDPDfCdZ1R0ZxwRms1akM0gXyNesHcfzoxgvNJBd8W/m/lGvj1HzQaKSCqzFod0cAKfqbDRSXw9abwceIhgDB3GTEAU+HZ5WSvkcePRrDnBhSsy6h3j9d2N6PnT9nyCQeTr/HSAEgwFGoOVzuOv666rWBbD3R4I25WgwbdPMycs=
+	t=1789122338; cv=none; b=dV6IRTS/lrq8qvD3PAwCFfvWreYMBsjIpV5/823Yzfa50yXoQD7/iQ4ouHTaBUSBOzDob+pASYB8x9qneT0dB8qUXMhfqPF3wj/Xd3P23DdNpcKad3OC/MiLCbgo2JzJMpOgpnvZKIMnQEUgoXdtx2h3ZEKmUyju1syRiZZZDVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789121738; c=relaxed/simple;
-	bh=KzP/eeDfOqS2yjpWh+qwaya1FNL4hs0zQzK48YpH6bw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uYW8RS9xcZ8WP+mvjrsDz1zjJvu51H/0hSkBUHTovbm3n/R3MPuH+U4A4GGMXn/lw9T3nF5coW6l85w0xCJtxHRueKVrd7QpcDu7OsUkghAPA6f4T4g93qMAyRCXmmK1O6H1Ko3YzYDnz7q+6m+TXMxlwVvC22KHMgPl3FNI0FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hh9Qt2Cy2zKHMLp
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:15:18 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 55E324058C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 18:15:24 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgDXPUq71KNqtWVMBg--.54653S2;
-	Fri, 11 Sep 2026 18:15:24 +0800 (CST)
-Message-ID: <05e0e407-c4d1-44e2-9d88-b170f57eb663@huaweicloud.com>
-Date: Fri, 11 Sep 2026 18:15:23 +0800
+	s=arc-20240116; t=1789122338; c=relaxed/simple;
+	bh=i+Lc5tkEyufviIM0jGsAEeA07f9PVW0hutsFkGn5rX0=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=IXrlaAo6/lT24VFfnogD5qdePrWIypqlnKBjtCivhdeCIOfw7jcAI7Z/zXqfZ1wYlKsfeaBiSzrZ9A3fDo6CirWjj+SyeGAHm8zxP2MDkCSX+DcHIPYPZ6nVs7VyJzgfy7WaHx2XNObBz9OTBp9LOx9QuuON8VQvVIEftbXY6jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=qQX2bXa4; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="qQX2bXa4"
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20260911102532epoutp01c48dfc478cf0cf3bde372be74ab2a1d2~UPUhc9a0I3256832568epoutp01p
+	for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 10:25:32 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20260911102532epoutp01c48dfc478cf0cf3bde372be74ab2a1d2~UPUhc9a0I3256832568epoutp01p
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1789122333;
+	bh=uBJvvC5Oh13J66pP9et6GEM9gPXl+p8Dp+kDY83wlok=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=qQX2bXa45gk6dAiaCyT3ETQyz3Gluf+lQunVEdTpqGhQiXuZSyLxjrHLkux5e4oYZ
+	 +RflNqzZwqNoim5xG0b1HNZCxiGC5+PABP6yG1G2P6GruS3dTdJj77vmqbap6dW6Uq
+	 MWLcg94RoL3vv483N6eoBZKg8nnWwrSStYt/w2QQ=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+	20260911102532epcas5p450603ec23bb5577551dd62d446c6ca3f~UPUg6pONH2389723897epcas5p4c;
+	Fri, 11 Sep 2026 10:25:32 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.91]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4hh9fg4KJgz6B9m6; Fri, 11 Sep
+	2026 10:25:31 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20260911102530epcas5p4995d3c7ac672cfa2df3521eb98bb9019~UPUflk_jo2629526295epcas5p48;
+	Fri, 11 Sep 2026 10:25:30 +0000 (GMT)
+Received: from SRIB8EG28RUQ1R (unknown [107.108.208.92]) by
+	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20260911102529epsmtip10ca203d0390a5e8e38efadf32ae9db36~UPUd_5XVS1268312683epsmtip1Y;
+	Fri, 11 Sep 2026 10:25:29 +0000 (GMT)
+From: "SandeepI" <irlanki.s@samsung.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <bpf@vger.kernel.org>, <netdev@vger.kernel.org>, <lorenzo@google.com>,
+	<maze@google.com>, <sporeba@google.com>, <motomuman@google.com>,
+	<srihari.k@samsung.com>, <g.pokhra@samsung.com>, <r.kumawat@samsung.com>,
+	<irlanki.s@samsung.com>, <raj.kumars@samsung.com>, "'Taeseok Lee'"
+	<ts413.lee@samsung.com>
+In-Reply-To: <20260910144455.CA7751F00893@smtp.kernel.org>
+Subject: RE: [PATCH net-next] tcp: add TCP_ECN and TCP_ECN_OPTION socket
+ options
+Date: Fri, 11 Sep 2026 15:55:27 +0530
+Message-ID: <045c01dd41d7$df167d30$9d437790$@samsung.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 25/26] perf annotate-arm64: Support per-cpu variable
- access tracking
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1788872630.git.wutengda@huaweicloud.com>
- <4cebb0f4d2db4d66c4ec19c4c007d6761e5aad8e.1788872630.git.wutengda@huaweicloud.com>
- <20260908133059.E85591F00AC4@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260908133059.E85591F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgDXPUq71KNqtWVMBg--.54653S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDuw4xAw4fAFyxXr1rXrb_yoWrXF1rpr
-	9akFyrKr1jvrsYqanavr4rXF1ruw47tr4Y9ryrta1xArnIyw1rGa93KrWUGF48Gr9xCr17
-	AwsYqa9xZa1kCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7
-	CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJgSB8NW/KS4Ewc4RaTtrZlfomIvQLHz9DYAS1y+Cm1o29WAA==
+Content-Language: en-in
+X-CMS-MailID: 20260911102530epcas5p4995d3c7ac672cfa2df3521eb98bb9019
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-065,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20260909144437epcas5p282be513a761ca5aec3f2b0fefcd2ecfa
+References: <CGME20260909144437epcas5p282be513a761ca5aec3f2b0fefcd2ecfa@epcas5p2.samsung.com>
+	<20260909144557.800676-1-irlanki.s@samsung.com>
+	<20260910144455.CA7751F00893@smtp.kernel.org>
 
-
-
-On 2026/9/8 21:30, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added logic to track per-cpu base registers in 'add' and 'ldr' instructions is entirely unreachable dead code because `arch_get_reg_offset` prematurely aborts the tracking state.
+> -----Original Message-----
+> From: sashiko-bot=40kernel.org <sashiko-bot=40kernel.org>
+> Sent: 10 September 2026 20:15
+> To: Irlanki Sandeep <irlanki.s=40samsung.com>
+> Cc: bpf=40vger.kernel.org
+> Subject: Re: =5BPATCH net-next=5D tcp: add TCP_ECN and TCP_ECN_OPTION soc=
+ket
+> options
+>=20
+> Thank you for your contribution=21 Sashiko AI review found 2 potential is=
+sue(s) to
+> consider:
+> - =5BHigh=5D Per-socket TCP_ECN configuration is ignored during SYN flood=
+s because
+> syncookies validation checks the global sysctl instead of the listener so=
+cket's
+> effective ECN mode.
+> - =5BMedium=5D Missing READ_ONCE() when reading =60ecn_mode=60 and =60ecn=
+_option=60
+> introduces a data race and double-fetch vulnerability, leaking the UNSPEC
+> placeholder (255) into TCP operational logic.
 > --
-> 
-> commit e3331fba4432f08f3db300129b5060bba477930c
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support per-cpu variable access tracking
-> 
-> This commit extends update_insn_state_arm64() to handle per-cpu variable
-> addressing. It detects 'adrp + ldr' pairs that resolve to the
-> '__per_cpu_offset' symbol, and attempts to propagate this type information
-> through subsequent 'ldr' and 'add' instructions. However, the newly added
-> logic is entirely unreachable dead code because arch_get_reg_offset()
-> prematurely aborts the tracking state.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 9daf959055457..33fef3d153786 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> 
-> [ ... ]
-> 
->> @@ -649,6 +660,12 @@ static int propagate_load_reg_state(struct type_state *state,
->>  		return 0;
->>  	}
->>  
->> +	/*
->> +	 * If src_tsr->kind is TSR_KIND_PERCPU_BASE, treat it as an array.
->> +	 * No special handling is needed here; just fall through to retry
->> +	 * and resolve the type from the second register.
->> +	 */
->> +
-> 
-> [Severity: Medium]
-> Is this fall-through logic in propagate_load_reg_state() for intermediate
-> Pattern A ('ldr') instructions actually reachable?
-> 
-> Earlier in propagate_load_reg_state(), arch_get_reg_offset() forces an early
-> exit by returning -1 when evaluating a multi-register load where the second
-> register isn't a constant. This happens before this new per-cpu fallback
-> logic can be reached, making this dead code.
-> 
+>=20
+> commit d87f9153f9de86df8e7de5798f8dffdac8f0e2fd
+> Author: Irlanki Sandeep <irlanki.s=40samsung.com>
+> Subject: tcp: add TCP_ECN and TCP_ECN_OPTION socket options
+>=20
+> This patch introduces granular, per-connection dynamic adaptation for ECN=
+ and
+> AccECN configurations. It adds two new socket options, TCP_ECN and
+> TCP_ECN_OPTION, which override the system-wide sysctl settings to prevent
+> connection failures or packet loss on paths with anomalous middleboxes.
+>=20
+> > diff --git a/include/net/tcp_ecn.h b/include/net/tcp_ecn.h index
+> > 865d5c5a7718d..931e0877176c7 100644
+> > --- a/include/net/tcp_ecn.h
+> > +++ b/include/net/tcp_ecn.h
+> =5B ... =5D
+> > =40=40 -30,8 +31,29 =40=40 enum tcp_accecn_option =7B
+> >  	TCP_ACCECN_OPTION_MINIMUM =3D 1,
+> >  	TCP_ACCECN_OPTION_FULL =3D 2,
+> >  	TCP_ACCECN_OPTION_PERSIST =3D 3,
+> > +	TCP_ACCECN_OPTION_UNSPEC =3D 255,	/* Use sysctl default (per-
+> socket) */
+> >  =7D;
+> >
+> > +/* Resolve the effective ECN mode: per-socket override or sysctl
+> > +fallback */ static inline u8 tcp_ecn_mode_eff(const struct sock *sk)
+> > +=7B
+> > +	u8 mode =3D tcp_sk(sk)->ecn_mode;
+> > +
+> > +	if (mode =3D=3D TCP_ECN_MODE_UNSPEC)
+> > +		return READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_ecn);
+> > +	return mode;
+> > +=7D
+>=20
+> =5BSeverity: Medium=5D
+> Is it possible for the compiler to double-fetch tcp_sk(sk)->ecn_mode here=
+?
+>=20
+> Since the ecn_mode field is updated concurrently via WRITE_ONCE() (for
+> example, during a setsockopt call while handling an incoming SYN packet i=
+n
+> softirq context), a lack of READ_ONCE() on the reader side could result i=
+n the
+> UNSPEC placeholder (255) leaking into the return evaluation.
+>=20
+> If that placeholder leaks, could it cause AccECN to be incorrectly enable=
+d later in
+> tcp_ecn_create_request(), where 255 >=3D 3 would evaluate to true?
+>=20
+> > +
+> > +/* Resolve the effective AccECN option: per-socket override or sysctl
+> > +fallback */ static inline u8 tcp_accecn_option_eff(const struct sock
+> > +*sk) =7B
+> > +	u8 opt =3D tcp_sk(sk)->ecn_option;
+> > +
+> > +	if (opt =3D=3D TCP_ACCECN_OPTION_UNSPEC)
+> > +		return READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_ecn_option);
+> > +	return opt;
+> > +=7D
+>=20
+> =5BSeverity: Medium=5D
+> Does tcp_sk(sk)->ecn_option also require a READ_ONCE() here to prevent a
+> similar data race and double-fetch?
+Yes, tcp_sk(sk)->ecn_mode and tcp_sk(sk)->ecn_option are updated
+concurrently via WRITE_ONCE() in do_tcp_setsockopt(). Without READ_ONCE(),
+a compiler double-fetch could leak the TCP_ECN_MODE_UNSPEC (255) sentinel
+value into operational evaluations.
 
-Indeed. The return happens too early.
+Both accessors (tcp_ecn_mode_eff and tcp_accecn_option_eff) have been updat=
+ed
+in V3 with READ_ONCE() to eliminate data races and prevent double-fetching.
 
->>  	/* Or try another register if any */
->>  	if (src->multi_regs && src->reg1 != src->reg2 && sreg != src->reg2 &&
->>  	    !(src->extend_type || src->shift_type)) {
-> 
-> [ ... ]
-> 
->> @@ -949,6 +966,34 @@ static void update_add_insn_state(struct type_state *state,
->>  		return;
->>  	}
->>  
->> +	if (src_tsr.kind == TSR_KIND_PERCPU_BASE) {
->> +		int reg2;
->> +
->> +		if (!src->multi_regs) {
->> +			invalidate_reg_state(tsr);
->> +			return;
->> +		}
->> +
->> +		reg2 = (sreg == src->reg1) ? src->reg2 : src->reg1;
->> +
->> +		if (!has_reg_type(state, reg2) || !state->regs[reg2].ok) {
->> +			invalidate_reg_state(tsr);
->> +			return;
->> +		}
->> +
->> +		/* Treat percpu as array: inherit type from reg2 */
->> +		tsr->type = state->regs[reg2].type;
->> +		tsr->kind = state->regs[reg2].kind;
->> +		tsr->offset = state->regs[reg2].offset;
->> +		tsr->imm_value = state->regs[reg2].imm_value;
->> +		tsr->ok = state->regs[reg2].ok;
->> +
->> +		pr_debug_dtp("add [%x] percpu (reg%d, reg%d) -> reg%d",
->> +			     insn_offset, src->reg1, src->reg2, dreg);
->> +		pr_debug_type_name(&tsr->type, tsr->kind);
->> +		return;
->> +	}
->> +
-> 
-> [Severity: Medium]
-> Does this block ever execute when handling a per-cpu address calculation
-> (Pattern B like 'add x0, x6, x5') in update_add_insn_state()?
-> 
-> When arch_get_reg_offset() executes earlier in update_add_insn_state(), it
-> returns -1 for multi-register non-memory operations (like 'add') unless one
-> register is a TSR_KIND_CONST or the base is a known TSR_KIND_POINTER.
-> 
-> Since the registers here are PERCPU_BASE and GLOBAL_ADDR, it returns -1
-> and jumps to the try_other_reg label, permanently bypassing this new tracking
-> logic.
-> 
 
-Agreed. This is the same issue as above. Will fix in v6.
+> =5B ... =5D
+> > diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c index
+> > 0f60a1dbf9274..b7dea787f8237 100644
+> > --- a/net/ipv4/tcp_input.c
+> > +++ b/net/ipv4/tcp_input.c
+> > =40=40 -7463,7 +7463,7 =40=40 static void tcp_ecn_create_request(struct
+> request_sock *req,
+> >  	u32 ecn_ok_dst;
+> >
+> >  	if (tcp_accecn_syn_requested(th) &&
+> > -	    (READ_ONCE(net->ipv4.sysctl_tcp_ecn) >=3D 3 =7C=7C
+> > +	    (tcp_ecn_mode_eff(listen_sk) >=3D 3 =7C=7C
+> >  	     tcp_ca_needs_accecn(listen_sk))) =7B
+> >  		inet_rsk(req)->ecn_ok =3D 1;
+> >  		tcp_rsk(req)->accecn_ok =3D 1;
+>=20
+> =5BSeverity: High=5D
+> Does the SYN cookies path also need to be updated to respect this new per=
+-
+> socket configuration?
+>=20
+> During a SYN flood, this standard tcp_ecn_create_request() path is bypass=
+ed in
+> favor of syncookies. Currently, cookie_v4_check() and cookie_v6_check()
+> determine ECN support by calling cookie_ecn_ok(), which only checks the g=
+lobal
+> sysctl:
+>=20
+> static inline bool cookie_ecn_ok(const struct net *net, const struct dst_=
+entry
+> *dst) =7B
+>         return READ_ONCE(net->ipv4.sysctl_tcp_ecn) =7C=7C
+>                 dst_feature(dst, RTAX_FEATURE_ECN); =7D
+>=20
+> If the system has the global sysctl_tcp_ecn disabled but a service has en=
+abled it
+> locally via TCP_ECN on its listener socket, will established connections =
+silently
+> lose their ECN capability during a SYN flood?
 
->>  try_other_reg:
->>  	/* Try another register if any */
->>  	if (src->multi_regs && src->reg1 != src->reg2 && sreg != src->reg2 &&
-> 
+Agreed. Under SYN flood conditions, cookie_v4_check() and cookie_v6_check()
+must honor the listener socket's effective ECN configuration rather than
+falling back exclusively to the global sysctl.
+
+Moved cookie_ecn_ok() from include/net/tcp.h to include/net/tcp_ecn.h
+to avoid circular header dependencies (since tcp_ecn_mode_eff() is defined
+in tcp_ecn.h and tcp.h does not include tcp_ecn.h), and updated it to take
+'const struct sock *sk' so it evaluates tcp_ecn_mode_eff(sk).
+
+Both issues have been addressed in the =5BPATCH net-next v3=5D tcp: add TCP=
+_ECN and TCP_ECN_OPTION socket options
+
+Thanks,
+Sandeep.
+
 
