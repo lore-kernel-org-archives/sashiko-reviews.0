@@ -1,140 +1,160 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D7FB35F602;
-	Sat, 12 Sep 2026 09:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC11B3B47D5;
+	Sat, 12 Sep 2026 09:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203851; cv=none; b=Rij/LfPZ1o1VnEQLwtuR4ipeFtR5hMg3wkk1/GQ04ST+vMWRskVB8jIEJrYhaa8OKZipxUmwWrDSwOJgW5E/DGGe4xcAq/ciN3pLaZkBeZ66I2KK2SUjX3nJDXjHOYD6fKHFuJ/RdrQ6so9V/2Agy/Wadc72rxHR5pWcPLABGoE=
+	t=1789205331; cv=none; b=hlHEV4IgkIzD9IrwZUx/MkQUw++2dQ9zagVHOanjkMSEK51egCP+7Et3AEg0G9JkfZHYPkfg+8JcYxZq928AZxLeckaGGIzFN4EYC2D4hJlt7sUp/wS/NQQdGep0FywfiIN9bRGyqw22mW0giw9J+iI1alLisYET/2DWHo+Bddg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203851; c=relaxed/simple;
-	bh=xD8JxPHjaxpnElNEZUSN/58hUhREedKqk8QVI12u0wI=;
+	s=arc-20240116; t=1789205331; c=relaxed/simple;
+	bh=hsHZPbHlPlBEmzivqVQMvSSuiORdsyC0qlaXSPnPHx0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vhk2uv6XL8Ug5TcZwWL3zA+5ZhG+O7FcqTytjvQsdMJVmYdcODgKmfdKzc8i9NghETzQtQlguM5Yhic6i7hJ920Us+TGhVHEruQ0aJBeBj2YnTEq04KuD6J2dBfX0D2O8a0ppOhSLWuXydp0GFZYW+3HUEHGbR/XmjcT8DrwlpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=acWvDJE1; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 In-Reply-To:Content-Type; b=Ju1ZE/tKxyHHx2NTRbgHuqHQC2d6k03g1yWiwYn2BEpJpNOZAg/kCUFHRuNmR1LEWXywEiDjqp9Qc2CaGmOg/BLKk+JuUOVbc0d0msofRpool4a66EViPZxOqFFf01iwR+XoyCtE4IpVmN9Fmje5PIRS6Ile/icwuLqkXGI9sXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IyT/9g+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="acWvDJE1"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BBC041713;
-	Sat, 12 Sep 2026 02:03:59 -0700 (PDT)
-Received: from [10.57.10.2] (unknown [10.57.10.2])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 707EA3F7D8;
-	Sat, 12 Sep 2026 02:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789203843; bh=xD8JxPHjaxpnElNEZUSN/58hUhREedKqk8QVI12u0wI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=acWvDJE1P4c7LpHpXJeu4VfOKgzzxw9uroFrn2jkgYpCuXwxs0uC67ManQRSFsXjS
-	 VlKJXNjzEqcrLHygX2oJ9oZ/qkE0EtmF4/vLYp9nnFPYmjZrr8dvvVXKYe5UeHnUMF
-	 MFDAZ1pir4u0iqMXw4nI/WuEvyCsUr3jlqugY76o=
-Message-ID: <a50e377b-4ba0-4d08-8176-e5003d44223c@arm.com>
-Date: Sat, 12 Sep 2026 10:04:00 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IyT/9g+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D301F00898;
+	Sat, 12 Sep 2026 09:28:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789205329;
+	bh=KyBDOKb2XC4qNx78w1Q+XyZq+awzI8ioCi5GQLwC7QY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=IyT/9g+yjgrdr8VeyId5uFyAr5xD2xHO9YfLFpXKTcQ2KZ7697WPfAP2hwcdZXvfG
+	 FaJ3w7BQ7+1gdY/+w3qXNXFk+6d6vxUV+KZIjRb31Kq53DMdgDLRNMwXc2GQNqYV46
+	 mQJhCB0vb2uZfSpFPKN6siE3RlnkR0ejdsJoRI+ibT81yuYcl1AkBP+1G9DhWp1wF+
+	 HR2X6Vv9EKoe7uv4WTZr5PKJHJauxD/7viMhiK58nRL/8sfMlrt9VdLDbqVhf9rB7/
+	 mCspxwhc3MgIoQjo7KTWAh5CInMuh8Nz9u6MuG0HqdbUzaJrwxjDqlWo2DKS0OKF/N
+	 vPoagwnYJupKw==
+Message-ID: <767ffb21-9465-4ef5-9e12-ac94f04180f8@kernel.org>
+Date: Sat, 12 Sep 2026 11:28:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 1/7] firmware: arm_rmm: Add SMC definitions for
- calling the RMM
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>,
- kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
-References: <20260912083611.2513845-1-suzuki.poulose@arm.com>
- <20260912083611.2513845-2-suzuki.poulose@arm.com>
- <20260912084556.2B68E1F00893@smtp.kernel.org>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20260912084556.2B68E1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH mptcp-next v4 4/4] mptcp: sched: add penalise counters and
+ tracepoint
+Content-Language: fr
+To: sashiko-reviews@lists.linux.dev,
+ Shardul Bankar <shardul.b@mpiricsoftware.com>
+Cc: mptcp@lists.linux.dev
+References: <20260911-mptcp_penalise_send_v2-v4-0-820f2be4a8fe@mpiricsoftware.com>
+ <20260911-mptcp_penalise_send_v2-v4-4-820f2be4a8fe@mpiricsoftware.com>
+ <20260911100920.CE6EB1F000FF@smtp.kernel.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260911100920.CE6EB1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/09/2026 09:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Usage of GENMASK and BIT macros for 64-bit masks causes Undefined Behavior on 32-bit architectures
+Hello,
 
-RMM is only supported for ARM64. But, given this is a header file, I 
-could fix them to ULL
-
-Cheers
-Suzuki
-
+On 11/09/2026 12:09, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] TP_fast_assign() evaluates a macro containing a WARN_ON() side effect, violating tracing guidelines.
+> - [Medium] Lockless reads of TCP socket state in tracepoint assignment lack data_race() or READ_ONCE() annotations.
 > --
 > 
-> commit cfdd0e3f2fb70671ab2dbb64f06ca56946732456
-> Author: Steven Price <steven.price@arm.com>
+> commit 5ddd66e7676359b892e5316c068af949834ad5ce
+> Author: Shardul Bankar <shardul.b@mpiricsoftware.com>
 > 
-> firmware: arm_rmm: Add SMC definitions for calling the RMM
+> mptcp: sched: add penalise counters and tracepoint
 > 
-> This commit introduces SMC definitions for calling the Realm Management Monitor
-> (RMM) from the host. The definitions are based on the ARM RMM specification
-> version 2.0-bet3.
+> This commit adds observability for the cwnd-halving penalty in MPTCP.
+> It introduces two new SNMP counters, CwndPenalised and PenalCandidate,
+> along with a tracepoint mptcp_subflow_penalise to track subflow selection
+> and pacing dynamics.
 > 
-> Link: https://developer.arm.com/documentation/den0137/2-0bet3/
-> 
->> diff --git a/include/linux/arm-smccc-rmi.h b/include/linux/arm-smccc-rmi.h
->> new file mode 100644
->> index 0000000000000..214d6228dfc22
->> --- /dev/null
->> +++ b/include/linux/arm-smccc-rmi.h
-> 
+>> diff --git a/include/trace/events/mptcp.h b/include/trace/events/mptcp.h
+>> index 22882bd034593..f16e04b81322d 100644
+>> --- a/include/trace/events/mptcp.h
+>> +++ b/include/trace/events/mptcp.h
 > [ ... ]
-> 
->> +#define RMI_ADDR_TYPE_NONE		0
->> +#define RMI_ADDR_TYPE_SINGLE		1
->> +#define RMI_ADDR_TYPE_LIST		2
+>> +	TP_fast_assign(
+>> +		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
 >> +
->> +#define RMI_ADDR_RANGE_STATE_MASK	GENMASK(63, 62)
->> +#define RMI_ADDR_RANGE_ADDR_MASK	GENMASK(51, PAGE_SHIFT)
+>> +		__entry->pace = subflow->avg_pacing_rate;
+>> +		__entry->max_pace = max_pace;
+>> +		if (ssk && sk_fullsock(ssk))
+>> +			__entry->cwnd = tcp_snd_cwnd(tcp_sk(ssk));
 > 
-> [Severity: Low]
-> Can the use of GENMASK for bit positions >= 32 cause undefined behavior on
-> 32-bit architectures?
+> [Severity: Medium]
+> Does this inject a WARN_ON() side effect into the tracepoint?
 > 
-> The GENMASK macro evaluates to unsigned long, which is 32 bits wide on 32-bit
-> architectures. Shifting by 32 or more results in truncation or an
-> out-of-bounds shift.
+> The tracepoint assignment evaluates the tcp_sk() macro, which contains a
+> WARN_ON(_ptr->sk_protocol != IPPROTO_TCP). This injects a side effect into
+> TP_fast_assign(), causing the warning condition to be evaluated only when
+> the tracepoint is enabled. This violates the core tracing guideline that
+> TP_fast_assign() must not contain side effects to prevent behavior from
+> diverging based on tracing state.
+
+This can be ignored: this WARN is only in our tree (debug to catch dev
+mistakes) and is harmless here.
+
+> [Severity: Medium]
+> Are these lockless reads of the TCP socket state missing annotations?
 > 
-> Would it be better to use GENMASK_ULL here for these 64-bit masks?
+> The tracepoint mptcp_subflow_penalise is invoked from
+> mptcp_subflow_get_send(), which holds the outer MPTCP socket lock but
+> not the subflow's TCP socket (ssk) lock. Here, sk_fullsock(ssk) reads
+> sk->sk_state and tcp_snd_cwnd() reads tp->snd_cwnd.
 > 
->> +#define RMI_ADDR_RANGE_COUNT_MASK	GENMASK(PAGE_SHIFT - 1, 2)
->> +#define RMI_ADDR_RANGE_BLOCK_SIZE_MASK	GENMASK(1, 0)
-> 
-> [ ... ]
-> 
->> +enum rmi_ripas {
->> +	RMI_EMPTY = 0,
->> +	RMI_RAM = 1,
->> +	RMI_DESTROYED = 2,
->> +	RMI_DEV = 3,
->> +};
->> +
->> +#define RMI_NO_MEASURE_CONTENT	0
->> +#define RMI_MEASURE_CONTENT	1
->> +
->> +#define RMI_FEATURE_REGISTER_0_S2OASZ			GENMASK(40, 33)
->> +#define RMI_FEATURE_REGISTER_0_L0GPT_BLOCK_DELEGATE	BIT(32)
-> 
-> [Severity: Low]
-> Similarly, will this GENMASK and BIT usage trigger the same undefined behavior
-> when evaluated as unsigned long? Using GENMASK_ULL and BIT_ULL might avoid this.
-> 
->> +#define RMI_FEATURE_REGISTER_0_PMU_NUM_CTRS		GENMASK(31, 27)
->> +#define RMI_FEATURE_REGISTER_0_PMU			BIT(26)
-> 
-> [ ... ]
-> 
->> +#define RMI_FEATURE_REGISTER_3_RTT_S2AP_INDIRECT	BIT(6)
->> +#define RMI_FEATURE_REGISTER_3_RTT_PLANE		GENMASK(5, 4)
->> +#define RMI_FEATURE_REGISTER_3_MAX_NUM_AUX_PLANES	GENMASK(3, 0)
->> +
->> +#define RMI_FEATURE_REGISTER_4_MEC_COUNT		GENMASK(63, 0)
-> 
-> [Severity: Low]
-> Could GENMASK_ULL(63, 0) be used here as well?
-> 
->> +
->> +#define RMI_MEM_CATEGORY_CONVENTIONAL		0
->> +#define RMI_MEM_CATEGORY_DEV_NCOH		1
-> 
+> Both fields can be concurrently modified by the TCP stack (e.g., during
+> ACK processing) under the ssk lock. Reading them locklessly without
+> KCSAN suppression (data_race()) or READ_ONCE() constitutes an unmarked
+> data race.
+
+Can be ignored here for the tracing: TCP is doing the same in
+include/trace/events/tcp.h.
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
