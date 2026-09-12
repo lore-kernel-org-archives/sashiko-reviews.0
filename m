@@ -1,103 +1,118 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628811B808
-	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 00:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D6D1E1A3D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 00:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789171757; cv=none; b=Iu6ImpVQ69xbufeBOR1FEo4Iq2NLw5sDX/KCGxh8tdze1DxBxPwif3kX3pupeZxtgii8UWJ0Dy/eLmvhSKk1juVpSBMz57pXa/plV7GIxldUwUkWl9qmJ5+T5xMynH8n61QTuRvJg8N2DmGUIQtAHNEL4vHj7LUQFqsDOETMwMc=
+	t=1789173496; cv=none; b=f9+sHlFzXunMIYdQd3k9sdVDIt1eX31a4ocPM0fWWyRcRY+L8blXxPETGsG1r2idUqDg6ne12HjrqE5mVGzJS5H9c96VYXFHyICiQZeiRmilsnUxY3gYvmsTt2Ywhpwr/vEN8qzYIYbu1poP5qt6un4X+EW8HElQJCELJJBTjrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789171757; c=relaxed/simple;
-	bh=QUPMqaO08oUcYGlK+QKcnzTJ2vhWDlM7cXLXYxsDZ4M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p4Ok1bvNZLHtfQBdxumPjm5cPnnruIBHVIum/yU6jL2EYMdItWm43s8LNS1s+m+lQNzqR5rYWFBP3sOsTNNVlljv1om8JuogppaTV/HZOA/qe5YUeMoiUwTIQEZiJrSVlsyphA6WRHuGJxejcBSYHAXRTqN7Ys9X6FYkJGwpY5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=NKy/A4jI; arc=none smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1789173496; c=relaxed/simple;
+	bh=4+pvpfnm7Y+kldzOhwF17EFvoIoCbYAxiP4iinuidC0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=PAoJA06LcfvISZoy1NC0GxqLTNl+GcK1tU78h+mK89L3+QkJgRwJowiTt7duccgyMCK7SI1JdG9Jq5Lmqz7LwTY8yXf+8w9z5zfVAelUclOf/4545xpz82lJWgNUQyibPHKS/wRlvPEWUcg0a/ZwEl0+n2/nufpIToxjVMXFvio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kmwIg2sV; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="NKy/A4jI"
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910cc46c7so8853185a.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 17:09:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kmwIg2sV"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-383b4a3755fso1587638a91.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 17:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1789171755; x=1789776555; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/J9+qt8jWu0CL9QlZjJtE4DsxuQMJWCwC+piAz+7Nb4=;
-        b=NKy/A4jIROj37hTM+gLLBbngXkFuYQGh4aAEx2ugigdQ7m2n90xPhaNC+acNNG/QOc
-         yR7KoA1F6+7x9mLFEaitKPNgYlHtVaS6dc+J3WZC7EtBrULoZbJGaXSFWKn1WtWPv+/4
-         UytSYCkilx86zccOwqoAEqhet5D6ex6d8ONj+FPVvsvxKC96LuD0+/gjyLZmNykKKMsG
-         YNFV2CI1ldS5xth9onyzDK+hjptczjTqg/D/sCtBRC7f84+dyyluYdoQRWjKGKw7+Xn5
-         ys0FiUuYYnYQFL42kStNmNFUW7DptmqVE6Ck2UqRHLmiJ57f8NXpngncc4c3jtr7cFmy
-         maAQ==
+        d=gmail.com; s=20251104; t=1789173494; x=1789778294; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=yZQfj7II/byHNXuSfY97UNVF+e/8Sy7W9P4BrNmI8r8=;
+        b=kmwIg2sVLLR+9MlwomrLLz+gKfi4PyPH+IE3fRXTqzMb4iOJkAnZwoz+lq8hSsJjh9
+         zgGJnOeXTKgGZJKgBUCktDGXfcVFbdUYqGXt34uGPnsQHV1CN4Nvw+hNAmawhipxu4lQ
+         S5WUS3nbH31TZ7GXUfGs3tgrTq0B1XUFTGsIb1M+D6/GYZy2xNLRje8mYVH5Ll4ofDHW
+         CUQOiM2JkXt84GK8uZt9BhukT1q77Sn2SFYjmI+WHAJTSObtR+veRLH9pZuJn3lCgd0r
+         wt+qSMEs18Ng0OK/lwTYuyOnTznEy681xhoIMeyJKAuAai1DLGKpU7MkUfWsfhYQkQQW
+         hn3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789171755; x=1789776555;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/J9+qt8jWu0CL9QlZjJtE4DsxuQMJWCwC+piAz+7Nb4=;
-        b=GyPknDgFxr43jHMhvzoBWfIcCxOL0DSO1Mi716nU60rljqX7/SU5UChoqBwdvNPcBT
-         XWmoRXc6eFDXL3vLrDkHAkE/P/WZU+GK8MzYLsf9tGU3g0zE2PbbNk/NWzDhMcgL//J8
-         X7GpT/ksAFr2QuyaK/fpBMUrEkxiF3XEECAgFI9s4oZXchOFHrzLLofzubNNUOy8TUJg
-         cssJ/JL+laRNAiAy1W3wI0eCXF7PFMTTU8/VoJZcp2bSIF9JjzA3r0ETf13UmeT79UjL
-         89NplnbVuE4eH1UT1kbzRRU++UeumvagIzSSW1qK8dh+5jtuSO732gYBnzrKY5xKHqxK
-         NzMA==
-X-Gm-Message-State: AFuF++mq8FlLOkApbHaW6T9vDaNXKxJVIOcgNFMYg97TE4/rxahrD6tc
-	AvFtK6uAZtZbdFlaC80xcZFnwPqaWACBqOORqRq52bnt8Uoc/sPa0I1VHgoow4L2ssk=
-X-Gm-Gg: AYBFou03NOmygnIslt7rIvcIPfENl9Rvr4sMMQWvz2DY95CVZpswldxFfcPE0n6/IP8
-	irWKlMnWmBZXOINhpsc4FborYgPLxAJTm1rFVjaNpDCxvQqP71039mSQV3Rbzr7nt0XTbozTJqx
-	2DHwnGNjHepnf6t117tqgdOhbxhK+Clcbx5lW8x6CxzrzEU2tu8PuLTWspSQ9brol6yglVWu4b9
-	ZllKLFhLUry7HAgr0KNRAAdm+aP6LiEsHSpoqK3ji2gOjOcCZODepbkstz4FH8PMV1/tPVtJRcf
-	JM29dN1+CIYQm4L/VKGWQdEHAZfZ74t4CPYpx7ReEzDkWwE1lUikkZwG3B3El3kk/KAm9CSFLXR
-	A1ebq81d+6EHRVC5o9EzR2FGlPCHCimBrbF8uG6DANYryjmwuUwKKhU0MvMkhI146TpdkVMB7eo
-	7ypIqCd0VjPwN10m+O2ZChoDPFt6m3/oyHnF7O5fywlN7oCPDP/JY1cmzsCz/HOqy5hnEiHH9Pd
-	/FQXPHMaVCgcDfToLnL11T+Y1jiJtYvNSvcSkBPs/c/CJNQIIanQl8=
-X-Received: by 2002:a05:620a:172a:b0:939:b43f:341e with SMTP id af79cd13be357-93a03671dd0mr109407485a.22.1789171755127;
-        Fri, 11 Sep 2026 17:09:15 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e803dc90sm365356585a.17.2026.09.11.17.09.14
+        d=1e100.net; s=20251104; t=1789173494; x=1789778294;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=yZQfj7II/byHNXuSfY97UNVF+e/8Sy7W9P4BrNmI8r8=;
+        b=JFfhCmkJZDsuQxTDOG9Efmek97xHAFfHdM2nUd3U29zZv5v9XK/KJbZLtixziqL/9g
+         8kL2ehUBvTK+wfwqFoGNNFBE9yykDWbglubZ9Et4xvUyQ82V6BbIxXu8LFs4FPwye7Gg
+         JDpGY/jI8unwqILyIq9mb1WHI+ltGtU0JX1mg7wun2huiETu2ZcH1JYxKFJhXdd59kdy
+         /zly6qmKE/h97aL/3KRuzmu+daArIx876Ckjb3oqIGR69L3ICYFuHa/KeZit8XklLd/V
+         QhPLOqiaaei36QNPh3Mloh3Oe8L1n7T56K/MGki1RIB1NSuShKw3b1OSq1/T/rKdbEXn
+         Afkw==
+X-Gm-Message-State: AFuF++kUbGgJoGXsIoTzw8Uv1RLUDHGr+X2vs547BZxQuAW1rCWfkVjb
+	vxzKrDqE9MmmTdxaTTnFpRfJPQjhvcNaQSSvRuOIicWBD790Phxn1Ix4FEk+yRgMeGlq
+X-Gm-Gg: AYBFou3lCU9G6ZSZnHDuxrjQmLayleoOnv8DUb/dE/Ma4x/XQ3d+Lfr2mglXqS/wWH+
+	lMmi6HmwdQBpQnhjjNI0d8yj69qXUZqNYFlFsSkWnZ+EnwZEw4tfXMBz+NkQSecLk9txd8ux+zn
+	sd0Y+Yiq+89MiqFWcpW/31ZwjBMYnfs9qyI15KXY8ELBaJS0CCy+M95hqbUdn3AXHBxELiHOLXP
+	qfh/mbcZMHfNLwXvYyC0lcE+tCAeH7BXdSasjbl6pRFD63GnpWUQsO7Mcq4pPW8ux5JqaDU6N+/
+	lrQXyz3N6BnmCC4/KNJfv3WLiK9ZkOfzCW4TmMCGR5dQceC4e8Fn8hlZshdM7rKUZ4+HY5e5mNB
+	hjznexMFdQ9WngG/fP8Zvhju7DGDTN2O3isjDFx34dDinlRzlZ+KS/+XdsUBNQSTAyckltkJSDG
+	RzM4ESn23uHgLCxR1sXHWUNUrKw2L0yQqj7M7KobrgUWVBseIoxah7U1r9x4RYW/bvPpZJEJ0mX
+	zzxK6upGwaWR6DbxZc12M1znQ==
+X-Received: by 2002:a17:90a:e7cb:b0:395:7fff:a08f with SMTP id 98e67ed59e1d1-39d9b960826mr1728046a91.0.1789173494034;
+        Fri, 11 Sep 2026 17:38:14 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([211.230.25.193])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39db113a3d0sm2808801a91.14.2026.09.11.17.38.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 17:09:14 -0700 (PDT)
-Date: Fri, 11 Sep 2026 20:09:13 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Anisa Su <anisa.su887@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
-Subject: Re: [RESEND PATCH v13 6/8] cxl/mem: Configure dynamic capacity
- interrupts
-Message-ID: <aqSX3OadID0REQps@gourry-fedora-PF4VCD3F>
-References: <20260908102124.2231730-2-anisa.su@samsung.com>
- <20260908102124.2231730-8-anisa.su@samsung.com>
- <20260908104327.DF5E61F00A3A@smtp.kernel.org>
- <aqRuYaUt9qAvPA3W@cxlqual>
+        Fri, 11 Sep 2026 17:38:12 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: sashiko-reviews@lists.linux.dev,
+	Matthew Brost <matthew.brost@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>
+Cc: Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Luben Tuikov <ltuikov89@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/sched: Free the run queues at the end of drm_sched_fini()
+Date: Sat, 12 Sep 2026 09:38:05 +0900
+Message-ID: <20260912003805.1900119-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910123736.6EB8D1F000FF@smtp.kernel.org>
+References: <20260910121601.805032-1-donggeunyoo.kernel@gmail.com> <20260910123736.6EB8D1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aqRuYaUt9qAvPA3W@cxlqual>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026 at 06:10:57AM +0900, Anisa Su wrote:
-> On Tue, Sep 08, 2026 at 10:43:27AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] If a CXL device is surprise-removed or a fatal PCIe error occurs, `cxl_event_thread` enters an infinite loop, pegging the CPU at 100% and deadlocking device removal.
-> > --
-> Surpise removal is unsupported. Jonathan mentioned the same on a similar
-> thread: 
-> https://lore.kernel.org/linux-cxl/aqLZP3ORYzCLfSgR@acer-nitro-anv15-41/T/#m8e12567a42b07fae8aa307406e6e017fe24ad832
+On 9/10/26 21:37, sashiko-bot@kernel.org wrote:
+> [Critical] Potential Use-After-Free of `sched` and `sched->sched_rq` if
+> `drm_sched_fini()` is called with pending jobs and `own_submit_wq` is false.
 
-This has been my favorite sashiko response so far
+The chain is there in the scheduler. drm_sched_start() queues work_run_job
+unconditionally, and drm_sched_fini() destroys submit_wq only when it owns it,
+so a timeout handler restarting the scheduler during teardown could leave work
+behind that later reads sched->sched_rq[i].
 
-"If memory is surprised-removed, the system deadlocks!"
+No in-tree driver reaches it. Of the four that pass their own submit_wq:
 
-lol.
+  - panthor sets .timeout = MAX_SCHEDULE_TIMEOUT on both its schedulers, which
+    drm_sched_start_timeout() tests before anything else, so the TDR never arms;
+  - powervr refcounts the context, and pvr_queue_destroy() runs only after the
+    last reference is dropped, which in-flight jobs hold;
+  - nouveau waits on nouveau_sched_job_list_empty() before drm_sched_fini();
+  - xe never calls drm_sched_start().
 
-(your series is great, sorry i haven't gotten around to reviewing it
-properly, i appreciate the doc updates very much)
+Both drivers named in the report are covered, for different reasons. So there
+is nothing here for this patch, which only moves the run queue frees within
+drm_sched_fini().
 
-~Gregory
+The one thing worth recording is that the protection is per-driver rather than
+structural. A driver combining its own submit_wq, a finite timeout, and
+drm_sched_start() in timedout_job would have to drain before teardown itself.
+
+Regards,
+Donggeun
