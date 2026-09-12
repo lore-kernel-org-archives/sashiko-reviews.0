@@ -1,151 +1,137 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from va-2-44.ptr.blmpb.com (va-2-44.ptr.blmpb.com [209.127.231.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6241B3C1D67
-	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 11:02:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC6B47A0AB
+	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 11:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210952; cv=none; b=e/Zxt/nuDzRaYYFT3+Xg+OZ5QrQBT28+C8uivDOWzZy9iPC1QfCJq+AIc3Ew7qNXZg90WmyJoOAawTwUONXueNkPUO2h+JH9bPYRVBaJuYNHwsHuE1ThVbr99tM4jgAeZOIWjsgGS6tf4SldXMALcvNNJvLTUUU2XewwwRoEic0=
+	t=1789213543; cv=none; b=KCa5gcSKiGwkjEy4AFgVGP/LL/WeSm2Fydhp06qMPhlPvlYGiusjerEsUk+g+YpZjGWiABFFACrxJjYzNOxUfTpa+Ivjd3p2wHZZ/mes5jTYjuXDcgbYZ0qstMKexDiekBlzw2jzXXBrzKU2UVDioeV/OuqqjvJdIFdk50OKdaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210952; c=relaxed/simple;
-	bh=6D8tm6JVnV49Wc4HiQ2KJYB99HHllQBm9FljOEs9rNY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZxBF9+ck/sd8wZBjrSvPnAR1Xfp6LRWDzEGYoSyrvd1aA1pp1ZzQZFZlooMJ1aEuqYBxFGEjKKPonMkKRbMSb6wqsNo9crpvltBBuq6EFy75y1yYDxfDgnsQUZDmbFFzu0I35moc24mX64MQjyDFi3TydxIiA65vK3+Md1LNGXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GVkrrb0S; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789213543; c=relaxed/simple;
+	bh=sliQ3PW7OuM+APGfCLd12WBbMv5+TXHCkpmoQedJqZw=;
+	h=In-Reply-To:From:Mime-Version:Subject:Message-Id:References:
+	 Content-Type:To:Cc:Date; b=A8pPDQ8N6piZMXB13PTPj6OgSWV9ATZo5PE+DPDPH/QAR9pgEdbEleEj/vnXZwdLa3M8zVEliqc/OpgqbIk+eHXE5O5vPztJTkgRCGez+ogNNvekMVHZKiYuSyIzeisdU3a8V4S1P10KYNwluylTHFU8HUntVy2QmbQJK6PZx8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=ga6xD6Yo; arc=none smtp.client-ip=209.127.231.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVkrrb0S"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccafb751so624914a91.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 04:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789210951; x=1789815751; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=M5LuP0pAQuf2bi/QiOEHOd5Tvm82nmh6zdwhe3gPFHE=;
-        b=GVkrrb0SnArSeCfLC6wfHm0zogP9+6Ll41d7U3RLMLtexTCWpcWox34wOxLGOdHUfc
-         F+jJvgllDxDHhIjgnjW8/atVJg8MjFhPN9sBTuEuF3WcfOvxbnD1TuScHKP9kk1JwW0s
-         27k03ptGrDkBn172q/Q+ejblySxNccGuKHEfbYTQjzkFPOd5u5fDPPL51yDcve8wCNqB
-         /wjR6hwmVfBjUckJfoS1hRS/Xrl386gL8mXU95nl4dH85Ws8TqdUVMgVSHVDFU6VSHPy
-         Uws1e7F6vHxPt4/eI+y/ZTe+1TlXcmJE91Ud/NqOdEjxZPq1aTs/eDQbn5n0T+DQuX5n
-         hRng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789210951; x=1789815751;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=M5LuP0pAQuf2bi/QiOEHOd5Tvm82nmh6zdwhe3gPFHE=;
-        b=FsGkoLlcqYHR7GHQShtyL3p/963qH0vxxHflF2Ekw/OcKgxgqeQ26hZc9G50EBITM2
-         Gy0ffdhu/CJI+hu+5IXHxCXEkpOKIlVVTvjPPtNB019+3dfo0//vemphUimYGv5VhtRu
-         +eZXHnM/HJ/HsgQAvJL1vGU15KbBKH4KzoyoeIEA7tfQn4lBKa2mrfpZvmxQ6okVO75L
-         1iURsLCGXrN3KA1j3hftFA5+vZnf3kaBeTsth780nw0lbFhCi1qqLNjwt0pxO/Mkr5Rn
-         FjyHRR6TxDF7V16qV1TEIte1cf6r2FeWP+norsITJ1r0h7GyHZu9LzNMwCSS5g8PJdm5
-         v3/w==
-X-Gm-Message-State: AFuF++lIhIGq6fDaCXrDXmHGnxUOeW3Ao83Iu353jyE3k/5g3OC+b8vm
-	fCdeDQ99tdw8zGL/SWbpOzye8KjXBREGqNlFf9YMvnu5BY3LFmVhOQIAc5lsiw==
-X-Gm-Gg: AYBFou3RLDjne4q5GwzjSizmdiGwuHAIcN10XZzTj1CzWiCRT6i8ddSMtYHnZBl8jJD
-	5GTOOHbEXeqTfsswqVuNM/uQgaDo8IFA9rIQJ+o8RcsfAg61KXWumuQANupwQrW2XT/Zi1lPI2v
-	8BpuOcoA4f1Gb6q/x/3n3UYdyaoaWP2BvqtA25tBve7B5ywH/vRiaWEtWtuCZ2f0zq5OSb1upj1
-	mhFwn6KaZ2lZRLSh4fyYPFxXpY3Qz/2UbF/h6cjCI9w3aaVcjBcDOm/bxYFwyBu3NyDZM8jbF0n
-	zkFEUvXI6xsZm2LOu58yWpOMA6okb9c5uYKerPYBCzG/P5d+7GzbbtZuCXLUBPfMKIgH7X41K1e
-	p44qE0POtofDghUsKn0sYCgH8C/p+Ie4JnC1X52xGBT64PIIM1RY98LCeRoCeWyVz8fb6b3T8Oh
-	ssT3JTgYqoz5dnUHGeHyVeVl9EBBr6ZAk3UlSN/Ev5LslMYFpiLX+Ug9az77CgbxzxEvDU/G71T
-	JZTGJdrQ4/E71SVqkjau0Ks0gk/13MYVPn/Bu8o8jjE1ghciW4SgSqh
-X-Received: by 2002:a17:90b:3850:b0:398:9be8:ea69 with SMTP id 98e67ed59e1d1-39d9c36187amr13612799a91.22.1789210950751;
-        Sat, 12 Sep 2026 04:02:30 -0700 (PDT)
-Received: from [172.19.1.47] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d98e60484sm9521600a91.4.2026.09.12.04.02.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Sep 2026 04:02:30 -0700 (PDT)
-Message-ID: <bfc92b12-5067-46c6-b1f9-0dbd42fc9470@gmail.com>
-Date: Sat, 12 Sep 2026 19:02:25 +0800
+	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="ga6xD6Yo"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1789213526;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=S4VTqOFfwwacEpTdW73keR5QVuHY0miPMcXtW76hUHw=;
+ b=ga6xD6YoOCmqyAHjnCaPYyaQ7ztxqU1R3/d2psoKT908b24HLEl+foUzc5Wf/FKyiwM+7J
+ 0Pwb6eX3pFLWcGcf/ZZVoFcIEzQ5JVNed9tLgM1ypXQcM1lOHj+J89cSRl77Q4bJuxQoPX
+ 1Ygdrl9yIW709SyQbq/eMlbwgJ5B14+PNmsDS5lPeHYfUJcXpeRSEHT+zZGmaZrDtEmJ0Q
+ Q//m+oRHufGG1P+BK1VT9Ggksh1xF5O6YsoMgwx3Pxp4oQBZ5X5gN3QSBWKXXLAuUGYjwG
+ 3JpKyAW7jTfP3M36y2+UoNLDlzMeHxFlvdu6IJ54nZbDcdICktZUFPn5Z5xpZA==
+X-Lms-Return-Path: <lba+26aa53b55+8ad1c9+lists.linux.dev+yukuai@fygo.io>
+In-Reply-To: <20260911042717.487AC1F00898@smtp.kernel.org>
+From: "yu kuai" <yukuai@fygo.io>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: nuvoton: ma35d1: add CAN nodes
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, Zi-Yu Chen <zychennvt@gmail.com>,
- conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260908014526.413399-1-zychennvt@gmail.com>
- <20260908015435.7DE071F00A3A@smtp.kernel.org>
- <853110ab-1bd8-41cc-9b82-cc28002c0bed@gmail.com>
- <20260911-frisky-imperial-elephant-3336e4-mkl@pengutronix.de>
-Content-Language: en-US
-From: Jacky Huang <ychuang570808@gmail.com>
-In-Reply-To: <20260911-frisky-imperial-elephant-3336e4-mkl@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Reply-To: yukuai@fygo.io
+Subject: Re: [PATCH v3] md/raid5: reject raid4/5 arrays with too few disks
+Message-Id: <0bbda44a-3d5f-43b0-a1f5-51ee57469902@fygo.io>
+References: <20260911041521.2433222-1-chencheng@fnnas.com> <20260911042717.487AC1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+To: <sashiko-reviews@lists.linux.dev>, "Chen Cheng" <chencheng@fnnas.com>, 
+	"yu kuai" <yukuai@fygo.io>
+Cc: <linux-raid@vger.kernel.org>
+Date: Sat, 12 Sep 2026 19:45:21 +0800
+Received: from [192.168.1.104] ([39.182.0.161]) by smtp.larksuite.com with ESMTPS; Sat, 12 Sep 2026 11:45:25 +0000
+X-Original-From: yu kuai <yukuai@fygo.io>
 
+Hi,
 
-
-Marc Kleine-Budde 於 2026/9/11 下午 01:56 寫道:
-> On 11.09.2026 10:15:21, Jacky Huang wrote:
->>> [ ... ]
->>>> @@ -244,6 +244,58 @@ gpion: gpio@340 {
->>>>                         };
->>>>                 };
->>>>
->>>> +             can0: can@403c0000 {
->>>> +                     compatible = "bosch,m_can";
->>>> +                     reg = <0x0 0x403c0000 0x0 0x200>, <0x0 0x403c0200 0x0 0x2000>;
->>>> +                     reg-names = "m_can", "message_ram";
->>>> +                     interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
->>>> +                                  <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
->>>> +                     interrupt-names = "int0", "int1";
->>>> +                     clocks = <&clk HCLK3>, <&clk CAN0_GATE>;
->>>> +                     clock-names = "hclk", "cclk";
->>>> +                     bosch,mram-cfg = <0x0 4 4 32 32 32 8 8>;
->>>> +                     status = "disabled";
->>>> +             };
->>> [Severity: Medium]
->>> Should this node include the hardware resets property (e.g.,
->>> resets = <&sys MA35D1_RESET_CANFD0>;)?
->>>
->>> Without the hardware reset line, the bosch,m_can driver cannot perform a
->>> hardware reset of the CAN controllers during probe or interface toggles.
->>> It must rely solely on software initialization, which can fail to fully
->>> recover the controller if the bootloader or a prior crashed state left
->>> the hardware in an unpredictable state.
->>>
->>> This omission pattern is identically repeated across the newly added can1,
->>> can2, and can3 nodes below.
->> The reset property is optional for the MA35D1 CAN nodes.
-> yes, but....
+=E5=9C=A8 2026/9/11 12:27, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
 >
->> The bosch,m_can binding does not require a reset property, and the
->> m_can driver obtains the reset control through
->> devm_reset_control_get_optional_shared().
+> Pre-existing issues:
+> - [High] Division by zero in `raid5_run()` when assembling an array with =
+an active reshape and insufficient data disks.
+> --
+>
+> commit e2bb0701d8414cbf17eed6287965f8022ffe5eab
+> Author: Chen Cheng <chencheng@fnnas.com>
+>
+> md/raid5: reject raid4/5 arrays with too few disks
+>
+> raid4 and raid5 require at least two disks, while raid6 requires at least
+> four disks. setup_conf() only rejects raid6 arrays with fewer than four
+> disks. As a result, an invalid raid4 or raid5 array can be assembled with
+> no data disks and later reach raid5_set_limits().
+>
+> Reported-by: syzbot+de94ddbfff0c9e6fe030@syzkaller.appspotmail.com
+> Closes: https://lore.kernel.org/r/6a778c82.01d0871a.3a0d52.006a.GAE@googl=
+e.com/
+> Fixes: f63f17350e53 ("md/raid5: use the atomic queue limit update APIs")
+>
+>> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+>> index b91545ce090de..e1f20035703ba 100644
+>> --- a/drivers/md/raid5.c
+>> +++ b/drivers/md/raid5.c
+>> @@ -7657,9 +7657,11 @@ static struct r5conf *setup_conf(struct mddev *md=
+dev)
+>>   			mdname(mddev), mddev->new_layout);
+>>   		return ERR_PTR(-EIO);
+>>   	}
+>> -	if (mddev->new_level =3D=3D 6 && mddev->raid_disks < 4) {
+>> -		pr_warn("md/raid:%s: not enough configured devices (%d, minimum 4)\n"=
+,
+>> -			mdname(mddev), mddev->raid_disks);
+>> +	if ((mddev->new_level !=3D 6 && mddev->raid_disks < 2) ||
+>> +	    (mddev->new_level =3D=3D 6 && mddev->raid_disks < 4)) {
+>> +		pr_warn("md/raid:%s: not enough configured devices (%d, minimum %d)\n=
+",
+>> +			mdname(mddev), mddev->raid_disks,
+>> +			mddev->new_level =3D=3D 6 ? 4 : 2);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this fully prevent
+> invalid array geometries from causing panics during array assembly?
+>
+> In raid5_run(), if there is an active reshape and the array is assembled =
+with
+> insufficient data disks, we calculate new_data_disks and divide by it bef=
+ore
+> setup_conf() is called to validate the array geometry:
+>
+> drivers/md/raid5.c:raid5_run() {
+>      if (mddev->reshape_position !=3D MaxSector) {
+>          ...
+>          new_data_disks =3D mddev->raid_disks - max_degraded;
+>          if (sector_div(here_new, chunk_sectors * new_data_disks)) {
+>              ...
+>          }
+>          ...
+>          sector_div(here_old, chunk_sectors * (old_disks-max_degraded));
+>      }
+>      ...
+>      if (mddev->private =3D=3D NULL)
+>          conf =3D setup_conf(mddev);
+> }
+This looks like a valid problem as well.
+>
+> If a crafted superblock sets raid_disks <=3D max_degraded and reshape_pos=
+ition
+> is not MaxSector, these divisions by zero are reached before the new chec=
+ks
+> in setup_conf() can reject the array.
+>
+> Could these checks be moved earlier in the assembly path to prevent the
+> divide-by-zero panics?
+>
+>>   		return ERR_PTR(-EINVAL);
+>>   	}
 >>
->> The MA35D1 CAN controllers also operate correctly without explicit
->> CAN reset properties in the existing platform DTS. Therefore, no
->> change is required for this patch.
-> ...we've observed that the SW reset doesn't clear the CAN state and
-> error counters, see commit 9271d0ea07c2 ("can: m_can: add support for
-> optional reset") for details. As your SoC has a reset line connected to
-> the M_CAN IP core, please add it to the dtsi.
->
-> regards,
-> Marc
->
-
-Hi Marc,
-
-Thanks for pointing this out. I agree that the hardware reset properties 
-should
-be described for the MA35D1 CAN controllers.
-
-Zi-Yu, please add the corresponding CANFD reset properties to can0 
-through can3 in v4.
-
-I will re-review the updated version.
-
-Best regards,
-Jacky Huang
-
+--=20
+Thanks,
+Kuai
