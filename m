@@ -1,118 +1,150 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D6D1E1A3D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 00:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D9D33938B
+	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 02:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789173496; cv=none; b=f9+sHlFzXunMIYdQd3k9sdVDIt1eX31a4ocPM0fWWyRcRY+L8blXxPETGsG1r2idUqDg6ne12HjrqE5mVGzJS5H9c96VYXFHyICiQZeiRmilsnUxY3gYvmsTt2Ywhpwr/vEN8qzYIYbu1poP5qt6un4X+EW8HElQJCELJJBTjrY=
+	t=1789180100; cv=none; b=ofX15MdGtfnicV0AbaHUgh3d2gxK3KaVeMZNL6zE+enlaa3xypHPUf71e7S/c/2AON/EreBJLURX38wJ+cLAL9XQBKEQwI0WdZ3T1VuRuAzd46w53Z+EH6q3w8WaLzLg4A8g91CCqgAzhkWwr9frDaQckzaBzHcjwELwkGZ51QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789173496; c=relaxed/simple;
-	bh=4+pvpfnm7Y+kldzOhwF17EFvoIoCbYAxiP4iinuidC0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAoJA06LcfvISZoy1NC0GxqLTNl+GcK1tU78h+mK89L3+QkJgRwJowiTt7duccgyMCK7SI1JdG9Jq5Lmqz7LwTY8yXf+8w9z5zfVAelUclOf/4545xpz82lJWgNUQyibPHKS/wRlvPEWUcg0a/ZwEl0+n2/nufpIToxjVMXFvio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kmwIg2sV; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789180100; c=relaxed/simple;
+	bh=Yfe9l32DMYQCUL9qWKud4tySomIrKoZvFPcCYvrVMu8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZUoYo6OFgMYiEGk24t7CkRrbrqNVQVDIgY5akW+QItm1iZkgnttehH16fnrPQ5ukJz75PRIlHg/HqSJIkrfdhsruXskboAs7yui6BZDMBYfJYawq+E/kCm06TxXf2BMY92D0HsZzNgBRpIvBNC6yVAj/KWVD1FKAlzMbnVTT2Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IJKk7iu2; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kmwIg2sV"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-383b4a3755fso1587638a91.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 17:38:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789173494; x=1789778294; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yZQfj7II/byHNXuSfY97UNVF+e/8Sy7W9P4BrNmI8r8=;
-        b=kmwIg2sVLLR+9MlwomrLLz+gKfi4PyPH+IE3fRXTqzMb4iOJkAnZwoz+lq8hSsJjh9
-         zgGJnOeXTKgGZJKgBUCktDGXfcVFbdUYqGXt34uGPnsQHV1CN4Nvw+hNAmawhipxu4lQ
-         S5WUS3nbH31TZ7GXUfGs3tgrTq0B1XUFTGsIb1M+D6/GYZy2xNLRje8mYVH5Ll4ofDHW
-         CUQOiM2JkXt84GK8uZt9BhukT1q77Sn2SFYjmI+WHAJTSObtR+veRLH9pZuJn3lCgd0r
-         wt+qSMEs18Ng0OK/lwTYuyOnTznEy681xhoIMeyJKAuAai1DLGKpU7MkUfWsfhYQkQQW
-         hn3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789173494; x=1789778294;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yZQfj7II/byHNXuSfY97UNVF+e/8Sy7W9P4BrNmI8r8=;
-        b=JFfhCmkJZDsuQxTDOG9Efmek97xHAFfHdM2nUd3U29zZv5v9XK/KJbZLtixziqL/9g
-         8kL2ehUBvTK+wfwqFoGNNFBE9yykDWbglubZ9Et4xvUyQ82V6BbIxXu8LFs4FPwye7Gg
-         JDpGY/jI8unwqILyIq9mb1WHI+ltGtU0JX1mg7wun2huiETu2ZcH1JYxKFJhXdd59kdy
-         /zly6qmKE/h97aL/3KRuzmu+daArIx876Ckjb3oqIGR69L3ICYFuHa/KeZit8XklLd/V
-         QhPLOqiaaei36QNPh3Mloh3Oe8L1n7T56K/MGki1RIB1NSuShKw3b1OSq1/T/rKdbEXn
-         Afkw==
-X-Gm-Message-State: AFuF++kUbGgJoGXsIoTzw8Uv1RLUDHGr+X2vs547BZxQuAW1rCWfkVjb
-	vxzKrDqE9MmmTdxaTTnFpRfJPQjhvcNaQSSvRuOIicWBD790Phxn1Ix4FEk+yRgMeGlq
-X-Gm-Gg: AYBFou3lCU9G6ZSZnHDuxrjQmLayleoOnv8DUb/dE/Ma4x/XQ3d+Lfr2mglXqS/wWH+
-	lMmi6HmwdQBpQnhjjNI0d8yj69qXUZqNYFlFsSkWnZ+EnwZEw4tfXMBz+NkQSecLk9txd8ux+zn
-	sd0Y+Yiq+89MiqFWcpW/31ZwjBMYnfs9qyI15KXY8ELBaJS0CCy+M95hqbUdn3AXHBxELiHOLXP
-	qfh/mbcZMHfNLwXvYyC0lcE+tCAeH7BXdSasjbl6pRFD63GnpWUQsO7Mcq4pPW8ux5JqaDU6N+/
-	lrQXyz3N6BnmCC4/KNJfv3WLiK9ZkOfzCW4TmMCGR5dQceC4e8Fn8hlZshdM7rKUZ4+HY5e5mNB
-	hjznexMFdQ9WngG/fP8Zvhju7DGDTN2O3isjDFx34dDinlRzlZ+KS/+XdsUBNQSTAyckltkJSDG
-	RzM4ESn23uHgLCxR1sXHWUNUrKw2L0yQqj7M7KobrgUWVBseIoxah7U1r9x4RYW/bvPpZJEJ0mX
-	zzxK6upGwaWR6DbxZc12M1znQ==
-X-Received: by 2002:a17:90a:e7cb:b0:395:7fff:a08f with SMTP id 98e67ed59e1d1-39d9b960826mr1728046a91.0.1789173494034;
-        Fri, 11 Sep 2026 17:38:14 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([211.230.25.193])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39db113a3d0sm2808801a91.14.2026.09.11.17.38.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 17:38:12 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: sashiko-reviews@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Philipp Stanner <phasta@kernel.org>
-Cc: Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Luben Tuikov <ltuikov89@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/sched: Free the run queues at the end of drm_sched_fini()
-Date: Sat, 12 Sep 2026 09:38:05 +0900
-Message-ID: <20260912003805.1900119-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260910123736.6EB8D1F000FF@smtp.kernel.org>
-References: <20260910121601.805032-1-donggeunyoo.kernel@gmail.com> <20260910123736.6EB8D1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IJKk7iu2"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Yfe9l32DMYQCUL9qWKud4tySomIrKoZvFPcCYvrVMu8=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789180094; v=1; x=1789784894;
+ b=IJKk7iu2CiQ9Eb+YRMEhMMtb7wd95tBcUYNwCymmJWQ8cFCYaIaZD7ioYtJ4OgGnnd83mFqx
+ 0E3hvA2P4NH0hnLXihxGxBmOS5rGhdp/Sw2E/Nfk8v8YyYI+zfmqTEfF7jDgAkBFiRD4sZ9SmSo
+ +B9MSKWYrHPGwiINsMU8o3ak=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id c45397abb0f02fb6;
+	Sat, 12 Sep 2026 02:28:14 +0000
+X-Mizu-Trace-ID: c45397abb0f02fb6
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <c8069a81-d9f1-4f0a-a0e0-58300080557a@linux.dev>
+Date: Sat, 12 Sep 2026 10:28:11 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf v3 1/2] bpf, veth: xdp: fix page_pool page leak on
+ skb-backed XDP
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260911135711.109338-1-jiayuan.chen@linux.dev>
+ <20260911135711.109338-2-jiayuan.chen@linux.dev>
+ <20260911143643.402B51F000FF@smtp.kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260911143643.402B51F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 9/10/26 21:37, sashiko-bot@kernel.org wrote:
-> [Critical] Potential Use-After-Free of `sched` and `sched->sched_rq` if
-> `drm_sched_fini()` is called with pending jobs and `own_submit_wq` is false.
 
-The chain is there in the scheduler. drm_sched_start() queues work_run_job
-unconditionally, and drm_sched_fini() destroys submit_wq only when it owns it,
-so a timeout handler restarting the scheduler during teardown could leave work
-behind that later reads sched->sched_rq[i].
+On 9/11/26 10:36 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] veth_xdp_rcv_one() overwrites shared per-queue rq->xdp_rxq.mem.type state, corrupting subsequent SKB processing in the same NAPI poll and causing kernel panics.
+> --
+>
+> commit 6d121019cfea2f329267400ac7c2525a49f34f53
+> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
+>
+>      bpf, veth: xdp: fix page_pool page leak on skb-backed XDP
+>      
+>      bpf_xdp_shrink_data() frees a released frag via __xdp_return() using
+>      xdp->rxq->mem.type, but that type is wrong for skb-backed XDP: the skb is
+>      cow'd into page_pool memory while the rxq still says MEM_TYPE_PAGE_SHARED.
+>      This fixes the resulting page pool panics by recording the memory type in
+>      the xdp_buff flags instead.
+>
+>> diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+>> index 6ed3ee81153fb..a3fdf1959b76c 100644
+>> --- a/drivers/net/veth.c
+>> +++ b/drivers/net/veth.c
+>> @@ -775,6 +775,12 @@ static int veth_convert_skb_to_xdp_buff(struct veth_rq *rq,
+>>   	if (skb_shinfo(skb)->nr_frags) {
+>>   		skb_shinfo(skb)->xdp_frags_size = skb->data_len;
+>>   		xdp_buff_set_frags_flag(xdp);
+>> +		/*
+>> +		 * A nonlinear skb was cow'd into rq->page_pool above, so the
+>> +		 * frags must be freed to that pool, not via the rxq's
+>> +		 * MEM_TYPE_PAGE_SHARED.
+>> +		 */
+>> +		xdp_buff_set_frag_pp(xdp);
+>>   	} else {
+>>   		xdp_buff_clear_frags_flag(xdp);
+>>   	}
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can the shared per-queue memory
+> type state be clobbered during a mixed batch?
+>
+> In veth_xdp_rcv_one(), the shared rq->xdp_rxq.mem.type state is overwritten
+> with the incoming frame's type without being restored:
+>
+> veth_xdp_rcv_one() {
+>      ...
+>      case XDP_REDIRECT:
+>          orig_frame = *frame;
+>          xdp->rxq->mem.type = frame->mem_type;
+>      ...
+> }
+>
+> If a single NAPI poll (veth_xdp_rcv) processes a batch containing a native
+> xdp_frame (e.g. MEM_TYPE_XSK_BUFF_POOL) followed by a standard sk_buff, the
 
-No in-tree driver reaches it. Of the four that pass their own submit_wq:
 
-  - panthor sets .timeout = MAX_SCHEDULE_TIMEOUT on both its schedulers, which
-    drm_sched_start_timeout() tests before anything else, so the TDR never arms;
-  - powervr refcounts the context, and pvr_queue_destroy() runs only after the
-    last reference is dropped, which in-flight jobs hold;
-  - nouveau waits on nouveau_sched_job_list_empty() before drm_sched_fini();
-  - xe never calls drm_sched_start().
+The premise doesn't hold here: frame->mem_type is never 
+MEM_TYPE_XSK_BUFF_POOL.
 
-Both drivers named in the report are covered, for different reasons. So there
-is nothing here for this patch, which only moves the run queue frees within
-drm_sched_fini().
 
-The one thing worth recording is that the protection is per-driver rather than
-structural. A driver combining its own submit_wq, a finite timeout, and
-drm_sched_start() in timedout_job would have to drain before teardown itself.
+A zc buff gets copied out before it can ever become a frame. 
+xdp_convert_buff_to_frame() sends
 
-Regards,
-Donggeun
+every XSK buff to xdp_convert_zc_to_xdp_frame(), and that one does:
+
+     xdpf->mem_type = MEM_TYPE_PAGE_ORDER0;
+
+     xsk_buff_free(xdp);
+
+
+so the plain "xdp_frame->mem_type = xdp->rxq->mem.type" further down 
+only ever sees non-XSK types.
+
+I grepped the tree and the only things that ever  end up in a frame's 
+mem_type are PAGE_SHARED,
+
+PAGE_POOL and PAGE_ORDER0. So "xdp->rxq->mem.type = frame->mem_type" in 
+veth_xdp_rcv_one() can't put
+
+XSK in there, and the XSK branch in bpf_xdp_shrink_data() is simply not 
+reachable from veth.
+
+
+> next packet will be processed with the clobbered rxq->mem.type.
+>
+> When veth_xdp_rcv_skb() processes the subsequent sk_buff, the BPF program
+> is executed with this clobbered state:
+>
+> veth_xdp_rcv_skb() {
+>      ...
+>      act = bpf_prog_run_xdp(xdp_prog, xdp);
+>      ...
+> }
+>
+> If this clobbered memory type is read by helpers like bpf_xdp_shrink_data(),
+> could it lead to a kernel panic? For instance, if clobbered to XSK_BUFF_POOL,
+> it would erroneously call xsk_buff_free() on a standard xdp_buff, resulting
+> in a garbage dereference.
+>
