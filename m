@@ -1,160 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC11B3B47D5;
-	Sat, 12 Sep 2026 09:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1E7419D8BC;
+	Sat, 12 Sep 2026 10:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205331; cv=none; b=hlHEV4IgkIzD9IrwZUx/MkQUw++2dQ9zagVHOanjkMSEK51egCP+7Et3AEg0G9JkfZHYPkfg+8JcYxZq928AZxLeckaGGIzFN4EYC2D4hJlt7sUp/wS/NQQdGep0FywfiIN9bRGyqw22mW0giw9J+iI1alLisYET/2DWHo+Bddg=
+	t=1789208904; cv=none; b=rfBX6SZ0frSxF3qDELibRdibRN3FHDywBZL0mPYC9tF91j1hjLcDc0RN+j71KekENTR4cQg4b8QFWd1QbZJkEMfyjGs37LWMMOFd8yEeJBszqAIwLWAkacLKsGZ/hxInzQ99GFYLE9z0ULSA/CUvp1A/KPwPhB0eWw2DiCwv2fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205331; c=relaxed/simple;
-	bh=hsHZPbHlPlBEmzivqVQMvSSuiORdsyC0qlaXSPnPHx0=;
+	s=arc-20240116; t=1789208904; c=relaxed/simple;
+	bh=HE6a7xCB9fyBWhSMjmYXu2+SaG5pCmShpeB7NuW8BOQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ju1ZE/tKxyHHx2NTRbgHuqHQC2d6k03g1yWiwYn2BEpJpNOZAg/kCUFHRuNmR1LEWXywEiDjqp9Qc2CaGmOg/BLKk+JuUOVbc0d0msofRpool4a66EViPZxOqFFf01iwR+XoyCtE4IpVmN9Fmje5PIRS6Ile/icwuLqkXGI9sXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IyT/9g+y; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=QEQiOR390K6W2GFj7Nl3LKrXJ8Wrj2LT7vTGI77lxY3BjIxOxaZSYjtXS96XMANPzrZoZFNr7jMljN3wJ7BO8PNux6JGjI3w9fItMbWjiaGgNcwr7tEuNYal4kO0GJBbhUyoxbwFTTephqwhXgmxR7kntRJxDsRQPAaPvaOCk+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=TUeIR6nA; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IyT/9g+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D301F00898;
-	Sat, 12 Sep 2026 09:28:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789205329;
-	bh=KyBDOKb2XC4qNx78w1Q+XyZq+awzI8ioCi5GQLwC7QY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=IyT/9g+yjgrdr8VeyId5uFyAr5xD2xHO9YfLFpXKTcQ2KZ7697WPfAP2hwcdZXvfG
-	 FaJ3w7BQ7+1gdY/+w3qXNXFk+6d6vxUV+KZIjRb31Kq53DMdgDLRNMwXc2GQNqYV46
-	 mQJhCB0vb2uZfSpFPKN6siE3RlnkR0ejdsJoRI+ibT81yuYcl1AkBP+1G9DhWp1wF+
-	 HR2X6Vv9EKoe7uv4WTZr5PKJHJauxD/7viMhiK58nRL/8sfMlrt9VdLDbqVhf9rB7/
-	 mCspxwhc3MgIoQjo7KTWAh5CInMuh8Nz9u6MuG0HqdbUzaJrwxjDqlWo2DKS0OKF/N
-	 vPoagwnYJupKw==
-Message-ID: <767ffb21-9465-4ef5-9e12-ac94f04180f8@kernel.org>
-Date: Sat, 12 Sep 2026 11:28:47 +0200
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="TUeIR6nA"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9E5631713;
+	Sat, 12 Sep 2026 03:28:17 -0700 (PDT)
+Received: from [10.57.10.2] (unknown [10.57.10.2])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 784C13F7B4;
+	Sat, 12 Sep 2026 03:28:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789208901; bh=HE6a7xCB9fyBWhSMjmYXu2+SaG5pCmShpeB7NuW8BOQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=TUeIR6nAdfBig/YdU4Y3FJ9oxgy59GA+iVrT/URmeKkFV4yy5DmsSP6Wqzph4VSNx
+	 FxtBScE6O6Z7BWRUsfmOUFV3pO55hTIc5TJnggx+WsI6Kuu8oZjaY1H6NW3PaE2tAg
+	 c2Ihk/6NJZZ5FuOtv9qSqp9MkDhDw8CX/IIX38tU=
+Message-ID: <74919bee-87c1-41b4-a244-143b6cfc2b01@arm.com>
+Date: Sat, 12 Sep 2026 11:28:18 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH mptcp-next v4 4/4] mptcp: sched: add penalise counters and
- tracepoint
-Content-Language: fr
-To: sashiko-reviews@lists.linux.dev,
- Shardul Bankar <shardul.b@mpiricsoftware.com>
-Cc: mptcp@lists.linux.dev
-References: <20260911-mptcp_penalise_send_v2-v4-0-820f2be4a8fe@mpiricsoftware.com>
- <20260911-mptcp_penalise_send_v2-v4-4-820f2be4a8fe@mpiricsoftware.com>
- <20260911100920.CE6EB1F000FF@smtp.kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260911100920.CE6EB1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 4/7] firmware: arm_rmm: Add support for SRO
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, kvmarm@lists.linux.dev, Marc Zyngier
+ <maz@kernel.org>, Oliver Upton <oupton@kernel.org>
+References: <20260912083611.2513845-1-suzuki.poulose@arm.com>
+ <20260912083611.2513845-5-suzuki.poulose@arm.com>
+ <20260912084847.285771F00898@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20260912084847.285771F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On 11/09/2026 12:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] TP_fast_assign() evaluates a macro containing a WARN_ON() side effect, violating tracing guidelines.
-> - [Medium] Lockless reads of TCP socket state in tracepoint assignment lack data_race() or READ_ONCE() annotations.
+On 12/09/2026 09:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] `delegated_phys` is used uninitialized on the buggy RMM error path of `rmi_delegate_range()`, causing unpredictable undelegation sizes and leaking/corrupting memory.
 > --
 > 
-> commit 5ddd66e7676359b892e5316c068af949834ad5ce
-> Author: Shardul Bankar <shardul.b@mpiricsoftware.com>
+> commit 860fe4975d9c1564e207c537f0159673fd509495
+> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
 > 
-> mptcp: sched: add penalise counters and tracepoint
+> firmware: arm_rmm: Add support for SRO
 > 
-> This commit adds observability for the cwnd-halving penalty in MPTCP.
-> It introduces two new SNMP counters, CwndPenalised and PenalCandidate,
-> along with a tracepoint mptcp_subflow_penalise to track subflow selection
-> and pacing dynamics.
+> RMM v2.0 introduces Stateful RMI Operations (SRO) where an SMC can return with
+> an operation still in progress. The SRO is tracked using a struct rmi_sro_state
+> object to manage memory donation and reclamation. This commit provides the core
+> infrastructure for SRO and adds delegate/undelegate range wrappers that use it.
 > 
->> diff --git a/include/trace/events/mptcp.h b/include/trace/events/mptcp.h
->> index 22882bd034593..f16e04b81322d 100644
->> --- a/include/trace/events/mptcp.h
->> +++ b/include/trace/events/mptcp.h
+>> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/arm_rmm/rmi.c
+>> index 5b0e342ce3d58..4f9898ece7547 100644
+>> --- a/drivers/firmware/arm_rmm/rmi.c
+>> +++ b/drivers/firmware/arm_rmm/rmi.c
 > [ ... ]
->> +	TP_fast_assign(
->> +		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+>> +int rmi_delegate_range(phys_addr_t phys,
+>> +		       unsigned long size,
+>> +		       phys_addr_t *out_phys)
+>> +{
+>> +	long ret = 0;
+>> +	unsigned long top = phys + size;
+>> +	unsigned long out_top;
 >> +
->> +		__entry->pace = subflow->avg_pacing_rate;
->> +		__entry->max_pace = max_pace;
->> +		if (ssk && sk_fullsock(ssk))
->> +			__entry->cwnd = tcp_snd_cwnd(tcp_sk(ssk));
+>> +	while (phys < top) {
+>> +		ret = rmi_granule_range_delegate(phys, top, &out_top);
+>> +
+>> +		if (ret == RMI_SUCCESS) {
+>> +			/* Buggy RMM ? */
+>> +			if (WARN_ON(out_top <= phys)) {
+>> +				rmi_undelegate_range(top - size, size);
+>> +				return -ENXIO;
+>> +			}
 > 
-> [Severity: Medium]
-> Does this inject a WARN_ON() side effect into the tracepoint?
+> [Severity: High]
+> If we take this buggy RMM error path, this function returns -ENXIO immediately
+> without setting *out_phys. Does this leave the caller's delegated_phys variable
+> uninitialized?
 > 
-> The tracepoint assignment evaluates the tcp_sk() macro, which contains a
-> WARN_ON(_ptr->sk_protocol != IPPROTO_TCP). This injects a side effect into
-> TP_fast_assign(), causing the warning condition to be evaluated only when
-> the tracepoint is enabled. This violates the core tracing guideline that
-> TP_fast_assign() must not contain side effects to prevent behavior from
-> diverging based on tracing state.
+> Also, doesn't rmi_undelegate_range(top - size, size) here undo the entire
+> delegation, making the caller's own cleanup logic redundant and potentially
+> conflicting?
 
-This can be ignored: this WARN is only in our tree (debug to catch dev
-mistakes) and is harmless here.
+I have changed this hunk to :
 
-> [Severity: Medium]
-> Are these lockless reads of the TCP socket state missing annotations?
+diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/arm_rmm/rmi.c
+index 4f9898ece7547..bf7ae9a60e22b 100644
+--- a/drivers/firmware/arm_rmm/rmi.c
++++ b/drivers/firmware/arm_rmm/rmi.c
+@@ -154,8 +154,8 @@ int rmi_delegate_range(phys_addr_t phys,
+                 if (ret == RMI_SUCCESS) {
+                         /* Buggy RMM ? */
+                         if (WARN_ON(out_top <= phys)) {
+-                               rmi_undelegate_range(top - size, size);
+-                               return -ENXIO;
++                               ret = -ENXIO;
++                               break;
+                         }
+
+Which forces to return the "completed range so far". In any case, 
+UNDELEGATE on a mixed region, forces the RMM to skip the "undelegated"
+granules and complete the range. So, this is safe from the caller's 
+perspective. Also, we don't know how far the RMM progressed in
+case of a buggy result.
+
 > 
-> The tracepoint mptcp_subflow_penalise is invoked from
-> mptcp_subflow_get_send(), which holds the outer MPTCP socket lock but
-> not the subflow's TCP socket (ssk) lock. Here, sk_fullsock(ssk) reads
-> sk->sk_state and tcp_snd_cwnd() reads tp->snd_cwnd.
+>> +			phys = out_top;
+>> +		} else {
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	if (out_phys)
+>> +		*out_phys = phys;
+>> +
+>> +	return ret;
+>> +}
+> [ ... ]
+>> +static int rmi_sro_donate_contig(struct rmi_sro_state *sro,
+>> +				 unsigned long sro_handle,
+>> +				 unsigned long donatereq,
+>> +				 struct arm_smccc_1_2_regs *out_regs,
+>> +				 gfp_t gfp)
+>> +{
+> [ ... ]
+>> +	if (state == RMI_OP_MEM_DELEGATED) {
+>> +		phys_addr_t delegated_phys;
+>> +
+>> +		if (rmi_delegate_range(phys, size, &delegated_phys)) {
+>> +			if (!rmi_undelegate_range(phys, delegated_phys - phys))
+>> +				free_pages_exact(virt, size);
+>> +			return -ENXIO;
+>> +		}
 > 
-> Both fields can be concurrently modified by the TCP stack (e.g., during
-> ACK processing) under the ssk lock. Reading them locklessly without
-> KCSAN suppression (data_race()) or READ_ONCE() constitutes an unmarked
-> data race.
+> [Severity: High]
+> If rmi_delegate_range() returns an error from the buggy RMM path,
+> delegated_phys is completely uninitialized.
+> 
+> Can this result in passing a garbage size (delegated_phys - phys) to
+> rmi_undelegate_range(), attempting to undelegate an unpredictable physical
+> memory region and preventing free_pages_exact() from executing?
 
-Can be ignored here for the tracing: TCP is doing the same in
-include/trace/events/tcp.h.
+Fixed as above.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+> 
+>> +	}
+> [ ... ]
+>> +static int rmi_sro_donate_noncontig(struct rmi_sro_state *sro,
+>> +				    unsigned long sro_handle,
+>> +				    unsigned long donatereq,
+>> +				    struct arm_smccc_1_2_regs *out_regs,
+>> +				    gfp_t gfp)
+>> +{
+> [ ... ]
+>> +		if (state == RMI_OP_MEM_DELEGATED) {
+>> +			phys_addr_t delegated_phys;
+>> +
+>> +			if (rmi_delegate_range(phys, block_size,
+>> +					       &delegated_phys)) {
+>> +				if (!rmi_undelegate_range(phys, delegated_phys - phys))
+>> +					free_pages_exact(virt, block_size);
+>> +				return -ENXIO;
+>> +			}
+> 
+> [Severity: High]
+> Similar to rmi_sro_donate_contig(), this code uses delegated_phys uninitialized
+> if rmi_delegate_range() takes the buggy RMM error path. Could this lead to
+> a similar memory leak and corruption risk?
+
+Fixed as above.
+
+Suzuki
+
+>> +		}
+> 
 
