@@ -1,99 +1,103 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9794BEE5E
-	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 00:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628811B808
+	for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 00:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789171528; cv=none; b=e7J21imwmRIMCWMyhjRFRgfaRKfbxeubDZEWHCuR1xJ+Othi6kszDUrJVMAwU84iMw4lv72O+FVgt5jw4aCKcDrDROPJ7myGp9Am0/s+Wnse4ILn+H8Bh+VuO4iyu2GbkHH8DDzjNNWveEFh+6ZqaKIQnD7n+8pYxb3T4p/XvnY=
+	t=1789171757; cv=none; b=Iu6ImpVQ69xbufeBOR1FEo4Iq2NLw5sDX/KCGxh8tdze1DxBxPwif3kX3pupeZxtgii8UWJ0Dy/eLmvhSKk1juVpSBMz57pXa/plV7GIxldUwUkWl9qmJ5+T5xMynH8n61QTuRvJg8N2DmGUIQtAHNEL4vHj7LUQFqsDOETMwMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789171528; c=relaxed/simple;
-	bh=bEuJl6tbZwwTV8fGbs7IcdzniD+J04Zd/HtTkYcb35c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BJ5NQw5B9FV7KCeDEN97joQ9MMgPqvTXMXnyFYqec6FTUwiEuY+sLpXEIKvWvK3aWd7GpIrwt/zrtfkMCrKfs/NysJXxjInIo5kpqX3HQEx02l1MqL0NTU7NihNsqDAs0y1i5ZdEfT8zQUX3OlbtSZmWDOrTOMGN2m9qYPCZI2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=c127.dev; spf=pass smtp.mailfrom=c127.dev; dkim=pass (2048-bit key) header.d=c127.dev header.i=@c127.dev header.b=pSUHe7qL; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=JPTE+ygz; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=c127.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=c127.dev
+	s=arc-20240116; t=1789171757; c=relaxed/simple;
+	bh=QUPMqaO08oUcYGlK+QKcnzTJ2vhWDlM7cXLXYxsDZ4M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4Ok1bvNZLHtfQBdxumPjm5cPnnruIBHVIum/yU6jL2EYMdItWm43s8LNS1s+m+lQNzqR5rYWFBP3sOsTNNVlljv1om8JuogppaTV/HZOA/qe5YUeMoiUwTIQEZiJrSVlsyphA6WRHuGJxejcBSYHAXRTqN7Ys9X6FYkJGwpY5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=NKy/A4jI; arc=none smtp.client-ip=74.125.230.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=c127.dev header.i=@c127.dev header.b="pSUHe7qL";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="JPTE+ygz"
-DKIM-Signature: a=rsa-sha256; b=pSUHe7qL9M6cTkt/HKYb3eo5nQep5aPmRqx+xKIfyKoactwZMtXDM3J4Xw0wEZTUMKhYI04+TaEOCJ+QTyvJMKFpWHwR90M78mn9AqqPDuztPky73kW/d53ETqIcvhLkGop/vd+hTESAY68KmWXNFLDOLLa0tbDHfw4CKZrsi22PToL2Oii9w+OqReEUAmUODD716e9xd6pXHeoZPYHO5p7M5rCTjGlnGRU6FPFuTQVHg4zC50jJk7wZkVIBNWGoBPo9ghEvKFIN4EsUtLtvgBFZE6VS9tnnHFK2vaHLohZJJ+201F8aZ+MZqr3QS1YOivBjxFJ7e+uPLZbo5V+tPQ==; s=purelymail1; d=c127.dev; v=1; bh=bEuJl6tbZwwTV8fGbs7IcdzniD+J04Zd/HtTkYcb35c=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=JPTE+ygzkg1E+W5yILE+IuWPVnn595+I5i8x/RVe/uXOaInPVKPdTfA+woNA0mMC7UxyuMnBUGMZaCs+IW/L3cDHfAp/hPhiTjeO6IABDyXEJCE87OefZcfuW/X/GqBWyXS6YLCdxGSc50QmEoL0AMnvdE9idrCDej3d6o5m7vgaMHqkKqr6Vd6f7RfxK94504OZHMOMbesjsqbmOH9W9K74FjUrDqcCj+f3aOkSEd04ajkq0WZb5/XSW60gMOqJ78e+uqLEzwzv9kcJt+VYTjzAgYBdk01SX1etbutbOraJtgKQLJOmRAu24QPuUj42za3XkH+LKaZ8gwrYcuukgQ==; s=purelymail1; d=purelymail.com; v=1; bh=bEuJl6tbZwwTV8fGbs7IcdzniD+J04Zd/HtTkYcb35c=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 1017243:43747:null:purelymail
-X-Pm-Original-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -621174798;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 12 Sep 2026 00:05:21 +0000 (UTC)
-From: Johan Alvarado <contact@c127.dev>
-To: broonie@kernel.org,
-	md.alam@oss.qualcomm.com
-Cc: Johan Alvarado <contact@c127.dev>,
-	sashiko-reviews@lists.linux.dev,
-	j4g8y7@gmail.com,
-	konradybcio@kernel.org,
-	pengpeng@iscas.ac.cn,
-	miquel.raynal@bootlin.com,
-	quic_varada@quicinc.com,
-	quic_srichara@quicinc.com,
-	linux-spi@vger.kernel.org,
-	linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] spi: spi-qpic-snand: drop the redundant ECC context handling
-Date: Fri, 11 Sep 2026 19:05:13 -0500
-Message-ID: <20260912000516.653989-1-contact@c127.dev>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260911191010.990EE1F000FF@smtp.kernel.org>
-References: <20260911184416.109790-1-contact@c127.dev> <20260911184416.109790-3-contact@c127.dev> <20260911191010.990EE1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="NKy/A4jI"
+Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910cc46c7so8853185a.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 11 Sep 2026 17:09:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1789171755; x=1789776555; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/J9+qt8jWu0CL9QlZjJtE4DsxuQMJWCwC+piAz+7Nb4=;
+        b=NKy/A4jIROj37hTM+gLLBbngXkFuYQGh4aAEx2ugigdQ7m2n90xPhaNC+acNNG/QOc
+         yR7KoA1F6+7x9mLFEaitKPNgYlHtVaS6dc+J3WZC7EtBrULoZbJGaXSFWKn1WtWPv+/4
+         UytSYCkilx86zccOwqoAEqhet5D6ex6d8ONj+FPVvsvxKC96LuD0+/gjyLZmNykKKMsG
+         YNFV2CI1ldS5xth9onyzDK+hjptczjTqg/D/sCtBRC7f84+dyyluYdoQRWjKGKw7+Xn5
+         ys0FiUuYYnYQFL42kStNmNFUW7DptmqVE6Ck2UqRHLmiJ57f8NXpngncc4c3jtr7cFmy
+         maAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789171755; x=1789776555;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/J9+qt8jWu0CL9QlZjJtE4DsxuQMJWCwC+piAz+7Nb4=;
+        b=GyPknDgFxr43jHMhvzoBWfIcCxOL0DSO1Mi716nU60rljqX7/SU5UChoqBwdvNPcBT
+         XWmoRXc6eFDXL3vLrDkHAkE/P/WZU+GK8MzYLsf9tGU3g0zE2PbbNk/NWzDhMcgL//J8
+         X7GpT/ksAFr2QuyaK/fpBMUrEkxiF3XEECAgFI9s4oZXchOFHrzLLofzubNNUOy8TUJg
+         cssJ/JL+laRNAiAy1W3wI0eCXF7PFMTTU8/VoJZcp2bSIF9JjzA3r0ETf13UmeT79UjL
+         89NplnbVuE4eH1UT1kbzRRU++UeumvagIzSSW1qK8dh+5jtuSO732gYBnzrKY5xKHqxK
+         NzMA==
+X-Gm-Message-State: AFuF++mq8FlLOkApbHaW6T9vDaNXKxJVIOcgNFMYg97TE4/rxahrD6tc
+	AvFtK6uAZtZbdFlaC80xcZFnwPqaWACBqOORqRq52bnt8Uoc/sPa0I1VHgoow4L2ssk=
+X-Gm-Gg: AYBFou03NOmygnIslt7rIvcIPfENl9Rvr4sMMQWvz2DY95CVZpswldxFfcPE0n6/IP8
+	irWKlMnWmBZXOINhpsc4FborYgPLxAJTm1rFVjaNpDCxvQqP71039mSQV3Rbzr7nt0XTbozTJqx
+	2DHwnGNjHepnf6t117tqgdOhbxhK+Clcbx5lW8x6CxzrzEU2tu8PuLTWspSQ9brol6yglVWu4b9
+	ZllKLFhLUry7HAgr0KNRAAdm+aP6LiEsHSpoqK3ji2gOjOcCZODepbkstz4FH8PMV1/tPVtJRcf
+	JM29dN1+CIYQm4L/VKGWQdEHAZfZ74t4CPYpx7ReEzDkWwE1lUikkZwG3B3El3kk/KAm9CSFLXR
+	A1ebq81d+6EHRVC5o9EzR2FGlPCHCimBrbF8uG6DANYryjmwuUwKKhU0MvMkhI146TpdkVMB7eo
+	7ypIqCd0VjPwN10m+O2ZChoDPFt6m3/oyHnF7O5fywlN7oCPDP/JY1cmzsCz/HOqy5hnEiHH9Pd
+	/FQXPHMaVCgcDfToLnL11T+Y1jiJtYvNSvcSkBPs/c/CJNQIIanQl8=
+X-Received: by 2002:a05:620a:172a:b0:939:b43f:341e with SMTP id af79cd13be357-93a03671dd0mr109407485a.22.1789171755127;
+        Fri, 11 Sep 2026 17:09:15 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e803dc90sm365356585a.17.2026.09.11.17.09.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2026 17:09:14 -0700 (PDT)
+Date: Fri, 11 Sep 2026 20:09:13 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Anisa Su <anisa.su887@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
+Subject: Re: [RESEND PATCH v13 6/8] cxl/mem: Configure dynamic capacity
+ interrupts
+Message-ID: <aqSX3OadID0REQps@gourry-fedora-PF4VCD3F>
+References: <20260908102124.2231730-2-anisa.su@samsung.com>
+ <20260908102124.2231730-8-anisa.su@samsung.com>
+ <20260908104327.DF5E61F00A3A@smtp.kernel.org>
+ <aqRuYaUt9qAvPA3W@cxlqual>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aqRuYaUt9qAvPA3W@cxlqual>
 
-On Fri, Sep 11, 2026 at 07:10:10PM +0000, sashiko-bot@kernel.org wrote:
-> Is this assumption accurate for all configurations?
-> If the device tree specifies ON-DIE or software ECC (nand,ecc-engine =3D
-> "on-die"), or if a non-NAND SPI memory device (like spi-nor) is attached =
-to
-> this controller, won't the host's init_ctx be bypassed?
+On Sat, Sep 12, 2026 at 06:10:57AM +0900, Anisa Su wrote:
+> On Tue, Sep 08, 2026 at 10:43:27AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] If a CXL device is surprise-removed or a fatal PCIe error occurs, `cxl_event_thread` enters an infinite loop, pegging the CPU at 100% and deadlocking device removal.
+> > --
+> Surpise removal is unsupported. Jonathan mentioned the same on a similar
+> thread: 
+> https://lore.kernel.org/linux-cxl/aqLZP3ORYzCLfSgR@acer-nitro-anv15-41/T/#m8e12567a42b07fae8aa307406e6e017fe24ad832
 
-The engine is selected by the nand-ecc-engine phandle, or by
-nand-no-ecc-engine and nand-use-soft-ecc-engine; the core does not read a
-nand,ecc-engine =3D "on-die" property. A chip node that phandles itself, or
-that omits the property and takes the SPI-NAND default, does land on the
-on-die engine, and qcom_spi_ecc_init_ctx_pipelined() is then never called.
+This has been my favorite sashiko response so far
 
-That configuration has never worked. The page helpers are gated on
-qspi->page_rw and qspi->oob_rw, which only
-qcom_spi_ecc_prepare_io_req_pipelined() sets, so qcom_spi_read_page()
-returns 0 with the buffer untouched while spi_mem_no_dirmap_read() reports
-the full length as read. Removing the phandle on an IPQ5018 board confirms
-it: the chip probes, then UBI reports "no valid UBI magic found inside
-mtd15" and "failed to attach mtd13, error -22". A block erase there took
-cfg0_raw and cfg1_raw from the zeroed scratch struct, which is a wrong
-erase configuration rather than a working one. So this patch changes no
-configuration that works today, and the three in-tree boards using this
-controller all set nand-ecc-engine =3D <&qpic_nand>.
+"If memory is surprised-removed, the system deadlocks!"
 
-For spi-nor, the binding documents a spi-nand child only, and
-qcom_spi_cmd_mapping() returns -EOPNOTSUPP for opcodes outside the
-SPI-NAND set, RDSR 0x05 and SFDP 0x5A among them, so such a probe fails
-before an mtd is registered.
+lol.
 
-A mismatched device tree should still not panic, and the silent read is
-the worse half of it. Refusing page access and block erase in
-qcom_spi_exec_op() while the context is NULL covers both. I have that
-patch ready and will send it on top once this series is applied, so it
-does not hold anything here up. It cannot go in qcom_spi_supports_op():
-spinand_select_op_variant() uses that callback to choose the cache op
-templates during detection, long before any ECC context exists, so
-rejecting page operations there leaves no variant supported and the chip
-fails to probe with "unknown raw ID".
+(your series is great, sorry i haven't gotten around to reviewing it
+properly, i appreciate the doc updates very much)
 
-Best regards,
-Johan
+~Gregory
