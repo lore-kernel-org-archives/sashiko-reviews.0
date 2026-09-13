@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B5832D42B
-	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 17:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326C432D42B
+	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 17:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789319147; cv=none; b=SYXOmaXLu7ph/vhimIIfdx1BtDe6d8A7AlNHnzUmYf0kCXfFfSxoll4GaXSeEktpKhuEQg4FfbgROoeRC7sO4UIGCbJ9gYjKZN8PY04VQbeEFqEkxKfC/lDjZGi708y1g8qH618+eewOxqRlKI/4zjARpPamRcpisEvRkc176A4=
+	t=1789320053; cv=none; b=I4btwMhcbWcmKDmbeeYSNn48NZOTKVJC0evdSOKrHK0Emze63+USmitcKTImTlWQ39BMxJEYC2+6vsxTG+GtyNPN7Zk0/zLUCy3Hv9MmzQqAXAWYIxHtzYQNmOA4Mu/rwPrx7si5c5iDk4fv5vfUkV8aojjUM3Fe1XdwlJuvaHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789319147; c=relaxed/simple;
-	bh=owZqRcM8Xi9fRt3ZDy6dU7srkF3vDjAP0nt1xyecOoU=;
+	s=arc-20240116; t=1789320053; c=relaxed/simple;
+	bh=nJptRM8dwtke6CPUFyBXukamdxk+DHD1KOAFWyVgSzE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b4UhCBgnCB342aHxvzj1kXPqHzNqGpJ24E/AZska4UI4zdc3YUZtJDtcy0ZGcad0mRpTyZ6r61uZpS3+odtPEkc/3FOn4t4u03/hSEt3uzjUvPvgZ7uPZXurvC3pxymEW8zMuhJEvOKrn1fh0jRjFkmQ+v8KQ1ybvXMvFHIujzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQl8KoIs; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=bXTAtPLR6cnduC/vx1gFsQkJ4N9F2sx5OoIq75ud5bkC2/ZgujRd1xOjvLXTtg+WnEtIixLxMUQOU6AwC0l9KdTpNMeh5CmMkCH3JVWwtbpQw3yf8JpiepZv1hrgWEPpom6v4DIskdQUg2Rq4wcLarUhCtwaDKsVoa2acVg9yqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T0I4bNZ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQl8KoIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1E81F000FF;
-	Sun, 13 Sep 2026 17:05:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T0I4bNZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3A51F000FF;
+	Sun, 13 Sep 2026 17:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789319145;
-	bh=esrKaC3nquF2tM5PphqR1dq6HbZYaQl48+WzX6mZbUo=;
+	s=k20260515; t=1789320052;
+	bh=SitOYg4KX34WdgfdWAgDEuxGFskL4Zw0LoKdr7C6qLE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fQl8KoIs+gixjLmTs7oozCegF7qzJp81r7JpNi01vEk+h8x0twiQ58AYf30937IiO
-	 emDhdBypP2RsCvKgfLl6wvv9cHbZKI45AKpEjS1LdkT46vOrDtIYsH+InAaAVB5uFe
-	 vVCbxuhQAd0tLEp6HkjEG8R2+jKtMQEabwU+g/hi8mde2pfd2PMlOqrIOeCnRmhpfX
-	 EmQc2LMMCTRv/IgQav2x0leztMKsCAf+G8+BmYiHRz9rgZp36D0Fybg7nnf3FkPpG5
-	 txF9UZTX8W36U6L8UEQUpBmoCphy0xRGi5qaFDB5t7M7UB+HLsmZAb63lRrqUoQRSH
-	 a09Jox7LkEqQA==
-Date: Sun, 13 Sep 2026 18:05:42 +0100
+	b=T0I4bNZ0lU2z+0pRgi2kqQ5RGY19yE+0NZxfCw6ZPWrUldqwvHIQxPsfygeY1zi6T
+	 Zmd8dZuN87DAGVvWg3ZUZtMVDLVL+QyZOduxzb/WbQTzT+nSy9wy/IV6W9XcmBrg+C
+	 gld1TieQ5GLSzV5Zscr9SulptuAfb9sFeFxpO0vPRgmIUf1Wh4ZtLw7xeWEiupodeS
+	 pie19K5BIR5flOLp6+08VLXmo+hnpwS1vM06x/9kM5yQDGfXosLViGvajSUgfFGlc4
+	 ZGFSo7CHkId5ISEmVrJOzp2pMbGvVpJWYumP0gyD7W/kcT9OH0TaZ2/r0mqx2nEaTY
+	 wyGAEngJ4PL5Q==
+Date: Sun, 13 Sep 2026 18:20:48 +0100
 From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org
-Subject: Re: [PATCH 04/23] kallsyms: output binary data to speed output and
- kallsyms assembly
-Message-ID: <aqbXvZv43RFjXg-N@gremlin>
+Cc: ojeda@kernel.org, Nathan Chancellor <nathan@kernel.org>
+Subject: Re: [PATCH 06/23] kbuild: only emit vmlinux relocations when required
+Message-ID: <aqba1CW91zlM11Oa@gremlin>
 References: <20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org>
- <20260908-build-speedup-v1-4-5dc1ac01672d@kernel.org>
- <20260908211043.D350C1F00A3A@smtp.kernel.org>
+ <20260908-build-speedup-v1-6-5dc1ac01672d@kernel.org>
+ <20260908211205.156371F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,67 +44,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260908211043.D350C1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260908211205.156371F00A3A@smtp.kernel.org>
 
-On Tue, Sep 08, 2026 at 09:10:43PM +0000, sashiko-bot@kernel.org wrote:
++cc Nathan as you flagged in reply (will reply there separately also! Doing a
+sashiko pass right now).
+
+On Tue, Sep 08, 2026 at 09:12:04PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Binary file `out_bin_file` is opened with `"w"` instead of `"wb"`, which can corrupt output on host platforms that translate newlines.
+> - [Low] Inconsistent kallsyms data build failure on RISC-V due to missing --emit-relocs in temporary links.
 > --
 >
-> commit 8a28ee77f330c86631e4b29d33b55c73c4d0f181
+> commit 4ec1c86acad0eaa0b52dbb5d1c138c6e094e48d0
 > Author: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 >
-> kallsyms: output binary data to speed output and kallsyms assembly
+> kbuild: only emit vmlinux relocations when required
 >
-> This commit modifies the kallsyms tool to output byte tables as binary data
-> and import them into assembly using the .incbin directive. This is intended
-> to significantly reduce the size of the generated assembly file and improve
-> assembly times during the kernel build process.
+> This commit modifies the kernel build process to only append the
+> --emit-relocs parameter during the final vmlinux link. Symbol tables
+> of trial links preceding it no longer receive this parameter, which
+> reduces build time since GNU ld is slow at emitting relocation tables.
 >
-> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> > --- a/scripts/kallsyms.c
-> > +++ b/scripts/kallsyms.c
+> > diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+> > index 970ca10f8fa90..09c5222ccb941 100755
+> > --- a/scripts/link-vmlinux.sh
+> > +++ b/scripts/link-vmlinux.sh
 >
 > [ ... ]
 >
-> > @@ -813,14 +856,26 @@ int main(int argc, char **argv)
-> >  			usage();
-> >  	}
+> > @@ -96,6 +97,11 @@ vmlinux_link()
+> >  		ldflags="${ldflags} ${wl}--strip-debug"
+> >  	fi
 > >
-> > -	if (optind >= argc)
-> > +	if (optind + 2 != argc)
-> >  		usage();
-> >
-> > +	out_bin_name = argv[optind + 1];
-> > +	out_bin_file = fopen(out_bin_name, "w");
->
-> [Severity: Medium]
-> Will this cause the output to become corrupted on host platforms that
-> translate newlines?
->
-> Since the file handles raw binary table data, opening it in text mode ("w")
-> instead of binary mode ("wb") might cause newline bytes (0x0A) in the binary
-> symbol tables to be transparently translated into carriage return and newline
-> sequences (0x0D, 0x0A) on platforms that do not use POSIX standard text
-> semantics, such as MSYS2 or MinGW.
->
-> Could this be changed to use "wb" to ensure portable byte-for-byte
-> correctness on all build hosts and prevent corrupted vmlinux images or
-> assembler errors?
->
-
-Linux kernel requires a POSIX host where 'b' is a no-op so this is nonsense.
-
-> > +	if (!out_bin_file) {
-> > +		perror(out_bin_name);
-> > +		exit(EXIT_FAILURE);
-> > +	}
+> > +	# Only the final link actually requires the relocations.
+> > +	if [ "${output}" = "${VMLINUX}" ] && [ -n "${LDFLAGS_vmlinux_relocs}" ]; then
+> > +		ldflags="${ldflags} ${wl}${LDFLAGS_vmlinux_relocs}"
+> > +	fi
 > > +
-> >  	read_map(argv[optind]);
-> >  	shrink_table();
+>
+> [Severity: Low]
+> Does omitting --emit-relocs from the temporary links cause an "Inconsistent
+> kallsyms data" build failure on RISC-V?
+>
+> On RISC-V, GNU ld disables linker relaxations when --emit-relocs is used.
+>
+> If the temporary .tmp_vmlinux* links in vmlinux_link() are built without
+> --emit-relocs, they will be built with relaxations enabled. Because the
+> final vmlinux link uses --emit-relocs, it is built with relaxations
+> disabled.
+>
+> Can this difference alter instruction sizes and shift symbol addresses,
+> causing the final System.map check against kallsyms symbols to fail?
+
+This was checked empirically between --emit-relocs passed/not and confirmed
+there was no change whatsoever with identical size and sizes.
+
+The code doesn't do anything differently. So this claim is false.
+
+>
+> >  	if [ -n "${generate_map}" ];  then
+> >  		ldflags="${ldflags} ${wl}-Map=vmlinux.map"
+> >  	fi
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org?part=6
 
 --
 Cheers, Lorenzo
