@@ -1,133 +1,114 @@
-Received: from mta0.migadu.com (out-224.mta0.migadu.com [91.218.175.224])
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247B1E5018
-	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 02:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.224
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789267237; cv=none; b=RautlE88cNQZ8Qxt/2ZsISykgKlloIlhfqnvGGGtOtxX/lczR7Xa2HJ+LYDyMwB0SwvzJRqZyQVtX2vPux0Ku67dRmSxR5x6CWkQuHdhjtSdm8Fy4DKdhacUlJNieHT8Bsw0M5oBt/wJ2oVL2RSkqJUbRgG/m42C3QacmM1rwdE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789267237; c=relaxed/simple;
-	bh=1BQvtwfvNYQLhpVKCeAZcPnYo1Jhvrk4p1blC0/0h5Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lnO2WmXwTrPbjiC3ttghIgDP05mmCj6YcnLXs8xkrxZpHZEQ6j7sKpu1aOGz+68t53ZEw3wYetSfhDtlhbLo7uWB2hgEq0pm+ePGIghoqqQEs19PRbjZI1R24hwA5RuEyzU4YpQtyfGAVqzCcky9waKKzf8SXDiwQKnhfHP4YCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Tvhhw66i; arc=none smtp.client-ip=91.218.175.224
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77436376BD7
+	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 02:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789268167; cv=pass; b=eysrHydwFUJ9vMP7f+ZJP81CBhmmlo0xkvwhsf4VjDcHB8Lb5aXUVj3QzRezEDqDBSrcxDl5W3QXQVoT3uI0+eJ0Ex6tJ8618IQs/1xpUY1TCCL+NT+K7TxbSSeq0fSwHRD2yo97K8r8xIsJS8gogoGawmSq37Sn8CLniRlVM5U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789268167; c=relaxed/simple;
+	bh=DZGKf+y2yHjX0JATUvwRU5kGsye4Uuh7hr9rvML6qF0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jhGD0HHy5S8xoPPaLXK0Rxsm51yGIy908xvEK1TMGrq8r+rcUYO7ovn02V6k5axfV1PhVDSQ4y0DuaHrfgaX/8Jc/UNpqwBBojdW8fZcCs0bMT8mc9EvJyjB/Z2b17x0pLXTO/uGhWE2rCQa8WWplIsUpr+BgkjiaPBhuSfaU3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QYIovudI; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Tvhhw66i"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=1BQvtwfvNYQLhpVKCeAZcPnYo1Jhvrk4p1blC0/0h5Q=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789267233; v=1; x=1789872033;
- b=Tvhhw66i5RLaJlwtwuPPFyg7f+f7AAapaVoNxKluig7C+Mf6wX4xYJRWHP5zjHcgvHHNlIte
- sJ102fhFM0vL5puJ9KbMdM3rhZtZNuUyk+dMwcIGwa35WlpX7LkxpP+hiGrK4MNWvjHP6DZrMus
- M+TiL9je4EXioI3mDMUr1qG0=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 494c0ba23b5337a7;
-	Sun, 13 Sep 2026 02:40:26 +0000
-X-Mizu-Trace-ID: 494c0ba23b5337a7
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <ada7a330-6402-4993-8fda-36ef9333af2b@linux.dev>
-Date: Sat, 12 Sep 2026 19:40:19 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QYIovudI"
+Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66e4ab19125so868595d50.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 19:56:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789268164; cv=none;
+        d=google.com; s=arc-20260327;
+        b=T+lpdYey0syBgjHXdM718Oimn1Cy23uJL+WCQ4IFMgddBRyMVnLe6cmQd8sfG+5cHG
+         pUgwRZhHfJuzfjpVv4IqpO++f76AUB6Fn1N/MqWuLLpDNcINcFqkFskUAz34CrRT5VY7
+         tXlob0bsShYRJrL5nDyz33+LcHdX1+v56QZjPAEn3gNCRFc8kiiCxirFZiIGncpyCHby
+         IZ1muiaYsufRq8RPEO4UhC4RbQf3fCdMO/pCl0h6djXs3XjOloIEgNdzKbku2MX+rcxl
+         bSSyGR4/c9QreYM/UaAq0E3ro186rwshqE8Xf5BnLl877YM39xt2+0oTN9bdoIyk4VpV
+         MDYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=DZGKf+y2yHjX0JATUvwRU5kGsye4Uuh7hr9rvML6qF0=;
+        fh=1EIuu+bdlLwalOgztuD6wHLYPeJ+Dj4z4JI7muwdNRU=;
+        b=QCeCu2S0iomxewazAlHl6NqtpsfXLEGQx80Lzg/9Qp7DHK+yRSqruPx9U9qlEVcx2L
+         Y0U7EzQquIsuzOF6Ncwu1w8czoeNQN9/r4QBbrJWY5+08wIiOMnW9DIUlnEdKksBWgHF
+         pAD2/sfjVgOfDWOleEjXEj9TT+3rnt4ZGTvoHUHFE/a1R+4ghxbciJwZjsF+QE2XbR/b
+         QTtNjlzBJkQTCxoy/ZMRR9lETfMvlptHcGOg7KjT4vDCoUlQpnP6o10IkEKaka2rRpiP
+         hiJ3dAb4bPL+0Fn38FaTD89naTU2E9ZeS2VpSd6eGPmhn5dPc5GE7BG2hU5hEM4AdqW5
+         qTqQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789268164; x=1789872964; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DZGKf+y2yHjX0JATUvwRU5kGsye4Uuh7hr9rvML6qF0=;
+        b=QYIovudIRXfVkzRsFg3Q5XNlkNpHLDnkTHmxWcjhiFLM9vhYNpaEdYiecEEEpZSaYV
+         Vm074W9K0MJ8ggVxuZvFNL87H8khHRMEEG2WFmgOpKbpog8aIIA0r0IwRmFjEBe5UGaV
+         hlW7IRDd02TwJ48u2gICp77oSa6jKDhbRkc69LvF/XUwzQM0EJfde3po5TQkLjB4qlgR
+         sfxiWnRTY71zHB9w6SGZTLpbDsIjahNhmLM3wwIwwxiTcTz1+By0oI3sVXvGhLUFGH2z
+         aQZ3D/eWs1TfNzMQtx0Toe0Jc4s9cjPndT/JCs0+n39lV9BFU6iBDbuIcd5LKj5wPPqa
+         rl2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789268164; x=1789872964;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DZGKf+y2yHjX0JATUvwRU5kGsye4Uuh7hr9rvML6qF0=;
+        b=kVsNh8ZYk1LA3H+wKaUaCIH9n4iuKRBVUjVPb+mYh6WLNKfi7CLtR4qHYqCdfnUSkj
+         Nzw5L7XGMon7GQnCTJ/z8l8GGlVPcXFa/6aD6YS7SqkPMZkDlsxnvvcz1h88xMMb4yI3
+         VCHKAblbMcKaCG6flP55YF5hxI79qAe8M382zwinysoKcEhk0CEswGY/T9xvJJkA47lf
+         o73ImvLo0U9yqQuVP69O8/s4OceOwOgM8LH5Og1iLY19CjKA3t5j64Vaow2qKFJvNHrq
+         XoXP2z6a2fF2VTD3TUmNtFtup41aNhdNuiqzqUsC8SqJOdOaeukMG7XNfNKKw3HTSc/N
+         Qr2Q==
+X-Gm-Message-State: AFuF++nn428nOLHkekbQI5CSkIItRH5UWPQy7a85q+xZvdfwsGCRxRYd
+	QDEmmJNYq49T4NUHl++FLEkyQOoWHRM0o3pg51O0TW0NfNYLHbG8hr19Gq9Qy9s2bOCmGp1xEM4
+	5TW0L5KOPbJvL1/k+w0bzthYL6X2sMHKnazW2
+X-Gm-Gg: AYBFou0iRyBUyxsul16wortdJRaIGpPIjB+9E3mGn5PYcSH4sbH4zlPMjWgo2LRlLr2
+	1IEGiDZZKYTaQI1UXzNwpJ3vPb2eEZ+AQa80itmiq6ui/xQrHi6nNBpT+duvpytqjw+TSoQBvP3
+	urjvQ9FjqzYEu6ULtxIrK6za+m33yFCQilu9f4Ew2ZEywfJlSfpxu3yIsTjJtEe3cRGDw1bEwgZ
+	jZbclC/JqXHyEgFB7d1RvCKBiy5FRBi6QM045RsZ2vIzn2y1g7wdtOS+5WI1ML3bpHx4DUCO5mZ
+	eA67CalXvOQl50eE5BTsUczYOcqBNf0hy8b8ISA+O1xtEN1B+GT5ZYYyByb2ybo5/qzAWzSGpYU
+	AXuy9JCzkYmW8YA==
+X-Received: by 2002:a05:690e:4806:b0:66f:7c64:9d47 with SMTP id
+ 956f58d0204a3-671245e99d1mr3820657d50.23.1789268159132; Sat, 12 Sep 2026
+ 19:55:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v4 01/15] bpf: Read a kfunc's __sz argument only
- when it is in a register
-Content-Language: en-GB
+References: <20260913024228.72317-1-laoar.shao@gmail.com> <20260913024228.72317-7-laoar.shao@gmail.com>
+ <20260913024817.2A6DE1F00893@smtp.kernel.org>
+In-Reply-To: <20260913024817.2A6DE1F00893@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Sun, 13 Sep 2026 10:55:23 +0800
+X-Gm-Features: AcwNN1XGxR-mMsAb0YOJXftgs1Id2BmjtGz_un8fTW9E9IfSrfUP1F5C5C-13Hw
+Message-ID: <CALOAHbCyhyEhg0upyMgZSaArg1WEDtpOdZw7zC_+DtfF0_h__w@mail.gmail.com>
+Subject: Re: [PATCH v9 6/9] livepatch: Deprecate stack_order
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260912195156.980886-1-yonghong.song@linux.dev>
- <20260912195201.982215-1-yonghong.song@linux.dev>
- <20260912200645.208041F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260912200645.208041F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: song@kernel.org, mbenes@suse.cz, pmladek@suse.com, jikos@kernel.org, 
+	jpoimboe@kernel.org, joe.lawrence@redhat.com, live-patching@vger.kernel.org, 
+	Wardenjohn <zhangwarden@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 9/12/26 1:06 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Sun, Sep 13, 2026 at 10:48=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Pre-existing issues:
-> - [High] Missing negative bounds check for enum parameters in memcg kfuncs allows out-of-bounds array read
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The patch removes the 'stack_order' sysfs attribute from the kern=
+el but does not remove the corresponding test code from the livepatch selft=
+ests, leaving a block of dead test code.
 > --
->
-> commit 5816e44e0d469f2be29753390131ba5c9f8fd073
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Read a kfunc's __sz argument only when it is in a register
->
-> This commit fixes an issue where an out-of-bounds index could be used to read
-> from const_reg_vals[] when a kfunc receives a stack argument pair of a
-> pointer and size. It ensures size_reg is bounded by MAX_BPF_FUNC_REG_ARGS
-> to prevent reading unrelated callee-saved registers.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 617a277c3558c..0c6a404167ca4 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -13641,13 +13641,14 @@ s64 bpf_kfunc_stack_access_bytes(struct bpf_verifier_env *env, struct bpf_insn *
->>   		goto out;
->>   	}
->>   
->> -	/* ptr + __sz/__szk pair: size is in the next register */
->> +	/* ptr + __sz/__szk pair: the size follows the pointer */
->>   	if (arg + 1 < nargs &&
->>   	    (btf_param_match_suffix(btf, &args[arg + 1], "__sz") ||
->>   	     btf_param_match_suffix(btf, &args[arg + 1], "__szk"))) {
->>   		int size_reg = BPF_REG_1 + arg + 1;
->>   
->> -		if (aux->const_reg_mask & BIT(size_reg)) {
->> +		if (size_reg <= MAX_BPF_FUNC_REG_ARGS &&
->> +		    (aux->const_reg_mask & BIT(size_reg))) {
->>   			size = (s64)aux->const_reg_vals[size_reg];
->>   			goto out;
->>   		}
-> [Severity: High]
-> This is a pre-existing issue, but I noticed a potential problem with how the
-> verifier handles enum arguments for kfuncs, specifically in the memcg
-> kfuncs.
->
-> Since the BPF verifier treats enum types as plain signed integers and does not
-> enforce enum ranges natively, BPF programs can pass negative scalar values
-> to kfuncs.
->
-> In mm/bpf_memcontrol.c:bpf_mem_cgroup_memory_events():
->
-> 	if (unlikely(event >= MEMCG_NR_MEMORY_EVENTS))
-> 		return (unsigned long)-1;
->
-> 	return atomic_long_read(&memcg->memory_events[event]);
->
-> Does this signed comparison without a negative bound allow a negative
-> event value to bypass the check and cause an out-of-bounds read on the
-> memory_events array?
->
-> Similarly, in mm/bpf_memcontrol.c:bpf_mem_cgroup_vm_events():
->
-> 	if (unlikely(!memcg_vm_event_item_valid(event)))
-> 		return (unsigned long)-1;
->
-> 	return memcg_events(memcg, event);
->
-> And the check in mm/memcontrol.c:memcg_vm_event_item_valid():
->
-> 	if (idx >= NR_VM_EVENT_ITEMS)
-> 		return false;
->
-> 	return !BAD_STAT_IDX(memcg_events_index(idx));
->
-> Could a negative idx here bypass the bounds check and lead to an
-> out-of-bounds access on the mem_cgroup_events_index array?
 
-I think we should be okay here. The kfunc itself is responsible to do 
-proper bound checking before doing other stuff, as examples in the above.
+No, the test cases won't be removed, as they may still run on older
+kernels that support stack_order.
 
+--=20
+Regards
+Yafang
