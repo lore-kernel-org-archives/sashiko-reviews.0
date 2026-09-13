@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9D0390C8A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 19:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9377939CD16
+	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 19:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789326140; cv=none; b=KeSZQWykr1Y4O1twv6nOR3dSG7hQye1pUKl9zGLlTvR1IWs6DX/ESTdLv9aHtuk/nLI6zYsRXKIHrXGenUfb1pU9pLeCWjJEWTR8INPrdTeAUMxz5J5W1Aj1PXDSk2Rlrn39GKD+vocQqPr/wX6wic2NUMomwYuc4C1KeoTs4zQ=
+	t=1789326585; cv=none; b=a3ksudxDLjEB0nKY6XPjfiYJPyJJ5o8d6oSjl65Ku1oopGNFqTEtPE/H/GXvu0b0bSS7V7nDhESBevgn6GY/C1UyxPWIb45WV4IDpYflaH9ihKmAa2LSXXgkGapSQQl1K3NxJLeeM22GjYI+s5BXLZ/829EZYqb4B7p/fSAShQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789326140; c=relaxed/simple;
-	bh=k6t5Ti103vZRlsKUiDpdsQU2Hqvw+9x1xtqqmSsANtA=;
+	s=arc-20240116; t=1789326585; c=relaxed/simple;
+	bh=dHHmg+YUy5DAtGw3L/sGDAlQbgpMjvnnQZS1YmaKwQQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BOJaNlB1v0ezz9JRvaGhvKqQT8hSAWwxm/Y7jWTw5d16ypNdBXAlAhxEGVP47Vv84Faa3fIagDlqhJfH/0u/AcFcE2jYmI5CGneI7H8+OsNV8NgtEYk1XyHIZ1GWMCXauq8uphTeC87LK9w4jpaKqgl4S5n3zjaK70OYVKd48jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tuzprcu2; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=I4lK1omwvR3dKXkgYDzHKOqMcwbxkEkKxBvC4qHqzNM5WXDtDBhAOfCnpYKRM56+SpDxVK5VuoR/wmgJxh5wPrncNfebACPDBR9Kq+3/6UPs3PTYpiUpoAK0rtHKw+vZbHuBZ9uHPFGmvgT95dKF9w/cIZS6yN/ZjVJX5vESu4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKjPQzwe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tuzprcu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F8F1F000FF;
-	Sun, 13 Sep 2026 19:02:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKjPQzwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B3E1F000FF;
+	Sun, 13 Sep 2026 19:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789326139;
-	bh=DW3R2KHTBbJYWwfwzwEO0X9YiCqPAvJ3eeZPjWS1CZA=;
+	s=k20260515; t=1789326584;
+	bh=lmhO64BOgV9xaPMFRdm4zXyLf2qicvTHG0qcBlHeLZo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Tuzprcu2qGc2K9+nLqH1QsN70ph3Z1KgEr9nuQ8ShConuJS9vs1Dz7LH53LKzx4VI
-	 O6w+BmOjp3m5MVeBO9M4KD4DPOB1SXQDz4loAmgBX6eVRP3qGXtTplJZoI/QCsExrB
-	 XGE9HP2db/L4dKE1LMCUL8bPyQxiEFBdFmS7W/7VV7H611LUgm7NkWE58+LYZy/c8y
-	 sJnl/ID625H5D2k+WnoshT8VxZuMMhWyqP4WrOJM76bsKSgUjOSGRhrK1e33uom+fe
-	 RGxBym6a+NWAR0/mI69RNWkVjtIraq9331b0YLPnOf5NehbvclDOFnA1U4NEmFf5sf
-	 Rr4NrsgmnpgvA==
-Date: Sun, 13 Sep 2026 20:02:15 +0100
+	b=TKjPQzwe0tSiQM5/z1MqHiheyyvbYufv/O2BQqNbTsajGLn1C4xvpYzPWOSa+0Nf6
+	 HsRDVeYH1nKN4ge2y7XtHvwne7Ptc41htbNTVQ246WbjAmgJwm8uPtuAJaQYzZqIg3
+	 oJmfamP9hUxLtzcS+t+V+ZKXJMsO4LwxSTRtEIbH8bzFYuGCufwuxYafVGo2q/0JPq
+	 YXZ0vg2dF5rCImu660u60CNls1Ny6yxRRzLQguXNdTQOhIha2bK6i9RP44YMEUXnPu
+	 7ml5Xb4TIqdGWNMQXhOrEMSMHCxyCQpEuj2Gy6cBi1u2yweIvR/E04c7ORPSTglV0p
+	 Z3q97g9E8swBw==
+Date: Sun, 13 Sep 2026 20:09:40 +0100
 From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org
-Subject: Re: [PATCH 20/23] kbuild: rust: parallelise rustc front end
-Message-ID: <aqby2K6mddww50_U@gremlin>
+Cc: gary@garyguo.net, ojeda@kernel.org
+Subject: Re: [PATCH 22/23] kbuild: build rust crates in parallel with the
+ rest of the build
+Message-ID: <aqb06kVv8XjGowNE@gremlin>
 References: <20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org>
- <20260908-build-speedup-v1-20-5dc1ac01672d@kernel.org>
- <20260908212035.010861F00A3A@smtp.kernel.org>
+ <20260908-build-speedup-v1-22-5dc1ac01672d@kernel.org>
+ <20260908214335.1C52F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,59 +45,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260908212035.010861F00A3A@smtp.kernel.org>
+In-Reply-To: <20260908214335.1C52F1F00A3A@smtp.kernel.org>
 
-On Tue, Sep 08, 2026 at 09:20:34PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Sep 08, 2026 at 09:43:34PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unconditionally passing `-j8` or `-Zthreads=8` to `rustc` breaks single-threaded Make invocations (e.g., `make -j1` or simply `make`), forcing an 8-thread pool and creating an OOM risk.
+> - [Medium] The `modules_prepare` target fails to build the `rust/` directory when multiple targets are specified on the command line.
 > --
 >
-> commit 31e6e028120fc1bff9382e6014058f3d1bbcb274
+> commit b7cbb20d375e296dcfc9da28b89bbc6beb01af39
 > Author: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 >
-> kbuild: rust: parallelise rustc front end
+> kbuild: build rust crates in parallel with the rest of the build
 >
-> This commit adds parallelization flags (-j or -Zthreads) to the rustc
-> invocation for Rust kernel code. It uses Kconfig checks to detect compiler
-> support and applies an 8-thread default to speed up the Rust frontend build
-> process.
+> This commit allows Rust crates to be built in parallel with C code by
+> removing the Rust build from the make prepare step and establishing a
+> top-level list of directories containing Rust code. It also attempts to
+> ensure that the rust/ dependency is established for out-of-tree module builds.
 >
 > > diff --git a/Makefile b/Makefile
-> > index 997fc7ebe0965..7d23d7b64be33 100644
+> > index 7d23d7b64be33..3805f72428cb2 100644
 > > --- a/Makefile
 > > +++ b/Makefile
-> > @@ -1204,6 +1204,10 @@ KBUILD_RUSTFLAGS += --remap-path-prefix=$(srcroot)/= --remap-path-scope=macro
-> >  endif
-> >  endif
-> >
+>
+> [ ... ]
+>
+> > @@ -1760,6 +1763,12 @@ modules: modules_prepare
+> >  # Target to prepare building external modules
+> >  modules_prepare: prepare
+> >  	$(Q)$(MAKE) $(build)=scripts scripts/module.lds
 > > +ifdef CONFIG_RUST
-> > +KBUILD_RUSTFLAGS += $(if $(CONFIG_RUSTC_HAS_JOBS),-j8,$(if $(CONFIG_RUSTC_HAS_ZTHREADS),-Zthreads=8))
+> > +# Ensure rust/ is build before any external rust module which will rely upon it.
+> > +ifeq ($(MAKECMDGOALS),modules_prepare)
 >
 > [Severity: Medium]
-> Does unconditionally passing -j8 or -Zthreads=8 to rustc break
-> single-threaded Make invocations (e.g. "make -j1" or just "make")?
+> Will this exact string comparison fail if multiple make targets are provided?
 >
-> It appears this might override Make's job controls and force an 8-thread
-> pool even when no jobserver is present. On resource-constrained systems
-> where users intentionally use "make -j1" to limit the RAM footprint, could
-> this significantly increase memory consumption per rustc invocation and
-> cause an out-of-memory error during the build?
+> If a user or distribution build script runs a command with multiple targets,
+> such as make modules_prepare scripts, MAKECMDGOALS will contain multiple
+> words. The exact string match check here will fail, causing the compilation
+> of the rust directory to be silently skipped.
+>
+> This would result in the prepared kernel headers being incomplete and lacking
+> necessary Rust artifacts like kernel.rmeta, preventing subsequent attempts to
+> build out-of-tree Rust modules.
+>
+> Could this check be modified to use the filter function to see if
+> modules_prepare is present in MAKECMDGOALS instead of requiring an exact
+> match?
 
-No, when a jobserver is present it doesn't override that.
-
-When -j1 yes it will, but the memory delta is small, a few hundred megabytes
-(~1.1 GiB vs. 1.4 GiB).
-
-So it doesn't seem to be real world issue.
+Yeah this is valid, will fix in v2.
 
 >
+> > +	$(Q)$(MAKE) $(build)=rust
 > > +endif
-> > +
-> >  # include additional Makefiles when needed
-> >  include-y			:= scripts/Makefile.warn
+> > +endif
+> >
+> >  endif # CONFIG_MODULES
+> >
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org?part=20
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260908-build-speedup-v1-0-5dc1ac01672d@kernel.org?part=22
 
 --
 Cheers, Lorenzo
