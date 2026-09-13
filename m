@@ -1,121 +1,96 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+Received: from mail-pz2-f17.google.com (mail-pz2-f17.google.com [74.125.228.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8422765D7
-	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 02:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789268301; cv=pass; b=DMLChrfITpCoBhHek9Wmv1W++KyzqoEipAh5SNcCbviCkGmLhKV1O1p3NxCqmsepnTaeJAmn6YA4WS8gkKnirLISl/+a8SflJEICAkrN4yvQNrczWHqDaQP1EFXVHLW5Ez2DhFPi51z9fQoCAlB2Q7pEWhM9C/NIINtcSNJ6FEQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789268301; c=relaxed/simple;
-	bh=5UzfQdz5mP5ZZyzhPDmxZKIk9wApiMAHPpeiQGwrQhg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=InT8jKDF4W/24zjUT33t9QLgG7aba6+a+prNgCM+er0hCGasSa1ocfkboiXrqUmTzlWjoDxG+VI3pyKn3Ci67n9J2h3XIT8XxZZAIk3E8dZBddAWa2jpphXV8b2xefkPhTG/VkLZki1uM1KgCkIbJUU+1P0s7HE4laG/x71W51o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fnoig31p; arc=pass smtp.client-ip=74.125.224.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801DC3C0A1B
+	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 06:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.17
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789281462; cv=none; b=ONEBWQlnZmT0sW2z6DgB7tEZMGNxRvupuW0UiswSXYEBFx0e+WYvzr/cYyLYscUGURiFD5liEfOPmq4ySOj+2yQ0cx09LpMXTwX9CoRL14pFUSDA5hyiZLZfv97EQZUbVaoJj9rD9wGadQRAv60CBc11ty2H9uNuAzCj/180k+Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789281462; c=relaxed/simple;
+	bh=EaOmmJJC3kV/y6g1/KOXknozM741k9/ONn4JSj6RC2M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UWxz7gJB7pjtF6h6NLmadVrEow6cjjjK2ifaofKShn0Z0Pvq+4vYglBLBAZlbf4z56w5YsFto3RsHoaDo8IndgpeefUYhAXXya8KwdoyGknkx+vPiF75o5MkAJAiAUgx2JHSRZbTAUHznTb9L687XtF05/tsJnmSOHct4vq/MY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/RwofI5; arc=none smtp.client-ip=74.125.228.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fnoig31p"
-Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-67109935888so851884d50.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 19:58:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789268299; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pR770GmC7GzQIPE3UuMb3cC3KcWd2IN+2K9rIS86dmfOfHNe4W0OxOiU58+t5coMkf
-         2y9JErFd31X/5mTO1HcTmaBFIOcPEp/FIAF12tmVBmzfeT947h2pnQs8A9LuO5BIP3Qp
-         IypUqxy+gxKIl3FIMAfGAQ34/9vEwvNinPXN8CWEuT7jWqQzvomT5khjglU0EK5FeLtL
-         HRaZ6Bjvf0ycwM3fyF/ggTLMr/87njmIsAi31S59nJns3QsD7xnpgJkK3/79jZFS653+
-         PE9rxmUqhTk+HoO9G3dowIVzAvJY1uIYLaJDh+3JMeZz9v5Vfh7xlo7Z2fh+h3rjFYCi
-         q51w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=T+zsyyUWoZeuEsNDePtAyeDZ8FoEK0FwB3reAh1f/WA=;
-        fh=IyoxqQbaumxCmADXVnF0CnJRjr+y+YwYqlcBVFj1eoI=;
-        b=e5yss+FJASq/L931/2uXu6zK/SgxEpGprN4AObhzoj4i7VdRhTcez4j0ygZoNtwtCH
-         OFIPLzRu5wS6bDRoOKCExElCfCuSwVicgKsT3t+26uJ4ufJGXPKtZCOCv6HqhbTS6rUN
-         llnwxcOn4yjC0rlL1ZqFISOEhMTP0qlE/4HJRQQKsp/bxx29cU8ny13Xh9SgKB0kJPd0
-         KaE6Q7klOlSibuz3+gS0KxuNfHrkBomBQjgoDc4fgNBSeYIsuUFaJy0+SPYJgw9lE/tA
-         g5Hli6NkWBQUr3rQYHpVNNh2V+qObGc/QefQ8EIpmdPXKvMzjrGHDOIAhunAgMzHzerG
-         WuhQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/RwofI5"
+Received: by mail-pz2-f17.google.com with SMTP id 41be03b00d2f7-cc4c3304784so1070455a12.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 12 Sep 2026 23:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789268299; x=1789873099; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=T+zsyyUWoZeuEsNDePtAyeDZ8FoEK0FwB3reAh1f/WA=;
-        b=Fnoig31pOfCthGAk1civFXi+StacIGpeqNieOH0eTBvaOZbHNm3OZNIJ8ON5C3scl+
-         JWAHrIpwPbt79fDu/3LUv9HSVw9EJZzW52sjgBHSpdz5rFE3eiwvIK2JDAHI3PjT0T5C
-         knJJdgyxb2xd9G4vOMI+TX51DRFf9Xpz6gq0xGCB38mFxiauOHPL13CPO/jyQOcPppL8
-         dVD2BbYRjj5XPuwqg2NLEpYiY+FSTIwcak461fXXvomipQ7JUopoejjqb2hNkrbvViMD
-         cgLWpZXSUvmFKIRAIUY2JyqBC1BLBtW0bxyCuPx2rxFX2C4rOm9L1Bmc0vbFXJ0RUytx
-         H3AA==
+        d=gmail.com; s=20251104; t=1789281461; x=1789886261; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=d5b80pzerJ3gCHaBvR30moKiKA9qUlNZYajnhJLIpzk=;
+        b=R/RwofI5cOrfD43W0f+Wj3fGKmcCWKh5SHbo9bt5kmKwPUVj476oH4HymNGgRuaF3V
+         5yoBg3+pijLKs9UZPyFvYcT/B/k7NPPWZN+MIP+IdC1S6clSOpd5qFxPPGIihUlJNVgI
+         1uuAGGEJbUuSflDwj+FyMB6LmALOcnQ4Alu7i5vO/TyT5IyGeuHR3oPu4TAsXKo7gESr
+         LIzaDj1vFv54hKBkJmsMvkg60HcD/WocYWCvN4ZSJQEHPpbi8EigpP7ztVRGYnXfc4X8
+         tm0SyGyvTuClXSNsrBpTGkzGkeogteqOOcWL0F3cmcKUjO9wiE+nPg14t7BDV1SmxjCL
+         5FoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789268299; x=1789873099;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=T+zsyyUWoZeuEsNDePtAyeDZ8FoEK0FwB3reAh1f/WA=;
-        b=I1k68MVBZcdpl10I4lvxcYneyLwchqogzeKqOQYpXbvO8bS7bt8GHgjS+sKUtJBvrL
-         xQhv/bum+BOhxeWrmmuvq9DSISJLQiT17XnC1h/Ph79Fq3AKTZvjMnoS0EuF8cZv47QL
-         sU7zgSp9AKNNaFaCq2bfhPJMLJ7c4jQacaefrorHLOKRvtnvfQN7fOreetJhnXSCezQI
-         Umb9Bw6/grxO6DUzatmD/PBjmL9fIdmptihrB9Kc889Vi9L/rXXP53zhbIIR4FFZk6Qq
-         cqe9s/9lkJf3gvVBbsby6jNBQWT0TgxcE5JvT0ZBDGuo9xiNOw/YGDBe+4X031Cy3bIP
-         NqlA==
-X-Gm-Message-State: AFuF++kd9SSrh89rfxKKo71GpEqVNx7ODyPprXAvCXxCcrHEJJNMZxlc
-	fQFFYkjXaYzGhKJGpUkACTu5+6BcBCldhjXdLaiKeRwbGZC4LBvXTkfiF2UbxOdYZLclOvECtbz
-	JgjPioRx0r4hiedA9UZrW+i/lETp23jRobLQ5
-X-Gm-Gg: AYBFou3ceG3o/SSttENiH5CQ9/VNZfl1apVHnMFHd5OqNHFsA5y0xxf32Fcu4SlmsYC
-	gwggYF+FfMjWavmEND4EwMvh9ZXbCfmo1D4nNtzb5UUxYMWV2fjZW8Y6DUqP2RwUzdb24uEfTzt
-	BBxFSCI00GI14VwvZ5WzzBmDRfpyXu459ihR9zUVi3Lw5lBy5GUNUqz0OaOCEptUsSLhvSHrCP/
-	ZmcgW/I66LwKsA/DKVA6I8jZmtH6S1RqdCbjNFyhBIoaB8xEHfyF1ojHqAoM9ET7FXHt7MuhunJ
-	atWMf3oKSzGWmluGokmeSD2DOjwp7vvWcH+B3X3JwIX+0vmuva8RhTsUlN8tKglWMNHp9zNcB8V
-	rO9PfUg/K22Uk
-X-Received: by 2002:a05:690e:134b:b0:671:3eae:6dbd with SMTP id
- 956f58d0204a3-6713eae70a5mr912664d50.5.1789268299098; Sat, 12 Sep 2026
- 19:58:19 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1789281461; x=1789886261;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=d5b80pzerJ3gCHaBvR30moKiKA9qUlNZYajnhJLIpzk=;
+        b=hjflxyIREnbm7PYGKHbcU5qoRxtZSRhCWYTjup7Uz2+NH6mZC9qfQIPoAPnZKxe57W
+         m/mQOPyfmaYERmnZyRjW8FFrhjk+1osPOpijD2jLoOx/EwFSjJGn+a5hpJdSeDO1F6ot
+         Xw7ClKsEzAuz38dwGSwoS5Z8FzZh7h0rea+gv5eV0Wq89DvfkkUtQcwDS1T3x1RlB+FT
+         eIf+49kheZ1aTwyQAGR32AVDdyxkbiOUxnUhlobOiuihBIqS/SmKI9tZwVTW85CpmJVa
+         5nseTjKFcVw7Jm0n75UTc0nd0uCpZZGHiAtp0zNB0VDm9h6MpbzrBDjgMk2Q4ZIjL4NG
+         W5ig==
+X-Gm-Message-State: AFuF++mRm6ITJ9pjSGjYSCkmKsmm5wbPGTmGphjcoj3yBx4SY9sDsoyw
+	/ojAsFLjcctrqHHE/ovTobAT0WYnd8yNdagjzJZ8auuYK8g3E3WZk0Z9XJajbNI=
+X-Gm-Gg: AYBFou0SUISHANq9JghCxcGBIuVjThLDJ/p34xACelcx8NitzvBFVc75sr1L0khvt/s
+	HibkVAp7H1aOXthn5zjM2L0d9bt0l0UVUqGSgU0NXEy9JmajcfAyJ/KoIHPR4LuAIyZ6YlQ7UWG
+	ijWO/ZX9Z8AKPkY5sKp0+kRPz9IeVU6Mr8N0kEWNkRhQrxlfqTuqkLgSNGbibnCaK39zHDngHYB
+	8UY2OnOvilWncdgCAJRK8amYX/IRRDHPoz2WuK/ryQo1lxdkVEtEaLGaMUlC1aHzfZgQy4mK8WY
+	jK5kdUX4oPycJCecvtuJE4Ss5bdL2j181vX/G/TqU8cYWHAvmSKPmQd+lNJLov13d7hVGvbCnwb
+	gaVu80x8UEoZF5DodhJmeEpMr/3TJIlQ0iZie1sqgWpS5JCZDIJhRapwB9cq9JEZVE6k1MBepBl
+	ObVlufrxNGfoVwNc/LkkgwkrW6ZTHDoMgFAU3HNMX86gAjdzDHFIRt0xDw3uQg+AMYCzFaXW2z2
+	a5yDFF1yGDlzlT9+7E2SzlOnQ==
+X-Received: by 2002:a05:6a21:6f88:b0:3d8:f78a:9349 with SMTP id adf61e73a8af0-3daed2e2f72mr26462406637.13.1789281460900;
+        Sat, 12 Sep 2026 23:37:40 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:b91:ff81:c860:362e])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc4c6585f94sm3253291a12.25.2026.09.12.23.37.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Sep 2026 23:37:39 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Jens Axboe <axboe@kernel.dk>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adriano Cordova <adrianox@gmail.com>,
+	donggeunyoo.kernel@gmail.com
+Subject: Re: [PATCH] blktrace: build the synthesized v1 record from the entry's own layout
+Date: Sun, 13 Sep 2026 15:37:34 +0900
+Message-ID: <20260913063734.708896-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260913031030.E85191F000FF@smtp.kernel.org>
+References: <20260913025827.457116-1-donggeunyoo.kernel@gmail.com> <20260913031030.E85191F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260913024228.72317-1-laoar.shao@gmail.com> <20260913024228.72317-5-laoar.shao@gmail.com>
- <20260913025505.D1F501F000FF@smtp.kernel.org>
-In-Reply-To: <20260913025505.D1F501F000FF@smtp.kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Sun, 13 Sep 2026 10:57:42 +0800
-X-Gm-Features: AcwNN1UFs_X-Jm_BMmrMmGrVOj_gJ1eaEM_SnOPMja5balftl3GALAtjTI952IQ
-Message-ID: <CALOAHbAffg2hfKp0YoQ5V1rYHBqZ7nh43rLiC8k5vsr8tW_oLg@mail.gmail.com>
-Subject: Re: [PATCH v9 4/9] livepatch: Call klp_init_patch_early() earlier
-To: sashiko-reviews@lists.linux.dev
-Cc: song@kernel.org, jikos@kernel.org, jpoimboe@kernel.org, mbenes@suse.cz, 
-	pmladek@suse.com, joe.lawrence@redhat.com, live-patching@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 13, 2026 at 10:55=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Use-after-free on statically allocated kobjects when CONFIG_DEBU=
-G_KOBJECT_RELEASE is enabled
+On Sun, 13 Sep 2026 03:10:30 +0000, sashiko-bot@kernel.org wrote:
+> - [Medium] Size-based differentiation between v1 and v2 events causes v1
+> entries with a large PDU (>= 16 bytes) to be misidentified as v2 entries,
+> scrambling output fields and truncating the PDU.
 
-As explained in the previous version [0], this pre-existing issue has
-already been fixed by commit 7f4ca0d0b40a ("livepatch: Fix UAF of
-unregistered patch kobjects"), which is in the livepatching for-next
-branch:
+Correct. A v1 record carrying a 16-byte BLK_TA_REMAP PDU is 64 bytes, the
+size of a v2 record, and nothing else in the entry tells them apart.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/livepatching/livepatching=
-.git/commit/?id=3D7f4ca0d0b40ac1ccd82ebaf1514c2d26c3db71c4
+v2 drops the size test and depends on Adriano Cordova's "blktrace: always
+record ftrace events as blk_io_trace2" instead:
 
-[0]. https://lore.kernel.org/live-patching/CALOAHbCOFvcDy9kVVKRBAECnDi-vRcw=
-h=3DdQQSC0ENeVxLYB_GQ@mail.gmail.com/T/#u
-
---=20
-Regards
-Yafang
+  https://lore.kernel.org/all/20260913063155.708520-1-donggeunyoo.kernel@gmail.com/
