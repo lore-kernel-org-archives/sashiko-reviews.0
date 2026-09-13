@@ -1,130 +1,158 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f10.google.com (mail-ej2-f10.google.com [74.125.228.138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002AB331EA8;
-	Sun, 13 Sep 2026 16:13:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789315987; cv=none; b=buG/2s/rm+JxRcGh+DBKZgclWTGOEaL4K8wUSbtm8c0R0Syd6YCPd4Tc1lH4vjUo5hFJhnNhSJMSSfb4bS8zvgx75EFrgNQc8jKiwmxrhW1VLA2lEHeRhWsskqr7XTgblg6IzYfln6+GpwPj73Y46TB0dCsWfDUbnvWxAEc3QTA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789315987; c=relaxed/simple;
-	bh=y20wvdB/hCrDKMEVppmgQxqr1c8y+UCBmfERPsoqDLk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iJDOzaZOT2yZpXXj5lEwJdHLxb/s2q5F5orh1lHvD9VE9gcvGy5EkECfjQJib8EcpZIdTx4bYqYcgOexYOm6hUSaFEKVnjhOyGspKmed68XJoLi0SWQKgQeLkysUXxbzB82/UM6lVk6mteDBUe+nE5qBbeOxnzIElLEnEJhqDPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=rQG/AxuL; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF64370AC0
+	for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 17:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.138
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789318945; cv=pass; b=uPg1tIq14koKj9NDX8j1UuBvbc4reNmd1ReovrOk+m5G5FbL8IdB+Xort3GUMQWnt5a4U6EagBJUbZpPVKi2JtzS48ANWPcFirSsYgqNEV3yjThXBg1PcaSUvlVarPU4W5aHv0vAiUsMd0ZIB9eBhC9MKhsCh8MBHs/YqHkkP+k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789318945; c=relaxed/simple;
+	bh=7MqM8rpLnr5z5TUezX4PbEFSVD8MDXRA61Xn6G8NOHk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qAr+v+qHtFJlRtTpN0AwQhdvTsGFkHs3vG4G6lnryeZ29PR25+LBB8Cw6HHIl2jT+KUIWlSlnLRaG+9UUAGA7GAYC0cohpiGdp3xr9J7URuAiCXsp8X4Y8Imk3e6+/HYa5mslTD6CrfjVa/nDWXe1YoJwl7dEFjsD66fyDGYUPg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P5Bye8Mn; arc=pass smtp.client-ip=74.125.228.138
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="rQG/AxuL"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68DE2I503532209;
-	Sun, 13 Sep 2026 16:13:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Y6m2rq
-	q5Dc3KZmgRi4tHGJhmnNcKcJqfHvJoxzOAcyU=; b=rQG/AxuLjz+RuQz2Jzx3Id
-	lwpCTm2DxeB2Nwx3OCpbajEVKpQnZ6VsCmuC6ya1V73bVMyFLjs+iiTB+HRPDegd
-	gj7e7fhefL6IZ4ApWkuAAfbTD4vSIfa/bWi+0NpJjd3WMI94F9+PlUFEQbEuqALv
-	Rket+JDs2Y9IwfAo6AqYptBzULGa2ozgRmk1QCekJ7f7qtfw9KaCy4/enVleQ1mQ
-	SKx1sNDA4sx2UvfO3sdP5X5FNsGA9YGQtoujSIL5kvXj7PgV2+kyB8qmMnx5Ez2U
-	rUpxLBQyrAPTWvP/tIHAOSmPzQDJ8S/Q2iwwz+7N6yklsgsUl8tZQW13QSofcmqQ
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxf4n319-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Sun, 13 Sep 2026 16:13:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68DE51ve796391;
-	Sun, 13 Sep 2026 16:13:02 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnk9j1s2f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 13 Sep 2026 16:13:02 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68DGCveZ31916504
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sun, 13 Sep 2026 16:12:58 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DC6A82004B;
-	Sun, 13 Sep 2026 16:12:57 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 78A7520043;
-	Sun, 13 Sep 2026 16:12:55 +0000 (GMT)
-Received: from [9.111.48.119] (unknown [9.111.48.119])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Sun, 13 Sep 2026 16:12:55 +0000 (GMT)
-Message-ID: <001596bb-0e76-460e-8d62-be4cf0645b07@linux.ibm.com>
-Date: Sun, 13 Sep 2026 18:12:50 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P5Bye8Mn"
+Received: by mail-ej2-f10.google.com with SMTP id a640c23a62f3a-c25b4493edfso113139866b.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 10:02:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789318942; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Cl1x61JE3eEbAtlY7O2I7RXwh3pcT/ezXu5sB1lwkv2hUg2mytSy214dl1EAIjsHyZ
+         YLEdgRP1ISZF68AJssOv9Y82sZD7t5sbkkzHYlwZov94d0QGS0of4YJy0HlnhKdIhH+3
+         vS+XrobHJdHZfNPxZNYfJaHNtOUF1lrOqwQW4t330p6W1ibWf7WEe8xJo8mjOzgXFntA
+         Jn6XKtpAPnbjxbqmQ/P9joR6jDnBz0SNvL/FFQO4KLzqiWXQI89khYGQeYMU0SqZwF+T
+         djhQ9REvGpBSNXB7ZjTWc73v6IkkI9Hse/70pqLVDwF3O28lvG5CkJliSShD8lPIPCcj
+         U76w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=u3r0lTRDt7dv1B8F+vm9KqEdZJPwpZEhR6NU+5nIfvc=;
+        fh=sKpHWfnTbcjzuT2a6X32MvMBQlrkUSHAx6oSYwF4Ym8=;
+        b=QyrhToGojCJkk7U5u2EUMIxN9F3/kdcrBVw3XfvMPfZsObKWIGPch02Fy3UHNWPniD
+         YudBx4knNEct1CrXOnQf7Cbj/LWyh9Vdgk95BmX+a9a7or9t29jRHi4filL0clYKfgAz
+         BtP8N0epBRR78ReE8KSrvbd4+wGLG2aVr88489+C4m2n8/S+yqhNlyJs+FhG8UNqq6y6
+         Sty0Jn5zcUV9oQ3HstbPA4ranwrvk4cpXBYKq61Te7M4O4idhGhmyxWf540qVvRQBwF+
+         INnPpbiPJ0klQ4VtI7prJKd2YtGp0SUYtwR0pHEVi2FtHRSfQtoooo4d6YKivmaucKRa
+         6+sw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789318942; x=1789923742; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=u3r0lTRDt7dv1B8F+vm9KqEdZJPwpZEhR6NU+5nIfvc=;
+        b=P5Bye8MnAGJfrAQCliDcUeBoMnjfQUEX0vJ7OqOxO+IgBYVhCAon1YRlhyowbe11u7
+         o+PpsTovN1+uBr2AdI5ub2DXFOuIz6A1/Wi3BGKBKZ/PB+vGMoU2NnfZaK8Umai5yAWH
+         ScyEWPfWSwPN17E2sdECt8ewp+77UJbs2D8dhCddZwMTd9NR4nIdCwmOWaEPAKqlRDIo
+         KHGmwHp2X4wS4UUR7sncmLBTtAl0OErsj5anL8fpQHyfY3OrdwCz00YlIanuNRIpTMcP
+         yqkhZyy9zIAKzj2vQF95yjbnibo7Eq/0OF0n2AmjgnVCX8lpC9wcalR5yu9Z/CH3Vibz
+         C/Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789318942; x=1789923742;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=u3r0lTRDt7dv1B8F+vm9KqEdZJPwpZEhR6NU+5nIfvc=;
+        b=sYKKs9vgNlEMDF0fzbIWASKVcpSrkVgl7RsgcqINX07e4KPNT7aVAfA0R40exK3UeW
+         MZ8CxtNEiAo9sWKmaGsnvcixmgssNoGJqXGXePmFIK3WaverXzMbu2HuQEHgUBy/UIqh
+         oQ5XH3dggTLeTr22AOupCvDgU8J4oRy5QZbr3a2x7/6oDK6/vy2qeQo3NkKiBRn6dtz9
+         YAVWiSHaSqxs0a9lQmj+LFIBepeVUEv6X/39elZu3HzJPe6pAtwdckDOF0o1/XYLtY8a
+         +nibakrHKSGp+cP/ZZcFD/P6o5XLSTgzKQRtlxJ4RW0Ihr75FP/26dgl3eQvu/+ZYln+
+         fbrw==
+X-Gm-Message-State: AFuF++lQc//+s52GAJ3lYWKEfHpy7mq0LDi03z1BmIAWb/xq7B5VmdfD
+	5V2td3/nDepIZTMiwp+SJ3TX/xjtmdkIj5zedTH4VM53jaFn/GWYWSltyHA/t/zgSWWluido5U3
+	FMCilusvdBQjuWJCqgKOWNBW1Iu3qE8sXX5Jr
+X-Gm-Gg: AYBFou3oBgTli/jAUs8mY59FD5zrvonTIK2hFuSHherTsxO3RrCTC8GKk8rqtn8XS5Y
+	s0YNMyz1QV5LqExAj8a8lFrKgg+n1WH/g4RCqeWMLRIosMcI60AxEun29kkhALT+cdmiXa49N5A
+	a/MjyfjWO2RPm5FiuTi8CW7HTZjvxyWLlguBiC3RYrU7h+rwYwSXH9RwwEG3wBgE+OLjqB06JET
+	L28taSVnXXJflgYv0sYKP1A0edfpDcaW+TRnr+1JM/Ob/DU1XNLadqaacSUZH84cCLUoW7n4l50
+	EMx4mGP8H0GdE/39fxMBVR5rV+AW/5csnmxETkf08HAtJz/5AiEtpCyXIw==
+X-Received: by 2002:a17:907:72cb:b0:c25:8c74:71e6 with SMTP id
+ a640c23a62f3a-c2966537005mr646354966b.10.1789318941762; Sun, 13 Sep 2026
+ 10:02:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] net/iucv: Add lock nesting annotation in
- iucv_sock_close()
-To: Simon Horman <horms@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>
-References: <20260910162919.2100124-1-wintera@linux.ibm.com>
- <20260911162945.B92321F000FF@smtp.kernel.org>
- <20260913134209.GH48209@horms.kernel.org>
-Content-Language: en-US
-From: Alexandra Winter <wintera@linux.ibm.com>
-In-Reply-To: <20260913134209.GH48209@horms.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: NHl932T2tOEeQyZVPDxbpNHpMEyT8yvg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEzMDIyNyBTYWx0ZWRfX0afjv4q6EcYN
- b1aWPzXvcXftYeVWwaulPXiaCELvAjzaSiRWDwHWU7+BcO8PliW9EE/QzuHHpDjH1XfzWuP2IE2
- Iij0XwvNB/yNpC/055rR0+Dx4Oro4Gs=
-X-Authority-Analysis: v=2.4 cv=cvgOAF4i c=1 sm=1 tr=0 ts=6aa6cb8e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=RiEY9gyW2IlFH4kpdRIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: NHl932T2tOEeQyZVPDxbpNHpMEyT8yvg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEzMDIyNyBTYWx0ZWRfX7vZ66NY04TAI
- THxGgTE4tu21aw3swu+kRHkFJPJ1NtDsfHgAO4qXBNPJebbd8bdqz630PxH64levVzQBzKBFyD+
- z1Lc2Mib76PtLs5k4youEitn6LNlMP2+ZKS+Td5o0SSUVH8xI/z5LIAuJBjPZ8hyTi3vIpZnTq8
- 5XJJe74Rkb9824qw88g6rJ2/N9QkaoEWwDIL3iPxQ/M0/WodmMtmzyVFGM8FhLyi9uv0v3XJg2Y
- s68Z50W/Ocs1LyNjZY1lSPIqd0YprTRAkl+4spqfbEbp6oI0vspF6cZgcO9WwlokAgTAW1qfsMT
- 9XOCqXrN641rtVhCB2/iZ+T9g5uyaVn68usxLRiRvTEnBFTObP+iIn7pBCzRC89W2rtXDDBgWmU
- /SOFNSJMLNpBGynr77/nJLgJbZrmpUBzxG6BPVOez0WA085FZyOe7hBecsIZK1fu2sMNcrXqHeS
- hiHomEyoxxmcrf/Rg7g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-13_05,2026-09-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609130227
+References: <20260907153713.2572547-2-coiaprant@gmail.com> <20260907153713.2572547-9-coiaprant@gmail.com>
+ <20260908154108.6864E1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260908154108.6864E1F00A3A@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Mon, 14 Sep 2026 01:02:10 +0800
+X-Gm-Features: AcwNN1XgtcPUOC2eP2OxkBkMdRnvIa2R9l1DdLogBuRgiStmD3sxsfDlmW79idI
+Message-ID: <CALj3r0i79sWnhyQU2xmECexi8G2VaznVOHWnuzdw+h9AzeKNSQ@mail.gmail.com>
+Subject: Re: [PATCH net-next v4 07/10] net: pcs: xpcs: add Rockchip RK3568
+ platform glue driver
+To: sashiko-reviews@lists.linux.dev
+Cc: olteanv@gmail.com, linux-phy@lists.infradead.org, 
+	neil.armstrong@linaro.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	vkoul@kernel.org, conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=888=E6=97=A5=E5=91=
+=A8=E4=BA=8C 23:41=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition in xpcs_r=
+k_create allows a concurrent unbind of the supplier to free the MDIO bus, l=
+eading to a Use-After-Free.
+> - [Medium] Incorrect LIFO teardown ordering in devres clock cleanup actio=
+n violates proper device initialization and PM hierarchy rules.
+> --
+>
+> commit 7142dbf6b28b5ee94d0edc969bcf16d1183a5f41
+> Author: Coia Prant <coiaprant@gmail.com>
+>
+> net: pcs: xpcs: add Rockchip RK3568 platform glue driver
+>
+> This commit adds a platform glue driver for the Synopsys DesignWare xpcs
+> integrated in the Rockchip RK3568 SoC. It creates a virtual mdio bus to
+> translate mdio operations to apb3 memory-mapped register accesses.
+>
+> Link: https://dl.radxa.com/rock3/docs/hw/datasheet/Rockchip%20RK3568%20TR=
+M%20Part2%20V1.1-20210301.pdf (Page 2078)
+>
+> > diff --git a/drivers/net/pcs/pcs-xpcs-rk.c b/drivers/net/pcs/pcs-xpcs-r=
+k.c
+> > new file mode 100644
+> > index 0000000000000..68bcaa1a5cbbf
+> > --- /dev/null
+> > +++ b/drivers/net/pcs/pcs-xpcs-rk.c
+> [ ... ]
+> > +static void xpcs_rk_exit_clk(void *data)
+> > +{
+> > +     struct dw_xpcs_rk *pxpcs =3D data;
+> > +     struct device *dev =3D &pxpcs->pdev->dev;
+> > +
+> > +     clk_disable_unprepare(pxpcs->eee_clk);
+> > +
+> > +     pm_runtime_force_suspend(dev);
+>
+> [Severity: Medium]
+> Does this sequence result in the clock being disabled before the device i=
+s
+> suspended?
+>
+> In xpcs_rk_init_clk(), eee_clk is enabled first, followed by a call to
+> pm_runtime_enable(), allowing the device to become runtime active. During
+> teardown, pm_runtime_force_suspend() invokes xpcs_rk_pm_runtime_suspend()
+> to disable csr_clk.
+>
+> Calling clk_disable_unprepare() for eee_clk before pm_runtime_force_suspe=
+nd()
+> violates last-in, first-out ordering, disabling the prerequisite clock wh=
+ile
+> the device is still considered active. Should pm_runtime_force_suspend() =
+be
+> called prior to disabling the eee_clk?
 
-
-On 13.09.26 15:42, Simon Horman wrote:
-> On Fri, Sep 11, 2026 at 04:29:45PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [Critical] Lockless traversal of accept_q causes list corruption and use-after-free due to concurrent modifications from softirq context.
->> - [High] Newly allocated sockets are permanently leaked on error paths because iucv_sock_kill() returns early if SOCK_ZAPPED is not set.
->> - [High] Child socket leak in iucv_sock_cleanup_listen due to late state update leaving a race window.
->> - [High] Unprotected state modifications in iucv_callback_connack cause state desynchronization.
-> 
-> My opinion is that the issues above are all orthogonal to this patch
-> and should not block progress of it.
-> 
-> ...
-
-I agree. I think all of them were reported already by Bryam Vargas [1]
-I need to get this one out of the way, so I can reproduce the real issues.
-
-
-Linkk: https://lore.kernel.org/netdev/20260724222917.134769-1-hexlabsecurity@proton.me/ [1]
+Sure, I will reorder it.
