@@ -1,156 +1,217 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B6440EB9C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789375160; cv=none; b=FUdpolTATZv8m33Bbggl+RIWLacPinxL8cIC2qqZbPKzShsja+ybzl5VNOrrFivtVpYrmh1OTDvqb1mXx8BzekrTcFCHhjipCD4wnlVIs8qnGv0jF8qLDlifPBiruAZyqKtZY4RdfHd9uJXSo8xK+DR5MCkJUUcEGG4f8kEa85Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789375160; c=relaxed/simple;
-	bh=T/NQlj4KEFbvcTcKeRCSLdv1JT6NuTOoCJ9yjBSuhIs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iPc2hd/B132Te+0346JtLYK9p2qRfsikO6jleJ7xwVIBnvjO/XIMnY5wCLyR8v0SCHtrqE/6l9voZZnmPjGs+9G4DCasjsyeUF6SjxQTGkxHT+RdH+c9nrJGKa0aGzDPKscpOu7jybKdix/Lyiq5I7T2yWSfpnVA6RnFIrnqJmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPKsmHkV; arc=none smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4DD279DC3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:39:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789375181; cv=pass; b=qk9YfmR1XbxpoaSr7qS2pypUATDvQjR95/hGW/sQkaaGfQ+hxyH+mskPiSFu2OW6+YU4MJqTPUmKwSHKMzm/BtoDepXVaKndL+I+4iKda0pSgp7QePa+deTTo/+k9VZswjCDRy/CjhYp59u34Qv93BVO8tAw7yG2jXCkX2hRvzw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789375181; c=relaxed/simple;
+	bh=qcoMC/s+Yrc0wEY/iKMF45CQwVjH1i79yiWScSddz9o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SH6f1/0LAhEdJCNvpe9eREuFzbwRe4Dc4oYmx4iuwH8BCF4w9SQ/tJPa9wETTSslOXR+4ZiIOakzUwDbMvioTVJ1WNjPobY2GhZgApYvmk25doxjRteDRge04/J9cggnOqg77dEHyN8EnjeQR3DNQIy+KH1uVVEr/4y14wQCVvY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rdn2Mnka; arc=pass smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPKsmHkV"
-Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469b355ffso948883b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 01:39:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rdn2Mnka"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-93a10f9a2easo131309285a.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 01:39:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789375173; cv=none;
+        d=google.com; s=arc-20260327;
+        b=arw31okJsTHF1sbs5+dpjgwrN/N7eVoinzkt2OrVWCrDJ23is7tWnX/hg8GihnGaDx
+         nNVPSPTRVW06rNyVAUAKQ2EpzPW2l3GqsLmSw40dFSKTNDJJGl9wCfVauqGU5DjYGaMW
+         gHWJxhRZz1aKAYRmS6aHpXIEIvZLx6xM19j2Vh2ZVrrmTBWXQygmiUvyKRPVfU4Vfdvw
+         22n4IVoJffxS6txdmboejrUwtkbL/8BrWBW0KmaRkFsdITF55eaNDDMUrBr1SeaOJ3BY
+         C0cx8g9eSZu7TKDqu1dgCV5LUfKZx4B6XrsFIwd1R6G84g0SUSMR1JhKRx8zCxM0OZ+5
+         T7uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
+        fh=Gm9wmu1k8YqrdUHmcyzqJMq+MJRbGwMyGWRI+6dhf48=;
+        b=lvXXAPInT06lSe36jkzymERrTAxB/Fz76KMr2HOeovWIgScdqcKeWgUglt2GnHr1b0
+         00/KLrC6f7JX/2U499qrMtDOyYBmXcGd2/MAAmhuCbAApW7oumZycFkcHg28JwWnFj7R
+         fyOxFGgIMvWBZI/wWAz9lYSNupiZiGH/fabYyYu5u1kRYvSOpYfudtPsm/qGYZa4VJyg
+         EWDQV1FWG4WYliK4kbM9nILZ2l2qn5sQhbAJffmgtD1j7PpBnBvQOzXKX3RoBuBXCTL/
+         3xLNvcVWWYMOaRLwt9CwgXJ8sT3FkCVrtNqDfG77+iqDJG9OPomsv7ESgKZziEMUZGrD
+         4F1g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789375157; x=1789979957; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=eGBrkoHMIJFGZ2LVPMmbnKr8Js6OWQm/jH/GzpXmdy4=;
-        b=SPKsmHkVv40wkFzbsiXHD0T+MZhYqE1xQKRQp/uVcFW3v2kJ3/sdGsZv9eDrI/i7Gm
-         4j19JA0+1/+iot2dY48Cu2NjL08XDkv02a9iYpKtJEa2HhdTHF/bc4a+a166u8Otluvn
-         HMLiHIGEvvYdX7as68WtyxX0VwtIBg5KtzZGZOxVPzOvCm7vyK82Ur2cSiFSkHQs834B
-         X14aYZDNKrL6qQrs/QH2WWAq/ylQS86NGIbkOlTIj4qS44PsJw6bttHSmcVL9RKJllw8
-         TOhOQN2ngP/r9GJxbKNgCOXfeOdypsrNI/PQ2GsqZkwMe5GQl7Ic8BG/foDX+0lQk5JL
-         XnXA==
+        d=gmail.com; s=20251104; t=1789375173; x=1789979973; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
+        b=Rdn2MnkaBjLRc8WWIb2bi5VddCu9jUdvTf6cG5YKLsVngkFclmxxkFP8CMgMvYErgh
+         /GD0Bb5e47N1DQDcNK/Ws91KVEru8+9hK+07W4pDcAkcV5imdw5ldW/r1XHqQMqA3/xm
+         7zqZDS+qTQ2u1lRDY/ec4shifdywpWgf7SncZ/XCMUwpfBfBDqtZ9Nf9qtO0kwyy3uzs
+         gZUDsg5W9u9cdbBm3+RLtZmtNvmkzusrSW2J7I5HdRsmWZ+i6m0Q3tQsfYKhq0a+DbJt
+         HD6R3lY7Tspqqm7mBwDFi5qkjd1HoPDNCwHKTjLshJwIPNOYpy/FK9SrjY+apYt4Psgl
+         S0zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789375157; x=1789979957;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eGBrkoHMIJFGZ2LVPMmbnKr8Js6OWQm/jH/GzpXmdy4=;
-        b=pdE2t6YibI+YH60b6svhOwFDTiVKjeFRf7NFM28OEpJ5i21nNvBp6Fckb0t1idCUJh
-         bOdnYsLn/YpjfNVI3XkEMphGOI/nhArdXFXue9ICJ/CIm6N4HY+IpkPxtpXi89/KD7f3
-         hzdKMP8KaNCa8LDKJQLhCxCvoeFf6kP33XIOvFUp7DxhLFPVuqJmsNFKPR2mwqupEYfX
-         JLMyT4ZzU/leodyU0A8H6uVtDw8rQyYuoGsWo0vpmVxCnbmfY2sm8Uown3GSkYt5FmQa
-         n+mxzzWKhKB8wkoXlNe77AbZeGCekNqNEiSCCnRiR8va+0Ot4njxW8Un0kLAi2Em/LYx
-         2JqA==
-X-Gm-Message-State: AFuF++mVuvyIlz6UIMuomYMqeF5V5X8P35s8lEMdlBjJ5usDPUnlztj1
-	+jdHCTV2ukOZIJ4p2BCHI3BBP071SGJLldFcjDYHWa5h2An5wKqV0CjnwpBvvPmnEFE=
-X-Gm-Gg: AYBFou3YoMTd7o844w3vibrwVgsdcn0WTa0BwNnBk1QR0UdeJLRDsYmmxXwF9YiMyfx
-	sMxEXTzvCucsnDb1Cx2lyrGzU9NS/fxUSH27lcK5JsrxHbCfkDH/0rG99pCWd6KKzs5IwVvZgEA
-	TPn2yC+ImkRQdVUSDKvyvfgHmVJ+T1yZwFZuNRG09ibzmgp4xwSF71/wVyhA3tWl+GVOu4cz9dK
-	QTfcjaDC+BuvOHVrljlFH3Jrl6aLyu6BSWkvBBamjSjXiHAfiQjYI/K4RgHwEJhXfvOlQrpWOWP
-	83ANZ0hP4Sw4wDPD84HGN9bY1sWoxMtwRJcR3ueigBZMvBoTnLyI6vdZpwmeKBjWlpnxk0jFPUK
-	uxBORImx0n5pj8ia6OnhCv8HActZsbaq456dyMmGGYCJry6tnHAlgA+RhEdPMKCvUSXPtONtoxL
-	ZrljH8vB56DOwfXL3hhlz/uYnPbBchBETk61aDoa5eGLjQ7ifsiP4tQmMNt4wfYwPjW/sI5dNfb
-	oNCOcLehVt9uwWUnpM=
-X-Received: by 2002:a05:6a00:950b:b0:846:de21:3da4 with SMTP id d2e1a72fcca58-86f82a5f333mr3496436b3a.3.1789375157194;
-        Mon, 14 Sep 2026 01:39:17 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b29bb8f28sm4294932b3a.40.2026.09.14.01.39.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2026 01:39:16 -0700 (PDT)
-Message-ID: <3b84eec4-82c3-409b-a5bc-5a68a8aaa9b8@gmail.com>
-Date: Mon, 14 Sep 2026 16:38:27 +0800
+        d=1e100.net; s=20251104; t=1789375173; x=1789979973;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
+        b=Z4bm8UNw97hkwnDiSzlsDSyLATCUHZrnm9kQ8mq6VWjyhHjxQCMPiy6fSaMvGw2qhh
+         5LSwCcjwJz0rRCBJZPlvmfLwFLGK78BhsPkVeJk7C9gPkmvtFE302Ou9AoIZuXAmx8qP
+         QfRjBHNyRridN6iT0AKdfaDj9XqB46XQEPMwngFTWFJZkbJwaVmTpS6bFb1tJ1jAWMd/
+         wsjl8MuPq4ZAJJ2MAFSDm1oI8YB0s/L0le1SyYGxxeRQtC6gJpfeFIRCrjTjj4rfAIk0
+         WuKCGki1fw1AlcNwZDiAKH/MhQASRkVNshvlfEBafGq0tIfTcEa/Rn4ibBDzcuuLriCa
+         zG9A==
+X-Gm-Message-State: AFuF++lBzh9H854pN3ra5TBBm5C+W/0fafjc2+G45ninAp3IHzpTGb6S
+	IDEFQzFutiu9b/NuBC9O1L1u/BNLP2nGK1PNyg5grGD/V8FDz5KDxq8R9hNqE4i2BfsSIiTliH3
+	HdCTcG/x2wCX1H0fIiIPDNLkM7Nr6yewSqPv7
+X-Gm-Gg: AYBFou24YSTqUy2/B45Pb5FWKeX4Y3aibvQN74wM20VJeYouYqk5eo1azjUs20SCJWc
+	Bb4V5tFOd0Z5GnRYjOgZg3ufBU0knt+IjavcA0GtA88CCP7m6S2VCUQswqwd28q90Z20/gKVQNi
+	sEiP+UfWm0amJRYVI5UBNbmMJ9QlDxHXBLD8dCa7cI7tWozY5g7VrlSmqabcVEcFzwR3x8hpcvR
+	H5ptn5M+knRlbNwWKpZYVv9GK1GPEzrIHsrElH9e01od/cqyw30HAcX3n7osmh64r9ZFqJIyuTZ
+	UIZwRD0XqKgfLw9qaDVnVH6dPWwMsTOCb2lEpPdeFrmHAW8d/6olJJM=
+X-Received: by 2002:a05:620a:63ca:b0:939:f1c2:7df7 with SMTP id
+ af79cd13be357-93a187b5cf0mr518226885a.41.1789375173301; Mon, 14 Sep 2026
+ 01:39:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 30/31] ext4: partially enable iomap for the buffered
- I/O path of regular files
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
-References: <20260903123543.2302999-1-yi.zhang@huaweicloud.com>
- <20260903124017.2325538-2-yi.zhang@huaweicloud.com>
- <20260903140457.8A92D1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <20260903140457.8A92D1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260912090420.47439-1-physicalmtea@gmail.com> <20260913090452.2B8221F00893@smtp.kernel.org>
+In-Reply-To: <20260913090452.2B8221F00893@smtp.kernel.org>
+From: Jia Jia <physicalmtea@gmail.com>
+Date: Mon, 14 Sep 2026 16:38:57 +0800
+X-Gm-Features: AcwNN1XVuYU0HUchoPplkYqW2a005r4W4YLv5OFcOP7MGcLCwxwN9odGIIkQaFk
+Message-ID: <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
+Subject: Re: [PATCH] vhost-scsi: do not relock event vq mutex on send_evt fallback
+To: sashiko-reviews@lists.linux.dev
+Cc: virtualization@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>, 
+	Eugenio Perez <eperezma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/3/2026 10:04 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Concurrent buffered reads during dynamic transition of the journal data flag cause type confusion on folio->private, leading to memory corruption.
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] vhost_scsi_do_evt_work() accesses vq->iov[out] without verif=
+ying that the guest actually provided an input buffer, leading to arbitrary=
+ user-space memory corruption.
+> - [High] Events are processed in LIFO order instead of FIFO, which can ca=
+use state corruption for hotplug/hotunplug sequences.
 > --
-
-This is a false positive. Buffered reads do take invalidate_lock.
-filemap_create_folio() and filemap_update_page() acquire
-filemap_invalidate_lock_shared() before installing the folio and calling
-->read_folio(). Readahead and page faults do the same.
-
-Thanks,
-Yi.
-
-> 
-> commit a5650f621dac34bfe427e11f706ab1c16d533afc
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> 
-> ext4: partially enable iomap for the buffered I/O path of regular files
-> 
-> This commit introduces ext4_enable_buffered_iomap() to determine whether a
-> regular file inode should use the iomap buffered I/O path. It also modifies
-> ext4_change_inode_journal_flag() to dynamically toggle the buffered I/O
-> path and address_space operations on an active inode when the per-inode
-> data journal flag is changed.
-> 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
-> [ ... ]
->> @@ -7598,9 +7695,10 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
->>   	 * the inode's in-core data-journaling state flag now.
->>   	 */
->>   
->> -	if (val)
->> +	if (val) {
->>   		ext4_set_inode_flag(inode, EXT4_INODE_JOURNAL_DATA);
->> -	else {
->> +		ext4_disable_buffered_iomap(inode);
->> +	} else {
->>   		err = jbd2_journal_flush(journal, 0);
->>   		if (err < 0) {
->>   			jbd2_journal_unlock_updates(journal);
->> @@ -7609,6 +7707,7 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
->>   			return err;
->>   		}
->>   		ext4_clear_inode_flag(inode, EXT4_INODE_JOURNAL_DATA);
->> +		ext4_enable_buffered_iomap(inode);
->>   	}
->>   	ext4_set_aops(inode);
-> 
+>
+> commit 05830c30fc2e4dc682c270a9b487ae5abb66218b
+> Author: Jia Jia <physicalmtea@gmail.com>
+>
+> vhost-scsi: do not relock event vq mutex on send_evt fallback
+>
+> This commit resolves a deadlock during fallback event handling when the v=
+host
+> worker has disconnected. It splits event completion into an internal unlo=
+cked
+> helper and a locked wrapper to safely reuse the completion path.
+>
+> Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel=
+.org/
+>
+> > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+> > index 4f8c0260bc9e7..42abf18291b75 100644
+> > --- a/drivers/vhost/scsi.c
+> > +++ b/drivers/vhost/scsi.c
+> > @@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, str=
+uct vhost_scsi_evt *evt)
+> >       vhost_scsi_log_write(vq, vq_log, log_num);
+> >  }
+> >
+> > -static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool dro=
+p)
+> > +/* Caller must hold the event virtqueue mutex. */
+> > +static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool d=
+rop)
+> >  {
+> > -     struct vhost_virtqueue *vq =3D &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
+> >       struct vhost_scsi_evt *evt, *t;
+> >       struct llist_node *llnode;
+> >
+> > -     mutex_lock(&vq->mutex);
+> >       llnode =3D llist_del_all(&vs->vs_event_list);
+> >       llist_for_each_entry_safe(evt, t, llnode, list) {
+>
 > [Severity: High]
-> Can this lead to memory corruption due to a type confusion on folio->private?
-> 
-> When toggling the journal data flag on an active file,
-> ext4_change_inode_journal_flag() truncates the page cache, but then blocks
-> on jbd2_journal_lock_updates(journal).
-> 
-> During this blocking window, a concurrent thread could perform a buffered
-> read on the same file. Because ext4_file_read_iter() calls
-> generic_file_read_iter(), which handles buffered reads without acquiring
-> the inode lock or invalidate_lock, the concurrent read can instantiate new
-> folios into the page cache using the old address space operations (for
-> example, attaching a buffer_head structure to folio->private).
-> 
-> When jbd2_journal_lock_updates() returns, this thread will proceed to
-> switch the operations via ext4_set_aops(inode).
-> 
-> Will subsequent operations on those concurrently populated folios invoke the
-> new iomap operations, misinterpreting the buffer_head pointer in
-> folio->private as an iomap_folio_state pointer?
-> 
+> This is a pre-existing issue, but does this loop deliver events to the gu=
+est
+> in reverse order?
+>
+> The events are added to vs_event_list using llist_add(), which constructs=
+ a
+> last-in, first-out list. Because lnode is retrieved locklessly with
+> llist_del_all(), and the iteration happens without first calling
+> llist_reverse_order(), the events appear to be processed from newest to
+> oldest.
+>
+> Could this cause state corruption for hotplug and hotunplug sequences? Fo=
+r
+> example, if a device is plugged and then rapidly unplugged, the guest mig=
+ht
+> receive the unplug event first and the plug event second, leaving it
+> erroneously believing the device is still present.
+>
 
+Looks like this could get the acquire order wrong? Need to verify.
+
+> >               if (!drop)
+> >                       vhost_scsi_do_evt_work(vs, evt);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but can this function access out-of-bounds =
+or
+> stale memory if the guest provides an empty input buffer?
+>
+> Looking at vhost_scsi_do_evt_work() in drivers/vhost/scsi.c, the code use=
+s
+> vhost_get_vq_desc() which populates vq->iov:
+>
+>     head =3D vhost_get_vq_desc(vq, vq->iov,
+>             ARRAY_SIZE(vq->iov), &out, &in,
+>             vq_log, &log_num);
+>     ...
+>     if ((vq->iov[out].iov_len !=3D sizeof(struct virtio_scsi_event))) {
+>         vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
+>                 vq->iov[out].iov_len);
+>
+> If a guest submits a descriptor chain with only read-only descriptors,
+> vhost_get_vq_desc() sets in =3D 0. The out variable holds the count of
+> read-only descriptors, meaning the first writable descriptor expected by =
+the
+> host would be at index out.
+>
+
+This is a dup -- an earlier patch already fixed it:
+https://lore.kernel.org/all/20260904005240.502787-1-physicalmtea@gmail.com/
+It was while fixing that earlier issue that Sashiko spotted this
+adjacent problem.
+
+> Does the length check above access vq->iov[out].iov_len without verifying
+> that in > 0?
+>
+> If in is 0, vq->iov[out] was not populated by vhost_get_vq_desc() and
+> contains stale data from a previous request. Could a malicious guest use
+> this to force the kernel to write the event structure to a previously
+> legitimate but now hot-unplugged host virtual address via the
+> __copy_to_user() call later in the function?
+>
+> >               vhost_scsi_free_evt(vs, evt);
+> >       }
+> > +}
+>
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260912090420.47=
+439-1-physicalmtea@gmail.com?part=3D1
