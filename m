@@ -1,150 +1,251 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FF5481FD6
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 15:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789401038; cv=none; b=IrOQ14IBOa8Q7j1u0QeS2pmYm48Eb/uw3W3+y/cGeIXCGu6RIlOCGsOuK1CVaKIwktsUVh8UMDb8Ee5If10JH1C63y3tmpxon/65uAyBPbToXX8p8q9MdQZiZZQ2Lqb8h3jzW/1sqvC5ZIcQHOB/dcQrJq74oDLj07mv+VFpOgo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789401038; c=relaxed/simple;
-	bh=k451+gMOysD3Eraruqh9nJz/poTGrMEDToEArn6yRI4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CblUeM7H3IzoriGxNVqHVtmCe9zWLS736gaalldOxCXLUAfVE/ZB19g3dN50K0nF1j6dP9sx6bf77p4W8xabJQyTogVzyGau4LOJVtB/kcY2Gs04vne/QmtQHkHLdXWDgp6DVL3uog7rYWvsfzcT/KBoTkSsVupGjRls4FECwK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f2NdKtfO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N5btawHz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625DF350A18
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 16:06:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789401991; cv=fail; b=NkSL23NN/JYUd0PSi18VExehZ+m6xC7hOw6QuD8AfWe4SPjf+HVH84SR2D3qof6WLF5ZPX5Q3WNSTnmYCtrALuGGn5twfMxCswcoKImsvPuK5WaLG3NBDPcLkaTx/r0J1l47xmEHmiNrtiNjje5kc1IGFp3bknYedF6akZzv8gQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789401991; c=relaxed/simple;
+	bh=LrD2zsBWMWDGXMDeVpDxRPnz4hBX2i0wtkAE0A1i6Og=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=fUSn0EqICuemtwsftAK3D3u6KM9Bte9bjXAZ5fQTgVnF3zan/S0XQwr0hPRMb7jyXOXPke7VuxDVduUwQGuusg22bgY88DRg3qfGUwEjXzuROEOQ3lvK2NHzTMi362H1j6ZzxC1nwat1Eaxb/lSqiGmUZ/z5QlEq8+/CPQhKLg8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fI24q/ir; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f2NdKtfO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N5btawHz"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68ED0haF135640
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 15:50:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YjWmSI9LLOuF7sYbpE+FB6ICXzIryi3249bljTKVuPY=; b=f2NdKtfOUYGVlnBz
-	sKa5mCo4BlYuw5G9NPaKCRUph6mcjLxlgTV/yUZ63Zgjtse65IARtI1F/svI66CL
-	/ghW6/jH4lFsw48ok1ZU9vHkqRKz0iujyibu9wfQI0s/E+04+1g0Jtw8wpb4ESYg
-	qZM+AWEVG/qXdkrQ3n6YcLND9CgTiyCKK7LfyvudS9Ts5uFdj/wbWkG2kiedNwNM
-	Z+rr9MaORAdx+i+X9v6bwaiAYk9q0zslcRum3IxbvFjcuOmJebg3QDDxEjDXGDOY
-	Q+4RQ9bsdsi8cJP0BB9dJjqBVw1lpYVU06HnV+BLG5RUG0ImxqUkItD/UmfJ1DD5
-	bz574A==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com [209.85.217.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpeuq9dk1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 15:50:36 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id ada2fe7eead31-7909e307799so3225789137.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1789401035; x=1790005835; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YjWmSI9LLOuF7sYbpE+FB6ICXzIryi3249bljTKVuPY=;
-        b=N5btawHzuSKjCdfo9rTOHZPuTiP+plXdUlsC1JcJ5JPNePaeAU35oof/EfOdpzN5HF
-         nZNGFWakJjfazQHdlChmK3/wnFakw2lOeFNIpKt/jm2SlKSPIYz4jYsgyEfb5MBTaGZO
-         i1K5zsgSr6GOHAp4dWdK2G1tb06KRDiOOqGgruVdUvFqriYSDPKcl9tLO8d+G/XJUf4P
-         k6YYDc9tz58deXSsIUzimzvCoGhtpJz9Ine80m4yIUspeOt7xkrY6oD3cUGBurdYQM2q
-         JejjAfTO6GwO6mVVg922RDor8+InbhaGh1SiFmfeEY+rUgcMg3GzmMeWn23aIcxA8iDK
-         Hsdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789401035; x=1790005835;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YjWmSI9LLOuF7sYbpE+FB6ICXzIryi3249bljTKVuPY=;
-        b=nQbRxQKRh4MYe2rGUB3CHG0osZimxYAttXcX86th88n1biOkUDtXpr/cdUdXIJgPQP
-         o+WMtAwEQ0xc6JzmAWU21IRyRK5JUk0l+VnUeFLRD4kSxgEcQ/vOs5LL5I3AmH1e6iLI
-         pXJxOvztmw48O26bOX6B91cv3RSKelolk05EA7YZfpicPntCAh/hfdLgNDOAJyJWscR5
-         M1Y8Izs4X5M6e7ed2sxcDdxkiGDyD4o57oezjMA6Fhu8xyzL4qdxjiuwaOeRAeGrp7y9
-         0nnxjIRWCzDc0YaVlsUux1JT2Q82siM3bQ4UX4bWoJ1p/aWyw0r7GsKnGVkSi7r8Q+8v
-         222g==
-X-Gm-Message-State: AFuF++msfLjfctCHIQE81AOFDQNV01Sil1poZxNaBlAR4MoUVcqBtzCQ
-	cOvHFniXVzYvnpNnaLvSl65ENNz9KiIOHmT/qd6CjI/XHkkEuJ+YuwuOXZpwIKIJZhuaUXslLYu
-	yEoLAIbQ+vL8RnfXCgqGxdm5q1PBcdQe5jGW3yBgqMRh2FS9PnKd5LCXZr/Uzl+9Vymw69Q0s/X
-	KL+3A=
-X-Gm-Gg: AYBFou2L6V4zG70MHk8HzCrIq4A2gfS/8A5MgrqLJD14+G2hLhXjDHnIbAEE+pU7Pxi
-	alHEn/s4uTBGUE96ePn3Nt3yrr8T3Cdk9mKYLGCOV3ofxNoBt/fVQZ0xE1W7poph+DWxrcdHLhI
-	hDdeL9fd/WF/vIlRZKrXwcS+Q7WkXCOx7sry2aueiP5lzPIGua2T181/ZK5wiBsQjNXLOvhUFTK
-	gKbuaxOdLGzuQWLie1Tbl/JR8CcklEIJCViI1aki9W3g+YySxAYy7WL59f6v0JLjVlPXwuZGkhv
-	HCTdIt9zYy+bg+JkHdlXJxsnsGUMRcuDrYEMLi5YXHuIvv/Buroi+AheIQmE/p25llYaBtqZ1CI
-	btlxYa0j6QAaWdy/Z1Mlp6XWoNx1/
-X-Received: by 2002:a05:6102:160b:b0:781:1ac:8232 with SMTP id ada2fe7eead31-79b58393a7amr2922900137.5.1789401030222;
-        Mon, 14 Sep 2026 08:50:30 -0700 (PDT)
-X-Received: by 2002:a05:6102:160b:b0:781:1ac:8232 with SMTP id ada2fe7eead31-79b58393a7amr2922808137.5.1789401029651;
-        Mon, 14 Sep 2026 08:50:29 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.219.214])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49e7d6a9d1dsm717375e9.10.2026.09.14.08.50.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2026 08:50:28 -0700 (PDT)
-Message-ID: <c4eb78c2-ec82-4246-9050-74c59acf0615@oss.qualcomm.com>
-Date: Mon, 14 Sep 2026 17:50:27 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fI24q/ir"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789401989; x=1820937989;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=LrD2zsBWMWDGXMDeVpDxRPnz4hBX2i0wtkAE0A1i6Og=;
+  b=fI24q/irvChhM8dBSKJEqM6+vfA/+aHJaOXLudJ6bSi97OsNyedFdHIF
+   Ut2x+tpqsxOr/FqjRFICR0uL9VwXtKPmG+xHQtMmNCuuu2MQEKi3wrrg5
+   pJAT+fiMPY7VjY/FqSn2oZsRXMp1KWACTDDg5xZtItUfCckRm1E959x4V
+   f/aw9Ln9xrufYQ++ERlQ1E3d4XKgN4OErTmq7uKlvD2GQs2nScqgw18BJ
+   VWtcex6Oe5qTawPD2IVrw9E2tSbCvfbgHBEv/EvzS5HXyWNasNSjxPbZO
+   3ye+sj/l+yLVi7cReUatOZyB4u2Norf2bV5JYERuuD7UTiTu5vHbKkVyh
+   g==;
+X-CSE-ConnectionGUID: L78t+ZbMRsiNsYrfHY4ODQ==
+X-CSE-MsgGUID: QVIjjhK+T/ep03fEp6R9gw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="77317977"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="77317977"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 09:06:28 -0700
+X-CSE-ConnectionGUID: hNTBJl0LTBiSXJ3y8mHrQQ==
+X-CSE-MsgGUID: IUxuk8OoSbqVXu4zk67A+Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="892432"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa011.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 09:06:29 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Mon, 14 Sep 2026 09:06:27 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Mon, 14 Sep 2026 09:06:27 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.62)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Mon, 14 Sep 2026 09:06:25 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ChWj9BhMyEoUfTjI3QpP7TLAHAe9RA2/5+74+CzM9YjHl/TVD+RhHclyINHy/Ebi1uYRWYgAAo67fReu+fhnDnbpEQdjCw1VZjg1YbFt/3AaRJ5ho11ReR6fqpzwwsZqLbqJfKReOIZH8A/3d/vUYhKOlr23MNZoZz06RlqQAhklZLA0SfXMDFzeapNnoa9wiA2XOo32blF3UQQljk70v6QPk2If6HuVAhFX57S1IU2S6mYB280CHBRJhztDd3tbxy0eGOY6NB4ikgn7RUqcYxrPkWuvYyuB3tFRrfy0Z341A2sypQcs4neYLiI+59D8qRujg7fNJYqgHO+pBV3b9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W4/LSbM/vTf78z9XWP7Hs2zxH8gfqEDC22UXE/3jtes=;
+ b=CfVkLXj4CC1ZThN9jxoFbcEKJr1T2QhiONErn4xg0WVBVj2jdt+IBAqpE10//dEALz7yy2pSIj2zySTsKSDvRRdatM74DjhOyCTM0drzzRJ/LQ8hJfHgODc/bckDexiWpu96EhDOmAEKITlLeE4KJgEPfTsfwFGo3XZ7E0Dx23wYMT2SlX8ixAdQfXyhkOzGFQpHZTZc0iVjMMHKlKnv8eB3S2AaIHz7iZqlR72hID6+r/7EIEw7x8DuVFw+LRPAc13C/t0R4+SZKbXdTibtsO5nfO7F3gvP5JxSTcDnG0xJpVv80Qq2YIl+AhXgUNq3HcvWKKSRVLdesXtFGwHDTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA0PR11MB7187.namprd11.prod.outlook.com (2603:10b6:208:441::12)
+ by DS0PR11MB7631.namprd11.prod.outlook.com (2603:10b6:8:14e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Mon, 14 Sep
+ 2026 16:06:17 +0000
+Received: from IA0PR11MB7187.namprd11.prod.outlook.com
+ ([fe80::be96:3f58:953d:6565]) by IA0PR11MB7187.namprd11.prod.outlook.com
+ ([fe80::be96:3f58:953d:6565%4]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
+ 16:06:17 +0000
+Date: Mon, 14 Sep 2026 12:06:14 -0400
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	<intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v8 05/20] platform/x86/intel/pmt: Do not remap when using
+ callbacks
+Message-ID: <aqgbdgS-YL3tW91L@intel.com>
+References: <20260911201148.1610547-22-michael.j.ruhl@intel.com>
+ <20260911201148.1610547-27-michael.j.ruhl@intel.com>
+ <20260911202614.E8FCE1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260911202614.E8FCE1F000FF@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR05CA0075.namprd05.prod.outlook.com
+ (2603:10b6:a03:332::20) To IA0PR11MB7187.namprd11.prod.outlook.com
+ (2603:10b6:208:441::12)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] dt-bindings: net: Use consistent indentation in
- the example
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
-        dri-devel@lists.freedesktop.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org
-References: <20260913122910.99457-3-krzysztof.kozlowski@oss.qualcomm.com>
- <20260914123106.44CC81F000FF@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260914123106.44CC81F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDIyNiBTYWx0ZWRfX0yPh/djAVL4Y
- mUlETi1D85T8zRIPiyfhDYFhF38+kOaMM/JoI1JXJufjUZZMB5SJLKfYfAbEC+0Mb61NF7mEeW3
- BN+kdisEkqzs9wl1dYBn9UJLPmfOsg79dV/pK467u1LbEmwzRz8HOWB/eqxRcRbnxtxCu9kjjpr
- W5LspZfRB76oYX+bvEfzR2q2W4/TFA7sexK4C4VUmOgqgS2lMDJ/WzoQXlGjQaJCk+QfupTC7Ts
- /kiQXLSjwIO5M53Bw1HghLbF3D0GGzX5UoDAYaa6Coti2fGT/xtODHeuMbc618HMmr1vM5gTh/V
- 4y+baOVydewSrThkh7lY+ETcBqdbEnhGKT5maA9ztpa7gq/DkELflj+MX4upoCF5ieUhYt/TMet
- MVfc/WWu6jDiltk2uhJHeRh0m365GfQgycA9P2y2TAbVWxih3uBosYDX4f3J8KBFOlITs8599qW
- 0DMAsqCw8zy4+Zj6EvQ==
-X-Authority-Analysis: v=2.4 cv=TrFzFzXh c=1 sm=1 tr=0 ts=6aa817cc cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=+bKQE0WJfmhK2875HamI0Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NWQlD2WTGmgqaikU65gA:9 a=QEXdDO2ut3YA:10
- a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-ORIG-GUID: eJtx4iGp_W49cvg7xoRcXw0BJy6Br7oM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDIyNiBTYWx0ZWRfX5aV0eJP3JLbl
- CZmF9MJ155UdPKQRW9140ASrU5HyWj9cw2YDb8qP5ozt0dx8wk2QQTII6aqVCzQpuC1tOYzKTHQ
- FJ8f+yCyJALVRIO+/yC6UE/LETzeUBU=
-X-Proofpoint-GUID: eJtx4iGp_W49cvg7xoRcXw0BJy6Br7oM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140226
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR11MB7187:EE_|DS0PR11MB7631:EE_
+X-MS-Office365-Filtering-Correlation-Id: d43d5c4d-83f5-480a-339e-08df127a1bf5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: P6ZX+qyaDh7B9hascXGumr9Yvz17039bx5y74vjSPo4tAcBey2zKF58nVfEN8z3d2JTwR3HyQyoLVx/119bN6ZLvX9Z3Zu9uLCjfr2Gp8ioXyZ/Kd4OIsX8aG3mNQHUg1PRgOd/H+ph9z1b3J0nXYVmbVUVkPuq+4KGeO2xGPqrW42SiqWsjD7j1cv9fZOSZJiTtYGy784Wj6c2tmJX/dsnPIRgdMnTpjSM1WKYwafBGGJkOgOOKI1UEdzUr5SUiQsVBcai9yZG22Zf3khex2eqQnNmuoMRuLURaJngRQnQK/NQmlQ2SpSQmGrwKRNj38JP2t6f/hTQrOiPl8z6rTLM3f45EB65GDddfJuvdPljd3vnMNEDmkkbfxTz9niXl74ph14rEwb58AB9h4EA+V3cMJeOg4VWLFxEFdZPrWEdXLHRc7X39CYAPDNx4r1jqAB3grdiga4PqDwYf+wc6hkCoAoPFRAHa+xK2Ai1ALohMy66O5POelCZzZZKy19WqTKK/MNvmdw+0CT4O9HxcPv2+GPJrIwYFlrq3YRu8gPJyYyO2MIXj1v8S2lIOwZbis3bdCpr+eXe63KNxXmURBmC8bHROWJ4AfKZZbQSOoZQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR11MB7187.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?p51Qa+FtxQ8g1JJx9nvRDbG8hqCsOAmO97lyHorQY/nvEpyqBA9x9X6u9W?=
+ =?iso-8859-1?Q?UJFuAggZHWu/Re5oPlAiPyP9PoOwW8P7PHuYjsU3sizHNiHowOgSyRHIzm?=
+ =?iso-8859-1?Q?4eDOuJo1b156U9TD2V1PYZx3KoTc/6//SjBvSPk8KingJQnuiV+di5YsWp?=
+ =?iso-8859-1?Q?MCncAYntvCWNcQgW4kK3aRHunW6CJoDChhUyLfC14haP9NAaYAoEcy6OHY?=
+ =?iso-8859-1?Q?QU+6pQ1LW7z3vbeyuGK7XKx8u3RaToKpL8mo2XRxVzM9xLbpYpsvvo03/T?=
+ =?iso-8859-1?Q?nNwYdhd2sTf9a7rdS/OmwZ5kI2zyNrl+ebxWjCPWLumiIsUIQkDSGwREcn?=
+ =?iso-8859-1?Q?AnAc4O92fBsjBZmPgV6lHNO/snMeP38iOtj0mAPA7NMEm7UIhxxBob+CBh?=
+ =?iso-8859-1?Q?hx8pMuZbWKL50xctJBdeqCrWS2kEcNZolbzkZwseHQtQ9OcvLsIB4uG0n+?=
+ =?iso-8859-1?Q?OoltQxmfKhvabY0GY+boxYEgtNOdaamngrIKsjvBSCHuM9xzxlvqnhAH+a?=
+ =?iso-8859-1?Q?bf3QiNI/lW4KMCjm8zLgpwTvVrQws+OwcgNaZ2fM4+RX5ZdwctZDOqqiLI?=
+ =?iso-8859-1?Q?QK4OdRXiAitT9+vFAPpxD8BWvynDk1G7E8pRuCkIQ2/Qp/80XokArRlvrB?=
+ =?iso-8859-1?Q?91blqgqRa62eWPwP3VJi3L8xy/qc/HU0mj7nt2m4gPapzSJwC/dPb09nUD?=
+ =?iso-8859-1?Q?l/5EkycZmf9kPDgEety9Vos44p7bSoeVvhMkiEUXBRYlRZMu2pa6AukjJ4?=
+ =?iso-8859-1?Q?Osb3chi+uh+dIOj4HNO1dfmXaARvv/YyeFBoByVv3vzG45LoSayevwykcw?=
+ =?iso-8859-1?Q?TwlD1n7+m/eNa+TJNnmosap//yzO9xmc7q/ZVWoJcb6s58ctouy4ecUhA7?=
+ =?iso-8859-1?Q?u7lMqPomq0hv7gJde2DvoWJ3YSC3WFhzlgIIra856wYnm60+S4ifDJEyc6?=
+ =?iso-8859-1?Q?Q5KXWXqTsKDW0vVAJYdoZ71lT71wlHLGFYaT6IvX3H7j1xjNB6j+OL/vXP?=
+ =?iso-8859-1?Q?r1DykzrRQ8wGwmRp5hgKriG8K3dqUNU7OFlScPbsrGpAQ04YSPpgGeG+s1?=
+ =?iso-8859-1?Q?PYZ/0UAhd5b3J34LNPLSKGKmKBZFUV8GaDAVF/qX37m7IHqFw8BsZ2obKD?=
+ =?iso-8859-1?Q?yJd288+pQhy0eQ0kQDsU7qElYfJot25cit57PkQARLaUTrixjIqUZGR5hx?=
+ =?iso-8859-1?Q?Ck3Eq2/4o2jVU8WIsx5HfRENH/I+HWtIGotJTTqV1uiWhdsL2VzHFrd4Mz?=
+ =?iso-8859-1?Q?Pxwxg4G2RL6IefMuz5rv185T7h4HUz6GsH2Z2ZMngg8EmSgaShshXF7kq/?=
+ =?iso-8859-1?Q?chBfhrU4NFQae/rHu2UjhJymfpfNDhFdKBXgdf75XCYFBSN3BuMzj9QkuB?=
+ =?iso-8859-1?Q?/mTIWaI1pzEhp6nlUzzpF/uWpf8o4M3bLzOCwp7ch6BMuBLWmihVGcxsKx?=
+ =?iso-8859-1?Q?uiP5AkPbbHJCpOgmtwTMJUY7IZhUWzJxT8S4PVQQaco5y1X7kK75kSrsEF?=
+ =?iso-8859-1?Q?U3Rmsm0C7lneq2TfnYgTAfvCz0WBVyUhqf1sSfcVWKGph/HHa+aJJPK9YP?=
+ =?iso-8859-1?Q?tOETRU4tBdVRs3s093sp9Ty3V31YhBy/r54KMQLyltp4ih+8IhBeKwp2TC?=
+ =?iso-8859-1?Q?07yLLK9oXkQeF5w+Y2jdxh5XJYjd3e8gJ97eb35gLWX5cPhoG+cR9fxpJf?=
+ =?iso-8859-1?Q?MWlKwMMUhjdNjvn72JqpCGCyd5rgm91+/N/IbFlcSaGdIQN1BEw1ucbo79?=
+ =?iso-8859-1?Q?92s6bV488nQ8SVvRXVg3/tOzwjil9CbgSpK3oTiOG4wvgpvgmk7C8gdgCO?=
+ =?iso-8859-1?Q?5JoKjUKo9Q=3D=3D?=
+X-Exchange-RoutingPolicyChecked: MFKdSEQsU32QP/ALhNiDmqlioLM6nd6nRMxLSdkFwk6FVj7l5t4d1DAEV7XtzWzzHQOo3blJXrPSEmzSGMHfwrWOg1/3Z3zqzdB8oFo9StPP3tmXogQB+Rsl2PZ3FqenDus0jRajpBfEnzeTqkMOCdOL5Nj1EHhUfbkU9Fk2zFY86pwKq4ufeJNYAoamgVptIS/oubsJXIkKu0PAnVquFX6HTrScQOtNfmly/NfqZpBNqDyEzQwbE6GD6nsF/f9vnM6eSmpmS+OIE2cRpNLzduSq6KV6H57EfLnN9197nS2upWLnl2zsgX+giFvTqlbE3M+LqiwFd1Og3ZYO2hDxQQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: d43d5c4d-83f5-480a-339e-08df127a1bf5
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7187.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 16:06:17.6927
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iTlK61h1buielRPEAHywL0NqBBM4uHil5FqsZl6J7+6/x6PfY1M9Tiv1LeSZ6QK61mH9FW+v2M0QO5fdtPtVGg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7631
+X-OriginatorOrg: intel.com
 
-On 14/09/2026 14:31, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The `mdio0` block containing the `phy0` and `phy1` node definitions was accidentally deleted during indentation cleanup, resulting in unresolved phandle references.
+On Fri, Sep 11, 2026 at 08:26:14PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] `pmt_telem_read32()` does not check for the `read_telem` callback and unconditionally dereferences `ep->base`, which the target patch now leaves as NULL for callback-driven devices.
+
+I believe we need to address this...
+
+> 
+> Pre-existing issues:
+> - [High] The sysfs `mmap` interface (`intel_pmt_mmap`) unconditionally maps physical memory directly to userspace, completely bypassing the `read_telem` callback required for safe hardware access and power management.
 > --
 > 
-> commit 3067fd6538b78515dc2a63a2028de505854e6496
-> Author: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> commit a61b8465842029c0f2ced5b0fa7ec2cd402fcbfa
+> Author: Michael J. Ruhl <michael.j.ruhl@intel.com>
 > 
-> dt-bindings: net: Use consistent indentation in the example
+> platform/x86/intel/pmt: Do not remap when using callbacks
 > 
-> This patch corrects the indentation in various device tree binding examples
-> to conform to a consistent 2- or 4-space indent style. It aims to resolve
-> dt-check-style warnings across multiple net and wireless bindings files.
-
-That was intentional, just forgot to write in the commit msg.
-
-
-Best regards,
-Krzysztof
+> A callback indicates that the parent driver is responsible for accessing
+> the data area.  Creating a PMT memory remap is redundant.
+> 
+> If a read_telem callback has been provided, do not create a remap.
+> 
+> > diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
+> > index 402d51df834a6..1c7a372b4fc42 100644
+> > --- a/drivers/platform/x86/intel/pmt/class.c
+> > +++ b/drivers/platform/x86/intel/pmt/class.c
+> [ ... ]
+> > @@ -403,14 +403,19 @@ static int intel_pmt_dev_register(struct intel_pmt_entry *entry,
+> >  	if (!entry->size)
+> >  		return 0;
+> >  
+> > -	res.start = entry->base_addr;
+> > -	res.end = res.start + entry->size - 1;
+> > -	res.flags = IORESOURCE_MEM;
+> > +	/*
+> > +	 * The read_telem callback is responsible for this mapping, and may have
+> > +	 * different requirements for use. If the callback is present do not
+> > +	 * create the map.
+> > +	 */
+> > +	if (!(entry->cb && entry->cb->read_telem)) {
+> > +		struct resource res = DEFINE_RES_MEM(entry->base_addr, entry->size);
+> >  
+> > -	entry->base = devm_ioremap_resource(dev, &res);
+> > -	if (IS_ERR(entry->base)) {
+> > -		ret = PTR_ERR(entry->base);
+> > -		goto fail_ioremap;
+> > +		entry->base = devm_ioremap_resource(dev, &res);
+> > +		if (IS_ERR(entry->base)) {
+> > +			ret = PTR_ERR(entry->base);
+> > +			goto fail_ioremap;
+> > +		}
+> >  	}
+> 
+> [Severity: High]
+> Since this change leaves entry->base as NULL when a callback is present,
+> will calling the exported pmt_telem_read32() API on a callback-driven
+> endpoint result in a NULL pointer dereference?
+> 
+> In drivers/platform/x86/intel/pmt/telemetry.c:pmt_telem_read32():
+>     ...
+>     memcpy_fromio(data, ep->base + offset, NUM_BYTES_DWORD(count));
+>     ...
+> 
+> The function unconditionally dereferences ep->base without checking if a
+> read_telem callback should be used instead.
+> 
+> 
+> >  
+> >  	sysfs_bin_attr_init(&entry->pmt_bin_attr);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does unconditionally exposing the mmap
+> handler to userspace allow users to circumvent the hardware state management
+> that the read_telem callback is meant to provide?
+> 
+> In drivers/platform/x86/intel/pmt/class.c:intel_pmt_dev_register():
+>     ...
+>     entry->pmt_bin_attr.mmap = intel_pmt_mmap;
+>     ...
+> 
+> Because intel_pmt_mmap() maps physical memory directly to userspace:
+> 
+> In drivers/platform/x86/intel/pmt/class.c:intel_pmt_mmap():
+>     ...
+>     if (io_remap_pfn_range(vma, vma->vm_start, pfn,
+>         vsize, vma->vm_page_prot))
+>     ...
+> 
+> A user can read from the mapped memory region directly. Could this bypass
+> locking and power management (like pm_runtime_get_sync), leading to hangs
+> or Machine Check Exceptions if userspace accesses PCIe MMIO space while the
+> device is in D3?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911201148.1610547-22-michael.j.ruhl@intel.com?part=5
