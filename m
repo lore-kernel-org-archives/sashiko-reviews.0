@@ -1,98 +1,87 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D544E39A803;
-	Mon, 14 Sep 2026 22:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A788A399342
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 23:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789426699; cv=none; b=P8aY163aQnhUqB+FNt0lYIjgiiHoKf4AP/iF9Bx3OCkkwpORtP6kGBxLKUbF9dd+60MaQiDKPV/rYLRFir4hls+eV5Hr731FPwgjG5dRGspdBT7gEyNKNAc4eRq0QsGI9LDTYpstFgdcTH7XFicJHkBuUVHHJlI4+itYt5VQV80=
+	t=1789430201; cv=none; b=I/WExkmKHYrv90koUTD5x719lnkMUsc8aJl+2Ts/du3xOJU9aySJ0oS2UlPnc6KU1bh7TqSC21HgMOa0usyonUA1dCp/c0IYB8Cw4W5kZPTyMtH+Xk/jWfmpu8FpwQPdPcnwcAzzlGzpATM28/HHFvnWnH7LorKtJ4KhDn76CNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789426699; c=relaxed/simple;
-	bh=nJjI23XqZAt3gjmdhdRyLaqXkQItKL4BbAjdnyoo4EQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qoby+KrRdUVvDqduS7dEHKt7YIIIaTcO4H0wDYQrTusCm6hyTqOtM2jBZL5oU4nLjnQt85bCyGNYSwrZ9IUM2O48C0VEjyEcrkfpCn6HNBBsRkmeiZh69iM/+jWEwCB/0SsLng94S4IRCEJP/pE7wP4azc3gL8LoKkPZy7kxscY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=t8mN7CS0; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1789430201; c=relaxed/simple;
+	bh=NLYYf+n54O4H0h4Xt+zLB6Dbu2ghpzSMuLrDhogbWps=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I72Ng8fOvb6B2Qgwzw+WWkwk9il4bb7CfRCvYM0V4PkfEy5Lzn9Np6FjTPvGaT4IL1ABBifP13ikp8CsS8ifVBRT9DCUzwHYBmuinGBRZxAHbVxCVmn/FrtgCF1O5n4Ck3FkiV/TWhui4fMaNGXLkLiJFq+crhabRFfXx33FjPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LA0HhwSi; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="t8mN7CS0"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 968551570;
-	Mon, 14 Sep 2026 15:58:13 -0700 (PDT)
-Received: from ryzen.lan (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D20D23F86F;
-	Mon, 14 Sep 2026 15:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789426697; bh=nJjI23XqZAt3gjmdhdRyLaqXkQItKL4BbAjdnyoo4EQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=t8mN7CS0M5PhL28wSIIYz3gA0JIpUmX55Tf27kKfYstglrK3kllufbJrsIll9YCBO
-	 O5KEtkGOSSeeitVzJHYWtKp4K1iIDM/r3zjz6pkiDI9k4DQm/WqQfUjsnSaHc10r6F
-	 5bj821ZLpzOAeY+tyGpuT4jQsPnIEwz7YtCHG/+8=
-Date: Tue, 15 Sep 2026 00:53:39 +0200
-From: Andre Przywara <andre.przywara@arm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
- devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev,
- conor+dt@kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: vendor-prefixes: Add vendor prefix for
- Teclast
-Message-ID: <20260915005339.0eff1d63@ryzen.lan>
-In-Reply-To: <20260914211139.48AA61F000FF@smtp.kernel.org>
-References: <20260914210115.28151-1-andre.przywara@arm.com>
-	<20260914210115.28151-2-andre.przywara@arm.com>
-	<20260914211139.48AA61F000FF@smtp.kernel.org>
-Organization: Arm Ltd.
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.31; x86_64-slackware-linux-gnu)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LA0HhwSi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789430200; x=1820966200;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=NLYYf+n54O4H0h4Xt+zLB6Dbu2ghpzSMuLrDhogbWps=;
+  b=LA0HhwSiU3XzNy8QJ8JqLerPjA0bBHn/pak2S21q6ljkf71zEW0QJ61v
+   M9Bhck/AOavQ9KXiJfrv7LI9B98f45XN0ZX3Wfq/Hn2aAWyQbHm/RpiGW
+   fFgmH2+RzaE5mU8OCpFrlNQ6sZWpmo866nUcY4tL5dOH4OqiCoTePhDnM
+   Y1P5O/RPTQlbyXwINpq0TOKA76mAyyn3MGTCKhyt345Afa2xcCz9qdfzf
+   xIcNYRopsvnA+5oIGn+z7RxkxPekR2J/fISMrNxPuFJjrdKZPMPzGGjgw
+   mFI22R3XnEmgtVgMQRFLRLklfbG6hqy8gpRZf5IqHSPjU/oWwDN+9D+DI
+   w==;
+X-CSE-ConnectionGUID: s+qsNumNRYiLEB35/N8RWw==
+X-CSE-MsgGUID: 2uRsxgb9SfqiKh69hV1TKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="112556241"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="112556241"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 16:56:39 -0700
+X-CSE-ConnectionGUID: ZavR2ebUSGaGcpDK+0QzMQ==
+X-CSE-MsgGUID: XxnNeEVNSjO4O7PS8/nMFA==
+X-ExtLoop1: 1
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 16:56:38 -0700
+Message-ID: <5335ab48-bea0-4f2d-9520-c8b8efbc62b6@linux.intel.com>
+Date: Tue, 15 Sep 2026 07:56:36 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v11 07/10] perf regs: Enable dumping of SIMD registers
+To: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+References: <20260914014049.2061519-1-dapeng1.mi@linux.intel.com>
+ <20260914014049.2061519-8-dapeng1.mi@linux.intel.com>
+ <20260914020418.97E881F000FF@smtp.kernel.org>
+ <1870044f-ab4c-4906-8f8b-c3216fb28211@linux.intel.com> <aqg9DV05lxzLKu0t@x2>
+ <aqhK3K_yfdtB51Ax@x2>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <aqhK3K_yfdtB51Ax@x2>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 14 Sep 2026 21:11:38 +0000
-sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The newly added vendor prefix `^teclast,.*` is inserted out of alphabetical order.
+On 9/15/2026 3:28 AM, Arnaldo Carvalho de Melo wrote:
+> On Mon, Sep 14, 2026 at 03:29:33PM -0300, Arnaldo Carvalho de Melo wrote:
+>> On Mon, Sep 14, 2026 at 01:17:00PM +0800, Mi, Dapeng wrote:
+>>> On 9/14/2026 10:04 AM, sashiko-bot@kernel.org wrote:
+>>>> [Severity: Low]
+>>>> Does this file need an explicit inclusion of <stdio.h>?
+>>>> The perf tool can be compiled with musl libc, which enforces strict POSIX
+>>>> namespace separation and does not implicitly include headers. Relying on
+>>>> implicit header inclusion for printf() can cause build failures under musl.
+>>> Ok, this can be fixed in a separate patch later.
+>> Ok, merging it now, later you send fixes for these minor issues.
+> It is now in tmp.perf-tools-next, will do the usual set of containerized
+> build tests and push,
 
-argh, of course, was kind of blind here, I guess.
+Thanks Arnaldo.  I would post the fixing patches later once this patch
+series is queued. :)
 
 
-> --
-> 
-> commit 5eadfadaf4aefd64a40c08bf27f4fc8d4fc5a0a6
-> Author: Andre Przywara <andre.przywara@arm.com>
-> 
-> dt-bindings: vendor-prefixes: Add vendor prefix for Teclast
-> 
-> This commit adds a new vendor prefix for Teclast to the device tree
-> vendor-prefixes.yaml file. Teclast is a manufacturer of tablets, laptops,
-> and mini PCs.
-> 
-> Link: https://www.teclast.com [1]
-> 
-> > diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > index ba20029693734..6da733d465a31 100644
-> > --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > @@ -1722,6 +1722,8 @@ patternProperties:
-> >      description: Thundercomm Technology Co., Ltd.
-> >    "^thwc,.*":
-> >      description: Shenzhen Tong Heng Wei Chuang Technology Co., Ltd.
-> > +  "^teclast,.*":
-> > +    description: Teclast
-> 
-> [Severity: Low]
-> Is this newly added vendor prefix inserted out of alphabetical order?
-> 
-> In the patternProperties section of vendor-prefixes.yaml, there is a
-> requirement to keep the list in alphabetical order. Alphabetically, the
-> entry "^teclast,.*" should be placed after "^techwell,.*" and before
-> "^teejet,.*", rather than after "^thwc,.*".
-> 
-> >    "^ti,.*":
-> >      description: Texas Instruments
-> >    "^tianma,.*":
-> 
-
+>
+> - Arnaldo
