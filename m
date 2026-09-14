@@ -1,67 +1,122 @@
-Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3332A4252C9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 10:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789380612; cv=none; b=oE+Hz3yDd/OaBvo/oa/plwPqvq3fs+hOn6TN/6HVso2CqrIS/LSDSmgyH9sgRz+ljoeSqYKy1CHjWPVkF0UNxG53DdO8jLySPKPv6uXoi+YndkjLrjxTurfnvsYavPdKU2mcWud7gG8HevIvlw2u6fJC2vc5+T/VT5hqhTcV1Vg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789380612; c=relaxed/simple;
-	bh=E8xW+tUodOajGp7idrinqcCpQ2T+Mjybso6K+IxuRM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RzXrmUTnSK8B1Jw86R61Y7lhVnRsRc3h8/odpoYOczmOB1GGR/aJHgus9GrqmM/xsCbwzRAk7R8zYSfpSuVEmXelAL9nf7ZSYahHIzAQb/S9NxlVAKCeYk+tYepVlk8/m3BdP2jqmSrXUwoWbFmRCd2TN3QaLg0/5UMlBkuYWHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=FllqzqXC; arc=none smtp.client-ip=217.70.178.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438F943CE7F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 10:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789382555; cv=pass; b=VyiArIKDbaAOrwQh+aPdez+4gkedjPEu7cowMxHXLxx6rhGgk5CUEBJND2GQkOZA2jazvNazVbF5E8UvXIHJu3cgJJkC4Kg4wy0YcInrhmTeUejsBXXMUD0DyKPpuzmzMfHL7/aTN0o43iVtiWN8ObeYUa0eZj09QnnYgR9bmxI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789382555; c=relaxed/simple;
+	bh=aH3qUfclucTu65C79a8F+WYWXexvD6ufiksGY7byA4Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NquXNLxT83mopkgb00YHgGImz3HqxU02pFRoWAE1Y/3MZ5ZBiuM8ZEjQ2B7TQJxmZgLDDCsBz3LeBgKMV0PZDG/mNH4GjJqN2ShTKY2fa1O+FM1TYnoRhGGGxCk0bJDHm+/JzUUFNXkDmyV9p94y2Q9nhzC9KcMSqjAcSiYk6R4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=al0fd6EF; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="FllqzqXC"
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 8642B58105B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 09:51:27 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D76AC1F654;
-	Mon, 14 Sep 2026 09:51:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
-	s=gm1; t=1789379480; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:in-reply-to:in-reply-to:  references:references;
-	bh=E8xW+tUodOajGp7idrinqcCpQ2T+Mjybso6K+IxuRM4=;
-	b=FllqzqXC1ja7JQ7/ZynxNwm2LrCk/P5JVPmaAIAh0wY+MkJ61v/RShkmCJVanSZ7RodY/Z
-	fLxJq6eGLihaGxJsVEdCmOQrb/16AEwmUMqhHf5NNAleluqKg4VyBuECnmlM+bAzzCkryd
-	kx2pxm/eMVPuazcrxSxDDYpv9Y+nmxX8kGxopMXUucwb97q7XTUbDFTUw6Jix5Phd/LFDI
-	YoaZN06xq7pEJ/IvSPCfTZy3PrGtvo8xXrPUpfjAqeCr1JN4uL9GvHqgxzW+fk5QtuD9dE
-	GWfbM7nDoO5uq4K4Zxm3OPoz235ZD5Wjk7Q8IZli4xxjH55sLBPuADw4QtyRqQ==
-Date: Mon, 14 Sep 2026 11:51:17 +0200
-From: Arthur Crepin Leblond <arthur@marmottus.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH net-next v7 1/3] dt-bindings: net: wiznet,w5100: convert
- to DT schema
-Message-ID: <20260914095117.GA719298@marmottus.net>
-Reply-To: arthur@marmottus.net
-References: <20260904-wiznet-link-gpio-v7-0-69f01b70c96f@marmottus.net>
- <20260904-wiznet-link-gpio-v7-1-69f01b70c96f@marmottus.net>
- <20260905123628.AF03E1F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="al0fd6EF"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d43ac6090so12437067b3.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 03:42:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789382553; cv=none;
+        d=google.com; s=arc-20260327;
+        b=N6a1kScSCwDu88dzQBeAsXcLhiR30aWc4g1Dcu7z5tkVbpXxj3c0RnVlzxdUCmYF9C
+         XBozfGVVTcXJH0GFSiCT/I5VmdIJGGjreQivqzUHwxJaLL9x6OpVjyTI5xTDdOHemZ5I
+         PJoSmbVIVA7qzUnrVKxEh7XIo47beLQquQfbCdbQr9ef84AlD2e3eWeNR7a+Gn5H6Rxv
+         j77T1lFf9yIo/Me4OTYYxBVwYC3BWNP75k394uPhHnsuOzSmSDqjuihsH7JAfLYVBLD4
+         HK2RT75/a3eSNNx2wdghwmguT5lhKrpU3TBe1uL5E7LoN+BCLqe8Oj4t/O0Nn/RtvBcg
+         FN5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aH3qUfclucTu65C79a8F+WYWXexvD6ufiksGY7byA4Q=;
+        fh=r5URhQl6whOcnDbP2Lcwh2ZUr6KpnezK+hz/MEOF1jk=;
+        b=T9ZClokLRTA/kdJK0vPCWYsnI0dG8LhjKLxrDnhyOB5nZ/ld5C2HXsy6Mr05m2LuFT
+         ZubzyCBVbksLYgmiF/YGdMvKWp3EKHiMFxlWL9bPS9If9hURUYyG4/386Dq1loPXmS6v
+         xzlIJQNRjgqLiqR5yiqGtGm10y6VMo8EshnxwqofxlxgJz+XTXjZdjXUoM5TPFPhw64t
+         26YgitMyMA5ukSyKVTNBANV+vUbbahgWXWE8hH1PjWXsDVK/hHucXWoDgBlNrmooakpW
+         TUp6z7icZzr7S1MM5fOonegRwdZkCnojk5ov6pebICckBb9XOaG7ouCRkZ8cT34p/meY
+         Tv9A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789382553; x=1789987353; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aH3qUfclucTu65C79a8F+WYWXexvD6ufiksGY7byA4Q=;
+        b=al0fd6EFPWICFVASTBHOZRa9tEw9TBbKkVRCu3e4PmfRn1Fc6I6mZNw5VC5ka1ibCo
+         00RNCr00psQt2Erx1jOVVycsR1CaMr0xK9PkpVXr2N1czgaETDR+KoDfgfEJNXHYQ4/5
+         WpiRSuPHCcwyVI9BTVfaaYMl549G1MKC8km9U25BivBlJn6uDP58yzcTZHwO198ihuqj
+         CRAELf6BoFbQruixYqoGSFzOh7cVYz3CAJPnmh1fBK1nGg3XVPAkSh2o0hkcuV2dkP5+
+         3YuP9b1nzhnQSS1D+1bZNcu+VjQ3OXt+jhptr9MMbPFPRqTj2xipo7Q1yft7S5s2YPWd
+         B86g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789382553; x=1789987353;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aH3qUfclucTu65C79a8F+WYWXexvD6ufiksGY7byA4Q=;
+        b=QDd3xjJgK7V/Q31ZcVocvBMf5ZqYTmBRPnqkaofgu0gGuASzqEaePZPYl+xq/aAiVk
+         zvp0IYcPaniLJcOkx8AxGV0C9oA3ov+LQsci/59d4NZ2lkW8MLYKCqaYcKHmBBqO1FeS
+         y984CF4hXdusuIq5CpxkjmfH/8fcc/VJVQzNlmkvHnch+DaXxFlxh0rTJz5jd75JtbMY
+         /W6oF4cNdPELc2XBMs5OoRNzmlV3Tm6dzXuHvD/WR+Nr7I5sM0G0uXucyzYj/yPjVZ6n
+         uQQqtFZTo1pEjrftGEb698bwoIv7qJVeixPp/Lfwso0lar3iWmlOsuT2LRTu+hg7358R
+         /+HQ==
+X-Gm-Message-State: AFuF++mhQsL/idSx7JuZYs0Cgp/x2dps5WKLqpY7KMEt8xHWfPT9pslc
+	F7/+jvqQwi5zmhqUGssGVUuVuGw1DkrIhIWT35ddhdmnxK0cl9kf+8elQJ0Ap+o2RwtxV6+ub4B
+	yR0jHlakPldvCsJf+VC3052NyFx6B/vs=
+X-Gm-Gg: AYBFou3ZcMcxm0qCDV7tpJdaKmZiBHv9kQGGyHRTPEDPCcJeFMKeRaGvNI9YNwMq84k
+	MqRtSakQJUVLS967MF0KI0ABz+CkDJsBelZLxNUCwfOUhd6g9D/gRWa8WVDmGDp2WACRQpRjx4k
+	ijbeb5ikaXgWwRKxJwcg/z5yT+na++FSBaKbIuGYw3H+ws8orKXqmZGz5FB3klVsOGXkH+8evxb
+	9ndug3iaITliVe/3cUg9K8hNQZJQOBskpf0FUaaAjjLFjDVl5Qxvctub54pQ06Yz/QvI7aCB90a
+	ScLGvmFWg2yuOhBIDH5IAh1atUhGJIPLOdrD7Puj6IZNPK64EtjMGU36DgispjlMdssfyO/804y
+	BvRfDJhdyCNat
+X-Received: by 2002:a05:690c:a5c1:b0:873:5c7b:c109 with SMTP id
+ 00721157ae682-88d23a93ae9mr3186947b3.65.1789382553231; Mon, 14 Sep 2026
+ 03:42:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260905123628.AF03E1F00A3D@smtp.kernel.org>
-X-GND-Sasl: arthur@marmottus.net
-X-GND-Score: 0
-X-GND-Cause: dmFkZTGp4xOWI0AdXGoLPHSO91iYdSLtEdQ6Om+eFyJHMqFRF2lr7ogGyK+00aksqXTQkqs8DuUwAJjE15ilokOwbHLb9f6xe1HlKl3QYfOOwAwHDhdmHk2rXZQEEXkWjen8LpLjfjlgYFqOSFQvjvedKbltH8XqIee4f0CmDCwxQeZFe1NAVfpvU+2Lo4huf9/nXBTQSWaS8z4q4+h0u1eWCqHzc3+ITfR+irI9NF1i6pXaZ2YmDazzLcK6hKwyrYvKuECDMMGw96z3raqcMxMACJSa2pFmDjm2nQTRbmKCyoV7oHtn6Slc7URvAXY3YzK55AS+znc/AvtqNo98Kmm5vtqIGwexyScKAF4AuK2fVib8ydJihHmIMeUxfXp8VGo0dPkLRg6FtegaeBGdXZuN0m/Az9nKzPEkxhITUX1KrCbz/sNSoifNOMbDTKuEYlDQGV5oXxTjaoTphC2FOafV49nOBeHiSe3ZIQP7nrGEV2B5nEl+riPgiaRd0rt9We2NEO7/DdSACwDkff47IztBthSUg6E5mNuphPTJAWrXZuOdIEufKCn4xH9mHFRF3jM+JIlhQIc7VHu6dYvEd0+msByedEhbbj+tQwPOxMRJ8sj8wm67ZrAlOJXl9AvKme79wwUJnoaws7RFfda3BFhAvHSQnRypCZUh13wV9u4sIL1khw
-X-GND-State: clean
+References: <20260901155648.1538876-1-congnt264@gmail.com> <20260901160931.DD3811F00A3D@smtp.kernel.org>
+ <fbb88a92-02c4-48cb-93a2-678ee169e88e@roeck-us.net>
+In-Reply-To: <fbb88a92-02c4-48cb-93a2-678ee169e88e@roeck-us.net>
+From: =?UTF-8?B?Tmd1eeG7hW4gQ8O0bmc=?= <congnt264@gmail.com>
+Date: Mon, 14 Sep 2026 17:42:21 +0700
+X-Gm-Features: AcwNN1Xp6V1imZJqUrnncRhJzwCc7a07hx1hIztm_bzgAQo-zBxQwj_SL_Ey-Dw
+Message-ID: <CAJpJ=Gsj2-m6kCc-jT8KiP2tGUDxKZ45ZdaZ+HXvOU3wH_ww8A@mail.gmail.com>
+Subject: Re: [PATCH] hwmon: (gpio-fan) return IRQ_HANDLED from the shared
+ alarm IRQ handler
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 05, 2026 at 12:36:28PM +0000, sashiko-bot@kernel.org wrote:
->Is the changelog description out of date, or was the dynamic property logic
->unintentionally dropped from the schema during a rebase?
+On Wed, Sep 2, 2026 at 1:28=E2=80=AFAM Guenter Roeck <linux@roeck-us.net> w=
+rote:
 >
+> On 9/1/26 09:09, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> >
+> > New issues:
+> > - [High] The interrupt handler unconditionally returns IRQ_HANDLED whil=
+e registered as IRQF_SHARED, neutralizing spurious interrupt detection and =
+risking a CPU lockup.
+> >
+>
+> As I suspected. This interrupt must not be configured as IRQF_SHARED.
 
-That's a changelog mistake from my side, it was meant for the second
-patch.
+Agreed, sent as v2 -- drops IRQF_SHARED too.
 
-Arthur
+thanks,
+Cong
+
+>
+> Thanks,
+> Guenter
+>
