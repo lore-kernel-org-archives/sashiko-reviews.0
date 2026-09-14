@@ -1,137 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07353911AA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA24838838B;
+	Mon, 14 Sep 2026 19:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789411842; cv=none; b=jc1oQU5W/DW3fo8BkzOEus5flh2MXLyUs9SNy4EvA0PU6E648wMrVoMDxP2r3xt9iLc+y0fAzZGcGwvO4IsE0ltLNLiIPk1CjgmfKC3mVWa6rlWLXvMbUQffa5A3PLUl1lD2DhwZ7zz9P9OF2tEg8y/AbKXmVTWaDS2cMDlccHs=
+	t=1789414116; cv=none; b=p52c6u2TahpX7abrsDoeeFqBxvEe4kUBwMtXn1LZEqEYYFJgCfgJm5fPZd4UV9+UDftIGsUxUvQryXVMxhTWYG+ET91f6l0LpPatT4AGMCz0TpP9xCY6btxf6/YjEnmtkqxtyJkZn3Akzh4JRdB5VMnHe8XXNl0rSDb8J8jqj2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789411842; c=relaxed/simple;
-	bh=E9q1DJdg0472QlXMjxwYvaljUHOOvgxBJY7nyPZKCME=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MRG1+Kbrw2XAQtYrLUcm6y+oT44FTqyqZYPo+c37YJVxJahih959Md6Mv1yobH53JPfP0QXPiJayd4kZTsPwhbR3pTUDZl4BPaV3CmmhEuas39BjHbl6FZeO+UfC2HPs5ybYga24ZzStrJwvq/7Nhz59mN7y+NPVz5z+HD2Hjwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l76juJDK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789414116; c=relaxed/simple;
+	bh=HRsWAOfE5wfBbrL7HjpB/f5PzdRMvLcsUR96pJH35Dg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P+D8RE/5pCh3/eRERHMimxDd5YhvroIEtR3Uum5YStDMiIjXUx3UjOydWb/yMLz8vO/uJ54MahV7fPkrQwmNo/2wbWNOsIrGt9tKZ2hy3pRUkOYoK476JGQ4dHQrh+a5Y0J3It0ge4++hPmJPsv+Z1AEEEs6kQ2+FsGz+9Eb70Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FP/5/hpx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l76juJDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853C41F00899
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:50:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FP/5/hpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8F21F000FF;
+	Mon, 14 Sep 2026 19:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789411840;
-	bh=ZPlZzEDD1mFZWNrLhXM48j7ztWTsjBkQryMVet4AyjQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=l76juJDKykcTaLyfx/V2NZWjhS18kmWF0N8uNb2BfdheCbGkdiCYo+OwNisK+/Saf
-	 Wq8PjcNXtxYk5kI2ByTugiF/5mI7vzEXpBc6jPoAwvTfx/KtiPrsfoKFPKiqJlFQgQ
-	 7a4VpKXPltn9lt9cVnoQczfOq8Lg3QZNGtD6HTtO1ECojXow6z4nW82UAIvyCKMf/x
-	 gZul4BOAh56hhNezctBuqkydnJ2lWBR8Nw7K5Su7z6cOlTBAJEhrze7A7xSMeURrxn
-	 87UoZg/Ij52WtsS33iVzJDAfJGa59JyF8rjtPUca6Sy3c3SmW5yMXvRD8rg26uAd+g
-	 dtxPpUtL45ajA==
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-939b5ded99dso361840085a.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:50:40 -0700 (PDT)
-X-Gm-Message-State: AFuF++lR7PrraptyRb/kY5jrbXmezF+oZomBEMH9jo09IcPnEEc6b95d
-	AVoydqWpaF0iRmSP4stLSzB1/WME/Ezh+31ftiK/+P09egSnj29TMCwt8V2l4a2LzFPPhXruzJd
-	yWuTpSSzUxdkyKyPXi0hG+p0j48x0x7w=
-X-Received: by 2002:a05:620a:6504:b0:939:13a7:70f0 with SMTP id
- af79cd13be357-93a297251cbmr564811685a.5.1789411839763; Mon, 14 Sep 2026
- 11:50:39 -0700 (PDT)
+	s=k20260515; t=1789414115;
+	bh=HRsWAOfE5wfBbrL7HjpB/f5PzdRMvLcsUR96pJH35Dg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=FP/5/hpxIwg0EEXYuu1ifxdNh3bdhWTaxidDXNdlMvkN0ltdbq/3NyAOT3DNTMWLQ
+	 cykNxHlCAsZ5DF0O3u+zF1GjOB//c58jboPiujCBTTfn0bM7dOJ4tznxN3gLW+5Lmr
+	 w6+pZ3IVPeRWrThyfYefqKrJ7JkEiTT+AREx1FAxLFWzGtl0wWzakG6c0edIWzdXkO
+	 99leIDIQ67yEO6RebXOsOWNVquBFbXrOPIEGwfhn5lbrxof4jD6ZLuTnsi5HOKlZrU
+	 HilL3aL1lxD04+SEQS3PCey1J0ULT0HNn/Pd7l9zPkh8c2WTLFQo7sCRnci2uPZblO
+	 wwP/i226fmHOg==
+Date: Mon, 14 Sep 2026 16:28:28 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [Patch v11 07/10] perf regs: Enable dumping of SIMD registers
+Message-ID: <aqhK3K_yfdtB51Ax@x2>
+References: <20260914014049.2061519-1-dapeng1.mi@linux.intel.com>
+ <20260914014049.2061519-8-dapeng1.mi@linux.intel.com>
+ <20260914020418.97E881F000FF@smtp.kernel.org>
+ <1870044f-ab4c-4906-8f8b-c3216fb28211@linux.intel.com>
+ <aqg9DV05lxzLKu0t@x2>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914062514.926997-1-song@kernel.org> <20260914062514.926997-5-song@kernel.org>
- <20260914063950.CE1F21F000FF@smtp.kernel.org>
-In-Reply-To: <20260914063950.CE1F21F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Mon, 14 Sep 2026 11:50:27 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW4C7gB38T4GdEDCc8O=CmbVSMQ639AeBWwd8tfmTbT62A@mail.gmail.com>
-X-Gm-Features: AcwNN1VLWJ01ullAT8oDW2BrT9LU5DNk8famPpHVoi1dvYsxnzaM6jbYvo5NsKU
-Message-ID: <CAPhsuW4C7gB38T4GdEDCc8O=CmbVSMQ639AeBWwd8tfmTbT62A@mail.gmail.com>
-Subject: Re: [PATCH v2 04/58] objtool/klp: Classify klp test outcomes
-To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, mbenes@suse.cz, puranjay@kernel.org, 
-	joe.lawrence@redhat.com, kernel-team@meta.com, jikos@kernel.org, 
-	jpoimboe@kernel.org, peterz@infradead.org, pmladek@suse.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aqg9DV05lxzLKu0t@x2>
 
-On Sun, Sep 13, 2026 at 11:39=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Literal `$'\n'` string is appended instead of a newline character=
- during TAP output manipulation.
-> --
->
-> commit df7f112de2ce31cfbac30c00e5d997457d3c2710
-> Author: Song Liu <song@kernel.org>
->
-> objtool/klp: Classify klp test outcomes
->
-> This commit introduces better classification of test outcomes for objtool=
- klp
-> tests, distinguishing between different types of skips (declared, probe,
-> undeclared) and TAP directives (xfail, xpass). It modifies the test runne=
-r to
-> explicitly handle these cases and improve result reporting.
->
-> > diff --git a/tools/objtool/tests/run-tests.sh b/tools/objtool/tests/run=
--tests.sh
-> > index 48728a98d9950..6b937fc7f5bda 100755
-> > --- a/tools/objtool/tests/run-tests.sh
-> > +++ b/tools/objtool/tests/run-tests.sh
-> [ ... ]
-> > @@ -23,31 +61,99 @@ cd "$(dirname "$0")" || exit 1
-> [ ... ]
-> > +     case "$result" in
-> > +     *"# SKIP (declared)"*)  static_skip=3D$((static_skip + 1)) ;;
-> > +     *"# SKIP (probe)"*)     probe_skip=3D$((probe_skip + 1)) ;;
-> > +     *"# SKIP"*)
-> > +             # An undeclared skip: the test gave up for a reason it ne=
-ver
-> > +             # said it might.  That is a hole, not an expected outcome=
-.
-> > +             #
-> > +             # Replace the line rather than adding one.  Every test ow=
-es the
-> > +             # plan exactly one result, and a consumer counting them i=
-s
-> > +             # entitled to say so when the totals disagree.
-> > +             rest=3D"$rest${rest:+$'\n'}was: $result"
->
-> [Severity: Low]
-> Does this append a literal dollar sign and single quotes instead of a new=
-line?
->
-> When a test fails via an undeclared skip and has already produced other o=
-utput,
-> the test runner attempts to append a newline to the rest string. Due to B=
-ash's
-> double-quoting rules, the $'\n' syntax is not expanded inside double quot=
-es and
-> is instead appended as literal characters. This can garble the terminal o=
-utput.
->
-> > +             result=3D"not ok - $(basename "$t" .sh): undeclared skip"
-> > +             result=3D"$result (use gcc_only/clang_only or require_inp=
-ut_*)"
-> > +             fail=3D$((fail + 1)) ;;
-> > +     "not ok"*"# TODO"*)     xfail=3D$((xfail + 1)) ;;
-> > +     "ok"*"# TODO"*)         xpass=3D$((xpass + 1)) ;;
-> > +     "not ok"*)              fail=3D$((fail + 1)) ;;
-> > +     "ok"*)                  pass=3D$((pass + 1)) ;;
-> > +     *)
-> > +             # No result line at all: the test died before reporting.
-> > +             rest=3D"$rest${rest:+$'\n'}exited $rc without a result li=
-ne"
->
-> [Severity: Low]
-> Is it possible this will also append literal characters rather than a new=
-line
-> when a test dies without outputting a valid TAP result line?
+On Mon, Sep 14, 2026 at 03:29:33PM -0300, Arnaldo Carvalho de Melo wrote:
+> On Mon, Sep 14, 2026 at 01:17:00PM +0800, Mi, Dapeng wrote:
+> > On 9/14/2026 10:04 AM, sashiko-bot@kernel.org wrote:
+> > > [Severity: Low]
+> > > Does this file need an explicit inclusion of <stdio.h>?
 
-This doesn't seem to be an issue.
+> > > The perf tool can be compiled with musl libc, which enforces strict POSIX
+> > > namespace separation and does not implicitly include headers. Relying on
+> > > implicit header inclusion for printf() can cause build failures under musl.
 
-Thanks,
-Song
+> > Ok, this can be fixed in a separate patch later.
+
+> Ok, merging it now, later you send fixes for these minor issues.
+
+It is now in tmp.perf-tools-next, will do the usual set of containerized
+build tests and push,
+
+- Arnaldo
+
