@@ -1,120 +1,178 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EF2391E44;
-	Mon, 14 Sep 2026 07:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36523B71A4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 07:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789370787; cv=none; b=c3YjJZABF8Tjc1MpLNAcBmbd7qD16BtGbzevhRsOcoBhFS3oEeA74mUDf055NB7ve1QIz0SxH+ufLDNgcURqvDmadSzblMORjitz6f79fITV3U1KHTCZL/EwoY9fnn0/f6TD+jguD145X97qnC2xLpxiZREK57EL2WfhdrGT95E=
+	t=1789370858; cv=none; b=P2C5LQ/cXtFObPfX5eM29d/5q1jotf9sFEeA/ffI8zoN1XkGSzz+ITAQe9Bp9LbfesC4pMqPGsclsdbJ/QvlN4Y52pQpeCJs4Icm+D+TuKNetKBo0Coimj5wA8IgmDO/vSITN8tlBtaLFRgV+DWoDfKwnn5kwaUibikf5iiZD8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789370787; c=relaxed/simple;
-	bh=bsGdOl8K2QiBGwmi0g97VKjbfovbw4P1wi4hex5y5E8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BtiPLODG6KiGagRYmmwxr4yb76Oq7JY8cGDvyu7rNPNGeFP0f/jqGFQuwTKTS+0vVOx2S+Eug8gSaOcDHi2MKmQQNJdM3P3x6Ln5K0XP0lam01FrZyAOUz77hQaOtdhr0UHtfNYs55sArNPhXBC+j7XGlHrkAwecDEN6UFMeaWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CFsiPCfE; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=5D6IopvA; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1789370858; c=relaxed/simple;
+	bh=FDmdJsva6PhVAruik3JBwqxF0r/t249ybkFPnUQ8UnE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=liOH8sL6rX2bLFszcn6aABE9qMAKFD7GVwCG1+4trf2i1L8iJkNYVBvprEfCmv1XEtYbZcBE/Cwd+lwUC6hXCwonGaoMiMxSenzCSRqHllYLYuECoFnv29aRXmDzyJeegaHtWF2Qri7ywctiL6dmGxunwh2ZgzztTLPHWPCPBUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/jIXXJK; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CFsiPCfE";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="5D6IopvA"
-Date: Mon, 14 Sep 2026 09:26:23 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1789370784;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7OGq4S9EEK8muizX5eTxulaDRgKnEZhBbib2tr3gCzU=;
-	b=CFsiPCfEGeF9XmgZTJSqe3Jwic/36JU0ej18ZLHmQ18tpFr6Jr0amoTVaRn0cwkScQxUIu
-	vKaPYVVn2f/hDyMhx3Mnt2jfr4qmNaQzTId3gO/qP8h26cBpY/kFjcfQS0l9CbJ1UZJ1CQ
-	rQ53qdFLGGJ8HYQ9jU+M4Iq8xRy2TM0XwpLJBGWbl9d8qvTQklXCjY55k4QNUuM5Ng1bfk
-	jrlsVKySyBLJlll/gCqJBjtzuT32YqNkD4q9M/Rnv80PFaYEhIbeH7j5wBN0njq6nZoPWz
-	GeJdc1SVPnmg7Y0U+bjv8P5kAbFJ6VoMx05ls7juU9jNScrkmjSMT2TACvqaRQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1789370784;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7OGq4S9EEK8muizX5eTxulaDRgKnEZhBbib2tr3gCzU=;
-	b=5D6IopvArs8zmcCStQuzr9aNjiioa49aHbktkrBKbof0She2ufNE0CNkm/tAKB1wFapvzE
-	WqfLrpYFSQjTnlCA==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] irq_work: Flush lazy work CPU down on PREEMPT_RT
-Message-ID: <20260914072623.OegMPpLL@linutronix.de>
-References: <20260911143815.997254-1-bigeasy@linutronix.de>
- <20260911143815.997254-3-bigeasy@linutronix.de>
- <20260911145555.8BE8C1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/jIXXJK"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d8fb334e72so16978915ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 00:27:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789370856; x=1789975656; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1JAD9tmGDUmLFmmjsY5lDiINw+bhtxWNRT0fitk2tyM=;
+        b=h/jIXXJKRuhM3aIjTxN5bLa0qGGtfxa75cepacEhWHjJZ3GUJsQEYNCHt3TgdqWq8W
+         fRTqCw9f9LlUT0R2rf/PYwdQCET+TLVtZNHja3xheW1a1bgPrEHa5JjE4xiNo9ErWggK
+         AZaUaWGgow5CpdZev4v/LOzuZ50rtgu+ITyy18pv74vvMEcuD17WtRCQP5/izBpuU9SU
+         YwDJsooxSyd9x2lNOnno4g1+Y+LUNb4qUrtmip2EWQC8/OufCj/n+fPo5ZKkfYx1SmNs
+         IllyF2JSwB0r3wg3oZUFRUB4IElLXv9hb89oM/tkSWlaD/qnBKDbcBgru8KH6nuUMQjg
+         a0MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789370856; x=1789975656;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1JAD9tmGDUmLFmmjsY5lDiINw+bhtxWNRT0fitk2tyM=;
+        b=etIXSjJJO85eNbBJSPqal6Gi0jN2uLu5wixLDmB5DulVxmtEWJCfqP4zsBMYHlH7eC
+         L4OF4joqQiQWqp2hiEe47JrOdV0NDCMC39zYPYtt0yfkjyFzheAsdfZTZ/i5sKiL8+wq
+         LCWltsLknOhUTfNZp6G6zgxF34VHEqfmscalrdCbEQlossrZg3SnJH/Wj+gJLx4Mthxa
+         Z+Jj1f1TMMEDmwTOkZHKekWyggSwn0kVi7ZsCo1aH4teC/a3pvVNkOA23BsnjdY8H37g
+         r7q/xECiypMMnICXMmH8wSDj1FiwdYySYx3Maa1I4UF1RHShT5fjtZv6q4RKMlIBJBp+
+         fyRA==
+X-Gm-Message-State: AFuF++m55NQh0FK4cF4eMpp6qyCUpklgu/O801JK0WpeYrBHtbdxu0nP
+	nRDVQrcQqE4ynx30Bw1oXySr7k+bWouM9xkdNw2i/TLEuCo15hRod5JWe8rf3lnNPBI=
+X-Gm-Gg: AYBFou0Im5qzt1UEsPnLX+7IUnKzGch2Ba25gZEdNVUVGmMCjn6IxUtCdukpAZUvIWX
+	Gw2R9T+ay57A+4K6zUr1FwDE+9bKYlTJZq3uuDKmh+vzDGgTDAW9DGtLbr9me1LJOxrJXRwT4qY
+	xIFUV7sbBqRh5ixkupv9GXrVgGcP4RbPz2KS2xu60PCd24Ig5TQaCPL0Xi10RGKewVuzfXZJhs6
+	jhF2TCSQx3+9KLll6IHHZXDATdf/HX6EP5TwjgGrZjz8emEVW6GPk4ez79q+soEtPNbbomsxtuy
+	dRRJgrHlHNiivxTAfmTvQKNUTBJr0AEsNq1W+DfOiZa7nw5U4ohmSDYt2/Cp/GoFY/AWU9KICo9
+	Ifwz4KpSg9etnlwQbjB0lgx+bJWmfatoU0mYenEy6c4jr+hm4iSwu/A2wujUkSb0F/qAUhcf2oS
+	/fimW8LfbOtKaQFeCi8R7g9GVShil9N0M4C4+hkCHY99Vrc3k+y+K2+P0BbDN3NWv2T9+HqI7pG
+	Ci5T9z2u4lAkriavtw50hGWt4NLFQ==
+X-Received: by 2002:a17:902:fc4c:b0:2d9:123c:8c49 with SMTP id d9443c01a7336-2dd6c6db8b7mr32241015ad.14.1789370855896;
+        Mon, 14 Sep 2026 00:27:35 -0700 (PDT)
+Received: from [100.125.248.95] ([124.70.231.46])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd5650198csm21446345ad.84.2026.09.14.00.27.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Sep 2026 00:27:35 -0700 (PDT)
+Message-ID: <999d5aab-d84b-45c2-96d4-ce809a111d48@gmail.com>
+Date: Mon, 14 Sep 2026 15:27:28 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260911145555.8BE8C1F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 22/31] ext4: submit and wait for pending disksize-grow
+ I/O on writeback
+To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
+Cc: linux-ext4@vger.kernel.org, tytso@mit.edu
+References: <20260903123543.2302999-1-yi.zhang@huaweicloud.com>
+ <20260903123543.2302999-23-yi.zhang@huaweicloud.com>
+ <20260903134042.5E0251F00A3F@smtp.kernel.org>
+Content-Language: en-US
+From: Zhang Yi <yizhang089@gmail.com>
+In-Reply-To: <20260903134042.5E0251F00A3F@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2026-09-11 14:55:55 [+0000], sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Is this statement accurate?
-> 
-> Several lazy irq_work callbacks (e.g., cgrp_dead_tasks_iwork_fn in
-> kernel/cgroup/cgroup.c) rely on this_cpu_*() accessors to process local queues:
-> 
-> kernel/cgroup/cgroup.c:cgrp_dead_tasks_iwork_fn() {
->     ...
->     lnode = llist_del_all(this_cpu_ptr(&cgrp_dead_tasks));
->     ...
-> }
-> 
-> Executing them remotely on the control CPU causes them to access and drain the
-> control CPU's per-CPU lists instead of the dying CPU's. Could this permanently
-> leak task structs and pin cgroups on the dead CPU indefinitely, while
-> incorrectly altering the state of the control CPU?
+On 9/3/2026 9:40 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Single-threaded workqueue stall causing filesystem-wide deadlock on concurrent write and writeback due to WB_SYNC_NONE skipping locked folios.
+> --
 
-The cover letter explained why this shouldn't happen. Additionally the
-referenced cgroup patch is already staged for 7.4. 
+I don't think this case can happen. A folio which is temporarily locked
+by a writer is not skipped: writeback_get_folio() takes the folio lock
+with a blocking folio_lock(), and the only folio WB_SYNC_NONE drops is
+one already under writeback, i.e. whose I/O has already been submitted
+with EXT4_IOMAP_IOEND_DISKSIZE_GROW_IO set (the flag is applied at
+submission time in ext4_iomap_writeback_submit()), so the state is
+cleared in ext4_iomap_end_bio().  That clearing happens in the bio
+completion path, in softirq context, not in the rsv_conversion worker,
+so a blocked worker cannot prevent it.
 
-> > diff --git a/kernel/irq_work.c b/kernel/irq_work.c
-> > index 9f19c05c9962c..73eabcbdcd50c 100644
-> > --- a/kernel/irq_work.c
-> > +++ b/kernel/irq_work.c
+The jbd2 link doesn't hold either: inodes on the iomap buffered I/O path
+do not use data=ordered, so they are never added to the transaction's
+ordered list and journal_finish_inode_data_buffers() never waits for
+their PG_writeback.
+
+Thanks,
+Yi.
+
+> 
+> commit 8015bea7c1654bcaea86ce738fcb50400fa35290
+> Author: Zhang Yi <yi.zhang@huawei.com>
+> 
+> ext4: submit and wait for pending disksize-grow I/O on writeback
+> 
+> This commit introduces a mechanism to proactively submit and wait for pending
+> disksize-grow zeroed EOF blocks during writeback. This prevents stale data
+> exposure when advancing i_disksize.
+> 
+>> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+>> index 383824e89d123..4c2b6cd15d1f9 100644
+>> --- a/fs/ext4/inode.c
+>> +++ b/fs/ext4/inode.c
 > [ ... ]
-> > @@ -263,6 +263,17 @@ void irq_work_run(void)
-> >  }
-> >  EXPORT_SYMBOL_GPL(irq_work_run);
-> >  
-> > +void irq_work_run_cpu(unsigned int cpu)
-> > +{
-> > +	if (WARN_ON_ONCE(!cpumask_test_cpu(cpu, cpu_dying_mask)))
-> > +		return;
-> > +
-> > +	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-> > +		return;
-> > +
-> > +	irq_work_run_list(per_cpu_ptr(&lazy_list, cpu));
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> +static void ext4_iomap_wb_submit_zeroed_eof(struct inode *inode,
+>> +					    struct writeback_control *wbc)
+>> +{
+>> +	struct address_space *mapping = inode->i_mapping;
+>> +	loff_t pstart, plen, range_start;
+> [ ... ]
+>> +	/* Keep the caller's sync mode to avoid stalling the background flusher. */
+>> +	if (wbc->sync_mode == WB_SYNC_ALL)
+>> +		filemap_fdatawrite_range(mapping, pstart, pstart + plen - 1);
+>> +	else
+>> +		filemap_flush_range(mapping, pstart, pstart + plen - 1);
 > 
-> [Severity: High]
-> Could this result in a use-after-free of the irq_work structure?
+> [Severity: Critical]
+> Could this WB_SYNC_NONE flush silently skip a locked folio, leaving the pending
+> EOF block unsubmitted?
 > 
-> irq_work_sync() protects against concurrent execution by waiting for
-> IRQ_WORK_BUSY to clear and then calling synchronize_rcu(). This assumes the work
-> callback executes inside an RCU read-side critical section.
+> If a user-space thread is concurrently modifying a folio covering the pending
+> zeroed EOF block (which has EXT4_STATE_DISKSIZE_GROW_PENDING set), the folio
+> will be temporarily locked.
 > 
-> However, irq_work_run_cpu() runs from preemptible thread context in
-> smpcfd_dead_cpu() without holding the RCU read lock. irq_work_single() can be
-> preempted after clearing IRQ_WORK_BUSY but before calling rcuwait_wake_up().
+> When background writeback (kupdate) flushes a subsequent range, it will call
+> filemap_flush_range() here, which uses WB_SYNC_NONE and skips locked folios
+> without submitting their I/O.
 > 
-> If irq_work_sync() on another CPU sees the BUSY bit clear, it will call
-> synchronize_rcu() which returns immediately, and the caller may then free the
-> irq_work structure. When the preempted work function resumes, could it access
-> freed memory in rcuwait_wake_up()?
+>> diff --git a/fs/ext4/page-io.c b/fs/ext4/page-io.c
+>> index 9b0e12b5463cf..697e12a54a49a 100644
+>> --- a/fs/ext4/page-io.c
+>> +++ b/fs/ext4/page-io.c
+> [ ... ]
+>> @@ -594,6 +622,9 @@ static void ext4_iomap_finish_ioend(struct iomap_ioend *ioend)
+>>   	    end <= READ_ONCE(EXT4_I(inode)->i_disksize))
+>>   		goto out;
+>>   
+>> +	/* Wait for disksize-pending zeroed data to be written out. */
+>> +	ext4_iomap_wb_disksize_pending_wait(inode, pos, size);
+> 
+> [Severity: Critical]
+> Does this wait cause a permanent filesystem-wide deadlock if the pending EOF
+> block was skipped during WB_SYNC_NONE?
+> 
+> If the locked EOF folio was skipped by ext4_iomap_wb_submit_zeroed_eof(), the
+> I/O for the subsequent range will complete and queue its ioend on the
+> single-threaded sbi->rsv_conversion_wq. The worker thread will unconditionally
+> block here waiting for the unsubmitted EOF block's I/O to complete.
+> 
+> This stalls the entire workqueue. Later, the jbd2 commit thread runs and blocks
+> in filemap_fdatawait() waiting for the PG_writeback bit of the subsequent range
+> to clear, which only happens at the end of ext4_iomap_finish_ioend() via
+> iomap_finish_ioends().
+> 
+> Finally, kupdate attempts to write another file with delayed allocation,
+> blocking in ext4_journal_start() waiting for jbd2. Because kupdate is now
+> deadlocked, it will never loop back to write out the skipped EOF folio,
+> resulting in a permanent circular deadlock.
+> 
 
-Okay, this is a bummer.
-
-> > +}
-> 
-
-Sebastian
