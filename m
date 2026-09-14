@@ -1,156 +1,105 @@
-Received: from mta0.migadu.com (out-101.mta0.migadu.com [91.218.175.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA8749EC48
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE610386567
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:25:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789409562; cv=none; b=Q+KKPQLOIAfygfuvvqpvn/xlEqWsJ075f0kBsuUaaLU0oC3i2X7fem6F8HGGzoPKdpuTGy2Ni2a4kh8HXZ+WjUWWheq66oReGmvwEog5yy1ua/B0fVz8kF9jcGGAHfYa5Zv9ilyOvrGllN3rZry3olfIKHcSoVnJhL5s4lK2h1M=
+	t=1789410325; cv=none; b=Hm2xhQRmAkvrR7QeVX0PJ39S5BWtPvDrrcj3tD1guvvD6urPLsi1hlHimEungHFwVsRYQsOEb6Uxh/+M3SuGXTSdVnnCxXidmmNkjP5ZVP+2HNsnLzfnWj0fCqLV/L9YFhT126ut6LibdfoW30+UQ1NjWBiK1JWRCA470zSEXPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789409562; c=relaxed/simple;
-	bh=hyfxBdy3OjG5YpYUeDDBzwGynwe4d62FEiIOMYVlhwE=;
+	s=arc-20240116; t=1789410325; c=relaxed/simple;
+	bh=sqsbDhf8/vykTPI0FFSA0x67K7EgbRexIgykj5m32F4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AuByOVitGOI5OuOudhhvweYglYk26e6w6chd+7siwF4EWwmKMzTgvomlI7QIvtpqMFYXuwoJcuDDWJ0lEz8UHxJdTMATOWiYpzMlqqIvs++Sn2dbzRnBPXW469FRsKPHmKbz1ygjhkx7U60umLynXuPCCJIV76EUSVvcVKf7g74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Alt4ce8L; arc=none smtp.client-ip=91.218.175.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 To:Cc:Content-Type; b=oVbnlTggcJVQ49vrV0wxOcVl4iC7bzNEL2CHLQ1HZ/OVP0RbuTpnh5RIHvZEJhN3VOCvqUvbX+sCyzUULk/n2Qp6KVy6u8d+8roFMHaxWkW4ZzX6i0NqCqf/gxJ7gvbDL8zyaXRNfo7ih5Nx0IJd5oL+1ap74eQERcbGDbXQzYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFPBKqJo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Alt4ce8L"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=hyfxBdy3OjG5YpYUeDDBzwGynwe4d62FEiIOMYVlhwE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789409556; v=1; x=1790014356;
- b=Alt4ce8LeK9kZVbuw3lEmyzZkq41REja81pnR6qO+Bn7KPds0KOQU5QisIHyi4wYtJHHf6wU
- FY0VkdZdnxp2CHlfDB4RR4uDPGhO3j4oiOfoESANEJIjmN5ZSF21lJXqyKU939EsCJFXXjXlQcs
- S4Dah2cx5jXQxCwRBYNMTz5s=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 59604cbf800d51ff;
-	Mon, 14 Sep 2026 18:12:36 +0000
-X-Mizu-Trace-ID: 59604cbf800d51ff
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b384b7so10762e87.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:12:36 -0700 (PDT)
-X-Gm-Message-State: AFuF++nA6CWoXTeATbUhfcKWTo6f5PLyKpd179D2+IkaMpjamkcJvEIp
-	ilcd9arQrndSG/aklG5/Yr9Yzs9umRlz5g9IU8PJ+Vlu/i7pUbINSNjuwnrI2DgfjHKRLPlB5G+
-	D8/POG5rLXdt1hCjtGF85OuGf20EntmOSgKjW1qqm
-X-Received: by 2002:a05:6512:1595:b0:5b6:4ad:d6bb with SMTP id
- 2adb3069b0e04-5b8b2d4fbc9mr14863e87.16.1789409555616; Mon, 14 Sep 2026
- 11:12:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFPBKqJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8875F1F00898
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:25:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789410323;
+	bh=pJdmS+x/1vPF2Qs60Ujuk+QWWE5dNTLa5JBaBjShvas=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=jFPBKqJokivmbz+VQ+0kSyIcRiQwUaQikqLDTNKoqxE6uItQyDkexZS1hFJUc2Dmr
+	 zrIcDBgCt7pm9DPingLmI+fGScGo5NfO1C8v/W8A326OJTwGlnIZ4z9sFYQqsAH0l+
+	 QQ/WPakwC8If6WJZvvMruSUXaUGWhXrtPYCkPaiCZQDwglzyDeOOIRln2xJN76jbAi
+	 sDL4+psmW53CsGP1Wy2GyaZSabDOmmdX0FehC8QdBEJ2xHHsUPtAlEvhHweeawfZSU
+	 bpNFLrKE0F4h+aGHQ2bUS8SClavoXmDq2IWMPDOiE7uiC/owA4S57SIPxtqHcaSp/L
+	 tlSgsrikj6SEA==
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-93910cc46c8so161234885a.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:25:23 -0700 (PDT)
+X-Gm-Message-State: AFuF++lF95D6FASta8CNYupYVUGSCRIsRdy6mAb2UPF7yjgy8h9g9dUn
+	CDPDUpYsK76UFIM8DAvRtoMLrgGRy4MQDSWEIuwsjL2o1K8MX9Swi7bhS7ObneE7jsAhAc0FHcp
+	b/uy3fYPsqrIkG2hsogmxXbTycYfW314=
+X-Received: by 2002:a05:620a:2548:b0:939:78ab:3c5f with SMTP id
+ af79cd13be357-93a297c8d1cmr542380885a.9.1789410322806; Mon, 14 Sep 2026
+ 11:25:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914174521.832575-1-fuad.tabba@linux.dev> <20260914175832.2A2D91F000FF@smtp.kernel.org>
-In-Reply-To: <20260914175832.2A2D91F000FF@smtp.kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 14 Sep 2026 19:11:59 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTwfY++rZNMmWvAAzHMLbGGy9NpBjAPaMLD_n02Vabx63w@mail.gmail.com>
-X-Gm-Features: AcwNN1VDuXzIFAxU2JP-AJgVJDeNayVdctVdg6EJ3aLm09WSanwCKKM_HnhYcYk
-Message-ID: <CA+EHjTwfY++rZNMmWvAAzHMLbGGy9NpBjAPaMLD_n02Vabx63w@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Reject the stage-2 MMU pointer hypercalls
- under pKVM
+References: <20260914062514.926997-1-song@kernel.org> <20260914062514.926997-11-song@kernel.org>
+ <20260914063734.71E531F000FF@smtp.kernel.org>
+In-Reply-To: <20260914063734.71E531F000FF@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Mon, 14 Sep 2026 11:25:11 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW6D=wVVNWLOkYBVaSVsVcS=rf2HDW_m7m8AWRWy1=YdLA@mail.gmail.com>
+X-Gm-Features: AcwNN1Xni1Kt8KtwU2LaozWdg9R3wKky_BCliNy5lwwVTNo3V8_0n75xlCDMvjA
+Message-ID: <CAPhsuW6D=wVVNWLOkYBVaSVsVcS=rf2HDW_m7m8AWRWy1=YdLA@mail.gmail.com>
+Subject: Re: [PATCH v2 10/58] objtool: Keep failing test workdirs by default
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+Cc: live-patching@vger.kernel.org, jikos@kernel.org, mbenes@suse.cz, 
+	kernel-team@meta.com, peterz@infradead.org, jpoimboe@kernel.org, 
+	pmladek@suse.com, puranjay@kernel.org, joe.lawrence@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 14 Sept 2026 at 18:58, <sashiko-bot@kernel.org> wrote:
+On Sun, Sep 13, 2026 at 11:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Hypercall handlers `handle___kvm_adjust_pc`, `handle___vgic_=
-v5_save_apr`, and `handle___vgic_v5_restore_vmcr_apr` dereference host-prov=
-ided pointers via `kern_hyp_va()` without validation, allowing a malicious =
-host to corrupt EL2-private memory under pKVM.
-
-All three are correct, and all three are already being fixed.
-handle___kvm_adjust_pc in [1], the GICv5 handlers in [2], and the rest
-in this patch.
-
-Cheers,
-/fuad
-
-[1] https://lore.kernel.org/all/20260914065136.3418404-1-fuad.tabba@linux.d=
-ev/
-[2] https://lore.kernel.org/all/20260817103228.1203140-1-fuad.tabba@linux.d=
-ev/
-
-
+> - [Medium] Incorrect shell logic nesting hides failure hints and masks le=
+aked artifacts in KEEP=3Dnone mode
 > --
 >
-> commit 6af3790e411879ef8c99b26ae2afdc619730e489
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> commit 3f45b4f5eca60d068a16adeda22b98b456f84450
+> Author: Joe Lawrence <joe.lawrence@redhat.com>
 >
-> KVM: arm64: Reject the stage-2 MMU pointer hypercalls under pKVM
+> objtool: Keep failing test workdirs by default
 >
-> This patch updates five stage-2 MMU pointer hypercalls to reject executio=
-n when
-> pKVM is enabled. It adds an is_protected_kvm_enabled() check to prevent
-> invalid execution paths.
+> Change the default test behavior to save failing test working directories
+> instead of deleting them. Add a KEEP Makefile variable to optionally reta=
+in
+> all or none of these directories.
 >
-> Link: https://lore.kernel.org/all/20260914130152.F0D5F1F000FF@smtp.kernel=
-.org/
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 9a3b92e626adb..4b0d00e55e2ea 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
->
+> > diff --git a/tools/objtool/tests/run-tests.sh b/tools/objtool/tests/run=
+-tests.sh
+> > index e6f1ac1b5d0da..81dd33f1819b5 100755
+> > --- a/tools/objtool/tests/run-tests.sh
+> > +++ b/tools/objtool/tests/run-tests.sh
 > [ ... ]
+> > @@ -167,15 +182,44 @@ done
+> [ ... ]
+> > +none)
+> > +     if ! rmdir "$rundir"/*/ "$rundir" 2>/dev/null; then
+> > +             if [ "$fail" !=3D 0 ] || [ "$xpass" !=3D 0 ]; then
 >
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___kvm_adjust_pc() {
->         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
+> [Severity: Medium]
+> Does nesting the failure hint inside the ! rmdir check in the KEEP=3Dnone
+> case block prevent the hint from being printed when tests successfully
+> clean up?
 >
->         __kvm_adjust_pc(kern_hyp_va(vcpu));
-> }
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this code allow a malicious host t=
-o
-> corrupt EL2-private memory?
->
-> The unvalidated host pointer vcpu is passed directly to __kvm_adjust_pc
-> which mutates it. An untrusted host could invoke the
-> __KVM_HOST_SMCCC_FUNC___kvm_adjust_pc hypercall with a crafted pointer (e=
-.g.,
-> an EL2 private-memory pointer which is idempotent under kern_hyp_va()). T=
-he
-> handler handle___kvm_adjust_pc directly passes this unvalidated pointer t=
-o the
-> underlying function, which dereferences it. This could allow the host to
-> overwrite arbitrary EL2 memory or leak its contents into system registers=
-.
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_save_apr() {
->         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
->
->         __vgic_v5_save_apr(kern_hyp_va(cpu_if));
-> }
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_restore_vmcr_apr() {
->         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
->
->         __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
-> }
->
-> [Severity: Critical]
-> This is a pre-existing issue, but can these handlers corrupt EL2 memory u=
-nder
-> pKVM?
->
-> Similar to the above, the unvalidated host pointer cpu_if is dereferenced=
- and
-> written to by __vgic_v5_save_apr and __vgic_v5_restore_vmcr_apr. An
-> untrusted host could invoke the corresponding hypercalls with a crafted p=
-ointer,
-> allowing a malicious host to corrupt EL2-private memory.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914174521.83=
-2575-1-fuad.tabba@linux.dev?part=3D1
+> If rmdir succeeds, meaning tests cleaned up properly, this entire block i=
+s
+> skipped. Also, if a test leaks files (causing rmdir to fail) and tests
+> also fail, won't this logic print the hint but skip the leak warning due =
+to
+> the elif statement? This would effectively mask the leaked artifacts when
+> tools/objtool/tests/run-tests.sh is run with KEEP=3Dnone.
+
+I think this is OK. We still print out "not ok" and "fail: <none zero>".
+
+Thanks,
+Song
