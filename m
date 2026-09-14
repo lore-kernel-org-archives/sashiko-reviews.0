@@ -1,281 +1,164 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010067.outbound.protection.outlook.com [52.101.61.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE88446062;
-	Mon, 14 Sep 2026 12:11:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789387909; cv=none; b=SVcPUnSl7Dyrb8mRhdI46eV4QBEmHIe59dMYIXOGP7iTDnAITetM6Ztf3brNCqB/Jpfw+w9/GoV1yUkNnp8jvJx5uv4FAuvlUS7amOXa67aB2P1+dsN82BKZozEEH6p+P2QcbqCx3oqAzFwhHVtHD+b7vglEPVKrgPUlP+2aoMk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789387909; c=relaxed/simple;
-	bh=zouD04vMRx28AW3yFpxS3KTW3GFgM1VjmQSdGMJinGY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q+CMM7Zn8jPavvIta/lLatInjez9EiFpoEqG1Vdx5LG4ZVuRPZlzuHJ1mXBJ34RVszH7OdEwJQbDxZixL4D5UeMDv/VQxuYFy5eqNxJOPwqk96t3uHYhukiCJZEDXGbZTreMKHpl4pPYH9ll8kbqE9JoXG2WOxMfrcubsFPL68w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JRQWt0CM; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=pKF5W324; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=uTgSYGVD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=J0MY04CB; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232352C11DF;
+	Mon, 14 Sep 2026 12:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789388351; cv=fail; b=qrzsNOj4kZr1P4XHTthpV4c3Bpj9wJGNdG9NgUyNhLTMH/T3VfTLKEXHDWozQ3zQdDTEbt+o6gFWLEgDtzuW4pm8FhflQFyg+Mj5i+Dzw+l10YhVJx5TPDfrpcDiMNCx+ZoCm44/dMI1Lu/wZzZr+zglulKEc8b7Asx4nJYubCw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789388351; c=relaxed/simple;
+	bh=W5NOi6Wq5vY31i++tbJAJg0m9wU8YXJUJ/4KMXqC7Zc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GfTnbR8fxONwmJ3eIAZhaEondA1Evu2QSSpYb1gez9/DikTs1u9Jo8uhxiFNA43ZnlgF8paoSYmoP8aOymX0mj8EpiUOYiQ6IymLs/zcoYG5PWPNgDLWZOoU5BLi86JzaN5u3vrP0mKeECTajllZUhlTSK6i6cOTglu4IUTAvBU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TtONWYlB; arc=fail smtp.client-ip=52.101.61.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JRQWt0CM";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="pKF5W324";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="uTgSYGVD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="J0MY04CB"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 75ECF1F457;
-	Mon, 14 Sep 2026 12:11:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789387894; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eJq1peufPlqG+KQkJBrDzKBHONxaaFeps9w2MW68dyE=;
-	b=JRQWt0CMWE54OzFsZHuUUQLssfYDjWoaEZ2qn2IJ5x+3VQBaJyFFputbgI60gVpGM1pIg3
-	BxPqaJr3XyDcdcSgXxUW80Cv4PL7ATJ+j2sGKhNey2hcPSizhIloBnv4Ss1aAZ4Q27kEV1
-	PYPE8Nu2MWG8z6dn9iP/gZC01UZqFro=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789387894;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eJq1peufPlqG+KQkJBrDzKBHONxaaFeps9w2MW68dyE=;
-	b=pKF5W324TcrEJ1JZMPhGOPpe1kQK6sY1gmuwBW839cdUAlk32WYBkTOC21Oz5YdF6+Srsp
-	mbcdt59TeN9o8IAg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uTgSYGVD;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=J0MY04CB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789387890; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eJq1peufPlqG+KQkJBrDzKBHONxaaFeps9w2MW68dyE=;
-	b=uTgSYGVDRTrpcc0ziw7dCLpsR7poNkCc4t0x/BX3OBEabz08kSSjAG465VJpRwgBd40ZXE
-	0o9OALMfQJGMGpsqlWWPqzY0CNvTIEDdOU+fTd+/04S55VGiTRjLlJcXlAb1qbn3UUbllP
-	7xxfZDVSxeglPTtAXdURife5TtrSZPQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789387890;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eJq1peufPlqG+KQkJBrDzKBHONxaaFeps9w2MW68dyE=;
-	b=J0MY04CBlm6DZUHYNU79vlM/JCTP3AiW5eaBj4LL5n2l3gLAsKNpW6VTLi9guDcBAUNIPF
-	Hm3BtxngRNwltsAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 223F113515;
-	Mon, 14 Sep 2026 12:11:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GX1yOXHkp2qKCQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 14 Sep 2026 12:11:29 +0000
-Message-ID: <c8e76f8f-aa64-44f1-93ad-b998c03ea731@suse.de>
-Date: Mon, 14 Sep 2026 14:11:29 +0200
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TtONWYlB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c61b+CwKwXWBEFHBiHd2XozQPFZj6RuJrKMbTsM3xjvPy2OviLEnK9yZBkeC4NHYv321r69K/X+VtfCvXNcYYft5WrjeV0zM0rMg+KLSl1VkATAWVtPqIcRNzKt49t40/kiRBM9mrg88RBr/WHvQEP0tM9+XlTPsUqqNzeauZMOdd7H6tGWEG79SaDi9gdPwvBv6RPOeIljkv+2FuxdyCrAZuAocBedQURfX0yn/ZHMup+yYY7+p5puVcmplJmoUhwFKMay8Eqek8ULW+RuEMHYcLN5c3Hmnn2PvOx44PdWIOXr5e256PrvLFtcjf8Yd8g87oCu819+cwqhU0vzGeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=p8YJEh/jVbzhKno7SNxErArxCxr2veKDoUQMr8XGoCo=;
+ b=qktniq8S9BKqKxpx6MDhpF8tF3AjlPEdc3VhylTsAasBm3vg64h0X3mxrXVRlWJ2pQ4zK4O+RaXCJXCrZruqfJCmC8Nn1tsfkXahVKoy0fNdq6iLQJX/has4gz9PQBenjw23MG5hWGhnzlMBdWWDiP2LD2j1lIvftZs47W+5JM3Fk7Dmb8s7WaWU1kDizwOChK3sOQmXD4j23e+pMdU1vHFMUDYmSSQc4ytuz0ctF1CFqrK+BB9C/2TUD2ni1tslrt+Hf0dUmpqzjpe31OlmucbVwqUIpNxscSRxzc6gNVZruAPdDjrA+YEhwwf8tdbJT8Kmgs2H0AoTM6FnhwmocA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=p8YJEh/jVbzhKno7SNxErArxCxr2veKDoUQMr8XGoCo=;
+ b=TtONWYlBDwoSJmOcFgrbSOBDiQX/IXzi3rEeeM+66OFhY9PXk8klYYku69gWG5Nrjwmfm4AKXXYhQfnYDfkHC1g4VCawGWAgqvrF4n2/3+6E3poklHGJx+8g6w8/2BjbbSMAHIdLaiwFQFCS7ZdIrd0aJWCbiybq5XhlQovrb9y6sVh6lBpupW+v+AVPndeoXigmaIllbo+XMFxmhgPNhsP4NiiVR3qCLxqYGfWEsNS43EsqmDklSBl0BTTBlAfRI/yHc1ewxVLasHVuRynsUokq3C1xFHdKb8iynBwmjnLxLaDJfrbxK91vzAx3RilqqUSdCNyKnhUiA4qSGng2Lg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by BL1PR12MB5851.namprd12.prod.outlook.com (2603:10b6:208:396::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Mon, 14 Sep
+ 2026 12:19:05 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
+ 12:19:05 +0000
+Date: Mon, 14 Sep 2026 14:18:53 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 1/2] sched_ext: Add lazy preemption support
+Message-ID: <aqfmLZXNue5VhK1w@gpd4>
+References: <20260914084955.1798562-1-arighi@nvidia.com>
+ <20260914084955.1798562-2-arighi@nvidia.com>
+ <20260914090640.A47A81F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260914090640.A47A81F000FF@smtp.kernel.org>
+X-ClientProxiedBy: AU2P273CA0107.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:200:6d::11) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-To: Ze Huang <ze.huang@oss.qualcomm.com>, Maxime Ripard <mripard@redhat.com>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
- Frank.Li@kernel.org, imx@lists.linux.dev
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
- <20260720-bold-jasmine-goldfish-d979e5@penduick>
- <DK45JBYJ8H1N.27UGNR6GBI6J5@oss.qualcomm.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <DK45JBYJ8H1N.27UGNR6GBI6J5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 75ECF1F457
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_TLS_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|BL1PR12MB5851:EE_
+X-MS-Office365-Filtering-Correlation-Id: d789d19a-4eac-487d-765a-08df125a5e65
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|10067099003|4143699003|6133799003|22082099003|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	ARyuD+ZLwYRzWnUMrUZ2QWEpX2sN+/OOnoSWfOTzN708rOOtOR0leUhRPvN8AFL96zYUfcRsfO5kzE0a6jWcI0FShS3O924OLoCtpKC//7FqeKOR70qbLFbFSq/SSvPNyrTTr8BaQs+2Sex3XYEmUxTEXqEQ0EEOuvTKmpRYumyhVXCdD7mgLkLRuRRQOK5U4mEJWkvCyPXXUYXHdIKM+KDr9gg3lr+MIMy0FfJLeW/eOIF8XLzGZd/NiA9AeOGNKbuS/rr19sRadjsKhV5Vj3C/DP91L3E73KinwWsfsXyyvolQOtz7v56FHLDJhnqOenLCuBdbJjuc/S8YzLFrZnZlUlMJuuOJFlFMDbitvkZ0EmX+7P3ElgM5U7t4Tq9WA7vTo06JrNSpbaCmlfoTK9mxaPoXD7a3vMYLH3O/VjuKetQJRNNJ6iy51IB4BYQBrbPb8nHOP4yDKNj9/+HWTHO/SQi/FBD68ki6BKYqsxK+70mY9BeqpJWfg96tIW4s9sH9X0Vwo/L3mMXAZWCATbhPk1D/reuaV/7rYcjPZ6R+WTELyl6RK7rzv0Bc81JI73NDATr/7IW2vLw5Q/vbeQfM2RE/sOK2aCS2w9uCddyhHDkLlXjyW1r2Km9GDmOdpnR4nmkehiuciTDZsBSb4W4zvz+JpJVY3dLeYNVYbY0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?m5u+fLXClH+qukkA4HFDv1x7BjSVTmLonTV+THzFOl4greReo1wNgxY2rBZv?=
+ =?us-ascii?Q?cTqQWXFVsZzf2dfGjwp9uUGFA4yirMAk+Q6rskihIdVKq43b36T6vK5vLzJy?=
+ =?us-ascii?Q?O11o+fCW/V+mOII6EhkljRWP9sEvyWhOQhDeveyON3gyj2POQKTVc8aP37VX?=
+ =?us-ascii?Q?gD0iw7aBFsj9U3oHpTXtLfJoC/J1/f5fTyebbPAJduJgasUvMD5viBCiHb16?=
+ =?us-ascii?Q?QIAdk1iNIYpzASGEZ+rEfXT0KNPQ+L/R19quH/oKdX5+X4QcNKDHW+Bno5sE?=
+ =?us-ascii?Q?++rj/RtjqabKk15sXmWMseDx+q4kzyS76qIg+186OXPcVGGmRXkCgGkJ9vN8?=
+ =?us-ascii?Q?Umx6OikDolOuGjjPyqEt18533j467n2R3B8C8hiTi2J6N8h1pXI+kwJ87ZJI?=
+ =?us-ascii?Q?YY3kgGNaViEtDYIJwVAJWmwmCLnJ2amEAcQoygebwiHRABTmCc7w8p/MIuJy?=
+ =?us-ascii?Q?bW+HxXObbgxbCSLTQxgGAxixWemVB8AP29we8FXJU2HYXCv9Q1PZ8IC3TKSa?=
+ =?us-ascii?Q?+Kn5pE5V/QahYwZ0wzr2CtQsFh2aTqHlsA8oxVMIuA6t1K1l52pGHMKqvfcm?=
+ =?us-ascii?Q?EnQt2EGpaR4zKKPPeSP76/lfLDwQth50ekVC2uOKPKPCueeR8J6RpKa7L9F+?=
+ =?us-ascii?Q?nfB83NEkebjysChpo6XdrTQDlS5e0+4FvNxWZ6HFTm73x+kWQvArKfBCXCm2?=
+ =?us-ascii?Q?UCfAzbF/AYTmrV9Tqq5rAYCRVXnCkr9yw3FdP7b6Ici5t9pgC/EQiyI8A0Re?=
+ =?us-ascii?Q?TmiGQz6Fu5U84Dfy0FxSfvxBLmAunsJaX9DxPZCnnMU/3+7+QqMCmdSniKpX?=
+ =?us-ascii?Q?0oLsyV2+bQ5kaNWHIKM83FhdXLGDOlsFW7BLvJeypkfr1A1BvOrffl3X7LFm?=
+ =?us-ascii?Q?yITMUlnG1XUXHkFYw0zrzn0mLf6N6f4OPPx5ghCKr6BCvij9m0gGtGu4Kk8x?=
+ =?us-ascii?Q?IDijfPUhwRvPI5atOA7MMNuiLeB7kQEVxntEKrZzP26w5E5EKNeaLNqJ7v0N?=
+ =?us-ascii?Q?8cXWtRjXVIjoZKcT5POIvCaXehDGM66wmf7zjJM6RwsVVqnMUU5pbADhkyr7?=
+ =?us-ascii?Q?5YUS7ZP4zotTcpIWDy848gDbaGV1yTT+Yru2cAGiiGBMVINZ8C44uuW0KamY?=
+ =?us-ascii?Q?7fPlviiav4mENvJxq89jmiRU5ampq71ZqdeScgrF5BLQVdyqj2r5fWmc+6+g?=
+ =?us-ascii?Q?FuTBzonVeWCFWOzne1SLk5l0qi0Ow35VYTIgYE36uk4ekmFnZf1wwd+pQRFS?=
+ =?us-ascii?Q?J8lOZBmCY8AbrwETZ7fvZhFUccYxkfJoxIJty9DOzRhM9mW5eJVr9NVP1L6z?=
+ =?us-ascii?Q?eGxtW9KxSebIjOufeceDLzDCy53E1gJJJVPc8t0DOc4WSwjgkodnLkTX89+I?=
+ =?us-ascii?Q?plqmDRU04QeZ+s3C7rx+B2c2v+4cNuDVu/vzbYfKrAHsB++zNR2JKAvoZET0?=
+ =?us-ascii?Q?L/wuHVaMDm0bVe07oS7pc1kw6yxTIm16Ljn7mebAaGa1FJ65+3ou1FGubrNe?=
+ =?us-ascii?Q?6E75b0TUav0uWqgyzlAq6i9qSorHVVFz4g6WWuot5OnRd+eCMtJ5P/cINiBN?=
+ =?us-ascii?Q?tj22X20QoiZ6Re+VnJcSr6+85VnNTyYfvm+cJmXwvh9wBP1ms4AwQmSMimvv?=
+ =?us-ascii?Q?9TV6Md1QAtE45Y3Z0+ZDprUL466282O00w5PoUHJx3uUhziNf16UuREpYA5Q?=
+ =?us-ascii?Q?vHCDJM/w0W8BKdvko5TDjqtARjlQMbKFmwMhOodqTbtdbSaiLDFviRpcZLbD?=
+ =?us-ascii?Q?uea4m6LJIw=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d789d19a-4eac-487d-765a-08df125a5e65
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 12:19:05.5952
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FCN8/tXHa4vEZl7MkyVHulTZZIHDWom7o42lR+e6Iwen4tMHVvtS7xcLrjMmKvwfQS/DCiRNkqJj4xQakqrvQw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5851
 
-Hi
+On Mon, Sep 14, 2026 at 09:06:40AM +0000, sashiko-bot@kernel.org wrote:
+...
+> > @@ -1515,6 +1515,23 @@ static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+> >  	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
+> >  }
+> >  
+> > +/*
+> > + * A task with an infinite slice may be running with its tick stopped. Lazy
+> > + * rescheduling doesn't send an IPI, so restore the tick dependency first to
+> > + * guarantee that the lazy request is promoted by a real scheduler tick.
+> > + */
+> > +static void scx_resched_curr_lazy(struct rq *rq)
+> > +{
+> > +	if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
+> > +		rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
+> > +		update_rq_clock(rq);
+> > +		update_other_load_avgs(rq);
+> 
+> [Severity: Medium]
+> Does this trigger a SCHED_WARN_ON(rq->clock_update_flags & RQCF_UPDATED)
+> double-clock update warning?
+> 
+> It looks like update_rq_clock() can be called from paths where the clock
+> has already been updated or the rq lock was taken without pinning.
+> 
+> For example, during a task enqueue, enqueue_task() updates the clock and
+> sets RQCF_UPDATED. The call chain then reaches rq_owned_post_enq() ->
+> scx_resched_curr_lazy(), calling update_rq_clock() while RQCF_UPDATED is
+> still set.
+> 
+> It also appears reachable via kick_one_cpu(), which acquires the runqueue
+> lock using raw_spin_rq_lock_irqsave() rather than rq_pin_lock(). This means
+> RQCF_UPDATED is not cleared from the previous lock hold, and calling
+> scx_resched_curr_lazy() here updates the clock without a valid pin context.
 
-Am 21.07.26 um 11:46 schrieb Ze Huang:
-> On Mon Jul 20, 2026 at 10:08 PM CST, Maxime Ripard wrote:
->> On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
->>> Hi
->>>
->>> Am 18.07.26 um 21:12 schrieb Ze Huang:
->>> [...]
->>>>>> -	if (event) {
->>>>>> -		crtc->state->event = NULL;
->>>>>> +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *plane,
->>>>>> +					      struct drm_atomic_commit *commit)
->>>>>> +{
->>>>>> +	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(commit, plane);
->>>>>> +	struct drm_crtc *crtc = plane_state->crtc;
->>>>>> +	struct drm_crtc_state *crtc_state = NULL;
->>>>>> -		spin_lock_irq(&crtc->dev->event_lock);
->>>>>> +	if (crtc)
->>>>>> +		crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
->>>>>> -		if (crtc->state->active && drm_crtc_vblank_get(crtc) == 0)
->>>>>> -			drm_crtc_arm_vblank_event(crtc, event);
->>>>>> -		else
->>>>>> -			drm_crtc_send_vblank_event(crtc, event);
->>>>>> +	return drm_atomic_helper_check_plane_state(plane_state, crtc_state,
->>>>> [Severity: High]
->>>>> Can fetching the CRTC state this way cause a kernel panic in the core atomic
->>>>> helpers?
->>>>>
->>>>> If userspace submits a commit that modifies only plane properties without
->>>>> affecting the CRTC, the CRTC is not implicitly added to the atomic commit
->>>>> state.
->>>>>
->>>>> In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passing this
->>>>> NULL pointer directly to drm_atomic_helper_check_plane_state() causes a crash
->>>>> when it dereferences crtc_state->enable.
->>>>>
->>>>> Could this use drm_atomic_get_crtc_state() instead to ensure the state is
->>>>> brought into the commit if it is missing?
->>>> I think it is fine here; I'll just copy the pattern from [1].
->>>>
->>>> [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L487
->>> It could be that there's a long standing problem in the overall logic. Not
->>> having a CRTC (and hence crtc_state) should also mean !fb, so we'd return at
->>> [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, we could
->>> get a panic at [2], where it does crtc_state->crtc.  I'm not aware of any
->>> bug reports about this problem, but it's still an issue.
->>>
->>> A number of drivers get this wrong by using
->>> drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
->>> drm_atomic_helper_get_crtc_state() instead.  This helper also returns the
->>> new state. But  if there's no new state, it duplicates the CRTC's existing
->>> state. That's a bit of an overhead, but probably not an issue.  Several
->>> drivers use this helper, but also get it wrong. They tend to return early in
->>> the case of !crtc or !fb without calling _check_plane_state(). See [3] and
->>> [4] for examples.
->>>
->>> I think, going with the bot's suggestion to use
->>> drm_atomic_helper_get_crtc_state() might be the best resolution for now. It
->>> still needs a crtc pointer, so the pattern is
->>>
-> Thank you Thomas and Maxime for the detailed explanations.
->
-> I will follow the suggested pattern here:
->
->>> crtc_state = NULL
->>> if (plane_state->crtc)
->>>      crtc_state = drm_atomic_helper_get_crtc_state(plane_state->crtc)
->>>
->>> _check_plane_state(plane_state, crtc_state);
+This seems legit. The enqueue path may have already updated the rq clock before
+reaching sched_resched_curr_lazy(), while the kick path doesn't currently
+establish new rq pin context. I think we can avoid the redundant clock update
+when the clock is already current and using a pinned rq lock helpers in
+kick_one_cpu().
 
-Is there an update to this patch available?
+I'll fix this in v3.
 
-> IIUC, atomic_check is the last stage where valid to extend commit state.
-> After that, the state is fixed and helpers should only use
-> get_new_crtc_state() or get_old_crtc_state().
->
-> My only remaining question is about the doc warning [1]:
->
->    * WARNING: Drivers may only add new CRTC states to a @state if
->    * drm_atomic_state.allow_modeset is set, or if it's a driver-internal
->    * commit not created by userspace through an IOCTL call.
-
-I don't think this affects your work. If you just inline the existing 
-simple-pipe it should be all good. (Or you duplicated existing bugs, but 
-that doesn't make it worse either. :)
-
-Best regards
-Thomas
-
->
-> if we end up adding the CRTC state for a userspace non-modeset commit,
-> it could hit the requested/affected CRTC warning in
-> drm_atomic_check_only() [2]. That would still be more acceptable than
-> crashing, though.
->
-> [1] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic.c#L355
-> [2] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic.c#L1746
->
-> Thanks,
-> Ze
->
->>> And in this case, _check_plane_state() should work correctly. But you can
->>> only use _get_crtc_state() in the atomic_check helpers! In the
->>> atomic_update, atomic_enable, etc helpers, it's too late for the helper to
->>> copy the CRTC state.
->>>
->>> I think some other DRM dev should look over this as well. It's one of the
->>> trickier things in DRM to get right.
->> drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
->> everything after that must use either get_new_crtc_state or
->> get_old_crtc_state, as the global state cannot be modified anymore.
->>
->> Maxime
->
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
-
+-Andrea
