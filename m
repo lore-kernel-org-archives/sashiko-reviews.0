@@ -1,143 +1,187 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3596F480DD6;
-	Mon, 14 Sep 2026 19:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C983E51EC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 19:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789414259; cv=none; b=PjYzwjTr3M7AsdC+Yf70Mra7qsohSkdDpV+CR1a89areXeGdm6eg7nquUsCaSTP4G9lkF7EYELu3GCURZQ5QBNfxCzCzBDkaEVUFfuuC4/XTla5xlWJTxi5NcJjaqRTgirOQqjY9WucGoTyk8kz7/+3I5ffUqAqiR2AhQo1XGCs=
+	t=1789415572; cv=none; b=dCFmq8SR0KgRNcNM1fKKAAzeyn5iKq9A09I2Vond4jAM+BrmjSRDulU4QFoG0VlzsjuVPh733OZ5pMg8QhRvdfzgfcVgUQVsk1ro0ORiRoXQt9z6iu7plT7EvsrANttlWx/9s1W0ibhQtIXxs9VpyQWSBEIWnVBvvbDBQzOX/+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789414259; c=relaxed/simple;
-	bh=Zc1hD76ecUbCp2j2KAowp/kLy9q/w2Sn6egXzdQ48gs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tcag1dnCU/DbWvN+E0wHfCn4nMmM24yu7RoXMypf4PmpG9Bj19favf9WMxzVoWpErPL+TT4ZCjJn3I0v9Zfbf4NEKfroyjwg5DsqlsuaBj4dR7yrQV5uYPfq/6ATkam7YoRIzPej2KSXx1qeVjgczkKbu10GFpJs4pEKoTBSRyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=azKfPNM6; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1789415572; c=relaxed/simple;
+	bh=tBnKPHKbQF4/+sshJ5lDUvnmcBdfLWpNulWGrNkziJQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rX73vyBGpuJRFCeJXqmKHC9xfzNgBBkzH26SGf8SKrrILYOWBktq3JY7d2K4gE4ELc+u7Tga7ixaUhMmVXQ3wZYTKl2iaOyBpXXB4lUtRsNUGcv11wbqdq78rD4GPC31+wTn6RssgaxgXJkMgQbUTZ1PjhjE5YjIrPN21nrHdXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C9TkjpHQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="azKfPNM6"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=X8fwiKN/T3YIT7uFngBKANOC5DpC5wC9kfGfjoFiBqY=; b=azKfPNM67Xv5FtcoAfxbqUm2Av
-	vsn+Gu7WiT1k6oactP8cau73C14Pb8cN8IAK636K1HCg/PzLhfqZyum4fM63sV00CjEQgCGOueUwy
-	8FjkTtJLuMQon20c6Gen6LyqA2P+9ZSE8BrZjK/+eVsw3fkEiRGziJw72Q5oLcyK+48nrivbZNu/Y
-	3kFeWqaycEE5lMFx6Giw6yuPXmhbodscnYNa6mlBWoa2i3KLNLm93iQh2d+GoiA7LJCr94OLZIHOY
-	0P08XQf2RU8e5of+F4RtaWveEeY+g3DxwUBdWd4GiYvZxTUKnrPgVB3Eq8Q+BEPbw0XXLAB/ertKc
-	aCkJKCOw==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1x6COA-000Eyd-22;
-	Mon, 14 Sep 2026 21:30:50 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1x6COA-000Jx4-1M;
-	Mon, 14 Sep 2026 21:30:50 +0200
-Message-ID: <43b5b1c6-ccd8-44fe-ae20-a1aaa0a577e3@iogearbox.net>
-Date: Mon, 14 Sep 2026 21:30:49 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C9TkjpHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26F1F0089A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 19:52:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789415568;
+	bh=NCRCQOwCdlxdC2Xk4UsHu6fuiCgej9VScIjR7G5rl4U=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=C9TkjpHQHZFATwMBNSAc5GpMKk7QlOfi3AqKJP+xFcei7glxr4LQlyJiq9APlgHWg
+	 pG61Ivp6dCWpAJnB6I+X7IcBHzOGGoCNNd8BdEDurHO8hMlpAfigl4WvRmy8P8/1bi
+	 ov3fJLnpqKsazdAs3dBJlsppoNiXQ6UPxIgf5eAD1nP4ke4qWX3T8Ni9+i8PtLqNga
+	 a7IYfcWdaVIJxnDsL07dLOsF0Fe5i6H8ohMGAlL+sp3FHKDs22Mj0tAN+ARr88gvIa
+	 BNlQX9bJDl4Zo0XT/AaLqORf0t/cH27A2NpALcjKod7s90FD2fr0l9Q9Jv+4x2VaQV
+	 gLHnjCVRa6Mdw==
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93a1118fbb8so215433285a.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 12:52:48 -0700 (PDT)
+X-Gm-Message-State: AFuF++k+L3AyI81zqBb9MddcaIPkN4vWhjMuMyRRjzjszjN4GMU4cufx
+	Cb4///NDeIdfiwczp0JEM2YSTpLloqlWVDEAHkeu0mRJL5CDTd2gptFvcpun2Nb90Q6wqqExvpY
+	tpKPqQO4SYnxkW+r7Dgd6RGB3X2sYPxY=
+X-Received: by 2002:a05:620a:2a03:b0:93a:1048:7d2f with SMTP id
+ af79cd13be357-93a29a19943mr589250385a.41.1789415568027; Mon, 14 Sep 2026
+ 12:52:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v2 06/11] bpf: Clear insn array jitted pointers on map
- reuse
+References: <20260914062514.926997-1-song@kernel.org> <20260914062514.926997-6-song@kernel.org>
+ <20260914064122.F118C1F000FF@smtp.kernel.org>
+In-Reply-To: <20260914064122.F118C1F000FF@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Mon, 14 Sep 2026 12:52:36 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW5edxhb5x4Tvzptzpp1VJW0VjB4pOJaVE9ztJUnWQFJZg@mail.gmail.com>
+X-Gm-Features: AcwNN1XXYfGSuEtoHUJZtd3HR-ham_tQsSrQDVtJuHgg9_7u6-dZfQzJ0aP-jYM
+Message-ID: <CAPhsuW5edxhb5x4Tvzptzpp1VJW0VjB4pOJaVE9ztJUnWQFJZg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/58] objtool/klp: Build klp test fixtures through the harness
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260914170326.249953-1-daniel@iogearbox.net>
- <20260914170326.249953-7-daniel@iogearbox.net>
- <20260914172911.DC6921F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260914172911.DC6921F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28123/Mon Sep 14 08:24:19 2026)
+Cc: live-patching@vger.kernel.org, jpoimboe@kernel.org, kernel-team@meta.com, 
+	peterz@infradead.org, joe.lawrence@redhat.com, pmladek@suse.com, 
+	jikos@kernel.org, mbenes@suse.cz, puranjay@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/14/26 7:29 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing release semantics in `bpf_insn_array_release` can allow stale JIT pointers to overwrite the re-initialized array due to CPU store reordering.
+On Sun, Sep 13, 2026 at 11:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Medium] The global `orig_obj` and `patched_obj` variables are not rese=
+t by `build_pair()`, causing state leakage between sequential test segments=
+.
+> - [Medium] `make_vmlinux_pair()` masks malformed test invocations as tool=
+chain deficiencies, resulting in silent test skips.
+> - [Medium] `run_objtool_check` fails to invalidate the `.checksummed` cac=
+he flag after modifying object files in-place.
 > --
-[...]
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while looking at how the map is
-> reused, I noticed a potential missing release semantics issue in
-> bpf_insn_array_release():
-> 
-> kernel/bpf/bpf_insn_array.c:bpf_insn_array_release() {
-> 	struct bpf_insn_array *insn_array = cast_insn_array(map);
-> 
-> 	atomic_set(&insn_array->used, 0);
-> }
-> 
-> Is it possible that without release semantics (like atomic_set_release), prior
-> stores to the map can be reordered after this flag is set?
-> 
-> If two threads concurrently load a BPF program using the same
-> BPF_MAP_TYPE_INSN_ARRAY map:
-> 
-> Thread 1 JITs the program and writes to ips via bpf_prog_update_insn_ptrs(),
-> but fails a late verification check like bpf_check_tail_call(). It then
-> releases the map by setting used = 0 via the relaxed atomic_set().
-> 
-> Thread 2 acquires the map using atomic_xchg() and zeroes ips during
-> initialization, as added in this patch.
-> 
-> Could CPU reordering on weakly-ordered architectures allow Thread 1's delayed
-> JIT stores to overwrite the zeros with stale pointers, causing Thread 2 to
-> subsequently use those stale pointers?
+>
+> commit 19435afd8ba9b070d7a97986a8ecde2ed711708b
+> Author: Song Liu <song@kernel.org>
+> Subject: objtool/klp: Build klp test fixtures through the harness
+>
+> This commit refactors the objtool livepatch testing harness to standardiz=
+e
+> fixture compilation, abstracting build and linking routines. It extracts =
+object
+> creation and checksum generation into helper functions. It also adds logi=
+c to
+> handle vmlinux pairs and properly sequence objtool checks.
+>
+> > diff --git a/tools/objtool/tests/lib.sh b/tools/objtool/tests/lib.sh
+> > index 7185198253bb7..0a9da178f4dc8 100644
+> > --- a/tools/objtool/tests/lib.sh
+> > +++ b/tools/objtool/tests/lib.sh
+>
+> [ ... ]
+>
+> > @@ -211,17 +224,64 @@ clang_only()
+> >       declared_skip "clang only${1:+: $1}"
+> >  }
+> >
+> > +# build_one <fixture.c> <output object> [cflags...]
+> > +build_one()
+> > +{
+>
+> [ ... ]
+>
+> > +}
+> > +
+> >  # build_pair <fixture.c> [cflags...]
+> >  build_pair()
+> >  {
+> > -     local fixture=3D"$FIXTURES_DIR/$1"; shift
+> > +     local fixture=3D"$1"; shift
+> >
+> > -     [ -f "$fixture" ] || fail "missing fixture $fixture"
+> > +     build_one "$fixture" orig.o "$@"
+> > +     build_one "$fixture" patched.o "$@" -DPATCHED
+> >  }
+>
+> [Severity: Medium]
+> Does this code leave orig_obj pointing to stale data if run after
+> make_vmlinux_pair()?
+>
+> If a test sequences its segments so that make_vmlinux_pair() is called fi=
+rst
+> (which sets the global orig_obj=3Dvmlinux.o), and then build_pair() is ca=
+lled,
+> build_pair() does not reset orig_obj to orig.o.
+>
+> Would this cause a subsequent run_diff() to erroneously diff the stale
+> vmlinux.o instead of the newly built orig.o?
+>
+> > +# run_objtool_check <objtool arguments...>
+> > +#
+> > +# Run objtool's ordinary check pass over the pair, as the kernel build=
+ does.
+> > +#
+>
+> [ ... ]
+>
+> > +run_objtool_check()
+> > +{
+> > +     local obj
+> > +
+> > +     for obj in "$orig_obj" "$patched_obj"; do
+> > +             "$OBJTOOL" "$@" "$workdir/$obj" ||
+> > +                     fail "objtool $* failed on $obj"
+> > +     done
+> > +}
+>
+> [Severity: Medium]
+> Can this function leave a stale checksum cache in place?
+>
+> Other functions that create or modify objects, like build_one() and
+> partial_link(), remove the $workdir/.checksummed marker.
+>
+> Since run_objtool_check() executes objtool directly on the test objects, =
+which
+> can append new sections like ORC metadata, should it also remove the
+> .checksummed file to prevent subsequent run_checksum() calls from skippin=
+g
+> generation and using stale checksum data?
+>
+> [ ... ]
+>
+> > +make_vmlinux_pair()
+> > +{
+> > +     local orig=3D() patched=3D() seen=3D arg
+> > +
+> > +     for arg in "$@"; do
+> > +             if [ "$arg" =3D -- ]; then seen=3Dy; continue; fi
+> > +             if [ -n "$seen" ]; then patched+=3D( "$arg" ); else orig+=
+=3D( "$arg" ); fi
+> > +     done
+> > +
+> > +     partial_link "$workdir/vmlinux.o" "${orig[@]}" ||
+> > +             probe_skip "partial link unavailable"
+>
+> [Severity: Medium]
+> Will this silently mask test definition bugs as toolchain deficiencies?
+>
+> If a test author accidentally malforms the arguments by omitting the --
+> delimiter, the $orig or $patched arrays will be empty. Calling partial_li=
+nk
+> with empty input arrays would correctly fail, but capturing that failure =
+here
+> and executing probe_skip masks it.
+>
+> Doesn't this contradict the commit's design principle that a fixture whic=
+h will
+> not compile should be a failure rather than a skip?
 
-I'll look into that one separately.
+Fixed in v3. Thanks!
