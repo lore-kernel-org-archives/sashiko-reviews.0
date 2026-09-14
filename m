@@ -1,103 +1,203 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415F11DED42;
-	Mon, 14 Sep 2026 05:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789363516; cv=none; b=TKh7XjBd120YLI3Iv3XYsHL4Xf8S4ZRyOcjNzxr01fbRZFKWfULx1omUozkGlC4R0C2Rb79tXn9GahTcwrrWWmfpgBlijUhmZbaJloeqyVrVitka42pExoUhT4wlT6f84cOaehopEd40T73iEnWiS5/969vHV8FgYHVEn2RoREQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789363516; c=relaxed/simple;
-	bh=r4kWyzgvFwIeVgCg37+kX+AH8VTAFyeQJt7wUmrPusg=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=J4FLTInpF274KgY32i5d5gUoeMJjd4QxiO6PAcSE2YZgK7Sf9kHN8OTz8Z9cPrm3D0z9xk14rqL4AY1XqIyVU/a0t8bHg6ueTKlNf49kUBzqELMZT35nJR9HeHxwoYznGrwsmwmhF6zU/N4GbF4amed6NkpTz5l1oJS5wvLEmRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KT2U/VtG; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B0B4BEE44
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 06:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789367501; cv=pass; b=TX2tWrdbanlJhj4nurTAZV2WYeP3cuwTHx5LsGTj1USZ3WrkiiPu7M8d6/ZySFsrD2FGLIZ43kGFLnVjtEBbCVn0ILEt7AmI/EsyybNdCjqK9jwd/iLPiNVRqEn9zdTxGtz+iK5qsI0//l7oLLqoCzJW4L+AiaQZ/hdD6ffTz+E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789367501; c=relaxed/simple;
+	bh=V22Zgc/BmnQdYwcgJWNR4GTRkr0CMXB3OWtLmKtj1zA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SJlWC8gSFnh/E3bkW8mZczrNIkbjCDvOVhDxqpvBQG9FiES6dqKTmHxyPZ2U43uYTVbm1kuKmzRfjeMj2Up8IzC1jNOxCMpUlNpydBe1x5efZjoQiWbmklAHf5zZJGdVtuqDfAbL6QUzsmdMc0141k0mHQZhHbrqdUMHsYbKb3w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Klek4B9j; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KT2U/VtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822A01F000FF;
-	Mon, 14 Sep 2026 05:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789363514;
-	bh=hqan0NVWc1HQxdNwE3P314UxIWRFhHCzTru45muAuIQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=KT2U/VtGlsE1S+EZSAUPnwTN+Uqcraag6+k5RtOICkdkXL2Rt5vx4QqnmRU55ABN3
-	 Wz1hYTf51/mI2GrHV8+dlgSsg0RXOXCmsKvLkMQe1nd4U547zyji9Y6jT7CKPFhZ17
-	 ZrgbEnrWOqdqWFgowDCfrHNYVTfg2cqDCE4bihC/VVYdyFD6ycY5JKersR91A0r/Ur
-	 C9rFotDsTSqFVoZFhu2jRUyi73BVGNiEJEhBj30cx4zDwqGj8unzT6jt73X+aho/EF
-	 oCwz9EX3IlEDaoTGGQXtMShVa/58w85oKxM2pYO+fqm3IJ+Rw5X6yUfHwq7qQf/BQe
-	 lR7mbN/vbKM1g==
-Date: Mon, 14 Sep 2026 14:25:11 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v15 05/12] tracing/wprobe: Add wprobe (watchpoint probe)
- trace event support
-Message-Id: <20260914142511.e8c56e55f2f35c8becfb679d@kernel.org>
-In-Reply-To: <20260907041503.A6DB71F00A3A@smtp.kernel.org>
-References: <178875277830.93794.14247844688761142429.stgit@devnote2>
-	<178875283469.93794.8082169522481243792.stgit@devnote2>
-	<20260907041503.A6DB71F00A3A@smtp.kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Klek4B9j"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6a9d30c8752so1763893a12.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 13 Sep 2026 23:31:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789367498; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oe6HPSg4aYTfPgZbDQU0qm3emocU0/vl3AgPbwdJJeSq0/xVFP/c7U7MuBRCY1auEc
+         2JCsSjFIXGfLlrPOIdATzbSkm6GPOX9B9Lo/DbOSv8zm19YmrHkfEf7r2u+5I62yKenc
+         2b9Pp1llSngTGkuz2tXudXTPuWHGSDZQRzwHAt2aDofKXxLT3vi1B6OIWsXE7DLgIYG4
+         PAlexKu/XuXReIuOWkGn4hBCnXb+YG7hXdGeR3To5jUQGtcFhumG8gyqswBuM5hXBLf2
+         LM6icJGw00Dlg1sQXRHFJ3UVhylhT1ALsivM8gj4ma5kqJIpF+W3Igyi2cYtlKPz2Nvy
+         GTXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=H1k8hbN7xc9rcGijhISE2nL9V09F7ReNGDz7FxIc72Y=;
+        fh=OrnvA1a4t3/HPwWwQh2a6uxugalKSabxDHPY5ooI2bY=;
+        b=X2PWWpbG0Zgn0iDDFFv0cR4o1qfscJbH1IGXU8WgfosW4kCZH5TzZqZjdhFHg+Rywx
+         AdKsP9aZYnrBYrVy7FkYYcmqB3yYI6P2WFN6GFl+jboqcyJKU+LhpuoF2oK/45XJ8aUJ
+         LkeVzLRXs1yE6BOo77bB8RtpJf6czma4c3anI/0fTHaoS5PzTnO8l+1dL7qdB9lBpnvE
+         4Z7AwhT0aako+GW3Ll9zHIlGQCJnd4ks33oI3iF2rfuCHmU2VNHnzzh6uV1RVIN20Dd6
+         l0h4xAwXPyMBywY8q1dDm8mZcyTKH5jfRzVygO2+6Iu3Czz0BIett6t+937ST5TbR8zu
+         sHyg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789367498; x=1789972298; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=H1k8hbN7xc9rcGijhISE2nL9V09F7ReNGDz7FxIc72Y=;
+        b=Klek4B9jOqaZbbZpcqN/YThpjYxFbjfvo/ir8jNS8+7kj3GT+V78KGnTzGQR8+qKpQ
+         IhUkLhnn1r+Vq8R+87T0CWgAAEwx8lkPSFNCriDPU0Mscl+FfmkQjJOiUzMdeYJyvTrq
+         S+yEMUtoYzewkjLQEzexEOScho+9xhVCOM1IWtnhHyPfifXuqb0BHowvTL2qOEl14+Sk
+         DeCO54GUgmJwbSJ00LBaG8Nv8ajmOTKCeyewX7UYMrt99yw3LWR/8rAIwNWUXoZQeBxH
+         6BR7ukEWb/+neJHgofkoKYJgGiavop6xMg9N8kSYjQuFCTsBvMRpW8TJHgBN1dYBoUUD
+         l+5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789367498; x=1789972298;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=H1k8hbN7xc9rcGijhISE2nL9V09F7ReNGDz7FxIc72Y=;
+        b=Gk7wQiaaW+8Sm/RHMMC87rIAqdEk9PhA107BAfuVAR36zrZzEWm9UPi6FHg9lFZ42L
+         o+ZrxGELmA6ICJ4SRYsF3QxVepnPZWTz4t6UTdprwCYFrX9YDtFKyhpiUCtv2r/DuX8I
+         PCdd5JtnYoj3iJUfDLeIKv2PvCHivoCzCYyA38HgOCrGah9/t7NAoqXFwAWijb+5xOdA
+         +i3WEbLs9uEHXNmJN52+XV2v2hgA0EAb+zAtkWxRMN3n38O9xvLN/Qi4V+Yp1Wu+7S9L
+         M6WaXBy9TuiSGAPbWDmasEfKUUZM0LyZ4zrAY9biDv3nyqamly78JwEE+V+InC4USaAf
+         MtfA==
+X-Gm-Message-State: AFuF++klRvNvUgsxFiJ3gc6hNNi0wr2FwtaXRnvOw2bwbKbaoE2DUN7s
+	pLzRovhtNQPqlWuoh6RovA/kqfkPjLfIUzMfZqfrqxIpvwYImq27v8Df3YhaJxNze2ZMgh9wViw
+	7BGFksz4zDUjH6CYimF0TheuS7m1LOXo+f+cmtC0=
+X-Gm-Gg: AYBFou1q9Yyl7DnliLwfgNZjcoxfWZ2gzZ77nX1oteqp6pA8soRSQyW7I1q/Zt8iebU
+	Ft27TN0386xNGDcJXJjNAg6ufDo2IRmf7npXM+rmkrCCKBpVDhbXL3Wy72hZ/quznXrkPy3kEXA
+	c38aun6KvcnyTitM10ZufCJheBCnAH+XB9kbaHUCvFBUUnYtVBLVkq35hnPPjdAtMa309vb25vb
+	DRKbEkeA5ywQaEyk27rvYzgIzyCgB16M673tuCp6argHQ4xQObjGyv0LDrsL9ODwX3V/wUXF0pe
+	bjq209VPCZ3jO6EKI9v78nqYpbgzC8StiJSbmqUsZeMD3PcDCpbBuSqwag==
+X-Received: by 2002:a17:907:3e0e:b0:c29:5a76:72be with SMTP id
+ a640c23a62f3a-c29b8731942mr66489666b.24.1789367497811; Sun, 13 Sep 2026
+ 23:31:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+References: <CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com>
+ <20260914034940.4070970-1-r772577952@gmail.com> <20260914040138.4F9E91F000FF@smtp.kernel.org>
+In-Reply-To: <20260914040138.4F9E91F000FF@smtp.kernel.org>
+From: Jiaming Zhang <r772577952@gmail.com>
+Date: Mon, 14 Sep 2026 14:30:59 +0800
+X-Gm-Features: AcwNN1XFb8F5qkILaFwO0oEm98biqcBPeylXE_DGiWpW2XO3wq86dlueovM_LKI
+Message-ID: <CANypQFZfAsx=DHa4QXc6qA4aYqbobVL0-8cr2tMRD2wCdyJQjA@mail.gmail.com>
+Subject: Re: [PATCH] ocfs2: fix chunk number of the first chunk in a local
+ quota file
+To: sashiko-reviews@lists.linux.dev
+Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>, 
+	Joseph Qi <joseph.qi@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 07 Sep 2026 04:15:03 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The `readme_msg` in `trace.c` instructs users to write to `wprobe_events`, but this file is never created.
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=8814=E6=97=A5=E5=91=
+=A8=E4=B8=80 12:01=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Integer overflow in `ol_dqblk_off` causes kernel memory corrupti=
+on when handling large quota files.
 > --
-> 
-> commit 5c44f59e0b2737617a0b5934e625357ecffcc63d
-> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> 
-> tracing/wprobe: Add wprobe (watchpoint probe) trace event support
-> 
-> This commit introduces hardware-breakpoint-based dynamic trace event support
-> (wprobe). It creates dynamic events on data read/write accesses using
-> hardware breakpoints and logs the access context and fetchargs.
-> 
-> Link: https://lore.kernel.org/all/59637b96946653393a7ad3c7de094094796b39c2.1785067572.git.wangjinchao600@gmail.com/
-> 
-> > diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-> > index a946e0183fd1e..40c3e1543f6e3 100644
-> > --- a/kernel/trace/trace.c
-> > +++ b/kernel/trace/trace.c
-> > @@ -4294,8 +4294,12 @@ static const char readme_msg[] =
-> >  	"  uprobe_events\t\t- Create/append/remove/show the userspace dynamic events\n"
-> >  	"\t\t\t  Write into this file to define/undefine new trace events.\n"
-> >  #endif
-> > +#ifdef CONFIG_WPROBE_EVENTS
-> > +	"  wprobe_events\t\t- Create/append/remove/show the hardware breakpoint dynamic events\n"
-> > +	"\t\t\t  Write into this file to define/undefine new trace events.\n"
-> 
-> [Severity: Low]
-> Does this advertise a non-existent interface file to the user?
-> 
-> The readme_msg instructs users to write to wprobe_events, but it appears
-> this file is never created by this patch.
+>
+> commit 2099765d5af01f1f5c3b09601279d4461b5e883e
+> Author: Jiaming Zhang <r772577952@gmail.com>
+>
+> ocfs2: fix chunk number of the first chunk in a local quota file
+>
+> This commit fixes a bug where the first chunk of an empty local quota fil=
+e
+> receives a bad chunk number due to an invalid list head dereference. By
+> checking if the list is empty before reading the previous entry, it corre=
+ctly
+> assigns chunk number 0.
+>
+> Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyH=
+csajV-SqCsmN_gg@mail.gmail.com/
+>
+> > diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
+> > index a2b276bcd0a87..eec0bffc77b0b 100644
+> > --- a/fs/ocfs2/quota_local.c
+> > +++ b/fs/ocfs2/quota_local.c
+> > @@ -1075,10 +1075,13 @@ static struct ocfs2_quota_chunk *ocfs2_local_qu=
+ota_add_chunk(
+> [ ... ]
+> > +     if (list_empty(&oinfo->dqi_chunk))
+> > +             chunk->qc_num =3D 0;
+> > +     else
+> > +             chunk->qc_num =3D list_entry(oinfo->dqi_chunk.prev,
+> > +                                        struct ocfs2_quota_chunk,
+> > +                                        qc_chunk)->qc_num + 1;
+> >       list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
+> > -     chunk->qc_num =3D list_entry(chunk->qc_chunk.prev,
+> > -                                struct ocfs2_quota_chunk,
+> > -                                qc_chunk)->qc_num + 1;
+> >       chunk->qc_headerbh =3D bh;
+>
+> [Severity: High]
+> This is a pre-existing issue, but while this patch fixes the uninitialize=
+d
+> variable that immediately triggered the overflow, does the underlying
+> structural math bug remain exposed if the quota file naturally grows larg=
+e?
+>
+> Looking at ol_dqblk_off() in fs/ocfs2/quota_local.c:
+>
+> static inline unsigned int ol_dqblk_off(struct super_block *sb, int c, in=
+t off)
+> {
+>         ...
+>         return (ol_dqblk_block(sb, c, off) << sb->s_blocksize_bits) +
+>                ol_dqblk_block_off(sb, c, off);
+> }
+>
+> The left operand is a 32-bit unsigned int. If a local quota file naturall=
+y
+> grows beyond 4GB (e.g., when a user creates files spanning over 126 milli=
+on
+> unique UIDs or GIDs), the quota block number exceeds 1,048,575. Shifting =
+it
+> left by the typical block size bits truncates the upper bits and wraps th=
+e
+> offset.
+>
+> This truncated offset is then used in ol_dqblk_chunk_off():
+>
+> static inline int ol_dqblk_chunk_off(struct super_block *sb, int c, int o=
+ff)
+> {
+>         ...
+>         return ((off >> sb->s_blocksize_bits) - ol_quota_chunk_block(sb, =
+c) - 1)
+>                * epb + ol_dqblk_block_off(sb, c, off) /
+>                sizeof(struct ocfs2_local_disk_dqblk);
+> }
+>
+> Subtracting the true, un-wrapped large chunk block number from the
+> truncated/wrapped block number yields a massive negative index.
+>
+> This massive negative index is ultimately passed to ocfs2_clear_bit_unali=
+gned()
+> in ocfs2_local_release_dquot():
+>
+>         ocfs2_clear_bit_unaligned(offset, dchunk->dqc_bitmap);
+>
+> Can this lead to an out-of-bounds backward write into kernel memory when
+> handling very large quota files?
 
-Ah, indeed. this is for dynamic_events interface.
+This is a pre-existing issue that is out of the scope of this patch.
 
-Thanks,
+To fix the issue pointed out by sashiko-bot, the return value of
+ol_dqblk_block() can be cast to loff_t before it is shifted left in
+ol_dqblk_off().  I can send a separate patch for it if this solution
+is acceptable.
 
-> 
-> > +#endif
-> >  #if defined(CONFIG_KPROBE_EVENTS) || defined(CONFIG_UPROBE_EVENTS) || \
-> > -    defined(CONFIG_FPROBE_EVENTS)
-> > +	defined(CONFIG_FPROBE_EVENTS) || defined(CONFIG_WPROBE_EVENTS)
-> >  	"\t  accepts: event-definitions (one definition per line)\n"
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/178875277830.93794.14247844688761142429.stgit@devnote2?part=5
-
-
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Best Regards,
+Jiaming Zhang
