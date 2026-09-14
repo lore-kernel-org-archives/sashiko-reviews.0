@@ -1,255 +1,193 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010014.outbound.protection.outlook.com [52.101.69.14])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DB6451071
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 14:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397633; cv=fail; b=OAaTCEjZSY7c24cOmjdoTQ1EHEHwmlhEzid3CLXFm90oDE/PGO5hHDWKiZ1AQTnx0UPAzdvcQg7VDHoqxamiYLxsyb1oQA9AHwGznzN2j5hhdg8h+Ssg7rN0qqgBbJizFM0ecv40/nl2aeTydRxMD02vLucNZbavOtHFcWiRaWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397633; c=relaxed/simple;
-	bh=W91e7uVxdtcOSwoEcKy/c7jX6YRSDoGelzkXOUmSrGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=HBhh8r10ivuOtC6qnMupywj2zQrRSESA6U2wv52sL3FHEVYjpt1XasrbT4QRV6QwMwS8bxs+aW9gXfQ4ZDcRozA9ysmGOetbWYN+Kshb9y4qR4m6jjl9HYw8HEDoEfSOpdLDETRY3CsobK5/cn2tnIagW17yVmJZFpaK+RI2f2Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=iThW2PuP reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93087319601;
+	Mon, 14 Sep 2026 14:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789397645; cv=none; b=Wz4F31FPhn5MwM/Pfc/QOo2QPRyVEKZ5bzz91Vq9phFY5k7uH1wv7NB5KWK32Z2fF+qMOw5mjdK6pu9wYoUpLH/7/En616DahWWdoZKmJbCsvCQqTaR0DzKod4Xg5g9egrJo9R8NR+Z5WplumEcW7A+QfsCQBieQk34kcOI617o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789397645; c=relaxed/simple;
+	bh=kFCKHi621AjGDm8LrVk88DLI3HyRyRbY9isaABoxJyg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GrTaxNg761kPoyq8g2wwW2hEBgVqn/yNazwigBECs7AlZFZiJXdHSAh8h/G97+Nuig+HpVJ4XucsNL8fX9J1S1trMui0rgrujygE/3ogZq9IQXqQzTR+V+RdGGjzbTUTT0fcRYplGpR90amdPlZf8wPV/tsz469hgFjXyojwxk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=D52SCTij; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="iThW2PuP"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T1IZpg7ckepr5fIHlnvB1QTw0WTeaxhh3igDXjPMvgepGDAPLjKtP0sGfXzNjO3itfb6QsEKJRAT0BgJNPefr15cBvtJYzr+IbcxAUgvdhgzYOvMtz3jCqlxSXt268aoBB0pY5hDaFsWtcmK6SWeGPDOO2PttCNUhi6MLS1KX2Oou7isx+mSsEBhWKANgwxYP0lUIlK38J2y7ZCUlDkpHld14e/TfXlYPaWamQyiFSZA/386cLQ00x88h7HttyTTf7/3SfqRtEgJPDmpaRUmqQqGBLLF5n3i5Eq56HlZ5F5895LXEBF9K1yiQMooybSyjxX1xg0+p3mSxH0l/s5Odg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HGDjSJKFw7d+YSvsHgfy8qaLUDK9ue1aZsSc3Z/Mu6g=;
- b=duuO03OKbbfgfDdiyRDMqkhSGjHQVhIVmj3I4fWe0H4ISEJUUFhxfyR4msM22HoP4U/YKp6pEPNfEa4yv6ohLG4y7YVLmWcKzpjDkEV3fGIXskgFWWeROiEJ+CPp+iROR+RVhTnaAmZTCeDJ5FXBJXh89qqiN3sNX5CUpK7aL9xmvTS4fCVs03fN8re+l2Teq8x31DxGAg9RrZJgOKJUI/qj3YtiscaD3xiieS5bP5NSzXHTZ+p8tJrv6My19ZmApkPR+4u14gOImM9Cm61iWxOHVy9s11PLrIHXlwngxs8cppGfvqlceG7ltBjeoqpljbL0rWTzilDG5Xfl5yDIYw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HGDjSJKFw7d+YSvsHgfy8qaLUDK9ue1aZsSc3Z/Mu6g=;
- b=iThW2PuPEfWJwq2Lpu3HDR2MXbFVcxk7YotOI9zueOND7HimV6KjcsIgToV8SxBCD3HdgNwv95C22KqokCQohF3FTUxsz375ipOmzWNZFe03wkvtdcKwaTk6UMuitldylHi3NMY2ho7UnfJdp0SjWBY+KXLMPCrjWzFWsa+x2fiDPQlMKjESvQpULHAtqtoPYN34faycOwNG+DhTUuUgYr9txqdqb+9KEIpAt/Mfua+atu/qUnBpFofPD3EvxwR20SswCzVHhj9sSTAscEITSFA/M63fODSnxdkVUipqROS3UEjIeOTOuy277Uab4es3Iz4b3HBKOhgaRV1Kl1ZAHA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA4PR04MB9661.eurprd04.prod.outlook.com (2603:10a6:102:273::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Mon, 14 Sep
- 2026 14:53:48 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 14:53:48 +0000
-Date: Mon, 14 Sep 2026 09:53:33 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Rosen Penev <rosenp@gmail.com>, vkoul@kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCHv2] dmaengine: ppc4xx: convert irq_of_parse_and_map to
- platform_get_irq
-Message-ID: <aqgKbf_wiS9TXpUa@SMW015318>
-References: <20260913195547.41579-1-rosenp@gmail.com>
- <20260913200914.9A69A1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260913200914.9A69A1F000FF@smtp.kernel.org>
-X-ClientProxiedBy: PH7P220CA0180.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:33b::30) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="D52SCTij"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68EEVlKj2160411;
+	Mon, 14 Sep 2026 14:53:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=luBa94
+	VbONhRx+7hsYfj2YPwmf9vpuN0WMLt38Sa+/M=; b=D52SCTij1xq5E+Tk568lfj
+	QU8sxzSJk+/5NUGqDpsb1b2pSrm+1pIQtlJvp1n4KZp2CBURcLi03Mh9SCYcOKr0
+	biJH5+kZeuq9NEaBH8bhp6BCzJ4r/d2vsOKQgvv/6MASZOuV+veMpDejEluUHlA+
+	e4ad3oICoQ1grpxxdIz9pPH4va86q12ByyRxAh4HHdlhbiCe8fZU5gu6EHQH8h/b
+	Z6yrHxUu2LW+uHQ0qfNLmdvXt7WMtJ+030UBNgUrJChAcPvHRtpT0aUOwSZuTISA
+	EOYWbOWexYCxOiJmnKoYqt/kGfFtw7Dad1s0UDSj/wXHfChlONc8KAR3NDMAPeRg
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmv5hj8g7-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 14 Sep 2026 14:53:59 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68ED54d72386810;
+	Mon, 14 Sep 2026 14:53:58 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnk9j6dyr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Sep 2026 14:53:58 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68EErspJ45154566
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 14 Sep 2026 14:53:54 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A98772004D;
+	Mon, 14 Sep 2026 14:53:54 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4EA6D20043;
+	Mon, 14 Sep 2026 14:53:54 +0000 (GMT)
+Received: from [9.111.205.105] (unknown [9.111.205.105])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 14 Sep 2026 14:53:54 +0000 (GMT)
+Message-ID: <fe8ff552-a33f-44a5-991c-22415862c136@linux.ibm.com>
+Date: Mon, 14 Sep 2026 16:53:54 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB9661:EE_
-X-MS-Office365-Filtering-Correlation-Id: d7c5abae-87bf-40c2-1a5f-08df126ffb59
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|19092799006|23010399003|18002099003|22082099003|11063799006|4143699003|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	6pjnzjbbPSoI5ZgRhKE3jDo2oQdDvXgNUfe9XahYEQON36SYQVp1BKqkv/AVO+6LzlYNnyoz3aT0GtWPdtjG4aXA76JD7QjVAcLD9XgV77yK6vTEJIyCMbDR4TYA3EKDrrk1xz7YeDsYgYkWAPIjF9fAnmw6uk4WR/qRcXTC70a1m0HvbHlpfVJnHZtpu0Lgmx+yyuZe/qVCAFw0eIxyPbko1d1dwtNK1eKdg3c1mtLhldmvVMVt0Z58uqze0EjE01reBOFe2Prot3RAZtSsfdmGkCs5TBPWj9SbeFl6un/7ldnv6WE7/Aw4nQDwK8+e/DrF9wsw0WIMmHwMe/4h9JjXX+rcvS3MPliSJ72JkU75xRVyY6BCxKoC1Z0VrYDwtkDGKHU99dUTCQFO4/00k7w5WCVZzZc6OFhMPkWCKQa2xFJizKcpsLLgT7rGuMfoNh7NlYqD6hqppDrlfowZVffmmr13iwh+15pNmFNrEqwPTmi8R8jgifHSe5rBIWZTaWZUbLaNXwy3p4EpGVxkMk46Y/L2ERfwa/UGfX8Xiwaa9wGZZ4Z7/8pLEyaqWGVbHhj3aDDl4AhDwIlmdS0C6+mA+iaVgYaQpm/9yPB7oK0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(19092799006)(23010399003)(18002099003)(22082099003)(11063799006)(4143699003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?JgiC5VmZxaTrEDniIgvlo3bnhDI+br5i2VXTTtB1MdTFekkv58AXm94/ls?=
- =?iso-8859-1?Q?LmOLzgaNb1thxcJ4nF0/S7soGuUH4RSrhqkH8qWB2LRyFIpkgy7X7tKREz?=
- =?iso-8859-1?Q?0mB0zBBgthrBkZ98yHKgz4eHZqooJ1XkOOuiCAlahkrqFUzYgRtC3SJ/dc?=
- =?iso-8859-1?Q?BfJED0Yen4ggr+s4rZS9guO3+yI+MOo2vthobqOPzMprMaThLDewOPsvti?=
- =?iso-8859-1?Q?V69aeGAw4Ow2YKwjCLms29oZa5AoousXoVagnvFH4XkECcbWXF423lsbOh?=
- =?iso-8859-1?Q?99lap1IcPuhhkBk7T3mN8chZPrdekIXdPc1ccCcCjBnqk0aiMhwFurML2g?=
- =?iso-8859-1?Q?a1KBlPntvn6Uz4hu4ZmWXwFl78+t8XH6iwzczTvtLfMhQexBaUdS2GzZJm?=
- =?iso-8859-1?Q?dIc8LFzfGbfcAVGoIK2cJEZBe1SJwzuwudxjkUNX/4LnwTxrtml982ue1q?=
- =?iso-8859-1?Q?pLpUicua7ciODrMhhFYd5GOK4eWyVnZPhk3YbYRVFWTy+Ei7HI31FU4+U4?=
- =?iso-8859-1?Q?x95u8QjDf6Evzy4b+HIEMRnVPHDBsdroyMTdU/gqMjb8ZeKJDcF0Y9h5Wa?=
- =?iso-8859-1?Q?O3w9JpZ7azM7ovHDGGo6xrGRq9/31vgicrQhUvHMefYSJswAWOok9raknf?=
- =?iso-8859-1?Q?sjcjnUVDleMhU3C/A4Ns9/j+L1p5kXXG7Lejk7dshHbNdEZCa2crFH8HcE?=
- =?iso-8859-1?Q?xOoa4J0CSeznQf2r1yyHwy5MA0+r2QtEuhhRytipq8hxgWkamnVJY2yyip?=
- =?iso-8859-1?Q?A4cmYIxjRfPDxAhZkFc9zG5CRaW3L+eaCGiYXX9x+NkIujdPgWat5hiePi?=
- =?iso-8859-1?Q?gh0nEaYbWCRPDvuqqdp6wQZA44L7JzdFwQzNQYZYehJnNTNz4hnPLFdEfr?=
- =?iso-8859-1?Q?sJhSG//SQFV1t3AKrWSAjpKP07VdvSJm8c8GOxO3/TgMLJN7fQeTFWSmlo?=
- =?iso-8859-1?Q?/zO92lAz6/oI5qChH1sfSxDYYm1G+gAjCNDJhRMxzabTdQk5Mi/EqepqG2?=
- =?iso-8859-1?Q?5jS3kUFEjFNVmCp8KxjWy0BNxZjJsLDiztgdntxyWXuPG8a1sNvuMsdQ5N?=
- =?iso-8859-1?Q?QcGkzB+K/a6GGFQEs6o6Op3Tnf44ms7I5CFvJ2DHDNKksV8JVg3K7tXP9n?=
- =?iso-8859-1?Q?/NmFnj5yughfUvJt9zCXNBGorfZL5rrh2jFCEZcc3LhVvoPYXoGJCXeZRd?=
- =?iso-8859-1?Q?1x5+KOtaAz0FCQWevTOhEmWyDKYwKsoIeBEP/H8KVFQTMC0xOL5LnMu/RQ?=
- =?iso-8859-1?Q?X22nUq6utkBL+CFfP/kP9IlwozIz7/U/PX7asw6xJVUzxB7jv6V2ZN3qO3?=
- =?iso-8859-1?Q?6h+sBIQf+GEWXbRNDsgUwH042kzTjHqj40xtxlepAuO5Qd2scY9hz40zdl?=
- =?iso-8859-1?Q?r5Q1owhwsCXxGFi1dhHAiyYkW6L8Xdim5Lug1CN1GqncxTbwqjNtq/mtfF?=
- =?iso-8859-1?Q?UIqST4W6GY5399FrFfT/pLgzr3wWdA0HJW6n3s0lTCm/oUDCd6lLNzDHhB?=
- =?iso-8859-1?Q?4QZ4O/AHP6L9thgGJQ9QAeKFQ/+M+dmbblsHWVRPoJcYoXcJeglZPjaEqk?=
- =?iso-8859-1?Q?+9/6Cb+xDnrGE73JbkDgUUvgkR2NfRUI4+7K0cpxqdymk86AwwikdpzQas?=
- =?iso-8859-1?Q?8jnY4mqhYg5fPwgqfeU/Ddnag1NijmLPaV2GO9RFBYSTfKaCq5KejMdafm?=
- =?iso-8859-1?Q?LFAXwTYOPdhmarnPmd4Ywj5ThW6iWy41Svq1ZU5Ps7qAsDyvHcn9HbJYIS?=
- =?iso-8859-1?Q?gMRlG27uDk2PGVFL1TjCcyEjSgJ0tXQ92gs8LYmvbl/5vq7Ppa0Tteuk3v?=
- =?iso-8859-1?Q?TahxXYz/12sLwR/5ksx8hv4aJMig7gUsumW2yqXscoB7f6FV+r+/?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d7c5abae-87bf-40c2-1a5f-08df126ffb59
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 14:53:47.9372
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Anyo5mboWG5Vjz4t07csatOv0hZuoDy+6ktUxoETxIhdVfm0PczfmNlSo6sgLP3FLV/sqMTCatLY1ktFIzXUsWVSgCkBJ+JMWQsFkaTeRP+gXqi0Nn4se7uuSGiHstJa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9661
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 18/24] x86/uaccess: Add unsafe_copy_from_user()
+ implementation
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: linux-s390@vger.kernel.org,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, linux-trace-kernel@vger.kernel.org,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>
+References: <20260821195259.2688377-1-jremus@linux.ibm.com>
+ <20260821195259.2688377-19-jremus@linux.ibm.com>
+ <20260821201107.7F0CB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260821201107.7F0CB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDIwOCBTYWx0ZWRfX8pJhEG3rjc1Y
+ lYnbic5+ymQS+46Dl0S/obOUT6gEdrsOze+ah5EgxdNifl4hkvBE8aNgnWH153+G6dky/8jleRV
+ Vhv/UU7Kv21Yn8th6yyO7IncPsFOiPmHUXWVDkGLdxX2235T3vBmNVeDAILmlJ6LIKHQFLvmhzN
+ g1rns0nt/yCpltnrpJw9/KBUvTPi7P+EGWh+55mwOl/Z7EqTz+wh0KeuiX32gutZ06E/mVmlpa5
+ j9XTkK/PWYXIBnEmKWQ781IQFg+aID9v/k1SewyrH27FC0rQB+117h0gl7AtPOlY0zrtfKpNAZK
+ BlbXeaBBYN31sqGjmxjh8/JYzuJuqWWwOlN5ubZdUwpe10F+fJ6EeYARiAVm1j2xQGNPC+k18qL
+ 7ZGfMScDDWhMikxSk/YY07LbpHkgRC6l3zM0MCQRIuL/byFomJ45Obh59aXctXNBqJ5FRjD804Y
+ nIgsZL/uzfRcG4IUIhg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDIwOCBTYWx0ZWRfXyis3z2GqfFuM
+ 9IlidRCHryfo+9EoLyjMb3ZzTeRoieIFGtcF7peSbBorDm/7f+6Dtr4kv036c7JdlYQ/ZDk/n9M
+ zzjnXrq0kmkX1/bpKTYchx/CSAfMBH4=
+X-Authority-Analysis: v=2.4 cv=Zsx4uN7G c=1 sm=1 tr=0 ts=6aa80a87 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=njC-hnyFwTIKUP6h0CMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: XggWwxfULuItcQhR-pRffxO0bPQTtQ8Y
+X-Proofpoint-GUID: XggWwxfULuItcQhR-pRffxO0bPQTtQ8Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609140208
 
-On Sun, Sep 13, 2026 at 08:09:14PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] Failure to properly handle -EPROBE_DEFER from platform_get_irq_optional(), breaking probe deferral for the error IRQ.
-> - [Medium] Inconsistent validation of `adev->err_irq` leads to a leaked atomic reference count if IRQ 0 is returned.
+On 8/21/2026 10:11 PM, sashiko-bot@kernel.org wrote:
 
-Please check above issue?
+> This commit adds an x86 implementation of unsafe_copy_from_user() similar to
+> the existing unsafe_copy_to_user() macro. It also updates the existing
+> unsafe_copy_to_user() macro to use shorter internal variable names.
 
-Frank
+>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
 
->
-> Pre-existing issues:
-> - [High] Pre-existing memory leak of `adev->i2o_reg` virtual mappings for the DMA engines on driver unbind.
-> - [High] Unprotected read-modify-write on the shared I2O IOPIM hardware register.
-> --
->
-> commit 50a4484470a83649ae6d7a02d361e752aed3ddeb
-> Author: Rosen Penev <rosenp@gmail.com>
->
-> dmaengine: ppc4xx: convert irq_of_parse_and_map to platform_get_irq
->
-> This patch replaces irq_of_parse_and_map() with platform_get_irq(), which
-> is the preferred way to obtain IRQ resources from platform devices, allowing
-> the framework to manage the mapping. It also fixes a latent bug in the error
-> path where the error IRQ was not freed if I2O setup failed. The device_node
-> np declaration is moved to a tighter scope where it is still needed.
->
-> > diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-> > index 279a431ccae38..99aee726644e0 100644
-> > --- a/drivers/dma/ppc4xx/adma.c
-> > +++ b/drivers/dma/ppc4xx/adma.c
-> > @@ -3865,28 +3865,24 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
-> >  				     int *initcode)
-> >  {
-> >  	struct platform_device *ofdev;
-> > -	struct device_node *np;
-> >  	int ret;
-> >
-> >  	ofdev = container_of(adev->dev, struct platform_device, dev);
-> > -	np = ofdev->dev.of_node;
-> >  	if (adev->id != PPC440SPE_XOR_ID) {
-> > -		adev->err_irq = irq_of_parse_and_map(np, 1);
-> > -		if (!adev->err_irq) {
-> > +		adev->err_irq = platform_get_irq_optional(ofdev, 1);
-> > +		if (adev->err_irq < 0) {
->
+>> -#define unsafe_copy_to_user(_dst,_src,_len,label)			\
+>> -do {									\
+>> -	char __user *__ucu_dst = (_dst);				\
+>> -	const char *__ucu_src = (_src);					\
+>> -	size_t __ucu_len = (_len);					\
+>> -	unsafe_copy_loop(__ucu_dst, __ucu_src, __ucu_len, u64, label);	\
+>> -	unsafe_copy_loop(__ucu_dst, __ucu_src, __ucu_len, u32, label);	\
+>> -	unsafe_copy_loop(__ucu_dst, __ucu_src, __ucu_len, u16, label);	\
+>> -	unsafe_copy_loop(__ucu_dst, __ucu_src, __ucu_len, u8, label);	\
+>> +#define unsafe_copy_to_user(_dst, _src, _len, label)				\
+>> +do {										\
+>> +	void __user *__dst = (_dst);						\
+>> +	const void *__src = (_src);						\
+>> +	size_t __len = (_len);							\
+> 
 > [Severity: Medium]
-> Will this silently swallow the -EPROBE_DEFER error code?
->
-> If the interrupt controller is not yet ready, platform_get_irq_optional()
-> will return -EPROBE_DEFER. Treating all negative codes here as missing
-> resources prevents the driver from correctly deferring its probe.
->
+> Could this macro change cause dangerous variable shadowing?
+> 
+> By renaming the internal variables from __ucu_dst to generic names like __dst,
+> __src, and __len, if a caller passes arguments with those exact names, the
+> macro will expand to something like void __user *__dst = (__dst);. This
+> results in self-initialization using uninitialized stack memory, which could
+> lead to arbitrary memory reads or writes when used with SMAP disabled.
+
+IIRC Steven advised to disregard Sashiko's concerns and leave Josh's
+commit as-is for now.  Any objections?
+
+> 
+>> +	unsafe_copy_to_user_loop(__dst, __src, __len, u64, label);		\
+>> +	unsafe_copy_to_user_loop(__dst, __src, __len, u32, label);		\
+>> +	unsafe_copy_to_user_loop(__dst, __src, __len, u16, label);		\
+>> +	unsafe_copy_to_user_loop(__dst, __src, __len, u8,  label);		\
+>> +} while (0)
+>> +
+>> +#define unsafe_copy_from_user_loop(dst, src, len, type, label)			\
+>> +	while (len >= sizeof(type)) {						\
+>> +		unsafe_get_user(*(type *)(dst), (type __user *)(src), label);	\
+>> +		dst += sizeof(type);						\
+>> +		src += sizeof(type);						\
+>> +		len -= sizeof(type);						\
+>> +	}
+>> +
+>> +#define unsafe_copy_from_user(_dst, _src, _len, label)				\
+>> +do {										\
+>> +	void *__dst = (_dst);							\
+>> +	const void __user *__src = (_src);					\
+>> +	size_t __len = (_len);							\
+> 
 > [Severity: Medium]
-> Does this inconsistent validation of adev->err_irq cause a leaked atomic
-> reference count if IRQ 0 is returned?
->
-> If platform_get_irq_optional() returns 0, this setup path treats it as a
-> valid IRQ and evaluates to false, executing the else branch and incrementing
-> the atomic refcount.
->
-> However, as seen further down in the diff during release, the teardown path
-> uses if (adev->err_irq > 0) which would evaluate to false, skipping the
-> atomic_dec entirely and leaking the reference count.
->
-> >  			dev_warn(adev->dev, "no err irq resource?\n");
-> >  			*initcode = PPC_ADMA_INIT_IRQ2;
-> > -			adev->err_irq = -ENXIO;
-> >  		} else
-> >  			atomic_inc(&ppc440spe_adma_err_irq_ref);
-> >  	} else {
->
-> [ ... ]
->
-> > @@ -3987,13 +3983,10 @@ static void ppc440spe_adma_release_irqs(struct ppc440spe_adma_device *adev,
-> >  		iowrite32(mask, &adev->i2o_reg->iopim);
->
-> [Severity: High]
-> This is a pre-existing issue, but could this lockless read-modify-write
-> on the shared I2O IOPIM register cause data corruption?
->
-> Both DMA0 and DMA1 engines map the exact same ibm,i2o-440spe device tree node
-> and access the shared physical iopim register during setup and teardown:
->
-> ppc440spe_adma_setup_irqs() {
->     ...
->     mask = ioread32(&adev->i2o_reg->iopim) & enable;
->     iowrite32(mask, &adev->i2o_reg->iopim);
->     ...
-> }
->
-> If one engine accesses ppc440spe_adma_setup_irqs() or
-> ppc440spe_adma_release_irqs() concurrently with the other, the lockless
-> ioread32() and iowrite32() sequence can race, causing one engine's updates
-> to silently clobber the other's and permanently break interrupts.
->
-> >  	}
-> >  	free_irq(adev->irq, chan);
-> > -	irq_dispose_mapping(adev->irq);
-> >  	if (adev->err_irq > 0) {
-> >  		free_irq(adev->err_irq, chan);
-> > -		if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref)) {
-> > -			irq_dispose_mapping(adev->err_irq);
-> > +		if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref))
-> >  			iounmap(adev->i2o_reg);
->
-> [Severity: High]
-> This is a pre-existing issue, but does tying the cleanup of independent
-> per-device allocations to a shared global refcount leak the other virtual
-> mappings?
->
-> Both DMA0 and DMA1 engines independently call of_iomap() in
-> ppc440spe_adma_setup_irqs(), allocating unique virtual mappings:
->
-> ppc440spe_adma_setup_irqs() {
->     ...
->     adev->i2o_reg = of_iomap(np, 0);
->     ...
-> }
->
-> Because iounmap() is gated behind this shared global refcount, it only
-> reaches zero for the last engine released. The mapping for the first released
-> engine is permanently leaked. Furthermore, if err_irq < 0, both unmaps are
-> bypassed entirely.
->
-> > -		}
-> >  	}
-> >  }
->
-> --
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260913195547.41579-1-rosenp@gmail.com?part=1
+> Does this new macro suffer from the same variable shadowing risk?
+> 
+> Using generic internal names like __dst, __src, and __len might cause
+> accidental self-initialization if a caller happens to use the same variable
+> names for the arguments. Should we use more uniquely prefixed names here
+> similar to the old __ucu_dst?
+
+Likewise.
+
+> 
+>> +	unsafe_copy_from_user_loop(__dst, __src, __len, u64, label);		\
+>> +	unsafe_copy_from_user_loop(__dst, __src, __len, u32, label);		\
+>> +	unsafe_copy_from_user_loop(__dst, __src, __len, u16, label);		\
+>> +	unsafe_copy_from_user_loop(__dst, __src, __len, u8,  label);		\
+>>  } while (0)
+Regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
+
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
+
