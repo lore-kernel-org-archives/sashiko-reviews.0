@@ -1,112 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06853254B8;
-	Mon, 14 Sep 2026 06:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E66532D7F8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 07:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789368424; cv=none; b=iHCVEXOBUCHMCWSywX+tiLcc90EeUr+MgdSXFy+r8gwOhO1odxx2fze64x8BManJtGjuM5ICJAnbyD9jsDqObBZE23PRAmUndYPuYcVuTfWp6VrwwS2PWnw2JZdKp48kvMSopg0pNwLLbNvjwoofmVtd4316+EPWFp36NGp9gRU=
+	t=1789369652; cv=none; b=cIrFEWczXMgFrwMnF4FMdF/U2qOkN1slaaELWqi01haMnrwNSgUAttZcj6uzEIOK8rjQI85D6vICavdM5PI/EethmPo7FEHUHn02m5d3ZN3SKXCD8iej/ZDh4Thtacm9az6A4YOuOlIBAVAL6cDlLzSwwJfOKGCuR35MCHFvAqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789368424; c=relaxed/simple;
-	bh=GsM2sKVClOmdLocloEDcVfy6zdabm6ArlTrzAiz4mKA=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=A7pD2zSjL7uFNRt9fzTy1CTz0kGmI2mlOZvvMZP5tPAIAYGfno8d/CZ/D4mT6kpZx3chdc4kNrlQzkpwXq1BbiKIfb80o3oNGA0pOQvtPlsgD38CTTyqH6Lk4r1r33Xqj/Ve4ysPbm7ixJXrSqdH6DnQu/LO1iscAt2Jf79hFc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tb+bdOGf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789369652; c=relaxed/simple;
+	bh=PyTez5HQe0/zwTIa93jTn8ltLOCQgueRSktm6uyM66o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l3aCrhvfh8JfGtrg/JzixeCtYsx+9e7Pb93+RmsREBO0dpTor9iPvdnJFDURKeUSulRzVxZvYDiWdym3fhUbErzbzMKcnLfnZWcrf7Ee6EuuphhfNZk+Q132f1TkqerToBnSjay/r7aiLDho0K9vimYJWkXCzxsJuScyM8xDL4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=CZYWzcWw; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tb+bdOGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F50B1F000FF;
-	Mon, 14 Sep 2026 06:47:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789368422;
-	bh=AGecsELHer1cwJ6XhKKoT8iLLK8IskJV9xUG9sEWX6k=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Tb+bdOGfgaW+kYxO4dCyOy08/XLmQC2um9WyLgG34hfCitDt3Vrw9twzwQZj2Nyfb
-	 o4NxxongO/MZb+wRkJBIJzjN6sibrQk5ex5+Q/pCt7aaeyRs20cqU6OF1Jvpy4Rtn/
-	 s1dcxW7hHIBBu5fOGp4hpidHJFA5RNq9ubPIgIMPWKcuWUrojO03tqqq6j91ODtjxO
-	 WDdN+SBdvxeFxdDW2cZNjsfn1wfQu5Y8EvQ9bGVyi1Z3ZjKPu00V8k/CJHUrJLcfGz
-	 DZDl04O8nCet/m0O5VSbJJ9UYl2uGc9cDOmLqGTlOQ3lb7srVSC0NIMyIX12AU9+aO
-	 5HywGIo3SD18A==
-Date: Mon, 14 Sep 2026 15:46:58 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org,
- linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v15 09/12] tracing/wprobe: Add set_wprobe and
- clear_wprobe event triggers
-Message-Id: <20260914154658.a43ec4fc877c9fa873d0550a@kernel.org>
-In-Reply-To: <20260907041036.DA9C41F00A3A@smtp.kernel.org>
-References: <178875277830.93794.14247844688761142429.stgit@devnote2>
-	<178875287944.93794.8914114071047199197.stgit@devnote2>
-	<20260907041036.DA9C41F00A3A@smtp.kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CZYWzcWw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1789369650;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z11npAfyXyZLp3jcVQ/pUy+RYhbspHGhoXmnEqcpbHY=;
+	b=CZYWzcWwd371ZwAyx1QjB0YHlrBXs5w7tH1PQhFDheZhdhN7dddZki6Hza8sTwFQwGSwnT
+	pTWExOoTOVk3JpXh7OTu9JMU/aASyoz0V5io7MP9qXgRNyfRoHlKDZuhNuW8J5whLhBsP/
+	C8FrE2J2rGMQ8F8akpH+qP9V2ZfBQzo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-48-MZBKHmgfPBmHWytEeL9q-A-1; Mon, 14 Sep 2026 03:07:28 -0400
+X-MC-Unique: MZBKHmgfPBmHWytEeL9q-A-1
+X-Mimecast-MFC-AGG-ID: MZBKHmgfPBmHWytEeL9q-A_1789369648
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-48700cc7243so275361f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 00:07:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789369647; x=1789974447;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=q3T8MmJHP0lKCHrHGSLSWbPMgzGHktYBz/oTT4ophsQ=;
+        b=HKjopIvHPWjwH2HPHSmFiYC5k4mIrEfpBESAfZssHgH2N9zzzDBoIVXstWz/0yFNGz
+         Hjg2/E79l22Ho3KyKw0v8VwSyjy1Bl9cHD0W4GfOzqt/Ix9AVtfeQIvj3WyBTIi2Cjq/
+         7josuJrkzXIatNEKjJXZQ8949J4qML/IoR4tuUMAj9v58J2QTTMCqjzq3K1DHFYm+VvF
+         0/5hKbPfY3DJ0b0QySOsBgcZvnemdGAD1XMxNrI5mwZoxHDwBwdZn5ssG0Xn9wBdnXuI
+         bRdZfKuDqMcNkzu5M6mzHLbwiAtv2zZ3EcRFcnc+o7Rib1EEVbQJK0hTYvfK3KQUS+Yh
+         Nvzw==
+X-Gm-Message-State: AFuF++kS0whoWCMyolkdc6cFos/zO1QK/PONDZtL/9WpRs860icZFHrj
+	sQDHpaC+QNU38FFPMPWNrzIm9rk0Ck0FmJY4utRzvRt1qQdIWU5r028wgV4dzhEFP7QLuo+3yr4
+	R8XCeudyICv+o42aEJfI42FXYGNha7cB8EsSa/OpSyBm+8Hjklkh0iwv1GVs60r6WR7fg+g==
+X-Gm-Gg: AYBFou2TihYWvvWuxmQjXC6rx3ZJFhuG3hRdS0NE0u26By1gYAmbm3rHaR37FNwVAuV
+	QYGk6eSmW5bWyUd+Rjnw8wd64LqENtn6Uj0L7nwd6TGjmnd84W7I91rRe3K0FY0/xHyvHmySPHo
+	WpmpF0KljsMfG9+HEu3UKgZdGymx8j+oo2MEfRgUfRHkeVngT29Xjpgd5Nk+6OJTatCpXoN+5Rl
+	xki5c3wT6tcgD/gTG35FNcOyhGInpc8p0unoR4OwHy9dPmDpNmYXYat+HaovggFkkrPpMrJfWaM
+	ZGbTFV8HigTDKDuI/u638gw3gxGlBEHAr1PY6l6vgbmoKcmLJ6dLN0YerNFzrOLD2kXIn7DlQ7Y
+	C45vUl5+Xh7DjkbhGvDNoQ850Hin2kdozf4K/MaBfgvEylk7ifcrBVd0Ntg==
+X-Received: by 2002:a05:6000:386:b0:485:8bc6:3caa with SMTP id ffacd0b85a97d-48702acc272mr1050455f8f.16.1789369647577;
+        Mon, 14 Sep 2026 00:07:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:386:b0:485:8bc6:3caa with SMTP id ffacd0b85a97d-48702acc272mr1050421f8f.16.1789369647201;
+        Mon, 14 Sep 2026 00:07:27 -0700 (PDT)
+Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb33fd3bsm25154298f8f.19.2026.09.14.00.07.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 00:07:26 -0700 (PDT)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Amit Barzilai <amit.barzilai22@gmail.com>, Krzysztof Kozlowski
+ <krzk@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 1/6] dt-bindings: display: Add Solomon SSD1351 OLED
+ controller
+In-Reply-To: <CAOEgbEqd6pGUL6o2CbyePUWm=NBy1GJJaOm+_7rg3CsEGqEfYw@mail.gmail.com>
+References: <20260823111959.17029-1-amit.barzilai22@gmail.com>
+ <20260823111959.17029-2-amit.barzilai22@gmail.com>
+ <20260823112814.896AE1F000E9@smtp.kernel.org>
+ <8733vhmk4p.fsf@ocarina.mail-host-address-is-not-set>
+ <CAOEgbEqd6pGUL6o2CbyePUWm=NBy1GJJaOm+_7rg3CsEGqEfYw@mail.gmail.com>
+Date: Mon, 14 Sep 2026 09:07:25 +0200
+Message-ID: <87v7881fbm.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: CdMFMdmpzpBkPUcuYA4Q1zXdAOlHzxm1O_eqybCBnHg_1789369648
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 07 Sep 2026 04:10:36 +0000
-sashiko-bot@kernel.org wrote:
+Amit Barzilai <amit.barzilai22@gmail.com> writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] clear_wprobe incorrectly rejects legitimate fields starting with "unlimited"
-> --
-> 
-> commit f87f4797ae7a52cd2de4840afea59fb8bb8bbaf6
-> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> 
-> tracing/wprobe: Add set_wprobe and clear_wprobe event triggers
-> 
-> This commit adds the set_wprobe and clear_wprobe event triggers to dynamically
-> attach and detach hardware breakpoint address monitoring based on event field
-> contents.
-> 
-> Link: https://lore.kernel.org/all/59637b96946653393a7ad3c7de094094796b39c2.1785067572.git.wangjinchao600@gmail.com/
-> 
-> > diff --git a/kernel/trace/trace_wprobe.c b/kernel/trace/trace_wprobe.c
-> > --- a/kernel/trace/trace_wprobe.c
-> > +++ b/kernel/trace/trace_wprobe.c
-> 
-> [ ... ]
-> 
-> > +static int wprobe_trigger_cmd_parse(struct event_command *cmd_ops,
-> > +				    struct trace_event_file *file,
-> > +				    char *glob, char *cmd,
-> > +				    char *param_and_filter)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	/* clear_wprobe does not need field, but can have optional field. */
-> > +	if (!clear) {
-> 
-> [ ... ]
-> 
-> > +	} else if (param && (isalpha(param[0]) || param[0] == '_')) {
-> > +		if (strncmp(param, "count=", 6) != 0 &&
-> > +		    strncmp(param, "unlimited", 9) != 0) {
-> [Severity: Medium]
-> Will this substring comparison mistakenly intercept legitimate C-identifier
-> field names that start with "unlimited"?
+Hello Amit,
 
-Ah, yes. I understand it. Maybe we can use strcmp(param, "unlimited") so that
-it will pass the field name that starts with "unlimited".
+> On Thu, Sep 10, 2026 at 2:16=E2=80=AFPM Javier Martinez Canillas
+> <javierm@redhat.com> wrote:
+>>
+>> sashiko-bot@kernel.org writes:
+>>
+>> >> +allOf:
+>> >> +  - $ref: solomon,ssd-common.yaml#
+>> >> +
+>> >> +properties:
+>> >> +  compatible:
+>> >> +    enum:
+>> >> +      - solomon,ssd1351
+>> >
+>> > [Severity: Low]
+>> > Should this properties block also declare default values for solomon,w=
+idth
+>> > and solomon,height?
+>> >
+>> > Other bindings that include solomon,ssd-common.yaml, such as
+>> > solomon,ssd133x.yaml, establish default geometry values for their spec=
+ific
+>> > compatible strings in this block. Without these default values, device=
+ trees
+>> > that omit the width and height properties will lack a schema-defined d=
+efault
+>> > geometry.
+>> >
+>> > --
+>> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260823111959=
+.17029-1-amit.barzilai22@gmail.com?part=3D1
+>> >
+>>
+>> I think Sashiko is correct here. Let's include the default values in the
+>> DT binding schema to be consistent to what is done in the other bindings=
+.
+>
+> I included them in v1, Krzysztof mentioned that they should be removed
+> since they are deducible from the compatible:
+> https://lore.kernel.org/dri-devel/20260611-psychedelic-funky-foxhound-a8e=
+39d@quoll/
+>
+> I personally agree with Krzysztof, but I won't die on this hill.
+> Let me know which way you'd like this to go.
+>
 
-> 
-> If a user passes a legitimate event field name like "unlimited_size" to
-> clear_wprobe, the strncmp(param, "unlimited", 9) != 0 check will evaluate
-> to false. The parsing logic in wprobe_trigger_cmd_parse() will mistakenly
-> assume it is a count parameter, skip the field parsing, and pass the string
-> to event_trigger_parse_num().
-> 
-> Since event_trigger_parse_num() attempts to parse "unlimited_size" using
-> kstrtoul(), it will fail and return -EINVAL. Could this prevent users from
-> using clear_wprobe on any valid field beginning with "unlimited"?
+I see. I don't have a strong opinion either so I'm OK with not having it
+in the binding doc then.
 
-Thanks,
+> --=20
+> Thanks,
+> Amit
+>
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+--=20
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
