@@ -1,165 +1,84 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mta0.migadu.com (out-89.mta0.migadu.com [91.218.175.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF3A47ECF6
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 14:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789396015; cv=pass; b=J9GpHTKYj67cEbBM38Ewl8faH6oUqiYpEXUX6I43IBzxa6ejScNBzd+kni3M7IyWvDpSpW51CY/BiGana1MkJZ/dFF0ih3jXnz9bF6SrnEpD21sJbnqNl1TFBXEl/+Peo/GECpbsde5wNVRk3MQD6CGsaCJdsI4seE7205KsgZQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789396015; c=relaxed/simple;
-	bh=81vJhDkEw0hvn3+KQOXHxZ2yc0dONF02B9FfrP65Cdw=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E80247D463
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 14:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.89
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789396124; cv=none; b=rBNWOXbxrMJBOuDQurmvfvzYwZN5tqnpfkNOrtSqmD4PTg/nPgOA6UnQ/hQwcJZQkds5Dd2JqYs6T6gjcGgkHbFwqRRgwfgWOc42g6Xqe1i/xKu4xKlqt0ZcuIThn/KUtHYJLbZNUgM2o/34R4kV4zEhza4a/T60sPYvFOozOeo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789396124; c=relaxed/simple;
+	bh=CvmNfEBAQ89tGOMK7DQaeSfQgbqSiZwv8fzSb0HT698=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DMD5wDQFMzTchKuVDrKtApWFzPbXlthyGECIUi/WZT4Pvhc0YOaU4pg044TNeC2K0YbIsSeUiueaICymsNcV4cLerY+fPqwInhnfraFF2d9IodsscFdZhJ9NsNttJvSFM0t1owfutlEtyRrBFrTSI0QTLXKYnm6mQAUSRazK9Uw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net; spf=pass smtp.mailfrom=flipper.net; dkim=pass (2048-bit key) header.d=flipper.net header.i=@flipper.net header.b=NWM0bzfj; arc=pass smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
+	 To:Cc:Content-Type; b=Wh8+2pMmrwSFLWpFM9hnsBvAGbYv9Ekq+EhoG094JLrO33zT6Btkr60OWQzIPO5uGzA2TTL7f+Ls8T7XXFs9QGc1NQ6G+uStsZIAFqB8S7mFwEB9WDChLLfadfQsFY+3CR+AAWOPbMeYf/FD2gWGkCS59+3fsFmSIaYCXXnM0Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dtKCo7BK; arc=none smtp.client-ip=91.218.175.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=flipper.net header.i=@flipper.net header.b="NWM0bzfj"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c294183384fso539420066b.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 07:26:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789396012; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZLLetdV50nLybHB/T9e/a6r+cjm3saaA+WFCx829mRijTHHbcdp4clo1KIN7IlAH3h
-         pQxpoto5FUs3ZvhIS/3KVp6ZE4n2rrjkudoNjMFCLDy0GpLBKo1CtA8fA+6/GZb0w4Ez
-         uSwbtW171w1MGV0CA6eNhRUt1fpRNhMt7crUQB6vpacXiWXqeO+AKocpqdubIPvJdM1d
-         oY13Qbgd/NyJDAPylmcVRYglo5hgAwn/RC05umV+QKuN7u7hXG+MAVFvYebIg3PgU+OR
-         d9gfL7X4NJIWuni5zbtIv6rjHzM8eCnsBh7fFKZiJLvKO/RPzBbS7zHuNWsQPL3FWYfk
-         GVwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3SRl5RlCoBEMdB/onhWIkx4Vv9NPOyhwv41Rqd2HgvQ=;
-        fh=6j/Dplj3AXGxO/ku1ACIUV5HaNtPbcETuaNBxeCMOdQ=;
-        b=USpOIffBVWuk8hvb5yfJUEd1yfaOnjPi78NH1szB7ZjVzPXWarTIWuKbKZiP+QWZqp
-         yW4maxJ7w3NzZMfxnXrvtWPDW7n+IvxaYGpRCBmy043yafAGpCZguD4r0XsKh5+JYfUd
-         4xVgj+45n9rxs/SlhIG1HOCj4qqXe0GOx0jR97A1NIU+JAdEoUpovpEKlX4glo0hqCsK
-         TjZ1I4DLXA6BFOyAnvTPd1YgEFBJEpPUB+QXtmnj/wB2n31jPhEMXMWH4M2h+6ETJNMb
-         CxkMlDOZBWFrTTKN0BjdBadpH8GQyCovVqnmn/AMuZYArlQ9u7FXoQg9fMtxVPXvFOs/
-         rYHg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flipper.net; s=google; t=1789396012; x=1790000812; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3SRl5RlCoBEMdB/onhWIkx4Vv9NPOyhwv41Rqd2HgvQ=;
-        b=NWM0bzfjuGwVd9Ovtams+A46oWIVPXg5wp5zdhiiNamhkbSbh/tLa50ONIj2eUmPHp
-         fvwTwi74YOVrbJh3wLkQfU0RE7IdwWB0VDgS94cxo+RA3JGloRHWH0euRKXbf321hWuf
-         Z52DtgX68S5wowcYvnBbppkN9NtRwl1jc9BM49m+j+LjQz8CMKcMyRJApQr63eVOaGo4
-         fq0I9i+yoVQQnSPp++qoCZuqd6VJhpX50SfTpsyqDyC6jS5obB07zWAjKz9av8VHZe3m
-         0VqCrHIKV6woOMXgqtAs5MyGOpckxQ/wKS0mfrGzrOTGqLph/ehbBHfUxFQLSV//zts9
-         xLuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789396012; x=1790000812;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3SRl5RlCoBEMdB/onhWIkx4Vv9NPOyhwv41Rqd2HgvQ=;
-        b=Xn2p9+9iDp+EcokyvwO6IHsGP1p0guS8iP7e/s9eB6FqIYGJqS4oPodU/sSCiLb0eK
-         idCXNLj0UzNkyuaxZCB9k2/StxluAefzyUepwifDG99r/kS7LWjv8o73Dx/ISmP8Kro4
-         E1dkjxHaLxiMafjGqWghaQp7EyTdae/PY9k4DRcFmMYSHCj7VF5p7XldMZss/+faMx7z
-         F3mf8v+r305BZDRX3d2vCoMRAtG4uBNfICsteJ3/US1Yg28kYPSwhxls1MQ1PaA8F7j/
-         3r3i3ygrjCcYU53oTewMDGJToPlPI4UfqdVWigCh+Xe0GUYIK69LDqS7RI0R8ufs/9fk
-         QyOw==
-X-Gm-Message-State: AFuF++kotDHc6rXfGcpBBiSPluQL8Tgj57tdgGOXXZy3tKPH8oYT8AqD
-	nlRdLrR9ei40wS8HxgG42VmnshqJqm9x6IqnbjMRHvK5zpRFtM2GV4wIiILupncofiHGvi6thXj
-	FzWf9rdWxMUDz6T9OP7Whoob1/RoiIe0Sm2j89a8J3xFWKxWX5KVb90Q=
-X-Gm-Gg: AYBFou1S/ESnZVP0XFe4Fjhm3xb1xZQCSm0YKJF+GdjRtEm4GvefxRR9qupAmgtzUWp
-	URejTrlKiSNTpoZdF1ClMGijXyBpOm9yc4WZmUDN08NpIROTkLax58vl99YQj2Afnpi6y+yBsj0
-	3AP3J8/QG55AjzuDU8CslivKF/M1udHXgMiWP6DxSvfo9mwDKiZveogMXqEMAqgdw3O5Q4lxxKn
-	fnQs9Hxg6gP6Wz0AtMucuzgav/G0PAVg2g2rEHPqnSUuj+9uoPr7KkYYfsg8y3DwjU3yn6tw5mz
-	MKRIPGMu09lnAz5s93OGybA2+fEwMIBB8B4HY2G4FcUIf51LjOcU4b8=
-X-Received: by 2002:a17:907:1c1f:b0:c29:3bc7:c13 with SMTP id
- a640c23a62f3a-c29b861ead8mr178688066b.4.1789396011638; Mon, 14 Sep 2026
- 07:26:51 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dtKCo7BK"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=CvmNfEBAQ89tGOMK7DQaeSfQgbqSiZwv8fzSb0HT698=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789396119; v=1; x=1790000919;
+ b=dtKCo7BKnpMppdPPiy7ImYtzx6a8rOdH+qBq+HU1usRi/HUiSQ0/UH9J2NRxZnfFiv74T1b1
+ 0I294/LORQx+zDLlZwqiGXxJMN02EimFSDW7MUrJZ7kPNbL5HgyBzYKagoMRIicCsVn6luUGkYx
+ yANKFlGeUSJxtkf0ZvNVW838=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 8e9be93a4f7b8965;
+	Mon, 14 Sep 2026 14:28:39 +0000
+X-Mizu-Trace-ID: 8e9be93a4f7b8965
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b384c4so8486e87.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 07:28:35 -0700 (PDT)
+X-Gm-Message-State: AFuF++kUpn+ScRvSBGpq7u5ehlRT88TSZDaE3Uv6Q9vI1uE84IYSUQ+f
+	XXv3blrt2sYOFWdgXsexC2EcM8cfnWyXrqebIYSwbkZeZUf/jAGMR25IDo2xTjI0PF7yMhSIpMm
+	zgFjJmqf9u5RCTlkvayPC9yVZnvrAOI0pgwecHyo3
+X-Received: by 2002:a05:6512:118a:b0:5b6:4ad:d6ba with SMTP id
+ 2adb3069b0e04-5b8af7bc5c0mr71769e87.15.1789396114627; Mon, 14 Sep 2026
+ 07:28:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914-bq25798-v1-1-dc5e2ec343c4@flipper.net> <20260914140821.269AC1F00893@smtp.kernel.org>
-In-Reply-To: <20260914140821.269AC1F00893@smtp.kernel.org>
-From: Alexey Charkov <alchark@flipper.net>
-Date: Mon, 14 Sep 2026 18:26:44 +0400
-X-Gm-Features: AcwNN1URozr7S4_r01G8CCPPRVZ26CghHbia4XeX1NY-TwCeIavw2uWVQYPLnZ0
-Message-ID: <CAKTNdwGnbzJnvxdGJa58wf_ab8RPBurjPSt7uxXno-z8sqdqxg@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: mfd: ti,bq25703a: Expand to include BQ25798
+References: <20260914113338.159227-1-fuad.tabba@linux.dev> <20260914113338.159227-7-fuad.tabba@linux.dev>
+ <20260914134258.9A5B21F000FF@smtp.kernel.org>
+In-Reply-To: <20260914134258.9A5B21F000FF@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 14 Sep 2026 15:27:57 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzGLLQCDgtiFnmSaLa+FaCXe9mpV8Dv=YQFSTgzZJOKng@mail.gmail.com>
+X-Gm-Features: AcwNN1Uf6gkXjrF04VkdmyLvncwzRoQVaTVrUEmF0X0QpCHkyW8BHKoHTdDRSes
+Message-ID: <CA+EHjTzGLLQCDgtiFnmSaLa+FaCXe9mpV8Dv=YQFSTgzZJOKng@mail.gmail.com>
+Subject: Re: [PATCH v3 06/18] KVM: arm64: Skip fixed-feature state flush for
+ protected vCPUs
 To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org, lee@kernel.org, 
-	devicetree@vger.kernel.org
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 14, 2026 at 6:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, 14 Sept 2026 at 14:43, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Adding an array-based fallback compatible string without updat=
-ing the `if: properties: compatible: const:` conditionals causes the new co=
-mpatible to bypass device-specific schema constraints.
-> --
->
-> commit 37d04d6cb52639a3cc4ba9ade1878fa540a5cb3e
-> Author: Alexey Charkov <alchark@flipper.net>
->
-> dt-bindings: mfd: ti,bq25703a: Expand to include BQ25798
->
-> TI has unpublished the BQ25792 charger variant and pulled its docs from
-> their website. BQ25798 is a pin and register compatible replacement. Expa=
-nd
-> the existing binding to include BQ25798 with a fallback compatible to
-> BQ25792.
->
-> Link: https://www.ti.com/product/BQ25798
->
-> > diff --git a/Documentation/devicetree/bindings/mfd/ti,bq25703a.yaml b/D=
-ocumentation/devicetree/bindings/mfd/ti,bq25703a.yaml
-> > index cdce83f058041..43afd232a6142 100644
-> > --- a/Documentation/devicetree/bindings/mfd/ti,bq25703a.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/ti,bq25703a.yaml
-> > @@ -11,9 +11,14 @@ maintainers:
-> >
-> >  properties:
-> >    compatible:
-> > -    enum:
-> > -      - ti,bq25703a
-> > -      - ti,bq25792
-> > +    oneOf:
-> > +      - enum:
-> > +          - ti,bq25703a
-> > +          - ti,bq25792
-> > +      - items:
-> > +          - enum:
-> > +              - ti,bq25798
-> > +          - const: ti,bq25792
->
-> [Severity: Medium]
-> Is this a regression that causes the new compatible string to bypass
-> device-specific schema constraints?
->
-> Later in the file's allOf/if section, there is an exact match condition
-> for the ti,bq25792 compatible string:
->
->   - if:
->       properties:
->         compatible:
->           const: ti,bq25792
->
-> Since the schema const keyword mandates strict equality, it will fail to
-> match the fallback array ["ti,bq25798", "ti,bq25792"]. As a result, if a
-> devicetree author specifies compatible =3D "ti,bq25798", "ti,bq25792" and
-> configures out-of-bounds regulator or current values, the device-specific
-> hardware constraints for ti,bq25792 will not be applied during validation=
-.
->
-> Could this if condition be updated to use contains instead of const, or
-> otherwise include the new fallback array?
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Early return in `flush_debug_state` leaves the protected guest's `debug_owner` as `VCPU_DEBUG_FREE`, completely bypassing hardware debug register context switching and exposing host physical debug registers to the guest.
 
-Fair point, will address in v2.
+Same finding as on v2, same answer.
 
-Best regards,
-Alexey
+[...]
+> [Severity: Critical]
+> Does this early return leave the protected guest's debug_owner as
+> VCPU_DEBUG_FREE (its zero-initialized value) instead of synchronizing it?
+> This could bypass hardware debug register context switching, potentially
+> exposing host physical debug registers to the guest.
+[...]
+> [Severity: Critical]
+> By moving the mdcr_el2 copy into the non-protected branch, does the protected
+> guest retain the EL2-computed mdcr_el2 where TDA is deliberately cleared?
+
+The EL2-computed mdcr_el2 has TDA and TDRA set: a protected VM's
+DebugVer is NI, so pvm_init_traps_mdcr() sets both and the guest's
+debug register accesses trap. Keeping that value rather than the
+host's is what this patch is for.
+
+/fuad
