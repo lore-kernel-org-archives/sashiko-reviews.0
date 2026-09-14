@@ -1,217 +1,116 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4DD279DC3
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789375181; cv=pass; b=qk9YfmR1XbxpoaSr7qS2pypUATDvQjR95/hGW/sQkaaGfQ+hxyH+mskPiSFu2OW6+YU4MJqTPUmKwSHKMzm/BtoDepXVaKndL+I+4iKda0pSgp7QePa+deTTo/+k9VZswjCDRy/CjhYp59u34Qv93BVO8tAw7yG2jXCkX2hRvzw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789375181; c=relaxed/simple;
-	bh=qcoMC/s+Yrc0wEY/iKMF45CQwVjH1i79yiWScSddz9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SH6f1/0LAhEdJCNvpe9eREuFzbwRe4Dc4oYmx4iuwH8BCF4w9SQ/tJPa9wETTSslOXR+4ZiIOakzUwDbMvioTVJ1WNjPobY2GhZgApYvmk25doxjRteDRge04/J9cggnOqg77dEHyN8EnjeQR3DNQIy+KH1uVVEr/4y14wQCVvY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rdn2Mnka; arc=pass smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BE7412BEF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789375400; cv=none; b=a4milkZMYSAyWZtuPx6ICVqlAUDoXSAYsAKZ+hgXqYABmRMA1Dlboe9XQ5MQkSbmC7KBhmWNXV9pknq+scSzaouQ1xJ+QiTCGPu4oV4t9enS8B2hxGXVOx5XJf6VRYJSxN9KNMMtIWzizps/ekil2bXUHzc6scI5GyZ2FUpUOMo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789375400; c=relaxed/simple;
+	bh=gd+qqjAMIqUJHMXe/UiAHncDTJYLgPQAMR6AsYzuoBA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Se+ALuYM9GJrhQ5/QuBwk+Xywk0Z7AKhcuIBgBfo8P2LjOxr0Ly02nBziVdIogaanoTgQyswOgvk0dZJzbOggShnOxZA84DOx1u7BCGs7unbgK0LV6BtzTX+RtXPtQbg0P4rjbCpZjk3Do1dfLyoGaJj1LKCs2dUes0bN2jHMUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ODdIDkbu; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=rDOTwdKQ; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rdn2Mnka"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-93a10f9a2easo131309285a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 01:39:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789375173; cv=none;
-        d=google.com; s=arc-20260327;
-        b=arw31okJsTHF1sbs5+dpjgwrN/N7eVoinzkt2OrVWCrDJ23is7tWnX/hg8GihnGaDx
-         nNVPSPTRVW06rNyVAUAKQ2EpzPW2l3GqsLmSw40dFSKTNDJJGl9wCfVauqGU5DjYGaMW
-         gHWJxhRZz1aKAYRmS6aHpXIEIvZLx6xM19j2Vh2ZVrrmTBWXQygmiUvyKRPVfU4Vfdvw
-         22n4IVoJffxS6txdmboejrUwtkbL/8BrWBW0KmaRkFsdITF55eaNDDMUrBr1SeaOJ3BY
-         C0cx8g9eSZu7TKDqu1dgCV5LUfKZx4B6XrsFIwd1R6G84g0SUSMR1JhKRx8zCxM0OZ+5
-         T7uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
-        fh=Gm9wmu1k8YqrdUHmcyzqJMq+MJRbGwMyGWRI+6dhf48=;
-        b=lvXXAPInT06lSe36jkzymERrTAxB/Fz76KMr2HOeovWIgScdqcKeWgUglt2GnHr1b0
-         00/KLrC6f7JX/2U499qrMtDOyYBmXcGd2/MAAmhuCbAApW7oumZycFkcHg28JwWnFj7R
-         fyOxFGgIMvWBZI/wWAz9lYSNupiZiGH/fabYyYu5u1kRYvSOpYfudtPsm/qGYZa4VJyg
-         EWDQV1FWG4WYliK4kbM9nILZ2l2qn5sQhbAJffmgtD1j7PpBnBvQOzXKX3RoBuBXCTL/
-         3xLNvcVWWYMOaRLwt9CwgXJ8sT3FkCVrtNqDfG77+iqDJG9OPomsv7ESgKZziEMUZGrD
-         4F1g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789375173; x=1789979973; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
-        b=Rdn2MnkaBjLRc8WWIb2bi5VddCu9jUdvTf6cG5YKLsVngkFclmxxkFP8CMgMvYErgh
-         /GD0Bb5e47N1DQDcNK/Ws91KVEru8+9hK+07W4pDcAkcV5imdw5ldW/r1XHqQMqA3/xm
-         7zqZDS+qTQ2u1lRDY/ec4shifdywpWgf7SncZ/XCMUwpfBfBDqtZ9Nf9qtO0kwyy3uzs
-         gZUDsg5W9u9cdbBm3+RLtZmtNvmkzusrSW2J7I5HdRsmWZ+i6m0Q3tQsfYKhq0a+DbJt
-         HD6R3lY7Tspqqm7mBwDFi5qkjd1HoPDNCwHKTjLshJwIPNOYpy/FK9SrjY+apYt4Psgl
-         S0zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789375173; x=1789979973;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=l8ggFII5MyNYC9kvCPHSC1d8pjP/XE+f6UmrXyuFuNw=;
-        b=Z4bm8UNw97hkwnDiSzlsDSyLATCUHZrnm9kQ8mq6VWjyhHjxQCMPiy6fSaMvGw2qhh
-         5LSwCcjwJz0rRCBJZPlvmfLwFLGK78BhsPkVeJk7C9gPkmvtFE302Ou9AoIZuXAmx8qP
-         QfRjBHNyRridN6iT0AKdfaDj9XqB46XQEPMwngFTWFJZkbJwaVmTpS6bFb1tJ1jAWMd/
-         wsjl8MuPq4ZAJJ2MAFSDm1oI8YB0s/L0le1SyYGxxeRQtC6gJpfeFIRCrjTjj4rfAIk0
-         WuKCGki1fw1AlcNwZDiAKH/MhQASRkVNshvlfEBafGq0tIfTcEa/Rn4ibBDzcuuLriCa
-         zG9A==
-X-Gm-Message-State: AFuF++lBzh9H854pN3ra5TBBm5C+W/0fafjc2+G45ninAp3IHzpTGb6S
-	IDEFQzFutiu9b/NuBC9O1L1u/BNLP2nGK1PNyg5grGD/V8FDz5KDxq8R9hNqE4i2BfsSIiTliH3
-	HdCTcG/x2wCX1H0fIiIPDNLkM7Nr6yewSqPv7
-X-Gm-Gg: AYBFou24YSTqUy2/B45Pb5FWKeX4Y3aibvQN74wM20VJeYouYqk5eo1azjUs20SCJWc
-	Bb4V5tFOd0Z5GnRYjOgZg3ufBU0knt+IjavcA0GtA88CCP7m6S2VCUQswqwd28q90Z20/gKVQNi
-	sEiP+UfWm0amJRYVI5UBNbmMJ9QlDxHXBLD8dCa7cI7tWozY5g7VrlSmqabcVEcFzwR3x8hpcvR
-	H5ptn5M+knRlbNwWKpZYVv9GK1GPEzrIHsrElH9e01od/cqyw30HAcX3n7osmh64r9ZFqJIyuTZ
-	UIZwRD0XqKgfLw9qaDVnVH6dPWwMsTOCb2lEpPdeFrmHAW8d/6olJJM=
-X-Received: by 2002:a05:620a:63ca:b0:939:f1c2:7df7 with SMTP id
- af79cd13be357-93a187b5cf0mr518226885a.41.1789375173301; Mon, 14 Sep 2026
- 01:39:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ODdIDkbu";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="rDOTwdKQ"
+Date: Mon, 14 Sep 2026 10:43:09 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1789375391;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ctiLvc9YkV+cVDeINxTojItvigNoXWATmW0CCJq6NUQ=;
+	b=ODdIDkbumMAcCWwMLx5PyrO8NixoHAI0XTWcxQzToORqpgoy2UJW5z4IBNGtFXeQJs9J5w
+	0fPvNz8GuF8vZB2k3L9qYF9888M4BnQBauCizml42HreKueCvVsrGqamAS4Od4TY3hMuIv
+	XL2lv9ldPYDIhRr3MtYjM2Qh1k3qhYhdEX4wGNt/SOp37hqjqfBcSQIfgre9Bq11UFyVQt
+	bA39jtqmPT62Qa7MOPH0H58BzaJWbZZxRpFs0apz6DRcO+FUekHhHq0e5kNKJxTpWgSAWO
+	rpFd7P4TCIXxuziknVF3eDVzG1n7BKKcQ0GicNPL4XEzApX98BaUFKFWw1cISA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1789375391;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ctiLvc9YkV+cVDeINxTojItvigNoXWATmW0CCJq6NUQ=;
+	b=rDOTwdKQDXAdYXTZI3N6NzGapyRKZineqcl2dG5w9Yu1l8vbgZGPLoZxXQy4PKs191Tgyl
+	+FKR8ZzinIX8/ACA==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next] selftests/bpf: Replace %pK output with 0
+Message-ID: <20260914084309.f4ivXcU5@linutronix.de>
+References: <20260911145011.kErTVDkS@linutronix.de>
+ <20260911150338.91D3E1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260912090420.47439-1-physicalmtea@gmail.com> <20260913090452.2B8221F00893@smtp.kernel.org>
-In-Reply-To: <20260913090452.2B8221F00893@smtp.kernel.org>
-From: Jia Jia <physicalmtea@gmail.com>
-Date: Mon, 14 Sep 2026 16:38:57 +0800
-X-Gm-Features: AcwNN1XVuYU0HUchoPplkYqW2a005r4W4YLv5OFcOP7MGcLCwxwN9odGIIkQaFk
-Message-ID: <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
-Subject: Re: [PATCH] vhost-scsi: do not relock event vq mutex on send_evt fallback
-To: sashiko-reviews@lists.linux.dev
-Cc: virtualization@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>, 
-	Eugenio Perez <eperezma@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260911150338.91D3E1F000FF@smtp.kernel.org>
 
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] vhost_scsi_do_evt_work() accesses vq->iov[out] without verif=
-ying that the guest actually provided an input buffer, leading to arbitrary=
- user-space memory corruption.
-> - [High] Events are processed in LIFO order instead of FIFO, which can ca=
-use state corruption for hotplug/hotunplug sequences.
-> --
->
-> commit 05830c30fc2e4dc682c270a9b487ae5abb66218b
-> Author: Jia Jia <physicalmtea@gmail.com>
->
-> vhost-scsi: do not relock event vq mutex on send_evt fallback
->
-> This commit resolves a deadlock during fallback event handling when the v=
-host
-> worker has disconnected. It splits event completion into an internal unlo=
-cked
-> helper and a locked wrapper to safely reuse the completion path.
->
-> Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel=
-.org/
->
-> > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-> > index 4f8c0260bc9e7..42abf18291b75 100644
-> > --- a/drivers/vhost/scsi.c
-> > +++ b/drivers/vhost/scsi.c
-> > @@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, str=
-uct vhost_scsi_evt *evt)
-> >       vhost_scsi_log_write(vq, vq_log, log_num);
-> >  }
-> >
-> > -static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool dro=
-p)
-> > +/* Caller must hold the event virtqueue mutex. */
-> > +static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool d=
-rop)
-> >  {
-> > -     struct vhost_virtqueue *vq =3D &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
-> >       struct vhost_scsi_evt *evt, *t;
-> >       struct llist_node *llnode;
-> >
-> > -     mutex_lock(&vq->mutex);
-> >       llnode =3D llist_del_all(&vs->vs_event_list);
-> >       llist_for_each_entry_safe(evt, t, llnode, list) {
->
-> [Severity: High]
-> This is a pre-existing issue, but does this loop deliver events to the gu=
-est
-> in reverse order?
->
-> The events are added to vs_event_list using llist_add(), which constructs=
- a
-> last-in, first-out list. Because lnode is retrieved locklessly with
-> llist_del_all(), and the iteration happens without first calling
-> llist_reverse_order(), the events appear to be processed from newest to
-> oldest.
->
-> Could this cause state corruption for hotplug and hotunplug sequences? Fo=
-r
-> example, if a device is plugged and then rapidly unplugged, the guest mig=
-ht
-> receive the unplug event first and the plug event second, leaving it
-> erroneously believing the device is still present.
->
+On 2026-09-11 15:03:37 [+0000], sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c b/tools/=
+testing/selftests/bpf/progs/bpf_iter_udp4.c
+> > index 23b2aa2604de2..9b789f09f1462 100644
+> > --- a/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c
+> > +++ b/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c
+> > @@ -57,13 +57,13 @@ int dump_udp4(struct bpf_iter__udp *ctx)
+> >  	BPF_SEQ_PRINTF(seq, "%5d: %08X:%04X %08X:%04X ",
+> >  		       ctx->bucket, src, srcp, dest, destp);
+> > =20
+> > -	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %p=
+K %u\n",
+> > +	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %8=
+d %u\n",
+>=20
+> [Severity: Low]
+> Does this %8d format incorrectly pad the 0 with spaces?
+>=20
+> The networking subsystem replaced %pK with a literal 0, but replacing it =
+with
+> %8d here in dump_udp4() causes a mismatch with the native /proc/net/ outp=
+ut.
+> Since BPF iterators are designed as exact drop-in replacements, could this
+> mismatch break parsers that rely on strict spacing?
 
-Looks like this could get the acquire order wrong? Need to verify.
+Indeed. I tried to match the pointer spacing for some reason. The
+formatting in net does not align with the columns starting with the
+inode which is %lu instead having 5 width same goes for ref. So I just
+ignored and moved on with a plain 0. I could update if this is
+considered important.
 
-> >               if (!drop)
-> >                       vhost_scsi_do_evt_work(vs, evt);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but can this function access out-of-bounds =
-or
-> stale memory if the guest provides an empty input buffer?
->
-> Looking at vhost_scsi_do_evt_work() in drivers/vhost/scsi.c, the code use=
-s
-> vhost_get_vq_desc() which populates vq->iov:
->
->     head =3D vhost_get_vq_desc(vq, vq->iov,
->             ARRAY_SIZE(vq->iov), &out, &in,
->             vq_log, &log_num);
->     ...
->     if ((vq->iov[out].iov_len !=3D sizeof(struct virtio_scsi_event))) {
->         vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
->                 vq->iov[out].iov_len);
->
-> If a guest submits a descriptor chain with only read-only descriptors,
-> vhost_get_vq_desc() sets in =3D 0. The out variable holds the count of
-> read-only descriptors, meaning the first writable descriptor expected by =
-the
-> host would be at index out.
->
-
-This is a dup -- an earlier patch already fixed it:
-https://lore.kernel.org/all/20260904005240.502787-1-physicalmtea@gmail.com/
-It was while fixing that earlier issue that Sashiko spotted this
-adjacent problem.
-
-> Does the length check above access vq->iov[out].iov_len without verifying
-> that in > 0?
->
-> If in is 0, vq->iov[out] was not populated by vhost_get_vq_desc() and
-> contains stale data from a previous request. Could a malicious guest use
-> this to force the kernel to write the event structure to a previously
-> legitimate but now hot-unplugged host virtual address via the
-> __copy_to_user() call later in the function?
->
-> >               vhost_scsi_free_evt(vs, evt);
-> >       }
-> > +}
->
 > [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260912090420.47=
-439-1-physicalmtea@gmail.com?part=3D1
+>=20
+> > diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c b/tools/=
+testing/selftests/bpf/progs/bpf_iter_udp6.c
+> > index c48b05aa2a4b2..9766eff7069ff 100644
+> > --- a/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c
+> > +++ b/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c
+> > @@ -65,13 +65,13 @@ int dump_udp6(struct bpf_iter__udp *ctx)
+> >  		       dest->s6_addr32[0], dest->s6_addr32[1],
+> >  		       dest->s6_addr32[2], dest->s6_addr32[3], destp);
+> > =20
+> > -	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %p=
+K %u\n",
+> > +	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %8=
+d %u\n",
+>=20
+> [Severity: Low]
+> Is the use of %8d here in dump_udp6() introducing the same formatting
+> mismatch as in dump_udp4()?
+>=20
+> It seems it should use a literal 0 instead of %8d to exactly match the
+> networking subsystem's native output format.
+
+Yes it does but the extra spacing intends to align with the columns=E2=80=A6
+
+Sebastian
