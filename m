@@ -1,97 +1,203 @@
-Received: from mx0a-0016f401.pphosted.com (mx0a-0016f401.pphosted.com [67.231.148.174])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8A534C9A3;
-	Mon, 14 Sep 2026 03:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.148.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA242332601
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 03:23:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789355762; cv=none; b=nPkH1GFY8SP3gsO7rlK+jpLAqCmDy3GUeVzrpzFw+0kqs27C0a2BEbr0bmXOyoFEZimsi3JVQkLx+0rq9zaT0bAeydTICAqBOQdLzmdTSZgL58X3gqocZ3oen57Wpel80ltr8TaY48TvzXKgb5DObf3+rDwyJrJPgfW5SFBLb3w=
+	t=1789356234; cv=none; b=Wtp/ROIhZrGVymNE+sFC6ZexcRu1MIjq87XDiXi+P1qhIxub/3w6o2dyO3J96kFma2ew/JuEJrIp3UarZleO4gujmeODjBrm0i5nSehJEWNwW0PSt1grF9hBodreSzyNMsJ3f806HRUj1St5SmBnwZk4FjpwHm263i9LtkHD1MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789355762; c=relaxed/simple;
-	bh=6/S9Z5FG0s11+HWWVjIlFOzA2T+2EeMHBlP204wPstY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LIRn3vKJPFF7m5z9Ss5ZGwXGpDoXZCeZ5GShuxriBEMSY4oF+gkcjvZhP7AadM0m2lak3dcS9UgjQCQGzX39ML78RZAXRY+pJuCQljmreaewqnG5bRZSe4zANrO/mw6y2GbAyXkvzCkMPVPoECqsPECyDp6Q4Pjb8uqV9KBJ0tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=marvell.com; spf=pass smtp.mailfrom=marvell.com; dkim=pass (2048-bit key) header.d=marvell.com header.i=@marvell.com header.b=fAx9a3L6; arc=none smtp.client-ip=67.231.148.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=marvell.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marvell.com
+	s=arc-20240116; t=1789356234; c=relaxed/simple;
+	bh=PJWRpZ6R7Caez2tyA1fHosu6VMV3NMzU5S7qJ024Imw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iNVJ6/T7Gld4hy9fKoN/RlSNW8iuy6U3nkBzXOouD3RheFAHBiWZsylJJwwFMqicY3X3sYgzMKSHOaLr8Kqtg3dasN8FQq+usfHqa98XySvu8sHAPycoGvbCFHpr7uXgQ+q1AQHa0Ow8lVbs67kPqGEBdsOE7vB2Q4ujnrWKFUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KFim7gbu; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marvell.com header.i=@marvell.com header.b="fAx9a3L6"
-Received: from pps.filterd (m0431384.ppops.net [127.0.0.1])
-	by mx0a-0016f401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68E2eT6d2045914;
-	Sun, 13 Sep 2026 20:15:46 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marvell.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pfpt0220; bh=6/S9Z5FG0s11+HWWVjIlFOzA2
-	T+2EeMHBlP204wPstY=; b=fAx9a3L6OjsyNF/HCNzmRolxTAiXuwmnOy1kYsqEk
-	k9x5Daw3RHOjJruOs3T+6WWZKpFNHlI3u+7h3sVeOsvEXtFp4L/qmRC2YoWATNY2
-	9XUV1a6S1L59MbibqwSvOZi/sZFKDDYgsXsTRWxT1PtRSq8sgU+OvBrCQC57MQR3
-	cYIBjtH1k4AFLJoD/Akth4wpMHb/iZSRoHFOUZp11UTrrW8k2+gVCZTQiF7hZJjI
-	FnlWDzqzLSrpkD3oaSfLLNhkuGqshbun3alHj01rB13sRcVfwp17zMM/QHwSDhW5
-	EdkwCGF0r5ktWnplT26Dz489Kj85MQyWPXQKndnjHdYVw==
-Received: from dc5-exch05.marvell.com ([199.233.59.128])
-	by mx0a-0016f401.pphosted.com (PPS) with ESMTPS id 4gnu08hc6g-3
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 13 Sep 2026 20:15:46 -0700 (PDT)
-Received: from DC5-EXCH05.marvell.com (10.69.176.209) by
- DC5-EXCH05.marvell.com (10.69.176.209) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Sun, 13 Sep 2026 20:15:31 -0700
-Received: from maili.marvell.com (10.69.176.80) by DC5-EXCH05.marvell.com
- (10.69.176.209) with Microsoft SMTP Server id 15.2.1544.25 via Frontend
- Transport; Sun, 13 Sep 2026 20:15:31 -0700
-Received: from rkannoth-OptiPlex-7090 (unknown [10.28.36.165])
-	by maili.marvell.com (Postfix) with SMTP id 24A923F706F;
-	Sun, 13 Sep 2026 20:15:29 -0700 (PDT)
-Date: Mon, 14 Sep 2026 08:45:23 +0530
-From: Ratheesh Kannoth <rkannoth@marvell.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <bpf@vger.kernel.org>
-Subject: Re: [PATCH v15 net-next 1/2] octeontx2: use atomic bitops for PF/VF
- and rep flags
-Message-ID: <aqdmy0GU7pV6wryi@rkannoth-OptiPlex-7090>
-References: <20260911105521.689565-1-rkannoth@marvell.com>
- <20260911105521.689565-2-rkannoth@marvell.com>
- <20260912105628.B3E251F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KFim7gbu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789356227; x=1820892227;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=PJWRpZ6R7Caez2tyA1fHosu6VMV3NMzU5S7qJ024Imw=;
+  b=KFim7gbuWYH2Hs60Yh6F3laOhW2hClF+5V2vn7ow78G4UZ9HwrUchGKS
+   mmJxh0PPHztzLz8zqVsduncuv5jJ0e4GROBHHiqYtWx8rx/e/mtyTsfrn
+   fI/gMy5FFjFSyVg2QZIfuseYoUQ43l45qu0rJvrlG+SZElAUmqSrMi7Tp
+   vxkvn3a5rnfw9gHmtEUbuZ23xG3OoVvo+1rYjxHyXZNJlzqMBUukIUWF8
+   +i/P9zuYizotjpya/i/CiLWt5nhIV/1zW/D2WgTIpC3WocstPidOZaNTW
+   G4fOHsEGqCZDbz7oWZKCNb+Vl2WMcB14l+YKfPnNPnjh/F3mdlUYtUyQK
+   Q==;
+X-CSE-ConnectionGUID: 14H86oW6Ri+gtpcyzfFgCw==
+X-CSE-MsgGUID: FnhzG4WfQcy8XJBFNddyEg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11904"; a="93579746"
+X-IronPort-AV: E=Sophos;i="6.27,102,1787036400"; 
+   d="scan'208";a="93579746"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2026 20:23:45 -0700
+X-CSE-ConnectionGUID: 0QlTuGIgQwWWu2rMeAXkhA==
+X-CSE-MsgGUID: tei1ZRo+Q6m6oz3OajZaeQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,102,1787036400"; 
+   d="scan'208";a="297534191"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2026 20:23:44 -0700
+Message-ID: <c16e173c-d3de-42e4-99e0-184eed096eac@linux.intel.com>
+Date: Mon, 14 Sep 2026 11:23:41 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260912105628.B3E251F000FF@smtp.kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDA0MyBTYWx0ZWRfX6aCS7ZwJ3VEp
- sg5jp9fO0EJg1jTnU4PW1uEWL/9ICIzIHUaYpAOYod3ptanL+tIoXnrMjfpcIYUOznozt9ykg0W
- +c2OWyl1L2+qO+sr/n/6kTU5any+OjtXDiNOJKxC6+kyk0StQsnrVHAunJmGSZjrtRbmpcPyL/S
- UBVHiSfQZnjspKsj3h5ow5nawLLiAh1OPI8O7o/lJ9rsDTKD7m6hySbKyPhUc01x2f8LoG4WAGv
- XPShlkyW1USGazzi2AIGbcsaKm/vsCoQlJPxfUekwksD5ZUOsJts/KWlg01vSTHEiPePOMPvI94
- PliEOujMCBKHDIpOZTNJETCHRNMV2YYJ2Bd+3ontNE7Xj2cKMSiHVdVVEy9uGzwsmPK6aFJldLs
- 38uGOml8JhOmfL4OlaV7+zZ7SiVZLRluTA3eBaxwuM8xOoL/LGqUnk7E1FR1jMRf1Uw01wEX2JV
- QNIQWYMUaJZH46/dfnw==
-X-Proofpoint-GUID: C8dX82UJ-yqTehfBiYh2I3S3cZCHxRen
-X-Authority-Analysis: v=2.4 cv=KujYSmWN c=1 sm=1 tr=0 ts=6aa766e2 cx=c_pps
- a=rEv8fa4AjpPjGxpoe8rlIQ==:117 a=rEv8fa4AjpPjGxpoe8rlIQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=l0iWHRpgs5sLHlkKQ1IR:22 a=TtqV-g6YmW1Jfm2GSLaY:22 a=VwQbUJbxAAAA:8
- a=xbFrFwBMfRNEcMa7yh4A:9 a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
- a=lhd_8Stf4_Oa5sg58ivl:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDA0MyBTYWx0ZWRfX/D4zd1Kppsb8
- N8NzXQkYi8bhap6Q8I38r9Fwxszwnk3c02Nxu34khfDhaHJrXWEsCIfJRP61DElSqOxUy8Tt+lA
- 3g3Og6w/oFEheVv+4yrAVYlXWQ4qYVo=
-X-Proofpoint-ORIG-GUID: C8dX82UJ-yqTehfBiYh2I3S3cZCHxRen
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_01,2026-09-13_01,2025-10-01_01
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v11 04/10] perf headers: Sync perf_event.h/perf_regs.h
+ with the kernel headers
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260914014049.2061519-1-dapeng1.mi@linux.intel.com>
+ <20260914014049.2061519-5-dapeng1.mi@linux.intel.com>
+ <20260914020145.4DEE91F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260914020145.4DEE91F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 2026-09-12 at 16:26:28, sashiko-bot@kernel.org (sashiko-bot@kernel.org) wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] TC offload setup on representors corrupts the shared physical function (PF) device state by locklessly overwriting its netdev and clobbering its flags via a non-atomic bitwise sync loop.
-> - [High] Inverted logic in `otx2_tc_del_flow()` prematurely disables TC MARK hardware offload when any single mark rule is deleted.
-> - [High] Missing cancellation of `stats_wrk` leads to a Use-After-Free during representor teardown.
-> - [High] `rvu_rep_mcam_flow_init()` interacts with the mailbox without acquiring its lock and executes an unbalanced `mutex_unlock()`.
+
+On 9/14/2026 10:01 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Sample parser in ASLR tool fails to consume the new SIMD register payload when PERF_SAMPLE_REGS_ABI_SIMD is set, leading to stream desynchronization.
+> - [Low] perf_event_attr__fprintf() prints the newly added SIMD fields out of struct layout order.
 > --
+>
+> commit 2a8ebff44960ffb0cedfa7b327d5de5cc826d750
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf headers: Sync perf_event.h/perf_regs.h with the kernel headers
+>
+> Sync the UAPI header changes of supporting SIMD/eGPRs/SSP sampling into
+> corresponding tools UAPI headers. Additionally, support the newly introduced
+> perf_event_attr fields in the perf_event_attr__fprintf and
+> perf_event__attr_swap() helpers.
+>
+>> diff --git a/tools/include/uapi/linux/perf_event.h b/tools/include/uapi/linux/perf_event.h
+>> index fd10aa8d697f2..c49fc76292f79 100644
+>> --- a/tools/include/uapi/linux/perf_event.h
+>> +++ b/tools/include/uapi/linux/perf_event.h
+> [ ... ]
+>
+>> @@ -1020,7 +1045,15 @@ enum perf_event_type {
+>>  	 *      } && PERF_SAMPLE_BRANCH_STACK
+>>  	 *
+>>  	 *	{ u64			abi; # enum perf_sample_regs_abi
+>> -	 *	  u64			regs[weight(mask)]; } && PERF_SAMPLE_REGS_USER
+>> +	 *	  u64			regs[weight(mask)];
+>> +	 *	  struct {
+>> +	 *		u64 nr_vectors;		# 0 ... weight(sample_simd_vec_reg_user)
+>> +	 *		u64 vector_qwords;	# 0 ... sample_simd_vec_reg_qwords
+>> +	 *		u64 nr_pred;		# 0 ... weight(sample_simd_pred_reg_user)
+>> +	 *		u64 pred_qwords;	# 0 ... sample_simd_pred_reg_qwords
+>> +	 *		u64 data[nr_vectors * vector_qwords + nr_pred * pred_qwords];
+>> +	 *	  } && (abi & PERF_SAMPLE_REGS_ABI_SIMD)
+>> +	 *	} && PERF_SAMPLE_REGS_USER
+>>  	 *
+> [Severity: High]
+> Does this new ABI payload cause stream desynchronization in
+> tools/perf/util/aslr.c?
+>
+> When PERF_SAMPLE_REGS_ABI_SIMD is set, aslr_tool__process_sample() fails to 
+> advance the payload pointer over the extended SIMD struct:
+>
+> tools/perf/util/aslr.c:aslr_tool__process_sample() {
+> 	...
+> 	if (orig_sample_type & PERF_SAMPLE_REGS_USER) {
+> 		u64 abi;
+>
+> 		if (CHECK_BOUNDS(1, 0)) {
+> 			ret = -EFAULT;
+> 			goto out_put;
+> 		}
+> 		abi = in_array[i++];
+> 		if (abi != PERF_SAMPLE_REGS_ABI_NONE) {
+> 			u64 nr = hweight64(orig_regs_user);
+>
+> 			if (nr > max_i - i) {
+> 				ret = -EFAULT;
+> 				goto out_put;
+> 			}
+> 			i += nr;
+> 		}
+> 	}
+> 	...
+> }
+>
+> It appears the function skips standard registers by adding
+> hweight64(orig_regs_user) to the parser index, but misses parsing or skipping
+> the dynamically sized SIMD payload that follows. Can this leave unparsed
+> SIMD data in the stream, potentially corrupting subsequent fields?
+>
+> A similar regression is present in the PERF_SAMPLE_REGS_INTR handling within
+> the same function.
+>
+> Note that while other parsers like evsel.c were fixed in subsequent patches,
+> aslr.c appears to remain broken at the end of the series.
 
-I will address these in separate follow-up patches to the 'net' tree once this series is merged.
+oh, yes. Since this patch series is close to merge, I would submit an
+independent patch to fix the miss.
+
+
+>
+> [ ... ]
+>
+>> diff --git a/tools/perf/util/perf_event_attr_fprintf.c b/tools/perf/util/perf_event_attr_fprintf.c
+>> index cc817294ad3d6..2e8be9a357dce 100644
+>> --- a/tools/perf/util/perf_event_attr_fprintf.c
+>> +++ b/tools/perf/util/perf_event_attr_fprintf.c
+>> @@ -407,8 +407,17 @@ int perf_event_attr__fprintf(FILE *fp, struct perf_event_attr *attr,
+>>  	}
+>>  	if (attr_size >= offsetof(struct perf_event_attr, config4))
+>>  		PRINT_ATTRf(config3, p_hex);
+>> -	if (attr_size > offsetof(struct perf_event_attr, config4))
+>> +	if (attr_size >= offsetof(struct perf_event_attr, sample_simd_regs_enabled))
+>>  		PRINT_ATTRf(config4, p_hex);
+>> +	if (attr_size > offsetof(struct perf_event_attr, sample_simd_vec_reg_user)) {
+>> +		PRINT_ATTRf(sample_simd_regs_enabled, p_unsigned);
+>> +		PRINT_ATTRf(sample_simd_pred_reg_qwords, p_unsigned);
+>> +		PRINT_ATTRf(sample_simd_pred_reg_intr, p_hex);
+>> +		PRINT_ATTRf(sample_simd_pred_reg_user, p_hex);
+>> +		PRINT_ATTRf(sample_simd_vec_reg_qwords, p_unsigned);
+>> +		PRINT_ATTRf(sample_simd_vec_reg_intr, p_hex);
+>> +		PRINT_ATTRf(sample_simd_vec_reg_user, p_hex);
+>> +	}
+> [Severity: Low]
+> Does this print the newly added SIMD fields out of struct layout order?
+>
+> The UAPI struct definition in tools/include/uapi/linux/perf_event.h places
+> sample_simd_vec_reg_qwords before sample_simd_pred_reg_intr:
+>
+> tools/include/uapi/linux/perf_event.h:struct perf_event_attr {
+> 	...
+> 	__u16	sample_simd_regs_enabled;
+> 	__u16	sample_simd_pred_reg_qwords;
+> 	__u16	sample_simd_vec_reg_qwords;
+> 	__u16	__reserved_4;
+>
+> 	__u32	sample_simd_pred_reg_intr;
+> 	__u32	sample_simd_pred_reg_user;
+> 	...
+> }
+>
+> However, the fprintf code above prints sample_simd_vec_reg_qwords after both
+> sample_simd_pred_reg_intr and sample_simd_pred_reg_user. Could this cause
+> minor confusion when debugging raw perf_event_attr fields?
+
+There is no strict requirement on the print order. The reason that adjusts
+the print order is to make the fields belonging same class printed close
+together and convenient for users reading.
+
+Thanks.
+
+
+>
