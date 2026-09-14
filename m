@@ -1,116 +1,135 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BE7412BEF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 08:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3C237CD2C;
+	Mon, 14 Sep 2026 08:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789375400; cv=none; b=a4milkZMYSAyWZtuPx6ICVqlAUDoXSAYsAKZ+hgXqYABmRMA1Dlboe9XQ5MQkSbmC7KBhmWNXV9pknq+scSzaouQ1xJ+QiTCGPu4oV4t9enS8B2hxGXVOx5XJf6VRYJSxN9KNMMtIWzizps/ekil2bXUHzc6scI5GyZ2FUpUOMo=
+	t=1789375508; cv=none; b=pwANKAsbqtYRzXMaJ7Mmeu8dyqycYsgm5Osx4fGu5Ax5n7giOYqwG7sXR7Co3fZJJxwNPTnja2QXuBTxAatZwzu4/yQmydhVOCKE/4kgVF9pXhT5k5grzksTQp9bOLwQfvlNJN8Mmw7MKgMkmjLZxlb8k6NdwHDRB8XgHWXF160=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789375400; c=relaxed/simple;
-	bh=gd+qqjAMIqUJHMXe/UiAHncDTJYLgPQAMR6AsYzuoBA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Se+ALuYM9GJrhQ5/QuBwk+Xywk0Z7AKhcuIBgBfo8P2LjOxr0Ly02nBziVdIogaanoTgQyswOgvk0dZJzbOggShnOxZA84DOx1u7BCGs7unbgK0LV6BtzTX+RtXPtQbg0P4rjbCpZjk3Do1dfLyoGaJj1LKCs2dUes0bN2jHMUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ODdIDkbu; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=rDOTwdKQ; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1789375508; c=relaxed/simple;
+	bh=8QeRlCqAjJ8EwhdQNeaHy3qTLWL5VNSQvltXO9KH64c=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=IpshQHn+sM7Rd5NZlkhF//h2hrz4ykAqoUui8x/ulP7t+2NL3WQPzrcVjiWospxZvWtJ5Fb49HOZ8xtuCllLa9QGW+VIAnqga2Y9Q5dN1TU5tty7+9NsAuwDaiEUOkCLVWfDYlHEfskuf1O592m9afJvNEnBzjvBCTDUv9i1ArI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=oXxE50Xp; arc=none smtp.client-ip=188.40.3.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ODdIDkbu";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="rDOTwdKQ"
-Date: Mon, 14 Sep 2026 10:43:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1789375391;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ctiLvc9YkV+cVDeINxTojItvigNoXWATmW0CCJq6NUQ=;
-	b=ODdIDkbumMAcCWwMLx5PyrO8NixoHAI0XTWcxQzToORqpgoy2UJW5z4IBNGtFXeQJs9J5w
-	0fPvNz8GuF8vZB2k3L9qYF9888M4BnQBauCizml42HreKueCvVsrGqamAS4Od4TY3hMuIv
-	XL2lv9ldPYDIhRr3MtYjM2Qh1k3qhYhdEX4wGNt/SOp37hqjqfBcSQIfgre9Bq11UFyVQt
-	bA39jtqmPT62Qa7MOPH0H58BzaJWbZZxRpFs0apz6DRcO+FUekHhHq0e5kNKJxTpWgSAWO
-	rpFd7P4TCIXxuziknVF3eDVzG1n7BKKcQ0GicNPL4XEzApX98BaUFKFWw1cISA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1789375391;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ctiLvc9YkV+cVDeINxTojItvigNoXWATmW0CCJq6NUQ=;
-	b=rDOTwdKQDXAdYXTZI3N6NzGapyRKZineqcl2dG5w9Yu1l8vbgZGPLoZxXQy4PKs191Tgyl
-	+FKR8ZzinIX8/ACA==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next] selftests/bpf: Replace %pK output with 0
-Message-ID: <20260914084309.f4ivXcU5@linutronix.de>
-References: <20260911145011.kErTVDkS@linutronix.de>
- <20260911150338.91D3E1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="oXxE50Xp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=ew.tq-group.com; s=default2602; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=4Oga6kynJatjXzIzded2ZK3xQfzefluemmgp053xo+o=; b=oXxE50XpvUsc9+1sShx9MKy8G7
+	ZaK3mQH1NmG9vpdk8rY34b8HtMDKjYJXL5nPxqJmUFqe4yfqMZQg9PBytZfGeW8Osv7jZAZ8JQLyo
+	F7+QMS20iAEH4mBl8wul861TZSwnxh4nbeO8a7B7gCzuA0K65c+8n7IlH7kwIzActt3YtJWs07F3Z
+	ny/79WmP4Z4dcIyfO9PHDiTxMPLh4EsrRaZq3ct1UkXMP6xWuIXWQ6kePyP3XvDFC2ivmQ3x9IFiz
+	pVnQC5FPJkC2wn3fXqaxcGn0TE8uXghpn6chXIW1D95CAyKvS6k9G1G+paJlVC2Lob+NrRur1vAbk
+	I/ooo0AA==;
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <nora.schiffer@ew.tq-group.com>)
+	id 1x61yd-000OVW-35;
+	Mon, 14 Sep 2026 10:23:47 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <nora.schiffer@ew.tq-group.com>)
+	id 1x61yd-000Ffh-0P;
+	Mon, 14 Sep 2026 10:23:47 +0200
+Message-ID: <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
+Subject: Re: [PATCH 2/7] dt-bindings: leds: pca995x: describe output-gain
+ property
+From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, lee@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org, 
+	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	linux@ew.tq-group.com
+Date: Mon, 14 Sep 2026 10:23:46 +0200
+In-Reply-To: <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
+References: 
+	<6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
+	 <7f61e7e8781292450f920c49ef8853b802d76ecc.1788350618.git.nora.schiffer@ew.tq-group.com>
+	 <20260902123105.11B171F000E9@smtp.kernel.org>
+	 <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
+	 <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260911150338.91D3E1F000FF@smtp.kernel.org>
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28123/Mon Sep 14 08:24:19 2026)
 
-On 2026-09-11 15:03:37 [+0000], sashiko-bot@kernel.org wrote:
-> > diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c b/tools/=
-testing/selftests/bpf/progs/bpf_iter_udp4.c
-> > index 23b2aa2604de2..9b789f09f1462 100644
-> > --- a/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c
-> > +++ b/tools/testing/selftests/bpf/progs/bpf_iter_udp4.c
-> > @@ -57,13 +57,13 @@ int dump_udp4(struct bpf_iter__udp *ctx)
-> >  	BPF_SEQ_PRINTF(seq, "%5d: %08X:%04X %08X:%04X ",
-> >  		       ctx->bucket, src, srcp, dest, destp);
-> > =20
-> > -	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %p=
-K %u\n",
-> > +	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %8=
-d %u\n",
+On Thu, 2026-09-03 at 15:09 +0200, Krzysztof Kozlowski wrote:
+> On Wed, Sep 02, 2026 at 03:10:09PM +0200, Nora Schiffer wrote:
+> > On Wed, 2026-09-02 at 12:31 +0000, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 3 potential =
+issue(s) to consider:
+> > > - [Low] The custom, device-specific property `output-gain` lacks a ma=
+ndatory vendor prefix.
+> >=20
+> > Probably makes sense to add the vendor prefix, will do in v2.
+> >=20
+> > > - [Low] The `output-gain` property incorrectly exposes a raw hardware=
+ register value directly to the Device Tree instead of describing physical =
+units.
+> >=20
+> > According to the datasheet, the LED current is calculated as follows:
+> >=20
+> >     Iled =3D output_gain * 900mV / Rext / 4
+> >=20
+> > If we want to fully describe the output gain using physical units, some=
+thing
+> > like output-current-microamps and external-resistor-ohms would work. Th=
+ere
+> > wouldn't be a meaningful default for these properties to describe in th=
+e binding
+> > docs however, which is possible for "output-gain" (as the driver just s=
+ets that
+> > to 127.)
 >=20
-> [Severity: Low]
-> Does this %8d format incorrectly pad the 0 with spaces?
->=20
-> The networking subsystem replaced %pK with a literal 0, but replacing it =
+> Output current is already there, no? led-max-microamp? So basically you
+> would be re-describing it... although I understand that for your case
+> you need two properties (also the resistor) to calculate the value to pro=
+gram.
+
+One other idea I had was to treat the output gain as a single value, but ha=
+ndle
+the constant factor in the driver, so it defines just the Iled * Rext term =
 with
-> %8d here in dump_udp4() causes a mismatch with the native /proc/net/ outp=
-ut.
-> Since BPF iterators are designed as exact drop-in replacements, could this
-> mismatch break parsers that rely on strict spacing?
+unit microvolts. This could be used in the Device Tree as follows:
 
-Indeed. I tried to match the pointer spacing for some reason. The
-formatting in net does not align with the columns starting with the
-inode which is %lu instead having 5 width same goes for ref. So I just
-ignored and moved on with a plain 0. I could update if this is
-considered important.
+    /* Configure an output current of 15000uA for Rext =3D 3000Ohm */
+    nxp,output-gain-microvolts =3D <(15000 * 3000)>;
 
-> [ ... ]
->=20
-> > diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c b/tools/=
-testing/selftests/bpf/progs/bpf_iter_udp6.c
-> > index c48b05aa2a4b2..9766eff7069ff 100644
-> > --- a/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c
-> > +++ b/tools/testing/selftests/bpf/progs/bpf_iter_udp6.c
-> > @@ -65,13 +65,13 @@ int dump_udp6(struct bpf_iter__udp *ctx)
-> >  		       dest->s6_addr32[0], dest->s6_addr32[1],
-> >  		       dest->s6_addr32[2], dest->s6_addr32[3], destp);
-> > =20
-> > -	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %p=
-K %u\n",
-> > +	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d %8=
-d %u\n",
->=20
-> [Severity: Low]
-> Is the use of %8d here in dump_udp6() introducing the same formatting
-> mismatch as in dump_udp4()?
->=20
-> It seems it should use a literal 0 instead of %8d to exactly match the
-> networking subsystem's native output format.
+Two notes regarding this approach:
 
-Yes it does but the extra spacing intends to align with the columns=E2=80=A6
+- These "microvolts" do not correspond to any actual voltage, but the full
+  "microamps-ohms" seems very verbose.
+- It is unclear to me whether using physical units actually makes this bind=
+ing
+  more generic. I have not worked with other LED drivers, so I don't know h=
+ow
+  common the concept of a gain that relates the current with an external
+  resistor is.
 
-Sebastian
+
+Opinions?
+
+Best,
+Nora
+
+
+--=20
+TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
+any
+Amtsgericht M=C3=BCnchen, HRB 105018
+Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
+neider
+https://www.tq-group.com/
