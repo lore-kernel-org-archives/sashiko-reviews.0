@@ -1,114 +1,157 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D727F4825C2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 17:46:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9079E495058
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789408020; cv=none; b=nkrdCixGEh6i9Z5uaFya1AOmL1yoOFPql4CNjj6PKwEA03DKVjTT50oujab5Jxl0XwcFNZzOxEZrbGrIr198uKAiASCwGxfS0vyM6sW213yoeibrIKK6sleI/orRLd1nki2X+eqp4Qc8qU9KIHaXyRPJZg6ShBsj/r+nfDgYX/c=
+	t=1789408926; cv=none; b=eQJgLQwWOyQ+kdL4unIroAAah+K1LFLyWhjtnk8ppmGz6CpPaYpareD1T312wKY3xmgWZePyppcphmcw0b/OM4zLUIYtmS4ZpjFGiA6094OKFhdqz20kzP7UUuo8LUJ5MpykzsvqlQrePsKQi8CLeB9RuX0uUb3XcIJ56jytdak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789408020; c=relaxed/simple;
-	bh=WSfODTiWoc3NsQ0K1W4/ZLgkIxuHZ+M/l+wBk4Q09Lk=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z6jMJd+50mnBmsmmMdM1ih8d4OVgCFE3xEYuHQbx0wt7B1mFdOkj0XSzLViIVWtJHMWaWP9RXJL85V+oFBKm0j4nPhzQUlAMwOk5I5scHfA5BfOHaTQMRjdPo4SLAjQtLdOuLRTWg+hQuj5ngsS+ZyPsEVyyGK/78UdfxZ0Krfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQppX8Ke; arc=none smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789408926; c=relaxed/simple;
+	bh=y9eqvfsDTPXQi0GHqe/fBv2xSL9pQtw7tDS/Cqr0/po=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ANylZXb/nvmlmcnt0zyFNiOwkKQX0lKEXp8aqbg1e4TRmGDZTa/fY9rTqmm26pSJmj25Ez3PwVBV9Set4q+FugkZ/04GCL6IwKVLygRmJxuHzPAiQSb2VZJ9Clj0GzOnSRkSaD1r8oOl0TBv3zz4jOk7LePjNk2on20Owa4fu+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nRUBiDZw; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQppX8Ke"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccb652d7so1720894a91.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 10:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789408018; x=1790012818; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MKqIsTiqCr2Rj37ZsJNqBA0JRDoXX2ERq8ueatT/jmg=;
-        b=AQppX8Ked4cWZ922PA4oU9AfCeV8upxaQ3hBVchNW9tE/TnA/XndPRrt1UKYdKbBut
-         YpB2wT6t2V/vQ3s6jxCKv02mT2Q+mwQgOvxVYMB9cih0QsSk9M26BV8IAvBn0S+QXz9g
-         AspFbyfk0fVnsRAtXcKjlNbDuZTGtFYBfPJUsPhldlZE0EAFgEjYMpIL7jReT1sSS8Tl
-         0GOmKqZ1IBWTzO7qdZYkuxR66ptcNa50+7kyzsqIF7wJJpD4j82ub20pTiYj9OWO8j5d
-         66HJEYTRVAhZ1+nWoa+POY3W24jdgkiGflCp091QMXpDOKQNVm/YXFN6IjHVAwLcgQwG
-         B3TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789408018; x=1790012818;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MKqIsTiqCr2Rj37ZsJNqBA0JRDoXX2ERq8ueatT/jmg=;
-        b=iotRHf4MC4KbkD1RNvpkeb8FKg58K8Mn7ZAZNtpT2x8GlB/QUvbrhc12w4wPaL3Tsb
-         PXD9gmUAiBLKXqONJg0uljbooMDScY66ffqyLN5q0GdkJhGc9BnHih81UNiX8pDtlY81
-         6XALBbtR+HhEMz/JFuq4SId+jnnJZbF4EtCWx1bLODZDvB3miZtSml4gqDvg/D1cZxKL
-         HoU4aGf0e/AO4uAc/k++CwDefMR9FQVzCCvc8+aep/OTF8qwk8u/rgIzvsb1zjrJ55yz
-         DJ+JF0pBsrWp1DlQYCnc0RJmORcY4iZDpLJQ/lvKrY2zLrfRxL4z9fMFer5NMPGlkFWL
-         hlQA==
-X-Forwarded-Encrypted: i=1; AKwUvBzn0dX+TtNQD1JOaAxxxn9CosNfg7AX/DyHz1FgIy5ZlHIgjcNFPg3Mtjewn7GeVoj2zN9/nPpmuxoccORhHJ8=@lists.linux.dev
-X-Gm-Message-State: AFuF++l1CmQZo2ydBZf+jpKSah3lFQ/cWN9xKp9E8+KsvghTMPZYPRP2
-	4Cp1QLSc0oUZtaz0I54XTbyLgqUgyLQgE+YkDeLXco52ZIm8fgugexAqZdUMk9ug
-X-Gm-Gg: AYBFou2OYt1DBlztZ4IHDHwZgp5Do8yw7CsFHVHcSNruWgA0DdDbSeNzHCUCb9vsL9r
-	8F1mjfbZEox4nzAC2TZXOukYNiixpyq414Bb5DykRA784cXZ18++BZV4oUbLftTPugamLEBRQOO
-	0o/vQWjCNCTNxf6ugBElQWwdBICZIojpPFarEZDIXXbHwofbzAaho9C3ymzYFVKFg/YeBa4tmlX
-	Umo1HkdBd4MQ+pSzAbMFjD9BMQHa9Na65SiCjqhgmz21+nqArx7qURTxaGbrna3mIw70JFlIz+w
-	zCSBVFaTxXXZutwyTNE2iXrsjqLOiarxDH/Twc6CxQFmb+JlkFZ/Cx4L+h9U2Zm5KES3QY0Zl5E
-	B8Coz2ogXxHWgUNbTMxTo/KFAYudolIvvhOt29+mqjMnlrAFeKKlS2FUaRHkZ+WpVq2r5CnxWsV
-	rmsM3QRWlAGbv7VuJRjXn+cWB/KzuRTY97FeIZrwUJDasOIWQTLfmHTPfVdWgaUZmNzKzYFDwq9
-	uMzEg4bGEtUxWHHmKOg/NiCGA==
-X-Received: by 2002:a17:90b:3812:b0:39d:fe64:5732 with SMTP id 98e67ed59e1d1-39dfe646221mr594365a91.2.1789408017739;
-        Mon, 14 Sep 2026 10:46:57 -0700 (PDT)
-Received: from cxlqual ([220.120.90.131])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39dfd9badb6sm590558a91.2.2026.09.14.10.46.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 10:46:57 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Tue, 15 Sep 2026 02:48:10 +0900
-To: Gregory Price <gourry@gourry.net>
-Cc: Anisa Su <anisa.su887@gmail.com>, sashiko-reviews@lists.linux.dev,
-	linux-cxl@vger.kernel.org
-Subject: Re: [RESEND PATCH v13 6/8] cxl/mem: Configure dynamic capacity
- interrupts
-Message-ID: <aqgzWnDw5trAaHzU@cxlqual>
-References: <20260908102124.2231730-2-anisa.su@samsung.com>
- <20260908102124.2231730-8-anisa.su@samsung.com>
- <20260908104327.DF5E61F00A3A@smtp.kernel.org>
- <aqRuYaUt9qAvPA3W@cxlqual>
- <aqSX3OadID0REQps@gourry-fedora-PF4VCD3F>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nRUBiDZw"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=y9eqvfsDTPXQi0GHqe/fBv2xSL9pQtw7tDS/Cqr0/po=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789408920; v=1; x=1790013720;
+ b=nRUBiDZwoGGHFtMQdFcUY3ZYlKupLRHTzSX9RAgA/3qncvBVxt9Vpfo9lhVWzCWYYLXjR8Wu
+ CbsP/hHXOZXfp/mS28oQ9dD5hK4oOcsLwtkvlv2ueZqluhGYIZnB+dzL0UHdHglgzegQ8evNpaF
+ CQiCVGO7AKNVE6GmqvlM9lls=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 1506610bf8c195ed;
+	Mon, 14 Sep 2026 18:02:00 +0000
+X-Mizu-Trace-ID: 1506610bf8c195ed
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b4a0b384c4so11080e87.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:01:56 -0700 (PDT)
+X-Gm-Message-State: AFuF++mWFya6FK/iYNKKfr6dzQ6Oe6SvqVK6JUPI3RqE7bo4iGl5R850
+	pKH5l7dkXWhKTyUkJGev5zbmiIcrQhfdw0P0dToe1ektRIDxh9WiwtK9pszCgMsGH4OYbyk+AS5
+	1Q0TUPyZu0JbccFsllEn7BnVBniwXh80QZq1r4nJJ
+X-Received: by 2002:a05:6512:404b:b0:5a4:ec:53d9 with SMTP id
+ 2adb3069b0e04-5b8b2d5e14amr11546e87.1.1789408915087; Mon, 14 Sep 2026
+ 11:01:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aqSX3OadID0REQps@gourry-fedora-PF4VCD3F>
+References: <20260914113338.159227-1-fuad.tabba@linux.dev> <20260914113338.159227-18-fuad.tabba@linux.dev>
+ <20260914162305.0054D1F000FF@smtp.kernel.org>
+In-Reply-To: <20260914162305.0054D1F000FF@smtp.kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 14 Sep 2026 19:01:18 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTx9egrMcGQqgXY4zKsZe0pFZfT83TSCzeCdoQg8ZQE93A@mail.gmail.com>
+X-Gm-Features: AcwNN1XrTUr8Z4mImmnPh-loYc9bYSSx1rtXQFp9E1BccYNJRe3r9FNkMgEoW1o
+Message-ID: <CA+EHjTx9egrMcGQqgXY4zKsZe0pFZfT83TSCzeCdoQg8ZQE93A@mail.gmail.com>
+Subject: Re: [PATCH v3 17/18] KVM: arm64: Advertise the capabilities that
+ protected VMs support
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 11, 2026 at 08:09:13PM -0400, Gregory Price wrote:
-> On Sat, Sep 12, 2026 at 06:10:57AM +0900, Anisa Su wrote:
-> > On Tue, Sep 08, 2026 at 10:43:27AM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > 
-> > > Pre-existing issues:
-> > > - [High] If a CXL device is surprise-removed or a fatal PCIe error occurs, `cxl_event_thread` enters an infinite loop, pegging the CPU at 100% and deadlocking device removal.
-> > > --
-> > Surpise removal is unsupported. Jonathan mentioned the same on a similar
-> > thread: 
-> > https://lore.kernel.org/linux-cxl/aqLZP3ORYzCLfSgR@acer-nitro-anv15-41/T/#m8e12567a42b07fae8aa307406e6e017fe24ad832
-> 
-> This has been my favorite sashiko response so far
-> 
-> "If memory is surprised-removed, the system deadlocks!"
-> 
-> lol.
-> 
-I was just happy to see it only found 1 thing to complain about this
-time. Music to my eyes
+On Mon, 14 Sept 2026 at 17:23, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Software SError injection via KVM_SET_VCPU_EVENTS silently fails=
+ for protected VMs and permanently leaves the host vCPU in a degraded state=
+.
 
-> (your series is great, sorry i haven't gotten around to reviewing it
-> properly, i appreciate the doc updates very much)
-> 
-No worries, picked up some minor changes from Jonathan and Davidlohr, so there
-will be a next rev anyway.
+[...]
+> Pre-existing issues:
+> - [High] Software SError injection via KVM_SET_VCPU_EVENTS silently fails=
+ for
+> protected VMs and permanently leaves the host vCPU in a degraded state.
+[...]
 
-> ~Gregory
+The host's copy of a protected vCPU's PSTATE has PSTATE.A set, so
+serror_is_masked() is true and kvm_inject_serror_esr() pends the
+SError through HCR_EL2.VSE, which flush_hyp_vcpu() carries into the
+guest. The emulated entry you describe isn't taken.
+
+Nothing is left behind either. The NULL return from
+pkvm_adjust_pc_get() clears nothing, the request stays on the host
+copy for the next entry, where the entry handler applies it, and
+sync_hyp_vcpu() clears PC_UPDATE_REQ at every exit of a protected
+vCPU. Marc asked the same question on patch 12 [1].
+
+/fuad
+
+[1] https://lore.kernel.org/all/CA+EHjTy6F9tG=3DeRLMuykc12P-Oc2pjMoQqAz34iG=
+R+Q5GzV2jQ@mail.gmail.com/
+
+> --
+>
+> commit 3a73d995c015585fa4c9bb7392c4fb3d6d828c9c
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> KVM: arm64: Advertise the capabilities that protected VMs support
+>
+> This patch updates kvm_pkvm_ext_allowed() to explicitly allow a list of
+> capabilities that are expected to work for a protected guest, including
+> various VCPU event and IRQ line capabilities.
+>
+> > diff --git a/arch/arm64/include/asm/kvm_pkvm.h b/arch/arm64/include/asm=
+/kvm_pkvm.h
+> > index fbea052fa3e16..a165af0d75689 100644
+> > --- a/arch/arm64/include/asm/kvm_pkvm.h
+> > +++ b/arch/arm64/include/asm/kvm_pkvm.h
+> > @@ -42,6 +42,15 @@ static inline bool kvm_pkvm_ext_allowed(struct kvm *=
+kvm, long ext)
+> >       case KVM_CAP_ARM_VM_IPA_SIZE:
+> >       case KVM_CAP_ARM_PTRAUTH_ADDRESS:
+> >       case KVM_CAP_ARM_PTRAUTH_GENERIC:
+> > +     case KVM_CAP_ONE_REG:
+> > +     case KVM_CAP_MP_STATE:
+> > +     case KVM_CAP_VCPU_EVENTS:
+> > +     case KVM_CAP_VCPU_ATTRIBUTES:
+> > +     case KVM_CAP_IMMEDIATE_EXIT:
+> > +     case KVM_CAP_IOEVENTFD:
+> > +     case KVM_CAP_IRQFD_RESAMPLE:
+> > +     case KVM_CAP_ARM_IRQ_LINE_LAYOUT_2:
+> > +     case KVM_CAP_ARM_INJECT_SERROR_ESR:
+> >               return true;
+>
+> [Severity: High]
+> This is a pre-existing issue, but advertising these capabilities formally
+> exposes a bug where software SError injection is broken for protected VMs=
+ and
+> leaves the host vCPU in a permanently degraded state.
+>
+> If userspace sets an SError pending via KVM_SET_VCPU_EVENTS,
+> kvm_inject_serror_esr() in arch/arm64/kvm/inject_fault.c attempts
+> injection based on a stale host pstate. It sets PENDING_EXCEPTION
+> and writes to the host's ESR_EL1.
+>
+> For a protected VM, this is mishandled at EL2. If the VM traps on an MMIO
+> access, handle_pvm_entry_dabt() in arch/arm64/kvm/hyp/nvhe/hyp-main.c see=
+s
+> the PENDING_EXCEPTION flag left by the software injection and incorrectly
+> injects a Synchronous External Abort (DABT) instead.
+>
+> Furthermore, EL2 does not clear PENDING_EXCEPTION on the host vcpu. When
+> the host vCPU returns to userspace, kvm_arch_vcpu_ioctl_run() in
+> arch/arm64/kvm/arm.c sees the uncleared flag. Because pkvm_adjust_pc_get(=
+)
+> returns NULL for protected VMs, __kvm_adjust_pc() returns early without
+> clearing the flag, triggering an unnecessary hypercall loop on every retu=
+rn
+> to userspace.
+>
+> Does it make sense to delay advertising KVM_CAP_VCPU_EVENTS and
+> KVM_CAP_ARM_INJECT_SERROR_ESR for protected VMs until the software SError
+> injection path is fixed?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914113338.15=
+9227-1-fuad.tabba@linux.dev?part=3D17
