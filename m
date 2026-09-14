@@ -1,212 +1,171 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB3844B69C;
-	Mon, 14 Sep 2026 11:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37306443C33
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:41:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789385004; cv=none; b=H04CploajMvCHbk6F397O2muwV2pf4QUs0edw4/XdLgEpIorB08pAvq6DgmWPfC3y3tJBNcVC8oZeJnCGQP2C48Fslc9raFIZUKj0tEnXxeT1SyaGkwWBcQHx9Pcrkm+aMWinLV/7bS18tAd+VmeMuwi887TmsZCdolqUd/sBfg=
+	t=1789386103; cv=none; b=p46PtXu5/4dmlgK7ptEZHWiVQnmIZxndC5lllfNb8krqC55mWG6MNP9oBKzOrjqKZvdZuhGwQXRAcBRPsrMV01OB7cm4kIxDjm1U1/7mEPNLsT537tO1ZespVbGymT5JXh0hIaqZKq+f9AElpokK5bZE+rUYBh2EcfD548W7QAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789385004; c=relaxed/simple;
-	bh=oWqn9pftwcN/9oNSklX7JYROHSh7KQkXjgIKwWebXu4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lsl8UGUpkVo+CX3uFobfpkXqq87vv5l0s4Pmws59fonNf7ht+wiu8S/HAio+e3T30YcgZVY4JBsnKNnP98zFm0vATZONdcpUQxMQOxht557osO2NYZ3/lLj+/4j81BFJoLfSVEGjYLg7vKz+qwkcFhycsWTAO3z4ctnHXy5qe0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZsIflXgp; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1789386103; c=relaxed/simple;
+	bh=bMyaj79Xj8SKgL++6asrV1IEx4PQu7LtkneHOHihzcU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lf/OSy2OKEVYgwdMhM2BPWm90+ARMQV9KMTSNRIeu9xntHvm74iSNDho4DlMw2081xuQyr1XcVa419cz2ZCI0psdZZ/sASqA8T1rrQ6UX1uCBFhPuB2F0lzeN3DuWjAYYzUH2mj+QhKgf5C8TSrbo0Xizy9o0dLDIvrVijBJ7/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZQwNE3rv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ce3MSl8/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZsIflXgp"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68EA1Zjv547032;
-	Mon, 14 Sep 2026 11:23:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=JLLu/o
-	G+cyhXUko09Gzghqb6hIqwWLnKxaGJlor8gjo=; b=ZsIflXgpGAoET3i/Z+fYZ1
-	96OBQIJQFiZcFkpv5ETepj1HSxz3OG0VyOq/2s3PCh0u5Lif0XU/vQP/F/GTwHTG
-	zgJMzKIlfNfq6nKHN+BmiFQaXuLlRIiaPApR/1VtVbQmH13hOkrYZJRjTNe+wf1D
-	zeq5pZW0YDxwOK+Za8cPF+g63XMXdk+ol2pugtT1x7db4IC/vb5bGmBHFm+OksPO
-	Ckcy1P0/tQSJ4v7/AwOHQdgNkWoRhZ2hqUKs2g4leqKPwuDduHA4odw/NH2pBXdo
-	4uxPXJby89whLDzM8U5dUQQmC0WtIJ8lOB08+8Q0CAZEJ7z2YQf2bFsX+n8cSOfw
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5drxus-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 14 Sep 2026 11:23:05 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68E9o4FL2106306;
-	Mon, 14 Sep 2026 11:23:04 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnh2pwu3v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Sep 2026 11:23:04 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68EBN06s40239458
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 14 Sep 2026 11:23:00 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AA2842004D;
-	Mon, 14 Sep 2026 11:23:00 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C664E20040;
-	Mon, 14 Sep 2026 11:22:59 +0000 (GMT)
-Received: from [9.111.205.105] (unknown [9.111.205.105])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 14 Sep 2026 11:22:59 +0000 (GMT)
-Message-ID: <e0a73454-fd65-414e-8db9-36f2b7a061af@linux.ibm.com>
-Date: Mon, 14 Sep 2026 13:22:59 +0200
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZQwNE3rv";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ce3MSl8/"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68EAm7UT3793323
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:41:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=q4hZNtHH206ssQDtYMttSBtL
+	e/TkFZ2gK05kL/0CYqE=; b=ZQwNE3rv2eCOTbg8qNXMeTGZWJfs6OkRhnoAH77j
+	DfGFeZaWw0OFJWGXpLVGKFjbOCiRoz7KmcsWGcfpCchFzHxqSdedOWsX3B2an2VH
+	hShiesPjDwxJx1Edu68NOyZRtv/MT23foXa1WwcU2vF1zUxV9LYCJruVryccJhbH
+	4xEAjcRdPWOPtcNTvRUkAFZsys6Yh2OsZdvxdLAuKqlzSNJADWAkXD4pRWtcqC9j
+	9M2qRR8oT1Ba1blWpISf1RcvNjYdttDkV8ZfpaYLeTbTMPM6j2ueR/MiUfaX7jp/
+	V0ZkEbyasEAW4VTxxR4tOVHIZ/4uFEpZ8MHTW4pZ8DNRvA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpcjg0xn3-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:41:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-93a08ff8451so288788085a.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 04:41:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1789386100; x=1789990900; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=q4hZNtHH206ssQDtYMttSBtLe/TkFZ2gK05kL/0CYqE=;
+        b=ce3MSl8/xb6P4dWLktbUvPC4CpNlMLkV+DaNhAbRAUhiNYMQ16H6xa6mKSiXIRCbZo
+         DXmsn34x8BwHNN00kLPYh5NO8yWEF+sye80mKW3nagmmhzZhpUFq6MBnUIt2K4H7WpDg
+         QG2K/JMOJMUeo2IDcofLSEmNvqkAL7ELW6G10lF+TlEF094icrggKDgPdvYR8NmgvfBa
+         EDl8qmqpOlf4k3N3koIleHRSjdleyJMK+M/1IQHtUU16I2o6gX9CvKsjxtDP2vSpia1j
+         UZ6dpfjWYGA6Uo/aklBmNHUVI45ezEPb6rtfUf/qYq/szK9rpY24sbLb54ExTCi/sE0B
+         QQYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789386100; x=1789990900;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=q4hZNtHH206ssQDtYMttSBtLe/TkFZ2gK05kL/0CYqE=;
+        b=lXfdhVdnJHG4CDWFfyrRXT+1ghbfwd9cMX/m9v6Y41zpaHBHn8Ij18BjUbey041NwH
+         YWRRdayLQBi3Z06lKdcI1MJAPpcLonrjyDrII8Dcuzc4477QgcRWv7L8puL24IUK6IMz
+         MdywhquvqbWVc++QDcOgXABfNaXU0D8EBO4C982vHdpz+t/dhp/dhPKh7tVZYL0VfrHF
+         etEYrUBWZi6KkXWJxCRS4j5rxqoh+BEFYjrv2yifZS4nySLjTSxcop4FONgKN10Tne++
+         ZpXU0WTGIEz5wq9LGHwPb9aDWgT9fr7s+iKc5hjUAB4dUvyV6JNeGovnZh6aVUHhe2Nu
+         t6VQ==
+X-Gm-Message-State: AFuF++mn5uVfW+og67Yu1Giwqazq+XbvumEN9yZAAKdFM3Tp1vkEONdc
+	3txoFQdK4ge1xHEb0crM9JVJjqwWM2Vo+XPTQoGsqF7cNZucyE92zRKITZsK4XpXBU8I0ynqvU0
+	5lN852Wr5yVMgYYIBEYoYcbEphuFKPoMIaGHJBUZBgys1yxKokWBCrZxfjbC0xYA9IhNJgG6pwd
+	wOqus=
+X-Gm-Gg: AYBFou29gUdnEBaVtzySGCe07d5ZowzjlrqoM7o3srDzaN40zmyhje7PNGhxZFVjjJ8
+	lThoRq/HG3X0K1kMcJjW3nYUZt1BM80VzaBonclAHfZ/3tWxA079FTga84ETckmwG/pdNZbVwFu
+	W27QyryWBcIgilluexeKQPN0uNgXiDw4k1d3XPC5P/giT2h6EWXHuxALKFNZm8Q77m+U/xYqP01
+	dpcAlnjmBkMVQqBbq57FwMyBpI07f4N6+ZI9f2O3oVBojvIGy6cssLlmQ+gReVm/JJjzLyjvMkr
+	Vfz3c9fqU8WwRTX+wCBfTXA0aszzkkIITiqrp5T/bB0t+Xtmv/w3v32BQf2xr7RgcRe4wn5aMlU
+	JkkP53YColBn9nw==
+X-Received: by 2002:a05:620a:470a:b0:939:f477:ffc7 with SMTP id af79cd13be357-93a297cb926mr321949085a.5.1789386100091;
+        Mon, 14 Sep 2026 04:41:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:470a:b0:939:f477:ffc7 with SMTP id af79cd13be357-93a297cb926mr321944585a.5.1789386099459;
+        Mon, 14 Sep 2026 04:41:39 -0700 (PDT)
+Received: from oss.qualcomm.com ([86.121.170.232])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb34f1f7sm26189080f8f.24.2026.09.14.04.41.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 04:41:38 -0700 (PDT)
+Date: Mon, 14 Sep 2026 14:41:37 +0300
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: eliza: Rename existing EVK to
+ suggest eMMC
+Message-ID: <bvku36cnoyfo6kx4rbhzx6avzoje2beaio6ohziy7hegmbwtly@42sgvqmatigw>
+References: <20260914-dts-qcom-eliza-add-ufs-variant-v1-0-78b3249eae61@oss.qualcomm.com>
+ <20260914-dts-qcom-eliza-add-ufs-variant-v1-3-78b3249eae61@oss.qualcomm.com>
+ <20260914105243.682101F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 11/24] unwind_user/eh_frame: Wire up unwind_user to
- eh_frame
-To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>,
-        Josh Poimboeuf <jpoimboe@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>
-Cc: linux-trace-kernel@vger.kernel.org,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>
-References: <20260821195259.2688377-1-jremus@linux.ibm.com>
- <20260821195259.2688377-12-jremus@linux.ibm.com>
- <20260821200722.8E9EC1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Jens Remus <jremus@linux.ibm.com>
-Organization: IBM Deutschland Research & Development GmbH
-In-Reply-To: <20260821200722.8E9EC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDE1NiBTYWx0ZWRfX5qqI1AN/KlmY
- sgnLDunqraeim75A1cw3GbrhJ5irMTaZsIXgTttic6dgWW6cl77ITD3wTQqVpXBgpMvQnycDGUR
- RxwT/GRZcUkvLpTzAxWqMiPylTAtULx9u3gG3zwwkk0RHvPDL+pMl4/QPjifbIwR2tVhdOCwCUN
- IF/js608bq5fuQdd3zOsWgDoQIptUe6tzVvZAMmZMCLne1k5XTNUw5L3L+V9jptJz2mKWKDsb9d
- OddCIUiCxgO/0sMes2JYQpnsC32SzD1hjVyPsoDVmewv+mQfz8r4xgNLkzQW3RNxkdbp4ncQlsL
- tORR4E0dAG63WZQhtjhVeuURfwAJfaYHjphQeLfioBLSgmVt4V/xTCcnpNUH8IgnwGlgJlg+Stu
- rDZbRvV2b69BIFqMDKocjDBMl65QAelT2ntOIGsYGJ7HhWvAIjnusnpOYjKF2fT9ECp7rLw9ZE8
- YlMDbtDsaIcXOzo/4mg==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aa7d919 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=VwQbUJbxAAAA:8 a=eEME7sabQ6DRVGjtH7YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: RHVjn9rlqz1ynJCRQypcIdMxxISb-NXJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDE1NiBTYWx0ZWRfX+LtzIHGPzBug
- ikUpqcNd56wzBmcDOHwKtnBlnrbwwOzcbeFuvkIOlFjauamkrobbHDDSu1Z81FGMcwHn9PUNhQb
- Gws2IqHKrgG483nGrntKNSush62PbRI=
-X-Proofpoint-GUID: RHVjn9rlqz1ynJCRQypcIdMxxISb-NXJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260914105243.682101F000FF@smtp.kernel.org>
+X-Authority-Analysis: v=2.4 cv=CKa/zhrD c=1 sm=1 tr=0 ts=6aa7dd75 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=po8fGBi+ks8MzcVQGuqtFQ==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=z0zxWqUZ7HtY6bVccYkA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: d8bQgCBDJZGduKkezNsfWzF3PddBQWE7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDE2NiBTYWx0ZWRfX2gHm8m2/5ezA
+ pu38pom4m/E4qJgGN8zkDoazSoCfLPGu5WpoTQAZDoVVQ0M/600bVi8lCyfQM1UvODTmqB2lBOa
+ ojrHFxZrR51n3c1kGMEfe+inWSB4pC0=
+X-Proofpoint-GUID: d8bQgCBDJZGduKkezNsfWzF3PddBQWE7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDE2NiBTYWx0ZWRfX2/XyZBwx64Yc
+ 2npd6zM7VNJFqQAjH0xRdxVUpv1yIA2LZI3rn0SAdOhLTAfxRnwt8LMcHk/NAEQ6O0YtlpXTgyg
+ KUBTsZIZ+Lqv3tmX/Wu8SgzEGqdV0ZAPVBMJ2vc6Dr1wPC9AE8C1KvDQYzCxBlKIEY3qoDmNH+X
+ sB7DCDzwR+ARSYMZsYXeJa0K5tk6eQ4LWnQn9Dc/0zQ56XaQNzrez/Er9lX0PINSNC38E8QKrFJ
+ r8O/HYqPnQuaTPu4YvyE4Up2yr4WkqQ/I4nkQmT4LHYtSX97g5MGqopUo4kQ/Azt0Asd6V9Zc/a
+ tmFQl2QrbOlfXos9megjprhN2iYPK/8qOuIGT7RaWIjSzsgPC5bv+x1Wi65Tub0K8cxx/4a9dQr
+ JMyehVu2qUg1KeGIs/h0OF8jd+1uz0zrSQcRvNYXG9TYEe6r5cnZuYLl/9MPfoiOm4kqj4dZ3Uq
+ vNilPIG/UwTFzlzDbVA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-14_03,2026-09-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609140156
+ adultscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140166
 
-On 8/21/2026 10:07 PM, sashiko-bot@kernel.org wrote:
-
-> This commit hooks up the eh_frame infrastructure to the unwind_user
-> interface. It enables the unwinder to use eh_frame data for user space
-> stack traces.
-
->> diff --git a/kernel/unwind/user.c b/kernel/unwind/user.c
-
->> @@ -173,6 +174,16 @@ static int unwind_user_next_fp(struct unwind_user_state *state)
->>  	return unwind_user_next_common(state, &fp_frame);
->>  }
->>  
->> +static int unwind_user_next_eh_frame(struct unwind_user_state *state)
->> +{
->> +	struct unwind_user_frame frame;
->> +
->> +	/* eh_frame expects the frame to be local storage */
->> +	if (eh_frame_find(state->ip, &frame))
+On 26-09-14 10:52:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The commit renames `eliza-cqs-som.dtsi` but fails to delete `eliza-cqs-evk.dts`, leaving it as an orphaned file that includes a now-nonexistent file.
+> --
 > 
-> [Severity: Medium]
-> Does this need to adjust state->ip for return addresses?
+> commit a1174aba52e7db785b4c5053b74679986a1f1e7c
+> Author: Abel Vesa <abel.vesa@oss.qualcomm.com>
 > 
-> Since state->ip points to the instruction after the call, if a function
-> call is the final instruction of a block or function, passing the
-> unadjusted ip to eh_frame_find() might cause it to match the next
-> function's FDE instead of the caller's.
+> arm64: dts: qcom: eliza: Rename existing EVK to suggest eMMC
 > 
-> Would it be better to pass an adjusted instruction pointer (like
-> state->topmost ? state->ip : state->ip - 1) to ensure the correct unwind
-> rules are retrieved during normal user space unwinding?
-
-I have this on my list of improvements for unwind user for quite some
-time, as I have observed this on s390 (see below for details), but
-wanted to postpone as enhancement once .eh_frame or .sframe unwinding
-have landed.
-
-Should unwind user only internally adust the IP used for the lookup
-(as suggested by Sashiko above)?  Or should it adjust the RA returned
-by unwind_user_next_common(), so that the adjusted value surfaces in
-callchains?
-
-perf does adjust the printed IPs for perf record --call-graph dwarf,
-as one can easily tell from the following output on s390.  Instructions
-must be 2-byte aligned on s390 and they are not except for the topmost:
-
-objdump    2802   515.787731:     100010 software/task-clock/P:
-             3ff846904b0 _dl_relocate_object_no_relro+0x580 (/usr/lib/ld64.so.1)
-             3ff84691bab _dl_relocate_object+0x1b (/usr/lib/ld64.so.1)
-             3ff8469d7d3 dl_main+0x1b83 (/usr/lib/ld64.so.1)
-             3ff8469a14b _dl_sysdep_start+0x1db (/usr/lib/ld64.so.1)
-             3ff8469b903 _dl_start+0x723 (/usr/lib/ld64.so.1)
-             3ff8469a733 _start+0x13 (/usr/lib/ld64.so.1)
-
+> This commit renames the Eliza SoM EVK and Eliza CQS EVK to reflect their
+> eMMC support and differentiate them from a newly discovered UFS variant.
+> It updates the Makefile, adds a new EVK dts, and renames the base dtsi.
 > 
->> +		return -ENOENT;
->> +	return unwind_user_next_common(state, &frame);
->> +}
->> +
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index d6547fb18edf0..ccaca98ad4c8f 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -14,7 +14,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096sg-db820c.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+> > -dtb-$(CONFIG_ARCH_QCOM)	+= eliza-cqs-evk.dtb
+> 
+> [Severity: Low]
+> Does this commit forget to delete the corresponding eliza-cqs-evk.dts file?
+> 
+> While this file is removed from the Makefile build list here, it appears it
+> wasn't deleted from the repository. Because this patch also renames
+> eliza-cqs-som.dtsi to eliza-cqs-som-emmc.dtsi, the orphaned eliza-cqs-evk.dts
+> will fail to parse since it still contains:
+> 
+> #include "eliza-cqs-som.dtsi"
+> 
+> This will break any tool that processes all device tree files in the
+> directory, such as running make dtbs_check.
+> 
+> As a side note, previous concerns regarding this patch dropping hardware
+> configurations appear to be unfounded, as those configurations were safely
+> refactored into eliza-evk.dtsi in a preceding patch (commit "arm64: dts:
+> qcom: eliza-cqs-evk: Move sound card support to Eliza EVK generic"). However,
+> the forgotten deletion of the obsolete file remains an issue.
 
-On s390 I regularly observe the following case where above would prevent
-the callchain to erroneously end in internal_addseverity+0x0:
-
-objdump    1060    26.324199:     100010 task-clock:ppp:
-             3ff9ec908b4 dfs_traversal.part.0+0x34 (/usr/lib/ld64.so.1)
-             3ff9ec90900 dfs_traversal.part.0+0x80 (/usr/lib/ld64.so.1)
-             3ff9ec90e68 _dl_sort_maps+0x4b8 (/usr/lib/ld64.so.1)
-             3ff9ec84aa2 _dl_fini+0x252 (/usr/lib/ld64.so.1)
-             3ff9e856b06 __run_exit_handlers+0x176 (/usr/lib64/libc.so.6)
-             3ff9e856c00 internal_addseverity+0x0 (/usr/lib64/libc.so.6)  <!!!
-
-unwind user needs to determine the next IP as RA - 1, as the return
-address of a function with __attribute__((noreturn)), such as exit(),
-might point at the following function:
-
-$ objdump -d /usr/lib64/libc.so.6
-...
-000000000004dee0 <exit>:
-   4dee0:       eb ef f0 70 00 24       stmg    %r14,%r15,112(%r15)
-   4dee6:       a7 59 00 01             lghi    %r5,1
-   4deea:       e3 f0 ff 60 ff 71       lay     %r15,-160(%r15)
-   4def0:       a7 49 00 01             lghi    %r4,1
-   4def4:       c0 30 00 0d 9b a2       larl    %r3,201638 <__exit_funcs>
-   4defa:       c0 e5 ff ff fe 9b       brasl   %r14,4dc30 <__run_exit_handlers>
-
-000000000004df00 <internal_addseverity>:
-   4df00:       eb 9f f0 48 00 24       stmg    %r9,%r15,72(%r15)
-   4df06:       c0 10 00 0d 9b 9d       larl    %r1,201640 <severity_list>
-   4df0c:       e3 f0 ff 60 ff 71       lay     %r15,-160(%r15)
-...
-
-Thanks and regards,
-Jens
--- 
-Jens Remus
-Linux on Z Development (D3303)
-jremus@de.ibm.com / jremus@linux.ibm.com
-
-IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
-IBM Data Privacy Statement: https://www.ibm.com/privacy/
-
+Yep. Will remove in v2.
