@@ -1,119 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06583E95B2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 20:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9EE3E5A0E;
+	Mon, 14 Sep 2026 20:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789419368; cv=none; b=c9ITwsh2Ho/1XpmeoK+O+eYM8NqMkyXEoXZAcjzymH/6WXkDXi7CV4WLQV7Ocd4ft0PC8ML/tWpElP8e5bQ8oShyOY/8iZeBveaj0z0DGpPOyqVZvXG8KPdA7jbnDIivMdh2IsS3RM0LszZZgkUyMgOysFCML/fx29zTnDhfLFs=
+	t=1789419594; cv=none; b=DiaVxydL1AZ2E54xqhGAGoo+yKXK82azDQa8Qg2V5bhSGLe77CGXypU1xdxMgZbPJFV4Iz18C8LgeXMZSQG4Px5tpzvcKx6VZd9RF7cUzsZ7oZ9N426sF5h8tLH+SvxIolztd6u2AbnbN+NjA3QSDozocBbRspSnrQxB18d6oqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789419368; c=relaxed/simple;
-	bh=kK+XZi3serLxSxlna0a7F+eRCY8aqT2zVyXAoySBNF0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IK+3tG9ZzBPA3kh5QDmv3+4kbArLc2NUZOgS9fuqq41T8+14ldbkme8BLTwI7zY+nan3of/1tfIB/JEF4vGySUtUnpAlZiZfltdz8aOW/Hs/JfwUiirvKVXSynpNxS0A1YJ6d909xkj5ctGMUxlzblYi/7ktezY2fUmSDtuOzdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1Zcbpsr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789419594; c=relaxed/simple;
+	bh=5kxlidUFCpU0ULPnNoqi4Oj2SDugDDeRksisx15L+fs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ckcCRnUq4nkwK2SX4oTQYZS+ymzxm5escgLYJKatGPgf2eWwdlrgPEZEsF7ws217wmplAH/5wKxbnQBuXZFWmgzzL8s5jVJJRKLvpXLBNnIV13qSOPtaBzwuIVAUFxeAkFgVO2TqzIcpTrwWu92AH8Km+bLAeC2ENr5aot0bVu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=NIQHoxlk; arc=none smtp.client-ip=212.27.42.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1Zcbpsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E411F0089E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 20:56:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789419367;
-	bh=AJmm8xNxEyPjZePvLMeOoP9YufNJ6rDf23wcJS6k1MU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=K1ZcbpsrCXM0RMUU6I3FTKh6oBK/UXX84i/mYOwirKuIGWmsEb2pTMNlOpLc6zrIY
-	 ZU+IUb7nC0YUx1+PkwU2GRQty18rUxz5kFjekdmmxCI6f7EklwINRb2kOWmrQ7Q8cx
-	 /nnfR10v6L8cTUqdOVw5NeYiGXzhBuAqL1t2qi15NAK3tbJNWCosCHIzFqP9NYv2Ff
-	 YJtXIT98Ah5okt12O9+D+TYhUdc5OIMdP6Rk0hsCGAg3dkTy+1xksGZrPt8uSFQ4cF
-	 KNavK37wFg9Ipo2n9jgZO36445OlP5y1Rs0gQivG1gV+17VIm3rmyrNAyfGt1R60Dt
-	 KJPYdz6ziy7Xg==
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-939109f067fso315767685a.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 13:56:07 -0700 (PDT)
-X-Gm-Message-State: AFuF++mW3Px05kWyjefTX0SasvdNBsCTf3PxEoT54FUFfKhvbZLazu5a
-	os1FOeKW6X20pmhVZGc4aYZtrWYuBim0VHSSA8hTnX3iviICUlJMBPUYRrQ58nDXPq9SXmolBhA
-	tT4DGTtLQoihUFJU4k/hcfgzVKPdxTfY=
-X-Received: by 2002:a05:620a:2556:b0:937:5298:7820 with SMTP id
- af79cd13be357-93a2973a1e5mr625763385a.8.1789419366620; Mon, 14 Sep 2026
- 13:56:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="NIQHoxlk"
+Received: from l301776.home (unknown [IPv6:2a01:e0a:ac2:22b0:3514:9134:2ea8:d094])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 200EF13F879;
+	Mon, 14 Sep 2026 22:59:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1789419590;
+	bh=5kxlidUFCpU0ULPnNoqi4Oj2SDugDDeRksisx15L+fs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NIQHoxlkAdE05We4kmWYV8nraIak2Ff5y29nmaPQHdG8t6hZOxyV17pu7r8mL8DYl
+	 jKyP/RFBfBXhsrkiZYKzyLDseGCr5jpgItMvarlPmmrroy1A57uGjliRxkLUgaSCZ/
+	 IDCXJMgHaR39Wh1hDMgG8xrFP0ZoA+zLaei8j8SdwLtm48ztXnoOMudBEUbmtx0Eqz
+	 rp+UD9XvBdRMJaX1S9ieCovwY9QoXC9q6iUM8AezqUaihaF2s5POQO0X7ip2teXNIP
+	 ptVu5Ki6McgRnW5n8uBJtidRdcAklShpzR1RcpjElapeR82UDQtD30fGc0PGi3QdhC
+	 ohxATrfoOHPzw==
+Date: Mon, 14 Sep 2026 22:59:43 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v6 3/3] arm64: dts: freescale: add Nodebox v3 CPU Module
+Message-ID: <aqhgP3Yy6uGB9RIC@l301776.home>
+References: <20260913-for-upstream-nbxv3-dts-v6-0-058566b93ba1@free.fr>
+ <20260913-for-upstream-nbxv3-dts-v6-3-058566b93ba1@free.fr>
+ <20260913124548.EBB021F000FF@smtp.kernel.org>
+ <aqf91XlM-aiX2MXe@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914062514.926997-1-song@kernel.org> <20260914062514.926997-20-song@kernel.org>
- <20260914064605.EE08C1F000FF@smtp.kernel.org>
-In-Reply-To: <20260914064605.EE08C1F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Mon, 14 Sep 2026 13:55:54 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW4yfq_VFNYLpFeivKOuk+YZ=X2i2Sk_Sb4Q8k-ey6ivCw@mail.gmail.com>
-X-Gm-Features: AcwNN1W2BrB4WxApQZroyilrRnfbZnHV-IEDDnthtvKx1J9ofv3ZvbAtVXHktCw
-Message-ID: <CAPhsuW4yfq_VFNYLpFeivKOuk+YZ=X2i2Sk_Sb4Q8k-ey6ivCw@mail.gmail.com>
-Subject: Re: [PATCH v2 19/58] objtool/klp: Add test for jump table key relocations
-To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, joe.lawrence@redhat.com, pmladek@suse.com, 
-	jikos@kernel.org, mbenes@suse.cz, jpoimboe@kernel.org, kernel-team@meta.com, 
-	puranjay@kernel.org, peterz@infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aqf91XlM-aiX2MXe@SMW015318>
 
-On Sun, Sep 13, 2026 at 11:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] The jump label test fixture hardcodes a 64-bit PC-relative reloca=
-tion which causes assembler errors on 32-bit architectures.
-> --
->
-> commit 12aec6304341b6d166d36c18d507d8088ff90b91
-> Author: Puranjay Mohan <puranjay@kernel.org>
->
-> objtool/klp: Add test for jump table key relocations
->
-> A cloned __jump_table entry must keep a relocation in its key slot.
-> This patch adds tests and fixtures to ensure the relocation stays
-> properly populated for both exported and unexported vmlinux keys
-> during a klp diff.
->
-> > diff --git a/tools/objtool/tests/generic/fixtures/jump_label.c b/tools/=
-objtool/tests/generic/fixtures/jump_label.c
-> > new file mode 100644
-> > index 0000000000000..ecd3c06912af5
-> > --- /dev/null
-> > +++ b/tools/objtool/tests/generic/fixtures/jump_label.c
-> > @@ -0,0 +1,76 @@
->
-> [ ... ]
->
-> > +int target(int x)
-> > +{
-> > +     int r =3D x;
-> > +
-> > +#if defined(NEW_KEY) && !defined(PATCHED)
-> > +     /* The original has no static branch at all. */
-> > +     return r + 1;
-> > +#else
-> > +     asm goto(
-> > +             "1:     nop\n\t"
-> > +             ".pushsection   __jump_table, \"aw\"\n\t"
-> > +             ".balign        8\n\t"
-> > +             "912:\n\t"
-> > +             ".pushsection   .discard.annotate_data, \"M\", @progbits,=
- 8\n\t"
-> > +             ".long          912b - ., 1\n\t"
-> > +             ".popsection\n\t"
-> > +             ".long          1b - ., %l[l_yes] - .\n\t"
-> > +             ".quad          %c0 - .\n\t"
->
-> [Severity: Low]
-> This inline assembly in target() explicitly requests a 64-bit PC-relative
-> relocation. On 32-bit x86 (which is supported by the test runner), the GN=
-U
-> assembler cannot represent a 64-bit PC-relative relocation.
->
-> Will this cause the test fixture to fail to build when running objtool
-> tests in a 32-bit environment?
+Hi Frank,
 
-I guess we don't care 32-bit any more..
+Le 14/09/26 08:59, Frank Li a écrit :
+> > However, the board's strict naming convention uses a '#' or '-b' suffix for
+> > active-low signals (e.g., ethsw-reset#, usb01-oc#). The absence of this
+> > suffix on ethsw-mdio-en strongly implies it is an active-high signal. If it
+> > is active-high, driving it low will erroneously disable the MDIO bus to the
+> > Ethernet switch.
+> 
+> Is it true?
+
+Yes, the polarity is right: the SoC enables the carrier's MDIO level
+shifter through an inverting stage, so the shifter is on when the pad is
+low.
+
+> > > +&gpio3 {
+> > > +	gpio-line-names =
+> > > +		"altfn:ec1-txd3", "altfn:ec1-txd2",
+> > > +		"altfn:ec1-txd1", "altfn:ec1-txd0",
+> > > +		"altfn:ec1-tx-en", "altfn:ec1-gtx-clk",
+> > > +		"altfn:ec1-rxd3", "altfn:ec1-rxd2",
+> > > +		"altfn:ec1-rxd1", "altfn:ec1-rxd0",
+> > > +		"altfn:ec1-rx-clk", "altfn:ec1-rx-dv",
+> > > +		"", "",
+> > > +		"ptp-refclk-in",
+> > > +		"", "", "", "", "", "", "", "",
+> > > +		"u1700-zl30733-pps-out",
+> > > +		"",
+> > > +		"ethsw-mdio-en",
+> > > +		"usb01-oc#",	/* USB1_PWRFAULT and USB2_PWRFAULT share one net */
+> > > +		"",
+> > > +		"usb01-oc#",
+> >
+> > [Severity: Low]
+> > Are these duplicate line names intentional?
+> 
+> Please fix this small problem.
+
+OK, I'll do it in a v7
 
 Thanks,
-Song
+  Vincent
+
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260913-for-upstream-nbxv3-dts-v6-0-058566b93ba1@free.fr?part=3
