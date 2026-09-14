@@ -1,201 +1,235 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011042.outbound.protection.outlook.com [52.101.62.42])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F6A44C4EA;
-	Mon, 14 Sep 2026 12:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789388492; cv=fail; b=GVN857v76VeqhS9Y8ZrleP2TOCwFF1MYtfwWkw63VQthGZVjna1QDfXekfVtfXDTvh48S52ff3MaVl11FmVIYaXsC2qKws6T1sXn5KpvgkVVXUATglnXC6xbaO4YXZ/5vUfeImc7jVQhIuyYQdgmDpaI7KckZ6dG7DXQ5W3+FOw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789388492; c=relaxed/simple;
-	bh=DPbUHz8iK+JtmCAWBeTB7jNJlO/NhH+gzslwSP1XjOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TOzw/wovALngk3cWtRDOy0GzVZXRKKJJvTm8uN50pmWWk1G4NUBZCRPD9w0/XorrvYxyANVT7BwaLEBI4h+JXcT4VHZqvQ7F9K5qpiiY6ZZzhBKQHbAeP4MVqmu4eiRh2xSuBgqTUGzJ2S6yYZyVMU4dB9yLH45db3s4ogy77EY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aRi4AXDp; arc=fail smtp.client-ip=52.101.62.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4D246AA85;
+	Mon, 14 Sep 2026 12:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789389635; cv=none; b=RvFt3XvpzoY9n/4GJC+wfmg06b8yWmKysbR/epScyIQecZYjYRvORlnHJQhR+2gnP7hmM0VwYD2RHajBUwKeAB0AEEQs04xe+Tys+eVtxM9PVU0zlSdQF36fc+p/1dbYZy9fM0Q3gD85qSN89SFTWJulyDfaVDr7sK8RW5pDmgU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789389635; c=relaxed/simple;
+	bh=WefzKgxG30Cyj+fenxlcnEF2bQNPVRFvkTZFA2rI/zI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=inedgGt+YMamy4fe8PGK+n8MsCdgUTMyhaOiG1BjQOhb35A90twTDic6QGOLhgnKlNl9oDITlNySk9f/fTzpxn142Fnv4NHor7fiKFNHBHGvwsxItF4zmWD+nhjhvqUukew7SowV/1joj/JsgxWhTO+vvzfDgpYXpZMJ5CLT1es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=cOrQs4cg; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aRi4AXDp"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NL9zwrwJbOnluva3Pa1rZaYjs82UR+y0j3cgybUYl91UAHdiuAxObYZqzTFVTpH/Axoo8bxN72kYRYNJwXAlfZivWlx4GFleNeK1Q6aJ1yaHLLBpEteAEjlOwXdd0Jy5EXMMdlHE1v5VeDp1ExYhlnBeoletTZQGdzZcYTpdbYVVora+I6V3m41sPvaO5ZFv6/6emfsx3/pDkRXGm8GXaY1pP/xkLtqqedkKwW5jk9TRlhrQL+8m3AqZmmujflNnRaO9raGTyZ41UkZ+4sXGVq3Fum0UwxfNqqnOxTUm+tWnnWAeEttJNQsri9ALoTzMVKbcfolOtYzYyhnprxnaiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=re0UVsFLztwOlOFSF5HEAvT7ur07dUE08Y/zCzMghHE=;
- b=H53elitrJfhKDzvLvUe6GOx73wxDZ7ATEmL/QRFbUNirLIzrntBAcmPqgdUxKNsIOqyDUP7k1wmfUaoK1Kwhh8oOrkFsprFKY5ul4w3Niol6nYNxu0ue97Fz+XTyyJoahBCMerj+9RTWNSZnFG8zQc+oYUJ8xqKnweyfWCOuoNdo1krcJNGYpKq5tZnb3plixU/sHXnGd067vDstq7Y4S1Vadc+dap8YnooxQ3M1X4tzK2GVeY2Zre0QnbJp7mQw6yWzKR9rWrDr+UzN7dtK++GUNIG2BHeezgSUPVbXcdJqZjYcJfIt2G+CBVeSmTL7ekzT3liM/7gERqQPVERPrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=re0UVsFLztwOlOFSF5HEAvT7ur07dUE08Y/zCzMghHE=;
- b=aRi4AXDp/kx0NiFx+xKm+I713Cse4G35sqbb6r/X6t87+5GhFBWifvi0FyjAQwQfMKM9VcMUqaQ+lXExKxa/dT3Y71X88j7SV9zvLkoTVpLNxyPPJ5elwfWUbPMiy7hk3NAZKpsb9r1vCeEv5TAUSfwZmgT1T2+CNIGzBPkSeBO6qesqJpsIlWyfEhdM0l0y/dq5u8t2jfqyukzA9NwOx+OaRcVKFdKqByPfb9RkIgI12LBfdE7rMJePQ4ZR5rkr8H7xTkNE+ggIS8lVao9gmADJ+cz3jaJETmIld9kxZeWnTFOBbFVSCG+1m3WJVTC07mHM6pFWa2xZdja45FQiuA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by BL1PR12MB5851.namprd12.prod.outlook.com (2603:10b6:208:396::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Mon, 14 Sep
- 2026 12:21:27 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 12:21:26 +0000
-Date: Mon, 14 Sep 2026 14:21:19 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
-Message-ID: <aqfmv__uhZ0ReyLo@gpd4>
-References: <20260914084955.1798562-1-arighi@nvidia.com>
- <20260914084955.1798562-3-arighi@nvidia.com>
- <20260914090155.DE2901F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260914090155.DE2901F000FF@smtp.kernel.org>
-X-ClientProxiedBy: FR4P281CA0255.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f5::18) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="cOrQs4cg"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68EA1Zon1572335;
+	Mon, 14 Sep 2026 12:40:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=3o859w
+	8koVHGjcJCXqMo2tIp5FaSk7kxdLPqJo3UyII=; b=cOrQs4cg59OfGlT69+wGO6
+	7AZFDlGh18ViLs5wPbm5hh8cgGSAWjvvOnK9ERoOBya3UN9K40kV762zinug4mM/
+	+poATbBQCSP0nYiQ40ICbje0LWcBvwk+85SC/nN84wphTwBsh6qG8WMkHdRONDcq
+	tP13IrKX8uK9BMrSSqWeRWfyP+tzqCZUOAxEtMRsl/Eje15PIbKHfH1mTy0B9fwg
+	7396TFSKrKUryg8KWgUkbD9WPIyS2MVcHaF5npdPk6uZmYuVwsBL7R5/KVhUy9k2
+	YEBColamT3SYPXLJpefu6ocO+0Bjhpnuf512pqcnJptWMJjo4WsMETCf18YODzfg
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmv5hhhy7-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 14 Sep 2026 12:40:27 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68E9o4nN2133360;
+	Mon, 14 Sep 2026 12:40:27 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnk9j5ukq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Sep 2026 12:40:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68ECeNqY44106138
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 14 Sep 2026 12:40:23 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8E5412004B;
+	Mon, 14 Sep 2026 12:40:23 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E53C620043;
+	Mon, 14 Sep 2026 12:40:22 +0000 (GMT)
+Received: from [9.111.205.105] (unknown [9.111.205.105])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 14 Sep 2026 12:40:22 +0000 (GMT)
+Message-ID: <f2fda4cc-1ba1-4944-91e0-00c4ff91b2f9@linux.ibm.com>
+Date: Mon, 14 Sep 2026 14:40:22 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|BL1PR12MB5851:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2f87d46d-0538-4016-442e-08df125ab2e8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|10067099003|4143699003|6133799003|22082099003|18002099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	Z4jUcDagKTM4T1DcI9zkgc5lDscdxyx2PXnJb0qVbdqRKcVxZo8fpRbK060CdsAN11R6ofBoLTz2EXLQAYtIntqRk0jbnIboRQrJpuqXx1f4GqiIQaGqrRpBv6oXb9fa9blnEQpvKlQ6+k/Wrjmn7ncOiLMrHvbEtaFD5rhgSMbNa4sWMFlVaJyIr/KI38+vznU6QoQ+nb/U1P6v2ksRlQHEsIgNMJPvBQArfeDSkn9i3aF+cK4aSFyUa6W23IQswnwSCJNzk33uJGstOffDnyoGV4Y/BYJz3w9+TsFfszD+JRATQOkD23ExNXM8sQ1XtgxGJptrUGzKTPDihxX3MWvDKmpdiCo8L1Wi218d1pDP/AD8FJbjllqevYpsh388115OFik6TqWWgP7QDRtXFwC4DdqUD6+dx0e+VjNtiUeiFBuadmpXcSksq2wd6/7cyq7b0qq9uljk4/fGr/x/KpEi3616Ez1zqMX72nCPEluJ98aOPHAr+fezxWnRIat0epVhZwGB3zoDCRW8vqXO+Y2YcMbruRUN0Dv3rx9x2iBeqU1Oppj1qVJbj8Ah5E/iJxslwXDjImLNoiv45Yti0fAwvYjbWz6jiOvAiaRu1PUOBfzJfVjKCBwSbiaF5OzB2oHGSZgOa5qLaNz4qfVwS9TUw/FP0YIUH0DVZ9Rtm9k=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?6ERHrOpOshyXQjSDHcJ9Qw1RiVBnq65CxtSFdVH0iiIvFhZKbL8eH3hefhoi?=
- =?us-ascii?Q?fPM6PwiLpumBNvVP6JNajTk3qPSoi2QAwhEfT5/9WaWaVHcK0+Wz5lYWl2ON?=
- =?us-ascii?Q?AdvFpec/LOaTKxQwo+JjFMVU8W++V9BUfT6TB+jnxwp3tXbDno6U76uwsT30?=
- =?us-ascii?Q?dISU6Q6aqEH7dKSFRQLv+Ws/JjbZWO2uLEN2Wv0tIEFVXqGZSd2Inp7WakcL?=
- =?us-ascii?Q?IDSAWMluAJTLHf6hX/GHkulmc/O1vmDupiVDd8n0SyAJCRyml0CM9FYbsjBX?=
- =?us-ascii?Q?Ke0vXRXtvLF52wBlEAl73WLAuPHs6/vrYrDG9VgYaSy3gdzH12+NBPfyWNAt?=
- =?us-ascii?Q?/3s2ladah0zHRqPq9bDfI/7zz404WeMYAf5d8nVvyG76xF/xMouLFIS4Dj17?=
- =?us-ascii?Q?T1eyjD23YN9r3hLIsViuFC3rkYXr7V2D2Ib7sHLnf0x9gheMeapz2Tslanoo?=
- =?us-ascii?Q?82FPS5Ow/ES6cEbbt8R/EIBwbQYHGAyssj5Sp7VGZ7TW3vt4/iV3woyiuRS1?=
- =?us-ascii?Q?6mP6ld4HGx8aPA+JoeK5ydgUZ9SDnRma2VbuPVkIRzkjtr5aO0km9me4wNb1?=
- =?us-ascii?Q?ne8Wmn59r+jpKE0RxVLEaePbZc/i6x89doJu6tzbmwdOt5J3de+n5Msy6nzF?=
- =?us-ascii?Q?s5//P5eU52utK4SdZ3UTkJomBKUN0fCUwPg4+FqYp4A/3SNvZq674OYXuZdX?=
- =?us-ascii?Q?h270Ws8XGDdR3hdidXVvXRe31DWSt1wPBbCjDSGXNSHR793kACYr0VId8uYW?=
- =?us-ascii?Q?pcprzz/MSVdd/X9iKrGs/13Gbj/pIPyj7YoaZTk+1Xy+3ae3cIEkLYSSxFhX?=
- =?us-ascii?Q?ZNs7dWsZOSFCUdNuzLYibcCnWvvBhiO98NxReAC83xOEYiQ0RD2P6jOfZykX?=
- =?us-ascii?Q?Gvo1GWijhCX53/E/HfcmOBlsGsMMtkSIXkPm+O1m8v5+6lPkCNXCjPYJdS3g?=
- =?us-ascii?Q?DHnbxeWqLZE/iyq5y/dU44UmjRPtTR9d+rphZtXT4yxCl9zhBFoA01aUQ5Sj?=
- =?us-ascii?Q?ZJR3MrM5dHQe2XoSfRkENQrHHSk0+2wyU/mv9EXWYb6T3zteC5NPLR3uA+/p?=
- =?us-ascii?Q?VQfwr9viH80//xi8rfwFT1b2Yw5Bv9G9YLs+UynbNm5BHzNCtn98tzTgMniT?=
- =?us-ascii?Q?ehKa8zye4ygEntF+5Fily5rewbIuWbxdLg8TXoYv7fyGokFRuhKBASl0Y0jA?=
- =?us-ascii?Q?6uyCC3ULb8nGF6uLStwIBx3Q82GFxHlbMuTYbyBom1WEL/iovmngi3epG5EN?=
- =?us-ascii?Q?kr73rWUCbL7HdddK4ln02z5edMal4jcskqB3pFUtfL8UGLlfPBU2p8RD5RC4?=
- =?us-ascii?Q?z6RNcC/r1Rb0X8MLzFXBeV9GRxWIz22sB9LB7nDLoKctrvLsDLgogxu2FZ/d?=
- =?us-ascii?Q?AYnunUdRdwf3bRtES5HO9hpkM47vq5vMJWJ5WM8g+kqSd25IMMhCV4Zwruh1?=
- =?us-ascii?Q?odkeF5etbe/Siwx8sXCEXNbuVT9pNTXa17yQ5PZgegmyLhxFGH27/Q/jXYqR?=
- =?us-ascii?Q?Sv09O+nyo473JhdNQdfs+l2gqtRLjQcs6dd3GTX5P5J/onmGDId++vkR7w+F?=
- =?us-ascii?Q?xJJIsUIWqv4/VWf4SnqTy6N6yKFGe8XKLP/0+k1h0fbHT1+bwMnHaHVCV0e4?=
- =?us-ascii?Q?EtLn8Bd3UBZ4kO51D5iXMxTGGv159GD66VoLABaTEmPJC1BhWW1wOZIenlw6?=
- =?us-ascii?Q?Ki0J9tkHGNIRd1EPMVrcjkNsY915MsIk0VSNRUK0U+Renv9W63V1ezoLTeXS?=
- =?us-ascii?Q?ePHkGDr+8g=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2f87d46d-0538-4016-442e-08df125ab2e8
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 12:21:26.9198
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GswUk+IZWJS95rY9hfTkPn6kI2llLOn7NDAEijhVXTohp20GZPRZ7FhSMy/QGI3t4XPc4ZD02PDZdWo8taHSdw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5851
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 12/24] unwind_user/eh_frame: Remove .eh_frame[_hdr]
+ section on detected corruption
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        linux-trace-kernel@vger.kernel.org, linux-s390@vger.kernel.org,
+        Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20260821195259.2688377-1-jremus@linux.ibm.com>
+ <20260821195259.2688377-13-jremus@linux.ibm.com>
+ <20260821201820.81B8D1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260821201820.81B8D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDE3OSBTYWx0ZWRfX3J4bRieoXKE4
+ NkCh4AArl1+65uAUtnuThRJ3lUVt2X/BIuFWq0jkX1JaRLHjMmD5LQeSlCE3pY37t/BzjN3HgqI
+ ilogZ+mT/ioFYN5xvd3AClSTIB9ipgeEMYVU1qo2NU6l+tBS8pAtdXjzIzMvG0x0gxO78fAgie6
+ yj/QcoMv3ldTei3L1Pb+LVF9Dkw78bHr9ajgccJpdA2dXGekINN0V8IPekYwKcqR6k6zYhGapUM
+ ymlEH9aV6Be9HMqd376F4uZ2KfU0ny0k5l2Kqh/vhucTn88P0HftU0a8EvncY9l/vWMu8MruojZ
+ CeGXQZzx1XEgV7bRvi7y6vVvQlG1FWKkyjFrhDFiTj0wwbKCNeoDo+p7eGZpsxgKApqkQeU9s+9
+ dr3XXR7izArlURY3jQA3mksangWIjeN88uYzB/snmGR9nZeQM31BIJV5X6OXweIrs+hlJgsHc1G
+ LcR56jB4tcWHn9sJdjQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDE3OSBTYWx0ZWRfX39PZNQi/X9fu
+ C0/nSqGyqSHckwMqBC6UkI947nB207ZaGraZh/RDwoZRS1n/sfq8WaaM0nRza4pAVd4RX0RZEmH
+ 8LT8NRdKz1ZeMA+mtbFY+VTtMrU0lV4=
+X-Authority-Analysis: v=2.4 cv=Zsx4uN7G c=1 sm=1 tr=0 ts=6aa7eb3c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=PwxMS5Maa9_4Qu9rs20A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: dKC0FBrvRtzc56uzBVVPmQQTqZQVqWVb
+X-Proofpoint-GUID: dKC0FBrvRtzc56uzBVVPmQQTqZQVqWVb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_03,2026-09-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609140179
 
-On Mon, Sep 14, 2026 at 09:01:55AM +0000, sashiko-bot@kernel.org wrote:
-...
-> > +	victim.pid = fork();
-> > +	if (!victim.pid) {
-> > +		cpu_set_t mask;
-> > +
-> > +		close(ready[0]);
-> > +		close(start[1]);
-> > +		CPU_ZERO(&mask);
-> > +		CPU_SET(cpu, &mask);
-> > +		if (sched_setaffinity(0, sizeof(mask), &mask))
-> > +			_exit(1);
-> > +		if (write(ready[1], &byte, 1) != 1)
-> > +			_exit(1);
-> > +		close(ready[1]);
-> > +		if (read(start[0], &byte, 1) != 1)
-> > +			_exit(1);
-> > +		close(start[0]);
-> > +		for (;;)
-> > +			asm volatile("" ::: "memory");
-> 
-> [Severity: Medium]
-> Will this lead to orphaned tasks spinning at 100% CPU if the test runner
-> crashes?
-> 
-> If the test is forcefully terminated or crashes before stop_victim() is
-> called, the child processes will be orphaned and continue their infinite loop
-> indefinitely.
-> 
-> Should prctl(PR_SET_PDEATHSIG, SIGKILL) be used here, similar to how it is
-> used in spawn_gated_worker() elsewhere in this patchset?
+On 8/21/2026 10:18 PM, sashiko-bot@kernel.org wrote:
 
-Although this is a kselftest intended for a test environment, it may still run
-on a persistent test host, and these workers spin indefinitely. Since I'm
-already planning to send a v3, I'll fix this as well.
+> This commit adds logic to unregister .eh_frame or .eh_frame_hdr sections on
+> demand when corruption is detected during lookup. This prevents repeated
+> attempts to parse bad unwind sections by removing them immediately upon an
+> error return.
+
+>> diff --git a/kernel/unwind/eh_frame.c b/kernel/unwind/eh_frame.c
+
+>> @@ -1202,6 +1202,15 @@ int eh_frame_find(unsigned long ip, struct unwind_user_frame *frame)
+>>  	if (!ret)
+>>  		ret = __find_frame_row(sec, &fde, ip, frame);
+>>  
+>> +	/*
+>> +	 * Unregister .eh_frame[_hdr] in case of an error,
+>> +	 * e.g. EINVAL (corrupted) or EFAULT (inaccessible).
+>> +	 * Keep if ENOENT (not found) or EOPNOTSUPP (unsupported CFI).
+>> +	 */
+>> +	if (ret && (ret != -ENOENT && ret != -EOPNOTSUPP))
+>> +		if (eh_frame_remove_section(sec->eh_frame_hdr_start))
+>> +			dbg("eh_frame_remove_section() failed\n");
+>> +
+> 
+> [Severity: High]
+> Does this introduce a race condition with memory unmapping and mapping?
+> 
+> If a thread is delayed after retrieving sec in eh_frame_find(), another
+> thread could unmap the library and map a new library at the exact same
+> virtual address, registering it with the same eh_frame_hdr_start. When the
+> first thread resumes and fails to parse against the new memory, passing the
+> virtual address sec->eh_frame_hdr_start to eh_frame_remove_section() seems
+> like it would unintentionally remove the newly loaded, valid library's
+> section.
+
+I don't think that is possible.  eh_frame_find() and likewise
+eh_frame_remove_section() both guard using eh_frame_srcu.  So while one
+thread has a reference to a section that cannot be removed and replaced.
+I am missing something?
 
 > 
-> > +	}
-> [ ... ]
-> > diff --git a/tools/testing/selftests/sched_ext/nohz_tick.c b/tools/testing/selftests/sched_ext/nohz_tick.c
-> > index 028f54391c2ca..a5266a5412935 100644
-> > --- a/tools/testing/selftests/sched_ext/nohz_tick.c
-> > +++ b/tools/testing/selftests/sched_ext/nohz_tick.c
-> [ ... ]
-> > +	/* Repeat with a lazy kick delivered from a housekeeping CPU. */
-> > +	__atomic_store_n(&skel->bss->phase, NOHZ_PHASE_LAZY_KICK,
-> > +			 __ATOMIC_RELEASE);
-> > +	victim = spawn_gated_worker(ctx->test_cpu);
-> > +	challenger = spawn_gated_worker(ctx->test_cpu);
-> > +	trigger = spawn_gated_worker(ctx->housekeeping_cpu);
-> > +	if (victim.pid < 0 || challenger.pid < 0 || trigger.pid < 0) {
-> > +		SCX_ERR("Failed to spawn lazy-kick workers");
-> > +		goto out;
-> > +	}
-> > +	skel->bss->victim_pid = victim.pid;
-> > +	skel->bss->challenger_pid = challenger.pid;
-> > +	skel->bss->trigger_pid = trigger.pid;
-> > +	if (!start_gated_worker(&victim) ||
-> > +	    !wait_for_counter(&skel->bss->nr_lazy_victim_running, 2,
-> > +			      PHASE_TIMEOUT_MS)) {
+> [Severity: High]
+> Is it safe to assume -EINVAL always means corruption?
 > 
-> [Severity: Medium]
-> Could this wait condition cause the test to flake by relying on an absolute
-> counter value?
+> Looking at __do_cfi_program(), it also returns -EINVAL when kernel limits
+> are hit, such as exceeding EH_FRAME_CFI_INSN_LIMIT or
+> EH_FRAME_MAX_CODE_ALIGN.
 > 
-> During the teardown of the previous phase (NOHZ_PHASE_LAZY_ENQ), stopping the
-> challenger can allow the original victim to be rescheduled, incrementing
-> nr_lazy_victim_running to 2 before this new phase begins.
-> 
-> If that happens, wait_for_counter() will return immediately here, and the test
-> will proceed to launch the new challenger before the new victim is running. If
-> the new challenger is scheduled before the new victim, the subsequent check on
-> nr_lazy_kick_running can fail.
-> 
-> Should this wait condition account for intermediate preemptions instead of
-> hardcoding 2?
+> If a valid library simply has a complex function that hits these limits,
+> wouldn't this code globally and permanently disable unwinding for it by
+> removing its section?
 
-We can snapshot nr_lazy_kick_running before starting the new victim and wait for
-the counter to increase by one. I'll also fix this on v3.
+Following are the used conventions:
+- EINVAL: bad .eh_frame; section should be removed
+- EOPNOTSUPP: unsupported .eh_frame
+- ENOENT: no .eh_frame for IP
 
--Andrea
+One can argue whether a CIE/FDE with too many CFI instructions should
+be considered bad or unsupported.  For now I decided for bad, to
+prevent future unwind attempts in case of crafted .eh_frame.
+
+> [Severity: High]
+> This is a pre-existing issue, but looking at eh_frame_remove_section()
+> which is called here, is there a memory leak if mas_erase() drops the lock?
+> 
+> eh_frame_remove_section() holds mtree_lock and iterates via mas_for_each().
+> It calls __eh_frame_remove_section(), which calls mas_erase().
+> 
+> If mas_erase() needs to allocate memory via mas_nomem(mas, GFP_KERNEL), it
+> can drop the tree lock. If a concurrent thread inserts a new section
+> covering the same range during this unlocked window, mas_erase() retries,
+> erases the new section, and returns it.
+> 
+> __eh_frame_remove_section() then sees the returned entry doesn't match sec,
+> returns -EINVAL, and skips call_srcu(), potentially leaking the new section.
+
+Help!  I fail to understand how the (internal) maple tree locking and
+its advanced API are then supposed to be used correctly to iterate over
+the items in the tree and remove some while doing so.  Is that why other
+users use an external lock (MT_FLAGS_LOCK_EXTERN, MTREE_INIT_EXT())?
+See MM_MT_FLAGS.
+
+> [Severity: Critical]
+> This is a pre-existing issue, but looking at __eh_frame_remove_section()
+> called by eh_frame_remove_section(), can a memory allocation failure lead
+> to a use-after-free?
+> 
+> If mas_nomem() fails to allocate memory during mas_erase(), it sets an
+> error state and aborts without removing the node, but still returns the
+> original sec:
+> 
+> __eh_frame_remove_section() {
+>     ...
+>     if (mas_erase(mas) != sec) {
+>         return -EINVAL;
+>     }
+>     call_srcu(&eh_frame_srcu, &sec->rcu, eh_frame_free_srcu);
+>     ...
+> }
+> 
+> Because __eh_frame_remove_section() only checks if the return value does
+> not equal sec, it misses the error state completely. It then calls
+> call_srcu() to free the section while the node remains active in the maple
+> tree. Could subsequent calls to eh_frame_find() load and access this freed
+> memory?
+
+This is resolved in the next version of "[RFC PATCH v2 08/24] unwind_user/
+eh_frame: Store .eh_frame_hdr section data in per-mm maple tree".  See my
+respective reply.
+
+> 
+>>  	return ret;
+>>  }
+>>
+> 
+
+Thanks and regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
+
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
+
