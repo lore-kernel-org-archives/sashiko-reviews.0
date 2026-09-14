@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1114A21;
-	Mon, 14 Sep 2026 01:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0361E7660;
+	Mon, 14 Sep 2026 02:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789347735; cv=none; b=ND2rw0sAxziowlzzsOG8WZn+LEaWOQaMUk5Nhsplx4NcFdpwziB9f15q8j3DBRAh0tC797WF0jYgM0kehMJj2RvUj4qGbsQgXK4y0z4KuevZzQ32MSP1GhPRumsjUHbX6ewV4PpkWYYrlQlSFLuP4exKniUNh5MMqp8I1O1W3QI=
+	t=1789354158; cv=none; b=Ldneqjnm4IleSnyg4G8CfRjV/Av2/HuazbYIJ0Cpwcm3N7zy+goFkmiWgCffhG+/GEWbj5dTgmgc0G7NyVdZOLZZVMFBt0/CZpDYavJp6vBFMYOYb9axUxF3IcaTDSOU3KW12er8Przj/YoSYNElgqYZhMFjje5L1Ygl6//ncWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789347735; c=relaxed/simple;
-	bh=Gh1tNRceTR/9E1sYC2KtixeffD/fmgrxC0umiZvOZco=;
+	s=arc-20240116; t=1789354158; c=relaxed/simple;
+	bh=4vh9gjNXkhaXvqa+21uDOCrbVDJJ6w5SisKdKFzjLd0=;
 	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=g2Mg7OAIaGoKj1cu1rh4p5TYV5WoAx+EnkkvcHyyfUxcdULC6GcniHzz80tzfoLLWy/kxmxw99sYMBKuUVqaEhcjoxhfnUZim2AwOWCcfskZs+B0wgcBoKIQkvxsPVqnARdSkmTCzjNdn7eOTCeRNn+EnONHKBUVoW44v3846IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7iHDRO1; arc=none smtp.client-ip=100.103.45.18
+	 Mime-Version:Content-Type; b=C1rG72markvQmCmhd1wO+7TpSw95KsfULskw9VbtXjfS+J5ebeqRLAnvyR+igUksQDqTQWS6Kh9iloS05qYNUW0F13sygQu88b0eUodCff/Eff6VKZ9XdoA65IYEt2tDZ382kQNghltSBfjsYub1yVciz/aqdQGWEDmDwTWjdqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dyevcDcs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7iHDRO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44521F000FF;
-	Mon, 14 Sep 2026 01:02:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dyevcDcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7E41F000FF;
+	Mon, 14 Sep 2026 02:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789347733;
-	bh=G6pDCyxr3Ezs2auxm8Wz0goUjjmuLZIphq3F9Yov2TI=;
+	s=k20260515; t=1789354156;
+	bh=Ho19rv+CrXyjO2kYe0RCDDpCrf+9WcveIFGfghODl34=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=m7iHDRO1ZBHN+71W4p6Q5EcTg+fJaCBzCt8r4jBuA+L6GmLbmT+B6eBO6RqqMKIEq
-	 U4dCP6UBKRbpnjbn3ycCUALB2qQ+yqC9JzituHO9fX71IV4VXnX0yDfSpxqLTS5a6c
-	 JzIZNZpllIzLFZXQqQ6/6bYKmt+0PmWP2wVNKZ3vpuFBIazcdhg8J01RnqJz8aYtUw
-	 3HlS4m1ywPIlei5ygLOQQoOykuqh4o+rioLskD1G0a0UYv7tj61l6QFdsZ0RBUenCR
-	 r69YoH1dH0o94EFbHR7os0Rwcpj04s5kniIvk+WsljYqK2b0QEf9H9ch2H7wpnSrQo
-	 QZoQkrGBF3aUQ==
-Date: Mon, 14 Sep 2026 10:02:10 +0900
+	b=dyevcDcs7PvWg4jzyqDDXyjnrKQUUsxkhJI1aRqFR2mpd15VDkx50Q1qYhhdUk7yH
+	 6/qaA9WeZepHSeJLUDhoo6i34jnLR71cQvtDd38nXlFtyDpNmisUL2HNfynw/OsFS8
+	 wBq3h5u9WA3P6bIGCy35vXDG0AETrVShPtTBaJRGBy8zRKJ++qAFXGg36aIE6t1yKo
+	 qaUAidl/iT34V17i7C76IuAKTDCUqJ1BK7Uv/1LWTTKwxgP+X+Bdkd6xHh3CBt4V5p
+	 oHuFo96Xy57fVn5zSve23LMAOnl/YB3ukgJm9ic6DyqWCuDH1ufGo0vS5WPr0W6dxY
+	 V/tzajxIWeHAA==
+Date: Mon, 14 Sep 2026 11:49:12 +0900
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org,
  linux-trace-kernel@vger.kernel.org
 Subject: Re: [PATCH v15 02/12] x86/hw_breakpoints: Make DR7 updates NMI safe
-Message-Id: <20260914100210.02ef75318a3826dc609d9750@kernel.org>
+Message-Id: <20260914114912.51a8c4649d5a9e812ede1349@kernel.org>
 In-Reply-To: <20260907040017.1983E1F00ACA@smtp.kernel.org>
 References: <178875277830.93794.14247844688761142429.stgit@devnote2>
 	<178875280112.93794.5857698342827027053.stgit@devnote2>
@@ -44,34 +44,12 @@ List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
 On Mon, 07 Sep 2026 04:00:16 +0000
 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] local_db_restore() incorrectly uses dr7 == 0 to discard NMI-installed hardware breakpoints, permanently losing debug state and corrupting KVM guest debug registers.
-> - [High] local_db_save() destructively clears hardware DR7 inside its sequence retry loop, permanently corrupting the restored state if a retry occurs.
-> 
-> Pre-existing issues:
-> - [High] The early return in local_db_save() bypasses the sequence retry loop, leaving a race window where an NMI can leave hardware breakpoints enabled during critical exception handlers.
-> --
-> 
-> commit 48808d0a31b45134e9ef897c90c0f96bd987d9ce
-> Author: Jinchao Wang <wangjinchao600@gmail.com>
-> 
-> x86/hw_breakpoints: Make DR7 updates NMI safe
-> 
-> This commit introduces atomic per-CPU operations and sequence numbers to
-> make DR7 hardware breakpoint updates NMI safe. It updates local_db_save()
-> and local_db_restore() to use retry loops that detect NMI interruptions,
-> preventing state corruption.
-> 
-> Link: https://lore.kernel.org/all/4ee0a2efc9e8387af83286b8495b7d490247e165.1785067572.git.wangjinchao600@gmail.com/
-> 
 > > diff --git a/arch/x86/include/asm/debugreg.h b/arch/x86/include/asm/debugreg.h
 > > index 854d82b88ff4e..3399e166d3044 100644
 > > --- a/arch/x86/include/asm/debugreg.h
@@ -107,115 +85,11 @@ sashiko-bot@kernel.org wrote:
 > hardware breakpoint active during exception handlers like MCE, which could
 > trigger a recursive #DB exception and lead to a kernel panic.
 
-Hmm, OK. But this should be fixed in this patch because this is for solving
-this kind of NMI related issue.
-
-Let me update checking cpu_dr7_seq is updated or not before returning.
-
-> 
-> >  
-> > +		get_debugreg(*dr7, 7);
-> >  
-> > -	/* Architecturally set bit */
-> > -	dr7 &= ~DR7_FIXED_1;
-> > -	if (dr7)
-> > -		set_debugreg(DR7_FIXED_1, 7);
-> > +		/* Architecturally set bit */
-> > +		*dr7 &= ~DR7_FIXED_1;
-> > +		if (*dr7)
-> > +			set_debugreg(DR7_FIXED_1, 7);
-> 
-> [Severity: High]
-> Can this destructively overwrite the hardware DR7 state inside the sequence
-> retry loop?
-> 
-> If an NMI interrupts execution between reading and clearing DR7, installs a
-> breakpoint, and increments cpu_dr7_seq, this set_debugreg() call will
-> overwrite the NMI's new hardware state with 0x400.
-> 
-> When the loop detects the sequence mismatch and retries, the next
-> iteration's get_debugreg() will read this clobbered 0x400 value instead of
-> the state installed by the NMI, permanently corrupting the restored state.
-
-Ah, OK. Let me add sequence number check there and use cpu_dr7 instead of
-raw dr7 value.
-
-> 
-> >  
-> > -	/*
-> > -	 * Ensure the compiler doesn't lower the above statements into
-> > -	 * the critical section; disabling breakpoints late would not
-> > -	 * be good.
-> > -	 */
-> > -	barrier();
-> > +		/*
-> > +		 * Ensure the compiler doesn't lower the above statements into
-> > +		 * the critical section; disabling breakpoints late would not
-> > +		 * be good.
-> > +		 */
-> > +		barrier();
-> > +	} while (unlikely(*dr7_seq != this_cpu_read(cpu_dr7_seq)));
-> >  }
-> [ ... ]
-> > -static __always_inline void local_db_restore(unsigned long dr7)
-> > +static __always_inline void local_db_restore(unsigned long dr7,
-> > +					     unsigned int dr7_seq)
-> >  {
-> > +	unsigned long val;
-> > +	unsigned int seq;
-> > +
-> >  	/*
-> >  	 * Ensure the compiler doesn't raise this statement into
-> >  	 * the critical section; enabling breakpoints early would
-> >  	 * not be good.
-> >  	 */
-> >  	barrier();
-> > -	if (dr7)
-> > -		set_debugreg(dr7, 7);
-> > +
-> > +	do {
-> > +		seq = this_cpu_read(cpu_dr7_seq);
-> > +		if (seq == dr7_seq) {
-> > +			if (!dr7)
-> > +				return;
-> > +			val = dr7;
-> > +		} else {
-> > +			/*
-> > +			 * If an NMI modified breakpoints while DR7 was saved as 0
-> > +			 * (e.g. KVM guest entry), arch_install_hw_breakpoint()
-> > +			 * clobbered hardware DR7. Restore val = 0 (DR7_FIXED_1)
-> > +			 * to clean up the NMI's write and preserve guest isolation.
-> > +			 * Otherwise, load the latest cpu_dr7 state.
-> > +			 */
-> > +			val = dr7 ? this_cpu_read(cpu_dr7) : 0;
-> 
-> [Severity: High]
-> Does this logic permanently discard the hardware breakpoint installed by an
-> NMI if dr7 was initially 0?
-> 
-> If dr7 was saved as 0, which happens when no host breakpoints were active,
-> and an NMI subsequently installs a breakpoint, this logic evaluates to 0
-> and ignores the new cpu_dr7 state.
-> 
-> It will then write 0x400 to hardware DR7, completely overriding the NMI
-> update. Furthermore, if an NMI interrupts a KVM guest, the guest's DR7
-> state is completely destroyed and replaced with 0x400.
-
-OK, then I always use cpu_dr7 for value.
+Wait... but fixing this may leak the DR7 setting to the guest. We need another
+patch to solve this, which introduce a per-cpu flag to prohibit updating the
+DR7 during switching to the guest.
 
 Thanks,
-
-> 
-> > +		}
-> > +
-> > +		set_debugreg(val | DR7_FIXED_1, 7);
-> > +		barrier();
-> > +	} while (unlikely(seq != this_cpu_read(cpu_dr7_seq)));
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/178875277830.93794.14247844688761142429.stgit@devnote2?part=2
-
 
 -- 
 Masami Hiramatsu (Google) <mhiramat@kernel.org>
