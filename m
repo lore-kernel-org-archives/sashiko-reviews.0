@@ -1,105 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE610386567
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D480D37F8DB;
+	Mon, 14 Sep 2026 18:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789410325; cv=none; b=Hm2xhQRmAkvrR7QeVX0PJ39S5BWtPvDrrcj3tD1guvvD6urPLsi1hlHimEungHFwVsRYQsOEb6Uxh/+M3SuGXTSdVnnCxXidmmNkjP5ZVP+2HNsnLzfnWj0fCqLV/L9YFhT126ut6LibdfoW30+UQ1NjWBiK1JWRCA470zSEXPE=
+	t=1789410579; cv=none; b=TGBcJrhr+dKNY5VENwa2gmJMaeRjw5u5UGv+evM7ug+AUQGK3VQKRC4Q+V5XtyKQ/rSNgjt57pzaaGJgn4TsWYXBxuAtLe5AitZ9BUya84YDSGm0ulxXaHG3rZGGySkVRkNKDo2HStaAkgpbxiKvppicHefT2LTW7K3qOfDyBfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789410325; c=relaxed/simple;
-	bh=sqsbDhf8/vykTPI0FFSA0x67K7EgbRexIgykj5m32F4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oVbnlTggcJVQ49vrV0wxOcVl4iC7bzNEL2CHLQ1HZ/OVP0RbuTpnh5RIHvZEJhN3VOCvqUvbX+sCyzUULk/n2Qp6KVy6u8d+8roFMHaxWkW4ZzX6i0NqCqf/gxJ7gvbDL8zyaXRNfo7ih5Nx0IJd5oL+1ap74eQERcbGDbXQzYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFPBKqJo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789410579; c=relaxed/simple;
+	bh=pj4qmB9ljnZQOtKncfDQ6cDshIDKeqBUyrovGUmVeXc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L2cXTiU8Y4M9TtFU/Ibp2xmNKKkIeVTVwG6bFSANy/nYR6MZQyJjzgFiwovBH5LcgtjVuIrcBNNt6EJ+J4K5aiuVqeo/A3pYEeSeV5Z2WFLkLi9Vb8fOs0Xyo7BT1i6HtqN1mAe3xmpVIJfel2YMQv8Z6P2w1FFTKl/0Xstrkeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EkhF2Mak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFPBKqJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8875F1F00898
-	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 18:25:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EkhF2Mak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD94C1F000FF;
+	Mon, 14 Sep 2026 18:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789410323;
-	bh=pJdmS+x/1vPF2Qs60Ujuk+QWWE5dNTLa5JBaBjShvas=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=jFPBKqJokivmbz+VQ+0kSyIcRiQwUaQikqLDTNKoqxE6uItQyDkexZS1hFJUc2Dmr
-	 zrIcDBgCt7pm9DPingLmI+fGScGo5NfO1C8v/W8A326OJTwGlnIZ4z9sFYQqsAH0l+
-	 QQ/WPakwC8If6WJZvvMruSUXaUGWhXrtPYCkPaiCZQDwglzyDeOOIRln2xJN76jbAi
-	 sDL4+psmW53CsGP1Wy2GyaZSabDOmmdX0FehC8QdBEJ2xHHsUPtAlEvhHweeawfZSU
-	 bpNFLrKE0F4h+aGHQ2bUS8SClavoXmDq2IWMPDOiE7uiC/owA4S57SIPxtqHcaSp/L
-	 tlSgsrikj6SEA==
-Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-93910cc46c8so161234885a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 11:25:23 -0700 (PDT)
-X-Gm-Message-State: AFuF++lF95D6FASta8CNYupYVUGSCRIsRdy6mAb2UPF7yjgy8h9g9dUn
-	CDPDUpYsK76UFIM8DAvRtoMLrgGRy4MQDSWEIuwsjL2o1K8MX9Swi7bhS7ObneE7jsAhAc0FHcp
-	b/uy3fYPsqrIkG2hsogmxXbTycYfW314=
-X-Received: by 2002:a05:620a:2548:b0:939:78ab:3c5f with SMTP id
- af79cd13be357-93a297c8d1cmr542380885a.9.1789410322806; Mon, 14 Sep 2026
- 11:25:22 -0700 (PDT)
+	s=k20260515; t=1789410577;
+	bh=uYl4DuQg7GEyWsAsWUx39SCZDduudy9YEJWobZDmAmk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=EkhF2MakXAMxcRVFIc7FDkJqCUb3Q8+gPO8j1qtG+kn+ig3U9wOIpDX2q+hUUx+r+
+	 1zIhTuHmTfG3+nO7Cptgs5DgsfaJ8LgrCMAj1mH9UZH1fkSlJMuJoi/7EmA91pIRmx
+	 4d/AMpio57C7ckipwKG070PgWrXQ9K9dhVCnr1i6JCj7S4Zy1N8YlhaiLSRTsHrFP4
+	 5iZjX/tVQ32QSC/8TzYpFhE77WEeOvTG7XzeXb38dgfSNAvm2b6S5Im/0ESYbnrwWH
+	 t6Ecu5fsCmdN1NBHK1jbuKRe0XRSWtnsO1yB7SeMlcpr1TBXU2U4AYNrHUYWsaMyGI
+	 o/OlaSR0WvQ0Q==
+Date: Mon, 14 Sep 2026 15:29:33 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [Patch v11 07/10] perf regs: Enable dumping of SIMD registers
+Message-ID: <aqg9DV05lxzLKu0t@x2>
+References: <20260914014049.2061519-1-dapeng1.mi@linux.intel.com>
+ <20260914014049.2061519-8-dapeng1.mi@linux.intel.com>
+ <20260914020418.97E881F000FF@smtp.kernel.org>
+ <1870044f-ab4c-4906-8f8b-c3216fb28211@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914062514.926997-1-song@kernel.org> <20260914062514.926997-11-song@kernel.org>
- <20260914063734.71E531F000FF@smtp.kernel.org>
-In-Reply-To: <20260914063734.71E531F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Mon, 14 Sep 2026 11:25:11 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW6D=wVVNWLOkYBVaSVsVcS=rf2HDW_m7m8AWRWy1=YdLA@mail.gmail.com>
-X-Gm-Features: AcwNN1Xni1Kt8KtwU2LaozWdg9R3wKky_BCliNy5lwwVTNo3V8_0n75xlCDMvjA
-Message-ID: <CAPhsuW6D=wVVNWLOkYBVaSVsVcS=rf2HDW_m7m8AWRWy1=YdLA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/58] objtool: Keep failing test workdirs by default
-To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, jikos@kernel.org, mbenes@suse.cz, 
-	kernel-team@meta.com, peterz@infradead.org, jpoimboe@kernel.org, 
-	pmladek@suse.com, puranjay@kernel.org, joe.lawrence@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1870044f-ab4c-4906-8f8b-c3216fb28211@linux.intel.com>
 
-On Sun, Sep 13, 2026 at 11:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Incorrect shell logic nesting hides failure hints and masks le=
-aked artifacts in KEEP=3Dnone mode
-> --
->
-> commit 3f45b4f5eca60d068a16adeda22b98b456f84450
-> Author: Joe Lawrence <joe.lawrence@redhat.com>
->
-> objtool: Keep failing test workdirs by default
->
-> Change the default test behavior to save failing test working directories
-> instead of deleting them. Add a KEEP Makefile variable to optionally reta=
-in
-> all or none of these directories.
->
-> > diff --git a/tools/objtool/tests/run-tests.sh b/tools/objtool/tests/run=
--tests.sh
-> > index e6f1ac1b5d0da..81dd33f1819b5 100755
-> > --- a/tools/objtool/tests/run-tests.sh
-> > +++ b/tools/objtool/tests/run-tests.sh
-> [ ... ]
-> > @@ -167,15 +182,44 @@ done
-> [ ... ]
-> > +none)
-> > +     if ! rmdir "$rundir"/*/ "$rundir" 2>/dev/null; then
-> > +             if [ "$fail" !=3D 0 ] || [ "$xpass" !=3D 0 ]; then
->
-> [Severity: Medium]
-> Does nesting the failure hint inside the ! rmdir check in the KEEP=3Dnone
-> case block prevent the hint from being printed when tests successfully
-> clean up?
->
-> If rmdir succeeds, meaning tests cleaned up properly, this entire block i=
-s
-> skipped. Also, if a test leaks files (causing rmdir to fail) and tests
-> also fail, won't this logic print the hint but skip the leak warning due =
-to
-> the elif statement? This would effectively mask the leaked artifacts when
-> tools/objtool/tests/run-tests.sh is run with KEEP=3Dnone.
+On Mon, Sep 14, 2026 at 01:17:00PM +0800, Mi, Dapeng wrote:
+> 
+> On 9/14/2026 10:04 AM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Low] Missing explicit `<stdio.h>` inclusion for `printf` usage, which can cause musl build failures.
+> > --
+> >
+> > commit a307c3e7165562ef96094cdee1fc722a99865e02
+> > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> >
+> > perf regs: Enable dumping of SIMD registers
+> >
+> > This commit adds support for dumping SIMD registers with the new
+> > PERF_SAMPLE_REGS_ABI_SIMD ABI. It currently supports XMM, YMM, ZMM,
+> > OPMASK, eGPRs, and SSP registers on x86 platforms.
+> >
+> >> diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
+> >> index 90d4e45f09f08..a5b596cd14be6 100644
+> >> --- a/tools/perf/util/session.c
+> >> +++ b/tools/perf/util/session.c
+> >> @@ -1446,6 +1446,86 @@ static void regs_dump__printf(u64 mask, struct regs_dump *regs,
+> >>  	}
+> >>  }
+> >>  
+> >> +static void simd_regs_dump__printf(uint16_t e_machine, struct regs_dump *regs, bool intr)
+> >> +{
+> >> +	const char *name = "unknown";
+> >> +	const char *simd_header;
+> >> +	u32 i, j, idx, pred_base;
+> >> +	uint16_t qwords;
+> >> +	int reg_c;
+> >> +
+> >> +	if (!(regs->abi & PERF_SAMPLE_REGS_ABI_SIMD))
+> >> +		return;
+> >> +
+> >> +	if (!regs->nr_vectors && !regs->nr_pred)
+> >> +		return;
+> >> +
+> >> +	simd_header = "... SIMD ABI nr_vectors %" PRIu64 " vector_qwords %" PRIu64 \
+> >> +		      " nr_pred %" PRIu64 "  pred_qwords %" PRIu64 "\n";
+> >> +	printf(simd_header, regs->nr_vectors, regs->vector_qwords,
+> >> +	       regs->nr_pred, regs->pred_qwords);
+> > [Severity: Low]
+> > Does this file need an explicit inclusion of <stdio.h>?
+> >
+> > The perf tool can be compiled with musl libc, which enforces strict POSIX
+> > namespace separation and does not implicitly include headers. Relying on
+> > implicit header inclusion for printf() can cause build failures under musl.
+> 
+> Ok, this can be fixed in a separate patch later.
 
-I think this is OK. We still print out "not ok" and "fail: <none zero>".
+Ok, merging it now, later you send fixes for these minor issues.
 
 Thanks,
-Song
+
+- Arnaldo
