@@ -1,135 +1,67 @@
-Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
+Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3C237CD2C;
-	Mon, 14 Sep 2026 08:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3332A4252C9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 10:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789375508; cv=none; b=pwANKAsbqtYRzXMaJ7Mmeu8dyqycYsgm5Osx4fGu5Ax5n7giOYqwG7sXR7Co3fZJJxwNPTnja2QXuBTxAatZwzu4/yQmydhVOCKE/4kgVF9pXhT5k5grzksTQp9bOLwQfvlNJN8Mmw7MKgMkmjLZxlb8k6NdwHDRB8XgHWXF160=
+	t=1789380612; cv=none; b=oE+Hz3yDd/OaBvo/oa/plwPqvq3fs+hOn6TN/6HVso2CqrIS/LSDSmgyH9sgRz+ljoeSqYKy1CHjWPVkF0UNxG53DdO8jLySPKPv6uXoi+YndkjLrjxTurfnvsYavPdKU2mcWud7gG8HevIvlw2u6fJC2vc5+T/VT5hqhTcV1Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789375508; c=relaxed/simple;
-	bh=8QeRlCqAjJ8EwhdQNeaHy3qTLWL5VNSQvltXO9KH64c=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=IpshQHn+sM7Rd5NZlkhF//h2hrz4ykAqoUui8x/ulP7t+2NL3WQPzrcVjiWospxZvWtJ5Fb49HOZ8xtuCllLa9QGW+VIAnqga2Y9Q5dN1TU5tty7+9NsAuwDaiEUOkCLVWfDYlHEfskuf1O592m9afJvNEnBzjvBCTDUv9i1ArI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=oXxE50Xp; arc=none smtp.client-ip=188.40.3.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
+	s=arc-20240116; t=1789380612; c=relaxed/simple;
+	bh=E8xW+tUodOajGp7idrinqcCpQ2T+Mjybso6K+IxuRM4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RzXrmUTnSK8B1Jw86R61Y7lhVnRsRc3h8/odpoYOczmOB1GGR/aJHgus9GrqmM/xsCbwzRAk7R8zYSfpSuVEmXelAL9nf7ZSYahHIzAQb/S9NxlVAKCeYk+tYepVlk8/m3BdP2jqmSrXUwoWbFmRCd2TN3QaLg0/5UMlBkuYWHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=FllqzqXC; arc=none smtp.client-ip=217.70.178.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="oXxE50Xp"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=ew.tq-group.com; s=default2602; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=4Oga6kynJatjXzIzded2ZK3xQfzefluemmgp053xo+o=; b=oXxE50XpvUsc9+1sShx9MKy8G7
-	ZaK3mQH1NmG9vpdk8rY34b8HtMDKjYJXL5nPxqJmUFqe4yfqMZQg9PBytZfGeW8Osv7jZAZ8JQLyo
-	F7+QMS20iAEH4mBl8wul861TZSwnxh4nbeO8a7B7gCzuA0K65c+8n7IlH7kwIzActt3YtJWs07F3Z
-	ny/79WmP4Z4dcIyfO9PHDiTxMPLh4EsrRaZq3ct1UkXMP6xWuIXWQ6kePyP3XvDFC2ivmQ3x9IFiz
-	pVnQC5FPJkC2wn3fXqaxcGn0TE8uXghpn6chXIW1D95CAyKvS6k9G1G+paJlVC2Lob+NrRur1vAbk
-	I/ooo0AA==;
-Received: from sslproxy07.your-server.de ([78.47.199.104])
-	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1x61yd-000OVW-35;
-	Mon, 14 Sep 2026 10:23:47 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1x61yd-000Ffh-0P;
-	Mon, 14 Sep 2026 10:23:47 +0200
-Message-ID: <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
-Subject: Re: [PATCH 2/7] dt-bindings: leds: pca995x: describe output-gain
- property
-From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>, lee@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	linux@ew.tq-group.com
-Date: Mon, 14 Sep 2026 10:23:46 +0200
-In-Reply-To: <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
-References: 
-	<6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
-	 <7f61e7e8781292450f920c49ef8853b802d76ecc.1788350618.git.nora.schiffer@ew.tq-group.com>
-	 <20260902123105.11B171F000E9@smtp.kernel.org>
-	 <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
-	 <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="FllqzqXC"
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 8642B58105B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 09:51:27 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D76AC1F654;
+	Mon, 14 Sep 2026 09:51:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
+	s=gm1; t=1789379480; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:in-reply-to:in-reply-to:  references:references;
+	bh=E8xW+tUodOajGp7idrinqcCpQ2T+Mjybso6K+IxuRM4=;
+	b=FllqzqXC1ja7JQ7/ZynxNwm2LrCk/P5JVPmaAIAh0wY+MkJ61v/RShkmCJVanSZ7RodY/Z
+	fLxJq6eGLihaGxJsVEdCmOQrb/16AEwmUMqhHf5NNAleluqKg4VyBuECnmlM+bAzzCkryd
+	kx2pxm/eMVPuazcrxSxDDYpv9Y+nmxX8kGxopMXUucwb97q7XTUbDFTUw6Jix5Phd/LFDI
+	YoaZN06xq7pEJ/IvSPCfTZy3PrGtvo8xXrPUpfjAqeCr1JN4uL9GvHqgxzW+fk5QtuD9dE
+	GWfbM7nDoO5uq4K4Zxm3OPoz235ZD5Wjk7Q8IZli4xxjH55sLBPuADw4QtyRqQ==
+Date: Mon, 14 Sep 2026 11:51:17 +0200
+From: Arthur Crepin Leblond <arthur@marmottus.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH net-next v7 1/3] dt-bindings: net: wiznet,w5100: convert
+ to DT schema
+Message-ID: <20260914095117.GA719298@marmottus.net>
+Reply-To: arthur@marmottus.net
+References: <20260904-wiznet-link-gpio-v7-0-69f01b70c96f@marmottus.net>
+ <20260904-wiznet-link-gpio-v7-1-69f01b70c96f@marmottus.net>
+ <20260905123628.AF03E1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28123/Mon Sep 14 08:24:19 2026)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260905123628.AF03E1F00A3D@smtp.kernel.org>
+X-GND-Sasl: arthur@marmottus.net
+X-GND-Score: 0
+X-GND-Cause: dmFkZTGp4xOWI0AdXGoLPHSO91iYdSLtEdQ6Om+eFyJHMqFRF2lr7ogGyK+00aksqXTQkqs8DuUwAJjE15ilokOwbHLb9f6xe1HlKl3QYfOOwAwHDhdmHk2rXZQEEXkWjen8LpLjfjlgYFqOSFQvjvedKbltH8XqIee4f0CmDCwxQeZFe1NAVfpvU+2Lo4huf9/nXBTQSWaS8z4q4+h0u1eWCqHzc3+ITfR+irI9NF1i6pXaZ2YmDazzLcK6hKwyrYvKuECDMMGw96z3raqcMxMACJSa2pFmDjm2nQTRbmKCyoV7oHtn6Slc7URvAXY3YzK55AS+znc/AvtqNo98Kmm5vtqIGwexyScKAF4AuK2fVib8ydJihHmIMeUxfXp8VGo0dPkLRg6FtegaeBGdXZuN0m/Az9nKzPEkxhITUX1KrCbz/sNSoifNOMbDTKuEYlDQGV5oXxTjaoTphC2FOafV49nOBeHiSe3ZIQP7nrGEV2B5nEl+riPgiaRd0rt9We2NEO7/DdSACwDkff47IztBthSUg6E5mNuphPTJAWrXZuOdIEufKCn4xH9mHFRF3jM+JIlhQIc7VHu6dYvEd0+msByedEhbbj+tQwPOxMRJ8sj8wm67ZrAlOJXl9AvKme79wwUJnoaws7RFfda3BFhAvHSQnRypCZUh13wV9u4sIL1khw
+X-GND-State: clean
 
-On Thu, 2026-09-03 at 15:09 +0200, Krzysztof Kozlowski wrote:
-> On Wed, Sep 02, 2026 at 03:10:09PM +0200, Nora Schiffer wrote:
-> > On Wed, 2026-09-02 at 12:31 +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 3 potential =
-issue(s) to consider:
-> > > - [Low] The custom, device-specific property `output-gain` lacks a ma=
-ndatory vendor prefix.
-> >=20
-> > Probably makes sense to add the vendor prefix, will do in v2.
-> >=20
-> > > - [Low] The `output-gain` property incorrectly exposes a raw hardware=
- register value directly to the Device Tree instead of describing physical =
-units.
-> >=20
-> > According to the datasheet, the LED current is calculated as follows:
-> >=20
-> >     Iled =3D output_gain * 900mV / Rext / 4
-> >=20
-> > If we want to fully describe the output gain using physical units, some=
-thing
-> > like output-current-microamps and external-resistor-ohms would work. Th=
-ere
-> > wouldn't be a meaningful default for these properties to describe in th=
-e binding
-> > docs however, which is possible for "output-gain" (as the driver just s=
-ets that
-> > to 127.)
->=20
-> Output current is already there, no? led-max-microamp? So basically you
-> would be re-describing it... although I understand that for your case
-> you need two properties (also the resistor) to calculate the value to pro=
-gram.
+On Sat, Sep 05, 2026 at 12:36:28PM +0000, sashiko-bot@kernel.org wrote:
+>Is the changelog description out of date, or was the dynamic property logic
+>unintentionally dropped from the schema during a rebase?
+>
 
-One other idea I had was to treat the output gain as a single value, but ha=
-ndle
-the constant factor in the driver, so it defines just the Iled * Rext term =
-with
-unit microvolts. This could be used in the Device Tree as follows:
+That's a changelog mistake from my side, it was meant for the second
+patch.
 
-    /* Configure an output current of 15000uA for Rext =3D 3000Ohm */
-    nxp,output-gain-microvolts =3D <(15000 * 3000)>;
-
-Two notes regarding this approach:
-
-- These "microvolts" do not correspond to any actual voltage, but the full
-  "microamps-ohms" seems very verbose.
-- It is unclear to me whether using physical units actually makes this bind=
-ing
-  more generic. I have not worked with other LED drivers, so I don't know h=
-ow
-  common the concept of a gain that relates the current with an external
-  resistor is.
-
-
-Opinions?
-
-Best,
-Nora
-
-
---=20
-TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
-any
-Amtsgericht M=C3=BCnchen, HRB 105018
-Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
-neider
-https://www.tq-group.com/
+Arthur
