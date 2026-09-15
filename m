@@ -1,100 +1,132 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EEB4CE678
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 19:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789499090; cv=pass; b=kagaoDb+pDi/GlnE9lZosZeXNK/Y98LZkyV7sveFwLW6B/brwIWydtdsUmtUin5AvnXdyaQOb/oavNYQ8R1La/N28GfRKh8DxxM7RxEeFauXf7Ar49upLreW6PceeSyO6A0ppT0TSMUAZ66uohZtTshZn28ssP4S++dXVAb4VQw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789499090; c=relaxed/simple;
-	bh=CG49oeYgRKGkXZIpez+UfckpNF7tbwFkBXsCCjJfd80=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B3D42F712
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 19:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789500436; cv=none; b=OiJzmMFoJmFA3ApCJrkd7wVH4yqaUdfmAmdCFbvAVPKdXv89yzaYjzHh365Wc4I856SAuOiZhfWk7Y2ff2JDimZUEiuN3WWc7xeodhKCRZ5ZpTBy35QDdLoOIFx31wcuFdyenw12PgyF0oKFo1uv+P6rtpUujxYltM8xh13T1Pw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789500436; c=relaxed/simple;
+	bh=6vZzByWooelztu0aVp1ZLBmgN3h7FAk3Frk3TpIOl9g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gRP0ccZdb45dovSwQVNJGscjZWa5VeRDenXcIQiKfSIKKAFdclmMHHqPlZuHwNwqh4TH+QfeQp3AY/s/k7u4K0yqxSHty37NPJTOujRVONe08kwhwGVHVmET7BH39VCCtKeeo6Fd6sNSlmH608rCl5AIUzTC4x9hK71RS+02qwY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com; spf=fail smtp.mailfrom=uber.com; dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b=le1jTG6h; arc=pass smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=uber.com
+	 To:Cc:Content-Type; b=b/VJrYrcTjMiQlsCmLtTtY4lcxt1Pu86Kd5O2V1/Q84m5fseyW5qzhtIZSTqFHVRSSqCzMxJX80px+hGQ6/mLFyw+tnOPNEvtkrei1EfjptqJObPbOAWtKz63SBq80O4Kda9kKfKnEyGbchOXPlrtyD5tV521mybHjbMhNn+lyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NcJtKGti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b="le1jTG6h"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f56039dso26757666b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:04:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789499087; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BQTMeG+lx24BrOegsLo5FlCO3gZYeKwgs6nvkKoVvlxYGIADq1vTyP+3bhL1RNpwv0
-         5zTLMYMYSeegYCz9KEjOUb73ngbluO2VWSIwykH0VRhL3wDQT956PWelJ3NNEaVxk83c
-         A9slHk+mSSv/SrA6EBQNg8qiCn1bbETdJPPjTJkU283Hn6KNOXicET8q93TPaIHvpI/E
-         4j+ygcJtlXnEc+KoDhdAK7ZxKGrrIlWN8pUcoPpWl53Fh2oGUmQYZbW6coXf4OOaBo5e
-         7E3Dx9HMJxiX4eTIMYdzrVDpHF33zQn4ianN1imKBU8xY7a7wGa3OIkQ1N4DVtdGEtPR
-         nUEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=CG49oeYgRKGkXZIpez+UfckpNF7tbwFkBXsCCjJfd80=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=cxG2cAdhMvK0mqH6UHLwZNxDIHCDuGgHdVFF4lUWoSIIFGLTY7mmU4pIri8sG93zfS
-         PcIrh1Jp6wvyoyspngltH2jfq0vkaAxcDZakwhbcaNyRo+Q6cVOCCALtHgJxIqGFBo8/
-         Rxjcy5tv/tHnMZzYEP2T/5BcF1A2wJuPPnhCiXQzDdiwjGCNKgrbjiz/lTFIkC7fzHMV
-         aXL0MdClJVP7//PczcFmXgcOKf9HSQdrDWq+MyeWS+mBJCBwPgZQI9FTyEsR/m0wyUxy
-         plHeICrMdwhbq7BKfU7Yfy4wKBEVOZC6gC3dSQoBoAgobc2O8rd2Qpawn/Y0j4wAoWao
-         lnKg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uber.com; s=google; t=1789499087; x=1790103887; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CG49oeYgRKGkXZIpez+UfckpNF7tbwFkBXsCCjJfd80=;
-        b=le1jTG6h5B4c/ONsqlIIa18VYTWie/QsWr7sHiJZGFyMJ6hqK+Obbca4jrY1ER+Cv6
-         0qihMl7d7qUNqgk2LfaY9LB6lPnMv9uS6xnyZ1zzVegQnsPSkC+YU8Y6m6OX/nxKE5h6
-         KY96rwzzVkouYNB6Y9qEwIxE9eVu1wPnZYUaE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789499087; x=1790103887;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CG49oeYgRKGkXZIpez+UfckpNF7tbwFkBXsCCjJfd80=;
-        b=HLulXVX7cQ6paOSa57D5TehLtH13xpVIZ9JmjJHOi1AOHynXoq3JaIXI/qRp+RqMqA
-         Naf+ZRFgKU3A66q8iNIS8jGcwJEYovbzoKSraS/GO5ggLLSeXAvZTbfeaP69PU7+Ym2m
-         wnEinlNxCUlbNAE5pvG9flOLIS4yppsTpyXl/WG3Wp4yYMMZGyGPRLGs0sOhyP5+NlS1
-         sC3ryVQ3k7jrr0dJZkJI29QN20ymz10G7eJPFCC8VB/f107Cu3V52tmuHeJOe8Ooxm7x
-         IQpcKHdADTlRE2d3gC5U6kCxnoG5DeY76pXAYTNGyCMgDFzMPYWwF1XuXMi7wuxUZ1xn
-         82uQ==
-X-Gm-Message-State: AFuF++nsy6k9ZmkN7tqomFnaTkhHtRHPXLNXPFqJAop/SiDumE0PnFQk
-	zS7WW7FvDks3M6dl59McnoJxvARNJrFGWr8qji/tbr8+1yT45VKnY37Nx4G5U0cmKj77Wszt8mg
-	0S1Cnndl3XO4w/hs9y3nnRKnyztZgLO8YJ6knEkPFxtALINYpbabs2t5+QA==
-X-Gm-Gg: AYBFou0kVH6dLp0bBzF9eDmDjVW/pWEzJNk2XCHBgMV/1L+DykRh0sLfBKbbpRT8F8l
-	4M0Jxu7a6JebgEJ2POmXx+5+4/EMH8SIPkivC8VaRrV6pmqCajW8auLfqiWghK7bsUhQA3Vn/br
-	lnLFeO2wpPT+jwcpZiJKNWZ0IqauVJaF86213C2jcRsjWmpgpLFFsOAgp9aeCeBsHJYVOHHE+Mi
-	jvy4n1NoBIem1xZ1pRraPJgBFqEngmAZKkYr2RuqZnkzSsFQZpTG19CNuBgA1HR3+B47wFhnKAC
-	W1y/HxqYZQSaUB5rTM0m3Kxtc9CobSu7YSOI9dvKT0sr1ZmosuAPReaRXfY9sCajhWsWCCHegxe
-	Wxe48Fl0vvq0=
-X-Received: by 2002:a17:907:1ca4:b0:c29:4204:8dbf with SMTP id
- a640c23a62f3a-c29d7733739mr190073166b.7.1789499086483; Tue, 15 Sep 2026
- 12:04:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NcJtKGti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13451F000FF
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 19:27:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789500434;
+	bh=rLDYLEgq12fxXE7+M4r63hCHWM72Qf52B0aKmQ4FbLI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=NcJtKGtiPdpWAJ2BdUNJmvIPQ8tsmmHxOSQyBuhLdOLeF6+f1wNtsW/Glpy8xhWBX
+	 dVbggJZuGxr7ts5YOGnVLCuTpoF+LhT6CeBr5Po+UX4WB0Ix9JLFtv/JhkcjUHwja6
+	 X8yM26JXcnwkSUSZT+68duo0XvNpRDKEkk4lGkeNK3SCBf9mMXCbX4CWJJgN8criLG
+	 p0Rj8tnwFcvi39N7aNCkl7BEOw75V76pe8aJ0qf0DpIynezvw3Aly4LsP2aRxg3t/J
+	 r58wZe2Aeef1REuJ7cmU2SbhL3QyMd8tFBtG/g1j+ylGdU/sWrJpxkfBRwJEftyRZA
+	 NC9YqOckBVndg==
+Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910cc46c8so15554585a.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:27:14 -0700 (PDT)
+X-Gm-Message-State: AFuF++l1FMhpIjEv8y+llDjRopMwxraebxtiMWmAABRXPvRyqUA70Pgg
+	TKqxROcbi21GqGpYHR2PyVGyEgTg377HqT+IMnJy4uEjY9RQehUEEAlNHx51RD+xEqPRtVRsRV0
+	ZuTegidV2Jj2wdI22/ctpBc9Uo9DqpzE=
+X-Received: by 2002:a05:620a:4889:b0:934:ab73:ac53 with SMTP id
+ af79cd13be357-93a294bf61cmr1354747585a.0.1789500429254; Tue, 15 Sep 2026
+ 12:27:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260915-perf-symbol-memory-send-v1-0-1d3360e21f07@uber.com>
- <20260915-perf-symbol-memory-send-v1-1-1d3360e21f07@uber.com> <20260915185318.0573C1F00893@smtp.kernel.org>
-In-Reply-To: <20260915185318.0573C1F00893@smtp.kernel.org>
-From: Alireza Haghdoost <haghdoost@uber.com>
-Date: Tue, 15 Sep 2026 12:04:27 -0700
-X-Gm-Features: AcwNN1XVfMPCTdeeQv6DV6pTbf4aLmDnQHyCC4-DGkKjtADM5TgV5RXmKioy6qQ
-Message-ID: <CA+w=M=Rpvn9QpbvC4UWex91wNZ39BNmjt2-PaACNS1Rsai3uGg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] perf symbols: Fix broken ELF_C_READ_MMAP fallback guard
+References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-6-song@kernel.org>
+ <20260914233426.D96CE1F000FF@smtp.kernel.org>
+In-Reply-To: <20260914233426.D96CE1F000FF@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Tue, 15 Sep 2026 12:26:57 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW7V1uZHbZ9Qykh65xAVbLBuzkYzYF4-yN6OAL0NfzuDXA@mail.gmail.com>
+X-Gm-Features: AcwNN1UxhkJWbx35k_pBQxChuAFdBspNgPY0YgfDkHAOzIgCKFTB8ou_3OwwylI
+Message-ID: <CAPhsuW7V1uZHbZ9Qykh65xAVbLBuzkYzYF4-yN6OAL0NfzuDXA@mail.gmail.com>
+Subject: Re: [PATCH v3 05/58] objtool/klp: Build klp test fixtures through the harness
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
+Cc: live-patching@vger.kernel.org, mbenes@suse.cz, jpoimboe@kernel.org, 
+	puranjay@kernel.org, kernel-team@meta.com, pmladek@suse.com, 
+	peterz@infradead.org, joe.lawrence@redhat.com, jikos@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> Could we restore a proper feature detection mechanism here rather than
-> relying on an unconditional definition?
+On Mon, Sep 14, 2026 at 4:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] objtool: test harness leaks vmlinux.o state across build_pair(=
+) calls
+> --
+>
+> commit 87b920426dfa2a217d6f9104d0f701cab5d67f5e
+> Author: Song Liu <song@kernel.org>
+>
+> objtool/klp: Build klp test fixtures through the harness
+>
+> This patch standardizes how klp test fixtures are built by shifting the
+> compile steps into harness helpers like build_one() and build_pair(). It
+> also establishes make_vmlinux_pair() to correctly build and diff vmlinux
+> images for tests.
+>
+> > diff --git a/tools/objtool/tests/lib.sh b/tools/objtool/tests/lib.sh
+> > index efe0a71326799..35be42758ece8 100644
+> > --- a/tools/objtool/tests/lib.sh
+> > +++ b/tools/objtool/tests/lib.sh
+> [ ... ]
+> > @@ -179,6 +192,13 @@ setup()
+> >       workdir=3D"$(mktemp -d)" || fail "mktemp failed"
+> >       trap cleanup EXIT
+> >
+> > +     # A test may run several segments, and make_vmlinux_pair() repoin=
+ts
+> > +     # orig_obj at the image it builds.  Start each segment from the
+> > +     # defaults, or the next build_pair() diffs the previous segment's
+> > +     # object against the new one.
+> > +     orig_obj=3Dorig.o
+> > +     patched_obj=3Dpatched.o
+> > +
+> >       export_syms "$@"
+> >  }
+>
+> [Severity: Medium]
+> Since setup() only executes once during script initialization, doesn't th=
+is
+> fail to reset the state between test segments?
+>
+> If a test calls make_vmlinux_pair() (which repoints orig_obj to vmlinux.o=
+)
+> and subsequently calls build_pair() for a new segment, orig_obj will stil=
+l
+> point to the stale vmlinux.o from the previous segment instead of orig.o.
+> This appears to cause run_diff() to evaluate the wrong file.
+>
+> [ ... ]
+> >  # build_pair <fixture.c> [cflags...]
+> >  build_pair()
+> >  {
+> > -     local fixture=3D"$FIXTURES_DIR/$1"; shift
+> > +     local fixture=3D"$1"; shift
+> >
+> > -     [ -f "$fixture" ] || fail "missing fixture $fixture"
+> > +     build_one "$fixture" orig.o "$@"
+> > +     build_one "$fixture" patched.o "$@" -DPATCHED
+> > +}
+>
+> [Severity: Medium]
+> Should the state reset logic for orig_obj and patched_obj be placed here =
+in
+> build_pair() instead of setup(), to ensure run_diff() evaluates the corre=
+ct
+> objects when multiple segments are executed?
 
-Thanks, this is a valid concern. I=E2=80=99ll restore the compile-time
-feature-libelf-mmap probe removed by 22dd1ac91a77 and use it to select
-between ELF_C_READ_MMAP and ELF_C_READ in v2.
+This doesn't appear to be a real issue yet, but we will move these two
+line to build_pair() in v4.
+
+Thanks,
+Song
