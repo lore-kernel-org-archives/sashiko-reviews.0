@@ -1,111 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-96.mta0.migadu.com [91.218.175.96])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F9017BCA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118B443B6D3
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 22:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.96
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789509377; cv=none; b=GOjMHmN7wzCNfP8HOcUJC7XnxYvnTjq0+Dfyg85oACxPKcmRNMdcbw2/UsM5CUXPFn2n9HtbK25wan7LzAqh5vHlOE7Co8yOzkbPbXJH7piizjByoZApna3prGWlRm6yZFs9wu7c/mcI6sHJL1C6/iSBDsnF5ImQuCCu6+yHe30=
+	t=1789510109; cv=none; b=kv+K7mkbzula5rj05UV7hs3ujyWYkaWn/j0opESaUNd3AN6tjNtC6QGyUjP/BGxgcC06RTZWl49i6t8PZ3bErjLYmb9dHMy5B7/NJ+yXCxf1fyb0piP/tpl8gE3fYBkWDxD3TtEOi3ESd+tQKWmF77wjrSy98p2LBMB5VmDI4gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789509377; c=relaxed/simple;
-	bh=gKPQVc+cna4+Hx3kVZSzb88SEZbuTTuSs2FHp81Jemw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ofe3tJ5mg5n/oiRbywTfU+Mq4W3eTzJm8oD9ynSI5juB7CG0SzbEY698b4iT00IZ6wzFx8awTv6a7LhxVGjdX0xuI27FoAHWnMCIVCEarFQwrNQtQrNuMUF0+4BI5fYA+Xy3A2rng+ketb4TuUqDNX2Qdj5mytyYtyBxkcBH17o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUv2AeVQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789510109; c=relaxed/simple;
+	bh=A37HkCwaw8sH5HmzUhu1ht6ab73vHd8c3KMufJ/82cA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EIeUO9GJeEQvLbZE+NNzRx6v6pr+Xh0boXG88gzUXEutjz5Ppt64c0V631kbib0PvyFVIVJXhwRDFCHNrLRfLk0K+1YWFzYZlOcwy3sVsPzJ0o5kZF7Zn6xByXQCA8bt/J5WKxU43WMGKh5/IFkopm/nV+XBS8kZXYPnN8pvDuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dkZDbISg; arc=none smtp.client-ip=91.218.175.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUv2AeVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12701F0089E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:56:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789509375;
-	bh=Tk2ETKTorV/A6TS8+8Wkf7n3G73+O0mzgbaD7rvcfy0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=OUv2AeVQ/pyEVkoBhhkDHBZ62XdLnI3aaLrHK7U+FkpIqoJpOF95fGczifsI7fjxF
-	 5oC5laQNz2ibS5mcj6fphjVXJ0rK3IF28V7ZGDnhAKC1flLwnCSsqGZzbT8Gumiyp4
-	 0bEZkwtpSuFrm91ABkH8Ciqb0iBwbF9GnBdunTKigKzn+uQcXYY0c68ztu8esqdkQx
-	 SkwK9cEa5N41YffQCnSiBvYbBnceEKsANgk9Yo2q8QwVeL8Z6c5J3mbhPwycErTDiF
-	 2m9xFcdBDEvlAIfsrIJC35MVru/lRttOEJAxYxU9lwnJ1aXUhTqTm0iMM5c144MIez
-	 R3M4IewEFJDbQ==
-Received: by mail-qk2-f43.google.com with SMTP id af79cd13be357-93910a0cb7cso21021585a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 14:56:15 -0700 (PDT)
-X-Gm-Message-State: AFuF++lcfHC2WpCntabPCxjtpbu7eQmU8f5j5zlvnDlpLGyPrI1Sx2wG
-	08MvDpMprVeFK09gxVx3CP5jtmZTF7JO2yN3eXJT39ejRPgfY5KBBx6WJu5/AlWLmd4VDRG/ZJk
-	XLEuIeEds/cd1yHJggqRmg/FOTYk5eGY=
-X-Received: by 2002:a05:620a:8014:b0:939:fce5:f6d2 with SMTP id
- af79cd13be357-93bb78f9fcemr12260585a.27.1789509374826; Tue, 15 Sep 2026
- 14:56:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dkZDbISg"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=A37HkCwaw8sH5HmzUhu1ht6ab73vHd8c3KMufJ/82cA=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789510105; v=1; x=1790114905;
+ b=dkZDbISgzSqy2OED2wgyTSNK7k9ndtn5twc0ShLTgmAJOh0tiUpyYFSL7YLzZupHBeCc28mo
+ eITXLxwfA1qfogfWXxA1VsHiOS+A2lLGHE2AI39qVN0XNKGGLEzvu1q4swGMnI11WtMfENwNWCa
+ 8mbK19oMwUTtZcYPofQ1OE/0=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 89c315bdab0e4b39;
+	Tue, 15 Sep 2026 22:08:24 +0000
+X-Mizu-Trace-ID: 89c315bdab0e4b39
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b1f31312-0f2d-4965-9bd4-d27a11b9d9fb@linux.dev>
+Date: Tue, 15 Sep 2026 15:08:22 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-15-song@kernel.org>
- <20260914234620.122791F000FF@smtp.kernel.org>
-In-Reply-To: <20260914234620.122791F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Tue, 15 Sep 2026 14:56:03 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW4+CgzPEsosV3dzw5BhBty1eiLwSPVTk3QazN+_nKh4ow@mail.gmail.com>
-X-Gm-Features: AcwNN1UdB_AtXXP_PuSuSEcBB1v4fjnD2paULr2tbVU4aGfVGfyL9qC8Kz-ZqB0
-Message-ID: <CAPhsuW4+CgzPEsosV3dzw5BhBty1eiLwSPVTk3QazN+_nKh4ow@mail.gmail.com>
-Subject: Re: [PATCH v3 14/58] objtool/klp: Add test for newly introduced functions
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 12/13] bpf: track low-32 scalar equality
+ across narrowing stack spills
 To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, pmladek@suse.com, peterz@infradead.org, 
-	joe.lawrence@redhat.com, jikos@kernel.org, jpoimboe@kernel.org, 
-	puranjay@kernel.org, kernel-team@meta.com, mbenes@suse.cz
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260910164635.459558-1-vineet.gupta@linux.dev>
+ <20260910164635.459558-13-vineet.gupta@linux.dev>
+ <20260910170600.0DFBA1F00893@smtp.kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
+Content-Language: en-US
+In-Reply-To: <20260910170600.0DFBA1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 14, 2026 at 4:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] selftests/objtool: fragile symbol check matches section names
+On 9/10/26 10:05 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Sign-extending loads from 32-bit narrowing spills incorrectly inherit and preserve a `SUBREG_ZEXT` link, causing a critical discrepancy between verifier bounds and runtime values.
 > --
 >
-> commit da3ad59507d5d910ed876f2401fd7f2746140303
-> Author: Puranjay Mohan <puranjay@kernel.org>
+> commit 3396576ba1c56571ccd9a040716058594f558da8
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
 >
-> objtool/klp: Add test for newly introduced functions
+> bpf: track low-32 scalar equality across narrowing stack spills
 >
-> A function added by the patch has no original to correlate against, and
-> still has to be carried into the livepatch or the changed caller ends up
-> referencing something which does not exist.
+> This commit allows the verifier to track a SUBREG_ZEXT relationship when a
+> 64-bit scalar is narrowed during a 4-byte stack spill. This preserves the
+> knowledge of the lower 32 bits for subsequent loads.
 >
-> > diff --git a/tools/objtool/tests/generic/test-new-function.sh b/tools/o=
-bjtool/tests/generic/test-new-function.sh
-> > new file mode 100755
-> > index 0000000000000..17af18545b7de
-> > --- /dev/null
-> > +++ b/tools/objtool/tests/generic/test-new-function.sh
-> > @@ -0,0 +1,17 @@
->
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 6cb35fc0d0fb0..9e63eddb9023b 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
 > [ ... ]
+>> @@ -3678,8 +3687,15 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+>>   			 * it came from.
+>>   			 */
+>>   			coerce_reg_to_size(&state->stack[spi].spilled_ptr, size);
+>> -			/* Break the relation on a narrowing spill. */
+>> -			clear_scalar_id(&state->stack[spi].spilled_ptr);
+>> +			if (subreg_link && reg->id)
+>> +				state->stack[spi].spilled_ptr.subreg = SUBREG_ZEXT;
+> [Severity: Critical]
+> Can this lead to verifier state corruption when the spilled value is later
+> read with a 4-byte sign-extending load (BPF_MEMSX)?
 >
-> > +setup
-> > +build_pair new_function.c
-> > +run_diff
-> > +
-> > +assert_patched target
-> > +out_symbols | grep -q 'klp_new_helper' ||
-> > +     fail "new function was not carried into the patch"
+> If a BPF program performs 64-bit arithmetic to create an unknown scalar and
+> spills it to the stack via a 4-byte narrowing store, it records a SUBREG_ZEXT
+> link here and coerces its bounds to 32 bits.
 >
-> [Severity: Medium]
-> Will this grep check falsely pass on newer versions of binutils?
+> If it then reads it back via a 4-byte sign-extending load, when processing
+> the read in check_stack_read_fixed_off(), narrowing evaluates to false since
+> the bounds were already truncated during the spill:
 >
-> It seems `grep -q 'klp_new_helper'` matches substrings, and newer version=
-s of
-> binutils print section names (e.g., `.text.klp_new_helper`) in `readelf -=
-s`
-> output. This could cause the test to erroneously pass if the section symb=
-ol
-> is present but the actual function symbol is missing.
+> 	bool narrowing = get_reg_width(reg) > size * BITS_PER_BYTE;
 >
-> Could this be updated to use the robust `assert_symbol` helper provided b=
-y
-> the test framework rather than directly grepping `out_symbols`?
+> As a result, subreg_link is false, and the verifier skips the
+> is_ldsx ? SUBREG_SEXT : SUBREG_ZEXT correction logic. The destination
+> register blindly inherits the stack slot's SUBREG_ZEXT link.
+>
+> In check_mem_access(), coerce_reg_to_size_sx() properly sign-extends the
+> loaded value's bounds, but because the subreg link is non-zero, it skips
+> breaking the scalar ID:
+>
+> 	if (!no_sext && !regs[value_regno].subreg)
+> 		clear_scalar_id(&regs[value_regno]);
+>
+> The register now has sign-extended bounds but a SUBREG_ZEXT link to the
+> original 64-bit scalar.
+>
+> If the original scalar is later refined, sync_linked_regs() will invoke
+> reconstruct_zext32(), completely overwriting the sign-extended bounds with
+> zero-extended bounds. The verifier will incorrectly assume the register holds
+> a positive value, while at runtime it holds a negative sign-extended value.
+>
+> Does this permit arbitrary out-of-bounds kernel memory accesses?
 
-Fixed in v4.
+Yes there's a bug here. A narrowing spill records SUBREG_ZEXT, 
+truncating the slot, and a later 4-byte ldsx has narrowing == false, 
+inherits the slot's SUBREG_ZEXT  leaving sign-extended bounds under a 
+zero-extending link.
 
-Thanks,
-Song
+Fixed by making the sign-extension path drop any link that is not 
+already SUBREG_SEXT:
+
+   -   if (!no_sext && !regs[value_regno].subreg)
+   +   if (!no_sext && regs[value_regno].subreg != SUBREG_SEXT)
+               clear_scalar_id(&regs[value_regno]);
+
+Also added a test to that effect.
+
+Thx,
+-Vineet
+
+>
+>> +			else
+>> +				/*
+>> +				 * Nothing to relate: either the source has no
+>> +				 * id to share, or the store is narrower than
+>> +				 * the 32 bits a link can describe.
+>> +				 */
+>> +				clear_scalar_id(&state->stack[spi].spilled_ptr);
+>>   		}
+
