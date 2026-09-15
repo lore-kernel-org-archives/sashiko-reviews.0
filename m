@@ -1,186 +1,231 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F94C3C1970;
-	Tue, 15 Sep 2026 14:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595DA47F2CC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 14:46:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789482862; cv=none; b=rsGTO/TstIbVH+SaCtaVdFqtQiPNSH8frIeBWt9b8leHg05NueCT3oyFqVic74C5NdDjOuBpJJzElCKOcMGkuXKikSm7tfPvzA9gX665x1BxtKSVVdOUl+lkw6lfNcstDQl3Jqs4LVevWc+lNLMBRXSvU6egUxxdGlCzpDNaJpo=
+	t=1789483625; cv=none; b=k4cQQcpFOeHdOfDA314Z6BPMqrGNjyf0t7ZTVtr/9yMxt+soDDws0vRrXBdMFtJ6UrK+GmoZwgSF0hG38qSuzQoH3BR92X1g5rWLcq36wpFtDVfHAXDuTAmXOSTefzFqDB9a1M6h8b5AibazX9+mZD+GIr1w8WSL3OIEG5Ftpfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789482862; c=relaxed/simple;
-	bh=8bv+/h4lZvkpcyPGdIrWEtBJS/FfAgOnu6jxAERwwzg=;
+	s=arc-20240116; t=1789483625; c=relaxed/simple;
+	bh=MczMyZ/5WpjnK3wtlqRK+hsmtRpFJuXNeJAZ4SM1PO0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VrQ6n+nf4h7+9Uwcd3VGUR5Y8y1EcC60fqRjq1T2uNXjgDxVBdpxsZn19vV4G1zGTeJJh/ToGjcRhmLBm5NiXPh56PQ9S55lpq28zyIXfDhlHWUhWoIekMRKozKWNjKn2QvE5BrgLnH+J5Nst6vdrQwpi72YZXAdHEg4vRiBF+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=rxIZo+ME; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	 In-Reply-To:Content-Type:Content-Disposition; b=fcVrGyZXKz8h+pra7rKcMfzPN0Bi5XR5WjaN5ZbDS1zLFUKIUJU/Xd0EeyC9X18TT6Qm5Ynw5QuylF5IlK+hz9lsE5XXwZwVbdFcHujsO7O/XNTagYQtT1A/pLWaj0MkL14Dma6E7HQar7JG/CR8HX1KOcTQXosUngdFxSOaneA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=jJvsJ1qh; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="rxIZo+ME"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=lDBTit4NoXLRMGpd4sVgLpWCd4j9Sa9yMZ+BGUjsUHM=; b=rxIZo+ME/rnXqtE9cMmhwEEDF8
-	herFmWck0rdzUOYTwXmZp0pi2WTQkMtFZNmZgCe0aEf9jVCe0Fu1nbdZWoIal6/iUa2akZj1+HXbC
-	+GLyz8VgoecklgzBC+RQ0T30hnVb2tPPJHlVdbwNN12DbSHBCszNGMMRvZDagv7QXAylN+YTwSUpT
-	EKdKzj8I1gZugRwDY3wWMw3szm63xr/sJAZZ9dyFVm//APAxrwVmHwFgeCM7y89NHhxaUXsVXvy/7
-	0aLs3fr2d8hoF0rhzA/vk7+SaxeIokLEUqWp9SqGvSmnLn5m+JK1SaAXp6Ycl37ZbKo9tDy/xHHr/
-	i7HszdgA==;
-Received: from authenticated-user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1x6UEZ-004Scw-23;
-	Tue, 15 Sep 2026 14:34:07 +0000
-Date: Tue, 15 Sep 2026 07:33:59 -0700
-From: Breno Leitao <leitao@debian.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: David Hildenbrand <david@kernel.org>, 
-	Naoya Horiguchi <nao.horiguchi@gmail.com>, kas@kernel.org, Zi Yan <ziy@nvidia.com>, hannes@cmpxchg.or, 
-	shakeel.butt@linux.dev, "Liam R. Howlett" <liam@infradead.org>, 
-	Miaohe Lin <linmiaohe@huawei.com>, Brendan Jackman <brendan.jackman@linux.dev>, 
-	Andrew Morton <akpm@linux-foundation.org>, Thomas Gleixner <tglx@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, x86@kernel.org, Lorenzo Stoakes <ljs@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
-	"H. Peter Anvin" <hpa@zytor.com>, Ard Biesheuvel <ardb@kernel.org>, Borislav Petkov <bp@alien8.de>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Danilo Krummrich <dakr@kernel.org>, 
-	Michal Hocko <mhocko@suse.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Oscar Salvador <osalvador@suse.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Mike Rapoport <rppt@kernel.org>, kernel-team@meta.com, kexec@lists.infradead.org, 
-	linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org, 
-	linux-mm@kvack.org, rmikey@meta.com, driver-core@lists.linux.dev, riel@surriel.com, 
-	harry@kernel.org
-Subject: Re: [PATCH v5 5/9] mm/memory-failure: efi: record hardware-poisoned
- frames into the poisoned-memory table
-Message-ID: <aqlVkbx8j5cQ3eNX@gmail.com>
-References: <20260915-hwpoison-kho-v5-0-3bc7a57bd503@debian.org>
- <20260915-hwpoison-kho-v5-5-3bc7a57bd503@debian.org>
- <20260915133629.700EE1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="jJvsJ1qh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1789483616;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=d5N5AF827aB5n+anIjvA7OfREw3AKCiRNrgDChZLUg4=;
+	b=jJvsJ1qhOufbU4PbMABUtTXljFQkcZhBZn1743zj+FTtWGE3dblEfpPw2QtpbEFspdjjK+
+	oAW//IXEN0wRWngoBZcBqmAQFtuxrIqu7iM9Cu2TnF5TOS8H5g5Aj0aXw4qBU8gcO/aTDQ
+	Z3pmK/t5glIlxdvoQOoX5kfwQQlNToU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-104-uT6qjl_TM6eexfwqMEYv1g-1; Tue, 15 Sep 2026 10:46:54 -0400
+X-MC-Unique: uT6qjl_TM6eexfwqMEYv1g-1
+X-Mimecast-MFC-AGG-ID: uT6qjl_TM6eexfwqMEYv1g_1789483613
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-49e6b5c5f44so26245735e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 07:46:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789483612; x=1790088412;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=d5N5AF827aB5n+anIjvA7OfREw3AKCiRNrgDChZLUg4=;
+        b=v4iAOcrZkRip1d9XomanHzXmsOt4uUwKubaGBuY57aYg4gdcP0/GCf5jaq1fKEh+Gs
+         TrE1YwGC1fKvCNsmdmAyzpnOEFsd298D9YMLoXo65LAY4FyhoRTpFCtS/JFwzFCEcw8C
+         xRdfUBmfoTVyE7yJnQE9NJvSphb0ZJ3Yews/8GbbykuG/izFwiHh6qHLpP+zRx7dIdOS
+         psuBeOXlHXglrAOrKB8GRQVBmW7yOrS7ZRXVl86Hml9JC3VJAD/iUhwRD8I+JTmxG82H
+         Qnx/Fl1r2BBQG/yfT0c7jHLmRI/70JHoMMKWRJXqcgF2rYmTzTxN57Qyvokuw0GhGy1r
+         UDpA==
+X-Gm-Message-State: AFuF++mKjxNiCsAIgOagZgBaIchDSa5RSfMTc91qw3jYgWYQhII+j7sY
+	EryEUJW9krhystOXL+HX+j1ghG+SABzSMjlWUIiz/fhdRdGMbG3Zv/k3Orq1ZnFme1dnKMircu3
+	95OCHvFZZ1FSx94OB38iDdFfwTsxBRYjC3RuX/e8CLTm1DBsr+jsABCebEFxPNWdE7bHd/g==
+X-Gm-Gg: AYBFou1XMaerC+657heopqxqMrTFtz760e5yY48kSJ7soj+STvuIC+QdarM8Wzeinu3
+	fdWlk1JoTNH/Y33S6uNYH4X9dS38vA3M8j1hdvYt3nOXawqS4H6U43LnS0GEdHHrFCuFmP3RSPM
+	1ResfkqudWR+fN5KrUcBYIlzhrFsD+Qp3Y503iZCF6DhNm9/Rnu14kgmJQasnxiirhA3VVyJbPn
+	ojDr96d+kEvsIfxIrvWgwsn/qVbgk+UcQfUHb0j8pl1UqdNhLFWy7Hu3fEaJxkS5JIeUZSDQg1z
+	Vydr36WJ+Z2CVS6Vbzq5DSVURivV7vde/9QaZRtQP5N2mGEav18T0UxKsePtyKPIfkE03aKIW/L
+	b6ahKe5PAtKxh4GhnNm9XF6U=
+X-Received: by 2002:a05:600c:620e:b0:49c:fa21:1c89 with SMTP id 5b1f17b1804b1-49e7a69c01fmr110713925e9.30.1789483612394;
+        Tue, 15 Sep 2026 07:46:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:620e:b0:49c:fa21:1c89 with SMTP id 5b1f17b1804b1-49e7a69c01fmr110713235e9.30.1789483611807;
+        Tue, 15 Sep 2026 07:46:51 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49e83b02211sm325185e9.9.2026.09.15.07.46.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 07:46:51 -0700 (PDT)
+Date: Tue, 15 Sep 2026 10:46:48 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jia Jia <physicalmtea@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, virtualization@lists.linux.dev,
+	Eugenio Perez <eperezma@redhat.com>
+Subject: Re: [PATCH] vhost-scsi: do not relock event vq mutex on send_evt
+ fallback
+Message-ID: <20260915104624-mutt-send-email-mst@kernel.org>
+References: <20260912090420.47439-1-physicalmtea@gmail.com>
+ <20260913090452.2B8221F00893@smtp.kernel.org>
+ <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
+ <20260915070050-mutt-send-email-mst@kernel.org>
+ <CAJwVaMLsAcRt609Wmz=G-G3j7xDj5+0QK-Ck2ko1pcwerMeb5w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CAJwVaMLsAcRt609Wmz=G-G3j7xDj5+0QK-Ck2ko1pcwerMeb5w@mail.gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: MOCRFT9NtnGZQuKRFMa867p8hmlunW1yhbiNKLCTa0o_1789483613
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260915133629.700EE1F000FF@smtp.kernel.org>
-X-Debian-User: leitao
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 15, 2026 at 01:36:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] efi: memblock_add() with PAGE_ALIGN_DOWN forces adjacent MMIO into system RAM
-> - [High] efi: ABI breakage in linux_efi_poisoned_memory due to native word size
-> - [Medium] mm: hard memory failures on soft-offlined pages are omitted from EFI table
-> --
+On Tue, Sep 15, 2026 at 09:30:27PM +0800, Jia Jia wrote:
+> >
+> > On Mon, Sep 14, 2026 at 04:38:57PM +0800, Jia Jia wrote:
+> > > >
+> > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > >
+> > > > Pre-existing issues:
+> > > > - [Critical] vhost_scsi_do_evt_work() accesses vq->iov[out] without verifying that the guest actually provided an input buffer, leading to arbitrary user-space memory corruption.
+> > > > - [High] Events are processed in LIFO order instead of FIFO, which can cause state corruption for hotplug/hotunplug sequences.
+> > > > --
+> > > >
+> > > > commit 05830c30fc2e4dc682c270a9b487ae5abb66218b
+> > > > Author: Jia Jia <physicalmtea@gmail.com>
+> > > >
+> > > > vhost-scsi: do not relock event vq mutex on send_evt fallback
+> > > >
+> > > > This commit resolves a deadlock during fallback event handling when the vhost
+> > > > worker has disconnected. It splits event completion into an internal unlocked
+> > > > helper and a locked wrapper to safely reuse the completion path.
+> > > >
+> > > > Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel.org/
+> > > >
+> > > > > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+> > > > > index 4f8c0260bc9e7..42abf18291b75 100644
+> > > > > --- a/drivers/vhost/scsi.c
+> > > > > +++ b/drivers/vhost/scsi.c
+> > > > > @@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, struct vhost_scsi_evt *evt)
+> > > > >       vhost_scsi_log_write(vq, vq_log, log_num);
+> > > > >  }
+> > > > >
+> > > > > -static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
+> > > > > +/* Caller must hold the event virtqueue mutex. */
+> > > > > +static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
+> > > > >  {
+> > > > > -     struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
+> > > > >       struct vhost_scsi_evt *evt, *t;
+> > > > >       struct llist_node *llnode;
+> > > > >
+> > > > > -     mutex_lock(&vq->mutex);
+> > > > >       llnode = llist_del_all(&vs->vs_event_list);
+> > > > >       llist_for_each_entry_safe(evt, t, llnode, list) {
+> > > >
+> > > > [Severity: High]
+> > > > This is a pre-existing issue, but does this loop deliver events to the guest
+> > > > in reverse order?
+> > > >
+> > > > The events are added to vs_event_list using llist_add(), which constructs a
+> > > > last-in, first-out list. Because lnode is retrieved locklessly with
+> > > > llist_del_all(), and the iteration happens without first calling
+> > > > llist_reverse_order(), the events appear to be processed from newest to
+> > > > oldest.
+> > > >
+> > > > Could this cause state corruption for hotplug and hotunplug sequences? For
+> > > > example, if a device is plugged and then rapidly unplugged, the guest might
+> > > > receive the unplug event first and the plug event second, leaving it
+> > > > erroneously believing the device is still present.
+> > > >
+> > >
+> > > Looks like this could get the acquire order wrong? Need to verify.
+> >
+> >
+> > didn't look into this yet - did u reach any conclusion?
+> >
 > 
-> commit e69689c81050c18119d69206dc9a7cb1e2fa4eeb
-> Author: Breno Leitao <leitao@debian.org>
+> Already reproduced this using a test program. To hit what Sashiko AI described,
+> need multiple vhost_scsi_send_evt->llist_add (at least 2) before the
+> worker schedules
+> vhost_scsi_complete_events(false).
 > 
-> mm/memory-failure: efi: record hardware-poisoned frames into the poisoned-memory table
+> I personally think this is not very easy to hit, first this kind of
+> hotplug/unplug event is not very frequent,
+> even if there are multiple calls, as long as the worker is idle it
+> will run vhost_scsi_complete_events(false)
+> quickly, so pending is often only 1.
 > 
-> This commit hooks memory_failure() hard offline reports into the EFI
-> poisoned memory table so that they persist across kexec. Soft-offlined
-> pages are deliberately excluded to prevent predictive offlining from
-> becoming a permanent loss.
-> 
-> > diff --git a/drivers/firmware/efi/poison.c b/drivers/firmware/efi/poison.c
-> > index 3f12db3dc9b84..847592862f01d 100644
-> > --- a/drivers/firmware/efi/poison.c
-> > +++ b/drivers/firmware/efi/poison.c
-> > @@ -91,3 +91,30 @@ void __init efi_poisoned_memory_reserve(void)
-> >  	memblock_add(start, end - start);
-> >  	memblock_reserve(start, end - start);
-> 
-> [Severity: Critical]
-> Does this forcefully override the firmware's memory map for adjacent 4KB
-> chunks on larger page architectures? 
-> 
-> On architectures like ARM64 where the kernel page size can be 16KB or
-> 64KB, EFI memory descriptors remain 4KB. If the EFI poisoned memory table
-> occupies a 4KB region within a 64KB page, rounding down to the kernel
-> page boundary expands the range.
-> 
-> This could force adjacent 4KB EFI regions containing firmware MMIO or
-> reserved non-RAM regions into system RAM via memblock_add(). If the
-> kernel later maps these regions with Write-Back caching attributes in the
-> direct map, could this cause fatal Machine Check Exceptions or SError
-> panics during speculative CPU accesses?
+> So to reproduce, I created multiple LUNs, and concurrently called 8 ln
+> -s (only triggers RESCAN,
+> no unplug, extra LUNs are just so we can see the lun numbers better).
+> This increases the chance that
+> vhost_scsi_send_evt races in before vhost_scsi_complete_events(false)
+> runs, so there are at least 2+ pending llist.
+> Finally when vhost_scsi_complete_events(false) runs, the guest sees
+> the later-linked LUN first.
+> (before testing I thought this needed a lot of SCSI I/O to reproduce,
+> actually it doesn't)
+> I only tested plug, the guest did see add LUN order reversed.
 
-arm64 already rounds every EFI descriptor outward via
-memrange_efi_to_native(), so it adds no new class of over-mapping, and
-reserve_regions() adds and reserves this WB ACPI-reclaim table anyway
-moments later.
+okay... so llist_reverse_order ? Will that fix it?
 
-So, it doesn't seem relevant?!
+> 
+> > > > >               if (!drop)
+> > > > >                       vhost_scsi_do_evt_work(vs, evt);
+> > > >
+> > > > [Severity: Critical]
+> > > > This is a pre-existing issue, but can this function access out-of-bounds or
+> > > > stale memory if the guest provides an empty input buffer?
+> > > >
+> > > > Looking at vhost_scsi_do_evt_work() in drivers/vhost/scsi.c, the code uses
+> > > > vhost_get_vq_desc() which populates vq->iov:
+> > > >
+> > > >     head = vhost_get_vq_desc(vq, vq->iov,
+> > > >             ARRAY_SIZE(vq->iov), &out, &in,
+> > > >             vq_log, &log_num);
+> > > >     ...
+> > > >     if ((vq->iov[out].iov_len != sizeof(struct virtio_scsi_event))) {
+> > > >         vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
+> > > >                 vq->iov[out].iov_len);
+> > > >
+> > > > If a guest submits a descriptor chain with only read-only descriptors,
+> > > > vhost_get_vq_desc() sets in = 0. The out variable holds the count of
+> > > > read-only descriptors, meaning the first writable descriptor expected by the
+> > > > host would be at index out.
+> > > >
+> > >
+> > > This is a dup -- an earlier patch already fixed it:
+> > > https://lore.kernel.org/all/20260904005240.502787-1-physicalmtea@gmail.com/
+> > > It was while fixing that earlier issue that Sashiko spotted this
+> > > adjacent problem.
+> > >
+> > > > Does the length check above access vq->iov[out].iov_len without verifying
+> > > > that in > 0?
+> > > >
+> > > > If in is 0, vq->iov[out] was not populated by vhost_get_vq_desc() and
+> > > > contains stale data from a previous request. Could a malicious guest use
+> > > > this to force the kernel to write the event structure to a previously
+> > > > legitimate but now hot-unplugged host virtual address via the
+> > > > __copy_to_user() call later in the function?
+> > > >
+> > > > >               vhost_scsi_free_evt(vs, evt);
+> > > > >       }
+> > > > > +}
+> > > >
+> > > > [ ... ]
+> > > >
+> > > > --
+> > > > Sashiko AI review · https://sashiko.dev/#/patchset/20260912090420.47439-1-physicalmtea@gmail.com?part=1
+> >
 
-> > diff --git a/include/linux/efi.h b/include/linux/efi.h index
-> > dd3263456dd4a..56402fdccd114 100644 --- a/include/linux/efi.h +++
-> > b/include/linux/efi.h @@ -1288,8 +1288,10 @@ struct
-> > linux_efi_poisoned_memory {
-> 
-> [Severity: High] Does the linux_efi_poisoned_memory ABI structure
-> break on architectures where the native word size differs from the
-> firmware? 
-> 
-> The struct uses an unsigned long flexible array for the bitmap, which
-> alters the element size depending on the kernel bitness (4 bytes on
-> 32-bit and 8 bytes on 64-bit). efi_poison_geometry_valid() rejects
-> tables where the size is not a multiple of sizeof(unsigned long). 
-> 
-> If a 32-bit EFI firmware generates this table, it will use 4-byte
-> alignment and a 32-bit word array. Because CONFIG_EFI_POISONED_MEMORY
-> is 64-bit only, the 64-bit kernel will evaluate sizeof(unsigned long)
-> as 8 and reject perfectly valid 32-bit firmware tables as malformed. 
-> 
-> Since bit array layouts also differ across word sizes on big-endian
-> architectures, should this firmware-to-kernel ABI boundary use
-> fixed-size types like u32 or u64 instead?
-
-That is not the case, because this feature depends on 64-bits and
-!BIG_ENDIAN.
-
-In fact, CONFIG_EFI is depends on OF && !CPU_BIG_ENDIAN
-> > diff --git a/mm/memory-failure.c b/mm/memory-failure.c index
-> > a2ca8df501cae..d9b8be696aac3 100644 --- a/mm/memory-failure.c +++
-> > b/mm/memory-failure.c
-> [ ... ]
-> > @@ -1326,6 +1327,8 @@ static int action_result(unsigned long pfn,
-> > enum mf_action_page_type type, if (type != MF_MSG_ALREADY_POISONED
-> > && type != MF_MSG_PFN_MAP) { num_poisoned_pages_inc(pfn);
-> > update_per_node_mf_stats(pfn, result); +		/* Only hard
-> > offlines are carried over to the next kernel. */
-> > +		efi_hwpoison_record_pfn(pfn); }
-> 
-> [Severity: Medium] Does placing efi_hwpoison_record_pfn() inside this
-> conditional block unintentionally skip recording hard errors on
-> previously soft-offlined pages? 
-> 
-> Soft-offline marks a page with PageHWPoison but intentionally does not
-> record it in the EFI table to avoid permanent loss for predictive
-> errors. 
-> 
-> If a genuine hard, uncorrectable error later occurs on that same page,
-> memory_failure() will see the existing PageHWPoison flag and pass
-> MF_MSG_ALREADY_POISONED to action_result(). 
-> 
-> By coupling the EFI recording to the meminfo stat increments, genuine
-> hard errors on soft-offlined pages are omitted from the EFI table.
-> Could this allow the next kernel to map and crash on physically broken
-> RAM?
-
-Yes, this one is real, thanks.
-
-soft_offline_page() reaches num_poisoned_pages_inc() through
-page_handle_poison() and never calls action_result(), so the hook does
-not need the MF_MSG_ALREADY_POISONED guard to keep soft offlines out of
-the table. That guard is there for the stats, and coupling to it drops a
-hard error on a page that was soft-offlined earlier.
-
-The frame is not lost for good -- the next kernel hands it out, the error
-comes back and is recorded then -- but that is one machine check per
-kexec that this series exists to avoid.
-
-I will move the call out of the stats guard in v6, keeping MF_MSG_PFN_MAP
-excluded since that path is not System RAM
