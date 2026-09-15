@@ -1,121 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D04D0A0B;
-	Tue, 15 Sep 2026 20:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E684D09E7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 20:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789503909; cv=none; b=J560kSfCusVXvGmV0vYoeqiJrEw7itSkJZ/CeCCVZ+pImXGUlIZ6x0Y6fa8Vf9rpec3dYnh5Sv+4tO05O0uGJhtGvswZfrLzXZe1R7PPSlE7VZyyUodjw+zXYZLBS9zy3vr6qpnbLgBW4MmuawywtHJiYmXPGgSck+FH9V5xRBs=
+	t=1789504273; cv=none; b=g3RQd6jWzicxjsi668vocN2ps9A1Vpf4zTLFRLdqw3s6Z2C2XG14u7xK4YLjgPFaHQOm1eFxiWrWip4Ebf2ldUDpfsjJy2pRcw3JlDSF9iPh9oVvd7dur9RFXlqQ8hnHQtvSdRBcmOiyWRDhX+PJkXATQaIOsYvGcWLfXJbOwEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789503909; c=relaxed/simple;
-	bh=/uQmxJnEI7GMumFCTvLm0x+THBTd2JpBgQwzYCqrYOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kxPC68b8oLMiueFRtHFsVUSDkP88vDuwabqtgsg5Z12q7pZmscrN/So4FP1dSv90uj/UjHkFscDXIOpB8zOq5a1hbSIPDQWsmphXf95uUClKN7oGJczJYm6sN2aqwvg9qptxJWurAGrDeBCQOYGsSjqFavbhozg3+ejGMpyVnt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJi/G0nr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789504273; c=relaxed/simple;
+	bh=D17fcssPPHgntO6sYGtC953/eS33YpklLTz3YG/tHHE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=R+UMA9vIyApYHEwOe+VLPhlkZe5EPk67dTzRcbfXhjsw7eegnXqNhSlRKDVTsMSvx0K2SjRm8Wpb6820JoHC66yx0r4YUSIklBWrQwM13FgL4TpqawHk4VF9eU8ED+CM4AmlMzu5rN9uPf1XYstm2j5C455WLGPxzibZuNlc0I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NOXsrFiY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJi/G0nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340BB1F00893;
-	Tue, 15 Sep 2026 20:25:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NOXsrFiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F751F00898
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 20:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789503905;
-	bh=EoD/r3KYpGurHEFTIS1d5XO7/LlPn8OpaAzlaaTsy0w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LJi/G0nrm6CQ8uO1vWKA73eKCCXoKoBULSw6YbVIutEY3841RE0fv+quuFlYBhmIE
-	 PkVqN+rkd9MINHjKPc2TBkC6/EG/SyuRmeYuOvqG1dD2iIRFuWrWkCYKn7DWVLzUvg
-	 jGym4VicVwuE2StjU84x+lN11DDfINSH6Q9Qv4fIDg+PI8KP1iRBqVDwmAp3bm4nTR
-	 y6wSGwL3WomEOWnHkras5bC4cigcsIPIDiWFdGro82n6s5H3DrybS5Hu1GVRNCsGn/
-	 rO5jwwb/SeXbqh+PNhw/Ge2EugJShSMud+gZYva+vi5FqgImz+HvWXT1sbE5c6H9lH
-	 OLuNVlRBbLYgg==
-Date: Tue, 15 Sep 2026 15:25:03 -0500
-From: Rob Herring <robh@kernel.org>
-To: Rudraksha Gupta <guptarud@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, linux-leds@vger.kernel.org,
-	lee@kernel.org
-Subject: Re: [PATCH v7 1/3] dt-bindings: leds: rt8515: Support single-GPIO
- flash ICs with vin supply
-Message-ID: <20260915202503.GA3364430-robh@kernel.org>
-References: <20260912-expressatt_camera_flash-v7-0-e1fd2edc8d84@gmail.com>
- <20260912-expressatt_camera_flash-v7-1-e1fd2edc8d84@gmail.com>
- <20260913024510.485A11F000FF@smtp.kernel.org>
- <583fd625-b57f-44be-96c8-94d981c29c79@gmail.com>
+	s=k20260515; t=1789504270;
+	bh=FBWXluVx1jaJMNxKKm1HopUNeOzvfDXiWVLOj3is80c=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=NOXsrFiYXO1U/JElBUHiqRgMiMRidi8JBsvS9gN8Slw3a6QifO9u9y78A8wtZTZ+1
+	 HK4Vc1Bb7hSyruFdZonM9kkioNXgwgwAjYju9osN3mQd6oiT/WWoWY7vj6+Fq1w+uO
+	 zvfz93doNhehJpJIdYmWcq40FPudaJQ50rS6BpbEbkq+n5RAQQywiGoasJBX005heX
+	 b1kVe5uJMXfvpYdirbcF/vWFY6v8ZLvi4Uk1URJQmWf2Bj3kruvChimx346EW8o+XF
+	 udTIKxBL1oEt9YDT1djd/WzAyAkBuYV2FOCwTVTvmmxFAGx4JlE29UndCly47tW0tg
+	 lcs9drkCn9aFw==
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-9120eda2195so14325016d6.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 13:31:09 -0700 (PDT)
+X-Gm-Message-State: AFuF++ngy/CL2PiOrBr5cfH+5HhA9sJi25z9Cms3M1wg7L+5rv9FMUP/
+	fIRqPzqrwu4B+xLBIo3VRvw0jQNNVtwqm9ASjc5ugC8A1LTVTB4ZAtpd7fG+XFhlwFJI3pUYlTp
+	CRRkLcQinuP2ZxpuImQGEJbqlDbCpCjg=
+X-Received: by 2002:a05:620a:6f0e:b0:939:72cb:baeb with SMTP id
+ af79cd13be357-93a347253d5mr745846985a.34.1789504269142; Tue, 15 Sep 2026
+ 13:31:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <583fd625-b57f-44be-96c8-94d981c29c79@gmail.com>
+References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-7-song@kernel.org>
+ <20260914233559.2C05F1F000FF@smtp.kernel.org>
+In-Reply-To: <20260914233559.2C05F1F000FF@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Tue, 15 Sep 2026 13:30:57 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW7YG9=dK=QvKuadpzMvLemE0Han1tLV9+_CM+nTo6y2CQ@mail.gmail.com>
+X-Gm-Features: AcwNN1Unt1XARvt-Hw6vtay5AL7lyW8dSkDsaN1M-Hxjcq1U3Tk3n0CrAEb_Xjc
+Message-ID: <CAPhsuW7YG9=dK=QvKuadpzMvLemE0Han1tLV9+_CM+nTo6y2CQ@mail.gmail.com>
+Subject: Re: [PATCH v3 06/58] objtool/klp: Grow the klp test harness vocabulary
+To: sashiko-reviews@lists.linux.dev
+Cc: live-patching@vger.kernel.org, pmladek@suse.com, mbenes@suse.cz, 
+	jikos@kernel.org, puranjay@kernel.org, jpoimboe@kernel.org, 
+	peterz@infradead.org, joe.lawrence@redhat.com, kernel-team@meta.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 12:49:47PM -0700, Rudraksha Gupta wrote:
-> 
-> On 9/12/26 19:45, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] The `oneOf` constraint incorrectly makes `ent-gpios` and `vin-supply` mutually exclusive and strictly requires exactly one to be present, contradicting the claim that `vin-supply` is optional and artificially restricting valid hardware configurations.
-> > --
-> make ARCH=arm CHECK_DTBS=y DT_SCHEMA_FILES=richtek,rt8515.yaml \
->       qcom/qcom-msm8960-samsung-expressatt.dtb \
->       st/ste-ux500-samsung-codina.dtb \
->       st/ste-ux500-samsung-codina-tmo.dtb \
->       st/ste-ux500-samsung-gavini.dtb \
->       st/ste-ux500-samsung-golden.dtb \
->       st/ste-ux500-samsung-janice.dtb \
->       st/ste-ux500-samsung-kyle.dtb \
->       st/ste-ux500-samsung-skomer.dtb
-> 
-> all 8 in-tree users of this binding. 0 warnings.
-> 
-> existing hw passes. 
+On Mon, Sep 14, 2026 at 4:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] objtool/klp: run_checksum failures swallowed in subshells mask=
+ test failures
+> --
+>
+> commit 3b088080b3fc17cb3c6bcdacd83b5a2febf34918
+> Author: Song Liu <song@kernel.org>
+>
+> objtool/klp: Grow the klp test harness vocabulary
+>
+> Adds assertions for the output produced by klp diff, as well as for the
+> input objects. Includes helpers to extract and verify checksums recorded
+> for livepatch symbols.
+>
+> > diff --git a/tools/objtool/tests/lib.sh b/tools/objtool/tests/lib.sh
+> > index 35be42758ece8..1b1baff80a712 100644
+> > --- a/tools/objtool/tests/lib.sh
+> > +++ b/tools/objtool/tests/lib.sh
+> [ ... ]
+> > +checksum_of()
+> > +{
+> > +     local obj=3D"$workdir/$1" sym=3D"$2" off
+> > +
+> > +     run_checksum
+> > +
+> > +     off=3D"$($READELF -rW "$obj" 2>/dev/null |
+> > +            awk -v s=3D"$sym" '/rela\.discard\.sym_checksum/,/^$/ {
+> > +                     if ($5 =3D=3D s) { print $1; exit }
+> > +            }')"
+> > +
+> > +     [ -n "$off" ] || return 1
+> > +
+> > +     $OBJCOPY -O binary --only-section=3D.discard.sym_checksum \
+> > +             "$obj" "$workdir/checksums.bin" 2>/dev/null || return 1
+> > +
+> > +     dd if=3D"$workdir/checksums.bin" bs=3D1 skip=3D$((16#$off + 8)) c=
+ount=3D8 \
+> > +             status=3Dnone | od -An -tx1 | tr -d ' \n'
+> > +}
+> > +
+> > +# assert_checksum_differs <symbol> / assert_checksum_matches <symbol>
+> > +#
+> > +# Compare what klp checksum recorded for a symbol in the original agai=
+nst the
+> > +# patched object.  This is what decides whether klp diff treats a func=
+tion as
+> > +# changed, so a test asserting only that the right functions were clon=
+ed cannot
+> > +# tell a correct checksum from one which happens to differ.
+> > +checksum_pair()
+> > +{
+> > +     orig_checksum=3D"$(checksum_of "$orig_obj" "$1")"
+> > +     patched_checksum=3D"$(checksum_of "$patched_obj" "$1")"
+>
+> [Severity: Medium]
+> Will run_checksum failures be swallowed by these subshells, potentially
+> masking test failures?
+>
+> If objtool klp checksum fails for orig_obj, it triggers the call chain
+> checksum_pair() -> checksum_of() -> run_checksum() -> fail() in
+> tools/objtool/tests/lib.sh. Since this occurs within a subshell, fail()
+> exits only the subshell and its stdout (the "not ok..." string) is
+> captured into orig_checksum instead of terminating the test. No
+> .checksummed marker is created.
+>
+> When checksum_of() runs for patched_obj, run_checksum() attempts to proce=
+ss
+> orig_obj again and fails identically, capturing the exact same failure
+> string into patched_checksum.
+>
+> Both variables will contain the identical "not ok..." error string.
+>
+> > +
+> > +     [ -n "$orig_checksum" ] ||
+> > +             fail "no checksum recorded for '$1' in $orig_obj"
+> > +     [ -n "$patched_checksum" ] ||
+> > +             fail "no checksum recorded for '$1' in $patched_obj"
+> > +}
+> > +
+> > +assert_checksum_differs()
+> > +{
+> > +     checksum_pair "$1"
+> > +
+> > +     [ "$orig_checksum" !=3D "$patched_checksum" ] ||
+> > +             fail "checksum for '$1' unchanged at $orig_checksum, expe=
+cted it to differ"
+> > +}
+> > +
+> > +assert_checksum_matches()
+> > +{
+> > +     checksum_pair "$1"
+> > +
+> > +     [ "$orig_checksum" =3D "$patched_checksum" ] ||
+>
+> As a result, assert_checksum_matches() evaluates to true here, and the te=
+st
+> silently passes despite a toolchain failure.
 
-So?
+Fixed this by moving run_checksum call to checksum_pair().
 
-> Probably not useful to account for hw not in the tree
-
-Oh, yes it is.
-
-
-> > commit 72463777ee1c18e7913b350d5d2ad857810ece89
-> > Author: Rudraksha Gupta <guptarud@gmail.com>
-> > Subject: dt-bindings: leds: rt8515: Support single-GPIO flash ICs with vin supply
-> > 
-> > This commit adds support for single-channel variants of the RT8515 flash
-> > ICs. It makes ent-gpios optional and introduces a vin-supply property,
-> > adding a oneOf constraint to manage their presence.
-> > 
-> > > diff --git a/Documentation/devicetree/bindings/leds/richtek,rt8515.yaml b/Documentation/devicetree/bindings/leds/richtek,rt8515.yaml
-> > > index 0356371a6b014..ab3c5139132cc 100644
-> > > --- a/Documentation/devicetree/bindings/leds/richtek,rt8515.yaml
-> > > +++ b/Documentation/devicetree/bindings/leds/richtek,rt8515.yaml
-> > [ ... ]
-> > 
-> > > @@ -81,10 +90,15 @@ properties:
-> > >   required:
-> > >     - compatible
-> > > -  - ent-gpios
-> > >     - enf-gpios
-> > >     - led
-> > > +oneOf:
-> > > +  - required:
-> > > +      - ent-gpios
-> > > +  - required:
-> > > +      - vin-supply
-> > > +
-> > [Severity: Medium]
-> > Does this oneOf constraint incorrectly restrict valid hardware configurations?
-> > 
-> > The oneOf constraint strictly requires exactly one of its subschemas to match.
-> > If a single-channel IC (which naturally lacks ent-gpios) does not use the
-> > explicitly optional vin-supply regulator, zero subschemas will match, causing
-> > schema validation to fail.
-> > 
-> > Conversely, if a standard dual-channel IC (which requires ent-gpios) is also
-> > powered by a vin-supply regulator, two subschemas will match. This will also
-> > fail validation due to the strict exclusivity of oneOf.
-
-I agree. It makes little sense that you can only have either a supply or 
-a GPIO. If that does make sense, the commit message better explain why.
-
-Rob
+Thanks,
+Song
