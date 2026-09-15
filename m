@@ -1,67 +1,67 @@
 Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com [74.125.230.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC163C3F7D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61CD3C9EDD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789476563; cv=none; b=F/WGD6AW/qolHKQubdpnK/Yz2vRsnxKTxJaCw+zk/tyckgcDzzo86ik8C/63oy5mvRRriDaofhC8qC+1fp+UkS9ImIyQ09fbx0XxI6e564CuIqdWqcAxU4MBxI9zNxadBhrg4tnxjMWiK7T3IuRvJyNIvZAy+tXc/vP1Iv3zAD4=
+	t=1789476565; cv=none; b=SyTk/gmEtOyM0gA/LW5a/i15VIs9efyZm0zAsctM4MwqDrJEOVy38Rgoml7MlAX4xJ+1Dnzkrgvy9ALjgXuSVtJnGW1vXwZZYjOD4OR63OSX8Jt3D7liLGUi/U+4MepB3y47cFbbf4aAxpdN85yQqGld7HXGPape7UXVUTUa0so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789476563; c=relaxed/simple;
-	bh=1CfyMB2h1Lp5gQE5pFkDas8JqDgo931tl90o9e2+poE=;
+	s=arc-20240116; t=1789476565; c=relaxed/simple;
+	bh=oP8ZBzl+K7e7S5kXo+GJljW1HAPBrtpilh/wSXvwTUA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YYAYzncyDjevQnjBzprrt6nusRHm5XZpFjvGaeBJtUhIV3CO9xc/R85TvDY01k2scUrVExqsEtai7oxpo5YhbgpoU/B8QoCjratOqrTd/E7KxTy/Qq0HBzWHiqoOS94cuGONqj+yKOgBWi2rEgnQqzK0gn7aFZMAlkbwkLl+YbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=jdexW850; arc=none smtp.client-ip=74.125.230.205
+	 In-Reply-To:Content-Type; b=W6zSRvX6/0mzBSaZ2RqbytvBV6Q83wiVVslfIS/k8N6GDkiaw5S/95JynPyMRqtPDMXMAi6l00sP7ZEarnFGZepC+z/OVYFOIUHPMMuw5pJQefLLXYKZTAMbSIYwSCzYGl0h69QU2zc8l6EJSQ8Z+LroTK3xtPAXjn1ajubyuFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=ex8z5Cx9; arc=none smtp.client-ip=74.125.230.205
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="jdexW850"
-Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-939695b5741so367162085a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="ex8z5Cx9"
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-939109fafd6so335969185a.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789476560; x=1790081360; darn=lists.linux.dev;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789476563; x=1790081363; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YLVX/S0EuVLiFJIa1AXRvkqCpIEN2ZZSYIPfhR/fxMg=;
-        b=jdexW850Txjb4QVpXGlxawp9XeISWykyenqQdhaCq65zgHMIXg0jYW4Oha4M5Grtqy
-         4lb8aygsDlc2hOYrJL5V7p+TAtojUBoN7sB+uSQGws00vtG2MaLYE653hJDH7T3HRQxB
-         jaPCUt5jRtuUBdW605nzxqoSYSTm064cwfaRsw7dEbiyrri7hIA6D/aZHeFJyiettsYn
-         EVVJ03Lv1AoWtk4/U/NLHmrzsYkZxDwEWLjJSNEVWkrVrLcnOBPsYHzO7L0URL6mzPp0
-         MghkIG1jDlSDlWSlep9F5H/aORpUCMk35iTZi1zQm1teB3AoQ4P9d3Eunup97M1b+Pq9
-         /cKg==
+        bh=J/MVO12tLI/QkQzG/oUBp0JuONjh3E/nA2a8Kxx1dMI=;
+        b=ex8z5Cx98jlz2Z0JoYv4SPq8KjyLrdpjdRgDUd/i9IA9Z0mLyU+luWMm4iI5WeZimy
+         HVXgO0j6H4W8MU/PkikrPi26QU2lavH210BFjHLISACyZyLzFza7jGn/BWbPGUk/UP7n
+         grCyZcluKNCH1I9Pz2ogdO9X1/aPiKvLIGHCGGg4xngvfIFFVRDWO7HxPB/yU2zQ7ztE
+         uSbvgGeHi4hZfQgoqvUzADypwbmq00k0dbmDMiP7Fvkdd0aWF4+98f0OecFaWfKDr1jW
+         Ik7/6se1w2LOdHpti4GKZPsCNNXYBB9V0+kHSClZk8cccLUAzfUafabequbR+mNS7vEW
+         eBLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789476560; x=1790081360;
+        d=1e100.net; s=20260707; t=1789476563; x=1790081363;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=YLVX/S0EuVLiFJIa1AXRvkqCpIEN2ZZSYIPfhR/fxMg=;
-        b=eVErNzSqc0fQ+/88NB+ZByGP98+L9nhccXX1tCAFP6l08ECaNcQ6hGDrX8z6ReximO
-         ARN+UxQ0MWhtd2WY2+9n5178HW62Hb+RL1XVkzJEJ/Y1LVcOiGVhxOANTkUbRtpjkY6K
-         /gNPwlY3PU6v0xfafKxzypK/O3akhFaVB3+PvccTZ3mciywCVPcap6lCzCPNRi4oQodJ
-         IBripbFF4shhzUEMqFGc8qhxxEtTQY9WFE9lap0056Bv3lPhwXqT3qyBRgHYZyoG34Ja
-         2sH+1NouTqBittbSQUHj9yf+FsQ+K/qsNOBA3aFztp06gM/rOfwlSWp72ZjvPmV7fPvl
-         cfsg==
-X-Gm-Message-State: AFuF++no+CoL5pZnNYzXwhTTalRdzeaT5p91Wk3k+7No7dRc7KxKG4kD
-	i6effH2kjfFkdCtWwgf5TSBIJ65aon0Zu69OcZqailDMNpU44bB4XZm8jOAbE0JDUztZgqTIwRN
-	U7CeJ26o=
-X-Gm-Gg: AYBFou3PIiCAxFXcW+fxlQ3Z/InN4ZR6CI2sdQZ81zaTiKjvxIiRJW+KYALyguu/cUJ
-	PY2d/zkuyLbUTKUuaFeUCq3aCvUk7N7Vtca90I5EUxbFoxKjcp2gAMFaHdNy2YwS9DOAjbcvcEE
-	wHUpWJMEhuIsZh8YTKmNhKwNQ3tlPixCHlYoxEnKrDy32EfFinhG/4Erld8HrfhZst7Au0K5VgX
-	V3FR2++BfeZNUre5aUDRFQrzoJ2vbWJ+5Q14oLYZ56wdqLBKU0J5sadNRznuR7Yuxib7EEe1KLv
-	tiTI66GZm5qNaFkcyP3Oz+ET5aZ26MwuFgMzQqtO4ttPB2L93Q25bngnYnHZfcqV7MWLonkRTiA
-	PATYMY2Vmn0/CfBQKP/ja7vR7ZpNHyDtAUTzGLibo07DGeSvj3eBIzwOwAu6WQx/On1vLuqkgZ/
-	33OqeKEtmlzeoPOhsEJVM3oHDvsMgMbEyDskAT2ZbnLwFJ5AEnUvYRChtvKnIFdVR5HmnQ0cY=
-X-Received: by 2002:a05:620a:43a2:b0:939:eb65:bd38 with SMTP id af79cd13be357-93a29a820aemr1092541685a.35.1789476560394;
-        Tue, 15 Sep 2026 05:49:20 -0700 (PDT)
+        bh=J/MVO12tLI/QkQzG/oUBp0JuONjh3E/nA2a8Kxx1dMI=;
+        b=w4gqHSxcj/xqJt9D0af1vLWqYOq6MLiQbOqcAcVWUxu3YexvC80fJaA0CkzSQibyqJ
+         7QAulpE3AxjIPcBf16wsd6v5iX5pq+Q2iVKKvMQGFNl3NdmJDLNZr9CSlqf+vRmrXO60
+         ixiwFbE0L8MavYDGuKzsTodXjB33MtIEJRCD/IohNptHiu9k0YZm7Wu0/TUir3n0sHSm
+         MNOZGKuQZ7OCIARy1DAHjlR9I9V3U84yRFcHb7RPmNNiEz+YbelUJst8rGhRtdj3uQW+
+         tW/JZaNUL5XwauwqpIR728in8PTuEeX/ypBJqkcjcQc4YMf7xkZ0su+1Ycw72B+tdf3/
+         /CTA==
+X-Gm-Message-State: AFuF++nKB3vqgrN4rDs5TgS2I8JTZGRXSTCDISjgy3jVqpoQhM8DV9Hl
+	8ZJy6NxtOxUvuwLsPNRS4W0h5gjHWhjkFhU9dV0s1DIC+GJR7phBLGHF8GTh58khyxzA98nDjue
+	SM8cHsz4=
+X-Gm-Gg: AYBFou25C0bJXC4y5T7zhnGs0ruhH4rRFXfuzhP7HTWtDJ24VcX8VLRfzYbFYnZDtsr
+	zO8vbIb4yM6IubS896PTkNRPjyKWcuwurLoWWW258Hf/FcRZ30KRNTP7FHx8bcDar1/Mwgd00NM
+	ebBjgxffeYollp3q/Fw1ozj/i5gx4UW6+ymE+AhcjHFOEiQ5FdeD0W6L0kKkJVeJ0hhrfdrz9tX
+	jxiTWknqv489JZHyc7G3FgCWkrakdbiiXvcCJ3/ysuTDn2eOWLYq+zAZqwjAlMyuknikTv8ug+1
+	c+HbwtTRs/EjdGepMrHWIuEqUY5ywHt52ISOxeBM8BalxsEn9gEUr7vnNkHP84PwaJ1tD4J7BGh
+	R3iF6cbA+z+Dcx8PcdBWuYmlUCuid5eVKZCptnIjuRJe3Cetilrp3sQnr+UyNenr9+/jowDPIgG
+	3SKRD+/Bibqt3rWKxNi34bjMZI1u1QSaXpymYecnRUiWnhV4Daz8cf/uQ0jCZUrWrAfkx/dwc=
+X-Received: by 2002:a05:620a:1a29:b0:939:6ec8:6928 with SMTP id af79cd13be357-93a2985d5c8mr1045812685a.16.1789476562792;
+        Tue, 15 Sep 2026 05:49:22 -0700 (PDT)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93a382ab7b3sm169560185a.19.2026.09.15.05.49.19
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93a382ab7b3sm169560185a.19.2026.09.15.05.49.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Sep 2026 05:49:20 -0700 (PDT)
-Message-ID: <7de28ce3-fb1c-44cc-96d4-47d21f6a05aa@riscstar.com>
-Date: Tue, 15 Sep 2026 07:49:19 -0500
+        Tue, 15 Sep 2026 05:49:22 -0700 (PDT)
+Message-ID: <7b85bdf3-d3d3-4e06-964a-3e5e969691da@riscstar.com>
+Date: Tue, 15 Sep 2026 07:49:21 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,57 +69,106 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: misc: introduce pci1179,0220.yaml
+Subject: Re: [PATCH v2 2/3] misc: tc9564: introduce base PCI driver
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, linux-pci@vger.kernel.org, conor+dt@kernel.org,
+Cc: robh@kernel.org, conor+dt@kernel.org, linux-pci@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20260915031038.1087264-1-elder@riscstar.com>
- <20260915031038.1087264-2-elder@riscstar.com>
- <20260915031552.179121F000FF@smtp.kernel.org>
+ <20260915031038.1087264-3-elder@riscstar.com>
+ <20260915032059.60CC61F000FF@smtp.kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260915031552.179121F000FF@smtp.kernel.org>
+In-Reply-To: <20260915032059.60CC61F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/14/26 10:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: typo in compatible comment (TC9654 vs TC9564)
+On 9/14/26 10:20 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] misc: missing of_platform_depopulate() on probe error path
+> - [Low] kconfig: unused REGMAP_MMIO selection in TC9564_PCI
 > --
 > 
-> commit 8118db85b05b7b5ac32fd5abc0d4c0b807fa8de2
+> commit 526cbf40d582cb34a1f4613745e5ca7890f929d2
 > Author: Alex Elder <elder@riscstar.com>
 > 
-> dt-bindings: misc: introduce pci1179,0220.yaml
+> misc: tc9564: introduce base PCI driver
 > 
-> This commit introduces a new devicetree binding for the Toshiba TC9564
-> internal PCI endpoint function device. It uses the pci-ep-bus model to
-> represent sub-devices accessed via the function's BARs.
+> This commit introduces a base PCI driver for the Toshiba TC9564 SoC, which
+> implements a PCIe switch and Ethernet AVB/TSN bridge. It performs basic PCI
+> initialization and uses of_platform_default_populate() to scan and probe
+> child devices defined in the devicetree.
 > 
->> diff --git a/Documentation/devicetree/bindings/misc/pci1179,0220.yaml b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
->> new file mode 100644
->> index 0000000000000..fca3d331097de
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
-> 
-> [ ... ]
-> 
->> +allOf:
->> +  - $ref: /schemas/pci/pci-ep-bus.yaml
->> +
->> +properties:
->> +  compatible:
->> +    const: pci1179,0220         # Toshiba TC9654 (a.k.a. Qualcomm QPS615)
+>> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+>> index 7364931dad3a1..91950d2928f07 100644
+>> --- a/drivers/misc/Kconfig
+>> +++ b/drivers/misc/Kconfig
+>> @@ -568,6 +568,16 @@ config MCHP_LAN966X_PCI
+>>   	    - lan966x-miim (MDIO_MSCC_MIIM)
+>>   	    - lan966x-switch (LAN966X_SWITCH)
+>>   
+>> +config TC9564_PCI
+>> +	tristate "Toshiba TC9564 PCI function support"
+>> +	depends on PCI
+>> +	select REGMAP_MMIO
 > 
 > [Severity: Low]
-> Is TC9654 a typo in this properties.compatible comment? The device is
-> referred to as TC9564 in the commit message, the file title, and the
-> MAINTAINERS file.
+> Is the REGMAP_MMIO selection required for this driver?
+> 
+> Looking at drivers/misc/tc9564-pci.c, it does not seem to include
+> linux/regmap.h or use any regmap APIs. Could this lead to unnecessary
+> kernel bloat if the regmap infrastructure isn't selected by other
+> configurations?
 
-Again!  I fixed the previous typo with a new one.
+This was an oversight when making the conversion to the endpoint
+bus.  This driver no longer uses regmap, so that dependency will
+be removed when version 3 is posted.
 
-If no one else offers any review comments this morning, I
-will send out version 3 this afternoon, fixing this and a
-few other things reported.
+> 
+> [ ... ]
+>> diff --git a/drivers/misc/tc9564-pci.c b/drivers/misc/tc9564-pci.c
+>> new file mode 100644
+>> index 0000000000000..d7ebbd90d1584
+>> --- /dev/null
+>> +++ b/drivers/misc/tc9564-pci.c
+> [ ... ]
+>> +static int
+>> +tc9564_function_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>> +{
+> [ ... ]
+>> +	/* Scan for pci-ep-bus nodes and probe their sub-devices */
+>> +	ret = of_platform_default_populate(np, NULL, dev);
+>> +	if (ret)
+>> +		goto err_clear_master;
+>> +
+>> +	return 0;
+>> +
+>> +err_clear_master:
+>> +	pci_clear_master(pdev);
+>> +
+>> +	return dev_err_probe(dev, ret, "failed to populate platform bus\n");
+>> +}
+> 
+> [Severity: High]
+> Does this error path need to call of_platform_depopulate() before returning?
+
+It looks like it does.  I now recognize that of_platform_populate()
+(called by of_platform_default_populate()) does not unwind and clean
+up its mess in the event of an error, so doing that is the caller's
+responsibility.
+
+I will fix this in version 3.
 
 					-Alex
+
+> 
+> When of_platform_default_populate() fails midway, it leaves any successfully
+> created child platform devices registered and sets the OF_POPULATED_BUS flag.
+> If we only call pci_clear_master() and return an error here, devres will
+> subsequently disable the PCI device completely via pcim_disable_device().
+> 
+> Since the orphaned child devices remain bound to their drivers, any later
+> attempt by those drivers to perform MMIO accesses on the disabled PCI
+> device could result in PCIe Unsupported Requests (UR), which can trigger a
+> fatal SError/MCE on many architectures.
+> 
+
