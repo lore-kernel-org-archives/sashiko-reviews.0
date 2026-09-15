@@ -1,111 +1,372 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC264AF9D7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 15:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789487302; cv=pass; b=IBl+lsqMNRPOVFKLYPgmHjWeI0q8SHZhAzOBWN3S+tLOKb4bjSaXy0w8QHhJDfE7mh1tyuYrQNj92ohxIX2TpUc5Tbol3E6b6/M1kGvqkrJBbxHFYXq+dF3htj6nN5yAJXSIDAkGVH8H/zRiKH3fmCH3fki3dqxbCwq6ZQmZSZ4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789487302; c=relaxed/simple;
-	bh=IIae2hOq/rSdDn4rRHwnG8IHTBsRfnz+1SfXNqeYduA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PWhz5VSLCyyXa30gr+mwvcEHOK8fPca1O2byOcMmPW9vcE92peuSf3x3/lYZpFHvboDxKBSXgByyDnBCNmpSC67vWmZaoPprSge09NFTSRz5zBPW8ystoBXefCjq7s3Qv4do7bTKHuk0rth0mCAPobrJdKYwdxlX77pb1ca0ucg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NbuJjaUF; arc=pass smtp.client-ip=74.125.228.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3989C3C4544;
+	Tue, 15 Sep 2026 15:50:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789487452; cv=none; b=F1OR517vNhMLFsoLFLzd1+5icLZzUjQI6fxkJsOp/YMejictdg/eNzFfjQngp/UYZWEMKmW2+FiaeVjcRnyoboNnAZyehY298YJh4A+F+ianzV+ZAHktcT5uycC5t18mpc/diNyqGe1j+h6wOV3w306EIcuEQYYkVoNwHhyacRM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789487452; c=relaxed/simple;
+	bh=ZmkBrfUTjM7PdBr/m5D8Mqj8lpJDEjBNzuaGb1jBMsM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CxbDdICqQu0smIQhlCVDpof2shwdni7Fmqn66Rta0ZsnVA5l9PJn/WovB6bxxitjflozBqwkk0ElpMwcZmwcCXZVvrQ1oamhN7yacMt/wBUbWbB5z0PrSBqfboKLzmdzPsr4Dy+KU1Bg7mfvEUKdkIMYoobibW1nXbGrTFmdDBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fePsybW7; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NbuJjaUF"
-Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc4bdf8abdfso2547394a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 08:48:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789487300; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sLUP3e/RlgktKafpszMbb/HHPJkppO2pfEPCR0h8ba+DrqQpJ9kFtSS7sJgkYfsiyD
-         Y4q9HdwST+BRLQZvvtfnnaojbakSUC70UPXUL6ZYwQI8qRgCampvvT3GQBM9Ml2uuyev
-         PleMpPb/Z0TjrChu9IGz/H8tbN6b8NNPI7SPVpiMWc6Q2cX6e00NzqPv3QV6dls1NvhU
-         sZA9Ac9e0+S0InNspQDUXxaOemBrtNXih+pNV+METdWWlSfCptSY4zm+rRefSyo8+KCf
-         1CIcFF5v+ezm16LbFbwY9UOweQ1SJ7Ekp2JB8/zRgxWFHEAIs9hkhG59pk8AW5hTaiUW
-         LEmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=IIae2hOq/rSdDn4rRHwnG8IHTBsRfnz+1SfXNqeYduA=;
-        fh=ChuEeOg5ezr/J5zALyft1oIJMbWJ1PVyNKZvZH0fPsI=;
-        b=FoKK3rcGK3WZzRancPp/OcWwu8SwIUTcryaa7TTxbGmZjcZBGe+X7C0ReGhKrlAGBR
-         3fJ0cfsiHRMDs2KjGe44zHfgbGMa0ZE2eXA+S6XGcp2Uvg9u4esDQoUaeddDzLUrtxb5
-         XD0zbppBWTthDKFFBO2Zw+tlgSkzBk+WeDFiHiBAl5zoTLcyEQpZbhXDR+ma9gIdCFsD
-         i4pLxRvGNZ9ayL3LvIeYX7osvYfEzZGDcyVrte/0ybCTCgjQKRJLKMXO4WVmJQjbE+tM
-         Ay85Rrf1yYkeUlFKpOwvQYRQ44GIOaOcoUvBb84+8bpSaT/2BQaemzHUwg2ZPZaxBtQN
-         7jZA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789487300; x=1790092100; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IIae2hOq/rSdDn4rRHwnG8IHTBsRfnz+1SfXNqeYduA=;
-        b=NbuJjaUFsW4vmpU1HpoH94nkaRDqgiY5hjNv8J1eXOihDW6Xx3QHs/fQBf1B+Wekv4
-         JXHSUpDXuU7v4bIvWjVpG2Spf87CFzYPKC00dcvnjwJkkpdE66/BKDgbC6zczBZXNgDq
-         r85TBWapu+hxSi/DUDqB0vBgWTCQ9N26VssEYVh8hD8DJr8n3VsOVTzv/3kJhtKYoCOc
-         Se/jUVn9NmWxZ5+Gs+ucE+I2lFcKECf2fLj78M/2qrv30ljS9JoPWpaqAbZvK2RiFtH2
-         2NmSvhY1eiuuNlnb0100Ikjb0Vd3vHm9MyL1kDdgl3UWeEvkS46Z8iyPDXYTCfK4/YGS
-         4whA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789487300; x=1790092100;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=IIae2hOq/rSdDn4rRHwnG8IHTBsRfnz+1SfXNqeYduA=;
-        b=CQTLHIYCjJEmQtUJPEjd7gU1mRUPwJoL+yThs/xXjverdbySQmisLH878JRG34XEsf
-         e2pp53QelNBUCl1E5qKP8tc5oJWBtJx7BsyDf7EfCHLLB5Hpz3HGqE6mckqOXSv/9GbD
-         7aK6ouxu0pMRC4+GnaxLNpm9XsgP0bICCPnr6OHoOx4L6x2vGVKJMMOCbrJmYfFI9Zvo
-         pTpYnaUoriqnpN9PdIzDYqUfaoQ3TJGuV9CBBpOw2lZZhIW8YJXtI5qjhaxJIITr1BPb
-         1LVwNWdHkm8D/GoR5dNnCsGOaFsG03tBDGwlxSQYzTFtR41YN3ADYMm0uCozvFl6obMS
-         TSKA==
-X-Gm-Message-State: AFuF++mDKJygjPeZ3gzYIuWNEJebivlM6HGgN2dRYVg9EK3ljhcqn42P
-	RheYvcQ50vA2Ge/TnAKgqHjmuLwVWizHI5+2Poh7WYjmo1zxrbf/dEmy7WdCxs0B0K3fUCscUcL
-	LaTlNuBIF5SR42W1uVN61FXYpzGzb2K6stGUsx8K4ggtx
-X-Gm-Gg: AYBFou3Ds2vZwQWzfKJc/Y+3sE7Wt667QYayJAyg2fDuC6ZEw/aN5aByZU0Wlvk3wZL
-	msdILI0FBWCQLoJ9DZb4qAkYcnByoE5mjmjdd8Sjz8jYC5+zT1VNL+Qm08EWyO3ygCV6Aaiae4E
-	n1z3OvzY6+IGY7bsj6kCrpu4CGd2h1hsn7Icp9HW8mrQF7fL7s4n95T/JC8kfrezuGCrANaLMGI
-	It8RLvy0Q1cf2fdTaImqQcnd8FD7v/L2DuMB6Y1FFNHQgESPMwKW9j+YkX6BQ0oggx2xS8I9PwX
-	prKSW6lmSj76VdUFKqnssIAOxseyWB40svR7i3uGrVG+D/9smBKS1w==
-X-Received: by 2002:a05:6a20:ce4a:b0:3cc:f008:8125 with SMTP id
- adf61e73a8af0-3db4047dfd2mr18121150637.1.1789487299805; Tue, 15 Sep 2026
- 08:48:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fePsybW7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789487449; x=1821023449;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ZmkBrfUTjM7PdBr/m5D8Mqj8lpJDEjBNzuaGb1jBMsM=;
+  b=fePsybW7pbvS64kl3/uxDxNM4Vhn8X5eRJ2+JFLxI8bpsMws9u5fnk1w
+   mVJAaw/nJwpsWcDb5VToKltXwg1xwdHCQ+Y8dn6/uHpFmt2MV6mCgvrd7
+   uz4EnXo+xT9VhFLcmUrgTpzFgy3bGNINYhvLoQoDc4sUJxfgrBGCtVoFu
+   6IrF0T4PcBcVV5xFg/YkJlUw4zMSuwzkWTTOUe9jqDgp8Ozg7IL/fxdUA
+   4LI2ltmncgyOfO7f5AYrjH/XkDp1PV8tl+x0G+uLmwmYTjbamaV32fCVP
+   kbeztgbhPOSRpfChFQnApQUz0nLfijyV+7Tby9f8MTlwFL1MeuUC0e2Lt
+   w==;
+X-CSE-ConnectionGUID: wkln5pN0QtmzTpWqDS6Nww==
+X-CSE-MsgGUID: WG/3TDc3SribR46T7xVLPg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="101205794"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="101205794"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2026 08:50:48 -0700
+X-CSE-ConnectionGUID: E1tlXyLhSjyJwVWNdodIww==
+X-CSE-MsgGUID: OS4bZ6Y8RiOgprzKFVF5rQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="302937712"
+Received: from dnelso2-mobl.amr.corp.intel.com (HELO [10.125.108.195]) ([10.125.108.195])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2026 08:50:48 -0700
+Message-ID: <37737659-6cef-4512-900a-4f373aa35566@intel.com>
+Date: Tue, 15 Sep 2026 08:50:47 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914040332.1892175-1-oss.patchbox@gmail.com> <20260914041702.258821F000FF@smtp.kernel.org>
-In-Reply-To: <20260914041702.258821F000FF@smtp.kernel.org>
-From: Yuho Choi <oss.patchbox@gmail.com>
-Date: Tue, 15 Sep 2026 11:48:07 -0400
-X-Gm-Features: AcwNN1WjwF8pq8QGvnAAIZj-8VV9zkdWmSbWOv3iTyv7SJN2U0DA4DXnP8qJG64
-Message-ID: <CAGG=RgBhjFbfvbmMtT4q=_1Q1k=Focg1HaLSzcRJ8YGg1XAS+A@mail.gmail.com>
-Subject: Re: [PATCH v1] vdpa/octeon_ep: Fix race condition in device deletion
-To: sashiko-reviews@lists.linux.dev
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Eugenio Perez <eperezma@redhat.com>, virtualization@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/14] NTB: ntb_transport: Remove clients before
+ freeing transport resources
+To: Koichiro Den <den@valinux.co.jp>
+Cc: sashiko-reviews@lists.linux.dev, ntb@lists.linux.dev
+References: <20260910040836.3792333-1-den@valinux.co.jp>
+ <20260910040836.3792333-15-den@valinux.co.jp>
+ <20260910043613.CE8FD1F000FF@smtp.kernel.org>
+ <pao67m2xtpetoj2mpqzuvftzdojoj65kqpbg6alqsdqrwozm2t@hdojuk4dsh5k>
+ <b90a302d-8ad4-480f-9794-2b62e273a6be@intel.com>
+ <rtc2lb2iic42wuqtcjxqqvvyxcl535x4iv7uxhvkk55o3q5ire@lq7eukkl4aaj>
+ <016c0065-04de-41ab-b098-fac2bceb2d24@intel.com>
+ <vuoc76ik5ethjsq25gu3aku5o3yvdsm4ko6dnp4n3biheiqdy2@pxxgq24tk2cy>
+From: Dave Jiang <dave.jiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <vuoc76ik5ethjsq25gu3aku5o3yvdsm4ko6dnp4n3biheiqdy2@pxxgq24tk2cy>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 14 Sept 2026 at 00:17, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->
-> New issues:
-> - [High] Incorrect teardown ordering in `octep_vdpa_remove_vf` allows hardware interrupts to re-queue the event worker after it has been cancelled, leading to a Use-After-Free of `mgmt_dev`.
-> - [High] The lockless `atomic_cmpxchg` synchronization introduced in `octep_vdpa_dev_del` is vulnerable to an ABA problem, allowing a Use-After-Free of a stale `vdpa_device` pointer.
-> - [High] Early return in `octep_vdpa_dev_del` silently skips unregistering devices if multiple vDPA devices are mistakenly attached, leading to a permanent device leak.
-> - [Medium] Calling `cancel_work_sync()` on a potentially uninitialized work struct triggers a kernel warning (`WARN_ON(!work->func)`).
 
-Thanks for the review.
-Please drop this version.
-I will rework it and send v2 based on the review.
 
-Please also drop the Cc: stable -- it was premature on v1.
+On 9/14/26 9:01 PM, Koichiro Den wrote:
+> On Mon, Sep 14, 2026 at 02:02:05PM -0700, Dave Jiang wrote:
+>>
+>>
+>> On 9/13/26 9:27 PM, Koichiro Den wrote:
+>>> On Fri, Sep 11, 2026 at 08:49:40AM -0700, Dave Jiang wrote:
+>>>>
+>>>>
+>>>> On 9/10/26 1:48 AM, Koichiro Den wrote:
+>>>>> On Thu, Sep 10, 2026 at 04:36:13AM +0000, sashiko-bot@kernel.org wrote:
+>>>>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>>>>
+>>>>>> New issues:
+>>>>>> - [Critical] Skipping ntb_qp_link_cleanup() during transport teardown fails to drain rx_post_q, causing freed memory to be accessed by in-flight IOAT DMA.
+>>>>>
+>>>>> I believe this is a false positive. See my inline comment below.
+>>>>>
+>>>>>>
+>>>>>> Pre-existing issues:
+>>>>>> - [Critical] Double-fetch of `hdr->len` from shared memory allows buffer overflow via TOCTOU race.
+>>>>>> - [High] Racy read-modify-write of `qp_bitmap_free` bitmask allows queue state corruption.
+>>>>>> --
+>>>>>>
+>>>>>> commit 68ca6cad9a88600dd4607f3c4ccd6bd32385b0e7
+>>>>>> Author: Koichiro Den <den@valinux.co.jp>
+>>>>>> Subject: NTB: ntb_transport: Remove clients before freeing transport resources
+>>>>>>
+>>>>>> Unbinding ntb_transport can call ntb_transport_free() while ntb_netdev
+>>>>>> is still bound. This patch reorders the teardown process to unregister
+>>>>>> clients before freeing resources, intending to fix unsafe memory accesses
+>>>>>> during intensive TX loads.
+>>>>>>
+>>>>>>> diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+>>>>>>> index c1e3a077c45ec..f24555b38d1b5 100644
+>>>>>>> --- a/drivers/ntb/ntb_transport.c
+>>>>>>> +++ b/drivers/ntb/ntb_transport.c
+>>>>>>> @@ -1487,9 +1487,11 @@ static void ntb_transport_free(struct ntb_client *self, struct ntb_dev *ndev)
+>>>>>>>  
+>>>>>>>  	debugfs_remove_recursive(nt->debugfs_node_dir);
+>>>>>>>  
+>>>>>>> -	ntb_transport_link_cleanup(nt);
+>>>>>>> -	cancel_work_sync(&nt->link_cleanup);
+>>>>>>> -	cancel_delayed_work_sync(&nt->link_work);
+>>>>>>> +	/* Stop transport work before clients release their QPs. */
+>>>>>>> +	disable_delayed_work_sync(&nt->link_work);
+>>>>>>> +	disable_work_sync(&nt->link_cleanup);
+>>>>>>> +
+>>>>>>> +	ntb_bus_remove(nt);
+>>>>>>
+>>>>>> [Severity: Critical]
+>>>>>> By moving ntb_bus_remove() before ntb_transport_link_cleanup(), does this
+>>>>>> introduce a DMA use-after-free regression?
+>>>>>>
+>>>>>> Calling ntb_bus_remove() first prompts client drivers to free their QPs via
+>>>>>> ntb_transport_free_queue(), which blindly frees all entries in rx_post_q
+>>>>>> without polling:
+>>>>>>
+>>>>>> drivers/ntb/ntb_transport.c:ntb_transport_free_queue() {
+>>>>>>     ...
+>>>>>> 	while ((entry = ntb_list_rm(&qp->ntb_rx_q_lock, &qp->rx_post_q))) {
+>>>>>> 		dev_warn(&pdev->dev, "Freeing item from non-empty rx_post_q\n");
+>>>>>> 		kfree(entry);
+>>>>>> 	}
+>>>>>>     ...
+>>>>>> }
+>>>>>
+>>>>> Yes, but ntb_transport_free_queue() calls dma_release_channel() before freeing
+>>>>> those entries. For IOAT, this goes through ioat_free_chan_resources(), which
+>>>>> calls ioat_stop() and ioat_reset_hw() to synchronize callbacks and stop the DMA
+>>>>> channel.
+>>>>
+>>>> The refute looks reasonable to me for ioat. Any concerns for other host DMA engines? 
+>>>
+>>> Sorry for the late reply. I've been looking into the other engines and
+>>> scratching my head a bit.. and
+>>>
+>>> Yes, I found some concerns.
+>>>
+>>> AFAICT:
+>>> - IDXD: device_synchronize() does not fully synchronize callbacks.
+>>> - AMD PTDMA/AE4DMA: device_synchronize() does not wait for their actual
+>>>   callback paths.
+>>> - DesignWare DMAC (not dw-edma): device_synchronize() is missing.
+>>
+>> Given that different DMA drivers have different implementations, this becomes a difficult issue. Either there needs to be a standard expectation and documented in dmaengine API (which would also including fixing up every DMA driver and seems kind of unrealistic). Or we document and fix it on the NTB side in a uniform way. Thoughts?
+> 
+> There is already a documented requirement. Here is [1] from my previous email
+> again:
+> 
+> [1] Documentation/driver-api/dmaengine/provider.rst, device_synchronize:
+>     > Must make sure that all complete callbacks for previously
+>     > submitted descriptors have finished running and none are
+>     > scheduled to run.
+> 
+> Based on that requirement and the code I checked, AFAICT:
+> 
+>   - IDXD             : fixes needed
+>   - AMD PTDMA/AE4DMA : fixes needed
+>   - DesignWare DMAC  : follow-up is desired
+> 
+> I agree that a uniform NTB-side approach would be worth looking into. But after
+> some more head-scratching, I'd like to revise my conclusion:
+> 
+> - I'd prefer to keep Patch 14 as-is. Compared to mainline, I consider this a
+>   pre-existing issue, rather than a new regression. This revises my earlier plan
+>   to drop Patch 14 for rework. My reasoning is in [2].
 
-Thanks,
-Yuho
+Ok yeah agreed. If it's already documented then the drivers need to fix the issues.
+
+DJ
+
+> 
+> - A uniform NTB-side approach can be explored separately from this series. It
+>   may require a larger rework than this fix.
+> 
+> 
+> [2] Why I consider the issue pre-existing.
+> 
+>     The key point of this patch 14 is to stop clients before freeing the
+>     resources they use.
+> 
+>     It relies on ntb_transport_free_queue() to stop and release QPs. This API is
+>     already called directly during standalone ntb_netdev removal, without prior
+>     transport link cleanup. It relies on the DMA driver to stop transfers and
+>     synchronize callbacks before resources are freed. Some drivers have gaps in
+>     that synchronization, allowing late callbacks to access freed resources.
+>     Those gaps already affect standalone netdev removal.
+> 
+>     Patch 10 added an RX wait before QP reset and MW release. That wait also
+>     covered transport removal. Patch 14 bypasses it, so compared with its
+>     immediate parent, it does remove some protection against the existing DMA
+>     driver bugs. I agree that this is a real change.
+> 
+>     However, that RX wait did not exist in mainline before this series, and the
+>     same callback-lifetime issue was already possible there. It would therefore
+>     be misleading to describe this as a new DMA synchronization bug or callback
+>     use-after-free introduced into mainline by the series.
+> 
+>     Relying on the DMA driver to synchronize callbacks is consistent with the
+>     existing dmaengine API contract. I would therefore prefer to keep Patch 14
+>     and address the DMA driver bugs separately, while acknowledging that Patch
+>     14 no longer benefits from the RX wait added earlier in the series.
+> 
+> Best regards,
+> Koichiro
+> 
+>>
+>> DJ
+>>
+>>>
+>>> These appear to be existing driver issues, but Patch 14 could expose them in
+>>> transport teardown. Leaving the patch out does not fix the original crash
+>>> described in its commit message either.
+>>>
+>>> For now, I would drop this patch 14(/14) from this series and work on:
+>>> (a) Seeing whether an NTB-side rework can fix the original issue without
+>>>     depending on the missing callback synchronization.
+>>> (b) Fixing callback synchronization in the DMA drivers.
+>>>
+>>> I'm not very familiar with these engines and don't have hardware to verify this
+>>> though, so please take this with a pinch of salt. Just my source-level
+>>> assessment.
+>>>
+>>> A few details:
+>>>
+>>> - IDXD
+>>>
+>>>   idxd_dma_synchronize() drains the hardware WQ, but idxd_wq_thread() can
+>>>   already have moved a completed descriptor to its local flist. It invokes
+>>>   the client callback after dropping list_lock.
+>>>
+>>>   The WQ drain does not wait for that callback to finish, contrary to [1].
+>>>   idxd_dma_free_chan_resources() does not provide a compensating wait either,
+>>>   unlike IOAT's channel teardown.
+>>>
+>>> - AMD PTDMA / AE4DMA
+>>>
+>>>   pt_synchronize() only calls vchan_synchronize(), but these drivers invoke
+>>>   callbacks outside the virt-dma tasklet: through status processing in PTDMA and
+>>>   ae4_pending_work in AE4DMA. pt_free_chan_resources() does not wait for those
+>>>   callbacks either.
+>>>
+>>>   Synchronization needs to cover those actual callback paths.
+>>>   ldma_synchronize() might be an example of waiting for driver-specific work as
+>>>   well as the virt-dma tasklet, though the details would differ here. The
+>>>   ordering of descriptor freeing would also need checking.
+>>>
+>>> - DesignWare DMAC
+>>>
+>>>   The legacy DW driver still lacks device_synchronize(), although its tasklet
+>>>   can drop the channel lock before invoking the client callback.  Channel
+>>>   resource release does not wait for that tasklet either.
+>>>
+>>>   Adding callback synchronization might be a right direction here. This looks
+>>>   like the kind of race the termination synchronization API was introduced to
+>>>   address:
+>>>   https://lore.kernel.org/r/1445334391-12272-1-git-send-email-lars@metafoo.de/
+>>>
+>>> [1] Documentation/driver-api/dmaengine/provider.rst, device_synchronize:
+>>>     > Must make sure that all complete callbacks for previously
+>>>     > submitted descriptors have finished running and none are
+>>>     > scheduled to run.
+>>>
+>>> Best regards,
+>>> Koichiro
+>>>
+>>>>
+>>>> DJ
+>>>>
+>>>>>
+>>>>> I believe Jon and Dave know IOAT well too, so I'd appreciate any comments from
+>>>>> them. I guess the mention on IOAT in an earlier patch in this series prompted
+>>>>> Sashiko to focus on it here.
+>>>>>
+>>>>> Best regards,
+>>>>> Koichiro
+>>>>>
+>>>>>>
+>>>>>> Because IOAT DMA engines could still be actively copying into those buffers,
+>>>>>> freeing them allows the hardware DMA engine to write to freed kernel memory.
+>>>>>> Furthermore, the DMA drain wait in ntb_qp_link_cleanup() is subsequently
+>>>>>> skipped entirely because qp_bitmap_alloc evaluates to 0 during the later
+>>>>>> call to ntb_transport_link_cleanup().
+>>>>>>
+>>>>>> [ ... ]
+>>>>>>
+>>>>>>> @@ -1736,17 +1736,17 @@ static void ntb_process_rxc(struct ntb_transport_qp *qp)
+>>>>>>>  
+>>>>>>>  	if (hdr->len > entry->len) {
+>>>>>>>  		dev_dbg(&qp->ndev->pdev->dev,
+>>>>>>>  			"receive buffer overflow! Wanted %d got %d\n",
+>>>>>>>  			hdr->len, entry->len);
+>>>>>>>  		qp->rx_err_oflow++;
+>>>>>>>  
+>>>>>>>  		entry->len = -EIO;
+>>>>>>>  		entry->flags |= DESC_DONE_FLAG;
+>>>>>>>  
+>>>>>>>  		ntb_complete_rxc(qp);
+>>>>>>>  	} else {
+>>>>>>>  		dev_dbg(&qp->ndev->pdev->dev,
+>>>>>>>  			"RX OK index %u ver %u size %d into buf size %d\n",
+>>>>>>>  			qp->rx_index, hdr->ver, hdr->len, entry->len);
+>>>>>>>  
+>>>>>>>  		qp->rx_bytes += hdr->len;
+>>>>>>>  		qp->rx_pkts++;
+>>>>>>>  
+>>>>>>>  		entry->len = hdr->len;
+>>>>>>
+>>>>>> [Severity: Critical]
+>>>>>> This is a pre-existing issue, but is there a time-of-check to time-of-use
+>>>>>> race condition in this bounds check on hdr->len?
+>>>>>>
+>>>>>> Since hdr points to a payload header located inside a memory window writable
+>>>>>> by the remote NTB peer (shared memory), hdr->len is read directly from
+>>>>>> shared memory twice (once for the bounds check, once for the assignment).
+>>>>>>
+>>>>>> Can a remote peer swap hdr->len to a much larger value immediately after
+>>>>>> the bounds check but before the assignment, bypassing the bounds check and
+>>>>>> causing a buffer overflow when copied?
+>>>>>>
+>>>>>> [ ... ]
+>>>>>>
+>>>>>>> @@ -2130,7 +2130,7 @@ struct ntb_transport_qp *
+>>>>>>>  ntb_transport_create_queue(void *data, struct device *client_dev,
+>>>>>>>  			   const struct ntb_queue_handlers *handlers)
+>>>>>>>  {
+>>>>>> [ ... ]
+>>>>>>>  	free_queue--;
+>>>>>>>  
+>>>>>>>  	qp = &nt->qp_vec[free_queue];
+>>>>>>>  	qp_bit = BIT_ULL(qp->qp_num);
+>>>>>>>  
+>>>>>>>  	nt->qp_bitmap_free &= ~qp_bit;
+>>>>>>
+>>>>>> [Severity: High]
+>>>>>> This isn't a bug introduced by this patch, but could this read-modify-write
+>>>>>> of nt->qp_bitmap_free lead to queue state corruption?
+>>>>>>
+>>>>>> The qp_bitmap_free bitmask is modified here using non-atomic bitwise
+>>>>>> operations without holding any lock. It is also modified concurrently during
+>>>>>> driver unbind:
+>>>>>>
+>>>>>> drivers/ntb/ntb_transport.c:ntb_transport_free_queue() {
+>>>>>>     ...
+>>>>>> 	qp->transport->qp_bitmap_free |= qp_bit;
+>>>>>>     ...
+>>>>>> }
+>>>>>>
+>>>>>> Since these are exported functions called by NTB client drivers, could
+>>>>>> concurrent probe and remove operations race and lose bit updates, leading
+>>>>>> to a leaked queue or two clients being assigned the same queue?
+>>>>>>
+>>>>>> -- 
+>>>>>> Sashiko AI review · https://sashiko.dev/#/patchset/20260910040836.3792333-1-den@valinux.co.jp?part=14
+>>>>>
+>>>>
+>>
+
