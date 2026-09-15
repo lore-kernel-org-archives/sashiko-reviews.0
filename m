@@ -1,217 +1,135 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B514A8A35
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 17:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DBA94398F2;
+	Tue, 15 Sep 2026 17:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493290; cv=none; b=jxkN5fHHhcqRFuxr6NHhkzABdOORD/mO/nvnN+MmnhISZt98rxEsYUUm341ZQEvaQVB50N7zUaEhaBcAGkEAPaJzHajZWXZO5GRbkowbJjkXCM6DhYlnWHbNwoc4C0mdxH0qYWrODrUUmRXp+EVXuFLk6eYrgpcibLgfRXCa5hM=
+	t=1789494721; cv=none; b=QeOf5vbudACVSE/0vlc3OzKwO+Hfj5o5uRzH6NAUZRJQZcApmVmH60QoucyemOWkaQHeH55G8LmNR4Af+xxiWIUBavRCebHuNmCYBK2i37AK2Z8BFZgId5NLhhhiJEk/Re8xgbaBTUGKfnoiK4xSELAv0pzzZ9nG+s2wst4jtIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493290; c=relaxed/simple;
-	bh=mQMV+C6BduxG5SehlC0gEQiE9IETMoxRHpnXV+4ZB0I=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BW5Ftmgt2crchD5rTq4suXvPtLdqGypnK5IIM//iRrE0DpCPhij4Uiq+AyKYX5hoSclDNTgO3prCHvO+RqD68n3IfoEP6Ns2+fCPku7kgQuphmB3jz4R7hN1aOqZiZL2yEyNrotU7cqH+KHLfk2T+KH3+o/Xxi6M2VT7PebquKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JlXYOUz0; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1789494721; c=relaxed/simple;
+	bh=zjV2zQ6578Cea/PcaJJwVuCoXIsKb8OLzDKalNpaJ5g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wl9nN4ymAWMAGDyxwly7HJ7ocNmmh9TytWxLxLxsZtATIQeAoq2bSWoQAySk9focVpCBR3FylbIsi9uItO3YSy9TjpQuOOi2jsWp7dvzxU8wXaP9ffHz+uhSf6TPIVb+3eyJaWQPg/dACnH60Ki+59S1Wn85VLqMPT73rjsEAtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=mxRm45AN; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JlXYOUz0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789493286;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mQMV+C6BduxG5SehlC0gEQiE9IETMoxRHpnXV+4ZB0I=;
-	b=JlXYOUz0HhMTgd2QAa5sDscoT4P8ovgevU5USsZhRVOJ8pVjVxQo/GjhFS8UWwVVKoR4P2
-	6RAnRMbASFg51zajZY18jqvsyv/32x+4qR5eLYGbj0u4bxPyUCngLhbgY3bcPbK0uEKtDI
-	CNMMDbZHh9j12uXSwu+hz5F1bJFZvWI=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-391-uiGagy8ANyaiJSlBR-aEZw-1; Tue, 15 Sep 2026 13:28:05 -0400
-X-MC-Unique: uiGagy8ANyaiJSlBR-aEZw-1
-X-Mimecast-MFC-AGG-ID: uiGagy8ANyaiJSlBR-aEZw_1789493285
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-90ce8ad8002so107589996d6.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 10:28:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789493285; x=1790098085;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VFBA8/Ye2T49r8xXFW9t78+x+y2UgQcI61D6BtQk4CU=;
-        b=KWvB3Y0pyVDmwB+Eacj10b0lWbLbinEWZa6zaSECBE63pNlTMXLWKQspbQXC2yl4iH
-         K7cE4NuzgMspTjmtt12HCkkHTsssYYmUxT46VMe7Kg/2CAuolcbmVpBFZxiNX61AqPFz
-         vwXbqoV4CrVUCY9jfKXAN+N2uN3E2qWpUqKqy/n3lHbqbs4hUjN/l6iGFajPJs2PoR6y
-         FjdYCONcYeIPaEiLthPbyHJKvYK7tJmeFnWk8/xAN6LiubQlqIx4bPLiw9dErgfvyBCI
-         lI2Xev3ABsJpQ+H1JQmhlnjKmxejHeshQqwU15TZIvFppY1gRLbVguGnkHZqsL3zQRmk
-         40MA==
-X-Gm-Message-State: AFuF++k6BfxzDOgh9xmaZV2psMMB6ccc6EyrxV1zdIiuv39U8H4+4X5W
-	YcWx4L6utBJrJeyXRCLCTyb1QFi6aWBFoSNOJIFA+Q+ngC2FfvS77VO7P2GOerA4LPAz6zD8T3q
-	oTw5Amr4RhCKW1WTx5XYmveBxrIHvlOYjx38gJKv/f+Lgfm0dH3T6J9xPFE5d4mLnu2QmcuSgpt
-	7CJmCjxUASihWyIfVMXZ3pTa3Du71O0gGDFIDoP921dpiKk/gIlQ==
-X-Gm-Gg: AYBFou3VbEbHbqFE20tKy1474QRJ8nGMM+5R5Z7TyIfEctuz76OlY8x86PRV47+6k5k
-	EoBgufW7lMiyVky5KPdVRjEE0OpyD2Uzz8/r+rLsJLL5pFejbYvXMnivz7AcVeCt3mIOwOBdKs3
-	8zwUncQmozedQm/TqCI46OdSZCb22GApns0m/CdOv/p3lHahjTh7OV5U5+v1LjJQH0+juhPJ/uL
-	u2Z3ACsg+gzGf4lK4ZHt4qA16xKsgOX8iu2i6NYM2yrCTdWxeYgc0/8RW+ZEa3psCbIU8sxMfQF
-	EwFjLPbdIz8VHoOOmgcyVS/tnwusW0zt6E+6WO2ar4cSEgwRxgPLHdYcKpvz8FkXqNyt9Q+E
-X-Received: by 2002:a05:6214:618a:10b0:912:33a0:5d7d with SMTP id 6a1803df08f44-91233a05ed0mr65594436d6.18.1789493284664;
-        Tue, 15 Sep 2026 10:28:04 -0700 (PDT)
-X-Received: by 2002:a05:6214:618a:10b0:912:33a0:5d7d with SMTP id 6a1803df08f44-91233a05ed0mr65593816d6.18.1789493283961;
-        Tue, 15 Sep 2026 10:28:03 -0700 (PDT)
-Received: from [192.168.8.4] ([100.0.180.93])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9123bddd5e1sm3872156d6.3.2026.09.15.10.28.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 10:28:03 -0700 (PDT)
-Message-ID: <0ae3091eaddd1e7fe97f8e3f410ae22cdd59d173.camel@redhat.com>
-Subject: Re: [PATCH 3/5] drm/nouveau/gsp/r570: Add comp mode workaround from
- issue #3172217
-From: lyude@redhat.com
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Date: Tue, 15 Sep 2026 13:28:02 -0400
-In-Reply-To: <20260911223727.1B6D11F000FF@smtp.kernel.org>
-References: <20260911222428.752641-1-lyude@redhat.com>
-	 <20260911222428.752641-4-lyude@redhat.com>
-	 <20260911223727.1B6D11F000FF@smtp.kernel.org>
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="mxRm45AN"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EA970153B;
+	Tue, 15 Sep 2026 10:51:48 -0700 (PDT)
+Received: from [192.168.1.148] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A87A53F7B4;
+	Tue, 15 Sep 2026 10:51:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789494712; bh=zjV2zQ6578Cea/PcaJJwVuCoXIsKb8OLzDKalNpaJ5g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mxRm45ANNZ8yc+jBzPCsl0QdxLoUHDn0VsO6ObX13Vg5vrD/rFWpCLxMXJIw5P/r1
+	 raW0H3Ihc23Q5KWcCKwytQNkzK7QOjyRvPY5fFAJRYXkEqlMoAyU5Fv4gA5bCpLPiB
+	 LlUO2ByTjpuRqFQ32p2awHclC8LJApo9bw1ge+M4=
+Message-ID: <fe2830b4-d044-48ea-91b5-3ff705023d8c@arm.com>
+Date: Tue, 15 Sep 2026 18:51:50 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 97RKKCeZyvZF4cYWLDI6wfySoG4YeKrzuZXrqLg-1DE_1789493285
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 23/23] KVM: arm64: CCA: Control user register access
+ for Realms
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, kvmarm@lists.linux.dev, Marc Zyngier
+ <maz@kernel.org>, Oliver Upton <oupton@kernel.org>
+References: <20260915160141.3543048-1-suzuki.poulose@arm.com>
+ <20260915160141.3543048-24-suzuki.poulose@arm.com>
+ <20260915164907.9729B1F000FF@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20260915164907.9729B1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 2026-09-11 at 22:37 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
->=20
-> New issues:
-> - [High] API Misuse causing command rejection:
-> `r570_memsys_enable_raw_comp_mode()` allocates the RPC with the
-> device object instead of the subdevice object.
-
-Wrong piece of feedback, but there was an issue here.
-
->=20
-> Pre-existing issues:
-> - [High] Missing state cleanup on error paths in the suspend callback
-> causes the GPU to hang permanently after a failed suspend.
-
+On 15/09/2026 17:49, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] arm64: kvm: KVM_SET_ONE_REG rejects PMCR_EL0 for Realm VMs breaking PMU config
 > --
->=20
-> commit 9926d57d576468c9d718471d17ce97302fb87674
-> Author: Lyude Paul <lyude@redhat.com>
->=20
-> drm/nouveau/gsp/r570: Add comp mode workaround from issue #3172217
->=20
-> This commit temporarily disables raw compression mode on the GPU
-> right
-> before initiating fbsr during suspend, and re-enables it upon resume.
-> This workaround resolves an issue on Ampere and Ada GPUs.
->=20
-> > diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-> > b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-> > --- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-> > +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
+> 
+> commit 2d966a4231d9ac9707a0d74a6ba5b743ae7b69b3
+> Author: Jean-Philippe Brucker <jpb@kernel.org>
+> 
+> KVM: arm64: CCA: Control user register access for Realms
+> 
+> This commit restricts user register access for Realm VMs by limiting which
+> registers the VMM can read or modify. KVM explicitly allows access to
+> ID_AA64DFR0_EL1 and SVE_VLS for Realm parameter configuration before the Realm
+> Descriptor is created.
+> 
+>> diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
+>> --- a/arch/arm64/kvm/guest.c
+>> +++ b/arch/arm64/kvm/guest.c
 > [ ... ]
-> > +static int
-> > +r570_memsys_enable_raw_comp_mode(struct nvkm_gsp *gsp, bool
-> > enable)
-> > +{
-> > +=09NV2080_CTRL_INTERNAL_MEMSYS_PROGRAM_RAW_COMPRESSION_MODE_P
-> > ARAMS *ctrl;
-> > +=09int ret;
-> > +
-> > +=09ctrl =3D nvkm_gsp_rm_ctrl_get(&gsp->internal.device.object,
-> > +=09=09=09=09=C2=A0=C2=A0=C2=A0
-> > NV2080_CTRL_CMD_INTERNAL_MEMSYS_PROGRAM_RAW_COMPRESSION_MODE,
-> > +=09=09=09=09=C2=A0=C2=A0=C2=A0 sizeof(*ctrl));
->=20
+>> +static bool validate_realm_set_reg(struct kvm_vcpu *vcpu,
+>> +				   const struct kvm_one_reg *reg)
+>> +{
+>> +	if ((reg->id & KVM_REG_ARM_COPROC_MASK) == KVM_REG_ARM_CORE) {
+>> +		u64 off = core_reg_offset_from_id(reg->id);
+>> +
+>> +		return kvm_realm_validate_core_reg(off);
+>> +	} else {
+>> +		switch (reg->id) {
+>> +		case KVM_REG_ARM_ID_AA64DFR0_EL1:
+>> +		case KVM_REG_ARM64_SVE_VLS:
+>> +			return true;
+>> +		}
+>> +	}
+>> +
+>> +	return false;
+>> +}
+> 
 > [Severity: High]
-> Does this code allocate the RPC with the device object instead of the
-> subdevice object?
->=20
-> By passing &gsp->internal.device.object, the header receives the
-> NV0080
-> device handle, but the command (NV2080_CTRL_CMD_INTERNAL_MEMSYS_...)
-> is an
-> NV2080 subdevice command. This mismatch between the command class and
-> the
-> target object typically causes the GSP firmware to reject the
-> command,
-> causing the workaround to fail and suspend to abort.
->=20
-> > +=09if (IS_ERR(ctrl))
-> > +=09=09return PTR_ERR(ctrl);
-> > +
-> > +=09ctrl->bRawMode =3D enable;
-> > +
-> > +=09ret =3D nvkm_gsp_rm_ctrl_wr(&gsp->internal.device.subdevice,
-> > ctrl);
->=20
-> The write operation here correctly uses &gsp-
-> >internal.device.subdevice,
-> which seems to confirm the intended target object is the subdevice.
-> Should
-> the nvkm_gsp_rm_ctrl_get() call above also use the subdevice?
->=20
+> Does this logic unconditionally reject KVM_SET_ONE_REG calls for PMCR_EL0?
+> 
+> When the VMM attempts to restore or configure the PMU, kvm_arm_set_reg()
+> calls validate_realm_set_reg(). Because the UAPI equivalent of SYS_PMCR_EL0
+> is missing from this whitelist, the VMM is prevented from configuring the
+> number of PMU counters for Realm VMs, breaking VM initialization.
+> 
+>> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+>> --- a/arch/arm64/kvm/sys_regs.c
+>> +++ b/arch/arm64/kvm/sys_regs.c
 > [ ... ]
-> > @@ -104,6 +140,17 @@ r570_fbsr_suspend(struct nvkm_gsp *gsp)
-> > =C2=A0=09/* Stop channel scheduling. */
-> > =C2=A0=09r570_fbsr_suspend_channels(gsp, true);
-> > =C2=A0
-> > +=09/* Temporarily disable raw mode to prevent FBSR restore
-> > operations from corrupting
-> > +=09 * compressed surfaces. Required for ampere and ada.
-> > +=09 *
-> > +=09 * Nvidia bug #3172217
-> > +=09 */
-> > +=09if (r570_need_raw_comp_war(gsp, device)) {
-> > +=09=09ret =3D r570_memsys_enable_raw_comp_mode(gsp,
-> > false);
-> > +=09=09if (ret)
-> > +=09=09=09return ret;
->=20
+>> +static inline bool kvm_realm_sys_reg_hidden_user(const struct kvm_vcpu *vcpu,
+>> +						 u64 reg)
+>> +{
+>> +	if (!vcpu_is_rec(vcpu))
+>> +		return false;
+>> +
+>> +	switch (reg) {
+>> +	case SYS_ID_AA64DFR0_EL1:
+>> +	case SYS_PMCR_EL0:
+>> +		return false;
+>> +	}
+>> +	return true;
+>> +}
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this error path
-> leave
-> the GPU channels permanently disabled?
->=20
-> If this function returns an error, the Linux PM framework does not
-> invoke
-> the device's resume callback. This means
-> r570_fbsr_suspend_channels(gsp,
-> false) is never called, potentially causing a hard hang of the GPU
-> session.
->=20
-> While not introduced by this patch, adding a new command that might
-> fail
-> (especially given the object mismatch noted above) heavily
-> exacerbates the
-> missing cleanup on this error path.
->=20
-> > +=09}
-> > +
-> > =C2=A0=09/* Save BAR2 allocations to system memory. */
-> > =C2=A0=09list_for_each_entry(iobj, &imem->list, head) {
-> > =C2=A0=09=09if (iobj->preserve) {
-> > =C2=A0=09=09=09ret =3D nvkm_instobj_save(iobj);
-> > =C2=A0=09=09=09if (ret)
-> > =C2=A0=09=09=09=09return ret;
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but this error path now
-> also skips
-> re-enabling raw compression mode in addition to leaving channels
-> disabled.
-> Could we use a goto label to ensure proper state cleanup before
-> returning
-> suspend errors?
+> This explicitly unhides SYS_PMCR_EL0 in kvm_realm_sys_reg_hidden_user(),
+> meaning it is returned to the VMM via KVM_GET_REG_LIST.
+> 
+> Since validate_realm_set_reg() in arch/arm64/kvm/guest.c rejects writes to
+> the PMU register, does this create an ABI inconsistency where the register
+> is listed but cannot be set?
+> 
+> Could this mismatch in configuration flow be corrected to allow PMU support
+> for Realm VMs?
+
+Yep, this is the idea. We don't have the PMU support in the current 
+integration branch. That said, I will remove the PMCR_EL0 from the 
+validate_realm_set_reg().
+
+Cheers
+Suzuki
+
+
+> 
 
