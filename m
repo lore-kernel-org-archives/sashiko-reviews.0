@@ -1,105 +1,116 @@
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF335412C05
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 16:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.226.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F8C4AF9C2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 16:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789488166; cv=none; b=kTTfHNpq4napjyiAY0DoBvt1R7CO8rma6sc5PIsiiKxbdGc/RLMoq8dJh4bP/1/s6FgqFx3sP1m7PFFFrCkol3btC4nQssw4FmzVmBMJafrxVp55k/0HgMzlCYFfrcvxzSkP6lExD36bdSq+hDPl2HNupjX34wCj0eoa98nOHvE=
+	t=1789490564; cv=none; b=AZsXr9lMDsJGGd6VxiKtoLCg7hVdV32/nQLyDgURpA8Ce11h1MdY3NmP0QC4sYttx7bhUkegnfaAfvHLwCPQSKVhwc/sqCZs9Vd8/HhTlsaCGfINUhVIUDN8LgJM/rABopYVEc2TguzbHk8F2yeCiRAxiWBeIr4ai/EfisYPwO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789488166; c=relaxed/simple;
-	bh=3IjIYNZ//EkU7RRxo8bHkfJOqg1GwqJOxlBJJC6w2Og=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ok3l65Qa+AEEkkO0ataAj8CaW+q2cKRyffVQLxrU55CUIEiE44Li9q4I0OAj/H/9zO974pUOhXLLk7HoY/hcLHPhpQiOkpOIIuxwJyeI7qfYJOYQ10meitHt7Wtr33meh0C57unwYOH445tF9PEvzDl6L6X/DJvX/B5WFXdWn3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toxicpanda.com; spf=pass smtp.mailfrom=toxicpanda.com; dkim=pass (2048-bit key) header.d=toxicpanda.com header.i=@toxicpanda.com header.b=ClnqUk0C; arc=none smtp.client-ip=74.125.226.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toxicpanda.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toxicpanda.com
+	s=arc-20240116; t=1789490564; c=relaxed/simple;
+	bh=DLlkjfOuya7v+DEz1a4h/J49rgyXuu2hbrUFVJeEY/s=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FaPeFsvCPT1dFS1od+cwcmAOXCIWX/cwqtEkExGx6MheZQqAAP/R8HMRQ0p4cFGQiX8Z8/mvPUWX1A/OeWna0H6EuZbpYd7VaLLXB19DpxOdZ/IgtNWKOjvF6zpYjUlcuQMs/NuMK0AVXzJNbGNp3N5W3yCbPt+PKp29aO3WKMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OPS9B9VO; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toxicpanda.com header.i=@toxicpanda.com header.b="ClnqUk0C"
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-9809f3af20cso197945241.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 09:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=toxicpanda.com; s=google; t=1789488162; x=1790092962; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kXYuW65IGDuV4RbA68/PmJHgU6ttorOq8wX2YILfQtc=;
-        b=ClnqUk0CYp0sSl2+BWzFTXauGK4rJb2YaZUBR28H7eU4Jnd34+LyeOnRUVR41kocW1
-         Mr5OrRFG3bcFjHjMjVx5n+6zNANejIlrwL5EFlPt/vja9yENiYgFci2GEIFu+Vs2EcEn
-         e0rT0QWrwq7JXy3+3YiGF9quT59Htzy8s8IvVbKMuHtb1dX0ezFzHY3cNfViRm3gtk4F
-         skLwHGCrACCtfRH7FZhelG/W1SXEwzF/pHa18F7M26bC4cQsMH0C4RQCUPQQIE8Qs4+Z
-         1kqXgKMqw0ifWvotmEo4BqhzauyrPzY9Sj7ANf0vrulGabIWxLkOSxTkYVvtgBqmpm64
-         rMfg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OPS9B9VO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1789490560;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DLlkjfOuya7v+DEz1a4h/J49rgyXuu2hbrUFVJeEY/s=;
+	b=OPS9B9VOMPab5aoyTonSF49qVAYt3Sd3GcFcbOdYt/6jPunRnxU5MBlz65c/Tvil2OFJJG
+	TNKChQ3GKvnlYNMW04cffEJKIFPnp63Xs9IOC1HQ3iSqS4GtzmsWQcGamBoUWSNv3nIHYg
+	UAiWZQbPdM4f+2e3m5DmkkPFNo66mUs=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-PxhKwdElMkq4B7zL_-rt0g-1; Tue, 15 Sep 2026 12:42:39 -0400
+X-MC-Unique: PxhKwdElMkq4B7zL_-rt0g-1
+X-Mimecast-MFC-AGG-ID: PxhKwdElMkq4B7zL_-rt0g_1789490558
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-90e8dd8be81so60639656d6.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 09:42:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789488162; x=1790092962;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1789490558; x=1790095358;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kXYuW65IGDuV4RbA68/PmJHgU6ttorOq8wX2YILfQtc=;
-        b=IoD/c+VztXxqz5rctOaHheLmF4aUMnJSUu/1oxOmKHwEybSZoGjqgsOc1dpF3gahHR
-         soxzArk9FBIpYMWLiChhb0GMWmSP07Lv1Qnecks2MRhxMYL+0E+xDNUF+KomFFa3uaVz
-         n7DEd0bxUkKNOAEZe2LI5H3oUDDxaJh5jBUZuBbC0vA9OpKSW3WYZpSSNmBVH2ySJHJi
-         hd7yyu4GFjD6u1RLzNN4DMnfPqeNor7/kHUQylTDnZ0blq9wk+VwriwLYBqJ1W/96nCg
-         lMCdO3904E5t9UDS2YcNn6jkW+6vkhj8Nx5JXcZkP6rdrG3qO/ET2zdYSrEpTggcW/vH
-         V4kw==
-X-Gm-Message-State: AFuF++nQ96gpo0SgKf1SdZCq21w6nv7+jMTN6IZibCYMZvzgKWz9hPCH
-	7xdfw4HVM0ktpzdx5DXDXsSgkgfh0qi+ChEzX2DaZI0xs/TYp6dgQN3elacKOxBiQdBw/1H5zDz
-	a1egmCA8=
-X-Gm-Gg: AYBFou3caBqeXP3vfCoRFXO0f/pTTiPCVe3hiRNegGBgepd5X85JYAd0x+/0cbfdwIx
-	JfYdkegBG0uxGNduR8V20++swWDvdfbnMihGCgJaCB2AlZT0DOO0gu5B3fQ7emfqopFvms8V65y
-	BI5nYIMzIjdlXpIJFQG0RyZVcFzIUUKhYy0jWTv6oPBMRVWI2i7uWISklA8Vq62XT1LCMAvQgWI
-	ArV2tc4w9K5haMJWS2w95v4z2eZIh+2AVwtEGHDfx/zMLJuP3fLtN707SAOdxBkYUNIcCdVhuQf
-	UlstQwyt7Aflqf5yQk/rz3Hso5tAkmUrOIkBTop58ggx675BuijUBcyAFnNZMCAtFYG9BmvpTKV
-	gkhNfxa5A/hTQTYQf8hnL/SQSvQ/7cNplrtYUU44W03UCZOkd546QRQrq3bi11c1cCvNMiC/65G
-	RpDm6Ide2tdBrfPfnHSEjWDn7HTDIPYAt6L8Q5UIApGH4qYOryGM/Fjwmk/ySJleWtmBWX0NNWB
-	FV1pVdaG5s3TIOvR4kR4l0KUNSdGHf3oEo25gw0zACXgR6t+wYOZu42
-X-Received: by 2002:a05:6102:1609:b0:785:c39b:6a1 with SMTP id ada2fe7eead31-79ed4a36e4fmr2855428137.6.1789488162285;
-        Tue, 15 Sep 2026 09:02:42 -0700 (PDT)
-Received: from toxicpanda.com (ec2-34-228-114-98.compute-1.amazonaws.com. [34.228.114.98])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9123bd339easm2205466d6.0.2026.09.15.09.02.41
+        bh=DLlkjfOuya7v+DEz1a4h/J49rgyXuu2hbrUFVJeEY/s=;
+        b=OqDJuxyZhi1+k/C5/vtabx8bPEhnwChUzC959jRwawOmJdPJUbCet4YH/xeuCVtFTy
+         vOQPus3KKJPNab0KhJj1UuCeSdf8VQA99SJJQeAAYcWW5Of+ZSqyhCsyBSBvLMbnnOg0
+         yHJgUGDq0cSaqEFIhHDyti7BAbebrTt4TQ0YPsSGQJfEQqvGHV/TlHxN9/WQMkTFaeaS
+         RUQ69x1hVfNqhLnkbTosKidpKfVycQlPsT54iq5cAueG5F6soM2ZCK9dZb9tRzj6lNVy
+         hiChH17fF+vS/zeiVwaMWyTZBuz1XgFtMnwLO2O01jeZ7Lv5wZqxKLaFXNGqi4xti28S
+         ueNw==
+X-Gm-Message-State: AFuF++lemEVdIok1e7nZbZS1GGMadWCf0qP5CKSQPgQaXofZZ2wpkPrc
+	CmT4jxxoKY2Gb0ixpVD/UBZjiiBrAr+7Olk5vk+MuRnu7qWsBKXyILyq9gM99c3B1taSTzA8RiP
+	QXwU9/QBLfOcWeqDP8ilByBAjp/HXiUJerRHVz+atA2Ggh+tz0zfzlCe1oISM9L7+NEusTF3oyL
+	555nYQPplP/EoyIdrRqK95p4/QZ4q8Ep/J/84x5lYztIKmv5JXXg==
+X-Gm-Gg: AYBFou0GI+ygaTsBMtu4ZmLpjyhRs3Bq4AcrWj1onQhsUW8P9a9RIgrDpYYItqn3mBK
+	Z7tLe98jQO958Lp3b4CQP+aPsX/xRmuWHHp/wLXVNI+1lGGXaSKsgdaputSi5+pIRRLXw93F27z
+	eF1RPNPYXJqdaEzQSlktXsLVeXKtSEB0J7Oso+lLd9j9P1JG0xLfGZQUUBAFSayDEMiKadFY0Rk
+	ZHdABtK2wCqC3jRME/BFlBEWoOIMAk4yjiV0DJ3JFpIi1nzj4lrIDDgC440x6c+4k8w7YhYN8fn
+	4Y6xANenyxijKuKws/4CVnubLYUPE5dkdgR4KPXBdEYcnAJK61M9lAI8iSJIhPlMP8V7vuye
+X-Received: by 2002:a05:6214:5012:b0:910:49a5:346e with SMTP id 6a1803df08f44-9123a41e15dmr28824896d6.5.1789490558285;
+        Tue, 15 Sep 2026 09:42:38 -0700 (PDT)
+X-Received: by 2002:a05:6214:5012:b0:910:49a5:346e with SMTP id 6a1803df08f44-9123a41e15dmr28824076d6.5.1789490557581;
+        Tue, 15 Sep 2026 09:42:37 -0700 (PDT)
+Received: from [192.168.8.4] ([100.0.180.93])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9123be61d17sm2634486d6.14.2026.09.15.09.42.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 09:02:41 -0700 (PDT)
-Date: Tue, 15 Sep 2026 16:02:31 +0000
-Message-ID: <162b7a9a7e12191a9661465090319408.josef@toxicpanda.com>
-From: Josef Bacik <josef@toxicpanda.com>
+        Tue, 15 Sep 2026 09:42:37 -0700 (PDT)
+Message-ID: <13440da22f31b81af4ac27471ab6d10f1523018f.camel@redhat.com>
+Subject: Re: [PATCH 1/5] drm/nouveau/gsp/r535: Add support for
+ INTERNAL_GCX_ENTRY_PREREQUISITE
+From: lyude@redhat.com
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH RFC v3 03/13] rcu-tasks: Add a Tasks RCU implementation for reader-marked trampolines
-In-Reply-To: <20260915132919.E868D1F000FF@smtp.kernel.org>
-References: <20260915-b4-rcu-tasks-preempt-qs-v3-0-0ad30c4c5ee7@toxicpanda.com> <20260915-b4-rcu-tasks-preempt-qs-v3-3-0ad30c4c5ee7@toxicpanda.com> <20260915132919.E868D1F000FF@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Date: Tue, 15 Sep 2026 12:42:36 -0400
+In-Reply-To: <20260911223650.8F0F61F000FF@smtp.kernel.org>
+References: <20260911222428.752641-1-lyude@redhat.com>
+	 <20260911222428.752641-2-lyude@redhat.com>
+	 <20260911223650.8F0F61F000FF@smtp.kernel.org>
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: _cHNj9blBXvfur-U0Glhm70pGmc5vAfcRDelGIknHsg_1789490558
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 15 Sep 2026 13:29:19 +0000, sashiko-bot@kernel.org wrote:
-> > +	if (!(ct_rcu_watching_cpu(cpu) & CT_RCU_WATCHING))
-> > +		return true;
-> > +	return idle_cpu(cpu);
-> > +}
->
-> [Severity: High]
-> Could the unconditional return of idle_cpu() lead to a use-after-free crash
-> if the idle task was interrupted in trampoline code?
+On Fri, 2026-09-11 at 22:36 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential
+> issue(s) to consider:
+> - [High] Negative error codes from `nvif_device_gcx_ready()` are
+> treated as bitmasks, leading to unpredictable runtime suspend
+> behavior.
 
-Yes, this one is right. The classic flavor ignores idle tasks too and
-leans on Tasks Rude for that, but the idle_cpu() shortcut here made it
-worse than it needs to be: an idle CPU with an interrupt sitting on top
-of a trampoline the idle loop had called into would be passed
-immediately, and since idle is never preempted from irq exit nothing
-else catches it.
+Probably right
 
-For v4 that line is gone and an idle CPU only counts while RCU is not
-watching it. If it is watching (the interrupt, or the traceable part of
-the idle loop) it gets the resched_cpu() like any other straggler and
-counts once the idle loop itself schedules, which it cannot do from
-inside a trampoline. So idle ends up covered rather than ignored.
+> - [High] Hardcoding `r535_gsp_gcx_ready(gsp)` bypasses the GSP
+> function vtable and will cause a NULL pointer dereference on non-RM
+> GSPs.
 
-Thanks,
+Completely wrong.
 
-Josef
+> - [Medium] `nvkm_udevice_gcx_ready()` bypasses the ioctl unpack
+> protocol and returns a positive bitmask directly as a return code.
+
+I think fine? But unsure if I actually agree with this, if anyone has
+any thoughts on this let me know
+
+> - [Low] `GSP_GCX_ENTRY_GC6_READY` and `GSP_GCX_ENTRY_GCOFF_READY` are
+> defined but never used.
+
+Correct
+
