@@ -1,163 +1,92 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54CA3BE643;
-	Tue, 15 Sep 2026 12:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987333C73E1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789475821; cv=none; b=XqKaf8K5gTo1aw5nmigdHUHldKsalLmWxUTc1zygi3JDbXvZd8vlZoOw7VJa/Te2lwmmRt89mRH81CwqGbNVMi1turTwc/ol1DvV/9UiC3EM1FaL7ASa3knTDhYEGzhswRNDzcf8GVX1rBCTGw3dxcUHxoZYzcW8vhw/OY0jUlw=
+	t=1789476551; cv=none; b=PKSHa1FHgVPK6Rwtr7KgGTSYxzPYXQQLXwp/wLBdrjv9Q7oM/8UI6dG85kdgm+RQXMd3Sl4jTp3/SgCshy+HYhuNZBir2a9MIPmtD1HdqFx4LBGd776VDPJ1jlQU3CdKZa3S5plFURbh/dp0fq14XIBo5cEMOXMI5JnQ9+xFAB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789475821; c=relaxed/simple;
-	bh=2En1tkcYieizct0scFPBIPhCAsUypbyJIy3vv+9QV2g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Od8rCkmlk0NmqUuSaKJkAuaGEK1NFn2fNdYaqJPTmHarLm8msBg/1yPg27G2Wq9M2pTvxz0SBDq1U6mNIO7r+oRCLPHxTPP9+31Uw5vqOFJGgZoDW8kCDkJYuQWh0NE+MGSKIX/fFhP5hPV+GxXbNKIzOjQ4481e6O3Dxl8QwXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IQ0+G0IW; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1789476551; c=relaxed/simple;
+	bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=WcNoa9KM6g7LatwdcE19KYoets1XC0e2P07EkHMKDm9r9jUKB0J1MDxSp+aPV6og3RBiDfdFQkWUCNZ0KpdiHAQs7gAeioipeGRiJnijd/A0ce4ZArF0it7bFwERd5XbK11IO0rBPWLzETjRW4LRda154YR0llxpMQp4LVlaRCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPN5mbyn; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IQ0+G0IW"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BC9E615A1;
-	Tue, 15 Sep 2026 05:36:55 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B3DFC3F882;
-	Tue, 15 Sep 2026 05:36:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789475819; bh=2En1tkcYieizct0scFPBIPhCAsUypbyJIy3vv+9QV2g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IQ0+G0IWNjEDik9LAW6yU/PzXxWhLWi4zQUzXbcCK5XqLhj6lDWSM8hB6D0JiZ4bN
-	 NU0gbK5cIj56bh1fYUXq+unggEHsax6mvWiBsP4lkdNjJlCPYvsERKqSSyjvhjWb7d
-	 J+L0HwGTvJWX+OjlOMzkw+E9bwjE7AulN6u+vDM4=
-Date: Tue, 15 Sep 2026 13:36:56 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v11 3/9] coresight: etm4x: fix inconsistencies with sysfs
- configuration
-Message-ID: <aqk76O2J6Ni7prxW@e129823.arm.com>
-References: <20260915-separate_etm_cfg_v2-v11-0-d2b258d51747@arm.com>
- <20260915-separate_etm_cfg_v2-v11-3-d2b258d51747@arm.com>
- <20260915115334.49FB91F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPN5mbyn"
+Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d747eb79f7so21555435ad.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789476550; x=1790081350; darn=lists.linux.dev;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
+        b=hPN5mbynZQl7E/kktKVvK4SC/DHeS/vJ6nbD5w0txkvRfialMRu5yn9OhSjZwyoDKJ
+         9vNaEfEBmwVK/gv8+qk+HahKCtauVlUEp6Eqn2X17hN5ZR4NhDE4x+W/24XGBatMRogo
+         KvQnWDTESJ952LpPtgIgzkH16V3bgxtaXLdZW6xAYiuPn6bSH+eXv9v7NpDQ7zxkWATB
+         7+7Mvwg6+lsa8ZkeRHmWoXQiz6GUZZAzydRjVsy7DZs6roMEMH7wielvAtE76HKTi27p
+         mEEWzgPGW7JzGS3u4D1D719bzrEZ8f3wE7wXXPNMpFf9LMJjxr4RS7BPbOM5RiNNYs/P
+         vqbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789476550; x=1790081350;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
+        b=FrXbPF3gKWW4ZBiSBTABYBKhBWnayptoSvbqfgMfY97Ym+7uGnHhIY7aDdA+3tcMjw
+         HVvPEFxBURygJfHHA/MvEm3Q5qEmw7WZFvm7+yEvczL9hubpzvzZ/j9UiUUTRXDdigvA
+         i+oNnumNXJWg51U3BdMK6sTPzLx58+rk98jJOqyDo+CL7wjgrqErmmVpxKNs1wHYWu5C
+         hNlZdWcASz0ABWk7ytiEdCpZRWgiQaHCyVEF+t0uP96J+tCcDhh0jRPwxcfJo5Mbqa99
+         1GFVsKrRq3n7AjuyAVuY0f8MiwHY5oL1hYy2VDLtRYBCkek79BLUMsX04/YpjP49TGrP
+         8ctw==
+X-Forwarded-Encrypted: i=1; AKwUvBxDIkF/iUu7SLctzdP6ZPIFFz4HEQin/0jHVpIwGmt0mhpBFLmDnS5BPGajoKxmegxGaMJUO/V2o2UnsO9pppI=@lists.linux.dev
+X-Gm-Message-State: AFuF++n6XuquQRMt7++kqRd3nlkqPBbKstWUSri4TCmAKzytGM/LNFQu
+	pE/moaYHIm60+7SKcnQb0FDzW26jZhypfJ7/753WF/xS37wfzhqs6+QF
+X-Gm-Gg: AYBFou3cAxEG2IGNZleZInKkzi93UCacA9ZK/kW9oHgi45UHLg0KHVtCrbLwEWWOyPh
+	xUFy0sxSFOnV1BwIuWEOWVxnmIWc0noiEi546nwvyMSC/zyH+i6Fvcb8NZ6PQGkZBeAoII0BEeO
+	747FhxiN+/2UjsHVyVWqGlvz3sElHiMorifmSFwsrqKPJ6HPPzS0HPipiBfjRMifcX9HskFBczk
+	us1PP/LAeR1hugFq8790VgHgd/zw5vl/l/yoqm/kxzpXFcZXmK6JB5OlLcIxKMRbDQWFbLCSXn2
+	mtf8ywYOuELzwdXNfyV1G7No/QexSnFCurVP+cpcLYfr65NgM2Rps9PlP+T+V31hzlneBwfzw0X
+	FsAebPBn3MEB8r4THzJRlTi0JGHgFrgDDaip4fZ9xD5f+AdktBbbqQz+2qsGdl6ChtRyp46zRd7
+	Dn/1RsSiRsuvez7nhggFl4QDikxy3SvH0/Eml50dWu+j2uprBkK726tPzjbdxlaHJQiP7HWw==
+X-Received: by 2002:a17:903:320e:b0:2cc:864b:539 with SMTP id d9443c01a7336-2dd6c5eebcfmr170674595ad.6.1789476549474;
+        Tue, 15 Sep 2026 05:49:09 -0700 (PDT)
+Received: from [127.0.1.1] ([240e:b8f:91e2:d400:ec2a:b15e:fef8:70a])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd48ae3cacsm52866095ad.26.2026.09.15.05.49.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 05:49:08 -0700 (PDT)
+From: Liang Haowen <nbg2974@gmail.com>
+To: Lee Jones <lee@kernel.org>
+Cc: linux-leds@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH RFC v3 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
+ driver for ROG NVMe enclosures
+Date: Tue, 15 Sep 2026 12:49:06 -0000
+Message-Id: <202609152112.ReplyLee0910.lhw@gmail.com>
+In-Reply-To: <20260910093232.GO2133376@google.com>
+References: <202609012200.RFC0.lhw@gmail.com>
+ <202609012200.RFC1.lhw@gmail.com>
+ <20260901145204.2BF551F000E9@smtp.kernel.org>
+ <202609032000.RFCv2-0.lhw@gmail.com> <202609032000.RFCv2-1.lhw@gmail.com>
+ <20260903122408.3CA6B1F00A3A@smtp.kernel.org>
+ <20260903161357.GX2133376@google.com> <202609042000.RFCv3-0.lhw@gmail.com>
+ <202609042030.RFCv3-1.lhw@gmail.com>
+ <20260904131503.355C41F00A3E@smtp.kernel.org>
+ <20260910093232.GO2133376@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915115334.49FB91F000FF@smtp.kernel.org>
 
-On Tue, Sep 15, 2026 at 11:53:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] coresight: data race when updating cntr_val in etm4_disable_sysfs()
-> - [Medium] coresight: feat_csdev_lock macro fails to disable IRQs when __lock is NULL
-> --
-> 
-> commit 5571e5128409a42536b24f594b727e037107f3f4
-> Author: Yeoreum Yun <yeoreum.yun@arm.com>
-> 
-> coresight: etm4x: fix inconsistencies with sysfs configuration
-> 
-> This commit separates the active configuration applied to the current session
-> from the sysfs configuration to resolve inconsistencies. It applies configfs
-> settings after taking the appropriate mode and removes the lock/unlock around
-> sysfs enable/disable paths except when accessing config fields.
-> 
-> > diff --git a/drivers/hwtracing/coresight/coresight-config.h b/drivers/hwtracing/coresight/coresight-config.h
-> > index 90fd937d3bd83..ae6295e308131 100644
-> > --- a/drivers/hwtracing/coresight/coresight-config.h
-> > +++ b/drivers/hwtracing/coresight/coresight-config.h
-> 
-> [ ... ]
-> 
-> > @@ -259,4 +260,25 @@ void cscfg_csdev_disable_config(struct cscfg_config_csdev *config_csdev);
-> >  /* reset a feature to default values */
-> >  void cscfg_reset_feat(struct cscfg_feature_csdev *feat_csdev);
-> >  
-> > +#define feat_csdev_lock(feat_csdev, flags)				\
-> > +	do {								\
-> > +		raw_spinlock_t *__lock = feat_csdev->drv_spinlock;	\
-> > +		typecheck(unsigned long, flags);			\
-> > +		if (__lock)						\
-> > +			raw_spin_lock_irqsave(__lock, flags);		\
-> > +	} while (0)
-> > +
-> > +#define feat_csdev_unlock(feat_csdev, flags)				\
-> > +	do {								\
-> > +		raw_spinlock_t *__lock = feat_csdev->drv_spinlock;	\
-> > +		typecheck(unsigned long, flags);			\
-> > +		if (__lock)						\
-> > +			raw_spin_unlock_irqrestore(__lock, flags);	\
-> > +	} while (0)
-> 
-> [Severity: Medium]
-> Will these macros fail to disable IRQs when __lock is NULL?
-> 
-> The intent is to let cfg-configfs operate without grabbing the drv_spinlock
-> when it is NULL. However, raw_spin_lock_irqsave() also saves and disables
-> IRQs. If the lock is bypassed completely here, IRQs are left enabled.
-> 
-> Could this lead to reentrancy bugs or deadlocks if generic coresight configfs
-> routines like cscfg_csdev_enable_active_config() are called from contexts
-> where IRQs are enabled? Should there be a fallback like local_irq_save() when
-> __lock is NULL to ensure the critical section remains protected from
-> interrupts?
+Understood, sorry about the threading. v4 goes out as its own thread.
 
-It was discussed with Leo but we couldn't find any issue for this.
-
-> 
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > index 2247ad55d4442..2df7f592bb5cf 100644
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> 
-> [ ... ]
-> 
-> > @@ -1140,9 +1152,17 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
-> >  	smp_call_function_single(drvdata->cpu, etm4_disable_sysfs_smp_call,
-> >  				 drvdata, 1);
-> >  
-> > -	raw_spin_unlock(&drvdata->spinlock);
-> > +	/*
-> > +	 * Userspace may read ss_status and cntr_val through sysfs after
-> > +	 * the sysfs-session has been disabled.
-> > +	 */
-> > +	for (i = 0; i < drvdata->nr_ss_cmp; i++)
-> > +		config->ss_status[i] = active_config->ss_status[i];
-> >  
-> > -	cscfg_csdev_disable_active_config(csdev);
-> > +	for (i = 0; i < drvdata->nr_cntr; i++)
-> > +		config->cntr_val[i] = active_config->cntr_val[i];
-> 
-> [Severity: Medium]
-> Does this create a data race with sysfs operations?
-> 
-> The etm4_disable_sysfs() function removes drvdata->spinlock but continues to
-> copy active_config values into config->cntr_val locklessly.
-> 
-> Meanwhile, concurrent sysfs show and store functions access these fields under
-> the spinlock:
-> 
-> cntr_val_store() {
->         ...
->         raw_spin_lock(&drvdata->spinlock);
->         idx = config->cntr_idx;
->         config->cntr_val[idx] = val;
->         raw_spin_unlock(&drvdata->spinlock);
->         ...
-> }
-> 
-> If etm4_disable_sysfs() runs while another thread concurrently reads or
-> writes cntr_val through sysfs, can it corrupt the configuration state?
-
-The store is prohibited at when sysfs sessino is enabled.
-So This is not true.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260915-separate_etm_cfg_v2-v11-0-d2b258d51747@arm.com?part=3
-
--- 
-Sincerely,
-Yeoreum Yun
+On the three sashiko items: the naming one was a real bug, the LED
+names now flatten the sdev colons to dashes
+(asus-arion-0-0-0-0:led0), so there is exactly one separator again.
+The other two are false positives: kzalloc_obj() has been in
+include/linux/slab.h since v7.0, and blk_rq_map_kern() takes four
+arguments on current kernels, called exactly this way from
+scsi_execute_cmd() in drivers/scsi/scsi_lib.c. Details in the v4
+cover letter.
