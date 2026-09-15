@@ -1,96 +1,185 @@
-Received: from mta0.migadu.com (out-70.mta0.migadu.com [91.218.175.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8578F485CD6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 11:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAE048B37B;
+	Tue, 15 Sep 2026 11:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789470845; cv=none; b=WOMjo37OeyBZadc5bfrFwfp7S99n2ebmMDZOf+OT6xoHdkd8Z8T0U5X75QiK1JrljW8ERsWAXiampmT4kLO4AidJK3qW6+9saJT5WBRu05/OQCDY6YXL3iiNccJhhXVes/ERFowtPTnfakSK/Dz4Y7IeDv7qGPd4IGFwGBd3zto=
+	t=1789470912; cv=none; b=LdmM/FTqjydOEy8LAb2t7tUcvqbScZgk3lNVujgky+YydUtUhSCEf4MLoYJtKPKoZa8oO7ctI60ssGqAlqvPULhycmxZG2F8D+vXEKbzIhRYh7+2+t7ko279A6zn6mesAYGt68x/mecHFHZB3e44/1lXveqkT2JT6O0dajYKyu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789470845; c=relaxed/simple;
-	bh=SAmWWDy6uJ1HUX3PogDksPgipTl5TLTj6F5gv0iM4ZA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=PlUkmUIg7boMCpoSicfXSbUmFMuql8B2cDQQ7COjBRXfNwJ0n6WvjzYBjjzn1TZ8SxsI1SbebR3NKIwvhaO6FowktS1oIQkByPzwYPaVsDL9Ac1cplh7CeW5XUVzICLTIkOxZJh4HhyomgFdbzQzq5u6AVRMkrlxaUF1wo6NJzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com; spf=pass smtp.mailfrom=cknow-tech.com; dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b=DHyOhi7P; arc=none smtp.client-ip=91.218.175.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow-tech.com
+	s=arc-20240116; t=1789470912; c=relaxed/simple;
+	bh=4T9ypKWkNGgDbG9u69g33Ob+gh5ZDGK3t0oJaNBwCEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mGhQjj28ZoijPxCpIYiuda9wqcVo1epJTbRmjetEqLBTxN9w+rlRYEjm8s2uobBDNI9n1r+2PkWmEfxk/SJmxNVW9khFysuICm2MqMYX8qyRBcAp31irTw8yMfzmaeu8DBth+7xIMESGvF/jyvUWY2/SYtbUfUQGRVPoo6Bs0sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GzGRg4aD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b="DHyOhi7P"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=SAmWWDy6uJ1HUX3PogDksPgipTl5TLTj6F5gv0iM4ZA=;
- c=simple/simple; d=cknow-tech.com;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789470840; v=1; x=1790075640;
- b=DHyOhi7PJBLhTS9eHuo4KzOlzXhO/jSYFSPItE8IeUcLlPIRdFhuMBsKTBL3Lu0oYLj0beR6
- Z3pBn/ZcPmTUWFfRF5ft/ZCwfTB0p6pnZmf1QKkI7bqWcRnPbXslFLk2/Ex363OpXunX9RSxj3L
- LMSsrybnB0+J7xgrowjYCWgIyjk9YzeBvztFQll6sR8mmE1F6S19RxYeY+S0DKRLwal21Dss3Gr
- SyOLH9xyAWkuYk1O81KYvlwAwGjafxxs0esdoJ2thEJvSMJpqEprvTsgqU6S7Z1pY2G9ERRPQoB
- xqFmib2zxVOFO1AiW9Oso9ov/B2SsRs6G32Wk/L5JEJnQ==
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 56136512ff7991f7;
-	Tue, 15 Sep 2026 11:13:50 +0000
-X-Mizu-Trace-ID: 56136512ff7991f7
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GzGRg4aD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA241F000FF;
+	Tue, 15 Sep 2026 11:15:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789470909;
+	bh=wCLfBUuxNPv3XS803Z/uR8KINkcBiOGeEsWT7V4HKKQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GzGRg4aDit1AfIZVZqP9pZdOMdaGOtiiCK8LoKNNO759gim0NOnkHWBbn9hMc6QKW
+	 oAnHKsKwmRuGxop23SHjHn9J8wdKWgjFIASggu7gj9LtFaxJH/FP8oTrfhjJx1zYQK
+	 AzQTUsvrMmMQ3rEuiccjwOzPOHoYxbGS6eP4uqcbipL0J4GK7ntxemvkV54fmDWIU6
+	 /YtG4+NSfuXfFDZ+Xz0q422NautoOVY249AOViQBKk3tFG98eL+PaTj93IxlVxNEZJ
+	 QkyziJ1/mY9bK3nhL2jjMsIHAAM5pAVK9oxvJVZfE2liJmvbIfc7IsFUzHtrZWFD7t
+	 dOgYujgvE+LjA==
+Date: Tue, 15 Sep 2026 12:15:05 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: =?utf-8?B?WcSwxJ7EsFRDQU4=?= KAVAKLI <kavakliyigitcan@gmail.com>,
+	linux-leds@vger.kernel.org, dmitry.torokhov@gmail.com,
+	conor+dt@kernel.org, dri-devel@lists.freedesktop.org,
+	linux-input@vger.kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC 02/10] backlight: add Kinetic KTD3136 driver
+Message-ID: <20260915111505.GE11487@google.com>
+References: <20260911-ginkgo-submission-final-v1-0-0e68e63a18d4@gmail.com>
+ <20260911-ginkgo-submission-final-v1-2-0e68e63a18d4@gmail.com>
+ <20260911085919.24FB01F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 15 Sep 2026 13:13:45 +0200
-Message-Id: <DLFUGSHJFYH8.1NFX2YZ9J7EMA@cknow-tech.com>
-To: "Diederik de Haas" <diederik@cknow-tech.com>,
- <sashiko-reviews@lists.linux.dev>
-Cc: <robh@kernel.org>, <conor+dt@kernel.org>, "Heiko Stuebner"
- <heiko@sntech.de>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 3/3] arm64: dts: rockchip: Add support for FriendlyElec
- NanoPC-T6 Plus
-From: "Diederik de Haas" <diederik@cknow-tech.com>
-X-Mailer: aerc 0.22.0-9-ge948bb7230f4
-References: <20260907122406.1862398-1-diederik@cknow-tech.com>
- <20260907122406.1862398-4-diederik@cknow-tech.com>
- <20260907123459.B96191F00A3A@smtp.kernel.org>
- <DL959BBXDOAZ.2RNX9SJVZIKPK@cknow-tech.com>
-In-Reply-To: <DL959BBXDOAZ.2RNX9SJVZIKPK@cknow-tech.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260911085919.24FB01F00893@smtp.kernel.org>
 
-On Mon Sep 7, 2026 at 4:12 PM CEST, Diederik de Haas wrote:
-> I have a MT7925 M.2 Wi-Fi+BT card in my NanoPC-T6 Plus and while
-> Wi-Fi looks great (1.4/1.9 Gbps connection), BT has been horrible.
-> Similar story for my BE200 M.2 Wi-Fi+BT card I have in my LTS board.
-> And the most annoying thing: it's behavior is very inconsistent.
+On Fri, 11 Sep 2026, sashiko-bot@kernel.org wrote:
 
-FWIW: that was caused by a broken and a severely damaged pigtail.
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] The 'vin' regulator is enabled during probe but never disabled on error paths or during module removal.
+> - [High] Missing `i2c_set_clientdata()` in probe causes `ktd3136_remove()` to silently skip hardware power-off.
+> - [Medium] Missing lock acquisition in `ktd3136_remove` causes a data race with concurrent backlight sysfs updates.
+> - [Medium] State mismatch leaves backlight physically ON when initial brightness is 0.
+> - [Low] Unnecessary and unused `select REGMAP_I2C` in Kconfig.
 
-> My cheapo (cherry) BT keyboard works fine/decent and connecting to my FNB=
-58 USB
-> meter over BT is great. Haven't tried anything useful with that latter on=
-e, but
-> it consistently finds it and when I connect to it, it succeeds. It even s=
-tays
-> connected \o/ :-O
+Please review, explain or fix the Sashiko review(s).
 
-And those worked (somewhat) because of close proximity to the chip.
+If this is a set, this request includes the other patches too.
 
-> All the rest? It either doesn't see it, it can't connect to it, or it
-> connects to it to drop the connection after a few seconds.
-> And after a reboot? No one knows what will happen.
+> --
+> 
+> commit 15d6d172969378ae4661195e2320fcd1b4ed08c1
+> Author: YİĞİTCAN KAVAKLI <kavakliyigitcan@gmail.com>
+> 
+> backlight: add Kinetic KTD3136 driver
+> 
+> This commit implements a generic Linux backlight driver for the Kinetic
+> Technologies KTD3136 36V, 6-channel LED driver. It uses the standard
+> backlight class interface over I2C.
+> 
+> > diff --git a/drivers/video/backlight/Kconfig b/drivers/video/backlight/Kconfig
+> > index dbf4ca23a9b6d..010e2ae3fa8cb 100644
+> > --- a/drivers/video/backlight/Kconfig
+> > +++ b/drivers/video/backlight/Kconfig
+> [ ... ]
+> > +config BACKLIGHT_KTD3136
+> > +	tristate "Backlight Driver for Kinetic KTD3136"
+> > +	depends on I2C
+> > +	select REGMAP_I2C
+> 
+> [Severity: Low]
+> Does this driver actually use the regmap API? Looking at the code, it appears
+> to exclusively use raw I2C SMBus operations (e.g., i2c_smbus_read_byte_data).
+> Could this select REGMAP_I2C be safely removed to avoid forcing an unnecessary
+> dependency?
+> 
+> > +	help
+> > +	  Say Y to enable the backlight driver for the Kinetic Technologies
+> [ ... ]
+> > diff --git a/drivers/video/backlight/ktd3136-backlight.c b/drivers/video/backlight/ktd3136-backlight.c
+> > new file mode 100644
+> > index 0000000000000..a8ebe3b23c99f
+> > --- /dev/null
+> > +++ b/drivers/video/backlight/ktd3136-backlight.c
+> [ ... ]
+> > +static int ktd3136_probe(struct i2c_client *client)
+> > +{
+> > +	struct device *dev = &client->dev;
+> > +	struct backlight_properties props;
+> > +	struct ktd3136_data *chip;
+> > +	int ret, val;
+> > +	u32 def_brightness = KTD3136_DEFAULT_BRIGHTNESS;
+> > +	u32 max_brightness = KTD3136_DEFAULT_MAX_BRIGHTNESS;
+> > +
+> > +	chip = devm_kzalloc(dev, sizeof(*chip), GFP_KERNEL);
+> > +	if (!chip)
+> > +		return -ENOMEM;
+> > +
+> > +	chip->client = client;
+> > +	mutex_init(&chip->lock);
+> 
+> [Severity: High]
+> Is a call to i2c_set_clientdata(client, chip) missing here? Later in
+> ktd3136_remove(), the code calls i2c_get_clientdata(client), which will
+> return NULL if it wasn't set, silently bypassing the hardware power-off.
+> 
+> > +
+> > +	chip->vin = devm_regulator_get_optional(dev, "vin");
+> > +	if (IS_ERR(chip->vin)) {
+> > +		ret = PTR_ERR(chip->vin);
+> > +		if (ret != -ENODEV)
+> > +			return dev_err_probe(dev, ret, "Failed to get vin regulator\n");
+> > +		chip->vin = NULL;
+> > +	}
+> > +
+> > +	if (chip->vin) {
+> > +		ret = regulator_enable(chip->vin);
+> > +		if (ret)
+> > +			return dev_err_probe(dev, ret, "Failed to enable vin regulator\n");
+> > +	}
+> > +
+> > +	chip->enable_gpio = devm_gpiod_get_optional(dev, "enable", GPIOD_OUT_HIGH);
+> > +	if (IS_ERR(chip->enable_gpio))
+> > +		return dev_err_probe(dev, PTR_ERR(chip->enable_gpio),
+> > +				     "Failed to get enable GPIO\n");
+> 
+> [Severity: High]
+> If devm_gpiod_get_optional() fails here, the function returns immediately.
+> Does this leave the vin regulator enabled since there is no devm action or
+> manual regulator_disable(chip->vin) on this error path?
+> 
+> [Severity: Medium]
+> The enable GPIO is asserted HIGH here (powering the hardware), but
+> chip->is_enabled remains false. If the default brightness evaluates to 0,
+> backlight_update_status() calls ktd3136_power_off(). Because chip->is_enabled
+> is false, ktd3136_power_off() returns early without de-asserting the GPIO.
+> Could this state mismatch leave the backlight physically ON when the initial
+> brightness is 0?
+> 
+> > +
+> > +	if (chip->enable_gpio)
+> > +		usleep_range(2000, 3000);
+> [ ... ]
+> > +static void ktd3136_remove(struct i2c_client *client)
+> > +{
+> > +	struct ktd3136_data *chip = i2c_get_clientdata(client);
+> > +
+> > +	if (chip)
+> > +		ktd3136_power_off(chip);
+> 
+> [Severity: Medium]
+> Does ktd3136_power_off(chip) need to be protected by mutex_lock(&chip->lock)
+> here? Since the backlight device is registered with
+> devm_backlight_device_register, its sysfs interface might still be active
+> during .remove(). Could this cause a data race with concurrent sysfs writes
+> to the brightness attribute?
+> 
+> [Severity: High]
+> Does the vin regulator need to be disabled here? It was enabled during probe
+> but there doesn't seem to be a corresponding regulator_disable() call when the
+> driver is unbound.
+> 
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-ginkgo-submission-final-v1-0-0e68e63a18d4@gmail.com?part=2
 
-After replacing the pigtails, Wi-Fi works even better and BT works really
-good as well.
-
-> I've had ONE time a stable connection between the MT7925 and my BT speake=
-rs.
-> Only it didn't show as a sink in pipewire/wireplumber so I couldn't actua=
-lly
-> use it. I haven't been able to make a connection since.
-
-Connecting to my BT speaker (thus) works great now too, but it still doesn'=
-t
-show up as a sink in pipewire. But that's either a driver or a pipewire and=
-/or=20
-wireplumber issue. HW if fine :-D
-
-Cheers,
-  Diederik
+-- 
+Lee Jones
