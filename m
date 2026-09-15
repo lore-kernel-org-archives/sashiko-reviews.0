@@ -1,92 +1,125 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com [74.125.230.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987333C73E1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC163C3F7D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789476551; cv=none; b=PKSHa1FHgVPK6Rwtr7KgGTSYxzPYXQQLXwp/wLBdrjv9Q7oM/8UI6dG85kdgm+RQXMd3Sl4jTp3/SgCshy+HYhuNZBir2a9MIPmtD1HdqFx4LBGd776VDPJ1jlQU3CdKZa3S5plFURbh/dp0fq14XIBo5cEMOXMI5JnQ9+xFAB0=
+	t=1789476563; cv=none; b=F/WGD6AW/qolHKQubdpnK/Yz2vRsnxKTxJaCw+zk/tyckgcDzzo86ik8C/63oy5mvRRriDaofhC8qC+1fp+UkS9ImIyQ09fbx0XxI6e564CuIqdWqcAxU4MBxI9zNxadBhrg4tnxjMWiK7T3IuRvJyNIvZAy+tXc/vP1Iv3zAD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789476551; c=relaxed/simple;
-	bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=WcNoa9KM6g7LatwdcE19KYoets1XC0e2P07EkHMKDm9r9jUKB0J1MDxSp+aPV6og3RBiDfdFQkWUCNZ0KpdiHAQs7gAeioipeGRiJnijd/A0ce4ZArF0it7bFwERd5XbK11IO0rBPWLzETjRW4LRda154YR0llxpMQp4LVlaRCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPN5mbyn; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789476563; c=relaxed/simple;
+	bh=1CfyMB2h1Lp5gQE5pFkDas8JqDgo931tl90o9e2+poE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YYAYzncyDjevQnjBzprrt6nusRHm5XZpFjvGaeBJtUhIV3CO9xc/R85TvDY01k2scUrVExqsEtai7oxpo5YhbgpoU/B8QoCjratOqrTd/E7KxTy/Qq0HBzWHiqoOS94cuGONqj+yKOgBWi2rEgnQqzK0gn7aFZMAlkbwkLl+YbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=jdexW850; arc=none smtp.client-ip=74.125.230.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPN5mbyn"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d747eb79f7so21555435ad.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="jdexW850"
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-939695b5741so367162085a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789476550; x=1790081350; darn=lists.linux.dev;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
-        b=hPN5mbynZQl7E/kktKVvK4SC/DHeS/vJ6nbD5w0txkvRfialMRu5yn9OhSjZwyoDKJ
-         9vNaEfEBmwVK/gv8+qk+HahKCtauVlUEp6Eqn2X17hN5ZR4NhDE4x+W/24XGBatMRogo
-         KvQnWDTESJ952LpPtgIgzkH16V3bgxtaXLdZW6xAYiuPn6bSH+eXv9v7NpDQ7zxkWATB
-         7+7Mvwg6+lsa8ZkeRHmWoXQiz6GUZZAzydRjVsy7DZs6roMEMH7wielvAtE76HKTi27p
-         mEEWzgPGW7JzGS3u4D1D719bzrEZ8f3wE7wXXPNMpFf9LMJjxr4RS7BPbOM5RiNNYs/P
-         vqbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789476550; x=1790081350;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789476560; x=1790081360; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=hjF5uq4+rnXMZsq4PdMN+lhsdpK+neGjIFKdjIdf+8w=;
-        b=FrXbPF3gKWW4ZBiSBTABYBKhBWnayptoSvbqfgMfY97Ym+7uGnHhIY7aDdA+3tcMjw
-         HVvPEFxBURygJfHHA/MvEm3Q5qEmw7WZFvm7+yEvczL9hubpzvzZ/j9UiUUTRXDdigvA
-         i+oNnumNXJWg51U3BdMK6sTPzLx58+rk98jJOqyDo+CL7wjgrqErmmVpxKNs1wHYWu5C
-         hNlZdWcASz0ABWk7ytiEdCpZRWgiQaHCyVEF+t0uP96J+tCcDhh0jRPwxcfJo5Mbqa99
-         1GFVsKrRq3n7AjuyAVuY0f8MiwHY5oL1hYy2VDLtRYBCkek79BLUMsX04/YpjP49TGrP
-         8ctw==
-X-Forwarded-Encrypted: i=1; AKwUvBxDIkF/iUu7SLctzdP6ZPIFFz4HEQin/0jHVpIwGmt0mhpBFLmDnS5BPGajoKxmegxGaMJUO/V2o2UnsO9pppI=@lists.linux.dev
-X-Gm-Message-State: AFuF++n6XuquQRMt7++kqRd3nlkqPBbKstWUSri4TCmAKzytGM/LNFQu
-	pE/moaYHIm60+7SKcnQb0FDzW26jZhypfJ7/753WF/xS37wfzhqs6+QF
-X-Gm-Gg: AYBFou3cAxEG2IGNZleZInKkzi93UCacA9ZK/kW9oHgi45UHLg0KHVtCrbLwEWWOyPh
-	xUFy0sxSFOnV1BwIuWEOWVxnmIWc0noiEi546nwvyMSC/zyH+i6Fvcb8NZ6PQGkZBeAoII0BEeO
-	747FhxiN+/2UjsHVyVWqGlvz3sElHiMorifmSFwsrqKPJ6HPPzS0HPipiBfjRMifcX9HskFBczk
-	us1PP/LAeR1hugFq8790VgHgd/zw5vl/l/yoqm/kxzpXFcZXmK6JB5OlLcIxKMRbDQWFbLCSXn2
-	mtf8ywYOuELzwdXNfyV1G7No/QexSnFCurVP+cpcLYfr65NgM2Rps9PlP+T+V31hzlneBwfzw0X
-	FsAebPBn3MEB8r4THzJRlTi0JGHgFrgDDaip4fZ9xD5f+AdktBbbqQz+2qsGdl6ChtRyp46zRd7
-	Dn/1RsSiRsuvez7nhggFl4QDikxy3SvH0/Eml50dWu+j2uprBkK726tPzjbdxlaHJQiP7HWw==
-X-Received: by 2002:a17:903:320e:b0:2cc:864b:539 with SMTP id d9443c01a7336-2dd6c5eebcfmr170674595ad.6.1789476549474;
-        Tue, 15 Sep 2026 05:49:09 -0700 (PDT)
-Received: from [127.0.1.1] ([240e:b8f:91e2:d400:ec2a:b15e:fef8:70a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd48ae3cacsm52866095ad.26.2026.09.15.05.49.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 05:49:08 -0700 (PDT)
-From: Liang Haowen <nbg2974@gmail.com>
-To: Lee Jones <lee@kernel.org>
-Cc: linux-leds@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH RFC v3 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
- driver for ROG NVMe enclosures
-Date: Tue, 15 Sep 2026 12:49:06 -0000
-Message-Id: <202609152112.ReplyLee0910.lhw@gmail.com>
-In-Reply-To: <20260910093232.GO2133376@google.com>
-References: <202609012200.RFC0.lhw@gmail.com>
- <202609012200.RFC1.lhw@gmail.com>
- <20260901145204.2BF551F000E9@smtp.kernel.org>
- <202609032000.RFCv2-0.lhw@gmail.com> <202609032000.RFCv2-1.lhw@gmail.com>
- <20260903122408.3CA6B1F00A3A@smtp.kernel.org>
- <20260903161357.GX2133376@google.com> <202609042000.RFCv3-0.lhw@gmail.com>
- <202609042030.RFCv3-1.lhw@gmail.com>
- <20260904131503.355C41F00A3E@smtp.kernel.org>
- <20260910093232.GO2133376@google.com>
+        bh=YLVX/S0EuVLiFJIa1AXRvkqCpIEN2ZZSYIPfhR/fxMg=;
+        b=jdexW850Txjb4QVpXGlxawp9XeISWykyenqQdhaCq65zgHMIXg0jYW4Oha4M5Grtqy
+         4lb8aygsDlc2hOYrJL5V7p+TAtojUBoN7sB+uSQGws00vtG2MaLYE653hJDH7T3HRQxB
+         jaPCUt5jRtuUBdW605nzxqoSYSTm064cwfaRsw7dEbiyrri7hIA6D/aZHeFJyiettsYn
+         EVVJ03Lv1AoWtk4/U/NLHmrzsYkZxDwEWLjJSNEVWkrVrLcnOBPsYHzO7L0URL6mzPp0
+         MghkIG1jDlSDlWSlep9F5H/aORpUCMk35iTZi1zQm1teB3AoQ4P9d3Eunup97M1b+Pq9
+         /cKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789476560; x=1790081360;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YLVX/S0EuVLiFJIa1AXRvkqCpIEN2ZZSYIPfhR/fxMg=;
+        b=eVErNzSqc0fQ+/88NB+ZByGP98+L9nhccXX1tCAFP6l08ECaNcQ6hGDrX8z6ReximO
+         ARN+UxQ0MWhtd2WY2+9n5178HW62Hb+RL1XVkzJEJ/Y1LVcOiGVhxOANTkUbRtpjkY6K
+         /gNPwlY3PU6v0xfafKxzypK/O3akhFaVB3+PvccTZ3mciywCVPcap6lCzCPNRi4oQodJ
+         IBripbFF4shhzUEMqFGc8qhxxEtTQY9WFE9lap0056Bv3lPhwXqT3qyBRgHYZyoG34Ja
+         2sH+1NouTqBittbSQUHj9yf+FsQ+K/qsNOBA3aFztp06gM/rOfwlSWp72ZjvPmV7fPvl
+         cfsg==
+X-Gm-Message-State: AFuF++no+CoL5pZnNYzXwhTTalRdzeaT5p91Wk3k+7No7dRc7KxKG4kD
+	i6effH2kjfFkdCtWwgf5TSBIJ65aon0Zu69OcZqailDMNpU44bB4XZm8jOAbE0JDUztZgqTIwRN
+	U7CeJ26o=
+X-Gm-Gg: AYBFou3PIiCAxFXcW+fxlQ3Z/InN4ZR6CI2sdQZ81zaTiKjvxIiRJW+KYALyguu/cUJ
+	PY2d/zkuyLbUTKUuaFeUCq3aCvUk7N7Vtca90I5EUxbFoxKjcp2gAMFaHdNy2YwS9DOAjbcvcEE
+	wHUpWJMEhuIsZh8YTKmNhKwNQ3tlPixCHlYoxEnKrDy32EfFinhG/4Erld8HrfhZst7Au0K5VgX
+	V3FR2++BfeZNUre5aUDRFQrzoJ2vbWJ+5Q14oLYZ56wdqLBKU0J5sadNRznuR7Yuxib7EEe1KLv
+	tiTI66GZm5qNaFkcyP3Oz+ET5aZ26MwuFgMzQqtO4ttPB2L93Q25bngnYnHZfcqV7MWLonkRTiA
+	PATYMY2Vmn0/CfBQKP/ja7vR7ZpNHyDtAUTzGLibo07DGeSvj3eBIzwOwAu6WQx/On1vLuqkgZ/
+	33OqeKEtmlzeoPOhsEJVM3oHDvsMgMbEyDskAT2ZbnLwFJ5AEnUvYRChtvKnIFdVR5HmnQ0cY=
+X-Received: by 2002:a05:620a:43a2:b0:939:eb65:bd38 with SMTP id af79cd13be357-93a29a820aemr1092541685a.35.1789476560394;
+        Tue, 15 Sep 2026 05:49:20 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93a382ab7b3sm169560185a.19.2026.09.15.05.49.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Sep 2026 05:49:20 -0700 (PDT)
+Message-ID: <7de28ce3-fb1c-44cc-96d4-47d21f6a05aa@riscstar.com>
+Date: Tue, 15 Sep 2026 07:49:19 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: misc: introduce pci1179,0220.yaml
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, linux-pci@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260915031038.1087264-1-elder@riscstar.com>
+ <20260915031038.1087264-2-elder@riscstar.com>
+ <20260915031552.179121F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260915031552.179121F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Understood, sorry about the threading. v4 goes out as its own thread.
+On 9/14/26 10:15 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dt-bindings: typo in compatible comment (TC9654 vs TC9564)
+> --
+> 
+> commit 8118db85b05b7b5ac32fd5abc0d4c0b807fa8de2
+> Author: Alex Elder <elder@riscstar.com>
+> 
+> dt-bindings: misc: introduce pci1179,0220.yaml
+> 
+> This commit introduces a new devicetree binding for the Toshiba TC9564
+> internal PCI endpoint function device. It uses the pci-ep-bus model to
+> represent sub-devices accessed via the function's BARs.
+> 
+>> diff --git a/Documentation/devicetree/bindings/misc/pci1179,0220.yaml b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
+>> new file mode 100644
+>> index 0000000000000..fca3d331097de
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/misc/pci1179,0220.yaml
+> 
+> [ ... ]
+> 
+>> +allOf:
+>> +  - $ref: /schemas/pci/pci-ep-bus.yaml
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: pci1179,0220         # Toshiba TC9654 (a.k.a. Qualcomm QPS615)
+> 
+> [Severity: Low]
+> Is TC9654 a typo in this properties.compatible comment? The device is
+> referred to as TC9564 in the commit message, the file title, and the
+> MAINTAINERS file.
 
-On the three sashiko items: the naming one was a real bug, the LED
-names now flatten the sdev colons to dashes
-(asus-arion-0-0-0-0:led0), so there is exactly one separator again.
-The other two are false positives: kzalloc_obj() has been in
-include/linux/slab.h since v7.0, and blk_rq_map_kern() takes four
-arguments on current kernels, called exactly this way from
-scsi_execute_cmd() in drivers/scsi/scsi_lib.c. Details in the v4
-cover letter.
+Again!  I fixed the previous typo with a new one.
+
+If no one else offers any review comments this morning, I
+will send out version 3 this afternoon, fixing this and a
+few other things reported.
+
+					-Alex
