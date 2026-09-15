@@ -1,68 +1,68 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020109.outbound.protection.outlook.com [52.101.228.109])
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013054.outbound.protection.outlook.com [40.107.201.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E0426EB2;
-	Tue, 15 Sep 2026 04:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.109
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DBD3E9C36
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:12:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789444927; cv=fail; b=ay4qJGUQtL3yhFcqgamHrQjDORf58ARTDygS3JyO3WnIJFecBs3xycpGeX/9x3fUnT8ZkDA0MhdKw1k21CmdPQsm0euIJBzGF/rvNbMAc9LHIt8g6fadHWpyvS9MdcMO54eOsmdLnusgN404e2/72UqUXwnaz0Q0IrNck069A3s=
+	t=1789449176; cv=fail; b=IEJISnprK8GjoVaqwqVTbc2FseCAun7Ie+ab4sIm5LU6D5Hxoa4D0FnfgxFbV35lTcQyX09dQO9iabcv+AzvO3UHJCatuBWYAAwp7aHcU2NTUH4rp982VkcGcGNkkFcNC1tAXLGaopo4XI/uglBmkk7EBQV/1i2TiTE7u+POBo4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789444927; c=relaxed/simple;
-	bh=mGGn/1NZT+FGPyJ8Rr/0UYv5ieXY+Eu67F3xprX01gU=;
+	s=arc-20240116; t=1789449176; c=relaxed/simple;
+	bh=HGLqX5lWX8rgrqjvCRkFearlVXdglzy4MfNz5TVLv/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=j5dgFS2MatgT4H380qEUIZV/1K/D4QZEaB9LlWBsJ1gUCVQJe9RXfG3QhTHSl2Gn/ZdHhlAtBQSoM59CVHnGiV5forVlTo1SkKQBTvlq7oAltsZziKC6TJPKarj7GAqglhQBWNn+VcHEYxeHgDzIyFcaWUXwges7TwTDQYOkZPc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=CEByaMCZ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	 Content-Disposition:In-Reply-To:MIME-Version; b=KnD619+JacsWw6oNJs749qNesZE6W/C9mpoT0HAjwTct0c/ySJyGOw6H1eiX3oZdgy9NaNhhfsk97uH8hHQ7CBhW7jC91Hiq7G9Q6oSTOR/pBtQlP3sFH5ok5ZnB9baDVxMgE0uVbQM4UrBS8COff4QddLWCUcB0Va6rEQmZ2f4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=r/YuDOKG reason="signature verification failed"; arc=fail smtp.client-ip=40.107.201.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="CEByaMCZ"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="r/YuDOKG"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VrPTk4tIPh0dM0Vepzq+LbNd0L7THhQ/qh7bQL6/X9fILsitFuj98qL/ka6KSnhmGY5V0nhOCKc7kfYR6z7iO4jQfSQorvi86gvOKBSLYG3UwYtFe4s1/SQB2Lurrqa0VgdIfqHx6gXDJNoI1U+eu0cAWoLbmnO58ZSLgLVFmOwdX1sZAVZraZ7C+6aboFBiDYbtLrpZJRLjeljOz9cByS2joT1NA+ESdw/I9a4WOLxTF/4vTWJtM/Giliky4eUQzUn3GKNc1KSPw/K8QWaZzS/qNIQLzoLIuckU3sZnO4JODRpktCa2k/nwFcgQV1Vdzmhy8D2FS61FD1jsZfuWag==
+ b=WFOwukoLvTrJWS58SaRxqrZrZRN+0KM52IX8qxnzFg9Q9INnWwbCRWWxN5Ji3FkaKJ+sODaZlZPfc11DTP7CXGXXUBx5gD/FeIftn8ReEvTjZ3aLWw5Ynfw38xpBiHWsZJV8z19t10FV0xoQzSwsi9m8cikl9OdAKutTo9aIy8j79z1brJMNotEfulSiprZHfmkDukVn5Y05eV4yQZOz45ZXeDiX3/TnKjizuZwYkzr9oe2oC3jvdq+I9LS6GStqFFKsKw3eN9+FjmmWLxWzZ2sYaBQ3Sv09mITTCttg2luA/zlMsl+UJ9SVFVcQB4fajxclLeFvsj4TJyGkaZmsXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kyvFRKLl0XO+GRaqNY/Z6tsD5gR8MhwY0ayQ6B2oa8U=;
- b=zGoGmVkkMClNGMcxk6H9id10wfD04gPDAAjNkIPSL9jPG/f2oPKvlDG/QjsovFpgPOSUYFvNA0UkHpFZZ/EzlMx7AIRrfX/QAVwraIK3li76rNWmdoNXXw2o9jIe0khKnPTU7Yy6/d6DXhcJbq/+dzVNbk/uZxay2Em8er18G/GwXAfFOc2BXieh+3jEPFcbaGtTUCpm3Lpued1fCyPbQHwfSd1S0fiXYRDfqd7IfY2j6JQluUcvWNvH7zWqvVzJwE7tVQKyJT1AYG0lsU3FGjFPJegefNSC+OHcIG8PTmcVAcwvsYWIwCSdVnJVO1QDh4FpSyK4ZSPOS3xnLyyUXg==
+ bh=w9DDMyn3Esxk8p7hJvv2DsX8GCnjxwy8j4g5mu3EdtU=;
+ b=DXbjoi4zvJaEDnGvjWmKv7aR6m3kTwxc8/0NPiEy0WbF0xEgWMLAk6Q4dFNcMr62tJ9nAS+cUywuDWO+B5v4p17hpMak4X/uAjMSxfVtChtW+79LmN0EapOVTaVCMEvSyhSS5Ba1XEeoeRkGWs4P8IQeb5HeJMTpSH5XImNenqp4nZWY42OCH1lTE+LhWf/Z5etxd0ugu0ed1R/aqzLqNshtJrxHZ8Vkn5CmuBmuz9VoB7XUdbHeltpEa2iGXJOqQEbBqGd38FJzit8TQOkdY/SiSpJCDXrYST2savhjNBr/A7CawiNqlUI98IcZ54QFxibuV0rBTzNqH9Z7DkyzqA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kyvFRKLl0XO+GRaqNY/Z6tsD5gR8MhwY0ayQ6B2oa8U=;
- b=CEByaMCZivZSB2P7y9vtnca4iODN/75/v8YwtjU6R/flrEAxB4gpLe5OE42NANJRPp0bbzNuJ8MgnM7dsLV2lVspdOeoFSAYWKt4zZb4niFFT/ONc00Fm2NNbfli5BoUdJVbnSyNkHP9oiIjtnwUne294hhFoVXGBg3GcZ5Ou9Q=
+ bh=w9DDMyn3Esxk8p7hJvv2DsX8GCnjxwy8j4g5mu3EdtU=;
+ b=r/YuDOKGulGf6OZSW2HQZlqZsUeTYK4vKQQEOzAkWT17UCblAEjKMxRQntHTCFM+ItyMPdUca5i32p2PIuB64xbyUbTeen0ku80irv5ztPBLY4gO8u1BzrIyY689EWx1O0+JY6aZlra2tpw87iKh2R1rP1yqwkIyek1olZ+bspby+nVjKpRsm6HxrPMwqohfEafC07ivdlJsZLVVsC3tMBGYXAVL0Wx7L08QHQ3kGcJZvrdL/352D9jGwGAtIejMdMuNSwtMeG+hjgPFj0ml8H01TPV+4OCDwjquu5mD0Ic1CgkA+R3TleQ8k/XSUPqelCs+OA+kfzk6B2zCQpbMGQ==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by OS9P286MB4153.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:2cd::6) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by DSVPR12MB213845.namprd12.prod.outlook.com (2603:10b6:8:4ff::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.13; Tue, 15 Sep
- 2026 04:01:58 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0406.007; Tue, 15 Sep 2026
- 04:01:58 +0000
-Date: Tue, 15 Sep 2026 13:01:56 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Dave Jiang <dave.jiang@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, ntb@lists.linux.dev
-Subject: Re: [PATCH v2 14/14] NTB: ntb_transport: Remove clients before
- freeing transport resources
-Message-ID: <vuoc76ik5ethjsq25gu3aku5o3yvdsm4ko6dnp4n3biheiqdy2@pxxgq24tk2cy>
-References: <20260910040836.3792333-1-den@valinux.co.jp>
- <20260910040836.3792333-15-den@valinux.co.jp>
- <20260910043613.CE8FD1F000FF@smtp.kernel.org>
- <pao67m2xtpetoj2mpqzuvftzdojoj65kqpbg6alqsdqrwozm2t@hdojuk4dsh5k>
- <b90a302d-8ad4-480f-9794-2b62e273a6be@intel.com>
- <rtc2lb2iic42wuqtcjxqqvvyxcl535x4iv7uxhvkk55o3q5ire@lq7eukkl4aaj>
- <016c0065-04de-41ab-b098-fac2bceb2d24@intel.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Tue, 15 Sep
+ 2026 05:12:51 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%7]) with mapi id 15.21.0406.007; Tue, 15 Sep 2026
+ 05:12:51 +0000
+Date: Tue, 15 Sep 2026 13:12:46 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: Alison Schofield <alison.schofield@intel.com>, 
+	sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K
+ granularity
+Message-ID: <aqjSLWq9-uFwdhXE@MWDK4CY14F>
+References: <cover.1783795720.git.alison.schofield@intel.com>
+ <9a798f6b445ca8f2b16743d3e16fa289efadd86a.1783795720.git.alison.schofield@intel.com>
+ <20260711201508.082531F000E9@smtp.kernel.org>
+ <alL3a2UXB38XI7Nb@aschofie-mobl2.lan>
+ <alXqISpyXQVzOlmq@MWDK4CY14F>
+ <20260908000455.32884adc@jic23-huawei>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <016c0065-04de-41ab-b098-fac2bceb2d24@intel.com>
-X-ClientProxiedBy: TYCP286CA0366.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:79::6) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+In-Reply-To: <20260908000455.32884adc@jic23-huawei>
+X-ClientProxiedBy: TPYP295CA0025.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:a::15) To BL0PR12MB2370.namprd12.prod.outlook.com
+ (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,349 +70,260 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS9P286MB4153:EE_
-X-MS-Office365-Filtering-Correlation-Id: 29b34b00-7edc-4f13-6f78-08df12de1684
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|DSVPR12MB213845:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7f998ddc-d6ce-45cc-a5b2-08df12e7fd94
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|10070799003|366016|56012099006|5023799004|4143699003|10067099003|6133799003|3023799007|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	E0WgYkiwafN/4mhw8bvve/1ErlZzPNwgwODah3M+DJXLuvtF2zhfQPfOYGZ395B3WTZ0EM/gG1PB9xqrb3IYnfK4WhPoNBaBzHmFlREohxQCTV/oI+4imab9NhpwxyZk14Q3BdhnnfHPlHerPoMs1BrkqeNUFS/g7SrKjswT99QbX0v4JKpNXmzbpLnQMuzFugIlRfhKq/rg3xwqUr7omVSwsIVvGsnC5WhHVjlKTgX1MPoKRmvV0VU54Pb8sYanu4Cp8nAlJROnVoPpp8cAxGiJ0agwGp2O8kyhPY0RX9VEK5gO5pG3TvCKhiJvQqAh4IR1mxuzOhCMPG21kxnYLoqR+ScfOdNAGQiDQupfo/76fEEV4HC3vSvlXdYp4A9lyg7ZjGm4wvEveqwgEKKMcu+R/kllMa1r5n3YaT+DheW2MUmJlr+ZCx/8k/uiCaL6rWUpTzHBquAvENuFhPUvscLSv6cGWLFrNyEYuoHhvYNMpo/BMgDYPUnu9h4mPS/+ZlhqDnkzSWtTnKU+RxMAUaGjb1yiHKStzL8avnOCLSWF2NUHyrC8J7RAr/5bT/kcvId1AfqzKSoevDTClZczE2ELilbMe3z/4EGDW7NeBus=
+	pltyc1VlR76hnKMhFOwyUvCUez+JSgckKzHAJhn37wi+6o1UIQWgTF4JAh8Q1FJoWoIxWMlQiQxCNOcRnV6EIiAWV5/fMWXwRDQCnB2tnYBQLZUc1b4TaQvT3IveTNy3aoSLmHvlk+a73elqBZ/UzrcSkDzfYFVfU/NiwXZzk13RrSnoCgKXnPj0ELX9IEk41iIs3HVfaMldcCZZHvZpR2I0qr/2zk6QoTm0hHX93Ap6QHIzOehiGQQ3Ycdjsz1TeYlvfks8eFTUQKMoofD/DRetjWYpcmvgKBb4oKAg22quEXD+Y9jtKwKLSUC1wyZYatwnHw1NBNk91+IyttdJaGpldT9A/XXwqjV87ByIibBWm8wb3+HUKCHwI1h3pqkkXTk9mt4uJKj3AndsFle5NuE5fpG9bNvLP6joF23z50epUioBuW5AhaWgzc99CpaNnJEFQcII0xtocoEtCcFPIAfKCTv0/QgVJV6QuJo1p4DySnmRva4y0domyPzC53GtBSjRwlvS30SSNJ02RYJtRyWpOTbKdu8OSwvgmcqtC8ezYVOBh36NAV2p+Mvx/ABjXkyGLegpj0jDEtvfzz36/SrKc8D9j5iUvUU0rq8v/bqA7g5Kvy+sngZxgm279fKFJu+ta63Dgl4F+oxQQRcPlR5J0iczU+5Htn14W5+xvRs=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(10070799003)(366016)(56012099006)(5023799004)(4143699003)(10067099003)(6133799003)(3023799007)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?Q9oUaNmQ/KfXoE+uXkskVXeV4+PM01DxsGjliahbYcqXPLXVNR09Mhpgwk?=
- =?iso-8859-1?Q?45YyLmzlFwywjDYiOLtgV64WFqtcT10Lws2GmInek5gZOgoFupWC9B5j9c?=
- =?iso-8859-1?Q?lZ6G8WtwYNx6k8sJyHnZm5rF1UAu0e1qYjKKQ8N00W5OGdhO0lprLjiw67?=
- =?iso-8859-1?Q?zao6XFDAWR0mA4fWwYnNEwF7TI1H4dWdl/lMy8TTjWNUSEFCOGcNp9ZcBx?=
- =?iso-8859-1?Q?mHKjgzbIGD3RrmR+LWS3PznHPvIE57Bi+uazK6IqwkoG3iJmkh7i5/nbAT?=
- =?iso-8859-1?Q?Y6t7HA41wXlBlZYJRyUAwj+hqWVxJoPymGBvPox5Bh8Oh+TduyeP6vVzfS?=
- =?iso-8859-1?Q?30Jw2eVRx29FV4EZu1YBP/pNeoKL4ao97Z2IYWD7dMACvx/ISuAnjpi6c+?=
- =?iso-8859-1?Q?xE6abMj3qJQFreSQ4srWT1MQwV/5pAoRB0oHIrITf3ugtfP9SiD2xRzcqm?=
- =?iso-8859-1?Q?5wiqQXIEGYFjCs364Q+nbw9TvBI6baf9iyQ7DNymWfP6jZgVlbmra/+PJ8?=
- =?iso-8859-1?Q?F506FfudJxz7Dd94bvJ6c4qnq89F7XxcmP353Q+1VBWdajmOpsWIMTVMY4?=
- =?iso-8859-1?Q?7X7XQhlPibFvnwHRbDSchKMHxTuFikCZo+BOxOlOCTxbxvm9TKO4K+dCAz?=
- =?iso-8859-1?Q?WTv2eHXKnXCHSyswprJBTVkIa6xF9ODdvHN4mDPRaEXN3hzMPbWcel05NI?=
- =?iso-8859-1?Q?qC2+uq6EwzAAiLj69iCEmW8r9pVNRvQ9QD/5yBvCIUFJ49tajDQIGodTmC?=
- =?iso-8859-1?Q?zhPSX8SHATkfGdm2WlSPnK/zakRZYsODk36BkFIdflv6oYN1siu/LkQ7HX?=
- =?iso-8859-1?Q?rGErWJnOIDVT4H0Mhp2iC75iYs3E9+gMt4k9tD5wSaB7XmQEdsKADUFJ9H?=
- =?iso-8859-1?Q?Z6y5E57kD9Zzhq0ULG7cCr8VwUIF2BzFN/b+9iu6QvMnenpBMWumiVfAJ4?=
- =?iso-8859-1?Q?UOtA/fJnwXKqwwpIAH6bwNEGFuPYfNDWiWlUmPfqSeDHOx7+aIEx35FBMk?=
- =?iso-8859-1?Q?4FT23cVheXEO+gKsrQR7LemrHl6b59ocuorqDZQX0j+67aHp6GzQtxJrs+?=
- =?iso-8859-1?Q?UpTaPrySd+7zeKQZpFB1cpFTcierjAIsrOn0x2oVfbixINcWAFWTwOFGlb?=
- =?iso-8859-1?Q?s/Cr0NpV3OB/ThVbVjXTUqMDak0Rkt0wrTNyvGzyzggFXdnx5/Roq11S3S?=
- =?iso-8859-1?Q?xHCl13Qo4+zzXMzYCPp/0tldpiikpKzBD5f1SkoiLy8oIuIV2iWO2OtnRI?=
- =?iso-8859-1?Q?IOuYL2lLcipzIgRC3DNoldAvVesKH7rKLvUwof7b/VIRmAPtITHFdQOI/M?=
- =?iso-8859-1?Q?4lYHnrax8yO0G9xrr3hOvCEWCHlsJl9EWKEc4sTIZCQSCgcawKA95we9l9?=
- =?iso-8859-1?Q?Mxy6zC1FZNCSFMgHy5mbQb4sBDiFpY276Xb4Q1HsQflIi/4bhYh2Lk8eqO?=
- =?iso-8859-1?Q?pNgR0FVoc3jX18NurCo9clrbxyz5XMzcjJJtjEU8JYT4TqK5pEsPp35bSL?=
- =?iso-8859-1?Q?VhJQXTzmV9hK0vJtwVQu+krC23Pd1kzB1wSyvOw6Pj2eAfAgifPlgF2b26?=
- =?iso-8859-1?Q?UdfZ/X8/UAKJw334f0I0TXPLE6JcCV+hIvi/2mfH4l9ZAjGe6ChN8CdrDT?=
- =?iso-8859-1?Q?nVU6nbkRKmf63X/ng388JH69WqK2CW9Z3mkd/+mislAqqqKqT20fPx7Jp4?=
- =?iso-8859-1?Q?Rc9PoyPnPNYtKb6a6xVG9p1ckkDKnS9rtlPIfYl7Hp3MHnI/YgW6cSYit7?=
- =?iso-8859-1?Q?4fxxMKXj7917NRXSsPHRzfMwQh/okOzKEWAe6WZzIVOGIX4QqZNahqaUsv?=
- =?iso-8859-1?Q?K5JWy3v7Sxn58rkLVoNys746WEUiF2kkRPlvzLrs5Lm7Hj1dqCat?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 29b34b00-7edc-4f13-6f78-08df12de1684
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+	=?iso-8859-1?Q?EftjFPQanSPHaTneLo7qR+WFPPocZR4FH9JDELx5OQW51LyiIsbaOlbdhG?=
+ =?iso-8859-1?Q?MgZIa9pYpIBDs8CUkcr2FnPiHNoFke9wOUS/9kH0vVcf3bL4i+TEaiT4uk?=
+ =?iso-8859-1?Q?EyNZEzNcx59TIHhEFs/ZcQnd6J8JklcFezDBeA94cDZpkORnemxhA5EU1I?=
+ =?iso-8859-1?Q?z6Q5TSnYO7u0nwtIP/E0y6l6LXb3Og08M1qone9fwszJQKeuAx2vveruBu?=
+ =?iso-8859-1?Q?P1nKygHTbfFsMtptJwq4zEvnCAlpzlrvgIyO71Ba4zDJv9AcrWNJ8x3t/o?=
+ =?iso-8859-1?Q?jF2RSoNpHiVZRS5rALztFF8QlAivQO8IGIhGCGS7Gnq5KQHSkndsseH4fe?=
+ =?iso-8859-1?Q?Cu/GJlzGkIW5seAvbYRREv9u5cneUyHYmNK4SkvY4U1F++xYv1MY3CXSPw?=
+ =?iso-8859-1?Q?ZfpiNFkLtjeR+nCimKQZkn/P3HNbsZygt2cQO3URXiWvLEEWgOToOErPUQ?=
+ =?iso-8859-1?Q?bOD4asQKCvC+Q49ImA51wjOE3DMSul4B2hiJbKpYVbFUF+EOauHbMLRBW9?=
+ =?iso-8859-1?Q?1kNG+R/Je9hQFVcD+dyaQS2igcJezZDizjinp1EbgZwH+vP2bTNyu+4Vm7?=
+ =?iso-8859-1?Q?7bJlOFoeu8lQq6wwaG1pkp3IGmoRP6M71P8HJOCuJqCghCyHqcQoQozsyn?=
+ =?iso-8859-1?Q?+GPe29kPUXJPQcA9vkCZuCKs85DIfIgZ4ZTfXhvQKCTNNNGOax7rse37yV?=
+ =?iso-8859-1?Q?z5nsYUGPU5zMjmgO11OrDjO5Xsx6gEJVj5XmEJLcE/2cCFvWwCXMXK3Q31?=
+ =?iso-8859-1?Q?ljqxSVRZyG21rRAwR3GH3wQ1aUeT/NwBNRBHD9U/pJXYkTW4W2wqSxLNCs?=
+ =?iso-8859-1?Q?cJMFHabp7PiCzvw3dL447YxvQla9DCyBIjy6D6QdygH+non7UjQ3XW7WS7?=
+ =?iso-8859-1?Q?RNIJ/cad37bh+kQ1yROSufWxIGBX9LartZnYz3q25+y+qzpb9/dxCLuupy?=
+ =?iso-8859-1?Q?rkoH0U6ZYXRwpa5wStM2M53N5NF0veMJVnaG0pXYqRG55qv7gh5usOJ2VX?=
+ =?iso-8859-1?Q?fWd6GPCuR+WX7Dd3gIUizR1ichcJEUsIAwAktW+tasAdaJJxtxP+ymfkgJ?=
+ =?iso-8859-1?Q?TIR7owKb45tY51fsyx1pq8OCB+XDUrzwjwBXiwjdFKRCiS3J9kHabFW4wT?=
+ =?iso-8859-1?Q?e+W5ImLvjZ7gkfee27qrrVYe8vnl9NnNvXQv1FpBii/rUDCZ3c73v+ODc+?=
+ =?iso-8859-1?Q?49vBbFy0QA96svtLj+2M8XQcpCgwrEJpGdOXm4nE71lVaaJV+JPA9Y4R0I?=
+ =?iso-8859-1?Q?v7tClgcsnlapgkVU4UuUXAvn0ORyMexVTH0+JGf6LJHREi6DJwTL+G3BiZ?=
+ =?iso-8859-1?Q?ho9l+lrwaWhwejrfCLA5YEhskB4/Gshi+LkkaCeUHI4WhHnzjV3vF+/Zjs?=
+ =?iso-8859-1?Q?i5uvfwMeqVtzEKN8n+eUrKZiLfD6gUvvVkkW9Kaxdp+oqqqha8gABGRTx4?=
+ =?iso-8859-1?Q?BmisDVxV0AOMa1EDwV7NwY+73KmwYzuwHuk4eaqhN1bSnr9i8an6kCK4Jv?=
+ =?iso-8859-1?Q?EYLqWBbx1DglCuRO0PdrskwM/YgyZfWFJfRITX9n3imzicCVzPNMVA+tZJ?=
+ =?iso-8859-1?Q?SQpiRRMD7a9XO2tI+of0/HE/WToITVy2/7StVfMomsziTbpPDYMmgyx0+x?=
+ =?iso-8859-1?Q?UOodE+QU4/Y8WWqy70lqNWaljxoJ6HOjdMfqQMjUQMgc+OFwmqum5i9sN7?=
+ =?iso-8859-1?Q?xH1YLDc6IMP1U5008VV62mfL3Wx13aglVlXEt8p3A6f4oAry/vOhs1pyXO?=
+ =?iso-8859-1?Q?rUrf5oMTz5c1ph0c2rRXKUa0Pj4yS3aP3jyVH/eguyiuQq?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f998ddc-d6ce-45cc-a5b2-08df12e7fd94
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 04:01:58.1594
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 05:12:51.2686
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CnLWo+xDuiY91Wj05bNflIdryWsQANKz6LdafzHc0xm/yVDWGv7EzWdRyLBJlr/B2IaC43dzmK7+/0VvtGhqvQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4153
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8PkqyF/K5jwy66v/leAyFaAFGQcphq+MusSETqlnK1ctjp+oyca46RWUfpHBRk5+VCD3Ygyv46oJ+IxTT4Cjcg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSVPR12MB213845
 
-On Mon, Sep 14, 2026 at 02:02:05PM -0700, Dave Jiang wrote:
+On Tue, Sep 08, 2026 at 12:04:55AM +0800, Jonathan Cameron wrote:
+> On Tue, 14 Jul 2026 15:56:18 +0800
+> Richard Cheng <icheng@nvidia.com> wrote:
 > 
+> > On Sat, Jul 11, 2026 at 07:09:47PM +0800, Alison Schofield wrote:
+> > > On Sat, Jul 11, 2026 at 08:15:07PM +0000, sashiko-bot@kernel.org wrote:  
+> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > > - [High] During auto-discovery (CXL_REGION_F_AUTO), passthrough decoders fail to update their `interleave_granularity` software state to the computed value, causing downstream decoders to inherit incorrect granularity and fail validation upon reboot.  
+> > > 
+> > > Same NO as in v1[1]  and I don't see a way to graciously alert you to this
+> > > in the code. Gratuitously updating the field is not the right thing to
+> > > do.
+> > > 
+> > > 
+> > > [1] https://lore.kernel.org/linux-cxl/alKP8OP4DNT2nJnu@aschofie-mobl2.lan/#r
+> > > No. A downstream decoder can't inherit an unecodable value into a failing
+> > > check. A >16K granularity only appears below a wide interleave, and
+> > > everything below that inherits an equal-or-larger value that an interleaving
+> > > decoder couldn't encode. So every descendant is necessarily passthrough and
+> > > never validates granularity. There is no path where updating the F_AUTO
+> > > value would prevent a failure because the failure cannot happen.
+> > >  
+> > 
+> > Hi Alison,
+> > 
+> > I'm thinking of 1 scenario where a regression might still happen,
+> > independent of whether an interleaving decoder can appear below a >16k
+> > passthrough decoder.
+> > 
+> > The new cxld_set_interleave() behavior writes EIG=0 for every IW=1 decoder,
+> > including cases where logical granularity is encodable.
+> > 
+> > For example,
+> > root: IW=2, IG=4k
+> > passthrough: IW=1, logical IG=8K
+> > downstream: IW=2, IG=8K
+> > 
+> > During manual setup, the passthrough decoder gets a logical IG of 8K.
+> > With your change, committing it writes EIG=0. On rediscovery, that is
+> > read back as 256 byte.
+> > 
+> > The AUTO path accepts the passthrough decoder because it skips the IG
+> > comparison for IW=1, but it does not restore.
+> > 
+> > The downstream decoder will inherits 256 bytes instead of 8K and its 8K config
+> > fails validation.
 > 
-> On 9/13/26 9:27 PM, Koichiro Den wrote:
-> > On Fri, Sep 11, 2026 at 08:49:40AM -0700, Dave Jiang wrote:
-> >>
-> >>
-> >> On 9/10/26 1:48 AM, Koichiro Den wrote:
-> >>> On Thu, Sep 10, 2026 at 04:36:13AM +0000, sashiko-bot@kernel.org wrote:
-> >>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >>>>
-> >>>> New issues:
-> >>>> - [Critical] Skipping ntb_qp_link_cleanup() during transport teardown fails to drain rx_post_q, causing freed memory to be accessed by in-flight IOAT DMA.
-> >>>
-> >>> I believe this is a false positive. See my inline comment below.
-> >>>
-> >>>>
-> >>>> Pre-existing issues:
-> >>>> - [Critical] Double-fetch of `hdr->len` from shared memory allows buffer overflow via TOCTOU race.
-> >>>> - [High] Racy read-modify-write of `qp_bitmap_free` bitmask allows queue state corruption.
-> >>>> --
-> >>>>
-> >>>> commit 68ca6cad9a88600dd4607f3c4ccd6bd32385b0e7
-> >>>> Author: Koichiro Den <den@valinux.co.jp>
-> >>>> Subject: NTB: ntb_transport: Remove clients before freeing transport resources
-> >>>>
-> >>>> Unbinding ntb_transport can call ntb_transport_free() while ntb_netdev
-> >>>> is still bound. This patch reorders the teardown process to unregister
-> >>>> clients before freeing resources, intending to fix unsafe memory accesses
-> >>>> during intensive TX loads.
-> >>>>
-> >>>>> diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-> >>>>> index c1e3a077c45ec..f24555b38d1b5 100644
-> >>>>> --- a/drivers/ntb/ntb_transport.c
-> >>>>> +++ b/drivers/ntb/ntb_transport.c
-> >>>>> @@ -1487,9 +1487,11 @@ static void ntb_transport_free(struct ntb_client *self, struct ntb_dev *ndev)
-> >>>>>  
-> >>>>>  	debugfs_remove_recursive(nt->debugfs_node_dir);
-> >>>>>  
-> >>>>> -	ntb_transport_link_cleanup(nt);
-> >>>>> -	cancel_work_sync(&nt->link_cleanup);
-> >>>>> -	cancel_delayed_work_sync(&nt->link_work);
-> >>>>> +	/* Stop transport work before clients release their QPs. */
-> >>>>> +	disable_delayed_work_sync(&nt->link_work);
-> >>>>> +	disable_work_sync(&nt->link_cleanup);
-> >>>>> +
-> >>>>> +	ntb_bus_remove(nt);
-> >>>>
-> >>>> [Severity: Critical]
-> >>>> By moving ntb_bus_remove() before ntb_transport_link_cleanup(), does this
-> >>>> introduce a DMA use-after-free regression?
-> >>>>
-> >>>> Calling ntb_bus_remove() first prompts client drivers to free their QPs via
-> >>>> ntb_transport_free_queue(), which blindly frees all entries in rx_post_q
-> >>>> without polling:
-> >>>>
-> >>>> drivers/ntb/ntb_transport.c:ntb_transport_free_queue() {
-> >>>>     ...
-> >>>> 	while ((entry = ntb_list_rm(&qp->ntb_rx_q_lock, &qp->rx_post_q))) {
-> >>>> 		dev_warn(&pdev->dev, "Freeing item from non-empty rx_post_q\n");
-> >>>> 		kfree(entry);
-> >>>> 	}
-> >>>>     ...
-> >>>> }
-> >>>
-> >>> Yes, but ntb_transport_free_queue() calls dma_release_channel() before freeing
-> >>> those entries. For IOAT, this goes through ioat_free_chan_resources(), which
-> >>> calls ioat_stop() and ioat_reset_hw() to synchronize callbacks and stop the DMA
-> >>> channel.
-> >>
-> >> The refute looks reasonable to me for ioat. Any concerns for other host DMA engines? 
-> > 
-> > Sorry for the late reply. I've been looking into the other engines and
-> > scratching my head a bit.. and
-> > 
-> > Yes, I found some concerns.
-> > 
-> > AFAICT:
-> > - IDXD: device_synchronize() does not fully synchronize callbacks.
-> > - AMD PTDMA/AE4DMA: device_synchronize() does not wait for their actual
-> >   callback paths.
-> > - DesignWare DMAC (not dw-edma): device_synchronize() is missing.
+> I was looking back having seen some text on this in v4 that confused me.
 > 
-> Given that different DMA drivers have different implementations, this becomes a difficult issue. Either there needs to be a standard expectation and documented in dmaengine API (which would also including fixing up every DMA driver and seems kind of unrealistic). Or we document and fix it on the NTB side in a uniform way. Thoughts?
+> Isn't a failure on this combination a bug anyway (that we should fix)? 
+> The downstream decoder shouldn't inherit a value of granularity from a
+> pass through decoder (as it's meaningless) it should be getting the
+> appropriate values from next level up in the tree (or further if
+> there are more passthrough decoders up there).
+> 
+> Jonathan
+>
 
-There is already a documented requirement. Here is [1] from my previous email
-again:
+Hi Jonathan,
 
-[1] Documentation/driver-api/dmaengine/provider.rst, device_synchronize:
-    > Must make sure that all complete callbacks for previously
-    > submitted descriptors have finished running and none are
-    > scheduled to run.
+I think you're right, one problem I'm not sure about is that whether
+a passthrough decoder will stay as is for the whole runtime ?
 
-Based on that requirement and the code I checked, AFAICT:
+Since we're assuming its register will be ignored with IW=1, it makes
+sense to me if that's the case for the whole runtime.
 
-  - IDXD             : fixes needed
-  - AMD PTDMA/AE4DMA : fixes needed
-  - DesignWare DMAC  : follow-up is desired
+But if IW at somepoint becomes larger than 1, not sure if it's possible
+in any scenario, without the correct bookkeeping we can corrupt the topology.
 
-I agree that a uniform NTB-side approach would be worth looking into. But after
-some more head-scratching, I'd like to revise my conclusion:
-
-- I'd prefer to keep Patch 14 as-is. Compared to mainline, I consider this a
-  pre-existing issue, rather than a new regression. This revises my earlier plan
-  to drop Patch 14 for rework. My reasoning is in [2].
-
-- A uniform NTB-side approach can be explored separately from this series. It
-  may require a larger rework than this fix.
-
-
-[2] Why I consider the issue pre-existing.
-
-    The key point of this patch 14 is to stop clients before freeing the
-    resources they use.
-
-    It relies on ntb_transport_free_queue() to stop and release QPs. This API is
-    already called directly during standalone ntb_netdev removal, without prior
-    transport link cleanup. It relies on the DMA driver to stop transfers and
-    synchronize callbacks before resources are freed. Some drivers have gaps in
-    that synchronization, allowing late callbacks to access freed resources.
-    Those gaps already affect standalone netdev removal.
-
-    Patch 10 added an RX wait before QP reset and MW release. That wait also
-    covered transport removal. Patch 14 bypasses it, so compared with its
-    immediate parent, it does remove some protection against the existing DMA
-    driver bugs. I agree that this is a real change.
-
-    However, that RX wait did not exist in mainline before this series, and the
-    same callback-lifetime issue was already possible there. It would therefore
-    be misleading to describe this as a new DMA synchronization bug or callback
-    use-after-free introduced into mainline by the series.
-
-    Relying on the DMA driver to synchronize callbacks is consistent with the
-    existing dmaengine API contract. I would therefore prefer to keep Patch 14
-    and address the DMA driver bugs separately, while acknowledging that Patch
-    14 no longer benefits from the RX wait added earlier in the series.
+Maybe carrying the effective IG/IW through the walk would be better ?
 
 Best regards,
-Koichiro
+Richard Cheng.
 
-> 
-> DJ
-> 
+
+ 
 > > 
-> > These appear to be existing driver issues, but Patch 14 could expose them in
-> > transport teardown. Leaving the patch out does not fix the original crash
-> > described in its commit message either.
+> > Could cxld_set_interleave() keep the real IG encoding when it's encodable and
+> > use EIG=0 only when an IW=1 value isn't encodable?
+> > For latter case, AUTO still need to restore the computed logical IG before
+> > walking descendants.
 > > 
-> > For now, I would drop this patch 14(/14) from this series and work on:
-> > (a) Seeing whether an NTB-side rework can fix the original issue without
-> >     depending on the missing callback synchronization.
-> > (b) Fixing callback synchronization in the DMA drivers.
-> > 
-> > I'm not very familiar with these engines and don't have hardware to verify this
-> > though, so please take this with a pinch of salt. Just my source-level
-> > assessment.
-> > 
-> > A few details:
-> > 
-> > - IDXD
-> > 
-> >   idxd_dma_synchronize() drains the hardware WQ, but idxd_wq_thread() can
-> >   already have moved a completed descriptor to its local flist. It invokes
-> >   the client callback after dropping list_lock.
-> > 
-> >   The WQ drain does not wait for that callback to finish, contrary to [1].
-> >   idxd_dma_free_chan_resources() does not provide a compensating wait either,
-> >   unlike IOAT's channel teardown.
-> > 
-> > - AMD PTDMA / AE4DMA
-> > 
-> >   pt_synchronize() only calls vchan_synchronize(), but these drivers invoke
-> >   callbacks outside the virt-dma tasklet: through status processing in PTDMA and
-> >   ae4_pending_work in AE4DMA. pt_free_chan_resources() does not wait for those
-> >   callbacks either.
-> > 
-> >   Synchronization needs to cover those actual callback paths.
-> >   ldma_synchronize() might be an example of waiting for driver-specific work as
-> >   well as the virt-dma tasklet, though the details would differ here. The
-> >   ordering of descriptor freeing would also need checking.
-> > 
-> > - DesignWare DMAC
-> > 
-> >   The legacy DW driver still lacks device_synchronize(), although its tasklet
-> >   can drop the channel lock before invoking the client callback.  Channel
-> >   resource release does not wait for that tasklet either.
-> > 
-> >   Adding callback synchronization might be a right direction here. This looks
-> >   like the kind of race the termination synchronization API was introduced to
-> >   address:
-> >   https://lore.kernel.org/r/1445334391-12272-1-git-send-email-lars@metafoo.de/
-> > 
-> > [1] Documentation/driver-api/dmaengine/provider.rst, device_synchronize:
-> >     > Must make sure that all complete callbacks for previously
-> >     > submitted descriptors have finished running and none are
-> >     > scheduled to run.
+> > What do you think ?
 > > 
 > > Best regards,
-> > Koichiro
-> > 
-> >>
-> >> DJ
-> >>
-> >>>
-> >>> I believe Jon and Dave know IOAT well too, so I'd appreciate any comments from
-> >>> them. I guess the mention on IOAT in an earlier patch in this series prompted
-> >>> Sashiko to focus on it here.
-> >>>
-> >>> Best regards,
-> >>> Koichiro
-> >>>
-> >>>>
-> >>>> Because IOAT DMA engines could still be actively copying into those buffers,
-> >>>> freeing them allows the hardware DMA engine to write to freed kernel memory.
-> >>>> Furthermore, the DMA drain wait in ntb_qp_link_cleanup() is subsequently
-> >>>> skipped entirely because qp_bitmap_alloc evaluates to 0 during the later
-> >>>> call to ntb_transport_link_cleanup().
-> >>>>
-> >>>> [ ... ]
-> >>>>
-> >>>>> @@ -1736,17 +1736,17 @@ static void ntb_process_rxc(struct ntb_transport_qp *qp)
-> >>>>>  
-> >>>>>  	if (hdr->len > entry->len) {
-> >>>>>  		dev_dbg(&qp->ndev->pdev->dev,
-> >>>>>  			"receive buffer overflow! Wanted %d got %d\n",
-> >>>>>  			hdr->len, entry->len);
-> >>>>>  		qp->rx_err_oflow++;
-> >>>>>  
-> >>>>>  		entry->len = -EIO;
-> >>>>>  		entry->flags |= DESC_DONE_FLAG;
-> >>>>>  
-> >>>>>  		ntb_complete_rxc(qp);
-> >>>>>  	} else {
-> >>>>>  		dev_dbg(&qp->ndev->pdev->dev,
-> >>>>>  			"RX OK index %u ver %u size %d into buf size %d\n",
-> >>>>>  			qp->rx_index, hdr->ver, hdr->len, entry->len);
-> >>>>>  
-> >>>>>  		qp->rx_bytes += hdr->len;
-> >>>>>  		qp->rx_pkts++;
-> >>>>>  
-> >>>>>  		entry->len = hdr->len;
-> >>>>
-> >>>> [Severity: Critical]
-> >>>> This is a pre-existing issue, but is there a time-of-check to time-of-use
-> >>>> race condition in this bounds check on hdr->len?
-> >>>>
-> >>>> Since hdr points to a payload header located inside a memory window writable
-> >>>> by the remote NTB peer (shared memory), hdr->len is read directly from
-> >>>> shared memory twice (once for the bounds check, once for the assignment).
-> >>>>
-> >>>> Can a remote peer swap hdr->len to a much larger value immediately after
-> >>>> the bounds check but before the assignment, bypassing the bounds check and
-> >>>> causing a buffer overflow when copied?
-> >>>>
-> >>>> [ ... ]
-> >>>>
-> >>>>> @@ -2130,7 +2130,7 @@ struct ntb_transport_qp *
-> >>>>>  ntb_transport_create_queue(void *data, struct device *client_dev,
-> >>>>>  			   const struct ntb_queue_handlers *handlers)
-> >>>>>  {
-> >>>> [ ... ]
-> >>>>>  	free_queue--;
-> >>>>>  
-> >>>>>  	qp = &nt->qp_vec[free_queue];
-> >>>>>  	qp_bit = BIT_ULL(qp->qp_num);
-> >>>>>  
-> >>>>>  	nt->qp_bitmap_free &= ~qp_bit;
-> >>>>
-> >>>> [Severity: High]
-> >>>> This isn't a bug introduced by this patch, but could this read-modify-write
-> >>>> of nt->qp_bitmap_free lead to queue state corruption?
-> >>>>
-> >>>> The qp_bitmap_free bitmask is modified here using non-atomic bitwise
-> >>>> operations without holding any lock. It is also modified concurrently during
-> >>>> driver unbind:
-> >>>>
-> >>>> drivers/ntb/ntb_transport.c:ntb_transport_free_queue() {
-> >>>>     ...
-> >>>> 	qp->transport->qp_bitmap_free |= qp_bit;
-> >>>>     ...
-> >>>> }
-> >>>>
-> >>>> Since these are exported functions called by NTB client drivers, could
-> >>>> concurrent probe and remove operations race and lose bit updates, leading
-> >>>> to a leaked queue or two clients being assigned the same queue?
-> >>>>
-> >>>> -- 
-> >>>> Sashiko AI review · https://sashiko.dev/#/patchset/20260910040836.3792333-1-den@valinux.co.jp?part=14
-> >>>
-> >>
+> > Richard Cheng.
+> > > 
+> > >   
+> > > > --
+> > > > 
+> > > > --- Patch [1]: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K granularity ---
+> > > > commit 9e2526342188a97e338bfc63d454c253f1e2b3ef
+> > > > Author: Alison Schofield <alison.schofield@intel.com>
+> > > > 
+> > > > cxl/region: Allow passthrough decoders with >16K granularity
+> > > > 
+> > > > This commit allows passthrough decoders beneath wide parent interleaves
+> > > > to have a granularity exceeding 16K by programming a don't-care value
+> > > > in hardware for non-interleaving decoders.
+> > > >   
+> > > > > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > > > > index 0c80b76a5f9b4..d164662668c19 100644
+> > > > > --- a/drivers/cxl/core/hdm.c
+> > > > > +++ b/drivers/cxl/core/hdm.c
+> > > > > @@ -691,9 +691,16 @@ static void cxld_set_interleave(struct cxl_decoder *cxld, u32 *ctrl)
+> > > > >  	if (WARN_ONCE(ways_to_eiw(cxld->interleave_ways, &eiw),
+> > > > >  		      "invalid interleave_ways: %d\n", cxld->interleave_ways))
+> > > > >  		return;
+> > > > > -	if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
+> > > > > -		      "invalid interleave_granularity: %d\n",
+> > > > > -		      cxld->interleave_granularity))
+> > > > > +
+> > > > > +	/*
+> > > > > +	 * A non-interleaving decoder ignores the IG field. Encode a
+> > > > > +	 * don't-care value instead of validating the stored granularity.
+> > > > > +	 */
+> > > > > +	if (cxld->interleave_ways == 1)
+> > > > > +		eig = 0;
+> > > > > +	else if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
+> > > > > +			   "invalid interleave_granularity: %d\n",
+> > > > > +			   cxld->interleave_granularity))
+> > > > >  		return;
+> > > > >  
+> > > > >  	u32p_replace_bits(ctrl, eig, CXL_HDM_DECODER0_CTRL_IG_MASK);  
+> > > > 
+> > > > [ ... ]
+> > > >   
+> > > > > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > > > > index 1e211542b6b64..5a443551288c4 100644
+> > > > > --- a/drivers/cxl/core/region.c
+> > > > > +++ b/drivers/cxl/core/region.c  
+> > > > 
+> > > > [ ... ]
+> > > >   
+> > > > > @@ -1549,20 +1557,21 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+> > > > >  	 * Interleave granularity is a multiple of @parent_port granularity.
+> > > > >  	 * Multiplier is the parent port interleave ways.
+> > > > >  	 */
+> > > > > -	rc = granularity_to_eig(parent_ig * parent_iw, &eig);
+> > > > > -	if (rc) {
+> > > > > -		dev_dbg(&cxlr->dev,
+> > > > > -			"%s: invalid granularity calculation (%d * %d)\n",
+> > > > > -			dev_name(&parent_port->dev), parent_ig, parent_iw);
+> > > > > -		return rc;
+> > > > > -	}
+> > > > > +	ig = parent_ig * parent_iw;
+> > > > >  
+> > > > > -	rc = eig_to_granularity(eig, &ig);
+> > > > > -	if (rc) {
+> > > > > -		dev_dbg(&cxlr->dev, "%s:%s: invalid interleave: %d\n",
+> > > > > -			dev_name(port->uport_dev), dev_name(&port->dev),
+> > > > > -			256 << eig);
+> > > > > -		return rc;
+> > > > > +	/*
+> > > > > +	 * Keep the computed granularity for descendant setup. Only
+> > > > > +	 * interleaving decoders require an encodable granularity.
+> > > > > +	 */
+> > > > > +	if (iw > 1) {
+> > > > > +		rc = granularity_to_eig(ig, &eig);
+> > > > > +		if (rc) {
+> > > > > +			dev_dbg(&cxlr->dev,
+> > > > > +				"%s: invalid granularity calculation (%d * %d)\n",
+> > > > > +				dev_name(&parent_port->dev), parent_ig,
+> > > > > +				parent_iw);
+> > > > > +			return rc;
+> > > > > +		}
+> > > > >  	}
+> > > > >  
+> > > > >  	if (iw > 8 || iw > cxlsd->nr_targets) {  
+> > > > 
+> > > > [Severity: High]
+> > > > Does this code break region auto-discovery on reboot for topologies
+> > > > containing a passthrough decoder?
+> > > > 
+> > > > When cxld_set_interleave() configures a passthrough decoder, it now sets
+> > > > eig = 0 (a don't-care value) in the hardware.
+> > > > 
+> > > > Upon reboot, reading this hardware state will initialize the decoder's
+> > > > software interleave_granularity to a stale value.
+> > > > 
+> > > > During auto-discovery in cxl_port_setup_targets(), the CXL_REGION_F_AUTO
+> > > > path skips validating the granularity for passthrough decoders (iw == 1),
+> > > > but it appears to be missing an update to correct the software state:
+> > > > 
+> > > > 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
+> > > > 		if (cxld->interleave_ways != iw ||
+> > > > 		    (iw > 1 && cxld->interleave_granularity != ig) ||
+> > > > 		    !spa_maps_hpa(p, &cxld->hpa_range) ||
+> > > > 		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
+> > > > 			...
+> > > > 			return -ENXIO;
+> > > > 		}
+> > > > 		/* missing update: cxld->interleave_granularity = ig; */
+> > > > 	}
+> > > > 
+> > > > If cxld->interleave_granularity is not updated to the computed ig here, won't
+> > > > any interleaving descendants read the stale parent_ig, compute a mismatched
+> > > > expected granularity, and fail validation?
+> > > > 
+> > > > -- 
+> > > > Sashiko AI review · https://sashiko.dev/#/patchset/cover.1783795720.git.alison.schofield@intel.com?part=1  
+> > >   
 > 
