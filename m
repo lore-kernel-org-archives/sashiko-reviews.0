@@ -1,199 +1,243 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010784195A6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 11:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E51D414418;
+	Tue, 15 Sep 2026 11:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789470084; cv=none; b=jPFIf67DZ4+bBNniAsymypBlT+hZ+KkI2nbJtWNdR+pVXYXVUI/Y7Vtai75SZ668iA9hzBDYzDhsJgpo1aOUkY/FRrD6Wb+tffeJMdB3vZjbV7sKA6c9t6TSzH7w8uKntbKgpCzYYHnbHcrx27S6rNX3cvcsB5+VPwwTfsJgDdA=
+	t=1789470445; cv=none; b=bq6YLIiIriNIA/lSDY+N3ho2cfvhDZZBOgmKtel/tKoBK5mBs2xEwDOG7rmlSFghIh3UV4jwbVemYrlhPyGSWFb6MEZEgvjesvdUW8CODDCQHPg7pPfuUXcBXrJK7se9oDrfFqrIJLGCjVpKiTfP5/Kp1JbO0noP0igRRg7sAzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789470084; c=relaxed/simple;
-	bh=Ftj8CTSLWRYL9OXXbJVKKqgqSrz2XFdu+rwr3vUie6c=;
+	s=arc-20240116; t=1789470445; c=relaxed/simple;
+	bh=eBp4h+7cPYV3PyJ8Rj8aNlGD2veZAlr4aNSUXmJE1Uk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=OfWWOEhJGPT6Q5P0jbFOTc3sPSCB6JXpVYOW/Urw3c4YTdE+mlqHxcuDTXqjFnTdqVfV+Fznf3vxVcInPmJaEt3ZO3E1xPMndZmBqDfopIgygMmaEXGFWtv/t24yS2+F9+ZT5ZieQjjEOK+xyAWHurKDkt1Yrn6eK8RoXYGyh2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HGaXutqj; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VnZS83E5G0WEVe17zGTY3yi2Ajhk+lxsGyobCk74AfrLLzmsGplz3C5pbMwqu3Ftnjn+miEbmR0ja0ETmayd5rxjB2dv7JSoEyjZr1L0LpiEoCQst56loJFEXSx+mbNnwOA4cGgD/1oMAtV56uzQi0Xlslc+aFp+OeyAeF6TCkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VUyWPS9O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HGaXutqj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789470081;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=txtxD4oHFA2YkyGlKVoJ0Hr6NZh2d56sqLMTfZsoi3c=;
-	b=HGaXutqjhOBWeOFoCmLBs65bNWLzNErOBya00bjnesQfnENRBSrJEO5rO7l9z3IxztvSEV
-	HX1Ix7nqEzZUnxNHIJ3k6b/r75hZZ/3OX3u8f3rRdMwqy6fXej12s6j8IXNiMCbVo17uvL
-	1aQPAmQKF6VAadS0qS9Bf7BkcK2NEUo=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-14-Tqg_AKtEP3Sk3O1j6xqbYw-1; Tue, 15 Sep 2026 07:01:15 -0400
-X-MC-Unique: Tqg_AKtEP3Sk3O1j6xqbYw-1
-X-Mimecast-MFC-AGG-ID: Tqg_AKtEP3Sk3O1j6xqbYw_1789470074
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c25edb54d22so209632866b.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 04:01:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789470074; x=1790074874;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=txtxD4oHFA2YkyGlKVoJ0Hr6NZh2d56sqLMTfZsoi3c=;
-        b=rtzLA3s2cvjDXJhuSDhy4C1jmoeOpcfs83Z8m8/0MC1YQgG72WOalbvdxAn+PSnHJG
-         RhGwaYB0R8TkFZaOdmw8H6sTYiUwcTRvQkDmf1EkAlK0uMlE3w6Qc5Pk5P8xEG8ljcY3
-         ou3d+LFUjS1bTsaJghfxeFTfqOg3yu8JTC6CbPrgMDzelHA+oOpnnun1eTOOv7QjWvLf
-         GuBMJL7G0MPhwZQ80ELFIbS4/h/lrOpW87ekmVpHSLeuJEcIqxMu9b1NRLWAGc0ldb7z
-         fEwhkYPhyU5FWyj7YdkmOi9K7HryKHZWPGxrcyzmkJ2wTiUfzU9vsbCRtJn/XvYaF2bv
-         +eFA==
-X-Gm-Message-State: AFuF++nJS4u3gQAcsrdZ/uaHeGKB8VEH1Blrl18QaKAm0oRniuaNrs3H
-	uDWEpUA1sFBf8+PFWjr+5XjKwZLBBoRKK21gbozx9f2auS5mMpRqWe9ohBRuFoxAvtlpvyj0o0u
-	e0kuEXBMnmlNy4voulbH+Dq4vCRBMbYgNhhsHmHTfUuNOAHEe7rR85A+B0TYrn4ATISDiPA==
-X-Gm-Gg: AYBFou3fI1RngVojzu6PdB+drGjKC7lfaTh6TCLjSeFzY7lWE/rGC7fw5dHZl5/xExe
-	fXLKiyzvoEjGsxzO+bZazWXfbstyGW3usEDk0k/J2wh9PXxpznJO0C8/dTTU1snAaUgT8nfVzkE
-	xAsE/oO5qAj3KKq9TJmzU4Kip1j/1PRn4yl8NuYb1wFoIIoYXujDdosjDT6N0xmnZ+q9oKQyENT
-	oY0wuG5GNQcY49+J4sCGRxukg+STTVsqA/qKZBBVsVUVorcgOV6Rmn03zZMWr2TCdv8SsCCTDrO
-	uY5NrDqPVU8YNz++aX3bRzqHXSiU4WyHNl2ltINXpv3VcE0Yviv/2wwBjRolJhcvGYdqVBP4WHQ
-	DF+Rs/sghJ0pINj+dfb+EhYI=
-X-Received: by 2002:a17:907:c18:b0:c25:8e53:45ca with SMTP id a640c23a62f3a-c29b87655b6mr752691966b.21.1789470074071;
-        Tue, 15 Sep 2026 04:01:14 -0700 (PDT)
-X-Received: by 2002:a17:907:c18:b0:c25:8e53:45ca with SMTP id a640c23a62f3a-c29b87655b6mr752683866b.21.1789470073233;
-        Tue, 15 Sep 2026 04:01:13 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2966021ae8sm558697666b.22.2026.09.15.04.01.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 04:01:12 -0700 (PDT)
-Date: Tue, 15 Sep 2026 07:01:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jia Jia <physicalmtea@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, virtualization@lists.linux.dev,
-	Eugenio Perez <eperezma@redhat.com>
-Subject: Re: [PATCH] vhost-scsi: do not relock event vq mutex on send_evt
- fallback
-Message-ID: <20260915070050-mutt-send-email-mst@kernel.org>
-References: <20260912090420.47439-1-physicalmtea@gmail.com>
- <20260913090452.2B8221F00893@smtp.kernel.org>
- <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VUyWPS9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755921F000FF;
+	Tue, 15 Sep 2026 11:07:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789470443;
+	bh=Ouzbh7dZPn9Yw6vd2rYWvCSztsBHlYK0YoEuzqInt+U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VUyWPS9OT0207Wl27AbILw3brqIkjAerQk/08dT4Yq6n2LflVDZF7YcFNuS1GVaaX
+	 jLIzv8UrmdNmFYZhP+fpOJ63EuuvrS3LJvCaiRzE2+iOUZV58tg1aIOeRA58Gb7dmQ
+	 RfAE5WuFW3aoStjNdpcOsK+2GH1vFclfHAOhrhCE0Sl8KkNDtGNBHq5BxgkyesfM7/
+	 JCDiYqr355d1dHUnVvmMikcgv5aRWNMpHNIFNdUXre7b2ISH0NlbPdhwc3KSzVV0f6
+	 HVfolcxEwqqi9Qo0bub3FUfwuBFjiY/fjT4STZIYJbz+ffzHMJQKzYdU03V6kXA1g/
+	 dJbBVn5xnjSZQ==
+Date: Tue, 15 Sep 2026 12:07:19 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Rudraksha Gupta <guptarud@gmail.com>, devicetree@vger.kernel.org,
+	robh@kernel.org, linux-leds@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v7 2/3] leds: flash: rt8515: Support single-GPIO flash
+ ICs with vin supply
+Message-ID: <20260915110719.GB11487@google.com>
+References: <20260912-expressatt_camera_flash-v7-0-e1fd2edc8d84@gmail.com>
+ <20260912-expressatt_camera_flash-v7-2-e1fd2edc8d84@gmail.com>
+ <20260913025029.34B121F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: _duqiXpXz_q7U7no7JYhFV4pjV0ZFl0rOIWzjGA6F1I_1789470074
-X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260913025029.34B121F000FF@smtp.kernel.org>
 
-On Mon, Sep 14, 2026 at 04:38:57PM +0800, Jia Jia wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [Critical] vhost_scsi_do_evt_work() accesses vq->iov[out] without verifying that the guest actually provided an input buffer, leading to arbitrary user-space memory corruption.
-> > - [High] Events are processed in LIFO order instead of FIFO, which can cause state corruption for hotplug/hotunplug sequences.
-> > --
-> >
-> > commit 05830c30fc2e4dc682c270a9b487ae5abb66218b
-> > Author: Jia Jia <physicalmtea@gmail.com>
-> >
-> > vhost-scsi: do not relock event vq mutex on send_evt fallback
-> >
-> > This commit resolves a deadlock during fallback event handling when the vhost
-> > worker has disconnected. It splits event completion into an internal unlocked
-> > helper and a locked wrapper to safely reuse the completion path.
-> >
-> > Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel.org/
-> >
-> > > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-> > > index 4f8c0260bc9e7..42abf18291b75 100644
-> > > --- a/drivers/vhost/scsi.c
-> > > +++ b/drivers/vhost/scsi.c
-> > > @@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, struct vhost_scsi_evt *evt)
-> > >       vhost_scsi_log_write(vq, vq_log, log_num);
-> > >  }
-> > >
-> > > -static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
-> > > +/* Caller must hold the event virtqueue mutex. */
-> > > +static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
-> > >  {
-> > > -     struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
-> > >       struct vhost_scsi_evt *evt, *t;
-> > >       struct llist_node *llnode;
-> > >
-> > > -     mutex_lock(&vq->mutex);
-> > >       llnode = llist_del_all(&vs->vs_event_list);
-> > >       llist_for_each_entry_safe(evt, t, llnode, list) {
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but does this loop deliver events to the guest
-> > in reverse order?
-> >
-> > The events are added to vs_event_list using llist_add(), which constructs a
-> > last-in, first-out list. Because lnode is retrieved locklessly with
-> > llist_del_all(), and the iteration happens without first calling
-> > llist_reverse_order(), the events appear to be processed from newest to
-> > oldest.
-> >
-> > Could this cause state corruption for hotplug and hotunplug sequences? For
-> > example, if a device is plugged and then rapidly unplugged, the guest might
-> > receive the unplug event first and the plug event second, leaving it
-> > erroneously believing the device is still present.
-> >
+On Sun, 13 Sep 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
 > 
-> Looks like this could get the acquire order wrong? Need to verify.
+> New issues:
+> - [High] Regulator is not enabled when requesting maximum torch brightness, preventing the LED from turning on.
+> - [High] Replacing mod_timer with schedule_delayed_work silently drops updates to the strobe timeout and causes premature LED power down.
+> - [Medium] Unbalanced regulator disable due to reliance on the global/physical regulator state instead of the driver's consumer enable count.
 
+Please review, explain or fix the Sashiko review(s).
 
-didn't look into this yet - did u reach any conclusion?
+If this is a set, this request includes the other patches too.
 
-> > >               if (!drop)
-> > >                       vhost_scsi_do_evt_work(vs, evt);
-> >
-> > [Severity: Critical]
-> > This is a pre-existing issue, but can this function access out-of-bounds or
-> > stale memory if the guest provides an empty input buffer?
-> >
-> > Looking at vhost_scsi_do_evt_work() in drivers/vhost/scsi.c, the code uses
-> > vhost_get_vq_desc() which populates vq->iov:
-> >
-> >     head = vhost_get_vq_desc(vq, vq->iov,
-> >             ARRAY_SIZE(vq->iov), &out, &in,
-> >             vq_log, &log_num);
-> >     ...
-> >     if ((vq->iov[out].iov_len != sizeof(struct virtio_scsi_event))) {
-> >         vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
-> >                 vq->iov[out].iov_len);
-> >
-> > If a guest submits a descriptor chain with only read-only descriptors,
-> > vhost_get_vq_desc() sets in = 0. The out variable holds the count of
-> > read-only descriptors, meaning the first writable descriptor expected by the
-> > host would be at index out.
-> >
+> Pre-existing issues:
+> - [Critical] Premature destruction of mutex and cancellation of workqueue during device removal while the LED class device is still registered, leading to a Use-After-Free.
+> --
 > 
-> This is a dup -- an earlier patch already fixed it:
-> https://lore.kernel.org/all/20260904005240.502787-1-physicalmtea@gmail.com/
-> It was while fixing that earlier issue that Sashiko spotted this
-> adjacent problem.
+> commit 6a964f82a818f57f5a1a31366f614609bc9c5008
+> Author: Rudraksha Gupta <guptarud@gmail.com>
 > 
-> > Does the length check above access vq->iov[out].iov_len without verifying
-> > that in > 0?
-> >
-> > If in is 0, vq->iov[out] was not populated by vhost_get_vq_desc() and
-> > contains stale data from a previous request. Could a malicious guest use
-> > this to force the kernel to write the event structure to a previously
-> > legitimate but now hot-unplugged host virtual address via the
-> > __copy_to_user() call later in the function?
-> >
-> > >               vhost_scsi_free_evt(vs, evt);
-> > >       }
-> > > +}
-> >
-> > [ ... ]
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260912090420.47439-1-physicalmtea@gmail.com?part=1
+> leds: flash: rt8515: Support single-GPIO flash ICs with vin supply
+> 
+> This commit extends the RT8515 driver to support flash ICs that use
+> only a single GPIO for both flash and torch modes, alongside an
+> optional vin regulator that gates power to the flash IC.
+> 
+> > diff --git a/drivers/leds/flash/leds-rt8515.c b/drivers/leds/flash/leds-rt8515.c
+> > index 00904cc90ed6e..541f61e13f018 100644
+> > --- a/drivers/leds/flash/leds-rt8515.c
+> > +++ b/drivers/leds/flash/leds-rt8515.c
+> [ ... ]
+> > @@ -62,27 +66,50 @@ static struct rt8515 *to_rt8515(struct led_classdev_flash *fled)
+> >  	return container_of(fled, struct rt8515, fled);
+> >  }
+> >  
+> > -static void rt8515_gpio_led_off(struct rt8515 *rt)
+> > +static int rt8515_gpio_led_off(struct rt8515 *rt)
+> >  {
+> > -	gpiod_set_value(rt->enable_flash, 0);
+> > -	gpiod_set_value(rt->enable_torch, 0);
+> > +	gpiod_set_value(rt->enable_flash, RT8515_OFF);
+> > +	gpiod_set_value(rt->enable_torch, RT8515_OFF);
+> > +
+> > +	if (!rt->reg)
+> > +		return 0;
+> > +
+> > +	return regulator_is_enabled(rt->reg) > 0 ? regulator_disable(rt->reg) : 0;
+> 
+> [Severity: Medium]
+> Since regulator_is_enabled() returns the global physical state rather than
+> the per-consumer enable count, could this lead to an unbalanced disable if
+> the regulator is marked always-on or shared with another consumer?
+> 
+> Because rt8515_gpio_led_off() is reachable from user-controllable sysfs
+> attributes via rt8515_led_brightness_set(), repeated calls when the driver
+> has not enabled the regulator might cause the regulator core to throw a
+> warning and return -EIO. Should the driver maintain its own boolean state
+> to track whether it has enabled the regulator?
+> 
+> >  }
+> [ ... ]
+> > @@ -91,23 +118,37 @@ static int rt8515_led_brightness_set(struct led_classdev *led,
+> >  {
+> >  	struct led_classdev_flash *fled = lcdev_to_flcdev(led);
+> >  	struct rt8515 *rt = to_rt8515(fled);
+> > +	int ret = 0;
+> >  
+> >  	mutex_lock(&rt->lock);
+> >  
+> >  	if (brightness == LED_OFF) {
+> > -		/* Off */
+> > -		rt8515_gpio_led_off(rt);
+> > +		ret = rt8515_gpio_led_off(rt);
+> > +		if (ret)
+> > +			goto out;
+> >  	} else if (brightness < RT8515_TORCH_MAX) {
+> > -		/* Step it up to movie mode brightness using the flash pin */
+> > -		rt8515_gpio_brightness_commit(rt->enable_torch, brightness);
+> > +		/*
+> > +		 * Step it up to movie mode brightness.
+> > +		 * If there is no separate torch pin, use the flash pin
+> > +		 * for torch as well.
+> > +		 */
+> > +		ret = rt8515_gpio_brightness_commit(rt,
+> > +				rt->enable_torch ?: rt->enable_flash, brightness);
+> > +		if (ret)
+> > +			goto out;
+> >  	} else {
+> > -		/* Max torch brightness requested */
+> > -		gpiod_set_value(rt->enable_torch, 1);
+> > +		/*
+> > +		 * Max torch brightness requested.
+> > +		 * If there is no separate torch pin, use the flash pin
+> > +		 * for torch as well.
+> > +		 */
+> > +		gpiod_set_value(rt->enable_torch ?: rt->enable_flash, RT8515_ON);
+> 
+> [Severity: High]
+> If a transition is made from LED_OFF directly to max torch brightness, the
+> optional vin regulator remains disabled because
+> rt8515_gpio_brightness_commit() is completely bypassed here. Does this mean
+> the max torch state might silently fail to power the IC?
+> 
+> >  	}
+> >  
+> > +out:
+> >  	mutex_unlock(&rt->lock);
+> >  
+> > -	return 0;
+> > +	return ret;
+> >  }
+> >  
+> >  static int rt8515_led_flash_strobe_set(struct led_classdev_flash *fled,
+> > @@ -116,27 +157,35 @@ static int rt8515_led_flash_strobe_set(struct led_classdev_flash *fled,
+> [ ... ]
+> > -	if (state) {
+> > -		/* Enable LED flash mode and set brightness */
+> > -		rt8515_gpio_brightness_commit(rt->enable_flash, brightness);
+> > -		/* Set timeout */
+> > -		mod_timer(&rt->powerdown_timer,
+> > -			  jiffies + usecs_to_jiffies(timeout->val));
+> > -	} else {
+> > -		timer_delete_sync(&rt->powerdown_timer);
+> > -		/* Turn the LED off */
+> > -		rt8515_gpio_led_off(rt);
+> > -	}
+> > +	/* Enable LED flash mode and set brightness */
+> > +	ret = rt8515_gpio_brightness_commit(rt, rt->enable_flash, brightness);
+> > +	if (ret)
+> > +		goto out;
+> > +
+> > +	/* Set timeout */
+> > +	schedule_delayed_work(&rt->powerdown_work, usecs_to_jiffies(timeout->val));
+> 
+> [Severity: High]
+> Does schedule_delayed_work() correctly handle consecutive flash strobe
+> commands? Unlike mod_timer(), schedule_delayed_work() silently ignores
+> updates if the work is already pending. This could cause consecutive V4L2
+> flash strobes to fail to extend the timeout, shutting down the flash
+> prematurely.
+> 
+> Additionally, if the delayed work is actively executing and blocked waiting
+> on rt->lock, its pending bit is cleared. In that scenario, could
+> schedule_delayed_work() queue a duplicate instance of the work that
+> immediately shuts down the LED as soon as the lock is released? Would using
+> mod_delayed_work() resolve these state management issues?
+> 
+> >  
+> >  	fled->led_cdev.brightness = LED_OFF;
+> >  	/* After this the torch LED will be disabled */
+> >  
+> > +out:
+> >  	mutex_unlock(&rt->lock);
+> >  
+> > -	return 0;
+> > +	return ret;
+> >  }
+> [ ... ]
+> > @@ -327,12 +389,17 @@ static int rt8515_probe(struct platform_device *pdev)
+> [ ... ]
+> >  	platform_set_drvdata(pdev, rt);
+> >  
+> >  	ret = devm_led_classdev_flash_register_ext(dev, fled, &init_data);
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but registering the LED class device via the
+> devm API schedules its sysfs interfaces to be unregistered after
+> rt8515_remove() returns.
+> 
+> [ ... ]
+> > @@ -371,7 +438,7 @@ static void rt8515_remove(struct platform_device *pdev)
+> >  	struct rt8515 *rt = platform_get_drvdata(pdev);
+> >  
+> >  	rt8515_v4l2_flash_release(rt);
+> > -	timer_delete_sync(&rt->powerdown_timer);
+> > +	cancel_delayed_work_sync(&rt->powerdown_work);
+> >  	mutex_destroy(&rt->lock);
+> 
+> Because devres destroys the sysfs interfaces after this function returns,
+> could a concurrent user-space write to sysfs (like triggering a flash
+> strobe) occur during this window? This would cause the sysfs handler to
+> attempt to lock the destroyed mutex and queue work on the freed device
+> structure, leading to a use-after-free. Should devm_add_action_or_reset()
+> be used here instead to ensure the work and mutex are only destroyed after
+> the devm-managed LED registration is cleanly torn down?
+> 
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260912-expressatt_camera_flash-v7-0-e1fd2edc8d84@gmail.com?part=2
 
+-- 
+Lee Jones
