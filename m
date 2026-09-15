@@ -1,101 +1,134 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDB7207E00
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 06:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789453978; cv=none; b=L2RuPXW1j9bjfuo06fiqTHVnNFmHN3IZOhdVo8wRaz96TaH6szKrEnGQGHLl6zVeGF5/tVqVw6baFpjO5xFYA1lA5odGLNi21g9WIYsEVMSatd4vwBTpWSMxS6ptj4qJjnjYItvwX+SPAVuam5zHZ+U74uHK2pBQkXuzYoskKiU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789453978; c=relaxed/simple;
-	bh=QqArEvzGbVkfAltQ7Gy444plDqM6Su1k8Ceju0cJ61Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bcXWN05YtObwF69UB4lYH/+61ACXIrVvW5nOSat79+64OeghvrGLg0dYHuwbRk3ycTW6jArNR5/PAMeLEIV0PfbJPi8FaXPl/lLK7Re7jjU/DaVSIgYumEoBihS7I49Dehq87tWaVyDXAw7LiFXggHJXQesJL2xM4SmjtPOBNU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hvDOaJ7M; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A621C3839A1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 06:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789454011; cv=pass; b=SxyjeLBtwTpqDLEF+BAUiHEu19wALBkOZybNSFEwmHNtAh1OKtZBAWoAy7f65Wt3w0XaeaRk4zThbkUVmh5runrGeDAsU/718zA32h5YV+mCKDfTOyRrpuMVF98PMEP9oQvhJn41+UYp6fSEAK0GrwjQxXNzmpD1CSbakMHVEzc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789454011; c=relaxed/simple;
+	bh=BZEOoUQ0Lo8ipUdfeprRBNlw3oHG9gKfH8cF4qSYIoM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=piIvDK77wWcmvAVQzTUqwkRna8vlEKw/SAYKtPl9hES/EbtswbfZWMu/F+T1T+9bEwdlWjWYzeCsRkO2VIgvrOEUd/Ct0K8lQMb5nzOrjEKsGl0HApyB51l9oMrl9xypPI6tJ6h7QcszbtfVlW2GTHstbDlmvqcogcyUlc24vZw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Alo0wid+; arc=pass smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvDOaJ7M"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39b350c69b4so2387069a91.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 23:32:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Alo0wid+"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-3a2015bbfceso3896631fa.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 14 Sep 2026 23:33:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789454007; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oVWj67JkXN0drYHqxSmzYbSWANSjmKtK3CyNdcwH2BMIjwNZ8BJl1TU98GOxfTN4oQ
+         Okb899TV+N+2Lif2zypveNKjHMfmd9EjgnV0JAqHW+KlUgb6QFvyn/ckqt1LqaiCawQa
+         K6PR3L2QQLLoKrb8EweCqlchEDFONMYA6VFGXD2IQgB4EpP5fXwhtXWBs/OZR1Efi/Zc
+         RCTvI5icGpRjPoBE4flzvjZSapnT5JPScdCZN+FHMWVmRHDfDTG+JngPIazobfAUa3Dm
+         1Sfx+g4mKPZo0CIi2GtpPs4y3PadB2Y31bAz6B1JDcxOGK8CSeiSTBcwZmkdV9q8zX/q
+         Z0Nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=casfK5KttDr72ePpP2HDg9NJjIeM9xhCgNcIOIAZHLU=;
+        fh=Epu0QFB8EafLM+drbMuj/cl69qaD46nq4BTHWWrHi3U=;
+        b=njTCZ+j0ZmklNZN1lzc7gA+YLsCkwzbOHTtVd1weKaPJaaTryORlCyBaIrvC93JXVf
+         rpU3aAfgWcWEBoOwZAbQQudlNBn5kzSN17bgXPjliSDtH/wasxxgEjER5ouGe7wZXvPv
+         5kYdHZ7F000obZkfnU13GvYmwghDD4XwrzWl+4moHdco1fsCiJr47wpXtib8ybcfK3XF
+         3YaKLmQAltd+3pYqF+WyLvrToyxTm6zxgVWfnb7dxF4u4sFUoGFie5r9OD5cCOkIrDEA
+         ANf+VFO3NdxbJzfh1Fs68BdQJzrX0AnhSv7v5WGRiPCQ7RQObQHuMSVbGNIV4HCwIcfZ
+         Bk9A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789453976; x=1790058776; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1789454007; x=1790058807; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=QqArEvzGbVkfAltQ7Gy444plDqM6Su1k8Ceju0cJ61Q=;
-        b=hvDOaJ7MxxDFWeC8jIjrccrzT3dOs5bUDYqRAEyfJhL1kS5mxK4n+HmRd2x1GHfVY3
-         2mioZGYo1lv7xILUGC1I9hQu3SdAYkQvSSbZb7kLgXB38x3Y1pCJlQTjLHKVNPoalgka
-         cJsUAp/GWfMmQarrnSIiWkXLGKWG56W755Wl7rhbpOdo3SjLVqHEiNof0JZ075Mw5u3a
-         CuZACs3uxmm1Vq68FAGhQErYpFmBgUUrsWTp9Ozqnah6xGvu8ybwtobb9mbtx5g25Q2K
-         oFJTox7cQuyJOAA92CE3ZM8hfmlpTGPBtXbo+Bql15Ijtm8wSjZx02e3R+z9lMaDJTzP
-         AUaQ==
+        bh=casfK5KttDr72ePpP2HDg9NJjIeM9xhCgNcIOIAZHLU=;
+        b=Alo0wid+lmNe9uuwF+UAgqI/ZHsS1lNQANiKzexG1Lyl/j3VV86Qn5tMe3wTx7RuLU
+         uaHcxTz3OSkwi7X3K3PCDj0lSvch6pJxYFA1wCCjxQZw5efoQ6lHmUBWiq/Jxc4slJIh
+         XxFaMi1cs1Mb4eDC8nTti4X0KenFvgkkbHB5AizDa55+S+rSLluExEy9sB4p9Q2eXMHp
+         UXzwWL6jmkr4jWGIIeeRB1SHYvH6p/jS1HOGXO6uEbaObR9rRukaxG30QxMP2d4cGpSP
+         bFqhTkOTT3FiAdWlD6pMyFk3paFCG7nu3gbNzTc1M2Es4OYeCaZXHpAU5nFm5Mzo6jdZ
+         5dbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789453976; x=1790058776;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1789454007; x=1790058807;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=QqArEvzGbVkfAltQ7Gy444plDqM6Su1k8Ceju0cJ61Q=;
-        b=QqGjbVdEokKwDI9E/5ic6HSUB4cSSTtRQog+wRhmT6qNguWH22M3sVJ5JX2hu67Sxy
-         gZGF4IarTlzBX4RNkzQQ0zfMu+ZWEomKJBXVQz3NM47hDiQl4pbamfXvy4XhsHZ76fDc
-         sz24BTTBLf5UzEd6pftNG8Jka836BXBtk62EkpLFzxZC09+K9dm5S6YewE3DVmnBWNBJ
-         kKl+va7Zbqaso5P8UsM+QGL9vd80Ylv+erlh7HklBVGyv8/+Uig6Il0Dk2Qvaqaw+UPi
-         Xxuw9zKigfZmzzmFd+zHcX3DKJRVSIG3eULH+ZPYgJ1Z2YqXUpjCij4SkqKjIXcAw5no
-         +c6g==
-X-Gm-Message-State: AFuF++lViPY1jD++Pf1/3XVapALgQwMa8IP7CFmRWl3dxYlDsPWIfw/K
-	Qpr2pd8pO9f+lIIHXNUPlCbeAuaxPekVwua5PkTvryD5OB+oUDBgKpSP+R2hS9vv
-X-Gm-Gg: AYBFou0BV1X5JFdtWQZ7de7dRhSjPfK/y/DxO3eAnGwX6wfJGfdQO/fY4m8D0BCl1DJ
-	sVhoGTcKwpOYWd6cq/emMF0Aqux3O/YbdrerriMRI2pF1XJyKHzZ40gsDT2S24EAvgzNmdPVJef
-	7UJDw6MzMlEJijRYMUGUdvfjYBHoHZzCasJOT+e3yWTY2YET56hz4SKwObrXE9hegjkfnZ4aJic
-	xgaaTkZ3eu3b9/tTGx0UNd8EtEHHvyg2QJXqKLPoPOyFExwbPvyBSok9DwsRKjWq9zEnYue1o69
-	yP9MqwVaJkSIh0UCfbCkk/yGIHZhONHvuFZuyaMoA0PfQXnVG0hlWfaJhgXq3cJbJHsKLq7dq9A
-	meY0+Dd4WTEm2Wqj/6dh/ehAHJE6rxrJ9PcHF3JJf+MfCWNwi5iKY7tY/gLxOtC0gagxgSuDeZp
-	AyoiV4dfqRvvGwEQzoJPY4jqSLR8RrncSK6f+PiiyNES3V9B+VufS2VE42AqV6mHT7RC9SFdEm3
-	qdy6f6LxHVq4gifG6gzdtc1HWfn3Xqy2/+YOTvBsgWbmFqoUwVnXh7PXBiMeQQHqTrpCzs0yOdZ
-	9snP+B3h632sWMrV8W9vcgnR4U6X6iCJ+oioOQ48HU17qXScFbLoFRNMajGm6hA=
-X-Received: by 2002:a17:90b:4b10:b0:39d:e54c:a28a with SMTP id 98e67ed59e1d1-39debf9b35dmr11228325a91.8.1789453976485;
-        Mon, 14 Sep 2026 23:32:56 -0700 (PDT)
-Received: from spider.bream-herring.ts.net ([103.252.203.158])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39dfd9baad9sm3254695a91.4.2026.09.14.23.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 23:32:56 -0700 (PDT)
-From: Matthias Goergens <matthias.goergens@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Matthias Goergens <matthias.goergens@gmail.com>,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/i915: unlock shmem folios after skipped writeback
-Date: Tue, 15 Sep 2026 14:32:53 +0800
-Message-ID: <20260915063253.2471499-1-matthias.goergens@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260914111511.648711F000FF@smtp.kernel.org>
-References: <20260914105606.3997649-1-matthias.goergens@gmail.com> <20260914111511.648711F000FF@smtp.kernel.org>
+        bh=casfK5KttDr72ePpP2HDg9NJjIeM9xhCgNcIOIAZHLU=;
+        b=CDv1zTZozv8WBZ4o1iRhRlVBSLHRO2THoAT8JiUcEIRmTX+Yr2soEMYwWlUZowh5hL
+         k1d1T+TW3L5j3UVo1OCN4khH/ebrU1gBpG5GYTBNKVSQOc2QIkBMnndyiySYjwUQY0Ea
+         maLDksRUqmGWF1FlpvrPOl91VlFEs4o0OIn9E8BY8xifuqWhwnEhkQRgJ7gtCSP4vVoW
+         2rBSKMEzIqFdQsS0Yg1Y5YzYcsNVvXZTgt9DvuQZfD6McqeOxIdGI335g4gQJSOTRGaf
+         P9j6NKzVrj4TB/MRnZyTj4QgDKbUiMy5+zc/D5AnMss7CGwW6CdfZc1dLnfnncjdsJRy
+         M2Ug==
+X-Gm-Message-State: AFuF++m9Puy4V7/QGSaYZZysW+uV1HA1UDb0juNqFdynGQgum0R4/x1B
+	TsfJuDPBVnl9nRsZUFIaFYAdoChk3Yds0h4Mz8td4aDzehMjb+As+y3TEwh3oPf9k2BMWF0eWKu
+	6VHuOQzHwBy2oRy4v4LFyR3613MWcn4JaycQ8648=
+X-Gm-Gg: AYBFou1m60WFJWZ+tSbyam/3DqNPRvTPOiTfpWnyrdEiKEdGlk9abWS5mXMJlgP70h9
+	qc5VEeIvGCr695rN44RLTHvWrFz6PTaJqW4zPah77cn5rU+84n7Ge9cCrjG0JVrVlDm3WQ4y4Jj
+	Zr4inE0tDarQhV6jtnMNQMwQlmHSU3C/iMt/f7CUxG+XTOlwk6cngvYVbQPIL3ttlTs0VAwMl2q
+	8k4UIKQ8nXkW71gM5ommfkXbloNs93FaEQbupv2r4/tkA/Gotyvxt1IU1aKMdQoWIcBF2JPG0yp
+	yEOjrrcszC0FS8iDfUF8fjARmRVxsNVtCBxHyEXQ/S+o76F5BxbuH7J0X/PqR5Dw3OcmHu4T5pO
+	61/1+Q/AQhcT5
+X-Received: by 2002:a2e:bc8b:0:b0:3a3:29d8:8b00 with SMTP id
+ 38308e7fff4ca-3a5d19a7c11mr2780671fa.10.1789454007172; Mon, 14 Sep 2026
+ 23:33:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260915052021.6959-1-syhuang3@nuvoton.com> <20260915052843.397FF1F000FF@smtp.kernel.org>
+In-Reply-To: <20260915052843.397FF1F000FF@smtp.kernel.org>
+From: Sheng-Yuan Huang <hsyemail2@gmail.com>
+Date: Tue, 15 Sep 2026 14:33:15 +0800
+X-Gm-Features: AcwNN1WwzpMg6DbhyfieH-d57sUuGMCMER0oo83Syvu7n2pAq0NeQmN3AZLllEU
+Message-ID: <CACW=pY5n1ku3m4QPgBkx4+r_nHr7s8GqYWUZ77DH+rgOvNq9dw@mail.gmail.com>
+Subject: Re: [PATCH v3] hwmon: (lm75) Add support for Nuvoton NCT7715
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, the budget should use the supplied object size. The current limit
-is a separate regression from
-776a853a43c9 ("i915: Use writeback_iter()"). The old loop walked
-size >> PAGE_SHIFT pages; the iterator now honours the pre-existing
-SWAP_CLUSTER_MAX budget, leaving size unused.
+<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B49=E6=9C=8815=E6=97=A5=E9=80=
+=B1=E4=BA=8C =E4=B8=8B=E5=8D=881:28=E5=AF=AB=E9=81=93=EF=BC=9A
 
-The reclaim-accounting consequence needs some qualification, though.
-Before optional writeback, i915 drops its references to the whole object's
-pages and clears mapping unevictability. The remaining pages can be
-reclaimed by the MM. The shrinker also counts the object when writeback
-isn't requested, so that count doesn't mean every page reached swap.
+> > +     [nct7715] =3D {
+> > +             .config_reg_16bits =3D true,
+> > +             .set_mask =3D 0x8060,     /* 12-bit mode, 4 samples / sec=
+ond */
+> > +             .clr_mask =3D 1 << 7,     /* no one-shot mode */
+>
+> [Severity: Medium]
+> Will this leave bit 14 unchanged if it was previously set by a bootloader=
+ or
+> left over from a warm reboot?
+>
+> During driver probe, lm75_generic_probe() calls lm75_write_config() to
+> initialize LM75_REG_CONF. The regmap update mask used is:
+> clr_mask | set_mask | LM75_SHUTDOWN
+>
+> For nct7715, set_mask is 0x8060 and clr_mask is 0x0080. Bit 14 (0x4000) i=
+s
+> missing from both masks. Because of this, regmap_update_bits() will
+> silently ignore the 0 in bit 14 of set_mask and preserve its prior value
+> from the hardware configuration register.
+>
+> If bit 14 remains set, can the sensor operate at 8 Hz instead of the
+> intended 4 Hz, leading to a mismatch between the hardware state and the
+> driver state which expects and reports a 250ms interval?
+>
+> Should 0x4000 be included in clr_mask to ensure the hardware is properly
+> initialized to 4 samples / second?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260915052021.69=
+59-1-syhuang3@nuvoton.com?part=3D1
 
-I have sent a separate patch [1], "drm/i915: size shmem writeback budget
-to the object", using an object-sized nr_to_write budget to restore the
-previous writeback scope. It remains best-effort.
-I have not measured the effect of the current limit on reclaim latency
-or OOM.
-
-[1] https://lore.kernel.org/all/20260915062924.2410550-1-matthias.goergens@gmail.com/
+I will update the patch in v4 to include bit 14 in the NCT7715 clear
+mask, ensuring that the default conversion rate is initialized to 4 Hz.
