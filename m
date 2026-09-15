@@ -1,67 +1,33 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F1D3A83A8
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 09:31:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C96A351C20;
+	Tue, 15 Sep 2026 10:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789464690; cv=none; b=Kn+DSB+It5XyonLNywioTI2PuXZbl4MXj9NO9BFr1Fmppq/PeQ3BSWODgzJEPeo2jWri13YLWaCkKt/Yxd62S/9OV3LkhZHh7JImkjfAp5r/C/MD7MpkjYEbYbpxvK2KVCBcL6lM0jnykPf6ckq/iHQ5qZ0OCZsrLacJYMDNwqk=
+	t=1789468126; cv=none; b=f8Kk4h+WtOgFQBNRgPMALROInlP5DeQ5snz1TrjYVjCPZlJ9ZILAl7gWyo5k/BIOf9WCacft++UnI/nV8cfnK8PJPrNxfVxHZ8NnpInu+humv4q5eXIj+ZIzWedmHHGYlFwqCauowf6HAHkqTc9Xs54twKpojLd86T3s2sXaHZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789464690; c=relaxed/simple;
-	bh=MBIDlzLETZ6Ke7JEueJiw1A6EOnNx0E46KmQ8mc7A2M=;
+	s=arc-20240116; t=1789468126; c=relaxed/simple;
+	bh=jYUuyaxap45YWktNnApW6hsSz3P+QMWv3MzYTLKhvn4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GZjj1IAenA0WbGRqhQ95eBj5at50jDIsZsnny8ZlC7MIVQZP2vCxHdpZ8gvUmYJen6JnqyGcsfEAvFLg2+JuZSNY6VpFAcYPIJLFfhJjzfvVFWNBJXvGitdzU3XV+lAujhIBG/8fGyAAPB8a5FszUAh6fh5wN0OTk/C5093YSaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=RCB93lnW; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 In-Reply-To:Content-Type; b=dPny5mjrwGHUTsc6aqD5Ue16vdb55/SHegUuchtYlAKCijzkD+oJXDDIsCEk7tBLVLi8WbAHVFlwmZJtBamFdAxY//r6wLeKopBDtZyEde9nV0tGGwRwVsxXTqQcqH/6My/JNgMlDEjz04DVb4BA6isivlieDu0EtiPK3ll8OdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofER0sHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="RCB93lnW"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccb1a98fso2291193a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 02:31:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1789464684; x=1790069484; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=gvUI2dEtuuIaSyk3LqlQfrXzsUcahMFLkx7ziY5U1Xs=;
-        b=RCB93lnWgIONsWLNp5tyqDYfSvZDFZ4SwgyWe1iHCqenJV85nJ1HyGXapSmg6nCJ5T
-         zvrP1HVAzDXoLzKR8G+LWAhnn0qDSzg9dU3Vuw8cpDYBEt1ObAX05KVcIVKWQ2WR14XR
-         WlTF4dfUM2fMlXIbP7I6mDfy6PzUfHKPhQIvk/0KMDXJG9ulrnKwjbn4upKdh86+l6IQ
-         n7JoRuLm6fu/4l950xv0Si9EQ4PGtTibOmu1x4yk9VNxLZy7zzyD5jXs8QpRzKRcWs6n
-         D05UYifpZDseeEeSAL7i13BerRNSYSjwaYnGJMSe2JeReSdyc9qLLpRpNX3o8L56Gts4
-         MCOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789464684; x=1790069484;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gvUI2dEtuuIaSyk3LqlQfrXzsUcahMFLkx7ziY5U1Xs=;
-        b=MQcI+l/XaAtS4iU/5ILfTLlb3p/e4yQtKk6FhV8vMbw0H/0gmWK4D+WaB3J/TrE5tF
-         naGX7KnA2JgUcCkXSEnepjs57kOYYT+tGBs7b5jQaSwxqIfwqcQ3EVGwtc2vxumOnCGO
-         FzY1LzCyejtw33pbg6yX7BMO4C98EIdBxa6mkzWpb7MIBgVYqmlkKiraNVZEz5plVIny
-         Zq7yg0TlB0ZvBUvkorZwyd8QbbBe3pGFNsebu2Rcp4nAPvB8hTq2pilPI3IeBGLHUZGj
-         VOO0d6EIJerd+EsRNw2bLtJO9RtddiXTb0xuM+bhPEbIlwBv/NbIL7Fd8wz5dunzP8wT
-         94Fw==
-X-Gm-Message-State: AFuF++nwwintWmB4quSNVtQVm6zhvoVZfzsuKEzIUTs/TI/VTc5DTaMN
-	DHGXxi4IOFrBdo7RcOMgMh+1jiTcGifMVaq0Mwbc2tz12k3xheWZx0kVvKDGj3E53M+DO6Mc19q
-	y26HbL0Q=
-X-Gm-Gg: AYBFou3Vo/00MBL4P9G0M509LYpne+4zlePS9CPaG5Ft/bALP7QAEgz5xUc/T+vhqE8
-	4cAi+zZgb2nhiq8Og7o3X553CxkoGbBWEOmLp8RdbzIXPNEHR/ao1RjGfkT9/FNYCuawWvKIDa8
-	946ng7NPYGTXuadMjfAXi1szrr4oiJ3B2fQPXuf4czkoxxEAjWu88zsJjHsryybvVvw9G+fNuuD
-	tNV9Br2LGoIi/KSjsqWdpcbdPV3CVcpBPbL2K4SQmyxHlPlpU/CgAZ3vroqJFbYjOR9NMFUBQ7H
-	pw6s7xa4snTtQ94AmA3JGTH5ndXNaWWQBsCEZi3cSll07xhSkK8h80rnHKnJ/Ny86ByqIRmZprL
-	mBg605rbHqOuJiWv/1PEKm+Wo/e9X2ILSAQT5It2zYOJK+KTGoRbCRZtwc+bsQz0sy6u9/pMJf/
-	kPcohfkEdtm6otToweLCv5PlG4k4ZheP5cQ2GtyFjbJcIWzDHN0syzPnPFLhDeUW/OXEfPOK4FY
-	vf4GOqbpd5VJtINIDRFVk1/cZW6T3tH2tL5Uiv/Ct8=
-X-Received: by 2002:a17:90a:6d97:b0:39d:ec43:df74 with SMTP id 98e67ed59e1d1-39dec43dfbbmr8690045a91.12.1789464684362;
-        Tue, 15 Sep 2026 02:31:24 -0700 (PDT)
-Received: from [100.81.12.150] ([61.213.176.57])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39dfdacc559sm4074101a91.13.2026.09.15.02.31.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Sep 2026 02:31:24 -0700 (PDT)
-Message-ID: <d7c0e570-f21f-4545-be57-9c6a13d72b8a@bytedance.com>
-Date: Tue, 15 Sep 2026 17:31:21 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofER0sHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39DA1F000FF;
+	Tue, 15 Sep 2026 10:28:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789468124;
+	bh=syFNOvFuqCHRPJWBM4ggaf2cVtoimRROGoRy3ic9eLQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ofER0sHqmC2xw3BMJAvR6Ugm28Sbl7XPGrPe0LQKFkO+9yoIcJ2Fhm1wbuRFF3XjP
+	 22DjNGwf6XL3ymWKSS+lNphWBNLffK/0Vw4eXFBTnXVT2hluLouTiB5z5nI0UdCL7d
+	 uHJbkkAswv14AYZAlVmnMS44C8gedUp40oNXK2JdTQjjqmLoN4UQl0Vdkdi3BGgY+C
+	 tWptz8QQxBw/ciR/w7q8mYs6cWcgDGbbM2jm9ZV2UfJTkW3xFAAMnQP9vNiZ6FsEJ0
+	 7kjRaul0nkrCY4yltrlqbZ4F1AntBo6CMaA9u2Y0fUZU1bmPzzTsL4BbM+ac1dfud6
+	 cRGx9nW7HXg1w==
+Message-ID: <f3c9d7aa-f158-42e6-a1a5-b88c28daa941@kernel.org>
+Date: Tue, 15 Sep 2026 12:28:38 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,84 +35,111 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] memcg,writeback: flush foreign bdev mappings
- separately from owner wbs
-To: sashiko-reviews@lists.linux.dev
-Cc: mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
-References: <20260915083406.3471036-1-sunjunchao@bytedance.com>
- <20260915083406.3471036-3-sunjunchao@bytedance.com>
- <20260915085732.786A51F00893@smtp.kernel.org>
-From: Julian Sun <sunjunchao@bytedance.com>
-In-Reply-To: <20260915085732.786A51F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/7] dt-bindings: leds: pca995x: describe output-gain
+ property
+To: Nora Schiffer <nora.schiffer@ew.tq-group.com>, lee@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ linux@ew.tq-group.com
+References: <6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
+ <7f61e7e8781292450f920c49ef8853b802d76ecc.1788350618.git.nora.schiffer@ew.tq-group.com>
+ <20260902123105.11B171F000E9@smtp.kernel.org>
+ <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
+ <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
+ <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 9/15/26 4:57 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mm: foreign bdev tracking blindly overwrites slot 0 causing cache thrashing
-> --
+On 14/09/2026 10:23, Nora Schiffer wrote:
+> On Thu, 2026-09-03 at 15:09 +0200, Krzysztof Kozlowski wrote:
+>> On Wed, Sep 02, 2026 at 03:10:09PM +0200, Nora Schiffer wrote:
+>>> On Wed, 2026-09-02 at 12:31 +0000, sashiko-bot@kernel.org wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>> - [Low] The custom, device-specific property `output-gain` lacks a mandatory vendor prefix.
+>>>
+>>> Probably makes sense to add the vendor prefix, will do in v2.
+>>>
+>>>> - [Low] The `output-gain` property incorrectly exposes a raw hardware register value directly to the Device Tree instead of describing physical units.
+>>>
+>>> According to the datasheet, the LED current is calculated as follows:
+>>>
+>>>     Iled = output_gain * 900mV / Rext / 4
+>>>
+>>> If we want to fully describe the output gain using physical units, something
+>>> like output-current-microamps and external-resistor-ohms would work. There
+>>> wouldn't be a meaningful default for these properties to describe in the binding
+>>> docs however, which is possible for "output-gain" (as the driver just sets that
+>>> to 127.)
+>>
+>> Output current is already there, no? led-max-microamp? So basically you
+>> would be re-describing it... although I understand that for your case
+>> you need two properties (also the resistor) to calculate the value to program.
 > 
-> commit f85768a9e7b14a40d0dd4c42452c25af0163f55e
-> Author: Julian Sun <sunjunchao@bytedance.com>
-> memcg,writeback: flush foreign bdev mappings separately from owner wbs
+> One other idea I had was to treat the output gain as a single value, but handle
+> the constant factor in the driver, so it defines just the Iled * Rext term with
+> unit microvolts. This could be used in the Device Tree as follows:
 > 
-> This commit introduces a separate tracking and flushing mechanism for foreign
-> dirty events on block device inodes. It records the device numbers
-> independently and flushes their mappings using a dedicated workqueue to
-> prevent writing unrelated file data.
+>     /* Configure an output current of 15000uA for Rext = 3000Ohm */
+>     nxp,output-gain-microvolts = <(15000 * 3000)>;
 > 
->> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
->> --- a/mm/memcontrol.c
->> +++ b/mm/memcontrol.c
-> [ ... ]
->> @@ -3845,6 +3847,41 @@ void mem_cgroup_wb_stats(struct bdi_writeback *wb, unsigned long *pfilepages,
-> [ ... ]
->> +static void mem_cgroup_track_foreign_bdev(struct mem_cgroup *memcg, dev_t dev)
->> +{
->> +	struct bdev_frn_flush_ctx *ctx;
->> +	unsigned long flags;
->> +	int i;
->> +
->> +	/*
->> +	 * __folio_mark_dirty() takes mapping->i_pages with xa_lock_irqsave()
->> +	 * before reaching this helper. Use irqsave here as well so frn_lock's
->> +	 * IRQ protection does not depend on that outer locking.
->> +	 */
->> +	spin_lock_irqsave(&memcg->frn_lock, flags);
->> +	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
->> +		if (memcg->bdev_frn[i].dev == dev)
->> +			goto out;
->> +	}
->> +
->> +	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
->> +		ctx = &memcg->bdev_frn[i];
->> +		if (ctx->inflight)
->> +			continue;
->> +		ctx->dev = dev;
->> +		break;
->> +	}
+> Two notes regarding this approach:
 > 
-> [Severity: Medium]
-> Does this slot selection logic cause cache thrashing?
-> 
-> By greedily picking the first non-inflight slot without checking if it is
-> empty (such as checking if ctx->dev == 0) or prioritizing older entries, it
-> appears that events for different devices will repeatedly overwrite slot 0
-> when it is not currently inflight.
-> 
-> This would effectively act as a single-slot cache, losing flush hints for
-> multiple devices and leading to less efficient writeback or potential memcg
-> dirty throttling.
+> - These "microvolts" do not correspond to any actual voltage, but the full
+>   "microamps-ohms" seems very verbose.
+> - It is unclear to me whether using physical units actually makes this binding
+>   more generic. I have not worked with other LED drivers, so I don't know how
+>   common the concept of a gain that relates the current with an external
+>   resistor is.
 
-Makes sense. I'll fix it in the next version. However, records may still
-be lost when all slots are full. This is expected, since tracking remains
-best effort, just like the original foreign-flush mechanism.
-> 
->> +out:
->> +	spin_unlock_irqrestore(&memcg->frn_lock, flags);
->> +}
-> 
 
-Thanks,
--- 
-Julian Sun <sunjunchao@bytedance.com>
+I think vendor,output-gain in register values is fine in such case.
+
+
+Best regards,
+Krzysztof
