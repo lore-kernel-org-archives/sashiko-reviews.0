@@ -1,142 +1,169 @@
-Received: from mta0.migadu.com (out-96.mta0.migadu.com [91.218.175.96])
+Received: from mail-oo2-f38.google.com (mail-oo2-f38.google.com [74.125.231.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118B443B6D3
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 22:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB6B386453
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 22:56:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789510109; cv=none; b=kv+K7mkbzula5rj05UV7hs3ujyWYkaWn/j0opESaUNd3AN6tjNtC6QGyUjP/BGxgcC06RTZWl49i6t8PZ3bErjLYmb9dHMy5B7/NJ+yXCxf1fyb0piP/tpl8gE3fYBkWDxD3TtEOi3ESd+tQKWmF77wjrSy98p2LBMB5VmDI4gM=
+	t=1789512968; cv=none; b=WenDJI+yMwaoRr5NSZLOFERjjWAMv8ITgfLydAgNrd/K2Ckbv1WXtPzckOeqZaitqhVIo+2DLc2m3HuIZqrngJIkLXcNt/xsw0CXm60t0MA1Dw1N5TzVY+Wk4lLsbZm0i31LW8xe+z5b5zt1ehRJSOaTbS4f9I3lr+xlUKYElcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789510109; c=relaxed/simple;
-	bh=A37HkCwaw8sH5HmzUhu1ht6ab73vHd8c3KMufJ/82cA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EIeUO9GJeEQvLbZE+NNzRx6v6pr+Xh0boXG88gzUXEutjz5Ppt64c0V631kbib0PvyFVIVJXhwRDFCHNrLRfLk0K+1YWFzYZlOcwy3sVsPzJ0o5kZF7Zn6xByXQCA8bt/J5WKxU43WMGKh5/IFkopm/nV+XBS8kZXYPnN8pvDuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dkZDbISg; arc=none smtp.client-ip=91.218.175.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789512968; c=relaxed/simple;
+	bh=D2zUWH66E4JDS2QbS/YUsl63GXMYkTMiaoJGK2SfZFw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GiL9jtcap/8JOnFg+vfM+PDg5dr18Mn1c5vCbcPIlpilrIjunGgUB17QEAKCAAYQwkwbmv0r95EYvjqY5PJo7FHeBcqeSiMwUfPkuQVbiDMfMO/B4qi3WF9/2ycBSIxNA3PiUlU4NFWePoRy0l+DHwhP1gtUV+Z/5is7d6FOrAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=CqE8U2N7; arc=none smtp.client-ip=74.125.231.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dkZDbISg"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=A37HkCwaw8sH5HmzUhu1ht6ab73vHd8c3KMufJ/82cA=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789510105; v=1; x=1790114905;
- b=dkZDbISgzSqy2OED2wgyTSNK7k9ndtn5twc0ShLTgmAJOh0tiUpyYFSL7YLzZupHBeCc28mo
- eITXLxwfA1qfogfWXxA1VsHiOS+A2lLGHE2AI39qVN0XNKGGLEzvu1q4swGMnI11WtMfENwNWCa
- 8mbK19oMwUTtZcYPofQ1OE/0=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 89c315bdab0e4b39;
-	Tue, 15 Sep 2026 22:08:24 +0000
-X-Mizu-Trace-ID: 89c315bdab0e4b39
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <b1f31312-0f2d-4965-9bd4-d27a11b9d9fb@linux.dev>
-Date: Tue, 15 Sep 2026 15:08:22 -0700
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="CqE8U2N7"
+Received: by mail-oo2-f38.google.com with SMTP id 46e09a7af769-7f4f0d37f93so133417a34.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 15:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1789512965; x=1790117765; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bKxFu7FSdp0zRZPyAWEHKVW9lpDU21iZxHJocYoCDsw=;
+        b=CqE8U2N7xofVjGA7tAI+PopKsUl+U3qicAGMw8Li/bWgbQQgSjzohzDqcfPy9g4LS3
+         0vYpf0+QhHqYiWQKL/idAT9yIbE4tljMS9d3wO/YSnww0w+IEaTORtkZxV01mX0PGpGd
+         5VotJnhMm29MD8GJWchX8ZES2gnVjj5rlYZZ8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789512965; x=1790117765;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bKxFu7FSdp0zRZPyAWEHKVW9lpDU21iZxHJocYoCDsw=;
+        b=RBm+FfUHB36A48JVhuqY9XvZUBNWy1OugYaUopnxI7YnJyzkVJzayLOHEAWntrkoLu
+         ddkZ3VlSz88aJJ+8pUqNi1qnHIZVl7W2ZqJWu0rJqIwWyZ/IA4jIyGn4MeW4MTS3dmSB
+         F0bzqkF89BEpkxul1XQGM/0DQsUxjdUUGxpSxsR4/S4e3dDkNjhkLZ0iZDOq0PIK/I+S
+         emjVxM5XEztCbUpR+lQL69Lgzfpc+vGAHgB1pWqy8Cqlxh0elZwcnhSvp9iq4KWQXIwG
+         ltcG7YHYxFHYvnEA9XASluaFAmJ4yAYBxKO8WNsV81EEWzwKTw0EmoitUm90sKhS92mr
+         +Abg==
+X-Gm-Message-State: AFuF++kj3RhaKKs/tWxD4TvTWA8sQXbnN9vlD0Q0TFWdmLi6D7L+F9Wt
+	fe8S7PXLBZ4gPFReZQ215O/j2S6+nZzd9M9PzvGCtL01iaq+DMMf+gn1AC+1p6SR1JwezLLlVd2
+	us+VLNB4=
+X-Gm-Gg: AYBFou0btLf4E4xmgMEaa1IHlj55hX36W7YIKwmjAio3eIDjbIy41AxaG+RMqMJFaOO
+	dMqFbgzR1L6Gkqqzh6VUwFRox9E3oiJQXtW2jJ7dV7ZsIMUdtPeLl411xNAnc38IgygS3wU/eTb
+	U7yWHMyaJQU25pxtfhffVKe7c0vhIkknR9K+s/nKhI2b9lraENwbKOtiuvRtfvp7IpwfTFAtrbD
+	qhwHO5lPIFqlocvJOCrqxJRI/GPM4oQfn6r0v+EtSOVLo5RtpX5w3p9CR4v+5OUW29VqXLm0sdp
+	A89EimxGSaSwv8G0rmt0qRdK6NqsWFmp6et+DGjCmrtD9+M5zh0qrojnBysYN3BHuVKUpPHkVwV
+	zu+UMboVraIFwIyRGRIbWzdikLMOjl9otp/pm6R/I/WvNZ0d7UzDfmhJaNhGNC7IctItaV5hvAq
+	7Lt/G08mcHwRQnv8dcAfdWEthX1/m6uEAQ+kdPMqrgq/z7mFJfxvju46W4QQYq48CPyn7ChwuGi
+	0pDawc9JkHTwCaafPBzqiaP7mHkx26Z4SdWjTHJumbfm2aSorfoag==
+X-Received: by 2002:a05:6830:700a:b0:7f6:6618:e506 with SMTP id 46e09a7af769-80b2df33bdamr612316a34.14.1789512965339;
+        Tue, 15 Sep 2026 15:56:05 -0700 (PDT)
+Received: from com-75606 ([199.47.143.7])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-80b07ad0506sm810908a34.27.2026.09.15.15.56.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 15:56:05 -0700 (PDT)
+Date: Tue, 15 Sep 2026 15:56:02 -0700
+From: Kyle Zeng <kylebot@openai.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v3] KVM: x86: Restrict saved GPA writes to hardware write
+ faults
+Message-ID: <aqnNAsGF_iUQsVX1@com-75606>
+References: <20260915222625.99965-1-kylebot@openai.com>
+ <20260915224104.4EB441F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 12/13] bpf: track low-32 scalar equality
- across narrowing stack spills
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260910164635.459558-1-vineet.gupta@linux.dev>
- <20260910164635.459558-13-vineet.gupta@linux.dev>
- <20260910170600.0DFBA1F00893@smtp.kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
-Content-Language: en-US
-In-Reply-To: <20260910170600.0DFBA1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260915224104.4EB441F000FF@smtp.kernel.org>
 
-On 9/10/26 10:05 AM, sashiko-bot@kernel.org wrote:
+On Tue, Sep 15, 2026 at 10:41:03PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Sign-extending loads from 32-bit narrowing spills incorrectly inherit and preserve a `SUBREG_ZEXT` link, causing a critical discrepancy between verifier bounds and runtime values.
+> - [High] kvm: x86: OOB read and type confusion via static SVM feature check
 > --
->
-> commit 3396576ba1c56571ccd9a040716058594f558da8
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
->
-> bpf: track low-32 scalar equality across narrowing stack spills
->
-> This commit allows the verifier to track a SUBREG_ZEXT relationship when a
-> 64-bit scalar is narrowed during a 4-byte stack spill. This preserves the
-> knowledge of the lower 32 bits for subsequent loads.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 6cb35fc0d0fb0..9e63eddb9023b 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
+> 
+> commit ed7805af977b5a574d9ccec8367687b0fbc85fd3
+> Author: Kyle Zeng <kylebot@openai.com>
+> 
+> KVM: x86: Restrict saved GPA writes to hardware write faults
+> 
+> This commit restricts emulated writes through a saved GPA to cases where
+> the hardware page fault actually reported a write access. It includes an
+> exception for SEV guests to preserve existing behavior since their guest
+> page tables are encrypted.
+> 
+> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > index 79468ddfe4736..de7fc8efeadce 100644
+> > --- a/arch/x86/kvm/x86.c
+> > +++ b/arch/x86/kvm/x86.c
+> > @@ -33,6 +33,7 @@
+> >  #include "lapic.h"
+> >  #include "xen.h"
+> >  #include "smm.h"
+> > +#include "svm/svm.h"
+> 
+> [Severity: High]
+> Does including a vendor-specific internal header like "svm/svm.h" inside
+> generic architecture code violate KVM layering rules?
+> 
 > [ ... ]
->> @@ -3678,8 +3687,15 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
->>   			 * it came from.
->>   			 */
->>   			coerce_reg_to_size(&state->stack[spi].spilled_ptr, size);
->> -			/* Break the relation on a narrowing spill. */
->> -			clear_scalar_id(&state->stack[spi].spilled_ptr);
->> +			if (subreg_link && reg->id)
->> +				state->stack[spi].spilled_ptr.subreg = SUBREG_ZEXT;
-> [Severity: Critical]
-> Can this lead to verifier state corruption when the spilled value is later
-> read with a 4-byte sign-extending load (BPF_MEMSX)?
->
-> If a BPF program performs 64-bit arithmetic to create an unknown scalar and
-> spills it to the stack via a 4-byte narrowing store, it records a SUBREG_ZEXT
-> link here and coerces its bounds to 32 bits.
->
-> If it then reads it back via a 4-byte sign-extending load, when processing
-> the read in check_stack_read_fixed_off(), narrowing evaluates to false since
-> the bounds were already truncated during the spill:
->
-> 	bool narrowing = get_reg_width(reg) > size * BITS_PER_BYTE;
->
-> As a result, subreg_link is false, and the verifier skips the
-> is_ldsx ? SUBREG_SEXT : SUBREG_ZEXT correction logic. The destination
-> register blindly inherits the stack slot's SUBREG_ZEXT link.
->
-> In check_mem_access(), coerce_reg_to_size_sx() properly sign-extends the
-> loaded value's bounds, but because the subreg link is non-zero, it skips
-> breaking the scalar ID:
->
-> 	if (!no_sext && !regs[value_regno].subreg)
-> 		clear_scalar_id(&regs[value_regno]);
->
-> The register now has sign-extended bounds but a SUBREG_ZEXT link to the
-> original 64-bit scalar.
->
-> If the original scalar is later refined, sync_linked_regs() will invoke
-> reconstruct_zext32(), completely overwriting the sign-extended bounds with
-> zero-extended bounds. The verifier will incorrectly assume the register holds
-> a positive value, while at runtime it holds a negative sign-extended value.
->
-> Does this permit arbitrary out-of-bounds kernel memory accesses?
+> 
+> > @@ -6454,7 +6456,18 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+> >  
+> >  		/* With shadow page tables, cr2 contains a GVA or nGPA. */
+> >  		if (vcpu->arch.mmu->root_role.direct) {
+> > -			ctxt->gpa_available = true;
+> > +			ctxt->gpa_access = ACC_READ_MASK;
+> > +			/*
+> > +			 * Always allow writes for SEV guests, as the guest's
+> > +			 * page tables are encrypted, i.e. KVM can't walk the
+> > +			 * guest's page tables and so must always use the GPA
+> > +			 * from the initial fault.  Restricting use of the GPA
+> > +			 * to the access type that faulted would prevent KVM
+> > +			 * from emulating RMW operations for SEV guests.
+> > +			 */
+> > +			if ((emulation_type & EMULTYPE_PF_WRITE) ||
+> > +			    (cpu_feature_enabled(X86_FEATURE_SVM) && is_sev_guest(vcpu)))
+> 
+> [Severity: High]
+> Could this lead to an out-of-bounds read and type confusion?
+> 
+> The cpu_feature_enabled(X86_FEATURE_SVM) check relies on a static host CPU
+> capability rather than checking the active KVM hypervisor module. In a nested
+> virtualization scenario (like QEMU with -cpu max), the host can expose both
+> VMX and SVM capabilities, but the kvm-intel module might be the one managing
+> the VM.
+> 
+> If a guest triggers an emulation fault on a kvm_vmx object, this path could
+> call is_sev_guest(vcpu). Since is_sev_guest() expects a kvm_svm vCPU, it
+> will blindly cast the kvm_vmx object to kvm_svm and read memory past the end
+> of the kvm_vmx allocation. 
+> 
+> If that out-of-bounds memory happens to be non-zero, it would incorrectly
+> grant ACC_WRITE_MASK authorization for emulated writes, leading to a
+> potential security bypass or host kernel panic.
+> 
+> > +				ctxt->gpa_access |= ACC_WRITE_MASK;
+> >  			ctxt->gpa_val = cr2_or_gpa;
+> >  		}
+> >  	} else {
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260915222625.99965-1-kylebot@openai.com?part=1
 
-Yes there's a bug here. A narrowing spill records SUBREG_ZEXT, 
-truncating the slot, and a later 4-byte ldsx has narrowing == false, 
-inherits the slot's SUBREG_ZEXT  leaving sign-extended bounds under a 
-zero-extending link.
+On this baseline, x86_virt_init() explicitly refuses to enable
+virtualization when both VMX and SVM initialize successfully. VM creation
+then fails, so exposing both CPUID bits doesn't appear sufficient to
+reach the path described here.
 
-Fixed by making the sign-extension path drop any link that is not 
-already SUBREG_SEXT:
+Also, is_sev_guest() casts vcpu->kvm, not the vCPU. In the configuration
+I built, the access would fall within zeroed padding in struct kvm_vmx,
+not beyond the allocation. That's not something to rely on for
+correctness, but it doesn't support the claimed OOB either.
 
-   -   if (!no_sext && !regs[value_regno].subreg)
-   +   if (!no_sext && regs[value_regno].subreg != SUBREG_SEXT)
-               clear_scalar_id(&regs[value_regno]);
+Is there a configuration that gets past the initialization checks and
+demonstrates an incorrect access? I'd like to establish that before
+treating this as a functional issue.
 
-Also added a test to that effect.
-
-Thx,
--Vineet
-
->
->> +			else
->> +				/*
->> +				 * Nothing to relate: either the source has no
->> +				 * id to share, or the store is narrower than
->> +				 * the 32 bits a link can describe.
->> +				 */
->> +				clear_scalar_id(&state->stack[spi].spilled_ptr);
->>   		}
-
+Thanks,
+Kyle
