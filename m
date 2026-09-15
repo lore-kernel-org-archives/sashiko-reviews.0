@@ -1,136 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E212437DE85
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 20:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94EF38D3F0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789505829; cv=none; b=kyEM4xupIEzLt1IQKyK6Wb5rMxjQRm5GBDJfNPHPvaBSCDzICtDMJbhu0y2JLV1OHH0fHO3GjOMHvI4PNfW//3B3J1p0kbUMXvH0M+qGjLpiCniZ/IvqjghxaB4uebTSRjRCLdpx8HUxAwgGQKgqT7rIIDdlEQNo7rjoZpvA864=
+	t=1789506294; cv=none; b=m4avFfwVi83tW/JYyv9vvJEpGULO6+OaTvPKro63dSEg8AWtYtyF1d+D8NlcjmrU79Bvj80zHqSmC0OiVNvURR3ZgkMQXl5F8rFcLCKUezct462beCE7kneZg1VsuCdv1oeX3xxughxLayIB8LTlqoJ+Gf6UgUgbbiNB3L2GiXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789505829; c=relaxed/simple;
-	bh=F20XL5v8/1WKKj0v3q5wMhgalZtJadt6kMHr5kX4ptw=;
+	s=arc-20240116; t=1789506294; c=relaxed/simple;
+	bh=yyIXuptmJwAPr4wTO/4PZiWiLUtiZfesBE2cNGieonk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tYPg/Fz8r9LrKU2xmYYvDfgX/hri0A7VSsV8cTrheY/59Xktzqvh6k5/hlfP9VIBG1Ux2aeY/g0AK0m24n4AdjWI9ziR4BxtwQiZs1ynn2yaHzod8tRQpeMGtIdsER2VpZ91QS/C3iQGAcTKz0vbxp+rfmpj618R2HES7Rj+aZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZW1ftprL; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=WBsNgxPQOPKLzVCGCygskwVd0Hy7hgFyeWbhSWj9eKKTkq3uqNltZIdFEdYBdmW+ic1KRkWtMS1IkZbQnLm/skBYB57QnRgfvmj2gM3grXa8N5aSpRnRjpYI+QQ5LKI+jwn/LkjNaDXKOCFYp3fbDukpPzrm7lOHs0pICwFOvwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IT+KGwvy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZW1ftprL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4651F00893
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 20:57:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IT+KGwvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688721F000FF
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789505827;
-	bh=CID9dPM6rVuPkyI+gF8J/cFYJpsH133faCUI+QAzZII=;
+	s=k20260515; t=1789506293;
+	bh=78QAKCGz5gzQ8zvkiIKxAHRqaOVV/ffw/xD9brOGPSA=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ZW1ftprLfuvhAouEGZ0DFTSlISJrZ7/JKMjrBnMBZuvUaGKn/7ohfTLNj2O5hKOX2
-	 i1h0lHCm1NTPqBv5YW4aRnn+Uk502od5VNwxEy3V5Czwb3+gYvavHXGOlVFG0NdkLg
-	 fy0HHCcIhFN6X0Hd+IGLfz8/WvhlS6rRYnI12ybaq43B/rjXvfp0T5TMZcqcPhnNEz
-	 XQuD/DIb0H4209a9DM3mW/Vxroqj0zlshZBcHNvXvxYQzb0DoNlpWcFrZewD3PY9OX
-	 MDZIgHctMhr8vJQq3y1326Aeh59VBfWma/sVLWHoR0oWJeYyNzVlVreXgd1Px5nDBA
-	 8ULiU2/HcZhBQ==
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910a0cb7aso20577985a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 13:57:07 -0700 (PDT)
-X-Gm-Message-State: AFuF++nD5Cq5UZ6X4LVS8l1hgQZ/hnbxXAfnopsTdryYPMaeC9TE9222
-	82I2xOohp2fGaSokZgvrUcvWl2SFyiKcm7lWfcJsx5Vs+NtAW/Y1lvlQ++owSfE6eY/ZsV7qMBH
-	P4fVo5eGWNzUKsaY9t3JiYYLevSfocs4=
-X-Received: by 2002:a05:620a:44d5:b0:939:3100:750c with SMTP id
- af79cd13be357-93a407c7017mr436646285a.22.1789505826818; Tue, 15 Sep 2026
- 13:57:06 -0700 (PDT)
+	b=IT+KGwvyocqaH5F784M21dsxWeI9Sl5CFq2jIE377mGJaZf4mNprU85cVqfGclzEW
+	 NvTVw43synjNWLkEZABu04OPDPJqHQxCtnolfNh+h8at692WPmn2Yz7BJV6IT1LpfX
+	 pJnl/pSL+OhRaMhIPSK4iE9slK3wt4lONKHXCoPuw43V2APGzTmvF3/4EKPaDMd2n6
+	 0YxuD2kkHgqtDOGTIpvQE5c82MIrFkfQ8RW7DXfFbva/9PZO9+DvSZ5zw2ncgs+lZ6
+	 mlOnWWLfWXmnwsGqx8bWbSgxnvF9S/ZU0eu/oebIIEpCV6j71FRO7HigQvt3u3jnKp
+	 dkk4DmhP4QZEA==
+Received: by mail-qk2-f43.google.com with SMTP id af79cd13be357-93910cadea2so19243285a.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 14:04:53 -0700 (PDT)
+X-Gm-Message-State: AFuF++nb2PGEgQIkYKATA19Zi7Ftze9g7u2KZ1WXZlU5ccbQ80DmHOOq
+	Ug+e4lUaivnjtWKTSutIJTGfUI7qoHpGlD808MK1LpOWC9abSEg992RJiXdy5LyWTzVNjdxZ3vZ
+	2LiW7lC9nI0iEuxI4ZDxTPArKhvSmp7U=
+X-Received: by 2002:a05:620a:2b81:b0:93a:3e13:15f1 with SMTP id
+ af79cd13be357-93a40797723mr439712485a.23.1789506287667; Tue, 15 Sep 2026
+ 14:04:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-11-song@kernel.org>
- <20260914234110.97F551F000FF@smtp.kernel.org>
-In-Reply-To: <20260914234110.97F551F000FF@smtp.kernel.org>
+References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-12-song@kernel.org>
+ <20260914234533.D81AF1F00893@smtp.kernel.org>
+In-Reply-To: <20260914234533.D81AF1F00893@smtp.kernel.org>
 From: Song Liu <song@kernel.org>
-Date: Tue, 15 Sep 2026 13:56:55 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW5StkY6=HAu3Ak6aub2g5jLpqBAMJ_=wzN18jH2ND-5aQ@mail.gmail.com>
-X-Gm-Features: AcwNN1WTgTGXGVUNUAnxfbd_oHXoPrVTDvPQzalxKuiqtiNgQIn0haUVqb66uSg
-Message-ID: <CAPhsuW5StkY6=HAu3Ak6aub2g5jLpqBAMJ_=wzN18jH2ND-5aQ@mail.gmail.com>
-Subject: Re: [PATCH v3 10/58] objtool: Keep failing test workdirs by default
+Date: Tue, 15 Sep 2026 14:04:35 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW7zOkVVZ=f_XGd17LaGdRWt2dW=U+Jhd7Cd-svn5e8hRg@mail.gmail.com>
+X-Gm-Features: AcwNN1X5OAyyRNduQJ-wDa9hV0u-e8IxGNWyYe4miL6RC61_voBMbwUtWN8HW2c
+Message-ID: <CAPhsuW7zOkVVZ=f_XGd17LaGdRWt2dW=U+Jhd7Cd-svn5e8hRg@mail.gmail.com>
+Subject: Re: [PATCH v3 11/58] objtool: Forward toolchain variables to the klp
+ test runner
 To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, joe.lawrence@redhat.com, jikos@kernel.org, 
-	peterz@infradead.org, jpoimboe@kernel.org, pmladek@suse.com, 
-	puranjay@kernel.org, mbenes@suse.cz, kernel-team@meta.com
+Cc: live-patching@vger.kernel.org, joe.lawrence@redhat.com, 
+	jpoimboe@kernel.org, mbenes@suse.cz, peterz@infradead.org, pmladek@suse.com, 
+	jikos@kernel.org, puranjay@kernel.org, kernel-team@meta.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 14, 2026 at 4:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, Sep 14, 2026 at 4:45=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] objtool/tests: misplaced artifact removal warning in KEEP=3Dno=
-ne block
+> - [Medium] objtool: tests target silently falls back to GNU objcopy under=
+ LLVM=3D1
 > --
 >
-> commit 6a850bca1e88fd95f7b038a701cf95c2d9700c66
+> commit 11c79ea0e223d9512f0e164886cfdec6a0e5e3b2
 > Author: Joe Lawrence <joe.lawrence@redhat.com>
 >
-> objtool: Keep failing test workdirs by default
+> objtool: Forward toolchain variables to the klp test runner
 >
-> This commit modifies the objtool test runner to keep the working
-> directories of failing tests by default. It introduces a KEEP variable
-> that can be set to 'all', 'none', or 'failed' to manage these artifacts.
->
-> > diff --git a/tools/objtool/tests/run-tests.sh b/tools/objtool/tests/run=
--tests.sh
-> > index e6f1ac1b5d0da..81dd33f1819b5 100755
-> > --- a/tools/objtool/tests/run-tests.sh
-> > +++ b/tools/objtool/tests/run-tests.sh
+> The tests target passes toolchain variables like CC, LD, READELF, and OBJ=
+COPY
+> into the test scripts so that fixtures are built and inspected with the
+> selected toolchain.
 >
 > [ ... ]
 >
-> > @@ -167,15 +182,44 @@ done
-> >  echo "# pass:$pass fail:$fail static-skip:$static_skip" \
-> >       "probe-skip:$probe_skip xfail:$xfail xpass:$xpass"
+> > diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
+> > index ed5cf146ef2e2..a3d09a5af7a20 100644
+> > --- a/tools/objtool/Makefile
+> > +++ b/tools/objtool/Makefile
+> > @@ -153,6 +153,8 @@ mrproper: clean
 > >
-> > -# A failure is the one time the objects matter, and by default they ar=
-e
-> > -# already gone.  Say so then rather than in the usage text nobody read=
-s while
-> > -# something is broken.
-> > -if [ -n "${KLP_TEST_KEEP:-}" ]; then
-> > -     echo "# working directories kept in $rundir -- inspect, then rm -=
-rf it"
-> > -elif ! rmdir "$rundir"/*/ "$rundir" 2>/dev/null; then
-> > -     echo "# $rundir was not empty; a test did not clean up after itse=
-lf"
-> > -elif [ "$fail" !=3D 0 ] || [ "$xpass" !=3D 0 ]; then
-> > -     echo "# re-run with --keep to hold on to what a failing test buil=
-t"
-> > -fi
-> > +case "$KLP_TEST_KEEP" in
->
-> [ ... ]
->
-> > +none)
-> > +     if ! rmdir "$rundir"/*/ "$rundir" 2>/dev/null; then
-> > +             if [ "$fail" !=3D 0 ] || [ "$xpass" !=3D 0 ]; then
-> > +                     echo "# keep=3Dnone: artifacts were removed" \
-> > +                          "(re-run with KEEP=3Dfailed or KEEP=3Dall)"
-> > +             elif [ -d "$rundir" ]; then
-> > +                     echo "# $rundir was not empty; a test did not cle=
-an up after itself"
-> > +             fi
-> > +     fi
-> > +     ;;
-> > +esac
+> >  tests: $(OBJTOOL)
+> >       $(Q)OBJTOOL=3D$(abspath $(OBJTOOL)) ARCH=3D$(ARCH) CROSS_COMPILE=
+=3D$(CROSS_COMPILE) \
+> > +             CC=3D'$(CC) $(CLANG_CROSS_FLAGS)' LD=3D'$(LD)' \
+> > +             READELF=3D'$(READELF)' OBJCOPY=3D'$(OBJCOPY)' \
 >
 > [Severity: Medium]
-> Does nesting the failure advice inside the if ! rmdir block prevent it fr=
-om
-> being displayed?
+> Will the tests target silently fall back to GNU objcopy when building wit=
+h
+> LLVM=3D1?
 >
-> If a test fails but successfully cleans up its individual subdirectories,=
+> It appears that tools/scripts/Makefile.include defines LLVM_OBJCOPY but l=
+eaves
+> OBJCOPY unset for LLVM builds. As a result, $(OBJCOPY) evaluates to an em=
+pty
+> string here in the tests recipe.
+>
+> When this empty variable is passed to tools/objtool/tests/lib.sh, the fal=
+lback
+> logic:
+>
+> OBJCOPY=3D"${OBJCOPY:-${CROSS_COMPILE}objcopy}"
+>
+> treats the empty OBJCOPY as null due to the :- operator. This substitutes=
  the
-> rmdir command will succeed and return 0. This skips the entire block,
-> swallowing the intended "artifacts were removed" advice message.
+> default GNU objcopy instead of the intended llvm-objcopy, which defeats t=
+he
+> goal of using the selected LLVM toolchain.
 >
-> Could this also fail to report test leaks if they occur alongside test
-> failures?
+OK, added the following to v4:
 
-Fixed in v4.
+OBJCOPY ?=3D $(if $(LLVM),$(LLVM_OBJCOPY),$(CROSS_COMPILE)objcopy)
 
 Thanks,
 Song
