@@ -1,220 +1,163 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazolkn19011024.outbound.protection.outlook.com [52.103.33.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350573CB546
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789476567; cv=none; b=C+R2C+lzXGmwaLjEO3J0/Ym5VDbQW4o53nSuLGdeRv28pUCXnEmXeaFseHdhb5PkHlZ70iXu03oKNrTf4TUA5/maPOF5Cgjr+eYszIrw3RodjpJaGYb/NTvZdX9KCWPjO4F6jLHEWWoFEMb2RDrbiYmwhqC/Rvp5GG2fDksyGQY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789476567; c=relaxed/simple;
-	bh=cG70onBw4K1F8vOWkzaGZgUFF3MV3PGnMgKqrTQh6MM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q5Acj46PSisrSHmNDwhj4Oq7/nuA8AUpaUsOHCefLLE270Mw+6ZKr5dZJyOqI/RFBr+ZrZfjY4bOlilotmnOvsOAXhPtnut9AQz+6SBC6nYWsk8GVAEOVGRR3NtZeETSd7ZpWzJkYGZMC3T1UqicGvSWosx1zeekXONGClMRG0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=nT8jGQKz; arc=none smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACE83B058F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 13:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789478634; cv=fail; b=kTk9CSAH27BaMhA0ZvYLgMdC8g6zPS3H4apMJrmFj5SDB/GWBzdd/C8U9SgkyrOy2zVA+2YzXCviWds43RlCJHTdKARIoAmNtLc5DBaGlGdaw29fXmVuKTMGecFA5/CIVzwoPYUCNpzl5qrosVOveQM8O0FZJyV+RgI1T9PgsG8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789478634; c=relaxed/simple;
+	bh=bdQWeaCJF9MjtWgp9BZiIYFoCE4JNFY+CFkoAAoDsx8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PxajOXHiGXUfSO7QGkMSu3BKVOXj3vS64s542apB324/+bokmpJ5JtnyOBGpFP/ZLO+TPj5/cvEsv+kwMBe1nGpD5eurgAm+PRcbPI7+jnUFJX18QaTM0cR4nqWa23AJbWeMoIc9rVvWt4Cg5CjL9fjBmKRlOu3gyYR9uN2Otmg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=ndL7oa6k; arc=fail smtp.client-ip=52.103.33.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="nT8jGQKz"
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910cadea2so13075585a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 05:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789476565; x=1790081365; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=azse08cG3HNfDP41RvTE/erEtfq8oj7Wmpy5TufdhRg=;
-        b=nT8jGQKzNHo8RJ/jVxElajTH5Ru/odANz5QRbGsGu4/ivLd8wC57HuhYyuOew5p6an
-         gKgCueJKiOdO7VW3/xFRY6aW92LDJefhwEF75gP2x3k1KahXj5NzDHg/lEjpA2tzKYV0
-         UnZeC5c1vlBU6D1Cwj/DRE3D2LqkH45nW8d88YDIS2CgyKyoELR7e7Au94eHl7b6wWaZ
-         TjXjLBGefNHyALe/3lZl9rSBvIiLQPOk0jW2CZPl0p8IejfP/lesrI0wVj02kDz1u5no
-         yCnLWggHF6rC9C8WZeveA8ne7Dh9VFKRtE8etdiGFEzxj+WK76yWzgApOGIZ1IH+jNWp
-         Wkyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789476565; x=1790081365;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=azse08cG3HNfDP41RvTE/erEtfq8oj7Wmpy5TufdhRg=;
-        b=jdBzOQhurpbHgOqNeQxSTmxnw2gt9KAgyQ70oW4MpZkT9XjoaPTItD7ECY2z1C1NSI
-         VqavCo4CydKnS5ri+HYa6ZusjinBrCNE4bjnPiMn/MqHYpCDXZsdPPvjhVsvTkx3FDGD
-         dTcCXKl1uQ6fV6ydHm/U4gOUw9pbORuJeN4N3YwJHP/A9St9c8Bg82hOUwtglZS6/FTq
-         0JbqEmva0V+Hv7QB7GI4E+3phncfx7j3XBlW+tVHZoXWUXAUWupaqrs1Cfd/kSENgh2P
-         sQuFDApewTwTNQ+hBNHdKMhnhz8Kj86SLGeXO7azw4QdBxYz1Q73acByF3oCa2vOcHsf
-         /8sA==
-X-Gm-Message-State: AFuF++llP4E+ZVOlfEdTkzUu4x5CFmssGMV3Wpet+rg8kylSz5vx1u52
-	mQXqeTPrqs+2N4X+zSYakic2E8OHqgHQVtgLGgzGEVAzTm5C0M7CaKf0PEkwUc147ZUxcOD3l0B
-	f82v9U+Y=
-X-Gm-Gg: AYBFou0uVrDcudtk+1D6tqh24kdUQc4iAjGgjdCOmGUJTdcUheRgjC59ZpqS/U1cvMW
-	5SmBMlLlmwj96xOZQb4K7DNCnoaNAeZTQ/RTecMsqtR1ZTYWfbxevRnNBeUjRPMCArPtNDmabIq
-	8EBEs1EZstrbTq4JZCCn7lByk7Phx6h8yY673E8VHOhlQPtzGxVYFHftp8IJRMPbWYr+Yp2Qg2w
-	EkNq+jWrMXPEjozS5gaTHRinQWfAi2wyvc7e2ci0W6Hvzdt/cVujghEhVWEmAEbdMbWl0/UQvtj
-	4avwDNdKd9GULISs1PPCRFLuCJg+WXQueIpFTUX7qQI7QKL79Q22j4B0t/ZyT6BUIwWkXnT79yH
-	6GkFpN8NjWEg0UtSEFHpVgQoE/telAhx12SPwxOu9iK5Lb0+WXMiy9K/opzNfe3aR/9rUPDVrl7
-	AiTVey0RgnV3DbJo9GbGmd2fz6LG0sXWiVYEDPx68Hsm1svthCcVyjrhibuhTEErv2hVkl1Go=
-X-Received: by 2002:a05:620a:1a1c:b0:939:93a1:1383 with SMTP id af79cd13be357-93a408176f8mr108459585a.32.1789476564973;
-        Tue, 15 Sep 2026 05:49:24 -0700 (PDT)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93a382ab7b3sm169560185a.19.2026.09.15.05.49.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Sep 2026 05:49:24 -0700 (PDT)
-Message-ID: <ed783639-05ed-4ad9-b881-d1689a8b2418@riscstar.com>
-Date: Tue, 15 Sep 2026 07:49:24 -0500
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="ndL7oa6k"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cB3GgUTjQfUczJzd9IqeFaAEXLXjaWJ35nAYKA7D9gwRPzxFfx5taG6clzDboFAL/l7FFtCJByBnSnVJDdx2U2DdXuho7obf4+dO9JC2Z3+TZpcCP4s1H3eaWstFhNNbYDBs3Cp4XdoMtFVjq0wX/6kuDGlgHXtYxhHeohwF9KkRBo2MW1jNRrndb9KdKPAGWXm3YoPBksdxp1QDRguB9NeK+XSJr+lMZLz0wGpO1EliO9z9dtm8xuqJUYV0ydyS4cEP1GhnxtdneKF+oGhMRKt5Bl7GwiJ0dwzUVx9fM3bKxh+anPzYUWZo7UZtk6LQVnmdp+pyM49CL12ChFO5Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bdQWeaCJF9MjtWgp9BZiIYFoCE4JNFY+CFkoAAoDsx8=;
+ b=WOwEVFnP/FVOV5E9F6Klolu6QPMehWv+EkWtPftsXyqu+G+9JCYeNIP7CL5E+Fya2cne9Pbk5ArZouHkqc3k8MdlzLJd3ypDrGDyd0RoJEuzL1dKUjJas7tT/XSNefA31N6uQG5pUH5LhQr3UmjhEUTsjp8ctXu9hoTMjw6JUBs3JDjtaey1IEPoMQu3EdzmEIMa5zgyn1I7AK9NKIvMB99a+Y/yqNPFvJz/8h5U5f4mLp8LizriLK00TcJTrGjaWFSRZHyHiUx0IdNteTqQBgvqQxqvfdXENduY6M6ZxOHfa+xw26tTTYeqmzxfk1kas5riD/QANsSxyQ0fPDPRZw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bdQWeaCJF9MjtWgp9BZiIYFoCE4JNFY+CFkoAAoDsx8=;
+ b=ndL7oa6kUVrjGiKLNgeXFst6BEIQho1353BtVNcf69EaSuW38bdGk4UBtpAwAvSHcaTDSaDJujJdau0OwoEUjCIN1FuoyP4Xs6oZfdUQ23VlXihc8tw/HtTV2Nx2GyZS6Cpa1or9QDyPrXHgD9h9C5S4g/wNYGW5UBu3L7gLCMpm2QUzbCAO1czKVrkd4BYjYWJTdMxSha2x9ZASbTu5/4j03ggVaz8oEwxr+16SFnLL8X2Q3S0lPRpPUZYeHHk9kIihnFko6h4qoYqJmPgwVRaG2U/LsW15jPjXD00x5s/rvYsulwAdzAeHhwoYIEqgTBJd2q6c8cGMcysyhgnOPw==
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
+ by VI0PR08MB10538.eurprd08.prod.outlook.com (2603:10a6:800:205::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Tue, 15 Sep
+ 2026 13:23:49 +0000
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0428.004; Tue, 15 Sep 2026
+ 13:23:49 +0000
+Message-ID:
+ <GV1PR08MB84978AC826CBE85D38E402D0C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+Subject: Re: [PATCH v2 12/13] leds: st1202: Cap the channel current in
+ st1202_led_set()
+From: Manuel Fombuena <fombuena@outlook.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: lee@kernel.org, linux-leds@vger.kernel.org
+Date: Tue, 15 Sep 2026 14:23:48 +0100
+In-Reply-To: <20260915130622.B253F1F00893@smtp.kernel.org>
+References:
+ <GV1PR08MB8497668D389D43F680D2CE3CC5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+	 <GV1PR08MB8497C60D1D2921DD0384926FC5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+	 <20260915130622.B253F1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44app2) 
+X-ClientProxiedBy: PA7P264CA0294.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:370::18) To GV1PR08MB8497.eurprd08.prod.outlook.com
+ (2603:10a6:150:81::22)
+X-Microsoft-Original-Message-ID:
+ <a93b40137ce840de75ff5f7f605dc1ce2364e4e7.camel@outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qcs6490-rb3gen2: add endpoint
- buses
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
- linux-pci@vger.kernel.org
-References: <20260915031038.1087264-1-elder@riscstar.com>
- <20260915031038.1087264-4-elder@riscstar.com>
- <20260915032023.6D7C81F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260915032023.6D7C81F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|VI0PR08MB10538:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0e3114b-d3b2-431a-d45f-08df132c9404
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|23021999003|25010399006|15080799012|37011999003|19110799012|8060799015|51005399006|6090799003|16051099003|5072599009|24021099003|40105399003|2607281247196008|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?WXEyZTB3STZ4WWhhcXBBTjBMVXkzNE5pc0phWUN2dG5DZkxjRnoySEI4QlF2?=
+ =?utf-8?B?K0ZYaC9RZjJpQ0F6a0F3cjRFc3YyYVcyQmRTRVhuUDRSUldhVXQzd3FLQ1Jq?=
+ =?utf-8?B?aUtzdmNOa0wzWE80V01ZbFFNdnUwS3NHVmxLcWpyZW1hNFZxZWcrUVd5cE04?=
+ =?utf-8?B?dTRJRzVoclNQT2kzbENwQUxZTlAxdDI0QUNLTkJFSHhYaGFRd3BDR1RRTnUv?=
+ =?utf-8?B?a0FndDFJeDV0MHJYMjZZdWRWd1Iza2ZUcStiYTRieWJidW51N3ZHU2NQenRv?=
+ =?utf-8?B?Z0RaanlrcTQreGt3enB1Qk1uMU02NEtySUl6RkgyUm1KOW5vdG9HVW5pRkJX?=
+ =?utf-8?B?VytjTk9ETzN1ZVR1YUJQd0NUOWpkNHhEVEt3YVBOd0dDRHBPWmdUTm9hYkZX?=
+ =?utf-8?B?bW1naU5wQ204Y01NOE5UcDBuaE5FL1ZjaU5VYjZVQzl5TzV5bHh6SFdUU1V0?=
+ =?utf-8?B?Yjl0SkUwSmlyWGJqbHZPczdNNllOcVBVeE4xVk5zbmY4NVhVclFXdVA4dTVv?=
+ =?utf-8?B?bGd6a0M3MlR3Nm40c1ZaNWFPZVBhRnRIQkVuUUs3TzJudVROQ3VKcmN0OXgy?=
+ =?utf-8?B?am0yRW1VbDM4TFJZa0xFSE9sQnFCd0VmRG9aYlI2V0JnRzJmNVZ4RDQ3aDBF?=
+ =?utf-8?B?czkrR1Vkd1pEV01uR1NkWFhOaTZCcHp3TzJEOTJaRlBwZTZ4K0dvUnNHZW9P?=
+ =?utf-8?B?VUFIOCsyY0xBVC85SzdSaitnZG9GOVJtZGNUMXViSlNmTzdQeC91b3Y1bWFI?=
+ =?utf-8?B?M1ZxVVlJdWFoZDdnWjJFQzFiamtJOWRNME9FV21UNHh0alFjWCtLb3ZTVkxK?=
+ =?utf-8?B?T1p6RnBXazJKem11c3lkNEtJMk5PL3g3aC9TYWJyb1FnMlYyNkxrNW5ueFFD?=
+ =?utf-8?B?ME1CZDl5bVVad0svWm95TnRGWmEyemZoT1ZLcVRpRU8zNmIrbThQdTY0M3ht?=
+ =?utf-8?B?SlpaTXp4ZTRYdXVZbkpOT29mV3dwYkVBbTlsSHg5NzFUTU1LUThDNzM4TGV1?=
+ =?utf-8?B?Z1ZJN2NISjd6S0VhNDlrdk1aOFk4ZmV5ajhnczVtY2lGU3VXMnZwb1dDeVBO?=
+ =?utf-8?B?VHpwYkp3R3FlaDQ4TkpQeEtaZmw2U2VQSkFLZHFyS09uUVBPZEZZYVBvb0pR?=
+ =?utf-8?B?ZjJiZmR2elppOTBHZlBtMDF0Zkg2Z0JYakEvV2wyeURTRU1WdHM1bFJ6RkUr?=
+ =?utf-8?B?OVBMZW1QSU9aMUZ4WXNVZVBoekN0U2YvVktjd2ZQYU9iRGZpbTdDaHBXK1VT?=
+ =?utf-8?B?a1dtTWxEYmhJZHNhSTFqVVdWYWtmWnMxL3VLN0pHTjJGYTEzYzlsTk1HZ1Ey?=
+ =?utf-8?B?N00zNzlPM05OYkc0Qi9FNUtQc2pCb01OdFVIZ0phR0FwWkZqS0hYRVlXdmpu?=
+ =?utf-8?B?SWxXS1h3SGRqSEE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SHE0dEdHNnlNSVd4VWFySHhLTUxkN2k2Z1NIbCthdTlIUC8zVllnZkx0MFVP?=
+ =?utf-8?B?dE1WNnI0eTdyTnBTVW42eTNhV09nN1Z4RDN0UlJHYXNMS1pGTDQ4SU1WYUpW?=
+ =?utf-8?B?Z2xCTEpnd1BEZExHUk1GdW55RXlOdVY3bWVDRmdXOWxEanYzT2k1dFZQT3Fq?=
+ =?utf-8?B?ek9nN3hGbmFaRnNFNXpZbEhoamkzWjcwODkyZGJhWWxzVmNObFVEOFRLVjBk?=
+ =?utf-8?B?MHV1YzVMUTdmbVQzK3paOG1rRTBjZXpNRnhyTDBnY2J2OXo5czVNOEtvWE5J?=
+ =?utf-8?B?QU83SHRnZzNCVEF6MFJsKzZUdmVKOFdPSUh2Vnp5QnA1Z2UyN0ZscTJFejl2?=
+ =?utf-8?B?T29xRFJsNkdIM3U5Q0ViaVB4OHY4MjBsL01VUmtkcmgyMWhjK3RVNXdKQWhF?=
+ =?utf-8?B?dTZhTm1sVVdXQVdwZC9GWTBuTmRaMjd3bG5NaHZKWHpQR2hKZHRYYUJMc3JP?=
+ =?utf-8?B?QXcrU3dTMVhBVGZxei95bXlta0xwbEtCdVQwN3E5bHBTd3FDZFdUcVd3YW1W?=
+ =?utf-8?B?WUNON0VyOUtsS0tQMDZYckc2RTA2V0NzUlhWQ0FiR1NFY3NXNDVsOVFqY3FQ?=
+ =?utf-8?B?YUdRQlRSemcweDA4Ty85UUJXK2wwVDRvekt0b1JzNHRheFJlWTQ4T2krV3Zx?=
+ =?utf-8?B?cFZIdEp0WVM1MXJaaXlMczZZVnFzOThwdS9ZSjkwbkFRaHJ5YlQzemt3MjZZ?=
+ =?utf-8?B?WUVBR0tYS0JKYWJXc3dFeVVMTXdqdTJxQXhDS3Z4MVQ4eUQxL3Z6WThNQWlD?=
+ =?utf-8?B?VE4wbmtLN3BMUnpxS0tQZ1dFd1pJNm16ZTdqOG82RHJoSFBCeUpCYUNMYk81?=
+ =?utf-8?B?djI3NUNERXdzQ2J4RVJIU05VajVQYkpPN2VYNXBZZFM2WnltWkU3QzlIa0hm?=
+ =?utf-8?B?cGtPOE9tWWtNTndQRHZMbG44dlRUT0lPOWY3OUttNEl1MVZKSHFnTW5CZDFx?=
+ =?utf-8?B?bTFLSGNnSldGMEpsdGFvSC9YRmdYQUUydDlnVkZua1hzU2RuQ2EwbVA0bUJX?=
+ =?utf-8?B?bkU0ZkdkN1A4M1N1ZFRneXh5OHkyNzBTSlZpRWlVMnFURTJSaWdiQ000OXpU?=
+ =?utf-8?B?cnNDaEdLb3o4UG54NHEzdVM1Nll5RTRWb29Vc1prNGFkWTh6SXo4VXF4NTVm?=
+ =?utf-8?B?QlJjNk5Ob1hmSXZPM2Q4RHF6SjdjSzF0UW5SaVB1YjVWU1NpSGhpRW8yNUNE?=
+ =?utf-8?B?SUhnQ1FCRmsrVU5ZcW1rS0o1MFNBaWlnUGhqTndyUjdYb25ySWtMMVp6SzJQ?=
+ =?utf-8?B?dFRGYXJOQ1lkQWs0MWQxWVRsZktsaE5TVkhKc1N1aXVuM0w2ZDRIWUdNM1Ro?=
+ =?utf-8?B?RWtqL2p6Q3hJVWJ4SW9EYUxNRTM0b3NJVmw2aXQzc3E4NUdnRHBkVVNTZmZh?=
+ =?utf-8?B?bVo2WkFCdXZveWxCU1pEdiszMjRoSWdmUkJlOGdhZ2krMkRpVmoycDhqOXdW?=
+ =?utf-8?B?Yys4OE1hZS83cmw2bm8yM2dHcWZOeWQwQzMrWG1oakUvTnpFeEtObVkvVWor?=
+ =?utf-8?B?SGFSMVM2RlZ3VE9YcjN4c2NoZWRKUFlKK1lsemVuQkg3cm5YVVF6d1A1YTVS?=
+ =?utf-8?B?cTZYRmljbVVjWkVRczRKV1VZUlZSN01UM3BoZlRiTVhVTGFSekovNUxuWUJU?=
+ =?utf-8?B?WE9jOUdON3ZrOFZJVlhDS3VpRndBcC9hN1c3WkJCdDdQSFF4azdXMGkzOERr?=
+ =?utf-8?B?a0JjRUlic2l6T0FWdlU0S01RWS9UQjZjOTVYVi9CZkNyWjduUkR5TDFZMVFr?=
+ =?utf-8?B?NFJjeElmUlRtdlJrUzUxbjlUcVY3OURhWE5za3I3bERMSVBKTTBIQVUwL05h?=
+ =?utf-8?B?eDlvV2x3OTkyUmN2eUVXRExCc285RGpmZm9qNjBZT0c3bFErdE9OTEpXS2Iz?=
+ =?utf-8?B?bVl6dC9YbWRoMjNFQW8xelZSU1ZUTG05YVRlaWJaa0U5RnZEcnJJSERBazFm?=
+ =?utf-8?Q?txHOYLJA0FsOy9zKwf2G78LTihjOOjD0?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0e3114b-d3b2-431a-d45f-08df132c9404
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 13:23:49.7488
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR08MB10538
 
-On 9/14/26 10:20 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] dts: pci: static ranges will not be updated dynamically due to existing DT node
-> - [Low] dts: pci-ep-bus node has unit address but no reg property
+On Tue, 2026-09-15 at 13:06 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [Medium] leds: broken brightness scaling and saturation when max-
+> brightness > 255
 > --
-> 
-> commit 1c7c7d7922bcd554a385a9dab10bfbe2a5cf71bb
-> Author: Alex Elder <elder@riscstar.com>
-> 
-> arm64: dts: qcom: qcs6490-rb3gen2: add endpoint buses
-> 
-> This commit adds endpoint buses for a PCIe switch connected via the second
-> PCI segment (0001) on the RB3gen2 platform. It defines devicetree nodes
-> representing these buses, including the mapping of each BAR's address
-> range to its local address space.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index 3bb5fca8e2b13..59fbb0444d9b7 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> [ ... ]
->> @@ -955,11 +955,41 @@ pcie@3,0 {
->>   			bus-range = <0x5 0xff>;
->>   
->>   			dev@0,0 {
->> +				compatible = "pci1179,0220";
->>   				reg = <0x50000 0x0 0x0 0x0 0x0>;
->> +				#address-cells = <3>;
->> +				#size-cells = <2>;
->> +				/* Ranges will be updated dynamically */
->> +				ranges = <0x0 0x0 0x0  0x83050000 0x0 0x0 0x0 0x4000>,
->> +					 <0x2 0x0 0x0  0x83050000 0x0 0x0 0x0 0x80000>,
->> +					 <0x4 0x0 0x0  0x83050000 0x0 0x0 0x0 0x200000>;
+>=20
 
-Looking at this now, I also realize I neglected to incorporate
-another change before sending this...  It is erroneous to
-specify the same parent address for all three of the ranges
-as is done here.  These ranges are only representative
-(because they *will* be dynamically updated), but the second
-and third parent address entries will be 0x83050000 0x4000
-and 0x83050000 0x84000, respectively.
+A max-brightness above 255 asks for more than the 8-bit current register
+can hold. The driver treats max-brightness as a ceiling, as the
+brightness, pattern and blink paths already do, so values above 255
+saturate at full current rather than being scaled. This is documented
+in leds-st1202.rst by patch 6. The pattern path and the brightness
+readback follow the same rule.
 
-I will update this when I post version 3 of this series.
-
-> 
-> [Severity: High]
-> Will these placeholder ranges actually be updated dynamically at runtime?
-> Because the dev@0,0 node is statically defined in the devicetree, it appears
-> the PCI core's of_pci_make_dev_node() will find it during quirk processing
-> (via pci_device_to_OF_node()) and return early.
-
-This is a correct statement based on the current state of 
-of_pci_make_dev_node().  Things change when another series
-(which is a prerequisite for the present one) is in place:
-   https://lore.kernel.org/lkml/20260910021919.3421449-1-elder@riscstar.com/
-
-That series changes of_pci_make_dev_node() so that the
-ranges property in the already-existing devicetree node
-gets updated dynamically, taking into account the addresses
-assigned to the BARs during PCI enumeration.
-
-So although this is a good observation, it does not take
-into account the other series that must be in place before
-this one is accepted.
-
-> If that happens, of_pci_add_properties() won't be called, leaving these
-> overlapping dummy physical addresses in place and potentially breaking MMIO
-> translation for child devices.
-> 
->> +
->> +				pci-ep-bus@4 {
-> 
-> [Severity: Low]
-> Does this node name trigger a dtc compiler warning? Defining a unit address
-> (@4) without a corresponding reg property violates the Devicetree
-> specification and will cause a unit_address_vs_reg warning.
-
-I don't believe this caused a warning (though I've had problems
-when checking bindings and DTBs in the past...).
-
-There are two other examples of DTS files that use pci-ep-bus
-(with a unit address, ans specified by the binding), but they
-do not add a "reg" property.
-   Documentation/devicetree/bindings/pci/pci-ep-bus.yaml
-   drivers/misc/lan966x_pci.dtso
-   arch/arm64/boot/dts/broadcom/rp1-common.dtsi
-
-This suggestion makes sense, but I'd like to hear it from one
-of the very human DT maintainers.
-
-					-Alex
-
-> 
->> +					compatible = "simple-bus";
->> +					#address-cells = <1>;
->> +					#size-cells = <1>;
->> +					/* Map 0x0-0x1fffff to BAR 4 */
->> +					ranges = <0x0  0x4 0x0 0x0  0x200000>;
->> +				};
->>   			};
->>   
->>   			dev@0,1 {
->> +				compatible = "pci1179,0220";
->>   				reg = <0x50100 0x0 0x0 0x0 0x0>;
->> +				#address-cells = <3>;
->> +				#size-cells = <2>;
->> +				/* Ranges will be updated dynamically */
->> +				ranges = <0x0 0x0 0x0  0x83050100 0x0 0x0 0x0 0x4000>,
->> +					 <0x2 0x0 0x0  0x83050100 0x0 0x0 0x0 0x80000>,
->> +					 <0x4 0x0 0x0  0x83050100 0x0 0x0 0x0 0x200000>;
-> 
-> [Severity: High]
-> Similarly for dev@0,1, will this static definition prevent dynamic ranges
-> updates? If of_pci_add_properties() is skipped due to the node already
-> existing, the dummy physical addresses will remain and could cause register
-> corruption or crashes if child drivers probe here.
-> 
->> +
->> +				pci-ep-bus@4 {
-> 
-> [Severity: Low]
-> This node is also named with @4 but does not define a reg property, which
-> can trigger a dtc unit_address_vs_reg warning.
-> 
->> +					compatible = "simple-bus";
->> +					#address-cells = <1>;
->> +					#size-cells = <1>;
->> +					/* Map 0x0-0x1fffff to BAR 4 */
->> +					ranges = <0x0  0x4 0x0 0x0  0x200000>;
->> +				};
->>   			};
->>   		};
->>   	};
-> 
-
+--=20
+Manuel Fombuena
