@@ -1,120 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94EF38D3F0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D536F39CCE3;
+	Tue, 15 Sep 2026 21:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789506294; cv=none; b=m4avFfwVi83tW/JYyv9vvJEpGULO6+OaTvPKro63dSEg8AWtYtyF1d+D8NlcjmrU79Bvj80zHqSmC0OiVNvURR3ZgkMQXl5F8rFcLCKUezct462beCE7kneZg1VsuCdv1oeX3xxughxLayIB8LTlqoJ+Gf6UgUgbbiNB3L2GiXI=
+	t=1789506371; cv=none; b=W8QuSjtCBmEFzYzwQxJhTcwaztl2hItMnOcEdXpqOksIOgDsXfrk19DpOVCTdVpFHRH/iG6IfSXzbmOGDXhMA82LY1Etj1Vl5ZqzgnToDwu9zW0jFRFaaDYyvvetJmAnoDMJJ/RZzoJh8QF6sxR7EpTxFSNCHAawBjV8SdUXIJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789506294; c=relaxed/simple;
-	bh=yyIXuptmJwAPr4wTO/4PZiWiLUtiZfesBE2cNGieonk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WBsNgxPQOPKLzVCGCygskwVd0Hy7hgFyeWbhSWj9eKKTkq3uqNltZIdFEdYBdmW+ic1KRkWtMS1IkZbQnLm/skBYB57QnRgfvmj2gM3grXa8N5aSpRnRjpYI+QQ5LKI+jwn/LkjNaDXKOCFYp3fbDukpPzrm7lOHs0pICwFOvwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IT+KGwvy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789506371; c=relaxed/simple;
+	bh=aBOJJP6A5C4hrhURb7yE5SYUAJ3oqx3hzU/msHVqdxg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nfEWu8Y7giDmGPSkVXhQufMrsDKVb26SdGe/ZX0NK9Jgd56gRH+oN3DEU8SCBqZljOPGO75d6PTQnIZyD1inXVXBU7j7oy8DBaTlmFbO4qK05yBWzklBoR5f22XR5cZ/aEOvSWXkpl3O5P+TiLrq8bPFYBWeD2Nxnz5l4HS0HZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=jSlvK8hI; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IT+KGwvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688721F000FF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:04:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789506293;
-	bh=78QAKCGz5gzQ8zvkiIKxAHRqaOVV/ffw/xD9brOGPSA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=IT+KGwvyocqaH5F784M21dsxWeI9Sl5CFq2jIE377mGJaZf4mNprU85cVqfGclzEW
-	 NvTVw43synjNWLkEZABu04OPDPJqHQxCtnolfNh+h8at692WPmn2Yz7BJV6IT1LpfX
-	 pJnl/pSL+OhRaMhIPSK4iE9slK3wt4lONKHXCoPuw43V2APGzTmvF3/4EKPaDMd2n6
-	 0YxuD2kkHgqtDOGTIpvQE5c82MIrFkfQ8RW7DXfFbva/9PZO9+DvSZ5zw2ncgs+lZ6
-	 mlOnWWLfWXmnwsGqx8bWbSgxnvF9S/ZU0eu/oebIIEpCV6j71FRO7HigQvt3u3jnKp
-	 dkk4DmhP4QZEA==
-Received: by mail-qk2-f43.google.com with SMTP id af79cd13be357-93910cadea2so19243285a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 14:04:53 -0700 (PDT)
-X-Gm-Message-State: AFuF++nb2PGEgQIkYKATA19Zi7Ftze9g7u2KZ1WXZlU5ccbQ80DmHOOq
-	Ug+e4lUaivnjtWKTSutIJTGfUI7qoHpGlD808MK1LpOWC9abSEg992RJiXdy5LyWTzVNjdxZ3vZ
-	2LiW7lC9nI0iEuxI4ZDxTPArKhvSmp7U=
-X-Received: by 2002:a05:620a:2b81:b0:93a:3e13:15f1 with SMTP id
- af79cd13be357-93a40797723mr439712485a.23.1789506287667; Tue, 15 Sep 2026
- 14:04:47 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="jSlvK8hI"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83893152B;
+	Tue, 15 Sep 2026 14:06:03 -0700 (PDT)
+Received: from ryzen.lan (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CB4CE3F882;
+	Tue, 15 Sep 2026 14:06:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789506367; bh=aBOJJP6A5C4hrhURb7yE5SYUAJ3oqx3hzU/msHVqdxg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=jSlvK8hI/FX84XvakztHpnE/7R0Z6+ZuVc99SRY+6AiDkO249I8rxrCC+H2rkgp/G
+	 oFeKtc80XxfP5T2VAcUkk58Cdnclh9mX7b7FX0ZnGLgL+C0mGjEJdpJa452zNT/nMG
+	 eXdnb6ApIDdvmxTOk9ARS8B1VIHubs4iqIlGsmDU=
+Date: Tue, 15 Sep 2026 23:01:27 +0200
+From: Andre Przywara <andre.przywara@arm.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ robh@kernel.org, devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ conor+dt@kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: arm: sunxi: Add two Teclast tablets
+Message-ID: <20260915230127.7aa4386a@ryzen.lan>
+In-Reply-To: <20260915-flip-steadfast-9198d002f381@spud>
+References: <20260914210115.28151-1-andre.przywara@arm.com>
+	<20260914210115.28151-3-andre.przywara@arm.com>
+	<20260914211940.256A11F000FF@smtp.kernel.org>
+	<20260915005122.40ba2d7a@ryzen.lan>
+	<20260915-flip-steadfast-9198d002f381@spud>
+Organization: Arm Ltd.
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.31; x86_64-slackware-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-12-song@kernel.org>
- <20260914234533.D81AF1F00893@smtp.kernel.org>
-In-Reply-To: <20260914234533.D81AF1F00893@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Tue, 15 Sep 2026 14:04:35 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW7zOkVVZ=f_XGd17LaGdRWt2dW=U+Jhd7Cd-svn5e8hRg@mail.gmail.com>
-X-Gm-Features: AcwNN1X5OAyyRNduQJ-wDa9hV0u-e8IxGNWyYe4miL6RC61_voBMbwUtWN8HW2c
-Message-ID: <CAPhsuW7zOkVVZ=f_XGd17LaGdRWt2dW=U+Jhd7Cd-svn5e8hRg@mail.gmail.com>
-Subject: Re: [PATCH v3 11/58] objtool: Forward toolchain variables to the klp
- test runner
-To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, joe.lawrence@redhat.com, 
-	jpoimboe@kernel.org, mbenes@suse.cz, peterz@infradead.org, pmladek@suse.com, 
-	jikos@kernel.org, puranjay@kernel.org, kernel-team@meta.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 14, 2026 at 4:45=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] objtool: tests target silently falls back to GNU objcopy under=
- LLVM=3D1
-> --
->
-> commit 11c79ea0e223d9512f0e164886cfdec6a0e5e3b2
-> Author: Joe Lawrence <joe.lawrence@redhat.com>
->
-> objtool: Forward toolchain variables to the klp test runner
->
-> The tests target passes toolchain variables like CC, LD, READELF, and OBJ=
-COPY
-> into the test scripts so that fixtures are built and inspected with the
-> selected toolchain.
->
-> [ ... ]
->
-> > diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
-> > index ed5cf146ef2e2..a3d09a5af7a20 100644
-> > --- a/tools/objtool/Makefile
-> > +++ b/tools/objtool/Makefile
-> > @@ -153,6 +153,8 @@ mrproper: clean
-> >
-> >  tests: $(OBJTOOL)
-> >       $(Q)OBJTOOL=3D$(abspath $(OBJTOOL)) ARCH=3D$(ARCH) CROSS_COMPILE=
-=3D$(CROSS_COMPILE) \
-> > +             CC=3D'$(CC) $(CLANG_CROSS_FLAGS)' LD=3D'$(LD)' \
-> > +             READELF=3D'$(READELF)' OBJCOPY=3D'$(OBJCOPY)' \
->
-> [Severity: Medium]
-> Will the tests target silently fall back to GNU objcopy when building wit=
-h
-> LLVM=3D1?
->
-> It appears that tools/scripts/Makefile.include defines LLVM_OBJCOPY but l=
-eaves
-> OBJCOPY unset for LLVM builds. As a result, $(OBJCOPY) evaluates to an em=
-pty
-> string here in the tests recipe.
->
-> When this empty variable is passed to tools/objtool/tests/lib.sh, the fal=
-lback
-> logic:
->
-> OBJCOPY=3D"${OBJCOPY:-${CROSS_COMPILE}objcopy}"
->
-> treats the empty OBJCOPY as null due to the :- operator. This substitutes=
- the
-> default GNU objcopy instead of the intended llvm-objcopy, which defeats t=
-he
-> goal of using the selected LLVM toolchain.
->
-OK, added the following to v4:
+On Tue, 15 Sep 2026 17:58:50 +0100
+Conor Dooley <conor@kernel.org> wrote:
 
-OBJCOPY ?=3D $(if $(LLVM),$(LLVM_OBJCOPY),$(CROSS_COMPILE)objcopy)
+Hi Conor,
 
-Thanks,
-Song
+> On Tue, Sep 15, 2026 at 12:51:22AM +0200, Andre Przywara wrote:
+> > On Mon, 14 Sep 2026 21:19:39 +0000
+> > sashiko-bot@kernel.org wrote:
+> > 
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [High] Missing SoC fallback compatible string 'allwinner,sun50i-a100' for the Teclast P80 tablet breaks CPU frequency scaling.
+> > 
+> > Well, there is more to it. We should rather add the a133 as an explicit
+> > name in the driver, like we did for the H616 family. And the whole OPP
+> > table is still from the old A100 days, it doesn't really cover the A133
+> > or A133P values, which go up to 1.6GHz and 2.0 GHz, respectively.
+> > The bin selection in the driver is also not adequate, the BSP code
+> > seems to use the SID cell at 0x00 to select one of two speed bins, at
+> > least for the A133. The A133P is probably still different.
+> > 
+> > So I'd rather keep the a133 fallback compatible, and adjust the driver.
+> 
+> Can you explain the complaint from Sashiko to me?
+> From where I am sitting, without awareness of allwinner SKUs, it seems
+> like the bot is suggesting that you add a "random" fallback to make a
+> driver probe.
+
+Well, this is about the DVFS driver, which doesn't really have a nice
+device to match against. The nodes under /cpus carry the cores, but
+there is no notion of a SoC here, it's just about architectural Arm
+cores. So the solution was to match this against the machine (fallback)
+compatible, which always carries the SoC name. I think other platforms
+do the same.
+And while we have DVFS support for the A133, this only supports the
+"allwinner,sun50i-a100" fallback string, as this was the only chip of
+that "family" at time of upstreaming. The A133 is using the same
+die, it's just a better bin, but there are virtually no A100 devices out
+there, as they were superseded by the A133 very quickly.
+
+So what Sashiko (somewhat correctly) mentions is that with that
+a100 fallback string we won't get DVFS support. It feels odd to name
+that tablet A100 when it's clearly not, so I went with the proper SoC
+name.
+We did the same for the H616 family: just adding all the names using
+the same die to the DVFS driver will solve this problem as well, which
+is what I am planning to do - unless people have different opinions.
+
+Hope that helps!
+
+Cheers,
+Andre
+
+
+
+> > 
+> > Cheers,
+> > Andre
+> > 
+> > > --
+> > > 
+> > > commit 582b866f1ad9000afddf47eb7e4c9d37a95dfbc8
+> > > Author: Andre Przywara <andre.przywara@arm.com>
+> > > 
+> > > dt-bindings: arm: sunxi: Add two Teclast tablets
+> > > 
+> > > This commit adds devicetree bindings for the Teclast P80 and P85T tablets.
+> > > The Teclast P80 is based on the Allwinner A133 SoC, and the P85T uses the
+> > > Allwinner A523 SoC.
+> > > 
+> > > > diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documentation/devicetree/bindings/arm/sunxi.yaml
+> > > > index f04db28c630ac..28437c47ac01b 100644
+> > > > --- a/Documentation/devicetree/bindings/arm/sunxi.yaml
+> > > > +++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+> > > > @@ -933,6 +933,16 @@ properties:
+> > > 
+> > > [ ... ]
+> > > 
+> > > > +      - description: Teclast P80 Tablet
+> > > > +        items:
+> > > > +          - const: teclast,p80
+> > > > +          - const: allwinner,sun50i-a133
+> > > 
+> > > [Severity: High]
+> > > Does this strict two-item compatible array omit the necessary fallback string?
+> > > 
+> > > The sun50i-cpufreq-nvmem driver in drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> > > requires allwinner,sun50i-a100 to exist in the root node's compatible array
+> > > to bind via of_machine_device_match(sun50i_cpufreq_match_list).
+> > > 
+> > > Without this fallback string included in the bindings (and subsequently the
+> > > board's Device Tree), cpufreq-dt will not be instantiated. This will cause
+> > > CPU frequency scaling to silently fail on the Teclast P80 tablet, leaving
+> > > the system stuck at the bootloader-configured frequency.
+> > > 
+> > > > +
+> > > > +      - description: Teclast P85T Tablet
+> > > > +        items:
+> > > > +          - const: teclast,p85t
+> > > > +          - const: allwinner,sun55i-a523
+> > > > +
+> > > 
+> > 
+
