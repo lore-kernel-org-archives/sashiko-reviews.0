@@ -1,259 +1,143 @@
-Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com [74.125.230.205])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0903B42CB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 13:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.205
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789479068; cv=pass; b=GTWHfFOhuv4BHMeY+TfsYaV+NNr0HhWM8wvpEkaS55qKw6pC6tbOvj26ZHDroSQCv3NEXxpf821bKtsroT9igl9B+Z/mXnJISlcpskYzMFYJkoXmEJw4TFZxx0xBYEtQu2lT7aqiFfQyHhympcboMlYlgIBr02y34BWmmWRjw4s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789479068; c=relaxed/simple;
-	bh=+/k81FNUEICxsqWdDA6+9UGvMKD0Du9jknRT1mqWjSA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I4M5iNGSdDl5Ycdy84iEIjsHPO6NAx0XjyTUOhCE5B48qWY9+dxYnthM7oC8utDo2m2eymC2EdFBbsTtTlR2RmGaVmxfb8PmDgoqnekgfuGYtE9z268Bn3QDTd6+lwbSJTipGsUf8jqrWB5ljoefdZZiOEqOYW40jJr/bSVX/Vs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QG1eYPzM; arc=pass smtp.client-ip=74.125.230.205
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D5EE3C3F54;
+	Tue, 15 Sep 2026 13:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789479352; cv=none; b=m6gXn8KueR/Pvg2agU/ZbNXY0eaBX6QOAMhJW/lVaJOpy1onj5nbTwUR7+N0VZdWggbyi6qOPiSV9h/gT+TBmd7tKyN7eZTWTlIusvcOvlls740eLiRK8RoDl3lOKAN52yS2/VdR4YRnnsusMNesijVZmeSjG8tzOHCPSIKr8Xg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789479352; c=relaxed/simple;
+	bh=ivHWy0zpM06EWX3bQlbrWhF3ivrtWE9QnS/QrGq9+Cc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k+zAtTu3ocUVfdlIbOkk8rZOgJMH5+rJOd/yFJ4kg8umvWXaHZ3RbMztUqhv73fBMfr5JGkef0IPq/h8t1N3AWaOGoCfYzID0MbdAMrQ69WtR+Xj4kZRgtCUVgrofOegmp2Hd3ynZ3pYIZGb+TDyjqcyPAPl3mv/uYlNhfJRW+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=hckTRaWx; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QG1eYPzM"
-Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-939109f067eso309017185a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 06:31:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789479064; cv=none;
-        d=google.com; s=arc-20260327;
-        b=I1Y0ykm/y6Nq36Veb7lsfcUmeZpRaWntGJyFwRjytzMptDvHnhrR1gj1NJIFMaSCVN
-         /cVX4QXJtEOW2lc10jvc7IbkK3JdmyvchuL7FlHMTDeLdQJxln2E89wDp/Wbiw5pBYr1
-         qlqDzQi3e8+Lkhfdsir9NPz9uSGP9XC1wSHPy3s068vvPgIUfMetjraa2xsMulzha3Nr
-         tmSQ2JhHDZcE0Am/IFmXLQ04ClBUzaxOsXEmZokf4UpkmqSr3uPr7c62WNACfJRxgufa
-         pI+NPoCP9M7iT5ItALrUyDZKfUyvvLlk7gMMEJFLxic7qwWMH/njGvkBKXosgogd+wXP
-         bNyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mGT5OSwSiWiMNxoJJTHbLPnbmEfhViALvNX2hFXt9mY=;
-        fh=g9Oe5K09T9jBWfPrqkUOZ1y6/7GSsyXSECS6xWWN14g=;
-        b=Ovs+cF72hxaTzvwG69OWwF1gzqdb/7H/rMO2jmrZjxlqt3w1196wGoWzFgYt/ZVOE3
-         ubbiM+FRcIkxSl8OnjV0fWz6i8t3USfAMTCWFVgrAC1GJCh0DlSucevBSucQzObP0gQJ
-         ahiRdqlo+Aoa27yTJXsiJBCh8SEWPwDmi9g960pCzkhbJzKdDDHIHBIlwXe2ybxkzK0d
-         RT6He8IdvSGP7TRgocdytoTgUAWBltkpdxkBhiEoSgOLphZGZ753wFD0RbrIEfp/f0Kf
-         bn4iX/VKEAEBPf8VwgSXMTdC129JgMI8wFR7D2V4XC3H1ogut4lxQVfARAztbbyfnrp7
-         SE3Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789479064; x=1790083864; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=mGT5OSwSiWiMNxoJJTHbLPnbmEfhViALvNX2hFXt9mY=;
-        b=QG1eYPzMi8slli44kwE/aKf9LZ0xoKmufKbuO3heBNapWUfUbkLqe5jnMt5TjhKstm
-         z20VUbTaiM9g4yhkXtLvYlkl5VSiiTPjOm5j92rc5bpTaIpKy2b3l9yTDxJQ/AKnW3YW
-         QokAkcGs31gqHghn7Jb1r9swmYW6JpQ+5MP0vxUEuNOF02p0yiQ08dFgoSLLhNfqnMrP
-         b4GtIy/cSpyeFrA7H35JI4UBPghCZMRmWeGbQOZhkKdU0Wb7/gSxOllPDfwdQfvKmdpq
-         KA2dWwUOEafEFXyuzNuqrdrOhlkwqCPUQMgcHH2IVQibQ/TSP+GUgBjPMff5G27WaNdW
-         ow/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789479064; x=1790083864;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mGT5OSwSiWiMNxoJJTHbLPnbmEfhViALvNX2hFXt9mY=;
-        b=JRdqZikvbHz+mq/f+G3M/gurMpZ/U7dZCfrkUuHs8DEs+k3XEsLRUacDwT49AgxCMU
-         K1TRh8cLIPcsf0k8bRHaDmnV4WtZnJafqZ/8UPZ1jnFDslOoIGkgLkTqvzWvuu2jZsRb
-         4+56HnOg8U9o4Uo9D8IzB5zOf234V620/BMdqAg6XHRt5jT8gDXmWwGIbvsTQ8ffRxAI
-         WOa5suEomXMgmux+WDaf66aMAHt/mq0KyzaLNDwfznVwDNjif+KFVdbAWk9UpTkRFO3Z
-         e5+hVtjcnnZnlrV0ejWBiyWDkkRpiltSJYop2m7UDQ2oLCQ+fEQ+0zxsyffp237/QvdU
-         OMqA==
-X-Gm-Message-State: AFuF++mfZb2pbVpRfarPw9DoFN7X8o6+XYEVAN+LszsS9bclS032k9Fl
-	/WOTDr/qBj8y/FMbF9kyOOE5w5ENipFMCowFwLDY3Dox5A/H3/ykDM6AUkCmSxtJMeQOAnb3Qq6
-	YbFNwXSwKqFFGV6hgx4KfmkgBAbB9Lv4=
-X-Gm-Gg: AYBFou0fjqljexCSxhV4++4RZf656xuLmwuoNMjLgZkOLbDp8DZ9IIDzTPgBZ6rw0sz
-	/O/luBoZVPqGqF+hUUY7jGMNZhwcA5Th+gCwzOqXOvPVKcyO3INN4bVJslw1+uxoWhfvA7S7oJM
-	3mugRwKrsDXXjZ1m07NWy3Y13XF8xVz7bNyLJbLkjk3rt757fnUVTbzW5wm3GnJqNEwA4wA/1z4
-	NB5JDltKSaJxxLmrm6tqU4joazLxh4c+9/cpCUMWr81t5mYYBcNbgBS0Otw1ODxYGwvdic80lwl
-	qpKCuSL6+txgOJEAkDNbD6/oQEJdz7UV0XW5CCdS+nEu9zAtC46PBzw=
-X-Received: by 2002:a05:620a:3902:b0:92e:5b92:98bb with SMTP id
- af79cd13be357-93a297ca655mr1074600185a.14.1789479063731; Tue, 15 Sep 2026
- 06:31:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="hckTRaWx"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2218515A1;
+	Tue, 15 Sep 2026 06:35:45 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 178493F7B4;
+	Tue, 15 Sep 2026 06:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789479348; bh=ivHWy0zpM06EWX3bQlbrWhF3ivrtWE9QnS/QrGq9+Cc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hckTRaWxwM3/d+3kpLpZTq+tDSiNDQ/0jHldKmtLxd/oJeG/c11FHs8Ny/cfd+xp6
+	 /P+qDtDI7QikJ5KltmG/QsmVbKunzGZm3Qzh3FpF5f/FGv4UA0y8qzIa4g1TmiLFVq
+	 nrTurMZjYUhTZHg0awQM6iR4CSHR7YDDGMoZywns=
+Date: Tue, 15 Sep 2026 14:35:45 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH v11 7/9] coresight: etm4x: exclude ss_status from
+ drvdata->config
+Message-ID: <aqlJsXWMUJgvEXCg@e129823.arm.com>
+References: <20260915-separate_etm_cfg_v2-v11-0-d2b258d51747@arm.com>
+ <20260915-separate_etm_cfg_v2-v11-7-d2b258d51747@arm.com>
+ <20260915114959.1A22A1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260912090420.47439-1-physicalmtea@gmail.com>
- <20260913090452.2B8221F00893@smtp.kernel.org> <CAJwVaMKtk=PxFq330K8NBLRF7FzgcSu32vt1irLEJ7dSRQ5A_w@mail.gmail.com>
- <20260915070050-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260915070050-mutt-send-email-mst@kernel.org>
-From: Jia Jia <physicalmtea@gmail.com>
-Date: Tue, 15 Sep 2026 21:30:27 +0800
-X-Gm-Features: AcwNN1WCssAbpLV_bseDxWD-pSbF-fj7FUW_YTjH1e6x6iS_yDJLEwUT0YuzDSs
-Message-ID: <CAJwVaMLsAcRt609Wmz=G-G3j7xDj5+0QK-Ck2ko1pcwerMeb5w@mail.gmail.com>
-Subject: Re: [PATCH] vhost-scsi: do not relock event vq mutex on send_evt fallback
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: sashiko-reviews@lists.linux.dev, virtualization@lists.linux.dev, 
-	Eugenio Perez <eperezma@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260915114959.1A22A1F00893@smtp.kernel.org>
 
->
-> On Mon, Sep 14, 2026 at 04:38:57PM +0800, Jia Jia wrote:
-> > >
-> > > Thank you for your contribution! Sashiko AI review found 2 potential =
-issue(s) to consider:
-> > >
-> > > Pre-existing issues:
-> > > - [Critical] vhost_scsi_do_evt_work() accesses vq->iov[out] without v=
-erifying that the guest actually provided an input buffer, leading to arbit=
-rary user-space memory corruption.
-> > > - [High] Events are processed in LIFO order instead of FIFO, which ca=
-n cause state corruption for hotplug/hotunplug sequences.
-> > > --
-> > >
-> > > commit 05830c30fc2e4dc682c270a9b487ae5abb66218b
-> > > Author: Jia Jia <physicalmtea@gmail.com>
-> > >
-> > > vhost-scsi: do not relock event vq mutex on send_evt fallback
-> > >
-> > > This commit resolves a deadlock during fallback event handling when t=
-he vhost
-> > > worker has disconnected. It splits event completion into an internal =
-unlocked
-> > > helper and a locked wrapper to safely reuse the completion path.
-> > >
-> > > Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.ke=
-rnel.org/
-> > >
-> > > > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-> > > > index 4f8c0260bc9e7..42abf18291b75 100644
-> > > > --- a/drivers/vhost/scsi.c
-> > > > +++ b/drivers/vhost/scsi.c
-> > > > @@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs,=
- struct vhost_scsi_evt *evt)
-> > > >       vhost_scsi_log_write(vq, vq_log, log_num);
-> > > >  }
-> > > >
-> > > > -static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool=
- drop)
-> > > > +/* Caller must hold the event virtqueue mutex. */
-> > > > +static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bo=
-ol drop)
-> > > >  {
-> > > > -     struct vhost_virtqueue *vq =3D &vs->vqs[VHOST_SCSI_VQ_EVT].vq=
-;
-> > > >       struct vhost_scsi_evt *evt, *t;
-> > > >       struct llist_node *llnode;
-> > > >
-> > > > -     mutex_lock(&vq->mutex);
-> > > >       llnode =3D llist_del_all(&vs->vs_event_list);
-> > > >       llist_for_each_entry_safe(evt, t, llnode, list) {
-> > >
-> > > [Severity: High]
-> > > This is a pre-existing issue, but does this loop deliver events to th=
-e guest
-> > > in reverse order?
-> > >
-> > > The events are added to vs_event_list using llist_add(), which constr=
-ucts a
-> > > last-in, first-out list. Because lnode is retrieved locklessly with
-> > > llist_del_all(), and the iteration happens without first calling
-> > > llist_reverse_order(), the events appear to be processed from newest =
-to
-> > > oldest.
-> > >
-> > > Could this cause state corruption for hotplug and hotunplug sequences=
-? For
-> > > example, if a device is plugged and then rapidly unplugged, the guest=
- might
-> > > receive the unplug event first and the plug event second, leaving it
-> > > erroneously believing the device is still present.
-> > >
-> >
-> > Looks like this could get the acquire order wrong? Need to verify.
->
->
-> didn't look into this yet - did u reach any conclusion?
->
+On Tue, Sep 15, 2026 at 11:49:58AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] coresight: data race and state leak in shared ss_status array
+> - [Medium] coresight: contradictory bitmask change introduces unhandled behavior
+> --
+> 
+> commit 1a408a1bbc8676e137115f3c8798cfbd8a499e15
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm4x: exclude ss_status from drvdata->config
+>     
+> This patch moves the ss_status array out of the session-specific configuration 
+> structures and into the shared etmv4_drvdata structure. It aims to preserve 
+> existing behavior regarding single-shot comparator events while cleaning up 
+> the configuration data.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > index 70a5c0b4fad1c..9de0c268ff954 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> [ ... ]
+> > @@ -573,11 +573,11 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+> >  		etm4x_relaxed_write32(csa, config->res_ctrl[i], TRCRSCTLRn(i));
+> >  
+> >  	for (i = 0; i < caps->nr_ss_cmp; i++) {
+> > -		/* always clear status bit on restart if using single-shot */
+> > +		/* always clear status and pending bits on restart if using single-shot */
+> >  		if (config->ss_ctrl[i] || config->ss_pe_cmp[i])
+> > -			config->ss_status[i] &= ~TRCSSCSRn_STATUS;
+> > +			drvdata->ss_status[i] &= ~(TRCSSCSRn_STATUS | TRCSSCSRn_PENDING);
+> 
+> [Severity: Medium]
+> The commit message states that this patch intentionally preserves the existing
+> behavior regarding the clearing of PENDING and STATUS bits. However, the
+> pre-patch code only cleared TRCSSCSRn_STATUS. By explicitly adding
+> TRCSSCSRn_PENDING to the bitmask here, does this code actively introduce the
+> behavioral change it claims to defer?
 
-Already reproduced this using a test program. To hit what Sashiko AI descri=
-bed,
-need multiple vhost_scsi_send_evt->llist_add (at least 2) before the
-worker schedules
-vhost_scsi_complete_events(false).
+No perf do always clean, just make the same for right now.
 
-I personally think this is not very easy to hit, first this kind of
-hotplug/unplug event is not very frequent,
-even if there are multiple calls, as long as the worker is idle it
-will run vhost_scsi_complete_events(false)
-quickly, so pending is often only 1.
+> 
+> [ ... ]
+> > @@ -1081,7 +1081,7 @@ static void etm4_disable_hw(struct etmv4_drvdata *drvdata)
+> >  
+> >  	/* read the status of the single shot comparators */
+> >  	for (i = 0; i < caps->nr_ss_cmp; i++) {
+> > -		config->ss_status[i] =
+> > +		drvdata->ss_status[i] =
+> >  			etm4x_relaxed_read32(csa, TRCSSCSRn(i));
+> >  	}
+> 
+> [Severity: High]
+> When a perf session stops, etm4_disable_hw() writes the hardware state
+> directly into the shared drvdata->ss_status array without holding
+> drvdata->spinlock.
+> 
+> Since a concurrent sysfs session could be writing to this same array in
+> sshot_ctrl_store() under the spinlock, can this lockless write cause a data
+> race?
+> 
+> Additionally, does this overwrite leak the perf session's single-shot state
+> into the shared array, allowing a subsequent sysfs session to inadvertently
+> observe or re-inject the leftover perf state?
 
-So to reproduce, I created multiple LUNs, and concurrently called 8 ln
--s (only triggers RESCAN,
-no unplug, extra LUNs are just so we can see the lun numbers better).
-This increases the chance that
-vhost_scsi_send_evt races in before vhost_scsi_complete_events(false)
-runs, so there are at least 2+ pending llist.
-Finally when vhost_scsi_complete_events(false) runs, the guest sees
-the later-linked LUN first.
-(before testing I thought this needed a lot of SCSI I/O to reproduce,
-actually it doesn't)
-I only tested plug, the guest did see add LUN order reversed.
+perf uses active_config directly, sysfs only uses config. so this is not
+true.
+
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > index f6d053f73264c..50ef2e957300f 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> [ ... ]
+> > @@ -1833,8 +1833,8 @@ static ssize_t sshot_ctrl_store(struct device *dev,
+> >  	raw_spin_lock(&drvdata->spinlock);
+> >  	idx = config->ss_idx;
+> >  	config->ss_ctrl[idx] = FIELD_PREP(TRCSSCCRn_SAC_ARC_RST_MASK, val);
+> > -	/* must clear bit 31 in related status register on programming */
+> > -	config->ss_status[idx] &= ~TRCSSCSRn_STATUS;
+> > +	/* must clear bit 31 and 30 in related status register on programming */
+> > +	drvdata->ss_status[idx] &= ~(TRCSSCSRn_STATUS | TRCSSCSRn_PENDING);
+> >  	raw_spin_unlock(&drvdata->spinlock);
+> 
+> [Severity: High]
+> As seen here, sysfs modifies the same shared array under the spinlock.
+> Is it safe to move ss_status to the shared drvdata struct without
+> synchronizing the hardware stop paths or segregating the session state?
+
+It checks the mode first. So it's fine.
 
 
-> > > >               if (!drop)
-> > > >                       vhost_scsi_do_evt_work(vs, evt);
-> > >
-> > > [Severity: Critical]
-> > > This is a pre-existing issue, but can this function access out-of-bou=
-nds or
-> > > stale memory if the guest provides an empty input buffer?
-> > >
-> > > Looking at vhost_scsi_do_evt_work() in drivers/vhost/scsi.c, the code=
- uses
-> > > vhost_get_vq_desc() which populates vq->iov:
-> > >
-> > >     head =3D vhost_get_vq_desc(vq, vq->iov,
-> > >             ARRAY_SIZE(vq->iov), &out, &in,
-> > >             vq_log, &log_num);
-> > >     ...
-> > >     if ((vq->iov[out].iov_len !=3D sizeof(struct virtio_scsi_event)))=
- {
-> > >         vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
-> > >                 vq->iov[out].iov_len);
-> > >
-> > > If a guest submits a descriptor chain with only read-only descriptors=
-,
-> > > vhost_get_vq_desc() sets in =3D 0. The out variable holds the count o=
-f
-> > > read-only descriptors, meaning the first writable descriptor expected=
- by the
-> > > host would be at index out.
-> > >
-> >
-> > This is a dup -- an earlier patch already fixed it:
-> > https://lore.kernel.org/all/20260904005240.502787-1-physicalmtea@gmail.=
-com/
-> > It was while fixing that earlier issue that Sashiko spotted this
-> > adjacent problem.
-> >
-> > > Does the length check above access vq->iov[out].iov_len without verif=
-ying
-> > > that in > 0?
-> > >
-> > > If in is 0, vq->iov[out] was not populated by vhost_get_vq_desc() and
-> > > contains stale data from a previous request. Could a malicious guest =
-use
-> > > this to force the kernel to write the event structure to a previously
-> > > legitimate but now hot-unplugged host virtual address via the
-> > > __copy_to_user() call later in the function?
-> > >
-> > > >               vhost_scsi_free_evt(vs, evt);
-> > > >       }
-> > > > +}
-> > >
-> > > [ ... ]
-> > >
-> > > --
-> > > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026091209042=
-0.47439-1-physicalmtea@gmail.com?part=3D1
->
+-- 
+Sincerely,
+Yeoreum Yun
