@@ -1,169 +1,103 @@
-Received: from mail-oo2-f38.google.com (mail-oo2-f38.google.com [74.125.231.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB6B386453
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 22:56:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAAF3A1A27
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 23:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789512968; cv=none; b=WenDJI+yMwaoRr5NSZLOFERjjWAMv8ITgfLydAgNrd/K2Ckbv1WXtPzckOeqZaitqhVIo+2DLc2m3HuIZqrngJIkLXcNt/xsw0CXm60t0MA1Dw1N5TzVY+Wk4lLsbZm0i31LW8xe+z5b5zt1ehRJSOaTbS4f9I3lr+xlUKYElcQ=
+	t=1789513932; cv=none; b=Wz5jhK0+3MH4h3yAY1MjFDdyVli5x7YZr6KtKsf/TQX7nbSvzKg8tTKuRrS0PEewVSv58kLfT2JXYkiucyn9yprB5qDSO5JePVT6utZ+3lWJyEG8Uz1cMGEEsBA2nMutakYP6PVUg+/kr0uhkPHFxkNRkon+I7+dkJquL+IvTOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789512968; c=relaxed/simple;
-	bh=D2zUWH66E4JDS2QbS/YUsl63GXMYkTMiaoJGK2SfZFw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GiL9jtcap/8JOnFg+vfM+PDg5dr18Mn1c5vCbcPIlpilrIjunGgUB17QEAKCAAYQwkwbmv0r95EYvjqY5PJo7FHeBcqeSiMwUfPkuQVbiDMfMO/B4qi3WF9/2ycBSIxNA3PiUlU4NFWePoRy0l+DHwhP1gtUV+Z/5is7d6FOrAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=CqE8U2N7; arc=none smtp.client-ip=74.125.231.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1789513932; c=relaxed/simple;
+	bh=5y89yViajF6E5sFOGF9VRWfKH3F2v8hmhVSzIiCTHd8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UJeWfPRZH01leQiXW8o9DAVrPkrvoMPcPUVWeMIhZWc6UYMe/9P5+M0cFqlA2JKjzXKK/NDSOS4Wo2jaxGUi08akuteKsTrEPNzEMMUO/62TRpZKNyLhy+8o66IoSTYUIzrEC8+mJtJSvTV6KE8WjHXWPrZofP9plpSSBwOTO+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VSLJSuE6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="CqE8U2N7"
-Received: by mail-oo2-f38.google.com with SMTP id 46e09a7af769-7f4f0d37f93so133417a34.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 15:56:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1789512965; x=1790117765; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bKxFu7FSdp0zRZPyAWEHKVW9lpDU21iZxHJocYoCDsw=;
-        b=CqE8U2N7xofVjGA7tAI+PopKsUl+U3qicAGMw8Li/bWgbQQgSjzohzDqcfPy9g4LS3
-         0vYpf0+QhHqYiWQKL/idAT9yIbE4tljMS9d3wO/YSnww0w+IEaTORtkZxV01mX0PGpGd
-         5VotJnhMm29MD8GJWchX8ZES2gnVjj5rlYZZ8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789512965; x=1790117765;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=bKxFu7FSdp0zRZPyAWEHKVW9lpDU21iZxHJocYoCDsw=;
-        b=RBm+FfUHB36A48JVhuqY9XvZUBNWy1OugYaUopnxI7YnJyzkVJzayLOHEAWntrkoLu
-         ddkZ3VlSz88aJJ+8pUqNi1qnHIZVl7W2ZqJWu0rJqIwWyZ/IA4jIyGn4MeW4MTS3dmSB
-         F0bzqkF89BEpkxul1XQGM/0DQsUxjdUUGxpSxsR4/S4e3dDkNjhkLZ0iZDOq0PIK/I+S
-         emjVxM5XEztCbUpR+lQL69Lgzfpc+vGAHgB1pWqy8Cqlxh0elZwcnhSvp9iq4KWQXIwG
-         ltcG7YHYxFHYvnEA9XASluaFAmJ4yAYBxKO8WNsV81EEWzwKTw0EmoitUm90sKhS92mr
-         +Abg==
-X-Gm-Message-State: AFuF++kj3RhaKKs/tWxD4TvTWA8sQXbnN9vlD0Q0TFWdmLi6D7L+F9Wt
-	fe8S7PXLBZ4gPFReZQ215O/j2S6+nZzd9M9PzvGCtL01iaq+DMMf+gn1AC+1p6SR1JwezLLlVd2
-	us+VLNB4=
-X-Gm-Gg: AYBFou0btLf4E4xmgMEaa1IHlj55hX36W7YIKwmjAio3eIDjbIy41AxaG+RMqMJFaOO
-	dMqFbgzR1L6Gkqqzh6VUwFRox9E3oiJQXtW2jJ7dV7ZsIMUdtPeLl411xNAnc38IgygS3wU/eTb
-	U7yWHMyaJQU25pxtfhffVKe7c0vhIkknR9K+s/nKhI2b9lraENwbKOtiuvRtfvp7IpwfTFAtrbD
-	qhwHO5lPIFqlocvJOCrqxJRI/GPM4oQfn6r0v+EtSOVLo5RtpX5w3p9CR4v+5OUW29VqXLm0sdp
-	A89EimxGSaSwv8G0rmt0qRdK6NqsWFmp6et+DGjCmrtD9+M5zh0qrojnBysYN3BHuVKUpPHkVwV
-	zu+UMboVraIFwIyRGRIbWzdikLMOjl9otp/pm6R/I/WvNZ0d7UzDfmhJaNhGNC7IctItaV5hvAq
-	7Lt/G08mcHwRQnv8dcAfdWEthX1/m6uEAQ+kdPMqrgq/z7mFJfxvju46W4QQYq48CPyn7ChwuGi
-	0pDawc9JkHTwCaafPBzqiaP7mHkx26Z4SdWjTHJumbfm2aSorfoag==
-X-Received: by 2002:a05:6830:700a:b0:7f6:6618:e506 with SMTP id 46e09a7af769-80b2df33bdamr612316a34.14.1789512965339;
-        Tue, 15 Sep 2026 15:56:05 -0700 (PDT)
-Received: from com-75606 ([199.47.143.7])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-80b07ad0506sm810908a34.27.2026.09.15.15.56.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 15:56:05 -0700 (PDT)
-Date: Tue, 15 Sep 2026 15:56:02 -0700
-From: Kyle Zeng <kylebot@openai.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v3] KVM: x86: Restrict saved GPA writes to hardware write
- faults
-Message-ID: <aqnNAsGF_iUQsVX1@com-75606>
-References: <20260915222625.99965-1-kylebot@openai.com>
- <20260915224104.4EB441F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VSLJSuE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796201F0089C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 23:12:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789513928;
+	bh=HdE+Ntll/c2YhvON/Aio6I+tStN72YxB0IDBbOZNqsw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=VSLJSuE6RTG/zhqxwjqZWle4odnErOwZcjB0EP0sO2do+KEAv66pcLOyXffQzY2zn
+	 UJjf8YFtz/BSxQcdeLMct4UC9lO1w9zcLUYeT2N67VcmFZ9pAjaGKnkD85uabMyHEz
+	 gau3LEjuHvOrQ84JsI2gCbtdDhT0FXPkgM1pR5TaD3+gdtFCRzdrsiq8vCUh9InCTG
+	 NIzm8LgIvQsff2aYWaZH4UxPKKSDv5UDi5O4lnOv9M/OVstKfCSb257BTHhd9jrb/x
+	 TAWkilkaw7+psxni3KD72mFrP3+cFOB+K7+Xe1j2WiYEavFNIqGANQZrnYQ3WleGpw
+	 LuQhPTWIMRs1w==
+Received: by mail-qk2-f43.google.com with SMTP id af79cd13be357-939109f067fso31999285a.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 16:12:08 -0700 (PDT)
+X-Gm-Message-State: AFuF++mtQdUYgzC50LSz3bSaezASe5JHkioJQmG5xyFINShXn1ng4zBr
+	MaBYLVuDG8xm97bjTpYt564MRLaSfU547+oiqG31/vXGfNWOVm+DZ98BHrqIeZZLo+i7QKqLksB
+	YhGwF8TF8O11mE1JQOgohvcKqD6qfVbQ=
+X-Received: by 2002:a05:620a:4542:b0:92e:5d44:73fc with SMTP id
+ af79cd13be357-93bb7668b19mr54909885a.12.1789513927735; Tue, 15 Sep 2026
+ 16:12:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915224104.4EB441F000FF@smtp.kernel.org>
+References: <20260914230355.3422996-1-song@kernel.org> <20260914230355.3422996-24-song@kernel.org>
+ <20260915000712.120901F000FF@smtp.kernel.org>
+In-Reply-To: <20260915000712.120901F000FF@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Tue, 15 Sep 2026 16:11:55 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW5xdsKWuXRmAUgVDLgg8Zdx6LQoO6SrNA27w720ZLN7iw@mail.gmail.com>
+X-Gm-Features: AcwNN1WziJh66MCop_MAQk08v99qEwXeSvsKmI0G-Em0C0Rg-OWCQZcLJ0snBzw
+Message-ID: <CAPhsuW5xdsKWuXRmAUgVDLgg8Zdx6LQoO6SrNA27w720ZLN7iw@mail.gmail.com>
+Subject: Re: [PATCH v3 23/58] objtool/klp: Add test for rejecting references
+ to init code/data
+To: sashiko-reviews@lists.linux.dev
+Cc: live-patching@vger.kernel.org, kernel-team@meta.com, puranjay@kernel.org, 
+	peterz@infradead.org, pmladek@suse.com, joe.lawrence@redhat.com, 
+	jpoimboe@kernel.org, mbenes@suse.cz, jikos@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 10:41:03PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: x86: OOB read and type confusion via static SVM feature check
+On Mon, Sep 14, 2026 at 5:07=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] objtool: test suite aborts due to fragile compiler assumptions
 > --
-> 
-> commit ed7805af977b5a574d9ccec8367687b0fbc85fd3
-> Author: Kyle Zeng <kylebot@openai.com>
-> 
-> KVM: x86: Restrict saved GPA writes to hardware write faults
-> 
-> This commit restricts emulated writes through a saved GPA to cases where
-> the hardware page fault actually reported a write access. It includes an
-> exception for SEV guests to preserve existing behavior since their guest
-> page tables are encrypted.
-> 
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 79468ddfe4736..de7fc8efeadce 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> > @@ -33,6 +33,7 @@
-> >  #include "lapic.h"
-> >  #include "xen.h"
-> >  #include "smm.h"
-> > +#include "svm/svm.h"
-> 
-> [Severity: High]
-> Does including a vendor-specific internal header like "svm/svm.h" inside
-> generic architecture code violate KVM layering rules?
-> 
-> [ ... ]
-> 
-> > @@ -6454,7 +6456,18 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
-> >  
-> >  		/* With shadow page tables, cr2 contains a GVA or nGPA. */
-> >  		if (vcpu->arch.mmu->root_role.direct) {
-> > -			ctxt->gpa_available = true;
-> > +			ctxt->gpa_access = ACC_READ_MASK;
-> > +			/*
-> > +			 * Always allow writes for SEV guests, as the guest's
-> > +			 * page tables are encrypted, i.e. KVM can't walk the
-> > +			 * guest's page tables and so must always use the GPA
-> > +			 * from the initial fault.  Restricting use of the GPA
-> > +			 * to the access type that faulted would prevent KVM
-> > +			 * from emulating RMW operations for SEV guests.
-> > +			 */
-> > +			if ((emulation_type & EMULTYPE_PF_WRITE) ||
-> > +			    (cpu_feature_enabled(X86_FEATURE_SVM) && is_sev_guest(vcpu)))
-> 
-> [Severity: High]
-> Could this lead to an out-of-bounds read and type confusion?
-> 
-> The cpu_feature_enabled(X86_FEATURE_SVM) check relies on a static host CPU
-> capability rather than checking the active KVM hypervisor module. In a nested
-> virtualization scenario (like QEMU with -cpu max), the host can expose both
-> VMX and SVM capabilities, but the kvm-intel module might be the one managing
-> the VM.
-> 
-> If a guest triggers an emulation fault on a kvm_vmx object, this path could
-> call is_sev_guest(vcpu). Since is_sev_guest() expects a kvm_svm vCPU, it
-> will blindly cast the kvm_vmx object to kvm_svm and read memory past the end
-> of the kvm_vmx allocation. 
-> 
-> If that out-of-bounds memory happens to be non-zero, it would incorrectly
-> grant ACC_WRITE_MASK authorization for emulated writes, leading to a
-> potential security bypass or host kernel panic.
-> 
-> > +				ctxt->gpa_access |= ACC_WRITE_MASK;
-> >  			ctxt->gpa_val = cr2_or_gpa;
-> >  		}
-> >  	} else {
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260915222625.99965-1-kylebot@openai.com?part=1
+>
+> commit fa8e7a87126e5978150272fd5c3b8728c0d8f68a
+> Author: Puranjay Mohan <puranjay@kernel.org>
+>
+> objtool/klp: Add test for rejecting references to init code/data
+>
+> Init code and data are freed once boot finishes, so a klp relocation
+> against them can never resolve.
+>
+> > diff --git a/tools/objtool/tests/generic/fixtures/init_reference.c b/to=
+ols/objtool/tests/generic/fixtures/init_reference.c
+> > new file mode 100644
+> > index 0000000000000..51b2a57dde14f
+> > --- /dev/null
+> > +++ b/tools/objtool/tests/generic/fixtures/init_reference.c
+> > @@ -0,0 +1,16 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/* Patched function referencing data in an .init section. */
+> > +
+> > +static const char __modinfo[]
+> > +     __attribute__((section(".modinfo"), used, aligned(1))) =3D "\0nam=
+e=3Dvmlinux";
+> > +
+> > +static int init_only __attribute__((section(".init.data"), used)) =3D =
+5;
+>
+> [Severity: Low]
+> Can this static variable be constant-folded by the compiler since it lack=
+s the
+> volatile qualifier and is never modified?
+>
+> Modern compilers compiling at -O2 may constant-fold non-volatile static
+> variables or use symbol-relative relocations.
 
-On this baseline, x86_virt_init() explicitly refuses to enable
-virtualization when both VMX and SVM initialize successfully. VM creation
-then fails, so exposing both CPUID bits doesn't appear sufficient to
-reach the path described here.
-
-Also, is_sev_guest() casts vcpu->kvm, not the vCPU. In the configuration
-I built, the access would fall within zeroed padding in struct kvm_vmx,
-not beyond the allocation. That's not something to rely on for
-correctness, but it doesn't support the claimed OOB either.
-
-Is there a configuration that gets past the initialization checks and
-demonstrates an incorrect access? I'd like to establish that before
-treating this as a functional issue.
+Added "volatile" here in v4.
 
 Thanks,
-Kyle
+Song
