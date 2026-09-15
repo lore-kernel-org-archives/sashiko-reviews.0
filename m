@@ -1,145 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f10.google.com (mail-ed2-f10.google.com [74.125.228.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C96A351C20;
-	Tue, 15 Sep 2026 10:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789468126; cv=none; b=f8Kk4h+WtOgFQBNRgPMALROInlP5DeQ5snz1TrjYVjCPZlJ9ZILAl7gWyo5k/BIOf9WCacft++UnI/nV8cfnK8PJPrNxfVxHZ8NnpInu+humv4q5eXIj+ZIzWedmHHGYlFwqCauowf6HAHkqTc9Xs54twKpojLd86T3s2sXaHZM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789468126; c=relaxed/simple;
-	bh=jYUuyaxap45YWktNnApW6hsSz3P+QMWv3MzYTLKhvn4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dPny5mjrwGHUTsc6aqD5Ue16vdb55/SHegUuchtYlAKCijzkD+oJXDDIsCEk7tBLVLi8WbAHVFlwmZJtBamFdAxY//r6wLeKopBDtZyEde9nV0tGGwRwVsxXTqQcqH/6My/JNgMlDEjz04DVb4BA6isivlieDu0EtiPK3ll8OdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofER0sHq; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C79541D12B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 10:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.74
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789468571; cv=pass; b=BxGD90JxMLTKPJj9ExQV8SBSGXc0lHwVxMF8r7jvYxpRs4XuMasDPj+eDhzZ2K2Pg6F3dAk8J3d1L5uj4ut4+Lxg87VK2fwBGqEmtNcih2ShzMflg4HMz78B1u4xK4ljnj2qrNEAdF4WlPwsnsUmzH5dlL864XZL1KopH8ZQxp4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789468571; c=relaxed/simple;
+	bh=lVH5yPIi3/pyYRXwtAiWL+HzSoiC/igDNveot238DKo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qAL9fmI1UJGg9KJGLBJoNYgGPsdda5H7d0uCsdKQe4S+NZKRNJk5WJR37TKW8/pPCWgoI/DMs6eIf7tD7lP0a1N1ohXxkrwpZUKGR6dmPJstRewJSfAnyWb/4UHTdaThevQaB5wi8/xlfg44KP/sdHLVpA1CJPOVq0pLNat+/cw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N39cfNHZ; arc=pass smtp.client-ip=74.125.228.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofER0sHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39DA1F000FF;
-	Tue, 15 Sep 2026 10:28:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789468124;
-	bh=syFNOvFuqCHRPJWBM4ggaf2cVtoimRROGoRy3ic9eLQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ofER0sHqmC2xw3BMJAvR6Ugm28Sbl7XPGrPe0LQKFkO+9yoIcJ2Fhm1wbuRFF3XjP
-	 22DjNGwf6XL3ymWKSS+lNphWBNLffK/0Vw4eXFBTnXVT2hluLouTiB5z5nI0UdCL7d
-	 uHJbkkAswv14AYZAlVmnMS44C8gedUp40oNXK2JdTQjjqmLoN4UQl0Vdkdi3BGgY+C
-	 tWptz8QQxBw/ciR/w7q8mYs6cWcgDGbbM2jm9ZV2UfJTkW3xFAAMnQP9vNiZ6FsEJ0
-	 7kjRaul0nkrCY4yltrlqbZ4F1AntBo6CMaA9u2Y0fUZU1bmPzzTsL4BbM+ac1dfud6
-	 cRGx9nW7HXg1w==
-Message-ID: <f3c9d7aa-f158-42e6-a1a5-b88c28daa941@kernel.org>
-Date: Tue, 15 Sep 2026 12:28:38 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N39cfNHZ"
+Received: by mail-ed2-f10.google.com with SMTP id 4fb4d7f45d1cf-6a6713aec3bso2691183a12.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 03:36:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789468568; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EFBnOK3eapv9aV+6spbhSBl9xnN5trtjeZY3fyfVeznCv2mC5MvR3MNfzbuieS3OW2
+         s4U30hk1ATl7qvXWMjyyXq4ET6IiPf1E5p6RjjzQ5wrrrS/V3/Jcnw81wnD4AqpWIMQW
+         gAO8VAJrkhw2ds+0RJstz26dv9ZC/qnB42+7pxaXyhZ0qi0fwp1WF+nnaZs1BnK2Tdts
+         E6KIbdDltMf0C9Z7njbRUWcJ0CFiGwRzESl7/qmiiqX53jzTXKh6hV9wKDEcvzg6OgG7
+         fV4oT1hNMh1LyLTsXIGayTz0Zf+pK3eNIJDnToHGpfxJw8PWLWaZprlQJyjJaE6kYfWN
+         ruOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EybIxRu7gh0/uGvNpGNQAsB/2hq7wOMr36eqhjWJ4kA=;
+        fh=HoIEfnVPM5gZs5Gg3H15i/nRn/VIzCuEe4n4Mon3SgI=;
+        b=s4N3i0tOpqvQ80D62YPnXsWNiNn5nZey6lvs6Xk/o23NljlRCg92BMbcUUZOk64a6x
+         4tZoCnauO5nIkQQi0CktKvD7frX5TKUP+edkS5lq4gJKXm6vU5pqot04KiFvL0ccK6UL
+         QMs0N1nac7tH5SCwSUT02E4EuqXfzoIx0uIh5rBDYASa5uEk/17F8VXP0+sEXd5HPaKu
+         rdXRq7cn3TTj1Zh1wZhJ56sCmptlFveRD/GKysaBhnNNDNbtwAWaPYyysupXZIwLqBk0
+         RMJ30pgIXiI/jNegM5ssr6cV9o2oLjIT5dvmt/iijPE1WdwSJSXxEGchf2m4VRN4byZO
+         OCKg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789468568; x=1790073368; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=EybIxRu7gh0/uGvNpGNQAsB/2hq7wOMr36eqhjWJ4kA=;
+        b=N39cfNHZjtRH/Dqd3z0wKgkxIB0oxGHiEi9gshEMjbIFSe0LInOa/u/tWZI29rQ1/j
+         hQfavAkBnbaZWVBTykAMf1Cu4CwhTJfHgp4t0gxPhrTcGpRNl5zws448tnVRJ90MkMy+
+         PU6f/F1Sr9hiJ18dTbqf4bupElxjuf8wl1IdI2/EcVpOAG41YtBJOwyC4fIAo/asg9dx
+         xznI+LE8MVoyeuGHfZ8/rlhIeF9lUfSiZ9waF37nEjfMYGNc+LwJHZpnKjF1Eb9hB3GU
+         ExU7jgLiFLbpFIyJ5VP7mEsXirAQA8I5k53vxcSvCL6wIQWauJ6d+eZaWq+zLGq927Lw
+         veKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789468568; x=1790073368;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EybIxRu7gh0/uGvNpGNQAsB/2hq7wOMr36eqhjWJ4kA=;
+        b=t8WFrFGUFRisEEFoDzBSIlUoWChJJbBiH33zcaomecWTgniUcEmBbTmzeh9fsVY5vp
+         WC+3wwbTFJIPMe0xaDWbtOwxAgBrnPgK9o0J3JSvdOus71SGthn1ZJS+HqhcK/fvniCw
+         4wR0xJxYozwJClUe6/7l2bRE0cJiediappS854Lelo5+G6B7OTONHwLHVYHppWWpGYl9
+         gkhs/YufyjDbxfSzXHQYPByIxtDUPAv0GVHURPziRYNPNKVywyshJyLgzlTlfbSJ4xtz
+         0XpvUwWG+75pz9cMtPWty8QM/qKRiOyBOJkHK/tOeDK0sb0Z/66sJXzvhSX60A3oY8c4
+         EOhg==
+X-Gm-Message-State: AFuF++kCYzaz55LhBeJFDpzfx0rGFgecfDivm5D7tp7IRq532RDupEzT
+	gFFxU6oeOiKn9k1Epp0fMrhz5hneeELIvgYPx7Ebw0j+EYxDP7W1+AQzwax0tOA1v4S6e59hpHK
+	9+ZeOXU3UHkcBLuy4m0rNlXN/r+T9Ci1Gi9A9vF8cxQ==
+X-Gm-Gg: AYBFou3Rdh4CpnKGE5g8GSheIXi3UONSe8OZJ/ZXcyOcx6BgeHcr+GBRDy4B8Dfekgs
+	vKeR9XAaweUTSaOuaDwsvvlwPVkwkQSweXJJM65MrfxLjivLdBmjorfNWDf7+3ShcR9/QeB7ZD8
+	/zW9Y+sFy3J8DLT2sSxm3txHHZQPCbgG4bWwECXl4CBPcK6bbrzMULI4/PHhalpFzYbm0pdSZGt
+	W616thVepyjKS5rE7JNHNOjCpclnvp8B3iFth5eY5cSlN7lp/AfTCew/yoE0zznmVYqCdmd3ABl
+	IohIykgX6qgIramdSdjhhPyulbKRDFB6RZ8Uy9RVSbKhcuB1cw4I4Ft16g==
+X-Received: by 2002:a17:907:80c:b0:c29:1678:de36 with SMTP id
+ a640c23a62f3a-c29b8756facmr375515766b.46.1789468567393; Tue, 15 Sep 2026
+ 03:36:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] dt-bindings: leds: pca995x: describe output-gain
- property
-To: Nora Schiffer <nora.schiffer@ew.tq-group.com>, lee@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
- conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- linux@ew.tq-group.com
-References: <6d3600f99c77c31166f0b6a5ccfb7f518b53c4c9.1788350618.git.nora.schiffer@ew.tq-group.com>
- <7f61e7e8781292450f920c49ef8853b802d76ecc.1788350618.git.nora.schiffer@ew.tq-group.com>
- <20260902123105.11B171F000E9@smtp.kernel.org>
- <630889485b7be21875c858c705e1c9d828973c67.camel@ew.tq-group.com>
- <20260903-sophisticated-magic-fennec-7c8aeb@quoll>
- <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <31aace01ed19712b2984890adf61144a80cf7f42.camel@ew.tq-group.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260913185849.907479-1-coiaprant@gmail.com> <20260913185849.907479-7-coiaprant@gmail.com>
+ <20260914194421.944211F00893@smtp.kernel.org>
+In-Reply-To: <20260914194421.944211F00893@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Tue, 15 Sep 2026 18:35:54 +0800
+X-Gm-Features: AcwNN1VJezYkhl7wtVaby68YugY1136mwuoA1MxlIq9aSNGHJATVbB4iAMAwGQo
+Message-ID: <CALj3r0jHGpLSRgErU5Vy3xO-CKMsdY_6ixAczeapx32yFbSziA@mail.gmail.com>
+Subject: Re: [PATCH net-next v5 06/11] net: pcs: xpcs: add ANRESTART support
+ for SGMII link recovery
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, olteanv@gmail.com, vkoul@kernel.org, 
+	conor+dt@kernel.org, linux-phy@lists.infradead.org, 
+	wsa+renesas@sang-engineering.com, robh@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 14/09/2026 10:23, Nora Schiffer wrote:
-> On Thu, 2026-09-03 at 15:09 +0200, Krzysztof Kozlowski wrote:
->> On Wed, Sep 02, 2026 at 03:10:09PM +0200, Nora Schiffer wrote:
->>> On Wed, 2026-09-02 at 12:31 +0000, sashiko-bot@kernel.org wrote:
->>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->>>> - [Low] The custom, device-specific property `output-gain` lacks a mandatory vendor prefix.
->>>
->>> Probably makes sense to add the vendor prefix, will do in v2.
->>>
->>>> - [Low] The `output-gain` property incorrectly exposes a raw hardware register value directly to the Device Tree instead of describing physical units.
->>>
->>> According to the datasheet, the LED current is calculated as follows:
->>>
->>>     Iled = output_gain * 900mV / Rext / 4
->>>
->>> If we want to fully describe the output gain using physical units, something
->>> like output-current-microamps and external-resistor-ohms would work. There
->>> wouldn't be a meaningful default for these properties to describe in the binding
->>> docs however, which is possible for "output-gain" (as the driver just sets that
->>> to 127.)
->>
->> Output current is already there, no? led-max-microamp? So basically you
->> would be re-describing it... although I understand that for your case
->> you need two properties (also the resistor) to calculate the value to program.
-> 
-> One other idea I had was to treat the output gain as a single value, but handle
-> the constant factor in the driver, so it defines just the Iled * Rext term with
-> unit microvolts. This could be used in the Device Tree as follows:
-> 
->     /* Configure an output current of 15000uA for Rext = 3000Ohm */
->     nxp,output-gain-microvolts = <(15000 * 3000)>;
-> 
-> Two notes regarding this approach:
-> 
-> - These "microvolts" do not correspond to any actual voltage, but the full
->   "microamps-ohms" seems very verbose.
-> - It is unclear to me whether using physical units actually makes this binding
->   more generic. I have not worked with other LED drivers, so I don't know how
->   common the concept of a gain that relates the current with an external
->   resistor is.
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=8815=E6=97=A5=E5=91=
+=A8=E4=BA=8C 03:44=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Unconditionally applying the RK3568 SGMII AN restart quirk cau=
+ses an infinite interrupt storm or workqueue loop on standard interrupt-dri=
+ven DW XPCS configurations.
+> --
+>
+> commit 78eb5488d0c0d3fe9f609e56e59710ced52856fa
+> Author: Coia Prant <coiaprant@gmail.com>
+>
+> net: pcs: xpcs: add ANRESTART support for SGMII link recovery
+>
+> This patch adds BMCR_ANRESTART to DW XPCS when configuring auto-negotiati=
+on
+> and when the link goes down. This is intended to resolve an issue on some
+> platforms (like RK3568) where the PCS does not automatically restart
+> auto-negotiation when the link goes down and comes back up.
+>
+> > diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
+> > index 0337e2bcc0125..8c3875b6985b9 100644
+> > --- a/drivers/net/pcs/pcs-xpcs.c
+> > +++ b/drivers/net/pcs/pcs-xpcs.c
+> [ ... ]
+> > @@ -1093,9 +1107,18 @@ static int xpcs_get_state_c37_sgmii(struct dw_xp=
+cs *xpcs,
+> >               return 0;
+> >       }
+> >
+> > -     /* Clear AN complete status or interrupt */
+> > -     if (state->an_complete)
+> > -             xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0=
+);
+> > +     if (state->an_complete) {
+> > +             /* Clear AN complete status or interrupt */
+> > +             ret =3D xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INT=
+R_STS, 0);
+> > +             if (ret < 0)
+> > +                     return ret;
+> > +
+> > +             /* Initiate the next round of AN */
+> > +             ret =3D xpcs_modify(xpcs, MDIO_MMD_VEND2, MII_BMCR, BMCR_=
+ANRESTART,
+> > +                               BMCR_ANRESTART);
+>
+> [Severity: Medium]
+> Could unconditionally applying this AN restart quirk cause an infinite
+> interrupt storm or MDIO polling loop on standard DW XPCS configurations?
+>
+> If a cable is disconnected on an SGMII port, the PHY may continuously tra=
+nsmit
+> the 'Link Down' AN configuration word. When the MAC completes AN and gene=
+rates
+> an interrupt, xpcs_get_state_c37_sgmii() is called. It clears the interru=
+pt
+> and unconditionally sets BMCR_ANRESTART.
+>
+> Will this cause the hardware to reset its AN state machine, immediately
+> complete AN again with the PHY's continuous 'Link Down' word, and fire an=
+other
+> interrupt, creating an endless loop?
+>
+> Should this behavior be isolated to only the platforms that require the q=
+uirk
+> (like RK3568), rather than applied to all hardware using the DesignWare X=
+PCS IP?
 
+Thanks for the review. The High item describes intended behaviour
+rather than a defect.
 
-I think vendor,output-gain in register values is fine in such case.
+The state you identified =E2=80=94 ANCMPLT latched with LNKSTS clear =E2=80=
+=94 is the
+normal state of an SGMII port whose link partner's media side is down.
+The partner PHY keeps sending a LNKSTS=3D0 config word, so the PCS
+completes AN and latches ANCMPLT while LNKSTS stays clear.
 
+That is precisely the state the restart is meant to handle. Without it,
+the PCS stays in that state indefinitely and never re-runs AN when the
+partner comes back, so the link can never recover. Re-issuing ANRESTART
+on each poll while the link is down is the mechanism that makes
+recovery possible: on the next poll the PCS re-runs AN, and if the
+partner has come back with LNKSTS=3D1 the link comes up.
 
-Best regards,
-Krzysztof
+On the poll rate: xpcs->pcs.poll is set for RK3568, so this runs at
+phylink's resolve interval, roughly once per second. A single MDIO
+register write per second is not a concern. On interrupt-driven parts
+the behaviour was tested by Wangxun and no adverse effect was observed.
+
+Thanks,
+Coia
