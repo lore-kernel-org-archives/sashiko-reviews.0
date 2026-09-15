@@ -1,287 +1,163 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AB33890F8
-	for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 12:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54CA3BE643;
+	Tue, 15 Sep 2026 12:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789475613; cv=none; b=nFz5tpVtTuc0zyy6PQoyBFbcJdqIiwcMikgPho0LKhfCS7zKd4emIfMO78IRzHQr5HNLByJY/Qt8oKjmfQo1xmbu5LBh/gbz7lV0ym4Swi8YG1WE6JEeHo4AMOsBP6V4phVApVEnuxqms0aelg88fsLQyHJabgh+o0hudZR45qg=
+	t=1789475821; cv=none; b=XqKaf8K5gTo1aw5nmigdHUHldKsalLmWxUTc1zygi3JDbXvZd8vlZoOw7VJa/Te2lwmmRt89mRH81CwqGbNVMi1turTwc/ol1DvV/9UiC3EM1FaL7ASa3knTDhYEGzhswRNDzcf8GVX1rBCTGw3dxcUHxoZYzcW8vhw/OY0jUlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789475613; c=relaxed/simple;
-	bh=JsKAJx8BMfZHoE7fTfSMmLBTHvQ4HXUbc3J/MfRdqnE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpNjQ672AbmIkTfnalq9Evl/d8eJU3j5G0tI3QgAwiZarT3JUbGLD2D5UVGd+q7XVTNBhpaCqref6TSpSzZ7HBhbdGROXYjuHeor88KbnYThfMXI2BHJGCd+FKWV5afZqW8wa0gFyE2fGFOYtzINtWPqeRzoHUKSdf8VEpwWw58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Yv7m8Q9b; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=IaA3xu58; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=o0nc7zne; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=7++Z3ipM; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1789475821; c=relaxed/simple;
+	bh=2En1tkcYieizct0scFPBIPhCAsUypbyJIy3vv+9QV2g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Od8rCkmlk0NmqUuSaKJkAuaGEK1NFn2fNdYaqJPTmHarLm8msBg/1yPg27G2Wq9M2pTvxz0SBDq1U6mNIO7r+oRCLPHxTPP9+31Uw5vqOFJGgZoDW8kCDkJYuQWh0NE+MGSKIX/fFhP5hPV+GxXbNKIzOjQ4481e6O3Dxl8QwXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IQ0+G0IW; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Yv7m8Q9b";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="IaA3xu58";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="o0nc7zne";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="7++Z3ipM"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3E4E01FD8D;
-	Tue, 15 Sep 2026 12:33:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789475599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eQInQiSoFgN20FwPZAQkSimSNxx0P+gPkILtWae2sXM=;
-	b=Yv7m8Q9btdhRjYaQJx8JUkDBPlIqE17zSROy1zXVnVb7LkJ9xtzpmIxVJhRj9razsJGlej
-	G10hhlI2gYPQcDK7v11x59+EUliHrp2gRkMJaL33eAoRLUxdQa31cop3WVe6LqkTBn36G5
-	8goE0OCCleBM/8+vNRBeIpczeJ/vI+E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789475599;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eQInQiSoFgN20FwPZAQkSimSNxx0P+gPkILtWae2sXM=;
-	b=IaA3xu585043qmgM5HELOzRWlTgA6kPfkE1UFiT6J/PaFsO0e2LCX9DFPA3JeGsg5Tqjoh
-	nVpEHDzBg5oMWTDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789475595; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eQInQiSoFgN20FwPZAQkSimSNxx0P+gPkILtWae2sXM=;
-	b=o0nc7zne/xS0WSUBj74F2SlIuS2UkZBrJuyZP7Pv06B5qW2nZkSp9nu8fPKOKJ3ht5G+o7
-	GPsm41oHtNzT24tg89kxzfFHBwMp4yd8Dn8qTMHw8zQU7DdJn+lglOYpxklFxg25e6W1Jn
-	muSFLIU33IJL6dlSS2Xl7aKGeRjdJHQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789475595;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eQInQiSoFgN20FwPZAQkSimSNxx0P+gPkILtWae2sXM=;
-	b=7++Z3ipMK8zi+b6/ntUpxeNwWNWMtbDcOHpIbQPTHH7A9pw30R5i0gh32Rvctb4qKpJIUw
-	irwTRLJerPrw6yBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ADF0613890;
-	Tue, 15 Sep 2026 12:33:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id COmnAwk7qWpGNQAAD6G6ig:T6
-	(envelope-from <tzimmermann@suse.de>); Tue, 15 Sep 2026 12:33:14 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: deller@gmx.de,
-	gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	simona@ffwll.ch
-Cc: linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-serial@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 5/5] fbcon: Replace fbcon_fill_cursor_mask() with fbcon_cursor_glyph()
-Date: Tue, 15 Sep 2026 14:29:16 +0200
-Message-ID: <20260915123304.1027277-6-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260915123304.1027277-1-tzimmermann@suse.de>
-References: <20260915123304.1027277-1-tzimmermann@suse.de>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IQ0+G0IW"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BC9E615A1;
+	Tue, 15 Sep 2026 05:36:55 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B3DFC3F882;
+	Tue, 15 Sep 2026 05:36:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789475819; bh=2En1tkcYieizct0scFPBIPhCAsUypbyJIy3vv+9QV2g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IQ0+G0IWNjEDik9LAW6yU/PzXxWhLWi4zQUzXbcCK5XqLhj6lDWSM8hB6D0JiZ4bN
+	 NU0gbK5cIj56bh1fYUXq+unggEHsax6mvWiBsP4lkdNjJlCPYvsERKqSSyjvhjWb7d
+	 J+L0HwGTvJWX+OjlOMzkw+E9bwjE7AulN6u+vDM4=
+Date: Tue, 15 Sep 2026 13:36:56 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v11 3/9] coresight: etm4x: fix inconsistencies with sysfs
+ configuration
+Message-ID: <aqk76O2J6Ni7prxW@e129823.arm.com>
+References: <20260915-separate_etm_cfg_v2-v11-0-d2b258d51747@arm.com>
+ <20260915-separate_etm_cfg_v2-v11-3-d2b258d51747@arm.com>
+ <20260915115334.49FB91F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Score: -2.80
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	FREEMAIL_TO(0.00)[gmx.de,linuxfoundation.org,kernel.org,ffwll.ch];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,gmx.de:email,imap1.dmz-prg2.suse.org:helo];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de]
-X-Spam-Flag: NO
+In-Reply-To: <20260915115334.49FB91F000FF@smtp.kernel.org>
 
-The kernel's font library provides font_glyph_cursor() to create cursor
-glyphs. Replace fbcon's fbcon_fill_cursor_mask() with a new helper that
-uses font_glyph_cursor().
+On Tue, Sep 15, 2026 at 11:53:33AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] coresight: data race when updating cntr_val in etm4_disable_sysfs()
+> - [Medium] coresight: feat_csdev_lock macro fails to disable IRQs when __lock is NULL
+> --
+> 
+> commit 5571e5128409a42536b24f594b727e037107f3f4
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm4x: fix inconsistencies with sysfs configuration
+> 
+> This commit separates the active configuration applied to the current session
+> from the sysfs configuration to resolve inconsistencies. It applies configfs
+> settings after taking the appropriate mode and removes the lock/unlock around
+> sysfs enable/disable paths except when accessing config fields.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-config.h b/drivers/hwtracing/coresight/coresight-config.h
+> > index 90fd937d3bd83..ae6295e308131 100644
+> > --- a/drivers/hwtracing/coresight/coresight-config.h
+> > +++ b/drivers/hwtracing/coresight/coresight-config.h
+> 
+> [ ... ]
+> 
+> > @@ -259,4 +260,25 @@ void cscfg_csdev_disable_config(struct cscfg_config_csdev *config_csdev);
+> >  /* reset a feature to default values */
+> >  void cscfg_reset_feat(struct cscfg_feature_csdev *feat_csdev);
+> >  
+> > +#define feat_csdev_lock(feat_csdev, flags)				\
+> > +	do {								\
+> > +		raw_spinlock_t *__lock = feat_csdev->drv_spinlock;	\
+> > +		typecheck(unsigned long, flags);			\
+> > +		if (__lock)						\
+> > +			raw_spin_lock_irqsave(__lock, flags);		\
+> > +	} while (0)
+> > +
+> > +#define feat_csdev_unlock(feat_csdev, flags)				\
+> > +	do {								\
+> > +		raw_spinlock_t *__lock = feat_csdev->drv_spinlock;	\
+> > +		typecheck(unsigned long, flags);			\
+> > +		if (__lock)						\
+> > +			raw_spin_unlock_irqrestore(__lock, flags);	\
+> > +	} while (0)
+> 
+> [Severity: Medium]
+> Will these macros fail to disable IRQs when __lock is NULL?
+> 
+> The intent is to let cfg-configfs operate without grabbing the drv_spinlock
+> when it is NULL. However, raw_spin_lock_irqsave() also saves and disables
+> IRQs. If the lock is bypassed completely here, IRQs are left enabled.
+> 
+> Could this lead to reentrancy bugs or deadlocks if generic coresight configfs
+> routines like cscfg_csdev_enable_active_config() are called from contexts
+> where IRQs are enabled? Should there be a fallback like local_irq_save() when
+> __lock is NULL to ensure the critical section remains protected from
+> interrupts?
 
-The cursor shapes remain mostly unchanged. The only exception is in
-underline cursors for fonts with a size larger than 10. The underlining
-dash is now one pixel closer to the font-glyph data, so that the cursor
-looks less detached. This follows the style used by vgacon.
+It was discussed with Leo but we couldn't find any issue for this.
 
-v2:
-- adapt to new VT interface
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > index 2247ad55d4442..2df7f592bb5cf 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> 
+> [ ... ]
+> 
+> > @@ -1140,9 +1152,17 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
+> >  	smp_call_function_single(drvdata->cpu, etm4_disable_sysfs_smp_call,
+> >  				 drvdata, 1);
+> >  
+> > -	raw_spin_unlock(&drvdata->spinlock);
+> > +	/*
+> > +	 * Userspace may read ss_status and cntr_val through sysfs after
+> > +	 * the sysfs-session has been disabled.
+> > +	 */
+> > +	for (i = 0; i < drvdata->nr_ss_cmp; i++)
+> > +		config->ss_status[i] = active_config->ss_status[i];
+> >  
+> > -	cscfg_csdev_disable_active_config(csdev);
+> > +	for (i = 0; i < drvdata->nr_cntr; i++)
+> > +		config->cntr_val[i] = active_config->cntr_val[i];
+> 
+> [Severity: Medium]
+> Does this create a data race with sysfs operations?
+> 
+> The etm4_disable_sysfs() function removes drvdata->spinlock but continues to
+> copy active_config values into config->cntr_val locklessly.
+> 
+> Meanwhile, concurrent sysfs show and store functions access these fields under
+> the spinlock:
+> 
+> cntr_val_store() {
+>         ...
+>         raw_spin_lock(&drvdata->spinlock);
+>         idx = config->cntr_idx;
+>         config->cntr_val[idx] = val;
+>         raw_spin_unlock(&drvdata->spinlock);
+>         ...
+> }
+> 
+> If etm4_disable_sysfs() runs while another thread concurrently reads or
+> writes cntr_val through sysfs, can it corrupt the configuration state?
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
----
- drivers/video/fbdev/core/bitblit.c   |  3 +-
- drivers/video/fbdev/core/fbcon.c     | 45 +++++++---------------------
- drivers/video/fbdev/core/fbcon.h     |  2 +-
- drivers/video/fbdev/core/fbcon_ccw.c |  3 +-
- drivers/video/fbdev/core/fbcon_cw.c  |  3 +-
- drivers/video/fbdev/core/fbcon_ud.c  |  3 +-
- 6 files changed, 16 insertions(+), 43 deletions(-)
+The store is prohibited at when sysfs sessino is enabled.
+So This is not true.
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index 39f44258d793..03b3b18e1fe9 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -334,11 +334,10 @@ static void bit_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
- 	    vc->vc_cursor_type != par->p->cursor_shape ||
- 	    par->cursor_state.mask == NULL ||
- 	    par->cursor_reset) {
--		unsigned char *mask = kmalloc_array(vc->vc_font.height, w, GFP_ATOMIC);
-+		unsigned char *mask = fbcon_cursor_glyph(&vc->vc_font, vc->vc_cursor_type);
- 
- 		if (!mask)
- 			return;
--		fbcon_fill_cursor_mask(par, vc, mask);
- 
- 		kfree(par->cursor_state.mask);
- 		par->cursor_state.mask = (const char *)mask;
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 615fa596b7cc..8581b7a9b3b7 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -444,44 +444,21 @@ static void fbcon_del_cursor_work(struct fb_info *info)
- 	cancel_delayed_work_sync(&par->cursor_work);
- }
- 
--void fbcon_fill_cursor_mask(struct fbcon_par *par, struct vc_data *vc, unsigned char *mask)
-+unsigned char *fbcon_cursor_glyph(const struct vc_font *font, unsigned int cursor_type)
- {
--	static const unsigned int pattern = 0xffffffff;
--	unsigned int pitch = vc_font_pitch(&vc->vc_font);
--	unsigned int cur_height, size;
-+	unsigned int height = font->height;
-+	unsigned int cursor_size = CUR_SIZE(cursor_type);
-+	unsigned char *glyph;
- 
--	switch (CUR_SIZE(vc->vc_cursor_type)) {
--	case CUR_NONE:
--		cur_height = 0;
--		break;
--	case CUR_UNDERLINE:
--		if (vc->vc_font.height < 10)
--			cur_height = 1;
--		else
--			cur_height = 2;
--		break;
--	case CUR_LOWER_THIRD:
--		cur_height = vc->vc_font.height / 3;
--		break;
--	case CUR_LOWER_HALF:
--		cur_height = vc->vc_font.height / 2;
--		break;
--	case CUR_TWO_THIRDS:
--		cur_height = (vc->vc_font.height * 2) / 3;
--		break;
--	case CUR_BLOCK:
--	default:
--		cur_height = vc->vc_font.height;
--		break;
--	}
-+	glyph = kmalloc_array(height, vc_font_pitch(font), GFP_ATOMIC);
-+	if (!glyph)
-+		return NULL;
- 
--	size = (vc->vc_font.height - cur_height) * pitch;
--	while (size--)
--		*mask++ = (unsigned char)~pattern;
-+	font_glyph_cursor(font->width, height,
-+			  vc_cursor_start(height, cursor_size),
-+			  vc_cursor_end(height, cursor_size), glyph);
- 
--	size = cur_height * pitch;
--	while (size--)
--		*mask++ = (unsigned char)pattern;
-+	return glyph;
- }
- 
- #ifndef MODULE
-diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
-index 407d207b14f1..054cf66b15fa 100644
---- a/drivers/video/fbdev/core/fbcon.h
-+++ b/drivers/video/fbdev/core/fbcon.h
-@@ -202,7 +202,7 @@ extern void fbcon_set_tileops(struct vc_data *vc, struct fb_info *info);
- extern void fbcon_set_bitops_ur(struct fbcon_par *par);
- extern int  soft_cursor(struct fb_info *info, struct fb_cursor *cursor);
- 
--void fbcon_fill_cursor_mask(struct fbcon_par *par, struct vc_data *vc, unsigned char *mask);
-+unsigned char *fbcon_cursor_glyph(const struct vc_font *font, unsigned int cursor_type);
- 
- #define FBCON_ATTRIBUTE_UNDERLINE 1
- #define FBCON_ATTRIBUTE_REVERSE   2
-diff --git a/drivers/video/fbdev/core/fbcon_ccw.c b/drivers/video/fbdev/core/fbcon_ccw.c
-index 33f02d579e02..9a9839631cc5 100644
---- a/drivers/video/fbdev/core/fbcon_ccw.c
-+++ b/drivers/video/fbdev/core/fbcon_ccw.c
-@@ -298,10 +298,9 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
- 	    par->cursor_reset) {
- 		unsigned char *tmp, *mask;
- 
--		tmp = kmalloc_array(vc->vc_font.height, vc_font_pitch(&vc->vc_font), GFP_ATOMIC);
-+		tmp = fbcon_cursor_glyph(&vc->vc_font, vc->vc_cursor_type);
- 		if (!tmp)
- 			return;
--		fbcon_fill_cursor_mask(par, vc, tmp);
- 
- 		mask = kmalloc_array(vc->vc_font.width, w, GFP_ATOMIC);
- 		if (!mask) {
-diff --git a/drivers/video/fbdev/core/fbcon_cw.c b/drivers/video/fbdev/core/fbcon_cw.c
-index bde820967eb9..4cb20337cf79 100644
---- a/drivers/video/fbdev/core/fbcon_cw.c
-+++ b/drivers/video/fbdev/core/fbcon_cw.c
-@@ -281,10 +281,9 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
- 	    par->cursor_reset) {
- 		unsigned char *tmp, *mask;
- 
--		tmp = kmalloc_array(vc->vc_font.height, vc_font_pitch(&vc->vc_font), GFP_ATOMIC);
-+		tmp = fbcon_cursor_glyph(&vc->vc_font, vc->vc_cursor_type);
- 		if (!tmp)
- 			return;
--		fbcon_fill_cursor_mask(par, vc, tmp);
- 
- 		mask = kmalloc_array(vc->vc_font.width, w, GFP_ATOMIC);
- 		if (!mask) {
-diff --git a/drivers/video/fbdev/core/fbcon_ud.c b/drivers/video/fbdev/core/fbcon_ud.c
-index eaf08999e249..ac22b9846b79 100644
---- a/drivers/video/fbdev/core/fbcon_ud.c
-+++ b/drivers/video/fbdev/core/fbcon_ud.c
-@@ -328,10 +328,9 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
- 	    par->cursor_reset) {
- 		unsigned char *tmp, *mask;
- 
--		tmp = kmalloc_array(vc->vc_font.height, w, GFP_ATOMIC);
-+		tmp = fbcon_cursor_glyph(&vc->vc_font, vc->vc_cursor_type);
- 		if (!tmp)
- 			return;
--		fbcon_fill_cursor_mask(par, vc, tmp);
- 
- 		mask = kmalloc_array(vc->vc_font.height, w, GFP_ATOMIC);
- 		if (!mask) {
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260915-separate_etm_cfg_v2-v11-0-d2b258d51747@arm.com?part=3
+
 -- 
-2.55.0
-
+Sincerely,
+Yeoreum Yun
