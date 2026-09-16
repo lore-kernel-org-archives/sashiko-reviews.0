@@ -1,30 +1,67 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f24.google.com (mail-ej2-f24.google.com [74.125.228.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B834E56D1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9064EC670
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789558278; cv=none; b=m0w+QbzDm5yU9Sd6snyg+G8gYxxycptwk+w+WolZXPpaxBBkstjg2TWig5EOluXBwK4tZoQojw703v+PN7scGYyVYfnnEfn4OV2iLHLHws4e6HAFOaRRLxjxL+JhSoUDt1x63sAkDgWLtxV+rB80c2yVXszjnWNpSWAImjJ+myA=
+	t=1789558520; cv=none; b=tEvPHa1nuzq2ZmtSg1W8vkCB2TXPmFnSU3D9sLbB64bDGEcOTTEA/MRWTd/DvdoYXH3DHIsJEh/TPttD7ljmKsdh3NTKtGtNO98TG4heltGVh2tZ8phdEQqPeiortPua7eA7b9luy2ObgDBGh9TcpASx36Mg6LnaMtiZsl6AqgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789558278; c=relaxed/simple;
-	bh=Wkx+M797dMS2uXHcLVB0w5jDzayTkLJxrXhEIkHK28s=;
+	s=arc-20240116; t=1789558520; c=relaxed/simple;
+	bh=JxFaW/WYqlOtA984BXiqHodpwCvgbe1pUjpcetQOGtE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fkathfe2PkNwnaYlQcK8KM8ZoOp2KLyrdoiNGqQMsTiBu9qFTKcUyYmg20rW9cRT/DsVBrOLI10ruS6x6qe6pF1Gh064hzexluy/1FhSJwtO61ghKr5215epRFMsiJWuna6h/dIOkYsmYI+x3AFe2NEZiLGvpAn5YP7yENhPoKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hlGsg5JPSzKHMmv
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:30:47 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 1448D4058C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:31:02 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXpyr0fapqC8sQAg--.61767S2;
-	Wed, 16 Sep 2026 19:31:02 +0800 (CST)
-Message-ID: <228cf99e-2b8a-42a8-aab6-45cc4823d3b7@huaweicloud.com>
-Date: Wed, 16 Sep 2026 19:31:00 +0800
+	 In-Reply-To:Content-Type; b=XekV4lrt8E3tjkfGPl6q7GL0nXBNPE65WFU0pqsXRBxWexG7Ec8HJubSTNvDdglwVnbXci6rRqE7FNETyWcHL77hdVANHUSPMBDcTScHpRkcBmVjmSNCGqn8jbx7hSe2W1kp2SoZiyhrl/dsjiTMffP0shCNimUUK1BPQtV893I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wsljzSJV; arc=none smtp.client-ip=74.125.228.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wsljzSJV"
+Received: by mail-ej2-f24.google.com with SMTP id a640c23a62f3a-c29d33431c8so116417466b.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 04:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1789558506; x=1790163306; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=I+ON5LylyLSRvB3Oy5FN+PptZ1PxOVJXbkytbHhMasY=;
+        b=wsljzSJV1AiJZjPCMMgQzIlCKrLnh8x3JIY/EY6Y9h+opaMAm6O+sxv9ahDkv53LxO
+         X3QRhZKDPcx9mN2pw1yNvGSvJKXHHxCIrDw09TFMVJwNg2RJZcXEo0vz3W1jV+1+BoH5
+         ZqTskLTltpwVemO1ad0p0NwcxDtMOXeirt2DqnYt7Q/G8VYNve0Mkh7dTdFm42/3ouUb
+         xpqOKVFflE2C6xn5QSEWp6hWWkVViA/pN5wr8r57j4jDkLqsW4L/841h92xa8vw/I9R4
+         hbfqFLgZwGEdv70ll1pF1N8IHqn9wQpaSwNX1T8VeRqRrLZ5Y6vXZD3TyN+xFDeVtbJj
+         fd0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789558506; x=1790163306;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=I+ON5LylyLSRvB3Oy5FN+PptZ1PxOVJXbkytbHhMasY=;
+        b=wwvJ+O0bRx7jIZeMK6RhtkgC6D56Mq2UucDBiWEwltrCsxptvO5fEAW58QHKfVJNMK
+         SmUbzkAeLTYBBaND7vJi4R5wkptl/tnBdp9mc5oYjY0ymFXgoxmshzM5d94eosb0orul
+         QJen8PjAQ6HLU32V6TjhIKzfRVcgJpEM3d07ZxK3gTrGgSd6YERW6427QHMJCqb1nio3
+         +bmgAMHJyVPtbkZy8NLXmZT4vZ2gDCfQODnisjLH4CNjFUvcLtsy2EbmPWEfpkddWRDA
+         Jd1RECYy0Bi2ayKlusyDoAXhiyrsg20xqAYKBTKkMz3CUVIGKnTmVqSHLt4BjcB4efNM
+         kE8w==
+X-Gm-Message-State: AFuF++mGtc1mN2CctQ2N0dlBbFHC/Psg09DGHcTfqaki0kN+3jIUyCVO
+	49Uq7yG/+QZb7jA9SrTJW+EaL2hZx9pSmeFnT2juP5PYr9SGtaPspu7nYCmSOqYbkUMowLxT5qM
+	ejNCw8mg=
+X-Gm-Gg: AYBFou3itf+YPfZk+hznfCrYxf2l03l7mR+PWQXXl8Jls9P21YR3a7M41zvZUhmCWsN
+	/Fgxe6rBxYexWZQkqT2+4fgDg1bnGZ61Nom1LNU55+a3iZjN/uKMo2JcGUhMZVfYMA4bSY3RNzC
+	AvdO6xxiAC5rRU8jBlOoj48aEQqAdaNdA744ZARuVUa5+1rbU8GoiOOpZA0GotPD7Up3cqD64g6
+	rEVBEkLwSHRVvE1XEuwPCTXXQM8vcZITjez2OurPiatIQqnAhrfO5sP9VRPrRZ3j1IIio6nyEgj
+	qL6pwBGRK/kIoGT5hZ7u6vX7snoJuVXNIV1pHGQcifacIGDkp5ak0qKB5m3g+hY8sVQzdJKbdwl
+	pVokZAJGcN5lzgB2Ae9XVt1Mepr+mKo1Zj20GfWvB+UOfZuCzHeomuGmYZHlJMgL2hDLrIdcHD7
+	fpf5VIeJASQRqN/FXDxXlk+xGDPKfeaoiYUshbAt09dagDK6+hYdtvt65k9e82LH8W9Y/zQX5fO
+	6RNBIj/SbgKwKQyENTYWHI=
+X-Received: by 2002:a17:907:d0b:b0:c25:c54d:d1a2 with SMTP id a640c23a62f3a-c29e5236f43mr142950366b.18.1789558506076;
+        Wed, 16 Sep 2026 04:35:06 -0700 (PDT)
+Received: from [192.168.0.167] ([109.76.116.194])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c29de0850ccsm117462366b.8.2026.09.16.04.35.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Sep 2026 04:35:05 -0700 (PDT)
+Message-ID: <92a4b3dd-4661-4a4e-90fd-83249acf0dbe@linaro.org>
+Date: Wed, 16 Sep 2026 12:35:04 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,141 +69,99 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 16/26] perf annotate-arm64: Support load instruction
- tracking
+Subject: Re: [PATCH v17 2/5] phy: core: Add phy_get_by_of_node()
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1789521520.git.wutengda@huaweicloud.com>
- <f95afe942520e925f209a2cd20c5f55d28c272b9.1789521520.git.wutengda@huaweicloud.com>
- <20260916015146.B53C01F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260916015146.B53C01F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc: vkoul@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
+ devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+ media-ci@linuxtv.org, robh@kernel.org, linux-clk@vger.kernel.org,
+ olteanv@gmail.com
+References: <20260906-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v17-0-e2197a3e2551@linaro.org>
+ <20260906-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v17-2-e2197a3e2551@linaro.org>
+ <20260906143127.2B5691F00A3A@smtp.kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-GB
+In-Reply-To: <20260906143127.2B5691F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDXpyr0fapqC8sQAg--.61767S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryktw43ZrW7Wr48Aw4rGrg_yoWrAw1xpF
-	Z8G345Jw12qr4ftrsIvr4kuFyF9wn3WF1DCryqgFWSvFyjyrn3GFZ3KFWj9ay8GrWxCw17
-	Zw1jyFZxXw4DCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26F4UJVW0obIYCTnIWIev
-	Ja73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-
-
-On 2026/9/16 9:51, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] perf annotate: stale lifetime metadata retained on load
-> - [Medium] perf annotate: incorrect type propagation for TSR_KIND_POINTER loads
+On 06/09/2026 15:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] phy_get_by_of_node() misses the legacy usb-nop-xceiv workaround, causing infinite -EPROBE_DEFER loops.
 > --
 > 
-> commit 9763211f6135d1b6c3e44acf4ac681c34ac60395
-> Author: Tengda Wu <wutengda@huaweicloud.com>
+> commit a021b561c8a9bfb36addca720d49ea935b34a131
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
-> perf annotate-arm64: Support load instruction tracking
->     
-> Extend update_insn_state_arm64() to handle load instructions, tracking
-> register state changes when data is loaded from memory to registers.
+> phy: core: Add phy_get_by_of_node()
 > 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index d3d994a22cf92..11b2bdceaacb1 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> This commit introduces phy_get_by_of_node() to allow looking up a phy
+> directly by its device node. It refactors the existing lookup logic in
+> _of_phy_get() into a new shared helper function called
+> _of_phy_get_with_args().
 > 
+>> diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+>> index 89addd732bff3..490a7cde6d40a 100644
+>> --- a/drivers/phy/phy-core.c
+>> +++ b/drivers/phy/phy-core.c
 > [ ... ]
-> 
->> @@ -461,11 +461,210 @@ static bool is_readonly_branch_or_cmp(const char *name)
->> +static int propagate_load_reg_state(struct type_state *state,
->> +				    struct data_loc_info *dloc,
->> +				    struct disasm_line *dl, int dreg,
->> +				    struct annotated_op_loc *src,
->> +				    struct type_state_reg **src_states,
->> +				    int mem_spacing)
+>> @@ -1001,6 +1015,41 @@ struct phy *devm_of_phy_get_by_index(struct device *dev, struct device_node *np,
+>>   }
+>>   EXPORT_SYMBOL_GPL(devm_of_phy_get_by_index);
+>>   
+>> +/**
+>> + * phy_get_by_of_node() - lookup and obtain a reference to a phy by device_node
+>> + * @np: node containing the phy
+>> + *
+>> + * Returns the phy associated with the device node or ERR_PTR.
+>> + */
+>> +struct phy *phy_get_by_of_node(struct device_node *np)
 >> +{
->> +	struct type_state_reg *tsr;
->> +	struct type_state_reg *src_tsr = src_states[0];
->> +	Dwarf_Die type_die;
->> +	u32 insn_offset = dl->al.offset;
->> +	int sreg = src->reg1;
->> +	int reg_offset;
+>> +	struct of_phandle_args args = { .np = np, .args_count = 0 };
+>> +	struct phy *phy;
 >> +
->> +	if (!has_reg_type(state, dreg))
->> +		return -1;
+>> +	if (!np)
+>> +		return ERR_PTR(-EINVAL);
 >> +
->> +	tsr = &state->regs[dreg];
->> +	tsr->copied_from = -1;
+>> +	mutex_lock(&phy_provider_mutex);
 >> +
->> +retry:
->> +	if (arch_get_reg_offset(dloc->arch, src, sreg, state, false, &reg_offset))
+>> +	phy = _of_phy_get_with_args(&args);
 > 
 > [Severity: Medium]
-> When acquiring the destination register state here, shouldn't the lifetime
-> metadata be cleared (e.g., via tsr->lifetime_active = false;)?
+> Does this new API miss the legacy compatibility check for usb-nop-xceiv?
 > 
-> If the register previously held a variable with an active DWARF lifetime, the
-> newly loaded value inherits this stale lifetime. During function calls,
-> caller-saved registers with active lifetimes are preserved rather than
-> invalidated. This causes the register's new type to incorrectly survive the
-> call, leading to stale type tracking downstream.
+> In _of_phy_get(), there is a workaround that returns -ENODEV if the
+> device is compatible with "usb-nop-xceiv". Because this workaround was
+> left in _of_phy_get() rather than being relocated into the shared
+> _of_phy_get_with_args() helper, phy_get_by_of_node() bypasses it
+> completely.
 > 
+> Could this cause drivers looking up a "usb-nop-xceiv" node via this new
+> API to receive -EPROBE_DEFER instead of -ENODEV, leading to infinite
+> probe deferrals and breaking fallback to the usb-phy subsystem?
 
-Normally DWARF handles this lifetime quite well (DW_AT_ranges will mark the
-lifetime end at the ldr instruction), but clearing it is fine too, and it will
-also get sashiko to stop complaining.
+I don't agree with this.
 
->> +		goto load_non_regoff;
+The compat string workaround should live where it is used, not be pushed 
+down into generic layers where it is not.
+
+No media-graph lookup needs this hack.
+> 
 >> +
->> +	reg_offset += mem_spacing;
+>> +	if (IS_ERR(phy))
+>> +		goto out_unlock;
+>> +
+>> +	if (!try_module_get(phy->ops->owner)) {
+>> +		phy = ERR_PTR(-EPROBE_DEFER);
+>> +		goto out_unlock;
+>> +	}
+>> +
+>> +	get_device(&phy->dev);
+>> +
+>> +out_unlock:
+>> +	mutex_unlock(&phy_provider_mutex);
+>> +
+>> +	return phy;
+>> +}
+>> +EXPORT_SYMBOL_GPL(phy_get_by_of_node);
 > 
-> [ ... ]
-> 
->> +	/* Handle dereference of TSR_KIND_POINTER registers */
->> +	if (src_tsr->kind == TSR_KIND_POINTER &&
->> +	    die_get_member_type(&src_tsr->type,
->> +				src_tsr->offset + reg_offset, &type_die)) {
->> +		tsr->type = src_tsr->type;
->> +		tsr->kind = TSR_KIND_TYPE;
->> +		tsr->offset = src_tsr->offset + reg_offset;
->> +		tsr->imm_value = 0;
->> +		tsr->ok = true;
-> 
-> [Severity: Medium]
-> Does this incorrectly assign the parent struct's type (src_tsr->type) instead
-> of the member's type (type_die), corrupting type tracking for the loaded
-> value?
-> 
-> If the destination register is subsequently used as a base address,
-> check_matching_type() will fail because it expects a TSR_KIND_TYPE register
-> to hold a pointer type, whereas it now holds a struct type. This breaks
-> downstream type inference for the loaded value.
-> 
-
-This code is consistent with x86, and it doesn't look like a problem.
-
-The purpose of die_get_member_type is only to determine whether the load offset
-is valid, not to resolve the type.
-
-TSR_KIND_POINTER is obtained from die_collect_vars() -> update_var_state(). Whether
-it is marked as TSR_KIND_POINTER mainly depends on var->is_reg_var_addr, and
-var->is_reg_var_addr is determined based on DW_OP_breg* or DW_OP_fbreg operations.
-These operations already describe where the DIE type of the current variable comes
-from (for example, DW_OP_breg26 W26+2920 describes that it is obtained by loading
-from x26 + 2920 offset, and stores the DIE into the x26 register). So when the actual
-load happens (for example, ldrsw x3, [x26, #2920]), it only needs to inherit the
-type from breg.
-
-So I will keep the TSR_KIND_POINTER handling unchanged.
-
-Thanks,
-Tengda
 
