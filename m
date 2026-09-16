@@ -1,139 +1,103 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7939B4A6
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 16:02:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789574542; cv=none; b=V+abZ7RLCQOiw2G7r/s5n0AFjq/qGHfWmuDXjVJwgZmyfXptltosPn2HKVc5zb2tTcRSn7gbGCrB+gfL7U7DoCgCfbwcfPx6mm9vrzHaPXGoBtED4ygYXDHe4q5+UyeHWcrkio4ntwNsz5/6IgHGtYAAGEpsztCQY9S3GmIUsOY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789574542; c=relaxed/simple;
-	bh=IZUwUzYqNUwMlmCYb6LmfLKmx4Mjvl8lUQFUEepftmY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X1epGMFpdzo3ztKnnzihj5XN229e+/INXvc0mUfCwaqjy/LZ5q8qp+jJUKJTTGXtMmecpxdOEeBIhXPBl6bZ0s3u9EKjCaVKs+wd6rOEsqLyA1Sn2dm4sl90RUnADUHdGDPltGsuwrkfI+KZqEppKx43CNecm0hVX7r9zkwSn9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=J/9oBK6W; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D404D6C59
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 16:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789575325; cv=pass; b=VmFqh+dhtnEJQjU7EcroLqsHu87bFO25g6BIYxxmqDJ3HYuK14hiwj+QZ81UUyc4UrmRV+DeA3beIMUTyAoIMH+2aJL2Dv/jymB40a5KwFWR9xMHY+yqYDpowKqALVWOIozJ0k/D9QtAaBSskAtdZIvsMRuvYADBonUcGgUIcNY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789575325; c=relaxed/simple;
+	bh=W/UaRW9VDKZ9nC26IGoc0xEyycGn8uxQTbeedJaZEmI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s40I5sujJGjGqkUX9jiUjRg09pqNAtbg1G9qZ7gf7f7czEkMiG8YLbA3LTCplEMJO5pkbul0gGpinpZM67+EKZtIHq+9EPz5I6AkTevWgkRfHQBEeQhFtSElkrZRrOBKFauoyqUdhO5ISiaaxWYkUNAGKKoDYja3R1/yUzghtG4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com; spf=fail smtp.mailfrom=uber.com; dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b=QZSSREa3; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=uber.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="J/9oBK6W"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=oDMuup7k0NYHwbtaJC3oPVr62QOUwrPoiy1ADTfugyU=;
-	b=J/9oBK6Wu/kZNtfpZOhyWg5U4d/5UuiySlf2pMK4+LE5K1kAEd9f5ySt7lorzD
-	tKLGX8QjdqQYUY1obkJ0vLRSjmjVqHNHmMlQsHBUZxnZNMnCB/uiaJQD1IlNI8B6
-	88vn+C2c75CrBDBKqDdBtcMqqQZduegWLvSHxVVPhr+nw=
-Received: from [IPV6:240e:b8f:91b3:d000:a95a:12fc:887a:b0f1] (unknown [])
-	by gzsmtp4 (Coremail) with SMTP id PygvCgBXGiZ9vapqTugESA--.43532S2;
-	Thu, 17 Sep 2026 00:02:05 +0800 (CST)
-Message-ID: <c96534dd-9623-46e7-8385-220566938b8d@163.com>
-Date: Thu, 17 Sep 2026 00:02:05 +0800
+	dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b="QZSSREa3"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-8659af7454eso13250147b3.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 09:15:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789575322; cv=none;
+        d=google.com; s=arc-20260327;
+        b=eNfUncn42G60YA9n/uJDoKNydD0s4gpA7Ew3Ih/r7zb1wj35EF5YNfW+uEo+DXwf8x
+         aEek84mp9/5wbYdDKafb1brOohtAqtkQr1n4uDkc89v/V++HwtVSrxrOXiJqLXmBqaBL
+         wRZKocaHSx8BMfLAwsgsrX3H5bs9FB78dGcUQcg7Tt+QVTZXeJsBseDJPG4R1ArgH9Ik
+         J310nFyBwMcfReidaFFgEo4vyRZ94QccOP8qRppVbvojQNVIYBSP19T+Q/MYQnF/avDM
+         tg00RL+I/t6/8lNbsnZRilsTBabG4f4GtVSalDsUEE6wE6DgsF7I/t7ur/KJEL72LTye
+         viUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=W/UaRW9VDKZ9nC26IGoc0xEyycGn8uxQTbeedJaZEmI=;
+        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
+        b=LKoDIlwMoWZZMFbrMdSolzPJ4UNbB0JfEOB+qfYcfBH4laS7//TUdxPzW138YArWxB
+         6zJfjLL2hWPpNpmhK3ptugNvyw+7vuUYxnAWtiCpQjgZs+At1dY8/1WtGfn0VYxGfPLF
+         YDuLHezTGHVrRkNzBtkiffnKDLIyhPxPXyVUgxgLptxYfwgZCoAQnb2OMtTO0ThCCSk3
+         sxMrgbrlKmte5N4Z9NjowPpsNV8wwlW63eLAK1DBqslWSdgzwflibhIjoXL3QawTvdii
+         TJUBDDBNry5geTCMopPKe6lomjkJmDA1dHyuRbujnDKzQ0/1tBmdJlBA7n0OZnqSRAO2
+         +VwA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uber.com; s=google; t=1789575322; x=1790180122; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=W/UaRW9VDKZ9nC26IGoc0xEyycGn8uxQTbeedJaZEmI=;
+        b=QZSSREa3MZl9kFxJICLtFlpUfeMydLE2RCdydh5p2c9s+XuQ+8iIVVIUUrPcmf1dK+
+         YM+0otK6VzbPikNOB1EGqV9K5IQkNonooEzJP9EWy1A2G/cJ+Gz8YZ66L9qG8h25pztQ
+         1ggNwN2lWJCfhiAl3Qjvp5Q9vxgsi2FP5fdFc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789575322; x=1790180122;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=W/UaRW9VDKZ9nC26IGoc0xEyycGn8uxQTbeedJaZEmI=;
+        b=OVak8lt+YtJ7Ljzo72Wjc6vg+5xO0kZzfoe/XM5/Hk82y8E78grWknbJtVDpURoXCC
+         cndAd3WOMgXy4TWh/NP2IizytjVlgA/U7X9fb3OTD4+9yHAhiVyQoB3/sg3XvZyg+erl
+         NEEfsj0Mu1zv8XpDuSmy5pj2qyemfXBGaOHhOP5sbu2+bpVIvPtU95twXgwC/opELDOD
+         ofABW0RY16UaEHvSGt19NCxW1Ph+aKi09SmriWXZ1twVfspi0tPSuZrd7FqwyGQSpEqe
+         pZS558fIH8093gl8WQww9PDFixe+2A0xlozF/43XuWOKR5BoMPKhyvfW6Jjp6xpumAkn
+         ld0Q==
+X-Gm-Message-State: AFuF++nFjOtp7ryONZ5dfTldVauJjI6MHO5wiqS9XswOHGtOb5ZI73TE
+	U+PpY5uEwcdgAweA/qlS/JiVgkArQyuc3jpVl2Oh9MdKLImaorFzwHHXSowIGkPGrD3M8THQRxj
+	d0LePq10bBXE8wAhpRslK9N7M4KFrC3sTM3WDAM0uI9CUNYtnm4Ia49p3PQ==
+X-Gm-Gg: AYBFou0NNmd/msFjGLgF4taad6qPAb3B02HdMMSqQELqnDdJkQORNBgngcS9gBkr/ax
+	j/H0qzT/ksj2nKfZuav/J3szCWnk+BrnbC8sk4SUCepGnc+NuFtJrG12VKQMQb7y8BO1ITLWoO1
+	9DHH6jaF/s8wUb0tVqyYvzMo6p63OLpOmjMhdTeA4M+61zvxO9jAU7KpCgIdZxiM3JhSqBk8UWF
+	/PRVPS0h3j1rCZPzUoa5OyIzri+NVcyk1a4OcxHlGFHAe1syNUC3sncA9b0P9VIwkZptF8kqZi4
+	FgQYTdPiLDZEiRR+vbck4FOQMWDxtSA5p8bvz0cjFgFOIWd946Y6WQx6Kr5ZgV1aDVpqHUgYxLX
+	8Y+iwDJ+BQWw=
+X-Received: by 2002:a05:690c:e250:20b0:873:5c0f:295 with SMTP id
+ 00721157ae682-892269d3f41mr7600217b3.63.1789575321506; Wed, 16 Sep 2026
+ 09:15:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/3] PCI: Configure Root Port MPS during host probing
+References: <20260915-perf-symbol-memory-send-v1-0-1d3360e21f07@uber.com>
+ <20260915-perf-symbol-memory-send-v1-2-1d3360e21f07@uber.com> <20260915190132.9B2131F008A2@smtp.kernel.org>
+In-Reply-To: <20260915190132.9B2131F008A2@smtp.kernel.org>
+From: Alireza Haghdoost <haghdoost@uber.com>
+Date: Wed, 16 Sep 2026 09:15:04 -0700
+X-Gm-Features: AcwNN1VMfAW9tyGy3MAW53y0Y_4rMhNKLpGNe0bKvVhbPRWeSPKrItVa4Bps7AI
+Message-ID: <CA+w=M=QMz7vMtNwUbObzfQO-6A9Xe-tuUrj-LU6i13UDanOSkA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] perf script: Add --max-symbol-bytes to bound ELF
+ symbol memory
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, neil.armstrong@linaro.org,
- linux-pci@vger.kernel.org
-References: <20260916153907.60344-1-18255117159@163.com>
- <20260916153907.60344-3-18255117159@163.com>
- <20260916155143.2E31B1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <20260916155143.2E31B1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:PygvCgBXGiZ9vapqTugESA--.43532S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuryDury7Zw48KFyfXrWkZwb_yoW5tF4xpa
-	y5JasYyFs7GFyIya92v348Zr1rJF93Ca17G398Wryvv3ZxC347Kry2yws5G34xGrs7Wry2
-	yan0v34xArn8ZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRepBfUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6x3Td2qqvX08gQAA3v
+Cc: linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Thanks, all three findings are valid.
 
-Thanks for the review.
+I=E2=80=99ll make the global accounting counter atomic, ensure that a
+budget-truncated symbol tree does not fill ranges containing omitted
+symbols, and use the full stored name length instead of the truncated
+u16 namelen when unaccounting allocations.
 
-
-
-On 9/16/26 23:51, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] pci: dangerous dynamic MPS reduction under PCIE_BUS_DEFAULT
-> --
-> 
-> commit 32945143b32b8b42f1dd3e1f419414a5bf8f9acf
-> Author: Hans Zhang <18255117159@163.com>
-> 
-> PCI: Configure Root Port MPS during host probing
-> 
-> This commit updates the PCIe initialization logic to set a Root Port's Maximum
-> Payload Size (MPS) to its maximum supported value during host controller
-> probing. It does this as long as the MPS strategy is not PCIE_BUS_TUNE_OFF or
-> PCIE_BUS_PEER2PEER, meaning it applies under the default PCIE_BUS_DEFAULT
-> strategy.
-> 
->> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
->> index 232bce2819f06..08af75aa7366b 100644
->> --- a/drivers/pci/probe.c
->> +++ b/drivers/pci/probe.c
->> @@ -2248,6 +2248,21 @@ static void pci_configure_mps(struct pci_dev *dev)
->>   		return;
->>   	}
->>   
->> +	/*
->> +	 * Unless MPS strategy is PCIE_BUS_TUNE_OFF (don't touch MPS at all) or
->> +	 * PCIE_BUS_PEER2PEER (use minimum MPS for peer-to-peer), set Root Ports'
->> +	 * MPS to their maximum supported value. Depending on the MPS strategy
->> +	 * and MPSS of downstream devices, a Root Port's MPS may be reduced
->> +	 * later during device enumeration.
->> +	 */
->> +	if (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT &&
->> +	    pcie_bus_config != PCIE_BUS_TUNE_OFF &&
->> +	    pcie_bus_config != PCIE_BUS_PEER2PEER) {
->> +		rc = pcie_set_mps(dev, 128 << dev->pcie_mpss);
-> 
-> [Severity: High]
-> Does this code introduce a regression where active downstream topologies are
-> exposed to dangerous dynamic MPS reductions under the default PCIE_BUS_DEFAULT
-> strategy?
-> 
-> By forcing the Root Port MPS to its maximum supported value here, it overrides
-> safe firmware settings. If a device with a smaller MPSS is subsequently
-> enumerated or hotplugged, pci_configure_mps() will detect that the downstream
-> MPSS is smaller than the Root Port's MPS, triggering pcie_reduce_mps() on the
-> entire hierarchy.
-> 
-> Because pcie_reduce_mps() modifies the Root Port first and sequentially walks
-> downstream without quiescing active devices, this creates a dangerous window.
-> 
-> If an existing downstream device (such as an active NIC or early
-> firmware-driven display controller) is actively performing DMA, could it
-> transmit a payload exceeding the newly reduced MPS of the Root Port,
-> potentially leading to Malformed TLP Fatal Errors and a system crash?
-
-
-The scenario you describe requires pcie_reduce_mps() to modify the MPS
-of a device that is already active.  As explained in the review of patch
-1/3, pci_configure_mps() is only reached from pci_setup_device() during
-enumeration, before the device is bound to its driver and before it can
-generate TLPs.  The reduction is therefore performed while the hierarchy
-is still quiescent.
-
-The pre-existing behaviour from 9f0e89359775 already lowers the Root
-Port's MPS when a downstream device has a smaller MPSS, so this series
-does not introduce dynamic reduction of an active hierarchy.  Patch 1/3
-additionally covers Switch ports and already-programmed siblings, which
-the old code missed; that is what fixes the Switch case reported in v8.
-
-> 
->> +		if (rc)
->> +			dev_warn(&dev->dev, "failed to set root port MPS\n");
->> +	}
->> +
->>   	if (!bridge || !pci_is_pcie(bridge))
->>   		return;
-> 
-
+I=E2=80=99ll include these fixes in v2.
