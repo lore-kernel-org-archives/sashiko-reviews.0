@@ -1,128 +1,92 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E6D4D9F63
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 21:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61980479886
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 21:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789593333; cv=none; b=Q1kmDIygIDhtrU0fN8G/zb5CDbF1jUfsPpn5gRE+tNvYncF/uwUo8hfuj/+77P/yTQQqWQc1CzjpodbK7h2HMWtekTp8PeGqbRDz4nPsVu5hs62aFolXyLKG0CvzY6bD0zk1fVFiq2kC5AzCwYQQf5Wc6mv053OjomgSocCbqXg=
+	t=1789594811; cv=none; b=U4SibEHP3avAAT7T95Z74ipU8dF0r/2AAG0QK+WRd2M1+UXzUB0iwPYImBlK0X4oM4ju8hJLfGITmC4SCDUna+Sm9cmxZS6RwqKaZF8oVQB1Ja7309MdOkAy3IDF/wmdRfjzcmBKqqBg7FPGmxD3uBg/8eFJH4XZdrOSymP933s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789593333; c=relaxed/simple;
-	bh=ZveIGnDwjvuPPZmz6qrmGim1y8f4JTpGuoUhjmB387U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mHbYM2Hye9GLzUa8b4rF5Hw3tfWW/v75yUwUHU8nXxXcGdv6km22ErTXvYvSZM1LitRxENC4BLgSUTriVjrXvYw+eO4xoPuDj4EFeg5j9S+dvyHeAtmbaqX47uVDv0NDCuO993x7SWz9/yxh6/Oq5s4EhrvowpYGHWWMPv/gdWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LWDDONFA; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789594811; c=relaxed/simple;
+	bh=eZVdUHmOSslZ4zBnvcc4bcwkIOdKveQiwIkLyiuidrk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EJUzxvtLrIh74GkCH9s5HDLS8lEJBeJb2qcfpthz2Ug3MaPluRe3g6YLoZybogPHmYUxJAeJyezm+rjYALc1cFiuSzx4pY0+lCO8bOmQ1r0tdYfD83nL5RmowYiLjFDPKo9fOR/pYj/mhc5DUbjGeqVFEo3KZiyqYirV1Qehq3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QwqXTiic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LWDDONFA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789593316; x=1821129316;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ZveIGnDwjvuPPZmz6qrmGim1y8f4JTpGuoUhjmB387U=;
-  b=LWDDONFA7JYP+zl9QSvyPAMFGdh7sMJ/zDffQcxFpXN3T0eRkfEB18yi
-   Dm4wsFqpKhfNdSWt3Vj+y7tdWX9nt6itlaxOuF7u2aSw1V/SxteRQyyrN
-   +AM4twcmyhsnNPCVAcRU/cyokze9ntW/USeto1VEY2d79Tgq0cYvCyXH0
-   dm5ZFsQBZKYcDnm1lXHgjU9ustavVBLkS+C2ispgHKFHzCU7XtK3c/Fk2
-   o/AWjIwRHv1hnVYcofOi95DXUt3aup6PawcKxP/md6MdK13DwoxlE6AVS
-   IWU3ZQBpOeZkIJnPj2B3nHiRc+uuKaIJlgsrot7+8/RTU6zNSAPGSmDXP
-   w==;
-X-CSE-ConnectionGUID: jIFUA7OZQZiongcQZ8RDJw==
-X-CSE-MsgGUID: EeW+PDTnSKmbALIwvVLARw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="89916914"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="89916914"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 14:15:12 -0700
-X-CSE-ConnectionGUID: VasEWHiSSVmPk+kd3fSvEw==
-X-CSE-MsgGUID: kYTxUuEMTJ2HfxYg+BcB4g==
-X-ExtLoop1: 1
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 14:15:11 -0700
-Message-ID: <9e86d9e4-7aee-4c1b-8812-94aecb2a2cea@intel.com>
-Date: Wed, 16 Sep 2026 16:15:10 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QwqXTiic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31D31F0089B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 21:39:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789594793;
+	bh=eZVdUHmOSslZ4zBnvcc4bcwkIOdKveQiwIkLyiuidrk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=QwqXTiicEvh4BmP3ihP4NzZdZKUB2smoB5OAvsHRisqL9w14djYaAB3Qceb5b4xn+
+	 hQnc60i3tsK1kiGjrawRBWE4LiFSm4JYTnyIS6/BQYfTJcWXZboDQrrZ115c8r5wVe
+	 oFoikx2GsmbzdCxF0nJTInX7gQrjuOGjwweU/EHUVHaNUe67CU6/kxl7DbjFkeeLHJ
+	 Ryk/PDRmOuAgBQynp6IDWfqmSMzPi37QURuzB+Tit6iiCZirgyIBXD4toOXttczVHC
+	 XBSyN9JPhCSBqU110WoZgQn4hmjxl6DsAfhRcCha9hVUAUz2qbDRDR9p6H4+x9g11d
+	 oCzhEIsVKzWjA==
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-939109fafd6so11121985a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 14:39:53 -0700 (PDT)
+X-Gm-Message-State: AFuF++nRO3tK+dNUZAKvcL0ROHCbfTC5gVDAGjlW+dR4nzDGQ30NrklA
+	5dKZBqZqcQxmlQjhbmeptRszHL1ac5Vw5XESUaCgfINaFtNa30KCtcQGRJY3kcdb6vGj28gbpiC
+	eE7yN8U4bnKFUAzPPgyxEODz8glljkg0=
+X-Received: by 2002:a05:620a:450e:b0:939:8373:b552 with SMTP id
+ af79cd13be357-93bb76e6382mr692821585a.1.1789594792812; Wed, 16 Sep 2026
+ 14:39:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] perf topdown: Don't require config1==0 for a slots event
+References: <20260916184351.2720310-1-song@kernel.org> <20260916184351.2720310-44-song@kernel.org>
+ <20260916190039.E41211F00893@smtp.kernel.org>
+In-Reply-To: <20260916190039.E41211F00893@smtp.kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Wed, 16 Sep 2026 14:39:40 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW41jWTrbQZ6RwNPfgh7Ow4Lk8qgT-LwnRFy47puwXMyYw@mail.gmail.com>
+X-Gm-Features: AcwNN1WX6yyrLZ981bKr8xbo9I24c6NIHrG8Uj6auM6KMkQOBSCg-UM2ciu9tpk
+Message-ID: <CAPhsuW41jWTrbQZ6RwNPfgh7Ow4Lk8qgT-LwnRFy47puwXMyYw@mail.gmail.com>
+Subject: Re: [PATCH v5 43/58] objtool/klp: Test rejection of a file-local
+ static branch key
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260916202740.257376-1-zide.chen@intel.com>
- <20260916204416.80E761F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260916204416.80E761F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: live-patching@vger.kernel.org, jpoimboe@kernel.org, pmladek@suse.com, 
+	joe.lawrence@redhat.com, kernel-team@meta.com, puranjay@kernel.org, 
+	peterz@infradead.org, mbenes@suse.cz, jikos@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 9/16/2026 3:44 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] perf: missing explicit <stdio.h> and <string.h> inclusions
+On Wed, Sep 16, 2026 at 12:00=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] invalid AI attribution tags in commit message
 > --
-> 
-> commit 197eea3115a0d065dc53e6f96ad2fd38fdb9bc99
-> Author: Zide Chen <zide.chen@intel.com>
-> 
-> perf topdown: Don't require config1==0 for a slots event
-> 
-> This commit modifies the topdown slots architecture check to no longer require
-> config1 == 0, fixing an issue where explicit slots events were duplicated in
-> scheduling. It also adds a new test to verify that an explicit metrics_clear
-> slots event doesn't trigger extra injections.
-> 
->> diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
->> index 2b6f47ce49324..b1ce9f83db00e 100644
->> --- a/tools/perf/arch/x86/tests/topdown.c
->> +++ b/tools/perf/arch/x86/tests/topdown.c
-> [ ... ]
->> @@ -229,10 +229,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
->>  	return TEST_OK;
->>  }
->>  
->> +/*
->> + * An explicit "slots,metrics_clear=1" event is still the slots event and
->> + * must not cause an extra slots event to be injected into the group.
->> + */
->> +static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
->> +					   int subtest __maybe_unused)
->> +{
->> +	struct perf_pmu *pmu;
->> +	char event_str[128];
->> +	int ret;
->> +
->> +	if (!topdown_sys_has_perf_metrics())
->> +		return TEST_OK;
->> +
->> +	pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
->> +	if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
->> +		return TEST_OK;
->> +
->> +	snprintf(event_str, sizeof(event_str),
->> +		 "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
->> +		 pmu->name, pmu->name);
-> 
+>
+> commit 31c30fc01ab7bac006cdecfa960b5321f80c4604
+> Author: Song Liu <song@kernel.org>
+>
+> objtool/klp: Test rejection of a file-local static branch key
+>
+> This commit adds a test to ensure that a static branch key owned by a
+> module is properly rejected when accessed via a livepatch relocation. It
+> adds a knob to cover file-local keys and verifies that the input referenc=
+es
+> the key through its section symbol.
+>
+> > Assisted-by: Claude:claude-opus-4
+> > Based-on-test-by: Joe Lawrence <joe.lawrence@redhat.com>
+> > Assisted-by: Claude:claude-opus-5
+>
 > [Severity: Low]
-> Does this new function test__x86_topdown_metrics_clear() need explicit header
-> inclusions for musl compatibility?
-> 
-> This code relies on an implicit declaration of <stdio.h> for snprintf().
-> Missing POSIX headers can cause build failures when compiling the perf tool
-> with strict libc implementations like musl instead of glibc.
-> 
-> Should <stdio.h> (and potentially <string.h>) be explicitly included at the top
-> of this file to prevent musl compilation failures?
+> This isn't a bug, but the commit message uses non-standard Assisted-by
+> tags with pseudonyms and no valid email addresses. Should these attributi=
+on
+> tags be removed or replaced with standard trailer formats before submissi=
+on?
 
-Not needed. tools/perf/util/pmu.h, along with debug.h (which is also
-included), explicitly pulls in <stdio.h>.
+I think the Assisted-by tag here is OK.
 
-Additionally, this file already contains other calls to snprintf(). If
-the required header dependency were missing, those existing uses would
-already fail to build.
+Thanks,
+Song
