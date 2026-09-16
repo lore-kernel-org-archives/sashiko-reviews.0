@@ -1,106 +1,96 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EDE451981
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6CB472F62
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789547827; cv=none; b=DGgdOSNClPv0YlFrvNvJX4fMyIZ9MmQfVWt1NU4LGCN75gP+RF0rXcLr7+72VZO9Gv04EwhDsLElF443Gk4QJ4iyFz4sp/+uOO1/AJXTVlkY7SFPUzZ0qdlEtxr9BVANRq3U1Bf+tce0cgvaOnnPClyuKlx4SvQVMEeUqs5SyCw=
+	t=1789548354; cv=none; b=RZyz2ZMURdxDuIuc9OdQlZOTt0YFaRwDfHOvQU3PMCDDT5atRO5bseoOlefxihksK9wbZOS76xs8KFrpe0QJ6ClqsSH9RGsTJIh846x7OYvoTD8yRZgODZ8cWdSC6A4jx6L4TlsWxAWvEJuqoCoQ9+5pYgwwSkCTWdMfRQ6nPqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789547827; c=relaxed/simple;
-	bh=nzqpSFJdhBT24epR0tIx+DeqgtVd9AwjcY+bt0Kjxcw=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sEk7vozp56SPIx1rjVSa4ttIc1PpiaBDUd61YEhiyyfxOdSevEFrvzGwAzEnIruL0vY1bE8PDnUCVwX1p9CtBaYQNY3j0RBaZs5YxEAMCymuSgttggIcY2o8CqPojI9f31iINdA6pHDLnOASeuEEZY2FcgAwSiJwbqpIStiXmGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=btxkVMvl; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1789548354; c=relaxed/simple;
+	bh=YSgXIzhg++9vDHgCGBKZv9F1BA9wqWdoQTudKaMXtQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gtrlXEjDrJ6LDAGnd/JPAeHlPj5ahLZzUkagWQnjvoCnyZ7a9GATCEBKAn1HySG/eHUUovxHuPKfgU47LF+XGtal+JSTb7T5eRNDf4IiIiDwZlTF4vXAW4C5i/seLvhb9uB+Mvr3LhAMl2faPyNjuTSB2SlGOALetAR6b6Cypi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=WUHFBjQY; arc=none smtp.client-ip=217.70.178.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="btxkVMvl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789547826; x=1821083826;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=nzqpSFJdhBT24epR0tIx+DeqgtVd9AwjcY+bt0Kjxcw=;
-  b=btxkVMvl/pdBElu0NmI3dB8frxyQViN8AkmYTeduCXdKC+QKH9mMy6nT
-   rqfeFbviZ/hVRQmUiPXHXqHkPeUJENsSx1fH9vqquh+XQlty8sRO98KjS
-   E+5wUkV90cV1LwBv1hPhMFs0Nwb8c31bqAyPmlGC1j3ZXh/kiNuJZyvmJ
-   vUaAfdac60V2YmZ6Wy/DGTwNKrAqK65k10MONXYVCQEGZk98zzWec+FCd
-   26fW1qCj1wbyK2Y1m54LIybUYdVw9vErFUVRD7FZ5sAWNZKC2l8fnu3nK
-   Lc/Q5is/wPm7gkGHzY/OrbW+9OzHQc65VjN/4VZwdI82fvQHuKiz/bFA+
-   w==;
-X-CSE-ConnectionGUID: JITOXW3LSCuK8CZd+7X3bQ==
-X-CSE-MsgGUID: XXJm/phPRwOTAO1NHI59qA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="100583890"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="100583890"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 01:37:05 -0700
-X-CSE-ConnectionGUID: 7HZFttlaSlePItWGmROmyw==
-X-CSE-MsgGUID: gDklz5Q9TYG35AumczGwCA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="269997320"
-Received: from unknown (HELO [10.238.1.188]) ([10.238.1.188])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 01:37:04 -0700
-Message-ID: <5fae68ba-1fcc-4817-8ed3-3f724a9f807d@linux.intel.com>
-Date: Wed, 16 Sep 2026 16:37:02 +0800
+	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="WUHFBjQY"
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::224])
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 85BB6582748
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:26:38 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 394883E9D6;
+	Wed, 16 Sep 2026 08:26:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
+	s=gm1; t=1789547190; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:in-reply-to:in-reply-to:  references:references;
+	bh=wRjr34jj7++KZjPe8ph6ml2ioy/xkv6jxMXjHoOskuA=;
+	b=WUHFBjQYRaH7VvjmSJHXVcqSxfBtI5Bbj140enQtxwyYR8kH/LbCr7ORjJlNsSacyrnXjf
+	1HG1H6GQ7uVLD0tfjwt8qm4nc+HgYAnUeFbGjcCWeFNn8m3XCEd4jP6SvquYIhe3utgJPQ
+	xsWJrOcqvvTdJVrpxnMd0udl1eWl7ll5QoQld4IMWR2A5VFT+sLNVIjrOPASlMHUuWII7A
+	swMwtU0oFQF3zOGsOLKRUma4KxnkBOOk7hPjkK/d4zUZChdTOpOyGXOzlDFMkcLb0tmBuL
+	k8aq7GHyB1hpoKy8TOjhCqkjX+1fNbADXIKcvzJYMi29brqQtom81rFlJC60nA==
+Date: Wed, 16 Sep 2026 10:26:28 +0200
+From: Arthur Crepin Leblond <arthur@marmottus.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH net-next v8 3/3] w5100: detect carrier state using link
+ status bit and optional interrupt
+Message-ID: <20260916082628.GA100127@marmottus.net>
+Reply-To: arthur@marmottus.net
+References: <20260915-wiznet-link-gpio-v8-0-d173622474cc@marmottus.net>
+ <20260915-wiznet-link-gpio-v8-3-d173622474cc@marmottus.net>
+ <20260916080754.A4FED1F0089A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, kvm@vger.kernel.org
-Subject: Re: [PATCH 4/5] iommu/vt-d: Add helpers to set up and tear down TDX
- extensions
-To: sashiko-reviews@lists.linux.dev
-References: <20260915074235.1219183-1-baolu.lu@linux.intel.com>
- <20260915074235.1219183-5-baolu.lu@linux.intel.com>
- <20260915080449.D960B1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20260915080449.D960B1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260916080754.A4FED1F0089A@smtp.kernel.org>
+X-GND-Sasl: arthur@marmottus.net
+X-GND-Cause: dmFkZTENTNQvFFcJsQHaRDGFTnpeeaD4kgCqLQhGqd/9+PCmMs/lVpKJwOBpbgVGDbFVSgo6rZnW7nozytMvGg9/A+pP3ZfGdzTPQXC5ljcd99G+mNXL+qRkST/sboCnAE+WvANJ84VrYqEoPsqlCT/lMlCSqN7rginmO7qEQ1dLVHACwwVtsQcOITxq9doXg6+NKl+eC0vvDvVN26O4KmBhrNqqQTRKBdZ/dldKdpkhK8kKvvS1uP/0s4b6NN5N1lFJykjeZmBGa8xcjHL5QG3iAk6U8/s85GX0qEx41w1sq7zE+kMmLyQIIAWJUX2ttu0K7dn2QBPS8ljW6wm7BjP/qVReFi2ZqqAMeR24DKS0ZfvAmMP9MOONW9Jq21n/5UsTr7a8+CrcbYKImJ00/rvXXCqR7TLJPcTVFzaC79PJyDUuzRbcD+OqwWayBF+iSPz0hD08K4cp73YiDvNrJOD4I3S5zWXZ79ibD3cREYUqcxNgEdPXmPa65/WUtDfThuY+qUIa8Au8iZY04Oh944X5KGAdceR+cR28OrSgybYdUF25ZnnAc3Qqc7cnpUR2zHN0ZjGgSg8SVa/+pORkwgWpZoPwihNETYizPnF6acU5eHvS/7vzqZobc3zOjOjbLZd7PuKlBq3AJ1ZUTVcWSKSXuZP9MpzurJ3l3Zxc2A+52o1f/w
+X-GND-State: clean
+X-GND-Score: 0
 
-On 9/15/2026 4:04 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] iommu: bounds check uses PAGE_SIZE while allocation uses SZ_4K
-> --
-> 
-> commit 4edc662d667d9a3f034b902dc510d5238c7c24a5
-> Author: Lu Baolu<baolu.lu@linux.intel.com>
-> 
-> iommu/vt-d: Add helpers to set up and tear down TDX extensions
-> 
-> This commit implements per-IOMMU TDX Connect bring-up and tear-down helpers.
-> It allocates and populates the IOMMU_MT parameter layout required by
-> TDH.IOMMU.SETUP, and handles initialization completion and rollback.
-> 
->> diff --git a/drivers/iommu/intel/tdxc.c b/drivers/iommu/intel/tdxc.c
->> index 559c752a15273..b5dfdeeb23dba 100644
->> --- a/drivers/iommu/intel/tdxc.c
->> +++ b/drivers/iommu/intel/tdxc.c
-> [ ... ]
-> 
->> +static struct tdxc_pages *tdxc_alloc_mt_pages(struct intel_iommu *iommu,
->> +					      unsigned int nr_mt_pages)
->> +{
->> +	unsigned int nr_entries = nr_mt_pages + IQ_BUFFERS_NUM;
->> +	struct tdxc_pages *array;
+On Wed, Sep 16, 2026 at 08:07:54AM +0000, sashiko-bot@kernel.org wrote:
+>> @@ -820,14 +953,22 @@ void w5100_remove(struct device *dev)
+>>  	struct net_device *ndev = dev_get_drvdata(dev);
+>>  	struct w5100_priv *priv = netdev_priv(ndev);
+>>
+>> -	w5100_hw_reset(priv);
+>> +	unregister_netdev(ndev);
 >> +
->> +	if (!nr_mt_pages || nr_mt_pages > (PAGE_SIZE / sizeof(u64) - IQ_BUFFERS_NUM))
-> [Severity: Low]
-> Does this bounds check use the wrong size macro? It restricts nr_mt_pages
-> based on PAGE_SIZE, but the corresponding root array allocation below is
-> hardcoded to SZ_4K. Should this check use SZ_4K to match the allocation size?
+>> +	cancel_work_sync(&priv->rx_work);
+>> +	cancel_work_sync(&priv->tx_work);
+>> +	cancel_work_sync(&priv->setrx_work);
+>> +	cancel_work_sync(&priv->restart_work);
+>> +
+>> +	if (priv->link_irq > 0)
+>> +		free_irq(priv->link_irq, ndev);
+>> +
+>>  	free_irq(priv->irq, ndev);
+>
+>[Severity: High]
+>Does this code introduce a teardown race by canceling the work queues before
+>freeing the interrupts?
+>
+>If the threaded interrupt handler (w5100_interrupt) is running concurrently
+>during w5100_remove(), it could queue a new rx_work or tx_work immediately
+>after cancel_work_sync() returns.
+>
+>Later in the teardown, destroy_workqueue() drains and forcibly executes all
+>pending works. Since w5100_hw_reset() is called prior to destroy_workqueue(),
+>could these newly queued works execute against a reset and uninitialized
+>hardware state, potentially causing I/O corruption or kernel crashes?
+>
+>Should free_irq() be called before cancel_work_sync() to guarantee the
+>interrupt handler has completed and no new works will be queued?
 
-I'll use SZ_4K instead of PAGE_SIZE here. The size is fixed at 4KB by
-the TDX module ABI, so it should not be expressed in terms of the host
-page size, even though this file is x86-only and PAGE_SIZE == SZ_4K
-unconditionally. No functional change.
+Good catch and seems like it's the only issue you found! Let's see
+what Clashiko will find. I'll fix that in the next patch.
 
-Thanks,
-baolu
+Arthur
