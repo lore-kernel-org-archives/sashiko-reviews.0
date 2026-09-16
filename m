@@ -1,117 +1,319 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f99.google.com (mail-pj1-f99.google.com [209.85.216.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300653DAAA9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 17:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E003D3D09
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 18:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789581120; cv=none; b=mtyaYJc+6L3yrPEi9FeekEYhP5FrKcyUZQSy/5mXg5YvS5/vZw6e4UUXNHycPUSbT4uyN7WftkBTA9zqihc35X9r7T5RoRR2X34D83pvG5I0Ug6hfHvW7CixfQ/m33mBL4yKnUu0N+yNhVZy0jCCeqeRO7OX3icHJnSwswgeszQ=
+	t=1789581959; cv=none; b=YoYUh2nzO/pj/B+dcrBdrKxLlcZnM7bsSe1twN35zBJg58K3Sonxpw14nXyHEinvRuLuWDAs7dEcBhSCOyF7+CBi/VGMT2y4c3ItrFsTxhcUi/pdmqJfU7lPdMkMHAMtGtrjc/EoezgUSLG8hNyxiLdff6til/rCvTyyse20e90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789581120; c=relaxed/simple;
-	bh=3A0G5Pe4pAFm0TGQ5xi1dN+pSR4EjRNmAAtc5zTHkek=;
+	s=arc-20240116; t=1789581959; c=relaxed/simple;
+	bh=lka4tlipTct+m6JbxFHkzoh0MusaGmAt3lvKckNY6ko=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JZpi3n8YYZlygD14EBhRYuCjazdyu+2sOMv/6dZ+qxzzEIxccrANv/CC67OQ/udjInoe7QSRq3zzEOD39bfLWZZZtlV0KcTi4spvFkjuGhanpJwJG0un6jueYzSJHIqwAF92B0i59m5trjVaAm/rGl14XB3CBZ//njc7KUDkqKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ortTXmU3; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=XdHrLfnwkJ/+lbpeAC3wUvKEN7oF1Poe2X6vEJaLkQdPMDpael2BMlkh8se1i7cM/pm4iBFGyRkfy2uJTT4Kfvn1swWGONBQUXYguuraCQXFcAt1y2TuXFuxKJH6Y6sNIu1J5RcBj9LF6U9UqRaLB0SBjCKCy0raHIbKSmqASA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hYVK8xxP; arc=none smtp.client-ip=209.85.216.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ortTXmU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795D81F0089A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 17:51:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789581103;
-	bh=0f4GMOSvUelDjB9gU1KrvKiigwJDQHiQeS+xocAliVM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ortTXmU3urYQB+jxjAsDdXrDGCpA7t7hnEy+xg7moECEJTeInVUzFiiQW3Kg0IfrE
-	 To3VWJw4viu9hRo/dGDg5aH5u3eBZgMvyzrhBnkC/EaewQCpBBVbbOiFVgo2suwlto
-	 VeGe/VKc7B+4uVdE2gGLKvl9h7l6wjBe10Fvp5sCMZ31Oeoj7QtxFy6O4CNbu2p4qy
-	 cyTgi83C8INAzo22fq0F4daM7QpoYF66LyP/KtwP9GXWDgqjNgGXj7rD21OfqOXCgC
-	 TbQT3SoAt78dVl5oJsp7XLzULS26yT6gLMh/TdUm893m/Lx8cHN2lsN7IhpFvzhqoW
-	 Rw6oVvudHZw1A==
-Received: by mail-qv2-f12.google.com with SMTP id 6a1803df08f44-910399d8b09so8214186d6.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 10:51:43 -0700 (PDT)
-X-Gm-Message-State: AFuF++k9sPbYTCeFDniYV8RoyGtv2tP5hPnlgHJ70led4vtX7GIZaeyf
-	pcdsVapZ1jHCkfWBjYMmOPb4b6VSvywZsWKcwzeTZP15JnvpAU0e0LDE7LAlA+8iTchnLTSUFyG
-	cQQjR1qfimLEjg5+Ntric18TH2jFgXFs=
-X-Received: by 2002:a05:620a:199d:b0:936:69dc:aedf with SMTP id
- af79cd13be357-93bb77391b6mr538479585a.16.1789581102702; Wed, 16 Sep 2026
- 10:51:42 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hYVK8xxP"
+Received: by mail-pj1-f99.google.com with SMTP id 98e67ed59e1d1-398d2b28acfso1094821a91.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:05:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789581943; x=1790186743;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZUzO+VqqWz37ZISQD0mQmOcNoBQ/58Vbmv2B2e4AlRo=;
+        b=N4ya1x7IEYG2PDLCkfB5edePermc8dnYD2AtLaVrRDLwCJFOHoIwygZ/RwVAFMYt9Y
+         p7fIIG5PiIViGzMex58MPay8MZ3nqtFVelKgf7pYEJ7/yHQXxDuGgl5fK9GN1KcclB2X
+         GOD2yGLXdiYN3ojuEqbEK9gnPfTLsOB7iXyxuD3cO4p6BIcYh4wR4MTvtYV84vzkDJM4
+         vibFIC9VhCQfPrSFuHq206qhtafKkqKtFRgE45tpmYqN5aDAG/fXk0a9NhpTkDC+o/f+
+         a089tQef1YSZJxkpo9lPH+Plt7XYHUroLRaRtI4mQFEII1rAO1Z86277zzT1fFECI7Ar
+         uS7A==
+X-Gm-Message-State: AFuF++noYgwzi6tjbgqxZ3C6E1OUPl9CsrPcDGXBxlF0ho3mGv3ic2x1
+	31EiR4EWKN0DkFxjAoYlwUctnvqgbkL5RMkH6KqTTinNT+4Dpjgc8QN/5iSLtbO1xdprnMSurDx
+	m4gujgIWsGfsTpajor4kG4DnrSMDwr6Nsw0F/OWgCoTxYQdqZS3OGiYaCWu4fyO9V4LMhMKA4l0
+	o22MsummkFul/uHJ1Bprqs68IW8UwSRSF40qHC04PLP9v4lg4vwL5/O/253Zus3EgV/P9AtbApe
+	khmF7YfOXJdHRsIK8e4tCn0
+X-Gm-Gg: AYBFou2Yi94ZX6FcH6d53di2YUsc07b9Cco+rwt7FTX/7vawdGAYa8tOFLY3rGQLqWV
+	iMKaufu4SEafBJv9vZG4MT3lV7bAyAiqcx+NGIuAT1+J+dzmK3VRfNVuI8W3D1FmFo6yfMD4xPx
+	D08vkp0eZrHFbtca4D3p7U2Y/Ckqbh9gxDPjIDZyIALh8PlkO7IEUKCTO497Dp+ETABAhu5cNC6
+	YX7NcuYTJEKsbOYQwHCE27uiDitYdw4ELiKzXne+MmXYuuciSfPmJqkDtv4ZjTizTM+yyH+/YZo
+	GME7Y227fyoSaV3TR665vverqoqL0aUzc4b9gX8la0oruGoGhHZsx6nesgT+JCT61AtbHDru4vZ
+	QVi855VBa1DZhbUE6mHDRSqHPnOlfcObc3CaRfbSWyfqSML2azNHR6u1/eaXg0OP8AuMbIh4plc
+	oP0Oc21nXs1dshUixb7c/qxOnwBtn6czlnXV8QPek=
+X-Received: by 2002:a17:90b:2744:b0:398:ba56:b926 with SMTP id 98e67ed59e1d1-39e1e5770b9mr9639020a91.25.1789581943184;
+        Wed, 16 Sep 2026 11:05:43 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-125.dlp.protect.broadcom.com. [144.49.247.125])
+        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-33bf56d7be9sm142109eec.0.2026.09.16.11.05.42
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Sep 2026 11:05:43 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ed1-f71.google.com with SMTP id 4fb4d7f45d1cf-6aa1c4f3001so31601a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1789581941; x=1790186741; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZUzO+VqqWz37ZISQD0mQmOcNoBQ/58Vbmv2B2e4AlRo=;
+        b=hYVK8xxPPzaUOVW5E3rU1cbLHaoJoFB7HFJXXBqnH4Fye6DsqFO2PAnho+5ONE+X75
+         H8Ygk8bmx5KGVwVNCJ4aH0qdie9XvRETAH9Zttm3H6N4OyuY6GUOWRtEKxq+GJddajCW
+         s36fg+4akoiTJn9c5y0ZNhCG8mlwB00Vp6BsQ=
+X-Received: by 2002:a17:907:fd89:b0:c29:3c6a:8357 with SMTP id a640c23a62f3a-c29e5308b67mr258769266b.28.1789581940845;
+        Wed, 16 Sep 2026 11:05:40 -0700 (PDT)
+X-Received: by 2002:a17:907:fd89:b0:c29:3c6a:8357 with SMTP id
+ a640c23a62f3a-c29e5308b67mr258766066b.28.1789581940333; Wed, 16 Sep 2026
+ 11:05:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260915233454.2405019-1-song@kernel.org> <20260915233454.2405019-40-song@kernel.org>
- <20260915235145.23B361F000FF@smtp.kernel.org>
-In-Reply-To: <20260915235145.23B361F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Wed, 16 Sep 2026 10:51:30 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW5K7m8wB4bKYgq-ys0RAOLMz24qS3uo0v=c=OXXDKZCxw@mail.gmail.com>
-X-Gm-Features: AcwNN1Xh9HJokIjXM3hI92EWJHWBeZg10HeoyHdk13UI84F4ktYjpCfS9bkBJkg
-Message-ID: <CAPhsuW5K7m8wB4bKYgq-ys0RAOLMz24qS3uo0v=c=OXXDKZCxw@mail.gmail.com>
-Subject: Re: [PATCH v4 39/58] objtool/klp: Add test for static locals which
- must not be correlated
+References: <20260911233541.1650895-1-james.quinlan@broadcom.com>
+ <20260911233541.1650895-14-james.quinlan@broadcom.com> <20260911235416.1E1A01F00893@smtp.kernel.org>
+In-Reply-To: <20260911235416.1E1A01F00893@smtp.kernel.org>
+From: Jim Quinlan <james.quinlan@broadcom.com>
+Date: Wed, 16 Sep 2026 14:05:27 -0400
+X-Gm-Features: AcwNN1UH9m0u8SjrYLAPHnYCJNwRE5QYmI7XyVmlNr6SBSnjrVChuFFj_5AQvbw
+Message-ID: <CA+-6iNyRv+=5ryA_FYKTpzY4DXpjjUNd7hR+pRKwadUzZTp0Xg@mail.gmail.com>
+Subject: Re: [PATCH 13/13] PCI: brcmstb: Split up complicated function into
+ two variants
 To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, kernel-team@meta.com, jpoimboe@kernel.org, 
-	peterz@infradead.org, jikos@kernel.org, pmladek@suse.com, mbenes@suse.cz, 
-	joe.lawrence@redhat.com, puranjay@kernel.org
+Cc: linux-pci@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000e8ec77065b9d836b"
+
+--000000000000e8ec77065b9d836b
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 4:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Sep 11, 2026 at 7:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] objtool: klp test regex fails on architectures with small data=
- sections
+>
+> Pre-existing issues:
+> - [High] An off-by-one error in the inbound window limit check allows one=
+ more window than supported by hardware to be processed, leading to out-of-=
+bounds register writes.
+> - [High] The MSI target address calculation incorrectly hardcodes the arr=
+ay index `inbound_wins[2]`, evaluating either a disabled zero-sized window =
+or uninitialized stack memory instead of the main inbound window.
 > --
 >
-> commit 4400f73b697d110a1f506b61da1421c4d22b7608
-> Author: Song Liu <song@kernel.org>
+> commit 2fa82ffee79e487108d802c77822d346d0a063c9
+> Author: Jim Quinlan <james.quinlan@broadcom.com>
 >
-> objtool/klp: Add test for static locals which must not be correlated
+> PCI: brcmstb: Split up complicated function into two variants
 >
-> This commit adds an objtool livepatch test to verify that certain static
-> local variables are properly uncorrelated in patched functions. It checks
-> that .data..once flags and per-instance variables use a fresh copy, while
-> ordinary static locals remain correlated.
+> This patch refactors brcm_pcie_get_inbound_wins into two variants: one fo=
+r
+> newer chips and one for older chips. It updates the configuration data
+> structures to assign the appropriate function pointer to get_ib_wins.
 >
-> > diff --git a/tools/objtool/tests/generic/test-static-local-uncorrelated=
-.sh b/tools/objtool/tests/generic/test-static-local-uncorrelated.sh
-> > new file mode 100755
-> > index 0000000000000..fa4ce88a79b1e
-> > --- /dev/null
-> > +++ b/tools/objtool/tests/generic/test-static-local-uncorrelated.sh
+> > diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/contro=
+ller/pcie-brcmstb.c
+> > index 53984cfa2c96f..45e8a9e030d4a 100644
+> > --- a/drivers/pci/controller/pcie-brcmstb.c
+> > +++ b/drivers/pci/controller/pcie-brcmstb.c
+> [ ... ]
+> > @@ -954,8 +957,58 @@ static void add_inbound_win(struct inbound_win *b,=
+ u8 *count, u64 size,
+> >       (*count)++;
+> >  }
+> >
+> > +/*
+> > + * This is used by newer SoCs. It configures the inbound mapping windo=
+ws
+> > + * in accordance to the values of the dma-ranges properties.
+> > + */
+> >  static int brcm_pcie_get_ib_wins(struct brcm_pcie *pcie,
+> >                                struct inbound_win *ib_win)
+> > +{
+> > +     struct pci_host_bridge *bridge =3D pci_host_bridge_from_priv(pcie=
+);
+> > +     struct resource_entry *entry;
+> > +     u64 size;
+> > +     u8 n =3D 0;
+> > +
+> > +     resource_list_for_each_entry(entry, &bridge->dma_ranges) {
+> > +             u64 pcie_start =3D entry->res->start - entry->offset;
+> > +             u64 cpu_start =3D entry->res->start;
+> > +
+> > +             size =3D resource_size(entry->res);
+> > +             add_inbound_win(ib_win++, &n, size, cpu_start, pcie_start=
+);
+> > +             if (n > pcie->cfg->num_inbound_wins)
+> > +                     break;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this off-by-one check allow n to
+> exceed the maximum hardware window count?
+
+Ack, will fix in an additional commit.
+>
+> Because add_inbound_win() post-increments n, if a device tree provides mo=
+re
+> dma-ranges than the maximum supported hardware windows, n can exceed
+> num_inbound_wins before the break occurs. The function will then return
+> this oversized window count.
+>
+> If this happens, when brcm_pcie_set_ib_win_registers() subsequently itera=
+tes
+> over the returned count, could it fetch an out-of-bounds register offset
+> and overwrite unrelated hardware configuration space?
 >
 > [ ... ]
+> > @@ -1195,7 +1217,7 @@ static int brcm_pcie_setup(struct brcm_pcie *pcie=
+)
+> >       u32p_replace_bits(&tmp, 1, PCIE_MISC_MISC_CTRL_PCIE_RCB_64B_MODE_=
+MASK);
+> >       writel(tmp, base + PCIE_MISC_MISC_CTRL);
+> >
+> > -     num_inbound_wins =3D brcm_pcie_get_ib_wins(pcie, inbound_wins);
+> > +     num_inbound_wins =3D pcie->cfg->get_ib_wins(pcie, inbound_wins);
+> >       if (num_inbound_wins < 0)
+> >               return num_inbound_wins;
 >
-> > +
-> > +# Not correlated: no klp symbol, and a copy cloned into the patch inst=
-ead.
-> > +out_symbols | grep -q '\.klp\.sym\..*__key' &&
-> > +     fail "__key was correlated; it must use a fresh copy"
-> > +out_sections | grep -qE '\.(bss|data)[^ ]*__key' ||
-> > +     fail "__key was neither correlated nor cloned"
+> [Severity: High]
+> This is a pre-existing issue, but does the setup logic later in this
+> function rely on inbound_wins[2] being initialized and valid?
+
+Ack, will fix in an additional commit.
+
+Jim Quinlan
+Broadcom CM/STB
 >
-> [Severity: Medium]
-> Will this grep pattern cause spurious test failures on architectures that=
- use
-> small data sections?
+> In brcm_pcie_setup(), the inbound_wins array is allocated on the stack.
+> Later in the function, it calculates the MSI target address like this:
 >
-> When compiling for architectures like PowerPC or LoongArch, the compiler =
-might
-> place small variables like __key into .sbss or .sdata rather than .bss or
-> .data. Since the regex strictly expects .bss or .data, it appears it will=
- fail
-> when small data sections are used.
+>     if (inbound_wins[2].pci_offset >=3D SZ_4G ||
+>         (inbound_wins[2].size + inbound_wins[2].pci_offset) < SZ_4G)
+>             pcie->msi_target_addr =3D BRCM_MSI_TARGET_ADDR_LT_4GB;
+>     else
+>             pcie->msi_target_addr =3D BRCM_MSI_TARGET_ADDR_GT_4GB;
+>
+> For newer SoCs using brcm_pcie_get_ib_wins(), if the device tree provides
+> fewer than 3 dma-ranges entries, could this logic read uninitialized stac=
+k
+> memory?
+>
+> For older SoCs using brcm_pcie_get_ib_wins_internal_map(), inbound_wins[2=
+]
+> is deliberately populated as a zero-sized, disabled window. Does evaluati=
+ng
+> this zeroed window result in misconfiguring the MSI target address,
+> potentially causing PCIe device interrupts to fail?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911233541.16=
+50895-1-james.quinlan@broadcom.com?part=3D13
 
-I don't have PowerPC or LoongArch to test. Claude proposed something
-like:
+--000000000000e8ec77065b9d836b
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-   out_sections | grep -qE '\.s?(bss|data)[^ ]*__key'
-
-which allows .sbss and .sdata in addition to .bss and .data.
-
-I will use this version in v5.
-
-Thanks,
-Song
+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
+P6nIShznyqOL2EoCa0IXujxvXUo0pANFYsDhrCVF5JOVPeEL3Y2m+4flRtOI+YlRQoepb+TEVdkY
+/g1rlWG7GIYrtHxrFFRvn2/Iqqpv/x5kzJgoTYFOyTTGlXIqGkKTqCWFrN09kJWzhhmxhxtJprJs
+KveDLF8yhHSbqmXfKTkT+CIrynXXDro+80qXEXC8CM9W9d+2lDDM+hWTlC6Pt/ikMYf/ZB4K2Nr8
+VFruDYGZfAHhh9/lqK3SpS2Z/8cB88K62U+Eb1yNAgMBAAGjggHeMIIB2jAOBgNVHQ8BAf8EBAMC
+BaAwDAYDVR0TAQH/BAIwADCBkwYIKwYBBQUHAQEEgYYwgYMwRgYIKwYBBQUHMAKGOmh0dHA6Ly9z
+ZWN1cmUuZ2xvYmFsc2lnbi5jb20vY2FjZXJ0L2dzZ2NjcjZzbWltZWNhMjAyMy5jcnQwOQYIKwYB
+BQUHMAGGLWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMzBlBgNV
+HSAEXjBcMAkGB2eBDAEFAwMwCwYJKwYBBAGgMgEoMEIGCisGAQQBoDIKAwIwNDAyBggrBgEFBQcC
+ARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wQQYDVR0fBDowODA2oDSg
+MoYwaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMuY3JsMCUGA1Ud
+EQQeMByBGmphbWVzLnF1aW5sYW5AYnJvYWRjb20uY29tMBMGA1UdJQQMMAoGCCsGAQUFBwMEMB8G
+A1UdIwQYMBaAFAApNp5ceroPry1QLdugI4UYsKCSMB0GA1UdDgQWBBQiuRLoBkhIaas+1j3yf23P
+ffVFcjANBgkqhkiG9w0BAQsFAAOCAgEAp1y0fznw9Uo7UzExANVpYjj+OG1c3C7MhWOvAd7LvfPX
+BSFisMaabop5Pyfc/sWzb/jCNfVkkDW5Ij2mzpUsUca2qpILoFhOUT9b0d+nc48MCZ4/Wj6vX5QJ
+i9VdYeuv3DYASZsQdH8iYnV5X5YCYo1AO/pyW+M4gG022Nsji9+3A9zkx8JRPDIXkPaDLrzcGD9L
+rEVIYnnSK9b/4VHzITVgEmSsUTAIzOD6M6TzgrSoJZFmKNMXlAqo+m1nlNyJkM4OyOvaDx5y+2hA
+mp4tzD9gJNU9TzQpQRZFz53+c8BkCpzvcHqT8lMluRlCrIYWqaSOUDHX9HPYvzbtO4iYV+irMdGN
+2PBz6Wtfaoi1xTfFSKK9ON1mvxACK+E4B5gycSoZcOBADTbGXLDMqiygl7Wz0oooAPqZpUnaD1nc
+x/pX7N8Ff6YK+iN3vVah34vLkE1CMFyDQMtyTCzQPW+7XCTxCL9ML3LBAF+eNAtKpPOsrGIdRHy5
+6oQr+2ZquSMvWj447q4v3sk1LHs7ata+sP8/kmcPKn3WPXQ/4xMevqFVyv2VIFrBK9ZnOZ//fz8R
+7SjJ7t2kOITvbWcMkizMc33S9hfmYiXaVTjIi89NiO3EXCJouYShpptgGNG6mpYHcddnfdKiILOS
+06KlKNuHO4IpRmaGrzcDjsUQQSn8amMxggJXMIICUwIBATBiMFIxCzAJBgNVBAYTAkJFMRkwFwYD
+VQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBD
+QSAyMDIzAgwHM7pH5w7o7Qb7yXUwDQYJYIZIAWUDBAIBBQCggccwLwYJKoZIhvcNAQkEMSIEIFI4
+NesFxTZxaK54YD4cDqFiVWKPnGHr6Ta3lmduJYSvMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTI2MDkxNjE4MDU0MVowXAYJKoZIhvcNAQkPMU8wTTALBglghkgBZQME
+ASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQcwCwYJ
+YIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBAIHMHV40ky2ndDaG/0JnibnO6B1qAg3YYdaCNqUX
+2yg6IPUpDPzO81N64TEUka2vMvDCYzgyGsgxWQN6fqBd7i53qRTBiKlZiZJ2G0PuTJnslcnBuP9g
+c8KhTHAD8wvcZislZ6bAjoFrYBrTiFVlJ9QSzGYltmIi9KCeu1QY0Rrg9rKjzlbfckN5Bwbo+40s
+naiiI9y0RSBsPAryC+mfONsM/z68nOS5K/13x/4ZpNs+qFVJFO2tia8oxQZUdj/ivlkTVKvLslaW
+R+AHlbfEyZhL6uHa4uEyyRcnbF3OpRFt3JpHkF5z6dp6pNYPyts708Ctafb0UGOy+ZUIgxS4fNA=
+--000000000000e8ec77065b9d836b--
