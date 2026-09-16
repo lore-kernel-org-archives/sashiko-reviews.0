@@ -1,154 +1,99 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A423C8C5E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749224BC00B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 12:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789559753; cv=none; b=pSKs3QGZSTKdPgh7uIiCTlrx2nUoGTRaGzjeQoFAkUx1XDDJvKjEw4z43qzLR3ugFRrASpQdnSay76c6GjoCID+CQAqic9JXxJ0f7b93BZW98m/TXnO1+tOtqKXPFOED6TswW0MN3h6OLYL51EjU/xrUcIhV6Q+Fj6KX0ToAr3Y=
+	t=1789560937; cv=none; b=VSP+XU4SWVHu7KFbkLN1g0B+PPR8O+ZjY40PSHal/loD3sR8KnfTH9vFicrwzwre2z23WIZ3K+8LNIpwfrZWIta7xBIG+BnQawpThTTk3vv0VBMHyRu8Tug8ZLTdqxu2CCc4I+B3w/OYOs3mdU4jWnsmMeeHCb4UiqgbSaCB4Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789559753; c=relaxed/simple;
-	bh=fNugRSq9PmrzHIjwPfcQnXhaeAst/a0SfHH21Q8krfw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LQYhlK+lbZdbG75TZ7F12taoqGMT3MOa2EnHq62UavSZSY/nUDWa7mWyqBPVNMNEHhdn2EAKAt3K3oqoX3N0RQlIZOALuiAtBCen/KNN0+LSQePnGlrezrm288IN7dM3x1lbB0UhEqAA4AQDXnUyqk71w5DYoVQqXje18ezg9A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hlHQH2b3XzYQtmH
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:55:35 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 3E6DD40577
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:55:40 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgCndim7g6pq0vsSAg--.59890S2;
-	Wed, 16 Sep 2026 19:55:40 +0800 (CST)
-Message-ID: <e1021204-6e4a-4767-889e-fd677409df1e@huaweicloud.com>
-Date: Wed, 16 Sep 2026 19:55:39 +0800
+	s=arc-20240116; t=1789560937; c=relaxed/simple;
+	bh=mKSCs4efO4oPsuBT2TQVVQpT0G+dF938WzWWznsLPTg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=hi4voBA/QIall9FkaX/j7wWHWUGmaZ0zCJoclbWD5UqJ5GBfkh3yXA/BGZQDLzXUYsl3xV24xGpdRBQeArH5XNqLL7H0GpdYbzkSMOwzjeZyUeISpFSAN7Qe3QLA/kNpP7Xnr/Mh1oEiDWXo8R3lqLlf7TqAf1nsZxxE8WnuGQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fMcTZNz2; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fMcTZNz2"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc502a179c1so1144284a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 05:15:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789560935; x=1790165735; darn=lists.linux.dev;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=mKSCs4efO4oPsuBT2TQVVQpT0G+dF938WzWWznsLPTg=;
+        b=fMcTZNz2QjaHFJAHrde1HeeVx/qdXytgfNKy7OSGRgzQjKS6HBpDI/vQ4fZ0RIhX/m
+         Ql8HBR2d1xBglL3pqoHH+aj+V/mR2l1mJ//e0fWpArRnGGEAAssmuRlRjB0ruNX19+S3
+         lsGAA9FWQ0J4AzOODfGrjQSyzwTkCZE93Ns0xO0RACmHhy3wOX3a1pQq1KUt5ohRlguG
+         KHV7f5on/SeM7C836LxHKC/HCCxZ1027+2ctinRPM7ihysZy3yJymYP3Y0O5po/v/oL7
+         QgdQCpIGioW1tnkl/DuaHPbx3XxCHSxXU/S7itQzA1foypQBsZSDXN6wZrEwbppVgVnD
+         xvhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789560935; x=1790165735;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mKSCs4efO4oPsuBT2TQVVQpT0G+dF938WzWWznsLPTg=;
+        b=lDTQVWPcEaqo50laQfxqbx0PbS/5Prm+aUGvv26+D1icGCTZwZ+HZNQEUID1o5/oNb
+         RuJlzrrMOU1tZ9YV22liVPizDC8ZwEfhl3d9Tv79RNVmXfFzVD2VbS/qmRa1e65tfldn
+         60X/GuRofAYxDs8OV5Q2uK39aJfOKUwqwFzuWBEXKvuWgcRwulVUemBhQ81aYZmuG+6l
+         FR6zqdfScYGQ2XuU/Gt+CbMFGWOOejI/uhCpcZ8a1FcxJmvQ6Mo39o+WFQ1p0RkCVfnv
+         3oDa7OZpgK1NIclsRN+mLh6Sy4FCXgNLdS5UXsjGF461R2j9MnSuQ/er6jtBDijiuqsG
+         eFog==
+X-Forwarded-Encrypted: i=1; AKwUvBzaZutwT8QJUq8hOoQjQ7GAvgLWxryGn7nkbV/I2uTskJiTgtpLngUhOaHhLppoWT/xfct3IuFTbuJyWWQ02KE=@lists.linux.dev
+X-Gm-Message-State: AFuF++knx+mqmW9kRgqoJDBCcFwMCoxwXwIq7FX64ePBSMe4h5jhxe3M
+	r0cZ+vQ7ZrttLcPs+xFhcP0il5p7FvK/m+9CnVCpCja53ykNHDlId4aw
+X-Gm-Gg: AYBFou1AmZGRF4Pk5JxhT7ascmI/ylvJx+iio9m4JiWeLL8MYiH/qxrIzs2UHVMjlyY
+	5S+lKwJLZH97EfF3V4MI+fCtN0FD/sA/tozk0mekYfKhUBdtdJvqxelnguQNS1kvcYPLzQwBLRI
+	3Vvv/hcFp0y8UBCp892KMwTU2ElcJvnm5AAZyTk9oMJaKhKOqXcoKJmDIQzA9aWluOKjqceCkS2
+	/HDJDGqhW29Sj+zXwHkJ7JmXz2PsZnXoME5TTaK1L/rdm58Lmws5ctsKmf12zmODue9pAMj+mJW
+	KEDPzoTSL60Co2WLVhfN2XcLgAJBgVmDtvHDbdPlQ4YS6Sm9BmkF4z7a+muaSni/adOB1rPjmEj
+	uP6hI2ieyxUosBAnaiNKInOiWBInPc83G/acXW3E4DF/5pJjHIa1jh2qQfXeOfDqO+DSSgPq2VL
+	8eRGYNzv2wgdT0BuFfvbyvpEN4R4K04FBgPzae1tjHrTCZsxI1N0K+NE+lUhAHuK3A43Xbaw==
+X-Received: by 2002:a05:6a21:6da4:b0:3da:eff0:c162 with SMTP id adf61e73a8af0-3db4fa37105mr11544412637.6.1789560934398;
+        Wed, 16 Sep 2026 05:15:34 -0700 (PDT)
+Received: from [127.0.1.1] ([240e:b8f:977f:f400:ec2a:b15e:fef8:70a])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc50ab8ae01sm1512489a12.18.2026.09.16.05.15.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 05:15:33 -0700 (PDT)
+From: Liang Haowen <nbg2974@gmail.com>
+To: Lee Jones <lee@kernel.org>
+Cc: linux-leds@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH RFC v4 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
+ driver for ROG NVMe enclosures
+Date: Wed, 16 Sep 2026 12:15:31 -0000
+Message-Id: <202609162015.ReplyLee0916.lhw@gmail.com>
+In-Reply-To: <20260916104305.GM11487@google.com>
+References: <202609012200.RFC0.lhw@gmail.com>
+ <202609012200.RFC1.lhw@gmail.com>
+ <20260901145204.2BF551F000E9@smtp.kernel.org>
+ <202609032000.RFCv2-0.lhw@gmail.com> <202609032000.RFCv2-1.lhw@gmail.com>
+ <20260903122408.3CA6B1F00A3A@smtp.kernel.org>
+ <20260903161357.GX2133376@google.com> <202609042000.RFCv3-0.lhw@gmail.com>
+ <202609042030.RFCv3-1.lhw@gmail.com>
+ <20260904131503.355C41F00A3E@smtp.kernel.org>
+ <20260910093232.GO2133376@google.com> <202609152112.RFCv4-0.lhw@gmail.com>
+ <202609152112.RFCv4-1.lhw@gmail.com>
+ <20260915130050.E8CDB1F000FF@smtp.kernel.org>
+ <20260916104305.GM11487@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 21/26] perf annotate-arm64: Support stack variable
- tracking
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1789521520.git.wutengda@huaweicloud.com>
- <11bcde1a75d96b524cc5a7f6fa442025680e56a0.1789521520.git.wutengda@huaweicloud.com>
- <20260916014905.D44C91F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260916014905.D44C91F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgCndim7g6pq0vsSAg--.59890S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDAryUXryrZFWUXFWkZwb_yoW5Zr4xpF
-	98Cay5Wrs7Jw109FnrXr4xXr98Ww4xKF1S9r90qan7JFnFyrnYkas7Kay2qFWUCryvkw4j
-	vw1q9r4DXrZakaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26F4UJVW0obIYCTnIWIev
-	Ja73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
+On the three sashiko items: the Medium one was a real race.
+led_mc_calc_color_components() writes the shared subled_info array
+outside the zone lock, and concurrent brightness_set callbacks for
+the same LED could cache a mix of each other's colours. v5 moves it
+under the spinlock; v5 goes out as its own thread.
 
-
-On 2026/9/16 9:49, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf: stale stack state due to bypassed invalidation in update_store_insn_state
-> --
-> 
-> commit 2ddb0f384d44eeb70844d8c3adc06f8d55101f68
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support stack variable tracking
-> 
-> Extend update_insn_state_arm64() to track data types stored on the stack. The
-> implementation handles stack loads and stores to follow data types as they
-> move between registers and memory.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index a72c7703dd6b3..8339aab0d314f 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> [ ... ]
->> +/*
->> + * For store insns: propagate type from @sreg to the memory location referenced
->> + * by @dst, applying @mem_spacing to account for multi-regs stores (e.g. stp).
->> + */
->> +static void propagate_store_reg_state(struct type_state *state,
->> +				      struct data_loc_info *dloc,
->> +				      struct disasm_line *dl, int sreg,
->> +				      struct annotated_op_loc *dst,
->> +				      int mem_spacing)
->> +{
-> [ ... ]
->> +		if (!has_reg_type(state, sreg) || !state->regs[sreg].ok) {
->> +			stack = find_stack_state(state, offset);
->> +			/* Preserve compound states when only a member is overwritten. */
->> +			if (stack && !stack->compound)
->> +				delete_stack_state(state, offset);
->> +
->> +			return;
->> +		}
-> [ ... ]
->> +static void update_store_insn_state(struct type_state *state,
->> +				    struct data_loc_info *dloc,
->> +				    struct disasm_line *dl,
->> +				    struct annotated_op_loc *src,
->> +				    struct annotated_op_loc *dst)
->> +{
->> +	int mem_spacing = 0;
->> +
->> +	if (!has_reg_type(state, dst->reg1))
->> +		return;
->> +
->> +	/* Handle the first source register */
->> +	if (has_reg_type(state, src->reg1))
->> +		propagate_store_reg_state(state, dloc, dl, src->reg1,
->> +					  dst, mem_spacing);
->> +
->> +	if (!src->multi_regs || !has_reg_type(state, src->reg2))
->> +		goto out_adjust;
-> 
-> [Severity: Medium]
-> Does the has_reg_type() guard here inadvertently skip the stack state
-> invalidation logic?
-> 
-> Looking at propagate_store_reg_state() above, there is logic to delete the
-> stack state if the source register is untracked. However, because
-> update_store_insn_state() completely bypasses the call to
-> propagate_store_reg_state() when the source register is untracked, this
-> cleanup is never reached.
-> 
-> If an untracked register is stored into a stack slot previously used for a
-> tracked variable, could this leave stale tracking state on the stack, causing
-> subsequent loads from that slot to inherit the wrong type?
-> 
-
-Agreed.
-
->> +
->> +	/* Handle the second source register */
->> +	mem_spacing = arm64__reg_size(dl->ops.source.raw);
->> +
->> +	if (mem_spacing >= 0)
->> +		propagate_store_reg_state(state, dloc, dl, src->reg2,
->> +					  dst, mem_spacing);
->> +
->> +out_adjust:
->> +	adjust_reg_index_state(state, dloc, dl, dst);
->> +}
-> 
-
+The two Low items are false positives, and the same two the bot has
+now reported in all four rounds: kzalloc_obj() has been in
+include/linux/slab.h since v7.0 (this driver builds against 7.2), and
+blk_rq_map_kern() takes four arguments on current kernels, called
+exactly this way from scsi_execute_cmd() in drivers/scsi/scsi_lib.c.
+The five-argument form it keeps describing is from older trees. The
+bot's reference tree looks outdated; can these two be retired from
+further rounds?
