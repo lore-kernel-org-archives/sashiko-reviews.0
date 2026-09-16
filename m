@@ -1,228 +1,161 @@
-Received: from mta0.migadu.com (out-227.mta0.migadu.com [91.218.175.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D355F4EE870
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 10:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681DB4EE85E;
+	Wed, 16 Sep 2026 10:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789554753; cv=none; b=AYGtjB1O4+5WGdWA0MiZcQD1SvB93t70DXJp5MetlnZR6KEtzO/UK1pvi8qq2/4ohSa3TCJJ0B9KWnK3y5EDf6M6nEn443s6njl9biqnwPr1biIToAO7t9zmYmUM7aoOSwmlfn14oxZbV4nmk0VsaucggFBAmD5E/8atfylmvUI=
+	t=1789555409; cv=none; b=C5YDv7mpMZVgyjkFFjsunTILTg0ZtxjfgCchLs4CNc47Lfzr3vXMBzx00WKUWLfgVFsKcyXSgJRsW6FboZD09TTd1zVHF++EKm53ePcjdFJMCd2c71VsCizvwchtP2xQrylrx9q7LCBzOOFhbAG2OPvXmFiD58kaW21JKj88i24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789554753; c=relaxed/simple;
-	bh=XEElrARnGZXo06nVsE55UlAH/qIqFqbot95vz0Dia1k=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ZedvRfVTAiNiYDPKlQ9BisHUzfLSXOvQ99ln4iIdF5grhIpJOCDTAxYcLMvFq2QTv3diNJhdF7pH7wqsNw+DRCskxvqgC176aT6X9SInkS1eRHP+yKS060NqaRRDIURrH7fgb6eNwOllxj1J43ix3EPz6EEuzOVJvOSYOpiIiQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qPlH3sK/; arc=none smtp.client-ip=91.218.175.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789555409; c=relaxed/simple;
+	bh=pNF/fYZKvcKlZCJNJy4Ik87MUKWeVC4PAUAyo2PWQB0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bz81jzssjlkdsMBcJH40PlDyZmNeKulS5vDYVVVHJcZp22eaB34tpqYbTuItL3fXYhY76MdyYRc9mMDqZ9GGzLjCGrX/Iyr3uWOG3/bjpucMGHFdNfvJbnKUyW6S1TRhRgfkfl0zxCzJ+Oz4S1gDKhQkduaRSVb7wYwMO6MVREw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=huxaqQI2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qPlH3sK/"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=XEElrARnGZXo06nVsE55UlAH/qIqFqbot95vz0Dia1k=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789554721; v=1; x=1790159521;
- b=qPlH3sK/T/fSA1FKI9kwsVwPTCwG53A8jfUMjBIPWqI7GNtNiomHw0GwS8a0vf4y02+JAjH+
- hYBFnwdXUULX/vom8QGUTMrRK3QId2IGoBT29dnvqR3MXRTaEklg/6TQSCHxT752s4eK9rSrJ2L
- WSNEZpMpGqLj40xPQK9wuKyw=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id d8fc3f7943fd14ab;
-	Wed, 16 Sep 2026 10:32:01 +0000
-X-Mizu-Trace-ID: d8fc3f7943fd14ab
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <2d6e4798-a3eb-4a63-8575-c3f9cbd7fe62@linux.dev>
-Date: Wed, 16 Sep 2026 18:31:57 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="huxaqQI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767AB1F0089D;
+	Wed, 16 Sep 2026 10:43:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789555389;
+	bh=/UGygQGXhuhDnAfhN574yKe4CYpKDrynLUaMeDlvo5U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=huxaqQI2TwNroiRMo7UjM/+rKuW2mlKdf7v57qzlMcWhE0jthgS9TjiY4+kKxXoSq
+	 rS3XGxZJj0vj4XSxGsx3dvGxSWBvLSkMtmqnxk4gy7EPNBuFiQf1iHmE92Wh+e3h0q
+	 +BkYS2MJwFfM6A8zgGgrUp+DnlgUFSxDRMDLbuxZLi/chvTvcJtz6bwVraJxNd03zI
+	 JMr9tXFxycEv2d6My8ACQbRfl8vRNd5j6XwSZz+/rrO7xunXrgswzsHnGNgwHyJ844
+	 2SnHZ9wtVvSD0Mc1HgliTNNp78ORg4SQtXU+RK1V1kbzzicqhDHg2MInzUVYHYX7jF
+	 wxtL5EVEMzVBA==
+Date: Wed, 16 Sep 2026 11:43:05 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Liang Haowen <nbg2974@gmail.com>, linux-scsi@vger.kernel.org,
+	linux-leds@vger.kernel.org
+Subject: Re: [PATCH RFC v4 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
+ driver for ROG NVMe enclosures
+Message-ID: <20260916104305.GM11487@google.com>
+References: <202609152112.RFCv4-0.lhw@gmail.com>
+ <202609152112.RFCv4-1.lhw@gmail.com>
+ <20260915130050.E8CDB1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com,
- bpf@vger.kernel.org
-Subject: Re: [RFC PATCH v4 1/5] blk-iocost: add BPF struct_ops cost model
- support
-To: sashiko-reviews@lists.linux.dev
-References: <20260916072302.1068871-1-cui.tao@linux.dev>
- <20260916072302.1068871-2-cui.tao@linux.dev>
- <20260916073408.D92471F000FF@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260916073408.D92471F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260915130050.E8CDB1F000FF@smtp.kernel.org>
 
+On Tue, 15 Sep 2026, sashiko-bot@kernel.org wrote:
 
-
-在 2026/9/16 15:34, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] bpf: resource leak and broken blkcg notifications on BPF model unbind
-> - [High] bpf: coefficient-only writes fail if bound model is unregistered
-> - [Low] bpf: multi-line comments do not follow modern kernel style
+> - [Medium] leds: data race on subled_info array causes torn color updates
+> - [Low] leds: build failure due to undefined macro kzalloc_obj
+> - [Low] leds: build failure due to missing argument in blk_rq_map_kern()
 
-Thanks for the reviews.  All five findings across the two patches are
-confirmed and will be fixed in the next revision:
+Please review, explain or fix the Sashiko review(s).
 
-- the lookup in iocost_bpf_model_get() only searched the registry, so
-  a coefficient-only write on a device using an unregistered model
-  failed with ENOENT; the lookup will fall back to the notify list,
-  keeping such a model selectable by name until the last device
-  unbinds
-
-- the notify-list detach condition in iocost_bpf_model_put() was
-  wrong for a registered model bound to several devices: the first
-  unbind removed the node from the lifecycle list early and the last
-  unbind then failed to find it, leaking the BPF map reference; the
-  node will leave the notify list only with the last binding
-
-- the 2x example model did not advance its cursor for merged bios,
-  unlike the builtin backmerge behaviour, so a long merged stream
-  could drift past the 16MB seek threshold and misprice the
-  following IO as random
-
-- the multi-line comments use the opening marker on its own line
-
-While testing those fixes we also found and fixed a problem of our
-own: two racing io.cost.model writes resolving the same model each
-took a reference on it, but the write whose commit found the model
-already bound did not drop one, leaking a map reference.  The commit
-path now drops the redundant reference.
-
-The next revision will follow shortly.
+If this is a set, this request includes the other patches too.
 
 > --
 > 
-> commit 4e914860298423131f3423ab63f79ed4a655051f
-> Author: Tao Cui <cuitao@kylinos.cn>
+> commit e6ce9b3b67cc2aa4897215acc2c62600810790a8
+> Author: Liang Haowen <nbg2974@gmail.com>
 > 
-> blk-iocost: add BPF struct_ops cost model support
+> leds: asus-aura-scsi: Add ASUS Aura RGB LED driver for ROG NVMe enclosures
 > 
-> This commit introduces a BPF struct_ops based cost model for blk-iocost,
-> replacing the builtin linear model on a device. It implements a
-> registration framework where sysfs bindings map a registered model to a
-> device.
+> This commit introduces a driver for ASUS ROG external NVMe enclosures that
+> exposes 4 independently addressable LEDs via the LED multicolor class. It
+> uses a SCSI device handler matched by vendor INQUIRY to send custom ENE
+> sequences over passthrough SCSI commands.
 > 
->> diff --git a/block/blk-iocost-bpf.c b/block/blk-iocost-bpf.c
->> new file mode 100644
->> index 0000000000000..7f1f9a2e51cb2
->> --- /dev/null
->> +++ b/block/blk-iocost-bpf.c
-> 
+> > diff --git a/drivers/leds/leds-asus-aura-scsi.c b/drivers/leds/leds-asus-aura-scsi.c
+> > new file mode 100644
+> > index 0000000000000..089cc3dcee105
+> > --- /dev/null
+> > +++ b/drivers/leds/leds-asus-aura-scsi.c
 > [ ... ]
-> 
->> +const struct iocost_model_ops *iocost_bpf_model_get(const char *name)
->> +{
->> +	struct iocost_bpf_model *m;
->> +	const struct iocost_model_ops *ops = ERR_PTR(-ENOENT);
->> +
->> +	mutex_lock(&iocost_bpf_reg_lock);
->> +	list_for_each_entry(m, &iocost_bpf_models, list) {
-> 
-> [Severity: High]
-> Will this lookup fail to find models that are unregistered but still
-> actively bound to devices? If a user issues a coefficient-only write on
-> a device using an unregistered model, ioc_cost_model_write() passes the
-> name here, but since this only searches the registry (iocost_bpf_models),
-> it returns -ENOENT and rejects the write.
-> 
->> +		if (!strcmp(m->ops->name, name)) {
-> 
-> [ ... ]
-> 
->> +static void bpf_iocost_unreg(void *kdata, struct bpf_link *link)
->> +{
->> +	struct iocost_model_ops *ops = kdata;
->> +	struct iocost_bpf_model *m;
->> +
->> +	mutex_lock(&iocost_bpf_reg_lock);
->> +	m = iocost_bpf_model_lookup(ops);
->> +	if (m) {
->> +		/* keep the linkage queryable so model_put() can tell a
->> +		 * still-registered node (one ref held by the registry)
->> +		 * from one kept alive only by device bindings
->> +		 */
+> > +static int ene_write(struct scsi_device *sdev, u16 reg,
+> > +		     const void *data, u8 arg_count)
+> > +{
+> > +	struct request *rq;
+> > +	struct scsi_cmnd *scmd;
+> > +	u8 cdb[ENE_CDB_LEN];
+> > +	int ret;
+> > +
+> > +	ene_build_cdb(cdb, reg, arg_count);
+> > +
+> > +	rq = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_OUT, 0);
+> > +	if (IS_ERR(rq))
+> > +		return PTR_ERR(rq);
+> > +
+> > +	if (arg_count) {
+> > +		ret = blk_rq_map_kern(rq, (void *)data, arg_count, GFP_NOIO);
 > 
 > [Severity: Low]
-> Does this comment style follow the BPF subsystem requirements? The
-> standard specifies that multi-line comments should have the opening /*
-> on its own line.
+> Does this cause a build failure? The kernel API blk_rq_map_kern() requires 5
+> arguments, where the first parameter should be the struct request_queue *q,
+> but it is called here with only 4 arguments.
 > 
->> +		list_del_init(&m->list);
-> 
+> > +		if (ret)
+> > +			goto out;
+> > +	}
 > [ ... ]
+> > +static void asus_aura_set(struct led_classdev *cdev,
+> > +			  enum led_brightness brightness)
+> > +{
+> > +	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
+> > +	struct asus_aura_led *led =
+> > +		container_of(mc, struct asus_aura_led, mc_cdev);
+> > +	struct asus_aura_zone *zone = led->zone;
+> > +	unsigned long flags;
+> > +
+> > +	led_mc_calc_color_components(mc, brightness);
+> > +
+> > +	spin_lock_irqsave(&zone->lock, flags);
 > 
->> +void iocost_bpf_model_put(const struct iocost_model_ops *ops)
->> +{
->> +	struct iocost_bpf_model *m;
->> +
->> +	mutex_lock(&iocost_bpf_reg_lock);
->> +	list_for_each_entry(m, &iocost_bpf_lifecycle, lifecycle) {
->> +		if (m->ops == ops)
->> +			break;
->> +	}
->> +	if (&m->lifecycle != &iocost_bpf_lifecycle) {
->> +		bool freed = refcount_dec_and_test(&m->refs);
->> +
->> +		/* leave the notify list with the last binding: the
->> +		 * remaining ref is either the registry's (node still on
->> +		 * iocost_bpf_models) or zero and the node is freed
->> +		 */
+> [Severity: Medium]
+> Could this lead to a data race on the subled_info array? The LED core allows
+> concurrent brightness_set callbacks for the same LED (for instance, from
+> sysfs and a hardware trigger). The helper led_mc_calc_color_components()
+> modifies the shared mc->subled_info array locklessly before the driver
+> acquires its spinlock. If multiple threads update the brightness
+> concurrently, they might interleave their writes to the array, causing the
+> winning thread to read a mix of old and new color components.
+> 
+> > +	/* ENE colour register byte order is R, B, G. */
+> > +	led->rgb[0] = led->subled[0].brightness;
+> > +	led->rgb[1] = led->subled[2].brightness;
+> > +	led->rgb[2] = led->subled[1].brightness;
+> > +	zone->dirty |= BIT(led->index);
+> > +	spin_unlock_irqrestore(&zone->lock, flags);
+> > +
+> > +	schedule_work(&zone->work);
+> > +}
+> [ ... ]
+> > +static int asus_aura_attach(struct scsi_device *sdev)
+> > +{
+> > +	struct asus_aura_zone *zone;
+> > +	int i, ret;
+> > +
+> > +	if (strncmp(sdev->vendor, ARION_INQ_VENDOR, strlen(ARION_INQ_VENDOR)) ||
+> > +	    strncmp(sdev->model, ARION_INQ_MODEL, strlen(ARION_INQ_MODEL)))
+> > +		return SCSI_DH_DEV_UNSUPP;
+> > +
+> > +	zone = kzalloc_obj(*zone, GFP_KERNEL);
 > 
 > [Severity: Low]
-> Similarly here, this multi-line comment is missing the opening /* on its
-> own line.
+> Does this code fail to compile? It looks like it invokes an undefined macro
+> kzalloc_obj() instead of the standard kzalloc() function to allocate memory.
 > 
->> +		if (freed || !list_empty(&m->list))
->> +			list_del(&m->lifecycle);
->> +		mutex_unlock(&iocost_bpf_reg_lock);
->> +		bpf_struct_ops_put(ops);
->> +		if (freed)
->> +			kfree(m);
->> +		return;
->> +	}
+> > +	if (!zone)
+> > +		return SCSI_DH_NOMEM;
+> > +	zone->sdev = sdev;
 > 
-> [Severity: High]
-> Can this sequence prematurely detach registered models from the lifecycle
-> list and leak BPF map references?
-> 
-> When the first device is unbound from a registered model,
-> !list_empty(&m->list) will evaluate to true. This removes the model from
-> the lifecycle list early, breaking blkcg notifications.
-> 
-> When subsequent devices are unbound, list_for_each_entry() at the start of
-> iocost_bpf_model_put() will fail to find the model, causing execution to
-> jump over this block completely. The bpf_struct_ops_put() call will be
-> skipped, leading to a map reference leak.
-> 
->> +	mutex_unlock(&iocost_bpf_reg_lock);
->> +}
-> 
->> diff --git a/block/blk-iocost.c b/block/blk-iocost.c
->> index 2745bffcd5eef..22b2ece52fa58 100644
->> --- a/block/blk-iocost.c
->> +++ b/block/blk-iocost.c
-> 
-> [ ... ]
-> 
->> @@ -3591,6 +3628,24 @@ static ssize_t ioc_cost_model_write(struct kernfs_open_file *of, char *input,
->>  	spin_lock_irq(&ioc->lock);
->>  	memcpy(u, ioc->params.i_lcoefs, sizeof(u));
->>  	user = ioc->user_cost_model;
->> +#ifdef CONFIG_BLK_CGROUP_IOCOST_BPF
->> +	{
->> +		const struct iocost_model_ops *model =
->> +			rcu_dereference_protected(ioc->model,
->> +					lockdep_is_held(&ioc->lock));
->> +
->> +		/* seed from the bound model so a coefficient-only write
->> +		 * keeps it bound; ctrl=auto/user and model=linear are
->> +		 * the explicit ways back to the builtin model
->> +		 */
-> 
-> [Severity: Low]
-> This comment also places text on the same line as the opening /*, which
-> diverges from the preferred BPF multi-line comment style.
-> 
->> +		if (model)
->> +			strscpy(bpf_model, model->name, sizeof(bpf_model));
-> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/202609152112.RFCv4-1.lhw@gmail.com?part=1
 
+-- 
+Lee Jones
