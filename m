@@ -1,67 +1,30 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30AA4CA294
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A423C8C5E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 11:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789559058; cv=none; b=ripMISd/JzWgVnkxhVK28R4iTzNv2wd0OflriVunivq26TNQmEiVvmCe+PluvwJs0dc1MHl/bpp9Qod8j6t3SaxJ4xD0Cn/jmPjgwW2tQwY2SGrTBKIOo4feHfzksQYTEYhYZJPnKQpdWiX5zrpJKbCklQ41UrrQBCVoOWz8qpg=
+	t=1789559753; cv=none; b=pSKs3QGZSTKdPgh7uIiCTlrx2nUoGTRaGzjeQoFAkUx1XDDJvKjEw4z43qzLR3ugFRrASpQdnSay76c6GjoCID+CQAqic9JXxJ0f7b93BZW98m/TXnO1+tOtqKXPFOED6TswW0MN3h6OLYL51EjU/xrUcIhV6Q+Fj6KX0ToAr3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789559058; c=relaxed/simple;
-	bh=p9+KEa8/8Dyrx6vfvDzmtoHvB1DxFmQKzIxJDGWSSvo=;
+	s=arc-20240116; t=1789559753; c=relaxed/simple;
+	bh=fNugRSq9PmrzHIjwPfcQnXhaeAst/a0SfHH21Q8krfw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RC74/D3vBSeQqv8xZQaEYj33xOA0lpF2w19PYOEDZ4MA07930hj9nIxkCKbVcCeD0IK4jLx7fnmXYs4k/8zj/pX9vTxHTAM9rn+p++MYZliZc+Y8dvaRwAReEQ6mrXa7MNXRigugJA0pbneHDhJ5A0jz9whUt0pwTcHak6gaN9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SAUUOm1G; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SAUUOm1G"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6a9a2f16ed4so2985928a12.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 04:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1789559047; x=1790163847; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+OkjIpCELnuJRozHROd7rQfIVtAzAlx7qACUrTNgcPM=;
-        b=SAUUOm1Gb/quKQsYvS9I5Py9ynyfRKCFfAywOXE+9+xxgQUQ2psNPSRAPJHiPo4iEg
-         cKDb0Q/HEtiP1NxsH1RAV5sre1oBHhScl3VATBjFfFDgDtBMDCngU3jxEP0Rx6plWqEU
-         PYlaOidEqkbPE51MVBNqSRgqkQSaHByJOqf41aX+C0IfBOU+MknGDtGPN8mmgP246DNx
-         5Lv03jOT5lSL+sxNvlCN8XrKy6mAyiCVRQpcIv1AU859cQebc3zkljZMln22Gp42lHn/
-         L4kUMiH/a4vv2jEX5if5fCYFDF3XN8PaneRCvt3+nBgaXfymsFbodWQ6wFv5q5LKAAyi
-         sHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789559047; x=1790163847;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+OkjIpCELnuJRozHROd7rQfIVtAzAlx7qACUrTNgcPM=;
-        b=hJB2pAwczkhP99qQDPXiEzzbG//vCIy9Pni5OwfPHitlVgXktG+/WDYsN8TrJRWDjv
-         q00h6CQMfKMICCqBP/wihcd8bTgvR6H99CnG/sjAxJHQ20s4GjGdf43au9BuDI9KywuP
-         Lg+34g/Md6UZU1m2suQwQMGPwxB801Ylt2DNO54eKXS67czzBHh3M0P+p/5/Ets9RdZ+
-         HkgzuPAi9SbOPb96qwSvBQN40MeUxqA8mJRFrtMORD5QZsKvei5hjCi1lMDxEWBwfcIA
-         PH6CDS5SwOVWlYiUZ+3zciuvFoHEZEM3ABscspeV8s5m6lnnGUhBV4+IwS7hlVT1Un+o
-         RXkg==
-X-Gm-Message-State: AFuF++kSZcKHpBtnEo2B6QTTXlA+UgTkI+va19FziUmhdD60vlqUniYK
-	TBo9yxsO3c4OJpIXri0H067WfjfcaawBw2Xh2ixPhYg6vAFusrk6E7AAJ9b6aYkoraCq+dK2WAv
-	F5BoR2Hc=
-X-Gm-Gg: AYBFou0HAX0EsYVASvTNExe6ZDeJjO5ZJEz099kdX3IPD9wVs54+3pEXfBPc6qwpQxo
-	1Z01Yg+4JTKN+DN9wPKeay/xDg4sk8FKdiIIDqegH2+amz0SdbaUk0ZbRoHv4yXj2vk41k4pI7G
-	airxAUxNS92WZMZLzQAo2f7V2ZOReARIk47mqgixzvPLKQcNUl6w5klGEGw8K/dgfF4H4qGnSPY
-	aZKIsmlXXBVhwrmL09G6cjUTTzQw6XoZCJeEZK6E4HcUMcFjp1mF5t3ZthEB2giFfUT/y+On3+Q
-	yVHMCnjEEfHxleCA8RGYPvjGqL49Fh4odrlSP4hS29H2mqq4qTg3T5nQ1SFT9KTuwZHFEr0xsHz
-	bq8YAoFuTNbS9uS5mB1ZQ2ReDZflF2HfEUhePc9b5QzgR+fIqEiZYuewVs/V5m16rOiZ8dKP4R4
-	SI6o7/8I8IEVm1MCq590lcUzoucO18etEprgKLLYLCShwn4UW7zq1Xkd16bs0nE/llKjCksb2+F
-	EXEUx3fxPuJ
-X-Received: by 2002:a05:6402:114a:b0:6a9:8c23:e0c0 with SMTP id 4fb4d7f45d1cf-6aa04039ddamr3843480a12.19.1789559046925;
-        Wed, 16 Sep 2026 04:44:06 -0700 (PDT)
-Received: from [192.168.0.167] ([109.76.116.194])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aa1d228de9sm1631723a12.6.2026.09.16.04.44.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Sep 2026 04:44:06 -0700 (PDT)
-Message-ID: <1a2b8244-0e8b-49d0-8dce-775abb070c76@linaro.org>
-Date: Wed, 16 Sep 2026 12:44:05 +0100
+	 In-Reply-To:Content-Type; b=LQYhlK+lbZdbG75TZ7F12taoqGMT3MOa2EnHq62UavSZSY/nUDWa7mWyqBPVNMNEHhdn2EAKAt3K3oqoX3N0RQlIZOALuiAtBCen/KNN0+LSQePnGlrezrm288IN7dM3x1lbB0UhEqAA4AQDXnUyqk71w5DYoVQqXje18ezg9A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hlHQH2b3XzYQtmH
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:55:35 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id 3E6DD40577
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 19:55:40 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgCndim7g6pq0vsSAg--.59890S2;
+	Wed, 16 Sep 2026 19:55:40 +0800 (CST)
+Message-ID: <e1021204-6e4a-4767-889e-fd677409df1e@huaweicloud.com>
+Date: Wed, 16 Sep 2026 19:55:39 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,163 +32,123 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 4/5] media: qcom: camss: Add support for PHY API
- devices
+Subject: Re: [PATCH v6 21/26] perf annotate-arm64: Support stack variable
+ tracking
 To: sashiko-reviews@lists.linux.dev
-Cc: olteanv@gmail.com, neil.armstrong@linaro.org, devicetree@vger.kernel.org,
- media-ci@linuxtv.org, linux-clk@vger.kernel.org,
- linux-phy@lists.infradead.org, vkoul@kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20260906-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v17-0-e2197a3e2551@linaro.org>
- <20260906-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v17-4-e2197a3e2551@linaro.org>
- <20260906143233.523A21F00A3A@smtp.kernel.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-GB
-In-Reply-To: <20260906143233.523A21F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1789521520.git.wutengda@huaweicloud.com>
+ <11bcde1a75d96b524cc5a7f6fa442025680e56a0.1789521520.git.wutengda@huaweicloud.com>
+ <20260916014905.D44C91F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260916014905.D44C91F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgCndim7g6pq0vsSAg--.59890S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDAryUXryrZFWUXFWkZwb_yoW5Zr4xpF
+	98Cay5Wrs7Jw109FnrXr4xXr98Ww4xKF1S9r90qan7JFnFyrnYkas7Kay2qFWUCryvkw4j
+	vw1q9r4DXrZakaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26F4UJVW0obIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On 06/09/2026 15:32, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Selects a non-existent Kconfig symbol PHY_QCOM_MIPI_CSI2.
-> - [High] Hardware PHY state and resources are leaked on early probe and registration error paths.
-> - [Medium] Missing return value checks for phy_mipi_dphy_get_default_config_for_hsclk() and phy_set_mode() can lead to uninitialized PHY configuration.
+
+
+On 2026/9/16 9:49, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] perf: stale stack state due to bypassed invalidation in update_store_insn_state
 > --
 > 
-> commit cc3786ea5902bcb687c49374e8e8db29c5127496
-> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> commit 2ddb0f384d44eeb70844d8c3adc06f8d55101f68
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> media: qcom: camss: Add support for PHY API devices
+> perf annotate-arm64: Support stack variable tracking
 > 
-> Add the ability to use a PHY pointer which interacts with the standard PHY
-> API. In the first instance the code will try to use the new PHY interface.
-> If no PHYs are present in the DT then the legacy method will be attempted.
+> Extend update_insn_state_arm64() to track data types stored on the stack. The
+> implementation handles stack loads and stores to follow data types as they
+> move between registers and memory.
 > 
->> diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
->> index 4eda48cb1adf0..1edc5e5a1829e 100644
->> --- a/drivers/media/platform/qcom/camss/Kconfig
->> +++ b/drivers/media/platform/qcom/camss/Kconfig
->> @@ -7,3 +7,4 @@ config VIDEO_QCOM_CAMSS
->>   	select VIDEO_V4L2_SUBDEV_API
->>   	select VIDEOBUF2_DMA_SG
->>   	select V4L2_FWNODE
->> +	select PHY_QCOM_MIPI_CSI2
-> 
-> [Severity: High]
-> Does this select a nonexistent config symbol? Selecting a symbol that isn't
-> defined anywhere in the kernel causes a silent build dependency failure,
-> which will leave the required PHY infrastructure unbuilt.
-
-No the dependency is described in the cover-letter
-> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index a72c7703dd6b3..8339aab0d314f 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
 > [ ... ]
-> 
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
->> index 539ac4888b608..e00748dd83b02 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> 
+>> +/*
+>> + * For store insns: propagate type from @sreg to the memory location referenced
+>> + * by @dst, applying @mem_spacing to account for multi-regs stores (e.g. stp).
+>> + */
+>> +static void propagate_store_reg_state(struct type_state *state,
+>> +				      struct data_loc_info *dloc,
+>> +				      struct disasm_line *dl, int sreg,
+>> +				      struct annotated_op_loc *dst,
+>> +				      int mem_spacing)
+>> +{
 > [ ... ]
-> 
->> @@ -306,11 +308,88 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
+>> +		if (!has_reg_type(state, sreg) || !state->regs[sreg].ok) {
+>> +			stack = find_stack_state(state, offset);
+>> +			/* Preserve compound states when only a member is overwritten. */
+>> +			if (stack && !stack->compound)
+>> +				delete_stack_state(state, offset);
 >> +
->> +	if (link_freq < 0) {
->> +		dev_err(dev,
->> +			"Cannot get CSI2 transmitter's link frequency\n");
->> +		return -EINVAL;
->> +	}
+>> +			return;
+>> +		}
+> [ ... ]
+>> +static void update_store_insn_state(struct type_state *state,
+>> +				    struct data_loc_info *dloc,
+>> +				    struct disasm_line *dl,
+>> +				    struct annotated_op_loc *src,
+>> +				    struct annotated_op_loc *dst)
+>> +{
+>> +	int mem_spacing = 0;
 >> +
->> +	phy_mipi_dphy_get_default_config_for_hsclk(link_freq, num_lanes, dphy_cfg);
+>> +	if (!has_reg_type(state, dst->reg1))
+>> +		return;
 >> +
->> +	phy_set_mode(csiphy->phy, PHY_MODE_MIPI_DPHY);
+>> +	/* Handle the first source register */
+>> +	if (has_reg_type(state, src->reg1))
+>> +		propagate_store_reg_state(state, dloc, dl, src->reg1,
+>> +					  dst, mem_spacing);
 >> +
->> +	ret = phy_configure(csiphy->phy, &dphy_opts);
+>> +	if (!src->multi_regs || !has_reg_type(state, src->reg2))
+>> +		goto out_adjust;
 > 
 > [Severity: Medium]
-> Should we check the return values of phy_mipi_dphy_get_default_config_for_hsclk()
-> and phy_set_mode() here?
+> Does the has_reg_type() guard here inadvertently skip the stack state
+> invalidation logic?
 > 
-> If link_freq evaluates to 0, it appears phy_mipi_dphy_get_default_config_for_hsclk()
-> could return -EINVAL and leave the output dphy_opts structure zero-filled. Passing
-> this uninitialized configuration directly to phy_configure() could lead to
-> erratic hardware behavior.
+> Looking at propagate_store_reg_state() above, there is logic to delete the
+> stack state if the source register is untracked. However, because
+> update_store_insn_state() completely bypasses the call to
+> propagate_store_reg_state() when the source register is untracked, this
+> cleanup is never reached.
+> 
+> If an untracked register is stored into a stack slot previously used for a
+> tracked variable, could this leave stale tracking state on the stack, causing
+> subsequent loads from that slot to inherit the wrong type?
+> 
 
-Yeah but no link_freq <= 0 should cover that case. I'll add the 
-evaluation of the return types anyway.
+Agreed.
 
-> 
-> [ ... ]
-> 
->> @@ -709,6 +788,56 @@ int msm_csiphy_subdev_init(struct camss *camss,
->> +	ret = phy_init(csiphy->phy);
->> +	if (ret)
->> +		dev_err(dev, "%s init fail %d\n", csiphy->name, ret);
 >> +
->> +done:
->> +	return ret;
+>> +	/* Handle the second source register */
+>> +	mem_spacing = arm64__reg_size(dl->ops.source.raw);
+>> +
+>> +	if (mem_spacing >= 0)
+>> +		propagate_store_reg_state(state, dloc, dl, src->reg2,
+>> +					  dst, mem_spacing);
+>> +
+>> +out_adjust:
+>> +	adjust_reg_index_state(state, dloc, dl, dst);
 >> +}
 > 
-> [ ... ]
-> 
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> index 2123f6388e3d7..84097d82d99c9 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
-> 
-> [ ... ]
-> 
->> @@ -4832,14 +4890,21 @@ static int camss_init_subdevices(struct camss *camss)
->>   	unsigned int i;
->>   	int ret;
->>   
->> +	camss_detect_legacy_phy(camss);
->> +
->>   	for (i = 0; i < camss->res->csiphy_num; i++) {
->> -		ret = msm_csiphy_subdev_init(camss, &camss->csiphy[i],
->> -					     &res->csiphy_res[i],
->> -					     res->csiphy_res[i].csiphy.id);
->> +		if (!camss->legacy_phy) {
->> +			ret = msm_csiphy_subdev_init(camss, i);
->> +		} else {
->> +			ret = msm_csiphy_subdev_init_legacy(camss,
->> +							    &camss->csiphy[i],
->> +							    &res->csiphy_res[i],
->> +							    res->csiphy_res[i].csiphy.id);
->> +		}
->> +
->>   		if (ret < 0) {
->> -			dev_err(camss->dev,
->> -				"Failed to init csiphy%d sub-device: %d\n",
->> -				i, ret);
->> +			dev_err(camss->dev, "csiphy %d init fail\n",
->> +				res->csiphy_res[i].csiphy.id);
->>   			return ret;
->>   		}
->>   	}
-> 
-> [Severity: High]
-> Does this error path leak the PHY initialization state?
-> 
-> When msm_csiphy_subdev_init() succeeds, it calls phy_init() to acquire the PHY.
-> If a subsequent iteration of this loop fails, or if a later initialization step
-> like camss_probe() fails, the code returns immediately or goes to an error label
-> without rolling back the previously initialized PHYs (which require phy_exit()).
-> 
-> Additionally, in msm_csiphy_register_entity() located in camss-csiphy.c:
-> 
-> 	ret = csiphy_init_formats(sd, NULL);
-> 	if (ret < 0) {
-> 		dev_err(dev, "Failed to init format: %d\n", ret);
-> 		return ret;
-> 	}
-> 
-> A failure here returns early without calling phy_exit(). When the calling code
-> in camss_register_entities() rolls back, it decrements the index and skips this
-> failing entity, which seems to permanently leak its PHY initialization state.
-> 
 
-yes missed the unwind.
-
----
-bod
