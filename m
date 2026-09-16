@@ -1,238 +1,242 @@
-Received: from shrimp.cherry.relay.mailchannels.net (shrimp.cherry.relay.mailchannels.net [23.83.223.164])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010014.outbound.protection.outlook.com [40.93.198.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D5A42CB1C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 23:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.164
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789601267; cv=none; b=TYA4tR70lGP8Suz1foE9HmfBfAdati7CPhVtoJLDiRJX9k4pP3PyBOfVIBuxtgwE80A0SkXRXa05nisfzjUSZ7Z+U77m6v6fkTiyd1OBvjccgy868EEdJeoEkp/Sxr+fcxOI79Bo8Us1jWLCU8ocu8U4Xr12LWF733Xuj6VTUJk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789601267; c=relaxed/simple;
-	bh=qjQfO8GVzBSS8SA+AVRJ+QFdgtk8iKjh31od1SIk+f4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E9plLTP++6688hSRTo5iFPgL7y+M4zf8b7qsvz/X2LEG7oBOB/rUOLSdwiLfk1vXCO7XxU1Wz/g6TU4lYPhucNpCUSvkEziCvTbMzeFBTj7sU43GGh7KsRKvnetUsRT59FxJjSGGAVMHmA4zL3owPk/TNXwb8qVu/Q9oVheiVOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=bmPyZ52G; arc=none smtp.client-ip=23.83.223.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0B74CDA39
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 23:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789601501; cv=fail; b=eHxum7sq0MyBaTgALUG7VcGRj5ffrdQi04iZzUIAZl8O3qr9Y2torFKofVWchx/gqDYScdcyxQNKAFMFw4CATIdTqAq84tHH1EMfn7RETYqPxJwW4H616xMsluDguJAlnTXa3kJuIxsS06WCKSVq47wBBt7hN+BTBUT9dkuxoBQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789601501; c=relaxed/simple;
+	bh=/UH0Whxp45lmKKRZMvr+/LO8IpobT1fmRGxAjweECHw=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=YnJ38N6batD0b9VSxB1m/nMyQNG8vfCMODPVgjFCgPMFf6bGM/O5fVa1huPbLART/kfVfCYtz15xCfxd6Zyl3l5844JlyyIuLXYJzADC6+8zfcHcTOF06DQUIdjGFnTzwR1MlY20+orUxB9oPFuHhyIc8MbhK5QY9O/9JA3SGw8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=RPckePkn; arc=fail smtp.client-ip=40.93.198.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="bmPyZ52G"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id C8C95160679;
-	Wed, 16 Sep 2026 23:27:38 +0000 (UTC)
-Received: from pdx1-sub0-mail-a220.dreamhost.com (100-100-63-247.trex-nlb.outbound.svc.cluster.local [100.100.63.247])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 7119F161AF6;
-	Wed, 16 Sep 2026 23:27:34 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Oafish-Well-Made: 6962876b70e8d844_1789601258680_2361391356
-X-MC-Loop-Signature: 1789601258680:4214184305
-X-MC-Ingress-Time: 1789601258680
-Received: from pdx1-sub0-mail-a220.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.100.63.247 (trex/8.0.2);
-	Wed, 16 Sep 2026 23:27:38 +0000
-Received: from offworld (unknown [76.167.199.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a220.dreamhost.com (Postfix) with ESMTPSA id 4hlZmk0YVtzT3;
-	Wed, 16 Sep 2026 16:27:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1789601254;
-	bh=N79yyICNek3QXouoyECywu8Y2dO9nu+pGip4A8AHeLY=;
-	h=Date:From:To:Cc:Subject:Content-Type:Content-Transfer-Encoding;
-	b=bmPyZ52G9qJzw23l4mNJ4z5dGPL4hc3e+wUU/5kXROkbzLXEgx49yGD48azipZDKw
-	 tDFw3Bv4J2I2NMDUHUiTJ+W+Fa4vrjnAC4XlNVRshC2YUYjh52m/KdV6KwoI2SYbm2
-	 CMCo1+AcoTbtfdbJEIkJDRq6F/FFF+hFrWVB6Cw10QuDreZoTHjRQIDLHjXFIqaPH9
-	 jFKhhCrJQMjbWG06hyRhU3Hw8C/bLEVYVPOyFtj8NgnMD+hwU10cMk5wDPdiaaRew2
-	 eyGJnGLohEZYZCpyxzm2jKJHBxnXTLY7HSgz6VOERe1jbfeConvkmyTAm5hiB5IX5L
-	 He8DLpwD7Pmzg==
-Date: Wed, 16 Sep 2026 16:27:31 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
-Cc: linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v8 04/10] cxl: Add HDM-DB region creation
-Message-ID: <20260916232731.voszaue7vwjzgdrz@offworld>
-References: <20260909170302.1550680-1-dave@stgolabs.net>
- <20260909170302.1550680-5-dave@stgolabs.net>
- <20260909174808.BE31E1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="RPckePkn"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=C8HhU8dvVnM1iyGqT1InyKmeLsxVaRr1UJ8gyPPMmh5fG2FauInzSd6XWnZWDNPB3guOJ5JK46eyszf8dzDHUz2jJw0jPGaxfel3TGpoe9DtdTSbzYawSRp4HyUXmSbreaVTAEi21FcWc0S5UVlEZcii2aHSibeh0cA28Go64qq4f3lZE10VOzbtkCi2jIRAmJRnFTaJPzNbBW/hfoae7a03ADt50aASUVA1fKJiECBizwnWoRpiIuVR4ZAeJGS/ZXhvWJX6y0xRc8um5HllwXVBUSKl05VGrfW57oiEoHTvThy8lrsYtAWMKihapbP9uSp8+0bcmHl2DGt2kT98Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/SNgFNJiD2nyEOR6xoH1PtliI2UjI7v0svl83gpGe2Y=;
+ b=LjT2qzmyEt3NO8aEP1UDerQgyi+3jqs2+Tyv+2Pq5a6veU9eU61sLD+IuRCd7+rYSilWoB7XlYQoHgBteNKUVoBdovSkRnpIn639dOyMdSIY/qIXUDXnuIrwVgTj9riNiQk0w48397RduwjQEFgwPHN34EdaOb2cWOJboN+eu75dzE5f0blxUXN0SR03kXczww96HwGZkDyGTzHaUDIHr7B8iklKCZsfCE8g5Kp7hPgLfMumgjWHZhMDXboU4+lMg+uIaqQsodXl0ZS0p7/pZGoY+Vb/mIJ5EL7xQvkxvwjUpSmq9M2D/fYwBynpXe9q695/Zyy+nnZiN23e5FtGgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/SNgFNJiD2nyEOR6xoH1PtliI2UjI7v0svl83gpGe2Y=;
+ b=RPckePkn/cG6ryRLOl98dIHoDhd5vCB/la+FUYRxJy9WC2lzsR+LRj/hiYhcdBNvzL2EYEeMgRTSlsqOhJgR2vRXpa5PzMcgQQTqwyKdLGebouqxuK+Ls58RFKTUWwVUASRVIJQEw0bR5AoYswwpziRICISEnwLdB4xuuPkSJ3Q=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
+ by MW6PR12MB8836.namprd12.prod.outlook.com (2603:10b6:303:241::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
+ 2026 23:31:35 +0000
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad%5]) with mapi id 15.21.0428.009; Wed, 16 Sep 2026
+ 23:31:35 +0000
+Message-ID: <c1afb35a-f9a3-48c6-81e4-91a4299f0cc1@amd.com>
+Date: Wed, 16 Sep 2026 18:31:32 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 2/5] x86/sev: Disable CPU hotplug while SNP is active
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <cover.1789594774.git.ashish.kalra@amd.com>
+ <cd6962a88d691a020c2bf40fe77a6a3f3852fdfc.1789594774.git.ashish.kalra@amd.com>
+ <20260916223630.C5E1C1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Kalra, Ashish" <ashish.kalra@amd.com>
+Autocrypt: addr=ashish.kalra@amd.com; keydata=
+ xsFNBGnyeG8BEADrp4EWc3KHI3tz7Lnw4HgRJRG6U+IJKAp6EBnQA5uimlJspSAr+jf23I2a
+ T0mr1uiTnZG0JkfgFpTgwBYcR+d8J96WP9LDeId9z6R7b5jyB64fhYqX8Hpich3lon2Woijn
+ azEZ++sSUtAU75m2j9ZE6lkkPM2Ti9YWSBsSg92KDVVROXLO9n6U80lzudJrKAKHE0/PagzV
+ D5gjV/s7lb9PX8khKVK3ockGRuy97lw2mAcw17EV8GE5cuToOOzpP8ESXBt1g7xoXVcbHYol
+ yuX1ljHEfqy7cCtTsBk1+LzPuhZ7532MIfVmFtDcNUSwCGeGgwNRZno7lAJ9xd6fLkZPTEZ4
+ UNsaViyzmJ22P7xMiZqXWQWSk1LohnGhZZdTaIwidWT12c8RX+qVUCzesaFXGqKt0PNTipTp
+ L39iEZO8m/+lC1BmTo0EoYtsNfrlngwNPsSU7rtd/t00RuW4YHhXALT2JUbulLCHGK1w9isH
+ E7dJXprYjUiZRVF3SaeTF4zg5AzkWRB+0yL2KzWQPumDx1gscLNFev8J1EbdrYClcpUuNxKG
+ MMG95wPqWtZm/HaNyG08alXDZcnq8hhxA7AbJLnPYpqWd108p0qp3Vr0UrvuekBKZ6Y7be+m
+ Hb4A1xRX3hE2kB971lsVp0lXSEGFHB9TJw7FH/S8paITH58y4wARAQABzSNBc2hpc2ggS2Fs
+ cmEgPGFzaGlzaC5rYWxyYUBhbWQuY29tPsLBkQQTAQoAOxYhBOnNssdBmZnznITYhaE6KKJw
+ lji/BQJp8nhvAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEKE6KKJwlji/q7AP
+ +wfg5wOWq+f7eB3uh0agX5Ax/o5r5hlK0EMyl+srJ4jc+NmNKKuVPwx0EwZEpuEcbDLlQuO3
+ JIyi13wm6n6FvIBOCfWjvndpaci1QGTMtZDnxueXM8UeFST3KjIEWFXbvgiAyiZBE+lHaSBp
+ 7UfAL19icIomKdCVCRtnqOsTvv7mcyPL8qs+OAOu8akvp3NlGsqLrkSB/YTEBKmh8oOR0aXz
+ 4VBIHpfTIppIu+F5l5PxOQGwNv/AfQ/oN+Aeo+o8i3s57gViqP8uVlVcI/vi1S4hngmc87Ah
+ 3p7KdbrxxPzahD+p1fMXsCwEf0dyJIRduDgAkpktmSLoRzBGkjtOX5nvs75QgA3r0WsvcfxF
+ zly+nnhu2GsptY+uu/ZzW6PCz6p0pHMiDfPAL1cfizY8eTMFJN5fnOW9rwXvKbM+DHbowfkw
+ NtF0DecH3qjmqAzGg2srE9XJxwOotS1JgeBp1TZsah8pXBaY+Z7s1iaY58H2TrdiDbz88DD+
+ TGX4ZHPjocpqeUuwxn7gTCKQq3K1fjt6IKY0A1ocxQEK33pjQMRTJ8lwy4z37V6EohmvCs9w
+ 5qyvI9D1gnMnFrqpbry1Jz7z1HB4sFFYxIxyMh86uOcUxGmHRrCiII3YqiSmzizvq4aUmHxd
+ YE1Wy+pKx2HVobhnuKIKoSJj2JgYV0+O5dk6zsFNBGnyeG8BEAC+BGciGUt4ODNq38ouK/6E
+ jlkJPpnxlksBhlhwce/p1vvARFceifVbawkM8ePHyIXrzxho0PUDjteGFFDjP1o/N0rQzgbf
+ 0INfkbJpHME+SYETxrkm+j9oe8DiHXZhdatY5rupZoypodNQJDD1G/HoT7bBQxPj6xDBgHWH
+ OyZbg1jjQXSWESgVX118uiQ5M9RdO+gc/YGLt5FDvN892uWs8899QBm804SdSlwkZGMKXZXv
+ 12qKw+swQoVzBdCqSLOOtIhGevkl6Ul5+N8iT7xeKMVZffAxkz7DF1yDovhJhrYtgKyUMQqW
+ qCINhtp9wHvPt+wfutzYsCLVJvVLMIj3fPtfYBSPXQu2FP0z2Nx6oUxQR/LjilP4UezSdXt9
+ WWpb+mvDLmelNuoA7WUxRauQBKu6tR1zoFl3zTdW4ZiSqZRgKInSfaVhINUMv8gqcLlAzkVS
+ seOwRrwNDUosSW3gVwj28m/T9JSfGR62i58WmH0sFQG42yuIbq/uE4crf2oQDrpFNzTJgx6+
+ Ede711weViGHEQz5vsgERmQrJDddRTgl/SlGtkAYNpVFJgYV2N/jYjiz98hgE2MYgZ2Kd8WL
+ T8dvswsQguvkDMpWJZ2BunYhRLGIpyVDhepu05qyFuNYA50GX/qcj7POBSEx/6mBaIQC7oXI
+ ffsirWGyL5WEVQARAQABwsF2BBgBCgAgFiEE6c2yx0GZmfOchNiFoTooonCWOL8FAmnyeG8C
+ GwwACgkQoTooonCWOL/tdA//RIcNr6dB4ZZaKWDe5SSw0KD7hKExIIiBkxIv5XILcazPK21x
+ LlDbXUHxWWaG+9wezceRRBe3GjRo2aKEpQzuAOgR5Ix5tRe5yJAFozO/CCGixiBzQ2I2TGIv
+ rp8xZqqvmgogckqz3RE9Rx5VF7bqKriuGbF+WciPU6+YSuN1rH+esS40yoFu2skbYAMfm+Av
+ AvEMDAmkR1o+weVZZAZMjm+2ZpCm2xXk5bjAqPQ+GoH70x/kPVv+TXjTN68xIjmP6gwA7c1P
+ qozwWzaA2Q2HO5D76clT3tmHbtzMuYt3cfwbWbCpNaqycaHvktATiRjy60Bz9FvRL8cMt0+4
+ jumtJoa0nAEmx88QzaMOK3QDW6KoDKzV8bqAHBPtrwH+jhOKId07yHmWCZxIGJAkhwqsdEx8
+ bXpP3nTer40r1tvds54lxhKxOlVvf5iBoxa3kC8f6cTNJeGm5ettvD5iFSR+fwAUDEyZEtxQ
+ f3Brs3CLkBfijS0zCw9rWqlZJGSst5xwV8UdfppsPWkU9lAUR8UZFsO+g1xCxtBc0nucygzh
+ O+mvU01WFeZGTnW7INdP+eDIvj4XYmVSjwCSNvDphJkPccAn2KFcPxYh8PJAqCDw++nfNDrc
+ BXA1uh2XzCnnzbc62A+AjwXB89wvlctBLptKlnKBVtrsKEFIoLugtmfIsa4=
+In-Reply-To: <20260916223630.C5E1C1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH5P222CA0004.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:610:1ee::8) To BL3PR12MB9049.namprd12.prod.outlook.com
+ (2603:10b6:208:3b8::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260909174808.BE31E1F000FF@smtp.kernel.org>
-User-Agent: NeoMutt/20220429
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|MW6PR12MB8836:EE_
+X-MS-Office365-Filtering-Correlation-Id: b20bf511-74c0-43f6-0c5a-08df144aa5b1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|11063799006|6133799003|22082099003|18002099003|3023799007|10067099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	jYOMalcM3JEDcsMuKMkUFUIUO9PIRLCmWRy0L7I9S7ofBGYKEhyB/1EvmXvBx7mR7Fix1bwuOs8FHkxqlegh06jCOjWUgTUM+PeJdAL9h7azes7QbsI2fJTKmS0fJcPE3Yk/ELb+GoIWdBFgqvEokRly2dSDt8TmbAj9ByJjI+2zTWWnqUzFfVrW9kDadeHfLsNtAJLILI+zxc+ZsTDuV5GcBqrcJUomOGy+F+YxwoBKMcXf0tAVcLEZbVBJbAB2aec5oGBOJtwuQWCt+HLCUTkSTfxrDbqXLfDvTpQMoMUn/X/rbpcOfmVoTaq23oL3NIIJL115nSiDhD6YH7lb+t8l0O3XkGF0gJv+N62zsOld4HEu7Riyr8NPdQ8qjI96gfzh0iKYRwpAwT7SO+bRbFpk5bodh2AjabEpaikI59HqHf3oyUr0g6aXfhdZaCBGupV1GmbA0s9VjrOKWWHE1BybU5Fjf+rjqAEV1W4rUt1Zps3/xfXiygV49ng1oYzryt9cPAGoWG3E+LqO7NtKrwZFAfnOy34x4N86IS9Xk11dIh2mlHX2ss0jyJgD5SgSBwA2G34wmEHnRfhxow8W2XQlOGoBd3QXBFjyxjminuyB5US07plf7IQArPOBRKh7iGnHN7CvMXTVesRTsgPehyX1jw69iW8GDc0FApvmBLM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(11063799006)(6133799003)(22082099003)(18002099003)(3023799007)(10067099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OGF2UWhJQitoSFo4YmRWY1EzRjJBaGRjeXorbmpqWFVoYVVxclBaSWdnWEVK?=
+ =?utf-8?B?ejZrUnoxRW9BblBIa2NmdFNYYnMvb2NPNXBBMVJtY3ZjcTlSUDB3WGg5RVl6?=
+ =?utf-8?B?bUtQS2JvRkpNeGNXRXlaUW51dERTeXNEekZab3hJeHRUTk9Vdk9qYy9Pejc4?=
+ =?utf-8?B?cksvZE1KNFpuWjJ1Wm96VEhVdUpVb2dvN1FmSWlvRHlTaFNVamJ3WjA5Q3Zv?=
+ =?utf-8?B?L0lqTmRPLy9WNnViQ21TT3UveDhXdTByUk5PL1Ryb2dGY2tLQVRPWUY5N2s0?=
+ =?utf-8?B?Smk0NjNqZWFvdnQyQ3JZUGdvVy9UeFM3aWtmMkh5NTY3b1A5Z1hNUGNQdEg2?=
+ =?utf-8?B?S0owRE5qTUZGc2l2NXNCVnBCSmxNbFd2bE9ZbzVqazVZNE9lNmpFNmF2NE5C?=
+ =?utf-8?B?eXdWQ1pRUXhiTzhpRStZanFBZFFDNW43OVV6dXhVNGliTTNYRnpPTk91UkNE?=
+ =?utf-8?B?Z01Fa0lPNEFRTjlXRHlHWU5QQ3llOHV5S2prRXVndlo4TlRubU1ORFlOSzRs?=
+ =?utf-8?B?UzJ1R2ltUWVRQUVsWmRaaHlES2J3WUZuTnBsZG5oeG45LzY2U2w5Z1JralI4?=
+ =?utf-8?B?Y1pXQkQrNzE5LzhXaXFHVGxlc045OFVHcjJSOTcwOGtsbTNyZlJkeXE4b21P?=
+ =?utf-8?B?bCtValBvRTcxdFNKSVdaU09iMmZnditEK3hoaitLcURvZEhxMkgwSmxlUGx5?=
+ =?utf-8?B?K3d0NmJEb2JyeXlnMW80SlRVbTlEaW9vdmY2R051eXZRTTgrc1h5U1VtK05F?=
+ =?utf-8?B?TVBacjFzUEVGMTdIM1hEekdONjBqdmszMXhPeHVrbVphaFVhRXhDTmZzWkt1?=
+ =?utf-8?B?WUtUd1VMVDJYK1hIcytmeW01T3FsZHpnVE94N3c5b2JJMUFvYnRTL3JYa0Fs?=
+ =?utf-8?B?d2FxY2xvdVNmS2VKbGpRdGp2SmYxMFl0bE1ocWcwd1FiaUFyRVZ3NWpjVWFl?=
+ =?utf-8?B?VnhLZk52UE5Ub2sxejc4c090T25oazZXdXc1c3dVY0NmOW02NW42NldpY2RU?=
+ =?utf-8?B?eG85ZEk4ZndQWmxxVzBWTVowMzJtMXJNYTJnM1dNSkN6aWROWEtzMGVncUdP?=
+ =?utf-8?B?QW1aejcraldCZWU1ZW52NXZoWTA2YXFMQmtQdGlyZU1FekxJY3dVREhnOWNY?=
+ =?utf-8?B?djF5MkZjOE84QlVuZm5TODJOb1ZpaGRCM2NxaG9yMDlXcFdhcHFhemZPSVlT?=
+ =?utf-8?B?SXBvcXBWTVJqbkVMejNtNXAvSHNnMWVUS1pia2pUY2kwT091MVZ1N3dScVNI?=
+ =?utf-8?B?dERaczJQbFBGdE9xeXBEUjFLM0dJTUVReEIrSFJad2tQc25PNm44UzgyNHc5?=
+ =?utf-8?B?VkxWSHExb3luU0UrUSt0MXRqS1JoUUZ3T052U3Uya1pzUG1iTUYwTmFUOXMr?=
+ =?utf-8?B?Vms3djRLTlpYOGkvb0VoS0hBb3dScG1lamRITWNlVlJSazdOMlhFbDMwUFl2?=
+ =?utf-8?B?NEwzL1VIaCtEb1h3alZlcGVxS1htUDdxMzBvSTBqMnZ5ak9KdmVwVVIreUpH?=
+ =?utf-8?B?MWRSaVhpZTNmV25CZHQ2NlZrWVdBRkgzRXdIYi8xaW4xK1I4cEhJQ0FRMEtG?=
+ =?utf-8?B?MjlQYUlOck5oL09vUk54U1JzZlIrQXMzZm1zWTZVZHBGdmV2YWh3bzVNcWox?=
+ =?utf-8?B?Qi9LKyt5SzJyWEtQN09FQnozT09WM2c4QU5oUkcrZ0lKeFpkY1EyNkhtOHhS?=
+ =?utf-8?B?bnpkMi9kYXg1YW1JZWZnQ3EzM1JVQXZDUnFEV0tEYTNwS1BZS1BsU1czbURr?=
+ =?utf-8?B?MldLaXlrQVg1Y1JuY0NzUjhNaDdZRWV4MjllRlI4TG5iMzZKYzJIeDVmeHVR?=
+ =?utf-8?B?bGM4TmYvYTVVdnE1ZlZtNG1zOGZUQWM1cEFablVMdU44dGRBRFJkeDJZT1pl?=
+ =?utf-8?B?cERQSUhPSEhmQyswbUNwOWJHQmFRb1RWQlhEdS9ZMHpZSms3YzdMTnVTUW1T?=
+ =?utf-8?B?cHBXNGZNdDljYlF2NnR4YVdKVm5ySUVtRmVjSk1uVFphbklJUTRHN1NhcWJv?=
+ =?utf-8?B?dGcrNkxZT3RoWG9RTFlpcWo5THAvSEVoU1N5aXk4eXpMQ2xxWWdtNTV6SFFY?=
+ =?utf-8?B?NHpGUHp4S0hQMFJKVFdtTjliRnh4cWgvVHJwMklIei9lNlVNNDBXVmZjL1du?=
+ =?utf-8?B?K3AyeXp2Sm02QWdxeUtqMDdkVytqY2ZDd1BYTlpvSFhrT29nZkd1VVFkMGRq?=
+ =?utf-8?B?Lzd6cmNIcXpEcm9XUXRJYUdMTVFDSHpjc2V3ZnRDKzdXcytBdDV6YXRiRXE2?=
+ =?utf-8?B?d3FzTHNjU2NqNFRkRkFyMFluSlFJdHRoR2p1SlRkNDZIbkUzY3Z1Z2l6MWV3?=
+ =?utf-8?Q?xoklVA+GvhPIXI/OGK?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b20bf511-74c0-43f6-0c5a-08df144aa5b1
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 23:31:35.0983
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nFX7vedhxV+DjsVUzU3ucU5ii1siJgY21MdjMZhKw4xo8nRP0UoJSK5832yJzyb+dLdEA12gicqch7jWI/p+Pg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8836
 
-On Wed, 09 Sep 2026, sashiko-bot@kernel.org wrote:
 
->Thank you for your contribution! Sashiko AI review found 1 potential issue=
-(s) to consider:
->- [High] The device state flag `cxlds->bi` is read without proper synchron=
-ization, leading to a TOCTOU race with concurrent reset handlers.
-
-Urgh, I was able to reproduce this by artificially enlarging the racy windo=
-w...
-this is pure reset nastiness, but a valid catch. See below.
-
-[...]
-
->> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
->> --- a/drivers/cxl/core/region.c
->> +++ b/drivers/cxl/core/region.c
->> @@ -314,6 +314,20 @@ static int cxl_region_decode_commit(struct cxl_regi=
-on *cxlr)
->>	struct cxl_region_params *p =3D &cxlr->params;
->>	int i, rc =3D 0;
->>
->> +	/* a reset since attach may have invalidated cxlds->bi */
->> +	for (i =3D 0; i < p->nr_targets; i++) {
->> +		struct cxl_endpoint_decoder *cxled =3D p->targets[i];
->> +		struct cxl_memdev *cxlmd =3D cxled_to_memdev(cxled);
+On 9/16/2026 5:36 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] x86/sev: CPU hotplug disablement bypassed on early kexec errors
+> --
+> 
+> commit ac084f2d7188c520f2ee3ced2ab76e4c068df91f
+> Author: Ashish Kalra <ashish.kalra@amd.com>
+> 
+> x86/sev: Disable CPU hotplug while SNP is active
+> 
+> This commit disables CPU hotplug when SNP is enabled to prevent SNP guest
+> memory from being broken by CPUs coming online without the SnpEn bit set.
+> It ties CPU hotplug to the SNP-enable bit, disabling it in snp_prepare()
+> and re-enabling it in snp_shutdown() when SNP is disabled. It also
+> explicitly disables CPU hotplug during kexec if SNP is already enabled.
+> 
+>> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+>> index cff285d8ad8e3..558f7924a3f85 100644
+>> --- a/arch/x86/virt/svm/sev.c
+>> +++ b/arch/x86/virt/svm/sev.c
+> 
+> [ ... ]
+> 
+>> @@ -577,6 +582,8 @@ EXPORT_SYMBOL_FOR_MODULES(snp_shutdown, "ccp");
+>>   */
+>>  int __init snp_rmptable_init(void)
+>>  {
+>> +	u64 val;
 >> +
->> +		if (cxlr->type =3D=3D CXL_DECODER_DEVMEM &&
->> +		    cxl_root_decoder_is_bi(cxlr->cxlrd) && !cxlmd->cxlds->bi) {
->
->[Severity: High]
->Is there a potential TOCTOU race here with concurrent reset handlers?
->
->If a userspace-initiated PCI reset (e.g. pci_reset_function()) runs
->concurrently with cxl_region_decode_commit(), the reset path can call
->cxl_reset_done() -> cxl_bi_reset_detected(), setting cxlds->bi =3D false
->without holding the cxl_rwsem.region lock.
->
->If this reset happens exactly after this unprotected read of cxlds->bi, but
->before the endpoint decoder is programmed, could the decoder be committed
->with BI enabled via MMIO even though the device-wide BI capability is now
->turned off?
->
->Because the decoder was not yet committed when the reset occurred, it
->appears cxl_endpoint_decoder_reset_detected() would evaluate to false. This
->would bypass the kernel taint and critical warning, potentially leaving the
->hardware in a silently mismatched state.
-
-Using the region rwsem in reset_done() would not solve this because it only
-orders the notification, not the hardware reset, so we need to account for
-the full window. We need a hardware check after the commit is done (and res=
-et
-if detected). The current BI/reset check we have for the case where
-reset_done() has already run is still valid as.
-
-I am folding the following for v9:
-
-diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
-index c57c6474a8a1..3118fb8ea085 100644
---- a/drivers/cxl/core/core.h
-+++ b/drivers/cxl/core/core.h
-@@ -231,4 +231,10 @@ int cxl_set_feature(struct cxl_mailbox *cxl_mbox, cons=
-t uuid_t *feat_uuid,
-
-  resource_size_t cxl_rcd_component_reg_phys(struct device *dev,
-					   struct cxl_dport *dport);
-+static inline bool cxl_bi_decoder_enabled(void __iomem *bi)
-+{
-+	return FIELD_GET(CXL_BI_DECODER_CTRL_BI_ENABLE,
-+			 readl(bi + CXL_BI_DECODER_CTRL_OFFSET));
-+}
-+
-  #endif /* __CXL_CORE_H__ */
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index 4a504afbf78b..af11bb5171ab 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -1371,8 +1371,7 @@ void cxl_bi_reset_detected(struct cxl_port *endpoint)
-	if (!cxlds->bi)
-		return;
-
--	if (FIELD_GET(CXL_BI_DECODER_CTRL_BI_ENABLE,
--		      readl(bi + CXL_BI_DECODER_CTRL_OFFSET)))
-+	if (cxl_bi_decoder_enabled(bi))
-		return;
-
-	dev_warn(cxlds->dev, "BI disabled by reset\n");
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index da83700f81ca..81ed30c34db5 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -361,6 +361,28 @@ static int cxl_region_decode_commit(struct cxl_region =
-*cxlr)
-		}
-	}
-
-+	/*
-+	 * Ensure that a reset did not come in between the cxlds->bi check above
-+	 * and while committing the decoders. Consult the hardware state.
-+	 */
-+	for (i =3D 0; i < p->nr_targets; i++) {
-+		struct cxl_endpoint_decoder *cxled =3D p->targets[i];
-+		struct cxl_memdev *cxlmd =3D cxled_to_memdev(cxled);
-+		void __iomem *bi =3D cxled_to_port(cxled)->regs.bi_decoder;
-+
-+		if (cxlr->type =3D=3D CXL_DECODER_DEVMEM &&
-+		    cxl_root_decoder_is_bi(cxlr->cxlrd) &&
-+		    !cxl_bi_decoder_enabled(bi)) {
-+			dev_err(&cxlr->dev,
-+				"%s:%s BI disabled by reset during commit\n",
-+				dev_name(&cxlmd->dev),
-+				dev_name(&cxled->cxld.dev));
-+			cxl_region_decode_reset(cxlr, p->nr_targets);
-+			return -ENXIO;
-+		}
-+	}
-+
-	return 0;
-
-  err:
-
-[ ... ]
-
->
->> @@ -2105,10 +2118,31 @@ static int cxl_region_attach(struct cxl_region *=
-cxlr,
->>		return -ENXIO;
->>	}
->>
->> -	if (cxled->cxld.target_type !=3D cxlr->type) {
->> -		dev_dbg(&cxlr->dev, "%s:%s type mismatch: %d vs %d\n",
->> -			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
->> -			cxled->cxld.target_type, cxlr->type);
+>>  	if (WARN_ON_ONCE(!cc_platform_has(CC_ATTR_HOST_SEV_SNP)))
+>>  		return -ENOSYS;
+>>  
+>> @@ -586,6 +593,15 @@ int __init snp_rmptable_init(void)
+>>  	if (!setup_rmptable())
+>>  		return -ENOSYS;
+>>  
 >> +	/*
->> +	 * Verify the device and HDM are capable of the region's flavor before
->> +	 * proceeding. The endpoint decoder's target_type is then inherited
->> +	 * from cxlr->type later in cxl_rr_assign_decoder().
+>> +	 * On a kexec boot SNP may already be enabled (legacy firmware leaves
+>> +	 * SnpEn set across shutdown), in which case snp_prepare() bails without
+>> +	 * disabling CPU hotplug, so disable it here.
 >> +	 */
->> +	if (cxlr->type =3D=3D CXL_DECODER_DEVMEM &&
->> +	    cxl_root_decoder_is_bi(cxlrd) && !cxlds->bi) {
->
->[Severity: High]
->Does this read of cxlds->bi during region attach also need synchronization?
->
->While a race in this earlier phase might be caught by the second check in
->cxl_region_decode_commit(), both reads appear to happen without protecting
->against concurrent modifications from PCIe resets.
+>> +	rdmsrq(MSR_AMD64_SYSCFG, val);
+>> +	if (val & MSR_AMD64_SYSCFG_SNP_EN)
+>> +		cpu_hotplug_disable();
+> 
+> [Severity: High]
+> If a kexec kernel boots into a system where the previous kernel left
+> MSR_AMD64_SYSCFG_SNP_EN active, and an early initialization step fails
+> (such as passing amd_iommu=off on the kernel command line resulting in
+> !amd_iommu_snp_en, or setup_rmptable() failing), snp_rmptable_init() will
+> return -ENOSYS before checking the physical MSR hardware state and
+> disabling CPU hotplug.
+> 
+> Because hotplug remains enabled and the CCP driver skips initialization on
+> failure (bypassing snp_prepare()), could a subsequently hotplugged CPU come
+> online without the SNP_EN bit set?
+> 
+> If this results in a mixed hardware state, does it violate firmware
+> constraints and cause fatal RMP faults when the new CPU accesses memory?
+> 
+> Should the hardware state be checked and hotplug disabled unconditionally
+> before the software configuration checks?
+> 
 
-Yes, it is caught later, and now caught by hardware. So a stale cxlds->bi
-here has exactly one consequence, a region carrying a target whose device
-has since lost BI =E2=80=94 and that region cannot commit: the pre-check re=
-fuses
-it if .reset_done has run, the hardware recheck refuses it if it hasn't.
+The SnpEn‑already‑set branch handles only legacy firmware that leaves SnpEn set across kexec. Platforms supporting RMPOPT advertise SNP_X86_SHUTDOWN_SUPPORTED, so kexec clears SnpEn and a kexec boot leaves SnpEn=0 — the branch is never reached, and no CPU has SnpEn set to form a mixed state, whether or not amd_iommu=off or setup_rmptable() fails. On legacy firmware that does leave SnpEn set, such an early failure makes snp_rmptable_init() return -ENOSYS and SNP host support is not enabled, so the system doesn't run as an SNP host and RMPOPT never comes up; the resulting SnpEn‑set‑without‑RMP‑table state is a pre‑existing base‑SNP condition, not introduced by this patch. Disabling hotplug unconditionally before the checks would instead leave it permanently disabled when falling back to non‑SNP operation.
 
->
->> +		dev_err(&cxlr->dev, "%s:%s BI not enabled on device\n",
->> +			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev));
->> +		return -ENXIO;
->> +	}
->
->--
->Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909170302.155=
-0680-1-dave@stgolabs.net?part=3D4
+Thanks,
+Ashish
