@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681DB4EE85E;
-	Wed, 16 Sep 2026 10:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337C54EC678;
+	Wed, 16 Sep 2026 11:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789555409; cv=none; b=C5YDv7mpMZVgyjkFFjsunTILTg0ZtxjfgCchLs4CNc47Lfzr3vXMBzx00WKUWLfgVFsKcyXSgJRsW6FboZD09TTd1zVHF++EKm53ePcjdFJMCd2c71VsCizvwchtP2xQrylrx9q7LCBzOOFhbAG2OPvXmFiD58kaW21JKj88i24=
+	t=1789557733; cv=none; b=GHwNPEVIi+8zr4bLK4akqeoim+c/BCsUDdtQkm80ncn24dXF9jurU81Zj7498QXK8ZnMfpGBCAwagG2U5MwGT4BYEBhXvHvpFrC/KnYAU1mA6t1lTEKhk/YQzAX2s+1ifZcmcR7tQdyqoUK8jkFuihRRBazKg2OrAsm6jFo2ghQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789555409; c=relaxed/simple;
-	bh=pNF/fYZKvcKlZCJNJy4Ik87MUKWeVC4PAUAyo2PWQB0=;
+	s=arc-20240116; t=1789557733; c=relaxed/simple;
+	bh=F4tNhj582OFHSkSYr3E5i0u16GEo/PD6lsqkjPUqJeg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bz81jzssjlkdsMBcJH40PlDyZmNeKulS5vDYVVVHJcZp22eaB34tpqYbTuItL3fXYhY76MdyYRc9mMDqZ9GGzLjCGrX/Iyr3uWOG3/bjpucMGHFdNfvJbnKUyW6S1TRhRgfkfl0zxCzJ+Oz4S1gDKhQkduaRSVb7wYwMO6MVREw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=huxaqQI2; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=FHG2rbzau/Pi2eYjV5CRMUS16FTgA/6uQS45VbMvf/3rffsNoCmX+WW0Mm9FZrx+QDxOV79kwDH+mHpV7t7zfFdXkTJeii5PB0qW4IpE31OBQEXkN7tEbN+cdEJpNzjEaK2luks0n2BOrwsx8TTz7y/X2dKCfVA04NVBF8acvGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ahEjjpuP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="huxaqQI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767AB1F0089D;
-	Wed, 16 Sep 2026 10:43:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ahEjjpuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7DA1F000FF;
+	Wed, 16 Sep 2026 11:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789555389;
-	bh=/UGygQGXhuhDnAfhN574yKe4CYpKDrynLUaMeDlvo5U=;
+	s=k20260515; t=1789557719;
+	bh=gD7w5VVQ3g5qNpNjChQr/b3F5YLn6o8rO2n40UFb5tg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=huxaqQI2TwNroiRMo7UjM/+rKuW2mlKdf7v57qzlMcWhE0jthgS9TjiY4+kKxXoSq
-	 rS3XGxZJj0vj4XSxGsx3dvGxSWBvLSkMtmqnxk4gy7EPNBuFiQf1iHmE92Wh+e3h0q
-	 +BkYS2MJwFfM6A8zgGgrUp+DnlgUFSxDRMDLbuxZLi/chvTvcJtz6bwVraJxNd03zI
-	 JMr9tXFxycEv2d6My8ACQbRfl8vRNd5j6XwSZz+/rrO7xunXrgswzsHnGNgwHyJ844
-	 2SnHZ9wtVvSD0Mc1HgliTNNp78ORg4SQtXU+RK1V1kbzzicqhDHg2MInzUVYHYX7jF
-	 wxtL5EVEMzVBA==
-Date: Wed, 16 Sep 2026 11:43:05 +0100
+	b=ahEjjpuPVCkG2MdaRTkUqzMva32AuIu5AN9ywxz1skbJFS2O7oriO0PRDN9j29shy
+	 tS19546+sJ6k+zUkFWyoaLaJSWRFvM0AgEd2er3N352g+CzkdwClmN5GOXG3lrYaM6
+	 3GJdz8PQjPfriUFJN4IAH/19vwS1w+Uuah+vldIpEJZktwupJkkGvFH7Vwz29tI2Bv
+	 NjnLwOTHUHvwCY1mXfh/RjrundUhjM+4SaHH/ESCrqIJv6RFGm428OCqEZgfmooUgc
+	 Ulzp1ar4aB+wVhXvSb2AjxYeKxRlCc0Ed1FoGNE2JjzP88mT2zYCPuO8LNOMi+uN5L
+	 ZjnobDWUE41Mw==
+Date: Wed, 16 Sep 2026 12:21:55 +0100
 From: Lee Jones <lee@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Liang Haowen <nbg2974@gmail.com>, linux-scsi@vger.kernel.org,
-	linux-leds@vger.kernel.org
-Subject: Re: [PATCH RFC v4 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
- driver for ROG NVMe enclosures
-Message-ID: <20260916104305.GM11487@google.com>
-References: <202609152112.RFCv4-0.lhw@gmail.com>
- <202609152112.RFCv4-1.lhw@gmail.com>
- <20260915130050.E8CDB1F000FF@smtp.kernel.org>
+Cc: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	mfd@lists.linux.dev
+Subject: Re: [PATCH 1/3] mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
+Message-ID: <20260916112155.GQ11487@google.com>
+References: <20260914201456.2018403-1-cosmin-gabriel.tanislav.xa@renesas.com>
+ <20260914201456.2018403-2-cosmin-gabriel.tanislav.xa@renesas.com>
+ <20260914202828.46A991F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,14 +45,13 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915130050.E8CDB1F000FF@smtp.kernel.org>
+In-Reply-To: <20260914202828.46A991F000FF@smtp.kernel.org>
 
-On Tue, 15 Sep 2026, sashiko-bot@kernel.org wrote:
+On Mon, 14 Sep 2026, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] leds: data race on subled_info array causes torn color updates
-> - [Low] leds: build failure due to undefined macro kzalloc_obj
-> - [Low] leds: build failure due to missing argument in blk_rq_map_kern()
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The patch replaces a standard API call with a bespoke pointer arithmetic helper to retrieve parent data, cementing an MFD architectural guideline violation.
+> - [Low] The commit message description starts with a lowercase letter, violating MFD subsystem guidelines.
 
 Please review, explain or fix the Sashiko review(s).
 
@@ -61,101 +59,57 @@ If this is a set, this request includes the other patches too.
 
 > --
 > 
-> commit e6ce9b3b67cc2aa4897215acc2c62600810790a8
-> Author: Liang Haowen <nbg2974@gmail.com>
+> commit 8098c2550655f8bdfa6c7acd0a4b1dfbc4e57e2a
+> Author: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 > 
-> leds: asus-aura-scsi: Add ASUS Aura RGB LED driver for ROG NVMe enclosures
+> mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
 > 
-> This commit introduces a driver for ASUS ROG external NVMe enclosures that
-> exposes 4 independently addressable LEDs via the LED multicolor class. It
-> uses a SCSI device handler matched by vendor INQUIRY to send custom ENE
-> sequences over passthrough SCSI commands.
+> Channels 1 and 2 are used by both the PWM and counter drivers. Both
+> subdrivers assign struct rz_mtu3_channel::dev to their own device
+> instance for those shared channels, so the value stored in it depends on
+> which subdriver binds last.
 > 
-> > diff --git a/drivers/leds/leds-asus-aura-scsi.c b/drivers/leds/leds-asus-aura-scsi.c
-> > new file mode 100644
-> > index 0000000000000..089cc3dcee105
-> > --- /dev/null
-> > +++ b/drivers/leds/leds-asus-aura-scsi.c
-> [ ... ]
-> > +static int ene_write(struct scsi_device *sdev, u16 reg,
-> > +		     const void *data, u8 arg_count)
-> > +{
-> > +	struct request *rq;
-> > +	struct scsi_cmnd *scmd;
-> > +	u8 cdb[ENE_CDB_LEN];
-> > +	int ret;
-> > +
-> > +	ene_build_cdb(cdb, reg, arg_count);
-> > +
-> > +	rq = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_OUT, 0);
-> > +	if (IS_ERR(rq))
-> > +		return PTR_ERR(rq);
-> > +
-> > +	if (arg_count) {
-> > +		ret = blk_rq_map_kern(rq, (void *)data, arg_count, GFP_NOIO);
+> > mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
 > 
 > [Severity: Low]
-> Does this cause a build failure? The kernel API blk_rq_map_kern() requires 5
-> arguments, where the first parameter should be the struct request_queue *q,
-> but it is called here with only 4 arguments.
+> Does this commit message subject violate the MFD subsystem formatting
+> conventions? The guidelines mandate capitalizing the description after the
+> subsystem prefix, e.g., "mfd: <Driver>: <Capitalized description>".
 > 
-> > +		if (ret)
-> > +			goto out;
-> > +	}
-> [ ... ]
-> > +static void asus_aura_set(struct led_classdev *cdev,
-> > +			  enum led_brightness brightness)
+> > diff --git a/drivers/mfd/rz-mtu3.c b/drivers/mfd/rz-mtu3.c
+> > index 0a254e61ec0a5..d809436e2124c 100644
+> > --- a/drivers/mfd/rz-mtu3.c
+> > +++ b/drivers/mfd/rz-mtu3.c
+> > @@ -60,10 +60,17 @@ static bool rz_mtu3_is_16bit_shared_reg(u16 offset)
+> >  		offset == RZ_MTU3_TCNTSA || offset == RZ_MTU3_TCNTSB);
+> >  }
+> >  
+> > +static inline struct rz_mtu3_priv *rz_mtu3_ch_to_priv(struct rz_mtu3_channel *ch)
 > > +{
-> > +	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
-> > +	struct asus_aura_led *led =
-> > +		container_of(mc, struct asus_aura_led, mc_cdev);
-> > +	struct asus_aura_zone *zone = led->zone;
-> > +	unsigned long flags;
+> > +	struct rz_mtu3_channel *first_ch = ch - ch->channel_number;
+> > +	struct rz_mtu3 *mtu = container_of(first_ch, struct rz_mtu3, channels[0]);
 > > +
-> > +	led_mc_calc_color_components(mc, brightness);
-> > +
-> > +	spin_lock_irqsave(&zone->lock, flags);
+> > +	return mtu->priv_data;
+> > +}
 > 
 > [Severity: Medium]
-> Could this lead to a data race on the subled_info array? The LED core allows
-> concurrent brightness_set callbacks for the same LED (for instance, from
-> sysfs and a hardware trigger). The helper led_mc_calc_color_components()
-> modifies the shared mc->subled_info array locklessly before the driver
-> acquires its spinlock. If multiple threads update the brightness
-> concurrently, they might interleave their writes to the array, causing the
-> winning thread to read a mix of old and new color components.
+> Does the introduction of rz_mtu3_ch_to_priv() violate MFD guidelines for
+> parent data access?
 > 
-> > +	/* ENE colour register byte order is R, B, G. */
-> > +	led->rgb[0] = led->subled[0].brightness;
-> > +	led->rgb[1] = led->subled[2].brightness;
-> > +	led->rgb[2] = led->subled[1].brightness;
-> > +	zone->dirty |= BIT(led->index);
-> > +	spin_unlock_irqrestore(&zone->lock, flags);
-> > +
-> > +	schedule_work(&zone->work);
-> > +}
-> [ ... ]
-> > +static int asus_aura_attach(struct scsi_device *sdev)
-> > +{
-> > +	struct asus_aura_zone *zone;
-> > +	int i, ret;
-> > +
-> > +	if (strncmp(sdev->vendor, ARION_INQ_VENDOR, strlen(ARION_INQ_VENDOR)) ||
-> > +	    strncmp(sdev->model, ARION_INQ_MODEL, strlen(ARION_INQ_MODEL)))
-> > +		return SCSI_DH_DEV_UNSUPP;
-> > +
-> > +	zone = kzalloc_obj(*zone, GFP_KERNEL);
+> The MFD guidelines explicitly state that child drivers must directly access
+> parent data using standard APIs (like dev_get_drvdata) and to avoid writing
+> bespoke helpers in the parent. 
 > 
-> [Severity: Low]
-> Does this code fail to compile? It looks like it invokes an undefined macro
-> kzalloc_obj() instead of the standard kzalloc() function to allocate memory.
+> While this replaces dev_get_drvdata(ch->dev->parent) to avoid depending on
+> subdriver-populated state, substituting it with a custom helper using pointer
+> arithmetic (ch - ch->channel_number) tightly couples the implementation to
+> the physical layout of the channels array.
 > 
-> > +	if (!zone)
-> > +		return SCSI_DH_NOMEM;
-> > +	zone->sdev = sdev;
+> Could the child drivers be refactored to retrieve the parent data themselves
+> instead of introducing this bespoke accessor?
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/202609152112.RFCv4-1.lhw@gmail.com?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260914201456.2018403-1-cosmin-gabriel.tanislav.xa@renesas.com?part=1
 
 -- 
 Lee Jones
