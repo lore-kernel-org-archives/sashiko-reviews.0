@@ -1,148 +1,228 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-227.mta0.migadu.com [91.218.175.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AF74D990A;
-	Wed, 16 Sep 2026 10:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D355F4EE870
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 10:32:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789554643; cv=none; b=XvV8qxx7yNdvV9r9cX1tmJ2f/Y9IcNMfp9dvMKositceF8NADZl3MkxcQtO45ZmcMVncI+0D9AvxY+m6uVtp33hKEFATEhQE1Vx/zIU7wDKS+KpETs7wSHG77VUeNFxsntoq/Kckh9e8t8dTpYSVLafWKKOmy/3vw5zisNcS6ak=
+	t=1789554753; cv=none; b=AYGtjB1O4+5WGdWA0MiZcQD1SvB93t70DXJp5MetlnZR6KEtzO/UK1pvi8qq2/4ohSa3TCJJ0B9KWnK3y5EDf6M6nEn443s6njl9biqnwPr1biIToAO7t9zmYmUM7aoOSwmlfn14oxZbV4nmk0VsaucggFBAmD5E/8atfylmvUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789554643; c=relaxed/simple;
-	bh=ToDiMD4kX9Iv406tqdtGXihdMYJOYTJMXqk/zYESWj4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KQ9Cmmge8m2goi7e6TjzfiT/Dg/WRlXqHYlpmoyDeWT3yMIf0d4kohP+2NHKvsUB2hhn22qHWMnsa2rOBbGw56/rmFJKSxzbqS7I0skj0Lm9Di6gTZC7giNlA8orjGJ4Zh9VhQZvtgjHfXjDE0p5yOJM8BhW2CJJg/mrjxudfBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPVnz4nf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789554753; c=relaxed/simple;
+	bh=XEElrARnGZXo06nVsE55UlAH/qIqFqbot95vz0Dia1k=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ZedvRfVTAiNiYDPKlQ9BisHUzfLSXOvQ99ln4iIdF5grhIpJOCDTAxYcLMvFq2QTv3diNJhdF7pH7wqsNw+DRCskxvqgC176aT6X9SInkS1eRHP+yKS060NqaRRDIURrH7fgb6eNwOllxj1J43ix3EPz6EEuzOVJvOSYOpiIiQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qPlH3sK/; arc=none smtp.client-ip=91.218.175.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPVnz4nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7091F00893;
-	Wed, 16 Sep 2026 10:30:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789554620;
-	bh=HMnGR1uP61JN+YKnnP9vFpggh244A2KHvY9fMIpEhfo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HPVnz4nfexvQhm6Ny/K/nF407DX5XswJufYNl/mLsMCXQncIkes5DPb6rOyeCJPwk
-	 V2EDc1JYGmk/bZrLXi1QuXydpXpSK7wPqG+qjvHRQUJSM//FCPShW1FVWIjz2OytjS
-	 pgXxihgAW1VFKnfGsRWgsACXsXJF8UI197ss3ECqdaPAIRqbPOEvF9uZKYgYDOXMWL
-	 adYRm9mb3tHlC2FSIPjqeQ9qiLikZf9KfDPbEPEIbArC/QYMuiGo3DnT71thp7mRXg
-	 ijy6pWDL6snOx6Rpulb6Q8GieZsvAPQlS+0nIGyJt8OLernbgXOcUGj96S1peR7gbs
-	 y4aGOo702H8Sw==
-Date: Wed, 16 Sep 2026 11:30:16 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ryan Brue <ryanbrue.dev@gmail.com>, robh@kernel.org,
-	devicetree@vger.kernel.org, conor+dt@kernel.org,
-	mfd@lists.linux.dev
-Subject: Re: [PATCH 3/3] mfd: mt6397-core: Add mt6397 AUXADC support
-Message-ID: <20260916103016.GK11487@google.com>
-References: <20260915-rbrue-suez-upstreaming-mt6397-auxadc-v1-0-d35d2ac3d6f0@gmail.com>
- <20260915-rbrue-suez-upstreaming-mt6397-auxadc-v1-3-d35d2ac3d6f0@gmail.com>
- <20260916042448.A40941F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qPlH3sK/"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=XEElrARnGZXo06nVsE55UlAH/qIqFqbot95vz0Dia1k=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789554721; v=1; x=1790159521;
+ b=qPlH3sK/T/fSA1FKI9kwsVwPTCwG53A8jfUMjBIPWqI7GNtNiomHw0GwS8a0vf4y02+JAjH+
+ hYBFnwdXUULX/vom8QGUTMrRK3QId2IGoBT29dnvqR3MXRTaEklg/6TQSCHxT752s4eK9rSrJ2L
+ WSNEZpMpGqLj40xPQK9wuKyw=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id d8fc3f7943fd14ab;
+	Wed, 16 Sep 2026 10:32:01 +0000
+X-Mizu-Trace-ID: d8fc3f7943fd14ab
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <2d6e4798-a3eb-4a63-8575-c3f9cbd7fe62@linux.dev>
+Date: Wed, 16 Sep 2026 18:31:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com,
+ bpf@vger.kernel.org
+Subject: Re: [RFC PATCH v4 1/5] blk-iocost: add BPF struct_ops cost model
+ support
+To: sashiko-reviews@lists.linux.dev
+References: <20260916072302.1068871-1-cui.tao@linux.dev>
+ <20260916072302.1068871-2-cui.tao@linux.dev>
+ <20260916073408.D92471F000FF@smtp.kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260916073408.D92471F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260916042448.A40941F000FF@smtp.kernel.org>
 
-On Wed, 16 Sep 2026, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] iio: mt6397-auxadc: hardware state leak on error paths
 
-Please review, explain or fix the Sashiko review(s).
+在 2026/9/16 15:34, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] bpf: resource leak and broken blkcg notifications on BPF model unbind
+> - [High] bpf: coefficient-only writes fail if bound model is unregistered
+> - [Low] bpf: multi-line comments do not follow modern kernel style
 
-If this is a set, this request includes the other patches too.
+Thanks for the reviews.  All five findings across the two patches are
+confirmed and will be fixed in the next revision:
+
+- the lookup in iocost_bpf_model_get() only searched the registry, so
+  a coefficient-only write on a device using an unregistered model
+  failed with ENOENT; the lookup will fall back to the notify list,
+  keeping such a model selectable by name until the last device
+  unbinds
+
+- the notify-list detach condition in iocost_bpf_model_put() was
+  wrong for a registered model bound to several devices: the first
+  unbind removed the node from the lifecycle list early and the last
+  unbind then failed to find it, leaking the BPF map reference; the
+  node will leave the notify list only with the last binding
+
+- the 2x example model did not advance its cursor for merged bios,
+  unlike the builtin backmerge behaviour, so a long merged stream
+  could drift past the 16MB seek threshold and misprice the
+  following IO as random
+
+- the multi-line comments use the opening marker on its own line
+
+While testing those fixes we also found and fixed a problem of our
+own: two racing io.cost.model writes resolving the same model each
+took a reference on it, but the write whose commit found the model
+already bound did not drop one, leaking a map reference.  The commit
+path now drops the redundant reference.
+
+The next revision will follow shortly.
 
 > --
 > 
-> commit e17dd59587f106380c3ede8aa27c118b33350f88
-> Author: Ryan Brue <ryanbrue.dev@gmail.com>
+> commit 4e914860298423131f3423ab63f79ed4a655051f
+> Author: Tao Cui <cuitao@kylinos.cn>
 > 
-> mfd: mt6397-core: Add mt6397 AUXADC support
+> blk-iocost: add BPF struct_ops cost model support
 > 
-> The mt6397 PMIC includes an AUXADC. Register the AUXADC in the mt6397
-> devices array to allow the corresponding driver to probe using compatible
-> string.
+> This commit introduces a BPF struct_ops based cost model for blk-iocost,
+> replacing the builtin linear model on a device. It implements a
+> registration framework where sysfs bindings map a registered model to a
+> device.
 > 
-> > diff --git a/drivers/mfd/mt6397-core.c b/drivers/mfd/mt6397-core.c
-> > index 9ec9519965887..5d5f816492aaa 100644
-> > --- a/drivers/mfd/mt6397-core.c
-> > +++ b/drivers/mfd/mt6397-core.c
-> > @@ -261,6 +261,9 @@ static const struct mfd_cell mt6359_devs[] = {
-> >  
-> >  static const struct mfd_cell mt6397_devs[] = {
-> >  	{
-> > +		.name = "mt6397-auxadc",
-> > +		.of_compatible = "mediatek,mt6397-auxadc",
+>> diff --git a/block/blk-iocost-bpf.c b/block/blk-iocost-bpf.c
+>> new file mode 100644
+>> index 0000000000000..7f1f9a2e51cb2
+>> --- /dev/null
+>> +++ b/block/blk-iocost-bpf.c
 > 
-> [Severity: Medium]
-> Enabling this device exposes a hardware state leak on error paths in the
-> mt6397-auxadc driver.
+> [ ... ]
 > 
-> In mt6397_auxadc_isense_enable(), if the second regmap write fails, does the
-> function return without unwinding the first write, leaving
-> MT6397_CHR_CON16_ADCIN_VSEN_EN incorrectly enabled?
+>> +const struct iocost_model_ops *iocost_bpf_model_get(const char *name)
+>> +{
+>> +	struct iocost_bpf_model *m;
+>> +	const struct iocost_model_ops *ops = ERR_PTR(-ENOENT);
+>> +
+>> +	mutex_lock(&iocost_bpf_reg_lock);
+>> +	list_for_each_entry(m, &iocost_bpf_models, list) {
 > 
-> drivers/iio/adc/mt6397-auxadc.c:mt6397_auxadc_isense_enable() {
->     ...
-> 	ret = regmap_update_bits(map, MT6397_CHR_CON16,
-> 				 MT6397_CHR_CON16_ADCIN_SEL,
-> 				 MT6397_CHR_CON16_ADCIN_VSEN_EN);
-> 	if (ret)
-> 		return ret;
+> [Severity: High]
+> Will this lookup fail to find models that are unregistered but still
+> actively bound to devices? If a user issues a coefficient-only write on
+> a device using an unregistered model, ioc_cost_model_write() passes the
+> name here, but since this only searches the registry (iocost_bpf_models),
+> it returns -ENOENT and rejects the write.
 > 
-> 	return regmap_set_bits(map, MT6397_AUXADC_CON14,
-> 			       MT6397_AUXADC_CON14_CH0_NORM_SEL |
-> 			       MT6397_AUXADC_CON14_CH0_LBAT_SEL);
-> }
+>> +		if (!strcmp(m->ops->name, name)) {
 > 
-> Similarly, during teardown in mt6397_auxadc_isense_disable(), the use of the
-> ?: operator short-circuits the sequence.
+> [ ... ]
 > 
-> If the first regmap_clear_bits() fails, will it abandon the cleanup and skip
-> disabling MT6397_CHR_CON16_ADCIN_SEL?
+>> +static void bpf_iocost_unreg(void *kdata, struct bpf_link *link)
+>> +{
+>> +	struct iocost_model_ops *ops = kdata;
+>> +	struct iocost_bpf_model *m;
+>> +
+>> +	mutex_lock(&iocost_bpf_reg_lock);
+>> +	m = iocost_bpf_model_lookup(ops);
+>> +	if (m) {
+>> +		/* keep the linkage queryable so model_put() can tell a
+>> +		 * still-registered node (one ref held by the registry)
+>> +		 * from one kept alive only by device bindings
+>> +		 */
 > 
-> drivers/iio/adc/mt6397-auxadc.c:mt6397_auxadc_isense_disable() {
->     ...
-> 	ret = regmap_clear_bits(map, MT6397_AUXADC_CON14,
-> 				MT6397_AUXADC_CON14_CH0_NORM_SEL |
-> 				MT6397_AUXADC_CON14_CH0_LBAT_SEL);
+> [Severity: Low]
+> Does this comment style follow the BPF subsystem requirements? The
+> standard specifies that multi-line comments should have the opening /*
+> on its own line.
 > 
-> 	return ret ?: regmap_clear_bits(map, MT6397_CHR_CON16,
-> 					MT6397_CHR_CON16_ADCIN_SEL);
-> }
+>> +		list_del_init(&m->list);
 > 
-> A similar issue appears in mt6397_auxadc_battemp_bias().
+> [ ... ]
 > 
-> Does this function lack a rollback path if the second or third regmap
-> operation fails, permanently leaking previously modified register states?
+>> +void iocost_bpf_model_put(const struct iocost_model_ops *ops)
+>> +{
+>> +	struct iocost_bpf_model *m;
+>> +
+>> +	mutex_lock(&iocost_bpf_reg_lock);
+>> +	list_for_each_entry(m, &iocost_bpf_lifecycle, lifecycle) {
+>> +		if (m->ops == ops)
+>> +			break;
+>> +	}
+>> +	if (&m->lifecycle != &iocost_bpf_lifecycle) {
+>> +		bool freed = refcount_dec_and_test(&m->refs);
+>> +
+>> +		/* leave the notify list with the last binding: the
+>> +		 * remaining ref is either the registry's (node still on
+>> +		 * iocost_bpf_models) or zero and the node is freed
+>> +		 */
 > 
-> drivers/iio/adc/mt6397-auxadc.c:mt6397_auxadc_battemp_bias() {
->     ...
-> 	if (on) {
-> 		ret = regmap_set_bits(map, MT6397_AUXADC_CON0,
-> 				      MT6397_AUXADC_CON0_BUF_PWD_ON);
-> 		if (ret)
-> 			return ret;
-> 		ret = regmap_set_bits(map, MT6397_AUXADC_CON0,
-> 				      MT6397_AUXADC_CON0_BUF_PWD_B);
-> 		if (ret)
-> 			return ret;
-> 		return regmap_set_bits(map, MT6397_CHR_CON7,
-> 				       MT6397_CHR_CON7_BATON_TDET_EN);
-> 	}
->     ...
-> }
+> [Severity: Low]
+> Similarly here, this multi-line comment is missing the opening /* on its
+> own line.
 > 
-> > +	}, {
-> >  		.name = "mt6397-rtc",
+>> +		if (freed || !list_empty(&m->list))
+>> +			list_del(&m->lifecycle);
+>> +		mutex_unlock(&iocost_bpf_reg_lock);
+>> +		bpf_struct_ops_put(ops);
+>> +		if (freed)
+>> +			kfree(m);
+>> +		return;
+>> +	}
 > 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260915-rbrue-suez-upstreaming-mt6397-auxadc-v1-0-d35d2ac3d6f0@gmail.com?part=3
+> [Severity: High]
+> Can this sequence prematurely detach registered models from the lifecycle
+> list and leak BPF map references?
+> 
+> When the first device is unbound from a registered model,
+> !list_empty(&m->list) will evaluate to true. This removes the model from
+> the lifecycle list early, breaking blkcg notifications.
+> 
+> When subsequent devices are unbound, list_for_each_entry() at the start of
+> iocost_bpf_model_put() will fail to find the model, causing execution to
+> jump over this block completely. The bpf_struct_ops_put() call will be
+> skipped, leading to a map reference leak.
+> 
+>> +	mutex_unlock(&iocost_bpf_reg_lock);
+>> +}
+> 
+>> diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+>> index 2745bffcd5eef..22b2ece52fa58 100644
+>> --- a/block/blk-iocost.c
+>> +++ b/block/blk-iocost.c
+> 
+> [ ... ]
+> 
+>> @@ -3591,6 +3628,24 @@ static ssize_t ioc_cost_model_write(struct kernfs_open_file *of, char *input,
+>>  	spin_lock_irq(&ioc->lock);
+>>  	memcpy(u, ioc->params.i_lcoefs, sizeof(u));
+>>  	user = ioc->user_cost_model;
+>> +#ifdef CONFIG_BLK_CGROUP_IOCOST_BPF
+>> +	{
+>> +		const struct iocost_model_ops *model =
+>> +			rcu_dereference_protected(ioc->model,
+>> +					lockdep_is_held(&ioc->lock));
+>> +
+>> +		/* seed from the bound model so a coefficient-only write
+>> +		 * keeps it bound; ctrl=auto/user and model=linear are
+>> +		 * the explicit ways back to the builtin model
+>> +		 */
+> 
+> [Severity: Low]
+> This comment also places text on the same line as the opening /*, which
+> diverges from the preferred BPF multi-line comment style.
+> 
+>> +		if (model)
+>> +			strscpy(bpf_model, model->name, sizeof(bpf_model));
+> 
 
--- 
-Lee Jones
