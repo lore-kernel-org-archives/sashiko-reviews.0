@@ -1,300 +1,326 @@
-Received: from SE2P216CU007.outbound.protection.outlook.com (mail-koreacentralazon11021089.outbound.protection.outlook.com [40.107.42.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f226.google.com (mail-oi1-f226.google.com [209.85.167.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B99B265623
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:21:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.42.89
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789546905; cv=fail; b=jwvIMk7F0PvBo2mt92LleTnmpJeqvs7+E67S1CJpcOKNFLyWlLwCk5hI58Zberiyl9mnkpLfWoB3p6o0Dq1OM+to8/IXjyHqyQk0qAf0XTrFXr+bSgX62L6vjwezq1e448zZbstU4rf6gvAVg7KsxLmCTCtA8krEOgZ1TW66I9I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789546905; c=relaxed/simple;
-	bh=f1ZOinIiEPqb+0v+PoolYtL756s7OvWv7YDWiueucmw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=GAJfQ6sai/qpHoJCId1DkcRGtuMfvCSTjZemYRxv0yiRcnhfpW547bUgvY8jV4CfqZfj9y5AlaapaDSRqruiU2kUOGhgzkJa/coA9JsOBVCQkU2hmVENOSSeYMuatijV1IFGaC7jptbWrUBgj4jrZrfTpKX3QTDOzrz7syTZzsc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chipsnmedia.com; spf=fail smtp.mailfrom=chipsnmedia.com; dkim=pass (2048-bit key) header.d=chipsnmedia.com header.i=@chipsnmedia.com header.b=H6JVAqzD; arc=fail smtp.client-ip=40.107.42.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chipsnmedia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=chipsnmedia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB4414AD0D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.226
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789547037; cv=none; b=YlGX0+umd1QFMt+6jdlMZpISwo/PPvLN+iqpYCUCuKrboLNdkI9qVn1q/o1DGrRxqNSghQBwH9rXtEs6N2dl9fGMm+kn+yUptkbL7/35RM0ugWn+a9qef7sCXr2Bq6K7sH1EUZ1735+RaoAVM+ZEB6gyklRztYfjWNSmJnv0djQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789547037; c=relaxed/simple;
+	bh=56NxGvgvbJp1M2ZqJKrGzVbegZUSJ+KAItQyeChqr8Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mcxpvfsmg4ZlcAQxQXqsnH7BVzK1X5x4SIghjpBU7i2V7/I+yIoGa1pHjmgyH9EJ8qN5k+xclgBcCOhagv3jKZ5wO7qY6VtZDUPSzY7LUcw5sr7vpLZyNnIHAsW1re4+R5+okBzA81qJ1w0u1JkmO9ZbyX2DTqZzFgBEp1A9k08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=CsvsKHJQ; arc=none smtp.client-ip=209.85.167.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chipsnmedia.com header.i=@chipsnmedia.com header.b="H6JVAqzD"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xoP5XK+FWjLqzX5gTzMMMPv5bHTmE95Kf3ZctI+huYeruKFHeeo80SMaJzqgLO3nVRiMnqZsykd/z+guuMvmsWNav/imCYIYHfrguke+dzP3Zwfdja8g4bo0WGdNSRaTPqS+ZlfZ0O+2bCjF8vVNyNN95PBHeWAO9wm0eGgLUbmLNyRjhAn7KKg7C/s5cJbAW462bt3QyL5dwN06sDMN5ea9ODm7dLCVLgLXANNcy2Zbpyf7rmcF4ZApfP0RSS2uHxBr1jZhJqO1U6NijFmS1dxMmjSlyolzP+8Rzh2/HAFFgdIfA/ieB4FidUUrcsTIeRVwNgj6JukuPfXQ1f48lA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+Y0/WpahdUmAEAV0L93Yw8nkKu/ecCm0U1UHeUcUXms=;
- b=X/Q43/KWHyyVdTq7TDajJ2omfpHaSY9lS5PETUeVAt0+zikmlyOOcWWAqJ3LiEyletDbaTOs1gkqvN4CrVOfMAkPXUHMLUbgFJrRuGw45yu3+fxKA40eHgJc+rfSbsfVuQvhAE0m63qDd+pE7ccRuxcPUsB3zGn07UluGqcffkwbDhBuA7iVRA5agDHlUheUt0Q87T9PZk4UlN0HIh/DAyQgg7/GUhr+N5ny6e+sHYnOU9tDkwk3gIyMU6+xzlSHB2tno1BSPH+hs3XxPcoJYTvjxB0067ZPCV4fPhoG830oxCWJzv/ILoV7uhsN2NaCzRPpx/AuUdllpWOTQoVYIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=chipsnmedia.com; dmarc=pass action=none
- header.from=chipsnmedia.com; dkim=pass header.d=chipsnmedia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chipsnmedia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+Y0/WpahdUmAEAV0L93Yw8nkKu/ecCm0U1UHeUcUXms=;
- b=H6JVAqzDL+2+JcXUYWPvCrBFmkAdJiHxWIt7wSDnW5iGVcj0JVc602Qq2xNJlFW3th6Q4tCwkX0JsRPqKgEGbLD+YdONjwUIcLjyeHNmV/TqNRyVPCbpgPX8Fil5gzzahWODMNxrtXfj3xPXdD/hjV4PqG/POYq59ZLeAuCXHt4dD9HbcHP9eGzD+WQiA+V4/yVc2UHVV0rlp0prAdbufU/4d8svBAndPNpYtg4Z96roLUka1Vj/8xsn0cuBJQB5Qo209STRbVk5LWHScbFvaJcpTvmYrvfu2cO/EFYUmcpsHCPSny6AxDrdWLnWq/2aJRJM53Hg3bOU5P0bjWgGpQ==
-Received: from SE2P216MB2440.KORP216.PROD.OUTLOOK.COM (2603:1096:101:1c8::6)
- by SEWP216MB815443.KORP216.PROD.OUTLOOK.COM (2603:1096:101:309::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Wed, 16 Sep
- 2026 08:21:27 +0000
-Received: from SE2P216MB2440.KORP216.PROD.OUTLOOK.COM
- ([fe80::bb33:6051:ecf9:aec3]) by SE2P216MB2440.KORP216.PROD.OUTLOOK.COM
- ([fe80::bb33:6051:ecf9:aec3%6]) with mapi id 15.21.0428.009; Wed, 16 Sep 2026
- 08:21:27 +0000
-From: Nas Chung <nas.chung@chipsnmedia.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "media-ci@linuxtv.org"
-	<media-ci@linuxtv.org>, "robh@kernel.org" <robh@kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Subject: RE: [PATCH v7 7/9] media: chips-media: wave6: Add Wave6 thermal
- cooling device
-Thread-Topic: [PATCH v7 7/9] media: chips-media: wave6: Add Wave6 thermal
- cooling device
-Thread-Index: AQHdPDktirYiArw6eU+sdFaEw4jZqra9/ZuAgBLo0uA=
-Date: Wed, 16 Sep 2026 08:21:27 +0000
-Message-ID:
- <SE2P216MB2440BB4BE20F183622B87107FBB92@SE2P216MB2440.KORP216.PROD.OUTLOOK.COM>
-References: <cover.1788496816.git.nas.chung@chipsnmedia.com>
- <e3cb770b50ce5932f0ec0ed25419cd8271a04780.1788496816.git.nas.chung@chipsnmedia.com>
- <20260904070011.E61AF1F00A3E@smtp.kernel.org>
-In-Reply-To: <20260904070011.E61AF1F00A3E@smtp.kernel.org>
-Accept-Language: en-US, ko-KR
-Content-Language: ko-KR
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=chipsnmedia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SE2P216MB2440:EE_|SEWP216MB815443:EE_
-x-ms-office365-filtering-correlation-id: 66803184-128a-42fb-9192-08df13cb810d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|6133799003|22082099003|18002099003|38070700021|56012099006|10067099003|3023799007|4143699003;
-x-microsoft-antispam-message-info:
- YFGAsiznsZXQRKAs7JC0s98vk1vGkGGLLfzOS+jE72LAACmSJwyCGJCfkTTI/yfuyBgAhuGpNMeiT+CWzCZhTjYWKZB/ZrNLYGMqWebKSukmQHJzRsiphEiIn2lyUfxqrKjFCv2WlgHnlRZQcf99vTetRMD0d6IRbv/UtXIDtTydYSZmeK4c39hsHTQRTlEGFyzXgw2m8si3OpmDGfDdoinh8sTWGkAGBEPrTmWHNGLdbQPrl28HE5SCLRDjfn5bEiv45VYJoG+So7p1yEHYOpU8EWQtIlNX2IB8Pqxso4RpuYH5gTEEXYWG6MqVh+qbrfDikixQVIh5RCvDo88vW+gaMVUfxp1jQiiwCrFllHHSmqk7psZUc4VtWO5XW5BrnrEyWaI9KKLxO9VqU6G92Zar4z97tv39231xFbi6VAIn3yywSgDA4bvfJsciHly68/SjNxzbLm+TaLzTvkzoSZ8Zm8RqkgSD00kDrr3JFdnpFyuE4o5DZezXZTtgrtm/rW43vbRq6fkextkJ2MTeFSV6BXicgIOVFV2OYvLm2ZgA/orTLvNk3TbClkqfqYODkJ9eZp3TGsrKeqnSEpGnerSlToOdxLjVpZoBmq1Kn1LvIcnAeXjZq0PPLLbVhgCb3flftONcm5R5iGXjqOSv8WAlwHGIGEUPThrLzbCB9yg=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SE2P216MB2440.KORP216.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(6133799003)(22082099003)(18002099003)(38070700021)(56012099006)(10067099003)(3023799007)(4143699003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?EHBD8HKtoq6EJ1zDKNssgvui5Mmpx0prqC3r45kyMDRnQW95LhKTA8wISvBN?=
- =?us-ascii?Q?BIWRwqmWhmqMX8WKdXk335mP6TnfgG0uEyc+asBZMUFrw6sqMvlLC60qF7/1?=
- =?us-ascii?Q?8M/zEbgueYTW0TYOwo+9OQqmBfhyQYkuOHS10uVjqjStGihb0ocR92e+l0cJ?=
- =?us-ascii?Q?5qldELaliT2jiae3BKZZzGjzBtuuyKWjITiUZJx7++1/huMGvU3kvPxXubVi?=
- =?us-ascii?Q?ey1G4x04G5/St0JClWDHAnmT11envae5qqY//AxZ0Xl9KWGK4Rb9+jElraDs?=
- =?us-ascii?Q?nmklVXL5iwcDfeWVtZlEMEk/p0EMgau9onW78IoO96XC+1AeFTiQiMFQED2T?=
- =?us-ascii?Q?Di4V10ydKAVKCkSdWJ2J4+RX9SGxZp0FKGJtJx9x6cvBmIpx2+/wI/RVk1ns?=
- =?us-ascii?Q?rL1crL+k/+uyvvrvWHohahHDjqkPV35TYe5PbCjbrgK8bttlfHN5rA5eI+18?=
- =?us-ascii?Q?n8ksG/WMN8+O57jCd+ehzB9rStyS1KIum8Uk5SFjNjI3+7LuKDgLmyfXF0gu?=
- =?us-ascii?Q?s5OwfUtrx/t/K5/7l1la+ZH8j1eRsfUFXMW6iiPgJuSjA9powB3JzdgkZuQe?=
- =?us-ascii?Q?crmsTSE7ZfPTyH8KKRJLl4EFRJ6+3xmNuOjxbipGWLYRnzfyaLkPuom6NyEo?=
- =?us-ascii?Q?HcA5RhXaggylyj4Mf/plAjBZZVlMloHEDPVDzUlwey4NlfHhzj7YOXWxpVP+?=
- =?us-ascii?Q?lNVsFSNAJjrwG35i7z0rWR1JkBT8oId3cT6h5HNhT9oXg6r4WOnyweA3flBt?=
- =?us-ascii?Q?BIvDdCh6Qq6CERstjhtcHIq4hoi2N66nBJ4x5tHZO84EJURLIP2huqGIMFZH?=
- =?us-ascii?Q?AlUcuySoq0fyCVBjq7umnZ7Dkd8s1204frijDc6/3mB1EJ6Scq/aazxw2GPl?=
- =?us-ascii?Q?GHzW9tw2sLHa13d7Mj7jNTZ5M7ctSzEMGe/XH54/7TpmbXCt5PzL3m48qsWw?=
- =?us-ascii?Q?awsqSef5a+/feW/Q6PdTdTsqV2sGPYMMWhAwZ3jlu3oeZhriE3rWYmmVfwD1?=
- =?us-ascii?Q?6BWM2eoicr62ifxGUOebW8AtZfmfae86EddirnluKlBgYFdSOXwTOgRpBpXE?=
- =?us-ascii?Q?8oVnWm2fYHWzWa8Xz31sMK2qdyjsaxUnvr/db4gzkBFE8BnGh9AQgBoPapYT?=
- =?us-ascii?Q?EFo99JsvMl7LQ6VBnisgrqx5DrqkPIlGZXdT2MDlEYm2cUlKAnZSCgg6LRuX?=
- =?us-ascii?Q?fJE+/R764XPbDpJ6gVC/Q3BnMC0lsUJxU+2DWZpxwcPornHR9r/LU71y7HnO?=
- =?us-ascii?Q?FeyA/ZmKtnGZxugDZ52duTbIfaie0j7+9QCS1nOR/9v2bU/i60V61v+LkuXL?=
- =?us-ascii?Q?JdGBv2qgKH0Olp9QGXmLw3JjJ8pEmWqe3d5MopNPsOJ+Fi7Hg1J0rSsDn+bT?=
- =?us-ascii?Q?+BThXT4kZHlmukQfufDma20FVrR5znJE6iyUfMhWvNa3lN1rcBtvcetTltK7?=
- =?us-ascii?Q?CfxTQfSLz38N6GhAZgyOgNBmqbNESYCU676tZemD8h70mARM8Z0bjfLBo9c/?=
- =?us-ascii?Q?qoE11ljkrYwWbWeyudZQsyQPHmmTinCfuwgkgKkszNmQHXL7uUjuQwBmxWTA?=
- =?us-ascii?Q?20IYE9f28Ov+oKPlj8FOycAHqj8Is8LkiN1KSwrhUV2asOKcpBkbpzlL6Wnt?=
- =?us-ascii?Q?4AOp6cdNJzG//tqZOPEEGzvqs1EEr7s56/iaZMXXdPgi8q/esrpateGxv3B3?=
- =?us-ascii?Q?rugLL2d2DsSD3ZlMb4oSDpSUiE3NfL1i67Rr7K705IGkuvYzsL7/XGTimxsi?=
- =?us-ascii?Q?IG/2bIdofw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="CsvsKHJQ"
+Received: by mail-oi1-f226.google.com with SMTP id 5614622812f47-4ab47c40e7eso769318b6e.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 01:23:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789547022; x=1790151822;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=pSGBMBluoRGgJUucnXzE5+/uHCAGW9tc8I8TwGmjaeQ=;
+        b=Nt0cCXRoTXenMP80TZiUMzpeZuhlqjD6maoJYXzaN8XF6aosV5bCElXGWqTKjhHaAY
+         DpmN9bHR/N5ZhZ50n1QMks0V2pR89erDHOtqemN7EbpqV4pCafnWz4CaFEdUO43idVtn
+         EJ2nwL/Z1xjv0CiH2e7FPAUvZLZPCSg9m7DZv26GHXRXQUDmfuIvlX0NmyruiLynFRfj
+         1GtLOWg1jAgHmqrzNfsVmi/YZaVYFZsssTisf+ZJgQaqcJHY9Oa0y75bbDdG5qd9xckk
+         q+x6nVXScxC30dg5CLvESRJxg5yVGiib1jDDvXwBXhvjfBbLv2z30Ot/1VSdPUSTnr1u
+         PbIw==
+X-Gm-Message-State: AFuF++kzEo4YR1vC3z8REQzKQFSJgeEjoMMuLEpPV+vXu4KcVZpM5WZk
+	nPyM4R7ltguV/ix84Bjc0E01rwkFHD+c8GFWb1z4vuHw1/hKUEPmLaaHSZ0HloncQNNFfWL6IsM
+	4jJdqoEVBiA6m3S/4q/zRdQ3oS2MEgM01hJLOkeBFYcqie2+b2ULGszbfcmr9gZ6d2EFAdjYrd3
+	GepAZKTZ0yJhaPL0jW6rl+m9u/9AyMDLQcLxXC3nVV06dwn0HRzrl39zrjgsKhjSg3lzfSNkUjY
+	wJNpbmmtOTiXxKD1SvU1g4=
+X-Gm-Gg: AYBFou3x3MtDgQVB6UE7NxxBckBOHwkSvwjtLJDLD/sqBXsxUm6Ml15zoZ6pAg5Fo2M
+	4atAdnLCOjtqU1ljgZndDaX2sQgNTHFZvs7NfeKnFf7e/SLPAwgLszZH01MVLGbOz8xswop+jvK
+	WGHAvs8yF05vcD6d6IZ62pBg2BYcyqER/3NJnLDBZfBkG1s3U9dLo3V4PD4os8Keenmr8U1Ifq5
+	RXOT4ePzh1710EOA+MYOnz4wx+gzlzn9/JFsF72jKGKTBZVD7meWmTpUK7dpMBvRll+BkpWdtbc
+	bcZxoa0Cr48ZTJJee9mrHuzV7AcxAYXXB2eTPFH+B0PgGqSKjItc1Q4+X0Gw7pEmdfqvOcOtdhr
+	kjx0kWo398RxwYdgTtH7mp7H7yDtB93MBzzKCe5SciNsq5S8annq4m/H8Wcyvo0GK911mhKRMHD
+	VeOvRhf6VDrsX6mh8NoELtU1l6KOHfQblvAc4=
+X-Received: by 2002:a05:6870:478c:b0:483:bdb3:a52b with SMTP id 586e51a60fabf-48476c51181mr2893932fac.11.1789547022041;
+        Wed, 16 Sep 2026 01:23:42 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
+        by smtp-relay.gmail.com with ESMTPS id 586e51a60fabf-4842b2358d5sm78860fac.16.2026.09.16.01.23.40
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Sep 2026 01:23:42 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-6a125f5b317so6172843a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 01:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1789547019; x=1790151819; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pSGBMBluoRGgJUucnXzE5+/uHCAGW9tc8I8TwGmjaeQ=;
+        b=CsvsKHJQfGKf5eIH3N+LtqUdAssvYttns9TlP4W44fPiSm2NX9YSLKWrOXcBq0+J7K
+         sMaaTywa6vkCWe59F/dpHLTPdXZg6REsL7Xx2FiWB0qyGe2jmSZ6o09kqBzENy75AsCo
+         wC13tyJ/tw1ydkUjK0XCW8WWWPwhrmyHV95CQ=
+X-Received: by 2002:a05:6402:46c3:b0:6a9:b520:5d63 with SMTP id 4fb4d7f45d1cf-6aa2244cff3mr864495a12.40.1789547019286;
+        Wed, 16 Sep 2026 01:23:39 -0700 (PDT)
+X-Received: by 2002:a05:6402:46c3:b0:6a9:b520:5d63 with SMTP id
+ 4fb4d7f45d1cf-6aa2244cff3mr864470a12.40.1789547018728; Wed, 16 Sep 2026
+ 01:23:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: chipsnmedia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SE2P216MB2440.KORP216.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66803184-128a-42fb-9192-08df13cb810d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2026 08:21:27.3889
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4d70c8e9-142b-4389-b7f2-fa8a3c68c467
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zrj+58Qb0BVF0xnWHYM00zvjMrMaA3mJuXuHcsRUP0LGMJiTlL2aUFOVl6Yxyr03oQHu9UbuuinDn2mDjCNGOegiGr6U3coWD2wzwRzOGzM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEWP216MB815443
+References: <20260805110634.346670-1-ranjan.kumar@broadcom.com>
+ <20260805110634.346670-2-ranjan.kumar@broadcom.com> <20260805113322.993BA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260805113322.993BA1F000E9@smtp.kernel.org>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Date: Wed, 16 Sep 2026 13:53:26 +0530
+X-Gm-Features: AcwNN1W9aPZ5JN-MSUs0A9u6UxH8leWeOsnanYSmQBZT6Rsyv0qKTVq8UZSiYI8
+Message-ID: <CAMFBP8NxDqKzyC_tUSAnAs6XEHQ0x4wGb3p9X=-M6u99u0WmjA@mail.gmail.com>
+Subject: Re: [PATCH v4 01/10] mpi3mr: Skip device shutdown during unload per
+ controller configuration
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000069d8e0065b9562a1"
 
-Hi,
+--00000000000069d8e0065b9562a1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->-----Original Message-----
->From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
->Sent: Friday, September 4, 2026 4:00 PM
->To: Nas Chung <nas.chung@chipsnmedia.com>
->Cc: conor+dt@kernel.org; media-ci@linuxtv.org; robh@kernel.org;
->devicetree@vger.kernel.org
->Subject: Re: [PATCH v7 7/9] media: chips-media: wave6: Add Wave6 thermal
->cooling device
->
->Thank you for your contribution! Sashiko AI review found 4 potential
->issue(s) to consider:
->- [Medium] Initial thermal state commands from the framework are silently
->discarded during registration due to a premature check on `thermal-
->>cooling`.
->- [Medium] The cooling device acts as a silent placebo if PM domain
->performance states are unsupported.
->- [Medium] The driver incorrectly uses
->`dev_pm_genpd_set_performance_state()` with a raw frequency in kHz,
->violating the OPP/genpd abstraction and risking hardware malfunction on
->platforms with abstract performance levels.
->- [Low] Defensive out-of-bounds check returns success (0) instead of an
->error, masking invalid requests and caching wrong states.
->--
->
->commit 99914a36008f0afa814ae979e8bbaf4616a8b747
->Author: Nas Chung <nas.chung@chipsnmedia.com>
->
->media: chips-media: wave6: Add Wave6 thermal cooling device
->
->Add a thermal cooling device for the Wave6 VPU.
->The device operates within the Linux thermal framework,
->adjusting the VPU performance state based on thermal conditions.
->
->> diff --git a/drivers/media/platform/chips-media/wave6/wave6-vpu-thermal.=
-c
->b/drivers/media/platform/chips-media/wave6/wave6-vpu-thermal.c
->> new file mode 100644
->> index 0000000000000..1e67943b213bd
->> --- /dev/null
->> +++ b/drivers/media/platform/chips-media/wave6/wave6-vpu-thermal.c
->> @@ -0,0 +1,143 @@
->
->[ ... ]
->
->> +static int wave6_vpu_thermal_cooling_update(struct vpu_thermal_cooling
->*thermal,
->> +					    int state)
->> +{
->> +	unsigned long new_clock_rate;
->> +	int ret;
->> +
->> +	if (state > thermal->thermal_max || !thermal->cooling)
->> +		return 0;
->
->[Severity: Low]
->Does returning 0 for an invalid state request (state > thermal->thermal_ma=
-x)
->mask the error from the thermal core? It seems this would incorrectly allo=
-w
->the caller wave6_vpu_cooling_set_cur_state() to cache this invalid state i=
-n
->thermal->thermal_event.
+Thank you for the review.
 
-The thermal core already rejects state > cdev->max_state, so this is dead
-code. Will remove in v8.
+Both findings are pre-existing issues in mpi3mr_alloc_trace_buffer(),
+unrelated to the changes in this patch. I will address them in a
+separate follow-up patch after further analysis and testing.
 
->
->[Severity: Medium]
->Will the !thermal->cooling check incorrectly trigger during the initial
->synchronous state assignment?
->
->When devm_thermal_of_child_cooling_device_register() is called in
->wave6_vpu_cooling_init(), it synchronously calls
->wave6_cooling_ops.set_cur_state(). The registration function has not yet
->returned to assign the pointer to thermal->cooling, so this check evaluate=
-s
->to true. This would silently discard the initial cooling state set by the
->thermal governor.
+Thanks,
+Ranjan
 
-That can happen. Will drop the condition in v8.
 
+On Wed, Aug 5, 2026 at 5:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
->> +
->> +	new_clock_rate =3D DIV_ROUND_UP(thermal->freq_table[state],
->HZ_PER_KHZ);
->> +	dev_dbg(thermal->dev, "receive cooling state: %d, new clock
->rate %ld\n",
->> +		state, new_clock_rate);
->> +
->> +	ret =3D dev_pm_genpd_set_performance_state(thermal->dev,
->new_clock_rate);
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
 >
->[Severity: Medium]
->Is it correct to use dev_pm_genpd_set_performance_state() with a raw
->frequency in kHz?
+> Pre-existing issues:
+> - [High] The driver rounds down the trace buffer size internally when all=
+ocating segmented buffer entries, but passes the original unrounded size to=
+ the firmware, which can cause the firmware to read past the end of the seg=
+ment list and DMA write to arbitrary physical memory.
+> - [Medium] A trace buffer size smaller than 4KB results in a 0-byte DMA a=
+llocation, triggering a WARN_ON_ONCE within the kernel DMA API.
+> --
 >
->The dev_pm_genpd_set_performance_state() function expects a performance
->state index (OPP level). Calculating
->DIV_ROUND_UP(thermal->freq_table[state], HZ_PER_KHZ) instead of retrieving
->the actual OPP level via dev_pm_opp_get_level() could violate the OPP/genp=
-d
->abstraction. On platforms where the performance domain uses abstract level=
-s,
->dividing the frequency by 1000 could result in an invalid or zero
->performance
->state, breaking the cooling mitigation.
+> --- Patch [1]: [PATCH v4 01/10] mpi3mr: Skip device shutdown during unloa=
+d per controller configuration ---
+> commit 9ac255a070f5df8da5fb46e54b2787eacb0b7c7c
+> Author: Ranjan Kumar <ranjan.kumar@broadcom.com>
+>
+> mpi3mr: Skip device shutdown during unload per controller configuration
+>
+> This commit caches Driver Page 1 settings to suppress device shutdown dur=
+ing
+> driver unload. It adds endianness conversions for the diagnostic buffer s=
+izes
+> read from Driver Page 1 and hardens the allocation retry loops against in=
+valid
+> decrement sizes provided by the firmware.
+>
+> Closes: https://sashiko.dev/#/patchset/20260626114109.43685-1-ranjan.kuma=
+r@broadcom.com?part=3D1
+> Closes: https://sashiko.dev/#/patchset/20260708183305.244485-1-ranjan.kum=
+ar@broadcom.com?part=3D1
+> Closes: https://sashiko.dev/#/patchset/20260724102505.115136-1-ranjan.kum=
+ar@broadcom.com?part=3D1
+>
+> > diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi=
+3mr_app.c
+> > index 1353a8ff9c85d..fca5357a515d1 100644
+> > --- a/drivers/scsi/mpi3mr/mpi3mr_app.c
+> > +++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+> [ ... ]
+> > @@ -179,6 +181,12 @@ void mpi3mr_alloc_diag_bufs(struct mpi3mr_ioc *mri=
+oc)
+> >                   mpi3mr_alloc_trace_buffer(mrioc, trace_size)) {
+> >
+> >                       retry =3D true;
+> > +
+> > +                     if (!trace_dec_size || trace_dec_size > trace_siz=
+e) {
+> > +                             retry =3D false;
+> > +                             goto retry_fw;
+> > +                     }
+> > +
+> >                       trace_size -=3D trace_dec_size;
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this lead to firmware reading
+> out-of-bounds and potentially corrupting physical memory?
+>
+> The driver rounds down the trace buffer size internally when allocating
+> segmented buffer entries in mpi3mr_alloc_trace_buffer():
+>
+>     seg_count =3D (trace_size) / MPI3MR_PAGE_SIZE_4K;
+>     trace_size =3D seg_count * MPI3MR_PAGE_SIZE_4K;
+>
+> However, it does not update the caller's trace_size. Thus, the original
+> unrounded trace_size is stored in mpi3mr_alloc_diag_bufs():
+>
+>     diag_buffer->size =3D trace_size;
+>
+> When posting the buffer to firmware in mpi3mr_issue_diag_buf_post():
+>
+>     diag_buf_post_req.length =3D le32_to_cpu(diag_buffer->size);
+>
+> The firmware calculates the required number of segments using the unround=
+ed
+> size (e.g., ceil(5120/4096) =3D 2), but only 1 segment was allocated (siz=
+e 8
+> bytes for the segment list). The firmware will read past the end of the
+> segment list (16 bytes), leading to an out-of-bounds DMA read. It will th=
+en
+> use the arbitrary out-of-bounds value as a physical address to DMA-write
+> trace data, leading to memory corruption.
+>
+> [Severity: Medium]
+> This is a pre-existing issue, but can this retry loop cause a 0-byte DMA
+> allocation warning?
+>
+> If the firmware-provided host_diag_trace_max_size (or the size after retr=
+y
+> decrements) is less than 4KB, trace_size will be less than 4096. When pas=
+sed
+> to mpi3mr_alloc_trace_buffer(), it calculates seg_count =3D trace_size / =
+4096
+> which evaluates to 0.
+>
+> This results in a 0-byte allocation in mpi3mr_alloc_trace_buffer():
+>
+>     diag_buffer_list =3D dma_alloc_coherent(&mrioc->pdev->dev,
+>                                           sizeof(u64) * seg_count,
+>                                           &diag_buffer_list_dma, GFP_KERN=
+EL);
+>
+> Calling the DMA API with a 0 size triggers a WARN_ON_ONCE(!size) splat in
+> dma_alloc_attrs(), which can crash systems with panic_on_warn enabled.
+>
+> >                       dprint_init(mrioc, "trace diag buffer allocation =
+failed\n"
+> >                       "retrying smaller size %dKB\n", trace_size / 1024=
+);
+> >                       goto retry_trace;
+> >               } else
+> >                       diag_buffer->size =3D trace_size;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260805110634.34=
+6670-1-ranjan.kumar@broadcom.com?part=3D1
 
-Will use the OPP level instead of computing the frequency in the driver,
-via dev_pm_opp_get_level().
+--00000000000069d8e0065b9562a1
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
->
->> +	if (ret && !((ret =3D=3D -ENODEV) || (ret =3D=3D -EOPNOTSUPP))) {
->
->[Severity: Medium]
->Does ignoring -ENODEV and -EOPNOTSUPP errors create a situation where the
->cooling device acts as a silent placebo?
->
->If the platform is missing genpd performance state support for the VPU,
->these errors are caught and 0 (success) is returned. The thermal governor
->will believe the device was throttled and will keep trying, but
->temperatures
->will not drop since the device is not actually being cooled.
-
-Agreed. Will report the failure properly in v8.
-
->
->> +		dev_err(thermal->dev, "failed to set perf to %lu, ret =3D %d\n",
->> +			new_clock_rate, ret);
->> +		return ret;
->> +	}
->> +
->> +	return 0;
->> +}
->
->[ ... ]
->
->> +int wave6_vpu_cooling_init(struct device *dev, struct
->vpu_thermal_cooling *thermal)
->> +{
->
->[ ... ]
->
->> +	thermal->thermal_event =3D 0;
->> +	thermal->cooling =3D devm_thermal_of_child_cooling_device_register(dev=
-,
->> +									 dev->of_node,
->> +
->dev_name(thermal->dev),
->> +									 thermal,
->> +
->&wave6_cooling_ops);
->
->[Severity: Medium]
->As noted above in wave6_vpu_thermal_cooling_update(), since this is where
->registration happens, thermal->cooling is only assigned after the framewor=
-k
->might have already attempted to set an initial cooling state. This causes
->that initial command to be silently discarded.
-
-Same here. Will drop the condition in v8.
-
-Thanks.
-Nas.
-
->
->--
->Sashiko AI review *
->https://sashiko.dev/#/patchset/cover.1788496816.git.nas.chung@chipsnmedia.=
-c
->om?part=3D7
+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
+zZSItX49nLoa4TBbzuCzoINrv59QeSCVlVdAYussUS3840ZjvcYHSQx3tqYcBN+an07lDASmGEM5
+7PEXJPVInjl/Fva3ksL3r8anR4PWc3Xz5jLD8Xg6BU4zmIcR/t1GlqWuz8uTWmQtm40C9m91Q9a+
+2alIIV6BTs8IG2ELtt4EfcVvi5af+Hu878sGeBtMx6Z9ljoKl3MfvDdtUNO4bkJ97a7PXy/CKxiy
+TApQj4qg9SKQcsH0xzQan67XeXjkvk4frNDhRikCAwEAAaOCAd0wggHZMA4GA1UdDwEB/wQEAwIF
+oDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3Nl
+Y3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEF
+BQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1Ud
+IAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIB
+FiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAy
+hjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwJAYDVR0R
+BB0wG4EZcmFuamFuLmt1bWFyQGJyb2FkY29tLmNvbTATBgNVHSUEDDAKBggrBgEFBQcDBDAfBgNV
+HSMEGDAWgBQAKTaeXHq6D68tUC3boCOFGLCgkjAdBgNVHQ4EFgQUfLdm66N7GfDsoL8cYp3s4YdO
+isMwDQYJKoZIhvcNAQELBQADggIBAA/lnAxDb9jbesclnBxWIKUSxAMIrq4XKO5WKHUYIOOzd2sL
+o59fH9AWg1AfVONfWIUNdWDrmNNLs0+drSKaZbGx2RWMbaL9ubo7+BTQV33ZRBxnnkmc9QszlOo5
+m6FB9uPOGB9LvJMCkJ8S7hNc9G/p7dB79s1IKc8JGEDIrsgX3s4xSCJA20WdePHY5rLh5ySwXyI2
+3sVTUC+oK0HJFRo+TpdMMtdpOetWzIkUbGceiOA2ur8372+0KOmvlIHA/jEnW3BRfmB2vmdk+raY
+C/xbXY9JEfS6D881+X/90w+cCQ7nuA1OELebS1RbSdXT6YkRDPWYA/DPFhOYCAiMwVAPRaAH1AQc
+8J8yTDigwRUCq4qKCYU9YnqQh3YZRbUYnW+i3+rAO2SUbKl0VM5y0tq+GOGLC7w+v6yGossZmy+6
+3w72qp/Colr4r5ZaROb+L2FXqk4tL/HfkRhliyPPPNIjre2mIkvFuShk5A5FcvQYCzDtejAz9JHq
+ZVJ1ZD+auQDbIUxT+Dn9bI5XkQnWJ9KrlcORtztdYTDafN8VQuweS3JY0X/VCNBNZkiYXd7fzOza
+hvkw/S+v8cIfiakLKBREtiBHqWLdVf5CNDVYpd17yz0LGz0TKARbfuK/EiKflA10pnnnOB33Ru9D
+WPp9aHW3szGYr3+H9AHS6IDwkIxyMYICVzCCAlMCAQEwYjBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
+ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0Eg
+MjAyMwIMDcMaKRu9LrbAxERoMA0GCWCGSAFlAwQCAQUAoIHHMC8GCSqGSIb3DQEJBDEiBCAsnh+O
+m+AiKiugFqaQmiVgRhm72upBm5e9gpqY9NFrIDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0yNjA5MTYwODIzMzlaMFwGCSqGSIb3DQEJDzFPME0wCwYJYIZIAWUDBAEq
+MAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCG
+SAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQDCIoyKN78/x0CXuuoc7Lr+bvG4cfysxLUQiiMjSSZi
+zqBGRKPiv1Iy0QFi8NF21wFOmIW6k3jyxTr+trDTnfGSAd2sZL3aFzyG5KAs2rRaZBX275qVVIUp
+flynYClgb8Xtmpk4BQXtA0jnlv6kaCD+MzmOACphuVk+Z/cIHNPoJU3dIbwVgJfaNW4BELsUffxb
+jbSNuTYEhi1DYFx4V5hj7IdwSDbNkgosrrbx1qW/dcIyau4LrPBdawh+YS53ZXjiAhL/ubX24CBD
+qSFnP2egWzTPUVCbugMAXtVLkWq9l6RhjUdZ+mee6GkbOdJmSMjAQfMrrAtcqkDXyCUnkf/9
+--00000000000069d8e0065b9562a1--
