@@ -1,144 +1,160 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FB43EEAE1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 07:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6033FE65F;
+	Wed, 16 Sep 2026 07:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789542042; cv=none; b=crikOBNgRwN+RimkCO0p40covpySp6NMsJwIKb9ly1FU7xH2hzyh8DNYJiLIIR0VsSsQqIsb3m7bmoTXWGEcdcT0Kcl98iacE03UpVH8hkBoubyxFzl4aiVhiQ387Ld0Gn2F3pNgsHYASIHAPwC03sXisXHplznYyiIS2WiL3as=
+	t=1789542637; cv=none; b=WtjUk3iTSSZcxH3XvOMdmbcT6OniBV0xLDVdovebLpT2KfEMFZpbbzhdORaXROBVV0UcPOj16OMYDRUY8maqeUZNlSXzsa4aART/vYzA2nRhhb0o5yNTCbSNMuibqyDRLT95frALtHFq+/vgNtKMVs9ZPr1ek7TNv0N7a4LhwM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789542042; c=relaxed/simple;
-	bh=1ofUehavKl0hOQLrWhcpRsR+aJ40CkCDThWgRTyuTYo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lhXW242qSaMeLODpkjrmDvAjn7Amn2/lQX4yW6zJQiyPKk7PU89DyJ2cH9wIw1V1kicQaGEe46uGBCImZG5ZW3l2Km+Ry/3UWeL+JOQ8p/SckSsDhXyierpJnZPqHrck4KyYoK6mrUrdrWVdVMVoq45U9dCdblYy4ZoUlarEhxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkgenM2g; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789542637; c=relaxed/simple;
+	bh=711jSefBsmecoQ4QRNeAxoYCOUHjjNqFTCleoSOJZDs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NAYJfN13MXNhAh/Hi1B+G88iAHvF6EgiaX/2ajB7szTefiqMJJt9jO3oNJCypdtpdd15y1w3FHWKTNKxaHwY7/A6wg5gcd367Vd+bkFo+UUw3ZLR1jlDPWSy80aj53lGZgRjlEyc/XywAbV0HzxXrGj83mD/4Wo91+DB2+8RiVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QrQbjuXT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkgenM2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAA91F0089E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 07:00:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QrQbjuXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879381F000FF;
+	Wed, 16 Sep 2026 07:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789542033;
-	bh=mRcpvS8VpZbdgZ3nCcPMHxrJq7UGL/WWhx7lQiem5cQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=LkgenM2gd8GVkBGC0j4HztLRp56lcr5PP4Br5ONTGPv6bNesjOohhJ2ADrzVxw5AS
-	 7qaPD5nhCRo9wt1qdh6xm2iFZNI0VeTDUCgoib8YY8SlKy5ITH7djf03rGXvUQxTMq
-	 7TH8LPQuD9NHPUUp2LKVMo3K3QQzIQ2dMbz7j846K5SkPswnkCcM+lJoA1TYG3E0ii
-	 zUM53ujQ5hhdsGNTww3X4jxrhoBdvAeTtnSkemrXEaJxlUbb7NKVhwa/vkVRIZok3e
-	 e5BMq6mKvtrem43jVXR0WAnGCsQvgkNMeqa7tT+aQtpt+UPcdZ1sObs8CnA1HcQ+2b
-	 C8mrNFCovRFQw==
-Received: by mail-qk2-f22.google.com with SMTP id af79cd13be357-93910cadeb4so71456985a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 00:00:33 -0700 (PDT)
-X-Gm-Message-State: AFuF++mtCCepqouXMjplTZpqBAwmG9eHJh+yIv3tHasOpb0JlxECHSti
-	9ycTKXVptkVebjxLdDCC30cwQDn7MImTJTnTGn+QEY6H6yL5fIr+ukq6fR/fy9DVexzTxi3xqoc
-	4qxjx+Aq4TaOsNbG5jwk4lzwe6dvIxzk=
-X-Received: by 2002:a05:620a:489b:b0:93a:3aba:a0d4 with SMTP id
- af79cd13be357-93bb789bea9mr195801485a.27.1789542032529; Wed, 16 Sep 2026
- 00:00:32 -0700 (PDT)
+	s=k20260515; t=1789542630;
+	bh=wtR88jIZSHW4+MkWxfx2D8N2ustZn4CObntY2/MrElk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=QrQbjuXTaxMWHGtzDPemhjis+1vx2Y+0aDvGg0YyTy4yGxYsoUgOt3YT7Gxq9LQX9
+	 1Spo+E0wFNvVi1cA2bVzNU83DvrlWmcbtJ7i7NXNk3B6tHT3l3+hvtykuXDAGBJrw+
+	 38MsZkC/umfg3a8b+kU14MHgS9co3DxwF3SInzZgJnjr8KP8zuidr3i5y79pPxxWfx
+	 Dvdnlr6/ICe+YZvhQn4CaAcMDfIGJ154Qm8Fq6ecWVlDwXielTgqBjt+SpGG+WLZMa
+	 t4L2tnHSAcTzayXHc07Bo4cO35Qe9mOm1HMLVCrhISoGYTYqKpgPRGjlN5xZPPWO7V
+	 jro8WienGAHpw==
+Date: Wed, 16 Sep 2026 07:10:27 +0000
+From: Tzung-Bi Shih <tzungbi@kernel.org>
+To: Triet Hoang <triet.hoang.dev@gmail.com>
+Cc: sashiko-bot@kernel.org, linux-watchdog@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v3] watchdog: msc313e: Propagate error code in resume()
+Message-ID: <aqpA4xln77xgBjs9@google.com>
+References: <20260912164221.966851F00893@smtp.kernel.org>
+ <20260916044557.74124-1-triet.hoang.dev@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260915233454.2405019-1-song@kernel.org> <20260915233454.2405019-47-song@kernel.org>
- <20260915235341.3E13A1F000FF@smtp.kernel.org>
-In-Reply-To: <20260915235341.3E13A1F000FF@smtp.kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Wed, 16 Sep 2026 00:00:20 -0700
-X-Gmail-Original-Message-ID: <CAPhsuW5vwjD4-iqtso_nUPxnAwLHESXyWVz+2Zy9z2wk-GMtxA@mail.gmail.com>
-X-Gm-Features: AcwNN1UC0vnmwkY_VC9QghVZ086qywyAz_xzll8md-9uObvYKnOWr3loMuZzlK8
-Message-ID: <CAPhsuW5vwjD4-iqtso_nUPxnAwLHESXyWVz+2Zy9z2wk-GMtxA@mail.gmail.com>
-Subject: Re: [PATCH v4 46/58] objtool/klp: Add test for data object checksums
-To: sashiko-reviews@lists.linux.dev
-Cc: live-patching@vger.kernel.org, peterz@infradead.org, jikos@kernel.org, 
-	puranjay@kernel.org, joe.lawrence@redhat.com, pmladek@suse.com, 
-	mbenes@suse.cz, jpoimboe@kernel.org, kernel-team@meta.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916044557.74124-1-triet.hoang.dev@gmail.com>
 
-On Tue, Sep 15, 2026 at 4:53=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] objtool/klp: test-checksum-data fails on GCC < 10 due to missing =
--fno-common
-> --
->
-> commit 1954bfc131a001b6d52e72e9ea82e16372d49e2b
-> Author: Song Liu <song@kernel.org>
->
-> objtool/klp: Add test for data object checksums
->
-> This commit adds a test suite for data object checksum calculations in
-> objtool's klp functionality. It verifies that various changes to data
-> objects, such as length, bytes, reloc targets, and string contents, corre=
-ctly
-> update the objtool klp checksum.
->
-> > diff --git a/tools/objtool/tests/generic/fixtures/checksum_data.c b/too=
-ls/objtool/tests/generic/fixtures/checksum_data.c
-> > new file mode 100644
-> > index 0000000000000..6310af5c02d34
-> > --- /dev/null
-> > +++ b/tools/objtool/tests/generic/fixtures/checksum_data.c
->
-> [ ... ]
->
-> > +/*
-> > + * A .bss object, where length is the only thing there is to hash: the=
- section
-> > + * has no data, so the bytes are skipped and only sym->len distinguish=
-es this
-> > + * from an object of another size.  An initialised array would not iso=
-late it
-> > + * -- growing one changes the hashed bytes as well.
-> > + */
-> > +#if defined(PATCHED) && defined(LONGER)
-> > +char sized[4];
-> > +#else
-> > +char sized[2];
-> > +#endif
->
-> [Severity: Low]
-> Will this test fail on older toolchains (like GCC < 10 or Clang < 11) whe=
-re
-> -fcommon is the default?
->
-> Because sized is an uninitialized array, these older compilers emit it as
-> a SHN_COMMON symbol. objtool klp checksum skips SHN_COMMON symbols becaus=
-e
-> they lack a data section pointer (!sym->sec->data), meaning no checksum i=
-s
-> calculated for sized. This would cause the test script to abort.
->
-> Could we add -fno-common to the test's FIXTURE_CFLAGS, or initialize this
-> array to ensure it lands in .bss instead of COMMON?
->
-> > +
-> > +/*
->
-> [ ... ]
->
-> > diff --git a/tools/objtool/tests/generic/test-checksum-data.sh b/tools/=
-objtool/tests/generic/test-checksum-data.sh
-> > new file mode 100755
-> > index 0000000000000..e915026b79a73
-> > --- /dev/null
-> > +++ b/tools/objtool/tests/generic/test-checksum-data.sh
->
-> [ ... ]
->
-> > +# The object's own bytes.
-> > +check PLAIN_VALUE plain
-> > +# Its length, for a .bss object whose bytes are not hashed at all.
-> > +check LONGER sized
->
-> [Severity: Low]
-> Could this check fail with "no checksum recorded for 'sized'" on compiler=
-s
-> defaulting to -fcommon due to the SHN_COMMON behavior mentioned above?
+On Wed, Sep 16, 2026 at 11:45:57AM +0700, Triet Hoang wrote:
+> Sat, 12 Sep 2026 16:42:21 +0000 Sashiko wrote:
+> 
+> > [Severity: High]
+> > This is a pre-existing issue, but does leaving the watchdog framework state
+> > flags intact when the clock fails to enable cause a system crash?
+> > 
+> > If msc313e_wdt_start() fails, the clock remains disabled, but WDOG_ACTIVE
+> > and WDOG_HW_RUNNING are still set. The Linux PM core ignores device resume 
+> > errors and proceeds with system resume.
 
-Added -fno-commont to 05/58 of v5.
+Another example that Sashiko complains either way.  See also v2 [1].
 
-Thanks,
-Song
+[1] https://lore.kernel.org/all/20260828162703.9F9DF1F00A3E@smtp.kernel.org
+
+> > 
+> > The watchdog core's PM notifier then calls watchdog_dev_resume(), which
+> > immediately invokes msc313e_wdt_ping(). This unconditionally writes to a 
+> > memory-mapped register:
+> > 
+> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_ping() {
+> > 	...
+> > 	writew(1, priv->base + REG_WDT_CLR);
+> > 	return 0;
+> > }
+> > 
+> > Can accessing these registers with the bus clock disabled on this platform 
+> > trigger a synchronous external bus abort and a kernel panic?
+> > 
+> > Additionally, a subsequent stop operation unconditionally disables the clock:
+> > 
+> > drivers/watchdog/msc313e_wdt.c:msc313e_wdt_stop() {
+> > 	...
+> > 	writew(0, priv->base + REG_WDT_CLR);
+> > 	clk_disable_unprepare(priv->clk);
+> > 	return 0;
+> > }
+> > 
+> > Since the clock enable previously failed, would this extra 
+> > clk_disable_unprepare() cause a clock reference count underflow warning?
+> 
+> Hi Tzung-Bi,
+> 
+> I think we can address the problem Sashiko mentioned by making the clock ownership 
+> explicit in the driver.
+> 
+> If msc313e_wdt_start() fails to enable the clock, the driver should not subsequently access
+> the watchdog registers or call clk_disable_unprepare() as if the clock had been successfully enabled.
+> In particular, we can track whether the clock was successfully acquired and make ping() and stop()
+> operate only when the clock is enabled.
+> 
+> diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
+> index 4a5cce2a16b1..437b8ace0a00 100644
+> --- a/drivers/watchdog/msc313e_wdt.c
+> +++ b/drivers/watchdog/msc313e_wdt.c
+> @@ -29,6 +29,7 @@ struct msc313e_wdt_priv {
+>         void __iomem *base;
+>         struct watchdog_device wdev;
+>         struct clk *clk;
+> +       bool clk_enabled;
+>  };
+>  
+>  static u32 msc313e_wdt_get_hw_timeout(struct msc313e_wdt_priv *priv)
+> @@ -60,6 +61,7 @@ static int msc313e_wdt_start(struct watchdog_device *wdev)
+>         if (err)
+>                 return err;
+>  
+> +       priv->clk_enabled = true;
+>         msc313e_wdt_set_hw_timeout(priv, wdev->timeout);
+>         return 0;
+>  }
+> @@ -68,6 +70,9 @@ static int msc313e_wdt_ping(struct watchdog_device *wdev)
+>  {
+>         struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
+>  
+> +       if (!priv->clk_enabled)
+> +               return -EIO;
+> +
+>         writew(1, priv->base + REG_WDT_CLR);
+>         return 0;
+>  }
+> @@ -79,7 +84,10 @@ static int msc313e_wdt_stop(struct watchdog_device *wdev)
+>         writew(0, priv->base + REG_WDT_MAX_PRD_L);
+>         writew(0, priv->base + REG_WDT_MAX_PRD_H);
+>         writew(0, priv->base + REG_WDT_CLR);
+> -       clk_disable_unprepare(priv->clk);
+> +       if (priv->clk_enabled) {
+> +               clk_disable_unprepare(priv->clk);
+> +               priv->clk_enabled = false;
+> +       }
+>         return 0;
+>  }
+> 
+> How do you think about this idea?
+
+Hi Triet,
+
+Thanks for the suggestion.
+
+Fundamentally, if msc313e_wdt_start() fails due to a clk_prepare_enable()
+failure, it indicates a much more severe system-level issue.  In such a
+scenario, propagating the error to the PM core is likely our best bet rather
+than trying to gracefully manage it with additional state tracking.
+
+Also, regarding Sashiko's concern about the bus abort and kernel panic:
+the driver enables and disables this clock primarily for CCF reference
+counting.  It is actually a "fixed-clock" (see xtal_div2 in mstar-v7.dtsi).
+Because it is a fixed clock, there is no physical clock gating that would
+block bus access and cause the synchronous external bus abort that the bot
+is warning about.
+
+Given that, I think it's better to avoid adding extra state complexity to
+the driver just to silence the warning.
