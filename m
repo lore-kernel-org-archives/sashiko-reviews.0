@@ -1,316 +1,141 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013016.outbound.protection.outlook.com [40.107.162.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74CB49B470
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 15:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ECC4D6C55
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 15:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.204
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789573867; cv=fail; b=FeM8+B31bsaiketI89NmTCyx1SAjGnbrsSPQqziJnLgb1i7F3n3RKOFnPcQ10zR/wZzt4qp1b/M1GjjVbDwSQMyCtaaGWDQIPqEchh8OPtBkp/lgfyFlqJ1J2PAw4P7kogVWLawSLgcsb8/i+kSQhwOmZBHqMoNnA0B8WOlSG6g=
+	t=1789573890; cv=pass; b=RlozXWpzyYhURAuKvSmJ4WU1KsTYjqsODrh/lgmKlY/ajH7gZKGCM0kZkiiop1L3vzui+t49NXv5VgQwEMLPPRKmmXZW62mCboVQC21Kcd7CVqtRQql9no0GMc1ZPHoM62SD3FUlbSjI/VqvEHey+Gg2gtYeqvX13SUWg1JYmNg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789573867; c=relaxed/simple;
-	bh=RlmzF1CX610eXTVu+IETNFDf4gnh9Ggs5uV0I7S/ylo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=PHZP9Wd8lVzDfY9X0XubrBscoDjW3FbWrC1f4ZEl0uTYbOe8iy8+K7HFQafYAFcVROjJqf4FPtZ7jXQdEjqwe8V/VaX51AoYuZg3H0bwmEZ1AvCYfa1gGh6kbV3z9JDVUL/PlqSZCQygOen13EvtdNl6P6ZenY4JGONwxTDdiAo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=WlMV4+FI reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1789573890; c=relaxed/simple;
+	bh=bo+nR5vgnm+LSKdCiwZsyqB138gI9BLV55OIiNb16sk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OeKKqw9QhRLtCIFD6dvT1AUhpa1v+cajUOFzoNtkc9XLxPcUDcGzumJLv0dBfT9YnM+GnEBogIhN8N4k8gQyUOSpEMleAR7PKMsGZkFz1hru8Z5RdIWeAEvLul5lpxr/b58M4IEZwtR8O+nmQdMt8POvOY5FBOtvqq6KdyeigIU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXaIFQCG; arc=pass smtp.client-ip=74.125.230.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="WlMV4+FI"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tvGm4eMQtwC5Cyaj5z75MUxPPXlwVhwc56Db7gg50sDfNta5XDJUmVdf+AZmX/0KTUDpnM99Air5D1wClhMb9RqH4cwE4S5D0sIZKyTcXzu1ypdl5qobfw+5nZpfgX00OCLI4lSWTgaHJd89X/V0bh4Oyp4fOYFO3xYLZ2brM6747GzIHI8QYsHyteEaemXbyBCMk+9ujjotG98uGpW3rkifKSlu2ITyjJByaOAH6F72hKkpFrsbh8u1pHwmX+wZoAXTMZdmPw9BYO7Z5u1yMKJqntT6T/bioLtqHXBw7YSn5SeyvKIk2cxNgIRahZo8vK9hHRgqxYf7lRQzRTb/rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xuBdvs8VvMQe3oEG5BwTHofkYyAG01dms+KQREXQRos=;
- b=BvUqTztwiBNGJax2PGmxMSOHCxjYdDeKcITp9Qzm8L8pzGJVfQ5DY/gImUpiVOkVV7E+/qaGmly1i39LXQYU2My3uHX6zst6BCdGZimb1ULmLPE3I4Nv6VbqHHwvWVrn1olgW6BRsHr9GrlrO/bUrfLOeVH6z87LtPYBVK9qArFM1P2jfQLAK2Q/IveYkjinHOcz4TkY6NUWw8bZOFaeAqMDYiAdnOuCPXEGF0fcuGFSEp1A9Egx/3qFCAaZEwmhIhZ5tj5Z4+TxUgWJv2dghtFC8TAR6Nev27M2BvJ3Hq9kggroLpPdvvJ5Fbu+zRjS+JDwy7cx1kqcEwOq9wumkA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xuBdvs8VvMQe3oEG5BwTHofkYyAG01dms+KQREXQRos=;
- b=WlMV4+FIpw6fuISXxC8Zdf31HIvGDWjZkXO1KRSPaWHZ1ToWWwS1x6CXv0W7BikoC670vc8IYS0Nb7KAK3CpOJ3neCCaont/mPbqI7Bre9f45cgkgxHxvsoAvGHShJXRffhUaOSS0ew5jIH7Y3WX3f09qSx3bBdozLosx4uvijoorTRGM5ADEt6Ok+Vh9wem7wsZMweK/+gYo4xfme8tKz7JtwYARDk+GtRpnQtekS/nXj1lw+d9rqMe0qJN6EXwhHwByd3DSua+NlNAYKzDMb0ZkjOEhQpRRVOrhVNsqP/S2YmdC0rpeiTilh8xldNGa3Nk7E25pJnj41PQdB/iKA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by BR0PR04MB685626.eurprd04.prod.outlook.com (2603:10a6:2c8:33::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
- 2026 15:50:59 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.012; Wed, 16 Sep 2026
- 15:50:59 +0000
-Date: Wed, 16 Sep 2026 10:50:50 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: CL Wang <cl634@andestech.com>, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, robh@kernel.org, Frank.Li@kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] dmaengine: atcdmac300: Add driver for Andes
- ATCDMAC300 DMA controller
-Message-ID: <aqq62tSqUHvBkRs4@SMW015318>
-References: <20260916134258.2178081-1-cl634@andestech.com>
- <20260916134258.2178081-3-cl634@andestech.com>
- <20260916140120.3112D1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260916140120.3112D1F000FF@smtp.kernel.org>
-X-ClientProxiedBy: CYXPR02CA0040.namprd02.prod.outlook.com
- (2603:10b6:930:cc::25) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXaIFQCG"
+Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910c9ff1fso127303685a.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:51:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789573887; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Rxnm+vSSkWgWoZ3Uk6tX4J20Tm4R8uxftOKoINCrv2VJoc1nZq2A/SIDKHNuUT6NNK
+         lHbZGdGGlwzzwdBvApvWV2OdD7/o3yDQJud+fGyBJGfs1pqL1n88zteEyRCy1eac2Msz
+         zbHmvgPJeszhvQY+sipdMVZQRha3oBDSlQwEmdILy1OeJmLd8iu6q+Hg20CNwW+42up8
+         71hjjlqSv3uDb25h5Baa9WSRzjWcuIml29xRAgW2oP2ICjsBxdRfBNdetMxhCnJHsKR1
+         tC0ftsSuWTOIlwWmARQy95yj8uUCVwxBp8vL26Rv0HbhclaiQ7GychqEGyUO5h09KkTC
+         8vBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1DZZDmRFFus61Ri0IMvmk4ynsdfBpq9f2UmqLYuX2d8=;
+        fh=tKq+NGS0C60ag/Rd2zbkkzhLpDlCFxwP3r6aptAIrtk=;
+        b=Dlzok8ouR2qKQULxhyRv7aFaWZQ/UJ8VamDzBd1kEgtQ3/BMVSfyxi9bK1HMb2XTBZ
+         sE8Dk3p6/B2oWQk9k2zKthsKX+zZh9soceNsEuyGm68imjjJ/AFkWZmTFwjR46WCB4yg
+         8LfLxXbQmkuSxjcNDfeLKtrOIzEpv+P41Rmc96kapGl2CvFEJjN0NqgECOl4ent5itVv
+         NtwNnurE/QGka8R39F0j0ioBnTeFQio1tqqaDHJvyi+fDJQleZfP5hmpKB0b7AKTloIu
+         +fuuQapCRWqdsYDEym2q959PfYUYD1l+qe0PcGzzxLVHqlHDKxARU7c+rgHgxUAFFHZX
+         D0cA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789573887; x=1790178687; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1DZZDmRFFus61Ri0IMvmk4ynsdfBpq9f2UmqLYuX2d8=;
+        b=fXaIFQCGJDbUyLhVvoj/pnwVsSIXbawBgemvJMO0wolY/iXwcnfm/keXHNJbyHUCMS
+         IJWYs1cbvFskNkqIYMRzqsMCJmMG+kRlpgmH4qWKAjy15HY6BD58yO5vyuyEDMMVT5Q0
+         PHxdoFtNt94V6eRAEb0cEgL8SdGzoNGVZDoGW8RrKeQBCadpsOHKBF+qK4NtAqGMB2u5
+         VWmPLs2Qg+3qY91+mUOP+qJcYtR0PuLI73sodYs4w5CND8hh5xeYZ67etcp7s5b0JzJv
+         TZLcjtf2jlZ28FOEgB5LuHbx8cveBdZVyB0V/LFbGutQnkbTZstYaZX6fxbRTtHQSpP+
+         wdYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789573887; x=1790178687;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1DZZDmRFFus61Ri0IMvmk4ynsdfBpq9f2UmqLYuX2d8=;
+        b=TjstwvQAsuHmGakzaj6mqqpbEXZ26Flbt1fDfxiS1QlbeLRZU+n5JOuiVoxrmVrVNV
+         NLgX1BSHyWheBPYwlhRXSAb/8iIgqghOVbg1HNIh1XwJWLmzB6LAoOTlLE0rj0pEbbP5
+         cd8juSK7eXPVvKEktclS+BPU+QvI+1gCaKwO3J6RnqiTbpC1A1JKgNR6ilbffA+M5Xbm
+         +wD8Y6nIgTTnuopGayGU8HvJggePtvv32lGDIz9/Fl+hbIHDN6yTz6qMF4NcgHwtxeTN
+         sCc9lY/hYjJFI9K3mUDt8RtpTXDJokgUtRyiiRyyoc5anJjMumKEh5NUtXJTlGRU7PuF
+         X40A==
+X-Gm-Message-State: AFuF++mSOyz002JG9OCLVCphbFEIiiDSMpUxw9GvxK5hsiDS9CwlXGZ+
+	dzohc+zEP1nkM42sBJT+OTqzkc71X3RS9sUKK8ZLLXsUpXa7dWo/TfKVWkYbHqMmGY0Gg9coFk2
+	WlfBZs3RoyC7FquDpWg8aJciT82pNTGQWZA==
+X-Gm-Gg: AYBFou14cpNMrGlDP06ByqCXIcpeD5tJ/StsrRaiS3foufH76zh5MlrOfraNrpHRNGJ
+	q4/kr7M+Weko7ldylZ6u9fqVaWQU6CfOrzhIUy1Qt4ddqpzeaFxgT1hcV470FHLyuLHpJ5gjq33
+	oIrWDQjh1ttn2AfL6rrqwRHEOCnXqwcNcyPH82XJB5j3CCzCBhtHh0YiIWtn/ZjIM/u+ZGvNeFS
+	xTrsbw4aRgAHB3ssE54MBYu6gt2HfOzOXpz29tUjQdlDWuNgvnloqF/gQNZXLe5YvBt2mzvE60u
+	FC+2uMdSbDcU3Amu/aUJWogtcAEDVzMs7QCRwumfOB7icUnMfxp+sxrh//mkiq7A6sHH0rC+TZI
+	JoyDQcXonj6BUgjTPJKtRujKi7LjdRhXqTJr1sLcXFMzTFQ==
+X-Received: by 2002:a05:620a:2b41:b0:93a:463:1296 with SMTP id
+ af79cd13be357-93bb77012a6mr512342585a.18.1789573887002; Wed, 16 Sep 2026
+ 08:51:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|BR0PR04MB685626:EE_
-X-MS-Office365-Filtering-Correlation-Id: b211bce8-f523-4f4f-5c30-08df140a4d9a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|23010399003|6133799003|18002099003|22082099003|3023799007|4143699003|10067099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	l303u2sdfcFm0PEGXxKMIDgCSN9Oi6MjZGkGATDkfjkmo6VgX3wB2A1S7USmKW0bpC3fTjQeVyHW5f0yTXP9/WTGoty7EV516XfumiMs34fJNUwqiUQr7FcrSELr327VeJr0FpMtSWUaP0LAQLa9b46IeeE+rKoUfcjI7qYpzfwdOaimV/J8rP6ojmig3nVgT1mXWD0MaSZ6Y84dHqSGQaVy0GwtwL+VUIBPLSY1FffjvBS4kCgdWzmEsspkwzYWmpzv2eaPEKtfd0TS0Khs12vSZwbLxYLAAee3FKZN+hTPed+bd7wh/IgpmiJWiOB+1aMo0gu+v1RXzqmcIILgDmW+rsUiTEZgJGFNetGEKWUqqd1Ppd6npJJfcoWmihRceqoavW6IebrHYfU8AiVBopPLNOl8sF3ywgHJ7876umUXP3TkvaXuOO1mK4xNIPBnEvEM7o9JLDEQFtsiRHQG94P2rF+ubRC7PnnDaSce1IGxDB2JzH122A5AdOTotLetzR0bRcTFgsM+EWUL8YEcDWi5yCaAQwDBg3m7X3GsldyNx4ZFbnIeWrQFqdki5lliTTZErDBRRnd2eMXqz0ilZNJLA+Pg+/oBa0C7n4LI2cw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(23010399003)(6133799003)(18002099003)(22082099003)(3023799007)(4143699003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?miIOXdGDo/oURkIE9yrqTvHrP17Nkce8Qfcmql3tFucpkIxAPEgdEg7Cqe?=
- =?iso-8859-1?Q?7PTM4ZsYlCZeHC8cMF1/WIhZk97hO4CCPM2Jxk9f8WUwU5ZzxELpjYPrhc?=
- =?iso-8859-1?Q?MLs9AAggKqaDx8YnWEzUKSt6WNb9aAm9m7TvM8cr1WTyEdKwYkcDe7uSOT?=
- =?iso-8859-1?Q?8FMRooQ8KSDLZiM6bMbI+7oF+eo/65t1MDHTQoOyQT9m6bHl9BZJ0Jn7KX?=
- =?iso-8859-1?Q?NA8D1pcH0tHLAlxEkpxuBZ7MYBMyt8/ez2TtBsFM5j/YuoDgMtp3M00VHz?=
- =?iso-8859-1?Q?O7S2Hz+uywHfNAhfzd99Or3zYezKVEMG1kyQ/LysnO9fnqBYBGqS++qYpP?=
- =?iso-8859-1?Q?YslF52bEhIWEDdUCdjFKNWJfaxFzlTZWeTW6OOCZa3S7kKJ7waCus51o6d?=
- =?iso-8859-1?Q?gAJvERlOyJEUJiiJd7rTTvPLmHs2YpS85M4+oDic3MEXHwpB8v/k/4yay8?=
- =?iso-8859-1?Q?57QWtPtBLFfaybWpjKqY7bwEan/UmN69p5HvgmnOcjMWnQ7uYO3n92qPsI?=
- =?iso-8859-1?Q?WBAb86OtfmTAFGTrdxSd72El9fDvMc3q1+W48EB3AraVan5vYNo7Hk/tMK?=
- =?iso-8859-1?Q?MDD7MxV+OK9eO/B8Pf6MsDn8/iZBhbq3fJJCtMP+OA7G3mzUX1NpEkT1BH?=
- =?iso-8859-1?Q?yrvkodw4kMdQ8jxlPgrw879UEdBnCfAFwGfOJ+CYve3VQkXiHZUwJqkEsp?=
- =?iso-8859-1?Q?3ZDPc/IDIA3YwhWy70juvgeukXDiD8tF5xdznGiZxaJlL4Ali6kpIoY+Qh?=
- =?iso-8859-1?Q?9qaVfzH0ZTdiAuQa8BXYKeyqqoxIRUKsNSuVOqlidCOmsu6bcqpTMKAIkN?=
- =?iso-8859-1?Q?KCoSXVmhEUTuwUf/K7S8gVyddkvfE1I+FHOfsxlA52S/vmHs3pRNIobX5H?=
- =?iso-8859-1?Q?97peh/iwW+oRFHbm9m2p4zh13trIVZ7PjFKaDI4T9ZJ8dZ/p94v8C+zX/d?=
- =?iso-8859-1?Q?IVF9iHt6uAlpv4vdqCGvjAD1wsSbt93gRrVS7W9Soj2hV9kpJ3zZJHhQpA?=
- =?iso-8859-1?Q?lQ7dSr+qwARKE6AOL37V6nP3BL0lhMBPJG5NPU5/YmRFcuAYzWkX0Hptbz?=
- =?iso-8859-1?Q?0LJCVaUpjSKvzhEZxN0ag5U4nX/l7wGI8I/0rEXqKa1Y69fm86fISZ/Hd4?=
- =?iso-8859-1?Q?SN+9OWL5BNv3l516sRoZfu2eMQf3vSnB0wpNkLlAdRld+DnYo3L7gia9Pw?=
- =?iso-8859-1?Q?ue3bcJYIfzSlJlwviLePFZQhLnyGu4dSRQvtBqCQtz85tB5z5iT9z7Bj0Y?=
- =?iso-8859-1?Q?3kBLgRSTNwkOaua1muspBL6lYCrWB+ABP4Oclm51pvu8lpLS71c2ArbmQ0?=
- =?iso-8859-1?Q?d5rvBtywDJPWXpAa2uRc3K6OuGr0QHEUjDS6KDGgz8+t8ukYAAt7uF8Wo2?=
- =?iso-8859-1?Q?L032zIaxEiDK1mgotqNWPczwBQZAGIEbtcVBdcmuNZwCF4PFZ1uCoFaKwj?=
- =?iso-8859-1?Q?ETv3FWDGPMA3pu8Urk0bcGII/b6WX/urLZiTy0YF/Ghu97VJ0f1ScYqFKF?=
- =?iso-8859-1?Q?zsodWoiF1MKA5wtNeTLhoeWvblhMIUAjW5Jk83tiBh1zi326c1qqQjw+LN?=
- =?iso-8859-1?Q?TeyA9DlcL9WkPzxvvfYW1axX7BgGOZjQ9LqS/U2/y01n5zYnSFCvQEIKiW?=
- =?iso-8859-1?Q?OV10ZD/WnKDXExOfeV65zEtYkCUVAv1OOimn2bkpuhBeCeQOv068ahtAn1?=
- =?iso-8859-1?Q?+G7cQOeqt9j9cR4CZoO7OznTAhkbTWXBGonHlfkifGeiPb2Jh7DB23eFUS?=
- =?iso-8859-1?Q?EvdPF3Bw90JxJLc3TFcNnRsHxR6gKjECtNesBW+cTVHSaSuutqSH55kxVI?=
- =?iso-8859-1?Q?PVJnpxQvoVzhqv+PnLqDesTsRR2vcLzMc1DzxJWeIlQe6aMIMSeW?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b211bce8-f523-4f4f-5c30-08df140a4d9a
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 15:50:59.7818
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9hPErDY2S+jf0UhRUiAzb3P1GptpMkw3hnjAPVfxrsGpiTqsTNC1Zr8a3JioZlXmJyPrQfjGNPSEsQoWZbmEXoyBeorauiUl60SsT/SUl0ZhAlTnGQKiLV5ZjD320Wsi
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR04MB685626
+References: <20260914155301.14499-1-tharitt97@gmail.com> <20260914161000.E3CD21F000FF@smtp.kernel.org>
+In-Reply-To: <20260914161000.E3CD21F000FF@smtp.kernel.org>
+From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+Date: Wed, 16 Sep 2026 22:51:14 +0700
+X-Gm-Features: AcwNN1XHwQyBqLjDeQ7jaI6DM6CbzWrYOn3V2n8CNvXZZDMWJ0_m1PdaYmObsWE
+Message-ID: <CACak8wMDhXTXkS6PAMCY1_SbvGK_v6YQBCZxBLJZY382JuKbiw@mail.gmail.com>
+Subject: Re: [PATCH] KVM: selftests: Test partial KVM_CLEAR_DIRTY_LOG requests
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>, Shuah Khan <shuah@kernel.org>, 
+	Sean Christopherson <seanjc@google.com>, linux-kselftest@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kernel-mentees@lists.linux.dev, 
+	me@brighamcampbell.com, jkoolstra@xs4all.nl
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 16, 2026 at 02:01:19PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
-> - [High] dmaengine: atcdmac300: UAF on driver unbind due to devres lifecycle mismatch
-> - [High] dmaengine: atcdmac300: permanent controller halt if suspend times out
-> - [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic and non-cyclic transfers
-> - [High] dmaengine: atcdmac300: cross-transfer corruption on simultaneous TC and ERR interrupts
-> - [Medium] dmaengine: atcdmac300: memory leak of unsubmitted descriptors
-> - [Medium] dmaengine: atcdmac300: silent truncation of DT req_num exceeding 15
-> - [Medium] dmaengine: atcdmac300: transfers queued during suspend are stranded on resume
-> - [Low] dmaengine: atcdmac300: missing endianness conversions for DMA descriptors
-> --
-
-Please fix these problem or provide explain.
-
-Frank
-
->
-> commit 94fd62b6d9e6afc2cf50f8dff89eedcdc57f24c9
-> Author: CL Wang <cl634@andestech.com>
-> Subject: dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
->
-> This patch adds support for the Andes ATCDMAC300 DMA controller. It provides
-> scatter-gather, cyclic, and slave transfer capabilities.
->
-> > diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
-> > index 0000000000000..e0a8a980e2fe8
-> > --- /dev/null
-> > +++ b/drivers/dma/atcdmac300.c
-> [ ... ]
-> > @@ -82,9 +82,6 @@ static struct atcdmac_desc *atcdmac_alloc_desc(struct dma_chan *chan,
-> >  		INIT_LIST_HEAD(&desc->desc_node);
-> >  		INIT_LIST_HEAD(&desc->tx_list);
-> >  		dma_async_tx_descriptor_init(&desc->txd, chan);
-> >  		desc->txd.flags = DMA_CTRL_ACK;
-> >  		desc->txd.tx_submit = atcdmac_tx_submit;
-> >  		desc->txd.phys = phys;
-> >  	}
+> > +/* Use the 2nd 64-page range to exercise a non-zero offset. */
+> > +#define TEST_CLEAR_LOG_FIRST_PAGE    64
+> > +#define TEST_CLEAR_LOG_NUM_PAGES     64
+> > +#define TEST_CLEAR_LOG_BIT           1
+> > +#define TEST_CLEAR_LOG_PAGE          (TEST_CLEAR_LOG_FIRST_PAGE + \
+> > +                                      TEST_CLEAR_LOG_BIT)
+> > +static void guest_code_clear_log(void)
+> > +{
+> > +     u64 addr =3D guest_test_virt_mem + TEST_CLEAR_LOG_PAGE * host_pag=
+e_size;
+> > +
+> > +     while (true) {
+> > +             vcpu_arch_put_guest(*(u64 *)addr, 1);
 >
 > [Severity: Medium]
-> The desc_free callback is omitted from the transaction descriptor here.
-> If a client prepares a descriptor but aborts and frees it before
-> submission, the DMA engine core won't be able to free it.
->
-> [ ... ]
-> > @@ -494,11 +494,11 @@ static irqreturn_t atcdmac_irq_thread(int irq, void *dev_id)
-> >  	for (i = 0; i < dmac->num_ch; i++) {
-> >  		dmac_chan = &dmac->chan[i];
-> >
-> >  		if (test_and_clear_bit(ATCDMAC_STA_TC, &dmac_chan->status)) {
-> >  			atcdmac_advance_work(dmac_chan);
-> >  			handled = true;
-> >  		}
-> >
-> >  		if (test_and_clear_bit(ATCDMAC_STA_ERR, &dmac_chan->status)) {
-> >  			atcdmac_handle_error(dmac_chan);
-> >  			handled = true;
-> >  		}
->
-> [Severity: High]
-> The lack of mutual exclusivity allows both conditions to execute if both
-> status bits are asserted simultaneously by the hardware. In this case,
-> atcdmac_advance_work() would complete the current descriptor and start the
-> next one, followed immediately by atcdmac_handle_error() wrongly aborting
-> the newly started, innocent descriptor. Should these checks be mutually
-> exclusive?
->
-> [ ... ]
-> > @@ -911,10 +911,8 @@ atcdmac_prep_dma_cyclic(struct dma_chan *chan,
-> >  		if (!desc)
-> >  			goto err_desc_get;
-> >  		atcdmac_chain_desc(&first, &prev, desc, true);
-> >  	}
-> >
-> >  	first->txd.flags = flags;
-> >  	dmac_chan->cyclic = true;
->
-> [Severity: High]
-> This modifies the channel-wide state during descriptor preparation.
-> If a client prepares a cyclic transfer, does not submit it, and
-> subsequently prepares and submits a non-cyclic transfer, this global
-> flag remains set. When the non-cyclic transfer completes, could this
-> cause atcdmac_advance_work() to treat it as cyclic and attempt to
-> dereference dma_desc->at->next in atcdmac_start_next_trans(), leading
-> to a kernel panic?
->
-> [ ... ]
-> > @@ -1144,10 +1144,8 @@ static void atcdmac_free_chan_resources(struct dma_chan *chan)
-> >  	spin_lock_irqsave(&dmac_chan->lock, flags);
-> >  	list_for_each_entry_safe(desc,
-> >  				 desc_next,
-> >  				 &dmac_chan->free_list,
-> >  				 desc_node) {
-> >  		list_del(&desc->desc_node);
-> >  		dma_pool_free(dmac->dma_desc_pool, desc, desc->txd.phys);
-> >  	}
+> Will this result in an out-of-bounds guest memory access on architectures=
+ where
+> the host page size is larger than the guest page size?
+
+Agreed.
+The allocation is sized in guest pages, but the clear request and
+guest write offset are expressed in host pages.
+I'll fix this in v2 by starting with 3*64=3D192 host pages and
+converting that count to guest pages before applying the allocation
+adjustment.
+
+> > +     kvm_vm_get_dirty_log(vm, TEST_MEM_SLOT_INDEX, bmap);
+> > +     for (page =3D 0; page < host_num_pages; page++)
+> > +             TEST_ASSERT(test_bit_le(page, bmap),
+> > +                         "Page %lu should be dirty after INITIALLY_SET=
+", page);
 >
 > [Severity: Medium]
-> This loop only frees descriptors currently sitting in the free_list.
-> Combined with the missing desc_free callback above, does this mean any
-> prepared but unsubmitted descriptors are permanently leaked and never
-> returned to the dma_desc_pool?
->
-> [ ... ]
-> > @@ -1189,8 +1189,8 @@ static struct dma_chan *atcdmac_dma_xlate_handler(struct of_phandle_args *dmac,
-> >  	if (!chan)
-> >  		return NULL;
-> >
-> >  	dmac_chan = atcdmac_chan_to_dmac_chan(chan);
-> >  	dmac_chan->dev_chan = true;
-> >  	dmac_chan->req_num = dmac->args[0] & 0xff;
->
-> [Severity: Medium]
-> The request number is extracted and masked to 8 bits. However, the hardware
-> request selection registers (SRC_REQ_SEL_MASK, DST_REQ_SEL_MASK) are only
-> 4 bits wide. Since FIELD_PREP silently truncates values, a device tree
-> req_num of 16 will be programmed into hardware as 0 without warning.
-> Should this value be explicitly validated against the 4-bit maximum?
->
-> [ ... ]
-> > @@ -1305,9 +1305,9 @@ static int atcdmac_init_ioremap_and_regmap(struct platform_device *pdev,
-> >  	regmap_read(regmap, REG_CFG, &val);
-> >  	num_ch = val & CH_NUM;
-> >  	size = sizeof(*dmac) + num_ch * sizeof(struct atcdmac_chan);
-> >  	dmac = devm_kzalloc(&pdev->dev, size, GFP_KERNEL);
-> >  	if (!dmac)
-> >  		return -ENOMEM;
->
-> [Severity: High]
-> The DMA controller structure is allocated using devres, tying its
-> lifetime to the device binding rather than the dma_device refcount.
-> If a client driver still holds a channel reference when the device is
-> unbound, could this lead to a use-after-free when the client later
-> releases the channel and atcdmac_free_chan_resources() accesses the
-> freed dmac structure?
->
-> [ ... ]
-> > @@ -1543,9 +1543,8 @@ static int atcdmac_resume(struct device *dev)
-> >  	list_for_each_entry_safe(chan,
-> >  				 chan_next,
-> >  				 &dmac->dma_device.channels,
-> >  				 device_node) {
-> >  		dmac_chan = atcdmac_chan_to_dmac_chan(chan);
-> >  		spin_lock_irqsave(&dmac_chan->lock, flags);
-> >  		if (!list_empty(&dmac_chan->active_list))
-> >  			atcdmac_start_next_trans(dmac_chan);
->
-> [Severity: Medium]
-> This condition actively prevents queue_list items from being serviced if
-> the active_list is empty during resume. Since transfers submitted during
-> suspend are placed into queue_list (because stop_mask prevents them from
-> starting), won't they remain stranded indefinitely unless issue_pending
-> is also called here?
->
-> [ ... ]
-> > @@ -1568,9 +1568,9 @@ static int atcdmac_suspend(struct device *dev)
-> >  	synchronize_irq(dmac->irq);
-> >
-> >  	ret = atcdmac_wait_chan_idle(dmac,
-> >  				     chan_mask,
-> >  				     ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
-> >
-> >  	return ret;
-> >  }
->
-> [Severity: High]
-> If atcdmac_wait_chan_idle() times out, the function returns the error code
-> without reverting dmac->stop_mask back to 0. Since the PM core would abort
-> the system suspend and resume normal operations, wouldn't this permanently
-> prevent any new transfers from starting?
->
-> > diff --git a/drivers/dma/atcdmac300.h b/drivers/dma/atcdmac300.h
-> > index 0000000000000..3d2d07effc26d
-> > --- /dev/null
-> > +++ b/drivers/dma/atcdmac300.h
-> [ ... ]
-> > @@ -148,10 +148,10 @@ enum dma_sta {
-> >   * @ll_ptr_hi: Linked List Pointer Register (high 32-bit).
-> >   */
-> >  struct atcdmac_regs {
-> >  	unsigned int ctrl;
-> >  	unsigned int trans_size;
->
-> [Severity: Low]
-> The hardware descriptor layout uses native unsigned int instead of
-> explicitly sized __le32 types. When these fields are populated in
-> atcdmac_build_desc(), values are assigned directly without cpu_to_le32().
-> Does this lack of endianness conversion break portability if this driver
-> is ever used on a big-endian system?
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260916134258.2178081-1-cl634@andestech.com?part=2
+> Does this assertion assume that KVM_DIRTY_LOG_INITIALLY_SET is always sup=
+ported
+> if KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2 is present?
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914155301.14=
+499-1-tharitt97@gmail.com?part=3D1
+
+Agreed.
+I'll check for the KVM_DIRTY_LOG_INITIALLY_SET at the start of the
+test, and skip the test if it is unavailable.
