@@ -1,164 +1,203 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F230370ADF
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 15:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789574073; cv=pass; b=q8KGEchvOK5YKzqKTJXlcFRzmki3xv9trMa4AlwCb+Ok2IkVlBp3ohIcZ3f2FXFtGXzW5RZZbKTBYaGgGJ+ISuh7HvDo8VXvkzvsOb69zjoXobdJdpmfABq3jF1f4sd15zjuCSc9ou8bD43xbi5u+/EYweaS9f63sz0VVC8Yejc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789574073; c=relaxed/simple;
-	bh=7TPfKC0S+AyjVWxEL3kMuQSa0P4aYfLH4X9y6XPnkiM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=drXh6pn7YkW6zeacT9lHt+WKWWBXJJXPyf3bwhyQGTTYZ6LXVdT0P7AZ970al7I9DOV4NKnFdKyt5z9vPaQO/2q36yAnxNjt2WSX9XwxZVCwx0ZSkuv7XKBQIyr2jhZktXtt2NExnzxKx+OrWcrML64f5bVK1SHp7LsC1nhnGS0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZDQM3/kN; arc=pass smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1204C652C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 16:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789574469; cv=none; b=OZ8IVAWMZMz0k4OkwU+YUQG+IM1bwyLyHPTjk7hqKjZVxYHi+MZTJVDiv1xOIYnxr97MXr+yp/lg0oMsDlb9mpngAou3TbzisWX67JccSdaOWz5ftnjpwXqGzbeYysLKO3ytmC9VvaVDCYK10Tzp5SuXgl7XDM1odxmy882CbHQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789574469; c=relaxed/simple;
+	bh=ZOWMZlV7dIId0Oq1envK8gIOfVU0kuIwLpbq58ddKzg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e/ED+Vvsx04Qe7jwOltLKZRP2YNj2+SRtymfo2iQJQlWNydBTsfch23Pydgo5VaQo7G99rFoXwxGlyiftiNKt5P2/Xpd1BEnLNaDQzvnedI8UQvk9Jyz1hS7O/7rn6KFzx3uBCIzmSytDTZ3XK8AXHW2UyJDDFbLXaArmjAFSxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=gFPzrwkE; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZDQM3/kN"
-Received: by mail-qk2-f12.google.com with SMTP id d75a77b69052e-530411c7ee1so306681cf.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:54:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789574069; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sdt223IPcnAw3V+ajLHGyBF8aisDWQY+EGHnD/pXnpFO4R+/gLyaylDIQgXu+sPezy
-         Ip5EXi0MFiRPNH4TO9fTWpAFjEh/OQysx3tq0K/A0uNJeJdTnMRWkYbuSkBzThy94Pkt
-         LeMewTDiEvy1LS76tZXjikJJEYlN/Nou2EsflLokJBRXbTYDdycipwwJdAyMxR3G920S
-         nywOnghHVDbum1QrncXvXz9Al1jXewJmDgiiMMkzYulHUaH4R0kcZ4dYTk6DNNX4QDVV
-         NhKND4t797W7VauTN9IEjyXcXASDh6th8g37bdmGxsX4Dz0pkfli91P5xyPC6UJwqRKp
-         l7uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LakOb0bCO9P4LHmMzGLPHsI3voGyQnWQGSKhp2smfTU=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=HFnq5PFznsWCgJggUuCrApGUEbscPiI0nnPHX+Iz4KzCOKO5Eh6rEjtxUlOicwbXnn
-         AHA3k275PgAJgwxKE1ozRUZIs7R8xc8w6iQhIATK8cZP4EDSY1bgWavjz9r+aL4LNQT2
-         j/h+xN3vLiEh10SlTTP5KKYMB62I2FLMq28XYZjxO9TmyklqZ4nSbN1agZJmoOiT5+qT
-         L2DgJpXsBhK+xeLjAqxWbBsr2imQ+cqI+GxCgjqfXYCdCia8erszOReTri5tOhw/VwS2
-         UH3PnRhri2GOgCgnRGZiDzjSTWqer39uN5VSYs0JuTUe+Su6cUb22xPlIzmXr0ompad3
-         zHFw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789574069; x=1790178869; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LakOb0bCO9P4LHmMzGLPHsI3voGyQnWQGSKhp2smfTU=;
-        b=ZDQM3/kNyRrE5oQ/53bMHRhIS2hyne5DgRSseZtzmB6/ml7ARQsx4M40vBRDRdxbIx
-         2oHztcfZtFCdu0aMJjuGBmLmNjO1ZqAjI/Rc6TwGT0MaGuhDrJW8ZrIaMlX8YhMmcwAE
-         AmjeuGRaHo8Tx/4fctgNrRHEJE6o1jFS/9k3jrq1AcyI2nyNDqRXnpL6ypqdPGjt4T0D
-         xqETlbaYshqo3nQUJgt9+HXrgoUbGNZihrvTjwsDoU4UEHyceEtQCOlCx/PMq6aq9JtL
-         xq4GvO60t2LYUfz0D7YibA/ryPOuY+KXXywyJ8Bn1CnbKHt0nNLJNMudAsRlhLy3rv2g
-         nanw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789574069; x=1790178869;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LakOb0bCO9P4LHmMzGLPHsI3voGyQnWQGSKhp2smfTU=;
-        b=sUDRLYw7jg4LpWb0ncWVboBpz7IWEUMq0sU6Riqn/aFxoTLD8gN33DYlFrHQgAY/4J
-         aQ9dOVJhKM5GLBV7USA8SzCNzkp1V4SQtn4rUUl51MG4KCsCkCQR7joK3k5PObgJkBwM
-         sM/9gpOrQC3bLAp4vHmsnqYNMMUcgDMbScboZZnKHsh33XwCM/iA/bbho+dC7uGc/PwT
-         kv1hdYGrf1C/qxiZqQjBnGVxGXag1Cm1sr46a5EXDX4jBkpXaRC2VVtuQDLzioJ/QFXm
-         BwnGWhY/TM3tR6MunbaLaM4Jyr9IzaGFF7FjZr5qy7s56dkwJRM91o/crDnnoW/5ccBt
-         OlrQ==
-X-Gm-Message-State: AFuF++k6czok470V7btjCrUODjyyYgcqxZF2/YlWPyw+BQFAmfUXf6D3
-	Rh5F/wkKsq8BoeRTBeu2HLlyed52NB6Ipd0teeqNEhR+nymdIisCN+/IjyfKoIB0oCjRgYzSi+U
-	3qINGePtZ8PU6OPyg41vPu3zXSFKgRb/ypmZRLlB6CZpoRlrawkp0Ok22Yn/k+Q==
-X-Gm-Gg: AYBFou0qpW0HXAzGfQtDrn6A+kntGv6toJlI5iPWW0NfozIVwzQBfPGapvka2zxCzs1
-	lTLDy71Ux9IhIPAKph65kFhzUwy2m7bnM6ufXPW/XX0QCDh7Xvx0grkvJFK722A7cslR2jIRDY2
-	ZXFxzGwl7+ntQC1BmtF/6G+raFHyJ0P9fr43iavM1Bzu9m9x8fVunIXhJILsvAhytoYraCeVSCl
-	V4twKD89OTMj8r74bK3A0xGGB2uB0yvVZzrS3AHdfMzfeF4jQ8oDY2U3uK5vvq51zSQi8jq6BTe
-	LgUZ3OwSlErce3Oq1UP8yg+Ex7kVumwJDgAy2GpLSkdJrPIqaAFgUpp4BlPgJE5EByvFnIUAArZ
-	69FGlWEGb
-X-Received: by 2002:ac8:7f09:0:b0:531:282:6560 with SMTP id
- d75a77b69052e-5327e6f2a86mr15289401cf.15.1789574067947; Wed, 16 Sep 2026
- 08:54:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="gFPzrwkE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=yAL2lM24N2c7+9aduKXD74ve9wflnU4W1RARVreAXIM=;
+	b=gFPzrwkE9fHkklMKKW9o+xKAmNFcYkGioWWn1Ll4E/KY3tYXPQ5Uy/Jrl1LEIg
+	Ess0cLLgrFMK2ltKMfXV3wqrb7VIIv+d2SqdgEj7z6WQEGC8tpDt8/0gHUeX6X+1
+	HzgKXeeBWYSMYfpw4bIpXXXbeZ9cxoVE3et4/oejLmRZ4=
+Received: from [IPV6:240e:b8f:91b3:d000:a95a:12fc:887a:b0f1] (unknown [])
+	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wD3X2sqvapqHFkTBA--.34803S2;
+	Thu, 17 Sep 2026 00:00:42 +0800 (CST)
+Message-ID: <d8e6c9be-ee1d-4426-9595-faf655ba0306@163.com>
+Date: Thu, 17 Sep 2026 00:00:42 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260916061218.3061216-1-irogers@google.com> <20260916061218.3061216-4-irogers@google.com>
- <20260916062233.192271F000FF@smtp.kernel.org>
-In-Reply-To: <20260916062233.192271F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Wed, 16 Sep 2026 08:54:16 -0700
-X-Gm-Features: AcwNN1V-7vNOQhejVrikEYGwQUihp15qdbep1GsDRqgE0RceZn_9nikCmJynvoE
-Message-ID: <CAP-5=fWNMrnB9KNjCGOc0A+kwvWWsxYc092x=q6CLK+-g3nwFw@mail.gmail.com>
-Subject: Re: [PATCH 3/9] perf libbfd: Include the headers that are used
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 1/3] PCI: Match the hierarchy's MPS to a device's MPSS
+ as necessary
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
+ linux-pci@vger.kernel.org
+References: <20260916153907.60344-1-18255117159@163.com>
+ <20260916153907.60344-2-18255117159@163.com>
+ <20260916155239.06ECC1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Hans Zhang <18255117159@163.com>
+In-Reply-To: <20260916155239.06ECC1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_____wD3X2sqvapqHFkTBA--.34803S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3JFW8WrWUuw1fWw4kur1UAwb_yoW7Zw1DpF
+	WDGF9Yyr4DJryUta1DZ3WrZr95GFs3ZayrJr90k34Iva45CryrKryYyr43Gw4xJrZxGFyj
+	yr1qq34xX3Z8taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRO18PUUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6wq+YmqqvSo1HAAA3D
 
-On Tue, Sep 15, 2026 at 11:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] perf libbfd: build failure on musl due to missing <stdarg.h>
+Hi,
+
+Thanks for the review.
+
+On 9/16/26 23:52, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] pci: pci_walk_bus() modifies MPS of active devices causing Malformed TLPs
+> - [High] pci: dynamically modified MPS in pcie_set_mps() is lost on system resume
+> - [High] pci: unlocked RMW of PCI_EXP_DEVCTL in pcie_set_mps() causes data races
 > --
->
-> commit b4b64b7fbd73cf480fc5aaa2ad17802e8f46fbcc
-> Author: Ian Rogers <irogers@google.com>
->
-> perf libbfd: Include the headers that are used
->
-> This patch explicitly includes several POSIX headers directly into libbfd=
-.c
-> instead of relying on indirect inclusions. It also reorders the includes =
-to
-> group system headers before perf's own headers.
->
-> > diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-> > index 131bfedf48cdf..1b23a261a9ced 100644
-> > --- a/tools/perf/util/libbfd.c
-> > +++ b/tools/perf/util/libbfd.c
-> > @@ -1,5 +1,19 @@
-> >  // SPDX-License-Identifier: GPL-2.0
-> >  #include "libbfd.h"
-> > +
-> > +#include <errno.h>
-> > +#include <inttypes.h>
-> > +#include <limits.h>
-> > +#include <stdint.h>
-> > +#include <stdio.h>
-> > +#include <stdlib.h>
-> > +#include <string.h>
-> > +
-> > +#include <fcntl.h>
-> > +#include <pthread.h>
-> > +
-> > +#include <tools/dis-asm-compat.h>
->
-> [Severity: Low]
-> Does this inclusion order break the build on musl libc?
->
-> Because <tools/dis-asm-compat.h> uses va_start and va_end in an inline
-> function, it strictly requires <stdarg.h>. Previously, this requirement
-> was satisfied implicitly because it was included later in the file, after
-> other headers provided the necessary declarations.
->
-> Moving <tools/dis-asm-compat.h> higher up in the file exposes this missin=
-g
-> dependency, which will cause va_start and va_end to be undeclared in stri=
-ct
-> environments like musl.
->
+> 
+> commit 5af1f52d57f95fe2335fa9124a2d504949bbc917
+> Author: Hans Zhang <18255117159@163.com>
+> 
+> PCI: Match the hierarchy's MPS to a device's MPSS as necessary
+> 
+> When a device's MPSS is too small to match the upstream bridge,
+> pci_configure_mps() now walks the hierarchy from the Root Port down
+> and reduces every device that is above the new value to avoid
+> Malformed TLPs on Switch egress ports.
+> 
+>> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+>> index 27008e2ea5afc..232bce2819f06 100644
+>> --- a/drivers/pci/probe.c
+>> +++ b/drivers/pci/probe.c
+>> @@ -2200,9 +2200,28 @@ int pci_setup_device(struct pci_dev *dev)
+>>   	return 0;
+>>   }
+>>   
+>> +static int pcie_reduce_mps(struct pci_dev *dev, void *data)
+>> +{
+>> +	int mps = *(int *)data;
+>> +	int ret;
+>> +
+>> +	/* MPS is of type 'RsvdP' for VFs */
+>> +	if (!pci_is_pcie(dev) || dev->is_virtfn)
+>> +		return 0;
+>> +
+>> +	if (pcie_get_mps(dev) > mps) {
+>> +		ret = pcie_set_mps(dev, mps);
+>                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> [Severity: High]
+> Does bypassing the PM software save state here cause the dynamically modified
+> MPS to be lost on system resume?
+> 
+> If the sibling driver previously called pci_save_state() during its probe,
+> dev->state_saved becomes true. During the next suspend, the PM core skips
+> saving the new hardware state. On resume, the old, larger MPS would be
+> restored, potentially desynchronizing the hierarchy.
+> 
+
+pci_save_state() is called from the driver's probe path, which runs 
+after enumeration has completed.  pcie_reduce_mps() runs during 
+enumeration, i.e. before any driver can have called pci_save_state(). 
+The saved state therefore already contains the reduced MPS and it is 
+restored correctly on resume.
+
+
+> [Severity: High]
+> Also, does modifying the hardware MPS of active third-party endpoints using
+> an unlocked Read-Modify-Write of PCI_EXP_DEVCTL cause data races?
+> 
+> pcie_set_mps() performs an unlocked RMW of PCI_EXP_DEVCTL. If the sibling
+> driver or userspace (via VFIO) modifies the same register concurrently
+> (e.g., via pcie_set_readrq()), could it corrupt the configuration state of
+> active endpoints?
+
+
+pcie_set_mps() does not perform an unlocked RMW.  It calls
+pcie_capability_clear_and_set_word(), which serializes config space
+access through pci_lock.  Concurrent access from userspace (VFIO) or 
+from pcie_set_readrq() cannot corrupt PCI_EXP_DEVCTL.
+
+> 
+>> +		if (ret)
+>> +			dev_warn(&dev->dev, "failed to set MPS\n");
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static void pci_configure_mps(struct pci_dev *dev)
+>>   {
+>>   	struct pci_dev *bridge = pci_upstream_bridge(dev);
+> 
 > [ ... ]
+> 
+>> @@ -2252,10 +2271,21 @@ static void pci_configure_mps(struct pci_dev *dev)
+>>   		return;
+>>   
+>>   	mpss = 128 << dev->pcie_mpss;
+>> -	if (mpss < p_mps && pci_pcie_type(bridge) == PCI_EXP_TYPE_ROOT_PORT) {
+>> -		pcie_set_mps(bridge, mpss);
+>> -		pci_info(dev, "Upstream bridge's Max Payload Size set to %d (was %d, max %d)\n",
+>> -			 mpss, p_mps, 128 << bridge->pcie_mpss);
+>> +	rp = pcie_find_root_port(bridge);
+>> +	if (mpss < p_mps && rp) {
+>> +		/*
+>> +		 * dev cannot be programmed to the MPS already in use above
+>> +		 * it, so reduce the hierarchy to what dev supports.  A Switch
+>> +		 * may not repackage TLPs, so reducing only the upstream
+>> +		 * bridge is not enough: every port up to the Root Port has to
+>> +		 * come down as well, and so do the devices already programmed
+>> +		 * below that Root Port, which would otherwise be left sending
+>> +		 * TLPs too large for their egress port.
+>> +		 */
+>> +		pcie_reduce_mps(rp, &mpss);
+>> +		pci_walk_bus(rp->subordinate, pcie_reduce_mps, &mpss);
+>                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> [Severity: Critical]
+> Does unconditionally walking the bus and dynamically reducing the MPS of active
+> siblings cause Malformed TLPs?
+> 
+> PCIe specifications prohibit changing MPS while a device is active. Active
+> devices will continue generating TLPs based on their driver's internal state
+> (or previously negotiated packet sizes). When these larger TLPs hit the
+> dynamically reduced upstream bridge, won't they be dropped as Malformed
+> TLPs, potentially leading to a system crash or bus reset?
 
-I don't plan to fix this as the issue is minor and relates to an
-include, not the code itself. The series has no other Sashiko
-feedback.
-https://sashiko.dev/#/patchset/20260916061218.3061216-1-irogers%40google.co=
-m
+The concern is valid in principle, but pci_configure_mps() is only
+called from pci_configure_device() during pci_setup_device(), i.e. while
+the device is being enumerated and before its driver has probed.  No
+device below the Root Port can be actively driving TLPs at that point,
+so the "active NIC or early firmware-driven display controller" scenario
+does not apply on this path.
 
-Thanks,
-Ian
+The same applies to the hotplug case: the newly added device goes 
+throughpci_setup_device() and pci_configure_mps() before it is bound to 
+a driver.  Reducing the Root Port's MPS when a downstream device has a
+smaller MPSS is also pre-existing behaviour from 9f0e89359775; this
+series extends it to Switch ports and already-programmed siblings, which
+is required to fix the Switch mismatch reported in v8.  I will document
+this precondition in the commit message.
 
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260916061218.30=
-61216-1-irogers@google.com?part=3D3
+
+
+
+Best regards,
+Hans
+
+> 
+>> +		pci_info(dev, "Max Payload Size of %s hierarchy set to %d (was %d)\n",
+>> +			 pci_name(rp), mpss, p_mps);
+>>   		p_mps = pcie_get_mps(bridge);
+>>   	}
+> 
+
