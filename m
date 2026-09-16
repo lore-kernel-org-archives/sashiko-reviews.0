@@ -1,102 +1,324 @@
-Received: from mta0.migadu.com (out-23.mta0.migadu.com [91.218.175.23])
+Received: from mail-pj1-f98.google.com (mail-pj1-f98.google.com [209.85.216.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C27E33DEF7
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 14:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEAE3B38B9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 15:21:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789570604; cv=none; b=ZofViDKuzg4nO2WwiATDHFoCNW8Qt2XNGCDrT1FWfSKpyovFbdxqNeVcOlvzMRCPPM1AldBwjiEr78EHjMhLHTfON9B5ggDr1fXt5BLg25CRREwbL3UFSYK6HZPxUCvHeRmHqroL1nCY1YrJUpmVGcJw9ix0EDiE8GGxqZsXyno=
+	t=1789572078; cv=none; b=T1lZIhsR+kOtupYsUbVyFosKSi/IWzRe1T3mYvuH5i+iXs699Uw7QsCS/jg6t9vkL9SYPzamr+SJ2KNsuUL8+sMOpOTEExNUdRTnqZzwX37k8RcKm3dDoEi0WFDB6UEHVTQ2PhI6DH5rXD1GbJfD+yaVxzaMTGpNMNQAEu18Nwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789570604; c=relaxed/simple;
-	bh=9GNGVAKTTK8eqix4yOLwD6F6vnU8nqAI6Taa7PAxP8M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rrnnI+pfDIeeEGbasFShKBpapT/MDnlBvunIZuNci5+heP5fzgdtIu3AgvI1xwSl7mPUPV+ndPGs86kEXdViNMJr7h06+QlV/pj2Sx6okPadV0TD+JTu/paQMb1ovfUyAcaaBBBapcYssHz1rJ/AmrChkFMbP0pNhPyTgus38L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LpT/lSMI; arc=none smtp.client-ip=91.218.175.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789572078; c=relaxed/simple;
+	bh=kynSRgs9iduqBjCm+/fyNFmhk40dXor/etqaRc5ZcSY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aRJT2nRl9tkbHUrf220WbsT3W8sIrn20RIzuqMcZnkL80ozjkH44NcsYzaE+PUVTjljarIqGJCRgHZp1WF9r/EH0G8gKb8AZf3B/SDtjLZ2AhKAqwSS1/nq3AXPbrf3ei+KqiTR6m8PK1i0sJQNqiPOiYMh/fu6k2yuJCBFr0tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=XM/gJeFm; arc=none smtp.client-ip=209.85.216.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LpT/lSMI"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=9GNGVAKTTK8eqix4yOLwD6F6vnU8nqAI6Taa7PAxP8M=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789570599; v=1; x=1790175399;
- b=LpT/lSMIym4AlFbkTxCUGTu4jb/WcIw66Plb82/XOV0tpV1tITEUA3sN1ZqwoLZ3wxPET1Rg
- +bovl+g7VRwaB9zMPplKJBg1ms32oO0fGyZiStnyKZongB0M3fMCxiNMKdIupHU8YLGBZZsOH8/
- 8Qj1VOCXVhE+bYQeJpt6Ukw4=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 914571e2011362e5;
-	Wed, 16 Sep 2026 14:56:39 +0000
-X-Mizu-Trace-ID: 914571e2011362e5
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <c5162a22-a455-4ed3-bed6-4488dbc45fce@linux.dev>
-Date: Wed, 16 Sep 2026 22:56:34 +0800
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="XM/gJeFm"
+Received: by mail-pj1-f98.google.com with SMTP id 98e67ed59e1d1-38511175ad3so1629068a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:21:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789572070; x=1790176870;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3jDCInRq0OCpkNe2zLbol20AZX9Me3lnxfgQEJwLAwg=;
+        b=BwL6KwGdi0padeJ62MeMbAmft7t5ZcwDJ9Cnp64RAeB8IJYnRD8gEdo3w+1d0mMOWl
+         UisLOearA34mWbGxL+rWFvCjaAe+Pdow8FjqX3pabHsTDSfrLxxlqgG0ls/PpIT8yWXc
+         /61ETCh9Hy6uklI2YT0bma6DdOuHuPxSOaRMmELfqJvkFLfzCSzhmIQvCCoXuM/FBBKO
+         TrtC/hzy6SiQgXXjSJA1DLj6C2Cbz429lEogquXRJrn0KDzrjNcHROnkroWxxrg5fjIG
+         2jtdTFBhe4nCpX0TiDwxY5TKWsWxLxUYKSqcVzkBTr+vXHjvFjTCr+L6ckhQ5oyfxm7D
+         0q8g==
+X-Gm-Message-State: AFuF++kikDsT+Vmq1eSvLk9KRLlbwctCr7Oh3mvMVSyhetoLn4+Dp5/i
+	pbojkzdyLDBWBkius8Fe7AWoH/3vr+LsygDcyZVoHvRxJ/KcWnkw37Edl0axSiZfGv7VA1M0NpZ
+	+tvWZeOshwPD/rI43YCKEYEzEKD1+BIL1lLl9mOw5NcId2QP30CTfInh7A6l24JTiNf+bVIaIMm
+	mcaQf94XoM9Je2fknKe4YEs8DCxOgC7PE+Sm72mmURtn8Tv+vt9/i+JVK3wNzyT5LdqIpa8MkvI
+	OYWl6vViXNHEGcgeMbCy0n3
+X-Gm-Gg: AYBFou1lfrPzw0XhFxnUz4mH+yS83mijtzB9+hnWTBm4gnO/oF0i31hCFQxPGSABgZh
+	3JiRG/kFWcddSfhUOky+fZqp6a6FT+b4zTbkFgU/k/hRbA9zLSaU3JNCFZJPk6Ao+wh/KlbNIE4
+	9Btiv6Km0zDuJcAZy3N4oPHVPrxvo4aviY3Ucwtj4TasjfMmTk+UlIixXJt5FUeb7hFherzMv9A
+	lavGZMuH8yofesXMQuaI6gxwEmxYKX+EzCGThZ7c+jBa2nCC/RutOCtfsbBmh10Nuh6+HfNablI
+	bWC8mtdZ2416x4Ncker3V19tEETnpnFuPPRzy2Nm7aVGZh+OTTJt4Wk5f0wOfIY3IbdshOe1aI1
+	tOyGbklBZ4GDIvSYrbRzFTo6ZAAsle9bQ/lyPAdGcP+mPJCI1yFeoIqVlRV8ZD0rLUA3OvlneF4
+	FglyS5bwDZgNECb/FTEYNabBLIrnkUG2IXdyfA
+X-Received: by 2002:a17:90b:1b08:b0:39d:ee20:1e3b with SMTP id 98e67ed59e1d1-39e1e4cf1cbmr6826386a91.23.1789572069437;
+        Wed, 16 Sep 2026 08:21:09 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-98.dlp.protect.broadcom.com. [144.49.247.98])
+        by smtp-relay.gmail.com with ESMTPS id 41be03b00d2f7-cc50ad1e189sm1349279a12.10.2026.09.16.08.21.08
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Sep 2026 08:21:09 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c2939e341f7so670875366b.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1789572067; x=1790176867; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3jDCInRq0OCpkNe2zLbol20AZX9Me3lnxfgQEJwLAwg=;
+        b=XM/gJeFmu7FQp6dQUFD13aBOiSyspVwfIm19yve46J/RFveai858f1NQXGYsFG5k6o
+         XTwqG8D8I3/e6xdsLD5YjZi8COwZtPf5UXDDv7fGpKIsBlEiRuvSBAehtV0GvLtWUEWx
+         ZDRpWotP1Tv5cAB+NU8C1pVs0j3GjHX2N3OY8=
+X-Received: by 2002:a17:907:9414:b0:c29:448b:f5d4 with SMTP id a640c23a62f3a-c29e532cca8mr215806666b.35.1789572067050;
+        Wed, 16 Sep 2026 08:21:07 -0700 (PDT)
+X-Received: by 2002:a17:907:9414:b0:c29:448b:f5d4 with SMTP id
+ a640c23a62f3a-c29e532cca8mr215803666b.35.1789572066469; Wed, 16 Sep 2026
+ 08:21:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3] bpftool: Compute map size of light skeletons
- at runtime
+References: <20260911233541.1650895-1-james.quinlan@broadcom.com>
+ <20260911233541.1650895-3-james.quinlan@broadcom.com> <20260911234703.B08F21F00893@smtp.kernel.org>
+In-Reply-To: <20260911234703.B08F21F00893@smtp.kernel.org>
+From: Jim Quinlan <james.quinlan@broadcom.com>
+Date: Wed, 16 Sep 2026 11:20:54 -0400
+X-Gm-Features: AcwNN1Xinvg8Z9NfEcyW1vfu5iWj6pGrSavA9-d62UdS4RnzB7jHJUC5vZ8azDk
+Message-ID: <CA+-6iNyukaqVYFm1jVjDYL2DujmX2r1kZCM=Vq9eNp22wUee0A@mail.gmail.com>
+Subject: Re: [PATCH 02/13] PCI: brcmstb: Use flags u32 instead of bools
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260915161450.96249-1-leon.hwang@linux.dev>
- <20260915162834.E2B751F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260915162834.E2B751F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: linux-pci@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000060c219065b9b37cf"
 
-On 2026/9/16 00:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] bpf: compilation failure in skel_internal.h due to non-standard roundup macro
+--00000000000060c219065b9b37cf
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Sep 11, 2026 at 7:47=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Medium] The newly introduced BFLAG macro lacks outer parentheses aroun=
+d the bitwise AND expression, introducing a dangerous operator precedence p=
+itfall.
+>
+> Pre-existing issues:
+> - [High] Uninitialized spinlock `bridge_lock` is acquired during early pr=
+obe before being initialized.
 > --
-> 
-> commit cf9410def9715a95832e67f7002ebd4dabf2d7ad
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> bpftool: Compute map size of light skeletons at runtime
-> 
-> This commit addresses an issue with generating light skeletons on
-> a host with a different page size from the target. It accomplishes
-> this by passing the original map dimensions and dynamically computing
-> the mmap size at runtime.
-> 
->> diff --git a/tools/lib/bpf/skel_internal.h b/tools/lib/bpf/skel_internal.h
->> index 1f3f332dffbe9..9e16b8e8cb7c9 100644
->> --- a/tools/lib/bpf/skel_internal.h
->> +++ b/tools/lib/bpf/skel_internal.h
+>
+> commit c6e2c757989753d5008cfee8a289e1111796b0bf
+> Author: Jim Quinlan <james.quinlan@broadcom.com>
+>
+>     PCI: brcmstb: Use flags u32 instead of bools
+>
+>     This commit replaces separate boolean fields for SoC configurations w=
+ith a
+>     single u32 bitvector. It introduces the BFLAG macro to provide a unif=
+orm
+>     way to assign and check these flags.
+>
+> > diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/contro=
+ller/pcie-brcmstb.c
+> > index 89aaa19d508a7..47862569937eb 100644
+> > --- a/drivers/pci/controller/pcie-brcmstb.c
+> > +++ b/drivers/pci/controller/pcie-brcmstb.c
+> > @@ -286,16 +286,24 @@ struct inbound_win {
+> >   */
+> >  #define CFG_QUIRK_AVOID_BRIDGE_SHUTDOWN              BIT(0)
+> >
+> > +/* FLAGS */
+> > +#define BFLAG(pcie, flag)                    ((pcie)->cfg->flags & CFG=
+_FLG_ ## flag)
+>
+> [Severity: Medium]
+> Will this macro evaluate correctly if used in a logical NOT expression li=
+ke
+> !BFLAG(pcie, HAS_PHY)?
+>
+> Without outer parentheses around the bitwise AND expression, an expressio=
+n
+> like !BFLAG(...) expands to !(pcie)->cfg->flags & flag. This applies the
+> logical NOT before the bitwise AND, which could lead to incorrect evaluat=
+ion.
+>
+> Could outer parentheses be added to prevent operator precedence issues?
+
+I believe Sashiko is wrong here -- the expression does have
+surrounding parens.  Using the given example
+
+     !BFLAG(pcie, HAS_PHY)
+
+should expand to:
+
+    !((pcie)->cfg->flags & CFG_FLG_HAS_PHY)
+
+which looks okay to me.  Perhaps Sashiko gets confused with #defines
+using the '##' operator?
+
+>
 > [ ... ]
->> @@ -193,25 +197,39 @@ static inline void skel_free(void *p)
->>  	free(p);
->>  }
->>  
->> -static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
->> +static inline size_t skel_map_mmap_sz(size_t val_sz, __u32 max_entries)
->>  {
->> -	munmap(p, sz);
->> +	const long page_sz = sysconf(_SC_PAGE_SIZE);
->> +	size_t mmap_sz;
->> +
->> +	mmap_sz = roundup(val_sz, 8) * max_entries;
->> +	mmap_sz = roundup(mmap_sz, page_sz);
-> 
-> [Severity: Low]
-> Does this code rely on the non-standard roundup macro from <sys/param.h>?
-> 
-> When users include the generated light skeleton header in a project compiled
-> with strict C standards (e.g., -std=c99 or -std=c11) without _DEFAULT_SOURCE
-> or _GNU_SOURCE, the roundup macro might not be defined. This can cause a
-> compilation error due to an implicit declaration of function.
+>
+> > @@ -356,14 +364,14 @@ static int brcm_pcie_bridge_sw_init_set(struct br=
+cm_pcie *pcie, u32 val)
+> >       unsigned long flags;
+> >       int ret;
+> >
+> > -     if (pcie->cfg->has_err_report)
+> > +     if (BFLAG(pcie, HAS_ERR_REPORT))
+> >               spin_lock_irqsave(&pcie->bridge_lock, flags);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this acquire an uninitialized spin=
+lock
+> during early probe?
 
-False positive.
+ack, will fix with an additional commit.
 
-By looking into the source code of <sys/param.h>, there's no
-_DEFAULT_SOURCE or _GNU_SOURCE guard for the roundup macro.
+Jim Quinlan
+Broadcom CM/STB
+>
+> During device probe, brcm_pcie_probe() calls brcm_pcie_bridge_sw_init_set=
+()
+> early in the sequence:
+>
+> brcm_pcie_probe() {
+>     ...
+>     ret =3D brcm_pcie_bridge_sw_init_set(pcie, 0);
+>     if (ret)
+>         return dev_err_probe(&pdev->dev, ret,
+>                              "could not de-assert bridge reset\n");
+>     ...
+> }
+>
+> If the SoC configuration has the HAS_ERR_REPORT flag set, this attempts t=
+o
+> acquire pcie->bridge_lock.
+>
+> However, the spinlock isn't initialized until much later in probe:
+>
+> [ ... ]
+>
+> > @@ -2179,7 +2186,7 @@ static int brcm_pcie_probe(struct platform_device=
+ *pdev)
+> >               return ret;
+> >       }
+> >
+> > -     if (pcie->cfg->has_err_report) {
+> > +     if (BFLAG(pcie, HAS_ERR_REPORT)) {
+> >               spin_lock_init(&pcie->bridge_lock);
+> >               brcm_register_die_notifiers(pcie);
+> >       }
+>
+> As shown here at the end of brcm_pcie_probe(), spin_lock_init() happens
+> long after the first call to brcm_pcie_bridge_sw_init_set().
+>
+> Could this cause lockdep splats or kernel crashes when PREEMPT_RT or lock
+> debugging is enabled?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911233541.16=
+50895-1-james.quinlan@broadcom.com?part=3D2
 
-Thanks,
-Leon
+--00000000000060c219065b9b37cf
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
+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
+P6nIShznyqOL2EoCa0IXujxvXUo0pANFYsDhrCVF5JOVPeEL3Y2m+4flRtOI+YlRQoepb+TEVdkY
+/g1rlWG7GIYrtHxrFFRvn2/Iqqpv/x5kzJgoTYFOyTTGlXIqGkKTqCWFrN09kJWzhhmxhxtJprJs
+KveDLF8yhHSbqmXfKTkT+CIrynXXDro+80qXEXC8CM9W9d+2lDDM+hWTlC6Pt/ikMYf/ZB4K2Nr8
+VFruDYGZfAHhh9/lqK3SpS2Z/8cB88K62U+Eb1yNAgMBAAGjggHeMIIB2jAOBgNVHQ8BAf8EBAMC
+BaAwDAYDVR0TAQH/BAIwADCBkwYIKwYBBQUHAQEEgYYwgYMwRgYIKwYBBQUHMAKGOmh0dHA6Ly9z
+ZWN1cmUuZ2xvYmFsc2lnbi5jb20vY2FjZXJ0L2dzZ2NjcjZzbWltZWNhMjAyMy5jcnQwOQYIKwYB
+BQUHMAGGLWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMzBlBgNV
+HSAEXjBcMAkGB2eBDAEFAwMwCwYJKwYBBAGgMgEoMEIGCisGAQQBoDIKAwIwNDAyBggrBgEFBQcC
+ARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wQQYDVR0fBDowODA2oDSg
+MoYwaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMuY3JsMCUGA1Ud
+EQQeMByBGmphbWVzLnF1aW5sYW5AYnJvYWRjb20uY29tMBMGA1UdJQQMMAoGCCsGAQUFBwMEMB8G
+A1UdIwQYMBaAFAApNp5ceroPry1QLdugI4UYsKCSMB0GA1UdDgQWBBQiuRLoBkhIaas+1j3yf23P
+ffVFcjANBgkqhkiG9w0BAQsFAAOCAgEAp1y0fznw9Uo7UzExANVpYjj+OG1c3C7MhWOvAd7LvfPX
+BSFisMaabop5Pyfc/sWzb/jCNfVkkDW5Ij2mzpUsUca2qpILoFhOUT9b0d+nc48MCZ4/Wj6vX5QJ
+i9VdYeuv3DYASZsQdH8iYnV5X5YCYo1AO/pyW+M4gG022Nsji9+3A9zkx8JRPDIXkPaDLrzcGD9L
+rEVIYnnSK9b/4VHzITVgEmSsUTAIzOD6M6TzgrSoJZFmKNMXlAqo+m1nlNyJkM4OyOvaDx5y+2hA
+mp4tzD9gJNU9TzQpQRZFz53+c8BkCpzvcHqT8lMluRlCrIYWqaSOUDHX9HPYvzbtO4iYV+irMdGN
+2PBz6Wtfaoi1xTfFSKK9ON1mvxACK+E4B5gycSoZcOBADTbGXLDMqiygl7Wz0oooAPqZpUnaD1nc
+x/pX7N8Ff6YK+iN3vVah34vLkE1CMFyDQMtyTCzQPW+7XCTxCL9ML3LBAF+eNAtKpPOsrGIdRHy5
+6oQr+2ZquSMvWj447q4v3sk1LHs7ata+sP8/kmcPKn3WPXQ/4xMevqFVyv2VIFrBK9ZnOZ//fz8R
+7SjJ7t2kOITvbWcMkizMc33S9hfmYiXaVTjIi89NiO3EXCJouYShpptgGNG6mpYHcddnfdKiILOS
+06KlKNuHO4IpRmaGrzcDjsUQQSn8amMxggJXMIICUwIBATBiMFIxCzAJBgNVBAYTAkJFMRkwFwYD
+VQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBD
+QSAyMDIzAgwHM7pH5w7o7Qb7yXUwDQYJYIZIAWUDBAIBBQCggccwLwYJKoZIhvcNAQkEMSIEIHwS
+BjaYi//EOr4Ys4WWcElg9IBGK3TJkgnZN6tjqPQdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTI2MDkxNjE1MjEwN1owXAYJKoZIhvcNAQkPMU8wTTALBglghkgBZQME
+ASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQcwCwYJ
+YIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBAKIHc+HPV3B8/uTwtJLdFqVvQW3wdggTL/G8rMlH
+rW/ZzKsECFvsUY42YMToRiTUBU+vtkEOBptXNgSdwzji/saqX6HWM7hyqVJL8vY9g5f3ZeM1q1CV
+20rZkDc1tg6bEeYmD5Wcca4rkp5P/zVpZyVO4C3XTNgbdWCwENi3zD0ghKZeFX/0pmLN+CnnS7RB
+N1wFOzcQ8Emq1uKKvwmCLVTW7lYCRUxJQrN6k5qQaDMDM5lTn+mqSaab9D72aEihl3xcxvcYHt0F
+GeDh+M+faX1Gja9g2qA0U64QEkLUAHg/3i3jcS5V2sRZOb8YLBDqXRG4ipLn2dRgx58sJbMdD58=
+--00000000000060c219065b9b37cf--
