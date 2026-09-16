@@ -1,231 +1,165 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE7321A453
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 04:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789532365; cv=fail; b=na5tGyueDGAdMQwxNuL0PG3D9Iv2zKHGjh+4zfSizIXgxDyVwo//6a9kP9JJ++IZ99SaOGb7FvwGBpAdaC+pNEZj8gBQRtbZ4NZqMYZt3G94bom+H1Ff+adQqPvunmHkRD+3MV8xEOxOxnWNJLEpFQNo8qrE9ZzwNlvOU4fSlrA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789532365; c=relaxed/simple;
-	bh=X0wSsmKLN0BpcuzxfCEf+R/7EK8MVNnMwdadWnJJla4=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ba5ObRG8viuxWf06bfmEhvnbmeyAiVQJxn828PBQed5WKInjN5yAHiUScDfR4O69FvU/LQCTClWSGKmgXVHom+oK33NUPuoYArIPukA3x3Jd7yPUlg6F7dopo9jNo4GmHVfTrBIMzYgyuFvCGhlFHJVpPDlPhzMB8ybWIv9MfIY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JmDdQnDf; arc=fail smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914ED390600
+	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 04:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789532776; cv=none; b=H0Zfi4DqisnVqTuBRryc7tlPHXjycFL7xdBA+hRQ+8lI5VFH7w9ewkX/qn4RnBexbgbRP3KJTy1WD3rxAVxyoo4GqmiGrLEbUEKpOPdQE2W/3swhjUByVGxUr+ylQ86OldTLBDvPgZ/8AcPawMX4rzgqvzYKdMxHPp5WPniY1G0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789532776; c=relaxed/simple;
+	bh=334syfjaJkoAeyzsz1IUG5zqRPqMRQ/P32fFz+5LeU4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=frEjqI6kr3qo3kW+sD4kxE/fKBZQyi00wkRhjfowE+Y2enFoJOO7e4tY3OzDGICITj3OpdikU8Dzv6xp+2JW9lsh8uW+a1PLlKnELjnz0pfx5dF2wQO7U6AKQ3RacH9FtJ8d1BPTQX2CII1Tn6IUnWJHbALA9Y7lMPII3qkJ7KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hB7VaaO4; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JmDdQnDf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789532363; x=1821068363;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=X0wSsmKLN0BpcuzxfCEf+R/7EK8MVNnMwdadWnJJla4=;
-  b=JmDdQnDfNI1we+foZ21WcRPKxQWLTn+g/PHdFH03fNeWXGdedLGWxKV/
-   VwBNbQVfgoherGHmP0TAP1SyaULqy3h/fSV4h64nh99LS1MGS+G+rk4Ki
-   qsfPSe4auARqVrCbvshmztYacYHs0YuJwCxLOyB+doVei/Rg6b0Okefj2
-   nduRUmX3YtMmmr904KXGLrkwLxfT+WkZFzFpELGHGPm2viFG0zaJhzajZ
-   8odj2SBtTmBvCEAnmc/ray6eqNmCVZhUqK/fi99HGPo2dn6jqOoZQSu9w
-   M82rKB41VxBVSJNjX2dlwmXpX2FP4rktcAII9TGtShaVu5c0jbxPLMrHV
-   g==;
-X-CSE-ConnectionGUID: IL7wbItVQFyvmXOpSd86nw==
-X-CSE-MsgGUID: rmPk8ebgTXy06pCsGegT8Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="89921729"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="89921729"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2026 21:19:23 -0700
-X-CSE-ConnectionGUID: rP7stxk9SdC6ZLaRnWnTXQ==
-X-CSE-MsgGUID: /lVUd3GYQ8iZ422wIhwSjQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="273761326"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2026 21:19:23 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 15 Sep 2026 21:19:22 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Tue, 15 Sep 2026 21:19:22 -0700
-Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.64) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 15 Sep 2026 21:19:21 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xmx5cIfjZTQ3XaMpohDOu8ijnJvwnqGAhqa6afTIovXXFFfGOJKXqM1uIu+/PvnfXYxwdoZ1811zK/e7p/R+i/99bJUE1xSBtoeLaqAqCA/ebr7loMp+6o0OvysTGvm9Ghte4XvzvoPo7VGKeXp0BHa7ltwekwrCL5JcM8m038NRwnR2MUhEnmUW//nxxqzzVpZV/eJ8DSCcya96zC9cG3T+C2xpuihm+SKpK4kLv9TqIR1lqjRluVQbYHE8bJEVC/0rGbLNYBVsyCYXzeqSE6n1ZQRmmiT4lvzu5wz1MPNSaznOmbUC2CMaDFAqEXVC6y5tQSs09C7XXEFsJMyD1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ywZ0w5L1vQNKt3IuLoaI9l+REJJ/lfbLA7ok9UtaRZE=;
- b=Z8bIxidYNI4p+iNf73i+NcHBZEuDKaKQatBraOjzuHbbvq/MifkbgELvu/5X7X7BaC9GuJjxxW9mjW3Paty8bX3LOP5nOe6yjbrmvyAZuPEgNtrDAAZ6PxdBArvtNW/aKiGqo8xV/m99/G8w+D7PMV8FbVhGqphKDPnHwJtZFRGwICei/F9CrFicRuzoVnsWTLlhT0J8MxRPvxujBNPLVsgGAUcaZh5QE0QVXgBeClDXjAdtql33TREtjksTucVJec8BExBU6eZcwrcNYxqJAiEf1n0TYOwHlMCj7Wstouwu2E7xbq6EBt5zjFfcayR+CPIM/3ERPP0LB/LrkCYxeA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV2PR11MB148960.namprd11.prod.outlook.com
- (2603:10b6:408:40f::21) by DS6PR11MB797010.namprd11.prod.outlook.com
- (2603:10b6:8:528::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Wed, 16 Sep
- 2026 04:19:20 +0000
-Received: from LV2PR11MB148960.namprd11.prod.outlook.com
- ([fe80::9761:b20d:6f27:5460]) by LV2PR11MB148960.namprd11.prod.outlook.com
- ([fe80::9761:b20d:6f27:5460%5]) with mapi id 15.21.0406.012; Wed, 16 Sep 2026
- 04:19:20 +0000
-Message-ID: <15d76c67-6379-4e63-a2fc-22e3b7e0b527@intel.com>
-Date: Wed, 16 Sep 2026 09:49:14 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 11/14] drm/i915/dip: Enable Common SDP Transmission
- line
-To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-gfx@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
-References: <20260915164657.3429075-1-ankit.k.nautiyal@intel.com>
- <20260915164657.3429075-12-ankit.k.nautiyal@intel.com>
- <20260915172857.E03151F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: "Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>
-In-Reply-To: <20260915172857.E03151F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5P287CA0077.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1d8::11) To LV2PR11MB148960.namprd11.prod.outlook.com
- (2603:10b6:408:40f::21)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hB7VaaO4"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccd66bb4so441165a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 15 Sep 2026 21:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789532773; x=1790137573; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YJWhUN+rb3FeHB7oqdusxLkDrd5idpWaFetoXpAmflM=;
+        b=hB7VaaO4NPmVMP2UuLjZznvjEjLrG1gI0T16x9rAHWWPatPjaN29kj+qZSguTgd2Fj
+         VnR8506dpHpcrGbdRrt4McNpZ0hXI8R73o0QN/7JZEqa+2yAUDXl9/PlsQ9UHPg78ehr
+         swqwbzTjIz6P+gSMFedLxqzBLqmbXSzQqv3MsV511Z6Y5bgyXgz2fImGoFhw9DZP3riq
+         85AiqLVkvkF1PuknFtNJqr41Ggmstj2T2dBMeIiXNgoQLA7LdUB2kY1johFci+yBcTCt
+         xontxVvI3Uvl4vBJKUyPSUMf+pdZyUdDt2d03c3nEg7ifBLcdfcgZ/lx7WxcEGmYJQxB
+         6GgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789532773; x=1790137573;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YJWhUN+rb3FeHB7oqdusxLkDrd5idpWaFetoXpAmflM=;
+        b=s951z+Zjko7sPGZugCKctLa91Vaav1ls6F0aJCP5wW6S/+wKTDH2Oy01j8FMxNGVhk
+         fDdJc/HL1PzM7n/32kVYM8pSLx5BvsrnEZvx+bdA8zWy5XO8o+MLI6AlW8IvtZGmpDNV
+         dsbFaSr888Cx3na2Kfon44nqJo+BQARmNwALDvf9W7GM8c9zcDqEZxj0bKix4i33sRrW
+         9GBHvEpRrYsEXMz9CnbIs7VDcLrlJuOHiNg/KJphXVj8trzllA6XrwF3ovegArnQFvip
+         uGCYVYCNKqem68ASMC5kzBGqZmk+xcQtO131S7jL1V3HIjMTePbgF/zUKco3JFHh5tyw
+         G2MA==
+X-Gm-Message-State: AFuF++mZEYJqiNzgIRl51+IdoqPlSAzJPu8PfhVx9cCrlI/gEEwG40Pm
+	JgqykFZy3olD8VbXZwtoj8od7iRiexvFVtJokGeoN/smaSDmcu4ZDYBsycAuYA==
+X-Gm-Gg: AYBFou3cCriHGNOR+40hXwCvJsIZPqFSd1NVkkY7Vuhc5BVYV0NzDKA/9F0GZZKcqUV
+	eSjOfB0uoNdRBZttGT7SVTxOxVaR4NFqYCUZ4nelPXNPgcigUjAIVWP5mVdLJVj2co0Chx+SyWA
+	+wWSX+RUlHcockBQRGJi6UxAGaG8ahMJ/zgUBqVm75vCu7BQI+gn2sNzft2DUPbdYQPXkk/4zFn
+	lmlB9PTvLjhBu8kCvOcoIMK+2q/myeElIEUUS6tIqbFkYUZ00K9t5VLoj+1ROw5m5wBQe71qmNT
+	CSQx+uXC/CHczDxHxSvbH70W/QZoZN/CGmD+1VLWr+8UPqKfdwRyRLzVqowfdMRhQOYSZXfa68n
+	C22nnL3shwARCL8UUe89wlFaQh0uB/IKRh5aGh/TJMDn1romnr5mdXApk4N7yQbbQCInXG+ldtA
+	YZc5C4Wx/+DH24wYDcr0MHvwi6rnCR/J+Nm8bRU1HT3OdIhkfk6yCbdkYJDjlo5IZw1IAFc0TgK
+	aWEIDAI7cMp4csCDFcPNid+Fw2n+3Brnuz+meNroLhtYuf/yxo=
+X-Received: by 2002:a17:90b:3ccb:b0:39e:433:23b5 with SMTP id 98e67ed59e1d1-39e1e24f9f4mr2820333a91.5.1789532772806;
+        Tue, 15 Sep 2026 21:26:12 -0700 (PDT)
+Received: from [172.19.1.42] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e1b69c756sm2159085a91.3.2026.09.15.21.26.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Sep 2026 21:26:12 -0700 (PDT)
+Message-ID: <dfdddb60-d150-4d8a-9393-feb2f3e32805@gmail.com>
+Date: Wed, 16 Sep 2026 12:26:10 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR11MB148960:EE_|DS6PR11MB797010:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1d7af139-bbab-4b7d-3cc5-08df13a9ae02
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|10067099003|4143699003|5023799004|11063799006|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 6u56sIqPNqPdMOtk2ov0e+yINrfVnF0QlkPZR67y/RF7xwSwbobiZdEnBpuuzbBeBvRmT4t8g95a8uyxLV8rkcA5wEnIg/xAu5U3taYXeBMsL6YajaTLEHCXb5Shms/GScqSuDsW+TCV326YvoQwq+PnvCc3Lh0LiQ7Y3UMqoKH/dQAahfNgIbnzGntvZKs+qyCbcqylMrkEI1+a9fWY3EAwQ2//Xi5Z9Vw9YvLWt68HYecpkJyzAghcgD2UVn5YCPF3fqDpdZ5nA1pGW88PF7ZLXRWu1PE7In9l73bhx9A24mxnM65wt3NIluXm3S55f1TeDHdsv0kqeChBSdz6OkDhG0Hq4VO3AcJeMbLSTMAgmu5Cyievj3yVwxZ+PRAs+102N6JRvkDWFm11pRcji/bkxhUOuy6ob/ZqaBZaWDQ19rUl23cHepC8a1GRnm4z3SSTe0ngK2iNx7hu8gCxaY7qm+Z4l0H479AF0OjdRazOsrC6YA8w3OGOa9cghjRiKvId6UOHrMwzoH9MRziSCyRSDDIm9QrOc+kym1CtTWbfgy8h3uEUKwwWTZp/meV3ieVvxVbPlnlNOxcpGIJ9HzOJ53319w+sRmUllScamroFgqYNwFUvQ45hLMpxlOhiTXUcrG1K+HM7NA2fK/Dd9onhkcQPtNn0EjnJ3PK0yOM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR11MB148960.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(10067099003)(4143699003)(5023799004)(11063799006)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TnByVkxnRVNXZW9neVVuanJLMGtoU2VrekwwaVZDZklRVWJ4bG5Eb0p2NlhM?=
- =?utf-8?B?V0ZGdkFQTnFSRzRrb0tEd2UxaWlaTEZETGE5MUtWcWZHOEZadWExeWl4WkN4?=
- =?utf-8?B?U2FOVXQrRlBmL29kQVN5bTY3cVhuV2NCYlBvMzUzUEl2dTVON0phdng2ZmEv?=
- =?utf-8?B?dTN3b25xb1lHV0VRTTVxcjRsc21pNVBRVXJzVS9CQk1tTkdGV3hFd015MWgw?=
- =?utf-8?B?dkV5cXNLa1hOUlM2VGRLc2JzbG5lVTNTVm51eUF6Qm5CVHl2UDlDTXlCWjhJ?=
- =?utf-8?B?a3NsSkJzWGtaUnRzTVh6NXBGNE9ya3VEZkllemxqZDVLUldHVnFSYXRvN0hK?=
- =?utf-8?B?aDdscmVWUll3UVJVNnBacnZLRFZxY0pnd0lnM1pkdFFHOG5KNW5kOGdpYWpp?=
- =?utf-8?B?NHJQbmFDVXMzS0JPc1NoWkt1ZXVxVlgzcm1HMEdKUUZzVWpBN3E0M0s3Y0dh?=
- =?utf-8?B?OGRYeTZ1Y09ITTQvZ3BzdEJ1aDhUb05ZSzRaOUZ0RHB4YXkwRjVENG5yVHpO?=
- =?utf-8?B?NnVyRkFIZ3pqYnZacFVIYmZWVEFoRnpWTFZmazZmcjdRRnVlMDdHa1FCZE1O?=
- =?utf-8?B?Vnd0UHBPTzlQb0ZTWkxSSm9JSURvWEU0TG10TVJkR2JsN0xMQkJTZDNrdThE?=
- =?utf-8?B?NDhuUGJKVW03ZVNyRnU3TG1lVVdPcHZYejB4UjVWY2U3TFlpWWlBQ0p1bXpu?=
- =?utf-8?B?dTVSZEVMWUtram9VNzJRYnhjcXZrMXI4NFdnV2dYNW5ITDY2MVhHRjdHV2d5?=
- =?utf-8?B?ZHdLVE8yVy8xQUlIKytFN3l1M0VHbFAvdmczVlE5MmtmQ29DTVNFaXg3L282?=
- =?utf-8?B?TmY4MUMxTEE1YUxsVUJuYm1yRk9KcUZpWW0zbENPMXVHVzgzZkxmbFppTHdV?=
- =?utf-8?B?RUhDL1Z6WnNkYlI5VzBHSXBCeHR5eUx4OFFURzZMbDM1K1prbHV4QlRrMEdW?=
- =?utf-8?B?R2lQZ3ZCYnJwdDRQbVUzdW56NDBENVVlN1NKRHJveVFOTGxNTSswNW5PVnoz?=
- =?utf-8?B?UkkvZlVYTnliditCVk15bmxmVkRrRDlYS0VMa3czd3dIdkRncklFMFl4d3Mv?=
- =?utf-8?B?aTFaRWFkZkVDczZQVWJUTk1ySDNsT2FmcXlPSm1uN0Qxd2FhRlo1N3ZSa0lv?=
- =?utf-8?B?clFVUENYQkxXVzMxNWlpcVJhNW9wSUsvWVNZYjFyazVWRUNZU2pMODVaS2U5?=
- =?utf-8?B?dStwU09UQnM3TXNCMGN2NCtKNTgzUEZMaldzRVhNNGJqdjVybllzL0Z5Z0hQ?=
- =?utf-8?B?VVZIRE45NzN2eEhMTVVQRDVubkk5QjZnSS9QSFAvcnpRdDRSN0s3bG51RzJQ?=
- =?utf-8?B?b0c5T3JpbFp5aG9zVHNha1o3L1Erc0dqa3ZjK01VaTluRkVxQ1pyN3RKL2M5?=
- =?utf-8?B?c3ZUbjRsb1A4eWhmUjE1V0E2alZZR2ZJY0ErcS9XaGlrTVdxWkpBZ21DZFhB?=
- =?utf-8?B?dk4vZkRMQXQra0I3NDFHTWNqRVAvM1JSejRBKy8zeUZ5cldIbEdRbVY3aHR0?=
- =?utf-8?B?VDBhemFqR2VseHFSU3VDZUtHdHNzU3dneGsyV0gycXVrRG0rK3FLODA4RlRm?=
- =?utf-8?B?RU5tdHBGSU9BRlQ3UE16STVJVGo0b3ozTkIzV1Z4Rzh4a2oxYTc2N1Qzd1c4?=
- =?utf-8?B?Tmw3WkVBYlZ6bzA1cEhnalF4L1huN3BBYTl4VlBKY1JLZXo1Y29LZDBpQitT?=
- =?utf-8?B?KzVXNk90TncyZlpyY2pHdG5LVWdPcFVTMW1MRjF5Vjl1S0VWV0NMd2xSOHNO?=
- =?utf-8?B?SjYyYjcwUzMrNzV1OHVMZ0lLM0pCRWN0L2pqTXJpZk9vOWJaNlFmd0ErMzI0?=
- =?utf-8?B?UlRWZDJHSlpudXM2NXl2cTZmeUthMXl2czF5WTQvWHVZS2Jzb3lRbEZteVQ1?=
- =?utf-8?B?aGhISjRRZmJ5aTZiL2RBWGVYbU9rNUM4ZXVmUmZWZ3BkRExUdDVsTHJVTktF?=
- =?utf-8?B?bVBUeHdLb3Foc055RHVJeDRSTko1RGR3Mm9Rb1R1R0l4d3NidUlETC91SWZH?=
- =?utf-8?B?bGZDWEhwclZyWkx3YXhtS043c3ozeWphbHR1L01TMTlaWVcwd1BEaW5KUHEr?=
- =?utf-8?B?N0JsWldhQStEMmJhVi85Y204em9meVV1UnNUMFVMUHFzTVVraTgxUzBPVW4z?=
- =?utf-8?B?MEo2cklnTzBkaE8yWHFBN3d5N2kwK3dTSm9kczYyVU5DL0IzeHJQR0IxMnJo?=
- =?utf-8?B?bzVSNXI5SzcrSG1NYTVBcko0SzFtL05SNS9qQ2RzS0c1MG5TY1ArczQ4Q0RI?=
- =?utf-8?B?SldQYnA3Zzd0NDRVTDIxVXFrWENOend5T1hhTUlzM2FiN0cyazFpZlAwbTl2?=
- =?utf-8?B?NjI3VUc5WE8zTjdiMHZJTkordXpoTVBsbFEyNlNqOEp6WXNBa2lUN3FnWVRL?=
- =?utf-8?Q?88AHIyAC5MFXERyg=3D?=
-X-Exchange-RoutingPolicyChecked: TEQyLvGH11x2ItHG/BU4LY6HTr4Rkgsh24rhthRMDhVGZHdGlbnRu7hhAjGu/Ib58m8Km7zQRO4MsLnkWSwRhJ9NqDym5f8s5fdK4RXZuGjkYG7Y6DKDMSAkbBCJVnq0ou/BBiipurqh8HC/nsdpCfqMtpdJTGvOj2RfZ6Xmc4W1UqWnSu9h89hFL7/Nfdet5o7skMg8KpEEbKIT2Dny+PYrYFp5oUNEuD+LZiGONU0njCF+GQSE2d0pswgawBI2eV1KU6pLP7x28L9miDWVvJQk9k+V5vjcxIyH03eqBtoCULMoLOd9lNngO+T59lnPanNuw+hjITCpSpVcJHZVJA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1d7af139-bbab-4b7d-3cc5-08df13a9ae02
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR11MB148960.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 04:19:20.2331
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9FbhbvbPrxonbefs0cXl9YQaVuu1oZqGQbM24hhVmq8T/KOXy1Y3rE7KKpAYcwNjh/wgmjmKrKdKOLAXX1hb6osoCwgNvr0dT9g0Z4mg6eI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR11MB797010
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/2] pwm: Add Nuvoton MA35D1 PWM controller support
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, cwweng@nuvoton.com
+References: <20260914110739.203479-1-cwweng.linux@gmail.com>
+ <20260914110739.203479-3-cwweng.linux@gmail.com>
+ <20260914111742.85BF01F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Chi-Wen Weng <cwweng.linux@gmail.com>
+In-Reply-To: <20260914111742.85BF01F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
-On 9/15/2026 10:58 PM, sashiko-bot@kernel.org wrote:
+
+sashiko-bot@kernel.org 於 2026/9/14 下午 07:17 寫道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] drm/i915/dip: Missing CMN_SDP_TL programming for DP MST slave transcoders
+> - [Medium] The driver relies on the bootloader-configured CLKPSC (prescaler) register but does not cache its value, which will cause incorrect period calculations after a system suspend/resume cycle.
 > --
->
-> commit de3a67cbeba4a6e70cc767d1dce1950454f58dfa
-> Author: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
->
-> drm/i915/dip: Enable Common SDP Transmission line
->
-> This commit enables programming of the common SDP transmission line on
-> supported platforms. It computes and programs the base transmission line
-> and stagger values during modeset. It also disables the feature on pipe
-> disable.
->
->> diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
->> index dacb4b7588a02..3cdb06e81130b 100644
->> --- a/drivers/gpu/drm/i915/display/intel_ddi.c
->> +++ b/drivers/gpu/drm/i915/display/intel_ddi.c
->> @@ -2737,6 +2737,8 @@ static void mtl_ddi_pre_enable_dp(struct intel_atomic_state *state,
->>   	/* 6.o Configure and enable FEC if needed */
->>   	intel_ddi_enable_fec(encoder, crtc_state);
->>   
->> +	intel_dip_cmn_sdp_transmission_line_enable(crtc_state);
->> +
-> [Severity: Medium]
-> Will placing this transcoder-specific initialization in mtl_ddi_pre_enable_dp()
-> cause it to be skipped for subsequent MST streams?
->
-> In DP MST configurations, mst_stream_pre_enable() invokes the primary encoder's
-> pre_enable hook (mtl_ddi_pre_enable_dp()) solely for the first active MST
-> stream.
->
-> Because intel_dip_cmn_sdp_transmission_line_enable() is called here, it
-> appears it will be skipped for all subsequent streams. This would leave the
-> CMN_SDP_TL registers uninitialized for slave transcoders, potentially causing
-> broken or mistimed SDP transmission on secondary MST monitors.
->
->>   	/* 7.a 128b/132b SST. */
->>   	if (!is_mst && intel_dp_is_uhbr(crtc_state)) {
->>   		/* VCPID 1, start slot 0 for 128b/132b, tu slots */
+> 
+> commit b9ac3c051c5908fe946a0ef1c7b809030aa32933
+> Author: Chi-Wen Weng <cwweng@nuvoton.com>
+> 
+> pwm: Add Nuvoton MA35D1 PWM controller support
+> 
+> This commit adds a generic PWM framework driver for the Nuvoton MA35D1 PWM
+> controller. The initial driver supports 6 channels in up-counting,
+> auto-reload, independent output, and period loading modes.
+> 
+>> diff --git a/drivers/pwm/pwm-ma35d1.c b/drivers/pwm/pwm-ma35d1.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/pwm/pwm-ma35d1.c
 > [ ... ]
->> @@ -3124,6 +3126,7 @@ static void intel_ddi_buf_disable(struct intel_encoder *encoder,
->>   			     DP_TP_CTL_ENABLE, 0);
->>   	}
->>   
->> +	intel_dip_cmn_sdp_transmission_line_disable(crtc_state);
+>> +static u32 nuvoton_pwm_get_prescale(struct nuvoton_pwm *nvtpwm,
+>> +				    unsigned int ch)
+>> +{
+>> +	return nuvoton_pwm_readl(nvtpwm, MA35D1_REG_PWM_CLKPSC(ch)) &
+>> +	       MA35D1_PWM_CLKPSC_MASK;
+>> +}
+> 
 > [Severity: Medium]
-> Does placing this disable routine in intel_ddi_buf_disable() prevent it from
-> executing for slave transcoders during MST teardown?
->
-> Similar to the enable path, intel_ddi_buf_disable() is only called for the
-> last active stream during teardown, which means the CMN_SDP_TL disable routine
-> would be skipped for slave streams.
+> Does reading the hardware register directly here make the driver vulnerable
+> to hardware state loss during system suspend?
+> 
+> If the controller loses power during suspend, the clock prescaler register
+> might reset to its default value. When the system resumes and a consumer
+> subsequently calls into the apply callback, this function will return the
+> reset value instead of the bootloader-configured value. This could result
+> in drastically altered PWM output frequencies.
+> 
+> Would it be safer to cache the prescaler value during probe?
+> 
+> [ ... ]
+>> +static struct platform_driver nuvoton_pwm_driver = {
+>> +	.probe = nuvoton_pwm_probe,
+>> +	.driver = {
+>> +		.name = "nuvoton-pwm",
+>> +		.of_match_table = nuvoton_pwm_of_match,
+>> +	},
+>> +};
+> 
+> [Severity: Medium]
+> Should this driver include PM callbacks to handle saving and restoring the
+> hardware state?
+> 
+> Currently, there are no suspend/resume hooks provided. If the platform
+> powers down the PWM domain during system suspend, the controller state
+> will be lost upon resume and might not be appropriately reconfigured before
+> the next state application.
+> 
+
+Hi,
+
+Thanks for the review.
+
+On MA35D1, the EPWM register context is retained across system suspend.
+This includes CLKPSC as well as the other EPWM configuration registers
+used by the driver.
+
+Therefore, after resume, nuvoton_pwm_get_prescale() still reads the
+same CLKPSC value that was present before suspend. The firmware-provided
+prescaler value is not lost, so caching CLKPSC during probe would be
+redundant.
+
+For the same reason, suspend/resume callbacks are not required to save
+and restore the EPWM register state on MA35D1.
+
+So I don't think either of these issues requires a driver change.
+
+Best regards,
+Chi-Wen
 
 
-For both comments. MST + VRR is not yet supported.
-
-Regards,
-
-Ankit
-
->
->>   	intel_ddi_disable_fec(encoder, crtc_state);
->>   
->>   	if (DISPLAY_VER(display) < 14)
