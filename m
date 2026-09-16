@@ -1,50 +1,33 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D6E47044F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 16 Sep 2026 08:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CD83E639B;
+	Wed, 16 Sep 2026 08:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789547116; cv=none; b=mv0qDWdMMUdzcRCzYaxf6sorLY54pnqRhYLFHOQm3fOlzdjaAz5laseLzxcNUgZ8ni5uOLstccl2187uay6hAVGEZcudJ97SNPyhvZumwe47UH9zIdsgtlD9z/ci2R01B5KNFoY68ZUhsJqZGQ73/088LPqo1DMCkG9F7UxcbqQ=
+	t=1789547391; cv=none; b=Bxlq1fuhQtlOJbf83dxAY03mxdLS+JeWBR7t3rw9T3rwDEpftojJ6dCqNFijjD4cyCra4F8kS/cz5I72BPNaAtq2Gvm9R9gbZYI/8esLucnvDXMofPlEfL3EWPHbtVysMCkGslJjkXnuTKOeEWrQWlH8GVMSCfjwSFHt8FvM9vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789547116; c=relaxed/simple;
-	bh=d2RsgbI3a5vH2k559izKEhziDtSd1rtlwhsHKltYtMw=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=jCQ0woXuxW/uonvHfHU+EXau5u9oKXpVqMP7oTy3dIO1SEiWS0Jw7YWTqssziy8Yy67M5IagfUMxbMeQ5wsNpm0k9+e2OYt0X8UUE88jVt3P+m9WoEcJDyfS+xdH8nUF2ZJVBKi+nbII5dZ2920vXs7YSZHMoG4tZ4+MPCC1dFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gS3PRQOt; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1789547391; c=relaxed/simple;
+	bh=y55ACC3MPUfOeusEzJNUnJR+YNOw7CmGAYFFZG69fOM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EUKgA15Dt1cIpe6EBJRvp31SWtLuNccxcwBTLI6OH9xjnPuwEjf1MB2wfKeIDO7S8wNrZM5XlH2AQ3501zuyGqP0/FdB4VnAYS280XjVUp2pICm9hcoouqMjG/KnjDrfcrkhadJIv6jii6waikSruutCc6YmZkavaRvKqOTjmDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IVLNFXo7; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gS3PRQOt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789547112; x=1821083112;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=d2RsgbI3a5vH2k559izKEhziDtSd1rtlwhsHKltYtMw=;
-  b=gS3PRQOtiXbQO8rb4EuS40HcY5kkrhNYtA4zpMHlvweL5KivWGvnN6hf
-   mjnWzRD4018BAcHY+uanSO0jtAMGFDBXlhyAtOO5KU7geMPQVxTb3jQEy
-   hMPhilQVfBajEWMqQ2Kil8hNgfiIUw1d5h1CBE4dzYRY6bgi5sse0CdbS
-   uyPmDfFoID+Z2WD3k5GgSKe7AKuSq1sdkTOaRafhv1clUzO9E0WBh3TAl
-   X7M0HCv5aUZwe/M7qwaHnPjO1ON3ZWvpFAWlY5ZLZbt1C757gNk5JPoeq
-   5WLBLzA2N4GW4HoZeGNtUtPq134jyZoiumDZvDfgL7LDzuUFXxKXqx4vr
-   w==;
-X-CSE-ConnectionGUID: X6DQjdsBQEq3bgF7KftBZA==
-X-CSE-MsgGUID: xYaBnAktTLWy2DAu2/hbtQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="107428826"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="107428826"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 01:25:07 -0700
-X-CSE-ConnectionGUID: MAqfUoh/SV+P1jVnNL3Vrw==
-X-CSE-MsgGUID: qbs5p9jRQoO3QKGVzVoFlw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="277389996"
-Received: from unknown (HELO [10.238.1.188]) ([10.238.1.188])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 01:25:06 -0700
-Message-ID: <01d08be8-94b3-4ba4-9eb5-0928bbe4a499@linux.intel.com>
-Date: Wed, 16 Sep 2026 16:25:03 +0800
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IVLNFXo7"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF092152B;
+	Wed, 16 Sep 2026 01:29:45 -0700 (PDT)
+Received: from [10.0.128.139] (unknown [10.0.128.139])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BDA623F882;
+	Wed, 16 Sep 2026 01:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789547389; bh=y55ACC3MPUfOeusEzJNUnJR+YNOw7CmGAYFFZG69fOM=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=IVLNFXo7GeAU8Xo5pmHQ1MHSQ3ZU8IGha06VwIrdgjVX2p9OPrAwXhk7dujDGXGBj
+	 CtC9UsgPBlBPaS0h/XPyJS+/ciKGCsXUQJ4HFHEmNlKYjAtEHZSyEt4hMpCRy6SzQP
+	 wUps3ACm3E14i5O4dVE1QwXxXGqEcQEXXJCjWAAA=
+Message-ID: <a53512f8-251b-4081-8d19-7957de3fc678@arm.com>
+Date: Wed, 16 Sep 2026 09:29:47 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,102 +35,99 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, kvm@vger.kernel.org
-Subject: Re: [PATCH 5/5] iommu/vt-d: Reserve MSB of domain ID space for TDX
- module
+Subject: Re: [PATCH v18 20/23] KVM: arm64: CCA: Don't expose unsupported
+ capabilities for realm guests
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 To: sashiko-reviews@lists.linux.dev
-References: <20260915074235.1219183-1-baolu.lu@linux.intel.com>
- <20260915074235.1219183-6-baolu.lu@linux.intel.com>
- <20260915081150.D79E21F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20260915081150.D79E21F000FF@smtp.kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.linux.dev, kvm@vger.kernel.org
+References: <20260915160141.3543048-1-suzuki.poulose@arm.com>
+ <20260915160141.3543048-21-suzuki.poulose@arm.com>
+ <20260915164346.D49711F000FF@smtp.kernel.org>
+ <6c3b2732-052c-47b8-905d-32aad2871ef8@arm.com>
+In-Reply-To: <6c3b2732-052c-47b8-905d-32aad2871ef8@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 9/15/2026 4:11 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] iommu: missing TDX teardown and mt_pages leak on IOMMU hot-remove
-> --
+On 15/09/2026 18:55, Suzuki K Poulose wrote:
+> On 15/09/2026 17:43, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>> - [High] kvm: host Denial of Service via WARN_ON_ONCE in 
+>> kvm_arch_vm_ioctl_allowed()
+>> -- 
+>>
+>> commit f9fdb12a2363dfa41ace289596ec2d2bd95cde48
+>> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
+>> KVM: arm64: CCA: Don't expose unsupported capabilities for realm guests
+>>
+>> This commit limits the capabilities allowed for Realm VMs and blocks
+>> vm_ioctls backed by unsupported capabilities. It introduces generic
+>> capability and ioctl filtering helpers kvm_arch_vm_ext_allowed() and
+>> kvm_arch_vm_ioctl_allowed() to support both pKVM and Realm guests.
+>>
+>>> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+>>> --- a/arch/arm64/kvm/arm.c
+>>> +++ b/arch/arm64/kvm/arm.c
+>> [ ... ]
+>>> +static inline bool kvm_arch_vm_ioctl_allowed(struct kvm *kvm, 
+>>> unsigned int ioctl)
+>>> +{
+>>> +    long ext;
+>>> +    int r;
+>>> +
+>>> +    r = kvm_get_cap_for_kvm_ioctl(ioctl, &ext);
+>>> +    if (WARN_ON_ONCE(r < 0))
+>>> +        return false;
+>>
+>> [Severity: High]
+>> Could this allow an unprivileged host userspace process to crash the 
+>> host?
 > 
-> commit 8a16aba70396ddc74c834953ff8123fae8be9bad
-> Author: Lu Baolu <baolu.lu@linux.intel.com>
+> This is addressed by a patch from Fuad, hence I didn't try to fix that
+> here.
 > 
-> iommu/vt-d: Reserve MSB of domain ID space for TDX module
+> https://lore.kernel.org/all/20260914093838.1082637-1-fuad.tabba@linux.dev
 > 
-> When an Intel IOMMU is enabled for TDX Connect, the VT-d DID namespace
-> must be split so the TDX module can use the MSB-tagged half for trusted
-> DMA translations, while the host/VMM uses the lower half.
 > 
->> diff --git a/drivers/iommu/intel/tdxc.c b/drivers/iommu/intel/tdxc.c
->> index b5dfdeeb23dba..1ca03257d4563 100644
->> --- a/drivers/iommu/intel/tdxc.c
->> +++ b/drivers/iommu/intel/tdxc.c
-> [ ... ]
->> @@ -154,17 +159,27 @@ static int intel_iommu_bringup_tdxc(struct intel_iommu *iommu, unsigned int nr_p
->>   		return -EFAULT;
->>   	}
->>   
->> +	/*
->> +	 * Intel TDX Connect Architecture Specification, Section 2.2 Trusted DMA
->> +	 *
->> +	 * When IOMMU is enabled to support TDX Connect, the IOMMU restricts
->> +	 * the VMM’s DID setting, reserving the MSB bit for the TDX module. The
->> +	 * TDX module always sets this reserved bit on the trusted DMA table.
->> +	 */
->> +	iommu->max_domain_id = ndoms >> 1;
->>   	iommu->tdx_iommu_id = tdx_iommu_id;
->>   	iommu->mt_pages = no_free_ptr(iommu_mt);
->>   
->> -	/* Bring-up is not complete yet; report as unsupported for now. */
->> -	return -EOPNOTSUPP;
->> +	pr_info("%s: trusted DMA for TEE/IO initialized\n", iommu->name);
->> +
->> +	return 0;
+>>
+>> When kvm_arch_vm_ioctl() receives an unrecognized or garbage ioctl,
+>> kvm_get_cap_for_kvm_ioctl() returns a negative value. This evaluates 
+>> to true
+>> and triggers the WARN_ON_ONCE() here. On systems configured with 
+>> panic_on_warn
+>> (which is common in production and Android environments), this results 
+>> in a
+>> kernel panic and a complete host denial of service.
+>>
+>> [ ... ]
+>>> @@ -2150,7 +2202,7 @@ int kvm_arch_vm_ioctl(struct file *filp, 
+>>> unsigned int ioctl, unsigned long arg)
+>>>       void __user *argp = (void __user *)arg;
+>>>       struct kvm_device_attr attr;
+>>> -    if (is_protected_kvm_enabled() && !kvm_pkvm_ioctl_allowed(kvm, 
+>>> ioctl))
+>>> +    if (!kvm_arch_vm_ioctl_allowed(kvm, ioctl))
+>>>           return -EINVAL;
+>>
+>> [Severity: High]
+>> Does removing the is_protected_kvm_enabled() check expose the 
+>> WARN_ON_ONCE()
+>> above to all ARM64 KVM deployments?
 > 
-> [Severity: High]
-> With TDX bring-up now successfully completing here, if this IOMMU is later
-> hot-removed, does this leak the TDX metadata pages (iommu->mt_pages) and leave
-> dangling hardware state in the SEAM firmware?
+> Thats right, I will add the following check in the 
+> kvm_arch_vm_ioctl_allowed()
+> 
+> if (!kvm || !kvm_vm_is_hyp_distrusting(kvm))
+>      return true;
 
-This path is basically unreachable in practice. No TDX Connect-capable
-platform supports DMAR hotplug.
+Thats not correct. It should be :
 
-> 
-> When ACPI hotplug invokes dmar_iommu_hotplug() with insert=false, the IOMMU
-> is destroyed via:
-> 
-> drivers/iommu/intel/iommu.c:dmar_iommu_hotplug() {
->      ...
-> 		disable_dmar_iommu(iommu);
-> 		free_dmar_iommu(iommu);
->      ...
-> }
+if (!is_protected_kvm_enabled() &&
+     (!kvm || !kvm_is_realm(kvm)))
+	return true;
 
-I will add the following check for future proofing:
+Cheers
+Suzuki
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index e88457d96b53..16203604b751 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -2202,6 +2202,10 @@ int dmar_iommu_hotplug(struct dmar_drhd_unit 
-*dmaru, bool insert)
-         if (insert) {
-                 ret = intel_iommu_add(dmaru);
-         } else {
-+#ifdef CONFIG_INTEL_IOMMU_TDX_CONNECT
-+               if (iommu->mt_pages)
-+                       return -EBUSY;
-+#endif
-                 disable_dmar_iommu(iommu);
-                 free_dmar_iommu(iommu);
-         }
-
-> 
-> Because this hot-remove path never calls intel_iommu_teardown_tdxc(), it
-> appears iommu->mt_pages is leaked and tdh_iommu_clear() is never called before
-> the IOMMU structure itself is freed.
-> 
-
-Thanks,
-baolu
