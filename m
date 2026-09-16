@@ -1,174 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA7B3DAAD0;
-	Wed, 16 Sep 2026 05:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A0E3EC2FF;
+	Wed, 16 Sep 2026 06:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789538296; cv=none; b=kdhtZOXNtjvMiCTA/sMVYy5OF/9B9Si0XTUk9O095Vo2pLru82SUMJ2MNrTm0UGmIFQaVBERhZnMaUwfFR8A/nz5f/giwQ8RGPGoHvnfzyAcxAl24BYDIR5+Zx0E39w92UFMhoZ0GFWjUtREhLVlJpP7zveNuA4G4N3UFROthtI=
+	t=1789541081; cv=none; b=pnhlVCQlLPo69M7LenhvAMBvyH2z6DidKZ5eE8+K6tT3DxmWeBMbUjHo5rYS45WqrBEcdvAXYl6JJiXMvnfBunxYELij1kELuwPNypgTAFEGHPBctukuphIocsj8CGL63QLliL01Jggm4MjETSxCaucKXgFaPnioTuxrZwNQk4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789538296; c=relaxed/simple;
-	bh=et0jC4mSIv2ZIl2g8eCuAGl4TvBrjzla1xbzmCO6/ls=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nf6QbqwG1xF77T8WtbNYNdL3mw5gRrzM7pQH9O5n6fv+JwXSxY9Y11rou3tli5YSGItuSMCjX+VYoKiV1sYT1ohvW/CBmCs4jDhka8ClyzHzf5PUkUNwDUJuYRbi4uUB2kVBR/nMR2Qs18EVYaVvy2oZtJaPNkOIvNuBuu+qb5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V5VYP5b+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789541081; c=relaxed/simple;
+	bh=oJVufVHpc6+v4+ZtEfmf0huRkJGE2F3y595KZRzcWdk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fHrPPJk5CHsRVGT7qA2dK/ZJNdKzR9KDi/up5VHz6AmQQYL32EpQyOaZtwon0zod7Lrp+XmTVO/dbGteVKUgU45Bs48iaidR7G1cR4q8BXGDSC6EWaQpqB0HEUUMesHyfVJQKZhNVebL9rGZsSIRoc8cpfgmw1dZdsYrkMRiizY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/iScPFn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V5VYP5b+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08571F000FF;
-	Wed, 16 Sep 2026 05:58:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/iScPFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C982D1F000FF;
+	Wed, 16 Sep 2026 06:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789538294;
-	bh=4bLXG1bXs90Ttift3qTLDBxDS6inIZijbenQqiq9uxs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=V5VYP5b+vsLVq79wCSLtwj9+WRjRMP3Gz/TOJ36Bh51p8sFc4XLlJi9YFyAgp2TZw
-	 V8wR3F5ZLzOiV98faKgkFPlEGM97GOKUbyqThPKfBnxejnOI/1PpcphfjKEjxnQbOI
-	 JZggo/ml3LVkinwzKwzM9kxS9MVFwBgFh9i1pAla9JR75m+qnAnqSbGlxTwwgDl/uL
-	 knI4kI2TX/cHrt+vKtsaQO2H3GNczd5jKaXBRFkQMDX2HI1pKBztc+ZGvHKJP88n27
-	 FpeNqyIzqN30wX5of8zRxjcKsui9wdOnV3SRgI6CTb8PL8ebAEOTxVSvRrhBy01iPE
-	 AdRBAmoQvhuWg==
-Date: Tue, 15 Sep 2026 22:58:13 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] perf annotate-data: Adjust type offset for
- flex-array
-Message-ID: <aqov9bkuxh6cNI5F@google.com>
-References: <20260915064035.1970175-1-namhyung@kernel.org>
- <20260915064035.1970175-4-namhyung@kernel.org>
- <20260915065313.ECA271F000FF@smtp.kernel.org>
+	s=k20260515; t=1789541079;
+	bh=TSC8m1uvKADe4izgOf34VC22kIw4m7aB4yU4DXkfMIQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=P/iScPFnM5QU1sYRRLc2FNGZUw6F/lcEZYGse0SpiTAH100wnTOStLTNR0mbiMUMy
+	 LTlFwL2yNXOKJEGfmq+8g8y4YjoeY48KN7pFPCDHdX3vu/vLeaKeP6f4pegr2KWtUd
+	 t530FRLGn44//3uYVozTWBv5nVqFY8pWeGpSpJC43U85OQbgdUrnLV28tOYBHKGwyo
+	 C5Pvn2OOZcS3GqdvhyI27yhiwci1cZTxNAq/v6BPm0tgLTmsLkklq19fqTADqSBAFE
+	 EQkRJaniEWsQG4Pw91NETf0FGkJUYeDJZQY0DffEMIG5y+lpVFgCbTRkMghbZo8Hjj
+	 Bcb0dhcpGhefw==
+Message-ID: <edafd246-0bd8-4335-9037-77f552968b56@kernel.org>
+Date: Wed, 16 Sep 2026 08:44:30 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915065313.ECA271F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 6/9] mm/memory-failure: efi: answer whether a range is
+ poisoned
+To: sashiko-reviews@lists.linux.dev, Andrew Morton
+ <akpm@linux-foundation.org>, hannes@cmpxchg.or,
+ Borislav Petkov <bp@alien8.de>, Danilo Krummrich <dakr@kernel.org>,
+ Brendan Jackman <brendan.jackman@linux.dev>, x86@kernel.org, kas@kernel.org,
+ Suren Baghdasaryan <surenb@google.com>, Zi Yan <ziy@nvidia.com>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>, Oscar Salvador <osalvador@suse.de>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, shakeel.butt@linux.dev,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ Miaohe Lin <linmiaohe@huawei.com>, Ard Biesheuvel <ardb@kernel.org>,
+ Breno Leitao <leitao@debian.org>, Michal Hocko <mhocko@suse.com>,
+ Naoya Horiguchi <nao.horiguchi@gmail.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Mike Rapoport <rppt@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
+ Lorenzo Stoakes <ljs@kernel.org>, Dave Hansen <dave.hansen@linux.intel.com>,
+ Ingo Molnar <mingo@redhat.com>
+Cc: linux-mm@kvack.org, kexec@lists.infradead.org, linux-cxl@vger.kernel.org,
+ linux-efi@vger.kernel.org, linux-kernel@vger.kernel.org, harry@kernel.org,
+ rmikey@meta.com, kernel-team@meta.com, driver-core@lists.linux.dev,
+ riel@surriel.com
+References: <20260915-hwpoison-kho-v5-0-3bc7a57bd503@debian.org>
+ <20260915-hwpoison-kho-v5-6-3bc7a57bd503@debian.org>
+ <20260915134535.C3FC91F00899@smtp.kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260915134535.C3FC91F00899@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 15, 2026 at 06:53:13AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] perf: flex-array offset adjustment skips elements in tail padding
-> - [Medium] perf: zero-length flex-arrays bypass element size extraction
-> - [Medium] perf: null pointer dereference in find_flex_array() on alloc failure
-> --
+On 9/15/26 15:45, sashiko-bot@kernel.org wrote:
+>> The bitmap an earlier kernel filled in gets in this one through EFI,
+>> but nothing reads it back yet.
+>>
+>> Introduce range_contains_poisoned_memory(), which the page allocator
+>> will use to ask about a block before handing it out.
+>>
+>> Signed-off-by: Breno Leitao <leitao@debian.org>
 > 
-> commit f8d5c159e83503d5c3d85f5f3c22dec6b4f25c06
-> Author: Namhyung Kim <namhyung@kernel.org>
+> Sashiko has reviewed this patch and found no issues. It looks great!
 > 
-> perf annotate-data: Adjust type offset for flex-array
-> 
-> This commit adjusts the type offset for flexible array members in perf's
-> data annotation. It ensures that the offset is properly adjusted to find
-> the corresponding element using modulo operations and updates the member
-> name resolution to correctly identify flex arrays.
-> 
-> > diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
-> > index 1ee2b74f99205..1c19b807c4f21 100644
-> > --- a/tools/perf/util/annotate-data.c
-> > +++ b/tools/perf/util/annotate-data.c
-> > @@ -241,7 +241,8 @@ static int __add_member_cb(Dwarf_Die *die, void *arg)
-> >  		return DIE_FIND_CB_END;
-> >  
-> >  	strbuf_init(&sb, 32);
-> > -	die_get_typename(die, &sb);
-> > +	if (die_get_typename(die, &sb) < 0)
-> > +		strbuf_add(&sb, "(unknown type)", 14);
-> >  
-> >  	__die_get_real_type(die, &member_type);
-> >  	if (dwarf_tag(&member_type) == DW_TAG_typedef)
-> 
-> [Severity: Medium]
-> Does this code safely handle zero-length flexible arrays during element size
-> extraction?
-> 
-> Just below this change in __add_member_cb(), the logic assumes failures
-> for flexible arrays:
-> 
-> 	if (dwarf_aggregate_size(&die_mem, &size) < 0) {
-> 		if (dwarf_tag(&die_mem) == DW_TAG_array_type) {
-> 			die_get_real_type(&die_mem, &die_mem);
-> 			...
-> 
-> Since dwarf_aggregate_size() returns 0 for zero-length arrays, the < 0
-> condition is skipped. This disables offset adjustment for all GNU zero-length
-> arrays (e.g., [0]), which results in incorrect field annotations.
 
-Ok, will handle that too.
+David has reviewed this mail and it annoyed him.
 
-> 
-> [ ... ]
-> > @@ -355,15 +377,37 @@ static int fill_member_name(char *buf, size_t sz, struct annotated_member *m,
-> [ ... ]
-> > +static struct annotated_member *find_flex_array(struct annotated_member *m)
-> > +{
-> > +	struct annotated_member *child;
-> > +
-> > +	if (list_empty(&m->children))
-> > +		return NULL;
-> > +
-> > +	child = list_last_entry(&m->children, struct annotated_member, node);
-> > +	if (strstr(child->type_name, "[]"))
-> 
-> [Severity: Medium]
-> Could child->type_name be NULL here?
-> 
-> If strbuf_init() or strbuf_add() fails due to memory pressure during type
-> string construction, strbuf_detach() returns NULL. Passing an unchecked NULL
-> pointer to strstr() in find_flex_array() could cause a segmentation fault in
-> the perf tool.
+-- 
+Cheers,
 
-I'll check the return value of strbuf_init().  Then strbuf_add() won't
-fail and type_name cannot be NULL.
-
-> 
-> > +		return child;
-> > +
-> > +	return find_flex_array(child);
-> > +}
-> [ ... ]
-> > @@ -1740,6 +1784,7 @@ struct annotated_data_type *find_data_type(struct data_loc_info *dloc)
-> [ ... ]
-> > -	return dso__findnew_data_type(dso, &type_die);
-> > +	result = dso__findnew_data_type(dso, &type_die);
-> > +	if (result == NULL)
-> > +		return NULL;
-> > +
-> > +	if (result->flex_array && dloc->type_offset > result->self.size) {
-> 
-> [Severity: Medium]
-> Does this condition skip elements located in the tail padding of the struct?
-> 
-> By checking that dloc->type_offset > result->self.size, the offset adjustment
-> is skipped if the flexible array element being accessed has an offset less
-> than or equal to the total padded size of the parent struct. 
-> 
-> The unadjusted offset fails to match children in fill_member_name(),
-> erroneously falling back to the last member during offline perf data analysis.
-
-As I said in the previous version, I think it's ok and it'll find the
-member when the offset is less than the total size.
-
-Thanks,
-Namhyung
-
-> 
-> > +		struct annotated_member *flex_array = get_flex_array_member(result);
-> > +
-> > +		if (flex_array && flex_array->size > 0) {
-> > +			int offset = dloc->type_offset;
-> > +
-> > +			/* adjust offset in the flex array */
-> > +			offset -= flex_array->offset;
-> > +			offset %= flex_array->size;
-> > +			offset += flex_array->offset;
-> > +
-> > +			dloc->type_offset = offset;
-> > +		}
-> > +	}
-> > +	return result;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260915064035.1970175-1-namhyung@kernel.org?part=3
+David
