@@ -1,145 +1,223 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012013.outbound.protection.outlook.com [52.101.43.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B32658FD29
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 14:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789656405; cv=none; b=kmY1KxlDC4JAu5DkkEOPsA4PazTRB9vIZkxsnWFRnDw56wpJ/wo+fcYlNnPlBykhlDtt5Fi6yVvdUFfNRkfvDM5kzBYL2CGgxfSIpiro/HkrYL2VDrcCQKzWbhjYghmlNM8mV/j0O6xULnKdpYSsi7IDd2m3aDTMf6q+yGvPU7M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789656405; c=relaxed/simple;
-	bh=wYdra0/rb995jwKqL3ELavlEIZq2PrYqyO7Wol0SOSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I4x/aug+0hh0kgjcFMbyvrCBk8ZCH3Gmsoc39MstBScBm03xRK770NThIVo3ekRYd4jccoAqU03s90fH+cXuNz7myqYhrt4fK59RigYwqX4Gs5XOhrL2xlwSdYddqSjzVwLztkdos34D61JuGrpuPSfkSzhQisgmAAwfqK3582E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jxNiD7fD; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33CD3A0E99
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 15:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789657667; cv=fail; b=IWg+0skSjRDDb6hCocLDzH6a9rKBRoHyfF0WWAOYGH0M1FJ6Fj4M/71o5IMNASxJABNy16jBSOtn+6Qz3LwSKD7OIbTI6mGtuGvC/zWekpFp1LA7Um23VusDwrgq/wNWzdhUkZa1koQWdFDYFGc9FfrVx3g+FkaFqd04Y2m4g2k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789657667; c=relaxed/simple;
+	bh=YpNk4pHfxQCVpmKYGksZd3K+R664z4OwCOd1miIHXPs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Q++CpXbbS85UGBrZGhY7niYCZe0Ii8A4mXSUzNIcxf95tEzX+qKYr3PpHlAQ6adO9e9UpEgspiUnbU5MFr09mY9cV/gMO4BzOAHn9oVYhP4DR3O9zUrV/x9lLeapKotRuYTKk2oLK/HsXMz0HSgiy/xh9Ic/pYw8OBBioravWt0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=hHUtG1/9; arc=fail smtp.client-ip=52.101.43.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jxNiD7fD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789656401; x=1821192401;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=wYdra0/rb995jwKqL3ELavlEIZq2PrYqyO7Wol0SOSc=;
-  b=jxNiD7fDbp9kAMmKLeHQKXxwNPe5QzFgB+SLdQqc42Rj9hgzKDYsu7Ux
-   MRlAELEOjV6UQBtDtKEW8cGYRtNvbSzZ01uhCNFyVHz7t0Yfw8CJ6wxU/
-   XiNGUG6W0hrehQqz8C86A50jksYw2PdQguRniBrtZz7UGMH8ZUVSHrLpY
-   +PEJds+LhK1XDKIJNcXkewHgIsAUqZ9cCjVm23en6eqKv4Yl/YdU5GJZm
-   n/PjWcKxa6x+yZ2qLYs+24uFY+E0RUS8MvUM0eagNqKXGA/wQBTZxH9/t
-   memt1DBDA7Mu7sauwEGI9Hx/0CpdRGa8ZbCkqr0mFyUDaF8cUMhQUp89a
-   w==;
-X-CSE-ConnectionGUID: vocyYLoQTT2J1TvFCfm+6g==
-X-CSE-MsgGUID: gsvuMud6QdqR3okpJW6s1A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="101429522"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="101429522"
-Received: from fmviesa012.fm.intel.com ([10.60.135.152])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 07:46:34 -0700
-X-CSE-ConnectionGUID: 2UwuFsgDRD2V5F61XYstEQ==
-X-CSE-MsgGUID: thdfgHLzRAqtu9BPuY/qUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="2058893"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 07:46:34 -0700
-Message-ID: <048b0319-470e-4f8b-816f-c7c835a43974@intel.com>
-Date: Thu, 17 Sep 2026 09:46:33 -0500
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="hHUtG1/9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YxWVHTfRoMl2IhnyfZYVbwYC7TKtaiNU4VwTX1dUbpZmxfS7W6orC2oDKJxQ/Ef8fQA0+fktGjV6T3BDSr3LZjrcsXyGh78ZL8LBGbcw3deVNCerDuTLvFHZczPf/foZWtv6KYYcuPjFGGwA3beS12hBlbzOm9ey751RU4Mn0NFGub7FF3njESb+ntY2GpeXwQe+IAp+zLGlA3Q6av65Yx2No511Hxozj7/gkgjBrLYHnvTyBy1ixXfUoQ1WZSEuDm9O01fSmfyPsydtPM5ZYz3K1xJY4WOT/NE6eo3dVtLtvgJYcbyeEh3tixQFMmT4kD5mRHgAcKdr1QmgYqBs1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZpeEOiEtEwbqUt04pig8Qa9MsVrqsyY9atddECtUbJ8=;
+ b=Ya6l9a5sCbL2FrvtBTbSFlYcXjDSkHUmmCUOMp9sOTEWastQUuGAWm9ZRG0ZEqDCvR/xmSRlnD6QNK74gkXDQBqonz60szGH5O8KSgfFu4mJriRGhQEC3XB1XJY08bSpj1I8l7RfoWz1Ivt5PHy5h18ox5048I/oqlvEUrCi5v4Nj5UBV0jmbZHqgt3PGVztAM1ugG3YrrjqLmbbHpA7rIYqYgV0IdrmfcvO8vYdMeScWH/xhqPgbn4kfZfjWjlnJF12yJndYpCdZx8/r4JpVuUO9MP/DXVZ4Mm7gRxwLDNcgxB2sjT+B1PbIQHWHDGhE/Qy4yqIy+KNBmNK1lRpwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZpeEOiEtEwbqUt04pig8Qa9MsVrqsyY9atddECtUbJ8=;
+ b=hHUtG1/95J3DtNwujeqY99Rjq3+vie+k1ifSyj4VYPw410C6+NhH+qJRRhPrDcEPQQ6d+EV+ad1ReZbk+UUWBgmq+TV6jxsfhY1HHGGarmibjakY4yMjWN3t/JK6ewGwXdbN1V0qF6KgEswFAvOXbCOU2oNGEqhkTqO004Y5baA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB8660.namprd12.prod.outlook.com (2603:10b6:610:177::5)
+ by PH7PR12MB6955.namprd12.prod.outlook.com (2603:10b6:510:1b8::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Thu, 17 Sep
+ 2026 15:07:25 +0000
+Received: from CH3PR12MB8660.namprd12.prod.outlook.com
+ ([fe80::87aa:52e5:4b72:d5f3]) by CH3PR12MB8660.namprd12.prod.outlook.com
+ ([fe80::87aa:52e5:4b72:d5f3%5]) with mapi id 15.21.0406.007; Thu, 17 Sep 2026
+ 15:07:25 +0000
+Message-ID: <ecbb6fb8-fe61-4028-880b-245f94db0f9f@amd.com>
+Date: Thu, 17 Sep 2026 11:07:23 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] KVM: SVM: Re-queue events that were never injected
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <cover.1789399214.git.prsampat@amd.com>
+ <d946de080e3dd34844a665c167179e4910fdc9d4.1789399214.git.prsampat@amd.com>
+ <20260914171628.8A4631F00893@smtp.kernel.org>
+Content-Language: en-US
+From: "Pratik R. Sampat" <prsampat@amd.com>
+In-Reply-To: <20260914171628.8A4631F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH0PR03CA0236.namprd03.prod.outlook.com
+ (2603:10b6:610:e7::31) To CH3PR12MB8660.namprd12.prod.outlook.com
+ (2603:10b6:610:177::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] perf topdown: Don't require config1==0 for a slots event
-To: Ian Rogers <irogers@google.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-References: <20260916202740.257376-1-zide.chen@intel.com>
- <20260916204416.80E761F000FF@smtp.kernel.org>
- <9e86d9e4-7aee-4c1b-8812-94aecb2a2cea@intel.com>
- <CAP-5=fVkubfWSoQbZRmC7Xg-4SHM-=ickZub7zi4SDuFAhZuCg@mail.gmail.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <CAP-5=fVkubfWSoQbZRmC7Xg-4SHM-=ickZub7zi4SDuFAhZuCg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8660:EE_|PH7PR12MB6955:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4cb7fd09-c9fb-4f74-4d5a-08df14cd61f9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|10067099003|4143699003|11063799006|22082099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	sBQHEIp0hPDVquJTlIPMpbOq+JbI4jesZmbU1kv2JfmyQ8v3ZSDXhbrChhjNiLhxSybgOU4vTezWBiaHht8TPA1/olCH72weFMi0zuXMe2TylF6e+AajR9jXwIU2/thwd8tVN9kiVKwwanJz/Q8INQ1PNwGr5Q8GFVs6wVXuCILgeSwbjKlIqmnVVYENu4/aSsmaDv7ogYSMaHAftNlWlQc48wAIoOorYrQIP8uReDgNEHaeAlYzCCPfqHJbqk95mxQMNhIXfp0hR8J7pfO36wDmh+wOJT44F7uldqkJtp5sSiVfLFZv4N/W8zp+SPpqAEWm4y5aLecVZcn7b44Ze4onXawreidsEhXiR1o8nW8OD3jrZcjN5LfCy01Y39MhVwwBukYj9j76CES1tEkyht9fCmd/uHJW8nVmAdXF27ulKzb8PvdlvyyBbj0b/kDGEn8q9ze3o8WX6s2SUQWAc6rO5US13W20ssZ9Z1bvvy8HMpF5jwZ1UxvNuZMw9FAFHVHQFilZJO7xipXmgR2ZycEaViQvN7fydnTvqYczSpPuGgn4yZ92NpiSjrvsesZ9Ss8L3qcEBc0TXELcyAouqa7o2KqvJca5pfGtTydHVTA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8660.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(10067099003)(4143699003)(11063799006)(22082099003)(56012099006)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TVVkL0poMXNSSnFBL01rNmsxYVdUakdVMFozUy9zb0dvSVNUeVhXWUNyM3Qv?=
+ =?utf-8?B?U1cwM2o3WW5YMW9yaFh2eHRaWnhBVVh1UVBkZEhiWTFPbm5QV2VweVkweVNj?=
+ =?utf-8?B?cWJYUS9ZL3BiTWVYRk9nT1VYTkxSamlmT21VQjYwVUJRQUNUbThKcDZrZzV6?=
+ =?utf-8?B?SWRaNW95RFA5cFBYZnVjNWNPUG9GWS9yMSs0RnArWWQranpDTW9EdlQrbUls?=
+ =?utf-8?B?WjFQMmF6WEU2MkFCeURWQm5SNWVOL3I2TXZQTlhuTnVwVzJIZmJJcW8ybDhP?=
+ =?utf-8?B?YnlodldPVU13VnlGU0wxNFUzRU1zcFdIc0FzT1d2MEhUTmdtQVZJSkFvaXc0?=
+ =?utf-8?B?UmhzczdvbzhIZWRVV0dLYlQrdXovTVlvdStCcGtLQWhTdDZQTjRXNnN0Smpu?=
+ =?utf-8?B?UllLRW5xWDdiamw1RjRySW4zYlJ4MUo1R0dLRDdXbEtEUk8yNzdwTXc0SkFM?=
+ =?utf-8?B?L1JSMVhFRVMvdEVLMWpiWXVtNTc3MHB6S2pkQXUxV1JaaENNQ0k2bjcrQlpH?=
+ =?utf-8?B?L2ZSLzBwcDBldk9sTFFmZlZWZnFKQ20xQVBCZFFyN3hKYXV0dW9sQ0Q4SXB5?=
+ =?utf-8?B?NHFiR1Bqdy81Yzh1czdHVGNpVm4zSjBIZWR6ODgvK0p5K0ZidjRJamE1dDZS?=
+ =?utf-8?B?SjFrN3RrS2VxMldJSklzOHlnajNMNEg5WUErcU4zVmUzSUlYSGs2dGx6SFhN?=
+ =?utf-8?B?K1VINS9PMng5bGdId1QyUTJOZkUrVHNpY3VUTUJXZ24rWFR1dVNNUi9Yd2N1?=
+ =?utf-8?B?N0xmVXhKMnE3U3VnMTg5NWNXc05QRHRLaWN5MHlpTDhVOVFpWXpkWjlsZ2hs?=
+ =?utf-8?B?VDZ2T2JZcWRCTkh4ZUpRclh3NVhXRnhib21vRjNSQndBd21sSUEwdm11bWR4?=
+ =?utf-8?B?TjA5QkZhTmgrQ0NUZk1zbkFqTmJyTnQzUG1FV1pLeEJ5Tkx3MjdlWDc2VE9s?=
+ =?utf-8?B?cnIyVCtEd2pVWmF3UU15MEg4bEV4elJRUFZUNWxrUXR0bXRlOG1WdUJ5Yzdq?=
+ =?utf-8?B?c1JUTEpaejA3ZjJKTWlvNVlVT3lJNWFVaUMrVXg1RElJZE8rOWtEWUd6RWha?=
+ =?utf-8?B?SXFQSGFhYkFJMEFnU2l5RzZFUXVzSlRLMDNTNXM2N2I5OGpmdnN1b1N4NGxX?=
+ =?utf-8?B?T2tZSE55K1NkNm52ZFBNbi9uZzdpS2s5N3J1Y2VzOVRndERrQWJOMUdHanNm?=
+ =?utf-8?B?dmdyS3MzZmRQQlNEYUxqaWhDVVlhbHlqWHo0cHRmd3J6RSsyVHJlNFpkZkZE?=
+ =?utf-8?B?TUdPQWlIZldKWE91NndqY0NFR293K2NEcXNnWFl6dHptQTBSLzhLUVJRN2Ri?=
+ =?utf-8?B?UWNBZHpxYXE3N0RsWHFaWS9xQkRMQ1kvc3lCTlV0dzMvd2tuU2VsYU1EMHFk?=
+ =?utf-8?B?MEFGQ21xZS9YSWZmY3BDditBdEZwbTU3K2Y4c3ZaWG9KajgremlrVkx6VmFU?=
+ =?utf-8?B?N05jZVhJcWVHZzNSNm9waVhjSE5zVGluclpzOHFOS1V0QnhwVWhZTy95OGRP?=
+ =?utf-8?B?a1BNaENQUStWQ0F1MmxDbVZFa2RUVW5pZ2lHRmpmODZ3Q0MzWnBSRG1NREQ1?=
+ =?utf-8?B?dHdwSWRKRGtteG5vWHBVMnRBRDEzdVBJdFZEU3RBd1p1elZ1M3FXUFNKdDZJ?=
+ =?utf-8?B?TDhkVWpOZWRqZUxnNDcyTW9hcS9vN1RkLzhyNkYzUk9xQzVaejZpSENvUXpn?=
+ =?utf-8?B?VzJQTmFzS2xWK3pnTjdYUHlRTis2VUVqSGlnemk5TzU0RFJiYlYwNGJMUGJP?=
+ =?utf-8?B?clJLYjJnbWlYSHRqUzIzQzBPTDhheE85blhWcmRLcjMxcUg3QlN3LzZiaE9u?=
+ =?utf-8?B?ZU9neGJhN0RiNDF5N0I1VkRZbXRzanNmNmNLRy9mU1I4MjhHUmZhYWtZb0tM?=
+ =?utf-8?B?SlIvbVRIbldIbEl6dlZUK1ViQUo3TWNNSkhjKzVPMFkvbmFGYWpQN3ZVVFBO?=
+ =?utf-8?B?cjRHTHJNUkFaVTFKa1BXdExveTBHeHorcEJmc2hEdHJZYU1KR1VpdlNOUGtC?=
+ =?utf-8?B?dGt3QVNNWk04OTEwcTQrTVV5Um40dXVzSitubHNnMksvRzA3ZVAvS1pkTVNT?=
+ =?utf-8?B?WDdIYWI4cGpZUnNKamxRM0ZHMS9IT2p1VUtmSE9QWUtmQ3E0UkZXK00yajlv?=
+ =?utf-8?B?anhpM1RPenFzQ2xEam1tWFdPNzZ0TVlkMm9JZWlYK094dDZFeFgwdVhWbXR2?=
+ =?utf-8?B?bDR1bE1NRUxyeS8xcXhrM0dvQmJaVm9sS2xCcit5ZmN6Ry9WY0pOUjJ6R3lC?=
+ =?utf-8?B?eUh0V0hQT0ZRRStxSkovTGNaYnA5TmZpTE0wa05FZnl4UVdEcjFaWFVmcHV1?=
+ =?utf-8?Q?JUYsRB6kqMLTHqAN1v?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4cb7fd09-c9fb-4f74-4d5a-08df14cd61f9
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8660.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 15:07:25.6581
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iCCeTu4zHBc+tMzueTXMKobXU7+5CLfkE9d6shNMR4wZaALHJlMSj6Q7s8U/2T3j9qxvp3LVXdXSrOB/W3UYgQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6955
 
 
 
-On 9/16/2026 6:00 PM, Ian Rogers wrote:
-> On Wed, Sep 16, 2026 at 2:52 PM Chen, Zide <zide.chen@intel.com> wrote:
->>
->> On 9/16/2026 3:44 PM, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [Low] perf: missing explicit <stdio.h> and <string.h> inclusions
->>> --
->>>
->>> commit 197eea3115a0d065dc53e6f96ad2fd38fdb9bc99
->>> Author: Zide Chen <zide.chen@intel.com>
->>>
->>> perf topdown: Don't require config1==0 for a slots event
->>>
->>> This commit modifies the topdown slots architecture check to no longer require
->>> config1 == 0, fixing an issue where explicit slots events were duplicated in
->>> scheduling. It also adds a new test to verify that an explicit metrics_clear
->>> slots event doesn't trigger extra injections.
->>>
->>>> diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
->>>> index 2b6f47ce49324..b1ce9f83db00e 100644
->>>> --- a/tools/perf/arch/x86/tests/topdown.c
->>>> +++ b/tools/perf/arch/x86/tests/topdown.c
->>> [ ... ]
->>>> @@ -229,10 +229,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
->>>>      return TEST_OK;
->>>>  }
->>>>
->>>> +/*
->>>> + * An explicit "slots,metrics_clear=1" event is still the slots event and
->>>> + * must not cause an extra slots event to be injected into the group.
->>>> + */
->>>> +static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
->>>> +                                       int subtest __maybe_unused)
->>>> +{
->>>> +    struct perf_pmu *pmu;
->>>> +    char event_str[128];
->>>> +    int ret;
->>>> +
->>>> +    if (!topdown_sys_has_perf_metrics())
->>>> +            return TEST_OK;
->>>> +
->>>> +    pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
->>>> +    if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
->>>> +            return TEST_OK;
->>>> +
->>>> +    snprintf(event_str, sizeof(event_str),
->>>> +             "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
->>>> +             pmu->name, pmu->name);
->>>
->>> [Severity: Low]
->>> Does this new function test__x86_topdown_metrics_clear() need explicit header
->>> inclusions for musl compatibility?
->>>
->>> This code relies on an implicit declaration of <stdio.h> for snprintf().
->>> Missing POSIX headers can cause build failures when compiling the perf tool
->>> with strict libc implementations like musl instead of glibc.
->>>
->>> Should <stdio.h> (and potentially <string.h>) be explicitly included at the top
->>> of this file to prevent musl compilation failures?
->>
->> Not needed. tools/perf/util/pmu.h, along with debug.h (which is also
->> included), explicitly pulls in <stdio.h>.
->>
->> Additionally, this file already contains other calls to snprintf(). If
->> the required header dependency were missing, those existing uses would
->> already fail to build.
+On 9/14/26 1:16 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 > 
-> In general we want to avoid transitive includes as they are brittle.
-> For example, if pmu.h and/or debug.h were changed, it might break
-> musl.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] svm_complete_interrupts() incorrectly checks if (control->event_inj) instead of the SVM_EVTINJ_VALID bit, which can silently drop valid hardware-reported events (like guest page faults) by clobbering EXITINTINFO.
+> --
+> 
+> commit 50716e3ba11eb9d000a0186ffad984ac08df1dcb
+> Author: Pratik R. Sampat <prsampat@amd.com>
+> 
+> KVM: SVM: Re-queue events that were never injected
+> 
+> When injecting an event into the guest via the event_inj field, a non-zero
+> event_inj value on #VMEXIT means the hardware was unable to inject it.
+> This commit adds a check to recover potentially lost interrupts by detecting
+> an undelivered injected event and re-queuing it.
+> 
+>> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+>> index d0971685034b9..e2be2cd86c320 100644
+>> --- a/arch/x86/kvm/svm/svm.c
+>> +++ b/arch/x86/kvm/svm/svm.c
+> [ ... ]
+>> @@ -4323,6 +4324,27 @@ static void svm_complete_interrupts(struct kvm_vcpu *vcpu)
+>>       svm->nmi_l1_to_l2 = false;
+>>       svm->soft_int_injected = false;
+>>
+>> +     /*
+>> +      * Hardware clears EVENTINJ field when it injects an event.
+>> +      * A non-empty EVENTINJ on #VMEXIT means the vCPU never entered guest
+>> +      * mode, and thus that the event was never delivered.  Migrate the event
+>> +      * to EXITINTINFO so that it's requeued instead of being dropped.
+>> +      *
+>> +      * An undelivered event doesn't imply a fatal VMEXIT_INVALID. With
+>> +      * Enhanced SMT Protection, VMRUN may exit with an ordinary #VMEXIT
+>> +      * without having injected that event into the guest.
+>> +      *
+>> +      * Clobbering EXITINTINFO is safe precisely because the vCPU never
+>> +      * entered guest mode.
+>> +      */
+>> +     if (control->event_inj) {
+> [Severity: High]
+> Does this code silently drop valid hardware-reported events?
+> 
+> If an L1 hypervisor sets event_inj to a non-zero value but leaves the
+> SVM_EVTINJ_VALID bit clear, hardware will ignore the injection and won't
+> clear EVENTINJ.
 
-OK, then I can add stdio.h and string.h to topdown.c.
 
-> Thanks,
-> Ian
+The first half is right, nested_svm_check_event_inj() intentionally returns
+true when V is clear, so vmcb02->control.event_inj can be non-zero with V=0.
+
+The second half isn't. Clearing EVENTINJ is not part of injection, it's part of
+#VMEXIT, and it's unconditional. APM vol 3, VMRUN:
+
+  Upon #VMEXIT, the processor performs the following actions in order to
+  return to the host execution context:
+  ...
+  EXITINTINFO
+  clear EVENTINJ field in VMCB
+
+KVM already relies on this, nested_svm_vmexit_update_vmcb12() zeroes vmcb12's
+EVENTINJ rather than propagating vmcb02's, citing the same thing.
+
+
+> 
+> If a genuine exception occurs in the L2 guest that populates EXITINTINFO,
+> this check incorrectly evaluates to true since event_inj is non-zero.
+> 
+> This causes EXITINTINFO to be clobbered with the L1's invalid event_inj
+> data. Because the clobbered value lacks the VALID bit, KVM will then ignore
+> it and drop the event.
+> 
+> Should this code check the SVM_EVTINJ_VALID bit instead of checking for a
+> non-zero event_inj value?
+
+I believe we don't need to since the valid check is made later below.
+
+-- Pratik
+
+> 
+>> +             control->exit_int_info = control->event_inj;
+>> +             control->exit_int_info_err = control->event_inj_err;
+>> +             control->event_inj = 0;
+>> +
+>> +             exitintinfo = control->exit_int_info;
+>> +     }
+>> +
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1789399214.git.prsampat@amd.com?part=1
 
