@@ -1,120 +1,191 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40085384CCB
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 02:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4C7384CD6;
+	Thu, 17 Sep 2026 02:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789611381; cv=none; b=Cw4Obc+WmAf3R9kg+41Zx8Bx7oL+lEKJNj2cEAtxSMNLfGtP4TLjl3MMBaiHRA3icyO1JASJHwJTMTsy7u5HGk1WkVPqrrp5OgNOO8xUyGScWu8s8GuXL5GeUMlSfAMAqHDzjgs/WcNq5dcDd8Vy3sFcCcN+ryacMqwo9tIL6LY=
+	t=1789611637; cv=none; b=X6BlNPayR/fFPEbRyVxpUMaEqTa8AgwcuoMRCTFlZKNMrdxQ4U30/ct14yMUXMEhv3t8A83kp/G2MgW+4jEZKkB6STtHDmH6BFtwwgkr0qq+WWlolXQE/KiIXp/V3rRtQ6mvqkGu99CpyWzKKjDl8HH4aJv783UaciUpvTN0YT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789611381; c=relaxed/simple;
-	bh=YSIHvWajymesgH5AeWt5kyqcHHXowrvsw/ZTno130NI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qfKeip/HAzWhaiNfvU/LnkCKJ/X4yWCD/tfXNUoAxK1KljFSZR/QhGVTqW1iDPbUXjCwkeHXSHV149+2++S2/M4XBo63701YZz0o++spUyxnCAmoLiHLB7Uwz+TWMi1+nTVd46ksOsVMD0WTTWQwhoqOst+H5IzP23P6Qsogx+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hlfW21TxxzYQtL6
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 10:15:58 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 1F75540561
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 10:16:04 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCnZ2xiTatqtrFSAg--.42473S2;
-	Thu, 17 Sep 2026 10:16:04 +0800 (CST)
-Message-ID: <65994196-8dd9-4477-9c4b-3fa485ad3071@huaweicloud.com>
-Date: Thu, 17 Sep 2026 10:16:02 +0800
+	s=arc-20240116; t=1789611637; c=relaxed/simple;
+	bh=2hEhyk0s4WVmFdIupv816I4A+gouGd9M8wYttLHRGbg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ID6I/35gzwxFhIQjy3MwqIa3XJZ6/9dOrg6B56HbsNsInNp4KJ1AmNE7LQxHQ9+F8ARiBW1pdh8mQGJMSw8OFwf42eK1nhYVWFTPgxAcvb1hQU6BoPhtk6V4jbvHqUPrqss0MVRaZa15nu42tHDaDYk2ZtwqyN28+j1gCKho6gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=fail (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=CPaKDwdl reason="signature verification failed"; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="CPaKDwdl"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id B90C440E00B9;
+	Thu, 17 Sep 2026 02:20:26 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=fail (4096-bit key)
+	reason="fail (body has been altered)" header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Oqanxm5HEzvI; Thu, 17 Sep 2026 02:20:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1789611616; bh=t+xhCY2klvKxUHYu8YVGd1Jq3dnIAaBznhM5u4gjcEw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CPaKDwdlQE4UQKX5VEGrvNFhWWNdZ5an+ir3VDDwOLNb6Thz2NZnvhPfPvM++nh1s
+	 VROsc8PIAf1rBld9VtHkliStCc5QOBkUfvkvLN6XzSyomnq5VgwkOnTcHJYn5y9w4N
+	 SE8zZ5Jd3EO/527Jd5FDgUJeeFgZKkqi6SWcTs0LH6a0KFHG5Ff79mpy/E/tLpu8am
+	 ZiA7szmkmZy8E+3FKpU+4Eqfvr5JMqail4qIA9Xuu6sufv7nTP2Ohx079BBbTcSCCL
+	 kzannFLMQ2DHAqs/tnDbkk9thbJ4iMfo3muzW6OBGoi7XG3n+W64ijBmTVHuwr5wIO
+	 B6i/1t0bSpSdzJFB6PmqZ1LSgp8S5eSHypxnfW+BarzoQey4PtjgDGpTWVIwcm+il6
+	 bjKC2FbBgFO4QREQRreqD+80QNfypJB6GZJcRSmvruu4RRAoTve2bwj+gKNMFhFjj2
+	 5RISMtwUxlPOqPYDNphTDxoIbghtrlNdnVdNcbmfIiv/dqOCMWNr3+1MP2KvnqZy3I
+	 6u9m+KPChF6vYRN2QhUwdKCyxQ4Q5X3ghAZENYaa14hVxAK23COKU6uaSESM6BPfc/
+	 h2my2Tpa8xQaGxnNFgyShc8qpJGhFS5mY7FESabANNs4/FR9yXHeSoVuBJRZKvqNxf
+	 C4zFsSARasged0QxHNaCVV3A=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1CEBE40E015B;
+	Thu, 17 Sep 2026 02:19:40 +0000 (UTC)
+Date: Wed, 16 Sep 2026 19:19:37 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ashish Kalra <Ashish.Kalra@amd.com>, kvm@vger.kernel.org,
+	tglx@kernel.org, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+	seanjc@google.com, peterz@infradead.org, thomas.lendacky@amd.com,
+	herbert@gondor.apana.org.au, davem@davemloft.net, ardb@kernel.org,
+	pbonzini@redhat.com, aik@amd.com, Michael.Roth@amd.com,
+	KPrateek.Nayak@amd.com, Tycho.Andersen@amd.com,
+	Nathan.Fontenot@amd.com, ackerleytng@google.com, jackyli@google.com,
+	pgonda@google.com, rientjes@google.com, jacobhxu@google.com,
+	xin@zytor.com, pawan.kumar.gupta@linux.intel.com,
+	babu.moger@amd.com, dyoung@redhat.com, nikunj@amd.com,
+	darwi@linutronix.de, linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-coco@lists.linux.dev
+Subject: Re: [PATCH v16 2/5] x86/sev: Disable CPU hotplug while SNP is active
+Message-ID: <20260917021937.GEaqtOOfbceTzNy0um@fat_crate.local>
+References: <cover.1789594774.git.ashish.kalra@amd.com>
+ <cd6962a88d691a020c2bf40fe77a6a3f3852fdfc.1789594774.git.ashish.kalra@amd.com>
+ <20260916223630.C5E1C1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 25/26] perf annotate-arm64: Support per-cpu variable
- access tracking
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1789521520.git.wutengda@huaweicloud.com>
- <735c23b4a55db2c67be4920792922550ff4f6409.1789521520.git.wutengda@huaweicloud.com>
- <20260916015348.2114B1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260916015348.2114B1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgCnZ2xiTatqtrFSAg--.42473S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFWrXF4UJF15ur17ZF45trb_yoW8tr45pa
-	95C3yrG34vqr4vq3ZayF4rXa4F9w17WFWY9ryrXFW7ZFySkrn7GrZ7Kr4UKFW8Wrsakw4U
-	J39YqrWDX3WkCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260916223630.C5E1C1F000FF@smtp.kernel.org>
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 2026/9/16 9:53, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf: retry mechanism fails for per-cpu variable loads
+On Wed, Sep 16, 2026 at 10:36:30PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> - [High] x86/sev: CPU hotplug disablement bypassed on early kexec error=
+s
 > --
-> 
-> commit 0a8000b94df79930832d6fd4535fbe42f682b339
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support per-cpu variable access tracking
-> 
-> This commit extends update_insn_state_arm64() to handle per-cpu variable
-> addressing. It detects pairs resolving to the '__per_cpu_offset' symbol
-> and marks the destination register as TSR_KIND_PERCPU_BASE to propagate
-> type information during subsequent instructions.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index b25a3c70675c1..f4b7b0eb44f42 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+>=20
+> commit ac084f2d7188c520f2ee3ced2ab76e4c068df91f
+> Author: Ashish Kalra <ashish.kalra@amd.com>
+>=20
+> x86/sev: Disable CPU hotplug while SNP is active
+>=20
+> This commit disables CPU hotplug when SNP is enabled to prevent SNP gue=
+st
+> memory from being broken by CPUs coming online without the SnpEn bit se=
+t.
+> It ties CPU hotplug to the SNP-enable bit, disabling it in snp_prepare(=
+)
+> and re-enabling it in snp_shutdown() when SNP is disabled. It also
+> explicitly disables CPU hotplug during kexec if SNP is already enabled.
+>=20
+> > diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+> > index cff285d8ad8e3..558f7924a3f85 100644
+> > --- a/arch/x86/virt/svm/sev.c
+> > +++ b/arch/x86/virt/svm/sev.c
+>=20
 > [ ... ]
->> @@ -666,6 +677,12 @@ static int propagate_load_reg_state(struct type_state *state,
->>  	}
->>  
->>  load_non_regoff:
->> +	/*
->> +	 * If src_tsr->kind is TSR_KIND_PERCPU_BASE, treat it as an array.
->> +	 * No special handling is needed here; just fall through to retry
->> +	 * and resolve the type from the second register.
->> +	 */
->> +
->>  	/* Try another register if any */
->>  	if (src->multi_regs && src->reg1 != src->reg2 && sreg != src->reg2 &&
->>  	    !(src->extend_type || src->shift_type)) {
-> 
-> [Severity: Medium]
-> Will this retry logic actually succeed for per-cpu variable loads?
-> 
-> Since both registers in the per-cpu load are non-constant
-> (TSR_KIND_PERCPU_BASE and TSR_KIND_GLOBAL_ADDR), arch_get_reg_offset()
-> returns -1 for both the initial attempt and the retry pass because it
-> requires the 'other' register in a multi-register operand to be
-> TSR_KIND_CONST.
-> 
-> Does this break the intended fallback logic here in
-> propagate_load_reg_state(), resulting in an unhandled -1 return and
-> silent type propagation failure?
-> 
+>=20
+> > @@ -577,6 +582,8 @@ EXPORT_SYMBOL_FOR_MODULES(snp_shutdown, "ccp");
+> >   */
+> >  int __init snp_rmptable_init(void)
+> >  {
+> > +	u64 val;
+> > +
+> >  	if (WARN_ON_ONCE(!cc_platform_has(CC_ATTR_HOST_SEV_SNP)))
+> >  		return -ENOSYS;
+> > =20
+> > @@ -586,6 +593,15 @@ int __init snp_rmptable_init(void)
+> >  	if (!setup_rmptable())
+> >  		return -ENOSYS;
+> > =20
+> > +	/*
+> > +	 * On a kexec boot SNP may already be enabled (legacy firmware leav=
+es
+> > +	 * SnpEn set across shutdown), in which case snp_prepare() bails wi=
+thout
+> > +	 * disabling CPU hotplug, so disable it here.
+> > +	 */
+> > +	rdmsrq(MSR_AMD64_SYSCFG, val);
+> > +	if (val & MSR_AMD64_SYSCFG_SNP_EN)
+> > +		cpu_hotplug_disable();
+>=20
+> [Severity: High]
+> If a kexec kernel boots into a system where the previous kernel left
+> MSR_AMD64_SYSCFG_SNP_EN active, and an early initialization step fails
+> (such as passing amd_iommu=3Doff
 
-It looks like arch_get_reg_offset needs to be extended to recognize when
-reg2 is TSR_KIND_PERCPU_BASE and set the offset to 0.
+amd_iommu=3Doff means no SNP.
 
-Thanks,
-Tengda
+> on the kernel command line resulting in !amd_iommu_snp_en, or
+> setup_rmptable() failing),
 
+The same happens in that case:
+
+        if (snp_rmptable_init()) {
+                pr_warn("SNP: RMP initialization failed, SNP cannot be su=
+pported.\n");
+                goto disable_snp;
+		     ^^^^^^^^^^^
+
+Does Sashiko not see that or somehow it ate a lot of credits so it cannot=
+ use
+enough now to "swap in" the whole context... if that is the AI that is go=
+ing
+to destroy the world, then I'm not too worried. :)
+
+Or is my AI failing me right now?
+
+:-P
+
+Leaving in the rest.
+
+> snp_rmptable_init() will
+> return -ENOSYS before checking the physical MSR hardware state and
+> disabling CPU hotplug.
+>=20
+> Because hotplug remains enabled and the CCP driver skips initialization=
+ on
+> failure (bypassing snp_prepare()), could a subsequently hotplugged CPU =
+come
+> online without the SNP_EN bit set?
+
+Yes, but the above disabled all our intention of running SNP in the first
+place...
+=20
+> If this results in a mixed hardware state, does it violate firmware
+> constraints and cause fatal RMP faults when the new CPU accesses memory=
+?
+>=20
+> Should the hardware state be checked and hotplug disabled unconditional=
+ly
+> before the software configuration checks?
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.178959477=
+4.git.ashish.kalra@amd.com?part=3D2
+
+--=20
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
