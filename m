@@ -1,154 +1,170 @@
-Received: from va-2-53.ptr.blmpb.com (va-2-53.ptr.blmpb.com [209.127.231.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43172.protonmail.ch (mail-43172.protonmail.ch [185.70.43.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD0B3E40EA
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 06:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B4B4349B6
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 06:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789626402; cv=none; b=hsgFO4TwRvuZzbZy3V5oSkknHoPDZLRsnQeNbP0S30jQZHwG//smkh6k0mBUC3RTZ6n6FqnwaAbav6ew6svTvi2FZwuDXkHTcn8HxKIW3ifEGZlet+GzyJFmUmwxyvQYSkRfzvmbAVhMNmBnKzCl/M7e8MRw0KprVJCDtPpbm9s=
+	t=1789627214; cv=none; b=pxVr7IIQLiPNRHWdrfqKCHemMq3bk3iQ7hZnVP46sJxIeO1dJjUDukKgV/kzw/+OXUqNORKPySHS6XdH+/N6bjCbzTqBA7GjY1aQE5HZjO9u/sOPKFIU4K0YaOomKDTKjqiW7MXh/NOnipsJaMX42vhWjvdiRYVTUF6Dvs2h+Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789626402; c=relaxed/simple;
-	bh=ILiVyg8+6YLMeqY60B64k49374KXRjjZE3oVWLDpoow=;
-	h=From:Content-Type:Subject:Message-Id:Mime-Version:To:Cc:Date:
-	 In-Reply-To:References; b=aWvt1xjO9PL+Khq3peK4DdUHEcNj1ac1HEEeoC3Acul86NMnx4/l/EQjAfY3myfsshTFOmbu13WMwiOq0IDhR6x9PBU4IBj/hpjnAlOEEkssTrC9YQ9DgPqn9Pgxd5r40M7Ib+d+gStjdjMAxCuSeDQm8oGwhg3aJHwCn2xXGcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=dUlb4Chh; arc=none smtp.client-ip=209.127.231.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	s=arc-20240116; t=1789627214; c=relaxed/simple;
+	bh=f1QRepBbWZ/l8660Nq06d26o8HeFv0/fKHJXcSIt6GI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hMhTSNcFgLs2zOgsuGKsGHmcwCH3qQaYRcgOui7MEZoSwvwM7gHJq6bPErugKeTWKqksp7yd6FaEGWUcf74PZ9ZpBv+Q23sCKeDnEkBI8LS6BxsBOkHCYe0P9PA7yhNXiBGLUwjiNb3Ps77VKDmiLg54BMfLE9OTQrdvp4D7Yuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=u7btnMhk; arc=none smtp.client-ip=185.70.43.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="dUlb4Chh"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1789626391;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=q9MN/pbFfh46oJfXN3YCcT64DX0HXtLINWr7ccWWP4A=;
- b=dUlb4ChhREAKtNmDl7VpdCnRs9qvEr6VA+sDWS8Nsi99CBeexkbxHq0LfPixbQHPYnrkge
- WcSC7cnjAieT8we4aaQkTxZkR57B75c7SjN24Vu4w1QV7SEWqtWFX7pufvjMNhlXDji2KQ
- VjJlclfYEOSifJR234ZlwSb6TNuQ7BDEDfAjxpvnIST6vQ2ZMOLMAFnlajH+G2Zfqg6pgL
- UAcXIOTzIhsCou0yEV4t1DcVgwShppjVbEZd7HmEfBX9YkpuFvnXfN/ZBh8HYQ83kYZDTw
- cSuHhJYmpWfFjpKCqey3S6DSSDamoeccEksjxpC0h4DKX7WvJzcXKLE7n59Nmw==
-From: "yu kuai" <yukuai@fygo.io>
-Received: from [192.168.1.104] ([39.182.0.142]) by smtp.larksuite.com with ESMTPS; Thu, 17 Sep 2026 06:26:30 +0000
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [PATCH] md: fix out-of-bounds access to superblock disk array
-Message-Id: <5e214547-0993-4219-a6b7-b64b5fcc8e48@fygo.io>
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="u7btnMhk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail; t=1789627208; x=1789886408;
+	bh=7IMNOjt0Ppv/0nXgXbNNXUVyv/GVippRssUgg0KAhJg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=u7btnMhk20zG/gaqDh4pRNnp/JvZ1PV3OekOxwfvgyBQFEPeYYvRw6t/WPOLpK381
+	 ze8i/TViXAV4VqpPGpS4Fkg7ufdN0T7vEbW/XtNH5CuhAPiv+7UlRfnS4su/PGhNeo
+	 Aw+OWm4zV4UJP+S/K2D35OjRXWr+vj7SygvPbN9To1UkHVR3RxdAuhEPwq/sjjs1ug
+	 qzscl9oZPOA61XWBJ9yVW3o//HxMuzNfIP1/Fu6tNPBkMEG4zBcrhi4xGtF27MsW2O
+	 dFn+FW6Ovr/1kRit8n2Hld7bjq1haCib3cFBHRurCaQdeNHTywSvH+dPEi+VB7llp3
+	 iO0lbGqsAbvUg==
+X-Pm-Submission-Id: 4hlmMp5NLYz1DDrw
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <robh@kernel.org>,  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v9 10/10] iio: accel: mma8452: Support interrupt sharing
+In-Reply-To: <20260916083119.03A8F1F000FF@smtp.kernel.org>
+References: <20260916-mma8452-open-drain-v9-0-0dd24fa2f3d7@geanix.com>
+	<20260916-mma8452-open-drain-v9-10-0dd24fa2f3d7@geanix.com>
+	<l9LG3al0xmawstyXcDwD8OhOBMwn13q6oz0NvCPy4kL0lA4DX5biMlUWcvt9Wwu1AiyugOvUZgQfnFJ4dvuvbA==@protonmail.internalid>
+	<20260916083119.03A8F1F000FF@smtp.kernel.org>
+Date: Thu, 17 Sep 2026 08:40:06 +0200
+Message-ID: <87se38754p.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Reply-To: yukuai@fygo.io
-To: <sashiko-reviews@lists.linux.dev>, 
-	"Deepanshu Kartikey" <kartikey406@gmail.com>, "yu kuai" <yukuai@fygo.io>
-Cc: <linux-raid@vger.kernel.org>
-Date: Thu, 17 Sep 2026 14:26:27 +0800
-X-Lms-Return-Path: <lba+26aab8817+b037fe+lists.linux.dev+yukuai@fygo.io>
-In-Reply-To: <20260914060656.937B01F000FF@smtp.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-References: <20260914055619.32929-1-kartikey406@gmail.com> <20260914060656.937B01F000FF@smtp.kernel.org>
-User-Agent: Mozilla Thunderbird
-X-Original-From: yu kuai <yukuai@fygo.io>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Hi,
+<sashiko-bot@kernel.org> writes:
 
-=E5=9C=A8 2026/9/14 14:06, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Skipping devices with an out-of-bounds `desc_nr` in `super_90_sy=
-nc()` leaves `rdev2->desc_nr` stale, silently corrupting the superblock's `=
-this_disk` field.
->
-> Pre-existing issues:
-> - [High] The patch fails to validate `sb->this_disk.number` in `super_90_=
-load()`, allowing an unvalidated value to be assigned to `rdev->desc_nr`, w=
-hich subsequently leads to out-of-bounds array reads in `super_90_validate(=
-)`.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] iio: accel: mma8452: Interrupt storm livelock when IRQ fires during RPM_SUSPENDING
+> - [High] iio: accel: mma8452: Invalid I2C access during system suspend due to mishandled -EINVAL
+> - [Medium] iio: accel: mma8452: Race condition in probe error path due to pm_runtime_disable() before free_irq()
 > --
 >
-> commit b64c4503567571cb6b3f8a25617dfc053378beea
-> Author: Deepanshu Kartikey <kartikey406@gmail.com>
-> md: fix out-of-bounds access to superblock disk array
+> commit bf19c63685f6fff116a3a5358196fd66dff6090a
+> Author: Esben Haabendal <esben@geanix.com>
 >
-> This commit adds bounds checks for raid_disks and desc_nr when loading an=
-d
-> syncing v0.90 superblocks. It aims to prevent out-of-bounds array accesse=
-s
-> to the 27-element sb->disks array caused by maliciously crafted or
-> corrupted metadata.
+> iio: accel: mma8452: Support interrupt sharing
 >
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index 680b34a63cb3d..81588c3fee49a 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
->> @@ -1393,7 +1393,8 @@ static int super_90_load(struct md_rdev *rdev, str=
-uct md_rdev *refdev, int minor
->>   		goto abort;
->>   	}
->>  =20
->> -	if (sb->raid_disks <=3D 0)
->> +	if (sb->raid_disks <=3D 0 ||
->> +	    sb->raid_disks > MD_SB_DISKS)
->>   		goto abort;
->>  =20
->>   	if (md_csum_fold(calc_sb_csum(sb)) !=3D md_csum_fold(sb->sb_csum)) {
-> [Severity: High]
-> This is a pre-existing issue, but while we are adding bounds checks to
-> super_90_load(), does this function still leave a critical path vulnerabl=
-e?
+> This commit adds support for shared interrupts to the mma8452 driver. It
+> modifies the interrupt handler to check the runtime PM status and ignores
+> the interrupt if the device is suspended. It also updates the runtime
+> suspend and resume paths to properly disable and restore interrupt sources.
 >
-> Slightly further down in super_90_load(), the code does:
->
->      rdev->desc_nr =3D sb->this_disk.number;
->
-> Since sb->this_disk.number is read from the untrusted superblock without
-> validation against MD_SB_DISKS, an unvalidated value is assigned directly
-> to rdev->desc_nr. Later during array assembly, super_90_validate()
-> unconditionally uses rdev->desc_nr to index the 27-element sb->disks arra=
-y:
->
->      desc =3D sb->disks + rdev->desc_nr;
->      if (desc->state & (1<<MD_DISK_FAULTY))
->
-> Can a maliciously crafted MD superblock still trigger an out-of-bounds
-> memory read through this unvalidated rdev->desc_nr?
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index 5aea6bf3312af..2a980c0c2e03a 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
 >
 > [ ... ]
 >
->> @@ -1693,6 +1694,13 @@ static void super_90_sync(struct mddev *mddev, st=
-ruct md_rdev *rdev)
->>   			desc_nr =3D rdev2->raid_disk;
->>   		else
->>   			desc_nr =3D next_spare++;
->> +
->> +		if (desc_nr < 0 || desc_nr >=3D MD_SB_DISKS) {
->> +			pr_warn("md: %s: desc_nr %d out of range for rdev %pg, skipping\n",
->> +				mdname(mddev), desc_nr, rdev2->bdev);
->> +			continue;
->> +		}
->> +
-> [Severity: High]
-> Does skipping out-of-bounds devices here leave rdev2->desc_nr with a stal=
-e
-> value?
+>> @@ -1086,15 +1088,28 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
+>>  {
+>>  	struct iio_dev *indio_dev = p;
+>>  	struct mma8452_data *data = iio_priv(indio_dev);
+>> +	struct device *dev = &data->client->dev;
+>>  	irqreturn_t ret = IRQ_NONE;
+>> +	int pm_status;
+>>  	int src;
+>>
+>> +	pm_status = pm_runtime_get_if_active(dev);
+>> +	if (pm_status == 0)
+>> +		return IRQ_NONE; /* device is powered down */
 >
-> By using continue to early-exit the loop, we skip the subsequent
-> rdev2->desc_nr =3D desc_nr assignment. Later in this same function, the
-> superblock's this_disk field is populated using rdev->desc_nr:
+> [Severity: Critical]
+> If the device asserts its level-triggered interrupt when the PM core is
+> transitioning the device to RPM_SUSPENDING (e.g., when the autosuspend
+> timer expires), pm_runtime_get_if_active() will return 0.
 >
->      if (rdev->desc_nr >=3D 0 && rdev->desc_nr < MD_SB_DISKS)
->          sb->this_disk =3D sb->disks[rdev->desc_nr];
->
-> If the target device was skipped during the rdev_for_each loop, will it
-> reuse its stale desc_nr and copy the descriptor of whichever other active
-> device took that slot, potentially causing metadata corruption?
-This looks like a real issue.
->
->>   		rdev2->desc_nr =3D desc_nr;
->>   		d =3D &sb->disks[rdev2->desc_nr];
->>   		nr_disks++;
+> Does returning IRQ_NONE without clearing the hardware interrupt here cause
+> a permanent interrupt storm? Since the IRQ line is shared and unmasked upon
+> return, the still-asserted hardware interrupt might immediately re-trigger
+> the handler, potentially starving the worker thread that executes
+> mma8452_runtime_suspend() and hard-locking the system.
 
---=20
-Thanks,
-Kuai
+This should be handled by the disable of all interrupt sources (clearing
+CTRL_REG4) in mma8452_runtime_suspend().
+
+> [Severity: High]
+> During system suspend, pm_runtime_force_suspend() disables runtime PM,
+> which increments the disable depth. If a shared interrupt fires during this
+> window, pm_runtime_get_if_active() returns -EINVAL.
+>
+> Since this check only catches pm_status == 0, does this allow the handler
+> to proceed and perform I2C reads on unpowered hardware? Per subsystem
+> guidelines, should this check for pm_status <= 0 instead?
+
+If we bail out on pm_status <= 0, the driver would not work on systems
+with CONFIG_PM not enabled.
+
+In order to handle the difference betwen the different reasons for
+-EINVAL, it would seem like we would need some #ifdef CONFIG_PM in here.
+Do we really want to do that?
+
+>> +
+>> +	/*
+>> +	 * pm_status is now 1 or -EINVAL. If pm_status==1, runtime PM is enabled
+>> +	 * and device is RPM_ACTIVE. If pm_status==-EINVAL, runtime PM is
+>> +	 * disabled (e.g. CONFIG_PM not enabled), and we can/must assume device
+>> +	 * is active.
+>> +	 */
+>> +
+>>  	src = i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
+>
+> [ ... ]
+>
+>> @@ -1771,11 +1790,12 @@ static void mma8452_remove(struct i2c_client *client)
+>>
+>>  	iio_device_unregister(indio_dev);
+>>
+>> -	pm_runtime_disable(dev);
+>> -	pm_runtime_set_suspended(dev);
+>> -
+>>  	if (client->irq)
+>>  		free_irq(client->irq, indio_dev);
+>> +	/* No irq will fire beyond this point */
+>> +
+>> +	pm_runtime_disable(dev);
+>> +	pm_runtime_set_suspended(dev);
+>
+> [Severity: Medium]
+> This correctly fixes the race in mma8452_remove() by moving free_irq()
+> before pm_runtime_disable(), but does the same race still exist in the
+> mma8452_probe() error path?
+>
+> If mma8452_probe() fails after pm_runtime_enable(), it jumps to the
+> runtime_suspend label:
+>
+>   mma8452_probe() {
+>       /* ... */
+>   runtime_suspend:
+>       pm_runtime_disable(dev);
+>       pm_runtime_set_suspended(dev);
+>
+>   free_irq:
+>       if (client->irq)
+>           free_irq(client->irq, indio_dev);
+>       /* ... */
+>   }
+>
+> If a shared interrupt fires between pm_runtime_disable() and free_irq(),
+> could the handler attempt to access unpowered hardware?
+
+I will apply the same reordering in mma8452_probe().
+
+/Esben
