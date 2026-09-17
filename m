@@ -1,170 +1,170 @@
-Received: from mail-43172.protonmail.ch (mail-43172.protonmail.ch [185.70.43.172])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013003.outbound.protection.outlook.com [40.93.196.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B4B4349B6
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 06:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789627214; cv=none; b=pxVr7IIQLiPNRHWdrfqKCHemMq3bk3iQ7hZnVP46sJxIeO1dJjUDukKgV/kzw/+OXUqNORKPySHS6XdH+/N6bjCbzTqBA7GjY1aQE5HZjO9u/sOPKFIU4K0YaOomKDTKjqiW7MXh/NOnipsJaMX42vhWjvdiRYVTUF6Dvs2h+Es=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789627214; c=relaxed/simple;
-	bh=f1QRepBbWZ/l8660Nq06d26o8HeFv0/fKHJXcSIt6GI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hMhTSNcFgLs2zOgsuGKsGHmcwCH3qQaYRcgOui7MEZoSwvwM7gHJq6bPErugKeTWKqksp7yd6FaEGWUcf74PZ9ZpBv+Q23sCKeDnEkBI8LS6BxsBOkHCYe0P9PA7yhNXiBGLUwjiNb3Ps77VKDmiLg54BMfLE9OTQrdvp4D7Yuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=u7btnMhk; arc=none smtp.client-ip=185.70.43.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B588382F35
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 06:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.3
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789627492; cv=fail; b=qgbMhIViUGnsp7SZw1QXTfkN/BVdxWfZY33JFMcPdJTFTL7Qd24dpcoRIK7Oncn8XQUt9WLkACGiqYEgihG/m2p2EkElQsuAmMiu5IZOv0FJgVvQpE+ziPu8LPjWHZuavjYsvE+RH93iwrOI+hR4HtBRKumNpTt3KO31Tf8EXr4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789627492; c=relaxed/simple;
+	bh=1oddLDnIeUtHq9DGDzxYfH/k1K2U1od6LvymirSfHF0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=E3RCPkaBR0/bSanKcgiWAKOshSrjmagA81gsSVGBK5WB1nD5nmGThbnhQYZo/jDE3HIcg5jDztHEiCswSTpJbEIeLFVps7ltUsnUzDsi/9UgqUXXlnCQ35w6ON+jQIC80TEo//fES+SW7oWKIUF7sNx7hxUt1vt9zO+XBe99eaI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lWBHdL0V; arc=fail smtp.client-ip=40.93.196.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="u7btnMhk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1789627208; x=1789886408;
-	bh=7IMNOjt0Ppv/0nXgXbNNXUVyv/GVippRssUgg0KAhJg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=u7btnMhk20zG/gaqDh4pRNnp/JvZ1PV3OekOxwfvgyBQFEPeYYvRw6t/WPOLpK381
-	 ze8i/TViXAV4VqpPGpS4Fkg7ufdN0T7vEbW/XtNH5CuhAPiv+7UlRfnS4su/PGhNeo
-	 Aw+OWm4zV4UJP+S/K2D35OjRXWr+vj7SygvPbN9To1UkHVR3RxdAuhEPwq/sjjs1ug
-	 qzscl9oZPOA61XWBJ9yVW3o//HxMuzNfIP1/Fu6tNPBkMEG4zBcrhi4xGtF27MsW2O
-	 dFn+FW6Ovr/1kRit8n2Hld7bjq1haCib3cFBHRurCaQdeNHTywSvH+dPEi+VB7llp3
-	 iO0lbGqsAbvUg==
-X-Pm-Submission-Id: 4hlmMp5NLYz1DDrw
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <robh@kernel.org>,  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v9 10/10] iio: accel: mma8452: Support interrupt sharing
-In-Reply-To: <20260916083119.03A8F1F000FF@smtp.kernel.org>
-References: <20260916-mma8452-open-drain-v9-0-0dd24fa2f3d7@geanix.com>
-	<20260916-mma8452-open-drain-v9-10-0dd24fa2f3d7@geanix.com>
-	<l9LG3al0xmawstyXcDwD8OhOBMwn13q6oz0NvCPy4kL0lA4DX5biMlUWcvt9Wwu1AiyugOvUZgQfnFJ4dvuvbA==@protonmail.internalid>
-	<20260916083119.03A8F1F000FF@smtp.kernel.org>
-Date: Thu, 17 Sep 2026 08:40:06 +0200
-Message-ID: <87se38754p.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lWBHdL0V"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JceLfbdvjTUxjRWE6Q0ruwqUHragizmZ8bV+JJSNCyTUtokQ4kwUlJvaMNbKc9cKvXRf9r7oMWUzFWqq6FKLNu81NI8flJAcKmPOjP0ui4nF/NV6IX4BhD0ETkQftrUUACiazOB3MwBvTJqY1yPNmPRP6wqXwuKks+M+ubiclGlxdDQIjxxI1oeBRNvGBb3cJK9fWraVJPxTo06Owwm8CFuqslmxo3qkhd65K7EZeVEr0Jvi9Oa5w/7/eQ46MSHeuomZSH4jaIFnOBSWZsgBrxqMyyHST5BFH98Kq4zn+4OYEyS0OOdPWJOuRZNgPPJZmB8Ar44mGMg1z52rYuiSXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=R5+7NknHeephla23ButpSU4oWrnxzzVk/CMvfFxyufU=;
+ b=vL/hTB26xUY5+m1/DxHxR95xXnqTnzPxJcjN7KanNLnbugCB8LYpqVyr948H0PIAGCiBy6x90MKVEWq4etIKt5+0qNXZ1zpduhcc6aC/KeaqmVyXQpBfGxfppQzLOXEcVgLH9lTUL0Sgd3LcOTrLaBixIoSGt3S0ECoDQO5jTQigW4lLzoJbW6W/2ckx3b3zgaRua6GVheAcPj82Rzt+VA65UUbPJvhC3I9+aViGz30sfNMp8yEqq69CLPXSKeNU41kwo2/jbLoktb7le6ElEbqb5+ji5bCJM19VPlavs/8iA4a+4XxXbuBrINVpEjrHS1KamlEwupDOcGRXvxR//Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R5+7NknHeephla23ButpSU4oWrnxzzVk/CMvfFxyufU=;
+ b=lWBHdL0V+73Tv7dNFqE4NIUjeu3DspLOEPcPaVKcylIqcwMGOK/KGJWp1MBSJZXMhJLIseAf3GvmIc7pQCBmNdGa6pEY+c9xV8i3aIPEiqvl38nqbuERCve63XQJxd/O7b4XAV6KKfqWU9ss3SYAVz0WXvTY8J/pTT8UGT3r1Rs=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
+ by IA1PR12MB6067.namprd12.prod.outlook.com (2603:10b6:208:3ed::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Thu, 17 Sep
+ 2026 06:44:48 +0000
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7]) by PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7%4]) with mapi id 15.21.0406.007; Thu, 17 Sep 2026
+ 06:44:48 +0000
+Message-ID: <121fe413-6861-4d45-a7d3-f3a3f91952dc@amd.com>
+Date: Thu, 17 Sep 2026 12:14:43 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] perf/x86/amd: Reject AMD Merge event as a countable event
+To: "Absandze, Luka" <absandze@amazon.de>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "linux-perf-users@vger.kernel.org" <linux-perf-users@vger.kernel.org>
+References: <20260916123315.89042-1-absandze@amazon.de>
+ <20260916125146.0E96F1F00893@smtp.kernel.org>
+ <aqqhR9rZBUx-jscN@dev-dsk-absandze-1c-663c31a8.eu-west-1.amazon.com>
+Content-Language: en-US
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <aqqhR9rZBUx-jscN@dev-dsk-absandze-1c-663c31a8.eu-west-1.amazon.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5PR01CA0156.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1ac::6) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|IA1PR12MB6067:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0349062c-d3c7-4f1a-afc4-08df14872ac5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|56012099006|10067099003|11063799006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	4jyzwm5Tb3JGQYWGShkapBcmVxCZMQ/GJytRA5UYfea1GaQmAK7ZZ5Oy7kDqDmjtj+OI1m6v55lDYMUYxrd4kqHuVRjHj2NIGNUjpscDdVWcTVgVdm96BqgbRgGKoHizmMFly05RNE7c8D1D7VJQXIavclkdvGoxJ1xhBEMtAVhGKAv4fm7P1p6XQBRIzBxD/7JvU6y0rTXILLgUehg2hCmoFPyjc8k3uqfHZNPy/o90PjHgAyJhbqMATsnXwE8AWyj/nAvPob1k5OUWxnSKKjwxkt9BApbKoSxXBR+IDqSAhypANU2YDMz7yX93mHkNuqZIP26btNbuZhTm/TYQNp1bhczInYa0uSsacBSYD+4Kbt4PSR3HXz59QXwARuqwHzqy2cppEM3pzosYyVg8EHm47od9MqsxSfmL/lZAh3Orxi5egyd4e5LeXF+iMduLok/SylqdBSYsDF2hpd9NhnSm/Ma0Hj0hr/HY0xgYEN5l94gRSEOnZsRoxo0+yA0YeoS570ZyDW3L5nWJqXamhNz25swNNCJpbf9EpzDli//Jk9dFWHuURne6JGEEXj1zheKD+jHa93DEc2Ucd/gLX6cotc0vYW+1Df3vTL5sSyQx3das5WCUr8RbRGM1oL4LsdTSdWSbPM00kVwIXl1LCKjjq/64jYZ1Oq93YuZIpJs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5712.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(56012099006)(10067099003)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?djlKN2I2Y1l3ZmdXcG9wZEdXSS9iK2ZwelZHamsrSzF5czVMbGNWaVFZSFJO?=
+ =?utf-8?B?ODRYWGlLZW8zWG0yMytjNTN1MHBkMGZ2cGRmVTFUcGhSRjBPcnVjNUFPdVRx?=
+ =?utf-8?B?cDZzZk11bUNrU3E4dVlManlpdTh4eXVQYUpwMUxPSGdUODFIM0h0ejRIaExv?=
+ =?utf-8?B?Q3JQYi9qZk95OXQ2Q3g2b0FLOFN1MVVzcjNvc0dEK2hFazkyZ242Q0tIdVBy?=
+ =?utf-8?B?TzNSZk03bkkrSHl3a3c3WGtibU4vSTNVZk9ZUG4xbDRkZzNZQS9JZUczZkZi?=
+ =?utf-8?B?djlTOCtwVnlFUlZWbUZ6VGRkNVFlRzk0aGFQOWFybmdhUUpSeExMSEh3WUdH?=
+ =?utf-8?B?czY4T25rbnNnWk1WVHY4dmFqWng3S0NyaG9DWmF1ay9iVEpZRnVzK1BGSWJn?=
+ =?utf-8?B?akFkNVRFVzZiSVNqQll2YXpHSENEN2RkYzBXem42VkREemNld2UxOEp1TUxX?=
+ =?utf-8?B?bWdSd3hlVS90U0YrZGVtbUd3K3Q1UGZyVWV4aDl5VnEyeG5TNmRDbnRwN1B1?=
+ =?utf-8?B?RHh0SEJtTkw1T0hhQVVPZ1k3cGFoQXo3Z0Zlc2dMb1Z3c1JZa0N2dktXVFBM?=
+ =?utf-8?B?MjZoSWVyOVhkMDRLcXpJbzgyWmhYdUlzaUczc3g5RkJmNVRGQk5CMGloT2Ix?=
+ =?utf-8?B?V0ZHQXQyQnh5NHdQTVpta3dmV1d1MSt2S09QdllTSXFSQmRBZnJnRHNadmpi?=
+ =?utf-8?B?SklmakRvWlBmMm9iK1ZVMnEyemU1WXppdCtqZ29aSVVOMkpzZVh6MnkyUWJu?=
+ =?utf-8?B?L2g1WFRxR3UvQ0lUOGJMejlxQzFxQlc5TURvYnJSZE5nczZSalJyV3BsenlO?=
+ =?utf-8?B?LzU5bUZCdUNVQzhSR1JHYkVaczZtWFpNRHp2VlNzREplUXUyWCtvcXFQNUZi?=
+ =?utf-8?B?T3hSODdueHF4YUg4NW5tbHhHRXVYeVRDOW1IY1pNS1RHZWdnTzJLV1kvOHBs?=
+ =?utf-8?B?emhncDBTb2s1MytWa3hBUE0rSHEydkJ0Rk9BZlVBaVZKT05WV1JHWkJPQW9U?=
+ =?utf-8?B?aElvTHhPTlJBOEQ0bk9UaERFYmw3RWF5YXcrczQzZ25meWdjY1NGZVMvdFBT?=
+ =?utf-8?B?dXZpL3h5a1ltams5WDlEVVlvOFpiQkJqdzFFUHA3USsyRFJQNXF1OENRTFp0?=
+ =?utf-8?B?YlN5cSsyU0k0WVNydWdGNFlkVWp4MWtvRHpiNERKc29hWmM0TE1FMUZlaDQ5?=
+ =?utf-8?B?Zkx2bFkrSWgyOVpnSThwS3R2MHBPWFZXQjRNUHR4ZDdvN2lWNkRoMUY1TTlY?=
+ =?utf-8?B?alFFazJ6MmJHNE0zTXlwTW1qZkdtSmozQmQwbFZZeEgwZmlQVk5Qc3hLdEY1?=
+ =?utf-8?B?ZkxFUHhSdVpnZCs0cnMxWkpjbVdiaFFLdTh4Y0RiOTMxZGNZcm85VjB2V2xO?=
+ =?utf-8?B?MVBOUXZLWUJ4dnhrb3BMZmFCUkpmVVY1Ny9Ya3BCK0F4bW5QQTFvZWtybzkr?=
+ =?utf-8?B?MmVGV0lEWWZFeHg1cVUxZjhjamZyMXNTM0I4YkFyU3dQWWtnWndrenVXZTRJ?=
+ =?utf-8?B?Nkg3dXdNdlJPcXJZN2FuR1RTeHE2Nmk4UjZ1bHFqV3JBNHdIVm9rU0lqVnRr?=
+ =?utf-8?B?VkMxYTROUXEvcmYvd0Q3dDF5Y3BJY2ZRelZwK1NGcDgxQjZGa1hXZ3lka1hP?=
+ =?utf-8?B?R2ZJTWVHUlkzS0twWVNML1UxTldKeVZ5Um9wa0doamF4Q0JmOFFTczZYY2U0?=
+ =?utf-8?B?bjEvYlJHUW1WMlJsYWdPcGhHSHFzalk4WjRSbmxqZHhaeXNWZUtQUno1a2hN?=
+ =?utf-8?B?bFlBdkttdzNmYlJPblNMK3pqSFFGdVZCRlgwR2ZIaHRoQlF2alpjL3BaM2RF?=
+ =?utf-8?B?ZmFwTXJZS0dBb0xjUVB6VVF0MGgvcUxCSi9HaC9Mb3pOTDh1K0xTOVc1bU43?=
+ =?utf-8?B?TjZ3UU1tNEZkK1E3ZktnK2I1L1NDOWxHZ3ArNWUxbnBYRERUTVVjRmx5djlJ?=
+ =?utf-8?B?ekpCMmpGN0tXRml0SGdvM2cwaklxWnZ2MmVyZE9XcXVTZjNkcjliK0hlL3Jo?=
+ =?utf-8?B?ZHJmTnhGVzdLVmlTQ1lubC92UlMrV0c4QmZERU9Oc3BVUFJ0VG5mcEZkbkNT?=
+ =?utf-8?B?TXN0YXJtcjFhZU93c3QwTXNiVDZ6OTEvMTBrUE5BM2kyVURETEpidnphN3lw?=
+ =?utf-8?B?cllwWE5NZENIeDk3VjUxT2ZGVnQ4NGJ5RmVjZVE0T05zUmxiUldUa3E4Rk82?=
+ =?utf-8?B?TXBvaW9sZG5WV0JSUFB4b1Q0Y0NxV3hyVDlabUNLRTJBNWIrUGg2L0YvZXFP?=
+ =?utf-8?B?MTVEVktjTWtyMFUxYnh5Wk5mN09laGxZOWUxUldSY2tqNmI4VDRmbE9qTU1u?=
+ =?utf-8?Q?jmRb8jfjNwyUcJa0jE?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0349062c-d3c7-4f1a-afc4-08df14872ac5
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 06:44:48.2885
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iUu9+vrVtrmr0+E7GOmw8rKGarUPAcEiQtY2LtHyVN2czWoFKde9xcLUIwjwguGydECGaAdgHj2vdZv+EDZm7Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6067
 
-<sashiko-bot@kernel.org> writes:
-
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] iio: accel: mma8452: Interrupt storm livelock when IRQ fires during RPM_SUSPENDING
-> - [High] iio: accel: mma8452: Invalid I2C access during system suspend due to mishandled -EINVAL
-> - [Medium] iio: accel: mma8452: Race condition in probe error path due to pm_runtime_disable() before free_irq()
-> --
->
-> commit bf19c63685f6fff116a3a5358196fd66dff6090a
-> Author: Esben Haabendal <esben@geanix.com>
->
-> iio: accel: mma8452: Support interrupt sharing
->
-> This commit adds support for shared interrupts to the mma8452 driver. It
-> modifies the interrupt handler to check the runtime PM status and ignores
-> the interrupt if the device is suspended. It also updates the runtime
-> suspend and resume paths to properly disable and restore interrupt sources.
->
->> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> index 5aea6bf3312af..2a980c0c2e03a 100644
->> --- a/drivers/iio/accel/mma8452.c
->> +++ b/drivers/iio/accel/mma8452.c
->
-> [ ... ]
->
->> @@ -1086,15 +1088,28 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
->>  {
->>  	struct iio_dev *indio_dev = p;
->>  	struct mma8452_data *data = iio_priv(indio_dev);
->> +	struct device *dev = &data->client->dev;
->>  	irqreturn_t ret = IRQ_NONE;
->> +	int pm_status;
->>  	int src;
+On 16-09-2026 19:32, Absandze, Luka wrote:
+> On 2026-09-16 12:51, sashiko-bot@kernel.org wrote:
+>> [Severity: High]
+>> Does returning a permanent -EINVAL error here cause an opportunistic retry storm
+>> in KVM?
 >>
->> +	pm_status = pm_runtime_get_if_active(dev);
->> +	if (pm_status == 0)
->> +		return IRQ_NONE; /* device is powered down */
->
-> [Severity: Critical]
-> If the device asserts its level-triggered interrupt when the PM core is
-> transitioning the device to RPM_SUSPENDING (e.g., when the autosuspend
-> timer expires), pm_runtime_get_if_active() will return 0.
->
-> Does returning IRQ_NONE without clearing the hardware interrupt here cause
-> a permanent interrupt storm? Since the IRQ line is shared and unmasked upon
-> return, the still-asserted hardware interrupt might immediately re-trigger
-> the handler, potentially starving the worker thread that executes
-> mma8452_runtime_suspend() and hard-locking the system.
-
-This should be handled by the disable of all interrupt sources (clearing
-CTRL_REG4) in mma8452_runtime_suspend().
-
-> [Severity: High]
-> During system suspend, pm_runtime_force_suspend() disables runtime PM,
-> which increments the disable depth. If a shared interrupt fires during this
-> window, pm_runtime_get_if_active() returns -EINVAL.
->
-> Since this check only catches pm_status == 0, does this allow the handler
-> to proceed and perform I2C reads on unpowered hardware? Per subsystem
-> guidelines, should this check for pm_status <= 0 instead?
-
-If we bail out on pm_status <= 0, the driver would not work on systems
-with CONFIG_PM not enabled.
-
-In order to handle the difference betwen the different reasons for
--EINVAL, it would seem like we would need some #ifdef CONFIG_PM in here.
-Do we really want to do that?
-
->> +
->> +	/*
->> +	 * pm_status is now 1 or -EINVAL. If pm_status==1, runtime PM is enabled
->> +	 * and device is RPM_ACTIVE. If pm_status==-EINVAL, runtime PM is
->> +	 * disabled (e.g. CONFIG_PM not enabled), and we can/must assume device
->> +	 * is active.
->> +	 */
->> +
->>  	src = i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
->
-> [ ... ]
->
->> @@ -1771,11 +1790,12 @@ static void mma8452_remove(struct i2c_client *client)
+>> If a KVM guest programs a Large Increment per Cycle (LIPC) event by writing
+>> AMD_MERGE_EVENT to an odd vPMC, KVM intercepts this and attempts to create a
+>> raw host perf event.  When this fails with -EINVAL, KVM's reprogram_counter()
+>> propagates the error to kvm_pmu_handle_event():
 >>
->>  	iio_device_unregister(indio_dev);
+>> arch/x86/kvm/pmu.c:kvm_pmu_handle_event() {
+>>     ...
+>>                 if (reprogram_counter(pmc))
+>>                         set_bit(pmc->idx, pmu->reprogram_pmi);
+>>     ...
+>> }
 >>
->> -	pm_runtime_disable(dev);
->> -	pm_runtime_set_suspended(dev);
->> -
->>  	if (client->irq)
->>  		free_irq(client->irq, indio_dev);
->> +	/* No irq will fire beyond this point */
->> +
->> +	pm_runtime_disable(dev);
->> +	pm_runtime_set_suspended(dev);
->
-> [Severity: Medium]
-> This correctly fixes the race in mma8452_remove() by moving free_irq()
-> before pm_runtime_disable(), but does the same race still exist in the
-> mma8452_probe() error path?
->
-> If mma8452_probe() fails after pm_runtime_enable(), it jumps to the
-> runtime_suspend label:
->
->   mma8452_probe() {
->       /* ... */
->   runtime_suspend:
->       pm_runtime_disable(dev);
->       pm_runtime_set_suspended(dev);
->
->   free_irq:
->       if (client->irq)
->           free_irq(client->irq, indio_dev);
->       /* ... */
->   }
->
-> If a shared interrupt fires between pm_runtime_disable() and free_irq(),
-> could the handler attempt to access unpowered hardware?
+>> Because KVM treats all failures as transient and unconditionally re-adds the
+>> failing counter to pmu->reprogram_pmi, on every subsequent PMU refresh KVM
+>> will repeatedly retry the failed counter.
+>>
+>> Could this create a permanent retry storm that degrades VM performance and
+>> wastes host CPU cycles?
+>>
+> 
+> There ins't any substantial load generated, we short circuit here before
+> the expesnive parts. However, a followup in KVM could be beneficial to
+> reject this case outright.
+> 
+> I'll wait for opinions
 
-I will apply the same reordering in mma8452_probe().
+I think it makes sense for the host layer to reject PMCxFFF altogether. Today,
+at least for emulated vPMU, when a KVM guest programs a LIPC event, 3 PMCs are
+consumed. This will ensure that the 3rd one, initiated by the guest programming
+PMCxFFF, is dropped.
 
-/Esben
+I also agree that a followup in KVM is required.
