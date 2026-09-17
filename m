@@ -1,218 +1,145 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A064C51EE08
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 17:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743C84FD791
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 18:02:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664457; cv=none; b=ev1/aIJGMLlpxxPiX/Jq9FnsybSxR5LjUsfFkyv6y6VNQ5y6qieu4YFVcJFn8Xwefj/88p6uk3qw8KE/IYB5qTrzqbEZ8MyrEUO44URT8UItL8IO8aFMfxwxQH20/pOHzDyM22rHshm+vyxfxr7pDYpJKsFSWoc2TPQdzgrSLO4=
+	t=1789668154; cv=none; b=Q5xQ0Kb9N0O1cpViHhSIej8Dz1SzCthV/7If0LeWpRTF9ri7IYNEiXGJ/x+58yNT6ncX3v9lHMwENnlpcUZia9hnKz5Z/Mw52U190WbHVV/7Ce77SSVbUysiHuWH67qU7T8Sq5rMh4EpFoE9axvyRflSw+ASmcRqmDdR4wdOm80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664457; c=relaxed/simple;
-	bh=sMn0zxxrFmrobv98CdrUP/r0FfnPbGieOClU09PN6s0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=faD3ZGn4I2exEDnLCt8dN69YKXb0JA03ruB3V/C/x48qUV4gHMjqs45nfUaB+XPzUIwXvTSJlr4PFXS2lmb/qCbGVJ5v2lixgyasS6CSdzSP8KVMEZofvscCnVrJznNaCeiZ/Bxqr1e3LJ40Gysf1jZnNqP9QtPjTMjSIjGqvqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TmExEdPn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wnwVyECH; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=IP7XbDMS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=KQfHQF1N; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1789668154; c=relaxed/simple;
+	bh=fWeVX8x7HAmbo/Np4MivXSYP5FclmPOlzMclAQTIwug=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tBBmin+4Q5nGnYDbVzcKNbkN9eujoyrp7XR79aACXsk48kGcI/pAQgqKWnnzBzcc7P9NEbSTfWwI872y1WurorkaFC6NVuqk+NUpqtYRqFeGo4NMhOeJbymnkm71QNTKcOIba3hZGirgE54FeO6Sc/KvCupNurpomj5tnUqWa/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Un57wwUT; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TmExEdPn";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wnwVyECH";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="IP7XbDMS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="KQfHQF1N"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 2DFE021A75;
-	Thu, 17 Sep 2026 17:00:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789664447; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=yeEMisngx5b8Pf0iu3jfCoPmLPlvkMuxoKVc4eTvbog=;
-	b=TmExEdPnLftdYw7SEccLB8+FQbfA6iXVQqG9pJNtw36T6Ifymqef11qQwmBgAgDK9I/VRx
-	dRnvk1pCwM9lGT2fSS3BUNpU+W1CJUIpIX0NW2LzQtRABvQkGs/sJ70GqaJ7Xo4bZCQyGc
-	O32chXsbVtVu/8m19ymeJRxfXE9kJTc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789664447;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=yeEMisngx5b8Pf0iu3jfCoPmLPlvkMuxoKVc4eTvbog=;
-	b=wnwVyECHCrZzjTZOrlSraW77RnmBM0ew9tFRz5XJguyrVli5oR4nODrxZtQ2RQsXsp+pIt
-	cBy+hWf9svpKIoCA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IP7XbDMS;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KQfHQF1N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1789664443; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=yeEMisngx5b8Pf0iu3jfCoPmLPlvkMuxoKVc4eTvbog=;
-	b=IP7XbDMSJfUiapGCCQJ1FV8TgQbY29eHmEWhvDA7TGPanHEMTbQtotPuAbPNC+izUdeAop
-	68GTh3FFc6ZRrzdcbCBtja0QrL/hjvEfbFVtLMIkULaQPiQEZjmqB1qSPB7rxerONW7Nc1
-	5JNNjD3y63sNkeGTckc1AKNjdodbwMo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1789664443;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=yeEMisngx5b8Pf0iu3jfCoPmLPlvkMuxoKVc4eTvbog=;
-	b=KQfHQF1NMEX9cD5SoRcNujI2w3JAOwNKfuALgbFXnr8KD6swj2iLTWkAsb6Bh5MHuy3/xd
-	26T/pNXr/TKILyDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E4A5613918;
-	Thu, 17 Sep 2026 17:00:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 3WpsKbocrGpsKwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 17 Sep 2026 17:00:42 +0000
-Message-ID: <2c339a2d-2988-49c4-a07f-dcec2eb6732d@suse.de>
-Date: Thu, 17 Sep 2026 19:00:42 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Un57wwUT"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e79a408deso5732145e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 11:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789668151; x=1790272951; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EP61s3LnDYIz9su7+Im2NBnWl8yHpK6Gkwrf//woF6Y=;
+        b=Un57wwUTFliOlJTx1l4jf1jKTk3DW4vn8rFC8m0XCmUnTcU18l0tQ/Za/G6dqRvUaq
+         rZ2LJUE/wNL/eQJqQ5eDIzB/Zo0HAcnD8+bVFDW2n1oRUvFEpkBt0Ni5FoiHLuBh3Sun
+         zRw+aqAiIxvoRcDo9AQivdwQhXX/A3v120pKlfyNBYdZ+AHLcFtwEherVWzCcmWTWgU/
+         ezC9zcUSTl6MfT0x2p3z6sJRAxNbRb63RYSS0eD9U3OPU/oRBQjjUINFgSQgpj5VtZvk
+         vB8CNvsU2Y5FnWiF0novNA62TwEKrjELpWgSIC1hKejPRWSduEz6tDBoM2V11wWoQ+oA
+         llBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789668151; x=1790272951;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=EP61s3LnDYIz9su7+Im2NBnWl8yHpK6Gkwrf//woF6Y=;
+        b=Jt1Cy6o8toDFlDUpkEBhJNjAEXucAEf2qxyY0KYdiyYlT0SqT3M1GzFhGRZTz9bree
+         mkxdfM7CIBWOVtXOBF1FBWpxSdiHkZhnp+N7/Rutp7YyOSjuKhS/UTJFMI3bbvg6MW6h
+         jVT0BHOvCiGhh3zO3prutGomJd3mzY8fZU3l49kJ8FAhobMwnrrCCCXFbADvGj6GVacK
+         tYVMl/qMux1+I8vRhgz3Un0plDzxwzwt5dDAe1f/1S91pXY1P4ypg5c51Sbt/JFMSvck
+         Up2KZ6d2oo5qs/pjsOVEz95Mn2U20bmX2a7GJMWdNxPuHfOJaz+r3Y/mppaseAk7jMe5
+         VmAw==
+X-Gm-Message-State: AFuF++kdVOFsa3MDXfolwDD4ldDyS4uLEI3rocEf0E6I0U9QAQ6hLlSw
+	Rvji8hmbgfoFem0eJsk4JYnPB7bbLi5GnArDUiUAVUOOoJ0dKDLr+i+cH0zvHw==
+X-Gm-Gg: AYBFou13n7RN6DoGXq1SGUklwshK3lrya/PBhvXDUew7UWObJ8NKJLlkMTEPbC1bEHY
+	pWG5F2CAxQ/coSHwvto1MymO7cYnszDHyuI7BYMaX1Z3D7cAHM2G+ljoPf1VpNDffewQpXfHP69
+	NXxtGw8Ks3tHhPPfZpCnrnxAuHBFnWvgpHZxqdjIC7c5W0qBgF29lMcswm4Sl5GGXwZ1vefUWeo
+	igqqVZEExtgcegVrMwfla9NA4OeQlvbyNvcLyWqpKKnZ3ezucRIcCBGjuategf66m/XtZwWXaaN
+	Tj4IGYIShhPLlnAnVhPm9edrtjr09SOz51xnwMhN9SyBXQtVB3xjY27KeI44QOTFhy4r1vkcFcF
+	iYBdcAKZElzCK/oZydWSbJr6CUISdDWz0ak2stjVsG7vQNpXOCEDrq8xyjOM9kbSVvkzSCJS9nM
+	fGIy8mb8jIAbvzymQEBtjwcWWsyz2XVfg9nxIQAmBbkjJoa5SXAmYncQ==
+X-Received: by 2002:a05:600c:4ed4:b0:49c:de80:b833 with SMTP id 5b1f17b1804b1-49eac462571mr89969195e9.2.1789668150501;
+        Thu, 17 Sep 2026 11:02:30 -0700 (PDT)
+Received: from antoniarch ([78.211.139.193])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fbd2160c2sm96803245e9.6.2026.09.17.11.02.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2026 11:02:30 -0700 (PDT)
+Date: Thu, 17 Sep 2026 20:00:44 +0200
+From: Antoni Pokusinski <apokusinski01@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, conor+dt@kernel.org
+Subject: Re: [PATCH v7 4/9] rtc: abx80x: properly handle shared IRQs
+Message-ID: <aqwpLXghj-NWgH8w@antoniarch>
+References: <20260916205138.16771-1-apokusinski01@gmail.com>
+ <20260916205138.16771-5-apokusinski01@gmail.com>
+ <20260916210527.CF14B1F0089A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/client: fix restore of partially initialized
- client
-To: sashiko-reviews@lists.linux.dev, shechenglong <shechenglong@xfusion.com>
-Cc: dri-devel@lists.freedesktop.org
-References: <20260907035147.1339-1-shechenglong@xfusion.com>
- <20260917154743.1621-1-shechenglong@xfusion.com>
- <20260917160619.256C91F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260917160619.256C91F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 2DFE021A75
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[xfusion.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.com:url];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
+In-Reply-To: <20260916210527.CF14B1F0089A@smtp.kernel.org>
 
-Hi
-
-Am 17.09.26 um 18:06 schrieb sashiko-bot@kernel.org:
+On Wed, Sep 16, 2026 at 09:05:27PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] drm/client: early return of 0 in fbdev restore aborts fallback loop
+> - [High] rtc: abx80x: race condition loses interrupts due to flawed W0C status register clearing
 > --
+> 
+> commit 27cfcb7135851594344aa538f01f8ef1328d2392
+> Author: Antoni Pokusinski <apokusinski01@gmail.com>
+> 
+> rtc: abx80x: properly handle shared IRQs
+> 
+> This commit updates the abx80x RTC interrupt handler to only return
+> IRQ_HANDLED and clear the status register when the alarm or watchdog flags
+> are set. It aims to properly support IRQF_SHARED by returning IRQ_NONE
+> for unrelated interrupts.
+> 
+> > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+> > --- a/drivers/rtc/rtc-abx80x.c
+> > +++ b/drivers/rtc/rtc-abx80x.c
+> 
+> [ ... ]
+> 
+> > @@ -284,9 +291,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+> >  	if (status & ABX8XX_STATUS_WDT)
+> >  		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
+> >  
+> > -	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
+> > +	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
+> >  
+> > -	return IRQ_HANDLED;
+> > +	if (status_flags_clear) {
+> > +		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
+> > +					  status & ~status_flags_clear);
+> 
+> [Severity: High]
+> Does this logic introduce a race condition that loses late-arriving interrupts
+> in abx80x_handle_irq()?
+> 
+> Because the ABX8XX_REG_STATUS register is W0C (write-0-to-clear), any bit
+> written as 0 will be cleared in hardware. 
+> 
+> The expression status & ~status_flags_clear forces a 0 for all bits that
+> were 0 during the initial read. If a new hardware interrupt asserts between
+> the read and this write, its status bit will be newly set to 1 in hardware.
+> However, writing back the old status value forces a 0 for that new bit,
+> silently clearing it and losing the event.
+> 
+> To preserve unhandled or newly asserted bits, the correct write value for a
+> W0C register is ~status_flags_clear instead.
 >
-> commit d167ca7eea0e08eeed4c9c5277344faccb69545c
-> Author: shechenglong <shechenglong@xfusion.com>
->
-> drm/client: fix restore of partially initialized client
->
-> This commit fixes a NULL pointer dereference that occurs when userspace
-> closes a DRM file descriptor and a partially initialized fbdev client is
-> restored. It adds a check to skip the restore operation if the framebuffer
-> device has not been fully initialized.
->
->> diff --git a/drivers/gpu/drm/clients/drm_fbdev_client.c b/drivers/gpu/drm/clients/drm_fbdev_client.c
->> index 827f326687140..7574bd36f45eb 100644
->> --- a/drivers/gpu/drm/clients/drm_fbdev_client.c
->> +++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
->> @@ -42,6 +42,14 @@ static int drm_fbdev_client_restore(struct drm_client_dev *client, bool force)
->>   {
->>   	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
->>   
->> +	/*
->> +	 * The client is registered before the initial fbdev probe.
->> +	 * If probing failed, the client remains registered but there
->> +	 * is no valid fbdev framebuffer to restore.
->> +	 */
->> +	if (!fb_helper->info || !fb_helper->fb)
->> +		return 0;
-> [Severity: Medium]
-> Does returning 0 here prematurely abort the fallback loop in the caller?
->
-> When the fbdev client is registered but fails probing, fb_helper->info is
-> NULL. The caller, drm_client_dev_restore(), iterates through clients and
-> calls their restore callbacks. Since drm_client_dev_restore() breaks the loop
-> on the first 0 return, this falsely signals success.
->
-> This means the display is not restored by other registered clients
-> (like drm_log) when userspace closes the DRM fd or exits. Should this return
-> a negative error code like -ENODEV to allow the loop to continue?
-
-We can ignore this problem for now.  Multi-client setups have never been 
-used or even tested before.
-
-Best regards
-Thomas
-
->
->> +
->>   	drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
->>   
->>   	return 0;
->>   }
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
-
+Not really: if the register bits are written with 1, then during the
+next call to `handle_irq()` all the interrupts are reported as pending
+(in other words the written ones are preserved). 
+In particular, when I was testing the alarm interrupt and the written value was
+`~status_flags_clear` as sashiko suggests, I was always getting the WDT
+bit enabled and hence the alert "watchdog timeout interrupt" was
+printed.
+> > +		return IRQ_HANDLED;
+> > +	}
+> > +
+> > +	return IRQ_NONE;
+> >  }
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260916205138.16771-1-apokusinski01@gmail.com?part=4
