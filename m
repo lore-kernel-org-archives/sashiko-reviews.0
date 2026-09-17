@@ -1,61 +1,104 @@
-Received: from www262.sakura.ne.jp (www262.sakura.ne.jp [202.181.97.72])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BDF44AB6B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 11:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.181.97.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A444CB8A8;
+	Thu, 17 Sep 2026 11:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789644351; cv=none; b=RBAshJ8g3O0dvlMCxyj7kjAdT6jWzUSfZajVkT7iFMpQDkPt3/y6eCZqlrR3qzQ+2Nub3MXOTYMJWqfao2rQ2vd4XVt2WvSMVLiAz0KxNFsZBdud7PjiHXhgZJ1HA4VjrmQeZjAduRIaW+qqInKFX/pNyuP/xVpG5zMEz/A5VSg=
+	t=1789644525; cv=none; b=kukuZrypwY8iPS/A0RW4d86hqQWV64Gg0TjPOCjpIEWnX9NREXVPLozDuBMGpg/rgsgVYTFBnQxRk9iyuBjrLKKDa+kopj2h8ixu032u3GhcqaxuXwRHxf5dbSfEdO12s+gFX+op81L1JPyvsdGsRxr/dZVNR3ENZwqB/aIg8Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789644351; c=relaxed/simple;
-	bh=S0MxfZagSvPcH0g6UcHQoyx/UrFsguK7ywCv/KWajfg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BnscNRla1MdT9A0/OM/G6s1t2A+VvdN6OwVTD+SnyjNGAibtuESGJgpPDrf716H9jFRPszCO8eBi65aw53gnxmyXE/EXqzp7ezy5QW6PPO8ddW855P72yTL6yPQqxsHfYEsM/amADY8k2ZrZABJP8NAT/syQkzm8zZx0iHAadg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=I-love.SAKURA.ne.jp; spf=pass smtp.mailfrom=I-love.SAKURA.ne.jp; arc=none smtp.client-ip=202.181.97.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=I-love.SAKURA.ne.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=I-love.SAKURA.ne.jp
-Received: from www262.sakura.ne.jp (localhost [127.0.0.1])
-	by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 68HBPfsM025012;
-	Thu, 17 Sep 2026 20:25:41 +0900 (JST)
-	(envelope-from penguin-kernel@I-love.SAKURA.ne.jp)
-Received: from [192.168.1.6] (M106072072000.v4.enabler.ne.jp [106.72.72.0])
-	(authenticated bits=0)
-	by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 68HBPfw0025009
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
-	Thu, 17 Sep 2026 20:25:41 +0900 (JST)
-	(envelope-from penguin-kernel@I-love.SAKURA.ne.jp)
-Message-ID: <5142b092-6a2d-4eed-a768-eb633f90f25f@I-love.SAKURA.ne.jp>
-Date: Thu, 17 Sep 2026 20:25:40 +0900
+	s=arc-20240116; t=1789644525; c=relaxed/simple;
+	bh=5Ncpa8+NPx3xlMt918fJVdvAb8iYngnRZqFQiVXUJYI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F/LL6O+Qm2LQbhGZrEMP1AQ0B92ubxac8PL+BZf8TtETCVKpR2r6tGGhINLoacieUL6arWk/aDrzZou/T9CvJ+yTlGdh06T+vEYuoX55mlOAFTqOCI434vFgidTJOKWauwyq7rfPxKg78oUI8BOPtKNO35ih5ymoUIcs808ZxvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAb7tk41; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAb7tk41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9AD1F000FF;
+	Thu, 17 Sep 2026 11:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789644523;
+	bh=4C7PqXuoe7AK1vOOoG90qYxrgB0Vpzu901u3h29blQ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=eAb7tk41jou1f5EjO/mghkgxzKuudOv9p4aKy1P0r85T2d/1Nob7lbhrughCpdv2X
+	 pv2EFz0AiZv5lw9B3UT3hgoibBXVbfJZL/hQgwTAcXQ+BB+7k2XHKic20fmcEvjF8l
+	 KCwaFMPDEM+UvvrGHsPr3gaYsN7qGPnYHLbJ4ZHuea4dOyEjV9C0iSjprrY4XNM66V
+	 xRhvAU9rTOb86/zmvUCArfrLnqMiCFgOaEf/DHObrZBKrH8ih33vuFwItFj772xHjN
+	 XRvMwsKP4Dv2l+dQfnMZ7yolurTCp/8KaoU+sT4TUBeMjGsVeVwkO6h71hAAjrXnKf
+	 qe4GOd9dAo/5w==
+Date: Thu, 17 Sep 2026 12:28:40 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Liang Haowen <nbg2974@gmail.com>, linux-scsi@vger.kernel.org,
+	linux-leds@vger.kernel.org
+Subject: Re: [PATCH RFC v6 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED
+ driver for ROG NVMe enclosures
+Message-ID: <20260917112840.GJ1605367@google.com>
+References: <202609162200.RFCv6-0.lhw@gmail.com>
+ <202609162200.RFCv6-1.lhw@gmail.com>
+ <20260916143832.520721F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] block: Add post_release() operation
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, gary@garyguo.net
-References: <a1a4739a-27c1-41a1-93f0-905756fee0b9@I-love.SAKURA.ne.jp>
- <20260917105317.C100A1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-In-Reply-To: <20260917105317.C100A1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Virus-Status: clean
-X-Anti-Virus-Server: fsav114.rs.sakura.ne.jp
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260916143832.520721F000FF@smtp.kernel.org>
 
-On 2026/09/17 19:53, sashiko-bot@kernel.org wrote:
-> Since the module reference is dropped and post_release() is completely
-> skipped in this error unwinding path, the async work scheduled by the
-> preceding release() will continue running after the module is unloaded.
+On Wed, 16 Sep 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] leds: build failure due to undefined kzalloc_obj()
+
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
+> --
 > 
-> While the commit message notes this is safe for the loop driver due to its
-> internal state machine, does this break the API contract for other drivers
-> that might implement it?
+> commit 8323106d834da191a6608c0c1f5330cc2b52094f
+> Author: Liang Haowen <nbg2974@gmail.com>
+> 
+> leds: asus-aura-scsi: Add ASUS Aura RGB LED driver for ROG NVMe enclosures
+> 
+> This commit adds a new driver for ASUS Aura RGB LEDs on ROG external NVMe
+> enclosures. It exposes the 4 independently addressable LEDs as multicolor LED
+> class devices driven via vendor SCSI commands.
+> 
+> > diff --git a/drivers/leds/leds-asus-aura-scsi.c b/drivers/leds/leds-asus-aura-scsi.c
+> > new file mode 100644
+> > index 0000000000000..4e039bdbe76ac
+> > --- /dev/null
+> > +++ b/drivers/leds/leds-asus-aura-scsi.c
+> [ ... ]
+> > +static int asus_aura_attach(struct scsi_device *sdev)
+> > +{
+> > +	struct asus_aura_zone *zone;
+> > +	int i, ret;
+> > +
+> > +	if (strncmp(sdev->vendor, ARION_INQ_VENDOR, strlen(ARION_INQ_VENDOR)) ||
+> > +	    strncmp(sdev->model, ARION_INQ_MODEL, strlen(ARION_INQ_MODEL)))
+> > +		return SCSI_DH_DEV_UNSUPP;
+> > +
+> > +	zone = kzalloc_obj(*zone, GFP_KERNEL);
+> 
+> [Severity: Low]
+> Does this code fail to compile because kzalloc_obj() is undefined? In
+> asus_aura_attach() in drivers/leds/leds-asus-aura-scsi.c, this line triggers a
+> compilation error since kzalloc_obj() is not a valid Linux kernel memory
+> allocation API. Should this be a call to kzalloc(sizeof(*zone), GFP_KERNEL)
+> instead?
+> 
+> > +	if (!zone)
+> > +		return SCSI_DH_NOMEM;
+> > +	zone->sdev = sdev;
+> > +	spin_lock_init(&zone->lock);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/202609162200.RFCv6-1.lhw@gmail.com?part=1
 
-That problem can be handled by calling flush_work() from its module unload
-path (like loop_remove() in
-https://lkml.kernel.org/r/9f1273a7-6dfe-46bb-966f-fe08876f4375@I-love.SAKURA.ne.jp does).
-
+-- 
+Lee Jones
