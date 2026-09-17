@@ -1,36 +1,33 @@
-Received: from mta0.migadu.com (out-69.mta0.migadu.com [91.218.175.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD68F36F906
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 03:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B693093C1;
+	Thu, 17 Sep 2026 03:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789614523; cv=none; b=Lipzz1ukHXFoOCSMRx+7oUMu6SHGP2Xl638MSARP01xgyOFb9yb/6sNC7oDlAXIp2TMbpdkPsqUmN4QhiZ2Gm6/ic3bm5HV7krTU55KpSHskJ4w450dvpZFc/6K9q/Nv2ku7Nmx/BiMAc0OCP8xntLQfH9qMO+gsdYUenfSLHLk=
+	t=1789614869; cv=none; b=ouBUwHP/ogSHII4qFAwF8TXXrvjAmPJCMePP2GvN3wgjkWMi5Za7YpOyYwIwo+QSc3LMDejAqr1ewFCdBBJSiJa+ylEtqUPa4k8neMD8b1Hh/ucwUqMmOUpoh5SbF7alWt8Kyg39HjGOVEZGauWdyMOK2wvvl7Q6dmOFjsHlenY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789614523; c=relaxed/simple;
-	bh=+YkLXi5CNwh2+4MA7mEfLifg0o7nPiOxwn0GCTbXNHI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=A0UD+coTB+zBOn+VYB2iM1Q0QEByIi74SOw7hcUiNMcKqt7vKMDrwyEVlZ2uOgFsQN+MaIo5Yzweu3gJjGKX+L3BN0L3qYCkXc/lr1zSswwJrm5GTGi7U/ARLZyPZzJkREn1EvXEfMxlxk+1SMC0ofhicRke5lIHmeB6yIBLoYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Ji027O2z; arc=none smtp.client-ip=91.218.175.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789614869; c=relaxed/simple;
+	bh=VEdmEHU4HRcFLiSrkc2qsVN8mU3sz6fIJalnefhVTs8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aJgOqa4TpOYYHQz4+/CxinFmuYNGqv1lsOKHQYaqdmIjL+PXKuwvCXLd/K7RJJR9CdZQ0tCbzQHyxbRx+fGkqgVXZPHdbxXMF4cHpM1JKclFh+HO7M/SfTbHZcW96ReViqmM/CR2OgDTBOS8Fjf7gIjSAmku4aD1nrkThpgOLWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dd7KyGlP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Ji027O2z"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=+YkLXi5CNwh2+4MA7mEfLifg0o7nPiOxwn0GCTbXNHI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789614517; v=1; x=1790219317;
- b=Ji027O2z6twe6k3o5bPbVA+0zDxSOo/18JOvgUtcpm0q3SLBhFEyGg3Cv+/UQkm+dIzflyHI
- bhrEk08C2BsNHdsif4wPoRvGTxo28P5pO5nYeQHN33cZO9ufwi0x3DxmWXgLtW12mdfQDr3ynrX
- ca4IpWVl1HS1V4t8WSXTLn/g=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 1d9053be508d1d4c;
-	Thu, 17 Sep 2026 03:08:27 +0000
-X-Mizu-Trace-ID: 1d9053be508d1d4c
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <267c9850-d346-4b4e-88d5-cc7939af864d@linux.dev>
-Date: Thu, 17 Sep 2026 11:08:20 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dd7KyGlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36041F000FF;
+	Thu, 17 Sep 2026 03:14:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789614868;
+	bh=cIZz2g8Pz+PxuDxpdtRY73qiC4kxknpNb+WL0xDIPYU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Dd7KyGlPaqCchTDzmDg4Fv2fL8zWmddUEFrPpesp5b3684t0Oox1e7rZ4iT9K/c31
+	 zAy7sx94VHWO1a3XTYo7xGRVLIWb2mwHN4lTHCwWN94nz8V2/m0Vn7PlsodrHnPYgx
+	 M13jk+udCl9YWbLL5Jt/5l6OdX+ddNtlHp+NJEuOl+6NvWKqIhYqb7LkWP12um39g7
+	 gjWdZl+LxlUTwD1jQHEONoTO95OulZKSffNqtd5dBmmJkmchzx9LYSZuf2XY1f55vI
+	 /rFsvFX0L4NW3j75R2eDu51SXcEUoNo1jhQUQfpdSawwrXXGac4hVEkUY2ZivU4rSc
+	 pJxVqqjCusEKg==
+Message-ID: <f3ab4b89-627d-4711-84b0-85b887256ccf@kernel.org>
+Date: Thu, 17 Sep 2026 10:14:24 +0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,119 +35,93 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/15] mm/memory-failure: convert process iterator to
- for_each_process_rculock
-From: Ye Liu <ye.liu@linux.dev>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20260911075800.491472-1-ye.liu@linux.dev>
- <20260911075800.491472-5-ye.liu@linux.dev>
- <20260911081351.A8FE81F00893@smtp.kernel.org>
- <7ae944a6-df67-4a8a-8ece-c34701715c8a@linux.dev>
+Subject: Re: [PATCH 12/37] scsi: st: use 16-bits defined sense codes
+To: Laurence Oberman <loberman@redhat.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-ide@vger.kernel.org, linux-scsi@vger.kernel.org, cassel@kernel.org
+References: <20260831020451.585944-1-dlemoal@kernel.org>
+ <20260831020451.585944-13-dlemoal@kernel.org>
+ <20260831021927.90FD21F00A3D@smtp.kernel.org>
+ <2ff511fa29b801ab74ce9ee60e1257c47918c1db.camel@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 Content-Language: en-US
-In-Reply-To: <7ae944a6-df67-4a8a-8ece-c34701715c8a@linux.dev>
+Organization: Western Digital Research
+In-Reply-To: <2ff511fa29b801ab74ce9ee60e1257c47918c1db.camel@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-
-
-在 2026/9/11 17:51, Ye Liu 写道:
-> 
-> 
-> 在 2026/9/11 16:13, sashiko-bot@kernel.org 写道:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] Potential NULL pointer dereference or Use-After-Free of `folio->mapping` in `collect_procs_file()` due to concurrent truncation.
+On 2026/09/16 22:29, Laurence Oberman wrote:
+> On Mon, 2026-08-31 at 02:19 +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential
+>> issue(s) to consider:
+>> - [Medium] Incorrectly assigning ASC value to ASCQ in SCSI
+>> tracepoint.
 >> --
 >>
-> Unrelated to this patch. I will fix it later.
+>> commit c1f7c0aa9501c3562bd45de8a85431d940fa338b
+>> Author: Damien Le Moal <dlemoal@kernel.org>
+>> Subject: scsi: st: use 16-bits defined sense codes
+>>
+>> This commit refactors the SCSI tape driver to use the 16-bit
+>> sense_code
+>> field of struct scsi_sense_hdr. It replaces hard-coded additional
+>> sense
+>> codes and qualifiers with enum values defined in
+>> include/scsi/scsi_sense.h
+>> to improve code clarity.
+>>
+>> While reviewing this patch series, I noticed an issue introduced in
+>> the
+>> related change to include/trace/events/scsi.h:
+>>
+>>> diff --git a/include/trace/events/scsi.h
+>>> b/include/trace/events/scsi.h
+>>> --- a/include/trace/events/scsi.h
+>>> +++ b/include/trace/events/scsi.h
+>>> @@ -303,8 +303,8 @@
+>>> DECLARE_EVENT_CLASS(scsi_cmd_done_timeout_template,
+>>>  		if (cmd->sense_buffer && SCSI_SENSE_VALID(cmd) &&
+>>>  		    scsi_command_normalize_sense(cmd, &sshdr)) {
+>>>  			__entry->sense_key = sshdr.sense_key;
+>>> -			__entry->asc = sshdr.asc;
+>>> -			__entry->ascq = sshdr.ascq;
+>>> +			__entry->asc = scsi_sense_asc(&sshdr);
+>>> +			__entry->ascq = scsi_sense_asc(&sshdr); <-
+>>> --- here
+>>                                         ^^^^^^^^^^^^^^
+>>
+>> [Severity: Medium]
+>> Is there a typo in this assignment?
+>>
+>> In the scsi_cmd_done_timeout_template tracepoint, __entry->ascq is
+>> being
+>> assigned scsi_sense_asc(&sshdr) instead of the ASCQ value. This
+>> appears to
+>> log the Additional Sense Code for both the asc and ascq fields, which
+>> will
+>> result in lost diagnostic data when userspace tools analyze SCSI
+>> errors via
+>> tracepoints.
+>>
+>> Should this use scsi_sense_ascq(&sshdr) for the ascq field instead?
 > 
->> commit 788d1f422c3f19026d9e0d86b550c238607720ed
->> Author: Ye Liu <liuye@kylinos.cn>
->>
->> mm/memory-failure: convert process iterator to for_each_process_rculock
->>
->> This commit replaces the manual rcu_read_lock()/rcu_read_unlock() pairs
->> combined with for_each_process() loop in mm/memory-failure.c with
->> for_each_process_rculock(), which scopes the RCU read lock to the loop body
->> via scoped_guard(rcu).
->>
->>> diff --git a/mm/memory-failure.c b/mm/memory-failure.c
->>> index a8b03e2920ba8..7d93deb1f7b3d 100644
->>> --- a/mm/memory-failure.c
->>> +++ b/mm/memory-failure.c
->> [ ... ]
->>> @@ -589,9 +587,8 @@ static void collect_procs_file(const struct folio *folio,
->>>  	pgoff_t pgoff;
->>>  
->>>  	i_mmap_lock_read(mapping);
->>
->> [Severity: High]
->> This is a pre-existing issue, but could this lead to a NULL pointer
->> dereference or a use-after-free of mapping due to a race with truncation?
->>
->> In memory_failure(), the folio lock is dropped in hwpoison_user_mappings()
->> before calling collect_procs(). collect_procs() performs an unlocked check of
->> !folio->mapping:
-
-This appears to be a false positive.                                      
-                                                                          
-In the memory_failure() path, the folio lock is acquired at line 2597     
-(folio_lock(folio)) and held through the call to hwpoison_user_mappings() 
-at line 2635, which in turn calls collect_procs() at line 1694. There is  
-no folio_unlock() between the lock acquisition and the collect_procs()    
-call, so the lock is held throughout.（The line numbers might not match
-exactly, but they shouldn't be far off.）                                     
-                                                                          
-Consequently, the check in collect_procs():                               
-                                                                          
-    if (!folio->mapping)                                                  
-        return;                                                           
-                                                                          
-and the subsequent read in collect_procs_file():                          
-                                                                          
-    struct address_space *mapping = folio->mapping;                       
-                                                                          
-are both performed under the folio lock. Since all truncation paths       
-that set folio->mapping = NULL require the folio lock (page_cache_delete()
-and filemap_remove_folio() both assert folio_test_locked()), no concurrent
-truncation can modify folio->mapping between these two reads.             
-                                                                          
-No fix is needed.                                                         
-
-
->>
->> static void collect_procs(...)
->> {
->> 	if (!folio->mapping)
->> 		return;
->> 	...
->> 	else
->> 		collect_procs_file(folio, page, tokill, force_early);
->> }
->>
->> If a concurrent truncation removes the folio from the page cache immediately
->> after this check, folio->mapping becomes NULL. collect_procs_file() then
->> initializes mapping = folio->mapping and calls i_mmap_lock_read(mapping).
->>
->> If the compiler performs a second read of folio->mapping, mapping will be
->> NULL, crashing the kernel on the semaphore acquisition. If the compiler
->> caches the first read, mapping will point to an address_space whose host
->> inode may have been concurrently freed, leading to a use-after-free since
->> the elevated page refcount does not pin the inode and no RCU read lock is
->> held during the blocking i_mmap_lock_read() call.
->>
->>> -	rcu_read_lock();
->>>  	pgoff = page_pgoff(folio, page);
->>> -	for_each_process(tsk) {
->>> +	for_each_process_rculock(tsk) {
->>>  		struct task_struct *t = task_early_kill(tsk, force_early);
->>>  		unsigned long addr;
->>
+> Hello Damien
+> This seems to be real issue here that sashiko found
 > 
+> We assign the same for __entry->ascq  as we do for __entry->asc i.e.
+> scsi_sense_asc(&sshdr)
+> 
+> We need to have it as
+> 
+> +			__entry->asc = scsi_sense_asc(&sshdr);
+> +			__entry->ascq = scsi_sense_ascq(&sshdr); <--
+> 
+> Otherwise we will miss the ASCQ
+
+Yes. That was fixed in later versions. The series that Martin queued up has this
+fix :)
+
+
 
 -- 
-Thanks,
-Ye Liu
-
+Damien Le Moal
+Western Digital Research
