@@ -1,155 +1,135 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3D1483BF1;
-	Thu, 17 Sep 2026 09:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C3C4AC173;
+	Thu, 17 Sep 2026 10:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789638621; cv=none; b=V2Mq+jFnMrI7TWTedhEag+i/6etSvOlNKoaYNKUqzT1okTiJYfo16XT3/giLOkDH03A+8rUGVdjzhGrm05tUEBUU2M9roIogwTb3jC/HNrd1mCnxw7e+c1mGBxD/r3PalF5SdZgQG9w+lDAV0yYvjnVdCiPL1XPUA7hAv1pm8xQ=
+	t=1789640909; cv=none; b=brcTRYZGyP+VNCkzyw03WVVqUbqLNP9x6fYs7FDaIkgzuUS7bYBNhyjLWCjbz+hIbuV8Sf5TTGQMc7dumCWjz4U3mmWEFhztMKkiwRQ7bWUo+TpSB12oy9gcAjdhLLW+727eZnlSRsLE3/YXh+Htrrb5YHIHnGxlNgGgjqH4oQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789638621; c=relaxed/simple;
-	bh=+Vq7VyY8jt+tyPHeeMu3dsn/m0TEJ+EqWN/3OQo09TA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BolekXaVyHeI8LNdsIsgjijwBJHnG2ZhU87lUdNnkme8mZIHZuakYwkei/e0e+Irmg3UXoYKC9X7HFJO0fdfirEyPrYCWtWTniE4r6IbBNvBfGL6d6Ev03B+XO9cB8BiRPeRyMArTh8X4sk44GzizeJzzLboDb0QcbbPWGRZLC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=p/dUKsTX; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1789640909; c=relaxed/simple;
+	bh=Zc8ptOlczH/gFjb0N2RN/D2x0THrxeomWyJog8GKTic=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KPlyM5FXpB3K9QS+gutqah8KZE22cXize43Llo3lXfwNBY2a5bTpfnhqAKLAajX4tIKSQeWht7nX5nJLNhG3um09eoPXJSenizyo+FPyRsxZMou1HealHMHPypQ8PsYSdyb0PQ6Mgc2YJnvSAjgnJzufE3PRl8R6sdS+ac61kgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P0hdMsPy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="p/dUKsTX"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68H62LLE1743422;
-	Thu, 17 Sep 2026 09:50:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=1um41C29ZBKqPqzYPgGQU991pVYC2B
-	HMKlk+Am+86g8=; b=p/dUKsTXPDK8STI5rsxrRfO7DXtfCVAF84BxqVyIVM9Be2
-	+GCWvJ6Zudtva4OWFJi4cLPfVus3pHbfzdiC6q3SPXeEMJrDd3uqPZ/D2xuCpBYJ
-	iKg5dDLyzF3AYUSKeGq6k/Aicmhe9s50B1lKIsCAjPvHyutUiTS62HTqz7/BCbwI
-	rAEKzrNji+NrvP7RpfgX8NMQZDhiaYBTiddxgX3JfTiASh8qGPlfrFleb4mOmiEU
-	wXeanq2EQwYzI+4TVdPwlOR3X2YeLzd18fncmRGX3FfPmFVpQQovM9W4N+wPX86D
-	B62bNZLrjKGnsR925E3XM+EqJzs35Wp00BpP+rNA==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv93rj-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 17 Sep 2026 09:50:04 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68H9aQgv2917878;
-	Thu, 17 Sep 2026 09:50:03 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5xa1pmg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Sep 2026 09:50:03 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68H9nxNY53084442
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 17 Sep 2026 09:49:59 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 90A2B20043;
-	Thu, 17 Sep 2026 09:49:59 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7E68120040;
-	Thu, 17 Sep 2026 09:49:59 +0000 (GMT)
-Received: from localhost (unknown [9.224.74.101])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 17 Sep 2026 09:49:59 +0000 (GMT)
-From: Alexander Egorenkov <egorenar@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev
- <agordeev@linux.ibm.com>,
-        Christian
- Borntraeger <borntraeger@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Vasily
- Gorbik <gor@linux.ibm.com>
-Subject: Re: [PATCH v5 1/4] s390/sclp: Introduce macro sclp_gds_for_each()
-In-Reply-To: <20260917070850.B5E171F000FF@smtp.kernel.org>
-References: <20260917065824.2858737-1-egorenar@linux.ibm.com>
- <20260917065824.2858737-2-egorenar@linux.ibm.com>
- <20260917070850.B5E171F000FF@smtp.kernel.org>
-Date: Thu, 17 Sep 2026 11:49:59 +0200
-Message-ID: <874ifodx6g.fsf@li-0ccc18cc-2c67-11b2-a85c-a193851e4c5d.ibm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P0hdMsPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7031F000FF;
+	Thu, 17 Sep 2026 10:28:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789640904;
+	bh=eqLot5BTeq881HQ0f4erh6zpuAyXP+aYcd/KfXpiyb8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=P0hdMsPyLSpL1vsHOO1ccrIpdkqjQTaPJijNAbvEEU/1YfgPQfcGtxKtLN5o30mPt
+	 YSGmtXxllM1FEkIjXMcy1XLODBrtfWvb8+J0s2EaAvhGm0fvYWCaOsNgVmTotCS+mm
+	 8Acq60/zplyP79hZomBPPAyMXoJK/xEWC/qFc5p/g651CeN9p8mcqjEngeLgyKAVcX
+	 3a2FaLqHHhS7mbFjNhtxxAdg9zDz9VeasSBbA059IYPESLwdYGTijG3WRTyTQDJLnk
+	 tslMFR9kvN7bo7r8kn8Hhfrg+k/L1j98Y+IA8rMZiFOOnM/Sdfh2U5PqficklEsHKL
+	 hKCnWeNFM+0Mg==
+Date: Thu, 17 Sep 2026 11:28:20 +0100
+From: Lee Jones <lee@kernel.org>
+To: Cosmin-Gabriel Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"mfd@lists.linux.dev" <mfd@lists.linux.dev>
+Subject: Re: [PATCH 1/3] mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
+Message-ID: <20260917102820.GH1605367@google.com>
+References: <20260914201456.2018403-1-cosmin-gabriel.tanislav.xa@renesas.com>
+ <20260914201456.2018403-2-cosmin-gabriel.tanislav.xa@renesas.com>
+ <20260914202828.46A991F000FF@smtp.kernel.org>
+ <TYRPR01MB15619117776C86C7E6BBF444E85B92@TYRPR01MB15619.jpnprd01.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDEzMCBTYWx0ZWRfX4ttOaPSl/Ss0
- GVDWjdRX6uD+rAfkfEWwdbvJUCAVDscTwVDUAa+nzNY2ariXMokCNp3vLgiAxS/W/DOboX0usH5
- h3rs2g3h2VTgG2cMh7DMtbcIhZF1mLk=
-X-Proofpoint-ORIG-GUID: 8f_Cx2QJNsgBiOIsfxGu19-C-NgSqNrJ
-X-Proofpoint-GUID: 8f_Cx2QJNsgBiOIsfxGu19-C-NgSqNrJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDEzMCBTYWx0ZWRfX+2oS+yFzAdAt
- oQXuQVkTau8kH8wy/2HARUPPJX1jZjS8We5GPhFvKj5kM50/qn2v20WUkHQbgXOqaqcRhAQo6n+
- P7Z8GZgZ1zdAOXyK4BRQ8oT3an65j+MILLcfBFJtP5K0AO60aGp4XTpBCySsEihBkJxr8VxUsXe
- IwaTrDedzEY8ajpoC0kdDmOnOCzhD8+41lWBCflqxMvliPb0o93fg1NuRwCCMcTF+CovDqdUc68
- oyheChNPs3UAen1PrxetfoIVp6yMmYkvg6zdzWAjawQ+l6MS74PKGTEwqR7ep/zrzXrFNHgyyP3
- IBwNw4JB4LdOtFJ7tC75FdjSHHmeMFnFqdsaTF/JJbD47G/derUEAylXtLgmVPgVeoQwXMP+DSW
- k6yvv47ebAFDfhecW2E9uHraxNHWE7nofM7uFL4npf4cHKOj2cPOdH93M0iCuISeId5sUZYVwDg
- dIshulVKcgAFd9YhcdA==
-X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aabb7cc cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=FAke6POGxsZ3gMvDDg4A:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_01,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1011 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170130
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <TYRPR01MB15619117776C86C7E6BBF444E85B92@TYRPR01MB15619.jpnprd01.prod.outlook.com>
 
-sashiko-bot@kernel.org writes:
+On Wed, 16 Sep 2026, Cosmin-Gabriel Tanislav wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] sclp: out-of-bounds read in sclp_gds_for_each() due to integer promotion
-> --
->
-> commit f292c3c2b28abf9088d99e5a8af81f738a00c9ee
-> Author: Alexander Egorenkov <egorenar@linux.ibm.com>
->
-> s390/sclp: Introduce macro sclp_gds_for_each()
->
-> This commit introduces a macro to iterate safely over GDS {sub}vectors. It
-> adds bounds checks to avoid infinite loops and out-of-bounds memory accesses
-> when parsing malformed event buffers.
->
->> diff --git a/drivers/s390/char/sclp.h b/drivers/s390/char/sclp.h
->> index b31a680e08714..d22003b769f14 100644
->> --- a/drivers/s390/char/sclp.h
->> +++ b/drivers/s390/char/sclp.h
->> @@ -360,25 +360,33 @@ sclp_ascebc_str(char *str, int nr)
->>  	(machine_is_vm()) ? ASCEBC(str, nr) : ASCEBC_500(str, nr);
->>  }
->>  
->> -static inline struct gds_vector *
->> -sclp_find_gds_vector(void *start, void *end, u16 id)
->> +/* Loop over all GDS {sub}vectors in a safe manner. */
->> +#define sclp_gds_for_each(v, n, start, end)	\
->> +	for ((n) = (end) - (start), (v) = (start);	\
->> +	     (n) >= sizeof(*(v)) && (v)->length >= sizeof(*(v)) && (v)->length <= (n);	\
->
-> [Severity: High]
-> Does this code introduce an out-of-bounds read due to integer promotion?
->
-> If a malformed SCLP event buffer is provided by the hardware with an
-> evbuf->length smaller than the header size, start will be greater than end.
-> This happens in callers like sclp_ocf_handler() and sclp_tty_receiver():
->
-> drivers/s390/char/sclp_ocf.c:sclp_ocf_handler() {
->     ...
->     v = sclp_find_gds_vector(evbuf + 1, (void *) evbuf + evbuf->length,
->                              0x9f00);
->     ...
-> }
->
+> > From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+> > Sent: Monday, September 14, 2026 11:28 PM
+> > 
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [Medium] The patch replaces a standard API call with a bespoke pointer arithmetic helper to retrieve
+> > parent data, cementing an MFD architectural guideline violation.
+> > - [Low] The commit message description starts with a lowercase letter, violating MFD subsystem
+> > guidelines.
+> > --
+> > 
+> > commit 8098c2550655f8bdfa6c7acd0a4b1dfbc4e57e2a
+> > Author: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+> > 
+> > mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
+> > 
+> > Channels 1 and 2 are used by both the PWM and counter drivers. Both
+> > subdrivers assign struct rz_mtu3_channel::dev to their own device
+> > instance for those shared channels, so the value stored in it depends on
+> > which subdriver binds last.
+> > 
+> > > mfd: rz-mtu3: do not use struct rz_mtu3_channel::dev
+> > 
+> > [Severity: Low]
+> > Does this commit message subject violate the MFD subsystem formatting
+> > conventions? The guidelines mandate capitalizing the description after the
+> > subsystem prefix, e.g., "mfd: <Driver>: <Capitalized description>".
+> > 
+> 
+> Ack.
+> 
+> > > diff --git a/drivers/mfd/rz-mtu3.c b/drivers/mfd/rz-mtu3.c
+> > > index 0a254e61ec0a5..d809436e2124c 100644
+> > > --- a/drivers/mfd/rz-mtu3.c
+> > > +++ b/drivers/mfd/rz-mtu3.c
+> > > @@ -60,10 +60,17 @@ static bool rz_mtu3_is_16bit_shared_reg(u16 offset)
+> > >  		offset == RZ_MTU3_TCNTSA || offset == RZ_MTU3_TCNTSB);
+> > >  }
+> > >
+> > > +static inline struct rz_mtu3_priv *rz_mtu3_ch_to_priv(struct rz_mtu3_channel *ch)
+> > > +{
+> > > +	struct rz_mtu3_channel *first_ch = ch - ch->channel_number;
+> > > +	struct rz_mtu3 *mtu = container_of(first_ch, struct rz_mtu3, channels[0]);
+> > > +
+> > > +	return mtu->priv_data;
+> > > +}
+> > 
+> > [Severity: Medium]
+> > Does the introduction of rz_mtu3_ch_to_priv() violate MFD guidelines for
+> > parent data access?
+> > 
+> > The MFD guidelines explicitly state that child drivers must directly access
+> > parent data using standard APIs (like dev_get_drvdata) and to avoid writing
+> > bespoke helpers in the parent.
+> > 
+> > While this replaces dev_get_drvdata(ch->dev->parent) to avoid depending on
+> > subdriver-populated state, substituting it with a custom helper using pointer
+> > arithmetic (ch - ch->channel_number) tightly couples the implementation to
+> > the physical layout of the channels array.
+> > 
+> > Could the child drivers be refactored to retrieve the parent data themselves
+> > instead of introducing this bespoke accessor?
+> > 
+> 
+> If we were to refactor the children to pass the parent's struct device
+> (or struct rz_mtu3 via dev_get_drvdata()), we'd have to change the API
+> and update all call sites.
+> 
+> What we could do rather than the container_of() solution I implemented
+> here is add a backpointer to struct rz_mtu3 in struct rz_mtu3_channel
+> and populate it in the MFD driver.
+> 
+> But container_of() gets the same data with nothing new to be stored,
+> and struct rz_mtu3_channel::dev can be removed entirely afterwards.
+> 
+> I would appreciate your feedback on the desired approach here, Lee.
 
-This is true but the length of an SCLP event buffer should be larger than its
-header.
+Either passing a pointer to `struct rz_mtu3_priv` as the first argument
+or adding the same pointer into the channel struct would be acceptable.
 
-To properly fix it i will make the parsing of event buffers in
-sclp_dispatch_evbufs() more robust.
+Both of those solutions are better than the current '_->parent' lookup
+which when conducted _from_ that parent is just odd.
+
+-- 
+Lee Jones
