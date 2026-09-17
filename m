@@ -1,96 +1,118 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300254F4754
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 12:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC225517BA2
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 13:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789649172; cv=none; b=b2gmDswHSLjgF5MQDn5supZpopN2XvMB8LY67HxUltcRlgXIfkHTEy68OOqnqDyXOuepB/ryuSgcDs0pzpJj9dSsXATqVSZRgILllhRMaHpw0Hoso0k0IMGYrr9qp+GaGL3VSziDFgAT2rXJeWZQQAVZ24YlvurEAwOH2VjHCsA=
+	t=1789650380; cv=none; b=RDto5PlLtpbmejBk+28sQN45p3hYt8JsSLhZwhOJN6HC+Qtp3ZxcGH9cKNvcBrBYZNG12S7zBh0tKc67OEtkCh/KwtW9MLOdjlIbUNFfNduBXq4KcRnQnZ0HnnADOLnHid8zVpCZUZz4+29YMS+1ZwOfqSh0RYGxfjRRp0xL8FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789649172; c=relaxed/simple;
-	bh=IcqJ5QjcXa7dC1ErZ97Ku/rkqOnOuufPwsDqcFfskd4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=jUER/VkS27j/mLdq2JCWdEVVKlAp7ZyLu7hlQOlDcTtnOWp6FxL0axcz0eS9A+7h+EpzQSIRi9NtCLj61jdqAoHNdGFTmD0HeohzumoYnL57xgstHk6r0GHx94SbXBI7XvhJek6BWnNkpalmqy94JmeQL99e2SkcwzqZ0Tiz7ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fUdAE1CX; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1789650380; c=relaxed/simple;
+	bh=FjiOi/LWCw112tSQalEnC178/ETX0Easoaw+fa4aJYI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MOytEHfGDzGJp0B5IuoQrig/XtdO1YjtrMJYdRAn2tbBP3fyu0mEL7RznXo+/qrG2MfiyzMdqtL2j4SkbTyjlbdwzi186hYEBFgHEvM0OAWUO4mU4oTeqVt5VT2WqdQJUZ/9ubh77HinGFjHFFIqdvTCeLJWfO6kghdQ1Cw7Vyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=kKlz4JYm; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Tguo721q; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fUdAE1CX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789649153;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IcqJ5QjcXa7dC1ErZ97Ku/rkqOnOuufPwsDqcFfskd4=;
-	b=fUdAE1CXlFggNZouiy9ihYttcxMEGwnYyLDFJH4r7EGPhPELVx3KlrLCLNLEz8mwDKn3Zb
-	8YREafJ4/ItY4Lwdl+4P5pw9Yi0K1vLvV2NG9Finwrbj8sTuDnx2cAlgNvv78nWiFoITSk
-	h8pa5Ku+8ggVhdpWp7qHQK0Waz1C9NI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-A4MrZ0goNYaicxW9-LsQaA-1; Thu,
- 17 Sep 2026 08:45:48 -0400
-X-MC-Unique: A4MrZ0goNYaicxW9-LsQaA-1
-X-Mimecast-MFC-AGG-ID: A4MrZ0goNYaicxW9-LsQaA_1789649147
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 4733B1808981;
-	Thu, 17 Sep 2026 12:45:47 +0000 (UTC)
-Received: from fedora.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
-	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id E46B4214;
-	Thu, 17 Sep 2026 12:45:45 +0000 (UTC)
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-To: sashiko-bot@kernel.org
-Cc: jtornosm@redhat.com,
-	linux-pci@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v14 1/2] PCI: Add device-specific reset for Qualcomm SDX62/SDX65 modems
-Date: Thu, 17 Sep 2026 14:45:44 +0200
-Message-ID: <20260917124544.9030-1-jtornosm@redhat.com>
-In-Reply-To: <20260917073528.A47E61F000FF@smtp.kernel.org>
-References: <20260917073528.A47E61F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="kKlz4JYm";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Tguo721q"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1789650366; bh=/89Pt9jfecmobhleE2QqkQL
+	/53slzWSbnYjmKx8md1s=; b=kKlz4JYmN1tAnl6AcXGI8RJLKwMIe9dbodtgrI42M50pBPtkt5
+	7bPlCp2ZaM6JsQeasBwY3fdxQUj3JQpVMRC3IQInHb1J7WjCM41UMK/O1dT3KKY0aEkyQ3nG0jP
+	W1EPPayGmJDJWJ056LgZ+slxqgYy/QFGp3YosZc2P0xqhBAkeyM4o9hp7FRmY7BUga7RM2DC4dH
+	7WFvMaKYanKgMqpdhRdxxRdn2Wi01rts1D4GlGQfcB9DV+gWj4QaczD4Rkd9jkRa6ssrFl1VayP
+	pFIGpOmuOtSW6LPsK4Sk9O2o918Lb7mCuYO6swGKHtE9eqyYOe5KQ4tKrQfcV0BmuVA==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1789650366; bh=/89Pt9jfecmobhleE2QqkQL
+	/53slzWSbnYjmKx8md1s=; b=Tguo721q8+vFl2tbEFSJfi5MwIopaMqhY+ossRwseds0htqIiQ
+	3WQL09XRU5XlPGM9SRjpa6ErBv2byGhB3wBw==;
+Message-ID: <0a6d59c7-006c-4cb9-98ff-e8d859489bc4@mainlining.org>
+Date: Thu, 17 Sep 2026 16:06:06 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-X-Mimecast-MFC-PROC-ID: TeT2jX4zv0MxddfbDehUrbg72CcI4hhgXZ5sLOTTZIY_1789649147
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] drivers: gpu: drm: panel: Add BOE NT51021 driver
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260917-qcom-novatek-nt51021-panels-v4-0-30afbc35d70c@mainlining.org>
+ <20260917-qcom-novatek-nt51021-panels-v4-2-30afbc35d70c@mainlining.org>
+ <20260917130132.CEE401F00893@smtp.kernel.org>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <20260917130132.CEE401F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+
+17.09.2026 16:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] drm: panel: novatek-nt51021: UAF and crash due to premature devm_drm_panel_add()
+> --
+>
+> commit 32c00aa725aa38b42eafcacc07a8f05495f7ed3d
+> Author: Nickolay Goppen <setotau@mainlining.org>
+>
+>      drivers: gpu: drm: panel: Add BOE NT51021 driver
+>      
+>      Add driver for BOE NT51021-based 8-inch and 10-inch DSI video mode
+>      panels used in Xiaomi Mi Pad 4, Mi Pad 4 Plus (xiaomi-clover)
+>      and Amazon Fire HD 10 (2017) (amazon-suez) tablets.
+>
+>> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt51021.c b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
+>> new file mode 100644
+>> index 0000000000000..94e7d6aaf0cb9
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/panel/panel-novatek-nt51021.c
+> [ ... ]
+>
+>> +static int nt51021_novatek_probe(struct mipi_dsi_device *dsi)
+>> +{
+>> +	struct device *dev = &dsi->dev;
+> [ ... ]
+>
+>> +	ctx->panel.prepare_prev_first = true;
+>> +
+>> +	ret = drm_panel_of_backlight(&ctx->panel);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+>> +
+>> +	ret = devm_drm_panel_add(dev, &ctx->panel);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	return devm_mipi_dsi_attach(dev, dsi);
 > [Severity: High]
-> Does this unsafely enable memory decoding on a hardware-reset device with
-> zeroed BARs?
+> Can this sequence lead to a use-after-free or kernel crash?
 >
-> If the caller did not explicitly clear PCI_COMMAND_MEMORY before the reset,
-> cmd will have PCI_COMMAND_MEMORY set.
+> By calling devm_drm_panel_add() before devm_mipi_dsi_attach(), the panel is
+> published globally before DSI attachment completes.
 >
-> The hardware reset zeroes the device's PCI configuration space, including all
-> BARs. Restoring cmd with PCI_COMMAND_MEMORY set will immediately enable memory
-> decoding while the BARs are still 0, potentially causing severe PCIe bus
-> conflicts, IOMMU faults, or kernel panics since the device will intercept
-> memory accesses to physical address 0.
+> If a DRM consumer discovers the panel via of_drm_find_panel() during this
+> window, it takes a reference on the panel. If devm_mipi_dsi_attach() then
+> fails, the probe function returns an error and devres cleans up the allocated
+> GPIO and regulator resources. However, the panel memory remains allocated
+> because of the consumer's reference.
 >
-> Should we clear PCI_COMMAND_MEMORY before returning (e.g.,
-> cmd & ~PCI_COMMAND_MEMORY), relying on the caller's subsequent
-> pci_restore_state() to safely reprogram the BARs before memory decoding is
-> formally re-enabled?
+> When the consumer later calls drm_panel_prepare(), the panel driver will
+> dereference the freed GPIO and regulator pointers, causing a use-after-free.
+>
+> Additionally, if a consumer calls drm_panel_prepare() before mipi_dsi_attach()
+> completes, it will trigger DSI commands on an unattached device, crashing the
+> DSI host.
+>
+> Should devm_mipi_dsi_attach() be called before devm_drm_panel_add() to prevent
+> this race window?
+Other drivers do the same sequence of add and attach functions as I did.
+>> +}
 
-The MHI SoC reset is a device-internal firmware/SoC reset, not a PCI-level
-reset. It does not zero the PCI configuration space or BARs, the PCIe link
-stays alive during this reset and BARs are maintained by the host PCI
-subsystem.
-
-Additionally, the PCI reset framework calls pci_dev_save_and_disable()
-before and pci_dev_restore() after the reset method, so config space is
-properly managed by the caller.
-
-The reset sequence replicates the existing MHI driver code (mhi_soc_reset(),
-mhi_pci_reset_prepare()) which works in production.
+-- 
+Best regards,
+Nickolay
 
