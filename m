@@ -1,107 +1,145 @@
-Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6234C58F07F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 14:27:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B32658FD29
+	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 14:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789655266; cv=none; b=KyxsKZBnrGdrXadpUqDpp+MNZBvWtq/6LVut5xnTVsTu9fD3mN6LhdilBII4f2vOGiF8dvbXCz7a2IvE3A/AISiJo/NIHKwiZYUK9/jYEsRBKSqNsiCeqgT/rvqFE58Un1jwWcRSi+dsNcYTdlmWV3jYFUzHinSAgcw4M1PjSCk=
+	t=1789656405; cv=none; b=kmY1KxlDC4JAu5DkkEOPsA4PazTRB9vIZkxsnWFRnDw56wpJ/wo+fcYlNnPlBykhlDtt5Fi6yVvdUFfNRkfvDM5kzBYL2CGgxfSIpiro/HkrYL2VDrcCQKzWbhjYghmlNM8mV/j0O6xULnKdpYSsi7IDd2m3aDTMf6q+yGvPU7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789655266; c=relaxed/simple;
-	bh=tR4az/LXX1uPEVPqZly1MWtWJFRe2M+C1Rbz7GqFq7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bVZ3r6iEHW3ey444AadHOTjvRZTO8EacdZZdSS2QKo9+PsB1RRuwjyrnTcMbX8oTx+xdbhNY9/FCL5LwUlgQT2rnfN9dCKXi2ZRtPOHggB0GIzTQOTPNDYgBQ1tqdA2Czzft05OVaQoZbBuBU0B23qopIOTi5P65iuxoy48HXws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.227.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs2-f12.google.com with SMTP id 71dfb90a1353d-5c67e512ee6so286869e0c.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 07:27:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789655263; x=1790260063;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2PUKRWOpjzB1uTEg8aunaQFp5fJugA1o1ujUfXk8Z4Y=;
-        b=NWD0sDkZcsFBeq6dt0Mog0ef3a16GOyjLbpFj7TBUf4UJYe3/ZipZPNIqvut/8rGx+
-         apkukoOthlRzt6Oz8yX0oZz5POceCamBx8YsMKhUVK58Feo12ZcyrqNyLAPzvQ1Pwmj9
-         JjQJh7ZM2Xdd5tK046baF0/+U6nfBxcmRCH5U4J1clTiNj5TqoSEzZD4z/c+ZHHyQtVv
-         HEwvD7DbW91GdQPtc889PcwpZ5YwNOyg8ki4bo855XTYuobHBj1kxq2Y91NMNmnXNEJz
-         QlqrpmACdFgC55lx/Y6hr/MLA6NCO3+jsWYRh+L8nVTr+mVuk5bnmIC6zfVg20/Iabmh
-         gUAQ==
-X-Gm-Message-State: AFuF++mKHigHpwD/ALg6je/4vVUakjmiXO2b7mIo5O6TqyLZIWMuYH51
-	8+7Saa1FQwHw2Vl3prrYCunwejCbjBdFJu46mKLqKKq9U50KWGvBVcvi61ql0Xul
-X-Gm-Gg: AYBFou3vVf+Mibvz2MBC53I5IcIzOb+Ziwgs/7zorishwx7rA5MFKlPypp01WqqgI4l
-	jzXws2WYxW++snvDNrC9mWMQr3jcdRp7FmQrhmCylk1CiqdwOLDY3tuwvE2qWo9gDyCxBQvDPkc
-	yek+7Zz+300ev1Ark9+QW7/j3Agf6+kNlNpfo4orsrRrWTCPhPV2PtU7Zg2dNbLATW87v770bXm
-	thEUtSe5Z875aArmUTlcz3mdmRpkz//tTA4emjARoFhElt1/aGC9VhW/dZlwESlNhIavZL0+Fy4
-	3DFZBbygWOhvDI7MhiqD6KdWY4okafE0QpPLsXC6oYt6RZzLLFeebZJbCF0OV/zrMZikADbXpOh
-	mUOdAHaxNz2rdx0/b2TCPKHkwgHx1KpyGQX38QjyJy+XaUAG7pl2025O9I/ymoKC0ThWzmNTImZ
-	Q/KVts50MOSeX3mUVcBGyLdx0JOKdGx/8i2MBLy/T2G/1nITaR3XHMftLjOTd3cGuj4v8K7mym3
-	F5e1hJuNnnC/fg7erSRHfdnWwVt/BkSqpm9UQ==
-X-Received: by 2002:a05:6122:1806:b0:5c9:a60d:327a with SMTP id 71dfb90a1353d-5c9a60d39bemr2192471e0c.14.1789655263013;
-        Thu, 17 Sep 2026 07:27:43 -0700 (PDT)
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com. [74.125.226.204])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5c9a53b2ba1sm2708440e0c.8.2026.09.17.07.27.42
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Sep 2026 07:27:42 -0700 (PDT)
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-982db8d3b1eso248180241.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 07:27:42 -0700 (PDT)
-X-Received: by 2002:a05:6102:3f06:b0:79d:e3a3:4ec7 with SMTP id
- ada2fe7eead31-7a028d64e77mr6733201137.8.1789655262508; Thu, 17 Sep 2026
- 07:27:42 -0700 (PDT)
+	s=arc-20240116; t=1789656405; c=relaxed/simple;
+	bh=wYdra0/rb995jwKqL3ELavlEIZq2PrYqyO7Wol0SOSc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I4x/aug+0hh0kgjcFMbyvrCBk8ZCH3Gmsoc39MstBScBm03xRK770NThIVo3ekRYd4jccoAqU03s90fH+cXuNz7myqYhrt4fK59RigYwqX4Gs5XOhrL2xlwSdYddqSjzVwLztkdos34D61JuGrpuPSfkSzhQisgmAAwfqK3582E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jxNiD7fD; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jxNiD7fD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789656401; x=1821192401;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wYdra0/rb995jwKqL3ELavlEIZq2PrYqyO7Wol0SOSc=;
+  b=jxNiD7fDbp9kAMmKLeHQKXxwNPe5QzFgB+SLdQqc42Rj9hgzKDYsu7Ux
+   MRlAELEOjV6UQBtDtKEW8cGYRtNvbSzZ01uhCNFyVHz7t0Yfw8CJ6wxU/
+   XiNGUG6W0hrehQqz8C86A50jksYw2PdQguRniBrtZz7UGMH8ZUVSHrLpY
+   +PEJds+LhK1XDKIJNcXkewHgIsAUqZ9cCjVm23en6eqKv4Yl/YdU5GJZm
+   n/PjWcKxa6x+yZ2qLYs+24uFY+E0RUS8MvUM0eagNqKXGA/wQBTZxH9/t
+   memt1DBDA7Mu7sauwEGI9Hx/0CpdRGa8ZbCkqr0mFyUDaF8cUMhQUp89a
+   w==;
+X-CSE-ConnectionGUID: vocyYLoQTT2J1TvFCfm+6g==
+X-CSE-MsgGUID: gsvuMud6QdqR3okpJW6s1A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="101429522"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="101429522"
+Received: from fmviesa012.fm.intel.com ([10.60.135.152])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 07:46:34 -0700
+X-CSE-ConnectionGUID: 2UwuFsgDRD2V5F61XYstEQ==
+X-CSE-MsgGUID: thdfgHLzRAqtu9BPuY/qUQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="2058893"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 07:46:34 -0700
+Message-ID: <048b0319-470e-4f8b-816f-c7c835a43974@intel.com>
+Date: Thu, 17 Sep 2026 09:46:33 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <4d6e5ac045af387dde8ef3810ce08c7cb079fc29.1789653872.git.geert@linux-m68k.org>
- <20260917141443.B68B91F000FF@smtp.kernel.org>
-In-Reply-To: <20260917141443.B68B91F000FF@smtp.kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 17 Sep 2026 16:27:31 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVgJkwkoF0-ptQ9g_8E5j1Oa8G41nBiiOfY+KF_p7XAxQ@mail.gmail.com>
-X-Gm-Features: AcwNN1Ush8QJQXkRhAfTq-tWcBhQ0EMlNvr04HXsZawb41gsyRT18-MJVn4i_LQ
-Message-ID: <CAMuHMdVgJkwkoF0-ptQ9g_8E5j1Oa8G41nBiiOfY+KF_p7XAxQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: serial: renesas,scif: Increase number of DMA
- channels to 6
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-serial@vger.kernel.org, 
-	conor+dt@kernel.org, robh@kernel.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] perf topdown: Don't require config1==0 for a slots event
+To: Ian Rogers <irogers@google.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+References: <20260916202740.257376-1-zide.chen@intel.com>
+ <20260916204416.80E761F000FF@smtp.kernel.org>
+ <9e86d9e4-7aee-4c1b-8812-94aecb2a2cea@intel.com>
+ <CAP-5=fVkubfWSoQbZRmC7Xg-4SHM-=ickZub7zi4SDuFAhZuCg@mail.gmail.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <CAP-5=fVkubfWSoQbZRmC7Xg-4SHM-=ickZub7zi4SDuFAhZuCg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Sashiko,
 
-On Thu, 17 Sept 2026 at 16:14, <sashiko-bot@kernel.org> wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: schema allows 6 DMAs for older SCIF hardware
-> --
->
-> commit ca96f7e40234020713acb3baf706d0b07d5dcc48
-> Author: Geert Uytterhoeven <geert@linux-m68k.org>
->
-> dt-bindings: serial: renesas,scif: Increase number of DMA channels to 6
->
-> This commit updates the renesas,scif device tree binding to allow up to 6
-> DMA channels. This supports the R-Car X5H hardware where SCIF serial
-> interfaces are connected to three DMACs.
 
-I wouldn't bother adding further restrictions, as these are not related
-to the actual I2C block, but to on-SoC wiring.  DMARQ is just a single
-signal going from the serial block to one or more DMAC instances.
-The number may also differs among serial instances on an SoC.
+On 9/16/2026 6:00 PM, Ian Rogers wrote:
+> On Wed, Sep 16, 2026 at 2:52 PM Chen, Zide <zide.chen@intel.com> wrote:
+>>
+>> On 9/16/2026 3:44 PM, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>> - [Low] perf: missing explicit <stdio.h> and <string.h> inclusions
+>>> --
+>>>
+>>> commit 197eea3115a0d065dc53e6f96ad2fd38fdb9bc99
+>>> Author: Zide Chen <zide.chen@intel.com>
+>>>
+>>> perf topdown: Don't require config1==0 for a slots event
+>>>
+>>> This commit modifies the topdown slots architecture check to no longer require
+>>> config1 == 0, fixing an issue where explicit slots events were duplicated in
+>>> scheduling. It also adds a new test to verify that an explicit metrics_clear
+>>> slots event doesn't trigger extra injections.
+>>>
+>>>> diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
+>>>> index 2b6f47ce49324..b1ce9f83db00e 100644
+>>>> --- a/tools/perf/arch/x86/tests/topdown.c
+>>>> +++ b/tools/perf/arch/x86/tests/topdown.c
+>>> [ ... ]
+>>>> @@ -229,10 +229,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
+>>>>      return TEST_OK;
+>>>>  }
+>>>>
+>>>> +/*
+>>>> + * An explicit "slots,metrics_clear=1" event is still the slots event and
+>>>> + * must not cause an extra slots event to be injected into the group.
+>>>> + */
+>>>> +static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
+>>>> +                                       int subtest __maybe_unused)
+>>>> +{
+>>>> +    struct perf_pmu *pmu;
+>>>> +    char event_str[128];
+>>>> +    int ret;
+>>>> +
+>>>> +    if (!topdown_sys_has_perf_metrics())
+>>>> +            return TEST_OK;
+>>>> +
+>>>> +    pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
+>>>> +    if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
+>>>> +            return TEST_OK;
+>>>> +
+>>>> +    snprintf(event_str, sizeof(event_str),
+>>>> +             "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
+>>>> +             pmu->name, pmu->name);
+>>>
+>>> [Severity: Low]
+>>> Does this new function test__x86_topdown_metrics_clear() need explicit header
+>>> inclusions for musl compatibility?
+>>>
+>>> This code relies on an implicit declaration of <stdio.h> for snprintf().
+>>> Missing POSIX headers can cause build failures when compiling the perf tool
+>>> with strict libc implementations like musl instead of glibc.
+>>>
+>>> Should <stdio.h> (and potentially <string.h>) be explicitly included at the top
+>>> of this file to prevent musl compilation failures?
+>>
+>> Not needed. tools/perf/util/pmu.h, along with debug.h (which is also
+>> included), explicitly pulls in <stdio.h>.
+>>
+>> Additionally, this file already contains other calls to snprintf(). If
+>> the required header dependency were missing, those existing uses would
+>> already fail to build.
+> 
+> In general we want to avoid transitive includes as they are brittle.
+> For example, if pmu.h and/or debug.h were changed, it might break
+> musl.
 
-See also my similar reply for rcar-i2c:
-https://lore.kernel.org/all/CAMuHMdXj04QoxituCF3wRcyzN7qZrVBn7-ukNkKDd0OfhB8zOQ@mail.gmail.com/
+OK, then I can add stdio.h and string.h to topdown.c.
 
-Gr{oetje,eeting}s,
+> Thanks,
+> Ian
 
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
