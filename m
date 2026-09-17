@@ -1,170 +1,139 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013003.outbound.protection.outlook.com [40.93.196.3])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B588382F35
-	for <sashiko-reviews@lists.linux.dev>; Thu, 17 Sep 2026 06:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.3
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789627492; cv=fail; b=qgbMhIViUGnsp7SZw1QXTfkN/BVdxWfZY33JFMcPdJTFTL7Qd24dpcoRIK7Oncn8XQUt9WLkACGiqYEgihG/m2p2EkElQsuAmMiu5IZOv0FJgVvQpE+ziPu8LPjWHZuavjYsvE+RH93iwrOI+hR4HtBRKumNpTt3KO31Tf8EXr4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789627492; c=relaxed/simple;
-	bh=1oddLDnIeUtHq9DGDzxYfH/k1K2U1od6LvymirSfHF0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=E3RCPkaBR0/bSanKcgiWAKOshSrjmagA81gsSVGBK5WB1nD5nmGThbnhQYZo/jDE3HIcg5jDztHEiCswSTpJbEIeLFVps7ltUsnUzDsi/9UgqUXXlnCQ35w6ON+jQIC80TEo//fES+SW7oWKIUF7sNx7hxUt1vt9zO+XBe99eaI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lWBHdL0V; arc=fail smtp.client-ip=40.93.196.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A791F3CB563;
+	Thu, 17 Sep 2026 07:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789630151; cv=none; b=mNpbaHMrjOJhxxRCO5gnQj+gF1qYqcAgrIbSImeVltjY26UFJYtII643iEEY6LcZZO7jR6GRnpUBaf5+hwu+nccUrlN6gqiDwqTXuAri6dyKwTRwfh5n3CS3OAkFf5aN5PTk+99lxsbS/TBSY/ui+eRvLTd29ZZ26A+3c1mwA38=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789630151; c=relaxed/simple;
+	bh=JkAeNspU3McztXyygCjKCcKYcHJmOgDhQqLtm+g1Dew=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LVd5rmKRKWrElq6u3ZI76izft6aktFxVBv0dwyS7Mb5LA914XdnO/083LFlUK2h8gyNa/dNEqauXnA1haaEVgHUJVL1GXgs6AStOVSwOOr5s24GBJ6mmes0UCHilD4x7EYPUwEcVq7E/EnQlw7t4vysSAfDj/05DxK92JNqzbJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=UVxZE6MQ; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lWBHdL0V"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JceLfbdvjTUxjRWE6Q0ruwqUHragizmZ8bV+JJSNCyTUtokQ4kwUlJvaMNbKc9cKvXRf9r7oMWUzFWqq6FKLNu81NI8flJAcKmPOjP0ui4nF/NV6IX4BhD0ETkQftrUUACiazOB3MwBvTJqY1yPNmPRP6wqXwuKks+M+ubiclGlxdDQIjxxI1oeBRNvGBb3cJK9fWraVJPxTo06Owwm8CFuqslmxo3qkhd65K7EZeVEr0Jvi9Oa5w/7/eQ46MSHeuomZSH4jaIFnOBSWZsgBrxqMyyHST5BFH98Kq4zn+4OYEyS0OOdPWJOuRZNgPPJZmB8Ar44mGMg1z52rYuiSXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R5+7NknHeephla23ButpSU4oWrnxzzVk/CMvfFxyufU=;
- b=vL/hTB26xUY5+m1/DxHxR95xXnqTnzPxJcjN7KanNLnbugCB8LYpqVyr948H0PIAGCiBy6x90MKVEWq4etIKt5+0qNXZ1zpduhcc6aC/KeaqmVyXQpBfGxfppQzLOXEcVgLH9lTUL0Sgd3LcOTrLaBixIoSGt3S0ECoDQO5jTQigW4lLzoJbW6W/2ckx3b3zgaRua6GVheAcPj82Rzt+VA65UUbPJvhC3I9+aViGz30sfNMp8yEqq69CLPXSKeNU41kwo2/jbLoktb7le6ElEbqb5+ji5bCJM19VPlavs/8iA4a+4XxXbuBrINVpEjrHS1KamlEwupDOcGRXvxR//Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R5+7NknHeephla23ButpSU4oWrnxzzVk/CMvfFxyufU=;
- b=lWBHdL0V+73Tv7dNFqE4NIUjeu3DspLOEPcPaVKcylIqcwMGOK/KGJWp1MBSJZXMhJLIseAf3GvmIc7pQCBmNdGa6pEY+c9xV8i3aIPEiqvl38nqbuERCve63XQJxd/O7b4XAV6KKfqWU9ss3SYAVz0WXvTY8J/pTT8UGT3r1Rs=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
- by IA1PR12MB6067.namprd12.prod.outlook.com (2603:10b6:208:3ed::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Thu, 17 Sep
- 2026 06:44:48 +0000
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::afe1:7dd0:ea71:b7e7]) by PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::afe1:7dd0:ea71:b7e7%4]) with mapi id 15.21.0406.007; Thu, 17 Sep 2026
- 06:44:48 +0000
-Message-ID: <121fe413-6861-4d45-a7d3-f3a3f91952dc@amd.com>
-Date: Thu, 17 Sep 2026 12:14:43 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] perf/x86/amd: Reject AMD Merge event as a countable event
-To: "Absandze, Luka" <absandze@amazon.de>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- "linux-perf-users@vger.kernel.org" <linux-perf-users@vger.kernel.org>
-References: <20260916123315.89042-1-absandze@amazon.de>
- <20260916125146.0E96F1F00893@smtp.kernel.org>
- <aqqhR9rZBUx-jscN@dev-dsk-absandze-1c-663c31a8.eu-west-1.amazon.com>
-Content-Language: en-US
-From: Sandipan Das <sandipan.das@amd.com>
-In-Reply-To: <aqqhR9rZBUx-jscN@dev-dsk-absandze-1c-663c31a8.eu-west-1.amazon.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5PR01CA0156.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1ac::6) To PH7PR12MB5712.namprd12.prod.outlook.com
- (2603:10b6:510:1e3::13)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="UVxZE6MQ"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68H62UWH543279;
+	Thu, 17 Sep 2026 07:29:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=HrNqlv
+	ne+h30yD1aOME+nBA0oQ3YIMTAigAGhfKIKXk=; b=UVxZE6MQHSQv8br3mlBAeA
+	uuJi04ANLVwAipCaYAN3K4DBBOteNJ7d0maNCnR4PMr965MFOp8PLR5EiiwDHXkj
+	s4h6Nuu4/zKtFcT+3QB0L12iQ4W6RUVmehmD/iEdHz7lPKn84zFlnfo0KVaQfogn
+	zpCS//J9YqufI8A/iDnhRD9kDv9HS5MTra7uNOnfUn5zpovwYuAh+3Xj2zmA7c+h
+	lyk3gU4xCzT1bH66iZbj5Xzc26frAnpLORGDCp7P+XzQzZ1jsIRRtVqn90BRal7i
+	KIGojW0pS0yz5tYs7hpEAIPk7XnerLA6oUMdeL+xGB9P8OkjAvXtHCze7awwLmbQ
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5e8mwt-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 17 Sep 2026 07:29:08 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68H65BkH2638636;
+	Thu, 17 Sep 2026 07:29:07 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gra3f8cjt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Sep 2026 07:29:07 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68H7T3Zp34669048
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 17 Sep 2026 07:29:04 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D9BD92004B;
+	Thu, 17 Sep 2026 07:29:03 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C2FE620040;
+	Thu, 17 Sep 2026 07:29:02 +0000 (GMT)
+Received: from [9.123.3.144] (unknown [9.123.3.144])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 17 Sep 2026 07:29:02 +0000 (GMT)
+Message-ID: <43395bfc-f41b-43ca-9be0-9dbeeb3fa614@linux.ibm.com>
+Date: Thu, 17 Sep 2026 12:59:01 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|IA1PR12MB6067:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0349062c-d3c7-4f1a-afc4-08df14872ac5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|56012099006|10067099003|11063799006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	4jyzwm5Tb3JGQYWGShkapBcmVxCZMQ/GJytRA5UYfea1GaQmAK7ZZ5Oy7kDqDmjtj+OI1m6v55lDYMUYxrd4kqHuVRjHj2NIGNUjpscDdVWcTVgVdm96BqgbRgGKoHizmMFly05RNE7c8D1D7VJQXIavclkdvGoxJ1xhBEMtAVhGKAv4fm7P1p6XQBRIzBxD/7JvU6y0rTXILLgUehg2hCmoFPyjc8k3uqfHZNPy/o90PjHgAyJhbqMATsnXwE8AWyj/nAvPob1k5OUWxnSKKjwxkt9BApbKoSxXBR+IDqSAhypANU2YDMz7yX93mHkNuqZIP26btNbuZhTm/TYQNp1bhczInYa0uSsacBSYD+4Kbt4PSR3HXz59QXwARuqwHzqy2cppEM3pzosYyVg8EHm47od9MqsxSfmL/lZAh3Orxi5egyd4e5LeXF+iMduLok/SylqdBSYsDF2hpd9NhnSm/Ma0Hj0hr/HY0xgYEN5l94gRSEOnZsRoxo0+yA0YeoS570ZyDW3L5nWJqXamhNz25swNNCJpbf9EpzDli//Jk9dFWHuURne6JGEEXj1zheKD+jHa93DEc2Ucd/gLX6cotc0vYW+1Df3vTL5sSyQx3das5WCUr8RbRGM1oL4LsdTSdWSbPM00kVwIXl1LCKjjq/64jYZ1Oq93YuZIpJs=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5712.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(56012099006)(10067099003)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?djlKN2I2Y1l3ZmdXcG9wZEdXSS9iK2ZwelZHamsrSzF5czVMbGNWaVFZSFJO?=
- =?utf-8?B?ODRYWGlLZW8zWG0yMytjNTN1MHBkMGZ2cGRmVTFUcGhSRjBPcnVjNUFPdVRx?=
- =?utf-8?B?cDZzZk11bUNrU3E4dVlManlpdTh4eXVQYUpwMUxPSGdUODFIM0h0ejRIaExv?=
- =?utf-8?B?Q3JQYi9qZk95OXQ2Q3g2b0FLOFN1MVVzcjNvc0dEK2hFazkyZ242Q0tIdVBy?=
- =?utf-8?B?TzNSZk03bkkrSHl3a3c3WGtibU4vSTNVZk9ZUG4xbDRkZzNZQS9JZUczZkZi?=
- =?utf-8?B?djlTOCtwVnlFUlZWbUZ6VGRkNVFlRzk0aGFQOWFybmdhUUpSeExMSEh3WUdH?=
- =?utf-8?B?czY4T25rbnNnWk1WVHY4dmFqWng3S0NyaG9DWmF1ay9iVEpZRnVzK1BGSWJn?=
- =?utf-8?B?akFkNVRFVzZiSVNqQll2YXpHSENEN2RkYzBXem42VkREemNld2UxOEp1TUxX?=
- =?utf-8?B?bWdSd3hlVS90U0YrZGVtbUd3K3Q1UGZyVWV4aDl5VnEyeG5TNmRDbnRwN1B1?=
- =?utf-8?B?RHh0SEJtTkw1T0hhQVVPZ1k3cGFoQXo3Z0Zlc2dMb1Z3c1JZa0N2dktXVFBM?=
- =?utf-8?B?MjZoSWVyOVhkMDRLcXpJbzgyWmhYdUlzaUczc3g5RkJmNVRGQk5CMGloT2Ix?=
- =?utf-8?B?V0ZHQXQyQnh5NHdQTVpta3dmV1d1MSt2S09QdllTSXFSQmRBZnJnRHNadmpi?=
- =?utf-8?B?SklmakRvWlBmMm9iK1ZVMnEyemU1WXppdCtqZ29aSVVOMkpzZVh6MnkyUWJu?=
- =?utf-8?B?L2g1WFRxR3UvQ0lUOGJMejlxQzFxQlc5TURvYnJSZE5nczZSalJyV3BsenlO?=
- =?utf-8?B?LzU5bUZCdUNVQzhSR1JHYkVaczZtWFpNRHp2VlNzREplUXUyWCtvcXFQNUZi?=
- =?utf-8?B?T3hSODdueHF4YUg4NW5tbHhHRXVYeVRDOW1IY1pNS1RHZWdnTzJLV1kvOHBs?=
- =?utf-8?B?emhncDBTb2s1MytWa3hBUE0rSHEydkJ0Rk9BZlVBaVZKT05WV1JHWkJPQW9U?=
- =?utf-8?B?aElvTHhPTlJBOEQ0bk9UaERFYmw3RWF5YXcrczQzZ25meWdjY1NGZVMvdFBT?=
- =?utf-8?B?dXZpL3h5a1ltams5WDlEVVlvOFpiQkJqdzFFUHA3USsyRFJQNXF1OENRTFp0?=
- =?utf-8?B?YlN5cSsyU0k0WVNydWdGNFlkVWp4MWtvRHpiNERKc29hWmM0TE1FMUZlaDQ5?=
- =?utf-8?B?Zkx2bFkrSWgyOVpnSThwS3R2MHBPWFZXQjRNUHR4ZDdvN2lWNkRoMUY1TTlY?=
- =?utf-8?B?alFFazJ6MmJHNE0zTXlwTW1qZkdtSmozQmQwbFZZeEgwZmlQVk5Qc3hLdEY1?=
- =?utf-8?B?ZkxFUHhSdVpnZCs0cnMxWkpjbVdiaFFLdTh4Y0RiOTMxZGNZcm85VjB2V2xO?=
- =?utf-8?B?MVBOUXZLWUJ4dnhrb3BMZmFCUkpmVVY1Ny9Ya3BCK0F4bW5QQTFvZWtybzkr?=
- =?utf-8?B?MmVGV0lEWWZFeHg1cVUxZjhjamZyMXNTM0I4YkFyU3dQWWtnWndrenVXZTRJ?=
- =?utf-8?B?Nkg3dXdNdlJPcXJZN2FuR1RTeHE2Nmk4UjZ1bHFqV3JBNHdIVm9rU0lqVnRr?=
- =?utf-8?B?VkMxYTROUXEvcmYvd0Q3dDF5Y3BJY2ZRelZwK1NGcDgxQjZGa1hXZ3lka1hP?=
- =?utf-8?B?R2ZJTWVHUlkzS0twWVNML1UxTldKeVZ5Um9wa0doamF4Q0JmOFFTczZYY2U0?=
- =?utf-8?B?bjEvYlJHUW1WMlJsYWdPcGhHSHFzalk4WjRSbmxqZHhaeXNWZUtQUno1a2hN?=
- =?utf-8?B?bFlBdkttdzNmYlJPblNMK3pqSFFGdVZCRlgwR2ZIaHRoQlF2alpjL3BaM2RF?=
- =?utf-8?B?ZmFwTXJZS0dBb0xjUVB6VVF0MGgvcUxCSi9HaC9Mb3pOTDh1K0xTOVc1bU43?=
- =?utf-8?B?TjZ3UU1tNEZkK1E3ZktnK2I1L1NDOWxHZ3ArNWUxbnBYRERUTVVjRmx5djlJ?=
- =?utf-8?B?ekpCMmpGN0tXRml0SGdvM2cwaklxWnZ2MmVyZE9XcXVTZjNkcjliK0hlL3Jo?=
- =?utf-8?B?ZHJmTnhGVzdLVmlTQ1lubC92UlMrV0c4QmZERU9Oc3BVUFJ0VG5mcEZkbkNT?=
- =?utf-8?B?TXN0YXJtcjFhZU93c3QwTXNiVDZ6OTEvMTBrUE5BM2kyVURETEpidnphN3lw?=
- =?utf-8?B?cllwWE5NZENIeDk3VjUxT2ZGVnQ4NGJ5RmVjZVE0T05zUmxiUldUa3E4Rk82?=
- =?utf-8?B?TXBvaW9sZG5WV0JSUFB4b1Q0Y0NxV3hyVDlabUNLRTJBNWIrUGg2L0YvZXFP?=
- =?utf-8?B?MTVEVktjTWtyMFUxYnh5Wk5mN09laGxZOWUxUldSY2tqNmI4VDRmbE9qTU1u?=
- =?utf-8?Q?jmRb8jfjNwyUcJa0jE?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0349062c-d3c7-4f1a-afc4-08df14872ac5
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 06:44:48.2885
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iUu9+vrVtrmr0+E7GOmw8rKGarUPAcEiQtY2LtHyVN2czWoFKde9xcLUIwjwguGydECGaAdgHj2vdZv+EDZm7Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6067
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next] net/iucv: fix UAF in afiucv_netdev_event()
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
+        linux-s390@vger.kernel.org
+References: <20260803182053.2355882-1-nagamani@linux.ibm.com>
+ <20260804182120.535961F00A3F@smtp.kernel.org>
+Content-Language: en-US
+From: Nagamani PV <nagamani@linux.ibm.com>
+In-Reply-To: <20260804182120.535961F00A3F@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDA5MyBTYWx0ZWRfXw9KKCWtVlopg
+ s2D2WawRTPM5+yr3YeeaQIia/3VU4dpOHHhYSkMW1DiKhE30yS96mW1jwkB5IEBAVxKSuGOFI+W
+ jETTwBK8x3eVvn4VQmJZ47JXtD2r+uzYLig8WhlPFU3kg7AWv66LmxsW6ObzvpX6DgaOQCj6pFN
+ JHmmcb74snuNqJK0Gz+ijf78EUuXtqL/XXynTYvrJPCVpPhGNkTk+PiZr3UwNn5BHGl4Sklg+6b
+ t6+6tkAqUS3yj56vb0q5LP4U/RdnaykRph7ci5yUGHdv6T54senz6qhEQJBem4+FBoNeoNidPY6
+ mS6R+aDx6T0Yl/erzAxJ7GOUNyFZoEZClzi5inbPxsyb/8HZv+5qzmOC4QP/GGGf3fHIrDbZx9p
+ GrqCH2loRRrw9Gp12E+pJMhL4+INVgdee0vxtjxLwvuNkyPwH7WesfeHDpP67NLke3b51dseuZU
+ AdHvW7P59kjaVtd0wzw==
+X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aab96c4 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=cFzD1ptanSrodPJrcKUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: C9O-HcMJBPjBiah7sUz2CJr3yhRgpAEm
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDA5MyBTYWx0ZWRfX3ZS93eCkrseq
+ pJKuJ/t8afLBkUIB1qpXIjCtb++07ZBWkm8kXlLqtDbgOKr70E+psei/kpTxfpun4NAk+pwbGJq
+ 3oL46W4ZSQl9VL7fztd/0dJr8Yoo05Y=
+X-Proofpoint-GUID: C9O-HcMJBPjBiah7sUz2CJr3yhRgpAEm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-17_01,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609170093
 
-On 16-09-2026 19:32, Absandze, Luka wrote:
-> On 2026-09-16 12:51, sashiko-bot@kernel.org wrote:
->> [Severity: High]
->> Does returning a permanent -EINVAL error here cause an opportunistic retry storm
->> in KVM?
->>
->> If a KVM guest programs a Large Increment per Cycle (LIPC) event by writing
->> AMD_MERGE_EVENT to an odd vPMC, KVM intercepts this and attempts to create a
->> raw host perf event.  When this fails with -EINVAL, KVM's reprogram_counter()
->> propagates the error to kvm_pmu_handle_event():
->>
->> arch/x86/kvm/pmu.c:kvm_pmu_handle_event() {
->>     ...
->>                 if (reprogram_counter(pmc))
->>                         set_bit(pmc->idx, pmu->reprogram_pmi);
->>     ...
->> }
->>
->> Because KVM treats all failures as transient and unconditionally re-adds the
->> failing counter to pmu->reprogram_pmi, on every subsequent PMU refresh KVM
->> will repeatedly retry the failed counter.
->>
->> Could this create a permanent retry storm that degrades VM performance and
->> wastes host CPU cycles?
->>
+
+
+On 04/08/26 11:51 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> There ins't any substantial load generated, we short circuit here before
-> the expesnive parts. However, a followup in KVM could be beneficial to
-> reject this case outright.
+> New issues:
+> - [High] The patch introduces a sleep-in-atomic-context bug by calling a sleepable memory allocation function while holding a spinlock (`read_lock_bh`) that disables bottom halves.
 > 
-> I'll wait for opinions
 
-I think it makes sense for the host layer to reject PMCxFFF altogether. Today,
-at least for emulated vPMU, when a KVM guest programs a LIPC event, 3 PMCs are
-consumed. This will ensure that the 3rd one, initiated by the guest programming
-PMCxFFF, is dropped.
+Correct.  Fixed in v2 by a two-pass design: iucv_send_ctrl() is only
+called in Pass 2, after read_unlock_bh().  Pass 1 uses GFP_ATOMIC.
 
-I also agree that a followup in KVM is required.
+> Pre-existing issues:
+> - [High] Socket state, shutdown flags, and transmissions are manipulated locklessly, leading to data races, lost state updates, and a potential NULL pointer dereference if the socket is orphaned concurrently.
+> 
+
+Correct.  All three sub-findings confirmed with KCSAN on IBM Z.
+Fixed in v2: Pass 2 acquires lock_sock() per socket, serialising
+sk->sk_state, sk->sk_shutdown, and iucv_send_ctrl() against
+iucv_sock_close() and sock_orphan().
+
+Pass 1 reads iucv->hs_dev under read_lock_bh while iucv_sock_close()
+writes hs_dev = NULL under lock_sock() — orthogonal locks. READ_ONCE()
+/ WRITE_ONCE() document the intentional concurrent access and suppress
+KCSAN reports on those accesses.
+
+v2 posted to netdev:
+  https://lore.kernel.org/netdev/20260917071706.23831-1-nagamani@linux.ibm.com/
+
+Validated with KASAN + KCSAN TAP on IBM Z.
+
+Thanks,
+Nagamani PV
+
