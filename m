@@ -1,188 +1,235 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011027.outbound.protection.outlook.com [52.101.70.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7092030F7FF;
-	Thu, 17 Sep 2026 08:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789634772; cv=none; b=lv5i2xyC5baUqZBGkV/LjoihJnOqJcH5sWyqV4Ny2/IZSSjczf5IbCGrV5vzX5lb9ZTpHdIy6v4z6I29IbKhs2WRjArxgRPS0vu9kyC6w+/X8MMqhhI2uzrF9t0BtAj/meskMbbOL1+7g3yRrPvMWm7KZF+W/KlZBvNk0vdGDQU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789634772; c=relaxed/simple;
-	bh=KNvuiSAZT/02QuUxp7uiQOlWYu2VUC1qzplqriSz8ZY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T/cMDx72Skwql2VZhhZNwOi38DY7mbNYmJ0sYKyVdLsc0BJuMO5RX1+rTNLmfmuS5a4J6PPadDryzHOz3FOsmt6HZ6Auv27RKne09EYKSady9gT3Nb6IQbO2bH44Ik0sx5JTbnkfhWU4ccXSsSF/vQBoUmcTs4ym9X+RQPlJs7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=g9dlaHth; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E91349159B;
+	Thu, 17 Sep 2026 09:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.27
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789635714; cv=fail; b=l2GgJgAAoUSDH5jc3+qTRLJ4dLxjeeu4VRmDoyE/rr/OtkVxXL81JBGjvCtssH0Orsu8d2yc17X5uL5TKPV2csx8IAh3PQet8sGBAfLJ3pmzwHVk8O5PXeCLjvX34LLVtWdfHjUCibW9zWm5QvJQU7GwKR+aK6IVK1o1R1UEMFI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789635714; c=relaxed/simple;
+	bh=wwy2OCN7YWDazcq5WHtYMuD3TWfOqTg59IC/GnZgVvs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=rouRqEkG0x+LIk69hcQE6/5/Vr1GnQmsZafKzlHY88yU01yAJCpvkL9DMtK1XyXsdJnWjiS2rbDQAFEYrWv7vMOESXeCMdjf8/Q5lHQeaYxOBLIeFeN6YPyhP1YVZ97bXDpE2vwx9Tp3Wmqssml2bkphuefrg+ijy8R9TIGquMg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=pUrJm7vt; arc=fail smtp.client-ip=52.101.70.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="g9dlaHth"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68H62V4k543286;
-	Thu, 17 Sep 2026 08:45:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=T5CM6ODXOUrqzCVj1f4AUoFeSoYLib
-	qQQi4xRw949ug=; b=g9dlaHthG11QP5ZrXfLVjTXxXbYSqgV2LuzJ2K/1ZC0lJr
-	quZT21uTR85Uc5hmt1I3JwSudAlylafERGmMd+bwd6fAb/XK9n4O8AV9sTgDiYXL
-	HLa/qAzjz4FtRGTj+nJQCNyb0Om/AJf7nUpapw9eqN3Tif3o5vH+C2gcf2SBFcJx
-	4ea4w2EvqSzyhPkEFCMZOgS8RalrRSoHve88zVmTtf4zmxcaYEYvJlsrRvgaMaPj
-	DKT7BU5LMP/h8uL9HbtHaIFu1z2wKDs+nm5pNP46cfYT4/YNApujotXLDoUJTUwg
-	jPwsXCjvmUMv26Ptog15p1Cj3RrlnArmewsVjIUw==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5e8ydf-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 17 Sep 2026 08:45:50 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68H653432660555;
-	Thu, 17 Sep 2026 08:45:50 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5fjhk3s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Sep 2026 08:45:50 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68H8jkFd28311812
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 17 Sep 2026 08:45:46 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 516AE20043;
-	Thu, 17 Sep 2026 08:45:46 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2D20720040;
-	Thu, 17 Sep 2026 08:45:46 +0000 (GMT)
-Received: from osiris (unknown [9.224.76.185])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 17 Sep 2026 08:45:46 +0000 (GMT)
-Date: Thu, 17 Sep 2026 10:45:44 +0200
-From: Steffen Eiden <seiden@linux.ibm.com>
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>
-Subject: Re: [PATCH v2] vfio: Use file-based reference counting for KVM
-Message-ID: <20260917084544.474297-A-seiden@linux.ibm.com>
-References: <20260903-vfio-v2-1-ef4cd4190ae7@linux.ibm.com>
- <20260903084221.C3B871F000E9@smtp.kernel.org>
- <apmpWNSv6ahYr2Bl@google.com>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="pUrJm7vt"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T+E96Av8QgsXRpCkeLGPV//k5jMuTV+e/OADE+7mxD2NmpE3m14ezMZB0oKq7fagwDkIBPgw0oveXnAgksR9hQjrY+xRweOBCa2ISYyWEyjvPGBp7YyOqIhA/0Sf8vTDTBksD5tge+3lYNjJVcEK+munQ552fpNyS4kZNTL3BJkOOVePSFSK7TsEAo5Em1trU9nX1p2HJaEDupkXd//kz50Lk+oyNA9Q2KTbbsB57QvoeIaOGVdHNE61UWUA7AegWxLuvVIjNVd8jR4oRoB9/XmpPn10rYmOdBmzpI6hH9EC3lSEdzSPmD/xNAqZh8Rpp+LE8ZlIgFqMVWE0G08uXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pl86Q7qob2YZ5ErX/IcW3i3qQSczAXkFlgiZv1kD11E=;
+ b=osOj6WpFDNxENdN/RfayFsZmzCKLBrO+PKeUrtM6WnXTZJ9xSgw2+9gKp2hztEIaJQw6FpT08VjILTOlNqoDs+ZBQ/YFF/UbqCpkSH5d3vgvXbyzXroGbjqzq2QZXr7BTw8dPFFXWJL1wYlN6P+Up68Goro6O2I9wwwDcjrhWmUEW2xEAhZprQ/YkxWjto7qGuHOWRtT0uwvlLixY3vEWYLm2XupRtOtLuhY+H1AwvwzCijGCKckZUBiy47881KaZE3KhxuYDUGusp7lWdr2/j2HQTygJAGef9FZIyYdu2I7PuSSWimaU5wayKb5S0pbfc9dF/fu0Y8MgYmQ5uHiXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pl86Q7qob2YZ5ErX/IcW3i3qQSczAXkFlgiZv1kD11E=;
+ b=pUrJm7vtkrKrzU2YH052GpeM0B/qYeHx14Gfvfbotc3/X3HyB49zkkzC/mU5yBanBiWQszNqoj0uBgOWzNGloLQnKB8DRniRCej/Imx2vRBfZJOACXTzdcdIV/hsIlyGIr3puqoAVRtbdU/+c+eoBury95JEVb0P+jilWXOGGqLDpudgTnxOuuSLbb+mikRsGWPL/uSGGZy94RccFIA6g90YQIWvS2gEoyfZAzqo1iWUvA5MSCt88FJclru1KmFzpH+LtWhRkRt3T1W8kqWKOKQKbYZwPlphPHn+A1+ULx0w2YXeEQarr11JUlmXJ6y2p9E1HwQ9/WvshzUAb+lcyQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB12558.eurprd04.prod.outlook.com
+ (2603:10a6:150:368::10) by DB9PR04MB11628.eurprd04.prod.outlook.com
+ (2603:10a6:10:608::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.12; Thu, 17 Sep
+ 2026 09:01:49 +0000
+Received: from GV2PR04MB12558.eurprd04.prod.outlook.com
+ ([fe80::cd9f:102:ea58:4c49]) by GV2PR04MB12558.eurprd04.prod.outlook.com
+ ([fe80::cd9f:102:ea58:4c49%6]) with mapi id 15.21.0428.011; Thu, 17 Sep 2026
+ 09:01:49 +0000
+Message-ID: <697d617b-0cc9-4457-8070-128cfa9cfb53@oss.nxp.com>
+Date: Thu, 17 Sep 2026 12:01:44 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/10] scsi: ufs: Add NXP S32N79 UFS host controller
+ driver
+To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, Frank.Li@kernel.org,
+ imx@lists.linux.dev, devicetree@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20260916084411.941297-1-larisa.grigore@oss.nxp.com>
+ <20260916084411.941297-8-larisa.grigore@oss.nxp.com>
+ <20260916090010.6C7111F00899@smtp.kernel.org> <aqrFo6eFD7fGtrHe@SMW015318>
+Content-Language: en-US
+From: Larisa Ileana Grigore <larisa.grigore@oss.nxp.com>
+In-Reply-To: <aqrFo6eFD7fGtrHe@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR3P281CA0065.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:4b::20) To GV2PR04MB12558.eurprd04.prod.outlook.com
+ (2603:10a6:150:368::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <apmpWNSv6ahYr2Bl@google.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDExNiBTYWx0ZWRfX4FTCRqbsYLxT
- y8ElZRsb3ecu1u3jDKbnmHnSGHE/pSCyvi4Gzl6o1Wf4YvQeV0UCfGyG0JQORNgz4mWHENUgImy
- mGACtsKrluwU18t44CFFM+VqNSl3cjODchhlAHPTo8OThpbciYJjgvkNvqSRjFzaGdoy6Dv23xB
- cKD8D3oadonV3LChRwFSETYe+g7YzLf0RcLkGcl82EmyB7YSASTi2ZruiaG+Mh7C8PxjIgT2EXR
- YgKlHxInAqGTLH+dPGlX9zzXpC8v4WAG2N/fwxyTJH/Kp8iRCZ4Opubs8TttoTuSBd62D81DATU
- moREleUNsgMwwtr+JdYYeyPWhvYtubVmUGPFSzLwUH6v44ktCQtb5+l2ekATqCbZxEF0O0/rlBF
- GGlqBywt+jRWyAx6IWyI+N9+c6xC+8I7aFvI/6CBgOawxTGmDel6jXjN0YZa/Si6rhJxDC9HVYC
- //o6GQ/iHCBPJDsQ01g==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aaba8bf cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=1S03ISw_H58Mq3hviRYA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: xKBDAchbgNBRyb6i4BLtkzoy4Et3BA-5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDExNiBTYWx0ZWRfXy8SBbaPR4RIP
- tedWM7+COBnMzpJi6+74K7bZqRIxJ8xZq8mim9sbyIu1RXRleDEgG2ir7YvzaIUXA/OYG+jvuKM
- 1L6fj4f+XLmxzwdAhin9TrHkMBfASSI=
-X-Proofpoint-GUID: sxzVDNJf6d89P3f8URrWrJYS87sx4rU_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_01,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609170116
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB12558:EE_|DB9PR04MB11628:EE_
+X-MS-Office365-Filtering-Correlation-Id: ae12f45e-0606-4edf-3db0-08df149a4f42
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|19092799006|11063799006|5023799004|56012099006|4143699003|10067099003|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	XZMxP3WxiqcKvuGcjUvbxtFTiwfgxw7mLAt98kkmBOejGyh10iENMFpS+/U493byA/QWIODB5qoD14gj9o1vVYmkOV3Xc2K35zaeIE+r/Scna0p5zC6+ZeN1ybWFU78BTyhzHE4mEV6wpEh8lMxFndWZz6RKq7g5n+sXcVkrQfzjgTNP5295orbIKsApL++GaNxDU/axpCBR2fALzf9WiKFB/Gz6+nZLYYYi+rnGoK7TZTl2/NLr9ulcnZx05+I8miiUurGzayo7nuEywhG/1FXbp4LYFQF1TkiqeAEf7IcSjbXF+jqVrKnWRsaVCj0buFkc0wzFkUwsP1GxTW92TBbojM4nfAiWChVCSJEQ5bB8CB8TS2Gp0U/z8b6sUxXSMMWrg1n8NCn/EOxBXcNguFDj4/bg1taJu7BVUlbk4soe+isQiFfiOzA7+5Qftt12sfyPEyn9lludor1iuXzrk46y5QCpLynpfAXQqm6fWL+xxva74EhzL3P1YLa8c0iV7oU8Y+uZreOAtZ0pofRCkX23CG6v2pyTaQPnTQ5POok0ynJVLBsTk7qdXrRmhWjbYrjYPxecs58vNNNQKFTnCIG37iQxrR6RkgAM2lS761U=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12558.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(19092799006)(11063799006)(5023799004)(56012099006)(4143699003)(10067099003)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ckxaVU91VFJaOENkNFQ1MEVpamt6QTN3QWducUNzL2hPMEdWb2g5QnZZOHR0?=
+ =?utf-8?B?ZmY4VjVSWFBxM2dYQ0dSQzArYUltRXlVOEMrQ3RkU0wrOWkybjhLWG9iWVg1?=
+ =?utf-8?B?N1BDK0ZKZFZjQXJaaE9SSmdTTEI5MEVnUHdIM3ltMDY0WHoyZHJCM1VHbTdv?=
+ =?utf-8?B?Mzk4TDhsOVVJTk1Oc3VWYnQrSDdGRUxmY1lmYlplbVNpRjAvY0d5eGg3bmFN?=
+ =?utf-8?B?ejAzZm9HRmNjMm15Y0F1OU12cmpnT3owdmJlcmRtNEk4dnphaFBMa3lVMTRX?=
+ =?utf-8?B?dUxVQzFqVzcvRkgvU3J2UGFDa2YwcERhblhaQ21HeHJWbUxqem14eWwwZEdD?=
+ =?utf-8?B?bzV2R2ZqbGZqRERWL0FkbmFyL2lnRlVRSm56b3p2QjhpUnlVK2pYbU1HSTJk?=
+ =?utf-8?B?aFdIK1VUZXVYV09JTVAzeEtoV3BRNTVlZC9pd0htd1NCZHpIV0kyY2ptM0xB?=
+ =?utf-8?B?VTQvSVNuSWJBa0VHVEpGQ3daUFlJWW9FZEsvbWFucUtnUGRFRHVEcG5wVjdr?=
+ =?utf-8?B?Qm9LU3FmUi96a3RSUjB5UElYWGxRMEoyKzN2cDRhQ1Q0MFBQK251VFpTa1BP?=
+ =?utf-8?B?bXV1a0kyaDluNGRObjJwSTdqNmVrQU5WcVNiWTZ5aUZXN3NDSGhUeXoyU3BT?=
+ =?utf-8?B?WHQxN0FwOXlCNVJYaFF4MnNhVUc0VGxRWEtNZDZVdVRuay8vMFVCeEhqK0dN?=
+ =?utf-8?B?Z0o4eWkveVh3WGJ1WTVObWhVS3I5ZGZVSkhkVFNKNnZiMVljNVFQMm9HSkh1?=
+ =?utf-8?B?dk9uN1p3VlF5aHM2VG9RYml0N1RpQk9DcVpidFJzWFdRY1VTUmJiTmVabm9v?=
+ =?utf-8?B?ZUtTQVpqRjIyaFFtaW9mTjliSCtUaHhmeTM4K1p4TDFEL3ltVnBJSDkvL2lj?=
+ =?utf-8?B?bk9tS0txMGMwM3Z3aWVwS1F5bEVjR1VhRGpPeDBBM0tDc3JsOEJhcGk1TTVT?=
+ =?utf-8?B?TG8vVXhoRWdMNkdHSlJIMUNrZG9qUlBGUFA5ZHZrR09xM2xZWjJidmk0ekh6?=
+ =?utf-8?B?RHR2OFVVWVNYOTBpZDZXLzNUUnBZUityTGNFR1BZSjlJUFVyVnFiM04wYk9D?=
+ =?utf-8?B?U0sxOTZvbzBNYU8zQVNLUEVtSmpUSGExUFQ4TDR2Q2IrNFhtWG5CNVBxVTlE?=
+ =?utf-8?B?MzFNYmtZN05BYlUrR1ZRcjdjRHloQ3FJL1Zrb2QxU01YNFpJMWdBNjl4WnhZ?=
+ =?utf-8?B?UFQwdXVyYnBJcnZMY2JOdkR4ZzZuMVlXL2hzS3R2Ui8ybnFaaUFqNG84bzJQ?=
+ =?utf-8?B?S0tvTERuUVBicE9hUW1wbEpteWZMWUMzU21QT0tHUk4xSFh6S2tmelduVWlk?=
+ =?utf-8?B?QlVEZ05rd3BVazlneUlpWm5DU1ljOXhHYmRiUzVCSjdXMjlMdmxNODU4SFAx?=
+ =?utf-8?B?MVpNMXUxNTEyZ2JMcDh3VFJWQWN5T0dDRG56Z2xEdlBzWkZMYTRtUFlkM01E?=
+ =?utf-8?B?aWVab2lrV2hCUnlwa0FmdTY2MUUxMWpvckhyZGpiZk5hRWE4MzMzRDdYZmJa?=
+ =?utf-8?B?QU0vVEw2Y2tkS0ttbnpZdGZVcU5hUzh6dld6QlFGcGZ4aEI4RVFCNy9JelE0?=
+ =?utf-8?B?QldSc01ocUY1MmpXdk52R3B5SnY0QWNhdGpHd3B2d2piNmJURy92S2VseGxj?=
+ =?utf-8?B?M056ZU9UVUc3cFJ6aUZ1V0hhNHZzOG44bUhwQmEvZFNjK3EvQUd3d3ZBbEZS?=
+ =?utf-8?B?V2h4WnQ3MjhaQUZjS1BVRXRkRjJJSlNPVWpncFFpMVhBcHNDQ1A0RkkzM0Np?=
+ =?utf-8?B?RElCcWhLMDJHa3N3RzlMN3NZQW9iZGdUdjhXWHpOTTZKR2F6Vjl2TFkyWHlm?=
+ =?utf-8?B?VHQySXZmT01wTE1Sc092S21KOXYycHNkVk13OHdtUDl0bHYwbFM0R1BidjZu?=
+ =?utf-8?B?K3BlQ0dzbkUwZzd6RXdmNjR5d3RxWTMwcmZDd2ZRWkg4VTNPc1pMZ29pQXhC?=
+ =?utf-8?B?R1hTTTY4VlNuVTluelY0NUhGdUZ2UjhRMklNeXEvdGdVajAzN0c5REgrZ3Zx?=
+ =?utf-8?B?ZVJueFM1cjlkZzBRYWZZb0kveDJQZGVQYUtCNEJ6MWFub2VXeDhGNWlBaGt1?=
+ =?utf-8?B?ZHQwcnlDT3NQTU5VOE53QTdXUzd6RHBYUllvMTNkSXVYVjB0bE9TUmZhU01r?=
+ =?utf-8?B?Y3pyMmdJK0lBMFNlYXNuNjIvK2FheC94Q2J4ejZJTHRNVEhwYm5oVVlzdlRR?=
+ =?utf-8?B?emxUNExHVWliaUdhRVpvZFZlTDVKNHNaZEJqaS9CNjhteDRJSFAzOWRncXdn?=
+ =?utf-8?B?RGdtQUhaNHNIbWxSNXZTbzVPL3grbFRKdTdIUUVYNEhkWGpMTUJjMEtrcnRC?=
+ =?utf-8?B?K2hTYXFaQUJLK1pxTHV4MDBUM21BTS9uMDBPUlA5Ky93dy9HaHJwZz09?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae12f45e-0606-4edf-3db0-08df149a4f42
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12558.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 09:01:49.8114
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: my/KMjw4OEjxOnAQAVrKcGmyIWbsr0MZ98wg5cD5bjEKqA7mtX1+7rZ2hclysDt9eoJxTkRQ4U8P2jOVC6tgAA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB11628
 
-On Thu, Sep 03, 2026 at 10:07:36AM -0700, Sean Christopherson wrote:
-> On Thu, Sep 03, 2026, sashiko-bot@kernel.org wrote:
-> > > diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
-> > > index 940c0ff668bee..f160e1945fbce 100644
-> > > --- a/drivers/s390/crypto/vfio_ap_ops.c
-> > > +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> > 
-> > [ ... ]
-> > 
-> > > @@ -1822,17 +1822,27 @@ static const struct attribute_group *vfio_ap_mdev_attr_groups[] = {
-> > >  
-> > >  /**
-> > >   * vfio_ap_mdev_set_kvm - sets all data for @matrix_mdev that are needed
-> > > - * to manage AP resources for the guest whose state is represented by @kvm
-> > > + * to manage AP resources for the guest whose state is represented by
-> > > + * @kvm_file
-> > >   *
-> > >   * @matrix_mdev: a mediated matrix device
-> > > - * @kvm: reference to KVM instance
-> > > + * @kvm_file: the KVM VM file this vfio device is associated with
-> > >   *
-> > > - * Return: 0 if no other mediated matrix device has a reference to @kvm;
-> > > + * Return: 0 if no other mediated matrix device has a reference to the VM;
-> > >   * otherwise, returns an -EPERM.
-> > >   */
-> > >  static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
-> > > -				struct kvm *kvm)
-> > > +				struct file *kvm_file)
-> > >  {
-> > > +	struct kvm *kvm;
-> > > +
-> > > +	if (!kvm_file)
-> > > +		return -ENOENT;
-> > > +
-> > > +	kvm = kvm_file->private_data;
-> > > +	if (!kvm)
-> > > +		return -ENOENT;
-> > > +
-> > >  	if (kvm->arch.crypto.crycbd) {
-> > 
-> > [Severity: Critical]
-> > Does this code adequately verify that the file is an s390 KVM file before
-> > casting its private_data in vfio_ap_mdev_set_kvm() inside
-> > drivers/s390/crypto/vfio_ap_ops.c?
-> > 
-> > If a user instantiates a VM using a concurrent KVM-arm64 module and attaches
-> > an s390-specific VFIO device to its KVM device, could this driver extract the
-> > untyped private_data and mistakenly treat an arm64 struct kvm as an s390 one?
-> > 
-> > Because the memory layouts of struct kvm_arch differ across architectures,
-> > would accessing s390-specific fields in the arch member (like
-> > kvm->arch.crypto.pqap_hook) result in arbitrary memory corruption?
+On 9/16/2026 7:36 PM, Frank Li wrote:
+> On Wed, Sep 16, 2026 at 09:00:09AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] pm: positive return in ufs_s32n7_link_startup_notify() causes unclocked access
+>> - [Low] pm: missing pm_sleep_ptr() wrapper for .prepare and .complete callbacks
+>> --
+>>
+>> commit 774c9ff68bb8216bae4f82205ba8ce70b0364e59
+>> Author: Larisa Grigore <larisa.grigore@oss.nxp.com>
+>>
+>> scsi: ufs: Add NXP S32N79 UFS host controller driver
+>>
+>> This commit adds support for the UFS host controller on the NXP S32N79 SoC,
+>> built on the Synopsys DesignWare (DWC) UFS architecture. It implements
+>> S32N79-specific initialization sequences before link startup and applies
+>> post-link calibration for HS operation.
+>>
+>>> diff --git a/drivers/ufs/host/ufs-nxp-s32n7.c b/drivers/ufs/host/ufs-nxp-s32n7.c
+>>> new file mode 100644
+>>> index 0000000000000..4f9a001562024
+>>> --- /dev/null
+>>> +++ b/drivers/ufs/host/ufs-nxp-s32n7.c
+>>
+>> [ ... ]
+>>
+>>> +static int ufs_s32n7_link_startup_notify(struct ufs_hba *hba,
+>>> +			     enum ufs_notify_change_status status)
+>>> +{
+>>> +	int err;
+>>> +
+>>> +	if (status == PRE_CHANGE) {
+>>> +		err = ufs_s32n7_link_startup_pre_change(hba);
+>>> +		if (err) {
+>>> +			dev_err(hba->dev, "MPHY setup failed (%d).\n", err);
+>>> +			return err;
+>>> +		}
+>>> +		return 0;
+>>> +	}
+>>> +
+>>> +	/* POST_CHANGE */
+>>> +	err = ufshcd_dwc_link_is_up(hba);
+>>> +	if (err) {
+>>> +		dev_err(hba->dev, "Link is not up.\n");
+>>> +		return err;
+>>
+>> [Severity: High]
+>> Could this propagate a positive return value on failure?
+>>
+>> When ufshcd_dwc_link_is_up() fails, it returns 1. If this positive value is
+>> returned here, it will propagate up through ufshcd_link_startup() and
+>> ufshcd_resume() to ufshcd_runtime_resume().
+>>
+>> The PM core's rpm_resume() will treat the positive return value as a failure,
+>> marking the device as RPM_SUSPENDED, but will propagate the positive 1
+>> back to callers of pm_runtime_get_sync().
+>>
+>> Since callers typically check for failure using a ret < 0 condition, they
+>> will assume the device successfully resumed and proceed to access unclocked
+>> or powered-off hardware registers. This can cause a system crash or bus hang.
 > 
-> This is effectively the same concern I raised[1] in the s390+arm64 series:
+> look likes make sense, please check.
 > 
->  : Side topic #2, this entire approach seems extremely brittle unless you make it
->  : all but impossible for non-KVM code to get at KVM structure definitions.  Outside
->  : of KVM, all compilation units will see the s390 version of KVM structures.  Which
->  : is "fine", but obviously dangerous and IMO asking for maintenance issues down the
->  : road.
-> 
-> I don't think we need to go to the super extreme lengths I proposed[2] back when
-> we were exploring multi-KVM on x86, but the direct dereference of ->private_data
-> is a huge red flag.
-> 
-> Given that external usage of "struct kvm" should be *super* rare, and IMO is
-> something we should actively discourage, I think we should make it opt-in.  Then
-> at the same time, define the API so that it's arch-specific, e.g. to yield
-> file_to_kvm_s390() so that drivers/s390/crypto/vfio_ap_ops.c can get exactly
-> what it wants.
+> Frank
 > 
 
-yes, I was not happy with the ->private_data either. Thanks for finding
-a solution. Simple is good. I only came up overly complex solutions I
-did not like :) I will incoporate this. 
+Yes, I will create a new commit to address this issue. Thanks!
 
-> Diff below, though it needs to be split into multiple patches (I'll respond with
-> more to the full patch).
+Larisa
+>>
+>>> +	}
+>>> +
+>>> +	err = ufs_s32n7_link_startup_post_change(hba);
+>>
+>> [ ... ]
+>>
+>>> +static const struct dev_pm_ops ufs_s32n7_pm_ops = {
+>>> +	SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
+>>> +	RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
+>>> +	.prepare	= ufshcd_suspend_prepare,
+>>> +	.complete	= ufshcd_resume_complete,
+>>
+>> [Severity: Low]
+>> Should these sleep callbacks be wrapped with pm_sleep_ptr()?
+>>
+>> The power management subsystem guidelines require sleep callbacks like
+>> .prepare and .complete to be wrapped in pm_sleep_ptr() to prevent them
+>> from becoming dead code when CONFIG_PM_SLEEP is disabled.
+>>
+>> Assigning them unconditionally can cause minor memory bloat and potential
+>> compiler warnings due to unused symbols being retained.
+>>
+>>> +};
+>>> +
+>>> +static struct platform_driver ufs_s32n7_driver = {
+>>
+>> [ ... ]
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260916084411.941297-1-larisa.grigore@oss.nxp.com?part=7
 
-Amazing, thanks!
-
-	Steffen
