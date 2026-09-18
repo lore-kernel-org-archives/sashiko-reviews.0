@@ -1,44 +1,44 @@
-Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from mta0.migadu.com (out-61.mta0.migadu.com [91.218.175.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D6B3C942C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8BC4A92CB
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 08:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.61
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789717910; cv=none; b=d2MwBAbNrRZOciqZEbFilu0fj0RIfvJVOjmWQcudgizP7v2D16sMBWZWuUYC+RWMpzw7P3YeO8o5gcHziTOVOPoSk+fi1RR/Ja9Q/SIgeBMKxfWhSSaNtLtI7M4zssUccYAGq2OqN3AvqmvXPvF/30lXBiyp8dlib1QKmslIMsw=
+	t=1789718564; cv=none; b=bnmWwv/u+waPwYjtcPgFcNgancCQu/VSX6Mo8g1mncrWpsFYXH6Ip7/hKKPCi9j4K6uh4a7fGTp2b+1YNzCHR3v6zQDQ9VGx2iIKRvGYGCQcDr0dU3qfg8zYotdKO63ElRuuslRcdFajElcYzPh6tkG64yUMiRhBP6qTifEr7QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789717910; c=relaxed/simple;
-	bh=vRqJ5yg9W8o95f36YRoXXQIb51GKlM15Je1cIirs4uU=;
+	s=arc-20240116; t=1789718564; c=relaxed/simple;
+	bh=BD6KeVFjToaPnvzwjk6Z9XMyjhaKLhRQqywzy1BkJSE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R+zURMlLKL1PKwko2NdueAlNLEuxqOSb9fIXRo0NmVoWfO9KtC7UyxC3hDsKE3fNfBJS1u8HGMtv8lRxG0jCM9TPD2xKbg0GHFOyeuTUWlruBRSADO0Zzvktat2Wv0Fd3W6DZ/i4XqQkdhGK/sTZlF6tdz4eOSg+4wS/asR/sJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=djow2UH7; arc=none smtp.client-ip=91.218.175.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bzp1MAzEYpCQ63hEfoUZdZNa5Qxwd3pPE89Hh2oxu/OBm5fa2LCqzQ6F1ifNoZRKVDlgACY05NRR5JOXq9nokyhR9uPVT+B4cnDgMJqYJqHAFyFFUXw/Dm55xVgA7ZMBInTKvmNEzI+CTnryXrn+dpBBvP0XXmgx6aOFZX74Hm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wXRjZ3Da; arc=none smtp.client-ip=91.218.175.61
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="djow2UH7"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wXRjZ3Da"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=vRqJ5yg9W8o95f36YRoXXQIb51GKlM15Je1cIirs4uU=;
+DKIM-Signature: a=rsa-sha256; bh=BD6KeVFjToaPnvzwjk6Z9XMyjhaKLhRQqywzy1BkJSE=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789717905; v=1; x=1790322705;
- b=djow2UH7KwgEGy+w70P4X0O6Ho/4+fXIPYd11GSyF7oR3885NKWYcfoM8QuZ1F0Ouz1Qg11g
- atZdB3fZxob5rqlAsk7kRSRzhSPGeTKdY8BNAeSHJ+cIk0FUDCowHl2HUoCVY283UD6mn/EJ7Dx
- 3eno7p6KrOtCxr3RD21NsC64=
+ t=1789718559; v=1; x=1790323359;
+ b=wXRjZ3DacgssrSt2kzWsNHdwh3hjdXgafT/0sE21TNBJxVXdg2NZKEbsUNquqYuBjO2pxXX0
+ 6KfkDLqTAZEEiYPkzjV40zziamwR1FbqECKZbkFzZTmXU6wJNhbplGk+cXEEbGmBzP3870PxIwQ
+ EhZwvAfpJzTh4rFWnqtw6KbY=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 963e1ddd0f01cd40;
-	Fri, 18 Sep 2026 07:51:45 +0000
-X-Mizu-Trace-ID: 963e1ddd0f01cd40
+Received: by mta11.migadu.com with ESMTPS id 77279d4c5977da50;
+	Fri, 18 Sep 2026 08:02:39 +0000
+X-Mizu-Trace-ID: 77279d4c5977da50
 X-Migadu-Flow: FLOW_OUT
-Date: Fri, 18 Sep 2026 15:51:40 +0800
+Date: Fri, 18 Sep 2026 16:02:25 +0800
 From: Hangbin Liu <hangbin.liu@linux.dev>
 To: sashiko-reviews@lists.linux.dev
 Cc: netdev@vger.kernel.org
-Subject: Re: [PATCH net-next 3/6] netlink: specs: rt-route: add lwtunnel
- encap sub-message support
-Message-ID: <aqztjJazXlf-VT-d@fedora>
+Subject: Re: [PATCH net-next 4/6] netlink: specs: rt-route: describe lwtunnel
+ IP options
+Message-ID: <aqzwEXWYBQqSfNUu@fedora>
 References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
- <20260917-ynl_rt_encap-v1-3-fbbe6e680571@kylinos.cn>
- <20260918063656.953941F00898@smtp.kernel.org>
+ <20260917-ynl_rt_encap-v1-4-fbbe6e680571@kylinos.cn>
+ <20260918063658.80E4F1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -48,124 +48,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918063656.953941F00898@smtp.kernel.org>
+In-Reply-To: <20260918063658.80E4F1F000FF@smtp.kernel.org>
 
-On Fri, Sep 18, 2026 at 06:36:56AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] netlink: missing byte-order: big-endian in rt-route specs
+On Fri, Sep 18, 2026 at 06:36:58AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] netlink: specs: missing byte-order property for lwtunnel-ip-opt-erspan index
+> - [Low] netlink: specs: missing max-len validation for lwtunnel-ip-opt-geneve data
 
-Thanks, I will fix all these byte order issue.
+Thanks, I will fix these.
 
 > --
 > 
-> commit 18041b529d7678ae7bbdd8ee61a7fb4213ae6804
+> commit 15d568f88486d1cb50af0dbb912eabab2c37d852
 > Author: Hangbin Liu <liuhangbin@kylinos.cn>
 > 
-> netlink: specs: rt-route: add lwtunnel encap sub-message support
+> netlink: specs: rt-route: describe lwtunnel IP options
 > 
-> This commit adds lwtunnel encapsulation sub-message support to the rt-route
-> netlink specs, defining various tunnel attribute sets such as mpls, ip, ip6,
-> seg6, bpf, etc. It updates the yaml spec for rt-route and adds necessary
-> headers to the Makefile dependencies.
+> This commit replaces binary options in lwtunnel-ip and lwtunnel-ip6 with
+> a nested lwtunnel-ip-opts set. It also adds attribute sets for geneve, vxlan,
+> and erspan IP options to align with the kernel's definitions in lwtunnel.h.
 > 
 > > diff --git a/Documentation/netlink/specs/rt-route.yaml b/Documentation/netlink/specs/rt-route.yaml
-> > index 253037ea5176a..0e236da140dc5 100644
+> > index 0e236da140dc5..6030d7cb8d0d1 100644
 > > --- a/Documentation/netlink/specs/rt-route.yaml
 > > +++ b/Documentation/netlink/specs/rt-route.yaml
 > [ ... ]
-> > @@ -277,6 +332,229 @@ attribute-sets:
+> > @@ -555,6 +557,59 @@ attribute-sets:
 > >        -
-> >          name: fastopen-no-cookie
+> >          name: link
 > >          type: u32
-> [ ... ]
 > > +  -
-> > +    name: lwtunnel-ip
-> > +    name-prefix: lwtunnel-ip-
-> > +    header: linux/lwtunnel.h
+> > +    name: lwtunnel-ip-opts
+> > +    name-prefix: lwtunnel-ip-opts-
 > > +    attributes:
 > > +      -
-> > +        name: id
-> > +        type: u64
-> 
-> [Severity: High]
-> Does this field need a byte-order: big-endian annotation? The kernel
-> reads LWTUNNEL_IP_ID as be64 using nla_get_be64(). Without the annotation,
-> YNL tools will byte-swap this on little-endian architectures, potentially
-> causing silent data corruption.
-> 
+> > +        name: geneve
+> > +        type: nest
+> > +        nested-attributes: lwtunnel-ip-opt-geneve
 > > +      -
-> > +        name: dst
-> > +        type: u32
-> > +        byte-order: big-endian
-> > +        display-hint: ipv4
+> > +        name: vxlan
+> > +        type: nest
+> > +        nested-attributes: lwtunnel-ip-opt-vxlan
 > > +      -
-> > +        name: src
-> > +        type: u32
-> > +        byte-order: big-endian
-> > +        display-hint: ipv4
+> > +        name: erspan
+> > +        type: nest
+> > +        nested-attributes: lwtunnel-ip-opt-erspan
+> > +  -
+> > +    name: lwtunnel-ip-opt-geneve
+> > +    name-prefix: lwtunnel-ip-opt-geneve-
+> > +    attributes:
 > > +      -
-> > +        name: ttl
-> > +        type: u8
-> > +      -
-> > +        name: tos
-> > +        type: u8
-> > +      -
-> > +        name: flags
+> > +        name: class
 > > +        type: u16
-> 
-> [Severity: High]
-> Does this field also need a byte-order: big-endian annotation? The kernel
-> reads LWTUNNEL_IP_FLAGS as be16 using nla_get_be16().
-> 
-> [ ... ]
-> > +  -
-> > +    name: lwtunnel-ip6
-> > +    name-prefix: lwtunnel-ip6-
-> > +    header: linux/lwtunnel.h
-> > +    attributes:
+> > +        byte-order: big-endian
 > > +      -
-> > +        name: id
-> > +        type: u64
-> 
-> [Severity: High]
-> Could this also be missing a byte-order: big-endian annotation? The kernel
-> reads LWTUNNEL_IP6_ID as be64.
-> 
-> [ ... ]
-> > +      -
-> > +        name: hoplimit
+> > +        name: type
 > > +        type: u8
 > > +      -
-> > +        name: tc
+> > +        name: data
+> > +        type: binary
+> 
+> [Severity: Low]
+> Does this binary attribute need a max-len validation check?
+> 
+> The kernel explicitly enforces a maximum length of 127 bytes for this
+> attribute in its Netlink policy:
+> 
+> net/ipv4/ip_tunnel_core.c:geneve_opt_policy[] {
+>     [LWTUNNEL_IP_OPT_GENEVE_DATA] = { .type = NLA_BINARY, .len = 127 },
+> }
+> 
+> Without a corresponding max-len constraint in the spec, auto-generated
+> tools will not catch oversized attributes locally before transmitting
+> them to the kernel.
+> 
+> > +  -
+> > +    name: lwtunnel-ip-opt-vxlan
+> > +    name-prefix: lwtunnel-ip-opt-vxlan-
+> > +    attributes:
+> > +      -
+> > +        name: gbp
+> > +        type: u32
+> > +  -
+> > +    name: lwtunnel-ip-opt-erspan
+> > +    name-prefix: lwtunnel-ip-opt-erspan-
+> > +    attributes:
+> > +      -
+> > +        name: ver
 > > +        type: u8
 > > +      -
-> > +        name: flags
-> > +        type: u16
-> 
-> [Severity: High]
-> Could this also be missing a byte-order: big-endian annotation? The kernel
-> reads LWTUNNEL_IP6_FLAGS as be16.
-> 
-> [ ... ]
-> > +  -
-> > +    name: seg6-local
-> > +    name-prefix: seg6-local-
-> > +    header: linux/seg6_local.h
-> > +    attributes:
-> [ ... ]
-> > +      -
-> > +        name: table
+> > +        name: index
 > > +        type: u32
-> > +      -
-> > +        name: nh4
-> > +        type: u32
-> > +        display-hint: ipv4
 > 
-> [Severity: High]
-> Does this field need a byte-order: big-endian annotation? SEG6_LOCAL_NH4 is
-> a raw IPv4 address and handled as a struct in_addr in the kernel, but here
-> it is typed as a native u32. This might cause YNL tools to silently
-> byte-swap the address on little-endian architectures.
+> [Severity: Medium]
+> Will this result in an incorrect ERSPAN index on little-endian architectures?
+> 
+> The kernel parses this attribute using nla_get_be32():
+> 
+> net/ipv4/ip_tunnel_core.c:ip_tun_parse_opts_erspan() {
+>     ...
+>     attr = tb[LWTUNNEL_IP_OPT_ERSPAN_INDEX];
+>     md->u.index = nla_get_be32(attr);
+>     ...
+> }
+> 
+> Since the spec defines index as a u32 without the byte-order: big-endian
+> property, auto-generated tools will send the value in host byte order.
+> When run on a little-endian system, the kernel would then read a
+> byte-swapped, incorrect value, which would break the tunnel configuration.
+> 
+> > +      -
+> > +        name: dir
+> > +        type: u8
+> > +      -
+> > +        name: hwid
+> > +        type: u8
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=4
