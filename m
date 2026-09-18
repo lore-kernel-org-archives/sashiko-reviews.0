@@ -1,204 +1,200 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010068.outbound.protection.outlook.com [52.101.84.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD2F3C108E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 22:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789772346; cv=none; b=UlNJQsUc3GGEoq4WMyK4RnYkicPnXo9czuNiVHfqAXqMOcabQIPI4T4OhAfwTUZzMlzh9XIijYL39V2N9s32HUL1xo2by2/0qgsNkZkCInmu/dwc6TBqq+BXUFGdOSHkIeGOUldZt7O2NNh790rjOCFkYu/FSehsEXEsVmkLmPQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789772346; c=relaxed/simple;
-	bh=G/Y8boK2DU4xEhD6ed9UxEeD7zKg4QbYoDi+BwDtBu4=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pR8bdDU6XF+HT14VGJelDctjelyYVBOr8VyU9AxNu2z8Pvy/1p4p3/k0JgdgfbSCWfFcp/hrlOEEUEhc07uK3PjyIiXY3IUaGIvN8PTKvoGDDMFACvMmg3IfRzlBHqY4wYjA/5FYL5yXdMxKOmJvqPmkGRDudT7J6UQ/urrijm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CZdnBTDP; arc=none smtp.client-ip=74.125.224.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E57A2E229F;
+	Fri, 18 Sep 2026 23:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.68
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789772764; cv=fail; b=lyF/BlhIsMKmx12RSzBBzbK+6pLAo/bhBJGn+IVC3S3w8kNIxnOhTOK/ibxCk0BWgu6yHLEW77ZoidRFF/eUEPHJh1/hzLxhcLt6YTDhm6oKlGybr2WPVzTaoKz4Y0+ZJutI1NX1ZDvWBhJwopUr4Xk7S/QnHXvUZFIJ7/HqtGE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789772764; c=relaxed/simple;
+	bh=gSy+MmdqA6tQGOOqT6nYkooAb6G/XgnspV+ACxmqcIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=NhSzFeHLAFNRT2fgYQ2kp0i1hamJY5tTX6Q9n/ixuhyBa2ysvduXUMk72cjqP0YAjziIj2+GouyCksIO1moTxphM+IZtFf9662sv52vKdk57rbAQvNtQP4dWCtxIutOTJOTRSOQB7oTYmwpz4oYyVuKaqhfk8MfsXt1O/Dp7l3g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=nVfCCy+a; arc=fail smtp.client-ip=52.101.84.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CZdnBTDP"
-Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d43f9b119so11095307b3.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 15:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789772343; x=1790377143; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Z7+JE5sqbMswNstG0Mf2Li3BgMognV5IketQmgnwosM=;
-        b=CZdnBTDPjBLUH0r4NggqLxTHDptRhr/5smr8c+8BPQeFPv99+gcDysZnvDEpDbuKSg
-         OxPQCVHASmqKhMsokr3I/tYgmdqailKbKY9Iy3GNaMC9w1aXUAai7qPKZQztex/Zyd9O
-         x4MXovh74zli4fS+EWaUZe5kYIfIzW+2AqHe2X17r1gEufWnLQhD+63T5XGtAHyJLWC0
-         +nYSStSWJjyki3fIuwkGz4OUC+8gQmFOcJzejYG/udCDHX+zDZU7bu+WUgfXb8k3m5wj
-         aIN5Wz82Ir2omK4YilUb2LxRIUf6D2P0YEYO5G/qATfXyx208qlZKf6wqs9s3HgAH53k
-         Gr8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789772343; x=1790377143;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Z7+JE5sqbMswNstG0Mf2Li3BgMognV5IketQmgnwosM=;
-        b=fR+ZfFeGJhyU49XoBlXKJR4qUMvT0Qx3GaC1ULnOxvEz5LdGlcUJfF4sqSRERAspDO
-         AJiehRfFbVAeiqJGhmfUfhQi5sf0DWGa3Vt7mGoYDr4BqnOH0PUIajiKWzMI2HI8YuhL
-         0NcQHCSsaXEOEn4fmtZ1cuNPyuRoQ7aCJ2yXfnJjoyWaJk+qzaWHgh/XMuLHfDDGC6rn
-         yGWf94Eu5BhNQpLWyd4H9U15VVeWiON8pg6WD8/Fr/fmsX/bzrk4zIMcQJemSZzEcgPP
-         quqEkBjTs6oFBBjxpsYhURKHGSZYd3pk7M/pQaJTbiRPPVxudFtL+3CaoU8cltxtmbRe
-         HhBg==
-X-Gm-Message-State: AFuF++kDZYio+7eTwLab8S/eoxmHSooQAACkCk1K0wQVDQdnwBwZ1du0
-	fWT4j0l3NW2a1l1XnePkcy8IObpqEkLObPeMyAis6CjW9dwTVapMtBvIKDFfAg==
-X-Gm-Gg: AYBFou0ZTtL1WDVSwXkuExljbJ13i2S2tFlaTB+NmKDwXrgFyl1Y8jEaWT2nZ/M3zmV
-	AsqHZTc2DDStIgNjJfyBtu3xsO/EVkjLl18/iHYe3ISAyQ5KQ5MzjNxROcSSkpdqMvrFI2pF/cn
-	XMMxs47YwQGVZ8V5uYRxx0xkoTxhQOecFILI009Px+pus44uF0mfocOT1LFWz0kUj6uUT+8OvEc
-	jxEMNFvFC4BRVZYLu8+DLyIruucDaoowwpFZe8Z9RRSa1sWx+H7K0YkZs+pMOs9ZWgFHmQNaw1u
-	fERAeKMBZq/DGno4FCqzT6uVQN35UgkxWIpfrQOnsbX5i5Rjf8GHnC+jB+9eQSS5XRrb6+gtjHo
-	o1p7SGHDUgOxoJcgpjU4kFEPgalYankWxZ9S1VvJnDwoqeFMcljhKqUgCJIshFy5QArlu+rrNgC
-	mnorJg5gktqnF3a1WswI//7tr/itIVkTsJvWDIgc6Anzni/ZnhGWQ9tp2xK/oUpZ49ktA6oxawn
-	e+95rfAYF0jbwF6YlUNhcXKn4Hkm5craSjATxviSRY/59K3nQ==
-X-Received: by 2002:a05:690c:c4f1:b0:87c:62fb:9833 with SMTP id 00721157ae682-89730420b52mr15265477b3.6.1789772343583;
-        Fri, 18 Sep 2026 15:59:03 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-89a4761747asm4285417b3.30.2026.09.18.15.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 15:59:03 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Fri, 18 Sep 2026 15:59:01 -0700
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="nVfCCy+a"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wTqt/3uRPfY36W9XWLI1ZILMB9OPwIuTPd4VBsasQQ25NNdqjBnxq3HWgky+hjmn1irmlphcpyUc7J0VpnAUsMfTuY0EWqudwXI2KpKDAJ09vA5Xt6PAFdSZ7tXR9G9CddwZ9eJwh5gimmCEnyAGX6axFSGss0vl9NupJMEXeH69v62dKR4LYtoURgBzSOg7KF73viPxigg9AIr2RzU0uP+mYFSBy5mav1Oqre5412Ma8zXwPOqXCAOv9bS45Al237JYa+ZV0LbTtAOX7/WQBX59HhNp6KqSRoZid/5jqZ4dvP1Xs1nmyvF5dRZLTkXr7yhUVxhoxVuRrn+XoOkukA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8sTEfqgMvYS8IC5fCum30cXAo5VrL2JqJnun2gOhdcU=;
+ b=GU0+yc4Hz8e2YuHhyQY0Ljx/nFYF3XipSF/2azpk9tj1X7qLgIRTk5x9EjXtOARYVDuIygFXVeiayUIudKjcnNsUZw67DLdDnw1t0mj1jSpdorehF1wDDjH0KPzGpGlfgpejVc+1BXixFsZl4gMo3PA4H2h/9RJi+/wRDNFjt8SzYEj8M9CbjbEi0pBznQe5Zpq1N2zxRWeQabrZGayNZNdtAUEPPjpOF+fi9E3cLDvb2dD3MuJ3h2znVDZMyF9iRS4DSUYHytX7toya6epdqsHNF0DX6oYnCBXTmHn+3fGSU8FWmWdhbOWvEYTK/lVwAW98AXQDXZaO08Vauvj6nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8sTEfqgMvYS8IC5fCum30cXAo5VrL2JqJnun2gOhdcU=;
+ b=nVfCCy+azGTZt67UKNdBvRgI5hqq3Q6YpdBos3J/h0Bn/A5C5TNO5dHoWIySv7I483GJ/5VEnNeoO048pt4HQUvxhcrYfx5jZhzsypIV/dSaxJd8Rt5scUvcDW7497i33eDoCjd/X9JCn1w7RYPEaAcsGZGz5ldhISZvcUlwpyEg/ZR2htjGwtV0FR+czH6FWL2HEl1U8/z/pZEP37wc2uTd+X9PQHOvAWxfYVuSZ0fXHJYFUNlwBdiyAa9NvQgm3zOzfz4fzHHKiRWzvSfOySt41VLSSgzle59ta/6059QB/jYikEIAG4UV2U7KGZEdw7P2d1gCeHVtrpWZFziDmA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by AM8PR04MB7906.eurprd04.prod.outlook.com (2603:10a6:20b:24e::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.14; Fri, 18 Sep
+ 2026 23:06:00 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%4]) with mapi id 15.21.0428.011; Fri, 18 Sep 2026
+ 23:06:00 +0000
+Date: Sat, 19 Sep 2026 02:05:57 +0300
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v14 2/8] cxl/mem: Read dynamic capacity configuration
- from the device
-Message-ID: <aq3CNTPThN2Q2Gga@4470NRD-ASU.ssi.samsung.com>
-References: <20260918203049.7273-1-anisa.su@samsung.com>
- <20260918203049.7273-3-anisa.su@samsung.com>
- <20260918204428.E2C4D1F000FF@smtp.kernel.org>
+Cc: bpf@vger.kernel.org, imx@lists.linux.dev, Frank.Li@kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH v3 net 2/7] net: enetc: ensure enetc_xdp_xmit() calls
+ enetc_update_tx_ring_tail()
+Message-ID: <20260918230557.bzboccc22ku7bzhx@skbuf>
+References: <20260915222735.1016937-1-vladimir.oltean@nxp.com>
+ <20260915222735.1016937-3-vladimir.oltean@nxp.com>
+ <20260916222806.6011F1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916222806.6011F1F00893@smtp.kernel.org>
+X-ClientProxiedBy: VI1P191CA0010.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:800:1ba::18) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918204428.E2C4D1F000FF@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|AM8PR04MB7906:EE_
+X-MS-Office365-Filtering-Correlation-Id: c9630d5a-dfdc-4310-06ef-08df15d967a8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|10070799003|1800799024|376014|19092799006|366016|10067099003|5023799004|11063799006|56012099006|4143699003|3023799007|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	tfs4v+Fbt5vCIuiNzRSiQGuOVpalfBJK5YGuF9wD85ZDIhsXSt0efMD6WXe262RQkjCksWjURJW++EjDm014CrNkTYVZRVKA7XPchg3DqWNtVNwViRKiBISHa8JStDpZkEhJ9C9BCB616uXIBYkiUxDnzVG6gm6iLhcnaRgzlNKrZWsr7O7G6esrFSPqftMPoquckdnlYKcsVhtgU3cnx5EClRZySw/Poo9Mf9D6CrFFEBg0FCBhSUNMv2qUrdMNs2C6hkmCGzPvrK2JnjJLIEXaefNKtt/r22PLc/Zpw7d8gd10XbzWcha7axw70VYZsvI7CvrgEbW4qb94bwv8KmMF0aWO+13AwyoN11EsusNie98DmHN4R0ZXEgENlUqk8eTn+wBN9pWpwK/a3vXrPT3vWlNZXZ3VgVgod2aBjVrk7ylLeTh0duGFSnttX0WYlsypAG5pyU/ytEeFJ9ByXZOxNycyMUMpr4KcbyhoV5dom643kHyLlnu54jdVYF8GPx+3aXqX6o0ao8xcICbTYpgkQ8ItSBaVkMDmYCSqtBViCzFd+7N9NYyzirggTwcjjGC0pxKwUvbaDhf8n3gGnyTKMTj/vEy7QOROUmIqmyxMDUoZOE9UJkwj3DO6DDrrunlGJTEFZVGhL0Ezl/oSBxRBjiMQnke4XSbHyiWzGso=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(10070799003)(1800799024)(376014)(19092799006)(366016)(10067099003)(5023799004)(11063799006)(56012099006)(4143699003)(3023799007)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?3vJ5Jk7neJMHhmHGN2BpcFrvV6SSVz6DQc4BBw879u5RkJgHT/8dNvJMyzPD?=
+ =?us-ascii?Q?VrdZZe7LXEaQhGSnB+CS9kuNzzSqCPqfbBiMvCGLUlRNvuyY74G09EwGinV3?=
+ =?us-ascii?Q?z4Xdr7WFGQd+d+A7VIMFdk2KYW+CTasQrvBLIqkGm45zf8KCraC0KQkR3uSp?=
+ =?us-ascii?Q?FsWN7H/AxMmqUGCwFbzX2+sh3H7P3gTXZITn/8lT7ANYldRtsjH4zONnL/bh?=
+ =?us-ascii?Q?C96craNi0Lz35rG5aRtac/d9eY7sBUoP1/tV8nVhFj8m43IDc2q+lqFNL69v?=
+ =?us-ascii?Q?nlHV5BORZoISGEwql2MtPqgHJQXX9fo/xGXN7ukUh2jiKlMYrQa97SQsNLc+?=
+ =?us-ascii?Q?tmMZL+Pli8D2o8lhDATY/z2de95WnFcgRizMinkcl1NNhhIkb69xZCmkaChN?=
+ =?us-ascii?Q?iK2kS4HtLiWTvsf0EDYSpVLpnhHndC4g6FjvgoQ+PhD8O6SD80yGrBFfwDOf?=
+ =?us-ascii?Q?fPzp+7cV8Y+Yj2GxMmj6NnnDJx8JJpxOgnxm5hUIgNqbmiluA/HvzN9LL2l0?=
+ =?us-ascii?Q?G2m2tp+cNvB+U+J2bhTWZmqDw7b1gdEeNK53bglgNS+JWJ4XunXIXZEfR4at?=
+ =?us-ascii?Q?CgmBfjvfsGKa29DBJu6tiBzjNFIMRCNoiv+Jd0YBP+fd/N/BP3MjdK+4+rMZ?=
+ =?us-ascii?Q?MamiFE4VRhh0bI0AZKQqg5aeI5ux3FmwwXtKxwMBK/d3mdaYXIXmfyk941E/?=
+ =?us-ascii?Q?rL91K7PEsHdWsYTahUP3DyynUiD41G6JT9N6qrF0JoybIml5kXSUedZyJPBj?=
+ =?us-ascii?Q?Yz4xD942N+DsRrW8aMvU+6TK8md7OCH2YwBiu+30ufSqeBtzD/eAmKo+vKSF?=
+ =?us-ascii?Q?nhIvjX7MZzBQBfoGPXO+4iMxBX7CHzFDbc0j1VgskX6HxkON0y/uogp4r/Go?=
+ =?us-ascii?Q?C6/u++bEO+Lfqk5Iup30xeiBzH1sZQYi09pM6fTtY3nWjEsQacoSC0zXQ1S1?=
+ =?us-ascii?Q?HDcQ7ekU9lVqB3Sn9v/gYxd+lT+I0mPmyOSGly8H3td0jF0RVvckSN3uCVMg?=
+ =?us-ascii?Q?xC+qOmJCCMssgu7QD8Xoz4o9ntLUsE2kcuv9S3WfGWv1tp1z5daYGi6S8l4W?=
+ =?us-ascii?Q?OLoeK7caEVpjIor6dsMgBKmNaz7WEzMn4nBOuq1jEUdNJmD0nLsKcf/IlnD3?=
+ =?us-ascii?Q?vMOd8tEgbsmP1mbYWE2R94Yn9pWXd/DQKZsZhgk562lJWlAfzUy/nvxB3KnO?=
+ =?us-ascii?Q?M0p9KzbgG1oTWTf//9rlrSpQF01KdmGYxvxt0Rj/W77Dvh72JKGYkZv11ohr?=
+ =?us-ascii?Q?j7H9oa0yXlgz59aL+8YwVjhITZGE6ynr8GYixeyAHrPNb0QyJVa8eREgo0Lr?=
+ =?us-ascii?Q?Ra9JALECLiOc07Wz7UtjXrrGnUMXC9YzUaqzRElAH65JnV3I5PTNAU85RtvM?=
+ =?us-ascii?Q?mFhpo94PdwdB0QmpetT367SxEw2nE+5kkvcewTNTxSmdEBKSskWNCari4V7L?=
+ =?us-ascii?Q?Y3obZsFXLzXeFZqGcunOP9BWjAyUw7j+01MoiMb7iF5BwxlbxGY96C2co7bl?=
+ =?us-ascii?Q?Dtf+pREyz64ld6LqkP7jhQKKk9gb09RjyPbbdgUCtAVZRvN9wxCmd7qV5VI/?=
+ =?us-ascii?Q?BOtZgwqXnOk0w6OulEWI+2aYotzK/roOxDQE838OCuyJ8Q2cz7mFAvREzRl7?=
+ =?us-ascii?Q?fFe/2ljDTWC0LclyayQjD7DzCrxWxVYW4drvekTzipAjAM9a23x3giU5XcZ/?=
+ =?us-ascii?Q?DOzbJ9sIxcJBjc5xGzYx3MzUPySvZNRMWidB6N7xWEN5SQ3e8dCwi7bd14v7?=
+ =?us-ascii?Q?0lQhjLaJM7EGM3HbfoK8FWtZmV4gkDNLkOP63QxyhXKr7lv7I5TqYvbI41Pv?=
+X-MS-Exchange-AntiSpam-MessageData-1: I0H+vCW/KrCWOFTc7ipzelrZvaKH2vL8y60=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9630d5a-dfdc-4310-06ef-08df15d967a8
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2026 23:06:00.3088
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: askH326jMxhL/7AnU6bAOkLT3mD2qbtMbur5EVH/MsFdJGhQn3eTV9PlpHkQESjrBhn79LX4QgXkjFg4/cVxXA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7906
 
-On Fri, Sep 18, 2026 at 08:44:28PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Sep 16, 2026 at 10:28:06PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] cxl/mem: cxl_configure_dcd() incorrectly treats Total Capacity as static capacity boundary
-
-False Positive
+> - [High] net: enetc: missing XDP_XMIT_FLUSH doorbell when k=0
 > --
 > 
-> commit 72ce11842054ad85a9e98674e8c97e80cf0a2d21
-> Author: Ira Weiny <iweiny@kernel.org>
+> commit d8271163a46118cc9a3212492775857b3ece7ba0
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
 > 
-> cxl/mem: Read dynamic capacity configuration from the device
+> net: enetc: ensure enetc_xdp_xmit() calls enetc_update_tx_ring_tail()
 > 
-> This commit implements the Dynamic Capacity (DC) mailbox commands to read 
-> and store CXL DCD configuration information. It validates the first 
-> partition and ensures there are no gaps or overlaps before configuring it.
+> This commit modifies enetc_xdp_xmit() to fix the condition that triggers
+> the TX doorbell. It removes the redundant xdp_tx_frm_cnt variable and
+> updates the check to verify if at least one frame was sent along with
+> flush requests.
 > 
-> > diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-> > index b3419df586b9c..15df8db314d90 100644
-> > --- a/drivers/cxl/core/memdev.c
-> > +++ b/drivers/cxl/core/memdev.c
-> > @@ -643,6 +643,54 @@ int cxl_mem_dpa_fetch(struct cxl_memdev_state *mds, struct cxl_dpa_info *info)
-> 
+> > diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+> > --- a/drivers/net/ethernet/freescale/enetc/enetc.c
+> > +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
 > [ ... ]
-> 
-> > +int cxl_configure_dcd(struct cxl_memdev_state *mds, struct cxl_dpa_info *info)
-> > +{
-> > +	struct cxl_dc_partition_info dc_info = { };
-> > +	struct device *dev = mds->cxlds.dev;
-> > +	u64 total;
-> > +	int rc;
-> > +
-> > +	if (!mds->cxlds.media_ready)
-> > +		return 0;
-> > +
-> > +	rc = cxl_dev_dc_identify(&mds->cxlds.cxl_mbox, &dc_info);
-> > +	if (rc) {
-> > +		dev_warn(dev,
-> > +			 "Failed to read Dynamic Capacity config: %d\n", rc);
-> > +		return rc;
-> > +	}
-> > +
-> > +	if (dc_info.start < info->size) {
-> > +		dev_err(dev,
-> > +			"DC partition 0 base %#llx overlaps static capacity ending at %#llx\n",
-> > +			dc_info.start, info->size);
-> > +		return -EINVAL;
-> > +	}
+> > @@ -1845,19 +1844,17 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+> >  						    &xdp_redirect_arr[i]);
+> >  			break;
+> >  		}
+> > -
+> > -		xdp_tx_frm_cnt++;
+> >  	}
+> >  
+> > -	if (unlikely((flags & XDP_XMIT_FLUSH) || k != xdp_tx_frm_cnt))
+> > +	if (unlikely(k && ((flags & XDP_XMIT_FLUSH) || k < num_frames)))
 > 
 > [Severity: High]
-> Does info->size here represent the total capacity (volatile + persistent +
-> dynamic) rather than just the static capacity?
+> Does the addition of the k && condition block the mandatory XDP_XMIT_FLUSH
+> doorbell if the current transmission call fails to enqueue any frames?
 > 
-No. The info returned by Identify Memory Device does not include dynamic
-capacity.
+> If the devmap subsystem enqueues a full batch of frames with flags=0
+> (no flush), enetc_xdp_xmit() successfully enqueues them but skips the
+> doorbell because k == num_frames and flags=0.
+> 
+> Subsequently, devmap calls __dev_flush() which invokes enetc_xdp_xmit()
+> with flags=XDP_XMIT_FLUSH to ring the doorbell. If the hardware TX ring
+> is now full, this call fails to enqueue its pending frames, resulting in
+> k=0.
+> 
+> Since the modified condition evaluates to false when k=0, wouldn't this
+> skip the doorbell entirely and leave the previously enqueued XDP frames
+> permanently stuck in the hardware TX ring?
 
-That's why we need to send Get Dynamic Capacity Configuration to find DC
-partitions and their sizes.
-> Since cxl_mem_dpa_fetch() initializes info->size to mds->total_bytes 
-> (which is the total capacity), comparing the dynamic partition's base 
-> against this will evaluate to true for spec-compliant devices, 
-> unconditionally rejecting them as overlaps.
-> 
-> > +
-> > +	/* A gap between static capacity and the DC partition is not supported */
-> > +	if (dc_info.start > info->size) {
-> > +		dev_warn(dev,
-> > +			 "DC partition 0 base %#llx leaves a gap from static capacity ending at %#llx\n",
-> > +			 dc_info.start, info->size);
-> > +		return -EOPNOTSUPP;
-> > +	}
-> 
-> [Severity: High]
-> If info->size includes dynamic capacity, would enforcing that the DCD 
-> partition starts exactly at info->size be physically impossible without 
-> overlapping the unprovisioned space at the end of the DPA?
-> 
-info->size does not include dynamic capacity.
+This is fun. The LLM has no idea what it's saying, but it's saying the
+words that are gravitating in the right direction anyway (kind of).
 
-> > +
-> > +	if (check_add_overflow(info->size, dc_info.size, &total)) {
-> > +		dev_err(dev,
-> > +			"DC partition 0 size %#llx overflows DPA space ending at %#llx\n",
-> > +			dc_info.size, info->size);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	info->size = total;
-> 
-> [Severity: High]
-> Could this lead to double-counting the dynamic capacity?
-> 
-> Since info->size already includes the dynamic capacity per the CXL spec, 
-> adding dc_info.size here would inflate the value. 
-> 
-info->size does not include dynamic capacity -__-
+Specifically, it's unable to articulate "the original code was
+functionally correct, it just needs some cleanup".
 
-> If a non-compliant device bypassed the overlap checks, this inflated size 
-> could also cause the strict contiguity check in cxl_dpa_setup() to fail 
-> later during device probe:
-> 
-> drivers/cxl/core/hdm.c:cxl_dpa_setup() {
->     ...
->     /* Require ordered + contiguous partitions */
->     if (i) {
->         const struct cxl_dpa_part_info *prev = &info->part[i - 1];
-> 
->         if (prev->range.end + 1 != part->range.start)
->             return -EINVAL;
->     }
->     ...
-> }
-> 
-> > +	dev_dbg(dev, "Adding dynamic ram partition 1; %#llx size %#llx\n",
-> > +		dc_info.start, dc_info.size);
-> > +	add_part(info, dc_info.start, dc_info.size, CXL_PARTMODE_DYNAMIC_RAM_1);
-> > +
-> > +	return 0;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260918203049.7273-1-anisa.su@samsung.com?part=2
+All other drivers only ring the doorbell if the XDP_XMIT_FLUSH bit is
+set in 'flags', and I wasn't able to understand why that is correct/
+sufficient, either when I wrote the original commit, or this 'fix'.
+
+My concern was: "if a full batch with flags=0 fails to be completely
+enqueued, don't I need to ring the doorbell anyway? what if another
+ndo_xdp_xmit() call never comes?" and as a result, I remained under the
+impression that this is condition that needs handling.
+
+But the answer is "it _will_ come; the only reason why you got an
+ndo_xdp_xmit() call with flags=0 is because there's even more data to
+send, it's just that there's no more room to store it in bq->count,
+so let's first send what we gathered thus far". The remainder _will_
+result in another ndo_xdp_xmit() call, which (if terminal) _will_ have
+the XDP_XMIT_FLUSH flag.
+
+What is even more interesting is that, after dead code elimination,
+enetc _does_ behave like every other driver, and there is no bug, just
+misunderstanding. Because as identified, "k != xdp_tx_frm_cnt" is always
+false, we have "if (A || false)" which simplifies to "if (A)". So enetc
+flushes the doorbell based on the same 'if (flags & XDP_XMIT_FLUSH)'
+condition as everybody else.
+
+I will remove this patch from this series, and resubmit the cleanup part
+only to net-next.
