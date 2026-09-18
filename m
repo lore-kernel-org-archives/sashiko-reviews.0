@@ -1,111 +1,183 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CD235201B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 12:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E9522F388
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 12:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789735518; cv=none; b=sGhut3o0Zmvon4hTc4Gyum46/rMX9CYpUT+QL5QiCkn318V69m9UOycToS0EKgVCuQo3qSE+x5vV4pfYWqx2bk5ZOIywgpi+MOn9K14SlKa5hykeqfc7iINF+6GFRQzQwjKc8omFTVBJLFAEGTnT9u/qJ5RKf1Quptf8mOQuWcI=
+	t=1789736052; cv=none; b=mAdZ7pFowGHXoOeYHLngRZWsrAKBRPyYX/ZrY5EVgHdY5GTlernw/tsv3mvTccPahDmGlvm5rGUUvP3nxBHVgzYjyyw853C8fbUpa2Nxvg2Dv/BHdalpif8NlYP2fBIPiADHJaTanAe5J5k0NlabanbjwIvSe89bULBoH1pTcFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789735518; c=relaxed/simple;
-	bh=yl6pFmV/xEg1vNv9xDvMEwbWpUcLiqdUahh2XN+OByI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A94H/XKFhtJNhil9UCbHt+aK/lfVO5E1Seg7WHJ+V3lYRmVEabyyZa7T0dV2DeX7xDbS8lhmZS+gafP+whwt7DCh+RsY4pFx6+PO92SQ46VsGqa07pZqMMySy8ew9Q1tRJ5fu2UsClmesF0Xyc5b2/eqWNx7aHoLZiiG1BKb34o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MVgOnUEL; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789736052; c=relaxed/simple;
+	bh=2iNBoZxSstrk0r9oQODWfc6wCfvzQI153E4ct4gGy3c=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=OTBbiaS6c23Dk8KQ3TfPvgCpRN3JXOok2aXa4RLKmogkBtcS0rgMilSisuMu3xiMgsu3ekEGJgW67c3ZJG4lj1EFWxbWFgmu3cNepbeEPsKADnZHBUWMZvUov92e6rSgyIS132N76dW2wXA5wSH4d1EDn6bDJbxa3xPSZfrg+Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=Uhc8NhEo; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=qjmDHYnZ; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=HSdZuaf4; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=lcWbmhkY; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVgOnUEL"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49b912d37b5so4607555e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 05:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789735512; x=1790340312; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yl6pFmV/xEg1vNv9xDvMEwbWpUcLiqdUahh2XN+OByI=;
-        b=MVgOnUELMhtY3Yuk9xrhddOWahe/vbGH5lS8ecGXR9r/xHeTSpJxv6tmnb+AfveAX3
-         3HEM6nzth2wODvisEtCFSkAv99rTLav5iBtQEItQlfeNWKtvoIuRCPq43guSb70d2G+0
-         h2KycI37GcQrYzHt/g0fBLTPF/fKBlAJjyJ4hARAJNwdf1th2a3eUShRYZXaWGHemL48
-         U6CU5/jfUHbuPItUcuUwuze7xUY40zBC6vwUuqnoEVIF900dxQ6QBglJZhW7vXT9MwsL
-         lsa2/vf+9zExgal0BKUkJBmzxB4tQr4DB14rTw+XUrkXy2suxj8JCt97n7hHI/ayfnB1
-         PElA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789735512; x=1790340312;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yl6pFmV/xEg1vNv9xDvMEwbWpUcLiqdUahh2XN+OByI=;
-        b=Rbx4FAwEk+PibBhlQA/kZXHkDXqj1iXqd1TeWWb4I38le6bQx8ja8mZg1VlBvXDVjk
-         UFDh17s9PoWt3FxB/MTpHcspwswpUS7iqyZ9pLg5dOLbtaq3WpC3jUyrI2mRL5+977LB
-         iYBwl7pRFuMzbqCoR+saZuL/CVO+gEjYBRN5h5kK7bJq+KKYEZFptRtv9NkMdwttrSiL
-         l99u0MjAEawqLGRHiqfmaaF4IORCSLAo5vZasV0yhxxB4gAkJNriLVSn3Y+X81YVGBPi
-         gv5sq3m/lshGl5iOTPS4Vj8pbcu3g6W0FRfzvPFUYhYHitCr4qeBIjHcLITFeNagrk8h
-         xfJg==
-X-Forwarded-Encrypted: i=1; AKwUvByp4fsJbckzGK4ikMJgoxlyeD3bibhs7QpGcKcRGYuA/fA6aaptpuY9OB4lihK7WFJtcfS9JAMdEaMa/wtesfQ=@lists.linux.dev
-X-Gm-Message-State: AFuF++nRZYaIPf1+NNC2QZL6JoC32PxewJokRO4EWY3jgToZe/SAMGXt
-	eIiujy3nAuuFjr/5MpnzKAXepfZl5bxMyOGbDDSw/PycEFLxJl2fFIIV
-X-Gm-Gg: AYBFou0BD058QC/35GQNueqHkY4657D9955srfWikZM5CFtKvbOY0TMjIP9oKdEXX4C
-	wsYACIDIkkLxVxyn9R54kxXDgRhr+fxS7SKU+5spysSe53g2orGI9WCt5oO18soZVDtYss/ofMS
-	AlwK6K4IIQsOHhbGdjw7uZ8P0Bwqv6gJxr/bNaD4hQS0ZBhI02jc8f5vlf+4tsZBOLPFsfNgcPP
-	PX3yy7V6JiecPNwBpnRYc+y1Uf9rsa9UOZzKZZB3i992tyDdPJKQgxufRbk53gtypAFpBuldw5f
-	gTKTkH8cTHDfCwp7xFdVW0ukJsNhEP67ro29Z2VC5hLn24t4TyWT97c2DwO0As0jFlltf4yILkH
-	f86/imQVSWP1eCecuBNc+RJBpavABCV0gj/Z1+odDNaQAWGVGh2XUIR4lBLq+ApKKrkMFobXGWM
-	ePMzsBVUtMR0X+hiCgYdCUxeSmcqQ64NYyUJTLGNB7svm1Qd3wJL8eWayEM92oe0YWhvtxKq87a
-	nEQJ07qY4X1XAk=
-X-Received: by 2002:a05:600c:34c7:b0:49c:ff8d:b548 with SMTP id 5b1f17b1804b1-49fc5726cfcmr73044225e9.11.1789735512203;
-        Fri, 18 Sep 2026 05:45:12 -0700 (PDT)
-Received: from dell-desktop ([2a02:587:4b4e:8500:290c:210b:1c76:5710])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fc7d8cee0sm48825095e9.15.2026.09.18.05.45.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 05:45:11 -0700 (PDT)
-From: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: bpf@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	tasos.papagiannnis@gmail.com
-Subject: Re: [PATCH bpf-next v8 3/5] bpf: Add user memory access kfuncs for mm_struct
-Date: Fri, 18 Sep 2026 15:44:46 +0300
-Message-ID: <20260918124446.462781-1-tasos.papagiannnis@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260918093017.AFF821F00893@smtp.kernel.org>
-References: <20260918093017.AFF821F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Uhc8NhEo";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="qjmDHYnZ";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="HSdZuaf4";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="lcWbmhkY"
+Received: from pobox.suse.cz (unknown [10.128.32.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 210E721DAC;
+	Fri, 18 Sep 2026 12:54:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1789736044; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lBBBWCqHsiNlUhjmYq/WLrwwKy4QikepSdDZAZ5FYWE=;
+	b=Uhc8NhEo9yHWmXYQH7OPyVPZp2eAwQJmfdPh7QamrcDP1KS7L2A3sqMu7g5JV66aG0dSA+
+	P5x51YICGkhkCQI+38+SmE88IxxUczGk6N7nUDBShig4kiDH3KdZxneckYIOo2ydrdpU0/
+	kjaw3NILGcrLk69YdHv7KLztZDQdPR4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1789736044;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lBBBWCqHsiNlUhjmYq/WLrwwKy4QikepSdDZAZ5FYWE=;
+	b=qjmDHYnZjY5hxTMQigxWcbufakKNaslXXtfGKVefnNcosdCgAsoZrCiTF55gGeNlpvDSQQ
+	DiFomEScvRROXvBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1789736040; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lBBBWCqHsiNlUhjmYq/WLrwwKy4QikepSdDZAZ5FYWE=;
+	b=HSdZuaf40j2m39W2xQR8dOdWUqbgXCUo7JO1DOEeLK+L0ymbJoc5n+O/8b1OfBG84W+3Y6
+	EngDrOJt8YDCoDY63BRZdjIxUtE/vHTeNxa1e4HNCAfN3uv9FrYj4Bm9ozM2xptUTTV3BN
+	DfdT3xt0R7peOulXgy1CfEoSNZVzU1Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1789736040;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lBBBWCqHsiNlUhjmYq/WLrwwKy4QikepSdDZAZ5FYWE=;
+	b=lcWbmhkYzV6dX3VO/ezupKZFQ9YxxYdpuYTU75Kbd80ZyjMsY2LuHFS+RRsl2wrsOEj/D1
+	+3GQQf8oD1ZPkeBw==
+Date: Fri, 18 Sep 2026 14:54:00 +0200 (CEST)
+From: Miroslav Benes <mbenes@suse.cz>
+To: Petr Mladek <pmladek@suse.com>
+cc: sashiko-reviews@lists.linux.dev, Harry Hsu <x90613@gmail.com>, 
+    joe.lawrence@redhat.com, jpoimboe@kernel.org, song@kernel.org, 
+    shuah@kernel.org, live-patching@vger.kernel.org, jikos@kernel.org, 
+    linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] livepatch: Fail object initialization on duplicate
+ patched function
+In-Reply-To: <aqAHU9Qecqvl88VT@pathway>
+Message-ID: <alpine.LSU.2.21.2609181452160.21788@pobox.suse.cz>
+References: <20260908120325.299649-1-pmladek@suse.com> <20260908120325.299649-2-pmladek@suse.com> <20260908121744.81D641F00A3A@smtp.kernel.org> <aqAHU9Qecqvl88VT@pathway>
+User-Agent: Alpine 2.21 (LSU 202 2017-01-01)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Score: -4.30
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.998];
+	MIME_GOOD(-0.10)[text/plain];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_ZERO(0.00)[0];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FREEMAIL_CC(0.00)[lists.linux.dev,gmail.com,redhat.com,kernel.org,vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pobox.suse.cz:helo,pobox.suse.cz:mid]
+X-Spam-Flag: NO
 
-> [Severity: High]
-> Can this result in a Use-After-Free during concurrent task exit?
+On Tue, 8 Sep 2026, Petr Mladek wrote:
 
-> When a task exits, mmput() drops mm_users to 0 and calls __mmput(), which
-> invokes exit_mmap(). exit_mmap() releases the mmap_write_lock and then calls
-> free_pgtables() without holding any locks.
+> On Tue 2026-09-08 12:17:44, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] Atomic replace patches will fail to load if previous patches targeted aliased functions.
+> > --
+> > 
+> > commit e5553650270f93e11fe885d264a3829802223d3a
+> > Author: Harry Hsu <x90613@gmail.com>
+> > 
+> > livepatch: Fail object initialization on duplicate patched function
+> > 
+> > This commit introduces a check to prevent patching multiple aliases of a
+> > function within a single livepatch. It fails object initialization if aliases
+> > resolving to the same address are detected.
+> > 
+> > > diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+> > > index a240d1144e89c..a6762cbe74b70 100644
+> > > --- a/kernel/livepatch/core.c
+> > > +++ b/kernel/livepatch/core.c
+> > [ ... ]
+> > > @@ -885,6 +885,21 @@ static int klp_init_object_loaded(struct klp_patch *patch,
+> > >  		if (ret)
+> > >  			return ret;
+> > >  
+> > > +		/*
+> > > +		 * Aliased symbols share one address, so they would resolve to
+> > > +		 * the same klp_ops and stack up on a single ops->func_stack,
+> > > +		 * leaving the redirection ambiguous.
+> > > +		 */
+> > > +		klp_for_each_func(obj, prev_func) {
+> > > +			if (prev_func == func)
+> > > +				break;
+> > > +			if (prev_func->old_func == func->old_func) {
+> > > +				pr_err("'%s' and '%s' resolve to the same address, aliased symbols are not supported\n",
+> > > +				       prev_func->old_name, func->old_name);
+> > > +				return -EINVAL;
+> > 
+> > [Severity: High]
+> > Will this check inadvertently reject nop functions generated by an atomic
+> > replace patch when previous patches targeted aliased functions?
+> > 
+> > If previously loaded livepatches targeted aliased functions (for example, one
+> > patch targets __do_sys_fork and another targets __x64_sys_fork), they were
+> > permitted since they resided in different patches.
+> > 
+> > When an atomic replace patch is loaded, klp_add_nops() loops over all
+> > previously patched functions and adds nops for them to the new patch. Since
+> > nop deduplication is based on old_name, nops for both aliases are added.
+> > 
+> > Later, this check in klp_init_object_loaded() resolves their addresses and
+> > finds duplicate old_func addresses. This causes the initialization to fail
+> > with -EINVAL, which prevents the system from atomically replacing existing
+> > livepatches and might force a reboot if the old patches cannot be safely
+> > disabled manually.
+> 
+> Wow, this is a nice catch. I would say that it is a corner case but
+> the problem seems to exist. Now, the question is how to deal with it.
+> 
+> I see three possibilities:
+> 
+> 1. We might detect the aliases in klp_find_func() and create only
+>    one "nop" entry or do not create it all.
+> 
+> 2. The problem might be easier to solve after adding
+>    the provides/obsoletes, aka replace set, feature [1].
+>    It should prevent loading the other livepatch for the aliased
+>    symbol in the 1st place.
+> 
+> 3. Just document the problem as a limitation. It might be hit only
+>    when installing more liveapatches in parallel that current
+>    wild way.
+> 
+> I personally prefer to wait for the provides/requires feature.
 
-> If a BPF program passes a trusted mm_struct like task->mm to this kfunc, it
-> eventually calls access_remote_vm(mm) without validating or incrementing
-> mm_users (for example, by using mmget_not_zero()).
+Perhaps.
 
-> Since access_remote_vm() acquires mmap_read_lock(), if this occurs after
-> exit_mmap() has dropped the write lock but before it destroys the VMA tree,
-> vma_lookup() will succeed. This means __get_user_pages() will walk page
-> tables that are being concurrently freed locklessly by free_pgtables(),
-> resulting in a Use-After-Free.
+Could we also check prev_func/func->nop in the check in 
+klp_init_object_loaded() and have a pass if true?
 
-> Does this need to acquire a reference to mm_users before proceeding?
-
-I don't believe that this can happen in the case of lsm.s/bprm_check_security,
-where bprm owns the mm throughout the lifetime of that hook.
-
-I also cannot find a case where we can have a trusted pointer to mm_struct
-where mm_users can be 0. A candidate could be security_vm_enough_memory_mm(),
-but this is not in sleepable_lsm_hooks.
-
-On the other hand, this can change in the future if anyone marks a relevant
-pointer as trusted-or-null, similarly to what I did in this series.
-
-I will update both kfuncs to use mmget_not_zero()/mmput() just to be on the
-safe side for future uses of these kfuncs.
+Miroslav 
