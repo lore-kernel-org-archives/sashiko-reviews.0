@@ -1,98 +1,113 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-oi2-f12.google.com (mail-oi2-f12.google.com [74.125.231.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0577E3F1070
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 17:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789753631; cv=none; b=Rt8sYzdrbRd4ZYPoqLUtfiNceoIiYIVHq26vJZDjcRCsUPqmR81TlUEYBcAYMNZVO6329U6c/OATyi59qa+xjcvUQJR1vp72IsvvgDEr/20Q2coYdG5ph0Sq5b4cF8O+aNz+Kr1ETzclqE9A1NNePM6iPiJJ8/hAbC6glAYCTMQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789753631; c=relaxed/simple;
-	bh=f42dMciCrW1J0Mcy+QEp7Bb81fgEDJ3RV9ZJ2fzxP40=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=aYDf6UoBWl/xbNPEbcgfPECjjoLzc2J9eLpTL+OPq3vutNq1+e7Nb0juuG1GvaSQ9BMW8WXZMzj7NAh4oS+yr9Pk0qiXLdmJGm8Kbr0yv40z3BRppS/k+LirnnsWQzhFyXO+1AzU/YQnOw3QtGH66j7u1+x7IQVDMB5qkaIubFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CoujTvEf; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C58446072
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.204
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789754519; cv=pass; b=hw3FBnJLDyBSEWG7My9Li3AL9wgegdjF+C+rZKOFlAg0Z0IyIlb5RTr0fBAdMnmRbcdwXnr4P15OgmrOoV8NFFAL36jbCwcH5VqhBKxFJq3H5lDCXdDqb9kJbB71luAgP6pIzOF6zmkDz7BPITOS9I5JfQC7P8RoKNug3WZbJTM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789754519; c=relaxed/simple;
+	bh=D4aV9/V2T0lgtI47jW3XfRAs3J354z+O1K6sl0PCO8A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uEAVtqFECJexEpxkvzWhObR13VbUlcmzVlvTalNVNjtKwllwDR4ULo/7VC8nDcYpc2FBxQRPdTs74edBrkR2Ucal4rfBdLEMK4UaDPBkcbkjkfKRN7NqiL7MKETpJFqTC0stoD4hXvIG8BGhR9l2dF5VNfSClkluvQhunAREr7w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=miMj4aGw; arc=pass smtp.client-ip=74.125.231.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CoujTvEf"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2dd58e1e2c7so9412435ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 10:47:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="miMj4aGw"
+Received: by mail-oi2-f12.google.com with SMTP id 46e09a7af769-7f4f0d1778eso589441a34.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 11:01:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789754514; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qDOQbAjiuOmfXt8TOM4gOyF/GpMR7uZcs/n7dfy4xmyhVZODqLoXFbE1xI5iYVFKxg
+         Jo8brNGKPULiAiMLKC/Ql6+AyvBKIlluICd0bftjIRahVHdg9ZJaYwMylKuHkDmyKKYa
+         edkitEHph4ExWB50xu+VflUCX1mYeABX1oVBNi6LzjHWT2z5KuwDFsimYbdh9z7BGV3g
+         izCRvrqsWC2dVql7Qonwg5Ndydv+lm/6Wm/0f4ReHjGVRaRUpvSEi5DbrW3aagq4u2LJ
+         N9yBTyVfN7GBVVFkd3BmGhOB07c2+IXzOdY4npcDoqcJSQbUozsiH2uU93qWN+IkA3Hs
+         IHUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
+        fh=L7w7dTDeaoXI/cOn7H/Z6eRmWYJdMKqTNJVIj2dAHlU=;
+        b=A8gLy2IEaXA4CKiK0v0wjnnp71v2/EwfR88LDdmMWCmrIp9YTUjQiWiZUG2cwPAm07
+         SNUC3o+ENMhBd50RTd1ubXBTRib+FbAmQoLeW/wjFUviEPEA70cLp9iWBmFCJGW3HL2e
+         zGMycv6MCLVzjRPHJ2esVJlmYdXz1bulmg6JXfAlsJj8yLDGotZHukeq9e8yQaNyHS4L
+         n7EdomvnpF/XuNMLLTnw7/4n6mkN7A2gia0pujRaS64uQAKo9lGqEU5LpIu6z4tvoBAu
+         1t0fP+YYJ1mpdxJFg/TVYIAU1gIde5msLpokUNmzCyijQ2EyGxpdOVSISGy4uDY0bVZH
+         eF/Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789753620; x=1790358420; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=GZvh9frVpT1nHhEQKPyuEwEyEjCXAqjHGVMbR0ccXvE=;
-        b=CoujTvEfvWSqlc30kOboSRZ1iHnnlFKT8ILIqnazJrGktmx3xTMyy7mjiRININ8dqE
-         zmrbn1tKZwIT9XkXMVbFgB30OJmUXn0eOr/1d5SQj8VwMkriVNIGOut0HCIo4wd19gBx
-         UA+3YAX5hUhd2SYGhVbveVeRXw+JiOnMx/g2gP10LYsg1g5s5E7YJSvC9pZ7iIJwSryB
-         LeP1Vk/dd4VrMb6+KL41LxP05wRodDOZJfstBtkUKXTQWRubWfLl1cpOMBLd65RHfHQz
-         ICq29V92rZJDEtbdlUULq2zyzlbPnlXsTHAiwlG6pTxCK8BZXGGIst4diUI3v0dMx/79
-         8gGQ==
+        d=gmail.com; s=20251104; t=1789754514; x=1790359314; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
+        b=miMj4aGwigVOPJgXpcjyVA6APrlFubW+TPtCcDmb6zRZckUA9ty5tHOMLT+VGuaWid
+         DNQrJol5PJleDX40LwDlKUPsGqY/y+B/HnyPRsD0MJMYlpKtA3OwgLZukqGuCs9y7nU/
+         Mzp6dYXkBM6Du9VRUYbU3EbmTX49ER80F2EUOfdePR/gS6JnyACX1VgjwftXlNlH9812
+         yG5ScRkLy8gxsFtr//p1HKxiNj/VXL0V0N3TKhTwh4bbCSclrR4AMcARb/CE9y6Hgcwv
+         ZCzlfFa9qAFg+kosXKFeDrawqitUEBrxZ8/OLKEtPyEZp9RjRmZus+YySKteVY3g5il1
+         e4oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789753620; x=1790358420;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1789754514; x=1790359314;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GZvh9frVpT1nHhEQKPyuEwEyEjCXAqjHGVMbR0ccXvE=;
-        b=kQKNytaCqy65RkZqqpbOVRMf8Of2wI0gL1HgZ4SvjG5cVAmjMzqloOmOmc2ZESY9Mv
-         o3xTIp+MFAxkN+XjEyjJcZSO50HJcoknYnEdpiiAEMp70EGNwAZ4VzRPzmzqk5OSrexx
-         ZuJk5D65vWfUoJ80fnypCVf1SHsyOWDYnHXqpgFFCB/JOvYWptD2yS6+nIKH6RO2s6AE
-         wLg7VRJQwJxEezlnMVCQkCFi23wfuUT1qsyFB0jdzxk9j0ndVFfWpd5CFGfAZ5vMY6fs
-         OBzXJZ6fcOD7JWp0df3OtWMe2/dDiM2rvNeBMo9cyudCRO6TWf2se242Xvf12finNcVz
-         9sqw==
-X-Gm-Message-State: AFuF++mcCviyfs0Ypez39oNJsgPOK7dQlQMk9R3EEK8zBrTEbom5a/mn
-	lGW9H7MzFYJ565aS2cevnb/j6UgJ1zZW7IxcOk3sn4YdxnCOIBFKG2SMhJ26pKYi
-X-Gm-Gg: AYBFou0Oikm5ZrGssgpolA5cbNNC6fhGiX9tfDYwLA1TaVsbwfInQQx0vFGQfSnPONk
-	IB/aI1juuVkyXxD8g/e0mjKF0sIsxj7j0BTNFhzeEZ9/FuzuNAY0B/3MyPGiIoYRRK7UTB94KXp
-	cVj1B8kURJKRw5f8M3Vggwyt+wkYNmNJGlxOPNbObYxzPdRLbH3EBHahaYaR1lTYX1kCCRq22+K
-	6aO2LWUMDFXcMPdSRRt8RaHWIwoil7Z/HK44x0NG7FKSLWhcSxjz/vHbjtb4F6MsUmXpJ6nrPra
-	FitJ1zB3tXBQ0SZyG8xgRJ2SxEWuMzs1p/wIWkU8vOrilinSjxzoO5cBH2Qe+3BfQTcn/HJPEg1
-	j3gmiQX0IsgGdwq1YxOrDB4R8rEyQGq4mLeNpzSPKk8RQYRTFBgAR32U5zvFxh12NUp3A1l6Chr
-	SMMBfYq26WzTNn5LMjJ+X095sXPmHajCAJOuC91A8XWnyQh2m+izPcYCw91uTHyhH3wiT3e1i8L
-	eulQPN4p6Wn2FyEFz4oOOfy8g/CWdoszwT8VZ9kHympAvHilGoo0IRVmQ==
-X-Received: by 2002:a17:902:c948:b0:2c8:248a:5dbb with SMTP id d9443c01a7336-2ddb1add3cbmr62250255ad.7.1789753620314;
-        Fri, 18 Sep 2026 10:47:00 -0700 (PDT)
-Received: from ?IPv6:2a03:83e0:115c:1:e136:8952:772a:93a4? ([2620:10d:c090:500::4:e681])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ddc17e17e0sm364765ad.70.2026.09.18.10.46.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 10:47:00 -0700 (PDT)
-Message-ID: <962a73fd049d797d27f8e51e8a14dc011d21415c.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v4 3/8] bpf: Check read access for initialized
- writable memory arguments
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: sashiko-reviews@lists.linux.dev, Kumar Kartikeya Dwivedi
- <memxor@gmail.com>
-Cc: bpf@vger.kernel.org
-Date: Fri, 18 Sep 2026 10:46:58 -0700
-In-Reply-To: <20260918055038.1D4AE1F000FF@smtp.kernel.org>
-References: <20260918052906.12226-1-memxor@gmail.com>
-	 <20260918052906.12226-4-memxor@gmail.com>
-	 <20260918055038.1D4AE1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
+        b=aPGAFwiqpnWzMf9NSiKNTs/X29W6kVyhip66LXixVrswy89kpEHqFVTJs5KbR/HuxR
+         OOVsJB43nCBmDJC20A5+WYBhbGxCYXC0DnYZa4HFdMigTkm7QINWoD6XOAgN69y4HZqX
+         eQhP3670vD/jZugGJZRrKH0Pn0S8IXApVXo4HMwk6RFmIcKMeU8M6x8yk4zwzqdyctxp
+         XaIcrpVAaKTyGzR74BnBFICpHOIy+FX+z96Ud8NfXNzr8vWJN+I4suC+pPHzw9p+ZKeI
+         64ZuCPv0jp/OBcNEqv984zUMKMYKN3HyF0RtM4HhdG1UTfQVVjh7Y5q6bg92P8rJ9qeP
+         0d3Q==
+X-Gm-Message-State: AFuF++my2mDasjwQUxDxTCSXNMm3GCqTemsYzIlSrExlHVYPCsm/fIYN
+	0O5+OMbTGZnTu8bS0nkoF9DJZjY0HDH1Ag17TqT7e6qbOZvt2kH7kpKKfThP4XX2xlQRf+TxaW0
+	oUZuXa7Eksg3658PV5JXE8D7Im+PWm/gyJ/M0
+X-Gm-Gg: AYBFou07+4+qb6ZbQMDFccIzuDCbQeHXietUab4D+r8tBPMfBFgiY6kAD7eaDhqvReB
+	GErZSKbgz0Gf85S7Q2v9UsywmAOmV8zflL8z/Tzp73jF+Tjpj/mg23DBBmrGgaMZzfaumSfxOv1
+	cqRNGvFU+oRdEtM3FNze8RZNBCEpl3aN8b1ufEkiJcbaoeAEgAlWxX7Fm70CImHcY0X2CUFB6KW
+	YBm13kog880HrloCrEQz5bX0QYraPLwbNgEg580ImDzSx7VMFiV7DHvW+WXwkYXUlKsBstPNu/H
+	IhrVmArK+Of6CPVv6kQulwCAfHSNYfnQrGo+XCEaze/QVkuUwLFxVoqOpzv1kzY1ThtvMoI=
+X-Received: by 2002:a05:6820:178b:b0:6b7:83c5:fdf7 with SMTP id
+ 006d021491bc7-6ca9c75016cmr3135671eaf.56.1789754514005; Fri, 18 Sep 2026
+ 11:01:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260918052906.12226-1-memxor@gmail.com> <20260918052906.12226-4-memxor@gmail.com>
+ <20260918055038.1D4AE1F000FF@smtp.kernel.org>
+In-Reply-To: <20260918055038.1D4AE1F000FF@smtp.kernel.org>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Fri, 18 Sep 2026 11:01:42 -0700
+X-Gm-Features: AcwNN1Uab8kO1EQcD3nOtj9wZwXUV80qHQAweUeg6HNGFR-V75aFhIIx6sft2CY
+Message-ID: <CAMB2axOVeCSWogRJn6z31J+4to6R2T7U97MEP-sAO6Zv1jeTQQ@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v4 3/8] bpf: Check read access for initialized
+ writable memory arguments
+To: sashiko-reviews@lists.linux.dev
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>, bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2026-09-18 at 05:50 +0000, sashiko-bot@kernel.org wrote:
+On Thu, Sep 17, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
 > - [Critical] bpf: MEM_WRITE without MEM_UNINIT enforces BPF_READ breaking=
  output helpers
 > --
->=20
+>
 > commit aebadfb01a3b32540321fe2b60bcb6fb1c8673be
 > Author: Eduard Zingerman <eddyz87@gmail.com>
->=20
+>
 > bpf: Check read access for initialized writable memory arguments
->=20
+>
 > This commit updates the BPF verifier to derive memory access types based =
 on
 > argument flags, correctly enforcing read access for writable memory argum=
@@ -103,66 +118,64 @@ ents
 > adds a generic func_arg_access_type() helper to replace the kfunc-specifi=
 c
 > access overrides.
->=20
+>
 > > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
 > > index 1d5e4ee64fc00..21eb806b1351c 100644
 > > --- a/kernel/bpf/verifier.c
 > > +++ b/kernel/bpf/verifier.c
 > > @@ -8886,6 +8886,15 @@ static int process_map_ptr_arg(struct bpf_verifi=
 er_env *env, struct bpf_reg_stat
-> >  	return 0;
+> >       return 0;
 > >  }
-> > =20
+> >
 > > +static enum bpf_access_type func_arg_access_type(enum bpf_arg_type arg=
 _type)
 > > +{
-> > +	if (!(arg_type & MEM_WRITE))
-> > +		return BPF_READ;
-> > +	if (arg_type & MEM_UNINIT)
-> > +		return BPF_WRITE;
-> > +	return BPF_READ | BPF_WRITE;
+> > +     if (!(arg_type & MEM_WRITE))
+> > +             return BPF_READ;
+> > +     if (arg_type & MEM_UNINIT)
+> > +             return BPF_WRITE;
+> > +     return BPF_READ | BPF_WRITE;
 > > +}
->=20
+>
 > [Severity: Critical]
 > Does this regression break pure output helpers that lack the MEM_UNINIT f=
 lag?
->=20
+
+This is a valid concern.
+
+I still think we should assign BPF_READ | BPF_WRITE to kfunc arguments
+when generating the prototype, and only BPF_WRITE for __uninit
+arguments. This would also avoid the need for func_arg_access_type().
+
+>
 > For example, bpf_snprintf() is defined as an output helper:
->=20
+>
 > kernel/bpf/helpers.c:
 > const struct bpf_func_proto bpf_snprintf_proto =3D {
 >     ...
 >     .arg1_type  =3D ARG_PTR_TO_MEM_OR_NULL | MEM_WRITE,
 >     ...
 > };
->=20
+>
 > Because bpf_snprintf() does not guarantee full buffer initialization, it
 > cannot be safely marked with MEM_UNINIT. However, with this change, the l=
 ack
 > of MEM_UNINIT means func_arg_access_type() will return BPF_READ | BPF_WRI=
 TE
 > instead of just BPF_WRITE.
->=20
+>
 > Will this inadvertently force check_helper_mem_access() to reject valid
 > write-only maps (BPF_F_WRONLY_PROG) when passed to such output helpers, c=
 ausing
 > valid BPF programs to fail verification?
-
-I think it should be safe to relax MEM_UNINIT interpretation for priv
-and not to require full buffer initialization. That would be only a
-documentation change, as far as I understand. Then it would be fine to
-put MEM_UNINIT for snprintf. For unpriv and MEM_UNINIT buffer we can
-scratch the buffer as a combination of BPF_MISC (for previously filled part=
-s) /
-BPF_INVALID (for previously invalid parts) instead of requiring full initia=
-lization.
-Kartikeya, could you please take a look if this requires any code changes?
-
+>
 > Additionally, for unprivileged programs lacking CAP_PERFMON, won't this
 > erroneously enforce stack buffer pre-initialization by enforcing a read c=
 heck
 > requiring stack initialization in check_stack_range_initialized()?
-
-But that's not an error. If the helper reads the memory, there is no
-MEM_UNINIT annotation and we pass a pointer to uninitiated memory
-buffer to the program, then such a program should be rejected.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918052906.12=
+226-1-memxor@gmail.com?part=3D3
+>
