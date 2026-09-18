@@ -1,67 +1,67 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com [74.125.230.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F52E503901
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 16:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A66050EC1E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 16:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789747355; cv=none; b=GWq2RrwHNqbRspn9zl1ZQkCMvGL+6na5dI3ShQsEyr1rZuEkjlGhX1JeqMIlQLCiDSZ3K4KjrRsm5B1J8nrSve6oVJHoq+Ve5N1dpi4OGWfneTOw0f+YxH4FGVtIgdr93dV/QXjZ8jaZq2LsmYl24FHXuwEujv62gE9RrgzBizw=
+	t=1789747356; cv=none; b=F0HIwbEOQ4O0w6tFnuGusSJ1ZO1V1hQPPVOcR4siMZpua/VVTEagJw6Nokm5uurAhPGJFfyZr4mGwpaXWnfuqtMW5HN3vJqClPZJlaabPgvrufzdN86mo0nElQZH2eZIpA+ebgnJaNrzS56JI0TrVIkEzgLI6VXDS1uk0nCNdVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789747355; c=relaxed/simple;
-	bh=ku4iBMP7GjjCjtOQ2BCljXzZcT3llCc8TZkAx0mwSsM=;
+	s=arc-20240116; t=1789747356; c=relaxed/simple;
+	bh=xLP8ZqqCxQPMvm6zHvf1Ffu9vtw7liSp3jcXxbjvmYw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tur0BTJX9GA/5lyGnKFarK2luIXkxaXVP16gemgFv3qnDgHlkID6jCjL/yAFYY14OexFzKoSnWMb2QbUbO9Ypf7GiTtN32YzD/51LRijgFP0HF54etjLv66XdztZvV3u6KDyZOMubVSX4MITJzLi9DltSmvNCnEOA2Dd0zDsDAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=XsJrHD9r; arc=none smtp.client-ip=74.125.230.204
+	 In-Reply-To:Content-Type; b=bZHv1QLJ8Rq3qm2z0fGH4gVVTA6/o0olDBKRIVoiSJ1MZ8TGRl0605BrKnurUkoKa6fDe8lo350RQGd2wObQFwLIdNy3ZdP/aJ2oF3FUqajRcdwXn66EVnHkZ6jwY76471fienqEXSm40D9jCF88dYMdqNMWpe7QiGdY5mBf+6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=nuIuPwDo; arc=none smtp.client-ip=74.125.230.205
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="XsJrHD9r"
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910ad20d4so102393385a.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 09:02:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="nuIuPwDo"
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-93910ca5aa8so86873185a.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 09:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789747352; x=1790352152; darn=lists.linux.dev;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1789747354; x=1790352154; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7eVbXMCDUQbHUQM6+WwRJ+hjMCQbS6dliJooLhO6lxA=;
-        b=XsJrHD9rP38/pyXw9f1fkPjRXC5XEl+1E3h635ns14NB8gBMfl3BUfK5Ne7J2UJ/3g
-         SHBk05pU41xXiug1rS2buQdz3imO7W4skFBtbaW8PKdiieeQU5jdFxowL2CWdVn/pYQw
-         Y3HMwnL0IYUHGxNWX9pMMFNOACipYSA6AE5zc7nRItEWez8+5K8Pyh+HKz5RuVx9HJig
-         FnSNBCu/dx/pBKAknhuCkUP1PF5FEjbULYCYhJtVFhhR/J/BMBV0ZzZm9RaPDhlmnc74
-         Ano5J8eLkB2Xd3IJDhlo58Z3frBMHdKt36pATAyRAlm50TylGdYe6KmwIyDQ24BwNRFg
-         FshA==
+        bh=Z6GtIbzjgakznD0y35eQfGVe5BRX2BKpmAlzkE/AHnw=;
+        b=nuIuPwDoEnHcwxcrhrf6HrJBRzhmdpQliAqpXoKr6IMrxJ2HEvZVdzGitxcWzG2JGf
+         rAqg3RGxG9eeQys3IAsqJQHbA1ozo7XhV0KHdA9eZiVNGzajPUbvHVBcCC+6ZQqBYG8T
+         mKsxv7pvlTEQ5oJ9wtdRQXuPpWt+pMcGZtyiZuQWz8H5WrwACTOn3nNySZTFQOAln8a3
+         lu5PnA1EPi8D9hW5I5Lt2lMM9VQ3qC7GKvsdmiLqju/cbAl7OYtWS8TpZ5WgNmGWlCsV
+         pfULqckPUmSK11gGJuyOZjA2IYIQh/IE7ibbRmlG0NMROBpudIpK+mksulYQf65Fg2c+
+         z9LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789747352; x=1790352152;
+        d=1e100.net; s=20260707; t=1789747354; x=1790352154;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=7eVbXMCDUQbHUQM6+WwRJ+hjMCQbS6dliJooLhO6lxA=;
-        b=pXEK54SXeqXDUZg2j2EUSIOZkt4p1wOk6uZv11dbuJdHT1U0pBq5xLidcNhfFZsrhJ
-         AywClrCXA9lFtiNSTnlRtiJWuHj7sLDOf7fAew/HoQ8qMMGsG8HpsP6lq0j/lkVxdtC2
-         s91E6Voyw4MDaheN1VAd8bJbgsVWr63HPqEdFy8S5FLf1yLMvil1WR68/Sm87bgA0Y+m
-         vjBlNYhwGMrWmAVnLCVntrZn9z6tgfk84a9IcsbXx9onF4DhegzX1zEi/pLkIXXb0odG
-         TjwmuKfTXvIxf00z5benoJQ9LUZ8JizrD6fA9A+mGyxApV18GRclJI04A9k3+k7+TZun
-         i7mw==
-X-Gm-Message-State: AFuF++k0/w83rINBxp60dcN25TLv+FLOXCuagIO7cnH1M/AtpiOTGyL4
-	YeHgRcumqvYDzL2dk1O6bzY18fTEYF+vLahtlZtRaeWzxqyXL2iQum17oq8YGl2XQeQJDvIkr6h
-	sXzA3e1U=
-X-Gm-Gg: AYBFou0CDDqroLao8CEu+JezgMmyUzKeMr6y9sFThkzgZsUMeQGHVVTA1BnCrDwcYa/
-	1R6PmgAIvMVWPXuKU4ACKShvbYFlGF8zK4nAMS/yx5BCyqBoiSZHp/qQd2WRkIylf+OZzMJy19Z
-	lLqgofFI5bpUxKym2EMgCgbdD8mO4t0WdAie9pmBff5E54VTC2bPPbik8JmYLgukJJvV9FJ4PAg
-	PbhfziGoUL4WRCO3EttrJZsU42LNhrcZkjCjL2CcWkxTr8UCwDncvzox0GDfK0faFyHOK7HZm75
-	44c/WIbwtCBURcImJtXcqcrqLzrbusQH7jHFYwfPGUCjxNCTUmNS/tgQxtCJYgEG/BOnVno0qM1
-	nFYeCpUrDMorb9TUsVuOHY5UhaioR1GTYhl4QNZyNBNr9AKUVJlswYJ8JM7usoS5rgv4Flwj3mQ
-	VwfipRn6z/m5HfZ72EAIlVdKBcEKBrD/qrOyjPsrAAFqjoUQcKVdpZeTqEj3XXsZ0MUqKSrfA=
-X-Received: by 2002:a05:620a:2a09:b0:932:df7e:b31d with SMTP id af79cd13be357-93bdc6d43femr428844085a.12.1789747351794;
-        Fri, 18 Sep 2026 09:02:31 -0700 (PDT)
+        bh=Z6GtIbzjgakznD0y35eQfGVe5BRX2BKpmAlzkE/AHnw=;
+        b=ZBYuzqYQX0UvLK3xR+upb+RCNDiIaajxqnyNtYNCnmTxOovFTwB+UBzbUweoPD8rrw
+         FiPpxj6QoQOs7VUKny4AoVMYJ7HveOvVDeOAWwiqbzr56UlxSVc/OJMfxsnO4PraQWTe
+         FdVQw06Xc0zjKwrFerLHUV1O303LhK4nKpwhos146mEvGT1GoMdrrv9DaiEBmufWFGEV
+         jhSFZKnX5EdJzO3ikPTN1hu0UJFYEtCjauf2z8mKuJq8bPbOdcosWfAnwG7ccpC9paf8
+         TNtRcKEX257PsCNw9PTG+x8p2Q6xYcPYtLisLzErglFF3+Gz6tGz/P91t+WYpivt/i3j
+         R+xQ==
+X-Gm-Message-State: AFuF++m1EkvAmd/KFLQusJeaBzsDBLOFXw6GoTsad2bDlbo0aMVUcYyi
+	Wvgt4p+KbHQTfC6guzGqzW538BlP4MnisdIaKNDFBxgPEMS/FXFpaX1av27wK+mTvjtn3L5UFvc
+	I7rcg28M=
+X-Gm-Gg: AYBFou1Ch3Gk28GBZSNicYDk4bgjvKeYFTLCtK2GZBYMtYbNfY7mNXTrP7+qU4HyVpL
+	lqXbZ3xElFTLgpUnFL3uBuLpB6CK4LDct3b2BZuqeV+Aw7q2O1lCf3RLmq97VOOjH5PyEDutEYf
+	nPXs+Vt4kjMBtEPbHUJ3RiKlMyDafFbJJcfzghcrZiA+AuIAyWoMi/vXRqAO1vw7eCnIR5e2t8i
+	5Z7v8MIp3QqpmCmCovDR412xJD8eTk6S/qlKfUGWI4ieBtNcPdNRGbLQzjSY+w+WG9SFi2XHXkf
+	TepO55XFRz4njsSLtHaZWfshi37uS5N6iimMSQCMAt9eEOkdg8zBWGTtjh7uK6uUKeh1/h4QKc1
+	I5Ny+TR9R4kUnex5+lPkfMDaxKlUi7JMNB5/ii6irkwJCSmyvBHqU4i8pOa+U0ATe0rOboGI5eC
+	hc9T10dLD0PoCfk5rzNz3ludCfzM/50uJxV1b2FdwxI+cgSc2TXkLu0khsLDI+TLOTOZ43Ti8=
+X-Received: by 2002:a05:620a:3710:b0:93b:d79b:9a5b with SMTP id af79cd13be357-93bdca7992dmr437096285a.60.1789747353937;
+        Fri, 18 Sep 2026 09:02:33 -0700 (PDT)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93be0e9ead7sm169853585a.23.2026.09.18.09.02.30
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93be0e9ead7sm169853585a.23.2026.09.18.09.02.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Sep 2026 09:02:31 -0700 (PDT)
-Message-ID: <0762c249-ceed-4b06-8a39-990d92a97ebf@riscstar.com>
-Date: Fri, 18 Sep 2026 11:02:30 -0500
+        Fri, 18 Sep 2026 09:02:33 -0700 (PDT)
+Message-ID: <36595da1-5943-4557-976f-4df709492045@riscstar.com>
+Date: Fri, 18 Sep 2026 11:02:32 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,130 +69,111 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] misc: tc9564: introduce base PCI driver
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: qcs6490-rb3gen2: add endpoint
+ buses
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+Cc: conor+dt@kernel.org, linux-pci@vger.kernel.org, robh@kernel.org,
  devicetree@vger.kernel.org
 References: <20260918152659.413268-1-elder@riscstar.com>
- <20260918152659.413268-3-elder@riscstar.com>
- <20260918154230.E8C2B1F000FF@smtp.kernel.org>
+ <20260918152659.413268-4-elder@riscstar.com>
+ <20260918153925.E51901F000FF@smtp.kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260918154230.E8C2B1F000FF@smtp.kernel.org>
+In-Reply-To: <20260918153925.E51901F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/18/26 10:42 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] pci: of_pci_make_dev_node quirk fails to update ranges of existing DT node
+On 9/18/26 10:39 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] pci: MMIO translation failure due to static dummy ranges bypassing dynamic update
 
-This series depends on another series that affects the
-code that is the subject of the above report.
+The same Sashiko report was made in version 2 of this series.
   
 https://lore.kernel.org/sashiko-reviews/ed783639-05ed-4ad9-b881-d1689a8b2418@riscstar.com/
 
-> - [Medium] kconfig: TC9564_PCI selects PCI_DYNAMIC_OF_NODES without inheriting OF_IRQ dependency
-I attempted to include this but wound up with a report of a circular
-dependency when configuring the kernel.
+(I repeat and reword my explanation below.)
 
-A bit more below.
+If I knew how to make Sashiko take into account the prerequisite
+series I would gladly do so:
+   https://lore.kernel.org/lkml/20260910021919.3421449-1-elder@riscstar.com/
+
 
 > --
 > 
-> commit d693efad7a099f6326c4b836ade779f0f07366be
+> commit 07e53b54e0b29671e1a08f764661a81fe5484062
 > Author: Alex Elder <elder@riscstar.com>
 > 
-> misc: tc9564: introduce base PCI driver
+> arm64: dts: qcom: qcs6490-rb3gen2: add endpoint buses
 > 
-> The Toshiba TC9564 is small and highly-specialized SoC that implements
-> a PCIe switch as well as an Ethernet AVB/TSN bridge. Create a new PCI
-> driver under drivers/misc that binds with the embedded PCI endpoint
-> functions within the TC9564 SoC. Use the PCI quirks mechanism to update
-> endpoint device nodes dynamically.
+> This commit adds devicetree nodes for a PCIe endpoint and its peripheral
+> buses on the QCS6490 RB3gen2 platform. It also defines static ranges for
+> the endpoint BARs, with the expectation that these will be updated
+> dynamically.
 > 
->> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
->> index 7364931dad3a1..9c5b1e9d672e8 100644
->> --- a/drivers/misc/Kconfig
->> +++ b/drivers/misc/Kconfig
-> 
-> [ ... ]
-> 
->> @@ -568,6 +568,21 @@ config MCHP_LAN966X_PCI
->>   	    - lan966x-miim (MDIO_MSCC_MIIM)
->>   	    - lan966x-switch (LAN966X_SWITCH)
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> index 3bb5fca8e2b13..5b7f5292a8864 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> @@ -955,11 +955,41 @@ pcie@3,0 {
+>>   			bus-range = <0x5 0xff>;
 >>   
->> +config TC9564_PCI
->> +	tristate "Toshiba TC9564 PCI function support"
->> +	depends on OF
->> +	depends on PCI
->> +	select PCI_DYNAMIC_OF_NODES
-> 
-> [Severity: Medium]
-> Can this cause a Kconfig unmet direct dependency warning?
-> 
-> PCI_DYNAMIC_OF_NODES explicitly defines 'depends on OF_IRQ' in
-> drivers/pci/Kconfig. Selecting it here without inheriting its dependencies
-> could cause unmet direct dependency warnings and potential build failures on
-> architectures lacking OF_IRQ support.
-
-I attempted to include "depends on OF_IRQ", but that led to
-a circular dependency, so I simply left it out.
-
-> 
->> +	select PCI_QUIRKS
->> +	default m
->> +	help
-> 
-> [ ... ]
-> 
->> diff --git a/drivers/misc/tc9564-pci.c b/drivers/misc/tc9564-pci.c
->> index 0000000000000..e4d00dfecfca9 100644
->> --- /dev/null
->> +++ b/drivers/misc/tc9564-pci.c
-> 
-> [ ... ]
-> 
->> +	/* Scan for pci-ep-bus (simple-bus) nodes and probe their sub-devices */
->> +	ret = of_platform_default_populate(np, NULL, dev);
-> 
-> [ ... ]
-> 
->> diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
->> index de9bbccda21fd..54e310c4153df 100644
->> --- a/drivers/pci/quirks.c
->> +++ b/drivers/pci/quirks.c
->> @@ -6391,6 +6391,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5020, of_pci_make_dev_node);
->>   DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5021, of_pci_make_dev_node);
->>   DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_REDHAT, 0x0005, of_pci_make_dev_node);
->>   DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_EFAR, 0x9660, of_pci_make_dev_node);
->> +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_TOSHIBA, 0x0220, of_pci_make_dev_node);
+>>   			dev@0,0 {
+>> +				compatible = "pci1179,0220";
+>>   				reg = <0x50000 0x0 0x0 0x0 0x0>;
+>> +				#address-cells = <3>;
+>> +				#size-cells = <2>;
+>> +				/* Ranges will be updated dynamically */
+>> +				ranges = <0x0 0x0 0x0  0x83050000 0x0 0x0  0x0 0x4000>,
 > 
 > [Severity: High]
-> Will this quirk successfully update the ranges property of the existing
-> devicetree node?
+> Does defining these dummy ranges statically bypass the dynamic update?
 > 
-> Because the tc9564 device has a static device tree node, pci_set_of_node()
-> attaches the static node to pdev->dev.of_node before this fixup runs.
-> 
-> Inside of_pci_make_dev_node(), the early check for an existing node:
-> 
->      if (pci_device_to_OF_node(pdev))
->          return;
-> 
-> evaluates to true, causing it to return immediately. Consequently,
-> of_pci_prop_ranges() is never executed.
+> During PCI enumeration, pci_set_of_node() binds existing nodes like dev@0,0
+> to the corresponding pci_dev. Later, when the PCI quirk calls
+> of_pci_make_dev_node() to dynamically update the ranges,
+> of_pci_make_dev_node() checks if (pci_device_to_OF_node(pdev)) and returns
+> immediately without calling of_pci_add_properties().
 
-The series mentioned above changes this exact code so that instead
-of returning immediately, it first checks to see if a non-bridge node
-has a pci-ep-bus sub-node.  If it does, it generates a new ranges
-property for the endpoint and updates the devicetree to use it.
+The series mentioned above changes this code so that, rather
+than returning immediately in this exact case, it updates the
+ranges property to incorporate the BAR addresses assigned
+during PCI enumeration.
+
+> As a result, the dummy ranges are left intact, which causes child devices
+> on the PCI endpoint bus to use these static ranges instead of the actual
+> BAR addresses assigned by the PCI core. Will this lead to invalid memory
+> accesses or driver probe failures?
+
+And with the above series in place, the ranges are *not* left intact.
 
 					-Alex
 
+>> +					 <0x2 0x0 0x0  0x83050000 0x0 0x4000  0x0 0x80000>,
+>> +					 <0x4 0x0 0x0  0x83050000 0x0 0x84000  0x0 0x200000>;
+>> +
+>> +				pci-ep-bus@4 {
+>> +					compatible = "simple-bus";
+>> +					#address-cells = <1>;
+>> +					#size-cells = <1>;
+>> +					/* Map 0x0-0x1fffff to BAR 4 */
+>> +					ranges = <0x0  0x4 0x0 0x0  0x200000>;
+>> +				};
+>>   			};
+>>   
+>>   			dev@0,1 {
+>> +				compatible = "pci1179,0220";
+>>   				reg = <0x50100 0x0 0x0 0x0 0x0>;
+>> +				#address-cells = <3>;
+>> +				#size-cells = <2>;
+>> +				/* Ranges will be updated dynamically */
+>> +				ranges = <0x0 0x0 0x0  0x83050100 0x0 0x0  0x0 0x4000>,
 > 
-> This means endpoint platform devices populated by of_platform_default_populate()
-> in tc9564_function_probe() will fail to map their MMIO addresses correctly,
-> translating addresses using the placeholder static 'ranges' property rather
-> than dynamically assigned PCI BAR addresses.
+> [Severity: High]
+> This appears to have the same issue. Because the dev@0,1 node is already
+> present, the dynamic update logic in of_pci_make_dev_node() will bypass it.
+> 
+> Child devices under this node will then attempt to translate MMIO addresses
+> using these static dummy ranges instead of the actual BAR addresses assigned
+> by the PCI core.
 > 
 
