@@ -1,181 +1,163 @@
-Received: from mail-oi2-f12.google.com (mail-oi2-f12.google.com [74.125.231.204])
+Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C58446072
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F30C51589C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.99
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789754519; cv=pass; b=hw3FBnJLDyBSEWG7My9Li3AL9wgegdjF+C+rZKOFlAg0Z0IyIlb5RTr0fBAdMnmRbcdwXnr4P15OgmrOoV8NFFAL36jbCwcH5VqhBKxFJq3H5lDCXdDqb9kJbB71luAgP6pIzOF6zmkDz7BPITOS9I5JfQC7P8RoKNug3WZbJTM=
+	t=1789755558; cv=pass; b=cKaqs2jxVXUFTDLqktXxM/vh9rf4PIuHd0LUHIZvwWknNRkT1CPDXTJg08U2HMr8o2Fj2MxrzopiC2h55AJ1SBd59Os+sYMfHrXE7UPkqfx6I9o7fvSVzMxaFxSsgW62f48V8Kcgn1Y02uNJfdU0qmHX3hc0GSxW9fIMcKxI8Qk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789754519; c=relaxed/simple;
-	bh=D4aV9/V2T0lgtI47jW3XfRAs3J354z+O1K6sl0PCO8A=;
+	s=arc-20240116; t=1789755558; c=relaxed/simple;
+	bh=B8dH8j3d8XLDzSCJawbfImR14z+XNYtPHGcF4ZCRVQA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uEAVtqFECJexEpxkvzWhObR13VbUlcmzVlvTalNVNjtKwllwDR4ULo/7VC8nDcYpc2FBxQRPdTs74edBrkR2Ucal4rfBdLEMK4UaDPBkcbkjkfKRN7NqiL7MKETpJFqTC0stoD4hXvIG8BGhR9l2dF5VNfSClkluvQhunAREr7w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=miMj4aGw; arc=pass smtp.client-ip=74.125.231.204
+	 To:Cc:Content-Type; b=K48VYQeR8PEhxcyVNAiJOYnnooH7URUyx7UU/o1KcF3nue5UYfVSemSpQ65XrBzT3sOeoUxCzEcn3NiO+kR4gynI1Z+jgWbit03eupg9/FfOAyoHo0VOrqoXdIhYFbng8JoreZ0/L7lqEIy/BRruU1Bi9bCjvGFq4rnY0uwHRwE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNw3jl9e; arc=pass smtp.client-ip=74.125.228.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="miMj4aGw"
-Received: by mail-oi2-f12.google.com with SMTP id 46e09a7af769-7f4f0d1778eso589441a34.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 11:01:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789754514; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNw3jl9e"
+Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6a8038a9f10so1512152a12.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 11:19:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789755555; cv=none;
         d=google.com; s=arc-20260327;
-        b=qDOQbAjiuOmfXt8TOM4gOyF/GpMR7uZcs/n7dfy4xmyhVZODqLoXFbE1xI5iYVFKxg
-         Jo8brNGKPULiAiMLKC/Ql6+AyvBKIlluICd0bftjIRahVHdg9ZJaYwMylKuHkDmyKKYa
-         edkitEHph4ExWB50xu+VflUCX1mYeABX1oVBNi6LzjHWT2z5KuwDFsimYbdh9z7BGV3g
-         izCRvrqsWC2dVql7Qonwg5Ndydv+lm/6Wm/0f4ReHjGVRaRUpvSEi5DbrW3aagq4u2LJ
-         N9yBTyVfN7GBVVFkd3BmGhOB07c2+IXzOdY4npcDoqcJSQbUozsiH2uU93qWN+IkA3Hs
-         IHUg==
+        b=ebe71l1x4Z+KTg/g2D5efza6Qa6rRIaKDuYlMWYzrsLlvWtiSlDIpslTdIkGF1xgrN
+         ZsVJu6x/9g8taTIHFipb+8RxsIu98/SrANsQaWHknZjVymMuVCt9pFC/DLRpCHlbKWJ0
+         JSAP2Rpl5t/u3RWF2rcbpQKDImKmKqMeRE5Z42y1VP+uSlEN5gfEvEiSLWt9UCC+CmMp
+         dcEaVO9aDaDqPaY+I1fH8GHhAHW0aQAzYfc9V1PBNtc904TSVZeMF0BHpYjf96X03g1A
+         Rqhn+hEDokZNliYeNzwr+7VefX7x/RIUuVO+om5mnodJU1yVbQhdxSrBW565rFJIboKY
+         qwSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
-        fh=L7w7dTDeaoXI/cOn7H/Z6eRmWYJdMKqTNJVIj2dAHlU=;
-        b=A8gLy2IEaXA4CKiK0v0wjnnp71v2/EwfR88LDdmMWCmrIp9YTUjQiWiZUG2cwPAm07
-         SNUC3o+ENMhBd50RTd1ubXBTRib+FbAmQoLeW/wjFUviEPEA70cLp9iWBmFCJGW3HL2e
-         zGMycv6MCLVzjRPHJ2esVJlmYdXz1bulmg6JXfAlsJj8yLDGotZHukeq9e8yQaNyHS4L
-         n7EdomvnpF/XuNMLLTnw7/4n6mkN7A2gia0pujRaS64uQAKo9lGqEU5LpIu6z4tvoBAu
-         1t0fP+YYJ1mpdxJFg/TVYIAU1gIde5msLpokUNmzCyijQ2EyGxpdOVSISGy4uDY0bVZH
-         eF/Q==;
+        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
+        fh=dZD3NgG1X7s6kpr5hZ2U8f/WHSVkfsXTB6YiQT1XEfs=;
+        b=KIFh3g+PNbwJEsCdvPcNFwlVWFk7PLMeNpaJXqT23LAvgez/FWTzrUPs+PxHOr+ULa
+         PpK+P4QMWcbd2TpaK3/WaaqMSs76DIY+bGIwsj/LcghtS3olCZDLyuG5mOUmaryrOJwq
+         fuED0dbYHRCsa0AIiqE7/JuFpJ+MAkOnIM5wnfjsEru5/kuMyj4or4CXPK22WH1Gij6e
+         9DS8DcwMPOMw3XSDG+00lRjL+pgxE309nje4G5zAKzagExUYoJPWGRpmG1OJucw8zbaS
+         Yu/I+A7H/ErkXq0USbwdyjneZkZ0+Nz5chWw/hUv0CCoELza2DjOCmRaCEZXS1dH03Kw
+         pehg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789754514; x=1790359314; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789755555; x=1790360355; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
-        b=miMj4aGwigVOPJgXpcjyVA6APrlFubW+TPtCcDmb6zRZckUA9ty5tHOMLT+VGuaWid
-         DNQrJol5PJleDX40LwDlKUPsGqY/y+B/HnyPRsD0MJMYlpKtA3OwgLZukqGuCs9y7nU/
-         Mzp6dYXkBM6Du9VRUYbU3EbmTX49ER80F2EUOfdePR/gS6JnyACX1VgjwftXlNlH9812
-         yG5ScRkLy8gxsFtr//p1HKxiNj/VXL0V0N3TKhTwh4bbCSclrR4AMcARb/CE9y6Hgcwv
-         ZCzlfFa9qAFg+kosXKFeDrawqitUEBrxZ8/OLKEtPyEZp9RjRmZus+YySKteVY3g5il1
-         e4oQ==
+        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
+        b=hNw3jl9eMrwdZmQQj5XNa3XlgtBPvT9LXp3NcruSeJgYRGlNuLwQLgePAb7c1Htb1h
+         C+pHk5c5laQB37l4g3FiVqcVECp13cZqB3sHLQewnx4RmSO1CT/Dib/aC1ayRqfDnhQb
+         RvQTdr9Sg3SrmJuq7Y/N9nRW/tPRae8wAqqkSvuQNALpsh7gNVwypPNNQAw4mHGagdog
+         jXfpfJFVU67qk0hGXnfsMtf2wDofAb2pqNmjfJa5bRmuWqfAMKWuokMvLfocW667ZG2/
+         2WNeH90niMd8C08mvRDTLR87EvH7bLBSd2g9fzx7YohgJR5ONt6ICpKEIQb4sbIARKYY
+         vwbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789754514; x=1790359314;
+        d=1e100.net; s=20260707; t=1789755555; x=1790360355;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NplD+iyuQz3OMkbtlm4TrefJDG7gfBsma8gEJO4G/yk=;
-        b=aPGAFwiqpnWzMf9NSiKNTs/X29W6kVyhip66LXixVrswy89kpEHqFVTJs5KbR/HuxR
-         OOVsJB43nCBmDJC20A5+WYBhbGxCYXC0DnYZa4HFdMigTkm7QINWoD6XOAgN69y4HZqX
-         eQhP3670vD/jZugGJZRrKH0Pn0S8IXApVXo4HMwk6RFmIcKMeU8M6x8yk4zwzqdyctxp
-         XaIcrpVAaKTyGzR74BnBFICpHOIy+FX+z96Ud8NfXNzr8vWJN+I4suC+pPHzw9p+ZKeI
-         64ZuCPv0jp/OBcNEqv984zUMKMYKN3HyF0RtM4HhdG1UTfQVVjh7Y5q6bg92P8rJ9qeP
-         0d3Q==
-X-Gm-Message-State: AFuF++my2mDasjwQUxDxTCSXNMm3GCqTemsYzIlSrExlHVYPCsm/fIYN
-	0O5+OMbTGZnTu8bS0nkoF9DJZjY0HDH1Ag17TqT7e6qbOZvt2kH7kpKKfThP4XX2xlQRf+TxaW0
-	oUZuXa7Eksg3658PV5JXE8D7Im+PWm/gyJ/M0
-X-Gm-Gg: AYBFou07+4+qb6ZbQMDFccIzuDCbQeHXietUab4D+r8tBPMfBFgiY6kAD7eaDhqvReB
-	GErZSKbgz0Gf85S7Q2v9UsywmAOmV8zflL8z/Tzp73jF+Tjpj/mg23DBBmrGgaMZzfaumSfxOv1
-	cqRNGvFU+oRdEtM3FNze8RZNBCEpl3aN8b1ufEkiJcbaoeAEgAlWxX7Fm70CImHcY0X2CUFB6KW
-	YBm13kog880HrloCrEQz5bX0QYraPLwbNgEg580ImDzSx7VMFiV7DHvW+WXwkYXUlKsBstPNu/H
-	IhrVmArK+Of6CPVv6kQulwCAfHSNYfnQrGo+XCEaze/QVkuUwLFxVoqOpzv1kzY1ThtvMoI=
-X-Received: by 2002:a05:6820:178b:b0:6b7:83c5:fdf7 with SMTP id
- 006d021491bc7-6ca9c75016cmr3135671eaf.56.1789754514005; Fri, 18 Sep 2026
- 11:01:54 -0700 (PDT)
+        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
+        b=VoPcc1OR48kPWFTgr+l2MWZuK2iuOnPboURsQwA4sABWExsmxvUEHx6PdYaXXGxheE
+         iKliy71MPP5kYlgFcsQoF//kQlEI8tOumPqr9GdbhVQENDIIyX//HDEKs4JzspA/3AwU
+         p8q8A+cu/X0a3r3H7W7NPVvJJJ4vx12pbLbTs+py/yxSy4H/ys7V0U7Z0B1RjF6BOpQx
+         8MibysaFDvHEAZwMaCOKTlra6XRRpqPsfxNvFnlj58lNGqnj3PH3n/b3ioZRuFd8h1UZ
+         /6asmr6XWMfmu6+6+Bl0fvuXJaaLMt/VB1usEp6XEPJyTXCRLFKasvfjpo64cLsvmDiF
+         4Anw==
+X-Gm-Message-State: AFuF++lmn8lyCt3rriwzZPn5GlVIWsCC18yszuOrmwbJjMkpWLPKhRPm
+	OljY9w7o+sLMALa8roM6ZVe1ZYM9qVGjH/Ru85+l/k42IFEXeXXP2BW+TXAYfVfA2YCx2z61ngx
+	bza2WvcBu4rzRGsTm3OazDif/badwQl9QZBID
+X-Gm-Gg: AYBFou0k7LtHmb+vzZoeF2IEcpodXt9w19PC6BKLaUL0cHNCTnw//3HrRbELT/V7Gaz
+	AAbOuyGB1zkM6k0CBnB1sNjbiAEBCzskY6Jvmf2oH4PeAQMCar6kR5HOwHj4cQdoaVsPrzNcQqw
+	RYiwIBOuCKbEcZYWBaE8FTZ0doVCbu+UydJeylwVHhaR1feijpU1wimqoLahU8dDHuRc2gUS/UU
+	SmKAuj5knzGgHHt56gHoiDV9JqFclVgjofVqVu+/lqsztOpu4VauhJNMr+uorVI/rX6+G0xgZWh
+	qW+4ZD6OIm7upG/fkpq3s0d6nQQX0I+jjs74pKF1+/U5D/5hhtLrSeM1N+so17y7z8IX5r3oLBU
+	gKQ3cAm807DmGFppUDj78zq76pqYcU+62P7C7flKfEQ+oqy+gfkn7RmrvCHj8mOqDUG07c4zKAG
+	77IOwZZoA2HeI42bIGmz4rCirnLE96ifOCPcN1BUoW2jIwQVUa5vAEV6HqHKUfB/L3+sU8mwjrh
+	iqH
+X-Received: by 2002:a17:906:c113:b0:c29:65ef:b907 with SMTP id
+ a640c23a62f3a-c2a157c9032mr318214066b.26.1789755554588; Fri, 18 Sep 2026
+ 11:19:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260918052906.12226-1-memxor@gmail.com> <20260918052906.12226-4-memxor@gmail.com>
- <20260918055038.1D4AE1F000FF@smtp.kernel.org>
-In-Reply-To: <20260918055038.1D4AE1F000FF@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Fri, 18 Sep 2026 11:01:42 -0700
-X-Gm-Features: AcwNN1Uab8kO1EQcD3nOtj9wZwXUV80qHQAweUeg6HNGFR-V75aFhIIx6sft2CY
-Message-ID: <CAMB2axOVeCSWogRJn6z31J+4to6R2T7U97MEP-sAO6Zv1jeTQQ@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v4 3/8] bpf: Check read access for initialized
- writable memory arguments
+References: <20260918175950.21657-1-rosenp@gmail.com> <20260918181025.DCFD81F000FF@smtp.kernel.org>
+In-Reply-To: <20260918181025.DCFD81F000FF@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 18 Sep 2026 11:19:02 -0700
+X-Gm-Features: AcwNN1Vsq01WUhvaVInIWSguLOn0V0MH48-XC3VKFbzajnMGmMZfA5TB6E39QAM
+Message-ID: <CAKxU2N-t9vWTazxtC+dSd-SoV5cvS2Hf98t2J2WrWCZNNjH0tA@mail.gmail.com>
+Subject: Re: [PATCHv2] dmaengine: bestcomm: Enable compile testing
 To: sashiko-reviews@lists.linux.dev
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>, bpf@vger.kernel.org
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 17, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Sep 18, 2026 at 11:10=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Critical] bpf: MEM_WRITE without MEM_UNINIT enforces BPF_READ breaking=
- output helpers
+> - [Low] kconfig: missing PPC_MPC52xx dependency for SND_SOC_MPC5200_AC97
+This was merged:
+
+https://lore.kernel.org/linux-sound/178967135736.285745.8925263446043052641=
+.b4-ty@b4/
 > --
 >
-> commit aebadfb01a3b32540321fe2b60bcb6fb1c8673be
-> Author: Eduard Zingerman <eddyz87@gmail.com>
+> commit 95cb68468081de8e2880323cb63c64d9da8626b0
+> Author: Rosen Penev <rosenp@gmail.com>
 >
-> bpf: Check read access for initialized writable memory arguments
+> dmaengine: bestcomm: Enable compile testing
 >
-> This commit updates the BPF verifier to derive memory access types based =
-on
-> argument flags, correctly enforcing read access for writable memory argum=
-ents
-> that are already initialized. The change addresses an issue where helper
-> argument checking previously omitted read permission checks on map values=
-. It
-> adds a generic func_arg_access_type() helper to replace the kfunc-specifi=
-c
-> access overrides.
+> This commit relaxing the dependency for the BestComm DMA engine allows it=
+ to
+> be selected on PowerPC for compile-test builds. It adds an alternative
+> dependency on (PPC && COMPILE_TEST).
 >
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > index 1d5e4ee64fc00..21eb806b1351c 100644
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
-> > @@ -8886,6 +8886,15 @@ static int process_map_ptr_arg(struct bpf_verifi=
-er_env *env, struct bpf_reg_stat
-> >       return 0;
-> >  }
+> > diff --git a/drivers/dma/bestcomm/Kconfig b/drivers/dma/bestcomm/Kconfi=
+g
+> > index 5dd437295964d..e23ba4982d7ed 100644
+> > --- a/drivers/dma/bestcomm/Kconfig
+> > +++ b/drivers/dma/bestcomm/Kconfig
+> > @@ -5,7 +5,7 @@
 > >
-> > +static enum bpf_access_type func_arg_access_type(enum bpf_arg_type arg=
-_type)
-> > +{
-> > +     if (!(arg_type & MEM_WRITE))
-> > +             return BPF_READ;
-> > +     if (arg_type & MEM_UNINIT)
-> > +             return BPF_WRITE;
-> > +     return BPF_READ | BPF_WRITE;
-> > +}
+> >  config PPC_BESTCOMM
+> >       tristate "Bestcomm DMA engine support"
+> > -     depends on PPC_MPC52xx
+> > +     depends on PPC_MPC52xx || (PPC && COMPILE_TEST)
 >
-> [Severity: Critical]
-> Does this regression break pure output helpers that lack the MEM_UNINIT f=
-lag?
-
-This is a valid concern.
-
-I still think we should assign BPF_READ | BPF_WRITE to kfunc arguments
-when generating the prototype, and only BPF_WRITE for __uninit
-arguments. This would also avoid the need for func_arg_access_type().
-
+> [Severity: Low]
+> Does relaxing this dependency cause an unresolved symbol during link time=
+ for
+> SND_SOC_MPC5200_AC97?
 >
-> For example, bpf_snprintf() is defined as an output helper:
+> When COMPILE_TEST is enabled on PowerPC, PPC_BESTCOMM can be selected wit=
+hout
+> PPC_MPC52xx. However, SND_SOC_MPC5200_AC97 in sound/soc/fsl/Kconfig depen=
+ds
+> on PPC_BESTCOMM but lacks an explicit dependency on PPC_MPC52xx:
 >
-> kernel/bpf/helpers.c:
-> const struct bpf_func_proto bpf_snprintf_proto =3D {
+> sound/soc/fsl/Kconfig:
+>     config SND_SOC_MPC5200_AC97
+>         tristate "Freescale MPC5200 PSC in AC97 mode driver"
+>         depends on PPC_BESTCOMM
+>
+> This inherits PPC_BESTCOMM's relaxation and allows the driver to be built
+> when the platform code is absent. In psc_ac97_cold_reset(), the driver
+> unconditionally calls a platform function:
+>
+> sound/soc/fsl/mpc5200_psc_ac97.c:psc_ac97_cold_reset() {
 >     ...
->     .arg1_type  =3D ARG_PTR_TO_MEM_OR_NULL | MEM_WRITE,
+>         mpc5200_psc_ac97_gpio_reset(psc_dma->id);
 >     ...
-> };
+> }
 >
-> Because bpf_snprintf() does not guarantee full buffer initialization, it
-> cannot be safely marked with MEM_UNINIT. However, with this change, the l=
-ack
-> of MEM_UNINIT means func_arg_access_type() will return BPF_READ | BPF_WRI=
-TE
-> instead of just BPF_WRITE.
->
-> Will this inadvertently force check_helper_mem_access() to reject valid
-> write-only maps (BPF_F_WRONLY_PROG) when passed to such output helpers, c=
-ausing
-> valid BPF programs to fail verification?
->
-> Additionally, for unprivileged programs lacking CAP_PERFMON, won't this
-> erroneously enforce stack buffer pre-initialization by enforcing a read c=
-heck
-> requiring stack initialization in check_stack_range_initialized()?
+> Since mpc5200_psc_ac97_gpio_reset() is only compiled when PPC_MPC52xx is
+> enabled, does this result in an undefined reference at link time?
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918052906.12=
-226-1-memxor@gmail.com?part=3D3
->
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918175950.21=
+657-1-rosenp@gmail.com?part=3D1
