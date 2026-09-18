@@ -1,163 +1,113 @@
-Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F30C51589C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7388851DAEC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789755558; cv=pass; b=cKaqs2jxVXUFTDLqktXxM/vh9rf4PIuHd0LUHIZvwWknNRkT1CPDXTJg08U2HMr8o2Fj2MxrzopiC2h55AJ1SBd59Os+sYMfHrXE7UPkqfx6I9o7fvSVzMxaFxSsgW62f48V8Kcgn1Y02uNJfdU0qmHX3hc0GSxW9fIMcKxI8Qk=
+	t=1789756073; cv=pass; b=cgVpCRBUiXhqtjTThjQBuZzfylAta0Y2S098q/k2PR1PpIAiEEIb8AvjyCO+wqaMcb9Tncw5CJuMD2s7LHnAuEsm60RSgSY80MDyRvdCcczcUhIwWNZVwsoBwVNvrleIdvu3VvtHb5cGz0MynystyoXzJHUcsiYxo6x2acVjDuc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789755558; c=relaxed/simple;
-	bh=B8dH8j3d8XLDzSCJawbfImR14z+XNYtPHGcF4ZCRVQA=;
+	s=arc-20240116; t=1789756073; c=relaxed/simple;
+	bh=CehHEgeM+pdJ84HcW1hUWFnVx85CKeaL98EzBzD3WlA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K48VYQeR8PEhxcyVNAiJOYnnooH7URUyx7UU/o1KcF3nue5UYfVSemSpQ65XrBzT3sOeoUxCzEcn3NiO+kR4gynI1Z+jgWbit03eupg9/FfOAyoHo0VOrqoXdIhYFbng8JoreZ0/L7lqEIy/BRruU1Bi9bCjvGFq4rnY0uwHRwE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNw3jl9e; arc=pass smtp.client-ip=74.125.228.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=oun8APakX/E01UtuO8EDB1DvtGt+uRSYYpg4vHuLupJFAxjXyDR20k0YApiu1SvpeIRgqGR8kKVruowYsK+u0fwwZjeeYxfBAvecIMEp4iqOIQCC8Ae00AfMRk3QBfqhWaoCSc/75IGAI1lADZxtHXhXz/bBal4OZab947Tunv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=asseily.com; spf=pass smtp.mailfrom=asseily.com; dkim=pass (2048-bit key) header.d=asseily.com header.i=@asseily.com header.b=WIMOboLB; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=asseily.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asseily.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNw3jl9e"
-Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6a8038a9f10so1512152a12.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 11:19:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789755555; cv=none;
+	dkim=pass (2048-bit key) header.d=asseily.com header.i=@asseily.com header.b="WIMOboLB"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d45ae011cso11429777b3.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 11:27:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789756068; cv=none;
         d=google.com; s=arc-20260327;
-        b=ebe71l1x4Z+KTg/g2D5efza6Qa6rRIaKDuYlMWYzrsLlvWtiSlDIpslTdIkGF1xgrN
-         ZsVJu6x/9g8taTIHFipb+8RxsIu98/SrANsQaWHknZjVymMuVCt9pFC/DLRpCHlbKWJ0
-         JSAP2Rpl5t/u3RWF2rcbpQKDImKmKqMeRE5Z42y1VP+uSlEN5gfEvEiSLWt9UCC+CmMp
-         dcEaVO9aDaDqPaY+I1fH8GHhAHW0aQAzYfc9V1PBNtc904TSVZeMF0BHpYjf96X03g1A
-         Rqhn+hEDokZNliYeNzwr+7VefX7x/RIUuVO+om5mnodJU1yVbQhdxSrBW565rFJIboKY
-         qwSg==
+        b=SLkcgsrvKT7pDxu1SYOJ4pS7oIDYSh95IJnK3iTXSMg+w8WJjuUYFABN9OVlTDa1/V
+         grrdRNKlYLpTX5Ouy/d0/y8ZTl0CcboinN9s0lL9D6N0BDBi1t3TjYPmP839nNVnLW4E
+         IrYrKU/qGDqwJCniKRbe9bXAxDMgZN6EURTIj3Gip5zhxwvK6xhOX0nzIFpQRVdH7RUV
+         XKZLM3nTfLd+kLpyfGpIb11+qqhxrJxe3IzCfVSG0pSoqgxLoDP7Xdl2TRfVRxG7NDqm
+         0wB9BbNl4YjVszZeU+T9OroIaZVkiiHP6evvnShThI1sdcHvvEiW3UWGxz1BjoR+f5lR
+         1C+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
-        fh=dZD3NgG1X7s6kpr5hZ2U8f/WHSVkfsXTB6YiQT1XEfs=;
-        b=KIFh3g+PNbwJEsCdvPcNFwlVWFk7PLMeNpaJXqT23LAvgez/FWTzrUPs+PxHOr+ULa
-         PpK+P4QMWcbd2TpaK3/WaaqMSs76DIY+bGIwsj/LcghtS3olCZDLyuG5mOUmaryrOJwq
-         fuED0dbYHRCsa0AIiqE7/JuFpJ+MAkOnIM5wnfjsEru5/kuMyj4or4CXPK22WH1Gij6e
-         9DS8DcwMPOMw3XSDG+00lRjL+pgxE309nje4G5zAKzagExUYoJPWGRpmG1OJucw8zbaS
-         Yu/I+A7H/ErkXq0USbwdyjneZkZ0+Nz5chWw/hUv0CCoELza2DjOCmRaCEZXS1dH03Kw
-         pehg==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=mSi+JtaOU6ls557xXyeB3xrqvaX8RUi/FGWcovRXz3A=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=qjnv06WYC0iql4avn3pkqoK6Z1RBBX1YC6ELyjp3VHvtEx5dypXsYUDJus1eGx8m3Z
+         UiKlpa+PZv6bqW5+nlHVwq+zL2qT7kHdCbdfwwiMomRcMqCNTMKKi3COyxmNxHdOW+ov
+         wzteAf9czo8Dy1RwjQbzYFkYvVa5if8hlbXwsUF92LzLVjTdTm71w+DGO9b7cDU3FoM0
+         DA2jDRfFlOUXaxpzL5k1OJ2e1kUkj1lXMZRT5Bxl0m6rKDdemcDv7kp7HaiAWA2V2/HB
+         M5rKF1MIEnT3NgiahC+yPnYNQ9DfoRfLSF2NF7KeZsCdQwNKHigyMbKtVsIcOWU91Ke7
+         EIHg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789755555; x=1790360355; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
-        b=hNw3jl9eMrwdZmQQj5XNa3XlgtBPvT9LXp3NcruSeJgYRGlNuLwQLgePAb7c1Htb1h
-         C+pHk5c5laQB37l4g3FiVqcVECp13cZqB3sHLQewnx4RmSO1CT/Dib/aC1ayRqfDnhQb
-         RvQTdr9Sg3SrmJuq7Y/N9nRW/tPRae8wAqqkSvuQNALpsh7gNVwypPNNQAw4mHGagdog
-         jXfpfJFVU67qk0hGXnfsMtf2wDofAb2pqNmjfJa5bRmuWqfAMKWuokMvLfocW667ZG2/
-         2WNeH90niMd8C08mvRDTLR87EvH7bLBSd2g9fzx7YohgJR5ONt6ICpKEIQb4sbIARKYY
-         vwbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789755555; x=1790360355;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=asseily.com; s=google; t=1789756068; x=1790360868; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4lxXJUnL2aGCDPT+0B0LiFdakuJvQky3WO+D+mrk96o=;
-        b=VoPcc1OR48kPWFTgr+l2MWZuK2iuOnPboURsQwA4sABWExsmxvUEHx6PdYaXXGxheE
-         iKliy71MPP5kYlgFcsQoF//kQlEI8tOumPqr9GdbhVQENDIIyX//HDEKs4JzspA/3AwU
-         p8q8A+cu/X0a3r3H7W7NPVvJJJ4vx12pbLbTs+py/yxSy4H/ys7V0U7Z0B1RjF6BOpQx
-         8MibysaFDvHEAZwMaCOKTlra6XRRpqPsfxNvFnlj58lNGqnj3PH3n/b3ioZRuFd8h1UZ
-         /6asmr6XWMfmu6+6+Bl0fvuXJaaLMt/VB1usEp6XEPJyTXCRLFKasvfjpo64cLsvmDiF
-         4Anw==
-X-Gm-Message-State: AFuF++lmn8lyCt3rriwzZPn5GlVIWsCC18yszuOrmwbJjMkpWLPKhRPm
-	OljY9w7o+sLMALa8roM6ZVe1ZYM9qVGjH/Ru85+l/k42IFEXeXXP2BW+TXAYfVfA2YCx2z61ngx
-	bza2WvcBu4rzRGsTm3OazDif/badwQl9QZBID
-X-Gm-Gg: AYBFou0k7LtHmb+vzZoeF2IEcpodXt9w19PC6BKLaUL0cHNCTnw//3HrRbELT/V7Gaz
-	AAbOuyGB1zkM6k0CBnB1sNjbiAEBCzskY6Jvmf2oH4PeAQMCar6kR5HOwHj4cQdoaVsPrzNcQqw
-	RYiwIBOuCKbEcZYWBaE8FTZ0doVCbu+UydJeylwVHhaR1feijpU1wimqoLahU8dDHuRc2gUS/UU
-	SmKAuj5knzGgHHt56gHoiDV9JqFclVgjofVqVu+/lqsztOpu4VauhJNMr+uorVI/rX6+G0xgZWh
-	qW+4ZD6OIm7upG/fkpq3s0d6nQQX0I+jjs74pKF1+/U5D/5hhtLrSeM1N+so17y7z8IX5r3oLBU
-	gKQ3cAm807DmGFppUDj78zq76pqYcU+62P7C7flKfEQ+oqy+gfkn7RmrvCHj8mOqDUG07c4zKAG
-	77IOwZZoA2HeI42bIGmz4rCirnLE96ifOCPcN1BUoW2jIwQVUa5vAEV6HqHKUfB/L3+sU8mwjrh
-	iqH
-X-Received: by 2002:a17:906:c113:b0:c29:65ef:b907 with SMTP id
- a640c23a62f3a-c2a157c9032mr318214066b.26.1789755554588; Fri, 18 Sep 2026
- 11:19:14 -0700 (PDT)
+        bh=mSi+JtaOU6ls557xXyeB3xrqvaX8RUi/FGWcovRXz3A=;
+        b=WIMOboLBw2FbeeAwtAJK0/yeopfWtbYBy9eulcz0t4Le687wmtp579X7CzKekCYiub
+         tmrYLKvfAdk++7/Co5wTy6n5rfRf36JBzeomrtpIJQSwNPFCo8RClRn6zcol60CAVPjc
+         faBCOXmhSU+VTIGDvqxFaB034MGM6G88YL29fR/UIISzg97hfc7H7RZfDG9H+94qCkar
+         A8QhbqaEAh8Mg46z9aYwl//NZmKv6JTmMKKHWohAMT9jfwQ1OwEl8jOheYTLJIuYMXK5
+         OLLnx5H/S93u5cLtgo2UyjYPpD65UcTTghIxkNUfLnUMJqNmgUhjldyAxNx/uajDFCFf
+         Eafg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789756068; x=1790360868;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mSi+JtaOU6ls557xXyeB3xrqvaX8RUi/FGWcovRXz3A=;
+        b=D04kmv17dnrPBLTckc/zqXYIgbsI6J/hcLM2szC/EfJeDBa0DcoIbJE6k3bvcLtP6S
+         sUQ3R6SNPpv4GxNRn80lrk/H2Muv961rcWQQFrYx1GKqj50F0NxXDkJ45S7JynBXHa6f
+         gnQmpCaUo3JID4A0M+wzVEKH72kLbdKPDAwl3XoZx0rsbMJyQATqjuqHexBfR8Hw+7zx
+         HvyzCba0S7kTISK0Z1LuLHYsRn8fzjtkT5PwJj8cq62N9JWfrUy29QlomD2u0nKu9c1h
+         GGsv0OvBdHFPG/rjek78qcM618iG7yrq10xtueVKkDpCGFhSUjSQ1WidHH+LDUZTLr5k
+         hzig==
+X-Gm-Message-State: AFuF++kY6uX9QyPuKgbCUNCRYMQluSlZMRURFx+NG9XHJjgbvWnbcLWa
+	wG8rHJy6OwKxnAogu4ZKx8Vdin3jKqV3xtB0xqwCPeE7W/HFsntkxxsV2p/3uNiFP1FNjZgRCZJ
+	Eoezfc/TInxVOsUUr616L7cu6nXGZHyXxZ06DqGEvF6aWe7q0fvC0lb8g5gLp
+X-Gm-Gg: AYBFou0RwOpCzldBIBPRDzHRn2fdDcxSmqcYaMdfh9LVyes9zKU66yvWvl6ocWyDBYX
+	SQX/oIyMd1sXVAa3HTkW/kCZg19gIENzsLZ71QmYnjt6IWRoobz8ps5TkXeQMtQzrHcMXC9vqYf
+	0fIa0UBnMS4QbMMGQ01oHk6d6xsRSc50V3vGj9jHqGcrzEklsq40dmPo/p4lo/Efr/gncnQog6q
+	KOHIq90eA7osFsDH3Nh6w4WzhuXNsPAc0jWyfqq+22XxlhCe5vdpS3a2glBF3vj/p+p8hvRTr9H
+	ggjOfG+ArCtIFoAEmFWtiWEjvAgprUSl3lXryKecZ8uLw/wdD6zPDQcUfb3FfvUo/opMmSwNHy5
+	JNWhQavqYXNE1
+X-Received: by 2002:a05:690c:f13:b0:89a:63bc:8c3 with SMTP id
+ 00721157ae682-89a63bc0b51mr1161317b3.77.1789756067983; Fri, 18 Sep 2026
+ 11:27:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260918175950.21657-1-rosenp@gmail.com> <20260918181025.DCFD81F000FF@smtp.kernel.org>
-In-Reply-To: <20260918181025.DCFD81F000FF@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 18 Sep 2026 11:19:02 -0700
-X-Gm-Features: AcwNN1Vsq01WUhvaVInIWSguLOn0V0MH48-XC3VKFbzajnMGmMZfA5TB6E39QAM
-Message-ID: <CAKxU2N-t9vWTazxtC+dSd-SoV5cvS2Hf98t2J2WrWCZNNjH0tA@mail.gmail.com>
-Subject: Re: [PATCHv2] dmaengine: bestcomm: Enable compile testing
+References: <20260918031326.68542-1-karl@asseily.com> <20260918031326.68542-4-karl@asseily.com>
+ <20260918032414.DA9E01F000FF@smtp.kernel.org>
+In-Reply-To: <20260918032414.DA9E01F000FF@smtp.kernel.org>
+From: Karl Asseily <karl@asseily.com>
+Date: Fri, 18 Sep 2026 21:27:36 +0300
+X-Gm-Features: AcwNN1UT5LNp3dA_PhMdzD49GGBeCsZBq_3bsdgYVOg6s5JM-3kAuBBBQQ5Lo-k
+Message-ID: <CA+gvwbot+W64DPHxgFNM9PfPF7tPVzhOmkLgL5CjdwPPMwSU2g@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] ASoC: es9039q2m: add ESS Technology ES9039Q2M
+ codec driver
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 18, 2026 at 11:10=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] kconfig: missing PPC_MPC52xx dependency for SND_SOC_MPC5200_AC97
-This was merged:
-
-https://lore.kernel.org/linux-sound/178967135736.285745.8925263446043052641=
-.b4-ty@b4/
-> --
->
-> commit 95cb68468081de8e2880323cb63c64d9da8626b0
-> Author: Rosen Penev <rosenp@gmail.com>
->
-> dmaengine: bestcomm: Enable compile testing
->
-> This commit relaxing the dependency for the BestComm DMA engine allows it=
- to
-> be selected on PowerPC for compile-test builds. It adds an alternative
-> dependency on (PPC && COMPILE_TEST).
->
-> > diff --git a/drivers/dma/bestcomm/Kconfig b/drivers/dma/bestcomm/Kconfi=
-g
-> > index 5dd437295964d..e23ba4982d7ed 100644
-> > --- a/drivers/dma/bestcomm/Kconfig
-> > +++ b/drivers/dma/bestcomm/Kconfig
-> > @@ -5,7 +5,7 @@
-> >
-> >  config PPC_BESTCOMM
-> >       tristate "Bestcomm DMA engine support"
-> > -     depends on PPC_MPC52xx
-> > +     depends on PPC_MPC52xx || (PPC && COMPILE_TEST)
->
 > [Severity: Low]
-> Does relaxing this dependency cause an unresolved symbol during link time=
- for
-> SND_SOC_MPC5200_AC97?
+> Can we use named initializers for this array?
 >
-> When COMPILE_TEST is enabled on PowerPC, PPC_BESTCOMM can be selected wit=
-hout
-> PPC_MPC52xx. However, SND_SOC_MPC5200_AC97 in sound/soc/fsl/Kconfig depen=
-ds
-> on PPC_BESTCOMM but lacks an explicit dependency on PPC_MPC52xx:
->
-> sound/soc/fsl/Kconfig:
->     config SND_SOC_MPC5200_AC97
->         tristate "Freescale MPC5200 PSC in AC97 mode driver"
->         depends on PPC_BESTCOMM
->
-> This inherits PPC_BESTCOMM's relaxation and allows the driver to be built
-> when the platform code is absent. In psc_ac97_cold_reset(), the driver
-> unconditionally calls a platform function:
->
-> sound/soc/fsl/mpc5200_psc_ac97.c:psc_ac97_cold_reset() {
->     ...
->         mpc5200_psc_ac97_gpio_reset(psc_dma->id);
->     ...
-> }
->
-> Since mpc5200_psc_ac97_gpio_reset() is only compiled when PPC_MPC52xx is
-> enabled, does this result in an undefined reference at link time?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918175950.21=
-657-1-rosenp@gmail.com?part=3D1
+> The I2C subsystem requires explicitly named initializers for struct
+> i2c_device_id arrays to ensure proper device matching.
+
+Not taken, and I do not think the premise holds.  Measured against
+broonie/sound for-next: sound/soc/codecs carries 202 i2c_device_id
+tables, and 136 of their entries use the plain positional form
+{ "name", data }, which is not a named initializer at all.  The bare
+{ "name" } this driver uses accounts for 196 more.  Matching does not
+read the initializer syntax - i2c_match_id() compares the name string -
+so the form has no bearing on device matching.
+
+The other three findings were real and are all fixed in v4, which is on
+the list now.  Thank you for them - the FIR-versus-suspend one was a
+genuine bug.
