@@ -1,133 +1,180 @@
-Received: from mta0.migadu.com (out-216.mta0.migadu.com [91.218.175.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9227543935C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:26:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7C54915BC;
+	Fri, 18 Sep 2026 07:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789716412; cv=none; b=ApqATQ90LLP8whFZBvXctQIMLoJlX4LbXiGb9WPIuxEf9ZuVmTOL26MI6gG5t/OlBePSt2u2gsnATjhr/zHzqqGzJxevDw/r7zTP6cSZ5DRsWvVM7fzRCd25e2gKQTW1Sv16z1PovIWnUhRA0s0wxwIW+lpGBjSkgXacD78YGKM=
+	t=1789716645; cv=none; b=LGP3MB2dFlSBC/fyrisM2bfjWbkTVB3IqiHm/Wm8P3JIxYXSJ05x1mfyGhCZcLMr9++Cvi5dZ+eFph50JlCsxzl/YPIvmxNzrPXwRC7tRZEz6zcd6RvtXOf7P+/nNHmtz4mYEA2tQluKTpoW/5LHJ7gOcLymgZMsmGJmrQsdGKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789716412; c=relaxed/simple;
-	bh=xZP6ftAtGzbZfQ0/YaJyLYZIBoBtWq9fi4M/yZkk3Uk=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qLzhzx2wI9Ax+VH4UrLcmvjzMdYMSvRXcKlY5+bQNgYVoXkh4AK9xaeK83U81U6PhhJawQ+hK0DND68mlluwLMGe10Imvv3midPba+NBN4x2MnQdxDb9RFEnItal4vNxhNAxbSGL25vJsQr/SDnaslxRto/AM1A1KKDGKuK+fk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R6ojULKy; arc=none smtp.client-ip=91.218.175.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789716645; c=relaxed/simple;
+	bh=Tt8GdfbueXGSkuK4G2fnxFMVppLcaokIDf9ojMSlu20=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a5ofdZhtrTF/z7X2tEvIBH7PARZdQRctvCEIk7bkIPFUcCRYabN/LdyGixLLr6tMpGq8mNgGi4IQ1XHw7DWmsqc+PLeBiOyKeS09Av1Li3VbEd6Edp/hDaaUNn8xxIcfGj2SgQAoeEDnIQ6v0YqHYCV9nmM99eNof4sqS+ncMag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=b9GkcDni; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R6ojULKy"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=xZP6ftAtGzbZfQ0/YaJyLYZIBoBtWq9fi4M/yZkk3Uk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789716385; v=1; x=1790321185;
- b=R6ojULKybALVFbU9XTc9+hWzhhRcZofFuvDAiW/7UlM13MZvv9i7NnIjan9MPFOQy0ua3137
- qf4xQldBNBdStJNlHshA9o4qtOrj8x0U84y23OnjRjrYB5Pb7jlqp/TrvnmR+ZqovJsHp5XETSI
- wTa2p6jtv6yWDKedHC+7xSrY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id c9dde96b7cfbc86a;
-	Fri, 18 Sep 2026 07:26:15 +0000
-X-Mizu-Trace-ID: c9dde96b7cfbc86a
-X-Migadu-Flow: FLOW_OUT
-Date: Fri, 18 Sep 2026 15:26:06 +0800
-From: Hangbin Liu <hangbin.liu@linux.dev>
-To: sashiko-reviews@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH net-next 1/6] net: lwtunnel: change encap fill order
-Message-ID: <aqznjquXIavzmuFD@fedora>
-References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
- <20260917-ynl_rt_encap-v1-1-fbbe6e680571@kylinos.cn>
- <20260918063655.418681F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="b9GkcDni"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68I61wOl313701;
+	Fri, 18 Sep 2026 07:30:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=VVrcSc
+	kwtiGgM8C01h+pd1zrhhl2QR3EIgt6hAK0330=; b=b9GkcDniko72qq1TLuDdAJ
+	e+lpqtgR3Jt2PiTMVsDMGNxqKlSK08ZA7sGGaDyMkfh4PpeZfRAu9ympXIP7g0ws
+	ZRWnB6RyrVq4qHuwC8qoig4Ne+PeyFXEymSaxQX5D1FcQDHXvYTtm+v3rhtPIhOb
+	YYY0Ars+zC7VPH+o/wAlMs35HDD2Z/FEbsDAAPhzbJGWbuIV7W1eUZ/V5rmvL55W
+	IFi39NA/q3DDXaHG0ITVDbEgtdqNQtQbkI8qZZgUzbgd+5y8VViHQObD/YjCN3OU
+	yTbo/l4ui5IWjXwZBc/EE0CcvVDvjoAHS6YuTW1ENM5aNAvl0Nh9IT/XW6sLtgvg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmv5j6hs5-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 18 Sep 2026 07:30:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68I653bE170840;
+	Fri, 18 Sep 2026 07:30:42 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gra3fdbyj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Sep 2026 07:30:41 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68I7Ubad12059132
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 18 Sep 2026 07:30:38 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DFD6A2004B;
+	Fri, 18 Sep 2026 07:30:37 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4672B20040;
+	Fri, 18 Sep 2026 07:30:37 +0000 (GMT)
+Received: from [9.123.2.177] (unknown [9.123.2.177])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 18 Sep 2026 07:30:37 +0000 (GMT)
+Message-ID: <31320deb-ad24-420e-aded-53031ca43fa4@linux.ibm.com>
+Date: Fri, 18 Sep 2026 13:00:36 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918063655.418681F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] KVM: PPC: Book3S HV: Avoid spurious interrupts caused
+ by LPCR_MER bit
+To: sashiko-reviews@lists.linux.dev, Gautam Menghani <gautam@linux.ibm.com>
+Cc: kvm@vger.kernel.org
+References: <20260918055848.28390-1-gautam@linux.ibm.com>
+ <20260918060829.D84C61F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+In-Reply-To: <20260918060829.D84C61F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDA5NCBTYWx0ZWRfXyOobu03mOjJc
+ bodtKZzzxpOuOYBxQ30RCBYYY/KPw3ST2h/LRPgSpPT3GsyhrXEKo60XdkpSBusFINdPrgUdxIn
+ CbDz5Vbqbhfk7vTkB40pkEaAT95cy/UY8jehUnZ7MF3yNPI2rSgh7bMAd0W6dmnM+rmkiQFd/Y3
+ b4C+fJVY1A+4XjwPS40UA4DqjpRsxcIz3iXoxkkZ8E3+JbOrbenOKpS4X/WSfB37KeP5MYoahET
+ 8e6yJsyfqzbYysqYmj2nYJsl7i2mfAy9hel08eUPWMNP3MRe5GQc43MmwnPLDQfZWOBAlYgW4EZ
+ AEuxhO+BAii4vHUvdOD5z3nE5Edc/Caedou/nB/SWT+X8gmxCLFo/VZfSQ6sWxKnkUDfeyuWp/+
+ +HwWOUtu3EF8UF5mWpQMn13cRW+YC+YDhWrxaVuBMEYvmS4m9gSAWdKIwIbPN/nazL4ni7npyR5
+ PPAV3a8yuUtfhhQF+oA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDA5NCBTYWx0ZWRfX0zRUpPM7f0kx
+ um3DNKoZsy9RQmAqoAQhXxgt7vbNHX//J+xJ5EGe5sGhh7934BT262dxOL07W9GCrhRhnaGqjRQ
+ SBK2+Lw21xJ/Gjioo5Law0g8Ot39b84=
+X-Authority-Analysis: v=2.4 cv=Zsx4uN7G c=1 sm=1 tr=0 ts=6aace8a2 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=yKAn6K1XAAAA:8 a=VnNF1IyMAAAA:8 a=XlwifpPfmKqjG8qNDjIA:9 a=QEXdDO2ut3YA:10
+ a=6M1ixcW_PCWoKiWyFx5v:22
+X-Proofpoint-ORIG-GUID: 8z_PiAN9i3nFrmeVXNNciFTh7UhUg6dv
+X-Proofpoint-GUID: 8z_PiAN9i3nFrmeVXNNciFTh7UhUg6dv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-18_02,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 clxscore=1011 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609180094
 
-Hi Jakub,
-On Fri, Sep 18, 2026 at 06:36:54AM +0000, sashiko-bot@kernel.org wrote:
+Hi
+
+On 18/09/26 11:38 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] net: lwtunnel: incomplete rollback on fallback path leaves orphan RTA_ENCAP_TYPE
+> - [High] kvm: ppc: software-injected external interrupts lost on XIVE hosts
 > --
 > 
-> commit b32da4e3fb34d0c2a7a1afb438a76ca410be21ec
-> Author: Hangbin Liu <liuhangbin@kylinos.cn>
+> commit 05773d5b089dd4410c7e3e3a1611da5479c7d1a4
+> Author: Gautam Menghani <gautam@linux.ibm.com>
 > 
-> net: lwtunnel: change encap fill order
+> KVM: PPC: Book3S HV: Avoid spurious interrupts caused by LPCR_MER bit
 > 
-> This commit changes the order in which lwtunnel netlink attributes are
-> emitted. It places the encap_type_attr before the encap_attr nest to
-> ensure userspace YNL can decode the sub-messages correctly.
+> This commit aims to avoid a huge number of spurious interrupts on KVM PowerNV
+> guests in XIVE mode by not using the LPCR_MER bit when the hardware can
+> present interrupts directly. It modifies kvmhv_run_single_vcpu() to skip
+> setting LPCR_MER when xics_on_xive() returns true.
 > 
-> > diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
-> > index b01a395d9a966..f13dfa02e026e 100644
-> > --- a/net/core/lwtunnel.c
-> > +++ b/net/core/lwtunnel.c
-> > @@ -240,6 +240,10 @@ int lwtunnel_fill_encap(struct sk_buff *skb, struct lwtunnel_state *lwtstate,
-> >  	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
-> >  		return 0;
-> >  
-> > +	ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> >  	nest = nla_nest_start_noflag(skb, encap_attr);
-> >  	if (!nest)
-> >  		return -EMSGSIZE;
-> > @@ -254,9 +258,6 @@ int lwtunnel_fill_encap(struct sk_buff *skb, struct lwtunnel_state *lwtstate,
-> >  	if (ret)
-> >  		goto nla_put_failure;
+> Closes: https://lore.kernel.org/linuxppc-dev/582904882.11159.1786719390349.JavaMail.zimbra@raptorengineeringinc.com
 > 
-> [Severity: Medium]
-> Does this leave an orphaned attribute in the buffer on the fallback path?
+>> diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+>> index dbac3573b2c89..f4d12a97311b9 100644
+>> --- a/arch/powerpc/kvm/book3s_hv.c
+>> +++ b/arch/powerpc/kvm/book3s_hv.c
+>> @@ -4980,7 +4980,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+>>   			if (!kvmhv_on_pseries() && (__kvmppc_get_msr_hv(vcpu) & MSR_EE))
+>>   				kvmppc_inject_interrupt_hv(vcpu,
+>>   							   BOOK3S_INTERRUPT_EXTERNAL, 0);
+>> -			else
+>> +			else if (!xics_on_xive())
+>>   				lpcr |= LPCR_MER;
 > 
-> If ops->fill_encap is unsupported, it evaluates to -EOPNOTSUPP and execution
-> jumps to nla_put_failure:
+> [Severity: High]
+> Does this unconditionally disable LPCR_MER on XIVE hosts, potentially dropping
+> software-injected external interrupts when MSR_EE=0?
 > 
-> net/core/lwtunnel.c:lwtunnel_fill_encap() {
-> ...
-> nla_put_failure:
-> 	nla_nest_cancel(skb, nest);
+> The outer condition in kvmhv_run_single_vcpu() checks if either a KVM software
+> interrupt (BOOK3S_IRQPRIO_EXTERNAL) or a hardware XIVE interrupt is pending.
 > 
-> 	return (ret == -EOPNOTSUPP ? 0 : ret);
-> }
+> When MSR_EE=0 on guest entry, the patched code evaluates:
 > 
-> Because nla_put_u16() was moved before nla_nest_start_noflag(),
-> nla_nest_cancel() only unwinds the buffer up to the start of the nest.
-> This leaves the encap_type_attr orphaned in the skb payload.
+>      else if (!xics_on_xive())
+>          lpcr |= LPCR_MER;
 > 
-> Since the function returns 0 (success) in the -EOPNOTSUPP case, the caller
-> is prevented from discarding the message, which results in a malformed
-> netlink message being sent to userspace.
+> Since xics_on_xive() evaluates to true globally on bare-metal POWER9+ hosts
+> with XIVE enabled, regardless of whether the guest uses the in-kernel XIVE
+> irqchip, bypassing LPCR_MER here seems to cause software-injected interrupts
+> (such as those from userspace via the KVM_INTERRUPT ioctl) to lose the
+> hardware trap mechanism that normally fires when the guest later sets
+> MSR_EE=1.
 > 
-> Could we record the skb tail pointer before nla_put_u16() and restore it on
-> failure, or is there another preferred way to unwind the encap_type_attr?
+> Could this lead to dropped or severely delayed external interrupts for guests
+> using a userspace irqchip?
 
-I'd like to add a checking
+No, interrupts are not dropped. KVM_INTERRUPT sets 
+BOOK3S_IRQPRIO_EXTERNAL in vcpu->arch.pending_exceptions and kicks the 
+vCPU out to the host. On the next kvmhv_run_single_vcpu() entry, 
+kvmppc_core_prepare_to_enter() re-evaluates the pending bit. The bit 
+persists until MSR_EE=1 allows delivery via vmppc_inject_interrupt_hv(). 
+LPCR_MER is not needed here as XIVE hardware handles the delivery 
+trigger directly If I am not wrong.
 
-	if (likely(ops && ops->fill_encap)) {
-		ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
-		if (ret)
-			return ret;
-	}
 
-to cover the EOPNOTSUPP issue. For other errors, the netlink fill will abort
-directly. What do you think?
+Looks good to me, much better logic than v1. The v1 concern about the
+case where xive_interrupt_pending() is true alongside the external
+exception bit is now handled cleanly with the xics_on_xive() guard.
 
-Thanks
-Hangbin
+Feel free to add:
 
+Reviewed-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+
+Thanks,
+Narayana Murty N.
 > 
-> >  	nla_nest_end(skb, nest);
-> > -	ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
-> > -	if (ret)
-> > -		goto nla_put_failure;
-> >  
-> >  	return 0;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=1
+
+
