@@ -1,69 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA97325C818;
-	Fri, 18 Sep 2026 20:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A51348C6B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 20:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789762216; cv=none; b=TgtarRD3lRkW+VqgjIEgXeCE9Kvk6EAx16cLxFXeZr8OkcnZUVW0PTj0j1qJaoQ1b/cs77zIUsz3447hVqCTUJCcKWkaxF/IBzusim6KkQYixm5CUcp5YyTe/EvDaYfQadnpSgWCvBbNtQfY6VK4juH+c6Os9yHtRAt1kYpjYyQ=
+	t=1789764341; cv=none; b=nJXrHC5fr/8ZI4sKozgD1XpvsFjXT0ap/DAGUVGxpUQS/ktzJiHKQTWMbH7WWpNah64ohVwT4Uw6m74lUxYxNO9rwxtfetsoHUU/T1U9oo94JOjhM5jURNpxWydz970DHYD2aq7JRiG9u5zJUkIUcKG63LlwYedAw4V9ISel9h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789762216; c=relaxed/simple;
-	bh=5PunqGU+h8hp5OvaViYJT7FIfIMZoaFbFSEBXLk2g2g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QaCYM1ZJF5bEbLdMhOeAl/Yhhg3h1vsWTi8CyLhvvRrYVxI84PdGZ6b50z4gAfZZMUWL6gSKNs3YYRmSCG/5Hc0W9ppWupPsvtbPY5e6iaWS/JdujGPSGFi2Z7aeKWqG8fKeX1Fv64jJPAfk11ud5dXsBsSm5zVcR4qyGc+71dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Db7G6tmb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789764341; c=relaxed/simple;
+	bh=8zPDmfzhVMae7pJP08ggzhkhghbY5IVEYtqvZcyDpcQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p3ZOg6TKTnDbjfuGsy/rUt6XMvZi1VdbuKsd272NOPchne53iaUvgwsbnLtvn+VCtO+ZClLWw4Ms+kDn6o9wmi3I2sqcr1YOMoJEJHrm63klF49XWGI1LF2i5qlwTAOSG7mNR4leg/iJpjLboNyOWLQWvk8fNlFLmZsExe/2U1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jjpPwuta; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Db7G6tmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D441F000FF;
-	Fri, 18 Sep 2026 20:10:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789762215;
-	bh=tmOXqQV+7zVBgHMuAkBfRfzCHNcoIovuLaiy1KVB8YQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Db7G6tmb4SfAN4qnTR24wV4mqtFI4f1Ksr/Ht1LhOu46xSzN+Cj671vTZihTpVQKy
-	 L3WUGhgdBLmUD9U6t2iSC2GLMCSLk2+8hNF2Cjt356+XgxtqVSOfEqDA8VYCE19a0b
-	 MlS3cfLifn9yIGFtt2qmL83vC23525qCnwmptvOvAR1Hd/29fE+WtTFQ8yL51dyjaA
-	 YqKd4APIc4rSLzONjEdvbeQ89Hm6+BXmoZSWOAqi/e496bFVi/XYyomNvLUPK0t6YS
-	 LDy5CCmQaC+gEG51cBDYqAofdUhjbCrPE+Z6oyLdL+iWRcOhQ5P2jcqowaMl8O2nxG
-	 MMdl1nHNxSS4w==
-Date: Fri, 18 Sep 2026 13:10:13 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v8 5/5] riscv_cbqri: Add CBQRI capacity allocation
- platform driver
-Message-ID: <aq2apbFvv5mSPc82@thelio>
-References: <20260917-dfustini-atl-sc-cbqri-dt-v8-0-7964e8d73fe8@kernel.org>
- <20260917-dfustini-atl-sc-cbqri-dt-v8-5-7964e8d73fe8@kernel.org>
- <20260917171116.1AD781F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jjpPwuta"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789764338; x=1821300338;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=8zPDmfzhVMae7pJP08ggzhkhghbY5IVEYtqvZcyDpcQ=;
+  b=jjpPwutaKFF3S4VUDpK1E3P6djQrXENimp/FVPgK2SiLBdG+u2sgbLWx
+   9CrgwjFZAaMwI5LnrtHjQaBHPc9y96ldOUDSAhig92ufdtJrdvfxjP0HQ
+   BXA2w5syTjMseFmazHwZVThFTkNHB82qztTOU61wsjKcTpWs7K9kQfNSC
+   G6Vgop0qGJu+48/VNSiW33bOEiMnSek/IyE9FsMm02NQjlH8mXqGq0dAa
+   kn4muww/MHA4BbBJW4C7+k4n4IzDuOii0WpvmiMDr+LTmy+XAM2AXcM4a
+   M39mSaxk6ug+636nGFKyzAcKohqVb3Gcb83MqdxgJ7LThyJ+ko2wYzqN9
+   Q==;
+X-CSE-ConnectionGUID: yYbJ1nagQuSW+VeZFpgHZQ==
+X-CSE-MsgGUID: CJYa7E70QAeyn3yfbE7CwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11909"; a="90161543"
+X-IronPort-AV: E=Sophos;i="6.27,109,1787036400"; 
+   d="scan'208";a="90161543"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 13:45:38 -0700
+X-CSE-ConnectionGUID: 2aBjOBbwTRCV1d/WSWVxNw==
+X-CSE-MsgGUID: DZj2cmmbRWmshYr/VnlCAQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,109,1787036400"; 
+   d="scan'208";a="271239314"
+Received: from calunden-mobl.amr.corp.intel.com (HELO [10.246.168.184]) ([10.246.168.184])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 13:45:37 -0700
+Message-ID: <948e5124-7edb-4aad-858d-f66a961ca300@intel.com>
+Date: Fri, 18 Sep 2026 15:45:36 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260917171116.1AD781F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 09/12] perf/x86: Add INTEL_TD_METRIC_FIELD_{BITS,MASK}
+ constants
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20260918193937.569414-1-zide.chen@intel.com>
+ <20260918193937.569414-10-zide.chen@intel.com>
+ <20260918195918.557421F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20260918195918.557421F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 17, 2026 at 05:11:15PM +0000, sashiko-bot@kernel.org wrote:
-[..]
-> > +	ret = of_property_read_u32(dev->of_node, "riscv,cbqri-rcid", &rcid_count);
-> > +	if (ret) {
-> > +		dev_err(dev, "missing riscv,cbqri-rcid\n");
-> > +		return ret;
-> > +	}
+
+
+On 9/18/2026 2:59 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] perf/x86: conflation of UMASK shift and MSR metric field width
+> --
 > 
-> [Severity: Medium]
-> Does this unconditionally fail probe for valid monitoring-only capacity
-> controllers?
+> commit ca73afb21aaf968ca13fd3d0ba413055c3dc1861
+> Author: Zide Chen <zide.chen@intel.com>
+> 
+> perf/x86: Add INTEL_TD_METRIC_FIELD_{BITS,MASK} constants
+>     
+> Replace the hard coded field width (8) and the equivalent 0xff mask
+> used for PERF_METRICS MSR field access with named constants
+> INTEL_TD_METRIC_FIELD_{BITS,MASK}.
+> 
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> index cc13164d948f2..cbc9a179f2e5c 100644
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
+> 
+> [ ... ]
+> 
+>> @@ -4742,7 +4743,8 @@ static int core_pmu_hw_config(struct perf_event *event)
+>>  }
+>>  
+>>  #define INTEL_TD_METRIC_AVAILABLE_MAX	(INTEL_TD_METRIC_RETIRING + \
+>> -					 ((x86_pmu.num_topdown_events - 1) << 8))
+>> +					 ((x86_pmu.num_topdown_events - 1) << \
+>> +					  INTEL_TD_METRIC_FIELD_BITS))
+> 
+> [Severity: Low]
+> Is it safe to replace the UMASK shift here with the hardware MSR metric
+> field width?
 
-Yes, because this is patch is only adding support for capacity
-allocation.
+It's safe since x86_pmu.num_topdown_events is guaranteed to be <= 8, and
+it's called when is_metric_event(event) is true.
+> The original << 8 was used to shift the metric ID into the UMASK field
+> (bits 8-15) of the software perf event configuration (attr.config).
+> INTEL_TD_METRIC_FIELD_BITS represents the hardware width of metrics within
+> the PERF_METRICS MSR.
+> 
+> When evaluated in is_available_metric_event() during perf_event_open(), this
+> currently functions because both values are 8. However, conflating a software
+> API layout offset with a hardware register field width could cause this macro
+> to calculate an invalid configuration mask if the MSR field width changes in
+> future hardware.
+> 
 
-The hardware I have access to only implements capacity allocation. I
-plan to add monitoring support in a future series - hopefully with
-feedback from vendors who are implementing monitoring support in
-hardware.
-
-Drew
