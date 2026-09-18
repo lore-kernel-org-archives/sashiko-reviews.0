@@ -1,168 +1,76 @@
-Received: from mta0.migadu.com (out-61.mta0.migadu.com [91.218.175.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8BC4A92CB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 08:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.61
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6152FABFB
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 08:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789718564; cv=none; b=bnmWwv/u+waPwYjtcPgFcNgancCQu/VSX6Mo8g1mncrWpsFYXH6Ip7/hKKPCi9j4K6uh4a7fGTp2b+1YNzCHR3v6zQDQ9VGx2iIKRvGYGCQcDr0dU3qfg8zYotdKO63ElRuuslRcdFajElcYzPh6tkG64yUMiRhBP6qTifEr7QA=
+	t=1789720620; cv=none; b=NlWULS13CZubSnmLWkhK4n88pFaSjcGXt7k2mfdlNm/vPLpJkZ0HSFwwSe2b8xprNOBKigB6uu/HaoQj6lOysyxlFVStyNSbqoLtkbfxaJM6OzbCXr5vZb9ha2h4wj5QlXwtEMriijzc3TIwfrprP4l2aL4i3vpCF9kpNDOh328=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789718564; c=relaxed/simple;
-	bh=BD6KeVFjToaPnvzwjk6Z9XMyjhaKLhRQqywzy1BkJSE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bzp1MAzEYpCQ63hEfoUZdZNa5Qxwd3pPE89Hh2oxu/OBm5fa2LCqzQ6F1ifNoZRKVDlgACY05NRR5JOXq9nokyhR9uPVT+B4cnDgMJqYJqHAFyFFUXw/Dm55xVgA7ZMBInTKvmNEzI+CTnryXrn+dpBBvP0XXmgx6aOFZX74Hm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wXRjZ3Da; arc=none smtp.client-ip=91.218.175.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789720620; c=relaxed/simple;
+	bh=Qaa+87nptui0AXsimzwsvpylfwIPwaERKMaDQTkWKjY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=na1wwEpvJmKcPirX9H5YkHEF2J90Lu1YITewjXstlSgl0uHUwf6D1vK+DurKuSrG6qz/DJF3UTMMgjOzdgIhEUG9+Rhk0951gq0vcadse8ZJ8BapLxOwHVYWsi5nGnlLxPLWVE93OBm2FffGg7R/qwzlfBE26bB3Enq09NfhZEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZ9Iun3K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wXRjZ3Da"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=BD6KeVFjToaPnvzwjk6Z9XMyjhaKLhRQqywzy1BkJSE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789718559; v=1; x=1790323359;
- b=wXRjZ3DacgssrSt2kzWsNHdwh3hjdXgafT/0sE21TNBJxVXdg2NZKEbsUNquqYuBjO2pxXX0
- 6KfkDLqTAZEEiYPkzjV40zziamwR1FbqECKZbkFzZTmXU6wJNhbplGk+cXEEbGmBzP3870PxIwQ
- EhZwvAfpJzTh4rFWnqtw6KbY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 77279d4c5977da50;
-	Fri, 18 Sep 2026 08:02:39 +0000
-X-Mizu-Trace-ID: 77279d4c5977da50
-X-Migadu-Flow: FLOW_OUT
-Date: Fri, 18 Sep 2026 16:02:25 +0800
-From: Hangbin Liu <hangbin.liu@linux.dev>
-To: sashiko-reviews@lists.linux.dev
-Cc: netdev@vger.kernel.org
-Subject: Re: [PATCH net-next 4/6] netlink: specs: rt-route: describe lwtunnel
- IP options
-Message-ID: <aqzwEXWYBQqSfNUu@fedora>
-References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
- <20260917-ynl_rt_encap-v1-4-fbbe6e680571@kylinos.cn>
- <20260918063658.80E4F1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZ9Iun3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F59A1F00899
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 08:36:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789720618;
+	bh=Qaa+87nptui0AXsimzwsvpylfwIPwaERKMaDQTkWKjY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=HZ9Iun3KYaqc5PQ+YropUPiJfXXvwv5wzUfGr1YP1ExS8WZFFkI3epYaz/wd6OI0R
+	 jM2BJHlAAV2M6yaCx5WKghFP8/OkKSW7KYwy/UXJ7DP4hMk9ZhvW18K/QACNYiYFan
+	 i1ei+4s0wBpIu380N/F7wXwN3NFsh6JYdfCWAhNr3TVu1NVdTlHNNiMdfNzZT1XU7f
+	 CTgnwLfaq07VXEI5QbuIdaDAYybUMI14W2X3SDOR+X3hvWMg7WKgKbrg7+n5vzsKts
+	 U5aTBniHZiQExLe2si+Dmu276jeJAbmEJ7QGKqOvnVw/KCLG4ry88b3luTt6+lKN5c
+	 nsKZsexst413Q==
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b5e4f15b78so429753e87.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 01:36:58 -0700 (PDT)
+X-Gm-Message-State: AFuF++m5D/dszjBjwZtbuG2/87GDGzrD0M2UM9RZL1UgjjErSKGyd1Lc
+	IvfEnTRig0g6hERgdsfg7t8zyWrWdB0yX0TprJzCgnIwnpfJtnGPUxtVqPvO6/c+tOW2iVHHFlG
+	dAAQDZ1nFTi+3T/Clli5Nu/xS75O2dws=
+X-Received: by 2002:a05:6512:1596:b0:5b6:19e9:faee with SMTP id
+ 2adb3069b0e04-5b8c17eff80mr552686e87.7.1789720617332; Fri, 18 Sep 2026
+ 01:36:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918063658.80E4F1F000FF@smtp.kernel.org>
+References: <20260918-ux500-simple-sound-v2-0-88d29416e3c3@kernel.org>
+ <20260918-ux500-simple-sound-v2-5-88d29416e3c3@kernel.org> <20260917230329.BC95C1F000FF@smtp.kernel.org>
+In-Reply-To: <20260917230329.BC95C1F000FF@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Fri, 18 Sep 2026 10:36:41 +0200
+X-Gmail-Original-Message-ID: <CAD++jLmUObU3PBnam+bWSssx_Nf4BkGUnVS+eDuEPZdDwUBSng@mail.gmail.com>
+X-Gm-Features: AcwNN1Vdv-5dFgmQiAbEZSVNvCH-ZByTPvn-TCXgwC2_y2I_TNPL34t_nHuHRxQ
+Message-ID: <CAD++jLmUObU3PBnam+bWSssx_Nf4BkGUnVS+eDuEPZdDwUBSng@mail.gmail.com>
+Subject: Re: [PATCH v2 5/9] ASoC: ux500: Remove the MOP500 machine driver
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, conor+dt@kernel.org, lee@kernel.org, 
+	devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 18, 2026 at 06:36:58AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] netlink: specs: missing byte-order property for lwtunnel-ip-opt-erspan index
-> - [Low] netlink: specs: missing max-len validation for lwtunnel-ip-opt-geneve data
+Hi Sashiko,
 
-Thanks, I will fix these.
+On Fri, Sep 18, 2026 at 1:03=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-> --
-> 
-> commit 15d568f88486d1cb50af0dbb912eabab2c37d852
-> Author: Hangbin Liu <liuhangbin@kylinos.cn>
-> 
-> netlink: specs: rt-route: describe lwtunnel IP options
-> 
-> This commit replaces binary options in lwtunnel-ip and lwtunnel-ip6 with
-> a nested lwtunnel-ip-opts set. It also adds attribute sets for geneve, vxlan,
-> and erspan IP options to align with the kernel's definitions in lwtunnel.h.
-> 
-> > diff --git a/Documentation/netlink/specs/rt-route.yaml b/Documentation/netlink/specs/rt-route.yaml
-> > index 0e236da140dc5..6030d7cb8d0d1 100644
-> > --- a/Documentation/netlink/specs/rt-route.yaml
-> > +++ b/Documentation/netlink/specs/rt-route.yaml
-> [ ... ]
-> > @@ -555,6 +557,59 @@ attribute-sets:
-> >        -
-> >          name: link
-> >          type: u32
-> > +  -
-> > +    name: lwtunnel-ip-opts
-> > +    name-prefix: lwtunnel-ip-opts-
-> > +    attributes:
-> > +      -
-> > +        name: geneve
-> > +        type: nest
-> > +        nested-attributes: lwtunnel-ip-opt-geneve
-> > +      -
-> > +        name: vxlan
-> > +        type: nest
-> > +        nested-attributes: lwtunnel-ip-opt-vxlan
-> > +      -
-> > +        name: erspan
-> > +        type: nest
-> > +        nested-attributes: lwtunnel-ip-opt-erspan
-> > +  -
-> > +    name: lwtunnel-ip-opt-geneve
-> > +    name-prefix: lwtunnel-ip-opt-geneve-
-> > +    attributes:
-> > +      -
-> > +        name: class
-> > +        type: u16
-> > +        byte-order: big-endian
-> > +      -
-> > +        name: type
-> > +        type: u8
-> > +      -
-> > +        name: data
-> > +        type: binary
-> 
-> [Severity: Low]
-> Does this binary attribute need a max-len validation check?
-> 
-> The kernel explicitly enforces a maximum length of 127 bytes for this
-> attribute in its Netlink policy:
-> 
-> net/ipv4/ip_tunnel_core.c:geneve_opt_policy[] {
->     [LWTUNNEL_IP_OPT_GENEVE_DATA] = { .type = NLA_BINARY, .len = 127 },
-> }
-> 
-> Without a corresponding max-len constraint in the spec, auto-generated
-> tools will not catch oversized attributes locally before transmitting
-> them to the kernel.
-> 
-> > +  -
-> > +    name: lwtunnel-ip-opt-vxlan
-> > +    name-prefix: lwtunnel-ip-opt-vxlan-
-> > +    attributes:
-> > +      -
-> > +        name: gbp
-> > +        type: u32
-> > +  -
-> > +    name: lwtunnel-ip-opt-erspan
-> > +    name-prefix: lwtunnel-ip-opt-erspan-
-> > +    attributes:
-> > +      -
-> > +        name: ver
-> > +        type: u8
-> > +      -
-> > +        name: index
-> > +        type: u32
-> 
-> [Severity: Medium]
-> Will this result in an incorrect ERSPAN index on little-endian architectures?
-> 
-> The kernel parses this attribute using nla_get_be32():
-> 
-> net/ipv4/ip_tunnel_core.c:ip_tun_parse_opts_erspan() {
->     ...
->     attr = tb[LWTUNNEL_IP_OPT_ERSPAN_INDEX];
->     md->u.index = nla_get_be32(attr);
->     ...
-> }
-> 
-> Since the spec defines index as a u32 without the byte-order: big-endian
-> property, auto-generated tools will send the value in host byte order.
-> When run on a little-endian system, the kernel would then read a
-> byte-swapped, incorrect value, which would break the tunnel configuration.
-> 
-> > +      -
-> > +        name: dir
-> > +        type: u8
-> > +      -
-> > +        name: hwid
-> > +        type: u8
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=4
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [High] ALSA: devicetree ABI breakage due to removal of stericsson,snd-s=
+oc-mop500
+> - [High] ALSA: ux500: mono streams fail with -EINVAL due to rigid static =
+TDM slot masks
+> - [Medium] ALSA: silent loss of audio on kernel upgrade due to missing SN=
+D_AUDIO_GRAPH_CARD2 selection
+> - [Medium] ALSA: ux500: loss of cross-DAI synchronization allows conflict=
+ing hardware parameters
+
+No-one cares about this. The old code wasn't working either.
+
+Yours,
+Linus Walleij
