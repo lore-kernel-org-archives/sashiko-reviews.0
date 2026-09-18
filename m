@@ -1,97 +1,171 @@
-Received: from mta0.migadu.com (out-223.mta0.migadu.com [91.218.175.223])
+Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81297421225
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.223
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D6B3C942C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789716793; cv=none; b=CYffrLho1eiesqkMAjYe2VL9jFZ5+9z10Xdfs7jTbx2fTV7kfrD+uaTyyBNgwiYYPywL1kSKeshGQ9CLJnFYIVRDVDAgsP9vF6gk+Rg7gZ3z8IA8Cf8qgRAjNAJT04VH8jZSDI1DsykY3bSCXaAIFK+DIGNXqP0rwok8lw3IIOE=
+	t=1789717910; cv=none; b=d2MwBAbNrRZOciqZEbFilu0fj0RIfvJVOjmWQcudgizP7v2D16sMBWZWuUYC+RWMpzw7P3YeO8o5gcHziTOVOPoSk+fi1RR/Ja9Q/SIgeBMKxfWhSSaNtLtI7M4zssUccYAGq2OqN3AvqmvXPvF/30lXBiyp8dlib1QKmslIMsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789716793; c=relaxed/simple;
-	bh=Gg1Ve84BH1KMyY5R4zfF/nmRSZBe/jom/oYoUmPRmRI=;
+	s=arc-20240116; t=1789717910; c=relaxed/simple;
+	bh=vRqJ5yg9W8o95f36YRoXXQIb51GKlM15Je1cIirs4uU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aw84OlMsUQT/gi4dLe+negg9S70220XvAvQlbkIjJyr4ZBJl3oeaSSVwXbllVH/3WIrWkqxIOg47E8afyEAg4cmLjYe1NRPAFzyZMbdzCaj+SX6/CW+FIkDO1e6V8KHZ4ZSvhWQvZgl+mPZ3uaZoiPiKLvxvbMlH9DFyWUe+l/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LoBOGfWk; arc=none smtp.client-ip=91.218.175.223
+	 Content-Type:Content-Disposition:In-Reply-To; b=R+zURMlLKL1PKwko2NdueAlNLEuxqOSb9fIXRo0NmVoWfO9KtC7UyxC3hDsKE3fNfBJS1u8HGMtv8lRxG0jCM9TPD2xKbg0GHFOyeuTUWlruBRSADO0Zzvktat2Wv0Fd3W6DZ/i4XqQkdhGK/sTZlF6tdz4eOSg+4wS/asR/sJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=djow2UH7; arc=none smtp.client-ip=91.218.175.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LoBOGfWk"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="djow2UH7"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Gg1Ve84BH1KMyY5R4zfF/nmRSZBe/jom/oYoUmPRmRI=;
+DKIM-Signature: a=rsa-sha256; bh=vRqJ5yg9W8o95f36YRoXXQIb51GKlM15Je1cIirs4uU=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789716788; v=1; x=1790321588;
- b=LoBOGfWkC3YDNORNTroR9+BsRilTTbYOJVAcRtE0+D4BXwrGqlS+dsx9gZQ9UCQLeXn0osf4
- g+9GUbaRNNKMArbC3HkVP0tD8yJmgfmNa8s5pU21Fl5btmchssi1LuXefIcDmWyuBSUJWMBJww7
- oUCJPiytlgTSuFshoIlG4Uw0=
+ t=1789717905; v=1; x=1790322705;
+ b=djow2UH7KwgEGy+w70P4X0O6Ho/4+fXIPYd11GSyF7oR3885NKWYcfoM8QuZ1F0Ouz1Qg11g
+ atZdB3fZxob5rqlAsk7kRSRzhSPGeTKdY8BNAeSHJ+cIk0FUDCowHl2HUoCVY283UD6mn/EJ7Dx
+ 3eno7p6KrOtCxr3RD21NsC64=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 7691ecdcd9b7d1da;
-	Fri, 18 Sep 2026 07:33:08 +0000
-X-Mizu-Trace-ID: 7691ecdcd9b7d1da
+Received: by mta12.migadu.com with ESMTPS id 963e1ddd0f01cd40;
+	Fri, 18 Sep 2026 07:51:45 +0000
+X-Mizu-Trace-ID: 963e1ddd0f01cd40
 X-Migadu-Flow: FLOW_OUT
-Date: Fri, 18 Sep 2026 15:32:59 +0800
+Date: Fri, 18 Sep 2026 15:51:40 +0800
 From: Hangbin Liu <hangbin.liu@linux.dev>
 To: sashiko-reviews@lists.linux.dev
 Cc: netdev@vger.kernel.org
-Subject: Re: [PATCH net-next 5/6] netlink: specs: rt-route: describe lwt BPF
- program options
-Message-ID: <aqzpK1H8Pib6bVcY@fedora>
+Subject: Re: [PATCH net-next 3/6] netlink: specs: rt-route: add lwtunnel
+ encap sub-message support
+Message-ID: <aqztjJazXlf-VT-d@fedora>
 References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
- <20260917-ynl_rt_encap-v1-5-fbbe6e680571@kylinos.cn>
- <20260918063655.EA1DC1F00893@smtp.kernel.org>
+ <20260917-ynl_rt_encap-v1-3-fbbe6e680571@kylinos.cn>
+ <20260918063656.953941F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260918063655.EA1DC1F00893@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260918063656.953941F00898@smtp.kernel.org>
 
-On Fri, Sep 18, 2026 at 06:36:55AM +0000, sashiko-bot@kernel.org wrote:
+On Fri, Sep 18, 2026 at 06:36:56AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] netlink: specs: build failure due to missing header in lwt-bpf-prog
+> - [High] netlink: missing byte-order: big-endian in rt-route specs
+
+Thanks, I will fix all these byte order issue.
+
 > --
 > 
-> commit 73e4e6736fda4554b1e22b6360a42d9d2e02b4dc
+> commit 18041b529d7678ae7bbdd8ee61a7fb4213ae6804
 > Author: Hangbin Liu <liuhangbin@kylinos.cn>
 > 
-> netlink: specs: rt-route: describe lwt BPF program options
+> netlink: specs: rt-route: add lwtunnel encap sub-message support
 > 
-> This replaces binary BPF attributes with a nested lwt-bpf-prog attribute
-> to support lwt bpf prog options.
+> This commit adds lwtunnel encapsulation sub-message support to the rt-route
+> netlink specs, defining various tunnel attribute sets such as mpls, ip, ip6,
+> seg6, bpf, etc. It updates the yaml spec for rt-route and adds necessary
+> headers to the Makefile dependencies.
 > 
 > > diff --git a/Documentation/netlink/specs/rt-route.yaml b/Documentation/netlink/specs/rt-route.yaml
-> > index 6030d7cb8d0d1..5e9537f7dfad4 100644
+> > index 253037ea5176a..0e236da140dc5 100644
 > > --- a/Documentation/netlink/specs/rt-route.yaml
 > > +++ b/Documentation/netlink/specs/rt-route.yaml
+> [ ... ]
+> > @@ -277,6 +332,229 @@ attribute-sets:
+> >        -
+> >          name: fastopen-no-cookie
+> >          type: u32
+> [ ... ]
+> > +  -
+> > +    name: lwtunnel-ip
+> > +    name-prefix: lwtunnel-ip-
+> > +    header: linux/lwtunnel.h
+> > +    attributes:
+> > +      -
+> > +        name: id
+> > +        type: u64
+> 
+> [Severity: High]
+> Does this field need a byte-order: big-endian annotation? The kernel
+> reads LWTUNNEL_IP_ID as be64 using nla_get_be64(). Without the annotation,
+> YNL tools will byte-swap this on little-endian architectures, potentially
+> causing silent data corruption.
+> 
+> > +      -
+> > +        name: dst
+> > +        type: u32
+> > +        byte-order: big-endian
+> > +        display-hint: ipv4
+> > +      -
+> > +        name: src
+> > +        type: u32
+> > +        byte-order: big-endian
+> > +        display-hint: ipv4
+> > +      -
+> > +        name: ttl
+> > +        type: u8
+> > +      -
+> > +        name: tos
+> > +        type: u8
+> > +      -
+> > +        name: flags
+> > +        type: u16
+> 
+> [Severity: High]
+> Does this field also need a byte-order: big-endian annotation? The kernel
+> reads LWTUNNEL_IP_FLAGS as be16 using nla_get_be16().
 > 
 > [ ... ]
-> 
-> > @@ -610,6 +614,16 @@ attribute-sets:
-> >        -
-> >          name: hwid
-> >          type: u8
 > > +  -
-> > +    name: lwt-bpf-prog
-> > +    name-prefix: lwt-bpf-prog-
+> > +    name: lwtunnel-ip6
+> > +    name-prefix: lwtunnel-ip6-
+> > +    header: linux/lwtunnel.h
 > > +    attributes:
+> > +      -
+> > +        name: id
+> > +        type: u64
 > 
-> [Severity: Low]
-> Will this cause a build failure in the generated YNL tools due to a missing
-> header?
+> [Severity: High]
+> Could this also be missing a byte-order: big-endian annotation? The kernel
+> reads LWTUNNEL_IP6_ID as be64.
 > 
-> Because the header property is omitted for the lwt-bpf-prog attribute set,
-> the YNL code generator will automatically output the C enumerators
-> LWT_BPF_PROG_FD and LWT_BPF_PROG_NAME in its generated header.
+> [ ... ]
+> > +      -
+> > +        name: hoplimit
+> > +        type: u8
+> > +      -
+> > +        name: tc
+> > +        type: u8
+> > +      -
+> > +        name: flags
+> > +        type: u16
 > 
-> Other attribute sets in this spec correctly specify header: linux/lwtunnel.h,
-> which causes the generated YNL header to globally include it. Since the
-> kernel header linux/lwtunnel.h already defines LWT_BPF_PROG_FD and
-> LWT_BPF_PROG_NAME, compiling the userspace YNL tools will result in a fatal
-> redefinition error.
+> [Severity: High]
+> Could this also be missing a byte-order: big-endian annotation? The kernel
+> reads LWTUNNEL_IP6_FLAGS as be16.
 > 
-> Should a header property mapping to linux/lwtunnel.h be added here?
-
-Yes, I will do it.
+> [ ... ]
+> > +  -
+> > +    name: seg6-local
+> > +    name-prefix: seg6-local-
+> > +    header: linux/seg6_local.h
+> > +    attributes:
+> [ ... ]
+> > +      -
+> > +        name: table
+> > +        type: u32
+> > +      -
+> > +        name: nh4
+> > +        type: u32
+> > +        display-hint: ipv4
+> 
+> [Severity: High]
+> Does this field need a byte-order: big-endian annotation? SEG6_LOCAL_NH4 is
+> a raw IPv4 address and handled as a struct in_addr in the kernel, but here
+> it is typed as a native u32. This might cause YNL tools to silently
+> byte-swap the address on little-endian architectures.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=3
