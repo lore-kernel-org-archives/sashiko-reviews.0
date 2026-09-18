@@ -1,100 +1,133 @@
-Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-216.mta0.migadu.com [91.218.175.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEACD547070
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 06:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9227543935C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789714758; cv=none; b=lMgIrh7I9iAb+//gHx+JdvFJ15GvA6GfPy3CYqd3qnUr/h4Nz50crljW08I2HoK38hJJGwEnHPSpfXP7k38sa3Wo7QgJB/NDjJumiTckz64szdfIPafR+tuKOprkVhnF5il8cyG1VXH/pyX6AuXYbecZJxdD7qum1x6vTS+84L4=
+	t=1789716412; cv=none; b=ApqATQ90LLP8whFZBvXctQIMLoJlX4LbXiGb9WPIuxEf9ZuVmTOL26MI6gG5t/OlBePSt2u2gsnATjhr/zHzqqGzJxevDw/r7zTP6cSZ5DRsWvVM7fzRCd25e2gKQTW1Sv16z1PovIWnUhRA0s0wxwIW+lpGBjSkgXacD78YGKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789714758; c=relaxed/simple;
-	bh=JV6QCvDz4ojJBBAX8alvdc2Geq5uxAza3V2fDXIpd8I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NUxlP29fgGxor839VUZM+/8MphASK7wP/CX/TgQd9thLl5BB7ZYb7SGyQuVXaKAkkETX7tsOzmCwdRpSndhWdxpvPoPT0NvPOPuN+BLc6HNQwjHRNmmBW1ZX3Zi/5u5vFSgkIu7JP7pui5pSvWOMV6TyvnPd4k0NDrY/KDfIAEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=d3o6CYm9; arc=none smtp.client-ip=113.46.200.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
+	s=arc-20240116; t=1789716412; c=relaxed/simple;
+	bh=xZP6ftAtGzbZfQ0/YaJyLYZIBoBtWq9fi4M/yZkk3Uk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qLzhzx2wI9Ax+VH4UrLcmvjzMdYMSvRXcKlY5+bQNgYVoXkh4AK9xaeK83U81U6PhhJawQ+hK0DND68mlluwLMGe10Imvv3midPba+NBN4x2MnQdxDb9RFEnItal4vNxhNAxbSGL25vJsQr/SDnaslxRto/AM1A1KKDGKuK+fk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R6ojULKy; arc=none smtp.client-ip=91.218.175.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="d3o6CYm9"
-dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=re+qb6b3Wt6oaaE85ttSZhwAjNXyMlzddCzdbi3wLiE=;
-	b=d3o6CYm9J5kZD1a3C5mjZtLa8BmqKt3sSLXIfQ4KfxD4SbkRt8K5/N57HdyIZtPa1s6cA/23w
-	3w7I4Yf/s1E9/lKXGN+0DCrUUeng6ZxKHQe7Z2/0cWFik8scIuGw8AdLICZk68qFmheLiAvKFGj
-	Bdh7dko+ot1gcVgqn1ycSDI=
-Received: from mail.maildlp.com (unknown [172.19.163.104])
-	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4hmNVg45jTz1prKW;
-	Fri, 18 Sep 2026 14:48:11 +0800 (CST)
-Received: from kwepemp100009.china.huawei.com (unknown [7.202.195.55])
-	by mail.maildlp.com (Postfix) with ESMTPS id C42F34057F;
-	Fri, 18 Sep 2026 14:59:12 +0800 (CST)
-Received: from kwepemp500015.china.huawei.com (7.202.195.9) by
- kwepemp100009.china.huawei.com (7.202.195.55) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Fri, 18 Sep 2026 14:59:12 +0800
-Received: from [10.67.120.108] (10.67.120.108) by
- kwepemp500015.china.huawei.com (7.202.195.9) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Fri, 18 Sep 2026 14:59:12 +0800
-Message-ID: <8f97a362-f9cd-715a-625b-a15851f72616@huawei.com>
-Date: Fri, 18 Sep 2026 14:59:11 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R6ojULKy"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=xZP6ftAtGzbZfQ0/YaJyLYZIBoBtWq9fi4M/yZkk3Uk=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789716385; v=1; x=1790321185;
+ b=R6ojULKybALVFbU9XTc9+hWzhhRcZofFuvDAiW/7UlM13MZvv9i7NnIjan9MPFOQy0ua3137
+ qf4xQldBNBdStJNlHshA9o4qtOrj8x0U84y23OnjRjrYB5Pb7jlqp/TrvnmR+ZqovJsHp5XETSI
+ wTa2p6jtv6yWDKedHC+7xSrY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta11.migadu.com with ESMTPS id c9dde96b7cfbc86a;
+	Fri, 18 Sep 2026 07:26:15 +0000
+X-Mizu-Trace-ID: c9dde96b7cfbc86a
+X-Migadu-Flow: FLOW_OUT
+Date: Fri, 18 Sep 2026 15:26:06 +0800
+From: Hangbin Liu <hangbin.liu@linux.dev>
+To: sashiko-reviews@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH net-next 1/6] net: lwtunnel: change encap fill order
+Message-ID: <aqznjquXIavzmuFD@fedora>
+References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
+ <20260917-ynl_rt_encap-v1-1-fbbe6e680571@kylinos.cn>
+ <20260918063655.418681F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH v2] scsi: libsas: Fix SMP IO deadlock during HA resume
-Content-Language: en-CA
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-scsi@vger.kernel.org>
-References: <20260917130642.1796231-1-yangxingui@huawei.com>
- <20260917131758.A2F4A1F000FF@smtp.kernel.org>
-From: yangxingui <yangxingui@huawei.com>
-In-Reply-To: <20260917131758.A2F4A1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- kwepemp500015.china.huawei.com (7.202.195.9)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260918063655.418681F000FF@smtp.kernel.org>
 
-
-
-On 2026/9/17 21:17, sashiko-bot@kernel.org wrote:
+Hi Jakub,
+On Fri, Sep 18, 2026 at 06:36:54AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] libsas: missed PM autosuspend in smp_execute_task_sg()
+> - [Medium] net: lwtunnel: incomplete rollback on fallback path leaves orphan RTA_ENCAP_TYPE
 > --
 > 
-> commit 8e09b6455fc925eb255f96d9d3584cbd10d1bdaa
-> Author: Xingui Yang <yangxingui@huawei.com>
+> commit b32da4e3fb34d0c2a7a1afb438a76ca410be21ec
+> Author: Hangbin Liu <liuhangbin@kylinos.cn>
 > 
-> scsi: libsas: Fix SMP IO deadlock during HA resume
+> net: lwtunnel: change encap fill order
 > 
-> This commit fixes a deadlock during controller resume by using
-> pm_runtime_get_noresume() and pm_runtime_put_noidle() when
-> SAS_HA_RESUMING is set. Outside of the resume window, it converts
-> pm_runtime_get_sync() to pm_runtime_resume_and_get() to handle
-> runtime resume failures.
+> This commit changes the order in which lwtunnel netlink attributes are
+> emitted. It places the encap_type_attr before the encap_attr nest to
+> ensure userspace YNL can decode the sub-messages correctly.
 > 
->> diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
->> index 811c9eb4fef11..a17b938cd3b7c 100644
->> --- a/drivers/scsi/libsas/sas_expander.c
->> +++ b/drivers/scsi/libsas/sas_expander.c
-> 
-> [ ... ]
-> 
->> @@ -135,7 +150,10 @@ static int smp_execute_task_sg(struct domain_device *dev,
->>   		}
->>   	}
->>   	mutex_unlock(&dev->ex_dev.cmd_mutex);
->> -	pm_runtime_put_sync(ha->dev);
->> +	if (ha_resuming)
->> +		pm_runtime_put_noidle(ha->dev);
+> > diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
+> > index b01a395d9a966..f13dfa02e026e 100644
+> > --- a/net/core/lwtunnel.c
+> > +++ b/net/core/lwtunnel.c
+> > @@ -240,6 +240,10 @@ int lwtunnel_fill_encap(struct sk_buff *skb, struct lwtunnel_state *lwtstate,
+> >  	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
+> >  		return 0;
+> >  
+> > +	ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> >  	nest = nla_nest_start_noflag(skb, encap_attr);
+> >  	if (!nest)
+> >  		return -EMSGSIZE;
+> > @@ -254,9 +258,6 @@ int lwtunnel_fill_encap(struct sk_buff *skb, struct lwtunnel_state *lwtstate,
+> >  	if (ret)
+> >  		goto nla_put_failure;
 > 
 > [Severity: Medium]
-> Does this leave the device permanently in the RPM_ACTIVE state if this
-> thread outlives the host resume?
+> Does this leave an orphaned attribute in the buffer on the fallback path?
+> 
+> If ops->fill_encap is unsupported, it evaluates to -EOPNOTSUPP and execution
+> jumps to nla_put_failure:
+> 
+> net/core/lwtunnel.c:lwtunnel_fill_encap() {
+> ...
+> nla_put_failure:
+> 	nla_nest_cancel(skb, nest);
+> 
+> 	return (ret == -EOPNOTSUPP ? 0 : ret);
+> }
+> 
+> Because nla_put_u16() was moved before nla_nest_start_noflag(),
+> nla_nest_cancel() only unwinds the buffer up to the start of the nest.
+> This leaves the encap_type_attr orphaned in the skb payload.
+> 
+> Since the function returns 0 (success) in the -EOPNOTSUPP case, the caller
+> is prevented from discarding the message, which results in a malformed
+> netlink message being sent to userspace.
+> 
+> Could we record the skb tail pointer before nla_put_u16() and restore it on
+> failure, or is there another preferred way to unwind the encap_type_attr?
 
-Ok, v3 drops the reference with pm_runtime_put() instead. ^_^
+I'd like to add a checking
+
+	if (likely(ops && ops->fill_encap)) {
+		ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
+		if (ret)
+			return ret;
+	}
+
+to cover the EOPNOTSUPP issue. For other errors, the netlink fill will abort
+directly. What do you think?
+
+Thanks
+Hangbin
+
+> 
+> >  	nla_nest_end(skb, nest);
+> > -	ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
+> > -	if (ret)
+> > -		goto nla_put_failure;
+> >  
+> >  	return 0;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn?part=1
