@@ -1,114 +1,169 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FDE4052C5
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 14:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789742390; cv=none; b=k++mIkD/1UI6VLzUuEaGOfsO1EGXIVXtcLz0qwtACW/lMYSQTN5DqzWSh6pKX+CxBxDMjjXpiJ8K/slm0QvLM1tjgiFIqxg7JdtfPV1FHDLEbplzzi4WbZrP6EnyHRcTVnekm7uv0Ko0L0T3MfrrnNdYKYbkoCUYG/cMLVybkI4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789742390; c=relaxed/simple;
-	bh=1fftUoidy4jgxh7YVMqg1ODr71CmedOL1GmKoW63t4E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hivjC/EN4SWox+lZ8SsOQSs7nuX3CBf5sPuJ/FK+p7/ox/9d2n3xK4yhKt4AIAC06xxZJ0Y71v3nWodbyONp55IuFC4YRx1DiN+hjhoJgOXCVi2FCea16acbasaxwDvaKB3h8mXEmQZ+mRwvnRMSZb834SMyyPRAxRYLT5s4w7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bzsUZkRh; arc=none smtp.client-ip=74.125.225.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EEF4E9C0E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 14:59:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789743573; cv=pass; b=FchFs39ZvVm//7ug1BexxR3nd1O7dotUt6h4wonRSYZGmhtZMSUCjUtDu9kY8Sv9mh4opSdR7RNNAQX7YfiSco3k0tOME091GpKv6ZvDv3YA+p2NBldVBj3FBvdKlfc8r+nNvAQ/rH6gDP4fqci0dOiO32ONHAWQLpETr1UNIzQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789743573; c=relaxed/simple;
+	bh=9/KuOEAUccINW8RzQoPd+Ke7JmL5bSGUt4d83wOmGis=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FC6UE3J3CCLh62XJUre3o06FdDaX3nO6/5VFlTZhCPNqeVM1g1U8DJyemQ9hGifXF0hC1ZBJSj5IdZYKtu/85k05CKwm86lOEIHQdX5P0WUGnlTFKGkta9A4ciEPYedOFivbSTf4gFVSaiD0l4DjiQ0kndwJrjo0O27nbRAnz7U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LRkUeDDy; arc=pass smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzsUZkRh"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d822dso6028455e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:39:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LRkUeDDy"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c294ad260fdso124679266b.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 07:59:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789743569; cv=none;
+        d=google.com; s=arc-20260327;
+        b=BTUFU7engJYvIb+pw5Kyb0oHvmJlgWd0gAwtHxgL9Io7FhYjjlBUbV1+ewH9wEfpYH
+         q0dckA2jNMCrIfEg41LZLN91hCoGKUyBe+6Eu05Fddp8Q2anpyJuDTDOHDVCpEgvhAtM
+         g7R36XjOoW8hNzcWgh1Hnp6W1acS3XpHIbhxTJvQ05Y4w+zcx/F05wCTlebaoNMxE3vr
+         CBJNZ+hiZbzaa4Oq0JUXW5OTmQtgTH96tqXY2cteH9hR/IWThlaa0evABjytDI6GXFXq
+         33COos7cIX3vxNad9frE7qN2Jp5JAgxDqmisnU6GT4xrCxBwwv5+8fXZskd/gkHb8NEp
+         Xp3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YC0PefwLkxVBXTBsKzjOWy/17vdgqLJp4+m26mDaKG8=;
+        fh=DVhPP+3RdotDD+5reLfhnN4x/2zAfGOzr4sDhhU9Xa4=;
+        b=EEvPsyNLIgFH5pdWXw4kYhhD/T9oKx+PY35rkVHKPZN6B7QVoPH143ZLqRhQ6sassQ
+         tybRs0VSCaR3ACmNJaa9V1FZt6ojhQVPZCxKNPgL2xTfRRx2wpWcMQx0296FMt15/Xgn
+         PK+JZlRkCKzq1Gj3Do7ral/7by+yUsuVpUE4pFzayoiV+AuQ4+zMmy1VcvtRMRhRwAyx
+         1X/nRFGoeUDQdFh2eXtFzkQW/4iIUzBAiArESFIX2Vv7l6YAmxxpOqLC/lNGa9bBlKyE
+         Clq/9elzFr4MZcktJJfAy19ywziVCtLsxZER3lsiT560soX7/STzjPAdQ4D7U36p/szR
+         YD4g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789742386; x=1790347186; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=92mac3At0JuDNMP0ZbTfo1sG6/Sn1KQAOj5nr4PadmI=;
-        b=bzsUZkRhjjDLKK0e8PWy2lBnGnoASBFZQWegXxY+v2kXPEn7Z5dm0jHhpxXdriwfTX
-         pO11DK2voISYb/Ye71GlkfEODSPdV1/jUbk/oe3rxG+PsLlnekQq7lBKAn6BeHxcdtnl
-         lcRx168sPNtNHu6qXE75a6+A9VHV9xvOZAfv0X2quNT6vp+xq731XIMgy8WNeXmLl6Uo
-         +SZYSbNDCpoFCE8S+60b0ru9tDA3tSD2m782oGrJOxwMnr6BhGWVGtaNGh7v5BEmSnoq
-         e4nzyl9cTjb9CjvQXVmV4LDAzOAJLooQRhPMxNuMIEOF7/x7GWGklnMInbODVfxJvs4e
-         DSDw==
+        d=google.com; s=20251104; t=1789743569; x=1790348369; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YC0PefwLkxVBXTBsKzjOWy/17vdgqLJp4+m26mDaKG8=;
+        b=LRkUeDDyeLPuaNJkcs94XdgIyy8uagN0Sx51rIZeWEu1VZ6OTk9iLORUcBZyXhk8Ue
+         x1vr/gytigJASawIVkF3sD2FpiloY2eeYs1rYlBmTTqdrF3Fi2c/jDgl+ygOIVlQbbWE
+         F0LgTK0t0UoXnE8N8cVE3Rq9Yo+CwlmJ5XA4ldsInVMjQ2u4ohe1pA7RtddIOVtptp9K
+         VO2FKRGdrAsGhIZ23krl85w79LQVzoYBg7ZtBDFVjZ/7/dTmgJjd2ZdIjbDzNbXUgAZV
+         zNntrpOTNmvwHo9YWR7t1WtQ0HdrLFrH/hbAfLANDGwMhTp9zD0BkkNYroQB9LiSZ6Bj
+         3z0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789742386; x=1790347186;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=92mac3At0JuDNMP0ZbTfo1sG6/Sn1KQAOj5nr4PadmI=;
-        b=PjDqlhhdYTaSJ8DWCelec4tnPSRLIkiku88LFlYp8wivX3Bwo+UhAX37pAoki3BII3
-         siVdwuAw2Qr+L8mwBsmYErR0oSyoHg8DtJChd+KvqQxN7692F+j3ySPRxAGz0Ln0bZOm
-         kk4pw1DJ9iFzKAtRaaBq/qn/Ay1GBU8mWKfwyqmk25dOKf4le2IPDka6PCg7gW2TVO50
-         fEc6ASQaSKHScoBu73VlzJ4LBKZs12A+9cOqoKL0bKxmxQrb9UVlwprmZ08QSox3vuPH
-         LUFvP9JbVnQ0DOqFh6Elc0lcOYlVWLc1VnaSBJ16lQMdkt84D0tBWTGlc3ZDJXSMk0iU
-         jDdQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwGa/9HtqbzeQa9n4wedZDz7Zsd/VS6pB90I165xubRE2f7+mIuEtrMn+AVG1JbX7IfhZcPqOSmKZDoUVx2DdU=@lists.linux.dev
-X-Gm-Message-State: AFuF++m4H22+fCuI1Y6EBekjuwdQ8zlCR/4PQoMcS9PB3c6gStIwnRfu
-	Huqnl0YuCcnnUvcLF194xcpE0p196BZWShOGSt7M94Juh0bU0FeX/Ve9
-X-Gm-Gg: AYBFou2FAJDALj6S0efDa5onZHCWmVBj8e1T6ZWC1zpS6IkRmL8G3BpIUGwE1gcDhyS
-	LEvB/r6ayKkPEI3/gr3JeOrkWxDKSrAiE7OEy2dq5fwo42KJqyBySkNK3dw/vFXVDAFWcU4Bdok
-	vgQX7RxDwwLKqDd4rCY0qAnGugEg/M+j1MLADsual60qAtiqAuG8DI74WHljKtUutrb0GoZOiXw
-	lj+WLLyMwSHu6It2Q6I4PHxHobj0TRIOuU35mVtjJtRkpeHfNF+jtjq0yeJTFOIslsJ88/naFg7
-	HXJh28hl8VCn4yMQL5bsgFXq0PG573wl8p67FUHPHj9okApjOFtoYPaei3GtvvTR7MA5kA8SLtk
-	vSJuUX7eOQY2eRMcQoMaD/dbyi1YkmQwpt51PCND5+CK4mw1i5yYAzgzz8z++o/aqbet+mXpvu3
-	PvE+WzmPvrb5k/2QjTwRZg8JLWvEiiv/iheyAdlFm73k/5K3jkhNUCXjFaTRrpniB1y7uR5U7re
-	lZFeCXvWUUpSdU=
-X-Received: by 2002:a05:600c:5254:b0:493:c47f:3c55 with SMTP id 5b1f17b1804b1-49fc56732aamr36801425e9.5.1789742386348;
-        Fri, 18 Sep 2026 07:39:46 -0700 (PDT)
-Received: from dell-desktop ([2a02:587:4b4e:8500:290c:210b:1c76:5710])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fcab7e333sm45448015e9.7.2026.09.18.07.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 07:39:45 -0700 (PDT)
-From: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: bpf@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	tasos.papagiannnis@gmail.com
-Subject: Re: [PATCH bpf-next v9 4/5] bpf: Mark linux_binprm->mm as trusted-or-null
-Date: Fri, 18 Sep 2026 17:39:21 +0300
-Message-ID: <20260918143921.10931-1-tasos.papagiannnis@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260918140305.C88251F000FF@smtp.kernel.org>
-References: <20260918140305.C88251F000FF@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1789743569; x=1790348369;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YC0PefwLkxVBXTBsKzjOWy/17vdgqLJp4+m26mDaKG8=;
+        b=HW+PpvXLQgiiPJfT340BobuKgXU+mDZMK0J3Zu4Lzo9yqNVQyx6zW+Kpn1iO/nBAHQ
+         xhRaO0Sg1Sj9/WH3XZNGfKEuJ9jMFDmMwlVVZQFxY2AfQUacW/rBOEMi9QxqcyFTk5fd
+         lucPdPKtBn6ucCHrVoPuRkDqSE7kCjyVaOkTOMc3Sx86qELe/bLnrd2rkkG47UPqNH3f
+         YNeqNJ6sn6JdAW7cGz4c8y9SRIbUW2m+UEevPuSVLedVH0H3Q/vvvUrZxBusIse05OPb
+         pP4R53wuvYucQc57/9AlRWt6MlreWb2jSFitFWp2gQU8TCPgHE1h3kpkqkMq4JQUBEUm
+         GwEQ==
+X-Gm-Message-State: AFuF++m0l8ohwUO0de9ixGQNC62eF5A2H2vnfoyUwRnfBeaPwJY9BtS6
+	zaSdzryqp/OhERDJ6Sjt1YnEZCNGyZoV9dtdYyQkR2ngVAX6SuUBhFlyra+DOAJReh3aQ25kWdr
+	CDhyArxGWeV9VTQXgJRTBe5Z2+PAr8Br5OFr3LIfh
+X-Gm-Gg: AYBFou1o65G2EC8cvkBM+9PoXN0FSppEQcDxwqNFI+ueWegabDNv4yUJRcCP9FBX5KR
+	z9NsIY6c2uIvy/prRQpXoeT+UaOckv+VgP7ADCPRslWDko869YdN32G+zKd/z75e+nL0d4IpA25
+	LmqrhNKQnGwcpxAXguGAS/IG77gvshbfrCTRgkMuct7/krJdkN09yI8Hku6KDoFiuqJFsDcJ/SB
+	fiaEZpf1U/8my0t/E53QxnmTv8dpU9hqbszgs5YSc8T1rCzSE5ERv8KsxPe+pHjQgn8oRjJuSaN
+	9P1gN9/souB2P52417wACXpRaolaLR6MAk5mc1RIUn5VfhgIwDRlLZDE
+X-Received: by 2002:a17:906:ba88:b0:c25:f7dc:2da with SMTP id
+ a640c23a62f3a-c29f5473df2mr602164866b.27.1789743568771; Fri, 18 Sep 2026
+ 07:59:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <6-v6-8af36cf7b73f+e2-mlx5st_jgg@nvidia.com> <20260917235245.CAAE41F00898@smtp.kernel.org>
+ <20260918115217.GA11142@nvidia.com>
+In-Reply-To: <20260918115217.GA11142@nvidia.com>
+From: David Matlack <dmatlack@google.com>
+Date: Fri, 18 Sep 2026 07:58:58 -0700
+X-Gm-Features: AcwNN1X4V2ednysXTROsIDMbW8yLdztMha6mDhRxWrhyVFhdILawxuBGR-T7aI0
+Message-ID: <CALzav=f4NTb4Csn2BoK5kk=MckFRvbVnOdO9yiCz8MLXdRMPOg@mail.gmail.com>
+Subject: Re: [PATCH v6 06/10] vfio: selftests: Allow drivers to specify
+ required region size
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	linux-rdma@vger.kernel.org, Sean Christopherson <seanjc@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> [Severity: Critical]
-> Can this upgrade to a trusted pointer cause a kernel panic if a user loads
-> an fexit program attached to free_bprm()?
+On Fri, Sep 18, 2026 at 4:52=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
+ote:
+>
+> On Thu, Sep 17, 2026 at 11:52:45PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] selftests: kvm/irq_test overwrites dynamic driver region siz=
+e
+> > --
+> >
+> > commit 97ad8ed7fec97be65848236fd1c8afab2ff66a54
+> > Author: Jason Gunthorpe <jgg@ziepe.ca>
+> >
+> > vfio: selftests: Allow drivers to specify required region size
+> >
+> > This commit adds a region_size field to struct vfio_pci_driver_ops to l=
+et
+> > drivers declare their required DMA-mapped region size. It updates the c=
+ore
+> > driver probe and the vfio_pci_driver_test to use this dynamically probe=
+d
+> > size instead of hardcoding 2MB.
+> >
+> > > diff --git a/tools/testing/selftests/vfio/vfio_pci_driver_test.c b/to=
+ols/testing/selftests/vfio/vfio_pci_driver_test.c
+> > > index 761bf117d624f..2bd949aafd731 100644
+> > > --- a/tools/testing/selftests/vfio/vfio_pci_driver_test.c
+> > > +++ b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
+> > > @@ -87,7 +87,8 @@ FIXTURE_SETUP(vfio_pci_driver_test)
+> > >     driver =3D &self->device->driver;
+> > >
+> > >     region_setup(self->iommu, self->iova_allocator, &self->memcpy_reg=
+ion, SZ_1G);
+> > > -   region_setup(self->iommu, self->iova_allocator, &driver->region, =
+SZ_2M);
+> > > +   region_setup(self->iommu, self->iova_allocator, &driver->region,
+> > > +                driver->region.size);
+> >
+> > [Severity: Medium]
+> > Since this changes the vfio test to use the dynamic driver->region.size
+> > instead of SZ_2M, should tools/testing/selftests/kvm/irq_test.c be upda=
+ted
+> > as well?
+> >
+> > It looks like vfio_setup_msi() in kvm/irq_test.c still forcefully overw=
+rites
+> > the dynamically probed size back to 2MB:
+> >
+> > tools/testing/selftests/kvm/irq_test.c:vfio_setup_msi() {
+> >       ...
+> >       region =3D &device->driver.region;
+> >       region->size =3D SZ_2M;
+> >       region->iova =3D iova_allocator_alloc(allocator, region->size);
+> >       ...
+> > }
+> >
+> > Will this cause the KVM irq_test to fail with a VFIO_ASSERT_GE during d=
+river
+> > initialization via vfio_pci_driver_init() when tested with a driver tha=
+t
+> > requires a larger region, such as the mlx5 driver mentioned in the comm=
+it
+> > message?
+>
+> I have no idea, Dave? Did kvm start using this stuff?
 
-> Because free_bprm() frees the bprm object before the fexit hook executes,
-> reading bprm->mm yields a garbage pointer. Before this patch, the verifier
-> automatically inserted a BPF_PROBE_MEM exception table entry to protect the
-> dereference of the untrusted pointer.
+Yes, KVM started linking in the VFIO selftests library in 7.3 and
+irq_test.c is the first test using it.
 
-> By upgrading bprm->mm to a PTR_TRUSTED nested pointer, the verifier bypasses
-> this BPF_PROBE_MEM safety net. If the fexit program checks for NULL and then
-> dereferences it, could it trigger an unhandled page fault and crash the
-> system?
-
-I don't believe the fexit/free_bprm case can cause a kernel panic.
-My understanding is that in fentry/fexit programs, the arguments are not
-trusted.
-
-The trusted-or-null annotation is only used when bprm itself is trusted
-which is the case in LSM programs.
-
-More specifically, the following program did not result in any kernel panic
-and prints 0.
-
-SEC("fexit/free_bprm")
-int BPF_PROG(fexit_free_bprm, struct linux_binprm *bprm)
-{
-	unsigned long arg_start = 0;
-
-	arg_start = bprm->mm->arg_start;
-	bpf_printk("%lu", arg_start);
-
-	return 0;
-}
+Looks like that is also causing the dma_rmb/wmb() redefinition
+compiler warning from the kernel-test-robot.
