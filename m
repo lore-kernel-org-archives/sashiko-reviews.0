@@ -1,129 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EEC248896;
-	Sat, 19 Sep 2026 07:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECF63AAF51
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 07:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789802373; cv=none; b=HK2bmGFyE7wM134R8PkS+8nK0JA76TrT4PhQoBTJMwYXtd3sArOsIZyRnJknv3YBRocxtxzoeCibZZFXQWXDCezGWXeMgJf2AQsWXg8ls4xL4UHu0W3YHOJtDUFCq212Kt2TuP3VuA9JnCJAKtzNTWUJUjWrKPdZGIYKDd5Npn4=
+	t=1789803905; cv=none; b=YSgOm6+UA0TL0aLurb4Bj22GZuasKCDsRUdgpdt0eTZnT43GhIiIZXC4DyuKv6pwhJF3xrJ0XU+a9/b2pXZeZgVcRaZJcYJX255nP3ss2RgLkiAcW1eY/DR+9r8iLTIM4Q115tumBq/xW0GXgXOH/Kel09DNMNRlKnwKM3ZjaW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789802373; c=relaxed/simple;
-	bh=0gpq8ITjjwq0RtKYSegekReqPxa0IW/AgK4iNjTV8q4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TRxm2MOSGY5KtiWFllXlYQtMVbCWupd8NIsgYiubifFz42Efj/pYysjdp0sB7/R72aZ40GosW9pI6NfxY45f0E/SogYyFuzpeWnfhROyfk+020wtOzepj/eIuOhSjeR4i6/16vE8h+lhKEQQg3uuSuarIlT5a75/Qq2AHPN7yTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0rmZkEo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789803905; c=relaxed/simple;
+	bh=Q1nUjk9VuBCM7ULANZtpDZsdAc2C3fd8JSuzKbgnvQ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=suIkpomWoEADibjaG1FnJPMMgdZhrCjKSiZ4A0fAhFDPy5IXUfYzxSi1J+TAu23lPJXpa4kWgEbe+pQDraNSyvIJx3sbunLzvhOnDax9Z+QXv0hioBL5PO4RQD5vQZ6EJgxTS4bgI+9KCGTEzEIQItvBuR/wqKYsvIllffPrpko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=jHPYmXIC; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0rmZkEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52E41F000FF;
-	Sat, 19 Sep 2026 07:19:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789802371;
-	bh=4uIB0dRz17da31aEieG1rUFLAuF4O+fIONGYthd8A6M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=L0rmZkEo9HozLKOWgFKp+mPYGjUseRs8SnEdwMxLY+pq1ygBNPnn7gbNZp5HjEoTH
-	 rKBaHjYmfcg6wGa+uKGhA82sNUDgWPaY2iIdLBHem4Gj6/X0N96tiDZWLqkVok1VWS
-	 eZjZ/k1qkkGnmQNdo4kNMFMwrifJMXDsySbjcwuRfIjb99McsLKCelZBwJS6gWW9za
-	 JbQvczqFI1Wq89thH3lN5/DFBkMN/xFrarwXpwssmNt822JbgE2HIe51K4qE3SN2Gj
-	 /ATKtexwcc/yxPqRXRyRM+dF3FRRi/2Fznf5jFuoyTEipOwr1WYTxJqebqwBENsj3c
-	 Dk3ty5QaApjnQ==
-Date: Sat, 19 Sep 2026 00:19:30 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: acme@kernel.org, sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] perf annotate-data: Adjust type offset for
- flex-array
-Message-ID: <aq43ghI8KTFfkMje@z2>
-References: <20260919063745.48444-1-namhyung@kernel.org>
- <20260919063745.48444-5-namhyung@kernel.org>
- <20260919064647.C05051F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="jHPYmXIC"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id F1601C51459;
+	Sat, 19 Sep 2026 07:45:44 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id BB066606CA;
+	Sat, 19 Sep 2026 07:44:59 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EA9C31032907B;
+	Sat, 19 Sep 2026 09:44:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1789803898; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=Q1nUjk9VuBCM7ULANZtpDZsdAc2C3fd8JSuzKbgnvQ4=;
+	b=jHPYmXICISt0CBNQjPTDTCC2qeZGvMsEMJrbnwLOm3YogxWf3b761RqRUgHk4k/qiSDy7e
+	W/YLodLm8ONW3xTvS2dp3x/JSSjNy3k/Q9BQKZFU0WRIc7/gEPd3koACUfo2mPE6HKqVOb
+	cPZMjC4/1pc4R+u/YZUQXVgi615GFpnT1TbLF/cbrIE9PftbtkKQTrQL0tidZO5ZvryMYE
+	we+X/a+wBLsMrbDUD9Vaw9ZOeLPWg7gxzcA3DJ5VBlUFDUMPbtXyRUr/IEYmQPcRG5qsQu
+	O0uSGkuHhtt8p51XvVvFo4mUEqAyuhWx2UDpVn4VdsiKCih4gqaTshLp7R82Ow==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: "Wentao Liang" <vulab@iscas.ac.cn>,  alexandre.belloni@bootlin.com,
+  sashiko-reviews@lists.linux.dev,  linux-mtd@lists.infradead.org,
+  linux-kernel@vger.kernel.org,  vigneshr@ti.com,
+  claudiu.beznea@tuxon.dev,  stable@vger.kernel.org,
+  linux-arm-kernel@lists.infradead.org,  nicolas.ferre@microchip.com,
+  bbrezillon@kernel.org,  richard@nod.at
+Subject: Re: [PATCH] mtd: rawnand: atmel: Fix HSMC clock leak in legacy
+ controller init
+In-Reply-To: <20260917103855.934A81F000FF@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Thu, 17 Sep 2026 10:38:55
+	+0000")
+References: <20260917102804.2146887-1-vulab@iscas.ac.cn>
+	<20260917103855.934A81F000FF@smtp.kernel.org>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Sat, 19 Sep 2026 09:44:51 +0200
+Message-ID: <87se35elcc.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260919064647.C05051F000FF@smtp.kernel.org>
+Content-Type: text/plain
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Sat, Sep 19, 2026 at 06:46:47AM +0000, sashiko-bot@kernel.org wrote:
+On 17/09/2026 at 10:38:55 GMT, sashiko-bot@kernel.org wrote:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf annotate-data: incorrect flex array adjustment skips elements in struct padding
-> --
-> 
-> commit b87f5c6310512e6a55305050539cf57984efb087
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf annotate-data: Adjust type offset for flex-array
-> 
-> The flex array members are located beyond the original type size.  Also
-> it needs to adjust the offset in an array to find a corresponding
-> element using module operation.  Note that we focus on access to type and
-> field, so array index is not important.
-> 
-> > diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
-> > index 5dd6c6ec2d424..e9b58a3d587be 100644
-> > --- a/tools/perf/util/annotate-data.c
-> > +++ b/tools/perf/util/annotate-data.c
-> 
-> [ ... ]
-> 
-> > @@ -1741,6 +1816,7 @@ struct annotated_data_type *find_data_type(struct data_loc_info *dloc)
-> >  {
-> >  	struct dso *dso = map__dso(dloc->ms->map);
-> >  	Dwarf_Die type_die;
-> > +	struct annotated_data_type *result;
-> >  
-> >  	/*
-> >  	 * The type offset is the same as instruction offset by default.
-> > @@ -1753,7 +1829,25 @@ struct annotated_data_type *find_data_type(struct data_loc_info *dloc)
-> >  	if (find_data_type_die(dloc, &type_die) < 0)
-> >  		return NULL;
-> >  
-> > -	return dso__findnew_data_type(dso, &type_die);
-> > +	result = dso__findnew_data_type(dso, &type_die);
-> > +	if (result == NULL)
-> > +		return NULL;
-> > +
-> > +	if (result->flex_array && dloc->type_offset > result->self.size) {
-> 
-> [Severity: Medium]
-> Since result->self.size (derived from DWARF's DW_AT_byte_size) includes
-> trailing padding for alignment, won't this check skip flex array elements
-> that fall within the struct's padded size boundary?
-> 
-> For example, if a struct has an 8-byte aligned member and a trailing flex
-> array of 2-byte structs, the struct size includes up to 6 bytes of trailing
-> padding. Accesses to indices 1 through 3 would remain `<= result->self.size`
-> and erroneously skip this modulo adjustment.
-> 
-> Does this cause fill_member_name() to fail matching the unadjusted offset
-> against the first element's nested fields, truncating the resolved name to
-> just the outer array name instead of the specific inner field?
+> - [Low] mtd: backward goto in error handling path violates kernel
+> style
 
-As I said, I think practically this is fine and will find a flex array
-member for most cases.
-
-Thanks,
-Namhyung
-
-> 
-> > +		struct annotated_member *flex_array = get_flex_array_member(result);
-> > +
-> > +		if (flex_array && flex_array->size > 0) {
-> > +			int offset = dloc->type_offset;
-> > +
-> > +			/* adjust offset in the flex array */
-> > +			offset -= flex_array->offset;
-> > +			offset %= flex_array->size;
-> > +			offset += flex_array->offset;
-> > +
-> > +			dloc->type_offset = offset;
-> > +		}
-> > +	}
-> > +	return result;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260919063745.48444-1-namhyung@kernel.org?part=4
+Yes, it is strange, can you please fix this?
