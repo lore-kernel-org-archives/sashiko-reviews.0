@@ -1,139 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5432C0F7F;
-	Sat, 19 Sep 2026 15:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDB0346E63
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 17:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789832852; cv=none; b=t273mw56gXbtNBRISXzdOWojWkfYFQNQiuDbgGgpa+PH+pWgJV8RI6BNjBL67C0pTRe7/S8tONmvQJCrluSYr6q2in8CP+SuMsyPwLKG5dJavMG1DXwHWYUGD8+fy/LMhw/vTtgDnpc76t78xNzIaq+zGFvxfnxIfkIzFzRAISc=
+	t=1789840313; cv=none; b=rqzY7sPQnRw/ipKFuDY8y/Fxl0AnAWClxLCe9PvGuEOhy06dObWVCJQWJ8G3CZjM8HJ426Ur03nLpID1Aqvmy1W88BcvhN4w8dskq+DBENiMGAQpq+syQMHWjFqC9UJQsCYo3fbWsQADw+GEMhOU1EqvFcGFqbNW37RlSfGEg7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789832852; c=relaxed/simple;
-	bh=L8JdDIdahX9jBR4MTVRaMlg2TrsyyQPLNqfeVDeiEuM=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2feI5qCwH2zp1tU4LEQugBvP9c9XwRdt6gwlzhrcqLZ063e+fRjS5T1KCE9NJaKZ7JMByvceV/OlCisav53u9pO6EIqXmD83NBJA2T4Nkf1JhDJDZAjb5kyODfcztBep04R6j175JasX01usY1e3JskWTS5Jwmc/8otNaNwq64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jt7mRTIh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789840313; c=relaxed/simple;
+	bh=q/hBOL5VhvukiO8I9fQFxJcxHhYRSYJ+tAl9JV7bFow=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PKbSm7M2/Sir+VqT2qvtOO103wJhoLslxclUo6LlgkISyGnuJhDiAi6UPiqD/maIWIJe8ilbToyguJUYvYJxzIR9md1GKeJ7koVfC085SxZZ5sOLoAgJdzjG0FTUyXMnoKi+q5MsizxXTICpp7ITR8oeLmp+zs2bGOy3djFf0+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5iBPSlx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jt7mRTIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259441F000FF;
-	Sat, 19 Sep 2026 15:47:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5iBPSlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F31F000FF;
+	Sat, 19 Sep 2026 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789832851;
-	bh=TvAuYE9a/SDHD1fvdcUafvtliLFXioE7PRAJICPhaZU=;
+	s=k20260515; t=1789840312;
+	bh=k9ei/PjC+XV2hruw6wBA4HnhJrHSGFx7FJobsi+5n1I=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=jt7mRTIhBhF5A0suAIUUUUHcXByj82ywHmIqSlmNTByQXMGDTrhqz0g9xpPHqVW/Q
-	 EopPW02VNDy4p1hz8okjVAVf7zbKHHwnlNXe99jwOVWfR/PRNppolPy8nRxWNTkg5l
-	 qeF6O2PT+V63XPBYYnw/w98nhrpPoVZuWmgfajcR+W7zoC2BEnsFRXRekwD56qbpky
-	 JGO70iaLsMrbT/yGU6d+9YxTnopOJU7CwdiwCYarxvEKDN8GxlFZmYOk+eCpVx0/Xt
-	 dnC1k4n3Ce6LRr3jGulVAPIKrYcE+0fRy5qIK9LnErz4kY6QB+AAYxlInAJpnBnccs
-	 dEu7vN2m4GoEw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1x7xHl-0000000Aypf-0qov;
-	Sat, 19 Sep 2026 15:47:29 +0000
-Date: Sat, 19 Sep 2026 16:50:35 +0100
-Message-ID: <87cxu944vo.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH 4/4] KVM: arm64: vgic-v5: Correctly handle host ISTE __le32 conversion
-In-Reply-To: <20260919123905.515941F000FF@smtp.kernel.org>
-References: <20260919123150.3283606-1-maz@kernel.org>
-	<20260919123150.3283606-5-maz@kernel.org>
-	<20260919123905.515941F000FF@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	b=D5iBPSlxCGLi55JA+8OC55wMs+CnTUNk6M6TsO0JwVqMIGfA8HQUUOK1vzl39tiN7
+	 xq7k2dnm1YLKZaolNSeM89w/9Ae2HOoa8m56daMwNksshozLmkrY+kM7RVbY47UunW
+	 Vrs6lcdJ8R9IG9FVXHGKLfSJZxD7frpftM4YgyEIY7n06nFA7jO8aOJXch/afb6Haj
+	 8GWVockeH0zkadRaO1gsCI2/mH8lgyJnNCmBbunjkPIWUcBglL0WIGuEIUF4ilSOLd
+	 5tsGd8l6QtdIREo+lxtGF7/Wnes87yQcOjSH1bI6tck7JfZQ1VhgSau6p0D1kqv0bX
+	 oaRQtlTjpmKgQ==
+Date: Sat, 19 Sep 2026 10:51:51 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Hangbin Liu <hangbin.liu@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH net-next 1/6] net: lwtunnel: change encap fill order
+Message-ID: <20260919105151.7d8e2b2a@kernel.org>
+In-Reply-To: <aqznjquXIavzmuFD@fedora>
+References: <20260917-ynl_rt_encap-v1-0-fbbe6e680571@kylinos.cn>
+	<20260917-ynl_rt_encap-v1-1-fbbe6e680571@kylinos.cn>
+	<20260918063655.418681F000FF@smtp.kernel.org>
+	<aqznjquXIavzmuFD@fedora>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Transfer-Encoding: 7bit
 
-On Sat, 19 Sep 2026 13:39:04 +0100,
-sashiko-bot@kernel.org wrote:
+On Fri, 18 Sep 2026 15:26:06 +0800 Hangbin Liu wrote:
+> > Does this leave an orphaned attribute in the buffer on the fallback path?
+> > 
+> > If ops->fill_encap is unsupported, it evaluates to -EOPNOTSUPP and execution
+> > jumps to nla_put_failure:
+> > 
+> > net/core/lwtunnel.c:lwtunnel_fill_encap() {
+> > ...
+> > nla_put_failure:
+> > 	nla_nest_cancel(skb, nest);
+> > 
+> > 	return (ret == -EOPNOTSUPP ? 0 : ret);
+> > }
+> > 
+> > Because nla_put_u16() was moved before nla_nest_start_noflag(),
+> > nla_nest_cancel() only unwinds the buffer up to the start of the nest.
+> > This leaves the encap_type_attr orphaned in the skb payload.
+> > 
+> > Since the function returns 0 (success) in the -EOPNOTSUPP case, the caller
+> > is prevented from discarding the message, which results in a malformed
+> > netlink message being sent to userspace.
+> > 
+> > Could we record the skb tail pointer before nla_put_u16() and restore it on
+> > failure, or is there another preferred way to unwind the encap_type_attr?  
 > 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] kvm: arm64: code and commit message mismatch regarding h_iste type
-> --
+> I'd like to add a checking
 > 
-> commit a916f514228ceaaf50a5546f6df29cea59ab15f1
-> Author: Marc Zyngier <maz@kernel.org>
+> 	if (likely(ops && ops->fill_encap)) {
+> 		ret = nla_put_u16(skb, encap_type_attr, lwtstate->type);
+> 		if (ret)
+> 			return ret;
+> 	}
 > 
-> KVM: arm64: vgic-v5: Correctly handle host ISTE __le32 conversion
-> 
-> This commit addresses a sparse warning by modifying the endianness
-> conversion of the host ISTE. The intent is to define h_iste as a u32
-> instead of __le32, doing the conversion at the point of access.
-> 
-> Closes: https://lore.kernel.org/oe-kbuild-all/202609191215.to1MBYak-lkp@intel.com/
-> 
-> > diff --git a/arch/arm64/kvm/vgic/vgic-v5-tables.c b/arch/arm64/kvm/vgic/vgic-v5-tables.c
-> > index 2c8d0f360506c..aae5cf05f3907 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-v5-tables.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-v5-tables.c
-> 
-> [ ... ]
-> 
-> > @@ -1520,7 +1520,7 @@ static int vgic_v5_save_two_level_ist(const struct vgic_v5_ist_desc *ist,
-> >  			h_iste = *(__le32 *)(h_l2_ist_base +
-> >  					     h_l2_index * ist->iste_size);
-> >  
-> > -			ret = put_user(h_iste, uaddr);
-> > +			ret = put_user(le32_to_cpu(h_iste), uaddr);
-> >  			if (ret)
-> >  				return ret;
-> 
-> [Severity: Medium]
-> Is the refactoring in vgic_v5_save_two_level_ist() incomplete?
-> 
-> The commit message explicitly states "define h_iste as a u32", and this
-> pattern was applied to the other three functions modified in the file.
-> However, in vgic_v5_save_two_level_ist(), the h_iste variable retains
-> its __le32 type at the top of the function, and the conversion is instead
-> done inline within the put_user() call.
-> 
-> Does this variable also need to be redefined as a u32 to remain consistent
-> with the commit description and the rest of the patch?
+> to cover the EOPNOTSUPP issue. For other errors, the netlink fill will abort
+> directly. What do you think?
 
-I'll add this to this patch.
-
-	M.
-
-diff --git a/arch/arm64/kvm/vgic/vgic-v5-tables.c b/arch/arm64/kvm/vgic/vgic-v5-tables.c
-index aae5cf05f3907..d577e485ebe9e 100644
---- a/arch/arm64/kvm/vgic/vgic-v5-tables.c
-+++ b/arch/arm64/kvm/vgic/vgic-v5-tables.c
-@@ -1490,7 +1490,6 @@ static int vgic_v5_save_two_level_ist(const struct vgic_v5_ist_desc *ist,
- 	struct vgic_v5_two_level_ist_shape shape;
- 	size_t h_l1_index, h_l2_index;
- 	void *h_l2_ist_base;
--	__le32 h_iste;
- 	int ret;
- 
- 	shape = vgic_v5_two_level_ist_shape(ist);
-@@ -1517,10 +1516,10 @@ static int vgic_v5_save_two_level_ist(const struct vgic_v5_ist_desc *ist,
- 				    shape.l2_entries * ist->iste_size);
- 
- 		for (h_l2_index = 0; h_l2_index < shape.l2_entries; h_l2_index++) {
--			h_iste = *(__le32 *)(h_l2_ist_base +
--					     h_l2_index * ist->iste_size);
-+			void *h_iste_addr = h_l2_ist_base + h_l2_index * ist->iste_size;
-+			u32 h_iste = le32_to_cpu(*(__le32 *)h_iste_addr);
- 
--			ret = put_user(le32_to_cpu(h_iste), uaddr);
-+			ret = put_user(h_iste, uaddr);
- 			if (ret)
- 				return ret;
- 
-
--- 
-Jazz isn't dead. It just smells funny.
+Sorry, the email landed in the wrong inbox (due to lack of CC)
+so I don't see the full context, but from memory - makes sense I think
